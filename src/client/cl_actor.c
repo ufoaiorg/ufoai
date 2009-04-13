@@ -617,7 +617,7 @@ void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActi
 
 	fd = CL_GetWeaponAndAmmo(actor, hand);
 	if (fd == NULL) {
-		CL_DisplayImpossibleReaction(actor);
+		HUD_DisplayImpossibleReaction(actor);
 		return;
 	}
 
@@ -648,7 +648,7 @@ void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActi
 				HUD_DisplayPossibleReaction(actor);
 			} else {
 				/* Display "impossible" (red) reaction button. */
-				CL_DisplayImpossibleReaction(actor);
+				HUD_DisplayImpossibleReaction(actor);
 			}
 		} else {
 			/* Weapon in _this_ hand not RF-capable. */
@@ -659,7 +659,7 @@ void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActi
 				/* No RF-capable item in either hand. */
 
 				/* Display "impossible" (red) reaction button. */
-				CL_DisplayImpossibleReaction(actor);
+				HUD_DisplayImpossibleReaction(actor);
 				/* Set RF-mode info to undef. */
 				CL_SetReactionFiremode(actor, -1, NULL, -1);
 				CL_ReserveTUs(actor, RES_REACTION, 0);
@@ -810,7 +810,6 @@ void CL_RemoveActorFromTeamList (le_t * le)
 qboolean CL_ActorSelect (le_t * le)
 {
 	int actorIdx;
-	qboolean sameActor = qfalse;
 
 	/* test team */
 	if (!le) {
@@ -821,21 +820,15 @@ qboolean CL_ActorSelect (le_t * le)
 		return qfalse;
 	}
 
-	if (le->team != cls.team || LE_IsDead(le) || !le->inuse)
+	if (le->team != cls.team || LE_IsDead(le) || !le->inuse || le->selected)
 		return qfalse;
 
-	/* select him */
 	if (selActor)
 		selActor->selected = qfalse;
-	le->selected = qtrue;
 
-	/* reset the align if we switched the actor */
-	if (selActor != le)
-		mousePosTargettingAlign = 0;
-	else
-		sameActor = qtrue;
-
+	mousePosTargettingAlign = 0;
 	selActor = le;
+	selActor->selected = qtrue;
 	menuInventory = &selActor->i;
 
 	actorIdx = CL_GetActorNumber(le);
@@ -860,21 +853,7 @@ qboolean CL_ActorSelect (le_t * le)
 		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
 	}
 
-	/* Forcing the hud-display to refresh its displayed stuff. */
-	/** @todo make this a function parameter to HUD_ActorUpdateCvars ? */
-	Cvar_SetValue("hud_refresh", 1);
-	/** @todo remove this here */
-	HUD_UpdateSelectedActorReactionState();
-	HUD_ActorUpdateCvars();
-
 	CL_ConditionalMoveCalcForCurrentSelectedActor();
-
-	/* Change to move-mode and hide firemodes.
-	 * Only if it's a different actor - if it's the same we keep the current mode etc... */
-	if (!sameActor) {
-		HUD_HideFiremodes(); /**< @todo remove this here */
-		le->actorMode = M_MOVE;
-	}
 
 	return qtrue;
 }
@@ -1450,35 +1429,27 @@ void CL_InvCheckHands (struct dbuffer *msg)
 	int hand = -1;		/**< 0=right, 1=left -1=undef*/
 
 	NET_ReadFormat(msg, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
-	if (entnum < 0 || hand < 0) {
-		Com_Printf("CL_InvCheckHands: entnum or hand not sent/received correctly. (number: %i)\n", entnum);
-	}
+	if (entnum < 0 || hand < 0)
+		Com_Error(ERR_DROP, "CL_InvCheckHands: entnum or hand not sent/received correctly. (number: %i)\n", entnum);
 
 	le = LE_Get(entnum);
-	if (!le) {
-		Com_Printf("CL_InvCheckHands: LE doesn't exist. (number: %i)\n", entnum);
-		return;
-	}
+	if (!le)
+		Com_Error(ERR_DROP, "CL_InvCheckHands: LE doesn't exist. (number: %i)\n", entnum);
 
 	actorIdx = CL_GetActorNumber(le);
-	if (actorIdx == -1) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: Could not get local entity actor id via CL_GetActorNumber\n");
-		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG actor info: team=%i(%s) type=%i inuse=%i\n",
+	if (actorIdx == -1)
+		Com_Error(ERR_DROP, "CL_InvCheckHands: Could not get local entity actor id via CL_GetActorNumber: team=%i(%s) type=%i inuse=%i\n",
 			le->team, le->teamDef ? le->teamDef->name : "No team", le->type, le->inuse);
-		return;
-	}
 
 	/* No need to continue if stored firemode settings are still usable. */
 	if (!CL_WorkingFiremode(le, qtrue)) {
 		/* Firemode for reaction not sane and/or not usable. */
 		/* Update the changed hand with default firemode. */
-		if (hand == ACTOR_HAND_RIGHT) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG right\n");
+		if (hand == ACTOR_HAND_RIGHT)
 			CL_UpdateReactionFiremodes(le, ACTOR_HAND_CHAR_RIGHT, -1);
-		} else {
-			Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG left\n");
+		else
 			CL_UpdateReactionFiremodes(le, ACTOR_HAND_CHAR_LEFT, -1);
-		}
+
 		HUD_HideFiremodes();
 	}
 }
@@ -1497,21 +1468,15 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	number = NET_ReadShort(msg);
 	/* get le */
 	le = LE_Get(number);
-	if (!le) {
-		Com_Printf("CL_ActorDoMove: Could not get LE with id %i\n", number);
-		return;
-	}
+	if (!le)
+		Com_Error(ERR_DROP, "CL_ActorDoMove: Could not get LE with id %i\n", number);
 
-	if (!LE_IsActor(le)) {
-		Com_Printf("Can't move, LE doesn't exist or is not an actor (number: %i, type: %i)\n",
+	if (!LE_IsActor(le))
+		Com_Error(ERR_DROP, "Can't move, LE doesn't exist or is not an actor (number: %i, type: %i)\n",
 			number, le ? le->type : -1);
-		return;
-	}
 
-	if (LE_IsDead(le)) {
-		Com_Printf("Can't move, actor dead\n");
-		return;
-	}
+	if (LE_IsDead(le))
+		Com_Error(ERR_DROP, "Can't move, actor dead\n");
 
 	pathLength = NET_ReadByte(msg);
 	if (le->pathLength + pathLength >= MAX_LE_PATHLENGTH)
@@ -1595,20 +1560,15 @@ void CL_ActorDoTurn (struct dbuffer *msg)
 
 	/* get le */
 	le = LE_Get(entnum);
-	if (!le) {
-		Com_Printf("CL_ActorDoTurn: Could not get LE with id %i\n", entnum);
-		return;
-	}
+	if (!le)
+		Com_Error(ERR_DROP, "CL_ActorDoTurn: Could not get LE with id %i\n", entnum);
 
-	if (!LE_IsActor(le)) {
-		Com_Printf("Can't turn, LE doesn't exist or is not an actor (number: %i, type: %i)\n", entnum, le ? le->type : -1);
-		return;
-	}
+	if (!LE_IsActor(le))
+		Com_Error(ERR_DROP, "Can't turn, LE doesn't exist or is not an actor (number: %i, type: %i)\n",
+				entnum, le ? le->type : -1);
 
-	if (LE_IsDead(le)) {
-		Com_Printf("Can't turn, actor dead\n");
-		return;
-	}
+	if (LE_IsDead(le))
+		Com_Error(ERR_DROP, "Can't turn, actor dead\n");
 
 	le->dir = dir;
 	le->angles[YAW] = directionAngles[le->dir];
@@ -1641,7 +1601,7 @@ void CL_ActorStandCrouch_f (void)
 void CL_ActorUseHeadgear_f (void)
 {
 	invList_t* headgear;
-	const int tmp_mouseSpace = mouseSpace;
+	const int tmpMouseSpace = mouseSpace;
 
 	/* this can be executed by a click on a hud button
 	 * but we need MS_WORLD mouse space to let the shooting
@@ -1661,7 +1621,7 @@ void CL_ActorUseHeadgear_f (void)
 	selActor->actorMode = M_MOVE;
 
 	/* restore old mouse space */
-	mouseSpace = tmp_mouseSpace;
+	mouseSpace = tmpMouseSpace;
 }
 
 /**

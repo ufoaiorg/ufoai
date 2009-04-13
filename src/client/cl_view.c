@@ -210,8 +210,6 @@ void V_LoadMedia (void)
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading %s"), _(cl.configstrings[CS_MAPTITLE]));
 	cls.loadingPercent = 0;
 
-	HUD_ResetWeaponButtons();
-
 	/* register models, pics, and skins */
 	Com_Printf("Map: %s\n", cl.configstrings[CS_NAME]);
 	if (GAME_IsMultiplayer())

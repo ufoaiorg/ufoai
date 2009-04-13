@@ -29,15 +29,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern int hitProbability;
 
 /* these should probably not be called from other places than menu */
-void HUD_UpdateSelectedActorReactionState(void);
-qboolean CL_DisplayImpossibleReaction(const le_t * actor);
+qboolean HUD_DisplayImpossibleReaction(const le_t * actor);
 void HUD_DisplayPossibleReaction(const le_t * actor);
 void HUD_HideFiremodes(void);
 /* check above for removal */
 
 void HUD_InitStartup(void);
 void HUD_DisplayMessage(const char * text);
-void HUD_ResetWeaponButtons(void);
 void HUD_ActorUpdateCvars(void);
 
 #endif

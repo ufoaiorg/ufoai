@@ -72,7 +72,6 @@ typedef struct le_s {
 	int currentSelectedFiremode;
 
 	actorModes_t actorMode;		/**< current selected action for the selected actor */
-	actorModes_t oldActorMode;
 
 	int clientAction;		/**< entnum from server that is currently triggered */
 

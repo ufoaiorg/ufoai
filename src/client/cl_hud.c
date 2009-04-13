@@ -190,12 +190,7 @@ static int HUD_GetReactionState (const le_t * le)
 		return R_FIRE_OFF;
 }
 
-void HUD_UpdateSelectedActorReactionState (void)
-{
-	selActorReactionState = HUD_GetReactionState(selActor);
-}
-
-void HUD_ResetWeaponButtons (void)
+static void HUD_ResetWeaponButtons (void)
 {
 	memset(weaponButtonState, BT_STATE_DISABLE, sizeof(weaponButtonState));
 }
@@ -557,7 +552,7 @@ void HUD_DisplayPossibleReaction (const le_t * actor)
  * @param[in] actor the actor to check for his reaction state.
  * @return qtrue if nothing changed message was sent otherwise qfalse.
  */
-qboolean CL_DisplayImpossibleReaction (const le_t * actor)
+qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
 {
 	if (!actor)
 		return qfalse;
@@ -947,9 +942,6 @@ static void HUD_RemainingTUs_f (void)
 	} else if (!strcmp(type, "crouch")) {
 		displayRemainingTus[REMAINING_TU_CROUCH] = state;
 	}
-
-	/* Update "remaining TUs" bar in HUD.*/
-	HUD_ActorUpdateCvars();
 }
 
 /**
@@ -1064,7 +1056,7 @@ static void HUD_RefreshWeaponButtons (int time)
 		if (CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT)) {
 			HUD_DisplayPossibleReaction(selActor);
 		} else {
-			CL_DisplayImpossibleReaction(selActor);
+			HUD_DisplayImpossibleReaction(selActor);
 		}
 	}
 
@@ -1173,9 +1165,8 @@ void HUD_ActorUpdateCvars (void)
 	static char bottomText[MAX_SMALLMENUTEXTLEN];
 	static char leftText[MAX_SMALLMENUTEXTLEN];
 	static char tuTooltipText[MAX_SMALLMENUTEXTLEN];
-	qboolean refresh;
 	const char *animName;
-	int time;
+	int time, i;
 	pos3_t pos;
 	int dv;
 
@@ -1186,12 +1177,7 @@ void HUD_ActorUpdateCvars (void)
 	if (cls.state != ca_active)
 		return;
 
-	refresh = Cvar_GetInteger("hud_refresh");
-	if (refresh) {
-		Cvar_Set("hud_refresh", "0");
-		Cvar_Set("cl_worldlevel", cl_worldlevel->string);
-		HUD_ResetWeaponButtons();
-	}
+	HUD_ResetWeaponButtons();
 
 	/* set Cvars for all actors */
 	HUD_ActorGlobalCvars();
@@ -1203,6 +1189,9 @@ void HUD_ActorUpdateCvars (void)
 
 	if (selActor) {
 		const invList_t *selWeapon;
+
+		selActorReactionState = HUD_GetReactionState(selActor);
+		HUD_HideFiremodes();
 
 		/* set generic cvars */
 		Cvar_Set("mn_tu", va("%i", selActor->TU));
@@ -1323,26 +1312,24 @@ void HUD_ActorUpdateCvars (void)
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), selActor->morale);
 				MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			}
-			if (selActor->actorMode != selActor->oldActorMode || refresh) {
-				if (actorMoveLength != ROUTING_NOT_REACHABLE) {
-					HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
-					if (reservedTUs > 0)
-						Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
-							selActor->morale, reservedTUs, moveModeDescriptions[CL_MoveMode(selActor, actorMoveLength)], actorMoveLength,
-							selActor->TU - actorMoveLength, selActor->TU - reservedTUs - actorMoveLength);
-					else
-						Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
-							moveModeDescriptions[CL_MoveMode(selActor, actorMoveLength)] , actorMoveLength, selActor->TU - actorMoveLength);
+			if (actorMoveLength != ROUTING_NOT_REACHABLE) {
+				HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
+				if (reservedTUs > 0)
+					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
+						selActor->morale, reservedTUs, moveModeDescriptions[CL_MoveMode(selActor, actorMoveLength)], actorMoveLength,
+						selActor->TU - actorMoveLength, selActor->TU - reservedTUs - actorMoveLength);
+				else
+					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
+						moveModeDescriptions[CL_MoveMode(selActor, actorMoveLength)] , actorMoveLength, selActor->TU - actorMoveLength);
 
-					if (actorMoveLength <= CL_UsableTUs(selActor))
-						Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", actorMoveLength, CL_UsableTUs(selActor));
-					else
-						Com_sprintf(mouseText, lengthof(mouseText), "- (-)\n");
-				} else {
-					HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
-				}
-				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
+				if (actorMoveLength <= CL_UsableTUs(selActor))
+					Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", actorMoveLength, CL_UsableTUs(selActor));
+				else
+					Com_sprintf(mouseText, lengthof(mouseText), "- (-)\n");
+			} else {
+				HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 			}
+			MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
 			time = actorMoveLength;
 		} else {
 			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
@@ -1377,7 +1364,7 @@ void HUD_ActorUpdateCvars (void)
 			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 		}
 
-		/* Find the coordiantes of the ceiling and floor we want. */
+		/* Find the coordinates of the ceiling and floor we want. */
 		VectorCopy(mousePos, pos);
 		pos[2] = cl_worldlevel->integer;
 
@@ -1419,45 +1406,32 @@ void HUD_ActorUpdateCvars (void)
 			Cvar_Set("mn_ammoleft", Cvar_GetString("mn_ammoright"));
 
 		/* change stand-crouch & reaction button state */
-		if (selActor->oldstate != selActor->state || refresh) {
-			selActorReactionState = HUD_GetReactionState(selActor);
-			if (selActorOldReactionState != selActorReactionState) {
-				selActorOldReactionState = selActorReactionState;
-				switch (selActorReactionState) {
-				case R_FIRE_MANY:
-					MN_ExecuteConfunc("startreactionmany");
-					break;
-				case R_FIRE_ONCE:
-					MN_ExecuteConfunc("startreactiononce");
-					break;
-				case R_FIRE_OFF: /* let RefreshWeaponButtons work it out */
-					weaponButtonState[BT_REACTION] = BT_STATE_DISABLE;
-					break;
-				}
-			}
-
-			selActor->oldstate = selActor->state;
-			/** @todo Check if the use of "time" is correct here (e.g. are the reserved TUs ignored here etc...?) */
-			if (actorMoveLength >= ROUTING_NOT_REACHABLE || (selActor->actorMode != M_MOVE && selActor->actorMode != M_PEND_MOVE))
-				time = CL_UsableTUs(selActor);
-
-			HUD_RefreshWeaponButtons(time);
-		} else {
-			if (refresh)
-				MN_ExecuteConfunc("deselstand");
-
-			/* this allows us to display messages even with no actor selected */
-			if (cl.time < cl.msgTime) {
-				/* special message */
-				Q_strncpyz(infoText, cl.msgText, sizeof(infoText));
+		selActorReactionState = HUD_GetReactionState(selActor);
+		if (selActorOldReactionState != selActorReactionState) {
+			selActorOldReactionState = selActorReactionState;
+			switch (selActorReactionState) {
+			case R_FIRE_MANY:
+				MN_ExecuteConfunc("startreactionmany");
+				break;
+			case R_FIRE_ONCE:
+				MN_ExecuteConfunc("startreactiononce");
+				break;
+			case R_FIRE_OFF: /* let RefreshWeaponButtons work it out */
+				weaponButtonState[BT_REACTION] = BT_STATE_DISABLE;
+				break;
 			}
 		}
+
+		selActor->oldstate = selActor->state;
+		/** @todo Check if the use of "time" is correct here (e.g. are the reserved TUs ignored here etc...?) */
+		if (actorMoveLength >= ROUTING_NOT_REACHABLE || (selActor->actorMode != M_MOVE && selActor->actorMode != M_PEND_MOVE))
+			time = CL_UsableTUs(selActor);
+
+		HUD_RefreshWeaponButtons(time);
+
 		MN_RegisterText(TEXT_STANDARD, infoText);
 
-		if (selActor->oldActorMode != selActor->actorMode || refresh) {
-			selActor->oldActorMode = selActor->actorMode;
-			HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
-		}
+		HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 	} else if (!cl.numTeamList) {
 		/* This will stop the drawing of the bars over the whole screen when we test maps. */
 		Cvar_SetValue("mn_tu", 0);
@@ -1469,23 +1443,17 @@ void HUD_ActorUpdateCvars (void)
 		Cvar_SetValue("mn_stun", 0);
 	}
 
-
 	/* player bar */
-	if (cl_selected->modified || refresh) {
-		int i;
-
-		for (i = 0; i < MAX_TEAMLIST; i++) {
-			if (!cl.teamList[i] || LE_IsDead(cl.teamList[i])) {
-				MN_ExecuteConfunc("huddisable %i", i);
-			} else if (i == cl_selected->integer) {
-				/* stored in menu_nohud.ufo - confunc that calls all the different
-				 * hud select confuncs */
-				MN_ExecuteConfunc("hudselect %i", i);
-			} else {
-				MN_ExecuteConfunc("huddeselect %i", i);
-			}
+	for (i = 0; i < MAX_TEAMLIST; i++) {
+		if (!cl.teamList[i] || LE_IsDead(cl.teamList[i])) {
+			MN_ExecuteConfunc("huddisable %i", i);
+		} else if (i == cl_selected->integer) {
+			/* stored in menu_nohud.ufo - confunc that calls all the different
+			 * hud select confuncs */
+			MN_ExecuteConfunc("hudselect %i", i);
+		} else {
+			MN_ExecuteConfunc("huddeselect %i", i);
 		}
-		cl_selected->modified = qfalse;
 	}
 }
 
@@ -1600,7 +1568,7 @@ static void CL_ActorToggleReaction_f (void)
 			break;
 		default:
 			/* Display "impossible" reaction button or disable button. */
-			CL_DisplayImpossibleReaction(selActor);
+			HUD_DisplayImpossibleReaction(selActor);
 			break;
 		}
 
