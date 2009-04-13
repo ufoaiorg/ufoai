@@ -40,8 +40,6 @@ int CM_NumClusters(void);
 int CM_NumInlineModels(void);
 char *CM_EntityString(void);
 
-
-
 /*==============================================================
 CMODEL BOX TRACING
 ==============================================================*/
@@ -49,7 +47,7 @@ CMODEL BOX TRACING
 /** creates a clipping hull for an arbitrary box */
 int CM_HeadnodeForBox(int tile, const vec3_t mins, const vec3_t maxs);
 trace_t CM_CompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, int brushrejects, const vec3_t origin, const vec3_t angles);
-trace_t CM_HintedTransformedBoxTrace (const int tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const float fraction);
+trace_t CM_HintedTransformedBoxTrace(const int tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const float fraction);
 #define CM_TransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushrejects, origin, angles) CM_HintedTransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushrejects, origin, angles, 1.0f);
 qboolean CM_TestLineWithEnt(const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
 qboolean CM_EntTestLine(const vec3_t start, const vec3_t stop, const int levelmask);
@@ -65,24 +63,24 @@ extern struct pathing_s svPathMap, clPathMap;
 
 void Grid_DumpWholeServerMap_f(void);
 void Grid_DumpWholeClientMap_f(void);
-void Grid_DumpClientRoutes_f (void);
-void Grid_DumpServerRoutes_f (void);
-void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max);
+void Grid_DumpClientRoutes_f(void);
+void Grid_DumpServerRoutes_f(void);
+void Grid_RecalcBoxRouting(struct routing_s *map, pos3_t min, pos3_t max);
 void Grid_RecalcRouting(struct routing_s *map, const char *name, const char **list);
-void Grid_DumpDVTable(struct pathing_s *path);
-void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t pos, int crouching_state, const int dir, priorityQueue_t *pqueue);
-void Grid_MoveCalc(struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t from, int crouching_state, int distance, byte ** fb_list, int fb_length);
+void Grid_DumpDVTable(const struct pathing_s *path);
+void Grid_MoveMark(const struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t pos, int crouching_state, const int dir, priorityQueue_t *pqueue);
+void Grid_MoveCalc(const struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t from, int crouching_state, int distance, byte ** fb_list, int fb_length);
 void Grid_MoveStore(struct pathing_s *path);
-pos_t Grid_MoveLength(struct pathing_s *path, pos3_t to, int crouching_state, qboolean stored);
-int Grid_MoveNext(struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t from, int crouching_state);
-int Grid_Height(struct routing_s *map, const int actor_size, const pos3_t pos);
-unsigned int Grid_Ceiling (struct routing_s *map, const int actor_size, const pos3_t pos);
-int Grid_Floor(struct routing_s *map, const int actor_size, const pos3_t pos);
-pos_t Grid_StepUp(struct routing_s *map, const int actor_size, const pos3_t pos, const int dir);
+pos_t Grid_MoveLength(const struct pathing_s *path, const pos3_t to, int crouching_state, qboolean stored);
+int Grid_MoveNext(const struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t from, int crouching_state);
+int Grid_Height(const struct routing_s *map, const int actor_size, const pos3_t pos);
+unsigned int Grid_Ceiling(const struct routing_s *map, const int actor_size, const pos3_t pos);
+int Grid_Floor(const struct routing_s *map, const int actor_size, const pos3_t pos);
+pos_t Grid_StepUp(const struct routing_s *map, const int actor_size, const pos3_t pos, const int dir);
 int Grid_TUsUsed(int dir);
-int Grid_Filled(struct routing_s *map, const int actor_size, pos3_t pos);
+int Grid_Filled(const struct routing_s *map, const int actor_size, pos3_t pos);
 pos_t Grid_Fall(const struct routing_s *map, const int actor_size, const pos3_t pos);
-void Grid_PosToVec(struct routing_s *map, const int actor_size, const pos3_t pos, vec3_t vec);
+void Grid_PosToVec(const struct routing_s *map, const int actor_size, const pos3_t pos, vec3_t vec);
 
 
 /*==========================================================

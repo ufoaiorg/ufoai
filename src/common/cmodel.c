@@ -1497,7 +1497,7 @@ void Grid_DumpServerRoutes_f (void)
  * @return qtrue if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in
  * the forbidden list) otherwise false.
  */
-static qboolean Grid_CheckForbidden (struct routing_s *map, const int actor_size, struct pathing_s *path, int x, int y, int z)
+static qboolean Grid_CheckForbidden (const struct routing_s *map, const int actor_size, struct pathing_s *path, int x, int y, int z)
 {
 	pos_t **p;
 	int i, size;
@@ -1531,7 +1531,7 @@ static qboolean Grid_CheckForbidden (struct routing_s *map, const int actor_size
 	return qfalse;
 }
 
-void Grid_DumpDVTable (struct pathing_s *path)
+void Grid_DumpDVTable (const struct pathing_s *path)
 {
 	int px, py, pz, cr;
 	pos3_t mins, maxs;
@@ -1592,7 +1592,7 @@ static void Grid_SetMoveData (struct pathing_s *path, const int x, const int y, 
  * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  */
-void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t pos, int crouching_state, const int dir, priorityQueue_t *pqueue)
+void Grid_MoveMark (const struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t pos, int crouching_state, const int dir, priorityQueue_t *pqueue)
 {
 	int x, y, z;
 	int nx, ny, nz;
@@ -1935,14 +1935,14 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
  * @param[in] from The position to start the calculation from.
  * @param[in] distance to calculate move-information for - currently unused
- * @param[in] crouching_state Whether the actor is currently crouching, 1 is yes, 0 is no.
+ * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
  * @sa Grid_MoveMark
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_MoveCalc (struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t from, int crouching_state, int distance, byte ** fb_list, int fb_length)
+void Grid_MoveCalc (const struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t from, int crouchingState, int distance, byte ** fb_list, int fb_length)
 {
 	int dir;
 	int count;
@@ -1962,17 +1962,17 @@ void Grid_MoveCalc (struct routing_s *map, const int actor_size, struct pathing_
 	VectorCopy(from, exclude_from_forbiddenlist); /**< Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
 
 	PQueueInitialise(&pqueue, 1024);
-	Vector4Set(epos, from[0], from[1], from[2], crouching_state);
+	Vector4Set(epos, from[0], from[1], from[2], crouchingState);
 	PQueuePush(&pqueue, epos, 0);
 
 	/* Confirm bounds */
 	assert((from[2]) < PATHFINDING_HEIGHT);
-	assert((crouching_state) >= 0);
-	assert((crouching_state) < ACTOR_MAX_STATES);
+	assert((crouchingState) >= 0);
+	assert((crouchingState) < ACTOR_MAX_STATES);
 
-	RT_AREA(path, from[0], from[1], from[2], crouching_state) = 0;
+	RT_AREA(path, from[0], from[1], from[2], crouchingState) = 0;
 
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveCalc: Start at (%i %i %i) c:%i\n", from[0], from[1], from[2], crouching_state);
+	Com_DPrintf(DEBUG_PATHING, "Grid_MoveCalc: Start at (%i %i %i) c:%i\n", from[0], from[1], from[2], crouchingState);
 
 	count = 0;
 	while (!PQueueIsEmpty(&pqueue)) {
@@ -2014,7 +2014,7 @@ void Grid_MoveStore (struct pathing_s *path)
  * @return ROUTING_NOT_REACHABLE if the move isn't possible
  * @return length of move otherwise (TUs)
  */
-pos_t Grid_MoveLength (struct pathing_s *path, pos3_t to, int crouchingState, qboolean stored)
+pos_t Grid_MoveLength (const struct pathing_s *path, const pos3_t to, int crouchingState, qboolean stored)
 {
 #ifdef PARANOID
 	if (to[2] >= PATHFINDING_HEIGHT) {
@@ -2041,9 +2041,9 @@ pos_t Grid_MoveLength (struct pathing_s *path, pos3_t to, int crouchingState, qb
  * @return (Guess: a direction index (see dvecs and DIRECTIONS))
  * @sa Grid_MoveCheck
  */
-int Grid_MoveNext (struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t from, int crouching_state)
+int Grid_MoveNext (const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t from, int crouchingState)
 {
-	const pos_t l = RT_AREA(path, from[0], from[1], from[2], crouching_state); /**< Get TUs for this square */
+	const pos_t l = RT_AREA(path, from[0], from[1], from[2], crouchingState); /**< Get TUs for this square */
 
 	/* Check to see if the TUs needed to move here are greater than 0 and less then ROUTING_NOT_REACHABLE */
 	if (!l && l != ROUTING_NOT_REACHABLE) {
@@ -2052,7 +2052,7 @@ int Grid_MoveNext (struct routing_s *map, const int actor_size, struct pathing_s
 	}
 
 	/* Return the information indicating how the actor got to this cell */
-	return RT_AREA_FROM(path, from[0], from[1], from[2], crouching_state);
+	return RT_AREA_FROM(path, from[0], from[1], from[2], crouchingState);
 }
 
 
@@ -2062,14 +2062,14 @@ int Grid_MoveNext (struct routing_s *map, const int actor_size, struct pathing_s
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's ceiling.
  */
-unsigned int Grid_Ceiling (struct routing_s *map, const int actor_size, const pos3_t pos)
+unsigned int Grid_Ceiling (const struct routing_s *map, const int actorSize, const pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
 		Com_Printf("Grid_Height: Warning: z level is bigger than %i: %i\n",
 			(PATHFINDING_HEIGHT - 1), pos[2]);
 	}
-	return RT_CEILING(map, actor_size, pos[0], pos[1], pos[2] & 7) * QUANT;
+	return RT_CEILING(map, actorSize, pos[0], pos[1], pos[2] & 7) * QUANT;
 }
 
 
@@ -2079,7 +2079,7 @@ unsigned int Grid_Ceiling (struct routing_s *map, const int actor_size, const po
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's ceiling.
  */
-int Grid_Height (struct routing_s *map, const int actor_size, const pos3_t pos)
+int Grid_Height (const struct routing_s *map, const int actor_size, const pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
@@ -2097,14 +2097,14 @@ int Grid_Height (struct routing_s *map, const int actor_size, const pos3_t pos)
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's floor.
  */
-int Grid_Floor (struct routing_s *map, const int actor_size, const pos3_t pos)
+int Grid_Floor (const struct routing_s *map, const int actorSize, const pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
 		Com_Printf("Grid_Floor: Warning: z level is bigger than %i: %i\n",
 			(PATHFINDING_HEIGHT - 1), pos[2]);
 	}
-	return RT_FLOOR(map, actor_size, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)) * QUANT;
+	return RT_FLOOR(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)) * QUANT;
 }
 
 
@@ -2114,13 +2114,13 @@ int Grid_Floor (struct routing_s *map, const int actor_size, const pos3_t pos)
  * @param[in] pos Position in the map to check the height
  * @return The actual model height increase needed to move into an adjacent cell.
  */
-pos_t Grid_StepUp (struct routing_s *map, const int actor_size, const pos3_t pos, const int dir)
+pos_t Grid_StepUp (const struct routing_s *map, const int actorSize, const pos3_t pos, const int dir)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
 		Com_Printf("Grid_StepUp: Warning: z level is bigger than 7: %i\n", pos[2]);
 	}
-	return RT_STEPUP(map, actor_size, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1), dir) * QUANT;
+	return RT_STEPUP(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1), dir) * QUANT;
 }
 
 
@@ -2143,7 +2143,7 @@ int Grid_TUsUsed (int dir)
  * @param[in] pos Position in the map to check for filling
  * @return 0 if the cell is vacant (of the world model), non-zero otherwise.
  */
-int Grid_Filled (struct routing_s *map, const int actor_size, pos3_t pos)
+int Grid_Filled (const struct routing_s *map, const int actorSize, pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
@@ -2151,7 +2151,7 @@ int Grid_Filled (struct routing_s *map, const int actor_size, pos3_t pos)
 		Com_Printf("Grid_Filled: Warning: z level is bigger than %i: %i\n", pos[2], maxHeight);
 		pos[2] &= maxHeight;
 	}
-	return RT_FILLED(map, pos[0], pos[1], pos[2], actor_size);
+	return RT_FILLED(map, pos[0], pos[1], pos[2], actorSize);
 }
 
 
@@ -2163,7 +2163,7 @@ int Grid_Filled (struct routing_s *map, const int actor_size, pos3_t pos)
  * @return New z (height) value.
  * @return 0xFF if an error occured.
  */
-pos_t Grid_Fall (const struct routing_s *map, const int actor_size, const pos3_t pos)
+pos_t Grid_Fall (const struct routing_s *map, const int actorSize, const pos3_t pos)
 {
 	int z = pos[2], base, diff;
 	qboolean flier = qfalse; /** @todo if an actor can fly, then set this to true. */
@@ -2182,7 +2182,7 @@ pos_t Grid_Fall (const struct routing_s *map, const int actor_size, const pos3_t
 	 * If z < 0, we are going down.
 	 * If z >= CELL_HEIGHT, we are going up.
 	 * If 0 <= z <= CELL_HEIGHT, then z / 16 = 0, no change. */
-	base = RT_FLOOR(map, actor_size, pos[0], pos[1], z);
+	base = RT_FLOOR(map, actorSize, pos[0], pos[1], z);
 	/* Hack to deal with negative numbers- otherwise rounds toward 0 instead of down. */
 	diff = base < 0 ? (base - (CELL_HEIGHT - 1)) / CELL_HEIGHT : base / CELL_HEIGHT;
 	z += diff;
@@ -2200,15 +2200,15 @@ pos_t Grid_Fall (const struct routing_s *map, const int actor_size, const pos3_t
  * @param[in] pos The grid position
  * @param[out] vec The world vector
  */
-void Grid_PosToVec (struct routing_s *map, const int actor_size, const pos3_t pos, vec3_t vec)
+void Grid_PosToVec (const struct routing_s *map, const int actorSize, const pos3_t pos, vec3_t vec)
 {
-	SizedPosToVec(pos, actor_size, vec);
+	SizedPosToVec(pos, actorSize, vec);
 #ifdef PARANOID
 	if (pos[2] >= PATHFINDING_HEIGHT)
 		Com_Printf("Grid_PosToVec: Warning - z level bigger than 7 (%i - source: %.02f)\n", pos[2], vec[2]);
 #endif
 	/* Clamp the floor value between 0 and UNIT_HEIGHT */
-	vec[2] += max(0, min(UNIT_HEIGHT, Grid_Floor(map, actor_size, pos)));
+	vec[2] += max(0, min(UNIT_HEIGHT, Grid_Floor(map, actorSize, pos)));
 }
 
 
@@ -2222,7 +2222,7 @@ void Grid_PosToVec (struct routing_s *map, const int actor_size, const pos3_t po
  */
 void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 {
-	int x, y, z, actor_size, dir;
+	int x, y, z, actorSize, dir;
 
 	Com_DPrintf(DEBUG_PATHING, "rerouting (%i %i %i) (%i %i %i)\n",
 		(int)min[0], (int)min[1], (int)min[2],
@@ -2232,15 +2232,15 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 	/* Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]); */
 
 	/* check unit heights */
-	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++) {
-		const int maxY = max[1] - actor_size;
-		const int maxX = max[0] - actor_size;
+	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
+		const int maxY = max[1] - actorSize;
+		const int maxX = max[0] - actorSize;
 		/* Offset the initial X and Y to compensate for larger actors when needed. */
-		for (y = max(min[1] - actor_size + 1, 0); y < maxY; y++) {
-			for (x = max(min[0] - actor_size + 1, 0); x < maxX; x++) {
+		for (y = max(min[1] - actorSize + 1, 0); y < maxY; y++) {
+			for (x = max(min[0] - actorSize + 1, 0); x < maxX; x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
 				for (z = max[2]; z >= 0; z--) {
-					const int new_z = RT_CheckCell(map, actor_size, x, y, z);
+					const int new_z = RT_CheckCell(map, actorSize, x, y, z);
 					assert(new_z <= z);
 					z = new_z;
 				}
@@ -2254,11 +2254,11 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 
 	/* check connections */
 	/*for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++) { */
-	for (actor_size = 1; actor_size <= 1; actor_size++) {
-		const int minX = max(min[0] - actor_size, 0);
-		const int minY = max(min[1] - actor_size, 0);
-		const int maxX = min(max[0] - actor_size + 1, PATHFINDING_WIDTH - 1);
-		const int maxY = min(max[1] - actor_size + 1, PATHFINDING_WIDTH - 1);
+	for (actorSize = 1; actorSize <= 1; actorSize++) {
+		const int minX = max(min[0] - actorSize, 0);
+		const int minY = max(min[1] - actorSize, 0);
+		const int maxX = min(max[0] - actorSize + 1, PATHFINDING_WIDTH - 1);
+		const int maxY = min(max[1] - actorSize + 1, PATHFINDING_WIDTH - 1);
 		/* Offset the initial X and Y to compensate for larger actors when needed.
 		 * Also sweep further out to catch the walls back into our box. */
 		for (y = minY; y < maxY; y++) {
@@ -2273,7 +2273,7 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 						continue;
 					*/
 					for (z = 0; z <= max[2]; z++) {
-						const int new_z = RT_UpdateConnection(map, actor_size, x, y, z, dir);
+						const int new_z = RT_UpdateConnection(map, actorSize, x, y, z, dir);
 						assert(new_z >= z);
 						z = new_z;
 					}

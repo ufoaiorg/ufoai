@@ -166,16 +166,16 @@ typedef struct {
 	qboolean (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
 	float (IMPORT *GrenadeTarget) (const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
 
-	void (IMPORT *MoveCalc) (struct routing_s * map, int actor_size, struct pathing_s * path, pos3_t from, int crouching_state, int distance, pos_t ** fb_list, int fb_length);
+	void (IMPORT *MoveCalc) (const struct routing_s * map, int actor_size, struct pathing_s * path, pos3_t from, int crouching_state, int distance, pos_t ** fb_list, int fb_length);
 	void (IMPORT *MoveStore) (struct pathing_s * path);
-	pos_t (IMPORT *MoveLength) (struct pathing_s * path, pos3_t to, int crouching_state, qboolean stored);
-	int (IMPORT *MoveNext) (struct routing_s * map, int actor_size, struct pathing_s *path, pos3_t from, int crouching_state);
-	int (IMPORT *GridFloor) (struct routing_s * map, int actor_size, const pos3_t pos);
+	pos_t (IMPORT *MoveLength) (const struct pathing_s * path, const pos3_t to, int crouching_state, qboolean stored);
+	int (IMPORT *MoveNext) (const struct routing_s * map, int actor_size, struct pathing_s *path, pos3_t from, int crouching_state);
+	int (IMPORT *GridFloor) (const struct routing_s * map, int actor_size, const pos3_t pos);
 	int (IMPORT *TUsUsed) (int dir);
 	pos_t (IMPORT *GridFall) (const struct routing_s * map, int actor_size, const pos3_t pos);
-	void (IMPORT *GridPosToVec) (struct routing_s * map, int actor_size, const pos3_t pos, vec3_t vec);
+	void (IMPORT *GridPosToVec) (const struct routing_s * map, int actor_size, const pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (struct routing_s * map, const char *name, const char **list);
-	void (IMPORT *GridDumpDVTable) (struct pathing_s * path);
+	void (IMPORT *GridDumpDVTable) (const struct pathing_s * path);
 
 	/* filesystem functions */
 	const char *(IMPORT *FS_Gamedir) (void);
