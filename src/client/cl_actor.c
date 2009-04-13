@@ -765,17 +765,13 @@ void CL_RemoveActorFromTeamList (le_t * le)
 
 	/* check selection */
 	if (selActor == le) {
-		CL_ConditionalMoveCalcForCurrentSelectedActor();
-
 		for (i = 0; i < cl.numTeamList; i++) {
 			if (cl.teamList[i] && CL_ActorSelect(cl.teamList[i]))
 				break;
 		}
 
-		if (i == cl.numTeamList) {
-			selActor->selected = qfalse;
+		if (i == cl.numTeamList)
 			CL_ActorSelect(NULL);
-		}
 	}
 }
 
