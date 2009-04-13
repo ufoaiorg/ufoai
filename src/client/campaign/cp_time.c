@@ -104,7 +104,7 @@ static qboolean CL_AllowTimeScale (void)
 	if (!ccs.campaignStats.basesBuild)
 		return qfalse;
 
-	return !strncmp(menuName, "map", 3) || !strncmp(menuName, "airfight", 8);
+	return !strncmp(menuName, "geoscape", 3) || !strncmp(menuName, "airfight", 8);
 }
 
 /**

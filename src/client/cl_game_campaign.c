@@ -304,7 +304,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	counts[MRC_ITEM_GATHEREDAMOUNT] = ccs.missionresults.itemamount;
 	CP_InitMissionResults(counts, winner == cls.team);
 
-	MN_InitStack("map", "campaign_main", qtrue, qtrue);
+	MN_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	CP_ExecuteMissionTrigger(ccs.selectedMission, winner == cls.team);
 
@@ -375,7 +375,7 @@ qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 void GAME_CP_Drop (void)
 {
 	/** @todo maybe create a savegame? */
-	MN_InitStack("map", "campaign_main", qfalse, qtrue);
+	MN_InitStack("geoscape", "campaign_main", qfalse, qtrue);
 }
 
 equipDef_t *GAME_CP_GetEquipmentDefinition (void)

@@ -1083,7 +1083,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
  */
 void MAP_CenterOnPoint_f (void)
 {
-	if (strncmp(MN_GetActiveMenuName(), "map", 3))
+	if (strcmp(MN_GetActiveMenuName(), "geoscape"))
 		return;
 
 	centerOnEventIdx++;

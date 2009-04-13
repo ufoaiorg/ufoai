@@ -2,7 +2,7 @@
 // MAP MENU
 // ==================
 
-window map
+window geoscape
 {
 	// ==================
 	// background

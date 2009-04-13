@@ -1997,7 +1997,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	CP_XVIInit();
 
-	MN_InitStack("map", "campaign_main", qtrue, qtrue);
+	MN_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	if (load) {
 		/** @todo move into CP_Load? */

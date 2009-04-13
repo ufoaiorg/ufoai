@@ -226,7 +226,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 			filename, header.compressed ? "compressed" : "");
 	Mem_Free(buf);
 
-	MN_PushMenu("map", NULL);
+	MN_InitStack("geoscape", NULL, qtrue, qtrue);
 	return qtrue;
 }
 
