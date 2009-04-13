@@ -35,5 +35,6 @@ void MP_LoadTeamMultiplayer_f(void);
 void MP_MultiplayerTeamSlotComments_f(void);
 void MP_UpdateMenuParameters_f(void);
 void MP_TeamSelect_f(void);
+qboolean MP_LoadDefaultTeamMultiplayer(void);
 
 #endif

@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_nodes.h"	/**< menuInventory */
 #include "mp_team.h"
 
-#define MPTEAM_SAVE_FILE_VERSION 2
+#define MPTEAM_SAVE_FILE_VERSION 3
 
 static inventory_t mp_inventory;
 character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
@@ -40,10 +40,8 @@ character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
 typedef struct mpSaveFileHeader_s {
 	int version; /**< which savegame version */
 	int soldiercount; /** the number of soldiers stored in this savegame */
-	int compressed; /**< is this file compressed via zlib, currently not implemented */
 	char name[32]; /**< savefile name */
-	int dummy[14]; /**< maybe we have to extend this later */
-	long xml_size; /** needed, if we store compressed */
+	long xmlSize; /** needed, if we store compressed */
 } mpSaveFileHeader_t;
 
 /**
@@ -59,8 +57,6 @@ void MP_MultiplayerTeamSlotComments_f (void)
 
 		FS_OpenFile(va("save/team%i.mpt", i), &f, FILE_READ);
 		if (f.f || f.z) {
-			int version, soldierCount;
-			const char *comment;
 			mpSaveFileHeader_t header;
 			const int clen = sizeof(header);
 			if (FS_Read(&header, clen, &f) != clen) {
@@ -69,20 +65,18 @@ void MP_MultiplayerTeamSlotComments_f (void)
 				continue;
 			}
 			FS_CloseFile(&f);
-			version = header.version;
-			comment = header.name;
-			soldierCount = header.soldiercount;
-			MN_ExecuteConfunc("set_slotname %i %i \"%s\"", i, soldierCount, comment);
+			if (LittleLong(header.version) == MPTEAM_SAVE_FILE_VERSION)
+				MN_ExecuteConfunc("set_slotname %i %i \"%s\"", i, LittleLong(header.soldiercount), header.name);
 		}
 	}
 }
 
 /**
  * @brief Stores the wholeTeam into a xml structure
- * @note Called by MP_SaveTeamMultiplayerXML to store the team info
+ * @note Called by MP_SaveTeamMultiplayer to store the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-static void MP_SaveTeamMultiplayerInfoXML (mxml_node_t *p)
+static void MP_SaveTeamMultiplayerInfo (mxml_node_t *p)
 {
 	int i;
 
@@ -100,7 +94,7 @@ static void MP_SaveTeamMultiplayerInfoXML (mxml_node_t *p)
  * @note Called by MP_SaveTeamMultiplayer to store the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-static void MP_LoadTeamMultiplayerInfoXML (mxml_node_t *p)
+static void MP_LoadTeamMultiplayerInfo (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n;
@@ -119,28 +113,26 @@ static void MP_LoadTeamMultiplayerInfoXML (mxml_node_t *p)
  * @sa MP_SaveTeamMultiplayerInfoXML
  * @sa MP_LoadTeamMultiplayerXML
  */
-static qboolean MP_SaveTeamMultiplayerXML (const char *filename, const char *name)
+static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 {
 	int res;
-	int requiredbuflen;
+	int requiredBufferLength;
 	byte *buf, *fbuf;
-	uLongf bufLen;
 	mpSaveFileHeader_t header;
 	char dummy[2];
 	int i;
-	mxml_node_t *top_node, *node, *snode;
+	mxml_node_t *topNode, *node, *snode;
 	equipDef_t *ed = GAME_GetEquipmentDefinition();
 
-	top_node = mxmlNewXML("1.0");
-	node = mxml_AddNode(top_node, "multiplayer");
+	topNode = mxmlNewXML("1.0");
+	node = mxml_AddNode(topNode, "multiplayer");
 	memset(&header, 0, sizeof(header));
-	header.compressed = 0;
 	header.version = LittleLong(MPTEAM_SAVE_FILE_VERSION);
 	header.soldiercount = LittleLong(chrDisplayList.num);
 	Q_strncpyz(header.name, name, sizeof(header.name));
 
 	snode = mxml_AddNode(node, "team");
-	MP_SaveTeamMultiplayerInfoXML(snode);
+	MP_SaveTeamMultiplayerInfo(snode);
 
 	snode = mxml_AddNode(node, "equipment");
 	for (i = 0; i < csi.numODs; i++) {
@@ -149,36 +141,24 @@ static qboolean MP_SaveTeamMultiplayerXML (const char *filename, const char *nam
 		mxml_AddInt(ssnode, "num", ed->num[i]);
 		mxml_AddInt(ssnode, "numloose", ed->numLoose[i]);
 	}
-	requiredbuflen = mxmlSaveString(top_node, dummy, 2, MXML_NO_CALLBACK);
+	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
 	/* required for storing compressed */
-	header.xml_size = LittleLong(requiredbuflen);
+	header.xmlSize = LittleLong(requiredBufferLength);
 
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredbuflen + 1, cl_genericPool, 0);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredBufferLength + 1, cl_genericPool, 0);
 	if (!buf) {
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
 		return qfalse;
 	}
-	res = mxmlSaveString(top_node, (char*)buf, requiredbuflen + 1, MXML_NO_CALLBACK);
-	Com_Printf("XML Written to buffer (%d Bytes)\n", res);
+	res = mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
 
-	bufLen = (uLongf) (24 + 1.02 * requiredbuflen);
-	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, 0);
+	fbuf = (byte *) Mem_PoolAlloc(requiredBufferLength + 1 + sizeof(header), cl_genericPool, 0);
 	memcpy(fbuf, &header, sizeof(header));
+	memcpy(fbuf + sizeof(header), buf, requiredBufferLength + 1);
+	Mem_Free(buf);
 
-	if (header.compressed) {
-		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredbuflen + 1);
-		Mem_Free(buf);
-		if (res != Z_OK) {
-			Mem_Free(fbuf);
-			Com_Printf("Memory error compressing save-game data (Error: %i)!\n", res);
-			return qfalse;
-		}
-	} else {
-		memcpy(fbuf + sizeof(header), buf, requiredbuflen + 1);
-		Mem_Free(buf);
-	}
 	/* last step - write data */
-	res = FS_WriteFile(fbuf, bufLen + sizeof(header), filename);
+	res = FS_WriteFile(fbuf, requiredBufferLength + 1 + sizeof(header), filename);
 	Mem_Free(fbuf);
 	return qtrue;
 }
@@ -209,7 +189,7 @@ void MP_SaveTeamMultiplayer_f (void)
 
 		/* save */
 		Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
-		if (!MP_SaveTeamMultiplayerXML(filename, name))
+		if (!MP_SaveTeamMultiplayer(filename, name))
 			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	}
 }
@@ -219,13 +199,13 @@ void MP_SaveTeamMultiplayer_f (void)
  * @sa MP_LoadTeamMultiplayer
  * @sa MP_SaveTeamMultiplayer
  */
-static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
+static qboolean MP_LoadTeamMultiplayer (const char *filename)
 {
 	uLongf len;
 	qFILE f;
-	byte *cbuf, *buf;
+	byte *cbuf;
 	int i, clen;
-	mxml_node_t *top_node, *node, *snode, *ssnode;
+	mxml_node_t *topNode, *node, *snode, *ssnode;
 	mpSaveFileHeader_t header;
 	equipDef_t *ed;
 
@@ -248,56 +228,45 @@ static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 
 	memcpy(&header, cbuf, sizeof(header));
 	/* swap all int values if needed */
-	header.compressed = LittleLong(header.compressed);
 	header.version = LittleLong(header.version);
-	header.xml_size = LittleLong(header.xml_size);
-	len = header.xml_size + 1 + sizeof(header);
+	header.xmlSize = LittleLong(header.xmlSize);
+	len = header.xmlSize + 1 + sizeof(header);
 
-	Com_Printf("Loading multiplayer team (size %d / %li)\n", clen, header.xml_size);
-
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * len, cl_genericPool, 0);
-
-	if (header.compressed) {
-		/* uncompress data, skipping comment header */
-		const int res = uncompress(buf, &len, cbuf + sizeof(header), clen - sizeof(header));
-
-		if (res != Z_OK) {
-			Mem_Free(buf);
-			Com_Printf("Error decompressing data in '%s'.\n", filename);
-			return qfalse;
-		}
-		top_node = mxmlLoadString(NULL, (char*)buf , mxml_ufo_type_cb);
-		if (!top_node) {
-			Mem_Free(buf);
-			Com_Printf("Error: Failure in loading the team data!");
-			return qfalse;
-		}
-	} else {
-		top_node = mxmlLoadString(NULL, (char*)(cbuf + sizeof(header)) , mxml_ufo_type_cb);
-		Mem_Free(cbuf);
-		if (!top_node) {
-			Mem_Free(buf);
-			Com_Printf("Error: Failure in Loading the xml Data!");
-			return qfalse;
-		}
+	if (header.version != MPTEAM_SAVE_FILE_VERSION) {
+		Com_Printf("Invalid version number\n");
+		return qfalse;
 	}
 
-	node = mxml_GetNode(top_node, "multiplayer");
+	Com_Printf("Loading multiplayer team (size %d / %li)\n", clen, header.xmlSize);
+
+	topNode = mxmlLoadString(NULL, (char*)(cbuf + sizeof(header)) , mxml_ufo_type_cb);
+	Mem_Free(cbuf);
+	if (!topNode) {
+		Com_Printf("Error: Failure in loading the xml data!");
+		return qfalse;
+	}
+
+	node = mxml_GetNode(topNode, "multiplayer");
 	if (!node) {
-		Com_Printf("Error: Failure in Loading the xml Data! (savegame node not found)");
-		Mem_Free(buf);
+		Com_Printf("Error: Failure in loading the xml data! (node 'multiplayer' not found)\n");
 		return qfalse;
 	}
 	Cvar_Set("mn_teamname", header.name);
 
 	snode = mxml_GetNode(node, "team");
-	if (!snode)
-		Com_Printf("Team Node not found\n");
-	MP_LoadTeamMultiplayerInfoXML(snode);
+	if (!snode) {
+		Mem_Free(cbuf);
+		Com_Printf("Error: Failure in loading the xml data! (node 'team' not found)\n");
+		return qfalse;
+	}
+	MP_LoadTeamMultiplayerInfo(snode);
 
 	snode = mxml_GetNode(node, "equipment");
-	if (!snode)
-		Com_Printf("Equipment Node not found\n");
+	if (!snode) {
+		Mem_Free(cbuf);
+		Com_Printf("Error: Failure in loading the xml data! (node 'equipment' not found)\n");
+		return qfalse;
+	}
 
 	ed = GAME_GetEquipmentDefinition();
 	for (i = 0, ssnode = mxml_GetNode(snode, "emission"); ssnode && i < csi.numODs; i++, ssnode = mxml_GetNextNode(ssnode, snode, "emission")) {
@@ -310,8 +279,12 @@ static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 	}
 
 	Com_Printf("File '%s' loaded.\n", filename);
-	Mem_Free(buf);
 	return qtrue;
+}
+
+qboolean MP_LoadDefaultTeamMultiplayer(void)
+{
+	return MP_LoadTeamMultiplayer("save/team0.mpt");
 }
 
 /**
@@ -331,7 +304,7 @@ void MP_LoadTeamMultiplayer_f (void)
 
 	/* first try to load the xml file, if this does not succeed, try the old file */
 	Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
-	if (!MP_LoadTeamMultiplayerXML(filename))
+	if (!MP_LoadTeamMultiplayer(filename))
 		Com_Printf("Could not load team '%s'.\n", filename);
 	else
 		Com_Printf("Team '%s' loaded.\n", filename);

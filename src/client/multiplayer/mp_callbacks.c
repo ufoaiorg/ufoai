@@ -45,7 +45,7 @@ void CL_Connect_f (void)
 		return;
 	}
 
-	if (!chrDisplayList.num) {
+	if (!chrDisplayList.num && !MP_LoadDefaultTeamMultiplayer()) {
 		MN_Popup(_("Error"), _("Assemble a team first"));
 		return;
 	}

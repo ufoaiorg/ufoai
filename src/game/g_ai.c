@@ -1091,13 +1091,13 @@ player_t *AI_CreatePlayer (int team)
 			p->num = p - game.players;
 			p->pers.team = team;
 			p->pers.ai = qtrue;
-			if (team == TEAM_CIVILIAN)
+			if (p->pers.team == TEAM_CIVILIAN)
 				G_SpawnAIPlayer(p, ai_numcivilians->integer);
 			else if (sv_maxclients->integer == 1)
 				G_SpawnAIPlayer(p, ai_numaliens->integer);
 			else
 				G_SpawnAIPlayer(p, ai_numactors->integer);
-			gi.dprintf("Created AI player (team %i)\n", team);
+			gi.dprintf("Created AI player (team %i)\n", p->pers.team);
 			return p;
 		}
 
