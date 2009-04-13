@@ -49,12 +49,27 @@ window production
 		image	"ui/panel_tab"
 	}
 
+	/**
+	 * @brief function to show/hide storage capacity info
+	 * @todo show hangar capacity when aircraft is selected
+	 */
+	func prod_stores {
+		if "*cvar:mn_itemtype ne aircraft" {
+			*node:parent.infopanel.txt_prod_storage_caption	invis	false
+			*node:parent.infopanel.txt_prod_storage			invis	false
+		} else {
+			*node:parent.infopanel.txt_prod_storage_caption	invis	true
+			*node:parent.infopanel.txt_prod_storage			invis	true
+		}
+	}
+
 	tab market_navigation {
 		pos		"47 106"
 		size	"938 39"
 		cvar	"*cvar mn_itemtype"
 		onChange {
 			cmd "prod_type <cvar:mn_itemtype>;"
+			call prod_stores
 		}
 
 		option description {
@@ -212,7 +227,6 @@ window production
 
 		string txt_prod_storage_caption
 		{
-			visiblewhen "*cvar:mn_itemtype"
 			string		"_Storage capacity:"
 			pos			"30 75"
 			size		"250 20"
@@ -221,7 +235,6 @@ window production
 
 		string txt_prod_storage
 		{
-			visiblewhen "*cvar:mn_itemtype"
 			string		"*cvar mn_production_storage"
 			pos			"295 75"
 			size		"100 20"
@@ -326,7 +339,6 @@ window production
 
 		item itemmodel
 		{
-			visiblewhen "*cvar:mn_itemtype"
 			model		"*cvar mn_item"
 			pos			"56 23"
 			size		"336 140"
@@ -530,5 +542,6 @@ window production
 	func init
 	{
 		cmd "prod_init; prod_type *mn_itemtype;"
+		call prod_stores
 	}
 }
