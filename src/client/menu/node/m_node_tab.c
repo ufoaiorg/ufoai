@@ -180,7 +180,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 
 	const char* image = MN_GetReferenceString(node, node->image);
 	if (!image)
-		image = "menu/tab";
+		image = "ui/tab";
 
 	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFont(node);
