@@ -752,6 +752,12 @@ void CL_AddActorToTeamList (le_t * le)
 	}
 }
 
+void CL_ActorCleanup (le_t *le)
+{
+	if (le->pathMap)
+		Mem_Free(le->pathMap);
+	le->pathMap = NULL;
+}
 
 /**
  * @brief Removes an actor from the team list.
@@ -759,7 +765,7 @@ void CL_AddActorToTeamList (le_t * le)
  * @sa CL_AddActorToTeamList
  * @param le Pointer to local entity struct
  */
-void CL_RemoveActorFromTeamList (const le_t * le)
+void CL_RemoveActorFromTeamList (le_t * le)
 {
 	int i;
 
@@ -768,7 +774,7 @@ void CL_RemoveActorFromTeamList (const le_t * le)
 
 	for (i = 0; i < cl.numTeamList; i++) {
 		if (cl.teamList[i] == le) {
-			Mem_Free(le->pathMap);
+			CL_ActorCleanup(le);
 
 			/* disable hud button */
 			MN_ExecuteConfunc("huddisable %i", i);

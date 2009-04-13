@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_team.h"
 #include "cl_menu.h"
 #include "menu/m_nodes.h"	/**< menuInventory */
+#include "cl_le.h"
 
 static invList_t invList[MAX_INVLIST];
 
@@ -86,8 +87,7 @@ void GAME_SetMode (int gametype)
 
 	cls.gametype = gametype;
 
-	SV_Shutdown("Quitting server.", qfalse);
-	CL_Disconnect();
+	LE_Cleanup();
 
 	while (list->name) {
 		if (list->gametype == gametype) {
@@ -104,6 +104,9 @@ void GAME_SetMode (int gametype)
 		}
 		list++;
 	}
+
+	SV_Shutdown("Quitting server.", qfalse);
+	CL_Disconnect();
 }
 
 /**

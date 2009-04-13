@@ -288,9 +288,6 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	if (winner == cls.team)
 		AL_CollectingAliens(ccs.missionaircraft);	/**< Collect aliens from the battlefield. */
 
-	/* clear unused LE inventories */
-	LE_Cleanup();
-
 	ccs.aliensKilled += their_killed;
 
 	counts[MRC_ALIENS_KILLED] = their_killed;
