@@ -44,6 +44,7 @@ team phalanx
 {
 	size 1
 	hit_particle blood
+	name	"_Phalanx"
 
 	names {
 		female {
@@ -545,6 +546,7 @@ team phalanx_scientist
 {
 	size 1
 	hit_particle blood
+	name	"_Scientist"
 
 	names {
 		male {
@@ -894,6 +896,7 @@ team phalanx_pilot
 {
 	size 1
 	hit_particle blood
+	name	"_Pilot"
 
 	names {
 		male {
@@ -1244,6 +1247,7 @@ team phalanx_worker
 {
 	size 1
 	hit_particle blood
+	name	"_Worker"
 
 	names {
 		male {
@@ -1592,6 +1596,7 @@ team phalanx_ugv_phoenix
 	race	robot
 	robot	true
 	//hit_particle none
+	name	"_Phoenix UGV"
 
 	names {
 		neutral {
@@ -1616,6 +1621,7 @@ team phalanx_ugv_ares_w
 	race	robot
 	robot	true
 	//hit_particle none
+	name	"_Ares W (UGV)"
 
 	names {
 		neutral {
