@@ -1484,17 +1484,23 @@ static void CL_ActorToggleReaction_f (void)
 	if (selActorReactionState > R_FIRE_MANY)
 		selActorReactionState = R_FIRE_OFF;
 
+	switch (selActorReactionState) {
+	case R_FIRE_OFF:
+		state = ~STATE_REACTION;
+		break;
+	case R_FIRE_ONCE:
+		state = STATE_REACTION_ONCE;
+		break;
+	case R_FIRE_MANY:
+		state = STATE_REACTION_MANY;
+		break;
+	}
+
 	/* Check all hands for reaction-enabled ammo-firemodes. */
 	if (CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT)) {
 		/* At least one weapon is RF capable. */
 
-		switch (selActorReactionState) {
-		case R_FIRE_OFF:
-			state = ~STATE_REACTION;
-			break;
-		case R_FIRE_ONCE:
-			state = STATE_REACTION_ONCE;
-			/* Check if stored info for RF is up-to-date and set it to default if not. */
+		if (state & STATE_REACTION) {
 			if (!CL_WorkingFiremode(selActor, qtrue)) {
 				CL_SetDefaultReactionFiremode(selActor, ACTOR_HAND_CHAR_RIGHT);
 			} else {
@@ -1502,20 +1508,6 @@ static void CL_ActorToggleReaction_f (void)
 				if (CL_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
 					return;
 			}
-			break;
-		case R_FIRE_MANY:
-			state = STATE_REACTION_MANY;
-			/* Check if stored info for RF is up-to-date and set it to default if not. */
-			if (!CL_WorkingFiremode(selActor, qtrue)) {
-				CL_SetDefaultReactionFiremode(selActor, ACTOR_HAND_CHAR_RIGHT);
-			} else {
-				/* Just in case. */
-				if (CL_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
-					return;
-			}
-			break;
-		default:
-			return;
 		}
 
 		/* Send request to update actor's reaction state to the server. */
@@ -1529,21 +1521,6 @@ static void CL_ActorToggleReaction_f (void)
 			HUD_DisplayFiremodes_f();
 	} else {
 		/* No usable RF weapon. */
-		switch (selActorReactionState) {
-		case R_FIRE_OFF:
-			state = ~STATE_REACTION;
-			break;
-		case R_FIRE_ONCE:
-			state = STATE_REACTION_ONCE;
-			break;
-		case R_FIRE_MANY:
-			state = STATE_REACTION_MANY;
-			break;
-		default:
-			/* Display "impossible" reaction button or disable button. */
-			HUD_DisplayImpossibleReaction(selActor);
-			break;
-		}
 
 		/* Send request to update actor's reaction state to the server. */
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
