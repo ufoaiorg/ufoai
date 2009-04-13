@@ -2774,8 +2774,9 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		int nextTeam = TEAM_NO_ACTIVE;
 
 		for (i = 1; i < MAX_TEAMS; i++) {
-			if (level.num_alive[(lastTeam + i) % MAX_TEAMS]) {
-				nextTeam = i;
+			const int team = (lastTeam + i) % MAX_TEAMS;
+			if (level.num_alive[team]) {
+				nextTeam = team;
 				break;
 			}
 		}
