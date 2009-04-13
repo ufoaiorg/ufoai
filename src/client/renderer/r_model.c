@@ -274,11 +274,20 @@ void R_ShutdownModels (qboolean complete)
 	}
 
 	/* don't free the static models with the tag MEM_TAG_STATIC_MODELS */
-	if (vid_modelPool)
-		Mem_FreeTag(vid_modelPool, 0);
-	if (vid_lightPool)
-		Mem_FreeTag(vid_lightPool, 0);
-	r_numModels = r_numModelsStatic;
+	if (complete) {
+		if (vid_modelPool)
+			Mem_FreePool(vid_modelPool);
+		if (vid_lightPool)
+			Mem_FreePool(vid_lightPool);
+		r_numModels = 0;
+		memset(&r_models, 0, sizeof(r_models));
+	} else {
+		if (vid_modelPool)
+			Mem_FreeTag(vid_modelPool, 0);
+		if (vid_lightPool)
+			Mem_FreeTag(vid_lightPool, 0);
+		r_numModels = r_numModelsStatic;
+	}
 }
 
 
