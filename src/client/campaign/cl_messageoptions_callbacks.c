@@ -86,7 +86,7 @@ static void MSO_InitTextList (void)
 		if (!entry->isCategory && entry->category->isFolded)
 			continue;
 		if (entry->isCategory) {
-			Com_sprintf(lineprefix, sizeof(lineprefix), TEXT_IMAGETAG"menu/icon_%s", entry->category->isFolded ? "open" : "close");
+			Com_sprintf(lineprefix, sizeof(lineprefix), TEXT_IMAGETAG"ui/icon_%s", entry->category->isFolded ? "open" : "close");
 		} else
 			Com_sprintf(lineprefix, sizeof(lineprefix), "   ");
 		Com_sprintf(categoryLine, sizeof(categoryLine), "%s %s", lineprefix, _(entry->notifyType));

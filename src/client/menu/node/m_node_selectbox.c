@@ -106,7 +106,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 	MN_GetNodeAbsPos(node, nodepos);
 	image = MN_GetReferenceString(node, node->image);
 	if (!image)
-		image = "menu/selectbox";
+		image = "ui/selectbox";
 
 	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFont(node);
@@ -152,7 +152,7 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 	MN_GetNodeAbsPos(node, nodepos);
 	image = MN_GetReferenceString(node, node->image);
 	if (!image)
-		image = "menu/selectbox";
+		image = "ui/selectbox";
 
 	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFont(node);
