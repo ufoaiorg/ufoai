@@ -170,4 +170,6 @@ void GAME_SK_Shutdown (void)
 	Cmd_RemoveCommand("sk_nextequip");
 	Cmd_RemoveCommand("sk_prevequip");
 	Cmd_RemoveCommand("game_go");
+
+	SV_Shutdown("Quitting server.", qfalse);
 }

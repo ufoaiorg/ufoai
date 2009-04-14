@@ -309,11 +309,6 @@ void GAME_MP_InitStartup (void)
 		Cvar_Set("sv_maxsoldiersperteam", max_s);
 	if (strlen(max_spp))
 		Cvar_Set("sv_maxsoldiersperplayer", max_spp);
-
-	/* disconnect already running session - when entering the
-	 * multiplayer menu while you are still connected */
-	if (cls.state >= ca_connecting)
-		CL_Disconnect();
 }
 
 void GAME_MP_Shutdown (void)

@@ -179,8 +179,6 @@ void CL_Drop (void)
 		return;
 
 	GAME_Drop();
-
-	CL_Disconnect();
 }
 
 /**

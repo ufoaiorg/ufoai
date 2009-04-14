@@ -435,4 +435,6 @@ void GAME_CP_Shutdown (void)
 	CP_CampaignExit();
 
 	CL_ResetSinglePlayerData();
+
+	SV_Shutdown("Quitting server.", qfalse);
 }

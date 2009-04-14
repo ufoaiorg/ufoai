@@ -105,7 +105,6 @@ void GAME_SetMode (int gametype)
 		list++;
 	}
 
-	SV_Shutdown("Quitting server.", qfalse);
 	CL_Disconnect();
 }
 
