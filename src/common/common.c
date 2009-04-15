@@ -241,7 +241,7 @@ void Com_Error (int code, const char *fmt, ...)
 		Com_Drop();
 	default:
 		Com_Printf("%s\n", msg);
-		SV_Shutdown("Server fatal crashed: %s", qfalse);
+		SV_Shutdown("Server fatal crashed", qfalse);
 		CL_Shutdown();
 	}
 

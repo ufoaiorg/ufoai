@@ -147,7 +147,7 @@ const char* SCR_SetLoadingBackground (const char *mapString)
 		Cvar_Set("sv_mapname", mapString);
 	}
 
-	if (!mapname[0] == '\0')
+	if (mapname[0] == '\0')
 		return NULL;
 
 	/* we will try to load the random map shots by just removing the + from the beginning */

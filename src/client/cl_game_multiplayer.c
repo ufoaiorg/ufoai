@@ -321,5 +321,7 @@ void GAME_MP_Shutdown (void)
 	MP_CallbacksShutdown();
 	MP_ServerListShutdown();
 
+	SV_Shutdown("Game mode shutdown", qfalse);
+
 	memset(&teamData, 0, sizeof(teamData));
 }
