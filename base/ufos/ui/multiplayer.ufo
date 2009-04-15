@@ -1285,6 +1285,7 @@ window multiplayer_wait
 		image		ui/popup_alpha_tile
 		blend		true
 	}
+	/** @todo This background image is completly hiding the underlaying popup structure */
 	pic background
 	{
 		image		"*cvar mn_mappicbig"
