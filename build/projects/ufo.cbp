@@ -127,11 +127,8 @@
 		<Unit filename="..\..\base\autoexec.cfg" />
 		<Unit filename="..\..\base\dedicated.cfg" />
 		<Unit filename="..\..\base\default.cfg" />
-		<Unit filename="..\..\base\entities.def" />
 		<Unit filename="..\..\base\shaders\bump_fs.glsl" />
 		<Unit filename="..\..\base\shaders\bump_vs.glsl" />
-		<Unit filename="..\..\base\shaders\default_fs.glsl" />
-		<Unit filename="..\..\base\shaders\default_vs.glsl" />
 		<Unit filename="..\..\base\shaders\light_fs.glsl" />
 		<Unit filename="..\..\base\shaders\light_vs.glsl" />
 		<Unit filename="..\..\base\shaders\warp_fs.glsl" />
@@ -155,46 +152,6 @@
 		<Unit filename="..\..\base\ufos\language.ufo" />
 		<Unit filename="..\..\base\ufos\maps.ufo" />
 		<Unit filename="..\..\base\ufos\medals.ufo" />
-		<Unit filename="..\..\base\ufos\menu_ahud.ufo" />
-		<Unit filename="..\..\base\ufos\menu_aircraft.ufo" />
-		<Unit filename="..\..\base\ufos\menu_aircraft_equip.ufo" />
-		<Unit filename="..\..\base\ufos\menu_aircraft_info.ufo" />
-		<Unit filename="..\..\base\ufos\menu_aircraft_pilots.ufo" />
-		<Unit filename="..\..\base\ufos\menu_aircraft_soldiers.ufo" />
-		<Unit filename="..\..\base\ufos\menu_aliencont.ufo" />
-		<Unit filename="..\..\base\ufos\menu_althud.ufo" />
-		<Unit filename="..\..\base\ufos\menu_basedefence.ufo" />
-		<Unit filename="..\..\base\ufos\menu_bases.ufo" />
-		<Unit filename="..\..\base\ufos\menu_basesummary.ufo" />
-		<Unit filename="..\..\base\ufos\menu_buildings.ufo" />
-		<Unit filename="..\..\base\ufos\menu_campaign.ufo" />
-		<Unit filename="..\..\base\ufos\menu_debug.ufo" />
-		<Unit filename="..\..\base\ufos\menu_equipment.ufo" />
-		<Unit filename="..\..\base\ufos\menu_geoscape.ufo" />
-		<Unit filename="..\..\base\ufos\menu_hire.ufo" />
-		<Unit filename="..\..\base\ufos\menu_hospital.ufo" />
-		<Unit filename="..\..\base\ufos\menu_hud.ufo" />
-		<Unit filename="..\..\base\ufos\menu_inventory.ufo" />
-		<Unit filename="..\..\base\ufos\menu_irc.ufo" />
-		<Unit filename="..\..\base\ufos\menu_lostwon.ufo" />
-		<Unit filename="..\..\base\ufos\menu_mailclient.ufo" />
-		<Unit filename="..\..\base\ufos\menu_main.ufo" />
-		<Unit filename="..\..\base\ufos\menu_market.ufo" />
-		<Unit filename="..\..\base\ufos\menu_modeltest.ufo" />
-		<Unit filename="..\..\base\ufos\menu_multiplayer.ufo" />
-		<Unit filename="..\..\base\ufos\menu_multiplayer_team.ufo" />
-		<Unit filename="..\..\base\ufos\menu_multiplayeringame.ufo" />
-		<Unit filename="..\..\base\ufos\menu_nohud.ufo" />
-		<Unit filename="..\..\base\ufos\menu_options.ufo" />
-		<Unit filename="..\..\base\ufos\menu_physdat.ufo" />
-		<Unit filename="..\..\base\ufos\menu_production.ufo" />
-		<Unit filename="..\..\base\ufos\menu_research.ufo" />
-		<Unit filename="..\..\base\ufos\menu_singleplayer.ufo" />
-		<Unit filename="..\..\base\ufos\menu_skirmish.ufo" />
-		<Unit filename="..\..\base\ufos\menu_stats.ufo" />
-		<Unit filename="..\..\base\ufos\menu_transfer.ufo" />
-		<Unit filename="..\..\base\ufos\menu_tutorials.ufo" />
-		<Unit filename="..\..\base\ufos\menu_ufopedia.ufo" />
 		<Unit filename="..\..\base\ufos\models.ufo" />
 		<Unit filename="..\..\base\ufos\msgcategories.ufo" />
 		<Unit filename="..\..\base\ufos\msgoptions.ufo" />
@@ -276,10 +233,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_installation.h" />
-		<Unit filename="..\..\src\client\campaign\cp_installation_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_installation_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_map.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -336,10 +289,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_transfer.h" />
-		<Unit filename="..\..\src\client\campaign\cp_transfer_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_transfer_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_ufo.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -388,6 +337,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_hospital_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_installation_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_installation_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_market_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -428,6 +381,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_time.h" />
+		<Unit filename="..\..\src\client\campaign\cp_transfer_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_transfer_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -484,7 +441,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_game_skirmish.h" />
-		<Unit filename="..\..\src\client\cl_global.h" />
 		<Unit filename="..\..\src\client\cl_http.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -532,6 +488,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_menu.h" />
+		<Unit filename="..\..\src\client\cl_music.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_music.h" />
 		<Unit filename="..\..\src\client\cl_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -553,10 +513,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_sound.h" />
-		<Unit filename="..\..\src\client\cl_music.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_music.h" />
 		<Unit filename="..\..\src\client\cl_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
