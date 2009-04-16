@@ -1096,13 +1096,6 @@ window multiplayer_selectteam
 	// background
 	// ==================
 
-	pic background
-	{
-		image		"*cvar mn_mappicbig"
-		pos			"0 0"
-		size		"1024 768"
-	}
-
 	pic back_ul
 	{
 		image		ui/multiplayer_teamsel
@@ -1280,42 +1273,57 @@ window multiplayer_wait
 {
 	{
 		string		"_Please wait"
-		pos 		"0 0"
-		size		"1024 768"
+		pos			"256 156"
+		size		"526 437"
+		dragbutton	true
 		image		ui/popup_alpha_tile
 		blend		true
 	}
-	/** @todo This background image is completly hiding the underlaying popup structure */
-	pic background
-	{
-		image		"*cvar mn_mappicbig"
-		pos			"0 0"
-		size		"1024 768"
-	}
-	string mapname
-	{
-		font		f_small
-		color		"1 1 1 1"
-		string		"*cvar mn_svmapname"
-		pos			"256 72"
-		size		"512 20"
-		textalign	uc
-	}
-
+	
 	string teams_str
 	{
 		string		"_Players connected, waiting for others"
-		pos			"335 370"
-		size		"300 20"
+		pos			"60 50"
+		size		"350 20"
 	}
 	string teams_val
 	{
 		string		"*cvar mp_wait_init_players"
 		color		"0 0.5 0 1"
-		pos			"300 370"
+		pos			"30 50"
 		size		"30 20"
 	}
 
+	string mapname
+	{
+		font		f_small
+		color		"1 1 1 1"
+		string		"*cvar mn_svmapname"
+		pos			"128 95"
+		size		"260 20"
+		textalign	"uc"
+	}
+	pic mappic
+	{
+		pos			"93 121"
+		size		"331 237"
+		image		"*cvar mn_mappicbig"
+	}
+
+	button bt_lobby
+	{
+		visiblewhen "*cvar:irc_defaultChannel"
+		string		"_Lobby"
+		image		ui/button_green_small
+		blend		true
+		width		"200"
+		pos			"30 373"
+		font		f_menu
+		color		"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		onClick		{ cmd "mn_push irc;" }
+	}
+	
 	button bt_force
 	{
 		visiblewhen "*cvar:mp_wait_init_show_force == 1"
@@ -1324,7 +1332,7 @@ window multiplayer_wait
 		image		ui/button_green_small
 		blend		true
 		width		"200"
-		pos			"520 446"
+		pos 		"297 373"
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
