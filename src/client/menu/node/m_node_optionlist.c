@@ -81,9 +81,8 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	MN_GetNodeAbsPos(node, pos);
 
 	image = MN_GetReferenceString(node, node->image);
-	if (image) {
-		R_DrawPanel(pos, node->size, image, node->blend, 0, 0, panelTemplate);
-	}
+	if (image)
+		MN_DrawPanel(pos, node->size, image, node->blend, 0, 0, panelTemplate);
 
 	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFont(node);

@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_font.h"
 #include "../m_internal.h"
 #include "m_node_window.h"
+#include "m_node_panel.h"
 #include "m_node_abstractnode.h"
 
 #include "../../client.h" /* gettext _() */
@@ -102,9 +103,8 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 
 	/* draw the background */
 	image = MN_GetReferenceString(node, node->image);
-	if (image) {
-		R_DrawPanel(pos, node->size, image, node->blend, 0, 0, windowTemplate);
-	}
+	if (image)
+		MN_DrawPanel(pos, node->size, image, node->blend, 0, 0, windowTemplate);
 
 	/* draw the title */
 	text = MN_GetReferenceString(node, node->text);

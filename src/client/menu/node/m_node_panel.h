@@ -28,5 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 
 void MN_RegisterPanelNode(nodeBehaviour_t *behaviour);
+void MN_DrawPanel(const vec2_t pos, const vec2_t size, const char *texture, qboolean blend, int texX, int texY, const int *panelDef);
 
 #endif

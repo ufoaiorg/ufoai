@@ -1124,69 +1124,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 }
 
 /**
- * @brief draw a panel from a texture as we can see on the image
- * The function is inline because there are often 3 or 5 const param, with it a lot of var became const too
- * @image html http://ufoai.ninex.info/wiki/images/Inline_draw_panel.png
- * @param[in] pos Position of the output panel
- * @param[in] size Size of the output panel
- * @param[in] texture Texture contain the template of the panel
- * @param[in] blend True if the texture must use alpha chanel for per pixel transparency
- * @param[in] texX Position x of the panel template into the texture
- * @param[in] texY Position y of the panel template into the texture
- * @param[in] panelDef Array of seven elements define the panel template used in the texture.
- * From the first to the last: left width, mid width, right width,
- * top height, mid height, bottom height, and marge
- * @todo can we improve the code? is it need?
- */
-void R_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, qboolean blend, int texX, int texY, const int *panelDef)
-{
-	const int leftWidth = panelDef[0];
-	const int midWidth = panelDef[1];
-	const int rightWidth = panelDef[2];
-	const int topHeight = panelDef[3];
-	const int midHeight = panelDef[4];
-	const int bottomHeight = panelDef[5];
-	const int marge =  panelDef[6];
-
-	/** @todo merge texX and texY here */
-	const int firstPos = 0;
-	const int secondPos = firstPos + leftWidth + marge;
-	const int thirdPos = secondPos + midWidth + marge;
-	const int firstPosY = 0;
-	const int secondPosY = firstPosY + topHeight + marge;
-	const int thirdPosY = secondPosY + midHeight + marge;
-
-	int y, h;
-
-	/* draw top (from left to right) */
-	R_DrawNormPic(pos[0], pos[1], leftWidth, topHeight, texX + firstPos + leftWidth, texY + firstPosY + topHeight,
-		texX + firstPos, texY + firstPosY, ALIGN_UL, blend, texture);
-	R_DrawNormPic(pos[0] + leftWidth, pos[1], size[0] - leftWidth - rightWidth, topHeight, texX + secondPos + midWidth, texY + firstPosY + topHeight,
-		texX + secondPos, texY + firstPosY, ALIGN_UL, blend, texture);
-	R_DrawNormPic(pos[0] + size[0] - rightWidth, pos[1], rightWidth, topHeight, texX + thirdPos + rightWidth, texY + firstPosY + topHeight,
-		texX + thirdPos, texY + firstPosY, ALIGN_UL, blend, texture);
-
-	/* draw middle (from left to right) */
-	y = pos[1] + topHeight;
-	h = size[1] - topHeight - bottomHeight; /* height of middle */
-	R_DrawNormPic(pos[0], y, leftWidth, h, texX + firstPos + leftWidth, texY + secondPosY + midHeight,
-		texX + firstPos, texY + secondPosY, ALIGN_UL, blend, texture);
-	R_DrawNormPic(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, texX + secondPos + midWidth, texY + secondPosY + midHeight,
-		texX + secondPos, texY + secondPosY, ALIGN_UL, blend, texture);
-	R_DrawNormPic(pos[0] + size[0] - rightWidth, y, rightWidth, h, texX + thirdPos + rightWidth, texY + secondPosY + midHeight,
-		texX + thirdPos, texY + secondPosY, ALIGN_UL, blend, texture);
-
-	/* draw bottom (from left to right) */
-	y = pos[1] + size[1] - bottomHeight;
-	R_DrawNormPic(pos[0], y, leftWidth, bottomHeight, texX + firstPos + leftWidth, texY + thirdPosY + bottomHeight,
-		texX + firstPos, texY + thirdPosY, ALIGN_UL, blend, texture);
-	R_DrawNormPic(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, bottomHeight, texX + secondPos + midWidth, texY + thirdPosY + bottomHeight,
-		texX + secondPos, texY + thirdPosY, ALIGN_UL, blend, texture);
-	R_DrawNormPic(pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
-		texX + thirdPos, texY + thirdPosY, ALIGN_UL, blend, texture);
-}
-
-/**
  * @brief Force to draw only on a rect
  * @note Don't forget to call @c R_EndClipRect
  * @sa R_EndClipRect
