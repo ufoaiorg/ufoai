@@ -40,12 +40,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] pos Position of the output panel
  * @param[in] size Size of the output panel
  * @param[in] texture Texture contain the template of the panel
- * @param[in] blend True if the texture must use alpha chanel for per pixel transparency
+ * @param[in] blend True if the texture must use alpha channel for per pixel transparency
  * @param[in] texX Position x of the panel template into the texture
  * @param[in] texY Position y of the panel template into the texture
  * @param[in] panelDef Array of seven elements define the panel template used in the texture.
  * From the first to the last: left width, mid width, right width,
- * top height, mid height, bottom height, and marge
+ * top height, mid height, bottom height, and margin
  * @todo can we improve the code? is it need?
  */
 void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, qboolean blend, int texX, int texY, const int *panelDef)

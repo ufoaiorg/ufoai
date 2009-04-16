@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractoption.h"
 #include "m_node_abstractnode.h"
 #include "m_node_optionlist.h"
+#include "m_node_panel.h"
 
 #include "../../client.h" /* gettext _() */
 #include "../../renderer/r_draw.h"
@@ -37,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MID_SIZE 1
 #define MARGE 3
 
-#define ELEMENT_HEIGHT 20	/**< todo remove it, should be computed with the font */
+#define ELEMENT_HEIGHT 20	/**< @todo remove it, should be computed with the font */
 
 /**
  * @brief Return the first option of the node
