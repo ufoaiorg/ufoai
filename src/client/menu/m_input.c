@@ -85,7 +85,7 @@ static qboolean MN_FocusExecuteActionNode (void)
 		if (focusNode->onClick) {
 			MN_ExecuteEventActions(focusNode, focusNode->onClick);
 		}
-		MN_ExecuteEventActions(focusNode, focusNode->onMouseOut);
+		MN_ExecuteEventActions(focusNode, focusNode->onMouseLeave);
 		focusNode = NULL;
 		return qtrue;
 	}
@@ -104,7 +104,7 @@ static menuNode_t *MN_GetNextActionNode (menuNode_t* node)
 		node = node->next;
 	while (node) {
 		if (MN_CheckVisibility(node) && !node->invis
-		 && ((node->onClick && node->onMouseIn) || node->onMouseIn))
+		 && ((node->onClick && node->onMouseEnter) || node->onMouseEnter))
 			return node;
 		node = node->next;
 	}
@@ -351,12 +351,12 @@ void MN_MouseMove (int x, int y)
 	/* update nodes: send 'in' and 'out' event */
 	if (oldHoveredNode != hoveredNode) {
 		if (oldHoveredNode) {
-			MN_ExecuteEventActions(oldHoveredNode, oldHoveredNode->onMouseOut);
+			MN_ExecuteEventActions(oldHoveredNode, oldHoveredNode->onMouseLeave);
 			oldHoveredNode->state = qfalse;
 		}
 		if (hoveredNode) {
 			hoveredNode->state = qtrue;
-			MN_ExecuteEventActions(hoveredNode, hoveredNode->onMouseIn);
+			MN_ExecuteEventActions(hoveredNode, hoveredNode->onMouseEnter);
 		}
 	}
 	oldHoveredNode = hoveredNode;

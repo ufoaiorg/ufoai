@@ -113,8 +113,8 @@ typedef struct menuNode_s {
 	struct menuAction_s *onRightClick;
 	struct menuAction_s *onMiddleClick;
 	struct menuAction_s *onWheel;
-	struct menuAction_s *onMouseIn;
-	struct menuAction_s *onMouseOut;
+	struct menuAction_s *onMouseEnter;
+	struct menuAction_s *onMouseLeave;
 	struct menuAction_s *onWheelUp;
 	struct menuAction_s *onWheelDown;
 	struct menuAction_s *onChange;	/**< called when the widget change from an user action */

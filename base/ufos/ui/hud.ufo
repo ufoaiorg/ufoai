@@ -370,8 +370,8 @@ window hud extends ahud
 			texh	"64 74"
 			mousefx	true
 			onClick	{ cmd "reloadright;" }
-			onMouseIn		{ cmd "remaining_tus reload_r 1;" }
-			onMouseOut		{ cmd "remaining_tus reload_r 0;" }
+			onMouseEnter		{ cmd "remaining_tus reload_r 1;" }
+			onMouseLeave		{ cmd "remaining_tus reload_r 0;" }
 		}
 
 		string ammoright
@@ -439,8 +439,8 @@ window hud extends ahud
 			texh	"64 74"
 			mousefx	true
 			onClick	{ cmd "reloadleft;" }
-			onMouseIn		{ cmd "remaining_tus reload_l 1;" }
-			onMouseOut		{ cmd "remaining_tus reload_l 0;" }
+			onMouseEnter		{ cmd "remaining_tus reload_l 1;" }
+			onMouseLeave		{ cmd "remaining_tus reload_l 0;" }
 		}
 
 		string ammoleft
@@ -467,8 +467,8 @@ window hud extends ahud
 			texl	"0 75"
 			texh	"52 112"
 			onClick	{ cmd "standcrouch;" }
-			onMouseIn		{ cmd "remaining_tus crouch 1;" }
-			onMouseOut		{ cmd "remaining_tus crouch 0;" }
+			onMouseEnter		{ cmd "remaining_tus crouch 1;" }
+			onMouseLeave		{ cmd "remaining_tus crouch 0;" }
 		}
 
 		checkbox bt_crouch_reservation
@@ -842,12 +842,12 @@ window hud extends ahud
 			texl		"64 0"
 			texh		"96 32"
 			mousefx		false
-			onMouseOut			{
+			onMouseLeave			{
 				*chatscreen size "690 48"
 				*chatscreen rows "3"
 				*(func)event timeout 10000
 			}
-			onMouseIn			{
+			onMouseEnter			{
 				*chatscreen size "690 400"
 				*chatscreen rows "25"
 				*(func)event timeout 0
@@ -863,11 +863,11 @@ window hud extends ahud
 			texl		"0 0"
 			texh		"32 36"
 			mousefx		false
-			onMouseIn {
+			onMouseEnter {
 				*node:this	texl	"0 36"
 				*node:this	texh	"32 72"
 			}
-			onMouseOut {
+			onMouseLeave {
 				*node:this	texl	"0 0"
 				*node:this	texh	"32 36"
 			}

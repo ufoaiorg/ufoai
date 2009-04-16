@@ -438,8 +438,8 @@ window hospital
 		texh	"48 48"
 		texl	"32 32"
 		onClick	{ cmd "hosp_list_up;" }
-		onMouseOut		{ *hos_button_scrollup texl "32 32" *hos_button_scrollup texh "48 48" }
-		onMouseIn		{ *hos_button_scrollup texl "48 32" *hos_button_scrollup texh "64 48" }
+		onMouseLeave		{ *hos_button_scrollup texl "32 32" *hos_button_scrollup texh "48 48" }
+		onMouseEnter		{ *hos_button_scrollup texl "48 32" *hos_button_scrollup texh "64 48" }
 	}
 
 	pic hos_button_scrolldown
@@ -451,8 +451,8 @@ window hospital
 		texl	"32 48"
 		texh	"48 64"
 		onClick	{ cmd "hosp_list_down;" }
-		onMouseOut		{ *hos_button_scrolldown texl "32 48" *hos_button_scrolldown texh "48 64" }
-		onMouseIn		{ *hos_button_scrolldown texl "48 48" *hos_button_scrolldown texh "64 64" }
+		onMouseLeave		{ *hos_button_scrolldown texl "32 48" *hos_button_scrolldown texh "48 64" }
+		onMouseEnter		{ *hos_button_scrolldown texl "48 48" *hos_button_scrolldown texh "64 64" }
 	}
 
 	// ==================

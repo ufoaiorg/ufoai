@@ -65,12 +65,12 @@ window althud extends ahud
 		image		hud/bar_chat
 		pos			"960 64"
 		size		"64 64"
-		onMouseOut			{
+		onMouseLeave			{
 			*bar_chat image hud/bar_chat
 			*bar_chat size "64 64"
 			cmd "mn_showchatbuttons 0;"
 		}
-		onMouseIn			{
+		onMouseEnter			{
 			*bar_chat image hud/bar_chat_choice
 			*bar_chat size "256 64"
 			cmd "mn_showchatbuttons 1;"
@@ -115,12 +115,12 @@ window althud extends ahud
 		texl		"64 0"
 		texh		"96 32"
 		mousefx		false
-		onMouseOut			{
+		onMouseLeave			{
 			*chatscreen size "690 48"
 			*chatscreen rows "3"
 			*(func)event timeout 10000
 		}
-		onMouseIn			{
+		onMouseEnter			{
 			*chatscreen size "690 400"
 			*chatscreen rows "25"
 			*(func)event timeout 0
@@ -642,8 +642,8 @@ window althud extends ahud
 		texh		"25 70"
 		mousefx		true
 		onClick		{ cmd "reloadright;" }
-		onMouseIn			{ cmd "remaining_tus reload_r 1;" }
-		onMouseOut			{ cmd "remaining_tus reload_r 0;" }
+		onMouseEnter			{ cmd "remaining_tus reload_r 1;" }
+		onMouseLeave			{ cmd "remaining_tus reload_r 0;" }
 	}
 
 	pic bt_reloadleft
@@ -655,8 +655,8 @@ window althud extends ahud
 		texh		"25 70"
 		mousefx		true
 		onClick		{ cmd "reloadleft;" }
-		onMouseIn			{ cmd "remaining_tus reload_l 1;" }
-		onMouseOut			{ cmd "remaining_tus reload_l 0;" }
+		onMouseEnter			{ cmd "remaining_tus reload_l 1;" }
+		onMouseLeave			{ cmd "remaining_tus reload_l 0;" }
 	}
 
 	// CROUCH/STAND UP BUTTON
@@ -675,8 +675,8 @@ window althud extends ahud
 		texl		"27 37"
 		texh		"52 70"
 		onClick		{ cmd "standcrouch;" }
-		onMouseIn			{ cmd "remaining_tus crouch 1;" }
-		onMouseOut			{ cmd "remaining_tus crouch 0;" }
+		onMouseEnter			{ cmd "remaining_tus crouch 1;" }
+		onMouseLeave			{ cmd "remaining_tus crouch 0;" }
 	}
 
 	checkbox bt_crouch_reservation

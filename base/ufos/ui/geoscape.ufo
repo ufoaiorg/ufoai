@@ -417,8 +417,8 @@ window geoscape
 			texh		"32 32"
 			mousefx		false
 			onClick		{ cmd "map_overlay nations;" }
-			onMouseOut			{ *control.bt_show_overlay texl "0 0" *control.bt_show_overlay texh "32 32" }
-			onMouseIn			{ *control.bt_show_overlay texl "32 0" *control.bt_show_overlay texh "64 32" }
+			onMouseLeave			{ *control.bt_show_overlay texl "0 0" *control.bt_show_overlay texh "32 32" }
+			onMouseEnter			{ *control.bt_show_overlay texl "32 0" *control.bt_show_overlay texh "64 32" }
 		}
 
 		pic bt_show_radar
@@ -430,8 +430,8 @@ window geoscape
 			texh		"32 32"
 			mousefx		false
 			onClick		{ cmd "map_overlay radar;" }
-			onMouseOut			{ *control.bt_show_radar texl "0 0" *control.bt_show_radar texh "32 32" }
-			onMouseIn			{ *control.bt_show_radar texl "32 0" *control.bt_show_radar texh "64 32" }
+			onMouseLeave			{ *control.bt_show_radar texl "0 0" *control.bt_show_radar texh "32 32" }
+			onMouseEnter			{ *control.bt_show_radar texl "32 0" *control.bt_show_radar texh "64 32" }
 		}
 
 		pic bt_show_xvi
@@ -444,8 +444,8 @@ window geoscape
 			texh		"32 32"
 			mousefx		false
 			onClick		{ cmd "map_overlay xvi;" }
-			onMouseOut			{ *control.bt_show_xvi texl "0 0" *control.bt_show_xvi texh "32 32" }
-			onMouseIn			{ *control.bt_show_xvi texl "32 0" *control.bt_show_xvi texh "64 32" }
+			onMouseLeave			{ *control.bt_show_xvi texl "0 0" *control.bt_show_xvi texh "32 32" }
+			onMouseEnter			{ *control.bt_show_xvi texl "32 0" *control.bt_show_xvi texh "64 32" }
 		}
 
 		custombutton bt_messagesystem
@@ -1170,8 +1170,8 @@ window popup_newinstallation_type
 	{
 		pos			"30 78"
 		size		"440 20"
-		onMouseIn			{ *bt_highlight invis false *bt_highlight pos "26 76" }
-		onMouseOut			{ *bt_highlight invis true }
+		onMouseEnter			{ *bt_highlight invis false *bt_highlight pos "26 76" }
+		onMouseLeave			{ *bt_highlight invis true }
 		onClick		{ cmd "set mn_installation_type radartower; mn_pop; mn_select_installation -1;" }
 	}
 
@@ -1207,8 +1207,8 @@ window popup_newinstallation_type
 	{
 		pos			"30 98"
 		size		"440 20"
-		onMouseIn			{ *bt_highlight invis false *bt_highlight pos "26 96" }
-		onMouseOut			{ *bt_highlight invis true }
+		onMouseEnter			{ *bt_highlight invis false *bt_highlight pos "26 96" }
+		onMouseLeave			{ *bt_highlight invis true }
 		onClick		{ cmd "set mn_installation_type samsite; mn_pop; mn_select_installation -1;" }
 	}
 
@@ -1244,8 +1244,8 @@ window popup_newinstallation_type
 	{
 		pos			"30 118"
 		size		"440 20"
-		onMouseIn			{ *bt_highlight invis false *bt_highlight pos "26 116" }
-		onMouseOut			{ *bt_highlight invis true }
+		onMouseEnter			{ *bt_highlight invis false *bt_highlight pos "26 116" }
+		onMouseLeave			{ *bt_highlight invis true }
 		onClick		{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
 	}
 
@@ -1287,8 +1287,8 @@ window popup_newinstallation_type
 	{
 		pos			"30 138"
 		size		"440 20"
-		onMouseIn			{ *bt_highlight invis false *bt_highlight pos "26 136" }
-		onMouseOut			{ *bt_highlight invis true }
+		onMouseEnter			{ *bt_highlight invis false *bt_highlight pos "26 136" }
+		onMouseLeave			{ *bt_highlight invis true }
 		onClick		{ cmd "mn_pop; mn_select_base -1;" }
 	}
 
