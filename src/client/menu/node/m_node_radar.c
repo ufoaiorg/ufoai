@@ -276,11 +276,11 @@ static void MN_InitRadar (const menuNode_t *node)
 			} else {
 				char imagePath[MAX_QPATH];
 				const image_t *image;
-				Com_sprintf(imagePath, sizeof(imagePath), "radars/%s_%i", hudRadarImage->name, i + 1);
+				Com_sprintf(imagePath, sizeof(imagePath), "pics/radars/%s_%i", hudRadarImage->name, i + 1);
 				hudRadarImage->path[i] = Mem_StrDup(imagePath);
 				hudRadarImage->maxlevel++;
 
-				image = R_RegisterImage(hudRadarImage->path[i]);
+				image = R_FindImage(hudRadarImage->path[i], it_pic);
 				hudRadarImage->w = image->width;
 				hudRadarImage->h = image->height;
 				if (hudRadarImage->w > VID_NORM_WIDTH || hudRadarImage->h > VID_NORM_HEIGHT)

@@ -252,10 +252,10 @@ static void SCR_TouchPics (void)
 		if (scr_cursor->integer > 9 || scr_cursor->integer < 0)
 			Cvar_SetValue("cursor", 1);
 
-		R_RegisterImage("cursors/wait");
-		R_RegisterImage("cursors/ducked");
+		R_FindImage("pics/cursors/wait", it_pic);
+		R_FindImage("pics/cursors/ducked", it_pic);
 		Com_sprintf(cursorImage, sizeof(cursorImage), "cursors/cursor%i", scr_cursor->integer);
-		if (!R_RegisterImage(cursorImage)) {
+		if (!R_FindImage(cursorImage, it_pic)) {
 			Com_Printf("SCR_TouchPics: Could not register cursor: %s\n", cursorImage);
 			cursorImage[0] = '\0';
 		}
