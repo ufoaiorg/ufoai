@@ -265,24 +265,26 @@ static void MN_InitRadar (const menuNode_t *node)
 	for (i = 0; i < PATHFINDING_HEIGHT; i++) {
 		/* map_mins, map_maxs */
 		for (j = 0; j < radar.numImages; j++) {
-			hudRadarImage_t *image = &radar.images[j];
-			if (!MN_CheckRadarImage(image->name, i + 1)) {
+			hudRadarImage_t *hudRadarImage = &radar.images[j];
+			if (!MN_CheckRadarImage(hudRadarImage->name, i + 1)) {
 				if (i == 0) {
 					/* there should be at least one level */
-					Com_Printf("No radar images for map: '%s'\n", image->name);
+					Com_Printf("No radar images for map: '%s'\n", hudRadarImage->name);
 					cl.skipRadarNodes = qtrue;
 					return;
 				}
 			} else {
 				char imagePath[MAX_QPATH];
-				Com_sprintf(imagePath, sizeof(imagePath), "radars/%s_%i", image->name, i + 1);
-				image->path[i] = Mem_StrDup(imagePath);
+				const image_t *image;
+				Com_sprintf(imagePath, sizeof(imagePath), "radars/%s_%i", hudRadarImage->name, i + 1);
+				hudRadarImage->path[i] = Mem_StrDup(imagePath);
+				hudRadarImage->maxlevel++;
 
-				image->maxlevel++;
-
-				R_DrawGetPicSize(&image->w, &image->h, image->path[i]);
-				if (image->w > VID_NORM_WIDTH || image->h > VID_NORM_HEIGHT)
-					Com_Printf("Image '%s' is too big\n", image->path[i]);
+				image = R_RegisterPic(hudRadarImage->path[i]);
+				hudRadarImage->w = image->width;
+				hudRadarImage->h = image->height;
+				if (hudRadarImage->w > VID_NORM_WIDTH || hudRadarImage->h > VID_NORM_HEIGHT)
+					Com_Printf("Image '%s' is too big\n", hudRadarImage->path[i]);
 			}
 		}
 	}

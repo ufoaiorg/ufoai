@@ -34,7 +34,6 @@ void R_Draw3DGlobe(int x, int y, int w, int h, int day, int second, const vec3_t
 void R_Draw3DMapMarkers(vec3_t angles, float zoom, vec3_t position, const char *model, int skin);
 int R_DrawImagePixelData(const char *name, byte *frame, int width, int height);
 void R_DrawTexture(int texnum, int x, int y, int w, int h);
-void R_DrawGetPicSize(int *w, int *h, const char *name);
 void R_DrawFlatGeoscape(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
 void R_DrawAirFightBackground(int x, int y, int w, int h, float cx, float cy, float iz);
 void R_DrawLineStrip(int points, int *verts);

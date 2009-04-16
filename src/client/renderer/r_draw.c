@@ -197,25 +197,6 @@ const image_t *R_RegisterPic (const char *name)
 }
 
 /**
- * @brief Fills w and h with the width and height of a given pic
- * @note if w and h are -1 the pic was not found
- * @param[out] w Pointer to int value for width
- * @param[out] h Pointer to int value for height
- * @param[in] pic The name of the pic to get the values for
- * @sa R_RegisterPic
- */
-void R_DrawGetPicSize (int *w, int *h, const char *pic)
-{
-	const image_t *gl = R_RegisterPic(pic);
-	if (!gl) {
-		*w = *h = -1;
-		return;
-	}
-	*w = gl->width;
-	*h = gl->height;
-}
-
-/**
  * @brief Bind and draw a texture
  * @param[in] texnum The texture id (already uploaded of course)
  * @param[in] x normalized x value on the screen

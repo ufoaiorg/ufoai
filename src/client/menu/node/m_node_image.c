@@ -41,10 +41,9 @@ static void MN_ImageNodeLoaded (menuNode_t *node)
 			node->size[0] = node->texh[0] - node->texl[0];
 			node->size[1] = node->texh[1] - node->texl[1];
 		} else if (node->image) {
-			int sx, sy;
-			R_DrawGetPicSize(&sx, &sy, node->image);
-			node->size[0] = sx;
-			node->size[1] = sy;
+			const image_t *image = R_RegisterPic(node->image);
+			node->size[0] = image->width;
+			node->size[1] = image->height;
 		}
 	}
 #ifdef DEBUG
@@ -65,10 +64,13 @@ void MN_ImageNodeDraw(menuNode_t *node)
 	vec2_t size;
 	vec2_t nodepos;
 	const int time = cl.time;
+	const image_t *gl;
 
 	const char* imageName = MN_GetReferenceString(node, node->image);
 	if (!imageName || imageName[0] == '\0')
 		return;
+
+	gl = R_RegisterPic(imageName);
 
 	/* mouse darken effect */
 	/** @todo convert all pic using mousefx into button.
@@ -97,25 +99,19 @@ void MN_ImageNodeDraw(menuNode_t *node)
 	}
 	if ((node->size[0] && !node->size[1])) {
 		float scale;
-		int w, h;
 
-		R_DrawGetPicSize(&w, &h, imageName);
-		scale = w / node->size[0];
-		Vector2Set(size, node->size[0], h / scale);
+		scale = gl->width / node->size[0];
+		Vector2Set(size, node->size[0], gl->height / scale);
 	} else if ((node->size[1] && !node->size[0])) {
 		float scale;
-		int w, h;
 
-		R_DrawGetPicSize(&w, &h, imageName);
-		scale = h / node->size[1];
-		Vector2Set(size, w / scale, node->size[1]);
+		scale = gl->height / node->size[1];
+		Vector2Set(size, gl->width / scale, node->size[1]);
 	} else {
 		if (node->preventRatio) {
 			/* maximize the image into the bounding box */
 			float ratio;
-			int w, h;
-			R_DrawGetPicSize(&w, &h, imageName);
-			ratio = (float) w / (float) h;
+			ratio = (float) gl->width / (float) gl->height;
 			if (node->size[1] * ratio > node->size[0]) {
 				Vector2Set(size, node->size[0], node->size[0] / ratio);
 			} else {
