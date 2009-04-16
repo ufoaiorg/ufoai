@@ -171,29 +171,17 @@ int R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 
 /**
  * @brief Searches for an image in the image array
- * @param[in] name The name of the image
- * @note the imagename can contain a / or \ (relative to gamedir/) - otherwise it's relative to gamedir/pics
+ * @param[in] name The name of the image relative to pics/
  * @note name may not be null and has to be longer than 4 chars
  * @return NULL on error or image_t pointer on success
  * @sa R_FindImage
  */
-const image_t *R_RegisterPic (const char *name)
+const image_t *R_RegisterImage (const char *name)
 {
-	image_t *gl;
-	char fullname[MAX_QPATH];
-
-	if (name[0] != '*' && name[1] != '*') {
-		if (name[0] != '/' && name[0] != '\\')
-			Com_sprintf(fullname, sizeof(fullname), "pics/%s", name);
-		else
-			Q_strncpyz(fullname, name + 1, MAX_QPATH);
-	} else
-		Q_strncpyz(fullname, name, MAX_QPATH);
-
-	gl = R_FindImage(fullname, it_pic);
-	if (gl == r_noTexture)
+	const image_t *image = R_FindImage(va("pics/%s", name), it_pic);
+	if (image == r_noTexture)
 		return NULL;
-	return gl;
+	return image;
 }
 
 /**
@@ -235,7 +223,7 @@ static short image_verts[4 * 2];
  * @param[in] align The alignment we should use for placing the image onto the screen (see align_t)
  * @param[in] blend Enable the blend mode (for alpha channel images)
  * @param[in] name The name of the image - relative to base/pics
- * @sa R_RegisterPic
+ * @sa R_RegisterImage
  * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are adjusted in this function
  */
@@ -244,7 +232,7 @@ const image_t *R_DrawNormPic (float x, float y, float w, float h, float sh, floa
 	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
 	const image_t *image;
 
-	image = R_RegisterPic(name);
+	image = R_RegisterImage(name);
 	if (!image) {
 		Com_Printf("Can't find pic: %s\n", name);
 		return NULL;

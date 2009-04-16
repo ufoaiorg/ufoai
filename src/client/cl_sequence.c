@@ -534,7 +534,7 @@ int SEQ_Wait (const char *name, char *data)
  * @brief Precaches the models and images for a sequence
  * @return 1 - increase the command position of the sequence by one
  * @sa R_RegisterModelShort
- * @sa R_RegisterPic
+ * @sa R_RegisterImage
  */
 int SEQ_Precache (const char *name, char *data)
 {
@@ -547,7 +547,7 @@ int SEQ_Precache (const char *name, char *data)
 	} else if (!strcmp(name, "pics")) {
 		while (*data) {
 			Com_DPrintf(DEBUG_CLIENT, "Precaching image: %s\n", data);
-			R_RegisterPic(data);
+			R_RegisterImage(data);
 			data += strlen(data) + 1;
 		}
 	} else

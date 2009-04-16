@@ -1394,7 +1394,7 @@ static const imageLoader_t imageLoader[] = {
 
 /**
  * @brief Finds or loads the given image
- * @sa R_RegisterPic
+ * @sa R_RegisterImage
  * @param pname Image name
  * @note the image name has to be at least 5 chars long
  * @sa R_LoadTGA

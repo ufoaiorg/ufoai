@@ -61,7 +61,7 @@ static cvar_t *scr_rspeed;
 static cvar_t *scr_cursor;
 static cvar_t *cl_show_cursor_tooltips;
 
-static char cursor_pic[MAX_QPATH];
+static char cursorImage[MAX_QPATH];
 
 /**
  * @sa Font_DrawString
@@ -252,15 +252,15 @@ static void SCR_TouchPics (void)
 		if (scr_cursor->integer > 9 || scr_cursor->integer < 0)
 			Cvar_SetValue("cursor", 1);
 
-		R_RegisterPic("cursors/wait");
-		R_RegisterPic("cursors/ducked");
-		Com_sprintf(cursor_pic, sizeof(cursor_pic), "cursors/cursor%i", scr_cursor->integer);
-		if (!R_RegisterPic(cursor_pic)) {
-			Com_Printf("SCR_TouchPics: Could not register cursor: %s\n", cursor_pic);
-			cursor_pic[0] = '\0';
+		R_RegisterImage("cursors/wait");
+		R_RegisterImage("cursors/ducked");
+		Com_sprintf(cursorImage, sizeof(cursorImage), "cursors/cursor%i", scr_cursor->integer);
+		if (!R_RegisterImage(cursorImage)) {
+			Com_Printf("SCR_TouchPics: Could not register cursor: %s\n", cursorImage);
+			cursorImage[0] = '\0';
 		}
 	} else
-		cursor_pic[0] = '\0';
+		cursorImage[0] = '\0';
 }
 
 static const vec4_t cursorBG = { 0.0f, 0.0f, 0.0f, 0.7f };
@@ -281,7 +281,7 @@ static void SCR_DrawCursor (void)
 		SCR_TouchPics();
 	}
 
-	if (!cursor_pic[0])
+	if (!cursorImage[0])
 		return;
 
 	if (!MN_DNDIsDragging()) {
@@ -289,7 +289,7 @@ static void SCR_DrawCursor (void)
 		if (cls.state == ca_active && cls.team != cl.actTeam)
 			pic = "cursors/wait";
 		else
-			pic = cursor_pic;
+			pic = cursorImage;
 
 		R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, pic);
 

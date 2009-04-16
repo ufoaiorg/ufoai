@@ -41,9 +41,11 @@ static void MN_ImageNodeLoaded (menuNode_t *node)
 			node->size[0] = node->texh[0] - node->texl[0];
 			node->size[1] = node->texh[1] - node->texl[1];
 		} else if (node->image) {
-			const image_t *image = R_RegisterPic(node->image);
-			node->size[0] = image->width;
-			node->size[1] = image->height;
+			const image_t *image = R_RegisterImage(node->image);
+			if (image) {
+				node->size[0] = image->width;
+				node->size[1] = image->height;
+			}
 		}
 	}
 #ifdef DEBUG
@@ -59,18 +61,18 @@ static void MN_ImageNodeLoaded (menuNode_t *node)
  * @todo Extract ekg_ into another node behaviour
  * @todo Center image, or use textalign property
  */
-void MN_ImageNodeDraw(menuNode_t *node)
+void MN_ImageNodeDraw (menuNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
 	const int time = cl.time;
-	const image_t *gl;
+	const image_t *image;
 
 	const char* imageName = MN_GetReferenceString(node, node->image);
 	if (!imageName || imageName[0] == '\0')
 		return;
 
-	gl = R_RegisterPic(imageName);
+	image = R_RegisterImage(imageName);
 
 	/* mouse darken effect */
 	/** @todo convert all pic using mousefx into button.
@@ -97,21 +99,21 @@ void MN_ImageNodeDraw(menuNode_t *node)
 		node->texl[0] = -(int) (0.01 * (node->name[4] - 'a') * time) % 64;
 		node->texh[0] = node->texl[0] + node->size[0];
 	}
-	if ((node->size[0] && !node->size[1])) {
+	if (node->size[0] && !node->size[1]) {
 		float scale;
 
-		scale = gl->width / node->size[0];
-		Vector2Set(size, node->size[0], gl->height / scale);
-	} else if ((node->size[1] && !node->size[0])) {
+		scale = image->width / node->size[0];
+		Vector2Set(size, node->size[0], image->height / scale);
+	} else if (node->size[1] && !node->size[0]) {
 		float scale;
 
-		scale = gl->height / node->size[1];
-		Vector2Set(size, gl->width / scale, node->size[1]);
+		scale = image->height / node->size[1];
+		Vector2Set(size, image->width / scale, node->size[1]);
 	} else {
 		if (node->preventRatio) {
 			/* maximize the image into the bounding box */
 			float ratio;
-			ratio = (float) gl->width / (float) gl->height;
+			ratio = (float) image->width / (float) image->height;
 			if (node->size[1] * ratio > node->size[0]) {
 				Vector2Set(size, node->size[0], node->size[0] / ratio);
 			} else {

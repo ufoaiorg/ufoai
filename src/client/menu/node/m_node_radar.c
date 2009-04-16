@@ -280,7 +280,7 @@ static void MN_InitRadar (const menuNode_t *node)
 				hudRadarImage->path[i] = Mem_StrDup(imagePath);
 				hudRadarImage->maxlevel++;
 
-				image = R_RegisterPic(hudRadarImage->path[i]);
+				image = R_RegisterImage(hudRadarImage->path[i]);
 				hudRadarImage->w = image->width;
 				hudRadarImage->h = image->height;
 				if (hudRadarImage->w > VID_NORM_WIDTH || hudRadarImage->h > VID_NORM_HEIGHT)

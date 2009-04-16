@@ -248,7 +248,7 @@ static inline void CL_ParticleLoadArt (ptlArt_t *a, byte type)
 				imageName = a->name;
 			else /* load several frames */
 				imageName = va("%s%c%c", a->name + 1, a->frame / 10 + '0', a->frame % 10 + '0');
-			a->art.image = R_RegisterPic(imageName);
+			a->art.image = R_RegisterImage(imageName);
 			if (!a->art.image)
 				Com_Printf("CL_ParticleLoadArt: Could not load image: '%s' for particle: '%s'\n", imageName, a->name);
 		}
