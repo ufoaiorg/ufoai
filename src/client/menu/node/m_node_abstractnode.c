@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_main.h"
 #include "../m_internal.h"
 
-/*
+/**
  * @brief Check the node inheritance
  * @param[in] node Requested node
  * @param[in] behaviourName Property name we search

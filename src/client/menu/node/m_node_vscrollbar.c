@@ -42,6 +42,11 @@ static const int TILE_HEIGHT = 18;
 static const int ELEMENT_WIDTH = 19;
 static const int ELEMENT_HEIGHT = 16;
 
+static int oldPos;
+static int oldMouseY;
+static menuTimer_t *capturedTimer;
+static int capturedElement;
+
 #define EXTRADATA(node) (node->u.abstractscrollbar)
 
 /**
@@ -58,7 +63,7 @@ static void MN_VScrollbarNodeGetElementSize (menuNode_t *node, int description[5
 	description[2] = middle + 2 * ELEMENT_HEIGHT;
 	description[3] = hight;
 	description[4] = ELEMENT_HEIGHT;
-	assert(description[0]+description[1]+description[2]+description[3]+description[4] == node->size[1]);
+	assert(description[0] + description[1] + description[2] + description[3] + description[4] == node->size[1]);
 }
 
 /**
@@ -113,12 +118,7 @@ static inline void MN_VScrollbarNodeDiff (menuNode_t *node, int value)
 	MN_VScrollbarNodeSet(node, EXTRADATA(node).pos + value);
 }
 
-static int oldPos;
-static int oldMouseY;
-static menuTimer_t *capturedTimer = NULL;
-static int capturedElement;
-
-static inline void MN_VScrollbarNodeAction (menuNode_t *node, int houveredElement, qboolean allowCapture);
+static inline void MN_VScrollbarNodeAction(menuNode_t *node, int hoveredElement, qboolean allowCapture);
 
 static void MN_VScrollbarNodeRepeat (menuNode_t *node, menuTimer_t *timer)
 {
@@ -130,25 +130,25 @@ static void MN_VScrollbarNodeRepeat (menuNode_t *node, menuTimer_t *timer)
 	}
 }
 
-static inline void MN_VScrollbarNodeAction (menuNode_t *node, int houveredElement, qboolean allowCapture)
+static inline void MN_VScrollbarNodeAction (menuNode_t *node, int hoveredElement, qboolean allowCapture)
 {
-	switch (houveredElement) {
+	switch (hoveredElement) {
 	case 0:
 		MN_VScrollbarNodeDiff(node, -1);
 		if (allowCapture) {
 			MN_SetMouseCapture(node);
-			capturedElement = houveredElement;
+			capturedElement = hoveredElement;
 			capturedTimer = MN_AllocTimer(node, 500, MN_VScrollbarNodeRepeat);
-			MN_TimerStart (capturedTimer);
+			MN_TimerStart(capturedTimer);
 		}
 		break;
 	case 1:
 		MN_VScrollbarNodeDiff(node, -10);
 		if (allowCapture) {
 			MN_SetMouseCapture(node);
-			capturedElement = houveredElement;
+			capturedElement = hoveredElement;
 			capturedTimer = MN_AllocTimer(node, 500, MN_VScrollbarNodeRepeat);
-			MN_TimerStart (capturedTimer);
+			MN_TimerStart(capturedTimer);
 		}
 		break;
 	case 2:
@@ -157,25 +157,25 @@ static inline void MN_VScrollbarNodeAction (menuNode_t *node, int houveredElemen
 			/* save start value */
 			oldMouseY = mousePosY;
 			oldPos = EXTRADATA(node).pos;
-			capturedElement = houveredElement;
+			capturedElement = hoveredElement;
 		}
 		break;
 	case 3:
 		MN_VScrollbarNodeDiff(node, 10);
 		if (allowCapture) {
 			MN_SetMouseCapture(node);
-			capturedElement = houveredElement;
+			capturedElement = hoveredElement;
 			capturedTimer = MN_AllocTimer(node, 500, MN_VScrollbarNodeRepeat);
-			MN_TimerStart (capturedTimer);
+			MN_TimerStart(capturedTimer);
 		}
 		break;
 	case 4:
 		MN_VScrollbarNodeDiff(node, 1);
 		if (allowCapture) {
 			MN_SetMouseCapture(node);
-			capturedElement = houveredElement;
+			capturedElement = hoveredElement;
 			capturedTimer = MN_AllocTimer(node, 500, MN_VScrollbarNodeRepeat);
-			MN_TimerStart (capturedTimer);
+			MN_TimerStart(capturedTimer);
 		}
 		break;
 	default:
@@ -213,7 +213,7 @@ static void MN_ActiveVScrollbarNode_f ()
 
 static void MN_VScrollbarNodeMouseDown (menuNode_t *node, int x, int y, int button)
 {
-	int houveredElement = -1;
+	int hoveredElement = -1;
 	int description[5];
 
 	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize)
@@ -222,8 +222,8 @@ static void MN_VScrollbarNodeMouseDown (menuNode_t *node, int x, int y, int butt
 		return;
 
 	MN_VScrollbarNodeGetElementSize(node, description);
-	houveredElement = MN_VScrollbarNodeGetElement(node, description, x, y);
-	MN_VScrollbarNodeAction(node, houveredElement, qtrue);
+	hoveredElement = MN_VScrollbarNodeGetElement(node, description, x, y);
+	MN_VScrollbarNodeAction(node, hoveredElement, qtrue);
 }
 
 static void MN_VScrollbarNodeMouseUp (menuNode_t *node, int x, int y, int button)

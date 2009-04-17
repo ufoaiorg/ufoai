@@ -41,6 +41,6 @@ typedef struct abstractValueExtraData_s {
 
 struct nodeBehaviour_s; /* prototype */
 
-void MN_RegisterAbstractValueNode(struct nodeBehaviour_s *behavior);
+void MN_RegisterAbstractValueNode(struct nodeBehaviour_s *behaviour);
 
 #endif
