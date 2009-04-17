@@ -69,6 +69,7 @@ static const vec4_t anamorphicBorder = {0, 0, 0, 1};
  */
 qboolean MN_WindowIsFullScreen (menuNode_t* const node)
 {
+	assert(MN_NodeInstanceOf(node, "window"));
 	return node->u.window.isFullScreen;
 }
 
