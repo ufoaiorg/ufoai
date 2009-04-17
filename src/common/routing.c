@@ -409,10 +409,6 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 	 * Well, give back two DIST_EPSILON just to be sure */
 	bottom -= 2 * DIST_EPSILON;
 	top += 2 * DIST_EPSILON;
-	/* ...but before rounding, give back the DIST_EPSILON that was added by the trace */
-	/* Well, give back two DIST_EPSILON just to be sure */
-	bottom -= 2*DIST_EPSILON;
-	top += 2*DIST_EPSILON;
 	for (i = fz; i <= cz; i++) {
 		/* Round up floor to keep feet out of model. */
 		RT_FLOOR(map, actor_size, x, y, i) = (int)ceil((bottom - i * UNIT_HEIGHT) / QUANT);
