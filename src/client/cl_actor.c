@@ -3232,8 +3232,8 @@ void CL_DebugPath_f (void)
 	const pos_t x = mousePos[0];
 	const pos_t y = mousePos[1];
 	const pos_t z = mousePos[2];
-	int dir = 1;
-	int new_z;
+	int dir;
+	dir = 3;
 
 	if (mouseSpace != MS_WORLD)
 		return;
@@ -3257,9 +3257,10 @@ void CL_DebugPath_f (void)
 		RT_STEPUP_PY(clMap, actor_size, x, y, z),		// 2
 		RT_STEPUP_NY(clMap, actor_size, x, y, z) );		// 3
 
-#if 1
+#if 0
 	Com_Printf("performing RT_UpdateConnection() in dir: %i\n", dir);
-	new_z = RT_UpdateConnection(clMap, actor_size, x, y, z, dir);
+//	RT_UpdateConnectionColumn(clMap, actor_size, x, y, dir);
+	RT_UpdateConnection(clMap, actor_size, x, y, z, dir);
 	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
 		RT_CONN_PX(clMap, actor_size, x, y, z),
 		RT_CONN_NX(clMap, actor_size, x, y, z),
@@ -3278,7 +3279,7 @@ void CL_DebugPath_f (void)
 #if 0
 	priorityQueue_t pqueue;
 	PQueueInitialise(&pqueue, 1024);
-	Grid_MoveMark(clMap, actor_size, le->pathMap, mousePos, 0, 1,&pqueue);
+	Grid_MoveMark(clMap, actor_size, selActor->pathMap, mousePos, 0, dir, &pqueue);
 	PQueueFree(&pqueue);
 #endif
 }
