@@ -80,7 +80,7 @@ static void MN_BarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 
 static void MN_BarNodeMouseDown (menuNode_t *node, int x, int y, int button)
 {
-	if (!node->mousefx || node->disabled)
+	if (node->disabled)
 		return;
 
 	if (button == K_MOUSE1) {
