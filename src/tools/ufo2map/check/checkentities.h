@@ -31,6 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void Check_Stats(void);
 void CheckEntities(void);
-mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes);
+mapbrush_t **Check_ExtraBrushesForWorldspawn(int *numBrushes);
 
 #endif /* _CHECKENTITIES_H */

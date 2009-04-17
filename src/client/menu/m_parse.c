@@ -97,7 +97,8 @@ static const char *reserved_tokens[] = {
 	NULL
 };
 
-static qboolean MN_IsReservedToken(const char *name) {
+static qboolean MN_IsReservedToken (const char *name)
+{
 	const char **token = reserved_tokens;
 	while (*token) {
 		if (!strcmp(*token, name))

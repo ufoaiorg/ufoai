@@ -1,10 +1,10 @@
 /**
- * @file checklib.h
- * @brief Performs check on a loaded mapfile, and makes changes
- * that can be saved back to the source map.
+ * @file utf8.h
  */
 
 /*
+All original material Copyright (C) 2002-2007 UFO: Alien Invasion team.
+
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -21,19 +21,25 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
-#ifndef _CHECKLIB_H
-#define _CHECKLIB_H
+#ifndef UTF8_H_
+#define UTF8_H_
 
-/** constants that may be passed to Check_Printf in lieu of entity/brush numbers */
-#define NUM_NONE -1
-#define NUM_DIFF -2
-#define NUM_SAME -3
+#include <stddef.h>
 
-void Check_Printf(const verbosityLevel_t msgVerbLevel, qboolean change, int entnum, int brushnum, const char *format, ...) __attribute__((format(printf, 5, 6)));
-void Check_InitEntityDefs(void);
-void Check_Free(void);
+/** Is this the second or later byte of a multibyte UTF-8 character? */
+/* The definition of UTF-8 guarantees that the second and later
+ * bytes of a multibyte character have high bits 10, and that
+ * singlebyte characters and the start of multibyte characters
+ * never do. */
+#define UTF8_CONTINUATION_BYTE(c) (((c) & 0xc0) == 0x80)
 
-#endif /* _CHECKLIB_H */
+int UTF8_delete_char(char *s, int pos);
+int UTF8_insert_char(char *s, int n, int pos, int codepoint);
+int UTF8_char_len(unsigned char c);
+int UTF8_encoded_len(int codepoint);
+size_t UTF8_strlen(const char *str);
+
+
+#endif

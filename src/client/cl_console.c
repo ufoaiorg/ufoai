@@ -75,8 +75,8 @@ static void Con_DisplayString (int x, int y, const char *s)
 
 static void Key_ClearTyping (void)
 {
-	key_lines[edit_line][1] = 0;	/* clear any typing */
-	key_linepos = 1;
+	keyLines[editLine][1] = 0;	/* clear any typing */
+	keyLinePos = 1;
 }
 
 void Con_ToggleConsole_f (void)
@@ -142,7 +142,7 @@ static void Con_MessageModeSay_f (void)
 	if (!CL_OnBattlescape() || GAME_IsSingleplayer())
 		return;
 
-	msg_mode = MSG_SAY;
+	msgMode = MSG_SAY;
 	Key_SetDest(key_message);
 }
 
@@ -152,7 +152,7 @@ static void Con_MessageModeSayTeam_f (void)
 	if (!CL_OnBattlescape() || GAME_IsSingleplayer())
 		return;
 
-	msg_mode = MSG_SAY_TEAM;
+	msgMode = MSG_SAY_TEAM;
 	Key_SetDest(key_message);
 }
 
@@ -221,10 +221,10 @@ void Con_LoadConsoleHistory (void)
 	while (fgets(line, MAXCMDLINE - 2, f.f)) {
 		if (line[strlen(line) - 1] == '\n')
 			line[strlen(line) - 1] = 0;
-		Q_strncpyz(&key_lines[edit_line][1], line, MAXCMDLINE - 1);
-		edit_line = (edit_line + 1) % MAXKEYLINES;
-		history_line = edit_line;
-		key_lines[edit_line][1] = 0;
+		Q_strncpyz(&keyLines[editLine][1], line, MAXCMDLINE - 1);
+		editLine = (editLine + 1) % MAXKEYLINES;
+		historyLine = editLine;
+		keyLines[editLine][1] = 0;
 	}
 
 	FS_CloseFile(&f);
@@ -251,11 +251,11 @@ void Con_SaveConsoleHistory (void)
 		return;
 	}
 
-	for (i = 0; i < history_line; i++) {
-		if (lastLine && !strncmp(lastLine, &(key_lines[i][1]), MAXCMDLINE - 1))
+	for (i = 0; i < historyLine; i++) {
+		if (lastLine && !strncmp(lastLine, &(keyLines[i][1]), MAXCMDLINE - 1))
 			continue;
 
-		lastLine = &(key_lines[i][1]);
+		lastLine = &(keyLines[i][1]);
 		if (*lastLine) {
 			FS_Write(lastLine, strlen(lastLine), &f);
 			FS_Write("\n", 1, &f);
@@ -394,14 +394,14 @@ static void Con_DrawInput (void)
 	if (cls.keyDest != key_console && cls.state == ca_active)
 		return;					/* don't draw anything (always draw if not active) */
 
-	Q_strncpyz(editlinecopy, key_lines[edit_line], sizeof(editlinecopy));
+	Q_strncpyz(editlinecopy, keyLines[editLine], sizeof(editlinecopy));
 	text = editlinecopy;
 	y = strlen(text);
 
 	/* add the cursor frame */
 	if ((int)(cls.realtime >> 8) & 1) {
-		text[key_linepos] = CONSOLE_CURSOR_CHAR | CONSOLE_COLORED_TEXT_MASK;
-		if (key_linepos == y)
+		text[keyLinePos] = CONSOLE_CURSOR_CHAR | CONSOLE_COLORED_TEXT_MASK;
+		if (keyLinePos == y)
 			y++;
 	}
 
@@ -410,8 +410,8 @@ static void Con_DrawInput (void)
 		text[i] = ' ';
 
 	/* prestep if horizontally scrolling */
-	if (key_linepos >= con.lineWidth)
-		text += 1 + key_linepos - con.lineWidth;
+	if (keyLinePos >= con.lineWidth)
+		text += 1 + keyLinePos - con.lineWidth;
 
 	/* draw it */
 	y = con.visLines - con_fontHeight;
@@ -455,11 +455,11 @@ void Con_DrawNotify (void)
 			v += con_fontHeight;
 	}
 
-	if (cls.keyDest == key_message && (msg_mode == MSG_SAY_TEAM || msg_mode == MSG_SAY)) {
-		const char *s = msg_buffer;
+	if (cls.keyDest == key_message && (msgMode == MSG_SAY_TEAM || msgMode == MSG_SAY)) {
+		const char *s = msgBuffer;
 		int x;
 
-		if (msg_mode == MSG_SAY) {
+		if (msgMode == MSG_SAY) {
 			Con_DisplayString(l, v, "say:");
 			skip = 4;
 		} else {
@@ -467,8 +467,8 @@ void Con_DrawNotify (void)
 			skip = 10;
 		}
 
-		if (msg_bufferlen > (viddef.width >> con_fontShift) - (skip + 1))
-			s += msg_bufferlen - ((viddef.width >> con_fontShift) - (skip + 1));
+		if (msgBufferLen > (viddef.width >> con_fontShift) - (skip + 1))
+			s += msgBufferLen - ((viddef.width >> con_fontShift) - (skip + 1));
 
 		x = 0;
 		while (s[x]) {

@@ -36,7 +36,7 @@ typedef enum {
 } mouseSpace_t;
 
 typedef enum {
-	key_game,		/**< input focus is on the menu (or the keybindings) */
+	key_game,		/**< input focus is on the menu (or the keyBindings) */
 	key_console,	/**< console is opened */
 	key_message		/**< chatting */
 } keydest_t;

@@ -71,16 +71,16 @@ static void MN_InitKeyList_f (void)
 	keylist[0] = '\0';
 
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
-		if (keybindings[i] && keybindings[i][0])
-			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(keybindings[i])), sizeof(keylist));
+		if (keyBindings[i] && keyBindings[i][0])
+			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(keyBindings[i])), sizeof(keylist));
 
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
-		if (menukeybindings[i] && menukeybindings[i][0])
-			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(menukeybindings[i])), sizeof(keylist));
+		if (menuKeyBindings[i] && menuKeyBindings[i][0])
+			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(menuKeyBindings[i])), sizeof(keylist));
 
 	for (i = 0; i < K_LAST_KEY; i++)
-		if (battlekeybindings[i] && battlekeybindings[i][0])
-			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(battlekeybindings[i])), sizeof(keylist));
+		if (battleKeyBindings[i] && battleKeyBindings[i][0])
+			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(battleKeyBindings[i])), sizeof(keylist));
 
 	MN_RegisterText(TEXT_LIST, keylist);
 
@@ -98,7 +98,7 @@ static void MN_InitKeyList_f (void)
  */
 void MN_InitStartup (void)
 {
-	/* print the keybindings to mn.menuText */
+	/* print the keyBindings to mn.menuText */
 	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);
 
 	MN_Init();

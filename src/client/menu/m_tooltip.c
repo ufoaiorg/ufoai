@@ -103,35 +103,3 @@ void MN_Tooltip (menuNode_t *node, int x, int y)
 
 	MN_DrawTooltip("f_verysmall", string, x, y, maxWidth, 0);
 }
-
-/**
- * @brief Generic notice function
- */
-int MN_DrawNotice (int x, int y, const char *noticeText)
-{
-	const vec4_t noticeBG = { 1.0f, 0.0f, 0.0f, 0.2f };
-	const vec4_t noticeColor = { 1.0f, 1.0f, 1.0f, 1.0f };
-	int height = 0, width = 0;
-	const int maxWidth = 320;
-	const int maxHeight = 100;
-	const char *font = "f_normal";
-	int lines = 5;
-	int dx; /**< Delta-x position. Relative to original x position. */
-
-	R_FontTextSize(font, noticeText, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);
-
-	if (!width)
-		return 0;
-
-	if (x + width + 3 > VID_NORM_WIDTH)
-		dx = -(width + 10);
-	else
-		dx = 0;
-
-	R_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, ALIGN_UL, noticeBG);
-	R_ColorBlend(noticeColor);
-	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
-
-	R_ColorBlend(NULL);
-	return width;
-}

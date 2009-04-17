@@ -79,7 +79,7 @@ static inline const char* MN_GenCommandReadProperty (const char* input, char* ou
 static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam, const char* input, qboolean addNewLine)
 {
 	static char cmd[256];
-	int length = sizeof(cmd) - ((addNewLine)?2:1);
+	int length = sizeof(cmd) - (addNewLine ? 2 : 1);
 	static char propertyName[MAX_VAR];
 	const char *cin = input;
 	char *cout = cmd;

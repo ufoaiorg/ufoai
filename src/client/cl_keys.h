@@ -185,16 +185,16 @@ typedef enum {
 
 #define MAXKEYLINES 32
 
-extern int msg_mode;
-extern char msg_buffer[MAXCMDLINE];
-extern size_t msg_bufferlen;
-extern char key_lines[MAXKEYLINES][MAXCMDLINE];
-extern int key_linepos;
-extern int history_line;
-extern int edit_line;
-extern char *keybindings[K_KEY_SIZE];
-extern char *menukeybindings[K_KEY_SIZE];
-extern char *battlekeybindings[K_KEY_SIZE];
+extern int msgMode;
+extern char msgBuffer[MAXCMDLINE];
+extern size_t msgBufferLen;
+extern char keyLines[MAXKEYLINES][MAXCMDLINE];
+extern int keyLinePos;
+extern int historyLine;
+extern int editLine;
+extern char *keyBindings[K_KEY_SIZE];
+extern char *menuKeyBindings[K_KEY_SIZE];
+extern char *battleKeyBindings[K_KEY_SIZE];
 
 void Key_SetDest(int key_dest);
 void Key_Event(unsigned int key, unsigned short unicode, qboolean down, unsigned time);

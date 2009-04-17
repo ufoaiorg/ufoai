@@ -233,12 +233,12 @@ static void MN_EditorNodeExtractNode (qFILE *file, menuNode_t *node, int depth)
 	/* properties */
 	if (child) {
 		FS_Printf(file, "%s\t{\n", tab);
-		FS_Printf(file, "%s\t\tpos \"%d %d\"\n", tab, (int)node->pos[0], (int)node->pos[1]);
-		FS_Printf(file, "%s\t\tsize \"%d %d\"\n", tab, (int)node->size[0], (int)node->size[1]);
+		FS_Printf(file, "%s\t\tpos\t\"%d %d\"\n", tab, (int)node->pos[0], (int)node->pos[1]);
+		FS_Printf(file, "%s\t\tsize\t\"%d %d\"\n", tab, (int)node->size[0], (int)node->size[1]);
 		FS_Printf(file, "%s\t}\n", tab);
 	} else {
-		FS_Printf(file, "%s\tpos \"%d %d\"\n", tab, (int)node->pos[0], (int)node->pos[1]);
-		FS_Printf(file, "%s\tsize \"%d %d\"\n", tab, (int)node->size[0], (int)node->size[1]);
+		FS_Printf(file, "%s\tpos\t\"%d %d\"\n", tab, (int)node->pos[0], (int)node->pos[1]);
+		FS_Printf(file, "%s\tsize\t\"%d %d\"\n", tab, (int)node->size[0], (int)node->size[1]);
 	}
 
 	/* child */

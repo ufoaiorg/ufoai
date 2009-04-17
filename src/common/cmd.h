@@ -2,7 +2,7 @@
  * @file cmd.h
  * @brief Command text buffering and command execution header
  * @note Any number of commands can be added in a frame, from several different sources.
- * Most commands come from either keybindings or console line input, but remote
+ * Most commands come from either keyBindings or console line input, but remote
  * servers can also send across commands and entire text files can be executed.
  * @note The + command line options are also added to the command buffer.
  * @note Command execution takes a null terminated string, breaks it into tokens,
@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void Cbuf_Init(void);
 
 /**
- * @brief as new commands are generated from the console or keybindings, */
+ * @brief as new commands are generated from the console or keyBindings, */
 /* the text is added to the end of the command buffer. */
 void Cbuf_AddText(const char *text);
 

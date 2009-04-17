@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_font.h"
 #include "r_error.h"
+#include "../../shared/utf8.h"
 
 #define MAX_CACHE_STRING	128
 #define MAX_CHUNK_CACHE		1024 /* making this bigger uses more GL textures */

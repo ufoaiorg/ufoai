@@ -2,7 +2,7 @@
  * @file cmd.c
  * @brief Script command processing module
  * Command text buffering. Any number of commands can be added in a frame, from several different sources.
- * Most commands come from either keybindings or console line input, but remote
+ * Most commands come from either keyBindings or console line input, but remote
  * servers can also send across commands and entire text files can be accessed.
  *
  * The + command line options are also added to the command buffer.
@@ -98,7 +98,7 @@ void Cbuf_Init (void)
 
 /**
  * @brief Adds command text at the end of the buffer
- * @note Normally when a command is generate from the console or keybindings, it will be added to the end of the command buffer.
+ * @note Normally when a command is generate from the console or keyBindings, it will be added to the end of the command buffer.
  */
 void Cbuf_AddText (const char *text)
 {
