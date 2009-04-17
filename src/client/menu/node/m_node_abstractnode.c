@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Check the node inheritance
  * @param[in] node Requested node
- * @param[in] behaviourName Property name we search
+ * @param[in] behaviourName Behaviour name we check
  * @return True if the node inherits from the behaviour
  */
 qboolean MN_NodeInstanceOf (const menuNode_t *node, const char* behaviourName)
