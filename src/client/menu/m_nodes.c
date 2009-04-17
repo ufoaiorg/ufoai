@@ -382,7 +382,7 @@ menuNode_t *MN_GetNodeAtPosition (int x, int y)
 			break;
 		if (menu->u.window.modal)
 			break;
-		if (menu->u.window.isFullScreen)
+		if (MN_WindowIsFullScreen(menu))
 			break;
 	}
 

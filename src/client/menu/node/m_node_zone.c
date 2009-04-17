@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_keys.h"
 
-static menuTimer_t *capturedTimer = NULL;
+static menuTimer_t *capturedTimer;
 
 static void MN_ZoneNodeRepeat (menuNode_t *node, menuTimer_t *timer)
 {

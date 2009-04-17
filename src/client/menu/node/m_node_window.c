@@ -83,7 +83,8 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 
 	/* black border for anamorphic mode */
 	/** @todo it should be over the window */
-	if (node->u.window.isFullScreen) {
+	/** @todo why not using glClear here with glClearColor set to black here? */
+	if (MN_WindowIsFullScreen(node)) {
 		/* top */
 		if (pos[1] != 0)
 			R_DrawFill(0, 0, viddef.virtualWidth, pos[1], ALIGN_UL, anamorphicBorder);
@@ -199,7 +200,7 @@ static void MN_WindowNodeDoLayout (menuNode_t *node)
 	}
 
 	/* move fullscreen menu on the center of the screen */
-	if (node->u.window.isFullScreen) {
+	if (MN_WindowIsFullScreen(node)) {
 		node->pos[0] = (int) ((viddef.virtualWidth - node->size[0]) / 2);
 		node->pos[1] = (int) ((viddef.virtualHeight - node->size[1]) / 2);
 	}
