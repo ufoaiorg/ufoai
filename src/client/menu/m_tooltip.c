@@ -58,7 +58,7 @@ int MN_DrawTooltip (const char *font, const char *string, int x, int y, int maxW
 	if (y + height + 3 > VID_NORM_HEIGHT)
 		y -= height + 10;
 
-	R_DrawFill(x - 1, y - 1, width + 4, height + 4, 0, tooltipBG);
+	R_DrawFill(x - 1, y - 1, width + 4, height + 4, ALIGN_UL, tooltipBG);
 	R_ColorBlend(tooltipColor);
 	R_FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 
@@ -128,7 +128,7 @@ int MN_DrawNotice (int x, int y)
 	else
 		dx = 0;
 
-	R_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, 0, noticeBG);
+	R_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, ALIGN_UL, noticeBG);
 	R_ColorBlend(noticeColor);
 	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, cl.msgText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 

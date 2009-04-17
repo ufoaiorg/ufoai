@@ -210,7 +210,7 @@ static void MN_DrawNode (menuNode_t *node)
 		vec2_t pos;
 		MN_GetNodeAbsPos(node, pos);
 		if (node->bgcolor[3] != 0)
-			R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], 0, node->bgcolor);
+			R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, node->bgcolor);
 
 		if (node->border && node->bordercolor[3] != 0) {
 			R_DrawRect(pos[0], pos[1], node->size[0], node->size[1],

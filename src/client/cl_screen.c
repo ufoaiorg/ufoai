@@ -87,12 +87,12 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
 static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
 {
 	const vec4_t color = {0.3f, 0.3f, 0.3f, 0.7f};
-	const vec4_t color_bar = {0.8f, 0.8f, 0.8f, 0.7f};
+	const vec4_t colorBar = {0.8f, 0.8f, 0.8f, 0.7f};
 
 	R_DrawFill(x, y, w, h, ALIGN_UL, color);
 
 	if (percent != 0)
-		R_DrawFill((int)(x+(h*0.2)), (int)(y+(h*0.2)), (int)((w-(h*0.4))*percent*0.01), (int)(h*0.6), ALIGN_UL, color_bar);
+		R_DrawFill((int)(x + (h * 0.2)), (int)(y + (h * 0.2)), (int)((w - (h * 0.4)) * percent * 0.01), (int)(h * 0.6), ALIGN_UL, colorBar);
 }
 
 /**
@@ -117,8 +117,7 @@ void SCR_DrawPrecacheScreen (qboolean string)
 	if (string) {
 		/* Not used with gettext because it would make removing it too easy. */
 		R_FontDrawString("f_menubig", ALIGN_UC,
-			(int)(VID_NORM_WIDTH / 2),
-			30,
+			(int)(VID_NORM_WIDTH / 2), 30,
 			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
 	}
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
