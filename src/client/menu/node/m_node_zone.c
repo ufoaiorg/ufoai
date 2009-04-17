@@ -98,6 +98,8 @@ static void MN_ZoneNodeLoaded (menuNode_t *node)
 static const value_t properties[] = {
 	{"repeat", V_BOOL, offsetof(menuNode_t, repeat), MEMBER_SIZEOF(menuNode_t, repeat)},
 	{"clickdelay", V_INT, offsetof(menuNode_t, clickDelay), MEMBER_SIZEOF(menuNode_t, clickDelay)},
+	/** @todo delete it went its possible */
+	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
 	{NULL, V_NULL, 0, 0}
 };
 

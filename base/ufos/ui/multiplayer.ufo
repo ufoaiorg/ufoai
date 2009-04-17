@@ -828,7 +828,6 @@ window mp_create_server extends abstract_multiplayer
 			image		ui/spinner_blue
 			blend		true
 			pos			"475 49"
-			mousefx		true
 			min			2
 			max			16
 			delta		1
@@ -857,7 +856,6 @@ window mp_create_server extends abstract_multiplayer
 			image		ui/spinner_blue
 			blend		true
 			pos			"475 69"
-			mousefx		true
 			min			1
 			max			8
 			delta		1
@@ -886,7 +884,6 @@ window mp_create_server extends abstract_multiplayer
 			image		ui/spinner_blue
 			blend		true
 			pos			"475 89"
-			mousefx		true
 			min			1
 			max			8
 			delta		1
@@ -915,7 +912,6 @@ window mp_create_server extends abstract_multiplayer
 			image		ui/spinner_blue
 			blend		true
 			pos			"475 109"
-			mousefx		true
 			min			1
 			max			8
 			delta		1
@@ -944,7 +940,6 @@ window mp_create_server extends abstract_multiplayer
 			image		ui/spinner_blue
 			blend		true
 			pos			"475 129"
-			mousefx		true
 			min			0
 			max			8
 			delta		1

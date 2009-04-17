@@ -136,6 +136,8 @@ void MN_ImageNodeDraw (menuNode_t *node)
 
 static const value_t properties[] = {
 	{"preventratio", V_BOOL, offsetof(menuNode_t, preventRatio), MEMBER_SIZEOF(menuNode_t, preventRatio)},
+	/** @todo delete it when its possible (use more button instead of image) */
+	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
 	{NULL, V_NULL, 0, 0}
 };
 

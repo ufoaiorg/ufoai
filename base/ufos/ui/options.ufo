@@ -404,7 +404,6 @@ window options
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			3.0
-			mousefx		true
 			onClick		{ }
 		}
 
@@ -426,7 +425,6 @@ window options
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			2.0
-			mousefx		true
 			onClick		{ }
 		}
 
@@ -448,7 +446,6 @@ window options
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			2.0
-			mousefx		true
 			onClick		{ }
 		}
 
@@ -470,7 +467,6 @@ window options
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			4.0
-			mousefx		true
 			onClick		{ }
 		}
 
@@ -611,7 +607,6 @@ window options
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			1.0
-			mousefx		true
 			onClick		{ }
 		}
 
@@ -633,7 +628,6 @@ window options
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			128
-			mousefx		true
 			onClick		{ }
 		}
 
@@ -976,7 +970,6 @@ window options
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			9
-			mousefx		true
 			onClick		{ }
 		}
 	}
@@ -1030,7 +1023,6 @@ window options
 			color		"0 .8 0 1"
 			min			150
 			max			3000
-			mousefx		true
 			onClick		{ }
 		}
 
@@ -1056,7 +1048,6 @@ window options
 			color		"0 .8 0 1"
 			min			50
 			max			1000
-			mousefx		true
 			onClick		{ }
 		}
 
@@ -1082,7 +1073,6 @@ window options
 			color		"0 .8 0 1"
 			min			150
 			max			3000
-			mousefx		true
 			onClick		{ }
 		}
 
@@ -1118,7 +1108,6 @@ window options
 			color		"0 .8 0 1"
 			min			0.0
 			max			1.0
-			mousefx		true
 			onClick		{ }
 		}
 
@@ -1144,7 +1133,6 @@ window options
 			color		"0 .8 0 1"
 			min			5
 			max			30
-			mousefx		true
 			onClick		{ }
 		}
 

@@ -1056,7 +1056,6 @@ window popup_newbase
 		pos			"298 188"
 		size		"176 32"
 		onClick	{
-			*name mousefx false
 			cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;"
 		}
 	}
@@ -1071,7 +1070,6 @@ window popup_newbase
 		pos			"111 188"
 		size		"176 32"
 		onClick	{
-			*name mousefx false
 			cmd "mn_pop;mn_build_base;"
 		}
 	}
