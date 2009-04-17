@@ -1098,6 +1098,8 @@ static void TR_TransferStart_f (void)
 			AIR_RemoveEmployees(aircraft);
 			transfer->hasAircraft = qtrue;
 			transfer->aircraftArray[i] = i;
+		} else {
+			transfer->aircraftArray[i] = TRANS_LIST_EMPTY_SLOT;
 		}
 	}
 
