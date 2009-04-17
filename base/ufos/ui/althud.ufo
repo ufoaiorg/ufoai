@@ -870,6 +870,7 @@ window althud extends ahud
 		color		".7 0 0 1"
 		current		"*cvar mn_hp"
 		max			"*cvar mn_hpmax"
+		disabled	true
 	}
 
 	//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_hud.
@@ -888,6 +889,7 @@ window althud extends ahud
 		color		".1 .1 .5 1"
 		current		"*cvar mn_tu"
 		max			"*cvar mn_tumax"
+		disabled	true
 	}
 	bar timeremain
 	{
@@ -896,6 +898,7 @@ window althud extends ahud
 		color		".2 .2 1 1"
 		current		"*cvar mn_turemain"
 		max			"*cvar mn_tumax"
+		disabled	true
 	}
 
 	bar timereserved
@@ -905,6 +908,7 @@ window althud extends ahud
 		color		"0 .5 0 1"
 		current		"*cvar mn_tureserved"
 		max			"*cvar mn_tumax"
+		disabled	true
 	}
 
 	bar morale
@@ -914,6 +918,7 @@ window althud extends ahud
 		color		".7 .7 0 1"
 		current		"*cvar mn_morale"
 		max			"*cvar mn_moralemax"
+		disabled	true
 	}
 
 	bar morale0
@@ -923,6 +928,7 @@ window althud extends ahud
 		color		".7 .7 0 1"
 		current		"*cvar mn_morale0"
 		max			"*cvar mn_moralemax0"
+		disabled	true
 	}
 	bar health0
 	{
@@ -931,6 +937,7 @@ window althud extends ahud
 		color		".7 0 0 1"
 		current		"*cvar mn_hp0"
 		max			"*cvar mn_hpmax0"
+		disabled	true
 	}
 	bar time0
 	{
@@ -939,6 +946,7 @@ window althud extends ahud
 		color		".2 .2 1 1"
 		current		"*cvar mn_tu0"
 		max			"*cvar mn_tumax0"
+		disabled	true
 	}
 	bar morale1
 	{
@@ -947,6 +955,7 @@ window althud extends ahud
 		color		".7 .7 0 1"
 		current		"*cvar mn_morale1"
 		max			"*cvar mn_moralemax1"
+		disabled	true
 	}
 	bar health1
 	{
@@ -955,6 +964,7 @@ window althud extends ahud
 		color		".7 0 0 1"
 		current		"*cvar mn_hp1"
 		max			"*cvar mn_hpmax1"
+		disabled	true
 	}
 	bar time1
 	{
@@ -963,6 +973,7 @@ window althud extends ahud
 		color		".2 .2 1 1"
 		current		"*cvar mn_tu1"
 		max			"*cvar mn_tumax1"
+		disabled	true
 	}
 	bar morale2
 	{
@@ -971,6 +982,7 @@ window althud extends ahud
 		color		".7 .7 0 1"
 		current		"*cvar mn_morale2"
 		max			"*cvar mn_moralemax2"
+		disabled	true
 	}
 	bar health2
 	{
@@ -979,6 +991,7 @@ window althud extends ahud
 		color		".7 0 0 1"
 		current		"*cvar mn_hp2"
 		max			"*cvar mn_hpmax2"
+		disabled	true
 	}
 	bar time2
 	{
@@ -987,6 +1000,7 @@ window althud extends ahud
 		color		".2 .2 1 1"
 		current		"*cvar mn_tu2"
 		max			"*cvar mn_tumax2"
+		disabled	true
 	}
 	bar morale3
 	{
@@ -995,6 +1009,7 @@ window althud extends ahud
 		color		".7 .7 0 1"
 		current		"*cvar mn_morale3"
 		max			"*cvar mn_moralemax3"
+		disabled	true
 	}
 	bar health3
 	{
@@ -1003,6 +1018,7 @@ window althud extends ahud
 		color		".7 0 0 1"
 		current		"*cvar mn_hp3"
 		max			"*cvar mn_hpmax3"
+		disabled	true
 	}
 	bar time3
 	{
@@ -1011,6 +1027,7 @@ window althud extends ahud
 		color		".2 .2 1 1"
 		current		"*cvar mn_tu3"
 		max			"*cvar mn_tumax3"
+		disabled	true
 	}
 	bar morale4
 	{
@@ -1019,6 +1036,7 @@ window althud extends ahud
 		color		".7 .7 0 1"
 		current		"*cvar mn_morale4"
 		max			"*cvar mn_moralemax4"
+		disabled	true
 	}
 	bar health4
 	{
@@ -1027,6 +1045,7 @@ window althud extends ahud
 		color		".7 0 0 1"
 		current		"*cvar mn_hp4"
 		max			"*cvar mn_hpmax4"
+		disabled	true
 	}
 	bar time4
 	{
@@ -1035,6 +1054,7 @@ window althud extends ahud
 		color		".2 .2 1 1"
 		current		"*cvar mn_tu4"
 		max			"*cvar mn_tumax4"
+		disabled	true
 	}
 	bar morale5
 	{
@@ -1043,6 +1063,7 @@ window althud extends ahud
 		color		".7 .7 0 1"
 		current		"*cvar mn_morale5"
 		max			"*cvar mn_moralemax5"
+		disabled	true
 	}
 	bar health5
 	{
@@ -1051,6 +1072,7 @@ window althud extends ahud
 		color		".7 0 0 1"
 		current		"*cvar mn_hp5"
 		max			"*cvar mn_hpmax5"
+		disabled	true
 	}
 	bar time5
 	{
@@ -1059,6 +1081,7 @@ window althud extends ahud
 		color		".2 .2 1 1"
 		current		"*cvar mn_tu5"
 		max			"*cvar mn_tumax5"
+		disabled	true
 	}
 	bar morale6
 	{
@@ -1067,6 +1090,7 @@ window althud extends ahud
 		color		".7 .7 0 1"
 		current		"*cvar mn_morale6"
 		max			"*cvar mn_moralemax6"
+		disabled	true
 	}
 	bar health6
 	{
@@ -1075,6 +1099,7 @@ window althud extends ahud
 		color		".7 0 0 1"
 		current		"*cvar mn_hp6"
 		max			"*cvar mn_hpmax6"
+		disabled	true
 	}
 	bar time6
 	{
@@ -1083,6 +1108,7 @@ window althud extends ahud
 		color		".2 .2 1 1"
 		current		"*cvar mn_tu6"
 		max			"*cvar mn_tumax6"
+		disabled	true
 	}
 	bar morale7
 	{
@@ -1091,6 +1117,7 @@ window althud extends ahud
 		color		".7 .7 0 1"
 		current		"*cvar mn_morale7"
 		max			"*cvar mn_moralemax7"
+		disabled	true
 	}
 	bar health7
 	{
@@ -1099,6 +1126,7 @@ window althud extends ahud
 		color		".7 0 0 1"
 		current		"*cvar mn_hp7"
 		max			"*cvar mn_hpmax7"
+		disabled	true
 	}
 	bar time7
 	{
@@ -1107,6 +1135,7 @@ window althud extends ahud
 		color		".2 .2 1 1"
 		current		"*cvar mn_tu7"
 		max			"*cvar mn_tumax7"
+		disabled	true
 	}
 
 	text infoscreen
