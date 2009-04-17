@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_actions.h"
 #include "m_node_textentry.h"
 #include "m_node_abstractnode.h"
+#include "m_node_panel.h"
 
 #include "../../client.h"
 #include "../../renderer/r_draw.h"

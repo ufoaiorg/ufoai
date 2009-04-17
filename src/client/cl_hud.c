@@ -108,6 +108,9 @@ CASSERT(lengthof(moveModeDescriptions) == WALKTYPE_MAX);
 static int popupNum;	/**< Number of entries in the popup list */
 static qboolean popupReload = qfalse;
 
+static int hudTime;
+static char hudText[256];
+
 /**
  * @brief Displays a message on the hud.
  * @sa MN_DisplayNotice
@@ -116,8 +119,8 @@ static qboolean popupReload = qfalse;
  */
 void HUD_DisplayMessage (const char *text)
 {
-	cl.msgTime = cl.time + cl_hud_message_timeout->integer;
-	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));
+	hudTime = cl.time + cl_hud_message_timeout->integer;
+	Q_strncpyz(hudText, text, sizeof(hudText));
 }
 
 static void HUD_RefreshWeaponButtons(const le_t* le, int additionalTime);
@@ -1258,8 +1261,8 @@ void HUD_ActorUpdateCvars (void)
 		time = 0;
 
 		/* display special message */
-		if (cl.time < cl.msgTime)
-			Q_strncpyz(infoText, cl.msgText, sizeof(infoText));
+		if (cl.time < hudTime)
+			Q_strncpyz(infoText, hudText, sizeof(infoText));
 
 		/* update HUD stats etc in more or shoot modes */
 		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT]
