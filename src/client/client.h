@@ -100,10 +100,6 @@ typedef struct client_state_s {
 
 	camera_t cam;
 
-	/** @todo MN_DisplayNotice should use a different timer and buffer - this place is for tactical stuff only */
-	int msgTime;	/**< @sa MN_DisplayNotice @sa HUD_DisplayMessage */
-	char msgText[256];	/**< @sa MN_DisplayNotice @sa HUD_DisplayMessage */
-
 	struct le_s *teamList[MAX_TEAMLIST];
 	int numTeamList;
 	int numAliensSpotted;

@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_parse.h"
 
-#include "../client.h"
+#include "../client.h" /* gettext _() */
 #include "../renderer/r_draw.h"
 
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
@@ -107,7 +107,7 @@ void MN_Tooltip (menuNode_t *node, int x, int y)
 /**
  * @brief Generic notice function
  */
-int MN_DrawNotice (int x, int y)
+int MN_DrawNotice (int x, int y, const char *noticeText)
 {
 	const vec4_t noticeBG = { 1.0f, 0.0f, 0.0f, 0.2f };
 	const vec4_t noticeColor = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -118,7 +118,7 @@ int MN_DrawNotice (int x, int y)
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
 
-	R_FontTextSize(font, cl.msgText, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);
+	R_FontTextSize(font, noticeText, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);
 
 	if (!width)
 		return 0;
@@ -130,7 +130,7 @@ int MN_DrawNotice (int x, int y)
 
 	R_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, ALIGN_UL, noticeBG);
 	R_ColorBlend(noticeColor);
-	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, cl.msgText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
+	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 
 	R_ColorBlend(NULL);
 	return width;

@@ -84,7 +84,6 @@ typedef struct menuGlobal_s {
 
 	menuIcon_t menuIcons[MAX_MENUICONS];
 	int numIcons;
-
 } menuGlobal_t;
 
 extern menuGlobal_t mn;
