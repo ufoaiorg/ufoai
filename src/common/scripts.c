@@ -209,14 +209,14 @@ void* Com_AlignPtr (void *memory, valueTypes_t type)
  * @note instead of , this function separate error message and write byte result
  * @todo better doxygen documentation
  */
-int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writedByte)
+int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes)
 {
 	byte *b;
 	int x, y, w, h;
 	byte num;
 	resultStatus_t status = RESULT_OK;
 	b = (byte *) base + ofs;
-	*writedByte = 0;
+	*writtenBytes = 0;
 
 	if (size) {
 #ifdef DEBUG
@@ -238,7 +238,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return RESULT_ERROR;
 
 	case V_NULL:
-		*writedByte = ALIGN_NOTHING(0);
+		*writtenBytes = ALIGN_NOTHING(0);
 		break;
 
 	case V_BOOL:
@@ -250,12 +250,12 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal bool statement '%s'", token);
 			return RESULT_ERROR;
 		}
-		*writedByte = ALIGN_NOTHING(sizeof(qboolean));
+		*writtenBytes = ALIGN_NOTHING(sizeof(qboolean));
 		break;
 
 	case V_CHAR:
 		*(char *) b = *token;
-		*writedByte = ALIGN_NOTHING(sizeof(char));
+		*writtenBytes = ALIGN_NOTHING(sizeof(char));
 		break;
 
 	case V_TEAM:
@@ -267,7 +267,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = TEAM_ALIEN;
 		else
 			Sys_Error("Unknown team string: '%s' found in script files", token);
-		*writedByte = ALIGN_NOTHING(sizeof(int));
+		*writtenBytes = ALIGN_NOTHING(sizeof(int));
 		break;
 
 	case V_RACE:
@@ -287,7 +287,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = RACE_SHEVAAR;
 		else
 			Sys_Error("Unknown race type: '%s'", token);
-		*writedByte = ALIGN_NOTHING(sizeof(int));
+		*writtenBytes = ALIGN_NOTHING(sizeof(int));
 		break;
 
 	case V_INT:
@@ -295,7 +295,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal int statement '%s'", token);
 			return RESULT_ERROR;
 		}
-		*writedByte = ALIGN_NOTHING(sizeof(int));
+		*writtenBytes = ALIGN_NOTHING(sizeof(int));
 		break;
 
 	case V_INT2:
@@ -303,7 +303,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal int2 statement '%s'", token);
 			return RESULT_ERROR;
 		}
-		*writedByte = ALIGN_NOTHING(2 * sizeof(int));
+		*writtenBytes = ALIGN_NOTHING(2 * sizeof(int));
 		break;
 
 	case V_FLOAT:
@@ -311,7 +311,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal float statement '%s'", token);
 			return RESULT_ERROR;
 		}
-		*writedByte = ALIGN_NOTHING(sizeof(float));
+		*writtenBytes = ALIGN_NOTHING(sizeof(float));
 		break;
 
 	case V_POS:
@@ -319,7 +319,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal pos statement '%s'", token);
 			return RESULT_ERROR;
 		}
-		*writedByte = ALIGN_NOTHING(2 * sizeof(float));
+		*writtenBytes = ALIGN_NOTHING(2 * sizeof(float));
 		break;
 
 	case V_VECTOR:
@@ -327,7 +327,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal vector statement '%s'", token);
 			return RESULT_ERROR;
 		}
-		*writedByte = ALIGN_NOTHING(3 * sizeof(float));
+		*writtenBytes = ALIGN_NOTHING(3 * sizeof(float));
 		break;
 
 	case V_COLOR:
@@ -337,7 +337,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 				snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal color statement '%s'", token);
 				return RESULT_ERROR;
 			}
-			*writedByte = ALIGN_NOTHING(4 * sizeof(float));
+			*writtenBytes = ALIGN_NOTHING(4 * sizeof(float));
 		}
 		break;
 
@@ -348,14 +348,14 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 				snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal rgba statement '%s'", token);
 				return RESULT_ERROR;
 			}
-			*writedByte = ALIGN_NOTHING(4 * sizeof(int));
+			*writtenBytes = ALIGN_NOTHING(4 * sizeof(int));
 		}
 		break;
 
 	case V_STRING:
 		Q_strncpyz((char *) b, token, MAX_VAR);
 		w = (int)strlen(token) + 1;
-		*writedByte = ALIGN_NOTHING(w);
+		*writtenBytes = ALIGN_NOTHING(w);
 		break;
 
 	/* just remove the _ but don't translate */
@@ -365,13 +365,13 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 		Q_strncpyz((char *) b, token, MAX_VAR);
 		w = (int)strlen((char *) b) + 1;
-		*writedByte = ALIGN_NOTHING(w);
+		*writtenBytes = ALIGN_NOTHING(w);
 		break;
 
 	case V_LONGSTRING:
 		strcpy((char *) b, token);
 		w = (int)strlen(token) + 1;
-		*writedByte = ALIGN_NOTHING(w);
+		*writtenBytes = ALIGN_NOTHING(w);
 		break;
 
 	case V_ALIGN:
@@ -382,7 +382,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN_NOTHING(sizeof(byte));
+		*writtenBytes = ALIGN_NOTHING(sizeof(byte));
 		break;
 
 	case V_BLEND:
@@ -393,7 +393,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN_NOTHING(sizeof(byte));
+		*writtenBytes = ALIGN_NOTHING(sizeof(byte));
 		break;
 
 	case V_STYLE:
@@ -404,7 +404,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN_NOTHING(sizeof(byte));
+		*writtenBytes = ALIGN_NOTHING(sizeof(byte));
 		break;
 
 	case V_FADE:
@@ -415,7 +415,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN_NOTHING(sizeof(byte));
+		*writtenBytes = ALIGN_NOTHING(sizeof(byte));
 		break;
 
 	case V_SHAPE_SMALL:
@@ -434,7 +434,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		}
 		for (h += y; y < h; y++)
 			*(uint32_t *) b |= ((1 << w) - 1) << x << (y * SHAPE_SMALL_MAX_WIDTH);
-		*writedByte = ALIGN_NOTHING(SHAPE_SMALL_MAX_HEIGHT);
+		*writtenBytes = ALIGN_NOTHING(SHAPE_SMALL_MAX_HEIGHT);
 		break;
 
 	case V_SHAPE_BIG:
@@ -453,7 +453,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		w = ((1 << w) - 1) << x;
 		for (h += y; y < h; y++)
 			((uint32_t *) b)[y] |= w;
-		*writedByte = ALIGN_NOTHING(SHAPE_BIG_MAX_HEIGHT * SHAPE_SMALL_MAX_HEIGHT);
+		*writtenBytes = ALIGN_NOTHING(SHAPE_BIG_MAX_HEIGHT * SHAPE_SMALL_MAX_HEIGHT);
 		break;
 
 	case V_DMGWEIGHT:
@@ -465,7 +465,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN_NOTHING(sizeof(byte));
+		*writtenBytes = ALIGN_NOTHING(sizeof(byte));
 		break;
 
 	case V_DATE:
@@ -476,7 +476,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 		((date_t *) b)->day = DAYS_PER_YEAR * x + y;
 		((date_t *) b)->sec = SECONDS_PER_HOUR * w;
-		*writedByte = ALIGN_NOTHING(sizeof(date_t));
+		*writtenBytes = ALIGN_NOTHING(sizeof(date_t));
 		break;
 
 	case V_RELABS:
@@ -496,7 +496,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			}
 			*(float *) b = atof(token);
 		}
-		*writedByte = ALIGN_NOTHING(sizeof(float));
+		*writtenBytes = ALIGN_NOTHING(sizeof(float));
 		break;
 
 	case V_LONGLINES:
@@ -507,7 +507,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN_NOTHING(sizeof(byte));
+		*writtenBytes = ALIGN_NOTHING(sizeof(byte));
 		break;
 
 	default:
@@ -531,8 +531,8 @@ int Com_EParseValueDebug (void *base, const char *token, valueTypes_t type, int 
 int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size)
 #endif
 {
-	size_t writedByte;
-	const resultStatus_t result = Com_ParseValue(base, token, type, ofs, size, &writedByte);
+	size_t writtenBytes;
+	const resultStatus_t result = Com_ParseValue(base, token, type, ofs, size, &writtenBytes);
 	switch (result) {
 	case RESULT_ERROR:
 #ifdef DEBUG
@@ -551,7 +551,7 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 	case RESULT_OK:
 		break;
 	}
-	return writedByte;
+	return writtenBytes;
 }
 
 /**
