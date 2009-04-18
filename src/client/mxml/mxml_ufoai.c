@@ -26,25 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void mxml_AddString (mxml_node_t *parent, const char *name, const char *value)
 {
-#if 0
-	mxml_node_t *t;
-	t = mxmlNewElement(parent, name);
-	mxmlElementSetAttr(t, "type", "string");
-	/*mxmlElementSetAttr(t, "value", value);*/
-	mxmlNewOpaque(t, value);
-#endif
 	mxmlElementSetAttr(parent, name, value);
 }
 
 void mxml_AddBool (mxml_node_t *parent, const char *name, qboolean value)
 {
-#if 0
-	mxml_node_t *t;
-	t = mxmlNewElement(parent, name);
-	mxmlElementSetAttr(t, "type", "int");
-	mxmlNewInteger(t, value?1:0);
-#endif
-	mxmlElementSetAttr(parent, name, value?"1":"0");
+	mxmlElementSetAttr(parent, name, value ? "1" : "0");
 }
 
 void mxml_AddFloat (mxml_node_t *parent, const char *name, float value)
@@ -57,23 +44,11 @@ void mxml_AddDouble (mxml_node_t *parent, const char *name, double value)
 	char txt[50];
 	snprintf(txt, sizeof(txt), "%f", value);
 	mxmlElementSetAttr(parent, name, txt);
-#if 0
-	mxml_node_t *t;
-	t = mxmlNewElement(parent, name);
-	mxmlElementSetAttr(t, "type", "double");
-	mxmlNewReal(t, value);
-#endif
 }
 
 void mxml_AddByte (mxml_node_t *parent, const char *name, byte value)
 {
 	mxml_AddLong(parent, name, value);
-#if 0
-	mxml_node_t *t;
-	t = mxmlNewElement(parent, name);
-	mxmlElementSetAttr(t, "type", "int");
-	mxmlNewInteger(t, value);
-#endif
 }
 
 void mxml_AddShort (mxml_node_t *parent, const char *name, short value)
@@ -91,12 +66,6 @@ void mxml_AddLong (mxml_node_t *parent, const char *name, long value)
 	char txt[50];
 	snprintf(txt, sizeof(txt), "%ld", value);
 	mxmlElementSetAttr(parent, name, txt);
-#if 0
-	mxml_node_t *t;
-	t = mxmlNewElement(parent, name);
-	mxmlElementSetAttr(t,"type", "long");
-	mxmlNewLong(t, value);
-#endif
 }
 
 void mxml_AddPos3(mxml_node_t *parent, const char *name, const vec3_t pos)
@@ -239,7 +208,7 @@ mxml_node_t * mxml_GetNextNode (mxml_node_t *current, mxml_node_t *parent, const
 /**
  * @brief callback function for parsing the node tree
  */
-mxml_type_t mxml_ufo_type_cb(mxml_node_t *node)
+mxml_type_t mxml_ufo_type_cb (mxml_node_t *node)
 {
 	/* You can lookup attributes and/or use the
 	 * element name, hierarchy, etc... */
