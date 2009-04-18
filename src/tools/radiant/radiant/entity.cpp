@@ -68,11 +68,12 @@ entity_globals_t g_entity_globals;
 
 class EntitySetKeyValueSelected: public scene::Graph::Walker
 {
+		const char* m_classname;
 		const char* m_key;
 		const char* m_value;
 	public:
-		EntitySetKeyValueSelected (const char* key, const char* value) :
-			m_key(key), m_value(value)
+		EntitySetKeyValueSelected (const char* classname, const char* key, const char* value) :
+			m_classname(classname), m_key(key), m_value(value)
 		{
 		}
 		bool pre (const scene::Path& path, scene::Instance& instance) const
@@ -82,7 +83,8 @@ class EntitySetKeyValueSelected: public scene::Graph::Walker
 		void post (const scene::Path& path, scene::Instance& instance) const
 		{
 			Entity* entity = Node_getEntity(path.top());
-			if (entity != 0 && (instance.childSelected() || Instance_getSelectable(instance)->isSelected())) {
+			if (entity != 0 && (!(strcmp(entity->getEntityClass().name(), m_classname))) && (instance.childSelected()
+					|| Instance_getSelectable(instance)->isSelected())) {
 				entity->setKeyValue(m_key, m_value);
 			}
 		}
@@ -90,10 +92,11 @@ class EntitySetKeyValueSelected: public scene::Graph::Walker
 
 class EntitySetClassnameSelected: public scene::Graph::Walker
 {
-		const char* m_classname;
+		const char* m_oldClassame;
+		const char* m_newClassname;
 	public:
-		EntitySetClassnameSelected (const char* classname) :
-			m_classname(classname)
+		EntitySetClassnameSelected (const char* oldClassname, const char* newClassname) :
+			m_newClassname(newClassname)
 		{
 		}
 		bool pre (const scene::Path& path, scene::Instance& instance) const
@@ -103,9 +106,10 @@ class EntitySetClassnameSelected: public scene::Graph::Walker
 		void post (const scene::Path& path, scene::Instance& instance) const
 		{
 			Entity* entity = Node_getEntity(path.top());
-			if (entity != 0 && (instance.childSelected() || Instance_getSelectable(instance)->isSelected())) {
+			if (entity != 0 && (!strcmp(entity->getEntityClass().name(), m_oldClassame)) && (instance.childSelected()
+					|| Instance_getSelectable(instance)->isSelected())) {
 				NodeSmartReference node(GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert(
-						m_classname, node_is_group(path.top()))));
+						m_newClassname, node_is_group(path.top()))));
 
 				EntityCopyingVisitor visitor(*Node_getEntity(node));
 
@@ -122,14 +126,14 @@ class EntitySetClassnameSelected: public scene::Graph::Walker
 		}
 };
 
-void Scene_EntitySetKeyValue_Selected (const char* key, const char* value)
+void Scene_EntitySetKeyValue_Selected (const char* classname, const char* key, const char* value)
 {
-	GlobalSceneGraph().traverse(EntitySetKeyValueSelected(key, value));
+	GlobalSceneGraph().traverse(EntitySetKeyValueSelected(classname, key, value));
 }
 
-void Scene_EntitySetClassname_Selected (const char* classname)
+void Scene_EntitySetClassname_Selected (const char* oldClassname, const char* newClassname)
 {
-	GlobalSceneGraph().traverse(EntitySetClassnameSelected(classname));
+	GlobalSceneGraph().traverse(EntitySetClassnameSelected(oldClassname, newClassname));
 }
 
 void Entity_ungroupSelected ()

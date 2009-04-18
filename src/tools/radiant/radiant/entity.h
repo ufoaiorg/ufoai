@@ -27,8 +27,8 @@ typedef BasicVector3<float> Vector3;
 void Entity_createFromSelection(const char* name, const Vector3& origin);
 void Entity_connectSelected();
 
-void Scene_EntitySetKeyValue_Selected(const char* key, const char* value);
-void Scene_EntitySetClassname_Selected(const char* classname);
+void Scene_EntitySetKeyValue_Selected(const char* classname, const char* key, const char* value);
+void Scene_EntitySetClassname_Selected(const char* classname, const char* newClassname);
 
 
 typedef struct _GtkWidget GtkWidget;

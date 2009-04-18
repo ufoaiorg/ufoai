@@ -73,34 +73,52 @@ static GtkEntry* numeric_entry_new (void)
 
 namespace
 {
-	typedef std::map<CopiedString, CopiedString> KeyValues;
-	KeyValues g_selectedKeyValues;
-	KeyValues g_selectedDefaultKeyValues;
+	typedef std::list<CopiedString> Values;
+	typedef std::map<CopiedString, Values> KeyValues;
+	typedef std::map<CopiedString, KeyValues> ClassKeyValues;
+	ClassKeyValues g_selectedKeyValues; /**< all selected entities keyvalues */
+
+	const EntityClass* g_current_attributes = 0;
+	CopiedString g_currentSelectedKey;
+
 }
 
+/**
+ * @brief Helper method returns value of the first list element
+ * @param values value list to get first data element from
+ * @return content of first list element
+ */
+const char* Values_getFirstValue(const Values &values)
+{
+	assert(!values.empty());
+	return (*values.begin()).c_str();
+}
+
+/**
+ * @brief Helper method returns the first value in value list for given key for currently selected entity class or an empty string.
+ * @param key key to retrieve value for
+ * @return first value in value list or empty string
+ */
 const char* SelectedEntity_getValueForKey (const char* key)
 {
-	{
-		KeyValues::const_iterator i = g_selectedKeyValues.find(key);
-		if (i != g_selectedKeyValues.end()) {
-			return (*i).second.c_str();
-		}
-	}
-	{
-		KeyValues::const_iterator i = g_selectedDefaultKeyValues.find(key);
-		if (i != g_selectedDefaultKeyValues.end()) {
-			return (*i).second.c_str();
+	assert(g_current_attributes != 0);
+	ClassKeyValues::iterator it = g_selectedKeyValues.find(g_current_attributes->m_name);
+	if (it != g_selectedKeyValues.end()) {
+		KeyValues &possibleValues = (*it).second;
+		KeyValues::const_iterator i = possibleValues.find(key);
+		if (i != possibleValues.end()) {
+			return Values_getFirstValue((*i).second);
 		}
 	}
 	return "";
 }
 
-static void Scene_EntitySetKeyValue_Selected_Undoable (const char* key, const char* value)
+static void Scene_EntitySetKeyValue_Selected_Undoable (const char* classname, const char* key, const char* value)
 {
 	StringOutputStream command(256);
-	command << "entitySetKeyValue -key " << makeQuoted(key) << " -value " << makeQuoted(value);
+	command << "entitySetKeyValue -classname " << makeQuoted(classname) << " -key " << makeQuoted(key) << " -value " << makeQuoted(value);
 	UndoableCommand undo(command.c_str());
-	Scene_EntitySetKeyValue_Selected(key, value);
+	Scene_EntitySetKeyValue_Selected(classname, key, value);
 }
 
 class EntityAttribute
@@ -115,6 +133,7 @@ class EntityAttribute
 
 class BooleanAttribute: public EntityAttribute
 {
+		CopiedString m_classname;
 		CopiedString m_key;
 		GtkCheckButton* m_check;
 
@@ -124,8 +143,8 @@ class BooleanAttribute: public EntityAttribute
 			return FALSE;
 		}
 	public:
-		BooleanAttribute (const char* key) :
-			m_key(key), m_check(0)
+		BooleanAttribute (const char* classname, const char* key) :
+			m_classname(classname), m_key(key), m_check(0)
 		{
 			GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new());
 			gtk_widget_show(GTK_WIDGET(check));
@@ -144,8 +163,8 @@ class BooleanAttribute: public EntityAttribute
 
 		void apply (void)
 		{
-			Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(
-					m_check)) ? "1" : "0");
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), gtk_toggle_button_get_active(
+					GTK_TOGGLE_BUTTON(m_check)) ? "1" : "0");
 		}
 		typedef MemberCaller<BooleanAttribute, &BooleanAttribute::apply> ApplyCaller;
 
@@ -163,12 +182,13 @@ class BooleanAttribute: public EntityAttribute
 
 class StringAttribute: public EntityAttribute
 {
+		CopiedString m_classname;
 		CopiedString m_key;
 		GtkEntry* m_entry;
 		NonModalEntry m_nonModal;
 	public:
-		StringAttribute (const char* key) :
-			m_key(key), m_entry(0), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
+		StringAttribute (const char* classname, const char* key) :
+			m_classname(classname), m_key(key), m_entry(0), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
 		{
 			GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 			gtk_widget_show(GTK_WIDGET(entry));
@@ -190,7 +210,7 @@ class StringAttribute: public EntityAttribute
 		{
 			StringOutputStream value(64);
 			value << ConvertUTF8ToLocale(gtk_entry_get_text(m_entry));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), value.c_str());
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), value.c_str());
 		}
 		typedef MemberCaller<StringAttribute, &StringAttribute::apply> ApplyCaller;
 
@@ -205,12 +225,14 @@ class StringAttribute: public EntityAttribute
 
 class ModelAttribute: public EntityAttribute
 {
+		CopiedString m_classname;
 		CopiedString m_key;
 		BrowsedPathEntry m_entry;
 		NonModalEntry m_nonModal;
 	public:
-		ModelAttribute (const char* key) :
-			m_key(key), m_entry(BrowseCaller(*this)), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
+		ModelAttribute (const char* classname, const char* key) :
+			m_classname(classname), m_key(key), m_entry(BrowseCaller(*this)), m_nonModal(ApplyCaller(*this),
+					UpdateCaller(*this))
 		{
 			m_nonModal.connect(m_entry.m_entry.m_entry);
 		}
@@ -223,7 +245,7 @@ class ModelAttribute: public EntityAttribute
 		{
 			StringOutputStream value(64);
 			value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), value.c_str());
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), value.c_str());
 		}
 		typedef MemberCaller<ModelAttribute, &ModelAttribute::apply> ApplyCaller;
 		void update (void)
@@ -248,12 +270,14 @@ class ModelAttribute: public EntityAttribute
 
 class SoundAttribute: public EntityAttribute
 {
+		CopiedString m_classname;
 		CopiedString m_key;
 		BrowsedPathEntry m_entry;
 		NonModalEntry m_nonModal;
 	public:
-		SoundAttribute (const char* key) :
-			m_key(key), m_entry(BrowseCaller(*this)), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
+		SoundAttribute (const char* classname, const char* key) :
+			m_classname(classname), m_key(key), m_entry(BrowseCaller(*this)), m_nonModal(ApplyCaller(*this),
+					UpdateCaller(*this))
 		{
 			m_nonModal.connect(m_entry.m_entry.m_entry);
 		}
@@ -266,7 +290,7 @@ class SoundAttribute: public EntityAttribute
 		{
 			StringOutputStream value(64);
 			value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), value.c_str());
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), value.c_str());
 		}
 		typedef MemberCaller<SoundAttribute, &SoundAttribute::apply> ApplyCaller;
 		void update (void)
@@ -291,12 +315,14 @@ class SoundAttribute: public EntityAttribute
 
 class ParticleAttribute: public EntityAttribute
 {
+		CopiedString m_classname;
 		CopiedString m_key;
 		BrowsedPathEntry m_entry;
 		NonModalEntry m_nonModal;
 	public:
-		ParticleAttribute (const char* key) :
-			m_key(key), m_entry(BrowseCaller(*this)), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
+		ParticleAttribute (const char* classname, const char* key) :
+			m_classname(classname), m_key(key), m_entry(BrowseCaller(*this)), m_nonModal(ApplyCaller(*this),
+					UpdateCaller(*this))
 		{
 			m_nonModal.connect(m_entry.m_entry.m_entry);
 		}
@@ -309,7 +335,7 @@ class ParticleAttribute: public EntityAttribute
 		{
 			StringOutputStream value(64);
 			value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), value.c_str());
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), value.c_str());
 		}
 		typedef MemberCaller<ParticleAttribute, &ParticleAttribute::apply> ApplyCaller;
 		void update (void)
@@ -338,12 +364,13 @@ static inline double angle_normalised (double angle)
 
 class AngleAttribute: public EntityAttribute
 {
+		CopiedString m_classname;
 		CopiedString m_key;
 		GtkEntry* m_entry;
 		NonModalEntry m_nonModal;
 	public:
-		AngleAttribute (const char* key) :
-			m_key(key), m_entry(0), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
+		AngleAttribute (const char* classname, const char* key) :
+			m_classname(classname), m_key(key), m_entry(0), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
 		{
 			GtkEntry* entry = numeric_entry_new();
 			m_entry = entry;
@@ -358,7 +385,7 @@ class AngleAttribute: public EntityAttribute
 		{
 			StringOutputStream angle(32);
 			angle << angle_normalised(entry_get_float(m_entry));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), angle.c_str());
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), angle.c_str());
 		}
 		typedef MemberCaller<AngleAttribute, &AngleAttribute::apply> ApplyCaller;
 
@@ -380,6 +407,7 @@ static const char* directionButtons[] = { "up", "down", "z-axis" };
 
 class DirectionAttribute: public EntityAttribute
 {
+		CopiedString m_classname;
 		CopiedString m_key;
 		GtkEntry* m_entry;
 		NonModalEntry m_nonModal;
@@ -387,9 +415,10 @@ class DirectionAttribute: public EntityAttribute
 		NonModalRadio m_nonModalRadio;
 		GtkHBox* m_hbox;
 	public:
-		DirectionAttribute (const char* key) :
-			m_key(key), m_entry(0), m_nonModal(ApplyCaller(*this), UpdateCaller(*this)), m_radio(RadioHBox_new(
-					STRING_ARRAY_RANGE(directionButtons))), m_nonModalRadio(ApplyRadioCaller(*this))
+		DirectionAttribute (const char* classname, const char* key) :
+			m_classname(classname), m_key(key), m_entry(0), m_nonModal(ApplyCaller(*this), UpdateCaller(*this)),
+					m_radio(RadioHBox_new(STRING_ARRAY_RANGE(directionButtons))), m_nonModalRadio(ApplyRadioCaller(
+							*this))
 		{
 			GtkEntry* entry = numeric_entry_new();
 			m_entry = entry;
@@ -412,7 +441,7 @@ class DirectionAttribute: public EntityAttribute
 		{
 			StringOutputStream angle(32);
 			angle << angle_normalised(entry_get_float(m_entry));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), angle.c_str());
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), angle.c_str());
 		}
 		typedef MemberCaller<DirectionAttribute, &DirectionAttribute::apply> ApplyCaller;
 
@@ -446,9 +475,9 @@ class DirectionAttribute: public EntityAttribute
 		{
 			const int index = radio_button_get_active(m_radio.m_radio);
 			if (index == 0) {
-				Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), "-1");
+				Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), "-1");
 			} else if (index == 1) {
-				Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), "-2");
+				Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), "-2");
 			} else if (index == 2) {
 				apply();
 			}
@@ -472,13 +501,14 @@ typedef BasicVector3<double> DoubleVector3;
 
 class AnglesAttribute: public EntityAttribute
 {
+		CopiedString m_classname;
 		CopiedString m_key;
 		AnglesEntry m_angles;
 		NonModalEntry m_nonModal;
 		GtkBox* m_hbox;
 	public:
-		AnglesAttribute (const char* key) :
-			m_key(key), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
+		AnglesAttribute (const char* classname, const char* key) :
+			m_classname(classname), m_key(key), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
 		{
 			m_hbox = GTK_BOX(gtk_hbox_new(TRUE, 4));
 			gtk_widget_show(GTK_WIDGET(m_hbox));
@@ -511,7 +541,7 @@ class AnglesAttribute: public EntityAttribute
 			StringOutputStream angles(64);
 			angles << angle_normalised(entry_get_float(m_angles.m_pitch)) << " " << angle_normalised(entry_get_float(
 					m_angles.m_yaw)) << " " << angle_normalised(entry_get_float(m_angles.m_roll));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), angles.c_str());
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), angles.c_str());
 		}
 		typedef MemberCaller<AnglesAttribute, &AnglesAttribute::apply> ApplyCaller;
 
@@ -559,13 +589,14 @@ class Vector3Entry
 
 class Vector3Attribute: public EntityAttribute
 {
+		CopiedString m_classname;
 		CopiedString m_key;
 		Vector3Entry m_vector3;
 		NonModalEntry m_nonModal;
 		GtkBox* m_hbox;
 	public:
-		Vector3Attribute (const char* key) :
-			m_key(key), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
+		Vector3Attribute (const char* classname, const char* key) :
+			m_classname(classname), m_key(key), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
 		{
 			m_hbox = GTK_BOX(gtk_hbox_new(TRUE, 4));
 			gtk_widget_show(GTK_WIDGET(m_hbox));
@@ -598,7 +629,7 @@ class Vector3Attribute: public EntityAttribute
 			StringOutputStream vector3(64);
 			vector3 << entry_get_float(m_vector3.m_x) << " " << entry_get_float(m_vector3.m_y) << " "
 					<< entry_get_float(m_vector3.m_z);
-			Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), vector3.c_str());
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), vector3.c_str());
 		}
 		typedef MemberCaller<Vector3Attribute, &Vector3Attribute::apply> ApplyCaller;
 
@@ -662,13 +693,14 @@ class NonModalComboBox
 
 class ListAttribute: public EntityAttribute
 {
+		CopiedString m_classname;
 		CopiedString m_key;
 		GtkComboBox* m_combo;
 		NonModalComboBox m_nonModal;
 		const ListAttributeType& m_type;
 	public:
-		ListAttribute (const char* key, const ListAttributeType& type) :
-			m_key(key), m_combo(0), m_nonModal(ApplyCaller(*this)), m_type(type)
+		ListAttribute (const char* classname, const char* key, const ListAttributeType& type) :
+			m_classname(classname), m_key(key), m_combo(0), m_nonModal(ApplyCaller(*this)), m_type(type)
 		{
 			GtkComboBox* combo = GTK_COMBO_BOX(gtk_combo_box_new_text());
 
@@ -688,7 +720,7 @@ class ListAttribute: public EntityAttribute
 		}
 		void apply (void)
 		{
-			Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(),
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(),
 					m_type[gtk_combo_box_get_active(m_combo)].second.c_str());
 		}
 		typedef MemberCaller<ListAttribute, &ListAttribute::apply> ApplyCaller;
@@ -708,16 +740,37 @@ class ListAttribute: public EntityAttribute
 
 namespace
 {
+	enum {
+		KEYVALLIST_COLUMN_KEY,
+		KEYVALLIST_COLUMN_VALUE,
+		KEYVALLIST_COLUMN_STYLE, /**< pango weigth value used to bold classname rows */
+		KEYVALLIST_COLUMN_KEY_PREPARED, /**< flag indicating whether combo for key has been prepared */
+
+		KEYVALLIST_MAX_COLUMN
+	};
+
+	/**
+	 * @brief Container class holds references to different gui elements in Entity Inspector
+	 */
+	class EntityInspectorGuiElements
+	{
+		public:
+			GtkButton *m_btnRemoveKey;
+			GtkButton *m_btnAddKey;
+			GtkTreeView *m_viewKeyValues;
+	};
+
+	static EntityInspectorGuiElements g_entityInspectorGui;
+
 	GtkTreeView* g_entityClassList;
 	GtkTextView* g_entityClassComment;
 
 	GtkCheckButton* g_entitySpawnflagsCheck[MAX_FLAGS];
 
 	GtkListStore* g_entlist_store;
-	GtkListStore* g_entprops_store;
+	GtkTreeStore* g_entprops_store;
 	const EntityClass* g_current_flags = 0;
 	const EntityClass* g_current_comment = 0;
-	const EntityClass* g_current_attributes = 0;
 
 	// the number of active spawnflags
 	int g_spawnflag_count;
@@ -730,6 +783,8 @@ namespace
 	GtkVBox* g_attributeBox = 0;
 	typedef std::vector<EntityAttribute*> EntityAttributes;
 	EntityAttributes g_entityAttributes;
+
+	int g_numNewKeys = 0;
 }
 
 static void GlobalEntityAttributes_clear (void)
@@ -740,45 +795,71 @@ static void GlobalEntityAttributes_clear (void)
 	g_entityAttributes.clear();
 }
 
+/**
+ * @brief visitor implementation used to add entities key/value pairs into a list.
+ * @note key "classname" is ignored as this is supposed to be in parent map
+ */
 class GetKeyValueVisitor: public Entity::Visitor
 {
-		KeyValues& m_keyvalues;
+		KeyValues &m_keyvalues;
 	public:
-		GetKeyValueVisitor (KeyValues& keyvalues) :
+		GetKeyValueVisitor (KeyValues& keyvalues):
 			m_keyvalues(keyvalues)
 		{
 		}
 
 		void visit (const char* key, const char* value)
 		{
-			m_keyvalues.insert(KeyValues::value_type(CopiedString(key), CopiedString(value)));
+			/* don't add classname property, as this will be in parent list */
+			if (!strcmp(key, "classname"))
+				return;
+			KeyValues::iterator keyIter = m_keyvalues.find(key);
+			if (keyIter == m_keyvalues.end()) {
+				m_keyvalues.insert(KeyValues::value_type(CopiedString(key),Values()));
+				keyIter = m_keyvalues.find(key);
+			}
+			(*keyIter).second.push_back(Values::value_type(CopiedString(value)));
 		}
 
 };
 
-void Entity_GetKeyValues (const Entity& entity, KeyValues& keyvalues, KeyValues& defaultValues)
+/**
+ * @brief Adds all entities class attributes into the given map.
+ *
+ * @param entity entity to add into map
+ * @param keyvalues list of key/values associated to their class names
+ */
+void Entity_GetKeyValues (const Entity& entity, ClassKeyValues& keyvalues)
 {
-	GetKeyValueVisitor visitor(keyvalues);
+	CopiedString classname = entity.getEntityClass().m_name;
+	ClassKeyValues::iterator valuesIter = keyvalues.find(classname);
+	if (valuesIter == keyvalues.end()) {
+		keyvalues.insert(ClassKeyValues::value_type(classname, KeyValues()));
+		valuesIter = keyvalues.find(classname);
+	}
+
+	GetKeyValueVisitor visitor((*valuesIter).second);
 
 	entity.forEachKeyValue(visitor);
-
-	const EntityClassAttributes& attributes = entity.getEntityClass().m_attributes;
-
-	for (EntityClassAttributes::const_iterator i = attributes.begin(); i != attributes.end(); ++i) {
-		defaultValues.insert(KeyValues::value_type((*i).first, (*i).second.m_value));
-	}
 }
 
-void Entity_GetKeyValues_Selected (KeyValues& keyvalues, KeyValues& defaultValues)
+/**
+ * @brief Adds all currently selected entities attribute values to the given map.
+ *
+ * @param keyvalues map of entitites key value pairs associated to their classnames
+ */
+void Entity_GetKeyValues_Selected (ClassKeyValues& keyvalues)
 {
+	/**
+	 * @brief visitor implementation used to add all selected entities key/value pairs
+	 */
 	class EntityGetKeyValues: public SelectionSystem::Visitor
 	{
-			KeyValues& m_keyvalues;
-			KeyValues& m_defaultValues;
+			ClassKeyValues& m_keyvalues;
 			mutable std::set<Entity*> m_visited;
 		public:
-			EntityGetKeyValues (KeyValues& keyvalues, KeyValues& defaultValues) :
-				m_keyvalues(keyvalues), m_defaultValues(defaultValues)
+			EntityGetKeyValues (ClassKeyValues& keyvalues) :
+				m_keyvalues(keyvalues)
 			{
 			}
 			void visit (scene::Instance& instance) const
@@ -788,19 +869,11 @@ void Entity_GetKeyValues_Selected (KeyValues& keyvalues, KeyValues& defaultValue
 					entity = Node_getEntity(instance.path().parent());
 				}
 				if (entity != 0 && m_visited.insert(entity).second) {
-					Entity_GetKeyValues(*entity, m_keyvalues, m_defaultValues);
+					Entity_GetKeyValues(*entity, m_keyvalues);
 				}
 			}
-	} visitor(keyvalues, defaultValues);
+	} visitor(keyvalues);
 	GlobalSelectionSystem().foreachSelected(visitor);
-}
-
-static const char* keyvalues_valueforkey (KeyValues& keyvalues, const char* key)
-{
-	KeyValues::iterator i = keyvalues.find(CopiedString(key));
-	if (i != keyvalues.end())
-		return (*i).second.c_str();
-	return "";
 }
 
 class EntityClassListStoreAppend: public EntityClassVisitor
@@ -845,6 +918,12 @@ static void SetComment (EntityClass* eclass)
 	gtk_text_buffer_set_text(buffer, eclass->comments(), -1);
 }
 
+/**
+ * @brief Updates surface flags buttons to display given entity class spawnflags
+ * @param eclass entity class to display
+ * @note This method hides all buttons, then updates as much as needed with new label and shows them.
+ * @sa EntityInspector_updateSpawnflags
+ */
 static void SurfaceFlags_setEntityClass (EntityClass* eclass)
 {
 	if (eclass == g_current_flags)
@@ -927,15 +1006,15 @@ template<typename Attribute>
 class StatelessAttributeCreator
 {
 	public:
-		static EntityAttribute* create (const char* name)
+		static EntityAttribute* create (const char* classname, const char* name)
 		{
-			return new Attribute(name);
+			return new Attribute(classname, name);
 		}
 };
 
 class EntityAttributeFactory
 {
-		typedef EntityAttribute* (*CreateFunc) (const char* name);
+		typedef EntityAttribute* (*CreateFunc) (const char* classname, const char* name);
 		typedef std::map<const char*, CreateFunc, RawStringLess> Creators;
 		Creators m_creators;
 	public:
@@ -956,19 +1035,40 @@ class EntityAttributeFactory
 		}
 		EntityAttribute* create (const char* type, const char* name)
 		{
+			const char* classname = g_current_attributes->name();
 			Creators::iterator i = m_creators.find(type);
 			if (i != m_creators.end()) {
-				return (*i).second(name);
+				return (*i).second(classname, name);
 			}
 			const ListAttributeType* listType = GlobalEntityClassManager().findListType(type);
 			if (listType != 0) {
-				return new ListAttribute(name, *listType);
+				return new ListAttribute(classname, name, *listType);
 			}
 			return 0;
 		}
 };
 
 typedef Static<EntityAttributeFactory> GlobalEntityAttributeFactory;
+
+static void EntityInspector_checkAddNewKeys (void)
+{
+	int count = 0;
+	const EntityClassAttributes validAttrib = g_current_attributes->m_attributes;
+	for (EntityClassAttributes::const_iterator i = validAttrib.begin(); i != validAttrib.end(); ++i) {
+		EntityClassAttribute *attrib = const_cast<EntityClassAttribute*> (&(*i).second);
+		ClassKeyValues::iterator it = g_selectedKeyValues.find(g_current_attributes->m_name);
+		if (it == g_selectedKeyValues.end()) {
+			return;
+		}
+		KeyValues possibleValues = (*it).second;
+		KeyValues::const_iterator keyIter = possibleValues.find(attrib->m_type.c_str());
+		/* end means we don't have it actually in this map, so this is a valid new key*/
+		if (keyIter == possibleValues.end()) {
+			count++;
+		}
+	}
+	g_numNewKeys = count;
+}
 
 static void EntityInspector_setEntityClass (EntityClass *eclass)
 {
@@ -992,6 +1092,11 @@ static void EntityInspector_setEntityClass (EntityClass *eclass)
 	}
 }
 
+/**
+ * @brief This method updates active state of spawnflag buttons based on current selected value
+ * @sa SurfaceFlags_setEntityClass
+ * @sa EntityInspector_updateGuiElements
+ */
 static void EntityInspector_updateSpawnflags (void)
 {
 	int i;
@@ -1008,30 +1113,56 @@ static void EntityInspector_updateSpawnflags (void)
 	}
 }
 
-void EntityInspector_updateKeyValues (void)
+/**
+ * @brief This method updates key value list for current selected entities.
+ * @sa EntityInspector_updateGuiElements
+ */
+static void EntityInspector_updateKeyValueList (void)
+{
+	GtkTreeStore* store = g_entprops_store;
+
+	gtk_tree_store_clear(store);
+	// Walk through list and add pairs
+	for (ClassKeyValues::iterator classIter = g_selectedKeyValues.begin(); classIter != g_selectedKeyValues.end(); ++classIter) {
+		CopiedString classname((*classIter).first.c_str());
+		GtkTreeIter classTreeIter;
+		gtk_tree_store_append(store, &classTreeIter, NULL);
+		gtk_tree_store_set(store, &classTreeIter, KEYVALLIST_COLUMN_KEY, "classname", KEYVALLIST_COLUMN_VALUE,
+				classname.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_BOLD, KEYVALLIST_COLUMN_KEY_PREPARED, FALSE, -1);
+		KeyValues possibleValues = classIter->second;
+		for (KeyValues::iterator i = possibleValues.begin(); i != possibleValues.end(); ++i) {
+			GtkTreeIter iter;
+			gtk_tree_store_append(store, &iter, &classTreeIter);
+			StringOutputStream key(64);
+			key << ConvertLocaleToUTF8((*i).first.c_str());
+			StringOutputStream value(64);
+			value << ConvertLocaleToUTF8(Values_getFirstValue((*i).second));
+			gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, key.c_str(), KEYVALLIST_COLUMN_VALUE,
+					value.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_PREPARED, FALSE,
+					-1);
+		}
+	}
+	//set all elements expanded
+	gtk_tree_view_expand_all(g_entityInspectorGui.m_viewKeyValues);
+	EntityInspector_checkAddNewKeys();
+}
+
+void EntityInspector_updateGuiElements (void)
 {
 	g_selectedKeyValues.clear();
-	g_selectedDefaultKeyValues.clear();
-	Entity_GetKeyValues_Selected(g_selectedKeyValues, g_selectedDefaultKeyValues);
+	Entity_GetKeyValues_Selected(g_selectedKeyValues);
 
-	EntityInspector_setEntityClass(GlobalEntityClassManager().findOrInsert(keyvalues_valueforkey(g_selectedKeyValues,
-			"classname"), false));
-
+	{
+		char* classname = "";
+		ClassKeyValues::iterator classFirstIter = g_selectedKeyValues.begin();
+		if (classFirstIter != g_selectedKeyValues.end()) {
+			classname = const_cast<char *> ((*classFirstIter).first.c_str());
+		}
+		EntityInspector_setEntityClass(GlobalEntityClassManager().findOrInsert(classname, false));
+	}
 	EntityInspector_updateSpawnflags();
 
-	GtkListStore* store = g_entprops_store;
-
-	gtk_list_store_clear(store);
-	// Walk through list and add pairs
-	for (KeyValues::iterator i = g_selectedKeyValues.begin(); i != g_selectedKeyValues.end(); ++i) {
-		GtkTreeIter iter;
-		gtk_list_store_append(store, &iter);
-		StringOutputStream key(64);
-		key << ConvertLocaleToUTF8((*i).first.c_str());
-		StringOutputStream value(64);
-		value << ConvertLocaleToUTF8((*i).second.c_str());
-		gtk_list_store_set(store, &iter, 0, key.c_str(), 1, value.c_str(), -1);
-	}
+	EntityInspector_updateKeyValueList();
 
 	for (EntityAttributes::const_iterator i = g_entityAttributes.begin(); i != g_entityAttributes.end(); ++i) {
 		(*i)->update();
@@ -1043,7 +1174,7 @@ class EntityInspectorDraw
 		IdleDraw m_idleDraw;
 	public:
 		EntityInspectorDraw () :
-			m_idleDraw(FreeCaller<EntityInspector_updateKeyValues> ())
+			m_idleDraw(FreeCaller<EntityInspector_updateGuiElements> ())
 		{
 		}
 		void queueDraw (void)
@@ -1096,44 +1227,61 @@ static void EntityClassList_createEntity (void)
 static void EntityInspector_addKeyValue (GtkButton *button, gpointer user_data)
 {
 	GtkTreeIter iter;
+	GtkTreeIter parent;
 	GtkTreeView *view = GTK_TREE_VIEW(user_data);
 	GtkTreeModel* model = gtk_tree_view_get_model(view);
-	GtkListStore *store = GTK_LIST_STORE(model);
+	GtkTreeStore *store = GTK_TREE_STORE(model);
+	GtkTreeSelection *selection = gtk_tree_view_get_selection(view);
 
-	gtk_list_store_append(store, &iter);
-	// TODO add a parameter name already - new parameters should be added via entity comment click
-	// maybe the key names should only be valid options from entities.def for the current entity?
-	gtk_list_store_set(store, &iter, 0, "", 1, "", -1);
+	gtk_tree_selection_get_selected(selection, &model, &iter);
+	if (gtk_tree_model_iter_parent(model, &parent, &iter) == FALSE)
+	{
+		// parent node selected, just add child
+		parent = iter;
+		gtk_tree_store_append(store, &iter, &parent);
+	} else {
+		gtk_tree_store_append(store, &iter, &parent);
+	}
+
+	gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, "", KEYVALLIST_COLUMN_VALUE, "", KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_PREPARED, FALSE, -1);
 
 	GtkTreeViewColumn* viewColumn = gtk_tree_view_get_column(view, 0);
 	GtkTreePath* path = gtk_tree_model_get_path(model, &iter);
 	gtk_tree_view_set_cursor(view, path, viewColumn, TRUE);
 	gtk_tree_path_free(path);
+	//disable new key as long as we edit
+	g_object_set(g_entityInspectorGui.m_btnAddKey, "sensitive", FALSE, (const char*)0);
 }
 
 static void EntityInspector_clearKeyValue (GtkButton * button, gpointer user_data)
 {
 	GtkTreeModel* model;
 	GtkTreeView *view = GTK_TREE_VIEW(user_data);
-	GtkTreeIter iter;
+	GtkTreeIter iter, parent;
 	GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
 	if (gtk_tree_selection_get_selected(selection, &model, &iter) == FALSE) {
 		return;
 	}
 
-	char* value, *key;
-	gtk_tree_model_get(model, &iter, 0, &key, -1);
-	gtk_tree_model_get(model, &iter, 1, &value, -1);
+	char* key, *classname;
+	gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_KEY, &key, -1);
+	if (gtk_tree_model_iter_parent(model, &parent, &iter) == FALSE) {
+		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_VALUE, &classname, -1);
+	} else {
+		gtk_tree_model_get(model, &parent, KEYVALLIST_COLUMN_VALUE, &classname, -1);
+	}
 
 	// Get current selection text
 	StringOutputStream keyConverted(64);
 	keyConverted << ConvertUTF8ToLocale(key);
+	StringOutputStream classnameConverted(64);
+	classnameConverted << ConvertUTF8ToLocale(classname);
 
 	if (strcmp(keyConverted.c_str(), "classname") != 0) {
 		StringOutputStream command;
-		command << "entityDeleteKey -key " << keyConverted.c_str();
+		command << "entityDeleteKey -classname " << classnameConverted.c_str() << " -key " << keyConverted.c_str();
 		UndoableCommand undo(command.c_str());
-		Scene_EntitySetKeyValue_Selected(keyConverted.c_str(), "");
+		Scene_EntitySetKeyValue_Selected(classnameConverted.c_str(), keyConverted.c_str(), "");
 	}
 }
 
@@ -1222,18 +1370,19 @@ static void SpawnflagCheck_toggled (GtkWidget *widget, gpointer data)
 
 	{
 		StringOutputStream command;
-		command << "entitySetFlags -flags " << f;
-		UndoableCommand undo("entitySetSpawnflags");
+		command << "entitySetFlags -classname " << g_current_flags->name() << "-flags " << f;
+		UndoableCommand undo(command.c_str());
 
-		Scene_EntitySetKeyValue_Selected("spawnflags", value);
+		Scene_EntitySetKeyValue_Selected(g_current_flags->name(), "spawnflags", value);
 	}
 }
 
 static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newValue)
 {
-	char *key, *value;
+	char *key, *value, *classname;
+	bool isClassname = false;
 	GtkTreeModel* model;
-	GtkTreeIter iter;
+	GtkTreeIter iter, parent;
 	GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
 
 	if (gtk_tree_selection_get_selected(selection, &model, &iter) == FALSE) {
@@ -1242,11 +1391,17 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 	}
 
 	if (columnIndex == 1) {
-		gtk_tree_model_get(model, &iter, 0, &key, -1);
+		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_KEY, &key, -1);
 		value = newValue;
 	} else {
-		gtk_tree_model_get(model, &iter, 1, &value, -1);
+		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_VALUE, &value, -1);
 		key = newValue;
+	}
+	if (gtk_tree_model_iter_parent(model, &parent, &iter) == FALSE) {
+		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_VALUE, &classname, -1);
+		isClassname = true;
+	} else {
+		gtk_tree_model_get(model, &parent, KEYVALLIST_COLUMN_VALUE, &classname, -1);
 	}
 
 	// Get current selection text
@@ -1254,10 +1409,12 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 	keyConverted << ConvertUTF8ToLocale(key);
 	StringOutputStream valueConverted(64);
 	valueConverted << ConvertUTF8ToLocale(value);
+	StringOutputStream classnameConverted(64);
+	classnameConverted << ConvertUTF8ToLocale(classname);
 
 	// if you change the classname to worldspawn you won't merge back in the structural
 	// brushes but create a parasite entity
-	if (!strcmp(keyConverted.c_str(), "classname") && !strcmp(valueConverted.c_str(), "worldspawn")) {
+	if (isClassname && !strcmp(valueConverted.c_str(), "worldspawn")) {
 		gtk_MessageBox(0, _("Cannot change \"classname\" key back to worldspawn."), 0, eMB_OK);
 		return;
 	}
@@ -1272,15 +1429,15 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 		valueConverted << g_current_attributes->getDefaultForAttribute(keyConverted.c_str());
 
 	g_message("change value for %s to %s\n", keyConverted.c_str(), valueConverted.c_str());
-	if (!strcmp(keyConverted.c_str(), "classname")) {
+	if (isClassname) {
 		StringOutputStream command;
-		command << "entitySetClass -class " << valueConverted.c_str();
+		command << "entitySetClass -class " << classnameConverted.c_str() << " -newclass " << valueConverted.c_str();
 		UndoableCommand undo(command.c_str());
-		Scene_EntitySetClassname_Selected(valueConverted.c_str());
+		Scene_EntitySetClassname_Selected(classnameConverted.c_str(), valueConverted.c_str());
 	} else {
-		Scene_EntitySetKeyValue_Selected_Undoable(keyConverted.c_str(), valueConverted.c_str());
+		Scene_EntitySetKeyValue_Selected_Undoable(classnameConverted.c_str(), keyConverted.c_str(), valueConverted.c_str());
 	}
-	gtk_list_store_remove(GTK_LIST_STORE(model), &iter);
+	gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
 }
 
 static void entityValueEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text, GtkTreeView *view)
@@ -1311,22 +1468,9 @@ static void entityKeyEditCanceled(GtkCellRendererText *renderer, GtkTreeView *vi
 		/* retrieve current selection and iter*/
 		GtkTreeSelection *selection = gtk_tree_view_get_selection(view);
 		gtk_tree_selection_get_selected(selection, &model, &iter);
-		gtk_list_store_remove(GTK_LIST_STORE(model), &iter);
+		gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
 	}
 }
-
-/**
- * @brief Container class holds references to different gui elements in Entity Inspector
- * @todo perhaps rename and move current selection elements also into this one?
- */
-class EntityInspectorGuiElements
-{
-	public:
-		GtkButton *m_btnRemoveKey;
-		GtkButton *m_btnAddKey;
-};
-
-static EntityInspectorGuiElements g_entityInspectorGui;
 
 /**
  * @brief Callback for selection changed in entity key value list used to enable/disable buttons
@@ -1337,28 +1481,47 @@ static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
 	ASSERT_NOTNULL(g_entityInspectorGui.m_btnRemoveKey);
 	if (gtk_tree_selection_count_selected_rows(selection) == 0) {
 		g_object_set(g_entityInspectorGui.m_btnRemoveKey, "sensitive", FALSE, (const char*) 0);
-		return;
-	}
-	GtkTreeModel *model;
-	GtkTreeIter iter;
-	gtk_tree_selection_get_selected(selection, &model, &iter);
-	char* attribKey;
-	bool removeAllowed = true;
-	gtk_tree_model_get(model, &iter, 0, &attribKey, -1);
-	ASSERT_NOTNULL(attribKey);
-	if (strlen(attribKey) == 0) {
-		/* new attribute, don't check for remove yet */
-		removeAllowed = false;
-	} else if (!strcmp(attribKey, "classname")) {
-		/* classname is mandatory but has no attribute */
-		removeAllowed = false;
+		g_object_set(g_entityInspectorGui.m_btnAddKey, "sensitive", FALSE, (const char*) 0);
 	} else {
-		EntityClassAttribute *attribute = g_current_attributes->getAttribute(attribKey);
-		ASSERT_NOTNULL(attribute);
-		if (attribute->m_mandatory)
+		GtkTreeModel *model;
+		GtkTreeIter iter;
+		GtkTreeIter parent;
+		bool removeAllowed = true;
+		char* attribKey;
+		char* classname;
+		gtk_tree_selection_get_selected(selection, &model, &iter);
+		if (gtk_tree_model_iter_parent(model, &parent, &iter) == FALSE)
+		{
+			// no parent -> top level = classname selected, may not be removed
 			removeAllowed = false;
+			gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_VALUE, &classname, -1);
+		} else {
+			gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_KEY, &attribKey, -1);
+			gtk_tree_model_get(model, &parent, KEYVALLIST_COLUMN_VALUE, &classname, -1);
+			ASSERT_NOTNULL(attribKey);
+			if (strlen(attribKey) == 0) {
+				/* new attribute, don't check for remove yet */
+				removeAllowed = false;
+			}
+		}
+		/* check whether attributes reflect current keyvalue list selected class */
+		if (strcmp(g_current_attributes->name(),classname)) {
+			/* entity class does not fit the selection from keyvaluelist, update as needed */
+			EntityClass *eclass = GlobalEntityClassManager().findOrInsert(classname, false);
+			EntityInspector_setEntityClass(eclass);
+		}
+		if (attribKey != 0 && strlen(attribKey) > 0) {
+			g_currentSelectedKey = CopiedString(attribKey);
+		}
+		if (removeAllowed) {
+			EntityClassAttribute *attribute = g_current_attributes->getAttribute(attribKey);
+			ASSERT_NOTNULL(attribute);
+			if (attribute->m_mandatory)
+				removeAllowed = false;
+		}
+		g_object_set(g_entityInspectorGui.m_btnRemoveKey, "sensitive", removeAllowed, (const char*) 0);
+		g_object_set(g_entityInspectorGui.m_btnAddKey, "sensitive", (g_numNewKeys > 0), (const char*) 0);
 	}
-	g_object_set(g_entityInspectorGui.m_btnRemoveKey, "sensitive", removeAllowed, (const char*) 0);
 }
 
 /**
@@ -1373,6 +1536,19 @@ static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
 static void EntityKeyValueList_updateKeyCombo (GtkTreeViewColumn *column, GtkCellRenderer *renderer,
 		GtkTreeModel *model, GtkTreeIter *iter, gpointer user_data)
 {
+	/** @todo use editing-started callback instead of datafunc when segfault problem is fixed */
+//static void EntityKeyValueList_updateKeyCombo (GtkCellRenderer *renderer,
+//		GtkCellEditable *editable, const gchar *path , gpointer *user_data)
+//{
+//	GtkTreeView *view = GTK_TREE_VIEW(user_data);
+//	GtkTreeSelection *selection = gtk_tree_view_get_selection(view);
+//	GtkTreeModel *model;
+//	GtkTreeIter iter;
+//	if (gtk_tree_selection_get_selected(selection, &model, &iter) == FALSE)
+//	{
+//		return;
+//	}
+
 	/* prevent update if already displaying anything */
 	{
 		bool editing;
@@ -1381,35 +1557,81 @@ static void EntityKeyValueList_updateKeyCombo (GtkTreeViewColumn *column, GtkCel
 			return;
 	}
 	char *value, *key;
-	gtk_tree_model_get(model, iter, 0, &key, 1, &value, -1);
+	int weight;
+	bool initialized;
+	gtk_tree_model_get(model, iter, KEYVALLIST_COLUMN_KEY, &key, KEYVALLIST_COLUMN_VALUE, &value, KEYVALLIST_COLUMN_STYLE, &weight, KEYVALLIST_COLUMN_KEY_PREPARED, &initialized, -1);
+	g_object_set(renderer, "weight", weight, (const char*)0);
 	/* don't allow to edit keys if value is already set to anything (only remove possible) */
-	if (strlen(value) > 0) {
+	if (value != 0 && strlen(value) > 0) {
 		g_object_set(renderer, "editable", FALSE, (const char*)0);
 	} else {
-		/** @todo don't calculate anything if nothing is selected or no valid entries are left - new button should be disabled in that case */
+		g_object_set(renderer, "editable", TRUE, (const char*)0);
 		if (!g_current_attributes)
 			return;
-		/* determine available key values and set them to combo box */
-		g_object_set(renderer, "editable", TRUE, (const char*)0);
-		GtkListStore* store = gtk_list_store_new(1, G_TYPE_STRING);
-		GtkTreeIter iter;
-		/** @todo fix this for multi-selections, actually it only gets the first selected */
-		/** @todo fix problem for yaw angle property */
-		const EntityClassAttributes validAttrib = g_current_attributes->m_attributes;
-		for (EntityClassAttributes::const_iterator i = validAttrib.begin(); i != validAttrib.end(); ++i) {
-			EntityClassAttribute *attrib = const_cast<EntityClassAttribute*>(&(*i).second);
-			KeyValues::const_iterator keyIter = g_selectedKeyValues.find(attrib->m_type.c_str());
-			/* end means we don't have it actually in this map, so this is a valid new key*/
-			if (keyIter == g_selectedKeyValues.end()) {
-				gtk_list_store_append(store, &iter);
-				gtk_list_store_set(store, &iter, 0, attrib->m_type.c_str(), -1);
+		if (!initialized) {
+			/* determine available key values and set them to combo box */
+			GtkListStore* store = gtk_list_store_new(1, G_TYPE_STRING);
+			GtkTreeIter storeIter;
+			const EntityClassAttributes validAttrib = g_current_attributes->m_attributes;
+			for (EntityClassAttributes::const_iterator i = validAttrib.begin(); i != validAttrib.end(); ++i) {
+				EntityClassAttribute *attrib = const_cast<EntityClassAttribute*>(&(*i).second);
+				ClassKeyValues::iterator it = g_selectedKeyValues.find(g_current_attributes->m_name);
+				if (it == g_selectedKeyValues.end()) {
+					return;
+				}
+				KeyValues possibleValues = (*it).second;
+				KeyValues::const_iterator keyIter = possibleValues.find(attrib->m_type.c_str());
+				/* end means we don't have it actually in this map, so this is a valid new key*/
+				if (keyIter == possibleValues.end()) {
+					gtk_list_store_append(store, &storeIter);
+					gtk_list_store_set(store, &storeIter, 0, attrib->m_type.c_str(), -1);
+				}
 			}
+			g_object_set(renderer, "model", GTK_TREE_MODEL(store), "text-column", 0, (const char*)0);
+
+			/** @todo disable edit of combo iff we got parse problems solved */
+			/*		g_object_set(renderer, "has-entry", FALSE, (const char*)0); */
+			g_object_unref(G_OBJECT(store));
+			gtk_tree_store_set(GTK_TREE_STORE(model), iter, KEYVALLIST_COLUMN_KEY_PREPARED, TRUE, -1);
 		}
-		g_object_set(renderer, "model", GTK_TREE_MODEL(store), "text-column", 0, (const char*)0);
-		/** @todo disable edit of combo iff we got parse problems solved */
-/*		g_object_set(renderer, "has-entry", FALSE, (const char*)0); */
-		g_object_unref(store);
 	}
+}
+
+static void EntityKeyValueList_updateValueCombo (GtkCellRenderer *renderer,
+		GtkCellEditable *editable, const gchar *path , gpointer *user_data)
+{
+	// prevent update if already displaying anything
+	{
+		bool editing;
+		g_object_get(G_OBJECT(renderer), "editing", &editing, NULL);
+		if (editing)
+			return;
+	}
+	if (g_currentSelectedKey.empty()) {
+		return;
+	}
+	const char *key = g_currentSelectedKey.c_str();
+	ClassKeyValues::iterator it = g_selectedKeyValues.find(g_current_attributes->m_name);
+	if (it == g_selectedKeyValues.end()) {
+		return;
+	}
+	KeyValues possibleValues = (*it).second;
+	KeyValues::const_iterator keyIter = possibleValues.find(key);
+	// end means we don't have it actually in this map, so this is a valid new key
+	GtkListStore* store = gtk_list_store_new(1, G_TYPE_STRING);
+	GtkTreeIter storeIter;
+	if (keyIter != possibleValues.end()) {
+		Values values = (*keyIter).second;
+		for (Values::const_iterator valueIter = values.begin(); valueIter != values.end(); valueIter++) {
+			gtk_list_store_append(store, &storeIter);
+			gtk_list_store_set(store, &storeIter, 0, (*valueIter).c_str(), -1);
+		}
+	} else {
+		gtk_list_store_append(store, &storeIter);
+		gtk_list_store_set(store, &storeIter, 0, "", -1);
+	}
+	g_object_set(renderer, "model", GTK_TREE_MODEL(store), "text-column", 0, (const char*)0);
+	g_object_unref(G_OBJECT(store));
 }
 
 GtkWidget* EntityInspector_constructNotebookTab (void)
@@ -1499,37 +1721,43 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 			gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 			gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
 
-			GtkListStore* store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
+			GtkTreeStore* store = gtk_tree_store_new(KEYVALLIST_MAX_COLUMN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT, G_TYPE_BOOLEAN);
 
-			GtkWidget* view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
-			gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), FALSE);
-
+			GtkTreeView* view = GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
+			gtk_tree_view_set_enable_search(view, FALSE);
+			gtk_tree_view_set_show_expanders(view, FALSE);
+			gtk_tree_view_set_level_indentation(view, 10);
+			/* expand all rows after the treeview widget has been realized */
+			g_signal_connect(view, "realize", G_CALLBACK(gtk_tree_view_expand_all), NULL);
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_combo_new();
 				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Key"), renderer, "text",
-						0, (char const*) 0);
+						KEYVALLIST_COLUMN_KEY, (char const*) 0);
 				gtk_tree_view_column_set_cell_data_func(column, renderer, EntityKeyValueList_updateKeyCombo, NULL, NULL);
-				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
+				gtk_tree_view_append_column(view, column);
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityKeyEdited), (gpointer) view);
 				g_signal_connect(G_OBJECT(renderer), "editing-canceled", G_CALLBACK(entityKeyEditCanceled), (gpointer) view);
+				//g_signal_connect(G_OBJECT(renderer), "editing-started", G_CALLBACK(EntityKeyValueList_updateKeyCombo), (gpointer) view);
 			}
 
 			{
-				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
+				GtkCellRenderer* renderer = gtk_cell_renderer_combo_new();
 				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Value"), renderer,
-						"text", 1, (char const*) 0);
-				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
+						"text", KEYVALLIST_COLUMN_VALUE, (char const*) 0);
+				gtk_tree_view_append_column(view, column);
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityValueEdited), (gpointer) view);
+				g_signal_connect(G_OBJECT(renderer), "editing-started", G_CALLBACK(EntityKeyValueList_updateValueCombo), (gpointer) view);
 			}
 
 			{
 				GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
 				g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(EntityKeyValueList_selection_changed), NULL);
 			}
+			g_entityInspectorGui.m_viewKeyValues = view;
 
-			gtk_container_add(GTK_CONTAINER(scr), view);
+			gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
 
 			g_object_unref(G_OBJECT(store));
 
@@ -1544,14 +1772,15 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 				g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_clearKeyValue),
 						gpointer(view));
 				gtk_box_pack_start(hbox, GTK_WIDGET(button), TRUE, TRUE, 0);
-				g_entityInspectorGui.m_btnRemoveKey = button;
 				g_object_set(button, "sensitive", FALSE, (const char*) 0);
+				g_entityInspectorGui.m_btnRemoveKey = button;
 			}
 			{
 				GtkButton* button = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_NEW));
 				g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_addKeyValue),
 						gpointer(view));
 				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, TRUE, 0);
+				g_object_set(button, "sensitive", FALSE, (const char*) 0);
 				g_entityInspectorGui.m_btnAddKey = button;
 			}
 		}
