@@ -94,11 +94,9 @@ typedef struct {
 
 extern rstate_t r_state;
 
-void R_StatePrint(void);
-
 void R_SetDefaultState(void);
-void R_SetupGL2D(void);
-void R_SetupGL3D(void);
+void R_Setup2D(void);
+void R_Setup3D(void);
 
 void R_TexEnv(GLenum value);
 void R_BlendFunc(GLenum src, GLenum dest);

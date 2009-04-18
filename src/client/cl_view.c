@@ -57,14 +57,14 @@ static void CL_ParseEntitystring (void)
 	char animname[MAX_QPATH], model[MAX_QPATH], particle[MAX_QPATH], sound[MAX_QPATH];
 	vec3_t origin, angles, scale;
 	vec2_t wait;
-	int maxlevel = 8, maxmultiplayerteams = 2, entnum = 0;
+	int maxLevel = 8, maxMultiplayerTeams = 2, entnum = 0;
 	int skin, frame, spawnflags;
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 	const char *es = CM_EntityString();
 
-	cl.map_maxlevel = 8;
-	if (cl.map_maxlevel_base >= 1)
-		cl.map_maxlevel = maxlevel = cl.map_maxlevel_base;
+	cl.mapMaxLevel = 8;
+	if (cl.mapMaxLevelBase >= 1)
+		cl.mapMaxLevel = maxLevel = cl.mapMaxLevelBase;
 
 	/* vid restart? */
 	if (numMapParticles || numLMs)
@@ -76,14 +76,14 @@ static void CL_ParseEntitystring (void)
 	/* parse ents */
 	while (1) {
 		/* parse the opening brace */
-		const char *entity_token = COM_Parse(&es);
+		const char *entityToken = COM_Parse(&es);
 		/* memorize the start */
 		const char *strstart = es;
 		if (!es)
 			break;
 
-		if (entity_token[0] != '{')
-			Com_Error(ERR_DROP, "CL_ParseEntitystring: found %s when expecting {", entity_token);
+		if (entityToken[0] != '{')
+			Com_Error(ERR_DROP, "CL_ParseEntitystring: found %s when expecting {", entityToken);
 
 		/* initialize */
 		VectorCopy(vec3_origin, origin);
@@ -96,66 +96,66 @@ static void CL_ParseEntitystring (void)
 		/* go through all the dictionary pairs */
 		while (1) {
 			/* parse key */
-			entity_token = COM_Parse(&es);
-			if (entity_token[0] == '}')
+			entityToken = COM_Parse(&es);
+			if (entityToken[0] == '}')
 				break;
 			if (!es)
 				Com_Error(ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
 
-			Q_strncpyz(keyname, entity_token, sizeof(keyname));
+			Q_strncpyz(keyname, entityToken, sizeof(keyname));
 
 			/* parse value */
-			entity_token = COM_Parse(&es);
+			entityToken = COM_Parse(&es);
 			if (!es)
 				Com_Error(ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
 
-			if (entity_token[0] == '}')
+			if (entityToken[0] == '}')
 				Com_Error(ERR_DROP, "CL_ParseEntitystring: closing brace without data");
 
 			/* filter interesting keys */
 			if (!strcmp(keyname, "classname"))
-				Q_strncpyz(classname, entity_token, sizeof(classname));
+				Q_strncpyz(classname, entityToken, sizeof(classname));
 			else if (!strcmp(keyname, "model"))
-				Q_strncpyz(model, entity_token, sizeof(model));
+				Q_strncpyz(model, entityToken, sizeof(model));
 			else if (!strcmp(keyname, "frame"))
-				frame = atoi(entity_token);
+				frame = atoi(entityToken);
 			else if (!strcmp(keyname, "anim"))
-				Q_strncpyz(animname, entity_token, sizeof(animname));
+				Q_strncpyz(animname, entityToken, sizeof(animname));
 			else if (!strcmp(keyname, "particle"))
-				Q_strncpyz(particle, entity_token, sizeof(particle));
+				Q_strncpyz(particle, entityToken, sizeof(particle));
 			else if (!strcmp(keyname, "noise"))
-				Q_strncpyz(sound, entity_token, sizeof(sound));
+				Q_strncpyz(sound, entityToken, sizeof(sound));
 			else if (!strcmp(keyname, "modelscale_vec"))
-				Com_EParseValue(scale, entity_token, V_VECTOR, 0, sizeof(scale));
+				Com_EParseValue(scale, entityToken, V_VECTOR, 0, sizeof(scale));
 			else if (!strcmp(keyname, "origin"))
-				Com_EParseValue(origin, entity_token, V_VECTOR, 0, sizeof(origin));
+				Com_EParseValue(origin, entityToken, V_VECTOR, 0, sizeof(origin));
 			else if (!strcmp(keyname, "angles") && !angles[YAW])
 				/* pitch, yaw, roll */
-				Com_EParseValue(angles, entity_token, V_VECTOR, 0, sizeof(angles));
+				Com_EParseValue(angles, entityToken, V_VECTOR, 0, sizeof(angles));
 			else if (!strcmp(keyname, "angle") && !angles[YAW])
-				angles[YAW] = atof(entity_token);
+				angles[YAW] = atof(entityToken);
 			else if (!strcmp(keyname, "wait"))
-				Com_EParseValue(wait, entity_token, V_POS, 0, sizeof(wait));
+				Com_EParseValue(wait, entityToken, V_POS, 0, sizeof(wait));
 			else if (!strcmp(keyname, "spawnflags"))
-				spawnflags = atoi(entity_token);
+				spawnflags = atoi(entityToken);
 			else if (!strcmp(keyname, "maxlevel"))
-				maxlevel = atoi(entity_token);
+				maxLevel = atoi(entityToken);
 			else if (!strcmp(keyname, "maxteams"))
-				maxmultiplayerteams = atoi(entity_token);
+				maxMultiplayerTeams = atoi(entityToken);
 			else if (!strcmp(keyname, "skin"))
-				skin = atoi(entity_token);
+				skin = atoi(entityToken);
 		}
 
 		/* analyze values - there is one worlspawn per maptile */
 		if (!strcmp(classname, "worldspawn")) {
 			/* maximum level */
-			cl.map_maxlevel = maxlevel;
+			cl.mapMaxLevel = maxLevel;
 
-			if (GAME_IsMultiplayer() && (cl_teamnum->integer > maxmultiplayerteams
+			if (GAME_IsMultiplayer() && (cl_teamnum->integer > maxMultiplayerTeams
 			 || cl_teamnum->integer <= TEAM_CIVILIAN)) {
 				Com_Printf("The selected team is not useable. "
 					"The map doesn't support %i teams but only %i teams\n",
-					cl_teamnum->integer, maxmultiplayerteams);
+					cl_teamnum->integer, maxMultiplayerTeams);
 				Cvar_SetValue("cl_teamnum", TEAM_DEFAULT);
 				Com_Printf("Set teamnum to %i\n", cl_teamnum->integer);
 			}

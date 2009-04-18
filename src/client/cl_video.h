@@ -92,13 +92,8 @@ extern cvar_t *vid_grabmouse;
 
 /* Video module initialisation etc */
 void VID_Init(void);
-
-#include "../common/common.h"
-
 int VID_GetModeNums(void);
-
 void VID_Restart_f(void);
-
 qboolean VID_GetModeInfo(void);
 
 #endif /* CLIENT_VID_H */

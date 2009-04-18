@@ -844,7 +844,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 		const int oldLevel = cl_worldlevel->integer;
 
 		/* we have to update the worldlevel to let the trace work */
-		cl_worldlevel->integer = cl.map_maxlevel - 1;
+		cl_worldlevel->integer = cl.mapMaxLevel - 1;
 		tr = CL_Trace(p->origin, p->s, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
 		cl_worldlevel->integer = oldLevel;
 

@@ -385,7 +385,7 @@ void R_EnableFog (qboolean enable)
 }
 
 /**
- * @sa R_SetupGL3D
+ * @sa R_Setup3D
  */
 static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 {
@@ -405,9 +405,9 @@ static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 }
 
 /**
- * @sa R_SetupGL2D
+ * @sa R_Setup2D
  */
-void R_SetupGL3D (void)
+void R_Setup3D (void)
 {
 	int x, x2, y2, y, w, h;
 
@@ -456,9 +456,9 @@ void R_SetupGL3D (void)
 extern const float SKYBOX_DEPTH;
 
 /**
- * @sa R_SetupGL3D
+ * @sa R_Setup3D
  */
-void R_SetupGL2D (void)
+void R_Setup2D (void)
 {
 	/* set 2D virtual screen size */
 	glViewport(0, 0, viddef.width, viddef.height);
@@ -487,39 +487,6 @@ void R_SetupGL2D (void)
 	glDisable(GL_DEPTH_TEST);
 
 	R_CheckError();
-}
-
-/**
- * @brief Prints the current render state - can be used to find state leaks
- * @note Keep in mind that when you call this via commandline it is called in 2d mode
- */
-void R_StatePrint (void)
-{
-	int i;
-
-	Com_Printf("\n------- render state ---------------\n");
-	Com_Printf("%c... color: %.1f:%.1f:%.1f:%.1f\n", COLORED_GREEN, r_state.color[0], r_state.color[1], r_state.color[2], r_state.color[3]);
-	Com_Printf("%c... blend src: %i, blend dest: %i\n", COLORED_GREEN, r_state.blend_src, r_state.blend_dest);
-	Com_Printf("%c... blend enabled: %s\n", COLORED_GREEN, r_state.blend_enabled ? "Yes" : "No");
-	Com_Printf("%c... alpha test enabled: %s\n", COLORED_GREEN, r_state.alpha_test_enabled ? "Yes" : "No");
-	Com_Printf("%c... lighting enabled: %s\n", COLORED_GREEN, r_state.lighting_enabled ? "Yes" : "No");
-	Com_Printf("%c... warp enabled: %s\n", COLORED_GREEN, r_state.warp_enabled ? "Yes" : "No");
-	Com_Printf("%c... ortho projection enabled: %s\n", COLORED_GREEN, r_state.ortho ? "Yes" : "No");
-	Com_Printf("%c... solid format: %i\n", COLORED_GREEN, r_config.gl_solid_format);
-	Com_Printf("%c... alpha format: %i\n", COLORED_GREEN, r_config.gl_alpha_format);
-	Com_Printf("%c... compressed solid format: %i\n", COLORED_GREEN, r_config.gl_compressed_solid_format);
-	Com_Printf("%c... compressed alpha format: %i\n", COLORED_GREEN, r_config.gl_compressed_alpha_format);
-	Com_Printf("%c... filter min: %i\n", COLORED_GREEN, r_config.gl_filter_min);
-	Com_Printf("%c... filter max: %i\n", COLORED_GREEN, r_config.gl_filter_max);
-
-	for (i = 0; i < r_config.maxTextureUnits; i++) {
-		const gltexunit_t *tex = &r_state.texunits[i];
-		Com_Printf("%c... texunit: %i\n", COLORED_GREEN, i);
-		Com_Printf("%c..... enabled: %i\n", COLORED_GREEN, tex->enabled);
-		Com_Printf("%c..... texture: %i\n", COLORED_GREEN, tex->texture);
-		Com_Printf("%c..... texture env: %i\n", COLORED_GREEN, tex->texenv);
-		Com_Printf("%c..... texture num: %i\n", COLORED_GREEN, tex->texnum);
-	}
 }
 
 /* global ambient lighting */
@@ -584,9 +551,6 @@ void R_SetDefaultState (void)
 
 	/* alpha blend parameters */
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	if (developer->integer & DEBUG_RENDERER)
-		R_StatePrint();
 
 	/* reset gl error state */
 	R_CheckError();

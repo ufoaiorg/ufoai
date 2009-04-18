@@ -948,11 +948,11 @@ static void CL_CvarCheck (void)
 		if (cl_worldlevel->integer < 0)
 			Com_Error(ERR_DROP, "CL_CvarCheck: cl_worldlevel is negative\n");
 
-		if (cl_worldlevel->integer >= cl.map_maxlevel - 1)
-			Cvar_SetValue("cl_worldlevel", cl.map_maxlevel - 1);
+		if (cl_worldlevel->integer >= cl.mapMaxLevel - 1)
+			Cvar_SetValue("cl_worldlevel", cl.mapMaxLevel - 1);
 		else if (cl_worldlevel->integer < 0)
 			Cvar_SetValue("cl_worldlevel", 0);
-		for (i = 0; i < cl.map_maxlevel; i++)
+		for (i = 0; i < cl.mapMaxLevel; i++)
 			MN_ExecuteConfunc("deselfloor %i", i + 1);
 		for (; i < PATHFINDING_HEIGHT; i++)
 			MN_ExecuteConfunc("disfloor %i", i + 1);

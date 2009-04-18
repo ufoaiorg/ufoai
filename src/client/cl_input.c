@@ -304,7 +304,7 @@ static void CL_LevelUp_f (void)
 {
 	if (!CL_OnBattlescape())
 		return;
-	Cvar_SetValue("cl_worldlevel", (cl_worldlevel->integer < cl.map_maxlevel - 1) ? cl_worldlevel->integer + 1 : cl.map_maxlevel - 1);
+	Cvar_SetValue("cl_worldlevel", (cl_worldlevel->integer < cl.mapMaxLevel - 1) ? cl_worldlevel->integer + 1 : cl.mapMaxLevel - 1);
 }
 
 /**

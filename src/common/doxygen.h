@@ -9,6 +9,6 @@
  *
  * http://cia.vc/stats/project/ufoai
  * http://ufoai.sourceforge.net/
- * http://colabti.org/irclogger/irclogger_logs/ufo:ai
+ * http://colabti.org/irclogger/irclogger_logs/ufoai
  * @author UFO:AI Team
  */

@@ -238,7 +238,7 @@ void R_BeginFrame (void)
 		r_threads->modified = qfalse;
 	}
 
-	R_SetupGL2D();
+	R_Setup2D();
 
 	/* clear screen if desired */
 	R_Clear();
@@ -252,7 +252,7 @@ void R_RenderFrame (void)
 {
 	int tile;
 
-	R_SetupGL3D();
+	R_Setup3D();
 
 	/* activate wire mode */
 	if (r_wire->integer)
@@ -313,7 +313,7 @@ void R_RenderFrame (void)
 	R_ResetArrayState();
 
 	/* go back into 2D mode for hud and the like */
-	R_SetupGL2D();
+	R_Setup2D();
 
 	R_CheckError();
 }
@@ -341,7 +341,6 @@ static const cmdList_t r_commands[] = {
 	{"r_screenshot", R_ScreenShot_f, "Take a screenshot"},
 	{"r_listmodels", R_ModModellist_f, "Show all loaded models on game console"},
 	{"r_strings", R_Strings_f, "Print openGL vendor and other strings"},
-	{"r_state", R_StatePrint, "Print the gl state to game console"},
 	{"r_restartprograms", R_RestartPrograms_f, "Reloads the shaders"},
 
 	{NULL, NULL, NULL}
@@ -803,9 +802,6 @@ void R_Shutdown (void)
 
 	/* shut down OS specific OpenGL stuff like contexts, etc. */
 	Rimp_Shutdown();
-
-	if (developer->integer & DEBUG_RENDERER)
-		R_StatePrint();
 
 	R_ShutdownThreads();
 }

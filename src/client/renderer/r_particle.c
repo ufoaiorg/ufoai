@@ -141,17 +141,17 @@ static void R_DrawSprite (const ptl_t * p)
 /**
  * @sa R_DrawParticles
  */
-static void R_DrawPtlModel (ptl_t * p)
+static void R_DrawParticleModel (ptl_t * p)
 {
 	modelInfo_t mi;
 
-	/* initialize minfo */
+	/* initialize model info */
 	memset(&mi, 0, sizeof(mi));
 	mi.color = p->color;
 	mi.origin = p->s;
 	mi.angles = p->angles;
 	assert(p->model);
-	mi.model = (model_t *) p->model->art.model; /**< @todo Fix this once model_t is known everywhere */
+	mi.model = p->model->art.model;
 	mi.skin = p->skin;
 
 	/* draw it */
@@ -258,9 +258,8 @@ static void R_SetBlendMode (int mode)
 }
 
 /**
- * @brief
- * @note No need to reset the blend mode - R_SetupGL2D will do this
- * @sa R_SetupGL2D
+ * @note No need to reset the blend mode - R_Setup2D will do this
+ * @sa R_Setup2D
  */
 void R_DrawParticles (void)
 {
@@ -286,7 +285,7 @@ void R_DrawParticles (void)
 			if (p->pic)
 				R_DrawSprite(p);
 			if (p->model)
-				R_DrawPtlModel(p);
+				R_DrawParticleModel(p);
 			R_TexEnv(GL_MODULATE);
 		}
 

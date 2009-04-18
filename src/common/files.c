@@ -57,7 +57,7 @@ const char *FS_Gamedir (void)
 }
 
 /**
- * @brief Convert operating systems path seperators to ufo virtual filesystem
+ * @brief Convert operating systems path separators to ufo virtual filesystem
  * separators (/)
  * @sa Sys_NormPath
  */
@@ -132,7 +132,7 @@ void FS_CloseFile (qFILE * f)
  * @param[in] filename
  * @param[in,out] file The file pointer
  * @return the filesize or -1 in case of an error
- * @note Used for streaming data out of either a pak file or a seperate file.
+ * @note Used for streaming data out of either a pak file or a separate file.
  * @sa FS_OpenFile
  */
 static int FS_OpenFileSingle (const char *filename, qFILE * file, filemode_t mode)
@@ -793,7 +793,7 @@ static const cmdList_t fs_commands[] = {
 	{"fs_restart", FS_RestartFilesystem, "Reloads the file subsystem"},
 	{"link", FS_Link_f, "Create file links"},
 	{"dir", FS_Dir_f, "Show the filesystem contents - also supports wildcarding"},
-	{"fs_info", FS_Info_f, "Show information about the virtuell filesystem"},
+	{"fs_info", FS_Info_f, "Show information about the virtual filesystem"},
 
 	{NULL, NULL, NULL}
 };
@@ -876,7 +876,6 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
 		f = name;
 	else
 		f++;
-/*	Com_Printf("_AddToListBlock: %s (%s)\n", name, f);*/
 
 	/* check for double occurrences */
 	for (tblock = block; tblock; tblock = tblock->next) {
@@ -927,7 +926,7 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
 
 /**
  * @brief Build a filelist
- * @param[in] fileList e.g. ufos\*.ufo to get all ufo files in the gamedir/ufos dir
+ * @param[in] fileList e.g. *.cfg to get all config files in the gamedir/ dir
  */
 int FS_BuildFileList (const char *fileList)
 {
@@ -1073,9 +1072,9 @@ const char* FS_NextFileFromFileList (const char *files)
 /**
  * @brief Returns the buffer of a file
  * @param[in] files If NULL, reset the filelist
- * If not NULL it may be something like ufos\*.ufo (slash) to get a list
- * of all ufo files in base/ufos. Calling FS_GetFileData("ufos\*.ufo");
- * until it returns NULL is sufficient to get on buffer after another.
+ * If not NULL it may be something like *.cfg to get a list
+ * of all config files in base/. Calling @c FS_GetFileData("*.cfg");
+ * until it returns @c NULL is sufficient to get one buffer after another.
  * @note You don't have to free the file buffer on the calling side.
  * This is done in this function, too
  */
@@ -1291,7 +1290,7 @@ static int CheckBSPFile (const char *filename)
 	char name[MAX_QPATH];
 
 	/* load the file */
-	Com_sprintf(name, MAX_QPATH, "maps/%s.bsp", filename);
+	Com_sprintf(name, sizeof(name), "maps/%s.bsp", filename);
 
 	FS_OpenFile(name, &file, FILE_READ);
 	if (!file.f && !file.z)
@@ -1317,7 +1316,6 @@ static int CheckBSPFile (const char *filename)
  * @brief File the fs_maps array with valid maps
  * @param[in] reset If true the directory is scanned every time for new maps (useful for dedicated servers).
  * If false we only use the maps array (for clients e.g.)
- * @todo Add ump file support
  */
 void FS_GetMaps (qboolean reset)
 {

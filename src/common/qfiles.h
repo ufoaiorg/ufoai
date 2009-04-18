@@ -81,7 +81,7 @@ typedef struct {
 				 * structure. This will give you the vertex coordinate relative to the model's
 				 * origin, which is at the origin, (0, 0, 0)
 				 */
-	byte lightnormalindex;		/**< this is an index into a table of normals (bytedirs - see anormtab.h) */
+	byte unused;
 } dMD2TriangleVertex_t;
 
 /**

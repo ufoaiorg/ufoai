@@ -835,7 +835,7 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 /**
  * @brief Center position of skybox along z-axis. This is used to make sure we see only the inside of Skybox.
  * @sa R_DrawStarfield
- * @sa R_SetupGL2D
+ * @sa R_Setup2D
  */
 const float SKYBOX_DEPTH = -9999.0f;
 
@@ -844,7 +844,7 @@ const float SKYBOX_DEPTH = -9999.0f;
  * @note The bigger, the less perspective default you'll have, but the more you'll
  * zoom on the texture (and see it's default).
  * @sa R_DrawStarfield
- * @sa R_SetupGL2D
+ * @sa R_Setup2D
  */
 #define SKYBOX_HALFSIZE 800.0f
 
@@ -901,7 +901,7 @@ static const float starFieldTexCoords[] = {
  * @note We draw a skybox: the camera is inside a cube rotating at earth rotation speed
  * (stars seems to rotate because we see earth as idle, but in reality stars are statics
  * and earth rotate around itself)
- * @sa R_SetupGL2D
+ * @sa R_Setup2D
  * @sa R_Draw3DGlobe
  */
 static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, float p)

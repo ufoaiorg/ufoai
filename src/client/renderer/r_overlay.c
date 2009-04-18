@@ -293,7 +293,7 @@ static void R_DrawRadarOverlayRow (int latMin, int latMax, int y, byte alpha, qb
  */
 static inline float R_GetRadarDeltaLongitude (const vec2_t radarPos, float radius, const float  yLat)
 {
-	float angle = (cos(radius * torad) - sin(radarPos[1] * torad) * sin(yLat)) / (cos(radarPos[1] * torad) * cos(yLat));
+	const float angle = (cos(radius * torad) - sin(radarPos[1] * torad) * sin(yLat)) / (cos(radarPos[1] * torad) * cos(yLat));
 
 	return fabs(angle) > 1.0f ? 180.0f : todeg * acos(angle);
 }
@@ -366,8 +366,8 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 	/* Draw middle part of the radar coverage */
 	for (y = yMin; y < yMax; y += bpp) {
 		const float yLat = torad * (90.0f - y / (radarHeightPerDegree * bpp));	/**< latitude of current point, in radian */
-		float deltaLong = R_GetRadarDeltaLongitude(pos, innerRadius, yLat);
-		float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
+		const float deltaLong = R_GetRadarDeltaLongitude(pos, innerRadius, yLat);
+		const float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
 
 		/* At this latitude, there are 3 parts to draw: left outer radar, inner radar, and right outer radar */
 		R_DrawRadarOverlayRow(-pos[0] - outerDeltaLong, -pos[0] - deltaLong, y, outerAlpha, source);
@@ -378,7 +378,7 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 	/* Draw lower part of the radar coverage */
 	for (y = yMax; y < outeryMax; y += bpp) {
 		const float yLat = torad * (90.0f - y / (radarHeightPerDegree * bpp));	/**< latitude of current point, in radian */
-		float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
+		const float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
 
 		/* Only the outer radar coverage is drawn at this latitude */
 		R_DrawRadarOverlayRow(-pos[0] - outerDeltaLong, -pos[0] + outerDeltaLong, y, outerAlpha, source);

@@ -2647,7 +2647,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t to
 
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
 	oldLevel = cl_worldlevel->integer;
-	cl_worldlevel->integer = cl.map_maxlevel - 1;
+	cl_worldlevel->integer = cl.mapMaxLevel - 1;
 
 	VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
 	tr = CL_Trace(start, temp, vec3_origin, vec3_origin, selActor, NULL, MASK_SHOT);
@@ -2743,7 +2743,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toP
 
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
 	oldLevel = cl_worldlevel->integer;
-	cl_worldlevel->integer = cl.map_maxlevel - 1;
+	cl_worldlevel->integer = cl.mapMaxLevel - 1;
 
 	/* paint */
 	vz = v0[2];

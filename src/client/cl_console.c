@@ -138,7 +138,7 @@ void Con_ClearNotify (void)
 
 static void Con_MessageModeSay_f (void)
 {
-	/* chatting makes only sense in battle field mode */
+	/* chatting makes only sense in battle field multiplayer mode */
 	if (!CL_OnBattlescape() || GAME_IsSingleplayer())
 		return;
 
@@ -148,7 +148,7 @@ static void Con_MessageModeSay_f (void)
 
 static void Con_MessageModeSayTeam_f (void)
 {
-	/* chatting makes only sense in battle field mode */
+	/* chatting makes only sense in battle field multiplayer mode */
 	if (!CL_OnBattlescape() || GAME_IsSingleplayer())
 		return;
 
@@ -161,33 +161,33 @@ static void Con_MessageModeSayTeam_f (void)
  */
 void Con_CheckResize (void)
 {
-	int i, j, oldwidth, oldtotallines, numlines, numchars;
+	int i, j, oldWidth, oldTotalLines, numLines, numChars;
 	char tbuf[CON_TEXTSIZE];
 	const int width = (viddef.width >> con_fontShift);
 
 	if (width == con.lineWidth)
 		return;
 
-	oldwidth = con.lineWidth;
+	oldWidth = con.lineWidth;
 	con.lineWidth = width;
-	oldtotallines = con.totalLines;
+	oldTotalLines = con.totalLines;
 	con.totalLines = CON_TEXTSIZE / con.lineWidth;
-	numlines = oldtotallines;
+	numLines = oldTotalLines;
 
-	if (con.totalLines < numlines)
-		numlines = con.totalLines;
+	if (con.totalLines < numLines)
+		numLines = con.totalLines;
 
-	numchars = oldwidth;
+	numChars = oldWidth;
 
-	if (con.lineWidth < numchars)
-		numchars = con.lineWidth;
+	if (con.lineWidth < numChars)
+		numChars = con.lineWidth;
 
 	memcpy(tbuf, con.text, sizeof(tbuf));
 	memset(con.text, ' ', sizeof(con.text));
 
-	for (i = 0; i < numlines; i++) {
-		for (j = 0; j < numchars; j++) {
-			con.text[(con.totalLines - 1 - i) * con.lineWidth + j] = tbuf[((con.currentLine - i + oldtotallines) % oldtotallines) * oldwidth + j];
+	for (i = 0; i < numLines; i++) {
+		for (j = 0; j < numChars; j++) {
+			con.text[(con.totalLines - 1 - i) * con.lineWidth + j] = tbuf[((con.currentLine - i + oldTotalLines) % oldTotalLines) * oldWidth + j];
 		}
 	}
 

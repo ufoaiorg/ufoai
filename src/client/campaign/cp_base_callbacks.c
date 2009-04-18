@@ -632,7 +632,7 @@ static void B_AssembleMap_f (void)
 			}
 		}
 	/* set maxlevel for base attacks */
-	cl.map_maxlevel_base = 6;
+	cl.mapMaxLevelBase = 6;
 
 	SAV_QuickSave();
 

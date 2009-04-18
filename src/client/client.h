@@ -120,8 +120,8 @@ typedef struct client_state_s {
 
 	clientinfo_t clientinfo[MAX_CLIENTS]; /**< client info of all connected clients */
 
-	int map_maxlevel;
-	int map_maxlevel_base;
+	int mapMaxLevel;
+	int mapMaxLevelBase;
 
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } client_state_t;
