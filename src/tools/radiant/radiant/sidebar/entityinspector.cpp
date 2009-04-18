@@ -90,7 +90,7 @@ namespace
  */
 const char* Values_getFirstValue(const Values &values)
 {
-	assert(!values.empty());
+	ASSERT_MESSAGE(!values.empty(), "Values don't exist");
 	return (*values.begin()).c_str();
 }
 
@@ -101,7 +101,7 @@ const char* Values_getFirstValue(const Values &values)
  */
 const char* SelectedEntity_getValueForKey (const char* key)
 {
-	assert(g_current_attributes != 0);
+	ASSERT_MESSAGE(g_current_attributes != 0, "g_current_attributes is zero");
 	ClassKeyValues::iterator it = g_selectedKeyValues.find(g_current_attributes->m_name);
 	if (it != g_selectedKeyValues.end()) {
 		KeyValues &possibleValues = (*it).second;
