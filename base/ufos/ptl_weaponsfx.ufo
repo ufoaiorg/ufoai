@@ -461,7 +461,7 @@ particle laserSparkSmall
 		add    float 1.2
 		pop    *tps
 		lightcolor "0.3 0.3 0.3"
-		lightintensity 0.05
+		lightintensity 0.01
 	}
 	think { kill }
 }
