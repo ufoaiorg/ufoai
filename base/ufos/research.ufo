@@ -1521,6 +1521,44 @@ tech rs_weapon_laserrifle
 	producetime	140
 }
 
+tech rs_weapon_electrolaser
+{
+	type	weapon
+	up_chapter	equipment
+
+	description {
+		default "_electrolaser_txt"
+	}
+	pre_description {
+		default "_electrolaser_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	require_AND
+	{
+		tech rs_laser
+		tech rs_skill_assault
+	}
+	provides	electrolaser
+	time	1000
+	producetime	90
+}
+
 tech rs_medikit
 {
 	type	weapon

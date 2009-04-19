@@ -56,8 +56,8 @@ item heavylaser
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-        shape           "1 0 4 1"
-        shape           "0 1 4 1"
+    shape           "1 0 4 1"
+    shape           "0 1 4 1"
 	center		"8.5 4.5 3.5"
 	scale		1.15
 	ammo		6
@@ -66,6 +66,29 @@ item heavylaser
 	size		50
 	is_primary	true
 	is_heavy	true
+}
+
+// =======================
+// ELECTRO LASER
+// =======================
+item electrolaser
+{
+	name		"_Electro Laser"
+	model		weapons/electrolaser/electrolaser
+	weapon		true
+	type		rifle
+	animationindex	1
+	holdtwohanded	false
+	firetwohanded	true
+	shape		"0 0 5 1"
+	shape		"0 1 4 1"
+	center		"4.5 0 .5"
+	scale		1.26
+	ammo		16
+	reload		12
+	price		9570
+	size		35
+	is_primary	true
 }
 
 item laserrifle_ammo
@@ -207,6 +230,49 @@ item laserrifle_ammo
 			time	15
 			damage	"40 12"
 			dmgweight laser_heavy
+			reaction	true
+		}
+	}
+	
+	weapon_mod electrolaser	// weap_fds_idx=1
+	{
+		firedef
+		{
+			name	"_Wave Fire"
+			skill 	assault
+			projtl	laserPulse
+			impact	laserImpact
+			hitbody	laserImpact
+			firesnd	weapons/laser
+			speed	0
+			spread	"0.5 0.5"
+			crouch	0.8
+			range	90
+			shots	1
+			ammo	2
+			time	7
+			damage	"55 6"
+			dmgweight laser_medium
+			reaction	true
+		}
+		firedef
+		{
+			name	"_Pulsed Fire"
+			skill 	assault
+			projtl	laserPulse
+			impact	laserImpact
+			hitbody	laserImpact
+			firesnd	weapons/laser
+			delaybetweenshots		8
+			speed	0
+			spread	"0.5 0.5"
+			crouch	0.8
+			range	90
+			shots	3
+			ammo	3
+			time	10
+			damage	"35 5"
+			dmgweight laser_medium
 			reaction	true
 		}
 	}

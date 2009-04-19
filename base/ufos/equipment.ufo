@@ -238,6 +238,8 @@ equipment multiplayer_alien
 //	laserpistol_ammo	5
 	laserrifle			2
 	laserrifle_ammo		11
+//	electrolaser		2
+//	laserpistol_ammo	5
 	heavylaser			2
 //	heavylaser_ammo		3
 	plaspistol			2
@@ -315,6 +317,7 @@ equipment multiplayer_phalanx
 	bolterrifle_ammo	3
 	laserpistol			2
 //	laserpistol_ammo	5
+	electrolaser		2
 	laserrifle			2
 	laserrifle_ammo		11
 	heavylaser			2
