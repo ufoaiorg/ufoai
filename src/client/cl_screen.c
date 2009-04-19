@@ -43,7 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_menu.h"
 #include "renderer/r_main.h"
 #include "renderer/r_draw.h"
-#include "renderer/r_misc.h"
 #include "menu/m_draw.h"
 #include "menu/m_nodes.h"
 #include "menu/m_dragndrop.h"
@@ -103,17 +102,13 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  */
 void SCR_DrawPrecacheScreen (qboolean string)
 {
-	vec3_t pos;
+	const image_t *image;
+
 	R_BeginFrame();
 
-	/* center loading screen */
-	pos[0] = (viddef.virtualWidth - VID_NORM_WIDTH) * viddef.rx / 2;
-	pos[1] = (viddef.virtualHeight - VID_NORM_HEIGHT) * viddef.ry / 2;
-	pos[2] = 0;
-	R_PushMatrix();
-	R_Transform(pos, NULL, NULL);
-
-	R_DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "loading");
+	image = R_FindImage("pics/loading", it_pic);
+	if (image)
+		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, qfalse, image);
 	if (string) {
 		/* Not used with gettext because it would make removing it too easy. */
 		R_FontDrawString("f_menubig", ALIGN_UC,
@@ -121,8 +116,6 @@ void SCR_DrawPrecacheScreen (qboolean string)
 			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
 	}
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
-
-	R_PopMatrix();
 
 	R_EndFrame();
 }
@@ -135,8 +128,6 @@ void SCR_DrawPrecacheScreen (qboolean string)
  */
 const char* SCR_SetLoadingBackground (const char *mapString)
 {
-	char loadingPic[MAX_QPATH];
-	char tmpPicName[MAX_VAR];
 	const char *mapname;
 
 	if (!mapString || Com_ServerState())
@@ -152,15 +143,11 @@ const char* SCR_SetLoadingBackground (const char *mapString)
 	/* we will try to load the random map shots by just removing the + from the beginning */
 	if (mapname[0] == '+')
 		mapname++;
-	Q_strncpyz(tmpPicName, mapname, sizeof(tmpPicName));
-	if (FS_CheckFile(va("pics/maps/loading/%s.jpg", tmpPicName)) > 0)
-		/* store it relative to pics/ dir - not relative to game dir */
-		Com_sprintf(loadingPic, sizeof(loadingPic), "maps/loading/%s", tmpPicName);
-	else
-		/* store it relative to pics/ dir - not relative to game dir */
-		Q_strncpyz(loadingPic, "maps/loading/default", sizeof(loadingPic));
 
-	Cvar_Set("mn_mappicbig", loadingPic);
+	if (R_FindImage(va("pics/maps/loading/%s", mapname), it_pic))
+		Cvar_Set("mn_mappicbig", va("pics/maps/loading/%s", mapname));
+	else
+		Cvar_Set("mn_mappicbig", "maps/loading/default");
 
 	return Cvar_GetString("mn_mappicbig");
 }
@@ -193,7 +180,7 @@ static void SCR_DrawLoading (void)
 	static const char *loadingPic;
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
 	char *mapmsg;
-	vec3_t pos;
+	const image_t *image;
 
 	if (cls.downloadName[0]) {
 		SCR_DrawDownloading();
@@ -211,13 +198,9 @@ static void SCR_DrawLoading (void)
 		return;
 
 	/* center loading screen */
-	pos[0] = (viddef.virtualWidth - VID_NORM_WIDTH) * viddef.rx / 2;
-	pos[1] = (viddef.virtualHeight - VID_NORM_HEIGHT) * viddef.ry / 2;
-	pos[2] = 0;
-	R_PushMatrix();
-	R_Transform(pos, NULL, NULL);
-
-	R_DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, loadingPic);
+	image = R_FindImage(loadingPic, it_pic);
+	if (image)
+		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, qfalse, image);
 	R_Color(color);
 
 	if (cl.configstrings[CS_TILES][0]) {
@@ -238,8 +221,6 @@ static void SCR_DrawLoading (void)
 		VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, cls.loadingMessages, 1, 0, NULL, qfalse, 0);
 
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
-
-	R_PopMatrix();
 }
 
 /**
@@ -253,7 +234,9 @@ static void SCR_TouchPics (void)
 
 		R_FindImage("pics/cursors/wait", it_pic);
 		R_FindImage("pics/cursors/ducked", it_pic);
-		Com_sprintf(cursorImage, sizeof(cursorImage), "cursors/cursor%i", scr_cursor->integer);
+		R_FindImage("pics/cursors/reactionfire", it_pic);
+		R_FindImage("pics/cursors/reactionfiremany", it_pic);
+		Com_sprintf(cursorImage, sizeof(cursorImage), "pics/cursors/cursor%i", scr_cursor->integer);
 		if (!R_FindImage(cursorImage, it_pic)) {
 			Com_Printf("SCR_TouchPics: Could not register cursor: %s\n", cursorImage);
 			cursorImage[0] = '\0';
@@ -268,9 +251,9 @@ static const vec4_t cursorBG = { 0.0f, 0.0f, 0.0f, 0.7f };
  */
 static void SCR_DrawCursor (void)
 {
-	int icon_offset_x = 16;	/* Offset of the first icon on the x-axis. */
-	int icon_offset_y = 16;	/* Offset of the first icon on the y-axis. */
-	const int icon_spacing = 2;	/* the space between different icons. */
+	int iconOffsetX = 16;	/* Offset of the first icon on the x-axis. */
+	int iconOffsetY = 16;	/* Offset of the first icon on the y-axis. */
+	const int iconSpacing = 2;	/* the space between different icons. */
 
 	if (!scr_cursor->integer || cls.playingCinematic == CIN_STATUS_FULLSCREEN)
 		return;
@@ -285,32 +268,44 @@ static void SCR_DrawCursor (void)
 
 	if (!MN_DNDIsDragging()) {
 		const char *pic;
+		image_t *image;
+
 		if (cls.state == ca_active && cls.team != cl.actTeam)
-			pic = "cursors/wait";
+			pic = "pics/cursors/wait";
 		else
 			pic = cursorImage;
 
-		R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, pic);
+		image = R_FindImage(pic, it_pic);
+		if (image)
+			R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, qtrue, image);
 
 		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
 			if (selActor) {
 				/* Display 'crouch' icon if actor is crouched. */
-				if (selActor->state & STATE_CROUCHED)
-					R_DrawNormPic(mousePosX + icon_offset_x, mousePosY + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "cursors/ducked");
-				icon_offset_y += 16;	/* Height of 'crouched' icon. */
-				icon_offset_y += icon_spacing;
+				if (selActor->state & STATE_CROUCHED) {
+					image = R_FindImage("pics/cursors/ducked", it_pic);
+					if (image)
+						R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, qtrue, image);
+				}
+				iconOffsetY += 16;	/* Height of 'crouched' icon. */
+				iconOffsetY += iconSpacing;
 
 				/* Display 'Reaction shot' icon if actor has it activated. */
 				if (selActor->state & STATE_REACTION_ONCE)
-					R_DrawNormPic(mousePosX + icon_offset_x, mousePosY + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "cursors/reactionfire");
+					image = R_FindImage("pics/cursors/reactionfire", it_pic);
 				else if (selActor->state & STATE_REACTION_MANY)
-					R_DrawNormPic(mousePosX + icon_offset_x, mousePosY + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "cursors/reactionfiremany");
-				icon_offset_y += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
-				icon_offset_y += icon_spacing;
+					image = R_FindImage("pics/cursors/reactionfiremany", it_pic);
+				else
+					image = NULL;
+
+				if (image)
+					R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, qtrue, image);
+				iconOffsetY += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
+				iconOffsetY += iconSpacing;
 
 				/* Display weaponmode (text) heR_ */
 				if (MN_GetText(TEXT_MOUSECURSOR_RIGHT) && cl_show_cursor_tooltips->integer)
-					SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 16, MN_GetText(TEXT_MOUSECURSOR_RIGHT), qfalse);
+					SCR_DrawString(mousePosX + iconOffsetX, mousePosY - 16, MN_GetText(TEXT_MOUSECURSOR_RIGHT), qfalse);
 			}
 
 			/* playernames */
@@ -318,7 +313,7 @@ static void SCR_DrawCursor (void)
 				/** @todo activate this:
 				R_DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
 				*/
-				SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 32, MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), qfalse);
+				SCR_DrawString(mousePosX + iconOffsetX, mousePosY - 32, MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), qfalse);
 				MN_ResetData(TEXT_MOUSECURSOR_PLAYERNAMES);
 			}
 

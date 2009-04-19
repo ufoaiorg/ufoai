@@ -28,13 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_font.h"
 #include "../m_actions.h"
 #include "../m_parse.h"
+#include "../m_render.h"
 #include "m_node_text.h"
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
 /** @todo remove this dependency from the text node */
 #include "../../campaign/cl_campaign.h" /**< message_t */
-#include "../../renderer/r_draw.h"
 #include "../../../shared/parse.h"
 
 #define EXTRADATA(node) (node->u.text)
@@ -161,11 +161,11 @@ static void MN_DrawScrollBar (const menuNode_t *node)
 		scrollbarX = nodepos[0] + node->size[0] - MN_SCROLLBAR_WIDTH;
 		scrollbarY = node->size[1] * EXTRADATA(node).rows / EXTRADATA(node).textLines * MN_SCROLLBAR_HEIGHT;
 
-		R_DrawFill(scrollbarX, nodepos[1],
+		MN_DrawFill(scrollbarX, nodepos[1],
 			MN_SCROLLBAR_WIDTH, node->size[1],
 			ALIGN_UL, scrollbarBackground);
 
-		R_DrawFill(scrollbarX, nodepos[1] + (node->size[1] - scrollbarY) * EXTRADATA(node).textScroll / (EXTRADATA(node).textLines - EXTRADATA(node).rows),
+		MN_DrawFill(scrollbarX, nodepos[1] + (node->size[1] - scrollbarY) * EXTRADATA(node).textScroll / (EXTRADATA(node).textLines - EXTRADATA(node).rows),
 			MN_SCROLLBAR_WIDTH, scrollbarY,
 			ALIGN_UL, scrollbarColor);
 	}
@@ -193,7 +193,7 @@ int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 		return (int) (y / node->u.text.lineHeight);
 }
 
-static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y) 
+static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y)
 {
 	EXTRADATA(node).lineUnderMouse = MN_TextNodeGetLine(node, x, y);
 }
@@ -296,8 +296,9 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			/* don't draw images that would be out of visible area */
 			if (y + height > y1 && lines >= EXTRADATA(node).textScroll) {
 				/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too */
-				image = R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->textalign, node->blend, token);
-				x1 += image->height;
+				image = MN_DrawNormImageByName(x1, y1, 0, 0, 0, 0, 0, 0, node->textalign, node->blend, token);
+				if (image)
+					x1 += image->height;
 			}
 		}
 

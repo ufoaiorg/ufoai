@@ -26,9 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_tooltip.h"
 #include "m_nodes.h"
 #include "m_parse.h"
+#include "m_render.h"
 
 #include "../client.h" /* gettext _() */
-#include "../renderer/r_draw.h"
 
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
@@ -58,7 +58,7 @@ int MN_DrawTooltip (const char *font, const char *string, int x, int y, int maxW
 	if (y + height + 3 > VID_NORM_HEIGHT)
 		y -= height + 10;
 
-	R_DrawFill(x - 1, y - 1, width + 4, height + 4, ALIGN_UL, tooltipBG);
+	MN_DrawFill(x - 1, y - 1, width + 4, height + 4, ALIGN_UL, tooltipBG);
 	R_ColorBlend(tooltipColor);
 	R_FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 

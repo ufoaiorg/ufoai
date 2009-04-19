@@ -25,7 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_DRAW_H
 #define R_DRAW_H
 
-const image_t *R_DrawNormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
+void R_DrawImage(float x, float y, qboolean blend, const image_t *image);
+const image_t *R_DrawImageArray(const float texcoords[8], const short verts[8], qboolean blend, const image_t *image);
 void R_DrawChar(int x, int y, int c);
 void R_DrawChars(void);
 void R_DrawFill(int x, int y, int w, int h, int align, const vec4_t color);

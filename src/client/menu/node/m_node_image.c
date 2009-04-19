@@ -24,11 +24,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 #include "../m_parse.h"
+#include "../m_render.h"
 #include "m_node_image.h"
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
-#include "../../renderer/r_draw.h"
 
 /**
  * @brief Handled after the end of the load of the node from the script (all data and/or child are set)
@@ -41,7 +41,7 @@ static void MN_ImageNodeLoaded (menuNode_t *node)
 			node->size[0] = node->texh[0] - node->texl[0];
 			node->size[1] = node->texh[1] - node->texl[1];
 		} else if (node->image) {
-			const image_t *image = R_RegisterImage(node->image);
+			const image_t *image = MN_LoadImage(node->image);
 			if (image) {
 				node->size[0] = image->width;
 				node->size[1] = image->height;
@@ -72,7 +72,7 @@ void MN_ImageNodeDraw (menuNode_t *node)
 	if (!imageName || imageName[0] == '\0')
 		return;
 
-	image = R_RegisterImage(imageName);
+	image = MN_LoadImage(imageName);
 
 	/* mouse darken effect */
 	/** @todo convert all pic using mousefx into button.
@@ -123,8 +123,8 @@ void MN_ImageNodeDraw (menuNode_t *node)
 			Vector2Copy(node->size, size);
 		}
 	}
-	R_DrawNormPic(nodepos[0], nodepos[1], size[0], size[1],
-		node->texh[0], node->texh[1], node->texl[0], node->texl[1], ALIGN_UL, node->blend, imageName);
+	MN_DrawNormImage(nodepos[0], nodepos[1], size[0], size[1],
+		node->texh[0], node->texh[1], node->texl[0], node->texl[1], ALIGN_UL, node->blend, image);
 
 	/** @todo convert all pic using mousefx into button.
 	 * @todo delete mousefx

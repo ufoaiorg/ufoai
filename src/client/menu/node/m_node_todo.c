@@ -28,11 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_draw.h"
 #include "../m_tooltip.h"
+#include "../m_render.h"
 #include "m_node_todo.h"
 #include "m_node_abstractnode.h"
 
 #include "../../cl_input.h"
-#include "../../renderer/r_draw.h"
 
 /**
  * @brief Custom tooltip of todo node
@@ -60,7 +60,7 @@ static void MN_TodoNodeDraw (menuNode_t *node)
 	vec2_t pos;
 
 	MN_GetNodeAbsPos(node, pos);
-	R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, red);
+	MN_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, red);
 
 	if (node->state)
 		MN_CaptureDrawOver(node);

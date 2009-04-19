@@ -44,6 +44,25 @@ cvar_t *cl_3dmap;				/**< 3D geoscape or flat geoscape */
 cvar_t *cl_mapzoommax;
 cvar_t *cl_mapzoommin;
 
+enum {
+	GEOSCAPE_IMAGE_MISSION,
+	GEOSCAPE_IMAGE_MISSION_ACTIVE,
+	GEOSCAPE_IMAGE_BASE,
+	GEOSCAPE_IMAGE_BASE_ATTACK,
+
+	GEOSCAPE_IMAGE_MAX
+};
+
+static const char *geoscapeImageNames[] = {
+	"pics/geoscape/circle",
+	"pics/geoscape/circleactive",
+	"pics/geoscape/base",
+	"pics/geoscape/baseattack"
+};
+CASSERT(lengthof(geoscapeImageNames) == GEOSCAPE_IMAGE_MAX);
+
+static image_t *geoscapeImages[GEOSCAPE_IMAGE_MAX];
+
 void R_UploadRadarCoverage(qboolean smooth);
 void R_InitializeRadarOverlay(qboolean source);
 
@@ -1250,16 +1269,22 @@ static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
 		if (cl_3dmap->integer) {
 			if (!ccs.selectedMission->active)
 				MAP_MapDrawEquidistantPoints(node, ms->pos, SELECT_CIRCLE_RADIUS, yellow);
-		} else
-			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, ccs.selectedMission->active ? "geoscape/circleactive" : "geoscape/circle");
+		} else {
+			if (ccs.selectedMission->active) {
+				const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_ACTIVE];
+				R_DrawImage(x - image->width / 2, y - image->height / 2, qtrue, image);
+			}
+		}
 	}
 
 	/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
 	if (cl_3dmap->integer) {
 		const float angle = MAP_AngleOfPath(ms->pos, northPole, NULL, NULL) + 90.0f;
 		MAP_Draw3DMarkerIfVisible(node, ms->pos, angle, MAP_GetMissionModel(ms), 0);
-	} else
-		R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/mission");
+	} else {
+		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
+		R_DrawImage(x - image->width / 2, y - image->height / 2, qfalse, image);
+	}
 
 	R_FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.mapSize[1],  _(ms->location), 0, 0, NULL, qfalse, 0);
 }
@@ -1300,7 +1325,9 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
 		const float angle = MAP_AngleOfPath(installation->pos, northPole, NULL, NULL) + 90.0f;
 		MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, tpl->model, 0);
 	} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
-		R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, tpl->model);
+		const image_t *image = R_FindImage(tpl->model, it_pic);
+		if (image)
+			R_DrawImage(x - image->width / 2, y - image->height / 2, qfalse, image);
 	}
 
 	/* Draw installation names */
@@ -1346,10 +1373,13 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 		else
 			MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "geoscape/base", 0);
 	} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
+		const image_t *image;
 		if (base->baseStatus == BASE_UNDER_ATTACK)
-			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/baseattack");
+			image = geoscapeImages[GEOSCAPE_IMAGE_BASE_ATTACK];
 		else
-			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/base");
+			image = geoscapeImages[GEOSCAPE_IMAGE_BASE];
+
+		R_DrawImage(x - image->width / 2, y - image->height / 2, qtrue, image);
 	}
 
 	/* Draw base names */
@@ -1399,17 +1429,18 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 
 	/* Draw a circle around selected aircraft */
 	if (aircraft == selectedAircraft) {
+		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
 		if (cl_3dmap->integer)
 			MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 		else
-			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/circle");
+			R_DrawImage(x - image->width / 2, y - image->height / 2, qtrue, image);
 
 		/* Draw a circle around ufo purchased by selected aircraft */
 		if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, NULL)) {
 			if (cl_3dmap->integer)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 			else
-				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/circle");
+				R_DrawImage(x - image->width / 2, y - image->height / 2, qtrue, image);
 		}
 	}
 
@@ -1515,8 +1546,10 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			if (aircraft == selectedUFO) {
 				if (cl_3dmap->integer)
 					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
-				else
-					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/circle");
+				else {
+					const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
+					R_DrawImage(x - image->width / 2, y - image->height / 2, qtrue, image);
+				}
 			}
 			MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 			VectorCopy(aircraft->pos, aircraft->oldDrawPos);
@@ -2416,6 +2449,8 @@ static void MAP_DeactivateOverlay_f (void)
  */
 void MAP_InitStartup (void)
 {
+	int i;
+
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
 	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
@@ -2423,4 +2458,10 @@ void MAP_InitStartup (void)
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
 	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
+
+	for (i = 0; i < GEOSCAPE_IMAGE_MAX; i++) {
+		geoscapeImages[i] = R_FindImage(geoscapeImageNames[i], it_pic);
+		if (geoscapeImages[i] == r_noTexture)
+			Sys_Error("Could not find image: %s", geoscapeImageNames[i]);
+	}
 }

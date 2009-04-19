@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_internal.h"
 #include "m_parse.h"
 #include "m_icon.h"
-
-#include "../renderer/r_draw.h"
+#include "m_render.h"
 
 /**
  * @brief normal, hovered, disabled, highlighted status are store in the same texture 256x256.
@@ -100,6 +99,6 @@ void MN_DrawIconInBox (menuIcon_t* icon, int status, int posX, int posY, int siz
 	posX += (sizeX - icon->size[0]) / 2;
 	posY += (sizeY - icon->size[1]) / 2;
 
-	R_DrawNormPic(posX, posY, icon->size[0], icon->size[1],
+	MN_DrawNormImageByName(posX, posY, icon->size[0], icon->size[1],
 		texX + icon->size[0], texY + icon->size[1], texX, texY, ALIGN_UL, qtrue, icon->image);
 }

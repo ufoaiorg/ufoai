@@ -28,13 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_main.h"
 #include "../m_parse.h"
 #include "../m_font.h"
+#include "../m_render.h"
 #include "m_node_button.h"
 #include "m_node_custombutton.h"
 #include "m_node_abstractnode.h"
 #include "m_node_panel.h"
 
 #include "../../client.h"
-#include "../../renderer/r_draw.h"
 
 #define TILE_SIZE 64
 #define CORNER_SIZE 17

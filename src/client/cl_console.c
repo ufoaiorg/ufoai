@@ -500,7 +500,7 @@ void Con_DrawConsole (float frac)
 
 	/* draw the background */
 	if (con_background->integer)
-		R_DrawNormPic(0, lines - (int) viddef.height, viddef.virtualWidth, viddef.virtualHeight, 0, 0, 0, 0, ALIGN_UL, qfalse, "conback");
+		R_DrawImage(0, lines - (int) viddef.height, qfalse, R_FindImage("pics/conback", it_pic));
 
 	Com_sprintf(consoleMessage, sizeof(consoleMessage), "Hit esc to close - v%s", UFO_VERSION);
 	{

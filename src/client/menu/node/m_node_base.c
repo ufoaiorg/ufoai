@@ -26,13 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_tooltip.h"
 #include "../m_nodes.h"
+#include "../m_render.h"
 #include "m_node_model.h"
 #include "m_node_base.h"
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
 #include "../../campaign/cl_campaign.h"
-#include "../../renderer/r_draw.h"
 
 /**
  * @brief Called after the end of the node load from script (all data and/or child are set)
@@ -73,11 +73,11 @@ static void MN_BaseLayoutNodeDraw (menuNode_t * node)
 		int x = nodepos[0] + node->padding;
 		for (col = 0; col < BASE_SIZE; col++) {
 			if (base->map[row][col].blocked) {
-				R_DrawFill(x, y, width, height, ALIGN_UL, c_gray);
+				MN_DrawFill(x, y, width, height, ALIGN_UL, c_gray);
 			} else if (base->map[row][col].building) {
 				/* maybe destroyed in the meantime */
 				if (base->founded)
-					R_DrawFill(x, y, width, height, ALIGN_UL, node->color);
+					MN_DrawFill(x, y, width, height, ALIGN_UL, node->color);
 			}
 			x += width + node->padding;
 		}
@@ -185,7 +185,7 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 
 			/* draw tile */
 			if (image[0] != '\0')
-				R_DrawNormPic(pos[0], pos[1], width, height, 0, 0, 0, 0, 0, qfalse, image);
+				MN_DrawNormImageByName(pos[0], pos[1], width, height, 0, 0, 0, 0, 0, qfalse, image);
 
 			/* only draw for first part of building */
 			if (building && !secondBuilding) {
@@ -238,9 +238,9 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 			vec2_t pos;
 			MN_GetNodeAbsPos(node, pos);
 			if (isLarge) {
-				R_DrawNormPic(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width + width, height, 0, 0, 0, 0, 0, qfalse, "base/hover2");
+				MN_DrawNormImageByName(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width + width, height, 0, 0, 0, 0, 0, qfalse, "base/hover2");
 			} else
-				R_DrawNormPic(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width, height, 0, 0, 0, 0, 0, qfalse, "base/hover");
+				MN_DrawNormImageByName(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width, height, 0, 0, 0, 0, 0, qfalse, "base/hover");
 		}
 	}
 }

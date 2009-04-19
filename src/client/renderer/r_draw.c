@@ -207,119 +207,31 @@ void R_DrawTexture (int texnum, int x, int y, int w, int h)
 	glEnd();
 }
 
-static float image_texcoords[4 * 2];
-static short image_verts[4 * 2];
 
 /**
  * @brief Draws an image or parts of it
  * @param[in] x X position to draw the image to
  * @param[in] y Y position to draw the image to
- * @param[in] w Width of the image
- * @param[in] h Height of the image
- * @param[in] sh Right x corner coord of the square to draw
- * @param[in] th Lower y corner coord of the square to draw
- * @param[in] sl Left x corner coord of the square to draw
- * @param[in] tl Upper y corner coord of the square to draw
- * @param[in] align The alignment we should use for placing the image onto the screen (see align_t)
  * @param[in] blend Enable the blend mode (for alpha channel images)
- * @param[in] name The name of the image - relative to base/pics
- * @sa R_RegisterImage
- * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
- * they are adjusted in this function
  */
-const image_t *R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name)
+void R_DrawImage (float x, float y, qboolean blend, const image_t *image)
 {
-	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
-	const image_t *image;
+	float x1, x2, x3, x4, y1, y2, y3, y4;
+	short image_verts[8];
 
-	image = R_RegisterImage(name);
-	if (!image) {
-		Com_Printf("Can't find pic: %s\n", name);
-		return NULL;
-	}
+	if (!image)
+		return;
 
 	/* normalize to the screen resolution */
 	x1 = x * viddef.rx;
 	y1 = y * viddef.ry;
 
-	/* provided width and height (if any) take precedence */
-	if (w)
-		nw = w * viddef.rx;
-	else
-		nw = 0;
-
-	if (h)
-		nh = h * viddef.ry;
-	else
-		nh = 0;
-
-	/* horizontal texture mapping */
-	if (sh) {
-		if (!w)
-			nw = (sh - sl) * viddef.rx;
-		sh /= image->width;
-	} else {
-		if (!w)
-			nw = ((float)image->width - sl) * viddef.rx;
-		sh = 1.0f;
-	}
-	sl /= image->width;
-
-	/* vertical texture mapping */
-	if (th) {
-		if (!h)
-			nh = (th - tl) * viddef.ry;
-		th /= image->height;
-	} else {
-		if (!h)
-			nh = ((float)image->height - tl) * viddef.ry;
-		th = 1.0f;
-	}
-	tl /= image->height;
-
-	/* alignment */
-	if (align > 0 && align < ALIGN_LAST) {
-		/* horizontal (0 is left) */
-		switch (align % 3) {
-		case 1:
-			x1 -= nw * 0.5;
-			break;
-		case 2:
-			x1 -= nw;
-			break;
-		}
-
-		/* vertical (0 is upper) */
-		switch ((align % 9) / 3) {
-		case 1:
-			y1 -= nh * 0.5;
-			break;
-		case 2:
-			y1 -= nh;
-			break;
-		}
-	}
-
 	/* fill the rest of the coordinates to make a rectangle */
 	x4 = x1;
-	x3 = x2 = x1 + nw;
+	x3 = x2 = x1 + image->width * viddef.rx;
 	y2 = y1;
-	y4 = y3 = y1 + nh;
+	y4 = y3 = y1 + image->height * viddef.ry;
 
-	/* slanting */
-	if (align >= 9 && align < ALIGN_LAST) {
-		x1 += nh;
-		x2 += nh;
-	}
-
-	image_texcoords[0] = sl;
-	image_texcoords[1] = tl;
-	image_texcoords[2] = sh;
-	image_texcoords[3] = tl;
-	image_texcoords[4] = sh;
-	image_texcoords[5] = th;
-	image_texcoords[6] = sl;
-	image_texcoords[7] = th;
 	image_verts[0] = x1;
 	image_verts[1] = y1;
 	image_verts[2] = x2;
@@ -329,9 +241,14 @@ const image_t *R_DrawNormPic (float x, float y, float w, float h, float sh, floa
 	image_verts[6] = x4;
 	image_verts[7] = y4;
 
+	R_DrawImageArray(default_texcoords, image_verts, blend, image);
+}
+
+const image_t *R_DrawImageArray (const float texcoords[8], const short verts[8], qboolean blend, const image_t *image)
+{
 	/* alter the array pointers */
-	glVertexPointer(2, GL_SHORT, 0, image_verts);
-	glTexCoordPointer(2, GL_FLOAT, 0, image_texcoords);
+	glVertexPointer(2, GL_SHORT, 0, verts);
+	glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
 
 	if (blend)
 		R_EnableBlend(qtrue);

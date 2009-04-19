@@ -28,12 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_font.h"
 #include "../m_input.h"
 #include "../m_icon.h"
+#include "../m_render.h"
 #include "m_node_tab.h"
 #include "m_node_abstractnode.h"
 
 #include "../../client.h" /* gettext _() */
 #include "../../cl_input.h"
-#include "../../renderer/r_draw.h"
 
 typedef enum {
 	MN_TAB_NOTHING = 0,
@@ -149,7 +149,7 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 static inline void MN_TabNodeDrawPlain (const char *image, int x, int y, int width, mn_tab_type_t type)
 {
 	/* Hack sl=1 to not use the pixel on the left border on the texture (create graphic bug) */
-	R_DrawNormPic(x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
+	MN_DrawNormImageByName(x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
 		1 + TILE_SIZE * 0, 0 + TILE_SIZE * type, ALIGN_UL, qtrue, image);
 }
 
@@ -163,7 +163,7 @@ static inline void MN_TabNodeDrawPlain (const char *image, int x, int y, int wid
  */
 static inline void MN_TabNodeDrawJunction (const char *image, int x, int y, mn_tab_type_t leftType, mn_tab_type_t rightType)
 {
-	R_DrawNormPic(x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
+	MN_DrawNormImageByName(x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, ALIGN_UL, qtrue, image);
 }
 

@@ -23,9 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../m_render.h"
 #include "m_node_rows.h"
 #include "m_node_abstractnode.h"
-#include "../../renderer/r_draw.h"
 
 /**
  * @brief Handles Button draw
@@ -43,7 +43,7 @@ static void MN_RowsNodeDraw (menuNode_t *node)
 			color = node->color;
 		else
 			color = node->selectedColor;
-		R_DrawFill(pos[0], pos[1] + current, node->size[0], node->texh[1], ALIGN_UL, color);
+		MN_DrawFill(pos[0], pos[1] + current, node->size[0], node->texh[1], ALIGN_UL, color);
 		current += node->texh[1];
 		i++;
 	}

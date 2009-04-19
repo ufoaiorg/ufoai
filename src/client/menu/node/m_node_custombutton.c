@@ -27,11 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_font.h"
 #include "../m_input.h"
+#include "../m_render.h"
 #include "m_node_custombutton.h"
 #include "m_node_button.h"
 #include "m_node_abstractnode.h"
-
-#include "../../renderer/r_draw.h"
 
 #define MN_CUSTOMBUTTON_TEX_HEIGHT 64
 #define MN_CUSTOMBUTTON_TEX_WIDTH 256
@@ -69,7 +68,7 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	if (image) {
 		const int texX = rint(node->texl[0]);
 		texY += node->texl[1];
-		R_DrawNormPic(pos[0], pos[1], node->size[0], node->size[1],
+		MN_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
 			texX + node->size[0], texY + node->size[1], texX, texY, ALIGN_UL, node->blend, image);
 	}
 

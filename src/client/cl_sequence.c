@@ -358,8 +358,10 @@ void CL_Sequence2D (void)
 			R_Color(s2d->color);
 
 			/* image can be background */
-			if (*s2d->image)
-				R_DrawNormPic(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], 0, 0, 0, 0, s2d->align, qtrue, s2d->image);
+			if (*s2d->image) {
+				const image_t *image = R_FindImage(s2d->image, it_pic);
+				R_DrawImage(s2d->pos[0], s2d->pos[1], qtrue, image);
+			}
 
 			/* bgcolor can be overlay */
 			if (s2d->bgcolor[3] > 0.0)

@@ -26,11 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_main.h"
 #include "../m_input.h"
+#include "../m_render.h"
 #include "m_node_bar.h"
 #include "m_node_abstractvalue.h"
 #include "m_node_abstractnode.h"
 
-#include "../../renderer/r_draw.h"
 #include "../../cl_keys.h"
 
 static void MN_BarNodeDraw (menuNode_t *node)
@@ -48,7 +48,7 @@ static void MN_BarNodeDraw (menuNode_t *node)
 
 	fac = node->size[0] / (max - min);
 	bar_width = (value - min) * fac;
-	R_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], ALIGN_UL, node->state ? color : node->color);
+	MN_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], ALIGN_UL, node->state ? color : node->color);
 }
 
 /**

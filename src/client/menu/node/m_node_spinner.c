@@ -28,11 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 #include "../m_timer.h"
 #include "../m_actions.h"
+#include "../m_render.h"
 #include "m_node_spinner.h"
 #include "m_node_abstractvalue.h"
 #include "m_node_abstractnode.h"
 
-#include "../../renderer/r_draw.h"
 #include "../../cl_input.h"
 #include "../../cl_keys.h"
 
@@ -186,10 +186,10 @@ static void MN_SpinnerNodeDraw (menuNode_t *node)
 	}
 
 	/* draw top button */
-	R_DrawNormPic(pos[0], pos[1], SPINNER_WIDTH, BUTTON_TOP_SIZE,
+	MN_DrawNormImageByName(pos[0], pos[1], SPINNER_WIDTH, BUTTON_TOP_SIZE,
 		topTexX + SPINNER_WIDTH, topTexY + BUTTON_TOP_SIZE, topTexX, topTexY, ALIGN_UL, node->blend, image);
 	/* draw bottom button */
-	R_DrawNormPic(pos[0], pos[1] + BUTTON_TOP_SIZE, SPINNER_WIDTH, BUTTON_BOTTOM_SIZE,
+	MN_DrawNormImageByName(pos[0], pos[1] + BUTTON_TOP_SIZE, SPINNER_WIDTH, BUTTON_BOTTOM_SIZE,
 		bottomTexX + SPINNER_WIDTH, bottomTexY + SPINNER_HEIGHT, bottomTexX, bottomTexY + SPINNER_HEIGHT - BUTTON_BOTTOM_SIZE, ALIGN_UL, node->blend, image);
 }
 

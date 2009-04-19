@@ -29,13 +29,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_timer.h"
 #include "../m_actions.h"
 #include "../m_input.h"
+#include "../m_render.h"
 #include "m_node_abstractnode.h"
 #include "m_node_abstractscrollbar.h"
 #include "m_node_vscrollbar.h"
 
 #include "../../cl_input.h"
 #include "../../cl_keys.h"
-#include "../../renderer/r_draw.h"
 
 static const int TILE_WIDTH = 32;
 static const int TILE_HEIGHT = 18;
@@ -294,42 +294,43 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 	int texX = 0;
 	int texY = 0;
 	const char *texture;
+	const image_t *image;
 
 	MN_GetNodeAbsPos(node, pos);
 	y = pos[1];
 
 	texture = MN_GetReferenceString(node, node->image);
-	if (!texture) {
+	if (!texture)
 		return;
-	}
+
+	image = MN_LoadImage(texture);
 
 	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize <= EXTRADATA(node).viewsize) {
 		/* hide the scrollbar */
-		if (EXTRADATA(node).hideWhenUnused) {
+		if (EXTRADATA(node).hideWhenUnused)
 			return;
-		}
 
 		texX = TILE_WIDTH * 3;
 
 		/* top */
-		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+		MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-			ALIGN_UL, node->blend, texture);
+			ALIGN_UL, node->blend, image);
 		texY += TILE_HEIGHT;
 		y += ELEMENT_HEIGHT;
 
 		/* top to bottom */
-		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, node->size[1] - (ELEMENT_HEIGHT * 2),
+		MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, node->size[1] - (ELEMENT_HEIGHT * 2),
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-			ALIGN_UL, node->blend, texture);
+			ALIGN_UL, node->blend, image);
 		texY += TILE_HEIGHT * 5;
 		y += node->size[1] - (ELEMENT_HEIGHT * 2);
 		assert(y == pos[1] + node->size[1] - ELEMENT_HEIGHT);
 
 		/* bottom */
-		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+		MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-			ALIGN_UL, node->blend, texture);
+			ALIGN_UL, node->blend, image);
 
 	} else {
 		int houveredElement = -1;
@@ -342,18 +343,18 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 
 		/* top */
 		texX = (houveredElement == 0)?TILE_WIDTH:0;
-		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+		MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-			ALIGN_UL, node->blend, texture);
+			ALIGN_UL, node->blend, image);
 		texY += TILE_HEIGHT;
 		y += ELEMENT_HEIGHT;
 
 		/* top to slider */
 		if (description[1]) {
 			texX = (houveredElement == 1)?TILE_WIDTH:0;
-			R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, description[1],
+			MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, description[1],
 				texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-				ALIGN_UL, node->blend, texture);
+				ALIGN_UL, node->blend, image);
 		}
 		texY += TILE_HEIGHT;
 		y += description[1];
@@ -361,34 +362,34 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 		/* slider */
 		texX = (houveredElement == 2)?TILE_WIDTH:0;
 		/* top slider */
-		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+		MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-			ALIGN_UL, node->blend, texture);
+			ALIGN_UL, node->blend, image);
 		texY += TILE_HEIGHT;
 		y += ELEMENT_HEIGHT;
 
 		/* middle slider */
 		if (description[2]) {
-			R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, description[2]-ELEMENT_HEIGHT-ELEMENT_HEIGHT,
+			MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, description[2]-ELEMENT_HEIGHT-ELEMENT_HEIGHT,
 				texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-				ALIGN_UL, node->blend, texture);
+				ALIGN_UL, node->blend, image);
 		}
 		texY += TILE_HEIGHT;
 		y += description[2]-ELEMENT_HEIGHT-ELEMENT_HEIGHT;
 
 		/* bottom slider */
-		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+		MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-			ALIGN_UL, node->blend, texture);
+			ALIGN_UL, node->blend, image);
 		texY += TILE_HEIGHT;
 		y += ELEMENT_HEIGHT;
 
 		/* slider to bottom */
 		if (description[3]) {
 			texX = (houveredElement == 3)?TILE_WIDTH:0;
-			R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, description[3],
+			MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, description[3],
 				texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-				ALIGN_UL, node->blend, texture);
+				ALIGN_UL, node->blend, image);
 		}
 		texY += TILE_HEIGHT;
 		y += description[3];
@@ -396,9 +397,9 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 
 		/* bottom */
 		texX = (houveredElement == 4)?TILE_WIDTH:0;
-		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+		MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-			ALIGN_UL, node->blend, texture);
+			ALIGN_UL, node->blend, image);
 	}
 
 }

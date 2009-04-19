@@ -24,9 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_node_radar.h"
 #include "m_node_abstractnode.h"
+#include "../m_render.h"
 
-#include "../../renderer/r_draw.h"
 #include "../../client.h"
+#include "../../renderer/r_draw.h"
 #include "../../cl_le.h"	/**< cl_actor.h needs this */
 #include "../../../shared/parse.h"
 
@@ -397,7 +398,7 @@ static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
 	/* relative to screen */
 	const int x = (radar.x + pos[0] * radar.gridWidth) * viddef.rx;
 	const int y = (radar.y + (radar.h - pos[1] * radar.gridHeight)) * viddef.ry;
-	R_DrawFill(x, y, radar.gridWidth, radar.gridHeight, ALIGN_UL, color);
+	MN_DrawFill(x, y, radar.gridWidth, radar.gridHeight, ALIGN_UL, color);
 }
 
 /**
@@ -429,7 +430,7 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 		if (maxlevel >= image->maxlevel)
 			maxlevel = image->maxlevel - 1;
 		assert(image->path[maxlevel]);
-		R_DrawNormPic(radar.x + image->x, radar.y + image->y, 0, 0, 0, 0, 0, 0, ALIGN_UL, node->blend, image->path[maxlevel]);
+		MN_DrawNormImageByName(radar.x + image->x, radar.y + image->y, 0, 0, 0, 0, 0, 0, ALIGN_UL, node->blend, image->path[maxlevel]);
 	}
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {

@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 #include "../m_nodes.h"
 #include "../m_menus.h"
+#include "../m_render.h"
 #include "m_node_editor.h"
 #include "m_node_abstractnode.h"
 
@@ -54,10 +55,10 @@ static void MN_EditorNodeHilightNode (menuNode_t *node, const vec4_t color)
 	R_ColorBlend(NULL);
 
 	R_DrawRect(pos[0] - 1, pos[1] - 1, node->size[0] + 2, node->size[1] + 2, color, 1.0, 0x3333);
-	R_DrawFill(pos[0] - anchorSize, pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
-	R_DrawFill(pos[0] - anchorSize, pos[1] + node->size[1], anchorSize, anchorSize, ALIGN_UL, color);
-	R_DrawFill(pos[0] + node->size[0], pos[1] + node->size[1], anchorSize, anchorSize, ALIGN_UL, color);
-	R_DrawFill(pos[0] + node->size[0], pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
+	MN_DrawFill(pos[0] - anchorSize, pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
+	MN_DrawFill(pos[0] - anchorSize, pos[1] + node->size[1], anchorSize, anchorSize, ALIGN_UL, color);
+	MN_DrawFill(pos[0] + node->size[0], pos[1] + node->size[1], anchorSize, anchorSize, ALIGN_UL, color);
+	MN_DrawFill(pos[0] + node->size[0], pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
 }
 
 static int MN_EditorNodeGetElementAtPosition (menuNode_t *node, int x, int y)

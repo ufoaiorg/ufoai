@@ -30,12 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "../m_font.h"
 #include "../m_internal.h"
+#include "../m_render.h"
 #include "m_node_window.h"
 #include "m_node_panel.h"
 #include "m_node_abstractnode.h"
 
 #include "../../client.h" /* gettext _() */
-#include "../../renderer/r_draw.h"
 
 /* constants defining all tile of the texture */
 
@@ -88,20 +88,20 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 	if (MN_WindowIsFullScreen(node)) {
 		/* top */
 		if (pos[1] != 0)
-			R_DrawFill(0, 0, viddef.virtualWidth, pos[1], ALIGN_UL, anamorphicBorder);
+			MN_DrawFill(0, 0, viddef.virtualWidth, pos[1], ALIGN_UL, anamorphicBorder);
 		/* left-right */
 		if (pos[0] != 0)
-			R_DrawFill(0, pos[1], pos[0], node->size[1], ALIGN_UL, anamorphicBorder);
+			MN_DrawFill(0, pos[1], pos[0], node->size[1], ALIGN_UL, anamorphicBorder);
 		if (pos[0] + node->size[0] < viddef.virtualWidth)
-			R_DrawFill(viddef.virtualWidth, pos[1], viddef.virtualWidth - (pos[0] + node->size[0]), node->size[1], ALIGN_UR, anamorphicBorder);
+			MN_DrawFill(viddef.virtualWidth, pos[1], viddef.virtualWidth - (pos[0] + node->size[0]), node->size[1], ALIGN_UR, anamorphicBorder);
 		/* bottom */
 		if (pos[1] + node->size[1] < viddef.virtualHeight)
-			R_DrawFill(0, viddef.virtualHeight, viddef.virtualWidth, viddef.virtualHeight - (pos[1] + node->size[1]), ALIGN_LL, anamorphicBorder);
+			MN_DrawFill(0, viddef.virtualHeight, viddef.virtualWidth, viddef.virtualHeight - (pos[1] + node->size[1]), ALIGN_LL, anamorphicBorder);
 	}
 
 	/* darker background if last window is a modal */
 	if (node->u.window.modal && mn.menuStack[mn.menuStackPos - 1] == node)
-		R_DrawFill(0, 0, viddef.virtualWidth, viddef.virtualHeight, ALIGN_UL, modalBackground);
+		MN_DrawFill(0, 0, viddef.virtualWidth, viddef.virtualHeight, ALIGN_UL, modalBackground);
 
 	/* draw the background */
 	image = MN_GetReferenceString(node, node->image);

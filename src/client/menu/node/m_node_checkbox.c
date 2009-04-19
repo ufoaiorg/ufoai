@@ -32,10 +32,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_main.h"
 #include "../m_actions.h"
+#include "../m_render.h"
 #include "m_node_checkbox.h"
 #include "m_node_abstractnode.h"
 
-#include "../../renderer/r_draw.h"
 
 static void MN_CheckBoxNodeDraw (menuNode_t* node)
 {
@@ -67,7 +67,7 @@ static void MN_CheckBoxNodeDraw (menuNode_t* node)
 	}
 
 	MN_GetNodeAbsPos(node, pos);
-	R_DrawNormPic(pos[0], pos[1], node->size[0], node->size[1],
+	MN_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
 		texx + node->size[0], texy + node->size[1], texx, texy, ALIGN_UL, node->blend, image);
 }
 

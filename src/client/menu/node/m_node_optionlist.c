@@ -26,13 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_main.h"
 #include "../m_parse.h"
 #include "../m_font.h"
+#include "../m_render.h"
 #include "m_node_abstractoption.h"
 #include "m_node_abstractnode.h"
 #include "m_node_optionlist.h"
 #include "m_node_panel.h"
 
 #include "../../client.h" /* gettext _() */
-#include "../../renderer/r_draw.h"
 
 #define CORNER_SIZE 25
 #define MID_SIZE 1
@@ -106,7 +106,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 
 		/* draw the hover effect */
 		if (option->hovered)
-			R_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, elementHeight, ALIGN_UL, node->color);
+			MN_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, elementHeight, ALIGN_UL, node->color);
 
 		/* text color */
 		if (!strcmp(option->value, ref)) {

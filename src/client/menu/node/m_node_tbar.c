@@ -24,11 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 #include "../m_parse.h"
+#include "../m_render.h"
 #include "m_node_tbar.h"
 #include "m_node_abstractvalue.h"
 #include "m_node_abstractnode.h"
-
-#include "../../renderer/r_draw.h"
 
 #define TEXTURE_WIDTH 250.0
 
@@ -64,7 +63,7 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 
 	width = (shx * node->size[0]) / TEXTURE_WIDTH;
 
-	R_DrawNormPic(nodepos[0], nodepos[1], width, node->size[1],
+	MN_DrawNormImageByName(nodepos[0], nodepos[1], width, node->size[1],
 		shx, node->texh[1], node->texl[0], node->texl[1], ALIGN_UL, node->blend, ref);
 }
 

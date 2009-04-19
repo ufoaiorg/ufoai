@@ -29,11 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_font.h"
 #include "../m_input.h"
 #include "../m_draw.h"
+#include "../m_render.h"
 #include "m_node_selectbox.h"
 #include "m_node_abstractnode.h"
 
 #include "../../client.h" /* gettext _() */
-#include "../../renderer/r_draw.h"
 
 #define SELECTBOX_DEFAULT_HEIGHT 20.0f
 
@@ -98,15 +98,18 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 	const char *ref;
 	const char *font;
 	vec2_t nodepos;
-	const char* image;
+	const char* imageName;
+	const image_t *image;
 
 	if (!node->cvar)
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	image = MN_GetReferenceString(node, node->image);
-	if (!image)
-		image = "ui/selectbox";
+	imageName = MN_GetReferenceString(node, node->image);
+	if (!imageName)
+		imageName = "ui/selectbox";
+
+	image = MN_LoadImage(imageName);
 
 	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFont(node);
@@ -114,13 +117,13 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 	selBoxY = nodepos[1] + SELECTBOX_SPACER;
 
 	/* left border */
-	R_DrawNormPic(nodepos[0], nodepos[1], SELECTBOX_SIDE_WIDTH, node->size[1],
+	MN_DrawNormImage(nodepos[0], nodepos[1], SELECTBOX_SIDE_WIDTH, node->size[1],
 		SELECTBOX_SIDE_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 0.0f, 0.0f, ALIGN_UL, node->blend, image);
 	/* stretched middle bar */
-	R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1], node->size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1],
+	MN_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1], node->size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1],
 		12.0f, SELECTBOX_DEFAULT_HEIGHT, 7.0f, 0.0f, ALIGN_UL, node->blend, image);
 	/* right border (arrow) */
-	R_DrawNormPic(nodepos[0] + node->size[0] - SELECTBOX_RIGHT_WIDTH, nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
+	MN_DrawNormImage(nodepos[0] + node->size[0] - SELECTBOX_RIGHT_WIDTH, nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
 		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, ALIGN_UL, node->blend, image);
 	/* draw the label for the current selected option */
 	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
@@ -144,15 +147,18 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 	const char *ref;
 	const char *font;
 	vec2_t nodepos;
-	const char* image;
+	const char* imageName;
+	const image_t *image;
 
 	if (!node->cvar)
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	image = MN_GetReferenceString(node, node->image);
-	if (!image)
-		image = "ui/selectbox";
+	imageName = MN_GetReferenceString(node, node->image);
+	if (!imageName)
+		imageName = "ui/selectbox";
+
+	image = MN_LoadImage(imageName);
 
 	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFont(node);
@@ -163,22 +169,22 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 
 	/* drop down menu */
 	/* left side */
-	R_DrawNormPic(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->u.option.count,
+	MN_DrawNormImage(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->u.option.count,
 		7.0f, 28.0f, 0.0f, 21.0f, ALIGN_UL, node->blend, image);
 
 	/* stretched middle bar */
-	R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * node->u.option.count,
+	MN_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * node->u.option.count,
 		16.0f, 28.0f, 7.0f, 21.0f, ALIGN_UL, node->blend, image);
 
 	/* right side */
-	R_DrawNormPic(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->u.option.count,
+	MN_DrawNormImage(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->u.option.count,
 		23.0f, 28.0f, 16.0f, 21.0f, ALIGN_UL, node->blend, image);
 
 	/* now draw all available options for this selectbox */
 	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
 		/* draw the hover effect */
 		if (option->hovered)
-			R_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
+			MN_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
 					SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
 		/* print the option label */
 		R_FontDrawString(font, ALIGN_UL, selBoxX, selBoxY,
@@ -188,16 +194,16 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 		selBoxY += node->size[1];
 	}
 	/* left side */
-	R_DrawNormPic(nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
+	MN_DrawNormImage(nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 		7.0f, 32.0f, 0.0f, 28.0f, ALIGN_UL, node->blend, image);
 
 	/* stretched middle bar */
-	R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
+	MN_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
 			SELECTBOX_BOTTOM_HEIGHT,
 		16.0f, 32.0f, 7.0f, 28.0f, ALIGN_UL, node->blend, image);
 
 	/* right bottom side */
-	R_DrawNormPic(nodepos[0] + node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
+	MN_DrawNormImage(nodepos[0] + node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
 		SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 		23.0f, 32.0f, 16.0f, 28.0f, ALIGN_UL, node->blend, image);
 }

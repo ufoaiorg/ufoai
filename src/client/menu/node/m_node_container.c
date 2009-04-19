@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_tooltip.h"
 #include "../m_nodes.h"
 #include "../m_input.h"
+#include "../m_render.h"
 #include "m_node_model.h"
 #include "m_node_container.h"
 #include "m_node_abstractnode.h"
@@ -335,7 +336,7 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 		const int imgHeight = od->sy * C_UNIT;
 
 		/* Draw the image. */
-		R_DrawNormPic(origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
+		MN_DrawNormImageByName(origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
 	} else {
 		menuModel_t *menuModel = NULL;
 		const char *modelName = od->model;
@@ -437,7 +438,7 @@ static void MN_DrawDisabled (const menuNode_t* node)
 	vec2_t nodepos;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	R_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], ALIGN_UL, color);
+	MN_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], ALIGN_UL, color);
 }
 
 /**
@@ -450,7 +451,7 @@ static void MN_DrawFree (int container, const menuNode_t *node, int posx, int po
 	vec2_t nodepos;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	R_DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
+	MN_DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
 
 	/* if showTUs is true (only the first time in none single containers)
 	 * and we are connected to a game */

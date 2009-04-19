@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_timer.h" /* define MN_HandleTimers */
 #include "m_dragndrop.h"
 #include "m_tooltip.h"
+#include "m_render.h"
 #include "node/m_node_abstractnode.h"
 
 #include "../client.h"
@@ -80,9 +81,8 @@ static void MN_HilightNode (const menuNode_t *node, const vec4_t color)
 	int lineDefinition[4];
 	const char* text;
 
-	if (node->parent) {
-		MN_HilightNode (node->parent, grey);
-	}
+	if (node->parent)
+		MN_HilightNode(node->parent, grey);
 
 	MN_GetNodeAbsPos(node, pos);
 
@@ -114,7 +114,7 @@ static void MN_HilightNode (const menuNode_t *node, const vec4_t color)
 		for (i = 0; i < node->excludeRectNum; i++) {
 			const int x = pos[0] + node->excludeRect[i].pos[0];
 			const int y = pos[1] + node->excludeRect[i].pos[1];
-			R_DrawFill(x, y, node->excludeRect[i].size[0], node->excludeRect[i].size[1], ALIGN_UL, trans);
+			MN_DrawFill(x, y, node->excludeRect[i].size[0], node->excludeRect[i].size[1], ALIGN_UL, trans);
 		}
 	}
 
@@ -143,7 +143,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 		debugPositionX = 0;
 
 	/* background */
-	R_DrawFill(debugPositionX, debugTextPositionY, DEBUG_PANEL_WIDTH, VID_NORM_HEIGHT - debugTextPositionY - 100, ALIGN_UL, background);
+	MN_DrawFill(debugPositionX, debugTextPositionY, DEBUG_PANEL_WIDTH, VID_NORM_HEIGHT - debugTextPositionY - 100, ALIGN_UL, background);
 
 	/* menu stack */
 	R_ColorBlend(white);
@@ -213,7 +213,7 @@ static void MN_DrawNode (menuNode_t *node)
 		vec2_t pos;
 		MN_GetNodeAbsPos(node, pos);
 		if (node->bgcolor[3] != 0)
-			R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, node->bgcolor);
+			MN_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, node->bgcolor);
 
 		if (node->border && node->bordercolor[3] != 0) {
 			R_DrawRect(pos[0], pos[1], node->size[0], node->size[1],
@@ -256,7 +256,7 @@ static int MN_DrawNotice (int x, int y, const char *noticeText)
 	else
 		dx = 0;
 
-	R_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, ALIGN_UL, noticeBG);
+	MN_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, ALIGN_UL, noticeBG);
 	R_ColorBlend(noticeColor);
 	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 
