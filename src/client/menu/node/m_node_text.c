@@ -193,7 +193,8 @@ int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 		return (int) (y / node->u.text.lineHeight);
 }
 
-static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y) {
+static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y) 
+{
 	EXTRADATA(node).lineUnderMouse = MN_TextNodeGetLine(node, x, y);
 }
 
@@ -345,7 +346,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 				*tab++ = '\0';
 
 			/*Com_Printf("tab - first part - lines: %i \n", lines);*/
-			R_FontDrawString(font, node->textalign, x1, y, x, y, tabwidth-1, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qfalse, LONGLINES_PRETTYCHOP);
+			R_FontDrawString(font, node->textalign, x1, y, x, y, tabwidth - 1, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qfalse, LONGLINES_PRETTYCHOP);
 			x1 += tabwidth;
 			/* now skip to the first char after the \t */
 			cur = tab;

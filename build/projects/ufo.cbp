@@ -594,6 +594,10 @@
 		<Unit filename="..\..\src\client\menu\m_timer.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\menu\m_render.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_render.h" />
 		<Unit filename="..\..\src\client\menu\m_timer.h" />
 		<Unit filename="..\..\src\client\menu\m_tooltip.c">
 			<Option compilerVar="CC" />
