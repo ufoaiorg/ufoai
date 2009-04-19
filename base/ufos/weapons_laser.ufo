@@ -240,7 +240,7 @@ item laserrifle_ammo
 		{
 			name	"_Wave Fire"
 			skill 	assault
-			projtl	laserPulse
+			projtl	laserPulseWhite
 			impact	laserImpact
 			hitbody	laserImpact
 			firesnd	weapons/laser
@@ -259,7 +259,7 @@ item laserrifle_ammo
 		{
 			name	"_Pulsed Fire"
 			skill 	assault
-			projtl	laserPulse
+			projtl	laserPulseWhite
 			impact	laserImpact
 			hitbody	laserImpact
 			firesnd	weapons/laser

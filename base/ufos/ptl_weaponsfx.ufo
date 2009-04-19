@@ -349,6 +349,20 @@ particle laserPulse
 	think { kill }
 }
 
+particle laserPulseWhite
+{
+	init
+	{
+		image  sfx/laserbeam_white
+		blend  add
+		style  beam
+		thinkfade  sin
+		tps    6.0
+		size	"0 2.2"
+	}
+	think { kill }
+}
+
 particle laserOverload
 {
 	init
