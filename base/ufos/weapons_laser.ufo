@@ -238,41 +238,21 @@ item laserrifle_ammo
 	{
 		firedef
 		{
-			name	"_Wave Fire"
+			name	"_Stun Shot"
 			skill 	assault
 			projtl	laserPulseWhite
 			impact	laserImpactSmall
 			hitbody	laserImpactSmall
 			firesnd	weapons/laser
 			speed	0
-			spread	"0.5 0.5"
+			spread	"0.8 0.8"
 			crouch	0.8
-			range	90
+			range	40
 			shots	1
-			ammo	2
+			ammo	1
 			time	7
-			damage	"55 6"
-			dmgweight laser_medium
-			reaction	true
-		}
-		firedef
-		{
-			name	"_Pulsed Fire"
-			skill 	assault
-			projtl	laserPulseWhite
-			impact	laserImpactSmall
-			hitbody	laserImpactSmall
-			firesnd	weapons/laser
-			delaybetweenshots		8
-			speed	0
-			spread	"0.5 0.5"
-			crouch	0.8
-			range	90
-			shots	3
-			ammo	3
-			time	10
-			damage	"35 5"
-			dmgweight laser_medium
+			damage	"30 6"
+			dmgweight stun_electro
 			reaction	true
 		}
 	}
