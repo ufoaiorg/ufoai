@@ -1717,16 +1717,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:131
 msgid "laser_pre_txt"
-msgstr ""
-"Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
-"\n"
-"Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research, as well as whole libraries filled with the highest technology on Earth. I believe that not only can we make an effective man-portable laser weapon, we can make it into sizes previously unheard-of for a DEW.\n"
-"\n"
-"사령관님, we should pursue this research as soon as possible. Varying our arsenal will make it much more difficult to defend against, and our experience may lead us to develop viable aircraft lasers that could more effectively target high-speed UFOs than conventional firearms.\n"
-"\n"
-"As far as I'm concerned, we at PHALANX are going to do the impossible, and we can start doing it as soon as you approve this proposal.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:161 ../base/ufos/research.ufo:199
 msgid "antimatter_txt"
@@ -1770,21 +1761,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:165
 msgid "antimatter_pre_txt"
-msgstr ""
-"사령관님, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
-"\n"
-"Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:166
 msgid "antimatter_extra_pre_txt"
-msgstr ""
-"사령관님, 정찰용 UFO를 조사하는 중 극도로 놀라운 발견을 하였고, 외계인의 반물질에 대한 광범위한 사용법과 전쟁과의 연관성을 더욱 자세히 분석하기 위해 연구실 사용허가가 필요합니다.\n"
-"\n"
-"우리의 목적을 위해 반물질을 복제해내는 방법을 찾을 수 있다고 생각합니다. 물질-반물질 소멸기는 연료로 놀라운 잠재력을 지니고 있습니다. 에너지 생성에서, 전 우주에서 어떠한 물질보다 뛰어난 밀도를 지녔을 것입니다; 외계인들이 사용하는 것과 같은 방식으로 사용한다면 우리의 기술력을 단번에 미래의 수준으로 끌어 올릴 것입니다. 우리는 최대한 빠른 기회를 잡아 연구를 해야만 합니다!\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:217
 #, fuzzy
@@ -1812,14 +1793,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:222
-#, fuzzy
 msgid "craft_upgrade_am_engines_pre_txt"
-msgstr ""
-"사령관님, the recovery of an intact alien astrogation unit is an important milestone. Although this unit doesn't seem to contain a star chart, it will allow us to decipher alien astronomical notations and upgrade the power of our own astrogation systems by several orders of magnitude. Eventually the work we do here may help us backtrack the aliens to their home planet.\n"
-"\n"
-"Along with Alien Propulsion and Alien Detection, Alien Astrogation is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:253
 msgid "Live Alien"
@@ -1842,18 +1817,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:261
 msgid "alien_live_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"우리는 외계인을 생포했습니다! 그 생명체는 우리의 마지막 전술 임무로 부터 발견되었고, 설계대로 작동되는 것으로 보여 기쁘게 보고했던 새로운 수용장치에 수용되었습니다.\n"
-"\n"
-"우리가 이 표본에 대해서 즉시 연구를 시작해야 하는지 별다른 설명은 하지 않겠습니다. 그것으로부터 힘들게 수집한 정보는 다른 결론으로 이끌어주었습니다. 지금까지 우리는 외계인의 사고방식, 그들의 생각과 동기를 연구할 기회를 가지지 못했었습니다. 아무도 연구한 적이 없는, 인간에 대한 외계인의 목적을 연구할 첫 기회입니다. 그들은 누구인가? 그들은 이곳에 왜 왔는지? 그들에 대항해서 우리는 어떤것을 할 수 있는가? 이 표본에 대한 조사 없이는 우리는 어떠한 것도 알지 못합니다.\n"
-"\n"
-"최대한 빨리 이 프로그램에 대한 승인을 부탁드립니다.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:266 ../base/ufos/research.ufo:274
 #: ../base/ufos/research.ufo:304 ../base/ufos/research.ufo:312
@@ -1898,18 +1862,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:299
 msgid "alien_breathing_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"외계인 사체를 부검하던 중, 외계 종족의 목에 심겨진 특이한 기계장치를 발견했습니다.뇌간의 양쪽에 두개의 구형 철제물로 구성되어 있으며, 작은 튜브로 기관과 직접 연결되어 있습니다. 기관은 밸브나 필터류로 보호되고 있습니다. 우리는 이 연결된 장치가 호흡도구이거나 산소 호흡기 혹은 그것들을 포함하는 전체적인 것이라고 생각하고 있습니다; 아직 어떤 원리인지 알 수 없습니다t.\n"
-"\n"
-"저는 연구가 계속 되도록 자금과 허가를 내려주시길 바랍니다. 전투라는 시점에서, 외계인의 위협으로 부터 방어 할 수 있는 지식을 늘려나가는 것은 유용하다고 생각하며,  외계인 기술과 생물학에 대한 치명적인 단서를 발견할지도 모릅니다. 확실한 것은, 오랫동안 외계인을 수용할 수 있도록 외계인 호흡에 대한 정보를 찾아야 한다는 것입니다.\n"
-"\n"
-"Navarre 사령관님과 그 휘하 장병들은 저희를 기술적으로 지원해 줄 것입니다.그는 적폭적인 지원을 약속하셨습니다.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:353
 msgid "The Alien Mind"
@@ -1937,18 +1890,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:361
 msgid "alien_mind_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"Though we've achieved limited results so far, research must continue on our alien captives. There's a number of experiments we'd like to run that require your authorisation for lab time and funding. I assure you this is not blue-sky research; with enough tests and behavioural data, we may be able to figure out a way to communicate with these aliens, perhaps even reawaken their intelligence somehow. We don't know what the results of the program will be -- we simply know too little about these aliens, our body of data is far too small to make any predictions at this point. What we do know is that every tidbit we learn about alien psychology is a valuable piece of the puzzle.\n"
-"\n"
-"On a personal note, I'm convinced they must know something, Commander. The trick is in getting it out of them, and we're by God going to do it.\n"
-"\n"
-"My team and I are all eagerly awaiting your approval for the program.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:391
 msgid "Odd Behaviour"
@@ -1981,18 +1923,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:399
 msgid "alien_odd_behaviour_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"The live aliens in our Containment unit have begun to display erratic behaviour since the last tactical mission.\n"
-"\n"
-"Before, the specimens were barely intelligent, operating solely on instinct despite their significantly-developed brain structures. Yet they now seem to be exercising some sort of intelligent control, clearly communicating through the soundproof cells and operating as a team, even going so far as to engineer coordinated escape attempts. Sedative darts were required to subdue the more active specimens.\n"
-"\n"
-"We believe the new specimens recently added to Containment are having some sort of effect on the group. They may be higher-ranking members of the alien hierarchy. If we have captured an alien officer, or if there is some entirely different cause for the new behaviour, we need to investigate the how and why of this right away. On behalf of DivBio, I would like your permission to start a new research project to look into the matter.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:429
 msgid "Alien Communication"
@@ -2017,22 +1948,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:437
 msgid "alien_communication_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"The increasing intellect of the captive aliens in our Containment unit leads me to conclude that we can finally begin to get a real handle on alien communication and, more importantly, getting some useable information out of them. Quoting from my report:\n"
-"\n"
-"(Odd Behaviour)\"There are several species of alien, all of which meet the physiological requirements for a sentient species, but they show little to no brainwave activity of their own. This implies the presence of some kind of shared or distributed thought between them, a hive mind that grows more intelligent as it grows in numbers.\"\n"
-"\n"
-"\"With several specimens on hand, their intelligence now seems to be approaching the human level. If we can create a suitable translation device or common language, we believe we may finally be able to establish communications with aliens in PHALANX captivity. Perhaps some of our linguists or psychology experts could form a dialogue. This is an avenue of inquiry that we cannot afford to ignore.\"\n"
-"\n"
-"Dr. Yamamura is beginning to make real progress on this front, teaching the aliens several new words of sign language every day, but we require lab time and funding for a proper study of what these aliens know and how it can help us. The ability to interrogate aliens about their own technology could be of incomparable value to our soldiers and engineers. Cdr. Navarre was so excited at the prospect, he almost argued in favour of DivBio on this one.\n"
-"\n"
-"Thank you for your time, Commander. Please approve this program as soon as feasible.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:468 client/campaign/cl_alienbase.c:164
 #: client/campaign/cp_missions.c:431
@@ -2081,16 +1997,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:500
 msgid "universal_serum_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"As you may know, our efforts at communication with the live aliens in our Containment unit are progressing only very slowly. We're having a great deal of trouble applying our standard interrogation methods. The truth serum we have available has several distinct limitations; it tends to produce a lethal allergic reaction in most alien bodies unless we restrict it to smaller, insufficient doses, which worsens the serum's already incomplete effect on alien physiology. We've encountered numerous small lies and half-truths in the sessions we've taken so far. Torture has been attempted to influence this behaviour, but to no avail. Pain seems to have no corrective effect on the hive mind.\n"
-"\n"
-"There's also the larger hurdle of having to inject every single specimen of the hive mind in order to properly submerge any subject's sense of judgment. If one member of the hive mind dies, the remaining specimens' adrenaline-equivalent levels rise to the point where we have to start over.\n"
-"\n"
-"To this end, armed with our expanded knowledge of the alien mind and body, I propose a new research program to look into a universal set of sera that we can use to extract more reliable information, faster and more easily. There is obviously a great deal of information inside these specimens waiting to be seized, Commander; we just need the tools to properly crack the shell.\n"
-"\n"
-"Sincerely,Dr. Connor"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:529
 msgid "Alien Origins"
@@ -2129,20 +2036,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:537
 msgid "alien_origins_pre_txt"
-msgstr ""
-"Good morning, Sir.\n"
-"\n"
-"Though we are still struggling to get operational, one of our first orders of business must be to find out where the aliens are coming from. The only thing we know right now is that they enter the atmosphere from space, do what they came to do, and then race into orbit again before disappearing from our screens. We need to find out what happens before and after these points. Where do they come from, how do they get here, and where do they go?\n"
-"\n"
-"We've seen no evidence of ships holding in Earth orbit or basing facilities anywhere in the solar system, but that doesn't mean they aren't there. The region of the asteroid belt and the outer planets -- the space between Mars and Neptune -- has been poorly monitored in a military sense and, given the stealth capabilities demonstrated by attacking UFOs, an alien fleet may have been misidentified or simply failed to register on civilian equipment. There has been no comprehensive effort at all to scan the surface of the various base-viable celestial objects in our solar system.\n"
-"\n"
-"Therefore, I propose a new research program aimed at scouring the solar system with probes and powerful optical- and radiotelescopes to detect alien activity anywhere in our space. Our scientists will also review the data we have of past incursions to try and form some kind of picture of alien movements to and from Earth orbit. Even if there's a fleet hiding behind Mars or one of the outer planets, they must eventually reveal themselves if they continue sending UFOs down to the surface of Earth. If we put enough eyes on the problem, even these aliens can't hide for long.\n"
-"\n"
-"This project will take a significant amount of funding and lab-time, Commander, so it requires your authorisation before work can begin.\n"
-"\n"
-"With kind regards,\n"
-"\n"
-"Col. Falkland"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:564
 msgid "UFO Theory"
@@ -2173,12 +2067,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:572
 msgid "alien_theory_pre_txt"
-msgstr ""
-"사령관님, we've captured our first UFO of the war. I don't have to tell you that this is a unique research opportunity. However, before we can begin to think about studying it in-depth and dismantling it for parts, we need to do a broader overview of UFO construction as a whole. Are any of its systems still active or boobytrapped? What kind of materials is it made of? What dangers might it pose during storage or disassembly? All these questions and more need to be answered before we do anything further.\n"
-"\n"
-"We're ready to start work whenever you say, but we will need some lab time and funding to make a proper assessment of this amazing technology.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:615
 msgid "pistol_txt"
@@ -2668,18 +2557,8 @@ msgid "xaw95_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:849
-#, fuzzy
 msgid "xaw95_pre_txt"
-msgstr ""
-"Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
-"\n"
-"Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research, as well as whole libraries filled with the highest technology on Earth. I believe that not only can we make an effective man-portable laser weapon, we can make it into sizes previously unheard-of for a DEW.\n"
-"\n"
-"사령관님, we should pursue this research as soon as possible. Varying our arsenal will make it much more difficult to defend against, and our experience may lead us to develop viable aircraft lasers that could more effectively target high-speed UFOs than conventional firearms.\n"
-"\n"
-"As far as I'm concerned, we at PHALANX are going to do the impossible, and we can start doing it as soon as you approve this proposal.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:876
 #, fuzzy
@@ -2726,14 +2605,8 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:879
-#, fuzzy
 msgid "bombkit1_pre_txt"
-msgstr ""
-"사령관님, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
-"\n"
-"Please authorise this program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:894
 #, fuzzy
@@ -2780,14 +2653,8 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:897
-#, fuzzy
 msgid "bombkit2_pre_txt"
-msgstr ""
-"사령관님, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
-"\n"
-"Please authorise this program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:912
 msgid "chaingun_txt"
@@ -2867,16 +2734,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:991
 msgid "bolterrifle_pre_txt"
-msgstr ""
-"사령관님, we've received a number of research files from several UN nations concerning research and development for man-portable electromagnetic weaponry; various designs have been proposed and even prototyped for railguns, coilguns and quench guns. Of course, all these experiments have failed, since electromagnetic weapons require huge amounts of power -- and therefore banks of capacitors so heavy that no human soldier could possibly carry them. Even atomic batteries have not given us the power output we need to make man-portable electromagnetic guns a reality. It is impossible.\n"
-"\n"
-"At least, that's what we thought, until the aliens showed up.\n"
-"\n"
-"Seeing alien craft hurtling through our skies, advanced robots scuttling through our streets, and high-powered energy weapons tearing up our people has given us a whole host of new ideas. It has also caused us to take a very close look through our collected UN research data. It's nothing short of a gold mine in disguise. By combining the best of these individual cluttered pieces, we believe we may be able to devise a new weapon for our tactical teams that will be both man-portable and combat-effective. This weapon would have extreme range and power and may serve us well in the days ahead.\n"
-"\n"
-"This idea holds a lot of promise, Commander. We would like your authorisation for lab time and funding in order finally make electromagnetic weaponry a reality.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1022
 #, fuzzy
@@ -2945,18 +2803,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1067
 msgid "monoknife_pre_txt"
-msgstr ""
-"사령관님, now that we've had a good look at the alien blade technology from several sources -- the Bloodspider's 'fangs' and the Kerrblade -- we're starting to form a picture of how to recreate the unknown or ill-understood materials used in their construction.\n"
-"\n"
-"Some of this stuff is completely new to us. The plastics from which the alien blades are forged are harder than damascus steel, sharper than a razor, and yet shock-resistant and flexible enough to survive the stresses of melee combat. Once forged they are nearly impossible to break, nick or bend. Applying a hammer and chisel directly to the blade just means you end up with two neatly-sliced halves of a chisel.\n"
-"\n"
-"Obviously it would be of great interest to us if we could create our own knives made from these materials, with edges tapering to the width of a single molecule. My team and I believe it may now be possible.\n"
-"\n"
-"If you give us the funding and lab time we need, we can design and create a new monomolecular combat knife that will even the playing field for our soldiers when forced into hand-to-hand combat. This knife will be far more compact than the Kerrblade and much easier for humans to wield, and it'll be small enough to be used one-handed.\n"
-"\n"
-"Equipping our troops with such weapons could give them a major advantage, as they'll be able to properly defend themselves in melee for the first time whilst using other weapons or equipment -- such as pistols, grenades, medikits, or other useful items of tactical or life-saving importance.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1103
 msgid "flamer_txt"
@@ -3334,16 +3181,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1278
 msgid "grenl_plasma_ammo_pre_txt"
-msgstr ""
-"사령관님, 저희는 플라즈마 수류탄 연구를 기반으로 새로운 무기기술에 대한 연구제안서를 작성했습니다.\n"
-"\n"
-"지금 우리는 외계인 플라즈마 수류탄을 복제할 수 있고, 좀 더 세부적인 연구결과와 그 기술을 개선하여 수류탄 발사기로부터 사격이 가능하다는 것을 알게 되었습니다. 그것의 가장 큰 문제는 25mm 보다 더 큰 수류탄 형태의 플라즈마 폭탄이었으나, 우리는 그것을 더 작게 축소된 버전으로 만들 수 있을 것입니다. -- 아주 강력한 정도가 아닌 -- 우리가 가지는 가장 큰 잇점은 표준 HPGL 수류탄 발사기로 사격가능하다는 것입니다.\n"
-"\n"
-"만약 우리가 이런형태의 군수품을 잘 설계하고 만든다면, 그들에게 HPGL 의 파워를 좀 더 증대시키고 좀 더 전술적 효과를 제공하며 재정적 가치도 만족스러울 겁니다.\n"
-"\n"
-"이 프로젝트는 사령관님의 허가를 기다리고 있습니다.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1317
 msgid "laser_ammo_txt"
@@ -3360,16 +3198,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1320
 msgid "laser_ammo_pre_txt"
-msgstr ""
-"이것은 새로운 레이저 무기류를 연구 개발하기위해 제가 보낸 몇몇 신청안건 중 하나입니다. 이것은 파워레벨과 복잡성이 얽혀있는 시스템으로 각각 다른 사이즈로 독립적으로 개발되어야만 할것입니다.\n"
-"\n"
-"우리의 중수소-불화물 레이저 무기류의 파워를 위하여, 위험한 물질을 안전하게 저장하기 위한 탕약창 설계가 필요합니다. 에틸렌, 질소, 3 불화물, 헬륨 그리고 중수소 -- 3 개는 유독성 혼합물 -- 각각의 칸막이로 구분하여 압축유지 함으로써 항상 완전하게 제한하여야 합니다. 이들 물질을 혼합하도록 지시 했더라면 우리 기술자들은 'Bad Thing' 이라 불렀을 겁니다.\n"
-"\n"
-"우리닌 이미 그러한 문제를 방지할 수 있는 기본적인 설계를 하였으나, UN 의 안전지침에 따른 원형 모델을 테스트 하기위한 연구시설과 자금이 필요합니다. 그것은 굉장히 지겨운 일이지만, 전장에서 우리의 레이저가 안전하게 사용되기위한 필수적인 절차입니다. 저는 아직 우리 병사들위해 탄창 모서리가 부서져 새어나오는 중수소 가스에 대한 해독제를 제조하지 않았습니다. 우리가 새로운 레이저 무기를 사용하기 위한다면 정형화 된 탄창이 필요합니다.\n"
-"\n"
-"사령관님, 빠른시일 내에 이 프로그램을 승인하시길 기대합니다.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1355
 msgid "heavylaser_txt"
@@ -3392,16 +3221,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1358
 msgid "heavylaser_pre_txt"
-msgstr ""
-"이것은 새로운 레이저 무기류를 연구 개발하기위해 제가 보낸 몇몇 신청안건 중 하나입니다. 이것은 파워레벨과 복잡성이 얽혀있는 시스템으로 각각 다른 사이즈로 독립적으로 개발되어야만 할것입니다.\n"
-"\n"
-"끊임 없는 레이저 파동 연구로부터 우리가 지식을 얻게 된것에 감사드립니다. 저와 저희팀은 저희 군대의 레이저가 더 나은 파괴력을 낼 수 있는 한두가지 방법을 도출해 냈습니다. 비록 우리의 원형모델에서 몇몇 구성요소와 더불어 더욱더 중요한 연구와 세밀함이 요구됩니다. 그 결과물은 엄격히 말해서 우리의 HPML 로켓런처와 같은 사이즈와 무게의 중보병 무기일것입니다.\n"
-"\n"
-"우리가 측정한 그 무기는 화력의 요소 또는 직접-화력에 대한 방어력 측정값을 낼 수 없었고, 정확히 조준하여 적의 거점을 강력하게 용해시켰습니다. 그것이 가지고 있는 속성과 기능성은 현재 우리 중장비 무기들의 부족한 부분일지 모릅니다. 지구에서생산된 중장비 무기들은 사거리에대한 정밀도가 일반적으로 떨어지고, 목표 주변의 피해가 우려되는 장소에서 사용되기가 어렵습니다. 헤비레이저는 이러한 모든문제점을 피하려 한것일겁니다.\n"
-"\n"
-"사령관님, 이것은 확실히 세부연구할 가치가 있는것입니다.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1394
 msgid "irgoggles_txt"
@@ -3475,14 +3295,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1417
 msgid "kerrblade_pre_txt"
-msgstr ""
-"사령관님, 전장에서 흥미있는 외계인 무기를 발견하였습니다. 지구상에서 어떤것과도 비교 할 수 없는 날카로움을 지닌 나이프나 칼의 종류로 보입니다. 휴지처럼 철을 조각낼 수 있고, 병사용 전신 방탄복 조차도 조각낼 수 있습니다. 부대원들은 우리의 방탄복을 썰때 들리는 독특한 소리를 따서 그것을 'Kerrblade'라고 이름 지었습니다.\n"
-"\n"
-"우리는 그것의 기능과 어떻게 만들어 졌는지를 조사해야 합니다. 인간이 사용할 수 있는 모양으로, 전장의 외계인과 난투전에서 컴뱃 나이프 보다 더 많이 생존할 수 있는 이 기술을 복제할 방법이 있을지도 모릅니다.\n"
-"\n"
-"물론 이 프로그램은 연구실 사용과 자금에 대한 사령관님의 승인이 필요 합니다.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1453
 msgid "laserpistol_txt"
@@ -3505,18 +3318,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1456
 msgid "laserpistol_pre_txt"
-msgstr ""
-"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
-"\n"
-"Our notes on Continuous Wave Laser Operation have produced a lot of designs, and this is possibly the most difficult one to bring into reality: a deuterium-fluoride laser weapon the size of an ordinary pistol.\n"
-"\n"
-"The difficulty in making this a reality will be to get the parts small enough and light enough so that they will:\n"
-"\n"
-"1) Fit into a pistol-sized package, and2) Be light enough to aim and fire one-handed.\n"
-"\n"
-"As always, it's going to be a tradeoff between size and power, but with enough work I believe we can indeed build a functioning laser pistol. We're just waiting for your authorisation, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1491
 msgid "laserrifle_txt"
@@ -3537,16 +3339,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1494
 msgid "laserrifle_pre_txt"
-msgstr ""
-"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
-"\n"
-"The laser rifle is the flagship design of our new deuterium-fluoride laser family. It will be a perfect marriage of power, accuracy, range, manoeuvrability and ammo capacity. Even on paper the laser rifle's specs can compete with any conventional assault rifle. The only problem will be actually building it.\n"
-"\n"
-"The components we've been using in our Continuous Wave Laser prototypes have been cumbersome, fragile and very expensive. Our soldiers need ruggedness in a rifle, something that will last through the bumps and bashes of combat, and we badly need to bring down production costs to make the program worthwhile. As it is, the price of a squad of working laser rifles would be on par with your average main battle tank. We need funding and lab time to bring costs down, fix or replace the most sensitive components to make the weapon more reliable, and reduce its form factor to something that can be comfortably fired by a human soldier.\n"
-"\n"
-"As always, Commander, we'll begin work as soon as you give us your authorisation.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1529
 msgid "medikit_txt"
@@ -3616,14 +3409,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1552
 msgid "plasatomizer_pre_txt"
-msgstr ""
-"사령관님, we've recovered the first alien plasma weapon of the war. I don't need to tell you how important this is. The alien armaments are highly-advanced, powerful and extremely lethal; we must figure out how they work in order to arm and armour ourselves against them.\n"
-"\n"
-"The alien plasma weapons represent a curious application of the plasma-thrower concept, which was previously believed to be unfeasible as a battlefield weapon. I would very much like to figure out how it works. My team and I are confident that -- with enough time and proper safety procedures -- we can hammer out the plasma pistol's function and controls and write a small operational manual; our soldiers could actually use the aliens' weapons against them!\n"
-"\n"
-"Of course, this program will need your approval for lab time and funding.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1604 ../base/ufos/research.ufo:1645
 msgid "Alien Artifact - Plasma Blaster"
@@ -3646,12 +3432,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1612
 msgid "plasblaster_pre_txt"
-msgstr ""
-"사령관님, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research. Preliminary testing confirms that blaster shots tear right through our Combat Armour and have a far longer range than the other plasma weapons we've recovered.\n"
-"\n"
-"Please authorise this research program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1663
 msgid "Alien Artifact - Plasma Blade"
@@ -3678,12 +3459,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1671
 msgid "plasblade_pre_txt"
-msgstr ""
-"사령관님, our last tactical mission brought back a strange alien weapon in the form of a plasma chamber with a handle. At least, we assume it's a weapon; the shape seems to suggest some kind of plasma-based knife, though I have no idea how this would work. We can't quite figure out how to turn it on or what purpose it serves in the alien arsenal.\n"
-"\n"
-"More research is definitely required, Commander. Whenever we have a bit of free lab time, I'd like a go at it.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1703
 msgid "Alien Artifact - Plasma Grenade"
@@ -3706,14 +3482,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1711
 msgid "plasmagren_pre_txt"
-msgstr ""
-"사령관님, our last tac mission has brought back an alien plasma grenade. This is a highly powerful grenade-type weapon that, once thrown, explodes in a shower of superheated plasma. It's somewhat larger and appears to be a good deal more dangerous than our standard frag grenades.\n"
-"\n"
-"We should examine this weapon to see how it works, what it's made of, and how it's put together. Once we have those points figured out, we should be able to replicate it for our own use.\n"
-"\n"
-"The project is ready for research, just waiting on your authorisation, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1743 ../base/ufos/research.ufo:1785
 msgid "Alien Artifact - Plasma Rifle"
@@ -3738,10 +3507,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1751
 msgid "plasrifle_pre_txt"
-msgstr ""
-"사령관님, my department is ready to begin studying the recovered alien plasma rifle. This is a highly dangerous and versatile weapon, vastly outstripping the plasma pistol in range and power; something we should try to put into the hands of our own soldiers ASAP. Please approve lab time and funding as soon as our schedule permits.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1803 ../base/ufos/research.ufo:1883
 #: ../base/ufos/weapons_aliens.ufo:6
@@ -3754,18 +3520,8 @@ msgid "needlergun_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1811
-#, fuzzy
 msgid "needlergun_pre_txt"
-msgstr ""
-"Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
-"\n"
-"Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research, as well as whole libraries filled with the highest technology on Earth. I believe that not only can we make an effective man-portable laser weapon, we can make it into sizes previously unheard-of for a DEW.\n"
-"\n"
-"사령관님, we should pursue this research as soon as possible. Varying our arsenal will make it much more difficult to defend against, and our experience may lead us to develop viable aircraft lasers that could more effectively target high-speed UFOs than conventional firearms.\n"
-"\n"
-"As far as I'm concerned, we at PHALANX are going to do the impossible, and we can start doing it as soon as you approve this proposal.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1843 ../base/ufos/weapons_aliens.ufo:26
 msgid "Heavy Needler Gun"
@@ -3792,18 +3548,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1851
-#, fuzzy
 msgid "needlerheavy_pre_txt"
-msgstr ""
-"이것은 새로운 레이저 무기류를 연구 개발하기위해 제가 보낸 몇몇 신청안건 중 하나입니다. 이것은 파워레벨과 복잡성이 얽혀있는 시스템으로 각각 다른 사이즈로 독립적으로 개발되어야만 할것입니다.\n"
-"\n"
-"끊임 없는 레이저 파동 연구로부터 우리가 지식을 얻게 된것에 감사드립니다. 저와 저희팀은 저희 군대의 레이저가 더 나은 파괴력을 낼 수 있는 한두가지 방법을 도출해 냈습니다. 비록 우리의 원형모델에서 몇몇 구성요소와 더불어 더욱더 중요한 연구와 세밀함이 요구됩니다. 그 결과물은 엄격히 말해서 우리의 HPML 로켓런처와 같은 사이즈와 무게의 중보병 무기일것입니다.\n"
-"\n"
-"우리가 측정한 그 무기는 화력의 요소 또는 직접-화력에 대한 방어력 측정값을 낼 수 없었고, 정확히 조준하여 적의 거점을 강력하게 용해시켰습니다. 그것이 가지고 있는 속성과 기능성은 현재 우리 중장비 무기들의 부족한 부분일지 모릅니다. 지구에서생산된 중장비 무기들은 사거리에대한 정밀도가 일반적으로 떨어지고, 목표 주변의 피해가 우려되는 장소에서 사용되기가 어렵습니다. 헤비레이저는 이러한 모든문제점을 피하려 한것일겁니다.\n"
-"\n"
-"사령관님, 이것은 확실히 세부연구할 가치가 있는것입니다.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1905
 #, fuzzy
@@ -3811,7 +3557,6 @@ msgid "coilgun_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1908
-#, fuzzy
 msgid "coilgun_pre_txt"
 msgstr "<TODO>"
 
@@ -4207,20 +3952,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2142
 msgid "stungren_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"Ever since the start of the invasion, we have been left scratching our heads about the aliens' biology. We knew almost nothing about them, their biology, their genetics or their potential vulnerabilities. This left us helpless in the fields of biological and chemical warfare.\n"
-"\n"
-"Our study of the various live and dead alien specimens we've recovered has been enlightening. Thanks to the discoveries we've made over the past few months, my team and I have come to believe that we're ready to start a bio/chemical warfare program against the alien threat. We have tissue samples, autopsy data, live specimens for testing; all the raw materials we require to investigate methods of properly incapacitating battlefield specimens without being forced to send PHALANX troops into melee combat.\n"
-"\n"
-"This will be a challenge given the constant protection and filtration offered by the alien breathing apparatus, which prevents any harmful materials entering the lungs, but if you authorise sufficient lab time and funding we can almost certainly develop an aerosol compound that will disable exposed aliens by chemical or biological means.\n"
-"\n"
-"This will be a project of greatest importance and priority, Commander. The sooner you lend it your authorisation, the better.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2181
 #, fuzzy
@@ -4246,22 +3978,8 @@ msgstr ""
 "Connor 박사로부터"
 
 #: ../base/ufos/research.ufo:2189
-#, fuzzy
 msgid "stungren_alien_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"Ever since the start of the invasion, we have been left scratching our heads about the aliens' biology. We knew almost nothing about them, their biology, their genetics or their potential vulnerabilities. This left us helpless in the fields of biological and chemical warfare.\n"
-"\n"
-"Our study of the various live and dead alien specimens we've recovered has been enlightening. Thanks to the discoveries we've made over the past few months, my team and I have come to believe that we're ready to start a bio/chemical warfare program against the alien threat. We have tissue samples, autopsy data, live specimens for testing; all the raw materials we require to investigate methods of properly incapacitating battlefield specimens without being forced to send PHALANX troops into melee combat.\n"
-"\n"
-"This will be a challenge given the constant protection and filtration offered by the alien breathing apparatus, which prevents any harmful materials entering the lungs, but if you authorise sufficient lab time and funding we can almost certainly develop an aerosol compound that will disable exposed aliens by chemical or biological means.\n"
-"\n"
-"This will be a project of greatest importance and priority, Commander. The sooner you lend it your authorisation, the better.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2228
 msgid "stunrod_txt"
@@ -4288,22 +4006,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2231
 msgid "stunrod_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"I hope I'm not overstepping my bounds, but I have an important technical research proposal to make, a proposal to create a new piece of PHALANX equipment for use by our field agents. I realise this falls outside the responsibilities of my division. However, I've already discussed things with Cdr. Navarre, and he doesn't quite see eye-to-eye with me on the necessity of the item in question. I had no choice but to go to straight to you with the proposal.\n"
-"\n"
-"As you know, we've yet to capture an alien alive during our tactical engagements in all the weeks we've been waging this war. Now that we know how to keep them alive in containment, our lack of specimens is becoming a serious impediment to our biological and chemical research. We need living tissue to study, performing its natural functions inside a living body, and we don't have the ability to simply clone up some aliens to research. We need prisoners. The sooner the better.\n"
-"\n"
-"That's why I would like to propose a simple but high-powered electrical shock weapon, not unlike a military stun gun, designed to disable our enemies without killing them. It would be a two-handed man-portable unit with a large battery and several charge settings, the highest of which should be sufficient even to disable alien robots such as the Bloodspider. We in DivBio believe that any alien subjected to this weapon would be disabled long enough for our soldiers to take control of the situation and secure prisoners.\n"
-"\n"
-"Cdr. Navarre, however, feels that such a weapon would be hazardous to our soldiers and \"a throwback to the 20th century\", and refuses to endorse it. He doesn't seem to understand. We have no alternative method of disabling enemies at the voltages required. Commander, we need this weapon as badly as we need live aliens from the field. We can't merely shoot them and hope to patch one or two up again upon return to base. Even if we succeeded in that mindset, my division's needs will be far, far higher than that for proper research and interrogation.\n"
-"\n"
-"I hope you understand. Please authorise lab time and funding for this project as soon as you can, and I'll get some people from DivEngine together to develop this project properly. I would of course be delighted if you could explain things to Cdr. Navarre. I'm sure he'll be happy to receive a message from you.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2264 ../base/ufos/research.ufo:2304
 msgid "Alien Artifact - Particle Beam Pistol"
@@ -4330,12 +4033,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2272
 msgid "pbeampistol_pre_txt"
-msgstr ""
-"사령관님, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
-"\n"
-"Please authorise this program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2323 ../base/ufos/research.ufo:2364
 msgid "Alien Artifact - Particle Beam Cannon"
@@ -4362,12 +4060,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2331
 msgid "pbeamcannon_pre_txt"
-msgstr ""
-"사령관님, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
-"\n"
-"Please authorise this program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2383 ../base/ufos/research.ufo:2423
 msgid "Alien Artifact - Particle Beam Rifle"
@@ -4396,12 +4089,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2391
 msgid "pbeamrifle_pre_txt"
-msgstr ""
-"사령관님, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.\n"
-"\n"
-"Please authorise this program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2443
 msgid "Man-Portable Particle Beams"
@@ -4428,16 +4116,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2451
 msgid "pbeamammo_pre_txt"
-msgstr ""
-"사령관님, we've decided that more research is badly needed on the particle beam weaponry, especially their mysterious power source, the magazines which we've been utterly unable to examine. No amount of finesse or ingenuity has been able to open them. That's why I'm hereby proposing extreme measures.\n"
-"\n"
-"I want to use our lab's radiation chamber to bombard one of the magazines with electromagnetic pulses, destroying most of the internal electronics, and hopefully causing it to shut down. Once it's safely deactivated, we can use brute force to open it up.\n"
-"\n"
-"Destroying a magazine to find out how it works may seem crude and backwards, but we have no other choice at the moment. Even blasted to hell by EMP, it should help us answer a lot of questions about the aliens' particle beam technology. It may also give us clues as to how we can get inside an undamaged magazine.\n"
-"\n"
-"Once we know how the magazine works, we can reassess the weapons and we'll hopefully be able to tell you how it all fits together, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2490
 msgid "combat_armour_txt"
@@ -4543,16 +4222,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2524
 msgid "nano_armour_pre_txt"
-msgstr ""
-"Our examination of the alien body armour has led us to many interesting realisations. Obviously, the key to creating more effective mobile armour based on the alien suits lies in the direction of nanocomposites. This will require large amounts of carbon nanotubes.\n"
-"\n"
-"In the past, carbon nanotubes have been difficult and expensive to produce, and trying to work them into a proper shape was even worse. Because of this nanocomposite armour has never been used except in high-cost vehicles such as aircraft and tanks, and then only in plating that requires minimal shaping or other work. The alien armour, however, uses carbon nanotube composites in abundance. It's our manufacturing processes that are holding us back.\n"
-"\n"
-"With the alien armour in hand and enough resources at our disposal, I believe that we can devise new production methods and shaping processes that will allow us to mass-produce shaped nanocomposite plates, finally bringing this technology into our reach.\n"
-"\n"
-"This project will require a fair amount of lab time and funding. We'll start work as soon as we receive your authorisation, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2599
 msgid "alien_body_armour_txt"
@@ -4573,12 +4243,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2602
 msgid "alien_body_armour_pre_txt"
-msgstr ""
-"사령관님, we've recovered a suit of alien body armour from the battlefield. This armour has been a plague to our soldiers due to its very high resistance to various types of damage; aliens wearing it have shrugged off shots that would have torn their unarmoured friends apart. It's not surprising that we still haven't managed to cut it open to perform an initial survey of its composition. We should investigate the armour's weaknesses as soon as we can, and perhaps ascertain a way to adapt it for our own uses.\n"
-"\n"
-"This project will require a moderate amount of lab time and funding. Work will start as soon as we have your authorisation, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2636
 msgid "alien_medium_armour_txt"
@@ -4599,12 +4264,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2639
 msgid "alien_medium_armour_pre_txt"
-msgstr ""
-"사령관님, we've salvaged a new suit of alien armour from the field. It's much heavier than the alien armour we've encountered previously, and it seems to stop ordinary firearms without taking so much as a scratch. Its trauma plates are made of the densest CNT (Carbon Nanotube) weave I've ever seen. We need to research this armour right away to determine which weapons will remain effective against aliens wearing it, and to try and find a method to replicate it for our own troops. As long as we can't match this technology, we are at a severe disadvantage.\n"
-"\n"
-"This project will require a significant amount of lab time and funding. Work will start as soon as we have your authorisation, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2674
 msgid "Blast Damage Type"
@@ -5706,7 +5366,6 @@ msgid "inter_dragon_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3317
-#, fuzzy
 msgid "inter_dragon_pre_txt"
 msgstr "<TODO>"
 
@@ -5771,71 +5430,14 @@ msgstr ""
 "Hardpoints: 2 Medium hardpoints (belly), 2 Equipment bays, 1 Armour slot"
 
 #: ../base/ufos/research.ufo:3338
-#, fuzzy
 msgid "inter_starchaser_pre_txt"
-msgstr ""
-"Aircraft Evaluation -- Saracen-class Interceptor\n"
-"\n"
-"보안등급: BLACK\n"
-"\n"
-"PHALANX 외계생명체 대책 기구\n"
-"\n"
-"기술 문서, Sigma Clearance -- Commander's Eyes Only\n"
-"\n"
-"작성일: 19 March 2084\n"
-"\n"
-"작성자: Cdr. Paul Navarre, R&D: 생산부서, PHALANX, 대서양 작전 본부\n"
-"\n"
-"\n"
-"\n"
-"내용\n"
-"\n"
-"It is clear that the Stiletto-class Interceptor, while a terrific aircraft, does not cover all our needs. We must be ready to defend our planet and our people anywhere across the globe. The Stiletto's operational range is too limited and it is not fast enough to engage all the UFOs we might detect.\n"
-"\n"
-"Only one aircraft in the world is capable of filling the operational gap we face; the Argentinian KB-550 Hypersonic Wing, dubbed the \"Saracen\" in NATO code. Mixing old and new stealth technology into a single airframe, the Saracen most resembles the ancient SR-71 \"Blackbird\" in its shape and bearing. It is black as the night itself, covered in radiation-absorbing paint that makes it practically invisible to radar, lidar and most other forms of active scanning. Its fuselage is composed almost entirely of carbon nanotubes and sheets of graphite-reinforced plastic. This makes the craft extremely strong and heat-resistant enough to cope with the temperatures of cruising at speeds in excess of Mach 4. The Saracen is the fastest military airplane still flying today.\n"
-"\n"
-"In terms of its capabilities, the Saracen pushes our interception range into international territory. Its huge, armoured tanks and amazing fuel-efficiency allow it to go anywhere up to 10,000 kilometres from its hangar at hypersonic speeds -- and back again -- with fuel to spare for combat manoeuvres. Its stealthy design, high speed and tough airframe allow it to engage UFOs that our Stiletto-class Interceptors may simply be unable to catch. It has tough armour and can fly home even on one engine. Thanks to the power of its engines and a set of additional manoeuvring thrusters in its belly, it can take off almost vertically; this is definitely within the restrictions of our hangar facilities.\n"
-"\n"
-"Its electronics suite is similarly impressive. It has state-of-the-art targeting computers, advanced radar and lidar systems, advanced ECM (Electronic Counter-Measures) equipment, in-helmet VR imaging for the pilot, and more. The Saracen can carry about twice the electronics load of a Stiletto-class Interceptor, with room to spare for further modular equipment.\n"
-"\n"
-"Unfortunately, for all its strengths, it is costly to lease and maintain, and its heavy load of fuel and armour cuts badly into weapons capacity. The Saracen cannot equal the weapons load of the far smaller and less expensive Stiletto. Nor can it hope to equal the Stiletto's manoeuvrability. Despite thrust-vectoring technology (the ability to change the shape of its engine nozzles to direct thrust), electro-elastic wing surface (the ability to dynamically change the shape of its wings) and other terrific advances, the Saracen is still a large fixed-wing aircraft with all the limitations that implies. Though it can take much more damage than a Stiletto and remain effective, the Saracen will not perform as well in combat with alien craft.\n"
-"\n"
-"The Saracen requires 1 Large Hangar for storage, maintenance and deployment. It has 2 weapon hardpoints; 2 medium belly bays.\n"
-"\n"
-"\n"
-"전술적 운용방법\n"
-"\n"
-"At its heart the Saracen is a long-range interceptor to be used against extremely distant or fast UFOs. Unlike the alien craft, it is barely slowed by moving inside Earth atmosphere, making it slightly faster than most of the UFOs we have observed so far. This will allow PHALANX to catch the aliens wherever they may be going -- short of interplanetary space.\n"
-"\n"
-"As always, the Saracen's performance against extraterrestrial craft can't be measured without solid observational data from at least one real combat encounter. However, if deployed in large enough flights, it should be able to cut up alien craft of all varieties.\n"
-"\n"
-"\n"
-"추가설명\n"
-"\n"
-"None.\n"
-"\n"
-"\n"
-"Aircraft statistics:\n"
-"\n"
-"\n"
-"Size: 10m x 27m x 5m\n"
-"\n"
-"Cruising speed: 4,110 km/h\n"
-"\n"
-"Top speed: 4,600km/h\n"
-"\n"
-"Operational range: 10,000km\n"
-"\n"
-"Crew capacity: 1 crew\n"
-"\n"
-"Hardpoints: 2 Medium hardpoints (belly), 2 Equipment bays, 1 Armour slot"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3356
 msgid "inter_stingray_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3359
-#, fuzzy
 msgid "inter_stingray_pre_txt"
 msgstr "<TODO>"
 
@@ -5876,10 +5478,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3387
 msgid "ufo_scout_pre_txt"
-msgstr ""
-"사령관님, we've recovered a new UFO type which is now waiting in our hangar for disassembly. We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3426
 msgid "ufo_fighter_txt"
@@ -5916,12 +5515,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3429
 msgid "ufo_fighter_pre_txt"
-msgstr ""
-"사령관님, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Recovering a Fighter-class UFO has been one of the things we at DivEngine have been praying for. This is the first armed combat UFO that PHALANX has observed; it is vital that we study these alien craft and weapons and learn their weaknesses, if they have any.\n"
-"\n"
-"We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3469
 msgid "ufo_supply_txt"
@@ -5958,12 +5552,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3472
 msgid "ufo_supply_pre_txt"
-msgstr ""
-"사령관님, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Larger than any of the other UFOs we've seen so far, it seems to be unarmed, and its large cargo hold suggests that it may be a supply carrier of some sort, supporting alien assets on the surface of the Earth. These craft can be found at the centre of many alien formations and will drastically increase the alien presence on our planet if we allow them to complete their missions.\n"
-"\n"
-"We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3512
 msgid "ufo_carrier_txt"
@@ -5979,7 +5568,6 @@ msgid "ufo_bomber_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3558
-#, fuzzy
 msgid "ufo_bomber_pre_txt"
 msgstr "<TODO>"
 
@@ -5989,7 +5577,6 @@ msgid "ufo_corrupter_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3601
-#, fuzzy
 msgid "ufo_corrupter_pre_txt"
 msgstr "<TODO>"
 
@@ -6032,12 +5619,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3644
 msgid "ufo_harvester_pre_txt"
-msgstr ""
-"사령관님, 현재 새로운 유형의 UFO를 회수하였고, 격납고에서 해체 대기중입니다. 이전의 UFO들보다 놀랍도록 크며, UFO 편대의 중심으로 보이며 우리의 연구를 위해 주요 목표로 삼아야 합니다. 그 UFO의 목적을 밝혀내고, 지구로 보내진 외계인들의 임무에 대한 새로운 시점을 줄 것으로 생각되는 특수한 장치들을 조사할 것 입니다.\n"
-"\n"
-"사령관님께서 말씀만 하신다면 즉시 연구 및 해체 작업을 할 준비가 되어있습니다만, 그것의 기능과 기능에 대한 올바른 평가를 하기 위한 연구실 사용 허가와 자금이 필요 합니다.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3686
 msgid "Live Specimen - Bloodspider"
@@ -6096,14 +5678,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3715
 msgid "bloodspider_autopsy_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"전장에서 새로운 종의 외계인 사체를 회수하였습니다. 우리는 가능한 빠른 시일내에 해부와 평가를 시작해야 합니다.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3765
 msgid "Alien Autopsy - Ortnok"
@@ -6183,25 +5758,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3774
 msgid "ortnok_autopsy_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"전장에서 새로운 종의 외계인 사체를 회수하였습니다. 우리는 가능한 빠른 시일내에 해부와 평가를 시작해야 합니다.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3775
 msgid "ortnok_autopsy_extra_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"전장에서 새로운 종의 외계인 사체를 회수하였습니다. 우리는 가능한 빠른 시일내에 해부와 평가를 시작해야 합니다.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3807
 msgid "Alien Autopsy - Taman"
@@ -6285,25 +5846,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3816
 msgid "taman_autopsy_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"전장에서 새로운 종의 외계인 사체를 회수하였습니다. 우리는 가능한 빠른 시일내에 해부와 평가를 시작해야 합니다.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3817
 msgid "taman_autopsy_extra_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"전장에서 새로운 종의 외계인 사체를 회수하였습니다. 우리는 가능한 빠른 시일내에 해부와 평가를 시작해야 합니다.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3849
 msgid "Alien Autopsy - Shevaar"
@@ -6383,25 +5930,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3858
 msgid "shevaar_autopsy_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"전장에서 새로운 종의 외계인 사체를 회수하였습니다. 우리는 가능한 빠른 시일내에 해부와 평가를 시작해야 합니다.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3859
 msgid "shevaar_autopsy_extra_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"전장에서 새로운 종의 외계인 사체를 회수하였습니다. 우리는 가능한 빠른 시일내에 해부와 평가를 시작해야 합니다.\n"
-"\n"
-"친애하는,\n"
-"\n"
-"Connor 박사로부터"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3948 ../base/ufos/team_humans.ufo:1599
 msgid "Phoenix UGV"
@@ -6433,7 +5966,6 @@ msgid "ugv_chaingun_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3992
-#, fuzzy
 msgid "ugv_chaingun_pre_txt"
 msgstr "<TODO>"
 
@@ -6443,7 +5975,6 @@ msgid "ugv_chaingun_belt_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4011
-#, fuzzy
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "<TODO>"
 
@@ -6468,14 +5999,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4029
-#, fuzzy
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"사령관님, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
-"\n"
-"Please authorise this program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4085
 msgid "'Raven' ECM Unit"
@@ -6565,16 +6090,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4121
 msgid "craft_shield_plating_pre_txt"
-msgstr ""
-"사령관님, now that we have the ability to produce and work the alien materials, a whole new range of options has opened up to us. These materials are so strong and flexible that they can be used for almost anything. Their most promising uses, however, have been in aircraft design -- specifically armour.\n"
-"\n"
-"We've had an extremely difficult time shooting down UFOs thanks to the resilient outer skin of alien materials. Unfortunately we can't simply slap this same kind of skin onto our own craft because the alien materials are far too heavy. Our craft would struggle to even get off the ground. That needn't be the end of it, though.\n"
-"\n"
-"사령관님, if you let us do some research on it, I believe we can come up with an armouring scheme that -- while it might decrease speed and increase fuel consumption a bit -- should give our aircraft a far better survival chance against the alien weapons during interceptions. According to our calculations, aircraft with this kind of armour could withstand several particle beam hits and still remain combat effective.\n"
-"\n"
-"It's a very promising possibility, Commander, one that definitely deserves investigation.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4124
 msgid "craft_shield_plating_txt"
@@ -6595,12 +6111,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4144
 msgid "craft_alien_astrogation_pre_txt"
-msgstr ""
-"사령관님, the recovery of an intact alien astrogation unit is an important milestone. Although this unit doesn't seem to contain a star chart, it will allow us to decipher alien astronomical notations and upgrade the power of our own astrogation systems by several orders of magnitude. Eventually the work we do here may help us backtrack the aliens to their home planet.\n"
-"\n"
-"Along with Alien Propulsion and Alien Detection, Alien Astrogation is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4147
 msgid "craft_alien_astrogation_txt"
@@ -6623,12 +6134,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4182
 msgid "craft_alien_propulsion_pre_txt"
-msgstr ""
-"사령관님, the alien antimatter engines we recovered have been fascinating my team ever since they arrived. With our new understanding of the alien materials, I think we can work out the details and duplication of this technology. Excitingly, it now seems to be within our capabilities to replicate these engines, if we can just figure out the function and creation of the different parts.\n"
-"\n"
-"Along with Alien Astrogation and Alien Detection, Alien Propulsion is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4185
 msgid "craft_alien_propulsion_txt"
@@ -6655,14 +6161,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4219
 msgid "craft_alien_detection_pre_txt"
-msgstr ""
-"사령관님, the alien sensor suite appears to be a very powerful set of passive and active scanning systems, including radar, lidar, magnetic and UV/infrared reception, and -- most interestingly -- a kind of detection unknown to us, but which seems to have far more success at detecting UFOs than anything we have.\n"
-"\n"
-"If you'll let us take the suite apart, I believe we can find out what everything does and how to operate it, and how to replicate most if not all of the alien detection equipment. It would be an immense boost to our defence efforts on Earth if we can get this technology working for us, and its long-term potential for spacecraft development is vital. There's no way we could build a viable space-capable fighter with human sensors.\n"
-"\n"
-"Along with Alien Propulsion and Alien Astrogation, Alien Detection is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4222
 msgid "craft_alien_detection_txt"
@@ -6688,48 +6187,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4255
-#, fuzzy
 msgid "craft_weapon_alc_pre_txt"
-msgstr ""
-"기술적 명세: TR-20 Rocket Pod\n"
-"\n"
-"보안등급: BLACK\n"
-"\n"
-"PHALANX 외계생명체 대책 기구\n"
-"\n"
-"기술 문서, Sigma Clearance -- Commander's Eyes Only\n"
-"\n"
-"작성일: 19 March 2084\n"
-"\n"
-"작성자: Cdr. Paul Navarre, R&D: 생산부서, PHALANX, 대서양 작전 본부\n"
-"\n"
-"\n"
-"\n"
-"내용\n"
-"\n"
-"Now that we have aircraft capable of intercepting the attacking UFOs, we need to equip them with armaments that can actually shoot down these alien craft. We have evaluated every available weapon on Earth as part of the Excalibur Program, and we have selected the very best for the defence of our planet.\n"
-"\n"
-"The TR-20 rocket pod is an interesting departure from conventional air-to-air weapons, in that it was originally designed for air-to-ground operations. The pod contains a total of 152 very small, very fast rockets with depleted uranium tips and powerful pulse detonation engines. No one considered using the TR-20 for anything other than chewing up ground targets until an attack helicopter pilot in Africa discovered their potential.\n"
-"\n"
-"At the time, the pilot -- the last surviving member of his flight -- had been cornered against a mountain by three MiG jets which were closing in for the kill. With nearly all his weapons expended, the only thing the pilot had left to fight with was one pod of TR-20 rockets. He made a suicide run with full afterburners, and managed to swat all three MiGs out of the sky with rapid fire before he ran out of fuel and had to crash-land. He returned to his airbase two days later without a scratch on him.\n"
-"\n"
-"Though unguided, TR-20 pods contain such a large number of rockets that they can be used almost like a rocket machine gun. This is because the rockets are stacked nose to tail inside their launch tubes, eight to each tube, and fired electronically in a timed sequence. This system is so fast that all eight rockets in a tube can be ignited and underway before the first rocket actually leaves the tube. At its maximum possible rate of fire, the pod can fire all 152 rockets in 0.2 seconds. However, this is usually throttled back to approx. 300 rounds per minute due to the low accuracy of any single volley.\n"
-"\n"
-"The advantages of the TR-20 over the SHIVA cannon are increased range and greater hitting power. However, the pod's ammo capacity is limited compared to the SHIVA's large portable magazines, and a single TR-20 pod is unlikely to last through a full UFO engagement.\n"
-"\n"
-"\n"
-"전술적 운용방법\n"
-"\n"
-"We anticipate the TR-20 will perform nicely against slower or slow-moving UFOs, especially if their propulsion systems have been damaged somehow. In these situations, TR-20 rockets perform with flying colours, tearing mercilessly into a target. However, accuracy drops rapidly against faster opponents. Damage potential is irrelevant if we can't place a single round on the target.\n"
-"\n"
-"For this reason, it's recommended we use the TR-20 in moderation and mostly in situations that play to its strengths, such as when engaging a single UFO with multiple aircraft. The flight leader can drive the target into his wingman's killzone with cannons or guided weapons, at which point the wingman has a clear shot with his rockets. Even so, no more than a single TR-20 pod should be loaded on any one aircraft for maximum air-to-air efficiency.\n"
-"\n"
-"If the mission target is stationary or ground-based, these rockets will be ideal for softening up any defences and defenders before a tactical mission.\n"
-"\n"
-"\n"
-"추가설명\n"
-"\n"
-"None."
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4258
 #, fuzzy
@@ -7088,10 +6547,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4440
 msgid "craft_weapon_particle_beam_pre_txt"
-msgstr ""
-"사령관님, the UFO we recovered was equipped with a very interesting type of weapon that we'd like to research right away. It seems to fire some kind of high-velocity particle beam; if we can master this technology, or at least adapt it for use on our own aircraft, we could make air engagements with armed alien craft significantly more survivable for our craft and pilots.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4443
 msgid "craft_weapon_particle_beam_txt"
@@ -7207,12 +6663,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4528
 msgid "alien_materials_pre_txt"
-msgstr ""
-"사령관님, as I mentioned in my previous report, the UFO we recovered was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
-"\n"
-"I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilites.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4580
 msgid "Political Situation Before The Invasion"
@@ -7494,24 +6945,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4656
 msgid "enemy_on_earth_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"My team and I are deeply troubled by the recent reports of human hostility against PHALANX personnel, as I'm sure you are. We've all seen the battlefield footage. There's no doubt that the attackers were humans like you and me, but it's also clear they were using alien weaponry and equipment -- some of which even PHALANX has never seen before.\n"
-"\n"
-"The worrying questions seem to mount up. First, however, we need to review the facts we have.\n"
-"\n"
-"Do the aliens have active sympathisers on Earth? Yes.\n"
-"\n"
-"Are the aliens supplying these human servants? Affirmative; it's the only explanation for their advanced alien equipment.\n"
-"\n"
-"Do the servants present a threat? Absolutely. Perhaps a greater one than the alien menace itself.\n"
-"\n"
-"We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. The DivBio also has a stake; we'd like to capture at least one live prisoner for our Containment unit so we can run a full physical examination. If the aliens have bodily altered these humans in addition to training and supplying them, we'd like to find out about it.\n"
-"\n"
-"Director Wong (DivInfo) also asked me to mention that, if we hold off on implementing a new info strategy for too long, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin getting their word out. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
-"\n"
-"Sincerely,Dr. Connor"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4686
 msgid "XVI Census"
@@ -7562,7 +6996,6 @@ msgstr ""
 "없음."
 
 #: ../base/ufos/research.ufo:4694
-#, fuzzy
 msgid "xvi_census_pre_txt"
 msgstr "<TODO>"
 
@@ -7594,26 +7027,8 @@ msgstr ""
 "Sincerely,Dr. Connor"
 
 #: ../base/ufos/research.ufo:4736
-#, fuzzy
 msgid "enemy_on_earth_rev_pre_txt"
-msgstr ""
-"사령관님,\n"
-"\n"
-"My team and I are deeply troubled by the recent reports of human hostility against PHALANX personnel, as I'm sure you are. We've all seen the battlefield footage. There's no doubt that the attackers were humans like you and me, but it's also clear they were using alien weaponry and equipment -- some of which even PHALANX has never seen before.\n"
-"\n"
-"The worrying questions seem to mount up. First, however, we need to review the facts we have.\n"
-"\n"
-"Do the aliens have active sympathisers on Earth? Yes.\n"
-"\n"
-"Are the aliens supplying these human servants? Affirmative; it's the only explanation for their advanced alien equipment.\n"
-"\n"
-"Do the servants present a threat? Absolutely. Perhaps a greater one than the alien menace itself.\n"
-"\n"
-"We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. The DivBio also has a stake; we'd like to capture at least one live prisoner for our Containment unit so we can run a full physical examination. If the aliens have bodily altered these humans in addition to training and supplying them, we'd like to find out about it.\n"
-"\n"
-"Director Wong (DivInfo) also asked me to mention that, if we hold off on implementing a new info strategy for too long, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin getting their word out. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
-"\n"
-"Sincerely,Dr. Connor"
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_credits.ufo:131 ../base/ufos/seq_credits.ufo:164
 msgid "Project leader"

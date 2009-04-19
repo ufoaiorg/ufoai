@@ -600,7 +600,8 @@ msgstr "Idegen Repülőt találtunk"
 
 #: ../base/ufos/events.ufo:78
 msgid "mail_from_un"
-msgstr "Mahouf Serra főtitk., Egyesült Nemzetek, New York"
+msgstr ""
+"Mahouf Serra főtitk., Egyesült Nemzetek, New York"
 
 #: ../base/ufos/events.ufo:79 ../base/ufos/events.ufo:89
 #: ../base/ufos/events.ufo:99 ../base/ufos/events.ufo:110
@@ -675,7 +676,8 @@ msgstr "Mahouf Serra főtitk., Egyesült Nemzetek, New York"
 #: ../base/ufos/research.ufo:4709 ../base/ufos/research.ufo:4742
 #: ../base/ufos/research.ufo:4749
 msgid "mail_to_base_commander"
-msgstr "PHALANX Bázisparancsnok, PHALANX Atlanti Műveleti Parancsnokság"
+msgstr ""
+"PHALANX Bázisparancsnok, PHALANX Atlanti Műveleti Parancsnokság"
 
 #: ../base/ufos/events.ufo:80
 msgid "2084 Mar 21"
@@ -738,7 +740,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4458 ../base/ufos/research.ufo:4533
 #: ../base/ufos/research.ufo:4541
 msgid "mail_from_paul_navarre"
-msgstr "Paul Navarre alezr., PHALANX Atlanti Műveleti Parancsnokság, K&F mérnöki részleg"
+msgstr ""
+"Paul Navarre alezr., PHALANX Atlanti Műveleti Parancsnokság, K&F mérnöki részleg"
 
 #: ../base/ufos/events.ufo:90
 msgid "Alien died"
@@ -790,7 +793,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:232 ../base/ufos/events.ufo:243
 #: ../base/ufos/events.ufo:254 ../base/ufos/events.ufo:265
 msgid "mail_from_xo"
-msgstr "Abel S. Howard par. hely., PHALANX, Atlanti Műveleti Parancsnokság, Parancsnokság"
+msgstr ""
+"Abel S. Howard par. hely., PHALANX, Atlanti Műveleti Parancsnokság, Parancsnokság"
 
 #: ../base/ufos/events.ufo:157
 msgid "Monthly Report -- %s"
@@ -885,7 +889,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:551 ../base/ufos/research.ufo:4699
 #: ../base/ufos/research.ufo:4708
 msgid "mail_from_col_falkland"
-msgstr "Ingrid Falkland ezr., PHALANX Atlanti Műveleti Parancsnokság, Felderítési részleg"
+msgstr ""
+"Ingrid Falkland ezr., PHALANX Atlanti Műveleti Parancsnokság, Felderítési részleg"
 
 #: ../base/ufos/events.ufo:278
 msgid "Response Too Late -- %s"
@@ -915,7 +920,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:331 ../base/ufos/events.ufo:342
 #: ../base/ufos/events.ufo:353
 msgid "mail_from_air_cdr"
-msgstr "Subakh al-Kuhar rep. ezr., PHALANX Atlanti Műveleti Parancsnokság, Légierő"
+msgstr ""
+"Subakh al-Kuhar rep. ezr., PHALANX Atlanti Műveleti Parancsnokság, Légierő"
 
 #: ../base/ufos/events.ufo:311
 msgid "New Aircraft Arrived -- %s"
@@ -1721,7 +1727,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4668 ../base/ufos/research.ufo:4741
 #: ../base/ufos/research.ufo:4748
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, PHALANX Atlanti Műveleti Parancsnokság, K&F: Bio&Karantén részleg"
+msgstr ""
+"Dr. Connor, PHALANX Atlanti Műveleti Parancsnokság, K&F: Bio&Karantén részleg"
 
 #: ../base/ufos/research.ufo:296 ../base/ufos/research.ufo:336
 msgid "alien_breathing_txt"
@@ -5181,7 +5188,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3359
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3384
 msgid "ufo_scout_txt"
@@ -5739,7 +5747,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4029
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4085
 msgid "'Raven' ECM Unit"
@@ -6952,35 +6961,43 @@ msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "2084. A Földre, amely sosem volt egy nyugodt hely, a viszonylagos béke ideje köszöntött. A 21. század véres kezdete messze volt már; távoli, bár még élő emlék volt a Föld népének nagy része számára. A Második Hidegháború is csak egy sötét árnyék volt a múltból, mint a késő huszadik század gyermekei szemében a két világháború."
+msgstr ""
+"2084. A Földre, amely sosem volt egy nyugodt hely, a viszonylagos béke ideje köszöntött. A 21. század véres kezdete messze volt már; távoli, bár még élő emlék volt a Föld népének nagy része számára. A Második Hidegháború is csak egy sötét árnyék volt a múltból, mint a késő huszadik század gyermekei szemében a két világháború."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "A konfliktusok egyre ritkábbak lettek, ahogy az új technológia és az egészségügy modern megoldásai a harmadik világban is elérhetőkké váltak. A terrorizmus lángjai is ellobbantak a Második Hidegháború tüzében. A hidegháború borzalma és embertelensége még friss volt az emberek emlékezetében, a régi Egyesült Államoktól a tönkretett Indiáig. Az osztályharcok a politikai küzdőtérre szorultak vissza, ahogy minden ország képviselethez jutott az ENSZ-ben, és a globális életszínvonal lassan növekedett a Föld legelmaradottabb részein is. A világ országai stabilizálódtak az újjászervezett ENSZ segítségével, amely sikeresen tartotta fenn a rendet a világban. Kisebb nemzetek szétszóródott csoportjai, megriadva a Kína és az Európai Unió körül megszilárduló hatalmi tömböktől, erős politikai szövetségekbe szerveződtek - és olyan szomszédok között találták magukat, amelyek egyikével szemben sem kockáztathattak meg egy kétes kimenetelű háborút. Az emberiség történelmében először béke és rend uralta a Föld több mint háromnegyedét."
+msgstr ""
+"A konfliktusok egyre ritkábbak lettek, ahogy az új technológia és az egészségügy modern megoldásai a harmadik világban is elérhetőkké váltak. A terrorizmus lángjai is ellobbantak a Második Hidegháború tüzében. A hidegháború borzalma és embertelensége még friss volt az emberek emlékezetében, a régi Egyesült Államoktól a tönkretett Indiáig. Az osztályharcok a politikai küzdőtérre szorultak vissza, ahogy minden ország képviselethez jutott az ENSZ-ben, és a globális életszínvonal lassan növekedett a Föld legelmaradottabb részein is. A világ országai stabilizálódtak az újjászervezett ENSZ segítségével, amely sikeresen tartotta fenn a rendet a világban. Kisebb nemzetek szétszóródott csoportjai, megriadva a Kína és az Európai Unió körül megszilárduló hatalmi tömböktől, erős politikai szövetségekbe szerveződtek - és olyan szomszédok között találták magukat, amelyek egyikével szemben sem kockáztathattak meg egy kétes kimenetelű háborút. Az emberiség történelmében először béke és rend uralta a Föld több mint háromnegyedét."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "A legtöbb ember számára úgy tűnt, a dolgok a lehető legnagyobb rendben mennek."
+msgstr ""
+"A legtöbb ember számára úgy tűnt, a dolgok a lehető legnagyobb rendben mennek."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "Az első támadás Bombayt érte, 2084. március 3-án. Hat kis UFO tűnt fel az égen a semmiből, a Bombayt védelmező radarrendszerek számára észrevétlenül, és leszálltak a Föld legnépesebb városában. Az idegenek nem figyelmeztettek, nem magyarázkodtak. Húszezer ártatlan civilt és három elit zászlóaljat mészároltak le húsz rettenetes óra alatt, mielőtt a Nemzetközösség katonáinak sikerült megállítaniuk az előrenyomulást; aztán amilyen hirtelen érkeztek, eltűntek a hajóikban és távoztak, csak Bombay porig rombolt utcáit hagyva maguk után bizonyítékul."
+msgstr ""
+"Az első támadás Bombayt érte, 2084. március 3-án. Hat kis UFO tűnt fel az égen a semmiből, a Bombayt védelmező radarrendszerek számára észrevétlenül, és leszálltak a Föld legnépesebb városában. Az idegenek nem figyelmeztettek, nem magyarázkodtak. Húszezer ártatlan civilt és három elit zászlóaljat mészároltak le húsz rettenetes óra alatt, mielőtt a Nemzetközösség katonáinak sikerült megállítaniuk az előrenyomulást; aztán amilyen hirtelen érkeztek, eltűntek a hajóikban és távoztak, csak Bombay porig rombolt utcáit hagyva maguk után bizonyítékul."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Az ENSZ vésztanácsa képtelen volt megoldást találni a helyzetre. A következő betörés Bonnt, Johannesburgot és Bangkokot érte, még gyorsabban, még pusztítóbban, még kegyetlenebbül. Néhány állam megpróbálkozott a diplomáciával, ezer különböző nyelven küldve üzenetet a földet dúló idegeneknek. Válasz nem érkezett. Órákon belül mindhárom városból eltűnt az emberi élet. A támadásnak már vége volt, mire a hadseregek megkapták az engedélyt a visszavágásra. Az idegenek semmit sem hagytak maguk után, csak betont és vért. Az UFO-k nyom nélkül eltűntek - és senkiben sem maradt kétség afelől, hogy vissza fognak-e térni."
+msgstr ""
+"Az ENSZ vésztanácsa képtelen volt megoldást találni a helyzetre. A következő betörés Bonnt, Johannesburgot és Bangkokot érte, még gyorsabban, még pusztítóbban, még kegyetlenebbül. Néhány állam megpróbálkozott a diplomáciával, ezer különböző nyelven küldve üzenetet a földet dúló idegeneknek. Válasz nem érkezett. Órákon belül mindhárom városból eltűnt az emberi élet. A támadásnak már vége volt, mire a hadseregek megkapták az engedélyt a visszavágásra. Az idegenek semmit sem hagytak maguk után, csak betont és vért. Az UFO-k nyom nélkül eltűntek - és senkiben sem maradt kétség afelől, hogy vissza fognak-e térni."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Nyolcvanhét órával a Bombayt érő támadás után a Föld deklarálta a háborút. A földi országok haderői két hétig minden erejüket latba vetve próbálták megállítani az idegen támadókat, viszonylag kevés - ám annál értékesebb - sikerrel."
+msgstr ""
+"Nyolcvanhét órával a Bombayt érő támadás után a Föld deklarálta a háborút. A földi országok haderői két hétig minden erejüket latba vetve próbálták megállítani az idegen támadókat, viszonylag kevés - ám annál értékesebb - sikerrel."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Az ENSZ számára egyetlen lehetőség maradt hátra. A régi - több mint százéves - felszerelést leporolva újjászervezték az USA régen megszüntetett földönkívüli-ellenes ügynökségét, a PHALANX-ot, ezúttal ENSZ-zászló alatt. Feladatául az idegen fenyegetés elhárítását, az emberi faj túlélésének bármi áron való biztosítását tűzték ki."
+msgstr ""
+"Az ENSZ számára egyetlen lehetőség maradt hátra. A régi - több mint százéves - felszerelést leporolva újjászervezték az USA régen megszüntetett földönkívüli-ellenes ügynökségét, a PHALANX-ot, ezúttal ENSZ-zászló alatt. Feladatául az idegen fenyegetés elhárítását, az emberi faj túlélésének bármi áron való biztosítását tűzték ki."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "A PHALANX-ot a Föld nyolc politikai ereje támogatja, katonáikat azok elitcsapataiból válogatják. A legjobbak legjobbjait. A PHALANX a bolygó első és egyetlen védvonala - nem veszíthet, mert az emberiségnek nincsen több esélye."
+msgstr ""
+"A PHALANX-ot a Föld nyolc politikai ereje támogatja, katonáikat azok elitcsapataiból válogatják. A legjobbak legjobbjait. A PHALANX a bolygó első és egyetlen védvonala - nem veszíthet, mert az emberiségnek nincsen több esélye."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

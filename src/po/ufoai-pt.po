@@ -1723,7 +1723,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:222
-#, fuzzy
 msgid "craft_upgrade_am_engines_pre_txt"
 msgstr "<TODO>"
 
@@ -5388,7 +5387,6 @@ msgstr ""
 "Hardpoints: 2 Medium hardpoints (belly), 2 Equipment bays, 1 Armour slot"
 
 #: ../base/ufos/research.ufo:3338
-#, fuzzy
 msgid "inter_starchaser_pre_txt"
 msgstr "<TODO>"
 
@@ -5973,7 +5971,6 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:3859
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr "<TODO>"
-
 # como traduzir isso?
 #: ../base/ufos/research.ufo:3948 ../base/ufos/team_humans.ufo:1599
 msgid "Phoenix UGV"
@@ -6226,48 +6223,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4255
-#, fuzzy
 msgid "craft_weapon_alc_pre_txt"
-msgstr ""
-"Technical Specifications: SHIVA Rotary Cannon\n"
-"\n"
-"CLASSIFIED LEVEL BLACK\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
-"\n"
-"Filed: 19 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"Now that we have aircraft capable of intercepting the attacking UFOs, we need to equip them with armaments that can actually shoot down these alien craft. We have evaluated every available weapon on Earth as part of the Excalibur Program, and we have selected the very best for the defence of our planet.\n"
-"\n"
-"The SHIVA is a four-barreled rotary cannon, firing the 20mm HMG (Heavy Machine Gun) round. It is an externally-powered gun -- rather than being dependent upon recoil to actuate the system, it uses an external motor to produce power. The electric motor which drives the SHIVA is a high-efficiency 20 horse power beast, achieving a rate of fire up to 6,000 rounds a minute with the accurate, hard-hitting 20mm HMG shells.\n"
-"\n"
-"Designed and built in Bangladesh, the SHIVA was first prototyped in 2048, failing every one of its trials during that year. The project was nearly discontinued until, in July 2050, an undercover investigation revealed a long-running sabotage plot by a rival arms company. A new prototype was constructed which showed enough promise justify further development. Eventually all the major bugs were ironed out, at which point the power of this weapon became apparent.\n"
-"\n"
-"The SHIVA is very light for an aircraft weapon of its size and effectiveness, weighing only 250 kilos unloaded, 400 kilos loaded. The rate of fire exceeds that of any other four-barreled cannon in existence. Its sophisticated tracking systems can hold a bead on an enemy for as long as there is a radar, lidar or optical target solution available. The unlinked ammo feeds are highly reliable and no jam has ever been recorded throughout the gun's service history.\n"
-"\n"
-"The SHIVA can fire two varieties of the HMG round; API (Armour-Piercing Incendiary) or HEI (High-Explosive Incendiary). The former achieves better penetration while the latter can do more damage if penetration is achieved. Both these rounds are proven to be capable of penetrating UFO armour to some degree.\n"
-"\n"
-"The largest issue with the SHIVA cannon is that it does only limited damage to a UFO, requiring a fairly long engagement time in order to bring a target down on its own. This also allows the enemy plenty of opportunity to escape or peg our craft with return fire. On the other hand, its large magazine gives it more staying power than most other weapons, and it is not to be underestimated.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"Low damage and long engagement times somewhat limit the SHIVA's usefulness. However, most of these failings can be amended or eliminated if the gun is used in numbers or as part of a mixed gun-and-missiles armament. It can provide continuous automatic fire while the pilot concentrates on delivering his missiles, or it can be part of a gunboat configuration -- one or more interceptors loaded with as many cannons as possible, bringing down a UFO by sheer weight of lead.\n"
-"\n"
-"We currently have too little experience to recommend a most-effective way to engage alien craft with or without this weapon, but until we manage to capture some UFO weapon mounts, the SHIVA will remain the best dogfighting gun Earth has to offer.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4258
 #, fuzzy

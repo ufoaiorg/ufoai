@@ -1724,7 +1724,6 @@ msgid "craft_upgrade_am_engines_txt"
 msgstr "Bojni nož"
 
 #: ../base/ufos/research.ufo:222
-#, fuzzy
 msgid "craft_upgrade_am_engines_pre_txt"
 msgstr "<TODO>"
 
@@ -2565,7 +2564,6 @@ msgid "inter_starchaser_txt"
 msgstr "Prestreznik"
 
 #: ../base/ufos/research.ufo:3338
-#, fuzzy
 msgid "inter_starchaser_pre_txt"
 msgstr "<TODO>"
 
@@ -2827,9 +2825,8 @@ msgid "craft_alien_detection_txt"
 msgstr "Bojni nož"
 
 #: ../base/ufos/research.ufo:4255
-#, fuzzy
 msgid "craft_weapon_alc_pre_txt"
-msgstr "Bojni nož"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4258
 #, fuzzy

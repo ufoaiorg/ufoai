@@ -1668,16 +1668,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:131
 msgid "laser_pre_txt"
-msgstr ""
-"Onze samengevoegde UN onderzoeksbestanden hebben een grote hoeveelheid aan informatie opgeleverd over de ontwikkeling van wapentechnologieën op aarde sinds het begin van deze eeuw. Eén van de meest interessante onderwerpen was de productie van DEW's (Directionele Energie Wapens), wapens die energie naar een doel overbrengen met andere middelen dan een projectiel. We zijn specifiek geïnteresseerd in de bestanden over Continue Golf Lasers.\n"
-"\n"
-"Veel landen en bedrijven hebben getracht een wapenklasse laser te maken in de loop der jaren, maar niemand heeft het ooit voor elkaar gekregen om een een laser te maken die draagbaar is en een energie uitstoot heeft die hoog genoeg is om met normale vuurwapens te wedijveren. Nu hebben we toegang tot alle samengevoegde onderzoeksinformatie, net als hele bibliotheke vol met de hoogste technologie op aarde. Ik geloof dat we nu niet alleen een draagbar laserwapen kunnen gebruiken, maar ook op een schaal die voorheen niet denkbaar was voor een DEW.\n"
-"\n"
-"Overste, we zouden dit onderzoek zo spoedig mogelijk moeten doen. Ons arsenaal aan wapens variëren zal het veel moeilijker maken op tegen te verdedigen en onze ervaring kan ons mogelijk leiden naar de ontwikkeling van een geloofwaardige vliegtuiglaser die veel effectiever hoge snelheids-UFO's kan neerhalen dan conventionele vuurwapens.\n"
-"\n"
-"Wat mij betreft, gaan we bij PHALANX het onmogelijke doen en we kunnen het zo snel u dit voorstel toestaat.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:161 ../base/ufos/research.ufo:199
 msgid "antimatter_txt"
@@ -1721,21 +1712,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:165
 msgid "antimatter_pre_txt"
-msgstr ""
-"Overste, gebaseerd op de extreem interessante bevindingen die we gedaan hebben na onderzoek van de UFO Verkenner, zou ik graag uw toestemming willen om een nadere blik te werpen op het buitensporige gebruik van antimaterie door de buitenaardsen en de verder consequenties voor deze oorlog.\n"
-"\n"
-"Ik zou graag willen onderzoeken of we een manier kunnen vinden om antimaterie te kunnen reproduceren voor onze eigen doeleinden. Materie-antimaterie heeft verbluffende mogelijkheden as brandstof. In termen van energie opwekking, heeft het zeer waarschijnlijk de beste afmeting-naar-gewicht verhouding van elk materiaal in het universum; de bekwaamheid om het te gebruiken net als de buitenaardsen zou onze technologie-basis eeuwen de toekomst inslingeren. We moeten dit zo snel mogelijk onderzoeken!\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:166
 msgid "antimatter_extra_pre_txt"
-msgstr ""
-"Overste, gebaseerd op de extreem interessante bevindingen die we gedaan hebben na onderzoek van de UFO Verkenner, zou ik graag uw toestemming willen om een nadere blik te werpen op het buitensporige gebruik van antimaterie door de buitenaardsen en de verder consequenties voor deze oorlog.\n"
-"\n"
-"Ik zou graag willen onderzoeken of we een manier kunnen vinden om antimaterie te kunnen reproduceren voor onze eigen doeleinden. Materie-antimaterie heeft verbluffende mogelijkheden as brandstof. In termen van energie opwekking, heeft het zeer waarschijnlijk de beste afmeting-naar-gewicht verhouding van elk materiaal in het universum; de bekwaamheid om het te gebruiken net als de buitenaardsen zou onze technologie-basis eeuwen de toekomst inslingeren. We moeten dit zo snel mogelijk onderzoeken!\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:217
 msgid "Upgrade - Antimatter engines"
@@ -1747,9 +1728,8 @@ msgid "craft_upgrade_am_engines_txt"
 msgstr "craft_upgrade_am_engines_txt"
 
 #: ../base/ufos/research.ufo:222
-#, fuzzy
 msgid "craft_upgrade_am_engines_pre_txt"
-msgstr "craft_upgrade_am_engines_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:253
 msgid "Live Alien"
@@ -1761,9 +1741,8 @@ msgid "alien_live_txt"
 msgstr "alien_live_txt"
 
 #: ../base/ufos/research.ufo:261
-#, fuzzy
 msgid "alien_live_pre_txt"
-msgstr "alien_live_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:266 ../base/ufos/research.ufo:274
 #: ../base/ufos/research.ufo:304 ../base/ufos/research.ufo:312
@@ -1787,9 +1766,8 @@ msgid "alien_breathing_txt"
 msgstr "alien_breathing_txt"
 
 #: ../base/ufos/research.ufo:299
-#, fuzzy
 msgid "alien_breathing_pre_txt"
-msgstr "alien_breathing_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:353
 msgid "The Alien Mind"
@@ -1801,9 +1779,8 @@ msgid "alien_mind_txt"
 msgstr "alien_mind_txt"
 
 #: ../base/ufos/research.ufo:361
-#, fuzzy
 msgid "alien_mind_pre_txt"
-msgstr "alien_mind_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:391
 msgid "Odd Behaviour"
@@ -1815,9 +1792,8 @@ msgid "alien_odd_behaviour_txt"
 msgstr "alien_odd_behaviour_txt"
 
 #: ../base/ufos/research.ufo:399
-#, fuzzy
 msgid "alien_odd_behaviour_pre_txt"
-msgstr "alien_odd_behaviour_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:429
 msgid "Alien Communication"
@@ -1829,9 +1805,8 @@ msgid "alien_communication_txt"
 msgstr "alien_communication_txt"
 
 #: ../base/ufos/research.ufo:437
-#, fuzzy
 msgid "alien_communication_pre_txt"
-msgstr "alien_communication_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:468 client/campaign/cl_alienbase.c:164
 #: client/campaign/cp_missions.c:431
@@ -1853,9 +1828,8 @@ msgid "universal_serum_txt"
 msgstr "universal_serum_txt"
 
 #: ../base/ufos/research.ufo:500
-#, fuzzy
 msgid "universal_serum_pre_txt"
-msgstr "universal_serum_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:529
 msgid "Alien Origins"
@@ -1867,9 +1841,8 @@ msgid "alien_origins_txt"
 msgstr "alien_origins_txt"
 
 #: ../base/ufos/research.ufo:537
-#, fuzzy
 msgid "alien_origins_pre_txt"
-msgstr "alien_origins_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:564
 msgid "UFO Theory"
@@ -1881,9 +1854,8 @@ msgid "alien_theory_txt"
 msgstr "alien_theory_txt"
 
 #: ../base/ufos/research.ufo:572
-#, fuzzy
 msgid "alien_theory_pre_txt"
-msgstr "alien_theory_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:615
 #, fuzzy
@@ -1952,7 +1924,7 @@ msgstr "xaw95_txt"
 
 #: ../base/ufos/research.ufo:849
 msgid "xaw95_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:876
 #, fuzzy
@@ -1961,7 +1933,7 @@ msgstr "bombkit1_txt"
 
 #: ../base/ufos/research.ufo:879
 msgid "bombkit1_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:894
 #, fuzzy
@@ -1970,7 +1942,7 @@ msgstr "bombkit2_txt"
 
 #: ../base/ufos/research.ufo:897
 msgid "bombkit2_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:912
 msgid "chaingun_txt"
@@ -1978,7 +1950,7 @@ msgstr "M242 <NOGDOEN>"
 
 #: ../base/ufos/research.ufo:915
 msgid "chaingun_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:947
 #, fuzzy
@@ -1995,9 +1967,8 @@ msgid "bolterrifle_txt"
 msgstr "bolterrifle_txt"
 
 #: ../base/ufos/research.ufo:991
-#, fuzzy
 msgid "bolterrifle_pre_txt"
-msgstr "bolterrifle_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1022
 msgid "Electromagnetic Rifle Magazine"
@@ -2019,9 +1990,8 @@ msgid "monoknife_txt"
 msgstr "monoknife_txt"
 
 #: ../base/ufos/research.ufo:1067
-#, fuzzy
 msgid "monoknife_pre_txt"
-msgstr "monoknife_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1103
 #, fuzzy
@@ -2077,9 +2047,8 @@ msgid "grenl_plasma_ammo_txt"
 msgstr "grenl_plasma_ammo_txt"
 
 #: ../base/ufos/research.ufo:1278
-#, fuzzy
 msgid "grenl_plasma_ammo_pre_txt"
-msgstr "grenl_plasma_ammo_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1317
 #, fuzzy
@@ -2087,9 +2056,8 @@ msgid "laser_ammo_txt"
 msgstr "laser_ammo_txt"
 
 #: ../base/ufos/research.ufo:1320
-#, fuzzy
 msgid "laser_ammo_pre_txt"
-msgstr "laser_ammo_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1355
 #, fuzzy
@@ -2097,9 +2065,8 @@ msgid "heavylaser_txt"
 msgstr "heavylaser_txt"
 
 #: ../base/ufos/research.ufo:1358
-#, fuzzy
 msgid "heavylaser_pre_txt"
-msgstr "heavylaser_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1394
 #, fuzzy
@@ -2116,9 +2083,8 @@ msgid "kerrblade_txt"
 msgstr "kerrblade_txt"
 
 #: ../base/ufos/research.ufo:1417
-#, fuzzy
 msgid "kerrblade_pre_txt"
-msgstr "kerrblade_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1453
 #, fuzzy
@@ -2126,9 +2092,8 @@ msgid "laserpistol_txt"
 msgstr "laserpistol_txt"
 
 #: ../base/ufos/research.ufo:1456
-#, fuzzy
 msgid "laserpistol_pre_txt"
-msgstr "laserpistol_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1491
 #, fuzzy
@@ -2136,9 +2101,8 @@ msgid "laserrifle_txt"
 msgstr "laserrifle_txt"
 
 #: ../base/ufos/research.ufo:1494
-#, fuzzy
 msgid "laserrifle_pre_txt"
-msgstr "laserrifle_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1529
 #, fuzzy
@@ -2155,7 +2119,7 @@ msgstr "plasmapistool_txt"
 
 #: ../base/ufos/research.ufo:1552
 msgid "plasatomizer_pre_txt"
-msgstr "plasmapistool_voor_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1604 ../base/ufos/research.ufo:1645
 msgid "Alien Artifact - Plasma Blaster"
@@ -2166,9 +2130,8 @@ msgid "plasblaster_txt"
 msgstr "plasmamitrailleur"
 
 #: ../base/ufos/research.ufo:1612
-#, fuzzy
 msgid "plasblaster_pre_txt"
-msgstr "plasblaster_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1663
 msgid "Alien Artifact - Plasma Blade"
@@ -2180,9 +2143,8 @@ msgid "plasblade_txt"
 msgstr "plasblade_txt"
 
 #: ../base/ufos/research.ufo:1671
-#, fuzzy
 msgid "plasblade_pre_txt"
-msgstr "plasblade_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1703
 msgid "Alien Artifact - Plasma Grenade"
@@ -2194,9 +2156,8 @@ msgid "plasmagren_txt"
 msgstr "plasmagren_txt"
 
 #: ../base/ufos/research.ufo:1711
-#, fuzzy
 msgid "plasmagren_pre_txt"
-msgstr "plasmagren_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1743 ../base/ufos/research.ufo:1785
 msgid "Alien Artifact - Plasma Rifle"
@@ -2208,9 +2169,8 @@ msgid "plasrifle_txt"
 msgstr "plasrifle_txt"
 
 #: ../base/ufos/research.ufo:1751
-#, fuzzy
 msgid "plasrifle_pre_txt"
-msgstr "plasrifle_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1803 ../base/ufos/research.ufo:1883
 #: ../base/ufos/weapons_aliens.ufo:6
@@ -2223,9 +2183,8 @@ msgid "needlergun_txt"
 msgstr "needlergun_txt"
 
 #: ../base/ufos/research.ufo:1811
-#, fuzzy
 msgid "needlergun_pre_txt"
-msgstr "needlergun_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1843 ../base/ufos/weapons_aliens.ufo:26
 msgid "Heavy Needler Gun"
@@ -2238,7 +2197,7 @@ msgstr "needlerheavy_txt"
 
 #: ../base/ufos/research.ufo:1851
 msgid "needlerheavy_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1905
 #, fuzzy
@@ -2247,7 +2206,7 @@ msgstr "coilgun_txt"
 
 #: ../base/ufos/research.ufo:1908
 msgid "coilgun_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1915 ../base/ufos/research.ufo:1923
 #: ../base/ufos/weapons_human.ufo:392
@@ -2309,9 +2268,8 @@ msgid "stungren_txt"
 msgstr "stungren_txt"
 
 #: ../base/ufos/research.ufo:2142
-#, fuzzy
 msgid "stungren_pre_txt"
-msgstr "stungren_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2181
 msgid "Alien Anti-Human Gas"
@@ -2324,7 +2282,7 @@ msgstr "stungren_alien_txt"
 
 #: ../base/ufos/research.ufo:2189
 msgid "stungren_alien_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2228
 #, fuzzy
@@ -2332,9 +2290,8 @@ msgid "stunrod_txt"
 msgstr "stunrod_txt"
 
 #: ../base/ufos/research.ufo:2231
-#, fuzzy
 msgid "stunrod_pre_txt"
-msgstr "stunrod_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2264 ../base/ufos/research.ufo:2304
 msgid "Alien Artifact - Particle Beam Pistol"
@@ -2346,9 +2303,8 @@ msgid "pbeampistol_txt"
 msgstr "pbeampistol_txt"
 
 #: ../base/ufos/research.ufo:2272
-#, fuzzy
 msgid "pbeampistol_pre_txt"
-msgstr "pbeampistol_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2323 ../base/ufos/research.ufo:2364
 msgid "Alien Artifact - Particle Beam Cannon"
@@ -2360,9 +2316,8 @@ msgid "pbeamcannon_txt"
 msgstr "pbeamcannon_txt"
 
 #: ../base/ufos/research.ufo:2331
-#, fuzzy
 msgid "pbeamcannon_pre_txt"
-msgstr "pbeamcannon_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2383 ../base/ufos/research.ufo:2423
 msgid "Alien Artifact - Particle Beam Rifle"
@@ -2374,9 +2329,8 @@ msgid "pbeamrifle_txt"
 msgstr "pbeamrifle_txt"
 
 #: ../base/ufos/research.ufo:2391
-#, fuzzy
 msgid "pbeamrifle_pre_txt"
-msgstr "pbeamrifle_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2443
 msgid "Man-Portable Particle Beams"
@@ -2388,9 +2342,8 @@ msgid "pbeamammo_txt"
 msgstr "pbeamammo_txt"
 
 #: ../base/ufos/research.ufo:2451
-#, fuzzy
 msgid "pbeamammo_pre_txt"
-msgstr "pbeamammo_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2490
 #, fuzzy
@@ -2408,9 +2361,8 @@ msgid "nano_armour_txt"
 msgstr "nano_armour_txt"
 
 #: ../base/ufos/research.ufo:2524
-#, fuzzy
 msgid "nano_armour_pre_txt"
-msgstr "nano_armour_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2599
 #, fuzzy
@@ -2418,9 +2370,8 @@ msgid "alien_body_armour_txt"
 msgstr "alien_body_armour_txt"
 
 #: ../base/ufos/research.ufo:2602
-#, fuzzy
 msgid "alien_body_armour_pre_txt"
-msgstr "alien_body_armour_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2636
 #, fuzzy
@@ -2428,9 +2379,8 @@ msgid "alien_medium_armour_txt"
 msgstr "alien_medium_armour_txt"
 
 #: ../base/ufos/research.ufo:2639
-#, fuzzy
 msgid "alien_medium_armour_pre_txt"
-msgstr "alien_medium_armour_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2674
 msgid "Blast Damage Type"
@@ -2633,9 +2583,8 @@ msgid "inter_dragon_txt"
 msgstr "inter_dragon_txt"
 
 #: ../base/ufos/research.ufo:3317
-#, fuzzy
 msgid "inter_dragon_pre_txt"
-msgstr "inter_dragon_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3335
 #, fuzzy
@@ -2643,18 +2592,16 @@ msgid "inter_starchaser_txt"
 msgstr "inter_starchaser_txt"
 
 #: ../base/ufos/research.ufo:3338
-#, fuzzy
 msgid "inter_starchaser_pre_txt"
-msgstr "inter_starchaser_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3356
 msgid "inter_stingray_txt"
 msgstr "<NOGDOEN>"
 
 #: ../base/ufos/research.ufo:3359
-#, fuzzy
 msgid "inter_stingray_pre_txt"
-msgstr "inter_stingray_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3384
 #, fuzzy
@@ -2662,9 +2609,8 @@ msgid "ufo_scout_txt"
 msgstr "ufo_scout_txt"
 
 #: ../base/ufos/research.ufo:3387
-#, fuzzy
 msgid "ufo_scout_pre_txt"
-msgstr "ufo_scout_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3426
 #, fuzzy
@@ -2672,9 +2618,8 @@ msgid "ufo_fighter_txt"
 msgstr "ufo_fighter_txt"
 
 #: ../base/ufos/research.ufo:3429
-#, fuzzy
 msgid "ufo_fighter_pre_txt"
-msgstr "ufo_fighter_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3469
 #, fuzzy
@@ -2682,9 +2627,8 @@ msgid "ufo_supply_txt"
 msgstr "ufo_supply_txt"
 
 #: ../base/ufos/research.ufo:3472
-#, fuzzy
 msgid "ufo_supply_pre_txt"
-msgstr "ufo_supply_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3512
 msgid "ufo_carrier_txt"
@@ -2692,7 +2636,7 @@ msgstr "<NOGDOEN>"
 
 #: ../base/ufos/research.ufo:3515
 msgid "ufo_carrier_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3555
 #, fuzzy
@@ -2701,7 +2645,7 @@ msgstr "ufo_bomber_txt"
 
 #: ../base/ufos/research.ufo:3558
 msgid "ufo_bomber_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3598
 #, fuzzy
@@ -2709,9 +2653,8 @@ msgid "ufo_corrupter_txt"
 msgstr "ufo_corrupter_txt"
 
 #: ../base/ufos/research.ufo:3601
-#, fuzzy
 msgid "ufo_corrupter_pre_txt"
-msgstr "ufo_corrupter_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3641
 #, fuzzy
@@ -2719,9 +2662,8 @@ msgid "ufo_harvester_txt"
 msgstr "ufo_harvester_txt"
 
 #: ../base/ufos/research.ufo:3644
-#, fuzzy
 msgid "ufo_harvester_pre_txt"
-msgstr "ufo_harvester_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3686
 msgid "Live Specimen - Bloodspider"
@@ -2733,9 +2675,8 @@ msgid "bloodspider_notes_txt"
 msgstr "bloodspider_notes_txt"
 
 #: ../base/ufos/research.ufo:3691
-#, fuzzy
 msgid "bloodspider_notes_pre_txt"
-msgstr "bloodspider_notes_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3707
 msgid "Alien Autopsy - Bloodspider"
@@ -2747,9 +2688,8 @@ msgid "bloodspider_autopsy_txt"
 msgstr "bloodspider_autopsy_txt"
 
 #: ../base/ufos/research.ufo:3715
-#, fuzzy
 msgid "bloodspider_autopsy_pre_txt"
-msgstr "bloodspider_autopsy_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3765
 msgid "Alien Autopsy - Ortnok"
@@ -2766,14 +2706,12 @@ msgid "ortnok_autopsy_extra_txt"
 msgstr "ortnok_autopsy_extra_txt"
 
 #: ../base/ufos/research.ufo:3774
-#, fuzzy
 msgid "ortnok_autopsy_pre_txt"
-msgstr "ortnok_autopsy_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3775
-#, fuzzy
 msgid "ortnok_autopsy_extra_pre_txt"
-msgstr "ortnok_autopsy_extra_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3807
 msgid "Alien Autopsy - Taman"
@@ -2790,14 +2728,12 @@ msgid "taman_autopsy_extra_txt"
 msgstr "taman_autopsy_extra_txt"
 
 #: ../base/ufos/research.ufo:3816
-#, fuzzy
 msgid "taman_autopsy_pre_txt"
-msgstr "taman_autopsy_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3817
-#, fuzzy
 msgid "taman_autopsy_extra_pre_txt"
-msgstr "taman_autopsy_extra_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3849
 msgid "Alien Autopsy - Shevaar"
@@ -2814,14 +2750,12 @@ msgid "shevaar_autopsy_extra_txt"
 msgstr "shevaar_autopsy_extra_txt"
 
 #: ../base/ufos/research.ufo:3858
-#, fuzzy
 msgid "shevaar_autopsy_pre_txt"
-msgstr "shevaar_autopsy_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3859
-#, fuzzy
 msgid "shevaar_autopsy_extra_pre_txt"
-msgstr "shevaar_autopsy_extra_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3948 ../base/ufos/team_humans.ufo:1599
 msgid "Phoenix UGV"
@@ -2833,7 +2767,7 @@ msgstr "<NOGDOEN>"
 
 #: ../base/ufos/research.ufo:3953
 msgid "ugv_phoenix_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3968 ../base/ufos/team_humans.ufo:1624
 msgid "Ares W (UGV)"
@@ -2845,7 +2779,7 @@ msgstr "<NOGDOEN>"
 
 #: ../base/ufos/research.ufo:3973
 msgid "ugv_ares_w_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3989
 #, fuzzy
@@ -2854,7 +2788,7 @@ msgstr "ugv_chaingun_txt"
 
 #: ../base/ufos/research.ufo:3992
 msgid "ugv_chaingun_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4008
 #, fuzzy
@@ -2863,7 +2797,7 @@ msgstr "ugv_chaingun_belt_txt"
 
 #: ../base/ufos/research.ufo:4011
 msgid "ugv_chaingun_belt_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4026
 #, fuzzy
@@ -2871,9 +2805,8 @@ msgid "ugv_weapon_autocannon_txt"
 msgstr "ugv_weapon_autocannon_txt"
 
 #: ../base/ufos/research.ufo:4029
-#, fuzzy
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "ugv_weapon_autocannon_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4085
 #, fuzzy
@@ -2891,9 +2824,8 @@ msgid "craft_shield_light_txt"
 msgstr "craft_shield_light_txt"
 
 #: ../base/ufos/research.ufo:4121
-#, fuzzy
 msgid "craft_shield_plating_pre_txt"
-msgstr "craft_shield_plating_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4124
 #, fuzzy
@@ -2901,9 +2833,8 @@ msgid "craft_shield_plating_txt"
 msgstr "craft_shield_plating_txt"
 
 #: ../base/ufos/research.ufo:4144
-#, fuzzy
 msgid "craft_alien_astrogation_pre_txt"
-msgstr "craft_alien_astrogation_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4147
 #, fuzzy
@@ -2911,9 +2842,8 @@ msgid "craft_alien_astrogation_txt"
 msgstr "craft_alien_astrogation_txt"
 
 #: ../base/ufos/research.ufo:4182
-#, fuzzy
 msgid "craft_alien_propulsion_pre_txt"
-msgstr "craft_alien_propulsion_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4185
 #, fuzzy
@@ -2921,9 +2851,8 @@ msgid "craft_alien_propulsion_txt"
 msgstr "craft_alien_propulsion_txt"
 
 #: ../base/ufos/research.ufo:4219
-#, fuzzy
 msgid "craft_alien_detection_pre_txt"
-msgstr "craft_alien_detection_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4222
 #, fuzzy
@@ -2931,9 +2860,8 @@ msgid "craft_alien_detection_txt"
 msgstr "craft_alien_detection_txt"
 
 #: ../base/ufos/research.ufo:4255
-#, fuzzy
 msgid "craft_weapon_alc_pre_txt"
-msgstr "craft_weapon_alc_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4258
 #, fuzzy
@@ -2988,9 +2916,8 @@ msgid "craft_ammo_tr20_txt"
 msgstr "craft_ammo_tr20_txt"
 
 #: ../base/ufos/research.ufo:4440
-#, fuzzy
 msgid "craft_weapon_particle_beam_pre_txt"
-msgstr "craft_weapon_particle_beam_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4443
 #, fuzzy
@@ -3013,9 +2940,8 @@ msgid "alien_materials_txt"
 msgstr "alien_materials_txt"
 
 #: ../base/ufos/research.ufo:4528
-#, fuzzy
 msgid "alien_materials_pre_txt"
-msgstr "alien_materials_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4580
 msgid "Political Situation Before The Invasion"
@@ -3073,9 +2999,8 @@ msgid "enemy_on_earth_txt"
 msgstr "enemy_on_earth_txt"
 
 #: ../base/ufos/research.ufo:4656
-#, fuzzy
 msgid "enemy_on_earth_pre_txt"
-msgstr "enemy_on_earth_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4686
 msgid "XVI Census"
@@ -3087,9 +3012,8 @@ msgid "xvi_census_txt"
 msgstr "bvi_volkstelling_txt"
 
 #: ../base/ufos/research.ufo:4694
-#, fuzzy
 msgid "xvi_census_pre_txt"
-msgstr "bvi_volkstelling_pre_txt"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4728
 msgid "The Enemy On Earth - Revisited"
@@ -3102,7 +3026,7 @@ msgstr "enemy_on_earth_rev_txt"
 
 #: ../base/ufos/research.ufo:4736
 msgid "enemy_on_earth_rev_pre_txt"
-msgstr "Geen vooronderzoek informatie beschikbaar"
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_credits.ufo:131 ../base/ufos/seq_credits.ufo:164
 msgid "Project leader"
