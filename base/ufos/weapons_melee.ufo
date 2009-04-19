@@ -188,7 +188,7 @@ item stunrod
 			range	1.5
 			shots	1
 			time	7
-			damage	"40 4"
+			damage	"30 4"
 			dmgweight normal_light
 			reaction	true
 		}
