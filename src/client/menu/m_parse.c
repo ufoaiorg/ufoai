@@ -256,15 +256,22 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	castedBehaviour = MN_GetNodeBehaviour(cast);
 	property = MN_GetPropertyFromBehaviour(castedBehaviour, *token);
 	if (!property) {
-		if (action->type.param1 != EA_PATHPROPERTY) {
-			/* do we ALREADY know this node? and his type */
-			const menuNode_t *node = MN_GetNodeByPath(va("%s.%s", menuNode->root->name, (char*)action->data));
-			if (node) {
-				property = MN_GetPropertyFromBehaviour(node->behaviour, *token);
-			} else {
-				Com_Printf("MN_ParseSetAction: node \"%s\" not already know (in event), you can cast it\n", *token);
-			}
+		menuNode_t *node = NULL;
+		/* do we ALREADY know this node? and his type */
+		switch (action->type.param1) {
+		case EA_PATHPROPERTY:
+			MN_ReadNodePath((char*)action->data, menuNode, &node, NULL);
+			break;
+		case EA_THISMENUNODENAMEPROPERTY:
+			node = MN_GetNodeByPath(va("%s.%s", menuNode->root->name, (char*)action->data));
+			break;
+		default:
+			assert(qfalse);
 		}
+		if (node)
+			property = MN_GetPropertyFromBehaviour(node->behaviour, *token);
+		else
+			Com_Printf("MN_ParseSetAction: node \"%s\" not already know (in event), you can cast it\n", (char*)action->data);
 	}
 
 	action->scriptValues = property;
