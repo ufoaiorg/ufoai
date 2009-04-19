@@ -2518,12 +2518,16 @@ base/textures/tex_buildings/e8crete_pillarb.jpg | GNU General Public License 2.0
 base/textures/tex_buildings/e8crete_pillarb_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8crete_pillarc.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8crete_pillarc_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/floor001.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor001_nm.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor004.tga | GNU General Public License 2.0 or later | Matthias "voller" Volmer | http://ufoai.ninex.info/forum/index.php?topic=3181.msg22120#msg22120
+base/textures/tex_buildings/floor006.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor006_nm.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor008.tga | GNU General Public License 2.0 or later | Matthias "Voller" Volmer
 base/textures/tex_buildings/floor008_nm.tga | GNU General Public License 2.0 or later | Matthias "Voller" Volmer
+base/textures/tex_buildings/floor009.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor009_nm.tga | GNU General Public License 2.0 or later | shedeki
+base/textures/tex_buildings/floor015.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor015_nm.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor020.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_buildings/floor_gray.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -2554,6 +2558,8 @@ base/textures/tex_buildings/q1metal7_99_broke.jpg | GNU General Public License 2
 base/textures/tex_buildings/roof004.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_buildings/roof006.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/roof007.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/roof008.tga | GNU General Public License 2.0 or later | shedeki
+base/textures/tex_buildings/roof008_nm.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/roof10.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/roof11.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/roof12.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
