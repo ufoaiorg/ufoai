@@ -90,11 +90,9 @@ static void MN_EditorNodeDraw (menuNode_t *node)
 	menuNode_t* hovered = NULL;
 
 	if (status == -1) {
-		int s = -1;
 		if (anchoredNode)
 			MN_EditorNodeGetElementAtPosition(anchoredNode, mousePosX, mousePosY);
-		if (s == -1 || s == 4)
-			hovered = MN_GetNodeAtPosition(mousePosX, mousePosY);
+		hovered = MN_GetNodeAtPosition(mousePosX, mousePosY);
 	}
 
 	if (hovered && hovered != anchoredNode)
