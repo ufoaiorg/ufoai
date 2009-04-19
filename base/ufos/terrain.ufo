@@ -368,7 +368,7 @@ terrain tex_nature/desert006 {
 // sand
 terrain tex_nature/desert007 {
 	footstepsound "footsteps/sand2"
-	bouncefraction 1
+	bouncefraction 0.1
 }
 
 // sand
