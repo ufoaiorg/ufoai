@@ -347,10 +347,10 @@ static const float mapZBorder = -(UNIT_HEIGHT * 5);
  */
 qboolean CL_OutsideMap (const vec3_t impact, const float delta)
 {
-	if (impact[0] < map_min[0] - delta || impact[0] > map_max[0] + delta)
+	if (impact[0] < mapMin[0] - delta || impact[0] > mapMax[0] + delta)
 		return qtrue;
 
-	if (impact[1] < map_min[1] - delta || impact[1] > map_max[1] + delta)
+	if (impact[1] < mapMin[1] - delta || impact[1] > mapMax[1] + delta)
 		return qtrue;
 
 	/* if a le is deeper than 5 levels below the latest walkable level (0) then

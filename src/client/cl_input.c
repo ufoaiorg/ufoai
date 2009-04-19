@@ -778,15 +778,15 @@ static float CL_GetKeyMouseState (int dir)
  */
 static inline void CL_ClampCamToMap (const float border)
 {
-	if (cl.cam.origin[0] < map_min[0] - border)
-		cl.cam.origin[0] = map_min[0] - border;
-	else if (cl.cam.origin[0] > map_max[0] + border)
-		cl.cam.origin[0] = map_max[0] + border;
+	if (cl.cam.origin[0] < mapMin[0] - border)
+		cl.cam.origin[0] = mapMin[0] - border;
+	else if (cl.cam.origin[0] > mapMax[0] + border)
+		cl.cam.origin[0] = mapMax[0] + border;
 
-	if (cl.cam.origin[1] < map_min[1] - border)
-		cl.cam.origin[1] = map_min[1] - border;
-	else if (cl.cam.origin[1] > map_max[1] + border)
-		cl.cam.origin[1] = map_max[1] + border;
+	if (cl.cam.origin[1] < mapMin[1] - border)
+		cl.cam.origin[1] = mapMin[1] - border;
+	else if (cl.cam.origin[1] > mapMax[1] + border)
+		cl.cam.origin[1] = mapMax[1] + border;
 }
 
 void CL_CameraMove (void)

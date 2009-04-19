@@ -30,7 +30,7 @@ CMODEL
 #include "pqueue.h"
 
 
-extern vec3_t map_min, map_max;
+extern vec3_t mapMin, mapMax;
 
 void CM_LoadMap(const char *tiles, qboolean day, const char *pos, unsigned *checksum);
 cBspModel_t *CM_InlineModel(const char *name);

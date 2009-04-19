@@ -290,8 +290,8 @@ static void MN_InitRadar (const menuNode_t *node)
 	}
 
 	/* get the three points of the triangle */
-	VectorSubtract(map_min, offset, radar.a);
-	VectorAdd(map_max, offset, radar.c);
+	VectorSubtract(mapMin, offset, radar.a);
+	VectorAdd(mapMax, offset, radar.c);
 	VectorSet(radar.b, radar.c[0], radar.a[1], 0);
 
 	distAB = (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);

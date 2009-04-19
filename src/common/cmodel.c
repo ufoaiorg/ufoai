@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/parse.h"
 
 /** @note holds all entity data as a single parsable string */
-static char map_entitystring[MAX_MAP_ENTSTRING];
+static char mapEntityString[MAX_MAP_ENTSTRING];
 
 /**
  * @note The vectors are from 0 up to 2*MAX_WORLD_WIDTH - but not negative
@@ -41,7 +41,7 @@ static char map_entitystring[MAX_MAP_ENTSTRING];
  * @sa CMod_GetMapSize
  * @sa SV_ClearWorld
  */
-vec3_t map_min, map_max;
+vec3_t mapMin, mapMax;
 
 /** @brief server and client routing table */
 routing_t svMap[ACTOR_MAX_SIZE], clMap[ACTOR_MAX_SIZE]; /**< A routing_t per size */
@@ -54,16 +54,16 @@ static int numInline;
 static const char **inlineList;
 
 /** @note a pointer to the bsp file model data */
-static byte *cmod_base;
+static byte *cModelBase;
 
 /** @note this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
-static pos3_t exclude_from_forbiddenlist;
+static pos3_t excludeFromForbiddenList;
 
 /** @note this is a zeroed surface structure */
-static cBspSurface_t nullsurface;
+static cBspSurface_t nullSurface;
 
 /** @note these are the TUs used to intentionally move in a given direction.  Falling not included. */
-static const int TUs_used[] = {
+static const int TUsUsed[] = {
 	TU_MOVE_STRAIGHT, /* E  */
 	TU_MOVE_STRAIGHT, /* W  */
 	TU_MOVE_STRAIGHT, /* N  */
@@ -105,7 +105,7 @@ static const int TUs_used[] = {
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & NW */
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR  /* FLY DOWN & SE */
 	};
-CASSERT(lengthof(TUs_used) == PATHFINDING_DIRECTIONS);
+CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
 
 /** @brief Used to track where rerouting needs to occur. */
 static byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
@@ -137,7 +137,7 @@ static void CMod_LoadSubmodels (const lump_t * l, const vec3_t shift)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
 
-	in = (const void *) (cmod_base + l->fileofs);
+	in = (const void *) (cModelBase + l->fileofs);
 	if (l->filelen % sizeof(dBspModel_t))
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T")", l->filelen, sizeof(dBspModel_t));
 	count = l->filelen / sizeof(dBspModel_t);
@@ -181,7 +181,7 @@ static void CMod_LoadSurfaces (const lump_t * l, const vec3_t shift)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: No lump given");
 
-	in = (const void *) (cmod_base + l->fileofs);
+	in = (const void *) (cModelBase + l->fileofs);
 	if (l->filelen % sizeof(dBspTexinfo_t))
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspTexinfo_t);
@@ -220,7 +220,7 @@ static void CMod_LoadNodes (const lump_t * l, const vec3_t shift)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadNodes: No lump given");
 
-	in = (const void *) (cmod_base + l->fileofs);
+	in = (const void *) (cModelBase + l->fileofs);
 	if (l->filelen % sizeof(dBspNode_t))
 		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspNode_t);
@@ -269,7 +269,7 @@ static void CMod_LoadBrushes (const lump_t * l, const vec3_t shift)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: No lump given");
 
-	in = (const void *) (cmod_base + l->fileofs);
+	in = (const void *) (cModelBase + l->fileofs);
 	if (l->filelen % sizeof(dBspBrush_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspBrush_t);
@@ -305,7 +305,7 @@ static void CMod_LoadLeafs (const lump_t * l, const vec3_t shift)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: No lump given");
 
-	in = (const void *) (cmod_base + l->fileofs);
+	in = (const void *) (cModelBase + l->fileofs);
 	if (l->filelen % sizeof(dBspLeaf_t))
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspLeaf_t);
@@ -357,7 +357,7 @@ static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: No lump given");
 
-	in = (const void *) (cmod_base + l->fileofs);
+	in = (const void *) (cModelBase + l->fileofs);
 	if (l->filelen % sizeof(dBspPlane_t))
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspPlane_t);
@@ -401,7 +401,7 @@ static void CMod_LoadLeafBrushes (const lump_t * l, const vec3_t shift)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: No lump given");
 
-	in = (const void *) (cmod_base + l->fileofs);
+	in = (const void *) (cModelBase + l->fileofs);
 	if (l->filelen % sizeof(unsigned short))
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(unsigned short);
@@ -437,7 +437,7 @@ static void CMod_LoadBrushSides (const lump_t * l, const vec3_t shift)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: No lump given");
 
-	in = (const void *) (cmod_base + l->fileofs);
+	in = (const void *) (cModelBase + l->fileofs);
 	if (l->filelen % sizeof(dBspBrushSide_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspBrushSide_t);
@@ -810,7 +810,7 @@ GAME RELATED TRACING
  */
 static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY, int sZ)
 {
-	static routing_t temp_map[ACTOR_MAX_SIZE];
+	static routing_t tempMap[ACTOR_MAX_SIZE];
 	byte *source;
 	int length;
 	int x, y, z, size, dir;
@@ -818,7 +818,7 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 	int maxX, maxY, maxZ;
 	unsigned int i;
 	double start, end;
-	const int targetLength = sizeof(curTile->wpMins) + sizeof(curTile->wpMaxs) + sizeof(temp_map);
+	const int targetLength = sizeof(curTile->wpMins) + sizeof(curTile->wpMaxs) + sizeof(tempMap);
 
 	inlineList = NULL;
 
@@ -834,13 +834,13 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 	assert((sY > -(PATHFINDING_WIDTH / 2)) && (sY < (PATHFINDING_WIDTH / 2)));
 	assert((sZ >= 0) && (sZ < PATHFINDING_HEIGHT));
 
-	source = cmod_base + l->fileofs;
+	source = cModelBase + l->fileofs;
 
 	i = CMod_DeCompressRouting(&source, (byte*)curTile->wpMins);
 	length = i;
 	i = CMod_DeCompressRouting(&source, (byte*)curTile->wpMaxs);
 	length += i;
-	i = CMod_DeCompressRouting(&source, (byte*)temp_map);
+	i = CMod_DeCompressRouting(&source, (byte*)tempMap);
 	length += i;
 
 	if (length != targetLength)
@@ -894,11 +894,11 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 				if (x < 0 || y < 0)
 					continue;
 				for (z = minZ; z <= maxZ; z++) {
-					clMap[size].floor[z][y][x] = temp_map[size].floor[z - sZ][y - sY][x - sX];
-					clMap[size].ceil[z][y][x] = temp_map[size].ceil[z - sZ][y - sY][x - sX];
+					clMap[size].floor[z][y][x] = tempMap[size].floor[z - sZ][y - sY][x - sX];
+					clMap[size].ceil[z][y][x] = tempMap[size].ceil[z - sZ][y - sY][x - sX];
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-						clMap[size].route[z][y][x][dir] = temp_map[size].route[z - sZ][y - sY][x - sX][dir];
-						clMap[size].stepup[z][y][x][dir] = temp_map[size].stepup[z - sZ][y - sY][x - sX][dir];
+						clMap[size].route[z][y][x][dir] = tempMap[size].route[z - sZ][y - sY][x - sX][dir];
+						clMap[size].stepup[z][y][x][dir] = tempMap[size].stepup[z - sZ][y - sY][x - sX][dir];
 					}
 				}
 				/* Update the reroute table */
@@ -923,7 +923,7 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
  */
 static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 {
-	const char *com_token;
+	const char *token;
 	const char *es;
 	char keyname[256];
 	vec3_t v;
@@ -940,64 +940,64 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has too large entity lump");
 
 	/* merge entitystring information */
-	es = (char *) (cmod_base + l->fileofs);
+	es = (char *) (cModelBase + l->fileofs);
 	while (1) {
 		/* parse the opening brace */
-		com_token = COM_Parse(&es);
+		token = COM_Parse(&es);
 		if (!es)
 			break;
-		if (com_token[0] != '{')
-			Com_Error(ERR_DROP, "CMod_LoadEntityString: found %s when expecting {", com_token);
+		if (token[0] != '{')
+			Com_Error(ERR_DROP, "CMod_LoadEntityString: found %s when expecting {", token);
 
 		/* new entity */
-		Q_strcat(map_entitystring, "{ ", MAX_MAP_ENTSTRING);
+		Q_strcat(mapEntityString, "{ ", MAX_MAP_ENTSTRING);
 
 		/* go through all the dictionary pairs */
 		while (1) {
 			/* parse key */
-			com_token = COM_Parse(&es);
-			if (com_token[0] == '}')
+			token = COM_Parse(&es);
+			if (token[0] == '}')
 				break;
 			if (!es)
 				Com_Error(ERR_DROP, "CMod_LoadEntityString: EOF without closing brace");
 
-			Q_strncpyz(keyname, com_token, sizeof(keyname));
+			Q_strncpyz(keyname, token, sizeof(keyname));
 
 			/* parse value */
-			com_token = COM_Parse(&es);
+			token = COM_Parse(&es);
 			if (!es)
 				Com_Error(ERR_DROP, "CMod_LoadEntityString: EOF without closing brace");
 
-			if (com_token[0] == '}')
+			if (token[0] == '}')
 				Com_Error(ERR_DROP, "CMod_LoadEntityString: closing brace without data");
 
 			/* alter value, if needed */
 			if (!strncmp(keyname, "origin", sizeof(keyname))) {
 				/* origins are shifted */
-				sscanf(com_token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]));
+				sscanf(token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]));
 				VectorAdd(v, shift, v);
-				Q_strcat(map_entitystring, va("%s \"%i %i %i\" ", keyname, (int) v[0], (int) v[1], (int) v[2]), MAX_MAP_ENTSTRING);
+				Q_strcat(mapEntityString, va("%s \"%i %i %i\" ", keyname, (int) v[0], (int) v[1], (int) v[2]), MAX_MAP_ENTSTRING);
 				/* If we have a model, then unadjust it's mins and maxs. */
 				if (model) {
 					VectorSubtract(model->mins, shift, model->mins);
 					VectorSubtract(model->maxs, shift, model->maxs);
 				}
-			} else if (!strncmp(keyname, "model", sizeof(keyname)) && com_token[0] == '*') {
+			} else if (!strncmp(keyname, "model", sizeof(keyname)) && token[0] == '*') {
 				/* adapt inline model number */
-				num = atoi(com_token + 1);
+				num = atoi(token + 1);
 				/* Get the model */
 				model = &curTile->models[NUM_REGULAR_MODELS + num];
 				/* Now update the model number to reflect prior tiles loaded. */
 				num += numInline;
-				Q_strcat(map_entitystring, va("%s *%i ", keyname, num), MAX_MAP_ENTSTRING);
+				Q_strcat(mapEntityString, va("%s *%i ", keyname, num), MAX_MAP_ENTSTRING);
 			} else {
 				/* just store key and value */
-				Q_strcat(map_entitystring, va("%s \"%s\" ", keyname, com_token), MAX_MAP_ENTSTRING);
+				Q_strcat(mapEntityString, va("%s \"%s\" ", keyname, token), MAX_MAP_ENTSTRING);
 			}
 		}
 
 		/* finish entity */
-		Q_strcat(map_entitystring, "} ", MAX_MAP_ENTSTRING);
+		Q_strcat(mapEntityString, "} ", MAX_MAP_ENTSTRING);
 	}
 }
 
@@ -1009,7 +1009,7 @@ static void CMod_LoadLighting (const lump_t * l)
 {
 #if 0
 	curTile->lightdata = Mem_PoolAlloc(l->filelen, com_cmodelSysPool, 0);
-	memcpy(curTile->lightdata, cmod_base + l->fileofs, l->filelen);
+	memcpy(curTile->lightdata, cModelBase + l->fileofs, l->filelen);
 #endif
 }
 
@@ -1059,7 +1059,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	if (header.version != BSPVERSION)
 		Com_Error(ERR_DROP, "CM_AddMapTile: %s has wrong version number (%i should be %i)", name, header.version, BSPVERSION);
 
-	cmod_base = (byte *) buf;
+	cModelBase = (byte *) buf;
 
 	/* init */
 	if (numTiles >= MAX_MAPTILES)
@@ -1105,8 +1105,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 
 	/* Now find the map bounds with the updated numTiles. */
 	/* calculate new border after merge */
-	RT_GetMapSize(map_min, map_max);
-
+	RT_GetMapSize(mapMin, mapMax);
 
 	FS_FreeFile(buf);
 
@@ -1122,8 +1121,8 @@ static void CMod_RerouteMap (void)
 
 	start = time(NULL);
 
-	VecToPos(map_min, mins);
-	VecToPos(map_max, maxs);
+	VecToPos(mapMin, mins);
+	VecToPos(mapMax, maxs);
 
 	/* fit min/max into the world size */
 	maxs[0] = min(maxs[0], PATHFINDING_WIDTH - 1);
@@ -1143,9 +1142,9 @@ static void CMod_RerouteMap (void)
 				if (reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
 					/* Com_Printf("Tracing floor (%i %i s:%i)\n", x, y, size); */
 					for (z = maxs[2]; z >= mins[2]; z--) {
-						const int new_z = RT_CheckCell(clMap, size + 1, x, y, z);
-						assert(new_z <= z);
-						z = new_z;
+						const int newZ = RT_CheckCell(clMap, size + 1, x, y, z);
+						assert(newZ <= z);
+						z = newZ;
 					}
 				}
 			}
@@ -1153,9 +1152,8 @@ static void CMod_RerouteMap (void)
 	}
 
 	/* Wall pass */
-	/** @note A temporary hack- if we decrease ACTOR_MAX_SIZE we need to bump the BSPVERSION again.
-	 * I'm just commenting out the CORRECT code for now.
-	 */
+	/** @todo A temporary hack- if we decrease ACTOR_MAX_SIZE we need to bump the BSPVERSION again.
+	 * I'm just commenting out the CORRECT code for now. */
 	/* for (size = 0; size < ACTOR_MAX_SIZE; size++) { */
 	for (size = 0; size < 1; size++) {
 		for (y = mins[1]; y <= maxs[1]; y++) {
@@ -1175,9 +1173,7 @@ static void CMod_RerouteMap (void)
 							continue;
 						tile2 = reroute[size][dy][dx];
 						/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
-						if (tile2
-						 && (tile2 == ROUTING_NOT_REACHABLE
-						 || tile2 != tile)) {
+						if (tile2 && (tile2 == ROUTING_NOT_REACHABLE || tile2 != tile)) {
 							/** @note This update MUST go from the bottom (0) to the top (7) of the model.
 							 * RT_UpdateConnection expects it and breaks otherwise. */
 							/* Com_Printf("Tracing passage (%i %i s:%i d:%i)\n", x, y, size, dir); */
@@ -1215,7 +1211,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
 
 	/* init */
 	c_traces = c_brush_traces = numInline = numTiles = 0;
-	map_entitystring[0] = base[0] = 0;
+	mapEntityString[0] = base[0] = 0;
 
 	memset(clMap, 0, sizeof(clMap));
 
@@ -1340,7 +1336,7 @@ int CM_NumInlineModels (void)
  */
 char *CM_EntityString (void)
 {
-	return map_entitystring;
+	return mapEntityString;
 }
 
 /*
@@ -1390,7 +1386,7 @@ static void CM_InitBoxHull (void)
 		/* brush sides */
 		s = &curTile->brushsides[curTile->numbrushsides + i];
 		s->plane = curTile->planes + (curTile->numplanes + i * 2 + side);
-		s->surface = &nullsurface;
+		s->surface = &nullSurface;
 
 		/* nodes */
 		c = &curTile->nodes[curTile->box_headnode + i];
@@ -1462,8 +1458,8 @@ void Grid_DumpWholeServerMap_f (void)
 void Grid_DumpClientRoutes_f (void)
 {
 	ipos3_t wpMins, wpMaxs;
-	VecToPos(map_min, wpMins);
-	VecToPos(map_max, wpMaxs);
+	VecToPos(mapMin, wpMins);
+	VecToPos(mapMax, wpMaxs);
 	RT_WriteCSVFiles(clMap, "ufoaiclient", wpMins, wpMaxs);
 }
 
@@ -1475,8 +1471,8 @@ void Grid_DumpClientRoutes_f (void)
 void Grid_DumpServerRoutes_f (void)
 {
 	ipos3_t wpMins, wpMaxs;
-	VecToPos(map_min, wpMins);
-	VecToPos(map_max, wpMaxs);
+	VecToPos(mapMin, wpMins);
+	VecToPos(mapMax, wpMaxs);
 	RT_WriteCSVFiles(svMap, "ufoaiserver", wpMins, wpMaxs);
 }
 
@@ -1502,7 +1498,7 @@ static qboolean Grid_CheckForbidden (const struct routing_s *map, const int acto
 
 	for (i = 0, p = path->fblist; i < path->fblength / 2; i++, p += 2) {
 		/* Skip initial position. */
-		if (VectorCompare((*p), exclude_from_forbiddenlist)) {
+		if (VectorCompare((*p), excludeFromForbiddenList)) {
 			/* Com_DPrintf(DEBUG_PATHING, "Grid_CheckForbidden: skipping %i|%i|%i\n", (*p)[0], (*p)[1], (*p)[2]); */
 			continue;
 		}
@@ -1532,8 +1528,8 @@ void Grid_DumpDVTable (const struct pathing_s *path)
 	int px, py, pz, cr;
 	pos3_t mins, maxs;
 
-	VecToPos(map_min, mins);
-	VecToPos(map_max, maxs);
+	VecToPos(mapMin, mins);
+	VecToPos(mapMax, maxs);
 
 	Com_Printf("Bounds: (%i %i %i) to (%i %i %i)\n", mins[0], mins[1], mins[2], maxs[0], maxs[1], maxs[2]);
 	for (cr = 0; cr < ACTOR_MAX_STATES; cr++) {
@@ -1662,7 +1658,7 @@ void Grid_MoveMark (const struct routing_s *map, const int actor_size, struct pa
 #endif
 
 	/* Find the number of TUs used to move in this direction. */
-	l = TUs_used[dir];
+	l = TUsUsed[dir];
 
 	/* If crouching then multiply by the crouching factor. */
 	if (crouching_state == 1)
@@ -1955,7 +1951,7 @@ void Grid_MoveCalc (const struct routing_s *map, const int actor_size, struct pa
 	if (distance > MAX_ROUTE)
 		distance = MAX_ROUTE;
 
-	VectorCopy(from, exclude_from_forbiddenlist); /**< Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
+	VectorCopy(from, excludeFromForbiddenList); /**< Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
 
 	PQueueInitialise(&pqueue, 1024);
 	Vector4Set(epos, from[0], from[1], from[2], crouchingState);
@@ -2129,7 +2125,7 @@ pos_t Grid_StepUp (const struct routing_s *map, const int actorSize, const pos3_
 int Grid_TUsUsed (int dir)
 {
 	assert(dir >= 0 && dir < PATHFINDING_DIRECTIONS);
-	return TUs_used[dir];
+	return TUsUsed[dir];
 }
 
 
@@ -2228,7 +2224,6 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 	/* Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]); */
 
 	/* check unit heights */
-	/* for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) { */
 	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
 		const int maxY = max[1] - actorSize;
 		const int maxX = max[0] - actorSize;
@@ -2237,9 +2232,9 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 			for (x = max(min[0] - actorSize + 1, 0); x < maxX; x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
 				for (z = max[2]; z >= 0; z--) {
-					const int new_z = RT_CheckCell(map, actorSize, x, y, z);
-					assert(new_z <= z);
-					z = new_z;
+					const int newZ = RT_CheckCell(map, actorSize, x, y, z);
+					assert(newZ <= z);
+					z = newZ;
 				}
 			}
 		}
@@ -2250,9 +2245,8 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 #endif
 
 	/* check connections */
-	/** @note A temporary hack- if we decrease ACTOR_MAX_SIZE we need to bump the BSPVERSION again.
-	 * I'm just commenting out the CORRECT code for now.
-	 */
+	/** @todo A temporary hack- if we decrease ACTOR_MAX_SIZE we need to bump the BSPVERSION again.
+	 * I'm just commenting out the CORRECT code for now. */
 	/*for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) { */
 	for (actorSize = 1; actorSize <= 1; actorSize++) {
 		const int minX = max(min[0] - actorSize, 0);
