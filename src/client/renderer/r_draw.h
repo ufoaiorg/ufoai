@@ -29,7 +29,7 @@ void R_DrawImage(float x, float y, qboolean blend, const image_t *image);
 const image_t *R_DrawImageArray(const float texcoords[8], const short verts[8], qboolean blend, const image_t *image);
 void R_DrawChar(int x, int y, int c);
 void R_DrawChars(void);
-void R_DrawFill(int x, int y, int w, int h, int align, const vec4_t color);
+void R_DrawFill(int x, int y, int w, int h, const vec4_t color);
 void R_DrawRect(int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern);
 void R_Draw3DGlobe(int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender);
 void R_Draw3DMapMarkers(vec3_t angles, float zoom, vec3_t position, const char *model, int skin);

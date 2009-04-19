@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void MN_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 {
-	R_DrawFill(x, y, w, h, align, color);
+	R_DrawFill(x, y, w, h, color);
 }
 
 /**

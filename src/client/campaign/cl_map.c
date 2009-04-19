@@ -1234,7 +1234,7 @@ static void MAP_DrawBullets (const menuNode_t* node, const vec3_t pos)
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 
 	if (MAP_AllMapToScreen(node, pos, &x, &y, NULL))
-		R_DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, ALIGN_CC, yellow);
+		R_DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, yellow);
 }
 
 /**

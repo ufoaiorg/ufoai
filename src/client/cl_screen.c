@@ -88,10 +88,10 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
 	const vec4_t color = {0.3f, 0.3f, 0.3f, 0.7f};
 	const vec4_t colorBar = {0.8f, 0.8f, 0.8f, 0.7f};
 
-	R_DrawFill(x, y, w, h, ALIGN_UL, color);
+	R_DrawFill(x, y, w, h, color);
 
 	if (percent != 0)
-		R_DrawFill((int)(x + (h * 0.2)), (int)(y + (h * 0.2)), (int)((w - (h * 0.4)) * percent * 0.01), (int)(h * 0.6), ALIGN_UL, colorBar);
+		R_DrawFill((int)(x + (h * 0.2)), (int)(y + (h * 0.2)), (int)((w - (h * 0.4)) * percent * 0.01), (int)(h * 0.6), colorBar);
 }
 
 /**
@@ -285,7 +285,7 @@ static void SCR_DrawCursor (void)
 				if (selActor->state & STATE_CROUCHED) {
 					image = R_FindImage("pics/cursors/ducked", it_pic);
 					if (image)
-						R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, qtrue, image);
+						R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, qtrue, image);
 				}
 				iconOffsetY += 16;	/* Height of 'crouched' icon. */
 				iconOffsetY += iconSpacing;
@@ -299,7 +299,7 @@ static void SCR_DrawCursor (void)
 					image = NULL;
 
 				if (image)
-					R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, qtrue, image);
+					R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, qtrue, image);
 				iconOffsetY += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
 				iconOffsetY += iconSpacing;
 
@@ -310,9 +310,6 @@ static void SCR_DrawCursor (void)
 
 			/* playernames */
 			if (MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES) && cl_show_cursor_tooltips->integer) {
-				/** @todo activate this:
-				R_DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
-				*/
 				SCR_DrawString(mousePosX + iconOffsetX, mousePosY - 32, MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), qfalse);
 				MN_ResetData(TEXT_MOUSECURSOR_PLAYERNAMES);
 			}

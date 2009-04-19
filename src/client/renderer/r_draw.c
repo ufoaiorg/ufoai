@@ -270,7 +270,7 @@ const image_t *R_DrawImageArray (const float texcoords[8], const short verts[8],
 /**
  * @brief Fills a box of pixels with a single color
  */
-void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
+void R_DrawFill (int x, int y, int w, int h, const vec4_t color)
 {
 	const float nx = x * viddef.rx;
 	const float ny = y * viddef.ry;
@@ -280,38 +280,17 @@ void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 	R_ColorBlend(color);
 
 	glDisable(GL_TEXTURE_2D);
+
 	glBegin(GL_QUADS);
-
-	switch (align) {
-	case ALIGN_CL:
-		glVertex2f(nx, ny);
-		glVertex2f(nx + nh, ny);
-		glVertex2f(nx + nh, ny - nw);
-		glVertex2f(nx, ny - nw);
-		break;
-	case ALIGN_CC:
-		glVertex2f(nx, ny);
-		glVertex2f(nx + nh, ny - nh);
-		glVertex2f(nx + nh, ny - nw - nh);
-		glVertex2f(nx, ny - nw);
-		break;
-	case ALIGN_UC:
-		glVertex2f(nx, ny);
-		glVertex2f(nx + nw, ny);
-		glVertex2f(nx + nw - nh, ny + nh);
-		glVertex2f(nx - nh, ny + nh);
-		break;
-	default:
-		glVertex2f(nx, ny);
-		glVertex2f(nx + nw, ny);
-		glVertex2f(nx + nw, ny + nh);
-		glVertex2f(nx, ny + nh);
-		break;
-	}
-
+	glVertex2f(nx, ny);
+	glVertex2f(nx + nw, ny);
+	glVertex2f(nx + nw, ny + nh);
+	glVertex2f(nx, ny + nh);
 	glEnd();
-	R_ColorBlend(NULL);
+
 	glEnable(GL_TEXTURE_2D);
+
+	R_ColorBlend(NULL);
 }
 
 /**

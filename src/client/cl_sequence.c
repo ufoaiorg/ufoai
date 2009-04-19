@@ -365,7 +365,7 @@ void CL_Sequence2D (void)
 
 			/* bgcolor can be overlay */
 			if (s2d->bgcolor[3] > 0.0)
-				R_DrawFill(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], s2d->align, s2d->bgcolor);
+				R_DrawFill(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], s2d->bgcolor);
 
 			/* render */
 			R_Color(s2d->color);
