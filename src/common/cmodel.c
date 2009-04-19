@@ -1757,7 +1757,7 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
 
 		const int stepup = RT_STEPUP(map, actorSize, x, y, z, dir); /**< The stepup needed to get to/through the passage */
 		const int stepupHeight = stepup & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP); /**< The actual stepup height without the level flags */
-		int height_change;
+		int heightChange;
 
 		/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
 		actorStepupHeight = PATHFINDING_MAX_STEPUP;
@@ -1813,17 +1813,17 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
 		} else {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up into higher cell.\n");
 		}
-		height_change = RT_FLOOR(map, actorSize, nx, ny, nz) - RT_FLOOR(map, actorSize, x, y, z) + (nz - z) * CELL_HEIGHT;
+		heightChange = RT_FLOOR(map, actorSize, nx, ny, nz) - RT_FLOOR(map, actorSize, x, y, z) + (nz - z) * CELL_HEIGHT;
 
 		/* If the actor tries to fall more than falling_height, then prohibit the move. */
-		if (height_change < -fallingHeight && !hasLadderSupport) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Too far a drop without a ladder. change:%i maxfall:%i\n", height_change, -fallingHeight);
+		if (heightChange < -fallingHeight && !hasLadderSupport) {
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Too far a drop without a ladder. change:%i maxfall:%i\n", heightChange, -fallingHeight);
 			return;
 		}
 
 		/* If we are walking normally, we can fall if we move into a cell that does not
 		 * have its STEPDOWN flag set and has a negative floor:
-		 * Set height_change to 0.
+		 * Set heightChange to 0.
 		 * The actor enters the cell.
 		 * The actor will be forced to fall (dir 13) from the destination cell to the cell below. */
 		if (RT_FLOOR(map, actorSize, nx, ny, nz) < 0) {
@@ -1837,8 +1837,8 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
 				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: The fall destination is occupied.\n");
 				return;
 			}
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", height_change, -actorStepupHeight);
-			height_change = 0;
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", heightChange, -actorStepupHeight);
+			heightChange = 0;
 		}
 
 	}

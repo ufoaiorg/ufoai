@@ -651,7 +651,7 @@ int main (int argc, const char **argv)
 	}
 #endif
 
-	/* if onlyents just grab the entites and resave */
+	/* if onlyents just grab the entities and resave */
 	if (config.onlyents) {
 		LoadBSPFile(bspFilename);
 		num_entities = 0; /* use the map source entities */
@@ -716,7 +716,8 @@ int main (int argc, const char **argv)
 	} else if (config.generateMaterialFile) {
 		/* start from scratch */
 		LoadMapFile(mapFilename);
-		config.nolighting = LIGHTING_NONE;
+		Mem_Shutdown();
+		return 0;
 	} else {
 		/* start from scratch */
 		LoadMapFile(mapFilename);
