@@ -372,8 +372,8 @@ void CL_Shutdown(void);
 void CL_Frame(int now, void *data);
 void CL_SlowFrame(int now, void *data);
 void CL_ParseClientData(const char *type, const char *name, const char **text);
-void CIN_RunCinematic(void);
 void SCR_BeginLoadingPlaque(void);
+void SCR_EndLoadingPlaque(void);
 void CL_InitAfter(void);
 
 void SV_Init(void);
@@ -393,21 +393,18 @@ extern struct memPool_s *com_genericPool;
 
 /*============================================================================ */
 
-int COM_Argc(void);
-const char *COM_Argv(int arg);		/* range and null checked */
-void COM_ClearArgv(int arg);
+int Com_Argc(void);
+const char *Com_Argv(int arg);		/* range and null checked */
+void Com_ClearArgv(int arg);
 unsigned int Com_HashKey(const char *name, int hashsize);
-int COM_CheckParm(const char *parm);
-void COM_AddParm(const char *parm);
-const char* COM_MacroExpandString(const char *text);
+const char* Com_MacroExpandString(const char *text);
 
-void COM_Init(void);
-void COM_InitArgv(int argc, const char **argv);
+void Com_Init(void);
+void Com_InitArgv(int argc, const char **argv);
 
 qboolean Com_ConsoleCompleteCommand(const char *s, char *target, size_t bufSize, int *pos, int offset);
 
 void Key_Init(void);
-void SCR_EndLoadingPlaque(void);
 
 
 /** Remove element at index from array of size n.  n gets adjusted to the new

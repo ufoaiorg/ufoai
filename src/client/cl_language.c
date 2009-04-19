@@ -91,7 +91,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 		return;
 	}
 
-	token = COM_EParse(text, errhead, name);
+	token = Com_EParse(text, errhead, name);
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseLanguages: language without body ignored (%s)\n", name);
 		return;
@@ -99,7 +99,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text || *token == '}')
 			break;
 		/* inner locale id definition */
@@ -110,7 +110,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 			}
 			do {
 				/* get the locale mappings now type */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				/* end of locale mappings reached */
 				if (!*text || *token == '}')
 					break;

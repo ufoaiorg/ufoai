@@ -29,15 +29,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Returns just the filename from a given path
- * @sa COM_StripExtension
+ * @sa Com_StripExtension
  */
-const char *COM_SkipPath (const char *pathname)
+const char *Com_SkipPath (const char *pathname)
 {
 	char const* const last = strrchr(pathname, '/');
 	return last ? last + 1 : pathname;
 }
 
-char *COM_Trim (char *s)
+char *Com_Trim (char *s)
 {
 	char *left, *right;
 
@@ -56,10 +56,10 @@ char *COM_Trim (char *s)
 
 /**
  * @brief Removed the file extension from a filename
- * @sa COM_SkipPath
+ * @sa Com_SkipPath
  * @param[in] size The size of the output buffer
  */
-void COM_StripExtension (const char *in, char *out, size_t size)
+void Com_StripExtension (const char *in, char *out, size_t size)
 {
 	char *out_ext = NULL;
 	int i = 1;
@@ -82,7 +82,7 @@ void COM_StripExtension (const char *in, char *out, size_t size)
 /**
  * @brief Sets a default extension if there is none
  */
-void COM_DefaultExtension (char *path, size_t len, const char *extension)
+void Com_DefaultExtension (char *path, size_t len, const char *extension)
 {
 	char oldPath[MAX_OSPATH];
 	const char *src;
@@ -104,7 +104,7 @@ void COM_DefaultExtension (char *path, size_t len, const char *extension)
 /**
  * @brief Returns the path up to, but not including the last /
  */
-void COM_FilePath (const char *in, char *out)
+void Com_FilePath (const char *in, char *out)
 {
 	const char *s;
 

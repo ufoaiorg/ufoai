@@ -79,7 +79,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 	alienTeamCategory_t *alienCategory;
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseAlienTeam: alien team category \"%s\" without body ignored\n", name);
@@ -105,7 +105,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 
 	do {
 		linkedList_t **list;
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -113,25 +113,25 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 
 		if (!strcmp(token, "equipment")) {
 			list = &alienCategory->equipment;
-			token = COM_EParse(text, errhead, name);
+			token = Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
 				Com_Printf("CL_ParseAlienTeam: alien team category \"%s\" has equipment with no opening brace\n", name);
 				break;
 			}
 			do {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
 					break;
 				LIST_AddString(list, token);
 			} while (*text);
 		} else if (!strcmp(token, "category")) {
-			token = COM_EParse(text, errhead, name);
+			token = Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
 				Com_Printf("CL_ParseAlienTeam: alien team category \"%s\" has category with no opening brace\n", name);
 				break;
 			}
 			do {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
 					break;
 				alienCategory->missionCategories[alienCategory->numMissionCategories] = CL_GetAlienMissionTypeByID(token);
@@ -142,7 +142,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 		} else if (!strcmp(token, "team")) {
 			alienTeamGroup_t *group;
 
-			token = COM_EParse(text, errhead, name);
+			token = Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
 				Com_Printf("CL_ParseAlienTeam: alien team \"%s\" has team with no opening brace\n", name);
 				break;
@@ -159,13 +159,13 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 			alienCategory->numAlienTeamGroups++;
 
 			do {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 
 				/* check for some standard values */
 				for (vp = alien_group_vals; vp->string; vp++)
 					if (!strcmp(token, vp->string)) {
 						/* found a definition */
-						token = COM_EParse(text, errhead, name);
+						token = Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 
@@ -214,7 +214,7 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 		return;
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseResearchedCampaignItems: equipment def \"%s\" without body ignored (%s)\n",
@@ -224,7 +224,7 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 
 	Com_DPrintf(DEBUG_CLIENT, "..campaign research list '%s'\n", name);
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text || *token == '}')
 			return;
 
@@ -266,7 +266,7 @@ static void CL_ParseResearchableCampaignStates (const char *name, const char **t
 	}
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseResearchableCampaignStates: equipment def \"%s\" without body ignored\n", name);
@@ -280,7 +280,7 @@ static void CL_ParseResearchableCampaignStates (const char *name, const char **t
 
 	Com_DPrintf(DEBUG_CLIENT, "..campaign researchable list '%s'\n", name);
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text || *token == '}')
 			return;
 
@@ -350,7 +350,7 @@ static void CL_ParseSalary (const char *name, const char **text, int campaignID)
 	s = &ccs.salaries[campaignID];
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseSalary: salary def without body ignored\n");
@@ -358,7 +358,7 @@ static void CL_ParseSalary (const char *name, const char **text, int campaignID)
 	}
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -368,7 +368,7 @@ static void CL_ParseSalary (const char *name, const char **text, int campaignID)
 		for (vp = salary_vals; vp->string; vp++)
 			if (!strcmp(token, vp->string)) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -377,7 +377,7 @@ static void CL_ParseSalary (const char *name, const char **text, int campaignID)
 			}
 		if (!vp->string) {
 			Com_Printf("CL_ParseSalary: unknown token \"%s\" ignored (campaignID %i)\n", token, campaignID);
-			COM_EParse(text, errhead, name);
+			Com_EParse(text, errhead, name);
 		}
 	} while (*text);
 }
@@ -448,7 +448,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 	Q_strncpyz(cp->researched, "researched_human", sizeof(cp->researched));
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseCampaign: campaign def \"%s\" without body ignored\n", name);
@@ -480,7 +480,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 	s->debt_interest = 0.005;
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -490,7 +490,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 		for (vp = campaign_vals; vp->string; vp++)
 			if (!strcmp(token, vp->string)) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -501,7 +501,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 			CL_ParseSalary(token, text, cp->idx);
 		} else if (!vp->string) {
 			Com_Printf("CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
-			COM_EParse(text, errhead, name);
+			Com_EParse(text, errhead, name);
 		}
 	} while (*text);
 
@@ -524,7 +524,7 @@ static void CL_ParseComponents (const char *name, const char **text)
 	const char *token;
 
 	/* get body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseComponents: \"%s\" components def without body ignored.\n", name);
 		return;
@@ -547,7 +547,7 @@ static void CL_ParseComponents (const char *name, const char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -558,14 +558,14 @@ static void CL_ParseComponents (const char *name, const char **text)
 			/* Defines what items need to be collected for this item to be researchable. */
 			if (comp->numItemtypes < MAX_COMP) {
 				/* Parse item name */
-				token = COM_Parse(text);
+				token = Com_Parse(text);
 
 				comp->items[comp->numItemtypes] = INVSH_GetItemByID(token);	/* item id -> item pointer */
 
 				/* Parse number of items. */
-				token = COM_Parse(text);
+				token = Com_Parse(text);
 				comp->item_amount[comp->numItemtypes] = atoi(token);
-				token = COM_Parse(text);
+				token = Com_Parse(text);
 				comp->item_amount2[comp->numItemtypes] = atoi(token);
 
 				/** @todo Set item links to NONE if needed */
@@ -577,7 +577,7 @@ static void CL_ParseComponents (const char *name, const char **text)
 			}
 		} else if (!strcmp(token, "time")) {
 			/* Defines how long disassembly lasts. */
-			token = COM_Parse(text);
+			token = Com_Parse(text);
 			comp->time = atoi(token);
 		} else {
 			Com_Printf("CL_ParseComponents: Error in \"%s\" - unknown token: \"%s\".\n", name, token);

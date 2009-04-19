@@ -288,7 +288,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			int y1 = y;
 			/* cut the image tag */
 			cur += strlen(TEXT_IMAGETAG);
-			token = COM_Parse((const char **)&cur);
+			token = Com_Parse((const char **)&cur);
 			/** @todo fix scrolling images */
 			if (lines > EXTRADATA(node).textScroll)
 				y1 += (lines - EXTRADATA(node).textScroll) * node->u.text.lineHeight;

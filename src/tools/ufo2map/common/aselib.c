@@ -334,7 +334,7 @@ static void ASE_KeyMAP_DIFFUSE (const char *token)
 		len = strlen(bitmap) - 1;
 		s_token[len] = '\0';
 
-		COM_StripExtension(bitmap, ase.materials[ase.numMaterials].name, MAX_QPATH);
+		Com_StripExtension(bitmap, ase.materials[ase.numMaterials].name, MAX_QPATH);
 		Verb_Printf(VERB_EXTRA, "ase material name: \'%s\'\n", ase.materials[ase.numMaterials].name);
 	}
 }

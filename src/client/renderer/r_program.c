@@ -242,7 +242,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 		if (!strncmp(in, "#include", 8)) {
 			size_t inc_len;
 			in += 8;
-			Com_sprintf(path, sizeof(path), "shaders/%s", COM_Parse(&in));
+			Com_sprintf(path, sizeof(path), "shaders/%s", Com_Parse(&in));
 
 			if (FS_LoadFile(path, &buf) == -1) {
 				Com_Printf("Failed to resolve #include: %s.\n", path);
@@ -260,7 +260,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 
 			in += 3;
 
-			f = Cvar_GetValue(COM_Parse(&in));
+			f = Cvar_GetValue(Com_Parse(&in));
 
 			while (*in) {
 				if (!strncmp(in, "#endif", 6)) {

@@ -1149,7 +1149,7 @@ void FS_SkipBlock (const char **text)
 	depth = 1;
 
 	do {
-		token = COM_Parse(text);
+		token = Com_Parse(text);
 		if (*token == '{')
 			depth++;
 		else if (*token == '}')
@@ -1194,7 +1194,7 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 		if (lBuffer) {
 			/* continue reading the current file */
 			if (*text) {
-				token = COM_Parse(text);
+				token = Com_Parse(text);
 				if (*token == '{') {
 					FS_SkipBlock(text);
 					continue;
@@ -1202,7 +1202,7 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 
 				Q_strncpyz(headerType, token, sizeof(headerType));
 				if (*text) {
-					token = COM_Parse(text);
+					token = Com_Parse(text);
 					Q_strncpyz(headerName, token, sizeof(headerName));
 					*name = headerName;
 					return headerType;
@@ -1368,8 +1368,8 @@ void FS_GetMaps (qboolean reset)
 					}
 					Q_strncpyz(findname, pak->files[i].name, sizeof(findname));
 					FS_NormPath(findname);
-					baseMapName = COM_SkipPath(findname);
-					COM_StripExtension(baseMapName, filename, sizeof(filename));
+					baseMapName = Com_SkipPath(findname);
+					Com_StripExtension(baseMapName, filename, sizeof(filename));
 					fs_numInstalledMaps++;
 					if (strstr(findname, ".ump"))
 						Com_sprintf(fs_maps[fs_numInstalledMaps], MAX_QPATH, "+%s", filename);
@@ -1384,8 +1384,8 @@ void FS_GetMaps (qboolean reset)
 			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (dirnames != NULL) {
 				for (i = 0; i < ndirs - 1; i++) {
-					baseMapName = COM_SkipPath(dirnames[i]);
-					COM_StripExtension(baseMapName, filename, sizeof(filename));
+					baseMapName = Com_SkipPath(dirnames[i]);
+					Com_StripExtension(baseMapName, filename, sizeof(filename));
 					status = CheckBSPFile(filename);
 					if (!status) {
 						if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
@@ -1413,8 +1413,8 @@ void FS_GetMaps (qboolean reset)
 			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (dirnames != NULL) {
 				for (i = 0; i < ndirs - 1; i++) {
-					baseMapName = COM_SkipPath(dirnames[i]);
-					COM_StripExtension(baseMapName, filename, sizeof(filename));
+					baseMapName = Com_SkipPath(dirnames[i]);
+					Com_StripExtension(baseMapName, filename, sizeof(filename));
 					if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
 						Com_Printf("FS_GetMaps: Max maps limit hit\n");
 						break;

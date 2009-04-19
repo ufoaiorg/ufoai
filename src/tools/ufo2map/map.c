@@ -485,8 +485,8 @@ static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, 
 
 	assert(filename);
 
-	COM_StripExtension(filename, fileBase, sizeof(fileBase));
-	Com_sprintf(materialPath, sizeof(materialPath), "materials/%s.mat", COM_SkipPath(fileBase));
+	Com_StripExtension(filename, fileBase, sizeof(fileBase));
+	Com_sprintf(materialPath, sizeof(materialPath), "materials/%s.mat", Com_SkipPath(fileBase));
 
 	FS_OpenFile(materialPath, &f, FILE_APPEND);
 	if (!f.f) {
@@ -555,7 +555,7 @@ static inline void GenerateFootstepList (const char *filename, int mipTexIndex)
 
 	assert(filename);
 
-	COM_StripExtension(filename, fileBase, sizeof(fileBase));
+	Com_StripExtension(filename, fileBase, sizeof(fileBase));
 
 	FS_OpenFile(va("%s.footsteps", fileBase), &f, FILE_APPEND);
 	if (!f.f) {

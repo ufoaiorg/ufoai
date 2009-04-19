@@ -76,7 +76,7 @@ static void CL_ParseEntitystring (void)
 	/* parse ents */
 	while (1) {
 		/* parse the opening brace */
-		const char *entityToken = COM_Parse(&es);
+		const char *entityToken = Com_Parse(&es);
 		/* memorize the start */
 		const char *strstart = es;
 		if (!es)
@@ -96,7 +96,7 @@ static void CL_ParseEntitystring (void)
 		/* go through all the dictionary pairs */
 		while (1) {
 			/* parse key */
-			entityToken = COM_Parse(&es);
+			entityToken = Com_Parse(&es);
 			if (entityToken[0] == '}')
 				break;
 			if (!es)
@@ -105,7 +105,7 @@ static void CL_ParseEntitystring (void)
 			Q_strncpyz(keyname, entityToken, sizeof(keyname));
 
 			/* parse value */
-			entityToken = COM_Parse(&es);
+			entityToken = Com_Parse(&es);
 			if (!es)
 				Com_Error(ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
 

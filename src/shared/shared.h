@@ -82,12 +82,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define STRINGIFY(x) #x
 #define DOUBLEQUOTE(x) STRINGIFY(x)
 
-const char *COM_SkipPath(const char *pathname);
-void COM_StripExtension(const char *in, char *out, size_t size);
-void COM_FilePath(const char *in, char *out);
-void COM_DefaultExtension(char *path, size_t len, const char *extension);
+const char *Com_SkipPath(const char *pathname);
+void Com_StripExtension(const char *in, char *out, size_t size);
+void Com_FilePath(const char *in, char *out);
+void Com_DefaultExtension(char *path, size_t len, const char *extension);
 
-char *COM_Trim(char *s);
+char *Com_Trim(char *s);
 
 /** returns the amount of elements - not the amount of bytes */
 #define lengthof(x) (sizeof(x) / sizeof(*(x)))

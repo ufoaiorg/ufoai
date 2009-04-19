@@ -182,7 +182,7 @@ static int ED_GetIntVectorFromString (const char *str, int v[], const int n)
 	const char *buf_p = str;
 
 	for (i = 0; buf_p; i++) {
-		const char *tok = COM_Parse(&buf_p);
+		const char *tok = Com_Parse(&buf_p);
 		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
 		ED_TEST_RETURN_ERROR(i >= n, "ED_GetIntVectorFromString: v[%i] too small for ints from string \"%s\"", n, str);
@@ -207,7 +207,7 @@ static int ED_GetFloatVectorFromString (const char *str, float v[], const int n)
 	const char *buf_p = str;
 
 	for (i = 0; buf_p; i++) {
-		const char *tok = COM_Parse(&buf_p);
+		const char *tok = Com_Parse(&buf_p);
 		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
 		ED_TEST_RETURN_ERROR(i >= n, "ED_GetFloatVectorFromString: v[%i] too small for floats from string \"%s\"", n, str);
@@ -372,7 +372,7 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 	strncpy(tokBuf, value, sizeof(tokBuf));
 	assert(!(floatOrInt & ED_TYPE_INT) != !(floatOrInt & ED_TYPE_FLOAT));/* logical exclusive or */
 	while (buf_p) {
-		const char *tok = COM_Parse(&buf_p);
+		const char *tok = Com_Parse(&buf_p);
 		int_float_tu parsedNumber;
 		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
@@ -470,13 +470,13 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 	strncpy(tokBuf, parsedToken, sizeof(tokBuf));
 	buf_p = tokBuf;
 
-	partToken = COM_Parse(&buf_p);
+	partToken = Com_Parse(&buf_p);
 
 	if (!strcmp("SIGNED", partToken)) {
-		partToken = COM_Parse(&buf_p);/* get next token */
+		partToken = Com_Parse(&buf_p);/* get next token */
 	} else if (!strcmp("UNSIGNED", partToken)) {
 		kd->flags |= ED_INSIST_POSITIVE;
-		partToken = COM_Parse(&buf_p);
+		partToken = Com_Parse(&buf_p);
 	}
 
 	if (strlen(partToken)) {
@@ -487,7 +487,7 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 	}
 
 	kd->flags |= type;
-	partToken = COM_Parse(&buf_p);
+	partToken = Com_Parse(&buf_p);
 	vectorLen = atoi(partToken);
 	if (vectorLen)
 		ED_TEST_RETURN_ERROR(ED_ERROR == ED_CheckNumber(partToken, ED_TYPE_INT, 1, &parsedNumber),
@@ -630,7 +630,7 @@ static int ED_ParseEntities (const char **data_p)
 	int toggle = 0; /* many lines should have a pair of tokens on, this toggles 0, 1 to indicate progress */
 
 	while (data_p) {
-		const char *parsedToken = COM_Parse(data_p);
+		const char *parsedToken = Com_Parse(data_p);
 		toggle ^= 1;
 
 		if (parsedToken[0] == '\0' && braceLevel == 0)
@@ -740,7 +740,7 @@ static int ED_ProcessRanges (void)
 					kd->name, ed->classname);
 				while (tmpRange_p) {
 					int_float_tu parsedNumber;
-					const char *tok = COM_Parse(&tmpRange_p);
+					const char *tok = Com_Parse(&tmpRange_p);
 					if (tok[0] == '\0')
 						break;
 					if (!strcmp("-", tok)) {

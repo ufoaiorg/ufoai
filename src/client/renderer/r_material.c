@@ -474,13 +474,13 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 	int i;
 
 	while (qtrue) {
-		const char *c = COM_Parse(buffer);
+		const char *c = Com_Parse(buffer);
 
 		if (!strlen(c))
 			break;
 
 		if (!strcmp(c, "texture")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->image = R_FindImage(va("textures/%s", c), it_material);
 
 			if (s->image == r_noTexture) {
@@ -493,7 +493,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "envmap")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			i = atoi(c);
 
 			if (i > -1 && i < MAX_ENVMAPTEXTURES)
@@ -511,7 +511,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "blend")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->blend.src = R_ConstByName(c);
 
 			if (s->blend.src == -1) {
@@ -519,7 +519,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 				return -1;
 			}
 
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->blend.dest = R_ConstByName(c);
 
 			if (s->blend.dest == -1) {
@@ -533,7 +533,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 
 		if (!strcmp(c, "color")) {
 			for (i = 0; i < 3; i++) {
-				c = COM_Parse(buffer);
+				c = Com_Parse(buffer);
 				s->color[i] = atof(c);
 
 				if (s->color[i] < 0.0 || s->color[i] > 1.0) {
@@ -547,7 +547,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "pulse")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->pulse.hz = atof(c);
 
 			if (s->pulse.hz < 0.0) {
@@ -560,7 +560,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "stretch")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->stretch.amp = atof(c);
 
 			if (s->stretch.amp < 0.0) {
@@ -568,7 +568,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 				return -1;
 			}
 
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->stretch.hz = atof(c);
 
 			if (s->stretch.hz < 0.0) {
@@ -581,7 +581,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "rotate")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->rotate.hz = atof(c);
 
 			if (s->rotate.hz < 0.0) {
@@ -594,7 +594,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "scroll.s")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->scroll.s = atof(c);
 
 			s->flags |= STAGE_SCROLL_S;
@@ -602,7 +602,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "scroll.t")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->scroll.t = atof(c);
 
 			s->flags |= STAGE_SCROLL_T;
@@ -610,7 +610,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "scale.s")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->scale.s = atof(c);
 
 			s->flags |= STAGE_SCALE_S;
@@ -618,7 +618,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "scale.t")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->scale.t = atof(c);
 
 			s->flags |= STAGE_SCALE_T;
@@ -626,10 +626,10 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "terrain")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->terrain.floor = atof(c);
 
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->terrain.ceil = atof(c);
 			if (s->terrain.ceil < s->terrain.floor) {
 				Com_Printf("R_ParseStage: Inverted terrain ceiling and floor "
@@ -650,7 +650,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "dirtmap")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->dirt.intensity = atof(c);
 			if (s->dirt.intensity <= 0.0 || s->dirt.intensity > 1.0) {
 				Com_Printf("R_ParseStage: Invalid dirtmap intensity for %s\n",
@@ -662,7 +662,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "anim")) {
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->anim.num_frames = atoi(c);
 
 			if (s->anim.num_frames < 1 || s->anim.num_frames > MAX_ANIM_FRAMES) {
@@ -671,7 +671,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 				return -1;
 			}
 
-			c = COM_Parse(buffer);
+			c = Com_Parse(buffer);
 			s->anim.fps = atof(c);
 
 			if (s->anim.fps <= 0) {
@@ -753,7 +753,7 @@ void R_LoadMaterials (const char *map)
 	R_ImageClearMaterials();
 
 	/* load the materials file for parsing */
-	Com_sprintf(path, sizeof(path), "materials/%s.mat", COM_SkipPath(map));
+	Com_sprintf(path, sizeof(path), "materials/%s.mat", Com_SkipPath(map));
 
 	if ((i = FS_LoadFile(path, &fileBuffer)) < 1) {
 		Com_DPrintf(DEBUG_RENDERER, "Couldn't load %s\n", path);
@@ -769,7 +769,7 @@ void R_LoadMaterials (const char *map)
 	m = NULL;
 
 	while (qtrue) {
-		c = COM_Parse(&buffer);
+		c = Com_Parse(&buffer);
 
 		if (!strlen(c))
 			break;
@@ -780,7 +780,7 @@ void R_LoadMaterials (const char *map)
 		}
 
 		if (!strcmp(c, "material")) {
-			c = COM_Parse(&buffer);
+			c = Com_Parse(&buffer);
 			image = R_FindImage(va("textures/%s", c), it_world);
 			if (image == r_noTexture) {
 				Com_Printf("R_LoadMaterials: Failed to resolve texture: %s\n", c);
@@ -796,7 +796,7 @@ void R_LoadMaterials (const char *map)
 		m = &image->material;
 
 		if (!strcmp(c, "normalmap")){
-			c = COM_Parse(&buffer);
+			c = Com_Parse(&buffer);
 			image->normalmap = R_FindImage(va("textures/%s", c), it_normalmap);
 
 			if (image->normalmap == r_noTexture){
@@ -807,7 +807,7 @@ void R_LoadMaterials (const char *map)
 
 
 		if (!strcmp(c, "bump")) {
-			m->bump = atof(COM_Parse(&buffer));
+			m->bump = atof(Com_Parse(&buffer));
 			if (m->bump < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid bump value for %s\n", image->name);
 				m->bump = DEFAULT_BUMP;
@@ -815,7 +815,7 @@ void R_LoadMaterials (const char *map)
 		}
 
 		if (!strcmp(c, "parallax")) {
-			m->parallax = atof(COM_Parse(&buffer));
+			m->parallax = atof(Com_Parse(&buffer));
 			if (m->parallax < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid parallax value for %s\n", image->name);
 				m->parallax = DEFAULT_PARALLAX;
@@ -823,7 +823,7 @@ void R_LoadMaterials (const char *map)
 		}
 
 		if (!strcmp(c, "hardness")) {
-			m->hardness = atof(COM_Parse(&buffer));
+			m->hardness = atof(Com_Parse(&buffer));
 			if (m->hardness < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid hardness value for %s\n", image->name);
 				m->hardness = DEFAULT_HARDNESS;
@@ -831,7 +831,7 @@ void R_LoadMaterials (const char *map)
 		}
 
 		if (!strcmp(c, "specular")) {
-			m->specular = atof(COM_Parse(&buffer));
+			m->specular = atof(Com_Parse(&buffer));
 			if (m->specular < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid specular value for %s\n", image->name);
 				m->specular = DEFAULT_SPECULAR;

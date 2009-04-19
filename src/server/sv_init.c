@@ -231,7 +231,7 @@ static void SV_ParseMapTile (const char *filename, const char **text)
 	int x, y, i;
 
 	/* get tile name */
-	token = COM_EParse(text, errhead, filename);
+	token = Com_EParse(text, errhead, filename);
 	if (!*text)
 		return;
 	if (numTiles >= MAX_TILETYPES) {
@@ -243,7 +243,7 @@ static void SV_ParseMapTile (const char *filename, const char **text)
 	Q_strncpyz(t->id, token, sizeof(t->id));
 
 	/* start parsing the block */
-	token = COM_EParse(text, errhead, filename);
+	token = Com_EParse(text, errhead, filename);
 	if (!*text)
 		return;
 	if (*token != '{') {
@@ -252,12 +252,12 @@ static void SV_ParseMapTile (const char *filename, const char **text)
 	}
 
 	/* get width and height */
-	token = COM_EParse(text, errhead, filename);
+	token = Com_EParse(text, errhead, filename);
 	if (!*text)
 		return;
 	t->w = atoi(token);
 
-	token = COM_EParse(text, errhead, filename);
+	token = Com_EParse(text, errhead, filename);
 	if (!*text)
 		return;
 	t->h = atoi(token);
@@ -271,7 +271,7 @@ static void SV_ParseMapTile (const char *filename, const char **text)
 	/* get tile specs */
 	for (y = t->h - 1; y >= 0; y--)
 		for (x = 0; x < t->w; x++) {
-			token = COM_EParse(text, errhead, filename);
+			token = Com_EParse(text, errhead, filename);
 			if (!*text || *token == '}') {
 				Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - not enough entries for size\n", t->id);
 				*text = strchr(*text, '}') + 1;
@@ -283,7 +283,7 @@ static void SV_ParseMapTile (const char *filename, const char **text)
 			}
 		}
 
-	token = COM_EParse(text, errhead, filename);
+	token = Com_EParse(text, errhead, filename);
 
 	/* get connections */
 	if (*token != '}')
@@ -311,7 +311,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 	int i, x, y;
 
 	/* get assembly name */
-	token = COM_EParse(text, errhead, filename);
+	token = Com_EParse(text, errhead, filename);
 	if (!*text)
 		return;
 	if (numAssemblies >= MAX_MAPASSEMBLIES) {
@@ -328,7 +328,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 	a->dx = 1;
 	a->dy = 1;
 
-	token = COM_EParse(text, errhead, filename);
+	token = Com_EParse(text, errhead, filename);
 	if (!*text || *token != '{') {
 		Com_Error(ERR_DROP, "Invalid assembly definition '%s' - invalid token '%s'", a->id, token);
 		return;
@@ -336,13 +336,13 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 
 	do {
 		/* get tile name */
-		token = COM_EParse(text, errhead, filename);
+		token = Com_EParse(text, errhead, filename);
 		if (!text || *token == '}')
 			break;
 
 		if (!strncmp(token, "title", 5)) {
 			/* get map title */
-			token = COM_EParse(text, errhead, filename);
+			token = Com_EParse(text, errhead, filename);
 			if (!text)
 				break;
 
@@ -351,7 +351,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 			/* fix tilename x y */
 		} else if (!strncmp(token, "size", 4)) {
 			/* get map size */
-			token = COM_EParse(text, errhead, filename);
+			token = Com_EParse(text, errhead, filename);
 			if (!text)
 				break;
 
@@ -359,7 +359,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 			continue;
 		} else if (!strncmp(token, "grid", 4)) {
 			/* get map size */
-			token = COM_EParse(text, errhead, filename);
+			token = Com_EParse(text, errhead, filename);
 			if (!text)
 				break;
 
@@ -368,7 +368,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 		/* fix tilename x y */
 		} else if (!strncmp(token, "fix", 3)) {
 			/* get tile */
-			token = COM_EParse(text, errhead, filename);
+			token = Com_EParse(text, errhead, filename);
 			if (!text)
 				break;
 
@@ -379,7 +379,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 						break;
 					}
 					/* get coordinates */
-					token = COM_EParse(text, errhead, filename);
+					token = Com_EParse(text, errhead, filename);
 					if (!text)
 						break;
 
@@ -396,7 +396,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 			token++; /* strip '*' */
 			Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement: %s\n", token);
 			Q_strncpyz(cvarName, token, sizeof(cvarName));
-			token = COM_EParse(text, errhead, filename);
+			token = Com_EParse(text, errhead, filename);
 			if (!text || *token == '}')
 				break;
 			cvarValue = Cvar_GetString(cvarName);
@@ -413,7 +413,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 		for (i = 0; i < numTiles; i++)
 			if (!strncmp(token, mTile[i].id, MAX_VAR)) {
 				/* get min and max tile number */
-				token = COM_EParse(text, errhead, filename);
+				token = Com_EParse(text, errhead, filename);
 				if (!text || *token == '}')
 					break;
 
@@ -920,12 +920,12 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 	numAssemblies = 0;
 	basePath[0] = 0;
 	do {
-		token = COM_Parse(&text);
+		token = Com_Parse(&text);
 		if (!text)
 			break;
 
 		if (!strcmp(token, "base")) {
-			token = COM_Parse(&text);
+			token = Com_Parse(&text);
 			Q_strncpyz(basePath, token, sizeof(basePath));
 		} else if (!strcmp(token, "tile"))
 			SV_ParseMapTile(filename, &text);

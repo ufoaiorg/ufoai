@@ -36,11 +36,11 @@
  * @brief Parsing function that prints an error message when there is no text in the buffer
  * @sa Com_Parse
  */
-const char *COM_EParse (const char **text, const char *errhead, const char *errinfo)
+const char *Com_EParse (const char **text, const char *errhead, const char *errinfo)
 {
 	const char *token;
 
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 	if (!*text) {
 		if (errinfo)
 			Com_Printf("%s \"%s\")\n", errhead, errinfo);
@@ -991,7 +991,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 	const char *token;
 
 	/* get its body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseFire: fire definition \"%s\" without body ignored\n", name);
@@ -999,7 +999,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 	}
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			return;
 		if (*token == '}')
@@ -1008,7 +1008,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 		for (fdp = fdps; fdp->string; fdp++)
 			if (!Q_strcasecmp(token, fdp->string)) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1020,7 +1020,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 			if (!strncmp(token, "skill", 5)) {
 				int skill;
 
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1032,12 +1032,12 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 				if (skill >= SKILL_NUM_TYPES)
 					Com_Printf("Com_ParseFire: unknown weapon skill \"%s\" ignored (weapon %s)\n", token, name);
 			} else if (!strncmp(token, "range", 5)) {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				fd->range = atof(token) * UNIT_SIZE;
 			} else if (!strncmp(token, "splrad", 6)) {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				fd->splrad = atof(token) * UNIT_SIZE;
@@ -1062,7 +1062,7 @@ static void Com_ParseArmour (const char *name, const char **text, short *ad, qbo
 	int i;
 
 	/* get its body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseArmour: armour definition \"%s\" without body ignored\n", name);
@@ -1070,7 +1070,7 @@ static void Com_ParseArmour (const char *name, const char **text, short *ad, qbo
 	}
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			return;
 		if (*token == '}')
@@ -1078,7 +1078,7 @@ static void Com_ParseArmour (const char *name, const char **text, short *ad, qbo
 
 		for (i = 0; i < csi.numDTs; i++)
 			if (!strncmp(token, csi.dts[i].id, MAX_VAR)) {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				if (rating && !csi.dts[i].showInMenu)
@@ -1157,7 +1157,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	od->idx = csi.numODs - 1;
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseItem: weapon def \"%s\" without body ignored\n", name);
@@ -1166,7 +1166,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	}
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1177,7 +1177,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 				/* found a definition */
 				if (val->type != V_NULL) {
 					/* parse a value */
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						break;
 
@@ -1188,7 +1188,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 					switch (i) {
 					case OD_WEAPON:
 						/* Save the weapon id. */
-						token = COM_Parse(text);
+						token = Com_Parse(text);
 						if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
 							/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
 							LIST_AddPointer(&parseItemWeapons, od);
@@ -1196,7 +1196,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 							LIST_AddString(&parseItemWeapons, token);
 
 							/* get it's body */
-							token = COM_Parse(text);
+							token = Com_Parse(text);
 
 							if (!*text || *token != '{') {
 								Com_Printf("Com_ParseItem: weapon_mod \"%s\" without body ignored\n", name);
@@ -1206,7 +1206,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 							weapFdsIdx = od->numWeapons;
 							/* For parse each firedef entry for this weapon.  */
 							do {
-								token = COM_EParse(text, errhead, name);
+								token = Com_EParse(text, errhead, name);
 								if (!*text)
 									return;
 								if (*token == '}')
@@ -1252,7 +1252,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 		if (!val->string) {
 			if (!strcmp(token, "craftweapon")) {
 				/* parse a value */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
 					/** Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
 					LIST_AddPointer(&parseItemWeapons, od);
@@ -1264,7 +1264,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 				}
 			} else if (!strcmp(token, "crafttype")) {
 				/* Craftitem type definition. */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1357,7 +1357,7 @@ static void Com_ParseInventory (const char *name, const char **text)
 	Q_strncpyz(id->name, name, sizeof(id->name));
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseInventory: inventory def \"%s\" without body ignored\n", name);
@@ -1399,7 +1399,7 @@ static void Com_ParseInventory (const char *name, const char **text)
 	}
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			return;
 		if (*token == '}')
@@ -1408,7 +1408,7 @@ static void Com_ParseInventory (const char *name, const char **text)
 		for (idp = idps; idp->string; idp++)
 			if (!Q_strcasecmp(token, idp->string)) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1483,7 +1483,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 	Q_strncpyz(ed->name, name, sizeof(ed->name));
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseEquipment: equipment def \"%s\" without body ignored\n", name);
@@ -1494,14 +1494,14 @@ static void Com_ParseEquipment (const char *name, const char **text)
 	do {
 		qboolean foundDefinition = qfalse;
 
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text || *token == '}')
 			return;
 
 		for (vp = equipment_definition_vals; vp->string; vp++)
 			if (!strcmp(token, vp->string)) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				Com_EParseValue(ed, token, vp->type, vp->ofs, vp->size);
@@ -1512,7 +1512,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 		if (!foundDefinition) {
 			for (i = 0; i < csi.numODs; i++)
 				if (!strncmp(token, csi.ods[i].id, MAX_VAR)) {
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text || *token == '}') {
 						Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
 						return;
@@ -1744,7 +1744,7 @@ static void Com_ParseActorNames (const char *name, const char **text, teamDef_t*
 	int i;
 
 	/* get name list body body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseActorNames: names def \"%s\" without body ignored\n", name);
@@ -1753,7 +1753,7 @@ static void Com_ParseActorNames (const char *name, const char **text, teamDef_t*
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1763,7 +1763,7 @@ static void Com_ParseActorNames (const char *name, const char **text, teamDef_t*
 			if (!strcmp(token, name_strings[i])) {
 				td->numNames[i] = 0;
 
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					break;
 				if (*token != '{')
@@ -1771,7 +1771,7 @@ static void Com_ParseActorNames (const char *name, const char **text, teamDef_t*
 
 				do {
 					/* get a name */
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						break;
 					if (*token == '}')
@@ -1819,7 +1819,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 	int i, j;
 
 	/* get name list body body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseActorModels: actor def \"%s\" without body ignored\n", td->id);
@@ -1828,7 +1828,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1839,7 +1839,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 				if (td->numModels[i])
 					Sys_Error("Com_ParseActorModels: Already parsed models for actor definition '%s'\n", name);
 				td->numModels[i] = 0;
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					break;
 				if (*token != '{') {
@@ -1850,7 +1850,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 				do {
 					/* get the path, body, head and skin */
 					for (j = 0; j < 4; j++) {
-						token = COM_EParse(text, errhead, name);
+						token = Com_EParse(text, errhead, name);
 						if (!*text) {
 							Com_Printf("Com_ParseActors: Premature end of script at j=%i\n", j);
 							break;
@@ -1898,7 +1898,7 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 	int i;
 
 	/* get name list body body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseActorSounds: actorsounds def \"%s\" without body ignored\n", name);
@@ -1907,7 +1907,7 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1915,7 +1915,7 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 
 		for (i = 0; i < NAME_LAST; i++)
 			if (!strcmp(token, name_strings[i])) {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					break;
 				if (*token != '{')
@@ -1923,19 +1923,19 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 
 				do {
 					/* get the sounds */
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						break;
 					if (*token == '}')
 						break;
 					if (!strcmp(token, "hurtsound")) {
-						token = COM_EParse(text, errhead, name);
+						token = Com_EParse(text, errhead, name);
 						if (!*text)
 							break;
 						LIST_AddString(&td->sounds[SND_HURT][i], token);
 						td->numSounds[SND_HURT][i]++;
 					} else if (!strcmp(token, "deathsound")) {
-						token = COM_EParse(text, errhead, name);
+						token = Com_EParse(text, errhead, name);
 						if (!*text)
 							break;
 						LIST_AddString(&td->sounds[SND_DEATH][i], token);
@@ -2002,7 +2002,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 	td->onlyWeapon = NULL;
 
 	/* get name list body body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseTeam: team def \"%s\" without body ignored\n", name);
@@ -2013,7 +2013,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -2022,7 +2022,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 		for (v = teamDefValues; v->string; v++)
 			if (!strncmp(token, v->string, strlen(token))) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -2033,7 +2033,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 		if (!v->string) {
 			if (!strcmp(token, "onlyWeapon")) {
 				objDef_t *od;
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				od = INVSH_GetItemByID(token);
@@ -2112,7 +2112,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 	}
 
 	/* get name list body body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseTerrain: terrain def \"%s\" without body ignored\n", name);
 		return;
@@ -2128,7 +2128,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -2137,7 +2137,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 		for (v = terrainTypeValues; v->string; v++)
 			if (!strncmp(token, v->string, sizeof(v->string))) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				switch (v->type) {
@@ -2180,7 +2180,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 	cvarlist_t* cvarlist;
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseGameTypes: gametype \"%s\" without body ignored\n", name);
 		return;
@@ -2201,7 +2201,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 			Sys_Error("Com_ParseGameTypes: Too many gametypes.\n");
 
 		do {
-			token = COM_EParse(text, errhead, name);
+			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				break;
 			if (*token == '}')
@@ -2210,7 +2210,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 			for (v = gameTypeValues; v->string; v++)
 				if (!strncmp(token, v->string, sizeof(v->string))) {
 					/* found a definition */
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 
@@ -2223,7 +2223,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 					Sys_Error("Com_ParseGameTypes: gametype \"%s\" without cvarlist\n", name);
 
 				do {
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text || *token == '}') {
 						if (!gt->num_cvars)
 							Sys_Error("Com_ParseGameTypes: gametype \"%s\" with empty cvarlist\n", name);
@@ -2235,7 +2235,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 					if (gt->num_cvars >= MAX_CVARLISTINGAMETYPE)
 						Sys_Error("Com_ParseGameTypes: gametype \"%s\" max cvarlist hit\n", name);
 					Q_strncpyz(cvarlist->name, token, sizeof(cvarlist->name));
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text || *token == '}')
 						Sys_Error("Com_ParseGameTypes: gametype \"%s\" cvar \"%s\" with no value\n", name, cvarlist->name);
 					Q_strncpyz(cvarlist->value, token, sizeof(cvarlist->value));
@@ -2261,7 +2261,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 	int i;
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseDamageTypes: damage type list \"%s\" without body ignored\n", name);
@@ -2269,7 +2269,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 	}
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -2435,7 +2435,7 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 	const char *token;
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" without body ignored\n", name);
@@ -2447,7 +2447,7 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 	md->id = Mem_PoolStrDup(name, com_genericPool, 0);
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -2456,7 +2456,7 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 		for (vp = mapdef_vals; vp->string; vp++)
 			if (!strcmp(token, vp->string)) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -2491,13 +2491,13 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
 				continue;
 			}
-			token = COM_EParse(text, errhead, name);
+			token = Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
 				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has ufos, gametypes, terrains, populations or cultures block with no opening brace\n", name);
 				break;
 			}
 			do {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
 					break;
 				LIST_AddString(list, token);

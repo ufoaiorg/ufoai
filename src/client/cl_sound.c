@@ -148,7 +148,7 @@ sfx_t *S_RegisterSound (const char *soundFile)
 	if (!s_env.initialized)
 		return NULL;
 
-	COM_StripExtension(soundFile, name, sizeof(name));
+	Com_StripExtension(soundFile, name, sizeof(name));
 
 	hash = Com_HashKey(name, SFX_HASH_SIZE);
 	for (sfx = sfx_hash[hash]; sfx; sfx = sfx->hash_next)

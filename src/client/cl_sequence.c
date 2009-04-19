@@ -768,7 +768,7 @@ void CL_ParseSequence (const char *name, const char **text)
 	sp->start = numSeqCmds;
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseSequence: sequence def \"%s\" without body ignored\n", name);
@@ -777,7 +777,7 @@ void CL_ParseSequence (const char *name, const char **text)
 	}
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 	next_cmd:
@@ -789,7 +789,7 @@ void CL_ParseSequence (const char *name, const char **text)
 			if (!strcmp(token, seqCmdName[i])) {
 				maxLength = MAX_DATA_LENGTH;
 				/* found a command */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -806,7 +806,7 @@ void CL_ParseSequence (const char *name, const char **text)
 				Q_strncpyz(sc->name, token, sizeof(sc->name));
 
 				/* read data */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				if (*token != '{')
@@ -819,7 +819,7 @@ void CL_ParseSequence (const char *name, const char **text)
 						Com_Printf("Too much data for sequence %s", sc->name);
 						break;
 					}
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 
@@ -838,7 +838,7 @@ void CL_ParseSequence (const char *name, const char **text)
 
 		if (i == SEQ_NUMCMDS) {
 			Com_Printf("CL_ParseSequence: unknown command \"%s\" ignored (sequence %s)\n", token, name);
-			COM_EParse(text, errhead, name);
+			Com_EParse(text, errhead, name);
 		}
 	} while (*text);
 }

@@ -242,15 +242,15 @@ void Cbuf_AddEarlyCommands (qboolean clear)
 {
 	int i;
 
-	for (i = 0; i < COM_Argc(); i++) {
-		const char *s = COM_Argv(i);
+	for (i = 0; i < Com_Argc(); i++) {
+		const char *s = Com_Argv(i);
 		if (strncmp(s, "+set", 4))
 			continue;
-		Cbuf_AddText(va("set %s %s\n", COM_Argv(i + 1), COM_Argv(i + 2)));
+		Cbuf_AddText(va("set %s %s\n", Com_Argv(i + 1), Com_Argv(i + 2)));
 		if (clear) {
-			COM_ClearArgv(i);
-			COM_ClearArgv(i + 1);
-			COM_ClearArgv(i + 2);
+			Com_ClearArgv(i);
+			Com_ClearArgv(i + 1);
+			Com_ClearArgv(i + 2);
 		}
 		i += 2;
 	}
@@ -272,9 +272,9 @@ qboolean Cbuf_AddLateCommands (void)
 
 	/* build the combined string to parse from */
 	s = 0;
-	argc = COM_Argc();
+	argc = Com_Argc();
 	for (i = 1; i < argc; i++) {
-		s += strlen(COM_Argv(i)) + 1;
+		s += strlen(Com_Argv(i)) + 1;
 	}
 	if (!s)
 		return qfalse;
@@ -282,7 +282,7 @@ qboolean Cbuf_AddLateCommands (void)
 	text = Mem_Alloc(s + 1);
 	text[0] = 0;
 	for (i = 1; i < argc; i++) {
-		Q_strcat(text, COM_Argv(i), s);
+		Q_strcat(text, Com_Argv(i), s);
 		if (i != argc - 1)
 			Q_strcat(text, " ", s);
 	}
@@ -516,7 +516,7 @@ void Cmd_BufClear (void)
  * @brief Parses the given string into command line tokens.
  * @note @c cmd_argv and @c cmd_argv are filled and set here
  * @note *cvars will be expanded unless they are in a quoted token
- * @sa COM_MacroExpandString
+ * @sa Com_MacroExpandString
  * @param[in] text The text to parse and tokenize
  * @param[in] macroExpand expand cvar string with their values
  */
@@ -528,7 +528,7 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 
 	/* macro expand the text */
 	if (macroExpand) {
-		expanded = COM_MacroExpandString(text);
+		expanded = Com_MacroExpandString(text);
 		if (expanded)
 			text = expanded;
 	}
@@ -562,7 +562,7 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 					break;
 		}
 
-		com_token = COM_Parse(&text);
+		com_token = Com_Parse(&text);
 		if (!text)
 			return;
 

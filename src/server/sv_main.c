@@ -644,12 +644,12 @@ static void SV_ParseMapcycle (void)
 		do {
 			qboolean day = qfalse;
 			/* parse map name */
-			token = COM_Parse(&buf);
+			token = Com_Parse(&buf);
 			if (!buf)
 				break;
 			Q_strncpyz(map, token, sizeof(map));
 			/* parse day or night */
-			token = COM_Parse(&buf);
+			token = Com_Parse(&buf);
 			if (!buf)
 				break;
 			if (!strcmp(token, "day"))
@@ -659,7 +659,7 @@ static void SV_ParseMapcycle (void)
 				break;
 			}
 			/* parse gametype */
-			token = COM_Parse(&buf);
+			token = Com_Parse(&buf);
 			if (!buf)
 				break;
 			Q_strncpyz(gameType, token, sizeof(gameType));

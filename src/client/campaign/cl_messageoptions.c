@@ -362,7 +362,7 @@ void MSO_ParseSettings (const char *name, const char **text)
 	const char *token, *tmpCommand, *msgtype;
 
 	/* get name list body body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token !='{') {
 		Com_Printf("MSO_ParseSettings: settingslist \"%s\" without body ignored\n", name);
@@ -373,7 +373,7 @@ void MSO_ParseSettings (const char *name, const char **text)
 
 	do {
 		/* get the msg type*/
-		msgtype = COM_EParse(text, errhead, name);
+		msgtype = Com_EParse(text, errhead, name);
 		if (text[0] == '\0')
 			break;
 		if (msgtype[0] == '}')
@@ -381,7 +381,7 @@ void MSO_ParseSettings (const char *name, const char **text)
 		/* temporarly store type */
 		tmpCommand = va("%s", msgtype);
 		/* build command from msgtype, settingstype (pause|notify|sound) */
-		token = va("msgoptions_set %s %s 1", tmpCommand, COM_EParse(text, errhead, name));
+		token = va("msgoptions_set %s %s 1", tmpCommand, Com_EParse(text, errhead, name));
 		Cmd_ExecuteString(token);
 	} while (*text);
 	/* reset menu state, was updated by msgoptions_set */
@@ -405,7 +405,7 @@ void MSO_ParseCategories (const char *name, const char **text)
 	name++;
 
 	/* get name list body body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("MSO_ParseCategories: category \"%s\" without body ignored\n", name);
@@ -440,7 +440,7 @@ void MSO_ParseCategories (const char *name, const char **text)
 
 	do {
 		/* get entries and add them to category */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (text[0] == '\0')
 			break;
 		if (token[0] == '}')

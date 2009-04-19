@@ -132,7 +132,7 @@ static void R_LoadObjModelTris (mobj_t *obj, const mobjvert_t *verts, int count)
  *
  * @code 57/13/31 58/14/32 59/15/33 21/15/19 @endcode
  *
- * Tokenize the line with @c COM_Parse, and parse each vertex definition.
+ * Tokenize the line with @c Com_Parse, and parse each vertex definition.
  * Faces with more than 3 vertices must be broken down into triangles.
  *
  * @return the number of triangles produced for the specified line.
@@ -149,7 +149,7 @@ static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line
 	i = 0;
 
 	while (qtrue) {
-		const char *c = COM_Parse(&line);
+		const char *c = Com_Parse(&line);
 
 		if (!strlen(c))  /* done */
 			break;
@@ -275,7 +275,7 @@ static void R_LoadObjSkin (model_t *mod)
 	char skinPath[MAX_QPATH];
 	mAliasMesh_t *mesh = &mod->alias.meshes[0];
 
-	COM_StripExtension(mod->name, skinPath, sizeof(skinPath));
+	Com_StripExtension(mod->name, skinPath, sizeof(skinPath));
 
 	mesh->num_skins = 1;
 	mesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t), vid_modelPool, 0);
@@ -310,7 +310,7 @@ static void R_LoadObjModel_ (model_t *mod, mobj_t *obj, const byte *buffer, int 
 			i = 0;
 
 			if (!comment)
-				R_LoadObjModelLine(mod, obj, COM_Trim(line));
+				R_LoadObjModelLine(mod, obj, Com_Trim(line));
 
 			comment = qfalse;
 			c++;

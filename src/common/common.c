@@ -325,30 +325,9 @@ unsigned int Com_HashKey (const char *name, int hashsize)
 }
 
 /**
- * @brief Checks whether a given commandline parameter was set
- * @param[in] parm Check for this commandline parameter
- * @return the position (1 to argc-1) in the program's argument list
- * where the given parameter appears, or 0 if not present
- * @sa COM_InitArgv
- */
-int COM_CheckParm (const char *parm)
-{
-	int i;
-
-	for (i = 1; i < com_argc; i++) {
-		if (!com_argv[i])
-			continue;               /* NEXTSTEP sometimes clears appkit vars. */
-		if (!strcmp(parm, com_argv[i]))
-			return i;
-	}
-
-	return 0;
-}
-
-/**
  * @brief Returns the script commandline argument count
  */
-int COM_Argc (void)
+int Com_Argc (void)
 {
 	return com_argc;
 }
@@ -356,7 +335,7 @@ int COM_Argc (void)
 /**
  * @brief Returns an argument of script commandline
  */
-const char *COM_Argv (int arg)
+const char *Com_Argv (int arg)
 {
 	if (arg < 0 || arg >= com_argc || !com_argv[arg])
 		return "";
@@ -366,11 +345,9 @@ const char *COM_Argv (int arg)
 /**
  * @brief Reset com_argv entry to empty string
  * @param[in] arg Which argument in com_argv
- * @sa COM_InitArgv
- * @sa COM_CheckParm
- * @sa COM_AddParm
+ * @sa Com_InitArgv
  */
-void COM_ClearArgv (int arg)
+void Com_ClearArgv (int arg)
 {
 	if (arg < 0 || arg >= com_argc || !com_argv[arg])
 		return;
@@ -378,10 +355,7 @@ void COM_ClearArgv (int arg)
 }
 
 
-/**
- * @sa COM_CheckParm
- */
-void COM_InitArgv (int argc, const char **argv)
+void Com_InitArgv (int argc, const char **argv)
 {
 	int i;
 
@@ -396,17 +370,6 @@ void COM_InitArgv (int argc, const char **argv)
 	}
 }
 
-/**
- * @brief Adds the given string at the end of the current argument list
- * @sa COM_InitArgv
- */
-void COM_AddParm (const char *parm)
-{
-	if (com_argc == MAX_NUM_ARGVS)
-		Com_Error(ERR_FATAL, "COM_AddParm: MAX_NUM)ARGS");
-	com_argv[com_argc++] = parm;
-}
-
 #define MACRO_CVAR_ID_LENGTH 6
 /**
  * @brief Expands strings with cvar values that are dereferenced by a '*cvar'
@@ -414,7 +377,7 @@ void COM_AddParm (const char *parm)
  * @sa Cmd_TokenizeString
  * @sa MN_GetReferenceString
  */
-const char *COM_MacroExpandString (const char *text)
+const char *Com_MacroExpandString (const char *text)
 {
 	int i, j, count, len;
 	qboolean inquote;
@@ -451,7 +414,7 @@ const char *COM_MacroExpandString (const char *text)
 
 		/* scan out the complete macro and only parse the cvar name */
 		start = &scan[i + MACRO_CVAR_ID_LENGTH];
-		token = COM_Parse(&start);
+		token = Com_Parse(&start);
 		if (!start)
 			continue;
 
@@ -856,7 +819,7 @@ static void Com_WriteConfig_f (void)
 	}
 
 	Q_strncpyz(filename, Cmd_Argv(1), sizeof(filename));
-	COM_DefaultExtension(filename, sizeof(filename), ".cfg");
+	Com_DefaultExtension(filename, sizeof(filename), ".cfg");
 	Com_WriteConfigToFile(filename);
 }
 
@@ -896,7 +859,7 @@ void Qcommon_Init (int argc, const char **argv)
 
 	/* prepare enough of the subsystems to handle
 	 * cvar and command buffer management */
-	COM_InitArgv(argc, argv);
+	Com_InitArgv(argc, argv);
 
 	Swap_Init();
 	Cbuf_Init();

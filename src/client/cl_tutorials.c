@@ -107,7 +107,7 @@ void TUT_ParseTutorials (const char *name, const char **text)
 	const value_t *v;
 
 	/* get name list body body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("TUT_ParseTutorials: tutorial \"%s\" without body ignored\n", name);
@@ -125,7 +125,7 @@ void TUT_ParseTutorials (const char *name, const char **text)
 	memset(t, 0, sizeof(*t));
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -133,7 +133,7 @@ void TUT_ParseTutorials (const char *name, const char **text)
 		for (v = tutValues; v->string; v++)
 			if (!strncmp(token, v->string, sizeof(v->string))) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 

@@ -195,7 +195,7 @@ void CL_ParseUGVs (const char *name, const char **text)
 	int i;
 
 	/* get name list body body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseUGVs: ugv \"%s\" without body ignored\n", name);
@@ -221,7 +221,7 @@ void CL_ParseUGVs (const char *name, const char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -229,7 +229,7 @@ void CL_ParseUGVs (const char *name, const char **text)
 		for (v = ugvValues; v->string; v++)
 			if (!strncmp(token, v->string, sizeof(v->string))) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				Com_EParseValue(ugv, token, v->type, v->ofs, v->size);

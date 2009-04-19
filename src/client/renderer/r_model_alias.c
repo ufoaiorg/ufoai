@@ -39,7 +39,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 	int n;
 
 	for (n = 0, text = buffer; text; n++)
-		COM_Parse(&text);
+		Com_Parse(&text);
 	n /= 4;
 	if (n > MAX_ANIMS)
 		n = MAX_ANIMS;
@@ -51,13 +51,13 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 
 	do {
 		/* get the name */
-		token = COM_Parse(&text);
+		token = Com_Parse(&text);
 		if (!text)
 			break;
 		Q_strncpyz(anim->name, token, MAX_ANIMNAME);
 
 		/* get the start */
-		token = COM_Parse(&text);
+		token = Com_Parse(&text);
 		if (!text)
 			break;
 		anim->from = atoi(token);
@@ -67,7 +67,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 			Sys_Error("R_ModLoadAnims: start frame is higher than models frame count (%i) (model: %s)", mod->num_frames, mod->animname);
 
 		/* get the end */
-		token = COM_Parse(&text);
+		token = Com_Parse(&text);
 		if (!text)
 			break;
 		anim->to = atoi(token);
@@ -77,7 +77,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 			Sys_Error("R_ModLoadAnims: end frame is higher than models frame count (%i) (model: %s)", mod->num_frames, mod->animname);
 
 		/* get the fps */
-		token = COM_Parse(&text);
+		token = Com_Parse(&text);
 		if (!text)
 			break;
 		anim->time = (atof(token) > 0.01) ? (1000.0 / atof(token)) : (1000.0 / 0.01);

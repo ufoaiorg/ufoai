@@ -378,7 +378,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 	int i;
 
 	/* get id list body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("INS_ParseInstallations: installation \"%s\" without body ignored\n", name);
 		return;
@@ -412,7 +412,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 	ccs.numInstallationTemplates++;
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -422,7 +422,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 		for (vp = installation_vals; vp->string; vp++)
 			if (!strcmp(token, vp->string)) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -448,7 +448,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 				Q_strcat(cvarname, installation->id, MAX_VAR);
 				Q_strcat(cvarname, "_cost", MAX_VAR);
 
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				installation->cost = atoi(token);
@@ -458,7 +458,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 				char cvarname[MAX_VAR];
 
 
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				installation->buildTime = atoi(token);

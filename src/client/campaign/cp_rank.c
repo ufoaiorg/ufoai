@@ -66,7 +66,7 @@ void CL_ParseRanks (const char *name, const char **text)
 	int i;
 
 	/* get name list body body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseRanks: rank/medal \"%s\" without body ignored\n", name);
@@ -92,7 +92,7 @@ void CL_ParseRanks (const char *name, const char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -100,7 +100,7 @@ void CL_ParseRanks (const char *name, const char **text)
 		for (v = rankValues; v->string; v++)
 			if (!strcmp(token, v->string)) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				switch (v->type) {
@@ -116,7 +116,7 @@ void CL_ParseRanks (const char *name, const char **text)
 
 		if (!strcmp(token, "type")) {
 			/* employeeType_t */
-			token = COM_EParse(text, errhead, name);
+			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
 			/* error check is performed in E_GetEmployeeType function */

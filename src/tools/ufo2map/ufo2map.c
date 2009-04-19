@@ -623,11 +623,11 @@ int main (int argc, const char **argv)
 
 	FS_InitFilesystem(qfalse);
 
-	COM_StripExtension(argv[argc - 1], mapFilename, sizeof(mapFilename));
+	Com_StripExtension(argv[argc - 1], mapFilename, sizeof(mapFilename));
 	strncpy(baseFilename, mapFilename, sizeof(baseFilename) - 1);
 	strncpy(bspFilename, mapFilename, sizeof(bspFilename) - 1);
-	COM_DefaultExtension(mapFilename, sizeof(mapFilename), ".map");
-	COM_DefaultExtension(bspFilename, sizeof(bspFilename), ".bsp");
+	Com_DefaultExtension(mapFilename, sizeof(mapFilename), ".map");
+	Com_DefaultExtension(bspFilename, sizeof(bspFilename), ".bsp");
 
 	if (config.info) {
 		LoadBSPFile(bspFilename);

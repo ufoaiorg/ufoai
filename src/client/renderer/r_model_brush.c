@@ -70,8 +70,8 @@ static void R_ModLoadLighting (const lump_t *l, qboolean day)
 		int i;
 		const char *c;
 
-		c = COM_Parse(&s);  /* parse the string itself */
-		c = COM_Parse(&s);  /* and then the value */
+		c = Com_Parse(&s);  /* parse the string itself */
+		c = Com_Parse(&s);  /* and then the value */
 
 		if (sscanf(c, "%f %f %f", &refdef.ambient_light[0],
 			&refdef.ambient_light[1], &refdef.ambient_light[2]) != 3)
@@ -936,7 +936,7 @@ static void R_LoadBspLights (model_t *mod)
 	entity = light = qfalse;
 
 	while (qtrue) {
-		const char *c = COM_Parse(&ents);
+		const char *c = Com_Parse(&ents);
 		if (!strlen(c))
 			break;
 
@@ -956,19 +956,19 @@ static void R_LoadBspLights (model_t *mod)
 		}
 
 		if (!strcmp(c, "classname")) {
-			c = COM_Parse(&ents);
+			c = Com_Parse(&ents);
 			if (!strcmp(c, "light"))
 				light = qtrue;
 		}
 
 		if (!strcmp(c, "origin")) {
-			if (sscanf(COM_Parse(&ents), "%f %f %f", &org[0], &org[1], &org[2]) != 3)
+			if (sscanf(Com_Parse(&ents), "%f %f %f", &org[0], &org[1], &org[2]) != 3)
 				Com_Printf("Invalid origin vector given\n");
 			continue;
 		}
 
 		if (!strcmp(c, "light")) {
-			radius = atof(COM_Parse(&ents));
+			radius = atof(Com_Parse(&ents));
 			continue;
 		}
 	}
@@ -1154,7 +1154,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 	/* load tiles */
 	while (tiles) {
 		/* get tile name */
-		const char *token = COM_Parse(&tiles);
+		const char *token = Com_Parse(&tiles);
 		if (!tiles) {
 			/* finish */
 			R_EndBuildingLightmaps();
@@ -1176,7 +1176,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 		if (pos && pos[0]) {
 			/* get grid position and add a tile */
 			for (i = 0; i < 3; i++) {
-				token = COM_Parse(&pos);
+				token = Com_Parse(&pos);
 				if (!pos)
 					Com_Error(ERR_DROP, "R_ModBeginLoading: invalid positions\n");
 				sh[i] = atoi(token);

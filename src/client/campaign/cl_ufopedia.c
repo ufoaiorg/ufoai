@@ -1406,7 +1406,7 @@ void UP_ParseChapters (const char *name, const char **text)
 	const char *token;
 
 	/* get name list body body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token !='{') {
 		Com_Printf("UP_ParseChapters: chapter def \"%s\" without body ignored\n", name);
@@ -1415,7 +1415,7 @@ void UP_ParseChapters (const char *name, const char **text)
 
 	do {
 		/* get the id */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1431,7 +1431,7 @@ void UP_ParseChapters (const char *name, const char **text)
 		ccs.upChapters[ccs.numChapters].idx = ccs.numChapters;	/* set self-link */
 
 		/* get the name */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')

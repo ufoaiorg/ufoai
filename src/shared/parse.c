@@ -38,9 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * the returned string must be copied first, as Com_Parse returns a
  * pointer to a static buffer that it holds. this will be re-used on
  * the next call.
- * @sa COM_EParse
+ * @sa Com_EParse
  */
-const char *COM_Parse (const char *data_p[])
+const char *Com_Parse (const char *data_p[])
 {
 	static char com_token[4096];
 	int c;

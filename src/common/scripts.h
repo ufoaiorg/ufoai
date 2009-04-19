@@ -218,6 +218,6 @@ teamDef_t* Com_GetTeamDefinitionByID(const char *team);
 mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
 void Com_ParseScripts(void);
 void Com_PrecacheCharacterModels(void);
-const char *COM_EParse(const char **text, const char *errhead, const char *errinfo);
+const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
 
 #endif /* SCRIPTS_H */

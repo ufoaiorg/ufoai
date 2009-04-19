@@ -82,7 +82,7 @@ StaticRegisterModule staticRegisterEclassDef (StaticEclassDefModule::instance ()
 static void Eclass_ParseFlags (EntityClass *e, const char **text)
 {
 	for (int i = 0; i < MAX_FLAGS; i++) {
-		const char *token = COM_Parse(text);
+		const char *token = Com_Parse(text);
 		if (!*token)
 			break;
 		strcpy(e->flagnames[i], token);
@@ -94,7 +94,7 @@ static void Eclass_ParseAttribute (EntityClass *e, const char **text, bool manda
 {
 	const char *token;
 	do {
-		token = COM_Parse(text);
+		token = Com_Parse(text);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -120,7 +120,7 @@ static void Eclass_ParseDefault (EntityClass *e, const char **text)
 {
 	const char *token;
 	do {
-		token = COM_Parse(text);
+		token = Com_Parse(text);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -132,7 +132,7 @@ static void Eclass_ParseType (EntityClass *e, const char **text)
 {
 	const char *token;
 	do {
-		token = COM_Parse(text);
+		token = Com_Parse(text);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -147,10 +147,10 @@ static EntityClass *Eclass_InitFromText (const char **text)
 	e->free = &Eclass_Free;
 
 	// grab the name
-	e->m_name = COM_Parse(text);
+	e->m_name = Com_Parse(text);
 	if (!*text)
 		return 0;
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 	if (*token != '{') {
 		g_message("Entity '%s' without body ignored\n", e->m_name.c_str());
 		return 0;
@@ -160,7 +160,7 @@ static EntityClass *Eclass_InitFromText (const char **text)
 
 	do {
 		/* get the name type */
-		token = COM_Parse(text);
+		token = Com_Parse(text);
 		if (!*text)
 			return 0;
 		if (*token == '}')
@@ -175,7 +175,7 @@ static EntityClass *Eclass_InitFromText (const char **text)
 			Eclass_ParseDefault(e, text);
 		} else {
 			if (!strcmp(token, "color") || !strcmp(token, "_color")) {
-				token = COM_Parse(text);
+				token = Com_Parse(text);
 				if (!*text)
 					return 0;
 				// grab the color, reformat as texture name
@@ -185,7 +185,7 @@ static EntityClass *Eclass_InitFromText (const char **text)
 					return e;
 				}
 			} else if (!strcmp(token, "size")) {
-				token = COM_Parse(text);
+				token = Com_Parse(text);
 				if (!*text)
 					return 0;
 				e->fixedsize = true;
@@ -196,20 +196,20 @@ static EntityClass *Eclass_InitFromText (const char **text)
 					return 0;
 				}
 			} else if (!strcmp(token, "description")) {
-				token = COM_Parse(text);
+				token = Com_Parse(text);
 				if (!*text)
 					return 0;
 				e->m_comments = token;
 			} else if (!strcmp(token, "spawnflags")) {
 				gchar *flags;
-				token = COM_Parse(text);
+				token = Com_Parse(text);
 				if (!*text)
 					return 0;
 				flags = g_strdup(token);
 				Eclass_ParseFlags(e, (const char **)&flags);
 				g_free(flags);
 			} else if (!strcmp(token, "model")) {
-				token = COM_Parse(text);
+				token = Com_Parse(text);
 				if (!*text)
 					return 0;
 				StringOutputStream buffer(string_length(token));
@@ -363,7 +363,7 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 	do {
 		const char *token;
 		do {
-			token = COM_Parse(text);
+			token = Com_Parse(text);
 			if (!*token)
 				return;
 		} while (strcmp(token, "entity"));

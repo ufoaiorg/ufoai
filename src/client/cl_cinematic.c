@@ -762,7 +762,7 @@ static void CIN_Cinematic_f (void)
 	}
 
 	Com_sprintf(name, sizeof(name), "videos/%s", Cmd_Argv(1));
-	COM_DefaultExtension(name, sizeof(name), ".roq");
+	Com_DefaultExtension(name, sizeof(name), ".roq");
 
 	/* If running a local server, kill it */
 	SV_Shutdown("Server quit", qfalse);

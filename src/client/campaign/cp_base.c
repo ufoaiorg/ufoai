@@ -1583,7 +1583,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 	int i;
 
 	/* get id list body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("B_ParseBuildings: building \"%s\" without body ignored\n", name);
 		return;
@@ -1618,7 +1618,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		ccs.numBuildingTemplates++;
 		do {
 			/* get the name type */
-			token = COM_EParse(text, errhead, name);
+			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				break;
 			if (*token == '}')
@@ -1626,7 +1626,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 
 			/* get values */
 			if (!strcmp(token, "type")) {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1636,14 +1636,14 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 			} else {
 				/* no linking yet */
 				if (!strcmp(token, "depends")) {
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 				} else {
 					for (vp = valid_building_vars; vp->string; vp++)
 						if (!strncmp(token, vp->string, sizeof(vp->string))) {
 							/* found a definition */
-							token = COM_EParse(text, errhead, name);
+							token = Com_EParse(text, errhead, name);
 							if (!*text)
 								return;
 
@@ -1679,14 +1679,14 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 
 		do {
 			/* get the name type */
-			token = COM_EParse(text, errhead, name);
+			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				break;
 			if (*token == '}')
 				break;
 			/* get values */
 			if (!strcmp(token, "depends")) {
-				dependsBuilding = B_GetBuildingTemplate(COM_EParse(text, errhead, name));
+				dependsBuilding = B_GetBuildingTemplate(Com_EParse(text, errhead, name));
 				if (!dependsBuilding)
 					Sys_Error("Could not find building depend of %s\n", building->id);
 				building->dependsBuilding = dependsBuilding;
@@ -1737,7 +1737,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	int i;
 
 	/* get token */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("B_ParseBaseTemplate: Template \"%s\" without body ignored\n", name);
@@ -1759,7 +1759,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 
 	do {
 		/* get the building */
-		token = COM_EParse(text, errhead, template->id);
+		token = Com_EParse(text, errhead, template->id);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1785,7 +1785,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 			Sys_Error("B_ParseBaseTemplate: Could not find building with id %s\n", template->id);
 
 		/* get the position */
-		token = COM_EParse(text, errhead, template->id);
+		token = Com_EParse(text, errhead, template->id);
 		if (!*text)
 			break;
 		if (*token == '}')

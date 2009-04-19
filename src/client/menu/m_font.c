@@ -93,7 +93,7 @@ void MN_ParseFont (const char *name, const char **text)
 	Com_DPrintf(DEBUG_CLIENT, "...found font %s (%i)\n", font->name, numFonts);
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("MN_ParseFont: font \"%s\" without body ignored\n", name);
@@ -104,7 +104,7 @@ void MN_ParseFont (const char *name, const char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -113,7 +113,7 @@ void MN_ParseFont (const char *name, const char **text)
 		for (v = fontValues; v->string; v++)
 			if (!strncmp(token, v->string, sizeof(v->string))) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 

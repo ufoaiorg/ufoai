@@ -79,7 +79,7 @@ void M_ParseMusic (const char *name, const char **text)
 	}
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseMusic: music def \"%s\" without body ignored\n", name);
@@ -87,7 +87,7 @@ void M_ParseMusic (const char *name, const char **text)
 	}
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -142,7 +142,7 @@ static void M_Start (const char *file)
 		return;
 	}
 
-	COM_StripExtension(file, name, sizeof(name));
+	Com_StripExtension(file, name, sizeof(name));
 	len = strlen(name);
 	if (len + 4 >= MAX_QPATH) {
 		Com_Printf("S_Music_Start: MAX_QPATH exceeded: "UFO_SIZE_T"\n", len + 4);
@@ -246,7 +246,7 @@ static void M_RandomTrack_f (void)
 		while ((filename = FS_NextFileFromFileList("music/*.ogg")) != NULL) {
 			if (!randomID) {
 				Com_sprintf(findname, sizeof(findname), "%s", filename);
-				musicTrack = COM_SkipPath(findname);
+				musicTrack = Com_SkipPath(findname);
 				Com_Printf("..playing next: '%s'\n", musicTrack);
 				Cvar_Set("snd_music", musicTrack);
 			}

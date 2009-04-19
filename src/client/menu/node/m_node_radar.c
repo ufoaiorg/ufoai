@@ -91,7 +91,7 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 		char name[MAX_VAR];
 		hudRadarImage_t *image;
 		/* get tile name */
-		const char *token = COM_Parse(&tiles);
+		const char *token = Com_Parse(&tiles);
 		if (!tiles) {
 			/* finish */
 			return;
@@ -116,7 +116,7 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 			vec3_t sh;
 			/* get grid position and add a tile */
 			for (i = 0; i < 3; i++) {
-				token = COM_Parse(&pos);
+				token = Com_Parse(&pos);
 				if (!pos)
 					Com_Error(ERR_DROP, "MN_BuildRadarImageList: invalid positions\n");
 				sh[i] = atoi(token);

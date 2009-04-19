@@ -943,7 +943,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 	es = (char *) (cModelBase + l->fileofs);
 	while (1) {
 		/* parse the opening brace */
-		token = COM_Parse(&es);
+		token = Com_Parse(&es);
 		if (!es)
 			break;
 		if (token[0] != '{')
@@ -955,7 +955,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 		/* go through all the dictionary pairs */
 		while (1) {
 			/* parse key */
-			token = COM_Parse(&es);
+			token = Com_Parse(&es);
 			if (token[0] == '}')
 				break;
 			if (!es)
@@ -964,7 +964,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 			Q_strncpyz(keyname, token, sizeof(keyname));
 
 			/* parse value */
-			token = COM_Parse(&es);
+			token = Com_Parse(&es);
 			if (!es)
 				Com_Error(ERR_DROP, "CMod_LoadEntityString: EOF without closing brace");
 
@@ -1224,7 +1224,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
 	/* load tiles */
 	while (tiles) {
 		/* get tile name */
-		token = COM_Parse(&tiles);
+		token = Com_Parse(&tiles);
 		if (!tiles) {
 			CMod_RerouteMap();
 			/* Copy the server map from the client */
@@ -1248,7 +1248,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
 		if (pos && pos[0]) {
 			/* get position and add a tile */
 			for (i = 0; i < 3; i++) {
-				token = COM_Parse(&pos);
+				token = Com_Parse(&pos);
 				if (!pos)
 					Com_Error(ERR_DROP, "CM_LoadMap: invalid positions");
 				sh[i] = atoi(token);

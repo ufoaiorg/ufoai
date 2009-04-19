@@ -1144,7 +1144,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	}
 
 	/* get body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("RS_ParseTechnologies: \"%s\" technology def without body ignored.\n", name);
 		return;
@@ -1186,7 +1186,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1194,7 +1194,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 		/* get values */
 		if (!strcmp(token, "type")) {
 			/* what type of tech this is */
-			token = COM_EParse(text, errhead, name);
+			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
 			/* redundant, but oh well. */
@@ -1231,7 +1231,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					descTemp = &tech->description;
 				}
 
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					break;
 				if (*token != '{')
@@ -1240,7 +1240,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					break;
 
 				do {	/* Loop through all descriptions in the list.*/
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 					if (*token == '}')
@@ -1251,7 +1251,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						descTemp->tech[descTemp->numDescriptions] = Mem_PoolStrDup(token, cl_campaignPool, 0);
 
 						/* Copy description text into the entry. */
-						token = COM_EParse(text, errhead, name);
+						token = Com_EParse(text, errhead, name);
 						/* skip translation marker */
 						if (*token == '_')
 							token++;
@@ -1264,7 +1264,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				} while (*text);
 
 			} else if (!strcmp(token, "redirect")) {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				/* Store this tech and the parsed tech-id of the target of the redirection for later linking. */
 				LIST_AddPointer(&redirectedTechs, tech);
 				LIST_AddString(&redirectedTechs, token);
@@ -1278,7 +1278,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					requiredTemp = &tech->require_for_production;
 				}
 
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					break;
 				if (*token != '{')
@@ -1287,7 +1287,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					break;
 
 				do {	/* Loop through all 'require' entries.*/
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 					if (*token == '}')
@@ -1302,7 +1302,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_TECH;
 
 							/* Set requirement-name (id). */
-							token = COM_Parse(text);
+							token = Com_Parse(text);
 							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(token, cl_campaignPool, 0);
 
 							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-tech ('tech' or 'tech_not')- %s\n", requiredTemp->links[requiredTemp->numLinks].id);
@@ -1317,10 +1317,10 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							/* Set requirement-type. */
 							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ITEM;
 							/* Set requirement-name (id). */
-							token = COM_Parse(text);
+							token = Com_Parse(text);
 							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(token, cl_campaignPool, 0);
 							/* Set requirement-amount of item. */
-							token = COM_Parse(text);
+							token = Com_Parse(text);
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
 							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-item - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							requiredTemp->numLinks++;
@@ -1328,7 +1328,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else if (!strcmp(token, "event")) {
-						token = COM_Parse(text);
+						token = Com_Parse(text);
 						Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-event - %s\n", token);
 						requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_EVENT;
 						/* Get name/id & amount of required item. */
@@ -1340,7 +1340,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alienglobal - %i\n", requiredTemp->links[requiredTemp->numLinks].amount);
 
 							/* Set requirement-amount of item. */
-							token = COM_Parse(text);
+							token = Com_Parse(text);
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
 							requiredTemp->numLinks++;
 						} else {
@@ -1358,10 +1358,10 @@ void RS_ParseTechnologies (const char *name, const char **text)
 								Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien alive - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							}
 							/* Set requirement-name (id). */
-							token = COM_Parse(text);
+							token = Com_Parse(text);
 							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(token, cl_campaignPool, 0);
 							/* Set requirement-amount of item. */
-							token = COM_Parse(text);
+							token = Com_Parse(text);
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
 							requiredTemp->numLinks++;
 						} else {
@@ -1373,7 +1373,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				} while (*text);
 			} else if (!strcmp(token, "up_chapter")) {
 				/* UFOpaedia chapter */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1417,19 +1417,19 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				} else {
 					mail = &tech->mail[TECHMAIL_RESEARCHED];
 				}
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text || *token != '{')
 					return;
 
 				/* grab the initial mail entry */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
 					return;
 				do {
 					for (vp = valid_techmail_vars; vp->string; vp++)
 						if (!strcmp(token, vp->string)) {
 							/* found a definition */
-							token = COM_EParse(text, errhead, name);
+							token = Com_EParse(text, errhead, name);
 							if (!*text)
 								return;
 
@@ -1448,7 +1448,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							break;
 						}
 					/* grab the next entry */
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 				} while (*text && *token != '}');
@@ -1459,7 +1459,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				for (vp = valid_tech_vars; vp->string; vp++)
 					if (!strcmp(token, vp->string)) {
 						/* found a definition */
-						token = COM_EParse(text, errhead, name);
+						token = Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 

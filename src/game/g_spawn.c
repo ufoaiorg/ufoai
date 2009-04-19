@@ -234,7 +234,7 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 	/* go through all the dictionary pairs */
 	while (1) {
 		/* parse key */
-		const char *c = COM_Parse(&data);
+		const char *c = Com_Parse(&data);
 		if (c[0] == '}')
 			break;
 		if (!data)
@@ -243,7 +243,7 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 		Q_strncpyz(keyname, c, sizeof(keyname));
 
 		/* parse value */
-		c = COM_Parse(&data);
+		c = Com_Parse(&data);
 		if (!data)
 			gi.error("ED_ParseEntity: EOF without closing brace");
 
@@ -338,7 +338,7 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 	entnum = 0;
 	while (1) {
 		/* parse the opening brace */
-		com_token = COM_Parse(&entities);
+		com_token = Com_Parse(&entities);
 		if (!entities)
 			break;
 		if (com_token[0] != '{')

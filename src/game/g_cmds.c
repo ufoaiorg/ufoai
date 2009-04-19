@@ -110,7 +110,7 @@ static void G_Say_f (player_t *player, qboolean arg0, qboolean team)
 		Q_strcat(text, gi.Cmd_Args(), sizeof(text));
 	} else {
 		const char *p = gi.Cmd_Args();
-		const char *token = COM_Parse(&p);
+		const char *token = Com_Parse(&p);
 
 		Q_strcat(text, token, sizeof(text));
 	}

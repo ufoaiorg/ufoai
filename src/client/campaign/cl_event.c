@@ -170,7 +170,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 	eventMail->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseEventMails: eventMail def \"%s\" without body ignored\n", name);
@@ -179,7 +179,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 	}
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -189,7 +189,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 		for (vp = eventMail_vals; vp->string; vp++)
 			if (!strcmp(token, vp->string)) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -208,7 +208,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 
 		if (!vp->string) {
 			Com_Printf("CL_ParseEventMails: unknown token \"%s\" ignored (mail %s)\n", token, name);
-			COM_EParse(text, errhead, name);
+			Com_EParse(text, errhead, name);
 		}
 	} while (*text);
 }

@@ -1469,7 +1469,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 	}
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("AIR_ParseAircraft: aircraft def \"%s\" without body ignored\n", name);
@@ -1477,7 +1477,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 	}
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1490,7 +1490,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 			if (*token == '{') {
 				FS_SkipBlock(text);
 			} else if (!strcmp(token, "shield")) {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				Com_DPrintf(DEBUG_CLIENT, "use shield %s for aircraft %s\n", token, aircraftTemplate->id);
@@ -1498,20 +1498,20 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				if (tech)
 					aircraftTemplate->shield.item = AII_GetAircraftItemByID(tech->provides);
 			} else if (!strcmp(token, "slot")) {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
 					Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
 					return;
 				}
 				do {
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						break;
 					if (*token == '}')
 						break;
 
 					if (!strcmp(token, "type")) {
-						token = COM_EParse(text, errhead, name);
+						token = Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						for (i = 0; i < MAX_ACITEMS; i++) {
@@ -1533,7 +1533,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 						if (i == MAX_ACITEMS)
 							Sys_Error("Unknown value '%s' for slot type\n", token);
 					} else if (!strcmp(token, "position")) {
-						token = COM_EParse(text, errhead, name);
+						token = Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						for (i = 0; i < AIR_POSITIONS_MAX; i++) {
@@ -1554,7 +1554,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 						if (i == AIR_POSITIONS_MAX)
 							Sys_Error("Unknown value '%s' for slot position\n", token);
 					} else if (!strcmp(token, "contains")) {
-						token = COM_EParse(text, errhead, name);
+						token = Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						tech = RS_GetTechByID(token);
@@ -1573,7 +1573,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							}
 						}
 					} else if (!strcmp(token, "ammo")) {
-						token = COM_EParse(text, errhead, name);
+						token = Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						tech = RS_GetTechByID(token);
@@ -1585,7 +1585,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 								Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
 						}
 					} else if (!strcmp(token, "size")) {
-						token = COM_EParse(text, errhead, name);
+						token = Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						if (itemType == AC_ITEM_WEAPON) {
@@ -1605,14 +1605,14 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 			}
 		} else {
 			if (!strcmp(token, "shield")) {
-				COM_EParse(text, errhead, name);
+				Com_EParse(text, errhead, name);
 				continue;
 			}
 			/* check for some standard values */
 			for (vp = aircraft_vals; vp->string; vp++)
 				if (!strcmp(token, vp->string)) {
 					/* found a definition */
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 					switch (vp->type) {
@@ -1636,7 +1636,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 			}
 
 			if (!strcmp(token, "type")) {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				if (!strcmp(token, "transporter"))
@@ -1646,20 +1646,20 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				else if (!strcmp(token, "ufo"))
 					aircraftTemplate->type = AIRCRAFT_UFO;
 			} else if (!strcmp(token, "slot")) {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
 					Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
 					return;
 				}
 				FS_SkipBlock(text);
 			} else if (!strcmp(token, "param")) {
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
 					Com_Printf("AIR_ParseAircraft: Invalid param value for aircraft: %s\n", name);
 					return;
 				}
 				do {
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						break;
 					if (*token == '}')
@@ -1667,7 +1667,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 
 					if (!strcmp(token, "range")) {
 						/* this is the range of aircraft, must be translated into fuel */
-						token = COM_EParse(text, errhead, name);
+						token = Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						Com_EParseValue(aircraftTemplate, token, V_INT, offsetof(aircraft_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraft_t, stats[0]));
@@ -1679,7 +1679,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 						for (vp = aircraft_param_vals; vp->string; vp++)
 							if (!strcmp(token, vp->string)) {
 								/* found a definition */
-								token = COM_EParse(text, errhead, name);
+								token = Com_EParse(text, errhead, name);
 								if (!*text)
 									return;
 								switch (vp->type) {
@@ -1699,7 +1699,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				} while (*text); /* dummy condition */
 			} else if (!vp->string) {
 				Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
-				COM_EParse(text, errhead, name);
+				Com_EParse(text, errhead, name);
 			}
 		} /* assignAircraftItems */
 	} while (*text);

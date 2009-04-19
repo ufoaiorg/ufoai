@@ -319,11 +319,11 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 		MN_RegisterText(TEXT_STANDARD, serverInfoText);
 		userInfoText[0] = '\0';
 		do {
-			token = COM_Parse(&users);
+			token = Com_Parse(&users);
 			if (!users)
 				break;
 			team = atoi(token);
-			token = COM_Parse(&users);
+			token = Com_Parse(&users);
 			if (!users)
 				break;
 			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
@@ -376,7 +376,7 @@ static int CL_QueryMasterServerThread (void *data)
 	serverList = responseBuf;
 
 	Com_DPrintf(DEBUG_CLIENT, "masterserver response: %s\n", serverList);
-	token = COM_Parse(&serverList);
+	token = Com_Parse(&serverList);
 
 	num = atoi(token);
 	if (num >= MAX_SERVERLIST) {
@@ -385,14 +385,14 @@ static int CL_QueryMasterServerThread (void *data)
 	}
 	for (i = 0; i < num; i++) {
 		/* host */
-		token = COM_Parse(&serverList);
+		token = Com_Parse(&serverList);
 		if (!*token || !serverList) {
 			Com_Printf("Could not finish the masterserver response parsing\n");
 			break;
 		}
 		Q_strncpyz(node, token, sizeof(node));
 		/* port */
-		token = COM_Parse(&serverList);
+		token = Com_Parse(&serverList);
 		if (!*token || !serverList) {
 			Com_Printf("Could not finish the masterserver response parsing\n");
 			break;

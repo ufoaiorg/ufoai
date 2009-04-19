@@ -908,7 +908,7 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 	key = keyname + 1;
 	do {
 		/* get keyname */
-		token = COM_Parse(&es);
+		token = Com_Parse(&es);
 		if (token[0] == '}')
 			break;
 		if (!es)
@@ -917,7 +917,7 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 		Q_strncpyz(keyname, token, sizeof(keyname));
 
 		/* parse value */
-		token = COM_Parse(&es);
+		token = Com_Parse(&es);
 		if (!es)
 			Com_Error(ERR_DROP, "ED_ParseEntity: EOF without closing brace");
 
@@ -990,7 +990,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 	int i, j;
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParsePtlCmds: particle cmds \"%s\" without body ignored\n", name);
@@ -1002,7 +1002,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 	}
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1022,7 +1022,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 					break;
 
 				/* get parameter type */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1118,7 +1118,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 					}
 
 					/* get the value */
-					token = COM_EParse(text, errhead, name);
+					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 				}
@@ -1140,7 +1140,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 		for (pp = pps; pp->string; pp++)
 			if (!strcmp(token, pp->string)) {
 				/* get parameter */
-				token = COM_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1212,7 +1212,7 @@ int CL_ParseParticle (const char *name, const char **text)
 	Q_strncpyz(pd->name, name, sizeof(pd->name));
 
 	/* get it's body */
-	token = COM_Parse(text);
+	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseParticle: particle def \"%s\" without body ignored\n", name);
@@ -1222,7 +1222,7 @@ int CL_ParseParticle (const char *name, const char **text)
 	}
 
 	do {
-		token = COM_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')

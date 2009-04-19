@@ -1307,7 +1307,7 @@ void RT_WriteCSVFiles (struct routing_s *map, const char* baseFilename, const ip
 	for (i = 1; i <= ACTOR_MAX_SIZE; i++) {
 		strncpy(filename, baseFilename, sizeof(filename) - 1);
 		sprintf(ext, ".%i.elevation.csv", i);
-		COM_DefaultExtension(filename, sizeof(filename), ext);
+		Com_DefaultExtension(filename, sizeof(filename), ext);
 		FS_OpenFile(filename, &f, FILE_WRITE);
 		if (!f.f)
 			Sys_Error("Could not open file %s.", filename);
@@ -1333,7 +1333,7 @@ void RT_WriteCSVFiles (struct routing_s *map, const char* baseFilename, const ip
 	for (i = 1; i <= ACTOR_MAX_SIZE; i++) {
 		strncpy(filename, baseFilename, sizeof(filename) - 1);
 		sprintf(ext, ".%i.walls.csv", i);
-		COM_DefaultExtension(filename, sizeof(filename), ext);
+		Com_DefaultExtension(filename, sizeof(filename), ext);
 		FS_OpenFile(filename, &f, FILE_WRITE);
 		if (!f.f)
 			Sys_Error("Could not open file %s.", filename);
