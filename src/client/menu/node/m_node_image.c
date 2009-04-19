@@ -73,6 +73,8 @@ void MN_ImageNodeDraw (menuNode_t *node)
 		return;
 
 	image = MN_LoadImage(imageName);
+	if (!image)
+		return;
 
 	/* mouse darken effect */
 	/** @todo convert all pic using mousefx into button.
