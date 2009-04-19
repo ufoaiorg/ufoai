@@ -75,7 +75,6 @@ qboolean MN_WindowIsFullScreen (menuNode_t* const node)
 
 static void MN_WindowNodeDraw (menuNode_t *node)
 {
-	menuNode_t *eventNode;
 	const char* image;
 	const char* text;
 	vec2_t pos;
@@ -115,15 +114,14 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 		R_FontDrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
 	}
 
-	/** @todo we should use and event, and not a node */
-	eventNode = node->u.window.eventNode;
-	if (eventNode && eventNode->timePushed) {
-		if (eventNode->timePushed + eventNode->timeOut < cls.realtime) {
-			eventNode->timePushed = 0;
-			eventNode->invis = qtrue;
-			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", eventNode->name);
-			if (eventNode->onClick)
-				MN_ExecuteEventActions(eventNode, eventNode->onClick);
+	/* embedded timer */
+	if (node->u.window.onTimeOut && node->timeOut) {
+		if (node->lastTime == 0)
+			node->lastTime = cls.realtime;
+		if (node->lastTime + node->timeOut < cls.realtime) {
+			node->lastTime = 0;	/**< allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
+			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", node->name);
+			MN_ExecuteEventActions(node, node->u.window.onTimeOut);
 		}
 	}
 }
@@ -226,6 +224,9 @@ static void MN_WindowNodeInit (menuNode_t *node)
 {
 	menuNode_t *child;
 
+	/* init the embeded timer */
+	node->lastTime = cls.realtime;
+
 	/* init child */
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->behaviour->init) {
@@ -315,6 +316,7 @@ static const value_t windowNodeProperties[] = {
 	{"preventtypingescape", V_BOOL, offsetof(menuNode_t, u.window.preventTypingEscape), MEMBER_SIZEOF(menuNode_t, u.window.preventTypingEscape)},
 	{"fill", V_BOOL, offsetof(menuNode_t, u.window.fill), MEMBER_SIZEOF(menuNode_t, u.window.fill)},
 	{"starlayout", V_BOOL, offsetof(menuNode_t, u.window.starLayout), MEMBER_SIZEOF(menuNode_t, u.window.starLayout)},
+	{"timeout", V_INT, offsetof(menuNode_t, timeOut), MEMBER_SIZEOF(menuNode_t, timeOut)},
 
 	{"oninit", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onInit), MEMBER_SIZEOF(menuNode_t, u.window.onInit)},
 	{"onclose", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onClose), MEMBER_SIZEOF(menuNode_t, u.window.onClose)},

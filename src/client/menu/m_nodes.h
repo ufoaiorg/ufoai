@@ -101,8 +101,10 @@ typedef struct menuNode_s {
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */
-	int timeOut;				/**< ms value until invis is set (see cl.time) */
-	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
+
+	/** @todo move it into window node, or think about a node way (i.e. Doom3 onTime) */
+	int timeOut;				/**< ms value until calling onTimeOut (see cl.time) */
+	int lastTime;				/**< when a menu was pushed this value is set to cl.time */
 
 	/* common color */
 	vec4_t color;				/**< rgba */

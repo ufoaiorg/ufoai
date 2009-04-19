@@ -80,15 +80,6 @@ static const char *ea_strings[EA_NUM_EVENTACTION] = {
 };
 CASSERT(lengthof(ea_strings) == EA_NUM_EVENTACTION);
 
-#define EA_SPECIAL_NUM_EVENTACTION 1
-#define EA_SPECIAL_TIMEOUT (EA_NUM_EVENTACTION + 1)
-
-static const char *ea_special_strings[EA_SPECIAL_NUM_EVENTACTION] = {
-	"timeout",
-};
-CASSERT(lengthof(ea_special_strings) == EA_SPECIAL_NUM_EVENTACTION);
-
-
 /** @brief reserved token preventing calling a node with it */
 static const char *reserved_tokens[] = {
 	"this",
@@ -364,14 +355,6 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 		if (type == EA_NULL && *token[0] == '*') {
 			type = EA_SET;
 		}
-		if (type == EA_NULL) {
-			for (i = 0; i < EA_SPECIAL_NUM_EVENTACTION; i++) {
-				if (Q_strcasecmp(*token, ea_special_strings[i]) == 0) {
-					type = EA_NUM_EVENTACTION + 1 + i;
-					break;
-				}
-			}
-		}
 
 		/* unknown, we break the parsing */
 		if (type == EA_NULL) {
@@ -462,19 +445,6 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 			if (!*text)
 				return NULL;
 			action->scriptValues = (const value_t *) MN_ParseAction (menuNode, text, token);
-			break;
-
-		case EA_SPECIAL_TIMEOUT:
-			/* get new token */
-			*token = Com_EParse(text, errhead, NULL);
-			if (!*token || **token == '}') {
-				Com_Printf("MN_ParseAction: timeout with no value (in event) (node: %s)\n", MN_GetPath(menuNode));
-				return NULL;
-			}
-			menuNode->timeOut = atoi(*token);
-
-			/* no action for that */
-			action->type.op = EA_NULL;
 			break;
 
 		default:
@@ -1372,7 +1342,6 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 				menu->u.window.renderNode = newNode;
 			else if (superMenu->u.window.onTimeOut == node->onClick) {
 				menu->u.window.onTimeOut = newNode->onClick;
-				menu->u.window.eventNode = newNode;
 			}
 		}
 

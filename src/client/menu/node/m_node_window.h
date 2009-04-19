@@ -53,10 +53,9 @@ typedef struct {
 	struct menuNode_s *renderNode;
 
 	/** @todo think about converting it to action instead of node */
-	struct menuNode_s *eventNode;	/**< single 'func' node, or NULL */
 	struct menuAction_s *onInit; 	/**< Call when the menu is push */
 	struct menuAction_s *onClose;	/**< Call when the menu is pop */
-	struct menuAction_s *onTimeOut;	/**< Call when the own timer of the menu out */
+	struct menuAction_s *onTimeOut;	/**< Call when the own timer of the window out */
 	struct menuAction_s *onLeave;	/**< Call when mouse leave the window? call by cl_input */
 
 } windowExtraData_t;

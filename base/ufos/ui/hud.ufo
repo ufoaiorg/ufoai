@@ -7,6 +7,7 @@ window hud extends ahud
 	{
 		fill		true
 		starlayout	true
+		timeout		10000
 	}
 
 	// ==================
@@ -851,12 +852,12 @@ window hud extends ahud
 			onMouseLeave			{
 				*chatscreen size "690 48"
 				*chatscreen rows "3"
-				*(func)event timeout 10000
+				*node:root timeout 10000
 			}
 			onMouseEnter			{
 				*chatscreen size "690 400"
 				*chatscreen rows "25"
-				*(func)event timeout 0
+				*node:root timeout 0
 				*chatscreen invis false
 			}
 		}
@@ -895,7 +896,6 @@ window hud extends ahud
 
 	func event
 	{
-		timeout	10000
 		*chatscreen invis true
 	}
 

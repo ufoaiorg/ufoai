@@ -267,6 +267,10 @@ window serverinfo
 // ==================
 window mp_serverbrowser extends abstract_multiplayer_join
 {
+	{
+		timeout	60000
+	}
+
 	panel content {
 		{
 			pos			"415 120"
@@ -440,7 +444,6 @@ window mp_serverbrowser extends abstract_multiplayer_join
 
 	func event
 	{
-		timeout	60000
 		cmd "pingservers refresh;"
 	}
 }
@@ -1087,6 +1090,10 @@ window mp_create_server extends abstract_multiplayer
 // ==========================
 window multiplayer_selectteam
 {
+	{
+		timeout 2000
+	}
+	
 	// ==================
 	// background
 	// ==================
@@ -1223,7 +1230,6 @@ window multiplayer_selectteam
 	// update every 2 sec
 	func event
 	{
-		timeout 2000
 		cmd "mp_selectteam_init;"
 	}
 
@@ -1273,6 +1279,7 @@ window multiplayer_wait
 		dragbutton	true
 		image		ui/popup_alpha_tile
 		blend		true
+		timeout		2000
 	}
 	
 	string teams_str
@@ -1336,7 +1343,6 @@ window multiplayer_wait
 
 	func event
 	{
-		timeout	2000
 		cmd		"mp_wait_init;"
 	}
 }

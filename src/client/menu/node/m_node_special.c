@@ -29,27 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_special.h"
 #include "m_node_abstractnode.h"
 
-
-/**
- * @brief Called when we init the node on the screen
- */
-static void MN_FuncNodeInit (menuNode_t *node)
-{
-	/* if timeout exists, initialize the menu with current client time */
-	if (node->timeOut)
-		node->timePushed = cl.time;
-}
-
-/**
- * @brief Call before the script initializes the node
- */
-static void MN_FuncNodeLoading (menuNode_t *node)
-{
-	if (!strcmp(node->name, "event")) {
-		node->timeOut = 2000; /* default value */
-	}
-}
-
 /**
  * @brief Call after the script initialized the node
  * @todo special cases should be managed as a common property event of the parent node
@@ -69,7 +48,6 @@ static void MN_FuncNodeLoaded (menuNode_t *node)
 			Com_Printf("MN_FuncNodeLoaded: second close function ignored (menu \"%s\")\n", menu->name);
 	} else if (!strcmp(node->name, "event")) {
 		if (!menu->u.window.onTimeOut) {
-			menu->u.window.eventNode = node;
 			menu->u.window.onTimeOut = node->onClick;
 		} else
 			Com_Printf("MN_FuncNodeLoaded: second event function ignored (menu \"%s\")\n", menu->name);
@@ -82,21 +60,13 @@ static void MN_FuncNodeLoaded (menuNode_t *node)
 
 }
 
-static const value_t properties[] = {
-	{"timeout", V_INT, offsetof(menuNode_t, timeOut), MEMBER_SIZEOF(menuNode_t, timeOut)},
-	{NULL, V_NULL, 0, 0}
-};
-
 void MN_RegisterFuncNode (nodeBehaviour_t *behaviour)
 {
 	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = "func";
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
-	behaviour->loading = MN_FuncNodeLoading;
 	behaviour->loaded = MN_FuncNodeLoaded;
-	behaviour->init = MN_FuncNodeInit;
-	behaviour->properties = properties;
 }
 
 void MN_RegisterNullNode (nodeBehaviour_t *behaviour)
