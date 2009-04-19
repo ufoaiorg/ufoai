@@ -1153,7 +1153,7 @@ void EntityInspector_updateGuiElements (void)
 	Entity_GetKeyValues_Selected(g_selectedKeyValues);
 
 	{
-		char* classname = "";
+		const char* classname = "";
 		ClassKeyValues::iterator classFirstIter = g_selectedKeyValues.begin();
 		if (classFirstIter != g_selectedKeyValues.end()) {
 			classname = const_cast<char *> ((*classFirstIter).first.c_str());
