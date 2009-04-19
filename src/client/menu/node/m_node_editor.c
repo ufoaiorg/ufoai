@@ -154,6 +154,18 @@ static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 		anchoredNode->size[1] = 5;
 }
 
+/**
+ * @brief Called when the node have lost the captured node
+ */
+static void MN_EditorNodeCapturedMouseLost (menuNode_t *node)
+{
+	/* force to close the window, if it need */
+#if 0	/** @todo find a way to close the window only when its need */
+	if (MN_IsMenuOnStack(node->root->name))
+		MN_CloseMenu(node->root->name);
+#endif
+}
+
 static void MN_EditorNodeMouseUp (menuNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
@@ -276,6 +288,7 @@ void MN_RegisterEditorNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseDown = MN_EditorNodeMouseDown;
 	behaviour->mouseUp = MN_EditorNodeMouseUp;
 	behaviour->capturedMouseMove = MN_EditorNodeCapturedMouseMove;
+	behaviour->capturedMouseLost = MN_EditorNodeCapturedMouseLost;
 
 	Cmd_AddCommand("mn_editornode_start", MN_EditorNodeStart_f, "Start node edition");
 	Cmd_AddCommand("mn_editornode_stop", MN_EditorNodeStop_f, "Stop node edition");
