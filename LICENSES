@@ -1635,7 +1635,6 @@ base/models/weapons/pistol/pistol_clip.jpg | GNU General Public License 2.0 | Lu
 base/models/weapons/pistol/pistol_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pistol2/pistol2.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/pistol2/pistol2.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
-base/models/weapons/pistol2/pistol2.psd | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/pistol2/pistol2_clip.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/pistol2/pistol2_clip.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/plasblade/plasblade.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
