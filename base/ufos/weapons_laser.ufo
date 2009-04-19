@@ -241,8 +241,8 @@ item laserrifle_ammo
 			name	"_Wave Fire"
 			skill 	assault
 			projtl	laserPulseWhite
-			impact	laserImpact
-			hitbody	laserImpact
+			impact	laserImpactSmall
+			hitbody	laserImpactSmall
 			firesnd	weapons/laser
 			speed	0
 			spread	"0.5 0.5"
@@ -260,8 +260,8 @@ item laserrifle_ammo
 			name	"_Pulsed Fire"
 			skill 	assault
 			projtl	laserPulseWhite
-			impact	laserImpact
-			hitbody	laserImpact
+			impact	laserImpactSmall
+			hitbody	laserImpactSmall
 			firesnd	weapons/laser
 			delaybetweenshots		8
 			speed	0

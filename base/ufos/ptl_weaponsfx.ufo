@@ -406,6 +406,66 @@ particle laserImpact
 	think { kill }
 }
 
+particle laserImpactSmall
+{
+	init
+	{
+		image  sfx/smoke
+		blend  add
+		style  facing
+		thinkfade  sin
+		size   "15 15"
+
+		push   *v
+		mul    float 4.0
+		kpop   *v
+		add    *s
+		pop    *s
+		tps    1.0
+
+		push   int 5
+		nspawn laserSparkSmall
+	}
+	run
+	{
+		push *color
+		mul  float 0.5
+		pop  *color
+	}
+	think { kill }
+}
+
+particle laserSparkSmall
+{
+	init
+	{
+		image  sfx/laserimpact_small
+		blend  add
+		style  facing
+		thinkfade  out
+		size   "20 20"
+
+		push   *v
+		rand   float 8.0
+		add    float 3.0
+		mul    #
+		crand  vector "10 10 10"
+		add    #
+		pop    *v
+
+		crand  vector "5 5 5"
+		add    *s
+		pop    *s
+
+		rand   float 1.3
+		add    float 1.2
+		pop    *tps
+		lightcolor "0.3 0.3 0.3"
+		lightintensity 0.05
+	}
+	think { kill }
+}
+
 particle laserSpark
 {
 	init
