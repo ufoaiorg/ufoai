@@ -1,0 +1,49 @@
+{
+	material tex_material/wood002
+	specular 0.2
+}
+{
+	material tex_buildings/japwall007
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_material/wood001
+	specular 0.2
+}
+{
+	material tex_buildings/japwall006
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/wall_nature
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/japwall004
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/japwall001
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/japwall005
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/japwall003
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/floor015
+	specular 0.6
+	hardness 0.2
+	bump 2.0
+}
