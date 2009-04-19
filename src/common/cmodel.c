@@ -1181,11 +1181,7 @@ static void CMod_RerouteMap (void)
 							/** @note This update MUST go from the bottom (0) to the top (7) of the model.
 							 * RT_UpdateConnection expects it and breaks otherwise. */
 							/* Com_Printf("Tracing passage (%i %i s:%i d:%i)\n", x, y, size, dir); */
-							for (z = 0; z <= maxs[2]; z++) {
-								const int new_z = RT_UpdateConnection(clMap, size + 1, x, y, z, dir);
-								assert(new_z >= z);
-								z = new_z;
-							}
+							RT_UpdateConnectionColumn(clMap, size + 1, x, y, dir);
 						}
 					}
 				}
@@ -2232,6 +2228,7 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 	/* Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]); */
 
 	/* check unit heights */
+	/* for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) { */
 	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
 		const int maxY = max[1] - actorSize;
 		const int maxX = max[0] - actorSize;
@@ -2253,7 +2250,10 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 #endif
 
 	/* check connections */
-	/*for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++) { */
+	/** @note A temporary hack- if we decrease ACTOR_MAX_SIZE we need to bump the BSPVERSION again.
+	 * I'm just commenting out the CORRECT code for now.
+	 */
+	/*for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) { */
 	for (actorSize = 1; actorSize <= 1; actorSize++) {
 		const int minX = max(min[0] - actorSize, 0);
 		const int minY = max(min[1] - actorSize, 0);
@@ -2268,15 +2268,9 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 					 * RT_UpdateConnection expects it and breaks otherwise.
 					 * @note The new version of RT_UpdateConnection is bidirectional, so we can
 					 * trace every other dir, unless we are on the edge. */
-					/*
 					if ((dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
 						continue;
-					*/
-					for (z = 0; z <= max[2]; z++) {
-						const int new_z = RT_UpdateConnection(map, actorSize, x, y, z, dir);
-						assert(new_z >= z);
-						z = new_z;
-					}
+					RT_UpdateConnectionColumn(map, actorSize, x, y, dir);
 				}
 			}
 		}

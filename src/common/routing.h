@@ -123,7 +123,7 @@ GAME RELATED TRACING
 
 
 int RT_CheckCell(routing_t * map, const int actor_size, const int x, const int y, const int z);
-int RT_UpdateConnection(routing_t * map, const int actor_size, const int x, const int y, const int z, const int dir);
+void RT_UpdateConnectionColumn(routing_t * map, const int actor_size, const int x, const int y, const int dir);
 
 /*
 ==========================================================

@@ -92,49 +92,28 @@ static void CheckUnitThread (unsigned int unitnum)
 /**
  * @sa DoRouting
  */
-static int CheckConnections (unsigned int unitnum)
+static void CheckConnectionsThread (unsigned int unitnum)
 {
-	int new_z;
-
 	/* get coordinates of that unit */
-	const int z = unitnum % PATHFINDING_HEIGHT;
-	const int dir = ((unitnum / PATHFINDING_HEIGHT) % (CORE_DIRECTIONS / 1));
-	const int y = (unitnum / PATHFINDING_HEIGHT / (CORE_DIRECTIONS / 1)) % PATHFINDING_WIDTH;
-	const int x = (unitnum / PATHFINDING_HEIGHT / (CORE_DIRECTIONS / 1) / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
-	const int actor_size = unitnum / PATHFINDING_HEIGHT / PATHFINDING_WIDTH / PATHFINDING_WIDTH / (CORE_DIRECTIONS / 1);
+	const int dir = (unitnum % (CORE_DIRECTIONS / 2)) * 2;
+	const int y = (unitnum / (CORE_DIRECTIONS / 2)) % PATHFINDING_WIDTH;
+	const int x = (unitnum / (CORE_DIRECTIONS / 2) / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
+	const int actor_size = unitnum / PATHFINDING_WIDTH / PATHFINDING_WIDTH / (CORE_DIRECTIONS / 2);
 
 
 	/* test bounds - the size adjustment is needed because large actor cells occupy multiple cell units. */
-	if (x > wpMaxs[0] - actor_size || y > wpMaxs[1] - actor_size || z > wpMaxs[2]
-	 || x < wpMins[0] || y < wpMins[1] || z < wpMins[2] ) {
+	if (x > wpMaxs[0] - actor_size || y > wpMaxs[1] - actor_size
+	 || x < wpMins[0] || y < wpMins[1] ) {
 		/* don't enter - outside world */
 		/* Com_Printf("x%i y%i z%i dir%i size%i (%i, %i, %i) (%i, %i, %i)\n", x, y, z, dir, size, wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]); */
-		return 0;
+		return;
 	}
 
-	/* Com_Printf("%i %i %i %i %i (%i, %i, %i) (%i, %i, %i)\n", x, y, z, dir, size, wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]); */
+	Verb_Printf(VERB_EXTRA, "%i %i %i %i (%i, %i, %i) (%i, %i, %i)\n", x, y, dir, actor_size, wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]);
 
-	new_z = RT_UpdateConnection(Nmap, actor_size + 1, x, y, z, dir);
+	RT_UpdateConnectionColumn(Nmap, actor_size + 1, x, y, dir);
 
 	/* Com_Printf("z:%i nz:%i\n", z, new_z); */
-
-	/* new_z should never be below z. */
-	assert(new_z >= z);
-
-	/* Adjust unitnum if this check adjusted multiple cells. */
-	return new_z - z;
-}
-
-/**
- * @brief A wrapper for CheckConnections that is thread safe.
- * @sa DoRouting
- */
-static void CheckConnectionsThread (unsigned int unitnum)
-{
-	const int basenum = unitnum * PATHFINDING_HEIGHT;
-	int newnum;
-	for (newnum = basenum; newnum < basenum + PATHFINDING_HEIGHT; newnum++)
-		newnum += CheckConnections(newnum);
 }
 
 
@@ -182,7 +161,8 @@ void DoRouting (void)
 	RunSingleThreadOn(CheckUnitThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "UNITCHECK");
 
 	/* scan connections */
-	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * (CORE_DIRECTIONS / 2) * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "CONNCHECK");
+	/** @note The (ACTOR_MAX_SIZE / 2) is so we don't trace for 2x2 actors (yet). */
+	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * (CORE_DIRECTIONS / 2) * (ACTOR_MAX_SIZE / 2), config.verbosity >= VERB_NORMAL, "CONNCHECK");
 
 	/* Try to shrink the world bounds along the x and y coordinates */
 	for (i = 0; i < 2; i++) {

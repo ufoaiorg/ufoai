@@ -834,7 +834,7 @@ static int RT_FindOpening (routing_t * map, const int actor_size, const int  x, 
  * @param[out] stepup Required stepup to travel in this direction.
  * @return The change in floor height in QUANT units because of the additional trace.
 */
-static int RT_MicroTrace (routing_t * map, const int actor_size, const int x, const int y, const int z, const int ax, const int ay, const int az, const int bottom, const int top, int *stepup)
+static int RT_MicroTrace (routing_t * map, const int actor_size, const int x, const int y, const int z, const int ax, const int ay, const int az, const int bottom, const int top, int *stepup, int *invstepup)
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
@@ -877,7 +877,7 @@ static int RT_MicroTrace (routing_t * map, const int actor_size, const int x, co
 
 	new_bottom = max(bases[0], bases[steps]);
 	/* Now calculate the rest of the microheights. */
-	for (i = 1; i <= steps; i++) {
+	for (i = 1; i < steps; i++) {
 		start[0] = end[0] = sx + (ex - sx) * (i / (float)steps);
 		start[1] = end[1] = sy + (ey - sy) * (i / (float)steps);
 
@@ -895,9 +895,6 @@ static int RT_MicroTrace (routing_t * map, const int actor_size, const int x, co
 
 		new_bottom = max(new_bottom, bases[i]);
 	}
-
-	if (debugTrace && last_step != bases[steps])
-		Com_Printf("The last found step does not match the destination floor! ls:%i f:%i\n", bases[steps], last_step);
 
 	if (debugTrace)
 		Com_Printf("z:%i az:%i bottom:%i new_bottom:%i top:%i bases[0]:%i bases[%i]:%i\n", z, az, bottom, new_bottom, top, bases[0], steps, bases[steps]);
@@ -947,7 +944,7 @@ static int RT_MicroTrace (routing_t * map, const int actor_size, const int x, co
 	}
 
 	/* Now place an upper bound on stepup */
-	if (*stepup > PATHFINDING_NO_STEPUP) {
+	if (*stepup > PATHFINDING_MAX_STEPUP) {
 		*stepup = PATHFINDING_NO_STEPUP;
 	} else {
 		/* Add rise/fall bit as needed. */
@@ -955,6 +952,61 @@ static int RT_MicroTrace (routing_t * map, const int actor_size, const int x, co
 			*stepup |= PATHFINDING_BIG_STEPDOWN;
 		else if (az > z)
 			*stepup |= PATHFINDING_BIG_STEPUP;
+	}
+
+	/** @note This for loop is bi-directional: i may be decremented to retrace prior steps. */
+	/* Now find the maximum stepup moving from (x, y) to (ax, ay). */
+	/* Initialize stepup. */
+	current_h = bases[steps];
+	highest_h = -1;
+	highest_i = steps - 1; /**< Note that for this part of the code, this is the LOWEST i. */
+	*invstepup = 0; /**<  Was originally -CELL_HEIGHT, but stepup is needed to go UP, not down. */
+	skipped = 0;
+	for (i = steps - 1; i >= 0; i--) {
+		if (debugTrace)
+			Com_Printf("Tracing backward i:%i h:%i\n", i, current_h);
+		/* If there is a rise, use it. */
+		if (bases[i] >= current_h || ++skipped > PATHFINDING_MICROSTEP_SKIP) {
+			if (skipped == PATHFINDING_MICROSTEP_SKIP) {
+				i = highest_i;
+				if (debugTrace)
+					Com_Printf(" Skipped too many steps, reverting to i:%i\n", i);
+			}
+			*invstepup = max(*invstepup, bases[i] - current_h);
+			current_h = bases[i];
+			highest_h = -2;
+			highest_i = i - 1;
+			skipped = 0;
+			if (debugTrace)
+				Com_Printf(" Advancing b:%i stepup:%i\n", bases[i], *invstepup);
+		} else {
+			/* We are skipping this step in case the actor can step over this lower step. */
+			/* Record the step in case it is the highest of the low steps. */
+			if (bases[i] > highest_h) {
+				highest_h = bases[i];
+				highest_i = i;
+			}
+			if (debugTrace)
+				Com_Printf(" Skipped because we are falling, skip:%i.\n", skipped);
+			/* If this is the last iteration, make sure we go back and get our last stepup tests. */
+			if (i == 0) {
+				skipped = PATHFINDING_MICROSTEP_SKIP;
+				i = highest_i + 1;
+				if (debugTrace)
+					Com_Printf(" Tripping skip counter to perform last tests.\n");
+			}
+		}
+	}
+
+	/* Now place an upper bound on stepup */
+	if (*invstepup > PATHFINDING_MAX_STEPUP) {
+		*invstepup = PATHFINDING_NO_STEPUP;
+	} else {
+		/* Add rise/fall bit as needed. */
+		if (az > z)
+			*invstepup |= PATHFINDING_BIG_STEPDOWN;
+		else if (az < z)
+			*invstepup |= PATHFINDING_BIG_STEPUP;
 	}
 
 	/* Return the confirmed passage opening. */
@@ -976,7 +1028,7 @@ static int RT_MicroTrace (routing_t * map, const int actor_size, const int x, co
  * @param[out] stepup Required stepup to travel in this direction.
  * @return The size in QUANT units of the detected opening.
  */
-static int RT_TraceOnePassage (routing_t * map, const int actor_size, const int  x, const int y, const int z, const int ax, const int ay, const int lower, const int upper, int *opening_base, int *stepup)
+static int RT_TraceOnePassage (routing_t * map, const int actor_size, const int  x, const int y, const int z, const int ax, const int ay, const int lower, const int upper, int *opening_base, int *stepup, int *invstepup)
 {
 	int hi; /**< absolute ceiling of the passage found. */
 	int az; /**< z height of the actor after moving in this direction. */
@@ -985,28 +1037,41 @@ static int RT_TraceOnePassage (routing_t * map, const int actor_size, const int 
 	az = RT_FindOpening(map, actor_size, x, y, z, ax, ay, lower, upper, opening_base, &hi);
 	/* calc opening found so far and set stepup */
 	opening_size = hi - *opening_base;
-	*stepup = *opening_base - lower;
-	if (az < z)
-		*stepup |= PATHFINDING_BIG_STEPDOWN;
-	else if (az > z)
-		*stepup |= PATHFINDING_BIG_STEPUP;
 
 	/* We subtract MIN_STEPUP because that is foot space-
 	 * the opening there only needs to be the microtrace
 	 * wide and not the usual dimensions.
 	 */
 	if (opening_size >= PATHFINDING_MIN_OPENING - PATHFINDING_MIN_STEPUP) {
-		const int src_floor = RT_FLOOR(map, actor_size, x, y, z);
-		const int dst_floor = RT_FLOOR(map, actor_size, ax, ay, az);
+		const int src_floor = RT_FLOOR(map, actor_size, x, y, z) + z * CELL_HEIGHT;
+		const int dst_floor = RT_FLOOR(map, actor_size, ax, ay, az) + az * CELL_HEIGHT;
 		/* if we already have enough headroom, try to skip microtracing */
+		/** @todo CELL_HEIGHT can be replaced with the largest actor height. */
 		if (opening_size < CELL_HEIGHT
 			|| abs(src_floor - *opening_base) > PATHFINDING_MIN_STEPUP
 			|| abs(dst_floor - *opening_base) > PATHFINDING_MIN_STEPUP) {
 			/* This returns the total opening height, as the
 			 * microtrace may reveal more passage height from the foot space. */
-			bonus_size = RT_MicroTrace(map, actor_size, x, y, z, ax, ay, az, *opening_base, hi, stepup);
+			bonus_size = RT_MicroTrace(map, actor_size, x, y, z, ax, ay, az, *opening_base, hi, stepup, invstepup);
 			*opening_base += bonus_size;
 			opening_size = hi - *opening_base;	/* re-calculate */
+		} else {
+			/* Skipping microtracing, just set the stepup values. */
+			*stepup = max(0, *opening_base - src_floor);
+			if (*stepup > PATHFINDING_MAX_STEPUP)
+				*stepup = PATHFINDING_NO_STEPUP;
+
+			*invstepup = max(0, *opening_base - dst_floor);
+			if (*invstepup > PATHFINDING_MAX_STEPUP)
+				*invstepup = PATHFINDING_NO_STEPUP;
+
+			if (az < z) {
+				*stepup |= PATHFINDING_BIG_STEPDOWN;
+				*invstepup |= PATHFINDING_BIG_STEPUP;
+			} else if (az > z) {
+				*stepup |= PATHFINDING_BIG_STEPUP;
+				*invstepup |= PATHFINDING_BIG_STEPDOWN;
+			}
 		}
 		if (opening_size >= PATHFINDING_MIN_OPENING) {
 			return opening_size;
@@ -1016,6 +1081,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actor_size, const int 
 	if (debugTrace)
 		Com_Printf(" No opening found.\n");
 	*stepup = PATHFINDING_NO_STEPUP;
+	*invstepup = PATHFINDING_NO_STEPUP;
 	return 0;
 }
 
@@ -1033,13 +1099,14 @@ static int RT_TraceOnePassage (routing_t * map, const int actor_size, const int 
  * @param[out] stepup Required stepup to travel in this direction.
  * @return The size in QUANT units of the detected opening.
  */
-static int RT_TracePassage (routing_t * map, const int actor_size, const int x, const int y, const int z, const int ax, const int ay, int *opening_base, int *stepup)
+static int RT_TracePassage (routing_t * map, const int actor_size, const int x, const int y, const int z, const int ax, const int ay, int *opening_base, int *stepup, int *invstepup)
 {
 	/* See if there is a passage TO the adjacent cell. */
 	const int bottom = max(0, RT_FLOOR(map, actor_size, x, y, z)) + z * CELL_HEIGHT;
 	const int top = RT_CEILING(map, actor_size, x, y, z) + z * CELL_HEIGHT;
-	const int belowceil = z > 0 ? RT_CEILING(map, actor_size, ax, ay, z) + z * CELL_HEIGHT: 0;
-	const int lowceil = min(top, belowceil);
+	const int belowceil = RT_CEILING(map, actor_size, ax, ay, z) + z * CELL_HEIGHT;
+	const int aboveceil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actor_size, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : belowceil;
+	const int lowceil = min(top, RT_CEILING(map, actor_size, ax, ay, z) == 0 ? aboveceil : belowceil);
 	int opening_size;
 
 	/*
@@ -1060,13 +1127,14 @@ static int RT_TracePassage (routing_t * map, const int actor_size, const int x, 
 	 * If there is no passage, then the obstruction may be used as steps to
 	 * climb up to the adjacent floor.
 	 */
-	if (lowceil - bottom >= PATHFINDING_MIN_OPENING && lowceil < top) {
+	if (lowceil - bottom < PATHFINDING_MIN_OPENING) {
 		if (debugTrace)
-			Com_Printf(" Testing down.\n");
-		opening_size = RT_TraceOnePassage(map, actor_size, x, y, z, ax, ay, bottom, lowceil, opening_base, stepup);
-		if (opening_size >= PATHFINDING_MIN_OPENING) {
-			return opening_size;
-		}
+			Com_Printf(" No opening found. c:%i lc:%i.\n", top, lowceil);
+		/* If we got here, then there is no opening from floor to ceiling. */
+		*stepup = PATHFINDING_NO_STEPUP;
+		*invstepup = PATHFINDING_NO_STEPUP;
+		*opening_base = lowceil;
+		return 0;
 	}
 
 	/*
@@ -1076,9 +1144,9 @@ static int RT_TracePassage (routing_t * map, const int actor_size, const int x, 
 	 */
 
 	if (debugTrace)
-		Com_Printf(" Testing up.\n");
+		Com_Printf(" Testing up c:%i lc:%i.\n", top, lowceil);
 
-	opening_size = RT_TraceOnePassage(map, actor_size, x, y, z, ax, ay, bottom, top, opening_base, stepup);
+	opening_size = RT_TraceOnePassage(map, actor_size, x, y, z, ax, ay, bottom, lowceil, opening_base, stepup, invstepup);
 	if (opening_size >= PATHFINDING_MIN_OPENING) {
 		return opening_size;
 	}
@@ -1087,6 +1155,8 @@ static int RT_TracePassage (routing_t * map, const int actor_size, const int x, 
 		Com_Printf(" No opening found.\n");
 	/* If we got here, then there is no opening from floor to ceiling. */
 	*stepup = PATHFINDING_NO_STEPUP;
+	*invstepup = PATHFINDING_NO_STEPUP;
+	*opening_base = lowceil;
 	return 0;
 }
 
@@ -1100,11 +1170,96 @@ static int RT_TracePassage (routing_t * map, const int actor_size, const int x, 
  * @param[in] z The z position in the routing arrays (0 to PATHFINDING_HEIGHT - 1)
  * @param[in] dir The direction to test for a connection through
  */
-int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, const int y, const int z, const int dir)
+static int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, const int y, const int ax, const int ay, const int z, const int dir)
 {
+	const int ceiling = RT_CEILING(map, actor_size, x, y, z);
+	const int adj_ceiling = RT_CEILING(map, actor_size, ax, ay, z);
+	const int abs_ceiling = ceiling + z * CELL_HEIGHT;
+	const int exadj_ceiling = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actor_size, ax, ay, z + 1) : adj_ceiling;
+	const int exabs_adj_ceiling = (z < PATHFINDING_HEIGHT - 1) ? adj_ceiling + (z + 1) * CELL_HEIGHT : abs_ceiling;
+	const int abs_adj_ceiling = adj_ceiling + z * CELL_HEIGHT;
+	const int abs_floor = RT_FLOOR(map, actor_size, x, y, z) + z * CELL_HEIGHT;
+	const int abs_adj_floor = RT_FLOOR(map, actor_size, ax, ay, z) + z * CELL_HEIGHT;
 	int opening_size; /**< The opening size (max actor height) that can travel this passage. */
 	int opening_base; /**< The base height of the opening. */
 	int stepup; /**< The stepup needed to travel through this passage in this direction. */
+	int invstepup; /**< The stepup needed to travel through this passage in the opposite direction. */
+	int new_z1, new_z2, az = z;
+
+	if (debugTrace)
+		Com_Printf("\n(%i, %i, %i) to (%i, %i, %i) as:%i\n", x, y, z, ax, ay, z, actor_size);
+
+	/* test if the adjacent cell and the cell above it are blocked by a loaded model */
+	if (adj_ceiling == 0 && (exadj_ceiling == 0 || ceiling == 0)){
+		/* We can't go this way. */
+		RT_CONN(map, actor_size, x, y, z, dir) = 0;
+		RT_STEPUP(map, actor_size, x, y, z, dir) = PATHFINDING_NO_STEPUP;
+		RT_CONN(map, actor_size, ax, ay, z, dir) = 0;
+		RT_STEPUP(map, actor_size, ax, ay, z, dir) = PATHFINDING_NO_STEPUP;
+		if (debugTrace)
+			Com_Printf("Current cell filled. c:%i ac:%i\n", RT_CEILING(map, actor_size, x, y, z), RT_CEILING(map, actor_size, ax, ay, z));
+		return z;
+	}
+
+	/* In case the adjacent floor has no ceiling, swap the current and adjacent cells. */
+	if (ceiling == 0 && adj_ceiling != 0) {
+		return RT_UpdateConnection (map, actor_size, ax, ay, x, y, z, dir ^ 1);
+	}
+
+	/**
+	 * @note OK, simple test here.  We know both cells have a ceiling, so they are both open.
+	 *  If the absolute ceiling of one is below the absolute floor of the other, then there is no intersection.
+	 */
+	if (abs_ceiling < abs_adj_floor || exabs_adj_ceiling < abs_floor){
+		/* We can't go this way. */
+		RT_CONN(map, actor_size, x, y, z, dir) = 0;
+		RT_STEPUP(map, actor_size, x, y, z, dir) = PATHFINDING_NO_STEPUP;
+		RT_CONN(map, actor_size, ax, ay, z, dir) = 0;
+		RT_STEPUP(map, actor_size, ax, ay, z, dir) = PATHFINDING_NO_STEPUP;
+		if (debugTrace)
+			Com_Printf("Ceiling lower than floor. f:%i c:%i af:%i ac:%i\n", abs_floor, abs_ceiling, abs_adj_floor, abs_adj_ceiling);
+		return z;
+	}
+
+	/* Find an opening. */
+	opening_size = RT_TracePassage(map, actor_size, x, y, z, ax, ay, &opening_base, &stepup, &invstepup);
+	if (debugTrace) {
+		Com_Printf("Final RT_STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, actor_size, dir, stepup);
+	}
+	/* We always call the fill function.  If the passage cannot be traveled, the
+	 * function fills it in as unpassable. */
+	new_z1 = RT_FillPassageData(map, actor_size, dir, x, y, z, opening_size, opening_base, stepup);
+
+	if (stepup & PATHFINDING_BIG_STEPUP) {
+		/* ^ 1 reverses the direction of dir */
+		RT_CONN(map, actor_size, ax, ay, z, dir ^ 1) = 0;
+		RT_STEPUP(map, actor_size, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		az++;
+	} else if (stepup & PATHFINDING_BIG_STEPDOWN) {
+		az--;
+		RT_CONN(map, actor_size, x, y, az, dir) = 0;
+		RT_STEPUP(map, actor_size, x, y, az, dir) = PATHFINDING_NO_STEPUP;
+	}
+	new_z2 = RT_FillPassageData(map, actor_size, dir ^ 1, ax, ay, az, opening_size, opening_base, invstepup);
+	if (new_z2 == az && az < z)
+		new_z2++;
+	return min(new_z1, new_z2);
+}
+
+
+/**
+ * @brief Routing Function to update the connection between two fields
+ * @param[in] map Routing field of the current loaded map
+ * @param[in] actor_size The size of the actor, in units
+ * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actor_size)
+ * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actor_size)
+ * @param[in] z The z position in the routing arrays (0 to PATHFINDING_HEIGHT - 1)
+ * @param[in] dir The direction to test for a connection through
+ */
+void RT_UpdateConnectionColumn (routing_t * map, const int actor_size, const int x, const int y, const int dir)
+{
+	int z = 0; /**< The current z value that we are testing. */
+	int new_z; /**< The last z value processed by the tracing function.  */
 
 	/* get the neighbor cell's coordinates */
 	const int ax = x + dvecs[dir][0];
@@ -1113,13 +1268,9 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	assert(map);
 	assert((x >= 0) && (x <= PATHFINDING_WIDTH - actor_size));
 	assert((y >= 0) && (y <= PATHFINDING_WIDTH - actor_size));
-	assert(z < PATHFINDING_HEIGHT);
 
 	/* Ensure that the current coordinates are valid. */
 	RT_CONN_TEST(map, actor_size, x, y, z, dir);
-
-	if (debugTrace)
-		Com_Printf("\n(%i, %i, %i) to (%i, %i, %i) as:%i\n", x, y, z, ax, ay, z, actor_size);
 
 	/* Com_Printf("At (%i, %i, %i) looking in direction %i with size %i\n", x, y, z, dir, actor_size); */
 
@@ -1131,33 +1282,18 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 		/* There is only one entry here: There is no inverse cell to store data for. */
 		if (debugTrace)
 			Com_Printf("Destination cell non-existant.\n");
-		return z;
+		return;
 	}
 
 	/* Ensure that the destination coordinates are valid. */
 	RT_CONN_TEST(map, actor_size, ax, ay, z, dir);
 
-	/* test if the unit is blocked by a loaded model */
-	/** @note This test as is will cause back tracing issues, as the cell we are tracing to might
-	 * be open and we are potentially not assigning opening information to it.  Figure out a
-	 * solution to this without simply calling this function again with the destination coordinates. */
-	if (RT_FLOOR(map, actor_size, x, y, z) >= CELL_HEIGHT || RT_CEILING(map, actor_size, x, y, z) == 0){
-		/* We can't go this way. */
-		RT_CONN(map, actor_size, x, y, z, dir) = 0;
-		RT_STEPUP(map, actor_size, x, y, z, dir) = PATHFINDING_NO_STEPUP;
-		if (debugTrace)
-			Com_Printf("Current cell filled. f:%i c:%i\n", RT_FLOOR(map, actor_size, x, y, z), RT_CEILING(map, actor_size, x, y, z));
-		return z;
+	/* Main loop */
+	for (z = 0; z < PATHFINDING_HEIGHT; z++) {
+		new_z = RT_UpdateConnection(map, actor_size, x, y, ax, ay, z, dir);
+		assert (new_z >= z);
+		z = new_z;
 	}
-
-	/* Find an opening. */
-	opening_size = RT_TracePassage(map, actor_size, x, y, z, ax, ay, &opening_base, &stepup);
-	if (debugTrace) {
-		Com_Printf("Final RT_STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, actor_size, dir, stepup);
-	}
-	/* We always call the fill function.  If the passage cannot be traveled, the
-	 * function fills it in as unpassable. */
-	return RT_FillPassageData(map, actor_size, dir, x, y, z, opening_size, opening_base, stepup);
 }
 
 
