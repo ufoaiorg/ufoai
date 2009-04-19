@@ -2125,6 +2125,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 	t->hash_next = terrainTypesHash[hash];
 	terrainTypesHash[hash] = t;
 	t->footStepVolume = DEFAULT_SOUND_ATTENUATION;
+	t->bounceFraction = 1.0f;
 
 	do {
 		/* get the name type */
