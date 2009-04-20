@@ -1237,8 +1237,8 @@ static int RT_UpdateConnection (routing_t * map, const int actor_size, const int
 		az++;
 	} else if (stepup & PATHFINDING_BIG_STEPDOWN) {
 		az--;
-		RT_CONN(map, actor_size, x, y, az, dir) = 0;
-		RT_STEPUP(map, actor_size, x, y, az, dir) = PATHFINDING_NO_STEPUP;
+//		RT_CONN(map, actor_size, x, y, az, dir) = 0;
+//		RT_STEPUP(map, actor_size, x, y, az, dir) = PATHFINDING_NO_STEPUP;
 	}
 	new_z2 = RT_FillPassageData(map, actor_size, dir ^ 1, ax, ay, az, opening_size, opening_base, invstepup);
 	if (new_z2 == az && az < z)
