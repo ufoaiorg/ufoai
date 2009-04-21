@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-04-19 09:53+0200\n"
-"PO-Revision-Date: 2009-04-19 11:51+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2009-04-20 22:32+0100\n"
+"Last-Translator: Borsti67 <i-c-q@hiereinwerfen.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,6 +13,8 @@ msgstr ""
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Basepath: c:\\programme\\spiele\\ufoai-2.3_dev\\src\n"
 
 #: ../base/maps/africa.ump:53
 msgid "Africa"
@@ -1943,7 +1945,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:217
 #, fuzzy
 msgid "Upgrade - Antimatter engines"
-msgstr "Baupläne - Antimaterie-Lager"
+msgstr "Baupläne - Antimaterie-Triebwerk"
 
 #: ../base/ufos/research.ufo:219
 #, fuzzy
@@ -3844,13 +3846,13 @@ msgstr ""
 "\n"
 "Wie ich in meinem Antrag erwähnte, ist der Nadler tatsächlich eine Scharfschützenwaffe, allerdings eine ungewöhnliche. Er ignoriert das bisherige, normale Konzept kräftige Projektile abzufeuern, um einzelne Ziele in großer Entfernung zu treffen und zu zerstören. Anstatt dessen schießt es hunderte und aber-hunderte von ultra-schnellen Nadeln aus Silizium-Stahl, die sehr leicht ein Ziel in beinahe jeder beliebigen Entfernung zerschneiden können.\n"
 "\n"
-"Die Nadeln werden von einem schnell wechselndem Magnetischen Feld innerhalb des Gewehrlaufes abgefeuert. Angeschlossen an den Lauf ist ein Zuführungssystem, dass tausende von Nadeln in der Minute in den Lauf injiziert. Dadurch wird ein nahezu ununterbrochener Feuerstoß abgefeuert, der so lange andauert, wie der Abzug gedrückt wird und das Magazin noch gefüllt ist. Anders als Gewehrkugeln haben diese Nadeln eine annähernd gerade Flugbahn von der Mündung bis zum Ziel. Sie durchschlagen fast jede Panzerung als würde sie nicht existieren. Durch ihre extrem geringe Masse erzeugen sie beim Abschuss fast gar keinen Rückstoß, was eine hervorragende Genauigkeit ergibt, gleichzeitig sind sie dabei auch noch dünn genug, so dass sie nur relativ wenig vom Wetter beeinflusst werden. Wind, Regen und physikalische Hindernisse können einige Nadeln ablenken, aber bei weitem nicht genug, um die Waffe weniger effektiv zu machen.\n"
+"Die Nadeln werden von einem schnell wechselndem magnetischen Feld innerhalb des Gewehrlaufes abgefeuert. Angeschlossen an den Lauf ist ein Zuführungssystem, das tausende von Nadeln in der Minute in den Lauf injiziert. Dadurch wird ein nahezu ununterbrochener Feuerstoß abgefeuert, der so lange andauert, wie der Abzug gedrückt wird und das Magazin noch gefüllt ist. Anders als Gewehrkugeln haben diese Nadeln eine annähernd gerade Flugbahn von der Mündung bis zum Ziel. Sie durchschlagen fast jede Panzerung als würde sie nicht existieren. Durch ihre extrem geringe Masse erzeugen sie beim Abschuss fast gar keinen Rückstoß, was eine hervorragende Genauigkeit ergibt, gleichzeitig sind sie dabei auch noch dünn genug, so dass sie nur relativ wenig vom Wetter beeinflusst werden. Wind, Regen und physikalische Hindernisse können einige Nadeln ablenken, aber bei weitem nicht genug, um die Waffe weniger effektiv zu machen.\n"
 "\n"
-"Eine der Hauptkomponenten, die meine Aufmerksamkeit erregt hat, sind die starken Elektromagnete. Sie sind gebaut, wie bei einem Gaußgewehr (auch bekannt als 'Coilgun'): Viele Spulen der Elektromagnete sind um das Rohr herum gelegt, eine Anordnung, die wir bisher als zu energie-ineffizient gehalten hatten, als dass man sie auf dem Schlachtfeld verwenden könnte. Die Außerirdischen scheinen das Prinzip durch intelligenten Einsatz von Supraleitern und außerirdischer Technologie anwendbar gemacht zu haben. Möglicherweise können wir diese Technologie für unsere eigenen EM Waffen Forschungen verwenden. Ich werde das genauer untersuchen und mich wieder bei Ihnen melden, sobald ich konkrete Anhaltspunkte habe.\n"
+"Eine der Hauptkomponenten, die meine Aufmerksamkeit erregt hat, sind die starken Elektromagnete. Sie sind gebaut, wie bei einem Gaußgewehr (auch bekannt als 'Coilgun'): Viele Spulen der Elektromagnete sind um das Rohr herum gelegt, eine Anordnung, die wir bisher als zu Energie-ineffizient gehalten hatten, als dass man sie auf dem Schlachtfeld verwenden könnte. Die Außerirdischen scheinen das Prinzip durch intelligenten Einsatz von Supraleitern und außerirdischer Technologie anwendbar gemacht zu haben. Möglicherweise können wir diese Technologie für unsere eigenen EM Waffen Forschungen verwenden. Ich werde das genauer untersuchen und mich wieder bei Ihnen melden, sobald ich konkrete Anhaltspunkte habe.\n"
 "\n"
-"Anstelle unserer oben angebrachten Zielfernrohre haben die Außerirdischen ein hoch effizientes holographisches Zielsystem mir Entfernungsmesser implementiert, welches direkt in das Zielauge des Schützen projiziert. Ziele werden mit absoluter Klarheit bei jeder Entfernung gezeigt, die Zieleinrichtung kompensiert natürliche Körperbewegungen und gibt sogar die exakte Zielwahrscheinlichkeit zu jedem beliebigen Zeitpunkt an. Wir haben das Zielsystem unseren eigenen Soldaten vorgeführt und -- sobald sie sich an das System gewöhnt hatten, bevorzugte jeder, aber auch wirklich jeder unserer Soldaten die außerirdische Zielvorrichtung. Wenn wir die Optik in eine anpassen und in einen eigenständige Einheit einbauen könnten, so könnten wir die ultimative Optik für unsere Gewehre bauen, möglicherweise sogar für einige Handfeuerwaffen.\n"
+"Anstelle unserer oben angebrachten Zielfernrohre haben die Außerirdischen ein hocheffizientes holographisches Zielsystem mit Entfernungsmesser implementiert, welches direkt in das Zielauge des Schützen projiziert. Ziele werden mit absoluter Klarheit bei jeder Entfernung gezeigt, die Zieleinrichtung kompensiert natürliche Körperbewegungen und gibt sogar die exakte Zielwahrscheinlichkeit zu jedem beliebigen Zeitpunkt an. Wir haben das Zielsystem unseren eigenen Soldaten vorgeführt und -- sobald sie sich an das System gewöhnt hatten, bevorzugte jeder, aber auch wirklich jeder unserer Soldaten die außerirdische Zielvorrichtung. Wenn wir die Optik  anpassen und in eine eigenständige Einheit einbauen könnten, so könnten wir die ultimative Optik für unsere Gewehre bauen, möglicherweise sogar für einige Handfeuerwaffen.\n"
 "\n"
-"Ausgestattet mit einem Zweibein um das Gewehr im liegen abfeuern zu können ist der Nadler eine wirkliche Bedrohung für unsere Truppen. Scharfschützen können schwere Verluste unter exponierten Truppenteilen hervorrufen und das können wir uns nicht leisten. Wenn ein Nadler entdeckt wird, sollten unsere Soldaten unter optimaler Ausnutzung jeglicher Deckung den Feind von der Seite angreifen, während sie selber außer seiner Sicht bleiben. Ein Frontalangriff auf einen eingegrabenen Nadler würde sich mit hoher Wahrscheinlichkeit als Selbstmordversuch herausstellen und ich empfehle dass niemand das ausprobiert.\n"
+"Ausgestattet mit einem Zweibein um das Gewehr im Liegen abfeuern zu können ist der Nadler eine wirkliche Bedrohung für unsere Truppen. Scharfschützen können schwere Verluste unter exponierten Truppenteilen hervorrufen, und das können wir uns nicht leisten. Wenn ein Nadler entdeckt wird, sollten unsere Soldaten unter optimaler Ausnutzung jeglicher Deckung den Feind von der Seite angreifen, während sie selber außer seiner Sicht bleiben. Ein Frontalangriff auf einen eingegrabenen Nadler würde sich mit hoher Wahrscheinlichkeit als Selbstmordversuch herausstellen, und ich empfehle dass niemand das ausprobiert.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -3902,9 +3904,8 @@ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 #: ../base/ufos/research.ufo:1915
 #: ../base/ufos/research.ufo:1923
 #: ../base/ufos/weapons_human.ufo:392
-#, fuzzy
 msgid "Coilgun"
-msgstr "Coilgun"
+msgstr "Gauß-Gewehr"
 
 #: ../base/ufos/research.ufo:1960
 msgid "shotgun2_txt"
@@ -8118,7 +8119,7 @@ msgstr "Mit der Leertaste kann zwischen den verschiedenen Geoscape-Einträgen ge
 #: ../base/ufos/tips.ufo:42
 #, fuzzy
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel on the time buttons, or by pressing [-], [+]. [backspace] will stop the flow of time."
-msgstr "Man kann die Zeit im Geoscape beschleunigen, indem man das Mausrad auf den Zeit-Knöpfen bewegt oder durch die Tasten [m] und [n]. "
+msgstr "Man kann die Zeit im Geoscape beschleunigen/verlangsamen, indem man das Mausrad auf den Zeit-Knöpfen bewegt oder durch die Tasten [-] und [+]. [Rückschritt] hält die Zeit an."
 
 #: ../base/ufos/tips.ufo:43
 msgid "Be sure to equip your interceptor with weapons before launching it."
@@ -10819,9 +10820,8 @@ msgid "Bomb"
 msgstr "Bombe"
 
 #: ../base/ufos/weapons_aliens.ufo:46
-#, fuzzy
 msgid "Needler Gun Magazine"
-msgstr "Needler Gun Magazine"
+msgstr "Nadler Magazin"
 
 #: ../base/ufos/weapons_aliens.ufo:62
 #: ../base/ufos/weapons_aliens.ufo:125
@@ -10930,9 +10930,8 @@ msgid "Aimed Shot"
 msgstr "Gezielter Schuss"
 
 #: ../base/ufos/weapons_human.ufo:412
-#, fuzzy
 msgid "Coilgun Clip"
-msgstr "Coilgun Magazin"
+msgstr "Gauß Magazin"
 
 #: ../base/ufos/weapons_human.ufo:472
 msgid "7.62mm Pistol"
@@ -11615,11 +11614,13 @@ msgid "%s has been promoted to %s.\n"
 msgstr "%s wurde zum %s befördert.\n"
 
 #: client/campaign/cl_campaign.c:1725
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
-msgstr "%s wurde angesichts der überwältigenden Chancenungleichheit posthum mit dem Rang '%s' ausgezeichnet.\n"
+msgstr ""
+"%s wurde angesichts der überwältigenden Chancenungleichheit\n"
+"posthum mit dem Rang '%s' ausgezeichnet.\n"
 
 #: client/campaign/cl_campaign.c:1726
 msgid "Soldier promoted"
@@ -13194,7 +13195,7 @@ msgstr "  * %s\n"
 #: client/campaign/cl_uforecovery_callbacks.c:303
 #, fuzzy, c-format
 msgid "Replace %s at %s (%i stored available)\n"
-msgstr "Lebendige %s (%i verfügbar)"
+msgstr "Ersetze %s in Basis %s (%i verfügbar)\n"
 
 #: client/campaign/cl_uforecovery_callbacks.c:310
 msgid "No ufo hangar or ufo yard available."
@@ -13213,12 +13214,12 @@ msgstr "UFO Bergung"
 #: client/campaign/cl_uforecovery_callbacks.c:423
 #, fuzzy, c-format
 msgid "previously recovered %s from base %s"
-msgstr "%s wurde erfolgreich aus der Basis %s entfernt."
+msgstr "zuvor geborgenes %s aus Basis %s"
 
 #: client/campaign/cl_uforecovery_callbacks.c:424
 #, c-format
 msgid "Storage process for captured %s ongoing."
-msgstr ""
+msgstr "Bergung des gekaperten %s läuft."
 
 #: client/campaign/cl_uforecovery_callbacks.c:508
 #, c-format
@@ -13485,7 +13486,7 @@ msgstr "Arbeitet: 100%"
 
 #: client/campaign/cp_base.c:854
 msgid "Not operational, depends on"
-msgstr ""
+msgstr "Nicht funktionsfähig, benötigt"
 
 #: client/campaign/cp_base.c:858
 msgid "Down"
@@ -14400,9 +14401,8 @@ msgid "Reserving TUs for shooting not possible."
 msgstr "ZE Reservierung zum Schießen nicht möglich."
 
 #: client/cl_hud.c:1066
-#, fuzzy
 msgid "No reload possible for right hand, already fully loaded."
-msgstr "Kann die Waffe in der rechten Hand nicht nachladen."
+msgstr "Kann Waffe in der rechten Hand nicht nachladen (ist voll)."
 
 #: client/cl_hud.c:1068
 msgid "No reload possible for right hand."
@@ -14412,12 +14412,11 @@ msgstr "Kann die Waffe in der rechten Hand nicht nachladen."
 #: client/cl_hud.c:1087
 #, c-format
 msgid "Reload weapon (%i TU)."
-msgstr "Waffen nachladen (%i ZE)."
+msgstr "Waffe nachladen (%i ZE)."
 
 #: client/cl_hud.c:1082
-#, fuzzy
 msgid "No reload possible for left hand, already fully loaded."
-msgstr "Kann die Waffe in der linken Hand nicht nachladen."
+msgstr "Kann Waffe in der linken Hand nicht nachladen (ist voll)."
 
 #: client/cl_hud.c:1084
 msgid "No reload possible for left hand."
@@ -14680,18 +14679,18 @@ msgid "Max ammo:\t%i\n"
 msgstr "Max. Munition:\t%i\n"
 
 #: client/cl_inventory_callbacks.c:182
-#, fuzzy, c-format
+#, c-format
 msgid "%s ammo-less weapon with\n"
-msgstr "%s munitionsärmere Waffe mit\n"
+msgstr "%s munitionsfreie Waffe mit\n"
 
 #: client/cl_inventory_callbacks.c:186
 msgid "Weapon for base defence system\n"
 msgstr "Waffe für Basisverteidigungssystem\n"
 
 #: client/cl_inventory_callbacks.c:192
-#, fuzzy, c-format
+#, c-format
 msgid "%s auxiliary equipment with\n"
-msgstr "%s Behelfsgegenstand mit\n"
+msgstr "%s Gegenstand mit\n"
 
 #: client/cl_inventory_callbacks.c:193
 #, c-format
@@ -14871,7 +14870,7 @@ msgstr[1] "%i Tage übrig"
 
 #: client/menu/node/m_node_base.c:272
 msgid "not operational, depends on"
-msgstr ""
+msgstr "nicht funktionsfähig, benötigt"
 
 #: client/menu/node/m_node_container.c:408
 #: client/menu/node/m_node_container.c:413
@@ -14895,7 +14894,7 @@ msgstr "Rein: %i Raus: %i"
 
 #: client/menu/node/m_node_window.c:272
 msgid "Drag to move window"
-msgstr ""
+msgstr "Ziehen um das Fenster zu bewegen"
 
 #: client/menu/node/m_node_window.c:288
 msgid "Close the window"
