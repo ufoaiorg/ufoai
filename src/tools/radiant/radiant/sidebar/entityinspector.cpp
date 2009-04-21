@@ -1244,7 +1244,10 @@ static void EntityInspector_addKeyValue (GtkButton *button, gpointer user_data)
 	}
 
 	gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, "", KEYVALLIST_COLUMN_VALUE, "", KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_PREPARED, FALSE, -1);
+	/* expand to have added line visible (for the case parent was not yet expanded because it had no children */
+	gtk_tree_view_expand_all(g_entityInspectorGui.m_viewKeyValues);
 
+	/* select newly added field and start editing */
 	GtkTreeViewColumn* viewColumn = gtk_tree_view_get_column(view, 0);
 	GtkTreePath* path = gtk_tree_model_get_path(model, &iter);
 	gtk_tree_view_set_cursor(view, path, viewColumn, TRUE);
@@ -1536,18 +1539,6 @@ static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
 static void EntityKeyValueList_updateKeyCombo (GtkTreeViewColumn *column, GtkCellRenderer *renderer,
 		GtkTreeModel *model, GtkTreeIter *iter, gpointer user_data)
 {
-	/** @todo use editing-started callback instead of datafunc when segfault problem is fixed */
-//static void EntityKeyValueList_updateKeyCombo (GtkCellRenderer *renderer,
-//		GtkCellEditable *editable, const gchar *path , gpointer *user_data)
-//{
-//	GtkTreeView *view = GTK_TREE_VIEW(user_data);
-//	GtkTreeSelection *selection = gtk_tree_view_get_selection(view);
-//	GtkTreeModel *model;
-//	GtkTreeIter iter;
-//	if (gtk_tree_selection_get_selected(selection, &model, &iter) == FALSE)
-//	{
-//		return;
-//	}
 
 	/* prevent update if already displaying anything */
 	{
@@ -1566,33 +1557,48 @@ static void EntityKeyValueList_updateKeyCombo (GtkTreeViewColumn *column, GtkCel
 		g_object_set(renderer, "editable", FALSE, (const char*)0);
 	} else {
 		g_object_set(renderer, "editable", TRUE, (const char*)0);
-		if (!g_current_attributes)
-			return;
-		if (!initialized) {
-			/* determine available key values and set them to combo box */
-			GtkListStore* store = gtk_list_store_new(1, G_TYPE_STRING);
-			GtkTreeIter storeIter;
-			const EntityClassAttributes validAttrib = g_current_attributes->m_attributes;
-			for (EntityClassAttributes::const_iterator i = validAttrib.begin(); i != validAttrib.end(); ++i) {
-				EntityClassAttribute *attrib = const_cast<EntityClassAttribute*>(&(*i).second);
-				ClassKeyValues::iterator it = g_selectedKeyValues.find(g_current_attributes->m_name);
-				if (it == g_selectedKeyValues.end()) {
-					return;
-				}
-				KeyValues possibleValues = (*it).second;
-				KeyValues::const_iterator keyIter = possibleValues.find(attrib->m_type.c_str());
-				/* end means we don't have it actually in this map, so this is a valid new key*/
-				if (keyIter == possibleValues.end()) {
-					gtk_list_store_append(store, &storeIter);
-					gtk_list_store_set(store, &storeIter, 0, attrib->m_type.c_str(), -1);
-				}
-			}
-			g_object_set(renderer, "model", GTK_TREE_MODEL(store), "text-column", 0, (const char*)0);
+	}
+	/* set combo store (initially empty) */
+	GtkListStore* store = gtk_list_store_new(1, G_TYPE_STRING);
+	g_object_set(renderer, "model", GTK_TREE_MODEL(store), "text-column", 0, (const char*) 0);
+	g_object_unref( G_OBJECT (store));
+	/** @todo disable edit of combo iff we got parse problems solved */
+	/*		g_object_set(renderer, "has-entry", FALSE, (const char*)0); */
 
-			/** @todo disable edit of combo iff we got parse problems solved */
-			/*		g_object_set(renderer, "has-entry", FALSE, (const char*)0); */
-			g_object_unref(G_OBJECT(store));
-			gtk_tree_store_set(GTK_TREE_STORE(model), iter, KEYVALLIST_COLUMN_KEY_PREPARED, TRUE, -1);
+}
+
+/**
+ * @brief Callback for "editing-started" signal for key column used to update combo renderer with appropriate values.
+ *
+ * @param renderer combo renderer used for editing
+ * @param editable unused
+ * @param path unused
+ * @param user_data unused
+ */
+static void EntityKeyValueList_keyEditingStarted (GtkCellRenderer *renderer,
+		GtkCellEditable *editable, const gchar *path , gpointer *user_data)
+{
+	if (!g_current_attributes)
+		return;
+	/* determine available key values and set them to combo box */
+	GtkListStore* store;
+	g_object_get(renderer, "model", &store, (char*)0);
+	gtk_list_store_clear(store);
+
+	GtkTreeIter storeIter;
+	const EntityClassAttributes validAttrib = g_current_attributes->m_attributes;
+	for (EntityClassAttributes::const_iterator i = validAttrib.begin(); i != validAttrib.end(); ++i) {
+		EntityClassAttribute *attrib = const_cast<EntityClassAttribute*> (&(*i).second);
+		ClassKeyValues::iterator it = g_selectedKeyValues.find(g_current_attributes->m_name);
+		if (it == g_selectedKeyValues.end()) {
+			return;
+		}
+		KeyValues possibleValues = (*it).second;
+		KeyValues::const_iterator keyIter = possibleValues.find(attrib->m_type.c_str());
+		/* end means we don't have it actually in this map, so this is a valid new key*/
+		if (keyIter == possibleValues.end()) {
+			gtk_list_store_append(store, &storeIter);
+			gtk_list_store_set(store, &storeIter, 0, attrib->m_type.c_str(), -1);
 		}
 	}
 }
@@ -1738,7 +1744,7 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityKeyEdited), (gpointer) view);
 				g_signal_connect(G_OBJECT(renderer), "editing-canceled", G_CALLBACK(entityKeyEditCanceled), (gpointer) view);
-				//g_signal_connect(G_OBJECT(renderer), "editing-started", G_CALLBACK(EntityKeyValueList_updateKeyCombo), (gpointer) view);
+				g_signal_connect(G_OBJECT(renderer), "editing-started", G_CALLBACK(EntityKeyValueList_keyEditingStarted), (gpointer) view);
 			}
 
 			{
