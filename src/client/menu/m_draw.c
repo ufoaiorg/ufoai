@@ -72,7 +72,7 @@ static int debugTextPositionY = 0;
 static int debugPositionX = 0;
 #define DEBUG_PANEL_WIDTH 300
 
-static void MN_HilightNode (const menuNode_t *node, const vec4_t color)
+static void MN_HighlightNode (const menuNode_t *node, const vec4_t color)
 {
 	static const vec4_t grey = {0.7, 0.7, 0.7, 1.0};
 	vec2_t pos;
@@ -81,7 +81,7 @@ static void MN_HilightNode (const menuNode_t *node, const vec4_t color)
 	const char* text;
 
 	if (node->parent)
-		MN_HilightNode(node->parent, grey);
+		MN_HighlightNode(node->parent, grey);
 
 	MN_GetNodeAbsPos(node, pos);
 
@@ -162,7 +162,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 
 		R_FontDrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "hovered node:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
-		MN_HilightNode(hoveredNode, red);
+		MN_HighlightNode(hoveredNode, red);
 		R_Color(white);
 	}
 
@@ -176,7 +176,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 			R_Color(green);
 			R_FontDrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "drag and drop target node:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 			debugTextPositionY += 15;
-			MN_HilightNode(targetNode, green);
+			MN_HighlightNode(targetNode, green);
 		}
 	}
 	R_Color(NULL);

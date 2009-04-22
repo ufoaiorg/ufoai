@@ -44,7 +44,7 @@ static int status = -1;
 static int startX;
 static int startY;
 
-static void MN_EditorNodeHilightNode (menuNode_t *node, const vec4_t color)
+static void MN_EditorNodeHighlightNode (menuNode_t *node, const vec4_t color)
 {
 	vec2_t pos;
 	MN_GetNodeAbsPos(node, pos);
@@ -95,10 +95,10 @@ static void MN_EditorNodeDraw (menuNode_t *node)
 	}
 
 	if (hovered && hovered != anchoredNode)
-		MN_EditorNodeHilightNode(hovered, grey);
+		MN_EditorNodeHighlightNode(hovered, grey);
 
 	if (anchoredNode)
-		MN_EditorNodeHilightNode(anchoredNode, red);
+		MN_EditorNodeHighlightNode(anchoredNode, red);
 }
 
 static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)

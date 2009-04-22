@@ -39,7 +39,7 @@ typedef enum {
 	MN_TAB_NOTHING = 0,
 	MN_TAB_NORMAL = 1,
 	MN_TAB_SELECTED = 2,
-	MN_TAB_HILIGHTED = 3,
+	MN_TAB_HIGHLIGHTED = 3,
 	MN_TAB_DISABLED = 4
 } mn_tab_type_t;
 
@@ -206,7 +206,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		} else if (option->disabled || node->disabled) {
 			status = MN_TAB_DISABLED;
 		} else if (option == overMouseOption) {
-			status = MN_TAB_HILIGHTED;
+			status = MN_TAB_HIGHLIGHTED;
 		}
 
 		/* Display */
