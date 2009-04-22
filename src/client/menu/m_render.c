@@ -112,7 +112,7 @@ void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, f
 		}
 
 		/* vertical (0 is upper) */
-		switch ((align % 9) / 3) {
+		switch ((align % ALIGN_UL_RSL) / 3) {
 		case 1:
 			y1 -= nh * 0.5;
 			break;
@@ -187,7 +187,6 @@ const image_t *MN_DrawNormImageByName (float x, float y, float w, float h, float
 
 /**
  * @brief draw a panel from a texture as we can see on the image
- * The function is inline because there are often 3 or 5 const param, with it a lot of var became const too
  * @image html http://ufoai.ninex.info/wiki/images/Inline_draw_panel.png
  * @param[in] pos Position of the output panel
  * @param[in] size Size of the output panel
@@ -199,7 +198,7 @@ const image_t *MN_DrawNormImageByName (float x, float y, float w, float h, float
  * top height, mid height, bottom height, and margin
  * @todo can we improve the code? is it need?
  */
-void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int *panelDef)
+void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int panelDef[6])
 {
 	const int leftWidth = panelDef[0];
 	const int midWidth = panelDef[1];
