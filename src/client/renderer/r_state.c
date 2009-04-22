@@ -478,6 +478,8 @@ void R_Setup2D (void)
 	/* bind default vertex array */
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
+	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	R_Color(NULL);
 
 	glEnable(GL_BLEND);
