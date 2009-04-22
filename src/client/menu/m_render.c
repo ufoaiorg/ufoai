@@ -279,6 +279,13 @@ int MN_DrawStringInBox (const menuNode_t *node, int align, int x, int y, int wid
 	const int xx = x + ((width * horizontalAlign) >> 1);
 	const int yy = y + ((height * verticalAlign) >> 1);
 
-	return R_FontDrawString(font, align, xx, yy, xx, yy, width, height,
+	return MN_DrawString(font, align, xx, yy, xx, yy, width, height,
 		0, text, 0, 0, NULL, qfalse, method);
 }
+
+int MN_DrawString (const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
+		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, qboolean increaseLine, longlines_t method)
+{
+	return R_FontDrawString(fontId, align, x, y, absX, absY, maxWidth, maxHeight, lineHeight, c, boxHeight, scrollPos, curLine, increaseLine, method);
+}
+

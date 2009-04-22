@@ -456,7 +456,7 @@ static void MN_DrawFree (int container, const menuNode_t *node, int posx, int po
 	/* if showTUs is true (only the first time in none single containers)
 	 * and we are connected to a game */
 	if (showTUs && cls.state == ca_active) {
-		R_FontDrawString("f_verysmall", ALIGN_UL, nodepos[0] + 3, nodepos[1] + 3,
+		MN_DrawString("f_verysmall", ALIGN_UL, nodepos[0] + 3, nodepos[1] + 3,
 			nodepos[0] + 3, nodepos[1] + 3, node->size[0] - 6, 0, 0,
 			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse, 0);
 	}
@@ -717,7 +717,7 @@ static int MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *h
 		pos[0] += obj->sx * C_UNIT / 2.0;
 		pos[1] += obj->sy * C_UNIT / 2.0;
 		MN_DrawItem(node, pos, &tempItem, -1, -1, scale, color);
-		R_FontDrawString("f_verysmall", ALIGN_LC,
+		MN_DrawString("f_verysmall", ALIGN_LC,
 			pos[0] + obj->sx * C_UNIT / 2.0, pos[1] + obj->sy * C_UNIT / 2.0,
 			pos[0] + obj->sx * C_UNIT / 2.0, pos[1] + obj->sy * C_UNIT / 2.0,
 			C_UNIT,	0,	/* maxWidth/maxHeight */
@@ -732,7 +732,7 @@ static int MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *h
 		ammopos[0] += obj->sx * C_UNIT + 10;
 
 		/* draw the item name. */
-		cellHeight += R_FontDrawString("f_verysmall", ALIGN_UL,
+		cellHeight += MN_DrawString("f_verysmall", ALIGN_UL,
 			pos[0], pos[1],
 			pos[0], nodepos[1],
 			cellWidth - 5, 200,	/* max width/height */
@@ -757,7 +757,7 @@ static int MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *h
 				ammopos[0] += icItem->item.t->sx * C_UNIT / 2.0;
 				ammopos[1] -= icItem->item.t->sy * C_UNIT / 2.0;
 				MN_DrawItem(node, ammopos, &tempItem, -1, -1, scale, colorDefault);
-				R_FontDrawString("f_verysmall", ALIGN_LC,
+				MN_DrawString("f_verysmall", ALIGN_LC,
 					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
 					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
 					C_UNIT,	/* maxWidth */

@@ -254,7 +254,7 @@ static int MN_DrawNotice (int x, int y, const char *noticeText)
 
 	MN_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, ALIGN_UL, noticeBG);
 	R_Color(noticeColor);
-	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
+	MN_DrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 	R_Color(NULL);
 
 	return width;

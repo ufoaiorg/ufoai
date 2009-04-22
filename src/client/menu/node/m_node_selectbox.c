@@ -128,7 +128,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 	/* draw the label for the current selected option */
 	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
 		if (!strcmp(option->value, ref)) {
-			R_FontDrawString(font, ALIGN_UL, selBoxX, selBoxY,
+			MN_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 				selBoxX, selBoxY, node->size[0] - 4, 0,
 				0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		}
@@ -187,7 +187,7 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 			MN_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
 					SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
 		/* print the option label */
-		R_FontDrawString(font, ALIGN_UL, selBoxX, selBoxY,
+		MN_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, nodepos[1] + node->size[1], node->size[0] - 4, 0,
 			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		/* next entries' position */

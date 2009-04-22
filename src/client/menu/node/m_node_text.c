@@ -347,7 +347,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 				*tab++ = '\0';
 
 			/*Com_Printf("tab - first part - lines: %i \n", lines);*/
-			R_FontDrawString(font, node->textalign, x1, y, x, y, tabwidth - 1, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qfalse, LONGLINES_PRETTYCHOP);
+			MN_DrawString(font, node->textalign, x1, y, x, y, tabwidth - 1, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qfalse, LONGLINES_PRETTYCHOP);
 			x1 += tabwidth;
 			/* now skip to the first char after the \t */
 			cur = tab;
@@ -361,7 +361,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			if (!cur) {
 				lines++;
 			} else {
-				R_FontDrawString(font, node->textalign, x1, y, x, y, width, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qtrue, node->longlines);
+				MN_DrawString(font, node->textalign, x1, y, x, y, width, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qtrue, node->longlines);
 			}
 		}
 
@@ -437,7 +437,7 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messa
 		const int prevScreenLines = screenLines;	/**< Screen lines before R_FontDrawString(...) is executed */
 
 		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
-		R_FontDrawString(font, node->textalign, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).rows, 0, &screenLines, qtrue, node->longlines);
+		MN_DrawString(font, node->textalign, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).rows, 0, &screenLines, qtrue, node->longlines);
 		addTextLines += screenLines - prevScreenLines - 1;
 		if (screenLines > EXTRADATA(node).rows)
 			break;

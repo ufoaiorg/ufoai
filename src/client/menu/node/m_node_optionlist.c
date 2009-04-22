@@ -119,7 +119,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 
 		/* print the option label */
 		R_Color(textColor);
-		R_FontDrawString(font, ALIGN_UL, pos[0] + node->padding, currentY,
+		MN_DrawString(font, ALIGN_UL, pos[0] + node->padding, currentY,
 			pos[0], currentY, node->size[0] - node->padding - node->padding, node->size[1],
 			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
