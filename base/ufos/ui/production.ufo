@@ -30,7 +30,7 @@ window production
 	custombutton back
 	{
 		tooltip		"_Back to baseview"
-		image		ui/button_background	blend	true
+		image		ui/button_background
 		texl		"1 1"
 		size		"59 55"
 		pos			"950 20"
@@ -45,7 +45,6 @@ window production
 	panel tab_background {
 		pos		"24 96"
 		size	"986 56"
-		blend	true
 		image	"ui/panel_tab"
 	}
 
@@ -164,7 +163,6 @@ window production
 		pos		"12 160"
 		size	"553 597"
 		image	ui/panel_grey_green_large2
-		blend	true
 	}
 
 	// ==================
@@ -176,7 +174,6 @@ window production
 			pos		"580 160"
 			size	"420 145"
 			image	ui/panel_grey_green_large
-			blend	true
 		}
 
 		// ==================
@@ -303,7 +300,6 @@ window production
 
 	vscrollbar prodlist_scroll {
 		image		ui/scrollbar_v_green
-		blend		true
 		pos			"428 180"
 		height		"550"
 		current		0
@@ -334,7 +330,6 @@ window production
 			pos		"580 310"
 			size	"420 447"
 			image	ui/panel_grey_green_large
-			blend	true
 		}
 
 		item itemmodel
@@ -383,7 +378,6 @@ window production
 	spinner prod_change {
 		tooltip		"_Change the production amount"
 		image		ui/spinner_blue
-		blend		true
 		pos			"810 505"
 		min			1
 		current		"*cvar mn_production_amount"
@@ -395,7 +389,6 @@ window production
 	spinner prod_change_10 {
 		tooltip		"_Change the production amount"
 		image		ui/spinner_blue
-		blend		true
 		pos			"860 505"
 		min			1
 		current		"*cvar mn_production_amount"
@@ -408,7 +401,6 @@ window production
 	{
 		string		"_Start this production"
 		image		ui/button_green_small
-		blend		true
 		pos			"670 480"
 		size		"250 32"
 		font		f_small

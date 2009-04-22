@@ -29,10 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 const image_t *MN_LoadImage(const char *name);
 
-void MN_DrawNormImage(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const image_t *image);
-const image_t *MN_DrawNormImageByName(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
+void MN_DrawNormImage(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, const image_t *image);
+const image_t *MN_DrawNormImageByName(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, const char *name);
 
-void MN_DrawPanel(const vec2_t pos, const vec2_t size, const char *texture, qboolean blend, int texX, int texY, const int *panelDef);
+void MN_DrawPanel(const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int *panelDef);
 void MN_DrawFill(int x, int y, int w, int h, int align, const vec4_t color);
 
 #endif

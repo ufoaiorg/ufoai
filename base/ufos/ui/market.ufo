@@ -31,7 +31,7 @@ window market
 	custombutton back
 	{
 		tooltip		"_Back to baseview"
-		image		ui/button_background	blend	true
+		image		ui/button_background
 		texl		"1 1"
 		size		"59 55"
 		pos			"950 20"
@@ -46,7 +46,6 @@ window market
 	panel tab_background {
 		pos		"24 96"
 		size	"986 56"
-		blend	true
 		image	"ui/panel_tab"
 	}
 
@@ -118,7 +117,6 @@ window market
 		pos		"12 160"
 		size	"553 597"
 		image	ui/panel_grey_green_large2
-		blend	true
 	}
 
 	text market
@@ -189,7 +187,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 180"
 		onChange	{ cmd "mn_buysell 0 <lastdiff>; market_click 0;" }
 	}
@@ -212,7 +209,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 205"
 		onChange	{ cmd "mn_buysell 1 <lastdiff>; market_click 1" }
 	}
@@ -235,7 +231,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 230"
 		onChange	{ cmd "mn_buysell 2 <lastdiff>; market_click 2" }
 	}
@@ -258,7 +253,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 255"
 		onChange	{ cmd "mn_buysell 3 <lastdiff>; market_click 3" }
 	}
@@ -281,7 +275,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 280"
 		onChange	{ cmd "mn_buysell 4 <lastdiff>; market_click 4" }
 	}
@@ -304,7 +297,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 305"
 		onChange	{ cmd "mn_buysell 5 <lastdiff>; market_click 5" }
 	}
@@ -327,7 +319,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 330"
 		onChange	{ cmd "mn_buysell 6 <lastdiff>; market_click 6" }
 	}
@@ -350,7 +341,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 355"
 		onChange	{ cmd "mn_buysell 7 <lastdiff>; market_click 7" }
 	}
@@ -373,7 +363,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 380"
 		onChange	{ cmd "mn_buysell 8 <lastdiff>; market_click 8" }
 	}
@@ -396,7 +385,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 405"
 		onChange	{ cmd "mn_buysell 9 <lastdiff>; market_click 9" }
 	}
@@ -419,7 +407,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 430"
 		onChange	{ cmd "mn_buysell 10 <lastdiff>; market_click 10" }
 	}
@@ -442,7 +429,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 455"
 		onChange	{ cmd "mn_buysell 11 <lastdiff>; market_click 11" }
 	}
@@ -465,7 +451,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 480"
 		onChange	{ cmd "mn_buysell 12 <lastdiff>; market_click 12" }
 	}
@@ -488,7 +473,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 505"
 		onChange	{ cmd "mn_buysell 13 <lastdiff>; market_click 13" }
 	}
@@ -511,7 +495,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 530"
 		onChange	{ cmd "mn_buysell 14 <lastdiff>; market_click 14" }
 	}
@@ -534,7 +517,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 555"
 		onChange	{ cmd "mn_buysell 15 <lastdiff>; market_click 15" }
 	}
@@ -557,7 +539,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 580"
 		onChange	{ cmd "mn_buysell 16 <lastdiff>; market_click 16" }
 	}
@@ -580,7 +561,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 605"
 		onChange	{ cmd "mn_buysell 17 <lastdiff>; market_click 17" }
 	}
@@ -603,7 +583,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 630"
 		onChange	{ cmd "mn_buysell 18 <lastdiff>; market_click 18" }
 	}
@@ -626,7 +605,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 655"
 		onChange	{ cmd "mn_buysell 19 <lastdiff>; market_click 19" }
 	}
@@ -649,7 +627,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 680"
 		onChange	{ cmd "mn_buysell 20 <lastdiff>; market_click 20" }
 	}
@@ -672,7 +649,6 @@ window market
 	{
 		tooltip		"_Buy and sell item"
 		image		ui/spinner_blue
-		blend		true
 		pos			"376 705"
 		onChange	{ cmd "mn_buysell 21 <lastdiff>; market_click 21" }
 	}
@@ -712,7 +688,6 @@ window market
 			pos		"588 167"
 			size	"410 115"
 			image	"ui/panel_grey_green"
-			blend	true
 		}
 
 		// ==================
@@ -743,7 +718,6 @@ window market
 			pos		"588 303"
 			size	"410 455"
 			image	"ui/panel_grey_green"
-			blend	true
 		}
 
 		// ==================

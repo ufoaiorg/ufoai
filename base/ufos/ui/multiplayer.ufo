@@ -38,7 +38,6 @@ window abstract_multiplayer {
 		pos			"80 160"
 		size		"256 60"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -51,7 +50,6 @@ window abstract_multiplayer {
 		pos			"80 225"
 		size		"256 60"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -64,7 +62,6 @@ window abstract_multiplayer {
 		pos			"80 290"
 		size		"256 60"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -77,7 +74,6 @@ window abstract_multiplayer {
 		pos			"80 385"
 		size		"256 60"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -90,7 +86,6 @@ window abstract_multiplayer {
 		pos			"80 480"
 		size		"256 60"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -221,7 +216,6 @@ window serverinfo
 		pos			"70 580"
 		size		"256 64"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -232,7 +226,6 @@ window serverinfo
 	{
 		tooltip		"_Leave Serverbrowser"
 		image		ui/button_background
-		blend		true
 		texl		"192 0"
 		pos			"26 720"
 		size		"64 37"
@@ -345,7 +338,6 @@ window mp_serverbrowser extends abstract_multiplayer_join
 
 		vscrollbar servers_scroll {
 			image		ui/scrollbar_v_green
-			blend		true
 			pos			"500 40"
 			height		"440"
 			current		0
@@ -358,7 +350,6 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		{
 			string		"_Refresh"
 			image		ui/button_green_small
-			blend		true
 			color		"0 0.8 0 1"
 			font		f_small
 			pos			"335 490"
@@ -381,7 +372,6 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		{
 			string		"*cvar cl_name"
 			image		ui/button_green_verysmall
-			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -410,7 +400,6 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		{
 			string		"*cvar mn_server_ip"
 			image		ui/button_green_verysmall
-			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -423,7 +412,6 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		{
 			string		"_Connect"
 			image		ui/button_green_small
-			blend		true
 			color		"0 0.8 0 1"
 			font		f_small
 			pos			"335 540"
@@ -571,7 +559,6 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"*cvar sv_hostname"
 			image		ui/button_green_verysmall
-			blend		true
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -706,7 +693,6 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"*cvar mn_svmapname"
 			image		ui/button_green_verysmall
-			blend		true
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -829,7 +815,6 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		"*cvar sv_maxclients"
 			image		ui/spinner_blue
-			blend		true
 			pos			"475 49"
 			min			2
 			max			16
@@ -857,7 +842,6 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		"*cvar sv_maxsoldiersperteam"
 			image		ui/spinner_blue
-			blend		true
 			pos			"475 69"
 			min			1
 			max			8
@@ -885,7 +869,6 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		"*cvar sv_maxsoldiersperplayer"
 			image		ui/spinner_blue
-			blend		true
 			pos			"475 89"
 			min			1
 			max			8
@@ -913,7 +896,6 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		"*cvar sv_maxplayersperteam"
 			image		ui/spinner_blue
-			blend		true
 			pos			"475 109"
 			min			1
 			max			8
@@ -941,7 +923,6 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		"*cvar ai_numactors"
 			image		ui/spinner_blue
-			blend		true
 			pos			"475 129"
 			min			0
 			max			8
@@ -985,7 +966,6 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"*cvar password"
 			image		ui/button_green_verysmall
-			blend		true
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -1009,7 +989,6 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"*cvar rcon_password"
 			image		ui/button_green_verysmall
-			blend		true
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -1048,7 +1027,6 @@ window mp_create_server extends abstract_multiplayer
 		pos			"570 630"
 		size		"256 64"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -1219,7 +1197,7 @@ window multiplayer_selectteam
 	custombutton button_exit
 	{
 		tooltip		"_Finish the teamselection and start the game"
-		image		ui/button_background blend true
+		image		ui/button_background
 		pos			"684 494"
 		size		"64 37"
 		texl		"192 0"
@@ -1278,7 +1256,6 @@ window multiplayer_wait
 		size		"526 437"
 		dragbutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 		timeout		2000
 	}
 	
@@ -1317,7 +1294,6 @@ window multiplayer_wait
 		visiblewhen "*cvar:irc_defaultChannel"
 		string		"_Lobby"
 		image		ui/button_green_small
-		blend		true
 		width		"200"
 		pos			"30 373"
 		font		f_menu
@@ -1332,7 +1308,6 @@ window multiplayer_wait
 		string		"_Force start"
 		tooltip		"_Start the game even if not all teams have joined"
 		image		ui/button_green_small
-		blend		true
 		width		"200"
 		pos 		"297 373"
 		font		f_menu
@@ -1359,7 +1334,6 @@ window serverpassword
 		dragbutton	true
 		closebutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 	}
 
 	// ===================
@@ -1374,7 +1348,6 @@ window serverpassword
 	textentry slot_password
 	{
 		image		ui/button_green_verysmall
-		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -1393,7 +1366,6 @@ window serverpassword
 		image		ui/button_green_small
 		pos			"260 170"
 		width		"200"
-		blend		true
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -1413,7 +1385,6 @@ window chat_popup
 		dragbutton	true
 		closebutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 	}
 
 	text chatscreen
@@ -1432,7 +1403,6 @@ window chat_popup
 		string		"_Lobby"
 		tooltip		"_Go into the lobby"
 		image		ui/button_green_small
-		blend		true
 		pos			"260 170"
 		width		"200"
 		font		f_menu

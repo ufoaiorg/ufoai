@@ -430,7 +430,7 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 		if (maxlevel >= image->maxlevel)
 			maxlevel = image->maxlevel - 1;
 		assert(image->path[maxlevel]);
-		MN_DrawNormImageByName(radar.x + image->x, radar.y + image->y, 0, 0, 0, 0, 0, 0, ALIGN_UL, node->blend, image->path[maxlevel]);
+		MN_DrawNormImageByName(radar.x + image->x, radar.y + image->y, 0, 0, 0, 0, 0, 0, ALIGN_UL, image->path[maxlevel]);
 	}
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {

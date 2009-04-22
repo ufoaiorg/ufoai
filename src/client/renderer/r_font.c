@@ -635,7 +635,6 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 	const float nh = h * viddef.ry;
 
 	R_BindTexture(texId);
-	R_EnableBlend(qtrue);
 
 	glVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
 
@@ -655,8 +654,6 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 
 	/* set back to standard 3d pointer */
 	glVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
-
-	R_EnableBlend(qfalse);
 }
 
 /**

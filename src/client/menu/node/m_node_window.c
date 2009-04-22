@@ -105,7 +105,7 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 	/* draw the background */
 	image = MN_GetReferenceString(node, node->image);
 	if (image)
-		MN_DrawPanel(pos, node->size, image, node->blend, 0, 0, windowTemplate);
+		MN_DrawPanel(pos, node->size, image, 0, 0, windowTemplate);
 
 	/* draw the title */
 	text = MN_GetReferenceString(node, node->text);

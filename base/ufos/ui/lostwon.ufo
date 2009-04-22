@@ -159,7 +159,6 @@ window uforecovery
 		modal		true
 		preventtypingescape true		// we can't use ESC
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_UFO recovery"
 	}
 
@@ -236,7 +235,6 @@ window uforecovery
 			string		"_Recover"
 			tooltip		"_Begin UFO recovery process"
 			image		ui/button_green_small
-			blend		true
 			pos			"140 210"
 			size		"176 32"
 			font		f_menu
@@ -249,7 +247,6 @@ window uforecovery
 			string		"_Replace UFO"
 			tooltip		"_Replace stored UFO with actual recovered one"
 			image		ui/button_green_small
-			blend		true
 			pos			"375 210"
 			size		"176 32"
 			font		f_menu
@@ -324,7 +321,6 @@ window uforecovery
 			string		"_Sell"
 			tooltip		"_Begin UFO sell process"
 			image		ui/button_green_small
-			blend		true
 			pos			"140 210"
 			size		"176 32"
 			font		f_menu

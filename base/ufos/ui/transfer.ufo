@@ -30,7 +30,7 @@ window transfer
 	custombutton back
 	{
 		tooltip		"_Back to baseview"
-		image		ui/button_background	blend	true
+		image		ui/button_background
 		texl		"1 1"
 		size		"59 55"
 		pos			"950 20"
@@ -67,7 +67,6 @@ window transfer
 	panel tab_background {
 		pos		"24 96"
 		size	"986 56"
-		blend	true
 		image	"ui/panel_tab"
 	}
 
@@ -113,7 +112,6 @@ window transfer
 		pos		"12 160"
 		size	"553 597"
 		image	ui/panel_grey_green_large2
-		blend	true
 	}
 
 	// ==================
@@ -124,7 +122,6 @@ window transfer
 		pos		"580 160"
 		size	"420 260"
 		image	ui/panel_grey_green_large
-		blend	true
 	}
 
 	// ==================
@@ -143,7 +140,6 @@ window transfer
 		pos		"580 440"
 		size	"420 269"
 		image	ui/panel_grey_green_large2
-		blend	true
 	}
 
 	text trans_cargolist
@@ -167,7 +163,6 @@ window transfer
 
 	vscrollbar trans_cargolist_scroll {
 		image		ui/scrollbar_v_green
-		blend		true
 		pos			"960 461"
 		height		"220"
 		current		0
@@ -253,7 +248,6 @@ window transfer
 
 	vscrollbar trans_list_scroll {
 		image		ui/scrollbar_v_green
-		blend		true
 		pos			"522 180"
 		height		"554"
 		current		0
@@ -272,7 +266,6 @@ window transfer
 		string		"_Unload"
 		tooltip		"_Empty the aircraft storage"
 		image		ui/button_blue
-		blend		true
 		pos			"619 711"
 		size		"128 52"
 		color		"1 1 1 0.6"
@@ -286,7 +279,6 @@ window transfer
 		string		"_Transfer"
 		tooltip		"_Start the transfer"
 		image		ui/button_blue
-		blend		true
 		pos			"830 711"
 		size		"128 52"
 		color		"1 1 1 0.6"

@@ -10,14 +10,12 @@ window aircraft_equip extends iaircraft
 	panel type_background {
 		pos		"24 441"
 		size	"270 319"
-		blend	true
 		image	"ui/panel_grey_green"
 	}
 
 	panel items_background {
 		pos		"299 441"
 		size	"270 319"
-		blend	true
 		image	"ui/panel_grey_green"
 	}
 
@@ -25,7 +23,6 @@ window aircraft_equip extends iaircraft
 		pos		"575 460"
 		size	"432 293"
 		texh	"432 293"
-		blend	true
 		image	"ui/airequip_element"
 	}
 
@@ -164,7 +161,7 @@ window aircraft_equip extends iaircraft
 	custombutton airequip_button_add1
 	{
 		tooltip		"_Add selected item"
-		image ui/button_background	blend true
+		image ui/button_background
 		texl "128 0"	size "37 32"
 		pos			"592 500"
 		onClick		{ cmd "airequip_add_item 1;" }
@@ -174,7 +171,7 @@ window aircraft_equip extends iaircraft
 	custombutton airequip_button_remove1
 	{
 		tooltip		"_Remove item from slot"
-		image ui/button_background	blend true
+		image ui/button_background
 		texl "128 0"	size "37 32"
 		pos			"592 550"
 		onClick		{ cmd "airequip_del_item 1;" }
@@ -184,7 +181,7 @@ window aircraft_equip extends iaircraft
 	custombutton airequip_button_add2
 	{
 		tooltip		"_Add selected item"
-		image ui/button_background	blend true
+		image ui/button_background
 		texl "128 0"	size "37 32"
 		pos			"592 660"
 		onClick		{ cmd "airequip_add_item 2;" }
@@ -194,7 +191,7 @@ window aircraft_equip extends iaircraft
 	custombutton airequip_button_remove2
 	{
 		tooltip		"_Remove item from slot"
-		image ui/button_background	blend true
+		image ui/button_background
 		texl "128 0"	size "37 32"
 		pos			"592 695"
 		onClick		{ cmd "airequip_del_item 2;" }
@@ -205,7 +202,7 @@ window aircraft_equip extends iaircraft
 	{
 		tooltip	"_Select this zone"
 		pos			"654 485"
-		image		ui/airequip_selected_element	blend true
+		image		ui/airequip_selected_element
 		texl		"0 83"
 		texh		"458 190"
 		invis		false
@@ -230,7 +227,7 @@ window aircraft_equip extends iaircraft
 		tooltip	"_Select this zone"
 		mousefx	true
 		pos	"654 648"
-		image	ui/airequip_selected_element	blend true
+		image	ui/airequip_selected_element
 		texl	"0 0"
 		texh	"458 82"
 		onClick	{ call airequip_zone2 }
@@ -276,7 +273,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot0
 	{
 		tooltip		"_Select this slot"
-		image		ui/button_square	blend true
+		image		ui/button_square
 		mousefx		true
 		pos			"909 121"
 		texl		"0 0"
@@ -296,7 +293,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot1
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square	blend true
+		image		ui/button_square
 		mousefx	true
 		pos		"909 201"
 		texl	"0 0"
@@ -316,7 +313,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot2
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square	blend true
+		image		ui/button_square
 		mousefx	true
 		pos		"909 281"
 		texl	"0 0"
@@ -336,7 +333,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot3
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square	blend true
+		image		ui/button_square
 		mousefx	true
 		pos		"709 121"
 		texl	"0 0"
@@ -356,7 +353,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot4
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square	blend true
+		image		ui/button_square
 		mousefx	true
 		pos		"709 281"
 		texl	"0 0"
@@ -376,7 +373,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot5
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square	blend true
+		image		ui/button_square
 		mousefx	true
 		pos		"509 121"
 		texl	"0 0"
@@ -396,7 +393,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot6
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square	blend true
+		image		ui/button_square
 		mousefx	true
 		pos		"509 201"
 		texl	"0 0"
@@ -416,7 +413,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot7
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square	blend true
+		image		ui/button_square
 		mousefx	true
 		pos		"509 281"
 		texl	"0 0"

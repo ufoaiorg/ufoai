@@ -48,7 +48,7 @@ window hospital
 	custombutton bt_continue
 	{
 		tooltip	"_Back to baseview"
-		image	ui/button_background	blend	true
+		image	ui/button_background
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"
@@ -515,7 +515,7 @@ window hospital_employee
 	custombutton bt_continue
 	{
 		tooltip	"_Back"
-		image	ui/button_background	blend	true
+		image	ui/button_background
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"
@@ -530,7 +530,6 @@ window hospital_employee
 		pos		"457 101"
 		size	"555 471"
 		image	ui/panel_grey_green_large
-		blend	true
 	}
 
 	string txt_name
@@ -621,7 +620,6 @@ window hospital_employee
 		pos		"26 101"
 		size	"276 471"
 		image	ui/panel_grey_green_large
-		blend	true
 	}
 
 	button button_hosp_bionic_start
@@ -632,7 +630,6 @@ window hospital_employee
 		pos			"60 270"
 		size		"207 48"
 		font		f_menu
-		blend		true
 		tooltip		"_Not implemented"
 		disabled	true
 		onClick

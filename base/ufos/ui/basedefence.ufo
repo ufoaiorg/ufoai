@@ -162,7 +162,6 @@ window basedefence
 	{
 		tooltip		"_Install selected defence system"
 		image		ui/button_background
-		blend		true
 		pos			"467 75"
 		size		"37 32"
 		texl		"128 0"
@@ -174,7 +173,6 @@ window basedefence
 	{
 		tooltip		"_Remove this defence system"
 		image		ui/button_background
-		blend		true
 		pos			"467 125"
 		size		"37 32"
 		texl		"128 0"
@@ -186,7 +184,6 @@ window basedefence
 	{
 		tooltip		"_Install selected defence system"
 		image		ui/button_background
-		blend		true
 		pos			"467 259"
 		size		"37 32"
 		texl		"128 0"
@@ -198,7 +195,6 @@ window basedefence
 	{
 		tooltip		"_Remove this defence system"
 		image		ui/button_background
-		blend		true
 		pos			"467 294"
 		size		"37 32"
 		texl		"128 0"
@@ -279,7 +275,6 @@ window basedefence
 	{
 		tooltip		"_Done"
 		image		ui/button_background
-		blend		true
 		pos			"940 720"
 		size		"64 37"
 		texl		"192 0"

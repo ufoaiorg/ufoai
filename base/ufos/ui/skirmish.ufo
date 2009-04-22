@@ -19,7 +19,6 @@ window skirmish
 		pos			"90 200"
 		size		"256 64"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -35,7 +34,6 @@ window skirmish
 		pos			"90 80"
 		size		"256 64"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -63,7 +61,6 @@ window skirmish
 	{
 		string		"*cvar cl_equip"
 		image		ui/button_green_verysmall
-		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -132,7 +129,6 @@ window skirmish
 	{
 		current		"*cvar ai_numaliens"
 		image		ui/spinner_blue
-		blend		true
 		pos			"868 279"
 		min			1
 		max			30
@@ -152,7 +148,6 @@ window skirmish
 	{
 		string		"*cvar mn_svmapname"
 		image		ui/button_green_verysmall
-		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl

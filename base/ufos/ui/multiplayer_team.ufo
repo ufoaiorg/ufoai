@@ -690,7 +690,7 @@ window mp_team_edit
 	}
 
 	vscrollbar equip_scroll {
-		image	ui/scrollbar_v_green	blend	true
+		image	ui/scrollbar_v_green
 		pos "629 405"	height	"339"
 		hidewhenunused true
 		onChange {
@@ -699,7 +699,7 @@ window mp_team_edit
 	}
 
 	vscrollbar equip_ammo_scroll {
-		image	ui/scrollbar_v_green	blend	true
+		image	ui/scrollbar_v_green
 		pos "892 405"	height	"339"
 		hidewhenunused true
 		onChange {
@@ -714,7 +714,7 @@ window mp_team_edit
 	custombutton bt_go
 	{
 		tooltip	"_Done"
-		image	ui/button_background blend true
+		image	ui/button_background
 		texl	"192 0"	size "64 37"
 		pos		"940 720"
 		icon return
@@ -760,7 +760,6 @@ window mp_team extends abstract_multiplayer
 		button slot_team0
 		{
 			image		ui/button_green_verysmall
-			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -776,7 +775,6 @@ window mp_team extends abstract_multiplayer
 		button slot_team1
 		{
 			image		ui/button_green_verysmall
-			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -792,7 +790,6 @@ window mp_team extends abstract_multiplayer
 		button slot_team2
 		{
 			image		ui/button_green_verysmall
-			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -808,7 +805,6 @@ window mp_team extends abstract_multiplayer
 		button slot_team3
 		{
 			image		ui/button_green_verysmall
-			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -824,7 +820,6 @@ window mp_team extends abstract_multiplayer
 		button slot_team4
 		{
 			image		ui/button_green_verysmall
-			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -840,7 +835,6 @@ window mp_team extends abstract_multiplayer
 		button slot_team5
 		{
 			image		ui/button_green_verysmall
-			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -856,7 +850,6 @@ window mp_team extends abstract_multiplayer
 		button slot_team6
 		{
 			image		ui/button_green_verysmall
-			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -872,7 +865,6 @@ window mp_team extends abstract_multiplayer
 		button slot_team7
 		{
 			image		ui/button_green_verysmall
-			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -895,7 +887,7 @@ window mp_team extends abstract_multiplayer
 			size "256 40"
 			tooltip	"_Generate a new random team"
 			onClick	{ cmd "mp_autoteam;mn_push mp_team_edit;" }
-			image	ui/button_green_small	blend	true
+			image	ui/button_green_small
 			font	f_menusmall
 			color	"0 0.5 0 1"
 			selectcolor "1 1 1 1"
@@ -908,7 +900,7 @@ window mp_team extends abstract_multiplayer
 			size "256 40"
 			tooltip	"_Save the current team"
 			onClick	{ cmd "mn_push mp_team_save_popup;" }
-			image	ui/button_green_small	blend	true
+			image	ui/button_green_small
 			font	f_menusmall
 			color	"0 0.5 0 1"
 			selectcolor "1 1 1 1"
@@ -963,7 +955,6 @@ window mp_team_save_popup
 		closebutton	true
 		modal		true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Save your team"
 	}
 
@@ -975,7 +966,6 @@ window mp_team_save_popup
 	textentry slot_team0
 	{
 		image		ui/button_green_verysmall
-		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -990,7 +980,6 @@ window mp_team_save_popup
 	textentry slot_team1
 	{
 		image		ui/button_green_verysmall
-		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -1005,7 +994,6 @@ window mp_team_save_popup
 	textentry slot_team2
 	{
 		image		ui/button_green_verysmall
-		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -1020,7 +1008,6 @@ window mp_team_save_popup
 	textentry slot_team3
 	{
 		image		ui/button_green_verysmall
-		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -1035,7 +1022,6 @@ window mp_team_save_popup
 	textentry slot_team4
 	{
 		image		ui/button_green_verysmall
-		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -1050,7 +1036,6 @@ window mp_team_save_popup
 	textentry slot_team5
 	{
 		image		ui/button_green_verysmall
-		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -1065,7 +1050,6 @@ window mp_team_save_popup
 	textentry slot_team6
 	{
 		image		ui/button_green_verysmall
-		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -1080,7 +1064,6 @@ window mp_team_save_popup
 	textentry slot_team7
 	{
 		image		ui/button_green_verysmall
-		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl

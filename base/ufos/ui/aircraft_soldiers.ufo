@@ -14,21 +14,18 @@ window team extends iaircraft
 	panel actors_background {
 		pos		"18 443"
 		size	"329 321"
-		blend	true
 		image	"ui/panel_grey_green_large"
 	}
 
 	panel actormodel_background {
 		pos		"358 443"
 		size	"205 321"
-		blend	true
 		image	"ui/panel_grey_green_large"
 	}
 
 	panel actorstats_background {
 		pos		"564 443"
 		size	"458 321"
-		blend	true
 		image	"ui/panel_grey_green_large"
 	}
 
@@ -73,7 +70,7 @@ window team extends iaircraft
 		string "_Equip soldiers"
 		pos		"483 129"
 		size	"198 43"
-		image	ui/button_blue	blend true
+		image	ui/button_blue
 		onClick	{
 			*cvar:cl_selected2 <cvar:cl_selected>
 			cmd "mn_addlistener equipment@close <path:root>.listen_close_equipment"
@@ -424,7 +421,7 @@ window team extends iaircraft
 
 	vscrollbar scroll_employees
 	{
-		image	ui/scrollbar_v_green	blend	true
+		image	ui/scrollbar_v_green
 		pos "310 463"	height	"282"
 		current 0
 		viewsize 8

@@ -375,7 +375,6 @@ window althud extends ahud
 	pic bar_selbox
 	{
 		image		althud/bar_selbox
-		blend		true
 		pos			"849 666"
 		size		"78 90"
 		texl		"0 38"

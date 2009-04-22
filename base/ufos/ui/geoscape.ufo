@@ -77,7 +77,6 @@ window geoscape
 		{
 			image		ui/geo_menu
 			pos			"0 0"
-			blend		true
 		}
 
 		// ==================
@@ -263,7 +262,6 @@ window geoscape
 				size	"164 164"
 				texh	"164 164"
 				image	ui/geo_miniglobe
-				blend	true
 			}
 
 			zone panel_scroll_up
@@ -337,7 +335,6 @@ window geoscape
 			size		"175 34"
 			selectcolor	"1 1 1 1"
 			image		ui/button_geoscape
-			blend		true
 
 			onClick		{ cmd "mn_push mailclient;" }
 		}
@@ -354,7 +351,6 @@ window geoscape
 			size		"175 34"
 			selectcolor	"1 1 1 1"
 			image		ui/button_geoscape
-			blend		true
 
 			onClick		{ cmd "mn_push mailclient;" }
 		}
@@ -369,7 +365,6 @@ window geoscape
 			font	 	f_small
 			selectcolor	"1 1 1 1"
 			image		ui/button_geoscape
-			blend		true
 
 			onClick		{ cmd "mn_push stats;" }
 		}
@@ -384,7 +379,6 @@ window geoscape
 			font	 	f_small
 			selectcolor	"1 1 1 1"
 			image		ui/button_geoscape
-			blend		true
 
 			onClick		{ cmd "mn_push ufopedia;" }
 		}
@@ -399,7 +393,6 @@ window geoscape
 			font	 	f_small
 			selectcolor	"1 1 1 1"
 			image		ui/button_geoscape
-			blend		true
 
 			onClick		{ cmd "mn_push popup_newinstallation_type;" }
 		}
@@ -452,7 +445,7 @@ window geoscape
 		{
 			// @todo: better -more verbose- tooltip
 			tooltip		"_Open up messages"
-			image		ui/button_background	blend true
+			image		ui/button_background
 			icon		geo_messagelog
 			pos			"82 324"
 			size		"28 25"
@@ -471,7 +464,7 @@ window geoscape
 		custombutton bt_messagesettings
 		{
 			tooltip		"_Change message and pause settings"
-			image		ui/button_background	blend true
+			image		ui/button_background
 			icon		geo_messageoption
 			pos			"82 354"
 			size		"28 25"
@@ -482,7 +475,7 @@ window geoscape
 		custombutton bt_mapcenter
 		{
 			tooltip		"_Center objects on the map"
-			image		ui/button_background	blend true
+			image		ui/button_background
 			icon		geo_center
 			pos			"124 324"
 			size		"28 25"
@@ -493,7 +486,7 @@ window geoscape
 		custombutton bt_menu
 		{
 			tooltip		"_Go to Options"
-			image		ui/button_background	blend true
+			image		ui/button_background
 			icon		geo_option
 			pos			"182 324"
 			size		"28 25"
@@ -528,7 +521,6 @@ window popup_list
 		dragbutton	true
 		closebutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 	}
 
 	/** @todo please use a cvar and move it into the "string" menu property */
@@ -566,7 +558,6 @@ window popup_list
 		string		"_OK"
 		tooltip		"_Close this dialogue"
 		image		ui/button_green_small
-		blend		true
 		pos			"296 192"
 		size		"176 32"
 		color		"0 0.5 0 1"
@@ -588,7 +579,6 @@ window popup_button
 		dragbutton	true
 		closebutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 	}
 
 	/** @todo please use a cvar and move it into the "string" menu property */
@@ -616,7 +606,7 @@ window popup_button
 	{
 		string		"*cvar mn_popup_button_text1"
 		tooltip		"*cvar mn_popup_button_tooltip1"
-		image		ui/button_green_small	blend true
+		image		ui/button_green_small
 		pos			"26 192"
 		size		"176 32"
 		font		f_menu
@@ -628,7 +618,7 @@ window popup_button
 	{
 		string		"*cvar mn_popup_button_text2"
 		tooltip		"*cvar mn_popup_button_tooltip2"
-		image		ui/button_green_small	blend true
+		image		ui/button_green_small
 		size		"176 32"
 		pos			"296 192"
 		font		f_menu
@@ -640,7 +630,7 @@ window popup_button
 	{
 		string		"*cvar mn_popup_button_text3"
 		tooltip		"*cvar mn_popup_button_tooltip3"
-		image		ui/button_green_small	blend true
+		image		ui/button_green_small
 		pos			"296 156"
 		size		"176 32"
 		font		f_menu
@@ -669,7 +659,6 @@ window popup_intercept_ready
 		size		"496 247"
 		dragbutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Ready"
 	}
 
@@ -688,7 +677,6 @@ window popup_intercept_ready
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"266 188"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
@@ -704,7 +692,6 @@ window popup_intercept_ready
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"66 125"
 		size		"176 40"
 		onClick		{ cmd "game_go;" }
@@ -717,7 +704,6 @@ window popup_intercept_ready
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"259 125"
 		size		"176 40"
 		onClick		{ cmd "cp_mission_autogo;" }
@@ -751,7 +737,6 @@ window popup_baseattack
 		modal		true				// we can't click out
 		preventtypingescape true		// we can't use ESC
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Base is under attack"
 	}
 
@@ -842,7 +827,6 @@ window popup_baseattack
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"259 241"
 		size		"176 32"
 		onClick		{
@@ -871,7 +855,6 @@ window popup_baseattack
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"74 241"
 		size		"176 32"
 		onClick		{
@@ -909,7 +892,6 @@ window popup_transferbaselist
 		size		"496 247"
 		dragbutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Select base to transfer to"
 	}
 
@@ -940,7 +922,6 @@ window popup_transferbaselist
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"266 188"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;aircraft_return;" }
@@ -958,7 +939,6 @@ window popup_newbase
 		dragbutton	true
 		modal		true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_New base"
 	}
 
@@ -1052,7 +1032,6 @@ window popup_newbase
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"298 188"
 		size		"176 32"
 		onClick	{
@@ -1066,7 +1045,6 @@ window popup_newbase
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"111 188"
 		size		"176 32"
 		onClick	{
@@ -1102,7 +1080,6 @@ window popup_newinstallation_type
 		dragbutton	true
 		closebutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_New installation"
 	}
 
@@ -1318,7 +1295,6 @@ window popup_newinstallation_type
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"297 188"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;" }
@@ -1378,7 +1354,6 @@ window popup_newinstallation
 		size		"496 247"
 		dragbutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 	}
 
 	string title_radar
@@ -1470,7 +1445,6 @@ window popup_newinstallation
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"294 188"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;" }
@@ -1482,7 +1456,6 @@ window popup_newinstallation
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"109 188"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_build_installation *mn_installation_type;" }
@@ -1504,7 +1477,6 @@ window radartower
 		size		"496 247"
 		dragbutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 	}
 
 	textentry title
@@ -1529,7 +1501,6 @@ window radartower
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"296 188"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
@@ -1543,7 +1514,6 @@ window popup_installationstatus
 		size		"496 247"
 		dragbutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Installation Status"
 	}
 
@@ -1596,7 +1566,6 @@ window popup_installationstatus
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"295 189"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
@@ -1609,7 +1578,6 @@ window popup_installationstatus
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"109 189"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_push *mn_installation_type;" }
@@ -1621,7 +1589,6 @@ window popup_installationstatus
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"295 78"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_destroyinstallation;" }
@@ -1645,7 +1612,6 @@ window popup_intercept
 		size		"548 459"
 		dragbutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Anti-UFO defence"
 	}
 
@@ -1716,7 +1682,6 @@ window popup_intercept
 
 		vscrollbar ships_scroll {
 			image		ui/scrollbar_v_green
-			blend		true
 			pos			"470 29"
 			height		"260"
 			current		0
@@ -1765,7 +1730,6 @@ window popup_intercept
 
 		vscrollbar bases_scroll {
 			image		ui/scrollbar_v_green
-			blend		true
 			pos			"470 29"
 			height		"260"
 			current		0
@@ -1785,7 +1749,6 @@ window popup_intercept
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"346 402"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
@@ -1824,7 +1787,6 @@ window popup_mission
 		size		"777 402"
 		dragbutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Select aircraft"
 	}
 
@@ -1876,7 +1838,6 @@ window popup_mission
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"566 338"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
@@ -1895,7 +1856,6 @@ window popup_multi_selection
 		dragbutton	true
 		modal		true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Select item"
 	}
 
@@ -1934,7 +1894,6 @@ window popup_multi_selection
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"266 188"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
@@ -1953,7 +1912,6 @@ window popup_aircraft
 		size		"496 247"
 		dragbutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Aircraft"
 	}
 
@@ -1992,7 +1950,6 @@ window popup_aircraft
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"297 191"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;" }
@@ -2007,7 +1964,6 @@ window popup
 		dragbutton	true
 		closebutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 	}
 
 	/** @todo please use a cvar and move it into "string" menu property */
@@ -2035,7 +1991,6 @@ window popup
 		string		"_OK"
 		tooltip		"_Close this dialogue"
 		image		ui/button_green_small
-		blend		true
 		pos			"260 180"
 		width		"200"
 		font		f_menu
@@ -2057,7 +2012,6 @@ window messageoptions
 		closebutton	true
 		modal		true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Pause/message settings"
 	}
 
@@ -2068,7 +2022,6 @@ window messageoptions
 		pos			"109 436"
 		size		"176 32"
 		image		ui/button_green_small
-		blend		true
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -2082,7 +2035,6 @@ window messageoptions
 		pos			"296 437"
 		size		"176 32"
 		image		ui/button_green_small
-		blend		true
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -2151,7 +2103,6 @@ window messageoptions
 
 	vscrollbar messagetypes_scroll {
 		image		ui/scrollbar_v_green
-		blend		true
 		pos			"455 90"
 		height		"300"
 		current		0
@@ -2865,7 +2816,6 @@ window geoscape_options {
 		dragbutton	true
 		closebutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Geoscape options"
 	}
 

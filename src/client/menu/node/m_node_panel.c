@@ -49,7 +49,7 @@ static void MN_PanelNodeDraw (menuNode_t *node)
 
 	image = MN_GetReferenceString(node, node->image);
 	if (image)
-		MN_DrawPanel(pos, node->size, image, node->blend, 0, 0, panelTemplate);
+		MN_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
 }
 
 /**

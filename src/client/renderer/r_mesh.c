@@ -259,9 +259,6 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	/* draw it */
 	R_BindTexture(skin->texnum);
 
-	if ((mi->color && mi->color[3] < 1.0f) || skin->has_alpha)
-		R_EnableBlend(qtrue);
-
 	/* draw the model */
 	for (i = 0; i < mi->model->alias.num_meshes; i++) {
 		const mAliasMesh_t *mesh = &mi->model->alias.meshes[i];
@@ -271,9 +268,6 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		else
 			R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
 	}
-
-	if ((mi->color && mi->color[3] < 1.0f) || skin->has_alpha)
-		R_EnableBlend(qfalse);
 
 	glDisable(GL_DEPTH_TEST);
 

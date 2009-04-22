@@ -64,7 +64,7 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 	width = (shx * node->size[0]) / TEXTURE_WIDTH;
 
 	MN_DrawNormImageByName(nodepos[0], nodepos[1], width, node->size[1],
-		shx, node->texh[1], node->texl[0], node->texl[1], ALIGN_UL, node->blend, ref);
+		shx, node->texh[1], node->texl[0], node->texl[1], ALIGN_UL, ref);
 }
 
 void MN_RegisterTBarNode (nodeBehaviour_t *behaviour)

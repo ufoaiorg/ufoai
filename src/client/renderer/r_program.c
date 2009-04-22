@@ -130,7 +130,7 @@ void R_ProgramParameter4fv (const char *name, GLfloat *value)
 	qglUniform4fv(v->location, 1, value);
 }
 
-void R_AttributePointer (const char *name, GLuint size, GLvoid *array)
+void R_AttributePointer (const char *name, GLuint size, const GLvoid *array)
 {
 	r_progvar_t *v;
 

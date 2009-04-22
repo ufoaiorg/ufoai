@@ -261,7 +261,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 		break;
 	}
 
-	R_ColorBlend(node->color);
+	R_Color(node->color);
 
 	/*Com_Printf("\n\n\nEXTRADATA(node).textLines: %i \n", EXTRADATA(node).textLines);*/
 	lines = 0;
@@ -296,7 +296,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			/* don't draw images that would be out of visible area */
 			if (y + height > y1 && lines >= EXTRADATA(node).textScroll) {
 				/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too */
-				image = MN_DrawNormImageByName(x1, y1, 0, 0, 0, 0, 0, 0, node->textalign, node->blend, token);
+				image = MN_DrawNormImageByName(x1, y1, 0, 0, 0, 0, 0, 0, node->textalign, token);
 				if (image)
 					x1 += image->height;
 			}
@@ -319,9 +319,9 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			/* Highlight line if mousefx is true. */
 			/** @todo what about multiline text that should be highlighted completely? */
 			if (lines == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
-				R_ColorBlend(colorSelectedHover);
+				R_Color(colorSelectedHover);
 			} else {
-				R_ColorBlend(colorHover);
+				R_Color(colorHover);
 			}
 		}
 
@@ -366,7 +366,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 		}
 
 		if (node->mousefx)
-			R_ColorBlend(node->color); /* restore original color */
+			R_Color(node->color); /* restore original color */
 
 		/* now set cur to the next char after the \n (see above) */
 		cur = end;
@@ -388,7 +388,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 		}
 	}
 
-	R_ColorBlend(NULL);
+	R_Color(NULL);
 	MN_DrawScrollBar(node);
 }
 

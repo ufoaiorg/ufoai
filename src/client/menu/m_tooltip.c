@@ -59,10 +59,10 @@ int MN_DrawTooltip (const char *font, const char *string, int x, int y, int maxW
 		y -= height + 10;
 
 	MN_DrawFill(x - 1, y - 1, width + 4, height + 4, ALIGN_UL, tooltipBG);
-	R_ColorBlend(tooltipColor);
+	R_Color(tooltipColor);
 	R_FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, lines, 0, NULL, qfalse, LONGLINES_WRAP);
+	R_Color(NULL);
 
-	R_ColorBlend(NULL);
 	return width;
 }
 

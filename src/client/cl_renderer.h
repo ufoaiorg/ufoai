@@ -217,7 +217,6 @@ struct model_s *R_RegisterModelShort(const char *name);
 const image_t *R_RegisterImage(const char *name);
 
 void R_Color(const float *rgba);
-void R_ColorBlend(const float *rgba);
 
 void R_ModBeginLoading(const char *tiles, qboolean day, const char *pos, const char *mapName);
 void R_SwitchModelMemPoolTag(void);

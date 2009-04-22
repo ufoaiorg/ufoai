@@ -25,7 +25,7 @@ window tutorials
 		pos	"640 520"
 		size "256 64"
 		onClick	{ cmd "mn_pop;" }
-		image	ui/button_green_big	blend true
+		image	ui/button_green_big
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"

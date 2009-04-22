@@ -48,7 +48,7 @@ window aliencont
 	custombutton bt_continue
 	{
 		tooltip	"_Back to baseview"
-		image	ui/button_background	blend	true
+		image	ui/button_background
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"
@@ -158,7 +158,6 @@ window aliencont
 			pos "11 92"
 			size "670 606"
 			image	ui/panel_grey_green_large
-			blend	true
 		}
 
 		pic button0 {
@@ -323,7 +322,6 @@ window aliencont
 			pos		"730 90"
 			size	"280 520"
 			image	ui/panel_grey_green_large
-			blend	true
 		}
 
 		string race
@@ -399,7 +397,6 @@ window aliencont
 			pos		"728 626"
 			size	"280 134"
 			image	ui/panel_grey_green_large
-			blend	true
 		}
 
 		// ==================

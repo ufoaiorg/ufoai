@@ -50,9 +50,9 @@ static void MN_EditorNodeHilightNode (menuNode_t *node, const vec4_t color)
 	vec2_t pos;
 	MN_GetNodeAbsPos(node, pos);
 
-	R_ColorBlend(color);
+	R_Color(color);
 	R_FontDrawString("f_small_bold", ALIGN_UL, 20, 50, 20, 50, 400, 400, 0, va("%s (%s)", node->name, node->behaviour->name), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
-	R_ColorBlend(NULL);
+	R_Color(NULL);
 
 	R_DrawRect(pos[0] - 1, pos[1] - 1, node->size[0] + 2, node->size[1] + 2, color, 1.0, 0x3333);
 	MN_DrawFill(pos[0] - anchorSize, pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);

@@ -69,7 +69,7 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 		const int texX = rint(node->texl[0]);
 		texY += node->texl[1];
 		MN_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
-			texX + node->size[0], texY + node->size[1], texX, texY, ALIGN_UL, node->blend, image);
+			texX + node->size[0], texY + node->size[1], texX, texY, ALIGN_UL, image);
 	}
 
 	if (node->icon) {
@@ -79,12 +79,12 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	text = MN_GetReferenceString(node, node->text);
 	if (text != NULL && *text != '\0') {
 		const char *font = MN_GetFont(node);
-		R_ColorBlend(textColor);
+		R_Color(textColor);
 		R_FontDrawStringInBox(font, node->textalign,
 			pos[0] + node->padding, pos[1] + node->padding,
 			node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
 			text, LONGLINES_PRETTYCHOP);
-		R_ColorBlend(NULL);
+		R_Color(NULL);
 	}
 }
 

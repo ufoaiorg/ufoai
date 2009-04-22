@@ -34,7 +34,6 @@ window employees
 		pos		"13 163"
 		size	"393 595"
 		image	ui/panel_grey_green_large2
-		blend	true
 	}
 
 	func employee_clear
@@ -233,7 +232,6 @@ window employees
 	vscrollbar scroll
 	{
 		image		ui/scrollbar_v_green
-		blend		true
 		pos			"368 182"
 		height		"558"
 		current		0
@@ -271,7 +269,6 @@ window employees
 			pos		"451 300"
 			size	"448 60"
 			image	ui/panel_grey_green
-			blend	true
 		}
 	}
 
@@ -300,7 +297,6 @@ window employees
 			pos		"451 364"
 			size	"561 388"
 			image	ui/panel_grey_green
-			blend	true
 		}
 	}
 
@@ -469,7 +465,6 @@ window employees
 			pos		"483 180"
 			size	"455 111"
 			image	"ui/panel_grey"
-			blend	true
 		}
 
 		string label_people {
@@ -542,7 +537,6 @@ window employees
 	panel tab_background {
 		pos		"24 96"
 		size	"986 56"
-		blend	true
 		image	"ui/panel_tab"
 	}
 
@@ -613,7 +607,6 @@ window employees
 	{
 		tooltip		"_Back to baseview"
 		image		ui/button_background
-		blend		true
 		pos			"950 20"
 		size		"59 55"
 		texl		"1 1"

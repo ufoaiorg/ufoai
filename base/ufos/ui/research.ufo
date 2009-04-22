@@ -32,7 +32,6 @@ window research
 	{
 		tooltip		"_Back"
 		image		ui/button_background
-		blend		true
 		pos			"950 20"
 		size		"59 55"
 		texl		"1 1"
@@ -52,14 +51,12 @@ window research
 		pos		"29 93"
 		size	"587 597"
 		image	ui/panel_grey_green_large2
-		blend	true
 	}
 
 	panel infopanel {
 		pos		"645 93"
 		size	"353 660"
 		image	ui/panel_grey_green_large
-		blend	true
 	}
 
 	// ==================
@@ -68,7 +65,7 @@ window research
 
 	custombutton bt_start
 	{
-		image	ui/button_background	blend	true
+		image	ui/button_background
 		texl	"1 1"	size	"59 55"
 		tooltip	"_Start research"
 		icon	research_start
@@ -78,7 +75,7 @@ window research
 
 	custombutton bt_stop
 	{
-		image	ui/button_background	blend	true
+		image	ui/button_background
 		texl	"1 1"	size	"59 55"
 		tooltip	"_Stop research"
 		icon	research_stop
@@ -88,7 +85,7 @@ window research
 
 	custombutton bt_pedia
 	{
-		image	ui/button_background	blend	true
+		image	ui/button_background
 		texl	"1 1"	size	"59 55"
 		tooltip	"_Show research proposal"
 		icon	mail
@@ -371,7 +368,7 @@ window research
 	spinner bt_rs_change0
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 113"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -382,7 +379,7 @@ window research
 	spinner bt_rs_change1
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 138"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -393,7 +390,7 @@ window research
 	spinner bt_rs_change2
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 163"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -404,7 +401,7 @@ window research
 	spinner bt_rs_change3
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 188"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -415,7 +412,7 @@ window research
 	spinner bt_rs_change4
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 213"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -426,7 +423,7 @@ window research
 	spinner bt_rs_change5
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 238"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -437,7 +434,7 @@ window research
 	spinner bt_rs_change6
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 263"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -448,7 +445,7 @@ window research
 	spinner bt_rs_change7
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 288"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -459,7 +456,7 @@ window research
 	spinner bt_rs_change8
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 313"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -470,7 +467,7 @@ window research
 	spinner bt_rs_change9
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 338"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -481,7 +478,7 @@ window research
 	spinner bt_rs_change10
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 363"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -492,7 +489,7 @@ window research
 	spinner bt_rs_change11
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 388"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -503,7 +500,7 @@ window research
 	spinner bt_rs_change12
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 413"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -514,7 +511,7 @@ window research
 	spinner bt_rs_change13
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 438"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -525,7 +522,7 @@ window research
 	spinner bt_rs_change14
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 463"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -536,7 +533,7 @@ window research
 	spinner bt_rs_change15
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 488"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -547,7 +544,7 @@ window research
 	spinner bt_rs_change16
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 513"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -558,7 +555,7 @@ window research
 	spinner bt_rs_change17
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 538"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -569,7 +566,7 @@ window research
 	spinner bt_rs_change18
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 563"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -580,7 +577,7 @@ window research
 	spinner bt_rs_change19
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 588"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -591,7 +588,7 @@ window research
 	spinner bt_rs_change20
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 613"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -602,7 +599,7 @@ window research
 	spinner bt_rs_change21
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 638"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -613,7 +610,7 @@ window research
 	spinner bt_rs_change22
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 663"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -624,7 +621,7 @@ window research
 	spinner bt_rs_change23
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"500 688"
 		min 0 current 10000 max 20000 delta 1
 		onChange {
@@ -635,7 +632,7 @@ window research
 	spinner bt_rs_change24
 	{
 		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue blend true
+		image	ui/spinner_blue
 		pos		"410 713"
 		min 0 current 10000 max 20000 delta 1
 		onChange {

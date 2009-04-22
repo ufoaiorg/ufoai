@@ -119,8 +119,6 @@ void R_DrawChars (void)
 {
 	R_BindTexture(draw_chars->texnum);
 
-	R_EnableBlend(qtrue);
-
 	/* alter the array pointers */
 	glVertexPointer(2, GL_SHORT, 0, char_verts);
 	glTexCoordPointer(2, GL_FLOAT, 0, char_texcoords);
@@ -128,8 +126,6 @@ void R_DrawChars (void)
 	glDrawArrays(GL_QUADS, 0, char_index / 2);
 
 	char_index = 0;
-
-	R_EnableBlend(qfalse);
 
 	/* and restore them */
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
@@ -241,24 +237,18 @@ void R_DrawImage (float x, float y, qboolean blend, const image_t *image)
 	image_verts[6] = x4;
 	image_verts[7] = y4;
 
-	R_DrawImageArray(default_texcoords, image_verts, blend, image);
+	R_DrawImageArray(default_texcoords, image_verts, image);
 }
 
-const image_t *R_DrawImageArray (const float texcoords[8], const short verts[8], qboolean blend, const image_t *image)
+const image_t *R_DrawImageArray (const float texcoords[8], const short verts[8], const image_t *image)
 {
 	/* alter the array pointers */
 	glVertexPointer(2, GL_SHORT, 0, verts);
-	glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
-
-	if (blend)
-		R_EnableBlend(qtrue);
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 
 	R_BindTexture(image->texnum);
 
 	glDrawArrays(GL_QUADS, 0, 4);
-
-	if (blend)
-		R_EnableBlend(qfalse);
 
 	/* and restore them */
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
@@ -277,7 +267,7 @@ void R_DrawFill (int x, int y, int w, int h, const vec4_t color)
 	const float nw = w * viddef.rx;
 	const float nh = h * viddef.ry;
 
-	R_ColorBlend(color);
+	R_Color(color);
 
 	glDisable(GL_TEXTURE_2D);
 
@@ -290,7 +280,7 @@ void R_DrawFill (int x, int y, int w, int h, const vec4_t color)
 
 	glEnable(GL_TEXTURE_2D);
 
-	R_ColorBlend(NULL);
+	R_Color(NULL);
 }
 
 /**
@@ -314,7 +304,7 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 	const float nw = w * viddef.rx;
 	const float nh = h * viddef.ry;
 
-	R_ColorBlend(color);
+	R_Color(color);
 
 	glDisable(GL_TEXTURE_2D);
 	glLineWidth(lineWidth);
@@ -332,7 +322,7 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 	glLineWidth(1.0f);
 	glDisable(GL_LINE_STIPPLE);
 
-	R_ColorBlend(NULL);
+	R_Color(NULL);
 }
 
 /**
@@ -370,7 +360,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 
 	/* alter the array pointers */
 	glVertexPointer(2, GL_SHORT, 0, geoscape_verts);
-	glTexCoordPointer(2, GL_FLOAT, 0, geoscape_texcoords);
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, geoscape_texcoords);
 
 	geoscape_texcoords[0] = cx - iz;
 	geoscape_texcoords[1] = cy - iz;
@@ -394,8 +384,6 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	R_BindTexture(gl->texnum);
 	glDrawArrays(GL_QUADS, 0, 4);
 
-	R_EnableBlend(qtrue);
-
 	/* draw night map */
 	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
@@ -404,6 +392,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 
 		R_BindTexture(gl->texnum);
 		R_EnableTexture(&texunit_lightmap, qtrue);
+		R_SelectTexture(&texunit_lightmap);
 
 		geoscape_nighttexcoords[0] = geoscape_texcoords[0] + p;
 		geoscape_nighttexcoords[1] = geoscape_texcoords[1];
@@ -414,9 +403,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		geoscape_nighttexcoords[6] = geoscape_texcoords[6] + p;
 		geoscape_nighttexcoords[7] = geoscape_texcoords[7];
 
-		R_SelectTexture(&texunit_lightmap);
-
-		glTexCoordPointer(2, GL_FLOAT, 0, geoscape_nighttexcoords);
+		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, geoscape_nighttexcoords);
 
 		R_BindTexture(r_dayandnightTexture->texnum);
 		if (lastQ != q) {
@@ -453,8 +440,6 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		R_BindTexture(r_radarTexture->texnum);
 		glDrawArrays(GL_QUADS, 0, 4);
 	}
-
-	R_EnableBlend(qfalse);
 
 	/* and restore them */
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
@@ -531,7 +516,6 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 
 	glDisable(GL_TEXTURE_2D);
 	glEnable(GL_LINE_SMOOTH);
-	R_EnableBlend(qtrue);
 
 	R_Color(color);
 
@@ -568,7 +552,6 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 
 	R_Color(NULL);
 
-	R_EnableBlend(qfalse);
 	glDisable(GL_LINE_SMOOTH);
 	glEnable(GL_TEXTURE_2D);
 }
@@ -593,7 +576,6 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 
 	glDisable(GL_TEXTURE_2D);
-	R_EnableBlend(qtrue);
 	R_Color(color);
 
 	if (thickness > 0.0)
@@ -621,7 +603,6 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 	glVertex2f(x + radius * cos(2.0 * M_PI), y - radius * sin(2.0 * M_PI));
 	glEnd();
 	glEnable(GL_TEXTURE_2D);
-	R_EnableBlend(qfalse);
 	R_Color(NULL);
 
 	glPopAttrib();
@@ -883,8 +864,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
 
-	R_EnableBlend(qtrue);
-
 	starfield = R_FindImage(va("pics/geoscape/%s_stars", map), it_wrappic);
 	if (starfield != r_noTexture)
 		R_DrawStarfield(starfield->texnum, earthPos, rotate, p);
@@ -902,8 +881,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		const float earthSizeY = fullscale * 20500.0 * viddef.ry;
 		R_DrawTexture(halo->texnum,  earthPos[0] - earthSizeX * 0.5, earthPos[1] - earthSizeY * 0.5, earthSizeX, earthSizeY);
 	}
-
-	R_EnableBlend(qfalse);
 
 	/* load earth image */
 	r_globeEarth.texture = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
@@ -950,25 +927,19 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
 		if (r_globeEarth.overlay == r_noTexture)
 			Sys_Error("Could not load geoscape nation overlay image");
-		R_EnableBlend(qtrue);
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
-		R_EnableBlend(qfalse);
 		r_globeEarth.overlay = NULL;
 	}
 	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
 		assert(r_xviTexture);
 		r_globeEarth.overlay = r_xviTexture;
-		R_EnableBlend(qtrue);
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
-		R_EnableBlend(qfalse);
 		r_globeEarth.overlay = NULL;
 	}
 	if (r_geoscape_overlay->integer & OVERLAY_RADAR) {
 		assert(r_radarTexture);
 		r_globeEarth.overlay = r_radarTexture;
-		R_EnableBlend(qtrue);
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
-		R_EnableBlend(qfalse);
 		r_globeEarth.overlay = NULL;
 	}
 

@@ -100,7 +100,7 @@ void R_BindNormalmapTexture (GLuint texnum)
 	R_SelectTexture(&texunit_diffuse);
 }
 
-void R_BindArray (GLenum target, GLenum type, void *array)
+void R_BindArray (GLenum target, GLenum type, const void *array)
 {
 	switch (target) {
 	case GL_VERTEX_ARRAY:
@@ -478,11 +478,9 @@ void R_Setup2D (void)
 	/* bind default vertex array */
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-	R_EnableAlphaTest(qtrue);
-
-	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	R_Color(NULL);
+
+	glEnable(GL_BLEND);
 
 	glDisable(GL_DEPTH_TEST);
 
@@ -571,24 +569,6 @@ const vec4_t color_white = {1, 1, 1, 1};
  * @brief Change the color to given value
  * @param[in] rgba A pointer to a vec4_t with rgba color value
  * @note To reset the color let rgba be NULL
- * @sa R_Color
- * @note Enables openGL blend if alpha value is lower than 1.0
- */
-void R_ColorBlend (const float *rgba)
-{
-	if (rgba && rgba[3] < 1.0f) {
-		R_EnableBlend(qtrue);
-	} else if (!rgba) {
-		R_EnableBlend(qfalse);
-	}
-	R_Color(rgba);
-}
-
-/**
- * @brief Change the color to given value
- * @param[in] rgba A pointer to a vec4_t with rgba color value
- * @note To reset the color let rgba be NULL
- * @sa R_ColorBlend
  */
 void R_Color (const float *rgba)
 {

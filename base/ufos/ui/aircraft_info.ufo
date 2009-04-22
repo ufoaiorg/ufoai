@@ -11,7 +11,6 @@ window aircraft extends iaircraft
 	panel info_background {
 		pos		"461 444"
 		size	"561 320"
-		blend	true
 		image	"ui/panel_grey_green_large"
 	}
 
@@ -48,7 +47,6 @@ window aircraft extends iaircraft
 	{
 		pos			"726 510"
 		image		ui/button_pack1
-		blend		true
 		size		"16 16"
 	}
 

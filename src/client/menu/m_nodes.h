@@ -77,7 +77,6 @@ typedef struct menuNode_s {
 	int num;					/**< used to identify child into a parent; can be used for layout */
 	byte textalign;
 	qboolean invis;				/**< true if the node is invisible */
-	qboolean blend;				/**< use the blending mode while rendering - useful to render e.g. transparent images */
 	qboolean disabled;			/**< true if the node is inactive */
 	qboolean invalidated;		/**< true if we need to update the layout */
 	qboolean ghost;				/**< true if the node is not tangible */

@@ -28,7 +28,7 @@ window main
 		pos	"640 170"
 		size "256 64"
 		onClick	{ cmd "mn_push singleplayer;" }
-		image	ui/button_green_big	blend true
+		image	ui/button_green_big
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -40,7 +40,7 @@ window main
 		pos	"640 240"
 		size "256 64"
 		onClick	{ cmd "mn_push_multiplayer;" }
-		image	ui/button_green_big	blend true
+		image	ui/button_green_big
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -52,7 +52,7 @@ window main
 		pos	"640 310"
 		size "256 64"
 		onClick	{ cmd "mn_push options;" }
-		image	ui/button_green_big	blend true
+		image	ui/button_green_big
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -64,7 +64,7 @@ window main
 		pos	"640 380"
 		size "256 64"
 		onClick	{ cmd "mn_push tutorials;" }
-		image	ui/button_green_big	blend true
+		image	ui/button_green_big
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -76,7 +76,7 @@ window main
 		pos	"640 450"
 		size "256 64"
 		onClick	{ cmd "seq_start credits;" }
-		image	ui/button_green_big	blend true
+		image	ui/button_green_big
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -88,7 +88,7 @@ window main
 		pos	"640 520"
 		size "256 64"
 		onClick	{ cmd "quit;" }
-		image	ui/button_green_big	blend true
+		image	ui/button_green_big
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -114,7 +114,6 @@ window checkcvars
 		dragbutton	true
 		modal		true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Initial settings"
 	}
 
@@ -140,7 +139,6 @@ window checkcvars
 	{
 		string		"*cvar cl_name"
 		image		ui/button_green_verysmall
-		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -237,7 +235,6 @@ window checkcvars
 
 	vscrollbar select_language_scroll {
 		image			ui/scrollbar_v_green
-		blend			true
 		pos				"692 78"
 		height			"226"
 		current			0
@@ -312,7 +309,6 @@ window popup_tipoftheday
 		size		"496 247"
 		dragbutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Tip of the day"
 	}
 
@@ -349,7 +345,6 @@ window popup_tipoftheday
 		string		"_Next"
 		tooltip		"_Next tip"
 		image		ui/button_green_small
-		blend		true
 		width		"176"
 		pos			"266 188"
 		font		f_menu

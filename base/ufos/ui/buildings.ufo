@@ -50,7 +50,7 @@ window buildings
 	custombutton back
 	{
 		tooltip		"_Back to baseview"
-		image		ui/button_background	blend	true
+		image		ui/button_background
 		texl		"1 1"
 		size		"59 55"
 		pos			"950 20"
@@ -124,7 +124,6 @@ window popup_buildingpreview
 		size		"526 237"
 		dragbutton	true
 		image		ui/popup_alpha_tile
-		blend		true
 		string		"_Building preview"
 	}
 

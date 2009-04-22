@@ -50,7 +50,7 @@ const struct image_s *MN_LoadImage (const char *name)
 	return image;
 }
 
-void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const image_t *image)
+void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, const image_t *image)
 {
 	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
 	float imageTexcoords[8];
@@ -150,7 +150,7 @@ void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, f
 	imageVerts[6] = x4;
 	imageVerts[7] = y4;
 
-	R_DrawImageArray(imageTexcoords, imageVerts, blend, image);
+	R_DrawImageArray(imageTexcoords, imageVerts, image);
 }
 
 /**
@@ -170,7 +170,7 @@ void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, f
  * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are adjusted in this function
  */
-const image_t *MN_DrawNormImageByName (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name)
+const image_t *MN_DrawNormImageByName (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, const char *name)
 {
 	const struct image_s *image;
 
@@ -180,7 +180,7 @@ const image_t *MN_DrawNormImageByName (float x, float y, float w, float h, float
 		return NULL;
 	}
 
-	MN_DrawNormImage(x, y, w, h, sh, th, sl, tl, align, blend, image);
+	MN_DrawNormImage(x, y, w, h, sh, th, sl, tl, align, image);
 	return image;
 }
 
@@ -191,7 +191,6 @@ const image_t *MN_DrawNormImageByName (float x, float y, float w, float h, float
  * @param[in] pos Position of the output panel
  * @param[in] size Size of the output panel
  * @param[in] texture Texture contain the template of the panel
- * @param[in] blend True if the texture must use alpha channel for per pixel transparency
  * @param[in] texX Position x of the panel template into the texture
  * @param[in] texY Position y of the panel template into the texture
  * @param[in] panelDef Array of seven elements define the panel template used in the texture.
@@ -199,7 +198,7 @@ const image_t *MN_DrawNormImageByName (float x, float y, float w, float h, float
  * top height, mid height, bottom height, and margin
  * @todo can we improve the code? is it need?
  */
-void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, qboolean blend, int texX, int texY, const int *panelDef)
+void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int *panelDef)
 {
 	const int leftWidth = panelDef[0];
 	const int midWidth = panelDef[1];
@@ -225,28 +224,28 @@ void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, qbo
 
 	/* draw top (from left to right) */
 	MN_DrawNormImage(pos[0], pos[1], leftWidth, topHeight, texX + firstPos + leftWidth, texY + firstPosY + topHeight,
-		texX + firstPos, texY + firstPosY, ALIGN_UL, blend, image);
+		texX + firstPos, texY + firstPosY, ALIGN_UL, image);
 	MN_DrawNormImage(pos[0] + leftWidth, pos[1], size[0] - leftWidth - rightWidth, topHeight, texX + secondPos + midWidth, texY + firstPosY + topHeight,
-		texX + secondPos, texY + firstPosY, ALIGN_UL, blend, image);
+		texX + secondPos, texY + firstPosY, ALIGN_UL, image);
 	MN_DrawNormImage(pos[0] + size[0] - rightWidth, pos[1], rightWidth, topHeight, texX + thirdPos + rightWidth, texY + firstPosY + topHeight,
-		texX + thirdPos, texY + firstPosY, ALIGN_UL, blend, image);
+		texX + thirdPos, texY + firstPosY, ALIGN_UL, image);
 
 	/* draw middle (from left to right) */
 	y = pos[1] + topHeight;
 	h = size[1] - topHeight - bottomHeight; /* height of middle */
 	MN_DrawNormImage(pos[0], y, leftWidth, h, texX + firstPos + leftWidth, texY + secondPosY + midHeight,
-		texX + firstPos, texY + secondPosY, ALIGN_UL, blend, image);
+		texX + firstPos, texY + secondPosY, ALIGN_UL, image);
 	MN_DrawNormImage(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, texX + secondPos + midWidth, texY + secondPosY + midHeight,
-		texX + secondPos, texY + secondPosY, ALIGN_UL, blend, image);
+		texX + secondPos, texY + secondPosY, ALIGN_UL, image);
 	MN_DrawNormImage(pos[0] + size[0] - rightWidth, y, rightWidth, h, texX + thirdPos + rightWidth, texY + secondPosY + midHeight,
-		texX + thirdPos, texY + secondPosY, ALIGN_UL, blend, image);
+		texX + thirdPos, texY + secondPosY, ALIGN_UL, image);
 
 	/* draw bottom (from left to right) */
 	y = pos[1] + size[1] - bottomHeight;
 	MN_DrawNormImage(pos[0], y, leftWidth, bottomHeight, texX + firstPos + leftWidth, texY + thirdPosY + bottomHeight,
-		texX + firstPos, texY + thirdPosY, ALIGN_UL, blend, image);
+		texX + firstPos, texY + thirdPosY, ALIGN_UL, image);
 	MN_DrawNormImage(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, bottomHeight, texX + secondPos + midWidth, texY + thirdPosY + bottomHeight,
-		texX + secondPos, texY + thirdPosY, ALIGN_UL, blend, image);
+		texX + secondPos, texY + thirdPosY, ALIGN_UL, image);
 	MN_DrawNormImage(pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
-		texX + thirdPos, texY + thirdPosY, ALIGN_UL, blend, image);
+		texX + thirdPos, texY + thirdPosY, ALIGN_UL, image);
 }

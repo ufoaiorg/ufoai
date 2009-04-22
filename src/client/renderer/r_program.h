@@ -56,7 +56,7 @@ typedef struct r_program_s {
 #define MAX_PROGRAMS 8
 
 void R_UseProgram(r_program_t *prog);
-void R_AttributePointer(const char *name, GLuint size, GLvoid *array);
+void R_AttributePointer(const char *name, GLuint size, const GLvoid *array);
 void R_EnableAttribute(const char *name);
 void R_DisableAttribute(const char *name);
 void R_ShutdownPrograms(void);

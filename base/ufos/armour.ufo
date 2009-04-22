@@ -122,7 +122,6 @@ item armour_light
 	}
 }
 
-/*
 //weights 100
 item armour_lightadv
 {
@@ -183,7 +182,6 @@ item armour_lightadv
 		stun_gas			10
 	}
 }
-*/
 
 //weights 120
 item armour_medium

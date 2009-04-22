@@ -68,7 +68,7 @@ static void MN_CheckBoxNodeDraw (menuNode_t* node)
 
 	MN_GetNodeAbsPos(node, pos);
 	MN_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
-		texx + node->size[0], texy + node->size[1], texx, texy, ALIGN_UL, node->blend, image);
+		texx + node->size[0], texy + node->size[1], texx, texy, ALIGN_UL, image);
 }
 
 /**
@@ -101,8 +101,8 @@ static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
 /**
  * @brief Handled before the begin of the load of the node from the script
  */
-static void MN_CheckBoxNodeLoading (menuNode_t *node) {
-	node->blend = qtrue;
+static void MN_CheckBoxNodeLoading (menuNode_t *node)
+{
 }
 
 void MN_RegisterCheckBoxNode (nodeBehaviour_t *behaviour)

@@ -89,7 +89,7 @@ static void MN_HilightNode (const menuNode_t *node, const vec4_t color)
 	text = va("%s (%s)", node->name, node->behaviour->name);
 	R_FontTextSize("f_small_bold", text, DEBUG_PANEL_WIDTH, LONGLINES_PRETTYCHOP, &width, NULL, NULL, NULL);
 
-	R_ColorBlend(color);
+	R_Color(color);
 	R_FontDrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, DEBUG_PANEL_WIDTH, DEBUG_PANEL_WIDTH, 0, text, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 
@@ -103,7 +103,7 @@ static void MN_HilightNode (const menuNode_t *node, const vec4_t color)
 	lineDefinition[1] = debugTextPositionY - 5;
 	lineDefinition[3] = pos[1];
 	R_DrawLine(lineDefinition, 1);
-	R_ColorBlend(NULL);
+	R_Color(NULL);
 
 	/* exclude rect */
 	if (node->excludeRectNum) {
@@ -146,12 +146,11 @@ static void MN_DrawDebugMenuNodeNames (void)
 	MN_DrawFill(debugPositionX, debugTextPositionY, DEBUG_PANEL_WIDTH, VID_NORM_HEIGHT - debugTextPositionY - 100, ALIGN_UL, background);
 
 	/* menu stack */
-	R_ColorBlend(white);
+	R_Color(white);
 	R_FontDrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "menu stack:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 	for (stackPosition = 0; stackPosition < mn.menuStackPos; stackPosition++) {
 		menuNode_t *menu = mn.menuStack[stackPosition];
-		R_ColorBlend(white);
 		R_FontDrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, menu->name, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 	}
@@ -159,31 +158,29 @@ static void MN_DrawDebugMenuNodeNames (void)
 	/* hovered node */
 	hoveredNode = MN_GetHoveredNode();
 	if (hoveredNode) {
-		R_ColorBlend(white);
 		R_FontDrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 
-		R_ColorBlend(white);
 		R_FontDrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "hovered node:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 		MN_HilightNode(hoveredNode, red);
+		R_Color(white);
 	}
 
 	/* target node */
 	if (MN_DNDIsDragging()) {
 		menuNode_t *targetNode = MN_DNDGetTargetNode();
 		if (targetNode) {
-			R_ColorBlend(white);
 			R_FontDrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 			debugTextPositionY += 15;
 
-			R_ColorBlend(green);
+			R_Color(green);
 			R_FontDrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "drag and drop target node:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 			debugTextPositionY += 15;
 			MN_HilightNode(targetNode, green);
 		}
 	}
-	R_ColorBlend(NULL);
+	R_Color(NULL);
 }
 #endif
 
@@ -257,10 +254,10 @@ static int MN_DrawNotice (int x, int y, const char *noticeText)
 		dx = 0;
 
 	MN_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, ALIGN_UL, noticeBG);
-	R_ColorBlend(noticeColor);
+	R_Color(noticeColor);
 	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
+	R_Color(NULL);
 
-	R_ColorBlend(NULL);
 	return width;
 }
 

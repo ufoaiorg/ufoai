@@ -22,7 +22,6 @@ window ufopedia
 		tooltip		"_Previous entry"
 		image		ui/button_background
 		texl		"192 0"
-		blend		true
 		pos			"10 10"
 		size		"64 37"
 		icon		prev
@@ -34,7 +33,6 @@ window ufopedia
 		tooltip		"_Next entry"
 		image		ui/button_background
 		texl		"192 0"
-		blend		true
 		pos			"950 10"
 		size		"64 37"
 		icon		next
@@ -46,7 +44,6 @@ window ufopedia
 		tooltip		"_Back to content"
 		image		ui/button_background
 		texl		"192 0"
-		blend		true
 		pos			"10 720"
 		size		"64 37"
 		icon		list
@@ -59,7 +56,6 @@ window ufopedia
 		tooltip		"_Pre research text"
 		image		ui/button_background
 		texl		"128 0"
-		blend		true
 		pos			"90 14"
 		size		"37 32"
 		icon		prev
@@ -72,7 +68,6 @@ window ufopedia
 		tooltip		"_Research results"
 		image		ui/button_background
 		texl		"128 0"
-		blend		true
 		pos			"140 14"
 		size		"37 32"
 		icon		next
@@ -83,7 +78,6 @@ window ufopedia
 	{
 		tooltip		"_Leave UFOpaedia"
 		image		ui/button_background
-		blend		true
 		texl		"192 0"
 		pos			"950 720"
 		size		"64 37"
@@ -116,7 +110,6 @@ window ufopedia
 
 	vscrollbar ufopedia_scroll {
 		image		ui/scrollbar_v_green
-		blend		true
 		pos			"704 85"
 		height		"368"
 		current		0

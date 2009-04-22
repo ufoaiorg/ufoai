@@ -16,7 +16,6 @@ window stats
 	custombutton button_exit
 	{
 		image		ui/button_background
-		blend		true
 		pos			"950 720"
 		texl		"192 0"
 		size		"64 37"
@@ -192,7 +191,6 @@ window nations
 	custombutton button_exit
 	{
 		image		ui/button_background
-		blend		true
 		texl		"192 0"
 		pos			"950 720"
 		size		"64 37"

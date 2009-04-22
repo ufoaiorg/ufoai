@@ -28,7 +28,7 @@ window multiplayerInGame
 		pos	"640 170"
 		size "256 64"
 		onClick	{ cmd "mn_pop;" }
-		image	ui/button_green_big	blend true
+		image	ui/button_green_big
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -40,7 +40,7 @@ window multiplayerInGame
 		pos	"640 240"
 		size "256 64"
 		onClick	{ cmd "mn_push options;" }
-		image	ui/button_green_big	blend true
+		image	ui/button_green_big
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -53,7 +53,7 @@ window multiplayerInGame
 		pos	"640 310"
 		size "256 64"
 		onClick	{ cmd "mn_push irc;" }
-		image	ui/button_green_big	blend true
+		image	ui/button_green_big
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -65,7 +65,7 @@ window multiplayerInGame
 		pos	"640 520"
 		size "256 64"
 		onClick	{ cmd "game_exit;mn_pop;" }
-		image	ui/button_green_big	blend true
+		image	ui/button_green_big
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"

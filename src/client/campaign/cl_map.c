@@ -837,7 +837,7 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t center, 
 	int numPoints = 0;
 	vec3_t initialVector, rotationAxis, currentPoint, centerPos;
 
-	R_ColorBlend(color);
+	R_Color(color);
 
 	/* Set centerPos corresponding to cartesian coordinates of the center point */
 	PolarToVec(center, centerPos);
@@ -876,7 +876,7 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t center, 
 
 	/* Draw the last path */
 	R_DrawLineStrip(numPoints, (int*)(&pts));
-	R_ColorBlend(NULL);
+	R_Color(NULL);
 }
 
 /**

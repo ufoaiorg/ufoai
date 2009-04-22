@@ -162,7 +162,7 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, const vec2_t
 		return;
 
 	/* Set color */
-	R_ColorBlend(color);
+	R_Color(color);
 
 	/* Draw lines from radar to ufos sensored */
 	display = MAP_AllMapToScreen(node, pos, &x, &y, NULL);
@@ -180,7 +180,7 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, const vec2_t
 		}
 	}
 
-	R_ColorBlend(NULL);
+	R_Color(NULL);
 }
 
 /**

@@ -83,7 +83,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 
 	image = MN_GetReferenceString(node, node->image);
 	if (image)
-		MN_DrawPanel(pos, node->size, image, node->blend, 0, 0, panelTemplate);
+		MN_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
 
 	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFont(node);
@@ -118,7 +118,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 		}
 
 		/* print the option label */
-		R_ColorBlend(textColor);
+		R_Color(textColor);
 		R_FontDrawString(font, ALIGN_UL, pos[0] + node->padding, currentY,
 			pos[0], currentY, node->size[0] - node->padding - node->padding, node->size[1],
 			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
@@ -127,7 +127,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 		currentY += elementHeight;
 		count++;
 	}
-	R_ColorBlend(NULL);
+	R_Color(NULL);
 
 	/* count number of options (current architecture doesn't allow to know if the data change) */
 	for (; option; option = option->next) {

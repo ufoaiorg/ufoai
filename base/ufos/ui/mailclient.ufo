@@ -21,7 +21,6 @@ window mail
 	{
 		tooltip		"_Close mail"
 		image		ui/button_background
-		blend		true
 		texl		"192 0"
 		pos			"950 720"
 		size		"64 37"
@@ -54,7 +53,6 @@ window mail
 
 	vscrollbar mail_scroll {
 		image		ui/scrollbar_v_green
-		blend		true
 		pos			"960 208"
 		height		"470"
 		current		0
@@ -84,7 +82,6 @@ window mail
 	pic sender_slot
 	{
 		image	ui/button_square
-		blend	true
 		pos		"62 82"
 		size	"64 64"
 		texh	"64 64"
@@ -550,7 +547,6 @@ window mailclient
 
 	vscrollbar mailclient_scroll {
 		image		ui/scrollbar_v_green
-		blend		true
 		pos			"950 125"
 		height		560
 		current		0
@@ -567,7 +563,6 @@ window mailclient
 	{
 		tooltip		"_Leave mailclient"
 		image		ui/button_background
-		blend		true
 		texl		"192 0"
 		pos			"920 720"
 		size		"64 37"

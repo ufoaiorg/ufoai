@@ -61,7 +61,7 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 		axes[3] = (int) node->size[1];
 		axes[4] = (int) node->size[0];
 		axes[5] = (int) node->size[1];
-		R_ColorBlend(node->u.linechart.axesColor);
+		R_Color(node->u.linechart.axesColor);
 		R_DrawLineStrip(3, axes);
 	}
 
@@ -70,11 +70,11 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 	for (; lineStrip; lineStrip = lineStrip->next) {
 		/* Draw this line if it's valid. */
 		if (lineStrip->pointList && lineStrip->numPoints > 0) {
-			R_ColorBlend(lineStrip->color);
+			R_Color(lineStrip->color);
 			R_DrawLineStrip(lineStrip->numPoints, lineStrip->pointList);
 		}
 	}
-	R_ColorBlend(NULL);
+	R_Color(NULL);
 
 	R_PopMatrix();
 }

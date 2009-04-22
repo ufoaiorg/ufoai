@@ -36,7 +36,6 @@ window options
 		pos			"80 170"
 		size		"256 64"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -52,7 +51,6 @@ window options
 		pos			"80 240"
 		size		"256 64"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -71,7 +69,6 @@ window options
 		pos			"80 310"
 		size		"256 64"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -90,7 +87,6 @@ window options
 		pos			"80 310"
 		size		"256 64"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -102,7 +98,6 @@ window options
 		pos			"80 380"
 		size		"256 64"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -118,7 +113,6 @@ window options
 		pos			"80 470"
 		size		"256 64"
 		image		ui/button_green_big
-		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
@@ -204,7 +198,6 @@ window options
 		{
 			current		"*cvar r_anisotropic"
 			image		ui/spinner_blue
-			blend		true
 			pos			"466 214"
 			min			0
 			max			16
@@ -354,7 +347,6 @@ window options
 		{
 			current		"*cvar r_multisample"
 			image		ui/spinner_blue
-			blend		true
 			pos			"466 464"
 			min			0
 			max			4
@@ -379,7 +371,6 @@ window options
 		{
 			current		"*cvar r_swapinterval"
 			image		ui/spinner_blue
-			blend		true
 			pos			"466 484"
 			min			0
 			max			2
@@ -713,7 +704,6 @@ window options
 
 		vscrollbar keyscroll {
 			image		ui/scrollbar_v_green
-			blend		true
 			pos			"508 110"
 			height		"560"
 			current		0
@@ -761,7 +751,6 @@ window options
 		{
 			string		"*cvar cl_name"
 			image		ui/button_green_verysmall
-			blend		true
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -814,7 +803,6 @@ window options
 			pos			"343 255"
 			cvar		"*cvar s_language"
 			image		"ui/panel_green_slim"
-			blend		true
 			size		"155 220"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -830,7 +818,6 @@ window options
 
 		vscrollbar select_language_scroll {
 			image		ui/scrollbar_v_green
-			blend		true
 			pos			"500 255"
 			height		"220"
 			current		0
@@ -1145,7 +1132,6 @@ window options
 			pos			"85 620"
 			size		"256 64"
 			image		ui/button_green_big
-			blend		true
 			font		f_menubig
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
@@ -1249,7 +1235,6 @@ window popup_maintain_resolution
 	{
 		string		"_Maintain resolution"
 		image		ui/popup_alpha_tile
-		blend		true
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	 true
@@ -1274,7 +1259,6 @@ window popup_maintain_resolution
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"112 188"
 		size		"176 32"
 		onClick		{ cmd "mn_pop; copy new_vidmode mn_vidmode;" }
@@ -1286,7 +1270,6 @@ window popup_maintain_resolution
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		blend		true
 		pos			"297 188"
 		size		"176 32"
 		onClick		{ cmd "mn_pop; copy new_vidmode old_vidmode;" }

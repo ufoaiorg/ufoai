@@ -108,7 +108,7 @@ void R_BindLightmapTexture(GLuint texnum);
 void R_BindDeluxemapTexture(GLuint texnum);
 void R_BindNormalmapTexture(GLuint texnum);
 void R_BindBuffer(GLenum target, GLenum type, GLuint id);
-void R_BindArray(GLenum target, GLenum type, void *array);
+void R_BindArray(GLenum target, GLenum type, const void *array);
 void R_BindDefaultArray(GLenum target);
 
 void R_EnableTexture(gltexunit_t *texunit, qboolean enable);

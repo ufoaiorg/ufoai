@@ -17,7 +17,6 @@ window basesummary
 			pos		"621 115"
 			size	"338 211"
 			image	"ui/panel_grey"
-			blend	true
 		}
 
 		panel inner_border {
@@ -25,7 +24,6 @@ window basesummary
 				pos		"19 20"
 				size	"298 170"
 				image	"ui/panel_grey_black"
-				blend	true
 			}
 		}
 
@@ -137,7 +135,6 @@ window basesummary
 		pos	"12 103"
 		size	"551 655"
 		image	ui/panel_grey_green_large
-		blend	true
 	}
 
 	text txt_base_summary
@@ -161,7 +158,6 @@ window basesummary
 		pos	"588 337"
 		size	"408 423"
 		image	ui/panel_grey_green_large
-		blend	true
 	}
 
 	text txt_info
@@ -212,7 +208,7 @@ window basesummary
 	custombutton bt_continue
 	{
 		tooltip	"_Back to baseview"
-		image	ui/button_background	blend	true
+		image	ui/button_background
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"

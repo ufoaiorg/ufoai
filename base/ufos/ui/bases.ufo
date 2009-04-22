@@ -32,7 +32,6 @@ window bases
 		image		ui/button_background
 		texl		"1 1"
 		size		"59 55"
-		blend		true
 		pos			"950 20"
 		icon		geoscape
 		onClick		{ cmd "mn_pop;check_baseattacks;" }
@@ -53,7 +52,6 @@ window bases
 		string		"_Buildings"
 		tooltip		"_Build base facilities"
 		image		ui/button_green_small
-		blend		 true
 		pos			"755 128"
 		size		"230 56"
 		color		"0 0.8 0 1"
@@ -67,7 +65,6 @@ window bases
 		string		"_Aircraft"
 		tooltip		"_Manage your aircraft"
 		image		ui/button_green_small
-		blend		true
 		pos			"755 188"
 		size		"230 56"
 		font		f_menu
@@ -81,7 +78,6 @@ window bases
 		string		"_Buy/Sell Equipment"
 		tooltip		"_Buy/Sell equipment"
 		image		ui/button_green_small
-		blend		true
 		pos			"755 248"
 		size		"230 56"
 		selectcolor	"1 1 1 1"
@@ -95,7 +91,6 @@ window bases
 		string		"_Transfer"
 		tooltip		"_Transfer equipment or personnel"
 		image		ui/button_green_small
-		blend		true
 		pos			"755 308"
 		size		"230 56"
 		color		"0 0.8 0 1"
@@ -109,7 +104,6 @@ window bases
 		string		"_Research"
 		tooltip		"_Research new technology"
 		image		ui/button_green_small
-		blend		true
 		pos			"755 368"
 		size		"230 56"
 		color		"0 0.8 0 1"
@@ -123,7 +117,6 @@ window bases
 		string		"_Production"
 		tooltip		"_Produce new equipment"
 		image		ui/button_green_small
-		blend		true
 		pos			"755 428"
 		size		"230 56"
 		color		"0 0.8 0 1"
@@ -137,7 +130,6 @@ window bases
 		string		"_Hire employees"
 		tooltip		"_Hire employees"
 		image		ui/button_green_small
-		blend		true
 		pos			"755 488"
 		size		"230 56"
 		onClick		{ cmd "mn_push employees;" }
@@ -151,7 +143,6 @@ window bases
 		string		"_Containment"
 		tooltip		"_Deal with Aliens in Alien Containment"
 		image		ui/button_green_small
-		blend		true
 		pos			"755 548"
 		size		"230 56"
 		color		"0 0.8 0 1"
@@ -165,7 +156,6 @@ window bases
 		string		"_Hospital"
 		tooltip		"_Medical and Surgery operations"
 		image		ui/button_green_small
-		blend		true
 		pos			"755 608"
 		size		"230 56"
 		color		"0 0.8 0 1"
@@ -179,7 +169,6 @@ window bases
 		string		"_Base Summary"
 		tooltip		"_Base Information"
 		image		ui/button_green_small
-		blend		true
 		pos			"755 668"
 		size		"230 56"
 		color		"0 0.8 0 1"
