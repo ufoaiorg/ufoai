@@ -663,46 +663,28 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
  * @param[in] absX Absolute x value for this string
  * @param[in] absY Absolute y value for this string
  * @param[in] maxWidth Max width - relative from absX
- * @param[in] maxHeight Max height - relative from absY
  * @param[in] lineHeight The lineheight of that node
  * @param[in] c The string to draw
  * @param[in] scrollPos Starting line in this node (due to scrolling)
  * @param[in] curLine Current line (see lineHeight)
- * @param[in] increaseLine If true cur_line is increased with every linebreak
  * @note the x, y, width and height values are all normalized here - don't use the
  * viddef settings for drawstring calls - make them all relative to VID_NORM_WIDTH
  * and VID_NORM_HEIGHT
  * @todo This could be replaced with a set of much simpler interfaces.
  */
-int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
-		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, qboolean increaseLine, longlines_t method)
+int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth,
+		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, longlines_t method)
 {
 	const font_t *font = R_FontGetFont(fontId);
 	const wrapCache_t *wrap;
 	int i;
 	const int horizontalAlign = align % 3; /* left, center, right */
-	const int verticalAlign = align / 3;  /* top, center, bottom */
 	int xalign = 0;
-	int yalign = 0;
-
-	if (maxWidth <= 0)
-		maxWidth = VID_NORM_WIDTH;
-
-	if (lineHeight <= 0)
-		lineHeight = font->height;
 
 	wrap = R_FontWrapText(font, c, maxWidth - (x - absX), method);
 
 	if (boxHeight <= 0)
 		boxHeight = wrap->numLines;
-
-	/* vertical alignment makes only a single-line adjustment in this
-	 * function. That means that ALIGN_Lx values will not show more than
-	 * one line in any case. */
-	if (verticalAlign == 1)
-		yalign = -(lineHeight / 2);
-	else if (verticalAlign == 2)
-		yalign = -lineHeight;
 
 	for (i = 0; i < wrap->numChunks; i++) {
 		chunkCache_t *chunk = &chunkCache[wrap->chunkIdx + i];
@@ -722,13 +704,10 @@ int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int
 			continue;
 
 		R_FontGenerateTexture(font, c, chunk);
-		R_FontDrawTexture(chunk->texId, x + xalign, y + (linenum - scrollPos) * lineHeight + yalign, chunk->texsize[0], chunk->texsize[1]);
+		R_FontDrawTexture(chunk->texId, x + xalign, y + (linenum - scrollPos) * lineHeight, chunk->texsize[0], chunk->texsize[1]);
 	}
 
-	if (curLine && increaseLine)
-		*curLine += wrap->numLines;
-
-	return wrap->numLines * lineHeight;
+	return wrap->numLines;
 }
 
 void R_FontInit (void)

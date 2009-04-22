@@ -283,9 +283,36 @@ int MN_DrawStringInBox (const menuNode_t *node, int align, int x, int y, int wid
 		0, text, 0, 0, NULL, qfalse, method);
 }
 
-int MN_DrawString (const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
+int MN_DrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
 		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, qboolean increaseLine, longlines_t method)
 {
-	return R_FontDrawString(fontId, align, x, y, absX, absY, maxWidth, maxHeight, lineHeight, c, boxHeight, scrollPos, curLine, increaseLine, method);
+	const menuFont_t *font = MN_GetFontByID(fontID);
+	const int verticalAlign = align / 3;  /* top, center, bottom */
+	int lines;
+
+	if (!font)
+		Sys_Error("Could not find font with id: '%s'", fontID);
+
+	if (maxWidth <= 0)
+		maxWidth = VID_NORM_WIDTH;
+
+	if (lineHeight <= 0)
+		lineHeight = R_FontGetHeight(font->name);
+
+	/* vertical alignment makes only a single-line adjustment in this
+	 * function. That means that ALIGN_Lx values will not show more than
+	 * one line in any case. */
+	if (verticalAlign == 1)
+		y += -(lineHeight / 2);
+	else if (verticalAlign == 2)
+		y += -lineHeight;
+
+	lines = R_FontDrawString(fontID, align, x, y, absX, absY, maxWidth, lineHeight,
+			c, boxHeight, scrollPos, curLine, method);
+
+	if (curLine && increaseLine)
+		*curLine += lines;
+
+	return lines * lineHeight;
 }
 

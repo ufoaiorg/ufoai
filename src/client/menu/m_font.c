@@ -32,12 +32,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_FONTS 16
 static int numFonts = 0;
-static font_t fonts[MAX_FONTS];
+static menuFont_t fonts[MAX_FONTS];
 
 static const value_t fontValues[] = {
-	{"font", V_TRANSLATION_STRING, offsetof(font_t, path), 0},
-	{"size", V_INT, offsetof(font_t, size), MEMBER_SIZEOF(font_t, size)},
-	{"style", V_CLIENT_HUNK_STRING, offsetof(font_t, style), 0},
+	{"font", V_TRANSLATION_STRING, offsetof(menuFont_t, path), 0},
+	{"size", V_INT, offsetof(menuFont_t, size), MEMBER_SIZEOF(menuFont_t, size)},
+	{"style", V_CLIENT_HUNK_STRING, offsetof(menuFont_t, style), 0},
 
 	{NULL, V_NULL, 0},
 };
@@ -48,7 +48,7 @@ static const value_t fontValues[] = {
  * fonts for every translation
  * @param[in] font
  */
-static void MN_RegisterFont (const font_t *font)
+static void MN_RegisterFont (const menuFont_t *font)
 {
 	const char *path = _(font->path);
 
@@ -66,18 +66,16 @@ static void MN_RegisterFont (const font_t *font)
  */
 void MN_ParseFont (const char *name, const char **text)
 {
-	font_t *font;
+	menuFont_t *font;
 	const char *errhead = "MN_ParseFont: unexpected end of file (font";
 	const char *token;
-	int i;
 	const value_t *v = NULL;
 
 	/* search for font with same name */
-	for (i = 0; i < numFonts; i++)
-		if (!strcmp(fonts[i].name, name)) {
-			Com_Printf("MN_ParseFont: font \"%s\" with same name found, second ignored\n", name);
-			return;
-		}
+	if (MN_GetFontByID(name)) {
+		Com_Printf("MN_ParseFont: font \"%s\" with same name found, second ignored\n", name);
+		return;
+	}
 
 	if (numFonts >= MAX_FONTS) {
 		Com_Printf("MN_ParseFont: Max fonts reached\n");
@@ -149,6 +147,21 @@ const char *MN_GetFont (const menuNode_t *const node)
 		return MN_GetReferenceString(node, node->font);
 	}
 	return "f_small";
+}
+
+
+/**
+ * @brief Return the font for a specific id
+ */
+const menuFont_t *MN_GetFontByID (const char *name)
+{
+	int i;
+
+	for (i = 0; i < numFonts; i++)
+		if (!strcmp(fonts[i].name, name))
+			return &fonts[i];
+
+	return NULL;
 }
 
 /**

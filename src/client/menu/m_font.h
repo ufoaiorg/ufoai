@@ -27,15 +27,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct menuNode_s;
 
-typedef struct font_s {
+typedef struct menuFont_s {
 	char *name;
 	int size;
 	char *style;
 	char *path;
-} font_t;
+} menuFont_t;
 
 /* will return the size and the path for each font */
 const char *MN_GetFont(const struct menuNode_s *const node);
+const menuFont_t *MN_GetFontByID(const char *fontID);
 /* this is the function where all the sdl_ttf fonts are parsed */
 void MN_ParseFont(const char *name, const char **text);
 void MN_InitFonts(void);
