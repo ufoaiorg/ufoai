@@ -210,7 +210,7 @@ void R_DrawTexture (int texnum, int x, int y, int w, int h)
  * @param[in] y Y position to draw the image to
  * @param[in] blend Enable the blend mode (for alpha channel images)
  */
-void R_DrawImage (float x, float y, qboolean blend, const image_t *image)
+void R_DrawImage (float x, float y, const image_t *image)
 {
 	float x1, x2, x3, x4, y1, y2, y3, y4;
 	short image_verts[8];

@@ -360,7 +360,7 @@ void CL_Sequence2D (void)
 			/* image can be background */
 			if (*s2d->image) {
 				const image_t *image = R_FindImage(s2d->image, it_pic);
-				R_DrawImage(s2d->pos[0], s2d->pos[1], qtrue, image);
+				R_DrawImage(s2d->pos[0], s2d->pos[1], image);
 			}
 
 			/* bgcolor can be overlay */

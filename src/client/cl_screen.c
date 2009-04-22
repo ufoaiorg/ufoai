@@ -108,7 +108,7 @@ void SCR_DrawPrecacheScreen (qboolean string)
 
 	image = R_FindImage("pics/loading", it_pic);
 	if (image)
-		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, qfalse, image);
+		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, image);
 	if (string) {
 		/* Not used with gettext because it would make removing it too easy. */
 		R_FontDrawString("f_menubig", ALIGN_UC,
@@ -200,7 +200,7 @@ static void SCR_DrawLoading (void)
 	/* center loading screen */
 	image = R_FindImage(loadingPic, it_pic);
 	if (image)
-		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, qfalse, image);
+		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, image);
 	R_Color(color);
 
 	if (cl.configstrings[CS_TILES][0]) {
@@ -277,7 +277,7 @@ static void SCR_DrawCursor (void)
 
 		image = R_FindImage(pic, it_pic);
 		if (image)
-			R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, qtrue, image);
+			R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, image);
 
 		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
 			if (selActor) {
@@ -285,7 +285,7 @@ static void SCR_DrawCursor (void)
 				if (selActor->state & STATE_CROUCHED) {
 					image = R_FindImage("pics/cursors/ducked", it_pic);
 					if (image)
-						R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, qtrue, image);
+						R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, image);
 				}
 				iconOffsetY += 16;	/* Height of 'crouched' icon. */
 				iconOffsetY += iconSpacing;
@@ -299,7 +299,7 @@ static void SCR_DrawCursor (void)
 					image = NULL;
 
 				if (image)
-					R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, qtrue, image);
+					R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, image);
 				iconOffsetY += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
 				iconOffsetY += iconSpacing;
 

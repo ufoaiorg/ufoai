@@ -1272,7 +1272,7 @@ static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
 		} else {
 			if (ccs.selectedMission->active) {
 				const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_ACTIVE];
-				R_DrawImage(x - image->width / 2, y - image->height / 2, qtrue, image);
+				R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 			}
 		}
 	}
@@ -1283,7 +1283,7 @@ static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
 		MAP_Draw3DMarkerIfVisible(node, ms->pos, angle, MAP_GetMissionModel(ms), 0);
 	} else {
 		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
-		R_DrawImage(x - image->width / 2, y - image->height / 2, qfalse, image);
+		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 	}
 
 	R_FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.mapSize[1],  _(ms->location), 0, 0, NULL, qfalse, 0);
@@ -1327,7 +1327,7 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
 	} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
 		const image_t *image = R_FindImage(tpl->model, it_pic);
 		if (image)
-			R_DrawImage(x - image->width / 2, y - image->height / 2, qfalse, image);
+			R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 	}
 
 	/* Draw installation names */
@@ -1379,7 +1379,7 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 		else
 			image = geoscapeImages[GEOSCAPE_IMAGE_BASE];
 
-		R_DrawImage(x - image->width / 2, y - image->height / 2, qtrue, image);
+		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 	}
 
 	/* Draw base names */
@@ -1433,14 +1433,14 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 		if (cl_3dmap->integer)
 			MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 		else
-			R_DrawImage(x - image->width / 2, y - image->height / 2, qtrue, image);
+			R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 
 		/* Draw a circle around ufo purchased by selected aircraft */
 		if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, NULL)) {
 			if (cl_3dmap->integer)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 			else
-				R_DrawImage(x - image->width / 2, y - image->height / 2, qtrue, image);
+				R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 		}
 	}
 
@@ -1548,7 +1548,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 				else {
 					const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
-					R_DrawImage(x - image->width / 2, y - image->height / 2, qtrue, image);
+					R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 				}
 			}
 			MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
