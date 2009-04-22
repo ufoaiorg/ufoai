@@ -62,7 +62,6 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 		MARGE
 	};
 	const char *text;
-	const char *font;
 	int texX, texY;
 	const float *textColor;
 	const char *image;
@@ -92,10 +91,9 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 
 	text = MN_GetReferenceString(node, node->text);
 	if (text != NULL && *text != '\0') {
-		font = MN_GetFont(node);
 		R_Color(textColor);
 		text = _(text);
-		R_FontDrawStringInBox(font, node->textalign,
+		MN_DrawStringInBox(node, node->textalign,
 			pos[0] + node->padding, pos[1] + node->padding,
 			node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
 			text, LONGLINES_PRETTYCHOP);

@@ -731,37 +731,6 @@ int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int
 	return wrap->numLines * lineHeight;
 }
 
-/**
- * @brief draw a line into a boundedbox
- * @param[in] fontID the font id (defined in ufos/fonts.ufo)
- * @param[in] align Align of the text into the boundedbox
- * @param[in] x Current x position of the bounded box
- * @param[in] y Current y position of the bounded box
- * @param[in] width Current width of the bounded box
- * @param[in] height Current height of the bounded box
- * @param[in] text The string to draw
- * @param[in] method Truncation method
- * @image http://ufoai.ninex.info/wiki/images/Text_position.png
- * @note the x, y, width and height values are all normalized here - don't use the
- * viddef settings for drawstring calls - make them all relative to VID_NORM_WIDTH
- * and VID_NORM_HEIGHT
- * @todo remove the use of R_FontDrawString
- * @todo test the code for multiline?
- * @todo fix problem with truncation (maybe problem into R_FontDrawString)
- */
-int R_FontDrawStringInBox(const char *fontId, int align, int x, int y, int width, int height, const char *text, longlines_t method)
-{
-	const int horiz_align = align % 3; /* left, center, right */
-	const int vert_align = align / 3;  /* top, center, bottom */
-
-	/* position of the text for R_FontDrawString */
-	const int xx = x + ((width * horiz_align) >> 1);
-	const int yy = y + ((height * vert_align) >> 1);
-
-	return R_FontDrawString (fontId, align, xx, yy, xx, yy, width, height,
-		0, text, 0, 0, NULL, qfalse, method);
-}
-
 void R_FontInit (void)
 {
 #ifdef SDL_TTF_VERSION

@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_main.h"
 #include "../m_parse.h"
 #include "../m_nodes.h"
-#include "../m_font.h"
 #include "../m_internal.h"
 #include "../m_render.h"
 #include "m_node_window.h"
@@ -109,10 +108,8 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 
 	/* draw the title */
 	text = MN_GetReferenceString(node, node->text);
-	if (text) {
-		const char *font = MN_GetFont(node);
-		R_FontDrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
-	}
+	if (text)
+		MN_DrawStringInBox(node, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
 
 	/* embedded timer */
 	if (node->u.window.onTimeOut && node->timeOut) {

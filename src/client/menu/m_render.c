@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "m_main.h"
+#include "m_font.h"
 #include "m_render.h"
 #include "../cl_video.h"
 #include "../renderer/r_draw.h"
@@ -248,4 +249,36 @@ void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
 		texX + secondPos, texY + thirdPosY, ALIGN_UL, image);
 	MN_DrawNormImage(pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
 		texX + thirdPos, texY + thirdPosY, ALIGN_UL, image);
+}
+
+/**
+ * @brief draw a line into a bounding box
+ * @param[in] fontID the font id (defined in ufos/fonts.ufo)
+ * @param[in] align Align of the text into the bounding box
+ * @param[in] x Current x position of the bounded box
+ * @param[in] y Current y position of the bounded box
+ * @param[in] width Current width of the bounded box
+ * @param[in] height Current height of the bounded box
+ * @param[in] text The string to draw
+ * @param[in] method Truncation method
+ * @image http://ufoai.ninex.info/wiki/images/Text_position.png
+ * @note the x, y, width and height values are all normalized here - don't use the
+ * viddef settings for drawstring calls - make them all relative to VID_NORM_WIDTH
+ * and VID_NORM_HEIGHT
+ * @todo remove the use of R_FontDrawString
+ * @todo test the code for multiline?
+ * @todo fix problem with truncation (maybe problem into R_FontDrawString)
+ */
+int MN_DrawStringInBox (const menuNode_t *node, int align, int x, int y, int width, int height, const char *text, longlines_t method)
+{
+	const char *font = MN_GetFont(node);
+	const int horizontalAlign = align % 3; /* left, center, right */
+	const int verticalAlign = align / 3;  /* top, center, bottom */
+
+	/* position of the text for R_FontDrawString */
+	const int xx = x + ((width * horizontalAlign) >> 1);
+	const int yy = y + ((height * verticalAlign) >> 1);
+
+	return R_FontDrawString(font, align, xx, yy, xx, yy, width, height,
+		0, text, 0, 0, NULL, qfalse, method);
 }

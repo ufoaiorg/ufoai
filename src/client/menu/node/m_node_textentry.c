@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_main.h"
 #include "../m_nodes.h"
 #include "../m_parse.h"
-#include "../m_font.h"
 #include "../m_input.h"
 #include "../m_actions.h"
 #include "../m_render.h"
@@ -237,7 +236,6 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 		MARGE
 	};
 	const char *text;
-	const char *font;
 	int texX, texY;
 	const float *textColor;
 	const char *image;
@@ -297,9 +295,8 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 		}
 
 		if (*text != '\0') {
-			font = MN_GetFont(node);
 			R_Color(textColor);
-			R_FontDrawStringInBox(font, node->textalign,
+			MN_DrawStringInBox(node, node->textalign,
 				pos[0] + node->padding, pos[1] + node->padding,
 				node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
 				text, LONGLINES_PRETTYCHOP);

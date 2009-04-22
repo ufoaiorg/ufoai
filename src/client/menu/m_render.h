@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_RENDER_H
 #define CLIENT_MENU_M_RENDER_H
 
+#include "m_nodes.h"
 #include "../cl_renderer.h"
 
 const image_t *MN_LoadImage(const char *name);
@@ -34,5 +35,6 @@ const image_t *MN_DrawNormImageByName(float x, float y, float w, float h, float 
 
 void MN_DrawPanel(const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int *panelDef);
 void MN_DrawFill(int x, int y, int w, int h, int align, const vec4_t color);
+int MN_DrawStringInBox(const menuNode_t *node, int align, int x, int y, int width, int height, const char *text, longlines_t method);
 
 #endif

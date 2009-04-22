@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_main.h"
 #include "../m_icon.h"
 #include "../m_parse.h"
-#include "../m_font.h"
 #include "../m_input.h"
 #include "../m_render.h"
 #include "m_node_custombutton.h"
@@ -78,9 +77,8 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 
 	text = MN_GetReferenceString(node, node->text);
 	if (text != NULL && *text != '\0') {
-		const char *font = MN_GetFont(node);
 		R_Color(textColor);
-		R_FontDrawStringInBox(font, node->textalign,
+		MN_DrawStringInBox(node, node->textalign,
 			pos[0] + node->padding, pos[1] + node->padding,
 			node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
 			text, LONGLINES_PRETTYCHOP);

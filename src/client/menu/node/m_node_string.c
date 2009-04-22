@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_font.h"
 #include "../m_parse.h"
 #include "../m_tooltip.h"
+#include "../m_render.h"
 #include "m_node_string.h"
 #include "m_node_abstractnode.h"
 
@@ -50,7 +51,7 @@ static void MN_StringNodeDraw (menuNode_t *node)
 	if (node->size[0] == 0)
 		R_FontDrawString(font, node->textalign, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, 0, ref, 0, 0, NULL, qfalse, 0);
 	else
-		R_FontDrawStringInBox(font, node->textalign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding, ref, node->longlines);
+		MN_DrawStringInBox(node, node->textalign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding, ref, node->longlines);
 	R_Color(NULL);
 }
 

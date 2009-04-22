@@ -129,7 +129,7 @@ typedef struct menuNode_s {
 	qboolean preventRatio;
 
 	/* text */
-	/** @todo remove it  from 'string node', need to full implement R_FontDrawStringInBox */
+	/** @todo remove it  from 'string node', need to full implement MN_DrawStringInBox */
 	byte longlines;				/**< what to do with long lines */
 
 	/* zone */
