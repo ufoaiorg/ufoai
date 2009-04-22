@@ -78,7 +78,7 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
 			string++;
 		}
 	} else
-		MN_DrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 12, string, 0, 0, NULL, qfalse, 0);
+		MN_DrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, viddef.virtualWidth, viddef.virtualHeight, 12, string, 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -113,10 +113,10 @@ void SCR_DrawPrecacheScreen (qboolean string)
 	if (string) {
 		/* Not used with gettext because it would make removing it too easy. */
 		MN_DrawString("f_menubig", ALIGN_UC,
-			(int)(VID_NORM_WIDTH / 2), 30,
-			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
+			(int)(viddef.virtualWidth / 2), 30,
+			0, 1, viddef.virtualWidth, viddef.virtualHeight, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
 	}
-	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
+	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, (int)cls.loadingPercent);
 
 	R_EndFrame();
 }
@@ -163,13 +163,13 @@ static void SCR_DrawDownloading (void)
 {
 	const char *dlmsg = va(_("Downloading [%s]"), cls.downloadName);
 	MN_DrawString("f_menubig", ALIGN_UC,
-		(int)(VID_NORM_WIDTH / 2),
-		(int)(VID_NORM_HEIGHT / 2 - 60),
-		(int)(VID_NORM_WIDTH / 2),
-		(int)(VID_NORM_HEIGHT / 2 - 60),
-		VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, dlmsg, 1, 0, NULL, qfalse, 0);
+		(int)(viddef.virtualWidth / 2),
+		(int)(viddef.virtualHeight / 2 - 60),
+		(int)(viddef.virtualWidth / 2),
+		(int)(viddef.virtualHeight / 2 - 60),
+		viddef.virtualWidth, viddef.virtualHeight, 50, dlmsg, 1, 0, NULL, qfalse, 0);
 
-	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.downloadPercent);
+	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, (int)cls.downloadPercent);
 }
 
 /**
@@ -207,21 +207,21 @@ static void SCR_DrawLoading (void)
 	if (cl.configstrings[CS_TILES][0]) {
 		mapmsg = va(_("Loading Map [%s]"), _(cl.configstrings[CS_MAPTITLE]));
 		MN_DrawString("f_menubig", ALIGN_UC,
-			(int)(VID_NORM_WIDTH / 2),
-			(int)(VID_NORM_HEIGHT / 2 - 60),
-			(int)(VID_NORM_WIDTH / 2),
-			(int)(VID_NORM_HEIGHT / 2 - 60),
-			VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, mapmsg, 1, 0, NULL, qfalse, 0);
+			(int)(viddef.virtualWidth / 2),
+			(int)(viddef.virtualHeight / 2 - 60),
+			(int)(viddef.virtualWidth / 2),
+			(int)(viddef.virtualHeight / 2 - 60),
+			viddef.virtualWidth, viddef.virtualHeight, 50, mapmsg, 1, 0, NULL, qfalse, 0);
 	}
 
 	MN_DrawString("f_menu", ALIGN_UC,
-		(int)(VID_NORM_WIDTH / 2),
-		(int)(VID_NORM_HEIGHT / 2),
-		(int)(VID_NORM_WIDTH / 2),
-		(int)(VID_NORM_HEIGHT / 2),
-		VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, cls.loadingMessages, 1, 0, NULL, qfalse, 0);
+		(int)(viddef.virtualWidth / 2),
+		(int)(viddef.virtualHeight / 2),
+		(int)(viddef.virtualWidth / 2),
+		(int)(viddef.virtualHeight / 2),
+		viddef.virtualWidth, viddef.virtualHeight, 50, cls.loadingMessages, 1, 0, NULL, qfalse, 0);
 
-	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
+	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, (int)cls.loadingPercent);
 }
 
 /**

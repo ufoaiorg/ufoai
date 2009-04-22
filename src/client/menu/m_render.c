@@ -265,9 +265,9 @@ void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
  * @note the x, y, width and height values are all normalized here - don't use the
  * viddef settings for drawstring calls - make them all relative to VID_NORM_WIDTH
  * and VID_NORM_HEIGHT
- * @todo remove the use of R_FontDrawString
+ * @todo remove the use of MN_DrawString
  * @todo test the code for multiline?
- * @todo fix problem with truncation (maybe problem into R_FontDrawString)
+ * @todo fix problem with truncation (maybe problem into MN_DrawString)
  */
 int MN_DrawStringInBox (const menuNode_t *node, int align, int x, int y, int width, int height, const char *text, longlines_t method)
 {
@@ -275,7 +275,7 @@ int MN_DrawStringInBox (const menuNode_t *node, int align, int x, int y, int wid
 	const int horizontalAlign = align % 3; /* left, center, right */
 	const int verticalAlign = align / 3;  /* top, center, bottom */
 
-	/* position of the text for R_FontDrawString */
+	/* position of the text for MN_DrawString */
 	const int xx = x + ((width * horizontalAlign) >> 1);
 	const int yy = y + ((height * verticalAlign) >> 1);
 

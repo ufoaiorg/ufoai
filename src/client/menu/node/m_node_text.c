@@ -434,7 +434,7 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messa
 
 	screenLines = 0;
 	for (; message; message = message->next) {
-		const int prevScreenLines = screenLines;	/**< Screen lines before R_FontDrawString(...) is executed */
+		const int prevScreenLines = screenLines;	/**< Screen lines before MN_DrawString(...) is executed */
 
 		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
 		MN_DrawString(font, node->textalign, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).rows, 0, &screenLines, qtrue, node->longlines);
