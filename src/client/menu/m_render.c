@@ -99,7 +99,7 @@ void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, f
 	tl /= image->height;
 
 	/* alignment */
-	if (align > 0 && align < ALIGN_LAST) {
+	if (align > ALIGN_UL && align < ALIGN_LAST) {
 		/* horizontal (0 is left) */
 		switch (align % 3) {
 		case 1:
@@ -128,7 +128,7 @@ void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, f
 	y4 = y3 = y1 + nh;
 
 	/* slanting */
-	if (align >= 9 && align < ALIGN_LAST) {
+	if (align >= ALIGN_UL_RSL && align < ALIGN_LAST) {
 		x1 += nh;
 		x2 += nh;
 	}
