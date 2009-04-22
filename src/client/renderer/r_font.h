@@ -41,10 +41,7 @@ typedef struct font_s {
 } font_t;
 
 /* public */
-void R_FontShutdown(void);
-void R_FontInit(void);
 void R_FontListCache_f(void);
-void R_FontSetTruncationMarker(const char *marker);
 font_t *R_GetFont(const char *name);
 
 #endif

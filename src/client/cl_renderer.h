@@ -221,7 +221,6 @@ void R_Color(const float *rgba);
 void R_ModBeginLoading(const char *tiles, qboolean day, const char *pos, const char *mapName);
 void R_SwitchModelMemPoolTag(void);
 
-void R_LoadTGA(const char *name, byte ** pic, int *width, int *height);
 void R_LoadImage(const char *name, byte **pic, int *width, int *height);
 
 void R_FontShutdown(void);

@@ -289,5 +289,7 @@ void R_DrawParticles (void)
 			R_TexEnv(GL_MODULATE);
 		}
 
+	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	R_Color(NULL);
 }

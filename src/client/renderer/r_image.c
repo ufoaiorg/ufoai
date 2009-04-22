@@ -346,7 +346,7 @@ typedef struct targaHeader_s {
  * @sa R_LoadPNG
  * @sa R_FindImage
  */
-void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
+static void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 {
 	int i, columns, rows, row_inc, row, col;
 	byte *buf_p, *buffer, *pixbuf, *targaRGBA;
