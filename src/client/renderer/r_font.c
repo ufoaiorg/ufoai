@@ -677,8 +677,8 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
 		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, qboolean increaseLine, longlines_t method)
 {
-	const int horiz_align = align % 3; /* left, center, right */
-	const int vert_align = align / 3;  /* top, center, bottom */
+	const int horizontalAlign = align % 3; /* left, center, right */
+	const int verticalAlign = align / 3;  /* top, center, bottom */
 	const font_t *font = R_FontGetFont(fontId);
 	const wrapCache_t *wrap;
 	int i;
@@ -699,9 +699,9 @@ int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int
 	/* vertical alignment makes only a single-line adjustment in this
 	 * function. That means that ALIGN_Lx values will not show more than
 	 * one line in any case. */
-	if (vert_align == 1)
+	if (verticalAlign == 1)
 		yalign = -(lineHeight / 2);
-	else if (vert_align == 2)
+	else if (verticalAlign == 2)
 		yalign = -lineHeight;
 
 	for (i = 0; i < wrap->numChunks; i++) {
@@ -711,9 +711,9 @@ int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int
 		if (curLine)
 			linenum += *curLine;
 
-		if (horiz_align == 1)
+		if (horizontalAlign == 1)
 			xalign = -(chunk->width / 2);
-		else if (horiz_align == 2)
+		else if (horizontalAlign == 2)
 			xalign = -chunk->width;
 		else
 			xalign = 0;
