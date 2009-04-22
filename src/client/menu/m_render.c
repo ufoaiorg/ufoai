@@ -297,7 +297,7 @@ int MN_DrawString (const char *fontID, int align, int x, int y, int absX, int ab
 		maxWidth = VID_NORM_WIDTH;
 
 	if (lineHeight <= 0)
-		lineHeight = R_FontGetHeight(font->name);
+		lineHeight = MN_FontGetHeight(font->name);
 
 	/* vertical alignment makes only a single-line adjustment in this
 	 * function. That means that ALIGN_Lx values will not show more than

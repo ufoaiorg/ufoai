@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_FONTS_H
 #define R_FONTS_H
 
+#include <SDL_ttf.h>
+
 /* starting offset for texture numbers used in text chunk cache */
 #define TEXNUM_FONTS		(TEXNUM_DELUXEMAPS + MAX_GL_DELUXEMAPS)
 
@@ -43,5 +45,6 @@ void R_FontShutdown(void);
 void R_FontInit(void);
 void R_FontListCache_f(void);
 void R_FontSetTruncationMarker(const char *marker);
+font_t *R_GetFont(const char *name);
 
 #endif

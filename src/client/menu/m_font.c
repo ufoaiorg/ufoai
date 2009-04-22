@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../../shared/parse.h"
+#include "../renderer/r_font.h"
 
 #define MAX_FONTS 16
 static int numFonts = 0;
@@ -162,6 +163,14 @@ const menuFont_t *MN_GetFontByID (const char *name)
 			return &fonts[i];
 
 	return NULL;
+}
+
+int MN_FontGetHeight (const char *fontID)
+{
+	font_t *font = R_GetFont(fontID);
+	if (font != NULL)
+		return font->height;
+	return -1;
 }
 
 /**

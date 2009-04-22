@@ -295,7 +295,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 				y1 += (lines - EXTRADATA(node).textScroll) * node->u.text.lineHeight;
 			/* don't draw images that would be out of visible area */
 			if (y + height > y1 && lines >= EXTRADATA(node).textScroll) {
-				/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too */
+				/** @todo (menu) we should scale the height here with font->height, too */
 				image = MN_DrawNormImageByName(x1, y1, 0, 0, 0, 0, 0, 0, node->textalign, token);
 				if (image)
 					x1 += image->height;
@@ -573,9 +573,8 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 	/* we don't overwrite node->u.text.lineHeight, because "0" is dynamically replaced by font height on draw function */
 	if (lineheight == 0) {
 		/* the font is used */
-		/** @todo clean this up once font_t is known in the client */
 		const char *font = MN_GetFont(node);
-		lineheight = R_FontGetHeight(font) / 2;
+		lineheight = MN_FontGetHeight(font) / 2;
 	}
 
 	/* auto compute rows */

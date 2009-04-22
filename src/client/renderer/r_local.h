@@ -29,8 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_renderer.h"
 #include "../cl_video.h"
 
-#include <SDL_ttf.h>
-
 #include "r_gl.h"
 #include "r_state.h"
 #include "r_array.h"

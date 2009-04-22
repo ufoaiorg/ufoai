@@ -40,5 +40,6 @@ const menuFont_t *MN_GetFontByID(const char *fontID);
 /* this is the function where all the sdl_ttf fonts are parsed */
 void MN_ParseFont(const char *name, const char **text);
 void MN_InitFonts(void);
+int MN_FontGetHeight(const char *font);
 
 #endif

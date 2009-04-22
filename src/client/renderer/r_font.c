@@ -205,7 +205,7 @@ static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyl
 /**
  * @brief Searches the array of available fonts (see fonts.ufo)
  */
-static font_t *R_FontGetFont (const char *name)
+font_t *R_GetFont (const char *name)
 {
 	int i;
 
@@ -521,7 +521,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
  */
 void R_FontTextSize (const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines, qboolean *isTruncated)
 {
-	const font_t *font = R_FontGetFont(fontId);
+	const font_t *font = R_GetFont(fontId);
 	const wrapCache_t *wrap = R_FontWrapText(font, text, maxWidth, method);
 
 	if (width) {
@@ -675,7 +675,7 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth,
 		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, longlines_t method)
 {
-	const font_t *font = R_FontGetFont(fontId);
+	const font_t *font = R_GetFont(fontId);
 	const wrapCache_t *wrap;
 	int i;
 	const int horizontalAlign = align % 3; /* left, center, right */
@@ -751,16 +751,4 @@ void R_FontRegister (const char *name, int size, const char *path, const char *s
 			}
 
 	R_FontAnalyze(name, path, renderstyle, size);
-}
-
-/**
- * @return -1 if font wasn't found, font height otherwise
- * @todo No longer needed once font_t is known in the client
- */
-int R_FontGetHeight (const char *fontID)
-{
-	const font_t *font = R_FontGetFont(fontID);
-	if (font)
-		return font->height;
-	return -1;
 }
