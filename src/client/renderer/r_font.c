@@ -677,11 +677,11 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
 		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, qboolean increaseLine, longlines_t method)
 {
-	const int horizontalAlign = align % 3; /* left, center, right */
-	const int verticalAlign = align / 3;  /* top, center, bottom */
 	const font_t *font = R_FontGetFont(fontId);
 	const wrapCache_t *wrap;
 	int i;
+	const int horizontalAlign = align % 3; /* left, center, right */
+	const int verticalAlign = align / 3;  /* top, center, bottom */
 	int xalign = 0;
 	int yalign = 0;
 

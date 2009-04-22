@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "renderer/r_mesh_anim.h"
 #include "../shared/parse.h"
 #include "menu/m_nodes.h"
+#include "menu/m_render.h"
 
 #define MAX_DATA_LENGTH 2048
 
@@ -372,7 +373,7 @@ void CL_Sequence2D (void)
 
 			/* gettext placeholder */
 			if (s2d->text)
-				height += R_FontDrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], (int) s2d->size[0], (int) s2d->size[1], -1 /** @todo use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+				height += MN_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], (int) s2d->size[0], (int) s2d->size[1], -1 /** @todo use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 		}
 	R_Color(NULL);
 	R_PopMatrix();
