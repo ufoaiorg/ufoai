@@ -1991,7 +1991,12 @@ qboolean TR_LoadXML (mxml_node_t *p)
 				const int group = mxml_GetInt(ss, "group", 0);
 				const int empl = mxml_GetInt(ss, "empl", 0);
 				if (group >= 0 && group < MAX_EMPL && empl >= 0 && empl < MAX_EMPLOYEES) {
-					transfer->trEmployees[group][empl] = ((emplIdx >= 0) ? &ccs.employees[group][emplIdx] : NULL);
+					if (emplIdx >= 0) {
+						transfer->trEmployees[group][empl] = &ccs.employees[group][emplIdx];
+						transfer->trEmployees[group][empl]->transfer = qtrue;
+					} else {
+						transfer->trEmployees[group][empl] = NULL;
+					}
 				}
 			}
 		}
