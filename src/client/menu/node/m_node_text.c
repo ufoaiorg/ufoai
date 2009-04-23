@@ -216,7 +216,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 	char *cur, *tab, *end;
 	int lines;
 	int x1; /* variable x position */
-	const char *font = MN_GetFontFromNode(node);
+	const char *font = MN_GetFont(node);
 	vec2_t pos;
 	int x, y, width, height;
 
@@ -261,7 +261,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 		break;
 	}
 
-	R_Color(node->color);
+	R_ColorBlend(node->color);
 
 	/*Com_Printf("\n\n\nEXTRADATA(node).textLines: %i \n", EXTRADATA(node).textLines);*/
 	lines = 0;
@@ -295,8 +295,8 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 				y1 += (lines - EXTRADATA(node).textScroll) * node->u.text.lineHeight;
 			/* don't draw images that would be out of visible area */
 			if (y + height > y1 && lines >= EXTRADATA(node).textScroll) {
-				/** @todo (menu) we should scale the height here with font->height, too */
-				image = MN_DrawNormImageByName(x1, y1, 0, 0, 0, 0, 0, 0, node->textalign, token);
+				/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too */
+				image = MN_DrawNormImageByName(x1, y1, 0, 0, 0, 0, 0, 0, node->textalign, node->blend, token);
 				if (image)
 					x1 += image->height;
 			}
@@ -319,9 +319,9 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			/* Highlight line if mousefx is true. */
 			/** @todo what about multiline text that should be highlighted completely? */
 			if (lines == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
-				R_Color(colorSelectedHover);
+				R_ColorBlend(colorSelectedHover);
 			} else {
-				R_Color(colorHover);
+				R_ColorBlend(colorHover);
 			}
 		}
 
@@ -347,7 +347,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 				*tab++ = '\0';
 
 			/*Com_Printf("tab - first part - lines: %i \n", lines);*/
-			MN_DrawString(font, node->textalign, x1, y, x, y, tabwidth - 1, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qfalse, LONGLINES_PRETTYCHOP);
+			R_FontDrawString(font, node->textalign, x1, y, x, y, tabwidth - 1, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qfalse, LONGLINES_PRETTYCHOP);
 			x1 += tabwidth;
 			/* now skip to the first char after the \t */
 			cur = tab;
@@ -361,12 +361,12 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			if (!cur) {
 				lines++;
 			} else {
-				MN_DrawString(font, node->textalign, x1, y, x, y, width, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qtrue, node->longlines);
+				R_FontDrawString(font, node->textalign, x1, y, x, y, width, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qtrue, node->longlines);
 			}
 		}
 
 		if (node->mousefx)
-			R_Color(node->color); /* restore original color */
+			R_ColorBlend(node->color); /* restore original color */
 
 		/* now set cur to the next char after the \n (see above) */
 		cur = end;
@@ -388,7 +388,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 		}
 	}
 
-	R_Color(NULL);
+	R_ColorBlend(NULL);
 	MN_DrawScrollBar(node);
 }
 
@@ -411,7 +411,7 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messa
 	int skip_messages;
 	int screenLines;
 	int addTextLines = 0;			/**< Number of wraped lines after n-lines */
-	const char *font = MN_GetFontFromNode(node);
+	const char *font = MN_GetFont(node);
 	vec2_t pos;
 	int x, y, width, height;
 
@@ -434,10 +434,10 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messa
 
 	screenLines = 0;
 	for (; message; message = message->next) {
-		const int prevScreenLines = screenLines;	/**< Screen lines before MN_DrawString(...) is executed */
+		const int prevScreenLines = screenLines;	/**< Screen lines before R_FontDrawString(...) is executed */
 
 		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
-		MN_DrawString(font, node->textalign, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).rows, 0, &screenLines, qtrue, node->longlines);
+		R_FontDrawString(font, node->textalign, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).rows, 0, &screenLines, qtrue, node->longlines);
 		addTextLines += screenLines - prevScreenLines - 1;
 		if (screenLines > EXTRADATA(node).rows)
 			break;
@@ -498,13 +498,12 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 	MN_TextNodeSelectLine(node, line);
 
 	/** @todo remove %s_click as far as possible */
-	/** @todo execute %s_click only if onClick is not "auto" (onClick with no block) */
+	/** @todo execute %s_click only if onClick i*/
 	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
-	if (Cmd_Exists(cmd)) {
+	if (Cmd_Exists(cmd))
 		Cbuf_AddText(va("%s %i\n", cmd, line));
-	} else if (node->onClick) {
+	else if (node->onClick)
 		MN_ExecuteEventActions(node, node->onClick);
-	}
 }
 
 /**
@@ -520,23 +519,15 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 	if (line < 0 || line >= EXTRADATA(node).textLines)
 		return;
 
+	MN_TextNodeSelectLine(node, line);
+
+	/** @todo remove %s_rclick as far as possible */
+	/** @todo execute %s_rclick only if onClick i*/
 	Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
 	if (Cmd_Exists(cmd))
 		Cbuf_AddText(va("%s %i\n", cmd, line));
-	else if (node->onRightClick) {
-		switch (node->onRightClick->type.op) {
-		case EA_CMD:
-			assert(node->onRightClick->data);
-			MN_TextNodeSelectLine(node, line);
-			Cbuf_AddText(va("%s %i\n", (const char *)node->onRightClick->data, line));
-			break;
-		case EA_CALL:
-			MN_ExecuteEventActions(node, node->onRightClick);
-		default:
-			/* unsupported action type */
-			break;
-		}
-	}
+	else if (node->onRightClick)
+		MN_ExecuteEventActions(node, node->onRightClick);
 }
 
 static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
@@ -564,8 +555,9 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 	/* we don't overwrite node->u.text.lineHeight, because "0" is dynamically replaced by font height on draw function */
 	if (lineheight == 0) {
 		/* the font is used */
-		const char *font = MN_GetFontFromNode(node);
-		lineheight = MN_FontGetHeight(font) / 2;
+		/** @todo clean this up once font_t is known in the client */
+		const char *font = MN_GetFont(node);
+		lineheight = R_FontGetHeight(font) / 2;
 	}
 
 	/* auto compute rows */
