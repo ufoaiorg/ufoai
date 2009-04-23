@@ -270,7 +270,7 @@ void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
  */
 int MN_DrawStringInBox (const menuNode_t *node, int align, int x, int y, int width, int height, const char *text, longlines_t method)
 {
-	const char *font = MN_GetFont(node);
+	const char *font = MN_GetFontFromNode(node);
 	const int horizontalAlign = align % 3; /* left, center, right */
 	const int verticalAlign = align / 3;  /* top, center, bottom */
 

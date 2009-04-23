@@ -1477,7 +1477,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	/* font color on geoscape */
 	R_Color(node->color);
 	/* default font */
-	font = MN_GetFont(node);
+	font = MN_GetFontFromNode(node);
 
 	/* check if at least 1 UFO is visible */
 	for (aircraftIdx = 0; aircraftIdx < ccs.numUFOs; aircraftIdx++) {

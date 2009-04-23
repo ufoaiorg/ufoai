@@ -119,7 +119,7 @@ static void MN_ButtonNodeLoaded (menuNode_t *node)
 {
 	/* auto calc the size if none was given via script files */
 	if (node->size[1] == 0) {
-		const char *font = MN_GetFont(node);
+		const char *font = MN_GetFontFromNode(node);
 		node->size[1] = (MN_FontGetHeight(font) / 2) + (node->padding * 2);
 	}
 #ifdef DEBUG

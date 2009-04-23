@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_StringNodeDraw (menuNode_t *node)
 {
 	vec2_t nodepos;
-	const char *font = MN_GetFont(node);
+	const char *font = MN_GetFontFromNode(node);
 	const char* ref = MN_GetReferenceString(node, node->text);
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	vec_t *color;
@@ -66,7 +66,7 @@ static void MN_StringNodeDrawTooltip (menuNode_t *node, int x, int y)
 	if (node->tooltip) {
 		MN_Tooltip(node, x, y);
 	} else {
-		const char *font = MN_GetFont(node);
+		const char *font = MN_GetFontFromNode(node);
 		const char* text = MN_GetReferenceString(node, node->text);
 		qboolean isTruncated;
 		if (!text)

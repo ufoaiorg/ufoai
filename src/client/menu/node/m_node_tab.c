@@ -68,7 +68,7 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
 	if (x < 0 || y < 0 || x >= node->size[0] || y >= node->size[1])
 		return NULL;
 
-	font = MN_GetFont(node);
+	font = MN_GetFontFromNode(node);
 
 	/* Text box test */
 	for (option = node->u.option.first; option; option = option->next) {
@@ -183,7 +183,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		image = "ui/tab";
 
 	ref = MN_GetReferenceString(node, node->cvar);
-	font = MN_GetFont(node);
+	font = MN_GetFontFromNode(node);
 
 	if (node->state) {
 		overMouseOption = MN_TabNodeTabAtPosition(node, mousePosX, mousePosY);

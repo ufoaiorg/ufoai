@@ -35,7 +35,7 @@ typedef struct menuFont_s {
 } menuFont_t;
 
 /* will return the size and the path for each font */
-const char *MN_GetFont(const struct menuNode_s *const node);
+const char *MN_GetFontFromNode(const struct menuNode_s *const node);
 const menuFont_t *MN_GetFontByID(const char *fontID);
 /* this is the function where all the sdl_ttf fonts are parsed */
 void MN_ParseFont(const char *name, const char **text);

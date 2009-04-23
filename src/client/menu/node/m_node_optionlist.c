@@ -86,7 +86,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 		MN_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
 
 	ref = MN_GetReferenceString(node, node->cvar);
-	font = MN_GetFont(node);
+	font = MN_GetFontFromNode(node);
 	currentY = pos[1] + node->padding;
 
 	/* skip option over current position */

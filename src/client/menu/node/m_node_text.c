@@ -216,7 +216,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 	char *cur, *tab, *end;
 	int lines;
 	int x1; /* variable x position */
-	const char *font = MN_GetFont(node);
+	const char *font = MN_GetFontFromNode(node);
 	vec2_t pos;
 	int x, y, width, height;
 
@@ -411,7 +411,7 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messa
 	int skip_messages;
 	int screenLines;
 	int addTextLines = 0;			/**< Number of wraped lines after n-lines */
-	const char *font = MN_GetFont(node);
+	const char *font = MN_GetFontFromNode(node);
 	vec2_t pos;
 	int x, y, width, height;
 
@@ -573,7 +573,7 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 	/* we don't overwrite node->u.text.lineHeight, because "0" is dynamically replaced by font height on draw function */
 	if (lineheight == 0) {
 		/* the font is used */
-		const char *font = MN_GetFont(node);
+		const char *font = MN_GetFontFromNode(node);
 		lineheight = MN_FontGetHeight(font) / 2;
 	}
 
