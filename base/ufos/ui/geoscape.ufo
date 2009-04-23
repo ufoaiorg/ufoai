@@ -450,6 +450,17 @@ window geoscape
 			pos			"82 324"
 			size		"28 25"
 			texl		"193 38"
+			onMouseEnter {
+				if "*cvar:mn_messagesystem < 2" {
+					*node:root.messagesystem rows 12
+					*node:root.messagesystem height 240
+				}
+			}
+			onMouseLeave {
+				if "*cvar:mn_messagesystem < 2" {
+					cmd "messagesystem_changemode"
+				}
+			}
 			onClick	{
 				cmd "add mn_messagesystem 1;"
 				cmd "mod mn_messagesystem 4;"
