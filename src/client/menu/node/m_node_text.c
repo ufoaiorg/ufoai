@@ -495,24 +495,15 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 	if (line < 0 || line >= EXTRADATA(node).textLines)
 		return;
 
+	MN_TextNodeSelectLine(node, line);
+
+	/** @todo remove %s_click as far as possible */
+	/** @todo execute %s_click only if onClick is not "auto" (onClick with no block) */
 	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
 	if (Cmd_Exists(cmd)) {
-		MN_TextNodeSelectLine(node, line);
 		Cbuf_AddText(va("%s %i\n", cmd, line));
 	} else if (node->onClick) {
-		switch (node->onClick->type.op) {
-		case EA_CMD:
-			assert(node->onClick->data);
-			MN_TextNodeSelectLine(node, line);
-			Cbuf_AddText(va("%s %i\n", (const char *)node->onClick->data, line));
-			break;
-		case EA_CALL:
-			MN_ExecuteEventActions(node, node->onClick);
-			break;
-		default:
-			/* unsupported action type */
-			break;
-		}
+		MN_ExecuteEventActions(node, node->onClick);
 	}
 }
 
