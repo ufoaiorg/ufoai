@@ -421,7 +421,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 	if (popupNum > 1 || popupReload) {
 		/* We have more entries than the "0 TUs" one
 		 * or we want to simply refresh/display the popup content (no matter how many TUs are left). */
-		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot");
+		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot <lineselected>");
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
 		MN_TextNodeSelectLine(popupListNode, selectedEntry);
