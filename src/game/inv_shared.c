@@ -2064,6 +2064,9 @@ const fireDef_t *FIRESH_FiredefForWeapon (const item_t *item)
 	if (weapon->numWeapons > 0)
 		ammo = item->t;
 
+	if (!ammo)
+		return NULL;
+
 	for (i = 0; i < ammo->numWeapons; i++) {
 		if (weapon == ammo->weapons[i])
 			return &ammo->fd[i][0];
