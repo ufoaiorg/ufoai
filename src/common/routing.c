@@ -1106,7 +1106,7 @@ static int RT_TracePassage (routing_t * map, const int actor_size, const int x, 
 	const int top = RT_CEILING(map, actor_size, x, y, z) + z * CELL_HEIGHT;
 	const int belowceil = RT_CEILING(map, actor_size, ax, ay, z) + z * CELL_HEIGHT;
 	const int aboveceil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actor_size, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : belowceil;
-	const int lowceil = min(top, RT_CEILING(map, actor_size, ax, ay, z) == 0 ? aboveceil : belowceil);
+	const int lowceil = min(top, (RT_CEILING(map, actor_size, ax, ay, z) == 0 || belowceil - bottom < PATHFINDING_MIN_OPENING) ? aboveceil : belowceil);
 	int opening_size;
 
 	/*
