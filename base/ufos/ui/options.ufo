@@ -697,6 +697,10 @@ window options
 			size		"430 560"
 			rows		"28"
 			lineheight	"20"
+			onLinesChange {
+				*(abstractscrollbar)options_keys.keyscroll fullsize <lines>
+				*(abstractscrollbar)options_keys.keyscroll current <text_scroll>
+			}
 			onWheel		{
 				*(abstractscrollbar)options_keys.keyscroll current <text_scroll>
 			}
@@ -709,7 +713,7 @@ window options
 			current		0
 			viewsize	28
 			fullsize	50
-			onChange		{ cmd "mn_textscroll options_keys.keylist <lastdiff>;" }
+			onChange	{ cmd "mn_textscroll options_keys.keylist <lastdiff>;" }
 		}
 
 		confunc optionkey_count
