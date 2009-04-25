@@ -73,7 +73,6 @@ typedef struct production_queue_s
 	production_t	items[MAX_PRODUCTIONS];	/**< Actual production items (in order). */
 } production_queue_t;
 
-void PR_InitStartup(void);
 void PR_ProductionRun(void);
 void PR_ProductionInit(void);
 void PR_UpdateProductionCap(struct base_s *base);

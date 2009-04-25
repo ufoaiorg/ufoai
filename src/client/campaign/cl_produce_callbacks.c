@@ -996,10 +996,7 @@ static void PR_ProductionDown_f (void)
 	PR_UpdateProductionList(base);
 }
 
-/**
- * @sa CL_InitAfter
- */
-void PR_Init (void)
+void PR_InitCallbacks (void)
 {
 	prodlist = MN_GetNodeByPath("production.prodlist");
 	node1 = MN_GetNodeByPath("production.prodlist_amount");
@@ -1007,11 +1004,7 @@ void PR_Init (void)
 
 	if (!prodlist || !node1 || !node2)
 		Sys_Error("Could not find the needed menu nodes in production menu\n");
-}
 
-
-void PR_InitCallbacks (void)
-{
 	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
 	Cmd_AddCommand("prod_type", PR_ProductionType_f, NULL);
 	Cmd_AddCommand("prod_scroll", PR_ProductionListScroll_f, "Scrolls the production lists");
@@ -1027,15 +1020,15 @@ void PR_InitCallbacks (void)
 
 void PR_ShutdownCallbacks (void)
 {
-	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
-	Cmd_AddCommand("prod_type", PR_ProductionType_f, NULL);
-	Cmd_AddCommand("prod_scroll", PR_ProductionListScroll_f, "Scrolls the production lists");
-	Cmd_AddCommand("prod_up", PR_ProductionUp_f, "Move production item up in the queue");
-	Cmd_AddCommand("prod_down", PR_ProductionDown_f, "Move production item down in the queue");
-	Cmd_AddCommand("prod_change", PR_ProductionChange_f, "Change production amount");
-	Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, "Increase production amount");
-	Cmd_AddCommand("prod_dec", PR_ProductionDecrease_f, "Decrease production amount");
-	Cmd_AddCommand("prod_stop", PR_ProductionStop_f, "Stop production");
-	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
-	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
+	Cmd_RemoveCommand("prod_init");
+	Cmd_RemoveCommand("prod_type");
+	Cmd_RemoveCommand("prod_scroll");
+	Cmd_RemoveCommand("prod_up");
+	Cmd_RemoveCommand("prod_down");
+	Cmd_RemoveCommand("prod_change");
+	Cmd_RemoveCommand("prod_inc");
+	Cmd_RemoveCommand("prod_dec");
+	Cmd_RemoveCommand("prod_stop");
+	Cmd_RemoveCommand("prodlist_rclick");
+	Cmd_RemoveCommand("prodlist_click");
 }

@@ -1936,6 +1936,7 @@ static void CP_AddCampaignCallbackCommands (void)
 	HOS_InitCallbacks();
 	INS_InitCallbacks();
 	TR_InitCallbacks();
+	PR_InitCallbacks();
 }
 
 static void CP_AddCampaignCommands (void)
@@ -1966,6 +1967,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 	HOS_ShutdownCallbacks();
 	INS_ShutdownCallbacks();
 	TR_ShutdownCallbacks();
+	PR_ShutdownCallbacks();
 }
 
 static void CP_RemoveCampaignCommands (void)
@@ -2280,8 +2282,6 @@ void CP_InitStartup (void)
 	cl_campaignPool = Mem_CreatePool("Client: Local (per game)");
 
 	SAV_Init();
-	/* init some production menu nodes */
-	PR_Init();
 
 	/* commands */
 #ifdef DEBUG
@@ -2298,7 +2298,6 @@ void CP_InitStartup (void)
 	B_InitStartup();
 	INS_InitStartup();
 	RS_InitStartup();
-	PR_InitStartup();
 	E_InitStartup();
 	HOS_InitStartup();
 	AC_InitStartup();

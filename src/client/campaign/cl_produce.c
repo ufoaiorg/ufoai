@@ -524,16 +524,6 @@ qboolean PR_ItemIsProduceable (const objDef_t const *item)
 }
 
 /**
- * @brief This is more or less the initial
- * Bind some of the functions in this file to console-commands that you can call ingame.
- * Called from MN_InitStartup resp. CL_InitLocal
- */
-void PR_InitStartup (void)
-{
-	PR_InitCallbacks();
-}
-
-/**
  * @brief Save callback for savegames in XML Format
  * @sa PR_LoadXML
  * @sa SAV_GameSaveXML

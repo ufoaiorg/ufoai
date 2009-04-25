@@ -26,8 +26,6 @@
 #ifndef CLIENT_CL_PRODUCE_CALLBACKS_H
 #define CLIENT_CL_PRODUCE_CALLBACKS_H
 
-void PR_Init(void); /* Init menu nodes for callbacks */
-
 void PR_InitCallbacks (void);
 void PR_ShutdownCallbacks (void);
 
