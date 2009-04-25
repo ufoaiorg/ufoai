@@ -72,8 +72,7 @@ start_downloads()
 	download http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.24/ atk-dev_1.24.0-1_win32.zip atk-dev.zip
 	download http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.6-1_win32.zip cairo-dev.zip
 
-	# TODO: Link is down
-	download http://www.rioki.org/wp-content/uploads/2008/09/ gtkglextmm-120-win32tar.gz gtkglext-dev.tar.gz
+	download http://mattn.ninex.info/download gtkglext-1.2.tar.bz2 gtkglext-dev.tar.bz2
 }
 
 extract_codeblocks()
@@ -157,7 +156,7 @@ extract_gtk()
 	${UNZIP} -o ${DOWNLOAD_DIR}/pango-dev.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/atk-dev.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/cairo-dev.zip -d ${MINGW_DIR}
-	${TAR} -xzf ${DOWNLOAD_DIR}/gtkglext-dev.tar.gz -C ${MINGW_DIR}
+	${TAR} -xjf ${DOWNLOAD_DIR}/gtkglext-dev.tar.gz -C ${MINGW_DIR}
 
 	for i in $(echo "glib-2.0 gail-1.0 gtk-2.0 pango-1.0 atk-1.0 cairo gtkglext-1.0 gtkglextmm-1.2"); do
 		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include
