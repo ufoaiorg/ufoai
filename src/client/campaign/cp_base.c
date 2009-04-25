@@ -936,19 +936,6 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *templa
 }
 
 /**
- * @brief Build starting building in the first base, and hire employees (calls B_AddBuildingToBasePos).
- * @param[in,out] base The base to put the new building into
- * @param[in] template The building template to create a new building with
- * @param[in] hire Hire employees for the building we create from the template
- * @sa B_AddBuildingToBasePos
- * @sa B_SetUpFirstBase
- */
-static inline void B_AddBuildingToBase (base_t *base, const building_t const *template, qboolean hire)
-{
-	B_AddBuildingToBasePos(base, template, hire, template->pos);
-}
-
-/**
  * @brief Prepares initial equipment for first base at the beginning of the campaign.
  * @param[in] base Pointer to first base.
  * @param[in] campaign The current running campaign
