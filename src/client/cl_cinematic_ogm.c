@@ -21,15 +21,17 @@
 #include "cl_cinematic_ogm.h"
 #include "renderer/r_draw.h"
 
-#if defined(USE_CODEC_VORBIS) && (defined(USE_CIN_XVID) || defined(USE_CIN_THEORA))
+#include "../../config.h"
+
+#if defined(HAVE_VORBIS_CODEC_H) && (defined(HAVE_XVID_H) || defined(HAVE_THEORA_THEORA_H))
 
 #include <ogg/ogg.h>
 #include <vorbis/codec.h>
 
-#ifdef USE_CIN_XVID
+#ifdef HAVE_XVID_H
 #include <xvid.h>
 #endif
-#ifdef USE_CIN_THEORA
+#ifdef HAVE_THEORA_THEORA_H
 #include <theora/theora.h>
 #endif
 
@@ -53,12 +55,12 @@ typedef struct
 	/** @todo atm there isn't really a check for this (all "video" streams are handled
 	 * as xvid, because xvid support more than one "subtype") */
 	qboolean videoStreamIsXvid;
-#ifdef USE_CIN_XVID
+#ifdef HAVE_XVID_H
 	xvid_dec_stats_t xvidDecodeStats;
 	void *xvidDecodeHandle;
 #endif
 	qboolean videoStreamIsTheora;
-#ifdef USE_CIN_THEORA
+#ifdef HAVE_THEORA_THEORA_H
 	theora_info th_info;
 	theora_comment th_comment;
 	theora_state th_state;
@@ -79,7 +81,7 @@ static ogmCinematic_t ogmCin;
 
 static int CIN_THEORA_NextNeededFrame(void);
 
-#ifdef USE_CIN_XVID
+#ifdef HAVE_XVID_H
 
 #define OGM_CINEMATIC_BPP 4
 
@@ -287,7 +289,7 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
  * @return 1 -> loaded a new Frame (ogmCin.outputBuffer points to the actual frame), 0 -> no new Frame
  * <0 -> error
  */
-#ifdef USE_CIN_XVID
+#ifdef HAVE_XVID_H
 static int CIN_XVID_LoadVideoFrame (void)
 {
 	int r = 0;
@@ -337,7 +339,7 @@ static int CIN_XVID_LoadVideoFrame (void)
 }
 #endif
 
-#ifdef USE_CIN_THEORA
+#ifdef HAVE_THEORA_THEORA_H
 /**
  * @brief how many >> are needed to make y == x (shifting y >> i)
  * @return -1 -> no match, >=0 -> number of shifts
@@ -464,11 +466,11 @@ static int CIN_THEORA_LoadVideoFrame (void)
  */
 static int CIN_OGM_LoadVideoFrame (void)
 {
-#ifdef USE_CIN_XVID
+#ifdef HAVE_XVID_H
 	if (ogmCin.videoStreamIsXvid)
 		return CIN_XVID_LoadVideoFrame();
 #endif
-#ifdef USE_CIN_THEORA
+#ifdef HAVE_THEORA_THEORA_H
 	if (ogmCin.videoStreamIsTheora)
 		return CIN_THEORA_LoadVideoFrame();
 #endif
@@ -610,7 +612,7 @@ int CIN_OGM_PlayCinematic (const char* filename)
 					ogg_stream_pagein(&ogmCin.os_audio, &og);
 				}
 			}
-#ifdef USE_CIN_THEORA
+#ifdef HAVE_THEORA_THEORA_H
 			if (strstr((char*) (og.body + 1), "theora")) {
 				if (ogmCin.os_video.serialno) {
 					Com_Printf("more than one video stream, in ogm-file(%s) ... we will stay at the first one\n",
@@ -622,7 +624,7 @@ int CIN_OGM_PlayCinematic (const char* filename)
 				}
 			}
 #endif
-#ifdef USE_CIN_XVID
+#ifdef HAVE_XVID_H
 			if (strstr((char*) (og.body + 1), "video")) { /** @todo better way to find video stream */
 				if (ogmCin.os_video.serialno) {
 					Com_Printf("more than one video stream, in ogm-file(%s) ... we will stay at the first one\n",
@@ -697,7 +699,7 @@ int CIN_OGM_PlayCinematic (const char* filename)
 
 	vorbis_synthesis_init(&ogmCin.vd, &ogmCin.vi);
 
-#ifdef USE_CIN_XVID
+#ifdef HAVE_XVID_H
 	status = CIN_XVID_Init();
 	if (status) {
 		Com_Printf("[Xvid]Decore INIT problem, return value %d(ogm-file: %s)\n", status, filename);
@@ -705,7 +707,7 @@ int CIN_OGM_PlayCinematic (const char* filename)
 	}
 #endif
 
-#ifdef USE_CIN_THEORA
+#ifdef HAVE_THEORA_THEORA_H
 	if (ogmCin.videoStreamIsTheora) {
 		theora_info_init(&ogmCin.th_info);
 		theora_comment_init(&ogmCin.th_comment);
@@ -796,14 +798,14 @@ qboolean CIN_OGM_RunCinematic (void)
 
 void CIN_OGM_StopCinematic (void)
 {
-#ifdef USE_CIN_XVID
+#ifdef HAVE_XVID_H
 	int status;
 
 	status = CIN_XVID_Shutdown();
 	if (status)
 		Com_Printf("[Xvid]Decore RELEASE problem, return value %d\n", status);
 #endif
-#ifdef USE_CIN_THEORA
+#ifdef HAVE_THEORA_THEORA_H
 	theora_clear(&ogmCin.th_state);
 	theora_comment_clear(&ogmCin.th_comment);
 	theora_info_clear(&ogmCin.th_info);
