@@ -104,7 +104,7 @@ void CIN_PlayCinematic (const char *fileName)
 	else if (FS_CheckFile(va("%s.ogm", name)) >= 0)
 		CIN_OGM_PlayCinematic(va("%s.ogm", name));
 	else
-		Com_Printf("Could not find cinematic 'videos/%s'\n", name);
+		Com_Printf("Could not find cinematic '%s'\n", name);
 }
 
 /**

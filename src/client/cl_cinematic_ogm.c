@@ -391,13 +391,12 @@ static void CIN_THEORA_FrameYUVtoRGB24 (const unsigned char* y, const unsigned c
 			const long YY = (long) (ogmCin_yuvTable.yy[(y[(i >> yWShift) + (j >> yHShift) * y_stride])]);
 			const int uvI = (i >> uvWShift) + (j >> uvHShift) * uv_stride;
 
-			byte r = CIN_THEORA_ClampByte((YY + ogmCin_yuvTable.vr[v[uvI]]) >> 6);
-			byte g = CIN_THEORA_ClampByte((YY + ogmCin_yuvTable.ug[u[uvI]] + ogmCin_yuvTable.vg[v[uvI]]) >> 6);
-			byte b = CIN_THEORA_ClampByte((YY + ogmCin_yuvTable.ub[u[uvI]]) >> 6);
+			const byte r = CIN_THEORA_ClampByte((YY + ogmCin_yuvTable.vr[v[uvI]]) >> 6);
+			const byte g = CIN_THEORA_ClampByte((YY + ogmCin_yuvTable.ug[u[uvI]] + ogmCin_yuvTable.vg[v[uvI]]) >> 6);
+			const byte b = CIN_THEORA_ClampByte((YY + ogmCin_yuvTable.ub[u[uvI]]) >> 6);
 
-			uint32_t rgb24 = LittleLong(r | (g << 8) | (b << 16) | (255 << 24));
-			*output = rgb24;
-			++output;
+			const uint32_t rgb24 = LittleLong(r | (g << 8) | (b << 16) | (255 << 24));
+			*output++ = rgb24;
 		}
 	}
 }

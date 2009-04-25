@@ -38,7 +38,7 @@ static void MN_CinematicNodeDraw (menuNode_t *node)
 	if (node->cvar) {
 		assert(cls.playingCinematic != CIN_STATUS_FULLSCREEN);
 		if (cls.playingCinematic == CIN_STATUS_NONE)
-			CIN_PlayCinematic(node->cvar);
+			CIN_PlayCinematic(va("videos/%s", (const char *)node->cvar));
 		if (cls.playingCinematic) {
 			/* only set replay to true if video was found and is running */
 			CIN_SetParameters(pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
@@ -48,7 +48,7 @@ static void MN_CinematicNodeDraw (menuNode_t *node)
 }
 
 static const value_t properties[] = {
-	{"roq", V_CVAR_OR_STRING, offsetof(menuNode_t, cvar), 0},
+	{"video", V_CVAR_OR_STRING, offsetof(menuNode_t, cvar), 0},
 	{NULL, V_NULL, 0, 0}
 };
 
