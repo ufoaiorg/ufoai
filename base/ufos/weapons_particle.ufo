@@ -3,76 +3,76 @@
 // =======================
 item pbeampistol
 {
-	name		"_Particle Beam Pistol"
-	model		weapons/pbeampistol/pbeampistol
-	weapon		true
-	type		pistol
+	name			"_Particle Beam Pistol"
+	model			weapons/pbeampistol/pbeampistol
+	weapon			true
+	type			pistol
 	animationindex	2
 	holdtwohanded	false
 	firetwohanded	false
-	shape		"0 0 2 2"
-	center		"1.2 0 1.5"
-	scale		1.18
-	ammo		16
-	reload		14
-	price		38000
-	size		20
+	shape			"0 0 2 2"
+	center			"1.2 0 1.5"
+	scale			1.18
+	ammo			16
+	reload			14
+	price			38000
+	size			20
 	is_secondary	true
 }
 
 item pbeampistol_ammo
 {
-	name		"_Pistol Particle Accelerator"
-	model		weapons/pbeampistol/pbeampistol_clip
-	type		ammo
+	name			"_Pistol Particle Accelerator"
+	model			weapons/pbeampistol/pbeampistol_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		0.97
-	price		2500
-	size		3
+	shape			"0 0 1 1"
+	center			"0 0 0"
+	scale			0.97
+	price			2500
+	size			3
 	is_secondary	true
-	dmgtype particlebeam
+	dmgtype			particlebeam
 
 	weapon_mod pbeampistol
 	{
 		firedef
 		{
-			name	"_Snap Shot"
-			skill	close
-			projtl	pbeamBeam
-			impact	pbeamImpact
-			hitbody	pbeamImpact
-			firesnd	weapons/pbeampistol
-			speed	0
-			spread	"1 1"
-			crouch	0.9
-			range	30
-			shots	1
-			ammo	1
-			time	7
-			damage	"60 10"
-			dmgweight particlebeam_light
+			name		"_Snap Shot"
+			skill		close
+			projtl		pbeamBeam
+			impact		pbeamImpact
+			hitbody		pbeamImpact
+			firesnd		weapons/pbeampistol
+			speed		0
+			spread		"1 1"
+			crouch		0.9
+			range		30
+			shots		1
+			ammo		1
+			time		7
+			damage		"60 10"
+			dmgweight	particlebeam_light
 			reaction	true
 		}
 		firedef
 		{
-			name	"_Burst"
-			skill	close
-			projtl	pbeamMiniBeam
-			impact	pbeamImpact
-			hitbody	pbeamImpact
-			firesnd	weapons/pbeampistol
-			speed	0
-			spread	"1.8 1.8"
-			crouch	0.9
-			range	30
-			shots	3
-			ammo	3
-			delaybetweenshots		5
-			time	11
-			damage	"60 10"
-			dmgweight particlebeam_light
+			name				"_Burst"
+			skill				close
+			projtl				pbeamMiniBeam
+			impact				pbeamImpact
+			hitbody				pbeamImpact
+			firesnd				weapons/pbeampistol
+			speed				0
+			spread				"1.8 1.8"
+			crouch				0.9
+			range				30
+			shots				3
+			ammo				3
+			delaybetweenshots	5
+			time				11
+			damage				"60 10"
+			dmgweight			particlebeam_light
 		}
 	}
 }
@@ -282,6 +282,3 @@ item pbeamcannon_ammo
 		}
 	}
 }
-
-
-
