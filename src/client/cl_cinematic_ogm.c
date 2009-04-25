@@ -36,7 +36,7 @@
 #include "client.h"
 #include "cl_sound.h"
 
-#define OGG_BUFFER_SIZE	8 * 1024
+#define OGG_BUFFER_SIZE	(8 * 1024)
 
 typedef struct
 {
@@ -832,6 +832,7 @@ void CIN_OGM_Init (void)
 #else
 int CIN_OGM_PlayCinematic (const char* filename)
 {
+	Com_Printf("No ogm support compiled into the binary\n");
 	return 1;
 }
 
