@@ -56,7 +56,7 @@ window basedefence
 		lineheight	"22"
 		rows		"27"
 		mousefx		true
-		onClick
+		onClick		{ cmd "basedef_slot_list_click <lineselected>" }
 	}
 
 	pic basedef_selected_slot
@@ -151,7 +151,7 @@ window basedefence
 		lineheight	"20"
 		rows		"11"
 		mousefx		true
-		onClick
+		onClick		{ cmd "basedef_list_click <lineselected>" }
 	}
 
 	// ==================

@@ -251,7 +251,7 @@ window employees
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		mousefx		true
-		onClick
+		onClick			{ cmd "employee_list_click <lineselected>" }
 		onWheelUp		{ cmd "mn_textscroll employee_list -1; employee_scroll;" }
 		onWheelDown		{ cmd "mn_textscroll employee_list 1; employee_scroll;" }
 		onLinesChange	{

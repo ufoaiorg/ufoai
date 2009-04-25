@@ -215,7 +215,7 @@ window uforecovery
 			rows		"8"
 			scrollbar	true
 			mousefx		true
-			onClick
+			onClick		{ cmd "cp_uforecovery_baselist_click <lineselected>" }
 		}
 
 		string selected_base_str
@@ -300,7 +300,7 @@ window uforecovery
 			color		"0.60 0.60 0.60 1"
 			selectcolor	"1 1 1 1"
 			rows		"8"		// max. nations
-			onClick
+			onClick		{ cmd "cp_uforecovery_nationlist_click <lineselected>" }
 			mousefx true
 		}
 

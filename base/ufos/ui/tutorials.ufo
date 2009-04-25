@@ -41,7 +41,7 @@ window tutorials
 		rows	"14"
 		mousefx true
 		scrollbar true
-		onClick	{ }
+		onClick	{ cmd "tutoriallist_click <lineselected>" }
 	}
 	func init
 	{

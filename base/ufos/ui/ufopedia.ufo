@@ -164,7 +164,7 @@ window ufopedia
 		rows		"12"
 		mousefx		true
 		scrollbar	true
-		onClick
+		onClick		{ cmd "techtree_click <lineselected>" }
 	}
 
 	string title

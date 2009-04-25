@@ -129,7 +129,7 @@ window market
 		size		"265 550"
 		mousefx		true
 		longlines	prettychop
-		onClick
+		onClick		{ cmd "market_click <lineselected>" }
 		onWheel		{ cmd "market_scroll;" }
 	}
 

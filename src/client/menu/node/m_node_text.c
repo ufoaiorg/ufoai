@@ -482,10 +482,7 @@ static void MN_TextNodeDraw (menuNode_t *node)
 
 /**
  * @brief Calls the script command for a text node that is clickable
- * @note The node must have the click parameter in it's menu definition or there
- * must be a console command that has the same name as the node has + _click
- * attached.
- * @sa MN_TextRightClick
+ * @sa MN_TextNodeRightClick
  */
 static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 {
@@ -498,18 +495,11 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 
 	if (node->onClick)
 		MN_ExecuteEventActions(node, node->onClick);
-	else {
-		/** @todo remove %s_click as far as possible */
-		char cmd[MAX_VAR];
-		Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
-		if (Cmd_Exists(cmd))
-			Cbuf_AddText(va("%s %i\n", cmd, line));
-	}
 }
 
 /**
  * @brief Calls the script command for a text node that is clickable via right mouse button
- * @sa MN_TextClick
+ * @sa MN_TextNodeClick
  */
 static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 {

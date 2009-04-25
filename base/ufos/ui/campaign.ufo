@@ -87,7 +87,7 @@ window campaigns
 		mousefx	true
 		lineheight	"20"
 		textid		TEXT_CAMPAIGN_LIST
-		onClick	{ }
+		onClick	{ cmd "campaignlist_click <lineselected>" }
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
 		rows	"6"

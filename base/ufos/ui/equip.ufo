@@ -149,7 +149,7 @@ window aircraft_equip extends iaircraft
 		rows		"7"
 		textid		TEXT_LIST
 		mousefx		true
-		onClick
+		onClick		{ cmd "airequip_list_click <lineselected>" }
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 	}

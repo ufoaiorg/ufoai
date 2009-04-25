@@ -151,7 +151,7 @@ window transfer
 		lineheight	"25"
 		longlines	prettychop
 		rows		"9"
-		onClick
+		onClick		{ cmd "trans_cargolist_click <lineselected>" }
 		onWheel		{
 			*(abstractscrollbar)trans_cargolist_scroll current <text_scroll>
 		}
@@ -236,7 +236,7 @@ window transfer
 		longlines	prettychop
 		lineheight	"25"
 		rows		"22"
-		onClick
+		onClick		{ cmd "trans_list_click <lineselected>" }
 		onWheel		{
 			*(abstractscrollbar)trans_list_scroll current <text_scroll>
 		}

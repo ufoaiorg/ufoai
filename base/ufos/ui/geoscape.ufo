@@ -941,8 +941,8 @@ window popup_transferbaselist
 		tabwidth	100
 		rows		7
 		mousefx		true
-		onClick
-		onRClick		{ cmd "mn_pop; aircraft_return;" }
+		onClick		{ cmd "trans_baselist_click <lineselected>" }
+		onRClick	{ cmd "mn_pop; aircraft_return;" }
 	}
 
 	button bt_cancel
@@ -1754,8 +1754,7 @@ window popup_intercept
 			onWheel {
 				*(abstractscrollbar)sam.bases_scroll current <text_scroll>
 			}
-			onClick
-			onRClick
+			onClick	{ cmd "bases_click <lineselected>" }
 		}
 
 		vscrollbar bases_scroll {
@@ -1914,7 +1913,7 @@ window popup_multi_selection
 		tabwidth	150
 		rows		5
 		mousefx		true
-		onClick		{ cmd "multi_select;" }
+		onClick		{ cmd "multi_select_click <lineselected>" }
 	}
 
 	button bt_cancel
@@ -1970,7 +1969,7 @@ window popup_aircraft
 		tabwidth	150
 		rows		5
 		mousefx		true
-		onClick
+		onClick		{ cmd "popup_aircraft_action_click <lineselected>" }
 	}
 
 	button bt_cancel
@@ -2121,6 +2120,7 @@ window messageoptions
 		size		"440 300"
 		mousefx		true
 		longlines	prettychop
+		onClick		{ cmd "messagetypes_click <lineselected>" }
 		onWheel		{
 			*(abstractscrollbar)messagetypes_scroll current <text_scroll>
 			cmd "msgoptions_scroll;"

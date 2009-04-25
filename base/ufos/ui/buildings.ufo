@@ -91,7 +91,7 @@ window buildings
 		mousefx		true
 		textid		TEXT_BUILDINGS
 		rows		"20"
-		onClick
+		onClick		{ cmd "buildings_click <lineselected>" }
 	}
 
 	confunc mn_buildings_reset

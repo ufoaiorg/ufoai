@@ -522,7 +522,6 @@ window mailclient
 		texh		"852 56"
 	}
 
-	// @sa mailclient_click
 	text mailclient
 	{
 		textid		TEXT_UFOPEDIA_MAIL
@@ -533,8 +532,7 @@ window mailclient
 		lineheight	38
 		tabwidth	700
 		mousefx		true
-		onClick
-		onRClick
+		onClick		{ cmd "mailclient_click <lineselected>" }
 		onWheel		{
 			*(abstractscrollbar)mailclient_scroll current <text_scroll>
 			cmd "ufopedia_scrollmail;"

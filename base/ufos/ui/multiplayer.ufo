@@ -325,7 +325,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			bgcolor		"0.3 0.3 0.3 0.4"
 			rows		"22"
 			textid		TEXT_LIST
-			onClick		{ }
+			onClick		{ cmd "servers_click <lineselected>" }
 			onRClick	{ cmd "pingservers;" }
 			onWheel {
 				*(abstractscrollbar)content.servers_scroll current <text_scroll>

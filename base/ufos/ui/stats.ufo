@@ -146,7 +146,7 @@ window stats
 		tabwidth	360
 		rows		10
 		mousefx		true
-		onClick
+		onClick		{ cmd "nation_stats_click <lineselected>" }
 	}
 
 	string campaign_string
