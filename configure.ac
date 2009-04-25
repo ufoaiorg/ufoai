@@ -466,6 +466,49 @@ then
 	#AC_CHECK_LIB(intl, gettext, [], AC_MSG_ERROR([You must have libintl!!!]))
 
 	#---------------------------------------------------------------------------------------------
+	# Check OGG
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([ogg/ogg.h])
+	if test "$ac_cv_header_ogg_ogg_h" = "no"
+	then
+		AC_MSG_ERROR([You must have the OGG development headers])
+	fi
+	LIBS=
+	AC_CHECK_LIB(ogg, ogg_sync_init, LIBS="-logg", AC_MSG_ERROR([You must have libogg!!!]))
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+
+	#---------------------------------------------------------------------------------------------
+	# Check XVID
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([xvid.h])
+	if test "$ac_cv_header_xvid_h" = "no"
+	then
+		AC_MSG_WARN([Could not find the Xvid development headers])
+	else
+		LIBS=
+		AC_CHECK_LIB(xvidcore, xvid_decore, LIBS="-lxvidcore", AC_MSG_ERROR([You must have libxvidcore!!!]))
+		CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	fi
+
+	#---------------------------------------------------------------------------------------------
+	# Check XVID
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([theora/theora.h])
+	if test "$ac_cv_header_theora_theora_h" = "no"
+	then
+		if test "$ac_cv_header_xvid_h" = "no"
+		then
+			AC_MSG_ERROR([Could not find the Theora development headers nor the Xvid developement headers])
+		else
+			AC_MSG_WARN([Could not find the Theora development headers])
+		fi
+	else
+		LIBS=
+		AC_CHECK_LIB(theora, theora_decode_packetin, LIBS="-ltheora", AC_MSG_ERROR([You must have libtheora!!!]))
+		CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	fi
+
+	#---------------------------------------------------------------------------------------------
 	# Check SDL
 	#---------------------------------------------------------------------------------------------
 	sdl_config=$with_sdl_config
