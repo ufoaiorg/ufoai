@@ -21,8 +21,6 @@
 #include "cl_cinematic_ogm.h"
 #include "renderer/r_draw.h"
 
-#include "../../config.h"
-
 #if defined(HAVE_VORBIS_CODEC_H) && (defined(HAVE_XVID_H) || defined(HAVE_THEORA_THEORA_H))
 
 #include <ogg/ogg.h>
@@ -240,7 +238,6 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 {
 	qboolean anyDataTransfered = qtrue;
 	float **pcm;
-	float *right, *left;
 	int samples;
 	int i;
 	ogg_packet op;
@@ -257,12 +254,13 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 		if ((samples = vorbis_synthesis_pcmout(&ogmCin.vd, &pcm)) > 0) {
 			/* vorbis -> raw */
 			short *ptr = (short*) rawBuffer;
-			int samplesNeeded = (SIZEOF_RAWBUFF) / (2 * 2 ); /* (width * channel) */
+			int samplesNeeded = (SIZEOF_RAWBUFF) / (2 * 2); /* (width * channel) */
+			const float *left = pcm[0];
+			const float *right = (ogmCin.vi.channels > 1) ? pcm[1] : pcm[0];
+
 			if (samples < samplesNeeded)
 				samplesNeeded = samples;
 
-			left = pcm[0];
-			right = (ogmCin.vi.channels > 1) ? pcm[1] : pcm[0];
 			for (i = 0; i < samplesNeeded; ++i, ptr += 2) {
 				ptr[0] = (left[i] >= -1.0f && left[i] <= 1.0f) ? left[i] * 32767.f : 32767 * ((left[i] > 0.0f) - (left[i] < 0.0f));
 				ptr[1] = (right[i] >= -1.0f && right[i] <= 1.0f) ? right[i] * 32767.f : 32767 * ((right[i] > 0.0f) - (right[i] < 0.0f));
@@ -272,7 +270,8 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 				/* tell libvorbis how many samples we actually consumed */
 				vorbis_synthesis_read(&ogmCin.vd, i);
 
-				S_PlaySoundFromMem((const short*)rawBuffer, SIZEOF_RAWBUFF, ogmCin.vi.rate, 2, -1);
+				if (!cin.noSound)
+					S_PlaySoundFromMem((const short*)rawBuffer, i * sizeof(short), ogmCin.vi.rate, 2, -1);
 
 				anyDataTransfered = qtrue;
 			}
