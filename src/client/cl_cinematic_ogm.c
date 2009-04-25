@@ -557,18 +557,6 @@ typedef struct
 	} sh;
 } stream_header_t;
 
-static qboolean isPowerOf2 (int x)
-{
-	int bitsSet = 0;
-	int i;
-
-	for (i = 0; i < sizeof(int) * 8; ++i)
-		if (x & (1 << i))
-			++bitsSet;
-
-	return (bitsSet <= 1);
-}
-
 /**
  * @return 0 -> no problem
  * @todo vorbis/theora-header & init in sub-functions
@@ -634,13 +622,15 @@ int CIN_OGM_PlayCinematic (const char* filename)
 
 					sh = (stream_header_t*) (og.body + 1);
 					/** @todo one solution for checking xvid and theora */
-					if (!isPowerOf2(sh->sh.stream_header_video.width)) {
-						Com_Printf("VideoWidth of the ogm-file isn't a power of 2 value (%s)\n", filename);
+					if (!Q_IsPowerOfTwo(sh->sh.stream_header_video.width)) {
+						Com_Printf("VideoWidth of the ogm-file isn't a power of 2 value (%s): %i\n",
+								filename, sh->sh.stream_header_video.width);
 
 						return -5;
 					}
-					if (!isPowerOf2(sh->sh.stream_header_video.height)) {
-						Com_Printf("VideoHeight of the ogm-file isn't a power of 2 value (%s)\n", filename);
+					if (!Q_IsPowerOfTwo(sh->sh.stream_header_video.height)) {
+						Com_Printf("VideoHeight of the ogm-file isn't a power of 2 value (%s): %i\n",
+								filename, sh->sh.stream_header_video.height);
 
 						return -6;
 					}
@@ -736,13 +726,15 @@ int CIN_OGM_PlayCinematic (const char* filename)
 		}
 
 		theora_decode_init(&ogmCin.th_state, &ogmCin.th_info);
-		if (!isPowerOf2(ogmCin.th_info.width)) {
-			Com_Printf("VideoWidth of the ogm-file isn't a power of 2 value (%s)\n", filename);
+		if (!Q_IsPowerOfTwo(ogmCin.th_info.width)) {
+			Com_Printf("VideoWidth of the ogm-file isn't a power of 2 value (%s): %i\n",
+					filename, ogmCin.th_info.width);
 
 			return -5;
 		}
-		if (!isPowerOf2(ogmCin.th_info.height)) {
-			Com_Printf("VideoHeight of the ogm-file isn't a power of 2 value (%s)\n", filename);
+		if (!Q_IsPowerOfTwo(ogmCin.th_info.height)) {
+			Com_Printf("VideoHeight of the ogm-file isn't a power of 2 value (%s): %i\n",
+					filename, ogmCin.th_info.height);
 
 			return -6;
 		}
