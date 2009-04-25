@@ -90,9 +90,9 @@ static yuvTable_t ogmCin_yuvTable;
 
 static int CIN_THEORA_NextNeededFrame(void);
 
-#ifdef HAVE_XVID_H
-
 #define OGM_CINEMATIC_BPP 4
+
+#ifdef HAVE_XVID_H
 
 static int CIN_XVID_Init (void)
 {
