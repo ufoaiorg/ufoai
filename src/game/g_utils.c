@@ -282,9 +282,8 @@ void G_GenerateEntList (const char *entList[MAX_EDICTS])
 
 	/* generate entity list */
 	for (i = 0, ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
-		if (ent->inuse && ent->model)
-			if (ent->solid == SOLID_TRIGGER || (*ent->model == '*' && ent->solid == SOLID_BSP))
-				entList[i++] = ent->model;
+		if (ent->inuse && ent->model && *ent->model == '*' && ent->solid == SOLID_BSP)
+			entList[i++] = ent->model;
 	entList[i] = NULL;
 }
 
