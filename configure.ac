@@ -478,6 +478,18 @@ then
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 	#---------------------------------------------------------------------------------------------
+	# Check Vorbis
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([vorbis/codec.h])
+	if test "$ac_cv_header_vorbis_codec_h" = "no"
+	then
+		AC_MSG_ERROR([You must have the Vorbis development headers])
+	fi
+	LIBS=
+	AC_CHECK_LIB(vorbis, vorbis_synthesis_init, LIBS="-lvorbis", AC_MSG_ERROR([You must have libvorbis!!!]))
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+
+	#---------------------------------------------------------------------------------------------
 	# Check XVID
 	#---------------------------------------------------------------------------------------------
 	AC_CHECK_HEADERS([xvid.h])
@@ -491,7 +503,25 @@ then
 	fi
 
 	#---------------------------------------------------------------------------------------------
-	# Check XVID
+	# Check Theora
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([theora/theora.h])
+	if test "$ac_cv_header_theora_theora_h" = "no"
+	then
+		if test "$ac_cv_header_xvid_h" = "no"
+		then
+			AC_MSG_ERROR([Could not find the Theora development headers nor the Xvid developement headers])
+		else
+			AC_MSG_WARN([Could not find the Theora development headers])
+		fi
+	else
+		LIBS=
+		AC_CHECK_LIB(theora, theora_decode_packetin, LIBS="-ltheora", AC_MSG_ERROR([You must have libtheora!!!]))
+		CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	fi
+
+	#---------------------------------------------------------------------------------------------
+	# Check Vorbis
 	#---------------------------------------------------------------------------------------------
 	AC_CHECK_HEADERS([theora/theora.h])
 	if test "$ac_cv_header_theora_theora_h" = "no"

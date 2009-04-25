@@ -102,6 +102,9 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
+/* Define to 1 if you have the <vorbis/codec.h> header file. */
+#undef HAVE_VORBIS_CODEC_H
+
 /* Define to 1 if you have the <winsock2.h> header file. */
 #undef HAVE_WINSOCK2_H
 
