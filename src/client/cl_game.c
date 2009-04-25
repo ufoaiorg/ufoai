@@ -100,7 +100,7 @@ void GAME_SetMode (int gametype)
 			list->shutdown();
 
 			/* option menu are the same everywhere when shutting down a game type */
-			MN_InitStack(NULL, "main", qfalse, qfalse);
+			MN_InitStack("main", "", qtrue, qtrue);
 		}
 		list++;
 	}
