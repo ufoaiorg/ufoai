@@ -25,6 +25,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifndef CLIENT_CL_CINEMATIC_H
 
+typedef struct {
+	char			name[MAX_QPATH];	/**< virtuell filesystem path with file suffix */
+
+	qboolean		replay;	/**< autmatically replay in endless loop */
+	qboolean		inMenu;	/**< is this cinematic shown in a menu node? */
+	int				x, y, w, h; /**< for drawing in the menu maybe */
+
+	qboolean		noSound;	/**< no sound while playing the cinematic */
+} cinematic_t;
+
+extern cinematic_t cin;
+
 void CIN_StopCinematic(void);
 void CIN_PlayCinematic(const char *name);
 void CIN_Shutdown(void);
@@ -37,8 +49,7 @@ typedef enum {
 	CIN_STATUS_FULLSCREEN,	/**< fullscreen cinematic */
 
 	/* don't stop running sounds for these - but the above */
-	CIN_STATUS_MENU,		/**< cinematic inside a menu node */
-	CIN_STATUS_SURFACE		/**< cinematic on a map surface */
+	CIN_STATUS_MENU		/**< cinematic inside a menu node */
 } cinStatus_t;
 
 #endif /* CLIENT_CL_CINEMATIC_H */
