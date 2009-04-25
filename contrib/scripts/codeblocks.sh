@@ -46,7 +46,7 @@ start_downloads()
 	download http://downloads.sourceforge.net/gnuwin32/ tiff-3.8.2-1-lib.zip libtiff.zip
 	download http://downloads.sourceforge.net/gnuwin32/ gettext-0.14.4-bin.zip gettext.zip
 	download http://downloads.sourceforge.net/gnuwin32/ libxml2-2.4.12-1-lib.zip libxml2.zip
-
+	
 	download http://curl.de-mirror.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
 
 	download http://www.libsdl.org/release/ SDL-devel-${SDL_VERSION}-mingw32.tar.gz sdl.tar.gz
@@ -54,6 +54,11 @@ start_downloads()
 	download http://www.libsdl.org/projects/SDL_mixer/release/ SDL_mixer-devel-${SDL_MIXER_VERSION}-VC8.zip sdl_mixer.zip
 	download http://www.libsdl.org/projects/SDL_image/release/ SDL_image-devel-${SDL_IMAGE_VERSION}-VC8.zip sdl_image.zip
 
+	download http://oss.netfarm.it/mplayer/pkgs/ libvorbis-mingw32-1.2.0-gcc42.tar.bz2 libvorbis.tar.bz2
+	download http://oss.netfarm.it/mplayer/pkgs/ libtheora-mingw32-svn-r15330-gcc42.tar.bz2 libtheora.tar.bz2
+	download http://oss.netfarm.it/mplayer/pkgs/ xvidcore-mingw32-1.1.3-gcc42.tar.bz2 xvidcore.tar.bz2
+	download http://oss.netfarm.it/mplayer/pkgs/ libogg-mingw32-1.1.3-gcc42.tar.bz2 libogg.tar.bz2
+	
 #	download http://downloads.xiph.org/releases/ogg/ libogg-1.1.3.tar.gz libogg.tar.gz
 #	download http://downloads.xiph.org/releases/ogg/ libvorbis-1.2.0.tar.gz libvorbis.tar.gz
 
@@ -67,6 +72,7 @@ start_downloads()
 	download http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.24/ atk-dev_1.24.0-1_win32.zip atk-dev.zip
 	download http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.6-1_win32.zip cairo-dev.zip
 
+	# TODO: Link is down
 	download http://www.rioki.org/wp-content/uploads/2008/09/ gtkglextmm-120-win32tar.gz gtkglext-dev.tar.gz
 }
 
@@ -161,6 +167,14 @@ extract_gtk()
 	done
 }
 
+extract_ogg()
+{
+	${TAR} -xjf ${DOWNLOAD_DIR}/libogg.tar.bz2 -C ${MINGW_DIR}
+	${TAR} -xjf ${DOWNLOAD_DIR}/xvidcore.tar.bz2 -C ${MINGW_DIR}
+	${TAR} -xjf ${DOWNLOAD_DIR}/libtheora.tar.bz2 -C ${MINGW_DIR}
+	${TAR} -xjf ${DOWNLOAD_DIR}/libvorbis.tar.bz2 -C ${MINGW_DIR}
+}
+
 #######################################################
 # variables
 #######################################################
@@ -184,22 +198,22 @@ WGET=$(which wget)
 UNZIP=$(which unzip)
 TAR=$(which tar)
 
-if [ ! -e ${UN7ZIP} ]; then
+if [ ! -x "${UN7ZIP}" ]; then
 	echo "you need 7zip installed to run this script"
 	exit 1;
 fi
 
-if [ ! -e ${WGET} ]; then
+if [ ! -x "${WGET}" ]; then
 	echo "you need wget installed to run this script"
 	exit 1;
 fi
 
-if [ ! -e ${UNZIP} ]; then
+if [ ! -x "${UNZIP}" ]; then
 	echo "you need unzip installed to run this script"
 	exit 1;
 fi
 
-if [ ! -e ${TAR} ]; then
+if [ ! -x "${TAR}" ]; then
 	echo "you need tar installed to run this script"
 	exit 1;
 fi
@@ -231,6 +245,8 @@ create()
 	extract_tools
 
 	extract_gtk
+
+	extract_ogg
 
 	${UN7ZIP} a -tzip -mx=9 ${ARCHIVE_NAME} ${CODEBLOCKS_DIR}
 
