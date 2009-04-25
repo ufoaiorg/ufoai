@@ -490,20 +490,21 @@ static void MN_TextNodeDraw (menuNode_t *node)
 static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 {
 	int line = MN_TextNodeGetLine(node, x, y);
-	char cmd[MAX_VAR];
 
 	if (line < 0 || line >= EXTRADATA(node).textLines)
 		return;
 
 	MN_TextNodeSelectLine(node, line);
 
-	/** @todo remove %s_click as far as possible */
-	/** @todo execute %s_click only if onClick i*/
-	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
-	if (Cmd_Exists(cmd))
-		Cbuf_AddText(va("%s %i\n", cmd, line));
-	else if (node->onClick)
+	if (node->onClick)
 		MN_ExecuteEventActions(node, node->onClick);
+	else {
+		/** @todo remove %s_click as far as possible */
+		char cmd[MAX_VAR];
+		Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
+		if (Cmd_Exists(cmd))
+			Cbuf_AddText(va("%s %i\n", cmd, line));
+	}
 }
 
 /**
@@ -514,20 +515,21 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 {
 	int line = MN_TextNodeGetLine(node, x, y);
-	char cmd[MAX_VAR];
 
 	if (line < 0 || line >= EXTRADATA(node).textLines)
 		return;
 
 	MN_TextNodeSelectLine(node, line);
 
-	/** @todo remove %s_rclick as far as possible */
-	/** @todo execute %s_rclick only if onClick i*/
-	Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
-	if (Cmd_Exists(cmd))
-		Cbuf_AddText(va("%s %i\n", cmd, line));
-	else if (node->onRightClick)
+	if (node->onRightClick)
 		MN_ExecuteEventActions(node, node->onRightClick);
+	else {
+		/** @todo remove %s_rclick as far as possible */
+		char cmd[MAX_VAR];
+		Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
+		if (Cmd_Exists(cmd))
+			Cbuf_AddText(va("%s %i\n", cmd, line));
+	}
 }
 
 static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
