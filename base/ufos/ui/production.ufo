@@ -275,8 +275,8 @@ window production
 		size		"265 550"
 		mousefx		true
 		longlines	prettychop
-		onClick
-		onRClick
+		onClick		{ cmd "prodlist_click <lineselected>" }
+		onRClick	{ cmd "prodlist_rclick <lineselected>" }
 		onWheel		{
 			*(abstractscrollbar)prodlist_scroll current <text_scroll>
 			cmd "prod_scroll;"

@@ -509,7 +509,6 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 
 /**
  * @brief Calls the script command for a text node that is clickable via right mouse button
- * @note The node must have the rclick parameter
  * @sa MN_TextClick
  */
 static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
@@ -523,13 +522,6 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 
 	if (node->onRightClick)
 		MN_ExecuteEventActions(node, node->onRightClick);
-	else {
-		/** @todo remove %s_rclick as far as possible */
-		char cmd[MAX_VAR];
-		Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
-		if (Cmd_Exists(cmd))
-			Cbuf_AddText(va("%s %i\n", cmd, line));
-	}
 }
 
 static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)

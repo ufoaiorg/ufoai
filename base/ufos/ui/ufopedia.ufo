@@ -97,8 +97,8 @@ window ufopedia
 		lineheight	23
 		tabwidth	100
 		rows		16
-		onClick
-		onRClick
+		onClick		{ cmd "ufopedia_click <lineselected>" }
+		onRClick	{ cmd "ufopedia_rclick <lineselected>" }
 		onWheel		{
 			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
 		}

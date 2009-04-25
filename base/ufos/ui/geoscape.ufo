@@ -1706,8 +1706,8 @@ window popup_intercept
 			onWheel {
 				*(abstractscrollbar)aircraft.ships_scroll current <text_scroll>
 			}
-			onClick
-			onRClick
+			onClick		{ cmd "ships_click <lineselected>" }
+			onRClick	{ cmd "ships_rclick <lineselected>" }
 		}
 
 		vscrollbar ships_scroll {
@@ -1857,8 +1857,8 @@ window popup_mission
 		tabwidth	190
 		mousefx		true
 		rows	"13"
-		onClick
-		onRClick
+		onClick		{ cmd "ships_click <lineselected>" }
+		onRClick	{ cmd "ships_rclick <lineselected>" }
 	}
 
 	button bt_cancel

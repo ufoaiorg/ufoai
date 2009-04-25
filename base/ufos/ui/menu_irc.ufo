@@ -63,8 +63,8 @@ window irc
 		textid		TEXT_LIST
 		rows		"27"
 		mousefx		true
-		onClick
-		onRClick
+		onClick		{ cmd "irc_userlist_click <lineselected>" }
+		onRClick	{ cmd "irc_userlist_rclick <lineselected>" }
 		onWheel {
 			*(abstractscrollbar)irc_userlist_scroll current <text_scroll>
 		}
