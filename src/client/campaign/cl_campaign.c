@@ -2018,6 +2018,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 		ccs.date.sec -= SECONDS_PER_DAY;
 		ccs.date.day++;
 	}
+	CL_UpdateTime();
 
 	/* set map view */
 	ccs.center[0] = ccs.center[1] = 0.5;
