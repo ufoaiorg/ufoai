@@ -3,28 +3,28 @@
 //========================================
 // Description:
 // definitions of categories to group notification types
-// the order of categories in this file defines the order in settings menu 
-msgcategory "_install_equipment" 
+// the order of categories in this file defines the order in settings menu
+msgcategory "_install_equipment"
 {
 	installation_installed
 	installation_removed
 	installation_replaced
 }
 
-msgcategory "_installation_construction" 
+msgcategory "_installation_construction"
 {
 	installation_build_started
 	installation_build_finished
 	installation_destroyed
 }
 
-msgcategory "_research" 
+msgcategory "_research"
 {
 	research_new_proposed
 	research_completed
 }
 
-msgcategory "_production" 
+msgcategory "_production"
 {
 	production_started
 	production_finished

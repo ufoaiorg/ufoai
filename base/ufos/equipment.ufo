@@ -1,11 +1,11 @@
 // if you modify something in here - your savegames and multiplayer teams may be broken
-// This files contains different lists of items used in game:
+// This file contains different lists of items used in game:
 //	campaign_player: List of items used to determine what soldiers start with when a new single player game begins.
 //	campaign_initial_market: List of items used to determine how many items are on market when a new single player game begins.
 //	campaign_asymptotic_market: List of items used to determine how many items will be on market in a new single player game
 //		when all technologies will be researched (if item is not in this list, campaign_initial_market is used).
-//	campaign_player_aliens: same than 'campaign_player' for alien campaign.
-//	campaign_market_aliens: same than 'campaign_asymptotic_market' for alien campaign.
+//	campaign_player_aliens: same as 'campaign_player' for alien campaign.
+//	campaign_market_aliens: same as 'campaign_asymptotic_market' for alien campaign.
 
 //=======================
 // human campaigns
@@ -13,112 +13,112 @@
 
 equipment campaign_player
 {
-	assault			1
-	assault_ammo	12
-	machinegun		1
-	machinegun_ammo	12
-	sniper			1
-	sniper_ammo		10
-	pistol			1
-	pistol_ammo		10
-	pistol2			1
-	pistol2_ammo		10
-	smg				1
-	smg_ammo		10
-	shotgun2		1
-	shotgun_micro_ammo		12
-	shotgun2_slug_ammo	12
-	shotgun_micro		1
-	flamer			1
-	flamer_ammo		6
-	rpg				1
-	rpg_ammo		12
-	grenl			1
-	grenl_ammo		10
-	fraggrenade		12
-	smokegrenade	2
-	knife			2
-	armour_light	0
-	medikit			2
-	irgoggles		1
-	flashbang		5
-	craft_weapon_shiva	2
-	craft_ammo_shiva_API	30
-	craft_ammo_shiva_HEI	30
+	assault						1
+	assault_ammo				12
+	machinegun					1
+	machinegun_ammo				12
+	sniper						1
+	sniper_ammo					10
+	pistol						1
+	pistol_ammo					10
+	pistol2						1
+	pistol2_ammo				10
+	smg							1
+	smg_ammo					10
+	shotgun2					1
+	shotgun_micro_ammo			12
+	shotgun2_slug_ammo			12
+	shotgun_micro				1
+	flamer						1
+	flamer_ammo					6
+	rpg							1
+	rpg_ammo					12
+	grenl						1
+	grenl_ammo					10
+	fraggrenade					12
+	smokegrenade				2
+	knife						2
+	armour_light				0
+	medikit						2
+	irgoggles					1
+	flashbang					5
+	craft_weapon_shiva			2
+	craft_ammo_shiva_API		30
+	craft_ammo_shiva_HEI		30
 	craft_weapon_sparrowhawk	3
 	craft_ammo_sparrowhawk		16
-	craft_weapon_tr20		1
-	craft_ammo_tr20		6
-	craft_el_fuelpod		1
-	craft_shield_polymer	1
+	craft_weapon_tr20			1
+	craft_ammo_tr20				6
+	craft_el_fuelpod			1
+	craft_shield_polymer		1
 }
 
 equipment campaign_initial_market
 {
-	assault					4
-	assault_ammo			45
-	machinegun				3
-	machinegun_ammo			12
-	sniper					3
-	sniper_ammo				45
-	pistol					4
-	pistol_ammo				40
-	pistol2					4
-	pistol2_ammo			40
-	smg					3
-	smg_ammo			40
-	shotgun2			3
-	shotgun2_slug_ammo	40
-	shotgun_micro			4
-	shotgun_micro_ammo		20
-	flamer					3
-	flamer_ammo				40
-	rpg						3
-	rpg_ammo				50
-	rpg_incendiary_ammo		20
-	grenl					2
-	grenl_ammo				20
-	grenl_incendiary_ammo	10
-	grenl_fle_ammo			10
-	fraggrenade				40
-	incgrenade				10
-	smokegrenade			10
-	knife					20
-	irgoggles				2
-	medikit					4
-	flashbang				10
-	armour_light			20
-	craft_weapon_shiva	6
-	craft_ammo_shiva_API	100
-	craft_ammo_shiva_HEI	100
+	assault						4
+	assault_ammo				45
+	machinegun					3
+	machinegun_ammo				12
+	sniper						3
+	sniper_ammo					45
+	pistol						4
+	pistol_ammo					40
+	pistol2						4
+	pistol2_ammo				40
+	smg							3
+	smg_ammo					40
+	shotgun2					3
+	shotgun2_slug_ammo			40
+	shotgun_micro				4
+	shotgun_micro_ammo			20
+	flamer						3
+	flamer_ammo					40
+	rpg							3
+	rpg_ammo					50
+	rpg_incendiary_ammo			20
+	grenl						2
+	grenl_ammo					20
+	grenl_incendiary_ammo		10
+	grenl_fle_ammo				10
+	fraggrenade					40
+	incgrenade					10
+	smokegrenade				10
+	knife						20
+	irgoggles					2
+	medikit						4
+	flashbang					10
+	armour_light				20
+	craft_weapon_shiva			6
+	craft_ammo_shiva_API		100
+	craft_ammo_shiva_HEI		100
 	craft_weapon_sparrowhawk	3
 	craft_ammo_sparrowhawk		56
-	craft_weapon_tr20		3
-	craft_ammo_tr20		30
-	craft_el_fuelpod		10
-	craft_el_raven		4
-	craft_el_targeting	2
-	craft_shield_polymer	4
-	base_AA51_launcher	3
-	ugv_chaingun	20	// This has to be at least the number of ugvs (with default weapon "ugv_chaingun")
-	ugv_chaingun_belt	40
+	craft_weapon_tr20			3
+	craft_ammo_tr20				30
+	craft_el_fuelpod			10
+	craft_el_raven				4
+	craft_el_targeting			2
+	craft_shield_polymer		4
+	base_AA51_launcher			3
+	ugv_chaingun				20 // This has to be at least the number of ugvs (with default weapon "ugv_chaingun")
+	ugv_chaingun_belt			40
 }
 
 equipment campaign_asymptotic_market
 {
-//	armour_lightadv					3
-	armour_medium							3
-	armour_power							3
-	coilgun							2
-	coilgun_ammo					20
-	rpg_incendiary_ammo				10
-	bolterrifle						3
-	bolterrifle_ammo				30
-	laserpistol						4
-	laserrifle						4
-	heavylaser						4
-	laserrifle_ammo					50
-	stunrod							4
+//	armour_lightadv			3
+	armour_medium			3
+	armour_power			3
+	coilgun					2
+	coilgun_ammo			20
+	rpg_incendiary_ammo		10
+	bolterrifle				3
+	bolterrifle_ammo		30
+	laserpistol				4
+	laserrifle				4
+	heavylaser				4
+	laserrifle_ammo			50
+	stunrod					4
 }
 
 //=================
@@ -129,63 +129,63 @@ equipment campaign_asymptotic_market
 
 equipment campaign_player_aliens
 {
-	assault					1
-	assault_ammo			1
-	sniper					1
-	sniper_ammo				1
+	assault				1
+	assault_ammo		1
+	sniper				1
+	sniper_ammo			1
 	pbeampistol			4
-	pbeampistol_ammo		40
-	smg						1
-	smg_ammo				1
-	shotgun					1
-	shotgun_ammo			1
-	flamer					1
-	flamer_ammo				1
-	rpg						1
-	rpg_ammo				4
-	fraggrenade				3
-	kerrblade				1
-	armour_light_alien				0
+	pbeampistol_ammo	40
+	smg					1
+	smg_ammo			1
+	shotgun				1
+	shotgun_ammo		1
+	flamer				1
+	flamer_ammo			1
+	rpg					1
+	rpg_ammo			4
+	fraggrenade			3
+	kerrblade			1
+	armour_light_alien	0
 }
 
 equipment campaign_market_aliens
 {
-	assault					4
-	assault_ammo			40
-	sniper					3
-	sniper_ammo				40
+	assault				4
+	assault_ammo		40
+	sniper				3
+	sniper_ammo			40
 	pbeampistol			4
-	pbeampistol_ammo		40
-	smg						3
-	smg_ammo				40
-	shotgun					3
-	shotgun_ammo			30
-	flamer					3
-	flamer_ammo				30
-	rpg						3
-	rpg_ammo				40
-	rpg_incendiary_ammo		20
-//	rpg_particle_ammo		10
-	grenl					2
-	grenl_ammo				20
-	grenl_plasma_ammo		10
-	bolterrifle				2
-	bolterrifle_ammo		20
-	laserpistol				1
-//	laserpistol_ammo		20
-	laserrifle				1
-	laserrifle_ammo			35
-	heavylaser				1
-//	heavylaser_ammo			5
-	fraggrenade				40
-	kerrblade				20
-	irgoggles				2
-	medikit					2
-	stunrod					2
-	stungrenade				10
-	armour_light_alien				20
-	armour_medium_alien			5
-//	heavy_alien				1
+	pbeampistol_ammo	40
+	smg					3
+	smg_ammo			40
+	shotgun				3
+	shotgun_ammo		30
+	flamer				3
+	flamer_ammo			30
+	rpg					3
+	rpg_ammo			40
+	rpg_incendiary_ammo	20
+//	rpg_particle_ammo	10
+	grenl				2
+	grenl_ammo			20
+	grenl_plasma_ammo	10
+	bolterrifle			2
+	bolterrifle_ammo	20
+	laserpistol			1
+//	laserpistol_ammo	20
+	laserrifle			1
+	laserrifle_ammo		35
+	heavylaser			1
+//	heavylaser_ammo		5
+	fraggrenade			40
+	kerrblade			20
+	irgoggles			2
+	medikit				2
+	stunrod				2
+	stungrenade			10
+	armour_light_alien	20
+	armour_medium_alien	5
+//	heavy_alien			1
 }
 
 //=============================
@@ -205,7 +205,7 @@ equipment multiplayer_alien
 	pistol_ammo			5
 	pistol2				2
 	pistol2_ammo		5
-	smg				    2
+	smg					2
 	smg_ammo			5
 	shotgun				2
 	shotgun_ammo		5
@@ -230,7 +230,7 @@ equipment multiplayer_alien
 //	rpg_particle_ammo	3
 	grenl				2
 	grenl_ammo			5
-	grenl_fle_ammo			4
+	grenl_fle_ammo		4
 	grenl_plasma_ammo	3
 	bolterrifle			2
 	bolterrifle_ammo	3
@@ -248,12 +248,12 @@ equipment multiplayer_alien
 	plasrifle_ammo		3
 	plasblaster			2
 	plasblaster_ammo	3
-	pbeampistol		2
+	pbeampistol			2
 	pbeampistol_ammo	5
-	pbeamcannon		1
+	pbeamcannon			1
 	pbeamcannon_ammo	3
-	pbeamrifle		1
-	pbeamrifle_ammo	3
+	pbeamrifle			1
+	pbeamrifle_ammo		3
 	fraggrenade			3
 	smokegrenade		2
 	flashbang			8
@@ -262,7 +262,7 @@ equipment multiplayer_alien
 	stunrod				3
 	irgoggles			2
 	medikit				3
-	incgrenade		3
+	incgrenade			3
 	plasmagrenade		3
 	kerrblade			2
 	plasblade			2
@@ -304,7 +304,7 @@ equipment multiplayer_phalanx
 //	rpg_particle_ammo	3
 	grenl				2
 	grenl_ammo			5
-	grenl_fle_ammo			4
+	grenl_fle_ammo		4
 	grenl_plasma_ammo	3
 	xaw95				2
 	xaw95_ammo			5
@@ -328,12 +328,12 @@ equipment multiplayer_phalanx
 	plasrifle_ammo		3
 	plasblaster			2
 	plasblaster_ammo	3
-	pbeampistol		2
+	pbeampistol			2
 	pbeampistol_ammo	5
-	pbeamcannon		1
+	pbeamcannon			1
 	pbeamcannon_ammo	3
-	pbeamrifle		1
-	pbeamrifle_ammo	3
+	pbeamrifle			1
+	pbeamrifle_ammo		3
 	fraggrenade			3
 	smokegrenade		2
 	flashbang			8
@@ -342,7 +342,7 @@ equipment multiplayer_phalanx
 	stunrod				3
 	irgoggles			2
 	medikit				3
-	incgrenade		3
+	incgrenade			3
 	plasmagrenade		3
 	kerrblade			2
 	plasblade			2
@@ -352,7 +352,7 @@ equipment multiplayer_phalanx
 	armour_light_alien	2
 	armour_medium_alien	2
 //	armour_heavy		1
-	armour_power	2
+	armour_power		2
 }
 
 //=============================
@@ -401,19 +401,19 @@ equipment multiplayer_initial
 	plasrifle_ammo		13
 	plasblaster			5
 	plasblaster_ammo	13
-	pbeampistol		8
+	pbeampistol			8
 	pbeampistol_ammo	25
-	pbeamcannon		5
+	pbeamcannon			5
 	pbeamcannon_ammo	13
-	pbeamrifle		5
-	pbeamrifle_ammo	13
+	pbeamrifle			5
+	pbeamrifle_ammo		13
 	fraggrenade			3
 	plasmagrenade		3
-	kerrblade           2 // bulky, will rarely get into the backpack
+	kerrblade			2 // bulky, will rarely get into the backpack
 	plasblade			3
 	armour_light		10
 	armour_medium		10
 //	armour_heavy		5
-//	armour_power	2
+//	armour_power		2
 	smokegrenade		3
 }

@@ -18,7 +18,7 @@
 
 // TODO/FIXME: Is the model parameter needed in the armour definitions?
 
-// if the damage type starts with _ it is marked at translateable and thus shown
+// if the damage type starts with _ it is marked as translateable and thus shown
 // in the menus, if there is no such character the damagetype will not be shown.
 
 damagetypes standard
@@ -106,7 +106,7 @@ item armour_light
 		particlebeam_heavy	5
 
 		stun_electro		0
-		stun_gas		0
+		stun_gas			0
 	}
 
 	rating {
@@ -117,7 +117,7 @@ item armour_light
 		plasma				10
 		laser				20
 		particlebeam		10
-		stun_electro			10
+		stun_electro		10
 		stun_gas			10
 	}
 }
@@ -143,7 +143,7 @@ item armour_lightadv
 		normal_heavy		11
 		normal_spray        9
 
-		normal_steelblade		10
+		normal_steelblade			10
 		normal_monomolecularblade	5
 
 		blast				25
@@ -167,7 +167,7 @@ item armour_lightadv
 		particlebeam_heavy	5
 
 		stun_electro		0
-		stun_gas		0
+		stun_gas			0
 	}
 
 	rating {
@@ -178,7 +178,7 @@ item armour_lightadv
 		plasma				10
 		laser				20
 		particlebeam		10
-		stun_electro			10
+		stun_electro		10
 		stun_gas			10
 	}
 }
@@ -204,7 +204,7 @@ item armour_medium
 		normal_heavy		16
 		normal_spray        12
 
-		normal_steelblade		20
+		normal_steelblade			20
 		normal_monomolecularblade	12
 
 		blast				38
@@ -227,7 +227,7 @@ item armour_medium
 		particlebeam_medium	17
 		particlebeam_heavy	14
 
-		stun_electro			10
+		stun_electro		10
 		stun_gas			10
 	}
 
@@ -239,7 +239,7 @@ item armour_medium
 		plasma				40
 		laser				50
 		particlebeam		30
-		stun_electro			30
+		stun_electro		30
 		stun_gas			30
 	}
 }
@@ -266,7 +266,7 @@ item armour_power
 		normal_heavy		41
 		normal_spray        19
 
-		normal_steelblade		25
+		normal_steelblade			25
 		normal_monomolecularblade	19
 
 		blast				49
@@ -289,7 +289,7 @@ item armour_power
 		particlebeam_medium	50
 		particlebeam_heavy	50
 
-		stun_electro			20
+		stun_electro		20
 		stun_gas			20
 	}
 
@@ -301,7 +301,7 @@ item armour_power
 		plasma				60
 		laser				40
 		particlebeam		70
-		stun_electro			50
+		stun_electro		50
 		stun_gas			50
 	}
 }
@@ -325,7 +325,7 @@ item armour_power
 //		normal_medium		22
 //		normal_heavy		20
 //
-//		normal_steelblade		40
+//		normal_steelblade			40
 //		normal_monomolecularblade	10
 //
 //		blast				15
@@ -347,7 +347,7 @@ item armour_power
 //		particlebeam_medium	16
 //		particlebeam_heavy	14
 //
-//		stun_electro			20
+//		stun_electro		20
 //		stun_gas			20
 //	}
 //
@@ -359,7 +359,7 @@ item armour_power
 //		plasma				100
 //		laser				70
 //		particlebeam		60
-//		stun_electro			80
+//		stun_electro		80
 //		stun_gas			80
 //	}
 //}
@@ -383,7 +383,7 @@ item armour_power
 //		normal_medium		22
 //		normal_heavy		20
 //
-//		normal_steelblade		40
+//		normal_steelblade			40
 //		normal_monomolecularblade	10
 //
 //		blast				15
@@ -405,7 +405,7 @@ item armour_power
 //		particlebeam_medium	16
 //		particlebeam_heavy	14
 //
-//		stun_electro			20
+//		stun_electro		20
 //		stun_gas			20
 //	}
 //
@@ -417,7 +417,7 @@ item armour_power
 //		plasma				80
 //		laser				100
 //		particlebeam		100
-//		stun_electro			100
+//		stun_electro		100
 //		stun_gas			100
 //	}
 //}
@@ -441,7 +441,7 @@ item armour_power
 //		normal_medium		22
 //		normal_heavy		20
 //
-//		normal_steelblade		40
+//		normal_steelblade			40
 //		normal_monomolecularblade	10
 //
 //		blast				15
@@ -463,7 +463,7 @@ item armour_power
 //		particlebeam_medium	16
 //		particlebeam_heavy	14
 //
-//		stun_electro			20
+//		stun_electro		20
 //		stun_gas			20
 //	}
 //
@@ -475,7 +475,7 @@ item armour_power
 //		plasma				60
 //		laser				80
 //		particlebeam		80
-//		stun_electro			80
+//		stun_electro		80
 //		stun_gas			80
 //	}
 //}
@@ -503,9 +503,9 @@ item armour_light_alien
 		normal_light		7
 		normal_medium		6
 		normal_heavy		5
-		normal_spray        9
+		normal_spray		9
 
-		normal_steelblade		10
+		normal_steelblade			10
 		normal_monomolecularblade	5
 
 		blast				25
@@ -528,7 +528,7 @@ item armour_light_alien
 		particlebeam_medium	19
 		particlebeam_heavy	17
 
-		stun_electro			0
+		stun_electro		0
 		stun_gas			0
 	}
 
@@ -540,7 +540,7 @@ item armour_light_alien
 		plasma				30
 		laser				20
 		particlebeam		30
-		stun_electro			10
+		stun_electro		10
 		stun_gas			10
 	}
 }
@@ -566,7 +566,7 @@ item armour_medium_alien
 		normal_heavy		16
 		normal_spray        12
 
-		normal_steelblade		20
+		normal_steelblade			20
 		normal_monomolecularblade	12
 
 		blast				38
@@ -589,7 +589,7 @@ item armour_medium_alien
 		particlebeam_medium	27
 		particlebeam_heavy	24
 
-		stun_electro			10
+		stun_electro		10
 		stun_gas			10
 	}
 
@@ -601,7 +601,7 @@ item armour_medium_alien
 		plasma				50
 		laser				40
 		particlebeam		50
-		stun_electro			30
+		stun_electro		30
 		stun_gas			30
 	}
 }

@@ -59,19 +59,19 @@
 
 building building_aliencontainment
 {
-	name		"_Alien Containment Facility"
-	image		base/aliencont2
-	fixcosts	92000
-	depends		building_powerplant
-	type		aliencont
-	build_time	10
-	varcosts	7500
-	map_name	"aliencont"
-	pedia		rs_building_aliencontainment
-	needs		building_aliencontainment2
-	pos		"0 1"
+	name			"_Alien Containment Facility"
+	image			base/aliencont2
+	fixcosts		92000
+	depends			building_powerplant
+	type			aliencont
+	build_time		10
+	varcosts		7500
+	map_name		"aliencont"
+	pedia			rs_building_aliencontainment
+	needs			building_aliencontainment2
+	pos				"0 1"
 	more_than_one	true
-	capacity	10
+	capacity		10
 }
 
 building building_aliencontainment2
@@ -100,49 +100,49 @@ building building_entrance
 
 building building_missile
 {
-	name		"_Missile Battery"
-	image		base/missile
-	fixcosts	10000
-	depends		building_command // need to know where to shoot
-	type		missile
-	build_time	3
-	varcosts	5000
-	map_name	"missile"
-	pedia		rs_building_missile
+	name			"_Missile Battery"
+	image			base/missile
+	fixcosts		10000
+	depends			building_command // need to know where to shoot
+	type			missile
+	build_time		3
+	varcosts		5000
+	map_name		"missile"
+	pedia			rs_building_missile
 	more_than_one	true
-	onconstruct	"add_battery 1"
-	ondestroy	"remove_battery 1"
+	onconstruct		"add_battery 1"
+	ondestroy		"remove_battery 1"
 }
 
 building building_storage
 {
-	name		"_Storage"
-	image		base/storage
-	fixcosts	36000
-	depends		building_entrance // storage base needs just entrance
-	type		storage
-	build_time	4
-	varcosts	1000
-	map_name	"storage"
-	pedia		rs_building_storage
-	pos			"3 4"
-	capacity	10000
-	ondestroy	"building_ondestroy"
+	name			"_Storage"
+	image			base/storage
+	fixcosts		36000
+	depends			building_entrance // storage base needs just entrance
+	type			storage
+	build_time		4
+	varcosts		1000
+	map_name		"storage"
+	pedia			rs_building_storage
+	pos				"3 4"
+	capacity		10000
+	ondestroy		"building_ondestroy"
 	more_than_one	true
 }
 
 building building_powerplant
 {
-	name		"_Power Plant"
-	image		base/powerplant
-	fixcosts	35000
-	depends		building_entrance
-	type		power
-	build_time	12
-	varcosts	5000
-	map_name	"powerplant"
-	pedia		rs_building_powerplant
-	pos			"4 4"
+	name			"_Power Plant"
+	image			base/powerplant
+	fixcosts		35000
+	depends			building_entrance
+	type			power
+	build_time		12
+	varcosts		5000
+	map_name		"powerplant"
+	pedia			rs_building_powerplant
+	pos				"4 4"
 	more_than_one	false // are we sure? this is boring now...
 }
 
@@ -164,37 +164,37 @@ building building_command
 
 building building_quarters
 {
-	name		"_Living Quarters"
-	image		base/quarters
-	fixcosts	40000
-	build_time	5
-	varcosts	1000
-	map_name	"quarters"
-	pedia		rs_building_quarters
-	pos			"4 3"
+	name			"_Living Quarters"
+	image			base/quarters
+	fixcosts		40000
+	build_time		5
+	varcosts		1000
+	map_name		"quarters"
+	pedia			rs_building_quarters
+	pos				"4 3"
 	more_than_one	true
-	type		quarters
-	ondestroy	"building_ondestroy"
-	capacity	20
+	type			quarters
+	ondestroy		"building_ondestroy"
+	capacity		20
 }
 
 building building_hangar
 {
-	name		"_Large Hangar"
-	image		base/drop2
-	fixcosts	68000
-	depends		building_powerplant // slow dropship operations can be coordinated from another base, so no Command Center needed
-	build_time	8
-	varcosts	5500
-	map_name	"drop"
-	pedia		rs_building_large_hangar
-	pos			"0 3"
-	more_than_one	true
-	type		hangar
-	needs		building_hangar2
-	ondestroy	"building_ondestroy"
-	starting_employees	8	//Number of soldiers in dropship when first base is build
-	capacity	1
+	name				"_Large Hangar"
+	image				base/drop2
+	fixcosts			68000
+	depends				building_powerplant // slow dropship operations can be coordinated from another base, so no Command Center needed
+	build_time			8
+	varcosts			5500
+	map_name			"drop"
+	pedia				rs_building_large_hangar
+	pos					"0 3"
+	more_than_one		true
+	type				hangar
+	needs				building_hangar2
+	ondestroy			"building_ondestroy"
+	starting_employees	8 //Number of soldiers in dropship when first base is built
+	capacity			1
 }
 
 building building_hangar2
@@ -207,52 +207,52 @@ building building_hangar2
 
 building building_intercept
 {
-	name		"_Small Hangar"
-	image		base/intercept
-	fixcosts	60000
-	depends		building_powerplant	// slow interceptions can be coordinated from another base, so no Command Center needed
-	build_time	5
-	varcosts	5200
-	map_name	"intercept"
-	pedia		rs_building_small_hangar
-	pos			"1 3"
+	name			"_Small Hangar"
+	image			base/intercept
+	fixcosts		60000
+	depends			building_powerplant	// slow interceptions can be coordinated from another base, so no Command Center needed
+	build_time		5
+	varcosts		5200
+	map_name		"intercept"
+	pedia			rs_building_small_hangar
+	pos				"1 3"
 	more_than_one	true
-	ondestroy	"building_ondestroy"
-	capacity	1
-	type		smallhangar
+	ondestroy		"building_ondestroy"
+	capacity		1
+	type			smallhangar
 }
 
 building building_small_ufo_hangar
 {
-	name		"_Small UFO Hangar"
-	image		base/adrop
-	fixcosts	71000
-	depends		building_powerplant
-	build_time	8
-	varcosts	6500
-	map_name	"ufohangar"
-	pedia		rs_building_small_ufo_hangar
+	name			"_Small UFO Hangar"
+	image			base/adrop
+	fixcosts		71000
+	depends			building_powerplant
+	build_time		8
+	varcosts		6500
+	map_name		"ufohangar"
+	pedia			rs_building_small_ufo_hangar
 	more_than_one	true
-	ondestroy	"building_ondestroy"
-	capacity	1
-	type		smallufohangar
+	ondestroy		"building_ondestroy"
+	capacity		1
+	type			smallufohangar
 }
 
 building building_large_ufo_hangar
 {
-	name		"_Large UFO Hangar"
-	image		base/adropl2
-	fixcosts	80000
-	depends		building_powerplant
-	build_time	11
-	varcosts	7600
-	map_name	"ufohangar_l"
-	capacity	1
-	ondestroy	"building_ondestroy"
-	pedia		rs_building_large_ufo_hangar
-	needs		building_large_ufo_hangar2
+	name			"_Large UFO Hangar"
+	image			base/adropl2
+	fixcosts		80000
+	depends			building_powerplant
+	build_time		11
+	varcosts		7600
+	map_name		"ufohangar_l"
+	capacity		1
+	ondestroy		"building_ondestroy"
+	pedia			rs_building_large_ufo_hangar
+	needs			building_large_ufo_hangar2
 	more_than_one	true
-	type		ufohangar
+	type			ufohangar
 }
 
 building building_large_ufo_hangar2
@@ -278,21 +278,21 @@ building building_teamroom
 
 building building_workshop
 {
-	name		"_Workshop"
-	image		base/workshop2
-	fixcosts	100000
-	depends		building_command
-	build_time	12
-	varcosts	8200
-	map_name	"workshop"
-	pedia		rs_building_workshop
-	pos			"4 0"
-	more_than_one	true
-	type	workshop
+	name				"_Workshop"
+	image				base/workshop2
+	fixcosts			100000
+	depends				building_command
+	build_time			12
+	varcosts			8200
+	map_name			"workshop"
+	pedia				rs_building_workshop
+	pos					"4 0"
+	more_than_one		true
+	type				workshop
 	starting_employees	10
-	needs		building_workshop2
-	ondestroy	"building_ondestroy"
-	capacity	10
+	needs				building_workshop2
+	ondestroy			"building_ondestroy"
+	capacity			10
 }
 
 building building_workshop2
@@ -305,68 +305,68 @@ building building_workshop2
 
 building building_radar
 {
-	name		"_Radar"
-	image		base/radar
-	fixcosts	55000
-	depends		building_command
-	build_time	7
-	varcosts	4000
-	map_name	"radar"
-	pedia		rs_building_radar
-	pos	"1 4"
+	name			"_Radar"
+	image			base/radar
+	fixcosts		55000
+	depends			building_command
+	build_time		7
+	varcosts		4000
+	map_name		"radar"
+	pedia			rs_building_radar
+	pos				"1 4"
 	more_than_one	true
-	type		radar
-	onconstruct	"update_base_radar_coverage"
-	ondestroy	"update_base_radar_coverage"
-	level		1.0
+	type			radar
+	onconstruct		"update_base_radar_coverage"
+	ondestroy		"update_base_radar_coverage"
+	level			1.0
 }
 
 building building_radar_adv
 {
-	name		"_Advanced Radar"
-	image		base/radar_adv
-	fixcosts	85000
-	depends		building_command
-	build_time	7
-	varcosts	7100
-	map_name	"radar_adv"
-	pedia		rs_building_radar_adv
+	name			"_Advanced Radar"
+	image			base/radar_adv
+	fixcosts		85000
+	depends			building_command
+	build_time		7
+	varcosts		7100
+	map_name		"radar_adv"
+	pedia			rs_building_radar_adv
 	more_than_one	true
-	type		radar
-	level		2.0
+	type			radar
+	level			2.0
 }
 
 building building_lab
 {
-	name		"_Laboratory"
-	image		base/lab
-	fixcosts	100000
-	depends		building_command // scientists need supervision, or...
-	build_time	12
-	varcosts	8300
-	map_name	"lab"
-	pedia		rs_building_lab
-	pos		"3 2"
-	more_than_one	true
-	type		lab
+	name				"_Laboratory"
+	image				base/lab
+	fixcosts			100000
+	depends				building_command // scientists need supervision, or...
+	build_time			12
+	varcosts			8300
+	map_name			"lab"
+	pedia				rs_building_lab
+	pos					"3 2"
+	more_than_one		true
+	type				lab
 	starting_employees	10
-	ondestroy	"building_ondestroy"
-	capacity	10
+	ondestroy			"building_ondestroy"
+	capacity			10
 }
 
 building building_hospital
 {
-	name		"_Hospital"
-	image		base/hospital
-	fixcosts	62000
-	depends		building_powerplant
-	build_time	8
-	varcosts	5200
-	map_name	"hospital"
-	pedia		rs_building_hospital
-	pos			"3 3"
-	more_than_one	false
-	type		hospital
+	name				"_Hospital"
+	image				base/hospital
+	fixcosts			62000
+	depends				building_powerplant
+	build_time			8
+	varcosts			5200
+	map_name			"hospital"
+	pedia				rs_building_hospital
+	pos					"3 3"
+	more_than_one		false
+	type				hospital
 	starting_employees	10
 }
 
@@ -381,22 +381,22 @@ building building_amstorage
 	map_name	"antimatter"
 	pedia		rs_building_antimatter
 	capacity	10000
-	// TODO: the ondestroy function should destroy the hole base with a 10% chance maybe
+	// TODO: the ondestroy function should destroy the whole base with a 10% chance maybe
 	ondestroy	""
 }
 
 basetemplate balanced {
-	building_entrance		"2 4"
-	building_quarters		"4 3"
-	building_quarters		"3 3"
+	building_entrance			"2 4"
+	building_quarters			"4 3"
+	building_quarters			"3 3"
 	building_aliencontainment	"0 1"
-	building_storage		"3 4"
-	building_powerplant		"4 4"
-	building_command		"4 2"
-	building_hangar			"0 3"
-	building_intercept		"1 3"
-	building_workshop		"4 0"
-	building_radar			"1 4"
-	building_lab			"3 1"
-	building_hospital		"3 2"
+	building_storage			"3 4"
+	building_powerplant			"4 4"
+	building_command			"4 2"
+	building_hangar				"0 3"
+	building_intercept			"1 3"
+	building_workshop			"4 0"
+	building_radar				"1 4"
+	building_lab				"3 1"
+	building_hospital			"3 2"
 }

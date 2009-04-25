@@ -19,7 +19,7 @@
 //	Only "item" supported right now.
 // <id>
 //	id of the item in the item definitions.
-//	See also weapons_dummy.ufo and research.ufo
+//	See also otheritems.ufo and research.ufo
 // <number>
 //	The number of the defined item to be found in the ufo.
 // <number-crash>
@@ -95,5 +95,3 @@ components craft_ufo_carrier {
 	//item	craft_alien_propulsion	0	8
 	//item	FTLdrive		0	1
 }
-
-

@@ -155,7 +155,7 @@ entity info_null {
 	size		"-4 -4 -4 4 4 4"
 
 	mandatory {
-		origin	"position"
+		origin		"position"
 		targetname	"Name of the target entity - e.g. used in light_spot to determine the direction the light should shine into"
 	}
 
@@ -192,12 +192,12 @@ entity misc_model {
 	}
 
 	optional {
-		angles		"Direction of the model [pitch yaw roll]"
-		angle		"Direction of the model [yaw]"
+		angles			"Direction of the model [pitch yaw roll]"
+		angle			"Direction of the model [yaw]"
 		modelscale_vec	"Scale of the model (vector of 3 values)"
-		skin		"Skin number"
-		frame		"Frame number - use frame or anim - but not both"
-		anim		"If this is this an animated model you can set the animation name from the *.anm file here"
+		skin			"Skin number"
+		frame			"Frame number - use frame or anim - but not both"
+		anim			"If this is this an animated model you can set the animation name from the *.anm file here"
 	}
 
 	type {
@@ -207,10 +207,10 @@ entity misc_model {
 	}
 
 	default {
-		skin		"0"
-		frame		"0"
+		skin			"0"
+		frame			"0"
 		modelscale_vec	"1.0 1.0 1.0"
-		spawnflags	"255"
+		spawnflags		"255"
 	}
 }
 
@@ -376,7 +376,7 @@ entity misc_sound {
 
 	mandatory {
 		origin	"position"
-		noise		"Sound file name relative to sound/ambience"
+		noise	"Sound file name relative to sound/ambience"
 	}
 
 	type {
@@ -399,15 +399,15 @@ entity misc_mission {
 		item		"Item that must be placed here to trigger the target (e.g. a bomb that will blast the target entity)"
 		time		"If set the entity has to be occupied x rounds to win the mission"
 		radius		"If the entity has to be occupied this defines the radius that is needed"
-		health		"If set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)"
+		health		"If set the entity has to be destroyed to win the mission - otherwise it just has to be reached (see time)"
 		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
 		target		"The target that is triggered once the round time was hit - target trigger must have targetname set"
 		message		"A message that is show when the mission is completed"
 	}
 
 	mandatory {
-		origin	"position"
-		spawnflags "Level flags"
+		origin		"position"
+		spawnflags	"Level flags"
 	}
 
 	type {
@@ -419,7 +419,6 @@ entity misc_mission {
 	}
 }
 
-
 entity misc_mission_alien {
 	description	"Defines the alien mission target"
 	color		"0.1 0.6 0.3"
@@ -429,7 +428,7 @@ entity misc_mission_alien {
 		particle	"Display a particle"
 		time		"If set the entity has to be occupied x rounds to win the mission"
 		radius		"If the entity has to be occupied this defines the radius that is needed"
-		health		"If set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)"
+		health		"If set the entity has to be destroyed to win the mission - otherwise it just has to be reached (see time)"
 		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
 		target		"The target that is triggered once the round time was hit - target trigger must have targetname set"
 		message		"A message that is show when the mission is completed"
@@ -557,4 +556,3 @@ entity misc_item {
 		spawnflags	"255"
 	}
 }
-

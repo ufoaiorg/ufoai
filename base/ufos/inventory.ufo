@@ -6,8 +6,8 @@
 // temp - a temporary container - such a container is not cleared - it's just a pointer to another one
 // armour - only armours can be placed here
 // all - everything can be placed here - even armours
-// headhear - headgear slot - only useable for headgear
-// extension - the extension slot - only weapon or item extension can be places here
+// headgear - headgear slot - only useable for headgear
+// extension - the extension slot - only weapon or item extension can be placed here
 
 // What's this "extension" exactly?
 inventory extension
@@ -113,14 +113,3 @@ inventory equip
 	scroll_height	325	// 13 squares x 25 [C_UNIT]
 	scroll_vertical 1	// vertical
 }
-
-
-
-
-
-
-
-
-
-
-
