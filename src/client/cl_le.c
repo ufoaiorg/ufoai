@@ -609,7 +609,7 @@ static void LET_PathMove (le_t * le)
 			/* next part */
 			const byte fulldv = le->path[le->pathPos];
 			const byte dir = getDVdir(fulldv);
-			const int crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
+			const byte crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
 			/** @note newCrouchingState needs to be set to the current crouching state and is possibly updated by PosAddDV. */
 			int newCrouchingState = crouchingState;
 			PosAddDV(le->pos, newCrouchingState, fulldv);

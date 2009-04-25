@@ -269,6 +269,8 @@ edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type
 	return NULL;
 }
 
+#define IS_BMODEL(ent) ((ent)->inuse && (ent)->model && (ent)->model[0] == '*' && (ent)->solid == SOLID_BSP)
+
 /**
  * @brief creates an entity list
  * @param[out] entList A list of all active inline model entities
@@ -282,7 +284,7 @@ void G_GenerateEntList (const char *entList[MAX_EDICTS])
 
 	/* generate entity list */
 	for (i = 0, ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
-		if (ent->inuse && ent->model && *ent->model == '*' && ent->solid == SOLID_BSP)
+		if (IS_BMODEL(ent))
 			entList[i++] = ent->model;
 	entList[i] = NULL;
 }
@@ -309,7 +311,7 @@ void G_CompleteRecalcRouting (void)
 
 	/* generate entity list */
 	for (ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
-		if (ent->inuse && ent->model && *ent->model == '*' && ent->solid == SOLID_BSP) {
+		if (IS_BMODEL(ent)) {
 			Com_DPrintf(DEBUG_GAME, "Processing entity %i: inuse:%i model:%s solid:%i\n",
 				ent->number, ent->inuse, ent->model ? ent->model : "", ent->solid);
 			G_RecalcRouting(ent);

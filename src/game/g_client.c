@@ -1350,16 +1350,16 @@ static void G_BuildForbiddenList (int team)
  * This will calculate a routing table for all reachable fields with the given distance
  * from the given spot with the given actorsize
  * @param[in] team The current team (see G_BuildForbiddenList)
- * @param[in] size The actorsize
+ * @param[in] actorSize
  * @param[in] from Position in the map to start the move-calculation from.
- * @param[in] crouching_state The crouching state of the actor. 0=stand, 1=crouch
+ * @param[in] crouchingState The crouching state of the actor. 0=stand, 1=crouch
  * @param[in] distance The distance to calculate the move for.
  * @sa G_BuildForbiddenList
  */
-void G_MoveCalc (int team, pos3_t from, int actor_size, int crouching_state, int distance)
+void G_MoveCalc (int team, pos3_t from, int actorSize, byte crouchingState, int distance)
 {
 	G_BuildForbiddenList(team);
-	gi.MoveCalc(gi.routingMap, actor_size, gi.pathingMap, from, crouching_state, distance, fb_list, fb_length);
+	gi.MoveCalc(gi.routingMap, actorSize, gi.pathingMap, from, crouchingState, distance, fb_list, fb_length);
 }
 
 #define ACTOR_SPEED_NORMAL 100
@@ -1393,7 +1393,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	edict_t* clientAction;
 	int oldState;
 	qboolean autoCrouchRequired = qfalse;
-	int crouchingState;
+	byte crouchingState;
 
 	ent = g_edicts + num;
 	crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
@@ -2546,7 +2546,7 @@ void G_ClientTeamInfo (player_t * player)
 				ent->morale = 100;
 				break;
 			default:
-				gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (actor_size: %i, actor num: %i)\n",
+				gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (actorSize: %i, actor num: %i)\n",
 						dummyFieldSize, i);
 			}
 

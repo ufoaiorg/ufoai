@@ -400,7 +400,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
 			byte minX, maxX, minY, maxY;
-			const int crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+			const byte crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
 			/* reward short walking to shooting spot, when seen by enemies; */
 			/** @todo do this decently, only penalizing the visible part of walk
 			 * and penalizing much more for reaction shooters around;
@@ -478,7 +478,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	float bestActionPoints;
 	float reaction_trap = 0.0;
 	float delta = 0.0;
-	const int crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* set basic parameters */
 	bestActionPoints = 0.0;
@@ -586,7 +586,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t *aia)
 {
 	int bestActionPoints = AI_ACTION_NOTHING_FOUND;
-	const int crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* reset any previous given action set */
 	memset(aia, 0, sizeof(*aia));
@@ -661,7 +661,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	vec3_t oldOrigin;
 	int xl, yl, xh, yh;
 	float bestActionPoints, best;
-	const int crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* calculate move table */
 	G_MoveCalc(0, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
@@ -762,7 +762,7 @@ void G_AddToWayPointList (edict_t *ent)
 void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 {
 	int dv;
-	const int crouchingState = aiActor->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = aiActor->state & STATE_CROUCHED ? 1 : 0;
 
 	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize, crouchingState, MAX_ROUTE);
 

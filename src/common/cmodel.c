@@ -1584,7 +1584,7 @@ static void Grid_SetMoveData (struct pathing_s *path, const int x, const int y, 
  * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  */
-void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t pos, int crouchingState, const int dir, priorityQueue_t *pqueue)
+void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
 {
 	int x, y, z;
 	int nx, ny, nz;
@@ -1932,7 +1932,7 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_MoveCalc (const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t from, int crouchingState, int distance, byte ** fb_list, int fb_length)
+void Grid_MoveCalc (const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingState, int distance, byte ** fb_list, int fb_length)
 {
 	int dir;
 	int count;
@@ -2004,7 +2004,7 @@ void Grid_MoveStore (struct pathing_s *path)
  * @return ROUTING_NOT_REACHABLE if the move isn't possible
  * @return length of move otherwise (TUs)
  */
-pos_t Grid_MoveLength (const struct pathing_s *path, const pos3_t to, int crouchingState, qboolean stored)
+pos_t Grid_MoveLength (const struct pathing_s *path, const pos3_t to, byte crouchingState, qboolean stored)
 {
 #ifdef PARANOID
 	if (to[2] >= PATHFINDING_HEIGHT) {
@@ -2031,7 +2031,7 @@ pos_t Grid_MoveLength (const struct pathing_s *path, const pos3_t to, int crouch
  * @return (Guess: a direction index (see dvecs and DIRECTIONS))
  * @sa Grid_MoveCheck
  */
-int Grid_MoveNext (const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t from, int crouchingState)
+int Grid_MoveNext (const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingState)
 {
 	const pos_t l = RT_AREA(path, from[0], from[1], from[2], crouchingState); /**< Get TUs for this square */
 

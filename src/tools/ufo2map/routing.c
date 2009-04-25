@@ -54,10 +54,10 @@ static int CheckUnit (unsigned int unitnum)
 	const int z = unitnum % PATHFINDING_HEIGHT;
 	const int y = (unitnum / PATHFINDING_HEIGHT) % PATHFINDING_WIDTH;
 	const int x = (unitnum / PATHFINDING_HEIGHT / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
-	const int actor_size = unitnum / PATHFINDING_HEIGHT / PATHFINDING_WIDTH / PATHFINDING_WIDTH;
+	const int actorSize = unitnum / PATHFINDING_HEIGHT / PATHFINDING_WIDTH / PATHFINDING_WIDTH;
 
 	/* test bounds - the size adjustment is needed because large actor cells occupy multiple cell units. */
-	if (x > wpMaxs[0] - actor_size || y > wpMaxs[1] - actor_size || z > wpMaxs[2]
+	if (x > wpMaxs[0] - actorSize || y > wpMaxs[1] - actorSize || z > wpMaxs[2]
 	 || x < wpMins[0] || y < wpMins[1] || z < wpMins[2] ) {
 		/* don't enter - outside world */
 		return 0;
@@ -65,7 +65,7 @@ static int CheckUnit (unsigned int unitnum)
 
 	/* Com_Printf("%i %i %i %i\n", x, y, z, size); */
 	/* Call the common CheckUnit function */
-	new_z = RT_CheckCell(Nmap, actor_size + 1, x, y, z);
+	new_z = RT_CheckCell(Nmap, actorSize + 1, x, y, z);
 
 	/* Com_Printf("z:%i nz:%i\n", z, new_z); */
 
@@ -98,20 +98,20 @@ static void CheckConnectionsThread (unsigned int unitnum)
 	const int dir = (unitnum % (CORE_DIRECTIONS / 2)) * 2;
 	const int y = (unitnum / (CORE_DIRECTIONS / 2)) % PATHFINDING_WIDTH;
 	const int x = (unitnum / (CORE_DIRECTIONS / 2) / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
-	const int actor_size = unitnum / PATHFINDING_WIDTH / PATHFINDING_WIDTH / (CORE_DIRECTIONS / 2);
+	const int actorSize = unitnum / PATHFINDING_WIDTH / PATHFINDING_WIDTH / (CORE_DIRECTIONS / 2);
 
 
 	/* test bounds - the size adjustment is needed because large actor cells occupy multiple cell units. */
-	if (x > wpMaxs[0] - actor_size || y > wpMaxs[1] - actor_size
+	if (x > wpMaxs[0] - actorSize || y > wpMaxs[1] - actorSize
 	 || x < wpMins[0] || y < wpMins[1] ) {
 		/* don't enter - outside world */
 		/* Com_Printf("x%i y%i z%i dir%i size%i (%i, %i, %i) (%i, %i, %i)\n", x, y, z, dir, size, wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]); */
 		return;
 	}
 
-	Verb_Printf(VERB_EXTRA, "%i %i %i %i (%i, %i, %i) (%i, %i, %i)\n", x, y, dir, actor_size, wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]);
+	Verb_Printf(VERB_EXTRA, "%i %i %i %i (%i, %i, %i) (%i, %i, %i)\n", x, y, dir, actorSize, wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]);
 
-	RT_UpdateConnectionColumn(Nmap, actor_size + 1, x, y, dir);
+	RT_UpdateConnectionColumn(Nmap, actorSize + 1, x, y, dir);
 
 	/* Com_Printf("z:%i nz:%i\n", z, new_z); */
 }

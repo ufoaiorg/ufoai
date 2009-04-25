@@ -68,7 +68,7 @@ int mousePosTargettingAlign = 0;
  * current grid position marked by the mouse cursor (mousePos)
  * @sa CL_MoveLength
  */
-int actorMoveLength;
+byte actorMoveLength;
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
@@ -1009,7 +1009,7 @@ void CL_DisplayBlockedPaths_f (void)
 void CL_ConditionalMoveCalcForCurrentSelectedActor (void)
 {
 	if (selActor) {
-		const int crouchingState = (selActor->state & STATE_CROUCHED) ? 1 : 0;
+		const byte crouchingState = (selActor->state & STATE_CROUCHED) ? 1 : 0;
 		CL_BuildForbiddenList();
 		Grid_MoveCalc(clMap, selActor->fieldSize, selActor->pathMap, selActor->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
 		CL_ResetActorMoveLength();
@@ -1043,22 +1043,11 @@ int CL_CheckAction (void)
  * @param[in] to The position in the map to calculate the move-length for.
  * @return The amount of TUs that are needed to walk to the given grid position
  */
-static int CL_MoveLength (const le_t *le, pos3_t to)
+static byte CL_MoveLength (const le_t *le, pos3_t to)
 {
-	const int crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
-	const float length = Grid_MoveLength(le->pathMap, to, crouchingState, qfalse);
-
-	switch (CL_MoveMode(le, length)) {
-	case WALKTYPE_AUTOSTAND_BEING_USED:
-		return length /* + 2 * TU_CROUCH */;
-	case WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH:
-	case WALKTYPE_CROUCH_WALKING:
-		return length /* * TU_CROUCH_MOVING_FACTOR */;
-	default:
-		Com_DPrintf(DEBUG_CLIENT,"CL_MoveLength: MoveMode not recognised.\n");
-	case WALKTYPE_WALKING:
-		return length;
-	}
+	const byte crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
+	const byte length = Grid_MoveLength(le->pathMap, to, crouchingState, qfalse);
+	return length;
 }
 
 /**
@@ -1078,11 +1067,11 @@ void CL_ResetActorMoveLength (void)
  */
 static qboolean CL_TraceMove (pos3_t to)
 {
-	int length;
+	byte length;
 	vec3_t vec, oldVec;
 	pos3_t pos;
 	int dv;
-	int crouching_state;
+	byte crouchingState;
 #ifdef DEBUG
 	int counter = 0;
 #endif
@@ -1094,29 +1083,29 @@ static qboolean CL_TraceMove (pos3_t to)
 	if (!length || length >= 0x3F)
 		return qfalse;
 
-	crouching_state = selActor->state & STATE_CROUCHED ? 1 : 0;
+	crouchingState = selActor->state & STATE_CROUCHED ? 1 : 0;
 
 	Grid_PosToVec(clMap, selActor->fieldSize, to, oldVec);
 	VectorCopy(to, pos);
 
 	Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
-	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, selActor->pathMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
+	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, selActor->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 #ifdef DEBUG
 		if (++counter > 100) {
 			Com_Printf("First pos: (%i, %i, %i, %i).\n", to[0], to[1], to[2], selActor->state & STATE_CROUCHED ? 1 : 0);
-			Com_Printf("Last pos: (%i, %i, %i, %i).\n", pos[0], pos[1], pos[2], crouching_state);
+			Com_Printf("Last pos: (%i, %i, %i, %i).\n", pos[0], pos[1], pos[2], crouchingState);
 			Grid_DumpDVTable(selActor->pathMap);
 			Com_Error(ERR_DROP, "CL_TraceMove: DV table loops.");
 		}
 #endif
 		length = CL_MoveLength(selActor, pos);
-		PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
-		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouching_state, dv);
+		PosSubDV(pos, crouchingState, dv); /* We are going backwards to the origin. */
+		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouchingState, dv);
 		Grid_PosToVec(clMap, selActor->fieldSize, pos, vec);
 		if (length > CL_UsableTUs(selActor))
 			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec, NULL);
-		else if (crouching_state)
+		else if (crouchingState)
 			CL_ParticleSpawn("crawlTracer", 0, vec, oldVec, NULL);
 		else
 			CL_ParticleSpawn("moveTracer", 0, vec, oldVec, NULL);
@@ -1134,9 +1123,9 @@ static qboolean CL_TraceMove (pos3_t to)
  */
 static void CL_MaximumMove (pos3_t to, const le_t *le, pos3_t pos)
 {
-	int length;
+	byte length;
 	int dv;
-	int crouchingState = le && (le->state & STATE_CROUCHED) ? 1 : 0;
+	byte crouchingState = le && (le->state & STATE_CROUCHED) ? 1 : 0;
 	const int tus = CL_UsableTUs(le);
 	/* vec3_t vec; */
 
@@ -1165,7 +1154,7 @@ static void CL_MaximumMove (pos3_t to, const le_t *le, pos3_t pos)
  */
 void CL_ActorStartMove (le_t * le, pos3_t to)
 {
-	int length;
+	byte length;
 	pos3_t toReal;
 
 	if (mouseSpace != MS_WORLD)
@@ -2596,7 +2585,7 @@ static void CL_Targeting_Radius (vec3_t center)
  * @sa CL_Trace
  * @sa G_ShootSingle
  */
-static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t toPos)
+static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPos)
 {
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
@@ -2625,7 +2614,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t to
 
 	/** @todo Adjust the toPos to the actor in case the actor is 2x2 */
 
-	Grid_PosToVec(clMap, from_actor_size, fromPos, start);
+	Grid_PosToVec(clMap, fromActorSize, fromPos, start);
 	Grid_PosToVec(clMap, toActorSize, toPos, end);
 	if (mousePosTargettingAlign)
 		end[2] -= mousePosTargettingAlign;
@@ -2686,7 +2675,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t to
  * @param[in] toPos The (grid-) position of the target (mousePos or mousePendPos).
  * @sa CL_TargetingStraight
  */
-static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toPos)
+static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos)
 {
 	vec3_t from, at, cross;
 	float vz, dt;
@@ -2717,7 +2706,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toP
 	/** @todo Adjust the toPos to the actor in case the actor is 2x2 */
 
 	/* get vectors, paint cross */
-	Grid_PosToVec(clMap, from_actor_size, fromPos, from);
+	Grid_PosToVec(clMap, fromActorSize, fromPos, from);
 	Grid_PosToVec(clMap, toActorSize, toPos, at);
 	from[2] += selFD->shotOrg[1];
 
@@ -3040,7 +3029,7 @@ static void CL_AddPathingBox (pos3_t pos)
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
-	const int crouchingState = selActor && (selActor->state & STATE_CROUCHED) ? 1 : 0;
+	const byte crouchingState = selActor && (selActor->state & STATE_CROUCHED) ? 1 : 0;
 	const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
 	const int TUhave = CL_UsableTUs(selActor);
 
@@ -3173,7 +3162,7 @@ void CL_DumpMoveMark_f (void)
 	const int fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
-	const int crouchingState = selActor
+	const byte crouchingState = selActor
 		? (selActor->state & STATE_CROUCHED ? 1 : 0)
 		: 0;
 	const int temp = developer->integer;
@@ -3226,7 +3215,7 @@ void CL_DumpTUs_f (void)
  */
 void CL_DebugPath_f (void)
 {
-	const int actor_size = 1;
+	const int actorSize = 1;
 	const pos_t x = mousePos[0];
 	const pos_t y = mousePos[1];
 	const pos_t z = mousePos[2];
@@ -3237,47 +3226,47 @@ void CL_DebugPath_f (void)
 		return;
 
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
-		RT_FLOOR(clMap, actor_size, x, y, z),
-		RT_CEILING(clMap, actor_size, x, y, z) );
+		RT_FLOOR(clMap, actorSize, x, y, z),
+		RT_CEILING(clMap, actorSize, x, y, z) );
 	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
-		RT_CONN_PX(clMap, actor_size, x, y, z),		// dir = 0
-		RT_CONN_NX(clMap, actor_size, x, y, z),		// 1
-		RT_CONN_PY(clMap, actor_size, x, y, z),		// 2
-		RT_CONN_NY(clMap, actor_size, x, y, z) );	// 3
+		RT_CONN_PX(clMap, actorSize, x, y, z),		// dir = 0
+		RT_CONN_NX(clMap, actorSize, x, y, z),		// 1
+		RT_CONN_PY(clMap, actorSize, x, y, z),		// 2
+		RT_CONN_NY(clMap, actorSize, x, y, z) );	// 3
 	Com_Printf("connections diago: (PX_PY=%i, NX_NY=%i, NX_PY=%i, PX_NY=%i))\n",
-		RT_CONN_PX_PY(clMap, actor_size, x, y, z),	// dir = 4
-		RT_CONN_NX_NY(clMap, actor_size, x, y, z),	// 5
-		RT_CONN_NX_PY(clMap, actor_size, x, y, z),	// 6
-		RT_CONN_PX_NY(clMap, actor_size, x, y, z) );// 7
+		RT_CONN_PX_PY(clMap, actorSize, x, y, z),	// dir = 4
+		RT_CONN_NX_NY(clMap, actorSize, x, y, z),	// 5
+		RT_CONN_NX_PY(clMap, actorSize, x, y, z),	// 6
+		RT_CONN_PX_NY(clMap, actorSize, x, y, z) );// 7
 	Com_Printf("stepup ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
-		RT_STEPUP_PX(clMap, actor_size, x, y, z),		// dir = 0
-		RT_STEPUP_NX(clMap, actor_size, x, y, z),		// 1
-		RT_STEPUP_PY(clMap, actor_size, x, y, z),		// 2
-		RT_STEPUP_NY(clMap, actor_size, x, y, z) );		// 3
+		RT_STEPUP_PX(clMap, actorSize, x, y, z),		// dir = 0
+		RT_STEPUP_NX(clMap, actorSize, x, y, z),		// 1
+		RT_STEPUP_PY(clMap, actorSize, x, y, z),		// 2
+		RT_STEPUP_NY(clMap, actorSize, x, y, z) );		// 3
 
 #if 0
 	Com_Printf("performing RT_UpdateConnection() in dir: %i\n", dir);
-//	RT_UpdateConnectionColumn(clMap, actor_size, x, y, dir);
-	RT_UpdateConnection(clMap, actor_size, x, y, z, dir);
+//	RT_UpdateConnectionColumn(clMap, actorSize, x, y, dir);
+	RT_UpdateConnection(clMap, actorSize, x, y, z, dir);
 	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
-		RT_CONN_PX(clMap, actor_size, x, y, z),
-		RT_CONN_NX(clMap, actor_size, x, y, z),
-		RT_CONN_PY(clMap, actor_size, x, y, z),
-		RT_CONN_NY(clMap, actor_size, x, y, z) );
+		RT_CONN_PX(clMap, actorSize, x, y, z),
+		RT_CONN_NX(clMap, actorSize, x, y, z),
+		RT_CONN_PY(clMap, actorSize, x, y, z),
+		RT_CONN_NY(clMap, actorSize, x, y, z) );
 	Com_Printf("connections diago: (PX_PY=%i, NX_NY=%i, NX_PY=%i, PX_NY=%i))\n",
-		RT_CONN_PX_PY(clMap, actor_size, x, y, z),	// dir = 4
-		RT_CONN_NX_NY(clMap, actor_size, x, y, z),	// 5
-		RT_CONN_NX_PY(clMap, actor_size, x, y, z),	// 6
-		RT_CONN_PX_NY(clMap, actor_size, x, y, z) );// 7
+		RT_CONN_PX_PY(clMap, actorSize, x, y, z),	// dir = 4
+		RT_CONN_NX_NY(clMap, actorSize, x, y, z),	// 5
+		RT_CONN_NX_PY(clMap, actorSize, x, y, z),	// 6
+		RT_CONN_PX_NY(clMap, actorSize, x, y, z) );// 7
 #endif
 #if 0
-	new_z = RT_CheckCell(clMap, actor_size, x, y, z);
+	new_z = RT_CheckCell(clMap, actorSize, x, y, z);
 	Com_Printf("check returns: Z=%i\n", new_z);
 #endif
 #if 0
 	priorityQueue_t pqueue;
 	PQueueInitialise(&pqueue, 1024);
-	Grid_MoveMark(clMap, actor_size, selActor->pathMap, mousePos, 0, dir, &pqueue);
+	Grid_MoveMark(clMap, actorSize, selActor->pathMap, mousePos, 0, dir, &pqueue);
 	PQueueFree(&pqueue);
 #endif
 }
