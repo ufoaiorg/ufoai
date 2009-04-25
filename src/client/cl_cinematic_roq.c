@@ -451,6 +451,7 @@ static void CIN_ROQ_DecodeSoundStereo (const byte *data, short *samples)
 
 /**
  * @sa CIN_ROQ_RunCinematic
+ * @return true if the cinematic is still running, false otherwise
  */
 static qboolean CIN_ROQ_DecodeChunk (void)
 {
@@ -522,6 +523,9 @@ static void CIN_ROQ_DrawCinematic (void)
 	R_DrawTexture(texnum, cin.x, cin.y, cin.w, cin.h);
 }
 
+/**
+ * @return true if the cinematic is still running, false otherwise
+ */
 qboolean CIN_ROQ_RunCinematic (void)
 {
 	qboolean runState = CIN_ROQ_DecodeChunk();
@@ -577,7 +581,7 @@ void CIN_ROQ_PlayCinematic (const char *fileName)
 	Q_strncpyz(cin.name, fileName, sizeof(cin.name));
 
 	/* Set to play the cinematic in fullscreen mode */
-	CIN_SetParameters(0, 0, viddef.virtualWidth, viddef.viewHeight, CIN_STATUS_FULLSCREEN, qfalse);
+	CIN_SetParameters(0, 0, viddef.virtualWidth, viddef.virtualHeight, CIN_STATUS_FULLSCREEN, qfalse);
 
 	roqCin.size = size;
 	roqCin.offset = sizeof(header);
