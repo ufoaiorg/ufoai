@@ -271,7 +271,7 @@ int FS_Seek (qFILE * f, long offset, int origin)
 }
 
 /**
- * @returns filesize
+ * @return filesize
  * @sa FS_OpenFileSingle
  * @sa FS_LoadFile
  */
@@ -284,6 +284,7 @@ int FS_OpenFile (const char *filename, qFILE * file, filemode_t mode)
 /**
  * @brief Just returns the filelength and -1 if the file wasn't found
  * @note Won't print any errors
+ * @sa FS_FileExists
  */
 int FS_CheckFile (const char *filename)
 {

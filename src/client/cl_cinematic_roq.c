@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_cinematic.h"
 #include "cl_cinematic_roq.h"
-#include "cl_console.h"
 #include "cl_sound.h"
 #include "cl_music.h"
 #include "renderer/r_draw.h"
@@ -65,13 +64,6 @@ typedef struct {
 } roqQuadCell_t;
 
 typedef struct {
-	int				vr[256];
-	int				ug[256];
-	int				vg[256];
-	int				ub[256];
-} yuvTable_t;
-
-typedef struct {
 	qFILE			file;
 	int				size;
 	int				offset;
@@ -98,7 +90,6 @@ typedef struct {
 	roqQuadCell_t	quadCells[256];
 } roqCinematic_t;
 
-static yuvTable_t	roqCin_yuvTable;
 static short		roqCin_sqrTable[256];
 
 static int			roqCin_quadOffsets2[2][4];
@@ -269,9 +260,9 @@ static void CIN_ROQ_DecodeCodeBook (const byte *data)
 
 	/* Decode YUV quad vectors to RGB */
 	for (i = 0; i < numQuadVectors; i++) {
-		const int r = roqCin_yuvTable.vr[data[5]];
-		const int g = roqCin_yuvTable.ug[data[4]] + roqCin_yuvTable.vg[data[5]];
-		const int b = roqCin_yuvTable.ub[data[4]];
+		const int r = cin.yuvTable.vr[data[5]];
+		const int g = cin.yuvTable.ug[data[4]] + cin.yuvTable.vg[data[5]];
+		const int b = cin.yuvTable.ub[data[4]];
 
 		((byte *)&roqCin.quadVectors[i].pixel[0])[0] = CIN_ROQ_ClampByte(data[0] + r);
 		((byte *)&roqCin.quadVectors[i].pixel[0])[1] = CIN_ROQ_ClampByte(data[0] - g);
@@ -577,6 +568,8 @@ void CIN_ROQ_PlayCinematic (const char *fileName)
 		Com_Error(ERR_DROP, "CIN_PlayCinematic: invalid RoQ header");
 	}
 
+	cin.cinematicType = CINEMATIC_TYPE_ROQ;
+
 	/* Fill it in */
 	Q_strncpyz(cin.name, fileName, sizeof(cin.name));
 
@@ -606,10 +599,6 @@ void CIN_ROQ_PlayCinematic (const char *fileName)
 	roqCin.offset += ROQ_CHUNK_HEADER_SIZE;
 
 	roqCin.header = roqCin.data;
-
-	/* Force console off in fullscreen mode - not neccessary in menu playback mode */
-	if (cls.playingCinematic == CIN_STATUS_FULLSCREEN)
-		Con_Close();
 
 	if (!cin.noSound) {
 		short samples[ROQ_MAX_CHUNK_SIZE];
@@ -693,15 +682,6 @@ void CIN_ROQ_Init (void)
 	int i;
 
 	memset(&roqCin, 0, sizeof(roqCin));
-
-	/* Build YUV table */
-	for (i = 0; i < 256; i++) {
-		const float f = (float)(i - 128);
-		roqCin_yuvTable.vr[i] = Q_ftol(f * 1.40200f);
-		roqCin_yuvTable.ug[i] = Q_ftol(f * 0.34414f);
-		roqCin_yuvTable.vg[i] = Q_ftol(f * 0.71414f);
-		roqCin_yuvTable.ub[i] = Q_ftol(f * 1.77200f);
-	}
 
 	/* Build square table */
 	for (i = 0; i < 128; i++) {

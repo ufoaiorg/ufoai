@@ -425,6 +425,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_cinematic_roq.h" />
+		<Unit filename="..\..\src\client\cl_cinematic_ogm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_cinematic_ogm.h" />
 		<Unit filename="..\..\src\client\cl_console.c">
 			<Option compilerVar="CC" />
 		</Unit>

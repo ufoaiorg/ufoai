@@ -26,10 +26,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_cinematic.h"
 #include "cl_cinematic_roq.h"
+#include "cl_cinematic_ogm.h"
 #include "cl_sound.h"
 #include "cl_music.h"
+#include "cl_console.h"
 
 cinematic_t cin;
+
+static void CIN_Reset (void)
+{
+	int i;
+
+	memset(&cin, 0, sizeof(cin));
+
+	/* Build YUV table */
+	for (i = 0; i < 256; i++) {
+		const float f = (float)(i - 128);
+		cin.yuvTable.vr[i] = Q_ftol(f * 1.40200f);
+		cin.yuvTable.ug[i] = Q_ftol(f * 0.34414f);
+		cin.yuvTable.vg[i] = Q_ftol(f * 0.71414f);
+		cin.yuvTable.ub[i] = Q_ftol(f * 1.77200f);
+		cin.yuvTable.yy[i] = (i << 6) | (i << 2);
+	}
+}
 
 /**
  * @sa MN_Draw
@@ -55,7 +74,9 @@ void CIN_RunCinematic (void)
 	assert(cls.playingCinematic != CIN_STATUS_NONE);
 
 	/* Decode chunks until the desired frame is reached */
-	if (CIN_ROQ_RunCinematic())
+	if (cin.cinematicType == CINEMATIC_TYPE_ROQ && CIN_ROQ_RunCinematic())
+		return;
+	else if (cin.cinematicType == CINEMATIC_TYPE_OGM && CIN_OGM_RunCinematic())
 		return;
 
 	/* If we get here, the cinematic has either finished or failed */
@@ -76,20 +97,26 @@ void CIN_PlayCinematic (const char *fileName)
 {
 	char name[MAX_OSPATH];
 
-	Com_sprintf(name, sizeof(name), "videos/%s", fileName);
-	Com_DefaultExtension(name, sizeof(name), ".roq");
+	Com_StripExtension(fileName, name, sizeof(name));
 
 	if (cls.playingCinematic <= CIN_STATUS_FULLSCREEN) {
 		/* Make sure sounds aren't playing */
 		S_StopAllSounds();
 		/* also stop the background music */
 		M_Shutdown();
+
+		Con_Close();
 	}
 
 	/* If already playing a cinematic, stop it */
 	CIN_StopCinematic();
 
-	CIN_ROQ_PlayCinematic(name);
+	if (FS_CheckFile(va("%s.roq", name)) >= 0)
+		CIN_ROQ_PlayCinematic(va("%s.roq", name));
+	else if (FS_CheckFile(va("%s.ogm", name)) >= 0)
+		CIN_OGM_PlayCinematic(va("%s.ogm", name));
+	else
+		Com_Printf("Could not find cinematic 'videos/%s'\n", name);
 }
 
 /**
@@ -108,9 +135,12 @@ void CIN_StopCinematic (void)
 		S_StopAllSounds();
 	}
 
-	CIN_ROQ_StopCinematic();
+	if (cin.cinematicType == CINEMATIC_TYPE_ROQ)
+		CIN_ROQ_StopCinematic();
+	else if (cin.cinematicType == CINEMATIC_TYPE_OGM)
+		CIN_OGM_StopCinematic();
 
-	memset(&cin, 0, sizeof(cin));
+	CIN_Reset();
 }
 
 static void CIN_Cinematic_f (void)
@@ -126,7 +156,7 @@ static void CIN_Cinematic_f (void)
 	/* If connected to a server, disconnect */
 	CL_Disconnect();
 
-	CIN_PlayCinematic(Cmd_Argv(1));
+	CIN_PlayCinematic(va("videos/%s", Cmd_Argv(1)));
 }
 
 /**
@@ -148,22 +178,34 @@ static int CIN_CompleteCommand (const char *partial, const char **match)
 	const char *localMatch[MAX_COMPLETE];
 	size_t len;
 
-	FS_BuildFileList("videos/*.roq");
-
 	len = strlen(partial);
 	if (!len) {
+		FS_BuildFileList("videos/*.roq");
 		while ((filename = FS_NextFileFromFileList("videos/*.roq")) != NULL) {
 			Com_Printf("%s\n", filename);
 		}
 		FS_NextFileFromFileList(NULL);
+
+		FS_BuildFileList("videos/*.ogm");
+		while ((filename = FS_NextFileFromFileList("videos/*.ogm")) != NULL) {
+			Com_Printf("%s\n", filename);
+		}
 		return 0;
 	}
 
-	/* start from first file entry */
-	FS_NextFileFromFileList(NULL);
-
 	/* check for partial matches */
 	while ((filename = FS_NextFileFromFileList("videos/*.roq")) != NULL) {
+		if (!strncmp(partial, filename, len)) {
+			Com_Printf("%s\n", filename);
+			localMatch[matches++] = filename;
+			if (matches >= MAX_COMPLETE)
+				break;
+		}
+	}
+	FS_NextFileFromFileList(NULL);
+
+	FS_BuildFileList("videos/*.ogm");
+	while ((filename = FS_NextFileFromFileList("videos/*.ogm")) != NULL) {
 		if (!strncmp(partial, filename, len)) {
 			Com_Printf("%s\n", filename);
 			localMatch[matches++] = filename;
@@ -183,9 +225,10 @@ void CIN_Init (void)
 	Cmd_AddParamCompleteFunction("cinematic", CIN_CompleteCommand);
 	Cmd_AddCommand("cinematic_stop", CIN_CinematicStop_f, "Stops a cinematic");
 
-	memset(&cin, 0, sizeof(cin));
+	CIN_Reset();
 
 	CIN_ROQ_Init();
+	CIN_OGM_Init();
 }
 
 void CIN_Shutdown (void)

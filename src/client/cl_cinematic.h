@@ -26,6 +26,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_CINEMATIC_H
 
 typedef struct {
+	int				vr[256];
+	int				ug[256];
+	int				vg[256];
+	int				ub[256];
+	int				yy[256];
+} yuvTable_t;
+
+enum {
+	CINEMATIC_TYPE_ROQ,
+	CINEMATIC_TYPE_OGM
+};
+
+typedef struct {
 	char			name[MAX_QPATH];	/**< virtuell filesystem path with file suffix */
 
 	qboolean		replay;	/**< autmatically replay in endless loop */
@@ -33,6 +46,9 @@ typedef struct {
 	int				x, y, w, h; /**< for drawing in the menu maybe */
 
 	qboolean		noSound;	/**< no sound while playing the cinematic */
+	yuvTable_t		yuvTable;
+
+	int cinematicType;
 } cinematic_t;
 
 extern cinematic_t cin;

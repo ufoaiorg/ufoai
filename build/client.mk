@@ -4,6 +4,7 @@ CLIENT_SRCS = \
 	client/cl_actor.c \
 	client/cl_cinematic.c \
 	client/cl_cinematic_roq.c \
+	client/cl_cinematic_ogm.c \
 	client/cl_console.c \
 	client/cl_game.c \
 	client/cl_game_campaign.c \
