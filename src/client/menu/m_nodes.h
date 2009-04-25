@@ -45,7 +45,7 @@ struct value_s;
 #include "node/m_node_window.h"
 
 /* exclude rect */
-#define MAX_EXLUDERECTS	32
+#define MAX_EXLUDERECTS	64
 
 typedef struct excludeRect_s {
 	vec2_t pos, size;

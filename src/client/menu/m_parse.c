@@ -569,7 +569,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 	} while (**token != '}');
 
 
-	if (node->excludeRectNum >= MAX_EXLUDERECTS) {
+	if (mn.numExcludeRect >= MAX_EXLUDERECTS) {
 		Com_Printf("MN_ParseExcludeRect: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
 		return qfalse;
 	}
