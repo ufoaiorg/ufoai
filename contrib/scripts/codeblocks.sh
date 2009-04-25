@@ -64,7 +64,7 @@ start_downloads()
 
 	download http://download.berlios.de/codeblocks/ wxmsw28u_gcc_cb_wx289.7z codeblocks_gcc.7z
 	download http://download.berlios.de/codeblocks/ mingwm10_gcc421.7z codeblocks_mingw.7z
-	download http://download.berlios.de/codeblocks/ CB_20090214_rev5456_win32.7z codeblocks.7z
+	download http://download.berlios.de/codeblocks/ CB_20090413_rev5535_win32.7z codeblocks.7z
 
 	download http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.18/ glib-dev_2.18.4-1_win32.zip glib-dev.zip
 	download http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.14/ gtk+-dev_2.14.7-1_win32.zip gtk+-dev.zip
