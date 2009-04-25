@@ -21,8 +21,6 @@
 #include "cl_cinematic_ogm.h"
 #include "renderer/r_draw.h"
 
-#include "../../config.h"
-
 #if defined(HAVE_VORBIS_CODEC_H) && (defined(HAVE_XVID_H) || defined(HAVE_THEORA_THEORA_H))
 
 #include <ogg/ogg.h>
