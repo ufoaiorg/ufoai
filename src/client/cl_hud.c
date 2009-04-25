@@ -1292,30 +1292,30 @@ void HUD_ActorUpdateCvars (void)
 			const int reservedTUs = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
 			/* If the mouse is outside the world, and we haven't placed the cursor in pend
 			 * mode already or the selected grid field is not reachable (ROUTING_NOT_REACHABLE) */
-			if ((mouseSpace != MS_WORLD && selActor->actorMode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
-				actorMoveLength = ROUTING_NOT_REACHABLE;
+			if ((mouseSpace != MS_WORLD && selActor->actorMode < M_PEND_MOVE) || selActor->actorMoveLength == ROUTING_NOT_REACHABLE) {
+				selActor->actorMoveLength = ROUTING_NOT_REACHABLE;
 				if (reservedTUs > 0)
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reservedTUs);
 				else
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), selActor->morale);
 				MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			}
-			if (actorMoveLength != ROUTING_NOT_REACHABLE) {
+			if (selActor->actorMoveLength != ROUTING_NOT_REACHABLE) {
 				if (reservedTUs > 0)
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
-						selActor->morale, reservedTUs, moveModeDescriptions[CL_MoveMode(selActor, actorMoveLength)], actorMoveLength,
-						selActor->TU - actorMoveLength, selActor->TU - reservedTUs - actorMoveLength);
+						selActor->morale, reservedTUs, moveModeDescriptions[CL_MoveMode(selActor, selActor->actorMoveLength)], selActor->actorMoveLength,
+						selActor->TU - selActor->actorMoveLength, selActor->TU - reservedTUs - selActor->actorMoveLength);
 				else
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
-						moveModeDescriptions[CL_MoveMode(selActor, actorMoveLength)] , actorMoveLength, selActor->TU - actorMoveLength);
+						moveModeDescriptions[CL_MoveMode(selActor, selActor->actorMoveLength)] , selActor->actorMoveLength, selActor->TU - selActor->actorMoveLength);
 
-				if (actorMoveLength <= CL_UsableTUs(selActor))
-					Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", actorMoveLength, CL_UsableTUs(selActor));
+				if (selActor->actorMoveLength <= CL_UsableTUs(selActor))
+					Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", selActor->actorMoveLength, CL_UsableTUs(selActor));
 				else
 					Com_sprintf(mouseText, lengthof(mouseText), "- (-)\n");
 			}
 			MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
-			time = actorMoveLength;
+			time = selActor->actorMoveLength;
 		} else {
 			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			if (selWeapon && !GAME_ItemIsUseable(selWeapon->item.t)) {
@@ -1405,7 +1405,7 @@ void HUD_ActorUpdateCvars (void)
 
 		selActor->oldstate = selActor->state;
 		/** @todo Check if the use of "time" is correct here (e.g. are the reserved TUs ignored here etc...?) */
-		if (actorMoveLength >= ROUTING_NOT_REACHABLE || (selActor->actorMode != M_MOVE && selActor->actorMode != M_PEND_MOVE))
+		if (selActor->actorMoveLength >= ROUTING_NOT_REACHABLE || (selActor->actorMode != M_MOVE && selActor->actorMode != M_PEND_MOVE))
 			time = CL_UsableTUs(selActor);
 
 		HUD_RefreshWeaponButtons(selActor, time);

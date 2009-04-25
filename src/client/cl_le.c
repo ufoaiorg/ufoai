@@ -611,14 +611,15 @@ static void LET_PathMove (le_t * le)
 			const byte dir = getDVdir(fulldv);
 			const byte crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
 			/** @note newCrouchingState needs to be set to the current crouching state and is possibly updated by PosAddDV. */
-			int newCrouchingState = crouchingState;
+			byte newCrouchingState = crouchingState;
 			PosAddDV(le->pos, newCrouchingState, fulldv);
 
-			if (le == selActor) {
+			if (le->selected) {
 				const int tuCost = Grid_MoveLength(le->pathMap, le->pos, newCrouchingState, qfalse) - Grid_MoveLength(le->pathMap, le->oldPos, crouchingState, qfalse);
 				if (tuCost < 0)
 					Com_Error(ERR_DROP, "Negative TU costs while walking");
-				actorMoveLength -= tuCost;
+				/** @todo overflow check */
+				le->actorMoveLength -= tuCost;
 			}
 
 			/* walking in water will not play the normal footstep sounds */

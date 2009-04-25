@@ -1081,7 +1081,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 static void CL_ActorStats (struct dbuffer *msg)
 {
 	le_t *le;
-	int number, selActorTU = 0;
+	int number, oldTUs = 0;
 
 	number = NET_ReadShort(msg);
 	le = LE_Get(number);
@@ -1101,7 +1101,7 @@ static void CL_ActorStats (struct dbuffer *msg)
 	}
 
 	if (le == selActor)
-		selActorTU = selActor->TU;
+		oldTUs = selActor->TU;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_STATS], &le->TU, &le->HP, &le->STUN, &le->morale);
 
@@ -1113,8 +1113,8 @@ static void CL_ActorStats (struct dbuffer *msg)
 		le->maxMorale = le->morale;
 
 	/* if selActor's timeunits have changed, update movelength */
-	if (le == selActor && selActor->TU != selActorTU)
-		CL_ResetActorMoveLength();
+	if (le->TU != oldTUs && le->selected)
+		CL_ResetActorMoveLength(le);
 }
 
 
@@ -1171,8 +1171,8 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 	}
 
 	/* state change may have affected move length */
-	if (selActor)
-		CL_ResetActorMoveLength();
+	if (le->selected)
+		CL_ResetActorMoveLength(le);
 }
 
 

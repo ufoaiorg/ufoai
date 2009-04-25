@@ -74,6 +74,12 @@ typedef struct le_s {
 	actorModes_t actorMode;		/**< current selected action for the selected actor */
 	/** for double-click movement and confirmations ... */
 	pos3_t mousePendPos;
+	/**
+	 * @brief The TUs that the current selected actor needs to walk to the
+	 * current grid position marked by the mouse cursor (mousePos)
+	 * @sa CL_MoveLength
+	 */
+	byte actorMoveLength;
 
 	int clientAction;		/**< entnum from server that is currently triggered */
 

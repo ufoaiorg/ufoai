@@ -63,13 +63,6 @@ pos3_t mousePos; /**< The cell that an actor will move to when directed to move.
  */
 int mousePosTargettingAlign = 0;
 
-/**
- * @brief The TUs that the current selected actor needs to walk to the
- * current grid position marked by the mouse cursor (mousePos)
- * @sa CL_MoveLength
- */
-byte actorMoveLength;
-
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
 
@@ -1012,7 +1005,7 @@ void CL_ConditionalMoveCalcForCurrentSelectedActor (void)
 		const byte crouchingState = (selActor->state & STATE_CROUCHED) ? 1 : 0;
 		CL_BuildForbiddenList();
 		Grid_MoveCalc(clMap, selActor->fieldSize, selActor->pathMap, selActor->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
-		CL_ResetActorMoveLength();
+		CL_ResetActorMoveLength(selActor);
 	}
 }
 
@@ -1053,10 +1046,9 @@ static byte CL_MoveLength (const le_t *le, pos3_t to)
 /**
  * @brief Recalculates the currently selected Actor's move length.
  */
-void CL_ResetActorMoveLength (void)
+void CL_ResetActorMoveLength (le_t *le)
 {
-	assert(selActor);
-	actorMoveLength = CL_MoveLength(selActor, mousePos);
+	le->actorMoveLength = CL_MoveLength(le, mousePos);
 }
 
 /**
@@ -2267,7 +2259,7 @@ void CL_ActorMouseTrace (void)
 	/* calculate move length */
 	if (selActor && !VectorCompare(mousePos, mouseLastPos)) {
 		VectorCopy(mousePos, mouseLastPos);
-		CL_ResetActorMoveLength();
+		CL_ResetActorMoveLength(selActor);
 	}
 
 	/* mouse is in the world */
@@ -2806,7 +2798,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	/* Paint the green box if move is possible ...
 	 * OR paint a dark blue one if move is impossible or the
 	 * soldier does not have enough TimeUnits left. */
-	if (selActor && actorMoveLength < ROUTING_NOT_REACHABLE && actorMoveLength <= CL_UsableTUs(selActor))
+	if (selActor && selActor->actorMoveLength < ROUTING_NOT_REACHABLE && selActor->actorMoveLength <= CL_UsableTUs(selActor))
 		VectorSet(ent.angles, 0, 1, 0); /* Green */
 	else
 		VectorSet(ent.angles, 0, 0, 0.6); /* Dark Blue */
