@@ -621,19 +621,6 @@ int CIN_OGM_PlayCinematic (const char* filename)
 					ogmCin.videoStreamIsXvid = qtrue;
 
 					sh = (stream_header_t*) (og.body + 1);
-					/** @todo one solution for checking xvid and theora */
-					if (!Q_IsPowerOfTwo(sh->sh.stream_header_video.width)) {
-						Com_Printf("VideoWidth of the ogm-file isn't a power of 2 value (%s): %i\n",
-								filename, sh->sh.stream_header_video.width);
-
-						return -5;
-					}
-					if (!Q_IsPowerOfTwo(sh->sh.stream_header_video.height)) {
-						Com_Printf("VideoHeight of the ogm-file isn't a power of 2 value (%s): %i\n",
-								filename, sh->sh.stream_header_video.height);
-
-						return -6;
-					}
 
 					ogmCin.Vtime_unit = sh->time_unit;
 
@@ -726,18 +713,6 @@ int CIN_OGM_PlayCinematic (const char* filename)
 		}
 
 		theora_decode_init(&ogmCin.th_state, &ogmCin.th_info);
-		if (!Q_IsPowerOfTwo(ogmCin.th_info.width)) {
-			Com_Printf("VideoWidth of the ogm-file isn't a power of 2 value (%s): %i\n",
-					filename, ogmCin.th_info.width);
-
-			return -5;
-		}
-		if (!Q_IsPowerOfTwo(ogmCin.th_info.height)) {
-			Com_Printf("VideoHeight of the ogm-file isn't a power of 2 value (%s): %i\n",
-					filename, ogmCin.th_info.height);
-
-			return -6;
-		}
 		ogmCin.Vtime_unit = ((ogg_int64_t) ogmCin.th_info.fps_denominator * 1000* 10000 / ogmCin .th_info.fps_numerator);
 	}
 #endif
