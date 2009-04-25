@@ -96,13 +96,12 @@ window campaigns
 
 	text campaign_desc
 	{
-		pos	"500 320"
-		lineheight	"20"
-		size	"415 360"
 		textid		TEXT_STANDARD
-		rows	18
-//		bgcolor "1 1 1 0.4"
-		onWheel {
+		pos			"500 320"
+		size		"415 360"
+		lineheight	20
+		rows		18
+		onWheel		{
 			*(abstractscrollbar)campaign_desc_scroll current <text_scroll>
 		}
 		onLinesChange {
@@ -112,12 +111,14 @@ window campaigns
 	}
 
 	vscrollbar campaign_desc_scroll {
-		image	ui/scrollbar_v_green
-		pos	"923 300"	height	"380"
-		current 0
-		viewsize 19
-		fullsize 19
-		onChange {
+		image		ui/scrollbar_v_green
+		pos			"923 320"
+		height		360
+		current		0
+		viewsize	19
+		fullsize	19
+		hidewhenunused true
+		onChange	{
 			cmd "mn_textscroll campaign_desc <lastdiff>;"
 		}
 	}
