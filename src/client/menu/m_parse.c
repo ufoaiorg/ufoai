@@ -609,10 +609,12 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 			return qfalse;
 	} else {
 		/** @todo dummy action, check whether this is really needed */
+#if 0	/**< we dont need to alloc an action for nothing */
 		if (mn.numActions >= MAX_MENUACTIONS)
 			Sys_Error("MN_ParseEventProperty: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
 		*action = &mn.menuActions[mn.numActions++];
 		memset(*action, 0, sizeof(**action));
+#endif
 	}
 	return qtrue;
 }
