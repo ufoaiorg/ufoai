@@ -15,7 +15,7 @@ tips tiplist {
 	"_To make a soldier look into a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
 	"_Be sure to hire as many scientists as you can. The earlier you know your enemy, the easier he is to defeat."
 	"_Be sure to hire as many engineers as you can. The faster your production lines, the sooner you can get access to better equipment and resupplies."
-	"_Be sure to visit our website, http://ufoai.sf.net/ and drop by our community channel, #ufoai on irc.freenode.net.
+	"_Be sure to visit our website, http://ufoai.sf.net/ and drop by our community channel, #ufoai on irc.freenode.net."
 	"_Remember that you need an active Command Centre in order to launch interceptors."
 	"_Never pass up an opportunity to capture a live alien, even one you have already researched."
 	"_Watch your back! Your soldiers can only see enemies in an arc in front of them."
@@ -47,7 +47,7 @@ tips tiplist {
 	"_Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] key will draw a line to each enemy the selected soldier can see."
 	"_You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base equipment, not in the tactical missions where such an action would cost TUs."
 	"_You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
-	"_Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to "multiple shots" to pick off aliens."
+	"_Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
 	"_Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
 	"_Consider stunning the civilians during Terror Site missions to keep them from running around. Aliens also seem to prefer killing conscious civilians rather than unconscious ones."
 	"_Don't forget to install missiles launchers and missiles in your missile batteries."
@@ -58,6 +58,6 @@ tips tiplist {
 	"_Remember to check your research and production queues often! A good arsenal is an active arsenal!"
 	"_The presence of live civilians probably means that there are no live aliens nearby. This can save time clearing a map."
 	"_Watch health of your soldiers, do not let them die. Experienced soldiers are more efficient in missions than new recruits."
-	"_You can prepare the actions for the next round while you are waiting. Hitting the [enter] button twice will perform all those pending actions once it's your round again."
+	"_You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 }
 
