@@ -93,13 +93,32 @@ window geoscape
 
 		text description
 		{
-			pos			"32 154"
-			size		"192 144"
-			lineheight		18
-			tabwidth	100
-			rows		"8"
-			scrollbar	true
 			textid		TEXT_STANDARD
+			pos			"32 154"
+			size		"172 144"
+			lineheight	18
+			tabwidth	70
+			rows		8
+			onLinesChange {
+				*node:(abstractscrollbar)parent.description_scroll fullsize <lines>
+				*node:(abstractscrollbar)parent.description_scroll current <text_scroll>
+			}
+			onWheel {
+				*node:(abstractscrollbar)parent.description_scroll current <text_scroll>
+			}
+		}
+
+		vscrollbar description_scroll {
+			image		ui/scrollbar_v_green
+			pos			"205 151"
+			height		"144"
+			current		0
+			viewsize	8
+			fullsize	8
+			hidewhenunused	true
+			onChange {
+				cmd "mn_textscroll control.description <lastdiff>;"
+			}
 		}
 
 		// ==================
