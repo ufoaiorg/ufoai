@@ -81,7 +81,7 @@ const char *CL_GetSkillString(const int skill);
 
 const fireDef_t *CL_GetWeaponAndAmmo(const le_t * actor, const char hand);
 int CL_GetActorNumber(const le_t * le);
-int CL_CheckAction(void);
+int CL_CheckAction(const le_t *le);
 qboolean CL_WeaponWithReaction(const le_t * actor, const char hand);
 
 int CL_UsableReactionTUs(const le_t * le);
@@ -134,7 +134,7 @@ void CL_ActorDie(struct dbuffer *msg);
 void CL_PlayActorSound(const le_t *le, actorSound_t soundType);
 
 void CL_ActorActionMouse(void);
-void CL_ActorUseDoor(void);
+void CL_ActorUseDoor(const le_t *le);
 void CL_ActorDoorAction_f(void);
 
 void CL_NextRound_f(void);

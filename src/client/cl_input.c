@@ -364,26 +364,48 @@ static void CL_ZoomOutQuant_f (void)
 }
 
 /**
+ * Performs pending actions for the given actor
+ * @param le The actor that should perform the pending actions
+ */
+static void CL_ConfirmAction (le_t *le)
+{
+	if (le->team != cl.actTeam)
+		return;
+
+	switch (le->actorMode) {
+	case M_PEND_MOVE:
+		CL_ActorStartMove(le, le->mousePendPos);
+		break;
+	case M_PEND_FIRE_R:
+	case M_PEND_FIRE_L:
+		CL_ActorShoot(le, le->mousePendPos);
+		break;
+	default:
+		break;
+	}
+}
+
+/**
  * @brief Executes "pending" actions such as walking and firing.
  * @note Manually triggered by the player when hitting the "confirm" button.
  */
 static void CL_ConfirmAction_f (void)
 {
+	static int time = 0;
+
 	if (!selActor)
 		return;
 
-	switch (selActor->actorMode) {
-	case M_PEND_MOVE:
-		CL_ActorStartMove(selActor, selActor->mousePendPos);
-		break;
-	case M_PEND_FIRE_R:
-	case M_PEND_FIRE_L:
-		CL_ActorShoot(selActor, selActor->mousePendPos);
-		/** @todo this might've broken animation choosing in cl_actor:CL_ActorDoShoot and CL_ActorStartShoot. */
-		/* selActor->actorMode = M_MOVE; */
-		break;
-	default:
-		break;
+	if (time - cl.time < 1000) {
+		int i;
+		for (i = 0; i < numLEs; i++) {
+			le_t *le = &LEs[i];
+			if (LE_IsLivingActor(le) && le->team == cls.team)
+				CL_ConfirmAction(le);
+		}
+	} else {
+		time = cl.time;
+		CL_ConfirmAction(selActor);
 	}
 }
 

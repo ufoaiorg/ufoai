@@ -1012,13 +1012,13 @@ void CL_ConditionalMoveCalcActor (le_t *le)
 /**
  * @brief Checks that an action is valid.
  */
-int CL_CheckAction (void)
+int CL_CheckAction (const le_t *le)
 {
-	if (!selActor)
+	if (!le)
 		return qfalse;
 
 	/* already moving */
-	if (selActor->pathLength)
+	if (le->pathLength)
 		return qfalse;
 
 	if (cls.team != cl.actTeam) {
@@ -1152,7 +1152,7 @@ void CL_ActorStartMove (le_t * le, pos3_t to)
 	if (mouseSpace != MS_WORLD)
 		return;
 
-	if (!CL_CheckAction())
+	if (!CL_CheckAction(le))
 		return;
 
 	length = CL_MoveLength(le, to);
@@ -1194,7 +1194,7 @@ void CL_ActorShoot (const le_t * le, pos3_t at)
 	if (mouseSpace != MS_WORLD)
 		return;
 
-	if (!CL_CheckAction())
+	if (!CL_CheckAction(le))
 		return;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_ActorShoot: cl.firemode %i.\n", le->currentSelectedFiremode);
@@ -1229,7 +1229,7 @@ void CL_ActorReload (le_t *le, int hand)
 	int x, y, tu;
 	int container, bestContainer;
 
-	if (!CL_CheckAction())
+	if (!CL_CheckAction(le))
 		return;
 
 	/* check weapon */
@@ -1294,15 +1294,15 @@ void CL_ActorReload (le_t *le, int hand)
  * @sa CL_ActorDoorAction
  * @sa G_ClientUseEdict
  */
-void CL_ActorUseDoor (void)
+void CL_ActorUseDoor (const le_t *le)
 {
-	if (!CL_CheckAction())
+	if (!CL_CheckAction(le))
 		return;
 
-	assert(selActor->clientAction);
+	assert(le->clientAction);
 
-	MSG_Write_PA(PA_USE_DOOR, selActor->entnum, selActor->clientAction);
-	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUseDoor: Use door number: %i (actor %i)\n", selActor->clientAction, selActor->entnum);
+	MSG_Write_PA(PA_USE_DOOR, le->entnum, le->clientAction);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUseDoor: Use door number: %i (actor %i)\n", le->clientAction, le->entnum);
 }
 
 /**
@@ -1335,7 +1335,7 @@ void CL_ActorDoorAction (struct dbuffer *msg)
  */
 void CL_ActorDoorAction_f (void)
 {
-	if (!CL_CheckAction())
+	if (!CL_CheckAction(selActor))
 		return;
 
 	/* no client action */
@@ -1346,7 +1346,7 @@ void CL_ActorDoorAction_f (void)
 
 	/* Check if we should even try to send this command (no TUs left or). */
 	if (CL_UsableTUs(selActor) >= TU_DOOR_ACTION)
-		CL_ActorUseDoor();
+		CL_ActorUseDoor(selActor);
 }
 
 /**
@@ -1474,7 +1474,7 @@ void CL_ActorTurnMouse (void)
 	if (mouseSpace != MS_WORLD)
 		return;
 
-	if (!CL_CheckAction())
+	if (!CL_CheckAction(selActor))
 		return;
 
 	if (CL_UsableTUs(selActor) < TU_TURN) {
@@ -1537,7 +1537,7 @@ void CL_ActorDoTurn (struct dbuffer *msg)
  */
 void CL_ActorStandCrouch_f (void)
 {
-	if (!CL_CheckAction())
+	if (!CL_CheckAction(selActor))
 		return;
 
 	if (selActor->fieldSize == ACTOR_SIZE_2x2)
@@ -1564,7 +1564,7 @@ void CL_ActorUseHeadgear_f (void)
 	 * function work */
 	mouseSpace = MS_WORLD;
 
-	if (!CL_CheckAction())
+	if (!CL_CheckAction(selActor))
 		return;
 
 	headgear = HEADGEAR(selActor);

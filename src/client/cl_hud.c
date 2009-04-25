@@ -1442,7 +1442,7 @@ void HUD_ActorUpdateCvars (void)
  */
 void CL_ActorToggleCrouchReservation_f (void)
 {
-	if (!CL_CheckAction())
+	if (!CL_CheckAction(selActor))
 		return;
 
 	selChr = CL_GetActorChr(selActor);
@@ -1477,7 +1477,7 @@ static void CL_ActorToggleReaction_f (void)
 {
 	int state = 0;
 
-	if (!CL_CheckAction())
+	if (!CL_CheckAction(selActor))
 		return;
 
 	selChr = CL_GetActorChr(selActor);
