@@ -281,9 +281,10 @@ static void SCR_DrawCursor (void)
 			R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, image);
 
 		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
-			if (selActor) {
+			le_t *le = selActor;
+			if (le) {
 				/* Display 'crouch' icon if actor is crouched. */
-				if (selActor->state & STATE_CROUCHED) {
+				if (le->state & STATE_CROUCHED) {
 					image = R_FindImage("pics/cursors/ducked", it_pic);
 					if (image)
 						R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, image);
@@ -292,9 +293,9 @@ static void SCR_DrawCursor (void)
 				iconOffsetY += iconSpacing;
 
 				/* Display 'Reaction shot' icon if actor has it activated. */
-				if (selActor->state & STATE_REACTION_ONCE)
+				if (le->state & STATE_REACTION_ONCE)
 					image = R_FindImage("pics/cursors/reactionfire", it_pic);
-				else if (selActor->state & STATE_REACTION_MANY)
+				else if (le->state & STATE_REACTION_MANY)
 					image = R_FindImage("pics/cursors/reactionfiremany", it_pic);
 				else
 					image = NULL;

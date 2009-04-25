@@ -1483,6 +1483,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 		assert(EXTRADATA(source).container);
 		assert(target);
 		assert(EXTRADATA(target).container);
+		assert(selActor);
 		/** @todo not sure whether a network event belongs into the menu code... */
 		MSG_Write_PA(PA_INVMOVE, selActor->entnum,
 			EXTRADATA(source).container->id, dragInfoFromX, dragInfoFromY,

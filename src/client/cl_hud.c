@@ -522,7 +522,7 @@ void HUD_DisplayPossibleReaction (const le_t * actor)
 	if (!actor)
 		return;
 
-	if (actor != selActor) {
+	if (!actor->selected) {
 		/* Given actor does not equal the currently selected actor. This normally only happens on game-start. */
 		return;
 	}
@@ -549,7 +549,7 @@ qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
 	if (!actor)
 		return qfalse;
 
-	if (actor != selActor) {
+	if (!actor->selected) {
 		/* Given actor does not equal the currently selected actor. */
 		return qfalse;
 	}
@@ -996,7 +996,7 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 	/* Crouch/stand button. */
 	if (le->state & STATE_CROUCHED) {
 		weaponButtonState[BT_STAND] = BT_STATE_DISABLE;
-		if ((time + CL_ReservedTUs(le, RES_CROUCH)) < TU_CROUCH) {
+		if (time + CL_ReservedTUs(le, RES_CROUCH) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for standing up."));
 			HUD_SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
 		} else {
@@ -1005,7 +1005,7 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 		}
 	} else {
 		weaponButtonState[BT_CROUCH] = BT_STATE_DISABLE;
-		if ((time + CL_ReservedTUs(le, RES_CROUCH)) < TU_CROUCH) {
+		if (time + CL_ReservedTUs(le, RES_CROUCH) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for crouching."));
 			HUD_SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
 		} else {
@@ -1558,7 +1558,7 @@ static void CL_ReloadLeft_f (void)
 {
 	if (!selActor || !CL_CheckMenuAction(selActor, CL_GetLeftHandWeapon(selActor), EV_INV_RELOAD))
 		return;
-	CL_ActorReload(csi.idLeft);
+	CL_ActorReload(selActor, csi.idLeft);
 }
 
 /**
@@ -1568,7 +1568,7 @@ static void CL_ReloadRight_f (void)
 {
 	if (!selActor || !CL_CheckMenuAction(selActor, RIGHT(selActor), EV_INV_RELOAD))
 		return;
-	CL_ActorReload(csi.idRight);
+	CL_ActorReload(selActor, csi.idRight);
 }
 
 

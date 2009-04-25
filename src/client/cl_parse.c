@@ -1063,7 +1063,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 
 			/* update pathing as new actor could block path */
 			if (newActor)
-				CL_ConditionalMoveCalcForCurrentSelectedActor();
+				CL_ConditionalMoveCalcActor(selActor);
 		}
 	}
 
@@ -1100,8 +1100,8 @@ static void CL_ActorStats (struct dbuffer *msg)
 		return;
 	}
 
-	if (le == selActor)
-		oldTUs = selActor->TU;
+	if (le->selected)
+		oldTUs = le->TU;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_STATS], &le->TU, &le->HP, &le->STUN, &le->morale);
 
@@ -1146,10 +1146,9 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 	 * If standing up or crouching down, set this le as the last moving.
 	 * Also remove the reserved-state for crouching.
 	 */
-	if ((state & STATE_CROUCHED && !(le->state & STATE_CROUCHED)) ||
-		 (!(state & STATE_CROUCHED) && le->state & STATE_CROUCHED)) {
-		if ((CL_UsableTUs(selActor) < TU_CROUCH)
-		&&  (CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH)) {
+	if (((state & STATE_CROUCHED) && !(le->state & STATE_CROUCHED)) ||
+		 (!(state & STATE_CROUCHED) && (le->state & STATE_CROUCHED))) {
+		if (CL_UsableTUs(le) < TU_CROUCH && CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
 			/* We have not enough non-reserved TUs,
 			 * but some reserved for crouching/standing up.
 			 * i.e. we only reset the reservation for crouching if it's the very last attempt. */

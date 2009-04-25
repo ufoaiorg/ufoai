@@ -76,6 +76,7 @@ void CL_CompleteRecalcRouting (void)
 
 /**
  * @sa LE_Explode
+ * @param[in] le A local entity of a brush model (func_breakable, func_door, ...)
  */
 void CL_RecalcRouting (const le_t* le)
 {
@@ -86,7 +87,7 @@ void CL_RecalcRouting (const le_t* le)
 	if (le->model1 && le->inlineModelName[0] == '*')
 		Grid_RecalcRouting(clMap, le->inlineModelName, leInlineModelList);
 
-	CL_ConditionalMoveCalcForCurrentSelectedActor();
+	CL_ConditionalMoveCalcActor(selActor);
 }
 
 /**
@@ -668,8 +669,7 @@ static void LET_PathMove (le_t * le)
 				Com_Error(ERR_DROP, "LET_PathMove: Actor movement is out of sync: %i:%i:%i should be %i:%i:%i (step %i of %i)",
 						le->pos[0], le->pos[1], le->pos[2], le->newPos[0], le->newPos[1], le->newPos[2], le->pathPos, le->pathLength);
 
-			if (le == selActor)
-				CL_ConditionalMoveCalcForCurrentSelectedActor();
+			CL_ConditionalMoveCalcActor(le);
 
 			/* link any floor container into the actor temp floor container */
 			floor = LE_Find(ET_ITEM, le->pos);

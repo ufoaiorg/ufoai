@@ -106,7 +106,7 @@ void CL_DumpTUs_f(void);
 void CL_DumpMoveMark_f(void);
 void CL_DebugPath_f(void);
 #endif
-void CL_ConditionalMoveCalcForCurrentSelectedActor(void);
+void CL_ConditionalMoveCalcActor(le_t *le);
 qboolean CL_ActorSelect(le_t *le);
 qboolean CL_ActorSelectList(int num);
 qboolean CL_ActorSelectNext(void);
@@ -114,7 +114,7 @@ void CL_AddActorToTeamList(le_t *le);
 void CL_RemoveActorFromTeamList(le_t *le);
 void CL_ActorCleanup(le_t *le);
 void CL_ActorSelectMouse(void);
-void CL_ActorReload(int hand);
+void CL_ActorReload(le_t *le, int hand);
 void CL_ActorTurnMouse(void);
 void CL_ActorDoTurn(struct dbuffer *msg);
 void CL_ActorStandCrouch_f(void);

@@ -755,7 +755,7 @@ void CL_RemoveActorFromTeamList (le_t * le)
 	}
 
 	/* check selection */
-	if (selActor == le) {
+	if (le->selected) {
 		for (i = 0; i < cl.numTeamList; i++) {
 			if (cl.teamList[i] && CL_ActorSelect(cl.teamList[i]))
 				break;
@@ -820,7 +820,7 @@ qboolean CL_ActorSelect (le_t * le)
 		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
 	}
 
-	CL_ConditionalMoveCalcForCurrentSelectedActor();
+	CL_ConditionalMoveCalcActor(le);
 
 	return qtrue;
 }
@@ -999,13 +999,13 @@ void CL_DisplayBlockedPaths_f (void)
  * @brief Recalculate forbidden list, available moves and actor's move length
  * for the current selected actor.
  */
-void CL_ConditionalMoveCalcForCurrentSelectedActor (void)
+void CL_ConditionalMoveCalcActor (le_t *le)
 {
-	if (selActor) {
-		const byte crouchingState = (selActor->state & STATE_CROUCHED) ? 1 : 0;
+	if (le->selected) {
+		const byte crouchingState = (le->state & STATE_CROUCHED) ? 1 : 0;
 		CL_BuildForbiddenList();
-		Grid_MoveCalc(clMap, selActor->fieldSize, selActor->pathMap, selActor->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
-		CL_ResetActorMoveLength(selActor);
+		Grid_MoveCalc(clMap, le->fieldSize, le->pathMap, le->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
+		CL_ResetActorMoveLength(le);
 	}
 }
 
@@ -1217,10 +1217,11 @@ void CL_ActorShoot (const le_t * le, pos3_t at)
 
 /**
  * @brief Reload weapon with actor.
+ * @param[in,out] le The actor to reload the weapon for
  * @param[in] hand
  * @sa CL_CheckAction
  */
-void CL_ActorReload (int hand)
+void CL_ActorReload (le_t *le, int hand)
 {
 	inventory_t *inv;
 	invList_t *ic;
@@ -1232,7 +1233,7 @@ void CL_ActorReload (int hand)
 		return;
 
 	/* check weapon */
-	inv = &selActor->i;
+	inv = &le->i;
 
 	/* search for clips and select the one that is available easily */
 	x = 0;
@@ -1283,7 +1284,7 @@ void CL_ActorReload (int hand)
 
 	/* send request */
 	if (bestContainer != NONE)
-		MSG_Write_PA(PA_INVMOVE, selActor->entnum, bestContainer, x, y, hand, 0, 0);
+		MSG_Write_PA(PA_INVMOVE, le->entnum, bestContainer, x, y, hand, 0, 0);
 	else
 		Com_Printf("No (researched) clip left.\n");
 }
@@ -1957,7 +1958,7 @@ void CL_ActorSelectMouse (void)
 	case M_MOVE:
 	case M_PEND_MOVE:
 		/* Try and select another team member */
-		if (mouseActor && mouseActor != selActor && CL_ActorSelect(mouseActor)) {
+		if (mouseActor && !mouseActor->selected && CL_ActorSelect(mouseActor)) {
 			/* Succeeded so go back into move mode. */
 			selActor->actorMode = M_MOVE;
 		} else {
@@ -1981,7 +1982,7 @@ void CL_ActorSelectMouse (void)
 		}
 		break;
 	case M_FIRE_R:
-		if (mouseActor == selActor)
+		if (mouseActor->selected)
 			break;
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
@@ -1993,7 +1994,7 @@ void CL_ActorSelectMouse (void)
 		}
 		break;
 	case M_FIRE_L:
-		if (mouseActor == selActor)
+		if (mouseActor->selected)
 			break;
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
@@ -2078,7 +2079,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 		MN_ExecuteConfunc("startround");
 		HUD_DisplayMessage(_("Your round started!\n"));
 		S_StartLocalSound("misc/roundstart");
-		CL_ConditionalMoveCalcForCurrentSelectedActor();
+		CL_ConditionalMoveCalcActor(selActor);
 
 		for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
 			if (cl.teamList[actorIdx]) {
@@ -2464,7 +2465,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 		/* no target there */
 		return 0.0;
 	/* or suicide attempted */
-	if (le == selActor && selFD->damage[0] > 0)
+	if (le->selected && selFD->damage[0] > 0)
 		return 0.0;
 
 	VectorCopy(selActor->origin, shooter);
@@ -2550,7 +2551,7 @@ static float CL_TargetingToHit (pos3_t toPos)
  * @brief Show weapon radius
  * @param[in] center The center of the circle
  */
-static void CL_Targeting_Radius (vec3_t center)
+static void CL_TargetingRadius (vec3_t center)
 {
 	const vec4_t color = {0, 1, 0, 0.3};
 	ptl_t *particle;
@@ -2758,7 +2759,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 
 	if (selFD->splrad) {
 		Grid_PosToVec(clMap, toActorSize, toPos, at);
-		CL_Targeting_Radius(at);
+		CL_TargetingRadius(at);
 	}
 
 	hitProbability = 100 * CL_TargetingToHit(toPos);
@@ -2806,7 +2807,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	VectorAdd(ent.origin, boxSize, ent.oldorigin);
 
 	/* color */
-	if (mouseActor && mouseActor != selActor) {
+	if (mouseActor && !mouseActor->selected) {
 		ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
 		/* Paint the box red if the soldiers under the cursor is
 		 * not in our team and no civilian either. */
@@ -3169,7 +3170,7 @@ void CL_DumpMoveMark_f (void)
 
 	developer->integer ^= DEBUG_PATHING;
 
-	CL_ConditionalMoveCalcForCurrentSelectedActor();
+	CL_ConditionalMoveCalcActor(selActor);
 	developer->integer = temp;
 }
 
