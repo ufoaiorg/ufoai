@@ -53,9 +53,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/tracing.h"
 
-/** @brief Grid position on the map for pending events */
-extern pos3_t mousePendPos;
-
 /* power of two please */
 #define MAX_KEYQ 64
 
@@ -377,11 +374,11 @@ static void CL_ConfirmAction_f (void)
 
 	switch (selActor->actorMode) {
 	case M_PEND_MOVE:
-		CL_ActorStartMove(selActor, mousePendPos);
+		CL_ActorStartMove(selActor, selActor->mousePendPos);
 		break;
 	case M_PEND_FIRE_R:
 	case M_PEND_FIRE_L:
-		CL_ActorShoot(selActor, mousePendPos);
+		CL_ActorShoot(selActor, selActor->mousePendPos);
 		/** @todo this might've broken animation choosing in cl_actor:CL_ActorDoShoot and CL_ActorStartShoot. */
 		/* selActor->actorMode = M_MOVE; */
 		break;

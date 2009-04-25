@@ -72,8 +72,6 @@ int actorMoveLength;
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
-/** for double-click movement and confirmations ... */
-pos3_t mousePendPos;
 
 /**
  * @brief Writes player action with its data
@@ -1944,17 +1942,17 @@ MOUSE INPUT
 static void CL_ActorMoveMouse (void)
 {
 	if (selActor->actorMode == M_PEND_MOVE) {
-		if (VectorCompare(mousePos, mousePendPos)) {
+		if (VectorCompare(mousePos, selActor->mousePendPos)) {
 			/* Pending move and clicked the same spot (i.e. 2 clicks on the same place) */
 			CL_ActorStartMove(selActor, mousePos);
 		} else {
 			/* Clicked different spot. */
-			VectorCopy(mousePos, mousePendPos);
+			VectorCopy(mousePos, selActor->mousePendPos);
 		}
 	} else {
 		if (confirm_actions->integer) {
 			/* Set our mode to pending move. */
-			VectorCopy(mousePos, mousePendPos);
+			VectorCopy(mousePos, selActor->mousePendPos);
 
 			selActor->actorMode = M_PEND_MOVE;
 		} else {
@@ -1987,7 +1985,7 @@ void CL_ActorSelectMouse (void)
 		break;
 	case M_PEND_FIRE_R:
 	case M_PEND_FIRE_L:
-		if (VectorCompare(mousePos, mousePendPos)) {
+		if (VectorCompare(mousePos, selActor->mousePendPos)) {
 			/* Pending shot and clicked the same spot (i.e. 2 clicks on the same place) */
 			CL_ActorShoot(selActor, mousePos);
 
@@ -1998,7 +1996,7 @@ void CL_ActorSelectMouse (void)
 				selActor->actorMode = M_FIRE_L;
 		} else {
 			/* Clicked different spot. */
-			VectorCopy(mousePos, mousePendPos);
+			VectorCopy(mousePos, selActor->mousePendPos);
 		}
 		break;
 	case M_FIRE_R:
@@ -2008,7 +2006,7 @@ void CL_ActorSelectMouse (void)
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
 			selActor->actorMode = M_PEND_FIRE_R;
-			VectorCopy(mousePos, mousePendPos);
+			VectorCopy(mousePos, selActor->mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
 		}
@@ -2020,7 +2018,7 @@ void CL_ActorSelectMouse (void)
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
 			selActor->actorMode = M_PEND_FIRE_L;
-			VectorCopy(mousePos, mousePendPos);
+			VectorCopy(mousePos, selActor->mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
 		}
@@ -2989,8 +2987,8 @@ void CL_AddTargeting (void)
 
 		if (selActor->actorMode == M_PEND_MOVE) {
 			/* Also display a box for the pending move if we have one. */
-			CL_AddTargetingBox(mousePendPos, qtrue);
-			if (!CL_TraceMove(mousePendPos))
+			CL_AddTargetingBox(selActor->mousePendPos, qtrue);
+			if (!CL_TraceMove(selActor->mousePendPos))
 				selActor->actorMode = M_MOVE;
 		}
 		break;
@@ -3013,12 +3011,12 @@ void CL_AddTargeting (void)
 		CL_AddTargetingBox(mousePos, qfalse);
 
 		/* Draw (pending) Cursor at target */
-		CL_AddTargetingBox(mousePendPos, qtrue);
+		CL_AddTargetingBox(selActor->mousePendPos, qtrue);
 
 		if (!selFD->gravity)
-			CL_TargetingStraight(selActor->pos, selActor->fieldSize, mousePendPos);
+			CL_TargetingStraight(selActor->pos, selActor->fieldSize, selActor->mousePendPos);
 		else
-			CL_TargetingGrenade(selActor->pos, selActor->fieldSize, mousePendPos);
+			CL_TargetingGrenade(selActor->pos, selActor->fieldSize, selActor->mousePendPos);
 		break;
 	default:
 		break;

@@ -72,6 +72,8 @@ typedef struct le_s {
 	int currentSelectedFiremode;
 
 	actorModes_t actorMode;		/**< current selected action for the selected actor */
+	/** for double-click movement and confirmations ... */
+	pos3_t mousePendPos;
 
 	int clientAction;		/**< entnum from server that is currently triggered */
 
