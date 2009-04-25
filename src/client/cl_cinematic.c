@@ -33,21 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cinematic_t cin;
 
-static void CIN_Reset (void)
+static inline void CIN_Reset (void)
 {
-	int i;
-
 	memset(&cin, 0, sizeof(cin));
-
-	/* Build YUV table */
-	for (i = 0; i < 256; i++) {
-		const float f = (float)(i - 128);
-		cin.yuvTable.vr[i] = Q_ftol(f * 1.40200f);
-		cin.yuvTable.ug[i] = Q_ftol(f * 0.34414f);
-		cin.yuvTable.vg[i] = Q_ftol(f * 0.71414f);
-		cin.yuvTable.ub[i] = Q_ftol(f * 1.77200f);
-		cin.yuvTable.yy[i] = (i << 6) | (i << 2);
-	}
 }
 
 /**

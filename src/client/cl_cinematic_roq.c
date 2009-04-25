@@ -31,6 +31,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_music.h"
 #include "renderer/r_draw.h"
 
+typedef struct {
+	int vr[256];
+	int	ug[256];
+	int	vg[256];
+	int	ub[256];
+} yuvTable_t;
+
 #define ROQ_IDENT					0x1084
 
 #define ROQ_QUAD_INFO				0x1001
@@ -91,6 +98,7 @@ typedef struct {
 } roqCinematic_t;
 
 static short		roqCin_sqrTable[256];
+static yuvTable_t	roqCin_yuvTable;
 
 static int			roqCin_quadOffsets2[2][4];
 static int			roqCin_quadOffsets4[2][4];
@@ -260,9 +268,9 @@ static void CIN_ROQ_DecodeCodeBook (const byte *data)
 
 	/* Decode YUV quad vectors to RGB */
 	for (i = 0; i < numQuadVectors; i++) {
-		const int r = cin.yuvTable.vr[data[5]];
-		const int g = cin.yuvTable.ug[data[4]] + cin.yuvTable.vg[data[5]];
-		const int b = cin.yuvTable.ub[data[4]];
+		const int r = roqCin_yuvTable.vr[data[5]];
+		const int g = roqCin_yuvTable.ug[data[4]] + roqCin_yuvTable.vg[data[5]];
+		const int b = roqCin_yuvTable.ub[data[4]];
 
 		((byte *)&roqCin.quadVectors[i].pixel[0])[0] = CIN_ROQ_ClampByte(data[0] + r);
 		((byte *)&roqCin.quadVectors[i].pixel[0])[1] = CIN_ROQ_ClampByte(data[0] - g);
@@ -696,5 +704,14 @@ void CIN_ROQ_Init (void)
 		roqCin_quadOffsets2[1][i] = 2 * (i >> 1);
 		roqCin_quadOffsets4[0][i] = 4 * (i & 1);
 		roqCin_quadOffsets4[1][i] = 4 * (i >> 1);
+	}
+
+	/* Build YUV table */
+	for (i = 0; i < 256; i++) {
+		const float f = (float)(i - 128);
+		roqCin_yuvTable.vr[i] = Q_ftol(f * 1.40200f);
+		roqCin_yuvTable.ug[i] = Q_ftol(f * 0.34414f);
+		roqCin_yuvTable.vg[i] = Q_ftol(f * 0.71414f);
+		roqCin_yuvTable.ub[i] = Q_ftol(f * 1.77200f);
 	}
 }

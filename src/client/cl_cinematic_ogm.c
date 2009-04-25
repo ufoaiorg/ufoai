@@ -21,6 +21,8 @@
 #include "cl_cinematic_ogm.h"
 #include "renderer/r_draw.h"
 
+#include "../../config.h"
+
 #if defined(HAVE_VORBIS_CODEC_H) && (defined(HAVE_XVID_H) || defined(HAVE_THEORA_THEORA_H))
 
 #include <ogg/ogg.h>
@@ -35,6 +37,15 @@
 
 #include "client.h"
 #include "cl_sound.h"
+
+
+typedef struct {
+	long vr[256];
+	long ug[256];
+	long vg[256];
+	long ub[256];
+	long yy[256];
+} yuvTable_t;
 
 #define OGG_BUFFER_SIZE	(8 * 1024)
 
@@ -76,6 +87,8 @@ typedef struct
 } ogmCinematic_t;
 
 static ogmCinematic_t ogmCin;
+
+static yuvTable_t ogmCin_yuvTable;
 
 static int CIN_THEORA_NextNeededFrame(void);
 
@@ -353,35 +366,38 @@ static int CIN_THEORA_FindSizeShift (int x, int y)
 	return -1;
 }
 
+
+/**
+ * @brief Clamps integer value into byte
+ */
+static inline byte CIN_THEORA_ClampByte (int value)
+{
+	if (value < 0)
+		return 0;
+
+	if (value > 255)
+		return 255;
+
+	return value;
+}
+
 static void CIN_THEORA_FrameYUVtoRGB24 (const unsigned char* y, const unsigned char* u, const unsigned char* v, int width,
 		int height, int y_stride, int uv_stride, int yWShift, int uvWShift, int yHShift, int uvHShift,
-		unsigned int* output)
+		uint32_t* output)
 {
 	int i, j;
 
 	for (j = 0; j < height; ++j) {
 		for (i = 0; i < width; ++i) {
-			const long YY = (long) (cin.yuvTable.yy[(y[(i >> yWShift) + (j >> yHShift) * y_stride])]);
+			const long YY = (long) (ogmCin_yuvTable.yy[(y[(i >> yWShift) + (j >> yHShift) * y_stride])]);
 			const int uvI = (i >> uvWShift) + (j >> uvHShift) * uv_stride;
 
-			int r = (YY + cin.yuvTable.vr[v[uvI]]) >> 6;
-			int g = (YY + cin.yuvTable.ug[u[uvI]] + cin.yuvTable.vg[v[uvI]]) >> 6;
-			int b = (YY + cin.yuvTable.ub[u[uvI]]) >> 6;
+			byte r = CIN_THEORA_ClampByte((YY + ogmCin_yuvTable.vr[v[uvI]]) >> 6);
+			byte g = CIN_THEORA_ClampByte((YY + ogmCin_yuvTable.ug[u[uvI]] + ogmCin_yuvTable.vg[v[uvI]]) >> 6);
+			byte b = CIN_THEORA_ClampByte((YY + ogmCin_yuvTable.ub[u[uvI]]) >> 6);
 
-			if (r < 0)
-				r = 0;
-			if (g < 0)
-				g = 0;
-			if (b < 0)
-				b = 0;
-			if (r > 255)
-				r = 255;
-			if (g > 255)
-				g = 255;
-			if (b > 255)
-				b = 255;
-
-			*output = LittleLong((r) | (g << 8) | (b << 16) | (255 << 24));
+			uint32_t rgb24 = LittleLong(r | (g << 8) | (b << 16) | (255 << 24));
+			*output = rgb24;
 			++output;
 		}
 	}
@@ -445,7 +461,7 @@ static int CIN_THEORA_LoadVideoFrame (void)
 				CIN_THEORA_FrameYUVtoRGB24(ogmCin.th_yuvbuffer.y, ogmCin.th_yuvbuffer.u, ogmCin.th_yuvbuffer.v,
 						ogmCin.th_info.width, ogmCin.th_info.height, ogmCin.th_yuvbuffer.y_stride,
 						ogmCin.th_yuvbuffer.uv_stride, yWShift, uvWShift, yHShift, uvHShift,
-						(unsigned int*) ogmCin.outputBuffer);
+						(uint32_t*) ogmCin.outputBuffer);
 
 				r = 1;
 				ogmCin.videoFrameCount = th_frame;
@@ -793,6 +809,22 @@ void CIN_OGM_StopCinematic (void)
 
 void CIN_OGM_Init (void)
 {
+	long i;
+	const float t_ub = (1.77200f / 2.0f) * (float)(1 << 6) + 0.5f;
+	const float t_vr = (1.40200f / 2.0f) * (float)(1 << 6) + 0.5f;
+	const float t_ug = (0.34414f / 2.0f) * (float)(1 << 6) + 0.5f;
+	const float t_vg = (0.71414f / 2.0f) * (float)(1 << 6) + 0.5f;
+
+	for (i = 0; i < 256; i++) {
+		const float x = (float)(2 * i - 255);
+
+		ogmCin_yuvTable.ub[i] = (long)(( t_ub * x) + (1 << 5));
+		ogmCin_yuvTable.vr[i] = (long)(( t_vr * x) + (1 << 5));
+		ogmCin_yuvTable.ug[i] = (long)((-t_ug * x));
+		ogmCin_yuvTable.vg[i] = (long)((-t_vg * x) + (1 << 5));
+		ogmCin_yuvTable.yy[i] = (long)((i << 6) | (i >> 2));
+	}
+
 	memset(&ogmCin, 0, sizeof(ogmCin));
 }
 
