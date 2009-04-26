@@ -521,26 +521,9 @@ then
 	fi
 
 	#---------------------------------------------------------------------------------------------
-	# Check Vorbis
-	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([theora/theora.h])
-	if test "$ac_cv_header_theora_theora_h" = "no"
-	then
-		if test "$ac_cv_header_xvid_h" = "no"
-		then
-			AC_MSG_ERROR([Could not find the Theora development headers nor the Xvid developement headers])
-		else
-			AC_MSG_WARN([Could not find the Theora development headers])
-		fi
-	else
-		LIBS=
-		AC_CHECK_LIB(theora, theora_decode_packetin, LIBS="-ltheora", AC_MSG_ERROR([You must have libtheora!!!]))
-		CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-	fi
-
-	#---------------------------------------------------------------------------------------------
 	# Check SDL
 	#---------------------------------------------------------------------------------------------
+	LIBS=
 	sdl_config=$with_sdl_config
 
 	OLD_CPPFLAGS=$CPPFLAGS
