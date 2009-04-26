@@ -211,9 +211,6 @@ void V_LoadMedia (void)
 	cls.loadingPercent = 0;
 
 	/* register models, pics, and skins */
-	Com_Printf("Map: %s\n", cl.configstrings[CS_NAME]);
-	if (GAME_IsMultiplayer())
-		SCR_SetLoadingBackground(cl.configstrings[CS_NAME]);
 	SCR_UpdateScreen();
 	R_ModBeginLoading(cl.configstrings[CS_TILES], atoi(cl.configstrings[CS_LIGHTMAP]), cl.configstrings[CS_POSITIONS], cl.configstrings[CS_NAME]);
 	CL_ParseEntitystring();

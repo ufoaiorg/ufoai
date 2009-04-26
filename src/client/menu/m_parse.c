@@ -463,7 +463,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 
 	assert(*token[0] == '}');
 
-	/* return non NULL value */
+	/* return none NULL value */
 	if (firstAction == NULL) {
 		firstAction = &mn.menuActions[mn.numActions++];
 		memset(firstAction, 0, sizeof(*firstAction));

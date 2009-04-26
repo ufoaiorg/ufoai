@@ -530,8 +530,6 @@ static void CL_StartGame (struct dbuffer *msg)
 	cl.cam.zoom = 1.25;
 	V_CalcFovX();
 
-	SCR_SetLoadingBackground(NULL);
-
 	Com_Printf("Starting the game...\n");
 
 	/* make sure selActor is null (after reconnect or server change this is needed) */
