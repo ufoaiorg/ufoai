@@ -450,22 +450,6 @@ then
 	LIBS=
 
 	#---------------------------------------------------------------------------------------------
-	# Check for gettext
-	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([libintl.h])
-	if test "$ac_cv_header_libintl_h" != "yes"
-	then
-		AC_MSG_ERROR([Could not find libintl.h!])
-	fi
-
-	AC_SEARCH_LIBS([gettext],[intl])
-	if test "$ac_cv_search_gettext" = "no"
-	then
-		AC_MSG_ERROR([Could not find internationalization library with gettext in it])
-	fi
-	#AC_CHECK_LIB(intl, gettext, [], AC_MSG_ERROR([You must have libintl!!!]))
-
-	#---------------------------------------------------------------------------------------------
 	# Check OGG
 	#---------------------------------------------------------------------------------------------
 	AC_CHECK_HEADERS([ogg/ogg.h])
@@ -520,10 +504,27 @@ then
 		CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 	fi
 
+	LIBS=
+
+	#---------------------------------------------------------------------------------------------
+	# Check for gettext
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([libintl.h])
+	if test "$ac_cv_header_libintl_h" != "yes"
+	then
+		AC_MSG_ERROR([Could not find libintl.h!])
+	fi
+
+	AC_SEARCH_LIBS([gettext],[intl])
+	if test "$ac_cv_search_gettext" = "no"
+	then
+		AC_MSG_ERROR([Could not find internationalization library with gettext in it])
+	fi
+	#AC_CHECK_LIB(intl, gettext, [], AC_MSG_ERROR([You must have libintl!!!]))
+
 	#---------------------------------------------------------------------------------------------
 	# Check SDL
 	#---------------------------------------------------------------------------------------------
-	LIBS=
 	sdl_config=$with_sdl_config
 
 	OLD_CPPFLAGS=$CPPFLAGS
