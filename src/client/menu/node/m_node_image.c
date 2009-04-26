@@ -90,12 +90,13 @@ void MN_ImageNodeDraw (menuNode_t *node)
 	/** @todo HACK for ekg pics */
 	if (!strncmp(node->name, "ekg_", 4)) {
 		int pt;
-		const int ekgHeight = 32;
+		const int ekgHeight = node->size[1];
 		const int ekgWidth = image->width;
 		const int time = cl.time;
 		/* the higher the letter - the higher the speed => morale scrolls faster than hp */
 		const int scrollSpeed = node->name[4] - 'a';
 
+		/** @sa GET_HP GET_MORALE macros */
 		/* ekg_morale and ekg_hp are the node names */
 		if (node->name[4] == 'm')
 			pt = Cvar_GetInteger("mn_morale") / 2;
