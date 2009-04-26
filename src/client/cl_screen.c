@@ -146,7 +146,7 @@ const char* SCR_SetLoadingBackground (const char *mapString)
 		mapname++;
 
 	if (R_FindImage(va("pics/maps/loading/%s", mapname), it_pic))
-		Cvar_Set("mn_mappicbig", va("pics/maps/loading/%s", mapname));
+		Cvar_Set("mn_mappicbig", va("maps/loading/%s", mapname));
 	else
 		Cvar_Set("mn_mappicbig", "maps/loading/default");
 
@@ -199,7 +199,7 @@ static void SCR_DrawLoading (void)
 		return;
 
 	/* center loading screen */
-	image = R_FindImage(loadingPic, it_pic);
+	image = R_FindImage(va("pics/%s", loadingPic), it_world);
 	if (image)
 		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, image);
 	R_Color(color);
