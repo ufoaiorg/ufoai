@@ -3215,7 +3215,7 @@ void CL_DebugPath_f (void)
 	const pos_t y = mousePos[1];
 	const pos_t z = mousePos[2];
 	int dir;
-	dir = 3;
+	dir = 2;
 
 	if (mouseSpace != MS_WORLD)
 		return;
@@ -3241,8 +3241,7 @@ void CL_DebugPath_f (void)
 
 #if 0
 	Com_Printf("performing RT_UpdateConnection() in dir: %i\n", dir);
-//	RT_UpdateConnectionColumn(clMap, actorSize, x, y, dir);
-	RT_UpdateConnection(clMap, actorSize, x, y, z, dir);
+	RT_UpdateConnectionColumn(clMap, actor_size, x, y, dir);
 	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
 		RT_CONN_PX(clMap, actorSize, x, y, z),
 		RT_CONN_NX(clMap, actorSize, x, y, z),
@@ -3255,7 +3254,7 @@ void CL_DebugPath_f (void)
 		RT_CONN_PX_NY(clMap, actorSize, x, y, z) );// 7
 #endif
 #if 0
-	new_z = RT_CheckCell(clMap, actorSize, x, y, z);
+	int new_z = RT_CheckCell(clMap, actor_size, x, y, z);
 	Com_Printf("check returns: Z=%i\n", new_z);
 #endif
 #if 0
