@@ -65,7 +65,6 @@ void MN_ImageNodeDraw (menuNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
-	const int time = cl.time;
 	const image_t *image;
 
 	const char* imageName = MN_GetReferenceString(node, node->image);
@@ -91,14 +90,17 @@ void MN_ImageNodeDraw (menuNode_t *node)
 	/* HACK for ekg pics */
 	if (!strncmp(node->name, "ekg_", 4)) {
 		int pt;
+		const int ekgHeight = 32;
+		const int ekgWidth = image->width;
+		const int time = cl.time;
 
 		if (node->name[4] == 'm')
 			pt = Cvar_GetInteger("mn_morale") / 2;
 		else
 			pt = Cvar_GetInteger("mn_hp");
-		node->texl[1] = (3 - (int) (pt < 60 ? pt : 60) / 20) * 32;
-		node->texh[1] = node->texl[1] + 32;
-		node->texl[0] = -(int) (0.01 * (node->name[4] - 'a') * time) % 64;
+		node->texl[1] = (3 - (int) (pt < 60 ? pt : 60) / 20) * ekgHeight;
+		node->texh[1] = node->texl[1] + ekgHeight;
+		node->texl[0] = -(int) (0.01 * (node->name[4] - 'a') * time) % ekgWidth;
 		node->texh[0] = node->texl[0] + node->size[0];
 	}
 	if (node->size[0] && !node->size[1]) {

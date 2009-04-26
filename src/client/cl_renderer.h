@@ -173,7 +173,7 @@ typedef struct ptl_s {
 } ptl_t;
 
 typedef struct {
-	qboolean ready;	/**< false if on new level or vid restart */
+	qboolean ready;	/**< false if on new level or vid restart - if this is true the map can be rendered */
 
 	int x, y, width, height;	/**< in virtual screen coordinates */
 	float fov_x, fov_y;
