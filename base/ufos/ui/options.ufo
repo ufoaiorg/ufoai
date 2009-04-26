@@ -82,14 +82,17 @@ window options
 	{
 		visiblewhen "*cvar:snd_init == 0"
 
-		string		"_Sound"
-		tooltip		"_Sound is not activated"
+		string		"_Activate Sound"
+		tooltip		"_Sound is currently not activated. Click here to activate it."
 		pos			"80 310"
 		size		"256 64"
 		image		ui/button_green_big
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
+		onClick		{
+			cmd "snd_init 1;"
+		}
 	}
 
 	button button_input
@@ -666,6 +669,20 @@ window options
 				value	"48000"
 				action	""
 			}
+		}
+
+		string sound_init_str
+		{
+			string		"_Enable sound:"
+			pos			"85 270"
+			size		"240 20"
+		}
+		checkbox sound_init
+		{
+			current		"*cvar snd_init"
+			pos			"463 270"
+			size		"20 18"
+			image		"ui/checkbox_blue"
 		}
 	}
 
