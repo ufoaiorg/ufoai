@@ -240,6 +240,36 @@ void R_DrawImage (float x, float y, const image_t *image)
 	R_DrawImageArray(default_texcoords, image_verts, image);
 }
 
+void R_DrawStretchImage(float x, float y, int w, int h, const image_t *image)
+{
+	float x1, x2, x3, x4, y1, y2, y3, y4;
+	short image_verts[8];
+
+	if (!image)
+		return;
+
+	/* normalize to the screen resolution */
+	x1 = x * viddef.rx;
+	y1 = y * viddef.ry;
+
+	/* fill the rest of the coordinates to make a rectangle */
+	x4 = x1;
+	x3 = x2 = x1 + w * viddef.rx;
+	y2 = y1;
+	y4 = y3 = y1 + h * viddef.ry;
+
+	image_verts[0] = x1;
+	image_verts[1] = y1;
+	image_verts[2] = x2;
+	image_verts[3] = y2;
+	image_verts[4] = x3;
+	image_verts[5] = y3;
+	image_verts[6] = x4;
+	image_verts[7] = y4;
+
+	R_DrawImageArray(default_texcoords, image_verts, image);
+}
+
 const image_t *R_DrawImageArray (const float texcoords[8], const short verts[8], const image_t *image)
 {
 	/* alter the array pointers */
