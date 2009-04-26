@@ -1984,7 +1984,7 @@ void CL_ActorSelectMouse (void)
 		}
 		break;
 	case M_FIRE_R:
-		if (mouseActor->selected)
+		if (mouseActor && mouseActor->selected)
 			break;
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
@@ -1996,7 +1996,7 @@ void CL_ActorSelectMouse (void)
 		}
 		break;
 	case M_FIRE_L:
-		if (mouseActor->selected)
+		if (mouseActor && mouseActor->selected)
 			break;
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
