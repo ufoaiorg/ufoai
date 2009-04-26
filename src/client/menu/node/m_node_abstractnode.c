@@ -1,5 +1,6 @@
 /**
  * @file m_node_abstractnode.c
+ * @brief Every node extends this node
  */
 
 /*

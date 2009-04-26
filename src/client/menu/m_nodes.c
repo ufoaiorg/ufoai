@@ -478,6 +478,10 @@ static const size_t virtualFunctions[] = {
 	0
 };
 
+/**
+ * Initializes the inheritance (every node extends the abstract node)
+ * @param behaviour The behaviour to initialize
+ */
 static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 {
 	if (behaviour->isInitialized)
