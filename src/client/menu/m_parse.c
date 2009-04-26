@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** prototypes */
 static qboolean MN_ParseProperty(void* object, const value_t *property, const char* objectName, const char **text, const char **token);
-static menuAction_t *MN_ParseAction(menuNode_t *menuNode, const char **text, const const char **token);
+static menuAction_t *MN_ParseActionList(menuNode_t *menuNode, const char **text, const const char **token);
 static qboolean MN_ParseNode(menuNode_t * parent, const char **text, const char **token, const char *errhead);
 
 /** @brief valid properties for options (selectbox, tab...) */
@@ -282,7 +282,9 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 
 	if (property->type == V_SPECIAL_ACTION) {
 		menuAction_t** actionRef = (menuAction_t**) MN_AllocPointer(1);
-		*actionRef = MN_ParseAction(menuNode, text, token);
+		*actionRef = MN_ParseActionList(menuNode, text, token);
+		if (*actionRef == NULL)
+			return qfalse;
 		action->data2 = actionRef;
 	} else if (property->type == V_SPECIAL_ICONREF) {
 		menuIcon_t* icon = MN_GetIconByName(*token);
@@ -318,9 +320,9 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
  * @sa ea_t
  * @todo need cleanup, compute action out of the final memory; reduce number of var
  */
-static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, const const char **token)
+static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text, const const char **token)
 {
-	const char *errhead = "MN_ParseAction: unexpected end of file (in event)";
+	const char *errhead = "MN_ParseActionList: unexpected end of file (in event)";
 	menuAction_t *firstAction;
 	menuAction_t *lastAction;
 	menuAction_t *action;
@@ -358,14 +360,14 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 
 		/* unknown, we break the parsing */
 		if (type == EA_NULL) {
-			Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, MN_GetPath(menuNode));
+			Com_Printf("MN_ParseActionList: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, MN_GetPath(menuNode));
 			return NULL;
 		}
 
 		/** @todo better to append the action after initialization */
 		/* add the action */
 		if (mn.numActions >= MAX_MENUACTIONS)
-			Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
+			Sys_Error("MN_ParseActionList: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
 		action = &mn.menuActions[mn.numActions++];
 		memset(action, 0, sizeof(*action));
 		if (lastAction) {
@@ -407,7 +409,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 				*token = Com_EParse(text, errhead, NULL);
 				callNode = MN_GetNodeByPath(va("%s.%s", menuNode->root->name, *token));
 				if (!callNode) {
-					Com_Printf("MN_ParseAction: function '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
+					Com_Printf("MN_ParseActionList: function '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 					return NULL;
 				}
 				action->data = (void*) callNode;
@@ -430,13 +432,15 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 			*token = Com_EParse(text, errhead, NULL);
 			if (!*text)
 				return NULL;
-			action->scriptValues = (const value_t *) MN_ParseAction (menuNode, text, token);
+			action->scriptValues = (const value_t *) MN_ParseActionList(menuNode, text, token);
+			if (action->scriptValues == NULL)
+				return NULL;
 			break;
 
 		case EA_ELSE:
 			/* check previous action */
 			if (!lastAction || lastAction->type.op != EA_IF) {
-				Com_Printf("MN_ParseAction: 'else' must be set after an 'if' (node: %s)\n", MN_GetPath(menuNode));
+				Com_Printf("MN_ParseActionList: 'else' must be set after an 'if' (node: %s)\n", MN_GetPath(menuNode));
 				return NULL;
 			}
 
@@ -444,7 +448,9 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 			*token = Com_EParse(text, errhead, NULL);
 			if (!*text)
 				return NULL;
-			action->scriptValues = (const value_t *) MN_ParseAction (menuNode, text, token);
+			action->scriptValues = (const value_t *) MN_ParseActionList(menuNode, text, token);
+			if (action->scriptValues == NULL)
+				return NULL;
 			break;
 
 		default:
@@ -456,6 +462,12 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 	}
 
 	assert(*token[0] == '}');
+
+	/* return non NULL value */
+	if (firstAction == NULL) {
+		firstAction = &mn.menuActions[mn.numActions++];
+		memset(firstAction, 0, sizeof(*firstAction));
+	}
 
 	return firstAction;
 }
@@ -509,13 +521,13 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 		return qfalse;
 	}
 
-	*token = Com_EParse(text, errhead, node->name);
-	if (!*text)
-		return qfalse;
-
 	do {
 		const value_t *property;
 		int result;
+
+		*token = Com_EParse(text, errhead, node->name);
+		if (!*text)
+			return qfalse;
 
 		if (*token[0] == '}')
 			break;
@@ -601,26 +613,18 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 	if (!*text)
 		return qfalse;
 
-	if (**token == '{') {
-		*action = MN_ParseAction(node, text, token);
-		/* get next token */
-		*token = Com_EParse(text, errhead, node->name);
-		if (!*text)
-			return qfalse;
-	} else {
-		/** @todo dummy action, check whether this is really needed */
-#if 0	/**< we dont need to alloc an action for nothing */
-		if (mn.numActions >= MAX_MENUACTIONS)
-			Sys_Error("MN_ParseEventProperty: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
-		*action = &mn.menuActions[mn.numActions++];
-		memset(*action, 0, sizeof(**action));
-#endif
-#if 1	/**< warning before raising a parse error */
-		static int number = 0;
-		number++;
-		Com_Printf("MN_ParseEventProperty: Event '%s' without body (%s) x%i\n", event->string, MN_GetPath(node), number);
-#endif
+	if (*token[0] != '{') {
+		Com_Printf("MN_ParseEventProperty: Event '%s' without body (%s)\n", event->string, MN_GetPath(node));
+		return qfalse;
 	}
+
+	*action = MN_ParseActionList(node, text, token);
+	if (*action == NULL)
+		return qfalse;
+
+	/* block terminal already read */
+	assert(*token[0] == '}');
+
 	return qtrue;
 }
 
@@ -634,7 +638,6 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 	size_t bytes;
 	int result;
 	const int specialType = property->type & V_SPECIAL_TYPE;
-	qboolean haveReadNextToken = qfalse;
 
 	if (property->type == V_NULL) {
 		return qfalse;
@@ -741,7 +744,6 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 			result = MN_ParseEventProperty(object, property, text, token, errhead);
 			if (!result)
 				return qfalse;
-			haveReadNextToken = qtrue;
 			break;
 
 		case V_SPECIAL_EXCLUDERECT:
@@ -812,12 +814,6 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		return qfalse;
 	}
 
-	if (!haveReadNextToken) {
-		*token = Com_EParse(text, errhead, objectName);
-		if (!*text)
-			return qfalse;
-	}
-
 	return qtrue;
 }
 
@@ -835,12 +831,9 @@ static qboolean MN_ParseFunction (menuNode_t * node, const char **text, const ch
 	*action = &mn.menuActions[mn.numActions++];
 	memset(*action, 0, sizeof(**action));
 
-	*action = MN_ParseAction(node, text, token);
-
-#if 0 /* empty function also return NULL */
+	*action = MN_ParseActionList(node, text, token);
 	if (*action == NULL)
 		return qfalse;
-#endif
 
 	return *token[0] == '}';
 }
@@ -906,9 +899,6 @@ static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, co
 					MN_GetPath(node), val->string);
 			return qfalse;
 		}
-
-		nextTokenAlreadyRead = qtrue;
-
 
 	} while (*text);
 
@@ -1239,14 +1229,14 @@ void MN_ParseIcon (const char *name, const char **text)
 	token = Com_Parse(text);
 	assert(strcmp(token, "{") == 0);
 
-	token = Com_Parse(text);
-	if (*text == NULL)
-		return;
-
 	/* read properties */
 	while (qtrue) {
 		const value_t *property;
 		qboolean result;
+
+		token = Com_Parse(text);
+		if (*text == NULL)
+			return;
 
 		if (token[0] == '}')
 			break;
