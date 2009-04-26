@@ -567,6 +567,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 		*token = Com_EParse(text, errhead, node->name);
 		if (!*text)
 			return qfalse;
+		/** @todo move it into a property array */
 		if (!strcmp(*token, "pos")) {
 			*token = Com_EParse(text, errhead, node->name);
 			if (!*text)
