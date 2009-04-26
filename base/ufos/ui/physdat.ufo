@@ -110,7 +110,7 @@ window physdata
 	}
 	pic ekg_hp
 	{
-		image		hud/phys_ekg_noclamp
+		image		hud/phys_ekg
 		pos			"78 369"
 		size		"324 32"
 	}
@@ -124,7 +124,7 @@ window physdata
 	}
 	pic ekg_morale
 	{
-		image		hud/phys_mor_noclamp
+		image		hud/phys_mor
 		pos			"78 408"
 		size		"324 32"
 	}

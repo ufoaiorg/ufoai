@@ -1837,8 +1837,8 @@ base/pics/hud/checkbox.tga | Creative Commons Attribution-Share Alike 3.0 | Wern
 base/pics/hud/close.tga | GNU General Public License 2.0
 base/pics/hud/event_log.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/pics/hud/firemode.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/pics/hud/phys_ekg_noclamp.tga | GNU General Public License 2.0
-base/pics/hud/phys_mor_noclamp.tga | GNU General Public License 2.0
+base/pics/hud/phys_ekg.tga | GNU General Public License 2.0
+base/pics/hud/phys_mor.tga | GNU General Public License 2.0
 base/pics/icons/air.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/alien.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/artifact.tga | GNU General Public License 2.0 | Gerd Heisse
