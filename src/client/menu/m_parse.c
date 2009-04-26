@@ -637,6 +637,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 {
 	const char *errhead = "MN_ParseProperty: unexpected end of file (object";
 	size_t bytes;
+	void *valuePtr = ((byte*)object) + property->ofs;
 	int result;
 	const int specialType = property->type & V_SPECIAL_TYPE;
 
@@ -653,7 +654,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		if (property->type == V_TRANSLATION_STRING) {
 			/* selectbox values are static arrays */
-			char *target = ((char*)object + property->ofs);
+			char *target = (char*) valuePtr;
 			const char *translateableToken = *token;
 			assert(property->size);
 			if (translateableToken[0] == '_')
@@ -704,7 +705,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		if (*token[0] == '*') {
 			/* a reference to data */
 			mn.curadata = Com_AlignPtr(mn.curadata, V_STRING);
-			*(byte **) ((byte *) object + property->ofs) = mn.curadata;
+			*(byte **) valuePtr = mn.curadata;
 
 			/* sanity check */
 			if (strlen(*token) > MAX_VAR - 1) {
@@ -721,7 +722,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		} else {
 			/* a reference to data */
 			mn.curadata = Com_AlignPtr(mn.curadata, property->type & V_BASETYPEMASK);
-			*(byte **) ((byte *) object + property->ofs) = mn.curadata;
+			*(byte **) valuePtr = mn.curadata;
 
 			/* sanity check */
 			if ((property->type & V_BASETYPEMASK) == V_STRING && strlen(*token) > MAX_VAR - 1) {
@@ -761,7 +762,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		case V_SPECIAL_ICONREF:
 			{
-				menuIcon_t** icon = (menuIcon_t**) ((byte *) object + property->ofs);
+				menuIcon_t** icon = (menuIcon_t**) valuePtr;
 				*token = Com_EParse(text, errhead, objectName);
 				if (!*text)
 					return qfalse;
@@ -774,7 +775,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		case V_SPECIAL_IF:
 			{
-				menuCondition_t **condition = (menuCondition_t **) ((byte *) object + property->ofs);
+				menuCondition_t **condition = (menuCondition_t **) valuePtr;
 
 				*token = Com_EParse(text, errhead, objectName);
 				if (!*text)
@@ -788,7 +789,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		case V_SPECIAL_DATAID:
 			{
-				int *dataId = (int*) ((byte *) object + property->ofs);
+				int *dataId = (int*) valuePtr;
 				*token = Com_EParse(text, errhead, objectName);
 				if (!*text)
 					return qfalse;
