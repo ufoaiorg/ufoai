@@ -74,8 +74,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTENSION(e) ((e)->i.c[csi.idExtension])
 
 typedef struct {
-	char name[MAX_QPATH];
-	char cinfo[MAX_QPATH];
+	char name[MAX_VAR];
+	char cinfo[MAX_VAR];
 } clientinfo_t;
 
 /** @todo There should be better places for these two macros */
