@@ -632,7 +632,6 @@ window hospital_employee
 		font		f_menu
 		tooltip		"_Not implemented"
 		disabled	true
-		onClick
 	}
 
 	// ==================

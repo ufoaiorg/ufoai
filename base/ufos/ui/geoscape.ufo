@@ -16,7 +16,6 @@ window geoscape
 	{
 		pos			"0 0"
 		size		"1024 768"
-		onClick
 		onRClick		{ cmd "mn_mapaction_reset;" }
 		num			10
 	}

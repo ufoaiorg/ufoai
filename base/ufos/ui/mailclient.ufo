@@ -40,8 +40,6 @@ window mail
 		lineheight	24
 		tabwidth	100
 		rows		"20"
-		onClick
-		onRClick
 		onWheel		{
 			*(abstractscrollbar)mail_scroll current <text_scroll>
 		}

@@ -615,6 +615,11 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 		*action = &mn.menuActions[mn.numActions++];
 		memset(*action, 0, sizeof(**action));
 #endif
+#if 1	/**< warning before raising a parse error */
+		static int number = 0;
+		number++;
+		Com_Printf("MN_ParseEventProperty: Event '%s' without body (%s) x%i\n", event->string, MN_GetPath(node), number);
+#endif
 	}
 	return qtrue;
 }

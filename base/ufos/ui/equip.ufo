@@ -76,7 +76,6 @@ window aircraft_equip extends iaircraft
 		autoscale	true
 		pos		"312 517"
 		size	"239 96"
-		onClick
 		view aircraft_equip
 	}
 

@@ -17,7 +17,6 @@ window physdata
 	{
 		image		hud/bar_phys
 		pos			"0 0"
-		onClick
 	}
 
 	string actorname

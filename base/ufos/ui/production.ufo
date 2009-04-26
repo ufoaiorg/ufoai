@@ -524,7 +524,6 @@ window production
 		tabwidth	260
 		rows		"5"
 		scrollbar	true
-		onWheel
 	}
 
 	// ==================

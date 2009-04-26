@@ -95,7 +95,6 @@ window basedefence
 		pos			"786 500"
 		size		"200 175"
 		origin		"0 -42 0"
-		onClick
 	}
 
 	string basedef_item_name
