@@ -300,6 +300,13 @@ window employees
 		}
 	}
 
+	pic	rank_img
+	{
+		visiblewhen "*cvar:mn_show_employee >= 1"
+		image		"*cvar mn_chrrank_img"
+		pos			"473 387"
+	}
+
 	model body
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
@@ -322,18 +329,11 @@ window employees
 		scale		"1.0 1.0 1.0"
 	}
 
-	pic	rank_img
-	{
-		visiblewhen "*cvar:mn_show_employee >= 1"
-		image		"*cvar mn_chrrank_img"
-		pos			"485 674"
-	}
-
 	string	rank_lbl
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
 		string		"*cvar mn_chrrank"
-		pos			"470 383"
+		pos			"473 717"
 		size		"200 20"
 	}
 
