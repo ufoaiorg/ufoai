@@ -545,7 +545,7 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 			return qfalse;
 		}
 
-	} while (**token != '}');
+	} while (*token[0] != '}');
 	MN_NodeAppendOption(node, option);
 	return qtrue;
 }
@@ -558,7 +558,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 	*token = Com_EParse(text, errhead, node->name);
 	if (!*text)
 		return qfalse;
-	if (**token != '{') {
+	if (*token[0] != '{') {
 		Com_Printf("MN_ParseExcludeRect: node with bad excluderect ignored (node \"%s\")\n", MN_GetPath(node));
 		return qtrue;
 	}
@@ -579,7 +579,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 				return qfalse;
 			Com_EParseValue(&rect, *token, V_POS, offsetof(excludeRect_t, size), sizeof(vec2_t));
 		}
-	} while (**token != '}');
+	} while (*token[0] != '}');
 
 
 	if (mn.numExcludeRect >= MAX_EXLUDERECTS) {
