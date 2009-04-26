@@ -200,7 +200,7 @@ static void SCR_DrawLoading (void)
 
 	/* center loading screen */
 	image = R_FindImage(va("pics/%s", loadingPic), it_world);
-	if (image)
+	if (image != r_noTexture)
 		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, image);
 	R_Color(color);
 
