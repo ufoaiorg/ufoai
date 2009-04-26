@@ -87,20 +87,23 @@ void MN_ImageNodeDraw (menuNode_t *node)
 	}*/
 
 	MN_GetNodeAbsPos(node, nodepos);
-	/* HACK for ekg pics */
+	/** @todo HACK for ekg pics */
 	if (!strncmp(node->name, "ekg_", 4)) {
 		int pt;
 		const int ekgHeight = 32;
 		const int ekgWidth = image->width;
 		const int time = cl.time;
+		/* the higher the letter - the higher the speed => morale scrolls faster than hp */
+		const int scrollSpeed = node->name[4] - 'a';
 
+		/* ekg_morale and ekg_hp are the node names */
 		if (node->name[4] == 'm')
 			pt = Cvar_GetInteger("mn_morale") / 2;
 		else
 			pt = Cvar_GetInteger("mn_hp");
 		node->texl[1] = (3 - (int) (pt < 60 ? pt : 60) / 20) * ekgHeight;
 		node->texh[1] = node->texl[1] + ekgHeight;
-		node->texl[0] = -(int) (0.01 * (node->name[4] - 'a') * time) % ekgWidth;
+		node->texl[0] = -(int) (0.01 * scrollSpeed * time) % ekgWidth;
 		node->texh[0] = node->texl[0] + node->size[0];
 	}
 	if (node->size[0] && !node->size[1]) {
