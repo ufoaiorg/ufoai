@@ -197,8 +197,9 @@ const char* Com_GetLastParseError (void)
  */
 void* Com_AlignPtr (void *memory, valueTypes_t type)
 {
-	int align = vt_aligns[type];
-	assert (align);
+	const int align = vt_aligns[type];
+	if (align == V_NULL)
+		Sys_Error("Com_AlignPtr: can't align V_NULL");
 	return ALIGN_PTR(memory, align);
 }
 
