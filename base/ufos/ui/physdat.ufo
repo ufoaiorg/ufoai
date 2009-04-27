@@ -108,7 +108,7 @@ window physdata
 		size		"50 20"
 		textalign	uc
 	}
-	pic ekg_hp
+	ekg hp
 	{
 		image		hud/phys_ekg
 		pos			"78 369"
@@ -122,7 +122,7 @@ window physdata
 		size		"50 20"
 		textalign	uc
 	}
-	pic ekg_morale
+	ekg morale
 	{
 		image		hud/phys_mor
 		pos			"78 408"

@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_container.h"
 #include "node/m_node_custombutton.h"
 #include "node/m_node_editor.h"
+#include "node/m_node_ekg.h"
 #include "node/m_node_image.h"
 #include "node/m_node_item.h"
 #include "node/m_node_linechart.h"
@@ -87,6 +88,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterCustomButtonNode,
 	MN_RegisterCvarFuncNode,
 	MN_RegisterEditorNode,
+	MN_RegisterEKGNode,
 	MN_RegisterFuncNode,
 	MN_RegisterItemNode,
 	MN_RegisterLineChartNode,

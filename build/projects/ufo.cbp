@@ -667,6 +667,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_image.h" />
+		<Unit filename="..\..\src\client\menu\node\m_node_ekg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\node\m_node_ekg.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_item.c">
 			<Option compilerVar="CC" />
 		</Unit>
