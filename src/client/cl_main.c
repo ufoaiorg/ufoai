@@ -606,9 +606,6 @@ void CL_InitAfter (void)
 	cls.loadingPercent = 100.0f;
 	SCR_DrawPrecacheScreen(qtrue);
 
-	/* link for faster access */
-	MN_LinkMenuModels();
-
 	vidModesOptions = MN_AllocOption(VID_GetModeNums());
 	if (vidModesOptions == 0)
 		return;

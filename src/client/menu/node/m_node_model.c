@@ -43,30 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const nodeBehaviour_t const *localBehaviour;
 
 /**
- * @brief Add a menu link to menumodel definition for faster access
- * @note Called after all menus are parsed - only once
- */
-void MN_LinkMenuModels (void)
-{
-#if 0
-	int i, j;
-
-	for (i = 0; i < mn.numMenuModels; i++) {
-		menuModel_t *m = &mn.menuModels[i];
-		for (j = 0; j < m->menuTransformCnt; j++) {
-			m->menuTransform[j].menuPtr = MN_GetMenu(m->menuTransform[j].menuID);
-			if (m->menuTransform[j].menuPtr == NULL)
-				Com_Printf("Could not find menu '%s' as requested by menumodel '%s'\n", m->menuTransform[j].menuID, m->id);
-
-			/* we don't need this anymore */
-			Mem_Free(m->menuTransform[j].menuID);
-			m->menuTransform[j].menuID = NULL;
-		}
-	}
-#endif
-}
-
-/**
  * @brief Returns pointer to menu model
  * @param[in] menuModel menu model id from script files
  * @return menuModel_t pointer
@@ -224,13 +200,6 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 				if (!strcmp(node->u.model.viewName, menuModel->menuTransform[i].menuID))
 					break;
 			}
-#if 0
-			else {
-				/** @todo remove it when its possible */
-				if (node->menu == menuModel->menuTransform[i].menuPtr)
-					break;
-			}
-#endif
 		}
 
 		/* menuTransforme found */
@@ -433,35 +402,6 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 	}
 
 }
-
-#if 0	/* no more need since "submodel" */
-static void MN_ModelNodeGetParentFromTag (const char* tag, char *parent, int bufferSize)
-{
-	char *c;
-	Q_strncpyz(parent, tag, bufferSize);
-	c = parent;
-	/* tag "menuNodeName modelTag" */
-	while (*c && *c != ' ')
-		c++;
-	/* split node name and tag */
-	*c++ = 0;
-}
-
-/**
- * @brief return the anchor name embedded in a tag
- */
-static const char* MN_ModelNodeGetAnchorFromTag (const char* tag)
-{
-	const char *c = tag;
-	assert(tag);
-	while (*c != '\0' && *c != ' ')
-		c++;
-	/* split node name and tag */
-	assert(*c != '\0');
-	c++;
-	return c;
-}
-#endif
 
 /**
  * @todo Menu models should inherite the node values from their parent
@@ -696,29 +636,6 @@ static void MN_ModelNodeClone (const menuNode_t *source, menuNode_t *clone)
 
 static void MN_ModelNodeLoaded (menuNode_t *node)
 {
-#if 0		/* no more need since "submodel" */
-	/* link node with the parent */
-	if (node->u.model.tag) {
-		char parentName[MAX_VAR];
-		menuNode_t *parent;
-		menuNode_t *last;
-		const char *tag = MN_GetReferenceString(node, node->u.model.tag);
-
-		/* find the parent node */
-		MN_ModelNodeGetParentFromTag(tag, parentName, MAX_VAR);
-		parent = MN_GetNode(node->root, parentName);
-		if (parent == NULL) {
-			Sys_Error("MN_ModelNodeLoaded: Node '%s.%s' not found. Please define parent node before childs\n", node->root->name, parentName);
-		}
-
-		/* find the last child, and like the new one */
-		last = parent;
-		while (last->u.model.next != NULL)
-			last = last->u.model.next;
-		last->u.model.next = node;
-	}
-#endif
-
 	/* a tag without but not a submodel */
 	if (node->u.model.tag != NULL && node->behaviour != node->parent->behaviour) {
 		Com_Printf("MN_ModelNodeLoaded: '%s' use a tag but is not a submodel. Tag removed.\n", MN_GetPath(node));
