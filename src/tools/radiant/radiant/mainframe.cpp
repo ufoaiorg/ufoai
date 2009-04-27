@@ -2472,7 +2472,9 @@ void MainFrame_Construct (void)
 #endif
 
 #ifdef BINDIR
-	g_strCompilerBinaryWithPath = DirectoryCleaned(BINDIR) << "ufo2map"
+	StringOutputStream ufo2mapPath(256);
+	ufo2mapPath << DirectoryCleaned(BINDIR) << "ufo2map";
+	g_strCompilerBinaryWithPath = ufo2mapPath.c_str();
 #endif
 
 	GlobalPreferenceSystem().registerPreference("EnginePath", CopiedStringImportStringCaller(g_strEnginePath), CopiedStringExportStringCaller(g_strEnginePath));
