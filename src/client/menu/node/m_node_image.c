@@ -90,14 +90,10 @@ void MN_ImageNodeDraw (menuNode_t *node)
 	MN_GetNodeAbsPos(node, nodepos);
 
 	if (node->size[0] && !node->size[1]) {
-		float scale;
-
-		scale = image->width / node->size[0];
+		const float scale = image->width / node->size[0];
 		Vector2Set(size, node->size[0], image->height / scale);
 	} else if (node->size[1] && !node->size[0]) {
-		float scale;
-
-		scale = image->height / node->size[1];
+		const float scale = image->height / node->size[1];
 		Vector2Set(size, image->width / scale, node->size[1]);
 	} else {
 		if (node->preventRatio) {
