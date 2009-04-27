@@ -32,6 +32,7 @@ else
 	ifneq ($(TARGET_OS),darwin)
 		CLIENT_LIBS+=-lGL
 	endif
+	CFLAGS+=-std=c99
 endif
 
 # Linux like
