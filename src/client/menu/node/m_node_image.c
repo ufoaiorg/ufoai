@@ -78,12 +78,14 @@ void MN_ImageNodeDraw (menuNode_t *node)
 	/** @todo convert all pic using mousefx into button.
 	 * @todo delete mousefx
 	 */
-	/*if (node->mousefx && node->state) {
+#if 0
+	if (node->mousefx && node->state) {
 		vec4_t color;
 		VectorScale(node->color, 0.8, color);
 		color[3] = node->color[3];
 		R_Color(color);
-	}*/
+	}
+#endif
 
 	MN_GetNodeAbsPos(node, nodepos);
 
@@ -117,9 +119,11 @@ void MN_ImageNodeDraw (menuNode_t *node)
 	/** @todo convert all pic using mousefx into button.
 	 * @todo delete mousefx
 	 */
-	/*if (node->mousefx && node->state) {
+#if 0
+	if (node->mousefx && node->state) {
 		R_Color(NULL);
-	}*/
+	}
+#endif
 }
 
 static const value_t properties[] = {
