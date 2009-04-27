@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
-void MN_EKGNodeDraw (menuNode_t *node)
+static void MN_EKGNodeDraw (menuNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
@@ -45,14 +45,10 @@ void MN_EKGNodeDraw (menuNode_t *node)
 
 	image = MN_LoadImage(imageName);
 	if (image) {
-		int pt;
 		const int ekgHeight = node->size[1];
 		const int ekgWidth = image->width;
-		const int time = cl.time;
-		/* the higher the letter - the higher the speed => morale scrolls faster than hp */
-		const int scrollSpeed = node->name[0] - 'a';
 		/* we have four different ekg parts in each ekg image... */
-		const int ekgImageParts = 4;
+		const int ekgImageParts = image->height / node->size[1];
 		/* ... thus indices go from 0 up tp 3 */
 		const int ekgMaxIndex = ekgImageParts - 1;
 		/* we change the index of the image part in 20s steps */
@@ -61,21 +57,19 @@ void MN_EKGNodeDraw (menuNode_t *node)
 		const int ekgMaxValue = ekgDivide * ekgMaxIndex;
 		/* the current value that was fetched from the cvar and was clamped to the max value */
 		int ekgValue;
+		float current;
 
-		/** @sa GET_HP GET_MORALE macros */
 		/* ekg_morale and ekg_hp are the node names */
 		if (node->name[0] == 'm')
-			/* morale uses another value scaling as the hp is using - so
-			 * we have to adjust it a little bit here */
-			pt = Cvar_GetInteger("mn_morale") / 2;
+			current = Cvar_GetValue("mn_morale") / node->u.ekg.scaleCvarValue;
 		else
-			pt = Cvar_GetInteger("mn_hp");
+			current = Cvar_GetValue("mn_hp") / node->u.ekg.scaleCvarValue;
 
-		ekgValue = min(pt, ekgMaxValue);
+		ekgValue = min(current, ekgMaxValue);
 
 		node->texl[1] = (ekgMaxIndex - (int) ekgValue / ekgDivide) * ekgHeight;
 		node->texh[1] = node->texl[1] + ekgHeight;
-		node->texl[0] = -(int) (0.01 * scrollSpeed * time) % ekgWidth;
+		node->texl[0] = -(int) (node->u.ekg.scrollSpeed * cl.time) % ekgWidth;
 		node->texh[0] = node->texl[0] + node->size[0];
 		if (node->size[0] && !node->size[1]) {
 			float scale;
@@ -106,9 +100,27 @@ void MN_EKGNodeDraw (menuNode_t *node)
 	}
 }
 
+/**
+ * @brief Called at the begin of the load from script
+ */
+static void MN_EKGNodeLoading (menuNode_t *node)
+{
+	node->u.ekg.scaleCvarValue = 1.0f;
+	node->u.ekg.scrollSpeed= 0.07f;
+}
+
+static const value_t properties[] = {
+	{"scrollspeed", V_FLOAT, offsetof(menuNode_t, u.ekg.scrollSpeed), MEMBER_SIZEOF(menuNode_t, u.ekg.scrollSpeed)},
+	{"scale", V_FLOAT, offsetof(menuNode_t, u.ekg.scaleCvarValue), MEMBER_SIZEOF(menuNode_t, u.ekg.scaleCvarValue)},
+
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterEKGNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "ekg";
+	behaviour->loading = MN_EKGNodeLoading;
 	behaviour->extends = "pic";
 	behaviour->draw = MN_EKGNodeDraw;
+	behaviour->properties = properties;
 }

@@ -129,6 +129,8 @@ window physdata
 		image		hud/phys_mor
 		pos			"78 408"
 		size		"324 32"
+		scrollspeed	0.12
+		scale		2.0
 	}
 
 	// ==================

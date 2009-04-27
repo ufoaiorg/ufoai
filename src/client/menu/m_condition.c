@@ -83,7 +83,7 @@ static float MN_GetFloatFromParam (const menuNode_t *source, const char* value, 
 				Com_Printf("MN_GetFloatFromParam: Property '%s' wasn't found; '0' returned", value);
 				return 0;
 			}
-			return MN_GetFloatFromNodeProperty (node, property);
+			return MN_GetFloatFromNodeProperty(node, property);
 		}
 	}
 	return 0;

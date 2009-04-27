@@ -38,6 +38,7 @@ struct value_s;
 #include "node/m_node_abstractvalue.h"
 #include "node/m_node_base.h"
 #include "node/m_node_container.h"
+#include "node/m_node_ekg.h"
 #include "node/m_node_linechart.h"
 #include "node/m_node_model.h"
 #include "node/m_node_text.h"
@@ -148,6 +149,7 @@ typedef struct menuNode_s {
 		textEntryExtraData_t textentry;
 		textExtraData_t text;
 		windowExtraData_t window;
+		ekgExtraData_t ekg;
 	} u;
 
 } menuNode_t;
