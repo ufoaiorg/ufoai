@@ -245,6 +245,9 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		return qfalse;
 
 	castedBehaviour = MN_GetNodeBehaviour(cast);
+	if (castedBehaviour == NULL)
+		Sys_Error("MN_ParseSetAction: Node behaviour cast '%s' doesn't exist (%s)\n", cast, MN_GetPath(menuNode));
+
 	property = MN_GetPropertyFromBehaviour(castedBehaviour, *token);
 	if (!property) {
 		menuNode_t *node = NULL;

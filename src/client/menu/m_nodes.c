@@ -305,6 +305,8 @@ menuNode_t* MN_AllocNode (const char* type)
 		Sys_Error("MN_AllocNode: MAX_MENUNODES hit");
 	memset(node, 0, sizeof(*node));
 	node->behaviour = MN_GetNodeBehaviour(type);
+	if (node->behaviour == NULL)
+		Sys_Error("MN_AllocNode: Node behaviour '%s' doesn't exist", type);
 	return node;
 }
 
@@ -394,6 +396,8 @@ menuNode_t *MN_GetNodeAtPosition (int x, int y)
 /**
  * @brief Return a node behaviour by name
  * @note Use a dichotomic search. nodeBehaviourList must be sorted by name.
+ * @param[in] name Behaviour name requested
+ * @return The bahaviour found, else NULL
  */
 nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 {
@@ -415,8 +419,7 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 			min = mid + 1;
 	}
 
-	Sys_Error("Node behaviour '%s' doesn't exist", name);
-	/* return NULL; */
+	return NULL;
 }
 
 /**
@@ -525,6 +528,22 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 				*(uintptr_t*)((byte*)behaviour + pos) = superFunc;
 
 			i++;
+		}
+	}
+
+	/* property must not overwrite another property */
+	if (behaviour->super && behaviour->properties) {
+		const value_t* current = behaviour->properties;
+		while (current->string != NULL) {
+			const value_t *p = MN_GetPropertyFromBehaviour(behaviour->super, current->string);
+			const nodeBehaviour_t *b = MN_GetNodeBehaviour(current->string);
+			if (p != NULL)
+				Sys_Error("MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property\n", current->string, behaviour->name);
+#if 0	/*< not possible at the moment, not sure its the right way */
+			if (b != NULL)
+				Sys_Error("MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' use the name of an existing node behaviour\n", current->string, behaviour->name);
+#endif
+			current++;
 		}
 	}
 
