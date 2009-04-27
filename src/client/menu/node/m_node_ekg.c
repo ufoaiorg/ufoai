@@ -47,15 +47,13 @@ static void MN_EKGNodeDraw (menuNode_t *node)
 	if (image) {
 		const int ekgHeight = node->size[1];
 		const int ekgWidth = image->width;
-		/* we have four different ekg parts in each ekg image... */
+		/* we have different ekg parts in each ekg image... */
 		const int ekgImageParts = image->height / node->size[1];
-		/* ... thus indices go from 0 up tp 3 */
 		const int ekgMaxIndex = ekgImageParts - 1;
 		/* we change the index of the image part in 20s steps */
 		const int ekgDivide = 20;
 		/* If we are in the range of (ekgMaxValue + ekgDivide, ekgMaxValue) we are using the first image */
 		const int ekgMaxValue = ekgDivide * ekgMaxIndex;
-		/* the current value that was fetched from the cvar and was clamped to the max value */
 		int ekgValue;
 		float current;
 
