@@ -308,27 +308,24 @@ item plasblaster_ammo
 		}
 		firedef
 		{
-			name	"_Burst"
-			skill 	heavy
-			projtl	plasmaContinuous
-			impact	plasmaImpact
-			hitbody	plasmaImpact
-			firesnd	weapons/plasma_big
-			sndonce true
-			speed	0
-			spread	"2.7 2.7"
-			crouch	0.6
-			range	60
-			shots	5
-			ammo	5
-			delaybetweenshots		38
-			time	24
-			damage	"90 15"
-			dmgweight plasma_heavy
-			reaction	true
+			name				"_Burst"
+			skill 				heavy
+			projtl				plasmaContinuous
+			impact				plasmaImpact
+			hitbody				plasmaImpact
+			firesnd				weapons/plasma_big
+			sndonce				true
+			speed				0
+			spread				"2.7 2.7"
+			crouch				0.6
+			range				60
+			shots				5
+			ammo				5
+			delaybetweenshots	38
+			time				24
+			damage				"90 15"
+			dmgweight			plasma_heavy
+			reaction			true
 		}
 	}
 }
-
-
-

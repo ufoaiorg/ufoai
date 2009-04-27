@@ -83,97 +83,97 @@ item pbeampistol_ammo
 // =======================
 item pbeamrifle
 {
-	name		"_Particle Beam Rifle"
-	model		weapons/pbeamrifle/pbeamrifle
-	weapon		true
-	type		rifle
+	name			"_Particle Beam Rifle"
+	model			weapons/pbeamrifle/pbeamrifle
+	weapon			true
+	type			rifle
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"2 0 3 1"
-	shape		"0 1 5 1"
-	center		"9 -0.5 1.8"
-	scale		1.1
-	ammo		12
-	reload		14
-	price		59000
-	size		40
-	is_primary	true
+	shape			"2 0 3 1"
+	shape			"0 1 5 1"
+	center			"9 -0.5 1.8"
+	scale			1.1
+	ammo			12
+	reload			14
+	price			59000
+	size			40
+	is_primary		true
 }
 
 item pbeamrifle_ammo
 {
-	name		"_Rifle Particle Accelerator"
-	model		weapons/pbeamrifle/pbeamrifle_clip
-	type		ammo
+	name			"_Rifle Particle Accelerator"
+	model			weapons/pbeamrifle/pbeamrifle_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 1"
-	center		"0 0 -0.3"
-	scale		1.1
-	price		3500
-	size		5
-	is_primary	true
-	dmgtype particlebeam
+	shape			"0 0 1 1"
+	center			"0 0 -0.3"
+	scale			1.1
+	price			3500
+	size			5
+	is_primary		true
+	dmgtype			particlebeam
 
 	weapon_mod pbeamrifle
 	{
 		firedef
 		{
-			name	"_Snap Shot"
-			skill	assault
-			projtl	pbeamBeam
-			impact	pbeamImpact
-			hitbody pbeamImpact
-			firesnd	weapons/pbeamrifle
-			speed	0
-			spread	"1.5 1.5"
-			crouch	0.7
-			range	150
-			shots	1
-			ammo	1
-			time	10
-			damage	"90 15"
-			dmgweight particlebeam_medium
+			name		"_Snap Shot"
+			skill		assault
+			projtl		pbeamBeam
+			impact		pbeamImpact
+			hitbody		pbeamImpact
+			firesnd		weapons/pbeamrifle
+			speed		0
+			spread		"1.5 1.5"
+			crouch		0.7
+			range		150
+			shots		1
+			ammo		1
+			time		10
+			damage		"90 15"
+			dmgweight	particlebeam_medium
 			reaction	true
 		}
 		firedef
 		{
-			name	"_Aimed Shot"
-			skill	sniper
-			projtl	pbeamBeam
-			impact	pbeamImpact
-			hitbody pbeamImpact
-			firesnd	weapons/pbeamrifle
-			speed	0
-			spread	"1 1"
-			crouch	0.7
-			range	150
-			shots	1
-			ammo	1
-			time	15
-			damage	"90 15"
-			dmgweight particlebeam_medium
+			name		"_Aimed Shot"
+			skill		sniper
+			projtl		pbeamBeam
+			impact		pbeamImpact
+			hitbody		pbeamImpact
+			firesnd		weapons/pbeamrifle
+			speed		0
+			spread		"1 1"
+			crouch		0.7
+			range		150
+			shots		1
+			ammo		1
+			time		15
+			damage		"90 15"
+			dmgweight	particlebeam_medium
 			reaction	true
 		}
 		firedef
 		{
-			name	"_Burst"
-			skill	assault
-			projtl	pbeamMiniBeam
-			impact	pbeamImpact
-			hitbody pbeamImpact
-			firesnd	weapons/pbeamrifle
-			speed	0
-			spread	"2 2"
-			crouch	0.7
-			range	90
-			shots	3
-			ammo	3
-			delaybetweenshots		5
-			time	16
-			damage	"90 15"
-			dmgweight particlebeam_medium
-			reaction true
+			name				"_Burst"
+			skill				assault
+			projtl				pbeamMiniBeam
+			impact				pbeamImpact
+			hitbody				pbeamImpact
+			firesnd				weapons/pbeamrifle
+			speed				0
+			spread				"2 2"
+			crouch				0.7
+			range				90
+			shots				3
+			ammo				3
+			delaybetweenshots	5
+			time				16
+			damage				"90 15"
+			dmgweight			particlebeam_medium
+			reaction			true
 		}
 	}
 }
@@ -184,100 +184,100 @@ item pbeamrifle_ammo
 // =======================
 item pbeamcannon
 {
-	name		"_Particle Beam Cannon"
-	model		weapons/pbeamcannon/pbeamcannon
-	weapon		true
-	type		rifle
+	name			"_Particle Beam Cannon"
+	model			weapons/pbeamcannon/pbeamcannon
+	weapon			true
+	type			rifle
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"0 0 5 2"
-	center		"11 0 0.3"
-	scale		1.07
-	ammo		8
-	reload		16
-	price		44000
-	size		70
-	is_primary	true
-	is_heavy	true
+	shape			"0 0 5 2"
+	center			"11 0 0.3"
+	scale			1.07
+	ammo			8
+	reload			16
+	price			44000
+	size			70
+	is_primary		true
+	is_heavy		true
 }
 
 item pbeamcannon_ammo
 {
-	name		"_Cannon Particle Accelerator"
-	model		weapons/pbeamcannon/pbeamcannon_clip
-	type		ammo
+	name			"_Cannon Particle Accelerator"
+	model			weapons/pbeamcannon/pbeamcannon_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 2 1"
-	center		"0 0 -0.2"
-	scale		1.0
-	price		3000
-	size		8
-	is_primary	true
-	is_heavy	true
-	dmgtype particlebeam
+	shape			"0 0 2 1"
+	center			"0 0 -0.2"
+	scale			1.0
+	price			3000
+	size			8
+	is_primary		true
+	is_heavy		true
+	dmgtype			particlebeam
 
 	weapon_mod pbeamcannon
 	{
 		firedef
 		{
-			name	"_Snap Shot"
-			skill	heavy
-			projtl	pbeamMiniBeam
-			impact	pbeamImpact
-			hitbody pbeamImpact
-			firesnd	weapons/pbeamcannon
-			speed	0
-			spread	"1.8 1.8"
-			crouch	0.6
-			range	50
-			shots	1
-			ammo	1
-			delaybetweenshots		5
-			time	17
-			damage	"150 20"
-			dmgweight particlebeam_heavy
-			reaction	true
+			name				"_Snap Shot"
+			skill				heavy
+			projtl				pbeamMiniBeam
+			impact				pbeamImpact
+			hitbody				pbeamImpact
+			firesnd				weapons/pbeamcannon
+			speed				0
+			spread				"1.8 1.8"
+			crouch				0.6
+			range				50
+			shots				1
+			ammo				1
+			delaybetweenshots	5
+			time				17
+			damage				"150 20"
+			dmgweight			particlebeam_heavy
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Burst"
-			skill	heavy
-			projtl	pbeamMiniBeam
-			impact	pbeamImpact
-			hitbody pbeamImpact
-			firesnd	weapons/pbeamcannon
-			speed	0
-			spread	"2.5 2.5"
-			crouch	0.6
-			range	50
-			shots	4
-			ammo	4
-			delaybetweenshots		5
-			time	24
-			damage	"150 20"
-			dmgweight particlebeam_heavy
-			reaction	false
+			name				"_Burst"
+			skill				heavy
+			projtl				pbeamMiniBeam
+			impact				pbeamImpact
+			hitbody				pbeamImpact
+			firesnd				weapons/pbeamcannon
+			speed				0
+			spread				"2.5 2.5"
+			crouch				0.6
+			range				50
+			shots				4
+			ammo				4
+			delaybetweenshots	5
+			time				24
+			damage				"150 20"
+			dmgweight			particlebeam_heavy
+			reaction			false
 		}
 		firedef
 		{
-			name	"_Unrestricted Blast"
-			skill	heavy
-			projtl	pbeamBigBeam
-			impact	pbeamBigImpact
-			hitbody pbeamBigImpact
-			firesnd	weapons/pbeamcannon_explosive
-			speed	0
-			spread	"1.5 1.5"
-			crouch	0.8
-			range	100
-			shots	1
-			ammo	8
-			time	28
-			damage	"0 0"
-			spldmg	"210 20"
-			splrad	4
-			dmgweight particlebeam_heavy
+			name		"_Unrestricted Blast"
+			skill		heavy
+			projtl		pbeamBigBeam
+			impact		pbeamBigImpact
+			hitbody		pbeamBigImpact
+			firesnd		weapons/pbeamcannon_explosive
+			speed		0
+			spread		"1.5 1.5"
+			crouch		0.8
+			range		100
+			shots		1
+			ammo		8
+			time		28
+			damage		"0 0"
+			spldmg		"210 20"
+			splrad		4
+			dmgweight	particlebeam_heavy
 			reaction	false
 		}
 	}
