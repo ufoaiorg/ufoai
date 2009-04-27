@@ -35,17 +35,17 @@ start_downloads()
 	download http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-core.tar.gz gcc.tar.gz
 	download http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-g++.tar.gz g++.tar.gz
 
-	download http://downloads.sourceforge.net/gnuwin32/ zlib-1.2.3-lib.zip zlib.zip
+	download http://downloads.sourceforge.net/gnuwin32/ freetype-2.3.6-lib.zip freetype.zip
+	download http://downloads.sourceforge.net/gnuwin32/ gettext-0.14.4-bin.zip gettext.zip
 	download http://downloads.sourceforge.net/gnuwin32/ jpeg-6b-4-lib.zip libjpeg.zip
-	download http://downloads.sourceforge.net/gnuwin32/ libpng-1.2.35-lib.zip libpng.zip
 	download http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-lib.zip libiconv.zip
 	download http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-bin.zip libiconv-bin.zip
 	download http://downloads.sourceforge.net/gnuwin32/ libintl-0.14.4-lib.zip libintl.zip
-	download http://downloads.sourceforge.net/gnuwin32/ freetype-2.3.6-lib.zip freetype.zip
-	download http://downloads.sourceforge.net/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
-	download http://downloads.sourceforge.net/gnuwin32/ tiff-3.8.2-1-lib.zip libtiff.zip
-	download http://downloads.sourceforge.net/gnuwin32/ gettext-0.14.4-bin.zip gettext.zip
+	download http://downloads.sourceforge.net/gnuwin32/ libpng-1.2.35-lib.zip libpng.zip
 	download http://downloads.sourceforge.net/gnuwin32/ libxml2-2.4.12-1-lib.zip libxml2.zip
+	download http://downloads.sourceforge.net/gnuwin32/ tiff-3.8.2-1-lib.zip libtiff.zip
+	download http://downloads.sourceforge.net/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
+	download http://downloads.sourceforge.net/gnuwin32/ zlib-1.2.3-lib.zip zlib.zip
 	
 	download http://curl.de-mirror.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
 
@@ -62,7 +62,7 @@ start_downloads()
 #	download http://downloads.xiph.org/releases/ogg/ libogg-1.1.3.tar.gz libogg.tar.gz
 #	download http://downloads.xiph.org/releases/ogg/ libvorbis-1.2.0.tar.gz libvorbis.tar.gz
 
-	download http://download.berlios.de/codeblocks/ wxmsw28u_gcc_cb_wx289.7z codeblocks_gcc.7z
+	download http://download.berlios.de/codeblocks/ wxmsw28u_gcc_cb_wx2810.7z codeblocks_gcc.7z
 	download http://download.berlios.de/codeblocks/ mingwm10_gcc421.7z codeblocks_mingw.7z
 	download http://download.berlios.de/codeblocks/ CB_20090413_rev5535_win32.7z codeblocks.7z
 
