@@ -83,7 +83,7 @@ MACROS
 #define RT_STEPUP_NX_NY(map, actorSize, x, y, z)	    (RT_STEPUP(map, actorSize, x, y, z, 5))
 
 #define RT_FLOOR(map, actorSize, x, y, z)			map[(actorSize) - 1].floor[(z)][(y)][(x)]
-#define RT_CEILING(map, actorSize, x, y, z)		map[(actorSize) - 1].ceil[(z)][(y)][(x)]
+#define RT_CEILING(map, actorSize, x, y, z)			map[(actorSize) - 1].ceil[(z)][(y)][(x)]
 #define RT_FILLED(map, actorSize, x, y, z)			(RT_CEILING(map, actorSize, x, y, z) - RT_FLOOR(map, actorSize, x, y, z) < PATHFINDING_MIN_OPENING)
 
 /* area - Used by Grid_* only */
@@ -93,7 +93,7 @@ MACROS
 #define RT_AREA_TEST(path, x, y, z, state)			assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
 														assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
 														assert((x) >= 0); assert((x) < PATHFINDING_WIDTH);\
-														assert((state) >= 0); assert((state) < ACTOR_MAX_STATES);
+														assert((state) == 0 || (state) == 1);
 
 
 /**

@@ -1957,8 +1957,7 @@ void Grid_MoveCalc (const struct routing_s *map, const int actorSize, struct pat
 
 	/* Confirm bounds */
 	assert((from[2]) < PATHFINDING_HEIGHT);
-	assert((crouchingState) >= 0);
-	assert((crouchingState) < ACTOR_MAX_STATES);
+	assert(crouchingState == 0 || crouchingState == 1);	/* s.a. ACTOR_MAX_STATES */
 
 	RT_AREA(path, from[0], from[1], from[2], crouchingState) = 0;
 
@@ -2014,8 +2013,7 @@ pos_t Grid_MoveLength (const struct pathing_s *path, const pos3_t to, byte crouc
 #endif
 	/* Confirm bounds */
 	assert(to[2] < PATHFINDING_HEIGHT);
-	assert(crouchingState >= 0);
-	assert(crouchingState < ACTOR_MAX_STATES);
+	assert(crouchingState == 0 || crouchingState == 1);	/* s.a. ACTOR_MAX_STATES */
 
 	if (!stored)
 		return RT_AREA(path, to[0], to[1], to[2], crouchingState);
