@@ -254,7 +254,7 @@ window endgame
 		color		"0 0.8 0 0.9"
 	}
 
-	func init {
+	func onInit {
 		cmd "cinematic end;"
 	}
 

@@ -123,7 +123,7 @@ window aircraft extends iaircraft
 		*aircraft_list lineselected <1>
 	}
 
-	func init
+	func onInit
 	{
 		*cvar:mn_aircrafttab "aircraft"
 		cmd "aircraft_update_list;"

@@ -448,11 +448,11 @@ window aliencont
 	// ================================================================================
 	// init
 	// ================================================================================
-	func init
+	func onInit
 	{
 		cmd "aliencont_init;"
 	}
-	func close
+	func onClose
 	{
 		cmd "del mn_al_alive;del mn_al_alientype;"
 		cmd "del mn_al_alienimage;del mn_al_dead;del mn_al_capacity;"

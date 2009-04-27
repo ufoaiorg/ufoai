@@ -123,7 +123,7 @@ window campaigns
 		}
 	}
 
-	func init
+	func onInit
 	{
 		cmd "game_setmode;cp_getcampaigns;"
 	}
@@ -248,7 +248,7 @@ window quickload
 		onClick		{ cmd "game_quickload;" }
 	}
 
-	func init
+	func onInit
 	{
 		cmd "game_quickloadinit;"
 	}
@@ -410,7 +410,7 @@ window load
 		onClick		{ cmd "mn_pop;" }
 	}
 
-	func init
+	func onInit
 	{
 		cmd "game_comments;"
 	}
@@ -597,7 +597,7 @@ window save
 		onClick		{ cmd "mn_pop;" }
 	}
 
-	func init
+	func onInit
 	{
 		cmd "game_comments;"
 	}

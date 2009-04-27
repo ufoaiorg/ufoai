@@ -281,13 +281,13 @@ window basedefence
 		onClick		{ cmd mn_pop }
 	}
 
-	func init
+	func onInit
 	{
 		call basedef_initnodevalues
 		cmd "basedef_initmenu;basedef_updatemenu 0;airequip_zone_select 1;"
 	}
 
-	func close
+	func onClose
 	{
 	}
 }

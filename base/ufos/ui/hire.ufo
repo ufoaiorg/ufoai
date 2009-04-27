@@ -620,7 +620,7 @@ window employees
 	// init function
 	// ==================
 
-	func init
+	func onInit
 	{
 		call employee_clear
 		cmd "employee_init 0;"
@@ -628,7 +628,7 @@ window employees
 		cmd "employee_update_count"
 	}
 
-	func close
+	func onClose
 	{
 		// call base init function because the amount of workers, scientists and
 		// so on can also change the button state in the base view

@@ -11,7 +11,7 @@ window multiplayer
 	}
 
 	/** @brief prevent pushing this menu */
-	func init
+	func onInit
 	{
 		cmd "mn_pop"
 		call mn_push_multiplayer
@@ -245,11 +245,11 @@ window serverinfo
 		onClick		{ cmd "bookmark_add;" }
 	}
 
-	func init
+	func onInit
 	{
 	}
 
-	func close
+	func onClose
 	{
 		cmd	"pingservers;"
 	}
@@ -423,14 +423,14 @@ window mp_serverbrowser extends abstract_multiplayer_join
 	// ====================
 	// init
 	// ====================
-	func init
+	func onInit
 	{
 		cmd "set cl_serverlist 0;"
 		cmd "pingservers refresh;"
 		cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
 	}
 
-	func event
+	func onEvent
 	{
 		cmd "pingservers refresh;"
 	}
@@ -1052,7 +1052,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 	}
 
-	func init
+	func onInit
 	{
 		cmd "killserver;set sv_maxplayersperteam 8;set sv_roundtimelimit 0;set mn_serverday 1;"
 		cmd "mp_updategametype;mn_getmaps;"
@@ -1206,7 +1206,7 @@ window multiplayer_selectteam
 	}
 
 	// update every 2 sec
-	func event
+	func onEvent
 	{
 		cmd "mp_selectteam_init;"
 	}
@@ -1239,7 +1239,7 @@ window multiplayer_selectteam
 	// ===================
 	// INIT
 	// ===================
-	func init
+	func onInit
 	{
 		cmd "mp_selectteam_init;"
 	}
@@ -1316,7 +1316,7 @@ window multiplayer_wait
 		onClick		{ cmd "sv startgame;" }
 	}
 
-	func event
+	func onEvent
 	{
 		cmd		"mp_wait_init;"
 	}

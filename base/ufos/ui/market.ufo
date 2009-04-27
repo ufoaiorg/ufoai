@@ -833,7 +833,7 @@ window market
 	// init
 	// ==================
 
-	func init
+	func onInit
 	{
 		cmd "buy_type *mn_itemtype;"
 	}

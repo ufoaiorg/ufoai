@@ -122,7 +122,7 @@ window options
 		onClick		{ cmd "mn_pop;" }
 	}
 
-	func init
+	func onInit
 	{
 		call hidepanels
 		cmd "mn_init_keylist;"
@@ -1296,14 +1296,14 @@ window popup_maintain_resolution
 		onClick		{ cmd "mn_pop; copy new_vidmode old_vidmode;" }
 	}
 
-	func init
+	func onInit
 	{
 		cmd "copy old_vidmode vid_mode;"
 		cmd "copy vid_mode mn_vidmode;"
 		cmd "copy new_vidmode old_vidmode;"
 	}
 
-	func close
+	func onClose
 	{
 		cmd "copy vid_mode new_vidmode;"
 	}

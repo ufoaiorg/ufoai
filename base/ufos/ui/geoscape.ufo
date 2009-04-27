@@ -525,7 +525,7 @@ window geoscape
 
 	}
 
-	func init
+	func onInit
 	{
 		cmd	"music_change geoscape;"
 		cmd "set mn_messagesystem 0;"
@@ -667,11 +667,11 @@ window popup_button
 		invis		true
 	}
 
-	func init
+	func onInit
 	{
 	}
 
-	func leave
+	func onLeave
 	{
 		cmd	"mn_pop;"
 	}
@@ -747,7 +747,7 @@ window popup_intercept_ready
 		}
 	}
 
-	func init
+	func onInit
 	{
 		cmd "cp_missionauto_check;popup_intercept_ready_update"
 	}
@@ -905,7 +905,7 @@ window popup_baseattack
 		}
 	}
 
-	func init
+	func onInit
 	{
 		cmd	"cp_missionauto_check;"
 	}
@@ -1081,7 +1081,7 @@ window popup_newbase
 		}
 	}
 
-	func init
+	func onInit
 	{
 		if "*cvar:mn_base_count <= 0" {
 			*start_employees_str invis false
@@ -1329,7 +1329,7 @@ window popup_newinstallation_type
 		onClick		{ cmd "mn_pop;" }
 	}
 
-	func init {
+	func onInit {
 		if "*cvar:mn_base_count >= *cvar:mn_base_max" {
 			*click_base invis true
 			*disabled_base invis false
@@ -1493,7 +1493,7 @@ window popup_newinstallation
 
 window samsite
 {
-	func init
+	func onInit
 	{
 		cmd "mn_pop; mn_push basedefence;"
 	}
@@ -1623,7 +1623,7 @@ window popup_installationstatus
 		onClick		{ cmd "mn_pop;mn_destroyinstallation;" }
 	}
 
-	func init
+	func onInit
 	{
 		cmd "game_timestop;"
 	}
@@ -1793,12 +1793,12 @@ window popup_intercept
 		}
 	}
 
-	func init {
+	func onInit {
 		*cvar:mn_defencetab 0
 		cmd "popup_intercept_update"
 	}
 
-	func close {
+	func onClose {
 		cmd "del mn_defencetab"
 	}
 }
@@ -2822,12 +2822,12 @@ window messageoptions
 		*bt_sound<1> invis true
 	}
 
-	func init
+	func onInit
 	{
 		cmd "game_timestop;msgoptions_init;msgoptions_backup;"
 	}
 
-	func close
+	func onClose
 	{
 		cmd "del tmp;"
 		cmd "msgoptions_restore;"
@@ -2945,7 +2945,7 @@ window geoscape_options {
 		}
 	}
 
-	func init {
+	func onInit {
 		*cvar:r_geoscape_overlay_fooooo 0
 	}
 }

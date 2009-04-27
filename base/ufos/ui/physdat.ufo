@@ -171,7 +171,7 @@ window hudphysdat extends physdata
 		size		"36 75"
 		onClick		{ cmd "mn_pop;" }
 	}
-	func leave
+	func onLeave
 	{
 		cmd "mn_pop;"
 	}
@@ -191,7 +191,7 @@ window ahudphysdat extends physdata
 		onClick		{ cmd "mn_pop;" }
 		onRClick		{ cmd "mn_pop;" }
 	}
-	func leave
+	func onLeave
 	{
 		cmd "mn_pop;"
 	}

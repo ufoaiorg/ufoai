@@ -201,7 +201,7 @@ window unittest_condition
 		}
 	}
 	
-	func init {
+	func onInit {
 		*cvar:test_float0 "0"
 		*cvar:test_float1 "1"
 		*cvar:test_float0-2 "0"
@@ -271,7 +271,7 @@ window unittest_condition
 		cmd "unittest_condition_relative"
 	}
 
-	func close {
+	func onClose {
 		cmd "del test_float0"
 		cmd "del test_float0-2"
 		cmd "del test_float314"

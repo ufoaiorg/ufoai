@@ -690,7 +690,7 @@ window equipment
 		onClick	{ cmd "mn_pop;" }
 	}
 
-	func close
+	func onClose
 	{
 		/** @note Do not define action here
 		 * this close is edited by the code
@@ -698,7 +698,7 @@ window equipment
 		 */
 	}
 
-	func init
+	func onInit
 	{
 		call names_clear
 		call actor_stats

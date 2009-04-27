@@ -336,12 +336,12 @@ window ufopedia
 		onClick		{ cmd "mn_increasefiremode;" }
 	}
 
-	func init
+	func onInit
 	{
 		cmd "mn_upcontent;"
 	}
 
-	func close
+	func onClose
 	{
 		cmd "mn_fireinit ufopedia;"
 	}

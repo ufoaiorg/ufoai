@@ -168,7 +168,7 @@ window stats
 		rows		5
 	}
 
-	func init
+	func onInit
 	{
 		cmd "stats_update;"
 	}
@@ -486,12 +486,12 @@ window nations
 		preventratio	true
 	}
 
-	func init
+	func onInit
 	{
 		cmd "nation_update;"
 	}
 
-	func close
+	func onClose
 	{
 		cmd "del mn_nat_symbol;"
 	}

@@ -459,7 +459,7 @@ window hospital
 	// init function
 	// ==================
 
-	func init
+	func onInit
 	{
 		cmd "hosp_init;"
 	}
@@ -640,7 +640,7 @@ window hospital_employee
 	// init function
 	// ==================
 
-	func init
+	func onInit
 	{
 		cmd "hosp_empl_init;"
 	}

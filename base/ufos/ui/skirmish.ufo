@@ -242,7 +242,7 @@ window skirmish
 	// ===================
 	// INIT
 	// ===================
-	func init
+	func onInit
 	{
 		// TODO: Allow changing the difficulty via menu
 		cmd	"game_setmode;set ai_numaliens 8;set difficulty 0;"

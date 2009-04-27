@@ -104,13 +104,13 @@ window buildings
 		cmd "mn_datareset TEXT_BUILDING_INFO;"
 	}
 
-	func init
+	func onInit
 	{
 		cmd "building_init;mn_push_child popup_buildingpreview buildings;"
 		call mn_buildings_reset
 	}
 
-	func close
+	func onClose
 	{
 		cmd "reset_building_current 0;"
 	}

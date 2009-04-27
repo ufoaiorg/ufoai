@@ -723,7 +723,7 @@ window mp_team_edit
 		onClick	{ cmd "mn_pop;" }
 	}
 
-	func init
+	func onInit
 	{
 		call mp_names_clear
 		call mp_actor_stats
@@ -935,7 +935,7 @@ window mp_team extends abstract_multiplayer
 		}
 	}
 
-	func init
+	func onInit
 	{
 		cmd	"team_comments;"
 	}
@@ -946,7 +946,7 @@ window mp_team extends abstract_multiplayer
 // ==========================
 
 /**
- * @todo The mn_pop into the change event dont work - the workaround is the func close team_comments call
+ * @todo The mn_pop into the change event dont work - the workaround is the func onClose team_comments call
  */
 window mp_team_save_popup
 {
@@ -1077,7 +1077,7 @@ window mp_team_save_popup
 		onChange	{ cmd "saveteam 7;mn_pop;" }
 	}
 
-	func close
+	func onClose
 	{
 		cmd "team_comments;"
 	}

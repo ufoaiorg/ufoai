@@ -31,7 +31,7 @@ window model_test
 		size	"1024 768"
 	}
 
-	func init
+	func onInit
 	{
 		cmd "set mn_model drop_firebird;"
 	}

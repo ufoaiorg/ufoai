@@ -97,7 +97,7 @@ window mail
 		font		"f_small_bold"
 	}
 
-	func close
+	func onClose
 	{
 		cmd "mn_fireinit mailclient;"
 	}
@@ -568,7 +568,7 @@ window mailclient
 		onClick		{ cmd "mn_pop;" }
 	}
 
-	func init
+	func onInit
 	{
 		cmd "ufopedia_openmail;"
 	}

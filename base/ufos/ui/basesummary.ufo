@@ -218,7 +218,7 @@ window basesummary
 	// ==================
 	// init
 	// ==================
-	func init
+	func onInit
 	{
 		*basenavigation.base0 bgcolor "1 1 1 0.4"
 		*basenavigation.base1 bgcolor "1 1 1 0.4"

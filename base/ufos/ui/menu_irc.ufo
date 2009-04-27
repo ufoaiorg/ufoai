@@ -161,7 +161,7 @@ window irc
 	// ==================
 	// init
 	// ==================
-	func init
+	func onInit
 	{
 		cmd "irc_activate;"
 	}
@@ -169,7 +169,7 @@ window irc
 	// ==================
 	// close
 	// ==================
-	func close
+	func onClose
 	{
 		cmd "irc_deactivate;"
 	}
@@ -220,7 +220,7 @@ window irc_popup
 		onClick		{ cmd "mn_pop;" }
 	}
 
-	func leave
+	func onLeave
 	{
 		cmd "mn_pop;"
 	}

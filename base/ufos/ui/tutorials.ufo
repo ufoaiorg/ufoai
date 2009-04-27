@@ -43,7 +43,7 @@ window tutorials
 		scrollbar true
 		onClick	{ cmd "tutoriallist_click <lineselected>" }
 	}
-	func init
+	func onInit
 	{
 		cmd	"gettutorials;"
 	}

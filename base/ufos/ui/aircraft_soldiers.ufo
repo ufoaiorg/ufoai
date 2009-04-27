@@ -585,7 +585,7 @@ window team extends iaircraft
 		cmd "aircraft_status_change"
 	}
 
-	func init
+	func onInit
 	{
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		*scroll_employees current 0

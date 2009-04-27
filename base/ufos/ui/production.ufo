@@ -530,7 +530,7 @@ window production
 	// init function
 	// ==================
 
-	func init
+	func onInit
 	{
 		cmd "prod_init; prod_type *mn_itemtype;"
 		call prod_stores

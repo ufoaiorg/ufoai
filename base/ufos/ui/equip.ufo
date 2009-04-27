@@ -447,14 +447,14 @@ window aircraft_equip extends iaircraft
 		}
 	}
 
-	func init
+	func onInit
 	{
 		// default is weapons @sa aircraftItemType_t (inv_shared.h)
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		cmd "airequip_updatemenu 2;"
 		call airequip_zone1
 	}
-	func close
+	func onClose
 	{
 		cmd "del mn_aircraft_item_model_slot0;del mn_aircraft_item_model_slot1;"
 		cmd "del mn_aircraft_item_model_slot2;del mn_aircraft_item_model_slot3;"

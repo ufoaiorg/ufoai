@@ -757,7 +757,7 @@ window research
 	// ==================
 	// init
 	// ==================
-	func init
+	func onInit
 	{
 		cmd "research_init;"
 	}

@@ -64,12 +64,12 @@ window won
 		}
 	}
 
-	func init
+	func onInit
 	{
 		cmd "snd_music ufo2;"
 	}
 
-	func close
+	func onClose
 	{
 		cmd "cp_results 1;"
 	}
@@ -136,12 +136,12 @@ window lost
 		onClick		{ cmd "set cp_mission_tryagain 0;mn_pop;" }
 	}
 
-	func init
+	func onInit
 	{
 		cmd "snd_music ufo1;"
 	}
 
-	func close
+	func onClose
 	{
 		cmd "cp_results 0;"
 	}
@@ -377,7 +377,7 @@ window uforecovery
 		*cvar:mission_recoverynation ""
 	}
 
-	func init {
+	func onInit {
 		*store_panel.cp_uforecovery_baselist lineselected	-1
 		*store_panel.cp_uforecovery_baselist disabled false
 		*store_panel.bt_basereplace disabled true
@@ -388,7 +388,7 @@ window uforecovery
 		cmd "del mission_recoverybase;del mission_recoverynation;uforecovery_tabchange;cp_uforecovery_sell_init;cp_uforecovery_store_init;"
 	}
 
-	func close {
+	func onClose {
 		cmd "del mn_uforecovery_tab;del mn_uforecovery_actualufo;"
 	}
 }

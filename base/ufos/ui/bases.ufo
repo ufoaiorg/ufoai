@@ -334,7 +334,7 @@ window bases
 		*hospital tooltip <2>
 	}
 
-	func init
+	func onInit
 	{
 		cmd "base_init;"
 	}

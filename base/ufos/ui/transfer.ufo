@@ -291,12 +291,12 @@ window transfer
 	// init function
 	// ==================
 
-	func init
+	func onInit
 	{
 		cmd "trans_init;"
 	}
 
-	func close
+	func onClose
 	{
 		cmd "trans_close;"
 	}

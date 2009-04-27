@@ -880,7 +880,7 @@ window hud extends ahud
 		}
 	}
 
-	func event
+	func onEvent
 	{
 		*chatscreen invis true
 	}
@@ -893,7 +893,7 @@ window hud extends ahud
 		*chatscreen invis false
 	}
 
-	func init
+	func onInit
 	{
 		*chatscreen invis true
 		cmd "music_change battlescape;"

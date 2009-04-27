@@ -13,12 +13,12 @@ window editor {
 		size "1 1"
 	}
 
-	func init {
+	func onInit {
 		cmd "echo \"Use mn_extract to write your changes to a file\";"
 		cmd "mn_editornode_start <path:root>.editor"
 	}
 
-	func close {
+	func onClose {
 		cmd "mn_editornode_stop <path:root>.editor"
 	}
 }
