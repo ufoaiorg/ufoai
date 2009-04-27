@@ -102,8 +102,7 @@ void MN_ImageNodeDraw (menuNode_t *node)
 	} else {
 		if (node->preventRatio) {
 			/* maximize the image into the bounding box */
-			float ratio;
-			ratio = (float) image->width / (float) image->height;
+			const float ratio = (float) image->width / (float) image->height;
 			if (node->size[1] * ratio > node->size[0]) {
 				Vector2Set(size, node->size[0], node->size[0] / ratio);
 			} else {
