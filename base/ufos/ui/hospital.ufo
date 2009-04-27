@@ -541,22 +541,24 @@ window hospital_employee
 
 	model body
 	{
-		model	"*cvar mn_body"
-		skin	"*cvar mn_skin"
-		anim	"stand2"
-		angles	"0 70 90"
-		scale	"6.7 6.7 6.7"
-		pos		"480 180"
-		size	"200 350"
-		origin	"0 -35 0"
-	}
-
-	model head
-	{
-		model	"*cvar mn_head"
-		skin	"*cvar mn_skin"
-		tag		"body tag_head"
-		scale	"1.0 1.0 1.0"
+		{
+			model	"*cvar mn_body"
+			skin	"*cvar mn_skin"
+			anim	"stand2"
+			angles	"0 70 90"
+			scale	"6.7 6.7 6.7"
+			pos		"480 180"
+			size	"200 350"
+			origin	"0 -35 0"
+		}
+		
+		model head
+		{
+			model	"*cvar mn_head"
+			skin	"*cvar mn_skin"
+			tag		"tag_head"
+			scale	"1.0 1.0 1.0"
+		}
 	}
 
 	pic	rank_img { pos "475 470" image "*cvar mn_chrrank_img" }

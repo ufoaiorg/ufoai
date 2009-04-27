@@ -49,21 +49,23 @@ window aircraft_pilots extends iaircraft
 
 	model assigned_pilot_body
 	{
-		model	"*cvar mn_pilot_body"
-		skin	"*cvar mn_pilot_skin"
-		anim	"stand_still"
-		angles	"0 90 90"
-		scale	"5.5 5.5 5.5"
-		pos		"495 121"
-		size	"62 62"
-		origin	"0 70 0"
-	}
+		{
+			model	"*cvar mn_pilot_body"
+			skin	"*cvar mn_pilot_skin"
+			anim	"stand_still"
+			angles	"0 90 90"
+			scale	"5.5 5.5 5.5"
+			pos		"495 121"
+			size	"62 62"
+			origin	"0 70 0"
+		}
 
-	model assigned_pilot_head
-	{
-		model	"*cvar mn_pilot_head"
-		skin	"*cvar mn_pilot_skin"
-		tag		"assigned_pilot_body tag_head"
+		model assigned_pilot_head
+		{
+			model	"*cvar mn_pilot_head"
+			skin	"*cvar mn_pilot_skin"
+			tag		"tag_head"
+		}
 	}
 
 	string assigned_pilot_name
@@ -86,22 +88,24 @@ window aircraft_pilots extends iaircraft
 
 	model body
 	{
-		model	"*cvar mn_body"
-		skin	"*cvar mn_skin"
-		anim	"stand2"
-		angles	"0 70 90"
-		scale	"5.5 5.5 5.5"
-		pos		"378 465"
-		size	"167 278"
-		origin	"0 -35 0"
-	}
-
-	model head
-	{
-		model	"*cvar mn_head"
-		skin	"*cvar mn_skin"
-		tag		"body tag_head"
-		scale	"1.0 1.0 1.0"
+		{
+			model	"*cvar mn_body"
+			skin	"*cvar mn_skin"
+			anim	"stand2"
+			angles	"0 70 90"
+			scale	"5.5 5.5 5.5"
+			pos		"378 465"
+			size	"167 278"
+			origin	"0 -35 0"
+		}
+		
+		model head
+		{
+			model	"*cvar mn_head"
+			skin	"*cvar mn_skin"
+			tag		"tag_head"
+			scale	"1.0 1.0 1.0"
+		}
 	}
 
 	// ==================

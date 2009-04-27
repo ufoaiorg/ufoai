@@ -434,6 +434,7 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 
 }
 
+#if 0	/* no more need since "submodel" */
 static void MN_ModelNodeGetParentFromTag (const char* tag, char *parent, int bufferSize)
 {
 	char *c;
@@ -460,7 +461,7 @@ static const char* MN_ModelNodeGetAnchorFromTag (const char* tag)
 	c++;
 	return c;
 }
-
+#endif
 
 /**
  * @todo Menu models should inherite the node values from their parent
@@ -578,17 +579,20 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	R_DrawModelDirect(&mi, NULL, NULL);
 
 	/* draw all childs */
-	if (node->u.model.next) {
+	if (node->firstChild) {
 		menuNode_t *child;
 		modelInfo_t pmi = mi;
-		for (child = node->u.model.next; child; child = child->u.model.next) {
+		for (child = node->firstChild; child; child = child->next) {
 			const char *tag;
 			char childSource[MAX_VAR];
 			const char* childRef;
 
+			/* skip non "model" nodes */
+			if (child->behaviour != node->behaviour)
+				continue;
+
 			/* skip invisible child */
-			/** @todo add the 'visiblewhen' test */
-			if (child->invis)
+			if (child->invis || !MN_CheckVisibility(child))
 				continue;
 
 			memset(&mi, 0, sizeof(mi));
@@ -599,8 +603,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			mi.color = pmi.color;
 
 			/* get the anchor name to link the model into the parent */
-			tag = MN_GetReferenceString(child, child->u.model.tag);
-			tag = MN_ModelNodeGetAnchorFromTag(tag);
+			tag = child->u.model.tag;
 
 			/* init model name */
 			childRef = MN_GetReferenceString(child, child->u.model.model);
@@ -693,6 +696,7 @@ static void MN_ModelNodeClone (const menuNode_t *source, menuNode_t *clone)
 
 static void MN_ModelNodeLoaded (menuNode_t *node)
 {
+#if 0		/* no more need since "submodel" */
 	/* link node with the parent */
 	if (node->u.model.tag) {
 		char parentName[MAX_VAR];
@@ -713,6 +717,7 @@ static void MN_ModelNodeLoaded (menuNode_t *node)
 			last = last->u.model.next;
 		last->u.model.next = node;
 	}
+#endif
 
 	if (node->u.model.tag == NULL && (node->size[0] == 0 || node->size[1] == 0)) {
 		Com_Printf("MN_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", MN_GetPath(node));

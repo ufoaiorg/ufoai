@@ -102,22 +102,24 @@ window inventory
 
 	model actor
 	{
-		model	"*cvar mn_body"
-		skin	"*cvar mn_skin"
-		anim	"stand_menu"
-		origin	"0 -25 0"
-		angles	"0 70 90"
-		scale	"5 5 5"
-		pos		"163 72"
-		size	"191 262"
-	}
+		{
+			model	"*cvar mn_body"
+			skin	"*cvar mn_skin"
+			anim	"stand_menu"
+			origin	"0 -25 0"
+			angles	"0 70 90"
+			scale	"5 5 5"
+			pos		"163 72"
+			size	"191 262"
+		}
 
-	model head
-	{
-		model	"*cvar mn_head"
-		skin	"*cvar mn_skin"
-		tag		"actor tag_head"
-		scale	"1.0 1.0 1.0"
+		model head
+		{
+			model	"*cvar mn_head"
+			skin	"*cvar mn_skin"
+			tag		"tag_head"
+			scale	"1.0 1.0 1.0"
+		}
 	}
 
 	// ==================

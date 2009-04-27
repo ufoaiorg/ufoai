@@ -61,20 +61,22 @@ window mail
 
 	model sender_body
 	{
-		visiblewhen "*cvar:mn_sender_head"
-		model	"civilians/male/body01"
-		anim	"stand_still"
-		angles	"0 85 90"
-		scale	"7.5 7.5 7.5"
-		pos		"63 83"
-		size	"62 62"
-		origin	"5 125 0"
-	}
-
-	model sender_head
-	{
-		model	"*cvar mn_sender_head"
-		tag		"sender_body tag_head"
+		{
+			visiblewhen "*cvar:mn_sender_head"
+			model	"civilians/male/body01"
+			anim	"stand_still"
+			angles	"0 85 90"
+			scale	"7.5 7.5 7.5"
+			pos		"63 83"
+			size	"62 62"
+			origin	"5 125 0"
+		}
+		
+		model sender_head
+		{
+			model	"*cvar mn_sender_head"
+			tag		"tag_head"
+		}
 	}
 
 	pic sender_slot

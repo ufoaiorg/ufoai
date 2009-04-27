@@ -76,7 +76,9 @@ typedef struct modelExtraData_s {
 	void* animationState;		/**< holds then anim state for the current model */
 	void* animation;			/**< Anim string from the *.anm files */
 	char *viewName;				/**< view name to use, if it exists (item, ufopedia, buy...) @sa base/ufos/models.ufo */
+#if 0	/* no more need since "submodel" */
 	struct menuNode_s *next;	/**< Next element of a composite model (example: body and next, head) */
+#endif
 	qboolean autoscale;			/**< If true autoscale the model when we drw it */
 	qboolean rotateWithMouse;	/**< If true the user can rotate the model with the mouse */
 	qboolean clipOverflow;		/**< If true (default) model outside the node are clipped */

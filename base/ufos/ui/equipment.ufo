@@ -578,23 +578,25 @@ window equipment
 
 	model body
 	{
-		model	"*cvar mn_body"
-		skin	"*cvar mn_skin"
-		anim	"stand_menu"
-		angles	"0 70 90"
-		scale	"5 5 5"
+		{
+			model	"*cvar mn_body"
+			skin	"*cvar mn_skin"
+			anim	"stand_menu"
+			angles	"0 70 90"
+			scale	"5 5 5"
+	
+			pos		"676 69"
+			size	"197 258"
+			origin	"0 -30 0"
+		}
 
-		pos		"676 69"
-		size	"197 258"
-		origin	"0 -30 0"
-	}
-
-	model head
-	{
-		model	"*cvar mn_head"
-		skin	"*cvar mn_skin"
-		tag		"body tag_head"
-		scale	"1.0 1.0 1.0"
+		model head
+		{
+			model	"*cvar mn_head"
+			skin	"*cvar mn_skin"
+			tag		"tag_head"
+			scale	"1.0 1.0 1.0"
+		}
 	}
 
 	/**

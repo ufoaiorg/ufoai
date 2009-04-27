@@ -32,20 +32,22 @@ window physdata
 
 	model actor
 	{
-		model		"*cvar mn_body"
-		skin		"*cvar mn_skin"
-		anim		"stand2"
-		angles		"0 70 90"
-		pos			"27 73"
-		size		"188 263"
-		autoscale	true
-	}
+		{
+			model		"*cvar mn_body"
+			skin		"*cvar mn_skin"
+			anim		"stand2"
+			angles		"0 70 90"
+			pos			"27 73"
+			size		"188 263"
+			autoscale	true
+		}
 
-	model head
-	{
-		model		"*cvar mn_head"
-		skin		"*cvar mn_skin"
-		tag			"actor tag_head"
+		model head
+		{
+			model		"*cvar mn_head"
+			skin		"*cvar mn_skin"
+			tag			"tag_head"
+		}
 	}
 
 	// ==================

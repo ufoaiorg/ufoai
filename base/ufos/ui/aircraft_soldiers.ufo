@@ -444,34 +444,36 @@ window team extends iaircraft
 
 	model body
 	{
-		model	"*cvar mn_body"
-		skin	"*cvar mn_skin"
-		anim	"stand2"
-		angles	"0 70 90"
-		scale	"5.5 5.5 5.5"
-		pos		"378 465"
-		size	"167 278"
-		origin	"0 -35 0"
-	}
+		{
+			model	"*cvar mn_body"
+			skin	"*cvar mn_skin"
+			anim	"stand2"
+			angles	"0 70 90"
+			scale	"5.5 5.5 5.5"
+			pos		"378 465"
+			size	"167 278"
+			origin	"0 -35 0"
+		}
 
-	model head
-	{
-		model	"*cvar mn_head"
-		skin	"*cvar mn_skin"
-		tag		"body tag_head"
-		scale	"1.0 1.0 1.0"
-	}
-
-	model right_rweapon
-	{
-		model	"*cvar mn_rweapon"
-		tag		"body tag_rweapon"
-	}
-
-	model right_lweapon
-	{
-		model	"*cvar mn_lweapon"
-		tag		"body tag_lweapon"
+		model head
+		{
+			model	"*cvar mn_head"
+			skin	"*cvar mn_skin"
+			tag		"tag_head"
+			scale	"1.0 1.0 1.0"
+		}
+	
+		model right_rweapon
+		{
+			model	"*cvar mn_rweapon"
+			tag		"tag_rweapon"
+		}
+	
+		model right_lweapon
+		{
+			model	"*cvar mn_lweapon"
+			tag		"tag_lweapon"
+		}
 	}
 
 	string	name { pos "380 700" size "165 20" string "*cvar mn_name" }
