@@ -61,7 +61,7 @@ window team extends iaircraft
 	{
 		cmd "team_select <cvar:cl_selected2>"
 		cmd "del cl_selected2"
-		cmd "mn_removelistener equipment@close <path:this>"
+		cmd "mn_removelistener equipment@onClose <path:this>"
 	}
 
 	button bt_equipsoldiers
@@ -73,7 +73,7 @@ window team extends iaircraft
 		image	ui/button_blue
 		onClick	{
 			*cvar:cl_selected2 <cvar:cl_selected>
-			cmd "mn_addlistener equipment@close <path:root>.listen_close_equipment"
+			cmd "mn_addlistener equipment@onClose <path:root>.listen_close_equipment"
 			cmd "mn_push equipment"
 		}
 		color	"1 1 1 0.8"
