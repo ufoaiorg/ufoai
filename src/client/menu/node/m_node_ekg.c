@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "../m_parse.h"
 #include "../m_render.h"
-#include "m_node_image.h"
+#include "m_node_ekg.h"
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
@@ -128,7 +128,6 @@ static const value_t properties[] = {
 
 void MN_RegisterEKGNode (nodeBehaviour_t* behaviour)
 {
-	/** @todo rename it according to the function name when its possible */
 	behaviour->name = "ekg";
 	behaviour->draw = MN_EKGNodeDraw;
 	behaviour->loaded = MN_EKGNodeLoaded;
