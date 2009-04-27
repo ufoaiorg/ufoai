@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "../m_nodes.h"
+#include "../m_parse.h"
 #include "../m_actions.h"
 #include "m_node_window.h"
 #include "m_node_special.h"
@@ -35,29 +36,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void MN_FuncNodeLoaded (menuNode_t *node)
 {
-	menuNode_t * menu = node->root;
-	if (!strcmp(node->name, "init")) {
-		if (!menu->u.window.onInit)
-			menu->u.window.onInit = node->onClick;
+	/** @todo move this code into the parser (it should not create a node) */
+	const value_t *prop = MN_GetPropertyFromBehaviour(node->parent->behaviour, node->name);
+	if (prop && prop->type == V_SPECIAL_ACTION) {
+		void **value = (void**) ((intptr_t)node->parent + prop->ofs);
+		if (*value == NULL)
+			*value = (void*) node->onClick;
 		else
-			Com_Printf("MN_FuncNodeLoaded: second init function ignored (menu \"%s\")\n", menu->name);
-	} else if (!strcmp(node->name, "close")) {
-		if (!menu->u.window.onClose)
-			menu->u.window.onClose = node->onClick;
-		else
-			Com_Printf("MN_FuncNodeLoaded: second close function ignored (menu \"%s\")\n", menu->name);
-	} else if (!strcmp(node->name, "event")) {
-		if (!menu->u.window.onTimeOut) {
-			menu->u.window.onTimeOut = node->onClick;
-		} else
-			Com_Printf("MN_FuncNodeLoaded: second event function ignored (menu \"%s\")\n", menu->name);
-	} else if (!strcmp(node->name, "leave")) {
-		if (!menu->u.window.onLeave) {
-			menu->u.window.onLeave = node->onClick;
-		} else
-			Com_Printf("MN_FuncNodeLoaded: second leave function ignored (menu \"%s\")\n", menu->name);
+			Com_Printf("MN_FuncNodeLoaded: '%s' already defined. Second function ignored (\"%s\")\n", prop->string, MN_GetPath(node));
 	}
-
 }
 
 void MN_RegisterFuncNode (nodeBehaviour_t *behaviour)
