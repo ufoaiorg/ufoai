@@ -719,6 +719,13 @@ static void MN_ModelNodeLoaded (menuNode_t *node)
 	}
 #endif
 
+	/* a tag without but not a submodel */
+	if (node->u.model.tag != NULL && node->behaviour != node->parent->behaviour) {
+		Com_Printf("MN_ModelNodeLoaded: '%s' use a tag but is not a submodel. Tag removed.\n", MN_GetPath(node));
+		node->u.model.tag = NULL;
+	}
+
+	/* no tag but no size */
 	if (node->u.model.tag == NULL && (node->size[0] == 0 || node->size[1] == 0)) {
 		Com_Printf("MN_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", MN_GetPath(node));
 	}
