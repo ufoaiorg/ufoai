@@ -222,6 +222,10 @@ static void MN_DrawNode (menuNode_t *node)
 		node->behaviour->draw(node);
 	}
 
+	/* skip child */
+	if (node->behaviour->drawItselfChild)
+		return;
+
 	/* draw all child */
 	for (child = node->firstChild; child; child = child->next) {
 		MN_DrawNode(child);

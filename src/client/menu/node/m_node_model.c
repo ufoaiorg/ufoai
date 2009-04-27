@@ -741,6 +741,7 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->name = "model";
+	behaviour->drawItselfChild = qtrue;
 	behaviour->draw = MN_ModelNodeDraw;
 	behaviour->mouseDown = MN_ModelNodeMouseDown;
 	behaviour->mouseUp = MN_ModelNodeMouseUp;

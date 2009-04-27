@@ -165,6 +165,7 @@ typedef struct nodeBehaviour_s {
 	qboolean isAbstract;			/**< true, if we can't instantiate the behaviour */
 	qboolean isInitialized;			/**< cache if we already have initialized the node behaviour */
 	qboolean focusEnabled;			/**< true if the node can win the focus (should be use when type TAB) */
+	qboolean drawItselfChild;		/**< if true, the node draw function must draw child, the core code will not do it */
 	const value_t* properties;		/**< list of properties of the node */
 	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
 	struct nodeBehaviour_s *super;	/**< link to the extended node */
