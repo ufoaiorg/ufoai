@@ -95,14 +95,29 @@ void MN_ImageNodeDraw (menuNode_t *node)
 		const int time = cl.time;
 		/* the higher the letter - the higher the speed => morale scrolls faster than hp */
 		const int scrollSpeed = node->name[4] - 'a';
+		/* we have four different ekg parts in each ekg image... */
+		const int ekgImageParts = 4;
+		/* ... thus indices go from 0 up tp 3 */
+		const int ekgMaxIndex = ekgImageParts - 1;
+		/* we change the index of the image part in 20s steps */
+		const int ekgDivide = 20;
+		/* If we are in the range of (ekgMaxValue + ekgDivide, ekgMaxValue) we are using the first image */
+		const int ekgMaxValue = ekgDivide * ekgMaxIndex;
+		/* the current value that was fetched from the cvar and was clamped to the max value */
+		int ekgValue;
 
 		/** @sa GET_HP GET_MORALE macros */
 		/* ekg_morale and ekg_hp are the node names */
 		if (node->name[4] == 'm')
+			/* morale uses another value scaling as the hp is using - so
+			 * we have to adjust it a little bit here */
 			pt = Cvar_GetInteger("mn_morale") / 2;
 		else
 			pt = Cvar_GetInteger("mn_hp");
-		node->texl[1] = (3 - (int) (pt < 60 ? pt : 60) / 20) * ekgHeight;
+
+		ekgValue = min(pt, ekgMaxValue);
+
+		node->texl[1] = (ekgMaxIndex - (int) ekgValue / ekgDivide) * ekgHeight;
 		node->texh[1] = node->texl[1] + ekgHeight;
 		node->texl[0] = -(int) (0.01 * scrollSpeed * time) % ekgWidth;
 		node->texh[0] = node->texl[0] + node->size[0];
