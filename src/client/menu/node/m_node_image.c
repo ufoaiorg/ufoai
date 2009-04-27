@@ -89,6 +89,7 @@ void MN_ImageNodeDraw (menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, nodepos);
 
+	/** @todo code is duplicated in the ekg node code */
 	if (node->size[0] && !node->size[1]) {
 		const float scale = image->width / node->size[0];
 		Vector2Set(size, node->size[0], image->height / scale);

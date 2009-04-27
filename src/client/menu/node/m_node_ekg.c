@@ -51,12 +51,14 @@ static void MN_EKGNodeDraw (menuNode_t *node)
 		const int ekgImageParts = image->height / node->size[1];
 		const int ekgMaxIndex = ekgImageParts - 1;
 		/* we change the index of the image part in 20s steps */
+		/** @todo this magic number should be replaced with a sane calculation of the value */
 		const int ekgDivide = 20;
 		/* If we are in the range of (ekgMaxValue + ekgDivide, ekgMaxValue) we are using the first image */
 		const int ekgMaxValue = ekgDivide * ekgMaxIndex;
 		int ekgValue;
 		float current;
 
+		/** @todo these cvars should come from the script */
 		/* ekg_morale and ekg_hp are the node names */
 		if (node->name[0] == 'm')
 			current = Cvar_GetValue("mn_morale") / node->u.ekg.scaleCvarValue;
@@ -65,10 +67,11 @@ static void MN_EKGNodeDraw (menuNode_t *node)
 
 		ekgValue = min(current, ekgMaxValue);
 
-		node->texl[1] = (ekgMaxIndex - (int) ekgValue / ekgDivide) * ekgHeight;
+		node->texl[1] = (ekgMaxIndex - (int)(ekgValue / ekgDivide)) * ekgHeight;
 		node->texh[1] = node->texl[1] + ekgHeight;
 		node->texl[0] = -(int) (node->u.ekg.scrollSpeed * cl.time) % ekgWidth;
 		node->texh[0] = node->texl[0] + node->size[0];
+		/** @todo code is duplicated in the image node code */
 		if (node->size[0] && !node->size[1]) {
 			const float scale = image->width / node->size[0];
 			Vector2Set(size, node->size[0], image->height / scale);
