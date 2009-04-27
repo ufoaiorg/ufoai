@@ -31,21 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
-/**
- * @brief Handled after the end of the load of the node from the script (all data and/or child are set)
- */
-static void MN_EKGNodeLoaded (menuNode_t *node)
-{
-	/* update the size when its possible */
-	if (node->size[0] == 0 && node->size[1] == 0) {
-		const image_t *image = MN_LoadImage(node->image);
-		if (image) {
-			node->size[0] = image->width;
-			node->size[1] = image->height;
-		}
-	}
-}
-
 void MN_EKGNodeDraw (menuNode_t *node)
 {
 	vec2_t size;
@@ -121,15 +106,9 @@ void MN_EKGNodeDraw (menuNode_t *node)
 	}
 }
 
-static const value_t properties[] = {
-	{"preventratio", V_BOOL, offsetof(menuNode_t, preventRatio), MEMBER_SIZEOF(menuNode_t, preventRatio)},
-	{NULL, V_NULL, 0, 0}
-};
-
 void MN_RegisterEKGNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "ekg";
+	behaviour->extends = "pic";
 	behaviour->draw = MN_EKGNodeDraw;
-	behaviour->loaded = MN_EKGNodeLoaded;
-	behaviour->properties = properties;
 }
