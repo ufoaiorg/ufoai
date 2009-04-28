@@ -806,7 +806,8 @@ qboolean CL_ActorSelect (le_t * le)
 	Cvar_ForceSet("cl_selected", va("%i", actorIdx));
 
 	selChr = CL_GetActorChr(le);
-	assert(selChr);
+	if (!selChr)
+		Com_Error(ERR_DROP, "No character given for local entity");
 
 	/* Right now we can only update this if the selChr is already set. */
 	switch (le->fieldSize) {
