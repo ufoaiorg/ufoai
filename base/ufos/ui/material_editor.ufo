@@ -15,7 +15,7 @@ window material_editor {
 		color	"1 1 1 0.8"
 	}
 
-	func init {
+	func onInit {
 		cmd "mn_materialeditor;"
 	}
 }
