@@ -3,22 +3,22 @@
 // =======================
 item needlergun
 {
-	name            "_Needler Gun"
-	model           weapons/needlergun/needler
-	weapon          true
-	type            biggun
-	animationindex        1
-	holdtwohanded   false
+	name			"_Needler Gun"
+	model			weapons/needlergun/needler
+	weapon			true
+	type			biggun
+	animationindex	1
+	holdtwohanded	false
 	firetwohanded	true
-	shape           "1 0 4 1"
-	shape           "0 1 4 1"
-	center          "4 -0.5 0.2"
-	scale           1.2
-	ammo            12
-	reload          15
-	price           13240
-	size		45
-	is_primary	true
+	shape			"1 0 4 1"
+	shape			"0 1 4 1"
+	center			"4 -0.5 0.2"
+	scale			1.2
+	ammo			12
+	reload			15
+	price			13240
+	size			45
+	is_primary		true
 }
 
 item needlerheavy
@@ -43,78 +43,78 @@ item needlerheavy
 
 item needlergun_ammo
 {
-	name            "_Needler Gun Magazine"
-	model           weapons/needlergun/needler_ammo
-	type            ammo
-	animationindex        0
-	shape           "0 0 1 1"
-	center          "0 0 0"
-	scale           1.2
-	price           930
-	size		9
-	is_primary	true
-	dmgtype normal
+	name			"_Needler Gun Magazine"
+	model			weapons/needlergun/needler_ammo
+	type			ammo
+	animationindex	0
+	shape			"0 0 1 1"
+	center			"0 0 0"
+	scale			1.2
+	price			930
+	size			9
+	is_primary		true
+	dmgtype			normal
 
 	weapon_mod needlergun
 	{
 		firedef
 		{
-			name    "_Snap Shot"
-			skill   assault
-			projtl  bolter
-			impact  bolterImpact
-			hitbody null
-			firesnd weapons/bolter2
-			speed   0
-			spread  "1.7 1.7"
-			crouch  0.8
-			range	250
-			shots   1
-			ammo    1
-			time    8
-			damage  "80 5"
-			dmgweight normal_heavy
+			name		"_Snap Shot"
+			skill		assault
+			projtl		bolter
+			impact		bolterImpact
+			hitbody		null
+			firesnd		weapons/bolter2
+			speed		0
+			spread		"1.7 1.7"
+			crouch		0.8
+			range		250
+			shots		1
+			ammo		1
+			time		8
+			damage		"80 5"
+			dmgweight	normal_heavy
 			reaction	true
 		}
 
 		firedef
 		{
-			name    "_Cannonade"
-			skill   assault
-			projtl  bolter
-			impact  bolterImpact
-			hitbody null
-			firesnd weapons/boltercannonade
-			speed   0
-			spread  "2.1 2.1"
-			crouch  0.8
-			range	250
-			shots   3
-			ammo    3
-			time    13
-			damage  "80 5"
-			dmgweight normal_heavy
+			name		"_Cannonade"
+			skill		assault
+			projtl		bolter
+			impact		bolterImpact
+			hitbody		null
+			firesnd		weapons/boltercannonade
+			speed		0
+			spread		"2.1 2.1"
+			crouch		0.8
+			range		250
+			shots		3
+			ammo		3
+			time		13
+			damage		"80 5"
+			dmgweight	normal_heavy
 			reaction	true
 		}
 
 		firedef
 		{
-			name    "_Precision Shot"
-			skill   sniper
-			projtl  bolter
-			impact  bolterImpact
-			hitbody null
-			firesnd weapons/bolter2
-			speed   0
-			spread  "1.2 1.2"
-			crouch  0.5
-			range	250
-			shots   1
-			ammo    1
-			delaybetweenshots     2
-			time    16
-			damage  "100 5"
-			dmgweight normal_heavy
+			name				"_Precision Shot"
+			skill				sniper
+			projtl				bolter
+			impact				bolterImpact
+			hitbody				null
+			firesnd				weapons/bolter2
+			speed				0
+			spread				"1.2 1.2"
+			crouch				0.5
+			range				250
+			shots				1
+			ammo				1
+			delaybetweenshots	2
+			time				16
+			damage				"100 5"
+			dmgweight			normal_heavy
 		}
 	}
 
@@ -122,62 +122,62 @@ item needlergun_ammo
 	{
 		firedef
 		{
-			name    "_Snap Shot"
-			skill   assault
-			projtl  bolter
-			impact  bolterImpact
-			hitbody null
-			firesnd weapons/bolter2
-			speed   0
-			spread  "2 2"
-			crouch  0.8
-			range	250
-			shots   1
-			ammo    1
-			time    10
-			damage  "110 10"
-			dmgweight normal_heavy
+			name		"_Snap Shot"
+			skill		assault
+			projtl		bolter
+			impact		bolterImpact
+			hitbody		null
+			firesnd		weapons/bolter2
+			speed		0
+			spread		"2 2"
+			crouch		0.8
+			range		250
+			shots		1
+			ammo		1
+			time		10
+			damage		"110 10"
+			dmgweight	normal_heavy
 			reaction	true
 		}
 
 		firedef
 		{
-			name    "_Cannonade"
-			skill   assault
-			projtl  bolter
-			impact  bolterImpact
-			hitbody null
-			firesnd weapons/boltercannonade
-			speed   0
-			spread  "2.6 2.6"
-			crouch  0.8
-			range	250
-			shots   3
-			ammo    3
-			time    13
-			damage  "110 10"
-			dmgweight normal_heavy
+			name		"_Cannonade"
+			skill		assault
+			projtl		bolter
+			impact		bolterImpact
+			hitbody		null
+			firesnd		weapons/boltercannonade
+			speed		0
+			spread		"2.6 2.6"
+			crouch		0.8
+			range		250
+			shots		3
+			ammo		3
+			time		13
+			damage		"110 10"
+			dmgweight	normal_heavy
 			reaction	true
 		}
 
 		firedef
 		{
-			name    "_Precision Shot"
-			skill   sniper
-			projtl  bolter
-			impact  bolterImpact
-			hitbody null
-			firesnd weapons/bolter2
-			speed   0
-			spread  "1.8 1.8"
-			crouch  0.5
-			range	250
-			shots   1
-			ammo    1
-			delaybetweenshots     2
-			time    16
-			damage  "150 5"
-			dmgweight normal_heavy
+			name				"_Precision Shot"
+			skill				sniper
+			projtl				bolter
+			impact				bolterImpact
+			hitbody				null
+			firesnd				weapons/bolter2
+			speed				0
+			spread				"1.8 1.8"
+			crouch				0.5
+			range				250
+			shots				1
+			ammo				1
+			delaybetweenshots	2
+			time				16
+			damage				"50 5"
+			dmgweight			normal_heavy
 		}
 	}
 }
