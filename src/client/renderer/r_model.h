@@ -73,6 +73,8 @@ image_t* R_AliasModelGetSkin(const model_t* mod, const char *skin);
 void R_DrawAliasModel(entity_t *e);
 void R_ShutdownModels(qboolean complete);
 
+void R_ModReloadSurfacesArrays(void);
+
 /** @brief The world model(s) */
 extern model_t *r_mapTiles[MAX_MAPTILES];
 extern int r_numMapTiles;

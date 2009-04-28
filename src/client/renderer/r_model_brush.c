@@ -898,12 +898,12 @@ static void R_AddBspLight (model_t* mod, vec3_t org, float radius)
 	}
 
 	if (i == mod->bsp.numbsplights) {
-		l = (mBspLight_t *)Mem_PoolAlloc(sizeof(*l), vid_modelPool, 0);
+		if (!mod->bsp.bsplights)  /* first source */
+			mod->bsp.bsplights = (mBspLight_t *)Mem_PoolAlloc(sizeof(*l), vid_modelPool, 0);
+		else
+			mod->bsp.bsplights = (mBspLight_t *)Mem_ReAlloc(mod->bsp.bsplights, sizeof(*l) * (mod->bsp.numbsplights + 1));
 
 		VectorCopy(org, l->org);
-
-		if (!mod->bsp.bsplights)  /* first source */
-			mod->bsp.bsplights = l;
 
 		mod->bsp.numbsplights++;
 	}
@@ -1197,4 +1197,22 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 	}
 
 	Com_Error(ERR_DROP, "R_ModBeginLoading: invalid tile names\n");
+}
+
+/**
+ * @todo fix this for threaded renderer mode
+ */
+void R_ModReloadSurfacesArrays (void)
+{
+	int i, j;
+
+	for (i = 0; i < r_numMapTiles; i++) {
+		model_t *mod = r_mapTiles[i];
+		for (j = 0; j < NUM_SURFACES_ARRAYS; j++)
+			if (mod->bsp.sorted_surfaces[j]) {
+				Mem_Free(mod->bsp.sorted_surfaces[j]);
+				mod->bsp.sorted_surfaces[j] = NULL;
+			}
+		R_LoadSurfacesArrays(mod);
+	}
 }

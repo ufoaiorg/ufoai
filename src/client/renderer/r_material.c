@@ -740,7 +740,6 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 void R_LoadMaterials (const char *map)
 {
 	char path[MAX_QPATH];
-	const char *c;
 	byte *fileBuffer;
 	const char *buffer;
 	qboolean inmaterial;
@@ -769,7 +768,7 @@ void R_LoadMaterials (const char *map)
 	m = NULL;
 
 	while (qtrue) {
-		c = Com_Parse(&buffer);
+		const char *c = Com_Parse(&buffer);
 
 		if (!strlen(c))
 			break;
