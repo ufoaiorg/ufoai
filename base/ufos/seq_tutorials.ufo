@@ -1,6 +1,6 @@
 tutorial gameplay
 {
-	name	"_Gameplay"
+	name		"_Gameplay"
 	sequence	tut_gameplay
 }
 
@@ -33,7 +33,7 @@ sequence tut_gameplay
 	2dobj gameplay_welcome
 	{
 		text	"_Some notes about the gameplay"
-		pos	"512 0"
+		pos		"512 0"
 		align	uc
 		color	"0 0.6 0 1"
 		speed	"0 10"
@@ -42,7 +42,7 @@ sequence tut_gameplay
 	2dobj gameplay_continue_txt
 	{
 		text	"_Click to exit"
-		pos	"512 750"
+		pos		"512 750"
 		align	uc
 		color	"0 0.6 0 1"
 		font	f_small
@@ -55,7 +55,7 @@ sequence tut_gameplay
 	2dobj gameplay_txt1
 	{
 		text	"_Set up a base"
-		pos	"512 100"
+		pos		"512 100"
 		align	uc
 		color	"1 1 1 1"
 		font	f_big
@@ -66,21 +66,21 @@ sequence tut_gameplay
 	{
 		image	tutorial/gameplay1a
 		align	ul
-		pos	"64 140"
+		pos		"64 140"
 	}
 	wait 2
 	2dobj gameplay_pic1b
 	{
 		image	tutorial/gameplay1b
 		align	ul
-		pos	"384 140"
+		pos		"384 140"
 	}
 	wait 2
 	2dobj gameplay_pic1c
 	{
 		image	tutorial/gameplay1c
 		align	ul
-		pos	"704 140"
+		pos		"704 140"
 	}
 	wait 4
 	rem gameplay_pic1a
@@ -93,7 +93,7 @@ sequence tut_gameplay
 	2dobj gameplay_txt2
 	{
 		text	"_Hire employees: scientists, soldiers"
-		pos	"512 125"
+		pos		"512 125"
 		align	uc
 		color	"1 1 1 1"
 		font	f_big
@@ -103,21 +103,21 @@ sequence tut_gameplay
 	{
 		image	tutorial/gameplay2a
 		align	ul
-		pos	"64 165"
+		pos		"64 165"
 	}
 	wait 2
 	2dobj gameplay_pic2b
 	{
 		image	tutorial/gameplay2b
 		align	ul
-		pos	"384 165"
+		pos		"384 165"
 	}
 	wait 2
 	2dobj gameplay_pic2c
 	{
 		image	tutorial/gameplay2c
 		align	ul
-		pos	"704 165"
+		pos		"704 165"
 	}
 	wait 4
 	rem gameplay_pic2a
@@ -130,7 +130,7 @@ sequence tut_gameplay
 	2dobj gameplay_txt3
 	{
 		text	"_Start some research"
-		pos	"512 150"
+		pos		"512 150"
 		align	uc
 		color	"1 1 1 1"
 		font	f_big
@@ -140,7 +140,7 @@ sequence tut_gameplay
 	{
 		image	tutorial/gameplay3a
 		align	ul
-		pos	"384 190"
+		pos		"384 190"
 	}
 	wait 4
 	rem gameplay_pic3a
@@ -149,7 +149,7 @@ sequence tut_gameplay
 	2dobj gameplay_txt4
 	{
 		text	"_Buy weapons and equipment"
-		pos	"512 175"
+		pos		"512 175"
 		align	uc
 		color	"1 1 1 1"
 		font	f_big
@@ -159,21 +159,21 @@ sequence tut_gameplay
 	{
 		image	tutorial/gameplay4a
 		align	ul
-		pos	"64 215"
+		pos		"64 215"
 	}
 	wait 2
 	2dobj gameplay_pic4b
 	{
 		image	tutorial/gameplay4b
 		align	ul
-		pos	"384 215"
+		pos		"384 215"
 	}
 	wait 2
 	2dobj gameplay_pic4c
 	{
 		image	tutorial/gameplay4c
 		align	ul
-		pos	"704 215"
+		pos		"704 215"
 	}
 	wait 4
 	rem gameplay_pic4a
@@ -186,7 +186,7 @@ sequence tut_gameplay
 	2dobj gameplay_txt5
 	{
 		text	"_Equip your aircraft with soldiers and weapons"
-		pos	"512 200"
+		pos		"512 200"
 		align	uc
 		color	"1 1 1 1"
 		font	f_big
@@ -196,21 +196,21 @@ sequence tut_gameplay
 	{
 		image	tutorial/gameplay5a
 		align	ul
-		pos	"64 240"
+		pos		"64 240"
 	}
 	wait 2
 	2dobj gameplay_pic5b
 	{
 		image	tutorial/gameplay5b
 		align	ul
-		pos	"384 240"
+		pos		"384 240"
 	}
 	wait 2
 	2dobj gameplay_pic5c
 	{
 		image	tutorial/gameplay5c
 		align	ul
-		pos	"704 240"
+		pos		"704 240"
 	}
 	wait 4
 	rem gameplay_pic5a
@@ -224,7 +224,7 @@ sequence tut_gameplay
 	2dobj gameplay_txt6
 	{
 		text	"_Speed up time on geoscape until the first alien mission appears"
-		pos	"512 225"
+		pos		"512 225"
 		align	uc
 		color	"1 1 1 1"
 		font	f_big
@@ -234,14 +234,14 @@ sequence tut_gameplay
 	{
 		image	tutorial/gameplay6a
 		align	ul
-		pos	"172 265"
+		pos		"172 265"
 	}
 	wait 2
 	2dobj gameplay_pic6b
 	{
 		image	tutorial/gameplay6b
 		align	ul
-		pos	"600 265"
+		pos		"600 265"
 	}
 	wait 4
 	rem gameplay_pic6a
@@ -252,7 +252,7 @@ sequence tut_gameplay
 	2dobj gameplay_txt7
 	{
 		text	"_Select the mission (doubleclick) and choose aircraft from list"
-		pos	"512 250"
+		pos		"512 250"
 		align	uc
 		color	"1 1 1 1"
 		font	f_big
@@ -262,7 +262,7 @@ sequence tut_gameplay
 	{
 		image	tutorial/gameplay7a
 		align	ul
-		pos	"384 290"
+		pos		"384 290"
 	}
 	wait 4
 	rem gameplay_pic7a
@@ -271,7 +271,7 @@ sequence tut_gameplay
 	2dobj gameplay_txt8
 	{
 		text	"_Hit the start or auto-mission button to fight the aliens"
-		pos	"512 275"
+		pos		"512 275"
 		align	uc
 		color	"1 1 1 1"
 		font	f_big
@@ -281,14 +281,14 @@ sequence tut_gameplay
 	{
 		image	tutorial/gameplay8a
 		align	ul
-		pos	"172 315"
+		pos		"172 315"
 	}
 	wait 2
 	2dobj gameplay_pic8b
 	{
 		image	tutorial/gameplay8b
 		align	ul
-		pos	"600 315"
+		pos		"600 315"
 	}
 	wait 4
 
