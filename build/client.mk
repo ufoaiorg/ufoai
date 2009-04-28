@@ -132,6 +132,7 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_item.c \
 	client/menu/node/m_node_linechart.c \
 	client/menu/node/m_node_map.c \
+	client/menu/node/m_node_material_editor.c \
 	client/menu/node/m_node_model.c \
 	client/menu/node/m_node_optionlist.c \
 	client/menu/node/m_node_panel.c \
