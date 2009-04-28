@@ -170,18 +170,9 @@ uint32_t _Mem_DeletePool (struct memPool_s *pool, const char *fileName, const in
 POOL AND TAG MEMORY ALLOCATION
 ==============================================================================*/
 
-/**
- * @sa _Mem_FreePool
- */
-uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
+static void _Mem_CheckSentinels (void *ptr, const char *fileName, const int fileLine)
 {
 	memBlock_t *mem;
-	memBlock_t *search;
-	memBlock_t **prev;
-	uint32_t size;
-
-	if (!ptr)
-		return 0;
 
 	/* Check sentinels */
 	mem = (memBlock_t *)((byte *)ptr - sizeof(memBlock_t));
@@ -204,6 +195,24 @@ uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 			"free: %s:#%i",
 			mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
 	}
+}
+
+/**
+ * @sa _Mem_FreePool
+ */
+uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
+{
+	memBlock_t *mem;
+	memBlock_t *search;
+	memBlock_t **prev;
+	uint32_t size;
+
+	if (!ptr)
+		return 0;
+
+	_Mem_CheckSentinels(ptr, fileName, fileLine);
+
+	mem = (memBlock_t *)((byte *)ptr - sizeof(memBlock_t));
 
 	SDL_mutexP(z_lock);
 
@@ -351,8 +360,7 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 {
 	memBlock_t *mem;
 	memPool_t *pool;
-	memBlock_t *search;
-	memBlock_t **prev;
+	void *new;
 
 	if (!size)
 		Sys_Error("Use Mem_Free instead");
@@ -360,51 +368,27 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	if (!ptr)
 		Sys_Error("Use Mem_Alloc instead");
 
-	mem = (memBlock_t *)((byte *)ptr - sizeof(memBlock_t));
-	mem = realloc(mem, size);
+	_Mem_CheckSentinels(ptr, fileName, fileLine);
 
+	mem = (memBlock_t *)((byte *)ptr - sizeof(memBlock_t));
+
+	/* if size matches, do nothing */
+	if (mem->memSize == size)
+		return mem;
+
+	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
 	pool = mem->pool;
 
-	SDL_mutexP(z_lock);
+    /* allocate memory for the new size */
+    new = _Mem_Alloc(size, qtrue, pool, mem->tagNum, fileName, fileLine);
 
-	/* De-link it */
-	prev = &pool->blocks[(uintptr_t)mem % MEM_HASH];
-	for (;;) {
-		search = *prev;
-		if (!search)
-			break;
+    /* copy old data */
+    memcpy(new, ptr, min(mem->memSize, size));
 
-		if (search == mem) {
-			*prev = search->next;
-			break;
-		}
-		prev = &search->next;
-	}
+    /* if there was old data, free it */
+	_Mem_Free(ptr, fileName, fileLine);
 
-	/* Link it in to the appropriate pool */
-	mem->next = pool->blocks[(uintptr_t)mem % MEM_HASH];
-	pool->blocks[(uintptr_t)mem % MEM_HASH] = mem;
-
-	/* Add header and round to cacheline */
-	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
-
-	/* counters */
-	pool->byteCount -= mem->size;
-	pool->byteCount += size;
-
-	SDL_mutexV(z_lock);
-
-	mem->size = size;
-	mem->memPointer = (void *)(mem + 1);
-	mem->memSize = size - sizeof(memBlock_t) - sizeof(memBlockFoot_t);
-	mem->allocFile = fileName;
-	mem->allocLine = fileLine;
-	mem->footer = (memBlockFoot_t *)((byte *)mem->memPointer + mem->memSize);
-
-	/* Fill in the footer */
-	mem->footer->sentinel = MEM_FOOT_SENTINEL;
-
-	return mem->memPointer;
+	return new;
 }
 
 /*==============================================================================
