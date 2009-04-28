@@ -16,16 +16,16 @@
 // size		Actorsize
 // ==================
 // Things to come:
-// footsteps	Append this the the footstep sound of the terrain to get
+// footsteps	Append this to the footstep sound of the terrain to get
 //				the team specific footsteps
 // ==================
 
 team taman
 {
-	name	"_Taman"
-	tech	"rs_alien_taman_autopsy"
-	race	taman
-	size	1
+	name			"_Taman"
+	tech			"rs_alien_taman_autopsy"
+	race			taman
+	size			1
 	hit_particle	blood
 
 	names {
@@ -91,10 +91,10 @@ team taman
 
 team ortnok
 {
-	name	"_Ortnok"
-	tech	rs_alien_ortnok_autopsy
-	race	ortnok
-	size	1
+	name			"_Ortnok"
+	tech			rs_alien_ortnok_autopsy
+	race			ortnok
+	size			1
 	//hit_particle	none
 
 	names {
@@ -166,11 +166,11 @@ team ortnok
 
 team shevaar
 {
-	name	"_Shevaar"
-	tech	"rs_alien_shevaar_autopsy"
-	race	shevaar
-	armour	false
-	size	1
+	name			"_Shevaar"
+	tech			"rs_alien_shevaar_autopsy"
+	race			shevaar
+	armour			false
+	size			1
 	hit_particle	blood
 
 	names {
@@ -203,14 +203,14 @@ team shevaar
 
 team bloodspider
 {
-	name	"_Bloodspider"
-	tech	"rs_alien_bloodspider_autopsy"
-	race	bloodspider
-	robot	true
-	armour	false
-	weapons	false
+	name		"_Bloodspider"
+	tech		"rs_alien_bloodspider_autopsy"
+	race		bloodspider
+	robot		true
+	armour		false
+	weapons		false
 	onlyWeapon	bloodspider_weapon
-	size	1
+	size		1
 	//hit_particle	none
 
 	names {
@@ -235,4 +235,3 @@ team bloodspider
 		}
 	}
 }
-
