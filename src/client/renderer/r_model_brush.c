@@ -903,6 +903,7 @@ static void R_AddBspLight (model_t* mod, vec3_t org, float radius)
 		else
 			mod->bsp.bsplights = (mBspLight_t *)Mem_ReAlloc(mod->bsp.bsplights, sizeof(*l) * (mod->bsp.numbsplights + 1));
 
+		l = &mod->bsp.bsplights[i];
 		VectorCopy(org, l->org);
 
 		mod->bsp.numbsplights++;
