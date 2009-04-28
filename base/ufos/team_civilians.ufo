@@ -9,11 +9,11 @@
 
 team latin
 {
-	size	1
+	size			1
 	hit_particle	blood
-	weapons false
-	armour false
-	race civilian
+	weapons			false
+	armour			false
+	race			civilian
 
 	names {
 		female { a }
@@ -36,11 +36,11 @@ team latin
 
 	actorsounds {
 		female {
-			hurtsound 	civilians/female_hurt
+			hurtsound	civilians/female_hurt
 			deathsound	civilians/female_death
 		}
 		male {
-			hurtsound 	civilians/male_hurt
+			hurtsound	civilians/male_hurt
 			deathsound	civilians/male_death
 		}
 	}
@@ -48,11 +48,11 @@ team latin
 
 team states
 {
-	size	1
+	size			1
 	hit_particle	blood
-	weapons false
-	armour false
-	race civilian
+	weapons			false
+	armour			false
+	race			civilian
 
 	names {
 		female { a }
@@ -95,11 +95,11 @@ team states
 
 	actorsounds {
 		female {
-			hurtsound 	civilians/female_hurt
+			hurtsound	civilians/female_hurt
 			deathsound	civilians/female_death
 		}
 		male {
-			hurtsound 	civilians/male_hurt
+			hurtsound	civilians/male_hurt
 			deathsound	civilians/male_death
 		}
 	}
@@ -107,11 +107,11 @@ team states
 
 team europe
 {
-	size	1
+	size			1
 	hit_particle	blood
-	weapons false
-	armour false
-	race civilian
+	weapons			false
+	armour			false
+	race			civilian
 
 	names {
 		female { a }
@@ -152,11 +152,11 @@ team europe
 
 	actorsounds {
 		female {
-			hurtsound 	civilians/female_hurt
+			hurtsound	civilians/female_hurt
 			deathsound	civilians/female_death
 		}
 		male {
-			hurtsound 	civilians/male_hurt
+			hurtsound	civilians/male_hurt
 			deathsound	civilians/male_death
 		}
 	}
@@ -164,11 +164,11 @@ team europe
 
 team asia
 {
-	size	1
+	size			1
 	hit_particle	blood
-	weapons false
-	armour false
-	race civilian
+	weapons			false
+	armour			false
+	race			civilian
 
 	names {
 		female { a }
@@ -191,11 +191,11 @@ team asia
 
 	actorsounds {
 		female {
-			hurtsound 	civilians/female_hurt
+			hurtsound	civilians/female_hurt
 			deathsound	civilians/female_death
 		}
 		male {
-			hurtsound 	civilians/male_hurt
+			hurtsound	civilians/male_hurt
 			deathsound	civilians/male_death
 		}
 	}
@@ -203,11 +203,11 @@ team asia
 
 team middle
 {
-	size	1
+	size			1
 	hit_particle	blood
-	weapons false
-	armour false
-	race civilian
+	weapons			false
+	armour			false
+	race			civilian
 
 	names {
 		female { a }
@@ -231,11 +231,11 @@ team middle
 
 	actorsounds {
 		female {
-			hurtsound 	civilians/female_hurt
+			hurtsound	civilians/female_hurt
 			deathsound	civilians/female_death
 		}
 		male {
-			hurtsound 	civilians/male_hurt
+			hurtsound	civilians/male_hurt
 			deathsound	civilians/male_death
 		}
 	}
@@ -243,11 +243,11 @@ team middle
 
 team africa
 {
-	size	1
+	size			1
 	hit_particle	blood
-	weapons false
-	armour false
-	race civilian
+	weapons			false
+	armour			false
+	race			civilian
 
 	names {
 		female { a }
@@ -270,11 +270,11 @@ team africa
 
 	actorsounds {
 		female {
-			hurtsound 	civilians/female_hurt
+			hurtsound	civilians/female_hurt
 			deathsound	civilians/female_death
 		}
 		male {
-			hurtsound 	civilians/male_hurt
+			hurtsound	civilians/male_hurt
 			deathsound	civilians/male_death
 		}
 	}
@@ -282,11 +282,11 @@ team africa
 
 team russia
 {
-	size	1
+	size			1
 	hit_particle	blood
-	weapons false
-	armour false
-	race civilian
+	weapons			false
+	armour			false
+	race			civilian
 
 	names {
 		female { a }
@@ -309,11 +309,11 @@ team russia
 
 	actorsounds {
 		female {
-			hurtsound 	civilians/female_hurt
+			hurtsound	civilians/female_hurt
 			deathsound	civilians/female_death
 		}
 		male {
-			hurtsound 	civilians/male_hurt
+			hurtsound	civilians/male_hurt
 			deathsound	civilians/male_death
 		}
 	}
@@ -321,11 +321,11 @@ team russia
 
 team oceania
 {
-	size	1
+	size			1
 	hit_particle	blood
-	weapons false
-	armour false
-	race civilian
+	weapons			false
+	armour			false
+	race			civilian
 
 	names {
 		female { a }
@@ -348,11 +348,11 @@ team oceania
 
 	actorsounds {
 		female {
-			hurtsound 	civilians/female_hurt
+			hurtsound	civilians/female_hurt
 			deathsound	civilians/female_death
 		}
 		male {
-			hurtsound 	civilians/male_hurt
+			hurtsound	civilians/male_hurt
 			deathsound	civilians/male_death
 		}
 	}
@@ -364,11 +364,11 @@ team oceania
 
 team armysoldier
 {
-	size	1
+	size			1
 	hit_particle	blood
-	weapons true
-	armour false
-	race civilian
+	weapons			true
+	armour			false
+	race			civilian
 
 	names {
 		male { b }
@@ -383,11 +383,11 @@ team armysoldier
 
 	actorsounds {
 		female {
-			hurtsound 	civilians/female_hurt
+			hurtsound	civilians/female_hurt
 			deathsound	civilians/female_death
 		}
 		male {
-			hurtsound 	civilians/male_hurt
+			hurtsound	civilians/male_hurt
 			deathsound	civilians/male_death
 		}
 	}
@@ -395,11 +395,11 @@ team armysoldier
 
 team scientist
 {
-	size	1
+	size			1
 	hit_particle	blood
-	weapons false
-	armour false
-	race civilian
+	weapons			false
+	armour			false
+	race			civilian
 
 	names {
 		male { b }
@@ -418,11 +418,11 @@ team scientist
 
 	actorsounds {
 		female {
-			hurtsound 	civilians/female_hurt
+			hurtsound	civilians/female_hurt
 			deathsound	civilians/female_death
 		}
 		male {
-			hurtsound 	civilians/male_hurt
+			hurtsound	civilians/male_hurt
 			deathsound	civilians/male_death
 		}
 	}
@@ -430,11 +430,11 @@ team scientist
 
 team worker
 {
-	size	1
+	size			1
 	hit_particle	blood
-	weapons false
-	armour false
-	race civilian
+	weapons			false
+	armour			false
+	race			civilian
 
 	names {
 		male { b }
@@ -450,11 +450,11 @@ team worker
 
 	actorsounds {
 		female {
-			hurtsound 	civilians/female_hurt
+			hurtsound	civilians/female_hurt
 			deathsound	civilians/female_death
 		}
 		male {
-			hurtsound 	civilians/male_hurt
+			hurtsound	civilians/male_hurt
 			deathsound	civilians/male_death
 		}
 	}
@@ -462,11 +462,11 @@ team worker
 
 team miner
 {
-	size	1
+	size			1
 	hit_particle	blood
-	weapons false
-	armour false
-	race civilian
+	weapons			false
+	armour			false
+	race			civilian
 
 	names {
 		male { b }
@@ -481,11 +481,11 @@ team miner
 
 	actorsounds {
 		female {
-			hurtsound 	civilians/female_hurt
+			hurtsound	civilians/female_hurt
 			deathsound	civilians/female_death
 		}
 		male {
-			hurtsound 	civilians/male_hurt
+			hurtsound	civilians/male_hurt
 			deathsound	civilians/male_death
 		}
 	}
