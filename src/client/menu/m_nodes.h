@@ -143,13 +143,13 @@ typedef struct menuNode_s {
 		abstractScrollbarExtraData_t abstractscrollbar;
 		baseExtraData_t base;
 		containerExtraData_t container;
+		ekgExtraData_t ekg;
 		lineChartExtraData_t linechart;
 		modelExtraData_t model;
 		optionExtraData_t option;
 		textEntryExtraData_t textentry;
 		textExtraData_t text;
 		windowExtraData_t window;
-		ekgExtraData_t ekg;
 	} u;
 
 } menuNode_t;
