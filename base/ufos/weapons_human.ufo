@@ -3,116 +3,116 @@
 // =======================
 item assault
 {
-	name		"_Assault Rifle"
-	model		weapons/assault/assault
-	weapon		true
-	type		rifle
+	name			"_Assault Rifle"
+	model			weapons/assault/assault
+	weapon			true
+	type			rifle
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"1 0 4 1"
-	shape		"0 1 5 1"
-	center		"3 -3 1"
-	scale		1.25
-	ammo		30
-	reload		12
-	price		2100
-	size		20
-	is_primary	true
+	shape			"1 0 4 1"
+	shape			"0 1 5 1"
+	center			"3 -3 1"
+	scale			1.25
+	ammo			30
+	reload			12
+	price			2100
+	size			20
+	is_primary		true
 }
 
 item assault_ammo
 {
-	name		"_Assault Rifle Magazine"
-	model		weapons/assault/assault_clip
-	type		ammo
+	name			"_Assault Rifle Magazine"
+	model			weapons/assault/assault_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 2"
-	center		"0 0 0"
-	scale		1.25
-	price		70
-	size		3
-	is_primary	true
-	dmgtype normal
+	shape			"0 0 1 2"
+	center			"0 0 0"
+	scale			1.25
+	price			70
+	size			3
+	is_primary		true
+	dmgtype			normal
 
 	weapon_mod assault
 	{
 		firedef
 		{
-			name	"_Snap Shot"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/assaultrifle
-			speed	0
-			spread	"1.8 1.8"
-			crouch	0.7
-			range	70
-			shots	1
-			ammo	1
-			time	8
-			damage	"42 5"
-			dmgweight normal_medium
+			name		"_Snap Shot"
+			skill		assault
+			projtl		bullet
+			impact		bulletImpact
+			hitbody		null
+			firesnd		weapons/assaultrifle
+			speed		0
+			spread		"1.8 1.8"
+			crouch		0.7
+			range		70
+			shots		1
+			ammo		1
+			time		8
+			damage		"42 5"
+			dmgweight	normal_medium
 			reaction	true
 		}
 		firedef
 		{
-			name	"_3-Round Burst"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/assaultrifle
-			speed	0
-			spread	"2.0 2.0"
-			crouch	0.7
-			range	70
-			shots	3
-			ammo	3
-			delaybetweenshots		5
-			time	12
-			damage	"42 5"
-			dmgweight normal_medium
-			reaction	true
+			name				"_3-Round Burst"
+			skill				assault
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/assaultrifle
+			speed				0
+			spread				"2.0 2.0"
+			crouch				0.7
+			range				70
+			shots				3
+			ammo				3
+			delaybetweenshots	5
+			time				12
+			damage				"42 5"
+			dmgweight			normal_medium
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Full-Auto"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/assaultrifle
-			speed	0
-			spread	"2.5 2.5"
-			crouch	0.6
-			range	70
-			shots	8
-			ammo	8
-			delaybetweenshots		10
-			time	18
-			damage	"42 5"
-			dmgweight normal_medium
-			reaction 	true
+			name				"_Full-Auto"
+			skill				assault
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/assaultrifle
+			speed				0
+			spread				"2.5 2.5"
+			crouch				0.6
+			range				70
+			shots				8
+			ammo				8
+			delaybetweenshots	10
+			time				18
+			damage				"42 5"
+			dmgweight			normal_medium
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Aimed shot"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/assaultrifle
-			speed	0
-			spread	"1 1"
-			crouch	0.7
-			range	70
-			shots	1
-			ammo	1
-			time	14
-			damage	"42 5"
-			dmgweight normal_medium
+			name		"_Aimed shot"
+			skill		assault
+			projtl		bullet
+			impact		bulletImpact
+			hitbody		null
+			firesnd		weapons/assaultrifle
+			speed		0
+			spread		"1 1"
+			crouch		0.7
+			range		70
+			shots		1
+			ammo		1
+			time		14
+			damage		"42 5"
+			dmgweight	normal_medium
 			reaction	true
 		}
 	}
@@ -121,80 +121,80 @@ item assault_ammo
 	{
 		firedef
 		{
-			name	"_Snap Shot"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/assaultrifle
-			speed	0
-			spread	"1.0 1.0"
-			crouch	0.7
-			range	250
-			shots	1
-			ammo	1
-			time	8
-			damage	"40 5"
-			dmgweight normal_medium
+			name		"_Snap Shot"
+			skill		assault
+			projtl		bullet
+			impact		bulletImpact
+			hitbody		null
+			firesnd		weapons/assaultrifle
+			speed		0
+			spread		"1.0 1.0"
+			crouch		0.7
+			range		250
+			shots		1
+			ammo		1
+			time		8
+			damage		"40 5"
+			dmgweight	normal_medium
 			reaction	true
 		}
 		firedef
 		{
-			name	"_3-Round Burst"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/assaultrifle
-			speed	0
-			spread	"1.2 1.2"
-			crouch	0.7
-			range	70
-			shots	3
-			ammo	3
-			delaybetweenshots		5
-			time	10
-			damage	"40 5"
-			dmgweight normal_medium
-			reaction	true
+			name				"_3-Round Burst"
+			skill				assault
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/assaultrifle
+			speed				0
+			spread				"1.2 1.2"
+			crouch				0.7
+			range				70
+			shots				3
+			ammo				3
+			delaybetweenshots	5
+			time				10
+			damage				"40 5"
+			dmgweight			normal_medium
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Full-Auto"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/assaultrifle
-			speed	0
-			spread	"1.8 1.8"
-			crouch	0.6
-			range	70
-			shots	6
-			ammo	8
-			delaybetweenshots		10
-			time	16
-			damage	"40 5"
-			dmgweight normal_medium
-			reaction 	true
+			name				"_Full-Auto"
+			skill				assault
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/assaultrifle
+			speed				0
+			spread				"1.8 1.8"
+			crouch				0.6
+			range				70
+			shots				6
+			ammo				8
+			delaybetweenshots	10
+			time				16
+			damage				"40 5"
+			dmgweight			normal_medium
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Aimed shot"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/assaultrifle
-			speed	0
-			spread	"0.75 0.75"
-			crouch	0.6
-			range	70
-			shots	1
-			ammo	1
-			time	12
-			damage	"40 5"
-			dmgweight normal_medium
+			name		"_Aimed shot"
+			skill		assault
+			projtl		bullet
+			impact		bulletImpact
+			hitbody		null
+			firesnd		weapons/assaultrifle
+			speed		0
+			spread		"0.75 0.75"
+			crouch		0.6
+			range		70
+			shots		1
+			ammo		1
+			time		12
+			damage		"40 5"
+			dmgweight	normal_medium
 			reaction	true
 		}
 	}
@@ -205,101 +205,101 @@ item assault_ammo
 // =======================
 item machinegun
 {
-	name		"_Machine Gun"
-	model		weapons/machinegun/machinegun
-	weapon		true
-	type		rifle
+	name			"_Machine Gun"
+	model			weapons/machinegun/machinegun
+	weapon			true
+	type			rifle
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"1 0 4 1"
-	shape		"0 1 4 1"
-	center		"5.9 0 2.5"
-	scale		1.1
-	ammo		100
-	reload		30
-	price		2100
-	size		20
-	is_primary	true
-	is_heavy	true
+	shape			"1 0 4 1"
+	shape			"0 1 4 1"
+	center			"5.9 0 2.5"
+	scale			1.1
+	ammo			100
+	reload			30
+	price			2100
+	size			20
+	is_primary		true
+	is_heavy		true
 }
 
 item machinegun_ammo
 {
-	name		"_Machine Gun Magazine"
-	model		weapons/machinegun/machinegun_clip
-	type		ammo
+	name			"_Machine Gun Magazine"
+	model			weapons/machinegun/machinegun_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 2 2"
-	center		"0 0 0"
-	scale		1.9
-	price		65
-	size		6
-	is_primary	true
-	is_heavy	true
-	dmgtype normal
+	shape			"0 0 2 2"
+	center			"0 0 0"
+	scale			1.9
+	price			65
+	size			6
+	is_primary		true
+	is_heavy		true
+	dmgtype			normal
 
 	weapon_mod machinegun
 	{
 		firedef
 		{
-			name	"_5-Shot Burst"
-			skill	heavy
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/machinegun
-			speed	0
-			spread	"2 2"
-			crouch	0.75
-			range	70
-			shots	5
-			ammo	5
-			delaybetweenshots		5
-			time	14
-			damage	"45 9"
-			dmgweight normal_medium
-			reaction	true
+			name				"_5-Shot Burst"
+			skill				heavy
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/machinegun
+			speed				0
+			spread				"2 2"
+			crouch				0.75
+			range				70
+			shots				5
+			ammo				5
+			delaybetweenshots	5
+			time				14
+			damage				"45 9"
+			dmgweight			normal_medium
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Full-Auto"
-			skill	heavy
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/machinegun
-			speed	0
-			spread	"3 3"
-			crouch	0.5
-			range	70
-			shots	20
-			ammo	20
-			delaybetweenshots		10
-			time	25
-			damage	"45 9"
-			dmgweight normal_medium
-			reaction 	true
+			name				"_Full-Auto"
+			skill				heavy
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/machinegun
+			speed				0
+			spread				"3 3"
+			crouch				0.5
+			range				70
+			shots				20
+			ammo				20
+			delaybetweenshots	10
+			time				25
+			damage				"45 9"
+			dmgweight			normal_medium
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Full-Auto Sweep"
-			skill	heavy
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/machinegun
-			speed	0
-			spread	"3 20"
-			crouch	0.5
-			range	70
-			shots	20
-			ammo	20
-			delaybetweenshots		10
-			time	25
-			damage	"45 9"
-			dmgweight normal_medium
-			reaction 	true
+			name				"_Full-Auto Sweep"
+			skill				heavy
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/machinegun
+			speed				0
+			spread				"3 20"
+			crouch				0.5
+			range				70
+			shots				20
+			ammo				20
+			delaybetweenshots	10
+			time				25
+			damage				"45 9"
+			dmgweight			normal_medium
+			reaction			true
 		}
 	}
 }
@@ -309,76 +309,76 @@ item machinegun_ammo
 // =======================
 item sniper
 {
-	name		"_Sniper Rifle"
-	model		weapons/sniper/sniper
-	weapon		true
-	type		rifle
+	name			"_Sniper Rifle"
+	model			weapons/sniper/sniper
+	weapon			true
+	type			rifle
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded 	true
-	shape		"2 0 3 1"
-	shape		"0 1 5 1"
-	center		"9 0 3"
-	scale		1.05
-	ammo		5
-	reload		10
-	price		2100
-	size		30
-	is_primary	true
+	shape			"2 0 3 1"
+	shape			"0 1 5 1"
+	center			"9 0 3"
+	scale			1.05
+	ammo			5
+	reload			10
+	price			2100
+	size			30
+	is_primary		true
 }
 
 item sniper_ammo
 {
-	name		"_Sniper Rifle Magazine"
-	model		weapons/sniper/sniper_clip
-	type		ammo
+	name			"_Sniper Rifle Magazine"
+	model			weapons/sniper/sniper_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 2"
-	center		"0 0 0"
-	scale		1.15
-	price		85
-	size		5
-	is_primary	true
-	dmgtype normal
+	shape			"0 0 1 2"
+	center			"0 0 0"
+	scale			1.15
+	price			85
+	size			5
+	is_primary		true
+	dmgtype			normal
 
 	weapon_mod sniper
 	{
 		firedef
 		{
-			name	"_Snap Shot"
-			skill	sniper
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/sniperrifle
-			speed	0
-			spread	"1.5 1.5"
-			crouch	0.5
-			range	90
-			shots	1
-			ammo	1
-			time	12
-			damage	"105 0"
-			dmgweight normal_heavy
+			name		"_Snap Shot"
+			skill		sniper
+			projtl		bullet
+			impact		bulletImpact
+			hitbody		null
+			firesnd		weapons/sniperrifle
+			speed		0
+			spread		"1.5 1.5"
+			crouch		0.5
+			range		90
+			shots		1
+			ammo		1
+			time		12
+			damage		"105 0"
+			dmgweight	normal_heavy
 			reaction	true
 		}
 		firedef
 		{
-			name	"_Aimed Shot"
-			skill	sniper
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/sniperrifle
-			speed	0
-			spread	"0.9 0.9"
-			crouch	0.5
-			range	90
-			shots	1
-			ammo	1
-			time	18
-			damage	"105 0"
-			dmgweight normal_heavy
+			name		"_Aimed Shot"
+			skill		sniper
+			projtl		bullet
+			impact		bulletImpact
+			hitbody		null
+			firesnd		weapons/sniperrifle
+			speed		0
+			spread		"0.9 0.9"
+			crouch		0.5
+			range		90
+			shots		1
+			ammo		1
+			time		18
+			damage		"105 0"
+			dmgweight	normal_heavy
 		}
 	}
 }
@@ -389,76 +389,76 @@ item sniper_ammo
 //========================
 item coilgun
 {
-	name		"_Coilgun"
-	model		weapons/coilgun/coilgun
-	weapon		true
-	type		rifle
+	name			"_Coilgun"
+	model			weapons/coilgun/coilgun
+	weapon			true
+	type			rifle
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded 	true
-	shape		"2 0 3 1"
-	shape		"0 1 4 1"
-	center		"9 2.7 3.2"
-	scale		0.9
-	ammo		2
-	reload		10
-	price		9000
-	size		30
-	is_primary	true
+	shape			"2 0 3 1"
+	shape			"0 1 4 1"
+	center			"9 2.7 3.2"
+	scale			0.9
+	ammo			2
+	reload			10
+	price			9000
+	size			30
+	is_primary		true
 }
 
 item coilgun_ammo
 {
-	name            "_Coilgun Clip"
-	model           weapons/coilgun/coilgun_ammo
-	type		ammo
+	name			"_Coilgun Clip"
+	model			weapons/coilgun/coilgun_ammo
+	type			ammo
 	animationindex	0
-	shape		"0 0 2 2"
-	center		"0 0 1.2"
-	scale		1.15
-	price		85
-	size		10
-	is_primary	true
-	dmgtype normal
+	shape			"0 0 2 2"
+	center			"0 0 1.2"
+	scale			1.15
+	price			85
+	size			10
+	is_primary		true
+	dmgtype			normal
 
 	weapon_mod coilgun
 	{
 		firedef
 		{
-			name	"_Snap Shot"
-			skill	sniper
-			projtl  bolter
-			impact  bolterImpact
-			hitbody null
-			firesnd weapons/bolter2
-			speed	0
-			spread	"1.5 1.5"
-			crouch	0.5
-			range	100
-			shots	1
-			ammo	1
-			time	12
-			damage	"180 36"
-			dmgweight normal_heavy
+			name		"_Snap Shot"
+			skill		sniper
+			projtl		bolter
+			impact		bolterImpact
+			hitbody		null
+			firesnd		weapons/bolter2
+			speed		0
+			spread		"1.5 1.5"
+			crouch		0.5
+			range		100
+			shots		1
+			ammo		1
+			time		12
+			damage		"180 36"
+			dmgweight	normal_heavy
 			reaction	true
 		}
 		firedef
 		{
-			name	"_Aimed Shot"
-			skill	sniper
-			projtl  bolter
-			impact  bolterImpact
-			hitbody null
-			firesnd weapons/bolter2
-			speed	0
-			spread	"0.9 0.9"
-			crouch	0.5
-			range	100
-			shots	1
-			ammo	1
-			time	18
-			damage	"180 36"
-			dmgweight normal_heavy
+			name		"_Aimed Shot"
+			skill		sniper
+			projtl		bolter
+			impact		bolterImpact
+			hitbody		null
+			firesnd		weapons/bolter2
+			speed		0
+			spread		"0.9 0.9"
+			crouch		0.5
+			range		100
+			shots		1
+			ammo		1
+			time		18
+			damage		"180 36"
+			dmgweight	normal_heavy
 		}
 	}
 }
@@ -469,96 +469,96 @@ item coilgun_ammo
 // =======================
 item pistol
 {
-	name		"_7.62mm Pistol"
-	model		weapons/pistol/pistol
-	weapon		true
-	type		pistol
+	name			"_7.62mm Pistol"
+	model			weapons/pistol/pistol
+	weapon			true
+	type			pistol
 	animationindex	2
 	holdtwohanded	false
 	firetwohanded 	false
-	shape		"0 0 2 2"
-	center		"2 0 1"
-	scale		1.35
-	ammo		12
-	reload		12
-	price		900
-	size		7
+	shape			"0 0 2 2"
+	center			"2 0 1"
+	scale			1.35
+	ammo			12
+	reload			12
+	price			900
+	size			7
 	is_secondary	true
 }
 
 item pistol_ammo
 {
-	name		"_7.62mm Pistol Magazine"
-	model		weapons/pistol/pistol_clip
-	type		ammo
+	name			"_7.62mm Pistol Magazine"
+	model			weapons/pistol/pistol_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 1"
-	center		"0 0 -0.2"
-	scale		1.5
-	price		20
-	size		1
+	shape			"0 0 1 1"
+	center			"0 0 -0.2"
+	scale			1.5
+	price			20
+	size			1
 	is_secondary	true
-	dmgtype normal
+	dmgtype			normal
 
 	weapon_mod pistol
 	{
 		firedef
 		{
-			name	"_Snap Shot"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/pistol2
-			speed	0
-			spread	"1.1 1.1"
-			crouch	0.9
-			range	40
-			shots	1
-			ammo	1
-			time	6
-			damage	"35 5"
-			dmgweight normal_light
+			name		"_Snap Shot"
+			skill		close
+			projtl		bullet
+			impact		bulletImpact
+			hitbody		null
+			firesnd		weapons/pistol2
+			speed		0
+			spread		"1.1 1.1"
+			crouch		0.9
+			range		40
+			shots		1
+			ammo		1
+			time		6
+			damage		"35 5"
+			dmgweight	normal_light
 			reaction	true
 		}
 		firedef
 		{
-			name	"_3-Round Burst"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/pistol2
-			speed	0
-			spread	"1.3 1.3"
-			crouch	0.9
-			range	40
-			shots	3
-			ammo	3
-			delaybetweenshots		10
-			time	8
-			damage	"35 5"
-			dmgweight normal_light
-			reaction true
+			name				"_3-Round Burst"
+			skill				close
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/pistol2
+			speed				0
+			spread				"1.3 1.3"
+			crouch				0.9
+			range				40
+			shots				3
+			ammo				3
+			delaybetweenshots	10
+			time				8
+			damage				"35 5"
+			dmgweight			normal_light
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Aimed Shot"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/pistol2
-			speed	0
-			spread	"1 1"
-			crouch	0.9
-			range	40
-			shots	1
-			ammo	1
-			delaybetweenshots		10
-			time	8
-			damage	"35 5"
-			dmgweight normal_light
+			name				"_Aimed Shot"
+			skill				close
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/pistol2
+			speed				0
+			spread				"1 1"
+			crouch				0.9
+			range				40
+			shots				1
+			ammo				1
+			delaybetweenshots	10
+			time				8
+			damage				"35 5"
+			dmgweight			normal_light
 		}
 	}
 }
@@ -568,98 +568,98 @@ item pistol_ammo
 // =======================
 item pistol2
 {
-	name		"_Machine Pistol"
-	model		weapons/pistol2/pistol2
-	weapon		true
-	type		pistol
+	name			"_Machine Pistol"
+	model			weapons/pistol2/pistol2
+	weapon			true
+	type			pistol
 	animationindex	2
 	holdtwohanded	false
-	firetwohanded 	false
-	shape		"0 0 2 1"
-	shape		"1 1 1 1"
-	center		"-0.1 0 0"
-	scale		2.0
-	ammo		30
-	reload		12
-	price		900
-	size		7
+	firetwohanded	false
+	shape			"0 0 2 1"
+	shape			"1 1 1 1"
+	center			"-0.1 0 0"
+	scale			2.0
+	ammo			30
+	reload			12
+	price			900
+	size			7
 	is_secondary	true
 }
 
 item pistol2_ammo
 {
-	name		"_4.2mm MP Magazine"
-	model		weapons/pistol2/pistol2_clip
-	type		ammo
+	name			"_4.2mm MP Magazine"
+	model			weapons/pistol2/pistol2_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 2"
-	center		"0 0 -0.21"
-	scale		2.5
-	price		20
-	size		2
+	shape			"0 0 1 2"
+	center			"0 0 -0.21"
+	scale			2.5
+	price			20
+	size			2
 	is_secondary	true
-	dmgtype normal
+	dmgtype			normal
 
 	weapon_mod pistol2
 	{
 		firedef
 		{
-			name	"_Snap Shot"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/machinepistol
-			speed	0
-			spread	"1.5 1.5"
-			crouch	0.9
-			range	40
-			shots	1
-			ammo	1
-			time	5
-			damage	"20 5"
+			name		"_Snap Shot"
+			skill		close
+			projtl		bullet
+			impact		bulletImpact
+			hitbody		null
+			firesnd		weapons/machinepistol
+			speed		0
+			spread		"1.5 1.5"
+			crouch		0.9
+			range		40
+			shots		1
+			ammo		1
+			time		5
+			damage		"20 5"
 			reaction	true
-			dmgweight normal_light
+			dmgweight	normal_light
 		}
 		firedef
 		{
-			name	"_3-Round Burst"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/machinepistol
-			speed	0
-			spread	"1.6 1.6"
-			crouch	0.9
-			range	40
-			shots	3
-			ammo	3
-			delaybetweenshots		10
-			time	7
-			damage	"20 5"
-			dmgweight normal_light
-			reaction true
+			name				"_3-Round Burst"
+			skill				close
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/machinepistol
+			speed				0
+			spread				"1.6 1.6"
+			crouch				0.9
+			range				40
+			shots				3
+			ammo				3
+			delaybetweenshots	10
+			time				7
+			damage				"20 5"
+			dmgweight			normal_light
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Full-Auto"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/machinepistol
-			speed	0
-			spread	"1.7 1.7"
-			crouch	0.9
-			range	40
-			shots	8
-			ammo	8
-			delaybetweenshots		10
-			time	14
-			damage	"20 5"
-			dmgweight normal_light
-			reaction true
+			name				"_Full-Auto"
+			skill				close
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/machinepistol
+			speed				0
+			spread				"1.7 1.7"
+			crouch				0.9
+			range				40
+			shots				8
+			ammo				8
+			delaybetweenshots	10
+			time				14
+			damage				"20 5"
+			dmgweight			normal_light
+			reaction			true
 		}
 	}
 }
@@ -670,115 +670,115 @@ item pistol2_ammo
 // =======================
 item smg
 {
-	name		"_Submachine Gun"
-	model		weapons/smg/smg
-	weapon		true
-	type		pistol
+	name			"_Submachine Gun"
+	model			weapons/smg/smg
+	weapon			true
+	type			pistol
 	animationindex	2
 	holdtwohanded	false
-	firetwohanded 	true
-	shape		"0 0 3 2"
-	center		"6.4 0 1"
-	scale		1.15
-	ammo		50
-	reload		12
-	price		1350
-	size		8
+	firetwohanded	true
+	shape			"0 0 3 2"
+	center			"6.4 0 1"
+	scale			1.15
+	ammo			50
+	reload			12
+	price			1350
+	size			8
 	is_secondary	true
 }
 
 item smg_ammo
 {
-	name		"_SMG Magazine"
-	model		weapons/smg/smg_clip
-	type		ammo
+	name			"_SMG Magazine"
+	model			weapons/smg/smg_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 2"
-	center		"0 0 0"
-	scale		1.4
-	price		40
-	size		3
+	shape			"0 0 1 2"
+	center			"0 0 0"
+	scale			1.4
+	price			40
+	size			3
 	is_secondary	true
-	dmgtype normal
+	dmgtype			normal
 
 	weapon_mod smg
 	{
 		firedef
 		{
-			name	"_Snap Shot"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/smg2
-			speed	0
-			spread	"1.7 1.7"
-			crouch	0.8
-			range	50
-			shots	1
-			ammo	1
-			time	5
-			damage	"20 4"
-			dmgweight normal_light
+			name		"_Snap Shot"
+			skill		close
+			projtl		bullet
+			impact		bulletImpact
+			hitbody		null
+			firesnd		weapons/smg2
+			speed		0
+			spread		"1.7 1.7"
+			crouch		0.8
+			range		50
+			shots		1
+			ammo		1
+			time		5
+			damage		"20 4"
+			dmgweight	normal_light
 			reaction	true
 		}
 		firedef
 		{
-			name	"_5-Round Burst"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/smg2
-			speed	0
-			spread	"2.0 2.0"
-			crouch	0.7
-			range	50
-			shots	5
-			ammo	5
-			delaybetweenshots		10
-			time	10
-			damage	"20 4"
-			dmgweight normal_light
-			reaction	true
+			name				"_5-Round Burst"
+			skill				close
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/smg2
+			speed				0
+			spread				"2.0 2.0"
+			crouch				0.7
+			range				50
+			shots				5
+			ammo				5
+			delaybetweenshots	10
+			time				10
+			damage				"20 4"
+			dmgweight			normal_light
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Full-Auto"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/smg2
-			speed	0
-			spread	"3.0 3.0"
-			crouch	0.6
-			range	50
-			shots	15
-			ammo	15
-			delaybetweenshots		10
-			time	20
-			damage	"20 4"
-			dmgweight normal_light
-			reaction	true
+			name				"_Full-Auto"
+			skill				close
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/smg2
+			speed				0
+			spread				"3.0 3.0"
+			crouch				0.6
+			range				50
+			shots				15
+			ammo				15
+			delaybetweenshots	10
+			time				20
+			damage				"20 4"
+			dmgweight			normal_light
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Aimed Shot"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/smg2
-			speed	0
-			spread	"1.25 1.25"
-			crouch	0.8
-			range	50
-			shots	1
-			ammo	1
-			time	10
-			damage	"20 4"
-			dmgweight normal_light
+			name		"_Aimed Shot"
+			skill		close
+			projtl		bullet
+			impact		bulletImpact
+			hitbody		null
+			firesnd		weapons/smg2
+			speed		0
+			spread		"1.25 1.25"
+			crouch		0.8
+			range		50
+			shots		1
+			ammo		1
+			time		10
+			damage		"20 4"
+			dmgweight	normal_light
 			reaction	false
 		}
 	}
@@ -789,84 +789,83 @@ item smg_ammo
 // =======================
 item shotgun2
 {
-	name		"_Riot Shotgun"
-	model		weapons/shotgun2/shotgun
-	weapon		true
-	type		rifle
+	name			"_Riot Shotgun"
+	model			weapons/shotgun2/shotgun
+	weapon			true
+	type			rifle
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"1 0 3 1"
-	shape		"0 1 4 1"
-	center		"1.5 0 3.8"
-	scale		0.98
-	ammo		7
-	reload		20
-	price		1500
-	size		25
-	is_primary	true
+	shape			"1 0 3 1"
+	shape			"0 1 4 1"
+	center			"1.5 0 3.8"
+	scale			0.98
+	ammo			7
+	reload			20
+	price			1500
+	size			25
+	is_primary		true
 }
 
 item shotgun2_slug_ammo
 {
-	name		"_Saboted Slugs"
-	model		weapons/shotgun2/shotgun_clip
-	type		ammo
+	name			"_Saboted Slugs"
+	model			weapons/shotgun2/shotgun_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 2"
-	center		"0 0 0"
-	scale		2.0
-	price		35
-	size		5
-	is_primary	true
-	dmgtype normal
+	shape			"0 0 1 2"
+	center			"0 0 0"
+	scale			2.0
+	price			35
+	size			5
+	is_primary		true
+	dmgtype			normal
 
 	weapon_mod shotgun2
 	{
 		firedef
 		{
-			name	"_Single Shot"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/riotshotgun
-			sndonce true
-			speed	0
-			spread	"1.5 1.5"
-			crouch	0.8
-			range	30
-			shots	1
-			ammo	1
-			delaybetweenshots		0
-			time	8
-			damage	"50 10"
-			dmgweight normal_heavy
-			reaction true
+			name				"_Single Shot"
+			skill				close
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/riotshotgun
+			sndonce				true
+			speed				0
+			spread				"1.5 1.5"
+			crouch				0.8
+			range				30
+			shots				1
+			ammo				1
+			delaybetweenshots	0
+			time				8
+			damage				"50 10"
+			dmgweight			normal_heavy
+			reaction			true
 		}
 
 		firedef
 		{
-			name	"_3-Round Burst"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/riotshotgun
-			sndonce false
-			speed	0
-			spread	"2.5 2.5"
-			crouch	0.8
-			range	30
-			shots	3
-			ammo	3
-			delaybetweenshots		5
-			time	12
-			damage	"50 10"
-			dmgweight normal_heavy
-			reaction	true
+			name				"_3-Round Burst"
+			skill				close
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/riotshotgun
+			sndonce				false
+			speed				0
+			spread				"2.5 2.5"
+			crouch				0.8
+			range				30
+			shots				3
+			ammo				3
+			delaybetweenshots	5
+			time				12
+			damage				"50 10"
+			dmgweight			normal_heavy
+			reaction			true
 		}
-
 	}
 }
 
@@ -875,81 +874,81 @@ item shotgun2_slug_ammo
 // =======================
 item shotgun_micro
 {
-	name		"_Micro Shotgun"
-	model		weapons/shotgunmicro/shotgunmicro
-	weapon		true
-	type		biggun
+	name			"_Micro Shotgun"
+	model			weapons/shotgunmicro/shotgunmicro
+	weapon			true
+	type			biggun
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"0 0 3 2"
-	center		"3 0 3"
-	scale		1.2
-	ammo		7
-	reload		20
-	price		1350
-	size		10
+	shape			"0 0 3 2"
+	center			"3 0 3"
+	scale			1.2
+	ammo			7
+	reload			20
+	price			1350
+	size			10
 	is_secondary	true
 }
 
 item shotgun_micro_ammo
 {
-	name		"_Flechette Shells"
-	model		weapons/shotgunmicro/shotgunmicro_clip
-	type		ammo
+	name			"_Flechette Shells"
+	model			weapons/shotgunmicro/shotgunmicro_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 2"
-	center		"0 0 0"
-	scale		1.2
-	price		35
-	size		4
-	is_primary	true
-	dmgtype blast
+	shape			"0 0 1 2"
+	center			"0 0 0"
+	scale			1.2
+	price			35
+	size			4
+	is_primary		true
+	dmgtype			blast
 
-	weapon_mod shotgun_micro	// weap_fds_idx=0
+	weapon_mod shotgun_micro // weap_fds_idx=0
 	{
 		firedef
 		{
-			name	"_Single Shot"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/microshotgun2
-			sndonce true
-			speed	0
-			spread	"1.3 1.3"
-			crouch	0.9
-			range	20
-			shots	7
-			ammo	1
-			delaybetweenshots		0
-			time	6
-			damage	"15 5"
-			dmgweight normal_spray
-			reaction	true
+			name				"_Single Shot"
+			skill				close
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/microshotgun2
+			sndonce				true
+			speed				0
+			spread				"1.3 1.3"
+			crouch				0.9
+			range				20
+			shots				7
+			ammo				1
+			delaybetweenshots	0
+			time				6
+			damage				"15 5"
+			dmgweight			normal_spray
+			reaction			true
 		}
 
 		firedef
 		{
-			name	"_3-Round Burst"
-			skill	close
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/microshotgun2
-			sndonce false
-			speed	0
-			spread	"2.8 2.8"
-			crouch	0.9
-			range	20
-			shots	21
-			ammo	3
-			delaybetweenshots		15
-			time	10
-			damage	"15 5"
-			dmgweight normal_spray
-			reaction	true
+			name				"_3-Round Burst"
+			skill				close
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/microshotgun2
+			sndonce				false
+			speed				0
+			spread				"2.8 2.8"
+			crouch				0.9
+			range				20
+			shots				21
+			ammo				3
+			delaybetweenshots	15
+			time				10
+			damage				"15 5"
+			dmgweight			normal_spray
+			reaction			true
 		}
 	}
 
@@ -957,68 +956,68 @@ item shotgun_micro_ammo
 	{
 		firedef
 		{
-			name	"_Single Shot"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/riotshotgun
-			sndonce true
-			speed	0
-			spread	"1.8 1.8"
-			crouch	1.0
-			range	15
-			shots	8
-			ammo	1
-			delaybetweenshots		0
-			time	8
-			damage	"15 5"
-			dmgweight blast
-			reaction	true
+			name				"_Single Shot"
+			skill				assault
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/riotshotgun
+			sndonce				true
+			speed				0
+			spread				"1.8 1.8"
+			crouch				1.0
+			range				15
+			shots				8
+			ammo				1
+			delaybetweenshots	0
+			time				8
+			damage				"15 5"
+			dmgweight			blast
+			reaction			true
 		}
 
 		firedef
 		{
-			name	"_3-Round Burst"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/riotshotgun
-			sndonce false
-			speed	0
-			spread	"2.8 2.8"
-			crouch	1.0
-			range	15
-			shots	24
-			ammo	3
-			delaybetweenshots		15
-			time	12
-			damage	"15 5"
-			dmgweight blast
-			reaction	true
+			name				"_3-Round Burst"
+			skill				assault
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/riotshotgun
+			sndonce				false
+			speed				0
+			spread				"2.8 2.8"
+			crouch				1.0
+			range				15
+			shots				24
+			ammo				3
+			delaybetweenshots	15
+			time				12
+			damage				"15 5"
+			dmgweight			blast
+			reaction			true
 		}
 
 		firedef
 		{
-			name	"_Full-Auto"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/riotshotgun
-			sndonce false
-			speed	0
-			spread	"3 3"
-			crouch	1.0
-			range	15
-			shots	56
-			ammo	7
-			delaybetweenshots		30
-			time	20
-			damage	"15 5"
-			dmgweight blast
-			reaction	true
+			name				"_Full-Auto"
+			skill				assault
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/riotshotgun
+			sndonce				false
+			speed				0
+			spread				"3 3"
+			crouch				1.0
+			range				15
+			shots				56
+			ammo				7
+			delaybetweenshots	30
+			time				20
+			damage				"15 5"
+			dmgweight			blast
+			reaction			true
 		}
 	}
 }
@@ -1028,103 +1027,103 @@ item shotgun_micro_ammo
 // =======================
 item flamer
 {
-	name		"_Flamethrower"
-	model		weapons/flamer/flamer
-	weapon		true
-	type		biggun
+	name			"_Flamethrower"
+	model			weapons/flamer/flamer
+	weapon			true
+	type			biggun
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"0 0 5 2"
-	center		"9 0 2"
-	scale		1.2
-	ammo		6
-	reload		14
-	price		1050
-	size		55
-	is_primary	true
-	is_heavy	true
+	shape			"0 0 5 2"
+	center			"9 0 2"
+	scale			1.2
+	ammo			6
+	reload			14
+	price			1050
+	size			55
+	is_primary		true
+	is_heavy		true
 }
 
 item flamer_ammo
 {
-	name		"_C90 Canister"
-	model		weapons/flamer/flamer_ammo
-	type		ammo
+	name			"_C90 Canister"
+	model			weapons/flamer/flamer_ammo
+	type			ammo
 	animationindex	0
-	shape		"0 0 2 1"
-	center		"0 0 0"
-	scale		1.1
-	price		170
-	size		10
-	is_primary	true
-	is_heavy	true
-	dmgtype fire
+	shape			"0 0 2 1"
+	center			"0 0 0"
+	scale			1.1
+	price			170
+	size			10
+	is_primary		true
+	is_heavy		true
+	dmgtype			fire
 
 	weapon_mod flamer
 	{
 		firedef
 		{
-			name	"_Candlelight"
-			skill	heavy
-			projtl	fireBall
-			impact	fireImpact
-			hitbody burning
-			firesnd	weapons/flamer_s
-			sndonce true
-			speed	400
-			spread	"1.5 0.5"
-			crouch  1.0
-			range	8
-			shots	30
-			ammo	1
-			delaybetweenshots		25
-			time	8
-			damage	"6 2"
-			dmgweight fire_flamer
-			reaction	true
+			name				"_Candlelight"
+			skill				heavy
+			projtl				fireBall
+			impact				fireImpact
+			hitbody				burning
+			firesnd				weapons/flamer_s
+			sndonce				true
+			speed				400
+			spread				"1.5 0.5"
+			crouch				1.0
+			range				8
+			shots				30
+			ammo				1
+			delaybetweenshots	25
+			time				8
+			damage				"6 2"
+			dmgweight			fire_flamer
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Inferno"
-			skill	heavy
-			projtl	fireBall
-			impact	fireImpact
-			hitbody burning
-			firesnd	weapons/flamer_l
-			sndonce true
-			speed	400
-			spread	"2 0.5"
-			crouch  1.0
-			range	8
-			shots	60
-			ammo	2
-			delaybetweenshots		25
-			time	12
-			damage	"6 2"
-			dmgweight fire_flamer
-			reaction	true
+			name				"_Inferno"
+			skill				heavy
+			projtl				fireBall
+			impact				fireImpact
+			hitbody				burning
+			firesnd				weapons/flamer_l
+			sndonce				true
+			speed				400
+			spread				"2 0.5"
+			crouch				1.0
+			range				8
+			shots				60
+			ammo				2
+			delaybetweenshots	25
+			time				12
+			damage				"6 2"
+			dmgweight			fire_flamer
+			reaction			true
 		}
 		firedef
 		{
-			name	"_Inferno Sweep"
-			skill	heavy
-			projtl	fireBall
-			impact	fireImpact
-			hitbody burning
-			firesnd	weapons/flamer_l
-			sndonce true
-			speed	400
-			spread	"1 10"
-			crouch  1.0
-			range	8
-			shots	60
-			ammo	2
-			delaybetweenshots		25
-			time	12
-			damage	"6 2"
-			dmgweight fire_flamer
-			reaction	true
+			name				"_Inferno Sweep"
+			skill				heavy
+			projtl				fireBall
+			impact				fireImpact
+			hitbody				burning
+			firesnd				weapons/flamer_l
+			sndonce				true
+			speed				400
+			spread				"1 10"
+			crouch				1.0
+			range				8
+			shots				60
+			ammo				2
+			delaybetweenshots	25
+			time				12
+			damage				"6 2"
+			dmgweight			fire_flamer
+			reaction			true
 		}
 	}
 }
@@ -1135,105 +1134,105 @@ item flamer_ammo
 // =======================
 item rpg
 {
-	name		"_Rocket Launcher"
-	model		weapons/rpg/rpg
-	weapon		true
-	type		rpg
+	name			"_Rocket Launcher"
+	model			weapons/rpg/rpg
+	weapon			true
+	type			rpg
 	animationindex	3
 	holdtwohanded	true
 	firetwohanded	true
-	shape		"0 0 5 1"
-	shape		"0 1 3 1"
-	center		"-5.7 0 1.5"
-	scale		0.87
-	ammo		1
-	reload		12
-	price		4130
-	size		250
-	is_primary	true
-	is_heavy	true
+	shape			"0 0 5 1"
+	shape			"0 1 3 1"
+	center			"-5.7 0 1.5"
+	scale			0.87
+	ammo			1
+	reload			12
+	price			4130
+	size			250
+	is_primary		true
+	is_heavy		true
 }
 
 item rpg_ammo
 {
-	name		"_HE Rocket"
-	model		weapons/rpg/rpg_ammo
-	type		ammo
+	name			"_HE Rocket"
+	model			weapons/rpg/rpg_ammo
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 2"
-	center		"0 0 0"
-	scale		1.1
-	price		430
-	size		6
-	is_primary	true
-	is_heavy	true
-	dmgtype blast
+	shape			"0 0 1 2"
+	center			"0 0 0"
+	scale			1.1
+	price			430
+	size			6
+	is_primary		true
+	is_heavy		true
+	dmgtype			blast
 
 	weapon_mod rpg
 	{
 		firedef
 		{
-			name	"_Aimed Shot"
-			skill	explosive
-			projtl	rocket
-			impact	explosion
-			hitbody explosion
-			firesnd	weapons/rpg
-			impsnd	misc/big_boom
-			bodysnd	misc/big_boom
-			speed	250
-			spread	"0.2 0.6"
-			crouch	0.6
-			range	250
-			shots	1
-			ammo	1
-			time	14
-			damage	"0 0"
-			spldmg	"120 30"
-			splrad	6
-			dmgweight blast
+			name		"_Aimed Shot"
+			skill		explosive
+			projtl		rocket
+			impact		explosion
+			hitbody		explosion
+			firesnd		weapons/rpg
+			impsnd		misc/big_boom
+			bodysnd		misc/big_boom
+			speed		250
+			spread		"0.2 0.6"
+			crouch		0.6
+			range		250
+			shots		1
+			ammo		1
+			time		14
+			damage		"0 0"
+			spldmg		"120 30"
+			splrad		6
+			dmgweight	blast
 		}
 	}
 }
 
 item rpg_incendiary_ammo
 {
-	name		"_IC Rocket"
-	model		weapons/rpg/rpg_inc_ammo
-	type		ammo
+	name			"_IC Rocket"
+	model			weapons/rpg/rpg_inc_ammo
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 2"
-	center		"0 0 -0.5"
-	scale		1.1
-	price		630
-	size		6
-	is_primary	true
-	is_heavy	true
-	dmgtype fire
+	shape			"0 0 1 2"
+	center			"0 0 -0.5"
+	scale			1.1
+	price			630
+	size			6
+	is_primary		true
+	is_heavy		true
+	dmgtype			fire
 
 	weapon_mod rpg
 	{
 		firedef
 		{
-			name	"_Aimed Shot"
-			skill	explosive
-			projtl	rocket_inc
-			impact	fire_explosion
-			hitbody fire_explosion
-			firesnd	weapons/rpg
-			impsnd	weapons/incendiary_rocket
-			bodysnd	weapons/incendiary_rocket
-			speed	250
-			spread	"0.2 0.6"
-			crouch	0.6
-			range	250
-			shots	1
-			ammo	1
-			time	14
-			damage	"0 0"
-			spldmg	"90 30"
-			splrad	7
-			dmgweight fire_medium
+			name		"_Aimed Shot"
+			skill		explosive
+			projtl		rocket_inc
+			impact		fire_explosion
+			hitbody		fire_explosion
+			firesnd		weapons/rpg
+			impsnd		weapons/incendiary_rocket
+			bodysnd		weapons/incendiary_rocket
+			speed		250
+			spread		"0.2 0.6"
+			crouch		0.6
+			range		250
+			shots		1
+			ammo		1
+			time		14
+			damage		"0 0"
+			spldmg		"90 30"
+			splrad		7
+			dmgweight	fire_medium
 		}
 	}
 }
@@ -1243,621 +1242,621 @@ item rpg_incendiary_ammo
 // =======================
 item grenl
 {
-	name		"_Grenade Launcher"
-	model		weapons/grenl/grenl
-	weapon		true
-	type		biggun
+	name			"_Grenade Launcher"
+	model			weapons/grenl/grenl
+	weapon			true
+	type			biggun
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"1 0 4 1"
-	shape		"0 1 5 1"
-	center		"7 0 2.4"
-	scale		1.1
-	ammo		6
-	reload		14
-	price		2450
-	size		60
-	is_primary	true
-	is_heavy	true
+	shape			"1 0 4 1"
+	shape			"0 1 5 1"
+	center			"7 0 2.4"
+	scale			1.1
+	ammo			6
+	reload			14
+	price			2450
+	size			60
+	is_primary		true
+	is_heavy		true
 }
 
 item grenl_ammo
 {
-	name		"_25mm HIT Grenades"
-	model		weapons/grenl/grenl_clip
-	type		ammo
+	name			"_25mm HIT Grenades"
+	model			weapons/grenl/grenl_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		0.7
-	price		135
-	size		6
-	is_primary	true
-	is_heavy	true
-	dmgtype blast
+	shape			"0 0 1 1"
+	center			"0 0 0"
+	scale			0.7
+	price			135
+	size			6
+	is_primary		true
+	is_heavy		true
+	dmgtype			blast
 
 	weapon_mod grenl
 	{
 		firedef
 		{
-			name	"_Snap Shot - Airburst"
-			skill	explosive
-			projtl	grenl_ammo
-			impact	frag_explosion
-			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/deepexplosion
-			bodysnd	weapons/deepexplosion
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			spread	"0 2"
-			range	15
-			shots	1
-			ammo	1
-			delaybetweenshots		1
-			time	8
-			damage	"20 2"
-			spldmg	"100 10"
-			splrad	4
-			dmgweight blast
-			reaction	false
+			name				"_Snap Shot - Airburst"
+			skill				explosive
+			projtl				grenl_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/deepexplosion
+			bodysnd				weapons/deepexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			spread				"0 2"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				8
+			damage				"20 2"
+			spldmg				"100 10"
+			splrad				4
+			dmgweight			blast
+			reaction			false
 		}
 
 		firedef
 		{
-			name	"_Aimed Shot - Airburst"
-			skill	explosive
-			projtl	grenl_ammo
-			impact	frag_explosion
-			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/deepexplosion
-			bodysnd	weapons/deepexplosion
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			spread	"0 1.5"
-			range	15
-			shots	1
-			ammo	1
-			delaybetweenshots		1
-			time	12
-			damage	"20 2"
-			spldmg	"100 10"
-			splrad	4
-			dmgweight blast
-			reaction	false
+			name				"_Aimed Shot - Airburst"
+			skill				explosive
+			projtl				grenl_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/deepexplosion
+			bodysnd				weapons/deepexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			spread				"0 1.5"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				12
+			damage				"20 2"
+			spldmg				"100 10"
+			splrad				4
+			dmgweight			blast
+			reaction			false
 		}
 
 		firedef
 		{
-			name	"_3-Round Burst - Airburst"
-			skill	explosive
-			projtl	grenl_ammo
-			impact	frag_explosion
-			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/deepexplosion
-			bodysnd	weapons/deepexplosion
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			spread	"0 4"
-			range	15
-			shots	3
-			ammo	3
-			delaybetweenshots		3
-			time	15
-			damage	"20 2"
-			spldmg	"100 10"
-			splrad	4
-			dmgweight blast
-			reaction	false
+			name				"_3-Round Burst - Airburst"
+			skill				explosive
+			projtl				grenl_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/deepexplosion
+			bodysnd				weapons/deepexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			spread				"0 4"
+			range				15
+			shots				3
+			ammo				3
+			delaybetweenshots	3
+			time				15
+			damage				"20 2"
+			spldmg				"100 10"
+			splrad				4
+			dmgweight			blast
+			reaction			false
 		}
 
 		firedef
 		{
-			name	"_Snap Shot - Timed"
-			skill	explosive
-			projtl	grenl_ammo
-			impact	frag_explosion
-			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/deepexplosion
-			bodysnd	weapons/deepexplosion
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			delay	1
-			bounce	5
-			bncfac	0.6
-			spread	"0 2"
-			range	15
-			shots	1
-			ammo	1
-			delaybetweenshots		1
-			time	8
-			spldmg	"100 10"
-			splrad	4
-			dmgweight blast
-			reaction	false
+			name				"_Snap Shot - Timed"
+			skill				explosive
+			projtl				grenl_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/deepexplosion
+			bodysnd				weapons/deepexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			delay				1
+			bounce				5
+			bncfac				0.6
+			spread				"0 2"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				8
+			spldmg				"100 10"
+			splrad				4
+			dmgweight			blast
+			reaction			false
 		}
 
 		firedef
 		{
-			name	"_Aimed Shot - Timed"
-			skill	explosive
-			projtl	grenl_ammo
-			impact	frag_explosion
-			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/deepexplosion
-			bodysnd	weapons/deepexplosion
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			delay	1
-			bounce	5
-			bncfac	0.6
-			spread	"0 1.5"
-			range	15
-			shots	1
-			ammo	1
-			delaybetweenshots		1
-			time	12
-			spldmg	"100 10"
-			splrad	4
-			dmgweight blast
-			reaction	false
+			name				"_Aimed Shot - Timed"
+			skill				explosive
+			projtl				grenl_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/deepexplosion
+			bodysnd				weapons/deepexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			delay				1
+			bounce				5
+			bncfac				0.6
+			spread				"0 1.5"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				12
+			spldmg				"100 10"
+			splrad				4
+			dmgweight			blast
+			reaction			false
 		}
 
 		firedef
 		{
-			name	"_3-Round Burst - Timed"
-			skill	explosive
-			projtl	grenl_ammo
-			impact	frag_explosion
-			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/deepexplosion
-			bodysnd	weapons/deepexplosion
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			delay	1
-			bounce	5
-			bncfac	0.6
-			spread	"0 4"
-			range	15
-			shots	3
-			ammo	3
-			delaybetweenshots		3
-			time	15
-			spldmg	"100 10"
-			splrad	4
-			dmgweight blast
-			reaction	false
+			name				"_3-Round Burst - Timed"
+			skill				explosive
+			projtl				grenl_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/deepexplosion
+			bodysnd				weapons/deepexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			delay				1
+			bounce				5
+			bncfac				0.6
+			spread				"0 4"
+			range				15
+			shots				3
+			ammo				3
+			delaybetweenshots	3
+			time				15
+			spldmg				"100 10"
+			splrad				4
+			dmgweight			blast
+			reaction			false
 		}
 	}
 }
 
 item grenl_incendiary_ammo
 {
-	name		"_25mm IC Grenades"
-	model		weapons/grenl/grenl_ic_clip
-	type		ammo
+	name			"_25mm IC Grenades"
+	model			weapons/grenl/grenl_ic_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		0.7
-	price		135
-	size		6
-	is_primary	true
-	is_heavy	true
-	dmgtype fire
+	shape			"0 0 1 1"
+	center			"0 0 0"
+	scale			0.7
+	price			135
+	size			6
+	is_primary		true
+	is_heavy		true
+	dmgtype			fire
 
 	weapon_mod grenl
 	{
 		firedef
 		{
-			name	"_Snap Shot - Airburst"
-			skill	explosive
-			projtl	grenl_ic_ammo
-			impact	frag_explosion
-			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/fireexplosion
-			bodysnd	weapons/fireexplosion
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			spread	"0 2"
-			range	15
-			shots	1
-			ammo	1
-			delaybetweenshots		1
-			time	8
-			damage	"15 10"
-			spldmg	"95 10"
-			splrad	4
-			dmgweight fire_medium
-			reaction	false
+			name				"_Snap Shot - Airburst"
+			skill				explosive
+			projtl				grenl_ic_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/fireexplosion
+			bodysnd				weapons/fireexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			spread				"0 2"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				8
+			damage				"15 10"
+			spldmg				"95 10"
+			splrad				4
+			dmgweight			fire_medium
+			reaction			false
 		}
 
 
 		firedef
 		{
-			name	"_Aimed Shot - Airburst"
-			skill	explosive
-			projtl	grenl_ic_ammo
-			impact	frag_explosion
-			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/fireexplosion
-			bodysnd	weapons/fireexplosion
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			spread	"0 1.5"
-			range	15
-			shots	1
-			ammo	1
-			delaybetweenshots		1
-			time	12
-			damage	"15 10"
-			spldmg	"95 10"
-			splrad	4
-			dmgweight fire_medium
-			reaction	false
+			name				"_Aimed Shot - Airburst"
+			skill				explosive
+			projtl				grenl_ic_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/fireexplosion
+			bodysnd				weapons/fireexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			spread				"0 1.5"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				12
+			damage				"15 10"
+			spldmg				"95 10"
+			splrad				4
+			dmgweight			fire_medium
+			reaction			false
 		}
 
 		firedef
 		{
-			name	"_3-Round Burst - Airburst"
-			skill	explosive
-			projtl	grenl_ic_ammo
-			impact	frag_explosion
-			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/fireexplosion
-			bodysnd	weapons/fireexplosion
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			spread	"0 4"
-			range	15
-			shots	3
-			ammo	3
-			delaybetweenshots		3
-			time	15
-			damage	"15 10"
-			spldmg	"95 10"
-			splrad	4
-			dmgweight fire_medium
-			reaction	false
+			name				"_3-Round Burst - Airburst"
+			skill				explosive
+			projtl				grenl_ic_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/fireexplosion
+			bodysnd				weapons/fireexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			spread				"0 4"
+			range				15
+			shots				3
+			ammo				3
+			delaybetweenshots	3
+			time				15
+			damage				"15 10"
+			spldmg				"95 10"
+			splrad				4
+			dmgweight			fire_medium
+			reaction			false
 		}
 
 		firedef
 		{
-			name	"_Snap Shot - Timed"
-			skill	explosive
-			projtl	grenl_ic_ammo
-			impact	frag_explosion
-			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/fireexplosion
-			bodysnd	weapons/fireexplosion
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			delay	1
-			bounce	5
-			bncfac	0.6
-			spread	"0 2"
-			range	15
-			shots	1
-			ammo	1
-			delaybetweenshots		1
-			time	8
-			spldmg	"95 10"
-			splrad	4
-			dmgweight fire_medium
-			reaction	false
+			name				"_Snap Shot - Timed"
+			skill				explosive
+			projtl				grenl_ic_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/fireexplosion
+			bodysnd				weapons/fireexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			delay				1
+			bounce				5
+			bncfac				0.6
+			spread				"0 2"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				8
+			spldmg				"95 10"
+			splrad				4
+			dmgweight			fire_medium
+			reaction			false
 		}
 
 		firedef
 		{
-			name	"_Aimed Shot - Timed"
-			skill	explosive
-			projtl	grenl_ic_ammo
-			impact	frag_explosion
-			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/fireexplosion
-			bodysnd	weapons/fireexplosion
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			delay	1
-			bounce	5
-			bncfac	0.6
-			spread	"0 1.5"
-			range	15
-			shots	1
-			ammo	1
-			delaybetweenshots		1
-			time	12
-			spldmg	"95 10"
-			splrad	4
-			dmgweight fire_medium
-			reaction	false
+			name				"_Aimed Shot - Timed"
+			skill				explosive
+			projtl				grenl_ic_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/fireexplosion
+			bodysnd				weapons/fireexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			delay				1
+			bounce				5
+			bncfac				0.6
+			spread				"0 1.5"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				12
+			spldmg				"95 10"
+			splrad				4
+			dmgweight			fire_medium
+			reaction			false
 		}
 
 		firedef
 		{
-			name	"_3-Round Burst - Timed"
-			skill	explosive
-			projtl	grenl_ic_ammo
-			impact	frag_explosion
-			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/fireexplosion
-			bodysnd	weapons/fireexplosion
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			delay	1
-			bounce	5
-			bncfac	0.6
-			spread	"0 4"
-			range	15
-			shots	3
-			ammo	3
-			delaybetweenshots		3
-			time	15
-			spldmg	"95 10"
-			splrad	4
-			dmgweight fire_medium
-			reaction	false
+			name				"_3-Round Burst - Timed"
+			skill				explosive
+			projtl				grenl_ic_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/fireexplosion
+			bodysnd				weapons/fireexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			delay				1
+			bounce				5
+			bncfac				0.6
+			spread				"0 4"
+			range				15
+			shots				3
+			ammo				3
+			delaybetweenshots	3
+			time				15
+			spldmg				"95 10"
+			splrad				4
+			dmgweight			fire_medium
+			reaction			false
 		}
 	}
 }
 
 item grenl_fle_ammo
 {
-	name		"_25mm Flechette Grenades"
-	model		weapons/grenl/grenl_flechette_clip
-	type		ammo
+	name			"_25mm Flechette Grenades"
+	model			weapons/grenl/grenl_flechette_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		0.7
-	price		135
-	size		6
-	is_primary	true
-	is_heavy	true
-	dmgtype normal
+	shape			"0 0 1 1"
+	center			"0 0 0"
+	scale			0.7
+	price			135
+	size			6
+	is_primary		true
+	is_heavy		true
+	dmgtype			normal
 
 	weapon_mod grenl
 	{
 		firedef
 		{
-			name	"_Single Shot"
-			skill	heavy
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/shotgun
-			sndonce true
-			speed   0
-			spread	"4 4.5"
-			range	10
-			shots	24
-			ammo	1
-			delaybetweenshots		0
-			time	8
-			damage	"6 2"
-			dmgweight normal_light
-			reaction	true
+			name				"_Single Shot"
+			skill				heavy
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/shotgun
+			sndonce				true
+			speed				0
+			spread				"4 4.5"
+			range				10
+			shots				24
+			ammo				1
+			delaybetweenshots	0
+			time				8
+			damage				"6 2"
+			dmgweight			normal_light
+			reaction			true
 		}
 
 		firedef
 		{
-			name	"_3-Round Burst"
-			skill	heavy
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/gren_fle_3shot
-			sndonce true
-			speed   0
-			spread	"5 5.5"
-			range	10
-			shots	72
-			ammo	3
-			delaybetweenshots		0
-			time	14
-			damage	"6 2"
-			dmgweight normal_light
-			reaction	true
+			name				"_3-Round Burst"
+			skill				heavy
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				weapons/gren_fle_3shot
+			sndonce				true
+			speed				0
+			spread				"5 5.5"
+			range				10
+			shots				72
+			ammo				3
+			delaybetweenshots	0
+			time				14
+			damage				"6 2"
+			dmgweight			normal_light
+			reaction			true
 		}
 	}
 }
 
 item grenl_plasma_ammo
 {
-	name		"_25mm PB Grenades"
-	model		weapons/grenl/grenl_plasma_clip
-	type		ammo
+	name			"_25mm PB Grenades"
+	model			weapons/grenl/grenl_plasma_clip
+	type			ammo
 	animationindex	0
-	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		0.7
-	price		930
-	size		6
-	is_primary	true
-	is_heavy	true
-	dmgtype plasma
+	shape			"0 0 1 1"
+	center			"0 0 0"
+	scale			0.7
+	price			930
+	size			6
+	is_primary		true
+	is_heavy		true
+	dmgtype			plasma
 
 	weapon_mod grenl
 	{
 		firedef
 		{
-			name	"_Snap Shot - Airburst"
-			skill	explosive
-			projtl	grenl_plasma_ammo
-			impact	plasmaBigExplosion
-			hitbody plasmaBigExplosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/plasma_grenade
-			bodysnd	weapons/plasma_grenade
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			spread	"0 2"
-			range	15
-			shots	1
-			ammo	1
-			delaybetweenshots		1
-			time	8
-			damage	"20 10"
-			spldmg	"130 20"
-			splrad	5
-			dmgweight plasma_heavy
-			reaction	true
+			name				"_Snap Shot - Airburst"
+			skill				explosive
+			projtl				grenl_plasma_ammo
+			impact				plasmaBigExplosion
+			hitbody				plasmaBigExplosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/plasma_grenade
+			bodysnd				weapons/plasma_grenade
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			spread				"0 2"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				8
+			damage				"20 10"
+			spldmg				"130 20"
+			splrad				5
+			dmgweight			plasma_heavy
+			reaction			true
 		}
 
 		firedef
 		{
-			name	"_Aimed Shot - Airburst"
-			skill	explosive
-			projtl	grenl_plasma_ammo
-			impact	plasmaBigExplosion
-			hitbody plasmaBigExplosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/plasma_grenade
-			bodysnd	weapons/plasma_grenade
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			spread	"0 1.5"
-			range	15
-			shots	1
-			ammo	1
-			delaybetweenshots		1
-			time	12
-			damage	"20 10"
-			spldmg	"130 20"
-			splrad	5
-			dmgweight plasma_heavy
+			name				"_Aimed Shot - Airburst"
+			skill				explosive
+			projtl				grenl_plasma_ammo
+			impact				plasmaBigExplosion
+			hitbody				plasmaBigExplosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/plasma_grenade
+			bodysnd				weapons/plasma_grenade
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			spread				"0 1.5"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				12
+			damage				"20 10"
+			spldmg				"130 20"
+			splrad				5
+			dmgweight			plasma_heavy
 		}
 
 		firedef
 		{
-			name	"_3-Round Burst - Airburst"
-			skill	explosive
-			projtl	grenl_plasma_ammo
-			impact	plasmaBigExplosion
-			hitbody plasmaBigExplosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/plasma_grenade
-			bodysnd	weapons/plasma_grenade
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			spread	"0 4"
-			range	15
-			shots	3
-			ammo	3
-			delaybetweenshots		3
-			time	15
-			damage	"20 10"
-			spldmg	"130 20"
-			splrad	5
-			dmgweight plasma_heavy
+			name				"_3-Round Burst - Airburst"
+			skill				explosive
+			projtl				grenl_plasma_ammo
+			impact				plasmaBigExplosion
+			hitbody				plasmaBigExplosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/plasma_grenade
+			bodysnd				weapons/plasma_grenade
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			spread				"0 4"
+			range				15
+			shots				3
+			ammo				3
+			delaybetweenshots	3
+			time				15
+			damage				"20 10"
+			spldmg				"130 20"
+			splrad				5
+			dmgweight			plasma_heavy
 		}
 
 		firedef
 		{
-			name	"_Snap Shot - Timed"
-			skill	explosive
-			projtl	grenl_plasma_ammo
-			impact	plasmaBigExplosion
-			hitbody plasmaBigExplosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/plasma_grenade
-			bodysnd	weapons/plasma_grenade
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			delay	1
-			bounce	5
-			bncfac	0.6
-			spread	"0 2"
-			range	15
-			shots	1
-			ammo	1
-			delaybetweenshots		1
-			time	8
-			spldmg	"130 20"
-			splrad	5
-			dmgweight plasma_heavy
+			name				"_Snap Shot - Timed"
+			skill				explosive
+			projtl				grenl_plasma_ammo
+			impact				plasmaBigExplosion
+			hitbody				plasmaBigExplosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/plasma_grenade
+			bodysnd				weapons/plasma_grenade
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			delay				1
+			bounce				5
+			bncfac				0.6
+			spread				"0 2"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				8
+			spldmg				"130 20"
+			splrad				5
+			dmgweight			plasma_heavy
 		}
 
 		firedef
 		{
-			name	"_Aimed Shot - Timed"
-			skill	explosive
-			projtl	grenl_plasma_ammo
-			impact	plasmaBigExplosion
-			hitbody plasmaBigExplosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/plasma_grenade
-			bodysnd	weapons/plasma_grenade
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			delay	1
-			bounce	5
-			bncfac	0.6
-			spread	"0 1.5"
-			range	15
-			shots	1
-			ammo	1
-			delaybetweenshots		1
-			time	12
-			spldmg	"130 20"
-			splrad	5
-			dmgweight plasma_heavy
+			name				"_Aimed Shot - Timed"
+			skill				explosive
+			projtl				grenl_plasma_ammo
+			impact				plasmaBigExplosion
+			hitbody				plasmaBigExplosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/plasma_grenade
+			bodysnd				weapons/plasma_grenade
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			delay				1
+			bounce				5
+			bncfac				0.6
+			spread				"0 1.5"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				12
+			spldmg				"130 20"
+			splrad				5
+			dmgweight			plasma_heavy
 		}
 
 		firedef
 		{
-			name	"_3-Round Burst - Timed"
-			skill	explosive
-			projtl	grenl_plasma_ammo
-			impact	plasmaBigExplosion
-			hitbody plasmaBigExplosion
-			firesnd	weapons/grenade_launcher
-			impsnd	weapons/plasma_grenade
-			bodysnd	weapons/plasma_grenade
-			bncsnd	misc/klonk03
-			gravity	true
-			launched true
-			delay	1
-			bounce	5
-			bncfac	0.6
-			spread	"0 4"
-			range	15
-			shots	3
-			ammo	3
-			delaybetweenshots		3
-			time	15
-			spldmg	"130 20"
-			splrad	5
-			dmgweight plasma_heavy
+			name				"_3-Round Burst - Timed"
+			skill				explosive
+			projtl				grenl_plasma_ammo
+			impact				plasmaBigExplosion
+			hitbody				plasmaBigExplosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/plasma_grenade
+			bodysnd				weapons/plasma_grenade
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			delay				1
+			bounce				5
+			bncfac				0.6
+			spread				"0 4"
+			range				15
+			shots				3
+			ammo				3
+			delaybetweenshots	3
+			time				15
+			spldmg				"130 20"
+			splrad				5
+			dmgweight			plasma_heavy
 		}
 	}
 }
@@ -1868,99 +1867,99 @@ item grenl_plasma_ammo
 // =======================
 item bolterrifle
 {
-	name            "_Bolter Rifle"
-	model           weapons/bolterrifle/bolterrifle
-	weapon          true
-	type            biggun
-	animationindex        1
-	holdtwohanded   false
+	name			"_Bolter Rifle"
+	model			weapons/bolterrifle/bolterrifle
+	weapon			true
+	type			biggun
+	animationindex	1
+	holdtwohanded	false
 	firetwohanded	true
-	shape           "0 0 5 2"
-	center          "4 1 1.1"
-	scale           1.2
-	ammo            12
-	reload          15
-	price           13240
-	size		45
-	is_primary	true
-	is_heavy	true
+	shape			"0 0 5 2"
+	center			"4 1 1.1"
+	scale			1.2
+	ammo			12
+	reload			15
+	price			13240
+	size			45
+	is_primary		true
+	is_heavy		true
 }
 
 item bolterrifle_ammo
 {
-	name            "_Bolter Rifle Magazine"
-	model           weapons/bolterrifle/bolterrifle_clip
-	type            ammo
-	animationindex        0
-	shape           "0 0 3 1"
-	center          "0 0 0"
-	scale           1.2
-	price           930
-	size		9
-	is_primary	true
-	is_heavy	true
-	dmgtype normal
+	name			"_Bolter Rifle Magazine"
+	model			weapons/bolterrifle/bolterrifle_clip
+	type			ammo
+	animationindex	0
+	shape			"0 0 3 1"
+	center			"0 0 0"
+	scale			1.2
+	price			930
+	size			9
+	is_primary		true
+	is_heavy		true
+	dmgtype			normal
 
 	weapon_mod bolterrifle
 	{
 		firedef
 		{
-			name    "_Snap Shot"
-			skill   assault
-			projtl  bolter
-			impact  bolterImpact
-			hitbody null
-			firesnd weapons/bolter2
-			speed   0
-			spread  "1.7 1.7"
-			crouch  0.8
-			range	80
-			shots   1
-			ammo    1
-			time    8
-			damage  "80 16"
-			dmgweight normal_heavy
+			name		"_Snap Shot"
+			skill		assault
+			projtl		bolter
+			impact		bolterImpact
+			hitbody		null
+			firesnd		weapons/bolter2
+			speed		0
+			spread		"1.7 1.7"
+			crouch		0.8
+			range		80
+			shots		1
+			ammo		1
+			time		8
+			damage		"80 16"
+			dmgweight	normal_heavy
 			reaction	true
 		}
 
 		firedef
 		{
-			name    "_3-Round Burst"
-			skill   assault
-			projtl  bolter
-			impact  bolterImpact
-			hitbody null
-			firesnd weapons/boltercannonade
-			speed   0
-			spread  "2.1 2.1"
-			crouch  0.8
-			range	80
-			shots   3
-			ammo    3
-			time    13
-			damage  "80 16"
-			dmgweight normal_heavy
+			name		"_3-Round Burst"
+			skill		assault
+			projtl		bolter
+			impact		bolterImpact
+			hitbody		null
+			firesnd		weapons/boltercannonade
+			speed		0
+			spread		"2.1 2.1"
+			crouch		0.8
+			range		80
+			shots		3
+			ammo		3
+			time		13
+			damage		"80 16"
+			dmgweight	normal_heavy
 			reaction	true
 		}
 
 		firedef
 		{
-			name    "_Aimed Shot"
-			skill   sniper
-			projtl  bolter
-			impact  bolterImpact
-			hitbody null
-			firesnd weapons/bolter2
-			speed   0
-			spread  "1.1 1.1"
-			crouch  0.5
-			range	80
-			shots   1
-			ammo    1
-			delaybetweenshots     2
-			time    16
-			damage  "80 16"
-			dmgweight normal_heavy
+			name				"_Aimed Shot"
+			skill				sniper
+			projtl				bolter
+			impact				bolterImpact
+			hitbody				null
+			firesnd				weapons/bolter2
+			speed				0
+			spread				"1.1 1.1"
+			crouch				0.5
+			range				80
+			shots				1
+			ammo				1
+			delaybetweenshots	2
+			time				16
+			damage				"80 16"
+			dmgweight			normal_heavy
 		}
 	}
 }
