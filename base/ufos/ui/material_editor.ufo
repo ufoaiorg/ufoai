@@ -1,0 +1,21 @@
+// ====================
+// MATERIAL EDITOR MENU
+// ====================
+
+window material_editor {
+	{
+		pos "0 0"
+		size "1024 84"
+	}	
+	
+	material_editor editor {
+		pos "0 0"
+		size "1024 84"
+		padding 10
+		color	"1 1 1 0.8"
+	}
+
+	func init {
+		cmd "mn_materialeditor;"
+	}
+}
