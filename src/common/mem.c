@@ -376,7 +376,6 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	if (mem->memSize == size)
 		return mem;
 
-	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
 	pool = mem->pool;
 
     /* allocate memory for the new size */
