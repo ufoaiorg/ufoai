@@ -454,12 +454,13 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
 {
 	assert(obj);
 
+	/* heavy weapons may be primary too. check heavy first */
+	if (obj->isHeavy)
+		return FILTER_S_HEAVY;
 	if (obj->isPrimary)
 		return FILTER_S_PRIMARY;
 	if (obj->isSecondary)
 		return FILTER_S_SECONDARY;
-	if (obj->isHeavy)
-		return FILTER_S_HEAVY;
 	if (obj->isMisc)
 		return FILTER_S_MISC;
 	if (!strcmp(obj->type, "armour"))
