@@ -57,8 +57,8 @@ static int CheckUnit (unsigned int unitnum)
 	const int actorSize = unitnum / PATHFINDING_HEIGHT / PATHFINDING_WIDTH / PATHFINDING_WIDTH;
 
 	/* test bounds - the size adjustment is needed because large actor cells occupy multiple cell units. */
-	if (x > wpMaxs[0] - actorSize || y > wpMaxs[1] - actorSize || z > wpMaxs[2]
-	 || x < wpMins[0] || y < wpMins[1] || z < wpMins[2] ) {
+	if (x > wpMaxs[0] - actorSize || y > wpMaxs[1] - actorSize
+	 || x < wpMins[0] || y < wpMins[1]) {
 		/* don't enter - outside world */
 		return 0;
 	}

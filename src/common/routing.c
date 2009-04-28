@@ -1252,8 +1252,8 @@ static int RT_UpdateConnection (routing_t * map, const int actorSize, const int 
 		/* We can't go this way. */
 		RT_CONN(map, actorSize, x, y, z, dir) = 0;
 		RT_STEPUP(map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
-		RT_CONN(map, actorSize, ax, ay, z, dir) = 0;
-		RT_STEPUP(map, actorSize, ax, ay, z, dir) = PATHFINDING_NO_STEPUP;
+		RT_CONN(map, actorSize, ax, ay, z, dir ^ 1) = 0;
+		RT_STEPUP(map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
 		if (debugTrace)
 			Com_Printf("Ceiling lower than floor. f:%i c:%i af:%i ac:%i\n", abs_floor, abs_ceiling, abs_adj_floor, abs_adj_ceiling);
 		return z;
@@ -1275,8 +1275,8 @@ static int RT_UpdateConnection (routing_t * map, const int actorSize, const int 
 		az++;
 	} else if (stepup & PATHFINDING_BIG_STEPDOWN) {
 		az--;
-/*		RT_CONN(map, actorSize, x, y, az, dir) = 0;*/
-/*		RT_STEPUP(map, actorSize, x, y, az, dir) = PATHFINDING_NO_STEPUP;*/
+		RT_CONN(map, actorSize, x, y, az, dir) = 0;
+		RT_STEPUP(map, actorSize, x, y, az, dir) = PATHFINDING_NO_STEPUP;
 	}
 	new_z2 = RT_FillPassageData(map, actorSize, dir ^ 1, ax, ay, az, opening_size, opening_base, invstepup);
 	if (new_z2 == az && az < z)
