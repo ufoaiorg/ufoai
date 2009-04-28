@@ -826,6 +826,7 @@ static int RT_FindOpening (routing_t * map, const int actorSize, const int  x, c
 			return RT_CalcNewZ (map, actorSize, ax, ay, top, hi);
 		}
 	}
+	/* Warning: never try to make this an 'else if', or 'arched entry' situations will fail !! */
 #endif
 	/* Now calculate the "guaranteed" opening, if any. If the opening from
 	 * the floor to the ceiling is not too tall, there must be a section that
