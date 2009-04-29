@@ -233,6 +233,10 @@ static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int butt
 	/* have we selected a new image? */
 	if (node->num != id) {
 		node->num = id;
+		if (r_images[id].normalmap == NULL)
+			MN_ExecuteConfunc("hideshaders true");
+		else
+			MN_ExecuteConfunc("hideshaders false");
 		if (node->onChange)
 			MN_ExecuteEventActions(node, node->onChange);
 	}
