@@ -341,6 +341,34 @@ static void MN_MaterialEditorChangeValue_f (void)
 	R_ModReloadSurfacesArrays();
 }
 
+static void MN_MaterialEditorSelectStage_f (void)
+{
+	image_t *image;
+	int id, stage;
+	materialStage_t *materialStage;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <image index> <stage index>\n", Cmd_Argv(0));
+		return;
+	}
+
+	id = atoi(Cmd_Argv(1));
+	if (id < 0 || id >= r_numImages) {
+		Com_Printf("Given image index (%i) is out of bounds\n", id);
+		return;
+	}
+
+	image = &r_images[id];
+
+	stage = atoi(Cmd_Argv(2));
+	if (stage < 0 || stage >= image->material.num_stages) {
+		Com_Printf("Given stage index (%i) is out of bounds\n", id);
+		return;
+	}
+
+	materialStage = &image->material.stages[stage];
+}
+
 void MN_RegisterMaterialEditorNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "material_editor";
@@ -350,6 +378,7 @@ void MN_RegisterMaterialEditorNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseDown = MN_MaterialEditorMouseDown;
 	behaviour->mouseWheel = MN_MaterialEditorNodeWheel;
 
+	Cmd_AddCommand("mn_materialeditor_selectstage", MN_MaterialEditorSelectStage_f, "Select a given material stage");
 	Cmd_AddCommand("mn_materialeditor_changevalue", MN_MaterialEditorChangeValue_f, "Initializes the material editor menu");
 	Cmd_AddCommand("mn_materialeditor", MN_MaterialEditorStart_f, "Initializes the material editor menu");
 }

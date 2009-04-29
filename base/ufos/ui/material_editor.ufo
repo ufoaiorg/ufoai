@@ -154,7 +154,25 @@ window material_editor {
 			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> parallax <current>;" }
 		}
 	}
-		
+
+	panel stage_attributes {
+		{
+			pos "460 55"
+			size "400 400"
+		}
+		text stages {
+			textid		TEXT_STANDARD
+			pos			"0 0"
+			size		"420 200"
+			lineheight	20
+			rows		10
+			onClick		{
+				*cvar:me_stage_id <lineselected>
+				cmd "mn_materialeditor_selectstage <cvar:me_image_id> <lineselected>;" 
+			}
+		}
+	}
+	
 	func onInit {
 		*cvar:me_image_id -1
 		*cvar:me_hardness 0
