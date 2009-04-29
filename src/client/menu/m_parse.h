@@ -30,7 +30,7 @@ struct menuNode_s;
 void MN_ParseMenu(const char *type, const char *name, const char **text);
 void MN_ParseIcon(const char *name, const char **text);
 void MN_ParseMenuModel(const char *name, const char **text);
-float MN_GetReferenceFloat(const struct menuNode_s* const node, void *ref);
+float MN_GetReferenceFloat(const struct menuNode_s* const node, const void *ref);
 const char *MN_GetReferenceString(const struct menuNode_s* const node, const char *ref) __attribute__ ((warn_unused_result));
 const value_t* MN_FindPropertyByName(const value_t* propertyList, const char* name) __attribute__ ((warn_unused_result));
 char* MN_AllocString(const char* string, int size) __attribute__ ((warn_unused_result));

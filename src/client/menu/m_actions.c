@@ -80,8 +80,6 @@ static const char* MN_NodeGetProperty(const menuNode_t* source, const value_t *p
 {
 	const byte* b = (const byte*)source + property->ofs;
 	const int specialType = property->type & V_SPECIAL_TYPE;
-	int result;
-	size_t bytes;
 
 	assert(source);
 	assert(property);

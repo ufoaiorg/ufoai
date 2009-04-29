@@ -1428,7 +1428,7 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 	}
 }
 
-float MN_GetReferenceFloat (const menuNode_t* const node, void *ref)
+float MN_GetReferenceFloat (const menuNode_t* const node, const void *ref)
 {
 	if (!ref)
 		return 0.0;
@@ -1468,6 +1468,6 @@ float MN_GetReferenceFloat (const menuNode_t* const node, void *ref)
 		}
 	} else {
 		/* just get the data */
-		return *(float *) ref;
+		return *(const float *) ref;
 	}
 }
