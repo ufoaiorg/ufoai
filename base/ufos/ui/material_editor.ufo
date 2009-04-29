@@ -157,13 +157,13 @@ window material_editor {
 
 	panel stage_attributes {
 		{
-			pos "460 55"
-			size "400 400"
+			pos "480 110"
+			size "300 400"
 		}
 		text stages {
-			textid		TEXT_STANDARD
+			textid		TEXT_MATERIAL_STAGES
 			pos			"0 0"
-			size		"420 200"
+			size		"280 200"
 			lineheight	20
 			rows		10
 			onClick		{

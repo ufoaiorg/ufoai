@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../client.h"
+#include "../m_data.h"
 #include "../m_menus.h"
 #include "../m_nodes.h"
 #include "../m_actions.h"
@@ -219,6 +220,13 @@ static int MN_MaterialEditorNodeGetImageAtPosition (menuNode_t *node, int x, int
 	return -1;
 }
 
+static char materialStagesList[512];
+
+static const char *MN_MaterialEditorStageToName (materialStage_t *stage)
+{
+	return "stage (todo)";
+}
+
 static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int button)
 {
 	int id;
@@ -233,6 +241,9 @@ static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int butt
 	/* have we selected a new image? */
 	if (node->num != id) {
 		const image_t *image = &r_images[id];
+		int i;
+
+		materialStagesList[0] = '\0';
 		node->num = id;
 		if (image->normalmap == NULL)
 			MN_ExecuteConfunc("hideshaders true 0 0 0 0");
@@ -240,6 +251,14 @@ static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int butt
 			MN_ExecuteConfunc("hideshaders false %f %f %f %f", image->material.bump,
 					image->material.hardness, image->material.parallax, image->material.specular);
 		}
+
+		for (i = 0; i < image->material.num_stages; i++) {
+			const char *stageName = va("%s\n", MN_MaterialEditorStageToName(&image->material.stages[i]));
+			Q_strcat(materialStagesList, stageName, sizeof(materialStagesList));
+		}
+
+		MN_RegisterText(TEXT_MATERIAL_STAGES, materialStagesList);
+
 		if (node->onChange)
 			MN_ExecuteEventActions(node, node->onChange);
 	}
