@@ -6,12 +6,11 @@ CPPFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS)
 CFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS) -pipe -Winline -Wcast-qual -Wcast-align\
 	-Wdeclaration-after-statement -Wmissing-prototypes -Wmissing-declarations
 #	-Wunreachable-code -Wpointer-arith -Wcast-align -Wunsafe-loop-optimizations \
-#	-Wimplicit-int -Wpacked -Wparentheses \
-#	-Wunused -Wunused-function -Wunused-label -Wunused-value -Wunused-variable -Wvariadic-macros
-#	-fstack-protector-all -Wstack-protector -Wpadded
-#	-Wfloat-equal -Wconversion -Wunreachable-code -Wbad-function-cast \
-#	-Wshadow -Wpointer-arith
-#	-Wbad-function-cast -pedantic -std=c99
+#	-Wimplicit-int -Wpacked -Wparentheses -Wpadded \
+#	-Wunused -Wunused-function -Wunused-label -Wunused-value -Wunused-variable \
+#	-fstack-protector-all -Wstack-protector \
+#	-Wfloat-equal -Wconversion -Wbad-function-cast \
+#	-Wshadow -pedantic -std=c99
 #-combine -fwhole-program
 
 # Common things
