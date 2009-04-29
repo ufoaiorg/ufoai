@@ -26,14 +26,70 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../m_menus.h"
 #include "../m_nodes.h"
+#include "../m_actions.h"
 #include "../m_render.h"
 #include "m_node_abstractnode.h"
+#include "m_node_abstractscrollable.h"
 #include "../../cl_video.h"
 #include "../../renderer/r_image.h"
+#include "../../renderer/r_draw.h"
 #include "../../renderer/r_model.h"
 #include "m_node_material_editor.h"
 
+#define ANYIMAGES
 #define IMAGE_WIDTH 64
+
+/**
+ * @brief return the number of images we can display
+ */
+static int MN_MaterialEditorNodeGetImageCount (menuNode_t *node)
+{
+	int i;
+	int cnt = 0;
+
+	for (i = 0; i < r_numImages; i++) {
+		image_t *image = &r_images[i];
+#ifndef ANYIMAGES
+		/* filter */
+		if (image->type != it_world)
+			continue;
+#endif
+		cnt++;
+	}
+	return cnt;
+}
+
+/**
+ * @brief Update the scrollable view
+ */
+static void MN_MaterialEditorNodeUpdateView (menuNode_t *node)
+{
+	const int imageCount = MN_MaterialEditorNodeGetImageCount(node);
+	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
+	const int imagesPerColumn = (node->size[1] - node->padding) / (IMAGE_WIDTH + node->padding);
+	int lineCount;
+
+	/* update view */
+	if (imagesPerLine > 0 && imagesPerColumn > 0) {
+		node->u.abstractscrollable.viewSizeX = imagesPerColumn;
+		node->u.abstractscrollable.fullSizeX = imageCount / imagesPerLine;
+	} else {
+		node->u.abstractscrollable.viewSizeX = 0;
+		node->u.abstractscrollable.viewPosX = 0;
+		node->u.abstractscrollable.fullSizeX = 0;
+	}
+
+	/* clap position */
+	if (node->u.abstractscrollable.viewPosX < 0)
+		node->u.abstractscrollable.viewPosX = 0;
+	if (node->u.abstractscrollable.viewPosX > node->u.abstractscrollable.fullSizeX - node->u.abstractscrollable.viewSizeX)
+		node->u.abstractscrollable.viewPosX = node->u.abstractscrollable.fullSizeX - node->u.abstractscrollable.viewSizeX;
+
+	/* callback the event */
+	if (node->u.abstractscrollable.onViewChange)
+		MN_ExecuteEventActions(node, node->u.abstractscrollable.onViewChange);
+}
+
 /**
  * @todo Scrolling support for images
  * @todo Replace magic number 64 by some script definition
@@ -43,84 +99,210 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_MaterialEditorNodeDraw (menuNode_t *node)
 {
 	int i;
-	vec2_t nodepos;
+	vec2_t pos;
 	int cnt = 0;
+	int cntView = 0;
+	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
 
-	MN_GetNodeAbsPos(node, nodepos);
+	if (MN_AbstractScrollableNodeIsSizeChange(node))
+		MN_MaterialEditorNodeUpdateView(node);
 
-	R_Color(node->color);
+	/* width too small to display anything */
+	if (imagesPerLine <= 0)
+		return;
 
+	MN_GetNodeAbsPos(node, pos);
+
+	/* display images */
 	for (i = 0; i < r_numImages; i++) {
 		image_t *image = &r_images[i];
-		if (image->type == it_world) {
-			if (node->u.abstractscrollbar.pos <= cnt) {
-				const int x = nodepos[0] + cnt * (IMAGE_WIDTH + node->padding);
-				if (x < -IMAGE_WIDTH)
-					continue;
-				if (x > viddef.virtualWidth)
-					break;
-				MN_DrawNormImage(x, nodepos[1] + node->padding, IMAGE_WIDTH, IMAGE_WIDTH,
-						node->texh[0], node->texh[1], node->texl[0], node->texl[1], ALIGN_UL, image);
-			}
+		vec2_t imagepos;
+
+#ifndef ANYIMAGES
+		/* filter */
+		if (image->type != it_world)
+			continue;
+#endif
+
+		/* skip images before the scroll position */
+		if (cnt / imagesPerLine < node->u.abstractscrollable.viewPosX) {
 			cnt++;
+			continue;
 		}
+
+		/** @todo do it incremental. Dont need all this math */
+		imagepos[0] = pos[0] + node->padding + (cntView % imagesPerLine) * (IMAGE_WIDTH + node->padding);
+		imagepos[1] = pos[1] + node->padding + (cntView / imagesPerLine) * (IMAGE_WIDTH + node->padding);
+
+		/* vertical overflow */
+		if (imagepos[1] + IMAGE_WIDTH + node->padding >= pos[1] + node->size[1])
+			break;
+
+		if (i == node->num) {
+			#define MARGE 3
+			R_DrawRect(imagepos[0] - MARGE, imagepos[1] - MARGE, IMAGE_WIDTH + MARGE * 2, IMAGE_WIDTH + MARGE * 2, node->selectedColor, 2, 0xFFFF);
+			#undef MARGE
+		}
+
+		MN_DrawNormImage(imagepos[0], imagepos[1], IMAGE_WIDTH, IMAGE_WIDTH, 0, 0, 0, 0, ALIGN_UL, image);
+
+		cnt++;
+		cntView++;
 	}
 
-	R_Color(NULL);
 }
 
-static image_t *MN_MaterialEditorNodeGetImageAtPosition (menuNode_t *node, int x, int y)
+/**
+ * @brief Return index of the image (r_images[i]) else NULL
+ */
+static int MN_MaterialEditorNodeGetImageAtPosition (menuNode_t *node, int x, int y)
 {
 	int i;
-	vec2_t nodepos;
+	vec2_t pos;
 	int cnt = 0;
+	int cntView = 0;
+	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
+	const int imagesPerColumn = (node->size[1] - node->padding) / (IMAGE_WIDTH + node->padding);
+	int columnRequested;
+	int lineRequested;
 
-	MN_GetNodeAbsPos(node, nodepos);
+	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 
+	/* have we click between 2 images? */
+	if (((x % (IMAGE_WIDTH + node->padding)) < node->padding)
+		|| ((y % (IMAGE_WIDTH + node->padding)) < node->padding))
+		return -1;
+
+	/* get column and line of the image */
+	columnRequested = x / (IMAGE_WIDTH + node->padding);
+	lineRequested = y / (IMAGE_WIDTH + node->padding);
+
+	/* have we click outside? */
+	if (columnRequested >= imagesPerLine || lineRequested >= imagesPerColumn)
+		return -1;
+
+	MN_GetNodeAbsPos(node, pos);
+
+	/* check images */
 	for (i = 0; i < r_numImages; i++) {
 		image_t *image = &r_images[i];
-		if (image->type == it_world) {
-			const int imageX = nodepos[0] + cnt * (IMAGE_WIDTH + node->padding);
-			if (x >= imageX && x <= imageX + IMAGE_WIDTH)
-				return image;
+		vec2_t imagepos;
+
+#ifndef ANYIMAGES
+		/* filter */
+		if (image->type != it_world)
+			continue;
+#endif
+
+		/* skip images before the scroll position */
+		if (cnt / imagesPerLine < node->u.abstractscrollable.viewPosX) {
 			cnt++;
+			continue;
 		}
+
+		if (cntView % imagesPerLine == columnRequested && cntView / imagesPerLine == lineRequested)
+			return i;
+
+		/* vertical overflow */
+		if (cntView / imagesPerLine > lineRequested)
+			break;
+
+		cnt++;
+		cntView++;
 	}
-	return NULL;
+
+	return -1;
 }
 
-static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
+static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int button)
 {
+	int id;
 	image_t *image;
 	if (button != K_MOUSE1)
 		return;
 
-	image = MN_MaterialEditorNodeGetImageAtPosition(node, mousePosX, mousePosY);
-	if (image) {
-		Com_Printf("image: '%s'\n", image->name);
-		image->material.flags = STAGE_RENDER;
-		image->material.bump = 3.0;
-		image->material.hardness = 3.0;
-		image->material.parallax = 3.0;
-		image->material.specular = 3.0;
-		R_ModReloadSurfacesArrays();
+	id = MN_MaterialEditorNodeGetImageAtPosition(node, x, y);
+	if (id == -1)
+		return;
+
+	image = &r_images[id];
+	Com_Printf("image: '%s'\n", image->name);
+
+	/** @note here we use "num" to cache the selected image id. We can reuse it on the script with "<num>" */
+	/* have we selected a new image? */
+	if (node->num != id) {
+		node->num = id;
+		if (node->onChange)
+			MN_ExecuteEventActions(node, node->onChange);
+	}
+
+#if 0
+	image->material.flags = STAGE_RENDER;
+	image->material.bump = 3.0;
+	image->material.hardness = 3.0;
+	image->material.parallax = 3.0;
+	image->material.specular = 3.0;
+	R_ModReloadSurfacesArrays();
+#endif
+}
+
+/**
+ * @brief Called when we push a window with this node
+ */
+static void MN_MaterialEditorNodeInit (menuNode_t *node)
+{
+	node->num = -1;
+	node->u.abstractscrollable.viewPosX = 0;
+	MN_MaterialEditorNodeUpdateView(node);
+}
+
+/**
+ * @brief Called when the user wheel the mouse over the node
+ */
+static void MN_MaterialEditorNodeWheel (menuNode_t *node, qboolean down, int x, int y)
+{
+	const int diff = (down)?1:-1;
+	int pos;
+
+	if (node->u.abstractscrollable.fullSizeX == 0 || node->u.abstractscrollable.fullSizeX < node->u.abstractscrollable.viewSizeX)
+		return;
+
+	/* clap new position */
+	pos = node->u.abstractscrollable.viewPosX + diff;
+	if (pos < 0)
+		pos = 0;
+	if (pos > node->u.abstractscrollable.fullSizeX - node->u.abstractscrollable.viewSizeX)
+		pos = node->u.abstractscrollable.fullSizeX - node->u.abstractscrollable.viewSizeX;
+
+	/* update position */
+	if (pos != node->u.abstractscrollable.viewPosX) {
+		node->u.abstractscrollable.viewPosX = pos;
+		/* callback the event */
+		if (node->u.abstractscrollable.onViewChange)
+			MN_ExecuteEventActions(node, node->u.abstractscrollable.onViewChange);
 	}
 }
 
 static void MN_MaterialEditorStart_f (void)
 {
 	/* material editor only makes sense in battlescape mode */
+#ifdef ANYIMAGES
+#else
 	if (cls.state != ca_active) {
 		MN_PopMenu(qfalse);
 		return;
 	}
+#endif
 }
 
 void MN_RegisterMaterialEditorNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "material_editor";
+	behaviour->extends = "abstractscrollable";
 	behaviour->draw = MN_MaterialEditorNodeDraw;
-	behaviour->mouseDown = MN_EditorNodeMouseDown;
+	behaviour->init = MN_MaterialEditorNodeInit;
+	behaviour->mouseDown = MN_MaterialEditorMouseDown;
+	behaviour->mouseWheel = MN_MaterialEditorNodeWheel;
 
 	Cmd_AddCommand("mn_materialeditor", MN_MaterialEditorStart_f, "Initializes the material editor menu");
 }

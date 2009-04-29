@@ -4,18 +4,58 @@
 
 window material_editor {
 	{
-		pos "0 0"
-		size "1024 84"
-	}	
+		pos "50 50"
+		size "900 650"
+		dragbutton	true
+		image		ui/popup_alpha_tile
+		string		"_Material editor"
+	}
 	
 	material_editor editor {
-		pos "0 0"
-		size "1024 84"
+		pos "30 55"
+		size "400 400"
 		padding 10
-		color	"1 1 1 0.8"
+		bgcolor	"0.5 0.5 0.5 1"
+		selectcolor "1 1 1 1"
+
+		onViewChange {
+			*(abstractscrollbar)editor_scroll current <viewpos>
+			*(abstractscrollbar)editor_scroll viewsize <viewsize>
+			*(abstractscrollbar)editor_scroll fullsize <fullsize>
+		}
+		onChange {
+			*cvar:materialID <num>
+		}
+	}
+
+	vscrollbar editor_scroll {
+		image		ui/scrollbar_v_green
+		pos			"450 55"
+		height		400
+		hidewhenunused true
+		onChange	{
+			*editor viewpos <current>
+		}
+	}
+
+	string label {
+		string		"_Material ID from r_images:"
+		pos			"480 55"
+		size		"300 20"
+	}
+
+	string value {
+		string		"*cvar materialID"
+		pos			"480 75"
+		size		"300 20"
 	}
 
 	func onInit {
+		*cvar:materialID -1
 		cmd "mn_materialeditor;"
+	}
+	
+	func onCLose {
+		cmd "del materialID"
 	}
 }
