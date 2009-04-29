@@ -46,7 +46,7 @@ typedef struct {
 	struct menuAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } abstractScrollableExtraData_t;
 
-qboolean MN_AbstractScrollableNodeIsSizeChange (struct menuNode_s *node);
+qboolean MN_AbstractScrollableNodeIsSizeChange(struct menuNode_s *node);
 void MN_RegisterAbstractScrollableNode(struct nodeBehaviour_s *behaviour);
 
 #endif

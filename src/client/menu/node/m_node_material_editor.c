@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_model.h"
 #include "m_node_material_editor.h"
 
-#define ANYIMAGES
+/*#define ANYIMAGES*/
 #define IMAGE_WIDTH 64
 
 /**
@@ -48,10 +48,13 @@ static int MN_MaterialEditorNodeGetImageCount (menuNode_t *node)
 	int cnt = 0;
 
 	for (i = 0; i < r_numImages; i++) {
-		image_t *image = &r_images[i];
 #ifndef ANYIMAGES
+		const image_t *image = &r_images[i];
 		/* filter */
 		if (image->type != it_world)
+			continue;
+
+		if (strstr(image->name, "tex_common"))
 			continue;
 #endif
 		cnt++;
@@ -67,7 +70,6 @@ static void MN_MaterialEditorNodeUpdateView (menuNode_t *node)
 	const int imageCount = MN_MaterialEditorNodeGetImageCount(node);
 	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
 	const int imagesPerColumn = (node->size[1] - node->padding) / (IMAGE_WIDTH + node->padding);
-	int lineCount;
 
 	/* update view */
 	if (imagesPerLine > 0 && imagesPerColumn > 0) {
@@ -91,9 +93,7 @@ static void MN_MaterialEditorNodeUpdateView (menuNode_t *node)
 }
 
 /**
- * @todo Scrolling support for images
  * @todo Replace magic number 64 by some script definition
- * @todo Clicking one of the images will open a floating dialog where you can change some material values
  * @param node The node to draw
  */
 static void MN_MaterialEditorNodeDraw (menuNode_t *node)
@@ -122,6 +122,9 @@ static void MN_MaterialEditorNodeDraw (menuNode_t *node)
 		/* filter */
 		if (image->type != it_world)
 			continue;
+
+		if (strstr(image->name, "tex_common"))
+			continue;
 #endif
 
 		/* skip images before the scroll position */
@@ -130,7 +133,7 @@ static void MN_MaterialEditorNodeDraw (menuNode_t *node)
 			continue;
 		}
 
-		/** @todo do it incremental. Dont need all this math */
+		/** @todo do it incremental. Don't need all this math */
 		imagepos[0] = pos[0] + node->padding + (cntView % imagesPerLine) * (IMAGE_WIDTH + node->padding);
 		imagepos[1] = pos[1] + node->padding + (cntView / imagesPerLine) * (IMAGE_WIDTH + node->padding);
 
@@ -139,9 +142,9 @@ static void MN_MaterialEditorNodeDraw (menuNode_t *node)
 			break;
 
 		if (i == node->num) {
-			#define MARGE 3
-			R_DrawRect(imagepos[0] - MARGE, imagepos[1] - MARGE, IMAGE_WIDTH + MARGE * 2, IMAGE_WIDTH + MARGE * 2, node->selectedColor, 2, 0xFFFF);
-			#undef MARGE
+#define MARGIN 3
+			R_DrawRect(imagepos[0] - MARGIN, imagepos[1] - MARGIN, IMAGE_WIDTH + MARGIN * 2, IMAGE_WIDTH + MARGIN * 2, node->selectedColor, 2, 0xFFFF);
+#undef MARGIN
 		}
 
 		MN_DrawNormImage(imagepos[0], imagepos[1], IMAGE_WIDTH, IMAGE_WIDTH, 0, 0, 0, 0, ALIGN_UL, image);
@@ -149,7 +152,6 @@ static void MN_MaterialEditorNodeDraw (menuNode_t *node)
 		cnt++;
 		cntView++;
 	}
-
 }
 
 /**
@@ -186,11 +188,13 @@ static int MN_MaterialEditorNodeGetImageAtPosition (menuNode_t *node, int x, int
 	/* check images */
 	for (i = 0; i < r_numImages; i++) {
 		image_t *image = &r_images[i];
-		vec2_t imagepos;
 
 #ifndef ANYIMAGES
 		/* filter */
 		if (image->type != it_world)
+			continue;
+
+		if (strstr(image->name, "tex_common"))
 			continue;
 #endif
 
@@ -261,7 +265,7 @@ static void MN_MaterialEditorNodeInit (menuNode_t *node)
  */
 static void MN_MaterialEditorNodeWheel (menuNode_t *node, qboolean down, int x, int y)
 {
-	const int diff = (down)?1:-1;
+	const int diff = (down) ? 1 : -1;
 	int pos;
 
 	if (node->u.abstractscrollable.fullSizeX == 0 || node->u.abstractscrollable.fullSizeX < node->u.abstractscrollable.viewSizeX)
@@ -286,8 +290,7 @@ static void MN_MaterialEditorNodeWheel (menuNode_t *node, qboolean down, int x, 
 static void MN_MaterialEditorStart_f (void)
 {
 	/* material editor only makes sense in battlescape mode */
-#ifdef ANYIMAGES
-#else
+#ifndef ANYIMAGES
 	if (cls.state != ca_active) {
 		MN_PopMenu(qfalse);
 		return;
