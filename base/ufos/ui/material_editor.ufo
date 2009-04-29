@@ -24,7 +24,7 @@ window material_editor {
 			*(abstractscrollbar)editor_scroll fullsize <fullsize>
 		}
 		onChange {
-			*cvar:materialID <num>
+			*cvar:me_image_id <num>
 		}
 	}
 
@@ -45,7 +45,7 @@ window material_editor {
 	}
 
 	string value {
-		string		"*cvar materialID"
+		string		"*cvar me_image_id"
 		pos			"480 75"
 		size		"300 20"
 	}
@@ -68,11 +68,11 @@ window material_editor {
 		size		"245 6"
 		color		"0 .8 0 1"
 		max			3.0
-		onChange	{ cmd "mn_materialeditor_changevalue <cvar:materialID> hardness <current>;" }
+		onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> hardness <current>;" }
 	}
 
 	func onInit {
-		*cvar:materialID -1
+		*cvar:me_image_id -1
 		*cvar:me_hardness 0
 		*cvar:me_bump 0
 		*cvar:me_specular 0
@@ -81,6 +81,6 @@ window material_editor {
 	}
 	
 	func onClose {
-		cmd "del materialID; del me_hardness; del me_specular; del me_bump; del me_parallax;"
+		cmd "del me_image_id; del me_hardness; del me_specular; del me_bump; del me_parallax;"
 	}
 }
