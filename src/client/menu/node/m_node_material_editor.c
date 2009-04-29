@@ -304,8 +304,6 @@ static void MN_MaterialEditorChangeValue_f (void)
 	const value_t *val;
 	size_t bytes;
 
-	Com_Printf("test\n");
-
 	if (Cmd_Argc() < 4) {
 		Com_Printf("Usage: %s <image index> <variable> <value>\n", Cmd_Argv(0));
 		return;
