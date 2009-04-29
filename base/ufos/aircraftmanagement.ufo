@@ -45,7 +45,7 @@
 //	price		- Cost of buying one item.
 //	craftweapon	- Only for crafttype: ammo, defines which weapon uses this ammo.
 //	size		- The size of the item used to see if it fits the slot (only for weapons).
-//  ecm         - Modifier for craft ECM rating.
+//	ecm			- Modifier for craft ECM rating.
 //	installationTime -
 //		The time needed to install/remove the item from the aircraft
 //		any param of aircraft param{}. These values are V_RELABS, and will modifiy
@@ -158,7 +158,7 @@ aircraft craft_inter_stiletto
 		speed		9
 		maxspeed	14
 		shield		0
-		ecm		100
+		ecm			100
 		damage		100
 		accuracy	100
 		range		80
@@ -203,7 +203,7 @@ aircraft craft_inter_saracen
 		speed		12
 		maxspeed	18
 		shield		3
-		ecm		80
+		ecm			80
 		damage		150
 		accuracy	70
 		range		110
@@ -283,7 +283,7 @@ aircraft craft_inter_starchaser
 		speed		9
 		maxspeed	14
 		shield		7
-		ecm		100
+		ecm			100
 		damage		180
 		accuracy	100
 		range		80
@@ -328,7 +328,7 @@ aircraft craft_inter_stingray
 		speed		20
 		maxspeed	30
 		shield		7
-		ecm		100
+		ecm			100
 		damage		250
 		accuracy	100
 		range		156
@@ -366,7 +366,7 @@ aircraft craft_inter_stingray
 // UFOS
 // Notes
 // UFOs are listed in order of appearance. See also: http://ufoai.ninex.info/wiki/index.php/Aircraft
-// adding or renaming ufos: change the assembly name or add the assembly to base/maps/ufocrash[dn].ump
+// adding or renaming ufos: change the assembly name or add the assembly to corresponding ump files
 // *********************************
 
 aircraft craft_ufo_scout
@@ -375,7 +375,7 @@ aircraft craft_ufo_scout
 		speed		7
 		maxspeed	13
 		shield		0
-		ecm		70
+		ecm			70
 		damage		100
 		accuracy	50
 		range		208
@@ -396,7 +396,7 @@ aircraft craft_ufo_fighter
 		speed		8
 		maxspeed	14
 		shield		0
-		ecm		90
+		ecm			90
 		damage		150
 		accuracy	80
 		range		236
@@ -424,7 +424,7 @@ aircraft craft_ufo_harvester
 		speed		10
 		maxspeed	18
 		shield		3
-		ecm		100
+		ecm			100
 		damage		250
 		accuracy	100
 		range		278
@@ -492,7 +492,7 @@ aircraft craft_ufo_supply
 		speed		8
 		maxspeed	16
 		shield		5
-		ecm		80
+		ecm			80
 		damage		200
 		accuracy	50
 		range		208
@@ -549,7 +549,7 @@ aircraft craft_ufo_carrier
 		speed		13
 		maxspeed	20
 		shield		0
-		ecm		100
+		ecm			100
 		damage		60
 		accuracy	50
 		range		347
@@ -571,45 +571,45 @@ aircraft craft_ufo_carrier
 
 craftitem craft_weapon_alc
 {
-	name		"_Aerial Laser Cannon"
-	crafttype		weapon
-	size		40 // light
+	name				"_Aerial Laser Cannon"
+	crafttype			weapon
+	size				40 // light
 	installationTime	2
-	price		12000
-	bullets		false
+	price				12000
+	bullets				false
 }
 
 craftitem craft_ammo_alc
 {
-	name		"_DF-Tank"
+	name			"_DF-Tank"
 	crafttype		ammo
 	craftweapon		craft_weapon_alc
-	notonmarket	true
+	notonmarket		true
 
 	unlimitedAmmo	true
-	wdamage		10
-	accuracy	0.7
-	wrange		1.8
-	wspeed		900
-	delay		30
-	size	10	// light
+	wdamage			10
+	accuracy		0.7
+	wrange			1.8
+	wspeed			900
+	delay			30
+	size			10 // light
 }
 
 craftitem craft_weapon_shiva
 {
-	name		"_Shiva Rotary Cannon"
-	crafttype		weapon
-	size		40 // light
+	name				"_Shiva Rotary Cannon"
+	crafttype			weapon
+	size				40 // light
 	installationTime	2
-	price		12000
-	bullets		true
+	price				12000
+	bullets				true
 }
 
 craftitem craft_ammo_shiva_API
 {
 	name		"_SHIVA 20mm API Rounds"
 	crafttype	ammo
-	craftweapon		craft_weapon_shiva
+	craftweapon	craft_weapon_shiva
 	price		600
 
 	ammo		20
@@ -618,15 +618,15 @@ craftitem craft_ammo_shiva_API
 	wrange		1.07
 	wspeed		62
 	delay		3
-	size	10	// light
+	size		10 // light
 }
 
 craftitem craft_ammo_shiva_HEI
 {
-	name		"_SHIVA 20mm HEI Rounds"
-	crafttype	ammo
+	name			"_SHIVA 20mm HEI Rounds"
+	crafttype		ammo
 	craftweapon		craft_weapon_shiva
-	price		640
+	price			640
 
 	ammo		20
 	wdamage		10
@@ -634,36 +634,36 @@ craftitem craft_ammo_shiva_HEI
 	wrange		1.07
 	wspeed		62
 	delay		3
-	size	10	// light
+	size		10 // light
 }
 
 craftitem craft_el_raven
 {
-	name		"_Raven ECM Unit"
-	crafttype	electronics
-	size	20	// light
+	name				"_Raven ECM Unit"
+	crafttype			electronics
+	size				20 // light
 	installationTime	1
-	price		20000
+	price				20000
 
 	ecm		1.25
 }
 
 craftitem craft_weapon_sparrowhawk
 {
-	name		"_Sparrowhawk AA Missile Rack"
-	crafttype	weapon
-	size	90	// medium
+	name				"_Sparrowhawk AA Missile Rack"
+	crafttype			weapon
+	size				90 // medium
 	installationTime	3
-	price		27000
+	price				27000
 }
 
 craftitem craft_ammo_sparrowhawk
 {
 	name		"_Sparrowhawk Missile"
 	crafttype	ammo
-	craftweapon		craft_weapon_sparrowhawk
+	craftweapon	craft_weapon_sparrowhawk
 	price		1000
-	size	40	// light
+	size		40 // light
 	model		"geoscape/missile_sparrow"
 
 	ammo		7
@@ -676,11 +676,11 @@ craftitem craft_ammo_sparrowhawk
 
 craftitem craft_weapon_tr20
 {
-	name		"_TR-20 Rocket Pod"
-	crafttype	weapon
-	size	90	// medium
+	name				"_TR-20 Rocket Pod"
+	crafttype			weapon
+	size				90 // medium
 	installationTime	2
-	price		25000
+	price				25000
 
 	speed		.9
 	maxspeed	.9
@@ -688,15 +688,15 @@ craftitem craft_weapon_tr20
 
 craftitem craft_ammo_tr20
 {
-	name		"_TR-20 Rocket"
-	crafttype	ammo
+	name			"_TR-20 Rocket"
+	crafttype		ammo
 	craftweapon		craft_weapon_tr20
-	price		840
-	model		"geoscape/missile_tr20"
+	price			840
+	model			"geoscape/missile_tr20"
 
 //	ammo		152
 // The value (12) below is a workaround until we can display (or fake) high numbers of projectiles in interception
-	size	10	// light
+	size		10 // light
 	ammo		12
 	wdamage		13
 	accuracy	0.4
@@ -707,11 +707,11 @@ craftitem craft_ammo_tr20
 
 craftitem craft_weapon_particle_beam
 {
-	name		"_Particle Beam Weapon"
-	crafttype	weapon
-	size	90	// medium
+	name				"_Particle Beam Weapon"
+	crafttype			weapon
+	size				90 // medium
 	installationTime	4
-	price		45000
+	price				45000
 
 	wdamage		21
 	speed		0.8
@@ -721,22 +721,22 @@ craftitem craft_weapon_particle_beam
 
 craftitem craft_el_targeting
 {
-	name		"_Targeting Computer"
-	crafttype	electronics
+	name				"_Targeting Computer"
+	crafttype			electronics
 	installationTime	1
-	price		25600
-	size	20	// light
+	price				25600
+	size				20 // light
 
 	accuracy	1.25
 }
 
 craftitem craft_el_fuelpod
 {
-	name		"_Fuel Pod"
-	crafttype	electronics
+	name				"_Fuel Pod"
+	crafttype			electronics
 	installationTime	2
-	price		4000
-	size	20	// light
+	price				4000
+	size				20 // light
 
 	fuelsize	+7000
 	speed		0.9
@@ -745,11 +745,11 @@ craftitem craft_el_fuelpod
 
 craftitem craft_shield_polymer
 {
-	name		"_Polymer Aircraft Armour"
-	crafttype	shield
+	name				"_Polymer Aircraft Armour"
+	crafttype			shield
 	installationTime	24
-	price		33600
-	size	40	// light
+	price				33600
+	size				40 // light
 
 	shield		+2
 	speed		0.9
@@ -758,11 +758,11 @@ craftitem craft_shield_polymer
 
 craftitem craft_shield_plating
 {
-	name		"_Alien Aircraft Plating"
-	crafttype	shield
+	name				"_Alien Aircraft Plating"
+	crafttype			shield
 	installationTime	36
-	price		50000
-	size	50	// light
+	price				50000
+	size				50 // light
 
 	shield		+4
 	speed		0.8
@@ -771,29 +771,29 @@ craftitem craft_shield_plating
 
 craftitem craft_alien_astrogation
 {
-	name		"_Alien Astrogation"
-	crafttype	electronics
+	name				"_Alien Astrogation"
+	crafttype			electronics
 	installationTime	-1
-	price		32000
-	size	20	// light
+	price				32000
+	size				20 // light
 }
 
 craftitem craft_alien_propulsion
 {
-	name		"_Alien Propulsion"
-	crafttype	electronics
+	name				"_Alien Propulsion"
+	crafttype			electronics
 	installationTime	-1
-	price		40000
-	size	50	// light
+	price				40000
+	size				50 // light
 }
 
 craftitem craft_alien_detection
 {
-	name		"_Alien Detection"
-	crafttype	electronics
+	name				"_Alien Detection"
+	crafttype			electronics
 	installationTime	-1
-	price		32000
-	size	20	// light
+	price				32000
+	size				20 // light
 }
 
 // *********************************
@@ -802,28 +802,28 @@ craftitem craft_alien_detection
 
 craftitem base_AA51_launcher
 {
-	name		"_AA51 missile launcher"
-	crafttype		base_missile
-	size	90	// medium
+	name				"_AA51 missile launcher"
+	crafttype			base_missile
+	size				90 // medium
 	installationTime	12
-	price		50000
-	is_dummy	true
+	price				50000
+	is_dummy			true
 }
 
 craftitem base_ammo_AA51
 {
-	name		"_AA51 Cicada SAM"
+	name			"_AA51 Cicada SAM"
 	crafttype		base_ammo_missile
 	craftweapon		base_AA51_launcher
-	is_dummy	true
-	notonmarket	true
-	model		"geoscape/missile"
+	is_dummy		true
+	notonmarket		true
+	model			"geoscape/missile"
 
 	unlimitedAmmo	true
-	wdamage		20
-	accuracy	0.3
-	wrange		7
-	wspeed		200
-	delay		500
-	size	10	// light
+	wdamage			20
+	accuracy		0.3
+	wrange			7
+	wspeed			200
+	delay			500
+	size			10 // light
 }
