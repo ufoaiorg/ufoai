@@ -76,6 +76,10 @@ static void MN_BarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 		const float value = min + frac * (MN_GetReferenceFloat(node, node->u.abstractvalue.max) - min);
 		MN_SetCvar(&var[6], NULL, value);
 	}
+
+	/* callback */
+	if (node->onChange)
+		MN_ExecuteEventActions(node, node->onChange);
 }
 
 static void MN_BarNodeMouseDown (menuNode_t *node, int x, int y, int button)
