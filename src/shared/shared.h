@@ -97,8 +97,16 @@ int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnul
 
 qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 
+#if defined(__MINGW32_VERSION) && defined(__STRICT_ANSI__)
+/* function exists but are not defined */
+_CRTIMP char* __cdecl	strdup (const char*) __MINGW_ATTRIB_MALLOC;
+_CRTIMP int __cdecl	_stricmp (const char*, const char*);
+_CRTIMP int __cdecl	_strnicmp (const char*, const char*, size_t);
+#define strncasecmp _strnicmp
+#endif
+
 /* portable case sensitive compare */
-#if defined _WIN32
+#if defined(_WIN32)
 #	define Q_strcasecmp(a, b) _stricmp((a), (b))
 #else
 #	define Q_strcasecmp(a, b) strcasecmp((a), (b))

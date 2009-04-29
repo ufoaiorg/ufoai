@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "http.h"
+#include "../shared/shared.h"
 
 /**
  * @brief libcurl callback to update header info.

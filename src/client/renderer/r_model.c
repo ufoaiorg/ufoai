@@ -157,7 +157,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 		break;
 
 	default:
-		if (!strcasecmp(mod->name + strlen(mod->name) - 4, ".obj"))
+		if (!Q_strcasecmp(mod->name + strlen(mod->name) - 4, ".obj"))
 			R_LoadObjModel(mod, buf, modfilelen);
 		else
 			Sys_Error("R_ModForName: unknown fileid for %s", mod->name);
