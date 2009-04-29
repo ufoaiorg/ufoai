@@ -189,8 +189,6 @@ static int MN_MaterialEditorNodeGetImageAtPosition (menuNode_t *node, int x, int
 
 	/* check images */
 	for (i = 0; i < r_numImages; i++) {
-		image_t *image = &r_images[i];
-
 #ifndef ANYIMAGES
 		/* filter */
 		if (image->type != it_world)
