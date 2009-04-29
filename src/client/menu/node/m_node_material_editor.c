@@ -232,11 +232,14 @@ static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int butt
 	/** @note here we use "num" to cache the selected image id. We can reuse it on the script with "<num>" */
 	/* have we selected a new image? */
 	if (node->num != id) {
+		const image_t *image = &r_images[id];
 		node->num = id;
-		if (r_images[id].normalmap == NULL)
-			MN_ExecuteConfunc("hideshaders true");
-		else
-			MN_ExecuteConfunc("hideshaders false");
+		if (image->normalmap == NULL)
+			MN_ExecuteConfunc("hideshaders true 0 0 0 0");
+		else {
+			MN_ExecuteConfunc("hideshaders false %f %f %f %f", image->material.bump,
+					image->material.hardness, image->material.parallax, image->material.specular);
+		}
 		if (node->onChange)
 			MN_ExecuteEventActions(node, node->onChange);
 	}

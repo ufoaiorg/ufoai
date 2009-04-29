@@ -50,9 +50,19 @@ window material_editor {
 		size		"300 20"
 	}
 
-	/** @param boolean to hide or show the panel */
+	/** 
+	 * @param<1> boolean to hide or show the panel 
+	 * @param<2> value for bump 
+	 * @param<3> value for hardness 
+	 * @param<4> value for parallax
+	 * @param<5> value for specular
+	 */
 	confunc hideshaders {
 		*shader_attributes invis <1>
+		*cvar:me_bump <2>
+		*cvar:me_hardness <3>
+		*cvar:me_parallax <4>
+		*cvar:me_specular <5>
 	}
 
 	panel shader_attributes {
