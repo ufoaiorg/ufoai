@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "../m_actions.h"
 #include "../m_render.h"
+#include "../m_parse.h"
 #include "m_node_abstractnode.h"
 #include "m_node_abstractscrollable.h"
 #include "../../cl_video.h"
@@ -37,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_material_editor.h"
 
 /*#define ANYIMAGES*/
+/** @todo Replace magic number 64 by some script definition */
 #define IMAGE_WIDTH 64
 
 /**
@@ -93,7 +95,6 @@ static void MN_MaterialEditorNodeUpdateView (menuNode_t *node)
 }
 
 /**
- * @todo Replace magic number 64 by some script definition
  * @param node The node to draw
  */
 static void MN_MaterialEditorNodeDraw (menuNode_t *node)
@@ -221,16 +222,12 @@ static int MN_MaterialEditorNodeGetImageAtPosition (menuNode_t *node, int x, int
 static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int button)
 {
 	int id;
-	image_t *image;
 	if (button != K_MOUSE1)
 		return;
 
 	id = MN_MaterialEditorNodeGetImageAtPosition(node, x, y);
 	if (id == -1)
 		return;
-
-	image = &r_images[id];
-	Com_Printf("image: '%s'\n", image->name);
 
 	/** @note here we use "num" to cache the selected image id. We can reuse it on the script with "<num>" */
 	/* have we selected a new image? */
@@ -239,15 +236,6 @@ static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int butt
 		if (node->onChange)
 			MN_ExecuteEventActions(node, node->onChange);
 	}
-
-#if 0
-	image->material.flags = STAGE_RENDER;
-	image->material.bump = 3.0;
-	image->material.hardness = 3.0;
-	image->material.parallax = 3.0;
-	image->material.specular = 3.0;
-	R_ModReloadSurfacesArrays();
-#endif
 }
 
 /**
@@ -298,6 +286,56 @@ static void MN_MaterialEditorStart_f (void)
 #endif
 }
 
+/** @brief valid properties for options (selectbox, tab...) */
+static const value_t materialValues[] = {
+	{"bump", V_FLOAT, offsetof(material_t, bump), 0},
+	{"parallax", V_FLOAT, offsetof(material_t, parallax), 0},
+	{"specular", V_FLOAT, offsetof(material_t, specular), 0},
+	{"hardness", V_FLOAT, offsetof(material_t, hardness), 0},
+
+	{NULL, V_NULL, 0, 0},
+};
+
+static void MN_MaterialEditorChangeValue_f (void)
+{
+	image_t *image;
+	int id;
+	const char *var, *value;
+	const value_t *val;
+	size_t bytes;
+
+	Com_Printf("test\n");
+
+	if (Cmd_Argc() < 4) {
+		Com_Printf("Usage: %s <image index> <variable> <value>\n", Cmd_Argv(0));
+		return;
+	}
+
+	id = atoi(Cmd_Argv(1));
+	if (id < 0 || id >= r_numImages) {
+		Com_Printf("Given image index (%i) is out of bounds\n", id);
+		return;
+	}
+
+	var = Cmd_Argv(2);
+	value = Cmd_Argv(3);
+
+	val = MN_FindPropertyByName(materialValues, var);
+	if (!val) {
+		Com_Printf("Could not find material variable for '%s'\n", var);
+		return;
+	}
+
+	image = &r_images[id];
+	/* new material should be added */
+	if (image->material.flags == 0)
+		image->material.flags = STAGE_RENDER;
+
+	Com_ParseValue(&image->material, value, val->type, val->ofs, val->size, &bytes);
+
+	R_ModReloadSurfacesArrays();
+}
+
 void MN_RegisterMaterialEditorNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "material_editor";
@@ -307,5 +345,6 @@ void MN_RegisterMaterialEditorNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseDown = MN_MaterialEditorMouseDown;
 	behaviour->mouseWheel = MN_MaterialEditorNodeWheel;
 
+	Cmd_AddCommand("mn_materialeditor_changevalue", MN_MaterialEditorChangeValue_f, "Initializes the material editor menu");
 	Cmd_AddCommand("mn_materialeditor", MN_MaterialEditorStart_f, "Initializes the material editor menu");
 }
