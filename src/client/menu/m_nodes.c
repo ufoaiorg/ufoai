@@ -539,10 +539,12 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 		const value_t* current = behaviour->properties;
 		while (current->string != NULL) {
 			const value_t *p = MN_GetPropertyFromBehaviour(behaviour->super, current->string);
+#if 0	/**< @todo not possible at the moment, not sure its the right way */
 			const nodeBehaviour_t *b = MN_GetNodeBehaviour(current->string);
+#endif
 			if (p != NULL)
 				Sys_Error("MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property\n", current->string, behaviour->name);
-#if 0	/*< not possible at the moment, not sure its the right way */
+#if 0	/**< @todo not possible at the moment, not sure its the right way */
 			if (b != NULL)
 				Sys_Error("MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' use the name of an existing node behaviour\n", current->string, behaviour->name);
 #endif
