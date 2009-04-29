@@ -75,6 +75,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterAbstractBaseNode,
 	MN_RegisterAbstractNode,
 	MN_RegisterAbstractOptionNode,
+	MN_RegisterAbstractScrollableNode,
 	MN_RegisterAbstractScrollbarNode,
 	MN_RegisterAbstractValueNode,
 	MN_RegisterBarNode,

@@ -687,6 +687,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_material_editor.h" />
+		<Unit filename="..\..\src\client\menu\node\m_node_abstractscrollable.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\node\m_node_abstractscrollable.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_model.c">
 			<Option compilerVar="CC" />
 		</Unit>

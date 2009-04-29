@@ -118,6 +118,7 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_abstractvalue.c \
 	client/menu/node/m_node_abstractoption.c \
 	client/menu/node/m_node_abstractscrollbar.c \
+	client/menu/node/m_node_abstractscrollable.c \
 	client/menu/node/m_node_bar.c \
 	client/menu/node/m_node_base.c \
 	client/menu/node/m_node_button.c \

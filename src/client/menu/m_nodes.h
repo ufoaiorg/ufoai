@@ -34,6 +34,7 @@ struct value_s;
 
 /* extradata struct */
 #include "node/m_node_abstractoption.h"
+#include "node/m_node_abstractscrollable.h"
 #include "node/m_node_abstractscrollbar.h"
 #include "node/m_node_abstractvalue.h"
 #include "node/m_node_base.h"
@@ -140,6 +141,7 @@ typedef struct menuNode_s {
 	/** union will contain all extradata for a node */
 	union {
 		abstractValueExtraData_t abstractvalue;
+		abstractScrollableExtraData_t abstractscrollable;
 		abstractScrollbarExtraData_t abstractscrollbar;
 		baseExtraData_t base;
 		containerExtraData_t container;
