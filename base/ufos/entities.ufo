@@ -102,8 +102,8 @@ entity info_alien_start {
 
 entity info_2x2_start {
 	description	"Starting point for a ugv 2x2 unit."
-	color		"0 0 1"
-	size		"-32 -32 -24 32 32 32"
+	color	"0 0 1"
+	size	"-32 -32 -24 32 32 32"
 
 	optional {
 		team	"The number of the team for this player starting point. Only for multiplayer teams."
@@ -127,8 +127,8 @@ entity info_2x2_start {
 
 entity info_civilian_start {
 	description	"Starting point for a civilian."
-	color		"0 1 1"
-	size		"-16 -16 -24 16 16 32"
+	color	"0 1 1"
+	size	"-16 -16 -24 16 16 32"
 
 	mandatory {
 		origin	"position"
@@ -151,8 +151,8 @@ entity info_civilian_start {
 
 entity info_null {
 	description	"Used as a positional target for spotlights, etc."
-	color		"0 0.5 0"
-	size		"-4 -4 -4 4 4 4"
+	color	"0 0.5 0"
+	size	"-4 -4 -4 4 4 4"
 
 	mandatory {
 		origin		"position"
@@ -227,7 +227,7 @@ entity misc_particle {
 	}
 
 	optional {
-		wait		"Wait times are of the format 'a b'. It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start."
+		wait	"Wait times are of the format 'a b'. It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start."
 	}
 
 	type {
@@ -246,9 +246,9 @@ entity light {
 	spawnflags	"day"
 
 	mandatory {
-		_color		"Colour for the light RGB"
-		light		"Intensity (e.g. 300) - the entity_scale is applied to these values"
-		origin		"position"
+		_color	"Colour for the light RGB"
+		light	"Intensity (e.g. 300) - the entity_scale is applied to these values"
+		origin	"position"
 	}
 
 	optional {
@@ -259,8 +259,8 @@ entity light {
 	}
 
 	default {
-		_cone		"10"
-		light		"300"
+		_cone	"10"
+		light	"300"
 	}
 
 	type {
@@ -282,20 +282,20 @@ entity light_spot {
 	spawnflags	"day"
 
 	mandatory {
-		_color		"Color for the light RGB"
-		light		"Intensity (e.g. 300) - the entity_scale is applied to these values"
-		origin		"position"
+		_color	"Color for the light RGB"
+		light	"Intensity (e.g. 300) - the entity_scale is applied to these values"
+		origin	"position"
 	}
 
 	optional {
-		angle		"Special values: UP -1 and DOWN -2"
-		target		"Entity target name (e.g. info_null) - target entity must have targetname set"
-		_cone		"Defines the light cone in degrees"
+		angle	"Special values: UP -1 and DOWN -2"
+		target	"Entity target name (e.g. info_null) - target entity must have targetname set"
+		_cone	"Defines the light cone in degrees"
 	}
 
 	default {
-		_cone		"10"
-		light		"300"
+		_cone	"10"
+		light	"300"
 	}
 
 	type {
@@ -519,11 +519,11 @@ entity trigger_hurt {
 	spawnflags	"KILL STUN DAZE"
 
 	optional {
-		dmg		"Damage per step (whole numbers only)"
+		dmg	"Damage per step (whole numbers only)"
 	}
 
 	default {
-		dmg		"5"
+		dmg	"5"
 	}
 }
 
@@ -531,7 +531,7 @@ entity trigger_touch {
 	description	"Any entity that touches this will trigger the use function of the target entity."
 
 	mandatory {
-		target		"Target entity - target entity must have targetname set (to the value given here)"
+		target	"Target entity - target entity must have targetname set (to the value given here)"
 	}
 }
 

@@ -379,46 +379,46 @@ item armour_power
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
-//		normal_light		25
-//		normal_medium		22
-//		normal_heavy		20
+//		normal_light	25
+//		normal_medium	22
+//		normal_heavy	20
 //
 //		normal_steelblade			40
 //		normal_monomolecularblade	10
 //
-//		blast				15
+//		blast			15
 //
-//		fire_medium			27
-//		fire_heavy			21
+//		fire_medium		27
+//		fire_heavy		21
 //
-//		shock				18
+//		shock			18
 //
-//		plasma_light		20
-//		plasma_medium		20
-//		plasma_heavy		18
+//		plasma_light	20
+//		plasma_medium	20
+//		plasma_heavy	18
 //
-//		laser_light			22
-//		laser_medium		15
-//		laser_heavy			15
+//		laser_light		22
+//		laser_medium	15
+//		laser_heavy		15
 //
 //		particlebeam_light	18
 //		particlebeam_medium	16
 //		particlebeam_heavy	14
 //
-//		stun_electro		20
-//		stun_gas			20
+//		stun_electro	20
+//		stun_gas		20
 //	}
 //
 //	rating {
-//		normal				100
-//		blast				60
-//		fire				100
-//		shock				100
-//		plasma				80
-//		laser				100
-//		particlebeam		100
-//		stun_electro		100
-//		stun_gas			100
+//		normal			100
+//		blast			60
+//		fire			100
+//		shock			100
+//		plasma			80
+//		laser			100
+//		particlebeam	100
+//		stun_electro	100
+//		stun_gas		100
 //	}
 //}
 
@@ -437,46 +437,46 @@ item armour_power
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
-//		normal_light		25
-//		normal_medium		22
-//		normal_heavy		20
+//		normal_light	25
+//		normal_medium	22
+//		normal_heavy	20
 //
 //		normal_steelblade			40
 //		normal_monomolecularblade	10
 //
-//		blast				15
+//		blast			15
 //
-//		fire_medium			27
-//		fire_heavy			21
+//		fire_medium		27
+//		fire_heavy		21
 //
-//		shock				18
+//		shock			18
 //
-//		plasma_light		20
-//		plasma_medium		20
-//		plasma_heavy		18
+//		plasma_light	20
+//		plasma_medium	20
+//		plasma_heavy	18
 //
-//		laser_light			22
-//		laser_medium		15
-//		laser_heavy			15
+//		laser_light		22
+//		laser_medium	15
+//		laser_heavy		15
 //
 //		particlebeam_light	18
 //		particlebeam_medium	16
 //		particlebeam_heavy	14
 //
-//		stun_electro		20
-//		stun_gas			20
+//		stun_electro	20
+//		stun_gas		20
 //	}
 //
 //	rating {
-//		normal				80
-//		blast				40
-//		fire				80
-//		shock				80
-//		plasma				60
-//		laser				80
-//		particlebeam		80
-//		stun_electro		80
-//		stun_gas			80
+//		normal			80
+//		blast			40
+//		fire			80
+//		shock			80
+//		plasma			60
+//		laser			80
+//		particlebeam	80
+//		stun_electro	80
+//		stun_gas		80
 //	}
 //}
 
@@ -500,48 +500,48 @@ item armour_light_alien
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		7
-		normal_medium		6
-		normal_heavy		5
-		normal_spray		9
+		normal_light	7
+		normal_medium	6
+		normal_heavy	5
+		normal_spray	9
 
 		normal_steelblade			10
 		normal_monomolecularblade	5
 
-		blast				25
+		blast			25
 
-		fire_medium			15
-		fire_heavy			15
-		fire_flamer         2
+		fire_medium		15
+		fire_heavy		15
+		fire_flamer		2
 
-		shock				0
+		shock			0
 
-		plasma_light		20
-		plasma_medium		17
-		plasma_heavy		15
+		plasma_light	20
+		plasma_medium	17
+		plasma_heavy	15
 
-		laser_light			12
-		laser_medium		10
-		laser_heavy			10
+		laser_light		12
+		laser_medium	10
+		laser_heavy		10
 
 		particlebeam_light	21
 		particlebeam_medium	19
 		particlebeam_heavy	17
 
-		stun_electro		0
-		stun_gas			0
+		stun_electro	0
+		stun_gas		0
 	}
 
 	rating {
-		normal				10
-		blast				30
-		fire				20
-		shock				10
-		plasma				30
-		laser				20
-		particlebeam		30
-		stun_electro		10
-		stun_gas			10
+		normal			10
+		blast			30
+		fire			20
+		shock			10
+		plasma			30
+		laser			20
+		particlebeam	30
+		stun_electro	10
+		stun_gas		10
 	}
 }
 
@@ -561,47 +561,47 @@ item armour_medium_alien
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		21
-		normal_medium		19
-		normal_heavy		16
-		normal_spray        12
+		normal_light	21
+		normal_medium	19
+		normal_heavy	16
+		normal_spray	12
 
 		normal_steelblade			20
 		normal_monomolecularblade	12
 
-		blast				38
+		blast			38
 
-		fire_medium			22
-		fire_heavy			22
-		fire_flamer         3
+		fire_medium		22
+		fire_heavy		22
+		fire_flamer		3
 
-		shock				10
+		shock			10
 
-		plasma_light		35
-		plasma_medium		29
-		plasma_heavy		26
+		plasma_light	35
+		plasma_medium	29
+		plasma_heavy	26
 
-		laser_light			26
-		laser_medium		25
-		laser_heavy			22
+		laser_light		26
+		laser_medium	25
+		laser_heavy		22
 
 		particlebeam_light	31
 		particlebeam_medium	27
 		particlebeam_heavy	24
 
-		stun_electro		10
-		stun_gas			10
+		stun_electro	10
+		stun_gas		10
 	}
 
 	rating {
-		normal				40
-		blast				50
-		fire				40
-		shock				30
-		plasma				50
-		laser				40
-		particlebeam		50
-		stun_electro		30
-		stun_gas			30
+		normal			40
+		blast			50
+		fire			40
+		shock			30
+		plasma			50
+		laser			40
+		particlebeam	50
+		stun_electro	30
+		stun_gas		30
 	}
 }

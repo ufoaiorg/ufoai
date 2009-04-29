@@ -1,23 +1,23 @@
 campaign veryhard
 {
-	name		"_Very Hard Campaign"
-	text		"_veryhard_campaign_txt"
-	team		phalanx
-	soldiers	6
-	scientists	2
-	workers		1
-	difficulty	4
-	minhappiness	0.42
-	maxdebts	50000
-	xvirate		30
-	firstbase	balanced
-	researched	rslist_phalanx
-	equipment	campaign_player
-	market		campaign_initial_market
+	name				"_Very Hard Campaign"
+	text				"_veryhard_campaign_txt"
+	team				phalanx
+	soldiers			6
+	scientists			2
+	workers				1
+	difficulty			4
+	minhappiness		0.42
+	maxdebts			50000
+	xvirate				30
+	firstbase			balanced
+	researched			rslist_phalanx
+	equipment			campaign_player
+	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
-	credits		1300000
-	map		    map_earth
-	visible		true
+	credits				1300000
+	map					map_earth
+	visible				true
 
 	date		"2084 79 6"
 	basecost	100000
@@ -25,27 +25,27 @@ campaign veryhard
 
 campaign hard
 {
-	name		"_Hard Campaign"
-	text		"_hard_campaign_txt"
-	team		phalanx
-	soldiers	7
-	scientists	3
-	workers		2
-	difficulty	2
+	name			"_Hard Campaign"
+	text			"_hard_campaign_txt"
+	team			phalanx
+	soldiers		7
+	scientists		3
+	workers			2
+	difficulty		2
 	minhappiness	0.35
-	maxdebts	100000
-	xvirate		50
+	maxdebts		100000
+	xvirate			50
 	salary {
 		soldier_base 4000
 	}
-	firstbase	balanced
-	researched	rslist_phalanx
-	equipment	campaign_player
-	market		campaign_initial_market
+	firstbase			balanced
+	researched			rslist_phalanx
+	equipment			campaign_player
+	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
-	credits		1300000
-	map		    map_earth
-	visible		true
+	credits				1300000
+	map					map_earth
+	visible				true
 
 	date		"2084 79 6"
 	basecost	100000
@@ -53,16 +53,16 @@ campaign hard
 
 campaign main
 {
-	name		"_Standard Campaign"
-	text		"_standard_campaign_txt"
-	team		phalanx
-	soldiers	9
-	scientists	6
-	workers		14
-	difficulty	0
+	name			"_Standard Campaign"
+	text			"_standard_campaign_txt"
+	team			phalanx
+	soldiers		9
+	scientists		6
+	workers			14
+	difficulty		0
 	minhappiness	0.30
-	maxdebts	200000
-	xvirate		70
+	maxdebts		200000
+	xvirate			70
 	salary {
 		soldier_rankbonus 500;
 		worker_base 3000;
@@ -84,15 +84,15 @@ campaign main
 		admin_robot 150;
 		debt_interest 0.005;
 	}
-	firstbase	balanced
-	researched	rslist_phalanx
-	ugvs	2
-	equipment	campaign_player
-	market		campaign_initial_market
+	firstbase			balanced
+	researched			rslist_phalanx
+	ugvs				2
+	equipment			campaign_player
+	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
-	credits		1350000
-	map		    map_earth
-	visible		true
+	credits				1350000
+	map					map_earth
+	visible				true
 
 	date		"2084 79 6"
 	basecost	100000
@@ -100,27 +100,27 @@ campaign main
 
 campaign easy
 {
-	name		"_Easy Campaign"
-	text		"_easy_campaign_txt"
-	team		phalanx
-	soldiers	25
-	scientists	16
-	workers		10
-	difficulty	-2
+	name			"_Easy Campaign"
+	text			"_easy_campaign_txt"
+	team			phalanx
+	soldiers		25
+	scientists		16
+	workers			10
+	difficulty		-2
 	minhappiness	0.2
-	maxdebts	350000
-	xvirate		80
+	maxdebts		350000
+	xvirate			80
 	salary {
 		soldier_base 3000
 	}
-	firstbase	balanced
-	researched	rslist_phalanx
-	equipment	campaign_player
-	market		campaign_initial_market
+	firstbase			balanced
+	researched			rslist_phalanx
+	equipment			campaign_player
+	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
-	credits		1500000
-	map		    map_earth
-	visible		true
+	credits				1500000
+	map					map_earth
+	visible				true
 
 	date		"2084 79 6"
 	basecost	100000
@@ -128,16 +128,16 @@ campaign easy
 
 campaign veryeasy
 {
-	name		"_Very Easy Campaign"
-	text		"_veryeasy_campaign_txt"
-	team		phalanx
-	soldiers	35
-	scientists	26
-	workers		20
-	difficulty	-4
+	name			"_Very Easy Campaign"
+	text			"_veryeasy_campaign_txt"
+	team			phalanx
+	soldiers		35
+	scientists		26
+	workers			20
+	difficulty		-4
 	minhappiness	0.1
-	maxdebts	500000
-	xvirate		90
+	maxdebts		500000
+	xvirate			90
 	salary {
 		soldier_rankbonus 1500;
 		worker_base 1000;
@@ -156,14 +156,14 @@ campaign veryeasy
 		admin_pilot 50;
 		admin_robot 50;
 	}
-	firstbase	balanced
-	researched	rslist_phalanx
-	equipment	campaign_player
-	market		campaign_initial_market
-	asymptotic_market		campaign_asymptotic_market
-	credits		2000000
-	map		    map_earth
-	visible		true
+	firstbase			balanced
+	researched			rslist_phalanx
+	equipment			campaign_player
+	market				campaign_initial_market
+	asymptotic_market	campaign_asymptotic_market
+	credits				2000000
+	map					map_earth
+	visible				true
 
 	date		"2084 79 6"
 	basecost	100000
@@ -172,20 +172,20 @@ campaign veryeasy
 /*
 campaign aliencampaign
 {
-	name		"_Play the aliens"
-	text		"_alien_campaign_txt"
-	team		alien
-	soldiers	15
-	scientists	12
-	workers		9
-	difficulty	-4
-	researched	rslist_alien
-	equipment	campaign_player_aliens
-	market		campaign_market_aliens
-	asymptotic_market		campaign_market_aliens
-	credits		6000000
-	map		    map_earth
-	visible		true
+	name				"_Play the aliens"
+	text				"_alien_campaign_txt"
+	team				alien
+	soldiers			15
+	scientists			12
+	workers				9
+	difficulty			-4
+	researched			rslist_alien
+	equipment			campaign_player_aliens
+	market				campaign_market_aliens
+	asymptotic_market	campaign_market_aliens
+	credits				6000000
+	map					map_earth
+	visible				true
 
 	date		"2084 79 6"
 	basecost	100000

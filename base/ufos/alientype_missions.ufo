@@ -215,7 +215,7 @@ alienteam alienbase
 
 	team
 	{
-		mininterest 0		// set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
+		mininterest 0 // set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
 		maxinterest 10000
 		taman
 		ortnok

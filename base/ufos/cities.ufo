@@ -12,102 +12,102 @@
 
 //city stockholm
 //{
-//	name 		"_Stockholm"
+//	name		"_Stockholm"
 //	pos			"-18 59.3"
 //}
 
 //city amsterdam
 //{
-//	name 		"_Amsterdam"
+//	name		"_Amsterdam"
 //	pos			"-5.5 52"
 //}
 
 city athens
 {
-	name 		"_Athens"
+	name		"_Athens"
 	pos			"-23.7 38"
 }
 
 city bangkok
 {
-	name 		"_Bangkok"
+	name		"_Bangkok"
 	pos			"-100.5 13.8"
 }
 
 //city beijing
 //{
-//	name 		"_Beijing"
+//	name		"_Beijing"
 //	pos			"-116.9 39.9"
 //}
 
 city berlin
 {
-	name 		"_Berlin"
+	name		"_Berlin"
 	pos			"-13.4 52.5"
 }
 
 //city mumbai
 //{
-//	name 		"_Mumbai"
+//	name		"_Mumbai"
 //	pos			"-73.2 18.5"
 //}
 
 city capetown
 {
-	name 		"_Cape Town"
+	name		"_Cape Town"
 	pos			"-18.5 -33.7"
 }
 
 //city cairo
 //{
-//	name 		"_Cayenne"
+//	name		"_Cayenne"
 //	pos			"-31.4 30"
 //}
 
 city cayenne
 {
-	name 		"_Cayenne"
+	name		"_Cayenne"
 	pos			"52.6 4.5"
 }
 
 //city dakar
 //{
-//	name 		"_Dakar"
+//	name		"_Dakar"
 //	pos			"16.8 14.7"
 //}
 
 //city mexico
 //{
-//	name 		"_Mexico City"
+//	name		"_Mexico City"
 //	pos			"99.1 19.4"
 //}
 
 //city paris
 //{
-//	name 		"_Paris"
+//	name		"_Paris"
 //	pos			"-2.3 48.8"
 //}
 
 city sydney
 {
-	name 		"_Sydney"
+	name		"_Sydney"
 	pos			"-151 -34"
 }
 
 //city teheran
 //{
-//	name 		"_Teheran"
+//	name		"_Teheran"
 //	pos			"-51.4 35.4"
 //}
 
 //city tokyo
 //{
-//	name 		"_Tokyo"
+//	name		"_Tokyo"
 //	pos			"-139.3 35.7"
 //}
 
 city wellington
 {
-	name 		"_Wellington"
+	name		"_Wellington"
 	pos			"-174 -42.4"
 }
