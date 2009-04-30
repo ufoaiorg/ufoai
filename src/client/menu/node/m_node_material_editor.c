@@ -422,7 +422,7 @@ static void MN_MaterialEditorChangeValue_f (void)
 		image->material.flags = STAGE_RENDER;
 
 	stageType = MN_MaterialEditorNameToStage(var);
-	if (stageType == 0) {
+	if (stageType == -1) {
 		const value_t *val = MN_FindPropertyByName(materialValues, var);
 		if (!val) {
 			Com_Printf("Could not find material variable for '%s'\n", var);
