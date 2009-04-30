@@ -42,6 +42,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @todo Replace magic number 64 by some script definition */
 #define IMAGE_WIDTH 64
 
+static char materialStagesList[512];
+
+typedef struct materialDescription_s {
+	const char *name;
+	const int stageFlag;
+} materialDescription_t;
+
+static const materialDescription_t materialDescriptions[] = {
+	{"texture", STAGE_TEXTURE},
+	{"envmap", STAGE_ENVMAP},
+	{"blend", STAGE_BLEND},
+	{"color", STAGE_COLOR},
+	{"pulse", STAGE_PULSE},
+	{"stretch", STAGE_STRETCH},
+	{"rotate", STAGE_ROTATE},
+	{"scroll.s", STAGE_SCROLL_S},
+	{"scroll.t", STAGE_SCROLL_T},
+	{"scale.s", STAGE_SCALE_S},
+	{"scale.t", STAGE_SCALE_T},
+	{"terrain", STAGE_TERRAIN},
+	{"lightmap", STAGE_LIGHTMAP},
+	{"anim", STAGE_ANIM},
+	{"dirtmap", STAGE_DIRTMAP},
+
+	{NULL, 0}
+};
+
 /**
  * @brief return the number of images we can display
  */
@@ -219,11 +246,49 @@ static int MN_MaterialEditorNodeGetImageAtPosition (menuNode_t *node, int x, int
 	return -1;
 }
 
-static char materialStagesList[512];
-
-static const char *MN_MaterialEditorStageToName (materialStage_t *stage)
+static void MN_MaterialEditorStagesToName (materialStage_t *stage, char *buf, size_t size)
 {
-	return "stage (todo)";
+	const materialDescription_t *md = materialDescriptions;
+
+	while (md->name) {
+		if (stage->flags & md->stageFlag)
+			Q_strcat(buf, va("%s ", md->name), size);
+		md++;
+	}
+}
+
+static void MN_MaterialEditorUpdate (const image_t *image)
+{
+	int i;
+
+	if (image->normalmap == NULL)
+		MN_ExecuteConfunc("hideshaders true 0 0 0 0");
+	else
+		MN_ExecuteConfunc("hideshaders false %f %f %f %f", image->material.bump,
+				image->material.hardness, image->material.parallax, image->material.specular);
+
+	MN_ExecuteConfunc("hidestages true 0");
+
+	materialStagesList[0] = '\0';
+	for (i = 0; i < image->material.num_stages; i++) {
+		char stageName[MAX_VAR] = "stage ";
+		MN_MaterialEditorStagesToName(&image->material.stages[i], stageName, sizeof(stageName) - 1);
+		Q_strcat(materialStagesList, va("%s\n", stageName), sizeof(materialStagesList));
+	}
+
+	MN_RegisterText(TEXT_MATERIAL_STAGES, materialStagesList);
+}
+
+static int MN_MaterialEditorNameToStage (const char *stageName)
+{
+	const materialDescription_t *md = materialDescriptions;
+
+	while (md->name) {
+		if (!strncmp(md->name, stageName, strlen(md->name)))
+			return md->stageFlag;
+		md++;
+	}
+	return -1;
 }
 
 static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int button)
@@ -240,23 +305,9 @@ static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int butt
 	/* have we selected a new image? */
 	if (node->num != id) {
 		const image_t *image = &r_images[id];
-		int i;
+		MN_MaterialEditorUpdate(image);
 
-		materialStagesList[0] = '\0';
 		node->num = id;
-		if (image->normalmap == NULL)
-			MN_ExecuteConfunc("hideshaders true 0 0 0 0");
-		else {
-			MN_ExecuteConfunc("hideshaders false %f %f %f %f", image->material.bump,
-					image->material.hardness, image->material.parallax, image->material.specular);
-		}
-
-		for (i = 0; i < image->material.num_stages; i++) {
-			const char *stageName = va("%s\n", MN_MaterialEditorStageToName(&image->material.stages[i]));
-			Q_strcat(materialStagesList, stageName, sizeof(materialStagesList));
-		}
-
-		MN_RegisterText(TEXT_MATERIAL_STAGES, materialStagesList);
 
 		if (node->onChange)
 			MN_ExecuteEventActions(node, node->onChange);
@@ -311,7 +362,18 @@ static void MN_MaterialEditorStart_f (void)
 #endif
 }
 
-/** @brief valid properties for options (selectbox, tab...) */
+static materialStage_t *MN_MaterialEditorGetStage (material_t *material, int stageIndex)
+{
+	materialStage_t *materialStage = material->stages;
+	while (stageIndex-- > 0) {
+		if (materialStage)
+			materialStage = materialStage->next;
+		else
+			break;
+	}
+	return materialStage;
+}
+
 static const value_t materialValues[] = {
 	{"bump", V_FLOAT, offsetof(material_t, bump), 0},
 	{"parallax", V_FLOAT, offsetof(material_t, parallax), 0},
@@ -321,16 +383,27 @@ static const value_t materialValues[] = {
 	{NULL, V_NULL, 0, 0},
 };
 
+
+static const value_t materialStageValues[] = {
+	{"rotate.hz", V_FLOAT, offsetof(materialStage_t, rotate.deg), 0},
+	{"rotate.deg", V_FLOAT, offsetof(materialStage_t, rotate.hz), 0},
+	{"scretch.hz", V_FLOAT, offsetof(materialStage_t, stretch.hz), 0},
+	{"scretch.dhz", V_FLOAT, offsetof(materialStage_t, stretch.dhz), 0},
+	{"scretch.amp", V_FLOAT, offsetof(materialStage_t, stretch.amp), 0},
+	{"scretch.damp", V_FLOAT, offsetof(materialStage_t, stretch.damp), 0},
+
+	{NULL, V_NULL, 0, 0},
+};
+
 static void MN_MaterialEditorChangeValue_f (void)
 {
 	image_t *image;
-	int id;
+	int id, stageType;
 	const char *var, *value;
-	const value_t *val;
 	size_t bytes;
 
-	if (Cmd_Argc() < 4) {
-		Com_Printf("Usage: %s <image index> <variable> <value>\n", Cmd_Argv(0));
+	if (Cmd_Argc() < 5) {
+		Com_Printf("Usage: %s <image index> <stage index> <variable> <value>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -340,21 +413,42 @@ static void MN_MaterialEditorChangeValue_f (void)
 		return;
 	}
 
-	var = Cmd_Argv(2);
-	value = Cmd_Argv(3);
-
-	val = MN_FindPropertyByName(materialValues, var);
-	if (!val) {
-		Com_Printf("Could not find material variable for '%s'\n", var);
-		return;
-	}
+	var = Cmd_Argv(3);
+	value = Cmd_Argv(4);
 
 	image = &r_images[id];
 	/* new material should be added */
 	if (image->material.flags == 0)
 		image->material.flags = STAGE_RENDER;
 
-	Com_ParseValue(&image->material, value, val->type, val->ofs, val->size, &bytes);
+	stageType = MN_MaterialEditorNameToStage(var);
+	if (stageType == 0) {
+		const value_t *val = MN_FindPropertyByName(materialValues, var);
+		if (!val) {
+			Com_Printf("Could not find material variable for '%s'\n", var);
+			return;
+		}
+		Com_ParseValue(&image->material, value, val->type, val->ofs, val->size, &bytes);
+	} else {
+		materialStage_t *stage;
+		int stageID;
+		const value_t *val = MN_FindPropertyByName(materialStageValues, var);
+
+		if (!val) {
+			Com_Printf("Could not find material stage variable for '%s'\n", var);
+			return;
+		}
+
+		stageID = atoi(Cmd_Argv(2));
+		if (stageID < 0 || stageID >= image->material.num_stages) {
+			Com_Printf("Given stage index (%i) is out of bounds\n", id);
+			return;
+		}
+
+		stage = MN_MaterialEditorGetStage(&image->material, stageID);
+
+		Com_ParseValue(stage, value, val->type, val->ofs, val->size, &bytes);
+	}
 
 	R_ModReloadSurfacesArrays();
 }
@@ -362,7 +456,7 @@ static void MN_MaterialEditorChangeValue_f (void)
 static void MN_MaterialEditorSelectStage_f (void)
 {
 	image_t *image;
-	int id, stage;
+	int id, stageID;
 	materialStage_t *materialStage;
 
 	if (Cmd_Argc() < 3) {
@@ -378,13 +472,49 @@ static void MN_MaterialEditorSelectStage_f (void)
 
 	image = &r_images[id];
 
-	stage = atoi(Cmd_Argv(2));
-	if (stage < 0 || stage >= image->material.num_stages) {
-		Com_Printf("Given stage index (%i) is out of bounds\n", id);
+	stageID = atoi(Cmd_Argv(2));
+	if (stageID < 0 || stageID >= image->material.num_stages) {
+		Com_Printf("Given stage index (%i) is out of bounds\n", stageID);
 		return;
 	}
 
-	materialStage = &image->material.stages[stage];
+	materialStage = MN_MaterialEditorGetStage(&image->material, stageID);
+
+	MN_ExecuteConfunc("hidestages false %f", materialStage->rotate.hz);
+}
+
+static void MN_MaterialEditorNewStage_f (void)
+{
+	material_t *m;
+	materialStage_t *s;
+	int id;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <image index>\n", Cmd_Argv(0));
+		return;
+	}
+
+	id = atoi(Cmd_Argv(1));
+	if (id < 0 || id >= r_numImages) {
+		Com_Printf("Given image index (%i) is out of bounds\n", id);
+		return;
+	}
+
+	m = &r_images[id].material;
+	s = Mem_PoolAlloc(sizeof(*s), vid_imagePool, 0);
+	m->num_stages++;
+
+	/* append the stage to the chain */
+	if (!m->stages)
+		m->stages = s;
+	else {
+		materialStage_t *ss = m->stages;
+		while (ss->next)
+			ss = ss->next;
+		ss->next = s;
+	}
+
+	MN_MaterialEditorUpdate(&r_images[id]);
 }
 
 void MN_RegisterMaterialEditorNode (nodeBehaviour_t *behaviour)
@@ -396,6 +526,7 @@ void MN_RegisterMaterialEditorNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseDown = MN_MaterialEditorMouseDown;
 	behaviour->mouseWheel = MN_MaterialEditorNodeWheel;
 
+	Cmd_AddCommand("mn_materialeditor_newstage", MN_MaterialEditorNewStage_f, "Creates a new material stage for the current selected material");
 	Cmd_AddCommand("mn_materialeditor_selectstage", MN_MaterialEditorSelectStage_f, "Select a given material stage");
 	Cmd_AddCommand("mn_materialeditor_changevalue", MN_MaterialEditorChangeValue_f, "Initializes the material editor menu");
 	Cmd_AddCommand("mn_materialeditor", MN_MaterialEditorStart_f, "Initializes the material editor menu");

@@ -261,7 +261,7 @@ menuNode_t *MN_GetNode (const menuNode_t* const node, const char *name)
 		return NULL;
 
 	for (current = node->firstChild; current; current = current->next)
-		if (!strncmp(name, current->name, sizeof(current->name)))
+		if (!strcmp(name, current->name))
 			break;
 
 	return current;

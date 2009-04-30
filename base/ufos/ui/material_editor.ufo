@@ -88,9 +88,9 @@ window material_editor {
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			3.0
-			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> hardness <current>;" }
+			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> -1 hardness <current>;" }
 		}
-	
+
 		string bump_str
 		{
 			string		"_Bump:"
@@ -109,9 +109,9 @@ window material_editor {
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			3.0
-			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> bump <current>;" }
+			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> -1 bump <current>;" }
 		}
-	
+
 		string specular_str
 		{
 			string		"_Specular:"
@@ -130,9 +130,9 @@ window material_editor {
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			3.0
-			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> specular <current>;" }
+			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> -1 specular <current>;" }
 		}
-		
+
 		string parallax_str
 		{
 			string		"_Parallax:"
@@ -151,10 +151,18 @@ window material_editor {
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			3.0
-			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> parallax <current>;" }
+			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> -1 parallax <current>;" }
 		}
 	}
 
+	/** 
+	 * @param<1> boolean to hide or show the stages panel 
+	 */
+	confunc hidestages {
+		*stage_attributes invis <1>
+		*cvar:rotate_hz <2>
+	}
+	
 	panel stage_attributes {
 		{
 			pos "480 110"
@@ -171,18 +179,56 @@ window material_editor {
 				cmd "mn_materialeditor_selectstage <cvar:me_image_id> <lineselected>;" 
 			}
 		}
+
+		textentry rotate_hz
+		{
+			string		"*cvar mn_rotate_hz"
+			image		ui/button_green_verysmall
+			color 		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			pos			"0 210"
+			size		"256 34"
+			onChange	{
+				cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.hz <cvar:mn_rotate_hz>;" 
+			}
+		}
+	}
+	
+	button stage_new {
+		string		"_New Stage"
+		pos			"480 530"
+		size		"256 64"
+		image		ui/button_green_big
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		onClick	{ cmd "mn_materialeditor_newstage <cvar:me_image_id>;" }
 	}
 	
 	func onInit {
+		// general cvars
 		*cvar:me_image_id -1
-		*cvar:me_hardness 0
+		*cvar:me_stage_id -1
+		// shader cvars
 		*cvar:me_bump 0
-		*cvar:me_specular 0
+		*cvar:me_hardness 0
 		*cvar:me_parallax 0
+		*cvar:me_specular 0
+		// stage cvars
+		*cvar:mn_rotate_hz 0
+
 		cmd "mn_materialeditor;"
 	}
 	
 	func onClose {
-		cmd "del me_image_id; del me_hardness; del me_specular; del me_bump; del me_parallax;"
+		// general cvars
+		cmd "del me_image_id; del me_stage_id;"
+		// shader cvars
+		cmd "del me_bump; del me_hardness; del me_parallax; del me_specular;"
+		// stage cvars
+		cmd "del mn_rotate_hz;"
 	}
 }
