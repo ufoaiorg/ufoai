@@ -198,15 +198,12 @@ const char* Com_GetLastParseError (void)
 void* Com_AlignPtr (void *memory, valueTypes_t type)
 {
 	const int align = vt_aligns[type];
-	void *result;
 	assert(memory != NULL);
 	if (align == V_NULL)
 		Sys_Error("Com_AlignPtr: can't align V_NULL");
 	if (type >= V_NUM_TYPES)
 		Sys_Error("Com_AlignPtr: type hit V_NUM_TYPES");
-	result = ALIGN_PTR(memory, align);
-	assert(result != NULL);
-	return result;
+	return ALIGN_PTR(memory, align);
 }
 
 /**
