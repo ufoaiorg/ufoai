@@ -88,7 +88,6 @@ static void CL_SpawnSoldiers_f(void);
 struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
 struct memPool_s *cl_ircSysPool;	/**< irc pool */
 struct memPool_s *cl_soundSysPool;
-struct memPool_s *cl_menuSysPool;
 struct memPool_s *vid_genericPool;	/**< also holds all the static models */
 struct memPool_s *vid_imagePool;
 struct memPool_s *vid_lightPool;	/**< lightmap - wiped with every new map */
@@ -1115,7 +1114,6 @@ void CL_Init (void)
 	textdomain(TEXT_DOMAIN);
 
 	cl_genericPool = Mem_CreatePool("Client: Generic");
-	cl_menuSysPool = Mem_CreatePool("Client: Menu");
 	cl_soundSysPool = Mem_CreatePool("Client: Sound system");
 	cl_ircSysPool = Mem_CreatePool("Client: IRC system");
 

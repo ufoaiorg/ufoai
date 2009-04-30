@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_model.h"
 
 /**
- * @todo Menu should manage itself cl_menuSysPool (initialisation), or provide a setter
+ * @brief Global data shared into all menu code
  */
 typedef struct menuGlobal_s {
 
@@ -87,7 +87,7 @@ typedef struct menuGlobal_s {
 } menuGlobal_t;
 
 extern menuGlobal_t mn;
-extern struct memPool_s *cl_menuSysPool;
+extern struct memPool_s *mn_sysPool;
 extern struct memPool_s *mn_dynStringPool;
 
 #endif

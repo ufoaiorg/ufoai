@@ -206,7 +206,6 @@ extern client_static_t cls;
 
 extern struct memPool_s *cl_genericPool;
 extern struct memPool_s *cl_ircSysPool;
-extern struct memPool_s *cl_menuSysPool;
 extern struct memPool_s *cl_soundSysPool;
 
 /*============================================================================= */

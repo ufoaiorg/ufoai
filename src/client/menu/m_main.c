@@ -33,6 +33,7 @@ menuGlobal_t mn;
 cvar_t *mn_sequence;
 cvar_t *mn_hud;
 struct memPool_s *mn_dynStringPool;
+struct memPool_s *mn_sysPool;
 
 /**
  * @sa MN_DisplayNotice
@@ -245,12 +246,14 @@ void MN_Init (void)
 	Cmd_AddCommand("debug_mnmemory", MN_Memory_f, "Display info about menu memory allocation");
 #endif
 
+
+	mn_sysPool = Mem_CreatePool("Client: Menu");
+	mn_dynStringPool = Mem_CreatePool("Client: Dynamic string for menu");
+
 	/* 256kb */
 	mn.adataize = MENU_HUNK_SIZE;
-	mn.adata = (byte*)Mem_PoolAlloc(mn.adataize, cl_menuSysPool, 0);
+	mn.adata = (byte*)Mem_PoolAlloc(mn.adataize, mn_sysPool, 0);
 	mn.curadata = mn.adata;
-
-	mn_dynStringPool = Mem_CreatePool("Menu: Dynamic string");
 
 	MN_InitData();
 	MN_InitNodes();
