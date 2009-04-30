@@ -69,6 +69,18 @@ static const materialDescription_t materialDescriptions[] = {
 	{NULL, 0}
 };
 
+static materialStage_t *MN_MaterialEditorGetStage (material_t *material, int stageIndex)
+{
+	materialStage_t *materialStage = material->stages;
+	while (stageIndex-- > 0) {
+		if (materialStage)
+			materialStage = materialStage->next;
+		else
+			break;
+	}
+	return materialStage;
+}
+
 /**
  * @brief return the number of images we can display
  */
@@ -246,7 +258,7 @@ static int MN_MaterialEditorNodeGetImageAtPosition (menuNode_t *node, int x, int
 	return -1;
 }
 
-static void MN_MaterialEditorStagesToName (materialStage_t *stage, char *buf, size_t size)
+static void MN_MaterialEditorStagesToName (const materialStage_t *stage, char *buf, size_t size)
 {
 	const materialDescription_t *md = materialDescriptions;
 
@@ -257,7 +269,7 @@ static void MN_MaterialEditorStagesToName (materialStage_t *stage, char *buf, si
 	}
 }
 
-static void MN_MaterialEditorUpdate (const image_t *image)
+static void MN_MaterialEditorUpdate (image_t *image, materialStage_t *materialStage)
 {
 	int i;
 
@@ -267,15 +279,30 @@ static void MN_MaterialEditorUpdate (const image_t *image)
 		MN_ExecuteConfunc("hideshaders false %f %f %f %f", image->material.bump,
 				image->material.hardness, image->material.parallax, image->material.specular);
 
-	MN_ExecuteConfunc("hidestages true 0");
+	if (image->normalmap == NULL)
+		Cvar_Set("me_imagename", image->name);
+	else
+		Cvar_Set("me_imagename", va("%s (nm)", image->name));
 
 	materialStagesList[0] = '\0';
-	for (i = 0; i < image->material.num_stages; i++) {
-		char stageName[MAX_VAR] = "stage ";
-		MN_MaterialEditorStagesToName(&image->material.stages[i], stageName, sizeof(stageName) - 1);
-		Q_strcat(materialStagesList, va("%s\n", stageName), sizeof(materialStagesList));
-	}
 
+	if (!image->material.num_stages) {
+		MN_ExecuteConfunc("hidestages true");
+	} else {
+		if (materialStage)
+			MN_ExecuteConfunc("hidestages false");
+		else
+			Cvar_Set("me_stage_id", "-1");
+		for (i = 0; i < image->material.num_stages; i++) {
+			const materialStage_t *stage = MN_MaterialEditorGetStage(&image->material, i);
+			char stageName[MAX_VAR] = "stage ";
+			if (stage == materialStage) {
+				MN_ExecuteConfunc("updatestagevalues %f %f", stage->rotate.hz, stage->rotate.deg);
+			}
+			MN_MaterialEditorStagesToName(stage, stageName, sizeof(stageName) - 1);
+			Q_strcat(materialStagesList, va("%s\n", stageName), sizeof(materialStagesList));
+		}
+	}
 	MN_RegisterText(TEXT_MATERIAL_STAGES, materialStagesList);
 }
 
@@ -304,8 +331,8 @@ static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int butt
 	/** @note here we use "num" to cache the selected image id. We can reuse it on the script with "<num>" */
 	/* have we selected a new image? */
 	if (node->num != id) {
-		const image_t *image = &r_images[id];
-		MN_MaterialEditorUpdate(image);
+		image_t *image = &r_images[id];
+		MN_MaterialEditorUpdate(image, NULL);
 
 		node->num = id;
 
@@ -360,18 +387,6 @@ static void MN_MaterialEditorStart_f (void)
 		return;
 	}
 #endif
-}
-
-static materialStage_t *MN_MaterialEditorGetStage (material_t *material, int stageIndex)
-{
-	materialStage_t *materialStage = material->stages;
-	while (stageIndex-- > 0) {
-		if (materialStage)
-			materialStage = materialStage->next;
-		else
-			break;
-	}
-	return materialStage;
 }
 
 static const value_t materialValues[] = {
@@ -441,13 +456,22 @@ static void MN_MaterialEditorChangeValue_f (void)
 
 		stageID = atoi(Cmd_Argv(2));
 		if (stageID < 0 || stageID >= image->material.num_stages) {
-			Com_Printf("Given stage index (%i) is out of bounds\n", id);
+			Com_Printf("Given stage index (%i) is out of bounds\n", stageID);
 			return;
 		}
 
 		stage = MN_MaterialEditorGetStage(&image->material, stageID);
 
+		stage->flags |= stageType;
+
 		Com_ParseValue(stage, value, val->type, val->ofs, val->size, &bytes);
+
+		/* a texture or envmap means render it */
+		if (stage->flags & (STAGE_TEXTURE | STAGE_ENVMAP))
+			stage->flags |= STAGE_RENDER;
+
+		if (stage->flags & (STAGE_TERRAIN | STAGE_DIRTMAP))
+			stage->flags |= STAGE_LIGHTING;
 	}
 
 	R_ModReloadSurfacesArrays();
@@ -479,8 +503,7 @@ static void MN_MaterialEditorSelectStage_f (void)
 	}
 
 	materialStage = MN_MaterialEditorGetStage(&image->material, stageID);
-
-	MN_ExecuteConfunc("hidestages false %f", materialStage->rotate.hz);
+	MN_MaterialEditorUpdate(image, materialStage);
 }
 
 static void MN_MaterialEditorNewStage_f (void)
@@ -514,7 +537,7 @@ static void MN_MaterialEditorNewStage_f (void)
 		ss->next = s;
 	}
 
-	MN_MaterialEditorUpdate(&r_images[id]);
+	MN_MaterialEditorUpdate(&r_images[id], s);
 }
 
 void MN_RegisterMaterialEditorNode (nodeBehaviour_t *behaviour)

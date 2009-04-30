@@ -15,7 +15,7 @@ window material_editor {
 		pos "30 55"
 		size "400 400"
 		padding 10
-		bgcolor	"0.5 0.5 0.5 1"
+		bgcolor	"0.5 0.5 0.5 0.3"
 		selectcolor "1 1 1 1"
 
 		onViewChange {
@@ -47,7 +47,13 @@ window material_editor {
 	string value {
 		string		"*cvar me_image_id"
 		pos			"480 75"
-		size		"300 20"
+		size		"45 20"
+	}
+
+	string imagename {
+		string		"*cvar me_imagename"
+		pos			"530 75"
+		size		"250 20"
 	}
 
 	/** 
@@ -160,18 +166,24 @@ window material_editor {
 	 */
 	confunc hidestages {
 		*stage_attributes invis <1>
-		*cvar:rotate_hz <2>
+	}
+
+	confunc updatestagevalues {
+		*cvar:rotate_hz <1>
+		*cvar:rotate_deg <2>
 	}
 	
-	panel stage_attributes {
+	panel stages {
 		{
 			pos "480 110"
-			size "300 400"
+			size "280 200"
 		}
 		text stages {
 			textid		TEXT_MATERIAL_STAGES
 			pos			"0 0"
-			size		"280 200"
+			size		"360 200"
+			bgcolor		"0.5 0.5 0.5 0.3"
+			selectcolor	"1 1 1 1"
 			lineheight	20
 			rows		10
 			onClick		{
@@ -179,20 +191,41 @@ window material_editor {
 				cmd "mn_materialeditor_selectstage <cvar:me_image_id> <lineselected>;" 
 			}
 		}
-
+	}
+	panel stage_attributes {
+		{
+			pos "480 320"
+			size "280 400"
+		}
 		textentry rotate_hz
 		{
-			string		"*cvar mn_rotate_hz"
+			string		"*cvar me_rotate_hz"
 			image		ui/button_green_verysmall
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
-			padding		8
+			padding		6
 			font		"f_verysmall"
-			pos			"0 210"
-			size		"256 34"
+			pos			"0 0"
+			size		"60 30"
 			onChange	{
-				cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.hz <cvar:mn_rotate_hz>;" 
+				cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.hz <cvar:me_rotate_hz>;" 
+			}
+		}
+
+		textentry rotate_deg
+		{
+			string		"*cvar me_rotate_deg"
+			image		ui/button_green_verysmall
+			color 		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		6
+			font		"f_verysmall"
+			pos			"64 0"
+			size		"60 30"
+			onChange	{
+				cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.deg <cvar:me_rotate_deg>;" 
 			}
 		}
 	}
@@ -212,23 +245,27 @@ window material_editor {
 		// general cvars
 		*cvar:me_image_id -1
 		*cvar:me_stage_id -1
+		*cvar:me_imagename ""
 		// shader cvars
 		*cvar:me_bump 0
 		*cvar:me_hardness 0
 		*cvar:me_parallax 0
 		*cvar:me_specular 0
 		// stage cvars
-		*cvar:mn_rotate_hz 0
+		*cvar:me_rotate_hz 0
+		*cvar:me_rotate_deg 0
 
+		cmd "hideshaders true 0 0 0 0;"
+		cmd "hidestages true;"
 		cmd "mn_materialeditor;"
 	}
 	
 	func onClose {
 		// general cvars
-		cmd "del me_image_id; del me_stage_id;"
+		cmd "del me_image_id; del me_stage_id; del me_imagename;"
 		// shader cvars
 		cmd "del me_bump; del me_hardness; del me_parallax; del me_specular;"
 		// stage cvars
-		cmd "del mn_rotate_hz;"
+		cmd "del me_rotate_hz; del me_rotate_deg"
 	}
 }
