@@ -39,7 +39,7 @@ static void MN_FuncNodeLoaded (menuNode_t *node)
 	/** @todo move this code into the parser (it should not create a node) */
 	const value_t *prop = MN_GetPropertyFromBehaviour(node->parent->behaviour, node->name);
 	if (prop && prop->type == V_SPECIAL_ACTION) {
-		void **value = (void**) ((intptr_t)node->parent + prop->ofs);
+		void **value = (void**) ((uintptr_t)node->parent + prop->ofs);
 		if (*value == NULL)
 			*value = (void*) node->onClick;
 		else

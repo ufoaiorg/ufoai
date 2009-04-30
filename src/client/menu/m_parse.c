@@ -640,7 +640,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 {
 	const char *errhead = "MN_ParseProperty: unexpected end of file (object";
 	size_t bytes;
-	void *valuePtr = ((byte*)object) + property->ofs;
+	void *valuePtr = (void*) ((uintptr_t)object + property->ofs);
 	int result;
 	const int specialType = property->type & V_SPECIAL_TYPE;
 
