@@ -1100,7 +1100,7 @@ void NET_DatagramBroadcast (struct datagram_socket *s, const char *buf, int len,
 		addr.sin_addr.s_addr = INADDR_BROADCAST;
 		NET_DatagramSend(s, buf, len, (struct sockaddr *)&addr);
 	} else {
-		Sys_Error("Broadcast unsupported on address family %d\n", s->family);
+		Com_Error(ERR_DROP, "Broadcast unsupported on address family %d\n", s->family);
 	}
 }
 

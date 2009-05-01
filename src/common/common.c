@@ -242,18 +242,19 @@ void Com_Error (int code, const char *fmt, ...)
 	default:
 		Com_Printf("%s\n", msg);
 		SV_Shutdown("Server fatal crashed", qfalse);
+
+		/* send an receive net messages a last time */
+		NET_Wait(0);
+
+		if (logfile) {
+			fclose(logfile);
+			logfile = NULL;
+		}
+
 		CL_Shutdown();
+		Qcommon_Shutdown();
+		Sys_Error("Shutdown");
 	}
-
-	/* send an receive net messages a last time */
-	NET_Wait(0);
-
-	if (logfile) {
-		fclose(logfile);
-		logfile = NULL;
-	}
-
-	Sys_Error("Shutdown");
 }
 
 void Com_Drop (void)

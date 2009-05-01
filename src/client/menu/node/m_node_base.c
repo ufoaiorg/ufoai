@@ -176,7 +176,7 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 					 * its own image set, too. We are searching for this second building part here. */
 					secondBuilding = B_GetBuildingTemplate(building->needs);
 					if (!secondBuilding)
-						Sys_Error("Error in ufo-scriptfile - could not find the needed building");
+						Com_Error(ERR_DROP, "Error in ufo-scriptfile - could not find the needed building");
 					Q_strncpyz(image, secondBuilding->image, sizeof(image));
 					/** @todo the view should not edit the model */
 					building->used = 0;
@@ -309,7 +309,7 @@ static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
 	if (base->map[row][col].building) {
 		const building_t *entry = base->map[row][col].building;
 		if (!entry)
-			Sys_Error("MN_BaseMapNodeClick: no entry at %i:%i", x, y);
+			Com_Error(ERR_DROP, "MN_BaseMapNodeClick: no entry at %i:%i", x, y);
 
 		assert(!base->map[row][col].blocked);
 
@@ -375,7 +375,7 @@ static void MN_BaseMapNodeMiddleClick (menuNode_t *node, int x, int y)
 	if (base->map[row][col].building) {
 		building_t *entry = base->map[row][col].building;
 		if (!entry)
-			Sys_Error("MN_BaseMapNodeMiddleClick: no entry at %i:%i\n", x, y);
+			Com_Error(ERR_DROP, "MN_BaseMapNodeMiddleClick: no entry at %i:%i", x, y);
 
 		assert(!base->map[row][col].blocked);
 		B_DrawBuilding(base, entry);

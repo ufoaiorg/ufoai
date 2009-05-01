@@ -84,10 +84,7 @@ void Sys_Error (const char *error, ...)
 	/* change stdin to non blocking */
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
-#ifdef COMPILE_UFO
-	CL_Shutdown();
-	Qcommon_Shutdown();
-#elif COMPILE_MAP
+#ifdef COMPILE_MAP
 	Mem_Shutdown();
 #endif
 

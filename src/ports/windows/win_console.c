@@ -161,8 +161,9 @@ void Sys_Error (const char *error, ...)
 	va_list argptr;
 	char text[1024];
 
-	CL_Shutdown();
-	Qcommon_Shutdown();
+#ifdef COMPILE_MAP
+	Mem_Shutdown();
+#endif
 
 	va_start(argptr, error);
 	Q_vsnprintf(text, sizeof(text), error, argptr);
