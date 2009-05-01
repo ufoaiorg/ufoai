@@ -633,7 +633,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 	const technology_t *tech = RS_GetTechByID("rs_craft_weapon_sparrowhawk");
 
 	if (!tech)
-		Sys_Error("Could not get tech rs_craft_weapon_sparrowhawk");
+		Com_Error(ERR_DROP, "Could not get tech rs_craft_weapon_sparrowhawk");
 
 	assert(aircraft);
 	assert(aircraft->homebase);
@@ -657,7 +657,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 	tech = RS_GetTechByID("rs_craft_weapon_shiva");
 
 	if (!tech)
-		Sys_Error("Could not get tech rs_craft_weapon_shiva");
+		Com_Error(ERR_DROP, "Could not get tech rs_craft_weapon_shiva");
 
 	item = AII_GetAircraftItemByID(tech->provides);
 

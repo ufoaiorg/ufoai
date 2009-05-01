@@ -116,9 +116,9 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 		/* number of soldiers */
 		num = NET_ReadByte(msg);
 		if (num > MAX_WHOLETEAM)
-			Sys_Error("CP_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
+			Com_Error(ERR_DROP, "CP_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
 		else if (num < 0)
-			Sys_Error("CP_ParseCharacterData: NET_ReadShort error (%i)\n", num);
+			Com_Error(ERR_DROP, "CP_ParseCharacterData: NET_ReadShort error (%i)\n", num);
 
 		for (i = 0; i < num; i++) {
 			/* updateCharacter_t */
@@ -236,7 +236,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
 			/* default map for crashsite mission is the crashsite random map assembly */
 			mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
 			if (!mission->mapDef)
-				Sys_Error("Could not find mapdef ufocrash");
+				Com_Error(ERR_DROP, "Could not find mapdef ufocrash");
 			return qtrue;
 		} else {
 			Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
@@ -589,11 +589,11 @@ void CP_InitMarket (qboolean load)
 	/* find the relevant markets */
 	campaign->marketDef = INV_GetEquipmentDefinitionByID(campaign->market);
 	if (!campaign->marketDef)
-		Sys_Error("CP_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
+		Com_Error(ERR_DROP, "CP_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
 				campaign->id, campaign->market);
 	campaign->asymptoticMarketDef = INV_GetEquipmentDefinitionByID(campaign->asymptoticMarket);
 	if (!ccs.curCampaign->asymptoticMarketDef)
-		Sys_Error("CP_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
+		Com_Error(ERR_DROP, "CP_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
 				campaign->id, campaign->asymptoticMarket);
 
 	/* the savegame loading process will get the following values from savefile */
@@ -610,7 +610,7 @@ void CP_InitMarket (qboolean load)
 			continue;
 
 		if (!RS_IsResearched_ptr(csi.ods[i].tech) && campaign->marketDef->num[i] > 0)
-			Sys_Error("CP_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n", csi.ods[i].id, campaign->id);
+			Com_Error(ERR_DROP, "CP_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s", csi.ods[i].id, campaign->id);
 		else
 			/* the other relevant values were already set above */
 			ccs.eMarket.num[i] = campaign->marketDef->num[i];
@@ -640,7 +640,7 @@ static void CL_CampaignRunMarket (void)
 		int asymptoticNumber;
 
 		if (!tech)
-			Sys_Error("No tech that provides '%s'\n", csi.ods[i].id);
+			Com_Error(ERR_DROP, "No tech that provides '%s'\n", csi.ods[i].id);
 
 		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->num[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
 			/* if items are researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,
@@ -1695,7 +1695,7 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 			character_t *chr = &ccs.employees[EMPL_SOLDIER][i].chr;
 			assert(chr);
 			if (!ccs.employees[EMPL_SOLDIER][i].hired) {
-				Sys_Error("Employee %s is reported as being on the aircraft (%s), but he is not hired (%i/%i)",
+				Com_Error(ERR_DROP, "Employee %s is reported as being on the aircraft (%s), but he is not hired (%i/%i)",
 					chr->name, aircraft->id, i, ccs.numEmployees[EMPL_SOLDIER]);
 			}
 			assert(ccs.employees[EMPL_SOLDIER][i].baseHired == aircraft->homebase);
@@ -2161,9 +2161,9 @@ static void CP_CampaignStats_f (void)
 base_t *CP_GetMissionBase (void)
 {
 	if (!ccs.missionaircraft)
-		Sys_Error("CP_GetMissionBase: No missionaircraft given");
+		Com_Error(ERR_DROP, "CP_GetMissionBase: No missionaircraft given");
 	if (!ccs.missionaircraft->homebase)
-		Sys_Error("CP_GetMissionBase: Missionaircraft has no homebase set");
+		Com_Error(ERR_DROP, "CP_GetMissionBase: Missionaircraft has no homebase set");
 	return ccs.missionaircraft->homebase;
 }
 

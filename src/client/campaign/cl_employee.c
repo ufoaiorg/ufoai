@@ -665,7 +665,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 		break;
 	case EMPL_ROBOT:
 		if (!ugvType)
-			Sys_Error("CL_GenerateCharacter: no type given for generation of EMPL_ROBOT employee.");
+			Com_Error(ERR_DROP, "CL_GenerateCharacter: no type given for generation of EMPL_ROBOT employee.");
 
 		rank = "ugv";
 

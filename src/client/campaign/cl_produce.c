@@ -283,7 +283,7 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, qboolean calcul
 
 	assert(comp);
 	if (!calculate && !base)	/* We need base only if this is real disassembling. */
-		Sys_Error("PR_DisassembleItem: No base given");
+		Com_Error(ERR_DROP, "PR_DisassembleItem: No base given");
 
 	for (i = 0; i < comp->numItemtypes; i++) {
 		const objDef_t *compOd = comp->items[i];

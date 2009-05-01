@@ -151,14 +151,14 @@ void AL_FillInContainment (base_t *base)
 		if (!CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
 			continue;
 		if (counter >= MAX_ALIENCONT_CAP)
-			Sys_Error("Overflow in AL_FillInContainment");
+			Com_Error(ERR_DROP, "Overflow in AL_FillInContainment");
 		containment[counter].teamDef = &csi.teamDef[i];	/* Link to global race index. */
 		containment[counter].amount_alive = 0;
 		containment[counter].amount_dead = 0;
 		/* for sanity checking */
 		containment[counter].tech = RS_GetTechByID(csi.teamDef[i].tech);
 		if (!containment[counter].tech)
-			Sys_Error("Could not find a valid tech for '%s'\n", containment[i].teamDef->name);
+			Com_Error(ERR_DROP, "Could not find a valid tech for '%s'\n", containment[i].teamDef->name);
 		counter++;
 		Com_DPrintf(DEBUG_CLIENT, "AL_FillInContainment: type: %s tech-index: %i\n", containment[i].teamDef->name, containment[i].tech->idx);
 	}
@@ -236,7 +236,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 	alienBreathing = RS_IsResearched_ptr(RS_GetTechByID("rs_alien_breathing"));
 	alienBreathingObjDef = INVSH_GetItemByID("brapparatus");
 	if (!alienBreathingObjDef)
-		Sys_Error("AL_AddAliens: Could not get brapparatus item definition");
+		Com_Error(ERR_DROP, "AL_AddAliens: Could not get brapparatus item definition");
 
 	for (i = 0; i < alienCargoTypes; i++) {
 		for (j = 0; j < ccs.numAliensTD; j++) {

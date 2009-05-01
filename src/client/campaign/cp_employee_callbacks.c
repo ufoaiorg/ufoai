@@ -441,7 +441,7 @@ void E_InitCallbacks (void)
 {
 	employeeListNode = MN_GetNodeByPath("employees.employee_list");
 	if (!employeeListNode)
-		Sys_Error("Could not find the 'employee_list' node in 'employees' menu\n");
+		Com_Error(ERR_DROP, "Could not find the 'employee_list' node in 'employees' menu");
 
 	Cmd_AddCommand("employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI");
 	Cmd_AddCommand("employee_list_click", E_EmployeeListClick_f, "Callback for employee_list click function");

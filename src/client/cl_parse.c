@@ -860,7 +860,7 @@ static void CL_ParseResults (struct dbuffer *msg)
 	/* get number of teams */
 	num = NET_ReadByte(msg);
 	if (num > MAX_TEAMS)
-		Sys_Error("Too many teams in result message\n");
+		Com_Error(ERR_DROP, "Too many teams in result message");
 
 	Com_DPrintf(DEBUG_CLIENT, "Receiving results with %i teams.\n", num);
 
@@ -868,7 +868,7 @@ static void CL_ParseResults (struct dbuffer *msg)
 	winner = NET_ReadByte(msg);
 
 	if (cls.team > num)
-		Sys_Error("Team number %d too high (only %d teams)\n", cls.team, num);
+		Com_Error(ERR_DROP, "Team number %d too high (only %d teams)", cls.team, num);
 
 	/* get spawn and alive count */
 	for (i = 0; i < num; i++) {
@@ -1472,7 +1472,7 @@ static void CL_ExecuteBattlescapeEvent (int now, void *data)
 		Com_DPrintf(DEBUG_EVENTSYS, "event(dispatching): %s %p\n", ev_names[event->eType], event);
 		CL_LogEvent(event->eType);
 		if (!ev_func[event->eType])
-			Sys_Error("Event %i doesn't have a callback", event->eType);
+			Com_Error(ERR_FATAL, "Event %i doesn't have a callback", event->eType);
 
 		ev_func[event->eType](event->msg);
 

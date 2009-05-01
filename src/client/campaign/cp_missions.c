@@ -185,7 +185,7 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission)
 	}
 
 	if (!numAvailableGroup)
-		Sys_Error("CP_SetAlienTeamByInterest: no available alien team for mission '%s': interest = %i -- category = %i",
+		Com_Error(ERR_DROP, "CP_SetAlienTeamByInterest: no available alien team for mission '%s': interest = %i -- category = %i",
 			mission->id, mission->initialOverallInterest, mission->category);
 
 	/* Pick up one group randomly */
@@ -239,7 +239,7 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 	Com_DPrintf(DEBUG_CLIENT, "CP_SetAlienEquipmentByInterest: %i available equipment packs for mission %s\n", availableEquipDef, mission->id);
 
 	if (!availableEquipDef)
-		Sys_Error("CP_SetAlienEquipmentByInterest: no available alien equipment for mission '%s'", mission->id);
+		Com_Error(ERR_DROP, "CP_SetAlienEquipmentByInterest: no available alien equipment for mission '%s'", mission->id);
 
 	/* Choose an alien equipment definition -- between 0 and availableStage - 1 */
 	randomNum = rand() % availableEquipDef;
@@ -639,7 +639,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	case INTERESTCATEGORY_MAX:			/* Should not be reached, this mission category is not drawn on geoscape */
 		break;
 	}
-	Sys_Error("Unknown mission interest category");
+	Com_Error(ERR_DROP, "Unknown mission interest category");
 }
 
 /**
@@ -1225,7 +1225,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 
 	mission = ufo->mission;
 	if (!mission)
-		Sys_Error("CP_SpawnCrashSiteMission: No mission correspond to ufo '%s'", ufo->id);
+		Com_Error(ERR_DROP, "CP_SpawnCrashSiteMission: No mission correspond to ufo '%s'", ufo->id);
 
 	assert(mission);
 
@@ -1343,11 +1343,11 @@ int CP_MissionChooseUFO (const mission_t *mission)
 		/* can't be spawned: alien base is the result of base building mission */
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
-		Sys_Error("CP_MissionChooseUFO: Wrong mission category %i\n", mission->category);
+		Com_Error(ERR_DROP, "CP_MissionChooseUFO: Wrong mission category %i", mission->category);
 	}
 
 	if (numTypes > UFO_MAX)
-		Sys_Error("CP_MissionChooseUFO: Too many values UFOs (%i/%i)\n", numTypes, UFO_MAX);
+		Com_Error(ERR_DROP, "CP_MissionChooseUFO: Too many values UFOs (%i/%i)", numTypes, UFO_MAX);
 
 	/* Roll the random number */
 	randNumber = frand();

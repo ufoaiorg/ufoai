@@ -180,7 +180,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 
 					/* This is an alien team */
 					if (group->numAlienTeams >= MAX_TEAMS_PER_MISSION)
-						Sys_Error("CL_ParseAlienTeam: MAX_TEAMS_PER_MISSION hit");
+						Com_Error(ERR_DROP, "CL_ParseAlienTeam: MAX_TEAMS_PER_MISSION hit");
 					teamDef = Com_GetTeamDefinitionByID(token);
 					if (teamDef)
 						group->alienTeams[group->numAlienTeams++] = teamDef;
@@ -601,7 +601,7 @@ components_t *CL_GetComponentsByItem (const objDef_t *item)
 			return comp;
 		}
 	}
-	Sys_Error("CL_GetComponentsByItem: could not find components id for: %s", item->id);
+	Com_Error(ERR_DROP, "CL_GetComponentsByItem: could not find components id for: %s", item->id);
 }
 
 /**

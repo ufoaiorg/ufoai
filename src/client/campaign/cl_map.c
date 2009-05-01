@@ -1949,7 +1949,7 @@ int MAP_GetCivilianNumberByPosition (const vec2_t pos)
 	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION);
 
 	if (MapIsWater(color))
-		Sys_Error("MAP_GetPopulationType: Trying to get number of civilian in a position on water");
+		Com_Error(ERR_DROP, "MAP_GetPopulationType: Trying to get number of civilian in a position on water");
 	else if (MapIsUrban(color))
 		return 10;
 	else if (MapIsSuburban(color))
@@ -2077,7 +2077,7 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 		height = nationsHeight;
 		break;
 	default:
-		Sys_Error("Unknown maptype %i\n", type);
+		Com_Error(ERR_DROP, "Unknown maptype %i\n", type);
 	}
 
 	assert(pos[0] >= -180);
@@ -2172,7 +2172,7 @@ void MAP_Init (void)
 	}
 	R_LoadImage(va("pics/geoscape/%s_terrain", ccs.curCampaign->map), &terrainPic, &terrainWidth, &terrainHeight);
 	if (!terrainPic || !terrainWidth || !terrainHeight)
-		Sys_Error("Couldn't load map mask %s_terrain in pics/geoscape", ccs.curCampaign->map);
+		Com_Error(ERR_DROP, "Couldn't load map mask %s_terrain in pics/geoscape", ccs.curCampaign->map);
 
 	/* load culture mask */
 	if (culturePic) {
@@ -2181,7 +2181,7 @@ void MAP_Init (void)
 	}
 	R_LoadImage(va("pics/geoscape/%s_culture", ccs.curCampaign->map), &culturePic, &cultureWidth, &cultureHeight);
 	if (!culturePic || !cultureWidth || !cultureHeight)
-		Sys_Error("Couldn't load map mask %s_culture in pics/geoscape", ccs.curCampaign->map);
+		Com_Error(ERR_DROP, "Couldn't load map mask %s_culture in pics/geoscape", ccs.curCampaign->map);
 
 	/* load population mask */
 	if (populationPic) {
@@ -2190,7 +2190,7 @@ void MAP_Init (void)
 	}
 	R_LoadImage(va("pics/geoscape/%s_population", ccs.curCampaign->map), &populationPic, &populationWidth, &populationHeight);
 	if (!populationPic || !populationWidth || !populationHeight)
-		Sys_Error("Couldn't load map mask %s_population in pics/geoscape", ccs.curCampaign->map);
+		Com_Error(ERR_DROP, "Couldn't load map mask %s_population in pics/geoscape", ccs.curCampaign->map);
 
 	/* load nations mask */
 	if (nationsPic) {
@@ -2199,7 +2199,7 @@ void MAP_Init (void)
 	}
 	R_LoadImage(va("pics/geoscape/%s_nations", ccs.curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
 	if (!nationsPic || !nationsWidth || !nationsHeight)
-		Sys_Error("Couldn't load map mask %s_nations in pics/geoscape", ccs.curCampaign->map);
+		Com_Error(ERR_DROP, "Couldn't load map mask %s_nations in pics/geoscape", ccs.curCampaign->map);
 
 	MAP_ResetAction();
 }
@@ -2463,6 +2463,6 @@ void MAP_InitStartup (void)
 	for (i = 0; i < GEOSCAPE_IMAGE_MAX; i++) {
 		geoscapeImages[i] = R_FindImage(geoscapeImageNames[i], it_pic);
 		if (geoscapeImages[i] == r_noTexture)
-			Sys_Error("Could not find image: %s", geoscapeImageNames[i]);
+			Com_Error(ERR_DROP, "Could not find image: %s", geoscapeImageNames[i]);
 	}
 }

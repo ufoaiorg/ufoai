@@ -983,7 +983,7 @@ void CL_SetClientState (int state)
 
 	switch (cls.state) {
 	case ca_uninitialized:
-		Sys_Error("CL_SetClientState: Don't set state ca_uninitialized\n");
+		Com_Error(ERR_FATAL, "CL_SetClientState: Don't set state ca_uninitialized\n");
 		break;
 	case ca_sequence:
 		refdef.ready = qtrue;

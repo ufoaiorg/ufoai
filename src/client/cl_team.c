@@ -58,7 +58,7 @@ const char* CL_GetTeamSkinName (int id)
 	case 5:
 		return _("CCCP");
 	}
-	Sys_Error("CL_GetTeamSkinName: Unknown skin id %i - max is %i", id, NUM_TEAMSKINS - 1);
+	Com_Error(ERR_DROP, "CL_GetTeamSkinName: Unknown skin id %i - max is %i", id, NUM_TEAMSKINS - 1);
 }
 
 /**
@@ -431,7 +431,7 @@ static void CL_InitSkin_f (void)
 	node = MN_GetNodeByPath(nodeName);
 
 	if (!node)
-		Sys_Error("CL_InitSkin_f: Could not find node '%s'", nodeName);
+		Com_Error(ERR_FATAL, "CL_InitSkin_f: Could not find node '%s'", nodeName);
 
 	/** link all elements */
 	if (node->u.option.first == NULL) {

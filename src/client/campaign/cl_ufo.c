@@ -91,7 +91,7 @@ const char* UFO_TypeToShortName (ufoType_t type)
 			return list->id;
 		list++;
 	}
-	Sys_Error("UFO_TypeToShortName(): Unknown UFO type %i\n", type);
+	Com_Error(ERR_DROP, "UFO_TypeToShortName(): Unknown UFO type %i", type);
 }
 
 /**
@@ -107,7 +107,7 @@ const char* UFO_CrashedTypeToShortName (ufoType_t type)
 			return list->crashedId;
 		list++;
 	}
-	Sys_Error("UFO_TypeToShortName(): Unknown UFO type %i\n", type);
+	Com_Error(ERR_DROP, "UFO_TypeToShortName(): Unknown UFO type %i", type);
 }
 
 /**
@@ -123,7 +123,7 @@ const char* UFO_TypeToName (ufoType_t type)
 	const technology_t *tech = RS_GetTechByProvided(id);
 	if (tech)
 		return _(tech->name);
-	Sys_Error("UFO_TypeToName(): Unknown UFO type %i - no tech for '%s'\n", type, id);
+	Com_Error(ERR_DROP, "UFO_TypeToName(): Unknown UFO type %i - no tech for '%s'\n", type, id);
 }
 /**
  * @brief Returns names of the UFO is UFO has been reseached.
@@ -884,7 +884,7 @@ qboolean UFO_IsUFOSeenOnGeoscape (const aircraft_t const *ufo)
 {
 #ifdef DEBUG
 	if (ufo->notOnGeoscape)
-		Sys_Error("UFO_IsUFOSeenOnGeoscape: ufo %s can't be used on geoscape", ufo->id);
+		Com_Error(ERR_DROP, "UFO_IsUFOSeenOnGeoscape: ufo %s can't be used on geoscape", ufo->id);
 #endif
 	return (!ufo->landed && ufo->detected);
 }

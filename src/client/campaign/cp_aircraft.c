@@ -310,7 +310,7 @@ static void AII_CarriedItems (const le_t *soldier)
 			ccs.eMission.num[item->item.t->idx]++;
 			tech = item->item.t->tech;
 			if (!tech)
-				Sys_Error("AII_CarriedItems: No tech for %s / %s\n", item->item.t->id, item->item.t->name);
+				Com_Error(ERR_DROP, "AII_CarriedItems: No tech for %s / %s\n", item->item.t->id, item->item.t->name);
 			RS_MarkCollected(tech);
 
 			if (!item->item.t->reload || item->item.a == 0)
@@ -513,7 +513,7 @@ qboolean AIR_IsAircraftOnGeoscape (const aircraft_t * aircraft)
 		return qfalse;
 	}
 
-	Sys_Error("Unknown aircraft status");
+	Com_Error(ERR_DROP, "Unknown aircraft status");
 }
 
 /**
@@ -774,7 +774,7 @@ int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 	case AIRCRAFT_LARGE:
 		return CAP_AIRCRAFT_BIG;
 	}
-	Sys_Error("AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->size);
+	Com_Error(ERR_DROP, "AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->size);
 }
 
 /**
@@ -1215,7 +1215,7 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 						}
 					}
 				} else {
-					Sys_Error("CL_CampaignRunAircraft: aircraft with no homebase (base: %i, aircraft '%s')",
+					Com_Error(ERR_DROP, "CL_CampaignRunAircraft: aircraft with no homebase (base: %i, aircraft '%s')",
 						j, aircraft->id);
 				}
 		}
@@ -1463,7 +1463,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 			if (aircraftTemplate->type == AIRCRAFT_UFO)
 				aircraftTemplate->ufotype = UFO_ShortNameToID(aircraftTemplate->id);
 		} else {
-			Sys_Error("AIR_ParseAircraft: aircraft not found - can not link (%s) - parsed aircraft amount: %i\n",
+			Com_Error(ERR_DROP, "AIR_ParseAircraft: aircraft not found - can not link (%s) - parsed aircraft amount: %i\n",
 					name, ccs.numAircraftTemplates);
 		}
 	}
@@ -1531,7 +1531,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							}
 						}
 						if (i == MAX_ACITEMS)
-							Sys_Error("Unknown value '%s' for slot type\n", token);
+							Com_Error(ERR_DROP, "Unknown value '%s' for slot type\n", token);
 					} else if (!strcmp(token, "position")) {
 						token = Com_EParse(text, errhead, name);
 						if (!*text)
@@ -1552,7 +1552,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							}
 						}
 						if (i == AIR_POSITIONS_MAX)
-							Sys_Error("Unknown value '%s' for slot position\n", token);
+							Com_Error(ERR_DROP, "Unknown value '%s' for slot position\n", token);
 					} else if (!strcmp(token, "contains")) {
 						token = Com_EParse(text, errhead, name);
 						if (!*text)
@@ -1672,7 +1672,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							return;
 						Com_EParseValue(aircraftTemplate, token, V_INT, offsetof(aircraft_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraft_t, stats[0]));
 						if (aircraftTemplate->stats[AIR_STATS_SPEED] == 0)
-							Sys_Error("AIR_ParseAircraft: speed value must be entered before range value");
+							Com_Error(ERR_DROP, "AIR_ParseAircraft: speed value must be entered before range value");
 						aircraftTemplate->stats[AIR_STATS_FUELSIZE] = (int) (2.0f * (float)SECONDS_PER_HOUR * aircraftTemplate->stats[AIR_STATS_FUELSIZE]) /
 							((float) aircraftTemplate->stats[AIR_STATS_SPEED]);
 					} else {
@@ -1954,7 +1954,7 @@ static float AIR_GetDestinationFindRoot (const float c, const float B, const flo
 					fEnd = fMiddle;
 					fdEnd = fdMiddle;
 				} else {
-					Sys_Error("AIR_GetDestinationFindRoot: Error in calculation, can't find root");
+					Com_Error(ERR_DROP, "AIR_GetDestinationFindRoot: Error in calculation, can't find root");
 				}
 				middle = (begin + end) / 2.;
 				fMiddle = AIR_GetDestinationFunction(c, B, speedRatio, middle);
@@ -2179,7 +2179,7 @@ qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
 				aircraft->teamSize++;
 				return qtrue;
 			}
-		Sys_Error("AIR_AddToAircraftTeam: Couldn't find space");
+		Com_Error(ERR_DROP, "AIR_AddToAircraftTeam: Couldn't find space");
 	}
 
 	Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: No space in aircraft\n");
@@ -3129,7 +3129,7 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
 	}
 
 	if (aircraft->teamSize > 0)
-		Sys_Error("AIR_RemoveEmployees: Error, there went something wrong with soldier-removing from aircraft.");
+		Com_Error(ERR_DROP, "AIR_RemoveEmployees: Error, there went something wrong with soldier-removing from aircraft.");
 }
 
 
@@ -3232,7 +3232,7 @@ void AIM_AddEmployeeFromMenu (aircraft_t *aircraft, const int num)
 	/* If this fails it's very likely that employeeList is not filled. */
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Sys_Error("AIM_AddEmployeeFromMenu: Could not get employee %i\n", num);
+		Com_Error(ERR_DROP, "AIM_AddEmployeeFromMenu: Could not get employee %i", num);
 
 	Com_DPrintf(DEBUG_CLIENT, "AIM_AddEmployeeFromMenu: employee with idx %i selected\n", employee->idx);
 

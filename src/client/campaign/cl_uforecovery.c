@@ -56,10 +56,10 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 		/* take the source mail and create a copy of it */
 		mail = CL_NewEventMail("ufo_crashed_report", va("ufo_crashed_report%i", ccs.date.sec), NULL);
 		if (!mail)
-			Sys_Error("UR_SendMail: ufo_crashed_report wasn't found");
+			Com_Error(ERR_DROP, "UR_SendMail: ufo_crashed_report wasn't found");
 		/* we need the source mail body here - this may not be NULL */
 		if (!mail->body)
-			Sys_Error("UR_SendMail: ufo_crashed_report has no mail body");
+			Com_Error(ERR_DROP, "UR_SendMail: ufo_crashed_report has no mail body");
 
 		/* Find components definition. */
 		comp = CL_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));
@@ -76,10 +76,10 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 		/* take the source mail and create a copy of it */
 		mail = CL_NewEventMail("ufo_recovery_report", va("ufo_recovery_report%i", ccs.date.sec), NULL);
 		if (!mail)
-			Sys_Error("UR_SendMail: ufo_recovery_report wasn't found");
+			Com_Error(ERR_DROP, "UR_SendMail: ufo_recovery_report wasn't found");
 		/* we need the source mail body here - this may not be NULL */
 		if (!mail->body)
-			Sys_Error("UR_SendMail: ufo_recovery_report has no mail body");
+			Com_Error(ERR_DROP, "UR_SendMail: ufo_recovery_report has no mail body");
 
 		/* Find components definition. */
 		comp = CL_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));

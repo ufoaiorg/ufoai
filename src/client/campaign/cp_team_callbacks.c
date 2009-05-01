@@ -274,7 +274,7 @@ static void CL_AssignPilot_f (void)
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Sys_Error("CL_AssignPilot_f: No employee at list-pos %i (base: %i)\n", num, base->idx);
+		Com_Error(ERR_DROP, "CL_AssignPilot_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
 	aircraft = base->aircraftCurrent;
 	if (!aircraft)
@@ -409,11 +409,11 @@ static void CL_ActorPilotSelect_f (void)
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Sys_Error("CL_ActorPilotSelect_f: No employee at list-pos %i (base: %i)\n", num, base->idx);
+		Com_Error(ERR_DROP, "CL_ActorPilotSelect_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
 	chr = &employee->chr;
 	if (!chr)
-		Sys_Error("CL_ActorPilotSelect_f: No hired character at list-pos %i (base: %i)\n", num, base->idx);
+		Com_Error(ERR_DROP, "CL_ActorPilotSelect_f: No hired character at list-pos %i (base: %i)", num, base->idx);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
@@ -453,11 +453,11 @@ static void CL_ActorTeamSelect_f (void)
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Sys_Error("CL_ActorTeamSelect_f: No employee at list-pos %i (base: %i)\n", num, base->idx);
+		Com_Error(ERR_DROP, "CL_ActorTeamSelect_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
 	chr = &employee->chr;
 	if (!chr)
-		Sys_Error("CL_ActorTeamSelect_f: No hired character at list-pos %i (base: %i)\n", num, base->idx);
+		Com_Error(ERR_DROP, "CL_ActorTeamSelect_f: No hired character at list-pos %i (base: %i)", num, base->idx);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));

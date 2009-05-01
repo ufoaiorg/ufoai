@@ -850,7 +850,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	transfer = &ccs.transfers[ccs.numTransfers];
 
 	if (transfer->active)
-		Sys_Error("Transfer idx %i shouldn't be active.", ccs.numTransfers);
+		Com_Error(ERR_DROP, "Transfer idx %i shouldn't be active.", ccs.numTransfers);
 
 	/* Initialize transfer.
 	 * calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
@@ -1034,7 +1034,7 @@ static void TR_TransferStart_f (void)
 	transfer = &ccs.transfers[ccs.numTransfers];
 
 	if (transfer->active)
-		Sys_Error("Transfer idx %i shouldn't be active.", ccs.numTransfers);
+		Com_Error(ERR_DROP, "Transfer idx %i shouldn't be active.", ccs.numTransfers);
 
 	/* Initialize transfer. */
 	/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/

@@ -178,7 +178,7 @@ aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base, const int airequipID)
 			/* update position of the arrow in front of the selected base defence */
 			menuNode_t *node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
 			if (!node)
-				Sys_Error("BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
+				Com_Error(ERR_DROP, "BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
 			airequipSelectedSlot = 0;
 		}
@@ -191,7 +191,7 @@ aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base, const int airequipID)
 			/* update position of the arrow in front of the selected base defence */
 			menuNode_t *node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
 			if (!node)
-				Sys_Error("BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
+				Com_Error(ERR_DROP, "BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
 			airequipSelectedSlot = 0;
 		}
@@ -225,7 +225,7 @@ aircraftSlot_t *BDEF_SelectInstallationSlot (installation_t *installation, const
 			/* update position of the arrow in front of the selected base defence */
 			menuNode_t *node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
 			if (!node)
-				Sys_Error("BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
+				Com_Error(ERR_DROP, "BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
 			airequipSelectedSlot = 0;
 		}

@@ -80,7 +80,7 @@ static const objDef_t *BS_GetObjectDefition (const buyListEntry_t *entry)
 	else if (entry->aircraft)
 		return NULL;
 
-	Sys_Error("You should not check an empty buy list entry");
+	Com_Error(ERR_DROP, "You should not check an empty buy list entry");
 }
 
 
@@ -340,7 +340,7 @@ static void BS_BuyType (const base_t *base)
 				BS_AddToList(air_samp->name, AIR_GetStorageSupply(base, air_samp->id, qtrue),
 						AIR_GetStorageSupply(base, air_samp->id, qfalse), air_samp->price);
 				if (j >= MAX_BUYLIST)
-					Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
+					Com_Error(ERR_DROP, "Increase the MAX_BUYLIST value to handle that much items\n");
 				buyList.l[j].item = NULL;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = air_samp;
@@ -369,7 +369,7 @@ static void BS_BuyType (const base_t *base)
 				}
 				BS_AddToList(od->name, base->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 				if (j >= MAX_BUYLIST)
-					Sys_Error("Increase the MAX_FILTERLIST value to handle that much items\n");
+					Com_Error(ERR_DROP, "Increase the MAX_FILTERLIST value to handle that much items\n");
 				buyList.l[j].item = od;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = NULL;
@@ -405,7 +405,7 @@ static void BS_BuyType (const base_t *base)
 					ugv->price);
 
 				if (j >= MAX_BUYLIST)
-					Sys_Error("Increase the MAX_BUYLIST value to handle that much entries.\n");
+					Com_Error(ERR_DROP, "Increase the MAX_BUYLIST value to handle that much entries.\n");
 				buyList.l[j].item = NULL;
 				buyList.l[j].ugv = ugv;
 				buyList.l[j].aircraft = NULL;
@@ -432,7 +432,7 @@ static void BS_BuyType (const base_t *base)
 				}
 
 				if (j >= MAX_BUYLIST)
-					Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
+					Com_Error(ERR_DROP, "Increase the MAX_BUYLIST value to handle that much items\n");
 				buyList.l[j].item = od;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = NULL;
@@ -462,7 +462,7 @@ static void BS_BuyType (const base_t *base)
 					}
 
 					if (j >= MAX_BUYLIST)
-						Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
+						Com_Error(ERR_DROP, "Increase the MAX_BUYLIST value to handle that much items\n");
 					buyList.l[j].item = od;
 					buyList.l[j].ugv = NULL;
 					buyList.l[j].aircraft = NULL;
@@ -745,7 +745,7 @@ static void BS_BuyItem_f (void)
 			/* Check if we have a weapon for this ugv in the market and there is enough storage-room for it. */
 			const objDef_t *ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 			if (!ugvWeapon)
-				Sys_Error("BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
+				Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 
 			ugvWeaponBuyable = qtrue;
 			if (!ccs.eMarket.num[ugvWeapon->idx])
@@ -824,7 +824,7 @@ static void BS_SellItem_f (void)
 		/* Check if we have a weapon for this ugv in the market to sell it. */
 		ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 		if (!ugvWeapon)
-			Sys_Error("BS_BuyItem_f: Could not get wepaon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
+			Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get wepaon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 
 		employee = E_GetHiredRobot(base, ugv);
 		if (!E_UnhireEmployee(employee)) {

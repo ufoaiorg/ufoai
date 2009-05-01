@@ -637,13 +637,13 @@ void CIN_ROQ_PlayCinematic (const char *fileName)
 			switch (roqCin.chunk.id) {
 			case ROQ_SOUND_MONO:
 				if (roqCin.soundChannels == 2)
-					Sys_Error("Mixed sound channels in roq file\n");
+					Com_Error(ERR_DROP, "Mixed sound channels in roq file");
 				roqCin.soundChannels = 1;
 				CIN_ROQ_DecodeSoundMono(roqCin.data, samples);
 				break;
 			case ROQ_SOUND_STEREO:
 				if (roqCin.soundChannels == 1)
-					Sys_Error("Mixed sound channels in roq file\n");
+					Com_Error(ERR_DROP, "Mixed sound channels in roq file");
 				roqCin.soundChannels = 2;
 				CIN_ROQ_DecodeSoundStereo(roqCin.data, samples);
 				break;

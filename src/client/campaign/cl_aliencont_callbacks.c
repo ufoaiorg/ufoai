@@ -106,7 +106,7 @@ static void AC_ResearchAlien_f (void)
 
 	tech = aliencontCurrent->tech;
 	if (!tech)
-		Sys_Error("aliencontCurrent without tech pointer");
+		Com_Error(ERR_DROP, "aliencontCurrent without tech pointer");
 
 	if (!RS_IsResearched_ptr(tech))
 		MN_PushMenu("research", NULL);

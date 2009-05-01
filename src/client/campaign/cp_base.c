@@ -573,7 +573,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 				continue;
 			break;
 		default:
-			Sys_Error("B_RemoveAircraftExceedingCapacity: Unknown type of aircraft '%i'\n", aircraftSize);
+			Com_Error(ERR_DROP, "B_RemoveAircraftExceedingCapacity: Unknown type of aircraft '%i'", aircraftSize);
 		}
 
 		/** @todo move aircraft being transfered to the destBase */
@@ -623,7 +623,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	if (!base->map[(int)building->pos[0]][(int)building->pos[1]].building
 	 || base->map[(int)building->pos[0]][(int)building->pos[1]].building != building) {
-		Sys_Error("B_BuildingDestroy: building mismatch at base %i pos %i,%i.\n", base->idx, (int)building->pos[0], (int)building->pos[1]);
+		Com_Error(ERR_DROP, "B_BuildingDestroy: building mismatch at base %i pos %i,%i.", base->idx, (int)building->pos[0], (int)building->pos[1]);
 	}
 
 	/* Remove the building from the base map */
@@ -1036,7 +1036,7 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 		/* @todo if there is no more space for mandatory building, remove a non mandatory one
 		 * or build mandatory ones first */
 		if (!B_GetBuildingStatus(base, building->buildingType))
-			Sys_Error("B_BuildFromTemplate: Cannot build base. No space for it's buildings!.");
+			Com_Error(ERR_DROP, "B_BuildFromTemplate: Cannot build base. No space for it's buildings!");
 	}
 }
 
@@ -1052,7 +1052,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 	campaign_t *campaign = ccs.curCampaign;
 
 	if (campaign->firstBaseTemplate[0] == '\0')
-		Sys_Error("No base template for setting up the first base given");
+		Com_Error(ERR_DROP, "No base template for setting up the first base given");
 
 	RS_MarkResearchable(qtrue, base);
 	CP_InitMarket(qfalse);
@@ -1069,14 +1069,14 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		if (B_GetBuildingStatus(base, B_HANGAR)) {
 			aircraft_t *aircraft = AIR_GetAircraft("craft_drop_firebird");
 			if (!aircraft)
-				Sys_Error("Could not find craft_drop_firebird definition");
+				Com_Error(ERR_DROP, "Could not find craft_drop_firebird definition");
 			AIR_NewAircraft(base, "craft_drop_firebird");
 			CL_UpdateCredits(ccs.credits - aircraft->price);
 		}
 		if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 			aircraft_t *aircraft = AIR_GetAircraft("craft_inter_stiletto");
 			if (!aircraft)
-				Sys_Error("Could not find craft_inter_stiletto definition");
+				Com_Error(ERR_DROP, "Could not find craft_inter_stiletto definition");
 			AIR_NewAircraft(base, "craft_inter_stiletto");
 			CL_UpdateCredits(ccs.credits - aircraft->price);
 		}
@@ -1113,7 +1113,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 				}
 				break;
 			default:
-				Sys_Error("B_SetUpFirstBase: Invalid aircraft type.");
+				Com_Error(ERR_DROP, "B_SetUpFirstBase: Invalid aircraft type.");
 			}
 		}
 	} else {
@@ -1321,9 +1321,9 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 {
 #ifdef DEBUG
 	if (!base)
-		Sys_Error("no current base\n");
+		Com_Error(ERR_DROP, "no current base\n");
 	if (!template)
-		Sys_Error("no current building\n");
+		Com_Error(ERR_DROP, "no current building\n");
 #endif
 	if (!B_CheckCredits(template->fixCosts)) {
 		MN_Popup(_("Notice"), _("Not enough credits to build this\n"));
@@ -1577,7 +1577,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 	}
 
 	if (ccs.numBuildingTemplates >= MAX_BUILDINGS)
-		Sys_Error("B_ParseBuildings: too many buildings");
+		Com_Error(ERR_DROP, "B_ParseBuildings: too many buildings");
 
 	if (!link) {
 		for (i = 0; i < ccs.numBuildingTemplates; i++) {
@@ -1656,13 +1656,13 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 	} else {
 		building = B_GetBuildingTemplate(name);
 		if (!building)
-			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", name);
+			Com_Error(ERR_DROP, "B_ParseBuildings: Could not find building with id %s\n", name);
 
 		tech_link = RS_GetTechByProvided(name);
 		if (tech_link)
 			building->tech = tech_link;
 		else if (building->visible)
-			Sys_Error("B_ParseBuildings: Could not find tech that provides %s\n", name);
+			Com_Error(ERR_DROP, "B_ParseBuildings: Could not find tech that provides %s\n", name);
 
 		do {
 			/* get the name type */
@@ -1675,7 +1675,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 			if (!strcmp(token, "depends")) {
 				dependsBuilding = B_GetBuildingTemplate(Com_EParse(text, errhead, name));
 				if (!dependsBuilding)
-					Sys_Error("Could not find building depend of %s\n", building->id);
+					Com_Error(ERR_DROP, "Could not find building depend of %s\n", building->id);
 				building->dependsBuilding = dependsBuilding;
 				if (!*text)
 					return;
@@ -1732,7 +1732,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	}
 
 	if (ccs.numBaseTemplates >= MAX_BASETEMPLATES)
-		Sys_Error("B_ParseBaseTemplate: too many base templates");
+		Com_Error(ERR_DROP, "B_ParseBaseTemplate: too many base templates");
 
 	/* create new Template */
 	template = &ccs.baseTemplates[ccs.numBaseTemplates];
@@ -1753,7 +1753,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 			break;
 
 		if (template->numBuildings >= MAX_BASEBUILDINGS)
-			Sys_Error("B_ParseBaseTemplate: too many buildings");
+			Com_Error(ERR_DROP, "B_ParseBaseTemplate: too many buildings");
 
 		/* check if building type is known */
 		tile = &template->buildings[template->numBuildings];
@@ -1763,13 +1763,13 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 			if (!strcmp(ccs.buildingTemplates[i].id, token)) {
 				tile->building = &ccs.buildingTemplates[i];
 				if (!tile->building->moreThanOne && buildingNums[i] > 0)
-					Sys_Error("B_ParseBaseTemplate: Found more %s than allowed in template %s", token, template->id);
+					Com_Error(ERR_DROP, "B_ParseBaseTemplate: Found more %s than allowed in template %s", token, template->id);
 				buildingNums[i]++;
 				break;
 			}
 
 		if (!tile->building)
-			Sys_Error("B_ParseBaseTemplate: Could not find building with id %s\n", template->id);
+			Com_Error(ERR_DROP, "B_ParseBaseTemplate: Could not find building with id %s\n", template->id);
 
 		/* get the position */
 		token = Com_EParse(text, errhead, template->id);
@@ -1782,12 +1782,12 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		tile->posX = pos[0];
 		tile->posY = pos[1];
 		if (tile->posX < 0 || tile->posX >= BASE_SIZE || tile->posY < 0 || tile->posY >= BASE_SIZE)
-			Sys_Error("Invalid template coordinates for building %s in template %s given",
+			Com_Error(ERR_DROP, "Invalid template coordinates for building %s in template %s given",
 					tile->building->id, template->id);
 
 		/* check for buildings on same position */
 		if (map[tile->posX][tile->posY])
-			Sys_Error("Base template '%s' has ambiguous positions for buildings set.", template->id);
+			Com_Error(ERR_DROP, "Base template '%s' has ambiguous positions for buildings set.", template->id);
 		map[tile->posX][tile->posY] = qtrue;
 	} while (*text);
 
@@ -1795,7 +1795,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t *building = &ccs.buildingTemplates[i];
 		if (building && building->mandatory && !buildingNums[i]) {
-			Sys_Error("Every base template needs one '%s'! '%s' has none.", building->id, template->id);
+			Com_Error(ERR_DROP, "Every base template needs one '%s'! '%s' has none.", building->id, template->id);
 		}
         }
 }
@@ -2008,7 +2008,7 @@ static void CL_SwapSkills (chrList_t *team)
 										CL_SwapSkill(cp1, cp2, ABILITY_MIND);
 									break;
 								default:
-									Sys_Error("CL_SwapSkills: illegal skill %i.\n", skill);
+									Com_Error(ERR_DROP, "CL_SwapSkills: illegal skill %i.\n", skill);
 								}
 							} else if (no1 < no2) {
 								if (cp2->score.skills[skill] < cp1->score.skills[skill])
@@ -2034,7 +2034,7 @@ static void CL_SwapSkills (chrList_t *team)
 										CL_SwapSkill(cp1, cp2, ABILITY_MIND);
 									break;
 								default:
-									Sys_Error("CL_SwapSkills: illegal skill %i.\n", skill);
+									Com_Error(ERR_DROP, "CL_SwapSkills: illegal skill %i.\n", skill);
 								}
 							}
 						}
@@ -2479,7 +2479,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	for (i = 0; i < aircraft->itemtypes; i++) {
 		technology_t *tech = cargo[i].item->tech;
 		if (!tech)
-			Sys_Error("B_SellOrAddItems: No tech for %s / %s\n", cargo[i].item->id, cargo[i].item->name);
+			Com_Error(ERR_DROP, "B_SellOrAddItems: No tech for %s / %s\n", cargo[i].item->id, cargo[i].item->name);
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
 			/* Items not researched cannot be thrown out even if not enough space in storage. */
@@ -2641,7 +2641,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		}
 		break;
 	default:
-		Sys_Error("Unknown capacity limit for this base: %i \n", cap);
+		Com_Error(ERR_DROP, "Unknown capacity limit for this base: %i \n", cap);
 		break;
 	}
 }
@@ -3263,7 +3263,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 	}
 
 	if (i == csi.numODs)
-		Sys_Error("Could not find "ANTIMATTER_TECH_ID" object definition");
+		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
 
 	if (add) {	/* Adding. */
 		if (base->capacities[CAP_ANTIMATTER].cur + (amount * ANTIMATTER_SIZE) <= base->capacities[CAP_ANTIMATTER].max) {

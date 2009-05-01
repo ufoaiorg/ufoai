@@ -258,7 +258,7 @@ static inline void CL_ParticleLoadArt (ptlArt_t *a, byte type)
 		a->art.model = R_RegisterModelShort(a->name);
 		break;
 	default:
-		Sys_Error("CL_ParticleLoadArt: Unknown art type\n");
+		Com_Error(ERR_DROP, "CL_ParticleLoadArt: Unknown art type\n");
 	}
 }
 
@@ -385,14 +385,14 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			/* get pics and models */
 			if (offsetof(ptl_t, pic) == -cmd->ref) {
 				if (stackType[--s] != V_STRING)
-					Sys_Error("Bad type '%s' for pic (particle %s)\n", vt_names[stackType[s - 1]], p->ctrl->name);
+					Com_Error(ERR_DROP, "Bad type '%s' for pic (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
 				p->pic = CL_ParticleGetArt((char *) stackPtr[s], p->frame, ART_PIC);
 				e = (byte *) stackPtr[s] - cmdStack;
 				break;
 			}
 			if (offsetof(ptl_t, model) == -cmd->ref) {
 				if (stackType[--s] != V_STRING)
-					Sys_Error("Bad type '%s' for model (particle %s)\n", vt_names[stackType[s - 1]], p->ctrl->name);
+					Com_Error(ERR_DROP, "Bad type '%s' for model (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
 				p->model = CL_ParticleGetArt((char *) stackPtr[s], 0, ART_MODEL);
 				e = (byte *) stackPtr[s] - cmdStack;
 				break;
@@ -995,7 +995,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParsePtlCmds: particle cmds \"%s\" without body ignored\n", name);
 		if (numPtlCmds >= MAX_PTLCMDS)
-			Sys_Error("CL_ParsePtlCmds: MAX_PTLCMDS exceeded\n");
+			Com_Error(ERR_DROP, "CL_ParsePtlCmds: MAX_PTLCMDS exceeded");
 		pc = &ptlCmd[numPtlCmds++];
 		memset(pc, 0, sizeof(*pc));
 		return;
@@ -1012,7 +1012,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 			if (!strcmp(token, pc_strings[i])) {
 				/* allocate an new cmd */
 				if (numPtlCmds >= MAX_PTLCMDS)
-					Sys_Error("CL_ParsePtlCmds: MAX_PTLCMDS exceeded\n");
+					Com_Error(ERR_DROP, "CL_ParsePtlCmds: MAX_PTLCMDS exceeded");
 				pc = &ptlCmd[numPtlCmds++];
 				memset(pc, 0, sizeof(*pc));
 
@@ -1146,7 +1146,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 
 				/* translate set to a push and pop */
 				if (numPtlCmds >= MAX_PTLCMDS)
-					Sys_Error("CL_ParsePtlCmds: MAX_PTLCMDS exceeded\n");
+					Com_Error(ERR_DROP, "CL_ParsePtlCmds: MAX_PTLCMDS exceeded");
 				pc = &ptlCmd[numPtlCmds++];
 				pc->cmd = PC_PUSH;
 				pc->type = pp->type;
@@ -1169,7 +1169,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 
 	/* terminalize cmd chain */
 	if (numPtlCmds >= MAX_PTLCMDS)
-		Sys_Error("CL_ParsePtlCmds: MAX_PTLCMDS exceeded\n");
+		Com_Error(ERR_DROP, "CL_ParsePtlCmds: MAX_PTLCMDS exceeded");
 	pc = &ptlCmd[numPtlCmds++];
 	memset(pc, 0, sizeof(*pc));
 }

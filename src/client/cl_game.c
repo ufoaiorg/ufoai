@@ -335,7 +335,7 @@ int GAME_GetCurrentTeam (void)
 		}
 		list++;
 	}
-	Sys_Error("GAME_GetCurrentTeam: Could not determine gamemode");
+	Com_Error(ERR_FATAL, "GAME_GetCurrentTeam: Could not determine gamemode");
 }
 
 equipDef_t *GAME_GetEquipmentDefinition (void)
@@ -350,7 +350,7 @@ equipDef_t *GAME_GetEquipmentDefinition (void)
 		}
 		list++;
 	}
-	Sys_Error("GAME_GetEquipmentDefinition: Could not determine gamemode");
+	Com_Error(ERR_FATAL, "GAME_GetEquipmentDefinition: Could not determine gamemode");
 }
 
 qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
@@ -368,7 +368,7 @@ qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
 		}
 		list++;
 	}
-	Sys_Error("GAME_TeamIsKnown: Could not determine gamemode");
+	Com_Error(ERR_FATAL, "GAME_TeamIsKnown: Could not determine gamemode");
 }
 
 void GAME_CharacterCvars (const character_t *chr)
@@ -383,7 +383,7 @@ void GAME_CharacterCvars (const character_t *chr)
 		}
 		list++;
 	}
-	Sys_Error("GAME_CharacterCvars: Could not determine gamemode");
+	Com_Error(ERR_FATAL, "GAME_CharacterCvars: Could not determine gamemode");
 }
 
 /**
@@ -411,7 +411,7 @@ void GAME_Drop (void)
 		}
 		list++;
 	}
-	Sys_Error("GAME_Drop: Could not determine gamemode");
+	Com_Error(ERR_FATAL, "GAME_Drop: Could not determine gamemode");
 }
 
 /**

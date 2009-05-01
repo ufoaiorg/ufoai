@@ -253,7 +253,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
 	Cvar_Set("mn_aircraftname", _(aircraft->name));
 	if (!aircraft->tech)
-		Sys_Error("No technology assigned to aircraft '%s'", aircraft->id);
+		Com_Error(ERR_DROP, "No technology assigned to aircraft '%s'", aircraft->id);
 	Cvar_Set("mn_aircraft_model", aircraft->tech->mdl);
 
 	/* generate aircraft info text */

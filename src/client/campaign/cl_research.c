@@ -394,13 +394,13 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 			/* Get the index in the techtree. */
 			req->link = RS_GetTechByID(req->id);
 			if (!req->link)
-				Sys_Error("RS_AssignTechLinks: Could not get tech definition for '%s'", req->id);
+				Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get tech definition for '%s'", req->id);
 			break;
 		case RS_LINK_ITEM:
 			/* Get index in item-list. */
 			req->link = INVSH_GetItemByID(req->id);
 			if (!req->link)
-				Sys_Error("RS_AssignTechLinks: Could not get item definition for '%s'", req->id);
+				Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get item definition for '%s'", req->id);
 			break;
 		case RS_LINK_EVENT:
 			/** @todo Get index of event in event-list. */
@@ -409,7 +409,7 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 		case RS_LINK_ALIEN_DEAD:
 			req->link = Com_GetTeamDefinitionByID(req->id);
 			if (!req->link)
-				Sys_Error("RS_AssignTechLinks: Could not get alien type (alien or alien_dead) definition for '%s'", req->id);
+				Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get alien type (alien or alien_dead) definition for '%s'", req->id);
 			break;
 		default:
 			break;
@@ -478,7 +478,7 @@ void RS_InitTree (qboolean load)
 		tech = RS_GetTechByProvided(od->id);
 		od->tech = tech;
 		if (!od->tech)
-			Sys_Error("RS_InitTree: Could not find a valid tech for item %s", od->id);
+			Com_Error(ERR_DROP, "RS_InitTree: Could not find a valid tech for item %s", od->id);
 	}
 
 	for (i = 0, tech = ccs.technologies; i < ccs.numTechnologies; i++, tech++) {
@@ -588,7 +588,7 @@ void RS_InitTree (qboolean load)
 		/* Check if we finally have a name for the tech. */
 		if (!tech->name) {
 			if (tech->type != RS_LOGIC)
-				Sys_Error("RS_InitTree: \"%s\" - no name found!", tech->id);
+				Com_Error(ERR_DROP, "RS_InitTree: \"%s\" - no name found!", tech->id);
 		} else {
 			/* Fill in subject lines of tech-mails.
 			 * The tech-name is copied if nothing is defined. */
@@ -1256,7 +1256,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						if (*token == '_')
 							token++;
 						else
-							Sys_Error("RS_ParseTechnologies: '%s' No gettext string for description '%s'. Abort.\n", name, descTemp->tech[descTemp->numDescriptions]);
+							Com_Error(ERR_DROP, "RS_ParseTechnologies: '%s' No gettext string for description '%s'. Abort.\n", name, descTemp->tech[descTemp->numDescriptions]);
 
 						descTemp->text[descTemp->numDescriptions] = Mem_PoolStrDup(token, cl_campaignPool, 0);
 						descTemp->numDescriptions++;
@@ -1810,7 +1810,7 @@ void RS_PostLoadInit (void)
 #ifdef DEBUG
 		if (t->statusResearch == RS_RUNNING && t->scientists > 0) {
 			if (!t->base)
-				Sys_Error("No base but research is running and scientists are assigned");
+				Com_Error(ERR_DROP, "No base but research is running and scientists are assigned");
 		}
 #endif
 		techBases = techBases->next->next;

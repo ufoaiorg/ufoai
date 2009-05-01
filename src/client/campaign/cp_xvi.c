@@ -106,7 +106,7 @@ void CP_XVIInit (void)
 {
 	rsAlienXVI = RS_GetTechByID(XVI_EVENT_NAME);
 	if (!rsAlienXVI)
-		Sys_Error("CP_XVIInit: Could not find tech definition for " XVI_EVENT_NAME);
+		Com_Error(ERR_DROP, "CP_XVIInit: Could not find tech definition for " XVI_EVENT_NAME);
 }
 
 /**
@@ -172,7 +172,7 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 
 	out = (byte *)Mem_PoolAlloc(width * height, vid_imagePool, 0);
 	if (!out)
-		Sys_Error("TagMalloc: failed on allocation of %i bytes for XVI_Load", width * height);
+		Com_Error(ERR_DROP, "TagMalloc: failed on allocation of %i bytes for XVI_Load", width * height);
 
 	memset(out, defaultval, sizeof(out)); /*setting the whole array to the defaultval. That saves much memory in saving */
 

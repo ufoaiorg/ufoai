@@ -135,7 +135,7 @@ static inline const char* CP_ToDifficultyName (int difficulty)
 	case 4:
 		return _("Insane");
 	default:
-		Sys_Error("Unknown difficulty id %i\n", difficulty);
+		Com_Error(ERR_DROP, "Unknown difficulty id %i", difficulty);
 	}
 }
 

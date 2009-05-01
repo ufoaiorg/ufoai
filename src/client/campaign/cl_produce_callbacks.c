@@ -597,7 +597,7 @@ static void PR_ProductionListClick_f (void)
 			}
 
 			if (!od->tech)
-				Sys_Error("PR_ProductionListClick_f: No tech pointer for object '%s'\n", od->id);
+				Com_Error(ERR_DROP, "PR_ProductionListClick_f: No tech pointer for object '%s'", od->id);
 			/* We can only produce items that fulfill the following conditions... */
 			if (RS_IsResearched_ptr(od->tech) && od->tech->produceTime >= 0			/* Item is producible */
 			 && INV_ItemMatchesFilter(od, produceCategory)) {	/* Item is in the current inventory-category */
@@ -1003,7 +1003,7 @@ void PR_InitCallbacks (void)
 	node2 = MN_GetNodeByPath("production.prodlist_queued");
 
 	if (!prodlist || !node1 || !node2)
-		Sys_Error("Could not find the needed menu nodes in production menu\n");
+		Com_Error(ERR_DROP, "Could not find the needed menu nodes in production menu");
 
 	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
 	Cmd_AddCommand("prod_type", PR_ProductionType_f, NULL);

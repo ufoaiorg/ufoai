@@ -303,7 +303,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 	mission->mapDef = Com_GetMapDefinitionByID("baseattack");
 	if (!mission->mapDef) {
 		CP_MissionRemove(mission);
-		Sys_Error("Could not find mapdef baseattack");
+		Com_Error(ERR_DROP, "Could not find mapdef baseattack");
 		return;
 	}
 

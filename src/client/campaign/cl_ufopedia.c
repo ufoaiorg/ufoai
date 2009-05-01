@@ -209,7 +209,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 			if (req->type == RS_LINK_TECH) {
 				technology_t *techRequired = req->link;
 				if (!techRequired)
-					Sys_Error("Could not find the tech for '%s'", req->id);
+					Com_Error(ERR_DROP, "Could not find the tech for '%s'", req->id);
 
 				/** Only display tech if it is ok to do so.
 				 * @todo If it is one (a logic tech) we may want to re-iterate from its requirements? */
@@ -235,7 +235,7 @@ static void UP_ArmourDescription (const technology_t* t)
 	int i;
 	const objDef_t *od = INVSH_GetItemByID(t->provides);
 	if (!od)
-		Sys_Error("Could not find armour definition '%s' which should have been provided by '%s'", t->provides, t->id);
+		Com_Error(ERR_DROP, "Could not find armour definition '%s' which should have been provided by '%s'", t->provides, t->id);
 
 	/* select item */
 	Cvar_Set("mn_upmodel_top", "");
@@ -536,7 +536,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 				break;
 			default:
-				Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for date.", type);
+				Com_Error(ERR_DROP, "UP_SetMailHeader: unhandled techMailType_t %i for date.", type);
 			}
 		}
 		if (from != NULL) {
@@ -555,7 +555,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 					subjectType = _("Re: ");
 					break;
 				default:
-					Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for subject.", type);
+					Com_Error(ERR_DROP, "UP_SetMailHeader: unhandled techMailType_t %i for subject.", type);
 				}
 			}
 		} else {
@@ -689,7 +689,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 			MN_ResetData(TEXT_UFOPEDIA);
 		}
 	} else {
-		Sys_Error("UP_Article: No mail or tech given");
+		Com_Error(ERR_DROP, "UP_Article: No mail or tech given");
 	}
 }
 
@@ -812,7 +812,7 @@ static void UP_Content_f (void)
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researchedEntries) {
 			if (numChaptersDisplayList >= MAX_PEDIACHAPTERS)
-				Sys_Error("MAX_PEDIACHAPTERS hit");
+				Com_Error(ERR_DROP, "MAX_PEDIACHAPTERS hit");
 			upChaptersDisplayList[numChaptersDisplayList++] = &ccs.upChapters[i];
 			/** @todo integrate images into text better */
 			Q_strcat(upBuffer, va(TEXT_IMAGETAG"icons/ufopedia_%s %s\n", ccs.upChapters[i].id, _(ccs.upChapters[i].name)), sizeof(upBuffer));
@@ -904,7 +904,7 @@ static void UP_Prev_f (void)
 			tech = tech->upPrev;
 			assert(tech);
 			if (tech == tech->upPrev)
-				Sys_Error("UP_Prev_f: The 'prev': %s entry is equal to '%s'.", tech->upPrev->id, tech->id);
+				Com_Error(ERR_DROP, "UP_Prev_f: The 'prev': %s entry is equal to '%s'.", tech->upPrev->id, tech->id);
 		} while (tech->upPrev && !UP_TechGetsDisplayed(tech));
 
 		if (UP_TechGetsDisplayed(tech)) {
@@ -934,7 +934,7 @@ static void UP_Next_f (void)
 		do {
 			tech = tech->upNext;
 			if (tech == tech->upNext)
-				Sys_Error("UP_Next_f: The 'next': %s entry is equal to '%s'.", tech->upNext->id, tech->id);
+				Com_Error(ERR_DROP, "UP_Next_f: The 'next': %s entry is equal to '%s'.", tech->upNext->id, tech->id);
 		} while (tech->upNext && !UP_TechGetsDisplayed(tech));
 
 		if (UP_TechGetsDisplayed(tech)) {
@@ -1047,7 +1047,7 @@ static void UP_TechTreeClick_f (void)
 
 	techRequired = required_AND->links[num].link;
 	if (!techRequired)
-		Sys_Error("Could not find the tech for '%s'", required_AND->links[num].id);
+		Com_Error(ERR_DROP, "Could not find the tech for '%s'", required_AND->links[num].id);
 
 	/* maybe there is no UFOpaedia chapter assigned - this tech should not be opened at all */
 	if (!techRequired->upChapter)
@@ -1241,7 +1241,7 @@ static void UP_OpenMail_f (void)
 
 	mailClientListNode = MN_GetNodeByPath("mailclient.mailclient");
 	if (!mailClientListNode)
-		Sys_Error("Could not find the mailclient node in mailclient menu");
+		Com_Error(ERR_DROP, "Could not find the mailclient node in mailclient menu");
 
 	mailBuffer[0] = '\0';
 
