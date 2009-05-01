@@ -126,7 +126,7 @@ void R_InitializeXVIOverlay (const char *mapname, byte *data, int width, int hei
 	/* Load the XVI texture */
 	R_LoadImage(va("pics/geoscape/%s_xvi_overlay", mapname), &r_xviPic, &xviWidth, &xviHeight);
 	if (!r_xviPic || !xviWidth || !xviHeight)
-		Sys_Error("Couldn't load map mask %s_xvi_overlay in pics/geoscape", mapname);
+		Com_Error(ERR_FATAL, "Couldn't load map mask %s_xvi_overlay in pics/geoscape", mapname);
 
 	if (data && (width == xviWidth) && (height == xviHeight))
 		setToZero = qfalse;

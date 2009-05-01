@@ -96,13 +96,13 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 	int modfilelen;
 
 	if (name[0] == '\0')
-		Sys_Error("R_ModForName: NULL name");
+		Com_Error(ERR_FATAL, "R_ModForName: NULL name");
 
 	/* inline models are grabbed only from worldmodel */
 	if (name[0] == '*') {
 		i = atoi(name + 1) - 1;
 		if (i < 0 || i >= r_numModelsInline)
-			Sys_Error("bad inline model number '%s' (%i/%i)", name, i, r_numModelsInline);
+			Com_Error(ERR_FATAL, "bad inline model number '%s' (%i/%i)", name, i, r_numModelsInline);
 		return &r_modelsInline[i];
 	}
 
@@ -119,7 +119,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 
 	if (i == r_numModels) {
 		if (r_numModels == MAX_MOD_KNOWN)
-			Sys_Error("r_numModels == MAX_MOD_KNOWN");
+			Com_Error(ERR_FATAL, "r_numModels == MAX_MOD_KNOWN");
 		r_numModels++;
 	}
 
@@ -130,7 +130,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 	modfilelen = FS_LoadFile(mod->name, &buf);
 	if (!buf) {
 		if (crash)
-			Sys_Error("R_ModForName: %s not found", mod->name);
+			Com_Error(ERR_FATAL, "R_ModForName: %s not found", mod->name);
 		memset(mod->name, 0, sizeof(mod->name));
 		r_numModels--;
 		return NULL;
@@ -153,14 +153,14 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 		break;
 
 	case IDBSPHEADER:
-		Sys_Error("R_ModForName: don't load BSPs with this function");
+		Com_Error(ERR_FATAL, "R_ModForName: don't load BSPs with this function");
 		break;
 
 	default:
 		if (!Q_strcasecmp(mod->name + strlen(mod->name) - 4, ".obj"))
 			R_LoadObjModel(mod, buf, modfilelen);
 		else
-			Sys_Error("R_ModForName: unknown fileid for %s", mod->name);
+			Com_Error(ERR_FATAL, "R_ModForName: unknown fileid for %s", mod->name);
 	}
 
 	FS_FreeFile(buf);

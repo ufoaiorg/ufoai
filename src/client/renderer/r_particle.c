@@ -69,7 +69,7 @@ static void R_GetSpriteVectors (const ptl_t *p, vec3_t right, vec3_t up)
 		break;
 
 	default:
-		Sys_Error("R_GetSpriteVectors: unknown style");
+		Com_Error(ERR_FATAL, "R_GetSpriteVectors: unknown style");
 	}
 }
 

@@ -223,7 +223,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 		hwHack = NULL;
 		break;
 	default:
-		Sys_Error("R_PreprocessShader: Unknown hardwaretype");
+		Com_Error(ERR_FATAL, "R_PreprocessShader: Unknown hardwaretype");
 	}
 
 	i = 0;
@@ -234,7 +234,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 		out += hwHackLength;
 		len -= hwHackLength;
 		if (len < 0)
-			Sys_Error("overflow in shader loading '%s'", name);
+			Com_Error(ERR_FATAL, "overflow in shader loading '%s'", name);
 		i += hwHackLength;
 	}
 
@@ -291,7 +291,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 
 		len--;
 		if (len < 0)
-			Sys_Error("R_PreprocessShader: Overflow in shader loading '%s'", name);
+			Com_Error(ERR_FATAL, "R_PreprocessShader: Overflow in shader loading '%s'", name);
 		*out++ = *in++;
 		i++;
 	}

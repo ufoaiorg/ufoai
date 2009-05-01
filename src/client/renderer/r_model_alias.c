@@ -62,9 +62,10 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 			break;
 		anim->from = atoi(token);
 		if (anim->from < 0)
-			Sys_Error("R_ModLoadAnims: negative start frame for %s", mod->animname);
+			Com_Error(ERR_FATAL, "R_ModLoadAnims: negative start frame for %s", mod->animname);
 		else if (anim->from > mod->num_frames)
-			Sys_Error("R_ModLoadAnims: start frame is higher than models frame count (%i) (model: %s)", mod->num_frames, mod->animname);
+			Com_Error(ERR_FATAL, "R_ModLoadAnims: start frame is higher than models frame count (%i) (model: %s)",
+					mod->num_frames, mod->animname);
 
 		/* get the end */
 		token = Com_Parse(&text);
@@ -72,9 +73,10 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 			break;
 		anim->to = atoi(token);
 		if (anim->to < 0)
-			Sys_Error("R_ModLoadAnims: negative start frame for %s", mod->animname);
+			Com_Error(ERR_FATAL, "R_ModLoadAnims: negative start frame for %s", mod->animname);
 		else if (anim->to > mod->num_frames)
-			Sys_Error("R_ModLoadAnims: end frame is higher than models frame count (%i) (model: %s)", mod->num_frames, mod->animname);
+			Com_Error(ERR_FATAL, "R_ModLoadAnims: end frame is higher than models frame count (%i) (model: %s)",
+					mod->num_frames, mod->animname);
 
 		/* get the fps */
 		token = Com_Parse(&text);

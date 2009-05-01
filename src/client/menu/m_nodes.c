@@ -305,11 +305,11 @@ menuNode_t* MN_AllocNode (const char* type)
 {
 	menuNode_t* node = &mn.menuNodes[mn.numNodes++];
 	if (mn.numNodes >= MAX_MENUNODES)
-		Sys_Error("MN_AllocNode: MAX_MENUNODES hit");
+		Com_Error(ERR_FATAL, "MN_AllocNode: MAX_MENUNODES hit");
 	memset(node, 0, sizeof(*node));
 	node->behaviour = MN_GetNodeBehaviour(type);
 	if (node->behaviour == NULL)
-		Sys_Error("MN_AllocNode: Node behaviour '%s' doesn't exist", type);
+		Com_Error(ERR_FATAL, "MN_AllocNode: Node behaviour '%s' doesn't exist", type);
 	return node;
 }
 
@@ -543,10 +543,10 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 			const nodeBehaviour_t *b = MN_GetNodeBehaviour(current->string);
 #endif
 			if (p != NULL)
-				Sys_Error("MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property\n", current->string, behaviour->name);
+				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property", current->string, behaviour->name);
 #if 0	/**< @todo not possible at the moment, not sure its the right way */
 			if (b != NULL)
-				Sys_Error("MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' use the name of an existing node behaviour\n", current->string, behaviour->name);
+				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' use the name of an existing node behaviour", current->string, behaviour->name);
 #endif
 			current++;
 		}
@@ -575,9 +575,9 @@ void MN_InitNodes (void)
 		assert(b);
 		if (strcmp(a->name, b->name) >= 0) {
 #ifdef DEBUG
-			Sys_Error("MN_InitNodes: '%s' is before '%s'. Please order node behaviour registrations by name\n", a->name, b->name);
+			Com_Error(ERR_FATAL, "MN_InitNodes: '%s' is before '%s'. Please order node behaviour registrations by name", a->name, b->name);
 #else
-			Sys_Error("MN_InitNodes: Error: '%s' is before '%s'\n", a->name, b->name);
+			Com_Error(ERR_FATAL, "MN_InitNodes: Error: '%s' is before '%s'", a->name, b->name);
 #endif
 		}
 		current++;

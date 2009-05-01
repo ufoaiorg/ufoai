@@ -478,7 +478,7 @@ static float *R_CalcTransform (entity_t * e)
 	t = &e->transform;
 
 	if (t->processing)
-		Sys_Error("Ring in entity transformations!");
+		Com_Error(ERR_DROP, "Ring in entity transformations!");
 
 	if (t->done)
 		return t->matrix;
@@ -618,7 +618,7 @@ void R_DrawEntities (void)
 					chain = &r_opaque_mesh_entities;
 				break;
 			default:
-				Sys_Error("Unknown model type in R_DrawEntities entity chain: %i", e->model->type);
+				Com_Error(ERR_DROP, "Unknown model type in R_DrawEntities entity chain: %i", e->model->type);
 				break;
 			}
 		}

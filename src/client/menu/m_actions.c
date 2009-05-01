@@ -260,7 +260,7 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		break;
 	default:
 		node = NULL;
-		Sys_Error("MN_ExecuteSetAction: Invalid actiontype (source: %s)", MN_GetPath(source));
+		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Invalid actiontype (source: %s)", MN_GetPath(source));
 	}
 
 	value = action->data2;
@@ -341,7 +341,7 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		break;
 
 	default:
-		Sys_Error("unknown action type");
+		Com_Error(ERR_FATAL, "unknown action type");
 	}
 }
 
@@ -441,7 +441,7 @@ menuAction_t* MN_AllocCommandAction (char *command)
 void MN_PoolAllocAction (menuAction_t** action, int type, const void *data)
 {
 	if (*action)
-		Sys_Error("There is already an action assigned");
+		Com_Error(ERR_FATAL, "There is already an action assigned");
 	*action = (menuAction_t *)Mem_PoolAlloc(sizeof(**action), mn_sysPool, 0);
 	(*action)->type.op = type;
 	switch (type) {
@@ -449,7 +449,7 @@ void MN_PoolAllocAction (menuAction_t** action, int type, const void *data)
 		(*action)->data = Mem_PoolStrDup((const char *)data, mn_sysPool, 0);
 		break;
 	default:
-		Sys_Error("Action type %i is not yet implemented", type);
+		Com_Error(ERR_FATAL, "Action type %i is not yet implemented", type);
 	}
 }
 

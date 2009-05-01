@@ -56,7 +56,7 @@ void R_DrawInitLocal (void)
 
 	draw_chars = R_FindImage("pics/conchars", it_chars);
 	if (draw_chars == r_noTexture)
-		Sys_Error("Could not find conchars image in game pics directory!");
+		Com_Error(ERR_FATAL, "Could not find conchars image in game pics directory!");
 }
 
 #define MAX_CHARS 8192
@@ -146,7 +146,7 @@ int R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 
 	img = R_FindImage(name, it_pic);
 	if (img == r_noTexture)
-		Sys_Error("Could not find the searched image: %s", name);
+		Com_Error(ERR_FATAL, "Could not find the searched image: %s", name);
 
 	R_BindTexture(img->texnum);
 
@@ -386,7 +386,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	/* load day image */
 	gl = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
 	if (gl == r_noTexture)
-		Sys_Error("Could not load geoscape day image");
+		Com_Error(ERR_FATAL, "Could not load geoscape day image");
 
 	/* alter the array pointers */
 	glVertexPointer(2, GL_SHORT, 0, geoscape_verts);
@@ -452,7 +452,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
 		gl = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
 		if (gl == r_noTexture)
-			Sys_Error("Could not load geoscape nation overlay image");
+			Com_Error(ERR_FATAL, "Could not load geoscape nation overlay image");
 
 		/* draw day image */
 		R_BindTexture(gl->texnum);
@@ -501,7 +501,7 @@ void R_DrawAirFightBackground (int x, int y, int w, int h, float cx, float cy, f
 	gl = R_FindImage("pics/airfight/forest1", it_wrappic);
 
 	if (gl == r_noTexture)
-		Sys_Error("Could not load geoscape day image");
+		Com_Error(ERR_FATAL, "Could not load geoscape day image");
 
 	/* alter the array pointers */
 	glVertexPointer(2, GL_SHORT, 0, geoscape_verts);
@@ -956,7 +956,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
 		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
 		if (r_globeEarth.overlay == r_noTexture)
-			Sys_Error("Could not load geoscape nation overlay image");
+			Com_Error(ERR_FATAL, "Could not load geoscape nation overlay image");
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 		r_globeEarth.overlay = NULL;
 	}

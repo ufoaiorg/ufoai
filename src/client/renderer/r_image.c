@@ -161,7 +161,7 @@ static void R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	pngBuf_t PngFileBuffer = {NULL, 0};
 
 	if (*pic != NULL)
-		Sys_Error("possible mem leak in LoadPNG");
+		Com_Error(ERR_FATAL, "possible mem leak in LoadPNG");
 
 	/* Load the file */
 	FS_LoadFile(name, (byte **)&PngFileBuffer.buffer);
@@ -356,7 +356,7 @@ static void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	targaHeader_t targaHeader;
 
 	if (*pic != NULL)
-		Sys_Error("R_LoadTGA: possible mem leak");
+		Com_Error(ERR_FATAL, "R_LoadTGA: possible mem leak");
 
 	/* Load the file */
 	length = FS_LoadFile(name, &buffer);
@@ -527,7 +527,7 @@ static void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 					alpha = 255;
 					break;
 				default:
-					Sys_Error("R_LoadTGA: Unknown tga image type: %i", targaHeader.imageType);
+					Com_Error(ERR_FATAL, "R_LoadTGA: Unknown tga image type: %i", targaHeader.imageType);
 				}
 			}
 
@@ -772,7 +772,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 	int rawsize, i, components;
 
 	if (*pic != NULL)
-		Sys_Error("possible mem leak in LoadJPG");
+		Com_Error(ERR_FATAL, "possible mem leak in LoadJPG");
 
 	/* Load JPEG file into memory */
 	rawsize = FS_LoadFile(filename, &rawdata);
@@ -886,7 +886,7 @@ void R_LoadImage (const char *name, byte **pic, int *width, int *height)
 	int len;
 
 	if (!name)
-		Sys_Error("R_LoadImage: NULL name");
+		Com_Error(ERR_FATAL, "R_LoadImage: NULL name");
 	len = strlen(name);
 
 	if (len >= 5) {
@@ -1220,7 +1220,7 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 	/* soften into a copy of the original image, as in-place would be incorrect */
 	out = (byte *)Mem_PoolAllocExt(size, qfalse, vid_imagePool, 0);
 	if (!out)
-		Sys_Error("Mem_PoolAllocExt: failed on allocation of %i bytes for R_SoftenTexture", width * height * bpp);
+		Com_Error(ERR_FATAL, "Mem_PoolAllocExt: failed on allocation of %i bytes for R_SoftenTexture", width * height * bpp);
 
 	memcpy(out, in, size);
 
@@ -1414,7 +1414,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	const imageLoader_t *loader;
 
 	if (!pname)
-		Sys_Error("R_FindImage: NULL name");
+		Com_Error(ERR_FATAL, "R_FindImage: NULL name");
 	len = strlen(pname);
 	if (len < 5)
 		return r_noTexture;
@@ -1489,12 +1489,12 @@ void R_InitImages (void)
 	r_numImages = 0;
 	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
 	if (!r_dayandnightTexture)
-		Sys_Error("Could not create daynight image for the geoscape");
+		Com_Error(ERR_FATAL, "Could not create daynight image for the geoscape");
 
 	for (i = 0; i < MAX_ENVMAPTEXTURES; i++) {
 		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i.tga", i), it_effect);
 		if (r_envmaptextures[i] == r_noTexture)
-			Sys_Error("Could not load environment map %i", i);
+			Com_Error(ERR_FATAL, "Could not load environment map %i", i);
 	}
 
 	R_CreateRadarOverlay();

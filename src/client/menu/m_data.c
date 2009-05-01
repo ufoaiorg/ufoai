@@ -241,7 +241,7 @@ menuOption_t* MN_AllocOption (int count)
 	assert(count > 0);
 
 	if (mn.numOptions + count >= MAX_MENUOPTIONS)
-		Sys_Error("MN_AllocOption: numOptions exceeded - increase MAX_MENUOPTIONS");
+		Com_Error(ERR_FATAL, "MN_AllocOption: numOptions exceeded - increase MAX_MENUOPTIONS");
 
 	newOptions = &mn.menuOptions[mn.numOptions];
 	mn.numOptions += count;

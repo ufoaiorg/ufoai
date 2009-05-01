@@ -70,10 +70,10 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 
 	popupListMenu = MN_GetMenu(POPUPLIST_MENU_NAME);
 	if (!popupListMenu)
-		Sys_Error("Could not get "POPUPLIST_MENU_NAME" menu");
+		Com_Error(ERR_FATAL, "Could not get "POPUPLIST_MENU_NAME" menu");
 	listNode = MN_GetNode(popupListMenu, POPUPLIST_NODE_NAME);
 	if (!listNode)
-		Sys_Error("Could not get "POPUPLIST_NODE_NAME" node in "POPUPLIST_MENU_NAME" menu");
+		Com_Error(ERR_FATAL, "Could not get "POPUPLIST_NODE_NAME" node in "POPUPLIST_MENU_NAME" menu");
 
 	/* free previous actions */
 	if (listNode->onClick) {
@@ -109,7 +109,7 @@ static void MN_SetOneButton (menuNode_t* menu, const char *button, const char *c
 
 	buttonNode = MN_GetNode(menu, button);
 	if (!buttonNode)
-		Sys_Error("Could not get %s node in %s menu", button, menu->name);
+		Com_Error(ERR_FATAL, "Could not get %s node in %s menu", button, menu->name);
 
 	/* free previous actions */
 	if (buttonNode->onClick) {
@@ -160,7 +160,7 @@ void MN_PopupButton (const char *title, const char *text,
 
 	popupButtonMenu = MN_GetMenu(POPUPBUTTON_MENU_NAME);
 	if (!popupButtonMenu)
-		Sys_Error("Could not get "POPUPBUTTON_MENU_NAME" menu");
+		Com_Error(ERR_FATAL, "Could not get "POPUPBUTTON_MENU_NAME" menu");
 
 	Cvar_Set("mn_popup_button_text1", clickText1);
 	Cvar_Set("mn_popup_button_tooltip1", tooltip1);

@@ -77,10 +77,10 @@ qboolean Rimp_Init (void)
 
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
-			Sys_Error("Video SDL_Init failed: %s", SDL_GetError());
+			Com_Error(ERR_FATAL, "Video SDL_Init failed: %s", SDL_GetError());
 	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
 		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
-			Sys_Error("Video SDL_InitSubsystem failed: %s", SDL_GetError());
+			Com_Error(ERR_FATAL, "Video SDL_InitSubsystem failed: %s", SDL_GetError());
 	}
 
 	SDL_VERSION(&version)
@@ -98,7 +98,7 @@ qboolean Rimp_Init (void)
 	Com_Printf("I: video driver: %s\n", videoDriverName);
 
 	if (!R_SetMode())
-		Sys_Error("Video subsystem failed to initialize\n");
+		Com_Error(ERR_FATAL, "Video subsystem failed to initialize");
 
 	SDL_WM_SetCaption(GAME_TITLE, GAME_TITLE_LONG);
 

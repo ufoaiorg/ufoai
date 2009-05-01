@@ -43,7 +43,8 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 
 	version = LittleLong(pintag->version);
 	if (version != TAG_VERSION)
-		Sys_Error("R_ModLoadTags: %s has wrong version number (%i should be %i)", mod->alias.tagname, version, TAG_VERSION);
+		Com_Error(ERR_FATAL, "R_ModLoadTags: %s has wrong version number (%i should be %i)",
+				mod->alias.tagname, version, TAG_VERSION);
 
 	size = LittleLong(pintag->ofs_extractend);
 	mod->alias.tagdata = Mem_PoolAlloc(size, vid_modelPool, 0);
@@ -54,10 +55,10 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 		((int *) pheader)[i] = LittleLong(((int *) buffer)[i]);
 
 	if (pheader->num_tags <= 0)
-		Sys_Error("R_ModLoadTags: tag file %s has no tags", mod->alias.tagname);
+		Com_Error(ERR_FATAL, "R_ModLoadTags: tag file %s has no tags", mod->alias.tagname);
 
 	if (pheader->num_frames <= 0)
-		Sys_Error("R_ModLoadTags: tag file %s has no frames", mod->alias.tagname);
+		Com_Error(ERR_FATAL, "R_ModLoadTags: tag file %s has no frames", mod->alias.tagname);
 
 	/* load tag names */
 	memcpy((char *) pheader + pheader->ofs_names, (char *) pintag + pheader->ofs_names, pheader->num_tags * MD2_MAX_SKINNAME);
@@ -67,7 +68,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 	outmat = (float *) ((byte *) pheader + pheader->ofs_tags);
 
 	if (bufSize != pheader->ofs_end)
-		Sys_Error("R_ModLoadTags: tagfile %s is broken - expected: %i, offsets tell us to read: %i",
+		Com_Error(ERR_FATAL, "R_ModLoadTags: tagfile %s is broken - expected: %i, offsets tell us to read: %i",
 			mod->alias.tagname, bufSize, pheader->ofs_end);
 
 	if (pheader->num_frames != mod->alias.num_frames)
@@ -75,15 +76,15 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 			pheader->num_frames, mod->alias.tagname, mod->alias.num_frames);
 
 	if (pheader->ofs_names != 32)
-		Sys_Error("R_ModLoadTags: invalid ofs_name for tagfile %s", mod->alias.tagname);
+		Com_Error(ERR_FATAL, "R_ModLoadTags: invalid ofs_name for tagfile %s", mod->alias.tagname);
 	if (pheader->ofs_tags != pheader->ofs_names + (pheader->num_tags * 64))
-		Sys_Error("R_ModLoadTags: invalid ofs_tags for tagfile %s", mod->alias.tagname);
+		Com_Error(ERR_FATAL, "R_ModLoadTags: invalid ofs_tags for tagfile %s", mod->alias.tagname);
 	/* (4 * 3) * 4 bytes (int) */
 	if (pheader->ofs_end != pheader->ofs_tags + (pheader->num_tags * pheader->num_frames * 48))
-		Sys_Error("R_ModLoadTags: invalid ofs_end for tagfile %s", mod->alias.tagname);
+		Com_Error(ERR_FATAL, "R_ModLoadTags: invalid ofs_end for tagfile %s", mod->alias.tagname);
 	/* (4 * 4) * 4 bytes (int) */
 	if (pheader->ofs_extractend != pheader->ofs_tags + (pheader->num_tags * pheader->num_frames * 64))
-		Sys_Error("R_ModLoadTags: invalid ofs_extractend for tagfile %s", mod->alias.tagname);
+		Com_Error(ERR_FATAL, "R_ModLoadTags: invalid ofs_extractend for tagfile %s", mod->alias.tagname);
 
 	for (i = 0; i < pheader->num_tags * pheader->num_frames; i++) {
 		for (j = 0; j < 4; j++) {
@@ -98,7 +99,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 
 	read = (byte *)outmat - (byte *)pheader;
 	if (read != size)
-		Sys_Error("R_ModLoadTags: read: %i expected: %i - tags: %i, frames: %i (should be %i)",
+		Com_Error(ERR_FATAL, "R_ModLoadTags: read: %i expected: %i - tags: %i, frames: %i (should be %i)",
 			read, size, pheader->num_tags, pheader->num_frames, mod->alias.num_frames);
 }
 

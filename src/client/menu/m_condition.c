@@ -162,7 +162,7 @@ qboolean MN_CheckCondition (const menuNode_t *source, menuCondition_t *condition
 		}
 	}
 
-	Sys_Error("Unknown condition for if statement: %i", condition->type.opCode);
+	Com_Error(ERR_FATAL, "Unknown condition for if statement: %i", condition->type.opCode);
 }
 
 /**
@@ -280,7 +280,7 @@ menuCondition_t *MN_AllocCondition (const char *description)
 	qboolean result;
 
 	if (mn.numConditions >= MAX_MENUCONDITIONS)
-		Sys_Error("MN_AllocCondition: Too many menu conditions");
+		Com_Error(ERR_FATAL, "MN_AllocCondition: Too many menu conditions");
 
 	result = MN_InitCondition(&condition, description);
 	if (!result)
