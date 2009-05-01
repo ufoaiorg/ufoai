@@ -88,8 +88,6 @@ static ogmCinematic_t ogmCin;
 
 static yuvTable_t ogmCin_yuvTable;
 
-static int CIN_THEORA_NextNeededFrame(void);
-
 #define OGM_CINEMATIC_BPP 4
 
 #ifdef HAVE_XVID_H
@@ -399,6 +397,11 @@ static void CIN_THEORA_FrameYUVtoRGB24 (const unsigned char* y, const unsigned c
 			*output++ = rgb24;
 		}
 	}
+}
+
+static int CIN_THEORA_NextNeededFrame (void)
+{
+	return (int) (ogmCin.currentTime * (ogg_int64_t) 10000 / ogmCin.Vtime_unit);
 }
 
 /**
@@ -735,11 +738,6 @@ int CIN_OGM_PlayCinematic (const char* filename)
 	CIN_SetParameters(0, 0, viddef.virtualWidth, viddef.virtualHeight, CIN_STATUS_FULLSCREEN, qfalse);
 
 	return 0;
-}
-
-static int CIN_THEORA_NextNeededFrame (void)
-{
-	return (int) (ogmCin.currentTime * (ogg_int64_t) 10000 / ogmCin.Vtime_unit);
 }
 
 /**
