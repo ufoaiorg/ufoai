@@ -1787,7 +1787,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 
 	/* actor dependent stuff following */
 	if (!le)
-		/* it's OK, the actor not visible */
+		/* it's OK, the actor is not visible */
 		return;
 
 	if (!LE_IsLivingActor(le)) {
@@ -1817,45 +1817,29 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 void CL_ActorDie (struct dbuffer *msg)
 {
 	le_t *le;
-	int number, state;
+	int entnum, state;
 	int i;
 
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_DIE], &number, &state);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_DIE], &entnum, &state);
 
 	/* get le */
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->entnum == number)
-			break;
+	le = LE_Get(entnum);
+	if (!le)
+		Com_Error(ERR_DROP, "CL_ActorDie: Could not get le with entnum: %i", entnum);
 
-	if (le->entnum != number) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDie: Can't kill, LE doesn't exist\n");
-		return;
-	}
+	if (!LE_IsActor(le))
+		Com_Error(ERR_DROP, "CL_ActorDie: Can't kill, LE is not an actor (type: %i)", le->type);
 
-	if (!LE_IsActor(le)) {
-		Com_Printf("CL_ActorDie: Can't kill, LE is not an actor (type: %i)\n", le->type);
-		return;
-	}
-
-	if (LE_IsDead(le)) {
-		Com_Printf("CL_ActorDie: Can't kill, actor already dead\n");
-		return;
-	} else if (!le->inuse) {
-		/* LE not in use condition normally arises when CL_EntPerish has been
-		 * called on the le to hide it from the client's sight.
-		 * Probably can return without killing unused LEs, but testing reveals
-		 * killing an unused LE here doesn't cause any problems and there is
-		 * an outside chance it fixes some subtle bugs. */
-	}
+	if (LE_IsDead(le))
+		Com_Error(ERR_DROP, "CL_ActorDie: Can't kill, actor already dead");
 
 	/* count spotted aliens */
-	if (le->team != cls.team && le->team != TEAM_CIVILIAN && le->inuse)
+	if (le->team != cls.team && le->team != TEAM_CIVILIAN)
 		cl.numAliensSpotted--;
 
 	/* set relevant vars */
 	FLOOR(le) = NULL;
-	le->STUN = 0;	/**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
-					 * @sa g_client.c:G_ActorDie */
+
 	le->state = state;
 
 	/* play animation */
