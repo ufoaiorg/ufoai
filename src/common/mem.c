@@ -374,17 +374,17 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 
 	/* if size matches, do nothing */
 	if (mem->memSize == size)
-		return mem;
+		return ptr;
 
 	pool = mem->pool;
 
-    /* allocate memory for the new size */
-    new = _Mem_Alloc(size, qtrue, pool, mem->tagNum, fileName, fileLine);
+	/* allocate memory for the new size */
+	new = _Mem_Alloc(size, qtrue, pool, mem->tagNum, fileName, fileLine);
 
-    /* copy old data */
-    memcpy(new, ptr, min(mem->memSize, size));
+	/* copy old data */
+	memcpy(new, ptr, min(mem->memSize, size));
 
-    /* if there was old data, free it */
+	/* if there was old data, free it */
 	_Mem_Free(ptr, fileName, fileLine);
 
 	return new;
