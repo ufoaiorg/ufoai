@@ -1818,7 +1818,6 @@ void CL_ActorDie (struct dbuffer *msg)
 {
 	le_t *le;
 	int entnum, state;
-	int i;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_DIE], &entnum, &state);
 
