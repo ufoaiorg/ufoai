@@ -514,6 +514,117 @@ static void R_ModLoadPlanes (const lump_t *l)
 	}
 }
 
+
+/**
+ * @brief Adds the specified static light source to the world model, after first
+ * ensuring that it can not be merged with any known sources.
+ */
+static void R_AddBspLight (model_t* mod, vec3_t org, float radius)
+{
+	mBspLight_t *l;
+	vec3_t delta;
+	int i;
+
+	l = mod->bsp.bsplights;
+	for (i = 0; i < mod->bsp.numbsplights; i++, l++) {
+		VectorSubtract(org, l->org, delta);
+
+		if (VectorLength(delta) <= 48.0)  /* merge them */
+			break;
+	}
+
+	if (i == mod->bsp.numbsplights) {
+		if (!mod->bsp.bsplights)  /* first source */
+			mod->bsp.bsplights = (mBspLight_t *)Mem_PoolAlloc(sizeof(*l), vid_modelPool, 0);
+		else {
+			const size_t size = sizeof(*l) * (mod->bsp.numbsplights + 1);
+			mod->bsp.bsplights = (mBspLight_t *)Mem_ReAlloc(mod->bsp.bsplights, size);
+		}
+
+		l = &mod->bsp.bsplights[i];
+		VectorCopy(org, l->org);
+
+		mod->bsp.numbsplights++;
+	}
+
+	l->radius += radius;
+
+	if (l->radius > 250.0)  /* clamp */
+		l->radius = 250.0;
+}
+
+/**
+ * @brief Parse the entity string and resolve all static light sources. Also
+ * iterate the world surfaces, allocating static light sources for those
+ * which emit light.
+ */
+static void R_ModLoadBspLights (const lump_t *l)
+{
+	const char *ents;
+	vec3_t org;
+	qboolean entity, light;
+	float radius;
+	int i;
+	mBspSurface_t *surf;
+
+	ents = (const char *)(mod_base + l->fileofs);
+
+	VectorClear(org);
+	radius = 0.0;
+
+	entity = light = qfalse;
+
+	while (qtrue) {
+		const char *c = Com_Parse(&ents);
+		if (!strlen(c))
+			break;
+
+		if (c[0] == '{')
+			entity = qtrue;
+
+		if (!entity)  /* skip any whitespace between ents */
+			continue;
+
+		if (c[0] == '}') {
+			entity = qfalse;
+
+			if (light) {
+				R_AddBspLight(r_worldmodel, org, radius);
+				light = qfalse;
+			}
+		}
+
+		if (!strcmp(c, "classname")) {
+			c = Com_Parse(&ents);
+			if (!strcmp(c, "light"))
+				light = qtrue;
+		} else if (!strcmp(c, "origin")) {
+			if (sscanf(Com_Parse(&ents), "%f %f %f", &org[0], &org[1], &org[2]) != 3)
+				Com_Printf("Invalid origin vector given\n");
+			continue;
+		} else if (!strcmp(c, "light")) {
+			radius = atof(Com_Parse(&ents));
+			continue;
+		}
+	}
+
+	surf = r_worldmodel->bsp.surfaces;
+	for (i = 0; i < r_worldmodel->bsp.numsurfaces; i++, surf++) {
+		if (surf->texinfo->flags & SURF_LIGHT) {
+			vec3_t tmp;
+
+			VectorMA(surf->center, 1.0, surf->normal, org);
+
+			VectorSubtract(surf->maxs, surf->mins, tmp);
+			radius = VectorLength(tmp);
+
+			R_AddBspLight(r_worldmodel, org, radius > 100.0 ? radius : 100.0);
+		}
+	}
+
+	Com_DPrintf(DEBUG_RENDERER, "%s: %i lights\n", r_worldmodel->name, r_worldmodel->bsp.numbsplights);
+}
+
 /**
  * @brief Shift the verts for map assemblies
  * @note This is needed because you want to place a bsp file to a given
@@ -880,112 +991,6 @@ static void R_RecursiveSetModel (mBspNode_t *node, model_t *mod)
 }
 
 /**
- * @brief Adds the specified static light source to the world model, after first
- * ensuring that it can not be merged with any known sources.
- */
-static void R_AddBspLight (model_t* mod, vec3_t org, float radius)
-{
-	mBspLight_t *l;
-	vec3_t delta;
-	int i;
-
-	l = mod->bsp.bsplights;
-	for (i = 0; i < mod->bsp.numbsplights; i++, l++) {
-		VectorSubtract(org, l->org, delta);
-
-		if (VectorLength(delta) <= 48.0)  /* merge them */
-			break;
-	}
-
-	if (i == mod->bsp.numbsplights) {
-		if (!mod->bsp.bsplights)  /* first source */
-			mod->bsp.bsplights = (mBspLight_t *)Mem_PoolAlloc(sizeof(*l), vid_modelPool, 0);
-		else
-			mod->bsp.bsplights = (mBspLight_t *)Mem_ReAlloc(mod->bsp.bsplights, sizeof(*l) * (mod->bsp.numbsplights + 1));
-
-		l = &mod->bsp.bsplights[i];
-		VectorCopy(org, l->org);
-
-		mod->bsp.numbsplights++;
-	}
-
-	l->radius += radius;
-
-	if (l->radius > 250.0)  /* clamp */
-		l->radius = 250.0;
-}
-
-/**
- * @brief Parse the entity string and resolve all static light sources. Also
- * iterate the world surfaces, allocating static light sources for those
- * which emit light.
- */
-static void R_LoadBspLights (model_t *mod)
-{
-	const char *ents;
-	vec3_t org;
-	qboolean entity, light;
-	float radius;
-	int i;
-	mBspSurface_t *surf;
-
-	ents = CM_EntityString();
-
-	VectorClear(org);
-	radius = 0.0;
-
-	entity = light = qfalse;
-
-	while (qtrue) {
-		const char *c = Com_Parse(&ents);
-		if (!strlen(c))
-			break;
-
-		if (c[0] == '{')
-			entity = qtrue;
-
-		if (!entity)  /* skip any whitespace between ents */
-			continue;
-
-		if (c[0] == '}') {
-			entity = qfalse;
-
-			if (light) {
-				R_AddBspLight(mod, org, radius);
-				light = qfalse;
-			}
-		}
-
-		if (!strcmp(c, "classname")) {
-			c = Com_Parse(&ents);
-			if (!strcmp(c, "light"))
-				light = qtrue;
-		} else if (!strcmp(c, "origin")) {
-			if (sscanf(Com_Parse(&ents), "%f %f %f", &org[0], &org[1], &org[2]) != 3)
-				Com_Printf("Invalid origin vector given\n");
-			continue;
-		} else if (!strcmp(c, "light")) {
-			radius = atof(Com_Parse(&ents));
-			continue;
-		}
-	}
-
-	surf = mod->bsp.surfaces;
-	for (i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
-		if (surf->texinfo->flags & SURF_LIGHT) {
-			vec3_t tmp;
-
-			VectorMA(surf->center, 1.0, surf->normal, org);
-
-			VectorSubtract(surf->maxs, surf->mins, tmp);
-			radius = VectorLength(tmp);
-
-			R_AddBspLight(mod, org, radius > 100.0 ? radius : 100.0);
-		}
-	}
-}
-
-/**
  * @brief Sets up bmodels (brush models) like doors and breakable objects
  */
 static void R_SetupSubmodels (void)
@@ -1089,10 +1094,9 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	R_ModLoadLeafs(&header->lumps[LUMP_LEAFS]);
 	R_ModLoadNodes(&header->lumps[LUMP_NODES]);
 	R_ModLoadSubmodels(&header->lumps[LUMP_MODELS]);
+	R_ModLoadBspLights(&header->lumps[LUMP_ENTITIES]);
 
 	R_SetupSubmodels();
-
-	R_LoadBspLights(r_worldmodel);
 
 	R_LoadBspVertexArrays(r_worldmodel);
 

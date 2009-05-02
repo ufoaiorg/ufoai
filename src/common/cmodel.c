@@ -940,7 +940,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has too large entity lump");
 
 	/* merge entitystring information */
-	es = (char *) (cModelBase + l->fileofs);
+	es = (const char *) (cModelBase + l->fileofs);
 	while (1) {
 		/* parse the opening brace */
 		token = Com_Parse(&es);
