@@ -960,15 +960,11 @@ static void R_LoadBspLights (model_t *mod)
 			c = Com_Parse(&ents);
 			if (!strcmp(c, "light"))
 				light = qtrue;
-		}
-
-		if (!strcmp(c, "origin")) {
+		} else if (!strcmp(c, "origin")) {
 			if (sscanf(Com_Parse(&ents), "%f %f %f", &org[0], &org[1], &org[2]) != 3)
 				Com_Printf("Invalid origin vector given\n");
 			continue;
-		}
-
-		if (!strcmp(c, "light")) {
+		} else if (!strcmp(c, "light")) {
 			radius = atof(Com_Parse(&ents));
 			continue;
 		}
