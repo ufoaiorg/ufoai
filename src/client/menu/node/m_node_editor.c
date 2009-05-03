@@ -166,7 +166,8 @@ static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
  */
 static void MN_EditorNodeCapturedMouseLost (menuNode_t *node)
 {
-	/* nothing to do */
+	status = -1;
+	anchoredNode = NULL;
 }
 
 static void MN_EditorNodeMouseUp (menuNode_t *node, int x, int y, int button)
