@@ -165,7 +165,7 @@ static void R_DrawFloor (const entity_t * e)
 {
 	vec3_t upper, lower;
 	float dx, dy;
-	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
+	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
 
 	glDisable(GL_TEXTURE_2D);
 	glEnable(GL_LINE_SMOOTH);

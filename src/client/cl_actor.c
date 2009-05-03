@@ -3024,12 +3024,12 @@ static void CL_AddPathingBox (pos3_t pos)
 	 * yellow if it can be entered but is too far,
 	 * or red if it cannot be entered ever. */
 	if (base < -PATHFINDING_MAX_FALL * QUANT) {
-		VectorSet(ent.angles, 0.0, 0.0, 0.0); /* Can't enter - black */
+		VectorSet(ent.color, 0.0, 0.0, 0.0); /* Can't enter - black */
 	} else {
 		/* Can reach - green
 		 * Passable but unreachable - yellow
 		 * Not passable - red */
-		VectorSet(ent.angles, (TUneed > TUhave), (TUneed != ROUTING_NOT_REACHABLE), 0);
+		VectorSet(ent.color, (TUneed > TUhave), (TUneed != ROUTING_NOT_REACHABLE), 0);
 	}
 
 	/* Set the box height to the ceiling value of the cell. */
