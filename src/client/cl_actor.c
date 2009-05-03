@@ -2786,9 +2786,9 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	 * OR paint a dark blue one if move is impossible or the
 	 * soldier does not have enough TimeUnits left. */
 	if (selActor && selActor->actorMoveLength < ROUTING_NOT_REACHABLE && selActor->actorMoveLength <= CL_UsableTUs(selActor))
-		VectorSet(ent.angles, 0, 1, 0); /* Green */
+		VectorSet(ent.color, 0, 1, 0); /* Green */
 	else
-		VectorSet(ent.angles, 0, 0, 0.6); /* Dark Blue */
+		VectorSet(ent.color, 0, 0, 0.6); /* Dark Blue */
 
 	VectorAdd(ent.origin, boxSize, ent.oldorigin);
 
@@ -2801,7 +2801,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 			switch (mouseActor->team) {
 			case TEAM_CIVILIAN:
 				/* Civilians are yellow */
-				VectorSet(ent.angles, 1, 1, 0); /* Yellow */
+				VectorSet(ent.color, 1, 1, 0); /* Yellow */
 				break;
 			default:
 				if (mouseActor->team == TEAM_ALIEN) {
@@ -2815,7 +2815,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 					MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum]);
 				}
 				/* Aliens (and players not in our team [multiplayer]) are red */
-				VectorSet(ent.angles, 1, 0, 0); /* Red */
+				VectorSet(ent.color, 1, 0, 0); /* Red */
 				break;
 			}
 		} else {
@@ -2829,7 +2829,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, chr->name);
 			}
 			/* Paint a light blue box if on our team */
-			VectorSet(ent.angles, 0.2, 0.3, 1); /* Light Blue */
+			VectorSet(ent.color, 0.2, 0.3, 1); /* Light Blue */
 		}
 
 		if (selActor) {
@@ -2855,7 +2855,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 
 	/* if pendBox is true then ignore all the previous color considerations and use cyan */
 	if (pendBox) {
-		VectorSet(ent.angles, 0, 1, 1); /* Cyan */
+		VectorSet(ent.color, 0, 1, 1); /* Cyan */
 		ent.alpha = 0.15;
 	}
 
@@ -3089,7 +3089,7 @@ static void CL_AddArrow (vec3_t from, vec3_t to, float red, float green, float b
 	ent.flags = RF_ARROW;
 	VectorCopy(from, ent.origin);
 	VectorCopy(to, ent.oldorigin);
-	VectorSet(ent.angles, red, green, blue);
+	VectorSet(ent.color, red, green, blue);
 
 	ent.alpha = 0.25;
 
@@ -3112,6 +3112,7 @@ void CL_DisplayFloorArrows (void)
 	VectorCopy(base, start);
 	base[2] -= QUANT;
 	start[2] += QUANT;
+	CL_AddArrow(base, start, 0.0, 0.0, 0.0);
 }
 
 /**
@@ -3128,7 +3129,6 @@ void CL_DisplayObstructionArrows (void)
 	Grid_PosToVec(clMap, fieldSize, truePos, base);
 	VectorCopy(base, start);
 	CL_AddArrow(base, start, 0.0, 0.0, 0.0);
-
 }
 
 #ifdef DEBUG

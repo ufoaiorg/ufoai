@@ -104,7 +104,7 @@ static void R_DrawBox (const entity_t * e)
 {
 	vec3_t upper, lower;
 	float dx, dy;
-	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
+	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
 
 	glDisable(GL_TEXTURE_2D);
 	if (!r_wire->integer)
@@ -227,7 +227,7 @@ static void R_DrawFloor (const entity_t * e)
 static void R_DrawArrow (const entity_t * e)
 {
 	vec3_t upper, mid, lower;
-	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
+	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
 
 	VectorCopy(e->origin, upper);
 	upper[0] += 2;

@@ -770,7 +770,7 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 static qboolean CL_AddEdictFunc (le_t *le, entity_t *ent)
 {
 	ent->flags = RF_BOX;
-	VectorSet(ent->angles, 1, 1, 1);
+	VectorSet(ent->color, 1, 1, 1);
 	ent->alpha = 1.0;
 	VectorCopy(le->mins, ent->mins);
 	VectorCopy(le->maxs, ent->maxs);

@@ -63,6 +63,7 @@ typedef struct entity_s {
 	struct model_s *model;		/**< opaque type outside refresh */
 	vec3_t angles;
 	vec3_t scale;
+	vec3_t color;
 	vec3_t origin;
 	vec3_t oldorigin;
 
