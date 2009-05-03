@@ -240,6 +240,10 @@ qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 			return qtrue;
 		break;
 	case K_ESCAPE:
+		if (MN_GetMouseCapture() != NULL) {
+			MN_MouseRelease();
+			return qtrue;
+		}
 		MN_PopMenuWithEscKey();
 		return qtrue;
 	}
