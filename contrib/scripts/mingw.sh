@@ -36,11 +36,11 @@ cd mingw_tmp
 
 if [ "$init" -eq "1" ]
 then
-	# a mirror is also available at mattn.ninex.info and ufo.myexp.de
-	# e.g. wget http://ufo.myexp.de/any2deb/any2deb_1.0-2_all.deb
+	# a mirror is also available at mattn.ninex.info
+	# e.g. wget http://mattn.ninex.info/any2deb/any2deb_1.0-2_all.deb
 	aptitude install fakeroot alien wget
-	download http://www.profv.de/any2deb/ any2deb_1.0-2_all.deb
-	dpkg -i any2deb_1.0-2_all.deb
+	download http://www.profv.de/any2deb/ any2deb_1.2-2_all.deb
+	dpkg -i any2deb_1.2-2_all.deb
 
 	aptitude install mingw32
 	#aptitude install upx-ucl
