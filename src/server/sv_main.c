@@ -894,8 +894,12 @@ void SV_Clear (void)
  */
 void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 {
+	if (Com_ServerState() == ss_dead)
+		return;
+
 	if (svs.clients)
 		SV_FinalMessage(finalmsg, reconnect);
+
 	Com_Printf("Shutdown server: %s\n", finalmsg);
 
 	Master_Shutdown();

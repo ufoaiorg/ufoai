@@ -66,6 +66,19 @@ static const gameTypeList_t gameTypeList[] = {
 	{NULL, NULL, 0, NULL, NULL}
 };
 
+static const gameTypeList_t *GAME_GetCurrentType (void)
+{
+	const gameTypeList_t *list = gameTypeList;
+
+	while (list->name) {
+		if (list->gametype == cls.gametype)
+			return list;
+		list++;
+	}
+
+	return NULL;
+}
+
 void GAME_RestartMode (int gametype)
 {
 	GAME_SetMode(GAME_NONE);
@@ -75,7 +88,6 @@ void GAME_RestartMode (int gametype)
 void GAME_SetMode (int gametype)
 {
 	const gameTypeList_t *list = gameTypeList;
-	const int currentGameType = cls.gametype;
 
 	if (gametype < 0 || gametype > GAME_MAX) {
 		Com_Printf("Invalid gametype %i given\n", gametype);
@@ -85,24 +97,25 @@ void GAME_SetMode (int gametype)
 	if (cls.gametype == gametype)
 		return;
 
-	cls.gametype = gametype;
-
 	LE_Cleanup();
 
-	while (list->name) {
-		if (list->gametype == gametype) {
-			Com_Printf("Change gametype to '%s'\n", list->name);
-			memset(&invList, 0, sizeof(invList));
-			INVSH_InitInventory(invList, qfalse); /* inventory structure switched/initialized */
-			list->init();
-		} else if (list->gametype == currentGameType) {
-			Com_Printf("Shutdown gametype '%s'\n", list->name);
-			list->shutdown();
+	list = GAME_GetCurrentType();
+	if (list) {
+		Com_Printf("Shutdown gametype '%s'\n", list->name);
+		list->shutdown();
 
-			/* option menu are the same everywhere when shutting down a game type */
-			MN_InitStack("main", "", qtrue, qtrue);
-		}
-		list++;
+		/* option menu are the same everywhere when shutting down a game type */
+		MN_InitStack("main", "", qtrue, qtrue);
+	}
+
+	cls.gametype = gametype;
+
+	list = GAME_GetCurrentType();
+	if (list) {
+		Com_Printf("Change gametype to '%s'\n", list->name);
+		memset(&invList, 0, sizeof(invList));
+		INVSH_InitInventory(invList, qfalse); /* inventory structure switched/initialized */
+		list->init();
 	}
 
 	CL_Disconnect();
@@ -203,15 +216,12 @@ static void GAME_SetMode_f (void)
 
 qboolean GAME_ItemIsUseable (const objDef_t *od)
 {
-	const gameTypeList_t *list = gameTypeList;
+	const gameTypeList_t *list = GAME_GetCurrentType();
 
-	while (list->name) {
-		if (list->gametype == cls.gametype)
-			return list->itemIsUseable ? list->itemIsUseable(od) : qtrue;
-		list++;
-	}
+	if (list && list->itemIsUseable)
+		return list->itemIsUseable(od);
 
-	return qfalse;
+	return qtrue;
 }
 
 /**
@@ -219,15 +229,10 @@ qboolean GAME_ItemIsUseable (const objDef_t *od)
  */
 void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
-	const gameTypeList_t *list = gameTypeList;
-
-	while (list->name) {
-		if (list->gametype == cls.gametype) {
-			list->results(msg, winner, numSpawned, numAlive, numKilled, numStunned);
-			INVSH_InvUnusedRevert(); /* inventory buffer switched back */
-			break;
-		}
-		list++;
+	const gameTypeList_t *list = GAME_GetCurrentType();
+	if (list) {
+		list->results(msg, winner, numSpawned, numAlive, numKilled, numStunned);
+		INVSH_InvUnusedRevert(); /* inventory buffer switched back */
 	}
 }
 
@@ -300,89 +305,75 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
  */
 void GAME_SpawnSoldiers (void)
 {
-	const gameTypeList_t *list = gameTypeList;
+	const gameTypeList_t *list = GAME_GetCurrentType();
+	if (list) {
+		/* this callback is responsible to set up the cl.chrList */
+		const qboolean spawnStatus = list->spawn();
+		if (spawnStatus && cl.chrList.num > 0) {
+			struct dbuffer *msg;
 
-	while (list->name) {
-		if (list->gametype == cls.gametype) {
-			/* this callback is responsible to set up the cl.chrList */
-			const qboolean spawnStatus = list->spawn();
-			if (spawnStatus && cl.chrList.num > 0) {
-				struct dbuffer *msg;
+			/* send team info */
+			msg = new_dbuffer();
+			GAME_SendCurrentTeamSpawningInfo(msg, &cl.chrList);
+			NET_WriteMsg(cls.netStream, msg);
 
-				/* send team info */
-				msg = new_dbuffer();
-				GAME_SendCurrentTeamSpawningInfo(msg, &cl.chrList);
-				NET_WriteMsg(cls.netStream, msg);
-
-				msg = new_dbuffer();
-				NET_WriteByte(msg, clc_stringcmd);
-				NET_WriteString(msg, va("spawn %i\n", cl.servercount));
-				NET_WriteMsg(cls.netStream, msg);
-			}
-			break;
+			msg = new_dbuffer();
+			NET_WriteByte(msg, clc_stringcmd);
+			NET_WriteString(msg, va("spawn %i\n", cl.servercount));
+			NET_WriteMsg(cls.netStream, msg);
 		}
-		list++;
 	}
 }
 
 int GAME_GetCurrentTeam (void)
 {
-	const gameTypeList_t *list = gameTypeList;
+	const gameTypeList_t *list = GAME_GetCurrentType();
 
-	while (list->name) {
-		if (list->gametype == cls.gametype) {
-			return list->getteam();
-		}
-		list++;
-	}
+	if (list)
+		return list->getteam();
+
 	Com_Error(ERR_FATAL, "GAME_GetCurrentTeam: Could not determine gamemode");
 }
 
 equipDef_t *GAME_GetEquipmentDefinition (void)
 {
-	const gameTypeList_t *list = gameTypeList;
+	const gameTypeList_t *list = GAME_GetCurrentType();
 
-	while (list->name) {
-		if (list->gametype == cls.gametype) {
-			if (list->getequipdef == NULL)
-				return NULL;
-			return list->getequipdef();
-		}
-		list++;
+	if (list) {
+		if (list->getequipdef == NULL)
+			return NULL;
+		return list->getequipdef();
 	}
+
 	Com_Error(ERR_FATAL, "GAME_GetEquipmentDefinition: Could not determine gamemode");
 }
 
 qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
 {
-	const gameTypeList_t *list = gameTypeList;
+	const gameTypeList_t *list = GAME_GetCurrentType();
 
 	if (!teamDef)
 		return qfalse;
 
-	while (list->name) {
-		if (list->gametype == cls.gametype) {
-			if (list->teamisknown)
-				return list->teamisknown(teamDef);
-			return qtrue;
-		}
-		list++;
+	if (list) {
+		if (list->teamisknown)
+			return list->teamisknown(teamDef);
+		return qtrue;
 	}
+
 	Com_Error(ERR_FATAL, "GAME_TeamIsKnown: Could not determine gamemode");
 }
 
 void GAME_CharacterCvars (const character_t *chr)
 {
-	const gameTypeList_t *list = gameTypeList;
+	const gameTypeList_t *list = GAME_GetCurrentType();
 
-	while (list->name) {
-		if (list->gametype == cls.gametype) {
-			if (list->charactercvars)
-				list->charactercvars(chr);
-			return;
-		}
-		list++;
+	if (list) {
+		if (list->charactercvars)
+			list->charactercvars(chr);
+		return;
 	}
+
 	Com_Error(ERR_FATAL, "GAME_CharacterCvars: Could not determine gamemode");
 }
 
@@ -397,20 +388,18 @@ static void GAME_Abort_f (void)
 
 void GAME_Drop (void)
 {
-	const gameTypeList_t *list = gameTypeList;
+	const gameTypeList_t *list = GAME_GetCurrentType();
 
-	while (list->name) {
-		if (list->gametype == cls.gametype) {
-			if (!list->drop) {
-				GAME_SetMode(GAME_NONE);
-				MN_InitStack("main", NULL, qfalse, qtrue);
-			} else {
-				list->drop();
-			}
-			return;
+	if (list) {
+		if (!list->drop) {
+			GAME_SetMode(GAME_NONE);
+			MN_InitStack("main", NULL, qfalse, qtrue);
+		} else {
+			list->drop();
 		}
-		list++;
+		return;
 	}
+
 	Com_Error(ERR_FATAL, "GAME_Drop: Could not determine gamemode");
 }
 
