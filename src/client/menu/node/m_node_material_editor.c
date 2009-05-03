@@ -269,6 +269,11 @@ static void MN_MaterialEditorStagesToName (const materialStage_t *stage, char *b
 	}
 }
 
+/**
+ * Updates the material editor menu for a given image and a given material stage
+ * @param image The image to load into the material editor
+ * @param materialStage The material stage to display
+ */
 static void MN_MaterialEditorUpdate (image_t *image, materialStage_t *materialStage)
 {
 	int i;
@@ -306,6 +311,11 @@ static void MN_MaterialEditorUpdate (image_t *image, materialStage_t *materialSt
 	MN_RegisterText(TEXT_MATERIAL_STAGES, materialStagesList);
 }
 
+/**
+ * Converts a stage name into the stage flag
+ * @param stageName The name to search the flag for
+ * @return -1 if no flag was not found for the given name
+ */
 static int MN_MaterialEditorNameToStage (const char *stageName)
 {
 	const materialDescription_t *md = materialDescriptions;
