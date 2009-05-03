@@ -88,10 +88,18 @@ static void MN_EditorNodeDraw (menuNode_t *node)
 {
 	menuNode_t* hovered = NULL;
 
+	if (MN_GetMouseCapture() != node)
+		return;
+
 	if (status == -1) {
+#if 0	/* it does nothing, remember why we need that... */
 		if (anchoredNode)
 			MN_EditorNodeGetElementAtPosition(anchoredNode, mousePosX, mousePosY);
+#endif
 		hovered = MN_GetNodeAtPosition(mousePosX, mousePosY);
+		/* do not edit node from editor window */
+		if (hovered && hovered->root == node->root)
+			hovered = NULL;
 	}
 
 	if (hovered && hovered != anchoredNode)
@@ -158,15 +166,13 @@ static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
  */
 static void MN_EditorNodeCapturedMouseLost (menuNode_t *node)
 {
-	/* force to close the window, if it need */
-#if 0	/** @todo find a way to close the window only when its need */
-	if (MN_IsMenuOnStack(node->root->name))
-		MN_CloseMenu(node->root->name);
-#endif
+	/* nothing to do */
 }
 
 static void MN_EditorNodeMouseUp (menuNode_t *node, int x, int y, int button)
 {
+	if (MN_GetMouseCapture() != node)
+		return;
 	if (button != K_MOUSE1)
 		return;
 	status = -1;
@@ -176,12 +182,22 @@ static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
 {
 	menuNode_t* hovered;
 
+	if (MN_GetMouseCapture() != node)
+		return;
+	if (button != K_MOUSE1)
+		return;
+
 	hovered = MN_GetNodeAtPosition(mousePosX, mousePosY);
+
+	/* stop the capture */
+	if (hovered && hovered->root == node->root) {
+		MN_MouseRelease();
+		return;
+	}
+
 	if (hovered == anchoredNode)
 		hovered = NULL;
 
-	if (button != K_MOUSE1)
-		return;
 	if (anchoredNode) {
 		status = MN_EditorNodeGetElementAtPosition(anchoredNode, x, y);
 		if (status == 4) {
@@ -197,8 +213,12 @@ static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
 		}
 	}
 
-	if (hovered && hovered->root != node->root)
+	/* select the node */
+	if (hovered && hovered->root != node->root) {
 		anchoredNode = hovered;
+		Cvar_Set("mn_editor_node", anchoredNode->name);
+		Cvar_Set("mn_editor_window", anchoredNode->root->name);
+	}
 }
 
 static void MN_EditorNodeStart_f (void)
@@ -278,6 +298,8 @@ static void MN_EditorNodeExtract_f (void)
 	FS_OpenFile(va("menu_%s_extracted.ufo", menu->name), &file, FILE_WRITE);
 	MN_EditorNodeExtractNode(&file, menu, 0);
 	FS_CloseFile(&file);
+
+	Com_Printf("Menu '%s' extracted.\n", Cmd_Argv(1));
 }
 
 void MN_RegisterEditorNode (nodeBehaviour_t *behaviour)

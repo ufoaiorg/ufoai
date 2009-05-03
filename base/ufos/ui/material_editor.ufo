@@ -7,6 +7,7 @@ window material_editor {
 		pos "50 50"
 		size "900 650"
 		dragbutton	true
+		closebutton true
 		image		ui/popup_alpha_tile
 		string		"_Material editor"
 	}

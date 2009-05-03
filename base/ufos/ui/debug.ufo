@@ -4,8 +4,13 @@
 
 window editor {
 	{
-		pos "0 0"
-		size "1 1"
+		pos "50 50"
+		size "200 300"
+		dragbutton	true
+		closebutton true
+		image		ui/popup_alpha_tile
+		string		"_Node editor"
+		font		f_menusmall
 	}
 
 	editor editor {
@@ -13,12 +18,66 @@ window editor {
 		size "1 1"
 	}
 
+	button start_capture_mode {
+		string		"_Capture mode"
+		pos			"25 55"
+		size		"150 35"
+		image		ui/button_green_small
+		font		f_verysmall
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		onClick	{ cmd "mn_editornode_start <path:root>.editor" }
+	}
+
+	button extract_window {
+		string		"_Extract window"
+		tooltip		"_Extract the window of the last/current selected node"
+		pos			"25 95"
+		size		"150 35"
+		image		ui/button_green_small
+		font		f_verysmall
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		onClick	{ cmd "mn_extract <cvar:mn_editor_window>" }
+	}
+
+	string current_window_title {
+		pos	"25 140"
+		size "150 20"
+		string "_Current window:"		
+		font		f_verysmall
+	}
+
+	string current_window {
+		pos	"30 160"
+		size "150 20"
+		string "*cvar mn_editor_window"		
+		font		f_verysmall
+	}
+
+	string current_node_title {
+		pos	"25 180"
+		size "150 20"
+		string "_Current node:"		
+		font		f_verysmall
+	}
+
+	string current_node {
+		pos	"30 200"
+		size "150 20"
+		string "*cvar mn_editor_node"		
+		font		f_verysmall
+	}
+
 	func onInit {
+		*cvar:mn_editor_node ""
+		*cvar:mn_editor_window ""
 		cmd "echo \"Use mn_extract to write your changes to a file\";"
-		cmd "mn_editornode_start <path:root>.editor"
 	}
 
 	func onClose {
+		cmd "del mn_editor_node"
+		cmd "del mn_editor_window"
 		cmd "mn_editornode_stop <path:root>.editor"
 	}
 }

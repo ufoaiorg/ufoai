@@ -367,6 +367,8 @@ void MN_MouseMove (int x, int y)
 	}
 }
 
+#define MN_IsMouseInvalidate (oldMousePosX == -1)
+
 /**
  * @brief Is called every time one clicks on a menu/screen. Then checks if anything needs to be executed in the area of the click
  * (e.g. button-commands, inventory-handling, geoscape-stuff, etc...)
@@ -376,6 +378,9 @@ void MN_MouseMove (int x, int y)
  */
 static void MN_LeftClick (int x, int y)
 {
+	if (MN_IsMouseInvalidate)
+		return;
+
 	/* send it to the captured mouse node */
 	if (capturedNode) {
 		if (capturedNode->behaviour->leftClick)
@@ -410,6 +415,9 @@ static void MN_LeftClick (int x, int y)
  */
 static void MN_RightClick (int x, int y)
 {
+	if (MN_IsMouseInvalidate)
+		return;
+
 	/* send it to the captured mouse node */
 	if (capturedNode) {
 		if (capturedNode->behaviour->rightClick)
@@ -433,6 +441,9 @@ static void MN_RightClick (int x, int y)
  */
 static void MN_MiddleClick (int x, int y)
 {
+	if (MN_IsMouseInvalidate)
+		return;
+
 	/* send it to the captured mouse node */
 	if (capturedNode) {
 		if (capturedNode->behaviour->middleClick)
