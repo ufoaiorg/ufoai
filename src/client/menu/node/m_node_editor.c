@@ -44,20 +44,19 @@ static int status = -1;
 static int startX;
 static int startY;
 
-static void MN_EditorNodeHighlightNode (menuNode_t *node, const vec4_t color)
+static void MN_EditorNodeHighlightNode (menuNode_t *node, const vec4_t color, qboolean displayAnchor)
 {
 	vec2_t pos;
 	MN_GetNodeAbsPos(node, pos);
 
-	R_Color(color);
-	MN_DrawString("f_small_bold", ALIGN_UL, 20, 50, 20, 50, 400, 400, 0, va("%s (%s)", node->name, node->behaviour->name), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
-	R_Color(NULL);
-
 	R_DrawRect(pos[0] - 1, pos[1] - 1, node->size[0] + 2, node->size[1] + 2, color, 1.0, 0x3333);
-	MN_DrawFill(pos[0] - anchorSize, pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
-	MN_DrawFill(pos[0] - anchorSize, pos[1] + node->size[1], anchorSize, anchorSize, ALIGN_UL, color);
-	MN_DrawFill(pos[0] + node->size[0], pos[1] + node->size[1], anchorSize, anchorSize, ALIGN_UL, color);
-	MN_DrawFill(pos[0] + node->size[0], pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
+
+	if (displayAnchor) {
+		MN_DrawFill(pos[0] - anchorSize, pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
+		MN_DrawFill(pos[0] - anchorSize, pos[1] + node->size[1], anchorSize, anchorSize, ALIGN_UL, color);
+		MN_DrawFill(pos[0] + node->size[0], pos[1] + node->size[1], anchorSize, anchorSize, ALIGN_UL, color);
+		MN_DrawFill(pos[0] + node->size[0], pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
+	}
 }
 
 static int MN_EditorNodeGetElementAtPosition (menuNode_t *node, int x, int y)
@@ -88,8 +87,11 @@ static void MN_EditorNodeDraw (menuNode_t *node)
 {
 	menuNode_t* hovered = NULL;
 
-	if (MN_GetMouseCapture() != node)
+	if (MN_GetMouseCapture() != node) {
+		if (anchoredNode)
+			MN_EditorNodeHighlightNode(anchoredNode, red, qfalse);
 		return;
+	}
 
 	if (status == -1) {
 #if 0	/* it does nothing, remember why we need that... */
@@ -103,10 +105,10 @@ static void MN_EditorNodeDraw (menuNode_t *node)
 	}
 
 	if (hovered && hovered != anchoredNode)
-		MN_EditorNodeHighlightNode(hovered, grey);
+		MN_EditorNodeHighlightNode(hovered, grey, qtrue);
 
 	if (anchoredNode)
-		MN_EditorNodeHighlightNode(anchoredNode, red);
+		MN_EditorNodeHighlightNode(anchoredNode, red, qtrue);
 }
 
 static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
@@ -167,7 +169,6 @@ static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 static void MN_EditorNodeCapturedMouseLost (menuNode_t *node)
 {
 	status = -1;
-	anchoredNode = NULL;
 }
 
 static void MN_EditorNodeMouseUp (menuNode_t *node, int x, int y, int button)
