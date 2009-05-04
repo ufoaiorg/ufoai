@@ -10,6 +10,7 @@ JPEG_CFLAGS=
 CFLAGS+=
 LDFLAGS+=
 CFLAGS_M_OPTS=-MD -MT $@ -MP
+USEWINDOWSCMD=
 
 # MinGW32
 ifeq ($(TARGET_OS),mingw32)
@@ -28,6 +29,11 @@ ifeq ($(TARGET_OS),mingw32)
 	CFLAGS+=-DWINVER=0x501
 #	GAME_LIBS+=
 	TOOLS_LIBS+=-lwinmm
+	# To use Windows CMD
+	ifeq ($(MSYS),1)
+	else
+		USEWINDOWSCMD=1
+	endif
 else
 	ifneq ($(TARGET_OS),darwin)
 		CLIENT_LIBS+=-lGL

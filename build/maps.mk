@@ -3,7 +3,7 @@ MAPSDIR ?= base/maps
 UFO2MAP = ./ufo2map
 
 # Excludes "*tutorial*", "*prefab*" and "*autosave*" maps
-ifeq ($(TARGET_OS),mingw32)
+ifeq ($(USEWINDOWSCMD),1)
     MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "prefab" | findstr /V "tutorial" | findstr /V "autosave") 
 else
     MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'prefab*' \! -name 'test*' )
@@ -46,7 +46,7 @@ maps-ents:
 
 clean-maps:
 	@echo "Deleting maps..."
-ifeq ($(TARGET_OS),mingw32)
+ifeq ($(USEWINDOWSCMD),1)
 	@del /S $(MAPSDIR)\*.bsp
 else
 	@find $(MAPSDIR) -name '*.bsp' -delete
