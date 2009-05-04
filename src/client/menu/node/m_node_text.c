@@ -585,10 +585,6 @@ static const value_t properties[] = {
 	{"tabwidth", V_INT, offsetof(menuNode_t, u.text.tabWidth), MEMBER_SIZEOF(menuNode_t, u.text.tabWidth)},
 	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
 
-	/** @todo deprecated */
-	{"onlineschange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.text.onLinesChange), MEMBER_SIZEOF(menuNode_t, u.text.onLinesChange)},
-	{"textid", V_SPECIAL_DATAID, offsetof(menuNode_t, u.text.num), MEMBER_SIZEOF(menuNode_t, u.text.num)},
-
 	/** @todo delete it went its possible (need to create a textlist) */
 	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
 	{NULL, V_NULL, 0, 0}
