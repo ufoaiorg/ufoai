@@ -468,7 +468,6 @@ static int CIN_THEORA_LoadVideoFrame (void)
 				ogmCin.videoFrameCount = th_frame;
 			}
 		}
-
 	}
 
 	return r;
@@ -513,29 +512,29 @@ static qboolean CIN_OGM_LoadFrame (void)
 
 	while (anyDataTransferred && (needVOutputData || audioWantsMoreData)) {
 		anyDataTransferred = qfalse;
-			if (needVOutputData && (status = CIN_OGM_LoadVideoFrame())) {
-				needVOutputData = qfalse;
-				if (status > 0)
-					anyDataTransferred = qtrue;
-				else
-					/* error (we don't need any videodata and we had no transferred) */
-					anyDataTransferred = qfalse;
-			}
+		if (needVOutputData && (status = CIN_OGM_LoadVideoFrame())) {
+			needVOutputData = qfalse;
+			if (status > 0)
+				anyDataTransferred = qtrue;
+			else
+				/* error (we don't need any videodata and we had no transferred) */
+				anyDataTransferred = qfalse;
+		}
 
-			if (needVOutputData || audioWantsMoreData) {
-				/* try to transfer Pages to the audio- and video-Stream */
-				if (CIN_OGM_LoadPagesToStream())
-					/* try to load a datablock from file */
-					anyDataTransferred |= !CIN_OGM_LoadBlockToSync();
-				else
-					/* successful loadPagesToStreams() */
-					anyDataTransferred = qtrue;
-			}
+		if (needVOutputData || audioWantsMoreData) {
+			/* try to transfer Pages to the audio- and video-Stream */
+			if (CIN_OGM_LoadPagesToStream())
+				/* try to load a datablock from file */
+				anyDataTransferred |= !CIN_OGM_LoadBlockToSync();
+			else
+				/* successful loadPagesToStreams() */
+				anyDataTransferred = qtrue;
+		}
 
-			/* load all Audio after loading new pages ... */
-			if (ogmCin.videoFrameCount > 1)
-				/* wait some videoframes (it's better to have some delay, than a laggy sound) */
-				audioWantsMoreData = CIN_OGM_LoadAudioFrame();
+		/* load all Audio after loading new pages ... */
+		if (ogmCin.videoFrameCount > 1)
+			/* wait some videoframes (it's better to have some delay, than a laggy sound) */
+			audioWantsMoreData = CIN_OGM_LoadAudioFrame();
 	}
 
 	return !anyDataTransferred;

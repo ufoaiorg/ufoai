@@ -78,7 +78,7 @@ static qboolean StringToFilter (const char *s, ipfilter_t * f)
 		}
 
 		j = 0;
-		while (*s >= '0' && *s <= '9') {
+		while (isdigit(*s)) {
 			num[j++] = *s++;
 		}
 		num[j] = 0;

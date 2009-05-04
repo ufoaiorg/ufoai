@@ -912,8 +912,8 @@ static void SP_misc_mission_aliens (edict_t *ent)
 static void SP_misc_model (edict_t *ent)
 {
 	if (ent->spawnflags & MISC_MODEL_SOLID) {
-		vec3_t modelMins, modelMaxs;
 		if (ent->model && *ent->model) {
+			vec3_t modelMins, modelMaxs;
 			if (gi.LoadModelMinsMaxs(ent->model, ent->frame, modelMins, modelMaxs)) {
 				ent->classname = "model";
 				VectorCopy(modelMaxs, ent->absmax);
