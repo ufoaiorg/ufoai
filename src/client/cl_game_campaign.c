@@ -193,7 +193,7 @@ static void GAME_CP_CampaignListClick_f (void)
 			return;
 	}
 
-	Cvar_Set("cl_campaign", ccs.campaigns[num].id);
+	Cvar_Set("cp_campaign", ccs.campaigns[num].id);
 	if (ccs.campaigns[num].team == TEAM_PHALANX)
 		racetype = _("Human");
 	else
@@ -225,7 +225,7 @@ static void GAME_CP_CampaignListClick_f (void)
 static void GAME_CP_Start_f (void)
 {
 	/* get campaign - they are already parsed here */
-	campaign_t *campaign = CL_GetCampaign(cl_campaign->string);
+	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
 	if (!campaign)
 		return;
 
@@ -405,8 +405,8 @@ void GAME_CP_InitStartup (void)
 
 	CP_InitStartup();
 
-	cl_campaign = Cvar_Get("cl_campaign", "main", 0, "Which is the current selected campaign id");
-	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
+	cp_campaign = Cvar_Get("cp_campaign", "main", 0, "Which is the current selected campaign id");
+	cp_start_employees = Cvar_Get("cp_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	/* cvars might have been changed by other gametypes */
 	Cvar_ForceSet("sv_maxclients", "1");
 	Cvar_ForceSet("sv_ai", "1");

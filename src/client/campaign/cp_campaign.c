@@ -59,8 +59,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct memPool_s *cp_campaignPool;		/**< reset on every game restart */
 ccs_t ccs;
-cvar_t *cl_campaign;
-cvar_t *cl_start_employees;
+cvar_t *cp_campaign;
+cvar_t *cp_start_employees;
 
 typedef struct {
 	int ucn;

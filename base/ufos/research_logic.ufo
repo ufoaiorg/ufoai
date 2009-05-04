@@ -111,7 +111,7 @@ tech rs_ortnok_extra
 //========================================================
 // Used for the "A New Twist" and "The Enemy On Earth" research.
 
-// Triggered in cl_campaign.c:CP_CheckEvents
+// Triggered in CP_CheckEvents
 // "XVI infection begins"
 tech rs_alien_xvi_event
 {
@@ -125,7 +125,7 @@ tech rs_alien_xvi_event
 	}
 }
 
-// Triggered in cl_campaign.c:CP_CheckEvents
+// Triggered in CP_CheckEvents
 // "Humans start to attacking player"
 tech rs_enemy_on_earth_event
 {

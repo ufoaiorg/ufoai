@@ -1427,7 +1427,7 @@ void UP_ParseChapters (const char *name, const char **text)
 			return;
 		}
 		memset(&ccs.upChapters[ccs.numChapters], 0, sizeof(ccs.upChapters[ccs.numChapters]));
-		ccs.upChapters[ccs.numChapters].id = Mem_PoolStrDup(token, cl_campaignPool, 0);
+		ccs.upChapters[ccs.numChapters].id = Mem_PoolStrDup(token, cp_campaignPool, 0);
 		ccs.upChapters[ccs.numChapters].idx = ccs.numChapters;	/* set self-link */
 
 		/* get the name */
@@ -1440,7 +1440,7 @@ void UP_ParseChapters (const char *name, const char **text)
 			token++;
 		if (!*token)
 			continue;
-		ccs.upChapters[ccs.numChapters].name = Mem_PoolStrDup(token, cl_campaignPool, 0);
+		ccs.upChapters[ccs.numChapters].name = Mem_PoolStrDup(token, cp_campaignPool, 0);
 
 		ccs.numChapters++;
 	} while (*text);

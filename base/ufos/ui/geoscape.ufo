@@ -1030,7 +1030,7 @@ window popup_newbase
 	checkbox start_employees
 	{
 		tooltip		"_Employees already hired at campaign start"
-		current		"*cvar cl_start_employees"
+		current		"*cvar cp_start_employees"
 		pos			"246 98"
 		size		"20 18"
 		image		"ui/checkbox_blue"

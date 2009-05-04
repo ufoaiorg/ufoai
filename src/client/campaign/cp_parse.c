@@ -204,7 +204,7 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 	int i;
 	const campaign_t* campaign;
 
-	campaign = CL_GetCampaign(cl_campaign->string);
+	campaign = CL_GetCampaign(cp_campaign->string);
 	if (!campaign) {
 		Com_Printf("CL_ParseResearchedCampaignItems: failed\n");
 		return;
@@ -234,7 +234,7 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 			if (!strcmp(token, tech->id)) {
 				tech->mailSent = MAILSENT_FINISHED;
 				tech->markResearched.markOnly[tech->markResearched.numDefinitions] = qtrue;
-				tech->markResearched.campaign[tech->markResearched.numDefinitions] = Mem_PoolStrDup(name, cl_campaignPool, 0);
+				tech->markResearched.campaign[tech->markResearched.numDefinitions] = Mem_PoolStrDup(name, cp_campaignPool, 0);
 				tech->markResearched.numDefinitions++;
 				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", tech->id);
 				break;
@@ -259,7 +259,7 @@ static void CL_ParseResearchableCampaignStates (const char *name, const char **t
 	int i;
 	const campaign_t* campaign;
 
-	campaign = CL_GetCampaign(cl_campaign->string);
+	campaign = CL_GetCampaign(cp_campaign->string);
 	if (!campaign) {
 		Com_Printf("CL_ParseResearchableCampaignStates: failed\n");
 		return;

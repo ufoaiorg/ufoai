@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_base_callbacks.h"
 
 vec2_t newBasePos;
-static cvar_t *cl_initial_equipment;
+static cvar_t *cp_initial_equipment;
 
 static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
@@ -1108,9 +1108,9 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 				if (hire) {
 					AIR_AssignInitial(aircraft);
 					/** @todo cleanup this mess: */
-					B_InitialEquipment(base, aircraft, cl_initial_equipment->string, &base->storage);
+					B_InitialEquipment(base, aircraft, cp_initial_equipment->string, &base->storage);
 				} else {
-					B_InitialEquipment(base, NULL, cl_initial_equipment->string, &base->storage);
+					B_InitialEquipment(base, NULL, cp_initial_equipment->string, &base->storage);
 				}
 				break;
 			default:
@@ -2341,7 +2341,7 @@ void B_InitStartup (void)
 	Cmd_AddCommand("debug_buildingfinished", B_BuildingConstructionFinished_f, "Finish construction for every building in the current base");
 #endif
 
-	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "phalanx_initial", 0, "Start with assigned equipment - see cl_start_employees");
+	cp_initial_equipment = Cvar_Get("cp_initial_equipment", "phalanx_initial", 0, "Start with assigned equipment - see cp_start_employees");
 }
 
 /**

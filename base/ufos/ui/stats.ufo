@@ -211,7 +211,7 @@ window nations
 	 * @brief select a nation
 	 * @param <1> nationid
 	 * @SA MAX_NATIONS
-	 * @note: Number of nations (0-7) defined by MAX_NATIONS in cl_campaign.h
+	 * @note: Number of nations (0-7) defined by MAX_NATIONS
 	 */
 	confunc nation_marksel {
 		*node:parent.nation<1>		invis	false

@@ -405,7 +405,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 	/* new entry */
 	installation = &ccs.installationTemplates[ccs.numInstallationTemplates];
 	memset(installation, 0, sizeof(*installation));
-	installation->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
+	installation->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
 	Com_DPrintf(DEBUG_CLIENT, "...found installation %s\n", installation->id);
 
@@ -430,7 +430,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)installation + (int)vp->ofs), cl_campaignPool, 0);
+					Mem_PoolStrDupTo(token, (char**) ((char*)installation + (int)vp->ofs), cp_campaignPool, 0);
 					break;
 				default:
 					if (Com_EParseValue(installation, token, vp->type, vp->ofs, vp->size) == -1)

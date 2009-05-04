@@ -421,7 +421,7 @@ void MSO_ParseCategories (const char *name, const char **text)
 	category = &ccs.messageCategories[ccs.numMsgCategories];
 
 	memset(category, 0, sizeof(*category));
-	category->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
+	category->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 	category->idx = ccs.numMsgCategories;	/* set self-link */
 	category->isFolded = qtrue;
 

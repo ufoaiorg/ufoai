@@ -49,9 +49,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* ufo2map/faces.c, shared/typedefs.h (face_t) */
 #define	MAXEDGES		20
 
-/* client/cl_campaign.c, client/cl_mapfightequip.c, client/cl_ufopedia.c */
-#define	UFO_EPSILON 0.00001f
-
 /* game/g_client.c, client/cl_main.c, client/cl_view.c */
 #define	TEAM_DEFAULT 1
 
@@ -76,7 +73,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	NONE_AMMO	0
 
 /* Used for saving/transfering (byte) indices */
-/* client/cl_aircraft.c, client/cl_basemanagement.c, client/cl_campaign.c, client/cl_trnasfer.c */
+/* client/cl_aircraft.c, client/cl_basemanagement.c, client/cp_campaign.c, client/cl_trnasfer.c */
 #define	BYTES_NONE	0xFF
 
 /* Move/Routing values */
