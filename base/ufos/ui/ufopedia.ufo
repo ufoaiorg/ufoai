@@ -91,7 +91,7 @@ window ufopedia
 
 	text ufopedia
 	{
-		textid		TEXT_UFOPEDIA
+		dataid		TEXT_UFOPEDIA
 		pos			"40 85"
 		size		"640 368"
 		lineheight	23
@@ -102,7 +102,7 @@ window ufopedia
 		onWheel		{
 			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
 		}
-		onLinesChange	{
+		onViewChange	{
 			*(abstractscrollbar)ufopedia_scroll fullsize <lines>
 			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
 		}
@@ -146,7 +146,7 @@ window ufopedia
 
 	text description
 	{
-		textid		TEXT_STANDARD
+		dataid		TEXT_STANDARD
 		pos			"30 495"
 		size		"495 200"
 		lineheight	20
@@ -157,7 +157,7 @@ window ufopedia
 
 	text techtree
 	{
-		textid		TEXT_LIST
+		dataid		TEXT_LIST
 		pos			"550 495"
 		size		"354 246"
 		lineheight	"20"

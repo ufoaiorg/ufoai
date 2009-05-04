@@ -332,7 +332,7 @@ window popup_tipoftheday
 		size		"444 120"
 		lineheight	20
 		tabwidth	150
-		textid		TEXT_TIPOFTHEDAY
+		dataid		TEXT_TIPOFTHEDAY
 		rows		6
 	}
 

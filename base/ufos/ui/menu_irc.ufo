@@ -60,7 +60,7 @@ window irc
 		pos			"750 100"
 		size		"240 594"
 		lineheight	22
-		textid		TEXT_LIST
+		dataid		TEXT_LIST
 		rows		"27"
 		mousefx		true
 		onClick		{ cmd "irc_userlist_click <lineselected>" }
@@ -68,7 +68,7 @@ window irc
 		onWheel {
 			*(abstractscrollbar)irc_userlist_scroll current <text_scroll>
 		}
-		onLinesChange {
+		onViewChange {
 			*(abstractscrollbar)irc_userlist_scroll fullsize <lines>
 			*(abstractscrollbar)irc_userlist_scroll current <text_scroll>
 		}
@@ -91,11 +91,11 @@ window irc
 		size		"660 528"
 		rows		"24"
 		lineheight  "22"
-		textid		TEXT_STANDARD
+		dataid		TEXT_STANDARD
 		onWheel {
 			*(abstractscrollbar)irc_data_scroll current <text_scroll>
 		}
-		onLinesChange {
+		onViewChange {
 			*(abstractscrollbar)irc_data_scroll fullsize <lines>
 			*(abstractscrollbar)irc_data_scroll current <text_scroll>
 		}

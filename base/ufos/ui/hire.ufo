@@ -242,7 +242,7 @@ window employees
 
 	text employee_list
 	{
-		textid		TEXT_LIST
+		dataid		TEXT_LIST
 		pos			"45 185"
 		width		280
 		lineheight	38
@@ -254,7 +254,7 @@ window employees
 		onClick			{ cmd "employee_list_click <lineselected>" }
 		onWheelUp		{ cmd "mn_textscroll employee_list -1; employee_scroll;" }
 		onWheelDown		{ cmd "mn_textscroll employee_list 1; employee_scroll;" }
-		onLinesChange	{
+		onViewChange	{
 			*(abstractscrollbar)scroll fullsize <lines>
 			*(abstractscrollbar)scroll current <text_scroll>
 		}
@@ -450,7 +450,7 @@ window employees
 
 	text description
 	{
-		textid		TEXT_EMPLOYEE
+		dataid		TEXT_EMPLOYEE
 		pos			"610 428"
 		size		"366 80"
 		lineheight	20

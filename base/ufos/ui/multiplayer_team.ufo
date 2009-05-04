@@ -387,7 +387,7 @@ window mp_team_edit
 			tabwidth	190
 			rows		"7"
 			scrollbar	true
-			textid		TEXT_STANDARD
+			dataid		TEXT_STANDARD
 		}
 	
 		// ======================

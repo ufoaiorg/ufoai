@@ -37,7 +37,7 @@ window tutorials
 		pos	"640 220"
 		lineheight	"20"
 		size	"260 280"
-		textid		TEXT_LIST
+		dataid		TEXT_LIST
 		rows	"14"
 		mousefx true
 		scrollbar true

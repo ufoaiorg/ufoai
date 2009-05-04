@@ -628,7 +628,7 @@ window hud extends ahud
 
 		text infoscreen
 		{
-			textid		TEXT_STANDARD
+			dataid		TEXT_STANDARD
 			pos			"118 61"
 			size		"290 50"
 			lineheight	20
@@ -772,7 +772,7 @@ window hud extends ahud
 	// the name must be the same in all huds
 	text chatscreen
 	{
-		textid		TEXT_CHAT_WINDOW
+		dataid		TEXT_CHAT_WINDOW
 		pos			"130 70"
 		size		"690 48"
 		font		f_verysmall

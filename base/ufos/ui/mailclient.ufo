@@ -34,7 +34,7 @@ window mail
 
 	text mail
 	{
-		textid		TEXT_UFOPEDIA
+		dataid		TEXT_UFOPEDIA
 		pos			"50 208"
 		size		"904 480"
 		lineheight	24
@@ -43,7 +43,7 @@ window mail
 		onWheel		{
 			*(abstractscrollbar)mail_scroll current <text_scroll>
 		}
-		onLinesChange	{
+		onViewChange	{
 			*(abstractscrollbar)mail_scroll fullsize <lines>
 			*(abstractscrollbar)mail_scroll current <text_scroll>
 		}
@@ -89,7 +89,7 @@ window mail
 
 	text mail_header
 	{
-		textid		TEXT_UFOPEDIA_MAILHEADER
+		dataid		TEXT_UFOPEDIA_MAILHEADER
 		pos			"150 70"
 		size		"824 134"
 		lineheight	"24"
@@ -524,7 +524,7 @@ window mailclient
 
 	text mailclient
 	{
-		textid		TEXT_UFOPEDIA_MAIL
+		dataid		TEXT_UFOPEDIA_MAIL
 		pos			"100 130"
 		width		"870"
 		rows		"15"
@@ -537,7 +537,7 @@ window mailclient
 			*(abstractscrollbar)mailclient_scroll current <text_scroll>
 			cmd "ufopedia_scrollmail;"
 		}
-		onLinesChange	{
+		onViewChange	{
 			*(abstractscrollbar)mailclient_scroll fullsize <lines>
 			*(abstractscrollbar)mailclient_scroll current <text_scroll>
 		}

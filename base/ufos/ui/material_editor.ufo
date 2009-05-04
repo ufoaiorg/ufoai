@@ -180,7 +180,7 @@ window material_editor {
 			size "280 200"
 		}
 		text stages {
-			textid		TEXT_MATERIAL_STAGES
+			dataid		TEXT_MATERIAL_STAGES
 			pos			"0 0"
 			size		"360 200"
 			bgcolor		"0.5 0.5 0.5 0.3"

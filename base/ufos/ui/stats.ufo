@@ -42,7 +42,7 @@ window stats
 	}
 	text mission_stats
 	{
-		textid		TEXT_STATS_MISSION
+		dataid		TEXT_STATS_MISSION
 		pos			"40 110"
 		size		"200 140"
 		bgcolor		"0.5 0.5 0.5 0.2"
@@ -61,7 +61,7 @@ window stats
 	}
 	text base_stats
 	{
-		textid		TEXT_STATS_BASES
+		dataid		TEXT_STATS_BASES
 		pos			"250 110"
 		size		"200 140"
 		bgcolor		"0.5 0.5 0.5 0.2"
@@ -80,7 +80,7 @@ window stats
 	}
 	text ins_stats
 	{
-		textid		TEXT_STATS_INSTALLATIONS
+		dataid		TEXT_STATS_INSTALLATIONS
 		pos			"460 110"
 		size		"200 140"
 		bgcolor		"0.5 0.5 0.5 0.2"
@@ -99,7 +99,7 @@ window stats
 	}
 	text empl_stats
 	{
-		textid		TEXT_STATS_EMPLOYEES
+		dataid		TEXT_STATS_EMPLOYEES
 		pos			"670 110"
 		size		"200 140"
 		bgcolor		"0.5 0.5 0.5 0.2"
@@ -118,7 +118,7 @@ window stats
 	}
 	text costs_stats
 	{
-		textid		TEXT_STATS_COSTS
+		dataid		TEXT_STATS_COSTS
 		pos			"40 284"
 		size		"470 400"
 		bgcolor		"0.5 0.5 0.5 0.2"
@@ -138,7 +138,7 @@ window stats
 	text nation_stats
 	{
 		tooltip		"_Click for funding graphs"
-		textid		TEXT_STATS_NATIONS
+		dataid		TEXT_STATS_NATIONS
 		pos			"518 284"
 		size		"470 240"
 		bgcolor		"0.5 0.5 0.5 0.2"
@@ -159,7 +159,7 @@ window stats
 	}
 	text campaign_stats
 	{
-		textid		TEXT_GENERIC
+		dataid		TEXT_GENERIC
 		pos			"518 574"
 		bgcolor		"0.5 0.5 0.5 0.2"
 		size		"470 110"

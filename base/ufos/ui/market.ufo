@@ -121,7 +121,7 @@ window market
 
 	text market
 	{
-		textid		TEXT_MARKET_NAMES
+		dataid		TEXT_MARKET_NAMES
 		color		"0 .78 0 1"
 		rows		"22"
 		lineheight	"25"
@@ -135,7 +135,7 @@ window market
 
 	text market_storage
 	{
-		textid		TEXT_MARKET_STORAGE
+		dataid		TEXT_MARKET_STORAGE
 		color		"0 .78 0 1"
 		textalign	ur
 		pos			"330 180"
@@ -146,7 +146,7 @@ window market
 
 	text market_market
 	{
-		textid		TEXT_MARKET_MARKET
+		dataid		TEXT_MARKET_MARKET
 		color		"0 .78 0 1"
 		textalign	ur
 		pos			"406 180"
@@ -157,7 +157,7 @@ window market
 
 	text market_prices
 	{
-		textid		TEXT_MARKET_PRICES
+		dataid		TEXT_MARKET_PRICES
 		color		"0 .78 0 1"
 		textalign	ur
 		rows		"22"
@@ -752,14 +752,13 @@ window market
 
 		text description
 		{
-			textid		TEXT_STANDARD
+			dataid		TEXT_STANDARD
 			pos			"32 257"
 			size		"336 120"
 			rows		"8"
 			lineheight	15
 			tabwidth	168
 			font		"f_verysmall"
-			textid	TEXT_STANDARD
 		}
 	}
 

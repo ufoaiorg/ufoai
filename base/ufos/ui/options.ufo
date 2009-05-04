@@ -709,12 +709,12 @@ window options
 		// only show the current binding - no support for changing them atm
 		text keylist
 		{
-			textid		TEXT_LIST
+			dataid		TEXT_LIST
 			pos			"65 110"
 			size		"430 560"
 			rows		"28"
 			lineheight	"20"
-			onLinesChange {
+			onViewChange {
 				*(abstractscrollbar)options_keys.keyscroll fullsize <lines>
 				*(abstractscrollbar)options_keys.keyscroll current <text_scroll>
 			}

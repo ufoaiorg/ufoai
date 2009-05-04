@@ -181,7 +181,7 @@ window lostgame
 		rows		"5"
 		font		"f_normal"
 		scrollbar	 true
-		textid	TEXT_STANDARD
+		dataid	TEXT_STANDARD
 	}
 
 	string lostgame_click
@@ -241,7 +241,7 @@ window endgame
 		rows		"5"
 		font		"f_normal"
 		scrollbar	true
-		textid	TEXT_STANDARD
+		dataid	TEXT_STANDARD
 	}
 
 	string endgame_click

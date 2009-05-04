@@ -267,7 +267,7 @@ window production
 
 	text prodlist
 	{
-		textid		TEXT_PRODUCTION_LIST
+		dataid		TEXT_PRODUCTION_LIST
 		color		"0 .78 0 1"
 		rows		"22"
 		lineheight	"25"
@@ -281,7 +281,7 @@ window production
 			*(abstractscrollbar)prodlist_scroll current <text_scroll>
 			cmd "prod_scroll;"
 		}
-		onLinesChange	{
+		onViewChange	{
 			*(abstractscrollbar)prodlist_scroll fullsize <lines>
 			*(abstractscrollbar)prodlist_scroll current <text_scroll>
 		}
@@ -289,7 +289,7 @@ window production
 
 	text prodlist_amount
 	{
-		textid		TEXT_PRODUCTION_AMOUNT
+		dataid		TEXT_PRODUCTION_AMOUNT
 		color		"0 .78 0 1"
 		textalign	ur
 		pos			"330 180"
@@ -312,7 +312,7 @@ window production
 
 	text prodlist_queued
 	{
-		textid		TEXT_PRODUCTION_QUEUED
+		dataid		TEXT_PRODUCTION_QUEUED
 		pos			"465 180"
 		size		"30 550"
 		color		"0 .78 0 1"
@@ -517,7 +517,7 @@ window production
 
 	text description
 	{
-		textid		TEXT_PRODUCTION_INFO
+		dataid		TEXT_PRODUCTION_INFO
 		pos			"610 528"
 		size		"366 100"
 		lineheight	20

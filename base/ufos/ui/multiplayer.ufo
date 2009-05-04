@@ -142,7 +142,7 @@ window serverinfo
 
 	text server_info
 	{
-		textid		TEXT_STANDARD
+		dataid		TEXT_STANDARD
 		pos			"500 200"
 		size		"420 490"
 		lineheight	20
@@ -179,7 +179,7 @@ window serverinfo
 	}
 	text user_list
 	{
-		textid	TEXT_LIST
+		dataid	TEXT_LIST
 		pos			"50 170"
 		size		"300 380"
 		lineheight	20
@@ -324,13 +324,13 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			padding		10
 			bgcolor		"0.3 0.3 0.3 0.4"
 			rows		"22"
-			textid		TEXT_LIST
+			dataid		TEXT_LIST
 			onClick		{ cmd "servers_click <lineselected>" }
 			onRClick	{ cmd "pingservers;" }
 			onWheel {
 				*(abstractscrollbar)content.servers_scroll current <text_scroll>
 			}
-			onLinesChange {
+			onViewChange {
 				*(abstractscrollbar)content.servers_scroll fullsize <lines>
 				*(abstractscrollbar)content.servers_scroll current <text_scroll>
 			}
@@ -1014,7 +1014,7 @@ window mp_create_server extends abstract_multiplayer
 		longlines	wrap
 		textalign	uc
 		font		"f_small"
-		textid		TEXT_STANDARD
+		dataid		TEXT_STANDARD
 	}
 
 	// ====================
@@ -1114,7 +1114,7 @@ window multiplayer_selectteam
 
 	text team_info
 	{
-		textid		TEXT_LIST
+		dataid		TEXT_LIST
 		pos			"300 100"
 		size		"422 320"
 		lineheight	16
@@ -1124,7 +1124,7 @@ window multiplayer_selectteam
 
 	text teamnum_status
 	{
-		textid		TEXT_STANDARD
+		dataid		TEXT_STANDARD
 		pos			"300 430"
 		size		"422 16"
 		lineheight	16
@@ -1224,7 +1224,7 @@ window multiplayer_selectteam
 
 	text chatscreen
 	{
-		textid		TEXT_CHAT_WINDOW
+		dataid		TEXT_CHAT_WINDOW
 		pos			"167 580"
 		size		"690 160"
 		font		"f_verysmall"
@@ -1389,7 +1389,7 @@ window chat_popup
 
 	text chatscreen
 	{
-		textid			TEXT_CHAT_WINDOW
+		dataid			TEXT_CHAT_WINDOW
 		pos			"26 58"
 		size		"444 100"
 		lineheight	20

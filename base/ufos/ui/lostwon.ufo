@@ -24,7 +24,7 @@ window won
 		lineheight	20
 		tabwidth	350
 		rows		"23"
-		textid		TEXT_STANDARD
+		dataid		TEXT_STANDARD
 	}
 
 	// ==================
@@ -101,7 +101,7 @@ window lost
 		lineheight	20
 		tabwidth	350
 		rows		"23"
-		textid		TEXT_STANDARD
+		dataid		TEXT_STANDARD
 	}
 
 	// ==================
@@ -205,7 +205,7 @@ window uforecovery
 
 		text cp_uforecovery_baselist
 		{
-			textid		TEXT_UFORECOVERY_BASESTORAGE
+			dataid		TEXT_UFORECOVERY_BASESTORAGE
 			pos			"25 50"
 			size		"610 128"
 			color		"0.60 0.60 0.60 1"
@@ -292,7 +292,7 @@ window uforecovery
 
 		text cp_uforecovery_nationlist
 		{
-			textid		TEXT_UFORECOVERY_NATIONS
+			dataid		TEXT_UFORECOVERY_NATIONS
 			pos			"25 50"
 			size		"610 128"
 			lineheight	16

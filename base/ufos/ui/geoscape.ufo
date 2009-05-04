@@ -27,7 +27,7 @@ window geoscape
 		bgcolor		"0 0 0 .5"
 		lineheight	"20"
 		rows		1
-		textid		TEXT_MESSAGESYSTEM
+		dataid		TEXT_MESSAGESYSTEM
 		scrollbar	false
 	}
 
@@ -92,13 +92,13 @@ window geoscape
 
 		text description
 		{
-			textid		TEXT_STANDARD
+			dataid		TEXT_STANDARD
 			pos			"32 154"
 			size		"172 144"
 			lineheight	18
 			tabwidth	70
 			rows		8
-			onLinesChange {
+			onViewChange {
 				*node:(abstractscrollbar)parent.description_scroll fullsize <lines>
 				*node:(abstractscrollbar)parent.description_scroll current <text_scroll>
 			}
@@ -559,14 +559,14 @@ window popup_list
 		width		"446"
 		textalign	ul
 		rows		"1"
-		textid		TEXT_POPUP
+		dataid		TEXT_POPUP
 	}
 
 	text popup_text
 	{
 		pos			"26 58"
 		size		"446 32"
-		textid		TEXT_POPUP_INFO
+		dataid		TEXT_POPUP_INFO
 		lineheight	16
 		tabwidth	100
 		rows		2
@@ -575,7 +575,7 @@ window popup_list
 	{
 		pos			"26 96"
 		size		"446 96"
-		textid		TEXT_LIST
+		dataid		TEXT_LIST
 		lineheight	16
 		tabwidth	100
 		rows		6
@@ -617,14 +617,14 @@ window popup_button
 		width		"446"
 		textalign	ul
 		rows		"1"
-		textid		TEXT_POPUP
+		dataid		TEXT_POPUP
 	}
 
 	text popup_text
 	{
 		pos			"26 58"
 		size		"446 128"
-		textid		TEXT_POPUP_INFO
+		dataid		TEXT_POPUP_INFO
 		lineheight	16
 		tabwidth	100
 		rows		8
@@ -772,7 +772,7 @@ window popup_baseattack
 	text description
 	{
 		pos			"26 58"
-		textid		TEXT_POPUP
+		dataid		TEXT_POPUP
 		size		"450 80"
 		lineheight	16
 		rows		5
@@ -933,7 +933,7 @@ window popup_transferbaselist
 
 	text trans_baselist
 	{
-		textid		TEXT_LIST
+		dataid		TEXT_LIST
 		pos			"26 74"
 		size		"450 112"
 		lineheight	16
@@ -1690,7 +1690,7 @@ window popup_intercept
 
 		text ships
 		{
-			textid		TEXT_AIRCRAFT_LIST
+			dataid		TEXT_AIRCRAFT_LIST
 			pos			"6 29"
 			size		"460 260"
 			lineheight	20
@@ -1698,7 +1698,7 @@ window popup_intercept
 			mousefx		true
 			rows		"13"
 			longlines	prettychop
-			onLinesChange {
+			onViewChange {
 				*(abstractscrollbar)aircraft.ships_scroll fullsize <lines>
 				*(abstractscrollbar)aircraft.ships_scroll current <text_scroll>
 			}
@@ -1739,14 +1739,14 @@ window popup_intercept
 
 		text bases
 		{
-			textid		TEXT_BASE_LIST
+			dataid		TEXT_BASE_LIST
 			pos			"6 29"
 			size		"460 260"
 			lineheight	20
 			tabwidth	175
 			mousefx		true
 			rows		"13"
-			onLinesChange {
+			onViewChange {
 				*(abstractscrollbar)sam.bases_scroll fullsize <lines>
 				*(abstractscrollbar)sam.bases_scroll current <text_scroll>
 			}
@@ -1848,7 +1848,7 @@ window popup_mission
 
 	text ships
 	{
-		textid		TEXT_AIRCRAFT_LIST
+		dataid		TEXT_AIRCRAFT_LIST
 		pos			"26 74"
 		size		"640 260"
 		lineheight	20
@@ -1905,7 +1905,7 @@ window popup_multi_selection
 
 	text multi_select
 	{
-		textid		TEXT_MULTISELECTION
+		dataid		TEXT_MULTISELECTION
 		pos			"26 78"
 		size		"420 100"
 		lineheight	20
@@ -1961,7 +1961,7 @@ window popup_aircraft
 
 	text popup_aircraft_action
 	{
-		textid		TEXT_POPUP
+		dataid		TEXT_POPUP
 		pos			"26 78"
 		size		"420 100"
 		lineheight	20
@@ -1997,7 +1997,7 @@ window popup
 	/** @todo please use a cvar and move it into "string" menu property */
 	text title
 	{
-		textid		TEXT_POPUP
+		dataid		TEXT_POPUP
 		pos			"176 18"
 		width		"446"
 		rows		"1"
@@ -2006,7 +2006,7 @@ window popup
 
 	text popup_text
 	{
-		textid		TEXT_POPUP_INFO
+		dataid		TEXT_POPUP_INFO
 		pos			"26 58"
 		size		"446 128"
 		lineheight	16
@@ -2111,7 +2111,7 @@ window messageoptions
 
 	text messagetypes
 	{
-		textid		TEXT_MESSAGEOPTIONS
+		dataid		TEXT_MESSAGEOPTIONS
 		color		"0 .78 0 1"
 		rows		"12"
 		lineheight	"25"
@@ -2124,7 +2124,7 @@ window messageoptions
 			*(abstractscrollbar)messagetypes_scroll current <text_scroll>
 			cmd "msgoptions_scroll;"
 		}
-		onLinesChange	{
+		onViewChange	{
 			*(abstractscrollbar)messagetypes_scroll fullsize <lines>
 			*(abstractscrollbar)messagetypes_scroll current <text_scroll>
 		}

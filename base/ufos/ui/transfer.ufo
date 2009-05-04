@@ -144,7 +144,7 @@ window transfer
 
 	text trans_cargolist
 	{
-		textid		TEXT_CARGO_LIST
+		dataid		TEXT_CARGO_LIST
 		pos			"604 463"
 		size		"345 225"
 		mousefx		true
@@ -155,7 +155,7 @@ window transfer
 		onWheel		{
 			*(abstractscrollbar)trans_cargolist_scroll current <text_scroll>
 		}
-		onLinesChange	{
+		onViewChange	{
 			*(abstractscrollbar)trans_cargolist_scroll fullsize <lines>
 			*(abstractscrollbar)trans_cargolist_scroll current <text_scroll>
 		}
@@ -220,7 +220,7 @@ window transfer
 
 	text t_baseinfo
 	{
-		textid		TEXT_BASE_INFO
+		dataid		TEXT_BASE_INFO
 		pos			"598 220"
 		size		"378 180"
 		lineheight	"20"
@@ -229,7 +229,7 @@ window transfer
 
 	text trans_list
 	{
-		textid		TEXT_TRANSFER_LIST
+		dataid		TEXT_TRANSFER_LIST
 		pos			"37 180"
 		size		"483 550"
 		mousefx		true
@@ -240,7 +240,7 @@ window transfer
 		onWheel		{
 			*(abstractscrollbar)trans_list_scroll current <text_scroll>
 		}
-		onLinesChange	{
+		onViewChange	{
 			*(abstractscrollbar)trans_list_scroll fullsize <lines>
 			*(abstractscrollbar)trans_list_scroll current <text_scroll>
 		}
