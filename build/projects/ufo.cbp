@@ -22,7 +22,7 @@
 					<Add option="-DNODEBUG" />
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
-					<Add option="-DHAVE_THEORA_H" />
+					<Add option="-DHAVE_THEORA_THEORA_H" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -50,6 +50,9 @@
 					<Add option="-DWINVER=0x501" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DDEBUG" />
+					<Add option="-DHAVE_VORBIS_CODEC_H" />
+					<Add option="-DHAVE_XVID_H" />
+					<Add option="-DHAVE_THEORA_THEORA_H" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
