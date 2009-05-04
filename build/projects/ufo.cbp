@@ -20,6 +20,9 @@
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DNODEBUG" />
+					<Add option="-DHAVE_VORBIS_CODEC_H" />
+					<Add option="-DHAVE_XVID_H" />
+					<Add option="-DHAVE_THEORA_H" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -107,10 +110,10 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
-			<Add option="-Winline" />
-			<Add option="-Wcast-qual" />
 			<Add option="-Wcast-align" />
+			<Add option="-Winline" />
+			<Add option="-Wall" />
+			<Add option="-Wcast-qual" />
 			<Add option="-Wdeclaration-after-statement" />
 			<Add option="-DCOMPILE_UFO" />
 		</Compiler>
@@ -122,6 +125,10 @@
 			<Add library="jpeg" />
 			<Add library="png" />
 			<Add library="curl" />
+			<Add library="vorbis" />
+			<Add library="ogg" />
+			<Add library="theora" />
+			<Add library="xvidcore" />
 		</Linker>
 		<Unit filename="..\..\Makefile.in" />
 		<Unit filename="..\..\base\autoexec.cfg" />
@@ -197,10 +204,22 @@
 		<Unit filename="..\tools.mk" />
 		<Unit filename="..\various.mk" />
 		<Unit filename="..\..\configure.ac" />
+		<Unit filename="..\..\src\client\campaign\cp_aircraft.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_aircraft.h" />
+		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_airfight.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_airfight.h" />
+		<Unit filename="..\..\src\client\campaign\cp_alien_interest.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_alien_interest.h" />
 		<Unit filename="..\..\src\client\campaign\cp_alienbase.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -213,6 +232,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_aliencont_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_base.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_base.h" />
+		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_campaign.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -221,6 +248,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_employee.h" />
+		<Unit filename="..\..\src\client\campaign\cp_employee_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_employee_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_event.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -229,10 +260,22 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_fightequip_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_hospital.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_hospital.h" />
+		<Unit filename="..\..\src\client\campaign\cp_hospital_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_hospital_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_installation.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_installation.h" />
+		<Unit filename="..\..\src\client\campaign\cp_installation_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_installation_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_map.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -245,6 +288,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_market.h" />
+		<Unit filename="..\..\src\client\campaign\cp_market_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_market_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_messageoptions.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -253,10 +300,30 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_messageoptions_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_messages.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_messages.h" />
+		<Unit filename="..\..\src\client\campaign\cp_mission_triggers.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_mission_triggers.h" />
+		<Unit filename="..\..\src\client\campaign\cp_missions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_missions.h" />
 		<Unit filename="..\..\src\client\campaign\cp_nation.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_nation.h" />
+		<Unit filename="..\..\src\client\campaign\cp_nations.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_nations.h" />
+		<Unit filename="..\..\src\client\campaign\cp_parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_parse.h" />
 		<Unit filename="..\..\src\client\campaign\cp_popup.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -273,6 +340,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_radar.h" />
+		<Unit filename="..\..\src\client\campaign\cp_rank.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_rank.h" />
 		<Unit filename="..\..\src\client\campaign\cp_research.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -285,10 +356,26 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_save.h" />
+		<Unit filename="..\..\src\client\campaign\cp_team.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_team.h" />
+		<Unit filename="..\..\src\client\campaign\cp_team_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_team_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_time.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_time.h" />
 		<Unit filename="..\..\src\client\campaign\cp_transfer.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_transfer.h" />
+		<Unit filename="..\..\src\client\campaign\cp_transfer_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_transfer_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_ufo.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -305,86 +392,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_uforecovery_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_aircraft.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_aircraft.h" />
-		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_alien_interest.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_alien_interest.h" />
-		<Unit filename="..\..\src\client\campaign\cp_base.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_base.h" />
-		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_employee_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_employee_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_hospital.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_hospital.h" />
-		<Unit filename="..\..\src\client\campaign\cp_hospital_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_hospital_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_installation_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_installation_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_market_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_market_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_messages.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_messages.h" />
-		<Unit filename="..\..\src\client\campaign\cp_mission_triggers.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_mission_triggers.h" />
-		<Unit filename="..\..\src\client\campaign\cp_missions.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_missions.h" />
-		<Unit filename="..\..\src\client\campaign\cp_nations.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_nations.h" />
-		<Unit filename="..\..\src\client\campaign\cp_parse.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_parse.h" />
-		<Unit filename="..\..\src\client\campaign\cp_rank.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_rank.h" />
-		<Unit filename="..\..\src\client\campaign\cp_team.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_team.h" />
-		<Unit filename="..\..\src\client\campaign\cp_team_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_team_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_time.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_time.h" />
-		<Unit filename="..\..\src\client\campaign\cp_transfer_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_transfer_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -421,14 +428,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_cinematic.h" />
-		<Unit filename="..\..\src\client\cl_cinematic_roq.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_cinematic_roq.h" />
 		<Unit filename="..\..\src\client\cl_cinematic_ogm.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_cinematic_ogm.h" />
+		<Unit filename="..\..\src\client\cl_cinematic_roq.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_cinematic_roq.h" />
 		<Unit filename="..\..\src\client\cl_console.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -599,13 +606,13 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_popup.h" />
-		<Unit filename="..\..\src\client\menu\m_timer.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\menu\m_render.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_render.h" />
+		<Unit filename="..\..\src\client\menu\m_timer.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\menu\m_timer.h" />
 		<Unit filename="..\..\src\client\menu\m_tooltip.c">
 			<Option compilerVar="CC" />
@@ -619,6 +626,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_abstractoption.h" />
+		<Unit filename="..\..\src\client\menu\node\m_node_abstractscrollable.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\node\m_node_abstractscrollable.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_abstractscrollbar.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -663,14 +674,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_editor.h" />
-		<Unit filename="..\..\src\client\menu\node\m_node_image.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\menu\node\m_node_image.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_ekg.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_ekg.h" />
+		<Unit filename="..\..\src\client\menu\node\m_node_image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\node\m_node_image.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_item.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -687,10 +698,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_material_editor.h" />
-		<Unit filename="..\..\src\client\menu\node\m_node_abstractscrollable.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\menu\node\m_node_abstractscrollable.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_model.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1089,9 +1096,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\infostring.h" />
-		<Unit filename="..\..\src\shared\utf8.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1106,6 +1110,9 @@
 		<Unit filename="..\..\src\shared\shared.h" />
 		<Unit filename="..\..\src\shared\typedefs.h" />
 		<Unit filename="..\..\src\shared\ufotypes.h" />
+		<Unit filename="..\..\src\shared\utf8.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\shared\vertex_normals.h" />
 		<Extensions>
 			<code_completion />
