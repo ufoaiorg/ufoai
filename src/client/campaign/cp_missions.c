@@ -27,10 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_team.h"
 #include "../cl_menu.h" /**< MN_PopMenu */
 #include "../renderer/r_draw.h"
-#include "cl_campaign.h"
-#include "cl_map.h"
-#include "cl_ufo.h"
-#include "cl_alienbase.h"
+#include "cp_campaign.h"
+#include "cp_map.h"
+#include "cp_ufo.h"
+#include "cp_alienbase.h"
 #include "cp_missions.h"
 #include "cp_time.h"
 #include "cp_xvi.h"
@@ -336,7 +336,7 @@ void CP_CreateBattleParameters (mission_t *mission)
 			if (mission->mapDef->map[0] == '+') {
 				/* set battleParameters.param to the ufo type: used for ufocrash random map */
 				if (!strcmp(mission->mapDef->id, "ufocrash"))
-					ccs.battleParameters.param = Mem_PoolStrDup(shortUFOType, cl_campaignPool, 0);
+					ccs.battleParameters.param = Mem_PoolStrDup(shortUFOType, cp_campaignPool, 0);
 			}
 		} else {
 			shortUFOType = UFO_TypeToShortName(ccs.selectedMission->ufo->ufotype);

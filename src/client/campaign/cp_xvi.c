@@ -26,8 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../renderer/r_overlay.h"
 #include "../mxml/mxml_ufoai.h"
-#include "cl_campaign.h"
-#include "cl_map.h"
+#include "cp_campaign.h"
+#include "cp_map.h"
 #include "cp_xvi.h"
 
 static technology_t *rsAlienXVI;

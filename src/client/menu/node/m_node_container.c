@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
-#include "../../campaign/cl_campaign.h" /**< @todo campaign mode only */
+#include "../../campaign/cp_campaign.h" /**< @todo campaign mode only */
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_mesh.h"
 #include "../../cl_game.h"

@@ -35,11 +35,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 #include "../../shared/parse.h"
 #include "../mxml/mxml_ufoai.h"
-#include "cl_campaign.h"
-#include "cl_mapfightequip.h"
-#include "cl_map.h"
-#include "cl_ufo.h"
-#include "cl_alienbase.h"
+#include "cp_campaign.h"
+#include "cp_mapfightequip.h"
+#include "cp_map.h"
+#include "cp_ufo.h"
+#include "cp_alienbase.h"
 #include "cp_team.h"
 #include "cp_time.h"
 #include "cp_missions.h"
@@ -1407,7 +1407,7 @@ static const value_t aircraft_vals[] = {
  * @sa CL_ParseScriptSecond
  * @note parses the aircraft into our aircraft_sample array to use as reference
  * @note This parsing function writes into two different memory pools
- * one is the cl_campaignPool which is cleared on every new game, the other is
+ * one is the cp_campaignPool which is cleared on every new game, the other is
  * cl_genericPool which is existant until you close the game
  */
 void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAircraftItems)
@@ -1485,7 +1485,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 
 		if (assignAircraftItems) {
 			assert(aircraftTemplate);
-			/* write into cl_campaignPool - this data is reparsed on every new game */
+			/* write into cp_campaignPool - this data is reparsed on every new game */
 			/* blocks like param { [..] } - otherwise we would leave the loop too early */
 			if (*token == '{') {
 				FS_SkipBlock(text);
@@ -2697,7 +2697,7 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 	if (isUfo)
 		craft->mission = CP_GetMissionByID(s);
 	else if (craft->status == AIR_MISSION)
-		craft->missionID = Mem_PoolStrDup(s, cl_campaignPool, 0);
+		craft->missionID = Mem_PoolStrDup(s, cp_campaignPool, 0);
 
 	for (l = 0, snode = mxml_GetNode(p, "airstats"); snode && l < AIR_STATS_MAX; snode = mxml_GetNextNode(snode, p, "airstats"), l++) {
 		craft->stats[l] = mxml_GetLong(snode, "val", 0);

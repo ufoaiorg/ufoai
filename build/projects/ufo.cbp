@@ -197,114 +197,114 @@
 		<Unit filename="..\tools.mk" />
 		<Unit filename="..\various.mk" />
 		<Unit filename="..\..\configure.ac" />
-		<Unit filename="..\..\src\client\campaign\cl_airfight.c">
+		<Unit filename="..\..\src\client\campaign\cp_airfight.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_airfight.h" />
-		<Unit filename="..\..\src\client\campaign\cl_alienbase.c">
+		<Unit filename="..\..\src\client\campaign\cp_airfight.h" />
+		<Unit filename="..\..\src\client\campaign\cp_alienbase.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_alienbase.h" />
-		<Unit filename="..\..\src\client\campaign\cl_aliencont.c">
+		<Unit filename="..\..\src\client\campaign\cp_alienbase.h" />
+		<Unit filename="..\..\src\client\campaign\cp_aliencont.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_aliencont.h" />
-		<Unit filename="..\..\src\client\campaign\cl_aliencont_callbacks.c">
+		<Unit filename="..\..\src\client\campaign\cp_aliencont.h" />
+		<Unit filename="..\..\src\client\campaign\cp_aliencont_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_aliencont_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cl_campaign.c">
+		<Unit filename="..\..\src\client\campaign\cp_aliencont_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_campaign.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_campaign.h" />
-		<Unit filename="..\..\src\client\campaign\cl_employee.c">
+		<Unit filename="..\..\src\client\campaign\cp_campaign.h" />
+		<Unit filename="..\..\src\client\campaign\cp_employee.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_employee.h" />
-		<Unit filename="..\..\src\client\campaign\cl_event.c">
+		<Unit filename="..\..\src\client\campaign\cp_employee.h" />
+		<Unit filename="..\..\src\client\campaign\cp_event.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_event.h" />
-		<Unit filename="..\..\src\client\campaign\cl_fightequip_callbacks.c">
+		<Unit filename="..\..\src\client\campaign\cp_event.h" />
+		<Unit filename="..\..\src\client\campaign\cp_fightequip_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_fightequip_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cl_installation.c">
+		<Unit filename="..\..\src\client\campaign\cp_fightequip_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_installation.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_installation.h" />
-		<Unit filename="..\..\src\client\campaign\cl_map.c">
+		<Unit filename="..\..\src\client\campaign\cp_installation.h" />
+		<Unit filename="..\..\src\client\campaign\cp_map.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_map.h" />
-		<Unit filename="..\..\src\client\campaign\cl_mapfightequip.c">
+		<Unit filename="..\..\src\client\campaign\cp_map.h" />
+		<Unit filename="..\..\src\client\campaign\cp_mapfightequip.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_mapfightequip.h" />
-		<Unit filename="..\..\src\client\campaign\cl_market.c">
+		<Unit filename="..\..\src\client\campaign\cp_mapfightequip.h" />
+		<Unit filename="..\..\src\client\campaign\cp_market.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_market.h" />
-		<Unit filename="..\..\src\client\campaign\cl_messageoptions.c">
+		<Unit filename="..\..\src\client\campaign\cp_market.h" />
+		<Unit filename="..\..\src\client\campaign\cp_messageoptions.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_messageoptions.h" />
-		<Unit filename="..\..\src\client\campaign\cl_messageoptions_callbacks.c">
+		<Unit filename="..\..\src\client\campaign\cp_messageoptions.h" />
+		<Unit filename="..\..\src\client\campaign\cp_messageoptions_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_messageoptions_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cl_nation.c">
+		<Unit filename="..\..\src\client\campaign\cp_messageoptions_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_nation.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_nation.h" />
-		<Unit filename="..\..\src\client\campaign\cl_popup.c">
+		<Unit filename="..\..\src\client\campaign\cp_nation.h" />
+		<Unit filename="..\..\src\client\campaign\cp_popup.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_popup.h" />
-		<Unit filename="..\..\src\client\campaign\cl_produce.c">
+		<Unit filename="..\..\src\client\campaign\cp_popup.h" />
+		<Unit filename="..\..\src\client\campaign\cp_produce.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_produce.h" />
-		<Unit filename="..\..\src\client\campaign\cl_produce_callbacks.c">
+		<Unit filename="..\..\src\client\campaign\cp_produce.h" />
+		<Unit filename="..\..\src\client\campaign\cp_produce_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_produce_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cl_radar.c">
+		<Unit filename="..\..\src\client\campaign\cp_produce_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_radar.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_radar.h" />
-		<Unit filename="..\..\src\client\campaign\cl_research.c">
+		<Unit filename="..\..\src\client\campaign\cp_radar.h" />
+		<Unit filename="..\..\src\client\campaign\cp_research.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_research.h" />
-		<Unit filename="..\..\src\client\campaign\cl_research_callbacks.c">
+		<Unit filename="..\..\src\client\campaign\cp_research.h" />
+		<Unit filename="..\..\src\client\campaign\cp_research_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_research_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cl_save.c">
+		<Unit filename="..\..\src\client\campaign\cp_research_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_save.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_save.h" />
-		<Unit filename="..\..\src\client\campaign\cl_transfer.c">
+		<Unit filename="..\..\src\client\campaign\cp_save.h" />
+		<Unit filename="..\..\src\client\campaign\cp_transfer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_transfer.h" />
-		<Unit filename="..\..\src\client\campaign\cl_ufo.c">
+		<Unit filename="..\..\src\client\campaign\cp_transfer.h" />
+		<Unit filename="..\..\src\client\campaign\cp_ufo.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_ufo.h" />
-		<Unit filename="..\..\src\client\campaign\cl_ufopedia.c">
+		<Unit filename="..\..\src\client\campaign\cp_ufo.h" />
+		<Unit filename="..\..\src\client\campaign\cp_ufopedia.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_ufopedia.h" />
-		<Unit filename="..\..\src\client\campaign\cl_uforecovery.c">
+		<Unit filename="..\..\src\client\campaign\cp_ufopedia.h" />
+		<Unit filename="..\..\src\client\campaign\cp_uforecovery.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_uforecovery.h" />
-		<Unit filename="..\..\src\client\campaign\cl_uforecovery_callbacks.c">
+		<Unit filename="..\..\src\client\campaign\cp_uforecovery.h" />
+		<Unit filename="..\..\src\client\campaign\cp_uforecovery_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_uforecovery_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_uforecovery_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_aircraft.c">
 			<Option compilerVar="CC" />
 		</Unit>

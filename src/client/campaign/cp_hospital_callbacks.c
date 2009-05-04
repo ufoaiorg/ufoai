@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_actor.h"	/**< for CL_CharacterCvars() */
 #include "../cl_menu.h"
 #include "../menu/m_popup.h"
-#include "cl_campaign.h"
+#include "cp_campaign.h"
 #include "cp_hospital.h"
 #include "cp_hospital_callbacks.h"
 

@@ -29,8 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "../../cl_game.h"
-#include "../../campaign/cl_campaign.h"
-#include "../../campaign/cl_map.h"
+#include "../../campaign/cp_campaign.h"
+#include "../../campaign/cp_map.h"
 #include "../../renderer/r_draw.h"
 
 static void MN_MapNodeDraw (menuNode_t *node)

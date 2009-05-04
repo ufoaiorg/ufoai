@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../../shared/parse.h"
 #include "cp_rank.h"
-#include "cl_campaign.h"
+#include "cp_campaign.h"
 
 /**
  * @brief Get the index number of the given rankID
@@ -88,7 +88,7 @@ void CL_ParseRanks (const char *name, const char **text)
 
 	rank = &ccs.ranks[ccs.numRanks++];
 	memset(rank, 0, sizeof(*rank));
-	rank->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
+	rank->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
 	do {
 		/* get the name type */
@@ -105,7 +105,7 @@ void CL_ParseRanks (const char *name, const char **text)
 					return;
 				switch (v->type) {
 				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)rank + (int)v->ofs), cl_campaignPool, 0);
+					Mem_PoolStrDupTo(token, (char**) ((char*)rank + (int)v->ofs), cp_campaignPool, 0);
 					break;
 				default:
 					Com_EParseValue(rank, token, v->type, v->ofs, v->size);

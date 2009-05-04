@@ -28,12 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_menu.h"
 #include "../menu/m_nodes.h"
 #include "../menu/m_popup.h"
-#include "cl_campaign.h"
-#include "cl_map.h"
+#include "cp_campaign.h"
+#include "cp_map.h"
 #include "cp_aircraft_callbacks.h"
 #include "cp_aircraft.h"
 #include "cp_team.h"
-#include "cl_mapfightequip.h" /* for AII_GetSlotItems */
+#include "cp_mapfightequip.h" /* for AII_GetSlotItems */
 
 /**
  * @brief Script function for AIR_AircraftReturnToBase

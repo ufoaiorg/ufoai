@@ -26,8 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_nodes.h"
 #include "../menu/m_popup.h"
 #include "../mxml/mxml_ufoai.h"
-#include "cl_campaign.h"
-#include "cl_popup.h"
+#include "cp_campaign.h"
+#include "cp_popup.h"
 #include "cp_messages.h"
 #include "cp_time.h"
 
@@ -86,7 +86,7 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 	assert(type < MSG_MAX);
 
 	/* allocate memory for new message - delete this with every new game */
-	mess = (message_t *) Mem_PoolAlloc(sizeof(message_t), cl_campaignPool, 0);
+	mess = (message_t *) Mem_PoolAlloc(sizeof(message_t), cp_campaignPool, 0);
 
 	/* push the new message at the beginning of the stack */
 	mess->next = cp_messageStack;
@@ -99,7 +99,7 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 
 	/** @todo (menu) Handle translated text - don't use single byte string copy here */
 	Q_strncpyz(mess->title, title, sizeof(mess->title));
-	mess->text = Mem_PoolStrDup(text, cl_campaignPool, 0);
+	mess->text = Mem_PoolStrDup(text, cp_campaignPool, 0);
 
 	/* get formatted date text */
 	MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));

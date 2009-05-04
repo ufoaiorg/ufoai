@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
-#include "../../campaign/cl_campaign.h"
+#include "../../campaign/cp_campaign.h"
 
 /**
  * @brief Called after the end of the node load from script (all data and/or child are set)

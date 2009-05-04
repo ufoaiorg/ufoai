@@ -32,12 +32,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../mxml/mxml_ufoai.h"
 #include "../renderer/r_draw.h"
 #include "../../shared/parse.h"
-#include "cl_campaign.h"
-#include "cl_mapfightequip.h"
+#include "cp_campaign.h"
+#include "cp_mapfightequip.h"
 #include "cp_aircraft.h"
 #include "cp_missions.h"
-#include "cl_map.h"
-#include "cl_popup.h"
+#include "cp_map.h"
+#include "cp_popup.h"
 #include "cp_time.h"
 #include "cp_base_callbacks.h"
 
@@ -1591,7 +1591,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		/* new entry */
 		building = &ccs.buildingTemplates[ccs.numBuildingTemplates];
 		memset(building, 0, sizeof(*building));
-		building->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
+		building->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
 		Com_DPrintf(DEBUG_CLIENT, "...found building %s\n", building->id);
 
@@ -1641,7 +1641,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 							case V_TRANSLATION_STRING:
 								token++;
 							case V_CLIENT_HUNK_STRING:
-								Mem_PoolStrDupTo(token, (char**) ((char*)building + (int)vp->ofs), cl_campaignPool, 0);
+								Mem_PoolStrDupTo(token, (char**) ((char*)building + (int)vp->ofs), cp_campaignPool, 0);
 								break;
 							default:
 								Com_EParseValue(building, token, vp->type, vp->ofs, vp->size);
@@ -1737,7 +1737,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 
 	/* create new Template */
 	template = &ccs.baseTemplates[ccs.numBaseTemplates];
-	template->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
+	template->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
 	/* clear map for checking duplicate positions and buildingNums for checking moreThanOne constraint */
 	memset(&map, 0, sizeof(map));

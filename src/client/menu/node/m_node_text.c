@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 /** @todo remove this dependency from the text node */
-#include "../../campaign/cl_campaign.h" /**< message_t */
+#include "../../campaign/cp_campaign.h" /**< message_t */
 #include "../../../shared/parse.h"
 
 #define EXTRADATA(node) (node->u.text)

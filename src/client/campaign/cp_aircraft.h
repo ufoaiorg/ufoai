@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_AIRCRAFT_H
 #define CLIENT_CL_AIRCRAFT_H
 
-#include "cl_radar.h"
+#include "cp_radar.h"
 
 #define MAX_CARGO		32
 #define MAX_AIRCRAFT	64

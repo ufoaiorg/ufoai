@@ -30,9 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_draw.h"
 #include "../cl_le.h"	/**< cl_actor.h needs this */
 #include "../cl_actor.h"
-#include "cl_campaign.h"
+#include "cp_campaign.h"
 #include "cp_employee_callbacks.h"
-#include "cl_employee.h"
+#include "cp_employee.h"
 
 
 /** Currently selected employee. @sa cl_employee.h */
