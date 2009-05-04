@@ -47,7 +47,8 @@ static cvar_t *cl_initial_equipment;
 static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
 /**
- * @brief Array bound check for the base index.
+ * @brief Array bound check for the base index. Will also return unfounded bases as
+ * long as the index is in the valid ranges,
  * @return Pointer to the base corresponding to baseIdx.
  */
 base_t* B_GetBaseByIDX (int baseIdx)

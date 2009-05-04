@@ -1737,8 +1737,6 @@ qboolean RS_SaveXML (mxml_node_t *parent)
 	return qtrue;
 }
 
-static linkedList_t *loadTechBases;
-
 qboolean RS_LoadXML (mxml_node_t *parent)
 {
 	int i, count;
@@ -1747,12 +1745,10 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 	if (!topnode)
 		return qfalse;
 	count = mxml_GetInt(topnode, "count", 0);
-	/* Clear linked list. */
-	LIST_Delete(&loadTechBases);
 	for (i = 0, snode = mxml_GetNode(topnode, "tech"); i < count && snode; i++, snode = mxml_GetNextNode(snode, topnode, "tech")) {
 		const char *techString = mxml_GetString(snode, "id");
 		mxml_node_t * ssnode;
-		int tempBaseIdx;
+		int baseIdx;
 		technology_t *t = RS_GetTechByID(techString);
 		if (!t) {
 			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
@@ -1762,9 +1758,10 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 		t->time = mxml_GetFloat(snode, "time", 0.0);
 		t->statusResearch = mxml_GetShort(snode, "statusresearch", 0);
 		/* Prepare base-index for later pointer-restoration in RS_PostLoadInit. */
-		tempBaseIdx = mxml_GetInt(snode, "base", -1);
-		LIST_AddPointer(&loadTechBases, t);
-		LIST_Add(&loadTechBases, (byte *)&tempBaseIdx, sizeof(int));
+		baseIdx = mxml_GetInt(snode, "base", -1);
+		if (baseIdx >= 0)
+			/* even if the base is not yet loaded we can set the pointer already */
+			t->base = B_GetBaseByIDX(baseIdx);
 		t->scientists = mxml_GetInt(snode, "scientists", 0);
 		t->statusResearchable = mxml_GetInt(snode, "statusresearchable", 0);
 		t->preResearchedDate.day = mxml_GetInt(snode, "preday", 0);
@@ -1781,14 +1778,21 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 			} else
 				Com_Printf("......your save game contains unknown techmail ids... \n");
 		}
+#ifdef DEBUG
+		if (t->statusResearch == RS_RUNNING && t->scientists > 0) {
+			if (!t->base) {
+				Com_Printf("No base but research is running and scientists are assigned");
+				return qfalse;
+			}
+		}
+#endif
 	}
 
 	return qtrue;
 }
 
 /**
- * @brief Called after savegame-load (all subsystems) is complete. Restores the base-pointers for each tech.
- * The base-pointer is searched with the base-index that was parsed in RS_Load.
+ * @brief Called after savegame-load (all subsystems) is complete.
  * @sa RS_Load
  * @sa SAV_GameActionsAfterLoad
  */
@@ -1796,30 +1800,7 @@ void RS_PostLoadInit (void)
 {
 	int baseIdx;
 
-	/* this list has an entry for the tech and for the base index */
-	linkedList_t *techBases = loadTechBases;
-
-	while (techBases) {
-		technology_t *t = (technology_t *) techBases->data;
-		const int baseIndex = *(int *)techBases->next->data;
-		/* Com_Printf("RS_PostLoadInit: DEBUG %s %i\n", t->id, baseIndex); */
-		if (baseIndex >= 0)
-			t->base = B_GetBaseByIDX(baseIndex);
-		else
-			t->base = NULL;
-#ifdef DEBUG
-		if (t->statusResearch == RS_RUNNING && t->scientists > 0) {
-			if (!t->base)
-				Com_Error(ERR_DROP, "No base but research is running and scientists are assigned");
-		}
-#endif
-		techBases = techBases->next->next;
-	}
-
-	/* Clear linked list. */
-	LIST_Delete(&loadTechBases);
-
-	/* Udate research so that it can start (otherwise research does not go on until you entered Laboratory) */
+	/* Update research so that it can start (otherwise research does not go on until you entered Laboratory) */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
