@@ -80,7 +80,7 @@ window aircraft extends iaircraft
 		size		"495 160"
 		lineheight	20
 		tabwidth	220
-		textid		TEXT_AIRCRAFT_INFO
+		dataid		TEXT_AIRCRAFT_INFO
 		rows		8
 	}
 

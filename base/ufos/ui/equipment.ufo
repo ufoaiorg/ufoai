@@ -338,8 +338,8 @@ window equipment
 			lineheight	20
 			tabwidth	190
 			rows		"7"
-			textid		TEXT_STANDARD
-			onLinesChange {
+			dataid		TEXT_STANDARD
+			onViewChange {
 				*(abstractscrollbar)itemdescription.description_scroll fullsize <lines>
 				*(abstractscrollbar)itemdescription.description_scroll current <text_scroll>
 			}

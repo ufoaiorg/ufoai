@@ -50,7 +50,7 @@ window basedefence
 
 	text basedef_slot_list
 	{
-		textid		TEXT_BASEDEFENCE_LIST
+		dataid		TEXT_BASEDEFENCE_LIST
 		pos			"40 30"
 		size		"390 600"
 		lineheight	"22"
@@ -81,7 +81,7 @@ window basedefence
 
 	text basedef_selected_description
 	{
-		textid		TEXT_STANDARD
+		dataid		TEXT_STANDARD
 		pos			"760 630"
 		size		"250 120"
 		lineheight	"20"
@@ -144,7 +144,7 @@ window basedefence
 
 	text basedef_list
 	{
-		textid		TEXT_LIST
+		dataid		TEXT_LIST
 		pos			"472 480"
 		size		"245 220"
 		lineheight	"20"
@@ -216,7 +216,7 @@ window basedefence
 
 	text basedef_text_zone1
 	{
-		textid		TEXT_AIREQUIP_1
+		dataid		TEXT_AIREQUIP_1
 		pos			"546 105"
 		size		"430 50"
 		lineheight	"16"
@@ -238,7 +238,7 @@ window basedefence
 
 	text basedef_text_zone2
 	{
-		textid		TEXT_AIREQUIP_2
+		dataid		TEXT_AIREQUIP_2
 		pos			"546 294"
 		size		"430 35"
 		lineheight	"16"

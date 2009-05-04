@@ -139,7 +139,7 @@ window basesummary
 
 	text txt_base_summary
 	{
-		textid		TEXT_STATS_BASESUMMARY
+		dataid		TEXT_STATS_BASESUMMARY
 		pos			"34 124"
 		size		"507 608"
 		lineheight	16
@@ -169,7 +169,7 @@ window basesummary
 		tabwidth	50
 		scrollbar	true
 		rows		"23"
-		textid			TEXT_STANDARD
+		dataid			TEXT_STANDARD
 	}
 
 	// ==================

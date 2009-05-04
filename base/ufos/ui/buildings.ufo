@@ -89,7 +89,7 @@ window buildings
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		mousefx		true
-		textid		TEXT_BUILDINGS
+		dataid		TEXT_BUILDINGS
 		rows		"20"
 		onClick		{ cmd "buildings_click <lineselected>" }
 	}
@@ -162,7 +162,7 @@ window popup_buildingpreview
 		mousefx	 	false
 		lineheight	20
 		tabwidth	140
-		textid		TEXT_BUILDING_INFO
+		dataid		TEXT_BUILDING_INFO
 		rows		"4"
 	}
 

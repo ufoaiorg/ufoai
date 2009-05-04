@@ -86,7 +86,7 @@ window campaigns
 		size	"420 120"
 		mousefx	true
 		lineheight	"20"
-		textid		TEXT_CAMPAIGN_LIST
+		dataid		TEXT_CAMPAIGN_LIST
 		onClick	{ cmd "campaignlist_click <lineselected>" }
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
@@ -96,7 +96,7 @@ window campaigns
 
 	text campaign_desc
 	{
-		textid		TEXT_STANDARD
+		dataid		TEXT_STANDARD
 		pos			"500 320"
 		size		"415 360"
 		lineheight	20
@@ -104,7 +104,7 @@ window campaigns
 		onWheel		{
 			*(abstractscrollbar)campaign_desc_scroll current <text_scroll>
 		}
-		onLinesChange {
+		onViewChange {
 			*(abstractscrollbar)campaign_desc_scroll fullsize <lines>
 			*(abstractscrollbar)campaign_desc_scroll current <text_scroll>
 		}

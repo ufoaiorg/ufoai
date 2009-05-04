@@ -136,12 +136,12 @@ window iaircraft
 		size		"350 220"
 		rows		11
 		lineheight	20
-		textid		TEXT_AIRCRAFT_LIST
+		dataid		TEXT_AIRCRAFT_LIST
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		mousefx		true
 		longlines	prettychop
-		onLinesChange {
+		onViewChange {
 			*(abstractscrollbar)aircraft_list_scroll fullsize <lines>
 			*(abstractscrollbar)aircraft_list_scroll current <text_scroll>
 		}

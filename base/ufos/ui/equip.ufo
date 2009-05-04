@@ -87,7 +87,7 @@ window aircraft_equip extends iaircraft
 		rows		"5"
 		tabwidth	160
 		scrollbar	true
-		textid		TEXT_STANDARD
+		dataid		TEXT_STANDARD
 	}
 
 	string airequip_item_name
@@ -146,7 +146,7 @@ window aircraft_equip extends iaircraft
 		size		"248 140"
 		lineheight	"20"
 		rows		"7"
-		textid		TEXT_LIST
+		dataid		TEXT_LIST
 		mousefx		true
 		onClick		{ cmd "airequip_list_click <lineselected>" }
 		color		"0 .78 0 1"
@@ -215,7 +215,7 @@ window aircraft_equip extends iaircraft
 		pos			"667 530"
 		size		"304 48"
 		lineheight	"16"
-		textid		TEXT_AIREQUIP_1
+		dataid		TEXT_AIREQUIP_1
 		rows		"3"
 		onClick		{ call airequip_zone1 }
 	}
@@ -238,7 +238,7 @@ window aircraft_equip extends iaircraft
 		pos			"669 689"
 		size		"306 35"
 		lineheight	"16"
-		textid		TEXT_AIREQUIP_2
+		dataid		TEXT_AIREQUIP_2
 		rows		"2"
 		onClick		{ call airequip_zone2 }
 	}
