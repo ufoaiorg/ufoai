@@ -656,7 +656,7 @@ int CIN_OGM_PlayCinematic (const char* filename)
 	}
 
 	if (!ogmCin.os_audio.serialno) {
-		Com_Printf("Haven't found a audio (vorbis) stream in ogm-file (%s)\n", filename);
+		Com_Printf("Haven't found an audio (vorbis) stream in ogm-file (%s)\n", filename);
 		return -2;
 	}
 	if (!ogmCin.os_video.serialno) {
@@ -730,7 +730,7 @@ int CIN_OGM_PlayCinematic (const char* filename)
 		}
 
 		theora_decode_init(&ogmCin.th_state, &ogmCin.th_info);
-		ogmCin.Vtime_unit = ((ogg_int64_t) ogmCin.th_info.fps_denominator * 1000* 10000 / ogmCin .th_info.fps_numerator);
+		ogmCin.Vtime_unit = ((ogg_int64_t) ogmCin.th_info.fps_denominator * 1000 * 10000 / ogmCin.th_info.fps_numerator);
 	}
 #endif
 
@@ -756,7 +756,6 @@ static void CIN_OGM_DrawCinematic (void)
 }
 
 /**
- * @param[in] time time in ms to which the movie should run
  * @return true if the cinematic is still running, false otherwise
  */
 qboolean CIN_OGM_RunCinematic (void)
