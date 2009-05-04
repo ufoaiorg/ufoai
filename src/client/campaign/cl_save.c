@@ -62,8 +62,6 @@ static cvar_t* save_compressed;
  */
 static qboolean SAV_GameActionsAfterLoad (char **error)
 {
-	RS_PostLoadInit();
-
 	B_PostLoadInit();
 
 	/* Make sure the date&time is displayed when loading. */

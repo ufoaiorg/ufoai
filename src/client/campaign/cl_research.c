@@ -1792,27 +1792,6 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 }
 
 /**
- * @brief Called after savegame-load (all subsystems) is complete.
- * @sa RS_Load
- * @sa SAV_GameActionsAfterLoad
- */
-void RS_PostLoadInit (void)
-{
-	int baseIdx;
-
-	/* Update research so that it can start (otherwise research does not go on until you entered Laboratory) */
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-
-		/** @todo CHECK THAT: very very strange */
-		/** rudolfo: please verify: changed from RS_InitGuiData to RS_MarkResearchable */
-		RS_MarkResearchable(qfalse, base);
-	}
-}
-
-/**
  * @brief Returns true if the current base is able to handle research
  * @sa B_BaseInit_f
  * probably menu function, but not for research gui

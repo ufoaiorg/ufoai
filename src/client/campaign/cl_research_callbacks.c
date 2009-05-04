@@ -669,9 +669,6 @@ static void RS_InitGUIData (base_t* base)
 		available[i] = E_CountUnassigned(b, EMPL_SCIENTIST);
 	}
 
-	/** @todo verify: do we need to mark research for gui again here? */
-	RS_MarkResearchable(qfalse, base);
-
 	/* update tech of the base */
 	row = 0;
 	for (i = 0; i < ccs.numTechnologies; i++) {

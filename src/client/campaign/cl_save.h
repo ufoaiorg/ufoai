@@ -88,7 +88,6 @@ qboolean INS_LoadXML(mxml_node_t *parent);
 qboolean MSO_SaveXML(mxml_node_t *parent);
 qboolean MSO_LoadXML(mxml_node_t *parent);
 
-void RS_PostLoadInit(void);
 void B_PostLoadInit(void);
 
 #endif /* CLIENT_CL_SAVE_H */
