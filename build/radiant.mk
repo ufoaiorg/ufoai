@@ -225,10 +225,10 @@ radiant: $(BUILDDIR)/.dirs $(RADIANT_PLUGIN_MODEL_TARGET) $(RADIANT_PLUGIN_ENTIT
 else
 
 radiant:
-	@echo "Radiant is not enabled - use './configure --enable-gtkradiant'"
+	@echo "Radiant is not enabled - use './configure --enable-uforadiant'"
 
 clean-radiant:
-	@echo "Radiant is not enabled - use './configure --enable-gtkradiant'"
+	@echo "Radiant is not enabled - use './configure --enable-uforadiant'"
 
 ALL_RADIANT_OBJS=""
 
