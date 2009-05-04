@@ -27,10 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_font.h"
 #include "../m_render.h"
-#include "m_node_abstractoption.h"
 #include "m_node_abstractnode.h"
-#include "m_node_optionlist.h"
-#include "m_node_panel.h"
+#include "m_node_abstractscrollable.h"
 
 #include "../../client.h" /* gettext _() */
 
@@ -49,6 +47,70 @@ qboolean MN_AbstractScrollableNodeIsSizeChange (menuNode_t *node)
 		return qtrue;
 	}
 	return qfalse;
+}
+
+/**
+ * @brief Set the Y scroll to a position, and call event if need
+ * @param[in] viewPos New position to set, else -1 if no change
+ * @param[in] viewSize New view size to set, else -1 if no change
+ * @param[in] fullSize New full size to set, else -1 if no change
+ * @return True, if something have change
+ */
+qboolean MN_AbstractScrollableNodeSetY (menuNode_t *node, int viewPos, int viewSize, int fullSize)
+{
+	qboolean updated = qfalse;
+	assert(MN_NodeInstanceOf(node, "abstractscrollable"));
+
+	/* default values */
+	if (viewPos == -1)
+		viewPos = node->u.abstractscrollable.viewPosY;
+	if (viewSize == -1)
+		viewSize = node->u.abstractscrollable.viewSizeY;
+	if (fullSize == -1)
+		fullSize = node->u.abstractscrollable.fullSizeY;
+
+	/* fix limits */
+	if (viewSize < 0)
+		viewSize = 0;
+	if (fullSize < 0)
+		fullSize = 0;
+	if (viewPos < 0)
+		viewPos = 0;
+
+	/* clap position */
+	if (viewSize >= fullSize)
+		viewPos = 0;
+	else if (viewPos > fullSize - viewSize)
+		viewPos = fullSize - viewSize;
+
+	/* update */
+	if (node->u.abstractscrollable.viewPosY != viewPos) {
+		node->u.abstractscrollable.viewPosY = viewPos;
+		updated = qtrue;
+	}
+	if (node->u.abstractscrollable.viewSizeY != viewSize) {
+		node->u.abstractscrollable.viewSizeY = viewSize;
+		updated = qtrue;
+	}
+	if (node->u.abstractscrollable.fullSizeY != fullSize) {
+		node->u.abstractscrollable.fullSizeY = fullSize;
+		updated = qtrue;
+	}
+
+	if (updated && node->u.abstractscrollable.onViewChange)
+		MN_ExecuteEventActions(node, node->u.abstractscrollable.onViewChange);
+
+	return updated;
+}
+
+/**
+ * @brief Scroll the Y scroll with a relative position, and call event if need
+ * @return True, if something have change
+ */
+qboolean MN_AbstractScrollableNodeScrollY (menuNode_t *node, int offset)
+{
+	assert(MN_NodeInstanceOf(node, "abstractscrollable"));
+	return MN_AbstractScrollableNodeSetY(node, node->u.abstractscrollable.viewPosY + offset, -1, -1);
 }
 
 static const value_t properties[] = {

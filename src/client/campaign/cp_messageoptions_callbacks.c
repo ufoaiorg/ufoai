@@ -1,5 +1,6 @@
 /**
  * @file cp_messageoptions_callbacks.c
+ * @todo Remove direct access to nodes
  */
 
 /*
@@ -95,11 +96,11 @@ static void MSO_InitTextList (void)
 	}
 	MN_RegisterLinkedListText(TEXT_MESSAGEOPTIONS, messageSettingsList);
 	MSO_SetMenuState(MSO_MSTATE_PREPARED, qfalse, qtrue);
-	if (oldVisibleEntries > visibleMSOEntries && messageList_scroll > visibleMSOEntries - msoTextNode->u.text.rows) {
-		messageList_scroll = visibleMSOEntries - msoTextNode->u.text.rows;
+	if (oldVisibleEntries > visibleMSOEntries && messageList_scroll > visibleMSOEntries - msoTextNode->u.text.super.viewSizeY) {
+		messageList_scroll = visibleMSOEntries - msoTextNode->u.text.super.viewSizeY;
 		if (messageList_scroll < 0)
 			messageList_scroll = 0;
-		msoTextNode->u.text.textScroll = messageList_scroll;
+		msoTextNode->u.text.super.viewPosY = messageList_scroll;
 	}
 }
 
@@ -113,7 +114,7 @@ static void MSO_UpdateVisibleButtons (void)
 	int visible = 0;/* visible lines*/
 
 	/* update visible button lines based on current displayed values */
-	for (idx = 0; visible < msoTextNode->u.text.rows && idx < ccs.numMsgCategoryEntries; idx++) {
+	for (idx = 0; visible < msoTextNode->u.text.super.viewSizeY && idx < ccs.numMsgCategoryEntries; idx++) {
 		const msgCategoryEntry_t *entry = MSO_GetEntryFromSelectionIndex(idx,qtrue);
 		if (!entry)
 			break;
@@ -132,7 +133,7 @@ static void MSO_UpdateVisibleButtons (void)
 		}
 	}
 
-	for (; visible < msoTextNode->u.text.rows && idx < lengthof(ccs.msgCategoryEntries); idx++) {
+	for (; visible < msoTextNode->u.text.super.viewSizeY && idx < lengthof(ccs.msgCategoryEntries); idx++) {
 		MN_ExecuteConfunc("ms_disable %i", visible);
 		visible++;
 	}
@@ -216,14 +217,14 @@ static void MSO_Scroll_f (void)
 		return;
 
 	/* no scrolling if visible entry count is less than max on page (due to folding) */
-	if (visibleMSOEntries < msoTextNode->u.text.rows)
+	if (visibleMSOEntries < msoTextNode->u.text.super.viewSizeY)
 		return;
 
-	messageList_scroll = msoTextNode->u.text.textScroll;
+	messageList_scroll = msoTextNode->u.text.super.viewPosY;
 
-	if (messageList_scroll >= visibleMSOEntries - msoTextNode->u.text.rows) {
-		messageList_scroll = visibleMSOEntries - msoTextNode->u.text.rows;
-		msoTextNode->u.text.textScroll = messageList_scroll;
+	if (messageList_scroll >= visibleMSOEntries - msoTextNode->u.text.super.viewSizeY) {
+		messageList_scroll = visibleMSOEntries - msoTextNode->u.text.super.viewSizeY;
+		msoTextNode->u.text.super.viewPosY = messageList_scroll;
 	}
 
 	if (messageList_scroll != oldScrollIdx)

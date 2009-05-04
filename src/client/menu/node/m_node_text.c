@@ -50,43 +50,6 @@ void MN_TextNodeSelectLine (menuNode_t *node, int num)
 }
 
 /**
- * @brief Scrolls the text in a textbox up/down.
- * @param[in] node The node of the text to be scrolled.
- * @param[in] offset Number of lines to scroll. Positive values scroll down, negative up.
- * @return Returns qtrue if scrolling was possible otherwise qfalse.
- */
-qboolean MN_TextScroll (menuNode_t *node, int offset)
-{
-	int textScroll_new;
-
-	if (!node || !EXTRADATA(node).rows)
-		return qfalse;
-
-	if (EXTRADATA(node).textLines <= EXTRADATA(node).rows) {
-		/* Number of lines are less than the height of the textbox. */
-		EXTRADATA(node).textScroll = 0;
-		return qfalse;
-	}
-
-	textScroll_new = EXTRADATA(node).textScroll + offset;
-
-	if (textScroll_new <= 0) {
-		/* Goto top line, no matter how big the offset was. */
-		EXTRADATA(node).textScroll = 0;
-		return qtrue;
-
-	} else if (textScroll_new >= (EXTRADATA(node).textLines + 1 - EXTRADATA(node).rows)) {
-		/* Goto last possible line, no matter how big the offset was. */
-		EXTRADATA(node).textScroll = EXTRADATA(node).textLines - EXTRADATA(node).rows;
-		return qtrue;
-
-	} else {
-		EXTRADATA(node).textScroll = textScroll_new;
-		return qtrue;
-	}
-}
-
-/**
  * @brief Scriptfunction that gets the wanted text node and scrolls the text.
  */
 static void MN_TextScroll_f (void)
@@ -113,7 +76,7 @@ static void MN_TextScroll_f (void)
 	}
 
 	if (!strncmp(Cmd_Argv(2), "reset", 5)) {
-		EXTRADATA(node).textScroll = 0;
+		MN_AbstractScrollableNodeSetY(node, 0, -1, -1);
 		return;
 	}
 
@@ -122,7 +85,7 @@ static void MN_TextScroll_f (void)
 	if (offset == 0)
 		return;
 
-	MN_TextScroll(node, offset);
+	MN_AbstractScrollableNodeScrollY(node, offset);
 }
 
 /**
@@ -137,38 +100,43 @@ void MN_TextScrollBottom (const char* nodeName)
 		return;
 	}
 
-	if (EXTRADATA(node).textLines > EXTRADATA(node).rows) {
-		Com_DPrintf(DEBUG_CLIENT, "\nMN_TextScrollBottom: Scrolling to line %i\n", EXTRADATA(node).textLines - EXTRADATA(node).rows + 1);
-		EXTRADATA(node).textScroll = EXTRADATA(node).textLines - EXTRADATA(node).rows + 1;
+	if (EXTRADATA(node).super.fullSizeY > EXTRADATA(node).super.viewSizeY) {
+		Com_DPrintf(DEBUG_CLIENT, "\nMN_TextScrollBottom: Scrolling to line %i\n", EXTRADATA(node).super.fullSizeY - EXTRADATA(node).super.viewSizeY + 1);
+		EXTRADATA(node).super.viewPosY = EXTRADATA(node).super.fullSizeY - EXTRADATA(node).super.viewSizeY + 1;
 	}
 }
 
 /**
  * @brief Draw a scrollbar, if necessary
- * @note Needs node->textLines to be accurate
+ * @note Needs node->super.fullSizeY to be accurate
  */
 static void MN_DrawScrollBar (const menuNode_t *node)
 {
 	static const vec4_t scrollbarBackground = {0.03, 0.41, 0.05, 0.5};
 	static const vec4_t scrollbarColor = {0.03, 0.41, 0.05, 1.0};
 
-	if (EXTRADATA(node).scrollbar && EXTRADATA(node).rows && EXTRADATA(node).textLines > EXTRADATA(node).rows) {
+	if (EXTRADATA(node).scrollbar && EXTRADATA(node).super.viewSizeY && EXTRADATA(node).super.fullSizeY > EXTRADATA(node).super.viewSizeY) {
 		vec2_t nodepos;
 		int scrollbarX;
 		float scrollbarY;
 
 		MN_GetNodeAbsPos(node, nodepos);
 		scrollbarX = nodepos[0] + node->size[0] - MN_SCROLLBAR_WIDTH;
-		scrollbarY = node->size[1] * EXTRADATA(node).rows / EXTRADATA(node).textLines * MN_SCROLLBAR_HEIGHT;
+		scrollbarY = node->size[1] * EXTRADATA(node).super.viewSizeY / EXTRADATA(node).super.fullSizeY * MN_SCROLLBAR_HEIGHT;
 
 		MN_DrawFill(scrollbarX, nodepos[1],
 			MN_SCROLLBAR_WIDTH, node->size[1],
 			ALIGN_UL, scrollbarBackground);
 
-		MN_DrawFill(scrollbarX, nodepos[1] + (node->size[1] - scrollbarY) * EXTRADATA(node).textScroll / (EXTRADATA(node).textLines - EXTRADATA(node).rows),
+		MN_DrawFill(scrollbarX, nodepos[1] + (node->size[1] - scrollbarY) * EXTRADATA(node).super.viewPosY / (EXTRADATA(node).super.fullSizeY - EXTRADATA(node).super.viewSizeY),
 			MN_SCROLLBAR_WIDTH, scrollbarY,
 			ALIGN_UL, scrollbarColor);
 	}
+}
+
+int MN_TextNodeGetLines(const struct menuNode_s *node)
+{
+	return EXTRADATA(node).super.fullSizeY;
 }
 
 /**
@@ -187,8 +155,8 @@ int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 		return 0;
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
-	if (EXTRADATA(node).textScroll)
-		return (int) (y / node->u.text.lineHeight) + EXTRADATA(node).textScroll;
+	if (EXTRADATA(node).super.viewPosY)
+		return (int) (y / node->u.text.lineHeight) + EXTRADATA(node).super.viewPosY;
 	else
 		return (int) (y / node->u.text.lineHeight);
 }
@@ -214,13 +182,25 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 	vec4_t colorHover;
 	vec4_t colorSelectedHover;
 	char *cur, *tab, *end;
-	int lines;
+	int fullSizeY;
 	int x1; /* variable x position */
 	const char *font = MN_GetFontFromNode(node);
 	vec2_t pos;
 	int x, y, width, height;
+	int viewSizeY;
 
 	MN_GetNodeAbsPos(node, pos);
+
+	if (MN_AbstractScrollableNodeIsSizeChange(node)) {
+		int lineheight = node->u.text.lineHeight;
+		if (lineheight == 0) {
+			const char *font = MN_GetFontFromNode(node);
+			lineheight = MN_FontGetHeight(font) / 2;
+		}
+		viewSizeY = node->size[1] / lineheight;
+	} else {
+		viewSizeY = EXTRADATA(node).super.viewSizeY;
+	}
 
 	/* text box */
 	x = pos[0] + node->padding;
@@ -263,8 +243,8 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 
 	R_Color(node->color);
 
-	/*Com_Printf("\n\n\nEXTRADATA(node).textLines: %i \n", EXTRADATA(node).textLines);*/
-	lines = 0;
+	/*Com_Printf("\n\n\nEXTRADATA(node).super.fullSizeY: %i \n", EXTRADATA(node).super.fullSizeY);*/
+	fullSizeY = 0;
 	do {
 		/* new line starts from node x position */
 		x1 = x;
@@ -291,10 +271,10 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			cur += strlen(TEXT_IMAGETAG);
 			token = Com_Parse((const char **)&cur);
 			/** @todo fix scrolling images */
-			if (lines > EXTRADATA(node).textScroll)
-				y1 += (lines - EXTRADATA(node).textScroll) * node->u.text.lineHeight;
+			if (fullSizeY > EXTRADATA(node).super.viewPosY)
+				y1 += (fullSizeY - EXTRADATA(node).super.viewPosY) * node->u.text.lineHeight;
 			/* don't draw images that would be out of visible area */
-			if (y + height > y1 && lines >= EXTRADATA(node).textScroll) {
+			if (y + height > y1 && fullSizeY >= EXTRADATA(node).super.viewPosY) {
 				/** @todo (menu) we should scale the height here with font->height, too */
 				image = MN_DrawNormImageByName(x1, y1, 0, 0, 0, 0, 0, 0, node->textalign, token);
 				if (image)
@@ -310,15 +290,15 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			*end++ = '\0';
 
 		/* highlighting */
-		if (lines == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
+		if (fullSizeY == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
 			/* Draw current line in "selected" color (if the linenumber is stored). */
 			R_Color(node->selectedColor);
 		}
 
-		if (node->state && node->mousefx && lines == EXTRADATA(node).lineUnderMouse) {
+		if (node->state && node->mousefx && fullSizeY == EXTRADATA(node).lineUnderMouse) {
 			/* Highlight line if mousefx is true. */
 			/** @todo what about multiline text that should be highlighted completely? */
-			if (lines == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
+			if (fullSizeY == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
 				R_Color(colorSelectedHover);
 			} else {
 				R_Color(colorHover);
@@ -347,7 +327,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 				*tab++ = '\0';
 
 			/*Com_Printf("tab - first part - lines: %i \n", lines);*/
-			MN_DrawString(font, node->textalign, x1, y, x, y, tabwidth - 1, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qfalse, LONGLINES_PRETTYCHOP);
+			MN_DrawString(font, node->textalign, x1, y, x, y, tabwidth - 1, height, node->u.text.lineHeight, cur, viewSizeY, EXTRADATA(node).super.viewPosY, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
 			x1 += tabwidth;
 			/* now skip to the first char after the \t */
 			cur = tab;
@@ -359,9 +339,9 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 		if (cur && (cur[0] || end || list)) {
 			/* is it a white line? */
 			if (!cur) {
-				lines++;
+				fullSizeY++;
 			} else {
-				MN_DrawString(font, node->textalign, x1, y, x, y, width, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qtrue, node->longlines);
+				MN_DrawString(font, node->textalign, x1, y, x, y, width, height, node->u.text.lineHeight, cur, viewSizeY, EXTRADATA(node).super.viewPosY, &fullSizeY, qtrue, EXTRADATA(node).longlines);
 			}
 		}
 
@@ -379,14 +359,8 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 		}
 	} while (cur);
 
-	/* content have change */
-	if (EXTRADATA(node).textLines != lines) {
-		EXTRADATA(node).textLines = lines;
-		/* fire the change of the lines */
-		if (EXTRADATA(node).onLinesChange) {
-			MN_ExecuteEventActions(node, EXTRADATA(node).onLinesChange);
-		}
-	}
+	/* update scroll status */
+	MN_AbstractScrollableNodeSetY(node, -1, viewSizeY, fullSizeY);
 
 	R_Color(NULL);
 	MN_DrawScrollBar(node);
@@ -428,7 +402,7 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messa
 		width -= MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
 
 	message       = messageStack;
-	skip_messages = EXTRADATA(node).textScroll;
+	skip_messages = EXTRADATA(node).super.viewPosY;
 	while (skip_messages-- != 0)
 		message = message->next;
 
@@ -437,17 +411,17 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messa
 		const int prevScreenLines = screenLines;	/**< Screen lines before MN_DrawString(...) is executed */
 
 		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
-		MN_DrawString(font, node->textalign, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).rows, 0, &screenLines, qtrue, node->longlines);
+		MN_DrawString(font, node->textalign, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).super.viewSizeY, 0, &screenLines, qtrue, EXTRADATA(node).longlines);
 		addTextLines += screenLines - prevScreenLines - 1;
-		if (screenLines > EXTRADATA(node).rows)
+		if (screenLines > EXTRADATA(node).super.viewSizeY)
 			break;
 	}
 
-	if (EXTRADATA(node).scrollbar && EXTRADATA(node).rows) {
+	if (EXTRADATA(node).scrollbar && EXTRADATA(node).super.viewSizeY) {
 		int lines = 0;
 		for (message = messageStack; message; message = message->next)
 			lines++;
-		EXTRADATA(node).textLines = lines + addTextLines;
+		EXTRADATA(node).super.fullSizeY = lines + addTextLines;
 		MN_DrawScrollBar(node);
 	}
 }
@@ -457,23 +431,27 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messa
  */
 static void MN_TextNodeDraw (menuNode_t *node)
 {
+	const menuSharedData_t *shared;
+
 	/** @todo Very special case, merge it with shared type, or split it into another node */
-	if (EXTRADATA(node).num == TEXT_MESSAGESYSTEM) {
+	if (EXTRADATA(node).dataID == TEXT_MESSAGESYSTEM) {
 		MN_TextNodeDrawMessageList(node, cp_messageStack);
 		return;
 	}
 
-	switch (mn.sharedData[EXTRADATA(node).num].type) {
+	shared = &mn.sharedData[EXTRADATA(node).dataID];
+
+	switch (shared->type) {
 	case MN_SHARED_TEXT:
 		{
-			const char* t = mn.sharedData[EXTRADATA(node).num].data.text;
+			const char* t = shared->data.text;
 			if (t[0] == '_')
 				t = _(++t);
 			MN_TextNodeDrawText(node, t, NULL);
 		}
 		break;
 	case MN_SHARED_LINKEDLISTTEXT:
-		MN_TextNodeDrawText(node, NULL, mn.sharedData[EXTRADATA(node).num].data.linkedListText);
+		MN_TextNodeDrawText(node, NULL, shared->data.linkedListText);
 		break;
 	default:
 		break;
@@ -488,7 +466,7 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 {
 	int line = MN_TextNodeGetLine(node, x, y);
 
-	if (line < 0 || line >= EXTRADATA(node).textLines)
+	if (line < 0 || line >= EXTRADATA(node).super.fullSizeY)
 		return;
 
 	MN_TextNodeSelectLine(node, line);
@@ -505,7 +483,7 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 {
 	int line = MN_TextNodeGetLine(node, x, y);
 
-	if (line < 0 || line >= EXTRADATA(node).textLines)
+	if (line < 0 || line >= EXTRADATA(node).super.fullSizeY)
 		return;
 
 	MN_TextNodeSelectLine(node, line);
@@ -519,7 +497,7 @@ static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y
 	if (node->onWheelUp && node->onWheelDown) {
 		MN_ExecuteEventActions(node, (down ? node->onWheelDown : node->onWheelUp));
 	} else {
-		MN_TextScroll(node, (down ? 1 : -1));
+		MN_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 		/* they can also have script commands assigned */
 		MN_ExecuteEventActions(node, node->onWheel);
 	}
@@ -543,47 +521,48 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 		lineheight = MN_FontGetHeight(font) / 2;
 	}
 
-	/* auto compute rows */
-	if (EXTRADATA(node).rows == 0) {
+	/* auto compute rows (super.viewSizeY) */
+	if (EXTRADATA(node).super.viewSizeY == 0) {
 		if (node->size[1] != 0 && lineheight != 0) {
-			EXTRADATA(node).rows = node->size[1] / lineheight;
+			EXTRADATA(node).super.viewSizeY = node->size[1] / lineheight;
 		} else {
-			EXTRADATA(node).rows = 1;
+			EXTRADATA(node).super.viewSizeY = 1;
 			Com_Printf("MN_TextNodeLoaded: node '%s' has no rows value\n", MN_GetPath(node));
 		}
 	}
 
 	/* auto compute height */
 	if (node->size[1] == 0) {
-		node->size[1] = EXTRADATA(node).rows * lineheight;
+		node->size[1] = EXTRADATA(node).super.viewSizeY * lineheight;
 	}
 
 	/* is text slot exists */
-	if (EXTRADATA(node).num >= MAX_MENUTEXTS)
-		Com_Error(ERR_DROP, "Error in node %s - max menu num exceeded (num: %i, max: %i)", MN_GetPath(node), EXTRADATA(node).num, MAX_MENUTEXTS);
+	if (EXTRADATA(node).dataID >= MAX_MENUTEXTS)
+		Com_Error(ERR_DROP, "Error in node %s - max menu num exceeded (num: %i, max: %i)", MN_GetPath(node), EXTRADATA(node).dataID, MAX_MENUTEXTS);
 
 #ifdef DEBUG
-	if (EXTRADATA(node).rows != (int)(node->size[1] / lineheight)) {
+	if (EXTRADATA(node).super.viewSizeY != (int)(node->size[1] / lineheight)) {
 		Com_Printf("MN_TextNodeLoaded: rows value (%i) of node '%s' differs from size (%.0f) and format (%i) values\n",
-			EXTRADATA(node).rows, MN_GetPath(node), node->size[1], lineheight);
+			EXTRADATA(node).super.viewSizeY, MN_GetPath(node), node->size[1], lineheight);
 	}
 #endif
 
-	if (EXTRADATA(node).num == TEXT_NULL)
+	if (EXTRADATA(node).dataID == TEXT_NULL)
 		Com_Printf("MN_TextNodeLoaded: 'textid' property of node '%s' is not set\n", MN_GetPath(node));
 }
 
 static const value_t properties[] = {
 	{"scrollbar", V_BOOL, offsetof(menuNode_t, u.text.scrollbar), MEMBER_SIZEOF(menuNode_t, u.text.scrollbar)},
 	{"lineselected", V_INT, offsetof(menuNode_t, u.text.textLineSelected), MEMBER_SIZEOF(menuNode_t, u.text.textLineSelected)},
-	{"dataid", V_SPECIAL_DATAID, offsetof(menuNode_t, u.text.num), MEMBER_SIZEOF(menuNode_t, u.text.num)},
-	{"rows", V_INT, offsetof(menuNode_t, u.text.rows), MEMBER_SIZEOF(menuNode_t, u.text.rows)},
-	{"text_scroll", V_INT, offsetof(menuNode_t, u.text.textScroll), MEMBER_SIZEOF(menuNode_t, u.text.textScroll)},
-	{"onviewchange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.text.onLinesChange), MEMBER_SIZEOF(menuNode_t, u.text.onLinesChange)},
-	{"lines", V_INT, offsetof(menuNode_t, u.text.textLines), MEMBER_SIZEOF(menuNode_t, u.text.textLines)},
+	{"dataid", V_SPECIAL_DATAID, offsetof(menuNode_t, u.text.dataID), MEMBER_SIZEOF(menuNode_t, u.text.dataID)},
 	{"lineheight", V_INT, offsetof(menuNode_t, u.text.lineHeight), MEMBER_SIZEOF(menuNode_t, u.text.lineHeight)},
 	{"tabwidth", V_INT, offsetof(menuNode_t, u.text.tabWidth), MEMBER_SIZEOF(menuNode_t, u.text.tabWidth)},
-	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
+	{"longlines", V_LONGLINES, offsetof(menuNode_t, u.text.longlines), MEMBER_SIZEOF(menuNode_t, u.text.longlines)},
+
+	/* translate text properties into the scrollable data; for a smoth scroll we should split that */
+	{"rows", V_INT, offsetof(menuNode_t, u.text.super.viewSizeY), MEMBER_SIZEOF(menuNode_t, u.text.super.viewSizeY)},
+	{"text_scroll", V_INT, offsetof(menuNode_t, u.text.super.viewPosY), MEMBER_SIZEOF(menuNode_t, u.text.super.viewPosY)},
+	{"lines", V_INT, offsetof(menuNode_t, u.text.super.fullSizeY), MEMBER_SIZEOF(menuNode_t, u.text.super.fullSizeY)},
 
 	/** @todo delete it went its possible (need to create a textlist) */
 	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
@@ -593,6 +572,7 @@ static const value_t properties[] = {
 void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
+	behaviour->extends = "abstractscrollable";
 	behaviour->draw = MN_TextNodeDraw;
 	behaviour->leftClick = MN_TextNodeClick;
 	behaviour->rightClick = MN_TextNodeRightClick;
@@ -602,5 +582,6 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	behaviour->loaded = MN_TextNodeLoaded;
 	behaviour->properties = properties;
 
+	/** @todo we should not need anymore this function */
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
 }

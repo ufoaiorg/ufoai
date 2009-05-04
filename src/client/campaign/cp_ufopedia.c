@@ -2,6 +2,7 @@
  * @file cp_ufopedia.c
  * @brief UFOpaedia script interpreter.
  * @todo Split the mail code into cl_mailclient.c/h
+ * @todo Remove direct access to nodes
  */
 
 /*
@@ -110,7 +111,7 @@ static void UP_ChangeDisplay (int newDisplay)
 
 	/* maybe we call this function and the UFOpaedia is not on the menu stack */
 	if (ufopedia && ufopediaMail) {
-		ufopedia->u.text.textScroll = ufopediaMail->u.text.textScroll = 0;
+		ufopedia->u.text.super.viewPosY = ufopediaMail->u.text.super.viewPosY = 0;
 	}
 
 	/* make sure, that we leave the mail header space */
@@ -1164,7 +1165,7 @@ static void UP_SetMailButtons_f (void)
 	if (!mailClientListNode)
 		return;
 
-	num = mailClientListNode->u.text.textScroll;
+	num = mailClientListNode->u.text.super.viewPosY;
 
 	while (m && (i < MAIL_CLIENT_LINES)) {
 		switch (m->type) {

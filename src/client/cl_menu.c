@@ -87,7 +87,7 @@ static void MN_InitKeyList_f (void)
 	/* @todo bad size computation, the text node only know the number of line */
 	MN_ExecuteConfunc("mn_textupdated keylist");
 	node = MN_GetNodeByPath("options.options_keys.keylist");
-	MN_ExecuteConfunc("optionkey_count %i", node->u.text.textLines);
+	MN_ExecuteConfunc("optionkey_count %i", MN_TextNodeGetLines(node));
 }
 
 /**

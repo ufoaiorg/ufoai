@@ -34,11 +34,12 @@ struct menuNode_s;
 
 typedef struct {
 	vec2_t cacheSize;		/**< check the size change while we dont have a realy event from property setter */
+
+	/** yet implemented nowhere */
 	int viewPosX;			/**< Position of the view */
 	int viewSizeX;			/**< Visible size */
 	int fullSizeX;			/**< Full size allowed */
 
-	/** yet implemented nowhere */
 	int viewPosY;			/**< Position of the view */
 	int viewSizeY;			/**< Visible size */
 	int fullSizeY;			/**< Full size allowed */
@@ -47,6 +48,9 @@ typedef struct {
 } abstractScrollableExtraData_t;
 
 qboolean MN_AbstractScrollableNodeIsSizeChange(struct menuNode_s *node);
+qboolean MN_AbstractScrollableNodeScrollY(struct menuNode_s *node, int offset);
+qboolean MN_AbstractScrollableNodeSetY(struct menuNode_s *node, int viewPos, int viewSize, int fullSize);
+
 void MN_RegisterAbstractScrollableNode(struct nodeBehaviour_s *behaviour);
 
 #endif

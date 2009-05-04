@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_TEXT_H
 #define CLIENT_MENU_M_NODE_TEXT_H
 
+#include "m_node_abstractscrollable.h"
+
 #define MAX_MENUTEXTLEN		32768
 /* used to speed up buffer safe string copies */
 #define MAX_SMALLMENUTEXTLEN	1024
@@ -46,22 +48,29 @@ struct menuAction_s;
 void MN_TextScrollBottom(const char* nodeName);
 qboolean MN_TextScroll(struct menuNode_s *node, int offset);
 int MN_TextNodeGetLine(const struct menuNode_s *node, int x, int y);
+int MN_TextNodeGetLines(const struct menuNode_s *node);
 void MN_TextNodeSelectLine(struct menuNode_s *node, int num);
 
 void MN_RegisterTextNode(struct nodeBehaviour_s *behaviour);
 
 typedef struct {
+	abstractScrollableExtraData_t super;
+
+	int dataID;					/**< ID of a shared data @sa src/client/menu/m_data.h */
+
 	qboolean scrollbar;			/**< if you want to add a scrollbar to a text node, set this to true */
-	int textScroll;				/**< textfields - current scroll position */
-	int textLines;				/**< How many lines there are */
 	int textLineSelected;		/**< Which line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
 	int lineUnderMouse;			/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
-	int num;					/**< textfields: menutexts-id - baselayouts: baseID */
-	int rows;					/**< textfields: max. rows to show */
-	struct menuAction_s *onLinesChange;
-	int lineHeight;			/**< size between two lines */
+	int lineHeight;				/**< size between two lines */
 	int tabWidth;				/**< max size of a tabulation */
+	byte longlines;				/**< what to do with long lines */
 
 } textExtraData_t;
+
+/**
+ * @note text node inherite scrollable node. Scrollable (super) extradata
+ * must not move, else we can't call scrollable functions.
+ */
+CASSERT(offsetof(textExtraData_t, super) == 0);
 
 #endif

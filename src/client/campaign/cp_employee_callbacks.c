@@ -1,6 +1,7 @@
 /**
  * @file cp_employee_callbacks.c
  * @brief Header file for menu callback functions used for hire/employee menu
+ * @todo Remove direct access to nodes
  */
 
 /*
@@ -103,7 +104,7 @@ static void E_EmployeeListScroll_f (void)
 	if (!base)
 		return;
 
-	j = employeeListNode->u.text.textScroll;
+	j = employeeListNode->u.text.super.viewPosY;
 
 	for (i = 0, employee = &(ccs.employees[employeeCategory][0]); i < ccs.numEmployees[employeeCategory]; i++, employee++) {
 		/* don't show employees of other bases */
@@ -136,7 +137,7 @@ static void E_EmployeeListScroll_f (void)
 		MN_ExecuteConfunc("employeedisable %i", cnt);
 	}
 
-	MN_ExecuteConfunc("hire_fix_scroll %i", employeeListNode->u.text.textScroll);
+	MN_ExecuteConfunc("hire_fix_scroll %i", employeeListNode->u.text.super.viewPosY);
 }
 
 /**
@@ -177,7 +178,7 @@ static void E_EmployeeList_f (void)
 		/* Reset scrolling when no specific entry was given. */
 		/** @todo Is there a case where hiredEmployeeIdx is < 0 and the
 		 * textScroll must be reset? */
-		employeeListNode->u.text.textScroll = 0;
+		employeeListNode->u.text.super.viewPosY = 0;
 	} else {
 		/** @todo If employee is given but outside the current visible list
 		 * (defined by employeeListNode->textScroll) we need to calculate the
@@ -199,17 +200,17 @@ static void E_EmployeeList_f (void)
 		/* Change/Display the buttons if the employee is currently displayed (i.e. visible in the on-screen list) .*/
 		/** @todo Check if the "textScroll % maxEmployeesPerPage" calculation
 		 * is still ok when _very_ long lists (i.e. more than 2x19 right now) are used. */
-		if (employeesInCurrentList >= employeeListNode->u.text.textScroll
-		 && employeesInCurrentList < employeeListNode->u.text.textScroll + maxEmployeesPerPage) {
+		if (employeesInCurrentList >= employeeListNode->u.text.super.viewPosY
+		 && employeesInCurrentList < employeeListNode->u.text.super.viewPosY + maxEmployeesPerPage) {
 			if (employee->hired) {
 				if (employee->baseHired == base) {
 					if (employee->transfer)
 						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), va(_("%s [Transferred]"), employee->chr.name));
 					else
 						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
-					Cbuf_AddText(va("employeeadd %i\n", employeesInCurrentList - (employeeListNode->u.text.textScroll % maxEmployeesPerPage)));
+					Cbuf_AddText(va("employeeadd %i\n", employeesInCurrentList - (employeeListNode->u.text.super.viewPosY % maxEmployeesPerPage)));
 				} else
-					Cbuf_AddText(va("employeedisable %i\n", employeesInCurrentList - (employeeListNode->u.text.textScroll % maxEmployeesPerPage)));
+					Cbuf_AddText(va("employeedisable %i\n", employeesInCurrentList - (employeeListNode->u.text.super.viewPosY % maxEmployeesPerPage)));
 			} else
 				Cbuf_AddText(va("employeedel %i\n", employeesInCurrentList));
 		}
@@ -315,7 +316,7 @@ static void E_EmployeeDelete_f (void)
 {
 	/* num - menu index (line in text) */
 	int num;
-	const int scroll = employeeListNode->u.text.textScroll;
+	const int scroll = employeeListNode->u.text.super.viewPosY;
 	employee_t* employee;
 
 	/* Check syntax. */
@@ -325,7 +326,7 @@ static void E_EmployeeDelete_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	num += employeeListNode->u.text.textScroll;
+	num += employeeListNode->u.text.super.viewPosY;
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	/* empty slot selected */
@@ -341,7 +342,8 @@ static void E_EmployeeDelete_f (void)
 	}
 	E_DeleteEmployee(employee, employee->type);
 	Cbuf_AddText(va("employee_init %i\n", employeeCategory));
-	employeeListNode->u.text.textScroll = scroll;
+	/** @todo horrible */
+	employeeListNode->u.text.super.viewPosY = scroll;
 }
 
 /**
@@ -373,12 +375,12 @@ static void E_EmployeeHire_f (void)
 	 * maxEmployeesPerPage) possible ... */
 	if (arg[0] == '+') {
 		num = atoi(arg + 1);
-		button = num - employeeListNode->u.text.textScroll;
+		button = num - employeeListNode->u.text.super.viewPosY;
 	/* ... or with the hire pictures that are using only values from
 	 * 0 - maxEmployeesPerPage */
 	} else {
 		button = atoi(Cmd_Argv(1));
-		num = button + employeeListNode->u.text.textScroll;
+		num = button + employeeListNode->u.text.super.viewPosY;
 	}
 
 	employee = E_GetEmployeeByMenuIndex(num);

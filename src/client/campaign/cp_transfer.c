@@ -2,6 +2,7 @@
  * @file cp_transfer.c
  * @brief Deals with the Transfer stuff.
  * @note Transfer menu functions prefix: TR_
+ * @todo Remove direct access to nodes
  */
 
 /*
@@ -476,7 +477,7 @@ static void TR_ResetScrolling_f (void)
 		return;
 	}
 
-	trans_list->u.text.textScroll = 0;
+	trans_list->u.text.super.viewPosY = 0;
 	trans_list_scroll->u.abstractscrollbar.pos = 0;
 }
 

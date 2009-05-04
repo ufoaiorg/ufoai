@@ -1,5 +1,6 @@
 /**
  * @file cp_market_callbacks.c
+ * @todo Remove direct access to nodes
  */
 
 /*
@@ -174,23 +175,24 @@ static void BS_MarketScroll_f (void)
 	if (!node)
 		return;
 
-	buyList.scroll = node->u.text.textScroll;
+	buyList.scroll = node->u.text.super.viewPosY;
 
 	if (buyList.length > MAX_MARKET_MENU_ENTRIES && buyList.scroll >= buyList.length - MAX_MARKET_MENU_ENTRIES) {
 		buyList.scroll = buyList.length - MAX_MARKET_MENU_ENTRIES;
-		node->u.text.textScroll = buyList.scroll;
+		/** @todo horrible */
+		node->u.text.super.viewPosY = buyList.scroll;
 	}
 
 	/* the following nodes must exist */
 	node = MN_GetNodeByPath("market.market_market");
 	assert(node);
-	node->u.text.textScroll = buyList.scroll;
+	node->u.text.super.viewPosY = buyList.scroll;
 	node = MN_GetNodeByPath("market.market_storage");
 	assert(node);
-	node->u.text.textScroll = buyList.scroll;
+	node->u.text.super.viewPosY = buyList.scroll;
 	node = MN_GetNodeByPath("market.market_prices");
 	assert(node);
-	node->u.text.textScroll = buyList.scroll;
+	node->u.text.super.viewPosY = buyList.scroll;
 
 	/* now update the menu pics */
 	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++) {
@@ -550,7 +552,7 @@ static void BS_BuyType_f (void)
 		Cvar_Set("mn_itemtype", INV_GetFilterType(buyCat));
 		buyList.scroll = 0;
 		if (node) {
-			node->u.text.textScroll = 0;
+			node->u.text.super.viewPosY = 0;
 			/* reset selection */
 			MN_TextNodeSelectLine(node, 0);
 		}
