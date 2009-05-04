@@ -22,7 +22,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="--export-all-symbols" />
-					<Add library="libgdk-pixbuf-2.0" />
+					<Add library="libgdk_pixbuf-2.0" />
 					<Add library="gobject-2.0" />
 				</Linker>
 			</Target>
@@ -36,15 +36,15 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-Wall" />
-					<Add option="-Wno-non-virtual-dtor" />
 					<Add option="-g" />
+					<Add option="-Wno-non-virtual-dtor" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DDEBUG" />
 				</Compiler>
 				<Linker>
 					<Add option="--export-all-symbols" />
-					<Add library="libgdk-pixbuf-2.0" />
+					<Add library="libgdk_pixbuf-2.0" />
 					<Add library="gobject-2.0" />
 				</Linker>
 			</Target>
@@ -80,10 +80,10 @@
 					<Add directory="\sw\include" />
 				</Compiler>
 				<Linker>
-					<Add directory="\sw\lib" />
 					<Add option="-dynamiclib" />
 					<Add option="-single_module" />
 					<Add option="-compatibility_version 1" />
+					<Add directory="\sw\lib" />
 				</Linker>
 			</Target>
 		</Build>
