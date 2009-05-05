@@ -192,13 +192,14 @@ window material_editor {
 				*(abstractscrollbar)stages.stage_scroll current <viewpos>
 				*(abstractscrollbar)stages.stage_scroll viewsize <viewsize>
 				*(abstractscrollbar)stages.stage_scroll fullsize <fullsize>
+				*(abstractscrollbar)stages.stage_scroll height <height>
 			}
 		}
 
 		vscrollbar stage_scroll {
 			image		ui/scrollbar_v_green
 			pos			"165 0"
-			height		90 // @todo use: *node:parent.stages.height
+			height		90
 			hidewhenunused true
 			onChange	{
 				*stages.stages viewpos <current>
