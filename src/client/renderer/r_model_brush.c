@@ -424,13 +424,13 @@ static void R_ModLoadNodes (const lump_t *l)
 		out->numsurfaces = LittleShort(in->numfaces);
 
 		for (j = 0; j < 2; j++) {
-			p = LittleLong(in->children[j]);
-			if (p > LEAFNODE) {
+			const int p2 = LittleLong(in->children[j]);
+			if (p2 > LEAFNODE) {
 				assert(p < r_worldmodel->bsp.numnodes);
-				out->children[j] = r_worldmodel->bsp.nodes + p;
+				out->children[j] = r_worldmodel->bsp.nodes + p2;
 			} else {
-				assert((LEAFNODE - p) < r_worldmodel->bsp.numleafs);
-				out->children[j] = (mBspNode_t *) (r_worldmodel->bsp.leafs + (LEAFNODE - p));
+				assert((LEAFNODE - p2) < r_worldmodel->bsp.numleafs);
+				out->children[j] = (mBspNode_t *) (r_worldmodel->bsp.leafs + (LEAFNODE - p2));
 			}
 			out->children[j]->parent = parent;
 		}
