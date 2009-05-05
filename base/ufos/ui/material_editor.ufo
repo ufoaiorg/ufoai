@@ -41,8 +41,9 @@ window material_editor {
 
 	string imagename {
 		string		"*cvar me_imagename"
-		pos			"340 55"
-		size		"250 20"
+		pos			"270 55"
+		font		"f_verysmall"
+		size		"200 15"
 	}
 
 	/** 
@@ -159,10 +160,12 @@ window material_editor {
 	}
 
 	/** 
-	 * @param<1> boolean to hide or show the stages panel 
+	 * @param<1> boolean to hide or show the stages panel
+	 * @param<2> int the stage type tab to show 
 	 */
 	confunc hidestages {
 		*stage_attributes invis <1>
+		*cvar:me_stagetype <2>
 	}
 
 	confunc updatestagevalues {
@@ -265,6 +268,20 @@ window material_editor {
 				cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.deg <cvar:me_rotate_deg>;" 
 			}
 		}
+
+		tab equip_type
+		{
+			pos		"400 365"
+			size	"505 40"
+			cvar	"*cvar me_stagetype"
+			onChange {
+			}
+	
+			option rotate {
+				label	"_Rotate"
+				value	"0"
+			}
+		}
 	}
 	
 	func onInit {
@@ -272,6 +289,7 @@ window material_editor {
 		*cvar:me_image_id -1
 		*cvar:me_stage_id -1
 		*cvar:me_imagename ""
+		*cvar:me_stagetype 0
 		// shader cvars
 		*cvar:me_bump 0
 		*cvar:me_hardness 0
@@ -282,13 +300,13 @@ window material_editor {
 		*cvar:me_rotate_deg 0
 
 		cmd "hideshaders true 0 0 0 0;"
-		cmd "hidestages true;"
+		cmd "hidestages true 0;"
 		cmd "mn_materialeditor;"
 	}
 	
 	func onClose {
 		// general cvars
-		cmd "del me_image_id; del me_stage_id; del me_imagename;"
+		cmd "del me_image_id; del me_stage_id; del me_imagename; del me_stagetype;"
 		// shader cvars
 		cmd "del me_bump; del me_hardness; del me_parallax; del me_specular;"
 		// stage cvars

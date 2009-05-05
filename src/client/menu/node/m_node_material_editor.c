@@ -279,10 +279,10 @@ static void MN_MaterialEditorUpdate (image_t *image, materialStage_t *materialSt
 	materialStagesList[0] = '\0';
 
 	if (!image->material.num_stages) {
-		MN_ExecuteConfunc("hidestages true");
+		MN_ExecuteConfunc("hidestages true 0");
 	} else {
 		if (materialStage)
-			MN_ExecuteConfunc("hidestages false");
+			MN_ExecuteConfunc("hidestages false 0");
 		else
 			Cvar_Set("me_stage_id", "-1");
 		for (i = 0; i < image->material.num_stages; i++) {
