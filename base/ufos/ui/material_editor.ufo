@@ -5,7 +5,7 @@
 window material_editor {
 	{
 		pos "50 50"
-		size "700 650"
+		size "600 650"
 		dragbutton	true
 		closebutton true
 		image		ui/popup_alpha_tile
@@ -105,7 +105,7 @@ window material_editor {
 		{
 			current		"*cvar me_bump"
 			pos			"94 30"
-			size		"245 6"
+			size		"100 5"
 			color		"0 .8 0 1"
 			max			3.0
 			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> -1 bump <current>;" }
@@ -128,7 +128,7 @@ window material_editor {
 		{
 			current		"*cvar me_specular"
 			pos			"94 50"
-			size		"245 6"
+			size		"100 5"
 			color		"0 .8 0 1"
 			max			3.0
 			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> -1 specular <current>;" }
@@ -151,7 +151,7 @@ window material_editor {
 		{
 			current		"*cvar me_parallax"
 			pos			"94 70"
-			size		"245 6"
+			size		"100 5"
 			color		"0 .8 0 1"
 			max			3.0
 			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> -1 parallax <current>;" }
@@ -173,25 +173,41 @@ window material_editor {
 	panel stages {
 		{
 			pos		"280 110"
-			size	"280 150"
+			size	"180 130"
 		}
 		text stages {
 			dataid		TEXT_MATERIAL_STAGES
 			pos			"0 0"
-			size		"360 100"
+			size		"160 90"
 			bgcolor		"0.5 0.5 0.5 0.3"
 			selectcolor	"1 1 1 1"
-			lineheight	20
-			rows		5
+			font		"f_verysmall"
+			lineheight	15
+			rows		6
 			onClick		{
 				*cvar:me_stage_id <lineselected>
 				cmd "mn_materialeditor_selectstage <cvar:me_image_id> <lineselected>;" 
+			}
+			onViewChange {
+				*(abstractscrollbar)stages.stage_scroll current <viewpos>
+				*(abstractscrollbar)stages.stage_scroll viewsize <viewsize>
+				*(abstractscrollbar)stages.stage_scroll fullsize <fullsize>
+			}
+		}
+
+		vscrollbar stage_scroll {
+			image		ui/scrollbar_v_green
+			pos			"165 0"
+			height		90 // @todo use: *node:parent.stages.height
+			hidewhenunused true
+			onChange	{
+				*stages.stages viewpos <current>
 			}
 		}
 	
 		button stage_new {
 			string		"_+"
-			pos			"0 110"
+			pos			"0 100"
 			size		"40 28"
 			image		ui/button_green_verysmall
 			font		f_verysmall
@@ -202,7 +218,7 @@ window material_editor {
 	
 		button stage_remove {
 			string		"_-"
-			pos			"50 110"
+			pos			"50 100"
 			size		"40 28"
 			image		ui/button_green_verysmall
 			font		f_verysmall
