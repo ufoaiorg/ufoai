@@ -107,7 +107,7 @@ static int MN_MaterialEditorNodeGetImageCount (menuNode_t *node)
 /**
  * @brief Update the scrollable view
  */
-static void MN_MaterialEditorNodeUpdateView (menuNode_t *node, qboolean resert)
+static void MN_MaterialEditorNodeUpdateView (menuNode_t *node, qboolean reset)
 {
 	const int imageCount = MN_MaterialEditorNodeGetImageCount(node);
 	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
@@ -115,9 +115,7 @@ static void MN_MaterialEditorNodeUpdateView (menuNode_t *node, qboolean resert)
 
 	/* update view */
 	if (imagesPerLine > 0 && imagesPerColumn > 0) {
-		int pos = -1;
-		if (resert)
-			pos = 0;
+		const int pos = reset ? 0 : -1;
 		MN_AbstractScrollableNodeSetY(node, pos, imagesPerColumn, imageCount / imagesPerLine);
 	} else
 		MN_AbstractScrollableNodeSetY(node, 0, 0, 0);
