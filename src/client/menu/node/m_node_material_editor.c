@@ -536,6 +536,10 @@ static void MN_MaterialEditorRemoveStage_f (void)
 		sParent->next = s->next;
 		Mem_Free(s);
 	}
+
+	image->material.num_stages--;
+
+	MN_MaterialEditorUpdate(image, NULL);
 }
 
 static void MN_MaterialEditorNewStage_f (void)
