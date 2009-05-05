@@ -5,7 +5,7 @@
 window material_editor {
 	{
 		pos "50 50"
-		size "600 650"
+		size "600 580"
 		dragbutton	true
 		closebutton true
 		image		ui/popup_alpha_tile
@@ -232,54 +232,83 @@ window material_editor {
 		}
 	}
 
+	confunc hidestageattributestabs {
+		*stage_attributes.stage_attributes_rotate invis true
+		*stage_attributes.stage_attributes_scale invis true
+	}
+	
 	panel stage_attributes {
 		{
 			pos "280 270"
-			size "280 100"
+			size "280 300"
 		}
-		textentry rotate_hz
-		{
-			string		"*cvar me_rotate_hz"
-			image		ui/button_green_verysmall
-			color 		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	cl
-			padding		6
-			font		"f_verysmall"
-			pos			"0 0"
-			size		"60 30"
-			onChange	{
-				cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.hz <cvar:me_rotate_hz>;" 
+		
+		panel stage_attributes_scale {
+			{
+				pos "0 40"
+				size "280 260"
+			}
+			
+		}
+			
+		panel stage_attributes_rotate {
+			{
+				pos "0 40"
+				size "280 260"
+			}
+			
+			textentry rotate_hz
+			{
+				string		"*cvar me_rotate_hz"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"0 0"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.hz <cvar:me_rotate_hz>;" 
+				}
+			}
+	
+			textentry rotate_deg
+			{
+				string		"*cvar me_rotate_deg"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"64 0"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.deg <cvar:me_rotate_deg>;" 
+				}
 			}
 		}
 
-		textentry rotate_deg
+		tab stage_type
 		{
-			string		"*cvar me_rotate_deg"
-			image		ui/button_green_verysmall
-			color 		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	cl
-			padding		6
-			font		"f_verysmall"
-			pos			"64 0"
-			size		"60 30"
-			onChange	{
-				cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.deg <cvar:me_rotate_deg>;" 
-			}
-		}
-
-		tab equip_type
-		{
-			pos		"400 365"
-			size	"505 40"
+			pos		"0 0"
+			size	"280 40"
 			cvar	"*cvar me_stagetype"
+			font	"f_verysmall"
+
 			onChange {
+				call hidestageattributestabs
+				*stage_attributes.stage_attributes_<cvar:me_stagetype> invis false
 			}
 	
 			option rotate {
 				label	"_Rotate"
-				value	"0"
+				value	"rotate"
+			}
+			option scale {
+				label	"_Scale"
+				value	"scale"
 			}
 		}
 	}
