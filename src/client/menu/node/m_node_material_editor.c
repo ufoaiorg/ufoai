@@ -502,6 +502,42 @@ static void MN_MaterialEditorSelectStage_f (void)
 	MN_MaterialEditorUpdate(image, materialStage);
 }
 
+static void MN_MaterialEditorRemoveStage_f (void)
+{
+	image_t *image;
+	int id, stageID;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <image index> <stage index>\n", Cmd_Argv(0));
+		return;
+	}
+
+	id = atoi(Cmd_Argv(1));
+	if (id < 0 || id >= r_numImages) {
+		Com_Printf("Given image index (%i) is out of bounds\n", id);
+		return;
+	}
+
+	image = &r_images[id];
+
+	stageID = atoi(Cmd_Argv(2));
+	if (stageID < 0 || stageID >= image->material.num_stages) {
+		Com_Printf("Given stage index (%i) is out of bounds\n", stageID);
+		return;
+	}
+
+	if (stageID == 0) {
+		materialStage_t *s = image->material.stages;
+		image->material.stages = s->next;
+		Mem_Free(s);
+	} else {
+		materialStage_t *sParent = MN_MaterialEditorGetStage(&image->material, stageID - 1);
+		materialStage_t *s = sParent->next;
+		sParent->next = s->next;
+		Mem_Free(s);
+	}
+}
+
 static void MN_MaterialEditorNewStage_f (void)
 {
 	material_t *m;
@@ -545,6 +581,7 @@ void MN_RegisterMaterialEditorNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseDown = MN_MaterialEditorMouseDown;
 	behaviour->mouseWheel = MN_MaterialEditorNodeWheel;
 
+	Cmd_AddCommand("mn_materialeditor_removestage", MN_MaterialEditorRemoveStage_f, "Removes the selected material stage");
 	Cmd_AddCommand("mn_materialeditor_newstage", MN_MaterialEditorNewStage_f, "Creates a new material stage for the current selected material");
 	Cmd_AddCommand("mn_materialeditor_selectstage", MN_MaterialEditorSelectStage_f, "Select a given material stage");
 	Cmd_AddCommand("mn_materialeditor_changevalue", MN_MaterialEditorChangeValue_f, "Initializes the material editor menu");
