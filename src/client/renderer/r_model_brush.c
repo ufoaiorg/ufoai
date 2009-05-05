@@ -426,7 +426,7 @@ static void R_ModLoadNodes (const lump_t *l)
 		for (j = 0; j < 2; j++) {
 			const int p2 = LittleLong(in->children[j]);
 			if (p2 > LEAFNODE) {
-				assert(p < r_worldmodel->bsp.numnodes);
+				assert(p2 < r_worldmodel->bsp.numnodes);
 				out->children[j] = r_worldmodel->bsp.nodes + p2;
 			} else {
 				assert((LEAFNODE - p2) < r_worldmodel->bsp.numleafs);
