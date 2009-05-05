@@ -383,7 +383,7 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
  */
 static void R_ModLoadNodes (const lump_t *l)
 {
-	int i, j, count, p;
+	int i, j, count;
 	const dBspNode_t *in;
 	mBspNode_t *out;
 	mBspNode_t *parent = NULL;
@@ -399,7 +399,7 @@ static void R_ModLoadNodes (const lump_t *l)
 	r_worldmodel->bsp.numnodes = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
-		p = LittleLong(in->planenum);
+		const int p = LittleLong(in->planenum);
 
 		/* skip special pathfinding nodes - they have a negative index */
 		if (p == PLANENUM_LEAF) {

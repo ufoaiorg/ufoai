@@ -134,7 +134,7 @@ static void MN_DrawScrollBar (const menuNode_t *node)
 	}
 }
 
-int MN_TextNodeGetLines(const struct menuNode_s *node)
+int MN_TextNodeGetLines (const struct menuNode_s *node)
 {
 	return EXTRADATA(node).super.fullSizeY;
 }
