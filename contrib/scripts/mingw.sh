@@ -5,12 +5,18 @@ init=1
 dont_install=0
 user=`whoami`
 mingwprefix=/usr/i586-mingw32msvc
-mingwtmp=mingw_tmp
+mingwtmp=tmp_mingw
 
-if [ "${user}" != "root" ]
+if [ "${dont_install}" -ne "1" ]
 then
-	echo "You must be root to run this script"
-	exit 1
+	if [ "${init}" -eq "1" ]
+	then
+		if [ "${user}" != "root" ]
+		then
+			echo "You must be root to run this script"
+			exit 1
+		fi
+	fi
 fi
 
 download()
