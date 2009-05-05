@@ -232,9 +232,12 @@ window material_editor {
 		}
 	}
 
-	confunc hidestageattributestabs {
-		*stage_attributes.stage_attributes_rotate invis true
+	func hidestageattributestabs {
 		*stage_attributes.stage_attributes_scale invis true
+		*stage_attributes.stage_attributes_scroll invis true
+		*stage_attributes.stage_attributes_pulse invis true
+		*stage_attributes.stage_attributes_scretch invis true
+		*stage_attributes.stage_attributes_rotate invis true
 	}
 	
 	panel stage_attributes {
