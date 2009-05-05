@@ -250,13 +250,140 @@ window material_editor {
 			}
 			
 		}
+		
+		panel stage_attributes_scroll {
+			{
+				pos "0 40"
+				size "280 260"
+			}
 			
+			string scroll_ds_str
+			{
+				string		"_Ds:"
+				pos			"0 0"
+				size		"100 30"
+				font		"f_verysmall"
+			}
+		
+			textentry scroll_ds
+			{
+				string		"*cvar me_scroll_ds"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"105 0"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.ds <cvar:me_scroll_ds>;" 
+				}
+			}
+
+			string scroll_dt_str
+			{
+				string		"_Dt:"
+				pos			"0 30"
+				size		"100 30"
+				font		"f_verysmall"
+			}
+	
+			textentry scroll_dt
+			{
+				string		"*cvar me_scroll_dt"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"105 35"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.dt <cvar:me_scroll_dt>;" 
+				}
+			}
+			
+			string scroll_s_str
+			{
+				string		"_S:"
+				pos			"0 0"
+				size		"100 60"
+				font		"f_verysmall"
+			}
+		
+			textentry scroll_s
+			{
+				string		"*cvar me_scroll_s"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"105 65"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.s <cvar:me_scroll_s>;" 
+				}
+			}
+
+			string scroll_t_str
+			{
+				string		"_T:"
+				pos			"0 90"
+				size		"100 30"
+				font		"f_verysmall"
+			}
+	
+			textentry scroll_t
+			{
+				string		"*cvar me_scroll_t"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"105 95"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.t <cvar:me_scroll_t>;" 
+				}
+			}
+		}
+						
+		panel stage_attributes_pulse {
+			{
+				pos "0 40"
+				size "280 260"
+			}
+			
+		}
+						
+		panel stage_attributes_scretch {
+			{
+				pos "0 40"
+				size "280 260"
+			}
+			
+		}
+						
 		panel stage_attributes_rotate {
 			{
 				pos "0 40"
 				size "280 260"
 			}
 			
+			string rotate_hz_str
+			{
+				string		"_Hz:"
+				pos			"0 0"
+				size		"100 30"
+				font		"f_verysmall"
+			}
+		
 			textentry rotate_hz
 			{
 				string		"*cvar me_rotate_hz"
@@ -266,11 +393,19 @@ window material_editor {
 				textalign	cl
 				padding		6
 				font		"f_verysmall"
-				pos			"0 0"
+				pos			"105 0"
 				size		"60 30"
 				onChange	{
 					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.hz <cvar:me_rotate_hz>;" 
 				}
+			}
+
+			string rotate_deg_str
+			{
+				string		"_Deg:"
+				pos			"0 30"
+				size		"100 30"
+				font		"f_verysmall"
 			}
 	
 			textentry rotate_deg
@@ -282,7 +417,7 @@ window material_editor {
 				textalign	cl
 				padding		6
 				font		"f_verysmall"
-				pos			"64 0"
+				pos			"105 35"
 				size		"60 30"
 				onChange	{
 					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.deg <cvar:me_rotate_deg>;" 
@@ -302,6 +437,18 @@ window material_editor {
 				*stage_attributes.stage_attributes_<cvar:me_stagetype> invis false
 			}
 	
+			option scretch {
+				label	"_Scretch"
+				value	"scretch"
+			}
+			option pulse {
+				label	"_Pulse"
+				value	"pulse"
+			}
+			option scroll {
+				label	"_Scroll"
+				value	"scroll"
+			}
 			option rotate {
 				label	"_Rotate"
 				value	"rotate"
@@ -327,6 +474,10 @@ window material_editor {
 		// stage cvars
 		*cvar:me_rotate_hz 0
 		*cvar:me_rotate_deg 0
+		*cvar:me_scroll_ds 0
+		*cvar:me_scroll_dt 0
+		*cvar:me_scroll_s 0
+		*cvar:me_scroll_t 0
 
 		cmd "hideshaders true 0 0 0 0;"
 		cmd "hidestages true 0;"
@@ -340,5 +491,7 @@ window material_editor {
 		cmd "del me_bump; del me_hardness; del me_parallax; del me_specular;"
 		// stage cvars
 		cmd "del me_rotate_hz; del me_rotate_deg"
+		cmd "del me_scroll_ds; del me_scroll_dt;"
+		cmd "del me_scroll_s; del me_scroll_t;"
 	}
 }
