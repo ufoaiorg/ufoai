@@ -114,9 +114,9 @@ qboolean MN_AbstractScrollableNodeScrollY (menuNode_t *node, int offset)
 }
 
 static const value_t properties[] = {
-	{"viewpos", V_INT, offsetof(menuNode_t, u.abstractscrollable.viewPosX),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.viewPosX)},
-	{"viewsize", V_INT, offsetof(menuNode_t, u.abstractscrollable.viewSizeX),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.viewSizeX)},
-	{"fullsize", V_INT, offsetof(menuNode_t, u.abstractscrollable.fullSizeX),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.fullSizeX)},
+	{"viewpos", V_INT, offsetof(menuNode_t, u.abstractscrollable.viewPosY),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.viewPosY)},
+	{"viewsize", V_INT, offsetof(menuNode_t, u.abstractscrollable.viewSizeY),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.viewSizeY)},
+	{"fullsize", V_INT, offsetof(menuNode_t, u.abstractscrollable.fullSizeY),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.fullSizeY)},
 
 	{"onviewchange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.abstractscrollable.onViewChange), MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.onViewChange)},
 

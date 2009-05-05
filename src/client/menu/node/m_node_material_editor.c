@@ -107,7 +107,7 @@ static int MN_MaterialEditorNodeGetImageCount (menuNode_t *node)
 /**
  * @brief Update the scrollable view
  */
-static void MN_MaterialEditorNodeUpdateView (menuNode_t *node)
+static void MN_MaterialEditorNodeUpdateView (menuNode_t *node, qboolean resert)
 {
 	const int imageCount = MN_MaterialEditorNodeGetImageCount(node);
 	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
@@ -115,23 +115,12 @@ static void MN_MaterialEditorNodeUpdateView (menuNode_t *node)
 
 	/* update view */
 	if (imagesPerLine > 0 && imagesPerColumn > 0) {
-		node->u.abstractscrollable.viewSizeX = imagesPerColumn;
-		node->u.abstractscrollable.fullSizeX = imageCount / imagesPerLine;
-	} else {
-		node->u.abstractscrollable.viewSizeX = 0;
-		node->u.abstractscrollable.viewPosX = 0;
-		node->u.abstractscrollable.fullSizeX = 0;
-	}
-
-	/* clap position */
-	if (node->u.abstractscrollable.viewPosX < 0)
-		node->u.abstractscrollable.viewPosX = 0;
-	if (node->u.abstractscrollable.viewPosX > node->u.abstractscrollable.fullSizeX - node->u.abstractscrollable.viewSizeX)
-		node->u.abstractscrollable.viewPosX = node->u.abstractscrollable.fullSizeX - node->u.abstractscrollable.viewSizeX;
-
-	/* callback the event */
-	if (node->u.abstractscrollable.onViewChange)
-		MN_ExecuteEventActions(node, node->u.abstractscrollable.onViewChange);
+		int pos = -1;
+		if (resert)
+			pos = 0;
+		MN_AbstractScrollableNodeSetY(node, pos, imagesPerColumn, imageCount / imagesPerLine);
+	} else
+		MN_AbstractScrollableNodeSetY(node, 0, 0, 0);
 }
 
 /**
@@ -146,7 +135,7 @@ static void MN_MaterialEditorNodeDraw (menuNode_t *node)
 	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
 
 	if (MN_AbstractScrollableNodeIsSizeChange(node))
-		MN_MaterialEditorNodeUpdateView(node);
+		MN_MaterialEditorNodeUpdateView(node, qfalse);
 
 	/* width too small to display anything */
 	if (imagesPerLine <= 0)
@@ -169,7 +158,7 @@ static void MN_MaterialEditorNodeDraw (menuNode_t *node)
 #endif
 
 		/* skip images before the scroll position */
-		if (cnt / imagesPerLine < node->u.abstractscrollable.viewPosX) {
+		if (cnt / imagesPerLine < node->u.abstractscrollable.viewPosY) {
 			cnt++;
 			continue;
 		}
@@ -239,7 +228,7 @@ static int MN_MaterialEditorNodeGetImageAtPosition (menuNode_t *node, int x, int
 #endif
 
 		/* skip images before the scroll position */
-		if (cnt / imagesPerLine < node->u.abstractscrollable.viewPosX) {
+		if (cnt / imagesPerLine < node->u.abstractscrollable.viewPosY) {
 			cnt++;
 			continue;
 		}
@@ -357,8 +346,7 @@ static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int butt
 static void MN_MaterialEditorNodeInit (menuNode_t *node)
 {
 	node->num = -1;
-	node->u.abstractscrollable.viewPosX = 0;
-	MN_MaterialEditorNodeUpdateView(node);
+	MN_MaterialEditorNodeUpdateView(node, qtrue);
 }
 
 /**
@@ -367,25 +355,7 @@ static void MN_MaterialEditorNodeInit (menuNode_t *node)
 static void MN_MaterialEditorNodeWheel (menuNode_t *node, qboolean down, int x, int y)
 {
 	const int diff = (down) ? 1 : -1;
-	int pos;
-
-	if (node->u.abstractscrollable.fullSizeX == 0 || node->u.abstractscrollable.fullSizeX < node->u.abstractscrollable.viewSizeX)
-		return;
-
-	/* clap new position */
-	pos = node->u.abstractscrollable.viewPosX + diff;
-	if (pos < 0)
-		pos = 0;
-	if (pos > node->u.abstractscrollable.fullSizeX - node->u.abstractscrollable.viewSizeX)
-		pos = node->u.abstractscrollable.fullSizeX - node->u.abstractscrollable.viewSizeX;
-
-	/* update position */
-	if (pos != node->u.abstractscrollable.viewPosX) {
-		node->u.abstractscrollable.viewPosX = pos;
-		/* callback the event */
-		if (node->u.abstractscrollable.onViewChange)
-			MN_ExecuteEventActions(node, node->u.abstractscrollable.onViewChange);
-	}
+	MN_AbstractScrollableNodeScrollY(node, diff);
 }
 
 static void MN_MaterialEditorStart_f (void)
