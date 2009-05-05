@@ -5,7 +5,7 @@
 window material_editor {
 	{
 		pos "50 50"
-		size "900 650"
+		size "700 650"
 		dragbutton	true
 		closebutton true
 		image		ui/popup_alpha_tile
@@ -14,8 +14,8 @@ window material_editor {
 	
 	material_editor editor {
 		pos "30 55"
-		size "400 400"
-		padding 10
+		size "210 210"
+		padding 4
 		bgcolor	"0.5 0.5 0.5 0.3"
 		selectcolor "1 1 1 1"
 
@@ -31,29 +31,17 @@ window material_editor {
 
 	vscrollbar editor_scroll {
 		image		ui/scrollbar_v_green
-		pos			"450 55"
-		height		400
+		pos			"250 55"
+		height		210
 		hidewhenunused true
 		onChange	{
 			*editor viewpos <current>
 		}
 	}
 
-	string label {
-		string		"_Material ID from r_images:"
-		pos			"480 55"
-		size		"300 20"
-	}
-
-	string value {
-		string		"*cvar me_image_id"
-		pos			"480 75"
-		size		"45 20"
-	}
-
 	string imagename {
 		string		"*cvar me_imagename"
-		pos			"530 75"
+		pos			"340 55"
 		size		"250 20"
 	}
 
@@ -74,25 +62,27 @@ window material_editor {
 
 	panel shader_attributes {
 		{
-			pos		"30 480"
-			size	"400 150"
+			pos		"30 280"
+			size	"200 150"
 		}
 		string hardness_str
 		{
 			string		"_Hardness:"
 			pos			"0 0"
-			size		"150 20"
+			size		"80 20"
+			font		"f_verysmall"
 		}
 		pic hardness_rahmen
 		{
 			image		ui/bar_rahmen
-			pos			"160 5"
+			pos			"90 5"
+			size		"108 16"
 		}
 		bar hardness_bar
 		{
 			current		"*cvar me_hardness"
-			pos			"169 10"
-			size		"245 6"
+			pos			"94 10"
+			size		"100 5"
 			color		"0 .8 0 1"
 			max			3.0
 			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> -1 hardness <current>;" }
@@ -101,18 +91,20 @@ window material_editor {
 		string bump_str
 		{
 			string		"_Bump:"
-			pos			"0 30"
-			size		"150 20"
+			pos			"0 20"
+			size		"80 20"
+			font		"f_verysmall"
 		}
 		pic bump_rahmen
 		{
 			image		ui/bar_rahmen
-			pos			"160 35"
+			pos			"90 25"
+			size		"108 16"
 		}
 		bar bump_bar
 		{
 			current		"*cvar me_bump"
-			pos			"169 40"
+			pos			"94 30"
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			3.0
@@ -122,18 +114,20 @@ window material_editor {
 		string specular_str
 		{
 			string		"_Specular:"
-			pos			"00 60"
-			size		"150 20"
+			pos			"0 40"
+			size		"80 20"
+			font		"f_verysmall"
 		}
 		pic specular_rahmen
 		{
 			image		ui/bar_rahmen
-			pos			"160 65"
+			pos			"90 45"
+			size		"108 16"
 		}
 		bar specular_bar
 		{
 			current		"*cvar me_specular"
-			pos			"169 70"
+			pos			"94 50"
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			3.0
@@ -143,18 +137,20 @@ window material_editor {
 		string parallax_str
 		{
 			string		"_Parallax:"
-			pos			"0 90"
-			size		"150 20"
+			pos			"0 60"
+			size		"80 20"
+			font		"f_verysmall"
 		}
 		pic parallax_rahmen
 		{
 			image		ui/bar_rahmen
-			pos			"160 95"
+			pos			"90 65"
+			size		"108 16"
 		}
 		bar parallax_bar
 		{
 			current		"*cvar me_parallax"
-			pos			"169 100"
+			pos			"94 70"
 			size		"245 6"
 			color		"0 .8 0 1"
 			max			3.0
@@ -176,27 +172,50 @@ window material_editor {
 	
 	panel stages {
 		{
-			pos "480 110"
-			size "280 200"
+			pos		"280 110"
+			size	"280 150"
 		}
 		text stages {
 			dataid		TEXT_MATERIAL_STAGES
 			pos			"0 0"
-			size		"360 200"
+			size		"360 100"
 			bgcolor		"0.5 0.5 0.5 0.3"
 			selectcolor	"1 1 1 1"
 			lineheight	20
-			rows		10
+			rows		5
 			onClick		{
 				*cvar:me_stage_id <lineselected>
 				cmd "mn_materialeditor_selectstage <cvar:me_image_id> <lineselected>;" 
 			}
 		}
+	
+		button stage_new {
+			string		"_+"
+			pos			"0 110"
+			size		"40 28"
+			image		ui/button_green_verysmall
+			font		f_verysmall
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick	{ cmd "mn_materialeditor_newstage <cvar:me_image_id>;" }
+		}
+	
+		button stage_remove {
+			string		"_-"
+			pos			"50 110"
+			size		"40 28"
+			image		ui/button_green_verysmall
+			font		f_verysmall
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick	{ cmd "mn_materialeditor_removestage <cvar:me_image_id> <cvar:me_stage_id>;" }
+		}
 	}
+
 	panel stage_attributes {
 		{
-			pos "480 320"
-			size "280 400"
+			pos "280 270"
+			size "280 100"
 		}
 		textentry rotate_hz
 		{
@@ -229,17 +248,6 @@ window material_editor {
 				cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.deg <cvar:me_rotate_deg>;" 
 			}
 		}
-	}
-	
-	button stage_new {
-		string		"_New Stage"
-		pos			"480 530"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		onClick	{ cmd "mn_materialeditor_newstage <cvar:me_image_id>;" }
 	}
 	
 	func onInit {
