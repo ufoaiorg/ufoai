@@ -279,17 +279,25 @@ static void MN_MaterialEditorUpdate (image_t *image, materialStage_t *materialSt
 	materialStagesList[0] = '\0';
 
 	if (!image->material.num_stages) {
-		MN_ExecuteConfunc("hidestages true 0");
+		MN_ExecuteConfunc("hidestages true");
 	} else {
-		if (materialStage)
-			MN_ExecuteConfunc("hidestages false 0");
-		else
+		if (materialStage) {
+			const char *stageType = Cvar_GetString("me_stagetype");
+			if (stageType[0] == '\0')
+				stageType = "stretch";
+			MN_ExecuteConfunc("hidestages false %s", stageType);
+		} else
 			Cvar_Set("me_stage_id", "-1");
 		for (i = 0; i < image->material.num_stages; i++) {
 			const materialStage_t *stage = MN_MaterialEditorGetStage(&image->material, i);
 			char stageName[MAX_VAR] = "stage ";
 			if (stage == materialStage) {
-				MN_ExecuteConfunc("updatestagevalues %f %f", stage->rotate.hz, stage->rotate.deg);
+				MN_ExecuteConfunc("updatestagevalues %f %f %f %f %f %f %f %f %f %f %f %f %f %f",
+						stage->rotate.hz, stage->rotate.deg,
+						stage->stretch.hz, stage->stretch.dhz, stage->stretch.amp, stage->stretch.damp,
+						stage->pulse.hz, stage->pulse.dhz,
+						stage->scroll.ds, stage->scroll.dt, stage->scroll.s, stage->scroll.t,
+						stage->scale.s, stage->scale.t);
 			}
 			MN_MaterialEditorStagesToName(stage, stageName, sizeof(stageName) - 1);
 			Q_strcat(materialStagesList, va("%s\n", stageName), sizeof(materialStagesList));
@@ -428,9 +436,6 @@ static void MN_MaterialEditorChangeValue_f (void)
 	value = Cmd_Argv(4);
 
 	image = &r_images[id];
-	/* new material should be added */
-	if (image->material.flags == 0)
-		image->material.flags = STAGE_RENDER;
 
 	stageType = MN_MaterialEditorNameToStage(var);
 	if (stageType == -1) {
@@ -457,6 +462,7 @@ static void MN_MaterialEditorChangeValue_f (void)
 		}
 
 		stage = MN_MaterialEditorGetStage(&image->material, stageID);
+		assert(stage);
 
 		stage->flags |= stageType;
 

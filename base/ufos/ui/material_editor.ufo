@@ -159,23 +159,50 @@ window material_editor {
 		}
 	}
 
+	func hidestageattributestabs {
+		*stage_attributes.stage_attributes_scale invis true
+		*stage_attributes.stage_attributes_scroll invis true
+		*stage_attributes.stage_attributes_pulse invis true
+		*stage_attributes.stage_attributes_stretch invis true
+		*stage_attributes.stage_attributes_rotate invis true
+	}
+
 	/** 
 	 * @param<1> boolean to hide or show the stages panel
-	 * @param<2> int the stage type tab to show 
+	 * @param<2> string the stage type tab to show - must only be given if <1> is false 
 	 */
 	confunc hidestages {
+		*cvar:me_tmp <1>
 		*stage_attributes invis <1>
-		*cvar:me_stagetype <2>
+		call hidestageattributestabs
+		if "*cvar:me_tmp == false" {
+			*cvar:me_stagetype <2>
+			*stage_attributes.stage_attributes_<cvar:me_stagetype> invis false
+		}
+		
+		cmd "del me_tmp;"
 	}
 
 	confunc updatestagevalues {
 		*cvar:rotate_hz <1>
 		*cvar:rotate_deg <2>
+		*cvar:me_stretch_hz <3>
+		*cvar:me_stretch_dhz <4>
+		*cvar:me_stretch_amp <5>
+		*cvar:me_stretch_damp <6>
+		*cvar:me_pulse_hz <7>
+		*cvar:me_pulse_dhz <8>
+		*cvar:me_scroll_ds <9>
+		*cvar:me_scroll_dt <10>
+		*cvar:me_scroll_s <11>
+		*cvar:me_scroll_t <12>
+		*cvar:me_scale_s <13>
+		*cvar:me_scale_t <14>
 	}
 	
 	panel stages {
 		{
-			pos		"280 110"
+			pos		"280 75"
 			size	"180 130"
 		}
 		text stages {
@@ -184,8 +211,10 @@ window material_editor {
 			size		"160 90"
 			bgcolor		"0.5 0.5 0.5 0.3"
 			selectcolor	"1 1 1 1"
+			color		"0.6 0.6 0.6 1"
 			font		"f_verysmall"
 			lineheight	15
+			mousefx		true
 			rows		6
 			onClick		{
 				*cvar:me_stage_id <lineselected>
@@ -231,14 +260,6 @@ window material_editor {
 			onClick	{ cmd "mn_materialeditor_removestage <cvar:me_image_id> <cvar:me_stage_id>;" }
 		}
 	}
-
-	func hidestageattributestabs {
-		*stage_attributes.stage_attributes_scale invis true
-		*stage_attributes.stage_attributes_scroll invis true
-		*stage_attributes.stage_attributes_pulse invis true
-		*stage_attributes.stage_attributes_scretch invis true
-		*stage_attributes.stage_attributes_rotate invis true
-	}
 	
 	panel stage_attributes {
 		{
@@ -251,7 +272,54 @@ window material_editor {
 				pos "0 40"
 				size "280 260"
 			}
-			
+
+			string scale_s_str
+			{
+				string		"_S:"
+				pos			"0 10"
+				size		"100 30"
+				font		"f_verysmall"
+			}
+		
+			textentry scale_s
+			{
+				string		"*cvar me_scale_s"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"105 5"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scale.s <cvar:me_scale_s>;" 
+				}
+			}
+
+			string scale_t_str
+			{
+				string		"_T:"
+				pos			"0 40"
+				size		"100 30"
+				font		"f_verysmall"
+			}
+	
+			textentry scale_t
+			{
+				string		"*cvar me_scale_t"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"105 35"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scale.t <cvar:me_scale_t>;" 
+				}
+			}
 		}
 		
 		panel stage_attributes_scroll {
@@ -263,7 +331,7 @@ window material_editor {
 			string scroll_ds_str
 			{
 				string		"_Ds:"
-				pos			"0 0"
+				pos			"0 10"
 				size		"100 30"
 				font		"f_verysmall"
 			}
@@ -277,7 +345,7 @@ window material_editor {
 				textalign	cl
 				padding		6
 				font		"f_verysmall"
-				pos			"105 0"
+				pos			"105 5"
 				size		"60 30"
 				onChange	{
 					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.ds <cvar:me_scroll_ds>;" 
@@ -287,8 +355,8 @@ window material_editor {
 			string scroll_dt_str
 			{
 				string		"_Dt:"
-				pos			"0 30"
-				size		"100 30"
+				pos			"0 40"
+				size		"100 40"
 				font		"f_verysmall"
 			}
 	
@@ -311,8 +379,8 @@ window material_editor {
 			string scroll_s_str
 			{
 				string		"_S:"
-				pos			"0 0"
-				size		"100 60"
+				pos			"0 70"
+				size		"100 30"
 				font		"f_verysmall"
 			}
 		
@@ -335,7 +403,7 @@ window material_editor {
 			string scroll_t_str
 			{
 				string		"_T:"
-				pos			"0 90"
+				pos			"0 100"
 				size		"100 30"
 				font		"f_verysmall"
 			}
@@ -363,14 +431,156 @@ window material_editor {
 				size "280 260"
 			}
 			
+			string pulse_hz_str
+			{
+				string		"_Hz:"
+				pos			"0 10"
+				size		"100 30"
+				font		"f_verysmall"
+			}
+		
+			textentry pulse_hz
+			{
+				string		"*cvar me_pulse_hz"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"105 5"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> pulse.hz <cvar:me_pulse_hz>;" 
+				}
+			}
+
+			string pulse_dhz_str
+			{
+				string		"_DHz:"
+				pos			"0 40"
+				size		"100 30"
+				font		"f_verysmall"
+			}
+	
+			textentry pulse_dhz
+			{
+				string		"*cvar me_pulse_dhz"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"105 35"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> pulse.dhz <cvar:me_pulse_dhz>;" 
+				}
+			}			
 		}
 						
-		panel stage_attributes_scretch {
+		panel stage_attributes_stretch {
 			{
 				pos "0 40"
 				size "280 260"
 			}
 			
+			string stretch_hz_str
+			{
+				string		"_Hz:"
+				pos			"0 10"
+				size		"100 30"
+				font		"f_verysmall"
+			}
+		
+			textentry stretch_hz
+			{
+				string		"*cvar me_stretch_hz"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"105 5"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> stretch.hz <cvar:me_stretch_hz>;" 
+				}
+			}
+
+			string stretch_dhz_str
+			{
+				string		"_DHz:"
+				pos			"0 40"
+				size		"100 30"
+				font		"f_verysmall"
+			}
+	
+			textentry stretch_dhz
+			{
+				string		"*cvar me_stretch_dhz"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"105 35"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> stretch.dhz <cvar:me_stretch_dhz>;" 
+				}
+			}	
+			
+			string stretch_amp_str
+			{
+				string		"_Amp:"
+				pos			"0 70"
+				size		"100 30"
+				font		"f_verysmall"
+			}
+		
+			textentry stretch_amp
+			{
+				string		"*cvar me_stretch_amp"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"105 65"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> stretch.amp <cvar:me_stretch_amp>;" 
+				}
+			}
+
+			string stretch_damp_str
+			{
+				string		"_DHz:"
+				pos			"0 100"
+				size		"100 30"
+				font		"f_verysmall"
+			}
+	
+			textentry stretch_damp
+			{
+				string		"*cvar me_stretch_damp"
+				image		ui/button_green_verysmall
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		6
+				font		"f_verysmall"
+				pos			"105 95"
+				size		"60 30"
+				onChange	{
+					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> stretch.damp <cvar:me_stretch_damp>;" 
+				}
+			}	
 		}
 						
 		panel stage_attributes_rotate {
@@ -382,7 +592,7 @@ window material_editor {
 			string rotate_hz_str
 			{
 				string		"_Hz:"
-				pos			"0 0"
+				pos			"0 10"
 				size		"100 30"
 				font		"f_verysmall"
 			}
@@ -396,7 +606,7 @@ window material_editor {
 				textalign	cl
 				padding		6
 				font		"f_verysmall"
-				pos			"105 0"
+				pos			"105 5"
 				size		"60 30"
 				onChange	{
 					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.hz <cvar:me_rotate_hz>;" 
@@ -406,7 +616,7 @@ window material_editor {
 			string rotate_deg_str
 			{
 				string		"_Deg:"
-				pos			"0 30"
+				pos			"0 40"
 				size		"100 30"
 				font		"f_verysmall"
 			}
@@ -440,9 +650,9 @@ window material_editor {
 				*stage_attributes.stage_attributes_<cvar:me_stagetype> invis false
 			}
 	
-			option scretch {
-				label	"_Scretch"
-				value	"scretch"
+			option stretch {
+				label	"_Stretch"
+				value	"stretch"
 			}
 			option pulse {
 				label	"_Pulse"
@@ -477,13 +687,22 @@ window material_editor {
 		// stage cvars
 		*cvar:me_rotate_hz 0
 		*cvar:me_rotate_deg 0
+		*cvar:me_stretch_hz 0
+		*cvar:me_stretch_dhz 0
+		*cvar:me_stretch_amp 0
+		*cvar:me_stretch_damp 0
+		*cvar:me_pulse_hz 0
+		*cvar:me_pulse_dhz 0
 		*cvar:me_scroll_ds 0
 		*cvar:me_scroll_dt 0
 		*cvar:me_scroll_s 0
 		*cvar:me_scroll_t 0
+		*cvar:me_scale_s 0
+		*cvar:me_scale_t 0
 
 		cmd "hideshaders true 0 0 0 0;"
-		cmd "hidestages true 0;"
+		cmd "hidestages true stretch;"
+		call hidestageattributestabs
 		cmd "mn_materialeditor;"
 	}
 	
@@ -493,8 +712,10 @@ window material_editor {
 		// shader cvars
 		cmd "del me_bump; del me_hardness; del me_parallax; del me_specular;"
 		// stage cvars
-		cmd "del me_rotate_hz; del me_rotate_deg"
-		cmd "del me_scroll_ds; del me_scroll_dt;"
-		cmd "del me_scroll_s; del me_scroll_t;"
+		cmd "del me_rotate_hz; del me_rotate_deg;"
+		cmd "del me_stretch_hz; del me_stretch_dhz; del me_stretch_amp; del me_stretch_damp;"
+		cmd "del me_pulse_hz; del me_pulse_dhz;"
+		cmd "del me_scroll_ds; del me_scroll_dt; del me_scroll_s; del me_scroll_t;"
+		cmd "del me_scale_s; del me_scale_t;"
 	}
 }
