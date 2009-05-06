@@ -618,7 +618,7 @@ static void LET_PathMove (le_t * le)
 			if (le->selected) {
 				const int tuCost = Grid_MoveLength(le->pathMap, le->pos, newCrouchingState, qfalse) - Grid_MoveLength(le->pathMap, le->oldPos, crouchingState, qfalse);
 				if (tuCost < 0)
-					Com_Error(ERR_DROP, "Negative TU costs while walking");
+					Com_Error(ERR_DROP, "Negative TU costs while walking (team: %i)", le->team);
 				/** @todo overflow check */
 				le->actorMoveLength -= tuCost;
 			}
@@ -666,8 +666,8 @@ static void LET_PathMove (le_t * le)
 
 			/* Verify the current position */
 			if (!VectorCompare(le->pos, le->newPos))
-				Com_Error(ERR_DROP, "LET_PathMove: Actor movement is out of sync: %i:%i:%i should be %i:%i:%i (step %i of %i)",
-						le->pos[0], le->pos[1], le->pos[2], le->newPos[0], le->newPos[1], le->newPos[2], le->pathPos, le->pathLength);
+				Com_Error(ERR_DROP, "LET_PathMove: Actor movement is out of sync: %i:%i:%i should be %i:%i:%i (step %i of %i) (team %i)",
+						le->pos[0], le->pos[1], le->pos[2], le->newPos[0], le->newPos[1], le->newPos[2], le->pathPos, le->pathLength, le->team);
 
 			CL_ConditionalMoveCalcActor(le);
 
