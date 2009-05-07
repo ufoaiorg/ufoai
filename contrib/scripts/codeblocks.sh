@@ -25,15 +25,20 @@ start_downloads()
 	#download http://downloads.sourceforge.net/mingw/ binutils-2.19.1-mingw32-bin.tar.gz binutils.tar.gz
 	download http://downloads.sourceforge.net/mingw/ mingwrt-3.15.2-mingw32-dev.tar.gz mingwrt.tar.gz
 	download http://downloads.sourceforge.net/mingw/ w32api-3.13-mingw32-dev.tar.gz w32api.tar.gz
-	download http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz mingw32.tar.gz
 	download http://downloads.sourceforge.net/mingw/ gdb-6.8-mingw-3.tar.bz2 gdb.tar.bz2
 	download http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz make.tar.gz
-	download http://downloads.sourceforge.net/mingw/ bash-3.1-MSYS-1.0.11-1.tar.bz2 bash.tar.bz2
-	download http://downloads.sourceforge.net/mingw/ bzip2-1.0.3-MSYS-1.0.11-1.tar.bz2 bzip2.tar.bz2
-	download http://downloads.sourceforge.net/mingw/ tar-1.19.90-MSYS-1.0.11-2-bin.tar.gz tar.tar.gz
 
-	download http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-core.tar.gz gcc.tar.gz
-	download http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-g++.tar.gz g++.tar.gz
+	download http://downloads.sourceforge.net/mingw/ bash-3.1-MSYS-1.0.11-1.tar.bz2 msys-bash.tar.bz2
+	download http://downloads.sourceforge.net/mingw/ bzip2-1.0.3-MSYS-1.0.11-1.tar.bz2 msys-bzip2.tar.bz2
+	download http://downloads.sourceforge.net/mingw/ tar-1.19.90-MSYS-1.0.11-2-bin.tar.gz msys-tar.tar.gz
+	download http://downloads.sourceforge.net/mingw/ coreutils-5.97-MSYS-1.0.11-snapshot.tar.bz2 msys-coreutils.tar.bz2
+	download http://downloads.sourceforge.net/mingw/ findutils-4.3.0-MSYS-1.0.11-3-bin.tar.gz msys-findutils.tar.gz
+	download http://downloads.sourceforge.net/mingw/ MSYS-1.0.11-20090120-dll.tar.gz msys.tar.gz
+	download http://downloads.sourceforge.net/mingw/ msysCORE-1.0.11-20080826.tar.gz msys-core.tar.gz
+	download http://downloads.sourceforge.net/mingw/ autoconf-4-1-bin.tar.bz2 msys-autoconf.tar.bz2 
+	    
+	download http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.0-tdm-1-core-2.tar.gz gcc.tar.gz
+	download http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.0-tdm-1-g++-2.tar.gz g++.tar.gz
 
 	download http://downloads.sourceforge.net/gnuwin32/ freetype-2.3.6-lib.zip freetype.zip
 	download http://downloads.sourceforge.net/gnuwin32/ gettext-0.14.4-bin.zip gettext.zip
@@ -54,10 +59,10 @@ start_downloads()
 	download http://www.libsdl.org/projects/SDL_mixer/release/ SDL_mixer-devel-${SDL_MIXER_VERSION}-VC8.zip sdl_mixer.zip
 	download http://www.libsdl.org/projects/SDL_image/release/ SDL_image-devel-${SDL_IMAGE_VERSION}-VC8.zip sdl_image.zip
 
-	download http://oss.netfarm.it/mplayer/pkgs/ libvorbis-mingw32-1.2.0-gcc42.tar.bz2 libvorbis.tar.bz2
-	download http://oss.netfarm.it/mplayer/pkgs/ libtheora-mingw32-svn-r15330-gcc42.tar.bz2 libtheora.tar.bz2
-	download http://oss.netfarm.it/mplayer/pkgs/ xvidcore-mingw32-1.1.3-gcc42.tar.bz2 xvidcore.tar.bz2
-	download http://oss.netfarm.it/mplayer/pkgs/ libogg-mingw32-1.1.3-gcc42.tar.bz2 libogg.tar.bz2
+	download http://oss.netfarm.it/mplayer/pkgs/ libvorbis-mingw32-1.2.0-gcc45.tar.bz2 libvorbis.tar.bz2
+	download http://oss.netfarm.it/mplayer/pkgs/ libtheora-mingw32-1.1alpha1-gcc45.tar.bz2 libtheora.tar.bz2
+	download http://oss.netfarm.it/mplayer/pkgs/ xvidcore-mingw32-1.2.1-gcc45.tar.bz2 xvidcore.tar.bz2
+	download http://oss.netfarm.it/mplayer/pkgs/ libogg-mingw32-1.1.3-gcc45.tar.bz2 libogg.tar.bz2
 	
 #	download http://downloads.xiph.org/releases/ogg/ libogg-1.1.3.tar.gz libogg.tar.gz
 #	download http://downloads.xiph.org/releases/ogg/ libvorbis-1.2.0.tar.gz libvorbis.tar.gz
@@ -87,14 +92,20 @@ extract_mingw()
 	${TAR} -xzf ${DOWNLOAD_DIR}/binutils.tar.gz -C ${MINGW_DIR}
 	${TAR} -xzf ${DOWNLOAD_DIR}/mingwrt.tar.gz -C ${MINGW_DIR}
 	${TAR} -xzf ${DOWNLOAD_DIR}/w32api.tar.gz -C ${MINGW_DIR}
-	${TAR} -xzf ${DOWNLOAD_DIR}/mingw32.tar.gz -C ${MINGW_DIR}
 	${TAR} -xjf ${DOWNLOAD_DIR}/gdb.tar.bz2 -C ${MINGW_DIR}
 	${TAR} -xzf ${DOWNLOAD_DIR}/gcc.tar.gz -C ${MINGW_DIR}
 	${TAR} -xzf ${DOWNLOAD_DIR}/g++.tar.gz -C ${MINGW_DIR}
 	${TAR} -xzf ${DOWNLOAD_DIR}/make.tar.gz -C ${MINGW_DIR}
-	${TAR} -xjf ${DOWNLOAD_DIR}/bash.tar.bz2 -C ${MINGW_DIR}
-	${TAR} -xjf ${DOWNLOAD_DIR}/bzip2.tar.bz2 -C ${MINGW_DIR}
-	${TAR} -xzf ${DOWNLOAD_DIR}/tar.tar.gz -C ${MINGW_DIR}
+	${TAR} -xjf ${DOWNLOAD_DIR}/msys-bash.tar.bz2 -C ${MINGW_DIR}
+	${TAR} -xjf ${DOWNLOAD_DIR}/msys-bzip2.tar.bz2 -C ${MINGW_DIR}
+	${TAR} -xzf ${DOWNLOAD_DIR}/msys-tar.tar.gz -C ${MINGW_DIR}
+	${TAR} -xzf ${DOWNLOAD_DIR}/msys-findutils.tar.gz -C ${MINGW_DIR}
+	${TAR} -xzf ${DOWNLOAD_DIR}/msys.tar.gz -C ${MINGW_DIR}
+	${TAR} -xzf ${DOWNLOAD_DIR}/msys-core.tar.gz -C ${MINGW_DIR}
+	${TAR} -xjf ${DOWNLOAD_DIR}/msys-autoconf.tar.bz2 -C ${MINGW_DIR}
+	${TAR} -xjf ${DOWNLOAD_DIR}/msys-coreutils.tar.bz2 -C ${MINGW_DIR}
+	cp -R ${MINGW_DIR}/coreutils*/* ${MINGW_DIR}
+	rm -rf ${MINGW_DIR}/coreutils*
 }
 
 extract_libs()
