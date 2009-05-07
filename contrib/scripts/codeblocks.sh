@@ -82,8 +82,8 @@ start_downloads()
 	download_archive http://downloads.sourceforge.net/mingw/ msysCORE-1.0.11-20080826.tar.gz msys-core.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ autoconf-4-1-bin.tar.bz2 msys-autoconf.tar.bz2 
 	    
-	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.0-tdm-1-core-2.tar.gz gcc.tar.gz
-	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.0-tdm-1-g++-2.tar.gz g++.tar.gz
+	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-core.tar.gz gcc.tar.gz
+	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-g++.tar.gz g++.tar.gz
 
 	download_archive http://downloads.sourceforge.net/gnuwin32/ freetype-2.3.6-lib.zip freetype.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ gettext-0.14.4-bin.zip gettext.zip
@@ -305,6 +305,8 @@ create()
 	echo $(date) > ${LOGFILE_NAME}
 
 	start_downloads
+
+	echo "Start to extract and prepare the downloaded archives"
 
 	extract_codeblocks
 
