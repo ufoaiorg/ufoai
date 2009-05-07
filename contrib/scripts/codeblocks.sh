@@ -81,7 +81,9 @@ start_downloads()
 
 	download http://mattn.ninex.info/download gtkglext-1.2.tar.bz2 gtkglext-dev.tar.bz2
 
-	download http://subversion.tigris.org/files/documents/15/44095/ svn-win32-1.5.4.zip svn.zip
+	download http://subversion.tigris.org/files/documents/15/45600/ svn-win32-1.6.1.zip svn.zip
+
+	download http://www.libsdl.org/extras/win32/common/ directx-devel.tar.gz directx.tar.gz
 }
 
 extract_codeblocks()
@@ -123,6 +125,7 @@ extract_libs()
 	${UNZIP} -o ${DOWNLOAD_DIR}/freetype.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/libtiff.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/gettext.zip -d ${MINGW_DIR}
+	${TAR} -xzf ${DOWNLOAD_DIR}/directx.tar.gz -C ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/libxml2.zip -d ${MINGW_DIR}
 	cp -R ${MINGW_DIR}/include/libxml2/* ${MINGW_DIR}/include
 	rm -r ${MINGW_DIR}/include/libxml2
