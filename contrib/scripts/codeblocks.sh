@@ -54,6 +54,8 @@ start_downloads()
 	download http://downloads.sourceforge.net/gnuwin32/ unzip-5.51-1-bin.zip unzip.zip
 	download http://downloads.sourceforge.net/gnuwin32/ openssl-0.9.8h-1-bin.zip openssl.zip
 	
+	download http://downloads.sourceforge.net/sevenzip/ 7za465.zip 7zip.zip
+
 	download http://curl.de-mirror.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
 
 	download http://www.libsdl.org/release/ SDL-devel-${SDL_VERSION}-mingw32.tar.gz sdl.tar.gz
@@ -164,8 +166,11 @@ extract_tools()
 	${UNZIP} -o ${DOWNLOAD_DIR}/wget.zip d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/unzip.zip d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/openssl.zip d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/7zip.zip d ${MINGW_DIR}/tmp
 	${UNZIP} -o ${DOWNLOAD_DIR}/svn.zip d ${MINGW_DIR}/tmp
 	#some parts of openssl are also included in the svn package
+	cp -R ${TEMP_DIR}/tmp/7za.exe ${MINGW_DIR}/bin/7z.exe
+	cp -R ${TEMP_DIR}/tmp/7za.exe ${MINGW_DIR}/bin/7za.exe
 	cp -R ${TEMP_DIR}/tmp/svn-win32*/* ${MINGW_DIR}
 	rm -rf ${TEMP_DIR}/tmp
 }
