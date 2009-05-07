@@ -52,6 +52,7 @@ start_downloads()
 	download http://downloads.sourceforge.net/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
 	download http://downloads.sourceforge.net/gnuwin32/ zlib-1.2.3-lib.zip zlib.zip
 	download http://downloads.sourceforge.net/gnuwin32/ unzip-5.51-1-bin.zip unzip.zip
+	download http://downloads.sourceforge.net/gnuwin32/ openssl-0.9.8h-1-bin.zip openssl.zip
 	
 	download http://curl.de-mirror.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
 
@@ -79,6 +80,8 @@ start_downloads()
 	download http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.6-1_win32.zip cairo-dev.zip
 
 	download http://mattn.ninex.info/download gtkglext-1.2.tar.bz2 gtkglext-dev.tar.bz2
+
+	download http://subversion.tigris.org/files/documents/15/44095/ svn-win32-1.5.4.zip svn.zip
 }
 
 extract_codeblocks()
@@ -154,13 +157,13 @@ extract_sdl()
 
 extract_tools()
 {
-	# wget
 	mkdir ${TEMP_DIR}/tmp
-	${UNZIP} -o ${DOWNLOAD_DIR}/wget.zip -d ${TEMP_DIR}/tmp
-	${UNZIP} -o ${DOWNLOAD_DIR}/unzip.zip -d ${TEMP_DIR}/tmp
-	cp ${TEMP_DIR}/tmp/bin/wget.exe ${MINGW_DIR}/bin
-	cp ${TEMP_DIR}/tmp/bin/unzip.exe ${MINGW_DIR}/bin
-#	cp ${TEMP_DIR}/tmp/bin/unzip32.dll ${MINGW_DIR}/bin
+	${UNZIP} -o ${DOWNLOAD_DIR}/wget.zip d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/unzip.zip d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/openssl.zip d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/svn.zip d ${MINGW_DIR}/tmp
+	#some parts of openssl are also included in the svn package
+	cp -R ${TEMP_DIR}/tmp/svn-win32*/* ${MINGW_DIR}
 	rm -rf ${TEMP_DIR}/tmp
 }
 
