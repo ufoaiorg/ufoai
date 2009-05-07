@@ -293,6 +293,8 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 		if (fullSizeY == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
 			/* Draw current line in "selected" color (if the linenumber is stored). */
 			R_Color(node->selectedColor);
+		} else {
+			R_Color(node->color);
 		}
 
 		if (node->state && node->mousefx && fullSizeY == EXTRADATA(node).lineUnderMouse) {
