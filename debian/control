@@ -17,7 +17,7 @@ Priority: optional
 Architecture: any
 Depends: ${shlibs:Depends}, ufoai-data (= ${source:Version}),
  ufoai-common (= ${source:Version}), libpng12-0, libsdl-mixer1.2,
- libsdl-ttf2.0-0, libjpeg62, libtheora0, libxidcore4
+ libsdl-ttf2.0-0, libjpeg62, libtheora0, libxvidcore4
 Recommends: ufoai-music
 Description: UFO: Alien Invasion - build your team and stop the aliens
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
