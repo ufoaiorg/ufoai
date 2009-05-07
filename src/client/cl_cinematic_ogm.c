@@ -1,7 +1,7 @@
 /**
  * @file cl_cinematic_ogm.c
  * @note Taken from World Of Padman Engine
- * @note This is a "ogm"-decoder to use a "better"(smaller files,higher resolutions) Cinematic-Format than roq
+ * @note This is a "ogm"-decoder to use a "better" (smaller files, higher resolutions) Cinematic-Format than roq
  * In this code "ogm" is only: ogg wrapper, vorbis audio, xvid video (or theora video)
  * (ogm(Ogg Media) in general is ogg wrapper with all kind of audio/video/subtitle/...)
  * ... infos used for this src:
@@ -11,7 +11,7 @@
  * ogg/vobis:
  * <li>decoder_example.c (libvorbis src)
  * <li>libogg Documentation ( http://www.xiph.org/ogg/doc/libogg/ )
- * <li>VLC ogg demux ( http://trac.videolan.org/vlc/browser/trunk/modules/demux/ogg.c )
+ * <li>VLC ogg demux ( http://trac.videolan.org/vlc/browser/modules/demux/ogg.c )
  * theora:
  * <li>theora doxygen docs (1.0beta1)
  */
@@ -540,7 +540,7 @@ static qboolean CIN_OGM_LoadFrame (void)
 	return !anyDataTransferred;
 }
 
-/** @brief from VLC ogg.c (http://trac.videolan.org/vlc/browser/trunk/modules/demux/ogg.c) */
+/** @brief from VLC ogg.c (http://trac.videolan.org/vlc/browser/modules/demux/ogg.c) */
 typedef struct
 {
 	char streamtype[8];

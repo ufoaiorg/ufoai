@@ -1518,7 +1518,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 						 * stepAmount pointer would no longer be valid and you would
 						 * modify data in the new event. */
 						stepAmount = gi.WriteDummyByte(0);
-						/* Add four more dummy bytes.  These will be the final actor position. */
+						/* Add three more dummy bytes.  These will be the final actor position. */
 						gi.WriteDummyByte(0); /* x */
 						gi.WriteDummyByte(0); /* y */
 						gi.WriteDummyByte(0); /* z */
