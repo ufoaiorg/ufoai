@@ -51,6 +51,7 @@ start_downloads()
 	download http://downloads.sourceforge.net/gnuwin32/ tiff-3.8.2-1-lib.zip libtiff.zip
 	download http://downloads.sourceforge.net/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
 	download http://downloads.sourceforge.net/gnuwin32/ zlib-1.2.3-lib.zip zlib.zip
+	download http://downloads.sourceforge.net/gnuwin32/ unzip-5.51-1-bin.zip unzip.zip
 	
 	download http://curl.de-mirror.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
 
@@ -156,7 +157,10 @@ extract_tools()
 	# wget
 	mkdir ${TEMP_DIR}/tmp
 	${UNZIP} -o ${DOWNLOAD_DIR}/wget.zip -d ${TEMP_DIR}/tmp
+	${UNZIP} -o ${DOWNLOAD_DIR}/unzip.zip -d ${TEMP_DIR}/tmp
 	cp ${TEMP_DIR}/tmp/bin/wget.exe ${MINGW_DIR}/bin
+	cp ${TEMP_DIR}/tmp/bin/unzip.exe ${MINGW_DIR}/bin
+#	cp ${TEMP_DIR}/tmp/bin/unzip32.dll ${MINGW_DIR}/bin
 	rm -rf ${TEMP_DIR}/tmp
 }
 
