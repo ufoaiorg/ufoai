@@ -2256,11 +2256,11 @@ base/sound/footsteps/flesh1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/flesh2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/grass.wav | GNU General Public License 2.0 |  | Worldforge media repository (Footsteps_on_grass_sasquatch.wav)
-base/sound/footsteps/grass2.wav | Creative Commons Sampling Plus 1.0
-base/sound/footsteps/hitground2.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
-base/sound/footsteps/hitground3.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
-base/sound/footsteps/hitground4.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
+base/sound/footsteps/grass.ogg | GNU General Public License 2.0 |  | Worldforge media repository (Footsteps_on_grass_sasquatch.wav)
+base/sound/footsteps/grass2.ogg | Creative Commons Sampling Plus 1.0
+base/sound/footsteps/hitground2.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
+base/sound/footsteps/hitground3.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
+base/sound/footsteps/hitground4.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/footsteps/linoleum.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | footsteps_linoleum1.ogg by David Reeves
 base/sound/footsteps/mech1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/mech2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
@@ -2270,8 +2270,8 @@ base/sound/footsteps/metal1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/metal2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/metal3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/metal4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/sand.wav | GNU General Public License 2.0 | Al Riddoch | Worldforge media repository
-base/sound/footsteps/sand2.wav | GNU General Public License 2.0 |  | sand.wav by Al Riddoch (Worldforge media repository)
+base/sound/footsteps/sand.ogg | GNU General Public License 2.0 | Al Riddoch | Worldforge media repository
+base/sound/footsteps/sand2.ogg | GNU General Public License 2.0 |  | sand.wav by Al Riddoch (Worldforge media repository)
 base/sound/footsteps/snow1.ogg | Creative Commons Sampling Plus 1.0 | Spandau   Martin Gerhardy | http://freesound.iua.upf.edu/samplesViewSingle.php?id=30833
 base/sound/footsteps/softrug1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/softrug2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
@@ -2281,21 +2281,21 @@ base/sound/footsteps/splash1.ogg | Creative Commons Attribution 2.5 | (c) 2006 S
 base/sound/footsteps/splash2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/splash3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/splash4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/squeak_2.wav | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
-base/sound/footsteps/squeak_3.wav | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
-base/sound/footsteps/squeak_4.wav | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
-base/sound/footsteps/step_1.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_10.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_11.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_12.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_2.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_3.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_4.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_5.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_6.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_7.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_8.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_9.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/squeak_2.ogg | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
+base/sound/footsteps/squeak_3.ogg | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
+base/sound/footsteps/squeak_4.ogg | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
+base/sound/footsteps/step_1.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_10.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_11.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_12.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_2.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_3.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_4.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_5.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_6.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_7.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_8.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_9.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
 base/sound/footsteps/stone1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/stone2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/stone3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
@@ -2303,7 +2303,7 @@ base/sound/footsteps/stone4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/water_in.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_out.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_under.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/wood1.wav | Creative Commons Sampling Plus 1.0 | swuing | http://freesound.iua.upf.edu/samplesViewSingle.php?id=38876
+base/sound/footsteps/wood1.ogg | Creative Commons Sampling Plus 1.0 | swuing | http://freesound.iua.upf.edu/samplesViewSingle.php?id=38876
 base/sound/geoscape/attack.wav | GNU General Public License 2.0 | BlakeD
 base/sound/geoscape/info.wav | GNU General Public License 2.0 | BlakeD
 base/sound/geoscape/mail.wav | GNU General Public License 2.0 | Karen Rei Pease
