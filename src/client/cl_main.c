@@ -1015,21 +1015,21 @@ void CL_SetClientState (int state)
  */
 void CL_Frame (int now, void *data)
 {
-	static int last_frame = 0;
+	static int lastFrame = 0;
 	int delta;
 
 	if (sys_priority->modified || sys_affinity->modified)
 		Sys_SetAffinityAndPriority();
 
 	/* decide the simulation time */
-	delta = now - last_frame;
-	if (last_frame)
+	delta = now - lastFrame;
+	if (lastFrame)
 		cls.frametime = delta / 1000.0;
 	else
 		cls.frametime = 0;
 	cls.realtime = Sys_Milliseconds();
 	cl.time = now;
-	last_frame = now;
+	lastFrame = now;
 	cl.battlescapeEventTime += delta;
 
 	/* frame rate calculation */

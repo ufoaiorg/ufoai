@@ -82,6 +82,7 @@ typedef struct
 	int videoFrameCount; /**< output video-stream */
 	ogg_int64_t Vtime_unit;
 	int currentTime; /**< input from run-function */
+	int startTime;
 } ogmCinematic_t;
 
 static ogmCinematic_t ogmCin;
@@ -189,7 +190,7 @@ static int CIN_OGM_LoadBlockToSync (void)
 }
 
 /**
- * @return !0 -> no data transferred (or not for all Streams)
+ * @return !0 -> no data transferred (or not for all streams)
  */
 static int CIN_OGM_LoadPagesToStream (void)
 {
@@ -294,7 +295,7 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 }
 
 /**
- * @return 1 -> loaded a new Frame (ogmCin.outputBuffer points to the actual frame), 0 -> no new Frame
+ * @return 1 -> loaded a new frame (ogmCin.outputBuffer points to the actual frame), 0 -> no new frame
  * <0 -> error
  */
 #ifdef HAVE_XVID_H
@@ -456,7 +457,7 @@ static int CIN_THEORA_LoadVideoFrame (void)
 			uvHShift = CIN_THEORA_FindSizeShift(ogmCin.th_yuvbuffer.uv_height, ogmCin.th_info.height);
 
 			if (yWShift < 0 || uvWShift < 0 || yHShift < 0 || uvHShift < 0) {
-				Com_Printf("[Theora] unexpected resolution in a yuv-Frame\n");
+				Com_Printf("[Theora] unexpected resolution in a yuv-frame\n");
 				r = -1;
 			} else {
 				CIN_THEORA_FrameYUVtoRGB24(ogmCin.th_yuvbuffer.y, ogmCin.th_yuvbuffer.u, ogmCin.th_yuvbuffer.v,
@@ -475,7 +476,7 @@ static int CIN_THEORA_LoadVideoFrame (void)
 #endif
 
 /**
- * @return 1 -> loaded a new Frame (ogmCin.outputBuffer points to the actual frame), 0 -> no new Frame
+ * @return 1 -> loaded a new frame (ogmCin.outputBuffer points to the actual frame), 0 -> no new frame
  * <0 -> error
  */
 static int CIN_OGM_LoadVideoFrame (void)
@@ -531,7 +532,7 @@ static qboolean CIN_OGM_LoadFrame (void)
 				anyDataTransferred = qtrue;
 		}
 
-		/* load all Audio after loading new pages ... */
+		/* load all audio after loading new pages ... */
 		if (ogmCin.videoFrameCount > 1)
 			/* wait some videoframes (it's better to have some delay, than a laggy sound) */
 			audioWantsMoreData = CIN_OGM_LoadAudioFrame();
@@ -598,6 +599,7 @@ int CIN_OGM_PlayCinematic (const char* filename)
 	}
 
 	cin.cinematicType = CINEMATIC_TYPE_OGM;
+	ogmCin.startTime = cls.realtime;
 
 	ogg_sync_init(&ogmCin.oy); /* Now we can read pages */
 
@@ -615,7 +617,7 @@ int CIN_OGM_PlayCinematic (const char* filename)
 				}
 			}
 #ifdef HAVE_THEORA_THEORA_H
-			if (strstr((char*) (og.body + 1), "theora")) {
+			else if (strstr((char*) (og.body + 1), "theora")) {
 				if (ogmCin.os_video.serialno) {
 					Com_Printf("more than one video stream, in ogm-file(%s) ... we will stay at the first one\n",
 							filename);
@@ -627,7 +629,7 @@ int CIN_OGM_PlayCinematic (const char* filename)
 			}
 #endif
 #ifdef HAVE_XVID_H
-			if (strstr((char*) (og.body + 1), "video")) { /** @todo better way to find video stream */
+			else if (strstr((char*) (og.body + 1), "video")) { /** @todo better way to find video stream */
 				if (ogmCin.os_video.serialno) {
 					Com_Printf("more than one video stream, in ogm-file(%s) ... we will stay at the first one\n",
 							filename);
@@ -759,7 +761,7 @@ static void CIN_OGM_DrawCinematic (void)
  */
 qboolean CIN_OGM_RunCinematic (void)
 {
-	ogmCin.currentTime = cl.time;
+	ogmCin.currentTime = cls.realtime - ogmCin.startTime;
 
 	while (!ogmCin.videoFrameCount || ogmCin.currentTime + 20 >= (int) (ogmCin.videoFrameCount * ogmCin.Vtime_unit / 10000)) {
 		if (CIN_OGM_LoadFrame())
