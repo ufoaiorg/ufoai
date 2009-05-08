@@ -41,21 +41,22 @@ qboolean MN_ScriptSanityCheck(void);
 
 /* main special type */
 /** @todo we should split/flag parse type (type need only 1 lex; and other) */
-#define	V_SPECIAL_TYPE			0x8F00
-#define	V_SPECIAL				0x8000
-#define	V_SPECIAL_ACTION		(V_SPECIAL + 0)			/**< Identify an action type into the value_t structure */
-#define V_SPECIAL_EXCLUDERECT	(V_SPECIAL + 1)			/**< Identify a special attribute, use special parse function */
-#define V_SPECIAL_OPTIONNODE	(V_SPECIAL + 2) 		/**< Identify a special attribute, use special parse function */
-#define V_SPECIAL_ICONREF		(V_SPECIAL + 3) 		/**< Identify a special attribute, use special parse function */
-#define V_SPECIAL_IF			(V_SPECIAL + 4)			/**< Identify a special attribute, use special parse function */
-#define V_SPECIAL_DATAID		(V_SPECIAL + 5)
-#define V_SPECIAL_CVAR			(V_SPECIAL + 0x0100) 	/**< Property is a CVAR string */
-#define V_SPECIAL_REF			(V_SPECIAL + 0x0200) 	/**< Property is a ref into a value */
+#define	V_UI_MASK			0x8F00			/**< Mask for all UI bits */
+#define	V_UI				0x8000			/**< bit identity an UI type */
+#define V_NOT_UI			0
+#define	V_UI_ACTION			(V_UI + 0)		/**< Identify an action type into the value_t structure */
+#define V_UI_EXCLUDERECT	(V_UI + 1)		/**< Identify a special attribute, use special parse function */
+#define V_UI_OPTIONNODE		(V_UI + 2)		/**< Identify a special attribute, use special parse function */
+#define V_UI_ICONREF		(V_UI + 3)		/**< Identify a special attribute, use special parse function */
+#define V_UI_IF				(V_UI + 4)		/**< Identify a special attribute, use special parse function */
+#define V_UI_DATAID			(V_UI + 5)
+#define V_UI_CVAR			(V_UI + 0x0100) /**< Property is a CVAR string (mix this flag with base type, see bellow) */
+#define V_UI_REF			(V_UI + 0x0200) /**< Property is a ref into a value (mix this flag with base type, see bellow) */
 
 /* composite special type */
-#define V_CVAR_OR_FLOAT			(V_SPECIAL_CVAR + V_FLOAT)
-#define V_CVAR_OR_STRING		(V_SPECIAL_CVAR + V_STRING)
-#define V_CVAR_OR_LONGSTRING	(V_SPECIAL_CVAR + V_LONGSTRING)
-#define V_REF_OF_STRING			(V_SPECIAL_REF + V_STRING)
+#define V_CVAR_OR_FLOAT			(V_UI_CVAR + V_FLOAT)
+#define V_CVAR_OR_STRING		(V_UI_CVAR + V_STRING)
+#define V_CVAR_OR_LONGSTRING	(V_UI_CVAR + V_LONGSTRING)
+#define V_REF_OF_STRING			(V_UI_REF + V_STRING)
 
 #endif

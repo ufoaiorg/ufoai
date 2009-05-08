@@ -143,7 +143,7 @@ const value_t *MN_GetPropertyFromBehaviour (const nodeBehaviour_t *behaviour, co
 
 /**
  * @brief Check the if conditions for a given node
- * @sa V_SPECIAL_IF
+ * @sa V_UI_IF
  * @returns qfalse if the node is not drawn due to not meet if conditions
  */
 qboolean MN_CheckVisibility (menuNode_t *node)

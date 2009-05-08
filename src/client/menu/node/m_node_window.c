@@ -312,10 +312,10 @@ static const value_t windowNodeProperties[] = {
 	{"starlayout", V_BOOL, offsetof(menuNode_t, u.window.starLayout), MEMBER_SIZEOF(menuNode_t, u.window.starLayout)},
 	{"timeout", V_INT, offsetof(menuNode_t, timeOut), MEMBER_SIZEOF(menuNode_t, timeOut)},
 
-	{"oninit", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onInit), MEMBER_SIZEOF(menuNode_t, u.window.onInit)},
-	{"onclose", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onClose), MEMBER_SIZEOF(menuNode_t, u.window.onClose)},
-	{"onleave", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onLeave), MEMBER_SIZEOF(menuNode_t, u.window.onLeave)},
-	{"onevent", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onTimeOut), MEMBER_SIZEOF(menuNode_t, u.window.onTimeOut)},
+	{"oninit", V_UI_ACTION, offsetof(menuNode_t, u.window.onInit), MEMBER_SIZEOF(menuNode_t, u.window.onInit)},
+	{"onclose", V_UI_ACTION, offsetof(menuNode_t, u.window.onClose), MEMBER_SIZEOF(menuNode_t, u.window.onClose)},
+	{"onleave", V_UI_ACTION, offsetof(menuNode_t, u.window.onLeave), MEMBER_SIZEOF(menuNode_t, u.window.onLeave)},
+	{"onevent", V_UI_ACTION, offsetof(menuNode_t, u.window.onTimeOut), MEMBER_SIZEOF(menuNode_t, u.window.onTimeOut)},
 
 	{NULL, V_NULL, 0, 0}
 };

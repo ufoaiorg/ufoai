@@ -69,7 +69,7 @@ static const value_t properties[] = {
 	{"tooltip", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, tooltip), 0},	/* translated in MN_Tooltip */
 	/** @todo use V_REF_OF_STRING when its possible ('image' is never a cvar) */
 	{"image", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
-	{"cvar", V_SPECIAL_CVAR, offsetof(menuNode_t, cvar), 0},
+	{"cvar", V_UI_CVAR, offsetof(menuNode_t, cvar), 0},
 	{"string", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
 	/** @todo use V_REF_OF_STRING when its possible ('font' is never a cvar) */
 	{"font", V_CVAR_OR_STRING, offsetof(menuNode_t, font), 0},
@@ -77,24 +77,24 @@ static const value_t properties[] = {
 	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
 	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
 	{"textalign", V_ALIGN, offsetof(menuNode_t, textalign), MEMBER_SIZEOF(menuNode_t, textalign)},
-	{"visiblewhen", V_SPECIAL_IF, offsetof(menuNode_t, visibilityCondition), 0},
+	{"visiblewhen", V_UI_IF, offsetof(menuNode_t, visibilityCondition), 0},
 
 	/* action event */
-	{"onclick", V_SPECIAL_ACTION, offsetof(menuNode_t, onClick), MEMBER_SIZEOF(menuNode_t, onClick)},
-	{"onrclick", V_SPECIAL_ACTION, offsetof(menuNode_t, onRightClick), MEMBER_SIZEOF(menuNode_t, onRightClick)},
-	{"onmclick", V_SPECIAL_ACTION, offsetof(menuNode_t, onMiddleClick), MEMBER_SIZEOF(menuNode_t, onMiddleClick)},
-	{"onwheel", V_SPECIAL_ACTION, offsetof(menuNode_t, onWheel), MEMBER_SIZEOF(menuNode_t, onWheel)},
-	{"onwheelup", V_SPECIAL_ACTION, offsetof(menuNode_t, onWheelUp), MEMBER_SIZEOF(menuNode_t, onWheelUp)},
-	{"onwheeldown", V_SPECIAL_ACTION, offsetof(menuNode_t, onWheelDown), MEMBER_SIZEOF(menuNode_t, onWheelDown)},
-	{"onmouseenter", V_SPECIAL_ACTION, offsetof(menuNode_t, onMouseEnter), MEMBER_SIZEOF(menuNode_t, onMouseEnter)},
-	{"onmouseleave", V_SPECIAL_ACTION, offsetof(menuNode_t, onMouseLeave), MEMBER_SIZEOF(menuNode_t, onMouseLeave)},
-	{"onchange", V_SPECIAL_ACTION, offsetof(menuNode_t, onChange), MEMBER_SIZEOF(menuNode_t, onChange)},
+	{"onclick", V_UI_ACTION, offsetof(menuNode_t, onClick), MEMBER_SIZEOF(menuNode_t, onClick)},
+	{"onrclick", V_UI_ACTION, offsetof(menuNode_t, onRightClick), MEMBER_SIZEOF(menuNode_t, onRightClick)},
+	{"onmclick", V_UI_ACTION, offsetof(menuNode_t, onMiddleClick), MEMBER_SIZEOF(menuNode_t, onMiddleClick)},
+	{"onwheel", V_UI_ACTION, offsetof(menuNode_t, onWheel), MEMBER_SIZEOF(menuNode_t, onWheel)},
+	{"onwheelup", V_UI_ACTION, offsetof(menuNode_t, onWheelUp), MEMBER_SIZEOF(menuNode_t, onWheelUp)},
+	{"onwheeldown", V_UI_ACTION, offsetof(menuNode_t, onWheelDown), MEMBER_SIZEOF(menuNode_t, onWheelDown)},
+	{"onmouseenter", V_UI_ACTION, offsetof(menuNode_t, onMouseEnter), MEMBER_SIZEOF(menuNode_t, onMouseEnter)},
+	{"onmouseleave", V_UI_ACTION, offsetof(menuNode_t, onMouseLeave), MEMBER_SIZEOF(menuNode_t, onMouseLeave)},
+	{"onchange", V_UI_ACTION, offsetof(menuNode_t, onChange), MEMBER_SIZEOF(menuNode_t, onChange)},
 
 	/* maybe only button */
-	{"icon", V_SPECIAL_ICONREF, offsetof(menuNode_t, icon), MEMBER_SIZEOF(menuNode_t, icon)},
+	{"icon", V_UI_ICONREF, offsetof(menuNode_t, icon), MEMBER_SIZEOF(menuNode_t, icon)},
 
 	/* very special attribute */
-	{"excluderect", V_SPECIAL_EXCLUDERECT, 0, 0},
+	{"excluderect", V_UI_EXCLUDERECT, 0, 0},
 
 	{NULL, V_NULL, 0, 0}
 };
@@ -323,12 +323,12 @@ void MN_SetNewNodePos (menuNode_t* node, int x, int y)
 qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const char* value)
 {
 	byte* b = (byte*)node + property->ofs;
-	const int specialType = property->type & V_SPECIAL_TYPE;
+	const int specialType = property->type & V_UI_MASK;
 	int result;
 	size_t bytes;
 
 	switch (specialType) {
-	case 0:	/* common type */
+	case V_NOT_UI:	/* common type */
 		/* not possible to set a string */
 		if (property->type == V_STRING || property->type == V_LONGSTRING)
 			break;
@@ -339,7 +339,7 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 		}
 		return qtrue;
 
-	case V_SPECIAL_CVAR:	/* cvar */
+	case V_UI_CVAR:	/* cvar */
 		switch (property->type) {
 		case V_CVAR_OR_FLOAT:
 			{
@@ -380,12 +380,12 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
  */
 const char* MN_GetStringFromNodeProperty (const menuNode_t* node, const value_t* property)
 {
-	const int baseType = property->type & V_SPECIAL_TYPE;
+	const int baseType = property->type & V_UI_MASK;
 	assert(node);
 	assert(property);
 
 	switch (baseType) {
-	case 0: /* common type */
+	case V_NOT_UI: /* common type */
 		return Com_ValueToStr(node, property->type, property->ofs);
 	default:
 		return NULL;

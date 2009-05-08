@@ -73,11 +73,11 @@ menuOption_t* MN_NodeAppendOption (menuNode_t *node, menuOption_t *newOption)
 }
 
 static const value_t properties[] = {
-	{"dataid", V_SPECIAL_DATAID, offsetof(menuNode_t, u.option.dataId), MEMBER_SIZEOF(menuNode_t, u.option.dataId)},
-	{"option", V_SPECIAL_OPTIONNODE, offsetof(menuNode_t, u.option.first), 0},
+	{"dataid", V_UI_DATAID, offsetof(menuNode_t, u.option.dataId), MEMBER_SIZEOF(menuNode_t, u.option.dataId)},
+	{"option", V_UI_OPTIONNODE, offsetof(menuNode_t, u.option.first), 0},
 	{"viewpos", V_INT, offsetof(menuNode_t, u.option.pos),  MEMBER_SIZEOF(menuNode_t, u.option.pos)},
 	{"count", V_INT, offsetof(menuNode_t, u.option.count),  MEMBER_SIZEOF(menuNode_t, u.option.count)},
-	{"onviewchange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.option.onViewChange), MEMBER_SIZEOF(menuNode_t, u.option.onViewChange)},
+	{"onviewchange", V_UI_ACTION, offsetof(menuNode_t, u.option.onViewChange), MEMBER_SIZEOF(menuNode_t, u.option.onViewChange)},
 
 	{NULL, V_NULL, 0, 0}
 };

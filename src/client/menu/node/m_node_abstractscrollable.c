@@ -118,7 +118,7 @@ static const value_t properties[] = {
 	{"viewsize", V_INT, offsetof(menuNode_t, u.abstractscrollable.viewSizeY),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.viewSizeY)},
 	{"fullsize", V_INT, offsetof(menuNode_t, u.abstractscrollable.fullSizeY),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.fullSizeY)},
 
-	{"onviewchange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.abstractscrollable.onViewChange), MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.onViewChange)},
+	{"onviewchange", V_UI_ACTION, offsetof(menuNode_t, u.abstractscrollable.onViewChange), MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.onViewChange)},
 
 	{NULL, V_NULL, 0, 0}
 };

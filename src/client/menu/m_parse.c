@@ -45,7 +45,7 @@ static const value_t optionProperties[] = {
 	{"label", V_TRANSLATION_STRING, offsetof(menuOption_t, label), sizeof(char) * OPTION_MAX_VALUE_LENGTH},
 	{"action", V_STRING, offsetof(menuOption_t, action), 0},
 	{"value", V_STRING, offsetof(menuOption_t, value), 0},
-	{"icon", V_SPECIAL_ICONREF, offsetof(menuOption_t, icon), 0},
+	{"icon", V_UI_ICONREF, offsetof(menuOption_t, icon), 0},
 	{"disabled", V_BOOL, offsetof(menuOption_t, disabled), MEMBER_SIZEOF(menuOption_t, disabled)},
 
 	{NULL, V_NULL, 0, 0},
@@ -283,13 +283,13 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	if (!*text)
 		return qfalse;
 
-	if (property->type == V_SPECIAL_ACTION) {
+	if (property->type == V_UI_ACTION) {
 		menuAction_t** actionRef = (menuAction_t**) MN_AllocPointer(1);
 		*actionRef = MN_ParseActionList(menuNode, text, token);
 		if (*actionRef == NULL)
 			return qfalse;
 		action->data2 = actionRef;
-	} else if (property->type == V_SPECIAL_ICONREF) {
+	} else if (property->type == V_UI_ICONREF) {
 		menuIcon_t* icon = MN_GetIconByName(*token);
 		menuIcon_t** icomRef;
 		if (icon == NULL) {
@@ -304,8 +304,8 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 			action->type.param2 = EA_VALUE;
 			action->data2 = MN_AllocString(*token, 0);
 		} else {
-			const int baseType = property->type & V_SPECIAL_TYPE;
-			if (baseType != 0 && baseType != V_SPECIAL_CVAR) {
+			const int baseType = property->type & V_UI_MASK;
+			if (baseType != 0 && baseType != V_UI_CVAR) {
 				Com_Printf("MN_ParseSetAction: setter for property '%s' (type %d, 0x%X) is not supported (%s)\n", property->string, property->type, property->type, MN_GetPath(menuNode));
 				return qfalse;
 			}
@@ -642,14 +642,14 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 	size_t bytes;
 	void *valuePtr = (void*) ((uintptr_t)object + property->ofs);
 	int result;
-	const int specialType = property->type & V_SPECIAL_TYPE;
+	const int specialType = property->type & V_UI_MASK;
 
 	if (property->type == V_NULL) {
 		return qfalse;
 	}
 
 	switch (specialType) {
-	case 0:	/* common type */
+	case V_NOT_UI:	/* common type */
 
 		*token = Com_EParse(text, errhead, objectName);
 		if (!*text)
@@ -672,7 +672,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		}
 		break;
 
-	case V_SPECIAL_REF:
+	case V_UI_REF:
 		*token = Com_EParse(text, errhead, objectName);
 		if (!*text)
 			return qfalse;
@@ -699,7 +699,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		break;
 
-	case V_SPECIAL_CVAR:	/* common type */
+	case V_UI_CVAR:	/* common type */
 		*token = Com_EParse(text, errhead, objectName);
 		if (!*text)
 			return qfalse;
@@ -742,28 +742,28 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		}
 		break;
 
-	case V_SPECIAL:
+	case V_UI:
 
 		switch (property->type) {
-		case V_SPECIAL_ACTION:
+		case V_UI_ACTION:
 			result = MN_ParseEventProperty(object, property, text, token, errhead);
 			if (!result)
 				return qfalse;
 			break;
 
-		case V_SPECIAL_EXCLUDERECT:
+		case V_UI_EXCLUDERECT:
 			result = MN_ParseExcludeRect(object, text, token, errhead);
 			if (!result)
 				return qfalse;
 			break;
 
-		case V_SPECIAL_OPTIONNODE:
+		case V_UI_OPTIONNODE:
 			result = MN_ParseOption(object, text, token, errhead);
 			if (!result)
 				return qfalse;
 			break;
 
-		case V_SPECIAL_ICONREF:
+		case V_UI_ICONREF:
 			{
 				menuIcon_t** icon = (menuIcon_t**) valuePtr;
 				*token = Com_EParse(text, errhead, objectName);
@@ -776,7 +776,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 			}
 			break;
 
-		case V_SPECIAL_IF:
+		case V_UI_IF:
 			{
 				menuCondition_t **condition = (menuCondition_t **) valuePtr;
 
@@ -790,7 +790,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 			}
 			break;
 
-		case V_SPECIAL_DATAID:
+		case V_UI_DATAID:
 			{
 				int *dataId = (int*) valuePtr;
 				*token = Com_EParse(text, errhead, objectName);

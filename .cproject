@@ -40,23 +40,8 @@
 </tool>
 </toolChain>
 </folderInfo>
-<folderInfo id="preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.406131790.1983061566" name="/" resourcePath="src/client/menu/node">
-<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.482655701" name="No ToolChain" superClass="org.eclipse.cdt.build.core.prefbase.toolchain" unusedChildren="">
-<tool id="org.eclipse.cdt.build.core.settings.holder.libs.305546788" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs.202962542"/>
-<tool id="org.eclipse.cdt.build.core.settings.holder.1941462270" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder.16358229">
-<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1627065541" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
-</tool>
-<tool id="org.eclipse.cdt.build.core.settings.holder.236498332" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder.16358229">
-<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1399428968" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
-</tool>
-<tool id="org.eclipse.cdt.build.core.settings.holder.630480736" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder.16358229">
-<option id="org.eclipse.cdt.build.core.settings.holder.symbols.1298538898" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols"/>
-<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.2006790604" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
-</tool>
-</toolChain>
-</folderInfo>
 <sourceEntries>
-<entry excluding="client/menu/node" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 </sourceEntries>
 </configuration>
 </storageModule>

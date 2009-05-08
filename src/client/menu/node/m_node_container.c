@@ -1538,12 +1538,12 @@ static const value_t properties[] = {
 	{"filter", V_INT, offsetof(menuNode_t, u.container.filterEquipType),  MEMBER_SIZEOF(menuNode_t, u.container.filterEquipType)},
 
 	{"lastselectedid", V_INT, offsetof(menuNode_t, u.container.lastSelectedId),  MEMBER_SIZEOF(menuNode_t, u.container.lastSelectedId)},
-	{"onselect", V_SPECIAL_ACTION, offsetof(menuNode_t, u.container.onSelect),  MEMBER_SIZEOF(menuNode_t, u.container.onSelect)},
+	{"onselect", V_UI_ACTION, offsetof(menuNode_t, u.container.onSelect),  MEMBER_SIZEOF(menuNode_t, u.container.onSelect)},
 
 	{"scrollpos", V_INT, offsetof(menuNode_t, u.container.scrollCur),  MEMBER_SIZEOF(menuNode_t, u.container.scrollCur)},
 	{"viewsize", V_INT, offsetof(menuNode_t, u.container.scrollNum),  MEMBER_SIZEOF(menuNode_t, u.container.scrollNum)},
 	{"fullsize", V_INT, offsetof(menuNode_t, u.container.scrollTotalNum),  MEMBER_SIZEOF(menuNode_t, u.container.scrollTotalNum)},
-	{"onviewchange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.container.onViewChange), MEMBER_SIZEOF(menuNode_t, u.container.onViewChange)},
+	{"onviewchange", V_UI_ACTION, offsetof(menuNode_t, u.container.onViewChange), MEMBER_SIZEOF(menuNode_t, u.container.onViewChange)},
 
 	{NULL, V_NULL, 0, 0}
 };

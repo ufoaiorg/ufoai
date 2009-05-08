@@ -79,7 +79,7 @@ static inline const char* MN_GenCommandReadProperty (const char* input, char* ou
 static const char* MN_NodeGetProperty(const menuNode_t* source, const value_t *property)
 {
 	const byte* b = (const byte*)source + property->ofs;
-	const int specialType = property->type & V_SPECIAL_TYPE;
+	const int specialType = property->type & V_UI_MASK;
 
 #ifdef __ISOC99__
 	foooooo
@@ -89,10 +89,10 @@ static const char* MN_NodeGetProperty(const menuNode_t* source, const value_t *p
 	assert(property);
 
 	switch (specialType) {
-	case 0:	/* common type */
+	case V_NOT_UI:	/* common type */
 		return Com_ValueToStr((const void*)source, property->type, property->ofs);
 
-	case V_SPECIAL_CVAR:	/* cvar */
+	case V_UI_CVAR:	/* cvar */
 		switch (property->type) {
 		case V_CVAR_OR_FLOAT:
 			{
@@ -274,9 +274,9 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 
 	/* decode RAW value */
 	assert(action->type.param2 == EA_RAWVALUE);
-	if ((action->scriptValues->type & V_SPECIAL_TYPE) == 0)
+	if ((action->scriptValues->type & V_UI_MASK) == V_NOT_UI)
 		Com_SetValue(node, (char *) value, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
-	else if ((action->scriptValues->type & V_SPECIAL_TYPE) == V_SPECIAL_CVAR) {
+	else if ((action->scriptValues->type & V_UI_MASK) == V_UI_CVAR) {
 		void *mem = ((byte *) node + action->scriptValues->ofs);
 		MN_FreeStringProperty(*(void**)mem);
 		switch (action->scriptValues->type & V_BASETYPEMASK) {
@@ -289,10 +289,10 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		default:
 			*(byte **) mem = value;
 		}
-	} else if (action->scriptValues->type == V_SPECIAL_ACTION) {
+	} else if (action->scriptValues->type == V_UI_ACTION) {
 		void *mem = ((byte *) node + action->scriptValues->ofs);
 		*(menuAction_t**) mem = *(menuAction_t**)value;
-	} else if (action->scriptValues->type == V_SPECIAL_ICONREF) {
+	} else if (action->scriptValues->type == V_UI_ICONREF) {
 		void *mem = ((byte *) node + action->scriptValues->ofs);
 		*(menuIcon_t**) mem = *(menuIcon_t**)value;
 	} else {
@@ -474,7 +474,7 @@ static void MN_AddListener_f (void)
 		Com_Printf("MN_AddListener_f: '%s' node not found.\n", Cmd_Argv(1));
 		return;
 	}
-	if (property == NULL || property->type != V_SPECIAL_ACTION) {
+	if (property == NULL || property->type != V_UI_ACTION) {
 		Com_Printf("MN_AddListener_f: '%s' property not found, or is not an event.\n", Cmd_Argv(1));
 		return;
 	}
@@ -523,7 +523,7 @@ static void MN_RemoveListener_f (void)
 		Com_Printf("MN_RemoveListener_f: '%s' node not found.\n", Cmd_Argv(1));
 		return;
 	}
-	if (property == NULL || property->type != V_SPECIAL_ACTION) {
+	if (property == NULL || property->type != V_UI_ACTION) {
 		Com_Printf("MN_RemoveListener_f: '%s' property not found, or is not an event.\n", Cmd_Argv(1));
 		return;
 	}

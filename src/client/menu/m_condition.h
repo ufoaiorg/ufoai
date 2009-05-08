@@ -34,7 +34,7 @@ struct menuNode_s;
 #define MAX_MENUCONDITIONS 512
 
 /**
- * @brief conditions for V_SPECIAL_IF
+ * @brief conditions for V_UI_IF
  */
 typedef enum menuConditionOpCodeType_s {
 	IF_INVALID = -1,
