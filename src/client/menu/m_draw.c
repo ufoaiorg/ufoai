@@ -323,7 +323,7 @@ void MN_Draw (void)
 
 	/* draw a special notice */
 	menu = MN_GetActiveMenu();
-	if (cl.time < msgTime) {
+	if (cls.realtime < msgTime) {
 		if (menu && (menu->u.window.noticePos[0] || menu->u.window.noticePos[1]))
 			MN_DrawNotice(menu->u.window.noticePos[0], menu->u.window.noticePos[1], msgText);
 		else
@@ -351,7 +351,7 @@ void MN_DrawCursor (void)
  */
 void MN_DisplayNotice (const char *text, int time)
 {
-	msgTime = cl.time + time;
+	msgTime = cls.realtime + time;
 	Q_strncpyz(msgText, text, sizeof(msgText));
 }
 

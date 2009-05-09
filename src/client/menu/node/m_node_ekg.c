@@ -69,7 +69,7 @@ static void MN_EKGNodeDraw (menuNode_t *node)
 
 		node->texl[1] = (ekgMaxIndex - (int)(ekgValue / ekgDivide)) * ekgHeight;
 		node->texh[1] = node->texl[1] + ekgHeight;
-		node->texl[0] = -(int) (node->u.ekg.scrollSpeed * cl.time) % ekgWidth;
+		node->texl[0] = -(int) (node->u.ekg.scrollSpeed * cls.realtime) % ekgWidth;
 		node->texh[0] = node->texl[0] + node->size[0];
 		/** @todo code is duplicated in the image node code */
 		if (node->size[0] && !node->size[1]) {
