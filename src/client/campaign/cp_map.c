@@ -47,6 +47,7 @@ cvar_t *cl_mapzoommin;
 
 enum {
 	GEOSCAPE_IMAGE_MISSION,
+	GEOSCAPE_IMAGE_MISSION_SELECTED,
 	GEOSCAPE_IMAGE_MISSION_ACTIVE,
 	GEOSCAPE_IMAGE_BASE,
 	GEOSCAPE_IMAGE_BASE_ATTACK,
@@ -55,6 +56,7 @@ enum {
 };
 
 static const char *geoscapeImageNames[] = {
+	"pics/geoscape/mission",
 	"pics/geoscape/circle",
 	"pics/geoscape/circleactive",
 	"pics/geoscape/base",
@@ -1244,6 +1246,7 @@ static void MAP_DrawBullets (const menuNode_t* node, const vec3_t pos)
  * @param[in] start Start position of the laser shot (on geoscape)
  * @param[in] end End position of the laser shot (on geoscape)
  * @sa MAP_DrawMap
+ * @todo Implement rendering of laser shot
  */
 static void MAP_DrawLaser (const menuNode_t* node, const vec3_t start, const vec3_t end)
 {
@@ -1271,10 +1274,13 @@ static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
 			if (!ccs.selectedMission->active)
 				MAP_MapDrawEquidistantPoints(node, ms->pos, SELECT_CIRCLE_RADIUS, yellow);
 		} else {
+			const image_t *image;
 			if (ccs.selectedMission->active) {
-				const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_ACTIVE];
-				R_DrawImage(x - image->width / 2, y - image->height / 2, image);
+				image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_ACTIVE];
+			} else {
+				image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
 			}
+			R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 		}
 	}
 
@@ -1591,7 +1597,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (projectile->bullets)
 			MAP_DrawBullets(node, drawPos);
 		else if (projectile->laser)
-			/** @todo Implement rendering of laser shot */
 			MAP_DrawLaser(node, vec3_origin, vec3_origin);
 		else
 			MAP_Draw3DMarkerIfVisible(node, drawPos, projectile->angle, projectile->aircraftItem->model, 0);
