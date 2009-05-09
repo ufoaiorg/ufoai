@@ -126,7 +126,7 @@ start_downloads()
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.24/ atk-dev_1.24.0-1_win32.zip atk-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.6-1_win32.zip cairo-dev.zip
 
-	download_archive http://mattn.ninex.info/download gtkglext-1.2.tar.gz gtkglext-dev.tar.gz
+	download_archive http://mattn.ninex.info/download/ gtkglext-1.2.tar.gz gtkglext-dev.tar.gz
 
 	download_archive http://subversion.tigris.org/files/documents/15/45600/ svn-win32-1.6.1.zip svn.zip
 
