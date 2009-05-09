@@ -470,7 +470,7 @@ then
 		AC_MSG_ERROR([You must have the Vorbis development headers])
 	fi
 	LIBS=
-	AC_CHECK_LIB(vorbis, vorbis_synthesis_init, LIBS="-lvorbis", AC_MSG_ERROR([You must have libvorbis!!!]))
+	AC_CHECK_LIB(vorbis, vorbis_synthesis_init, LIBS="-lvorbis", AC_MSG_ERROR([You must have libvorbis!!!]), [-lm -logg])
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 	#---------------------------------------------------------------------------------------------
