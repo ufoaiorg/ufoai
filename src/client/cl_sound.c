@@ -539,6 +539,8 @@ void S_Shutdown (void)
 	if (!s_env.initialized)
 		return;
 
+	S_StopAllSounds();
+
 	for (i = 0; i < SFX_HASH_SIZE; i++)
 		for (sfx = sfx_hash[i]; sfx; sfx = sfx->hash_next)
 			Mix_FreeChunk(sfx->chunk);
