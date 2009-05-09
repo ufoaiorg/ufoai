@@ -11,3 +11,5 @@
 /gmon.out
 /*.dll
 /*.exe
+/autom4te.cache
+/*.diff

@@ -436,15 +436,15 @@ static void CIN_ROQ_DecodeSoundMono (const byte *data, short *samples)
 static void CIN_ROQ_DecodeSoundStereo (const byte *data, short *samples)
 {
 	int i;
-	int prevL = (roqCin.chunk.flags & 0xFF00) << 0;
-	int prevR = (roqCin.chunk.flags & 0x00FF) << 8;
+	short prevL = (roqCin.chunk.flags & 0xFF00) << 0;
+	short prevR = (roqCin.chunk.flags & 0x00FF) << 8;
 
 	for (i = 0; i < roqCin.chunk.size; i += 2) {
-		prevL = (short)(prevL + roqCin_sqrTable[data[i + 0]]);
-		prevR = (short)(prevR + roqCin_sqrTable[data[i + 1]]);
+		prevL = prevL + roqCin_sqrTable[data[i + 0]];
+		prevR = prevR + roqCin_sqrTable[data[i + 1]];
 
-		samples[i + 0] = (short)prevL;
-		samples[i + 1] = (short)prevR;
+		samples[i + 0] = prevL;
+		samples[i + 1] = prevR;
 	}
 }
 
