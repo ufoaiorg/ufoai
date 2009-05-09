@@ -464,14 +464,17 @@ then
 	#---------------------------------------------------------------------------------------------
 	# Check Vorbis
 	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([vorbis/codec.h])
-	if test "$ac_cv_header_vorbis_codec_h" = "no"
-	then
-		AC_MSG_ERROR([You must have the Vorbis development headers])
+	PKG_CHECK_MODULES(VORBIS, vorbis, HAVE_VORBIS="yes", HAVE_VORBIS="no") 
+	if test "x$HAVE_VORBIS" = "xno" ; then
+		AC_CHECK_HEADERS([vorbis/codec.h])
+		if test "$ac_cv_header_vorbis_codec_h" = "no"
+		then
+			AC_MSG_ERROR([You must have the Vorbis development headers])
+		fi
+		LIBS=
+		AC_CHECK_LIB(vorbis, vorbis_synthesis_init, LIBS="-lvorbis", AC_MSG_ERROR([You must have libvorbis!!!]), [-lm -logg])
 	fi
-	LIBS=
-	AC_CHECK_LIB(vorbis, vorbis_synthesis_init, LIBS="-lvorbis", AC_MSG_ERROR([You must have libvorbis!!!]), [-lm -logg])
-	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	CLIENT_LIBS="$LIBS $CLIENT_LIBS"
 
 	#---------------------------------------------------------------------------------------------
 	# Check XVID
@@ -489,20 +492,23 @@ then
 	#---------------------------------------------------------------------------------------------
 	# Check Theora
 	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([theora/theora.h])
-	if test "$ac_cv_header_theora_theora_h" = "no"
-	then
-		if test "$ac_cv_header_xvid_h" = "no"
+	PKG_CHECK_MODULES(THEORA, theora, HAVE_THEORA="yes", HAVE_THEORA="no") 
+	if test "x$HAVE_THEORA" = "xno" ; then
+		AC_CHECK_HEADERS([theora/theora.h])
+		if test "$ac_cv_header_theora_theora_h" = "no"
 		then
-			AC_MSG_ERROR([Could not find the Theora development headers nor the Xvid developement headers])
+			if test "$ac_cv_header_xvid_h" = "no"
+			then
+				AC_MSG_ERROR([Could not find the Theora development headers nor the Xvid developement headers])
+			else
+				AC_MSG_WARN([Could not find the Theora development headers])
+			fi
 		else
-			AC_MSG_WARN([Could not find the Theora development headers])
+			LIBS=
+			AC_CHECK_LIB(theora, theora_decode_packetin, LIBS="-ltheora", AC_MSG_ERROR([You must have libtheora!!!]))
 		fi
-	else
-		LIBS=
-		AC_CHECK_LIB(theora, theora_decode_packetin, LIBS="-ltheora", AC_MSG_ERROR([You must have libtheora!!!]))
-		CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 	fi
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 	LIBS=
 

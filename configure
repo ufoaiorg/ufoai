@@ -657,11 +657,15 @@ BUILD_CLIENT
 HAVE_XML2_CONFIG
 RADIANT_LIBS
 RADIANT_CFLAGS
-PKG_CONFIG
 HAVE_CURSES
 SDL_LIBS
 SDL_CFLAGS
 HAVE_SDL_CONFIG
+THEORA_LIBS
+THEORA_CFLAGS
+VORBIS_LIBS
+VORBIS_CFLAGS
+PKG_CONFIG
 WINDRES
 HAVE_WINDRES
 HAVE_MKDIR
@@ -762,6 +766,10 @@ CXXFLAGS
 CCC
 CPP
 PKG_CONFIG
+VORBIS_CFLAGS
+VORBIS_LIBS
+THEORA_CFLAGS
+THEORA_LIBS
 RADIANT_CFLAGS
 RADIANT_LIBS'
 
@@ -1423,6 +1431,12 @@ Some influential environment variables:
   CXXFLAGS    C++ compiler flags
   CPP         C preprocessor
   PKG_CONFIG  path to pkg-config utility
+  VORBIS_CFLAGS
+              C compiler flags for VORBIS, overriding pkg-config
+  VORBIS_LIBS linker flags for VORBIS, overriding pkg-config
+  THEORA_CFLAGS
+              C compiler flags for THEORA, overriding pkg-config
+  THEORA_LIBS linker flags for THEORA, overriding pkg-config
   RADIANT_CFLAGS
               C compiler flags for RADIANT, overriding pkg-config
   RADIANT_LIBS
@@ -8984,6 +8998,194 @@ fi
 	# Check Vorbis
 	#---------------------------------------------------------------------------------------------
 
+
+if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
+	if test -n "$ac_tool_prefix"; then
+  # Extract the first word of "${ac_tool_prefix}pkg-config", so it can be a program name with args.
+set dummy ${ac_tool_prefix}pkg-config; ac_word=$2
+{ $as_echo "$as_me:$LINENO: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if test "${ac_cv_path_PKG_CONFIG+set}" = set; then
+  $as_echo_n "(cached) " >&6
+else
+  case $PKG_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_PKG_CONFIG="$PKG_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_path_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
+
+  ;;
+esac
+fi
+PKG_CONFIG=$ac_cv_path_PKG_CONFIG
+if test -n "$PKG_CONFIG"; then
+  { $as_echo "$as_me:$LINENO: result: $PKG_CONFIG" >&5
+$as_echo "$PKG_CONFIG" >&6; }
+else
+  { $as_echo "$as_me:$LINENO: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+fi
+if test -z "$ac_cv_path_PKG_CONFIG"; then
+  ac_pt_PKG_CONFIG=$PKG_CONFIG
+  # Extract the first word of "pkg-config", so it can be a program name with args.
+set dummy pkg-config; ac_word=$2
+{ $as_echo "$as_me:$LINENO: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if test "${ac_cv_path_ac_pt_PKG_CONFIG+set}" = set; then
+  $as_echo_n "(cached) " >&6
+else
+  case $ac_pt_PKG_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_ac_pt_PKG_CONFIG="$ac_pt_PKG_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_path_ac_pt_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
+
+  ;;
+esac
+fi
+ac_pt_PKG_CONFIG=$ac_cv_path_ac_pt_PKG_CONFIG
+if test -n "$ac_pt_PKG_CONFIG"; then
+  { $as_echo "$as_me:$LINENO: result: $ac_pt_PKG_CONFIG" >&5
+$as_echo "$ac_pt_PKG_CONFIG" >&6; }
+else
+  { $as_echo "$as_me:$LINENO: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+  if test "x$ac_pt_PKG_CONFIG" = x; then
+    PKG_CONFIG=""
+  else
+    case $cross_compiling:$ac_tool_warned in
+yes:)
+{ $as_echo "$as_me:$LINENO: WARNING: using cross tools not prefixed with host triplet" >&5
+$as_echo "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
+ac_tool_warned=yes ;;
+esac
+    PKG_CONFIG=$ac_pt_PKG_CONFIG
+  fi
+else
+  PKG_CONFIG="$ac_cv_path_PKG_CONFIG"
+fi
+
+fi
+if test -n "$PKG_CONFIG"; then
+	_pkg_min_version=0.9.0
+	{ $as_echo "$as_me:$LINENO: checking pkg-config is at least version $_pkg_min_version" >&5
+$as_echo_n "checking pkg-config is at least version $_pkg_min_version... " >&6; }
+	if $PKG_CONFIG --atleast-pkgconfig-version $_pkg_min_version; then
+		{ $as_echo "$as_me:$LINENO: result: yes" >&5
+$as_echo "yes" >&6; }
+	else
+		{ $as_echo "$as_me:$LINENO: result: no" >&5
+$as_echo "no" >&6; }
+		PKG_CONFIG=""
+	fi
+
+fi
+
+pkg_failed=no
+{ $as_echo "$as_me:$LINENO: checking for VORBIS" >&5
+$as_echo_n "checking for VORBIS... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$VORBIS_CFLAGS"; then
+        pkg_cv_VORBIS_CFLAGS="$VORBIS_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { ($as_echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"vorbis\"") >&5
+  ($PKG_CONFIG --exists --print-errors "vorbis") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; then
+  pkg_cv_VORBIS_CFLAGS=`$PKG_CONFIG --cflags "vorbis" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$VORBIS_LIBS"; then
+        pkg_cv_VORBIS_LIBS="$VORBIS_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { ($as_echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"vorbis\"") >&5
+  ($PKG_CONFIG --exists --print-errors "vorbis") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; then
+  pkg_cv_VORBIS_LIBS=`$PKG_CONFIG --libs "vorbis" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        VORBIS_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "vorbis"`
+        else
+	        VORBIS_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "vorbis"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$VORBIS_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:$LINENO: result: no" >&5
+$as_echo "no" >&6; }
+                HAVE_VORBIS="no"
+elif test $pkg_failed = untried; then
+	HAVE_VORBIS="no"
+else
+	VORBIS_CFLAGS=$pkg_cv_VORBIS_CFLAGS
+	VORBIS_LIBS=$pkg_cv_VORBIS_LIBS
+        { $as_echo "$as_me:$LINENO: result: yes" >&5
+$as_echo "yes" >&6; }
+	HAVE_VORBIS="yes"
+fi
+	if test "x$HAVE_VORBIS" = "xno" ; then
+
 for ac_header in vorbis/codec.h
 do
 as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
@@ -9134,14 +9336,14 @@ fi
 
 done
 
-	if test "$ac_cv_header_vorbis_codec_h" = "no"
-	then
-		{ { $as_echo "$as_me:$LINENO: error: You must have the Vorbis development headers" >&5
+		if test "$ac_cv_header_vorbis_codec_h" = "no"
+		then
+			{ { $as_echo "$as_me:$LINENO: error: You must have the Vorbis development headers" >&5
 $as_echo "$as_me: error: You must have the Vorbis development headers" >&2;}
    { (exit 1); exit 1; }; }
-	fi
-	LIBS=
-	{ $as_echo "$as_me:$LINENO: checking for vorbis_synthesis_init in -lvorbis" >&5
+		fi
+		LIBS=
+		{ $as_echo "$as_me:$LINENO: checking for vorbis_synthesis_init in -lvorbis" >&5
 $as_echo_n "checking for vorbis_synthesis_init in -lvorbis... " >&6; }
 if test "${ac_cv_lib_vorbis_vorbis_synthesis_init+set}" = set; then
   $as_echo_n "(cached) " >&6
@@ -9214,7 +9416,8 @@ $as_echo "$as_me: error: You must have libvorbis!!!" >&2;}
    { (exit 1); exit 1; }; }
 fi
 
-	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	fi
+	CLIENT_LIBS="$LIBS $CLIENT_LIBS"
 
 	#---------------------------------------------------------------------------------------------
 	# Check XVID
@@ -9456,6 +9659,78 @@ fi
 	# Check Theora
 	#---------------------------------------------------------------------------------------------
 
+pkg_failed=no
+{ $as_echo "$as_me:$LINENO: checking for THEORA" >&5
+$as_echo_n "checking for THEORA... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$THEORA_CFLAGS"; then
+        pkg_cv_THEORA_CFLAGS="$THEORA_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { ($as_echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"theora\"") >&5
+  ($PKG_CONFIG --exists --print-errors "theora") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; then
+  pkg_cv_THEORA_CFLAGS=`$PKG_CONFIG --cflags "theora" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$THEORA_LIBS"; then
+        pkg_cv_THEORA_LIBS="$THEORA_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { ($as_echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"theora\"") >&5
+  ($PKG_CONFIG --exists --print-errors "theora") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; then
+  pkg_cv_THEORA_LIBS=`$PKG_CONFIG --libs "theora" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        THEORA_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "theora"`
+        else
+	        THEORA_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "theora"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$THEORA_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:$LINENO: result: no" >&5
+$as_echo "no" >&6; }
+                HAVE_THEORA="no"
+elif test $pkg_failed = untried; then
+	HAVE_THEORA="no"
+else
+	THEORA_CFLAGS=$pkg_cv_THEORA_CFLAGS
+	THEORA_LIBS=$pkg_cv_THEORA_LIBS
+        { $as_echo "$as_me:$LINENO: result: yes" >&5
+$as_echo "yes" >&6; }
+	HAVE_THEORA="yes"
+fi
+	if test "x$HAVE_THEORA" = "xno" ; then
+
 for ac_header in theora/theora.h
 do
 as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
@@ -9606,20 +9881,20 @@ fi
 
 done
 
-	if test "$ac_cv_header_theora_theora_h" = "no"
-	then
-		if test "$ac_cv_header_xvid_h" = "no"
+		if test "$ac_cv_header_theora_theora_h" = "no"
 		then
-			{ { $as_echo "$as_me:$LINENO: error: Could not find the Theora development headers nor the Xvid developement headers" >&5
+			if test "$ac_cv_header_xvid_h" = "no"
+			then
+				{ { $as_echo "$as_me:$LINENO: error: Could not find the Theora development headers nor the Xvid developement headers" >&5
 $as_echo "$as_me: error: Could not find the Theora development headers nor the Xvid developement headers" >&2;}
    { (exit 1); exit 1; }; }
-		else
-			{ $as_echo "$as_me:$LINENO: WARNING: Could not find the Theora development headers" >&5
+			else
+				{ $as_echo "$as_me:$LINENO: WARNING: Could not find the Theora development headers" >&5
 $as_echo "$as_me: WARNING: Could not find the Theora development headers" >&2;}
-		fi
-	else
-		LIBS=
-		{ $as_echo "$as_me:$LINENO: checking for theora_decode_packetin in -ltheora" >&5
+			fi
+		else
+			LIBS=
+			{ $as_echo "$as_me:$LINENO: checking for theora_decode_packetin in -ltheora" >&5
 $as_echo_n "checking for theora_decode_packetin in -ltheora... " >&6; }
 if test "${ac_cv_lib_theora_theora_decode_packetin+set}" = set; then
   $as_echo_n "(cached) " >&6
@@ -9692,8 +9967,9 @@ $as_echo "$as_me: error: You must have libtheora!!!" >&2;}
    { (exit 1); exit 1; }; }
 fi
 
-		CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+		fi
 	fi
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 	LIBS=
 
@@ -11633,122 +11909,6 @@ then
 	RADIANT_LIBS=
 	{ $as_echo "$as_me:$LINENO: UFORadiant dependencies: gtk2, gtkglext, glib2 and libxml2" >&5
 $as_echo "$as_me: UFORadiant dependencies: gtk2, gtkglext, glib2 and libxml2" >&6;}
-
-
-if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
-	if test -n "$ac_tool_prefix"; then
-  # Extract the first word of "${ac_tool_prefix}pkg-config", so it can be a program name with args.
-set dummy ${ac_tool_prefix}pkg-config; ac_word=$2
-{ $as_echo "$as_me:$LINENO: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if test "${ac_cv_path_PKG_CONFIG+set}" = set; then
-  $as_echo_n "(cached) " >&6
-else
-  case $PKG_CONFIG in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_PKG_CONFIG="$PKG_CONFIG" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_path_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
-    $as_echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-IFS=$as_save_IFS
-
-  ;;
-esac
-fi
-PKG_CONFIG=$ac_cv_path_PKG_CONFIG
-if test -n "$PKG_CONFIG"; then
-  { $as_echo "$as_me:$LINENO: result: $PKG_CONFIG" >&5
-$as_echo "$PKG_CONFIG" >&6; }
-else
-  { $as_echo "$as_me:$LINENO: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
-fi
-if test -z "$ac_cv_path_PKG_CONFIG"; then
-  ac_pt_PKG_CONFIG=$PKG_CONFIG
-  # Extract the first word of "pkg-config", so it can be a program name with args.
-set dummy pkg-config; ac_word=$2
-{ $as_echo "$as_me:$LINENO: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if test "${ac_cv_path_ac_pt_PKG_CONFIG+set}" = set; then
-  $as_echo_n "(cached) " >&6
-else
-  case $ac_pt_PKG_CONFIG in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_ac_pt_PKG_CONFIG="$ac_pt_PKG_CONFIG" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_path_ac_pt_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
-    $as_echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-IFS=$as_save_IFS
-
-  ;;
-esac
-fi
-ac_pt_PKG_CONFIG=$ac_cv_path_ac_pt_PKG_CONFIG
-if test -n "$ac_pt_PKG_CONFIG"; then
-  { $as_echo "$as_me:$LINENO: result: $ac_pt_PKG_CONFIG" >&5
-$as_echo "$ac_pt_PKG_CONFIG" >&6; }
-else
-  { $as_echo "$as_me:$LINENO: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-  if test "x$ac_pt_PKG_CONFIG" = x; then
-    PKG_CONFIG=""
-  else
-    case $cross_compiling:$ac_tool_warned in
-yes:)
-{ $as_echo "$as_me:$LINENO: WARNING: using cross tools not prefixed with host triplet" >&5
-$as_echo "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
-ac_tool_warned=yes ;;
-esac
-    PKG_CONFIG=$ac_pt_PKG_CONFIG
-  fi
-else
-  PKG_CONFIG="$ac_cv_path_PKG_CONFIG"
-fi
-
-fi
-if test -n "$PKG_CONFIG"; then
-	_pkg_min_version=0.9.0
-	{ $as_echo "$as_me:$LINENO: checking pkg-config is at least version $_pkg_min_version" >&5
-$as_echo_n "checking pkg-config is at least version $_pkg_min_version... " >&6; }
-	if $PKG_CONFIG --atleast-pkgconfig-version $_pkg_min_version; then
-		{ $as_echo "$as_me:$LINENO: result: yes" >&5
-$as_echo "yes" >&6; }
-	else
-		{ $as_echo "$as_me:$LINENO: result: no" >&5
-$as_echo "no" >&6; }
-		PKG_CONFIG=""
-	fi
-
-fi
 
 pkg_failed=no
 { $as_echo "$as_me:$LINENO: checking for RADIANT" >&5
