@@ -1399,6 +1399,10 @@ void CP_StartSelectedMission (void)
 		return;
 	}
 
+	/* if we retry a mission we have to drop from the current game before */
+	SV_Shutdown("Server quit.", qfalse);
+	CL_Disconnect();
+
 	CP_CreateBattleParameters(mis);
 	CP_SetMissionVars(mis);
 	/* Set the states of mission Cvars to proper values. */
