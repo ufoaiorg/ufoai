@@ -23,12 +23,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "s_local.h"
 #include "s_main.h"
 #include "s_music.h"
-#include "../cl_le.h"
-
-#define DISTANCE_SCALE 0.8
+#include "s_sample.h"
+#include "s_mix.h"
 
 /** @brief Support sound file extensions */
 static const char *soundExtensions[] = {"ogg", "wav", NULL};
@@ -183,39 +182,6 @@ static int S_AllocChannel (void)
 }
 
 /**
- * @brief Set distance and stereo panning for the specified channel.
- */
-static void S_SpatializeChannel (const s_channel_t *ch)
-{
-	vec3_t origin, delta;
-	float dist, angle;
-	const int c = (int)((ptrdiff_t)(ch - s_env.channels));
-	const le_t *actor;
-
-	VectorCopy(ch->org, origin);
-
-	actor = LE_GetClosestActor(origin);
-	if (actor)
-		VectorSubtract(origin, actor->origin, delta);
-	else
-		VectorSubtract(origin, cl.cam.camorg, delta);
-
-	dist = VectorNormalize(delta) * DISTANCE_SCALE;
-
-	if (dist > 255.0)  /* clamp to max */
-		dist = 255.0;
-
-	if (dist > 50.0) {  /* resolve stereo panning */
-		const float dot = DotProduct(s_env.right, delta);
-		angle = acos(dot) * 180.0 / M_PI - 90.0;
-		angle = (int)(360.0 - angle) % 360;
-	} else
-		angle = 0;
-
-	Mix_SetPosition(c, (int)angle, (int)dist);
-}
-
-/**
  * @brief Validates the parms and queues the sound up
  * @param[in] origin if is NULL, the sound will be dynamically sourced from the entity
  * @param[in] sfx The soundfile to play
@@ -301,37 +267,6 @@ static void S_Play_f (void)
 	S_StartLocalSound(filename);
 }
 
-
-/**
- * @note Called at precache phase - only load these soundfiles once at startup or on sound restart
- * @sa S_Restart_f
- */
-static void S_RegisterSounds (void)
-{
-	int i, j, k;
-
-	/* load weapon sounds */
-	for (i = 0; i < csi.numODs; i++) { /* i = obj */
-		for (j = 0; j < csi.ods[i].numWeapons; j++) {	/* j = weapon-entry per obj */
-			for (k = 0; k < csi.ods[i].numFiredefs[j]; j++) { /* k = firedef per wepaon */
-				if (csi.ods[i].fd[j][k].fireSound[0] != '\0')
-					S_RegisterSound(csi.ods[i].fd[j][k].fireSound);
-				if (csi.ods[i].fd[j][k].impactSound[0] != '\0')
-					S_RegisterSound(csi.ods[i].fd[j][k].impactSound);
-				if (csi.ods[i].fd[j][k].hitBodySound[0] != '\0')
-					S_RegisterSound(csi.ods[i].fd[j][k].hitBodySound);
-				if (csi.ods[i].fd[j][k].bounceSound[0] != '\0')
-					S_RegisterSound(csi.ods[i].fd[j][k].bounceSound);
-			}
-		}
-	}
-
-	/* precache the sound pool */
-	cls.sound_pool[SOUND_WATER_IN] = S_RegisterSound("footsteps/water_in");
-	cls.sound_pool[SOUND_WATER_OUT] = S_RegisterSound("footsteps/water_out");
-	cls.sound_pool[SOUND_WATER_MOVE] = S_RegisterSound("footsteps/water_under");
-}
-
 /**
  * @brief Restart the sound subsystem so it can pick up new parameters and flush all sounds
  * @sa S_Shutdown
@@ -362,11 +297,6 @@ void S_Frame (void)
 	AngleVectors(cl.cam.angles, NULL, s_env.right, NULL);
 
 	M_Frame();
-}
-
-static void S_FreeChannel (int c)
-{
-	memset(&s_env.channels[c], 0, sizeof(s_env.channels[0]));
 }
 
 /** @todo This should be removed and read from the dir tree instead */

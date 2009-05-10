@@ -1,5 +1,5 @@
 /**
- * @file cl_sound.h
+ * @file s_main.h
  * @brief Specifies sound API?
  */
 
@@ -26,8 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_SOUND_H
-#define CLIENT_SOUND_H
+#ifndef CLIENT_SOUND_MAIN_H
+#define CLIENT_SOUND_MAIN_H
 
 #include <SDL_mixer.h>
 
@@ -77,6 +77,4 @@ void S_StartLocalSound(const char *s);
 sfx_t *S_RegisterSound(const char *s);
 int S_PlaySoundFromMem(const short* mem, size_t size, int rate, int channel, int ms);
 
-void S_Music_Stop(void);
-
-#endif /* CLIENT_SOUND_H */
+#endif

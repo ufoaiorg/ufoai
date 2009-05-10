@@ -1,6 +1,5 @@
 /**
- * @file s_music.h
- * @brief Specifies music API
+ * @file s_sample.h
  */
 
 /*
@@ -26,12 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_SOUND_MUSIC_H
-#define CLIENT_SOUND_MUSIC_H
+#ifndef CLIENT_SOUND_SAMPLE_H
+#define CLIENT_SOUND_SAMPLE_H
 
-void M_ParseMusic(const char *name, const char **text);
-void M_Frame(void);
-void M_Init(void);
-void M_Shutdown(void);
+void S_RegisterSounds(void);
 
 #endif
