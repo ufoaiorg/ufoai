@@ -58,6 +58,9 @@ void S_StopAllSounds (void)
  */
 void S_Frame (void)
 {
+	int i;
+	s_channel_t *ch;
+
 	if (snd_init && snd_init->modified) {
 		S_Restart_f();
 		snd_init->modified = qfalse;
@@ -66,31 +69,39 @@ void S_Frame (void)
 	if (!s_env.initialized)
 		return;
 
+	M_Frame();
+
 	/* update right angle for stereo panning */
 	AngleVectors(cl.cam.angles, NULL, s_env.right, NULL);
 
-	M_Frame();
+	/* update spatialization for current sounds */
+	ch = s_env.channels;
+
+	for (i = 0; i < MAX_CHANNELS; i++, ch++) {
+		if (!ch->sample)
+			continue;
+
+		S_SpatializeChannel(ch);
+	}
 }
 
 /**
- * @brief Plays a sound fx file via console
+ * @brief Plays sound fx files via console
  */
 static void S_Play_f (void)
 {
-	const char *filename;
+	int i;
 
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <filename>\n", Cmd_Argv(0));
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <filename> [<filename> ...]\n", Cmd_Argv(0));
 		return;
 	}
 
-	if (!s_env.initialized) {
-		Com_Printf("No audio activated\n");
-		return;
+	i = 1;
+	while(i < Cmd_Argc()){
+		S_StartLocalSound(Cmd_Argv(i));
+		i++;
 	}
-
-	filename = Cmd_Argv(1);
-	S_StartLocalSound(filename);
 }
 
 /**
@@ -154,83 +165,14 @@ static int S_CompleteSounds (const char *partial, const char **match)
 }
 
 /**
- * @brief
- * @return true if the value needed adjustment and was changed
- */
-static qboolean S_CvarCheckSoundRate (cvar_t *cvar)
-{
-	const int sndRates[] = {48000, 44100, 22050, 11025};
-	const int n = lengthof(sndRates);
-	int i;
-
-	for (i = 0; i < n; i++)
-		if (cvar->integer == sndRates[i])
-			break;
-	if (i == n) {
-		Com_Printf("Invalid value for %s, valid values are: ", cvar->name);
-		for (i = 0; i < n; i++)
-			Com_Printf(" %i", sndRates[i]);
-		Com_Printf("\n");
-		Cvar_Set(cvar->name, "44100");
-		cvar->modified = qfalse;
-		return qtrue;
-	}
-
-	return qfalse;
-}
-
-/**
- * @sa S_Shutdown
- * @sa S_Init
- */
-static qboolean SND_Init (void)
-{
-	SDL_version version;
-	char drivername[MAX_VAR];
-
-	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
-		if (SDL_Init(SDL_INIT_AUDIO) == -1) {
-			Com_Printf("Couldn't init SDL audio: %s\n", SDL_GetError());
-			return qfalse;
-		}
-	} else if (SDL_WasInit(SDL_INIT_AUDIO) == 0) {
-		if (SDL_InitSubSystem(SDL_INIT_AUDIO) == -1) {
-			Com_Printf("Couldn't init SDL audio subsystem: %s\n", SDL_GetError());
-			return qfalse;
-		}
-	}
-
-	MIX_VERSION(&version)
-	Com_Printf("SDL_mixer version: %d.%d.%d\n", version.major, version.minor, version.patch);
-
-	if (Mix_OpenAudio(snd_rate->integer, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
-		Com_Printf("Unable to open audio\n");
-		return qfalse;
-	}
-
-	Mix_QuerySpec(&audioRate, &audioFormat, &audioChannels);
-	Com_Printf("... audio rate: %i\n... audio channels: %i\n", audioRate, audioChannels);
-	if (audioRate != snd_rate->integer)
-		Cvar_SetValue("snd_rate", audioRate);
-
-	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == NULL)
-		strncpy(drivername, "(UNKNOWN)", sizeof(drivername) - 1);
-	Com_Printf("... driver: '%s'\n", drivername);
-
-	s_env.numChannels = Mix_AllocateChannels(MAX_CHANNELS);
-	Com_Printf("... channels to mix sounds: %i\n", s_env.numChannels);
-
-	Mix_ChannelFinished(S_FreeChannel);
-
-	return qtrue;
-}
-
-/**
  * @sa S_Shutdown
  * @sa S_Restart_f
  */
 void S_Init (void)
 {
+	SDL_version version;
+	char drivername[MAX_VAR];
+
 	Com_Printf("\n------- sound initialization -------\n");
 
 	memset(&s_env, 0, sizeof(s_env));
@@ -246,18 +188,49 @@ void S_Init (void)
 
 	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
-	Cvar_SetCheckFunction("snd_rate", S_CvarCheckSoundRate);
 	/* set volumes to be changed so they are applied again for next sound/music playing */
 	snd_volume->modified = qtrue;
 
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file. Pass path relative to base/sound without file extension");
 	Cmd_AddParamCompleteFunction("snd_play", S_CompleteSounds);
 
-	if (!SND_Init()) {
-		Com_Printf("SND_Init failed\n");
-		s_env.initialized = qfalse;
+	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
+		if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+			Com_Printf("S_Init: %s.\n", SDL_GetError());
+			return;
+		}
+	} else if (SDL_WasInit(SDL_INIT_AUDIO) == 0) {
+		if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0) {
+			Com_Printf("S_Init: %s.\n", SDL_GetError());
+			return;
+		}
+	}
+
+	MIX_VERSION(&version)
+	Com_Printf("SDL_mixer version: %d.%d.%d\n", version.major, version.minor, version.patch);
+
+	if (Mix_OpenAudio((int)snd_rate->value, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+		Com_Printf("S_Init: %s\n", Mix_GetError());
 		return;
 	}
+
+	if (Mix_QuerySpec(&audioRate, &audioFormat, &audioChannels) == 0) {
+		Com_Printf("S_Init: %s\n", Mix_GetError());
+		return;
+	}
+
+	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == NULL)
+		strncpy(drivername, "(UNKNOWN)", sizeof(drivername) - 1);
+	Com_Printf("... driver: '%s'\n", drivername);
+
+	if (Mix_AllocateChannels(MAX_CHANNELS) != MAX_CHANNELS) {
+		Com_Printf("S_Init: %s\n", Mix_GetError());
+		return;
+	}
+
+	Mix_ChannelFinished(S_FreeChannel);
+
+	Com_Printf("... audio rate: %i\n... audio channels: %i\n", audioRate, audioChannels);
 
 	s_env.initialized = qtrue;
 
@@ -275,15 +248,22 @@ void S_Shutdown (void)
 	if (!s_env.initialized)
 		return;
 
+	M_Shutdown();
+
 	S_StopAllSounds();
+
+	Mix_AllocateChannels(0);
 
 	S_FreeSamples();
 
-	M_Shutdown();
-
 	Mix_CloseAudio();
+
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 
 	Mem_FreeTag(cl_soundSysPool, 0);
+
+	Cmd_RemoveCommand("snd_play");
+	Cmd_RemoveCommand("snd_restart");
+
 	s_env.initialized = qfalse;
 }
