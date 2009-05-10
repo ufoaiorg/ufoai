@@ -102,11 +102,25 @@ void M_ParseMusic (const char *name, const char **text)
 	} while (*text);
 }
 
+/**
+ * @sa M_Start
+ */
+void M_Stop (void)
+{
+	if (music.data != NULL) {
+		Mix_HaltMusic();
+		Mix_FreeMusic(music.data);
+		/* rwops is freed in the SDL_mixer callback functions */
+		memset(&music, 0, sizeof(music));
+	}
+
+}
+
 static void M_Start(const char *file);
 
 static void M_MusicHookFinished (void)
 {
-	M_Shutdown();
+	M_Stop();
 	M_Start(Cvar_GetString("snd_music"));
 }
 
@@ -143,7 +157,7 @@ static void M_Start (const char *file)
 	/* we are still playing some background track - fade it out @sa S_Frame */
 	if (Mix_PlayingMusic()) {
 		if (!Mix_FadeOutMusic(1500))
-			M_Shutdown();
+			M_Stop();
 		if (music.nextMusicTrack)
 			Mem_Free(music.nextMusicTrack);
 		music.nextMusicTrack = Mem_PoolStrDup(name, cl_soundSysPool, 0);
@@ -151,7 +165,7 @@ static void M_Start (const char *file)
 	}
 
 	/* make really sure the last track is closed and freed */
-	M_Shutdown();
+	M_Stop();
 
 	/* load it in */
 	if ((size = FS_LoadFile(va("music/%s.ogg", name), &musicBuf)) != -1) {
@@ -337,7 +351,7 @@ void M_Frame (void)
 	}
 	if (music.nextMusicTrack) {
 		if (!Mix_PlayingMusic()) {
-			M_Shutdown(); /* free the allocated memory */
+			M_Stop(); /* free the allocated memory */
 			M_Start(music.nextMusicTrack);
 			Mem_Free(music.nextMusicTrack);
 			music.nextMusicTrack = NULL;
@@ -349,7 +363,7 @@ void M_Init (void)
 {
 	Cmd_AddCommand("music_play", M_Play_f, "Plays a background sound track");
 	Cmd_AddCommand("music_change", M_Change_f, "Changes the music theme");
-	Cmd_AddCommand("music_stop", M_Shutdown, "Stops currently playing music tracks");
+	Cmd_AddCommand("music_stop", M_Stop, "Stops currently playing music tracks");
 	Cmd_AddCommand("music_randomtrack", M_RandomTrack_f, "Plays a random background track");
 	Cmd_AddParamCompleteFunction("music_play", M_CompleteMusic);
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
@@ -360,21 +374,12 @@ void M_Init (void)
 	memset(&music, 0, sizeof(music));
 }
 
-/**
- * @sa S_Music_Start
- */
 void M_Shutdown (void)
 {
-	if (music.data != NULL) {
-		Mix_HaltMusic();
-		Mix_FreeMusic(music.data);
-		/* rwops is freed in the SDL_mixer callback functions */
-		memset(&music, 0, sizeof(music));
-	}
+	M_Stop();
 
 	Cmd_RemoveCommand("music_play");
 	Cmd_RemoveCommand("music_change");
 	Cmd_RemoveCommand("music_stop");
 	Cmd_RemoveCommand("music_randomtrack");
-
 }

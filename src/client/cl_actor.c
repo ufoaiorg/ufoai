@@ -1644,7 +1644,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED))
-		S_PlaySample(muzzle, S_RegisterSound(fd->fireSound), fd->fireAttenuation);
+		S_PlaySample(muzzle, S_LoadSample(fd->fireSound), fd->fireAttenuation);
 
 	firstShot = qfalse;
 
@@ -1743,7 +1743,7 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED)) {
-		s_sample_t *sample = S_RegisterSound(fd->fireSound);
+		s_sample_t *sample = S_LoadSample(fd->fireSound);
 		S_PlaySample(muzzle, sample, DEFAULT_SOUND_ATTENUATION);
 	}
 
@@ -3068,7 +3068,7 @@ void CL_PlayActorSound (const le_t *le, actorSound_t soundType)
 {
 	const char *actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
 	if (actorSound) {
-		s_sample_t *sample = S_RegisterSound(actorSound);
+		s_sample_t *sample = S_LoadSample(actorSound);
 		if (sample) {
 			Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: ActorSound: '%s'\n", actorSound);
 			S_PlaySample(le->origin, sample, DEFAULT_SOUND_ATTENUATION);

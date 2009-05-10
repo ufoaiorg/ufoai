@@ -550,7 +550,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 			CL_ParticleSpawn(t->particle, 0, origin, NULL, NULL);
 	}
 	if (t->footStepSound) {
-		s_sample_t *sample = S_RegisterSound(t->footStepSound);
+		s_sample_t *sample = S_LoadSample(t->footStepSound);
 		Com_DPrintf(DEBUG_SOUND, "LE_PlaySoundFileAndParticleForSurface: volume %.2f\n", t->footStepVolume);
 		S_PlaySample(origin, sample, t->footStepVolume);
 	}
@@ -728,7 +728,7 @@ static void LET_Projectile (le_t * le)
 			VecToAngles(bytedirs[le->state], le->ptl->angles);
 		}
 		if (le->ref2 && le->ref2[0]) {
-			s_sample_t *sample = S_RegisterSound(le->ref2);
+			s_sample_t *sample = S_LoadSample(le->ref2);
 			S_PlaySample(impact, sample, le->fd->impactAttenuation);
 		}
 	} else if (CL_OutsideMap(le->ptl->s, UNIT_SIZE * 10)) {
@@ -781,14 +781,14 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 			ptl_t *ptl = NULL;
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
-					s_sample_t *sample = S_RegisterSound(fd->hitBodySound);
+					s_sample_t *sample = S_LoadSample(fd->hitBodySound);
 					S_PlaySample(le->origin, sample, le->fd->impactAttenuation);
 				}
 				if (fd->hitBody[0])
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[normal], NULL);
 			} else {
 				if (fd->impactSound[0]) {
-					s_sample_t *sample = S_RegisterSound(fd->impactSound);
+					s_sample_t *sample = S_LoadSample(fd->impactSound);
 					S_PlaySample(le->origin, sample, le->fd->impactAttenuation);
 				}
 				if (fd->impact[0])
@@ -916,7 +916,7 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags)
 	le_t* le;
 	s_sample_t* sample;
 
-	sample = S_RegisterSound(sound);
+	sample = S_LoadSample(sound);
 	if (!sample)
 		return;
 

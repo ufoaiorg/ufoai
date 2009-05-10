@@ -33,5 +33,6 @@ void M_ParseMusic(const char *name, const char **text);
 void M_Frame(void);
 void M_Init(void);
 void M_Shutdown(void);
+void M_Stop(void);
 
 #endif

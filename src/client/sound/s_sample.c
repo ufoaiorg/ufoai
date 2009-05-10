@@ -29,53 +29,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAMPLE_HASH_SIZE 64
 static s_sample_t *sample_hash[SAMPLE_HASH_SIZE];
 
-/**
- * @note Called at precache phase - only load these soundfiles once at startup or on sound restart
- * @sa S_Restart_f
- */
-void S_RegisterSamples (void)
+static s_sample_t *S_FindName (const char *name)
 {
-	int i, j, k;
+	s_sample_t *sample;
+	const unsigned hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
 
-	/* load weapon sounds */
-	for (i = 0; i < csi.numODs; i++) { /* i = obj */
-		for (j = 0; j < csi.ods[i].numWeapons; j++) {	/* j = weapon-entry per obj */
-			for (k = 0; k < csi.ods[i].numFiredefs[j]; j++) { /* k = firedef per wepaon */
-				if (csi.ods[i].fd[j][k].fireSound[0] != '\0')
-					S_RegisterSound(csi.ods[i].fd[j][k].fireSound);
-				if (csi.ods[i].fd[j][k].impactSound[0] != '\0')
-					S_RegisterSound(csi.ods[i].fd[j][k].impactSound);
-				if (csi.ods[i].fd[j][k].hitBodySound[0] != '\0')
-					S_RegisterSound(csi.ods[i].fd[j][k].hitBodySound);
-				if (csi.ods[i].fd[j][k].bounceSound[0] != '\0')
-					S_RegisterSound(csi.ods[i].fd[j][k].bounceSound);
-			}
-		}
-	}
+	for (sample = sample_hash[hash]; sample; sample = sample->hash_next)
+		if (!strcmp(name, sample->name))
+			return sample;
 
-	/* precache the sound pool */
-	cls.sound_pool[SOUND_WATER_IN] = S_RegisterSound("footsteps/water_in");
-	cls.sound_pool[SOUND_WATER_OUT] = S_RegisterSound("footsteps/water_out");
-	cls.sound_pool[SOUND_WATER_MOVE] = S_RegisterSound("footsteps/water_under");
+	return NULL;
 }
 
-void S_FreeSamples (void)
-{
-	int i;
-	s_sample_t* sample;
-
-	for (i = 0; i < SAMPLE_HASH_SIZE; i++)
-		for (sample = sample_hash[i]; sample; sample = sample->hash_next)
-			Mix_FreeChunk(sample->chunk);
-
-	memset(sample_hash, 0, sizeof(sample_hash));
-}
-
-/**
- * @brief
- * @sa S_RegisterSound
- */
-static Mix_Chunk *S_LoadSound (const char *sound)
+static Mix_Chunk* S_LoadSampleChunk (const char *sound)
 {
 	size_t len;
 	byte *buf;
@@ -122,28 +88,28 @@ static Mix_Chunk *S_LoadSound (const char *sound)
  * @param[in] name The name of the soundfile, relative to the sounds dir
  * @sa S_LoadSound
  */
-s_sample_t *S_RegisterSound (const char *soundFile)
+s_sample_t *S_LoadSample (const char *soundFile)
 {
 	Mix_Chunk *chunk;
 	s_sample_t *sample;
-	unsigned hash;
 	char name[MAX_QPATH];
+	unsigned hash;
 
 	if (!s_env.initialized)
 		return NULL;
 
 	Com_StripExtension(soundFile, name, sizeof(name));
 
-	hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
-	for (sample = sample_hash[hash]; sample; sample = sample->hash_next)
-		if (!strcmp(name, sample->name))
-			return sample;
+	sample = S_FindName(name);
+	if (sample)
+		return sample;
 
 	/* make sure the sound is loaded */
-	chunk = S_LoadSound(name);
+	chunk = S_LoadSampleChunk(name);
 	if (!chunk)
 		return NULL;		/* couldn't load the sound's data */
 
+	hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
 	sample = Mem_PoolAlloc(sizeof(*sample), cl_soundSysPool, 0);
 	sample->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
 	sample->chunk = chunk;
@@ -151,4 +117,46 @@ s_sample_t *S_RegisterSound (const char *soundFile)
 	sample->hash_next = sample_hash[hash];
 	sample_hash[hash] = sample;
 	return sample;
+}
+
+/**
+ * @note Called at precache phase - only load these soundfiles once at startup or on sound restart
+ * @sa S_Restart_f
+ */
+void S_RegisterSamples (void)
+{
+	int i, j, k;
+
+	/* load weapon sounds */
+	for (i = 0; i < csi.numODs; i++) { /* i = obj */
+		for (j = 0; j < csi.ods[i].numWeapons; j++) {	/* j = weapon-entry per obj */
+			for (k = 0; k < csi.ods[i].numFiredefs[j]; j++) { /* k = firedef per wepaon */
+				if (csi.ods[i].fd[j][k].fireSound[0] != '\0')
+					S_LoadSample(csi.ods[i].fd[j][k].fireSound);
+				if (csi.ods[i].fd[j][k].impactSound[0] != '\0')
+					S_LoadSample(csi.ods[i].fd[j][k].impactSound);
+				if (csi.ods[i].fd[j][k].hitBodySound[0] != '\0')
+					S_LoadSample(csi.ods[i].fd[j][k].hitBodySound);
+				if (csi.ods[i].fd[j][k].bounceSound[0] != '\0')
+					S_LoadSample(csi.ods[i].fd[j][k].bounceSound);
+			}
+		}
+	}
+
+	/* precache the sound pool */
+	cls.sound_pool[SOUND_WATER_IN] = S_LoadSample("footsteps/water_in");
+	cls.sound_pool[SOUND_WATER_OUT] = S_LoadSample("footsteps/water_out");
+	cls.sound_pool[SOUND_WATER_MOVE] = S_LoadSample("footsteps/water_under");
+}
+
+void S_FreeSamples (void)
+{
+	int i;
+	s_sample_t* sample;
+
+	for (i = 0; i < SAMPLE_HASH_SIZE; i++)
+		for (sample = sample_hash[i]; sample; sample = sample->hash_next)
+			Mix_FreeChunk(sample->chunk);
+
+	memset(sample_hash, 0, sizeof(sample_hash));
 }

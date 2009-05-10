@@ -95,7 +95,6 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten)
 	if (!s_env.initialized)
 		return;
 
-	/* maybe the sound file couldn't be loaded */
 	if (!sample)
 		return;
 
@@ -104,13 +103,13 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten)
 
 	ch = &s_env.channels[i];
 
+	ch->atten = atten;
+	ch->sample = sample;
+
 	if (origin != NULL) {
 		VectorCopy(origin, ch->org);
 		S_SpatializeChannel(ch);
 	}
-
-	ch->atten = atten;
-	ch->sample = sample;
 
 	Mix_PlayChannel(i, ch->sample->chunk, 0);
 }
@@ -159,16 +158,16 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample)
 /**
  * @sa S_PlaySample
  */
-void S_StartLocalSample (const char *sound)
+void S_StartLocalSample (const char *name)
 {
 	s_sample_t *sample;
 
 	if (!s_env.initialized)
 		return;
 
-	sample = S_RegisterSound(sound);
+	sample = S_LoadSample(name);
 	if (!sample) {
-		Com_Printf("S_StartLocalSample: can't load %s\n", sound);
+		Com_Printf("S_StartLocalSample: Failed to load %s\n", name);
 		return;
 	}
 	S_PlaySample(NULL, sample, DEFAULT_SOUND_ATTENUATION);

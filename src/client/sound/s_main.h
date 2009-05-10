@@ -75,7 +75,7 @@ void S_Frame(void);
 void S_StopAllSounds(void);
 void S_PlaySample(const vec3_t origin, s_sample_t* sample, float relVolume);
 void S_StartLocalSample(const char *s);
-s_sample_t *S_RegisterSound(const char *s);
+s_sample_t *S_LoadSample(const char *s);
 int S_PlaySoundFromMem(const short* mem, size_t size, int rate, int channel, int ms);
 
 #endif

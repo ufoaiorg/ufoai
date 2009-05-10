@@ -91,7 +91,7 @@ void CIN_PlayCinematic (const char *fileName)
 		/* Make sure sounds aren't playing */
 		S_StopAllSounds();
 		/* also stop the background music */
-		M_Shutdown();
+		M_Stop();
 
 		Con_Close();
 	}
