@@ -31,4 +31,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_le.h"
 
+/** @brief Supported sound file extensions */
+#define SAMPLE_TYPES { "ogg", "wav", NULL }
+
+extern cvar_t *snd_volume;
+extern int audioRate;
+extern int audioChannels;
+extern uint16_t audioFormat;
+
+
 #endif

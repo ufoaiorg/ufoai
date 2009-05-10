@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_CHANNELS 64
 
-/** @brief These sounds are precached in S_RegisterSounds */
+/** @brief These sounds are precached in S_RegisterSamples */
 enum {
 	SOUND_WATER_IN,
 	SOUND_WATER_OUT,

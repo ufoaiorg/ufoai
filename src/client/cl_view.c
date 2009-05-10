@@ -194,7 +194,6 @@ static void CL_ParseEntitystring (void)
 
 /**
  * @brief Call before entering a new level, or after vid_restart
- * @sa S_RegisterSounds
  */
 void V_LoadMedia (void)
 {

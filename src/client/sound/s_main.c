@@ -29,210 +29,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "s_sample.h"
 #include "s_mix.h"
 
-/** @brief Support sound file extensions */
-static const char *soundExtensions[] = {"ogg", "wav", NULL};
-
-
 s_env_t s_env;
 
-#define SFX_HASH_SIZE 64
-static sfx_t *sfx_hash[SFX_HASH_SIZE];
-
-static cvar_t *snd_volume;
+cvar_t *snd_volume;
 static cvar_t *snd_init;
 static cvar_t *snd_rate;
 
-static int      audioRate;
-static int      audioChannels;
-static uint16_t audioFormat;
+static void S_Restart_f(void);
 
-/**
- * @brief
- * @sa S_RegisterSound
- */
-static Mix_Chunk *S_LoadSound (const char *sound)
-{
-	size_t len;
-	byte *buf;
-	const char **extension = soundExtensions;
-	SDL_RWops *rw;
-	Mix_Chunk *chunk;
-
-	if (!sound || sound[0] == '*')
-		return NULL;
-
-	len = strlen(sound);
-	if (len + 4 >= MAX_QPATH) {
-		Com_Printf("S_LoadSound: MAX_QPATH exceeded for: '%s'\n", sound);
-		return NULL;
-	}
-
-	while (*extension) {
-		if ((len = FS_LoadFile(va("sound/%s.%s", sound, *extension++), &buf)) == -1)
-			continue;
-
-		if (!(rw = SDL_RWFromMem(buf, len))){
-			FS_FreeFile(buf);
-			continue;
-		}
-
-		if (!(chunk = Mix_LoadWAV_RW(rw, qfalse)))
-			Com_Printf("S_LoadSound: %s.\n", Mix_GetError());
-
-		FS_FreeFile(buf);
-
-		SDL_FreeRW(rw);
-
-		if (chunk)
-			return chunk;
-	}
-
-	Com_Printf("S_LoadSound: Could not find sound file: '%s'\n", sound);
-	return NULL;
-}
-
-/**
- * @brief Loads a buffer from memory into the mixer
- * @param[in] mem 16 byte (short) buffer with data
- * @returns the channel the sound is played on or -1 in case of an error
- */
-int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, int ms)
-{
-	SDL_AudioCVT wavecvt;
-	Mix_Chunk sample;
-	const int samplesize = 2 * channel;
-
-	if (!s_env.initialized)
-		return -1;
-
-	/* Build the audio converter and create conversion buffers */
-	if (SDL_BuildAudioCVT(&wavecvt, AUDIO_S16, channel, rate,
-			audioFormat, audioChannels, audioRate) < 0) {
-		return -1;
-	}
-
-	wavecvt.len = size & ~(samplesize - 1);
-	wavecvt.buf = (byte *)Mem_PoolAlloc(wavecvt.len * wavecvt.len_mult, cl_soundSysPool, 0);
-	if (wavecvt.buf == NULL)
-		return -1;
-	memcpy(wavecvt.buf, mem, size);
-
-	/* Run the audio converter */
-	if (SDL_ConvertAudio(&wavecvt) < 0) {
-		Mem_Free(wavecvt.buf);
-		return -1;
-	}
-
-	sample.allocated = 0;
-	sample.abuf = wavecvt.buf;
-	sample.alen = wavecvt.len_cvt;
-	sample.volume = MIX_MAX_VOLUME * snd_volume->value;
-
-	/** @todo Free the channel data after the channel ended - memleak */
-	return Mix_PlayChannelTimed(-1, &sample, 0, ms);
-}
-
-/**
- * @brief Loads and registers a sound file for later use
- * @param[in] name The name of the soundfile, relative to the sounds dir
- * @sa S_LoadSound
- */
-sfx_t *S_RegisterSound (const char *soundFile)
-{
-	Mix_Chunk *chunk;
-	sfx_t *sfx;
-	unsigned hash;
-	char name[MAX_QPATH];
-
-	if (!s_env.initialized)
-		return NULL;
-
-	Com_StripExtension(soundFile, name, sizeof(name));
-
-	hash = Com_HashKey(name, SFX_HASH_SIZE);
-	for (sfx = sfx_hash[hash]; sfx; sfx = sfx->hash_next)
-		if (!strcmp(name, sfx->name))
-			return sfx;
-
-	/* make sure the sound is loaded */
-	chunk = S_LoadSound(name);
-	if (!chunk)
-		return NULL;		/* couldn't load the sound's data */
-
-	sfx = Mem_PoolAlloc(sizeof(*sfx), cl_soundSysPool, 0);
-	sfx->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
-	sfx->chunk = chunk;
-	sfx->loops = 0; /* play once */
-	Mix_VolumeChunk(sfx->chunk, snd_volume->value * MIX_MAX_VOLUME);
-	sfx->hash_next = sfx_hash[hash];
-	sfx_hash[hash] = sfx;
-	return sfx;
-}
-
-static int S_AllocChannel (void)
-{
-	int i;
-
-	for (i = 0; i < MAX_CHANNELS; i++) {
-		if (!s_env.channels[i].sample)
-			return i;
-	}
-
-	return -1;
-}
-
-/**
- * @brief Validates the parms and queues the sound up
- * @param[in] origin if is NULL, the sound will be dynamically sourced from the entity
- * @param[in] sfx The soundfile to play
- * @param[in] relVolume Max mixer volume factor (0.0 - 1.0)
- * @sa S_StartLocalSound
- * @sa S_SetVolume
- */
-void S_StartSound (const vec3_t origin, sfx_t* sfx, float atten)
-{
-	s_channel_t *ch;
-	int i;
-
-	if (!s_env.initialized)
-		return;
-
-	/* maybe the sound file couldn't be loaded */
-	if (!sfx)
-		return;
-
-	if ((i = S_AllocChannel()) == -1)
-		return;
-
-	ch = &s_env.channels[i];
-
-	if (origin != NULL) {
-		VectorCopy(origin, ch->org);
-		S_SpatializeChannel(ch);
-	}
-
-	ch->sample = sfx;
-
-	Mix_PlayChannel(i, ch->sample->chunk, sfx->loops);
-}
-
-/**
- * @sa S_StartSound
- */
-void S_StartLocalSound (const char *sound)
-{
-	sfx_t *sfx;
-
-	if (!s_env.initialized)
-		return;
-
-	sfx = S_RegisterSound(sound);
-	if (!sfx) {
-		Com_Printf("S_StartLocalSound: can't load %s\n", sound);
-		return;
-	}
-	S_StartSound(NULL, sfx, 0.0);
-}
+int audioRate;
+int audioChannels;
+uint16_t audioFormat;
 
 /**
  * @brief Stop all channels
@@ -244,6 +51,25 @@ void S_StopAllSounds (void)
 	Mix_HaltChannel(-1);
 
 	memset(s_env.channels, 0, sizeof(s_env.channels));
+}
+
+/**
+ * @sa CL_Frame
+ */
+void S_Frame (void)
+{
+	if (snd_init && snd_init->modified) {
+		S_Restart_f();
+		snd_init->modified = qfalse;
+	}
+
+	if (!s_env.initialized)
+		return;
+
+	/* update right angle for stereo panning */
+	AngleVectors(cl.cam.angles, NULL, s_env.right, NULL);
+
+	M_Frame();
 }
 
 /**
@@ -271,7 +97,7 @@ static void S_Play_f (void)
  * @brief Restart the sound subsystem so it can pick up new parameters and flush all sounds
  * @sa S_Shutdown
  * @sa S_Init
- * @sa S_RegisterSounds
+ * @sa S_RegisterSamples
  */
 static void S_Restart_f (void)
 {
@@ -280,29 +106,11 @@ static void S_Restart_f (void)
 	S_Init();
 }
 
-/**
- * @sa CL_Frame
- */
-void S_Frame (void)
-{
-	if (snd_init && snd_init->modified) {
-		S_Restart_f();
-		snd_init->modified = qfalse;
-	}
-
-	if (!s_env.initialized)
-		return;
-
-	/* update right angle for stereo panning */
-	AngleVectors(cl.cam.angles, NULL, s_env.right, NULL);
-
-	M_Frame();
-}
-
 /** @todo This should be removed and read from the dir tree instead */
 static const char *soundFileSubDirs[] = {
 	"aliens", "ambience", "civilians", "doors", "footsteps", "geoscape", "misc", "soldiers", "weapons", NULL
 };
+
 
 static int S_CompleteSounds (const char *partial, const char **match)
 {
@@ -311,6 +119,7 @@ static int S_CompleteSounds (const char *partial, const char **match)
 	char *localMatch[MAX_COMPLETE];
 	size_t len = strlen(partial);
 	const char **dirList = soundFileSubDirs;
+	const char *soundExtensions[] = SAMPLE_TYPES;
 	const char **extension = soundExtensions;
 	int returnValue;
 
@@ -452,8 +261,9 @@ void S_Init (void)
 
 	s_env.initialized = qtrue;
 
+	S_RegisterSamples();
+
 	M_Init();
-	S_RegisterSounds();
 }
 
 /**
@@ -462,17 +272,12 @@ void S_Init (void)
  */
 void S_Shutdown (void)
 {
-	int i;
-	sfx_t* sfx;
-
 	if (!s_env.initialized)
 		return;
 
 	S_StopAllSounds();
 
-	for (i = 0; i < SFX_HASH_SIZE; i++)
-		for (sfx = sfx_hash[i]; sfx; sfx = sfx->hash_next)
-			Mix_FreeChunk(sfx->chunk);
+	S_FreeSamples();
 
 	M_Shutdown();
 
@@ -480,6 +285,5 @@ void S_Shutdown (void)
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 
 	Mem_FreeTag(cl_soundSysPool, 0);
-	memset(sfx_hash, 0, sizeof(sfx_hash));
 	s_env.initialized = qfalse;
 }
