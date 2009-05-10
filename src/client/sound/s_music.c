@@ -39,8 +39,8 @@ enum {
 typedef struct music_s {
 	char currentlyPlaying[MAX_QPATH];
 	Mix_Music *data;
-	SDL_RWops *musicSrc;		/**< freed by SDL_mixer */
 	char *nextMusicTrack;
+	byte *buffer;
 } music_t;
 
 
@@ -51,8 +51,6 @@ static music_t music;
 
 static cvar_t *snd_music;
 static cvar_t *snd_music_volume;
-/* HACK: Remove this as soon as the reason was found */
-static cvar_t *snd_music_crackleWorkaround;
 
 /**
  * @brief Parses music definitions for different situations
@@ -60,7 +58,7 @@ static cvar_t *snd_music_crackleWorkaround;
  */
 void M_ParseMusic (const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseMusic: unexpected end of file (campaign ";
+	const char *errhead = "M_ParseMusic: unexpected end of file (campaign ";
 	const char *token;
 	int i;
 
@@ -73,7 +71,7 @@ void M_ParseMusic (const char *name, const char **text)
 	else if (!strcmp(name, "main"))
 		i = MUSIC_MAIN;
 	else {
-		Com_Printf("CL_ParseMusic: Invalid music id '%s'\n", name);
+		Com_Printf("M_ParseMusic: Invalid music id '%s'\n", name);
 		FS_SkipBlock(text);
 		return;
 	}
@@ -82,7 +80,7 @@ void M_ParseMusic (const char *name, const char **text)
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseMusic: music def \"%s\" without body ignored\n", name);
+		Com_Printf("M_ParseMusic: music def \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -93,7 +91,7 @@ void M_ParseMusic (const char *name, const char **text)
 		if (*token == '}')
 			break;
 		if (musicArrayLength[i] >= MUSIC_MAX_ENTRIES) {
-			Com_Printf("Too many music entries for category: '%s'\n", name);
+			Com_Printf("M_ParseMusic: Too many music entries for category: '%s'\n", name);
 			FS_SkipBlock(text);
 			break;
 		}
@@ -110,22 +108,16 @@ void M_Stop (void)
 	if (music.data != NULL) {
 		Mix_HaltMusic();
 		Mix_FreeMusic(music.data);
-		/* rwops is freed in the SDL_mixer callback functions */
-		memset(&music, 0, sizeof(music));
 	}
 
-}
+	if (music.buffer)
+		FS_FreeFile(music.buffer);
 
-static void M_Start(const char *file);
-
-static void M_MusicHookFinished (void)
-{
-	M_Stop();
-	M_Start(Cvar_GetString("snd_music"));
+	music.data = NULL;
+	music.buffer = NULL;
 }
 
 /**
- * @brief
  * @sa S_Music_Stop
  */
 static void M_Start (const char *file)
@@ -134,19 +126,20 @@ static void M_Start (const char *file)
 	size_t len;
 	byte *musicBuf;
 	int size;
+	SDL_RWops *rw;
 
 	if (!file || file[0] == '\0')
 		return;
 
 	if (!s_env.initialized) {
-		Com_Printf("S_Music_Start: no sound started\n");
+		Com_Printf("M_Start: no sound started\n");
 		return;
 	}
 
 	Com_StripExtension(file, name, sizeof(name));
 	len = strlen(name);
 	if (len + 4 >= MAX_QPATH) {
-		Com_Printf("S_Music_Start: MAX_QPATH exceeded: "UFO_SIZE_T"\n", len + 4);
+		Com_Printf("M_Start: MAX_QPATH exceeded: "UFO_SIZE_T"\n", len + 4);
 		return;
 	}
 
@@ -154,12 +147,12 @@ static void M_Start (const char *file)
 	if (!strcmp(name, music.currentlyPlaying))
 		return;
 
-	/* we are still playing some background track - fade it out @sa S_Frame */
+	/* we are still playing some background track - fade it out @sa M_Frame */
 	if (Mix_PlayingMusic()) {
-		if (!Mix_FadeOutMusic(1500))
-			M_Stop();
 		if (music.nextMusicTrack)
 			Mem_Free(music.nextMusicTrack);
+		if (!Mix_FadeOutMusic(1500))
+			M_Stop();
 		music.nextMusicTrack = Mem_PoolStrDup(name, cl_soundSysPool, 0);
 		return;
 	}
@@ -169,59 +162,38 @@ static void M_Start (const char *file)
 
 	/* load it in */
 	if ((size = FS_LoadFile(va("music/%s.ogg", name), &musicBuf)) != -1) {
-		music.musicSrc = SDL_RWFromMem(musicBuf, size);
+		rw = SDL_RWFromMem(musicBuf, size);
 	} else if ((size = FS_LoadFile(va("music/%s.mp3", name), &musicBuf)) != -1) {
-		music.musicSrc = SDL_RWFromMem(musicBuf, size);
+		rw = SDL_RWFromMem(musicBuf, size);
 	} else {
-		Com_Printf("Could not load '%s' background track\n", name);
+		Com_Printf("M_Start: Could not load '%s' background track\n", name);
 		return;
 	}
 
-	music.data = Mix_LoadMUS_RW(music.musicSrc);
+	music.data = Mix_LoadMUS_RW(rw);
 
 	if (music.data) {
-		Com_Printf("S_Music_Start: Playing music: 'music/%s'\n", name);
+		Com_Printf("M_Start: Playing music: 'music/%s'\n", name);
 		Q_strncpyz(music.currentlyPlaying, name, sizeof(music.currentlyPlaying));
-		if (snd_music_crackleWorkaround->integer) {
-			if (Mix_FadeInMusic(music.data, 1, 1500) == -1)
-				Com_Printf("S_Music_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
-			Mix_HookMusicFinished(M_MusicHookFinished);
-		} else {
-			if (Mix_FadeInMusic(music.data, -1, 1500) == -1)
-				Com_Printf("S_Music_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
-		}
+		music.buffer = musicBuf;
+		if (Mix_FadeInMusic(music.data, -1, 1500) == -1)
+			Com_Printf("M_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
 	} else {
-		Com_Printf("S_Music_Start: Could not load music: 'music/%s' (%s)\n", name, Mix_GetError());
+		Com_Printf("M_Start: Could not load music: 'music/%s' (%s)\n", name, Mix_GetError());
+		SDL_FreeRW(rw);
+		FS_FreeFile(musicBuf);
 	}
 }
 
 /**
  * @brief Plays the music file given via commandline parameter
- * @todo Is it safe to simply have this as a wrapper for S_Music_Start() ?
  */
 static void M_Play_f (void)
 {
-	/** @todo the chunk below would make S_Music_Play_f() a wrapper for S_Music_Start() */
-#if 0
 	if (Cmd_Argc() == 2)
 		Cvar_Set("snd_music", Cmd_Argv(1));
 
-	S_Music_Start(Cvar_GetString("snd_music"));
-#endif
-
-	if (!s_env.initialized) {
-		Com_Printf("No audio activated\n");
-		return;
-	}
-
-	if (Cmd_Argc() == 2) {
-		if (Mix_PlayingMusic()) {
-			M_Start(Cmd_Argv(1));
-		} else {
-			Cvar_Set("snd_music", Cmd_Argv(1));
-		}
-	} else
-		snd_music->modified = qtrue;
+	M_Start(Cvar_GetString("snd_music"));
 }
 
 static int musicTrackCount = 0;
@@ -368,7 +340,6 @@ void M_Init (void)
 	Cmd_AddParamCompleteFunction("music_play", M_CompleteMusic);
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128");
-	snd_music_crackleWorkaround = Cvar_Get("snd_music_crackleWorkaround", "0", CVAR_ARCHIVE, "Set to 1 and issue \"music_stop; music_play\" if you experience crackling when background music loops");
 	snd_music_volume->modified = qtrue;
 
 	memset(&music, 0, sizeof(music));
