@@ -123,8 +123,7 @@ class RadiantCoreAPI
 		_QERFuncTable_1 m_radiantcore;
 	public:
 		typedef _QERFuncTable_1 Type;
-		STRING_CONSTANT(Name, "*")
-		;
+		STRING_CONSTANT(Name, "*");
 
 		RadiantCoreAPI ()
 		{
@@ -231,7 +230,9 @@ class Radiant: public TypeSystemRef
 		{
 			Preferences_Init();
 
+			/** @todo Add soundtypes support into ufoai.game */
 			GlobalFiletypes().addType("sound", "wav", filetype_t("PCM sound files", "*.wav"));
+			GlobalFiletypes().addType("sound", "ogg", filetype_t("OGG sound files", "*.ogg"));
 
 			Selection_construct();
 			HomePaths_Construct();

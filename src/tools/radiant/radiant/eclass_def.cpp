@@ -38,8 +38,6 @@
 #include "../../../shared/parse.h"
 #include "../../../shared/entitiesdef.h"
 
-#define OLDPARSING 0
-
 static const char* EClass_GetFilename (void)
 {
 	return "ufos/entities.ufo";
@@ -88,153 +86,6 @@ static void Eclass_ParseFlags (EntityClass *e, const char **text)
 		strcpy(e->flagnames[i], token);
 	}
 }
-
-#if OLDPARSING
-static void Eclass_ParseAttribute (EntityClass *e, const char **text, bool mandatory)
-{
-	const char *token;
-	do {
-		token = Com_Parse(text);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		if (!strcmp(token, "model")) {
-			EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model", mandatory));
-		} else if (!strcmp(token, "particle")) {
-			EntityClass_insertAttribute(*e, "particle", EntityClassAttribute("particle", "Particle", mandatory));
-		} else if (!strcmp(token, "noise")) {
-			EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("noise", "Sound", mandatory));
-		}
-	} while (*token != '}');
-}
-
-/**
- * Parses default values for entity parameters
- * @param e The entity class to add the default values to
- * @param text The text to parse the default values from
- * @sa GetDefaultValueForParameter
- */
-static void Eclass_ParseDefault (EntityClass *e, const char **text)
-{
-	const char *token;
-	do {
-		token = Com_Parse(text);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-	} while (*token != '}');
-}
-
-static void Eclass_ParseType (EntityClass *e, const char **text)
-{
-	const char *token;
-	do {
-		token = Com_Parse(text);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-	} while (*token != '}');
-}
-
-static EntityClass *Eclass_InitFromText (const char **text)
-{
-	EntityClass* e = Eclass_Alloc();
-	const char *token;
-	e->free = &Eclass_Free;
-
-	// grab the name
-	e->m_name = Com_Parse(text);
-	if (!*text)
-		return 0;
-	token = Com_Parse(text);
-	if (*token != '{') {
-		g_message("Entity '%s' without body ignored\n", e->m_name.c_str());
-		return 0;
-	}
-
-	g_debug("Parsing entity '%s'\n", e->m_name.c_str());
-
-	do {
-		/* get the name type */
-		token = Com_Parse(text);
-		if (!*text)
-			return 0;
-		if (*token == '}')
-			break;
-		if (!strcmp(token, "mandatory")) {
-			Eclass_ParseAttribute(e, text, true);
-		} else if (!strcmp(token, "optional")) {
-			Eclass_ParseAttribute(e, text, false);
-		} else if (!strcmp(token, "type")) {
-			Eclass_ParseType(e, text);
-		} else if (!strcmp(token, "default")) {
-			Eclass_ParseDefault(e, text);
-		} else {
-			if (!strcmp(token, "color") || !strcmp(token, "_color")) {
-				token = Com_Parse(text);
-				if (!*text)
-					return 0;
-				// grab the color, reformat as texture name
-				const int r = sscanf(token, "%f %f %f", &e->color[0], &e->color[1], &e->color[2]);
-				if (r != 3) {
-					g_message("Invalid color token given\n");
-					return e;
-				}
-			} else if (!strcmp(token, "size")) {
-				token = Com_Parse(text);
-				if (!*text)
-					return 0;
-				e->fixedsize = true;
-				const int r = sscanf(token, "%f %f %f %f %f %f", &e->mins[0], &e->mins[1], &e->mins[2], &e->maxs[0],
-						&e->maxs[1], &e->maxs[2]);
-				if (r != 6) {
-					g_message("Invalid size token given\n");
-					return 0;
-				}
-			} else if (!strcmp(token, "description")) {
-				token = Com_Parse(text);
-				if (!*text)
-					return 0;
-				e->m_comments = token;
-			} else if (!strcmp(token, "spawnflags")) {
-				gchar *flags;
-				token = Com_Parse(text);
-				if (!*text)
-					return 0;
-				flags = g_strdup(token);
-				Eclass_ParseFlags(e, (const char **)&flags);
-				g_free(flags);
-			} else if (!strcmp(token, "model")) {
-				token = Com_Parse(text);
-				if (!*text)
-					return 0;
-				StringOutputStream buffer(string_length(token));
-				buffer << PathCleaned(e->m_modelpath.c_str());
-				e->m_modelpath = buffer.c_str();
-			} else {
-				g_message("Invalid token '%s'\n", token);
-			}
-		}
-	} while (*text);
-
-	eclass_capture_state(e);
-
-	if (!e->fixedsize) {
-		EntityClass_insertAttribute(*e, "angle", EntityClassAttribute("direction", "Direction", "0"));
-	} else {
-		EntityClass_insertAttribute(*e, "angle", EntityClassAttribute("angle", "Yaw Angle", "0"));
-	}
-
-	g_debug("...added\n");
-	return e;
-}
-#endif
-
-#if !OLDPARSING
 
 /**
  * Add a new EntityClassAttribute to entity class based on given definition
@@ -338,7 +189,6 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 	return e;
 
 }
-#endif
 
 static void Eclass_ScanFile (EntityClassCollector& collector, const char *filename)
 {
@@ -357,22 +207,6 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 	char *entities = (char *)malloc(size + 1);
 	file.read(entities, size);
 	entities[size] = '\0';
-#if OLDPARSING
-	const char **text = (const char **)&entities;
-
-	do {
-		const char *token;
-		do {
-			token = Com_Parse(text);
-			if (!*token)
-				return;
-		} while (strcmp(token, "entity"));
-
-		e = Eclass_InitFromText(text);
-		if (e)
-			collector.insert(e);
-	} while (*entities);
-#else
 	if (ED_Parse(entities) == ED_ERROR) {
 		g_message("Parsing of entities definition file failed, returned error was %s\n", ED_GetLastError());
 		return;
@@ -382,5 +216,4 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 		if (e)
 			collector.insert(e);
 	}
-#endif
 }
