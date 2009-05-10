@@ -94,9 +94,6 @@ void S_Frame (void)
 		int j;
 
 		if (le->inuse && le->type == ET_SOUND) {
-			if (!((1 << cl_worldlevel->integer) & le->levelflags))
-				continue;
-
 			for (j = 0; j < MAX_CHANNELS; j++) {
 				if (s_env.channels[j].sample == le->sample)
 					break;
