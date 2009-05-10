@@ -35,6 +35,8 @@ CLIENT_SRCS = \
 	\
 	client/sound/s_music.c \
 	client/sound/s_main.c \
+	client/sound/s_mix.c \
+	client/sound/s_sample.c \
 	\
 	client/campaign/cp_aircraft.c \
 	client/campaign/cp_aircraft_callbacks.c \

@@ -510,6 +510,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\sound\s_music.h" />
+		<Unit filename="..\..\src\client\sound\s_sample.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\sound\s_sample.h" />
+		<Unit filename="..\..\src\client\sound\s_mix.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\sound\s_mix.h" />
 		<Unit filename="..\..\src\client\cl_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
