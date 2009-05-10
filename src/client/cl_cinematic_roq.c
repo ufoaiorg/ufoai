@@ -668,7 +668,7 @@ void CIN_ROQ_PlayCinematic (const char *fileName)
 		/* check whether this roq even has sound data */
 		if (!cin.noSound && roqCin.soundChannels)
 			/* Send samples to mixer */
-			roqCin.soundChannel = S_PlaySoundFromMem(roqCin.soundBuffer, roqCin.soundBufferPos * sizeof(short), ROQ_SOUND_RATE, roqCin.soundChannels, -1);
+			roqCin.soundChannel = S_StartRawSample(roqCin.soundBuffer, roqCin.soundBufferPos * sizeof(short), ROQ_SOUND_RATE, roqCin.soundChannels, -1);
 
 		if (roqCin.soundBuffer) {
 			Mem_Free(roqCin.soundBuffer);

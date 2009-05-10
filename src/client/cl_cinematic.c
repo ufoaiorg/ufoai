@@ -89,7 +89,7 @@ void CIN_PlayCinematic (const char *fileName)
 
 	if (cls.playingCinematic <= CIN_STATUS_FULLSCREEN) {
 		/* Make sure sounds aren't playing */
-		S_StopAllSounds();
+		S_Stop();
 		/* also stop the background music */
 		M_Stop();
 
@@ -120,7 +120,7 @@ void CIN_StopCinematic (void)
 	if (!cin.noSound) {
 		/** @todo only stop the cin.soundChannel channel - but don't call
 		 * @c Mix_HaltChannel directly */
-		S_StopAllSounds();
+		S_Stop();
 	}
 
 	if (cin.cinematicType == CINEMATIC_TYPE_ROQ)

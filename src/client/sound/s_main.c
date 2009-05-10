@@ -44,7 +44,7 @@ uint16_t audioFormat;
 /**
  * @brief Stop all channels
  */
-void S_StopAllSounds (void)
+void S_Stop (void)
 {
 	if (!s_env.initialized)
 		return;
@@ -252,7 +252,7 @@ void S_Shutdown (void)
 
 	M_Shutdown();
 
-	S_StopAllSounds();
+	S_Stop();
 
 	Mix_AllocateChannels(0);
 

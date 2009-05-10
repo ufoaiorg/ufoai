@@ -270,7 +270,7 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 				vorbis_synthesis_read(&ogmCin.vd, i);
 
 				if (!cin.noSound)
-					S_PlaySoundFromMem((const short*)rawBuffer, i * sizeof(short), ogmCin.vi.rate, 2, -1);
+					S_StartRawSample((const short*)rawBuffer, i * sizeof(short), ogmCin.vi.rate, 2, -1);
 
 				anyDataTransfered = qtrue;
 			}

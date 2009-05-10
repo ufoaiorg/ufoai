@@ -178,7 +178,7 @@ void S_StartLocalSample (const char *name)
  * @param[in] mem 16 byte (short) buffer with data
  * @returns the channel the sound is played on or -1 in case of an error
  */
-int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, int ms)
+int S_StartRawSample (const short* mem, size_t size, int rate, int channel, int ms)
 {
 	SDL_AudioCVT wavecvt;
 	Mix_Chunk chunk;

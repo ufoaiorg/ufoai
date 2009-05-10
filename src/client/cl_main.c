@@ -265,7 +265,7 @@ void CL_Disconnect (void)
 
 	CL_ClearState();
 
-	S_StopAllSounds();
+	S_Stop();
 
 	CL_SetClientState(ca_disconnected);
 }
