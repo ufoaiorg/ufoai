@@ -276,6 +276,8 @@ void S_StopAllSounds (void)
 	if (!s_env.initialized)
 		return;
 	Mix_HaltChannel(-1);
+
+	memset(s_env.channels, 0, sizeof(s_env.channels));
 }
 
 /**
@@ -341,9 +343,6 @@ static void S_Restart_f (void)
 	Com_Printf("Restarting sound\n");
 	S_Shutdown();
 	S_Init();
-
-	if (!s_env.initialized)
-		return;
 }
 
 /**
