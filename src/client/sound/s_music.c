@@ -118,7 +118,7 @@ void M_Stop (void)
 }
 
 /**
- * @sa S_Music_Stop
+ * @sa M_Stop
  */
 static void M_Start (const char *file)
 {
@@ -214,7 +214,7 @@ static void M_RandomTrack_f (void)
 	musicTrackCount = FS_BuildFileList("music/*.ogg");
 	if (musicTrackCount) {
 		randomID = rand() % musicTrackCount;
-		Com_DPrintf(DEBUG_SOUND, "S_Music_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
+		Com_DPrintf(DEBUG_SOUND, "M_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
 
 		while ((filename = FS_NextFileFromFileList("music/*.ogg")) != NULL) {
 			if (!randomID) {
@@ -227,7 +227,7 @@ static void M_RandomTrack_f (void)
 		}
 		FS_NextFileFromFileList(NULL);
 	} else {
-		Com_DPrintf(DEBUG_SOUND, "S_Music_RandomTrack_f: No musics found!\n");
+		Com_DPrintf(DEBUG_SOUND, "M_RandomTrack_f: No musics found!\n");
 	}
 }
 
