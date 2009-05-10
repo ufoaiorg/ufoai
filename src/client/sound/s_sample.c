@@ -119,11 +119,24 @@ s_sample_t *S_LoadSample (const char *soundFile)
 	return sample;
 }
 
+
+void S_FreeSamples (void)
+{
+	int i;
+	s_sample_t* sample;
+
+	for (i = 0; i < SAMPLE_HASH_SIZE; i++)
+		for (sample = sample_hash[i]; sample; sample = sample->hash_next)
+			Mix_FreeChunk(sample->chunk);
+
+	memset(sample_hash, 0, sizeof(sample_hash));
+}
+
 /**
  * @note Called at precache phase - only load these soundfiles once at startup or on sound restart
  * @sa S_Restart_f
  */
-void S_RegisterSamples (void)
+void S_LoadSamples (void)
 {
 	int i, j, k;
 
@@ -147,16 +160,4 @@ void S_RegisterSamples (void)
 	cls.sound_pool[SOUND_WATER_IN] = S_LoadSample("footsteps/water_in");
 	cls.sound_pool[SOUND_WATER_OUT] = S_LoadSample("footsteps/water_out");
 	cls.sound_pool[SOUND_WATER_MOVE] = S_LoadSample("footsteps/water_under");
-}
-
-void S_FreeSamples (void)
-{
-	int i;
-	s_sample_t* sample;
-
-	for (i = 0; i < SAMPLE_HASH_SIZE; i++)
-		for (sample = sample_hash[i]; sample; sample = sample->hash_next)
-			Mix_FreeChunk(sample->chunk);
-
-	memset(sample_hash, 0, sizeof(sample_hash));
 }

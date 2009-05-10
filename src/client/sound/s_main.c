@@ -111,7 +111,6 @@ static void S_Play_f (void)
  * @brief Restart the sound subsystem so it can pick up new parameters and flush all sounds
  * @sa S_Shutdown
  * @sa S_Init
- * @sa S_RegisterSamples
  */
 static void S_Restart_f (void)
 {
@@ -237,7 +236,7 @@ void S_Init (void)
 
 	s_env.initialized = qtrue;
 
-	S_RegisterSamples();
+	S_LoadSamples();
 
 	M_Init();
 }
