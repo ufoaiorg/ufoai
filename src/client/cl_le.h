@@ -109,7 +109,7 @@ typedef struct le_s {
 	float rotationSpeed;
 
 	/** sound effects */
-	struct sfx_s* sfx;
+	struct s_sample_s* sample;
 
 	/** gfx */
 	animState_t as;	/**< holds things like the current active frame and so on */

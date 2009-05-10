@@ -116,7 +116,7 @@ typedef struct
     zlib_filefunc_def z_filefunc;
     voidpf filestream;        /* io structore of the zipfile */
     uLong compression_method;   /* compression method (0==store) */
-    uLong byte_before_the_zipfile;/* byte before the zipfile, (>0 for sfx)*/
+    uLong byte_before_the_zipfile;/* byte before the zipfile, (>0 for sample)*/
     int   raw;
 } file_in_zip_read_info_s;
 
@@ -128,7 +128,7 @@ typedef struct
     zlib_filefunc_def z_filefunc;
     voidpf filestream;        /* io structore of the zipfile */
     unz_global_info gi;       /* public global information */
-    uLong byte_before_the_zipfile;/* byte before the zipfile, (>0 for sfx)*/
+    uLong byte_before_the_zipfile;/* byte before the zipfile, (>0 for sample)*/
     uLong num_file;             /* number of the current file in the zipfile*/
     uLong pos_in_central_dir;   /* pos of the current file in the central dir*/
     uLong current_file_ok;      /* flag about the usability of the current file*/

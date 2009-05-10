@@ -81,6 +81,9 @@ void S_Frame (void)
 		if (!ch->sample)
 			continue;
 
+		/* reset channel's count for loop samples */
+		ch->count = 0;
+
 		S_SpatializeChannel(ch);
 	}
 }
@@ -99,7 +102,7 @@ static void S_Play_f (void)
 
 	i = 1;
 	while(i < Cmd_Argc()){
-		S_StartLocalSound(Cmd_Argv(i));
+		S_StartLocalSample(Cmd_Argv(i));
 		i++;
 	}
 }

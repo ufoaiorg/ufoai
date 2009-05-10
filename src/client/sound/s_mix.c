@@ -64,7 +64,7 @@ void S_SpatializeChannel (const s_channel_t *ch)
 	else
 		VectorSubtract(origin, cl.cam.camorg, delta);
 
-	dist = VectorNormalize(delta) * DISTANCE_SCALE;
+	dist = VectorNormalize(delta) * DISTANCE_SCALE * ch->atten * ch->atten;
 
 	if (dist > 255.0)  /* clamp to max */
 		dist = 255.0;
@@ -82,12 +82,12 @@ void S_SpatializeChannel (const s_channel_t *ch)
 /**
  * @brief Validates the parms and queues the sound up
  * @param[in] origin if is NULL, the sound will be dynamically sourced from the entity
- * @param[in] sfx The soundfile to play
+ * @param[in] sample The soundfile to play
  * @param[in] relVolume Max mixer volume factor (0.0 - 1.0)
- * @sa S_StartLocalSound
+ * @sa S_StartLocalSample
  * @sa S_SetVolume
  */
-void S_StartSound (const vec3_t origin, sfx_t* sfx, float atten)
+void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten)
 {
 	s_channel_t *ch;
 	int i;
@@ -96,7 +96,7 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float atten)
 		return;
 
 	/* maybe the sound file couldn't be loaded */
-	if (!sfx)
+	if (!sample)
 		return;
 
 	if ((i = S_AllocChannel()) == -1)
@@ -109,27 +109,69 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float atten)
 		S_SpatializeChannel(ch);
 	}
 
-	ch->sample = sfx;
+	ch->atten = atten;
+	ch->sample = sample;
 
-	Mix_PlayChannel(i, ch->sample->chunk, sfx->loops);
+	Mix_PlayChannel(i, ch->sample->chunk, 0);
 }
 
 /**
- * @sa S_StartSound
+ * @brief Adds a loop sample for e.g. ambient sounds
  */
-void S_StartLocalSound (const char *sound)
+void S_LoopSample (const vec3_t org, s_sample_t *sample)
 {
-	sfx_t *sfx;
+	s_channel_t *ch;
+	int i;
+
+	if (!sample || !sample->chunk)
+		return;
+
+	ch = NULL;
+
+	for (i = 0; i < MAX_CHANNELS; i++){  /* find existing loop sound */
+		if (s_env.channels[i].sample == sample) {
+			ch = &s_env.channels[i];
+			break;
+		}
+	}
+
+	if (ch) {  /* update existing loop sample */
+		ch->count++;
+
+		VectorMix(ch->org, org, 1.0 / ch->count, ch->org);
+	} else {  /* or allocate a new one */
+		if ((i = S_AllocChannel()) == -1)
+			return;
+
+		ch = &s_env.channels[i];
+
+		VectorCopy(org, ch->org);
+		ch->count = 1;
+		ch->atten = DEFAULT_SOUND_ATTENUATION;
+		ch->sample = sample;
+
+		Mix_PlayChannel(i, ch->sample->chunk, 0);
+	}
+
+	S_SpatializeChannel(ch);
+}
+
+/**
+ * @sa S_PlaySample
+ */
+void S_StartLocalSample (const char *sound)
+{
+	s_sample_t *sample;
 
 	if (!s_env.initialized)
 		return;
 
-	sfx = S_RegisterSound(sound);
-	if (!sfx) {
-		Com_Printf("S_StartLocalSound: can't load %s\n", sound);
+	sample = S_RegisterSound(sound);
+	if (!sample) {
+		Com_Printf("S_StartLocalSample: can't load %s\n", sound);
 		return;
 	}
-	S_StartSound(NULL, sfx, 0.0);
+	S_PlaySample(NULL, sample, DEFAULT_SOUND_ATTENUATION);
 }
 
 /**
@@ -140,8 +182,8 @@ void S_StartLocalSound (const char *sound)
 int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, int ms)
 {
 	SDL_AudioCVT wavecvt;
-	Mix_Chunk sample;
-	const int samplesize = 2 * channel;
+	Mix_Chunk chunk;
+	const int chunkSize = 2 * channel;
 
 	if (!s_env.initialized)
 		return -1;
@@ -152,7 +194,7 @@ int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, in
 		return -1;
 	}
 
-	wavecvt.len = size & ~(samplesize - 1);
+	wavecvt.len = size & ~(chunkSize - 1);
 	wavecvt.buf = (byte *)Mem_PoolAlloc(wavecvt.len * wavecvt.len_mult, cl_soundSysPool, 0);
 	if (wavecvt.buf == NULL)
 		return -1;
@@ -164,11 +206,11 @@ int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, in
 		return -1;
 	}
 
-	sample.allocated = 0;
-	sample.abuf = wavecvt.buf;
-	sample.alen = wavecvt.len_cvt;
-	sample.volume = MIX_MAX_VOLUME * snd_volume->value;
+	chunk.allocated = 0;
+	chunk.abuf = wavecvt.buf;
+	chunk.alen = wavecvt.len_cvt;
+	chunk.volume = MIX_MAX_VOLUME * snd_volume->value;
 
 	/** @todo Free the channel data after the channel ended - memleak */
-	return Mix_PlayChannelTimed(-1, &sample, 0, ms);
+	return Mix_PlayChannelTimed(-1, &chunk, 0, ms);
 }

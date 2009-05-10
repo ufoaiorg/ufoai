@@ -192,7 +192,7 @@ typedef struct client_static_s {
 	struct model_s *model_weapons[MAX_OBJDEFS];
 
 	/** this pool is reloaded on every sound system restart */
-	sfx_t *sound_pool[MAX_SOUNDIDS];
+	s_sample_t *sound_pool[MAX_SOUNDIDS];
 
 	/** Used in team assignment screen to tell if we are assigning soldiers or heavy equipment (ugvs/tanks) */
 	/** @todo this doesn't belong here */

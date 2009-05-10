@@ -26,8 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "s_local.h"
 #include "s_sample.h"
 
-#define SFX_HASH_SIZE 64
-static sfx_t *sfx_hash[SFX_HASH_SIZE];
+#define SAMPLE_HASH_SIZE 64
+static s_sample_t *sample_hash[SAMPLE_HASH_SIZE];
 
 /**
  * @note Called at precache phase - only load these soundfiles once at startup or on sound restart
@@ -62,13 +62,13 @@ void S_RegisterSamples (void)
 void S_FreeSamples (void)
 {
 	int i;
-	sfx_t* sfx;
+	s_sample_t* sample;
 
-	for (i = 0; i < SFX_HASH_SIZE; i++)
-		for (sfx = sfx_hash[i]; sfx; sfx = sfx->hash_next)
-			Mix_FreeChunk(sfx->chunk);
+	for (i = 0; i < SAMPLE_HASH_SIZE; i++)
+		for (sample = sample_hash[i]; sample; sample = sample->hash_next)
+			Mix_FreeChunk(sample->chunk);
 
-	memset(sfx_hash, 0, sizeof(sfx_hash));
+	memset(sample_hash, 0, sizeof(sample_hash));
 }
 
 /**
@@ -122,10 +122,10 @@ static Mix_Chunk *S_LoadSound (const char *sound)
  * @param[in] name The name of the soundfile, relative to the sounds dir
  * @sa S_LoadSound
  */
-sfx_t *S_RegisterSound (const char *soundFile)
+s_sample_t *S_RegisterSound (const char *soundFile)
 {
 	Mix_Chunk *chunk;
-	sfx_t *sfx;
+	s_sample_t *sample;
 	unsigned hash;
 	char name[MAX_QPATH];
 
@@ -134,22 +134,21 @@ sfx_t *S_RegisterSound (const char *soundFile)
 
 	Com_StripExtension(soundFile, name, sizeof(name));
 
-	hash = Com_HashKey(name, SFX_HASH_SIZE);
-	for (sfx = sfx_hash[hash]; sfx; sfx = sfx->hash_next)
-		if (!strcmp(name, sfx->name))
-			return sfx;
+	hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
+	for (sample = sample_hash[hash]; sample; sample = sample->hash_next)
+		if (!strcmp(name, sample->name))
+			return sample;
 
 	/* make sure the sound is loaded */
 	chunk = S_LoadSound(name);
 	if (!chunk)
 		return NULL;		/* couldn't load the sound's data */
 
-	sfx = Mem_PoolAlloc(sizeof(*sfx), cl_soundSysPool, 0);
-	sfx->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
-	sfx->chunk = chunk;
-	sfx->loops = 0; /* play once */
-	Mix_VolumeChunk(sfx->chunk, snd_volume->value * MIX_MAX_VOLUME);
-	sfx->hash_next = sfx_hash[hash];
-	sfx_hash[hash] = sfx;
-	return sfx;
+	sample = Mem_PoolAlloc(sizeof(*sample), cl_soundSysPool, 0);
+	sample->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
+	sample->chunk = chunk;
+	Mix_VolumeChunk(sample->chunk, snd_volume->value * MIX_MAX_VOLUME);
+	sample->hash_next = sample_hash[hash];
+	sample_hash[hash] = sample;
+	return sample;
 }

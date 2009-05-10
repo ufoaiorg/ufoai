@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_le.h"
 #include "sound/s_main.h"
+#include "sound/s_mix.h"
 #include "cl_particle.h"
 #include "cl_actor.h"
 #include "cl_parse.h"
@@ -461,12 +462,12 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
  */
 void LET_PlayAmbientSound (le_t * le)
 {
-	assert(le->sfx);
+	assert(le->sample);
 
 	if (!((1 << cl_worldlevel->integer) & le->levelflags))
 		return;
 
-	S_StartSound(le->origin, le->sfx, -1.0f);
+	S_LoopSample(le->origin, le->sample);
 }
 
 /**
@@ -508,17 +509,17 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 			/* were we already in the water? */
 			if (le->positionContents & CONTENTS_WATER) {
 				/* play water moving sound */
-				S_StartSound(le->origin, cls.sound_pool[SOUND_WATER_OUT], DEFAULT_SOUND_ATTENUATION);
+				S_PlaySample(le->origin, cls.sound_pool[SOUND_WATER_OUT], DEFAULT_SOUND_ATTENUATION);
 			} else {
 				/* play water entering sound */
-				S_StartSound(le->origin, cls.sound_pool[SOUND_WATER_IN], DEFAULT_SOUND_ATTENUATION);
+				S_PlaySample(le->origin, cls.sound_pool[SOUND_WATER_IN], DEFAULT_SOUND_ATTENUATION);
 			}
 			return;
 		}
 
 		if (le->positionContents & CONTENTS_WATER) {
 			/* play water leaving sound */
-			S_StartSound(le->origin, cls.sound_pool[SOUND_WATER_MOVE], DEFAULT_SOUND_ATTENUATION);
+			S_PlaySample(le->origin, cls.sound_pool[SOUND_WATER_MOVE], DEFAULT_SOUND_ATTENUATION);
 		}
 	}
 }
@@ -549,9 +550,9 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 			CL_ParticleSpawn(t->particle, 0, origin, NULL, NULL);
 	}
 	if (t->footStepSound) {
-		sfx_t *sfx = S_RegisterSound(t->footStepSound);
+		s_sample_t *sample = S_RegisterSound(t->footStepSound);
 		Com_DPrintf(DEBUG_SOUND, "LE_PlaySoundFileAndParticleForSurface: volume %.2f\n", t->footStepVolume);
-		S_StartSound(origin, sfx, t->footStepVolume);
+		S_PlaySample(origin, sample, t->footStepVolume);
 	}
 }
 
@@ -727,8 +728,8 @@ static void LET_Projectile (le_t * le)
 			VecToAngles(bytedirs[le->state], le->ptl->angles);
 		}
 		if (le->ref2 && le->ref2[0]) {
-			sfx_t *sfx = S_RegisterSound(le->ref2);
-			S_StartSound(impact, sfx, le->fd->impactAttenuation);
+			s_sample_t *sample = S_RegisterSound(le->ref2);
+			S_PlaySample(impact, sample, le->fd->impactAttenuation);
 		}
 	} else if (CL_OutsideMap(le->ptl->s, UNIT_SIZE * 10)) {
 		le->endTime = cl.time;
@@ -780,15 +781,15 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 			ptl_t *ptl = NULL;
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
-					sfx_t *sfx = S_RegisterSound(fd->hitBodySound);
-					S_StartSound(le->origin, sfx, le->fd->impactAttenuation);
+					s_sample_t *sample = S_RegisterSound(fd->hitBodySound);
+					S_PlaySample(le->origin, sample, le->fd->impactAttenuation);
 				}
 				if (fd->hitBody[0])
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[normal], NULL);
 			} else {
 				if (fd->impactSound[0]) {
-					sfx_t *sfx = S_RegisterSound(fd->impactSound);
-					S_StartSound(le->origin, sfx, le->fd->impactAttenuation);
+					s_sample_t *sample = S_RegisterSound(fd->impactSound);
+					S_PlaySample(le->origin, sample, le->fd->impactAttenuation);
 				}
 				if (fd->impact[0])
 					ptl = CL_ParticleSpawn(fd->impact, 0, impact, bytedirs[normal], NULL);
@@ -913,10 +914,10 @@ void LET_BrushModel (le_t *le)
 void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags)
 {
 	le_t* le;
-	sfx_t* sfx;
+	s_sample_t* sample;
 
-	sfx = S_RegisterSound(sound);
-	if (!sfx)
+	sample = S_RegisterSound(sound);
+	if (!sample)
 		return;
 
 	le = LE_Add(0);
@@ -925,7 +926,7 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags)
 		return;
 	}
 	le->type = ET_SOUND;
-	le->sfx = sfx;
+	le->sample = sample;
 	VectorCopy(origin, le->origin);
 	le->invis = !cl_leshowinvis->integer;
 	le->levelflags = levelflags;

@@ -198,7 +198,7 @@ enum clc_ops_e {
 	clc_oob = 0xff				/**< out of band - connectionless */
 };
 
-#define DEFAULT_SOUND_ATTENUATION	0.15
+#define DEFAULT_SOUND_ATTENUATION	1.0
 
 #include "cmd.h"
 #include "cvar.h"

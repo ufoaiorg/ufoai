@@ -42,17 +42,18 @@ enum {
 	MAX_SOUNDIDS
 };
 
-typedef struct sfx_s {
+typedef struct s_sample_s {
 	char *name;
-	int loops;					/**< how many loops - 0 = play only once, -1 = infinite */
 	Mix_Chunk* chunk;
-	struct sfx_s* hash_next;	/**< next hash entry */
-} sfx_t;
+	struct s_sample_s* hash_next;	/**< next hash entry */
+} s_sample_t;
 
 
 typedef struct s_channel_s {
-	vec3_t org;  // for temporary entities and other positioned sounds
-	sfx_t *sample;
+	vec3_t org;  /**< for temporary entities and other positioned sounds */
+	s_sample_t *sample;
+	float atten;
+	int count;
 } s_channel_t;
 
 /** @brief the sound environment */
@@ -72,9 +73,9 @@ void S_Init(void);
 void S_Shutdown(void);
 void S_Frame(void);
 void S_StopAllSounds(void);
-void S_StartSound(const vec3_t origin, sfx_t* sfx, float relVolume);
-void S_StartLocalSound(const char *s);
-sfx_t *S_RegisterSound(const char *s);
+void S_PlaySample(const vec3_t origin, s_sample_t* sample, float relVolume);
+void S_StartLocalSample(const char *s);
+s_sample_t *S_RegisterSound(const char *s);
 int S_PlaySoundFromMem(const short* mem, size_t size, int rate, int channel, int ms);
 
 #endif

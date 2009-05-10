@@ -102,19 +102,6 @@ void M_ParseMusic (const char *name, const char **text)
 	} while (*text);
 }
 
-/**
- * @sa S_Music_Start
- */
-void M_Shutdown (void)
-{
-	if (music.data != NULL) {
-		Mix_HaltMusic();
-		Mix_FreeMusic(music.data);
-		/* rwops is freed in the SDL_mixer callback functions */
-		memset(&music, 0, sizeof(music));
-	}
-}
-
 static void M_Start(const char *file);
 
 static void M_MusicHookFinished (void)
@@ -371,4 +358,23 @@ void M_Init (void)
 	snd_music_volume->modified = qtrue;
 
 	memset(&music, 0, sizeof(music));
+}
+
+/**
+ * @sa S_Music_Start
+ */
+void M_Shutdown (void)
+{
+	if (music.data != NULL) {
+		Mix_HaltMusic();
+		Mix_FreeMusic(music.data);
+		/* rwops is freed in the SDL_mixer callback functions */
+		memset(&music, 0, sizeof(music));
+	}
+
+	Cmd_RemoveCommand("music_play");
+	Cmd_RemoveCommand("music_change");
+	Cmd_RemoveCommand("music_stop");
+	Cmd_RemoveCommand("music_randomtrack");
+
 }

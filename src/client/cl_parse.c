@@ -444,13 +444,13 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 {
 	vec3_t origin;
 	const char *sound;
-	sfx_t *sfx;
+	s_sample_t *sample;
 
 	sound = NET_ReadString(msg);
 	NET_ReadPos(msg, origin);
 
-	sfx = S_RegisterSound(sound);
-	S_StartSound(origin, sfx, DEFAULT_SOUND_ATTENUATION);
+	sample = S_RegisterSound(sound);
+	S_PlaySample(origin, sample, DEFAULT_SOUND_ATTENUATION);
 }
 
 /**
@@ -1414,7 +1414,7 @@ static void CL_InvReload (struct dbuffer *msg)
 	if (!ic)
 		return;
 
-	S_StartSound(le->origin, S_RegisterSound("weapons/reload"), DEFAULT_SOUND_ATTENUATION);
+	S_PlaySample(le->origin, S_RegisterSound("weapons/reload"), DEFAULT_SOUND_ATTENUATION);
 
 	/* if the displaced clip had any remaining bullets
 	 * store them as loose, unless the removed clip was full */
@@ -1729,7 +1729,7 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 		s = NET_ReadString(msg);
 		switch (i) {
 		case PRINT_CHAT:
-			S_StartLocalSound("misc/talk");
+			S_StartLocalSample("misc/talk");
 			MP_AddChatMessage(s);
 			/* skip format strings */
 			if (s[0] == '^')
