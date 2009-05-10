@@ -1,5 +1,5 @@
 /**
- * @file cl_music.c
+ * @file s_music.c
  */
 
 /*
@@ -22,10 +22,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_sound.h"
-#include "cl_music.h"
-#include "../shared/parse.h"
+#include "../client.h"
+#include "s_main.h"
+#include "s_music.h"
+#include "../../shared/parse.h"
 
 enum {
 	MUSIC_MAIN,

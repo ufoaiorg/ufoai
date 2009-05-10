@@ -22,11 +22,9 @@ CLIENT_SRCS = \
 	client/cl_le.c \
 	client/cl_main.c \
 	client/cl_menu.c \
-	client/cl_music.c \
 	client/cl_parse.c \
 	client/cl_particle.c \
 	client/cl_screen.c \
-	client/cl_sound.c \
 	client/cl_sequence.c \
 	client/cl_team.c \
 	client/cl_tip.c \
@@ -34,6 +32,9 @@ CLIENT_SRCS = \
 	client/cl_ugv.c \
 	client/cl_video.c \
 	client/cl_view.c \
+	\
+	client/sound/s_music.c \
+	client/sound/s_main.c \
 	\
 	client/campaign/cp_aircraft.c \
 	client/campaign/cp_aircraft_callbacks.c \

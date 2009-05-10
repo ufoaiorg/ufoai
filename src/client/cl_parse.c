@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_parse.h"
 #include "cl_screen.h"
 #include "cl_game.h"
-#include "cl_sound.h"
+#include "sound/s_main.h"
 #include "cl_team.h"
 #include "cl_particle.h"
 #include "cl_actor.h"

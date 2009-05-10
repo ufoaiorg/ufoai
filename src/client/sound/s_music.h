@@ -1,6 +1,6 @@
 /**
- * @file cl_sound.h
- * @brief Specifies sound API?
+ * @file s_music.h
+ * @brief Specifies music API
  */
 
 /*

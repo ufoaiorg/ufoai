@@ -1,5 +1,5 @@
 /**
- * @file cl_sound.c
+ * @file s_main.c
  * @brief Main control for any streaming sound output device.
  */
 
@@ -23,10 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_sound.h"
-#include "cl_music.h"
-#include "cl_le.h"
+#include "../client.h"
+#include "s_main.h"
+#include "s_music.h"
+#include "../cl_le.h"
 
 #define DISTANCE_SCALE 0.8
 

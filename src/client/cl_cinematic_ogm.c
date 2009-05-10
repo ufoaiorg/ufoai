@@ -34,7 +34,7 @@
 #endif
 
 #include "client.h"
-#include "cl_sound.h"
+#include "sound/s_main.h"
 
 
 typedef struct {
