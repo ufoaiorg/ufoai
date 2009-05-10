@@ -458,19 +458,6 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 }
 
 /**
- * @sa LE_AddAmbientSound
- */
-void LET_PlayAmbientSound (le_t * le)
-{
-	assert(le->sample);
-
-	if (!((1 << cl_worldlevel->integer) & le->levelflags))
-		return;
-
-	S_LoopSample(le->origin, le->sample);
-}
-
-/**
  * @brief Change the animation of an actor to the idle animation (which can be
  * panic, dead or stand)
  * @note We have more than one animation for dead - the index is given by the
@@ -916,6 +903,9 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags)
 	le_t* le;
 	s_sample_t* sample;
 
+	if (strstr(sound, "sound/"))
+		sound += 6;
+
 	sample = S_LoadSample(sound);
 	if (!sample)
 		return;
@@ -930,7 +920,6 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags)
 	VectorCopy(origin, le->origin);
 	le->invis = !cl_leshowinvis->integer;
 	le->levelflags = levelflags;
-	le->think = LET_PlayAmbientSound;
 	Com_DPrintf(DEBUG_SOUND, "Add ambient sound '%s'\n", sound);
 }
 

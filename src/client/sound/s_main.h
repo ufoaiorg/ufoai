@@ -45,7 +45,7 @@ enum {
 typedef struct s_sample_s {
 	char *name;
 	Mix_Chunk* chunk;
-	struct s_sample_s* hash_next;	/**< next hash entry */
+	struct s_sample_s* hashNext;	/**< next hash entry */
 } s_sample_t;
 
 

@@ -64,7 +64,7 @@ void S_SpatializeChannel (const s_channel_t *ch)
 	else
 		VectorSubtract(origin, cl.cam.camorg, delta);
 
-	dist = VectorNormalize(delta) * DISTANCE_SCALE * ch->atten * ch->atten;
+	dist = VectorNormalize(delta) * DISTANCE_SCALE * ch->atten;
 
 	if (dist > 255.0)  /* clamp to max */
 		dist = 255.0;

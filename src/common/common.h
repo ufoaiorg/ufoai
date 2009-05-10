@@ -176,7 +176,7 @@ enum svc_ops_e {
 	svc_sound,
 	svc_print,					/**< [byte] id [string] null terminated string */
 	svc_stufftext,				/**< [string] stuffed into client's console buffer, should be \n terminated */
-	svc_serverdata,				/**< [long] protocol ... */
+	svc_serverdata,				/**< [long] protocol, spawncount, playernum, mapname, ... */
 	svc_configstring,			/**< [short] [string] */
 	svc_event,					/**< event like move or inventory usage - see EV_* and ev_format array @sa CL_ParseEvent */
 	svc_oob = 0xff

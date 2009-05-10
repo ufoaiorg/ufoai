@@ -86,6 +86,25 @@ void S_Frame (void)
 
 		S_SpatializeChannel(ch);
 	}
+
+	/* ambient sounds */
+	for (i = 0; i < numLEs; i++) {
+		const le_t *le = &LEs[i];
+		int j;
+
+		if (le->inuse && le->type == ET_SOUND) {
+			if (!((1 << cl_worldlevel->integer) & le->levelflags))
+				continue;
+
+			for (j = 0; j < MAX_CHANNELS; j++) {
+				if (s_env.channels[j].sample == le->sample)
+					break;
+			}
+
+			if (j == MAX_CHANNELS)
+				S_LoopSample(le->origin, le->sample);
+		}
+	}
 }
 
 /**

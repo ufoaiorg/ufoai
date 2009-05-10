@@ -34,7 +34,7 @@ static s_sample_t *S_FindName (const char *name)
 	s_sample_t *sample;
 	const unsigned hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
 
-	for (sample = sampleHash[hash]; sample; sample = sample->hash_next)
+	for (sample = sampleHash[hash]; sample; sample = sample->hashNext)
 		if (!strcmp(name, sample->name))
 			return sample;
 
@@ -114,7 +114,7 @@ s_sample_t *S_LoadSample (const char *soundFile)
 	sample->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
 	sample->chunk = chunk;
 	Mix_VolumeChunk(sample->chunk, snd_volume->value * MIX_MAX_VOLUME);
-	sample->hash_next = sampleHash[hash];
+	sample->hashNext = sampleHash[hash];
 	sampleHash[hash] = sample;
 	return sample;
 }
@@ -125,11 +125,11 @@ void S_FreeSamples (void)
 	s_sample_t* sample;
 
 	for (i = 0; i < SAMPLE_HASH_SIZE; i++)
-		for (sample = sampleHash[i]; sample; sample = sample->hash_next)
+		for (sample = sampleHash[i]; sample; sample = sample->hashNext)
 			Mix_FreeChunk(sample->chunk);
 
 	for (i = 0; i < SAMPLE_HASH_SIZE; i++)
-		for (sample = sampleHash[i]; sample; sample = sample->hash_next)
+		for (sample = sampleHash[i]; sample; sample = sample->hashNext)
 			Mem_Free(sample);
 
 	memset(sampleHash, 0, sizeof(sampleHash));
