@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 s_env_t s_env;
 
 cvar_t *snd_volume;
+cvar_t *snd_distance_scale;
 static cvar_t *snd_init;
 static cvar_t *snd_rate;
 
@@ -207,6 +208,7 @@ void S_Init (void)
 		return;
 	}
 
+	snd_distance_scale = Cvar_Get("snd_distance_scale", "0.8", 0, "Sound distance scale");
 	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
 	/* set volumes to be changed so they are applied again for next sound/music playing */

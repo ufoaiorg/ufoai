@@ -44,7 +44,7 @@ void S_FreeChannel (int c)
 	memset(&s_env.channels[c], 0, sizeof(s_env.channels[0]));
 }
 
-#define DISTANCE_SCALE 0.8
+#define DISTANCE_SCALE snd_distance_scale->value
 
 /**
  * @brief Set distance and stereo panning for the specified channel.
