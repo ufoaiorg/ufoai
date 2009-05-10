@@ -37,18 +37,17 @@ enum {
 };
 
 typedef struct music_s {
-	char currentlyPlaying[MAX_QPATH];
+	char currentTrack[MAX_QPATH];
+	char nextTrack[MAX_QPATH];
 	Mix_Music *data;
-	char *nextMusicTrack;
 	byte *buffer;
 } music_t;
-
 
 #define MUSIC_MAX_ENTRIES 64
 static char *musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
 static int musicArrayLength[MUSIC_MAX];
 static music_t music;
-
+static int musicTrackCount;
 static cvar_t *snd_music;
 static cvar_t *snd_music_volume;
 
@@ -144,16 +143,14 @@ static void M_Start (const char *file)
 	}
 
 	/* we are already playing that track */
-	if (!strcmp(name, music.currentlyPlaying))
+	if (!strcmp(name, music.currentTrack))
 		return;
 
-	/* we are still playing some background track - fade it out @sa M_Frame */
+	/* we are still playing some background track - fade it out */
 	if (Mix_PlayingMusic()) {
-		if (music.nextMusicTrack)
-			Mem_Free(music.nextMusicTrack);
 		if (!Mix_FadeOutMusic(1500))
 			M_Stop();
-		music.nextMusicTrack = Mem_PoolStrDup(name, cl_soundSysPool, 0);
+		Q_strncpyz(music.nextTrack, name, sizeof(music.nextTrack));
 		return;
 	}
 
@@ -174,7 +171,7 @@ static void M_Start (const char *file)
 
 	if (music.data) {
 		Com_Printf("M_Start: Playing music: 'music/%s'\n", name);
-		Q_strncpyz(music.currentlyPlaying, name, sizeof(music.currentlyPlaying));
+		Q_strncpyz(music.currentTrack, name, sizeof(music.currentTrack));
 		music.buffer = musicBuf;
 		if (Mix_FadeInMusic(music.data, -1, 1500) == -1)
 			Com_Printf("M_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
@@ -195,8 +192,6 @@ static void M_Play_f (void)
 
 	M_Start(Cvar_GetString("snd_music"));
 }
-
-static int musicTrackCount = 0;
 
 /**
  * @brief Sets the music cvar to a random track
@@ -321,12 +316,11 @@ void M_Frame (void)
 		Mix_VolumeMusic(snd_music_volume->integer);
 		snd_music_volume->modified = qfalse;
 	}
-	if (music.nextMusicTrack) {
+	if (music.nextTrack[0] != '\0') {
 		if (!Mix_PlayingMusic()) {
 			M_Stop(); /* free the allocated memory */
-			M_Start(music.nextMusicTrack);
-			Mem_Free(music.nextMusicTrack);
-			music.nextMusicTrack = NULL;
+			M_Start(music.nextTrack);
+			music.nextTrack[0] = '\0';
 		}
 	}
 }
