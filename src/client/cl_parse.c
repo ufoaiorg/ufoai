@@ -450,7 +450,7 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	NET_ReadPos(msg, origin);
 
 	sample = S_LoadSample(sound);
-	S_PlaySample(origin, sample, DEFAULT_SOUND_ATTENUATION);
+	S_PlaySample(origin, sample, SOUND_ATTN_NORM);
 }
 
 /**
@@ -1414,7 +1414,7 @@ static void CL_InvReload (struct dbuffer *msg)
 	if (!ic)
 		return;
 
-	S_PlaySample(le->origin, S_LoadSample("weapons/reload"), DEFAULT_SOUND_ATTENUATION);
+	S_PlaySample(le->origin, S_LoadSample("weapons/reload"), SOUND_ATTN_IDLE);
 
 	/* if the displaced clip had any remaining bullets
 	 * store them as loose, unless the removed clip was full */

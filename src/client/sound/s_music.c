@@ -158,28 +158,24 @@ static void M_Start (const char *file)
 	M_Stop();
 
 	/* load it in */
-	if ((size = FS_LoadFile(va("music/%s.ogg", name), &musicBuf)) != -1) {
-		rw = SDL_RWFromMem(musicBuf, size);
-	} else if ((size = FS_LoadFile(va("music/%s.mp3", name), &musicBuf)) != -1) {
-		rw = SDL_RWFromMem(musicBuf, size);
-	} else {
+	if ((size = FS_LoadFile(va("music/%s.ogg", name), &musicBuf)) == -1) {
 		Com_Printf("M_Start: Could not load '%s' background track\n", name);
 		return;
 	}
 
+	rw = SDL_RWFromMem(musicBuf, size);
 	music.data = Mix_LoadMUS_RW(rw);
-
-	if (music.data) {
-		Com_Printf("M_Start: Playing music: 'music/%s'\n", name);
-		Q_strncpyz(music.currentTrack, name, sizeof(music.currentTrack));
-		music.buffer = musicBuf;
-		if (Mix_FadeInMusic(music.data, -1, 1500) == -1)
-			Com_Printf("M_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
-	} else {
+	if (!music.data) {
 		Com_Printf("M_Start: Could not load music: 'music/%s' (%s)\n", name, Mix_GetError());
 		SDL_FreeRW(rw);
 		FS_FreeFile(musicBuf);
+		return;
 	}
+
+	Q_strncpyz(music.currentTrack, name, sizeof(music.currentTrack));
+	music.buffer = musicBuf;
+	if (Mix_FadeInMusic(music.data, -1, 1500) == -1)
+		Com_Printf("M_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
 }
 
 /**

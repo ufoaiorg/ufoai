@@ -1219,8 +1219,8 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 								if (!strcmp(token, "firedef")) {
 									if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
 										const int fdIdx = od->numFiredefs[weapFdsIdx];
-										od->fd[weapFdsIdx][fdIdx].fireAttenuation = DEFAULT_SOUND_ATTENUATION;
-										od->fd[weapFdsIdx][fdIdx].impactAttenuation = DEFAULT_SOUND_ATTENUATION;
+										od->fd[weapFdsIdx][fdIdx].fireAttenuation = SOUND_ATTN_NORM;
+										od->fd[weapFdsIdx][fdIdx].impactAttenuation = SOUND_ATTN_NORM;
 										/* Parse firemode into fd[IDXweapon][IDXfiremode] */
 										Com_ParseFire(name, text, &od->fd[weapFdsIdx][fdIdx]);
 										/* Self-link fd */
@@ -2128,7 +2128,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 	/* link in terrainTypesHash[hash] should be NULL on the first run */
 	t->hash_next = terrainTypesHash[hash];
 	terrainTypesHash[hash] = t;
-	t->footStepVolume = DEFAULT_SOUND_ATTENUATION;
+	t->footStepVolume = SOUND_ATTN_STATIC;
 	t->bounceFraction = 1.0f;
 
 	do {

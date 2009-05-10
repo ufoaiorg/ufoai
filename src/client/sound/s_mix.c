@@ -146,7 +146,7 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample)
 
 		VectorCopy(org, ch->org);
 		ch->count = 1;
-		ch->atten = DEFAULT_SOUND_ATTENUATION;
+		ch->atten = SOUND_ATTN_IDLE;
 		ch->sample = sample;
 
 		Mix_PlayChannel(i, ch->sample->chunk, 0);
@@ -170,7 +170,7 @@ void S_StartLocalSample (const char *name)
 		Com_Printf("S_StartLocalSample: Failed to load %s\n", name);
 		return;
 	}
-	S_PlaySample(NULL, sample, DEFAULT_SOUND_ATTENUATION);
+	S_PlaySample(NULL, sample, SOUND_ATTN_NORM);
 }
 
 /**

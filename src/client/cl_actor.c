@@ -1744,7 +1744,7 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED)) {
 		s_sample_t *sample = S_LoadSample(fd->fireSound);
-		S_PlaySample(muzzle, sample, DEFAULT_SOUND_ATTENUATION);
+		S_PlaySample(muzzle, sample, SOUND_ATTN_IDLE);
 	}
 
 	firstShot = qfalse;
@@ -3071,7 +3071,7 @@ void CL_PlayActorSound (const le_t *le, actorSound_t soundType)
 		s_sample_t *sample = S_LoadSample(actorSound);
 		if (sample) {
 			Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: ActorSound: '%s'\n", actorSound);
-			S_PlaySample(le->origin, sample, DEFAULT_SOUND_ATTENUATION);
+			S_PlaySample(le->origin, sample, SOUND_ATTN_IDLE);
 		}
 	}
 }

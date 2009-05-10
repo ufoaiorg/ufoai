@@ -198,7 +198,10 @@ enum clc_ops_e {
 	clc_oob = 0xff				/**< out of band - connectionless */
 };
 
-#define DEFAULT_SOUND_ATTENUATION	1.0
+#define SOUND_ATTN_NONE 0 /**< full volume the entire level */
+#define SOUND_ATTN_NORM	1
+#define SOUND_ATTN_IDLE 2
+#define SOUND_ATTN_STATIC 3 /**< dimish very rapidly with distance */
 
 #include "cmd.h"
 #include "cvar.h"
