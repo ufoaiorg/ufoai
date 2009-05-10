@@ -74,7 +74,6 @@ typedef enum {
 
 typedef struct client_s {
 	client_state_t state;
-	int lastframe;				/**< for delta compression */
 	char userinfo[MAX_INFO_STRING];
 	player_t *player;			/**< game client structure */
 	char name[32];				/**< extracted from userinfo, high bits masked */
