@@ -429,12 +429,6 @@ const char* misc_model_dialog (GtkWidget* parent)
 
 	buffer << g_qeglobals.m_userGamePath.c_str() << "models/";
 
-	if (!file_readable(buffer.c_str())) {
-		// just go to fsmain
-		buffer.clear();
-		buffer << g_qeglobals.m_userGamePath.c_str() << "/";
-	}
-
 	const char *filename = file_dialog(parent, TRUE, _("Choose Model"), buffer.c_str(), ModelLoader::Name());
 	if (filename != 0) {
 		// use VFS to get the correct relative path
@@ -460,18 +454,15 @@ const char* misc_sound_dialog (GtkWidget* parent)
 
 	buffer << g_qeglobals.m_userGamePath.c_str() << "sound/";
 
-	if (!file_readable(buffer.c_str())) {
-		// just go to fsmain
-		buffer.clear();
-		buffer << g_qeglobals.m_userGamePath.c_str() << "/";
-	}
-
-	const char* filename = file_dialog(parent, TRUE, _("Open Wav File"), buffer.c_str(), "sound");
+	const char* filename = file_dialog(parent, TRUE, _("Open Sound File"), buffer.c_str(), "sound");
 	if (filename != 0) {
 		const char* relative = path_make_relative(filename, GlobalFileSystem().findRoot(filename));
 		if (relative == filename) {
 			g_warning("Could not extract the relative path, using full path instead\n");
 		}
+		// @todo strip extension
+		// const std::size_t length = path_get_filename_base_length(relative);
+		// relative[length] = '\0';
 		return relative;
 	}
 	return filename;
