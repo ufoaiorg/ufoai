@@ -119,7 +119,6 @@ s_sample_t *S_LoadSample (const char *soundFile)
 	return sample;
 }
 
-
 void S_FreeSamples (void)
 {
 	int i;
@@ -128,6 +127,10 @@ void S_FreeSamples (void)
 	for (i = 0; i < SAMPLE_HASH_SIZE; i++)
 		for (sample = sampleHash[i]; sample; sample = sample->hash_next)
 			Mix_FreeChunk(sample->chunk);
+
+	for (i = 0; i < SAMPLE_HASH_SIZE; i++)
+		for (sample = sampleHash[i]; sample; sample = sample->hash_next)
+			Mem_Free(sample);
 
 	memset(sampleHash, 0, sizeof(sampleHash));
 }
