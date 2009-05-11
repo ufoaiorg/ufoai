@@ -18,9 +18,9 @@ particle water_fountain
 {
 	init
 	{
-		v      "0 0 0"
-		tps    25.0
-		spawn water_drop
+		v		"0 0 0"
+		tps		25.0
+		spawn	water_drop
 	}
 	think
 	{
@@ -32,35 +32,35 @@ particle water_drop
 {
 	init
 	{
-		image  sfx/plasmaball
-		blend  add
-		style  facing
-		thinkfade  out
-		rand   float 1.0	// random value between 0 and 1
-		add    float 2.5	// ensure a minimum value
-		pop    *tps			// write the current stack value back into particle structure
-		color  ".5 .5 .5 1"
-		crand  vector "2 2 2"	// get a random vector between -2 and 2
-		add    *s				// add this vector to the particle structure starting vector
-		pop    *s				// write it back into the particle
+		image		sfx/plasmaball
+		blend		add
+		style		facing
+		thinkfade	out
+		rand		float 1.0 // random value between 0 and 1
+		add			float 2.5 // ensure a minimum value
+		pop			*tps // write the current stack value back into particle structure
+		color		".5 .5 .5 1"
+		crand		vector "2 2 2" // get a random vector between -2 and 2
+		add			*s // add this vector to the particle structure starting vector
+		pop			*s // write it back into the particle
 
-		a      "0 0 -100"		// the acceleration is going downwards
-		crand  vector "8 8 8"	// get a random vector with values between -8 and 8
-		add    vector "-4 -4 50"	// add some values to the random vector
-		pop    *v				// move it back into particle structure (velocity)
+		a		"0 0 -100" // the acceleration is going downwards
+		crand	vector "8 8 8" // get a random vector with values between -8 and 8
+		add		vector "-4 -4 50" // add some values to the random vector
+		pop		*v // move it back into particle structure (velocity)
 	}
 	run
 	{
 		// change the size
-		push   pos "1 1"
-		mul    *t
-		add    pos "4 4"
-		pop    *size
+		push	pos "1 1"
+		mul		*t
+		add		pos "4 4"
+		pop		*size
 
 		// change the color (fade out)
-		//push   *color
-		//mul    float .01
-		//pop    *color
+		//push	*color
+		//mul	float .01
+		//pop	*color
 	}
 	think { kill }
 }
@@ -75,15 +75,15 @@ particle bubble
 		tps		0.5
 		v		"0 0 20"
 		size	"2 2"
-		crand	vector "20 20 2"	// get a random vector
-		add		*s				// add this vector to the particle structure starting vector
-		pop		*s				// write it back into the particle
+		crand	vector "20 20 2" // get a random vector
+		add		*s // add this vector to the particle structure starting vector
+		pop		*s // write it back into the particle
 	}
 	run
 	{
 		crand	vector "0.3 0.3 0.3"
 		add		*s
-		pop 	*s
+		pop	*s
 	}
 	think { kill }
 }
@@ -96,7 +96,7 @@ particle bubbles
 	}
 	think
 	{
-		spawn bubble
+		spawn	bubble
 	}
 }
 
@@ -110,30 +110,30 @@ particle white_single_smoke
 		color	"1 1 1 1"
 		v		"0 0 10"
 		size	"16 16"
-		crand	vector "2 2 8"	// get a random vector
-		add		*s				// add this vector to the particle structure starting vector
-		pop		*s				// write it back into the particle
+		crand	vector "2 2 8" // get a random vector
+		add		*s // add this vector to the particle structure starting vector
+		pop		*s // write it back into the particle
 
-		tps 	1
+		tps		1
 		life	5
 	}
 	run
 	{
 		crand	vector "0.5 0.5 0"
 		add		*s
-		pop 	*s
+		pop		*s
 
 		// scale the size in relation to time
-		push   pos "10 10"
-		mul    *t
-		add    pos "4 4"
-		pop    *size
+		push	pos "10 10"
+		mul		*t
+		add		pos "4 4"
+		pop		*size
 	}
 	think
 	{
-		push   *color
-		mul    float 0.5
-		pop    *color
+		push	*color
+		mul		float 0.5
+		pop		*color
 	}
 }
 
@@ -145,7 +145,7 @@ particle white_smoke
 	}
 	think
 	{
-		spawn white_single_smoke
+		spawn	white_single_smoke
 	}
 }
 
@@ -153,10 +153,10 @@ particle corona
 {
 	init
 	{
-		image sfx/corona
-		blend add
-		style facing
-		size  "30 30"
+		image	sfx/corona
+		blend	add
+		style	facing
+		size	"30 30"
 	}
 }
 
@@ -164,10 +164,10 @@ particle corona_yellow
 {
 	init
 	{
-		image sfx/corona_y
-		blend add
-		style facing
-		size  "30 30"
+		image	sfx/corona_y
+		blend	add
+		style	facing
+		size	"30 30"
 	}
 }
 
@@ -175,19 +175,19 @@ particle coronaImpact
 {
 	init
 	{
-		image  sfx/corona
-		blend  add
-		style  rotated
-		size   "40 40"
-		thinkfade  out
-		tps    0.7
+		image		sfx/corona
+		blend		add
+		style		rotated
+		size		"40 40"
+		thinkfade	out
+		tps			0.7
 	}
 	run
 	{
-		push   pos "140 140"
-		mul    *t
-		add    pos "40 40"
-		pop    *size
+		push	pos "140 140"
+		mul		*t
+		add		pos "40 40"
+		pop		*size
 	}
 	think { kill }
 }
@@ -196,10 +196,10 @@ particle explosion
 {
 	init
 	{
-		spawn  explosion_1
-		spawn  explosion_2
-		push   int 10
-		nspawn smoketrail
+		spawn	explosion_1
+		spawn	explosion_2
+		push	int 10
+		nspawn	smoketrail
 		kill
 	}
 }
@@ -208,10 +208,10 @@ particle fire_explosion
 {
 	init
 	{
-		spawn  explosion_1
-		spawn  explosion_2
-		push   int 20
-		nspawn firetrail
+		spawn	explosion_1
+		spawn	explosion_2
+		push	int 20
+		nspawn	firetrail
 		kill
 	}
 }
@@ -220,22 +220,22 @@ particle explosion_1
 {
 	init
 	{
-		frame 0
-		endframe 10
-		image +sfx/uexp_
-		blend blend
-		style facing
-		framefade in
-		lightcolor "1 0.4 0.4"
-		lightintensity -0.5
-		size  "170 170"
-		fps   8.0
-		tps   0.8
-		push  *v
-		mul   float 30.0
-		add   *s
-		pop   *s
-		v     "0 0 0"
+		frame			0
+		endframe		10
+		image			+sfx/uexp_
+		blend			blend
+		style			facing
+		framefade		in
+		lightcolor		"1 0.4 0.4"
+		lightintensity	-0.5
+		size			"170 170"
+		fps				8.0
+		tps				0.8
+		push			*v
+		mul				float 30.0
+		add				*s
+		pop				*s
+		v				"0 0 0"
 	}
 	think { kill }
 }
@@ -244,25 +244,25 @@ particle explosion_2
 {
 	init
 	{
-		frame 0
-		endframe 10
-		image +sfx/uexp_
-		blend blend
-		style facing
-		lightcolor "0.4 0.4 1.0"
-		lightintensity 0.5
-		lightsustain 1.0
-		framefade out
-		lightcolor "1 0.4 0.4"
-		lightintensity -0.5
-		size  "170 170"
-		fps   8.0
-		tps   0.8
-		push  *v
-		mul   float 30.0
-		add   *s
-		pop   *s
-		v     "0 0 0"
+		frame			0
+		endframe		10
+		image			+sfx/uexp_
+		blend			blend
+		style			facing
+		lightcolor		"0.4 0.4 1.0"
+		lightintensity	0.5
+		lightsustain	1.0
+		framefade		out
+		lightcolor		"1 0.4 0.4"
+		lightintensity	-0.5
+		size			"170 170"
+		fps				8.0
+		tps				0.8
+		push			*v
+		mul				float 30.0
+		add				*s
+		pop				*s
+		v				"0 0 0"
 	}
 	think { kill }
 }
@@ -271,13 +271,13 @@ particle flash
 {
 	init
 	{
-		image sfx/flashbang
-		blend add
-		style facing
-		framefade out
-		size  "250 250"
-		tps   10
-		v     "0 0 0"
+		image		sfx/flashbang
+		blend		add
+		style		facing
+		framefade	out
+		size		"250 250"
+		tps			10
+		v			"0 0 0"
 	}
 	think { kill }
 }
@@ -286,22 +286,22 @@ particle smoketrail
 {
 	init
 	{
-		image sfx/fireball
-		blend add
-		style facing
-		size  "3 3"
-		crand vector "20 20 20"
-		add   *s
-		pop   *s
-		push  *v
-		mul   float 80.0
-		add   vector "0 0 90"
-		crand vector "110 110 110"
-		add   #
-		pop   *v
-		a     "0 0 -250"
-		tps   20.0
-		life  1
+		image	sfx/fireball
+		blend	add
+		style	facing
+		size	"3 3"
+		crand	vector "20 20 20"
+		add		*s
+		pop		*s
+		push	*v
+		mul		float 80.0
+		add		vector "0 0 90"
+		crand	vector "110 110 110"
+		add		#
+		pop		*v
+		a		"0 0 -250"
+		tps		20.0
+		life	1
 	}
 	think
 	{

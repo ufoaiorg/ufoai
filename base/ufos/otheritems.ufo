@@ -34,60 +34,60 @@ item alienmaterials
 
 item craft_ufo_scout
 {
-	name	"_UFO - Scout"
+	name		"_UFO - Scout"
 	is_dummy	true
-	weapon	false
-	model	objects/alien/disassembled/ufo_scout
+	weapon		false
+	model		objects/alien/disassembled/ufo_scout
 	notonmarket	true
 }
 
 item craft_ufo_fighter
 {
-	name	"_UFO - Fighter"
+	name		"_UFO - Fighter"
 	is_dummy	true
-	weapon	false
-	model	objects/alien/disassembled/ufo_fighter
+	weapon		false
+	model		objects/alien/disassembled/ufo_fighter
 	notonmarket	true
 }
 
 item craft_ufo_harvester
 {
-	name	"_UFO - Harvester"
+	name		"_UFO - Harvester"
 	is_dummy	true
-	weapon	false
-	model	objects/alien/disassembled/ufo_harvester
+	weapon		false
+	model		objects/alien/disassembled/ufo_harvester
 	notonmarket	true
 }
 
 item craft_ufo_bomber
 {
-	name	"_UFO - Bomber"
+	name		"_UFO - Bomber"
 	is_dummy	true
-	weapon false
+	weapon		false
 	notonmarket	true
 }
 
 item craft_ufo_corrupter
 {
-	name	"_UFO - Corrupter"
+	name		"_UFO - Corrupter"
 	is_dummy	true
-	weapon false
+	weapon		false
 	notonmarket	true
 }
 
 item craft_ufo_carrier
 {
-	name	"_UFO - Carrier"
+	name		"_UFO - Carrier"
 	is_dummy	true
-	weapon false
+	weapon		false
 	notonmarket	true
 }
 
 item craft_ufo_supply
 {
-	name	"_UFO - Supply Ship"
+	name		"_UFO - Supply Ship"
 	is_dummy	true
-	weapon false
+	weapon		false
 	notonmarket	true
 }
 
@@ -97,17 +97,17 @@ item craft_ufo_supply
 
 item bloodspider_weapon
 {
-	name	"Bloodspider weapon"	// TODO Will this ever be displayed? If se we would need gettext support.
-	model	weapons/knife/knife	//FIXME
-	weapon	true
-	type	melee
-	animationindex	2			//FIXME
-	scale	1.0
-	size	6
-	is_dummy	true
-	notonmarket	true
-	firetwohanded   true
-	dmgtype		normal
+	name			"Bloodspider weapon" // TODO Will this ever be displayed? If se we would need gettext support.
+	model			weapons/knife/knife //FIXME
+	weapon			true
+	type			melee
+	animationindex	2 //FIXME
+	scale			1.0
+	size			6
+	is_dummy		true
+	notonmarket		true
+	firetwohanded	true
+	dmgtype			normal
 
 	weapon_mod bloodspider_weapon
 	{
@@ -121,14 +121,11 @@ item bloodspider_weapon
 			firesnd		weapons/bloodspider
 			speed		0
 			range		2
-			shots		1			//FIXME
-			time		12			//FIXME
-			damage		"40 20"			//FIXME
+			shots		1 //FIXME
+			time		12 //FIXME
+			damage		"40 20" //FIXME
 			reaction	true
-			dmgweight   normal_monomolecularblade
+			dmgweight	normal_monomolecularblade
 		}
 	}
 }
-
-
-
