@@ -1444,6 +1444,48 @@ mapdef farm
 }
 
 
+mapdef ferry
+{
+	map				ferry
+	description		"_A ferry."
+	size			"medium"
+	teams			2
+	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		12
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		water
+	}
+
+	cultures
+	{
+		eastern
+		western 
+		oriental
+	}
+
+	populations
+	{
+		rural
+		village
+		suburban
+	}
+}
+
 
 mapdef rivertown
 {
