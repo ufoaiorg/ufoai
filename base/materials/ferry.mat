@@ -1,0 +1,11 @@
+
+
+# scrolling texture
+{
+	material tex_nature/ice002
+	{
+		texture tex_nature/ice002
+		scroll.s 1
+	}
+}
+
