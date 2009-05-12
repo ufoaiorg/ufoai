@@ -2448,6 +2448,7 @@ base/textures/tex_buildings/9techwall03b.jpg | GNU General Public License 2.0 | 
 base/textures/tex_buildings/9techwall05b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9techwall06.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9techwall07.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/carpet006.jpg | GNU General Public License 2.0 or later | zark127 | tex_buildings/wall_tab003
 base/textures/tex_buildings/ceiling.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/ceiling_slate.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/cemdrk.tga | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -2528,6 +2529,7 @@ base/textures/tex_buildings/floor009_nm.tga | GNU General Public License 2.0 or 
 base/textures/tex_buildings/floor015.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor015_nm.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor020.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_buildings/floor024.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_buildings/floor_gray.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/floor_gray_nm.tga | GNU General Public License 2.0
 base/textures/tex_buildings/japwall001.jpg | GNU General Public License 2.0 or later | Willem Sitters
@@ -2759,6 +2761,9 @@ base/textures/tex_doors/door016.jpg | GNU General Public License 2.0 | Werner "h
 base/textures/tex_doors/door017.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_doors/elevator_button.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_doors/metaldoor.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_furniture/basket.jpg | GNU General Public License 2.0 or later | zark127
+base/textures/tex_furniture/chest007.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/door_19 and tex_mattn/door_18
+base/textures/tex_furniture/clothes.jpg | GNU General Public License 2.0 or later | zark127 | models/civilians/ skins
 base/textures/tex_lights/mtl_l1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l1_fx0.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l1_fx1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -2773,10 +2778,12 @@ base/textures/tex_material/c_gray050.jpg | GNU General Public License 2.0 | Wern
 base/textures/tex_material/c_gray230.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_gray255.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_green1.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_material/c_lgreen.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_material/c_orange.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_orange2.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_orange3.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_red.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_material/c_white.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_material/c_yellow.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_yellow2.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_yellow3.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
@@ -2785,6 +2792,10 @@ base/textures/tex_material/metal002.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
 base/textures/tex_material/metall007.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall009.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metall011.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001.jpg
+base/textures/tex_material/metall011_nm.tga | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001_nm.tga
+base/textures/tex_material/shell001.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
+base/textures/tex_material/shell002.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_mattn/art001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/automat.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/bark001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3211,6 +3222,7 @@ base/textures/tex_pics/art_abstract003.jpg | GNU General Public License 2.0 | Jo
 base/textures/tex_pics/art_abstract004.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract005.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract006.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_pics/art_abstract007.jpg | GNU General Public License 2.0 or later | zark127 | created from a Gimp pattern
 base/textures/tex_pics/art_abstract_design001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract_design002.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract_design003.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -3281,7 +3293,10 @@ base/textures/tex_streets/street004.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_streets/street005.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_streets/street010.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_streets/street11.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_tech/comptable.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_tech/laptop_screen.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_tech/screen1.jpg | GNU General Public License 2.0 or later | zark127
+base/textures/tex_tech/screen2.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_tech/spec_analyser.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_terrain/desert.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_terrain/dummy.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
