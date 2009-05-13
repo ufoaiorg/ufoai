@@ -158,6 +158,8 @@ extract_mingw()
 	extract_archive_gz msys-core.tar.gz "${MINGW_DIR}"
 	extract_archive_bz2 msys-autoconf.tar.bz2 "${MINGW_DIR}"
 	extract_archive_bz2 msys-coreutils.tar.bz2 "${MINGW_DIR}"
+	cp -R ${MINGW_DIR}/usr/local/* "${MINGW_DIR}"
+	rm -rf ${MINGW_DIR}/usr/local
 	cp -R ${MINGW_DIR}/coreutils*/* "${MINGW_DIR}"
 	rm -rf ${MINGW_DIR}/coreutils*
 }
