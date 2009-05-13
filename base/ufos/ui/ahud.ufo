@@ -4,7 +4,7 @@
 
 /**
  * @brief Define interface shared by all huds.
- * @note called "ahud" to be load before another huds
+ * @note called "ahud" to be loaded before another huds
  */
 window ahud {
 
@@ -32,7 +32,7 @@ window radarmenu {
 //  FIREMODES (seperate lists for each weaponhand)
 // ==================
 /*
-	fm	... firemode
+	fm ... firemode
 	left/right/l/r  ... The hand/side of the firemode list
 	name ... The name of the firemode.
 	tu ... timeunits
@@ -62,17 +62,17 @@ window firemode_left {
 	pic bt_left_fm0
 	{
 		{
-			image	hud/firemode
-			pos		"0 576"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			mousefx	false
-			invis true
-			onClick	{ cmd "fireweap l 0;mn_pop;" }
-			onMouseEnter { *node:this image "hud/firemode_hover" }
-			onMouseLeave { *node:this image "hud/firemode" }
-			tooltip "*cvar mn_l_fm_name0" // @todo create a better tooltip with name, tu, shots...
+			image			hud/firemode
+			pos				"0 576"
+			texl			"0 0"
+			texh			"214  63"
+			size			"214  63"
+			mousefx			false
+			invis			true
+			onClick			{ cmd "fireweap l 0;mn_pop;" }
+			onMouseEnter	{ *node:this image "hud/firemode_hover" }
+			onMouseLeave	{ *node:this image "hud/firemode" }
+			tooltip			"*cvar mn_l_fm_name0" // @todo create a better tooltip with name, tu, shots...
 		}
 
 		pic cb
@@ -93,17 +93,17 @@ window firemode_left {
 	pic bt_left_fm1
 	{
 		{
-			image	hud/firemode
-			pos		"0 512"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			mousefx	false
-			invis true
-			onClick	{ cmd "fireweap l 1;mn_pop;" }
-			onMouseEnter { *node:this image "hud/firemode_hover" }
-			onMouseLeave { *node:this image "hud/firemode" }
-			tooltip "*cvar mn_l_fm_name1" // @todo create a better tooltip with name, tu, shots...
+			image			hud/firemode
+			pos				"0 512"
+			texl			"0 0"
+			texh			"214  63"
+			size			"214  63"
+			mousefx			false
+			invis			true
+			onClick			{ cmd "fireweap l 1;mn_pop;" }
+			onMouseEnter	{ *node:this image "hud/firemode_hover" }
+			onMouseLeave	{ *node:this image "hud/firemode" }
+			tooltip			"*cvar mn_l_fm_name1" // @todo create a better tooltip with name, tu, shots...
 		}
 
 		pic cb
@@ -124,17 +124,17 @@ window firemode_left {
 	pic bt_left_fm2
 	{
 		{
-			image	hud/firemode
-			pos		"0 448"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			mousefx	false
-			invis true
-			onClick	{ cmd "fireweap l 2;mn_pop;" }
-			onMouseEnter { *node:this image "hud/firemode_hover" }
-			onMouseLeave { *node:this image "hud/firemode" }
-			tooltip "*cvar mn_l_fm_name2" // @todo create a better tooltip with name, tu, shots...
+			image			hud/firemode
+			pos				"0 448"
+			texl			"0 0"
+			texh			"214  63"
+			size			"214  63"
+			mousefx			false
+			invis			true
+			onClick			{ cmd "fireweap l 2;mn_pop;" }
+			onMouseEnter	{ *node:this image "hud/firemode_hover" }
+			onMouseLeave	{ *node:this image "hud/firemode" }
+			tooltip			"*cvar mn_l_fm_name2" // @todo create a better tooltip with name, tu, shots...
 		}
 
 		pic cb
@@ -155,17 +155,17 @@ window firemode_left {
 	pic bt_left_fm3
 	{
 		{
-			image	hud/firemode
-			pos		"0 384"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			mousefx	false
-			invis true
-			onClick	{ cmd "fireweap l 3;mn_pop;" }
-			onMouseEnter { *node:this image "hud/firemode_hover" }
-			onMouseLeave { *node:this image "hud/firemode" }
-			tooltip "*cvar mn_l_fm_name3" // @todo create a better tooltip with name, tu, shots...
+			image			hud/firemode
+			pos				"0 384"
+			texl			"0 0"
+			texh			"214  63"
+			size			"214  63"
+			mousefx			false
+			invis			true
+			onClick			{ cmd "fireweap l 3;mn_pop;" }
+			onMouseEnter	{ *node:this image "hud/firemode_hover" }
+			onMouseLeave	{ *node:this image "hud/firemode" }
+			tooltip			"*cvar mn_l_fm_name3" // @todo create a better tooltip with name, tu, shots...
 		}
 
 		pic cb
