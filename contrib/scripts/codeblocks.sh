@@ -80,8 +80,11 @@ start_downloads()
 	download_archive http://downloads.sourceforge.net/mingw/ findutils-4.3.0-MSYS-1.0.11-3-bin.tar.gz msys-findutils.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ MSYS-1.0.11-20090120-dll.tar.gz msys.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ msysCORE-1.0.11-20080826.tar.gz msys-core.tar.gz
-	download_archive http://downloads.sourceforge.net/mingw/ autoconf-4-1-bin.tar.bz2 msys-autoconf.tar.bz2 
-	    
+	download_archive http://downloads.sourceforge.net/mingw/ autoconf-4-1-bin.tar.bz2 msys-autoconf.tar.bz2
+	download_archive http://downloads.sourceforge.net/mingw/ autoconf2.5-2.61-1-bin.tar.bz2 msys-autoconf2.5.tar.bz2 
+ 	download_archive http://downloads.sourceforge.net/mingw/ automake-3-1-bin.tar.bz2 msys-automake.tar.bz2
+ 	download_archive http://downloads.sourceforge.net/mingw/ automake1.10-1.10-1-bin.tar.bz2 msys-automake1.10.tar.bz2
+ 	
 	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-core.tar.gz gcc.tar.gz
 	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-g++.tar.gz g++.tar.gz
 
@@ -157,6 +160,9 @@ extract_mingw()
 	extract_archive_gz msys.tar.gz "${MINGW_DIR}"
 	extract_archive_gz msys-core.tar.gz "${MINGW_DIR}"
 	extract_archive_bz2 msys-autoconf.tar.bz2 "${MINGW_DIR}"
+	extract_archive_bz2 msys-autoconf2.5.tar.bz2 "${MINGW_DIR}"
+	extract_archive_bz2 msys-automake.tar.bz2 "${MINGW_DIR}"
+	extract_archive_bz2 msys-automake1.10tar.bz2 "${MINGW_DIR}"
 	extract_archive_bz2 msys-coreutils.tar.bz2 "${MINGW_DIR}"
 	cp -R ${MINGW_DIR}/usr/local/* "${MINGW_DIR}"
 	rm -rf ${MINGW_DIR}/usr/local
