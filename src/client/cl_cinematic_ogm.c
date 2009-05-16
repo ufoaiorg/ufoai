@@ -230,18 +230,11 @@ static int CIN_OGM_LoadPagesToStream (void)
 #define SIZEOF_RAWBUFF SAMPLE_SIZE * 4048
 static byte rawBuffer[SIZEOF_RAWBUFF];
 
-#define MIN_AUDIO_PRELOAD 0 /* in ms */
-#define MAX_AUDIO_PRELOAD 0 /* in ms */
-
 /**
  * @return true if audio wants more packets
  */
 static qboolean CIN_OGM_LoadAudioFrame (void)
 {
-	qboolean anyDataTransfered = qtrue;
-	float **pcm;
-	int samples;
-	int i;
 	ogg_packet op;
 	vorbis_block vb;
 
@@ -249,20 +242,19 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 	memset(&vb, 0, sizeof(vb));
 	vorbis_block_init(&ogmCin.vd, &vb);
 
-	while (anyDataTransfered && ogmCin.currentTime + MAX_AUDIO_PRELOAD > (int) (ogmCin.vd.granulepos * 1000
-			/ ogmCin.vi.rate)) {
-		anyDataTransfered = qfalse;
+	while (ogmCin.currentTime > (int) (ogmCin.vd.granulepos * 1000 / ogmCin.vi.rate)) {
+		float **pcm;
+		const int samples = vorbis_synthesis_pcmout(&ogmCin.vd, &pcm);
 
-		if ((samples = vorbis_synthesis_pcmout(&ogmCin.vd, &pcm)) > 0) {
+		if (samples > 0) {
 			/* vorbis -> raw */
 			const int width = 2;
 			const int channel = 2;
 			int samplesNeeded = sizeof(rawBuffer) / (width * channel);
 			const float *left = pcm[0];
 			const float *right = (ogmCin.vi.channels > 1) ? pcm[1] : pcm[0];
-			short *ptr;
-
-			ptr = (short*)rawBuffer;
+			short *ptr = (short*)rawBuffer;
+			int i;
 
 			if (samples < samplesNeeded)
 				samplesNeeded = samples;
@@ -272,35 +264,26 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 				ptr[1] = (right[i] >= -1.0f && right[i] <= 1.0f) ? right[i] * 32767.f : 32767 * ((right[i] > 0.0f) - (right[i] < 0.0f));
 			}
 
-			if (i > 0) {
-				/* tell libvorbis how many samples we actually consumed */
-				vorbis_synthesis_read(&ogmCin.vd, i);
+			/* tell libvorbis how many samples we actually consumed */
+			vorbis_synthesis_read(&ogmCin.vd, i);
 
-				if (!cin.noSound)
-					M_AddToSampleBuffer(&ogmCin.musicStream, i, rawBuffer);
+			if (!cin.noSound)
+				M_AddToSampleBuffer(&ogmCin.musicStream, i, rawBuffer);
 
-				anyDataTransfered = qtrue;
-
-				ogmCin.musicStream.playing = qtrue;
-			}
-		}
-
-		if (!anyDataTransfered) {
+			ogmCin.musicStream.playing = qtrue;
+		} else {
 			/* op -> vorbis */
 			if (ogg_stream_packetout(&ogmCin.os_audio, &op)) {
 				if (vorbis_synthesis(&vb, &op) == 0)
 					vorbis_synthesis_blockin(&ogmCin.vd, &vb);
-				anyDataTransfered = qtrue;
-			}
+			} else
+				break;
 		}
 	}
 
 	vorbis_block_clear(&vb);
 
-	if (ogmCin.currentTime + MIN_AUDIO_PRELOAD > (int)(ogmCin.vd.granulepos * 1000 / ogmCin.vi.rate))
-		return qtrue;
-	else
-		return qfalse;
+	return ogmCin.currentTime > (int)(ogmCin.vd.granulepos * 1000 / ogmCin.vi.rate);
 }
 
 /**
