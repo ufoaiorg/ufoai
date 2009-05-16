@@ -29,6 +29,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_SOUND_MUSIC_H
 #define CLIENT_SOUND_MUSIC_H
 
+/* 2 channels and a width of 2 bytes (short) */
+#define SAMPLE_SIZE 4
+#define MAX_RAW_SAMPLES 4096 * SAMPLE_SIZE
+
+typedef struct musicStream_s {
+	qboolean playing;
+	byte sampleBuf[MAX_RAW_SAMPLES];
+	int mixerPos;
+	int samplePos;
+} musicStream_t;
+
+void M_PlayMusicStream(musicStream_t *userdata);
+void M_AddToSampleBuffer(musicStream_t *userdata, int samples, const byte *data);
+void M_StopMusicStream(musicStream_t *userdata);
 void M_ParseMusic(const char *name, const char **text);
 void M_Frame(void);
 void M_Init(void);

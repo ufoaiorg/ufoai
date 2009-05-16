@@ -344,3 +344,60 @@ void M_Shutdown (void)
 	Cmd_RemoveCommand("music_stop");
 	Cmd_RemoveCommand("music_randomtrack");
 }
+
+static void M_MusicStreamCallback (musicStream_t *userdata, byte *stream, int length)
+{
+	while (1) {
+		const int availableBytes = (userdata->mixerPos > userdata->samplePos) ? MAX_RAW_SAMPLES - userdata->mixerPos + userdata->samplePos : userdata->samplePos - userdata->mixerPos;
+		if (!userdata->playing)
+			return;
+		if (length < availableBytes)
+			break;
+		Sys_Sleep(10);
+	}
+
+	if (userdata->mixerPos + length <= MAX_RAW_SAMPLES) {
+		memcpy(stream, userdata->sampleBuf + userdata->mixerPos, length);
+		userdata->mixerPos += length;
+		userdata->mixerPos %= MAX_RAW_SAMPLES;
+	} else {
+		const int end = MAX_RAW_SAMPLES - userdata->mixerPos;
+		const int start = length - end;
+		memcpy(stream, userdata->sampleBuf + userdata->mixerPos, end);
+		memcpy(stream, userdata->sampleBuf, start);
+		userdata->mixerPos = start;
+	}
+}
+
+/**
+ * Add stereo samples with a 16 byte width to the stream buffer
+ * @param[in] the amount of stereo samples that should be added to the stream buffer (this
+ * is usually 1/4 of the size of the data buffer, one sample should have 4 bytes, 2 for
+ * each channel)
+ * @param[in] data The stereo sample buffer
+ */
+void M_AddToSampleBuffer (musicStream_t *userdata, int samples, const byte *data)
+{
+	int i;
+	for (i = 0; i < samples; i++) {
+		short *ptr = (short *)&userdata->sampleBuf[userdata->samplePos];
+		*ptr = LittleShort(((const short *) data)[i * 2]);
+		ptr++;
+		*ptr = LittleShort(((const short *) data)[i * 2 + 1]);
+
+		userdata->samplePos += 4;
+		userdata->samplePos %= MAX_RAW_SAMPLES;
+	}
+}
+
+void M_PlayMusicStream (musicStream_t *userdata)
+{
+	Mix_HookMusic((void (*)(void*, Uint8*, int)) M_MusicStreamCallback, userdata);
+}
+
+void M_StopMusicStream (musicStream_t *userdata)
+{
+	userdata->playing = qfalse;
+	Mix_HookMusic(NULL, NULL);
+}
+

@@ -19,9 +19,16 @@
 #include "client.h"
 #include "cl_cinematic.h"
 #include "cl_cinematic_ogm.h"
+#include "sound/s_music.h"
 #include "renderer/r_draw.h"
 
+#define HAVE_VORBIS_CODEC_H 1
+#define HAVE_XVID_H 1
+#define HAVE_THEORA_THEORA_H 1
+
 #if defined(HAVE_VORBIS_CODEC_H) && (defined(HAVE_XVID_H) || defined(HAVE_THEORA_THEORA_H))
+
+#include <SDL_thread.h>
 
 #include <ogg/ogg.h>
 #include <vorbis/codec.h>
@@ -83,6 +90,8 @@ typedef struct
 	ogg_int64_t Vtime_unit;
 	int currentTime; /**< input from run-function */
 	int startTime;
+
+	musicStream_t musicStream;
 } ogmCinematic_t;
 
 static ogmCinematic_t ogmCin;
@@ -224,11 +233,11 @@ static int CIN_OGM_LoadPagesToStream (void)
 	return r;
 }
 
-#define SIZEOF_RAWBUFF 4 * 1024
+#define SIZEOF_RAWBUFF SAMPLE_SIZE * 4048
 static byte rawBuffer[SIZEOF_RAWBUFF];
 
-#define MIN_AUDIO_PRELOAD 400 /* in ms */
-#define MAX_AUDIO_PRELOAD 500 /* in ms */
+#define MIN_AUDIO_PRELOAD 0 /* in ms */
+#define MAX_AUDIO_PRELOAD 0 /* in ms */
 
 /**
  * @return true if audio wants more packets
@@ -252,15 +261,19 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 
 		if ((samples = vorbis_synthesis_pcmout(&ogmCin.vd, &pcm)) > 0) {
 			/* vorbis -> raw */
-			short *ptr = (short*) rawBuffer;
-			int samplesNeeded = (SIZEOF_RAWBUFF) / (2 * 2); /* (width * channel) */
+			const int width = 2;
+			const int channel = 2;
+			int samplesNeeded = sizeof(rawBuffer) / (width * channel);
 			const float *left = pcm[0];
 			const float *right = (ogmCin.vi.channels > 1) ? pcm[1] : pcm[0];
+			short *ptr;
+
+			ptr = (short*)rawBuffer;
 
 			if (samples < samplesNeeded)
 				samplesNeeded = samples;
 
-			for (i = 0; i < samplesNeeded; ++i, ptr += 2) {
+			for (i = 0; i < samplesNeeded; ++i, ptr += channel) {
 				ptr[0] = (left[i] >= -1.0f && left[i] <= 1.0f) ? left[i] * 32767.f : 32767 * ((left[i] > 0.0f) - (left[i] < 0.0f));
 				ptr[1] = (right[i] >= -1.0f && right[i] <= 1.0f) ? right[i] * 32767.f : 32767 * ((right[i] > 0.0f) - (right[i] < 0.0f));
 			}
@@ -270,9 +283,11 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 				vorbis_synthesis_read(&ogmCin.vd, i);
 
 				if (!cin.noSound)
-					S_StartRawSample((const short*)rawBuffer, i * sizeof(short), ogmCin.vi.rate, 2, -1);
+					M_AddToSampleBuffer(&ogmCin.musicStream, i, rawBuffer);
 
 				anyDataTransfered = qtrue;
+
+				ogmCin.musicStream.playing = qtrue;
 			}
 		}
 
@@ -738,6 +753,8 @@ int CIN_OGM_PlayCinematic (const char* filename)
 	/* Set to play the cinematic in fullscreen mode */
 	CIN_SetParameters(0, 0, viddef.virtualWidth, viddef.virtualHeight, CIN_STATUS_FULLSCREEN, qfalse);
 
+	M_PlayMusicStream(&ogmCin.musicStream);
+
 	return 0;
 }
 
@@ -777,6 +794,8 @@ void CIN_OGM_StopCinematic (void)
 {
 #ifdef HAVE_XVID_H
 	int status;
+
+	M_StopMusicStream(&ogmCin.musicStream);
 
 	status = CIN_XVID_Shutdown();
 	if (status)
