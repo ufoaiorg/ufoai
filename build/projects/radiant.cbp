@@ -36,7 +36,7 @@
 					<Add library="user32" />
 					<Add library="gdi32" />
 					<Add library="shell32" />
-					<Add library="libgdk-pixbuf-2.0" />
+					<Add library="libgdk_pixbuf-2.0" />
 					<Add library="winmm" />
 					<Add library="kernel32" />
 					<Add library="libgtkglext-win32-1.0" />
@@ -79,7 +79,7 @@
 					<Add library="user32" />
 					<Add library="gdi32" />
 					<Add library="shell32" />
-					<Add library="libgdk-pixbuf-2.0" />
+					<Add library="libgdk_pixbuf-2.0" />
 					<Add library="winmm" />
 					<Add library="kernel32" />
 					<Add library="libgtkglext-win32-1.0" />
