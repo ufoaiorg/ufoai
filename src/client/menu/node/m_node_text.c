@@ -46,7 +46,11 @@ static void MN_TextNodeDraw(menuNode_t *node);
  */
 void MN_TextNodeSelectLine (menuNode_t *node, int num)
 {
+	if (EXTRADATA(node).textLineSelected == num)
+		return;
 	EXTRADATA(node).textLineSelected = num;
+	if (node->onChange)
+		MN_ExecuteEventActions(node, node->onChange);
 }
 
 /**
@@ -494,6 +498,9 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 		MN_ExecuteEventActions(node, node->onRightClick);
 }
 
+/**
+ * @todo we should anyway scroll the text (if its possible)
+ */
 static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
 	if (node->onWheelUp && node->onWheelDown) {

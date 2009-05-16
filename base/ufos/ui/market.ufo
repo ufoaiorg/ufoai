@@ -129,8 +129,8 @@ window market
 		size		"265 550"
 		mousefx		true
 		longlines	prettychop
-		onClick		{ cmd "market_click <lineselected>" }
-		onWheel		{ cmd "market_scroll;" }
+		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
+		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
 
 	text market_storage
@@ -142,6 +142,8 @@ window market
 		rows		"22"
 		size		"40 550"
 		lineheight	"25"
+		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
+		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
 
 	text market_market
@@ -153,6 +155,8 @@ window market
 		rows		"22"
 		size		"40 550"
 		lineheight	"25"
+		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
+		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll;" }
 	}
 
 	text market_prices
@@ -164,7 +168,23 @@ window market
 		size		"80 550"
 		lineheight	"25"
 		pos			"462 180"
-		onWheel		{ cmd "market_scroll;" }
+		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
+		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
+	}
+
+	/**
+	 * @param <1> item selected
+	 * @param <2> scroll position
+	 */
+	confunc sync_market_scroll {
+		*market lineselected <1>
+		*market_storage lineselected <1>
+		*market_market lineselected <1>
+		*market_prices lineselected <1>
+		*market viewpos <2>
+		*market_storage viewpos <2>
+		*market_market viewpos <2>
+		*market_prices viewpos <2>
 	}
 
 	// ==================

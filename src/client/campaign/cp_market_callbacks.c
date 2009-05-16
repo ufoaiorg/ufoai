@@ -1,6 +1,5 @@
 /**
  * @file cp_market_callbacks.c
- * @todo Remove direct access to nodes
  */
 
 /*
@@ -164,35 +163,19 @@ static void BS_UpdateItem (const base_t *base, int itemNum)
  */
 static void BS_MarketScroll_f (void)
 {
-	menuNode_t* node;
 	int i;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base || buyCat >= MAX_FILTERTYPES || buyCat < 0)
 		return;
 
-	node = MN_GetNodeByPath("market.market");
-	if (!node)
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <scrollpos>\n", Cmd_Argv(0));
 		return;
-
-	buyList.scroll = node->u.text.super.viewPosY;
-
-	if (buyList.length > MAX_MARKET_MENU_ENTRIES && buyList.scroll >= buyList.length - MAX_MARKET_MENU_ENTRIES) {
-		buyList.scroll = buyList.length - MAX_MARKET_MENU_ENTRIES;
-		/** @todo horrible */
-		node->u.text.super.viewPosY = buyList.scroll;
 	}
 
-	/* the following nodes must exist */
-	node = MN_GetNodeByPath("market.market_market");
-	assert(node);
-	node->u.text.super.viewPosY = buyList.scroll;
-	node = MN_GetNodeByPath("market.market_storage");
-	assert(node);
-	node->u.text.super.viewPosY = buyList.scroll;
-	node = MN_GetNodeByPath("market.market_prices");
-	assert(node);
-	node->u.text.super.viewPosY = buyList.scroll;
+	buyList.scroll = atoi(Cmd_Argv(1));
+	assert(!((buyList.length > MAX_MARKET_MENU_ENTRIES && buyList.scroll >= buyList.length - MAX_MARKET_MENU_ENTRIES)));
 
 	/* now update the menu pics */
 	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++) {
