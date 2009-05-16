@@ -2230,10 +2230,14 @@ base/sound/aliens/slithering.wav | GNU General Public License 2.0 | Karen Rei Pe
 base/sound/aliens/strange_chat.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/alien_engine.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/creak.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/ambience/cricket_loop.wav | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/ambience/droning_long.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/droning_short.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/jingle.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/jingle2.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/ambience/lights_loop.wav | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/ambience/machine1.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/ambience/radiomessage.wav | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/ambience/sparks.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/ambience/sparks_short.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | sparks.ogg
 base/sound/ambience/water.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
@@ -2319,9 +2323,13 @@ base/sound/weapons/assaultrifle.wav | GNU General Public License 2.0 | Alex Park
 base/sound/weapons/bloodspider.wav | GNU General Public License 2.0 |  | Nexuiz' GPLed data - weapons/weapon_switch.wav
 base/sound/weapons/bolter2.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/boltercannonade.wav | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/brass1.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/weapons/casings3.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/weapons/chaingun.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/deepexplosion.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/electrolaser.wav | Creative Commons Sampling Plus 1.0 | BlakeD | Sine Wave 1 - Self Created via sine waves   12506__Koops__NEWLazerLOOP - Licensed under Creative Commons Sampling Plus 1.0 License. (http://freesound.iua.upf.edu/samplesViewSingle.php?id=12506)   30935__aust_paul__possiblelazer - Licensed under Creative Commons Sampling Plus 1.0 License.  (http://freesound.iua.upf.edu/samplesViewSingle.php?id=30935)   36990__Sea_Fury__M1_Abrams_Tank_Gun_Shot - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=36990)   19483__Halleck__JacobsLadderLong2 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19483)   19486__Halleck__JacobsLadderSingle1 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19486)   19484__Halleck__JacobsLadderShort1 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19484)   19487__Halleck__JacobsLadderSingle2 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19487)
+base/sound/weapons/expire.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/weapons/explode.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/weapons/fireexplosion.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/grenade.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/grenade_launcher.wav | GNU General Public License 2.0 | Karen Rei Pease
