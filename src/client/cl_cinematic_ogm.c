@@ -22,13 +22,7 @@
 #include "sound/s_music.h"
 #include "renderer/r_draw.h"
 
-#define HAVE_VORBIS_CODEC_H 1
-#define HAVE_XVID_H 1
-#define HAVE_THEORA_THEORA_H 1
-
 #if defined(HAVE_VORBIS_CODEC_H) && (defined(HAVE_XVID_H) || defined(HAVE_THEORA_THEORA_H))
-
-#include <SDL_thread.h>
 
 #include <ogg/ogg.h>
 #include <vorbis/codec.h>
