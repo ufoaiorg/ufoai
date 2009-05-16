@@ -473,8 +473,11 @@ then
 		fi
 		LIBS=
 		AC_CHECK_LIB(vorbis, vorbis_synthesis_init, LIBS="-lvorbis", AC_MSG_ERROR([You must have libvorbis!!!]), [-lm -logg])
+		CLIENT_LIBS="$LIBS $CLIENT_LIBS"
+	else
+		CLIENT_CFLAGS="$CLIENT_LIBS $VORBIS_CFLAGS"
+		CLIENT_LIBS="$VORBIS_LIBS $CLIENT_LIBS"
 	fi
-	CLIENT_LIBS="$LIBS $CLIENT_LIBS"
 
 	#---------------------------------------------------------------------------------------------
 	# Check XVID
@@ -507,10 +510,12 @@ then
 			LIBS=
 			AC_CHECK_LIB(theora, theora_decode_packetin, LIBS="-ltheora", AC_MSG_ERROR([You must have libtheora!!!]))
 		fi
+		CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	else
+		CLIENT_CFLAGS="$CLIENT_CFLAGS $THEORA_CFLAGS"
+		CLIENT_LIBS="$CLIENT_LIBS $THEORA_LIBS"
 	fi
-	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
-	LIBS=
 
 	#---------------------------------------------------------------------------------------------
 	# Check for gettext
