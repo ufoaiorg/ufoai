@@ -36,9 +36,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern cvar_t *snd_volume;
 extern cvar_t *snd_distance_scale;
-extern int audioRate;
-extern int audioChannels;
-extern uint16_t audioFormat;
-
 
 #endif
