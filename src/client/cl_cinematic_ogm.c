@@ -162,7 +162,7 @@ static int CIN_XVID_Decode (unsigned char *input, int inputSize)
 
 	ret = xvid_decore(ogmCin.xvidDecodeHandle, XVID_DEC_DECODE, &xvid_dec_frame, &ogmCin.xvidDecodeStats);
 
-	return (ret);
+	return ret;
 }
 
 static int CIN_XVID_Shutdown (void)
@@ -172,7 +172,7 @@ static int CIN_XVID_Shutdown (void)
 	if (ogmCin.xvidDecodeHandle)
 		ret = xvid_decore(ogmCin.xvidDecodeHandle, XVID_DEC_DESTROY, NULL, NULL);
 
-	return (ret);
+	return ret;
 }
 #endif
 

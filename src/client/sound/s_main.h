@@ -48,7 +48,6 @@ typedef struct s_sample_s {
 	struct s_sample_s* hashNext;	/**< next hash entry */
 } s_sample_t;
 
-
 typedef struct s_channel_s {
 	vec3_t org;  /**< for temporary entities and other positioned sounds */
 	s_sample_t *sample;
@@ -78,6 +77,5 @@ void S_Stop(void);
 void S_PlaySample(const vec3_t origin, s_sample_t* sample, float relVolume);
 void S_StartLocalSample(const char *s);
 s_sample_t *S_LoadSample(const char *s);
-int S_StartRawSample(const short* mem, size_t size, int rate, int channel, int ms);
 
 #endif
