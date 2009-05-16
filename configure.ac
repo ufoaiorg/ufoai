@@ -475,6 +475,8 @@ then
 		AC_CHECK_LIB(vorbis, vorbis_synthesis_init, LIBS="-lvorbis", AC_MSG_ERROR([You must have libvorbis!!!]), [-lm -logg])
 		CLIENT_LIBS="$LIBS $CLIENT_LIBS"
 	else
+		AC_SUBST([HAVE_VORBIS_CODEC_H],1)
+		AC_DEFINE([HAVE_VORBIS_CODEC_H],[1],[Have vorbis library])
 		CLIENT_CFLAGS="$CLIENT_LIBS $VORBIS_CFLAGS"
 		CLIENT_LIBS="$VORBIS_LIBS $CLIENT_LIBS"
 	fi
@@ -512,6 +514,8 @@ then
 		fi
 		CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 	else
+		AC_SUBST([HAVE_THEORA_THEORA_H],1)
+		AC_DEFINE([HAVE_THEORA_THEORA_H],[1],[Have theora library])
 		CLIENT_CFLAGS="$CLIENT_CFLAGS $THEORA_CFLAGS"
 		CLIENT_LIBS="$CLIENT_LIBS $THEORA_LIBS"
 	fi

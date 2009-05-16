@@ -22,7 +22,9 @@
 #include "sound/s_music.h"
 #include "renderer/r_draw.h"
 
-#if defined(HAVE_VORBIS_CODEC_H) && (defined(HAVE_XVID_H) || defined(HAVE_THEORA_THEORA_H))
+#if !defined(HAVE_VORBIS_CODEC_H) || (!defined(HAVE_XVID_H) && !defined(HAVE_THEORA_THEORA_H))
+#error "No ogm support compiled into the binary"
+#endif
 
 #include <ogg/ogg.h>
 #include <vorbis/codec.h>
@@ -817,24 +819,3 @@ void CIN_OGM_Init (void)
 
 	memset(&ogmCin, 0, sizeof(ogmCin));
 }
-
-#else
-int CIN_OGM_PlayCinematic (const char* filename)
-{
-	Com_Printf("No ogm support compiled into the binary\n");
-	return 1;
-}
-
-qboolean CIN_OGM_RunCinematic (void)
-{
-	return qfalse;
-}
-
-void CIN_OGM_StopCinematic (void)
-{
-}
-
-void CIN_OGM_Init (void)
-{
-}
-#endif
