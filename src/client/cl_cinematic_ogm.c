@@ -770,19 +770,18 @@ qboolean CIN_OGM_RunCinematic (void)
 void CIN_OGM_StopCinematic (void)
 {
 #ifdef HAVE_XVID_H
-	int status;
-
-	M_StopMusicStream(&ogmCin.musicStream);
-
-	status = CIN_XVID_Shutdown();
-	if (status)
+	if (CIN_XVID_Shutdown())
 		Com_Printf("[Xvid]Decore RELEASE problem, return value %d\n", status);
 #endif
+
 #ifdef HAVE_THEORA_THEORA_H
 	theora_clear(&ogmCin.th_state);
 	theora_comment_clear(&ogmCin.th_comment);
 	theora_info_clear(&ogmCin.th_info);
 #endif
+
+	M_StopMusicStream(&ogmCin.musicStream);
+
 	if (ogmCin.outputBuffer)
 		Mem_Free(ogmCin.outputBuffer);
 	ogmCin.outputBuffer = NULL;
