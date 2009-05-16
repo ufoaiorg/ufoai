@@ -117,12 +117,6 @@ void CIN_StopCinematic (void)
 
 	cls.playingCinematic = CIN_STATUS_NONE;
 
-	if (!cin.noSound) {
-		/** @todo only stop the cin.soundChannel channel - but don't call
-		 * @c Mix_HaltChannel directly */
-		S_Stop();
-	}
-
 	if (cin.cinematicType == CINEMATIC_TYPE_ROQ)
 		CIN_ROQ_StopCinematic();
 	else if (cin.cinematicType == CINEMATIC_TYPE_OGM)

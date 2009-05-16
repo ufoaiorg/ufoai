@@ -268,9 +268,7 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 			vorbis_synthesis_read(&ogmCin.vd, i);
 
 			if (!cin.noSound)
-				M_AddToSampleBuffer(&ogmCin.musicStream, i, rawBuffer);
-
-			ogmCin.musicStream.playing = qtrue;
+				M_AddToSampleBuffer(&ogmCin.musicStream, ogmCin.vi.rate, i, rawBuffer);
 		} else {
 			/* op -> vorbis */
 			if (ogg_stream_packetout(&ogmCin.os_audio, &op)) {

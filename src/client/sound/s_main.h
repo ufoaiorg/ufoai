@@ -62,7 +62,9 @@ typedef struct s_env_s {
 
 	s_channel_t channels[MAX_CHANNELS];
 
+	int rate;
 	int numChannels;
+	uint16_t format;
 
 	qboolean initialized;
 } s_env_t;

@@ -376,22 +376,40 @@ static void M_MusicStreamCallback (musicStream_t *userdata, byte *stream, int le
  * each channel)
  * @param[in] data The stereo sample buffer
  */
-void M_AddToSampleBuffer (musicStream_t *userdata, int samples, const byte *data)
+void M_AddToSampleBuffer (musicStream_t *userdata, int rate, int samples, const byte *data)
 {
 	int i;
-	for (i = 0; i < samples; i++) {
-		short *ptr = (short *)&userdata->sampleBuf[userdata->samplePos];
-		*ptr = LittleShort(((const short *) data)[i * 2]);
-		ptr++;
-		*ptr = LittleShort(((const short *) data)[i * 2 + 1]);
 
-		userdata->samplePos += 4;
-		userdata->samplePos %= MAX_RAW_SAMPLES;
+	if (rate != s_env.rate) {
+		const float scale = (float)rate / s_env.rate;
+		for (i = 0;; i++) {
+			const int src = i * scale;
+			short *ptr = (short *)&userdata->sampleBuf[userdata->samplePos];
+			if (src >= samples)
+				break;
+			*ptr = LittleShort(((const short *) data)[src * 2]);
+			ptr++;
+			*ptr = LittleShort(((const short *) data)[src * 2 + 1]);
+
+			userdata->samplePos += 4;
+			userdata->samplePos %= MAX_RAW_SAMPLES;
+		}
+	} else {
+		for (i = 0; i < samples; i++) {
+			short *ptr = (short *)&userdata->sampleBuf[userdata->samplePos];
+			*ptr = LittleShort(((const short *) data)[i * 2]);
+			ptr++;
+			*ptr = LittleShort(((const short *) data)[i * 2 + 1]);
+
+			userdata->samplePos += 4;
+			userdata->samplePos %= MAX_RAW_SAMPLES;
+		}
 	}
 }
 
 void M_PlayMusicStream (musicStream_t *userdata)
 {
+	userdata->playing = qtrue;
 	Mix_HookMusic((void (*)(void*, Uint8*, int)) M_MusicStreamCallback, userdata);
 }
 

@@ -189,7 +189,7 @@ int S_StartRawSample (const short* mem, size_t size, int rate, int channel, int 
 
 	/* Build the audio converter and create conversion buffers */
 	if (SDL_BuildAudioCVT(&wavecvt, AUDIO_S16, channel, rate,
-			audioFormat, audioChannels, audioRate) < 0) {
+			s_env.format, s_env.numChannels, s_env.rate) < 0) {
 		return -1;
 	}
 

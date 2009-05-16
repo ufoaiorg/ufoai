@@ -38,10 +38,6 @@ static cvar_t *snd_rate;
 
 static void S_Restart_f(void);
 
-int audioRate;
-int audioChannels;
-uint16_t audioFormat;
-
 /**
  * @brief Stop all channels
  */
@@ -234,7 +230,7 @@ void S_Init (void)
 		return;
 	}
 
-	if (Mix_QuerySpec(&audioRate, &audioFormat, &audioChannels) == 0) {
+	if (Mix_QuerySpec(&s_env.rate, &s_env.format, &s_env.numChannels) == 0) {
 		Com_Printf("S_Init: %s\n", Mix_GetError());
 		return;
 	}
@@ -250,7 +246,7 @@ void S_Init (void)
 
 	Mix_ChannelFinished(S_FreeChannel);
 
-	Com_Printf("... audio rate: %i\n... audio channels: %i\n", audioRate, audioChannels);
+	Com_Printf("... audio rate: %i\n... audio channels: %i\n", s_env.rate, s_env.numChannels);
 
 	s_env.initialized = qtrue;
 
