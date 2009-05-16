@@ -770,8 +770,7 @@ qboolean CIN_OGM_RunCinematic (void)
 void CIN_OGM_StopCinematic (void)
 {
 #ifdef HAVE_XVID_H
-	if (CIN_XVID_Shutdown())
-		Com_Printf("[Xvid]Decore RELEASE problem, return value %d\n", status);
+	CIN_XVID_Shutdown();
 #endif
 
 #ifdef HAVE_THEORA_THEORA_H
