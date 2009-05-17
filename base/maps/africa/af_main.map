@@ -10893,3 +10893,10 @@
 "light" "100"
 "spawnflags" "1"
 }
+// entity 205
+{
+"classname" "misc_sound"
+"origin" "1024 384 32"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "511"
+}
