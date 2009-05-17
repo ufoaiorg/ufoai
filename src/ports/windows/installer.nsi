@@ -136,6 +136,8 @@ SectionGroup /e "Mapping" SECGROUP02
 	SectionEnd
 
 	Section "Mapping Tools Shortcuts" SEC02B
+		SetOutPath "$INSTDIR\radiant"
+		
 		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\radiant\uforadiant.exe" "" "$INSTDIR\radiant\uforadiant.exe" 0
 	SectionEnd
