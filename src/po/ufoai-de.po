@@ -642,7 +642,8 @@ msgstr "UFO gesichtet"
 
 #: ../base/ufos/events.ufo:78
 msgid "mail_from_un"
-msgstr "SecGen. Mahouf Serra, Vereinte Nationen, New York City"
+msgstr ""
+"SecGen. Mahouf Serra, Vereinte Nationen, New York City"
 
 #: ../base/ufos/events.ufo:79
 #: ../base/ufos/events.ufo:89
@@ -788,7 +789,8 @@ msgstr "SecGen. Mahouf Serra, Vereinte Nationen, New York City"
 #: ../base/ufos/research.ufo:4742
 #: ../base/ufos/research.ufo:4749
 msgid "mail_to_base_commander"
-msgstr "Basiskommandeur, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Basiskommandeur, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:80
 msgid "2084 Mar 21"
@@ -909,7 +911,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4533
 #: ../base/ufos/research.ufo:4541
 msgid "mail_from_paul_navarre"
-msgstr "Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:90
 msgid "Alien died"
@@ -1008,7 +1011,8 @@ msgstr "<TODO>"
 #: ../base/ufos/events.ufo:254
 #: ../base/ufos/events.ufo:265
 msgid "mail_from_xo"
-msgstr "XO Abel S. Howard, Kommando & Kontrolle, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"XO Abel S. Howard, Kommando & Kontrolle, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:157
 msgid "Monthly Report -- %s"
@@ -1117,7 +1121,8 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:4699
 #: ../base/ufos/research.ufo:4708
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:278
 msgid "Response Too Late -- %s"
@@ -1156,7 +1161,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:342
 #: ../base/ufos/events.ufo:353
 msgid "mail_from_air_cdr"
-msgstr "Cdr. (Luft) Subakh al-Kuhar, Luftgeschwader, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Cdr. (Luft) Subakh al-Kuhar, Luftgeschwader, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:311
 msgid "New Aircraft Arrived -- %s"
@@ -2031,7 +2037,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4741
 #: ../base/ufos/research.ufo:4748
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/research.ufo:296
 #: ../base/ufos/research.ufo:336
@@ -3546,7 +3553,7 @@ msgid "kerrblade_txt"
 msgstr ""
 "Unsere Analyse der Kerrklinge ist fertig, Herr Kommandant. Hier ist eine Zusammenfassung.\n"
 "\n"
-"Die Kerrklinge scheint auf den ersten Blick das außerirdische Equivalent unseres Kampfmessers zu sein. Die Realität wäre ein besserer Ort, wenn das war wäre. Wir haben herausgefunden, dass die Klinge viel mehr als das ist und die Wahrheit ist nicht gerade beruhigend.\n"
+"Die Kerrklinge scheint auf den ersten Blick das außerirdische Equivalent unseres Kampfmessers zu sein. Die Realität wäre ein besserer Ort, wenn das wahr wäre. Wir haben herausgefunden, dass die Klinge viel mehr als das ist und die Wahrheit ist nicht gerade beruhigend.\n"
 "\n"
 "Hergestellt mit Kohlenstoffverbindungen und außerirdischen Plastiken ist sie überraschend leicht und beinhaltet keinerlei Metall. Das Material selbst ist sehr interessant für unsere Waffenproduktion. Weder splitterte die Klinge, noch bog sie sich oder bekam Scharten, egal wie sehr wir sie während der Tests missbrauchten. Wir glauben, dass wir dieses Material mit etwas mehr Forschung kopieren können.\n"
 "\n"
@@ -3846,20 +3853,20 @@ msgstr ""
 "\n"
 "Wie ich in meinem Antrag erwähnte, ist der Nadler tatsächlich eine Scharfschützenwaffe, allerdings eine ungewöhnliche. Er ignoriert das bisherige, normale Konzept kräftige Projektile abzufeuern, um einzelne Ziele in großer Entfernung zu treffen und zu zerstören. Anstatt dessen schießt es hunderte und aber-hunderte von ultra-schnellen Nadeln aus Silizium-Stahl, die sehr leicht ein Ziel in beinahe jeder beliebigen Entfernung zerschneiden können.\n"
 "\n"
-"Die Nadeln werden von einem schnell wechselndem magnetischen Feld innerhalb des Gewehrlaufes abgefeuert. Angeschlossen an den Lauf ist ein Zuführungssystem, das tausende von Nadeln in der Minute in den Lauf injiziert. Dadurch wird ein nahezu ununterbrochener Feuerstoß abgefeuert, der so lange andauert, wie der Abzug gedrückt wird und das Magazin noch gefüllt ist. Anders als Gewehrkugeln haben diese Nadeln eine annähernd gerade Flugbahn von der Mündung bis zum Ziel. Sie durchschlagen fast jede Panzerung als würde sie nicht existieren. Durch ihre extrem geringe Masse erzeugen sie beim Abschuss fast gar keinen Rückstoß, was eine hervorragende Genauigkeit ergibt, gleichzeitig sind sie dabei auch noch dünn genug, so dass sie nur relativ wenig vom Wetter beeinflusst werden. Wind, Regen und physikalische Hindernisse können einige Nadeln ablenken, aber bei weitem nicht genug, um die Waffe weniger effektiv zu machen.\n"
+"Die Nadeln werden von einem schnell wechselndem Magnetischen Feld innerhalb des Gewehrlaufes abgefeuert. Angeschlossen an den Lauf ist ein Zuführungssystem, dass tausende von Nadeln in der Minute in den Lauf injiziert. Dadurch wird ein nahezu ununterbrochener Feuerstoß abgefeuert, der so lange andauert, wie der Abzug gedrückt wird und das Magazin noch gefüllt ist. Anders als Gewehrkugeln haben diese Nadeln eine annähernd gerade Flugbahn von der Mündung bis zum Ziel. Sie durchschlagen fast jede Panzerung als würde sie nicht existieren. Durch ihre extrem geringe Masse erzeugen sie beim Abschuss fast gar keinen Rückstoß, was eine hervorragende Genauigkeit ergibt, gleichzeitig sind sie dabei auch noch dünn genug, so dass sie nur relativ wenig vom Wetter beeinflusst werden. Wind, Regen und physikalische Hindernisse können einige Nadeln ablenken, aber bei weitem nicht genug, um die Waffe weniger effektiv zu machen.\n"
 "\n"
-"Eine der Hauptkomponenten, die meine Aufmerksamkeit erregt hat, sind die starken Elektromagnete. Sie sind gebaut, wie bei einem Gaußgewehr (auch bekannt als 'Coilgun'): Viele Spulen der Elektromagnete sind um das Rohr herum gelegt, eine Anordnung, die wir bisher als zu Energie-ineffizient gehalten hatten, als dass man sie auf dem Schlachtfeld verwenden könnte. Die Außerirdischen scheinen das Prinzip durch intelligenten Einsatz von Supraleitern und außerirdischer Technologie anwendbar gemacht zu haben. Möglicherweise können wir diese Technologie für unsere eigenen EM Waffen Forschungen verwenden. Ich werde das genauer untersuchen und mich wieder bei Ihnen melden, sobald ich konkrete Anhaltspunkte habe.\n"
+"Eine der Hauptkomponenten, die meine Aufmerksamkeit erregt hat, sind die starken Elektromagnete. Sie sind gebaut, wie bei einem Gaußgewehr (auch bekannt als 'Coilgun'): Viele Spulen der Elektromagnete sind um das Rohr herum gelegt, eine Anordnung, die wir bisher als zu energie-ineffizient gehalten hatten, als dass man sie auf dem Schlachtfeld verwenden könnte. Die Außerirdischen scheinen das Prinzip durch intelligenten Einsatz von Supraleitern und außerirdischer Technologie anwendbar gemacht zu haben. Möglicherweise können wir diese Technologie für unsere eigenen EM Waffen Forschungen verwenden. Ich werde das genauer untersuchen und mich wieder bei Ihnen melden, sobald ich konkrete Anhaltspunkte habe.\n"
 "\n"
-"Anstelle unserer oben angebrachten Zielfernrohre haben die Außerirdischen ein hocheffizientes holographisches Zielsystem mit Entfernungsmesser implementiert, welches direkt in das Zielauge des Schützen projiziert. Ziele werden mit absoluter Klarheit bei jeder Entfernung gezeigt, die Zieleinrichtung kompensiert natürliche Körperbewegungen und gibt sogar die exakte Zielwahrscheinlichkeit zu jedem beliebigen Zeitpunkt an. Wir haben das Zielsystem unseren eigenen Soldaten vorgeführt und -- sobald sie sich an das System gewöhnt hatten, bevorzugte jeder, aber auch wirklich jeder unserer Soldaten die außerirdische Zielvorrichtung. Wenn wir die Optik  anpassen und in eine eigenständige Einheit einbauen könnten, so könnten wir die ultimative Optik für unsere Gewehre bauen, möglicherweise sogar für einige Handfeuerwaffen.\n"
+"Anstelle unserer oben angebrachten Zielfernrohre haben die Außerirdischen ein hoch effizientes holographisches Zielsystem mir Entfernungsmesser implementiert, welches direkt in das Zielauge des Schützen projiziert. Ziele werden mit absoluter Klarheit bei jeder Entfernung gezeigt, die Zieleinrichtung kompensiert natürliche Körperbewegungen und gibt sogar die exakte Zielwahrscheinlichkeit zu jedem beliebigen Zeitpunkt an. Wir haben das Zielsystem unseren eigenen Soldaten vorgeführt und -- sobald sie sich an das System gewöhnt hatten, bevorzugte jeder, aber auch wirklich jeder unserer Soldaten die außerirdische Zielvorrichtung. Wenn wir die Optik in eine anpassen und in einen eigenständige Einheit einbauen könnten, so könnten wir die ultimative Optik für unsere Gewehre bauen, möglicherweise sogar für einige Handfeuerwaffen.\n"
 "\n"
-"Ausgestattet mit einem Zweibein um das Gewehr im Liegen abfeuern zu können ist der Nadler eine wirkliche Bedrohung für unsere Truppen. Scharfschützen können schwere Verluste unter exponierten Truppenteilen hervorrufen, und das können wir uns nicht leisten. Wenn ein Nadler entdeckt wird, sollten unsere Soldaten unter optimaler Ausnutzung jeglicher Deckung den Feind von der Seite angreifen, während sie selber außer seiner Sicht bleiben. Ein Frontalangriff auf einen eingegrabenen Nadler würde sich mit hoher Wahrscheinlichkeit als Selbstmordversuch herausstellen, und ich empfehle dass niemand das ausprobiert.\n"
+"Ausgestattet mit einem Zweibein um das Gewehr im liegen abfeuern zu können ist der Nadler eine wirkliche Bedrohung für unsere Truppen. Scharfschützen können schwere Verluste unter exponierten Truppenteilen hervorrufen und das können wir uns nicht leisten. Wenn ein Nadler entdeckt wird, sollten unsere Soldaten unter optimaler Ausnutzung jeglicher Deckung den Feind von der Seite angreifen, während sie selber außer seiner Sicht bleiben. Ein Frontalangriff auf einen eingegrabenen Nadler würde sich mit hoher Wahrscheinlichkeit als Selbstmordversuch herausstellen und ich empfehle dass niemand das ausprobiert.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1811
 msgid "needlergun_pre_txt"
 msgstr ""
-"Herr Kommandant, wir haben eine neue außerirdische Waffe geborgen. Es handelt sich anscheinend um ein vollautomatisches Scharfschützengewehr, dass dutzende von dünnen scharfen Nadeln abschießt. Erste Tests haben gezeigt, dass die Nadeln nahezu ohne Beeinflussung normale Panzerung durchdringen. Ja, sie durchdringen die meisten Materialien sogar ohne zu verlangsamen! Es ist ein faszinierendes Design und wir würden gerne wissen, wie es genau funktioniert.\n"
+"Herr Kommandant, wir haben eine neue außerirdische Waffe geborgen. Es handelt sich anscheinend um ein vollautomatisches Scharfschützengewehr, das dutzende von dünnen scharfen Nadeln abschießt. Erste Tests haben gezeigt, dass die Nadeln nahezu ohne Beeinflussung normale Panzerung durchdringen. Ja, sie durchdringen die meisten Materialien sogar ohne zu verlangsamen! Es ist ein faszinierendes Design und wir würden gerne wissen, wie es genau funktioniert.\n"
 "\n"
 "Natürlich benötigt dieses Programm Ihre Zustimmung für Laborzeit und Mittel.\n"
 "\n"
@@ -5665,26 +5672,26 @@ msgstr ""
 #: ../base/ufos/research.ufo:3314
 msgid "inter_dragon_txt"
 msgstr ""
-"Commander, I'm extremely proud to present you with the plans for our new interceptor, the Dragon. As you can see we've taken more than one page out of the aliens' book and the radical styling truly pays off.\n"
+"Herr Kommandant, ich bin stolz, Ihnen die Pläne für unseren neuen Abfangjäger, den \"Dragon\" vorstellen zu dürfen. Wie Sie sehen können, haben wir mehr als nur einen Aspekt der außerirdischen Technik verwertet, und das radikale Design macht sich wirklich bezahlt.\n"
 "\n"
-"Incorporating new technologies from the ground up, the Dragon consists of an inner skeleton of alien materials providing strength for the lighter outer skin of carbon nanotube-reinforced plastics. This allows it to mount two actual alien engines which give speed and power like nothing else in our arsenal. The forward-swept wings are a special touch to allow it more knife-fighting mobility than alien designs.\n"
+"Von Grund auf mit neuer Technologie aufgebaut, besteht der Dragon aus einem inneren Skelett aus außerirdischen Werkstoffen, die die leichtere Außenhaut aus Kohlenstoff-Nanoröhren stabilisiert. Dies erlaubt uns, zwei außerirdische Triebwerke anzubringen, was mehr Geschwindigkeit und Beschleunigung bringt als alles andere in unserem Arsenal. Die nach vorn gerichteten Flügel sind eine Besonderheit, die eine bessere Nahkampf-Beweglichkeit ermöglichen als die Außerirdischen haben.\n"
 "\n"
-"The three-pronged fuselage is also inspired by the enemy, slicing through the air with remarkable grace. The upper two prongs can mount small retractable weapons, the bottom prong contains a medium-sized weapon compartment, and the central structure was designed to accomodate the main hardpoint -- the 'mouth', if you will -- for which the Dragon was named.\n"
+"Der Drei-Säulen-Rumpf ist ebenfalls durch den Feind inspiriert, er schneidet sich mit bemerkenswerter Eleganz durch die Luft. In die oberen Zinken können kleine, einziehbare Waffen montiert werden, der untere enthält eine Fach für eine mittlere Waffe, und die Zentralstruktur ist so entwickelt, dass sie die Hauptwaffe aufnehmen kann -- das Maul des Drachen, wenn Sie so wollen -- daher der Name.\n"
 "\n"
-"The main drawback of the Dragon is that, like UFOs, it requires antimatter to get into the air. Nothing else will do considering the weight of the fuselage. Since our supplies of antimatter are so limited it may be that we can't afford to spend it on anything but our airfleet. That's why we should be careful about where we deploy the Dragon, and consider whether or not its deployment is really necessary in any given situation.\n"
+"Der größte Nachteil des Dragon ist, dass er genau wie UFOs Antimaterie zum Fliegen benötigt. Nichts anderes funktioniert, wenn man das Gewicht des Rumpfes bedenkt. Da unsere Antimaterie-Vorräte so begrenzt sind, können wir uns möglicherweise nicht leisten, diese für etwas anderes als unsere Luftflotte zu verwenden. Daher sollten wir genau prüfen wo wir den Dragon einsetzen, und ob der Einsatz in einer konkreten Situation wirklich notwendig ist.\n"
 "\n"
-"Also, please note that while the Dragon is technically capable of entering orbit on its own steam, it has no space capabilities and should not be pushed above the upper atmosphere under any circumstances. Some things are just too much to ask right now. We're engineers, Commander, not wizards.\n"
+"Bitte beachten Sie, dass der Dragon zwar technisch in der Lage ist, aus eigener Kraft in den Orbit zu gelangen, er ist aber nicht weltraumfest und sollte daher unter keinen Umständen die Atmosphäre verlassen. Für manche Dinge ist es einfach noch zu früh. Wir sind Ingenieure, Herr Kommandant, keine Zauberer.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3317
 msgid "inter_dragon_pre_txt"
 msgstr ""
-"Commander, let me preface this by saying it's obvious that the aliens have been severely outperforming us in every way, but nowhere is this more evident than in the air. We were in a bad position at the start of the war and despite our efforts there has been little improvement.\n"
+"Herr Kommandant, lassen Sie mich einleitend bemerken, dass die Außerirdischen uns offensichtlich in jeglicher Hinsicht überlegen sind, aber in der Luft ist es besonders deutlich. Wir waren zu Beginn des Krieges in einer schlechten Position, und trotz unserer Anstrengungen haben wir kaum Fortschritte erzielt.\n"
 "\n"
-"However, now that we have an understanding of alien materials and how they behave in the air, as well as alien engines and fuelling systems, I think my team and I are ready to tackle the task of creating an entirely new interceptor exclusive to PHALANX. We believe that by combining alien techniques with good old human manufacturing we can design something that will be vastly superior to our current-generation craft while remaining economically feasible to produce and to fly.\n"
+"Doch nun haben wir Erkenntnisse über die außerirdischen Werkstoffe und wie sich diese in der Luft verhalten, sowie über außerirdische Triebwerke und deren Treibstoff, daher denke ich dass mein Team und ich nun in der Lage sind, einen völlig neuen Abfangjäger exklusiv für PHALANX zu entwerfen. Wir glauben, dass wir durch die Kombination aus außerirdischer Technik mit der guten alten irdischen Handarbeit etwas erschaffen können, das allen derzeitigen Luftfahrzeugen weit überlegen ist und dabei sowohl bezahlbar, als auch leicht zu fliegen bleibt.\n"
 "\n"
-"The program will incur considerable expenses in lab time, personnel and materials, but as always we stand to gain much more than we could possibly lose. It's a project that could rally a lot of hope for our cause, Commander. Please let me know as soon as possible when you want us to start work.\n"
+"Das Programm wird erhebliche Kosten in Laborzeit, Personal und Material verursachen, aber wie immer haben wir mehr zu gewinnen als zu verlieren. Es ist ein Projekt, das eine Menge Hoffnung für unsere Sache birgt, Kommandant. Bitte lassen Sie mich schnellstmöglich wissen, wann wir mit der Arbeit beginnen sollen.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -5818,7 +5825,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3359
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3384
 msgid "ufo_scout_txt"
@@ -6008,11 +6016,19 @@ msgstr ""
 #: ../base/ufos/research.ufo:3601
 msgid "ufo_corrupter_pre_txt"
 msgstr ""
-"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This is one of the largest UFOs we have observed so far, but the relatively light armament indicates that it's not a combat craft. Our preliminary walkabout of the interior has given us only tantalising clues about its intended function.\n"
+"Kommandant, meine Mannschaft und ich haben gerade einen weiteren UFO-Bericht für sie fertig gestellt. Sie erhalten hier meine Zusammenfassung zur Übersicht.\n"
 "\n"
-"A lot of the equipment is stuff we've seen before, containers geared towards storing live and dead biomass, but this UFO also has a lot of other kit that's leaving my team scratching their heads. There are mysterious alcoves with ports and valves leading to tanks full of human blood, with strange controls unlike anything we've seen from the aliens before. There are banks of robotic arms all ending in alien syringes, like some kind of mass inoculation centre -- and there's more that we can't even begin to describe. Just being inside it gives you a sense of something hostile to all human life.\n"
+"Dieses UFO, welches wir nun Verderber nennen, ist ein Alptraum der außerirdischen Medizin-Technologie. Für den Luftkampf ist es eher nicht geeignet. Seine Hauptaufgabe liegt ohne Zweifel darin, auf der Erde zu landen und verborgene Operationen an den menschlichen Opfern durchzuführen.\n"
 "\n"
-"I think we need to do some serious investigation on that thing right away, Commander. There's something very very wrong about it, and I'm not going to be able to sleep until I know what it is.\n"
+"Im Gegensatz zur bisherigen Ausstattung der Außerirdischen, die hauptsächlich den Zweck hatte menschliche Biomasse zu sammeln, dient die Innenausstattung des Verderbers (besonders die riesigen Blutbanken) auf die Gefangennahme und Manipulation von lebenden Menschen ab. Die Nischen, die ich bereits in meinem Antrag erwähnt hatte, sind immer noch mysteriös, aber wenn man die abgenutzten Strukturen am Boden entlang geht, machen sie den Eindruck, eine Art Lager zu sein. Sie könnten eine Art schweren außerirdischen Roboter beinhalten, oder eine Ladung die sich aus großen Tanks zusammensetzt. Schwere Halterungen kommen aus der Decke, um diese Roboter während des Fluges an Ort und Stelle zu halten. Die Nischen scheinen auch einen Luftlandemechanismus zu besitzen.\n"
+"\n"
+"Es ist schwer darüber zu spekulieren was, hinsichtlich der gefangenen Zivilisten, genau in diesen UFOs vorgeht. Sicherlich hat es etwas mit dem Abernten der menschlichen Biomasse zu tun, aber dafür haben sie ja bereits Schiffe, welche nicht den Eindruck machen, veraltet zu sein. Wir vermuten, dass der Verderber einen Paradigmenwechsel der außerirdischen Aktivitäten auf der Erde darstellt. Etwas hat sich verändert. Bis wir vollständig verstehen, was hier vor sich geht, müssen wir uns auf etwas vorbereiten, was die schlimmste Bedrohung für die Weltbevölkerung darstellen könnte, die wir bisher gesehen haben.\n"
+"\n"
+"In der Luft ist die Leistung des Verderbers ziemlich gering. Im Vergleich zu anderen UFOs ist er langsam und Träge. Wie unsere Nachforschungen jedoch ergaben, wird er wahrscheinlich sehr schwer bewacht. Aufgrund der hohen Anzahl seiner Besatzung und der schweren Waffen, stellt er eine schwerwiegende Bodenbedrohung dar. Mehr als jedes andere Schiff, welches wir bereits geborgen haben, wurde der Verderber speziell für den Zweck gebaut, große Streitkräfte der Außerirdischen an die Erdoberfläche zu befördern, nur um Zivilisten anzugreifen.\n"
+"\n"
+"Kommandant, es ist unbedingt notwendig, dass wir diese Schiffe vom Himmel hohlen, egal wo und wann wir sie sehen. Sollten wir das nicht tun, wird das darin enden, das Heerscharen unschuldiger Menschen abgeschlachtet werden. Es könnte sogar schlimmer werden als in Mumbai und Bonn.\n"
+"\n"
+"Wir müssen das um jeden Preis verhindern.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -6474,7 +6490,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4029
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4085
 msgid "'Raven' ECM Unit"
@@ -6693,15 +6710,15 @@ msgstr ""
 #: ../base/ufos/research.ufo:4255
 msgid "craft_weapon_alc_pre_txt"
 msgstr ""
-"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"Kommandant, ich habe soeben meinen Bericht über unser neuestes Laser-Programm fertig gestellt. Wir konnten einen Prototypen des Flugzeug-Lasers bauen und sind nun bereit ihn zu produzieren.\n"
 "\n"
-"The Aerial Laser Cannon is the largest and most powerful iteration of our new laser designs. Like our infantry weapons it'll be powered by deuterium-fluoride reaction, but on a much larger scale and amplified by the aircraft's on-board electrical systems. Several exciting ideas are being considered.\n"
+"Wir haben das erreicht was wir uns vorgenommen hatten: Erzeugen einer konstanten Welle, Deuterium-Flourid betriebener Laser mit einer Leistung von mehreren Megawatt, fähig UFOs zu verfolgen und diese auch noch in Entfernungen von 5 Kilometern zu treffen. Die Genauigkeit ist ausgezeichnet, sie wird nur durch das gegnerische EGM (elektronische Gegenmaßnahme) gedämpft. Im Gegensatz zu all unseren anderen Waffen hat die Entfernung keine Auswirkung auf den Laser. Der Laser verläuft in einer geraden Linie und trifft das Ziel innerhalb kürzester Zeit. Mit dieser Waffe ist es schwer sein Ziel nicht zu treffen.\n"
 "\n"
-"As well as being the biggest, this may well be our most challenging laser to create. Any aircraft cannon will have to reach across several kilometres of atmosphere -- and therefore loads of atmospheric blooming -- with enough punch at the endpoint to cut into a UFO's fuselage. Those sorts of power levels have been achieved before with massive arrays mounted on jumbo jets, but never in a package small enough to make a jet fighter cannon.\n"
+"Leider haben wir immer noch Probleme bei Nebel und Wolken. Der Laser verliert in dieser Umgebung immer noch zu schnell zu viel Kraft, wenn er längere Strecke darin unterwegs ist. Bei der maximalen Reichweite von 5 Kilometern dauert es 32 Sekunden, bis der Laserstrahl ein Loch in die Hülle des UFOs gebrannt hat. Allerdings haben wir während des Gefechts selten so viel Zeit um ein UFO abzuschießen. Die ideale Entfernung für den Laser liegt zwischen zwei und drei Kilometern. In diesem Bereich ist das Verhältnis zwischen Schaden und Entfernung sehr ausgewogen. Der durchschnittliche Schaden pro Sekunde bewegt sich leicht unter dem eines SHIVA Drehgeschützes, aber die Reichweite ist um 1,5 Kilometer höher. Mehr als jede unserer anderen Waffen eignet sich der Laser dazu, den Gegner hinter einer Wand aus Laserbeschuss nieder zumachen.\n"
 "\n"
-"The finished product should be able to engage UFOs with bullseye accuracy at ranges well beyond that of the SHIVA cannon, and although damage may be low, we expect that the ability to keep continuous fire and pressure on enemy craft will be valuable in the days to come.\n"
+"Der Flugzeug-Laser hat ein integriertes Deuterium-Flourid-Magazin das es ihm erlaubt bis zu 30 Minuten Dauerfeuer zu geben. Da Deuterium und Flourid zu gefährlich sind um sie in unserer Basis zu lagern und wir über große Bestände außerhalb verfügen, müssen wir die Laser-Munition nicht in unserem Lager aufbewahren.\n"
 "\n"
-"Please approve lab time and funding for this program when you're ready, Commander.\n"
+"Natürlich liegt der Verwendungszweck der Waffe in ihrem Aufgabengebiet, aber ich empfehle die SHIVA-Drehgeschütze durch die neuen Laser zu ersetzen. Es sei denn es handelt sich um Flieger welche speziell für den Nahkampf konzipiert sind. Alles was nicht so manövrierfähig wie ein UFO ist, hat Probleme ein Ziel im Auge zu behalten. Der Laser bietet uns hier eine weit bessere Lösung mit fast genau soviel Durchhaltevermögen.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -7448,26 +7465,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4656
 msgid "enemy_on_earth_pre_txt"
-msgstr ""
-"Herr Kommandant,\n"
-"\n"
-"Mein Team und ich sind durch die aktuellen Berichte von Angriffen gegenüber PHALANX-Personal aus der Zivilbevölkerung – genau wie Sie sicherlich auch - schwer getroffen. Wir haben alle die Bilder vom Schlachtfeld gesehen. Es bestehen keine Zweifel, dass die Angreifer Menschen wie Sie und ich waren. Dennoch steht ebenfalls fest, dass sie außerirdische Waffen und Ausrüstung benutzten – einiges davon hat noch nicht einmal PHALANX je gesehen.\n"
-"\n"
-"Einige besorgniserregende Fragen tauchen auf. Als erstes müssen wir die Fakten begutachten, die wir kennen.\n"
-"\n"
-"- Haben die Außerirdischen Sympathisanten auf der Erde? - Ja.\n"
-"\n"
-"- Unterstützen die Außerirdischen diese? - Offensichtlich; das ist die einzige logische Erklärung für deren fortschrittliche außerirdische Ausrüstung und Bewaffnung.\n"
-"\n"
-"- Stellen diese Sympathisanten eine Gefahr dar? - Absolut. Vielleicht sogar eine größere als die durch die Außerirdischen selbst.\n"
-"\n"
-"Wir müssen uns eingehender damit befassen, was in diesen Menschen vor sich geht. Wenn wir die Methoden der außerirdischen Infiltration genauer kennen, könnte unsere Nachrichtenabteilung mit gezielter Überzeugungsarbeit intervenieren. Wir erhoffen uns davon, dass sich die Anzahl der Überläufer auf dem Globus drastisch verringert und die Anzahl derer vergrößert, die uns wohlgesonnen sind. Die Abteilung Biologie & Eindämmung hat außerdem den Vorschlag gemacht, dass wir wenigstens einen Alien-Sympathisanten lebend fangen und in unserer Quarantänestation gefangen halten sollten, damit wir an diesem eine vollständige Untersuchung durchführen können. Wir würden gerne wissen, ob die Außerirdischen diese Menschen körperlich verändert haben, um sie zu trainieren und zu unterstützen.\n"
-"\n"
-"Direktor Wong (Abteilung Nachrichten) bat mich außerdem zu erwähnen, dass wir nicht zu lange mit der Umsetzung der neuen Informationsstrategie warten sollten, da sich ansonsten - wenn die Sympathisanten ihre Stimmen erheben - in der Bevölkerung weiterer Widerstand entwickeln könnte, was die Rekrutierung von neuem PHALANX-Personal erheblich erschweren würde. Ich stimme dieser Ansicht zu. Wir müssen diesen Planeten zusammenhalten, wenn wir auch nur irgendeine Chance haben wollen, dieser Bedrohung Herr zu werden.\n"
-"\n"
-"Mit freundlichen Grüßen,\n"
-"\n"
-"Dr. Connor"
+msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 
 #: ../base/ufos/research.ufo:4686
 msgid "XVI Census"
@@ -7776,35 +7774,43 @@ msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
+msgstr ""
+"Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als drei Vierteln der Erde."
+msgstr ""
+"Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als drei Vierteln der Erde."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
+msgstr ""
+"Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
+msgstr ""
+"Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Eine Notfallversammlung der UN ergibt keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie zurückkehren werden."
+msgstr ""
+"Eine Notfallversammlung der UN ergibt keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie zurückkehren werden."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
+msgstr ""
+"87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
+msgstr ""
+"Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
+msgstr ""
+"Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
