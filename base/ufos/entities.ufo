@@ -376,7 +376,7 @@ entity misc_sound {
 
 	mandatory {
 		origin	"position"
-		noise	"Sound file name relative to sound/ambience"
+		noise	"Sound file name relative to sound/"
 	}
 
 	type {
