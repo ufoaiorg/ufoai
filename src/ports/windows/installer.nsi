@@ -96,13 +96,11 @@ SectionGroup /e "Game" SECGROUP01
 		SetOutPath "$INSTDIR\base\i18n"
 			File /r "..\..\..\base\i18n\*.mo"
 		
-		;======================================================================
-		; to let the game start up
-		;======================================================================
-		SetOutPath "$INSTDIR"
 	SectionEnd
 
 	Section "Game Shortcuts" SEC01B
+		SetOutPath "$INSTDIR"
+
 		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 +set snd_init 1" "$INSTDIR\ufo.exe" 0
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} (safe-mode).lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 +set vid_mode 6 +set snd_init 0" "$INSTDIR\ufo.exe" 0
@@ -118,7 +116,7 @@ SectionGroup /e "Mapping" SECGROUP02
 	Section "Mapping Tools" SEC02
 		SetOutPath "$INSTDIR\base\maps"
 			File "..\..\..\base\maps\compile.p*"
-			File /r /x prefabs /x *.svn /x CVS "..\..\..\base\maps\*.map"
+			File /r /x *.svn /x CVS "..\..\..\base\maps\*.map"
 		SetOutPath "$INSTDIR\tools"
 			File "..\..\tools\*.ms"
 			File "..\..\tools\*.pl"
