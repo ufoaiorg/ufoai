@@ -104,6 +104,8 @@ start_downloads()
 	download_archive http://downloads.sourceforge.net/gnuwin32/ gawk-3.1.6-1-bin.zip gawk.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ sed-4.2-bin.zip sed.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ regex-2.7-bin.zip regex.zip
+	download_archive http://downloads.sourceforge.net/gnuwin32/ pcre-7.0-bin.zip pcre.zip
+	download_archive http://downloads.sourceforge.net/gnuwin32/ grep-2.5.4-bin.zip grep.zip
 	
 	download_archive http://downloads.sourceforge.net/sevenzip/ 7za465.zip 7zip.zip
 
@@ -226,6 +228,8 @@ extract_tools()
 	extract_archive_zip gawk.zip "${MINGW_DIR}"
 	extract_archive_zip sed.zip "${MINGW_DIR}"
 	extract_archive_zip regex.zip "${MINGW_DIR}"
+	extract_archive_zip pcre.zip "${MINGW_DIR}"
+	extract_archive_zip grep.zip "${MINGW_DIR}"
 	extract_archive_zip 7zip.zip "${TEMP_DIR}/tmp"
 	extract_archive_zip svn.zip "${TEMP_DIR}/tmp"
 	#some parts of openssl are also included in the svn package
@@ -332,11 +336,11 @@ create()
 
 	extract_libcurl
 
-	extract_tools
-
 	extract_gtk
 
 	extract_ogg
+
+	extract_tools
 
 	${UN7ZIP} a -tzip -mx=9 ${ARCHIVE_NAME} ${CODEBLOCKS_DIR}
 
