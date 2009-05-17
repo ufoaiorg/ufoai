@@ -198,6 +198,8 @@ SCRIPT PARSING
 
 extern const char *const name_strings[];
 
+#define SND_VOLUME_FOOTSTEPS 0.2f
+
 /** @brief Different terrain definitions for footsteps and particles */
 typedef struct terrainType_s {
 	const char *texture;			/**< script id is the texture name/path */

@@ -148,7 +148,7 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 	}
 
 	if (playSound)
-		S_StartLocalSample(sound);
+		S_StartLocalSample(sound, SND_VOLUME_DEFAULT);
 
 	return mess;
 }

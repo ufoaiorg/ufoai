@@ -64,8 +64,8 @@ typedef struct fireDef_s {
 	char fireSound[MAX_VAR];	/**< the sound when a recruits fires */
 	char impactSound[MAX_VAR];	/**< the sound that is played on impact */
 	char hitBodySound[MAX_VAR];	/**< the sound that is played on hitting a body */
-	float fireAttenuation;
-	float impactAttenuation;
+	int fireAttenuation;
+	int impactAttenuation;
 	char bounceSound[MAX_VAR];	/**< bouncing sound */
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.

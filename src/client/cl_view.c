@@ -186,7 +186,7 @@ static void CL_ParseEntitystring (void)
 				CL_AddMapParticle(particle, origin, wait, strstart, (spawnflags & 0xFF));
 		} else if (!strcmp(classname, "misc_sound")) {
 			if (!(dayLightmap && (spawnflags & (1 << SPAWNFLAG_NO_DAY))))
-				LE_AddAmbientSound(sound, origin, (spawnflags & 0xFF));
+				LE_AddAmbientSound(sound, origin, (spawnflags & 0xFF), 1.0f);
 		}
 
 		entnum++;

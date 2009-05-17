@@ -96,7 +96,7 @@ void S_Frame (void)
 			}
 
 			if (j == MAX_CHANNELS)
-				S_LoopSample(le->origin, le->sample);
+				S_LoopSample(le->origin, le->sample, le->volume);
 		}
 	}
 }
@@ -115,7 +115,7 @@ static void S_Play_f (void)
 
 	i = 1;
 	while(i < Cmd_Argc()){
-		S_StartLocalSample(Cmd_Argv(i));
+		S_StartLocalSample(Cmd_Argv(i), SND_VOLUME_DEFAULT);
 		i++;
 	}
 }

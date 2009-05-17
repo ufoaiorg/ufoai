@@ -70,12 +70,15 @@ typedef struct s_env_s {
 
 extern s_env_t s_env;
 
+#define SND_VOLUME_DEFAULT 1.0f
+#define SND_VOLUME_WEAPONS 1.0f
+
 void S_Init(void);
 void S_Shutdown(void);
 void S_Frame(void);
 void S_Stop(void);
-void S_PlaySample(const vec3_t origin, s_sample_t* sample, float relVolume);
-void S_StartLocalSample(const char *s);
+void S_PlaySample(const vec3_t origin, s_sample_t* sample, float atten, float volume);
+void S_StartLocalSample(const char *s, float volume);
 s_sample_t *S_LoadSample(const char *s);
 
 #endif

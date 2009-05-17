@@ -110,6 +110,7 @@ typedef struct le_s {
 
 	/** sound effects */
 	struct s_sample_s* sample;
+	float volume;			/**< loop sound volume - 0.0f-1.0f */
 
 	/** gfx */
 	animState_t as;	/**< holds things like the current active frame and so on */
@@ -171,7 +172,7 @@ qboolean CL_OutsideMap(const vec3_t impact, const float delta);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
 void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal);
 void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt);
-void LE_AddAmbientSound(const char *sound, const vec3_t origin, int levelflags);
+void LE_AddAmbientSound(const char *sound, const vec3_t origin, int levelflags, float volume);
 le_t *LE_GetClosestActor(const vec3_t origin);
 
 #define LE_IsStunned(le)	(((le)->state & STATE_STUN) & ~STATE_DEAD)

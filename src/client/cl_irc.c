@@ -450,7 +450,7 @@ static qboolean Irc_AppendToBuffer (const char* const msg, ...)
 
 	MN_TextScrollBottom("irc_data");
 	if (irc_showIfNotInMenu->integer && strcmp(MN_GetActiveMenuName(), "irc")) {
-		S_StartLocalSample("misc/talk");
+		S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
 		MP_AddChatMessage(appendString);
 		return qtrue;
 	}
@@ -744,10 +744,10 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		if (!Irc_AppendToBuffer("<%s> %s", nick, trailing)) {
 			/* check whether this is no message to the channel - but to the user */
 			if (params && strcmp(params, irc_defaultChannel->string)) {
-				S_StartLocalSample("misc/lobbyprivmsg");
+				S_StartLocalSample("misc/lobbyprivmsg", SND_VOLUME_DEFAULT);
 				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
 			} else if (strstr(trailing, irc_nick->string)) {
-				S_StartLocalSample("misc/lobbyprivmsg");
+				S_StartLocalSample("misc/lobbyprivmsg", SND_VOLUME_DEFAULT);
 				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
 				if (strcmp(MN_GetActiveMenuName(), "irc") && strcmp(MN_GetActiveMenuName(), mn_hud->string)) {
 					/* we are not in hud mode, nor in the lobby menu, use a popup */

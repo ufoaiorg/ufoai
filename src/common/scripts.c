@@ -962,8 +962,8 @@ static const value_t fdps[] = {
 	{"impsnd", V_STRING, offsetof(fireDef_t, impactSound), 0},
 	{"bodysnd", V_STRING, offsetof(fireDef_t, hitBodySound), 0},
 	{"bncsnd", V_STRING, offsetof(fireDef_t, bounceSound), 0},
-	{"fireattenuation", V_FLOAT, offsetof(fireDef_t, fireAttenuation), MEMBER_SIZEOF(fireDef_t, fireAttenuation)},
-	{"impactattenuation", V_FLOAT, offsetof(fireDef_t, impactAttenuation), MEMBER_SIZEOF(fireDef_t, impactAttenuation)},
+	{"fireattenuation", V_INT, offsetof(fireDef_t, fireAttenuation), MEMBER_SIZEOF(fireDef_t, fireAttenuation)},
+	{"impactattenuation", V_INT, offsetof(fireDef_t, impactAttenuation), MEMBER_SIZEOF(fireDef_t, impactAttenuation)},
 	{"throughwall", V_INT, offsetof(fireDef_t, throughWall), MEMBER_SIZEOF(fireDef_t, throughWall)},
 	{"sndonce", V_BOOL, offsetof(fireDef_t, soundOnce), MEMBER_SIZEOF(fireDef_t, soundOnce)},
 	{"gravity", V_BOOL, offsetof(fireDef_t, gravity), MEMBER_SIZEOF(fireDef_t, gravity)},
@@ -1049,6 +1049,13 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 				Com_Printf("Com_ParseFire: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 		}
 	} while (*text);
+
+	if (fd->impactAttenuation < SOUND_ATTN_NONE || fd->impactAttenuation > SOUND_ATTN_MAX)
+		Com_Printf("Com_ParseFire: firedef for weapon \"%s\" has an invalid impact sound attenuation value set\n", name);
+
+	if (fd->fireAttenuation < SOUND_ATTN_NONE || fd->fireAttenuation > SOUND_ATTN_MAX)
+		Com_Printf("Com_ParseFire: firedef for weapon \"%s\" has an invalid fire sound attenuation value set\n", name);
+
 	if (fd->weaponSkill < ABILITY_NUM_TYPES)
 		Com_Printf("Com_ParseFire: firedef for weapon \"%s\" doesn't have a skill set\n", name);
 }
@@ -2128,7 +2135,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 	/* link in terrainTypesHash[hash] should be NULL on the first run */
 	t->hash_next = terrainTypesHash[hash];
 	terrainTypesHash[hash] = t;
-	t->footStepVolume = SOUND_ATTN_STATIC;
+	t->footStepVolume = SND_VOLUME_FOOTSTEPS;
 	t->bounceFraction = 1.0f;
 
 	do {

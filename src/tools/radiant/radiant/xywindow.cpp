@@ -1585,7 +1585,7 @@ void WXY_BackgroundSelect (void)
 	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Background Image"), 0, 0);
 	g_pParentWnd->ActiveXY()->XY_DisableBackground();
 	if (filename)
-	g_pParentWnd->ActiveXY()->XY_LoadBackgroundImage(filename);
+		g_pParentWnd->ActiveXY()->XY_LoadBackgroundImage(filename);
 }
 
 /*

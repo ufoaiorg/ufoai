@@ -202,6 +202,7 @@ enum clc_ops_e {
 #define SOUND_ATTN_NORM	1
 #define SOUND_ATTN_IDLE 2
 #define SOUND_ATTN_STATIC 3 /**< dimish very rapidly with distance */
+#define SOUND_ATTN_MAX SOUND_ATTN_STATIC
 
 #include "cmd.h"
 #include "cvar.h"

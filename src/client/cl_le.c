@@ -496,17 +496,17 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 			/* were we already in the water? */
 			if (le->positionContents & CONTENTS_WATER) {
 				/* play water moving sound */
-				S_PlaySample(le->origin, cls.sound_pool[SOUND_WATER_OUT], SOUND_ATTN_IDLE);
+				S_PlaySample(le->origin, cls.sound_pool[SOUND_WATER_OUT], SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
 			} else {
 				/* play water entering sound */
-				S_PlaySample(le->origin, cls.sound_pool[SOUND_WATER_IN], SOUND_ATTN_IDLE);
+				S_PlaySample(le->origin, cls.sound_pool[SOUND_WATER_IN], SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
 			}
 			return;
 		}
 
 		if (le->positionContents & CONTENTS_WATER) {
 			/* play water leaving sound */
-			S_PlaySample(le->origin, cls.sound_pool[SOUND_WATER_MOVE], SOUND_ATTN_IDLE);
+			S_PlaySample(le->origin, cls.sound_pool[SOUND_WATER_MOVE], SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
 		}
 	}
 }
@@ -539,7 +539,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	if (t->footStepSound) {
 		s_sample_t *sample = S_LoadSample(t->footStepSound);
 		Com_DPrintf(DEBUG_SOUND, "LE_PlaySoundFileAndParticleForSurface: volume %.2f\n", t->footStepVolume);
-		S_PlaySample(origin, sample, t->footStepVolume);
+		S_PlaySample(origin, sample, SOUND_ATTN_STATIC, t->footStepVolume);
 	}
 }
 
@@ -716,7 +716,7 @@ static void LET_Projectile (le_t * le)
 		}
 		if (le->ref2 && le->ref2[0]) {
 			s_sample_t *sample = S_LoadSample(le->ref2);
-			S_PlaySample(impact, sample, le->fd->impactAttenuation);
+			S_PlaySample(impact, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 		}
 	} else if (CL_OutsideMap(le->ptl->s, UNIT_SIZE * 10)) {
 		le->endTime = cl.time;
@@ -769,14 +769,14 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
 					s_sample_t *sample = S_LoadSample(fd->hitBodySound);
-					S_PlaySample(le->origin, sample, le->fd->impactAttenuation);
+					S_PlaySample(le->origin, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
 				if (fd->hitBody[0])
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[normal], NULL);
 			} else {
 				if (fd->impactSound[0]) {
 					s_sample_t *sample = S_LoadSample(fd->impactSound);
-					S_PlaySample(le->origin, sample, le->fd->impactAttenuation);
+					S_PlaySample(le->origin, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
 				if (fd->impact[0])
 					ptl = CL_ParticleSpawn(fd->impact, 0, impact, bytedirs[normal], NULL);
@@ -898,7 +898,7 @@ void LET_BrushModel (le_t *le)
  * @brief Adds ambient sounds from misc_sound entities
  * @sa CL_ParseEntitystring
  */
-void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags)
+void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume)
 {
 	le_t* le;
 	s_sample_t* sample;
@@ -916,6 +916,7 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags)
 		return;
 	}
 	le->type = ET_SOUND;
+	le->volume = volume;
 	le->sample = sample;
 	VectorCopy(origin, le->origin);
 	le->invis = !cl_leshowinvis->integer;

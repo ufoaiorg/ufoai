@@ -87,7 +87,7 @@ void S_SpatializeChannel (const s_channel_t *ch)
  * @sa S_StartLocalSample
  * @sa S_SetVolume
  */
-void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten)
+void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float volume)
 {
 	s_channel_t *ch;
 	int i;
@@ -111,13 +111,14 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten)
 		S_SpatializeChannel(ch);
 	}
 
+	Mix_VolumeChunk(ch->sample->chunk, snd_volume->value * volume * MIX_MAX_VOLUME);
 	Mix_PlayChannel(i, ch->sample->chunk, 0);
 }
 
 /**
  * @brief Adds a loop sample for e.g. ambient sounds
  */
-void S_LoopSample (const vec3_t org, s_sample_t *sample)
+void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume)
 {
 	s_channel_t *ch;
 	int i;
@@ -158,7 +159,7 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample)
 /**
  * @sa S_PlaySample
  */
-void S_StartLocalSample (const char *name)
+void S_StartLocalSample (const char *name, float volume)
 {
 	s_sample_t *sample;
 
@@ -170,5 +171,5 @@ void S_StartLocalSample (const char *name)
 		Com_Printf("S_StartLocalSample: Failed to load %s\n", name);
 		return;
 	}
-	S_PlaySample(NULL, sample, SOUND_ATTN_NORM);
+	S_PlaySample(NULL, sample, SOUND_ATTN_NORM, volume);
 }

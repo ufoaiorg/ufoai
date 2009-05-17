@@ -1644,7 +1644,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED))
-		S_PlaySample(muzzle, S_LoadSample(fd->fireSound), fd->fireAttenuation);
+		S_PlaySample(muzzle, S_LoadSample(fd->fireSound), fd->fireAttenuation, SND_VOLUME_WEAPONS);
 
 	firstShot = qfalse;
 
@@ -1710,7 +1710,7 @@ void CL_ActorShootHidden (struct dbuffer *msg)
 
 	/* start the sound */
 	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0])
-		S_StartLocalSample(fd->fireSound);
+		S_StartLocalSample(fd->fireSound, SND_VOLUME_WEAPONS);
 
 	/* if the shooting becomes visible, don't repeat sounds! */
 	firstShot = qfalse;
@@ -1744,7 +1744,7 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED)) {
 		s_sample_t *sample = S_LoadSample(fd->fireSound);
-		S_PlaySample(muzzle, sample, SOUND_ATTN_IDLE);
+		S_PlaySample(muzzle, sample, SOUND_ATTN_IDLE, 1.0f);
 	}
 
 	firstShot = qfalse;
@@ -2064,7 +2064,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 		CL_ParticleCheckRounds();
 		MN_ExecuteConfunc("startround");
 		HUD_DisplayMessage(_("Your round started!\n"));
-		S_StartLocalSample("misc/roundstart");
+		S_StartLocalSample("misc/roundstart", SND_VOLUME_DEFAULT);
 		CL_ConditionalMoveCalcActor(selActor);
 
 		for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
@@ -3071,7 +3071,7 @@ void CL_PlayActorSound (const le_t *le, actorSound_t soundType)
 		s_sample_t *sample = S_LoadSample(actorSound);
 		if (sample) {
 			Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: ActorSound: '%s'\n", actorSound);
-			S_PlaySample(le->origin, sample, SOUND_ATTN_IDLE);
+			S_PlaySample(le->origin, sample, SOUND_ATTN_IDLE, SND_VOLUME_DEFAULT);
 		}
 	}
 }

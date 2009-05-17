@@ -113,7 +113,6 @@ s_sample_t *S_LoadSample (const char *soundFile)
 	sample = Mem_PoolAlloc(sizeof(*sample), cl_soundSysPool, 0);
 	sample->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
 	sample->chunk = chunk;
-	Mix_VolumeChunk(sample->chunk, snd_volume->value * MIX_MAX_VOLUME);
 	sample->hashNext = sampleHash[hash];
 	sampleHash[hash] = sample;
 	return sample;
