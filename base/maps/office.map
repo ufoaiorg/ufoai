@@ -18124,3 +18124,10 @@
 "angles" "0 90 0"
 "spawnflags" "4"
 }
+// entity 310
+{
+"classname" "misc_sound"
+"origin" "1168 688 40"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}

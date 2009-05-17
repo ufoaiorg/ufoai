@@ -13704,3 +13704,87 @@
 ( 276 238 46 ) ( 338 252 42 ) ( 338 238 40 ) tex_nature/desert004 120 0 180 0.5 0.5 65280 0 0
 }
 }
+// entity 165
+{
+"classname" "misc_sound"
+"origin" "208 480 24"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}
+// entity 166
+{
+"classname" "misc_sound"
+"origin" "-208 536 24"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}
+// entity 167
+{
+"classname" "misc_sound"
+"origin" "-160 496 24"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}
+// entity 168
+{
+"classname" "misc_sound"
+"origin" "8 568 24"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}
+// entity 169
+{
+"classname" "misc_sound"
+"origin" "128 592 40"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}
+// entity 170
+{
+"classname" "misc_sound"
+"origin" "656 592 24"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}
+// entity 171
+{
+"classname" "misc_sound"
+"origin" "240 528 24"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}
+// entity 172
+{
+"classname" "misc_sound"
+"origin" "32 488 48"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}
+// entity 173
+{
+"classname" "misc_sound"
+"origin" "432 624 24"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}
+// entity 174
+{
+"classname" "misc_sound"
+"origin" "488 704 24"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}
+// entity 175
+{
+"classname" "misc_sound"
+"origin" "696 640 24"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}
+// entity 176
+{
+"classname" "misc_sound"
+"origin" "736 552 24"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}
