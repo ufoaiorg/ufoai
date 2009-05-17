@@ -101,6 +101,8 @@ start_downloads()
 	download_archive http://downloads.sourceforge.net/gnuwin32/ zlib-1.2.3-lib.zip zlib.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ unzip-5.51-1-bin.zip unzip.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ openssl-0.9.8h-1-bin.zip openssl.zip
+	download_archive http://downloads.sourceforge.net/gnuwin32/ gawk-3.1.6-1-bin.zip gawk.zip
+	download_archive http://downloads.sourceforge.net/gnuwin32/ sed-4.2-bin.zip sed.zip
 	
 	download_archive http://downloads.sourceforge.net/sevenzip/ 7za465.zip 7zip.zip
 
@@ -220,6 +222,8 @@ extract_tools()
 	extract_archive_zip wget.zip "${MINGW_DIR}"
 	extract_archive_zip unzip.zip "${MINGW_DIR}"
 	extract_archive_zip openssl.zip "${MINGW_DIR}"
+	extract_archive_zip gawk.zip "${MINGW_DIR}"
+	extract_archive_zip sed.zip "${MINGW_DIR}"
 	extract_archive_zip 7zip.zip "${TEMP_DIR}/tmp"
 	extract_archive_zip svn.zip "${TEMP_DIR}/tmp"
 	#some parts of openssl are also included in the svn package
