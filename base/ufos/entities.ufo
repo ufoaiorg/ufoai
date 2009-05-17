@@ -372,7 +372,7 @@ entity misc_sound {
 	description	"Used to play ambient sounds (looped sounds)"
 	color		"0.5 1 0.5"
 	size		"-8 -8 -8 8 8 8"
-	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 noday"
 
 	mandatory {
 		origin	"position"
