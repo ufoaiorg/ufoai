@@ -7653,3 +7653,10 @@
 ( 1760 928 184 ) ( 1760 960 184 ) ( 1760 960 112 ) tex_nature/tree_chopped 13 33 13 0.133353 0.131305 65024 1024 0
 }
 }
+// entity 96
+{
+"classname" "misc_sound"
+"origin" "1860 -32 56"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "255"
+}

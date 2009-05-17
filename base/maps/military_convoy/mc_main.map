@@ -8998,3 +8998,10 @@
 ( 588 728 164 ) ( 592 728 164 ) ( 592 724 164 ) tex_material/wood002 8 0 -90 0.5 0.5 64514 0 0
 }
 }
+// entity 172
+{
+"classname" "misc_sound"
+"origin" "2244 32 88"
+"noise" "ambience/firesoft.wav"
+"spawnflags" "254"
+}
