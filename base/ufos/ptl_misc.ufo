@@ -678,9 +678,7 @@ particle camping_fire
 {
 	init
 	{
-		v      "0 0 0"
-		tps    25.0
-		spawn  burnFlame
+		tps    15.0
 	}
 	think
 	{
@@ -692,9 +690,7 @@ particle crashsite_fire
 {
 	init
 	{
-		v      "0 0 0"
-		tps    25.0
-		spawn  burnFlame2
+		tps    15.0
 	}
 	think
 	{
