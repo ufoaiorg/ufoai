@@ -205,6 +205,7 @@ void S_Init (void)
 	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
 	/* set volumes to be changed so they are applied again for next sound/music playing */
+	/** @todo implement the volume change for already loaded sample chunks */
 	snd_volume->modified = qtrue;
 
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file. Pass path relative to base/sound without file extension");
