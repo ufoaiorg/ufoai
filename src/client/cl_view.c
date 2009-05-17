@@ -59,6 +59,7 @@ static void CL_ParseEntitystring (void)
 	vec2_t wait;
 	int maxLevel = 8, maxMultiplayerTeams = 2, entnum = 0;
 	int skin, frame, spawnflags;
+	float volume;
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 	const char *es = CM_EntityString();
 
@@ -90,6 +91,7 @@ static void CL_ParseEntitystring (void)
 		VectorCopy(vec3_origin, angles);
 		VectorSet(scale, 1, 1, 1);
 		Vector2Clear(wait);
+		volume = SND_VOLUME_DEFAULT;
 		spawnflags = frame = skin = 0;
 		animname[0] = model[0] = particle[0] = '\0';
 
@@ -119,6 +121,8 @@ static void CL_ParseEntitystring (void)
 				Q_strncpyz(model, entityToken, sizeof(model));
 			else if (!strcmp(keyname, "frame"))
 				frame = atoi(entityToken);
+			else if (!strcmp(keyname, "volume"))
+				volume = atof(entityToken);
 			else if (!strcmp(keyname, "anim"))
 				Q_strncpyz(animname, entityToken, sizeof(animname));
 			else if (!strcmp(keyname, "particle"))
@@ -186,7 +190,7 @@ static void CL_ParseEntitystring (void)
 				CL_AddMapParticle(particle, origin, wait, strstart, (spawnflags & 0xFF));
 		} else if (!strcmp(classname, "misc_sound")) {
 			if (!(dayLightmap && (spawnflags & (1 << SPAWNFLAG_NO_DAY))))
-				LE_AddAmbientSound(sound, origin, (spawnflags & 0xFF), 1.0f);
+				LE_AddAmbientSound(sound, origin, (spawnflags & 0xFF), volume);
 		}
 
 		entnum++;

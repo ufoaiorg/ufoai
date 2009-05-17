@@ -916,12 +916,19 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags,
 		return;
 	}
 	le->type = ET_SOUND;
-	le->volume = volume;
 	le->sample = sample;
 	VectorCopy(origin, le->origin);
 	le->invis = !cl_leshowinvis->integer;
 	le->levelflags = levelflags;
-	Com_DPrintf(DEBUG_SOUND, "Add ambient sound '%s'\n", sound);
+
+	if (volume < 0.0f || volume > 1.0f) {
+		le->volume = SND_VOLUME_DEFAULT;
+		Com_Printf("Invalid volume for local entity given - only values between 0.0 and 1.0 are valid\n");
+	} else {
+		le->volume = volume;
+	}
+
+	Com_DPrintf(DEBUG_SOUND, "Add ambient sound '%s' with volume %f\n", sound, volume);
 }
 
 /*===========================================================================

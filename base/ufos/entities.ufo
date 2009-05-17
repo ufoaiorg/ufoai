@@ -379,8 +379,13 @@ entity misc_sound {
 		noise	"Sound file name relative to sound/"
 	}
 
+	optional {
+		volume	"Relative volume - value between 0.0 and 1.0"
+	}
+
 	type {
 		origin	"V_FLOAT 3"
+		volume	"V_FLOAT"
 	}
 
 	default {
