@@ -95,6 +95,7 @@ start_downloads()
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-bin.zip libiconv-bin.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libintl-0.14.4-lib.zip libintl.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libpng-1.2.35-lib.zip libpng.zip
+	download_archive http://downloads.sourceforge.net/gnuwin32/ pdcurses-2.6-lib.zip libpdcurses.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libxml2-2.4.12-1-lib.zip libxml2.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ tiff-3.8.2-1-lib.zip libtiff.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
@@ -187,6 +188,7 @@ extract_libs()
 	extract_archive_zip libtiff.zip "${MINGW_DIR}"
 	extract_archive_zip gettext.zip "${MINGW_DIR}"
 	extract_archive_gz directx.tar.gz "${MINGW_DIR}"
+	extract_archive_zip libpdcurses.zip "${MINGW_DIR}"
 	extract_archive_zip libxml2.zip "${MINGW_DIR}"
 	cp -R ${MINGW_DIR}/include/libxml2/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
 	rm -r ${MINGW_DIR}/include/libxml2 >> ${LOGFILE_NAME} 2>&1
