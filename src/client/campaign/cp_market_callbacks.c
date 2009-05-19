@@ -535,7 +535,8 @@ static void BS_BuyType_f (void)
 
 	BS_BuyType(base);
 	buyList.scroll = 0;
-	MN_ExecuteConfunc("sync_market_scroll 0 0");
+	MN_ExecuteConfunc("sync_market_scroll 0 %d", buyList.scroll);
+	MN_ExecuteConfunc("market_scroll %d", buyList.scroll);
 	MN_ExecuteConfunc("market_click 0");
 }
 
