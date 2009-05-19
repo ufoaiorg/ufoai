@@ -156,7 +156,7 @@ window market
 		size		"40 550"
 		lineheight	"25"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
-		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll;" }
+		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
 
 	text market_prices

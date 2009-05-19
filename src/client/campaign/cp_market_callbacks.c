@@ -175,14 +175,13 @@ static void BS_MarketScroll_f (void)
 	}
 
 	buyList.scroll = atoi(Cmd_Argv(1));
+	assert(buyList.scroll >= 0);
 	assert(!((buyList.length > MAX_MARKET_MENU_ENTRIES && buyList.scroll >= buyList.length - MAX_MARKET_MENU_ENTRIES)));
 
 	/* now update the menu pics */
 	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++) {
 		MN_ExecuteConfunc("buy_autoselli %i", i);
 	}
-
-	assert(buyList.scroll >= 0);
 
 	/* get item list */
 	for (i = buyList.scroll; i < buyList.length - buyList.scroll; i++) {
@@ -518,8 +517,6 @@ static void BS_BuyType_f (void)
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() == 2) {
-		menuNode_t* node = MN_GetNodeByPath("market.market");
-
 		buyCat = INV_GetFilterTypeID(Cmd_Argv(1));
 
 		if (buyCat == FILTER_DISASSEMBLY)
@@ -533,17 +530,13 @@ static void BS_BuyType_f (void)
 		}
 
 		Cvar_Set("mn_itemtype", INV_GetFilterType(buyCat));
-		buyList.scroll = 0;
-		if (node) {
-			node->u.text.super.viewPosY = 0;
-			/* reset selection */
-			MN_TextNodeSelectLine(node, 0);
-		}
 		currentSelectedMenuEntry = NULL;
 	}
 
 	BS_BuyType(base);
-	BS_MarketScroll_f();
+	buyList.scroll = 0;
+	MN_ExecuteConfunc("sync_market_scroll 0 0");
+	MN_ExecuteConfunc("market_click 0");
 }
 
 /**
