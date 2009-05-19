@@ -141,6 +141,18 @@ static void MN_DrawDebugMenuNodeNames (void)
 	if (mousePosX > 2 * viddef.virtualWidth / 3)
 		debugPositionX = 0;
 
+	/* main menus */
+	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "main active menu:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	debugTextPositionY += 15;
+	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, Cvar_GetString("mn_active"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	debugTextPositionY += 15;
+	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "main option menu:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	debugTextPositionY += 15;
+	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, Cvar_GetString("mn_main"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	debugTextPositionY += 15;
+	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	debugTextPositionY += 15;
+
 	/* background */
 	MN_DrawFill(debugPositionX, debugTextPositionY, DEBUG_PANEL_WIDTH, VID_NORM_HEIGHT - debugTextPositionY - 100, ALIGN_UL, background);
 
