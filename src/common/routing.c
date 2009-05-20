@@ -982,17 +982,6 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
 		}
 	}
 
-	/* Now place an upper bound on stepup */
-	if (*stepup > PATHFINDING_MAX_STEPUP) {
-		*stepup = PATHFINDING_NO_STEPUP;
-	} else {
-		/* Add rise/fall bit as needed. */
-		if (az < z)
-			*stepup |= PATHFINDING_BIG_STEPDOWN;
-		else if (az > z)
-			*stepup |= PATHFINDING_BIG_STEPUP;
-	}
-
 	/** @note This for loop is bi-directional: i may be decremented to retrace prior steps. */
 	/* Now find the maximum stepup moving from (x, y) to (ax, ay). */
 	/* Initialize stepup. */
@@ -1035,17 +1024,6 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
 					Com_Printf(" Tripping skip counter to perform last tests.\n");
 			}
 		}
-	}
-
-	/* Now place an upper bound on stepup */
-	if (*invstepup > PATHFINDING_MAX_STEPUP) {
-		*invstepup = PATHFINDING_NO_STEPUP;
-	} else {
-		/* Add rise/fall bit as needed. */
-		if (az > z)
-			*invstepup |= PATHFINDING_BIG_STEPDOWN;
-		else if (az < z)
-			*invstepup |= PATHFINDING_BIG_STEPUP;
 	}
 
 	/* Return the confirmed passage opening. */
@@ -1094,6 +1072,29 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, const int  
 			bonus_size = RT_MicroTrace(map, actorSize, x, y, z, ax, ay, az, *opening_base, hi, stepup, invstepup);
 			*opening_base += bonus_size;
 			opening_size = hi - *opening_base;	/* re-calculate */
+
+			/* Now place an upper bound on stepup */
+			if (*stepup > PATHFINDING_MAX_STEPUP) {
+				*stepup = PATHFINDING_NO_STEPUP;
+			} else {
+				/* Add rise/fall bit as needed. */
+				if (az < z)
+					*stepup |= PATHFINDING_BIG_STEPDOWN;
+				else if (az > z)
+					*stepup |= PATHFINDING_BIG_STEPUP;
+			}
+
+			/* Now place an upper bound on stepup */
+			if (*invstepup > PATHFINDING_MAX_STEPUP) {
+				*invstepup = PATHFINDING_NO_STEPUP;
+			} else {
+				/* Add rise/fall bit as needed. */
+				if (az > z)
+					*invstepup |= PATHFINDING_BIG_STEPDOWN;
+				else if (az < z)
+					*invstepup |= PATHFINDING_BIG_STEPUP;
+			}
+
 		} else {
 			/* Skipping microtracing, just set the stepup values. */
 			*stepup = max(0, *opening_base - src_floor);
