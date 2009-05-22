@@ -1072,37 +1072,14 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, const int  
 			bonus_size = RT_MicroTrace(map, actorSize, x, y, z, ax, ay, az, *opening_base, hi, stepup, invstepup);
 			*opening_base += bonus_size;
 			opening_size = hi - *opening_base;	/* re-calculate */
-
-			/* Now place an upper bound on stepup */
-			if (*stepup > PATHFINDING_MAX_STEPUP) {
-				*stepup = PATHFINDING_NO_STEPUP;
-			} else {
-				/* Add rise/fall bit as needed. */
-				if (az < z)
-					*stepup |= PATHFINDING_BIG_STEPDOWN;
-				else if (az > z)
-					*stepup |= PATHFINDING_BIG_STEPUP;
-			}
-
-			/* Now place an upper bound on stepup */
-			if (*invstepup > PATHFINDING_MAX_STEPUP) {
-				*invstepup = PATHFINDING_NO_STEPUP;
-			} else {
-				/* Add rise/fall bit as needed. */
-				if (az > z)
-					*invstepup |= PATHFINDING_BIG_STEPDOWN;
-				else if (az < z)
-					*invstepup |= PATHFINDING_BIG_STEPUP;
-			}
-
 		} else {
 			/* Skipping microtracing, just set the stepup values. */
 			*stepup = max(0, *opening_base - src_floor);
-			if (*stepup > PATHFINDING_MAX_STEPUP)
-				*stepup = PATHFINDING_NO_STEPUP;
+	/*		if (*stepup > PATHFINDING_MAX_STEPUP)
+				*stepup = PATHFINDING_NO_STEPUP;*/
 
 			*invstepup = max(0, *opening_base - dst_floor);
-			if (*invstepup > PATHFINDING_MAX_STEPUP)
+	/*		if (*invstepup > PATHFINDING_MAX_STEPUP)
 				*invstepup = PATHFINDING_NO_STEPUP;
 
 			if (az < z) {
@@ -1111,8 +1088,32 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, const int  
 			} else if (az > z) {
 				*stepup |= PATHFINDING_BIG_STEPUP;
 				*invstepup |= PATHFINDING_BIG_STEPDOWN;
-			}
+			}*/
 		}
+
+		/* Now place an upper bound on stepup */
+		if (*stepup > PATHFINDING_MAX_STEPUP) {
+			*stepup = PATHFINDING_NO_STEPUP;
+		} else {
+			/* Add rise/fall bit as needed. */
+			if (az < z && *invstepup <= PATHFINDING_MAX_STEPUP)
+			/* BIG_STEPDOWN indicates 'walking down', don't set it if we're 'falling' */
+				*stepup |= PATHFINDING_BIG_STEPDOWN;
+			else if (az > z)
+				*stepup |= PATHFINDING_BIG_STEPUP;
+		}
+
+		/* Now place an upper bound on stepup */
+		if (*invstepup > PATHFINDING_MAX_STEPUP) {
+			*invstepup = PATHFINDING_NO_STEPUP;
+		} else {
+			/* Add rise/fall bit as needed. */
+			if (az > z)
+				*invstepup |= PATHFINDING_BIG_STEPDOWN;
+			else if (az < z)
+				*invstepup |= PATHFINDING_BIG_STEPUP;
+		}
+
 		if (opening_size >= PATHFINDING_MIN_OPENING) {
 			return opening_size;
 		}
