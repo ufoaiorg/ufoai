@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_light.h"
 #include "r_entity.h"
 
-#define LIGHT_RADIUS_FACTOR 100.0
+#define LIGHT_RADIUS_FACTOR 80.0
 
 int r_numLights;
 static light_t r_lightsArray[MAX_GL_LIGHTS];

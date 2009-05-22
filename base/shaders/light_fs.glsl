@@ -3,6 +3,9 @@
 varying vec3 point;
 varying vec3 normal;
 
+// constant + linear + quadratic attenuation
+#define ATTENUATION (0.15 + 1.8 * dist + 3.5 * dist * dist)
+
 
 /*
 LightFragment
@@ -10,7 +13,7 @@ LightFragment
 void LightFragment(in vec4 diffuse, in vec3 lightmap){
 
 	vec3 delta, dir, light = vec3(0.0);
-	float dist, d, atten;
+	float dist, d;
 
 #if r_lights
 	/*
@@ -30,8 +33,8 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 			d = dot(normal, dir);
 
 			if(d > 0.0){
-				atten = gl_LightSource[0].constantAttenuation / dist - 1.0;
-				light += gl_LightSource[0].diffuse.rgb * d * atten * atten;
+				dist = 1.0 - dist / gl_LightSource[0].constantAttenuation;
+				light += gl_LightSource[0].diffuse.rgb * d * ATTENUATION;
 			}
 		}
 
@@ -46,8 +49,8 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 			d = dot(normal, dir);
 
 			if(d > 0.0){
-				atten = gl_LightSource[1].constantAttenuation / dist - 1.0;
-				light += gl_LightSource[1].diffuse.rgb * d * atten * atten;
+				dist = 1.0 - dist / gl_LightSource[1].constantAttenuation;
+				light += gl_LightSource[1].diffuse.rgb * d * ATTENUATION;
 			}
 		}
 
@@ -62,8 +65,8 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 			d = dot(normal, dir);
 
 			if(d > 0.0){
-				atten = gl_LightSource[2].constantAttenuation / dist - 1.0;
-				light += gl_LightSource[2].diffuse.rgb * d * atten * atten;
+				dist = 1.0 - dist / gl_LightSource[2].constantAttenuation;
+				light += gl_LightSource[2].diffuse.rgb * d * ATTENUATION;
 			}
 		}
 
@@ -78,8 +81,8 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 			d = dot(normal, dir);
 
 			if(d > 0.0){
-				atten = gl_LightSource[3].constantAttenuation / dist - 1.0;
-				light += gl_LightSource[3].diffuse.rgb * d * atten * atten;
+				dist = 1.0 - dist / gl_LightSource[3].constantAttenuation;
+				light += gl_LightSource[3].diffuse.rgb * d * ATTENUATION;
 			}
 		}
 
@@ -94,8 +97,8 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 			d = dot(normal, dir);
 
 			if(d > 0.0){
-				atten = gl_LightSource[4].constantAttenuation / dist - 1.0;
-				light += gl_LightSource[4].diffuse.rgb * d * atten * atten;
+				dist = 1.0 - dist / gl_LightSource[4].constantAttenuation;
+				light += gl_LightSource[4].diffuse.rgb * d * ATTENUATION;
 			}
 		}
 
@@ -110,8 +113,8 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 			d = dot(normal, dir);
 
 			if(d > 0.0){
-				atten = gl_LightSource[5].constantAttenuation / dist - 1.0;
-				light += gl_LightSource[5].diffuse.rgb * d * atten * atten;
+				dist = 1.0 - dist / gl_LightSource[5].constantAttenuation;
+				light += gl_LightSource[5].diffuse.rgb * d * ATTENUATION;
 			}
 		}
 
@@ -126,8 +129,8 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 			d = dot(normal, dir);
 
 			if(d > 0.0){
-				atten = gl_LightSource[6].constantAttenuation / dist - 1.0;
-				light += gl_LightSource[6].diffuse.rgb * d * atten * atten;
+				dist = 1.0 - dist / gl_LightSource[6].constantAttenuation;
+				light += gl_LightSource[6].diffuse.rgb * d * ATTENUATION;
 			}
 		}
 
@@ -142,8 +145,8 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 			d = dot(normal, dir);
 
 			if(d > 0.0){
-				atten = gl_LightSource[7].constantAttenuation / dist - 1.0;
-				light += gl_LightSource[7].diffuse.rgb * d * atten * atten;
+				dist = 1.0 - dist / gl_LightSource[7].constantAttenuation;
+				light += gl_LightSource[7].diffuse.rgb * d * ATTENUATION;
 			}
 		}
 	}
