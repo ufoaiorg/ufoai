@@ -28,6 +28,8 @@ while read FILENAME; do
 	else
 		# make sure there are no dos style newlines before setting eol style - that can fail if there are mixed newlines
 		sed -i 's/\r//' $FILENAME
+		# remove trailing whitespaces
+		sed -i 's/[ ^t]*$//' $FILENAME
 		[[ $REPORTPOSITIVES ]] && echo "*** setting svn:eol-style native for $FILENAME"
 		svn ps svn:eol-style native "$FILENAME"
 	fi
