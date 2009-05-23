@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_render.h"
 #include "../cl_video.h"
 #include "../renderer/r_draw.h"
+#include "../renderer/r_misc.h"
 
 /**
  * @brief Fills a box of pixels with a single color
@@ -34,6 +35,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void MN_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 {
 	R_DrawFill(x, y, w, h, color);
+}
+
+/**
+ * Pushes a new matrix, normalize to current resolution and move, rotate and scale the
+ * matrix to the given values.
+ * @note Will pop the matrix if @c transform is @c NULL
+ * @param transform if @c NULL the matrix is removed from stack
+ * @sa R_Transform
+ * @sa R_PopMatrix
+ * @sa R_PushMatrix
+ */
+void MN_Transform (const vec3_t transform, const vec3_t rotate, const vec3_t scale)
+{
+	vec3_t pos;
+
+	if (transform != NULL) {
+		R_PushMatrix();
+		VectorCopy(transform, pos);
+		pos[0] *= viddef.rx;
+		pos[1] *= viddef.ry;
+
+		R_Transform(pos, rotate, scale);
+	} else {
+		R_PopMatrix();
+	}
 }
 
 /**

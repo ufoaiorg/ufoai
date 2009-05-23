@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_view.h"
 #include "cl_menu.h"
 #include "renderer/r_draw.h"
-#include "renderer/r_misc.h"
 #include "renderer/r_mesh_anim.h"
 #include "../shared/parse.h"
 #include "menu/m_nodes.h"
@@ -249,7 +248,6 @@ void CL_SequenceRender (void)
 	seqCmd_t *sc;
 	seqEnt_t *se;
 	int i;
-	vec3_t pos;
 
 	/* run script */
 	while (seqTime <= cl.time) {
@@ -264,13 +262,6 @@ void CL_SequenceRender (void)
 		sc = &seqCmds[seqCmd];
 		seqCmd += sc->handler(sc->name, sc->data);
 	}
-
-	/* center screen */
-	pos[0] = (viddef.virtualWidth - VID_NORM_WIDTH) * viddef.rx / 2;
-	pos[1] = (viddef.virtualHeight - VID_NORM_HEIGHT) * viddef.ry / 2;
-	pos[2] = 0;
-	R_PushMatrix();
-	R_Transform(pos, NULL, NULL);
 
 	/* set camera */
 	CL_SequenceCamera();
@@ -307,8 +298,6 @@ void CL_SequenceRender (void)
 			se->ep = R_GetFreeEntity();
 			R_AddEntity(&ent);
 		}
-
-	R_PopMatrix();
 }
 
 
@@ -324,11 +313,10 @@ void CL_Sequence2D (void)
 	vec3_t pos;
 
 	/* center screen */
-	pos[0] = (viddef.virtualWidth - VID_NORM_WIDTH) * viddef.rx / 2;
-	pos[1] = (viddef.virtualHeight - VID_NORM_HEIGHT) * viddef.ry / 2;
+	pos[0] = (viddef.virtualWidth - VID_NORM_WIDTH) / 2;
+	pos[1] = (viddef.virtualHeight - VID_NORM_HEIGHT) / 2;
 	pos[2] = 0;
-	R_PushMatrix();
-	R_Transform(pos, NULL, NULL);
+	MN_Transform(pos, NULL, NULL);
 
 	/* add texts */
 	for (i = 0, s2d = seq2Ds; i < numSeq2Ds; i++, s2d++)
@@ -376,7 +364,8 @@ void CL_Sequence2D (void)
 				height += MN_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], (int) s2d->size[0], (int) s2d->size[1], -1 /** @todo use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 		}
 	R_Color(NULL);
-	R_PopMatrix();
+
+	MN_Transform(NULL, NULL, NULL);
 }
 
 /**

@@ -25,11 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "../m_parse.h"
 #include "../m_internal.h"
+#include "../m_render.h"
 #include "m_node_abstractnode.h"
 #include "m_node_linechart.h"
 
 #include "../../renderer/r_draw.h"
-#include "../../renderer/r_misc.h"
 
 static void MN_LineChartNodeDraw (menuNode_t *node)
 {
@@ -49,8 +49,7 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 	MN_GetNodeAbsPos(node, pos);
 	pos[2] = 0;
 
-	R_PushMatrix();
-	R_Transform(pos, NULL, NULL);
+	MN_Transform(pos, NULL, NULL);
 
 	/* Draw axes */
 	if (node->u.linechart.displayAxes) {
@@ -76,7 +75,7 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 	}
 	R_Color(NULL);
 
-	R_PopMatrix();
+	MN_Transform(NULL, NULL, NULL);
 }
 
 static const value_t properties[] = {
