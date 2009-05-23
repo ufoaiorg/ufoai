@@ -594,7 +594,6 @@ void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 	/* bump the time */
 	lighting->time = refdef.time;
 
-
 	/* resolve the lighting color */
 	R_LightPointColor(lighting);
 

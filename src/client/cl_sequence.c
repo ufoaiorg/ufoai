@@ -90,7 +90,9 @@ typedef struct seqEnt_s {
 	int skin;
 	vec3_t origin, speed;
 	vec3_t angles, omega;
+	vec3_t color;
 	float alpha;
+	static_lighting_t lighting;
 	char parent[MAX_VAR];
 	char tag[MAX_VAR];
 	animState_t as;
@@ -110,14 +112,14 @@ typedef struct seq2D_s {
 	qboolean relativePos;	/**< useful for translations when sentence length may differ */
 } seq2D_t;
 
-int SEQ_Click(const char *name, char *data);
-int SEQ_Wait(const char *name, char *data);
-int SEQ_Precache(const char *name, char *data);
-int SEQ_Camera(const char *name, char *data);
-int SEQ_Model(const char *name, char *data);
-int SEQ_2Dobj(const char *name, char *data);
-int SEQ_Remove(const char *name, char *data);
-int SEQ_Command(const char *name, char *data);
+static int SEQ_Click(const char *name, char *data);
+static int SEQ_Wait(const char *name, char *data);
+static int SEQ_Precache(const char *name, char *data);
+static int SEQ_Camera(const char *name, char *data);
+static int SEQ_Model(const char *name, char *data);
+static int SEQ_2Dobj(const char *name, char *data);
+static int SEQ_Remove(const char *name, char *data);
+static int SEQ_Command(const char *name, char *data);
 
 static int (*seqCmdFunc[SEQ_NUMCMDS]) (const char *name, char *data) = {
 	NULL,
@@ -280,6 +282,8 @@ void CL_SequenceRender (void)
 			ent.skinnum = se->skin;
 			ent.as = se->as;
 			ent.alpha = se->alpha;
+			ent.lighting = &se->lighting;
+			VectorCopy(se->color, se->lighting.color);
 
 			VectorCopy(se->origin, ent.origin);
 			VectorCopy(se->origin, ent.oldorigin);
@@ -469,6 +473,7 @@ static const value_t seqEnt_vals[] = {
 	{"speed", V_VECTOR, offsetof(seqEnt_t, speed), MEMBER_SIZEOF(seqEnt_t, speed)},
 	{"angles", V_VECTOR, offsetof(seqEnt_t, angles), MEMBER_SIZEOF(seqEnt_t, angles)},
 	{"omega", V_VECTOR, offsetof(seqEnt_t, omega), MEMBER_SIZEOF(seqEnt_t, omega)},
+	{"color", V_VECTOR, offsetof(seqEnt_t, color), MEMBER_SIZEOF(seqEnt_t, color)},
 	{"parent", V_STRING, offsetof(seqEnt_t, parent), 0},
 	{"tag", V_STRING, offsetof(seqEnt_t, tag), 0},
 	{NULL, 0, 0, 0}
@@ -497,7 +502,7 @@ static const value_t seq2D_vals[] = {
  * @return 0 if you wait for the click
  * @return 1 if the click occured
  */
-int SEQ_Click (const char *name, char *data)
+static int SEQ_Click (const char *name, char *data)
 {
 	/* if a CL_SequenceClick_f event was called */
 	if (seqEndClickLoop) {
@@ -516,7 +521,7 @@ int SEQ_Click (const char *name, char *data)
  * @brief Increase the sequence time
  * @return 1 - increase the command position of the sequence by one
  */
-int SEQ_Wait (const char *name, char *data)
+static int SEQ_Wait (const char *name, char *data)
 {
 	seqTime += 1000 * atof(name);
 	return 1;
@@ -528,7 +533,7 @@ int SEQ_Wait (const char *name, char *data)
  * @sa R_RegisterModelShort
  * @sa R_RegisterImage
  */
-int SEQ_Precache (const char *name, char *data)
+static int SEQ_Precache (const char *name, char *data)
 {
 	if (!strcmp(name, "models")) {
 		while (*data) {
@@ -550,7 +555,7 @@ int SEQ_Precache (const char *name, char *data)
 /**
  * @brief Parse the values for the camera like given in seqCamera
  */
-int SEQ_Camera (const char *name, char *data)
+static int SEQ_Camera (const char *name, char *data)
 {
 	const value_t *vp;
 
@@ -576,7 +581,7 @@ int SEQ_Camera (const char *name, char *data)
  * @sa seqEnt_vals
  * @sa CL_SequenceFindEnt
  */
-int SEQ_Model (const char *name, char *data)
+static int SEQ_Model (const char *name, char *data)
 {
 	seqEnt_t *se;
 	const value_t *vp;
@@ -598,6 +603,7 @@ int SEQ_Model (const char *name, char *data)
 		memset(se, 0, sizeof(*se));
 		se->inuse = qtrue;
 		Q_strncpyz(se->name, name, sizeof(se->name));
+		VectorSet(se->color, 0.7, 0.7, 0.7);
 	}
 
 	/* get values */
@@ -632,7 +638,7 @@ int SEQ_Model (const char *name, char *data)
  * @sa seq2D_vals
  * @sa CL_SequenceFind2D
  */
-int SEQ_2Dobj (const char *name, char *data)
+static int SEQ_2Dobj (const char *name, char *data)
 {
 	seq2D_t *s2d;
 	const value_t *vp;
@@ -691,7 +697,7 @@ int SEQ_2Dobj (const char *name, char *data)
  * @sa CL_SequenceFind2D
  * @sa CL_SequenceFindEnt
  */
-int SEQ_Remove (const char *name, char *data)
+static int SEQ_Remove (const char *name, char *data)
 {
 	seqEnt_t *se;
 	seq2D_t *s2d;
@@ -720,7 +726,7 @@ int SEQ_Remove (const char *name, char *data)
  * @return 1 - increase the command position of the sequence by one
  * @sa Cbuf_AddText
  */
-int SEQ_Command (const char *name, char *data)
+static int SEQ_Command (const char *name, char *data)
 {
 	/* add the command */
 	Cbuf_AddText(name);

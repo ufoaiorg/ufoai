@@ -407,6 +407,8 @@ void R_DrawAliasModel (entity_t *e)
 {
 	const mAliasModel_t *mod;
 	int i;
+	float g;
+	vec4_t color = {1, 1, 1, e->alpha};
 
 	mod = (mAliasModel_t *)&e->model->alias;
 
@@ -418,58 +420,56 @@ void R_DrawAliasModel (entity_t *e)
 		glScalef(e->scale[0], e->scale[1], e->scale[2]);
 
 	/* resolve lighting for coloring */
-	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
-		vec4_t color = {1, 1, 1, 1};
-		float g;
-
+	/* update static lighting info */
+	if (e->lighting) {
 		if (r_state.lighting_enabled) {
 			vec3_t lightpos;
+
+			if (e->lighting->dirty) {
+				if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
+					/* tagged models have an origin relative to the parent entity - so we
+					 * have to transform them */
+					if (e->tagent) {
+						vec4_t tmp;
+						GLVectorTransform(e->transform.matrix, e->origin, tmp);
+						R_LightPoint(tmp, e->lighting);
+					} else {
+						R_LightPoint(e->origin, e->lighting);
+					}
+				}
+			}
+
 			/* enable hardware light sources, transform the static light source vector */
 			R_ModelViewTransform(e->lighting->position, lightpos);
 			R_ProgramParameter3fv("LIGHTPOS", lightpos);
 		}
 
-		/* update static lighting info */
-		if (e->lighting) {
-			if (e->lighting->dirty) {
-				/* tagged models have an origin relative to the parent entity - so we
-				 * have to transform them */
-				if (e->tagent) {
-					vec4_t tmp;
-					GLVectorTransform(e->transform.matrix, e->origin, tmp);
-					R_LightPoint(tmp, e->lighting);
-				} else {
-					R_LightPoint(e->origin, e->lighting);
-				}
-			}
-
-			/* resolve the color, starting with the lighting result */
-			VectorCopy(e->lighting->color, color);
-		}
-
-		/* IR goggles override color
-		 * don't highlight all misc_models, only actors */
-		if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_ACTOR)
-			color[0] = 1.0;
-
-		if (e->flags & RF_PULSE) {  /* and then adding in a pulse */
-			const float f = 1.0 + sin((refdef.time + (e->model->alias.meshes[0].num_tris)) * 6.0) * 0.33;
-			VectorScale(color, 1.0 + f, color);
-		}
-
-		g = 0.0;
-		/* find brightest component */
- 		for (i = 0; i < 3; i++) {
- 			if (color[i] > g)  /* keep it */
-				g = color[i];
-		}
-
-		/* scale it back to 1.0 */
-		if (g > 1.0)
-			VectorScale(color, 1.0 / g, color);
-
-		R_Color(color);
+		/* resolve the color, starting with the lighting result */
+		VectorCopy(e->lighting->color, color);
 	}
+
+	/* IR goggles override color
+	 * don't highlight all misc_models, only actors */
+	if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_ACTOR)
+		color[0] = 1.0;
+
+	if (e->flags & RF_PULSE) {  /* and then adding in a pulse */
+		const float f = 1.0 + sin((refdef.time + (e->model->alias.meshes[0].num_tris)) * 6.0) * 0.33;
+		VectorScale(color, 1.0 + f, color);
+	}
+
+	g = 0.0;
+	/* find brightest component */
+	for (i = 0; i < 3; i++) {
+		if (color[i] > g)  /* keep it */
+			g = color[i];
+	}
+
+	/* scale it back to 1.0 */
+	if (g > 1.0)
+		VectorScale(color, 1.0 / g, color);
+
+	R_Color(color);
 
 	/* the values are sane here already - see R_DrawEntities */
 	R_BindTexture(mod->meshes[e->as.mesh].skins[e->skinnum].skin->texnum);
