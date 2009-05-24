@@ -10761,46 +10761,39 @@
 // entity 184
 {
 "classname" "misc_sound"
-"origin" "1360 658 32"
+"origin" "80 912 32"
 "noise" "ambience/firesoft.wav"
 "spawnflags" "511"
 }
 // entity 185
 {
 "classname" "misc_sound"
-"origin" "80 912 32"
+"origin" "40 1032 32"
 "noise" "ambience/firesoft.wav"
 "spawnflags" "511"
 }
 // entity 186
 {
 "classname" "misc_sound"
-"origin" "40 1032 32"
+"origin" "400 1266 32"
 "noise" "ambience/firesoft.wav"
 "spawnflags" "511"
 }
 // entity 187
 {
 "classname" "misc_sound"
-"origin" "400 1266 32"
+"origin" "1196 780 28"
 "noise" "ambience/firesoft.wav"
 "spawnflags" "511"
 }
 // entity 188
 {
 "classname" "misc_sound"
-"origin" "1196 780 28"
-"noise" "ambience/firesoft.wav"
-"spawnflags" "511"
-}
-// entity 189
-{
-"classname" "misc_sound"
 "origin" "1132 588 28"
 "noise" "ambience/firesoft.wav"
 "spawnflags" "511"
 }
-// entity 190
+// entity 189
 {
 "classname" "misc_model"
 "model" "models/objects/cars/golf/car1t.md2"
@@ -10808,7 +10801,7 @@
 "spawnflags" "255"
 "angles" "0 90 0"
 }
-// entity 191
+// entity 190
 {
 "classname" "misc_model"
 "model" "models/objects/cars/golf/car1.md2"
