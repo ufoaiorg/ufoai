@@ -130,8 +130,12 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume)
 
 	for (i = 0; i < MAX_CHANNELS; i++){  /* find existing loop sound */
 		if (s_env.channels[i].sample == sample) {
-			ch = &s_env.channels[i];
-			break;
+			vec3_t delta;
+			VectorSubtract(s_env.channels[i].org, org, delta);
+			if (VectorLength(delta) < 255.0) {
+				ch = &s_env.channels[i];
+				break;
+			}
 		}
 	}
 
