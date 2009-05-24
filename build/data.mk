@@ -58,4 +58,4 @@ $(BASE_DIR)/0ufos.pk3 : $(filter %.ufo, $(shell $(call FIND, ufos)))
 
 $(BASE_DIR)/0materials.pk3 : $(filter %.mat, $(shell $(call FIND, materials)))
 
-$(BASE_DIR)/0base.pk3 : $(wildcard base/*.cfg) base/irc_motd.txt $(wildcard base/ai/*.lua)
+$(BASE_DIR)/0base.pk3 : $(wildcard base/*.cfg) base/mapcycle.txt base/irc_motd.txt $(wildcard base/ai/*.lua)
