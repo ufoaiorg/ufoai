@@ -408,7 +408,7 @@ void R_DrawAliasModel (entity_t *e)
 	const mAliasModel_t *mod;
 	int i;
 	float g;
-	vec4_t color = {1, 1, 1, e->alpha};
+	vec4_t color = {1, 1, 1, 1};
 
 	mod = (mAliasModel_t *)&e->model->alias;
 

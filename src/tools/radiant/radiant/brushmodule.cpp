@@ -85,7 +85,7 @@ void Brush_Construct ()
 	Brush::m_maxWorldCoord = g_MaxWorldCoord;
 	BrushInstance::m_counter = &g_brushCount;
 
-	g_texdef_default_scale = 1.0f;
+	g_texdef_default_scale = 0.25f;
 
 	GlobalPreferenceSystem().registerPreference("TextureLock", BoolImportStringCaller(g_brush_texturelock_enabled),
 			BoolExportStringCaller(g_brush_texturelock_enabled));
