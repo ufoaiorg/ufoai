@@ -713,7 +713,7 @@ sequence credits
 
 	2dobj ufoai
 	{
-		image	ufoai
+		image	pics/ufoai
 		align	uc
 		pos		"512 800"
 		speed	"0 -128"

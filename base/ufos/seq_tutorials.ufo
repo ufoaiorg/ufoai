@@ -64,21 +64,21 @@ sequence tut_gameplay
 
 	2dobj gameplay_pic1a
 	{
-		image	tutorial/gameplay1a
+		image	pics/tutorial/gameplay1a
 		align	ul
 		pos		"64 140"
 	}
 	wait 2
 	2dobj gameplay_pic1b
 	{
-		image	tutorial/gameplay1b
+		image	pics/tutorial/gameplay1b
 		align	ul
 		pos		"384 140"
 	}
 	wait 2
 	2dobj gameplay_pic1c
 	{
-		image	tutorial/gameplay1c
+		image	pics/tutorial/gameplay1c
 		align	ul
 		pos		"704 140"
 	}
@@ -101,21 +101,21 @@ sequence tut_gameplay
 	wait 2
 	2dobj gameplay_pic2a
 	{
-		image	tutorial/gameplay2a
+		image	pics/tutorial/gameplay2a
 		align	ul
 		pos		"64 165"
 	}
 	wait 2
 	2dobj gameplay_pic2b
 	{
-		image	tutorial/gameplay2b
+		image	pics/tutorial/gameplay2b
 		align	ul
 		pos		"384 165"
 	}
 	wait 2
 	2dobj gameplay_pic2c
 	{
-		image	tutorial/gameplay2c
+		image	pics/tutorial/gameplay2c
 		align	ul
 		pos		"704 165"
 	}
@@ -138,7 +138,7 @@ sequence tut_gameplay
 	wait 1
 	2dobj gameplay_pic3a
 	{
-		image	tutorial/gameplay3a
+		image	pics/tutorial/gameplay3a
 		align	ul
 		pos		"384 190"
 	}
@@ -157,21 +157,21 @@ sequence tut_gameplay
 	wait 1
 	2dobj gameplay_pic4a
 	{
-		image	tutorial/gameplay4a
+		image	pics/tutorial/gameplay4a
 		align	ul
 		pos		"64 215"
 	}
 	wait 2
 	2dobj gameplay_pic4b
 	{
-		image	tutorial/gameplay4b
+		image	pics/tutorial/gameplay4b
 		align	ul
 		pos		"384 215"
 	}
 	wait 2
 	2dobj gameplay_pic4c
 	{
-		image	tutorial/gameplay4c
+		image	pics/tutorial/gameplay4c
 		align	ul
 		pos		"704 215"
 	}
@@ -194,21 +194,21 @@ sequence tut_gameplay
 	wait 2
 	2dobj gameplay_pic5a
 	{
-		image	tutorial/gameplay5a
+		image	pics/tutorial/gameplay5a
 		align	ul
 		pos		"64 240"
 	}
 	wait 2
 	2dobj gameplay_pic5b
 	{
-		image	tutorial/gameplay5b
+		image	pics/tutorial/gameplay5b
 		align	ul
 		pos		"384 240"
 	}
 	wait 2
 	2dobj gameplay_pic5c
 	{
-		image	tutorial/gameplay5c
+		image	pics/tutorial/gameplay5c
 		align	ul
 		pos		"704 240"
 	}
@@ -232,14 +232,14 @@ sequence tut_gameplay
 	wait 2
 	2dobj gameplay_pic6a
 	{
-		image	tutorial/gameplay6a
+		image	pics/tutorial/gameplay6a
 		align	ul
 		pos		"172 265"
 	}
 	wait 2
 	2dobj gameplay_pic6b
 	{
-		image	tutorial/gameplay6b
+		image	pics/tutorial/gameplay6b
 		align	ul
 		pos		"600 265"
 	}
@@ -260,7 +260,7 @@ sequence tut_gameplay
 	wait 2
 	2dobj gameplay_pic7a
 	{
-		image	tutorial/gameplay7a
+		image	pics/tutorial/gameplay7a
 		align	ul
 		pos		"384 290"
 	}
@@ -279,14 +279,14 @@ sequence tut_gameplay
 	wait 2
 	2dobj gameplay_pic8a
 	{
-		image	tutorial/gameplay8a
+		image	pics/tutorial/gameplay8a
 		align	ul
 		pos		"172 315"
 	}
 	wait 2
 	2dobj gameplay_pic8b
 	{
-		image	tutorial/gameplay8b
+		image	pics/tutorial/gameplay8b
 		align	ul
 		pos		"600 315"
 	}
@@ -357,7 +357,7 @@ sequence tut_tacticalmission
 	// background image
 	2dobj tactical_bg
 	{
-		image	tutorial/tactical1
+		image	pics/tutorial/tactical1
 		align	ul
 		pos	"0 0"
 	}
