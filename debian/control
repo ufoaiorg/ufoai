@@ -2,11 +2,13 @@ Source: ufoai
 Section: games
 Priority: optional
 Maintainer: Yann Dirson <dirson@debian.org>
-Build-Depends: debhelper (>= 6.0.0), dh-buildinfo, libpng-dev, libjpeg-dev,
- libgl-dev, libsdl-dev, libsdl-ttf2.0-dev, libsdl-mixer1.2-dev, libcurl4-openssl-dev,
- texlive-latex-recommended, quilt, texlive-latex-extra, zip,
- libgtk2.0-dev, libxml2-dev, libgtkglext1-dev, libglib2.0-dev,
- libtheora-dev, libxvidcore4-dev
+Build-Depends: debhelper (>= 5.0.0), libpng-dev, libjpeg-dev,
+ libgl-dev, libsdl-dev, libsdl-ttf2.0-dev, libsdl-mixer1.2-dev, 
+ libcurl3-openssl-dev | libcurl4-openssl-dev,
+ texlive-latex-recommended, texlive-latex-extra, zip,
+ libgtk2.0-dev (>=2.4.0), libxml2-dev, libgtkglext1-dev,
+ libtheora-dev | libxvidcore4-dev, libpng-dev, libjpeg-dev
+ libglib2.0-dev
 Standards-Version: 3.7.3
 Homepage: http://ufoai.sf.net
 Vcs-Svn: https://ufoai.svn.sourceforge.net/svnroot/ufoai/ufoai/trunk
@@ -16,8 +18,7 @@ Section: games
 Priority: optional
 Architecture: any
 Depends: ${shlibs:Depends}, ufoai-data (= ${source:Version}),
- ufoai-common (= ${source:Version}), libpng12-0, libsdl-mixer1.2,
- libsdl-ttf2.0-0, libjpeg62, libtheora0, libxvidcore4
+ ufoai-common (= ${source:Version})
 Recommends: ufoai-music
 Description: UFO: Alien Invasion - build your team and stop the aliens
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
@@ -33,8 +34,7 @@ Package: ufoai-server
 Section: games
 Priority: optional
 Architecture: any
-Depends: ${shlibs:Depends}, ufoai-common (= ${source:Version}), libsdl1.2debian
-Recommends: ufoai-server-data
+Depends: ${shlibs:Depends}, ufoai-common (= ${source:Version}), ufoai-server-data (= ${source:Version})
 Suggests: ufoai
 Description: UFO: Alien Invasion - standalone game server
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
@@ -103,10 +103,8 @@ Package: ufoai-radiant
 Section: games
 Priority: optional
 Architecture: any
-Depends: ${shlibs:Depends}, ufoai-tools, libgtk2.0-0, libgtkglext1,
- libglib2.0-0, libxml2, libjpeg62, libpng12-0
-Build-Depends: debhelper (>= 5.0.0), libgtkglext1-dev (>= 1.0.0), libxml2 (>= 2.0.0),
- libxml2-dev (>= 2.0.0), libgtk2.0-dev (>=2.4.0), libglib2.0-dev, libpng-dev, libjpeg-dev
+Depends: ${shlibs:Depends}, ufoai-tools
+Suggests: ufoai-map-sources
 Description: UFO: Alien Invasion - map-building tool
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
@@ -116,7 +114,7 @@ Package: ufoai-map-sources
 Section: games
 Priority: optional
 Architecture: any
-Depends: ${shlibs:Depends}, ufoai-tools
+Depends: ufoai-tools
 Recommends: ufoai-radiant
 Description: UFO: Alien Invasion - map-sources
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.

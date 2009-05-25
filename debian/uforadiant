@@ -21,8 +21,9 @@
 
 set -e
 
-INSTDIR=/usr/share/games/ufoai/radiant/
+BINDIR=/usr/lib/games/uforadiant/
+INSTDIR=/usr/share/games/uforadiant/
 
 cd $INSTDIR
 
-${INSTDIR}/uforadiant "$@"
+${BINDIR}/uforadiant "$@"

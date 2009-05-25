@@ -3,7 +3,6 @@
 # Copyright 2004, 2006 Yann Dirson.
 # Based on debhelper sample by Joey Hess.
 
-FONTDIR=debian/ufoai-data/usr/share/games/ufoai/media
 export LC_ALL=C
 export DH_OPTIONS
 
@@ -96,24 +95,6 @@ install-indep: stamps/build-indep
 	dh_installdirs
 	dh_install
 
-	# add links to fonts
-	mkdir -p $(FONTDIR)
-	#From ttf-freefont
-	ln -s /usr/share/fonts/truetype/freefont/FreeSans.ttf $(FONTDIR)
-	#From ttf-dejavu-core
-	ln -s /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf $(FONTDIR)
-	#From ttf-thai-tlwg
-	ln -s /usr/share/fonts/truetype/thai/Loma.ttf $(FONTDIR)
-	ln -s /usr/share/fonts/truetype/thai/Norasi.ttf $(FONTDIR)
-	#From ttf-wqy-zenhei
-	ln -s /usr/share/fonts/truetype/wqy/wqy-zenhei.ttf $(FONTDIR)
-	#From ttf-unfonts
-	ln -s /usr/share/fonts/truetype/unfonts/UnGraphicBold.ttf $(FONTDIR)
-	# This is not in Debian yet
-	cp base/media/UnDinaruBold.ttf $(FONTDIR)
-	# This is not in Debian yet, see ITP #461757 for ttf-ume
-	cp base/media/ume-pgo4.ttf $(FONTDIR)
-
 # No architecture-independent files here.
 binary-indep: DH_OPTIONS=-i
 binary-indep: install-indep
@@ -136,11 +117,9 @@ binary-arch: install-arch
 	dh_testroot
 	dh_installchangelogs
 	dh_installdocs
-	ln -s ../ufoai-data debian/ufoai/usr/share/doc/ufoai/docs
-	dh_buildinfo
 	dh_installexamples
 	dh_installmenu
-	dh_installman debian/ufo.6 debian/ufoded.6
+	dh_installman
 	dh_link
 	dh_strip
 	dh_compress -X.pdf
