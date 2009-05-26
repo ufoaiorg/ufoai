@@ -976,7 +976,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 				/* origins are shifted */
 				sscanf(token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]));
 				VectorAdd(v, shift, v);
-				Q_strcat(mapEntityString, va("%s \"%i %i %i\" ", keyname, (int) v[0], (int) v[1], (int) v[2]), MAX_MAP_ENTSTRING);
+				Q_strcat(mapEntityString, va("%s \"%f %f %f\" ", keyname, v[0], v[1], v[2]), MAX_MAP_ENTSTRING);
 				/* If we have a model, then unadjust it's mins and maxs. */
 				if (model) {
 					VectorSubtract(model->mins, shift, model->mins);

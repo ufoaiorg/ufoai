@@ -664,6 +664,7 @@ static void LET_PathMove (le_t * le)
 			if (floor)
 				FLOOR(le) = FLOOR(floor);
 
+			le->lighting.dirty = qtrue;
 			le->think = LET_StartIdle;
 			return;
 		}
@@ -675,6 +676,8 @@ static void LET_PathMove (le_t * le)
 	VectorSubtract(dest, start, delta);
 
 	frac = (float) (cl.time - le->startTime) / (float) (le->endTime - le->startTime);
+
+	le->lighting.dirty = qtrue;
 
 	/* calculate the new interpolated actor origin in the world */
 	VectorMA(start, frac, delta, le->origin);
@@ -1081,7 +1084,6 @@ void LE_AddToScene (void)
 			}
 
 			ent.lighting = &le->lighting;
-			ent.lighting->dirty = qtrue;
 
 			/* call add function */
 			/* if it returns false, don't draw */

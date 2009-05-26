@@ -632,6 +632,7 @@ static void CL_EntAppear (struct dbuffer *msg)
 	}
 
 	le->type = type;
+	le->lighting.dirty = qtrue;
 
 	/* the default is invisible - another event will follow which spawns not
 	 * only the le, but also the particle. The visibility is set there, too */
@@ -983,6 +984,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 
 	/* maybe added via CL_ActorAdd before */
 	le->invis = qfalse;
+	le->lighting.dirty = qtrue;
 
 	entnum = NET_ReadShort(msg);
 	if (entnum >= 0)

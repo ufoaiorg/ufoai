@@ -301,8 +301,7 @@ void R_EndBuildingLightmaps (void)
  * @brief Moves the given mins/maxs volume through the world from start to end.
  * @param[in] start Start vector to start the trace from
  * @param[in] end End vector to stop the trace at
- * @param[in] mins Bounding box used for tracing
- * @param[in] maxs Bounding box used for tracing
+ * @param[in] size Bounding box size used for tracing
  * @param[in] contentmask Searched content the trace should watch for
  */
 static void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
@@ -418,7 +417,7 @@ static void R_LightPointClamp (static_lighting_t *lighting)
 	clamped = qfalse;
 
 	for (i = 0; i < 3; i++) {  /* clamp it */
-		if(lighting->colors[0][i] < STATIC_LIGHTING_MIN_COMPONENT){
+		if (lighting->colors[0][i] < STATIC_LIGHTING_MIN_COMPONENT) {
 			lighting->colors[0][i] = STATIC_LIGHTING_MIN_COMPONENT;
 			clamped = qtrue;
 		}
@@ -449,14 +448,15 @@ static void R_LightPointColor (static_lighting_t *lighting)
 {
 	/* shuffle the samples */
 	VectorCopy(lighting->colors[0], lighting->colors[1]);
+	VectorCopy(refdef.ambient_light, lighting->colors[0]);
 
 	/* hit something */
 	if (refdef.trace.leafnum) {
 		VectorSet(lighting->colors[0], 1.0, 1.0, 1.0);
 		/* resolve the lighting sample */
-		if (r_mapTiles[refdef.trace.mapTile]->bsp.lightdata) {
+		if (refdef.trace_ent) {
 			/* clip to all surfaces of the bsp entity */
-			if (refdef.trace_ent) {
+			if (r_mapTiles[refdef.trace_ent->model->bsp.maptile]->bsp.lightdata) {
 				VectorSubtract(refdef.trace.endpos,
 						refdef.trace_ent->origin, refdef.trace.endpos);
 
@@ -464,21 +464,19 @@ static void R_LightPointColor (static_lighting_t *lighting)
 						refdef.trace_ent->model->bsp.firstmodelsurface,
 						refdef.trace_ent->model->bsp.nummodelsurfaces,
 						refdef.trace.endpos, lighting->colors[0]);
-			} else {
-				/* general case is to recurse up the nodes */
-				mBspLeaf_t *leaf = &r_mapTiles[refdef.trace.mapTile]->bsp.leafs[refdef.trace.leafnum];
-				mBspNode_t *node = leaf->parent;
+			}
+		} else if (r_mapTiles[refdef.trace.mapTile]->bsp.lightdata) {
+			/* general case is to recurse up the nodes */
+			mBspLeaf_t *leaf = &r_mapTiles[refdef.trace.mapTile]->bsp.leafs[refdef.trace.leafnum];
+			mBspNode_t *node = leaf->parent;
 
-				while (node) {
-					if (R_LightPointColor_(refdef.trace.mapTile, node->firstsurface, node->numsurfaces, refdef.trace.endpos, lighting->colors[0]))
-						break;
+			while (node) {
+				if (R_LightPointColor_(refdef.trace.mapTile, node->firstsurface, node->numsurfaces, refdef.trace.endpos, lighting->colors[0]))
+					break;
 
-					node = node->parent;
-				}
+				node = node->parent;
 			}
 		}
-	} else {
-		VectorCopy(refdef.ambient_light, lighting->colors[0]);
 	}
 
 	R_LightPointClamp(lighting);

@@ -713,6 +713,7 @@ void CL_AddActorToTeamList (le_t * le)
 	if (i == -1) {
 		i = cl.numTeamList;
 		le->pathMap = Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
+		le->lighting.dirty = qtrue;
 		cl.teamList[cl.numTeamList++] = le;
 		MN_ExecuteConfunc("numonteam%i", cl.numTeamList); /* althud */
 		MN_ExecuteConfunc("huddeselect %i", i);
@@ -1840,6 +1841,7 @@ void CL_ActorDie (struct dbuffer *msg)
 	FLOOR(le) = NULL;
 
 	le->state = state;
+	le->lighting.dirty = qtrue;
 
 	/* play animation */
 	le->think = NULL;
