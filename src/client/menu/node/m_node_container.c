@@ -1452,6 +1452,8 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 		fItem = Com_SearchInInventory(menuInventory, EXTRADATA(target).container, dragInfoToX, dragInfoToY);
 		if (!fItem)
 			return qfalse;
+		if (EXTRADATA(target).container->single)
+			return qtrue;
 		return INVSH_LoadableInWeapon(dragItem->t, fItem->item.t);
 	}
 }
