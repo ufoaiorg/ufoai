@@ -408,7 +408,7 @@ void R_DrawAliasModel (entity_t *e)
 	const mAliasModel_t *mod;
 	int i;
 	float g;
-	vec4_t color = {1, 1, 1, 1};
+	vec4_t color = {0.8, 0.8, 0.8, 1.0};
 
 	mod = (mAliasModel_t *)&e->model->alias;
 
@@ -439,8 +439,10 @@ void R_DrawAliasModel (entity_t *e)
 			R_ProgramParameter3fv("LIGHTPOS", lightpos);
 		}
 
-		/* resolve the color, starting with the lighting result */
-		VectorCopy(e->lighting->color, color);
+		/* we don't want black models */
+		if (VectorNotEmpty(e->lighting->color))
+			/* resolve the color, starting with the lighting result */
+			VectorCopy(e->lighting->color, color);
 	}
 
 	/* IR goggles override color

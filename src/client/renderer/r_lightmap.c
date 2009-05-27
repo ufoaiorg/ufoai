@@ -448,7 +448,6 @@ static void R_LightPointColor (static_lighting_t *lighting)
 {
 	/* shuffle the samples */
 	VectorCopy(lighting->colors[0], lighting->colors[1]);
-	VectorCopy(refdef.ambient_light, lighting->colors[0]);
 
 	/* hit something */
 	if (refdef.trace.leafnum) {
