@@ -427,15 +427,10 @@ void R_DrawAliasModel (entity_t *e)
 
 			if (e->lighting->dirty) {
 				if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
-					/* tagged models have an origin relative to the parent entity - so we
-					 * have to transform them */
-					if (e->tagent) {
-						vec4_t tmp;
-						GLVectorTransform(e->transform.matrix, e->origin, tmp);
-						R_LightPoint(tmp, e->lighting);
-					} else {
+					/* tagged models are not handled, they share the static lighting
+					 * information with the parent anyway */
+					if (!e->tagent)
 						R_LightPoint(e->origin, e->lighting);
-					}
 				}
 			}
 
