@@ -1558,8 +1558,11 @@ static void EntityKeyValueList_updateKeyCombo (GtkTreeViewColumn *column, GtkCel
 	} else {
 		g_object_set(renderer, "editable", TRUE, (const char*)0);
 	}
-	/* set combo store (initially empty) */
+	/* set combo store and set initial value (current key)*/
 	GtkListStore* store = gtk_list_store_new(1, G_TYPE_STRING);
+	GtkTreeIter storeIter;
+	gtk_list_store_append(store, &storeIter);
+	gtk_list_store_set(store, &storeIter, 0, key, -1);
 	g_object_set(renderer, "model", GTK_TREE_MODEL(store), "text-column", 0, (const char*) 0);
 	g_object_unref( G_OBJECT (store));
 	/** @todo disable edit of combo iff we got parse problems solved */
