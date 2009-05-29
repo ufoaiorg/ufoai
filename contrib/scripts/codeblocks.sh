@@ -88,7 +88,7 @@ start_downloads()
 	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-core.tar.gz gcc.tar.gz
 	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-g++.tar.gz g++.tar.gz
 
-	download_archive http://downloads.sourceforge.net/gnuwin32/ freetype-2.3.6-lib.zip freetype.zip
+	download_archive http://downloads.sourceforge.net/gnuwin32/ freetype-2.3.5-1-lib.zip freetype.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ gettext-0.14.4-bin.zip gettext.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ jpeg-6b-4-lib.zip libjpeg.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-lib.zip libiconv.zip
