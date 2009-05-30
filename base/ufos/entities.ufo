@@ -261,6 +261,7 @@ entity light {
 	default {
 		_cone	"10"
 		light	"300"
+		_color	"1 1 1"
 	}
 
 	type {
@@ -268,6 +269,7 @@ entity light {
 		light	"UNSIGNED V_INT"
 		_cone	"UNSIGNED V_INT"
 		angle	"SIGNED V_INT"
+		_color	"V_FLOAT 3"
 	}
 
 	range {
@@ -296,10 +298,12 @@ entity light_spot {
 	default {
 		_cone	"10"
 		light	"300"
+		_color	"1 1 1"
 	}
 
 	type {
 		origin	"V_FLOAT 3"
+		_color	"V_FLOAT 3"
 	}
 }
 
