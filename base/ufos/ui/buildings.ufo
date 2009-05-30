@@ -83,15 +83,38 @@ window buildings
 	text buildings
 	{
 		pos			"770 120"
-		size		"210 600"
+		size		"210 540"
 		lineheight	30
 		tabwidth	700
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		mousefx		true
 		dataid		TEXT_BUILDINGS
-		rows		"20"
+		rows		"18"
 		onClick		{ cmd "buildings_click <lineselected>" }
+	}
+	
+	checkbox building_preview
+	{
+		tooltip		"_Open/close Building preview window"
+		image		ui/checkbox_green
+		pos			"770 700"
+		size		"20 20"
+		current		1
+		onChange	{
+			if "*node:root.building_preview@current == 0" {
+				cmd "mn_close popup_buildingpreview;"
+			} else {
+				cmd "mn_push_child popup_buildingpreview buildings;"
+			}
+		}
+	}
+	string txt_preview
+	{
+		string		"_Building preview"
+		tooltip		"_Open/close Building preview window"
+		pos			"800 700"
+		size		"180 20"
 	}
 
 	confunc mn_buildings_reset
@@ -106,8 +129,12 @@ window buildings
 
 	func onInit
 	{
-		cmd "building_init;mn_push_child popup_buildingpreview buildings;"
+		cmd "building_init;"
 		call mn_buildings_reset
+		if "*node:root.building_preview@current == 1" {
+			cmd "mn_push_child popup_buildingpreview buildings;"
+		}
+		
 	}
 
 	func onClose
