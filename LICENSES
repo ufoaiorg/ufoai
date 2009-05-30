@@ -3452,6 +3452,7 @@ base/ufos/team_humans.ufo | GNU General Public License 2.0
 base/ufos/terrain.ufo | GNU General Public License 2.0
 base/ufos/tips.ufo | GNU General Public License 2.0
 base/ufos/ui/aircraft.ufo | GNU General Public License 2.0
+base/ufos/ui/aircraft_equip.ufo | GNU General Public License 2.0
 base/ufos/ui/aircraft_info.ufo | GNU General Public License 2.0
 base/ufos/ui/aircraft_soldiers.ufo | GNU General Public License 2.0
 base/ufos/ui/aliencont.ufo | GNU General Public License 2.0
