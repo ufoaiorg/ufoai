@@ -214,7 +214,7 @@ window unittest_condition
 			min			0
 			max			16
 			invis		true
-			disabled	true
+			disabled	false
 		}
 		
 		confunc unittest_condition_relative {
@@ -222,13 +222,11 @@ window unittest_condition
 			else { *testNode6 color "1 0 0 1" }
 			if "1 == *node:parent@current" { *testNode7 color "0 1 0 1" }
 			else { *testNode7 color "1 0 0 1" }
-			// @todo this test no more work !!!!! need to fix it
-			if "*node:this.menu.testNodeFoo2@max == 16" { *testNode8 color "0 1 0 1" }
+			if "*node:this.root.testNodeFoo2@max == 16" { *testNode8 color "0 1 0 1" }
 			else { *testNode8 color "1 0 0 1" }
 			if "*node:root.testNodeFoo2@invis == 1" { *testNode9 color "0 1 0 1" }
 			else { *testNode9 color "1 0 0 1" }
-			// @todo this test no more work !!!!! need to fix it
-			if "*node:this.parent.parent.testNodeFoo2.menu.testNodeFoo2@disabled == 1" { *testNode10 color "0 1 0 1" }
+			if "*node:this.parent.parent.testNodeFoo2.root.testNodeFoo2@disabled == 0" { *testNode10 color "0 1 0 1" }
 			else { *testNode10 color "1 0 0 1" }
 		}
 	}
