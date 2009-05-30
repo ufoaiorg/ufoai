@@ -77,6 +77,7 @@ static const char *ea_strings[EA_NUM_EVENTACTION] = {
 	"set",
 	"if",
 	"else",
+	"elif"
 };
 CASSERT(lengthof(ea_strings) == EA_NUM_EVENTACTION);
 
@@ -421,6 +422,14 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			}
 			break;
 
+		case EA_ELIF:
+			/* check previous action */
+			if (!lastAction || (lastAction->type.op != EA_IF && lastAction->type.op != EA_ELIF)) {
+				Com_Printf("MN_ParseActionList: 'elif' must be set after an 'if' or an 'elif' (node: %s)\n", MN_GetPath(menuNode));
+				return NULL;
+			}
+			/* then it execute EA_IF, no break */
+
 		case EA_IF:
 			/* get the condition */
 			*token = Com_EParse(text, errhead, NULL);
@@ -442,8 +451,8 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 
 		case EA_ELSE:
 			/* check previous action */
-			if (!lastAction || lastAction->type.op != EA_IF) {
-				Com_Printf("MN_ParseActionList: 'else' must be set after an 'if' (node: %s)\n", MN_GetPath(menuNode));
+			if (!lastAction || (lastAction->type.op != EA_IF && lastAction->type.op != EA_ELIF)) {
+				Com_Printf("MN_ParseActionList: 'else' must be set after an 'if' or an 'elif' (node: %s)\n", MN_GetPath(menuNode));
 				return NULL;
 			}
 

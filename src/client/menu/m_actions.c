@@ -331,12 +331,23 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 	case EA_IF:
 		if (MN_CheckCondition(source, (menuCondition_t *) action->data)) {
 			MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
-		} else if (action->next && action->next->type.op == EA_ELSE) {
-			MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->next->scriptValues);
+			return;
+		}
+		action = action->next;
+		while (action && action->type.op == EA_ELIF) {
+			if (MN_CheckCondition(source, (menuCondition_t *) action->data)) {
+				MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
+				return;
+			}
+			action = action->next;
+		}
+		if (action && action->type.op == EA_ELSE) {
+			MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
 		}
 		break;
 
 	case EA_ELSE:
+	case EA_ELIF:
 		/* previous EA_IF execute this action */
 		break;
 

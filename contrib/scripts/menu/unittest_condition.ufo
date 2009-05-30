@@ -8,7 +8,7 @@ window unittest_condition
 {
 	{
 		pos "100 100"
-		size "300 300"
+		size "340 300"
 		dragbutton	true
 		closebutton	true
 		string		"_Unittest condition"
@@ -46,57 +46,57 @@ window unittest_condition
 	}
 
 	string testFloat6 {
-		pos		"60 60"
+		pos		"20 160"
 		string	"t6"
 	}
 
 	string testFloat7 {
-		pos		"60 80"
+		pos		"20 180"
 		string	"t7"
 	}
 
 	string testFloat8 {
-		pos		"60 100"
+		pos		"20 200"
 		string	"t8"
 	}
 
 	string testFloat9 {
-		pos		"60 120"
+		pos		"20 220"
 		string	"t9"
 	}
 
 	string testFloat10 {
-		pos		"60 140"
+		pos		"20 240"
 		string	"t10"
 	}
 	
 	string stringTitle {
-		pos		"90 40"
+		pos		"80 40"
 		string	"string"
 	}
 
 	string testString1 {
-		pos		"100 60"
+		pos		"80 60"
 		string	"t1"
 	}
 
 	string testString2 {
-		pos		"100 80"
+		pos		"80 80"
 		string	"t2"
 	}
 
 	string testString3 {
-		pos		"100 100"
+		pos		"80 100"
 		string	"t3"
 	}
 
 	string testString4 {
-		pos		"100 120"
+		pos		"80 120"
 		string	"t4"
 	}
 
 	string testString5 {
-		pos		"100 140"
+		pos		"80 140"
 		string	"t5"
 	}
 
@@ -116,58 +116,88 @@ window unittest_condition
 	}
 
 	string nodeTitle {
-		pos		"190 40"
+		pos		"200 40"
 		string	"node"
 	}
 
 	string testNode1 {
-		pos		"180 60"
+		pos		"200 60"
 		string	"t1"
 	}
 
 	string testNode2 {
-		pos		"180 80"
+		pos		"200 80"
 		string	"t2"
 	}
 
 	string testNode3 {
-		pos		"180 100"
+		pos		"200 100"
 		string	"t3"
 	}
 
 	string testNode4 {
-		pos		"180 120"
+		pos		"200 120"
 		string	"t4"
 	}
 
 	string testNode5 {
-		pos		"180 140"
+		pos		"200 140"
 		string	"t5"
 	}
 
 	string testNode6 {
-		pos		"220 60"
+		pos		"200 160"
 		string	"t6"
 	}
 
 	string testNode7 {
-		pos		"220 80"
+		pos		"200 180"
 		string	"t7"
 	}
 
 	string testNode8 {
-		pos		"220 100"
+		pos		"200 200"
 		string	"t8"
 	}
 
 	string testNode9 {
-		pos		"220 120"
+		pos		"200 220"
 		string	"t9"
 	}
 
 	string testNode10 {
-		pos		"220 140"
+		pos		"200 240"
 		string	"t10"
+	}
+
+	string controlTitle {
+		pos		"260 40"
+		string	"control"
+	}
+
+	string testControl1 {
+		pos		"260 60"
+		string	"t1"
+	}
+
+	string testControl2 {
+		pos		"260 80"
+		string	"t2"
+	}
+
+	string testControl3 {
+		pos		"260 100"
+		string	"t3"
+	}
+
+	string testControl4 {
+		pos		"260 120"
+		string	"t4"
+	}
+
+	string testControl5 {
+		pos		"260 140"
+		string	"t5"
 	}
 
 	spinner testNodeFoo {
@@ -184,7 +214,7 @@ window unittest_condition
 			min			0
 			max			16
 			invis		true
-			disabled	false
+			disabled	true
 		}
 		
 		confunc unittest_condition_relative {
@@ -192,13 +222,52 @@ window unittest_condition
 			else { *testNode6 color "1 0 0 1" }
 			if "1 == *node:parent@current" { *testNode7 color "0 1 0 1" }
 			else { *testNode7 color "1 0 0 1" }
+			// @todo this test no more work !!!!! need to fix it
 			if "*node:this.menu.testNodeFoo2@max == 16" { *testNode8 color "0 1 0 1" }
 			else { *testNode8 color "1 0 0 1" }
 			if "*node:root.testNodeFoo2@invis == 1" { *testNode9 color "0 1 0 1" }
 			else { *testNode9 color "1 0 0 1" }
-			if "*node:this.parent.parent.testNodeFoo2.menu.testNodeFoo2@disabled == 0" { *testNode10 color "0 1 0 1" }
+			// @todo this test no more work !!!!! need to fix it
+			if "*node:this.parent.parent.testNodeFoo2.menu.testNodeFoo2@disabled == 1" { *testNode10 color "0 1 0 1" }
 			else { *testNode10 color "1 0 0 1" }
 		}
+	}
+	
+	confunc unittest_testIfControl {
+		/* if condition */
+		if "0 == 0" { *testControl1 color "0 1 0 1" }
+		elif "0 == 1" { *testControl1 color "1 0 0 1" }
+		elif "0 == 1" { *testControl1 color "1 0 0 1" }
+		elif "0 == 1" { *testControl1 color "1 0 0 1" }
+		else { *testControl1 color "1 0 0 1" }
+
+		/* first elif condition */
+		if "0 == 1" { *testControl2 color "1 0 0 1" }
+		elif "0 == 0" { *testControl2 color "0 1 0 1" }
+		elif "0 == 1" { *testControl2 color "1 0 0 1" }
+		elif "0 == 1" { *testControl2 color "1 0 0 1" }
+		else { *testControl2 color "1 0 0 1" }
+
+		/* mid elif condition */
+		if "0 == 1" { *testControl3 color "1 0 0 1" }
+		elif "0 == 1" { *testControl3 color "1 0 0 1" }
+		elif "0 == 0" { *testControl3 color "0 1 0 1" }
+		elif "0 == 1" { *testControl3 color "1 0 0 1" }
+		else { *testControl3 color "1 0 0 1" }
+
+		/* last elif condition */
+		if "0 == 1" { *testControl4 color "1 0 0 1" }
+		elif "0 == 1" { *testControl4 color "1 0 0 1" }
+		elif "0 == 1" { *testControl4 color "1 0 0 1" }
+		elif "0 == 0" { *testControl4 color "0 1 0 1" }
+		else { *testControl4 color "1 0 0 1" }
+
+		/* else condition */
+		if "0 == 1" { *testControl5 color "1 0 0 1" }
+		elif "0 == 1" { *testControl5 color "1 0 0 1" }
+		elif "0 == 1" { *testControl5 color "1 0 0 1" }
+		elif "0 == 1" { *testControl5 color "1 0 0 1" }
+		else { *testControl5 color "0 1 0 1" }
 	}
 	
 	func onInit {
@@ -269,6 +338,7 @@ window unittest_condition
 		else { *testNode5 color "1 0 0 1" }
 		
 		cmd "unittest_condition_relative"
+		cmd "unittest_testIfControl"
 	}
 
 	func onClose {
