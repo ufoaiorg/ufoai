@@ -697,7 +697,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 		break;
 	}
 
-	employee->chr.score.rank = CL_GetRankIdx("rifleman");
+	employee->chr.score.rank = CL_GetRankIdx(rank);
 
 	Com_DPrintf(DEBUG_CLIENT, "Generate character for type: %i\n", type);
 
