@@ -350,21 +350,6 @@ window research
 	string txt_assigned21	{ string "*cvar mn_researchassigned21"	textalign ur size "40 20"  pos "455 638"	color "0 .78 0 1" }
 	string txt_rsstatus21	{ string "*cvar mn_rsstatus21"	pos "530 638" size "60 20"	color "0 .78 0 1"	textalign ur }
 
-	pic img_status22	{ tooltip "*cvar mn_researchstatus22"	pos	"50 663"	image ui/buttons_small	mousefx true	texl	"32 16"	texh	"48 32" }
-	string txt_item22	{ string "*cvar mn_researchitem22"		pos "70 663"	color "0 .78 0 1"	size "365 25"	longlines prettychop onClick { cmd "research_select 22;" } }
-	string txt_assigned22	{ string "*cvar mn_researchassigned22"	textalign ur size "40 20"  pos "455 663"	color "0 .78 0 1" }
-	string txt_rsstatus22	{ string "*cvar mn_rsstatus22"	pos "530 663" size "60 20"	color "0 .78 0 1"	textalign ur }
-
-	pic img_status23	{ tooltip "*cvar mn_researchstatus23"	pos	"50 688"	image ui/buttons_small	mousefx true	texl	"32 16"	texh	"48 32" }
-	string txt_item23	{ string "*cvar mn_researchitem23"		pos "70 688"	color "0 .78 0 1"	size "365 25"	longlines prettychop onClick { cmd "research_select 23;" } }
-	string txt_assigned23	{ string "*cvar mn_researchassigned23"	textalign ur size "40 20"  pos "455 688"	color "0 .78 0 1" }
-	string txt_rsstatus23	{ string "*cvar mn_rsstatus23"	pos "530 688" size "60 20"	color "0 .78 0 1"	textalign ur }
-
-	pic img_status24	{ tooltip "*cvar mn_researchstatus24"	pos	"50 713"	image ui/buttons_small	mousefx true	texl	"32 16"	texh	"48 32" }
-	string txt_item24	{ string "*cvar mn_researchitem24"		pos "70 713"	color "0 .78 0 1"	size "365 25"	longlines prettychop onClick { cmd "research_select 24;" } }
-	string txt_assigned24	{ string "*cvar mn_researchassigned24"	textalign ur size "40 20"  pos "455 713"	color "0 .78 0 1" }
-	string txt_rsstatus24	{ string "*cvar mn_rsstatus24"	pos "530 713" size "60 20"	color "0 .78 0 1"	textalign ur }
-
 	spinner bt_rs_change0
 	{
 		tooltip	"_Add and remove scientist"
@@ -607,46 +592,13 @@ window research
 		}
 	}
 
-	spinner bt_rs_change22
-	{
-		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue
-		pos		"500 663"
-		min 0 current 10000 max 20000 delta 1
-		onChange {
-			cmd "research_select 22; mn_rs_change 22 <lastdiff>;"
-		}
-	}
-
-	spinner bt_rs_change23
-	{
-		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue
-		pos		"500 688"
-		min 0 current 10000 max 20000 delta 1
-		onChange {
-			cmd "research_select 23; mn_rs_change 23 <lastdiff>;"
-		}
-	}
-
-	spinner bt_rs_change24
-	{
-		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue
-		pos		"410 713"
-		min 0 current 10000 max 20000 delta 1
-		onChange {
-			cmd "research_select 24; mn_rs_change 24 <lastdiff>;"
-		}
-	}
-
 	// ==================
 	// Research infos related to the base
 	// ==================
 	string txt_base_name
 	{
 		string		"_Base Info"
-		pos			"695 115"
+		pos			"675 115"
 		size		"290 18"
 		longlines	prettychop
 	}
@@ -655,7 +607,7 @@ window research
 	string txt_base_labs
 	{
 		string		"*cvar mn_research_labs"
-		pos			"705 135"
+		pos			"685 135"
 		size		"290 18"
 		longlines	prettychop
 		color		"0 .78 0 1"
@@ -665,7 +617,7 @@ window research
 	string txt_base_scis
 	{
 		string		"*cvar mn_research_scis"
-		pos			"705 155"
+		pos			"685 155"
 		size		"290 18"
 		longlines	prettychop
 		color		"0 .78 0 1"
@@ -678,7 +630,7 @@ window research
 	string txt_selected_name
 	{
 		string		"*cvar mn_research_selname"
-		pos			"695 190"
+		pos			"675 190"
 		size		"300 18"
 		longlines	prettychop
 	}
@@ -694,7 +646,7 @@ window research
 	string txt_selected_status
 	{
 		string		"*cvar mn_research_selstatus"
-		pos			"705 210"
+		pos			"685 210"
 		color		"0 .78 0 1"
 		longlines	prettychop
 		size		"290 24"
@@ -704,7 +656,7 @@ window research
 	string txt_selected_base
 	{
 		string		"*cvar mn_research_selbase"
-		pos			"695 615"
+		pos			"675 615"
 		color		"0 .78 0 1"
 		size		"290 18"
 	}
@@ -712,20 +664,20 @@ window research
 	string txt_selected_time
 	{
 		string		"*cvar mn_research_seltime"
-		pos			"695 635"
+		pos			"675 635"
 		color		"0 .78 0 1"
 		size		"290 18"
 	}
 	pic progress_img
 	{
 		visiblewhen	"*cvar:mn_research_seltimebar != 0"
-		pos			"704 657"
+		pos			"684 657"
 		image		ui/bar_rahmen
 	}
 	bar progress_bar
 	{
 		visiblewhen	"*cvar:mn_research_seltimebar != 0"
-		pos			"714 662"
+		pos			"694 662"
 		current		"*cvar mn_research_seltimebar"
 		size		"245 6"
 		color		"0 .8 0 1"

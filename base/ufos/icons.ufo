@@ -68,7 +68,7 @@ icon autopsyalien {
 
 icon killalien {
 	image "ui/icon_pack2"
-	texl	"49 1"
+	texl	"80 1"
 	size	"29 25"
 }
 

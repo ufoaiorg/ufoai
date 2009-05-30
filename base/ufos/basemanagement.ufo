@@ -128,7 +128,6 @@ building building_storage
 	pos				"3 4"
 	capacity		10000
 	ondestroy		"building_ondestroy"
-	more_than_one	true
 }
 
 building building_powerplant
