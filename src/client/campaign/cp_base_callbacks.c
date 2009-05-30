@@ -424,13 +424,11 @@ static void B_BuildingInit (base_t* base)
 		if (tpl->visible) {
 			const int numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, tpl);
 
-			if (tpl->moreThanOne) {
-				/* skip if limit of BASE_SIZE*BASE_SIZE exceeded */
-				if (numSameBuildings >= BASE_SIZE * BASE_SIZE)
-					continue;
-			} else if (numSameBuildings > 0) {
+			if (tpl->maxCount >= 0 && tpl->maxCount <= numSameBuildings)
 				continue;
-			}
+			/* skip if limit of BASE_SIZE*BASE_SIZE exceeded */
+			if (numSameBuildings >= BASE_SIZE * BASE_SIZE)
+				continue;
 
 			/* if the building is researched add it to the list */
 			if (RS_IsResearched_ptr(tpl->tech)) {

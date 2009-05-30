@@ -251,12 +251,12 @@ void B_ResetBuildingCurrent (base_t* base)
 /**
  * @brief Holds the names of valid entries in the basemanagement.ufo file.
  *
- * The valid definition names for BUILDINGS (building_t) in the basemagagement.ufo file.
+ * The valid definition names for BUILDINGS (building_t) in the basemanagement.ufo file.
  * to the appropriate values in the corresponding struct
  */
 static const value_t valid_building_vars[] = {
 	{"map_name", V_CLIENT_HUNK_STRING, offsetof(building_t, mapPart), 0},	/**< Name of the map file for generating basemap. */
-	{"more_than_one", V_BOOL, offsetof(building_t, moreThanOne), MEMBER_SIZEOF(building_t, moreThanOne)},	/**< Is the building allowed to be build more the one time? */
+	{"max_count", V_INT, offsetof(building_t, maxCount), MEMBER_SIZEOF(building_t, maxCount)},	/**< How many building of the same type allowed? */
 	{"level", V_FLOAT, offsetof(building_t, level), MEMBER_SIZEOF(building_t, level)},	/**< building level */
 	{"name", V_TRANSLATION_STRING, offsetof(building_t, name), 0},	/**< The displayed building name. */
 	{"pedia", V_CLIENT_HUNK_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
@@ -1602,6 +1602,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		building->buildingType = MAX_BUILDING_TYPE;
 		building->dependsBuilding = NULL;
 		building->visible = qtrue;
+		building->maxCount = -1;	/* Default: no limit */
 
 		ccs.numBuildingTemplates++;
 		do {
@@ -1763,8 +1764,8 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		for (i = 0; i < ccs.numBuildingTemplates; i++)
 			if (!strcmp(ccs.buildingTemplates[i].id, token)) {
 				tile->building = &ccs.buildingTemplates[i];
-				if (!tile->building->moreThanOne && buildingNums[i] > 0)
-					Com_Error(ERR_DROP, "B_ParseBaseTemplate: Found more %s than allowed in template %s", token, template->id);
+				if (tile->building->maxCount >= 0 && tile->building->maxCount <= buildingNums[i])
+					Com_Error(ERR_DROP, "B_ParseBaseTemplate: Found more %s than allowed in template %s (%d))", token, template->id, tile->building->maxCount);
 				buildingNums[i]++;
 				break;
 			}

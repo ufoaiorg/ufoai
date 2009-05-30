@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -163,7 +163,7 @@ typedef struct building_s {
 	char onAttack[MAX_VAR];
 	char onDestroy[MAX_VAR];
 
-	int moreThanOne;	/**< More than one building of the same type allowed? */
+	int maxCount;		/**< How many building of the same type allowed? */
 
 	vec2_t pos;			/**< Position of autobuild. */
 	qboolean mandatory;
