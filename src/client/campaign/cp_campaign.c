@@ -1062,6 +1062,20 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 					Com_Printf("......warning: Missing BaseIndex\n");
 			}
 			break;
+		case INTERESTCATEGORY_INTERCEPT:
+			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_INTERCEPT) {
+				const int installationIdx = mxml_GetInt(act_node, "installationindex", BYTES_NONE);
+				if (installationIdx != BYTES_NONE) {
+					installation_t *installation = INS_GetInstallationByIDX(installationIdx);
+					if (installation)
+						mission.data = (void *) installation;
+					else {
+						Com_Printf("Mission on non-existent installation\n");
+						return qfalse;
+					}
+				}
+			}
+			break;
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
 			if (mission.stage >= STAGE_MISSION_GOTO) {
@@ -1256,6 +1270,13 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 				base = (base_t*)mission->data;
 				assert(base);
 				mxml_AddShort(missions, "baseindex", base->idx);
+			}
+			break;
+		case INTERESTCATEGORY_INTERCEPT:
+			if (mission->stage == STAGE_MISSION_GOTO || mission->stage == STAGE_INTERCEPT) {
+				const installation_t *installation = (installation_t*)mission->data;
+				if (installation)
+					mxml_AddShort(missions, "installationindex", installation->idx);
 			}
 			break;
 		case INTERESTCATEGORY_BUILDING:
