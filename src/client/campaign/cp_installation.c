@@ -238,6 +238,7 @@ void INS_DestroyInstallation (installation_t *installation)
 	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 
 	REMOVE_ELEM_ADJUST_IDX(ccs.installations, installation->idx, ccs.numInstallations);
+	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
 }
 
 installation_t *INS_GetCurrentSelectedInstallation (void)

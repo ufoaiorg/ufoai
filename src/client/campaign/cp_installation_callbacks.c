@@ -230,7 +230,6 @@ static void INS_DestroyInstallation_f (void)
 		return;
 	}
 	INS_DestroyInstallation(installation);
-	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
 }
 
 /**
