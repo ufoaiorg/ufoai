@@ -88,6 +88,24 @@ static const city_t* CP_ChooseCity (void)
 	return &ccs.cities[randnumber];
 }
 
+static const mission_t* CP_TerrorInCity (const city_t *city)
+{
+	const linkedList_t *list = ccs.missions;
+
+	if (!city)
+		return NULL;
+
+	for (;list; list = list->next) {
+		mission_t *mission = (mission_t *)list->data;
+		if (mission->category == INTERESTCATEGORY_TERROR_ATTACK
+		 && mission->stage <= STAGE_TERROR_MISSION
+		 && mission->pos[0] == city->pos[0]
+		 && mission->pos[1] == city->pos[1])
+			return mission;
+	}
+	return NULL;
+}
+
 /**
  * @brief Set Terror attack mission, and go to Terror attack mission pos.
  * @note Terror attack mission -- Stage 1
@@ -110,13 +128,16 @@ static void CP_TerrorMissionGo (mission_t *mission)
 		if (!CP_ChooseMap(mission, city->pos, qfalse))
 			continue;
 
+		if (CP_TerrorInCity(city))
+			continue;
+
 		Vector2Copy(city->pos, mission->pos);
 		mission->posAssigned = qtrue;
 		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(city->name));
 		break;
 	}
 	if (counter >= MAX_POS_LOOP) {
-		Com_Printf("CP_TerrorMissionGo: Error, could not set position.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CP_TerrorMissionGo: Could not set position.\n");
 		CP_MissionRemove(mission);
 		return;
 	}
