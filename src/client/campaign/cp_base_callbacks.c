@@ -523,6 +523,7 @@ static void B_BuildingDestroy_f (void)
 	B_BuildingDestroy(base, base->buildingCurrent);
 
 	B_ResetBuildingCurrent(base);
+	B_BuildingInit(base);
 }
 
 /**
