@@ -917,7 +917,7 @@ void Cmd_ExecuteString (const char *text)
 	/* check alias */
 	hash = Com_HashKey(str, ALIAS_HASH_SIZE);
 	for (a = cmd_alias_hash[hash]; a; a = a->hash_next) {
-		if (!Q_strcasecmp(cmd_argv[0], a->name)) {
+		if (!Q_strcasecmp(str, a->name)) {
 			if (++alias_count == ALIAS_LOOP_COUNT) {
 				Com_Printf("ALIAS_LOOP_COUNT\n");
 				return;

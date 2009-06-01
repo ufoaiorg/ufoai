@@ -1569,10 +1569,10 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
 }
 
 /**
- * @brief Handles the auto mission for none storyrelated missions or missions
- * that failed to assembly
+ * @brief Handles the auto mission for none storyrelated missions
  * @sa GAME_CP_MissionAutoGo_f
  * @sa CL_Drop
+ * @sa CP_MissionEnd
  * @sa AL_CollectingAliens
  */
 void CL_GameAutoGo (mission_t *mis)
@@ -1696,7 +1696,6 @@ void CP_InitMissionResults (int resultCounts[MAX_MISSIONRESULTCOUNT], qboolean w
 
 	if (won && ccs.missionresults.recovery)
 		Q_strcat(resultText, UFO_MissionResultToString(), sizeof(resultText));
-
 }
 
 /**

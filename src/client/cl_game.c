@@ -188,6 +188,31 @@ static void MN_ChangeMap_f (void)
 		MN_MapInfo(-1);
 }
 
+static void MN_SelectMap_f (void)
+{
+	const char *mapname;
+	int i;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <mapname>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (!csi.numMDs)
+		return;
+
+	mapname = Cmd_Argv(1);
+
+	for (i = 0; i < csi.numMDs; i++) {
+		const mapDef_t *md = &csi.mds[i];
+		if (strcmp(md->map, mapname))
+			continue;
+		cls.currentSelectedMap = 1;
+		MN_MapInfo(0);
+		return;
+	}
+}
+
 /**
  * @brief Decides with game mode should be set - takes the menu as reference
  */
@@ -417,6 +442,7 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("game_exit", GAME_Exit_f, "Abort the game and let the aliens/opponents win");
 	Cmd_AddCommand("game_abort", GAME_Abort_f, "Abort the game and let the aliens/opponents win");
 	Cmd_AddCommand("mn_getmaps", MN_GetMaps_f, "The initial map to show");
-	Cmd_AddCommand("mn_nextmap", MN_ChangeMap_f, "Switch to the next multiplayer map");
-	Cmd_AddCommand("mn_prevmap", MN_ChangeMap_f, "Switch to the previous multiplayer map");
+	Cmd_AddCommand("mn_nextmap", MN_ChangeMap_f, "Switch to the next valid map for the selected gametype");
+	Cmd_AddCommand("mn_prevmap", MN_ChangeMap_f, "Switch to the previous valid map for the selected gametype");
+	Cmd_AddCommand("mn_selectmap", MN_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
 }

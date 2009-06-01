@@ -1070,6 +1070,9 @@ void CP_MissionIsOverByUFO (aircraft_t *ufocraft)
 	CP_MissionIsOver(ufocraft->mission);
 }
 
+/**
+ * @sa CL_GameAutoGo
+ */
 void CP_MissionEnd (mission_t* mission, qboolean won)
 {
 	int civiliansKilled;
