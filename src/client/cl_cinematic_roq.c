@@ -419,7 +419,7 @@ static void CIN_ROQ_DecodeVideo (const byte *data)
 static void CIN_ROQ_DecodeSoundMono (const byte *data)
 {
 	short samples[ROQ_MAX_CHUNK_SIZE * 2];
-	int prev;
+	int prev = 0;
 	int i, j;
 
 	for (i = 0, j = 0; i < roqCin.chunk.size; i++, j += 2) {
