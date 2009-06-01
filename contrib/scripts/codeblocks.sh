@@ -100,7 +100,6 @@ start_downloads()
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libintl-0.14.4-lib.zip libintl.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libpng-1.2.35-lib.zip libpng.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ pdcurses-2.6-lib.zip libpdcurses.zip
-	download_archive http://downloads.sourceforge.net/gnuwin32/ libxml2-2.4.12-1-lib.zip libxml2.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ tiff-3.8.2-1-lib.zip libtiff.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ zlib-1.2.3-lib.zip zlib.zip
@@ -113,6 +112,8 @@ start_downloads()
 	download_archive http://downloads.sourceforge.net/gnuwin32/ grep-2.5.4-bin.zip grep.zip
 	
 	download_archive http://downloads.sourceforge.net/sevenzip/ 7za465.zip 7zip.zip
+
+	download_archive http://www.zlatkovic.com/pub/libxml/ libxml2-2.7.3.win32.zip libxml2.zip
 
 	download_archive http://curl.de-mirror.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
 
@@ -193,8 +194,10 @@ extract_libs()
 	extract_archive_gz directx.tar.gz "${MINGW_DIR}"
 	extract_archive_zip libpdcurses.zip "${MINGW_DIR}"
 	extract_archive_zip libxml2.zip "${MINGW_DIR}"
+	cp -R "${MINGW_DIR}/libxml2-*.win32/*" ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
+	rm -rf "${MINGW_DIR}/libxml2-*.win32/"
 	cp -R ${MINGW_DIR}/include/libxml2/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
-	rm -r ${MINGW_DIR}/include/libxml2 >> ${LOGFILE_NAME} 2>&1
+	rm -rf ${MINGW_DIR}/include/libxml2 >> ${LOGFILE_NAME} 2>&1
 }
 
 extract_libcurl()
