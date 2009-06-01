@@ -922,7 +922,6 @@ entity_t *FindTargetEntity (const char *target)
 static qboolean ParseMapEntity (const char *filename)
 {
 	entity_t *mapent;
-	epair_t *e;
 	const char *entName;
 	int startbrush, startsides;
 	static int worldspawnCount = 0;
@@ -953,7 +952,7 @@ static qboolean ParseMapEntity (const char *filename)
 		if (*parsedToken == '{')
 			ParseBrush(mapent, filename);
 		else {
-			e = ParseEpair();
+			epair_t *e = ParseEpair();
 			e->next = mapent->epairs;
 			mapent->epairs = e;
 		}

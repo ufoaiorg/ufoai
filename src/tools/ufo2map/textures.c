@@ -97,7 +97,7 @@ static const vec3_t baseaxis[18] =
 static void TextureAxisFromPlane (plane_t *pln, vec3_t xv, vec3_t yv, qboolean isTerrain)
 {
 	int bestaxis, numaxis, i;
-	vec_t dot, best;
+	vec_t best;
 
 	/* Knightmare- terrain support, use floor/ceiling axis only */
 	numaxis = (isTerrain) ? 2 : 6;
@@ -106,7 +106,7 @@ static void TextureAxisFromPlane (plane_t *pln, vec3_t xv, vec3_t yv, qboolean i
 	bestaxis = 0;
 
 	for (i = 0; i < numaxis; i++) {
-		dot = DotProduct(pln->normal, baseaxis[i * 3]);
+		const vec_t dot = DotProduct(pln->normal, baseaxis[i * 3]);
 		if (dot > best) {
 			best = dot;
 			bestaxis = i;
@@ -126,7 +126,6 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 	vec3_t vecs[2];
 	int sv, tv;
 	vec_t ang, sinv, cosv;
-	vec_t ns, nt;
 	dBspTexinfo_t tx, *tc;
 	int i, j, k;
 	float shift[2];
@@ -181,8 +180,8 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 		tv = 2;
 
 	for (i = 0; i < 2; i++) {
-		ns = cosv * vecs[i][sv] - sinv * vecs[i][tv];
-		nt = sinv * vecs[i][sv] +  cosv * vecs[i][tv];
+		const vec_t ns = cosv * vecs[i][sv] - sinv * vecs[i][tv];
+		const vec_t nt = sinv * vecs[i][sv] +  cosv * vecs[i][tv];
 		vecs[i][sv] = ns;
 		vecs[i][tv] = nt;
 	}
@@ -203,9 +202,9 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 			continue;
 		if (tc->value != tx.value)
 			continue;
+		if (strcmp(tc->texture, tx.texture))
+			goto skip;
 		for (j = 0; j < 2; j++) {
-			if (strcmp(tc->texture, tx.texture))
-				goto skip;
 			for (k = 0; k < 4; k++) {
 				if (tc->vecs[j][k] != tx.vecs[j][k])
 					goto skip;

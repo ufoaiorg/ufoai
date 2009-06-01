@@ -235,8 +235,8 @@ static void R_ModLoadTexinfo (const lump_t *l)
 
 	for (i = 0; i < count; i++, in++, out++) {
 		for (j = 0; j < 4; j++) {
-			out->vecs[0][j] = LittleFloat(in->vecs[0][j]);
-			out->vecs[1][j] = LittleFloat(in->vecs[1][j]);
+			out->vecs[0][j] = LittleFloat(in->vecs[0][j]); /* s */
+			out->vecs[1][j] = LittleFloat(in->vecs[1][j]); /* t */
 		}
 
 		out->flags = LittleLong(in->surfaceFlags);
