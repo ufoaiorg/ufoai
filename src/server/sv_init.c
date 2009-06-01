@@ -1064,8 +1064,6 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	Com_DPrintf(DEBUG_SERVER, "SpawnServer: %s\n", server);
 
 	svs.spawncount++;
-	/* any partially connected client will be restarted */
-	Com_SetServerState(ss_dead);
 
 	/* wipe the entire per-level structure */
 	memset(&sv, 0, sizeof(sv));
@@ -1209,9 +1207,11 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 {
 	assert(levelstring[0] != '\0');
 
+	/* any partially connected client will be restarted */
+	Com_SetServerState(ss_dead);
+
 	/* the game is just starting */
-	if (Com_ServerState() == ss_dead)
-		SV_InitGame();
+	SV_InitGame();
 
 	if (!svs.initialized) {
 		Com_Printf("Could not spawn the map\n");

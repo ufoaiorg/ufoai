@@ -303,6 +303,8 @@ int Com_ServerState (void)
 void Com_SetServerState (int state)
 {
 	Com_DPrintf(DEBUG_ENGINE, "Set server state to %i\n", state);
+	if (state == ss_dead)
+		SV_Shutdown("Server shutdown", qtrue);
 	sv.state = state;
 }
 
