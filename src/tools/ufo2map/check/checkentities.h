@@ -3,7 +3,7 @@
  */
 
 /*
-All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+All original material Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 Copyright (C) 1997-2001 Id Software, Inc.
 
