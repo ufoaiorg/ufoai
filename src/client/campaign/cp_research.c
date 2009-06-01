@@ -753,41 +753,6 @@ void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
 }
 
 /**
- * @brief Enable autosell option.
- * @param[in] tech Pointer to newly researched technology.
- * @sa RS_MarkResearched
- */
-static void RS_EnableAutosell (const technology_t *tech)
-{
-	int i;
-
-	/* If the tech leads to weapon or armour, find related item and enable autosell. */
-	if (tech->type == RS_WEAPON || tech->type == RS_ARMOUR) {
-		const objDef_t *obj = NULL;
-		for (i = 0; i < csi.numODs; i++) {
-			obj = &csi.ods[i];
-			if (!strcmp(tech->provides, obj->id)) {
-				ccs.autosell[i] = qtrue;
-				break;
-			}
-		}
-		if (i == csi.numODs)
-			return;
-
-		/* If the weapon has ammo, enable autosell for proper ammo as well. */
-		if (tech->type == RS_WEAPON && obj->reload) {
-			for (i = 0; i < obj->numAmmos; i++) {
-				const objDef_t *ammo = obj->ammos[i];
-				const technology_t *ammotech = ammo->tech;
-				if (ammotech && ammotech->produceTime < 0)
-					continue;
-				ccs.autosell[ammo->idx] = qtrue;
-			}
-		}
-	}
-}
-
-/**
  * @brief Mark technologies as researched. This includes techs that depends on "tech" and have time=0
  * @param[in] tech Pointer to a technology_t struct.
  * @sa RS_ResearchRun
@@ -796,7 +761,6 @@ static void RS_MarkResearched (technology_t *tech, const base_t *base)
 {
 	RS_ResearchFinish(tech);
 	Com_DPrintf(DEBUG_CLIENT, "Research of \"%s\" finished.\n", tech->id);
-	RS_EnableAutosell(tech);
 	RS_MarkResearchable(qfalse, base);
 }
 
