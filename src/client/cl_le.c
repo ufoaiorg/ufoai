@@ -1113,19 +1113,10 @@ void LE_Cleanup (void)
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
 			inv = le->i;
-			INVSH_DestroyInventory(&inv);
 			CL_ActorCleanup(le);
 			break;
 		case ET_ITEM:
 			INVSH_EmptyContainer(&le->i, &csi.ids[csi.idFloor]);
-			break;
-		case ET_PARTICLE:
-			if (le->ptl) {
-				CL_ParticleFree(le->ptl);
-				le->ptl = NULL;
-			}
-			break;
-		default:
 			break;
 		}
 	}

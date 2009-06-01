@@ -424,6 +424,8 @@ void GAME_Drop (void)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
 
+	LE_Cleanup();
+
 	if (list) {
 		if (!list->drop) {
 			GAME_SetMode(GAME_NONE);
