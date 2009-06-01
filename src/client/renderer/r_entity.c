@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_mesh_anim.h"
 #include "r_error.h"
 
+#define	MAX_ENTITIES	2048
+
 int r_numEntities;
 static entity_t r_entities[MAX_ENTITIES];
 
@@ -641,7 +643,8 @@ void R_DrawEntities (void)
  */
 entity_t *R_GetFreeEntity (void)
 {
-	assert(r_numEntities < MAX_ENTITIES);
+	if (r_numEntities >= MAX_ENTITIES)
+		Com_Error(ERR_DROP, "R_GetFreeEntity: MAX_ENTITIES exceeded");
 	return &r_entities[r_numEntities];
 }
 
@@ -661,10 +664,8 @@ entity_t *R_GetEntity (int id)
  */
 void R_AddEntity (entity_t *ent)
 {
-	if (r_numEntities >= MAX_ENTITIES) {
-		Com_Printf("R_AddEntity: MAX_ENTITIES exceeded\n");
-		return;
-	}
+	if (r_numEntities >= MAX_ENTITIES)
+		Com_Error(ERR_DROP, "R_AddEntity: MAX_ENTITIES exceeded");
 
 	/* don't add the bsp tiles from random map assemblies */
 	if (ent->model && ent->model->type == mod_bsp)
