@@ -207,10 +207,21 @@ static void MN_SelectMap_f (void)
 		const mapDef_t *md = &csi.mds[i];
 		if (strcmp(md->map, mapname))
 			continue;
-		cls.currentSelectedMap = 1;
+		cls.currentSelectedMap = i;
 		MN_MapInfo(0);
 		return;
 	}
+
+	for (i = 0; i < csi.numMDs; i++) {
+		const mapDef_t *md = &csi.mds[i];
+		if (strcmp(md->id, mapname))
+			continue;
+		cls.currentSelectedMap = i;
+		MN_MapInfo(0);
+		return;
+	}
+
+	Com_Printf("Could not find map %s\n", mapname);
 }
 
 /**
