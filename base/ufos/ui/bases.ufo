@@ -233,25 +233,21 @@ window bases
 		}
 	}
 
-	pic prev_base
+	custombutton prev_base
 	{
 		tooltip	"_Switch to the previous base"
-		image	ui/buttons_small
-		pos	"30 40"
-		mousefx true
-		texl	"0 0"
-		texh	"16 16"
+		icon	prev
+		pos		"30 30"
+		size	"30 30"
 		onClick	{ cmd "mn_prev_base;" }
 	}
 
-	pic next_base
+	custombutton next_base
 	{
 		tooltip	"_Switch to the next base"
-		image	ui/buttons_small
-		pos	"600 40"
-		mousefx	true
-		texl	"16 0"
-		texh	"32 16"
+		icon	next
+		pos		"600 30"
+		size	"30 30"
 		onClick	{ cmd "mn_next_base;" }
 	}
 

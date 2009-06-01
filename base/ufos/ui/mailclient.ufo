@@ -56,6 +56,7 @@ window mail
 		current		0
 		viewsize	20
 		fullsize	50
+		hidewhenunused true
 		onChange	{ cmd "mn_textscroll mail <lastdiff>;" }
 	}
 
@@ -91,7 +92,7 @@ window mail
 	{
 		dataid		TEXT_UFOPEDIA_MAILHEADER
 		pos			"150 70"
-		size		"824 134"
+		size		"824 120"
 		lineheight	"24"
 		rows		"5"
 		font		"f_small_bold"

@@ -1385,26 +1385,8 @@ window popup_newinstallation
 		image		ui/popup_alpha_tile
 	}
 
-	string title_radar
+	string title
 	{
-		visiblewhen "*cvar:mn_installation_type eq radartower"
-		string		"_New radar tower"
-		pos			"26 18"
-		size		"420 25"
-		font		f_big
-	}
-	string title_samsite
-	{
-		visiblewhen "*cvar:mn_installation_type eq samsite"
-		string		"_New SAM site"
-		pos			"26 18"
-		size		"420 25"
-		font		f_big
-	}
-	string title_ufoyard
-	{
-		visiblewhen "*cvar:mn_installation_type eq ufoyard"
-		string		"_New UFO yard"
 		pos			"26 18"
 		size		"420 25"
 		font		f_big
@@ -1442,26 +1424,8 @@ window popup_newinstallation
 		size		"200 20"
 	}
 
-	string cost_radartower
+	string cost
 	{
-		visiblewhen "*cvar:mn_installation_type eq radartower"
-		string		"*cvar mn_installation_radartower_cost"
-		pos			"26 133"
-		size		"200 25"
-		font		f_big
-	}
-	string cost_samsite
-	{
-		visiblewhen "*cvar:mn_installation_type eq samsite"
-		string		"*cvar mn_installation_samsite_cost"
-		pos			"26 133"
-		size		"200 25"
-		font		f_big
-	}
-	string cost_ufoyard
-	{
-		visiblewhen "*cvar:mn_installation_type eq ufoyard"
-		string		"*cvar mn_installation_ufoyard_cost"
 		pos			"26 133"
 		size		"200 25"
 		font		f_big
@@ -1488,6 +1452,20 @@ window popup_newinstallation
 		pos			"109 188"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_build_installation *mn_installation_type;" }
+	}
+
+	func onInit
+	{
+		if "*cvar:mn_installation_type eq radartower" {
+			*node:root.title string "_New radar tower"
+			*node:root.cost string "*cvar mn_installation_radartower_cost"
+		} elif "*cvar:mn_installation_type eq samsite" {
+			*node:root.title string "_New SAM site"
+			*node:root.cost string "*cvar mn_installation_samsite_cost"
+		} elif "*cvar:mn_installation_type eq ufoyard" {
+			*node:root.title string "_New UFO yard"
+			*node:root.cost string "*cvar mn_installation_ufoyard_cost"
+		}		
 	}
 }
 

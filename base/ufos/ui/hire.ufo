@@ -444,20 +444,6 @@ window employees
 		string	kills_val { pos "190 338" size "130 20" string "*cvar mn_chrkillalien" textalign ur }
 	}
 
-	// ====================
-	// employee description
-	// ====================
-
-	text description
-	{
-		dataid		TEXT_EMPLOYEE
-		pos			"610 428"
-		size		"366 80"
-		lineheight	20
-		tabwidth	260
-		rows		"4"
-	}
-
 	// ==================
 	// buttons
 	// ==================
@@ -529,7 +515,6 @@ window employees
 			size	"42 20"
 			textalign	ur
 		}
-
 	}
 
 	// ==================
@@ -624,7 +609,7 @@ window employees
 	{
 		call employee_clear
 		cmd "employee_init 0;"
-		cmd "set mn_hiretype 0;"
+		*cvar:mn_hiretype 0
 		cmd "employee_update_count"
 	}
 
