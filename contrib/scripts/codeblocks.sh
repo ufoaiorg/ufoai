@@ -55,9 +55,7 @@ extract_archive_zip()
 {
 	file=${1}
 	target=${2}
-	pushd "${target}" > /dev/null
-	${UNZIP} -o "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
-	popd > /dev/null
+	${UNZIP} -o "${DOWNLOAD_DIR}/${file}" -d "${target}" >> ${LOGFILE_NAME} 2>&1
 	check_error "Failed to extract ${file}"
 }
 
@@ -65,9 +63,7 @@ extract_archive_7z()
 {
 	file=${1}
 	target=${2}
-	pushd "${target}" > /dev/null
-	${UN7ZIP} x -y "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
-	popd > /dev/null
+	${UN7ZIP} x -y -o"${target}" "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
 	check_error "Failed to extract ${file}"
 }
 
