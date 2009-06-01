@@ -5,7 +5,8 @@
 installation radartower
 {
 	name		"_Radar Tower"
-	model		"pics/geoscape/radar"
+	model		"geoscape/radar"
+	image		"pics/geoscape/radar"
 	cost		10000
 	radar_range	8
 	radar_tracking_range	19
@@ -18,7 +19,8 @@ installation radartower
 installation ufoyard
 {
 	name		"_UFO Yard"
-	model		"pics/geoscape/ufoyard"
+	model		"geoscape/ufoyard"
+	image		"pics/geoscape/ufoyard"
 	cost		30000
 	radar_range	0
 	max_batteries	0
@@ -30,7 +32,8 @@ installation ufoyard
 installation samsite
 {
 	name		"_SAM Site"
-	model		"pics/geoscape/defence"
+	model		"geoscape/defence"
+	image		"pics/geoscape/defence"
 	cost		20000
 	radar_range	0
 	max_batteries	2

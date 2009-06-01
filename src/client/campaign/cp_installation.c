@@ -359,6 +359,7 @@ static const value_t installation_vals[] = {
 	{"max_ufo_stored", V_INT, offsetof(installationTemplate_t, maxUFOsStored), MEMBER_SIZEOF(installationTemplate_t, maxUFOsStored)},
 	{"max_damage", V_INT, offsetof(installationTemplate_t, maxDamage), MEMBER_SIZEOF(installationTemplate_t, maxDamage)},
 	{"model", V_CLIENT_HUNK_STRING, offsetof(installationTemplate_t, model), 0},
+	{"image", V_CLIENT_HUNK_STRING, offsetof(installationTemplate_t, image), 0},
 
 	{NULL, 0, 0, 0}
 };

@@ -1332,7 +1332,7 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
 		const float angle = MAP_AngleOfPath(installation->pos, northPole, NULL, NULL) + 90.0f;
 		MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, tpl->model, 0);
 	} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
-		const image_t *image = R_FindImage(tpl->model, it_pic);
+		const image_t *image = R_FindImage(tpl->image, it_pic);
 		if (image)
 			R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 	}

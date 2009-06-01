@@ -57,7 +57,8 @@ typedef struct installationTemplate_s {
 	int maxUFOsStored;		/**< The maximum number of ufos that can be stored in an installation. */
 	int maxDamage;			/**< The maximum amount of damage an installation can sustain before it is destroyed. */
 	int buildTime;			/**< Time to build the installation, in days. */
-	char *model;			/**< Model used on geoscape */
+	char *model;			/**< Model used on 3D geoscape */
+	char *image;			/**< Image used on 2D geoscape */
 } installationTemplate_t;
 
 typedef struct installationUFOs_s {
