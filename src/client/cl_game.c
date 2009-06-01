@@ -97,8 +97,6 @@ void GAME_SetMode (int gametype)
 	if (cls.gametype == gametype)
 		return;
 
-	LE_Cleanup();
-
 	list = GAME_GetCurrentType();
 	if (list) {
 		Com_Printf("Shutdown gametype '%s'\n", list->name);

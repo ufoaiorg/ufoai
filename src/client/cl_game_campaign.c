@@ -375,7 +375,10 @@ qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 void GAME_CP_Drop (void)
 {
 	/** @todo maybe create a savegame? */
-	MN_InitStack("geoscape", "campaign_main", qfalse, qtrue);
+	MN_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+
+	SV_Shutdown("Mission end", qfalse);
+	CL_Disconnect();
 }
 
 equipDef_t *GAME_CP_GetEquipmentDefinition (void)

@@ -174,9 +174,6 @@ void CL_Drop (void)
 	/* drop loading plaque */
 	SCR_EndLoadingPlaque();
 
-	if (cls.state == ca_uninitialized || cls.state == ca_disconnected)
-		return;
-
 	GAME_Drop();
 }
 
