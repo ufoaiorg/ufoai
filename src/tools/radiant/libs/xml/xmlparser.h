@@ -22,9 +22,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_XML_XMLPARSER_H)
 #define INCLUDED_XML_XMLPARSER_H
 
-#ifdef _WIN32
-# define xmlFree free
-#endif
 #include <cstdio>
 #include <string.h>
 #include "ixml.h"
