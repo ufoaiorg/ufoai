@@ -35,7 +35,9 @@ extract_archive_gz()
 {
 	file=${1}
 	target=${2}
-	${TAR} -xzf "${DOWNLOAD_DIR}/${file}" -C "${target}" >> ${LOGFILE_NAME} 2>&1
+	pushd "${target}"
+	${TAR} -xzf "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
+	popd
 	check_error "Failed to extract ${file}"
 }
 
@@ -43,7 +45,9 @@ extract_archive_bz2()
 {
 	file=${1}
 	target=${2}
-	${TAR} -xjf "${DOWNLOAD_DIR}/${file}" -C "${target}" >> ${LOGFILE_NAME} 2>&1
+	pushd "${target}"
+	${TAR} -xjf "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
+	popd
 	check_error "Failed to extract ${file}"
 }
 
@@ -51,7 +55,9 @@ extract_archive_zip()
 {
 	file=${1}
 	target=${2}
-	${UNZIP} -o "${DOWNLOAD_DIR}/${file}" -d "${target}" >> ${LOGFILE_NAME} 2>&1
+	pushd "${target}"
+	${UNZIP} -o "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
+	popd
 	check_error "Failed to extract ${file}"
 }
 
@@ -59,7 +65,9 @@ extract_archive_7z()
 {
 	file=${1}
 	target=${2}
-	${UN7ZIP} x -y -o${target} "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
+	pushd "${target}"
+	${UN7ZIP} x -y "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
+	popd
 	check_error "Failed to extract ${file}"
 }
 
