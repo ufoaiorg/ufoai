@@ -160,7 +160,6 @@ extract_codeblocks()
 extract_mingw()
 {
 	extract_archive_gz binutils.tar.gz "${MINGW_DIR}"
-	extract_archive_gz binutils.tar.gz "${MINGW_DIR}"
 	extract_archive_gz mingwrt.tar.gz "${MINGW_DIR}"
 	extract_archive_gz w32api.tar.gz "${MINGW_DIR}"
 	extract_archive_bz2 gdb.tar.bz2 "${MINGW_DIR}"
