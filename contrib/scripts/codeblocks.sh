@@ -195,7 +195,7 @@ extract_libs()
 	extract_archive_zip libpdcurses.zip "${MINGW_DIR}"
 	extract_archive_zip libxml2.zip "${MINGW_DIR}"
 	cp -R "${MINGW_DIR}/libxml2-*.win32/*" ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
-	rm -rf "${MINGW_DIR}/libxml2-*.win32/"
+	rm -rf "${MINGW_DIR}/libxml2-*.win32/" >> ${LOGFILE_NAME} 2>&1
 	cp -R ${MINGW_DIR}/include/libxml2/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
 	rm -rf ${MINGW_DIR}/include/libxml2 >> ${LOGFILE_NAME} 2>&1
 }
