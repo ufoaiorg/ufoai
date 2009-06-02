@@ -1398,7 +1398,7 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 			token = token + 8;
 			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
 		} else {
-			assert(qfalse);	/**< maybe this code is never used */
+			Sys_Error("MN_GetReferenceString: unknown reference");	/**< maybe this code is never used */
 #if 0	/** @todo need a full rework */
 			menuNode_t *refNode;
 			const value_t *val;
@@ -1448,7 +1448,7 @@ float MN_GetReferenceFloat (const menuNode_t* const node, const void *ref)
 			/* get the cvar value */
 			return Cvar_GetValue(token + 5);
 		} else {
-			assert(qfalse);	/**< maybe this code is never used */
+			Sys_Error("MN_GetReferenceFloat: unknown reference");	/**< maybe this code is never used */
 #if 0	/** @todo need a full rework */
 			menuNode_t *refNode;
 			const value_t *val;
