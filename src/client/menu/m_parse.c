@@ -1380,30 +1380,23 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 
 	/* its a cvar */
 	if (*ref == '*') {
-		char ident[MAX_VAR];
-		const char *text, *token;
+		const char *token;
 
 		/* get the reference and the name */
-		text = Com_MacroExpandString(ref);
-		if (text)
-			return text;
+		/** @todo merge this function here, it is only used here */
+		token = Com_MacroExpandString(ref);
+		if (token)
+			return token;
 
+		/* skip the star */
 		token = ref + 1;
 		if (token[0] == '\0')
 			return NULL;
 
-		Q_strncpyz(ident, token, sizeof(ident));
-
-		if (!strncmp(ident, "binding:", 8)) {
-			char command[MAX_VAR] = "";
-			/* get the cvar value */
-			if (*text) {
-				if (*text == ' ')
-					text++;
-				/* copy the comand and params */
-				Q_strncpyz(command, text, sizeof(command));
-			}
-			return Key_GetBinding(command, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
+		if (!strncmp(token, "binding:", 8)) {
+			/* skip prefix */
+			token = token + 8;
+			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
 		} else {
 			assert(qfalse);	/**< maybe this code is never used */
 #if 0	/** @todo need a full rework */
