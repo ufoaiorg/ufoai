@@ -905,7 +905,7 @@ void Cmd_ExecuteString (const char *text)
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcasecmp(str, cmd->name)) {
 			if (!cmd->function) {	/* forward to server command */
-				Cmd_ExecuteString(va("cmd %s", Cmd_Args()));
+				Cmd_ExecuteString(va("cmd %s", text));
 			} else {
 				cmd_userdata = cmd->userdata;
 				cmd->function();
