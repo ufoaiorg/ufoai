@@ -378,8 +378,8 @@ static qboolean R_LightPointColor_ (const int tile, const int firstsurface, cons
 
 		surf->tracenum = r_locals.tracenum;
 
-		s = DotProduct(point, tex->vecs[0]) + tex->vecs[0][3] - surf->stmins[0];
-		t = DotProduct(point, tex->vecs[1]) + tex->vecs[1][3] - surf->stmins[1];
+		s = DotProduct(point, tex->uv) + tex->u_offset - surf->stmins[0];
+		t = DotProduct(point, tex->vv) + tex->v_offset - surf->stmins[1];
 
 		if ((s < 0.0 || s > surf->stextents[0]) || (t < 0.0 || t > surf->stextents[1]))
 			continue;

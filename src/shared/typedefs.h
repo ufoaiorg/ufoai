@@ -237,8 +237,8 @@ typedef struct {
 /** @sa cBspSurface_t */
 typedef struct texinfo_s {
 	float vecs[2][4];				/**< [s/t][xyz offset] */
-	int surfaceFlags;			/**< miptex flags + overrides */
-	int value;					/**< light emission, etc */
+	uint32_t surfaceFlags;			/**< miptex flags + overrides */
+	uint32_t value;					/**< light emission, etc */
 	char texture[32];			/**< texture name */
 } dBspTexinfo_t;
 

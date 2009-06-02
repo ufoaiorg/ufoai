@@ -55,9 +55,20 @@ typedef struct mBspEdge_s {
 	unsigned short v[2];
 } mBspEdge_t;
 
+/**
+ * Apply texture with a planar texture mapping
+ * @note Texture coordinates for a vector v are found with this computation:
+ * @code
+ * float u = v[0] * uv[0] + v[1] * uv[1] + v[2] * uv[2] + u_offset
+ * float v = v[0] * vv[0] + v[1] * vv[1] + v[2] * vv[2] + v_offset
+ * @endcode
+ */
 typedef struct mBspTexInfo_s {
-	float vecs[2][4];		/**< [s/t][xyz offset] */
-	int flags;
+	vec3_t uv;
+	float u_offset;
+	vec3_t vv;
+	float v_offset;
+	uint32_t flags;
 	image_t *image;
 } mBspTexInfo_t;
 

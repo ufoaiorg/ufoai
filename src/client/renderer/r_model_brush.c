@@ -234,10 +234,12 @@ static void R_ModLoadTexinfo (const lump_t *l)
 	r_worldmodel->bsp.numtexinfo = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
-		for (j = 0; j < 4; j++) {
-			out->vecs[0][j] = LittleFloat(in->vecs[0][j]); /* s */
-			out->vecs[1][j] = LittleFloat(in->vecs[1][j]); /* t */
+		for (j = 0; j < 3; j++) {
+			out->uv[j] = LittleFloat(in->vecs[0][j]);
+			out->vv[j] = LittleFloat(in->vecs[1][j]);
 		}
+		out->u_offset = LittleFloat(in->vecs[0][3]);
+		out->v_offset = LittleFloat(in->vecs[1][3]);
 
 		out->flags = LittleLong(in->surfaceFlags);
 
@@ -284,12 +286,13 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 				mins[j] = v->position[j];
 		}
 
-		for (j = 0; j < 2; j++) {  /* calculate stmins, stmaxs */
-			const float val = DotProduct(v->position, tex->vecs[j]) + tex->vecs[j][3];
-			if (val < stmins[j])
-				stmins[j] = val;
-			if (val > stmaxs[j])
-				stmaxs[j] = val;
+		{  /* calculate stmins, stmaxs */
+			const float valS = DotProduct(v->position, tex->uv) + tex->u_offset;
+			const float valT = DotProduct(v->position, tex->vv) + tex->v_offset;
+			stmins[0] = min(valS, stmins[0]);
+			stmaxs[0] = max(valS, stmaxs[0]);
+			stmins[1] = min(valT, stmins[1]);
+			stmaxs[1] = max(valT, stmaxs[1]);
 		}
 	}
 
@@ -714,11 +717,11 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			VectorAdd(point, shift, vecShifted);
 
 			/* texture directional vectors and offsets */
-			sdir = surf->texinfo->vecs[0];
-			soff = surf->texinfo->vecs[0][3];
+			sdir = surf->texinfo->uv;
+			soff = surf->texinfo->u_offset;
 
-			tdir = surf->texinfo->vecs[1];
-			toff = surf->texinfo->vecs[1][3];
+			tdir = surf->texinfo->vv;
+			toff = surf->texinfo->v_offset;
 
 			/* texture coordinates */
 			s = DotProduct(point, sdir) + soff;
