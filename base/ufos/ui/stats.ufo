@@ -249,56 +249,56 @@ window nations
 	}
 
 	string nation0 {
-		string		"*cvar mn_nat_name0"
+		string		"*cvar:mn_nat_name0"
 		pos			"40 115"
 		size		"260 20"
 		invis		false
 		onClick		{ cmd "nation_select 0;" }
 	}
 	string nation1 {
-		string		"*cvar mn_nat_name1"
+		string		"*cvar:mn_nat_name1"
 		pos			"40 140"
 		size		"260 20"
 		invis		false
 		onClick		{ cmd "nation_select 1;" }
 	}
 	string nation2 {
-		string		"*cvar mn_nat_name2"
+		string		"*cvar:mn_nat_name2"
 		pos			"40 165"
 		size		"260 20"
 		invis		false
 		onClick		{ cmd "nation_select 2;" }
 	}
 	string nation3 {
-		string		"*cvar mn_nat_name3"
+		string		"*cvar:mn_nat_name3"
 		pos			"40 190"
 		size		"260 20"
 		invis		false
 		onClick		{ cmd "nation_select 3;" }
 	}
 	string nation4 {
-		string		"*cvar mn_nat_name4"
+		string		"*cvar:mn_nat_name4"
 		pos			"40 215"
 		size		"260 20"
 		invis		false
 		onClick		{ cmd "nation_select 4;" }
 	}
 	string nation5 {
-		string		"*cvar mn_nat_name5"
+		string		"*cvar:mn_nat_name5"
 		pos			"40 240"
 		size		"260 20"
 		invis		false
 		onClick		{ cmd "nation_select 5;" }
 	}
 	string nation6 {
-		string		"*cvar mn_nat_name6"
+		string		"*cvar:mn_nat_name6"
 		pos			"40 265"
 		size		"260 20"
 		invis		false
 		onClick		{ cmd "nation_select 6;" }
 	}
 	string nation7 {
-		string		"*cvar mn_nat_name7"
+		string		"*cvar:mn_nat_name7"
 		pos			"40 290"
 		size		"260 20"
 		invis		false
@@ -311,49 +311,49 @@ window nations
 		size		"175 20"
 	}
 	string nat_fund0 {
-		string		"*cvar mn_nat_fund0"
+		string		"*cvar:mn_nat_fund0"
 		pos			"340 115"
 		size		"100 20"
 		invis		false
 	}
 	string nat_fund1 {
-		string		"*cvar mn_nat_fund1"
+		string		"*cvar:mn_nat_fund1"
 		pos			"340 140"
 		size		"100 20"
 		invis		false
 	}
 	string nat_fund2 {
-		string		"*cvar mn_nat_fund2"
+		string		"*cvar:mn_nat_fund2"
 		pos			"340 165"
 		size		"100 20"
 		invis		false
 	}
 	string nat_fund3 {
-		string		"*cvar mn_nat_fund3"
+		string		"*cvar:mn_nat_fund3"
 		pos			"340 190"
 		size		"100 20"
 		invis		false
 	}
 	string nat_fund4 {
-		string		"*cvar mn_nat_fund4"
+		string		"*cvar:mn_nat_fund4"
 		pos			"340 215"
 		size		"100 20"
 		invis		false
 	}
 	string nat_fund5 {
-		string		"*cvar mn_nat_fund5"
+		string		"*cvar:mn_nat_fund5"
 		pos			"340 240"
 		size		"100 20"
 		invis		false
 	}
 	string nat_fund6 {
-		string		"*cvar mn_nat_fund6"
+		string		"*cvar:mn_nat_fund6"
 		pos			"340 265"
 		size		"100 20"
 		invis		false
 	}
 	string nat_fund7 {
-		string		"*cvar mn_nat_fund7"
+		string		"*cvar:mn_nat_fund7"
 		pos			"340 290"
 		size		"100 20"
 		invis		false
@@ -464,14 +464,14 @@ window nations
 		font		f_small
 	}
 	string graph_funding_zero {
-		string		"0"				/** @todo *cvar mn_nat_fund_zero */
+		string		"0"				/** @todo *cvar:mn_nat_fund_zero */
 		pos			"550 290"
 		size		"40 20"
 		textalign	ur
 		font		f_small
 	}
 	string graph_funding_max {
-		string		"_max"			/*< @todo *cvar mn_nat_fund_max */
+		string		"_max"			/*< @todo *cvar:mn_nat_fund_max */
 		pos			"550 100"
 		size		"40 20"
 		textalign	lr
@@ -480,7 +480,7 @@ window nations
 
 	pic nation_symbol
 	{
-		image		"*cvar mn_nat_symbol"
+		image		"*cvar:mn_nat_symbol"
 		pos			"269 390"
 		size		"486 300"
 		preventratio	true

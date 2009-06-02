@@ -59,7 +59,7 @@ window skirmish
 	}
 	textentry slot_equipment
 	{
-		string		"*cvar cl_equip"
+		string		"*cvar:cl_equip"
 		image		ui/button_green_verysmall
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
@@ -102,7 +102,7 @@ window skirmish
 	}
 	checkbox daynight_value
 	{
-		current		"*cvar mn_serverday"
+		current		"*cvar:mn_serverday"
 		pos			"825 260"
 		image		"ui/checkbox_blue"
 		size		"20 18"
@@ -120,14 +120,14 @@ window skirmish
 	}
 	string ai_numactors_value
 	{
-		string		"*cvar ai_numaliens"
+		string		"*cvar:ai_numaliens"
 		pos			"810 280"
 		size		"50 20"
 		textalign	cc
 	}
 	spinner ai_numactors_change
 	{
-		current		"*cvar ai_numaliens"
+		current		"*cvar:ai_numaliens"
 		image		ui/spinner_blue
 		pos			"868 279"
 		min			1
@@ -146,7 +146,7 @@ window skirmish
 	}
 	textentry slot_map
 	{
-		string		"*cvar mn_svmapname"
+		string		"*cvar:mn_svmapname"
 		image		ui/button_green_verysmall
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
@@ -180,7 +180,7 @@ window skirmish
 	}
 	pic mappic
 	{
-		image		"*cvar mn_mappic"
+		image		"*cvar:mn_mappic"
 		pos			"500 430"
 		texl		"0 0"
 		texh		"128 96"
@@ -191,7 +191,7 @@ window skirmish
 	}
 	pic mappic2
 	{
-		image		"*cvar mn_mappic2"
+		image		"*cvar:mn_mappic2"
 		pos			"650 430"
 		texl		"0 0"
 		texh		"128 96"
@@ -202,7 +202,7 @@ window skirmish
 	}
 	pic mappic3
 	{
-		image		"*cvar mn_mappic3"
+		image		"*cvar:mn_mappic3"
 		pos			"800 430"
 		texl		"0 0"
 		texh		"128 96"
@@ -226,7 +226,7 @@ window skirmish
 		pos		"780 300"
 		size	"125 20"
 		color	"0.6 0.6 0.6 0.3"
-		cvar	"*cvar cl_team"
+		cvar	"*cvar:cl_team"
 		option low_value {
 			label	"_Human"
 			value	"1"

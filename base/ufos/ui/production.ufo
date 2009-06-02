@@ -14,7 +14,7 @@ window production
 
 	string name
 	{
-		string		"*cvar mn_base_title"
+		string		"*cvar:mn_base_title"
 		tooltip		"_Name of this base"
 		pos			"60 30"
 		size		"240 32"
@@ -65,7 +65,7 @@ window production
 	tab market_navigation {
 		pos		"47 106"
 		size	"938 39"
-		cvar	"*cvar mn_itemtype"
+		cvar	"*cvar:mn_itemtype"
 		onChange {
 			cmd "prod_type <cvar:mn_itemtype>;"
 			call prod_stores
@@ -128,7 +128,7 @@ window production
 	string txt_credits
 	{
 		tooltip		"_Organisation capital"
-		string		"*cvar mn_credits"
+		string		"*cvar:mn_credits"
 		pos			"780 30"
 		size		"130 30"
 		font		f_big
@@ -190,7 +190,7 @@ window production
 
 		string txt_prod_workers
 		{
-			string		"*cvar mn_production_workers"
+			string		"*cvar:mn_production_workers"
 			pos			"295 25"
 			size		"100 20"
 			textalign	ur
@@ -211,7 +211,7 @@ window production
 
 		string txt_prod_basecap
 		{
-			string		"*cvar mn_production_basecap"
+			string		"*cvar:mn_production_basecap"
 			pos			"295 50"
 			size		"100 20"
 			textalign	ur
@@ -232,7 +232,7 @@ window production
 
 		string txt_prod_storage
 		{
-			string		"*cvar mn_production_storage"
+			string		"*cvar:mn_production_storage"
 			pos			"295 75"
 			size		"100 20"
 			textalign	ur
@@ -253,7 +253,7 @@ window production
 
 		string txt_prod_limit
 		{
-			string		"*cvar mn_production_limit"
+			string		"*cvar:mn_production_limit"
 			pos			"295 100"
 			size		"100 20"
 			textalign	ur
@@ -334,7 +334,7 @@ window production
 
 		item itemmodel
 		{
-			model		"*cvar mn_item"
+			model		"*cvar:mn_item"
 			pos			"56 23"
 			size		"336 140"
 			angles		"-10 160 70"
@@ -349,7 +349,7 @@ window production
 	// ==================
 
 	string prod_amount {
-		string		"*cvar mn_production_amount"
+		string		"*cvar:mn_production_amount"
 		pos			"730 505"
 		size		"40 20"
 		color		"0 .78 0 1"
@@ -380,7 +380,7 @@ window production
 		image		ui/spinner_blue
 		pos			"810 505"
 		min			1
-		current		"*cvar mn_production_amount"
+		current		"*cvar:mn_production_amount"
 		max			1000
 		delta		1
 		onChange	{ cmd "prod_change <lastdiff>;" }
@@ -391,7 +391,7 @@ window production
 		image		ui/spinner_blue
 		pos			"860 505"
 		min			1
-		current		"*cvar mn_production_amount"
+		current		"*cvar:mn_production_amount"
 		max			1000
 		delta		10
 		onChange	{ cmd "prod_change <lastdiff>;" }

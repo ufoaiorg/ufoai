@@ -179,7 +179,7 @@ window basesummary
 	string base_name
 	{
 		tooltip	"_Name of this base"
-		string	"*cvar mn_base_title"
+		string	"*cvar:mn_base_title"
 		pos	"60 30"
 		size "240 32"
 		textalign	cl
@@ -198,7 +198,7 @@ window basesummary
 	string txt_credits
 	{
 		tooltip		"_Organisation capital"
-		string		"*cvar mn_credits"
+		string		"*cvar:mn_credits"
 		pos			"780 30"
 		size		"130 30"
 		font		f_big

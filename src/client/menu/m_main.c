@@ -62,7 +62,6 @@ void MN_SetCvar (const char *name, const char *str, float value)
 		Com_Printf("Could not find cvar '%s'\n", name);
 		return;
 	}
-	/* strip '*cvar ' from data[0] - length is already checked above */
 	if (str)
 		Cvar_Set(cvar->name, str);
 	else

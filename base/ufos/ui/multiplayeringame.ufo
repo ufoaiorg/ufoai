@@ -15,7 +15,7 @@ window multiplayerInGame
 
 	string version
 	{
-		string	"*cvar version"
+		string	"*cvar:version"
 		pos		"10 744"
 	}
 

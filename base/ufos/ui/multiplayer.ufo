@@ -102,7 +102,7 @@ window abstract_multiplayer_join extends abstract_multiplayer {
 	tab join_navigation {
 		pos		"462 73"
 		size	"486 40"
-		cvar	"*cvar mn_multiplayer_tab"
+		cvar	"*cvar:mn_multiplayer_tab"
 		option internet {
 			label	"_Internet/Lan"
 			value	"1"
@@ -195,7 +195,7 @@ window serverinfo
 
 	string mapstring
 	{
-		string		"*cvar mn_svmapname"
+		string		"*cvar:mn_svmapname"
 		font		f_menubig
 		color		"1 1 1 1"
 		pos			"500 110"
@@ -204,7 +204,7 @@ window serverinfo
 
 	pic mappic
 	{
-		image		"*cvar mn_mappic"
+		image		"*cvar:mn_mappic"
 		pos			"800 80"
 		texl		"0 0"
 		texh		"128 96"
@@ -278,7 +278,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		}
 		string status_value
 		{
-			string		"*cvar mn_serverliststr"
+			string		"*cvar:mn_serverliststr"
 			pos			"300 7"
 			size		"150 20"
 			textalign	uc
@@ -370,7 +370,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 
 		textentry slot_name
 		{
-			string		"*cvar cl_name"
+			string		"*cvar:cl_name"
 			image		ui/button_green_verysmall
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -398,7 +398,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 
 		textentry slot_ip
 		{
-			string		"*cvar mn_server_ip"
+			string		"*cvar:mn_server_ip"
 			image		ui/button_green_verysmall
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -462,52 +462,52 @@ window mp_bookmarks extends abstract_multiplayer_join
 			textalign	uc
 		}
 
-		string adr0 { pos "95 230" string "*cvar adr0" size "300 12" }
+		string adr0 { pos "95 230" string "*cvar:adr0" size "300 12" }
 		custombutton resetadr0 { visiblewhen "*cvar:adr0" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr0;" } tooltip "_Delete this bookmark" }
 
-		string adr1 { pos "95 260" string "*cvar adr1" size "300 12" }
+		string adr1 { pos "95 260" string "*cvar:adr1" size "300 12" }
 		custombutton resetadr1 { visiblewhen "*cvar:adr1" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr1;" } tooltip "_Delete this bookmark" }
 
-		string adr2 { pos "95 290" string "*cvar adr2" size "300 12" }
+		string adr2 { pos "95 290" string "*cvar:adr2" size "300 12" }
 		custombutton resetadr2 { visiblewhen "*cvar:adr2" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr2;" } tooltip "_Delete this bookmark" }
 
-		string adr3 { pos "95 320" string "*cvar adr3" size "300 12" }
+		string adr3 { pos "95 320" string "*cvar:adr3" size "300 12" }
 		custombutton resetadr3 { visiblewhen "*cvar:adr3" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr3;" } tooltip "_Delete this bookmark" }
 
-		string adr4 { pos "95 350" string "*cvar adr4" size "300 12" }
+		string adr4 { pos "95 350" string "*cvar:adr4" size "300 12" }
 		custombutton resetadr4 { visiblewhen "*cvar:adr4" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr4;" } tooltip "_Delete this bookmark" }
 
-		string adr5 { pos "95 380" string "*cvar adr5" size "300 12" }
+		string adr5 { pos "95 380" string "*cvar:adr5" size "300 12" }
 		custombutton resetadr5 { visiblewhen "*cvar:adr5" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr5;" } tooltip "_Delete this bookmark" }
 
-		string adr6 { pos "95 410" string "*cvar adr6" size "300 12" }
+		string adr6 { pos "95 410" string "*cvar:adr6" size "300 12" }
 		custombutton resetadr6 { visiblewhen "*cvar:adr6" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr6;" } tooltip "_Delete this bookmark" }
 
-		string adr7 { pos "95 440" string "*cvar adr7" size "300 12" }
+		string adr7 { pos "95 440" string "*cvar:adr7" size "300 12" }
 		custombutton resetadr7 { visiblewhen "*cvar:adr7" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr7;" } tooltip "_Delete this bookmark" }
 
-		string adr8 { pos "95 470" string "*cvar adr8" size "300 12" }
+		string adr8 { pos "95 470" string "*cvar:adr8" size "300 12" }
 		custombutton resetadr8 { visiblewhen "*cvar:adr8" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr8;" } tooltip "_Delete this bookmark" }
 
-		string adr9 { pos "95 500" string "*cvar adr9" size "300 12" }
+		string adr9 { pos "95 500" string "*cvar:adr9" size "300 12" }
 		custombutton resetadr9 { visiblewhen "*cvar:adr9" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr9;" } tooltip "_Delete this bookmark" }
 
-		string adr10 { pos "95 530" string "*cvar adr10" size "300 12" }
+		string adr10 { pos "95 530" string "*cvar:adr10" size "300 12" }
 		custombutton resetadr10 { visiblewhen "*cvar:adr10" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr10;" } tooltip "_Delete this bookmark" }
 
-		string adr11 { pos "95 560" string "*cvar adr11" size "300 12" }
+		string adr11 { pos "95 560" string "*cvar:adr11" size "300 12" }
 		custombutton resetadr11 { visiblewhen "*cvar:adr11" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr11;" } tooltip "_Delete this bookmark" }
 
-		string adr12 { pos "95 590" string "*cvar adr12" size "300 12" }
+		string adr12 { pos "95 590" string "*cvar:adr12" size "300 12" }
 		custombutton resetadr12 { visiblewhen "*cvar:adr12" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr12;" } tooltip "_Delete this bookmark" }
 
-		string adr13 { pos "95 620" string "*cvar adr13" size "300 12" }
+		string adr13 { pos "95 620" string "*cvar:adr13" size "300 12" }
 		custombutton resetadr13 { visiblewhen "*cvar:adr13" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr13;" } tooltip "_Delete this bookmark" }
 
-		string adr14 { pos "95 650" string "*cvar adr14" size "300 12" }
+		string adr14 { pos "95 650" string "*cvar:adr14" size "300 12" }
 		custombutton resetadr14 { visiblewhen "*cvar:adr14" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr14;" } tooltip "_Delete this bookmark" }
 
-		string adr15 { pos "95 680" string "*cvar adr15" size "300 12" }
+		string adr15 { pos "95 680" string "*cvar:adr15" size "300 12" }
 		custombutton resetadr15 { visiblewhen "*cvar:adr15" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr15;" } tooltip "_Delete this bookmark" }
 	}
 }
@@ -522,7 +522,7 @@ window mp_create_server extends abstract_multiplayer
 	tab create_natigation {
 		pos		"472 200"
 		size	"466 40"
-		cvar	"*cvar mn_server_config_tab"
+		cvar	"*cvar:mn_server_config_tab"
 		option map {
 			label	"_Map"
 			value	"1"
@@ -557,7 +557,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 		textentry slot_hostname
 		{
-			string		"*cvar sv_hostname"
+			string		"*cvar:sv_hostname"
 			image		ui/button_green_verysmall
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -584,7 +584,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 		string gametype_value
 		{
-			string		"*cvar sv_gametype"
+			string		"*cvar:sv_gametype"
 			pos			"380 40"
 			size		"80 20"
 			textalign	uc
@@ -621,7 +621,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 		checkbox server_teamplay_value
 		{
-			current		"*cvar sv_teamplay"
+			current		"*cvar:sv_teamplay"
 			pos			"410 70"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -648,7 +648,7 @@ window mp_create_server extends abstract_multiplayer
 
 		pic mappic
 		{
-			image		"*cvar mn_mappic"
+			image		"*cvar:mn_mappic"
 			pos			"85 30"
 			texl		"0 0"
 			texh		"128 96"
@@ -659,7 +659,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 		pic mappic2
 		{
-			image		"*cvar mn_mappic2"
+			image		"*cvar:mn_mappic2"
 			pos			"225 30"
 			texl		"0 0"
 			texh		"128 96"
@@ -670,7 +670,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 		pic mappic3
 		{
-			image		"*cvar mn_mappic3"
+			image		"*cvar:mn_mappic3"
 			pos			"365 30"
 			texl		"0 0"
 			texh		"128 96"
@@ -691,7 +691,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 		textentry slot_map
 		{
-			string		"*cvar mn_svmapname"
+			string		"*cvar:mn_svmapname"
 			image		ui/button_green_verysmall
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -737,7 +737,7 @@ window mp_create_server extends abstract_multiplayer
 
 		string string_gametypes
 		{
-			string		"*cvar mn_mapgametypes"
+			string		"*cvar:mn_mapgametypes"
 			pos			"245 200"
 			size		"256 32"
 			font		"f_verysmall"
@@ -759,7 +759,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 		checkbox daynight_value
 		{
-			current		"*cvar mn_serverday"
+			current		"*cvar:mn_serverday"
 			pos			"410 245"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -783,7 +783,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 		checkbox morale_value
 		{
-			current		"*cvar sv_enablemorale"
+			current		"*cvar:sv_enablemorale"
 			pos			"410 0"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -806,14 +806,14 @@ window mp_create_server extends abstract_multiplayer
 		}
 		string maxclients_value
 		{
-			string		"*cvar sv_maxclients"
+			string		"*cvar:sv_maxclients"
 			pos			"395 50"
 			size		"50 20"
 			textalign	uc
 		}
 		spinner maxclients_change
 		{
-			current		"*cvar sv_maxclients"
+			current		"*cvar:sv_maxclients"
 			image		ui/spinner_blue
 			pos			"475 49"
 			min			2
@@ -833,14 +833,14 @@ window mp_create_server extends abstract_multiplayer
 		}
 		string maxperplayer_value
 		{
-			string		"*cvar sv_maxsoldiersperteam"
+			string		"*cvar:sv_maxsoldiersperteam"
 			pos			"395 70"
 			size		"50 20"
 			textalign	uc
 		}
 		spinner maxperplayer_change
 		{
-			current		"*cvar sv_maxsoldiersperteam"
+			current		"*cvar:sv_maxsoldiersperteam"
 			image		ui/spinner_blue
 			pos			"475 69"
 			min			1
@@ -860,14 +860,14 @@ window mp_create_server extends abstract_multiplayer
 		}
 		string maxsoldierperplayer_value
 		{
-			string		"*cvar sv_maxsoldiersperplayer"
+			string		"*cvar:sv_maxsoldiersperplayer"
 			pos			"395 90"
 			size		"50 20"
 			textalign	uc
 		}
 		spinner maxsoldierperplayer_change
 		{
-			current		"*cvar sv_maxsoldiersperplayer"
+			current		"*cvar:sv_maxsoldiersperplayer"
 			image		ui/spinner_blue
 			pos			"475 89"
 			min			1
@@ -887,14 +887,14 @@ window mp_create_server extends abstract_multiplayer
 		}
 		string server_maxplayerperteam_value
 		{
-			string		"*cvar sv_maxplayersperteam"
+			string		"*cvar:sv_maxplayersperteam"
 			pos			"395 110"
 			size		"50 20"
 			textalign	uc
 		}
 		spinner maxplayersperteam_change
 		{
-			current		"*cvar sv_maxplayersperteam"
+			current		"*cvar:sv_maxplayersperteam"
 			image		ui/spinner_blue
 			pos			"475 109"
 			min			1
@@ -914,14 +914,14 @@ window mp_create_server extends abstract_multiplayer
 		}
 		string ai_numactors_value
 		{
-			string		"*cvar ai_numactors"
+			string		"*cvar:ai_numactors"
 			pos			"395 130"
 			size		"50 20"
 			textalign	uc
 		}
 		spinner ai_numactors_change
 		{
-			current		"*cvar ai_numactors"
+			current		"*cvar:ai_numactors"
 			image		ui/spinner_blue
 			pos			"475 129"
 			min			0
@@ -947,7 +947,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 		checkbox public_value
 		{
-			current		"*cvar sv_public"
+			current		"*cvar:sv_public"
 			pos			"410 20"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -964,7 +964,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 		textentry slot_server_pwd
 		{
-			string		"*cvar password"
+			string		"*cvar:password"
 			image		ui/button_green_verysmall
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -987,7 +987,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 		textentry slot_rcon_pwd
 		{
-			string		"*cvar rcon_password"
+			string		"*cvar:rcon_password"
 			image		ui/button_green_verysmall
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -1104,7 +1104,7 @@ window multiplayer_selectteam
 
 	string mapname
 	{
-		string		"*cvar mn_svmapname"
+		string		"*cvar:mn_svmapname"
 		font		f_small
 		color		"1 1 1 1"
 		pos			"305 72"
@@ -1141,7 +1141,7 @@ window multiplayer_selectteam
 
 	string maxplayersperteams_value
 	{
-		string		"*cvar mn_maxplayersperteam"
+		string		"*cvar:mn_maxplayersperteam"
 		pos			"550 460"
 		size		"50 20"
 	}
@@ -1155,7 +1155,7 @@ window multiplayer_selectteam
 
 	string maxteams_value
 	{
-		string		"*cvar mn_maxteams"
+		string		"*cvar:mn_maxteams"
 		pos			"550 480"
 		size		"50 20"
 	}
@@ -1168,7 +1168,7 @@ window multiplayer_selectteam
 	}
 	string teamnum_value
 	{
-		string		"*cvar cl_teamnum"
+		string		"*cvar:cl_teamnum"
 		pos			"510 500"
 		size		"40 20"
 		textalign	ur
@@ -1267,7 +1267,7 @@ window multiplayer_wait
 	}
 	string teams_val
 	{
-		string		"*cvar mp_wait_init_players"
+		string		"*cvar:mp_wait_init_players"
 		color		"0 0.5 0 1"
 		pos			"30 50"
 		size		"30 20"
@@ -1277,7 +1277,7 @@ window multiplayer_wait
 	{
 		font		f_small
 		color		"1 1 1 1"
-		string		"*cvar mn_svmapname"
+		string		"*cvar:mn_svmapname"
 		pos			"128 95"
 		size		"260 20"
 		textalign	"uc"
@@ -1286,7 +1286,7 @@ window multiplayer_wait
 	{
 		pos			"93 121"
 		size		"331 237"
-		image		"*cvar mn_mappicbig"
+		image		"*cvar:mn_mappicbig"
 	}
 
 	button bt_lobby
@@ -1355,7 +1355,7 @@ window serverpassword
 		font		"f_verysmall"
 		pos			"66 78"
 		size		"256 34"
-		string		"*cvar password"
+		string		"*cvar:password"
 		ispassword	true
 	}
 

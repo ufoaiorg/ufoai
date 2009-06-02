@@ -75,7 +75,7 @@ window mail
 		
 		model sender_head
 		{
-			model	"*cvar mn_sender_head"
+			model	"*cvar:mn_sender_head"
 			tag		"tag_head"
 		}
 	}
@@ -139,7 +139,7 @@ window mailclient
 	}
 	string time
 	{
-		string		"*cvar mn_maptime"
+		string		"*cvar:mn_maptime"
 		pos			"820 36"
 		size		"150 20"
 		color		"0 .9 0 1"
@@ -157,7 +157,7 @@ window mailclient
 	}
 	string date
 	{
-		string		"*cvar mn_mapdate"
+		string		"*cvar:mn_mapdate"
 		pos			"820 56"
 		size		"150 20"
 		color		"0 .9 0 1"
@@ -177,105 +177,105 @@ window mailclient
 
 	pic mail_icon_0
 	{
-		image		"*cvar mn_mail_icon0"
+		image		"*cvar:mn_mail_icon0"
 		pos			"50 124"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_1
 	{
-		image		"*cvar mn_mail_icon1"
+		image		"*cvar:mn_mail_icon1"
 		pos			"50 162"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_2
 	{
-		image		"*cvar mn_mail_icon2"
+		image		"*cvar:mn_mail_icon2"
 		pos			"50 200"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_3
 	{
-		image		"*cvar mn_mail_icon3"
+		image		"*cvar:mn_mail_icon3"
 		pos			"50 238"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_4
 	{
-		image		"*cvar mn_mail_icon4"
+		image		"*cvar:mn_mail_icon4"
 		pos			"50 276"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_5
 	{
-		image		"*cvar mn_mail_icon5"
+		image		"*cvar:mn_mail_icon5"
 		pos			"50 314"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_6
 	{
-		image		"*cvar mn_mail_icon6"
+		image		"*cvar:mn_mail_icon6"
 		pos			"50 352"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_7
 	{
-		image		"*cvar mn_mail_icon7"
+		image		"*cvar:mn_mail_icon7"
 		pos			"50 390"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_8
 	{
-		image		"*cvar mn_mail_icon8"
+		image		"*cvar:mn_mail_icon8"
 		pos			"50 428"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_9
 	{
-		image		"*cvar mn_mail_icon9"
+		image		"*cvar:mn_mail_icon9"
 		pos			"50 466"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_10
 	{
-		image		"*cvar mn_mail_icon10"
+		image		"*cvar:mn_mail_icon10"
 		pos			"50 504"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_11
 	{
-		image		"*cvar mn_mail_icon11"
+		image		"*cvar:mn_mail_icon11"
 		pos			"50 542"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_12
 	{
-		image		"*cvar mn_mail_icon12"
+		image		"*cvar:mn_mail_icon12"
 		pos			"50 580"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_13
 	{
-		image		"*cvar mn_mail_icon13"
+		image		"*cvar:mn_mail_icon13"
 		pos			"50 618"
 		texl		"0 0"
 		texh		"28 28"
 	}
 	pic mail_icon_14
 	{
-		image		"*cvar mn_mail_icon14"
+		image		"*cvar:mn_mail_icon14"
 		pos			"50 656"
 		texl		"0 0"
 		texh		"28 28"

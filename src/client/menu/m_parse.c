@@ -1388,13 +1388,13 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 		if (text)
 			return text;
 
-		text = ref + 1;
-		token = Com_Parse(&text);
-		if (!text)
+		token = ref + 1;
+		if (token[0] == '\0')
 			return NULL;
+
 		Q_strncpyz(ident, token, sizeof(ident));
 
-		if (!strncmp(ident, "binding", 7)) {
+		if (!strncmp(ident, "binding:", 8)) {
 			char command[MAX_VAR] = "";
 			/* get the cvar value */
 			if (*text) {
@@ -1405,6 +1405,8 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 			}
 			return Key_GetBinding(command, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
 		} else {
+			assert(qfalse);	/**< maybe this code is never used */
+#if 0	/** @todo need a full rework */
 			menuNode_t *refNode;
 			const value_t *val;
 
@@ -1424,6 +1426,7 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 
 			/* get the string */
 			return Com_ValueToStr(refNode, val->type & V_BASETYPEMASK, val->ofs);
+#endif
 		}
 
 	/* traslatable string */
@@ -1442,23 +1445,18 @@ float MN_GetReferenceFloat (const menuNode_t* const node, const void *ref)
 	if (!ref)
 		return 0.0;
 	if (*(const char *) ref == '*') {
-		char ident[MAX_VAR];
-		const char *token, *text;
+		const char *token;
+		token = (const char *) ref + 1;
 
-		/* get the reference and the name */
-		text = (const char *) ref + 1;
-		token = Com_Parse(&text);
-		if (!text)
-			return 0.0;
-		Q_strncpyz(ident, token, sizeof(ident));
-		token = Com_Parse(&text);
-		if (!text)
+		if (token == '\0')
 			return 0.0;
 
-		if (!strncmp(ident, "cvar", 4)) {
+		if (!strncmp(token, "cvar:", 5)) {
 			/* get the cvar value */
-			return Cvar_GetValue(token);
+			return Cvar_GetValue(token + 5);
 		} else {
+			assert(qfalse);	/**< maybe this code is never used */
+#if 0	/** @todo need a full rework */
 			menuNode_t *refNode;
 			const value_t *val;
 
@@ -1474,6 +1472,7 @@ float MN_GetReferenceFloat (const menuNode_t* const node, const void *ref)
 
 			/* get the string */
 			return *(float *) ((byte *) refNode + val->ofs);
+#endif
 		}
 	} else {
 		/* just get the data */

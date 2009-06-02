@@ -408,7 +408,7 @@ const char *Com_MacroExpandString (const char *text)
 		if (scan[i] == '"')
 			inquote ^= 1;
 		/* don't expand inside quotes */
-		if (inquote || strncmp(&scan[i], "*cvar ", MACRO_CVAR_ID_LENGTH)) {
+		if (inquote || strncmp(&scan[i], "*cvar:", MACRO_CVAR_ID_LENGTH)) {
 			*pos++ = scan[i];
 			continue;
 		}

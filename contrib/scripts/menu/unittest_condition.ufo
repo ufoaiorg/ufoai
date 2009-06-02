@@ -201,7 +201,7 @@ window unittest_condition
 	}
 
 	spinner testNodeFoo {
-		current		"*cvar test_nodefoo"
+		current		"*cvar:test_nodefoo"
 		min			0
 		max			16
 		invis		true
@@ -210,7 +210,7 @@ window unittest_condition
 
 	spinner testNodeFoo2 {
 		{
-			current		"*cvar test_nodefoo"
+			current		"*cvar:test_nodefoo"
 			min			0
 			max			16
 			invis		true

@@ -90,7 +90,7 @@ window basedefence
 
 	model mdl_top
 	{
-		model		"*cvar mn_upmodel_top"
+		model		"*cvar:mn_upmodel_top"
 		angles		"0 0 120"
 		pos			"786 500"
 		size		"200 175"
@@ -99,7 +99,7 @@ window basedefence
 
 	string basedef_item_name
 	{
-		string		"*cvar mn_itemname"
+		string		"*cvar:mn_itemname"
 		pos			"750 475"
 		size		"261 20"
 		textalign	cc

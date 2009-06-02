@@ -51,7 +51,7 @@ window editor {
 	string current_window {
 		pos	"30 160"
 		size "150 20"
-		string "*cvar mn_editor_window"		
+		string "*cvar:mn_editor_window"		
 		font		f_verysmall
 	}
 
@@ -65,7 +65,7 @@ window editor {
 	string current_node {
 		pos	"30 200"
 		size "150 20"
-		string "*cvar mn_editor_node"		
+		string "*cvar:mn_editor_node"		
 		font		f_verysmall
 	}
 

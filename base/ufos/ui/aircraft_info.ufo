@@ -19,7 +19,7 @@ window aircraft extends iaircraft
 	// ==================
 	model aircraft
 	{
-		model		"*cvar mn_aircraft_model"
+		model		"*cvar:mn_aircraft_model"
 		pos			"478 107"
 		size		"529 260"
 		origin		"-45 25 0"
@@ -28,7 +28,7 @@ window aircraft extends iaircraft
 
 	string aircraft_name
 	{
-		string		"*cvar mn_aircraftname"
+		string		"*cvar:mn_aircraftname"
 		pos			"505 480"
 		size		"317 21"
 		textalign	ul
@@ -37,7 +37,7 @@ window aircraft extends iaircraft
 
 	string aircraft_status
 	{
-		string		"*cvar mn_aircraftstatus"
+		string		"*cvar:mn_aircraftstatus"
 		pos			"770 510"
 		size		"229 20"
 		textalign	ul
@@ -67,7 +67,7 @@ window aircraft extends iaircraft
 
 	string team_hired
 	{
-		string		"*cvar mn_hired"
+		string		"*cvar:mn_hired"
 		pos			"722 544"
 		size		"110 20"
 		textalign	cl

@@ -165,7 +165,7 @@ window uforecovery
 	tab uforecovery_navigation {
 		pos		"17 125"
 		size	"667 38"
-		cvar	"*cvar mn_uforecovery_tab"
+		cvar	"*cvar:mn_uforecovery_tab"
 		option store {
 			label	"_Store UFO"
 			value	"0"
@@ -180,7 +180,7 @@ window uforecovery
 
 	string actualufo
 	{
-		string		"*cvar mn_uforecovery_actualufo"
+		string		"*cvar:mn_uforecovery_actualufo"
 		pos			"30 70"
 		size		"610 40"
 		font		f_small
@@ -226,7 +226,7 @@ window uforecovery
 
 		string selected_base_val
 		{
-			string		"*cvar mission_recoverybase"
+			string		"*cvar:mission_recoverybase"
 			pos			"160 186"
 		}
 
@@ -312,7 +312,7 @@ window uforecovery
 
 		string selected_nation_val
 		{
-			string		"*cvar mission_recoverynation"
+			string		"*cvar:mission_recoverynation"
 			pos			"160 186"
 		}
 
