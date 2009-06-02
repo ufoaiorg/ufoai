@@ -140,7 +140,7 @@ start_downloads()
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.24/ atk-dev_1.24.0-1_win32.zip atk-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.6-1_win32.zip cairo-dev.zip
 
-	download_archive http://mattn.ninex.info/download/ gtkglext-1.2.tar.gz gtkglext-dev.tar.gz
+	download_archive http://mattn.ninex.info/download/ gtkglext-1.2.zip gtkglext-dev.zip
 
 	download_archive http://subversion.tigris.org/files/documents/15/45600/ svn-win32-1.6.1.zip svn.zip
 
@@ -254,7 +254,7 @@ extract_gtk()
 	extract_archive_zip pango-dev.zip "${MINGW_DIR}"
 	extract_archive_zip atk-dev.zip "${MINGW_DIR}"
 	extract_archive_zip cairo-dev.zip "${MINGW_DIR}"
-	extract_archive_gz gtkglext-dev.tar.gz "${MINGW_DIR}"
+	extract_archive_zip gtkglext-dev.zip "${MINGW_DIR}"
 
 	for i in $(echo "glib-2.0 gail-1.0 gtk-2.0 pango-1.0 atk-1.0 cairo gtkglext-1.0 gtkglextmm-1.2"); do
 		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
