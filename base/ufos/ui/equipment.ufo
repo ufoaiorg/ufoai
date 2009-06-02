@@ -82,29 +82,37 @@ window equipment
 
 	func names_clear
 	{
-		*bt_actor0 image hud/buttons1
-		*bt_actor1 image hud/buttons1
-		*bt_actor2 image hud/buttons1
-		*bt_actor3 image hud/buttons1
-		*bt_actor4 image hud/buttons1
-		*bt_actor5 image hud/buttons1
-		*bt_actor6 image hud/buttons1
-		*bt_actor7 image hud/buttons1
-		*txt_actor0 color "0 .78 0 1"
-		*txt_actor1 color "0 .78 0 1"
-		*txt_actor2 color "0 .78 0 1"
-		*txt_actor3 color "0 .78 0 1"
-		*txt_actor4 color "0 .78 0 1"
-		*txt_actor5 color "0 .78 0 1"
-		*txt_actor6 color "0 .78 0 1"
-		*txt_actor7 color "0 .78 0 1"
+		*bt_actor0@image hud/buttons1
+		*bt_actor1@image hud/buttons1
+		*bt_actor2@image hud/buttons1
+		*bt_actor3@image hud/buttons1
+		*bt_actor4@image hud/buttons1
+		*bt_actor5@image hud/buttons1
+		*bt_actor6@image hud/buttons1
+		*bt_actor7@image hud/buttons1
+		*txt_actor0@color "0 .78 0 1"
+		*txt_actor1@color "0 .78 0 1"
+		*txt_actor2@color "0 .78 0 1"
+		*txt_actor3@color "0 .78 0 1"
+		*txt_actor4@color "0 .78 0 1"
+		*txt_actor5@color "0 .78 0 1"
+		*txt_actor6@color "0 .78 0 1"
+		*txt_actor7@color "0 .78 0 1"
 	}
 
-	confunc equipdeselect { *bt_actor<1> image hud/buttons1 *txt_actor<1> color "0 .78 0 1" }
+	confunc equipdeselect {
+		*bt_actor<1>@image hud/buttons1
+		*txt_actor<1>@color "0 .78 0 1"
+	}
 
-	confunc equipselect { *bt_actor<1> image hud/buttons1a *txt_actor<1> color "1 1 1 1" }
+	confunc equipselect {
+		*bt_actor<1>@image hud/buttons1a
+		*txt_actor<1>@color "1 1 1 1"
+	}
 
-	confunc equipdisable { *bt_actor<1> image hud/buttons1g }
+	confunc equipdisable {
+		*bt_actor<1>@image hud/buttons1g
+	}
 
 	pic bt_actor0
 	{
@@ -181,7 +189,7 @@ window equipment
 
 	string txt_actor0
 	{
-		string	"*cvar:mn_name0"
+		string	*cvar:mn_name0
 		pos		"60 13"
 		size	"270 40"
 		textalign cl
@@ -189,7 +197,7 @@ window equipment
 	}
 	string txt_actor1
 	{
-		string	"*cvar:mn_name1"
+		string	*cvar:mn_name1
 		pos		"60 54"
 		size	"270 40"
 		textalign cl
@@ -197,7 +205,7 @@ window equipment
 	}
 	string txt_actor2
 	{
-		string	"*cvar:mn_name2"
+		string	*cvar:mn_name2
 		pos		"60 95"
 		size	"270 40"
 		textalign cl
@@ -205,7 +213,7 @@ window equipment
 	}
 	string txt_actor3
 	{
-		string	"*cvar:mn_name3"
+		string	*cvar:mn_name3
 		pos		"60 136"
 		size	"270 40"
 		textalign cl
@@ -213,7 +221,7 @@ window equipment
 	}
 	string txt_actor4
 	{
-		string	"*cvar:mn_name4"
+		string	*cvar:mn_name4
 		pos		"60 177"
 		size	"270 40"
 		textalign cl
@@ -221,7 +229,7 @@ window equipment
 	}
 	string txt_actor5
 	{
-		string	"*cvar:mn_name5"
+		string	*cvar:mn_name5
 		pos		"60 218"
 		size	"270 40"
 		textalign cl
@@ -229,7 +237,7 @@ window equipment
 	}
 	string txt_actor6
 	{
-		string	"*cvar:mn_name6"
+		string	*cvar:mn_name6
 		pos		"60 259"
 		size	"270 40"
 		textalign cl
@@ -237,7 +245,7 @@ window equipment
 	}
 	string txt_actor7
 	{
-		string	"*cvar:mn_name7"
+		string	*cvar:mn_name7
 		pos		"60 300"
 		size	"270 40"
 		textalign cl
@@ -250,34 +258,34 @@ window equipment
 
 	confunc update_item_list {
 		if "*cvar:mn_equiptype == 0" {
-			*(container)equip filter 0
-			*(container)equip_ammo filter 0
+			*(container)equip@filter 0
+			*(container)equip_ammo@filter 0
 		}
-		if "*cvar:mn_equiptype == 1" {
-			*(container)equip filter 1
-			*(container)equip_ammo filter 1
+		elif "*cvar:mn_equiptype == 1" {
+			*(container)equip@filter 1
+			*(container)equip_ammo@filter 1
 		}
-		if "*cvar:mn_equiptype == 2" {
-			*(container)equip filter 2
-			*(container)equip_ammo filter 2
+		elif "*cvar:mn_equiptype == 2" {
+			*(container)equip@filter 2
+			*(container)equip_ammo@filter 2
 		}
-		if "*cvar:mn_equiptype == 3" {
-			*(container)equip filter 3
-			*(container)equip_ammo filter 3
+		elif "*cvar:mn_equiptype == 3" {
+			*(container)equip@filter 3
+			*(container)equip_ammo@filter 3
 		}
-		if "*cvar:mn_equiptype == 4" {
-			*(container)equip filter 4
-			*(container)equip_ammo filter 4
+		elif "*cvar:mn_equiptype == 4" {
+			*(container)equip@filter 4
+			*(container)equip_ammo@filter 4
 		}
-		*(container)equip scrollpos 0
-		*(container)equip_ammo scrollpos 0
+		*(container)equip@scrollpos 0
+		*(container)equip_ammo@scrollpos 0
 	}
 
 	tab equip_type
 	{
 		pos		"400 365"
 		size	"505 40"
-		cvar	"*cvar:mn_equiptype"
+		cvar	*cvar:mn_equiptype
 		onChange {
 			cmd	"update_item_list;"
 		}
@@ -316,7 +324,7 @@ window equipment
 
 		string itemname
 		{
-			string	"*cvar:mn_itemname"
+			string	*cvar:mn_itemname
 			pos		"10 6"
 			size	"330 20"
 			textalign	uc
@@ -326,7 +334,7 @@ window equipment
 		{
 			pos 		"0 30"
 			size 		"350 100"
-			model		"*cvar:mn_item"
+			model		*cvar:mn_item
 			angles		"-10 160 70"
 			autoscale	true
 		}
@@ -340,11 +348,11 @@ window equipment
 			rows		"7"
 			dataid		TEXT_STANDARD
 			onViewChange {
-				*(abstractscrollbar)itemdescription.description_scroll fullsize <lines>
-				*(abstractscrollbar)itemdescription.description_scroll current <text_scroll>
+				*(abstractscrollbar)itemdescription.description_scroll@fullsize <lines>
+				*(abstractscrollbar)itemdescription.description_scroll@current <text_scroll>
 			}
 			onWheel {
-				*(abstractscrollbar)itemdescription.description_scroll current <text_scroll>
+				*(abstractscrollbar)itemdescription.description_scroll@current <text_scroll>
 			}
 		}
 		vscrollbar description_scroll {
@@ -356,7 +364,7 @@ window equipment
 			fullsize	7
 			hidewhenunused true
 			onChange {
-				*itemdescription.description text_scroll <current>
+				*itemdescription.description@text_scroll <current>
 			}
 		}
 
@@ -384,7 +392,7 @@ window equipment
 	
 		string item_name
 		{
-			string	"*cvar:mn_linkname"
+			string	*cvar:mn_linkname
 			pos		"140 290"
 			size	"190 16"
 			textalign	cc
@@ -426,7 +434,7 @@ window equipment
 		
 		string firemode_name
 		{
-			string	"*cvar:mn_firemodename"
+			string	*cvar:mn_firemodename
 			pos		"140 314"
 			size	"190 16"
 			textalign	cc
@@ -500,59 +508,59 @@ window equipment
 
 	confunc weapon_stats
 	{
-		*itemdescription.itemname invis false
-		*itemdescription.itemmodel invis false
-		*itemdescription.description invis false
-		*itemdescription.item_name invis false
+		*itemdescription.itemname@invis false
+		*itemdescription.itemmodel@invis false
+		*itemdescription.description@invis false
+		*itemdescription.item_name@invis false
 		// they are hidden
-		*itemdescription.action_dec invis true
-		*itemdescription.action_inc invis true
-		*itemdescription.header_item invis true
-		*itemdescription.firemode_dec invis true
-		*itemdescription.firemode_inc invis true
-		*itemdescription.header_firemode invis true
-		*itemdescription.firemode_name invis true
+		*itemdescription.action_dec@invis true
+		*itemdescription.action_inc@invis true
+		*itemdescription.header_item@invis true
+		*itemdescription.firemode_dec@invis true
+		*itemdescription.firemode_inc@invis true
+		*itemdescription.header_firemode@invis true
+		*itemdescription.firemode_name@invis true
 
-		*pwr_lbl invis true *pwr_val invis true *pwr_bdr invis true *pwr_bar invis true
-		*spd_lbl invis true *spd_val invis true *spd_bdr invis true *spd_bar invis true
-		*acc_lbl invis true *acc_val invis true *acc_bdr invis true *acc_bar invis true
-		*mnd_lbl invis true *mnd_val invis true *mnd_bdr invis true *mnd_bar invis true
-		*cls_lbl invis true *cls_val invis true *cls_bdr invis true *cls_bar invis true
-		*hvy_lbl invis true *hvy_val invis true *hvy_bdr invis true *hvy_bar invis true
-		*ass_lbl invis true *ass_val invis true *ass_bdr invis true *ass_bar invis true
-		*snp_lbl invis true *snp_val invis true *snp_bdr invis true *snp_bar invis true
-		*exp_lbl invis true *exp_val invis true *exp_bdr invis true *exp_bar invis true
+		*pwr_lbl@invis true *pwr_val@invis true *pwr_bdr@invis true *pwr_bar@invis true
+		*spd_lbl@invis true *spd_val@invis true *spd_bdr@invis true *spd_bar@invis true
+		*acc_lbl@invis true *acc_val@invis true *acc_bdr@invis true *acc_bar@invis true
+		*mnd_lbl@invis true *mnd_val@invis true *mnd_bdr@invis true *mnd_bar@invis true
+		*cls_lbl@invis true *cls_val@invis true *cls_bdr@invis true *cls_bar@invis true
+		*hvy_lbl@invis true *hvy_val@invis true *hvy_bdr@invis true *hvy_bar@invis true
+		*ass_lbl@invis true *ass_val@invis true *ass_bdr@invis true *ass_bar@invis true
+		*snp_lbl@invis true *snp_val@invis true *snp_bdr@invis true *snp_bar@invis true
+		*exp_lbl@invis true *exp_val@invis true *exp_bdr@invis true *exp_bar@invis true
 	}
 
 	confunc actor_stats
 	{
-		*itemdescription.itemname invis true
-		*itemdescription.itemmodel invis true
-		*itemdescription.description invis true
-		*itemdescription.action_dec invis true
-		*itemdescription.action_inc invis true
-		*itemdescription.header_item invis true
-		*itemdescription.item_name invis true
-		*itemdescription.firemode_dec invis true
-		*itemdescription.firemode_inc invis true
-		*itemdescription.header_firemode invis true
-		*itemdescription.firemode_name invis true
+		*itemdescription.itemname@invis true
+		*itemdescription.itemmodel@invis true
+		*itemdescription.description@invis true
+		*itemdescription.action_dec@invis true
+		*itemdescription.action_inc@invis true
+		*itemdescription.header_item@invis true
+		*itemdescription.item_name@invis true
+		*itemdescription.firemode_dec@invis true
+		*itemdescription.firemode_inc@invis true
+		*itemdescription.header_firemode@invis true
+		*itemdescription.firemode_name@invis true
 
-		*pwr_lbl invis false *pwr_val invis false *pwr_bdr invis false *pwr_bar invis false
-		*spd_lbl invis false *spd_val invis false *spd_bdr invis false *spd_bar invis false
-		*acc_lbl invis false *acc_val invis false *acc_bdr invis false *acc_bar invis false
-		*mnd_lbl invis false *mnd_val invis false *mnd_bdr invis false *mnd_bar invis false
-		*cls_lbl invis false *cls_val invis false *cls_bdr invis false *cls_bar invis false
-		*hvy_lbl invis false *hvy_val invis false *hvy_bdr invis false *hvy_bar invis false
-		*ass_lbl invis false *ass_val invis false *ass_bdr invis false *ass_bar invis false
-		*snp_lbl invis false *snp_val invis false *snp_bdr invis false *snp_bar invis false
-		*exp_lbl invis false *exp_val invis false *exp_bdr invis false *exp_bar invis false
+		*pwr_lbl@invis false *pwr_val@invis false *pwr_bdr@invis false *pwr_bar@invis false
+		*spd_lbl@invis false *spd_val@invis false *spd_bdr@invis false *spd_bar@invis false
+		*acc_lbl@invis false *acc_val@invis false *acc_bdr@invis false *acc_bar@invis false
+		*mnd_lbl@invis false *mnd_val@invis false *mnd_bdr@invis false *mnd_bar@invis false
+		*cls_lbl@invis false *cls_val@invis false *cls_bdr@invis false *cls_bar@invis false
+		*hvy_lbl@invis false *hvy_val@invis false *hvy_bdr@invis false *hvy_bar@invis false
+		*ass_lbl@invis false *ass_val@invis false *ass_bdr@invis false *ass_bar@invis false
+		*snp_lbl@invis false *snp_val@invis false *snp_bdr@invis false *snp_bar@invis false
+		*exp_lbl@invis false *exp_val@invis false *exp_bdr@invis false *exp_bar@invis false
 	}
 
 	tab info {
 		pos		"20 365"
 		size	"355 40"
-		cvar	"*cvar:mn_infotype"
+		cvar	*cvar:mn_infotype
 		option abilities {
 			label	"_Actor Abilities"
 			value	"0"
@@ -571,7 +579,7 @@ window equipment
 
 	string txt_actorname
 	{
-		string	"*cvar:mn_name"
+		string	*cvar:mn_name
 		pos		"544 24"
 		size	"300 20"
 	}
@@ -579,8 +587,8 @@ window equipment
 	model body
 	{
 		{
-			model	"*cvar:mn_body"
-			skin	"*cvar:mn_skin"
+			model	*cvar:mn_body
+			skin	*cvar:mn_skin
 			anim	"stand_menu"
 			angles	"0 70 90"
 			scale	"5 5 5"
@@ -592,8 +600,8 @@ window equipment
 
 		model head
 		{
-			model	"*cvar:mn_head"
-			skin	"*cvar:mn_skin"
+			model	*cvar:mn_head
+			skin	*cvar:mn_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
 		}
@@ -607,7 +615,7 @@ window equipment
 		image	"ui/selectbox_green"
 		pos	"660 290"
 		size	"120 40"
-		cvar	"*cvar:mn_skin"
+		cvar	*cvar:mn_skin
 		color	"0.6 0.6 0.6 0.3"
 	}
 
@@ -638,9 +646,9 @@ window equipment
 		displayunavailableitem	true
 		columns					1
 		onViewChange {
-			*(abstractscrollbar)equip_scroll current <scrollpos>
-			*(abstractscrollbar)equip_scroll viewsize <viewsize>
-			*(abstractscrollbar)equip_scroll fullsize <fullsize>
+			*(abstractscrollbar)equip_scroll@current <scrollpos>
+			*(abstractscrollbar)equip_scroll@viewsize <viewsize>
+			*(abstractscrollbar)equip_scroll@fullsize <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
@@ -651,9 +659,9 @@ window equipment
 		displayammo		true
 		columns			2
 		onViewChange {
-			*(abstractscrollbar)equip_ammo_scroll current <scrollpos>
-			*(abstractscrollbar)equip_ammo_scroll viewsize <viewsize>
-			*(abstractscrollbar)equip_ammo_scroll fullsize <fullsize>
+			*(abstractscrollbar)equip_ammo_scroll@current <scrollpos>
+			*(abstractscrollbar)equip_ammo_scroll@viewsize <viewsize>
+			*(abstractscrollbar)equip_ammo_scroll@fullsize <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
@@ -663,7 +671,7 @@ window equipment
 		pos "629 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*equip scrollpos <current>
+			*equip@scrollpos <current>
 		}
 	}
 
@@ -672,7 +680,7 @@ window equipment
 		pos "892 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*equip_ammo scrollpos <current>
+			*equip_ammo@scrollpos <current>
 		}
 	}
 

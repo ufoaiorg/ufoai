@@ -195,12 +195,31 @@ char* MN_AllocString (const char* string, int size)
 	return result;
 }
 
+/** @brief A way to count how many setter without embedded properties */
+static int setterWithoutArobase = 0;
+
+/**
+ * @brief Parser for setter command
+ * @todo Clean up the code after merge of setter without @
+ */
 static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const char **token, const char *errhead)
 {
+	char base[256];
 	char cast[32] = "abstractnode";
 	const char *nodeName = *token + 1;
 	nodeBehaviour_t *castedBehaviour;
 	const value_t *property;
+	char *nextArobase = NULL;
+
+	/* allow to use both with/without @ */
+	Q_strncpyz(base, *token, sizeof(base));
+	nextArobase = strchr(base, '@');
+	if (nextArobase) {
+		*nextArobase = '\0';
+		nextArobase++;
+	}
+	assert(*token[0] == '*');
+	nodeName = base + 1;
 
 	/* cvar setter */
 	if (strncmp(nodeName, "cvar:", 5) == 0) {
@@ -215,6 +234,9 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		action->data2 = MN_AllocString(*token, 0);
 		return qtrue;
 	}
+
+	if (!nextArobase)
+		setterWithoutArobase++;
 
 	/* copy the menu name, and move to the node name */
 	if (strncmp(nodeName, "node:", 5) == 0) {
@@ -241,9 +263,13 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	action->data = (byte*) MN_AllocString(nodeName, 0);
 
 	/* get the node property */
-	*token = Com_EParse(text, errhead, NULL);
-	if (!*text)
-		return qfalse;
+	if (nextArobase) {
+		*token = nextArobase;
+	} else {
+		*token = Com_EParse(text, errhead, NULL);
+		if (!*text)
+			return qfalse;
+	}
 
 	castedBehaviour = MN_GetNodeBehaviour(cast);
 	if (castedBehaviour == NULL)
