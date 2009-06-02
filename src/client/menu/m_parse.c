@@ -1437,7 +1437,7 @@ float MN_GetReferenceFloat (const menuNode_t* const node, const void *ref)
 {
 	if (!ref)
 		return 0.0;
-	if ((const char *) ref[0] == '*') {
+	if (((const char *) ref)[0] == '*') {
 		const char *token;
 		token = (const char *) ref + 1;
 
