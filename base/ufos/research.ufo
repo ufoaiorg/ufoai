@@ -1553,6 +1553,7 @@ tech rs_weapon_electrolaser
 	{
 		tech rs_laser
 		tech rs_skill_assault
+		tech rs_alien_live
 	}
 	provides	electrolaser
 	time	1000
