@@ -2537,13 +2537,17 @@ void G_ClientTeamInfo (player_t * player)
 			case ACTOR_SIZE_NORMAL:
 				/* Find valid actor spawn fields for this player. */
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
-				ent->type = ET_ACTOR;
+				if (ent) {
+					ent->type = ET_ACTOR;
+				}
 				break;
 			case ACTOR_SIZE_2x2:
 				/* Find valid actor spawn fields for this player. */
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
-				ent->type = ET_ACTOR2x2;
-				ent->morale = 100;
+				if (ent) {
+					ent->type = ET_ACTOR2x2;
+					ent->morale = 100;
+				}
 				break;
 			default:
 				gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (actorSize: %i, actor num: %i)\n",
