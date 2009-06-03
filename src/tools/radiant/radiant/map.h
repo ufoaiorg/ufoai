@@ -96,7 +96,7 @@ extern float g_MaxWorldCoord;
 extern float g_MinWorldCoord;
 
 void Map_Reload(void);
-void Map_LoadFile(const char* filename);
+bool Map_LoadFile(const char* filename);
 bool Map_SaveFile(const char* filename);
 
 void Map_New();

@@ -61,6 +61,7 @@
 #include "signal/signal.h"
 
 #include "gtkutil/filechooser.h"
+#include "gtkutil/messagebox.h"
 #include "timer.h"
 #include "select.h"
 #include "plugin.h"
@@ -769,9 +770,12 @@ class ScopeTimer
 /**
  * @brief Loads a map file
  * @param[in] filename The filename of the map to load
- * @note The file must be checked for existence and readability already
+ * @note The file must be checked for existence and readability already.
+ * If file is not a valid map, this will result in a new unnamed map and
+ * returns false.
+ * @return bool indicating whether file loading was successful
  */
-void Map_LoadFile (const char *filename)
+bool Map_LoadFile (const char *filename)
 {
 	g_message("Loading map from %s\n", filename);
 	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Map"));
@@ -783,7 +787,15 @@ void Map_LoadFile (const char *filename)
 		g_map.m_resource = GlobalReferenceCache().capture(g_map.m_name.c_str());
 		g_map.m_resource->attach(g_map);
 
-		Node_getTraversable(GlobalSceneGraph().root())->traverse(entity_updateworldspawn());
+		scene::Traversable* traversible = Node_getTraversable(GlobalSceneGraph().root());
+		if (traversible)
+			traversible->traverse(entity_updateworldspawn());
+		else {
+			gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("Error during load of map."));
+			Map_Free();
+			Map_New();
+			return false;
+		}
 	}
 
 	g_message("LoadMapFile: %s\n", g_map.m_name.c_str());
@@ -794,6 +806,7 @@ void Map_LoadFile (const char *filename)
 	g_currentMap = &g_map;
 
 	MapInfo_Update();
+	return true;
 }
 
 void Map_Reload (void)
@@ -1515,10 +1528,10 @@ void OpenMap (void)
 	const char* filename = map_open("Open Map");
 
 	if (filename != 0) {
-		MRU_AddFile(filename);
 		Map_RegionOff();
 		Map_Free();
-		Map_LoadFile(filename);
+		if (Map_LoadFile(filename))
+			MRU_AddFile(filename);
 	}
 }
 

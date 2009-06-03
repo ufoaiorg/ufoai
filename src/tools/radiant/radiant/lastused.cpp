@@ -152,13 +152,15 @@ static void MRU_Activate (std::size_t index)
 {
 	char text[1024];
 	strcpy(text, MRU_GetText(index));
+	bool success = false;
 
-	/** @todo Test 'map load succeeds' instead of 'file is readable'. */
 	if (file_readable(text)) {
-		MRU_AddFile(text);
 		Map_RegionOff();
 		Map_Free();
-		Map_LoadFile(text);
+		success = Map_LoadFile(text);
+	}
+	if (success) {
+		MRU_AddFile(text);
 	} else {
 		MRU_used--;
 
