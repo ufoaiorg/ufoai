@@ -1318,9 +1318,7 @@ static const value_t idps[] = {
 	/* only a single item */
 	{"single", V_BOOL, offsetof(invDef_t, single), MEMBER_SIZEOF(invDef_t, single)},
 	/* Scrollable container */
-	{"scroll", V_INT, offsetof(invDef_t, scroll), MEMBER_SIZEOF(invDef_t, scroll)},
-	{"scroll_height", V_INT, offsetof(invDef_t, scrollHeight), MEMBER_SIZEOF(invDef_t, scrollHeight)},
-	{"scroll_vertical", V_BOOL, offsetof(invDef_t, scrollVertical), MEMBER_SIZEOF(invDef_t, scrollVertical)},
+	{"scroll", V_BOOL, offsetof(invDef_t, scroll), MEMBER_SIZEOF(invDef_t, scroll)},
 	/* only a single item as weapon extension - single should be set, too */
 	{"extension", V_BOOL, offsetof(invDef_t, extension), MEMBER_SIZEOF(invDef_t, extension)},
 	/* this is the armour container */

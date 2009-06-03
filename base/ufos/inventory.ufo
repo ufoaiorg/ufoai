@@ -103,13 +103,5 @@ inventory equip
 	shape	"0 13 20 2"
 	temp	true
 	all	true
-
-// horizontal
-//	scroll		550	// 22 squares x 25 [C_UNIT]
-//	scroll_height	225	// 9 squares x 25 [C_UNIT]
-
-// vertical
-	scroll		225	// 9 squares x 25 [C_UNIT]
-	scroll_height	325	// 13 squares x 25 [C_UNIT]
-	scroll_vertical 1	// vertical
+	scroll	true
 }

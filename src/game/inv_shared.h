@@ -330,10 +330,7 @@ typedef struct invDef_s {
 	int in, out;	/**< parsed: TU costs for moving items in and out. */
 
 	/** Scroll information. @sa inventory_t */
-	int scroll;			/**< If set this container is scrollable (i.e. no grid and no single container)
-						 * The number tells us how many pixels (width) the container can display at one time. */
-	int scrollHeight;	/**< Tells us how many pixels (height) the container can display. */
-	int scrollVertical;	/**< 0/false=horizontal 1/true=vertical */
+	qboolean scroll;	/**< Set if the container is scrollable */
 } invDef_t;
 
 #define MAX_CONTAINERS	MAX_INVDEFS
