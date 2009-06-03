@@ -80,6 +80,7 @@ typedef struct trace_s{
 typedef struct boxtrace_s {
 	vec3_t start, end;
 	vec3_t mins, maxs;
+	vec3_t absmins, absmaxs;
 	vec3_t extents;
 
 	trace_t trace;

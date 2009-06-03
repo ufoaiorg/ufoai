@@ -242,12 +242,24 @@ NEW MAP TRACING FUNCTIONS
  */
 int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y, const int z)
 {
-	vec3_t start, end; /* Start and end of the traces */
-	vec3_t bmin, bmax; /* Extents of the ceiling box being traced */
-	/* Extents of the floor box being traced */
-	const vec3_t bmin2 = {-2 + DIST_EPSILON, -2 + DIST_EPSILON, 0};
-	const vec3_t bmax2 = {2 - DIST_EPSILON, 2 - DIST_EPSILON, 0};
-	vec3_t tstart, tend;
+	/* This sets up the size of the box required to stand in a cell by an actor's feet.  */
+	const float halfMicrostepSize = PATHFINDING_MICROSTEP_SIZE / 2;
+	/* This is a template for the extents of the box used by an actor's legs. */
+	const vec3_t floormins = {-halfMicrostepSize + DIST_EPSILON, -halfMicrostepSize + DIST_EPSILON, 0};
+	const vec3_t floormaxs = {halfMicrostepSize - DIST_EPSILON, halfMicrostepSize - DIST_EPSILON, 0};
+	/* This is a template for the extents of the box used by an actor's legs. */
+	const vec3_t footmins = {-halfMicrostepSize + DIST_EPSILON, -halfMicrostepSize + DIST_EPSILON, 0};
+	const vec3_t footmaxs = {halfMicrostepSize - DIST_EPSILON, halfMicrostepSize - DIST_EPSILON, PATHFINDING_MIN_STEPUP * QUANT - DIST_EPSILON * 2};
+	/* This is a template for the extents of the box used by an actor's torso. */
+	const vec3_t torsomins = {UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, PATHFINDING_MIN_STEPUP * QUANT};
+	const vec3_t torsomaxs = {UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, PATHFINDING_MIN_OPENING * QUANT  - DIST_EPSILON * 2};
+	/* This is a template for the ceiling trace after an actor's torso space has been found. */
+	const vec3_t ceilmins = {UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, 0};
+	const vec3_t ceilmaxs = {UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, 0};
+
+	vec3_t start, end; /* Start and end of the downward traces. */
+	vec3_t tstart, tend; /* Start and end of the upward traces. */
+	vec3_t bmins, bmaxs; /* Holds the exact bounds to be traced for legs and torso. */
 	pos3_t pos;
 	float bottom, top; /* Floor and ceiling model distances from the cell base. */
 	float initial; /* Cell floor and ceiling z coordinate. */
@@ -274,9 +286,6 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	start[2] += UNIT_HEIGHT / 2 - QUANT;
 	end[2] = -UNIT_HEIGHT * 2; /* To the bottom of the model! (Plus some for good measure) */
 
-	/* Configure bmin and bmax for the main ceiling scan */
-	VectorSet(bmin, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, 0);
-	VectorSet(bmax, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, 0);
 
 	/*
 	 * Trace for a floor.  Steps:
@@ -294,7 +303,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 			Com_Printf("[(%i, %i, %i, %i)]Casting floor (%f, %f, %f) to (%f, %f, %f)\n",
 				x, y, z, actorSize, start[0], start[1], start[2], end[0], end[1], end[2]);
 
-		tr = RT_COMPLETEBOXTRACE(start, end, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+		tr = RT_COMPLETEBOXTRACE(start, end, floormins, floormaxs, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		if (tr.fraction >= 1.0) {
 			/* There is no brush underneath this starting point. */
 			if (debugTrace)
@@ -317,27 +326,70 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 		if (debugTrace)
 			Com_Printf("Potential floor found at %f.\n", bottom);
 
+		/* Record the hit position in tstart for later use. */
+		VectorCopy(tr.endpos, tstart);
+
 		/* Prep the start and end of the "leg room" test. */
+		VectorAdd(tstart, footmins, bmins); /* Now bmins has the lower required foot space extent */
+		VectorAdd(tstart, footmaxs, bmaxs); /* Now bmaxs has the upper required foot space extent */
+
+		/*
 		VectorCopy(start, tstart);
 		tstart[2] = bottom;
 		VectorCopy(tstart, tend);
-		tend[2] += PATHFINDING_MIN_STEPUP * QUANT; /* tend is now MIN_STEPUP above tstart */
+		tend[2] += PATHFINDING_MIN_STEPUP * QUANT; / * tend is now MIN_STEPUP above tstart * /
+		*/
 
 		if (debugTrace)
 			Com_Printf("    Casting leg room (%f, %f, %f) to (%f, %f, %f)\n",
-				tstart[0], tstart[1], tstart[2], tend[0], tend[1], tend[2]);
-		tr = RT_COMPLETEBOXTRACE(tstart, tend, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+				bmins[0], bmins[1], bmins[2], bmaxs[0], bmaxs[1], bmaxs[2]);
+		tr = RT_COMPLETEBOXTRACE(vec3_origin, vec3_origin, bmins, bmaxs, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		if (tr.fraction < 1.0) {
 			if (debugTrace)
-				Com_Printf("Cannot use found surface- stepup obstruction found at %f.\n", tr.endpos[2]);
+				Com_Printf("Cannot use found surface- leg obstruction found.\n");
 			/*
 			 * There is a premature obstruction.  We can't use this as a floor.
 			 * Check under start.  We need to have at least the minimum amount of clearance from our ceiling,
 			 * So start at that point.
 			 */
-			start[2] = tr.endpos[2] - PATHFINDING_MIN_OPENING * QUANT;
+			start[2] = bottom - PATHFINDING_MIN_OPENING * QUANT;
 			/* Check in case we are trying to scan too close to the bottom of the model. */
-			if (start[2] <= PATHFINDING_MIN_OPENING) {
+			if (start[2] <= PATHFINDING_MIN_OPENING * QUANT) {
+				/* There is no brush underneath this starting point. */
+				if (debugTrace)
+					Com_Printf("Reached bottom of map.  No floor in cell(s).\n");
+				/* Mark all cells to the model base as filled. */
+				for (i = z; i >= 0 ; i--) {
+					/* no floor in this cell, it is bottomless! */
+					RT_FLOOR(map, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
+					RT_CEILING(map, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
+				}
+				/* return 0 to indicate we just scanned the model bottom. */
+				return 0;
+			}
+			/* Restart */
+			continue;
+		}
+
+		/* Prep the start and end of the "torso room" test. */
+		VectorAdd(tstart, torsomins, bmins); /* Now bmins has the lower required torso space extent */
+		VectorAdd(tstart, torsomaxs, bmaxs); /* Now bmaxs has the upper required torso space extent */
+
+		if (debugTrace)
+			Com_Printf("    Casting torso room (%f, %f, %f) to (%f, %f, %f)\n",
+				bmins[0], bmins[1], bmins[2], bmaxs[0], bmaxs[1], bmaxs[2]);
+		tr = RT_COMPLETEBOXTRACE(vec3_origin, vec3_origin, bmins, bmaxs, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+		if (tr.fraction < 1.0) {
+			if (debugTrace)
+				Com_Printf("Cannot use found surface- torso obstruction found.\n");
+			/*
+			 * There is a premature obstruction.  We can't use this as a floor.
+			 * Check under start.  We need to have at least the minimum amount of clearance from our ceiling,
+			 * So start at that point.
+			 */
+			start[2] = bottom - PATHFINDING_MIN_OPENING * QUANT;
+			/* Check in case we are trying to scan too close to the bottom of the model. */
+			if (start[2] <= PATHFINDING_MIN_OPENING * QUANT) {
 				/* There is no brush underneath this starting point. */
 				if (debugTrace)
 					Com_Printf("Reached bottom of map.  No floor in cell(s).\n");
@@ -355,19 +407,22 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 		}
 
 		/*
-		 * If we are here, then the immediate floor is unobstructed STEPUP units high.
-		 * Scan for the ceiling with a box as big as the actor and check that the total
-		 * distance from floor to ceiling is at least PATHIFINDING_MIN_OPENING.
+		 * If we are here, then the immediate floor is unobstructed MIN_OPENING units high.
+		 * This is a valid floor.  Find the actual ceiling.
 		 */
 
-		tstart[2] = tend[2]; /* The box trace for height starts at stepup height. */
+		tstart[2] = bmaxs[2]; /* The box trace for height starts at the top of the last trace. */
+		VectorCopy(tstart, tend);
 		tend[2] = PATHFINDING_HEIGHT * UNIT_HEIGHT; /* tend now reaches the model ceiling. */
 
 		if (debugTrace)
 			Com_Printf("    Casting ceiling (%f, %f, %f) to (%f, %f, %f)\n",
 				tstart[0], tstart[1], tstart[2], tend[0], tend[1], tend[2]);
 
-		tr = RT_COMPLETEBOXTRACE(tstart, tend, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+		tr = RT_COMPLETEBOXTRACE(tstart, tend, ceilmins, ceilmaxs, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+
+		/* We found the ceiling. */
+		top = tr.endpos[2];
 
 		/*
 		 * There is one last possibility:
@@ -376,17 +431,9 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 		 * ceiling if it is lower than our found ceiling.
 		 */
 		if (tr.endpos[2] > (z + 1) * UNIT_HEIGHT)
-			tr.endpos[2] = min(tr.endpos[2], (z + 1) * UNIT_HEIGHT + (RT_FLOOR(map, actorSize, x, y, z + 1) - 1) * QUANT);
+			top = min(tr.endpos[2], (z + 1) * UNIT_HEIGHT + (RT_FLOOR(map, actorSize, x, y, z + 1) - 1) * QUANT);
 
-		if (tr.endpos[2] - bottom < PATHFINDING_MIN_OPENING * QUANT) { /* Case 1 */
-			if (debugTrace)
-				Com_Printf("Ceiling not at least PATHING_MIN_OPENING; surface found at %f.\n", tr.endpos[2]);
-			start[2] = tr.endpos[2] - PATHFINDING_MIN_OPENING * QUANT; /* Move start the minimum opening distance below our ceiling. */
-			/* Repeat the floor test */
-			continue;
-		}
-
-		/* We found a valid ceiling. */
+		/* We found the ceiling. */
 		top = tr.endpos[2];
 
 		/* exit the infinite while loop */
@@ -801,7 +848,6 @@ static int RT_FindOpening (routing_t * map, const int actorSize, const int  x, c
 	/* Initialize the z component of both vectors */
 	start[2] = end[2] = 0;
 
-#if 1
 	/* shortcut: if both ceilings are the sky, we can check for walls
 	 * AND determine the bottom of the passage in just one trace */
 	if (   z * CELL_HEIGHT + RT_CEILING(map, actorSize, x, y, z) >= PATHFINDING_HEIGHT * CELL_HEIGHT
@@ -827,7 +873,7 @@ static int RT_FindOpening (routing_t * map, const int actorSize, const int  x, c
 		}
 	}
 	/* Warning: never try to make this an 'else if', or 'arched entry' situations will fail !! */
-#endif
+
 	/* Now calculate the "guaranteed" opening, if any. If the opening from
 	 * the floor to the ceiling is not too tall, there must be a section that
 	 * will always be vacant if there is a usable passage of any size and at
