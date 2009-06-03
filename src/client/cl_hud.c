@@ -153,7 +153,7 @@ static void HUD_ActorGlobalCvars (void)
 			Cvar_SetValue(va("mn_stun%i", i), le->STUN);
 
 			invList = RIGHT(le);
-			if ((!invList || !invList->item.t->holdTwoHanded) && LEFT(le))
+			if ((!invList || !invList->item.t || !invList->item.t->holdTwoHanded) && LEFT(le))
 				invList = LEFT(le);
 
 			Com_sprintf(tooltip, lengthof(tooltip), "%s\nHP: %i/%i TU: %i\n%s",
