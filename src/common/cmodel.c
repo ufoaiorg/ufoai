@@ -735,7 +735,6 @@ trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_
 	const char **name;
 	vec3_t amins, amaxs, acenter, aoffset;
 	vec3_t bmins, bmaxs, boffset;
-	float offset;
 
 	/* trace against world first */
 	trace = TR_CompleteBoxTrace(start, end, mins, maxs, levelmask, brushmask, brushreject);
@@ -765,7 +764,7 @@ trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_
 		VectorAdd(model->origin, model->mins, amins);
 		VectorAdd(model->origin, model->maxs, amaxs);
 		if (VectorNotEmpty(model->angles)) {
-			offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
+			const float offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
 			VectorCenterFromMinsMaxs(amins, amaxs, acenter);
 			VectorSet(aoffset, offset, offset, offset);
 			VectorAdd(acenter, aoffset, amaxs);
@@ -972,7 +971,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 				Com_Error(ERR_DROP, "CMod_LoadEntityString: closing brace without data");
 
 			/* alter value, if needed */
-			if (!strncmp(keyname, "origin", sizeof(keyname))) {
+			if (!strcmp(keyname, "origin")) {
 				/* origins are shifted */
 				sscanf(token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]));
 				VectorAdd(v, shift, v);
@@ -982,7 +981,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 					VectorSubtract(model->mins, shift, model->mins);
 					VectorSubtract(model->maxs, shift, model->maxs);
 				}
-			} else if (!strncmp(keyname, "model", sizeof(keyname)) && token[0] == '*') {
+			} else if (!strcmp(keyname, "model") && token[0] == '*') {
 				/* adapt inline model number */
 				num = atoi(token + 1);
 				/* Get the model */
