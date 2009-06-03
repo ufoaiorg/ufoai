@@ -310,6 +310,8 @@ menuNode_t* MN_AllocNode (const char* type)
 	node->behaviour = MN_GetNodeBehaviour(type);
 	if (node->behaviour == NULL)
 		Com_Error(ERR_FATAL, "MN_AllocNode: Node behaviour '%s' doesn't exist", type);
+	if (node->behaviour->isAbstract)
+		Com_Error(ERR_FATAL, "MN_AllocNode: We can't allocate the abstract node behaviour '%s'", type);
 	return node;
 }
 
