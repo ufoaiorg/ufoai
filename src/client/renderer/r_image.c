@@ -1416,7 +1416,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	if (!pname)
 		Com_Error(ERR_FATAL, "R_FindImage: NULL name");
 	len = strlen(pname);
-	if (len < 5)
+	if (len < 5 || len >= sizeof(lname))
 		return r_noTexture;
 
 	/* drop extension */
