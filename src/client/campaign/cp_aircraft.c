@@ -2154,7 +2154,6 @@ void AIR_ResetAircraftTeam (aircraft_t *aircraft)
  * @param[in] aircraft Pointer to an aircraft, to which we will add employee.
  * @param[in] employee The employee to add to the aircraft.
  * @note this is responsible for adding soldiers to a team in dropship
- * @sa baseAttackFakeAircraft
  */
 qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
 {

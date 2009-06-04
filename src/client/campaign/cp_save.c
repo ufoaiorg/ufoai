@@ -623,7 +623,8 @@ static void SAV_GameQuickLoad_f (void)
 		Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
 		MN_Popup(_("Error"), popupText);
 	} else {
-		MN_Popup(_("Campaign loaded"), _("Quicksave campaign was successfully loaded."));
+		MS_AddNewMessage(_("Campaign loaded"), _("Quicksave campaign was successfully loaded."), qfalse, MSG_INFO, NULL);
+		Cmd_ExecuteString("check_baseattacks");
 	}
 }
 

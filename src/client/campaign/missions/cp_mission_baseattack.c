@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa CP_BaseAttackStartMission
  * @sa AIR_AddToAircraftTeam
  */
-aircraft_t baseAttackFakeAircraft;
+static aircraft_t baseAttackFakeAircraft;
 
 /**
  * @brief Base attack mission is over and is a success (from an alien point of view): change interest values.
@@ -129,12 +129,12 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 	CL_GameTimeStop();
 
 	/* we really don't want to use the fake aircraft anywhere */
-	base->aircraftCurrent = &base->aircraft[0];
 	ccs.missionaircraft = NULL;
 
 	/* HACK This hack is only needed until base will be really destroyed
 	 * we must recalculate items in storage because of the items we collected on battlefield */
 	B_UpdateStorageCap(base);
+	base->aircraftCurrent = NULL;
 	base->baseStatus = BASE_WORKING;
 }
 

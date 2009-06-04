@@ -1084,11 +1084,10 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 
 	if (mission->stage == STAGE_BASE_ATTACK) {
 		base = (base_t *)mission->data;
-		/* HACK */
-		aircraft = &baseAttackFakeAircraft;
 		assert(base);
+		/* HACK */
+		aircraft = base->aircraftCurrent;
 	} else {
-		/* note that ccs.interceptAircraft is baseAttackFakeAircraft in case of base Attack */
 		aircraft = ccs.interceptAircraft;
 		base = CP_GetMissionBase();
 	}
