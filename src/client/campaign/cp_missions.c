@@ -1155,7 +1155,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 			CP_BaseAttackMissionIsFailure(mission);
 			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
-			CP_BaseAttackMissionLeave(mission);
+			CP_BaseAttackMissionDestroyBase(mission);
 	} else {
 		AIR_AircraftReturnToBase(aircraft);
 		if (won)

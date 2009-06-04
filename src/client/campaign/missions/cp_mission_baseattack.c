@@ -116,7 +116,7 @@ void CP_BaseAttackMissionLeave (mission_t *mission)
  * @note Base attack mission -- Stage 3
  * @note UFO attacking this base will be redirected when notify function will be called, don't set new destination here.
  */
-static void CP_BaseAttackMissionDestroyBase (mission_t *mission)
+void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 {
 	base_t *base;
 

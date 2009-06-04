@@ -35,6 +35,7 @@ void CP_BaseAttackMissionIsFailure(mission_t *mission);
 void CP_BaseAttackMissionStart(mission_t *mission);
 int CP_BaseAttackMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
 void CP_BaseAttackMissionNextStage(mission_t *mission);
+void CP_BaseAttackMissionDestroyBase(mission_t *mission);
 
 void CP_CheckBaseAttacks_f(void);
 
