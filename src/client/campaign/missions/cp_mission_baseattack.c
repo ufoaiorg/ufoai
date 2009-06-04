@@ -207,7 +207,8 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	LIST_Delete(&hiredSoldiersInBase);
 	base->aircraftCurrent = &baseAttackFakeAircraft;
 	ccs.missionaircraft = &baseAttackFakeAircraft;
-	ccs.interceptAircraft = &baseAttackFakeAircraft; /* needed for updating soldier stats sa CL_UpdateCharacterStats*/
+	ccs.interceptAircraft = &baseAttackFakeAircraft;	/* needed for updating soldier stats sa CL_UpdateCharacterStats*/
+	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
 
 	Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack! What to do ?"), base->name);
 	MN_RegisterText(TEXT_POPUP, popupText);
