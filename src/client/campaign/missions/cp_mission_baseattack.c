@@ -141,8 +141,6 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 /**
  * @brief Start Base Attack.
  * @note Base attack mission -- Stage 2
- * @todo Base attack should start right away
- * @todo Base attack can't be selected in map anymore: remove all base attack code from cl_map.c
  */
 void CP_BaseAttackStartMission (mission_t *mission)
 {
