@@ -110,6 +110,26 @@ icon smallhead_medic {
 	size	"28 28"
 }
 
+// vertical arrows
+
+icon varrow_top_bottom {
+	image "ui/icon_pack2"
+	texl	"202 32"
+	size	"11 15"
+}
+
+icon varrow_swap {
+	image "ui/icon_pack2"
+	texl	"218 32"
+	size	"19 15"
+}
+
+icon varrow_bottom_top {
+	image "ui/icon_pack2"
+	texl	"242 32"
+	size	"11 15"
+}
+
 // big employee
 
 icon bighead_soldier {
