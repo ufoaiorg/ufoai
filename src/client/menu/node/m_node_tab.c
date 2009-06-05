@@ -110,15 +110,8 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 	if (!strcmp(option->value, ref))
 		return;
 
-	/* the cvar string is stored in dataModelSkinOrCVar
-	 * no cvar given? */
-	if (!node->cvar || !*(char*)node->cvar) {
-		Com_Printf("MN_TabNodeClick: node '%s' doesn't have a valid cvar assigned\n", MN_GetPath(node));
-		return;
-	}
-
-	/* no cvar? */
-	if (strncmp((const char *)node->cvar, "*cvar", 5))
+	/* no cvar given? */
+	if (!node->cvar)
 		return;
 
 	/* only execute the click stuff if the selectbox is active */
@@ -256,10 +249,40 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		MN_TabNodeDrawPlain(image, currentX, pos[1], pos[0] + node->size[0] - currentX, MN_TAB_NOTHING);
 }
 
+/** called when the window is pushed
+ * check cvar then, reduce runtime check
+ */
+static void MN_TabNodeInit (menuNode_t *node)
+{
+	const char *cvarName;
+
+	/* no cvar given? */
+	if (!node->cvar)
+		return;
+
+	/* not a cvar? */
+	if (strncmp((char *)node->cvar, "*cvar:", 6) != 0) {
+		/* normalize */
+		Com_Printf("MN_TabNodeInit: node '%s' doesn't have a valid cvar assigned (\"%s\" read)\n", MN_GetPath(node), (char*) node->cvar);
+		node->cvar = NULL;
+		return;
+	}
+
+	/* cvar do not exists? */
+	cvarName = &((const char *)node->cvar)[6];
+	if (Cvar_FindVar(cvarName) == NULL) {
+		/* search default value, if possible */
+		menuOption_t* option = node->u.option.first;
+		if (option)
+			Cvar_ForceSet(cvarName, option->value);
+	}
+}
+
 void MN_RegisterTabNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "tab";
 	behaviour->extends = "abstractoption";
 	behaviour->draw = MN_TabNodeDraw;
 	behaviour->leftClick = MN_TabNodeClick;
+	behaviour->init = MN_TabNodeInit;
 }
