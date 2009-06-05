@@ -1085,6 +1085,8 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 		node->parent = parent;
 		node->root = parent->root;
 		Q_strncpyz(node->name, *token, sizeof(node->name));
+		if (strlen(node->name) != strlen(*token))
+			Com_Printf("MN_ParseNode: Node name \"%s\" truncated. New name is \"%s\"\n", *token, node->name);
 		MN_AppendNode(parent, node);
 	}
 
@@ -1337,6 +1339,8 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 	/* initialize the menu */
 	menu = MN_AllocNode(type);
 	Q_strncpyz(menu->name, name, sizeof(menu->name));
+	if (strlen(menu->name) != strlen(name))
+		Com_Printf("MN_ParseMenu: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
 	menu->root = menu;
 
 	menu->behaviour->loading(menu);
