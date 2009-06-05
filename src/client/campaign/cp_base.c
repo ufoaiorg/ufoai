@@ -1889,14 +1889,6 @@ void B_SelectBase (base_t *base)
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
 		ccs.mapAction = MA_NONE;
 		MN_PushMenu("bases", NULL);
-		switch (base->baseStatus) {
-		case BASE_UNDER_ATTACK:
-			Cmd_ExecuteString("set_base_under_attack");
-			break;
-		default:
-			Cmd_ExecuteString("set_base_to_normal");
-			break;
-		}
 		B_SetCurrentSelectedBase(base);
 	}
 

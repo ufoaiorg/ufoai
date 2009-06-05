@@ -843,7 +843,7 @@ window popup_baseattack
 		size		"220 20"
 	}
 
-	func listen_close_equipment
+	func listen_automission
 	{
 		cmd "cp_mission_autogo"
 		cmd "mn_removelistener equipment@onClose <path:this>"
@@ -869,7 +869,7 @@ window popup_baseattack
 				cmd "pwr_down;"
 			}
 			if "*node:root.equip@current > 0" {
-				cmd "mn_addlistener equipment@onClose <path:root>.listen_close_equipment"
+				cmd "mn_addlistener equipment@onClose <path:root>.listen_automission"
 				cmd "mn_push equipment;"
 			} else {
 				cmd "cp_mission_autogo;"
@@ -877,6 +877,11 @@ window popup_baseattack
 		}
 	}
 
+	func listen_mission
+	{
+		cmd "game_go"
+		cmd "mn_removelistener equipment@onClose <path:this>"
+	}
 	button bt_go
 	{
 		string		"_Enter"
@@ -897,7 +902,7 @@ window popup_baseattack
 				cmd "pwr_down;"
 			}
 			if "*node:root.equip@current > 0" {
-				*cvar:mn_postaction	"game_go"
+				cmd "mn_addlistener equipment@onClose <path:root>.listen_mission"
 				cmd "mn_push equipment;"
 			} else {
 				cmd "game_go;"

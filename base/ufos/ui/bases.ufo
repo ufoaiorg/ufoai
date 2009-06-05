@@ -34,7 +34,7 @@ window bases
 		size		"59 55"
 		pos			"950 20"
 		icon		geoscape
-		onClick		{ cmd "mn_pop;check_baseattacks;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	basemap thebasemap
@@ -249,37 +249,6 @@ window bases
 		pos		"600 30"
 		size	"30 30"
 		onClick	{ cmd "mn_next_base;" }
-	}
-
-	string base_status
-	{
-		string		""
-		color		"1 1 1 1"
-		pos			"0 370"
-		size		"768 35"
-		font		f_menu
-		textalign	uc
-		ghost		true
-	}
-
-	confunc set_base_under_attack
-	{
-		*base_status string "_Base is under attack"
-		*base_status color "1 0 0 1"
-		*buildings disabled true
-		*buysell disabled true
-		*transfer disabled true
-		*research disabled true
-		*production disabled true
-		*hire disabled true
-		*hospital disabled true
-	}
-	confunc set_base_to_normal
-	{
-		*base_status string ""
-		*base_status color "1 1 1 1"
-		*buildings disabled false
-		cmd "base_init;"
 	}
 
 	confunc update_aircraft
