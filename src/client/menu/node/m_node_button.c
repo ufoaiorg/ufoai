@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_font.h"
 #include "../m_render.h"
+#include "../m_icon.h"
 #include "m_node_button.h"
 #include "m_node_custombutton.h"
 #include "m_node_abstractnode.h"
@@ -67,16 +68,20 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 	const char *image;
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
+	int iconPadding = 0;
+	int iconStatus = 0;
 
 	if (!node->onClick || node->disabled) {
 		/** @todo need custom color when button is disabled */
 		textColor = disabledColor;
 		texX = TILE_SIZE;
 		texY = TILE_SIZE;
+		iconStatus = 2;
 	} else if (node->state) {
 		textColor = node->selectedColor;
 		texX = TILE_SIZE;
 		texY = 0;
+		iconStatus = 1;
 	} else {
 		textColor = node->color;
 		texX = 0;
@@ -89,13 +94,24 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 	if (image)
 		MN_DrawPanel(pos, node->size, image, texX, texY, panelTemplate);
 
+	/* display the icon at the left */
+	/** @todo should we move it according to the text align? */
+	if (node->icon) {
+		/* use at least a box size equals to button height */
+		int size = node->size[1] - node->padding - node->padding;
+		if (size < node->icon->size[0])
+			size = node->icon->size[0];
+		MN_DrawIconInBox(node->icon, iconStatus, pos[0] + node->padding, pos[1] + node->padding, size, node->size[1] - node->padding - node->padding);
+		iconPadding = size + node->padding;
+	}
+
 	text = MN_GetReferenceString(node, node->text);
 	if (text != NULL && *text != '\0') {
 		R_Color(textColor);
 		text = _(text);
 		MN_DrawStringInBox(node, node->textalign,
-			pos[0] + node->padding, pos[1] + node->padding,
-			node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
+			pos[0] + node->padding + iconPadding, pos[1] + node->padding,
+			node->size[0] - node->padding - node->padding - iconPadding, node->size[1] - node->padding - node->padding,
 			text, LONGLINES_PRETTYCHOP);
 		R_Color(NULL);
 	}
