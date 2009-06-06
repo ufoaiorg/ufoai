@@ -572,7 +572,7 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 
 		property = MN_FindPropertyByName(optionProperties, *token);
 		if (!property) {
-			Com_Printf("MN_ParseOption: unknown options property: '%s' - ignore it\n", *token);
+			Com_Printf("MN_ParseOption: unknown options property: '%s'\n", *token);
 			return qfalse;
 		}
 
@@ -849,7 +849,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		break;
 
 	default:
-		Com_Printf("MN_ParseNodeProperties: unknown property type '%d' (0x%X) (%s@%s)\n",
+		Com_Printf("MN_ParseProperties: unknown property type '%d' (0x%X) (%s@%s)\n",
 				property->type, property->type, objectName, property->string);
 		return qfalse;
 	}
