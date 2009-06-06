@@ -9899,7 +9899,7 @@
 "classname" "misc_sound"
 "origin" "2560 464 128"
 "noise" "ambience/alien_engine"
-"volume" "100"
+"volume" "0.4"
 "spawnflags" "2"
 }
 // entity 178
@@ -9907,7 +9907,7 @@
 "classname" "misc_sound"
 "origin" "2560 560 128"
 "noise" "ambience/alien_engine"
-"volume" "100"
+"volume" "0.4"
 "spawnflags" "2"
 }
 // entity 179
