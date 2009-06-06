@@ -406,48 +406,42 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName, const ugv_
 	CHRSH_CharGenAbilitySkills(chr, GAME_IsMultiplayer());
 }
 
-static menuOption_t skinlist[] = {
-	{"urban", N_("Urban"), "team_changeskin;", "0", NULL, qfalse, qfalse, NULL},
-	{"jungle", N_("Jungle"), "team_changeskin;", "1", NULL, qfalse, qfalse, NULL},
-	{"desert", N_("Desert"), "team_changeskin;", "2", NULL, qfalse, qfalse, NULL},
-	{"arctic", N_("Arctic"), "team_changeskin;", "3", NULL, qfalse, qfalse, NULL},
-	{"multionly_yellow", N_("Yellow"), "team_changeskin;", "4", NULL, qfalse, qfalse, NULL},
-	{"multionly_cccp", N_("CCCP"), "team_changeskin;", "5", NULL, qfalse, qfalse, NULL},
-};
-
 /**
  * @brief Init skins into the GUI
+ * @todo We should move it into a script, or into a C struct
  */
 static void CL_InitSkin_f (void)
 {
-	menuNode_t *node;
-	const char *nodeName;
-
-	if (GAME_IsCampaign())
-		nodeName = "equipment.skins";
-	else
-		nodeName = "mp_team_edit.skins";
-
-	node = MN_GetNodeByPath(nodeName);
-
-	if (!node)
-		Com_Error(ERR_FATAL, "CL_InitSkin_f: Could not find node '%s'", nodeName);
-
-	/** link all elements */
-	if (node->u.option.first == NULL) {
+	/* create singleplayer skins */
+	if (MN_GetOption(OPTION_SINGLEPLAYER_SKINS) == NULL) {
 		int i;
-		for (i = 0; i < NUM_TEAMSKINS - 1; i++)
-			skinlist[i].next = &skinlist[i + 1];
-		node->u.option.first = skinlist;
+		menuOption_t *skins;
+		assert(NUM_TEAMSKINS_SINGLEPLAYER >= 4);	/*< the current code create 4 skins */
+		skins = MN_AllocOption(NUM_TEAMSKINS_SINGLEPLAYER);
+		MN_InitOption(&skins[0], "urban", N_("Urban"), "0");
+		MN_InitOption(&skins[1], "jungle", N_("Jungle"), "1");
+		MN_InitOption(&skins[2], "desert", N_("Desert"), "2");
+		MN_InitOption(&skins[3], "arctic", N_("Arctic"), "3");
+		for (i = 0; i < NUM_TEAMSKINS_SINGLEPLAYER - 1; i++)
+			skins[i].next = &skins[i + 1];
+		MN_RegisterOption(OPTION_SINGLEPLAYER_SKINS, skins);
 	}
 
-	/** link/unlink multiplayer skins */
-	if (GAME_IsSingleplayer()) {
-		skinlist[NUM_TEAMSKINS_SINGLEPLAYER - 1].next = NULL;
-		node->u.option.count = NUM_TEAMSKINS_SINGLEPLAYER;
-	} else {
-		skinlist[NUM_TEAMSKINS_SINGLEPLAYER - 1].next = &skinlist[NUM_TEAMSKINS_SINGLEPLAYER];
-		node->u.option.count = NUM_TEAMSKINS;
+	/* create multiplayer skins */
+	if (MN_GetOption(OPTION_MULTIPLAYER_SKINS) == NULL) {
+		int i;
+		menuOption_t *skins;
+		assert(NUM_TEAMSKINS >= 6);		/*< the current code create 6 skins */
+		skins = MN_AllocOption(NUM_TEAMSKINS);
+		MN_InitOption(&skins[0], "urban", N_("Urban"), "0");
+		MN_InitOption(&skins[1], "jungle", N_("Jungle"), "1");
+		MN_InitOption(&skins[2], "desert", N_("Desert"), "2");
+		MN_InitOption(&skins[3], "arctic", N_("Arctic"), "3");
+		MN_InitOption(&skins[4], "multionly_yellow", N_("Yellow"), "4");
+		MN_InitOption(&skins[5], "multionly_cccp", N_("CCCP"), "5");
+		for (i = 0; i < NUM_TEAMSKINS - 1; i++)
+			skins[i].next = &skins[i + 1];
+		MN_RegisterOption(OPTION_MULTIPLAYER_SKINS, skins);
 	}
 }
 

@@ -637,10 +637,12 @@ window mp_team_edit
 	 */
 	selectbox skins {
 		image	"ui/selectbox_green"
-		pos	"660 290"
+		pos		"660 290"
 		size	"120 40"
 		cvar	"*cvar:mn_skin"
 		color	"0.6 0.6 0.6 0.3"
+		onChange { cmd "team_changeskin;" }
+		dataid	OPTION_MULTIPLAYER_SKINS
 	}
 	/** @todo add team_changeskinteam callback */
 
