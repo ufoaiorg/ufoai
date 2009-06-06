@@ -90,6 +90,9 @@ typedef enum {
 	OPTION_LANGUAGES,
 	OPTION_JOYSTICKS,
 	OPTION_VIDEO_RESOLUTIONS,
+	OPTION_SINGLEPLAYER_SKINS,
+	OPTION_MULTIPLAYER_SKINS,
+
 
 	LINESTRIP_FUNDING,
 	LINESTRIP_COLOR,
@@ -138,6 +141,7 @@ struct menuOption_s* MN_AllocOption(int count) __attribute__ ((warn_unused_resul
 void MN_RegisterOption(int dataId, struct menuOption_s *option);
 struct menuOption_s *MN_GetOption(int dataId) __attribute__ ((warn_unused_result));
 void MN_SortOptions(struct menuOption_s **option);
+void MN_InitOption(struct menuOption_s *option, const char* name, const char* label, const char* value);
 
 /* line strip */
 void MN_RegisterLineStrip(int dataId, struct lineStrip_s *text);

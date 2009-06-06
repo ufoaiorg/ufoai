@@ -86,6 +86,8 @@ static const char *const menutextid_names[] = {
 	"OPTION_LANGUAGES",
 	"OPTION_JOYSTICKS",
 	"OPTION_VIDEO_RESOLUTIONS",
+	"OPTION_SINGLEPLAYER_SKINS",
+	"OPTION_MULTIPLAYER_SKINS",
 
 	"LINESTRIP_FUNDING",
 	"LINESTRIP_COLOR"
@@ -208,6 +210,22 @@ void MN_SortOptions (menuOption_t **first)
 		element->next = *first;
 		*first = element;
 	}
+}
+
+/**
+ * @brief Init an option with a very little set of value.
+ * @note need you abstract menuOption_t values
+ * @param[in] nameID name of the option (should be unique into the option list)
+ * @param[in] label label displayed
+ * @param[in] label value used when this option is selected
+ */
+void MN_InitOption (menuOption_t* option, const char* nameID, const char* label, const char* value)
+{
+	assert(option);
+	memset(option, 0, sizeof(*option));
+	Q_strncpyz(option->id, nameID, sizeof(option->id));
+	Q_strncpyz(option->label, label, sizeof(option->label));
+	Q_strncpyz(option->value, value, sizeof(option->value));
 }
 
 void MN_RegisterOption (int dataId, menuOption_t *option)
