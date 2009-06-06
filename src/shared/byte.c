@@ -25,32 +25,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include <SDL/SDL_endian.h>
 #include "../common/common.h"
 
 /* can't just use function pointers, or dll linkage can */
 /* mess up when common is included in multiple places */
-static short (*_BigShort)(short l);
-static short (*_LittleShort)(short l);
-static int   (*_BigLong)(int l);
-static int   (*_LittleLong)(int l);
 static float (*_BigFloat)(float l);
 static float (*_LittleFloat)(float l);
 
 short BigShort (short l)
 {
-	return _BigShort(l);
+	return SDL_SwapBE16(l);
 }
 short LittleShort (short l)
 {
-	return _LittleShort(l);
+	return SDL_SwapLE16(l);
 }
 int BigLong (int l)
 {
-	return _BigLong(l);
+	return SDL_SwapBE32(l);
 }
 int LittleLong (int l)
 {
-	return _LittleLong(l);
+	return SDL_SwapLE32(l);
 }
 float BigFloat (float l)
 {
@@ -59,50 +56,6 @@ float BigFloat (float l)
 float LittleFloat (float l)
 {
 	return _LittleFloat(l);
-}
-
-/**
- * @sa ShortNoSwap
- */
-static short ShortSwap (short l)
-{
-	byte b1, b2;
-
-	b1 = l & 255;
-	b2 = (l >> 8) & 255;
-
-	return (b1 << 8) + b2;
-}
-
-/**
- * @sa ShortSwap
- */
-static short ShortNoSwap (short l)
-{
-	return l;
-}
-
-/**
- * @sa LongNoSwap
- */
-static int LongSwap (int l)
-{
-	byte b1, b2, b3, b4;
-
-	b1 = l & UCHAR_MAX;
-	b2 = (l >> 8) & UCHAR_MAX;
-	b3 = (l >> 16) & UCHAR_MAX;
-	b4 = (l >> 24) & UCHAR_MAX;
-
-	return ((int) b1 << 24) + ((int) b2 << 16) + ((int) b3 << 8) + b4;
-}
-
-/**
- * @sa LongSwap
- */
-static int LongNoSwap (int l)
-{
-	return l;
 }
 
 /**
@@ -133,22 +86,11 @@ static float FloatNoSwap (float f)
 
 void Swap_Init (void)
 {
-	byte swaptest[2] = { 1, 0 };
-
-	/* set the byte swapping variables in a portable manner */
-	if (*(short *) swaptest == 1) {
-		_BigShort = ShortSwap;
-		_LittleShort = ShortNoSwap;
-		_BigLong = LongSwap;
-		_LittleLong = LongNoSwap;
-		_BigFloat = FloatSwap;
-		_LittleFloat = FloatNoSwap;
-	} else {
-		_BigShort = ShortNoSwap;
-		_LittleShort = ShortSwap;
-		_BigLong = LongNoSwap;
-		_LittleLong = LongSwap;
-		_BigFloat = FloatNoSwap;
-		_LittleFloat = FloatSwap;
-	}
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+	_BigFloat = FloatSwap;
+	_LittleFloat = FloatNoSwap;
+#else
+	_BigFloat = FloatNoSwap;
+	_LittleFloat = FloatSwap;
+#endif
 }

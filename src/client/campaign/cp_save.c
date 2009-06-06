@@ -299,13 +299,13 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 
 	/** @todo little/big endian */
 	header.xml_size = requiredbuflen;
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredbuflen+1, cl_genericPool, 0);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredbuflen + 1, cl_genericPool, 0);
 	if (!buf) {
 		*error = _("Could not allocate enough memory to save this game");
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
 		return qfalse;
 	}
-	res = mxmlSaveString(top_node, (char*)buf, requiredbuflen+1, MXML_NO_CALLBACK);
+	res = mxmlSaveString(top_node, (char*)buf, requiredbuflen + 1, MXML_NO_CALLBACK);
 	Com_Printf("XML Written to buffer (%d Bytes)\n", res);
 
 	bufLen = (uLongf) (24 + 1.02 * requiredbuflen);
