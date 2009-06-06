@@ -36,12 +36,17 @@ team latin
 
 	actorsounds {
 		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
 		}
 		male {
-			hurtsound	civilians/male_hurt
-			deathsound	civilians/male_death
+			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
+			hurtsound	civilians/malehurt03
+			hurtsound	civilians/malehurt04
+			deathsound	civilians/maledeath01
+			deathsound	civilians/maledeath02
+			deathsound	civilians/maledeath03
 		}
 	}
 }
@@ -95,12 +100,17 @@ team states
 
 	actorsounds {
 		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
 		}
 		male {
-			hurtsound	civilians/male_hurt
-			deathsound	civilians/male_death
+			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
+			hurtsound	civilians/malehurt03
+			hurtsound	civilians/malehurt04
+			deathsound	civilians/maledeath01
+			deathsound	civilians/maledeath02
+			deathsound	civilians/maledeath03
 		}
 	}
 }
@@ -152,12 +162,17 @@ team europe
 
 	actorsounds {
 		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
 		}
 		male {
-			hurtsound	civilians/male_hurt
-			deathsound	civilians/male_death
+			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
+			hurtsound	civilians/malehurt03
+			hurtsound	civilians/malehurt04
+			deathsound	civilians/maledeath01
+			deathsound	civilians/maledeath02
+			deathsound	civilians/maledeath03
 		}
 	}
 }
@@ -191,12 +206,17 @@ team asia
 
 	actorsounds {
 		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
 		}
 		male {
-			hurtsound	civilians/male_hurt
-			deathsound	civilians/male_death
+			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
+			hurtsound	civilians/malehurt03
+			hurtsound	civilians/malehurt04
+			deathsound	civilians/maledeath01
+			deathsound	civilians/maledeath02
+			deathsound	civilians/maledeath03
 		}
 	}
 }
@@ -231,12 +251,17 @@ team middle
 
 	actorsounds {
 		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
 		}
 		male {
-			hurtsound	civilians/male_hurt
-			deathsound	civilians/male_death
+			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
+			hurtsound	civilians/malehurt03
+			hurtsound	civilians/malehurt04
+			deathsound	civilians/maledeath01
+			deathsound	civilians/maledeath02
+			deathsound	civilians/maledeath03
 		}
 	}
 }
@@ -270,12 +295,17 @@ team africa
 
 	actorsounds {
 		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
 		}
 		male {
-			hurtsound	civilians/male_hurt
-			deathsound	civilians/male_death
+			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
+			hurtsound	civilians/malehurt03
+			hurtsound	civilians/malehurt04
+			deathsound	civilians/maledeath01
+			deathsound	civilians/maledeath02
+			deathsound	civilians/maledeath03
 		}
 	}
 }
@@ -309,12 +339,17 @@ team russia
 
 	actorsounds {
 		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
 		}
 		male {
-			hurtsound	civilians/male_hurt
-			deathsound	civilians/male_death
+			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
+			hurtsound	civilians/malehurt03
+			hurtsound	civilians/malehurt04
+			deathsound	civilians/maledeath01
+			deathsound	civilians/maledeath02
+			deathsound	civilians/maledeath03
 		}
 	}
 }
@@ -348,12 +383,17 @@ team oceania
 
 	actorsounds {
 		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
 		}
 		male {
-			hurtsound	civilians/male_hurt
-			deathsound	civilians/male_death
+			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
+			hurtsound	civilians/malehurt03
+			hurtsound	civilians/malehurt04
+			deathsound	civilians/maledeath01
+			deathsound	civilians/maledeath02
+			deathsound	civilians/maledeath03
 		}
 	}
 }
@@ -383,12 +423,17 @@ team armysoldier
 
 	actorsounds {
 		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
 		}
 		male {
-			hurtsound	civilians/male_hurt
-			deathsound	civilians/male_death
+			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
+			hurtsound	civilians/malehurt03
+			hurtsound	civilians/malehurt04
+			deathsound	civilians/maledeath01
+			deathsound	civilians/maledeath02
+			deathsound	civilians/maledeath03
 		}
 	}
 }
@@ -418,12 +463,17 @@ team scientist
 
 	actorsounds {
 		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
 		}
 		male {
-			hurtsound	civilians/male_hurt
-			deathsound	civilians/male_death
+			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
+			hurtsound	civilians/malehurt03
+			hurtsound	civilians/malehurt04
+			deathsound	civilians/maledeath01
+			deathsound	civilians/maledeath02
+			deathsound	civilians/maledeath03
 		}
 	}
 }
@@ -450,12 +500,17 @@ team worker
 
 	actorsounds {
 		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
 		}
 		male {
-			hurtsound	civilians/male_hurt
-			deathsound	civilians/male_death
+			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
+			hurtsound	civilians/malehurt03
+			hurtsound	civilians/malehurt04
+			deathsound	civilians/maledeath01
+			deathsound	civilians/maledeath02
+			deathsound	civilians/maledeath03
 		}
 	}
 }
@@ -481,12 +536,17 @@ team miner
 
 	actorsounds {
 		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
 		}
 		male {
-			hurtsound	civilians/male_hurt
-			deathsound	civilians/male_death
+			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
+			hurtsound	civilians/malehurt03
+			hurtsound	civilians/malehurt04
+			deathsound	civilians/maledeath01
+			deathsound	civilians/maledeath02
+			deathsound	civilians/maledeath03
 		}
 	}
 }

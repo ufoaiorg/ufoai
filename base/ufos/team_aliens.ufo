@@ -83,8 +83,8 @@ team taman
 			hurtsound aliens/echovoice1
 			hurtsound aliens/echovoice2
 			hurtsound aliens/echovoice3
-			deathsound aliens/aliendeath1
-			deathsound aliens/aliendeath3
+			deathsound aliens/aliendeath01
+			deathsound aliens/aliendeath03
 		}
 	}
 }

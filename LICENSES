@@ -2202,13 +2202,13 @@ base/pics/ui/ufopedia_buttons2.tga | GNU General Public License 2.0 |  | Based o
 base/pics/ui/vertical_bar.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/wingame_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/won_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/sound/aliens/aliendeath1.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath2.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath3.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath4.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath5.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath6.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath7.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/aliens/aliendeath01.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath02.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath03.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath04.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath05.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath06.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath07.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
 base/sound/aliens/big_angry.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/big_angry2.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/big_angry3.wav | GNU General Public License 2.0 | Karen Rei Pease
@@ -2245,14 +2245,14 @@ base/sound/ambience/sparks.ogg | GNU General Public License 2.0 |  | Nexuiz's GP
 base/sound/ambience/sparks_short.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | sparks.ogg
 base/sound/ambience/water.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/ambience/windloop.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/civilians/female_death.ogg | Creative Commons Sampling Plus 1.0 |  | http://freesound.iua.upf.edu/samplesViewSingle.php?id=35716
-base/sound/civilians/male_death.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/civilians/male_death2.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/civilians/male_death3.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/civilians/male_hurt.ogg | Creative Commons Sampling Plus 1.0 |  | http://freesound.iua.upf.edu/data/37/sounds/37553__mw_1984__ah.mp3
-base/sound/civilians/male_hurt2.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/civilians/male_hurt3.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/civilians/male_hurt4.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
+base/sound/civilians/femaledeath01.ogg | Creative Commons Sampling Plus 1.0 |  | http://freesound.iua.upf.edu/samplesViewSingle.php?id=35716
+base/sound/civilians/maledeath01.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
+base/sound/civilians/maledeath02.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
+base/sound/civilians/maledeath03.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
+base/sound/civilians/malehurt01.ogg | Creative Commons Sampling Plus 1.0 |  | http://freesound.iua.upf.edu/data/37/sounds/37553__mw_1984__ah.mp3
+base/sound/civilians/malehurt02.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
+base/sound/civilians/malehurt03.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
+base/sound/civilians/malehurt04.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/doors/creak_low_short.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
 base/sound/doors/latch_01.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
 base/sound/doors/latch_sharp.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
