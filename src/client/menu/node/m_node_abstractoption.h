@@ -41,6 +41,7 @@ typedef struct menuOption_s {
 	char value[MAX_VAR];	/**< the value the cvar should get */
 	struct menuIcon_s *icon;	/**< Facultative icon */
 	qboolean disabled;		/**< If true, the option is not selectable */
+	qboolean invis;			/**< If true, the option is not displayed */
 
 	/**
 	 * @brief True if the element is hovered

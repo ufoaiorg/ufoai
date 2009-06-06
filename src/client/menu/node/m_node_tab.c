@@ -74,6 +74,10 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
 	for (option = node->u.option.first; option; option = option->next) {
 		int fontWidth;
 
+		/* skip hidden options */
+		if (option->invis)
+			continue;
+
 		if (x < TILE_WIDTH / 2)
 			return prev;
 
@@ -191,9 +195,15 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		int fontHeight, tabWidth;
 		int textPos;
 		qboolean drawIcon = qfalse;
+		mn_tab_type_t status = MN_TAB_NORMAL;
+
+		/* skip hidden options */
+		if (option->invis) {
+			option = option->next;
+			continue;
+		}
 
 		/* Check the status of the current tab */
-		mn_tab_type_t status = MN_TAB_NORMAL;
 		if (!strcmp(option->value, ref)) {
 			status = MN_TAB_SELECTED;
 		} else if (option->disabled || node->disabled) {

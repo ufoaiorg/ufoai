@@ -47,6 +47,7 @@ static const value_t optionProperties[] = {
 	{"value", V_STRING, offsetof(menuOption_t, value), 0},
 	{"icon", V_UI_ICONREF, offsetof(menuOption_t, icon), 0},
 	{"disabled", V_BOOL, offsetof(menuOption_t, disabled), MEMBER_SIZEOF(menuOption_t, disabled)},
+	{"invis", V_BOOL, offsetof(menuOption_t, invis), MEMBER_SIZEOF(menuOption_t, invis)},
 
 	{NULL, V_NULL, 0, 0},
 };
