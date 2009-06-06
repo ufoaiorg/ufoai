@@ -608,10 +608,11 @@ void CL_InitAfter (void)
 
 	for (i = 0; i < VID_GetModeNums(); i++) {
 		menuOption_t *option = &vidModesOptions[i];
+		MN_InitOption(option, "",
+			va("%i:%i", vid_modes[i].width, vid_modes[i].height),
+			va("%i", vid_modes[i].mode));
 		if (i > 0)
 			(&vidModesOptions[i - 1])->next = option;
-		Com_sprintf(option->label, sizeof(option->label), "%i:%i", vid_modes[i].width, vid_modes[i].height);
-		Com_sprintf(option->value, sizeof(option->value), "%i", vid_modes[i].mode);
 	}
 	MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, &vidModesOptions[0]);
 

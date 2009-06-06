@@ -276,8 +276,7 @@ void IN_JoystickInitMenu (void)
 	if (total == 0) {
 		menuOption_t *option = MN_AllocOption(1);
 		if (option) {
-			Q_strncpyz(option->label, "None", sizeof(option->label));
-			Q_strncpyz(option->value, "0", sizeof(option->value));
+			MN_InitOption(option, "", "None", "0");
 			joystickOptions = option;
 		}
 	} else {
@@ -290,12 +289,10 @@ void IN_JoystickInitMenu (void)
 		for (i = 0; i < total; i++) {
 			menuOption_t *option = &optionArray[i];
 
-			/* link */
+			/* init and link */
+			MN_InitOption(option, "", SDL_JoystickName(i), va("%i", i));
 			if (i > 0)
 				optionArray[i - 1].next = option;
-
-			Q_strncpyz(option->label, SDL_JoystickName(i), sizeof(option->label));
-			Com_sprintf(option->value, sizeof(option->value), "%i", i);
 		}
 		joystickOptions = &optionArray[0];
 	}

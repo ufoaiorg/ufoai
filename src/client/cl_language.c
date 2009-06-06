@@ -249,11 +249,8 @@ void CL_LanguageInit (void)
 			if (!option)
 				break;
 
-			/* init content */
-			Q_strncpyz(option->label, language->localeString, sizeof(option->label));
-			Q_strncpyz(option->value, language->localeID, sizeof(option->value));
-
-			/* link to list */
+			/* init and link to list */
+			MN_InitOption(option, "", language->localeString, language->localeID);
 			option->next = languageOption;
 			languageOption = option;
 		}
