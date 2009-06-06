@@ -363,7 +363,10 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 	firstAction = NULL;
 
 	/* prevent bad position */
-	assert(*token[0] == '{');
+	if (*token[0] != '{') {
+		Com_Printf("MN_ParseActionList: token \"{\" expected, but \"%s\" found (in event) (node: %s)\n", *token, MN_GetPath(menuNode));
+		return NULL;
+	}
 
 	while (qtrue) {
 		int type = EA_NULL;
@@ -471,8 +474,13 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			if (!*text)
 				return NULL;
 			action->scriptValues = (const value_t *) MN_ParseActionList(menuNode, text, token);
-			if (action->scriptValues == NULL)
+			if (action->scriptValues == NULL) {
+				if (action->type.op == EA_IF)
+					Com_Printf("MN_ParseActionList: block expected after \"if\" (node: %s)\n", MN_GetPath(menuNode));
+				else
+					Com_Printf("MN_ParseActionList: block expected after \"elif\" (node: %s)\n", MN_GetPath(menuNode));
 				return NULL;
+			}
 			break;
 
 		case EA_ELSE:
@@ -487,8 +495,10 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			if (!*text)
 				return NULL;
 			action->scriptValues = (const value_t *) MN_ParseActionList(menuNode, text, token);
-			if (action->scriptValues == NULL)
+			if (action->scriptValues == NULL) {
+				Com_Printf("MN_ParseActionList: block expected after \"else\" (node: %s)\n", MN_GetPath(menuNode));
 				return NULL;
+			}
 			break;
 
 		default:
