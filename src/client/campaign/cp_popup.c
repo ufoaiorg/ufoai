@@ -260,7 +260,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 				continue;
 			}
 			if (tempMission->pos) {
-				popupAircraft.itemsId[popupAircraft.nbItems] = MAP_GetIdxByMission(tempMission);
+				popupAircraft.itemsId[popupAircraft.nbItems] = MAP_GetIDXByMission(tempMission);
 				popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
 				Q_strcat(popupAircraft.text_popup, va(_("Mission\t%s (%s)\n"),
 					CP_MissionToTypeString(tempMission), _(tempMission->location)), POPUP_AIRCRAFT_MAX_TEXT);
@@ -310,7 +310,7 @@ static void CL_PopupAircraftClick_f (void)
 		CL_DisplayHomebasePopup(aircraft, qtrue);
 		break;
 	case POPUP_AIRCRAFT_ACTION_MOVETOMISSION:	/* Aircraft move to mission */
-		mission = MAP_GetMissionByIdx(popupAircraft.itemsId[num]);
+		mission = MAP_GetMissionByIDX(popupAircraft.itemsId[num]);
 		if (mission)
 			AIR_SendAircraftToMission(aircraft, mission);
 		break;

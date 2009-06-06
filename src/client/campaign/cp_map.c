@@ -211,13 +211,13 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		INS_SelectInstallation(INS_GetFoundedInstallationByIDX(id));
 		break;
 	case MULTISELECT_TYPE_MISSION: /* Select a mission */
-		if (ccs.mapAction == MA_INTERCEPT && ccs.selectedMission && ccs.selectedMission == MAP_GetMissionByIdx(id)) {
+		if (ccs.mapAction == MA_INTERCEPT && ccs.selectedMission && ccs.selectedMission == MAP_GetMissionByIDX(id)) {
 			CL_DisplayPopupIntercept(ccs.selectedMission, NULL);
 			return;
 		}
 
 		MAP_ResetAction();
-		ccs.selectedMission = MAP_GetMissionByIdx(id);
+		ccs.selectedMission = MAP_GetMissionByIDX(id);
 
 		Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", ccs.selectedMission->id, ccs.selectedMission->pos[0], ccs.selectedMission->pos[1]);
 		ccs.mapAction = MA_INTERCEPT;
@@ -339,7 +339,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		if (tempMission->stage == STAGE_NOT_ACTIVE || !tempMission->onGeoscape)
 			continue;
 		if (tempMission->pos && MAP_IsMapPositionSelected(node, tempMission->pos, x, y))
-			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_MISSION, MAP_GetIdxByMission(tempMission),
+			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_MISSION, MAP_GetIDXByMission(tempMission),
 				CP_MissionToTypeString(tempMission), _(tempMission->location));
 	}
 

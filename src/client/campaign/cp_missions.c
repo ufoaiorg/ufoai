@@ -381,7 +381,7 @@ mission_t* CP_GetMissionByID (const char *missionId)
 /**
  * @brief Find mission corresponding to idx
  */
-mission_t* MAP_GetMissionByIdx (int id)
+mission_t* MAP_GetMissionByIDX (int id)
 {
 	int i;
 	const linkedList_t *list = ccs.missions;
@@ -392,14 +392,14 @@ mission_t* MAP_GetMissionByIdx (int id)
 			return mission;
 	}
 
-	Com_Printf("MAP_GetMissionByIdx: No mission of id %i\n", id);
+	Com_Printf("MAP_GetMissionByIDX: No mission of id %i\n", id);
 	return NULL;
 }
 
 /**
  * @brief Find idx corresponding to mission
  */
-int MAP_GetIdxByMission (const mission_t *mis)
+int MAP_GetIDXByMission (const mission_t *mis)
 {
 	int i;
 	const linkedList_t *list = ccs.missions;
@@ -410,7 +410,7 @@ int MAP_GetIdxByMission (const mission_t *mis)
 			return i;
 	}
 
-	Com_Printf("MAP_GetIdxByMission: Mission does not exist\n");
+	Com_Printf("MAP_GetIDXByMission: Mission does not exist\n");
 	return 0;
 }
 
