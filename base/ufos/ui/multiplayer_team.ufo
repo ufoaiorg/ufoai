@@ -386,10 +386,28 @@ window mp_team_edit
 			lineheight	20
 			tabwidth	190
 			rows		"7"
-			scrollbar	true
 			dataid		TEXT_STANDARD
+			onViewChange {
+				*(abstractscrollbar)itemdescription.description_scroll@fullsize <lines>
+				*(abstractscrollbar)itemdescription.description_scroll@current <text_scroll>
+			}
+			onWheel {
+				*(abstractscrollbar)itemdescription.description_scroll@current <text_scroll>
+			}
 		}
-	
+		vscrollbar description_scroll {
+			image		ui/scrollbar_v_green
+			pos			"325 140"
+			height		"150"
+			current		0
+			viewsize	7
+			fullsize	7
+			hidewhenunused true
+			onChange {
+				*itemdescription.description@text_scroll <current>
+			}
+		}
+
 		// ======================
 		// useable weapon or ammo
 		// ======================
