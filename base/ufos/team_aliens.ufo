@@ -156,6 +156,7 @@ team ortnok
 
 	actorsounds {
 		neutral {
+			hurtsound aliens/alienhurt01
 			hurtsound aliens/big_angry
 			hurtsound aliens/big_angry2
 			hurtsound aliens/big_angry3

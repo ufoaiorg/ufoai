@@ -532,6 +532,7 @@ team phalanx
 			deathsound	soldiers/femaledeath01
 			deathsound	soldiers/femaledeath02
 			deathsound	soldiers/femaledeath03
+			deathsound	soldiers/femaledeath04
 		}
 		male {
 			hurtsound 	soldiers/malehurt01
@@ -1245,6 +1246,7 @@ team phalanx_pilot
 			deathsound	soldiers/femaledeath01
 			deathsound	soldiers/femaledeath02
 			deathsound	soldiers/femaledeath03
+			deathsound	soldiers/femaledeath04
 		}
 		male {
 			hurtsound 	soldiers/malehurt01
@@ -1598,6 +1600,7 @@ team phalanx_worker
 			deathsound	soldiers/femaledeath01
 			deathsound	soldiers/femaledeath02
 			deathsound	soldiers/femaledeath03
+			deathsound	soldiers/femaledeath04
 		}
 		male {
 			hurtsound 	soldiers/malehurt01
