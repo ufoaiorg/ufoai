@@ -104,7 +104,7 @@ const char *ev_format[] =
 	"!sbbs",			/* EV_ACTOR_MOVE: Don't use this format string - see CL_ActorDoMove for more info */
 
 	"ssbbbgg",			/* EV_ACTOR_START_SHOOT */
-	"ssbbbbbppb",		/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
+	"sssbbbbbppb",		/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
 	"bsbb"	,			/* EV_ACTOR_SHOOT_HIDDEN */
 	"ssbbbpp",			/* EV_ACTOR_THROW */
 
@@ -1627,7 +1627,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 				vec3_t muzzle, impact;
 
 				/* read data */
-				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
+				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &dummy, &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
 
 				obj = INVSH_GetItemByIDX(objIdx);
 				fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);

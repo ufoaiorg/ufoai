@@ -1606,8 +1606,6 @@ static void CL_ActorHit (const le_t * le, vec3_t impact, int normal)
 		if (le->teamDef->hitParticle[0] != '\0')
 			CL_ParticleSpawn(le->teamDef->hitParticle, 0, impact, bytedirs[normal], NULL);
 	}
-
-	CL_PlayActorSound(le, SND_HURT);
 }
 
 /**
@@ -1625,18 +1623,18 @@ static qboolean firstShot = qfalse;
 void CL_ActorDoShoot (struct dbuffer *msg)
 {
 	const fireDef_t *fd;
-	le_t *le;
+	le_t *leShooter;
 	vec3_t muzzle, impact;
-	int flags, normal, entnum;
+	int flags, normal, shooterEntnum, victimEntnum;
 	int objIdx;
 	const objDef_t *obj;
 	int weapFdsIdx, fdIdx, surfaceFlags, shootType;
 
 	/* read data */
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &entnum, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &shooterEntnum, &victimEntnum, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
 
-	/* get le */
-	le = LE_Get(entnum);
+	/* get shooter le */
+	leShooter = LE_Get(shooterEntnum);
 
 	/* get the fire def */
 	obj = INVSH_GetItemByIDX(objIdx);
@@ -1655,40 +1653,48 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		refdef.rdflags |= RDF_IRGOGGLES;
 
 	/* do actor related stuff */
-	if (!le)
+	if (!leShooter)
 		return; /* maybe hidden or inuse is false? */
 
-	if (!LE_IsActor(le)) {
-		Com_Printf("Can't shoot, LE not an actor (type: %i)\n", le->type);
+	if (!LE_IsActor(leShooter)) {
+		Com_Printf("Can't shoot, LE not an actor (type: %i)\n", leShooter->type);
 		return;
 	}
 
+	if (victimEntnum > 0) {
+		const le_t *leVictim = LE_Get(victimEntnum);
+		if (!leVictim || !LE_IsActor(leShooter))
+			Com_Printf("Can't shoot, invalid victim LE given\n");
+
+		CL_PlayActorSound(leVictim, SND_HURT);
+	}
+
 	/* no animations for hidden actors */
-	if (le->type == ET_ACTORHIDDEN)
+	if (leShooter->type == ET_ACTORHIDDEN)
 		return;
 
 	/** Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead :)
 	 * Don't do it if it's a stun-attack though.
 	 * @todo Special particles for stun attack (mind you that there is electrical and gas/chemical stunning)? */
 	if ((flags & SF_BODY) && fd->obj->dmgtype != csi.damStunGas) {	/**< @todo && !(flags & SF_BOUNCED) ? */
-		CL_ActorHit(le, impact, normal);
+		CL_ActorHit(leShooter, impact, normal);
 	}
 
-	if (LE_IsDead(le)) {
+	if (LE_IsDead(leShooter)) {
 		Com_Printf("Can't shoot, actor dead or stunned.\n");
 		return;
 	}
 
 	/* Animate - we have to check if it is right or left weapon usage. */
 	if (IS_SHOT_RIGHT(shootType)) {
-		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
-		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
+		R_AnimChange(&leShooter->as, leShooter->model1, LE_GetAnim("shoot", leShooter->right, leShooter->left, leShooter->state));
+		R_AnimAppend(&leShooter->as, leShooter->model1, LE_GetAnim("stand", leShooter->right, leShooter->left, leShooter->state));
 	} else if (IS_SHOT_LEFT(shootType)) {
-		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
-		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
+		R_AnimChange(&leShooter->as, leShooter->model1, LE_GetAnim("shoot", leShooter->left, leShooter->right, leShooter->state));
+		R_AnimAppend(&leShooter->as, leShooter->model1, LE_GetAnim("stand", leShooter->left, leShooter->right, leShooter->state));
 	} else if (!IS_SHOT_HEADGEAR(shootType)) {
 		/* no animation for headgear (yet) */
-		Com_Error(ERR_DROP, "CL_ActorDoShoot: Invalid shootType given (entnum: %i, shootType: %i).\n", shootType, entnum);
+		Com_Error(ERR_DROP, "CL_ActorDoShoot: Invalid shootType given (entnum: %i, shootType: %i).\n", shootType, shooterEntnum);
 	}
 }
 

@@ -919,6 +919,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 			/* send shot */
 			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
 			gi.WriteShort(ent->number);
+			gi.WriteShort(tr.ent ? tr.ent->number : 0);
 			gi.WriteShort(fd->obj->idx);
 			gi.WriteByte(fd->weapFdsIdx);
 			gi.WriteByte(fd->fdIdx);
