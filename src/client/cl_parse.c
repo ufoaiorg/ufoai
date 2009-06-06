@@ -1449,8 +1449,19 @@ static void CL_LogEvent (const int num)
 	FS_OpenFile("events.log", &f, FILE_APPEND);
 	if (!f.f)
 		return;
-	FS_Printf(&f, "%10i %s\n", cl.battlescapeEventTime, ev_names[num]);
-	FS_CloseFile(&f);
+	else {
+		struct tm *t;
+		char tbuf[32];
+		time_t aclock;
+
+		time(&aclock);
+		t = localtime(&aclock);
+
+		Com_sprintf(tbuf, sizeof(tbuf), "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+
+		FS_Printf(&f, "%s - %s: %10i %s\n", tbuf, cl.configstrings[CS_MAPTITLE], cl.battlescapeEventTime, ev_names[num]);
+		FS_CloseFile(&f);
+	}
 }
 
 static void CL_ScheduleEvent(evTimes_t *event);
