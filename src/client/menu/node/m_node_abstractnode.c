@@ -381,15 +381,33 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 const char* MN_GetStringFromNodeProperty (const menuNode_t* node, const value_t* property)
 {
 	const int baseType = property->type & V_UI_MASK;
+	const byte* b = (const byte*)node + property->ofs;
 	assert(node);
 	assert(property);
 
 	switch (baseType) {
 	case V_NOT_UI: /* common type */
 		return Com_ValueToStr(node, property->type, property->ofs);
+	case V_UI_CVAR:
+		switch (property->type) {
+		case V_CVAR_OR_FLOAT:
+			{
+				const float f = MN_GetReferenceFloat(node, *(const void*const*)b);
+				const int i = f;
+				if (f == i)
+					return va("%i", i);
+				else
+					return va("%f", f);
+			}
+		case V_CVAR_OR_LONGSTRING:
+		case V_CVAR_OR_STRING:
+			return MN_GetReferenceString(node, *(const void*const*)b);
+		}
+		break;
 	default:
-		return NULL;
+		break;
 	}
+	return NULL;
 }
 
 /**
@@ -432,7 +450,7 @@ float MN_GetFloatFromNodeProperty (const menuNode_t* node, const value_t* proper
 
 #ifdef DEBUG
 /**
- * @brief set a node property from the command line
+ * @brief display value of a node property from the command line
  */
 static void MN_NodeGetProperty_f (void)
 {
