@@ -142,6 +142,33 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 					length -= l;
 					continue;
 
+				} else if (!strncmp(propertyName, "node:", 5)) {
+					const char *path = propertyName + 5;
+					menuNode_t *node;
+					const value_t *property;
+					const char* string;
+					int l;
+					MN_ReadNodePath(path, source, &node, &property);
+					if (!node) {
+						Com_Printf("MN_GenInjectedString: Node '%s' wasn't found; '' returned\n", path);
+						string = "";
+					} else if (!property) {
+						Com_Printf("MN_GenInjectedString: Property '%s' wasn't found; '' returned\n", path);
+						string = "";
+					} else {
+						string = MN_GetStringFromNodeProperty(node, property);
+						if (string == NULL) {
+							Com_Printf("MN_GenInjectedString: String getter for '%s' property do not exists; '' injected\n", path);
+							string = "";
+						}
+					}
+
+					l = snprintf(cout, length, "%s", string);
+					cout += l;
+					cin = next;
+					length -= l;
+					continue;
+
 				/* source path injection */
 				} else if (!strncmp(propertyName, "path:", 5)) {
 					if (source) {
