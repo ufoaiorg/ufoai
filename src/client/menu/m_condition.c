@@ -106,7 +106,26 @@ static const char* MN_GetStringFromParam (const menuNode_t *source, const char* 
 		return cvar->string;
 	}
 	case IF_VALUE_NODEPROPERTY:
-		Com_Printf("MN_GetStringFromParam: Node property '%s' to string unsupported", value);
+		{
+			menuNode_t *node;
+			const value_t *property;
+			const char* string;
+			MN_ReadNodePath(value, source, &node, &property);
+			if (!node) {
+				Com_Printf("MN_GetStringFromParam: Node '%s' wasn't found; '' returned\n", value);
+				return "";
+			}
+			if (!property) {
+				Com_Printf("MN_GetStringFromParam: Property '%s' wasn't found; '' returned\n", value);
+				return "";
+			}
+			string = MN_GetStringFromNodeProperty(node, property);
+			if (string == NULL) {
+				Com_Printf("MN_GetStringFromParam: String getter for '%s' property do not exists; '' returned\n", value);
+				return "";
+			}
+			return string;
+		}
 		break;
 	}
 	return "";
