@@ -71,50 +71,6 @@ static inline const char* MN_GenCommandReadProperty (const char* input, char* ou
 }
 
 /**
- * @brief return a string from a node property
- * @note this function return a string from the function va
- * @sa va
- * @todo move it in a better place
- */
-static const char* MN_NodeGetProperty(const menuNode_t* source, const value_t *property)
-{
-	const byte* b = (const byte*)source + property->ofs;
-	const int specialType = property->type & V_UI_MASK;
-
-#ifdef __ISOC99__
-	foooooo
-#endif
-
-	assert(source);
-	assert(property);
-
-	switch (specialType) {
-	case V_NOT_UI:	/* common type */
-		return Com_ValueToStr((const void*)source, property->type, property->ofs);
-
-	case V_UI_CVAR:	/* cvar */
-		switch (property->type) {
-		case V_CVAR_OR_FLOAT:
-			{
-				const float f = MN_GetReferenceFloat(source, b);
-				const int i = f;
-				if (f == i)
-					return va("%i", i);
-				else
-					return va("%f", f);
-			}
-		case V_CVAR_OR_LONGSTRING:
-		case V_CVAR_OR_STRING:
-			/** @todo implement the code */
-			break;
-		}
-	}
-
-	Com_Printf("MN_NodeGetProperty: Unsupported injection for property type 0x%X (%s@%s)", property->type, MN_GetPath(source), property->string);
-	return va("<%s>", property->string);
-}
-
-/**
  * @brief Replace injection identifiers (e.g. <eventParam>) by a value
  * @note The injection identifier can be every node value - e.g. <image> or <width>.
  * It's also possible to do something like
@@ -202,7 +158,9 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 							const char* value;
 							int l;
 							/* inject the property value */
-							value = MN_NodeGetProperty(source, property);
+							value = MN_GetStringFromNodeProperty(source, property);
+							if (value == NULL)
+								value = "";
 							l = snprintf(cout, length, "%s", value);
 							cout += l;
 							cin = next;

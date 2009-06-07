@@ -407,6 +407,8 @@ const char* MN_GetStringFromNodeProperty (const menuNode_t* node, const value_t*
 	default:
 		break;
 	}
+
+	Com_Printf("MN_GetStringFromNodeProperty: Unsupported string getter for property type 0x%X (%s@%s)", property->type, MN_GetPath(node), property->string);
 	return NULL;
 }
 
