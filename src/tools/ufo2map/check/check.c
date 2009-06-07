@@ -192,6 +192,8 @@ static qboolean Check_SurfProp (const int flag, const side_t *s)
 	switch (flag) {
 	case SURF_NODRAW:
 		return !strcmp(tex->name, "tex_common/nodraw") ? qtrue : qfalse;
+	case CONTENTS_LADDER:
+		return !strcmp(tex->name, "tex_common/ladder") ? qtrue : qfalse;
 	case CONTENTS_WEAPONCLIP:
 		return !strcmp(tex->name, "tex_common/weaponclip") ? qtrue : qfalse;
 	case CONTENTS_ACTORCLIP:
@@ -227,6 +229,9 @@ static qboolean Check_SurfProps (const int flags, const side_t *s)
 		return qtrue;
 
 	if ((flags & CONTENTS_ACTORCLIP) && !strcmp(texname, "tex_common/actorclip"))
+		return qtrue;
+
+	if ((flags & CONTENTS_LADDER) && !strcmp(texname, "tex_common/ladder"))
 		return qtrue;
 
 	if ((flags & CONTENTS_ORIGIN) && !strcmp(texname, "tex_common/origin"))
