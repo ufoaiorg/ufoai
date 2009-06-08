@@ -384,18 +384,47 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
  * which looks better anyway.
  * @todo Campaign mode only function
  */
-static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messageStack)
+static void MN_TextNodeDrawMessageList (menuNode_t *node, message_t *messageStack)
 {
-	char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
-	const message_t *message;
-	int skip_messages;
+	message_t *message;
 	int screenLines;
-	int addTextLines = 0;			/**< Number of wraped lines after n-lines */
 	const char *font = MN_GetFontFromNode(node);
 	vec2_t pos;
 	int x, y, width, height;
+	int defaultHeight;
+	int lineNumber = 0;
+	int posY;
 
 	MN_GetNodeAbsPos(node, pos);
+
+	/** @todo dont know where come from this +2 but without line computation dont work */
+	defaultHeight = MN_FontGetHeight(font) + 2;
+
+	/* update message cache */
+	if (MN_AbstractScrollableNodeIsSizeChange(node)) {
+		/* recompute all line size */
+		message = messageStack;
+		while (message) {
+			const char* text = va("%s%s", message->timestamp, message->text);
+			R_FontTextSize(font, text, node->size[0], EXTRADATA(node).longlines, NULL, NULL, &message->lineUsed, NULL);
+			lineNumber += message->lineUsed;
+			message = message->next;
+		}
+	} else {
+		/* only check unvalidated messages */
+		message = messageStack;
+		while (message) {
+			if (message->lineUsed == 0) {
+				const char* text = va("%s%s", message->timestamp, message->text);
+				R_FontTextSize(font, text, node->size[0], EXTRADATA(node).longlines, NULL, NULL, &message->lineUsed, NULL);
+			}
+			lineNumber += message->lineUsed;
+			message = message->next;
+		}
+	}
+
+	/* update scroll status */
+	MN_AbstractScrollableNodeSetY(node, -1, node->size[1] / defaultHeight, lineNumber);
 
 	/* text box */
 	x = pos[0] + node->padding;
@@ -407,29 +436,29 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messa
 	if (EXTRADATA(node).scrollbar)
 		width -= MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
 
-	message       = messageStack;
-	skip_messages = EXTRADATA(node).super.viewPosY;
-	while (skip_messages-- != 0)
-		message = message->next;
-
-	screenLines = 0;
-	for (; message; message = message->next) {
-		const int prevScreenLines = screenLines;	/**< Screen lines before MN_DrawString(...) is executed */
-
-		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
-		MN_DrawString(font, node->textalign, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).super.viewSizeY, 0, &screenLines, qtrue, EXTRADATA(node).longlines);
-		addTextLines += screenLines - prevScreenLines - 1;
-		if (screenLines > EXTRADATA(node).super.viewSizeY)
+	/* found the first message we must display */
+	message = messageStack;
+	posY = EXTRADATA(node).super.viewPosY;
+	while (message && posY > 0) {
+		posY -= message->lineUsed;
+		if (posY < 0)
 			break;
+		message = message->next;
 	}
 
-	if (EXTRADATA(node).scrollbar && EXTRADATA(node).super.viewSizeY) {
-		int lines = 0;
-		for (message = messageStack; message; message = message->next)
-			lines++;
-		EXTRADATA(node).super.fullSizeY = lines + addTextLines;
-		MN_DrawScrollBar(node);
+	/* draw */
+	/** @note posY can be negative (if we must display last line of the first message) */
+	screenLines = posY;
+	while (message) {
+		const char* text = va("%s%s", message->timestamp, message->text);
+		MN_DrawString(font, node->textalign, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).super.viewSizeY, 0, &screenLines, qtrue, EXTRADATA(node).longlines);
+		if (screenLines - EXTRADATA(node).super.viewPosY >= EXTRADATA(node).super.viewSizeY)
+			break;
+		message = message->next;
 	}
+
+	if (EXTRADATA(node).scrollbar && EXTRADATA(node).super.viewSizeY)
+		MN_DrawScrollBar(node);
 }
 
 /**

@@ -60,6 +60,7 @@ typedef struct message_s {
 	struct eventMail_s *eventMail;
 	struct message_s *next;
 	date_t date;
+	int lineUsed;		/**< used my the node to cache the number of lines need (often =1) */
 } message_t;
 
 message_t *MS_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
