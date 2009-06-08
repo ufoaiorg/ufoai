@@ -394,7 +394,9 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, message_t *messageStac
 	int defaultHeight;
 	int lineNumber = 0;
 	int posY;
-#if 0
+
+/* #define AUTOSCROLL */		/**< if older is on top, autoscroll is not need */
+#ifdef AUTOSCROLL
 	qboolean autoscroll;
 #endif
 	MN_GetNodeAbsPos(node, pos);
@@ -404,7 +406,7 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, message_t *messageStac
 	else
 		defaultHeight = node->u.text.lineHeight;
 
-#if 0
+#ifdef AUTOSCROLL
 	autoscroll = (EXTRADATA(node).super.viewPosY + EXTRADATA(node).super.viewSizeY == EXTRADATA(node).super.fullSizeY)
 		|| (EXTRADATA(node).super.fullSizeY < EXTRADATA(node).super.viewSizeY);
 #endif
@@ -433,7 +435,7 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, message_t *messageStac
 	}
 
 	/* update scroll status */
-#if 0
+#ifdef AUTOSCROLL
 	if (autoscroll)
 		MN_AbstractScrollableNodeSetY(node, lineNumber, node->size[1] / defaultHeight, lineNumber);
 	else
