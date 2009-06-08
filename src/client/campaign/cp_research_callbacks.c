@@ -662,6 +662,8 @@ static void RS_InitGUIData (base_t* base)
 
 	assert(base);
 
+	RS_MarkResearchable(qfalse, base);
+
 	for (i = 0; i < MAX_BASES; i++) {
 		const base_t const *b = B_GetFoundedBaseByIDX(i);
 		if (!b)
