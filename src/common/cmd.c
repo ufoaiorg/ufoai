@@ -145,6 +145,7 @@ void Cbuf_InsertText (const char *text)
 	} else
 		temp = NULL;			/* shut up compiler */
 
+	/* add the entire text of the file */
 	Cbuf_AddText(text);
 
 	/* add the copied off data */

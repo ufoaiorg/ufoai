@@ -208,7 +208,7 @@ static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t c
 		color[3] = a;
 	} else if (stage->flags & STAGE_DIRTMAP) {
 		/* resolve dirtmap based on vertex position */
-		const int index = (int)(v[0] + v[1]) % NUM_DIRTMAP_ENTRIES;
+		const int index = (int)VectorLength(v) % NUM_DIRTMAP_ENTRIES;
 
 		if (stage->flags & STAGE_COLOR)  /* honor stage color */
 			VectorCopy(stage->color, color);
