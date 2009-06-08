@@ -395,7 +395,7 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, message_t *messageStac
 	int lineNumber = 0;
 	int posY;
 
-/* #define AUTOSCROLL */		/**< if older is on top, autoscroll is not need */
+/* #define AUTOSCROLL */		/**< if newer messages are on top, autoscroll is not need */
 #ifdef AUTOSCROLL
 	qboolean autoscroll;
 #endif
