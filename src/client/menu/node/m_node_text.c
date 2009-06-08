@@ -394,11 +394,20 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, message_t *messageStac
 	int defaultHeight;
 	int lineNumber = 0;
 	int posY;
-
+#if 0
+	qboolean autoscroll;
+#endif
 	MN_GetNodeAbsPos(node, pos);
 
-	/** @todo dont know where come from this +2 but without line computation dont work */
-	defaultHeight = MN_FontGetHeight(font) + 2;
+	if (node->u.text.lineHeight == 0)
+		defaultHeight = MN_FontGetHeight(font);
+	else
+		defaultHeight = node->u.text.lineHeight;
+
+#if 0
+	autoscroll = (EXTRADATA(node).super.viewPosY + EXTRADATA(node).super.viewSizeY == EXTRADATA(node).super.fullSizeY)
+		|| (EXTRADATA(node).super.fullSizeY < EXTRADATA(node).super.viewSizeY);
+#endif
 
 	/* update message cache */
 	if (MN_AbstractScrollableNodeIsSizeChange(node)) {
@@ -424,7 +433,14 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, message_t *messageStac
 	}
 
 	/* update scroll status */
+#if 0
+	if (autoscroll)
+		MN_AbstractScrollableNodeSetY(node, lineNumber, node->size[1] / defaultHeight, lineNumber);
+	else
+		MN_AbstractScrollableNodeSetY(node, -1, node->size[1] / defaultHeight, lineNumber);
+#else
 	MN_AbstractScrollableNodeSetY(node, -1, node->size[1] / defaultHeight, lineNumber);
+#endif
 
 	/* text box */
 	x = pos[0] + node->padding;
