@@ -278,7 +278,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 
 	property = MN_GetPropertyFromBehaviour(castedBehaviour, *token);
 	if (!property) {
-		menuNode_t *node = NULL;
+		menuNode_t *node;
 		/* do we ALREADY know this node? and his type */
 		switch (action->type.param1) {
 		case EA_PATHPROPERTY:
@@ -288,7 +288,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 			node = MN_GetNodeByPath(va("%s.%s", menuNode->root->name, (char*)action->data));
 			break;
 		default:
-			assert(qfalse);
+			Sys_Error("MN_ParseSetAction: Invalid type param1 given");
 		}
 		if (node)
 			property = MN_GetPropertyFromBehaviour(node->behaviour, *token);
