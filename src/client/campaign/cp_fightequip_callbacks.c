@@ -37,101 +37,20 @@ static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu *
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
 static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
 
-static void BDEF_BaseDefenseMenuUpdate_f(void);
-
-/**
- * @brief Script command to init the base defence menu.
- * @note this function is only called when the menu launches
- * @sa BDEF_BaseDefenseMenuUpdate_f
- */
-void BDEF_MenuInit_f (void)
-{
-	menuNode_t *node;
-
-	/* initialize selected item */
-	Cvar_Set("basedef_item_name", "main");
-	/* Clear model cvar */
-	Cvar_Set("mn_upmodel_top", "");
-	airequipSelectedTechnology = NULL;
-
-	/* initialize different variables */
-	airequipID = -1;
-	noparams = qfalse;
-	airequipSelectedZone = ZONE_NONE;
-	airequipSelectedSlot = ZONE_NONE;
-
-	/* initialize selected slot */
-	airequipSelectedSlot = 0;
-	/* update position of the arrow in front of the selected base defence */
-	node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
-	if (node)
-		Vector2Set(node->pos, 25, 30);
-}
-
-/**
- * @brief Click function for base defence menu list.
- * @sa AIM_AircraftEquipMenuUpdate_f
- */
-void BDEF_ListClick_f (void)
-{
-	int num, height;
-	menuNode_t *node;
-	base_t *base = B_GetCurrentSelectedBase();
-	installation_t* installation = INS_GetCurrentSelectedInstallation();
-
-	if ((!base && !installation) || (base && installation))
-		return;
-
-	if (Cmd_Argc() < 2)
-		return;
-	num = atoi(Cmd_Argv(1));
-
-	if ((base && num < base->numBatteries)
-	 || (installation && num < installation->installationTemplate->maxBatteries))
-		airequipSelectedSlot = num;
-
-	/* draw an arrow in front of the selected base defence */
-	node = MN_GetNodeByPath("basedefence.basedef_slot_list");
-	if (!node)
-		return;
-	height = node->texh[0];
-	node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
-	if (!node)
-		return;
-	Vector2Set(node->pos, 25, 30 + height * airequipSelectedSlot);
-
-	noparams = qtrue;
-	BDEF_BaseDefenseMenuUpdate_f();
-}
 
 /**
  * @brief Check airequipID value and set the correct values for aircraft items
- * and base defence items
  */
 static void AIM_CheckAirequipID (void)
 {
-	const qboolean aircraftMenu = !strcmp(MN_GetActiveMenuName(), "aircraft_equip");
-
-	if (aircraftMenu) {
-		switch (airequipID) {
-		case AC_ITEM_AMMO:
-		case AC_ITEM_WEAPON:
-		case AC_ITEM_SHIELD:
-		case AC_ITEM_ELECTRONICS:
-			return;
-		default:
-			airequipID = AC_ITEM_WEAPON;
-		}
-	} else {
-		switch (airequipID) {
-		case AC_ITEM_BASE_MISSILE:
-		case AC_ITEM_BASE_LASER:
-		case AC_ITEM_AMMO_MISSILE:
-		case AC_ITEM_AMMO_LASER:
-			return;
-		default:
-			airequipID = AC_ITEM_BASE_MISSILE;
-		}
+	switch (airequipID) {
+	case AC_ITEM_AMMO:
+	case AC_ITEM_WEAPON:
+	case AC_ITEM_SHIELD:
+	case AC_ITEM_ELECTRONICS:
+		return;
+	default:
+		airequipID = AC_ITEM_WEAPON;
 	}
 }
 
@@ -157,86 +76,6 @@ static void AIM_CheckAirequipSelectedSlot (const aircraft_t *aircraft)
 		}
 		break;
 	}
-}
-
-/**
- * @brief Returns a pointer to the selected slot.
- * @param[in] base Pointer to the aircraft
- * @return Pointer to the slot corresponding to airequipID
- * @note There is always at least one slot, otherwise you can't enter base defence menu screen.
- * @sa BDEF_ListClick_f
- */
-aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base, const int airequipID)
-{
-	aircraftSlot_t *slot;
-
-	switch (airequipID) {
-	case AC_ITEM_AMMO_MISSILE:
-	case AC_ITEM_BASE_MISSILE:
-		assert(base->numBatteries > 0);
-		if (airequipSelectedSlot >= base->numBatteries) {
-			/* update position of the arrow in front of the selected base defence */
-			menuNode_t *node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
-			if (!node)
-				Com_Error(ERR_DROP, "BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
-			Vector2Set(node->pos, 25, 30);
-			airequipSelectedSlot = 0;
-		}
-		slot = &base->batteries[airequipSelectedSlot].slot;
-		break;
-	case AC_ITEM_AMMO_LASER:
-	case AC_ITEM_BASE_LASER:
-		assert(base->numLasers > 0);
-		if (airequipSelectedSlot >= base->numLasers) {
-			/* update position of the arrow in front of the selected base defence */
-			menuNode_t *node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
-			if (!node)
-				Com_Error(ERR_DROP, "BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
-			Vector2Set(node->pos, 25, 30);
-			airequipSelectedSlot = 0;
-		}
-		slot = &base->lasers[airequipSelectedSlot].slot;
-		break;
-	default:
-		Com_Printf("BDEF_SelectBaseSlot: Unknown airequipID: %i\n", airequipID);
-		return NULL;
-	}
-
-	return slot;
-}
-
-/**
- * @brief Returns a pointer to the selected slot.
- * @param[in] installation Installation pointer.
- * @return Pointer to the slot corresponding to airequipID
- * @sa BDEF_ListClick_f
- */
-aircraftSlot_t *BDEF_SelectInstallationSlot (installation_t *installation, const int airequipID)
-{
-	aircraftSlot_t *slot;
-
-	switch (airequipID) {
-	case AC_ITEM_AMMO_MISSILE:
-	case AC_ITEM_BASE_MISSILE:
-	case AC_ITEM_AMMO_LASER:
-	case AC_ITEM_BASE_LASER:
-		assert(installation->installationTemplate->maxBatteries > 0);
-		if (airequipSelectedSlot >= installation->installationTemplate->maxBatteries) {
-			/* update position of the arrow in front of the selected base defence */
-			menuNode_t *node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
-			if (!node)
-				Com_Error(ERR_DROP, "BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
-			Vector2Set(node->pos, 25, 30);
-			airequipSelectedSlot = 0;
-		}
-		slot = &installation->batteries[airequipSelectedSlot].slot;
-		break;
-	default:
-		Com_Printf("BDEF_SelectInstallationSlot: Unknown airequipID: %i\n", airequipID);
-		return NULL;
-	}
-
-	return slot;
 }
 
 /**
@@ -269,35 +108,6 @@ aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft, const int airequip
 }
 
 /**
- * @brief Returns a list of craftitem technologies for the given type.
- * @note This list is terminated by a NULL pointer.
- * @param[in] type Type of the craft-items to return.
- */
-static technology_t **AII_GetCraftitemTechsByType (int type)
-{
-	static technology_t *techList[MAX_TECHNOLOGIES];
-	objDef_t *aircraftitem = NULL;
-	int i, j = 0;
-
-	for (i = 0; i < csi.numODs; i++) {
-		aircraftitem = &csi.ods[i];
-		if (aircraftitem->craftitem.type == type) {
-			assert(j < MAX_TECHNOLOGIES);
-			techList[j] = aircraftitem->tech;
-			j++;
-		}
-		/* j+1 because last item has to be NULL */
-		if (j + 1 >= MAX_TECHNOLOGIES) {
-			Com_Printf("AII_GetCraftitemTechsByType: MAX_TECHNOLOGIES limit hit.\n");
-			break;
-		}
-	}
-	/* terminate the list */
-	techList[j] = NULL;
-	return techList;
-}
-
-/**
  * @brief Check that airequipSelectedZone is available
  * @sa slot Pointer to the slot
  */
@@ -316,12 +126,6 @@ static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 		switch (airequipID) {
 		case AC_ITEM_AMMO:
 			airequipID = AC_ITEM_WEAPON;
-			break;
-		case AC_ITEM_AMMO_MISSILE:
-			airequipID = AC_ITEM_BASE_MISSILE;
-			break;
-		case AC_ITEM_AMMO_LASER:
-			airequipID = AC_ITEM_BASE_LASER;
 			break;
 		default:
 			Com_Printf("AIM_CheckAirequipSelectedZone: aircraftItemType_t must end with ammos !!!\n");
@@ -377,74 +181,33 @@ static inline const char *AIM_AircraftItemtypeName (const int equiptype)
 
 /**
  * @brief Update the list of item you can choose
- * @param[in] base Pointer to the base where items are listed (NULL if not in base).
- * @param[in] installation Pointer to installation where items are listed (NULL if not in installation).
- * @param[in] aircraft Pointer to aircraft where items are listed (NULL if not in aircraft).
+ * @param[in] slot Pointer to aircraftSlot where items can be equiped
  * @param[in] tech Pointer to the technolgy to select if needed (NULL if no selected technology).
  */
-static void AIM_UpdateAircraftItemList (base_t* base, installation_t* installation, aircraft_t* aircraft, const technology_t *tech)
+static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot, const technology_t *tech)
 {
-	static char buffer[1024];
+	char buffer[MAX_SMALLMENUTEXTLEN];
+	linkedList_t *itemList = NULL;
 	technology_t **list;
-	int i;
-	int selectedLine = 0;
 
+	assert(slot);
 	/* Delete list */
 	buffer[0] = '\0';
 
-	assert(base || aircraft || installation);
-
-	if (airequipID == -1) {
-		Com_Printf("AIM_UpdateAircraftItemList: airequipID is -1\n");
-		return;
-	}
-
 	/* Add all items corresponding to airequipID to list */
-	list = AII_GetCraftitemTechsByType(airequipID);
+	list = AII_GetCraftitemTechsByType(slot->type);
 
 	/* Copy only those which are researched to buffer */
-	i = 0;
 	while (*list) {
-		if (AIM_SelectableAircraftItem(base, installation, aircraft, *list, airequipID)) {
-			Q_strcat(buffer, va("%s\n", _((*list)->name)), sizeof(buffer));
-			if ((*list) == tech)
-				selectedLine = i;
-			i++;
+		if (AIM_SelectableCraftItem(slot, *list)) {
+			Com_sprintf(buffer, lengthof(buffer), "%s\n", _((*list)->name));
+			LIST_AddString(&itemList, buffer);
 		}
 		list++;
 	}
 
 	/* copy buffer to mn.menuText to display it on screen */
-	MN_RegisterText(TEXT_LIST, buffer);
-
-	/* if there is at least one element, select the first one */
-	if (i)
-		Cmd_ExecuteString(va("airequip_list_click %i", selectedLine));
-	else {
-		/* no element in list, no tech selected */
-		airequipSelectedTechnology = NULL;
-		INV_ItemDescription(NULL);
-	}
-}
-
-/**
- * @brief Highlight selected zone
- */
-static void BDEF_DrawSelectedZone (void)
-{
-	menuNode_t *node;
-
-	node = MN_GetNodeByPath("basedefence.airequip_zone_select1");
-	if (airequipSelectedZone == ZONE_MAIN)
-		MN_HideNode(node);
-	else
-		MN_UnHideNode(node);
-
-	node = MN_GetNodeByPath("basedefence.airequip_zone_select2");
-	if (airequipSelectedZone == ZONE_AMMO)
-		MN_HideNode(node);
-	else
-		MN_UnHideNode(node);
+	MN_RegisterLinkedListText(TEXT_LIST, itemList);
 }
 
 /**
@@ -552,205 +315,6 @@ static inline void AIM_NoEmphazeAmmoSlotText (void)
 	VectorSet(node->color, 1.0f, 1.0f, 1.0f);
 }
 
-/**
- * @brief Fills the battery list, descriptions, and weapons in slots
- * of the basedefence equip menu
- * @sa BDEF_MenuInit_f
- */
-static void BDEF_BaseDefenseMenuUpdate_f (void)
-{
-	static char defBuffer[1024];
-	static char smallbuffer1[256];
-	static char smallbuffer2[128];
-	aircraftSlot_t *slot;
-	int i;
-	int type;
-	base_t *base = B_GetCurrentSelectedBase();
-	installation_t *installation = INS_GetCurrentSelectedInstallation();
-
-	/* don't let old links appear on this menu */
-	MN_ResetData(TEXT_BASEDEFENCE_LIST);
-	MN_ResetData(TEXT_AIREQUIP_1);
-	MN_ResetData(TEXT_AIREQUIP_2);
-	MN_ResetData(TEXT_STANDARD);
-
-	/* base or installation should not be NULL because we are in the menu of this base or installation */
-	if (!base && !installation)
-		return;
-
-	/* base and installation should not both be set. This function requires one or the other set. */
-	if (base && installation) {
-		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: both the base and installation are set.  This shouldn't happen: you shouldn't be in this function.\n");
-		return;
-	}
-
-	/* Check that the base or installation has at least 1 battery */
-	if (base) {
-		if (base->numBatteries + base->numLasers < 1) {
-			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defence battery in this base: you shouldn't be in this function.\n");
-			return;
-		}
-	} else if (installation) {
-		if (installation->installationStatus != INSTALLATION_WORKING) {
-			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: installation isn't working: you shouldn't be in this function.\n");
-			return;
-		} else if (installation->installationTemplate->maxBatteries < 1) {
-			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defence battery in this installation: you shouldn't be in this function.\n");
-			return;
-		}
-	}
-
-	if (Cmd_Argc() != 2 || noparams) {
-		if (airequipID == -1) {
-			Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-			return;
-		}
-		AIM_CheckAirequipID();
-	} else {
-		type = atoi(Cmd_Argv(1));
-		switch (type) {
-		case 0:
-			/* missiles */
-			airequipID = AC_ITEM_BASE_MISSILE;
-			break;
-		case 1:
-			/* lasers */
-			airequipID = AC_ITEM_BASE_LASER;
-			break;
-		case 2:
-			/* ammo */
-			if (airequipID == AC_ITEM_BASE_MISSILE)
-				airequipID = AC_ITEM_AMMO_MISSILE;
-			else if (airequipID == AC_ITEM_BASE_LASER)
-				airequipID = AC_ITEM_AMMO_LASER;
-			break;
-		default:
-			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: Invalid type %i.\n", type);
-			return;
-		}
-	}
-
-	/* Check if we can change to laser or missile */
-	if (base && base->numBatteries > 0 && base->numLasers > 0) {
-		menuNode_t *node = MN_GetNodeByPath("basedefence.basedef_button_missile");
-		if (node)
-			MN_UnHideNode(node);
-		node = MN_GetNodeByPath("basedefence.basedef_button_laser");
-		if (node)
-			MN_UnHideNode(node);
-	}
-
-	/* Select slot */
-	if (base)
-		slot = BDEF_SelectBaseSlot(base, airequipID);
-	else
-		slot = BDEF_SelectInstallationSlot(installation, airequipID);
-
-	/* Check that the selected zone is OK */
-	AIM_CheckAirequipSelectedZone(slot);
-
-	/* Fill the list of item you can equip your aircraft with */
-	AIM_UpdateAircraftItemList(base, installation, NULL, AII_GetTechnologyToDisplay(slot));
-
-	/* Delete list */
-	defBuffer[0] = '\0';
-
-	if (installation) {
-		/* we are in the installation defence menu */
-		if (installation->installationTemplate->maxBatteries == 0)
-			Q_strcat(defBuffer, _("No defence of this type in this installation\n"), sizeof(defBuffer));
-		else {
-			for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
-				if (!installation->batteries[i].slot.item)
-					Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
-				else {
-					const objDef_t *item = installation->batteries[i].slot.item;
-					Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, _(item->tech->name)), sizeof(defBuffer));
-				}
-			}
-		}
-	} else if (airequipID == AC_ITEM_BASE_MISSILE || airequipID == AC_ITEM_AMMO_MISSILE) {
-		/* we are in the base defence menu for missile */
-		if (base->numBatteries == 0)
-			Q_strcat(defBuffer, _("No defence of this type in this base\n"), sizeof(defBuffer));
-		else {
-			for (i = 0; i < base->numBatteries; i++) {
-				if (!base->batteries[i].slot.item)
-					Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
-				else {
-					const objDef_t *item = base->batteries[i].slot.item;
-					Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, _(item->tech->name)), sizeof(defBuffer));
-				}
-			}
-		}
-	} else if (airequipID == AC_ITEM_BASE_LASER || airequipID == AC_ITEM_AMMO_LASER) {
-		/* we are in the base defence menu for laser */
-		if (base->numLasers == 0)
-			Q_strcat(defBuffer, _("No defence of this type in this base\n"), sizeof(defBuffer));
-		else {
-			for (i = 0; i < base->numLasers; i++) {
-				if (!base->lasers[i].slot.item)
-					Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
-				else {
-					const objDef_t *item = base->lasers[i].slot.item;
-					Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, _(item->tech->name)), sizeof(defBuffer));
-				}
-			}
-		}
-	} else {
-		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: unknown airequipId.\n");
-		return;
-	}
-	MN_RegisterText(TEXT_BASEDEFENCE_LIST, defBuffer);
-
-	/* Fill the texts of each zone */
-	/* First slot: item currently assigned */
-	if (!slot->item) {
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s", _("No defence system assigned.\n"));
-		/* Weight are not used for base defence atm
-		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1)); */
-	} else {
-		/* Print next item if we are removing item currently installed and a new item has been added. */
-		assert(slot->item->tech);
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n",
-			slot->nextItem ? _(slot->nextItem->tech->name) : _(slot->item->tech->name));
-		if (!slot->installationTime)
-			Q_strcat(smallbuffer1, _("This defence system is functional.\n"), sizeof(smallbuffer1));
-		else if (slot->installationTime > 0)
-			Q_strcat(smallbuffer1, va(_("This defence system will be installed in %i hours.\n"),
-				slot->installationTime), sizeof(smallbuffer1));
-		else if (slot->nextItem) {
-			Q_strcat(smallbuffer1, va(_("%s will be removed in %i hours.\n"), _(slot->item->tech->name),
-				- slot->installationTime), sizeof(smallbuffer1));
-			Q_strcat(smallbuffer1, va(_("%s will be installed in %i hours.\n"), _(slot->nextItem->tech->name),
-				slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer1));
-		} else
-			Q_strcat(smallbuffer1, va(_("This defence system will be removed in %i hours.\n"),
-				-slot->installationTime), sizeof(smallbuffer1));
-	}
-	MN_RegisterText(TEXT_AIREQUIP_1, smallbuffer1);
-
-	/* Second slot: ammo slot (only used for weapons) */
-	if ((airequipID < AC_ITEM_WEAPON || airequipID > AC_ITEM_AMMO) && slot->item) {
-		char const* const ammo = slot->nextAmmo ?
-			_(slot->nextAmmo->tech->name) :
-			(slot->ammo ?
-			_(slot->ammo->tech->name) :
-			_("No ammo assigned to this defence system."));
-		Q_strncpyz(smallbuffer2, ammo, sizeof(smallbuffer2));
-		/* inform player that base missile are unlimited */
-		if (slot->ammo && slot->ammo->craftitem.unlimitedAmmo)
-			Q_strcat(smallbuffer2, _(" (unlimited missiles)"), sizeof(smallbuffer2));
-	} else {
-		*smallbuffer2 = '\0';
-	}
-	MN_RegisterText(TEXT_AIREQUIP_2, smallbuffer2);
-
-	/* Draw selected zone */
-	BDEF_DrawSelectedZone();
-
-	noparams = qfalse;
-}
 
 /**
  * @brief Fills the weapon and shield list of the aircraft equip menu
@@ -829,7 +393,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	AIM_CheckAirequipSelectedZone(slot);
 
 	/* Fill the list of item you can equip your aircraft with */
-	AIM_UpdateAircraftItemList(NULL, NULL, aircraft, AII_GetTechnologyToDisplay(slot));
+	AIM_UpdateAircraftItemList(slot, AII_GetTechnologyToDisplay(slot));
 
 	Cvar_Set("mn_equip_itemtype_name", AIM_AircraftItemtypeName(airequipID));
 
@@ -958,11 +522,12 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	int zone;
 	aircraft_t *aircraft;
 	aircraftSlot_t *slot;
-	qboolean aircraftMenu;
 	base_t *base = B_GetCurrentSelectedBase();
-	installation_t *installation = INS_GetCurrentSelectedInstallation();
 
-	if ((!base && !installation) || (base && installation))
+	if (!base)
+		return;
+
+	if (strcmp(MN_GetActiveMenuName(), "aircraft_equip"))
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -970,24 +535,12 @@ void AIM_AircraftEquipZoneSelect_f (void)
 		return;
 	}
 
-	/* select menu */
-	aircraftMenu = !strcmp(MN_GetActiveMenuName(), "aircraft_equip");
-
 	zone = atoi(Cmd_Argv(1));
 
-	if (aircraftMenu) {
-		aircraft = base->aircraftCurrent;
-		assert(aircraft);
-		/* Select slot */
-		slot = AII_SelectAircraftSlot(aircraft, airequipID);
-	} else {
-		/* Select slot */
-		if (installation)
-			slot = BDEF_SelectInstallationSlot(installation, airequipID);
-		else
-			slot = BDEF_SelectBaseSlot(base, airequipID);
-		aircraft = NULL;
-	}
+	aircraft = base->aircraftCurrent;
+	assert(aircraft);
+	/* Select slot */
+	slot = AII_SelectAircraftSlot(aircraft, airequipID);
 
 	/* ammos are only available for weapons */
 	switch (airequipID) {
@@ -998,30 +551,10 @@ void AIM_AircraftEquipZoneSelect_f (void)
 				airequipID = AC_ITEM_AMMO;
 		}
 		break;
-	case AC_ITEM_BASE_MISSILE:
-		if (zone == ZONE_AMMO) {
-			if (slot->item)
-				airequipID = AC_ITEM_AMMO_MISSILE;
-		}
-		break;
-	case AC_ITEM_BASE_LASER:
-		if (zone == ZONE_AMMO) {
-			if (slot->item)
-				airequipID = AC_ITEM_AMMO_LASER;
-		}
-		break;
 	/* an ammo was selected - select weapon type corresponding to this ammo */
 	case AC_ITEM_AMMO:
 		if (zone != ZONE_AMMO)
 			airequipID = AC_ITEM_WEAPON;
-		break;
-	case AC_ITEM_AMMO_MISSILE:
-		if (zone != ZONE_AMMO)
-			airequipID = AC_ITEM_BASE_MISSILE;
-		break;
-	case AC_ITEM_AMMO_LASER:
-		if (zone != ZONE_AMMO)
-			airequipID = AC_ITEM_BASE_LASER;
 		break;
 	default :
 		/* ZONE_AMMO is not available for electronics and shields */
@@ -1031,8 +564,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	airequipSelectedZone = zone;
 
 	/* Fill the list of item you can equip your aircraft with */
-	AIM_UpdateAircraftItemList(aircraftMenu ? NULL : base, aircraftMenu ? NULL : installation,
-		aircraft, AII_GetTechnologyToDisplay(slot));
+	AIM_UpdateAircraftItemList(slot, AII_GetTechnologyToDisplay(slot));
 
 	/* Check that the selected zone is OK */
 	AIM_CheckAirequipSelectedZone(slot);
@@ -1043,7 +575,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 
 /**
  * @brief Add selected item to current zone.
- * @note May be called from airequip menu or basedefence menu
+ * @note Called from airequip menu
  * @sa aircraftItemType_t
  */
 void AIM_AircraftEquipAddItem_f (void)
@@ -1051,14 +583,7 @@ void AIM_AircraftEquipAddItem_f (void)
 	int zone;
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft = NULL;
-	qboolean aircraftMenu;
-	installation_t* installation = INS_GetCurrentSelectedInstallation();
 	base_t *base = B_GetCurrentSelectedBase();
-
-	if ((!base && !installation) || (base && installation)) {
-		Com_Printf("Exiting early base and install both true or both false\n");
-		return;
-	}
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -1067,29 +592,15 @@ void AIM_AircraftEquipAddItem_f (void)
 
 	zone = atoi(Cmd_Argv(1));
 
-	/* select menu */
-	aircraftMenu = !strncmp(MN_GetActiveMenuName(), "aircraft_equip", 14);
-
 	/* proceed only if an item has been selected */
 	if (!airequipSelectedTechnology)
 		return;
 
-	/* check in which menu we are */
-	if (aircraftMenu) {
-		assert(base);
-		aircraft = base->aircraftCurrent;
-		installation = NULL;
-		assert(aircraft);
-		base = aircraft->homebase;	/* we need to know where items will be removed */
-		slot = AII_SelectAircraftSlot(aircraft, airequipID);
-	} else if (base) {
-		installation = NULL;
-		slot = BDEF_SelectBaseSlot(base, airequipID);
-	} else {
-		base = NULL;
-		assert(installation);
-		slot = BDEF_SelectInstallationSlot(installation, airequipID);
-	}
+	assert(base);
+	aircraft = base->aircraftCurrent;
+	assert(aircraft);
+	base = aircraft->homebase;	/* we need to know where items will be removed */
+	slot = AII_SelectAircraftSlot(aircraft, airequipID);
 
 	/* the clicked button doesn't correspond to the selected zone */
 	if (zone != airequipSelectedZone)
@@ -1104,12 +615,11 @@ void AIM_AircraftEquipAddItem_f (void)
 	switch (zone) {
 	case ZONE_MAIN:
 		if (!slot->nextItem) {
-			/* we add the weapon, shield, item, or base defence if slot is free or the installation of
-			 * current item just began */
+			/* we add the weapon, shield, item if slot is free or the installation of current item just began */
 			if (!slot->item || (slot->item && slot->installationTime == slot->item->craftitem.installationTime)) {
 				AII_RemoveItemFromSlot(base, slot, qfalse);
 				AII_AddItemToSlot(base, airequipSelectedTechnology, slot, qfalse); /* Aircraft stats are updated below */
-				AIM_AutoAddAmmo(base, installation, aircraft, slot, airequipID);
+				AIM_AutoAddAmmo(slot);
 				break;
 			} else if (slot->item == AII_GetAircraftItemByID(airequipSelectedTechnology->provides)) {
 				/* the added item is the same than the one in current slot */
@@ -1135,7 +645,7 @@ void AIM_AircraftEquipAddItem_f (void)
 		/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
 		 * of the one in the slot atm */
 		AII_AddItemToSlot(base, airequipSelectedTechnology, slot, qtrue);
-		AIM_AutoAddAmmo(base, installation, aircraft, slot, airequipID);
+		AIM_AutoAddAmmo(slot);
 		break;
 	case ZONE_AMMO:
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defence system) */
@@ -1148,16 +658,11 @@ void AIM_AircraftEquipAddItem_f (void)
 		return;
 	}
 
-	if (aircraftMenu) {
-		/* Update the values of aircraft stats (just in case an item has an installationTime of 0) */
-		AII_UpdateAircraftStats(aircraft);
+	/* Update the values of aircraft stats (just in case an item has an installationTime of 0) */
+	AII_UpdateAircraftStats(aircraft);
 
-		noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
-		AIM_AircraftEquipMenuUpdate_f();
-	} else {
-		noparams = qtrue; /* used for BDEF_BaseDefenseMenuUpdate_f */
-		BDEF_BaseDefenseMenuUpdate_f();
-	}
+	noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
+	AIM_AircraftEquipMenuUpdate_f();
 }
 
 /**
@@ -1168,14 +673,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	int zone;
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft = NULL;
-	qboolean aircraftMenu;
-	installation_t* installation = INS_GetCurrentSelectedInstallation();
 	base_t *base = B_GetCurrentSelectedBase();
-
-	if ((!base && !installation) || (base && installation)) {
-		Com_Printf("Exiting early base and install both true or both false\n");
-		return;
-	}
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -1183,24 +681,10 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	}
 	zone = atoi(Cmd_Argv(1));
 
-	/* select menu */
-	aircraftMenu = !strncmp(MN_GetActiveMenuName(), "aircraft_equip", 14);
-
-	/* check in which menu we are
-	 * and select the slot we are changing */
-	if (aircraftMenu) {
-		assert(base);
-		aircraft = base->aircraftCurrent;
-		assert(aircraft);
-		slot = AII_SelectAircraftSlot(aircraft, airequipID);
-	} else if (base) {
-		installation = NULL;
-		slot = BDEF_SelectBaseSlot(base, airequipID);
-	} else {
-		base = NULL;
-		assert(installation);
-		slot = BDEF_SelectInstallationSlot(installation, airequipID);
-	}
+	assert(base);
+	aircraft = base->aircraftCurrent;
+	assert(aircraft);
+	slot = AII_SelectAircraftSlot(aircraft, airequipID);
 
 	/* no item in slot: nothing to remove */
 	if (!slot->item)
@@ -1241,16 +725,11 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		return;
 	}
 
-	if (aircraftMenu) {
-		/* Update the values of aircraft stats */
-		AII_UpdateAircraftStats(aircraft);
+	/* Update the values of aircraft stats */
+	AII_UpdateAircraftStats(aircraft);
 
-		noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
-		AIM_AircraftEquipMenuUpdate_f();
-	} else {
-		noparams = qtrue; /* used for BDEF_MenuUpdate_f */
-		BDEF_BaseDefenseMenuUpdate_f();
-	}
+	noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
+	AIM_AircraftEquipMenuUpdate_f();
 }
 
 /**
@@ -1264,6 +743,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 	technology_t **list;
 	installation_t* installation = INS_GetCurrentSelectedInstallation();
 	base_t *base = B_GetCurrentSelectedBase();
+	aircraftSlot_t *slot;
 
 	if ((!base && !installation) || (base && installation) || airequipID == -1)
 		return;
@@ -1294,19 +774,22 @@ void AIM_AircraftEquipMenuClick_f (void)
 	/* build the list of all aircraft items of type airequipID - null terminated */
 	list = AII_GetCraftitemTechsByType(airequipID);
 	/* to prevent overflows we go through the list instead of address it directly */
-	while (*list) {
-		if (AIM_SelectableAircraftItem(base, installation, aircraft, *list, airequipID)) {
-			/* found it */
-			if (num <= 0) {
-				airequipSelectedTechnology = *list;
-				UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides));
-				break;
+	if (aircraft)
+		slot = AII_SelectAircraftSlot(aircraft, airequipID);
+	if (slot)
+		while (*list) {
+			if (AIM_SelectableCraftItem(slot, *list)) {
+				/* found it */
+				if (num <= 0) {
+					airequipSelectedTechnology = *list;
+					UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides));
+					break;
+				}
+				num--;
 			}
-			num--;
+			/* next item in the tech pointer list */
+			list++;
 		}
-		/* next item in the tech pointer list */
-		list++;
-	}
 }
 
 void AIM_ResetEquipAircraftMenu (void)
@@ -1353,6 +836,356 @@ static void AIM_PreviousItemtype_f (void)
 	airequipSelectedZone = ZONE_MAIN;
 
 	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
+}
+
+
+/***************************
+ *	Base Defences
+ ***************************/
+
+
+/**
+ * @brief returns the itemtype index from string identifier 
+ */
+static aircraftItemType_t BDEF_GetItemTypeFromID (const char *type)
+{
+	assert(type);
+	if (!strncmp(type, "missile", 7))
+		return AC_ITEM_BASE_MISSILE;
+	else if (!strncmp(type, "laser", 5))
+		return AC_ITEM_BASE_LASER;
+	else {
+		return MAX_ACITEMS;
+	}
+}
+/**
+ * @brief returns the itemtype index from string identifier 
+ */
+static const char *BDEF_GetIDFromItemType (aircraftItemType_t type)
+{
+	switch (type) {
+	case AC_ITEM_BASE_MISSILE:
+		return "missile";
+	case AC_ITEM_BASE_LASER:
+		return "laser";
+	default:
+		return "unknown";
+	}
+}
+
+/**
+ * @brief Script command to init the base defence menu.
+ * @note this function is only called when the menu launches
+ * @sa BDEF_BaseDefenseMenuUpdate_f
+ */
+static void BDEF_MenuInit_f (void)
+{
+	/* initialize selected item */
+	Cvar_Set("mn_itemname", "");
+	/* Clear model cvar */
+	Cvar_Set("mn_upmodel_top", "");
+}
+
+/**
+ * @brief Fills the battery list, descriptions, and weapons in slots
+ * of the basedefence equip menu
+ * @sa BDEF_MenuInit_f
+ */
+static void BDEF_BaseDefenseMenuUpdate_f (void)
+{
+	int i;
+	char type[MAX_VAR];
+	base_t *base = B_GetCurrentSelectedBase();
+	installation_t *installation = INS_GetCurrentSelectedInstallation();
+	aircraftItemType_t BDEF_Type;
+
+	char defBuffer[MAX_SMALLMENUTEXTLEN];
+	linkedList_t *slotList = NULL;
+
+	/* don't let old links appear on this menu */
+	MN_ResetData(TEXT_BASEDEFENCE_LIST);
+	MN_ResetData(TEXT_LIST);
+	MN_ResetData(TEXT_STANDARD);
+
+	/* base or installation should not be NULL because we are in the menu of this base or installation */
+	if (!base && !installation)
+		return;
+
+	/* base and installation should not both be set. This function requires one or the other set. */
+	if (base && installation) {
+		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: both the base and installation are set.  This shouldn't happen: you shouldn't be in this function.\n");
+		return;
+	}
+
+	/* Check that the base or installation has at least 1 battery */
+	if (base) {
+		if (base->numBatteries + base->numLasers < 1) {
+			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defence battery in this base: you shouldn't be in this function.\n");
+			return;
+		}
+	} else if (installation) {
+		if (installation->installationStatus != INSTALLATION_WORKING) {
+			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: installation isn't working: you shouldn't be in this function.\n");
+			return;
+		} else if (installation->installationTemplate->maxBatteries < 1) {
+			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defence battery in this installation: you shouldn't be in this function.\n");
+			return;
+		}
+	}
+
+	if (Cmd_Argc() != 2) {
+		type[0] = '\0';
+	} else
+		Q_strncpyz(type, Cmd_Argv(1), sizeof(type));
+
+	if (!strncmp(type, "missile", 7))
+		BDEF_Type = AC_ITEM_BASE_MISSILE;
+	else if (!strncmp(type, "laser", 5))
+		BDEF_Type = AC_ITEM_BASE_LASER;
+	else {
+		/* invalid ID -> defaults to missiles */
+		if (BDEF_Type > AC_ITEM_BASE_LASER || BDEF_Type < 0)
+			BDEF_Type = AC_ITEM_BASE_MISSILE;
+	}
+
+	/* Check if we can change to laser or missile */
+	/* @todo make the laser depend on laser defence tech - once we have it 
+	defBuffer[0] = '\0';
+	Com_sprintf(defBuffer, lengthof(defBuffer), "set_defencetypes %s %s",
+		(!RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"))) ? "na" : (base && base->numBatteries > 0) ? "enable" : "disable",
+		(!RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"))) ? "na" : (base && base->numLasers > 0) ? "enable" : "disable");
+	MN_ExecuteConfunc(defBuffer);*/
+
+	if (installation) {
+		/* we are in the installation defence menu */
+		if (installation->installationTemplate->maxBatteries == 0) {
+			Q_strncpyz(defBuffer, _("No defence of this type in this installation"), lengthof(defBuffer));
+			LIST_AddString(&slotList, defBuffer);
+		} else {
+			AIM_UpdateAircraftItemList(&installation->batteries[0].slot, NULL);
+			for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
+				if (!installation->batteries[i].slot.item) {
+					Com_sprintf(defBuffer, lengthof(defBuffer), _("Slot %i:\tempty"), i);
+					LIST_AddString(&slotList, defBuffer);
+				} else {
+					const aircraftSlot_t *slot = &installation->batteries[i].slot ;
+					char status[MAX_VAR];
+					if (!slot->installationTime) 
+						Q_strncpyz(status, _("Working"), sizeof(status));
+					else if (slot->installationTime > 0)
+						Q_strncpyz(status, _("Installing"), sizeof(status));
+					else if (slot->nextItem)
+						Q_strncpyz(status, _("Replacing"), sizeof(status));
+					else
+						Q_strncpyz(status, _("Removing"), sizeof(status));
+					
+					Com_sprintf(defBuffer, lengthof(defBuffer), _("Slot %i:\t%s (%s)"), i, (slot->nextItem) ? _(slot->nextItem->tech->name) : _(slot->item->tech->name), status);
+					LIST_AddString(&slotList, defBuffer);
+				}
+			}
+		}
+	} else if (BDEF_Type == AC_ITEM_BASE_MISSILE) {
+		/* we are in the base defence menu for missile */
+		if (base->numBatteries == 0) {
+			Q_strncpyz(defBuffer, _("No defence of this type in this base"), lengthof(defBuffer));
+			LIST_AddString(&slotList, defBuffer);
+		} else {
+			AIM_UpdateAircraftItemList(&base->batteries[0].slot, NULL);
+			for (i = 0; i < base->numBatteries; i++) {
+				if (!base->batteries[i].slot.item) {
+					Com_sprintf(defBuffer, lengthof(defBuffer), _("Slot %i:\tempty"), i);
+					LIST_AddString(&slotList, defBuffer);
+				} else {
+					const aircraftSlot_t *slot = &base->batteries[i].slot ;
+					char status[MAX_VAR];
+					if (!slot->installationTime) 
+						Q_strncpyz(status, _("Working"), sizeof(status));
+					else if (slot->installationTime > 0)
+						Q_strncpyz(status, _("Installing"), sizeof(status));
+					else if (slot->nextItem)
+						Q_strncpyz(status, _("Replacing"), sizeof(status));
+					else
+						Q_strncpyz(status, _("Removing"), sizeof(status));
+					
+					Com_sprintf(defBuffer, lengthof(defBuffer), _("Slot %i:\t%s (%s)"), i, (slot->nextItem) ? _(slot->nextItem->tech->name) : _(slot->item->tech->name), status);
+					LIST_AddString(&slotList, defBuffer);
+				}
+			}
+		}
+	} else if (BDEF_Type == AC_ITEM_BASE_LASER) {
+		/* we are in the base defence menu for laser */
+		if (base->numLasers == 0) {
+			Q_strncpyz(defBuffer, _("No defence of this type in this base"), lengthof(defBuffer));
+			LIST_AddString(&slotList, defBuffer);
+		} else {
+			AIM_UpdateAircraftItemList(&base->lasers[0].slot, NULL);
+			for (i = 0; i < base->numLasers; i++) {
+				if (!base->lasers[i].slot.item) {
+					Com_sprintf(defBuffer, lengthof(defBuffer), _("Slot %i:\tempty"), i);
+					LIST_AddString(&slotList, defBuffer);
+				} else {
+					const aircraftSlot_t *slot = &base->lasers[i].slot ;
+					char status[MAX_VAR];
+					if (!slot->installationTime) 
+						Q_strcat(status, _("Working"), sizeof(status));
+					else if (slot->installationTime > 0)
+						Q_strncpyz(status, _("Installing"), sizeof(status));
+					else if (slot->nextItem)
+						Q_strncpyz(status, _("Replacing"), sizeof(status));
+					else
+						Q_strncpyz(status, _("Removing"), sizeof(status));
+					
+					Com_sprintf(defBuffer, lengthof(defBuffer), _("Slot %i:\t%s (%s)"), i, (slot->nextItem) ? _(slot->nextItem->tech->name) : _(slot->item->tech->name), status);
+					LIST_AddString(&slotList, defBuffer);
+				}
+			}
+		}
+	} else {
+		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: unknown airequipId.\n");
+		return;
+	}
+	MN_RegisterLinkedListText(TEXT_BASEDEFENCE_LIST, slotList);
+}
+
+/**
+ * @brief add item to a base defence slot (installation too)
+ */
+static void BDEF_AddItem_f (void)
+{
+	aircraftSlot_t *slot;
+	installation_t* installation = INS_GetCurrentSelectedInstallation();
+	base_t *base = B_GetCurrentSelectedBase();
+	technology_t **list;
+	technology_t *itemTech = NULL;
+	int bdefType;
+	int slotIDX;
+	int itemIDX;
+
+	if ((!base && !installation) || (base && installation)) {
+		Com_Printf("Exiting early base and install both true or both false\n");
+		return;
+	}
+
+	if (Cmd_Argc() < 4) {
+		Com_Printf("Usage: %s <type> <slotIDX> <itemIDX>\n", Cmd_Argv(0));
+		return;
+	}
+
+	bdefType = BDEF_GetItemTypeFromID(Cmd_Argv(1));
+	slotIDX = atoi(Cmd_Argv(2));
+	itemIDX = atoi(Cmd_Argv(3));
+
+	if (bdefType == MAX_ACITEMS) {
+		Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
+		return;
+	}
+
+	slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType,slotIDX);
+
+	if (!slot) {
+		Com_Printf("BDEF_AddItem_f: Invalid slot.\n");
+		return;
+	}
+
+	list = AII_GetCraftitemTechsByType(bdefType);
+	while (*list) {
+		if (AIM_SelectableCraftItem(slot, *list)) {
+			itemTech = *list;
+			break;
+		}
+		list++;
+	}
+
+	if (!slot->nextItem) {
+		/* we add the weapon, shield, item, or base defence if slot is free or the installation of
+		 * current item just began */
+		if (!slot->item || (slot->item && slot->installationTime == slot->item->craftitem.installationTime)) {
+			AII_RemoveItemFromSlot(base, slot, qfalse);
+			AII_AddItemToSlot(base, itemTech, slot, qfalse); /* Aircraft stats are updated below */
+			AIM_AutoAddAmmo(slot);
+		} else if (slot->item == AII_GetAircraftItemByID(itemTech->provides)) {
+			/* the added item is the same than the one in current slot */
+			if (slot->installationTime == -slot->item->craftitem.installationTime) {
+				/* player changed his mind: he just want to re-add the item he just removed */
+				slot->installationTime = 0;
+			} else if (!slot->installationTime) {
+				/* player try to add a weapon he already have: just skip */
+			}
+		} else {
+			/* We start removing current item in slot, and the selected item will be installed afterwards */
+			slot->installationTime = -slot->item->craftitem.installationTime;
+			AII_AddItemToSlot(base, itemTech, slot, qtrue);
+			AIM_AutoAddAmmo(slot);
+		}
+	} else {
+		/* remove weapon and ammo of next item */
+		AII_RemoveItemFromSlot(base, slot, qfalse);
+		AII_AddItemToSlot(base, itemTech, slot, qtrue);
+		AIM_AutoAddAmmo(slot);
+	}
+
+	/* Reinit menu */
+	Cmd_ExecuteString(va("basedef_updatemenu %s", BDEF_GetIDFromItemType(slot->type)));
+}
+
+/**
+ * @brief add item to a base defence slot (installation too)
+ */
+static void BDEF_RemoveItem_f (void)
+{
+	aircraftSlot_t *slot;
+	installation_t* installation = INS_GetCurrentSelectedInstallation();
+	base_t *base = B_GetCurrentSelectedBase();
+	int bdefType;
+	int slotIDX;
+
+	if ((!base && !installation) || (base && installation)) {
+		Com_Printf("Exiting early base and install both true or both false\n");
+		return;
+	}
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <type> <slotIDX>\n", Cmd_Argv(0));
+		return;
+	}
+
+	bdefType = BDEF_GetItemTypeFromID(Cmd_Argv(1));
+	slotIDX = atoi(Cmd_Argv(2));
+
+	if (bdefType == MAX_ACITEMS) {
+		Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
+		return;
+	}
+
+	slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType,slotIDX);
+
+	if (!slot) {
+		Com_Printf("BDEF_AddItem_f: Invalid slot.\n");
+		return;
+	}
+
+	if (!slot->item)
+		return;
+
+	if (!slot->nextItem) {
+		/* we change the weapon, shield, item, or base defence that is already in the slot */
+		/* if the item has been installed since less than 1 hour, you don't need time to remove it */
+		if (slot->installationTime < slot->item->craftitem.installationTime) {
+			slot->installationTime = -slot->item->craftitem.installationTime;
+			AII_RemoveItemFromSlot(base, slot, qtrue); /* we remove only ammo, not item */
+		} else {
+			AII_RemoveItemFromSlot(base, slot, qfalse); /* we remove weapon and ammo */
+		}
+	} else {
+		/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
+		 * of the one in the slot atm */
+		AII_RemoveItemFromSlot(base, slot, qfalse); /* we remove weapon and ammo */
+		/* if you canceled next item for less than 1 hour, previous item is still functional */
+		if (slot->installationTime == -slot->item->craftitem.installationTime) {
+			slot->installationTime = 0;
+		}
+	}
+	Cmd_ExecuteString(va("basedef_updatemenu %s", BDEF_GetIDFromItemType(slot->type)));
 }
 
 /**
@@ -1489,8 +1322,9 @@ void AIM_InitCallbacks (void)
 	Cmd_AddCommand("remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base");
 	Cmd_AddCommand("basedef_initmenu", BDEF_MenuInit_f, "Inits base defence menu");
 	Cmd_AddCommand("basedef_updatemenu", BDEF_BaseDefenseMenuUpdate_f, "Inits base defence menu");
-	Cmd_AddCommand("basedef_slot_list_click", BDEF_ListClick_f, "Inits base defence menu");
 	Cmd_AddCommand("basedef_list_click", AIM_AircraftEquipMenuClick_f, NULL);
+	Cmd_AddCommand("basedef_additem", BDEF_AddItem_f, "Add item to slot");
+	Cmd_AddCommand("basedef_removeitem", BDEF_RemoveItem_f, "Remove item from slot");
 }
 
 void AIM_ShutdownCallbacks (void)
@@ -1505,8 +1339,9 @@ void AIM_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("remove_battery");
 	Cmd_RemoveCommand("basedef_initmenu");
 	Cmd_RemoveCommand("basedef_updatemenu");
-	Cmd_RemoveCommand("basedef_slot_list_click");
 	Cmd_RemoveCommand("basedef_list_click");
+	Cmd_RemoveCommand("basedef_additem");
+	Cmd_RemoveCommand("basedef_removeitem");
 
 	Cmd_RemoveCommand("mn_next_equiptype");
 	Cmd_RemoveCommand("mn_prev_equiptype");

@@ -25,9 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CAMPAIGN_CL_FIGHTEQUIP_CALLBACKS_H
 #define CLIENT_CAMPAIGN_CL_FIGHTEQUIP_CALLBACKS_H
 
-void BDEF_MenuInit_f(void);
-void BDEF_ListClick_f(void);
-
 void AIM_AircraftEquipMenuUpdate_f(void);
 void AIM_AircraftEquipSlotSelect_f(void);
 void AIM_AircraftEquipZoneSelect_f(void);

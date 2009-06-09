@@ -70,6 +70,7 @@ void BDEF_InitialiseBaseSlots(base_t *base);
 void BDEF_InitialiseInstallationSlots(installation_t *installation);
 void BDEF_ReloadBattery(void);
 
+technology_t **AII_GetCraftitemTechsByType(int type);
 void AII_UpdateInstallationDelay(void);
 qboolean AII_AddItemToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot, qboolean nextItem);
 qboolean AII_AddAmmoToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot);
@@ -86,8 +87,11 @@ qboolean AII_InstallationCanShoot(const installation_t *installation);
 itemWeight_t AII_GetItemWeightBySize(const objDef_t *od);
 
 const char* AII_WeightToName(itemWeight_t weight);
-void AIM_AutoAddAmmo(base_t *base, installation_t *installation, aircraft_t *aircraft, aircraftSlot_t *slot, const int airequipID);
+void AIM_AutoAddAmmo(aircraftSlot_t *slot);
+qboolean AIM_SelectableCraftItem(const aircraftSlot_t *slot, const technology_t *tech);
 
-qboolean AIM_SelectableAircraftItem(base_t* base, installation_t* installation, aircraft_t *aircraft, const technology_t *tech, const int airequipID);
+aircraftSlot_t *BDEF_GetBaseSlotByIDX(base_t *base, aircraftItemType_t type, int idx);
+aircraftSlot_t *BDEF_GetInstallationSlotByIDX(installation_t *installation, aircraftItemType_t type, int idx);
+aircraftSlot_t *AII_GetAircraftSlotByIDX(aircraft_t *aircraft, aircraftItemType_t type, int idx);
 
 #endif /* CLIENT_CL_MAPFIGHTEQUIP_H */

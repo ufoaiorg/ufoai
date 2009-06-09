@@ -33,6 +33,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_fightequip_callbacks.h"
 
 /**
+ * @brief Returns a list of craftitem technologies for the given type.
+ * @note This list is terminated by a NULL pointer.
+ * @param[in] type Type of the craft-items to return.
+ */
+technology_t **AII_GetCraftitemTechsByType (int type)
+{
+	static technology_t *techList[MAX_TECHNOLOGIES];
+	objDef_t *aircraftitem = NULL;
+	int i, j = 0;
+
+	for (i = 0; i < csi.numODs; i++) {
+		aircraftitem = &csi.ods[i];
+		if (aircraftitem->craftitem.type == type) {
+			assert(j < MAX_TECHNOLOGIES);
+			techList[j] = aircraftitem->tech;
+			j++;
+		}
+		/* j+1 because last item has to be NULL */
+		if (j + 1 >= MAX_TECHNOLOGIES) {
+			Com_Printf("AII_GetCraftitemTechsByType: MAX_TECHNOLOGIES limit hit.\n");
+			break;
+		}
+	}
+	/* terminate the list */
+	techList[j] = NULL;
+	return techList;
+}
+
+/**
  * @brief Returns craftitem weight based on size.
  * @param[in] od Pointer to objDef_t object being craftitem.
  * @return itemWeight_t
@@ -53,33 +82,17 @@ itemWeight_t AII_GetItemWeightBySize (const objDef_t *od)
 
 /**
  * @brief Check if an aircraft item should or should not be displayed in airequip menu
- * @param[in] base Pointer to a base.
- * @param[in] installation Pointer to a installation.
- * @param[in] aircraft Pointer to a aircraft.
+ * @param[in] Pointer to an aircraft slot (can be base/installation too)
  * @param[in] tech Pointer to the technology to test
- * @return qtrue if the aircraft item should be displayed, qfalse else
+ * @return qtrue if the craft item should be displayed, qfalse else
  */
-qboolean AIM_SelectableAircraftItem (base_t* base, installation_t* installation, aircraft_t *aircraft, const technology_t *tech, const int airequipID)
+qboolean AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t *tech)
 {
 	objDef_t *item;
-	aircraftSlot_t *slot;
 
-	if (aircraft)
-		slot = AII_SelectAircraftSlot(aircraft, airequipID);
-	else if (base)
-		slot = BDEF_SelectBaseSlot(base, airequipID);
-	else if (installation)
-		slot = BDEF_SelectInstallationSlot(installation, airequipID);
-	else {
-		Com_Printf("AIM_SelectableAircraftItem: no aircraft, no base and no installation given\n");
-		return qfalse;
-	}
-
-	/* no slot somehow */
 	if (!slot)
 		return qfalse;
 
-	/* item is researched? */
 	if (!RS_IsResearched_ptr(tech))
 		return qfalse;
 
@@ -87,8 +100,7 @@ qboolean AIM_SelectableAircraftItem (base_t* base, installation_t* installation,
 	if (!item)
 		return qfalse;
 
-	/* you can choose an ammo only if it fits the weapons installed in this slot */
-	if (airequipID >= AC_ITEM_AMMO) {
+	if (slot->type >= AC_ITEM_AMMO) {
 		/** @todo This only works for ammo that is useable in exactly one weapon
 		 * check the weap_idx array and not only the first value */
 		if (!slot->nextItem && item->weapons[0] != slot->item)
@@ -105,21 +117,20 @@ qboolean AIM_SelectableAircraftItem (base_t* base, installation_t* installation,
 
 	/* you can't install an item that you don't possess
 	 * unlimited ammo don't need to be possessed */
-	if (aircraft) {
-		if (aircraft->homebase->storage.num[item->idx] <= 0 && !item->notOnMarket  && !item->craftitem.unlimitedAmmo)
+	if (slot->aircraft) {
+		if (slot->aircraft->homebase->storage.num[item->idx] <= 0 && !item->notOnMarket  && !item->craftitem.unlimitedAmmo)
 			return qfalse;
-	} else if (base) {
-		if (base->storage.num[item->idx] <= 0 && !item->notOnMarket && !item->craftitem.unlimitedAmmo)
+	} else if (slot->base) {
+		if (slot->base->storage.num[item->idx] <= 0 && !item->notOnMarket && !item->craftitem.unlimitedAmmo)
 			return qfalse;
-	} else if (installation) {
-		if (installation->storage.num[item->idx] <= 0 && !item->notOnMarket && !item->craftitem.unlimitedAmmo)
+	} else if (slot->installation) {
+		if (slot->installation->storage.num[item->idx] <= 0 && !item->notOnMarket && !item->craftitem.unlimitedAmmo)
 			return qfalse;
 	}
 
-
 	/* you can't install an item that does not have an installation time (alien item)
 	 * except for ammo which does not have installation time */
-	if (item->craftitem.installationTime == -1 && airequipID < AC_ITEM_AMMO)
+	if (item->craftitem.installationTime == -1 && slot->type < AC_ITEM_AMMO)
 		return qfalse;
 
 	return qtrue;
@@ -399,24 +410,19 @@ void AII_UpdateInstallationDelay (void)
 
 /**
  * @brief Auto add ammo corresponding to weapon, if there is enough in storage.
- * @param[in] base Pointer to the base where you want to add/remove ammo (needed even for aicraft:
- * we need to know where to add / remove items. Maybe be NULL for installations or UFOs.
- * @param[in] installation Pointer to the installation where you want to add/remove ammo
- * @param[in] aircraft Pointer to the aircraft (NULL if we are changing base defence system)
  * @param[in] slot Pointer to the slot where you want to add ammo
  * @sa AIM_AircraftEquipAddItem_f
  * @sa AII_RemoveItemFromSlot
  */
-void AIM_AutoAddAmmo (base_t *base, installation_t *installation, aircraft_t *aircraft, aircraftSlot_t *slot, const int airequipID)
+void AIM_AutoAddAmmo (aircraftSlot_t *slot)
 {
 	int k;
-	const qboolean nextAmmo = (qboolean) slot->nextItem;	/**< do we search an ammo for next item? */
 	const objDef_t *item;
 
 	assert(slot);
 
 	/* Get the weapon (either current weapon or weapon to install after this one is removed) */
-	item = nextAmmo ? slot->nextItem : slot->item;
+	item = (slot->nextItem) ? slot->nextItem : slot->item;
 
 	if (!item)
 		return;
@@ -425,7 +431,7 @@ void AIM_AutoAddAmmo (base_t *base, installation_t *installation, aircraft_t *ai
 		return;
 
 	/* don't try to add ammo to a slot that already has ammo */
-	if (nextAmmo ? slot->nextAmmo : slot->ammo)
+	if ((slot->nextItem) ? slot->nextAmmo : slot->ammo)
 		return;
 
 	/* Try every ammo usable with this weapon until we find one we have in storage */
@@ -433,8 +439,8 @@ void AIM_AutoAddAmmo (base_t *base, installation_t *installation, aircraft_t *ai
 		const objDef_t *ammo = item->ammos[k];
 		if (ammo) {
 			const technology_t *ammo_tech = ammo->tech;
-			if (ammo_tech && AIM_SelectableAircraftItem(base, installation, aircraft, ammo_tech, airequipID)) {
-				AII_AddAmmoToSlot((ammo->notOnMarket || ammo->craftitem.unlimitedAmmo) ? NULL : base, ammo_tech, slot);
+			if (ammo_tech && AIM_SelectableCraftItem(slot, ammo_tech)) {
+				AII_AddAmmoToSlot((ammo->notOnMarket || ammo->craftitem.unlimitedAmmo) ? NULL : slot->base, ammo_tech, slot);
 				break;
 			}
 		}
@@ -649,7 +655,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 		if (aircraft->homebase->storage.num[item->idx] <= 0)
 			continue;
 		AII_AddItemToSlot(aircraft->homebase, tech, slot, qfalse);
-		AIM_AutoAddAmmo(aircraft->homebase, NULL, aircraft, slot, AC_ITEM_WEAPON);
+		AIM_AutoAddAmmo(slot);
 		slot->installationTime = 0;
 	}
 
@@ -673,7 +679,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 		if (slot->item)
 			continue;
 		AII_AddItemToSlot(aircraft->homebase, tech, slot, qfalse);
-		AIM_AutoAddAmmo(aircraft->homebase, NULL, aircraft, slot, AC_ITEM_WEAPON);
+		AIM_AutoAddAmmo(slot);
 		slot->installationTime = 0;
 	}
 
@@ -729,6 +735,125 @@ static qboolean AII_CheckUpdateAircraftStats (const aircraftSlot_t *slot, int st
 
 	return qtrue;
 }
+
+/**
+ * @brief returns the aircraftSlot of a base at an index or the first free slot
+ * @param[in] base Pointer to base
+ * @param[in] type defence type, see aircraftItemType_t
+ * @param[in] idx index of aircraftslot
+ * @returns the aircraftSlot at the index idx if idx non-negative the first free slot otherwise
+ */
+aircraftSlot_t *BDEF_GetBaseSlotByIDX (base_t *base, aircraftItemType_t type, int idx)
+{
+	switch (type) {
+	case AC_ITEM_BASE_MISSILE:
+		if (idx < 0) {			/* returns the first free slot on negative */
+			int i;
+			for (i = 0; i < base->numBatteries; i++)
+				if (!base->batteries[idx].slot.item && !base->batteries[idx].slot.nextItem)
+					return &base->batteries[i].slot;
+			return NULL;
+		}
+		if(idx >= base->numBatteries)
+			return NULL;
+		return &base->batteries[idx].slot;
+		break;
+	case AC_ITEM_BASE_LASER:
+		if (idx < 0) {			/* returns the first free slot on negative */
+			int i;
+			for (i = 0; i < base->numLasers; i++)
+				if (!base->lasers[idx].slot.item && !base->lasers[idx].slot.nextItem)
+					return &base->lasers[i].slot;
+			return NULL;
+		}
+		if(idx >= base->numLasers)
+			return NULL;
+		return &base->lasers[idx].slot;
+		break;
+	default:
+		return NULL;
+	}
+	return NULL;
+}
+
+/**
+ * @brief returns the aircraftSlot of an installaion at an index or the first free slot
+ * @param[in] installation Pointer to the installation
+ * @param[in] type defence type, see aircraftItemType_t
+ * @param[in] idx index of aircraftslot
+ * @returns the aircraftSlot at the index idx if idx non-negative the first free slot otherwise
+ */
+aircraftSlot_t *BDEF_GetInstallationSlotByIDX (installation_t *installation, aircraftItemType_t type, int idx)
+{
+	switch (type) {
+	case AC_ITEM_BASE_MISSILE:
+		if (idx < 0) {			/* returns the first free slot on negative */
+			int i;
+			for (i = 0; i < installation->numBatteries; i++)
+				if (!installation->batteries[idx].slot.item && !installation->batteries[idx].slot.nextItem)
+					return &installation->batteries[i].slot;
+			return NULL;
+		}
+		if(idx >= installation->numBatteries)
+			return NULL;
+		return &installation->batteries[idx].slot;
+		break;
+	default:
+		return NULL;
+	}
+	return NULL;
+}
+
+/**
+ * @brief returns the aircraftSlot of an aircraft at an index or the first free slot
+ * @param[in] aircraft Pointer to aircraft
+ * @param[in] type base defence type, see aircraftItemType_t
+ * @param[in] idx index of aircraftslot
+ * @returns the aircraftSlot at the index idx if idx non-negative the first free slot otherwise
+ */
+aircraftSlot_t *AII_GetAircraftSlotByIDX (aircraft_t *aircraft, aircraftItemType_t type, int idx)
+{
+	switch (type) {
+	case AC_ITEM_WEAPON:
+		if (idx < 0) {			/* returns the first free slot on negative */
+			int i;
+			for (i = 0; i < aircraft->maxWeapons; i++)
+				if (!aircraft->weapons[i].item && !aircraft->weapons[i].nextItem)
+					return &aircraft->weapons[i];
+			return NULL;
+		}
+		if(idx >= aircraft->maxWeapons)
+			return NULL;
+		return &aircraft->weapons[idx];
+		break;
+	case AC_ITEM_SHIELD:
+		if (idx < 0) {			/* returns the first free slot on negative */
+			if (!aircraft->shield.item && !aircraft->shield.nextItem)
+				return &aircraft->shield;
+			return NULL;
+		}
+		if (idx > 0)
+			return NULL;
+		return &aircraft->shield;
+		break;
+	case AC_ITEM_ELECTRONICS:
+		if (idx < 0) {			/* returns the first free slot on negative */
+			int i;
+			for (i = 0; i < aircraft->maxElectronics; i++)
+				if (!aircraft->electronics[i].item && !aircraft->electronics[i].nextItem)
+					return &aircraft->electronics[i];
+			return NULL;
+		}
+		if(idx >= aircraft->maxElectronics)
+			return NULL;
+		return &aircraft->electronics[idx];
+		break;
+	default:
+		return NULL;
+	}
+	return NULL;
+}
+
 
 /**
  * @brief Get the maximum weapon range of aircraft.

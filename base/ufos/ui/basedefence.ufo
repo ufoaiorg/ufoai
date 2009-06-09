@@ -1,293 +1,291 @@
-// ==================
-// BASE DEFENCE MENU
-// ==================
 window basedefence
 {
-	// ==================
-	// background
-	// ==================
-
-	pic background
 	{
-		image		ui/basedefence_bg
+		pos			"100 150"
+		size		"700 435"
+		dragbutton	true
+		closebutton	true
+		modal		true
+		image		ui/popup_alpha_tile
+		string		"_Equip Defence Weapons"
 	}
 
-	// ==================
-	// buttons
-	// ==================
-
-	func basedef_reset
-	{
-		*basedef_header2 invis true
+	/**
+	 * @brief sets available defencetypes
+	 */
+/*	@note: not working yet as option isn't a node :(	*/
+	confunc set_defencetypes {
+/*		*cvar:mn_cvartmp "<1>"
+		if "*cvar:mn_cvartmp eq enable" {
+			*defencetype.missile@invis false
+			*defencetype.missile@disabled false
+		} elif "*cvar:mn_cvartmp eq disable" {
+			*defencetype.missile@invis false
+			*defencetype.missile@disabled true
+		} elif "*cvar:mn_cvartmp eq na" {
+			*defencetype.missile@invis true
+		}
+		*cvar:mn_cvartmp "<2>"
+		if "*cvar:mn_cvartmp eq enable" {
+			*defencetype.laser@invis false
+			*defencetype.laser@disabled false
+		} elif "*cvar:mn_cvartmp eq disable" {
+			*defencetype.laser@invis false
+			*defencetype.missile@disabled true
+		} elif "*cvar:mn_cvartmp eq na" {
+			*defencetype.laser@invis true
+		}
+		cmd "del mn_cvartmp;"
+*/
 	}
 
-	func basedef_initnodevalues
-	{
-		*basedef_header2 invis false
-	}
-
-	func basedef_missile
-	{
-		cmd "basedef_updatemenu 0;"
-		call basedef_reset
-		*basedef_header2 invis false
-	}
-
-	func basedef_laser
-	{
-		cmd "basedef_updatemenu 1;"
-		call basedef_reset
-	}
-
-	func basedef_zone1
-	{
-		cmd "airequip_zone_select 1;basedef_updatemenu;"
-	}
-	func basedef_zone2
-	{
-		cmd "airequip_zone_select 2;basedef_updatemenu 2;"
-	}
-
-	text basedef_slot_list
-	{
-		dataid		TEXT_BASEDEFENCE_LIST
-		pos			"40 30"
-		size		"390 600"
-		lineheight	"22"
-		rows		"27"
-		mousefx		true
-		onClick		{ cmd "basedef_slot_list_click <lineselected>" }
-	}
-
-	pic basedef_selected_slot
-	{
-		tooltip		"_Your are changing this defence system"
-		image		ui/buttons_small
-		pos			"25 30"
-		texl		"23 16"
-		texh		"31 32"
-		mousefx		true
-	}
-
-	string basedef_available
-	{
-		string		"_Available defence:"
-		pos			"469 441"
-		size		"250 25"
-		font		f_big
-		textalign	cc
-
-	}
-
-	text basedef_selected_description
-	{
-		dataid		TEXT_STANDARD
-		pos			"760 630"
-		size		"250 120"
-		lineheight	"20"
-		rows		"6"
-	}
-
-	model mdl_top
-	{
-		model		"*cvar:mn_upmodel_top"
-		angles		"0 0 120"
-		pos			"786 500"
-		size		"200 175"
-		origin		"0 -42 0"
-	}
-
-	string basedef_item_name
-	{
-		string		"*cvar:mn_itemname"
-		pos			"750 475"
-		size		"261 20"
-		textalign	cc
-	}
-
-	string basedef_description
-	{
-		string		"_Selected defence:"
-		pos			"750 441"
-		size		"260 25"
-		font		f_big
-		textalign	cc
-	}
-
-	button basedef_button_missile
-	{
-		invis		true
-
-		string		"_Missile"
-		tooltip		"_Choose missile battery"
-		image		ui/button_blue
-		pos			"50 710"
-		size		"128 52"
-		color		"1 1 1 1"
-		selectcolor	"1 1 1 1"
-		onClick		{ call basedef_missile }
-	}
-
-	button basedef_button_laser
-	{
-		invis		true
-
-		string		"_Laser"
-		tooltip		"_Choose laser battery"
-		image		ui/button_blue
-		pos			"288 710"
-		size		"128 52"
-		color		"1 1 1 1"
-		selectcolor	"1 1 1 1"
-		onClick		{ call basedef_laser }
-	}
-
-	text basedef_list
-	{
-		dataid		TEXT_LIST
-		pos			"472 480"
-		size		"245 220"
-		lineheight	"20"
-		rows		"11"
-		mousefx		true
-		onClick		{ cmd "basedef_list_click <lineselected>" }
-	}
-
-	// ==================
-	// Zones
-	// ==================
-
-	custombutton basedef_button_add1
-	{
-		tooltip		"_Install selected defence system"
-		image		ui/button_background
-		pos			"467 75"
-		size		"37 32"
-		texl		"128 0"
-		icon		plus
-		onClick		{ cmd "airequip_add_item 1;" }
-	}
-
-	custombutton basedef_button_remove1
-	{
-		tooltip		"_Remove this defence system"
-		image		ui/button_background
-		pos			"467 125"
-		size		"37 32"
-		texl		"128 0"
-		icon		del
-		onClick		{ cmd "airequip_del_item 1;" }
-	}
-
-	custombutton basedef_button_add2
-	{
-		tooltip		"_Install selected defence system"
-		image		ui/button_background
-		pos			"467 259"
-		size		"37 32"
-		texl		"128 0"
-		icon		plus
-		onClick		{ cmd "airequip_add_item 2;" }
-	}
-
-	custombutton basedef_button_remove2
-	{
-		tooltip		"_Remove this defence system"
-		image		ui/button_background
-		pos			"467 294"
-		size		"37 32"
-		texl		"128 0"
-		icon		del
-		onClick 		{ cmd "airequip_del_item 2;" }
-	}
-
-	pic airequip_zone_select1
-	{
-		invis		false
-
-		tooltip		"_Choose defence system to build"
-		image		ui/button_big_menu
-		pos			"534 66"
-		texl		"0 83"
-		texh		"458 190"
-		mousefx		true
-		onClick		{ call basedef_zone1 }
-	}
-
-	text basedef_text_zone1
-	{
-		dataid		TEXT_AIREQUIP_1
-		pos			"546 105"
-		size		"430 50"
-		lineheight	"16"
-		rows		"3"
-	}
-
-	pic airequip_zone_select2
-	{
-		invis		false
-
-		tooltip		"_Change ammo in the defence system"
-		image		ui/button_big_menu
-		pos			"534 254"
-		texl		"0 0"
-		texh		"458 82"
-		mousefx		true
-		onClick		{ call basedef_zone2 }
-	}
-
-	text basedef_text_zone2
-	{
-		dataid		TEXT_AIREQUIP_2
-		pos			"546 294"
-		size		"430 35"
-		lineheight	"16"
-		rows		"2"
-	}
-
-	string basedef_header1
-	{
-		string		"_Current defence system"
-		pos			"545 75"
-		size		"275 20"
-		color		"0 .78 0 1"
-		textalign	cl
-		font		f_small
-	}
-
-	string basedef_header2
-	{
-		string		"_Ammo to use with installed system"
-		pos			"545 263"
-		size		"275 20"
-		color		"0 .78 0 1"
-		textalign	cl
-		font		f_small
+	tab defencetype {
+		pos		"17 75"
+		size	"667 38"
+		cvar	"*cvar:mn_bdef_type"
+		onChange {
+			cmd "bdef_type >cvar:mn_bdef_type>;"
+		}
+		option missile {
+			label	"_Missile Defences"
+			value	"missile"
+		}
+		option laser {
+			label	"_Laser Defences"
+			value	"laser"
+			invis	true
+		}
 	}
 
 
-	// ==================
-	// additional stuff
-	// ==================
-
-	custombutton button_leave
-	{
-		tooltip		"_Done"
-		image		ui/button_background
-		pos			"940 720"
-		size		"64 37"
-		texl		"192 0"
-		icon		return
-		onClick		{ cmd mn_pop }
+	/* @todo: We should check if the slot is empty but can't do from here */
+	confunc update_buttons {
+		if "*node:root.slots.slotlist@lineselected < 0" {
+			*node:root.bt_add@disabled true
+			*node:root.bt_remove@disabled true
+		} elif "*node:root.slots.slotlist@lineselected >= *node:root.slots.slotlist@lines" {
+			*node:root.bt_add@disabled true
+			*node:root.bt_remove@disabled true
+		} elif "*node:root.store.storelist@lineselected < 0" {
+			*node:root.bt_add@disabled true
+			*node:root.bt_remove@disabled false
+		} elif "*node:root.store.storelist@lineselected >= *node:root.store.storelist@lines" {
+			*node:root.bt_add@disabled true
+			*node:root.bt_remove@disabled false
+		} else {
+			*node:root.bt_add@disabled false
+			*node:root.bt_remove@disabled false
+		}
 	}
 
-	func onInit
-	{
-		call basedef_initnodevalues
-		cmd "basedef_initmenu;basedef_updatemenu 0;airequip_zone_select 1;"
+	panel slots {
+		{
+			pos		"20 120"
+			size	"335 115"
+		}
+
+		string slotlist_title
+		{
+			string		"_Weapon slots"
+			pos			"5 5"
+			size		"300 25"
+			font		f_small_bold
+		}
+		rows slotback {
+			pos			"5 30"
+			size		"300 80"
+			color1		"0 0.08 0 1"
+			color2		"0 0.16 0 1"
+			lineheight	20
+		}
+		text slotlist
+		{
+			dataid		TEXT_BASEDEFENCE_LIST
+			pos			"5 30"
+			size		"300 80"
+			lineheight	20
+			color		"0.60 0.60 0.60 1"
+			selectcolor	"1 1 1 1"
+			rows		"4"
+			mousefx		true
+			tabwidth	50
+			longlines	prettychop
+			onClick		{
+				call update_buttons
+			}
+			onViewChange {
+				*(abstractscrollbar)slots.slotlist_scroll fullsize <lines>
+				*(abstractscrollbar)slots.slotlist_scroll current <text_scroll>
+			}
+			onWheel {
+				*(abstractscrollbar)slots.slotlist_scroll current <text_scroll>
+			}
+		}
+		vscrollbar slotlist_scroll
+		{
+			image		ui/scrollbar_v_green
+			pos			"310 30"
+			height		"80"
+			current		0
+			viewsize	4
+			fullsize	4
+			hidewhenunused	true
+			onChange	{ cmd "mn_textscroll slots.slotlist <lastdiff>;" }
+		}
 	}
 
-	func onClose
+	button bt_add
 	{
+		icon		varrow_swap
+		string		"_Add"
+		tooltip		"_Equip the selected slot with this weapon"
+		image		ui/button_green_small
+		pos			"25 245"
+		size		"150 32"
+		onClick		{
+			cmd "basedef_additem <cvar:mn_bdef_type> <node:root.slots.slotlist@lineselected> <node:root.store.storelist@lineselected>;"
+		}
+	}
+	button bt_remove
+	{
+		icon		varrow_top_bottom
+		string		"_Remove"
+		tooltip		"_Remove weapon from the selected slot"
+		image		ui/button_green_small
+		pos			"195 245"
+		size		"150 32"
+		onClick		{
+			cmd "basedef_removeitem <cvar:mn_bdef_type> <node:root.slots.slotlist@lineselected>;"
+		}
+	}
+
+	panel store {
+		{
+			pos		"20 290"
+			size	"335 115"
+		}
+
+		string storelist_title
+		{
+			string		"_Stores"
+			pos			"5 5"
+			size		"300 25"
+			font		f_small_bold
+		}
+		rows storeback {
+			pos			"5 30"
+			size		"300 80"
+			color1		"0 0.08 0 1"
+			color2		"0 0.16 0 1"
+			lineheight	20
+		}
+		text storelist
+		{
+			dataid		TEXT_LIST
+			pos			"5 30"
+			size		"300 80"
+			lineheight	20
+			color		"0.60 0.60 0.60 1"
+			selectcolor	"1 1 1 1"
+			rows		"4"
+			mousefx		true
+			onClick		{
+				call update_buttons
+				cmd "basedef_list_click <lineselected>;"
+			}
+			onViewChange {
+				*(abstractscrollbar)store.storelist_scroll fullsize <lines>
+				*(abstractscrollbar)store.storelist_scroll current <text_scroll>
+			}
+			onWheel {
+				*(abstractscrollbar)store.storelist_scroll current <text_scroll>
+			}
+		}
+		vscrollbar storelist_scroll
+		{
+			image		ui/scrollbar_v_green
+			pos			"310 30"
+			height		"80"
+			current		0
+			viewsize	4
+			fullsize	4
+			hidewhenunused	true
+			onChange	{ cmd "mn_textscroll store.storelist <lastdiff>;" }
+		}
+	}
+
+	panel descpanel {
+		{
+			pos		"370 120"
+			size	"310 285"
+			image	ui/panel_green
+		}
+
+		string description_title
+		{
+			string		"_Selected Item"
+			pos			"10 5"
+			size		"290 25"
+			textalign	uc
+			font		f_small_bold
+		}
+		string item_name
+		{
+			string		"*cvar:mn_itemname"
+			pos			"10 25"
+			size		"290 25"
+			textalign	uc
+		}
+
+		model item_model
+		{
+			model		"*cvar:mn_upmodel_top"
+			angles		"0 0 120"
+			pos			"786 500"
+			size		"200 175"
+			origin		"0 -42 0"
+		}
+
+		text description
+		{
+			dataid		TEXT_STANDARD
+			pos			"10 155"
+			size		"260 120"
+			lineheight	20
+			color		"0.60 0.60 0.60 1"
+			selectcolor	"1 1 1 1"
+			rows		"6"
+			mousefx		true
+			onViewChange {
+				*(abstractscrollbar)descpanel.description_scroll fullsize <lines>
+				*(abstractscrollbar)descpanel.description_scroll current <text_scroll>
+			}
+			onWheel {
+				*(abstractscrollbar)descpanel.description_scroll current <text_scroll>
+			}
+		}
+		vscrollbar description_scroll
+		{
+			image		ui/scrollbar_v_green
+			pos			"280 155"
+			height		"120"
+			current		0
+			viewsize	6
+			fullsize	6
+			hidewhenunused	true
+			onChange	{ cmd "mn_textscroll descpanel.description <lastdiff>;" }
+		}
+
+		todo descript
+		{
+			pos			"30 155"
+			string		"Base defence weapon descriptions not yet shown"
+		}
+	}
+
+	func onInit {
+		cmd "basedef_initmenu;"
+		cmd "basedef_updatemenu;"
+		call update_buttons
 	}
 }
