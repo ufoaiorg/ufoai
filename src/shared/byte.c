@@ -33,19 +33,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static float (*_BigFloat)(float l);
 static float (*_LittleFloat)(float l);
 
-short BigShort (short l)
+short BigShort (uint16_t l)
 {
 	return SDL_SwapBE16(l);
 }
-short LittleShort (short l)
+short LittleShort (uint16_t l)
 {
 	return SDL_SwapLE16(l);
 }
-int BigLong (int l)
+int BigLong (uint32_t l)
 {
 	return SDL_SwapBE32(l);
 }
-int LittleLong (int l)
+int LittleLong (uint32_t l)
 {
 	return SDL_SwapLE32(l);
 }

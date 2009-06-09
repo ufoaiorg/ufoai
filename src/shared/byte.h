@@ -28,10 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __BYTE_H__
 #define __BYTE_H__
 
-short BigShort(short l);
-short LittleShort(short l);
-int BigLong(int l);
-int LittleLong(int l);
+#include "ufotypes.h"
+
+short BigShort(uint16_t l);
+short LittleShort(uint16_t l);
+int BigLong(uint32_t l);
+int LittleLong(uint32_t l);
 float BigFloat(float l);
 float LittleFloat(float l);
 
