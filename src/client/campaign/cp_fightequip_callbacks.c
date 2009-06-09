@@ -355,11 +355,11 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		case AC_ITEM_ELECTRONICS:
 		case AC_ITEM_SHIELD:
 			airequipID = type;
-			Cbuf_AddText("airequip_zone2_off;");
+			Cmd_ExecuteString("airequip_zone2_off");
 			break;
 		case AC_ITEM_WEAPON:
 			airequipID = type;
-			Cbuf_AddText("airequip_zone2_on;");
+			Cmd_ExecuteString("airequip_zone2_on");
 			break;
 		default:
 			airequipID = AC_ITEM_WEAPON;
@@ -850,9 +850,9 @@ static void AIM_PreviousItemtype_f (void)
 static aircraftItemType_t BDEF_GetItemTypeFromID (const char *type)
 {
 	assert(type);
-	if (!strncmp(type, "missile", 7))
+	if (!strcmp(type, "missile"))
 		return AC_ITEM_BASE_MISSILE;
-	else if (!strncmp(type, "laser", 5))
+	else if (!strcmp(type, "laser"))
 		return AC_ITEM_BASE_LASER;
 	else {
 		return MAX_ACITEMS;
@@ -897,10 +897,11 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 	char type[MAX_VAR];
 	base_t *base = B_GetCurrentSelectedBase();
 	installation_t *installation = INS_GetCurrentSelectedInstallation();
-	aircraftItemType_t BDEF_Type = 0;
-
+	aircraftItemType_t bdefType = 0;
 	char defBuffer[MAX_SMALLMENUTEXTLEN];
 	linkedList_t *slotList = NULL;
+	const qboolean missileResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"));
+	const qboolean laserResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"));
 
 	/* don't let old links appear on this menu */
 	MN_ResetData(TEXT_BASEDEFENCE_LIST);
@@ -938,23 +939,22 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 	} else
 		Q_strncpyz(type, Cmd_Argv(1), sizeof(type));
 
-	if (!strncmp(type, "missile", 7))
-		BDEF_Type = AC_ITEM_BASE_MISSILE;
-	else if (!strncmp(type, "laser", 5))
-		BDEF_Type = AC_ITEM_BASE_LASER;
+	if (!strcmp(type, "missile"))
+		bdefType = AC_ITEM_BASE_MISSILE;
+	else if (!strcmp(type, "laser"))
+		bdefType = AC_ITEM_BASE_LASER;
 	else {
 		/* invalid ID -> defaults to missiles */
-		if (BDEF_Type > AC_ITEM_BASE_LASER || BDEF_Type < 0)
-			BDEF_Type = AC_ITEM_BASE_MISSILE;
+		if (bdefType > AC_ITEM_BASE_LASER || bdefType < 0)
+			bdefType = AC_ITEM_BASE_MISSILE;
 	}
 
 	/* Check if we can change to laser or missile */
-	/* @todo make the laser depend on laser defence tech - once we have it 
-	defBuffer[0] = '\0';
+	/** @todo make the laser depend on laser defence tech - once we have it */
 	Com_sprintf(defBuffer, lengthof(defBuffer), "set_defencetypes %s %s",
-		(!RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"))) ? "na" : (base && base->numBatteries > 0) ? "enable" : "disable",
-		(!RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"))) ? "na" : (base && base->numLasers > 0) ? "enable" : "disable");
-	MN_ExecuteConfunc(defBuffer);*/
+		(!missileResearched) ? "na" : (base && base->numBatteries > 0) ? "enable" : "disable",
+		(!laserResearched) ? "na" : (base && base->numLasers > 0) ? "enable" : "disable");
+	MN_ExecuteConfunc(defBuffer);
 
 	if (installation) {
 		/* we are in the installation defence menu */
@@ -984,7 +984,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 				}
 			}
 		}
-	} else if (BDEF_Type == AC_ITEM_BASE_MISSILE) {
+	} else if (bdefType == AC_ITEM_BASE_MISSILE) {
 		/* we are in the base defence menu for missile */
 		if (base->numBatteries == 0) {
 			Q_strncpyz(defBuffer, _("No defence of this type in this base"), lengthof(defBuffer));
@@ -1012,7 +1012,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 				}
 			}
 		}
-	} else if (BDEF_Type == AC_ITEM_BASE_LASER) {
+	} else if (bdefType == AC_ITEM_BASE_LASER) {
 		/* we are in the base defence menu for laser */
 		if (base->numLasers == 0) {
 			Q_strncpyz(defBuffer, _("No defence of this type in this base"), lengthof(defBuffer));

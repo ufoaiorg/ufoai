@@ -749,7 +749,7 @@ aircraftSlot_t *BDEF_GetBaseSlotByIDX (base_t *base, aircraftItemType_t type, in
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
 			for (i = 0; i < base->numBatteries; i++)
-				if (!base->batteries[idx].slot.item && !base->batteries[idx].slot.nextItem)
+				if (!base->batteries[i].slot.item && !base->batteries[i].slot.nextItem)
 					return &base->batteries[i].slot;
 		} else if (idx < base->numBatteries)
 			return &base->batteries[idx].slot;
@@ -757,7 +757,7 @@ aircraftSlot_t *BDEF_GetBaseSlotByIDX (base_t *base, aircraftItemType_t type, in
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
 			for (i = 0; i < base->numLasers; i++)
-				if (!base->lasers[idx].slot.item && !base->lasers[idx].slot.nextItem)
+				if (!base->lasers[i].slot.item && !base->lasers[i].slot.nextItem)
 					return &base->lasers[i].slot;
 		} else if (idx < base->numLasers)
 			return &base->lasers[idx].slot;
@@ -781,7 +781,7 @@ aircraftSlot_t *BDEF_GetInstallationSlotByIDX (installation_t *installation, air
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
 			for (i = 0; i < installation->numBatteries; i++)
-				if (!installation->batteries[idx].slot.item && !installation->batteries[idx].slot.nextItem)
+				if (!installation->batteries[i].slot.item && !installation->batteries[i].slot.nextItem)
 					return &installation->batteries[i].slot;
 		} else if (idx < installation->numBatteries)
 			return &installation->batteries[idx].slot;
