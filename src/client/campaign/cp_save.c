@@ -36,14 +36,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 
 typedef struct saveFileHeaderXML_s {
-	int version; /**< which savegame version */
-	int compressed; /**< is this file compressed via zlib */
-	int dummy[14]; /**< maybe we have to extend this later */
+	uint32_t version; /**< which savegame version */
+	uint32_t compressed; /**< is this file compressed via zlib */
+	uint32_t dummy[14]; /**< maybe we have to extend this later */
 	char gameVersion[16]; /**< game version that was used to save this file */
 	char name[32]; /**< savefile name */
 	char gameDate[32]; /**< internal game date */
 	char realDate[32]; /**< real datestring when the user saved this game */
-	int xmlSize;
+	uint32_t xmlSize;
 } saveFileHeader_t;
 
 typedef struct saveSubsystems_s {
