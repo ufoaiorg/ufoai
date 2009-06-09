@@ -43,7 +43,7 @@ typedef struct saveFileHeaderXML_s {
 	char name[32]; /**< savefile name */
 	char gameDate[32]; /**< internal game date */
 	char realDate[32]; /**< real datestring when the user saved this game */
-	long xml_size;
+	int xmlSize;
 } saveFileHeader_t;
 
 typedef struct saveSubsystems_s {
@@ -103,8 +103,8 @@ static qboolean SAV_VerifyXMLHeader (saveFileHeader_t const * const header)
 	}
 
 	/* saved games should not be bigger than 15MB */
-	if (header->xml_size < 0 || header->xml_size > 15 * 1024 * 1024) {
-		Com_DPrintf(DEBUG_CLIENT, "Save size seems to be to large (over 15 MB) %ld.\n", header->xml_size);
+	if (header->xmlSize < 0 || header->xmlSize > 15 * 1024 * 1024) {
+		Com_DPrintf(DEBUG_CLIENT, "Save size seems to be to large (over 15 MB) %i.\n", header->xmlSize);
 		return qfalse;
 	}
 	if (header->version < 0) {
@@ -153,6 +153,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	/* swap all int values if needed */
 	header.compressed = LittleLong(header.compressed);
 	header.version = LittleLong(header.version);
+	header.xmlSize = LittleLong(header.xmlSize);
 	/* doing some header verification */
 	if (!SAV_VerifyXMLHeader(&header)) {
 		/* our header is not valid, we MUST abort loading the game! */
@@ -164,9 +165,9 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	Com_Printf("Loading savegame\n"
 			"...version: %i\n"
 			"...game version: %s\n"
-			"...xml Size: %ld, compressed? %c\n",
-			header.version, header.gameVersion, header.xml_size, header.compressed ? 'y' : 'n');
-	len = header.xml_size + 50;
+			"...xml Size: %i, compressed? %c\n",
+			header.version, header.gameVersion, header.xmlSize, header.compressed ? 'y' : 'n');
+	len = header.xmlSize + 50;
 	buf = (byte *) Mem_PoolAlloc(sizeof(byte)*len, cl_genericPool, 0);
 
 	if (header.compressed) {
@@ -297,8 +298,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 
 	requiredbuflen = mxmlSaveString(top_node, dummy, 2, MXML_NO_CALLBACK);
 
-	/** @todo little/big endian */
-	header.xml_size = requiredbuflen;
+	header.xmlSize = LittleLong(requiredbuflen);
 	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredbuflen + 1, cl_genericPool, 0);
 	if (!buf) {
 		*error = _("Could not allocate enough memory to save this game");
@@ -346,7 +346,6 @@ static void SAV_GameSave_f (void)
 {
 	char comment[MAX_COMMENTLENGTH] = "";
 	char *error = NULL;
-	const char *arg = NULL;
 	qboolean result;
 
 	/* get argument */
@@ -362,8 +361,7 @@ static void SAV_GameSave_f (void)
 
 	/* get comment */
 	if (Cmd_Argc() > 2) {
-		arg = Cmd_Argv(2);
-		assert(arg);
+		const char *arg = Cmd_Argv(2);
 		Q_strncpyz(comment, arg, sizeof(comment));
 	}
 
