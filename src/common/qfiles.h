@@ -168,15 +168,15 @@ typedef struct {
 #define MD3_MAX_PATH		64
 
 /** vertex scales */
-#define	MD3_XYZ_SCALE		(1.0/64)
+#define	MD3_XYZ_SCALE		(1.0f/64.0f)
 
 typedef struct {
 	float st[2];
 } dmd3coord_t;
 
 typedef struct {
-	short point[3];
-	short norm;
+	int16_t point[3];
+	int16_t norm;
 } dmd3vertex_t;
 
 typedef struct {

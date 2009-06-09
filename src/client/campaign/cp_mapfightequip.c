@@ -40,11 +40,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 technology_t **AII_GetCraftitemTechsByType (int type)
 {
 	static technology_t *techList[MAX_TECHNOLOGIES];
-	objDef_t *aircraftitem = NULL;
 	int i, j = 0;
 
 	for (i = 0; i < csi.numODs; i++) {
-		aircraftitem = &csi.ods[i];
+		objDef_t *aircraftitem = &csi.ods[i];
 		if (aircraftitem->craftitem.type == type) {
 			assert(j < MAX_TECHNOLOGIES);
 			techList[j] = aircraftitem->tech;
@@ -752,26 +751,18 @@ aircraftSlot_t *BDEF_GetBaseSlotByIDX (base_t *base, aircraftItemType_t type, in
 			for (i = 0; i < base->numBatteries; i++)
 				if (!base->batteries[idx].slot.item && !base->batteries[idx].slot.nextItem)
 					return &base->batteries[i].slot;
-			return NULL;
-		}
-		if(idx >= base->numBatteries)
-			return NULL;
-		return &base->batteries[idx].slot;
-		break;
+		} else if (idx < base->numBatteries)
+			return &base->batteries[idx].slot;
 	case AC_ITEM_BASE_LASER:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
 			for (i = 0; i < base->numLasers; i++)
 				if (!base->lasers[idx].slot.item && !base->lasers[idx].slot.nextItem)
 					return &base->lasers[i].slot;
-			return NULL;
-		}
-		if(idx >= base->numLasers)
-			return NULL;
-		return &base->lasers[idx].slot;
-		break;
+		} else if (idx < base->numLasers)
+			return &base->lasers[idx].slot;
 	default:
-		return NULL;
+		break;
 	}
 	return NULL;
 }
@@ -792,14 +783,10 @@ aircraftSlot_t *BDEF_GetInstallationSlotByIDX (installation_t *installation, air
 			for (i = 0; i < installation->numBatteries; i++)
 				if (!installation->batteries[idx].slot.item && !installation->batteries[idx].slot.nextItem)
 					return &installation->batteries[i].slot;
-			return NULL;
-		}
-		if(idx >= installation->numBatteries)
-			return NULL;
-		return &installation->batteries[idx].slot;
-		break;
+		} else if (idx < installation->numBatteries)
+			return &installation->batteries[idx].slot;
 	default:
-		return NULL;
+		break;
 	}
 	return NULL;
 }
@@ -820,36 +807,24 @@ aircraftSlot_t *AII_GetAircraftSlotByIDX (aircraft_t *aircraft, aircraftItemType
 			for (i = 0; i < aircraft->maxWeapons; i++)
 				if (!aircraft->weapons[i].item && !aircraft->weapons[i].nextItem)
 					return &aircraft->weapons[i];
-			return NULL;
-		}
-		if(idx >= aircraft->maxWeapons)
-			return NULL;
-		return &aircraft->weapons[idx];
-		break;
+		} else if (idx < aircraft->maxWeapons)
+			return &aircraft->weapons[idx];
 	case AC_ITEM_SHIELD:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			if (!aircraft->shield.item && !aircraft->shield.nextItem)
 				return &aircraft->shield;
-			return NULL;
-		}
-		if (idx > 0)
-			return NULL;
-		return &aircraft->shield;
-		break;
+		} else if (idx <= 0)
+			return &aircraft->shield;
 	case AC_ITEM_ELECTRONICS:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
 			for (i = 0; i < aircraft->maxElectronics; i++)
 				if (!aircraft->electronics[i].item && !aircraft->electronics[i].nextItem)
 					return &aircraft->electronics[i];
-			return NULL;
-		}
-		if(idx >= aircraft->maxElectronics)
-			return NULL;
-		return &aircraft->electronics[idx];
-		break;
+		} else if (idx < aircraft->maxElectronics)
+			return &aircraft->electronics[idx];
 	default:
-		return NULL;
+		break;
 	}
 	return NULL;
 }

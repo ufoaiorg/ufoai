@@ -38,10 +38,10 @@ static inventory_t mp_inventory;
 character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
 
 typedef struct mpSaveFileHeader_s {
-	int version; /**< which savegame version */
-	int soldiercount; /** the number of soldiers stored in this savegame */
+	uint32_t version; /**< which savegame version */
+	uint32_t soldiercount; /** the number of soldiers stored in this savegame */
 	char name[32]; /**< savefile name */
-	long xmlSize; /** needed, if we store compressed */
+	uint32_t xmlSize; /** needed, if we store compressed */
 } mpSaveFileHeader_t;
 
 /**
