@@ -203,7 +203,7 @@ static int setterWithoutArobase = 0;
  * @brief Parser for setter command
  * @todo Clean up the code after merge of setter without @
  */
-static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const char **token, const char *errhead)
+static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const char **token, const char *errhead)
 {
 	char base[256];
 	char cast[32] = "abstractnode";
@@ -1318,7 +1318,6 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 {
 	const char *errhead = "MN_ParseMenu: unexpected end of file (menu";
 	menuNode_t *menu;
-	menuNode_t *node;
 	const char *token;
 	qboolean result;
 	int i;
@@ -1351,7 +1350,7 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 	menu = MN_AllocNode(type);
 	Q_strncpyz(menu->name, name, sizeof(menu->name));
 	if (strlen(menu->name) != strlen(name))
-		Com_Printf("MN_ParseMenu: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
+		Com_Printf("MN_ParseMenu: Menu name \"%s\" truncated. New name is \"%s\"\n", name, menu->name);
 	menu->root = menu;
 
 	menu->behaviour->loading(menu);
@@ -1365,6 +1364,7 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 	if (!strncmp(token, "extends", 7)) {
 		menuNode_t *superMenu;
 		menuNode_t *newNode;
+		menuNode_t *node;
 
 		token = Com_Parse(text);
 		Com_DPrintf(DEBUG_CLIENT, "MN_ParseMenus: %s \"%s\" inheriting node \"%s\"\n", type, name, token);

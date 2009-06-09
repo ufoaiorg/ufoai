@@ -237,7 +237,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 		return qfalse;
 	}
 
-	Com_Printf("Loading multiplayer team (size %d / %li)\n", clen, header.xmlSize);
+	Com_Printf("Loading multiplayer team (size %d / %i)\n", clen, header.xmlSize);
 
 	topNode = mxmlLoadString(NULL, (char*)(cbuf + sizeof(header)) , mxml_ufo_type_cb);
 	Mem_Free(cbuf);
