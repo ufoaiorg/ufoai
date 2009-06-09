@@ -743,7 +743,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 	technology_t **list;
 	installation_t* installation = INS_GetCurrentSelectedInstallation();
 	base_t *base = B_GetCurrentSelectedBase();
-	aircraftSlot_t *slot;
+	aircraftSlot_t *slot = NULL;
 
 	if ((!base && !installation) || (base && installation) || airequipID == -1)
 		return;
@@ -897,7 +897,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 	char type[MAX_VAR];
 	base_t *base = B_GetCurrentSelectedBase();
 	installation_t *installation = INS_GetCurrentSelectedInstallation();
-	aircraftItemType_t BDEF_Type;
+	aircraftItemType_t BDEF_Type = 0;
 
 	char defBuffer[MAX_SMALLMENUTEXTLEN];
 	linkedList_t *slotList = NULL;
