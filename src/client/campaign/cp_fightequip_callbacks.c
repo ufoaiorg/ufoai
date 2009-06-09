@@ -200,7 +200,7 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot, const techno
 	/* Copy only those which are researched to buffer */
 	while (*list) {
 		if (AIM_SelectableCraftItem(slot, *list)) {
-			Com_sprintf(buffer, lengthof(buffer), "%s\n", _((*list)->name));
+			Com_sprintf(buffer, lengthof(buffer), "%s", _((*list)->name));
 			LIST_AddString(&itemList, buffer);
 		}
 		list++;
