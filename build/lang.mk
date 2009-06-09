@@ -7,11 +7,11 @@ RADIANT_MOFILES = $(patsubst src/po/uforadiant-%.po, radiant/i18n/%/LC_MESSAGES/
 
 $(UFOAI_MOFILES) : base/i18n/%/LC_MESSAGES/ufoai.mo : src/po/ufoai-%.po
 	@mkdir -p $(dir $@)
-	msgfmt -v -o $@ $^
+	msgfmt -c -v -o $@ $^
 
 $(RADIANT_MOFILES) : radiant/i18n/%/LC_MESSAGES/uforadiant.mo : src/po/uforadiant-%.po
 	@mkdir -p $(dir $@)
-	msgfmt -v -o $@ $^
+	msgfmt -c -v -o $@ $^
 
 lang: $(UFOAI_MOFILES) $(RADIANT_MOFILES)
 
