@@ -486,6 +486,14 @@ static void MN_TextNodeDraw (menuNode_t *node)
 {
 	const menuSharedData_t *shared;
 
+	if (EXTRADATA(node).dataID == TEXT_NULL && node->text != NULL) {
+		const char* t = MN_GetReferenceString(node, node->text);
+		if (t[0] == '_')
+			t = _(++t);
+		MN_TextNodeDrawText(node, t, NULL);
+		return;
+	}
+
 	/** @todo Very special case, merge it with shared type, or split it into another node */
 	if (EXTRADATA(node).dataID == TEXT_MESSAGESYSTEM) {
 		MN_TextNodeDrawMessageList(node, cp_messageStack);
@@ -603,7 +611,7 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 	}
 #endif
 
-	if (EXTRADATA(node).dataID == TEXT_NULL)
+	if (node->text == NULL && EXTRADATA(node).dataID == TEXT_NULL)
 		Com_Printf("MN_TextNodeLoaded: 'textid' property of node '%s' is not set\n", MN_GetPath(node));
 }
 
