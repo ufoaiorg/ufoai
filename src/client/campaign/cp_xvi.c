@@ -163,8 +163,10 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 	int defaultval;
 	mxml_node_t *n = mxml_GetNode(p, "xvi");
 	/* If there is no XVI, it will not be saved */
-	if (!n)
+	if (!n) {
+		R_InitializeXVIOverlay(ccs.curCampaign->map, NULL, 0, 0);
 		return qtrue;
+	}
 
 	width = mxml_GetInt(n, "width", 0);
 	height = mxml_GetInt(n, "height", 0);
