@@ -56,18 +56,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * The ranges for s and t are greater than or equal to 0 and less than skinWidth and skinHeight
  */
 typedef struct {
-	short s; /**< (0 <= s < skinWidth) */
-	short t; /**< (0 <= t < skinHeight) */
+	uint16_t s; /**< (0 <= s < skinWidth) */
+	uint16_t t; /**< (0 <= t < skinHeight) */
 } dMD2Coord_t;
 
 typedef struct {
-	short index_verts[3];	/**< these three shorts are indices into the array of vertices in each frames.
-						 * In other words, the number of triangles in a md2 file is fixed, and each
-						 * triangle is always made of the same three indices into each frame's array
-						 * of vertices. So, in each frame, the triangles themselves stay intact, their
-						 * vertices are just moved around
-						 */
-	short index_st[3];	/**< these three shorts are indices into the array of texture coordinates */
+	uint16_t index_verts[3];	/**< these three shorts are indices into the array of vertices in each frames.
+								 * In other words, the number of triangles in a md2 file is fixed, and each
+								 * triangle is always made of the same three indices into each frame's array
+								 * of vertices. So, in each frame, the triangles themselves stay intact, their
+								 * vertices are just moved around
+								 */
+	uint16_t index_st[3];	/**< these three shorts are indices into the array of texture coordinates */
 } dMD2Triangle_t;
 
 typedef struct {
@@ -108,46 +108,46 @@ typedef struct dAliasFrame_s {
 
 /** @brief model file header structure - 68 bytes */
 typedef struct {
-	int ident;					/**< a "magic number" used to identify the file. The magic number is
-								 * 844121161 in decimal (0x32504449 in hexadecimal). The magic number
-								 * is equal to the int "IDP2" (id polygon 2), which is formed by
-								 * ('I' + ('D' << 8) + ('P' << 16) + ('2' << 24))
-								 */
-	int version;				/**< version number of the file. Always 8 */
+	uint32_t ident;					/**< a "magic number" used to identify the file. The magic number is
+									 * 844121161 in decimal (0x32504449 in hexadecimal). The magic number
+									 * is equal to the int "IDP2" (id polygon 2), which is formed by
+									 * ('I' + ('D' << 8) + ('P' << 16) + ('2' << 24))
+									 */
+	uint32_t version;				/**< version number of the file. Always 8 */
 
-	int skinwidth;				/**< width of the skin(s) in pixels */
-	int skinheight;				/**< height of the skin(s) in pixels */
-	int framesize;				/**< byte size of each frame */
+	uint32_t skinwidth;				/**< width of the skin(s) in pixels */
+	uint32_t skinheight;			/**< height of the skin(s) in pixels */
+	uint32_t framesize;				/**< byte size of each frame */
 
-	int num_skins;				/**< Number of skins associated with this model */
-	int num_verts;				/**< number of vertices */
-	int num_st;					/**< number of texture coordinates - can be greater than num_verts */
-	int num_tris;				/**< number of triangles in each frame. */
-	int num_glcmds;				/**< dwords in strip/fan command list */
-	int num_frames;				/**< number of frames for this model */
+	uint32_t num_skins;				/**< Number of skins associated with this model */
+	uint32_t num_verts;				/**< number of vertices */
+	uint32_t num_st;				/**< number of texture coordinates - can be greater than num_verts */
+	uint32_t num_tris;				/**< number of triangles in each frame. */
+	uint32_t num_glcmds;			/**< dwords in strip/fan command list */
+	uint32_t num_frames;			/**< number of frames for this model */
 
-	int ofs_skins;				/**< each skin is a MD2_MAX_SKINNAME string */
-	int ofs_st;					/**< byte offset from start for stverts */
-	int ofs_tris;				/**< offset for dtriangles */
-	int ofs_frames;				/**< offset for first frame */
-	int ofs_glcmds;				/**< offset to the gl command list */
-	int ofs_end;				/**< end of file */
+	uint32_t ofs_skins;				/**< each skin is a MD2_MAX_SKINNAME string */
+	uint32_t ofs_st;				/**< byte offset from start for stverts */
+	uint32_t ofs_tris;				/**< offset for dtriangles */
+	uint32_t ofs_frames;			/**< offset for first frame */
+	uint32_t ofs_glcmds;			/**< offset to the gl command list */
+	uint32_t ofs_end;				/**< end of file */
 } dMD2Model_t;
 
 
 /** @brief Tag file header structure - 32 byte */
 typedef struct {
-	int ident;					/**< 844121162 */
-	int version;				/**< version of the tag file - @sa TAG_VERSION */
+	uint32_t ident;					/**< 844121162 */
+	uint32_t version;				/**< version of the tag file - @sa TAG_VERSION */
 
-	int num_tags;				/**< number of tags in this tag file */
-	int num_frames;				/**< number of frames in this tag file - should be the same as in your
-								 * exported model that uses this tag file */
+	uint32_t num_tags;				/**< number of tags in this tag file */
+	uint32_t num_frames;			/**< number of frames in this tag file - should be the same as in your
+									 * exported model that uses this tag file */
 
-	int ofs_names;
-	int ofs_tags;
-	int ofs_end;
-	int ofs_extractend;
+	uint32_t ofs_names;
+	uint32_t ofs_tags;
+	uint32_t ofs_end;
+	uint32_t ofs_extractend;
 } dMD2tag_t;
 
 /*========================================================================
@@ -199,7 +199,7 @@ typedef struct {
 
 typedef struct {
 	char name[MD3_MAX_PATH];
-	int unused;					/**< shader */
+	uint32_t unused;					/**< shader */
 } dmd3skin_t;
 
 typedef struct {
@@ -207,38 +207,38 @@ typedef struct {
 
 	char name[MD3_MAX_PATH];
 
-	int flags;
+	uint32_t flags;
 
-	int num_frames;
-	int num_skins;
-	int num_verts;
-	int num_tris;
+	uint32_t num_frames;
+	uint32_t num_skins;
+	uint32_t num_verts;
+	uint32_t num_tris;
 
-	int ofs_tris;
-	int ofs_skins;
-	int ofs_tcs;
-	int ofs_verts;
+	uint32_t ofs_tris;
+	uint32_t ofs_skins;
+	uint32_t ofs_tcs;
+	uint32_t ofs_verts;
 
-	int meshsize;
+	uint32_t meshsize;
 } dmd3mesh_t;
 
 typedef struct {
-	int id;
-	int version;
+	uint32_t id;
+	uint32_t version;
 
 	char filename[MD3_MAX_PATH];
 
-	int flags;
+	uint32_t flags;
 
-	int num_frames;
-	int num_tags;
-	int num_meshes;
-	int num_skins;
+	uint32_t num_frames;
+	uint32_t num_tags;
+	uint32_t num_meshes;
+	uint32_t num_skins;
 
-	int ofs_frames;
-	int ofs_tags;
-	int ofs_meshes;
-	int ofs_end;
+	uint32_t ofs_frames;
+	uint32_t ofs_tags;
+	uint32_t ofs_meshes;
+	uint32_t ofs_end;
 } dmd3_t;
 
 /*==============================================================================
@@ -284,29 +284,29 @@ dpm file format
 /** @brief header for the entire file */
 typedef struct dpmheader_s {
 	char id[16]; /**< "DARKPLACESMODEL\0", length 16 */
-	unsigned int type; /**< 2 (hierarchical skeletal pose) */
-	unsigned int filesize; /**< size of entire model file */
+	uint32_t type; /**< 2 (hierarchical skeletal pose) */
+	uint32_t filesize; /**< size of entire model file */
 	float mins[3], maxs[3], yawradius, allradius; /**< for clipping uses */
 
 	/** these offsets are relative to the file */
-	unsigned int num_bones;
-	unsigned int num_meshs;
-	unsigned int num_frames;
-	unsigned int ofs_bones; /**< dpmbone_t bone[num_bones]; */
-	unsigned int ofs_meshs; /**< dpmmesh_t mesh[num_meshs]; */
-	unsigned int ofs_frames; /**< dpmframe_t frame[num_frames]; */
+	uint32_t num_bones;
+	uint32_t num_meshs;
+	uint32_t num_frames;
+	uint32_t ofs_bones; /**< dpmbone_t bone[num_bones]; */
+	uint32_t ofs_meshs; /**< dpmmesh_t mesh[num_meshs]; */
+	uint32_t ofs_frames; /**< dpmframe_t frame[num_frames]; */
 } dpmheader_t;
 
 /** @brief there may be more than one of these */
 typedef struct dpmmesh_s {
 	/** these offsets are relative to the file */
 	char shadername[32]; /**< name of the shader to use */
-	unsigned int num_verts;
-	unsigned int num_tris;
-	unsigned int ofs_verts; /**< dpmvertex_t vert[numvertices]; see vertex struct */
-	unsigned int ofs_texcoords; /**< float texcoords[numvertices][2]; */
-	unsigned int ofs_indices; /**< unsigned int indices[numtris*3]; designed for glDrawElements (each triangle is 3 unsigned int indices) */
-	unsigned int ofs_groupids; /**< unsigned int groupids[numtris]; the meaning of these values is entirely up to the gamecode and modeler */
+	uint32_t num_verts;
+	uint32_t num_tris;
+	uint32_t ofs_verts; /**< dpmvertex_t vert[numvertices]; see vertex struct */
+	uint32_t ofs_texcoords; /**< float texcoords[numvertices][2]; */
+	uint32_t ofs_indices; /**< uint32_t indices[numtris*3]; designed for glDrawElements (each triangle is 3 uint32_t indices) */
+	uint32_t ofs_groupids; /**< uint32_t groupids[numtris]; the meaning of these values is entirely up to the gamecode and modeler */
 } dpmmesh_t;
 
 /** @brief if set on a bone, it must be protected from removal */
@@ -317,9 +317,9 @@ typedef struct dpmbone_s {
 	/** name examples: upperleftarm leftfinger1 leftfinger2 hand, etc */
 	char name[32];
 	/** parent bone number */
-	signed int parent;
+	int32_t parent;
 	/** flags for the bone */
-	unsigned int flags;
+	uint32_t flags;
 } dpmbone_t;
 
 /** @brief a bonepose matrix is intended to be used like this:
@@ -336,7 +336,7 @@ typedef struct dpmframe_s {
 	/** name examples: idle_1 idle_2 idle_3 shoot_1 shoot_2 shoot_3, etc */
 	char name[32];
 	float mins[3], maxs[3], yawradius, allradius;
-	int ofs_bonepositions; /**< dpmbonepose_t bonepositions[bones]; */
+	uint32_t ofs_bonepositions; /**< dpmbonepose_t bonepositions[bones]; */
 } dpmframe_t;
 
 /** @brief one or more of these per vertex */
@@ -350,12 +350,12 @@ typedef struct dpmbonevert_s {
 	 * (in SSE or 3DNow! assembly it can be done as a quad vector op
 	 * (or two dual vector ops) very easily, the bonenum is ignored) */
 	float normal[3]; /**< surface normal (these blend) */
-	unsigned int bonenum; /**< number of the bone */
+	uint32_t bonenum; /**< number of the bone */
 } dpmbonevert_t;
 
 /** @brief variable size, parsed sequentially */
 typedef struct dpmvertex_s {
-	unsigned int numbones;
+	uint32_t numbones;
 	/** immediately followed by 1 or more dpmbonevert_t structures */
 } dpmvertex_t;
 
@@ -368,9 +368,9 @@ typedef struct miptex_s {
 	char name[MAX_QPATH];	/**< texture name - relative to base/textures */
 	unsigned width, height;
 	unsigned offsets[MIPLEVELS];	/**< four mip maps stored */
-	int surfaceFlagsFromFile;
-	int contentFlagsFromFile;
-	int value;
+	uint32_t surfaceFlagsFromFile;
+	uint32_t contentFlagsFromFile;
+	uint32_t value;
 } miptex_t;
 
 /*==============================================================================
@@ -384,14 +384,14 @@ typedef struct miptex_s {
 
 /** @brief Directory of the different data blocks */
 typedef struct {
-	int fileofs;	/**< the offset of the data block (from the start of the file) */
-	int filelen;	/**< the length of the data block */
+	uint32_t fileofs;	/**< the offset of the data block (from the start of the file) */
+	uint32_t filelen;	/**< the length of the data block */
 } lump_t;
 
 /** @brief The BSP header definition with the data block directory */
 typedef struct {
-	int ident;		/**< the magic number of the BSP file @sa IDBSPHEADER */
-	int version;	/**< the version of the BSP file @sa BSPVERSION */
+	uint32_t ident;		/**< the magic number of the BSP file @sa IDBSPHEADER */
+	uint32_t version;	/**< the version of the BSP file @sa BSPVERSION */
 	lump_t lumps[HEADER_LUMPS];	/**< the data directories */
 } dBspHeader_t;
 
