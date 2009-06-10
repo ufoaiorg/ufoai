@@ -233,7 +233,8 @@ static qboolean AI_NoHideNeeded (edict_t *ent)
 static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check;
-	int move, tu;
+	int tu;
+	pos_t move;
 	int i, fm, shots;
 	float dist, minDist;
 	float bestActionPoints, dmg, maxDmg, bestTime = -1, vis;
@@ -247,7 +248,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	tu = ent->TU - move;
 
 	/* test for time */
-	if (tu < 0)
+	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
 		return AI_ACTION_NOTHING_FOUND;
 
 	/* set basic parameters */
@@ -421,8 +422,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 				for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 					/* time */
-					const int delta = gi.MoveLength(gi.pathingMap, ent->pos, crouchingState, qfalse);
-					if (delta > tu)
+					const pos_t delta = gi.MoveLength(gi.pathingMap, ent->pos, crouchingState, qfalse);
+					if (delta > tu || delta == ROUTING_NOT_REACHABLE)
 						continue;
 
 					/* visibility */
@@ -475,7 +476,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check;
-	int i, move, tu;
+	int i, tu;
+	pos_t move;
 	float minDist, minDistCivilian, minDistFighter;
 	float bestActionPoints;
 	float reaction_trap = 0.0;
@@ -494,7 +496,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	tu = ent->TU - move;
 
 	/* test for time */
-	if (tu < 0)
+	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
 		return AI_ACTION_NOTHING_FOUND;
 
 	/* check whether this civilian can use weapons */
@@ -611,9 +613,12 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 			/* the lower the count value - the nearer the final target */
 			if (checkPoint->count < ent->count) {
 				if (VectorDist(ent->origin, checkPoint->origin) <= WAYPOINT_CIV_DIST) {
+					const pos_t move = gi.MoveLength(gi.pathingMap, checkPoint->pos, crouchingState, qtrue);
 					i++;
+					if (move == ROUTING_NOT_REACHABLE)
+						continue;
 					/* test for time and distance */
-					length = ent->TU - gi.MoveLength(gi.pathingMap, checkPoint->pos, crouchingState, qtrue);
+					length = ent->TU - move;
 					bestActionPoints = GUETE_MISSION_TARGET + length;
 
 					ent->count = checkPoint->count;
@@ -695,8 +700,9 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	 * including combat considerations */
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
-			for (to[0] = xl; to[0] < xh; to[0]++)
-				if (gi.MoveLength(gi.pathingMap, to, crouchingState, qtrue) <= ent->TU) {
+			for (to[0] = xl; to[0] < xh; to[0]++) {
+				const pos_t move = gi.MoveLength(gi.pathingMap, to, crouchingState, qtrue);
+				if (move != ROUTING_NOT_REACHABLE && move <= ent->TU) {
 					if (ent->team == TEAM_CIVILIAN || ent->state & STATE_PANIC)
 						bestActionPoints = AI_CivilianCalcBestAction(ent, to, &aia);
 					else
@@ -707,6 +713,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 						best = bestActionPoints;
 					}
 				}
+			}
 
 	VectorCopy(oldPos, ent->pos);
 	VectorCopy(oldOrigin, ent->origin);

@@ -781,8 +781,11 @@ static int AIL_positionshoot (lua_State *L)
 				/* Can we see the target? */
 				gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, check);
 				if (G_ActorVis(check, target->ent, qtrue) > 0.3) {
-					const int tu = gi.MoveLength(gi.pathingMap, to,
+					const pos_t tu = gi.MoveLength(gi.pathingMap, to,
 							(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
+
+					if (tu == ROUTING_NOT_REACHABLE)
+						continue;
 
 					/* Better spot (easier to get to). */
 					if (tu < min_tu) {

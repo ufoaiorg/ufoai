@@ -606,7 +606,7 @@ static void LET_PathMove (le_t * le)
 			if (le->selected) {
 				const int tuCost = Grid_MoveLength(le->pathMap, le->pos, newCrouchingState, qfalse) - Grid_MoveLength(le->pathMap, le->oldPos, crouchingState, qfalse);
 				if (tuCost < 0)
-					Com_Error(ERR_DROP, "Negative TU costs while walking (team: %i)", le->team);
+					Com_Error(ERR_DROP, "Negative TU costs while walking (team: %i): %i", le->team, tuCost);
 				/** @todo overflow check */
 				le->actorMoveLength -= tuCost;
 			}

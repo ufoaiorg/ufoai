@@ -1407,28 +1407,27 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
 	length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
 
-	/* Autostand: check if the actor is crouched and player wants autostanding...*/
-	if ((ent->state & STATE_CROUCHED) && player->autostand) {
-		/* ...and if this is a long walk... */
-		if ((float) (2 * TU_CROUCH) < (float) length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
-			/* ...make them stand first. If the player really wants them to walk a long
-			 * way crouched, he can move the actor in several stages.
-			 * Uses the threshold at which standing, moving and crouching again takes
-			 * fewer TU than just crawling while crouched. */
-			G_ClientStateChange(player, num, STATE_CROUCHED, qtrue); /* change to stand state */
-			autoCrouchRequired = qtrue;
-		}
-	}
-
-	/* slower if crouched */
-	if (ent->state & STATE_CROUCHED)
-		ent->speed = ACTOR_SPEED_CROUCHED;
-	else
-		ent->speed = ACTOR_SPEED_NORMAL;
-	ent->speed *= g_actorspeed->value;
-
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length < ROUTING_NOT_REACHABLE) {
+		/* Autostand: check if the actor is crouched and player wants autostanding...*/
+		if ((ent->state & STATE_CROUCHED) && player->autostand) {
+			/* ...and if this is a long walk... */
+			if ((float) (2 * TU_CROUCH) < (float) length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
+				/* ...make them stand first. If the player really wants them to walk a long
+				 * way crouched, he can move the actor in several stages.
+				 * Uses the threshold at which standing, moving and crouching again takes
+				 * fewer TU than just crawling while crouched. */
+				G_ClientStateChange(player, num, STATE_CROUCHED, qtrue); /* change to stand state */
+				autoCrouchRequired = qtrue;
+			}
+		}
+
+		/* slower if crouched */
+		if (ent->state & STATE_CROUCHED)
+			ent->speed = ACTOR_SPEED_CROUCHED;
+		else
+			ent->speed = ACTOR_SPEED_NORMAL;
+		ent->speed *= g_actorspeed->value;
 		/* this let the footstep sounds play even over network */
 		ent->think = G_PhysicsStep;
 		ent->nextthink = level.time;
@@ -1620,11 +1619,11 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			G_GetFloorItems(ent);
 			gi.EndEvents();
 		}
-	}
 
-	if (autoCrouchRequired)
-		/* toggle back to crouched state */
-		G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
+		if (autoCrouchRequired)
+			/* toggle back to crouched state */
+			G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
+	}
 }
 
 /**
