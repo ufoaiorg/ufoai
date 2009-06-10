@@ -513,7 +513,8 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 		if (!G_IsLivingActor(check))
 			continue;
 		dist = VectorDist(ent->origin, check->origin);
-		assert(dist);
+		if (!dist)
+			gi.error("AI_CivilianCalcBestAction: Error - two actors are standing on the same grid");
 		switch (check->team) {
 		case TEAM_ALIEN:
 			if (dist < minDist)
