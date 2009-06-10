@@ -603,16 +603,6 @@ static void LET_PathMove (le_t * le)
 			byte newCrouchingState = crouchingState;
 			PosAddDV(le->pos, newCrouchingState, fulldv);
 
-			if (le->selected) {
-				const pos_t to = Grid_MoveLength(le->pathMap, le->pos, newCrouchingState, qfalse);
-				const pos_t from = Grid_MoveLength(le->pathMap, le->oldPos, crouchingState, qfalse);
-				const int tuCost = to - from;
-				if (tuCost < 0)
-					Com_Error(ERR_DROP, "Negative TU costs while walking (team: %i): %i (to: %i, from %i)", le->team, tuCost, to, from);
-				/** @todo overflow check */
-				le->actorMoveLength -= tuCost;
-			}
-
 			/* walking in water will not play the normal footstep sounds */
 			if (!le->pathContents[le->pathPos]) {
 				trace_t trace;

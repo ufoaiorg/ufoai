@@ -1657,7 +1657,7 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
 #endif
 
 	/* Find the number of TUs used to move in this direction. */
-	l = TUsUsed[dir];
+	l = Grid_TUsUsed(dir);
 
 	/* If crouching then multiply by the crouching factor. */
 	if (crouchingState == 1)
