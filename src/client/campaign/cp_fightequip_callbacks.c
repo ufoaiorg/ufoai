@@ -186,23 +186,18 @@ static inline const char *AIM_AircraftItemtypeName (const int equiptype)
  */
 static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot, const technology_t *tech)
 {
-	char buffer[MAX_SMALLMENUTEXTLEN];
 	linkedList_t *itemList = NULL;
 	technology_t **list;
 
 	assert(slot);
-	/* Delete list */
-	buffer[0] = '\0';
 
 	/* Add all items corresponding to airequipID to list */
 	list = AII_GetCraftitemTechsByType(slot->type);
 
 	/* Copy only those which are researched to buffer */
 	while (*list) {
-		if (AIM_SelectableCraftItem(slot, *list)) {
-			Com_sprintf(buffer, lengthof(buffer), "%s", _((*list)->name));
-			LIST_AddString(&itemList, buffer);
-		}
+		if (AIM_SelectableCraftItem(slot, *list))
+			LIST_AddString(&itemList, _((*list)->name));
 		list++;
 	}
 
@@ -355,11 +350,11 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		case AC_ITEM_ELECTRONICS:
 		case AC_ITEM_SHIELD:
 			airequipID = type;
-			Cmd_ExecuteString("airequip_zone2_off");
+			MN_ExecuteConfunc("airequip_zone2_off");
 			break;
 		case AC_ITEM_WEAPON:
 			airequipID = type;
-			Cmd_ExecuteString("airequip_zone2_on");
+			MN_ExecuteConfunc("airequip_zone2_on");
 			break;
 		default:
 			airequipID = AC_ITEM_WEAPON;
@@ -845,7 +840,7 @@ static void AIM_PreviousItemtype_f (void)
 
 
 /**
- * @brief returns the itemtype index from string identifier 
+ * @brief returns the itemtype index from string identifier
  */
 static aircraftItemType_t BDEF_GetItemTypeFromID (const char *type)
 {
@@ -859,7 +854,7 @@ static aircraftItemType_t BDEF_GetItemTypeFromID (const char *type)
 	}
 }
 /**
- * @brief returns the itemtype index from string identifier 
+ * @brief returns the itemtype index from string identifier
  */
 static const char *BDEF_GetIDFromItemType (aircraftItemType_t type)
 {
@@ -954,7 +949,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 	Com_sprintf(defBuffer, lengthof(defBuffer), "set_defencetypes %s %s",
 		(!missileResearched) ? "na" : (base && base->numBatteries > 0) ? "enable" : "disable",
 		(!laserResearched) ? "na" : (base && base->numLasers > 0) ? "enable" : "disable");
-	MN_ExecuteConfunc(defBuffer);
+	MN_ExecuteConfunc("%s", defBuffer);
 
 	if (installation) {
 		/* we are in the installation defence menu */
@@ -970,7 +965,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 				} else {
 					const aircraftSlot_t *slot = &installation->batteries[i].slot ;
 					char status[MAX_VAR];
-					if (!slot->installationTime) 
+					if (!slot->installationTime)
 						Q_strncpyz(status, _("Working"), sizeof(status));
 					else if (slot->installationTime > 0)
 						Q_strncpyz(status, _("Installing"), sizeof(status));
@@ -978,7 +973,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 						Q_strncpyz(status, _("Replacing"), sizeof(status));
 					else
 						Q_strncpyz(status, _("Removing"), sizeof(status));
-					
+
 					Com_sprintf(defBuffer, lengthof(defBuffer), _("Slot %i:\t%s (%s)"), i, (slot->nextItem) ? _(slot->nextItem->tech->name) : _(slot->item->tech->name), status);
 					LIST_AddString(&slotList, defBuffer);
 				}
@@ -998,7 +993,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 				} else {
 					const aircraftSlot_t *slot = &base->batteries[i].slot ;
 					char status[MAX_VAR];
-					if (!slot->installationTime) 
+					if (!slot->installationTime)
 						Q_strncpyz(status, _("Working"), sizeof(status));
 					else if (slot->installationTime > 0)
 						Q_strncpyz(status, _("Installing"), sizeof(status));
@@ -1006,7 +1001,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 						Q_strncpyz(status, _("Replacing"), sizeof(status));
 					else
 						Q_strncpyz(status, _("Removing"), sizeof(status));
-					
+
 					Com_sprintf(defBuffer, lengthof(defBuffer), _("Slot %i:\t%s (%s)"), i, (slot->nextItem) ? _(slot->nextItem->tech->name) : _(slot->item->tech->name), status);
 					LIST_AddString(&slotList, defBuffer);
 				}
@@ -1026,7 +1021,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 				} else {
 					const aircraftSlot_t *slot = &base->lasers[i].slot ;
 					char status[MAX_VAR];
-					if (!slot->installationTime) 
+					if (!slot->installationTime)
 						Q_strcat(status, _("Working"), sizeof(status));
 					else if (slot->installationTime > 0)
 						Q_strncpyz(status, _("Installing"), sizeof(status));
@@ -1034,7 +1029,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 						Q_strncpyz(status, _("Replacing"), sizeof(status));
 					else
 						Q_strncpyz(status, _("Removing"), sizeof(status));
-					
+
 					Com_sprintf(defBuffer, lengthof(defBuffer), _("Slot %i:\t%s (%s)"), i, (slot->nextItem) ? _(slot->nextItem->tech->name) : _(slot->item->tech->name), status);
 					LIST_AddString(&slotList, defBuffer);
 				}
