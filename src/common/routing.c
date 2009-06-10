@@ -1281,8 +1281,8 @@ static int RT_UpdateConnection (routing_t * map, const int actorSize, const int 
 		/* We can't go this way. */
 		RT_CONN(map, actorSize, x, y, z, dir) = 0;
 		RT_STEPUP(map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
-		RT_CONN(map, actorSize, ax, ay, z, dir) = 0;
-		RT_STEPUP(map, actorSize, ax, ay, z, dir) = PATHFINDING_NO_STEPUP;
+		RT_CONN(map, actorSize, ax, ay, z, dir ^ 1) = 0;
+		RT_STEPUP(map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
 		if (debugTrace)
 			Com_Printf("Current cell filled. c:%i ac:%i\n", RT_CEILING(map, actorSize, x, y, z), RT_CEILING(map, actorSize, ax, ay, z));
 		return z;
