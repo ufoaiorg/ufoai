@@ -468,6 +468,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 
 /**
  * @sa AI_ActorThink
+ * @param ent The civilian edict
+ * @param to The grid position to walk to
  * @note Even civilians can use weapons if the teamdef allows this
  */
 static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
@@ -513,8 +515,9 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 		if (!G_IsLivingActor(check))
 			continue;
 		dist = VectorDist(ent->origin, check->origin);
+		/* if we are trying to walk to a position that is occupied by another actor already we just return */
 		if (!dist)
-			gi.error("AI_CivilianCalcBestAction: Error - two actors are standing on the same grid");
+			return AI_ACTION_NOTHING_FOUND;
 		switch (check->team) {
 		case TEAM_ALIEN:
 			if (dist < minDist)
