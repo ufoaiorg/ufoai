@@ -58,7 +58,7 @@ static void B_Destroy_AntimaterStorage_f (void)
 		return;
 
 	if (prob < atof(Cmd_Argv(1))) {
-		MS_AddNewMessage(_("Notice"), va(_("The base %s was destroyed when Antimatter Storage blew up."), base->name), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), va(_("%s has been destroyed by an antimatter storage breach."), base->name), qfalse, MSG_STANDARD, NULL);
 		MN_PopMenu(qfalse);
 		CL_BaseDestroy(base);
 	}
