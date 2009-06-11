@@ -2731,7 +2731,7 @@ qboolean B_SaveXML (mxml_node_t *parent)
 			if (!building->tpl)
 				continue;
 			snode = mxml_AddNode(node, "building");
-			mxml_AddInt(snode, "building_tpl", building->tpl ? building->tpl - ccs.buildingTemplates : BYTES_NONE);
+			mxml_AddString(snode, "buildingtype", building->tpl->id);
 			mxml_AddInt(snode, "building_place", k);
 			mxml_AddInt(snode, "buildingstatus", building->buildingStatus);
 			mxml_AddInt(snode, "buildingtimestart", building->timeStart);
@@ -2885,15 +2885,21 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		for (snode = mxml_GetNode(node, "building"); snode; snode = mxml_GetNextNode(snode, node, "building")) {
 			const int buildId = mxml_GetInt(snode, "building_place", 0);
 			building_t *building;
-			byte buildingTpl;
+			char buildingType[MAX_VAR];
 			if (buildId >= MAX_BUILDINGS) {
 				Com_Printf("building ID is greater than MAX buildings\n");
 				return qfalse;
 			}
 			building = &ccs.buildings[i][buildId];
-			buildingTpl = mxml_GetInt(snode, "building_tpl", BYTES_NONE);
-			if (buildingTpl != BYTES_NONE)
-				*building = ccs.buildingTemplates[buildingTpl];
+
+			Q_strncpyz(buildingType, mxml_GetString(snode, "buildingtype"), sizeof(buildingType));
+			if (buildingType[0] == '\0') {
+				/* Fallback for keeping compatibility, should be a return qfalse; otherwise */
+				const byte buildingTpl = mxml_GetInt(snode, "building_tpl", BYTES_NONE);
+				if (buildingTpl != BYTES_NONE)
+					*building = ccs.buildingTemplates[buildingTpl];
+			} else
+				*building = *B_GetBuildingTemplate(buildingType);
 
 			building->idx = B_GetBuildingIDX(b, building);
 			if (building->idx != buildId) {
