@@ -1606,7 +1606,9 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 			/* now we can send other events again - the EV_ACTOR_MOVE event has ended */
 
 			/* submit the TUs / round down */
-			if (g_notu != NULL && !g_notu->integer)
+			if (g_notu != NULL && g_notu->integer)
+				ent->TU = initTU;
+			else
 				ent->TU = max(0, initTU - (int) tu);
 
 			G_SendStats(ent);
