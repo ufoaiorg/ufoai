@@ -284,7 +284,8 @@ window basedefence
 	}
 
 	func onInit {
-		cmd "basedef_initmenu;"
+		*cvar:mn_itemname ""
+		*cvar:mn_upmodel_top ""
 		cmd "basedef_updatemenu;"
 		call update_buttons
 	}

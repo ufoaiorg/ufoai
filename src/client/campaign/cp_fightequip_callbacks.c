@@ -869,19 +869,6 @@ static const char *BDEF_GetIDFromItemType (aircraftItemType_t type)
 }
 
 /**
- * @brief Script command to init the base defence menu.
- * @note this function is only called when the menu launches
- * @sa BDEF_BaseDefenseMenuUpdate_f
- */
-static void BDEF_MenuInit_f (void)
-{
-	/* initialize selected item */
-	Cvar_Set("mn_itemname", "");
-	/* Clear model cvar */
-	Cvar_Set("mn_upmodel_top", "");
-}
-
-/**
  * @brief Fills the battery list, descriptions, and weapons in slots
  * of the basedefence equip menu
  * @sa BDEF_MenuInit_f
@@ -1090,6 +1077,9 @@ static void BDEF_AddItem_f (void)
 		}
 		list++;
 	}
+
+	if (!itemTech)
+		return;
 
 	if (!slot->nextItem) {
 		/* we add the weapon, shield, item, or base defence if slot is free or the installation of
@@ -1315,7 +1305,6 @@ void AIM_InitCallbacks (void)
 
 	Cmd_AddCommand("add_battery", BDEF_AddBattery_f, "Add a new battery to base");
 	Cmd_AddCommand("remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base");
-	Cmd_AddCommand("basedef_initmenu", BDEF_MenuInit_f, "Inits base defence menu");
 	Cmd_AddCommand("basedef_updatemenu", BDEF_BaseDefenseMenuUpdate_f, "Inits base defence menu");
 	Cmd_AddCommand("basedef_list_click", AIM_AircraftEquipMenuClick_f, NULL);
 	Cmd_AddCommand("basedef_additem", BDEF_AddItem_f, "Add item to slot");
@@ -1332,7 +1321,6 @@ void AIM_ShutdownCallbacks (void)
 
 	Cmd_RemoveCommand("add_battery");
 	Cmd_RemoveCommand("remove_battery");
-	Cmd_RemoveCommand("basedef_initmenu");
 	Cmd_RemoveCommand("basedef_updatemenu");
 	Cmd_RemoveCommand("basedef_list_click");
 	Cmd_RemoveCommand("basedef_additem");
