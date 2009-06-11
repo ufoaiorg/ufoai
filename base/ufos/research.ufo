@@ -151,6 +151,39 @@ tech rs_laser
 	image	techs/continuous_wave_laser_operation
 }
 
+//tech rs_baselaser
+//{
+//	name "_Base Defence Laser Turret"
+//	type	tech
+//	up_chapter	tech
+//
+//	description {
+//		default "_baselaser_txt"
+//	}
+//	pre_description {
+//		default "_baselaser_pre_txt"
+//	}
+//
+//	mail_pre
+//	{
+//		from	"_mail_from_paul_navarre"
+//		to		"_mail_to_base_commander"
+//		// subject	defined by "name"
+//		icon	icons/tech
+//	}
+//
+//	mail
+//	{
+//		from	"_mail_from_paul_navarre"
+//		to		"_mail_to_base_commander"
+//		// subject	defined by "name"
+//		icon	icons/tech
+//	}
+//
+//	time	2000
+//	image	techs/base_defence_laser_turret
+//}
+
 tech rs_antimatter
 {
 	name		"_Antimatter"
@@ -3029,6 +3062,7 @@ tech rs_building_laser
 		tech rs_building_command
 		tech rs_laser
 		tech rs_damage_laser
+		//tech rs_baselaser
 	}
 
 	provides	building_laser
