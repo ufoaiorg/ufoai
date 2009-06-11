@@ -170,6 +170,33 @@ static inline void dbuffer_grow (struct dbuffer *buf, size_t len)
 }
 
 /**
+ * @brief Allocate a dbuffer and prepend the given data to it
+ * @param[in] old the source buffer
+ * @return the newly allocated buffer
+ * Allocates a new dbuffer and initialises it to contain a copy of the
+ * data in old
+ */
+struct dbuffer *dbuffer_prepend (struct dbuffer *old, const char *data, size_t len)
+{
+	/* element we're currently reading from */
+	const struct dbuffer_element *e;
+	struct dbuffer *buf = new_dbuffer();
+	const char *p;
+
+	dbuffer_add(buf, data, len);
+
+	e = old->head;
+	p = old->start;
+	while (e && (e->len > 0)) {
+		dbuffer_add(buf, p, e->len);
+		e = e->next;
+		p = &e->data[0];
+	}
+
+	return buf;
+}
+
+/**
  * @brief Append data to a dbuffer
  * @param[in,out] buf the target buffer
  * @param[in] data pointer to the start of the bytes to add
@@ -185,9 +212,8 @@ void dbuffer_add (struct dbuffer *buf, const char *data, size_t len)
 
 	e = buf->tail;
 	/* We grow the buffer enough to ensure that we always have one extra
-	* byte, so that buf->end has somewhere to point. The minor loss in
-	* memory efficiency is offset by the code complexity this avoids
-	*/
+	 * byte, so that buf->end has somewhere to point. The minor loss in
+	 * memory efficiency is offset by the code complexity this avoids */
 	if (len >= buf->space)
 		dbuffer_grow(buf, len);
 
