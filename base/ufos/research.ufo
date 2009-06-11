@@ -180,6 +180,10 @@ tech rs_laser
 //		icon	icons/tech
 //	}
 //
+//	require_AND
+//	{
+//		tech rs_laser
+//	}
 //	time	2000
 //	image	techs/base_defence_laser_turret
 //}
