@@ -1058,6 +1058,7 @@ void CL_ResetActorMoveLength (le_t *le)
  * @param[in] to The location we draw the line to (starting with the location of selActor)
  * @return qtrue if everything went ok, otherwise qfalse.
  * @sa CL_MaximumMove (similar algo.)
+ * @sa CL_AddTargetingBox
  */
 static qboolean CL_TraceMove (pos3_t to)
 {
@@ -2776,6 +2777,7 @@ static const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEI
 /**
  * @brief create a targeting box at the given position
  * @sa CL_ParseClientinfo
+ * @sa CL_TraceMove
  */
 static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 {

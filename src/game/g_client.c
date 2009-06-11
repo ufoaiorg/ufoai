@@ -1475,7 +1475,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				/* moveDiagonal = !((dvtab[numdv] & (DIRECTIONS - 1)) < 4); */
 				div = gi.TUsUsed(dir);
 				truediv = div;
-				if (ent->state & STATE_CROUCHED && dir < CORE_DIRECTIONS)
+				if ((ent->state & STATE_CROUCHED) && dir < CORE_DIRECTIONS)
 					div *= TU_CROUCH_MOVING_FACTOR;
 				if ((int) (tu + div) > ent->TU)
 					break;
