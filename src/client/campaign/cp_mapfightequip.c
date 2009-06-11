@@ -810,10 +810,7 @@ aircraftSlot_t *AII_GetAircraftSlotByIDX (aircraft_t *aircraft, aircraftItemType
 		} else if (idx < aircraft->maxWeapons)
 			return &aircraft->weapons[idx];
 	case AC_ITEM_SHIELD:
-		if (idx < 0) {			/* returns the first free slot on negative */
-			if (!aircraft->shield.item && !aircraft->shield.nextItem)
-				return &aircraft->shield;
-		} else if (idx <= 0)
+		if (idx == 0 || ((idx < 0) && !aircraft->shield.item && !aircraft->shield.nextItem))	/* returns the first free slot on negative */
 			return &aircraft->shield;
 	case AC_ITEM_ELECTRONICS:
 		if (idx < 0) {			/* returns the first free slot on negative */
