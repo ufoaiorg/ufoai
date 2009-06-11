@@ -1135,6 +1135,11 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 	case ET_ACTORHIDDEN:
 	case ET_ACTOR:
 	case ET_ACTOR2x2:
+		/* actor is already moving - so reschedule this event */
+		if (le->pathLength) {
+			CL_EnqueueEventForLaterExecution(msg, 100);
+			return;
+		}
 		break;
 	default:
 		Com_Printf("StateChange message ignored... LE not found or not an actor (number: %i, state: %i, type: %i)\n",
@@ -1502,13 +1507,49 @@ static void CL_ScheduleEvent (evTimes_t *event)
 	/* We need to schedule the first event in the queue. Unfortunately,
 	 * events don't run on the master timer (yet - this should change),
 	 * so we have to convert from one timescale to the other */
-	int timescale_delta;
+	int timescaleDelta;
 
 	if (!battlescapeEvents)
 		return;
 
-	timescale_delta = Sys_Milliseconds() - cl.battlescapeEventTime;
-	Schedule_Event(event->when + timescale_delta, &CL_ExecuteBattlescapeEvent, NULL);
+	timescaleDelta = Sys_Milliseconds() - cl.battlescapeEventTime;
+	Schedule_Event(event->when + timescaleDelta, &CL_ExecuteBattlescapeEvent, NULL);
+}
+
+/**
+ * @brief Sort the event into the queue
+ * @param[in] cur The event to put into the queue
+ * @param[in] eventTime the time when the event should get executed
+ */
+static void CL_EnqueueEvent (evTimes_t *cur, int eventTime)
+{
+	evTimes_t *e = battlescapeEvents;
+	/* sort the new event into the pending scheduled events list */
+	while (e->next && e->next->when <= eventTime)
+		e = e->next;
+	cur->next = e->next;
+	e->next = cur;
+}
+
+/**
+ * @brief Used to readd an event into the queue. Can e.g. be used if an event is not due yet.
+ * @param[in] msg The buffer that contains the event data
+ * @param[in] timeGap The time in ms at which the event should be scheduled the next time.
+ */
+void CL_EnqueueEventForLaterExecution (struct dbuffer *msg, int timeGap)
+{
+	evTimes_t *cur;
+	const int eType = NET_ReadByte(msg);
+
+	if (eType == 0)
+		return;
+
+	cur = Mem_PoolAlloc(sizeof(*cur), cl_genericPool, 0);
+	cur->when = cl.battlescapeEventTime + timeGap;
+	cur->eType = eType;
+	cur->msg = dbuffer_dup(msg);
+
+	CL_EnqueueEvent(cur, cur->when);
 }
 
 /**
@@ -1682,12 +1723,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			battlescapeEvents = cur;
 			CL_ScheduleEvent(cur);
 		} else {
-			evTimes_t *e = battlescapeEvents;
-			/* sort the new event into the pending scheduled events list */
-			while (e->next && e->next->when <= event_time)
-				e = e->next;
-			cur->next = e->next;
-			e->next = cur;
+			CL_EnqueueEvent(cur, event_time);
 		}
 
 		Com_DPrintf(DEBUG_EVENTSYS, "event(at %d): %s %p\n", event_time, ev_names[eType], cur);
