@@ -1,8 +1,9 @@
 # Danish translation for UFO: Alien Invasion
 # Martin Gerhardy <martin.gerhardy@gmail.com>, 2006.
-# Joe Hansen <joedalton2@yahoo.dk>, 2007, 2008.
+# Joe Hansen <joedalton2@yahoo.dk>, 2007, 2008, 2009.
 #
 # alien -> rumvæsen (aliens -> rumvæsener)
+# autopsy -> obduktion
 # hire -> ansæt
 # pod -> holder (til våben/ammunition)
 # UFO -> ufo
@@ -13,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-09 20:46+0200\n"
-"PO-Revision-Date: 2008-07-21 12:38+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"POT-Creation-Date: 2009-06-11 07:22+0200\n"
+"PO-Revision-Date: 2009-06-10 12:38+0100\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,58 +24,53 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../base/maps/africa.ump:53
-#, fuzzy
 msgid "Africa"
-msgstr "Ny Afrika"
+msgstr "Afrika"
 
 #: ../base/maps/alienbase.ump:85
 msgid "Alienbase"
 msgstr "Rumvæsenbase"
 
 #: ../base/maps/bomber_city.ump:57
-#, fuzzy
 msgid "Bomber_city"
-msgstr "Bombefly U"
+msgstr "Bombefly_by"
 
 #: ../base/maps/bridge.ump:58
 msgid "Bridge"
-msgstr ""
+msgstr "Bro"
 
 #: ../base/maps/cemetery.ump:199
 msgid "Small cemetery"
-msgstr ""
+msgstr "Lille kirkegård"
 
 #: ../base/maps/city_disco.ump:54
 msgid "City_disco"
-msgstr ""
+msgstr "By_disco"
 
 #: ../base/maps/community_centre.ump:51
-#, fuzzy
 msgid "Community_centre"
-msgstr "Kommandocentral"
+msgstr "Forsamlings_hus"
 
 #: ../base/maps/construction.ump:53
-#, fuzzy
 msgid "Construction"
-msgstr "Bygning færdig"
+msgstr "Bygning"
 
 #: ../base/maps/druglord.ump:57
 msgid "Druglord"
-msgstr ""
+msgstr "Narkobaron"
 
 #: ../base/maps/eaglenest.ump:42
 msgid "Eaglenest"
-msgstr ""
+msgstr "Ørnerede"
 
 #: ../base/maps/forest.ump:370
-#, fuzzy
 msgid "Little forest"
-msgstr "Sitters"
+msgstr "Lille skov"
 
+# engelsk fejl bungalow
 #: ../base/maps/forest.ump:400
-#, fuzzy
 msgid "Little bungalo in forest"
-msgstr "Sitters"
+msgstr "Lille bungalow i skov"
 
 #: ../base/maps/frozen.ump:251
 msgid "Snow"
@@ -101,25 +97,21 @@ msgid "Multiplayer Deathmatch"
 msgstr "Flerspiller dødskamp"
 
 #: ../base/maps/gasstation.ump:43
-#, fuzzy
 msgid "Gasstation"
-msgstr "Nation"
+msgstr "Gasstation"
 
 # #ufopedia
 #: ../base/maps/industrial.ump:235
-#, fuzzy
 msgid "UFO Landed"
-msgstr "Ufopædi"
+msgstr "Ufo landet"
 
 #: ../base/maps/italy.ump:42
-#, fuzzy
 msgid "Italy"
-msgstr "Italiensk"
+msgstr "Italien"
 
 #: ../base/maps/japan.ump:42
-#, fuzzy
 msgid "Japan"
-msgstr "Japansk"
+msgstr "Japan"
 
 #: ../base/maps/laboratory.ump:43 ../base/ufos/basemanagement.ufo:334
 #: client/campaign/cp_base_callbacks.c:283
@@ -127,13 +119,12 @@ msgid "Laboratory"
 msgstr "Laboratorium"
 
 #: ../base/maps/mart.ump:44
-#, fuzzy
 msgid "Mart"
-msgstr "Mar"
+msgstr "Indkøbscenter"
 
 #: ../base/maps/military_convoy.ump:58
 msgid "Military convoy"
-msgstr ""
+msgstr "Militær konvoj"
 
 #: ../base/maps/oriental.ump:235
 msgid "Oriental small"
@@ -147,20 +138,19 @@ msgstr "Orientalsk mellem"
 msgid "Oriental big"
 msgstr "Orientalsk stor"
 
+# hvad er dette?
 #: ../base/maps/spedition.ump:43
 #, fuzzy
 msgid "Spedition"
 msgstr "Indstillinger"
 
 #: ../base/maps/stadium.ump:43
-#, fuzzy
 msgid "Stadium"
-msgstr "Mellem"
+msgstr "Stadion"
 
 #: ../base/maps/transport.ump:42
-#, fuzzy
 msgid "Transport"
-msgstr "Transportfly"
+msgstr "Transport"
 
 #: ../base/maps/tropic.ump:336
 msgid "Tropical river"
@@ -171,9 +161,8 @@ msgid "Tropical drug"
 msgstr "Tropisk medicin"
 
 #: ../base/maps/tropic.ump:393
-#, fuzzy
 msgid "Tropical UFO"
-msgstr "Tropisk medicin"
+msgstr "Tropisk ufo"
 
 #: ../base/maps/ufocrash.ump:320 client/campaign/cp_missions.c:435
 msgid "Crashed UFO"
@@ -198,7 +187,7 @@ msgstr "Landsby stor"
 # Ikke afklaret
 #: ../base/ufos/aircraftmanagement.ufo:92
 msgid "Firebird-class Dropship"
-msgstr "Transportfly af ildfugle-klasse"
+msgstr "Transportfly af Ildfugleklasse"
 
 #: ../base/ufos/aircraftmanagement.ufo:93
 msgid "Firebird D"
@@ -206,15 +195,15 @@ msgstr "Ildfugl D"
 
 #: ../base/ufos/aircraftmanagement.ufo:127
 msgid "Herakles-class Heavy Lifter"
-msgstr ""
+msgstr "Tung løfter af Heraklesklasse"
 
 #: ../base/ufos/aircraftmanagement.ufo:128
 msgid "Herakles D"
-msgstr ""
+msgstr "Herakles D"
 
 #: ../base/ufos/aircraftmanagement.ufo:166
 msgid "Stiletto-class Interceptor"
-msgstr "Kortrækkende jagerfly af stilet-klasse"
+msgstr "Kortrækkende jagerfly af Stiletklasse"
 
 #: ../base/ufos/aircraftmanagement.ufo:167
 msgid "Stiletto I"
@@ -222,7 +211,7 @@ msgstr "Stilet I"
 
 #: ../base/ufos/aircraftmanagement.ufo:211
 msgid "Saracen-class Interceptor"
-msgstr "Kortrækkende jagerfly af saracen-klasse"
+msgstr "Kortrækkende jagerfly af Saracenklasse"
 
 #: ../base/ufos/aircraftmanagement.ufo:212
 msgid "Saracen I"
@@ -230,26 +219,24 @@ msgstr "Saracen I"
 
 #: ../base/ufos/aircraftmanagement.ufo:251
 msgid "Dragon Interceptor"
-msgstr "Kortrækkende dragon-jagerfly "
+msgstr "Kortrækkende Dragonjagerfly"
 
 #: ../base/ufos/aircraftmanagement.ufo:252
 msgid "Dragon"
 msgstr "Dragon"
 
 #: ../base/ufos/aircraftmanagement.ufo:291
-#, fuzzy
 msgid "Starchaser-class Interceptor"
-msgstr "Kortrækkende jagerfly af saracen-klasse"
+msgstr "Kortrækkende jagerfly af Starchaserklasse"
 
 #: ../base/ufos/aircraftmanagement.ufo:292
-#, fuzzy
 msgid "Starchaser"
-msgstr "Overfør"
+msgstr "Starchaser"
 
 # Stingray er indenfor zoologi en pilrokke
 #: ../base/ufos/aircraftmanagement.ufo:336
 msgid "Stingray Interceptor"
-msgstr "Kortrækkende stingray-jagerfly "
+msgstr "Kortrækkende stingrayjagerfly"
 
 # i zoologien er en stingray en pilrokke.
 #: ../base/ufos/aircraftmanagement.ufo:337
@@ -316,19 +303,16 @@ msgid "UFO - Carrier"
 msgstr "Ufo - transport"
 
 #: ../base/ufos/aircraftmanagement.ufo:558
-#, fuzzy
 msgid "Carrier U"
-msgstr "Fordærver U"
+msgstr "Transport U"
 
 #: ../base/ufos/aircraftmanagement.ufo:574 ../base/ufos/research.ufo:4290
-#, fuzzy
 msgid "Aerial Laser Cannon"
-msgstr "Shiva roterende kanon"
+msgstr "Luftlaserkanon"
 
 #: ../base/ufos/aircraftmanagement.ufo:584 ../base/ufos/research.ufo:4329
-#, fuzzy
 msgid "DF-Tank"
-msgstr "Overfør"
+msgstr "DF-tank"
 
 #: ../base/ufos/aircraftmanagement.ufo:600
 msgid "Shiva Rotary Cannon"
@@ -432,12 +416,11 @@ msgstr "partikelstråle"
 
 #: ../base/ufos/armour.ufo:56
 msgid "stun_electro"
-msgstr ""
+msgstr "bedøve_elektro"
 
 #: ../base/ufos/armour.ufo:57
-#, fuzzy
 msgid "stun_gas"
-msgstr "bedøve"
+msgstr "bedøve_gas"
 
 #: ../base/ufos/armour.ufo:67
 msgid "Combat Armour"
@@ -599,36 +582,32 @@ msgid "alien_campaign_txt"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:27
-#, fuzzy
 msgid "Athens"
-msgstr "Rumvæsener"
+msgstr "Athener"
 
 #: ../base/ufos/cities.ufo:33
 msgid "Bangkok"
-msgstr ""
+msgstr "Bangkok"
 
 #: ../base/ufos/cities.ufo:45
-#, fuzzy
 msgid "Berlin"
-msgstr "Bælte"
+msgstr "Berlin"
 
 #: ../base/ufos/cities.ufo:57
 msgid "Cape Town"
-msgstr ""
+msgstr "Kapstaden"
 
 #: ../base/ufos/cities.ufo:69
-#, fuzzy
 msgid "Cayenne"
-msgstr "Kannonade"
+msgstr "Cayenne"
 
 #: ../base/ufos/cities.ufo:93
 msgid "Sydney"
-msgstr ""
+msgstr "Sydney"
 
 #: ../base/ufos/cities.ufo:111
-#, fuzzy
 msgid "Wellington"
-msgstr "Genopfyld"
+msgstr "Wellington"
 
 #: ../base/ufos/events.ufo:39
 msgid "Devastating alien terror attack on Mumbai"
@@ -798,9 +777,8 @@ msgid "mail_from_paul_navarre"
 msgstr "Kommandør Paul Navarre, F&U; Ingeniørdivisionen, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:90
-#, fuzzy
 msgid "Alien died"
-msgstr "Rumvæsenbase"
+msgstr "Rumvæsen døde"
 
 #: ../base/ufos/events.ufo:91
 #, fuzzy
@@ -1124,17 +1102,16 @@ msgid "Coop 4 players"
 msgstr "4 samarbejdende"
 
 #: ../base/ufos/installation.ufo:7
-#, fuzzy
 msgid "Radar Tower"
-msgstr "Radar"
+msgstr "Radartårn"
 
 #: ../base/ufos/installation.ufo:21 ../base/ufos/ui/geoscape.ufo:1251
 msgid "UFO Yard"
-msgstr ""
+msgstr "Oplagsplads til ufo"
 
 #: ../base/ufos/installation.ufo:34 ../base/ufos/ui/geoscape.ufo:1214
 msgid "SAM Site"
-msgstr ""
+msgstr "SAM-affyringsrampe"
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
@@ -1178,20 +1155,19 @@ msgstr "Græsk"
 
 #: ../base/ufos/language.ufo:176
 msgid "Hungarian"
-msgstr ""
+msgstr "Ungarnsk"
 
 #: ../base/ufos/language.ufo:186
 msgid "Italien"
 msgstr "Italiensk"
 
 #: ../base/ufos/language.ufo:198
-#, fuzzy
 msgid "Korean"
-msgstr "Saracen I"
+msgstr "Koreansk"
 
 #: ../base/ufos/language.ufo:208
 msgid "Dutch"
-msgstr ""
+msgstr "Hollandsk"
 
 #: ../base/ufos/language.ufo:218
 msgid "Portuguese"
@@ -1219,20 +1195,19 @@ msgstr "Japansk"
 
 #: ../base/ufos/language.ufo:282
 msgid "Chinese"
-msgstr ""
+msgstr "Kinesisk"
 
 #: ../base/ufos/language.ufo:290
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bulgarsk"
 
 #: ../base/ufos/language.ufo:298
 msgid "No language"
 msgstr "Intet sprog"
 
 #: ../base/ufos/maps.ufo:27
-#, fuzzy
 msgid "Industrial theme."
-msgstr "Industri"
+msgstr "Industriel tema."
 
 #: ../base/ufos/maps.ufo:68 ../base/ufos/maps.ufo:101
 #: ../base/ufos/maps.ufo:135
@@ -1331,14 +1306,12 @@ msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "Et tropisk område som flere mistænkelige kriminelle har gjort til deres hjem."
 
 #: ../base/ufos/maps.ufo:1377
-#, fuzzy
 msgid "A small estate in the mountains"
-msgstr "Et lille kontor i en bjergrig region."
+msgstr "Et lille kontor i en bjergrig region"
 
 #: ../base/ufos/maps.ufo:1419
-#, fuzzy
 msgid "A crashed Scout UFO"
-msgstr "Nedstyrtet ufo"
+msgstr "Nedstyrtet spejderufo"
 
 #: ../base/ufos/maps.ufo:1449
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
@@ -1346,7 +1319,7 @@ msgstr "En bondegård omringet af marker og skure. En ufo er landet på en af ma
 
 #: ../base/ufos/maps.ufo:1490
 msgid "A ferry."
-msgstr ""
+msgstr "En færge."
 
 #: ../base/ufos/maps.ufo:1533
 msgid "A rather old-fashioned suburban district."
@@ -1426,25 +1399,23 @@ msgstr "Et sted hvor folk kommer for at slappe af og omgås."
 
 #: ../base/ufos/maps.ufo:2451
 msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr ""
+msgstr "Et laboratorium hvor der undersøges indsamlede vragdele fra ufoer."
 
 #: ../base/ufos/maps.ufo:2492
 msgid "A fuel depot the aliens try to destroy."
-msgstr ""
+msgstr "Et brændstofdepot rumvæsenerne forsøger at ødelægge."
 
 #: ../base/ufos/maps.ufo:2526
-#, fuzzy
 msgid "Wilderness terror mission."
-msgstr "Terrormission"
+msgstr "Ødemarksterrormission."
 
 #: ../base/ufos/maps.ufo:2567
 msgid "UFO Crashsite."
-msgstr ""
+msgstr "Ufonedstyrtningssted."
 
 #: ../base/ufos/maps.ufo:2588
-#, fuzzy
 msgid "An alien base."
-msgstr "Rumvæsenbase"
+msgstr "En rumvæsenbase."
 
 #: ../base/ufos/maps.ufo:2603
 msgid "Base is under attack."
@@ -1575,37 +1546,32 @@ msgid "Col"
 msgstr "Obt"
 
 #: ../base/ufos/msgcategories.ufo:7
-#, fuzzy
 msgid "install_equipment"
-msgstr "Tilgængelig udstyr:"
+msgstr "installer_udstyr"
 
 #: ../base/ufos/msgcategories.ufo:14
-#, fuzzy
 msgid "installation_construction"
-msgstr "Nation"
+msgstr "installation_konstruktion"
 
 #: ../base/ufos/msgcategories.ufo:21
-#, fuzzy
 msgid "research"
-msgstr "Forskning"
+msgstr "forskning"
 
 #: ../base/ufos/msgcategories.ufo:27
-#, fuzzy
 msgid "production"
-msgstr "Produktion"
+msgstr "produktion"
 
 #: ../base/ufos/msgcategories.ufo:34
 msgid "nations_happiness"
-msgstr ""
+msgstr "lande_tilfredshed"
 
 #: ../base/ufos/msgcategories.ufo:41
-#, fuzzy
 msgid "transfer"
-msgstr "Overfør"
+msgstr "overfør"
 
 #: ../base/ufos/msgcategories.ufo:49
 msgid "ufo_activity"
-msgstr ""
+msgstr "ufo_aktivitet"
 
 #: ../base/ufos/nations.ufo:31
 msgid "The Revolutionary Countries"
@@ -6325,18 +6291,16 @@ msgid "Werner Hoehrer (hoehrer)"
 msgstr "Werner Hoehrer (hoehrer)"
 
 #: ../base/ufos/seq_credits.ufo:197
-#, fuzzy
 msgid "Lead Story Developer/Game Design"
-msgstr "Hovedforfatter"
+msgstr "Hovedforfatter/spildesign"
 
 #: ../base/ufos/seq_credits.ufo:208
 msgid "Ryan A. Span. (Winter)"
 msgstr "Ryan A. Span. (Winter)"
 
 #: ../base/ufos/seq_credits.ufo:230
-#, fuzzy
 msgid "Story Developer/Game Design"
-msgstr "Forfatter"
+msgstr "Tekstforfatter/spildesign"
 
 #: ../base/ufos/seq_credits.ufo:241
 msgid "Bas Fournier (BTAxis)"
@@ -6351,60 +6315,56 @@ msgid "Maciej Wierzbicki (Zenerka/Voovoos)"
 msgstr "Maciej Wierzbicki (Zenerka/Voovoos)"
 
 #: ../base/ufos/seq_credits.ufo:296
-#, fuzzy
 msgid "Technology Consultants"
-msgstr "Teknologisk konsulent"
+msgstr "Teknologiske konsulenter"
 
 #: ../base/ufos/seq_credits.ufo:307
 msgid "Forest Hale (LordHavoc)"
 msgstr "Forest Hale (LordHavoc)"
 
 #: ../base/ufos/seq_credits.ufo:318
-#, fuzzy
 msgid "Tron"
-msgstr "Kast"
+msgstr "Tron"
 
 #: ../base/ufos/seq_credits.ufo:342
-#, fuzzy
 msgid "Contributing Programmers"
-msgstr "Deltagende programmør"
+msgstr "Deltagende programmører"
 
 #: ../base/ufos/seq_credits.ufo:353
 msgid "Ivor Blockley (ubequitz/cassiterite)"
 msgstr "Ivor Blockley (ubequitz/cassiterite)"
 
 #: ../base/ufos/seq_credits.ufo:364
-#, fuzzy
 msgid "Kracken"
-msgstr "Saracen I"
+msgstr "Kracken"
 
 #: ../base/ufos/seq_credits.ufo:375
 msgid "Fehervari Tamas (geever)"
-msgstr ""
+msgstr "Fehervari Tamas (geever)"
 
 #: ../base/ufos/seq_credits.ufo:386
 msgid "Edgar Simo (bobbens)"
-msgstr ""
+msgstr "Edgar Simo (bobbens)"
 
 #: ../base/ufos/seq_credits.ufo:397
 msgid "Andy Buckle (blondandy)"
-msgstr ""
+msgstr "Andy Buckle (blondandy)"
 
 #: ../base/ufos/seq_credits.ufo:408
 msgid "Michael Wilmes (wilminator)"
-msgstr ""
+msgstr "Michael Wilmes (wilminator)"
 
 #: ../base/ufos/seq_credits.ufo:440
 msgid "General Support"
-msgstr ""
+msgstr "Generel hjælp"
 
 #: ../base/ufos/seq_credits.ufo:451
 msgid "Richlv"
-msgstr ""
+msgstr "Richlv"
 
 #: ../base/ufos/seq_credits.ufo:462
 msgid "Kostia Romanov (Kildor)"
-msgstr ""
+msgstr "Kostia Romanov (Kildor)"
 
 #: ../base/ufos/seq_credits.ufo:486
 msgid "This game is now community driven"
@@ -6503,9 +6463,8 @@ msgid "http://ufoai.sf.net"
 msgstr "http://ufoai.sf.net"
 
 #: ../base/ufos/seq_credits.ufo:732
-#, fuzzy
 msgid "Copyright 2004-2009 by UFO: AI Team"
-msgstr "Ophavsret 2004-2007 UFO: AI-holdet"
+msgstr "Ophavsret 2004-2009 UFO: AI-holdet"
 
 #: ../base/ufos/seq_ingame.ufo:13 ../base/ufos/seq_ingame.ufo:42
 #: ../base/ufos/seq_ingame.ufo:80 ../base/ufos/seq_intro.ufo:73
@@ -6782,9 +6741,8 @@ msgid "Be sure to hire as many engineers as you can. The faster your production 
 msgstr "Husk at ansætte så mange ingeniører som du kan. Jo hurtigere din produktion går, jo hurtigere kan du få adgang til bedre udstyr og erstatte dine tab."
 
 #: ../base/ufos/tips.ufo:18
-#, fuzzy
 msgid "Be sure to visit our website, http://ufoai.sf.net/ and drop by our community channel, #ufoai on irc.freenode.net."
-msgstr "Husk at besøge vores internetside http://ufoai.sf.net/ og kig ind i vores fællesskabskanal. Det kan du gøre ved at gå til flerspillermenuen og taste på lobby-knappen."
+msgstr "Husk at besøge vores internetside http://ufoai.sf.net/ og kig ind i vores fællesskabskanal, #ufoai on irc.freenode.net."
 
 #: ../base/ufos/tips.ufo:19
 msgid "Remember that you need an active Command Centre in order to launch interceptors."
@@ -6879,16 +6837,14 @@ msgid "You can use [space] to cycle between all geoscape items."
 msgstr "Du kan anvende [mellemrum] for at skifte mellem geoscape udstyr."
 
 #: ../base/ufos/tips.ufo:42
-#, fuzzy
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel on the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
-msgstr "Du kan også øge/formindske tiden på overbliksbilledet ved at anvende musehjulet på tidsknapper, eller [m}, [n]."
+msgstr "Du kan også øge/formindske tiden på overbliksbilledet ved at anvende musehjulet på tidsknapperne, eller ved at trykke [-], [+/=]. Alternativt kan du trykke [n] og [m]. [Slet tilbage] vil stoppe tiden."
 
 #: ../base/ufos/tips.ufo:43
 msgid "Be sure to equip your interceptor with weapons before launching it."
 msgstr "Husk at udstyr dit kortrækkende jagerfly med våben før det letter."
 
 #: ../base/ufos/tips.ufo:44
-#, fuzzy
 msgid "Remember that items will slow an aircraft down. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
 msgstr "Husk at udstyr vil sinke et luftfartøj. For at indhente hurtige ufoer kan det være en fordel at sende flere luftfartøjer, der er let udstyret."
 
@@ -6914,31 +6870,31 @@ msgstr "Du bør sikre dig at der ikke er for mange civile tab. Ellers kan du tab
 
 #: ../base/ufos/tips.ufo:50
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
-msgstr ""
+msgstr "Udnyt snigskytternes dække. Få snigskytterne til områder med god oversigt (områder højt oppe og hjørner på tagene). Efterlad dem i knæ og reaktionsild sat til 'flere skud' så de kan tynde ud i rumvæsenerne."
 
 #: ../base/ufos/tips.ufo:51
 msgid "Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
-msgstr ""
+msgstr "Overvej at sende dine kortrækkende jagerfly af sted sted mod hurtige ufoer, når de er rigtig tætte på din base, så du undgår jagten og dine kortrækkende jagerfly allerede er indenfor skudrække når de letter."
 
 #: ../base/ufos/tips.ufo:52
 msgid "Consider stunning the civilians during Terror Site missions to keep them from running around. Aliens also seem to prefer killing conscious civilians rather than unconscious ones."
-msgstr ""
+msgstr "Overvej at bedøve de civile under terrormissioner så du forhindrer dem i at løbe omkring. Rumvæsener ser også ud til at foretrække at dræbe civile ved bevidsthed fremfor bevidstløse."
 
 #: ../base/ufos/tips.ufo:53
 msgid "Don't forget to install missiles launchers and missiles in your missile batteries."
-msgstr ""
+msgstr "Glem ikke at installere missilaffyringsramper og missiler i dine missilbatterier."
 
 #: ../base/ufos/tips.ufo:54
 msgid "Can't remember who has the medikit in their backpack? Press [i] for inventory and then [1] to [8] to flick through your troops."
-msgstr ""
+msgstr "Kan du ikke huske hvem der har din førstehjælpskasse i rygsækken? Tast [i] for rygsækken og så [1] til [8] for at løbe igennem dine styrker."
 
 #: ../base/ufos/tips.ufo:55
 msgid "To catch fast UFOs send interceptors in from several directions."
-msgstr ""
+msgstr "For at fange hurtige ufoer kan du sende kortrækkende jagerfly af sted fra flere retninger."
 
 #: ../base/ufos/tips.ufo:56
 msgid "To buy/sell items fast, hover over the arrows and roll your mousewheel."
-msgstr ""
+msgstr "For at købe/sælge udstyr hurtigt, så hold markøren over pilene og rul på musehjulet."
 
 #: ../base/ufos/tips.ufo:57
 msgid "Beware friendly fire! It may be easiest to lob a grenade at that hostile enemy who snuck up on your troops, but if your not careful you do the alien's work for them. The same is said about bullets, make sure once the enemy is dead you wont be shooting your own person on the other side."
@@ -7010,27 +6966,24 @@ msgid "Back"
 msgstr "Tilbage"
 
 #: ../base/ufos/ui/aircraft.ufo:98
-#, fuzzy
 msgid "Description"
-msgstr "Beskrivelse:"
+msgstr "Beskrivelse"
 
 #: ../base/ufos/ui/aircraft.ufo:102 ../base/ufos/ui/hire.ufo:544
 msgid "Pilots"
-msgstr ""
+msgstr "Piloter"
 
 #: ../base/ufos/ui/aircraft.ufo:111
-#, fuzzy
 msgid "Tanks"
-msgstr "Overfør"
+msgstr "Tank"
 
 #: ../base/ufos/ui/aircraft.ufo:117 ../base/ufos/ui/hire.ufo:539
 msgid "Soldiers"
 msgstr "Soldater"
 
 #: ../base/ufos/ui/aircraft.ufo:122
-#, fuzzy
 msgid "Soldier equipment"
-msgstr "Soldat bærer udstyr"
+msgstr "Soldaterudstyr"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:66
 msgid "Available equipment:"
@@ -7041,14 +6994,12 @@ msgid "Selected item:"
 msgstr "Valgt udstyr:"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:113
-#, fuzzy
 msgid "Previous category"
-msgstr "Tidligere artikel"
+msgstr "Forrige kategori"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:124
-#, fuzzy
 msgid "Next category"
-msgstr "Næste artikel"
+msgstr "Næste kategori"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:162
 #: ../base/ufos/ui/aircraft_equip.ufo:182
@@ -7121,9 +7072,8 @@ msgstr "Tilføj/fjern denne soldat"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:69
 #: ../base/ufos/ui/aircraft_soldiers.ufo:70 ../base/ufos/ui/geoscape.ufo:810
-#, fuzzy
 msgid "Equip soldiers"
-msgstr "Udstyr denne soldat"
+msgstr "Udstyr soldater"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:135
 msgid "Soldier carries equipment"
@@ -7224,9 +7174,8 @@ msgstr "Tilbage til baseoverblik"
 #: ../base/ufos/ui/aliencont.ufo:269 ../base/ufos/ui/aliencont.ufo:270
 #: ../base/ufos/ui/aliencont.ufo:271 ../base/ufos/ui/aliencont.ufo:272
 #: ../base/ufos/ui/aliencont.ufo:273
-#, fuzzy
 msgid "Start autopsy"
-msgstr "Start spil"
+msgstr "Start obduktion"
 
 #: ../base/ufos/ui/aliencont.ufo:149 ../base/ufos/ui/aliencont.ufo:249
 #: ../base/ufos/ui/aliencont.ufo:250 ../base/ufos/ui/aliencont.ufo:251
@@ -7235,19 +7184,16 @@ msgstr "Start spil"
 #: ../base/ufos/ui/aliencont.ufo:256 ../base/ufos/ui/aliencont.ufo:257
 #: ../base/ufos/ui/aliencont.ufo:258 ../base/ufos/ui/aliencont.ufo:259
 #: ../base/ufos/ui/aliencont.ufo:260
-#, fuzzy
 msgid "Kill this alien"
-msgstr "Dræb et rumvæsen"
+msgstr "Dræb dette rumvæsen"
 
 #: ../base/ufos/ui/aliencont.ufo:354
-#, fuzzy
 msgid "Alive:"
-msgstr "Levende"
+msgstr "Levende:"
 
 #: ../base/ufos/ui/aliencont.ufo:375
-#, fuzzy
 msgid "Dead:"
-msgstr "Klar"
+msgstr "Død:"
 
 #: ../base/ufos/ui/aliencont.ufo:408
 msgid "Base info"
@@ -7339,71 +7285,53 @@ msgstr "Skift til våben i venstre hånd"
 msgid "Use Item"
 msgstr "Brug udstyr"
 
-#: ../base/ufos/ui/basedefence.ufo:64
-#, fuzzy
-msgid "Your are changing this defence system"
-msgstr "Du ændrer dette forsvarssystem"
+#: ../base/ufos/ui/basedefence.ufo:10
+msgid "Equip Defence Weapons"
+msgstr ""
 
-#: ../base/ufos/ui/basedefence.ufo:74
+#: ../base/ufos/ui/basedefence.ufo:50
 #, fuzzy
-msgid "Available defence:"
-msgstr "Tilgængelig forsvar:"
-
-#: ../base/ufos/ui/basedefence.ufo:110
-#, fuzzy
-msgid "Selected defence:"
-msgstr "Valgt forsvar:"
-
-#: ../base/ufos/ui/basedefence.ufo:121
-msgid "Missile"
+msgid "Missile Defences"
 msgstr "Missil"
 
-#: ../base/ufos/ui/basedefence.ufo:122
-msgid "Choose missile battery"
-msgstr "Vælg missilbatteri"
-
-#: ../base/ufos/ui/basedefence.ufo:135
-msgid "Laser"
-msgstr "Laser"
-
-#: ../base/ufos/ui/basedefence.ufo:136
-msgid "Choose laser battery"
-msgstr "Vælg laserbatteri"
-
-#: ../base/ufos/ui/basedefence.ufo:162 ../base/ufos/ui/basedefence.ufo:184
+#: ../base/ufos/ui/basedefence.ufo:54
 #, fuzzy
-msgid "Install selected defence system"
-msgstr "Installere valgt forsvarssystem"
+msgid "Laser Defences"
+msgstr "Laserriffel"
 
-#: ../base/ufos/ui/basedefence.ufo:173 ../base/ufos/ui/basedefence.ufo:195
+#: ../base/ufos/ui/basedefence.ufo:89
 #, fuzzy
-msgid "Remove this defence system"
-msgstr "Fjerne dette forsvarssystem"
+msgid "Weapon slots"
+msgstr "Våben"
 
-#: ../base/ufos/ui/basedefence.ufo:208
+#: ../base/ufos/ui/basedefence.ufo:140
+msgid "Add"
+msgstr ""
+
+#: ../base/ufos/ui/basedefence.ufo:141
 #, fuzzy
-msgid "Choose defence system to build"
-msgstr "Vælg hvilket forsvarssystem der skal bygges"
+msgid "Equip the selected slot with this weapon"
+msgstr "Udstyr dette forsvarssystem med den valgte ammo"
 
-#: ../base/ufos/ui/basedefence.ufo:230
+#: ../base/ufos/ui/basedefence.ufo:152
 #, fuzzy
-msgid "Change ammo in the defence system"
-msgstr "Ændr ammo i forsvarssystemet"
+msgid "Remove"
+msgstr "Hent"
 
-# # in game
-#: ../base/ufos/ui/basedefence.ufo:250
+#: ../base/ufos/ui/basedefence.ufo:153
 #, fuzzy
-msgid "Current defence system"
-msgstr "Nuværende forsvarssystem"
+msgid "Remove weapon from the selected slot"
+msgstr "Hent hold fra den nuværende valgte plads"
 
-#: ../base/ufos/ui/basedefence.ufo:260
-msgid "Ammo to use with installed system"
-msgstr "Ammo til brug for det installerede system"
+#: ../base/ufos/ui/basedefence.ufo:170
+#, fuzzy
+msgid "Stores"
+msgstr "Lagerrum"
 
-#: ../base/ufos/ui/basedefence.ufo:275 ../base/ufos/ui/equipment.ufo:695
-#: ../base/ufos/ui/multiplayer_team.ufo:738
-msgid "Done"
-msgstr "Færdig"
+#: ../base/ufos/ui/basedefence.ufo:226
+#, fuzzy
+msgid "Selected Item"
+msgstr "Valgt udstyr:"
 
 #: ../base/ufos/ui/bases.ufo:31
 msgid "Back to geoscape"
@@ -7495,19 +7423,16 @@ msgid "Switch to the next base"
 msgstr "Skift til den næste base"
 
 #: ../base/ufos/ui/buildings.ufo:99 ../base/ufos/ui/buildings.ufo:115
-#, fuzzy
 msgid "Open/close Building preview window"
-msgstr "Bygning færdig"
+msgstr "Åbn/luk Bygning forhåndsvisningsvindue"
 
 #: ../base/ufos/ui/buildings.ufo:114 ../base/ufos/ui/buildings.ufo:154
-#, fuzzy
 msgid "Building preview"
-msgstr "Bygning færdig"
+msgstr "Bygningsforhåndsvisning"
 
 #: ../base/ufos/ui/buildings.ufo:123
-#, fuzzy
 msgid "Select building"
-msgstr "Ødelæg bygning"
+msgstr "Vælg bygning"
 
 # #ufopedia
 #: ../base/ufos/ui/buildings.ufo:199 ../base/ufos/ui/geoscape.ufo:423
@@ -7571,30 +7496,28 @@ msgstr "Hent den sidst automatisk gemte kampagne."
 
 #: ../base/ufos/ui/debug.ufo:12
 msgid "Node editor"
-msgstr ""
+msgstr "Knudehåndtering"
 
 #: ../base/ufos/ui/debug.ufo:22
 msgid "Capture mode"
-msgstr ""
+msgstr "Optagelsestilstand"
 
 #: ../base/ufos/ui/debug.ufo:33
 msgid "Extract window"
-msgstr ""
+msgstr "Udtræk vindue"
 
 #: ../base/ufos/ui/debug.ufo:34
 msgid "Extract the window of the last/current selected node"
-msgstr ""
+msgstr "Udtræk vinduet på den sidste/aktuelt valgte knude"
 
 #: ../base/ufos/ui/debug.ufo:47
-#, fuzzy
 msgid "Current window:"
-msgstr "Luk denne besked"
+msgstr "Aktuel vindue:"
 
 # # in game
 #: ../base/ufos/ui/debug.ufo:61
-#, fuzzy
 msgid "Current node:"
-msgstr "Hentet nu:"
+msgstr "Aktuel knude:"
 
 #: ../base/ufos/ui/equipment.ufo:20 ../base/ufos/ui/inventory.ufo:25
 #: ../base/ufos/ui/multiplayer_team.ufo:20
@@ -7660,15 +7583,14 @@ msgstr "Blandet"
 
 #: ../base/ufos/ui/equipment.ufo:310 ../base/ufos/ui/market.ufo:77
 #: ../base/ufos/ui/multiplayer_team.ufo:311 ../base/ufos/ui/production.ufo:91
-#: client/campaign/cp_fightequip_callbacks.c:367
+#: client/campaign/cp_fightequip_callbacks.c:171
 #: client/campaign/cp_ufopedia.c:158
 msgid "Armour"
 msgstr "Beskyttelse"
 
 #: ../base/ufos/ui/equipment.ufo:377 ../base/ufos/ui/multiplayer_team.ufo:417
-#, fuzzy
 msgid "With:"
-msgstr "Med ammo:"
+msgstr "Med:"
 
 #: ../base/ufos/ui/equipment.ufo:418 ../base/ufos/ui/multiplayer_team.ufo:458
 #: ../base/ufos/ui/ufopedia.ufo:298
@@ -7693,39 +7615,41 @@ msgstr "Soldatevner"
 msgid "Object Info"
 msgstr "Objektinfo"
 
+#: ../base/ufos/ui/equipment.ufo:695 ../base/ufos/ui/multiplayer_team.ufo:738
+msgid "Done"
+msgstr "Færdig"
+
 #: ../base/ufos/ui/geoscape.ufo:194
-#, fuzzy
 msgid "Pause"
-msgstr "Base"
+msgstr "Pause"
 
 #: ../base/ufos/ui/geoscape.ufo:206
-#, fuzzy
 msgid "Time lapse: 5 seconds"
-msgstr "Sæt tiden til 5 sekunder"
+msgstr "Tidsinterval: 5 sekunder"
 
 #: ../base/ufos/ui/geoscape.ufo:218
 msgid "Time lapse: 5 minutes"
-msgstr ""
+msgstr "Tidsinterval: 5 minutter"
 
 #: ../base/ufos/ui/geoscape.ufo:231
 msgid "Time lapse: 20 minutes"
-msgstr ""
+msgstr "Tidsinterval: 20 minutter"
 
 #: ../base/ufos/ui/geoscape.ufo:243
 msgid "Time lapse: 1 hour"
-msgstr ""
+msgstr "Tidsinterval: 1 time"
 
 #: ../base/ufos/ui/geoscape.ufo:255
 msgid "Time lapse: 12 hours"
-msgstr ""
+msgstr "Tidsinterval: 12 timer"
 
 #: ../base/ufos/ui/geoscape.ufo:268
 msgid "Time lapse: 1 day"
-msgstr ""
+msgstr "Tidsinterval: 1 dag"
 
 #: ../base/ufos/ui/geoscape.ufo:280
 msgid "Time lapse: 5 days"
-msgstr ""
+msgstr "Tidsinterval: 5 dage"
 
 #: ../base/ufos/ui/geoscape.ufo:379 ../base/ufos/ui/geoscape.ufo:395
 #: ../base/ufos/ui/mailclient.ufo:124
@@ -7755,29 +7679,27 @@ msgstr "Åben Ufopædi"
 
 #: ../base/ufos/ui/geoscape.ufo:437 ../base/ufos/ui/geoscape.ufo:438
 msgid "Create installation"
-msgstr ""
+msgstr "Opret installation"
 
 #: ../base/ufos/ui/geoscape.ufo:455 ../base/ufos/ui/geoscape.ufo:2900
 msgid "Highlight nation borders"
 msgstr "Fremhæv landegrænser"
 
 #: ../base/ufos/ui/geoscape.ufo:468 ../base/ufos/ui/geoscape.ufo:2925
-#, fuzzy
 msgid "Show radar range"
-msgstr "Ufo indenfor rangerafstand\n"
+msgstr "Vis radarafstand"
 
 #: ../base/ufos/ui/geoscape.ufo:482 ../base/ufos/ui/geoscape.ufo:2946
 msgid "Show XVI map"
-msgstr ""
+msgstr "Vis XVI-kort"
 
 #: ../base/ufos/ui/geoscape.ufo:496
 msgid "Open up messages"
 msgstr "Åben beskeder"
 
 #: ../base/ufos/ui/geoscape.ufo:515
-#, fuzzy
 msgid "Change message and pause settings"
-msgstr "Oprindelige indstillinger"
+msgstr "Ændr besked- og pauseindstillinger"
 
 #: ../base/ufos/ui/geoscape.ufo:526
 msgid "Center objects on the map"
@@ -7790,7 +7712,7 @@ msgstr "Gå til indstillinger"
 #: ../base/ufos/ui/geoscape.ufo:607 ../base/ufos/ui/geoscape.ufo:2022
 #: ../base/ufos/ui/main.ufo:260 ../base/ufos/ui/multiplayer.ufo:1364
 msgid "OK"
-msgstr "Ok"
+msgstr "O.k."
 
 #: ../base/ufos/ui/geoscape.ufo:608 ../base/ufos/ui/geoscape.ufo:725
 #: ../base/ufos/ui/geoscape.ufo:975 ../base/ufos/ui/geoscape.ufo:1085
@@ -7842,31 +7764,26 @@ msgid "Base is under attack"
 msgstr "Base er under angreb"
 
 #: ../base/ufos/ui/geoscape.ufo:811
-#, fuzzy
 msgid "Go to soldier equipment screen before the battle"
-msgstr "Gå ind på slagmarken"
+msgstr "Gå til udstyrsskærmen for soldater før slaget"
 
 #: ../base/ufos/ui/geoscape.ufo:825
-#, fuzzy
 msgid "Kill aliens in container"
-msgstr "Dræb alle rumvæsener på denne base"
+msgstr "Dræb rumvæsener i container"
 
 #: ../base/ufos/ui/geoscape.ufo:834 ../base/ufos/ui/geoscape.ufo:843
 #: ../base/ufos/ui/geoscape.ufo:852 ../base/ufos/ui/geoscape.ufo:861
 #: ../base/ufos/ui/hospital.ufo:635
-#, fuzzy
 msgid "Not implemented"
-msgstr "Intet udstyr valgt"
+msgstr "Ikke implementeret"
 
 #: ../base/ufos/ui/geoscape.ufo:841
-#, fuzzy
 msgid "Lift aircraft"
-msgstr "Næste luftfartøj"
+msgstr "Løft luftfartøj"
 
 #: ../base/ufos/ui/geoscape.ufo:859
-#, fuzzy
 msgid "Disable Power Plant"
-msgstr "Kraftværk"
+msgstr "Sluk kraftværk"
 
 #: ../base/ufos/ui/geoscape.ufo:949
 msgid "Select base to transfer to"
@@ -7892,18 +7809,16 @@ msgid "Cost:"
 msgstr "Pris:"
 
 #: ../base/ufos/ui/geoscape.ufo:1050
-#, fuzzy
 msgid "Start with employees"
-msgstr "Start med stab:"
+msgstr "Start med stab"
 
 #: ../base/ufos/ui/geoscape.ufo:1057
 msgid "Employees already hired at campaign start"
 msgstr "Stab allerede ansat ved kampagnestart"
 
 #: ../base/ufos/ui/geoscape.ufo:1067
-#, fuzzy
 msgid "Start with buildings"
-msgstr "Start med bygninger:"
+msgstr "Start med bygninger"
 
 #: ../base/ufos/ui/geoscape.ufo:1074
 msgid "Buildings already built in the initial base"
@@ -7918,46 +7833,40 @@ msgid "Build the base"
 msgstr "Byg basen"
 
 #: ../base/ufos/ui/geoscape.ufo:1137
-#, fuzzy
 msgid "New installation"
-msgstr "Nation"
+msgstr "Ny installation"
 
 #: ../base/ufos/ui/geoscape.ufo:1142
-#, fuzzy
 msgid "Type"
-msgstr "Type:"
+msgstr "Type"
 
 #: ../base/ufos/ui/geoscape.ufo:1149
-#, fuzzy
 msgid "Build Time"
-msgstr "Byg"
+msgstr "Konstruktionstid"
 
 #: ../base/ufos/ui/geoscape.ufo:1157
-#, fuzzy
 msgid "Cost"
-msgstr "Pris:"
+msgstr "Pris"
 
 #: ../base/ufos/ui/geoscape.ufo:1177
-#, fuzzy
 msgid "Radar tower"
-msgstr "Radar"
+msgstr "Radartårn"
 
 #: ../base/ufos/ui/geoscape.ufo:1293 client/campaign/cp_map.c:352
 msgid "Base"
 msgstr "Base"
 
 #: ../base/ufos/ui/geoscape.ufo:1301
-#, fuzzy
 msgid "0 day"
-msgstr "1 dag"
+msgstr "0 dag"
 
 #: ../base/ufos/ui/geoscape.ufo:1330
 msgid "Installation limit reached. Build more bases."
-msgstr ""
+msgstr "Installationsbegrænsning nået. Byg flere baser."
 
 #: ../base/ufos/ui/geoscape.ufo:1337
 msgid "Base limit reached."
-msgstr ""
+msgstr "Basebegrænsning nået."
 
 #: ../base/ufos/ui/geoscape.ufo:1347 ../base/ufos/ui/geoscape.ufo:1531
 #: ../base/ufos/ui/geoscape.ufo:1596 ../base/ufos/ui/main.ufo:357
@@ -7965,51 +7874,44 @@ msgid "Close"
 msgstr "Luk"
 
 #: ../base/ufos/ui/geoscape.ufo:1436 ../base/ufos/ui/geoscape.ufo:1569
-#, fuzzy
 msgid "Rename installation"
-msgstr "Nation"
+msgstr "Omdøb installation"
 
 #: ../base/ufos/ui/geoscape.ufo:1473
-#, fuzzy
 msgid "Build the radar tower"
-msgstr "Byg basen"
+msgstr "Byg radartårnet"
 
 #: ../base/ufos/ui/geoscape.ufo:1485
 msgid "New radar tower"
-msgstr ""
+msgstr "Nyt radartårn"
 
 #: ../base/ufos/ui/geoscape.ufo:1488
-#, fuzzy
 msgid "New SAM site"
-msgstr "Ny base"
+msgstr "Nyt SAM-affyringsrampe"
 
 #: ../base/ufos/ui/geoscape.ufo:1491
 msgid "New UFO yard"
-msgstr ""
+msgstr "Ny ufooplagsplads"
 
 #: ../base/ufos/ui/geoscape.ufo:1524
 msgid "No manangeable options for a radartower"
-msgstr ""
+msgstr "Ingen håndterbare indstillinger for et radartårn"
 
 #: ../base/ufos/ui/geoscape.ufo:1549
-#, fuzzy
 msgid "Installation Status"
-msgstr "Nation"
+msgstr "Installationstatus"
 
 #: ../base/ufos/ui/geoscape.ufo:1581
-#, fuzzy
 msgid "Time to build:"
-msgstr "% dag at bygge\n"
+msgstr "Byggetidsforbrug:"
 
 #: ../base/ufos/ui/geoscape.ufo:1608
-#, fuzzy
 msgid "Manage"
-msgstr "Sprog"
+msgstr "Håndter"
 
 #: ../base/ufos/ui/geoscape.ufo:1609
-#, fuzzy
 msgid "Manage installation"
-msgstr "Nation"
+msgstr "Håndter installation"
 
 #: ../base/ufos/ui/geoscape.ufo:1619 client/campaign/cp_base.c:785
 #: client/campaign/cp_base.c:795 client/campaign/cp_base.c:805
@@ -8020,28 +7922,24 @@ msgstr "Ødelæg"
 
 #: ../base/ufos/ui/geoscape.ufo:1620
 #: client/campaign/cp_installation_callbacks.c:227
-#, fuzzy
 msgid "Destroy installation"
-msgstr "Nation"
+msgstr "Ødelæg installation"
 
 #: ../base/ufos/ui/geoscape.ufo:1647
 msgid "Anti-UFO defence"
-msgstr ""
+msgstr "Antiufoforsvar"
 
 #: ../base/ufos/ui/geoscape.ufo:1655
-#, fuzzy
 msgid "Aircraft interception"
-msgstr "Forfølgelse"
+msgstr "Forfølgelse af luftfartøj"
 
 #: ../base/ufos/ui/geoscape.ufo:1660
-#, fuzzy
 msgid "SAM defence"
-msgstr "Valgt forsvar:"
+msgstr "SAM-forsvar"
 
 #: ../base/ufos/ui/geoscape.ufo:1675
-#, fuzzy
 msgid "Aircraft:"
-msgstr "Luftfartøj"
+msgstr "Luftfartøj:"
 
 #: ../base/ufos/ui/geoscape.ufo:1682 ../base/ufos/ui/geoscape.ufo:1833
 msgid "Status:"
@@ -8053,7 +7951,7 @@ msgstr "Base:"
 
 #: ../base/ufos/ui/geoscape.ufo:1738
 msgid "Surface-to-air missile site:"
-msgstr ""
+msgstr "Overflade-til-luft-missilaffyringsrampe:"
 
 #: ../base/ufos/ui/geoscape.ufo:1821
 msgid "Select aircraft"
@@ -8081,26 +7979,24 @@ msgid "Description:"
 msgstr "Beskrivelse:"
 
 #: ../base/ufos/ui/geoscape.ufo:2046
-#, fuzzy
 msgid "Pause/message settings"
-msgstr "Spilindstillinger"
+msgstr "Pause-/beskedindstillinger"
 
 #: ../base/ufos/ui/geoscape.ufo:2051
-#, fuzzy
 msgid "Apply"
-msgstr "Forsyning U"
+msgstr "Anvend"
 
 #: ../base/ufos/ui/geoscape.ufo:2052
 msgid "Apply changes"
-msgstr ""
+msgstr "Anvend ændringer"
 
 #: ../base/ufos/ui/geoscape.ufo:2065
 msgid "Revert changes"
-msgstr ""
+msgstr "Fortryd ændringer"
 
 #: ../base/ufos/ui/geoscape.ufo:2077
 msgid "Notify types:"
-msgstr ""
+msgstr "Beskedtyper:"
 
 #: ../base/ufos/ui/geoscape.ufo:2085
 msgid "Enable or disable pause for all notification types\\nPause can't be enabled without notification\\nLeft click enables pause for all, right click disables."
@@ -8126,7 +8022,7 @@ msgstr ""
 #: ../base/ufos/ui/geoscape.ufo:2693 ../base/ufos/ui/geoscape.ufo:2723
 #: ../base/ufos/ui/geoscape.ufo:2753
 msgid "enable or disable game stopping"
-msgstr ""
+msgstr "slå spilstop til eller fra"
 
 #: ../base/ufos/ui/geoscape.ufo:2164 ../base/ufos/ui/geoscape.ufo:2193
 #: ../base/ufos/ui/geoscape.ufo:2223 ../base/ufos/ui/geoscape.ufo:2253
@@ -8140,7 +8036,7 @@ msgstr ""
 #: ../base/ufos/ui/geoscape.ufo:2703 ../base/ufos/ui/geoscape.ufo:2733
 #: ../base/ufos/ui/geoscape.ufo:2763
 msgid "enable or disable displaying a notification message"
-msgstr ""
+msgstr "slå visning af beskeder til eller fra"
 
 #: ../base/ufos/ui/geoscape.ufo:2174 ../base/ufos/ui/geoscape.ufo:2203
 #: ../base/ufos/ui/geoscape.ufo:2233 ../base/ufos/ui/geoscape.ufo:2263
@@ -8154,12 +8050,11 @@ msgstr ""
 #: ../base/ufos/ui/geoscape.ufo:2713 ../base/ufos/ui/geoscape.ufo:2743
 #: ../base/ufos/ui/geoscape.ufo:2773
 msgid "enable or disable playing sound"
-msgstr ""
+msgstr "slå lyd til eller fra"
 
 #: ../base/ufos/ui/geoscape.ufo:2851
-#, fuzzy
 msgid "Geoscape options"
-msgstr "Gå til indstillinger"
+msgstr "Geoscapeindstillinger"
 
 #: ../base/ufos/ui/geoscape.ufo:2863
 msgid "Geoscape projection mode:"
@@ -8167,11 +8062,11 @@ msgstr ""
 
 #: ../base/ufos/ui/geoscape.ufo:2873
 msgid "2D"
-msgstr ""
+msgstr "2D"
 
 #: ../base/ufos/ui/geoscape.ufo:2878
 msgid "3D"
-msgstr ""
+msgstr "3D"
 
 #: ../base/ufos/ui/hire.ufo:71 ../base/ufos/ui/hire.ufo:81
 #: ../base/ufos/ui/hire.ufo:91 ../base/ufos/ui/hire.ufo:101
@@ -8189,9 +8084,8 @@ msgid "Rename your employee"
 msgstr "Giv nyt navn"
 
 #: ../base/ufos/ui/hire.ufo:459
-#, fuzzy
 msgid "Occupation"
-msgstr "Indstillinger"
+msgstr "Beskæftigelse"
 
 #: ../base/ufos/ui/hire.ufo:549
 msgid "Workers"
@@ -8310,14 +8204,12 @@ msgid "Retry this mission"
 msgstr "Spil missionen igen"
 
 #: ../base/ufos/ui/lostwon.ufo:162
-#, fuzzy
 msgid "UFO recovery"
-msgstr "Ufo indsamling"
+msgstr "Ufoindsamling"
 
 #: ../base/ufos/ui/lostwon.ufo:170
-#, fuzzy
 msgid "Store UFO"
-msgstr "Sælg ufo"
+msgstr "Opmaganiser ufo"
 
 #: ../base/ufos/ui/lostwon.ufo:175
 msgid "Sell UFO"
@@ -8329,16 +8221,15 @@ msgstr "Hent"
 
 #: ../base/ufos/ui/lostwon.ufo:236
 msgid "Begin UFO recovery process"
-msgstr "Begynd ufo-indsamling"
+msgstr "Begynd ufoindsamling"
 
 #: ../base/ufos/ui/lostwon.ufo:247
-#, fuzzy
 msgid "Replace UFO"
-msgstr "Sælg ufo"
+msgstr "Erstat ufo"
 
 #: ../base/ufos/ui/lostwon.ufo:248
 msgid "Replace stored UFO with actual recovered one"
-msgstr ""
+msgstr "Erstat opmaganiseret ufo med den nylig hentede"
 
 #: ../base/ufos/ui/lostwon.ufo:269
 msgid "Nation:"
@@ -8361,9 +8252,8 @@ msgid "Begin UFO sell process"
 msgstr "Begynd ufo salgsproces"
 
 #: ../base/ufos/ui/mailclient.ufo:22
-#, fuzzy
 msgid "Close mail"
-msgstr "Nærkamp:"
+msgstr "Luk post"
 
 #: ../base/ufos/ui/mailclient.ufo:134
 msgid "Time:"
@@ -8374,9 +8264,8 @@ msgid "Date:"
 msgstr "Dato:"
 
 #: ../base/ufos/ui/mailclient.ufo:171
-#, fuzzy
 msgid "Mark all messages read"
-msgstr "Maks. baser nået"
+msgstr "Marker alle beskeder som læst"
 
 #: ../base/ufos/ui/mailclient.ufo:563
 msgid "Leave mailclient"
@@ -8403,9 +8292,8 @@ msgid "Initial settings"
 msgstr "Oprindelige indstillinger"
 
 #: ../base/ufos/ui/main.ufo:122
-#, fuzzy
 msgid "User Information"
-msgstr "Base information"
+msgstr "Brugerinformation"
 
 #: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:582
 msgid "Volume Control"
@@ -8448,17 +8336,14 @@ msgid "Next"
 msgstr "Næste"
 
 #: ../base/ufos/ui/main.ufo:342 ../base/ufos/ui/main.ufo:355
-#, fuzzy
 msgid "Next tip"
-msgstr "Næste"
+msgstr "Næste tip"
 
 #: ../base/ufos/ui/main.ufo:358
-#, fuzzy
 msgid "Close window"
-msgstr "Luk denne besked"
+msgstr "Luk vindue"
 
 #: ../base/ufos/ui/market.ufo:81 ../base/ufos/ui/production.ufo:95
-#, fuzzy
 msgid "Craft items"
 msgstr "Flyudstyr"
 
@@ -8468,7 +8353,7 @@ msgstr "Andet"
 
 #: ../base/ufos/ui/market.ufo:93 ../base/ufos/ui/production.ufo:103
 msgid "UGV items"
-msgstr ""
+msgstr "UGV-udstyr"
 
 #: ../base/ufos/ui/market.ufo:208 ../base/ufos/ui/market.ufo:230
 #: ../base/ufos/ui/market.ufo:252 ../base/ufos/ui/market.ufo:274
@@ -8481,9 +8366,8 @@ msgstr ""
 #: ../base/ufos/ui/market.ufo:560 ../base/ufos/ui/market.ufo:582
 #: ../base/ufos/ui/market.ufo:604 ../base/ufos/ui/market.ufo:626
 #: ../base/ufos/ui/market.ufo:648 ../base/ufos/ui/market.ufo:670
-#, fuzzy
 msgid "Buy and sell item"
-msgstr "Køb eller sælg luftfartøjudstyr"
+msgstr "Køb og sælg udstyr"
 
 #: ../base/ufos/ui/market.ufo:720
 msgid "Storage (used/all):"
@@ -8499,12 +8383,11 @@ msgstr "Intet automatisk salg af udstyr"
 
 #: ../base/ufos/ui/material_editor.ufo:12
 msgid "Material editor"
-msgstr ""
+msgstr "Materialehåndtering"
 
 #: ../base/ufos/ui/material_editor.ufo:71
-#, fuzzy
 msgid "Hardness:"
-msgstr "Svær"
+msgstr "Hårdhedsgrad:"
 
 #: ../base/ufos/ui/material_editor.ufo:94
 msgid "Bump:"
@@ -8520,78 +8403,69 @@ msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:242
 msgid "+"
-msgstr ""
+msgstr "+"
 
 #: ../base/ufos/ui/material_editor.ufo:253
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: ../base/ufos/ui/material_editor.ufo:278
 #: ../base/ufos/ui/material_editor.ufo:381
 msgid "S:"
-msgstr ""
+msgstr "S:"
 
-# Estimated time of arrival, anslået ankomsttidspunkt
 #: ../base/ufos/ui/material_editor.ufo:302
 #: ../base/ufos/ui/material_editor.ufo:405
-#, fuzzy
 msgid "T:"
-msgstr "AAT:"
+msgstr "T:"
 
 #: ../base/ufos/ui/material_editor.ufo:333
 msgid "Ds:"
-msgstr ""
+msgstr "Ds:"
 
 #: ../base/ufos/ui/material_editor.ufo:357
-#, fuzzy
 msgid "Dt:"
-msgstr "Dato:"
+msgstr "Dt:"
 
 #: ../base/ufos/ui/material_editor.ufo:436
 #: ../base/ufos/ui/material_editor.ufo:491
 #: ../base/ufos/ui/material_editor.ufo:594
 msgid "Hz:"
-msgstr ""
+msgstr "Hz:"
 
 #: ../base/ufos/ui/material_editor.ufo:460
 #: ../base/ufos/ui/material_editor.ufo:515
 #: ../base/ufos/ui/material_editor.ufo:563
 msgid "DHz:"
-msgstr ""
+msgstr "DHz"
 
 #: ../base/ufos/ui/material_editor.ufo:539
 msgid "Amp:"
-msgstr ""
+msgstr "Amp:"
 
 #: ../base/ufos/ui/material_editor.ufo:618
-#, fuzzy
 msgid "Deg:"
-msgstr "Klar"
+msgstr "Deg:"
 
 #: ../base/ufos/ui/material_editor.ufo:654
-#, fuzzy
 msgid "Stretch"
-msgstr "Styrke:"
+msgstr "Træk"
 
 #: ../base/ufos/ui/material_editor.ufo:658
-#, fuzzy
 msgid "Pulse"
-msgstr "Base"
+msgstr "Puls"
 
 #: ../base/ufos/ui/material_editor.ufo:662
-#, fuzzy
 msgid "Scroll"
-msgstr "Rul op"
+msgstr "Rul"
 
 #: ../base/ufos/ui/material_editor.ufo:666
-#, fuzzy
 msgid "Rotate"
-msgstr "Bemærk"
+msgstr "Roter"
 
 #: ../base/ufos/ui/material_editor.ufo:670
-#, fuzzy
 msgid "Scale"
-msgstr "Gem"
+msgstr "Skaler"
 
 #: ../base/ufos/ui/menu_irc.ufo:19 ../base/ufos/ui/multiplayer.ufo:73
 #: ../base/ufos/ui/multiplayer.ufo:124 ../base/ufos/ui/multiplayer.ufo:1295
@@ -8617,9 +8491,8 @@ msgid "Users"
 msgstr "Brugere"
 
 #: ../base/ufos/ui/menu_irc.ufo:189
-#, fuzzy
 msgid "Not connected"
-msgstr "Ingen spillere forbundet\n"
+msgstr "Ikke forbundet"
 
 #: ../base/ufos/ui/menu_irc.ufo:194
 msgid "You are not connected to the lobby. Do you want to connect?"
@@ -8647,15 +8520,13 @@ msgid "Create"
 msgstr "Opret"
 
 #: ../base/ufos/ui/multiplayer.ufo:107
-#, fuzzy
 msgid "Internet/Lan"
-msgstr "Forfølgelse"
+msgstr "Internet/Lan"
 
 # # cl_campaign.c
 #: ../base/ufos/ui/multiplayer.ufo:112
-#, fuzzy
 msgid "Lan"
-msgstr "Jan"
+msgstr "Lan"
 
 #: ../base/ufos/ui/multiplayer.ufo:118 ../base/ufos/ui/multiplayer.ufo:238
 msgid "Bookmark"
@@ -8706,7 +8577,7 @@ msgstr "Kort"
 
 #: ../base/ufos/ui/multiplayer.ufo:537
 msgid "Security/registration"
-msgstr ""
+msgstr "Sikkerhed/registrering"
 
 #: ../base/ufos/ui/multiplayer.ufo:554
 msgid "Hostname:"
@@ -8721,19 +8592,16 @@ msgid "Teamplay:"
 msgstr "Holdspil:"
 
 #: ../base/ufos/ui/multiplayer.ufo:644
-#, fuzzy
 msgid "Preview:"
-msgstr "Pris:"
+msgstr "Forhåndsvisning:"
 
 #: ../base/ufos/ui/multiplayer.ufo:688
-#, fuzzy
 msgid "Map name:"
-msgstr "Sprog"
+msgstr "Kortnavn:"
 
 #: ../base/ufos/ui/multiplayer.ufo:733
-#, fuzzy
 msgid "Allowed gametype:"
-msgstr "Rumvæsen-art:"
+msgstr "Tilladt spiltype:"
 
 #: ../base/ufos/ui/multiplayer.ufo:756 ../base/ufos/ui/skirmish.ufo:99
 msgid "Day version:"
@@ -8821,7 +8689,7 @@ msgstr "Næste ledige hold"
 
 #: ../base/ufos/ui/multiplayer.ufo:1188
 msgid "Previous free team"
-msgstr "Tidligere ledige hold"
+msgstr "Forrige ledige hold"
 
 #: ../base/ufos/ui/multiplayer.ufo:1199
 msgid "Finish the teamselection and start the game"
@@ -8864,23 +8732,20 @@ msgid "Go into the lobby"
 msgstr "Gå til lobbyen"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:910
-#, fuzzy
 msgid "Generate a new random team"
-msgstr "Opret et nyt hold"
+msgstr "Opret et nyt tilfældigt hold"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:916
 msgid "New"
 msgstr "Nyt"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:923
-#, fuzzy
 msgid "Save the current team"
-msgstr "Gem hold til nuværende valgt plads"
+msgstr "Gem det nuværende hold"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:934 ../base/ufos/ui/skirmish.ufo:217
-#, fuzzy
 msgid "Team:"
-msgstr "Hold"
+msgstr "Hold:"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:946 ../base/ufos/ui/skirmish.ufo:231
 #: client/cl_game_campaign.c:198
@@ -8888,14 +8753,12 @@ msgid "Human"
 msgstr "Menneske"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:951 ../base/ufos/ui/skirmish.ufo:236
-#, fuzzy
 msgid "Alien"
-msgstr "Rumvæsener"
+msgstr "Rumvæsen"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:980
-#, fuzzy
 msgid "Save your team"
-msgstr "Hyr dit første hold"
+msgstr "Gem dit hold"
 
 #: ../base/ufos/ui/multiplayeringame.ufo:72
 msgid "Abort Game"
@@ -8914,21 +8777,20 @@ msgid "Sound"
 msgstr "Lyd"
 
 #: ../base/ufos/ui/options.ufo:85
-#, fuzzy
 msgid "Activate Sound"
-msgstr "Aktiver snak"
+msgstr "Aktiver lyd"
 
 #: ../base/ufos/ui/options.ufo:86
 msgid "Sound is currently not activated. Click here to activate it."
-msgstr ""
+msgstr "Lyd er ikke slået til. Tast her for at aktivere lyden."
 
 #: ../base/ufos/ui/options.ufo:100
 msgid "Input"
-msgstr ""
+msgstr "Inddata"
 
 #: ../base/ufos/ui/options.ufo:145
 msgid "Video settings"
-msgstr "Video-indstillinger"
+msgstr "Videoindstillinger"
 
 #: ../base/ufos/ui/options.ufo:154
 msgid "Resolution:"
@@ -8956,7 +8818,7 @@ msgstr "Fuldskærm:"
 
 #: ../base/ufos/ui/options.ufo:226
 msgid "Texture compression:"
-msgstr "Tekstur kompression:"
+msgstr "Teksturkompression:"
 
 #: ../base/ufos/ui/options.ufo:240
 msgid "Show FPS:"
@@ -8964,7 +8826,7 @@ msgstr "Vis FPS:"
 
 #: ../base/ufos/ui/options.ufo:254
 msgid "Texture Lod:"
-msgstr "Tekstur lod:"
+msgstr "Teksturlod:"
 
 #: ../base/ufos/ui/options.ufo:268
 msgid "Isometric Mode:"
@@ -8972,12 +8834,11 @@ msgstr "Isometrisk indstilling:"
 
 #: ../base/ufos/ui/options.ufo:282
 msgid "GLSL shaders:"
-msgstr ""
+msgstr "GLSL shaders:"
 
 #: ../base/ufos/ui/options.ufo:296
-#, fuzzy
 msgid "Realtime lighting:"
-msgstr "Per pixel lys:"
+msgstr "Lyssætning:"
 
 #: ../base/ufos/ui/options.ufo:310
 msgid "Weather effects:"
@@ -8985,7 +8846,7 @@ msgstr "Vejreffekter:"
 
 #: ../base/ufos/ui/options.ufo:324
 msgid "Vertex buffers:"
-msgstr ""
+msgstr "Vertex buffere:"
 
 #: ../base/ufos/ui/options.ufo:338
 msgid "Multisample buffers:"
@@ -9013,7 +8874,7 @@ msgstr "Skala for lyskort:"
 
 #: ../base/ufos/ui/options.ufo:469
 msgid "Strech the screen with a 4:3 ratio:"
-msgstr ""
+msgstr "Træk skærmen med et 4:3 forhold:"
 
 #: ../base/ufos/ui/options.ufo:489 ../base/ufos/ui/options.ufo:518
 msgid "Low"
@@ -9053,9 +8914,8 @@ msgid "Restart sound to change the settings"
 msgstr "Genstart lyd for at ændre indstillinger"
 
 #: ../base/ufos/ui/options.ufo:676
-#, fuzzy
 msgid "Enable sound:"
-msgstr "Afslut runde"
+msgstr "Slå lyd til:"
 
 #: ../base/ufos/ui/options.ufo:702
 msgid "Show key bindings"
@@ -9110,9 +8970,8 @@ msgid "Use 3D geoscape"
 msgstr "Anvend 3D geoscape"
 
 #: ../base/ufos/ui/options.ufo:929
-#, fuzzy
 msgid "Show tip of the day:"
-msgstr "Vis dagens tip"
+msgstr "Vis dagens tip:"
 
 #: ../base/ufos/ui/options.ufo:947
 msgid "Precache models:"
@@ -9123,52 +8982,44 @@ msgid "Precache models (faster menus)"
 msgstr "Læg modeller i mellemlager (hurtigere menuer)"
 
 #: ../base/ufos/ui/options.ufo:965
-#, fuzzy
 msgid "Actor speed:"
-msgstr "Rul op"
+msgstr "Skuespillerhastighed:"
 
 #: ../base/ufos/ui/options.ufo:999
-#, fuzzy
 msgid "Input settings"
-msgstr "Oprindelige indstillinger"
+msgstr "Inddataopsætning"
 
 #: ../base/ufos/ui/options.ufo:1011
-#, fuzzy
 msgid "Camera"
-msgstr "Navn"
+msgstr "Kamera"
 
 #: ../base/ufos/ui/options.ufo:1017
-#, fuzzy
 msgid "Scroll Speed:"
-msgstr "Rul op"
+msgstr "Markørens rullehastighed:"
 
 #: ../base/ufos/ui/options.ufo:1042
-#, fuzzy
 msgid "Rotation Speed:"
-msgstr "Joystick fart:"
+msgstr "Rotationhastighed:"
 
 #: ../base/ufos/ui/options.ufo:1067
 msgid "Move Acceleration:"
-msgstr ""
+msgstr "Bevægelsesacceleration:"
 
 #: ../base/ufos/ui/options.ufo:1092
-#, fuzzy
 msgid "Joystick settings:"
-msgstr "Joystick fart:"
+msgstr "Joystickopsætning:"
 
 #: ../base/ufos/ui/options.ufo:1102
-#, fuzzy
 msgid "Threshold:"
-msgstr "Joystick følsomhed:"
+msgstr "Grænseværdi:"
 
 #: ../base/ufos/ui/options.ufo:1152
 msgid "Keys"
 msgstr "Nøgler"
 
 #: ../base/ufos/ui/options.ufo:1172 client/cl_hud.c:101
-#, fuzzy
 msgid "Autostand"
-msgstr "Enestående"
+msgstr "Autostand"
 
 #: ../base/ufos/ui/options.ufo:1184 ../base/ufos/ui/options.ufo:1212
 #: po/OTHER_STRINGS:4
@@ -9189,9 +9040,8 @@ msgid "Only for moving"
 msgstr "Kun for bevægelse"
 
 #: ../base/ufos/ui/options.ufo:1233
-#, fuzzy
 msgid "Joystick:"
-msgstr "Joystick fart:"
+msgstr "Joystick:"
 
 #: ../base/ufos/ui/options.ufo:1257
 msgid "Maintain resolution"
@@ -9210,9 +9060,8 @@ msgid "Change the resolution"
 msgstr "Ændr opløsningen"
 
 #: ../base/ufos/ui/production.ufo:111
-#, fuzzy
 msgid "Disassembly"
-msgstr "Demontere"
+msgstr "Demonter"
 
 #: ../base/ufos/ui/production.ufo:185
 msgid "Workers (ready/all):"
@@ -9231,14 +9080,12 @@ msgid "Production limit:"
 msgstr "Produktionsgrænse:"
 
 #: ../base/ufos/ui/production.ufo:379 ../base/ufos/ui/production.ufo:390
-#, fuzzy
 msgid "Change the production amount"
-msgstr "Ændr opløsningen"
+msgstr "Ændr produktionsantallet"
 
 #: ../base/ufos/ui/production.ufo:402
-#, fuzzy
 msgid "Start this production"
-msgstr "Stop produktion"
+msgstr "Start denne produktion"
 
 #: ../base/ufos/ui/production.ufo:413
 msgid "Stop production"
@@ -9265,9 +9112,8 @@ msgid "Show research proposal"
 msgstr "Vis forskningsforslag"
 
 #: ../base/ufos/ui/research.ufo:203
-#, fuzzy
 msgid "Switch to another base"
-msgstr "Skift til den næste base"
+msgstr "Skift til en anden base"
 
 #: ../base/ufos/ui/research.ufo:355 ../base/ufos/ui/research.ufo:366
 #: ../base/ufos/ui/research.ufo:377 ../base/ufos/ui/research.ufo:388
@@ -9280,9 +9126,8 @@ msgstr "Skift til den næste base"
 #: ../base/ufos/ui/research.ufo:531 ../base/ufos/ui/research.ufo:542
 #: ../base/ufos/ui/research.ufo:553 ../base/ufos/ui/research.ufo:564
 #: ../base/ufos/ui/research.ufo:575 ../base/ufos/ui/research.ufo:586
-#, fuzzy
 msgid "Add and remove scientist"
-msgstr "Fjern videnskabsmand"
+msgstr "Tilføj og fjern videnskabsmand"
 
 #: ../base/ufos/ui/research.ufo:600
 msgid "Base Info"
@@ -9327,7 +9172,7 @@ msgstr "Maks computerspillere i dette spil"
 
 #: ../base/ufos/ui/skirmish.ufo:220
 msgid "Select which side you want to play with"
-msgstr ""
+msgstr "Vælg hvilken side du ønsker at spille"
 
 #: ../base/ufos/ui/stats.ufo:37
 msgid "Missions"
@@ -9338,9 +9183,8 @@ msgid "Bases"
 msgstr "Baser"
 
 #: ../base/ufos/ui/stats.ufo:75
-#, fuzzy
 msgid "Installations"
-msgstr "Nation"
+msgstr "Installationer"
 
 #: ../base/ufos/ui/stats.ufo:94 ../base/ufos/ui/transfer.ufo:86
 msgid "Employees"
@@ -9355,9 +9199,8 @@ msgid "Nations"
 msgstr "Nationer"
 
 #: ../base/ufos/ui/stats.ufo:140
-#, fuzzy
 msgid "Click for funding graphs"
-msgstr "Klik for at udføre obduktion"
+msgstr "Klik for at se indtægtsgrafer"
 
 #: ../base/ufos/ui/stats.ufo:203
 msgid "Nation Statistics"
@@ -9591,9 +9434,8 @@ msgid "Machine Gun Magazine"
 msgstr "Maskinpistol magasin"
 
 #: ../base/ufos/weapons_human.ufo:246
-#, fuzzy
 msgid "5-Shot Burst"
-msgstr "Kort salve"
+msgstr "5-skuds salve"
 
 #: ../base/ufos/weapons_human.ufo:286 ../base/ufos/weapons_multiplayer.ufo:88
 #: ../base/ufos/weapons_multiplayer.ufo:300
@@ -9774,9 +9616,8 @@ msgid "Heavy Laser"
 msgstr "Tung laser"
 
 #: ../base/ufos/weapons_laser.ufo:76
-#, fuzzy
 msgid "Electro Laser"
-msgstr "Vælg base"
+msgstr "Elektrolaser"
 
 #: ../base/ufos/weapons_laser.ufo:96
 msgid "D-F Cartridge"
@@ -9793,9 +9634,8 @@ msgid "Pulsed Fire"
 msgstr "Pulsild"
 
 #: ../base/ufos/weapons_laser.ufo:241
-#, fuzzy
 msgid "Stun Shot"
-msgstr "Lynskud"
+msgstr "Bedøvelsesskud"
 
 #: ../base/ufos/weapons_melee.ufo:6
 msgid "Combat Knife"
@@ -9819,7 +9659,7 @@ msgstr "Dobbelt portion"
 
 #: ../base/ufos/weapons_melee.ufo:181
 msgid "Bludgeon"
-msgstr ""
+msgstr "Bludgeon"
 
 #: ../base/ufos/weapons_melee.ufo:204
 msgid "Kerrblade"
@@ -9854,19 +9694,16 @@ msgid "Double Shot"
 msgstr "Dobbeltskyd"
 
 #: ../base/ufos/weapons_multiplayer.ufo:199
-#, fuzzy
 msgid "VHS Assault Rifle"
-msgstr "Angrebsriffel"
+msgstr "VHS-angrebsriffel"
 
 #: ../base/ufos/weapons_multiplayer.ufo:222
 msgid "XAW95"
-msgstr ""
+msgstr "XAW95"
 
-# LMG -> let maskingevær
 #: ../base/ufos/weapons_multiplayer.ufo:243
-#, fuzzy
 msgid "XAW95 Magazine"
-msgstr "LMG magasin"
+msgstr "XAW95-magasin"
 
 #: ../base/ufos/weapons_multiplayer.ufo:260 ../base/ufos/weapons_ugv.ufo:80
 msgid "10-Round Burst"
@@ -9955,56 +9792,46 @@ msgid "Nothing - should not be displayed"
 msgstr "Intet - bør ikke vises"
 
 #: client/campaign/cp_aircraft.c:452
-#, fuzzy
 msgid "at home base"
-msgstr "På basen"
+msgstr "på basen"
 
 #: client/campaign/cp_aircraft.c:454
-#, fuzzy
 msgid "refuelling"
-msgstr "Genopfyld"
+msgstr "genopfylder"
 
 #: client/campaign/cp_aircraft.c:456
-#, fuzzy
 msgid "idle"
-msgstr "Ledig"
+msgstr "ledig"
 
 #: client/campaign/cp_aircraft.c:458
-#, fuzzy
 msgid "in transit"
-msgstr "I transit"
+msgstr "i transit"
 
 #: client/campaign/cp_aircraft.c:460
-#, fuzzy
 msgid "enroute to mission"
-msgstr "Automission"
+msgstr "på vej på mission"
 
 #: client/campaign/cp_aircraft.c:462
-#, fuzzy
 msgid "pursuing a UFO"
-msgstr "Forfølger en ufo"
+msgstr "forfølger en ufo"
 
 #: client/campaign/cp_aircraft.c:464
-#, fuzzy
 msgid "ready to drop soldiers"
-msgstr "Omdøb din soldat"
+msgstr "klar til landsætning af soldater"
 
 # Kunne også være imødegåelse, opsnappen, beslaglæggelse, opfangning.
 #: client/campaign/cp_aircraft.c:466
-#, fuzzy
 msgid "intercepting a UFO"
-msgstr "På afskæring"
+msgstr "Afskærer en ufo"
 
 #: client/campaign/cp_aircraft.c:468
-#, fuzzy
 msgid "enroute to new home base"
-msgstr "Opret et nyt hold"
+msgstr "på vej mod ny hjemmebase"
 
 # # in game
 #: client/campaign/cp_aircraft.c:470
-#, fuzzy
 msgid "returning to base"
-msgstr "Nuværende base:"
+msgstr "returnerer til base"
 
 # kan ikke være kortrækkende jagerfly, da det bliver for langt og
 # dermed overskriver antallet til højre for teksten.
@@ -10023,7 +9850,7 @@ msgstr "Ufo"
 #: client/campaign/cp_aircraft.c:746
 #, c-format
 msgid "A new (a %s) class craft is ready in base %s"
-msgstr ""
+msgstr "Et nyt (en/et %s) klasseluftfartøj er klar på base %s"
 
 #: client/campaign/cp_aircraft.c:747 client/campaign/cp_aircraft.c:1192
 #: client/campaign/cp_aircraft.c:1200 client/campaign/cp_aircraft.c:1303
@@ -10051,10 +9878,10 @@ msgstr ""
 #: client/campaign/cp_campaign.c:1664 client/campaign/cp_campaign.c:1666
 #: client/campaign/cp_installation_callbacks.c:135
 #: client/campaign/cp_installation_callbacks.c:182
-#: client/campaign/cp_mapfightequip.c:303
-#: client/campaign/cp_mapfightequip.c:324
-#: client/campaign/cp_mapfightequip.c:330
-#: client/campaign/cp_mapfightequip.c:342
+#: client/campaign/cp_mapfightequip.c:313
+#: client/campaign/cp_mapfightequip.c:334
+#: client/campaign/cp_mapfightequip.c:340
+#: client/campaign/cp_mapfightequip.c:352
 #: client/campaign/cp_market_callbacks.c:586
 #: client/campaign/cp_market_callbacks.c:591 client/campaign/cp_missions.c:723
 #: client/campaign/cp_missions.c:1153 client/campaign/cp_nations.c:85
@@ -10081,44 +9908,42 @@ msgid "Notice"
 msgstr "Meddelelse"
 
 #: client/campaign/cp_aircraft.c:812
-#, fuzzy
 msgid "No operational hangars at that base."
-msgstr "Ingen hangarer på denne base"
+msgstr "Ingen operatonsklare hangarer på denne base."
 
 #: client/campaign/cp_aircraft.c:816
-#, fuzzy
 msgid "No free hangars at that base."
-msgstr "Ingen hangarer på denne base"
+msgstr "Ingen ledige hangarer på denne base."
 
 #: client/campaign/cp_aircraft.c:819
 msgid "Insufficient free crew quarter space at that base."
-msgstr ""
+msgstr "Utilstrækkelig ledig beboelsesplads på den base."
 
 #: client/campaign/cp_aircraft.c:822
 msgid "Insufficient storage space at that base."
-msgstr ""
+msgstr "Utilstrækkelig lagerkapacitet på den base."
 
 #: client/campaign/cp_aircraft.c:826
 msgid "That base is beyond this aircraft's range."
-msgstr ""
+msgstr "Den base er udenfor dette luftfartøjs rækkevidde."
 
 #: client/campaign/cp_aircraft.c:1192
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has refuelled at base %s."
-msgstr "Dit landingsfly er næsten tomt og returnerer til basen"
+msgstr "Luffartøj %s er blevet optanket på base %s."
 
 #: client/campaign/cp_aircraft.c:1200
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s is low on fuel and must return to base."
-msgstr "Dit landingsfly er næsten tomt og returnerer til basen"
+msgstr "Luftfartøj %s har lavt brændstofniveau og må returnere til basen."
 
 #: client/campaign/cp_aircraft.c:1303
 msgid "Assign one or more soldiers to this aircraft first."
-msgstr ""
+msgstr "Tildel først en eller flere soldater til dette luftfartøj."
 
 #: client/campaign/cp_aircraft.c:1327
 msgid "Insufficient fuel."
-msgstr ""
+msgstr "Ikke nok brændstof."
 
 #: client/campaign/cp_aircraft.c:2119
 #, fuzzy, c-format
@@ -10852,122 +10677,117 @@ msgstr "%i %s %02i"
 msgid "You've got a new mail: %s"
 msgstr "Du har ny e-post: %s"
 
-#: client/campaign/cp_fightequip_callbacks.c:365
+#: client/campaign/cp_fightequip_callbacks.c:169
 msgid "Weapons"
 msgstr "Våben"
 
-#: client/campaign/cp_fightequip_callbacks.c:369
+#: client/campaign/cp_fightequip_callbacks.c:173
 msgid "Items"
 msgstr "Udstyr"
 
-#: client/campaign/cp_fightequip_callbacks.c:372
+#: client/campaign/cp_fightequip_callbacks.c:176
 #, fuzzy
 msgid "Ammo"
 msgstr "Ammo:\t%i\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:374 client/campaign/cp_map.c:378
+#: client/campaign/cp_fightequip_callbacks.c:178 client/campaign/cp_map.c:378
 msgid "Unknown"
 msgstr "Ukendt"
 
-#: client/campaign/cp_fightequip_callbacks.c:661
-#, fuzzy
-msgid "No defence of this type in this installation\n"
-msgstr "Intet forsvar af denne type på denne base\n"
-
-#: client/campaign/cp_fightequip_callbacks.c:665
-#: client/campaign/cp_fightequip_callbacks.c:679
-#: client/campaign/cp_fightequip_callbacks.c:693
-#, c-format
-msgid "Slot %i:\tempty\n"
-msgstr "Plads %i:\tempty\n"
-
-#: client/campaign/cp_fightequip_callbacks.c:668
-#: client/campaign/cp_fightequip_callbacks.c:682
-#: client/campaign/cp_fightequip_callbacks.c:696
-#, c-format
-msgid "Slot %i:\t%s\n"
-msgstr "Plads %i:\t%s\n"
-
-#: client/campaign/cp_fightequip_callbacks.c:675
-#: client/campaign/cp_fightequip_callbacks.c:689
-#, fuzzy
-msgid "No defence of this type in this base\n"
-msgstr "Intet forsvar af denne type på denne base\n"
-
-#: client/campaign/cp_fightequip_callbacks.c:709
-#, fuzzy
-msgid "No defence system assigned.\n"
-msgstr "Intet forsvarssystem tildelt.\n"
-
-#: client/campaign/cp_fightequip_callbacks.c:718
-#, fuzzy
-msgid "This defence system is functional.\n"
-msgstr "Dette forsvarssystem er funktionsdygtigt.\n"
-
-#: client/campaign/cp_fightequip_callbacks.c:720
-#, fuzzy, c-format
-msgid "This defence system will be installed in %i hours.\n"
-msgstr "Dette forsvarssystem vil blive installeret om %i timer.\n"
-
-#: client/campaign/cp_fightequip_callbacks.c:723
-#: client/campaign/cp_fightequip_callbacks.c:852
-#, fuzzy, c-format
-msgid "%s will be removed in %i hours.\n"
-msgstr "Dette udstyr vil blive fjernet om %i timer.\n"
-
-#: client/campaign/cp_fightequip_callbacks.c:725
-#: client/campaign/cp_fightequip_callbacks.c:854
-#, fuzzy, c-format
-msgid "%s will be installed in %i hours.\n"
-msgstr "Dette udstyr vil være installeret om %i timer.\n"
-
-#: client/campaign/cp_fightequip_callbacks.c:728
-#, fuzzy, c-format
-msgid "This defence system will be removed in %i hours.\n"
-msgstr "Dette forsvarssystem vil blive fjernet om %i timer.\n"
-
-#: client/campaign/cp_fightequip_callbacks.c:739
-#, fuzzy
-msgid "No ammo assigned to this defence system."
-msgstr "Intet ammo er tildelt dette forsvarssystem."
-
-#: client/campaign/cp_fightequip_callbacks.c:743
-#, fuzzy
-msgid " (unlimited missiles)"
-msgstr " (%i missil tilbage)"
-
-#: client/campaign/cp_fightequip_callbacks.c:838
+#: client/campaign/cp_fightequip_callbacks.c:397
 msgid "No item assigned.\n"
 msgstr "Intet udstyr er tildelt.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:839
+#: client/campaign/cp_fightequip_callbacks.c:398
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "Denne plads er til %s eller mindre udstyr."
 
-#: client/campaign/cp_fightequip_callbacks.c:847
+#: client/campaign/cp_fightequip_callbacks.c:406
 msgid "This item is functional.\n"
 msgstr "Dette udstyr er funktionelt.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:849
+#: client/campaign/cp_fightequip_callbacks.c:408
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "Dette udstyr vil være installeret om %i timer.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:857
+#: client/campaign/cp_fightequip_callbacks.c:411
+#, fuzzy, c-format
+msgid "%s will be removed in %i hours.\n"
+msgstr "Dette udstyr vil blive fjernet om %i timer.\n"
+
+#: client/campaign/cp_fightequip_callbacks.c:413
+#, fuzzy, c-format
+msgid "%s will be installed in %i hours.\n"
+msgstr "Dette udstyr vil være installeret om %i timer.\n"
+
+#: client/campaign/cp_fightequip_callbacks.c:416
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "Dette udstyr vil blive fjernet om %i timer.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:866
+#: client/campaign/cp_fightequip_callbacks.c:425
 msgid "No ammo assigned to this weapon."
 msgstr "Intet ammo tildelt dette våben."
 
-#: client/campaign/cp_fightequip_callbacks.c:874
-#: client/campaign/cp_fightequip_callbacks.c:879
+#: client/campaign/cp_fightequip_callbacks.c:433
+#: client/campaign/cp_fightequip_callbacks.c:438
 #, fuzzy
 msgid " (unlimited ammos)"
 msgstr " (%i missil tilbage)"
+
+#: client/campaign/cp_fightequip_callbacks.c:957
+#, fuzzy
+msgid "No defence of this type in this installation"
+msgstr "Intet forsvar af denne type på denne base\n"
+
+#: client/campaign/cp_fightequip_callbacks.c:963
+#: client/campaign/cp_fightequip_callbacks.c:991
+#: client/campaign/cp_fightequip_callbacks.c:1019
+#, fuzzy, c-format
+msgid "Slot %i:\tempty"
+msgstr "Plads %i:\tempty\n"
+
+#: client/campaign/cp_fightequip_callbacks.c:969
+#: client/campaign/cp_fightequip_callbacks.c:997
+#: client/campaign/cp_fightequip_callbacks.c:1025
+#, fuzzy
+msgid "Working"
+msgstr "Arbejder 100 %"
+
+#: client/campaign/cp_fightequip_callbacks.c:971
+#: client/campaign/cp_fightequip_callbacks.c:999
+#: client/campaign/cp_fightequip_callbacks.c:1027
+#, fuzzy
+msgid "Installing"
+msgstr "Nation"
+
+#: client/campaign/cp_fightequip_callbacks.c:973
+#: client/campaign/cp_fightequip_callbacks.c:1001
+#: client/campaign/cp_fightequip_callbacks.c:1029
+#, fuzzy
+msgid "Replacing"
+msgstr "Forbindelser:"
+
+#: client/campaign/cp_fightequip_callbacks.c:975
+#: client/campaign/cp_fightequip_callbacks.c:1003
+#: client/campaign/cp_fightequip_callbacks.c:1031
+msgid "Removing"
+msgstr ""
+
+#: client/campaign/cp_fightequip_callbacks.c:977
+#: client/campaign/cp_fightequip_callbacks.c:1005
+#: client/campaign/cp_fightequip_callbacks.c:1033
+#, fuzzy, c-format
+msgid "Slot %i:\t%s (%s)"
+msgstr "Plads %i:\t%s\n"
+
+#: client/campaign/cp_fightequip_callbacks.c:985
+#: client/campaign/cp_fightequip_callbacks.c:1013
+#, fuzzy
+msgid "No defence of this type in this base"
+msgstr "Intet forsvar af denne type på denne base\n"
 
 #: client/campaign/cp_installation.c:237
 #, fuzzy, c-format
@@ -11124,54 +10944,54 @@ msgstr "Afstand til mål:\t\t%.0f\n"
 msgid "ETA:\t%sh\n"
 msgstr "AAT:\t%s\n"
 
-#: client/campaign/cp_mapfightequip.c:294
+#: client/campaign/cp_mapfightequip.c:304
 #, c-format
 msgid "%s was successfully installed into aircraft %s at base %s."
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:297
+#: client/campaign/cp_mapfightequip.c:307
 #, fuzzy, c-format
 msgid "%s was successfully installed at installation %s."
 msgstr "Flyudstyr blev med succes installeret."
 
-#: client/campaign/cp_mapfightequip.c:300
+#: client/campaign/cp_mapfightequip.c:310
 #, fuzzy, c-format
 msgid "%s was successfully installed at base %s."
 msgstr "Flyudstyr blev med succes installeret."
 
-#: client/campaign/cp_mapfightequip.c:322
+#: client/campaign/cp_mapfightequip.c:332
 #, c-format
 msgid "%s was successfully removed from aircraft %s at base %s."
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:328
+#: client/campaign/cp_mapfightequip.c:338
 #, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at base %s"
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:336
+#: client/campaign/cp_mapfightequip.c:346
 #, c-format
 msgid "%s was successfully removed from installation %s."
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:339
+#: client/campaign/cp_mapfightequip.c:349
 #, fuzzy, c-format
 msgid "%s was successfully removed from base %s."
 msgstr "Flyudstyr blev med succes installeret."
 
-#: client/campaign/cp_mapfightequip.c:936
+#: client/campaign/cp_mapfightequip.c:1036
 msgid "Light weight"
 msgstr "Let vægt"
 
-#: client/campaign/cp_mapfightequip.c:939
+#: client/campaign/cp_mapfightequip.c:1039
 msgid "Medium weight"
 msgstr "Mellem vægt"
 
-#: client/campaign/cp_mapfightequip.c:942
+#: client/campaign/cp_mapfightequip.c:1042
 msgid "Heavy weight"
 msgstr "Tung vægt"
 
-#: client/campaign/cp_mapfightequip.c:945
+#: client/campaign/cp_mapfightequip.c:1045
 msgid "Unknown weight"
 msgstr "Ukendt vægt"
 
@@ -13767,60 +13587,60 @@ msgstr "Kan ikke udføre aktion - ikke nok tidsenheder!\n"
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Kan ikke udføre aktion - våben er allerede ladt med den samme ammunition!\n"
 
-#: game/g_client.c:1701
+#: game/g_client.c:1700
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Rystet for nuværende, får ikke vagten ned.\n"
 
-#: game/g_client.c:1764
+#: game/g_client.c:1763
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s går i panik!\n"
 
-#: game/g_client.c:1826
+#: game/g_client.c:1825
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s er gået amok.\n"
 
-#: game/g_client.c:1828
+#: game/g_client.c:1827
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s er gået bærserk!\n"
 
-#: game/g_client.c:1888
+#: game/g_client.c:1887
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s er rystet.\n"
 
-#: game/g_client.c:2424 game/g_svcmds.c:348
+#: game/g_client.c:2423 game/g_svcmds.c:348
 #, c-format
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr "Hold %i (%s) får den første runde.\n"
 
-#: game/g_client.c:2691
+#: game/g_client.c:2690
 msgid "4 minutes left until forced round end\n"
 msgstr "4 minutter tilbage før runden afsluttes\n"
 
-#: game/g_client.c:2694
+#: game/g_client.c:2693
 msgid "3 minutes left until forced round end\n"
 msgstr "3 minutter tilbage før runden afsluttes\n"
 
-#: game/g_client.c:2697
+#: game/g_client.c:2696
 msgid "2 minutes left until forced round end\n"
 msgstr "2 minutter tilbage før runden afsluttes\n"
 
-#: game/g_client.c:2700
+#: game/g_client.c:2699
 msgid "1 minute left until forced round end\n"
 msgstr "1 minut tilbage før runden afsluttes\n"
 
-#: game/g_client.c:2703
+#: game/g_client.c:2702
 msgid "30 seconds left until forced round end\n"
 msgstr "30 sekunder tilbage før runden afsluttes\n"
 
-#: game/g_client.c:2706
+#: game/g_client.c:2705
 msgid "15 seconds left until forced round end\n"
 msgstr "15 sekunder tilbage før runden afsluttes\n"
 
-#: game/g_client.c:2714
+#: game/g_client.c:2713
 msgid "Current active team hit the max round time\n"
 msgstr "Nuværende aktive hold rammer maks rundetiden\n"
 
@@ -13905,6 +13725,67 @@ msgstr "Græsk"
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr ""
+
+#~ msgid "Your are changing this defence system"
+#~ msgstr "Du ændrer dette forsvarssystem"
+
+#~ msgid "Available defence:"
+#~ msgstr "Tilgængelig forsvar:"
+
+#~ msgid "Selected defence:"
+#~ msgstr "Valgt forsvar:"
+
+#~ msgid "Choose missile battery"
+#~ msgstr "Vælg missilbatteri"
+
+#~ msgid "Laser"
+#~ msgstr "Laser"
+
+#~ msgid "Choose laser battery"
+#~ msgstr "Vælg laserbatteri"
+
+#~ msgid "Install selected defence system"
+#~ msgstr "Installer valgt forsvarssystem"
+
+#~ msgid "Remove this defence system"
+#~ msgstr "Fjern dette forsvarssystem"
+
+#~ msgid "Choose defence system to build"
+#~ msgstr "Vælg hvilket forsvarssystem der skal bygges"
+
+#~ msgid "Change ammo in the defence system"
+#~ msgstr "Ændr ammo i forsvarssystemet"
+
+# # in game
+#~ msgid "Current defence system"
+#~ msgstr "Nuværende forsvarssystem"
+
+#~ msgid "Ammo to use with installed system"
+#~ msgstr "Ammo til brug for det installerede system"
+
+#, fuzzy
+#~ msgid "No defence system assigned.\n"
+#~ msgstr "Intet forsvarssystem tildelt.\n"
+
+#, fuzzy
+#~ msgid "This defence system is functional.\n"
+#~ msgstr "Dette forsvarssystem er funktionsdygtigt.\n"
+
+#, fuzzy
+#~ msgid "This defence system will be installed in %i hours.\n"
+#~ msgstr "Dette forsvarssystem vil blive installeret om %i timer.\n"
+
+#, fuzzy
+#~ msgid "This defence system will be removed in %i hours.\n"
+#~ msgstr "Dette forsvarssystem vil blive fjernet om %i timer.\n"
+
+#, fuzzy
+#~ msgid "No ammo assigned to this defence system."
+#~ msgstr "Intet ammo er tildelt dette forsvarssystem."
+
+#, fuzzy
+#~ msgid " (unlimited missiles)"
+#~ msgstr " (%i missil tilbage)"
 
 #~ msgid "Sound is not activated"
 #~ msgstr "Lyd er ikke aktiveret"
@@ -14176,9 +14057,6 @@ msgstr ""
 #~ msgid "Value:"
 #~ msgstr "Værdi:"
 
-#~ msgid "Load team from current selected slot"
-#~ msgstr "Hent hold fra den nuværende valgte plads"
-
 # # in game
 #~ msgid "Current Team"
 #~ msgstr "Nuværende hold"
@@ -14359,10 +14237,6 @@ msgstr ""
 
 #~ msgid "Item to install after removal"
 #~ msgstr "Udstyr til installering efter fjernelse"
-
-#, fuzzy
-#~ msgid "Equip this defence system with selected ammo"
-#~ msgstr "Udstyr dette forsvarssystem med den valgte ammo"
 
 #, fuzzy
 #~ msgid "Remove ammo from this defence system"
@@ -14780,28 +14654,6 @@ msgstr ""
 #~ msgid "Not enough hospital space"
 #~ msgstr "Ikke nok hospitalssenge"
 
-#~ msgid "100000 c"
-#~ msgstr "100.000"
-
-#, fuzzy
-#~ msgid "Test"
-#~ msgstr "Ørken"
-
-#~ msgid "Buy factor:"
-#~ msgstr "Køb faktor:"
-
-#~ msgid "Decrease the amount of items you want to buy"
-#~ msgstr "Nedsæt antallet af udstyr du ønsker at købe"
-
-#~ msgid "Increase the amount of items you want to buy"
-#~ msgstr "Øg antallet af udstyr du ønsker at købe"
-
-#~ msgid "Decrease the amount of items you want to sell"
-#~ msgstr "Nedsæt antallet af udstyr du ønsker at sælge"
-
-#~ msgid "Increase the amount of items you want to sell"
-#~ msgstr "Øg antallet af udstyr du ønsker at sælge"
-
 #~ msgid "eXtraterrestial Viral Infection"
 #~ msgstr "udenjordisk virusinfektion"
 
@@ -14854,56 +14706,3 @@ msgstr ""
 
 #~ msgid "monomolecularblade"
 #~ msgstr "monomolekylærklinge"
-
-#~ msgid "NA"
-#~ msgstr "Ingen"
-
-#~ msgid "Camera Scroll:"
-#~ msgstr "Kamerarulning:"
-
-#~ msgid "Camera Rotation:"
-#~ msgstr "Kamerarotation:"
-
-#~ msgid "%s\t%0.2f%%\n"
-#~ msgstr "%s\t%0.2f%%\n"
-
-#~ msgid "Speed"
-#~ msgstr "Fart"
-
-#~ msgid "Crashed Alien Ship. Secure the area."
-#~ msgstr "Nedstyrtet rumvæsenfly. Gør området sikkert."
-
-# #ufopedia
-#~ msgid "Check UFOpaedia entry"
-#~ msgstr "Tjek Ufopædi indhold"
-
-#~ msgid "Alive aliens in all bases:"
-#~ msgstr "Levende rumvæsener på alle baser:"
-
-#~ msgid "Alive aliens in this base:"
-#~ msgstr "Levende rumvæsener på denne base:"
-
-#~ msgid "Aliens available to process:"
-#~ msgstr "Tilgængelige rumvæsener:"
-
-#~ msgid "Alien type"
-#~ msgstr "Rumvæsen-art"
-
-#~ msgid "Examined"
-#~ msgstr "Undersøgt"
-
-#~ msgid "Killed:"
-#~ msgstr "Dræbt:"
-
-#~ msgid "Captured in all bases:"
-#~ msgstr "Fanget i alle baser:"
-
-#~ msgid "Buy or sell aircrafts"
-#~ msgstr "Køb eller sælg luftfartøjer"
-
-#~ msgid "Show aircrafts"
-#~ msgstr "Vis luftfartøjer"
-
-#, fuzzy
-#~ msgid "Alien Base"
-#~ msgstr "Rumvæsenbase"
