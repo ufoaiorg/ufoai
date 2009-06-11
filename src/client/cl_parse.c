@@ -1142,10 +1142,7 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 		return;
 	}
 
-	/*
-	 * If standing up or crouching down, set this le as the last moving.
-	 * Also remove the reserved-state for crouching.
-	 */
+	/* If standing up or crouching down remove the reserved-state for crouching. */
 	if (((state & STATE_CROUCHED) && !(le->state & STATE_CROUCHED)) ||
 		 (!(state & STATE_CROUCHED) && (le->state & STATE_CROUCHED))) {
 		if (CL_UsableTUs(le) < TU_CROUCH && CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
@@ -1157,7 +1154,7 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 	}
 
 	/* killed by the server: no animation is played, etc. */
-	if (state & STATE_DEAD && !LE_IsDead(le)) {
+	if ((state & STATE_DEAD) && !LE_IsDead(le)) {
 		le->state = state;
 		FLOOR(le) = NULL;
 		le->think = NULL;
@@ -1170,8 +1167,7 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 	}
 
 	/* state change may have affected move length */
-	if (le->selected)
-		CL_ResetActorMoveLength(le);
+	CL_ConditionalMoveCalcActor(le);
 }
 
 
