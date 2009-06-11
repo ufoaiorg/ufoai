@@ -225,14 +225,20 @@ void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode
 
 		switch (command) {
 		case '^':	/* first string */
-			if (!strcmp(name, "this"))
+			if (!strcmp(name, "this")) {
+				if (relativeNode == NULL)
+					return;
 				/** @todo find a way to fix the bad cast. only here to remove "discards qualifiers" warning */
 				node = *(menuNode_t**) ((void*)&relativeNode);
-			else if (!strcmp(name, "parent"))
+			} else if (!strcmp(name, "parent")) {
+				if (relativeNode == NULL)
+					return;
 				node = relativeNode->parent;
-			else if (!strcmp(name, "root"))
+			} else if (!strcmp(name, "root")) {
+				if (relativeNode == NULL)
+					return;
 				node = relativeNode->root;
-			else
+			} else
 				node = MN_GetMenu(name);
 			break;
 		case '.':	/* child node */
