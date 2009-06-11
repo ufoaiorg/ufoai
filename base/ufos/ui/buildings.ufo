@@ -119,7 +119,7 @@ window buildings
 
 	confunc mn_buildings_reset
 	{
-		*buildings lineselected	-1
+		*buildings@lineselected	-1
 		*cvar:mn_building_name	"_Select building"
 		*cvar:mn_building_image	""
 		*cvar:mn_building_info	""

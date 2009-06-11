@@ -114,11 +114,11 @@ window basedefence
 				call update_buttons
 			}
 			onViewChange {
-				*(abstractscrollbar)slots.slotlist_scroll fullsize <lines>
-				*(abstractscrollbar)slots.slotlist_scroll current <text_scroll>
+				*(abstractscrollbar)slots.slotlist_scroll@fullsize <lines>
+				*(abstractscrollbar)slots.slotlist_scroll@current <text_scroll>
 			}
 			onWheel {
-				*(abstractscrollbar)slots.slotlist_scroll current <text_scroll>
+				*(abstractscrollbar)slots.slotlist_scroll@current <text_scroll>
 			}
 		}
 		vscrollbar slotlist_scroll
@@ -194,11 +194,11 @@ window basedefence
 				cmd "basedef_list_click <lineselected>;"
 			}
 			onViewChange {
-				*(abstractscrollbar)store.storelist_scroll fullsize <lines>
-				*(abstractscrollbar)store.storelist_scroll current <text_scroll>
+				*(abstractscrollbar)store.storelist_scroll@fullsize <lines>
+				*(abstractscrollbar)store.storelist_scroll@current <text_scroll>
 			}
 			onWheel {
-				*(abstractscrollbar)store.storelist_scroll current <text_scroll>
+				*(abstractscrollbar)store.storelist_scroll@current <text_scroll>
 			}
 		}
 		vscrollbar storelist_scroll
@@ -257,11 +257,11 @@ window basedefence
 			rows		"6"
 			mousefx		true
 			onViewChange {
-				*(abstractscrollbar)descpanel.description_scroll fullsize <lines>
-				*(abstractscrollbar)descpanel.description_scroll current <text_scroll>
+				*(abstractscrollbar)descpanel.description_scroll@fullsize <lines>
+				*(abstractscrollbar)descpanel.description_scroll@current <text_scroll>
 			}
 			onWheel {
-				*(abstractscrollbar)descpanel.description_scroll current <text_scroll>
+				*(abstractscrollbar)descpanel.description_scroll@current <text_scroll>
 			}
 		}
 		vscrollbar description_scroll

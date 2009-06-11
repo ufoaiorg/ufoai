@@ -32,11 +32,11 @@ window aircraft_equip extends iaircraft
 
 	confunc airequip_zone2_off
 	{
-		*airequip_header2	invis true
+		*airequip_header2@invis true
 	}
 	confunc airequip_zone2_on
 	{
-		*airequip_header2	invis false
+		*airequip_header2@invis false
 	}
 
 	func airequip_zone1

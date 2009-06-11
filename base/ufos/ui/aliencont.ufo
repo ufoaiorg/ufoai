@@ -60,11 +60,11 @@ window aliencont
 	// ==================
 
 	confunc aliencont_killb {
-		*bt_alc_killaliens disabled false
+		*bt_alc_killaliens@disabled false
 	}
 
 	confunc aliencont_killg {
-		*bt_alc_killaliens disabled true
+		*bt_alc_killaliens@disabled true
 	}
 
 	// ==================
@@ -73,70 +73,70 @@ window aliencont
 
 	confunc aliencont_clear
 	{
-		*ac.button0	image ui/hosp_button_green
-		*ac.button1	image ui/hosp_button_green
-		*ac.button2	image ui/hosp_button_green
-		*ac.button3	image ui/hosp_button_green
-		*ac.button4	image ui/hosp_button_green
-		*ac.button5	image ui/hosp_button_green
-		*ac.button6	image ui/hosp_button_green
-		*ac.button7	image ui/hosp_button_green
-		*ac.button8	image ui/hosp_button_green
-		*ac.button9	image ui/hosp_button_green
-		*ac.button10	image ui/hosp_button_green
-		*ac.button11	image ui/hosp_button_green
+		*ac.button0@image ui/hosp_button_green
+		*ac.button1@image ui/hosp_button_green
+		*ac.button2@image ui/hosp_button_green
+		*ac.button3@image ui/hosp_button_green
+		*ac.button4@image ui/hosp_button_green
+		*ac.button5@image ui/hosp_button_green
+		*ac.button6@image ui/hosp_button_green
+		*ac.button7@image ui/hosp_button_green
+		*ac.button8@image ui/hosp_button_green
+		*ac.button9@image ui/hosp_button_green
+		*ac.button10@image ui/hosp_button_green
+		*ac.button11@image ui/hosp_button_green
 
-		*ac.icon0	image	icons/health_unused
-		*ac.icon1	image	icons/health_unused
-		*ac.icon2	image	icons/health_unused
-		*ac.icon3	image	icons/health_unused
-		*ac.icon4	image	icons/health_unused
-		*ac.icon5	image	icons/health_unused
-		*ac.icon6	image	icons/health_unused
-		*ac.icon7	image	icons/health_unused
-		*ac.icon8	image	icons/health_unused
-		*ac.icon9	image	icons/health_unused
-		*ac.icon10	image	icons/health_unused
-		*ac.icon11	image	icons/health_unused
+		*ac.icon0@image	icons/health_unused
+		*ac.icon1@image	icons/health_unused
+		*ac.icon2@image	icons/health_unused
+		*ac.icon3@image	icons/health_unused
+		*ac.icon4@image	icons/health_unused
+		*ac.icon5@image	icons/health_unused
+		*ac.icon6@image	icons/health_unused
+		*ac.icon7@image	icons/health_unused
+		*ac.icon8@image	icons/health_unused
+		*ac.icon9@image	icons/health_unused
+		*ac.icon10@image	icons/health_unused
+		*ac.icon11@image	icons/health_unused
 
-		*ac.kill_zone0 invis true
-		*ac.kill_zone1 invis true
-		*ac.kill_zone2 invis true
-		*ac.kill_zone3 invis true
-		*ac.kill_zone4 invis true
-		*ac.kill_zone5 invis true
-		*ac.kill_zone6 invis true
-		*ac.kill_zone7 invis true
-		*ac.kill_zone8 invis true
-		*ac.kill_zone9 invis true
-		*ac.kill_zone10 invis true
-		*ac.kill_zone11 invis true
+		*ac.kill_zone0@invis true
+		*ac.kill_zone1@invis true
+		*ac.kill_zone2@invis true
+		*ac.kill_zone3@invis true
+		*ac.kill_zone4@invis true
+		*ac.kill_zone5@invis true
+		*ac.kill_zone6@invis true
+		*ac.kill_zone7@invis true
+		*ac.kill_zone8@invis true
+		*ac.kill_zone9@invis true
+		*ac.kill_zone10@invis true
+		*ac.kill_zone11@invis true
 
-		*ac.autopsy_zone0 invis true
-		*ac.autopsy_zone1 invis true
-		*ac.autopsy_zone2 invis true
-		*ac.autopsy_zone3 invis true
-		*ac.autopsy_zone4 invis true
-		*ac.autopsy_zone5 invis true
-		*ac.autopsy_zone6 invis true
-		*ac.autopsy_zone7 invis true
-		*ac.autopsy_zone8 invis true
-		*ac.autopsy_zone9 invis true
-		*ac.autopsy_zone10 invis true
-		*ac.autopsy_zone11 invis true
+		*ac.autopsy_zone0@invis true
+		*ac.autopsy_zone1@invis true
+		*ac.autopsy_zone2@invis true
+		*ac.autopsy_zone3@invis true
+		*ac.autopsy_zone4@invis true
+		*ac.autopsy_zone5@invis true
+		*ac.autopsy_zone6@invis true
+		*ac.autopsy_zone7@invis true
+		*ac.autopsy_zone8@invis true
+		*ac.autopsy_zone9@invis true
+		*ac.autopsy_zone10@invis true
+		*ac.autopsy_zone11@invis true
 	}
 
 	/**
 	 * @param[in] <1> index of the field
 	 */
 	confunc aliencontneedautopsy {
-		*ac.icon<1>	image icons/surgery
-		*ac.button<1>	image ui/hosp_button_light
-		*ac.icon<1>	tooltip "_Start autopsy"
+		*ac.icon<1>@image icons/surgery
+		*ac.button<1>@image ui/hosp_button_light
+		*ac.icon<1>@tooltip "_Start autopsy"
 
 		/* hide kill */
-		*ac.kill_zone<1> invis true
-		*ac.autopsy_zone<1> invis false
+		*ac.kill_zone<1>@invis true
+		*ac.autopsy_zone<1>@invis false
 	}
 
 	/**
@@ -144,13 +144,13 @@ window aliencont
 	 */
 	confunc aliencontkill
 	{
-		*ac.icon<1>  image icons/kill
-		*ac.button<1> image ui/hosp_button_light
-		*ac.icon<1> tooltip "_Kill this alien"
+		*ac.icon<1>@image icons/kill
+		*ac.button<1>@image ui/hosp_button_light
+		*ac.icon<1>@tooltip "_Kill this alien"
 
 		/* hide_autopsy */
-		*ac.kill_zone<1> invis false
-		*ac.autopsy_zone<1> invis true
+		*ac.kill_zone<1>@invis false
+		*ac.autopsy_zone<1>@invis true
 	}
 
 	panel ac {

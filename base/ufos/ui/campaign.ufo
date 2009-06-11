@@ -102,11 +102,11 @@ window campaigns
 		lineheight	20
 		rows		18
 		onWheel		{
-			*(abstractscrollbar)campaign_desc_scroll current <text_scroll>
+			*(abstractscrollbar)campaign_desc_scroll@current <text_scroll>
 		}
 		onViewChange {
-			*(abstractscrollbar)campaign_desc_scroll fullsize <lines>
-			*(abstractscrollbar)campaign_desc_scroll current <text_scroll>
+			*(abstractscrollbar)campaign_desc_scroll@fullsize <lines>
+			*(abstractscrollbar)campaign_desc_scroll@current <text_scroll>
 		}
 	}
 

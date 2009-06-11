@@ -117,24 +117,24 @@ window aircraft_pilots extends iaircraft
 	 */
 	confunc aircraft_pilot_usedelsewhere
 	{
-		*txt_actor<1> color ".50 .50 .50 1"
-		*(checkbox)check_actor<1> current 0
-		*check_actor<1> disabled true
-		*check_actor<1> invis false
-		*txt_actor<1> invis false
+		*txt_actor<1>@color ".50 .50 .50 1"
+		*(checkbox)check_actor<1>@current 0
+		*check_actor<1>@disabled true
+		*check_actor<1>@invis false
+		*txt_actor<1>@invis false
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_pilot_unassigned {
-		*txt_actor<1> color "0 .78 0 1"
-		*check_actor<1> disabled false
-		*(checkbox)check_actor<1> current 0
-		*check_actor<1> invis false
-		*txt_actor<1> invis false
+		*txt_actor<1>@color "0 .78 0 1"
+		*check_actor<1>@disabled false
+		*(checkbox)check_actor<1>@current 0
+		*check_actor<1>@invis false
+		*txt_actor<1>@invis false
 		if "*cvar:mn_pilotassigned == 1" {
-			*(checkbox)check_actor<1> disabled true
+			*(checkbox)check_actor<1>@disabled true
 		}
 	}
 
@@ -142,11 +142,11 @@ window aircraft_pilots extends iaircraft
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_pilot_assigned {
-		*txt_actor<1> color "0 .78 0 1"
-		*check_actor<1> disabled false
-		*(checkbox)check_actor<1> current 1
-		*check_actor<1> invis false
-		*txt_actor<1> invis false
+		*txt_actor<1>@color "0 .78 0 1"
+		*check_actor<1>@disabled false
+		*(checkbox)check_actor<1>@current 1
+		*check_actor<1>@invis false
+		*txt_actor<1>@invis false
 	}
 
 	/**
@@ -165,22 +165,22 @@ window aircraft_pilots extends iaircraft
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_pilot_unusedslot {
-		*check_actor<1> invis true
-		*txt_actor<1> invis true
+		*check_actor<1>@invis true
+		*txt_actor<1>@invis true
 	}
 
 	/**
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc aircraft_pilot_list_size {
-		*(abstractscrollbar)scroll_employees fullsize <1>
+		*(abstractscrollbar)scroll_employees@fullsize <1>
 	}
 
 	/**
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc aircraft_pilot_selected {
-		*txt_actor<1> color "1 1 1 1"
+		*txt_actor<1>@color "1 1 1 1"
 	}
 
 	// checkbox

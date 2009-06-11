@@ -220,15 +220,15 @@ window basesummary
 	// ==================
 	func onInit
 	{
-		*basenavigation.base0 bgcolor "1 1 1 0.4"
-		*basenavigation.base1 bgcolor "1 1 1 0.4"
-		*basenavigation.base2 bgcolor "1 1 1 0.4"
-		*basenavigation.base3 bgcolor "1 1 1 0.4"
-		*basenavigation.base4 bgcolor "1 1 1 0.4"
-		*basenavigation.base5 bgcolor "1 1 1 0.4"
-		*basenavigation.base6 bgcolor "1 1 1 0.4"
-		*basenavigation.base7 bgcolor "1 1 1 0.4"
-		*basenavigation.base<cvar:mn_base_id> bgcolor "1 1 1 0.7"
+		*basenavigation.base0@bgcolor "1 1 1 0.4"
+		*basenavigation.base1@bgcolor "1 1 1 0.4"
+		*basenavigation.base2@bgcolor "1 1 1 0.4"
+		*basenavigation.base3@bgcolor "1 1 1 0.4"
+		*basenavigation.base4@bgcolor "1 1 1 0.4"
+		*basenavigation.base5@bgcolor "1 1 1 0.4"
+		*basenavigation.base6@bgcolor "1 1 1 0.4"
+		*basenavigation.base7@bgcolor "1 1 1 0.4"
+		*basenavigation.base<cvar:mn_base_id>@bgcolor "1 1 1 0.7"
 		cmd "basesummary_init;"
 	}
 }

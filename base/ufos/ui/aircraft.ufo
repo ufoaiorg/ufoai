@@ -142,11 +142,11 @@ window iaircraft
 		mousefx		true
 		longlines	prettychop
 		onViewChange {
-			*(abstractscrollbar)aircraft_list_scroll fullsize <lines>
-			*(abstractscrollbar)aircraft_list_scroll current <text_scroll>
+			*(abstractscrollbar)aircraft_list_scroll@fullsize <lines>
+			*(abstractscrollbar)aircraft_list_scroll@current <text_scroll>
 		}
 		onWheel {
-			*(abstractscrollbar)aircraft_list_scroll current <text_scroll>
+			*(abstractscrollbar)aircraft_list_scroll@current <text_scroll>
 		}
 		onClick {
 			cmd "mn_select_aircraft <lineselected>"	// @note the node autocomplet the command with the selected line
