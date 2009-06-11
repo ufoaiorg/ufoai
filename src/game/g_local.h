@@ -313,7 +313,7 @@ float G_Vis(int team, const edict_t * from, const edict_t * check, int flags);
 void G_ClientReload(player_t *player, int entnum, shoot_types_t st, qboolean quiet);
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet);
-void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean stop, qboolean quiet);
+void G_ClientMove(player_t * player, int visTeam, const int num, pos3_t to, qboolean stop, qboolean quiet);
 void G_MoveCalc(int team, pos3_t from, int actorSize, byte crouchingState, int distance);
 void G_ClientInvMove(player_t * player, int num, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
 void G_ClientStateChange(player_t * player, int num, int reqState, qboolean checkaction);

@@ -1376,7 +1376,7 @@ void G_MoveCalc (int team, pos3_t from, int actorSize, byte crouchingState, int 
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean stopOnVisStop, qboolean quiet)
+void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qboolean stopOnVisStop, qboolean quiet)
 {
 	edict_t *ent;
 	int status, initTU;
@@ -1418,7 +1418,12 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				 * Uses the threshold at which standing, moving and crouching again takes
 				 * fewer TU than just crawling while crouched. */
 				G_ClientStateChange(player, num, STATE_CROUCHED, qtrue); /* change to stand state */
-				autoCrouchRequired = qtrue;
+				crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+				if (crouchingState) {
+					G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
+					length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
+					autoCrouchRequired = qtrue;
+				}
 			}
 		}
 
