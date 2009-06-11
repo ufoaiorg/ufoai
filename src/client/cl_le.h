@@ -105,7 +105,7 @@ typedef struct le_s {
 	int positionContents;					/**< content flags for the current brush the actor is standing in */
 	int pathLength, pathPos;
 	int startTime, endTime;
-	int speed;			/**< the speed the le is moving with */
+	int speed[MAX_LE_PATHLENGTH];			/**< the speed the le is moving with */
 	float rotationSpeed;
 
 	/** sound effects */

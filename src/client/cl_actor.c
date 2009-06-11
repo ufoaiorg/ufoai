@@ -1448,7 +1448,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 
 	for (i = le->pathLength; i < le->pathLength + pathLength; i++) {
 		le->path[i] = NET_ReadByte(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
-		le->speed = NET_ReadShort(msg);
+		le->speed[i] = NET_ReadShort(msg);
 		le->pathContents[i] = NET_ReadShort(msg);
 	}
 

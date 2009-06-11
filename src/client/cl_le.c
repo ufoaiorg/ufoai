@@ -626,10 +626,10 @@ static void LET_PathMove (le_t * le)
 			le->angles[YAW] = directionAngles[le->dir];
 			le->startTime = le->endTime;
 			/* check for straight movement or diagonal movement */
-			assert(le->speed);
+			assert(le->speed[le->pathPos]);
 			if (dir != DIRECTION_FALL) {
 				/* sqrt(2) for diagonal movement */
-				le->endTime += (le->dir >= BASE_DIRECTIONS ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
+				le->endTime += (le->dir >= BASE_DIRECTIONS ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed[le->pathPos];
 			} else {
 				/* This needs to account for the distance of the fall. */
 				Grid_PosToVec(clMap, le->fieldSize, le->oldPos, start);
@@ -878,7 +878,8 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 
 void LET_BrushModel (le_t *le)
 {
-	if (cl.time - le->thinkDelay < le->speed) {
+	/** @todo what is le->speed for a brush model? */
+	if (cl.time - le->thinkDelay < le->speed[0]) {
 		le->thinkDelay = cl.time;
 		return;
 	}

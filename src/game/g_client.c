@@ -1427,12 +1427,6 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 			}
 		}
 
-		/* slower if crouched */
-		if (ent->state & STATE_CROUCHED)
-			ent->speed = ACTOR_SPEED_CROUCHED;
-		else
-			ent->speed = ACTOR_SPEED_NORMAL;
-		ent->speed *= g_actorspeed->value;
 		/* this let the footstep sounds play even over network */
 		ent->think = G_PhysicsStep;
 		ent->nextthink = level.time;
@@ -1485,6 +1479,13 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 				if ((int) (tu + div) > ent->TU)
 					break;
 				tu += div;
+
+				/* slower if crouched */
+				if (ent->state & STATE_CROUCHED)
+					ent->speed = ACTOR_SPEED_CROUCHED;
+				else
+					ent->speed = ACTOR_SPEED_NORMAL;
+				ent->speed *= g_actorspeed->value;
 
 				/* move */
 				crouchingState = 0; /* This is now a flag to indicate a change in crouching */
