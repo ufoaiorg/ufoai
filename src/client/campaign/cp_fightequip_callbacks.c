@@ -896,7 +896,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 	char defBuffer[MAX_SMALLMENUTEXTLEN];
 	linkedList_t *slotList = NULL;
 	const qboolean missileResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"));
-	const qboolean laserResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"));	/** @todo: change this to laser defence (building?) technology when we have such */
+	const qboolean laserResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_laser"));
 
 	/* don't let old links appear on this menu */
 	MN_ResetData(TEXT_BASEDEFENCE_LIST);
