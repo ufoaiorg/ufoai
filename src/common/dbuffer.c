@@ -170,6 +170,40 @@ static inline void dbuffer_grow (struct dbuffer *buf, size_t len)
 }
 
 /**
+ * @brief Merges two dbuffers
+ * @param[in] old the source buffer
+ * @param[in] old2 the second source buffer
+ * @return the newly allocated buffer
+ * Allocates a new dbuffer and initialises it to contain a copy of the
+ * data in old ones
+ */
+struct dbuffer *dbuffer_merge (struct dbuffer *old, struct dbuffer *old2)
+{
+	/* element we're currently reading from */
+	const struct dbuffer_element *e;
+	struct dbuffer *buf = new_dbuffer();
+	const char *p;
+
+	e = old->head;
+	p = old->start;
+	while (e && (e->len > 0)) {
+		dbuffer_add(buf, p, e->len);
+		e = e->next;
+		p = &e->data[0];
+	}
+
+	e = old2->head;
+	p = old2->start;
+	while (e && (e->len > 0)) {
+		dbuffer_add(buf, p, e->len);
+		e = e->next;
+		p = &e->data[0];
+	}
+
+	return buf;
+}
+
+/**
  * @brief Allocate a dbuffer and prepend the given data to it
  * @param[in] old the source buffer
  * @return the newly allocated buffer

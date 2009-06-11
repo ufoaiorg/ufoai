@@ -655,8 +655,8 @@ qboolean G_RunFrame (void)
 
 	/* check for intermission */
 	if (level.intermissionTime && level.time > level.intermissionTime) {
-		G_EndGame(level.winningTeam);
 		G_PrintStats(va("End of game - Team %i is the winner", level.winningTeam));
+		G_EndGame(level.winningTeam);
 		level.intermissionTime = 0.0;
 		/* end this game */
 		return qtrue;

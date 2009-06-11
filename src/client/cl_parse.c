@@ -1137,7 +1137,9 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 	case ET_ACTOR2x2:
 		/* actor is already moving - so reschedule this event */
 		if (le->pathLength) {
-			CL_EnqueueEventForLaterExecution(msg, 100);
+			struct dbuffer *revert = new_dbuffer();
+			NET_WriteFormat(revert, ev_format[EV_ACTOR_STATECHANGE], entnum, state);
+			CL_EnqueueEventForLaterExecution(EV_ACTOR_STATECHANGE, msg, 100);
 			return;
 		}
 		break;
@@ -1523,12 +1525,17 @@ static void CL_ScheduleEvent (evTimes_t *event)
  */
 static void CL_EnqueueEvent (evTimes_t *cur, int eventTime)
 {
-	evTimes_t *e = battlescapeEvents;
-	/* sort the new event into the pending scheduled events list */
-	while (e->next && e->next->when <= eventTime)
-		e = e->next;
-	cur->next = e->next;
-	e->next = cur;
+	if (!battlescapeEvents) {
+		battlescapeEvents = cur;
+	} else {
+		evTimes_t *e = battlescapeEvents;
+
+		/* sort the new event into the pending scheduled events list */
+		while (e->next && e->next->when <= eventTime)
+			e = e->next;
+		cur->next = e->next;
+		e->next = cur;
+	}
 }
 
 /**
@@ -1536,13 +1543,12 @@ static void CL_EnqueueEvent (evTimes_t *cur, int eventTime)
  * @param[in] msg The buffer that contains the event data
  * @param[in] timeGap The time in ms at which the event should be scheduled the next time.
  */
-void CL_EnqueueEventForLaterExecution (struct dbuffer *msg, int timeGap)
+void CL_EnqueueEventForLaterExecution (const int eType, struct dbuffer *msg, const int timeGap)
 {
 	evTimes_t *cur;
-	const int eType = NET_ReadByte(msg);
 
-	if (eType == 0)
-		return;
+	if (eType <= 0 || eType > EV_NUM_EVENTS)
+		Com_Error(ERR_DROP, "Invalid event id given: %i", eType);
 
 	cur = Mem_PoolAlloc(sizeof(*cur), cl_genericPool, 0);
 	cur->when = cl.battlescapeEventTime + timeGap;

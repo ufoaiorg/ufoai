@@ -1422,7 +1422,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 void CL_ActorDoMove (struct dbuffer *msg)
 {
 	le_t *le;
-	int number, i, pathLength;
+	int number, i;
 
 	number = NET_ReadShort(msg);
 	/* get le */
@@ -1437,8 +1437,16 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	if (LE_IsDead(le))
 		Com_Error(ERR_DROP, "Can't move, actor dead\n");
 
-	pathLength = NET_ReadByte(msg);
-	if (le->pathLength + pathLength >= MAX_LE_PATHLENGTH)
+	/* actor is already moving - so put it back into the queue until it due again */
+	if (le->pathLength) {
+		struct dbuffer *revert = new_dbuffer();
+		NET_WriteFormat(revert, "s", number);
+		CL_EnqueueEventForLaterExecution(EV_ACTOR_MOVE, dbuffer_merge(revert, msg), 100);
+		return;
+	}
+
+	le->pathLength = NET_ReadByte(msg);
+	if (le->pathLength >= MAX_LE_PATHLENGTH)
 		Com_Error(ERR_DROP, "Overflow in pathLength");
 
 	/* Also get the final position */
@@ -1446,16 +1454,11 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	le->newPos[1] = NET_ReadByte(msg);
 	le->newPos[2] = NET_ReadByte(msg);
 
-	for (i = le->pathLength; i < le->pathLength + pathLength; i++) {
+	for (i = 0; i < le->pathLength; i++) {
 		le->path[i] = NET_ReadByte(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
 		le->speed[i] = NET_ReadShort(msg);
 		le->pathContents[i] = NET_ReadShort(msg);
 	}
-
-	/* we are adding to already existing pathLength because a move event can be interrupted by
-	 * an perish or appear event (or any other event) on the server side. This results in two events
-	 * where the player would just like to walk on path */
-	le->pathLength += pathLength;
 
 	/* activate PathMove function */
 	FLOOR(le) = NULL;
@@ -1528,6 +1531,14 @@ void CL_ActorDoTurn (struct dbuffer *msg)
 
 	if (LE_IsDead(le))
 		Com_Error(ERR_DROP, "Can't turn, actor dead\n");
+
+	/* actor is already moving - so put it back into the queue until it due again */
+	if (le->pathLength) {
+		struct dbuffer *revert = new_dbuffer();
+		NET_WriteFormat(revert, ev_format[EV_ACTOR_TURN], entnum, dir);
+		CL_EnqueueEventForLaterExecution(EV_ACTOR_TURN, dbuffer_merge(revert, msg), 100);
+		return;
+	}
 
 	le->dir = dir;
 	le->angles[YAW] = directionAngles[le->dir];
@@ -1634,6 +1645,22 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	/* read data */
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &shooterEntnum, &victimEntnum, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
 
+	if (victimEntnum > 0) {
+		const le_t *leVictim = LE_Get(victimEntnum);
+		if (!leVictim)
+			Com_Error(ERR_DROP, "Can't shoot, invalid victim LE given\n");
+
+		/* don't shoot at the victim until it reached the final position where the server send the shot */
+		if (leVictim->pathLength) {
+			struct dbuffer *revert = new_dbuffer();
+			NET_WriteFormat(revert, ev_format[EV_ACTOR_SHOOT], shooterEntnum, victimEntnum, objIdx, weapFdsIdx, fdIdx, shootType, flags, surfaceFlags, muzzle, impact, normal);
+			CL_EnqueueEventForLaterExecution(EV_ACTOR_SHOOT, dbuffer_merge(revert, msg), 400);
+			return;
+		}
+
+		CL_PlayActorSound(leVictim, SND_HURT);
+	}
+
 	/* get shooter le */
 	leShooter = LE_Get(shooterEntnum);
 
@@ -1660,14 +1687,6 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	if (!LE_IsActor(leShooter)) {
 		Com_Printf("Can't shoot, LE not an actor (type: %i)\n", leShooter->type);
 		return;
-	}
-
-	if (victimEntnum > 0) {
-		const le_t *leVictim = LE_Get(victimEntnum);
-		if (!leVictim || !LE_IsActor(leShooter))
-			Com_Printf("Can't shoot, invalid victim LE given\n");
-
-		CL_PlayActorSound(leVictim, SND_HURT);
 	}
 
 	/* no animations for hidden actors */
@@ -1948,7 +1967,7 @@ static void CL_ActorMoveMouse (void)
  */
 void CL_ActorSelectMouse (void)
 {
-	if (mouseSpace != MS_WORLD)
+	if (mouseSpace != MS_WORLD || !selActor)
 		return;
 
 	switch (selActor->actorMode) {

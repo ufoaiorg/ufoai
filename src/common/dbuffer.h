@@ -102,6 +102,8 @@ extern ssize_t dbuffer_find_char(const struct dbuffer *, int);
 extern struct dbuffer *dbuffer_dup(struct dbuffer *);
 /* Duplicate the buffer and prepend the given data */
 extern struct dbuffer *dbuffer_prepend(struct dbuffer *old, const char *data, size_t len);
+/* Merges two dbuffers */
+struct dbuffer *dbuffer_merge(struct dbuffer *old, struct dbuffer *old2);
 
 #define dbuffer_len(A) (A ? (A)->len : 0)
 

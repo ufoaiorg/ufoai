@@ -29,7 +29,7 @@ extern const char *ev_format[EV_NUM_EVENTS];
 extern cvar_t *cl_log_battlescape_events;
 
 void CL_ResetBattlescapeEvents(void);
-void CL_EnqueueEventForLaterExecution(struct dbuffer *msg, int timeGap);
+void CL_EnqueueEventForLaterExecution(const int eType, struct dbuffer *msg, const int timeGap);
 void CL_SetLastMoving(struct le_s *le);
 void CL_ParseServerMessage(int cmd, struct dbuffer *msg);
 qboolean CL_CheckOrDownloadFile(const char *filename);
