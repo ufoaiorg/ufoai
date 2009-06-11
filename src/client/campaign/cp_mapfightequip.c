@@ -753,6 +753,7 @@ aircraftSlot_t *BDEF_GetBaseSlotByIDX (base_t *base, aircraftItemType_t type, in
 					return &base->batteries[i].slot;
 		} else if (idx < base->numBatteries)
 			return &base->batteries[idx].slot;
+		break;
 	case AC_ITEM_BASE_LASER:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
@@ -761,6 +762,7 @@ aircraftSlot_t *BDEF_GetBaseSlotByIDX (base_t *base, aircraftItemType_t type, in
 					return &base->lasers[i].slot;
 		} else if (idx < base->numLasers)
 			return &base->lasers[idx].slot;
+		break;
 	default:
 		break;
 	}
@@ -785,6 +787,7 @@ aircraftSlot_t *BDEF_GetInstallationSlotByIDX (installation_t *installation, air
 					return &installation->batteries[i].slot;
 		} else if (idx < installation->numBatteries)
 			return &installation->batteries[idx].slot;
+		break;
 	default:
 		break;
 	}
@@ -809,9 +812,11 @@ aircraftSlot_t *AII_GetAircraftSlotByIDX (aircraft_t *aircraft, aircraftItemType
 					return &aircraft->weapons[i];
 		} else if (idx < aircraft->maxWeapons)
 			return &aircraft->weapons[idx];
+		break;
 	case AC_ITEM_SHIELD:
 		if (idx == 0 || ((idx < 0) && !aircraft->shield.item && !aircraft->shield.nextItem))	/* returns the first free slot on negative */
 			return &aircraft->shield;
+		break;
 	case AC_ITEM_ELECTRONICS:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
@@ -820,6 +825,7 @@ aircraftSlot_t *AII_GetAircraftSlotByIDX (aircraft_t *aircraft, aircraftItemType
 					return &aircraft->electronics[i];
 		} else if (idx < aircraft->maxElectronics)
 			return &aircraft->electronics[idx];
+		break;
 	default:
 		break;
 	}
