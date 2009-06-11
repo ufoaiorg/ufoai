@@ -114,22 +114,6 @@ building building_missile
 	ondestroy		"remove_battery 1"
 }
 
-building building_laser
-{
-	name			"_Laser Battery"
-	image			base/laser
-	fixcosts		10000
-	depends			building_command // need to know where to shoot
-	type			laser
-	build_time		3
-	varcosts		5000
-	map_name		"laser"
-	pedia			rs_building_laser
-	max_count		4
-	onconstruct		"add_battery 1"
-	ondestroy		"remove_battery 1"
-}
-
 building building_storage
 {
 	name			"_Storage"
@@ -391,6 +375,22 @@ building building_amstorage
 	capacity	10000
 	// TODO: the ondestroy function should destroy the whole base with a 10% chance maybe
 	ondestroy	""
+}
+
+building building_laser
+{
+	name			"_Laser Battery"
+	image			base/laser
+	fixcosts		10000
+	depends			building_command // need to know where to shoot
+	type			laser
+	build_time		3
+	varcosts		5000
+	map_name		"laser"
+	pedia			rs_building_laser
+	max_count		4
+	onconstruct		"add_battery 1"
+	ondestroy		"remove_battery 1"
 }
 
 basetemplate balanced {
