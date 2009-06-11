@@ -1410,7 +1410,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length < ROUTING_NOT_REACHABLE) {
 		/* Autostand: check if the actor is crouched and player wants autostanding...*/
-		if ((ent->state & STATE_CROUCHED) && player->autostand) {
+		if (crouchingState && player->autostand) {
 			/* ...and if this is a long walk... */
 			if ((float) (2 * TU_CROUCH) < (float) length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
 				/* ...make them stand first. If the player really wants them to walk a long
@@ -1419,7 +1419,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 				 * fewer TU than just crawling while crouched. */
 				G_ClientStateChange(player, num, STATE_CROUCHED, qtrue); /* change to stand state */
 				crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
-				if (crouchingState) {
+				if (!crouchingState) {
 					G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
 					length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
 					autoCrouchRequired = qtrue;
@@ -1572,7 +1572,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 						status |= VIS_STOP;
 				} else if (crouchingState == 1) { /* Actor is standing */
 					G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
-				} else { /* Actor is crouching */
+				} else if (crouchingState == -1) { /* Actor is crouching and should stand up */
 					G_ClientStateChange(player, num, STATE_CROUCHED, qfalse);
 				}
 
