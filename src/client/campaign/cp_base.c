@@ -707,6 +707,7 @@ void CL_BaseDestroy (base_t *base)
 	int buildingIdx;
 
 	assert(base);
+	base->baseStatus = BASE_DESTROYED;
 
 	CP_MissionNotifyBaseDestroyed(base);
 

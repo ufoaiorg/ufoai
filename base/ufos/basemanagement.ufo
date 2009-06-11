@@ -373,8 +373,7 @@ building building_amstorage
 	map_name	"antimatter"
 	pedia		rs_building_antimatter
 	capacity	10000
-	// TODO: the ondestroy function should destroy the whole base with a 10% chance maybe
-	ondestroy	""
+	ondestroy	"building_amdestroy 0.1"
 }
 
 building building_laser

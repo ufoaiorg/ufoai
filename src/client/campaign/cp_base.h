@@ -60,7 +60,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef enum {
 	BASE_NOT_USED,
 	BASE_UNDER_ATTACK,	/**< base is under attack */
-	BASE_WORKING		/**< nothing special */
+	BASE_WORKING,		/**< nothing special */
+	BASE_DESTROYED		/**< the base is being destroyed (prevent double destroy attempt) */
 } baseStatus_t;
 
 /** @brief All possible base actions */

@@ -41,6 +41,29 @@ static cvar_t *mn_base_title;
 static cvar_t *cl_start_buildings;
 static building_t *buildingConstructionList[MAX_BUILDINGS];
 
+static void B_Destroy_AntimaterStorage_f (void)
+{
+	base_t *base;
+	const float prob = frand();
+
+	if (Cmd_Argc() < 4) {	/** note: third parameter not used but we must be sure we have probability parameter */
+		Com_Printf("Usage: %s <probability> <baseID> <buildingType>\n", Cmd_Argv(0));
+		return;
+	}
+
+	base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(2)));
+	if (!base)
+		return;
+	if (base->baseStatus != BASE_WORKING)
+		return;
+
+	if (prob < atof(Cmd_Argv(1))) {
+		MS_AddNewMessage(_("Notice"), va(_("The base %s was destroyed when Antimatter Storage blew up."), base->name), qfalse, MSG_STANDARD, NULL);
+		MN_PopMenu(qfalse);
+		CL_BaseDestroy(base);
+	}
+}
+
 /**
  * @brief Handles the list of constructable buildings.
  * @param[in] base The base to update the building list for
@@ -893,6 +916,7 @@ void B_InitCallbacks (void)
 	Cmd_AddCommand("building_init", B_BuildingInit_f, NULL);
 	Cmd_AddCommand("building_status", B_BuildingStatus_f, NULL);
 	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
+	Cmd_AddCommand("building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed");	
 	Cmd_AddCommand("building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building");
 	Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
 	Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode");
