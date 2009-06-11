@@ -1541,6 +1541,8 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 		return B_ENTRANCE;
 	} else if (!strcmp(buildingID, "missile")) {
 		return B_DEFENCE_MISSILE;
+	} else if (!strcmp(buildingID, "laser")) {
+		return B_DEFENCE_LASER;
 	} else if (!strcmp(buildingID, "radar")) {
 		return B_RADAR;
 	} else if (!strcmp(buildingID, "teamroom")) {

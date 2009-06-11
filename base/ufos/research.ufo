@@ -3015,6 +3015,26 @@ tech rs_building_missile
 	time	0
 }
 
+tech rs_building_laser
+{
+	type	building
+	description {
+		default "_b_laser_txt"
+	}
+	// pre_description	"_b_laser_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_command
+		tech rs_laser
+		tech rs_damage_laser
+	}
+
+	provides	building_laser
+	time	0
+}
+
 tech rs_building_large_hangar
 {
 	type	building
