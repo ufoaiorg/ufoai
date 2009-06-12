@@ -204,6 +204,17 @@ char* MN_AllocString (const char* string, int size)
 	return result;
 }
 
+/**
+ * @brief Allocate an action
+ * @return An action
+ */
+static menuAction_t *MN_AllocAction (void)
+{
+	if (mn.numActions >= MAX_MENUACTIONS)
+		Com_Error(ERR_FATAL, "MN_AllocAction: Too many menu actions");
+	return &mn.menuActions[mn.numActions++];
+}
+
 /** @brief A way to count how many setter without embedded properties */
 static int setterWithoutArobase = 0;
 
@@ -408,18 +419,13 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			return NULL;
 		}
 
-		/** @todo better to append the action after initialization */
 		/* add the action */
-		if (mn.numActions >= MAX_MENUACTIONS)
-			Com_Error(ERR_FATAL, "MN_ParseActionList: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
-		action = &mn.menuActions[mn.numActions++];
-		memset(action, 0, sizeof(*action));
-		if (lastAction) {
+		action = MN_AllocAction();
+		/** @todo better to append the action after initialization */
+		if (lastAction)
 			lastAction->next = action;
-		}
-		if (!firstAction) {
+		if (!firstAction)
 			firstAction = action;
-		}
 		action->type.op = type;
 
 		/* decode action */
