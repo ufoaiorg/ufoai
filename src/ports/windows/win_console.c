@@ -167,8 +167,17 @@ void Sys_Backtrace (void)
 {
 #ifdef HAVE_EXECINFO_H
 	void *symbols[MAX_BACKTRACE_SYMBOLS];
-	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
-	backtrace_symbols_fd(symbols, i, STDERR_FILENO);
+	int i;
+	const int j = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
+
+	backtrace_symbols(symbols, j);
+
+	for (i = 0; i < j; i++) {
+		if (symbols[i] != NULL) {
+			Sys_ConsoleOutput(symbols[i]);
+			free(symbols[i]);
+		}
+	}
 #endif
 }
 
