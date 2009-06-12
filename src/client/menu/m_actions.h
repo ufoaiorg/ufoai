@@ -54,13 +54,34 @@ typedef struct {
 	unsigned char param2;
 } ea_opcode;
 
+typedef union {
+	float number;
+	char* string;
+	void* data;
+} menuTerminalActionData_t;
+
 typedef struct menuAction_s {
 	ea_opcode type;
 
+	union {
+		struct {
+			struct menuAction_s *left;
+			struct menuAction_s *right;
+		} nonTerminal;
+		struct {
+			menuTerminalActionData_t d1;
+			menuTerminalActionData_t d2;
+		} terminal;
+	} d;
+
+	/** @todo merge it in terminal */
 	void *data;
+	/** @todo merge it in terminal */
 	void *data2;
-	struct menuAction_s *next;
+	/** @todo merge it in terminal */
 	const value_t *scriptValues;
+
+	struct menuAction_s *next;
 } menuAction_t;
 
 void MN_ExecuteConfunc(const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
