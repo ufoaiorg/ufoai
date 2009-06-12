@@ -145,7 +145,7 @@ window althud extends ahud
 
 	func onEvent
 	{
-		*chatscreen invis true
+		*chatscreen@invis true
 	}
 
 	pic bar_floor

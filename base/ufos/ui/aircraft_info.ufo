@@ -93,7 +93,7 @@ window aircraft extends iaircraft
 			*aircraft_return@onClick	{ cmd "aircraft_start;" }
 			*aircraft_return@texl		"0 32"
 		} else {
-			*aircraft_navigation	disabled	true
+			*aircraft_navigation@disabled	true
 
 			*aircraft_return@tooltip	"_Call back"
 			*aircraft_return@onClick	{ cmd "aircraft_return;" }

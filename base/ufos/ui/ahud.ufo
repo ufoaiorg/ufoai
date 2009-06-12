@@ -310,39 +310,39 @@ window firemode_left {
 	/* Firemode console functions ===================================*/
 
 	confunc set_left_ina {
-		*bt_left_fm<1>	texl "0 64"
-		*bt_left_fm<1>	texh "214 128"
+		*bt_left_fm<1>@texl "0 64"
+		*bt_left_fm<1>@texh "214 128"
 	}
 
 	confunc set_left_a {
-		*bt_left_fm<1>	texl "0 0"
-		*bt_left_fm<1> texh "214 63"
+		*bt_left_fm<1>@texl "0 0"
+		*bt_left_fm<1>@texh "214 63"
 	}
 
 	confunc set_left_inv {
-		*bt_left_fm<1> invis true
+		*bt_left_fm<1>@invis true
 	}
 
 	confunc set_left_vis {
-		*bt_left_fm<1> invis false
+		*bt_left_fm<1>@invis false
 	}
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
 
 	confunc set_left_cb_ina {
-		*bt_left_fm<1>.cb texl "0 0"
-		*bt_left_fm<1>.cb texh "31 31"
-		*bt_left_fm<1>.cb invis false
+		*bt_left_fm<1>.cb@texl "0 0"
+		*bt_left_fm<1>.cb@texh "31 31"
+		*bt_left_fm<1>.cb@invis false
 	}
 
 	confunc set_left_cb_a {
-		*bt_left_fm<1>.cb texl "0 32"
-		*bt_left_fm<1>.cb texh "31 63"
-		*bt_left_fm<1>.cb invis false
+		*bt_left_fm<1>.cb@texl "0 32"
+		*bt_left_fm<1>.cb@texh "31 63"
+		*bt_left_fm<1>.cb@invis false
 	}
 
 	confunc set_left_cb_invis {
-		*bt_left_fm<1>.cb invis true
+		*bt_left_fm<1>.cb@invis true
 	}
 }
 

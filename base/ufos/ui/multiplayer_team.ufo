@@ -716,7 +716,7 @@ window mp_team_edit
 		pos "629 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*equip scrollpos <current>
+			*equip@scrollpos <current>
 		}
 	}
 
@@ -725,7 +725,7 @@ window mp_team_edit
 		pos "892 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*equip_ammo scrollpos <current>
+			*equip_ammo@scrollpos <current>
 		}
 	}
 

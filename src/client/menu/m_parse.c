@@ -236,8 +236,10 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		return qtrue;
 	}
 
-	if (!nextArobase)
+	if (!nextArobase) {
 		setterWithoutArobase++;
+		Com_Printf("MN_ParseSetAction: Property setter '%s' without '@' in node '%s' (x%d)\n", base, MN_GetPath(menuNode), setterWithoutArobase);
+	}
 
 	/* copy the menu name, and move to the node name */
 	if (strncmp(nodeName, "node:", 5) == 0) {

@@ -120,28 +120,28 @@ window ufopedia
 
 	confunc mn_upfbig
 	{
-		*ufopedia lineheight	"23"
-		*ufopedia rows	"16"
-		*ufopedia_scroll	viewsize	16
-		*ufopedia font		f_big
-		*ufopedia mousefx	true
-		*ufopedia 			height	368
-		*ufopedia_scroll	height	368
+		*ufopedia@lineheight	"23"
+		*ufopedia@rows	"16"
+		*ufopedia_scroll@viewsize	16
+		*ufopedia@font		f_big
+		*ufopedia@mousefx	true
+		*ufopedia@height	368
+		*ufopedia_scroll@height	368
 		cmd "mn_textscroll ufopedia reset;"
-		*ufopedia_scroll current 0
+		*ufopedia_scroll@current 0
 	}
 
 	confunc mn_upfsmall
 	{
-		*ufopedia lineheight	"18"
-		*ufopedia rows	"20"
-		*ufopedia_scroll	viewsize	20
-		*ufopedia font		f_small
-		*ufopedia mousefx	false
-		*ufopedia 			height	360
-		*ufopedia_scroll	height	360
-		cmd "mn_textscroll ufopedia reset;"
-		*ufopedia_scroll current 0
+		*ufopedia@lineheight	"18"
+		*ufopedia@rows	"20"
+		*ufopedia_scroll@viewsize	20
+		*ufopedia@font		f_small
+		*ufopedia@mousefx	false
+		*ufopedia@height	360
+		*ufopedia_scroll@height	360
+		cmd "mn_textscroll@ufopedia reset;"
+		*ufopedia_scroll@current 0
 	}
 
 	text description

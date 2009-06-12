@@ -459,8 +459,8 @@ window geoscape
 			texh		"32 32"
 			mousefx		false
 			onClick		{ cmd "map_overlay nations;" }
-			onMouseLeave			{ *control.bt_show_overlay texl "0 0" *control.bt_show_overlay texh "32 32" }
-			onMouseEnter			{ *control.bt_show_overlay texl "32 0" *control.bt_show_overlay texh "64 32" }
+			onMouseLeave			{ *node:this@texl "0 0" *node:this@texh "32 32" }
+			onMouseEnter			{ *node:this@texl "32 0" *node:this@texh "64 32" }
 		}
 
 		pic bt_show_radar
@@ -472,8 +472,8 @@ window geoscape
 			texh		"32 32"
 			mousefx		false
 			onClick		{ cmd "map_overlay radar;" }
-			onMouseLeave			{ *control.bt_show_radar texl "0 0" *control.bt_show_radar texh "32 32" }
-			onMouseEnter			{ *control.bt_show_radar texl "32 0" *control.bt_show_radar texh "64 32" }
+			onMouseLeave			{ *node:this@texl "0 0" *node:this@texh "32 32" }
+			onMouseEnter			{ *node:this@texl "32 0" *node:this@texh "64 32" }
 		}
 
 		pic bt_show_xvi
@@ -486,8 +486,8 @@ window geoscape
 			texh		"32 32"
 			mousefx		false
 			onClick		{ cmd "map_overlay xvi;" }
-			onMouseLeave			{ *control.bt_show_xvi texl "0 0" *control.bt_show_xvi texh "32 32" }
-			onMouseEnter			{ *control.bt_show_xvi texl "32 0" *control.bt_show_xvi texh "64 32" }
+			onMouseLeave			{ *node:this@texl "0 0" *node:this@texh "32 32" }
+			onMouseEnter			{ *node:this@texl "32 0" *node:this@texh "64 32" }
 		}
 
 		custombutton bt_messagesystem
@@ -1039,7 +1039,7 @@ window popup_newbase
 		if "*node:root.start_building@current > 0" {
 			*start_employees@disabled false
 		} else {
-			*(abstractvalue)start_employees current 0
+			*(abstractvalue)start_employees@current 0
 			*start_employees@disabled true
 		}		
 	}
