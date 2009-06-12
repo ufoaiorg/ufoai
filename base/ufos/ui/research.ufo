@@ -111,8 +111,8 @@ window research
 	 * @param[in] <4> max value allowed
 	 */
 	confunc research_updateitem {
-		*(abstractvalue)bt_rs_change<1> current <2>
-		*(abstractvalue)bt_rs_change<1> max <3>
+		*(abstractvalue)bt_rs_change<1>@current <2>
+		*(abstractvalue)bt_rs_change<1>@max <3>
 	}
 
 	/**
@@ -120,64 +120,64 @@ window research
 	 * @param[in] <1> Item row
 	 */
 	confunc research_hide {
-		*txt_item<1> invis true
-		*img_status<1> invis true
-		*bt_rs_change<1> invis true
-		*txt_assigned<1> invis true
+		*txt_item<1>@invis true
+		*img_status<1>@invis true
+		*bt_rs_change<1>@invis true
+		*txt_assigned<1>@invis true
 	}
 
 	confunc research_research {
-		*txt_item<1> invis false
-		*txt_item<1> left 70
-		*txt_item<1> color "0 .78 0 1"
-		*img_status<1> invis false
-		*bt_rs_change<1> invis false
-		*txt_assigned<1> invis false
+		*txt_item<1>@invis false
+		*txt_item<1>@left 70
+		*txt_item<1>@color "0 .78 0 1"
+		*img_status<1>@invis false
+		*bt_rs_change<1>@invis false
+		*txt_assigned<1>@invis false
 	}
 
 	confunc research_outterresearch {
-		*txt_item<1> invis false
-		*txt_item<1> left 70
-		*txt_item<1> color "0 .78 0 1"
-		*img_status<1> invis false
-		*bt_rs_change<1> invis true
-		*txt_assigned<1> invis false
+		*txt_item<1>@invis false
+		*txt_item<1>@left 70
+		*txt_item<1>@color "0 .78 0 1"
+		*img_status<1>@invis false
+		*bt_rs_change<1>@invis true
+		*txt_assigned<1>@invis false
 	}
 
 	confunc research_basetitle {
-		*txt_item<1> invis false
-		*txt_item<1> left 50
-		*txt_item<1> color "1 1 1 1"
-		*img_status<1> invis true
-		*bt_rs_change<1> invis true
-		*txt_assigned<1> invis true
+		*txt_item<1>@invis false
+		*txt_item<1>@left 50
+		*txt_item<1>@color "1 1 1 1"
+		*img_status<1>@invis true
+		*bt_rs_change<1>@invis true
+		*txt_assigned<1>@invis true
 	}
 
 	confunc research_baseinfo {
-		*txt_item<1> invis false
-		*txt_item<1> color "0.7 0.7 0.7 1"
-		*txt_item<1> left 70
-		*img_status<1> invis true
-		*bt_rs_change<1> invis true
-		*txt_assigned<1> invis false
+		*txt_item<1>@invis false
+		*txt_item<1>@color "0.7 0.7 0.7 1"
+		*txt_item<1>@left 70
+		*img_status<1>@invis true
+		*bt_rs_change<1>@invis true
+		*txt_assigned<1>@invis false
 	}
 
 	confunc research_unresearchableitemtitle {
-		*txt_item<1> invis false
-		*txt_item<1> color "1 1 1 1"
-		*txt_item<1> left 50
-		*img_status<1> invis true
-		*bt_rs_change<1> invis true
-		*txt_assigned<1> invis true
+		*txt_item<1>@invis false
+		*txt_item<1>@color "1 1 1 1"
+		*txt_item<1>@left 50
+		*img_status<1>@invis true
+		*bt_rs_change<1>@invis true
+		*txt_assigned<1>@invis true
 	}
 
 	confunc research_unresearchableitem {
-		*txt_item<1> invis false
-		*txt_item<1> color "0 .78 0 1"
-		*txt_item<1> left 70
-		*img_status<1> invis true
-		*bt_rs_change<1> invis true
-		*txt_assigned<1> invis true
+		*txt_item<1>@invis false
+		*txt_item<1>@color "0 .78 0 1"
+		*txt_item<1>@left 70
+		*img_status<1>@invis true
+		*bt_rs_change<1>@invis true
+		*txt_assigned<1>@invis true
 	}
 
 	/**
@@ -185,49 +185,49 @@ window research
 	 * @param[in] <1> Item row
 	 */
 	confunc research_show {
-		*img_status<1> invis false
-		*bt_rs_change<1> invis false
+		*img_status<1>@invis false
+		*bt_rs_change<1>@invis false
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_selected {
-		*txt_item<1>  color ".3 1 0 1"
+		*txt_item<1>@color ".3 1 0 1"
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_changebasetooltype {
-		*txt_item<1>  tooltip "_Switch to another base"
+		*txt_item<1>@tooltip "_Switch to another base"
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_normal {
-//		*txt_item<1> color "0 .78 0 1"
-		*img_status<1> texl	"32 16"
-		*img_status<1> texh	"48 32"
+//		*txt_item<1>@color "0 .78 0 1"
+		*img_status<1>@texl	"32 16"
+		*img_status<1>@texh	"48 32"
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_running {
-//		*txt_item<1>  color "0 1 0 1"
-		*img_status<1> texl	"32 0"
-		*img_status<1> texh	"48 16"
+//		*txt_item<1>@color "0 1 0 1"
+		*img_status<1>@texl	"32 0"
+		*img_status<1>@texh	"48 16"
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_paused {
-//		*txt_item<1>  color ".78 .78 0 1"
-		*img_status<1> texl	"48 0"
-		*img_status<1> texh	"64 16"
+//		*txt_item<1>@color ".78 .78 0 1"
+		*img_status<1>@texl	"48 0"
+		*img_status<1>@texh	"64 16"
 	}
 
 	/**

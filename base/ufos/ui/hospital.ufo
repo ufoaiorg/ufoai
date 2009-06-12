@@ -61,64 +61,64 @@ window hospital
 
 	confunc hospital_clear
 	{
-		*hos_button0	image ui/hosp_button_green
-		*hos_button1	image ui/hosp_button_green
-		*hos_button2	image ui/hosp_button_green
-		*hos_button3	image ui/hosp_button_green
-		*hos_button4	image ui/hosp_button_green
-		*hos_button5	image ui/hosp_button_green
-		*hos_button6	image ui/hosp_button_green
-		*hos_button7	image ui/hosp_button_green
-		*hos_button8	image ui/hosp_button_green
-		*hos_button9	image ui/hosp_button_green
-		*hos_button10	image ui/hosp_button_green
-		*hos_button11	image ui/hosp_button_green
-		*hos_button12	image ui/hosp_button_green
-		*hos_button13	image ui/hosp_button_green
-		*hos_button14	image ui/hosp_button_green
-		*hos_button15	image ui/hosp_button_green
-		*hos_button16	image ui/hosp_button_green
-		*hos_button17	image ui/hosp_button_green
-		*hos_button18	image ui/hosp_button_green
-		*hos_button19	image ui/hosp_button_green
-		*hos_button20	image ui/hosp_button_green
-		*click_hos_button0	tooltip "_Unused"
-		*click_hos_button1	tooltip "_Unused"
-		*click_hos_button2	tooltip "_Unused"
-		*click_hos_button3	tooltip "_Unused"
-		*click_hos_button4	tooltip "_Unused"
-		*click_hos_button5	tooltip "_Unused"
-		*click_hos_button6	tooltip "_Unused"
-		*click_hos_button7	tooltip "_Unused"
-		*click_hos_button8	tooltip "_Unused"
-		*click_hos_button9	tooltip "_Unused"
-		*click_hos_button10	tooltip "_Unused"
-		*click_hos_button11	tooltip "_Unused"
-		*click_hos_button12	tooltip "_Unused"
-		*click_hos_button13	tooltip "_Unused"
-		*click_hos_button14	tooltip "_Unused"
-		*click_hos_button15	tooltip "_Unused"
-		*click_hos_button16	tooltip "_Unused"
-		*click_hos_button17	tooltip "_Unused"
-		*click_hos_button18	tooltip "_Unused"
-		*click_hos_button19	tooltip "_Unused"
-		*click_hos_button20	tooltip "_Unused"
+		*hos_button0@image ui/hosp_button_green
+		*hos_button1@image ui/hosp_button_green
+		*hos_button2@image ui/hosp_button_green
+		*hos_button3@image ui/hosp_button_green
+		*hos_button4@image ui/hosp_button_green
+		*hos_button5@image ui/hosp_button_green
+		*hos_button6@image ui/hosp_button_green
+		*hos_button7@image ui/hosp_button_green
+		*hos_button8@image ui/hosp_button_green
+		*hos_button9@image ui/hosp_button_green
+		*hos_button10@image ui/hosp_button_green
+		*hos_button11@image ui/hosp_button_green
+		*hos_button12@image ui/hosp_button_green
+		*hos_button13@image ui/hosp_button_green
+		*hos_button14@image ui/hosp_button_green
+		*hos_button15@image ui/hosp_button_green
+		*hos_button16@image ui/hosp_button_green
+		*hos_button17@image ui/hosp_button_green
+		*hos_button18@image ui/hosp_button_green
+		*hos_button19@image ui/hosp_button_green
+		*hos_button20@image ui/hosp_button_green
+		*click_hos_button0@tooltip "_Unused"
+		*click_hos_button1@tooltip "_Unused"
+		*click_hos_button2@tooltip "_Unused"
+		*click_hos_button3@tooltip "_Unused"
+		*click_hos_button4@tooltip "_Unused"
+		*click_hos_button5@tooltip "_Unused"
+		*click_hos_button6@tooltip "_Unused"
+		*click_hos_button7@tooltip "_Unused"
+		*click_hos_button8@tooltip "_Unused"
+		*click_hos_button9@tooltip "_Unused"
+		*click_hos_button10@tooltip "_Unused"
+		*click_hos_button11@tooltip "_Unused"
+		*click_hos_button12@tooltip "_Unused"
+		*click_hos_button13@tooltip "_Unused"
+		*click_hos_button14@tooltip "_Unused"
+		*click_hos_button15@tooltip "_Unused"
+		*click_hos_button16@tooltip "_Unused"
+		*click_hos_button17@tooltip "_Unused"
+		*click_hos_button18@tooltip "_Unused"
+		*click_hos_button19@tooltip "_Unused"
+		*click_hos_button20@tooltip "_Unused"
 	}
 
 	confunc hospitalserious	{
-		*hos_icon<1>	image	icons/health_critical
-		*hos_button<1>	image	ui/hosp_button_light
-		*click_hos_button<1>	tooltip	"_Heavily wounded"
+		*hos_icon<1>@image				icons/health_critical
+		*hos_button<1>@image			ui/hosp_button_light
+		*click_hos_button<1>@tooltip	"_Heavily wounded"
 	}
 	confunc hospitalmedium	{
-		*hos_icon<1>	image	icons/health_medium
-		*hos_button<1>	image	ui/hosp_button_light
-		*click_hos_button<1>	tooltip	"_Medium wounds"
+		*hos_icon<1>@image				icons/health_medium
+		*hos_button<1>@image			ui/hosp_button_light
+		*click_hos_button<1>@tooltip	"_Medium wounds"
 	}
 	confunc hospitallight	{
-		*hos_icon<1>	image	icons/health_normal
-		*hos_button<1>	image	ui/hosp_button_light
-		*click_hos_button<1>	tooltip	"_Slightly wounded"
+		*hos_icon<1>@image				icons/health_normal
+		*hos_button<1>@image			ui/hosp_button_light
+		*click_hos_button<1>@tooltip	"_Slightly wounded"
 	}
 
 	zone hos_scroll_zone
@@ -438,8 +438,8 @@ window hospital
 		texh	"48 48"
 		texl	"32 32"
 		onClick	{ cmd "hosp_list_up;" }
-		onMouseLeave		{ *hos_button_scrollup texl "32 32" *hos_button_scrollup texh "48 48" }
-		onMouseEnter		{ *hos_button_scrollup texl "48 32" *hos_button_scrollup texh "64 48" }
+		onMouseLeave		{ *node:this@texl "32 32" *node:this@texh "48 48" }
+		onMouseEnter		{ *node:this@texl "48 32" *node:this@texh "64 48" }
 	}
 
 	pic hos_button_scrolldown
@@ -451,8 +451,8 @@ window hospital
 		texl	"32 48"
 		texh	"48 64"
 		onClick	{ cmd "hosp_list_down;" }
-		onMouseLeave		{ *hos_button_scrolldown texl "32 48" *hos_button_scrolldown texh "48 64" }
-		onMouseEnter		{ *hos_button_scrolldown texl "48 48" *hos_button_scrolldown texh "64 64" }
+		onMouseLeave		{ *node:this@texl "32 48" *node:this@texh "48 64" }
+		onMouseEnter		{ *node:this@texl "48 48" *node:this@texh "64 64" }
 	}
 
 	// ==================

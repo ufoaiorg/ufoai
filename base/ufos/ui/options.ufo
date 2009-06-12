@@ -19,11 +19,11 @@ window options
 
 	func hidepanels
 	{
-		*(panel)options_game invis true
-		*(panel)options_sound invis true
-		*(panel)options_video invis true
-		*(panel)options_input invis true
-		*(panel)options_keys invis true
+		*(panel)options_game@invis true
+		*(panel)options_sound@invis true
+		*(panel)options_video@invis true
+		*(panel)options_input@invis true
+		*(panel)options_keys@invis true
 	}
 
 	// ==================
@@ -41,7 +41,7 @@ window options
 		selectcolor	"1 1 1 1"
 		onClick		{
 			call hidepanels
-			*(panel)options_game invis false
+			*(panel)options_game@invis false
 		}
 	}
 
@@ -56,7 +56,7 @@ window options
 		selectcolor	"1 1 1 1"
 		onClick		{
 			call hidepanels
-			*(panel)options_video invis false
+			*(panel)options_video@invis false
 			cmd "copy mn_vidmode vid_mode;"
 		}
 	}
@@ -74,7 +74,7 @@ window options
 		selectcolor "1 1 1 1"
 		onClick		{
 			call hidepanels
-			*(panel)options_sound invis false
+			*(panel)options_sound@invis false
 		}
 	}
 
@@ -106,7 +106,7 @@ window options
 		selectcolor	"1 1 1 1"
 		onClick		{
 			call hidepanels
-			*(panel)options_input invis false
+			*(panel)options_input@invis false
 		}
 	}
 
@@ -126,7 +126,7 @@ window options
 	{
 		call hidepanels
 		cmd "mn_init_keylist;"
-		*(panel)options_input invis false
+		*(panel)options_input@invis false
 	}
 
 	// ==================
@@ -715,11 +715,11 @@ window options
 			rows		"28"
 			lineheight	"20"
 			onViewChange {
-				*(abstractscrollbar)options_keys.keyscroll fullsize <lines>
-				*(abstractscrollbar)options_keys.keyscroll current <text_scroll>
+				*(abstractscrollbar)options_keys.keyscroll@fullsize <lines>
+				*(abstractscrollbar)options_keys.keyscroll@current <text_scroll>
 			}
 			onWheel		{
-				*(abstractscrollbar)options_keys.keyscroll current <text_scroll>
+				*(abstractscrollbar)options_keys.keyscroll@current <text_scroll>
 			}
 		}
 
@@ -735,7 +735,7 @@ window options
 
 		confunc optionkey_count
 		{
-			*(abstractscrollbar)options_keys.keyscroll fullsize <1>
+			*(abstractscrollbar)options_keys.keyscroll@fullsize <1>
 		}
 	}
 
@@ -829,9 +829,9 @@ window options
 			selectcolor	"1 1 1 1"
 			padding		6
 			onViewchange	{
-				*(vscrollbar)options_game.select_language_scroll current <viewpos>
-				*(vscrollbar)options_game.select_language_scroll fullsize <count>
-				*(vscrollbar)options_game.select_language_scroll viewsize 10
+				*(vscrollbar)options_game.select_language_scroll@current <viewpos>
+				*(vscrollbar)options_game.select_language_scroll@fullsize <count>
+				*(vscrollbar)options_game.select_language_scroll@viewsize 10
 			}
 			onWheelUp 	{ cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 0" } // 0: click on top
 			onWheelDown { cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 4" } // 4: click on bottom
@@ -845,7 +845,7 @@ window options
 			viewsize	8
 			fullsize	22
 			onChange		{
-				*options_game.select_language viewpos <current>
+				*options_game.select_language@viewpos <current>
 			}
 		}
 

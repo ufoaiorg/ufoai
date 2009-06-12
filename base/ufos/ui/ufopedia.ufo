@@ -100,11 +100,11 @@ window ufopedia
 		onClick		{ cmd "ufopedia_click <lineselected>" }
 		onRClick	{ cmd "ufopedia_rclick <lineselected>" }
 		onWheel		{
-			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
+			*(abstractscrollbar)ufopedia_scroll@current <text_scroll>
 		}
 		onViewChange	{
-			*(abstractscrollbar)ufopedia_scroll fullsize <lines>
-			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
+			*(abstractscrollbar)ufopedia_scroll@fullsize <lines>
+			*(abstractscrollbar)ufopedia_scroll@current <text_scroll>
 		}
 	}
 

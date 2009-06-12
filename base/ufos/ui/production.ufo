@@ -54,11 +54,11 @@ window production
 	 */
 	func prod_stores {
 		if "*cvar:mn_itemtype ne aircraft" {
-			*node:parent.infopanel.txt_prod_storage_caption	invis	false
-			*node:parent.infopanel.txt_prod_storage			invis	false
+			*node:parent.infopanel.txt_prod_storage_caption@invis	false
+			*node:parent.infopanel.txt_prod_storage@invis	false
 		} else {
-			*node:parent.infopanel.txt_prod_storage_caption	invis	true
-			*node:parent.infopanel.txt_prod_storage			invis	true
+			*node:parent.infopanel.txt_prod_storage_caption@invis	true
+			*node:parent.infopanel.txt_prod_storage@invis	true
 		}
 	}
 
@@ -278,12 +278,12 @@ window production
 		onClick		{ cmd "prodlist_click <lineselected>" }
 		onRClick	{ cmd "prodlist_rclick <lineselected>" }
 		onWheel		{
-			*(abstractscrollbar)prodlist_scroll current <text_scroll>
+			*(abstractscrollbar)prodlist_scroll@current <text_scroll>
 			cmd "prod_scroll;"
 		}
 		onViewChange	{
-			*(abstractscrollbar)prodlist_scroll fullsize <lines>
-			*(abstractscrollbar)prodlist_scroll current <text_scroll>
+			*(abstractscrollbar)prodlist_scroll@fullsize <lines>
+			*(abstractscrollbar)prodlist_scroll@current <text_scroll>
 		}
 	}
 
@@ -449,18 +449,18 @@ window production
 	confunc prod_priodecr_off
 	{
 		//decrease and prio off
-		*prod_dec	invis true
-		*prod_stop	invis true
-		*prod_inc	invis false
-		*prod_down	invis true
-		*prod_up	invis true
+		*prod_dec@invis true
+		*prod_stop@invis true
+		*prod_inc@invis false
+		*prod_down@invis true
+		*prod_up@invis true
 	}
 
 	confunc prod_inc_off
 	{
 		//increase off (used in combination with prod_priodecr_off
-		*prod_inc	invis true
-		*prod_inc2	invis true
+		*prod_inc@invis true
+		*prod_inc2@invis true
 	}
 
 	/**
@@ -468,15 +468,15 @@ window production
 	 */
 	confunc prod_nothingselected
 	{
-		*prod_stop	invis true
-		*prod_down	invis true
-		*prod_up	invis true
-		*prod_change	invis true
-		*prod_change_10	invis true
-		*prod_new	invis true
-		*prod_amount	invis true
-		*label_1	invis true
-		*label_10	invis true
+		*prod_stop@invis true
+		*prod_down@invis true
+		*prod_up@invis true
+		*prod_change@invis true
+		*prod_change_10@invis true
+		*prod_new@invis true
+		*prod_amount@invis true
+		*label_1@invis true
+		*label_10@invis true
 	}
 
 	/**
@@ -484,15 +484,15 @@ window production
 	 */
 	confunc prod_availableselected
 	{
-		*prod_stop	invis true
-		*prod_down	invis true
-		*prod_up	invis true
-		*prod_change	invis true
-		*prod_change_10	invis true
-		*prod_amount	invis true
-		*prod_new	invis false
-		*label_1	invis true
-		*label_10	invis true
+		*prod_stop@invis true
+		*prod_down@invis true
+		*prod_up@invis true
+		*prod_change@invis true
+		*prod_change_10@invis true
+		*prod_amount@invis true
+		*prod_new@invis false
+		*label_1@invis true
+		*label_10@invis true
 	}
 
 	/**
@@ -500,15 +500,15 @@ window production
 	 */
 	confunc prod_taskselected
 	{
-		*prod_stop	invis false
-		*prod_down	invis false
-		*prod_up	invis false
-		*prod_change	invis false
-		*prod_change_10	invis false
-		*prod_amount	invis false
-		*prod_new	invis true
-		*label_1	invis false
-		*label_10	invis false
+		*prod_stop@invis false
+		*prod_down@invis false
+		*prod_up@invis false
+		*prod_change@invis false
+		*prod_change_10@invis false
+		*prod_amount@invis false
+		*prod_new@invis true
+		*label_1@invis false
+		*label_10@invis false
 	}
 
 	// ==================

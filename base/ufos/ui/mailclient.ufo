@@ -41,11 +41,11 @@ window mail
 		tabwidth	100
 		rows		"20"
 		onWheel		{
-			*(abstractscrollbar)mail_scroll current <text_scroll>
+			*(abstractscrollbar)mail_scroll@current <text_scroll>
 		}
 		onViewChange	{
-			*(abstractscrollbar)mail_scroll fullsize <lines>
-			*(abstractscrollbar)mail_scroll current <text_scroll>
+			*(abstractscrollbar)mail_scroll@fullsize <lines>
+			*(abstractscrollbar)mail_scroll@current <text_scroll>
 		}
 	}
 
@@ -535,12 +535,12 @@ window mailclient
 		mousefx		true
 		onClick		{ cmd "mailclient_click <lineselected>" }
 		onWheel		{
-			*(abstractscrollbar)mailclient_scroll current <text_scroll>
+			*(abstractscrollbar)mailclient_scroll@current <text_scroll>
 			cmd "ufopedia_scrollmail;"
 		}
 		onViewChange	{
-			*(abstractscrollbar)mailclient_scroll fullsize <lines>
-			*(abstractscrollbar)mailclient_scroll current <text_scroll>
+			*(abstractscrollbar)mailclient_scroll@fullsize <lines>
+			*(abstractscrollbar)mailclient_scroll@current <text_scroll>
 		}
 	}
 

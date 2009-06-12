@@ -333,57 +333,57 @@ window uforecovery
 	// function to manage tab
 	//
 	confunc uforecovery_tabchange {
-		*store_panel invis true
-		*sell_panel invis true
+		*store_panel@invis true
+		*sell_panel@invis true
 		if "*cvar:mn_uforecovery_tab == 0" {
-			*store_panel invis false
+			*store_panel@invis false
 		}
 		if "*cvar:mn_uforecovery_tab == 1" {
-			*sell_panel invis false
+			*sell_panel@invis false
 		}
 	}
 
 	confunc btnatsel_enable {
-		*sell_panel.bt_natsel disabled false
+		*sell_panel.bt_natsel@disabled false
 	}
 
 	confunc btbasesel_enable {
-		*store_panel.bt_basesel disabled false
+		*store_panel.bt_basesel@disabled false
 	}
 
 	confunc btbaserepl_enable {
-		*store_panel.bt_basereplace disabled false
+		*store_panel.bt_basereplace@disabled false
 	}
 
 	confunc cp_basesel_disable {
-		*store_panel.cp_uforecovery_baselist disabled true
+		*store_panel.cp_uforecovery_baselist@disabled true
 	}
 
 	// @todo perhaps a shorter way to do so?
 	confunc cp_basesel_select {
-		*store_panel.cp_uforecovery_baselist lineselected 0
+		*store_panel.cp_uforecovery_baselist@lineselected 0
 	}
 
 	confunc start_replace {
 		*cvar:mn_uforecovery_tab 1
 		call uforecovery_tabchange
 		cmd "cp_uforecovery_replace;"
-		*store_panel.cp_uforecovery_baselist disabled true
-		*store_panel.cp_uforecovery_baselist lineselected -1
-		*store_panel.bt_basesel disabled true
-		*store_panel.bt_basereplace disabled true
-		*sell_panel.cp_uforecovery_nationlist lineselected	-1
-		*sell_panel.bt_natsel disabled true
+		*store_panel.cp_uforecovery_baselist@disabled true
+		*store_panel.cp_uforecovery_baselist@lineselected -1
+		*store_panel.bt_basesel@disabled true
+		*store_panel.bt_basereplace@disabled true
+		*sell_panel.cp_uforecovery_nationlist@lineselected	-1
+		*sell_panel.bt_natsel@disabled true
 		*cvar:mission_recoverynation ""
 	}
 
 	func onInit {
-		*store_panel.cp_uforecovery_baselist lineselected	-1
-		*store_panel.cp_uforecovery_baselist disabled false
-		*store_panel.bt_basereplace disabled true
-		*store_panel.bt_basesel disabled true
-		*sell_panel.cp_uforecovery_nationlist lineselected	-1
-		*sell_panel.bt_natsel disabled true
+		*store_panel.cp_uforecovery_baselist@lineselected	-1
+		*store_panel.cp_uforecovery_baselist@disabled false
+		*store_panel.bt_basereplace@disabled true
+		*store_panel.bt_basesel@disabled true
+		*sell_panel.cp_uforecovery_nationlist@lineselected	-1
+		*sell_panel.bt_natsel@disabled true
 		*cvar:mn_uforecovery_tab 0
 		cmd "del mission_recoverybase;del mission_recoverynation;uforecovery_tabchange;cp_uforecovery_sell_init;cp_uforecovery_store_init;"
 	}

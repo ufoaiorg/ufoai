@@ -166,26 +166,26 @@ window mp_team_edit
 	 * @param[in] <1> number of soldier in the list
 	 */
 	confunc mp_soldier_unselect {
-		*txt_actor<1> color "0 .78 0 1"
+		*txt_actor<1>@color "0 .78 0 1"
 	}
 
 	/**
 	 * @param[in] <1> number of soldier in the list
 	 */
 	confunc mp_soldier_select {
-		*txt_actor<1> color "1 1 1 1"
+		*txt_actor<1>@color "1 1 1 1"
 	}
 
 	func mp_names_clear
 	{
-		*txt_actor0 color "0 .78 0 1"
-		*txt_actor1 color "0 .78 0 1"
-		*txt_actor2 color "0 .78 0 1"
-		*txt_actor3 color "0 .78 0 1"
-		*txt_actor4 color "0 .78 0 1"
-		*txt_actor5 color "0 .78 0 1"
-		*txt_actor6 color "0 .78 0 1"
-		*txt_actor7 color "0 .78 0 1"
+		*txt_actor0@color "0 .78 0 1"
+		*txt_actor1@color "0 .78 0 1"
+		*txt_actor2@color "0 .78 0 1"
+		*txt_actor3@color "0 .78 0 1"
+		*txt_actor4@color "0 .78 0 1"
+		*txt_actor5@color "0 .78 0 1"
+		*txt_actor6@color "0 .78 0 1"
+		*txt_actor7@color "0 .78 0 1"
 	}
 
 	string txt_actor0
@@ -259,27 +259,27 @@ window mp_team_edit
 
 	confunc mp_update_item_list {
 		if "*cvar:mn_equiptype == 0" {
-			*(container)equip filter 0
-			*(container)equip_ammo filter 0
+			*(container)equip@filter 0
+			*(container)equip_ammo@filter 0
 		}
-		if "*cvar:mn_equiptype == 1" {
-			*(container)equip filter 1
-			*(container)equip_ammo filter 1
+		elif "*cvar:mn_equiptype == 1" {
+			*(container)equip@filter 1
+			*(container)equip_ammo@filter 1
 		}
-		if "*cvar:mn_equiptype == 2" {
-			*(container)equip filter 2
-			*(container)equip_ammo filter 2
+		elif "*cvar:mn_equiptype == 2" {
+			*(container)equip@filter 2
+			*(container)equip_ammo@filter 2
 		}
-		if "*cvar:mn_equiptype == 3" {
-			*(container)equip filter 3
-			*(container)equip_ammo filter 3
+		elif "*cvar:mn_equiptype == 3" {
+			*(container)equip@filter 3
+			*(container)equip_ammo@filter 3
 		}
-		if "*cvar:mn_equiptype == 4" {
-			*(container)equip filter 4
-			*(container)equip_ammo filter 4
+		elif "*cvar:mn_equiptype == 4" {
+			*(container)equip@filter 4
+			*(container)equip_ammo@filter 4
 		}
-		*(container)equip scrollpos 0
-		*(container)equip_ammo scrollpos 0
+		*(container)equip@scrollpos 0
+		*(container)equip_ammo@scrollpos 0
 	}
 
 	tab equip_type
@@ -330,10 +330,10 @@ window mp_team_edit
 		confunc hide_firemode {
 			// only show them when the object info window is active  
 			if "*node:this.parent.item_name@invis == 0" {
-				*node:this.parent.firemode_dec invis <1>
-				*node:this.parent.firemode_inc invis <1>
-				*node:this.parent.header_firemode invis <1>
-				*node:this.parent.firemode_name invis <1>
+				*node:this.parent.firemode_dec@invis <1>
+				*node:this.parent.firemode_inc@invis <1>
+				*node:this.parent.header_firemode@invis <1>
+				*node:this.parent.firemode_name@invis <1>
 			}
 		}
 		
@@ -345,9 +345,9 @@ window mp_team_edit
 			if "*cvar:mn_changeitem != 0" {
 				// only show them when the object info window is active  
 				if "*node:this.parent.item_name@invis == 0" {
-					*node:this.parent.action_dec invis false 
-					*node:this.parent.action_inc invis false 
-					*node:this.parent.header_item invis false
+					*node:this.parent.action_dec@invis false 
+					*node:this.parent.action_inc@invis false 
+					*node:this.parent.header_item@invis false
 					if "*cvar:mn_changeitem == 2" {
 						cmd "hide_firemode true;"
 					} else {
@@ -355,9 +355,9 @@ window mp_team_edit
 					}				
 				}
 			} else {
-				*node:this.parent.action_dec invis true 
-				*node:this.parent.action_inc invis true 
-				*node:this.parent.header_item invis true
+				*node:this.parent.action_dec@invis true 
+				*node:this.parent.action_inc@invis true 
+				*node:this.parent.header_item@invis true
 				cmd "hide_firemode true;" 
 			}
 		}
@@ -549,54 +549,54 @@ window mp_team_edit
 	// @todo merge with confunc weapon_stats?
 	confunc mp_weapon_stats
 	{
-		*itemdescription.itemname invis false
-		*itemdescription.itemmodel invis false
-		*itemdescription.description invis false
-		*itemdescription.item_name invis false
+		*itemdescription.itemname@invis false
+		*itemdescription.itemmodel@invis false
+		*itemdescription.description@invis false
+		*itemdescription.item_name@invis false
 		// they are hidden
-		*itemdescription.action_dec invis true
-		*itemdescription.action_inc invis true
-		*itemdescription.header_item invis true
-		*itemdescription.firemode_dec invis true
-		*itemdescription.firemode_inc invis true
-		*itemdescription.header_firemode invis true
-		*itemdescription.firemode_name invis true
+		*itemdescription.action_dec@invis true
+		*itemdescription.action_inc@invis true
+		*itemdescription.header_item@invis true
+		*itemdescription.firemode_dec@invis true
+		*itemdescription.firemode_inc@invis true
+		*itemdescription.header_firemode@invis true
+		*itemdescription.firemode_name@invis true
 		
-		*pwr_lbl invis true *pwr_val invis true *pwr_bdr invis true *pwr_bar invis true
-		*spd_lbl invis true *spd_val invis true *spd_bdr invis true *spd_bar invis true
-		*acc_lbl invis true *acc_val invis true *acc_bdr invis true *acc_bar invis true
-		*mnd_lbl invis true *mnd_val invis true *mnd_bdr invis true *mnd_bar invis true
-		*cls_lbl invis true *cls_val invis true *cls_bdr invis true *cls_bar invis true
-		*hvy_lbl invis true *hvy_val invis true *hvy_bdr invis true *hvy_bar invis true
-		*ass_lbl invis true *ass_val invis true *ass_bdr invis true *ass_bar invis true
-		*snp_lbl invis true *snp_val invis true *snp_bdr invis true *snp_bar invis true
-		*exp_lbl invis true *exp_val invis true *exp_bdr invis true *exp_bar invis true
+		*pwr_lbl@invis true *pwr_val@invis true *pwr_bdr@invis true *pwr_bar@invis true
+		*spd_lbl@invis true *spd_val@invis true *spd_bdr@invis true *spd_bar@invis true
+		*acc_lbl@invis true *acc_val@invis true *acc_bdr@invis true *acc_bar@invis true
+		*mnd_lbl@invis true *mnd_val@invis true *mnd_bdr@invis true *mnd_bar@invis true
+		*cls_lbl@invis true *cls_val@invis true *cls_bdr@invis true *cls_bar@invis true
+		*hvy_lbl@invis true *hvy_val@invis true *hvy_bdr@invis true *hvy_bar@invis true
+		*ass_lbl@invis true *ass_val@invis true *ass_bdr@invis true *ass_bar@invis true
+		*snp_lbl@invis true *snp_val@invis true *snp_bdr@invis true *snp_bar@invis true
+		*exp_lbl@invis true *exp_val@invis true *exp_bdr@invis true *exp_bar@invis true
 	}
 
 	// @todo merge with confunc actor_stats?
 	confunc mp_actor_stats
 	{
-		*itemdescription.itemname invis true
-		*itemdescription.itemmodel invis true
-		*itemdescription.description invis true
-		*itemdescription.action_dec invis true
-		*itemdescription.action_inc invis true
-		*itemdescription.header_item invis true
-		*itemdescription.item_name invis true
-		*itemdescription.firemode_dec invis true
-		*itemdescription.firemode_inc invis true
-		*itemdescription.header_firemode invis true
-		*itemdescription.firemode_name invis true
+		*itemdescription.itemname@invis true
+		*itemdescription.itemmodel@invis true
+		*itemdescription.description@invis true
+		*itemdescription.action_dec@invis true
+		*itemdescription.action_inc@invis true
+		*itemdescription.header_item@invis true
+		*itemdescription.item_name@invis true
+		*itemdescription.firemode_dec@invis true
+		*itemdescription.firemode_inc@invis true
+		*itemdescription.header_firemode@invis true
+		*itemdescription.firemode_name@invis true
 
-		*pwr_lbl invis false *pwr_val invis false *pwr_bdr invis false *pwr_bar invis false
-		*spd_lbl invis false *spd_val invis false *spd_bdr invis false *spd_bar invis false
-		*acc_lbl invis false *acc_val invis false *acc_bdr invis false *acc_bar invis false
-		*mnd_lbl invis false *mnd_val invis false *mnd_bdr invis false *mnd_bar invis false
-		*cls_lbl invis false *cls_val invis false *cls_bdr invis false *cls_bar invis false
-		*hvy_lbl invis false *hvy_val invis false *hvy_bdr invis false *hvy_bar invis false
-		*ass_lbl invis false *ass_val invis false *ass_bdr invis false *ass_bar invis false
-		*snp_lbl invis false *snp_val invis false *snp_bdr invis false *snp_bar invis false
-		*exp_lbl invis false *exp_val invis false *exp_bdr invis false *exp_bar invis false
+		*pwr_lbl@invis false *pwr_val@invis false *pwr_bdr@invis false *pwr_bar@invis false
+		*spd_lbl@invis false *spd_val@invis false *spd_bdr@invis false *spd_bar@invis false
+		*acc_lbl@invis false *acc_val@invis false *acc_bdr@invis false *acc_bar@invis false
+		*mnd_lbl@invis false *mnd_val@invis false *mnd_bdr@invis false *mnd_bar@invis false
+		*cls_lbl@invis false *cls_val@invis false *cls_bdr@invis false *cls_bar@invis false
+		*hvy_lbl@invis false *hvy_val@invis false *hvy_bdr@invis false *hvy_bar@invis false
+		*ass_lbl@invis false *ass_val@invis false *ass_bdr@invis false *ass_bar@invis false
+		*snp_lbl@invis false *snp_val@invis false *snp_bdr@invis false *snp_bar@invis false
+		*exp_lbl@invis false *exp_val@invis false *exp_bdr@invis false *exp_bar@invis false
 	}
 
 	tab info {
@@ -691,9 +691,9 @@ window mp_team_edit
 		displayunavailableitem	true
 		columns					1
 		onViewChange {
-			*(abstractscrollbar)equip_scroll current <scrollpos>
-			*(abstractscrollbar)equip_scroll viewsize <viewsize>
-			*(abstractscrollbar)equip_scroll fullsize <fullsize>
+			*(abstractscrollbar)equip_scroll@current <scrollpos>
+			*(abstractscrollbar)equip_scroll@viewsize <viewsize>
+			*(abstractscrollbar)equip_scroll@fullsize <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
@@ -704,9 +704,9 @@ window mp_team_edit
 		displayammo		true
 		columns			2
 		onViewChange {
-			*(abstractscrollbar)equip_ammo_scroll current <scrollpos>
-			*(abstractscrollbar)equip_ammo_scroll viewsize <viewsize>
-			*(abstractscrollbar)equip_ammo_scroll fullsize <fullsize>
+			*(abstractscrollbar)equip_ammo_scroll@current <scrollpos>
+			*(abstractscrollbar)equip_ammo_scroll@viewsize <viewsize>
+			*(abstractscrollbar)equip_ammo_scroll@fullsize <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
@@ -776,7 +776,7 @@ window mp_team extends abstract_multiplayer
 		 */
 		confunc set_slotname {
 			cmd "set mn_slot<1> \"<3> (<2>)\";"
-			*content.slot_team<1> disabled false
+			*content.slot_team<1>@disabled false
 		}
 
 		button slot_team0

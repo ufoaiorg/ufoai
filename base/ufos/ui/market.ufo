@@ -177,14 +177,14 @@ window market
 	 * @param <2> scroll position
 	 */
 	confunc sync_market_scroll {
-		*market lineselected <1>
-		*market_storage lineselected <1>
-		*market_market lineselected <1>
-		*market_prices lineselected <1>
-		*market viewpos <2>
-		*market_storage viewpos <2>
-		*market_market viewpos <2>
-		*market_prices viewpos <2>
+		*market@lineselected <1>
+		*market_storage@lineselected <1>
+		*market_market@lineselected <1>
+		*market_prices@lineselected <1>
+		*market@viewpos <2>
+		*market_storage@viewpos <2>
+		*market_market@viewpos <2>
+		*market_prices@viewpos <2>
 	}
 
 	// ==================
@@ -791,25 +791,25 @@ window market
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselle {
-		*bt_autosell<1> invis false
-		*bt_autosell<1> image ui/button_autosell1
-		*bt_autosell<1> tooltip "_Item autosell enabled"
+		*bt_autosell<1>@invis false
+		*bt_autosell<1>@image ui/button_autosell1
+		*bt_autosell<1>@tooltip "_Item autosell enabled"
 	}
 	/**
 	 * @brief unchecks an autosell checkbox and makes it visible
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselld {
-		*bt_autosell<1> invis false
-		*bt_autosell<1> image ui/button_autosell2
-		*bt_autosell<1> tooltip "_Item autosell disabled"
+		*bt_autosell<1>@invis false
+		*bt_autosell<1>@image ui/button_autosell2
+		*bt_autosell<1>@tooltip "_Item autosell disabled"
 	}
 	/**
 	 * @brief makes an autosell checkbox invisible
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselli {
-		*bt_autosell<1> invis true
+		*bt_autosell<1>@invis true
 	}
 
 	/**
@@ -817,7 +817,7 @@ window market
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_selectitem {
-		*market lineselected <1>
+		*market@lineselected <1>
 	}
 
 	/**
@@ -828,9 +828,9 @@ window market
 	 * @param[in] <4> max value allowed
 	 */
 	confunc buy_updateitem {
-		*(abstractvalue)bt_buysell<1> current <2>
-		*(abstractvalue)bt_buysell<1> min <3>
-		*(abstractvalue)bt_buysell<1> max <4>
+		*(abstractvalue)bt_buysell<1>@current <2>
+		*(abstractvalue)bt_buysell<1>@min <3>
+		*(abstractvalue)bt_buysell<1>@max <4>
 	}
 
 	/**
@@ -838,14 +838,14 @@ window market
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_hide {
-		*bt_buysell<1> invis true
+		*bt_buysell<1>@invis true
 	}
 	/**
 	 * @brief shows the buy/sell spinner control
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_show {
-		*bt_buysell<1> invis false
+		*bt_buysell<1>@invis false
 	}
 
 	// ==================
