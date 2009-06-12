@@ -1121,20 +1121,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, const int  
 		} else {
 			/* Skipping microtracing, just set the stepup values. */
 			*stepup = max(0, *opening_base - src_floor);
-	/*		if (*stepup > PATHFINDING_MAX_STEPUP)
-				*stepup = PATHFINDING_NO_STEPUP;*/
-
 			*invstepup = max(0, *opening_base - dst_floor);
-	/*		if (*invstepup > PATHFINDING_MAX_STEPUP)
-				*invstepup = PATHFINDING_NO_STEPUP;
-
-			if (az < z) {
-				*stepup |= PATHFINDING_BIG_STEPDOWN;
-				*invstepup |= PATHFINDING_BIG_STEPUP;
-			} else if (az > z) {
-				*stepup |= PATHFINDING_BIG_STEPUP;
-				*invstepup |= PATHFINDING_BIG_STEPDOWN;
-			}*/
 		}
 
 		/* Now place an upper bound on stepup */
