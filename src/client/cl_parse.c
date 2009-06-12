@@ -965,32 +965,39 @@ static void CL_ActorAppear (struct dbuffer *msg)
 {
 	qboolean newActor;
 	le_t *le, *leResponsible;
-	int entnum, modelnum1, modelnum2;
+	int entnum, entnumResponsible, modelnum1, modelnum2;
 	int teamDefID = -1;
 
 	/* check if the actor is already visible */
 	entnum = NET_ReadShort(msg);
+	entnumResponsible = NET_ReadShort(msg);
 	le = LE_Get(entnum);
+	leResponsible = LE_Get(entnumResponsible);
 
-	if (!le) {
-		le = LE_Add(entnum);
-		newActor = qtrue;
-	} else {
-		if (le->type == ET_ACTORHIDDEN)
-			newActor = qtrue;
-		else
-			newActor = qfalse;
+	if (entnumResponsible >= 0) {
+		if (!leResponsible)
+			Com_Error(ERR_DROP, "CL_ActorAppear: Could not get responsible le with entnum %i", entnumResponsible);
+		/* actor is still moving */
+		if (leResponsible->pathLength) {
+			struct dbuffer *revert = new_dbuffer();
+			NET_WriteFormat(revert, "ss", entnum, entnumResponsible);
+			CL_EnqueueEventForLaterExecution(EV_ACTOR_APPEAR, dbuffer_merge(revert, msg), 200);
+			return;
+		}
 	}
+
+	/* mission start - no actor is spawned yet - so create it */
+	if (!le)
+		le = LE_Add(entnum);
+
+	if (le->type == ET_ACTORHIDDEN)
+		newActor = qtrue;
+	else
+		newActor = qfalse;
 
 	/* maybe added via CL_ActorAdd before */
 	le->invis = qfalse;
 	le->lighting.dirty = qtrue;
-
-	entnum = NET_ReadShort(msg);
-	if (entnum >= 0)
-		leResponsible = LE_Get(entnum);
-	else
-		leResponsible = NULL;
 
 	/* get the info */
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_APPEAR],

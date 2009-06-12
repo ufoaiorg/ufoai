@@ -975,6 +975,9 @@ le_t *LE_Get (int entnum)
 	int i;
 	le_t *le;
 
+	if (entnum < 0)
+		return NULL;
+
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
 		if (le->inuse && le->entnum == entnum)
 			/* found the LE */
