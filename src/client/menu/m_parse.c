@@ -70,17 +70,25 @@ static const value_t menuModelProperties[] = {
 	{NULL, V_NULL, 0, 0},
 };
 
-/** @brief valid node event actions */
-static const char *ea_strings[EA_NUM_EVENTACTION] = {
-	"",
+
+/** @brief valid actions ID we can create into the script with a reserved work */
+static ea_t actionCommandID[] = {
+	EA_CMD,
+	EA_CALL,
+	EA_IF,
+	EA_ELSE,
+	EA_ELIF
+};
+
+/** @brief reserved work to create actions */
+static const char *actionCommand[] = {
 	"cmd",
 	"call",
-	"set",
 	"if",
 	"else",
 	"elif"
 };
-CASSERT(lengthof(ea_strings) == EA_NUM_EVENTACTION);
+CASSERT(lengthof(actionCommand) == lengthof(actionCommandID));
 
 /** @brief reserved token preventing calling a node with it */
 static const char *reserved_tokens[] = {
@@ -383,9 +391,9 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			break;
 
 		/* decode action type */
-		for (i = 0; i < EA_NUM_EVENTACTION; i++) {
-			if (Q_strcasecmp(*token, ea_strings[i]) == 0) {
-				type = i;
+		for (i = 0; i < lengthof(actionCommand); i++) {
+			if (Q_strcasecmp(*token, actionCommand[i]) == 0) {
+				type = actionCommandID[i];
 				break;
 			}
 		}
@@ -427,12 +435,6 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			break;
 
 		case EA_SET:
-			/* if not short syntax */
-			if (Q_strcasecmp(*token, ea_strings[EA_SET]) == 0) {
-				*token = Com_EParse(text, errhead, NULL);
-				if (!*token)
-					return NULL;
-			}
 			result = MN_ParseSetAction(menuNode, action, text, token, errhead);
 			if (!result)
 				return NULL;
