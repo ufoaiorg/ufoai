@@ -1367,10 +1367,9 @@ void CL_ActorResetClientAction (struct dbuffer *msg)
 
 	/* get actor le */
 	le = LE_Get(number);
-	if (!le) {
-		Com_Printf("CL_ActorResetClientAction: Could not get le %i\n", number);
-		return;
-	}
+	if (!le)
+		LE_NotFoundError(number);
+
 	/* set door number */
 	le->clientAction = 0;
 	Com_DPrintf(DEBUG_CLIENT, "CL_ActorResetClientAction: Reset client action for actor with entnum %i\n", number);
@@ -1393,7 +1392,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 
 	le = LE_Get(entnum);
 	if (!le)
-		Com_Error(ERR_DROP, "CL_InvCheckHands: LE doesn't exist. (number: %i)\n", entnum);
+		LE_NotFoundError(entnum);
 
 	actorIdx = CL_GetActorNumber(le);
 	if (actorIdx == -1)
@@ -1428,7 +1427,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	/* get le */
 	le = LE_Get(number);
 	if (!le)
-		Com_Error(ERR_DROP, "CL_ActorDoMove: Could not get LE with id %i\n", number);
+		LE_NotFoundError(number);
 
 	if (!LE_IsActor(le))
 		Com_Error(ERR_DROP, "Can't move, LE doesn't exist or is not an actor (number: %i, type: %i)\n",
@@ -1523,7 +1522,7 @@ void CL_ActorDoTurn (struct dbuffer *msg)
 	/* get le */
 	le = LE_Get(entnum);
 	if (!le)
-		Com_Error(ERR_DROP, "CL_ActorDoTurn: Could not get LE with id %i\n", entnum);
+		LE_NotFoundError(entnum);
 
 	if (!LE_IsActor(le))
 		Com_Error(ERR_DROP, "Can't turn, LE doesn't exist or is not an actor (number: %i, type: %i)\n",
@@ -1645,7 +1644,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	/* read data */
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &shooterEntnum, &victimEntnum, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
 
-	if (victimEntnum > 0) {
+	if (victimEntnum != SKIP_LOCAL_ENTITY) {
 		const le_t *leVictim = LE_Get(victimEntnum);
 		if (!leVictim)
 			Com_Error(ERR_DROP, "Can't shoot, invalid victim LE given\n");
@@ -1845,21 +1844,31 @@ void CL_ActorStartShoot (struct dbuffer *msg)
  */
 void CL_ActorDie (struct dbuffer *msg)
 {
-	le_t *le;
-	int entnum, state;
+	le_t *le, *attackerLE;
+	int entnum, attackerEntnum, state;
 
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_DIE], &entnum, &state);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_DIE], &entnum, &attackerEntnum, &state);
 
-	/* get le */
+	/* get les */
 	le = LE_Get(entnum);
+	attackerLE = LE_Get(attackerEntnum);
+
 	if (!le)
-		Com_Error(ERR_DROP, "CL_ActorDie: Could not get le with entnum: %i", entnum);
+		LE_NotFoundError(entnum);
 
 	if (!LE_IsActor(le))
 		Com_Error(ERR_DROP, "CL_ActorDie: Can't kill, LE is not an actor (type: %i)", le->type);
 
 	if (LE_IsDead(le))
 		Com_Error(ERR_DROP, "CL_ActorDie: Can't kill, actor already dead");
+
+	/* don't shoot at the victim until it reached the final position where the server send the shot */
+	if (attackerLE && attackerLE->pathLength) {
+		struct dbuffer *revert = new_dbuffer();
+		NET_WriteFormat(revert, ev_format[EV_ACTOR_DIE], entnum, attackerEntnum, state);
+		CL_EnqueueEventForLaterExecution(EV_ACTOR_DIE, dbuffer_merge(revert, msg), 100);
+		return;
+	}
 
 	/* count spotted aliens */
 	if (le->team != cls.team && le->team != TEAM_CIVILIAN)

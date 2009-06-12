@@ -310,10 +310,7 @@ void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check, 
 			/* parsed in CL_ActorAppear */
 			gi.AddEvent(player_mask, EV_ACTOR_APPEAR);
 			gi.WriteShort(check->number);
-			if (ent != NULL)
-				gi.WriteShort(ent->number);
-			else
-				gi.WriteShort(-1);
+			gi.WriteShort(ent ? ent->number : SKIP_LOCAL_ENTITY);
 
 			gi.WriteByte(check->team);
 			gi.WriteByte(check->chr.teamDef ? check->chr.teamDef->idx : NONE);
@@ -2092,6 +2089,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 	/* send death */
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_DIE);
 	gi.WriteShort(ent->number);
+	gi.WriteShort(attacker ? attacker->number : SKIP_LOCAL_ENTITY);
 	gi.WriteShort(ent->state);
 
 	/* handle inventory - drop everything to floor edict (but not the armour) */

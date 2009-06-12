@@ -207,10 +207,8 @@ void LE_ParticleAppear (struct dbuffer *msg)
 	NET_ReadFormat(msg, ev_format[EV_SPAWN_PARTICLE], &entnum, &levelflags, &particle);
 
 	le = LE_Get(entnum);
-	if (!le) {
-		Com_DPrintf(DEBUG_CLIENT, "LE_ParticleAppear: Could not get particle le with id %i\n", entnum);
-		return;
-	}
+	if (!le)
+		LE_NotFoundError(entnum);
 
 	/* particles don't have a model to add to the scene - we mark them as invisible and
 	 * only render the particle */
@@ -230,12 +228,10 @@ void LE_ParticleAppear (struct dbuffer *msg)
 static inline void LE_DoorAction (struct dbuffer *msg, qboolean openDoor)
 {
 	/* get local entity */
-	const int entNum = NET_ReadShort(msg);
-	le_t *le = LE_Get(entNum);
-	if (!le) {
-		Com_Printf("Can't close the door - le (%p) for entnum %i not found\n", le, entNum);
-		return;
-	}
+	const int entnum = NET_ReadShort(msg);
+	le_t *le = LE_Get(entnum);
+	if (!le)
+		LE_NotFoundError(entnum);
 
 	if (openDoor) {
 		/** @todo YAW should be the orientation of the door */
@@ -275,10 +271,10 @@ void LE_DoorOpen (struct dbuffer *msg)
  */
 void LE_Explode (struct dbuffer *msg)
 {
-	const int num = NET_ReadShort(msg);
-	le_t *le = LE_Get(num);
+	const int entnum = NET_ReadShort(msg);
+	le_t *le = LE_Get(entnum);
 	if (!le)
-		Com_Error(ERR_DROP, "LE_Explode: Could not find le with entnum %i", num);
+		LE_NotFoundError(entnum);
 
 	le->inuse = qfalse;
 
@@ -965,6 +961,12 @@ le_t *LE_Add (int entnum)
 	return le;
 }
 
+void LE_NotFoundError (const int entnum)
+{
+	Cmd_ExecuteString("debug_listle");
+	Com_Error(ERR_DROP, "LE_NotFoundError: Could not get LE with id %i\n", entnum);
+}
+
 /**
  * @brief Searches all local entities for the one with the searched entnum
  * @param[in] entnum The entity number (server side)
@@ -975,7 +977,7 @@ le_t *LE_Get (int entnum)
 	int i;
 	le_t *le;
 
-	if (entnum < 0)
+	if (entnum == SKIP_LOCAL_ENTITY)
 		return NULL;
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++)

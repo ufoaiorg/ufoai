@@ -35,6 +35,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CONSOLE_WINDOW_NAME			CONSOLE_WINDOW_CLASS_NAME
 #endif
 
+#ifdef HAVE_EXECINFO_H
+#include <execinfo.h>
+#define MAX_BACKTRACE_SYMBOLS 50
+#endif
+
 #define MAX_OUTPUT					32768
 #define	MAX_PRINTMSG				8192
 
@@ -155,11 +160,24 @@ void Sys_ConsoleOutput (const char *text)
 	SendMessage(sys_console.hWndOutput, EM_SCROLLCARET, 0, 0);
 }
 
+/**
+ * @brief On platforms supporting it, print a backtrace.
+ */
+void Sys_Backtrace (void)
+{
+#ifdef HAVE_EXECINFO_H
+	void *symbols[MAX_BACKTRACE_SYMBOLS];
+	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
+	backtrace_symbols_fd(symbols, i, STDERR_FILENO);
+#endif
+}
 
 void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
 	char text[1024];
+
+	Sys_Backtrace();
 
 #ifdef COMPILE_MAP
 	Mem_Shutdown();

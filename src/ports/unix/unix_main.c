@@ -81,6 +81,8 @@ void Sys_Error (const char *error, ...)
 	va_list argptr;
 	char string[1024];
 
+	Sys_Backtrace();
+
 	/* change stdin to non blocking */
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
@@ -478,7 +480,7 @@ void Sys_Mkdir (const char *thePath)
 /**
  * @brief On platforms supporting it, print a backtrace.
  */
-static void Sys_Backtrace (void)
+void Sys_Backtrace (void)
 {
 #ifdef HAVE_EXECINFO_H
 	void *symbols[MAX_BACKTRACE_SYMBOLS];

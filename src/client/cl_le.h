@@ -207,6 +207,7 @@ void LE_DoorClose(struct dbuffer *msg);
 void LE_ParticleAppear(struct dbuffer *msg);
 le_t *LE_Add(int entnum);
 le_t *LE_Get(int entnum);
+void LE_NotFoundError(int entnum) __attribute__((noreturn));
 le_t *LE_Find(int type, pos3_t pos);
 void LE_Cleanup(void);
 void LE_AddToScene(void);

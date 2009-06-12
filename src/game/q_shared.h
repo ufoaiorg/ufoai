@@ -153,6 +153,7 @@ char *Sys_Cwd(void);
 void Sys_SetAffinityAndPriority(void);
 int Sys_Milliseconds(void);
 void Sys_Mkdir(const char *path);
+void Sys_Backtrace(void);
 
 /* this is only here so the functions in q_shared.c can link */
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
@@ -299,6 +300,10 @@ typedef enum {
 #define SF_BODY		2
 #define SF_BOUNCING	4
 #define SF_BOUNCED	8
+
+/* is used in events where two edicts can be send, one actor and one receiver - but one of them can
+ * be NULL, e.g. in a case where the actor is a trigger */
+#define SKIP_LOCAL_ENTITY (-1)
 
 #define MAX_DEATH	3	/**< @sa STATE_DEAD */
 
