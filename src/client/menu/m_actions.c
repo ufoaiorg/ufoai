@@ -300,13 +300,13 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 
 	case EA_CMD:
 		/* execute a command */
-		if (action->data)
-			Cbuf_AddText(MN_GenInjectedString(source, useCmdParam, action->data, qtrue));
+		if (action->d.terminal.d1.string)
+			Cbuf_AddText(MN_GenInjectedString(source, useCmdParam, action->d.terminal.d1.string, qtrue));
 		break;
 
 	case EA_CALL:
 		/* call another function */
-		MN_ExecuteInjectedActions((const menuNode_t *) action->data, qfalse, *(menuAction_t **) action->data2);
+		MN_ExecuteInjectedActions((const menuNode_t *) action->d.terminal.d1.data, qfalse, *(menuAction_t **) action->d.terminal.d2.data);
 		break;
 
 	case EA_SET:
@@ -314,20 +314,20 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		break;
 
 	case EA_IF:
-		if (MN_CheckCondition(source, (menuCondition_t *) action->data)) {
-			MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
+		if (MN_CheckCondition(source, (menuCondition_t *) action->d.nonTerminal.left)) {
+			MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
 			return;
 		}
 		action = action->next;
 		while (action && action->type.op == EA_ELIF) {
-			if (MN_CheckCondition(source, (menuCondition_t *) action->data)) {
-				MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
+			if (MN_CheckCondition(source, (menuCondition_t *) action->d.nonTerminal.left)) {
+				MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
 				return;
 			}
 			action = action->next;
 		}
 		if (action && action->type.op == EA_ELSE) {
-			MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
+			MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
 		}
 		break;
 

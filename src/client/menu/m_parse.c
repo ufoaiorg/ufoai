@@ -431,7 +431,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 				return NULL;
 
 			/* get the value */
-			action->data = MN_AllocString(*token, 0);
+			action->d.terminal.d1.string = MN_AllocString(*token, 0);
 			break;
 
 		case EA_SET:
@@ -450,8 +450,8 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 					Com_Printf("MN_ParseActionList: function '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 					return NULL;
 				}
-				action->data = (void*) callNode;
-				action->data2 = (void*) &callNode->onClick;
+				action->d.terminal.d1.data = (void*) callNode;
+				action->d.terminal.d2.data = (void*) &callNode->onClick;
 				lastAction = action;
 			}
 			break;
@@ -470,16 +470,16 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			if (!*text)
 				return NULL;
 
-			action->data = MN_AllocCondition(*token);
-			if (action->data == NULL)
+			action->d.nonTerminal.left = (void*) MN_AllocCondition(*token);
+			if (action->d.nonTerminal.left == NULL)
 				return NULL;
 
 			/* get the action block */
 			*token = Com_EParse(text, errhead, NULL);
 			if (!*text)
 				return NULL;
-			action->scriptValues = (const value_t *) MN_ParseActionList(menuNode, text, token);
-			if (action->scriptValues == NULL) {
+			action->d.nonTerminal.right = MN_ParseActionList(menuNode, text, token);
+			if (action->d.nonTerminal.right == NULL) {
 				if (action->type.op == EA_IF)
 					Com_Printf("MN_ParseActionList: block expected after \"if\" (node: %s)\n", MN_GetPath(menuNode));
 				else
@@ -499,8 +499,9 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			*token = Com_EParse(text, errhead, NULL);
 			if (!*text)
 				return NULL;
-			action->scriptValues = (const value_t *) MN_ParseActionList(menuNode, text, token);
-			if (action->scriptValues == NULL) {
+			action->d.nonTerminal.left = NULL;
+			action->d.nonTerminal.right = MN_ParseActionList(menuNode, text, token);
+			if (action->d.nonTerminal.right == NULL) {
 				Com_Printf("MN_ParseActionList: block expected after \"else\" (node: %s)\n", MN_GetPath(menuNode));
 				return NULL;
 			}
