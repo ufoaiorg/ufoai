@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_PARSE_H
 
 struct menuNode_s;
+struct menuAction_s;
 
 void MN_ParseMenu(const char *type, const char *name, const char **text);
 void MN_ParseIcon(const char *name, const char **text);
@@ -36,6 +37,7 @@ const value_t* MN_FindPropertyByName(const value_t* propertyList, const char* na
 char* MN_AllocString(const char* string, int size) __attribute__ ((warn_unused_result));
 float* MN_AllocFloat(int count) __attribute__ ((warn_unused_result));
 vec4_t* MN_AllocColor(int count) __attribute__ ((warn_unused_result));
+struct menuAction_s *MN_AllocAction(void) __attribute__ ((warn_unused_result));
 
 /* main special type */
 /** @todo we should split/flag parse type (type need only 1 lex; and other) */

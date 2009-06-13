@@ -418,10 +418,9 @@ void MN_FreeStringProperty (void* pointer)
  */
 menuAction_t* MN_AllocCommandAction (char *command)
 {
-	menuAction_t* action = &mn.menuActions[mn.numActions++];
-	memset(action, 0, sizeof(*action));
+	menuAction_t* action = MN_AllocAction();
 	action->type.op = EA_CMD;
-	action->data = command;
+	action->d.terminal.d1.string = command;
 	return action;
 }
 

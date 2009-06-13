@@ -208,7 +208,7 @@ char* MN_AllocString (const char* string, int size)
  * @brief Allocate an action
  * @return An action
  */
-static menuAction_t *MN_AllocAction (void)
+menuAction_t *MN_AllocAction (void)
 {
 	if (mn.numActions >= MAX_MENUACTIONS)
 		Com_Error(ERR_FATAL, "MN_AllocAction: Too many menu actions");
@@ -523,10 +523,9 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 
 	assert(*token[0] == '}');
 
-	/* return none NULL value */
+	/* return non NULL value */
 	if (firstAction == NULL) {
-		firstAction = &mn.menuActions[mn.numActions++];
-		memset(firstAction, 0, sizeof(*firstAction));
+		firstAction = MN_AllocAction();
 	}
 
 	return firstAction;
