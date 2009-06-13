@@ -110,4 +110,6 @@ void Texdef_normalise(TextureProjection& projection, float width, float height);
 
 extern float g_texdef_default_scale;
 
+void ComputeAxisBase(const Vector3& normal, Vector3& texS, Vector3& texT);
+
 #endif
