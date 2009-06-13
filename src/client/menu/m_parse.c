@@ -240,6 +240,14 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		*token = Com_EParse(text, errhead, NULL);
 		if (!*text)
 			return qfalse;
+
+		/* allow to use "equal" char between name and value */
+		if (!strcmp(*token, "=")) {
+			*token = Com_EParse(text, errhead, NULL);
+			if (!*text)
+				return qfalse;
+		}
+
 		action->d.terminal.d2.string = MN_AllocString(*token, 0);
 		return qtrue;
 	}
