@@ -44,8 +44,7 @@ typedef enum {
 	EA_RAWVALUE,					/**< parsed value */
 	EA_CVARNAME,					/**< a cvar name */
 	EA_PATHPROPERTY,				/**< a property identify by a path */
-	EA_THISMENUNODENAMEPROPERTY,	/**< a property identify by a node name into 'this' menu */
-	EA_THISPROPERTY,				/**< a property of 'this' node */
+	EA_PATHPROPERTYWITHINJECTION,	/**< a property identify by a path, but using injection (then its not a const node) */
 } ea_paramType;
 
 typedef struct {
@@ -73,13 +72,6 @@ typedef struct menuAction_s {
 			menuTerminalActionData_t d2;
 		} terminal;
 	} d;
-
-	/** @todo merge it in terminal */
-	void *data;
-	/** @todo merge it in terminal */
-	void *data2;
-	/** @todo merge it in terminal */
-	const value_t *scriptValues;
 
 	struct menuAction_s *next;
 } menuAction_t;

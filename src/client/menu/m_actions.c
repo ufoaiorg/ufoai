@@ -202,19 +202,20 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* action)
 {
 	const char* path;
-	byte *value;
 	menuNode_t *node;
+	const value_t *property;
 
-	if (!action->data)
+	/** @todo should we remove it? type control the action, not the data */
+	if (action->d.terminal.d1.data == NULL)
 		return;
 
 	if (action->type.param1 == EA_CVARNAME) {
 		char cvarName[MAX_VAR];
 		const char* textValue;
 		assert(action->type.param2 == EA_VALUE);
-		Q_strncpyz(cvarName, MN_GenInjectedString(source, useCmdParam, action->data, qfalse), MAX_VAR);
+		Q_strncpyz(cvarName, MN_GenInjectedString(source, useCmdParam, action->d.terminal.d1.string, qfalse), MAX_VAR);
 
-		textValue = action->data2;
+		textValue = action->d.terminal.d2.string;
 		textValue = MN_GenInjectedString(source, useCmdParam, textValue, qfalse);
 		if (textValue[0] == '_') {
 			textValue = _(textValue + 1);
@@ -224,62 +225,53 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 	}
 
 	/* search the node */
-	path = MN_GenInjectedString(source, useCmdParam, action->data, qfalse);
-	switch (action->type.param1) {
-	case EA_THISMENUNODENAMEPROPERTY:
-		{
-			const menuNode_t *root = source->root;
-			node = MN_GetNodeByPath(va("%s.%s", root->name, path));
-			if (!node) {
-				Com_Printf("MN_ExecuteSetAction: node \"%s.%s\" doesn't exist (source: %s)\n", root->name, path, MN_GetPath(source));
-				return;
-			}
-		}
-		break;
-	case EA_PATHPROPERTY:
-		MN_ReadNodePath(path, source, &node, NULL);
-		if (!node) {
-			Com_Printf("MN_ExecuteSetAction: node \"%s\" doesn't exist (source: %s)\n", path, MN_GetPath(source));
-			return;
-		}
-		break;
-	default:
-		node = NULL;
-		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Invalid actiontype (source: %s)", MN_GetPath(source));
-	}
+	if (action->type.param1 == EA_PATHPROPERTY)
+		path = action->d.terminal.d1.string;
+	else if (action->type.param1 == EA_PATHPROPERTYWITHINJECTION)
+		path = MN_GenInjectedString(source, useCmdParam, action->d.terminal.d1.string, qfalse);
+	else
+		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Property setter with wrong object type '%d'", action->type.param1);
 
-	value = action->data2;
+	MN_ReadNodePath(path, source, &node, &property);
+	if (!node) {
+		Com_Printf("MN_ExecuteSetAction: node \"%s\" doesn't exist (source: %s)\n", path, MN_GetPath(source));
+		return;
+	}
+	if (!property) {
+		Com_Printf("MN_ExecuteSetAction: property \"%s\" doesn't exist (source: %s)\n", path, MN_GetPath(source));
+		return;
+	}
 
 	/* decode text value */
 	if (action->type.param2 == EA_VALUE) {
-		const char* v = MN_GenInjectedString(source, useCmdParam, (char*) value, qfalse);
-		MN_NodeSetProperty(node, action->scriptValues, v);
+		const char* v = MN_GenInjectedString(source, useCmdParam, action->d.terminal.d2.string, qfalse);
+		MN_NodeSetProperty(node, property, v);
 		return;
 	}
 
 	/* decode RAW value */
 	assert(action->type.param2 == EA_RAWVALUE);
-	if ((action->scriptValues->type & V_UI_MASK) == V_NOT_UI)
-		Com_SetValue(node, (char *) value, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
-	else if ((action->scriptValues->type & V_UI_MASK) == V_UI_CVAR) {
-		void *mem = ((byte *) node + action->scriptValues->ofs);
+	if ((property->type & V_UI_MASK) == V_NOT_UI)
+		Com_SetValue(node, action->d.terminal.d2.data, property->type, property->ofs, property->size);
+	else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
+		void *mem = ((byte *) node + property->ofs);
 		MN_FreeStringProperty(*(void**)mem);
-		switch (action->scriptValues->type & V_BASETYPEMASK) {
+		switch (property->type & V_BASETYPEMASK) {
 		case V_FLOAT:
-			**(float **) mem = *(float*) value;
+			**(float **) mem = *(float*) action->d.terminal.d2.data;
 			break;
 		case V_INT:
-			**(int **) mem = *(int*) value;
+			**(int **) mem = *(int*) action->d.terminal.d2.data;
 			break;
 		default:
-			*(byte **) mem = value;
+			*(byte **) mem = action->d.terminal.d2.data;
 		}
-	} else if (action->scriptValues->type == V_UI_ACTION) {
-		void *mem = ((byte *) node + action->scriptValues->ofs);
-		*(menuAction_t**) mem = *(menuAction_t**)value;
-	} else if (action->scriptValues->type == V_UI_ICONREF) {
-		void *mem = ((byte *) node + action->scriptValues->ofs);
-		*(menuIcon_t**) mem = *(menuIcon_t**)value;
+	} else if (property->type == V_UI_ACTION) {
+		void *mem = ((byte *) node + property->ofs);
+		*(menuAction_t**) mem = *(menuAction_t**) action->d.terminal.d2.data;
+	} else if (property->type == V_UI_ICONREF) {
+		void *mem = ((byte *) node + property->ofs);
+		*(menuIcon_t**) mem = *(menuIcon_t**) action->d.terminal.d2.data;
 	} else {
 		assert(qfalse);
 	}
@@ -441,7 +433,7 @@ void MN_PoolAllocAction (menuAction_t** action, int type, const void *data)
 	(*action)->type.op = type;
 	switch (type) {
 	case EA_CMD:
-		(*action)->data = Mem_PoolStrDup((const char *)data, mn_sysPool, 0);
+		(*action)->d.terminal.d1.string = Mem_PoolStrDup((const char *)data, mn_sysPool, 0);
 		break;
 	default:
 		Com_Error(ERR_FATAL, "Action type %i is not yet implemented", type);
@@ -483,8 +475,8 @@ static void MN_AddListener_f (void)
 	/* create the action */
 	action = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
 	action->type.op = EA_CALL;
-	action->data = (void*) function;
-	action->data2 = (void*) &function->onClick;
+	action->d.terminal.d1.data = (void*) function;
+	action->d.terminal.d2.data = (void*) &function->onClick;
 	action->next = NULL;
 
 	/* insert the action */
@@ -536,12 +528,12 @@ static void MN_RemoveListener_f (void)
 	lastAction = *(menuAction_t**)((char*)node + property->ofs);
 	if (lastAction) {
 		menuAction_t *tmp = NULL;
-		if (lastAction->data2 == data) {
+		if (lastAction->d.terminal.d2.data == data) {
 			tmp = lastAction;
 			*(menuAction_t**)((char*)node + property->ofs) = lastAction->next;
 		} else {
 			while (lastAction->next) {
-				if (lastAction->next->data2 == data)
+				if (lastAction->next->d.terminal.d2.data == data)
 					break;
 				lastAction = lastAction->next;
 			}

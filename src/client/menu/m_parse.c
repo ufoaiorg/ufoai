@@ -215,35 +215,24 @@ menuAction_t *MN_AllocAction (void)
 	return &mn.menuActions[mn.numActions++];
 }
 
-/** @brief A way to count how many setter without embedded properties */
-static int setterWithoutArobase = 0;
-
 /**
  * @brief Parser for setter command
  * @todo Clean up the code after merge of setter without @
  */
 static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const char **token, const char *errhead)
 {
-	char base[256];
 	char cast[32] = "abstractnode";
 	const char *nodeName = *token + 1;
 	nodeBehaviour_t *castedBehaviour;
 	const value_t *property;
-	char *nextArobase = NULL;
+	const char *propertyName;
+	qboolean relativeToNode;
 
-	/* allow to use both with/without @ */
-	Q_strncpyz(base, *token, sizeof(base));
-	nextArobase = strchr(base, '@');
-	if (nextArobase) {
-		*nextArobase = '\0';
-		nextArobase++;
-	}
 	assert(*token[0] == '*');
-	nodeName = base + 1;
 
 	/* cvar setter */
 	if (strncmp(nodeName, "cvar:", 5) == 0) {
-		action->data = MN_AllocString(nodeName + 5, 0);
+		action->d.terminal.d1.string = MN_AllocString(nodeName + 5, 0);
 		action->type.param1 = EA_CVARNAME;
 		action->type.param2 = EA_VALUE;
 
@@ -251,22 +240,13 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		*token = Com_EParse(text, errhead, NULL);
 		if (!*text)
 			return qfalse;
-		action->data2 = MN_AllocString(*token, 0);
+		action->d.terminal.d2.string = MN_AllocString(*token, 0);
 		return qtrue;
 	}
 
-	if (!nextArobase) {
-		setterWithoutArobase++;
-		Com_Printf("MN_ParseSetAction: Property setter '%s' without '@' in node '%s' (x%d)\n", base, MN_GetPath(menuNode), setterWithoutArobase);
-	}
-
-	/* copy the menu name, and move to the node name */
-	if (strncmp(nodeName, "node:", 5) == 0) {
+	relativeToNode = !strncmp(nodeName, "node:", 5);
+	if (relativeToNode)
 		nodeName = nodeName + 5;
-		action->type.param1 = EA_PATHPROPERTY;
-	} else {
-		action->type.param1 = EA_THISMENUNODENAMEPROPERTY;
-	}
 
 	/* check cast */
 	if (nodeName[0] == '(') {
@@ -282,42 +262,34 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 	}
 
 	/* copy the node path */
-	action->data = (byte*) MN_AllocString(nodeName, 0);
+	if (relativeToNode)
+		action->d.terminal.d1.string = MN_AllocString(nodeName, 0);
+	else
+		action->d.terminal.d1.string = MN_AllocString(va("root.%s", nodeName), 0);
 
-	/* get the node property */
-	if (nextArobase) {
-		*token = nextArobase;
-	} else {
-		*token = Com_EParse(text, errhead, NULL);
-		if (!*text)
-			return qfalse;
-	}
+	if (MN_IsInjectedString(action->d.terminal.d1.string))
+		action->type.param1 = EA_PATHPROPERTYWITHINJECTION;
+	else
+		action->type.param1 = EA_PATHPROPERTY;
 
 	castedBehaviour = MN_GetNodeBehaviour(cast);
 	if (castedBehaviour == NULL)
 		Com_Error(ERR_FATAL, "MN_ParseSetAction: Node behaviour cast '%s' doesn't exist (%s)\n", cast, MN_GetPath(menuNode));
 
-	property = MN_GetPropertyFromBehaviour(castedBehaviour, *token);
+	/* get property name */
+	propertyName = strchr(nodeName, '@');
+	if (propertyName == NULL)
+		Com_Error(ERR_FATAL, "MN_ParseSetAction: Property setter without property ('@' not found in '%s', node '%s')\n", nodeName, MN_GetPath(menuNode));
+	propertyName++;
+
+	property = MN_GetPropertyFromBehaviour(castedBehaviour, propertyName);
 	if (!property) {
 		menuNode_t *node;
 		/* do we ALREADY know this node? and his type */
-		switch (action->type.param1) {
-		case EA_PATHPROPERTY:
-			MN_ReadNodePath((char*)action->data, menuNode, &node, NULL);
-			break;
-		case EA_THISMENUNODENAMEPROPERTY:
-			node = MN_GetNodeByPath(va("%s.%s", menuNode->root->name, (char*)action->data));
-			break;
-		default:
-			Sys_Error("MN_ParseSetAction: Invalid type param1 given");
-		}
-		if (node)
-			property = MN_GetPropertyFromBehaviour(node->behaviour, *token);
-		else
-			Com_Printf("MN_ParseSetAction: node \"%s\" not already know (in event), you can cast it\n", (char*)action->data);
+		MN_ReadNodePath(action->d.terminal.d1.string, menuNode, &node, &property);
+		if (!node)
+			Com_Printf("MN_ParseSetAction: node \"%s\" not already know (in event), you can cast it\n", action->d.terminal.d1.string);
 	}
-
-	action->scriptValues = property;
 
 	if (!property || !property->type) {
 		Com_Printf("MN_ParseSetAction: token \"%s\" isn't a node property (in event)\n", *token);
@@ -325,19 +297,25 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		return qtrue;
 	}
 
-	action->type.param2 = EA_RAWVALUE;
-
 	/* get the value */
 	*token = Com_EParse(text, errhead, NULL);
 	if (!*text)
 		return qfalse;
+
+	/* allow to use "equal" char between name and value */
+	if (!strcmp(*token, "=")) {
+		*token = Com_EParse(text, errhead, NULL);
+		if (!*text)
+			return qfalse;
+	}
 
 	if (property->type == V_UI_ACTION) {
 		menuAction_t** actionRef = (menuAction_t**) MN_AllocPointer(1);
 		*actionRef = MN_ParseActionList(menuNode, text, token);
 		if (*actionRef == NULL)
 			return qfalse;
-		action->data2 = actionRef;
+		action->type.param2 = EA_RAWVALUE;
+		action->d.terminal.d2.data = actionRef;
 	} else if (property->type == V_UI_ICONREF) {
 		menuIcon_t* icon = MN_GetIconByName(*token);
 		menuIcon_t** icomRef;
@@ -347,11 +325,12 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		}
 		icomRef = (menuIcon_t**) MN_AllocPointer(1);
 		*icomRef = icon;
-		action->data2 = icomRef;
+		action->type.param2 = EA_RAWVALUE;
+		action->d.terminal.d2.data = icomRef;
 	} else {
 		if (MN_IsInjectedString(*token)) {
 			action->type.param2 = EA_VALUE;
-			action->data2 = MN_AllocString(*token, 0);
+			action->d.terminal.d2.string = MN_AllocString(*token, 0);
 		} else {
 			const int baseType = property->type & V_UI_MASK;
 			if (baseType != 0 && baseType != V_UI_CVAR) {
@@ -359,7 +338,8 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 				return qfalse;
 			}
 			mn.curadata = Com_AlignPtr(mn.curadata, property->type & V_BASETYPEMASK);
-			action->data2 = mn.curadata;
+			action->type.param2 = EA_RAWVALUE;
+			action->d.terminal.d2.data = mn.curadata;
 			mn.curadata += Com_EParseValue(mn.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size);
 		}
 	}

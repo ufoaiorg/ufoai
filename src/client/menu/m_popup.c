@@ -77,8 +77,8 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 
 	/* free previous actions */
 	if (listNode->onClick) {
-		assert(listNode->onClick->data);
-		Mem_Free(listNode->onClick->data);
+		assert(listNode->onClick->d.terminal.d1.data);
+		Mem_Free(listNode->onClick->d.terminal.d1.data);
 		Mem_Free(listNode->onClick);
 		listNode->onClick = NULL;
 	}
@@ -113,8 +113,8 @@ static void MN_SetOneButton (menuNode_t* menu, const char *button, const char *c
 
 	/* free previous actions */
 	if (buttonNode->onClick) {
-		assert(buttonNode->onClick->data);
-		Mem_Free(buttonNode->onClick->data);
+		assert(buttonNode->onClick->d.terminal.d1.data);
+		Mem_Free(buttonNode->onClick->d.terminal.d1.data);
 		Mem_Free(buttonNode->onClick);
 		buttonNode->onClick = NULL;
 	}
