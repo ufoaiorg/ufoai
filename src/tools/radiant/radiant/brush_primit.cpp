@@ -37,6 +37,23 @@
 #include "winding.h"
 #include "preferences.h"
 
+void ComputeAxisBase(const Vector3& normal, Vector3& texS, Vector3& texT) {
+	const Vector3 up(0, 0, 1);
+	const Vector3 down(0, 0, -1);
+
+	if (vector3_equal_epsilon(normal, up, float(1e-6))) {
+		texS = Vector3(0, 1, 0);
+		texT = Vector3(1, 0, 0);
+	} else if (vector3_equal_epsilon(normal, down, float(1e-6))) {
+		texS = Vector3(0, 1, 0);
+		texT = Vector3(-1, 0, 0);
+	} else {
+		texS = vector3_normalised(vector3_cross(normal, up));
+		texT = vector3_normalised(vector3_cross(normal, texS));
+		vector3_negate(texS);
+	}
+}
+
 /*!
  \brief Construct a transform from XYZ space to ST space (3d to 2d).
  This will be one of three axis-aligned spaces, depending on the surface normal.
