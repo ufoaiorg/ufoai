@@ -2,9 +2,12 @@
 # Martin Gerhardy <martin.gerhardy@gmail.com>, 2006.
 # Joe Hansen <joedalton2@yahoo.dk>, 2007, 2008, 2009.
 #
+# aircraft -> luftfartøj
 # alien -> rumvæsen (aliens -> rumvæsener)
 # autopsy -> obduktion
+# flashbang -> blitzgranat
 # hire -> ansæt
+# homebase -> hovedbase
 # pod -> holder (til våben/ammunition)
 # UFO -> ufo
 # workshop -> værksted
@@ -15,7 +18,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-11 07:22+0200\n"
-"PO-Revision-Date: 2009-06-10 12:38+0100\n"
+"PO-Revision-Date: 2009-06-13 12:38+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -140,9 +143,8 @@ msgstr "Orientalsk stor"
 
 # hvad er dette?
 #: ../base/maps/spedition.ump:43
-#, fuzzy
 msgid "Spedition"
-msgstr "Indstillinger"
+msgstr "Skranke"
 
 #: ../base/maps/stadium.ump:43
 msgid "Stadium"
@@ -432,7 +434,7 @@ msgstr "Avanceret vest"
 
 #: ../base/ufos/armour.ufo:189
 msgid "Nanocomposite Armour"
-msgstr "Nanosammensatvest"
+msgstr "Nanovest"
 
 #: ../base/ufos/armour.ufo:251
 msgid "Power Armour"
@@ -444,7 +446,7 @@ msgstr "Rumvæsenvest"
 
 #: ../base/ufos/armour.ufo:551
 msgid "Medium Alien Armour"
-msgstr "Mellem rumvæsenvest"
+msgstr "Forbedret rumvæsenvest"
 
 # Opbevaringsrum til rumvæsener er for langt.
 #: ../base/ufos/basemanagement.ufo:62 ../base/ufos/basemanagement.ufo:78
@@ -781,30 +783,8 @@ msgid "Alien died"
 msgstr "Rumvæsen døde"
 
 #: ../base/ufos/events.ufo:91
-#, fuzzy
 msgid "mail_alienbreathing"
 msgstr ""
-"Øverstbefalende\n"
-"\n"
-"I have made a thorough examination of the devices found during the alien autopsies we've performed. I believe we're now ready to present our conclusions.\n"
-"\n"
-"From our investigation of tissue growth and scarring around the alien larynx, we conclude that these artifacts are surgically implanted in an alien's throat at a very early age. Somewhere during adolescence, the child-sized device is removed and an adult version is implanted.\n"
-"\n"
-"We've examined several different possibilities for the device's function, from food preprocessors to suicide equipment, but the obvious answer turned out to be the correct one. It is some kind of respirator, allowing the aliens to survive in our atmosphere, and possibly other atmospheres as well. Every organic specimen we've autopsied has carried one of these devices, all with the same basic functionality, implying that their constant operation is either required for survival on the alien homeworld or that we are seeing only specimens which are intended for frequent planetary operations. Certainly external breathing apparatus would be easier and more economical to use if these specimens were only intended to take short trips into hostile atmospheres.\n"
-"\n"
-"The device itself consists of a sophisticated filter stretched across the subject's windpipe, and two small spherical tanks positioned on either side of the brainstem, connected to the windpipe by a small metal tube. These tanks are filled with a gas mixture compressed into a liquid state, functioning much like a scuba diver's oxygen bottles. The filter mechanism is semi-intelligent; it scrupulously removes all elements that are harmful to the subject, but allows beneficial elements to pass through. The tanks are refilled by way of a small mechanical navel at the back of the alien's neck.\n"
-"\n"
-"An examination of the tanks' contents has given us our first accurate data on the alien atmosphere. We now have several mixtures on record that we believe will be able to support various alien lifeforms in our Containment unit. A few of the mixtures are nitrogen-oxygen compounds, very similar to our own, but others don't contain any oxygen at all. If all of these mixtures are actively used by one or more alien species, some of our enemies seem to breathe an atmosphere of almost pure methane.\n"
-"\n"
-"The vastly different mixtures are actually giving us a bit of a puzzle. Surely it would be more economical to use segregated crews than to force these species to coexist in the same place?\n"
-"\n"
-"Future questions aside, I'm well pleased with our present results. We can now store aliens in our Containment unit for prolonged periods of time -- they will no longer suffocate when their atmosphere tanks run out. This usually happens after 24 hours without replenishment, so no delays should be afforded when we manage to capture a specimen.\n"
-"\n"
-"Mit hold og jeg ser frem til endelig at kunne undersøge et levende eksemplar.\n"
-"\n"
-"Med venlig hilsen\n"
-"\n"
-"Dr. Connor"
 
 #: ../base/ufos/events.ufo:102 ../base/ufos/events.ufo:113
 msgid "Recovery Report -- %s"
@@ -1247,11 +1227,11 @@ msgstr "Et fredeligt beboelsesområde i udkanten af et befolket område."
 
 #: ../base/ufos/maps.ufo:693 ../base/ufos/maps.ufo:729
 msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr ""
+msgstr "Rumvæsenerne har noget for i denne tyndt befolket skovregion."
 
 #: ../base/ufos/maps.ufo:765 ../base/ufos/maps.ufo:801
 msgid "Some houses in desert"
-msgstr ""
+msgstr "Nogle huse i ørkenen"
 
 #: ../base/ufos/maps.ufo:838
 msgid "An excavation site that has fallen under alien attack."
@@ -1263,7 +1243,7 @@ msgstr "En bygning ejet af rige folk med indflydelse."
 
 #: ../base/ufos/maps.ufo:919
 msgid "A small village in England."
-msgstr ""
+msgstr "En lille landsby i England."
 
 #: ../base/ufos/maps.ufo:959
 msgid "A small office in a mountainous region."
@@ -1437,7 +1417,7 @@ msgstr "Videnskabsmand"
 #: ../base/ufos/medals.ufo:38 ../base/ufos/team_humans.ufo:912
 #: client/campaign/cp_employee.c:169
 msgid "Pilot"
-msgstr ""
+msgstr "Pilot"
 
 #: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:1630
 #: ../base/ufos/team_humans.ufo:1655 client/campaign/cp_employee.c:171
@@ -1756,37 +1736,16 @@ msgstr ""
 "--Kommandør Navarre"
 
 #: ../base/ufos/research.ufo:217
-#, fuzzy
 msgid "Upgrade - Antimatter engines"
-msgstr "Tegninger - Antistoflagerrum"
+msgstr "Forbedring - Antistofmotorer"
 
 #: ../base/ufos/research.ufo:219
-#, fuzzy
 msgid "craft_upgrade_am_engines_txt"
 msgstr ""
-"Øverstbefalende\n"
-"\n"
-"Vi er nu færdige med at arbejde på den fundne rumvæsen navigationsenhed. Her er et sammendrag af min rapport.\n"
-"\n"
-"Vi konkluderede tidligt i vores undersøgelser at navigations enheden i sin kerne er en formålsbestemt computer med ekstraordinære kræfter kørende med specialiseret software -- udelukkende med det formå at lægge en rute fra et punkt i rummet til et andet. Det bruger et andet astronomisk notations system, som vi har besluttet selv at bruge for at kunne udnytte rumvæsen navigations udstyr.\n"
-"\n"
-"Nu da vi kender notations systemet, kan vi se at navigations enheden er utrolig god til dens formål. Med korrekt inddata kan enheden beregne en rute fra hvor som helst til hvor som helst på få sekunder og den kan intelligent genberegne ruten med filtre som 'kortest rejsetid', 'korteste distance', 'færrest navigationsfarer osv. Disse filtre kan tilføjes i en uendelighed indtil enheden giver den rute som du ønsker, hvilket bekræfter den teori at rumvæsnerne virkelig har adgang til Hurtigere-end-lys teknologi.\n"
-"\n"
-"Det eneste problem med enhedens beregningsmetode er at den kræver et stjernekort for at kunne nøjagtige ruter udenfor ufoens skannings rækkevidde. Vi har ikke fundet noget stjernekort gemt i nogen af de enheder vi har undersøgt. Måske er det kun ufoer med HEL fremdrift som har stjernekort i sig; de vil helt sikkert have brug for det til navigation.\n"
-"\n"
-"I stedet for det manglende stjernekort, indeholder den fundne enhed enorme mængder af oplysninger om jorden og solsystemet. Overflade kort af de ydre planeter og alle deres måner (endda en ukendt måne omkring pluto), spektral analyser af enhver masse i asteroide bæltet som vel som det fjerntliggende Kuiper bælte, og banerne for enhver masse i solsystemet fremskrevet hundrede af år ud i fremtiden. Vi er ikke sikre på om denne information vil være brugbar for os, men det vil kraftige øge menneskehedens forståelse af vores hjem system -- når vi engang frigiver det for offentligheden.\n"
-"\n"
-"Det er muligt at lægge vores egne stjernekort ind i navigations enheden, men jeg kan kun forestille mig hvor primitivt og mangelfuldt vores kort må være sammenlignet med hvad rumvæsenerne har. Jeg vil ikke støtte\n"
-"\n"
-"nogen former for rumrejse med disse enheder for vi har fået fat i et rumvæsen stjernekort. Imidlertid kan vi bestemt bruge disse enheder til at navigerer i vores eget solsystem, hvis vi kunne designe et FALANKS\n"
-"\n"
-"fartøj som kunne flyve ud i rummet. Dette vil simplificerer hele processen omkring rumrejser til det punkt hvor det at lave en mission til saturn eller endda pluto bare vil være et tryk på en knap.\n"
-"\n"
-"-- Kommandør Navarre"
 
 #: ../base/ufos/research.ufo:222
 msgid "craft_upgrade_am_engines_pre_txt"
-msgstr "Ingen information om tidligere forskning tilgængelig"
+msgstr ""
 
 #: ../base/ufos/research.ufo:253
 msgid "Live Alien"
@@ -2002,7 +1961,6 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:468 client/campaign/cp_alienbase.c:164
 #: client/campaign/cp_missions.c:431
-#, fuzzy
 msgid "Alien base"
 msgstr "Rumvæsenbase"
 
@@ -2324,48 +2282,8 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:695
-#, fuzzy
 msgid "vhs_assault_txt"
 msgstr ""
-"Tekniske specifikationer: AR-80 Angrebsriffel\n"
-"\n"
-"KLASSIFIKATIONSNIVEAU GUL\n"
-"\n"
-"FALANKS Rumvæsenudrykningsenhed\n"
-"\n"
-"Teknisk dokument, Delta tilladelse\n"
-"\n"
-"Arkiveret: 20. marts 2084\n"
-"\n"
-"Af: Kommandør Paul Navarre, F&U: Ingeniørdivisionen, FALANKS, Atlanterhavskommandoen\n"
-"\n"
-"\n"
-"\n"
-"Overblik\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
-"\n"
-"The French LeBlanc FAA-191 (Fusil Assaut Automatique) provides the most advantageous mix of range, penetration against alien armour, and magazine size in the assault rifle class. It is a bullpup design, meaning the magazine and action of the weapon are located behind the grip to reduce overall weapon length. The 191 fires a 30-round box magazine of 4.7mm caseless ammunition, tungsten-cored steel penetrators with impressive armour-piercing capability over short and medium ranges. The round does not perform well at long range, but then assault rifles aren't meant for long-range firefights.\n"
-"\n"
-"Though the design is far from new, first prototyped in 2057, no other rifle has fully surpassed the 191. It is accurate and quick to reload. Its rugged construction makes it dependable in combat and unlikely to break or jam. It is resistant to heat, cold, dust and humidity all at once. Ammunition and replacement parts are widely available due to the design's maturity and relative popularity among Earth's armed forces. This is a rifle you can entrust your life to.\n"
-"\n"
-"For PHALANX use, we have given this rifle the classification AR-80.\n"
-"\n"
-"\n"
-"Anbefalet doktrin\n"
-"\n"
-"This should be our go-to weapon for medium-range engagements. It can lay down an impressive amount of fire and is deadly out to far longer ranges than any pistol or SMG.\n"
-"\n"
-"However, no one should entertain the illusion that the assault rifle is the end-all be-all of our arsenal. A balance of weapons is required for us to be able to deal with different situations; while the assault rifle remains a good weapon at close range, it can be slow to manoeuvre in tight spaces and is eclipsed by both submachine guns and shotguns at these ranges, weapons which provide a far greater point-blank punch. Any sweep of an urban building should be led by close-range weapons, while rifle-equipped soldiers either secure the perimeter or form a second assault wave to support the others.\n"
-"\n"
-"If our rifle-equipped troops are caught beyond effective weapon range, they should make an advance from cover to cover in order to effectively bring their weapons to bear. Snipers should provide covering fire for the advancing teams or attempt to take out the enemy at range.\n"
-"\n"
-"\n"
-"Tilføjelse\n"
-"\n"
-"While the AR-80 is a fine rifle in all respects, it was not designed to fight an alien invasion force. We should develop our own purpose-built weapons as soon as it becomes feasible to do so."
 
 #: ../base/ufos/research.ufo:712
 msgid "assault_txt"
@@ -2653,96 +2571,16 @@ msgid "xaw95_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
 #: ../base/ufos/research.ufo:876
-#, fuzzy
 msgid "bombkit1_txt"
 msgstr ""
-"Technical Specifications: Medikit\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 19 March 2084\n"
-"\n"
-"By: Surgeon-Captain Helen Floydd, Medical Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"In the past, the application of first aid and field surgery in hostile situations required specially-trained combat medics and surgeons who could handle the stresses of saving lives under fire. Troops who saw their friends being hit usually had no choice but to keep fighting and hope the medics would arrive in time -- that is, if they didn't freeze or panic or make some futile attempt at a field dressing without ability or materials. If the wounded survived at all, they'd still be out of action for weeks or months at a time.\n"
-"\n"
-"This may have been a workable strategy in the trenches of World War 2, but it isn't any longer. Waiting for a medic to arrive on the scene can contribute to the death of a soldier who might have been saved by immediate aid. The prompt application of trauma medicine needs to be made as quick and easy as possible so that any soldier can provide life-saving effort with minimal training. This is where the modern medikit comes in.\n"
-"\n"
-"Every medikit contains an onboard computer that can diagnose injuries via directed X-ray and ultrasound. It can run ECGs and EEGs at the same time, measure blood pressure and heart rate, and even calculate the soldier's combat effectiveness based on his or her individual record (stored in a small subdermal chip for medical, locational and identification purposes). All this information can be shown in a small hologram or displayed directly to a soldier's helmet information system. At the same time the medikit can deploy a number of drugs and sterile surgical tools for emergency operations, cauterise wounds via a special heating iron, and -- most importantly -- apply its store of nanorobots to a wound.\n"
-"\n"
-"The old idea of medical nanobots was first put into practice by Vietnamese researchers thirty years ago. Today, medicine without them is almost unthinkable. Nanobots are tiny robots several micrometres in diameter which can be programmed to perform specific tasks on the fly. They will quickly sterilise a wound and seal ruptured arteries, alert the medikit operator about any internal bleeding, request suction at appropriate places, patch up bowel or stomach punctures, revive or remove necrotic tissue, and repair nerve damage. They dissolve harmlessly in the victim's bloodstream once their battery runs out, which lasts no longer than 10 to 15 seconds, often not long enough to stabilise heavily-wounded troops. Two or more doses of nanobots may be required. Any number of doses can be applied and metabolised with no ill effects.\n"
-"\n"
-"This technology is the most important breakthrough in trauma surgery ever made. It can do everything except regenerate tissue. If more attention is required -- for example when a vital organ is hit, or a bullet is lodged in a critical place -- the medikit provides equipment and detailed instructions for the soldier to follow. It can never replace the operating room, but it's as close to a portable hospital as we'll ever get.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"All our soldiers have been trained in the use of the medikit. In fact, in an ideal situation, every soldier would carry one for immediate use -- but I recognise that our troops have a limited carrying capacity. All major wounds should be treated without delay to prevent complications and further risk to the injured soldier. If the victim can still walk, she should retreat from the firefight and seek cover in order to safely receive treatment by a comrade.\n"
-"\n"
-"The medikit's onboard pharmacy can also be used to revive unconscious soldiers. If this is done, please take care to remove the revived troop from the line of fire as soon as possible and proceed with further treatment from a safe position. The medic herself may be forced to engage approaching targets to enable the patient's escape; this is acceptable practice, but please supply the medic with adequate covering fire. Trading one soldier's life for another does not make for good battlefield mathematics.\n"
-"\n"
-"Once a wounded soldier makes it back to base alive, our medical team will take over treatment. The risk of anyone succumbing to battlefield trauma while in a PHALANX ward is less than one percent, and as near to zero as we can make it.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
 
 #: ../base/ufos/research.ufo:879
 msgid "bombkit1_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
 #: ../base/ufos/research.ufo:894
-#, fuzzy
 msgid "bombkit2_txt"
 msgstr ""
-"Technical Specifications: Medikit\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 19 March 2084\n"
-"\n"
-"By: Surgeon-Captain Helen Floydd, Medical Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"In the past, the application of first aid and field surgery in hostile situations required specially-trained combat medics and surgeons who could handle the stresses of saving lives under fire. Troops who saw their friends being hit usually had no choice but to keep fighting and hope the medics would arrive in time -- that is, if they didn't freeze or panic or make some futile attempt at a field dressing without ability or materials. If the wounded survived at all, they'd still be out of action for weeks or months at a time.\n"
-"\n"
-"This may have been a workable strategy in the trenches of World War 2, but it isn't any longer. Waiting for a medic to arrive on the scene can contribute to the death of a soldier who might have been saved by immediate aid. The prompt application of trauma medicine needs to be made as quick and easy as possible so that any soldier can provide life-saving effort with minimal training. This is where the modern medikit comes in.\n"
-"\n"
-"Every medikit contains an onboard computer that can diagnose injuries via directed X-ray and ultrasound. It can run ECGs and EEGs at the same time, measure blood pressure and heart rate, and even calculate the soldier's combat effectiveness based on his or her individual record (stored in a small subdermal chip for medical, locational and identification purposes). All this information can be shown in a small hologram or displayed directly to a soldier's helmet information system. At the same time the medikit can deploy a number of drugs and sterile surgical tools for emergency operations, cauterise wounds via a special heating iron, and -- most importantly -- apply its store of nanorobots to a wound.\n"
-"\n"
-"The old idea of medical nanobots was first put into practice by Vietnamese researchers thirty years ago. Today, medicine without them is almost unthinkable. Nanobots are tiny robots several micrometres in diameter which can be programmed to perform specific tasks on the fly. They will quickly sterilise a wound and seal ruptured arteries, alert the medikit operator about any internal bleeding, request suction at appropriate places, patch up bowel or stomach punctures, revive or remove necrotic tissue, and repair nerve damage. They dissolve harmlessly in the victim's bloodstream once their battery runs out, which lasts no longer than 10 to 15 seconds, often not long enough to stabilise heavily-wounded troops. Two or more doses of nanobots may be required. Any number of doses can be applied and metabolised with no ill effects.\n"
-"\n"
-"This technology is the most important breakthrough in trauma surgery ever made. It can do everything except regenerate tissue. If more attention is required -- for example when a vital organ is hit, or a bullet is lodged in a critical place -- the medikit provides equipment and detailed instructions for the soldier to follow. It can never replace the operating room, but it's as close to a portable hospital as we'll ever get.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"All our soldiers have been trained in the use of the medikit. In fact, in an ideal situation, every soldier would carry one for immediate use -- but I recognise that our troops have a limited carrying capacity. All major wounds should be treated without delay to prevent complications and further risk to the injured soldier. If the victim can still walk, she should retreat from the firefight and seek cover in order to safely receive treatment by a comrade.\n"
-"\n"
-"The medikit's onboard pharmacy can also be used to revive unconscious soldiers. If this is done, please take care to remove the revived troop from the line of fire as soon as possible and proceed with further treatment from a safe position. The medic herself may be forced to engage approaching targets to enable the patient's escape; this is acceptable practice, but please supply the medic with adequate covering fire. Trading one soldier's life for another does not make for good battlefield mathematics.\n"
-"\n"
-"Once a wounded soldier makes it back to base alive, our medical team will take over treatment. The risk of anyone succumbing to battlefield trauma while in a PHALANX ward is less than one percent, and as near to zero as we can make it.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
 
 #: ../base/ufos/research.ufo:897
 msgid "bombkit2_pre_txt"
@@ -2797,9 +2635,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1022
-#, fuzzy
 msgid "Electromagnetic Rifle Magazine"
-msgstr "Elektromagnetisk gevær"
+msgstr "Elektromagnetisk geværmagasin"
 
 #: ../base/ufos/research.ufo:1043
 msgid "combatknife_txt"
@@ -3469,40 +3306,12 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1530
-#, fuzzy
 msgid "electrolaser_txt"
 msgstr ""
-"Øverstbefalende, jeg er særdeles glad for at kunne rapportere at vores projekt har været succesfuldt. Jeg har inkluderet billeder af vores laservåben prototype, som har opnået bølgeenergi i en bærbar version.\n"
-"\n"
-"Den praktiske løsning gik ikke ud på at bygge stadig større batterier, men snarere i at anvende radikale miniature teknologier til at gøre eksisterende kemisk funderede laserkomponenter lettere og mindre. Kemiske lasere har været i anvendelse i meget lang tid, og har været en del af eksperimentelle våbensprogrammer siden det sene 20. århundrede, men de har altid haft mange problemer. De eneste kemiske lasere med brugbar militært potentiale har været for store og besværlige for en infanterist i kamp. Indtil nu har deres muligheder været begrænset til laserkanoner på kampvogne eller antimissil-batterier på skibe.\n"
-"\n"
-"Nu har vi dog her hos FALANKS bygget en konventionel laserkanon i miniatureudgave. På trods af sin lille størrelse er den fuldt ud i stand til at håndtere deuterium-fluoride reaktionen og tilbageholde det giftige biprodukt uden fare for forurening. Lad mig give dig en kort beskrivelse af hvordan den fungerer.\n"
-"\n"
-"Inde i forbrændingskammeret brændes ætyl i kvælstof trifluoride. Denne reaktion producerer opflammede fluorine radikaler, som så bringes i kontakt med en blanding af helium og deuterium gas. Deuteriumet reagerer med fluorinen, og producerer opflammede molekyler af deuterium fluoride. Disse undergår stimulerede udladninger i våbenets optiske udlader hvilket skaber en stråle. En række intelligente linser fokuserer herefter strålen og sender den mod skyttens mål og korrigerer endda for små bevægelser fra skytten eller målets side. Affaldsgassen fra deuteriumet sendes igennem vores specialdesignede filtreringssystem der er under højt tryk. Her fanges alle giftige og radioaktive molekyler før systemet sender den resterende harmløse damp ud i atmosfæren.\n"
-"\n"
-"Filteret skal skiftes efter hver mission, men vi har designet et system som gør det nemt og problemfrit. Hvis filteret af en eller anden grund bliver skadet under missionen, bliver våbnet øjeblikkeligt ufunktionsdygtigt for at forhindre en eventuel forurening.\n"
-"\n"
-"Laseren fungerer i midten af de infrarøde-bølgelængder, så den viser ingen synlig stråle for andre end dem med infrarøde briller.\n"
-"\n"
-"Prototypen vi har bygget er endnu ikke klar til fuld produktion som et infanterivåben, da yderligere raffinering og afbalancering kræves hvis mennesker skal anvende den, men de fremskridt vi har gjort kan også anvendes på køretøjer -- måske endda på fly. Jeg har vedlagt flere nye forslag i din indbakke til yderligere undersøgelser af de ideer vi her har skitseret.\n"
-"\n"
-"Lad mig høre hvornår du ønsker at vi skal begynde arbejdet på dem, øverstbefaldende.\n"
-"\n"
-"-- Kommandør Navarre"
 
 #: ../base/ufos/research.ufo:1533
-#, fuzzy
 msgid "electrolaser_pre_txt"
 msgstr ""
-"Vores indsamlede FN forskningsfiler har givet en masse værdifuld information vedrørende våbenudvikling på jorden siden begyndelsen af dette århundrede. Et af de mest interessante emner har været produktion af DEV (Dirigerede energivåben), våben som overfører energi til et mål ved brug af andet end et projektil. Vi er især interesseret i filerne omkring udvidet bølgelaserteknologi.\n"
-"\n"
-"En del lande og firmaer har forsøgt at opfinde laservåben igennem årene, men ingen har været i stand til at bygge en laser som kan bæres af en person og som har en styrke der kan konkurrere med gængse våben. Nu har vi fået adgang til den samlede forskning indenfor dette område, såvel som hele biblioteker med den fremmeste teknologi på jorden. Jeg er overbevidst om at vi ikke kun kan bygge et effektivt bærbart laservåben, men at vi også kan gøre det mindre end man tidligere har set en DEV være.\n"
-"\n"
-"Kommandør vi bør forfølge denne forskningsretning så hurtigt som muligt. Variation i vores arsenal vil gøre vores styrker langt sværere at forsvare sig imod, og vores indsamlede viden kan føre os i retning af udvikling af luftvåbenlasere som med større nøjagtighed end gængse våben kan ramme hurtige UFO'er.\n"
-"\n"
-"Som jeg ser det, kan vi her hos FALANKS gøre det umulige, og vi kan gøre det så snart du har godkendt dette forslag.\n"
-"\n"
-"-- Kommandør Navarre"
 
 #: ../base/ufos/research.ufo:1568
 msgid "medikit_txt"
@@ -3735,31 +3544,16 @@ msgid "Heavy Needler Gun"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1887
-#, fuzzy
 msgid "needlerheavy_txt"
 msgstr ""
-"Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
-"\n"
-"As I mentioned in my research proposal, the needler is indeed a type of sniper rifle, but an unusual one. It ignores the normal concept of firing powerful slugs to make single, long-range kills. Instead it vomits out hundreds and hundreds of ultra-fast silicon steel needles which can easily tear apart a target at any range.\n"
-"\n"
-"The needles are fired by a fast-changing magnetic field inside the barrel, hooked up to a feed mechanism that injects thousands of needles a minute into the barrel. This creates a near-constant stream of fire which lasts for as long as you hold down the trigger and the magazine holds out. Unlike bullets, these needles have a practically flat trajectory from muzzle to target. They punch through most armour like it doesn't exist. They're so low in mass that there's little appreciable recoil when firing, giving them excellent accuracy, but at the same time thin enough to avoid being overly affected by weather. Wind, rain and physical obstructions can knock some of the needles off course but not enough to make the weapon much less effective.\n"
-"\n"
-"One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research, I'll take a closer look and get back to you when I have anything concrete.\n"
-"\n"
-"Instead of an ordinary top-mounted sniper scope, the aliens have incorporated a highly effective holographic aiming mechanism and rangefinder which projects directly in front of the user's leading eye. Targets are shown with absolute clarity at any range, the sight automatically compensates for natural body motions, and it will even tell the user the exact chances of scoring a hit at any time. We've run this thing by our own troops and -- once they got used to it -- the alien holo-sight was the preferred choice by an amazing 100% compared to our own scopes. If we can adapt and duplicate this sight in a self-contained package, we could create the ultimate aiming unit to use on any of our rifles, possibly even some handguns.\n"
-"\n"
-"Equipped with a bipod for prone firing and a very large magazine, the needler is a serious threat to our troops. Snipers can inflict serious casualties on exposed troops and we cannot afford the losses. If a needler is spotted, our soldiers will have to make optimal use of cover and try to flank whilst staying out of sight. A direct assault on an entrenched needler gun will likely prove suicidal and I don't recommend anyone to try it, Commander.\n"
-"\n"
-"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1890
 msgid "needlerheavy_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
 #: ../base/ufos/research.ufo:1944
-#, fuzzy
 msgid "coilgun_txt"
-msgstr "<TODO>"
+msgstr ""
 
 #: ../base/ufos/research.ufo:1947
 msgid "coilgun_pre_txt"
@@ -3767,9 +3561,8 @@ msgstr "Ingen information om tidligere forskning tilgængelig"
 
 #: ../base/ufos/research.ufo:1954 ../base/ufos/research.ufo:1962
 #: ../base/ufos/weapons_human.ufo:392
-#, fuzzy
 msgid "Coilgun"
-msgstr "Mønt"
+msgstr "Magnetpistol"
 
 #: ../base/ufos/research.ufo:1999
 msgid "shotgun2_txt"
@@ -5229,9 +5022,8 @@ msgid "drop_firebird_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3298
-#, fuzzy
 msgid "drop_herakles_txt"
-msgstr "<TODO>"
+msgstr ""
 
 #: ../base/ufos/research.ufo:3319
 msgid "inter_stiletto_txt"
@@ -5250,9 +5042,8 @@ msgid "inter_dragon_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
 #: ../base/ufos/research.ufo:3372
-#, fuzzy
 msgid "inter_starchaser_txt"
-msgstr "<TODO>"
+msgstr ""
 
 #: ../base/ufos/research.ufo:3375
 msgid "inter_starchaser_pre_txt"
@@ -5697,24 +5488,8 @@ msgid "ugv_chaingun_belt_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
 #: ../base/ufos/research.ufo:4063
-#, fuzzy
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
-"Commander, we've finished work on this big damned cannon we brought back.\n"
-"\n"
-"We've always suspected that a real alien army would field more than just plasma weapons and Kerrblades. Now they've gone and proved us right. This particle beam weaponry is extremely advanced, a quantum leap above the plasma weapons, miniaturised far beyond our ability to duplicate.\n"
-"\n"
-"Particle-beam weaponry is designed to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. Until now we've only seen the aliens use this technology in large UFO weapons. Now, however, they're using it on the ground in the worst way.\n"
-"\n"
-"This cannon has got to be the most powerful infantry particle beam the aliens can field, because I can't imagine them getting much bigger. Though smaller and lighter than the Plasma Blaster, the PB cannon's recoil is out of this world. It can blast a full grown man clean off his feet in one shot. No normal human will be able to use this weapon. We can adapt it for mounting on our UGVs, and we may be able to enhance our soldiers with cybernetic implants or powered armour, but that's all.\n"
-"\n"
-"As bad as the recoil is, the target will have it worse. A single fleeting hit -- a heartbeat of exposure -- will buckle three inches of homogenous steel and blow the target back by several metres. This is usually all that's necessary. A second hit will turn the buckle into a fist-sized hole, clean through. Our infantry armour will perform only slightly better, but deflection will help somewhat.\n"
-"\n"
-"The cannon's mechanics are quite simple, nothing that we can't duplicate easily with enough money and effort. The only thing we have yet to figure out is the ammo supply. The energy readings we've taken from the magazines are extreme, and despite our efforts, we haven't managed to disable or disarm one in order to safely open it up. Even shooting it dry doesn't completely deactivate one of these magazines. More research will be required before we can try and understand them, much less reproduce them.\n"
-"\n"
-"That's all I've got for you right now, Commander. I'll keep you updated on our progress with the magazines.\n"
-"\n"
-"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4066
 msgid "ugv_weapon_autocannon_pre_txt"
@@ -5847,9 +5622,8 @@ msgid "craft_weapon_alc_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
 #: ../base/ufos/research.ufo:4295
-#, fuzzy
 msgid "craft_weapon_alc_txt"
-msgstr "<TODO>"
+msgstr ""
 
 #: ../base/ufos/research.ufo:4339
 msgid "SHIVA Rotary Cannon"
@@ -6111,14 +5885,12 @@ msgid "A New Twist"
 msgstr "En ny konflikt"
 
 #: ../base/ufos/research.ufo:4658
-#, fuzzy
 msgid "news_new_twist_txt"
-msgstr "<TODO>"
+msgstr ""
 
 #: ../base/ufos/research.ufo:4659
-#, fuzzy
 msgid "news_new_twist_alt_txt"
-msgstr "<TODO>"
+msgstr ""
 
 #: ../base/ufos/research.ufo:4684
 msgid "The Enemy On Earth"
@@ -6203,7 +5975,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4723
 msgid "XVI Census"
-msgstr ""
+msgstr "Udenjordisk virusinfektion"
 
 #: ../base/ufos/research.ufo:4728
 msgid "xvi_census_txt"
@@ -6246,33 +6018,12 @@ msgstr ""
 "Oberst Falkland"
 
 #: ../base/ufos/research.ufo:4765
-#, fuzzy
 msgid "The Enemy On Earth - Revisited"
-msgstr "Fjenden på jorden"
+msgstr "Fjenden på jorden - Tilrettet"
 
 #: ../base/ufos/research.ufo:4770
-#, fuzzy
 msgid "enemy_on_earth_rev_txt"
 msgstr ""
-"Øverstbefalende\n"
-"\n"
-"Mit hold og jeg er dybt bekymret over de seneste rapporter om menneskeligt fjendskab overfor FALANKS personale, ligesom de er er jeg sikker på. Vi har alle set optagelser fra kamppladser. Der er ingen tvivl om at angriberne var mennesker ligesom dig og mig, men det er også klart at de brugte rumvæsen våben og udstyr -- endda nogle som FALANKS aldrig har set før.\n"
-"\n"
-"De bekymrende spørgsmål ser ud til at være talrige. Først må vi gennemgå de fakta vi har.\n"
-"\n"
-"Har rumvæsenerne aktive sympatisører på jorden? Ja\n"
-"\n"
-"Leverer rumvæsenerne forsyninger til de menneskelige tjenere? bestemt; det er den eneste forklaring for deres avancerede rumvæsen udstyr.\n"
-"\n"
-"Er disse tjenere en trussel? Absolut. Måske større end rumvæsen ondskaben selv.\n"
-"\n"
-"vi er nødt til at grave dybere ned i hver der motiverer disse mennesker. Hvis vi kan finde de mest almindelige grunde til rumvæsen infiltration, skulle vores informations division, være i stand til at lave en langt mere succesfuld propaganda strategi, som kunne øge antallet af frivillige, samt mindske rumvæsen infiltrationen over hele kloden. DivBio har også en andel; vi vil gerne tage en levende fange til vores opbevarings rum, så vi kan udføre en komplet helbredsundersøgelse. Hvis rumvæsenerne har lavet fysiske ændringer på disse menneske kroppe udover træning og forsyning af dem, vil vi gerne vide det.\n"
-"\n"
-"Direktør Wong (DivInfo) har også bedt mig nævne, at hvis vi venter for længe med at implementerer en ny informations strategi, kan vi snart have problemer med rekrutering, og øget menneskelig modstand, efter sympatisørerne får deres budskab ud. Jeg er stort set enig. Vi er nødt til at holde denne planet sammen, hvis vi skal have en chance mod rumvæsen truslen.\n"
-"\n"
-"Med venlig hilsen\n"
-"\n"
-"Dr. Connor"
 
 #: ../base/ufos/research.ufo:4773
 msgid "enemy_on_earth_rev_pre_txt"
@@ -6678,7 +6429,7 @@ msgstr "Blodedderkop"
 
 #: ../base/ufos/team_humans.ufo:47
 msgid "Phalanx"
-msgstr ""
+msgstr "Falanks"
 
 #: ../base/ufos/team_humans.ufo:1633
 msgid "Phoenix"
@@ -6826,7 +6577,7 @@ msgstr "Før du kaster en granat så kig på landskabet. En hældning vil påvir
 
 #: ../base/ufos/tips.ufo:39
 msgid "Grenades don't bounce well on sand or dirt."
-msgstr ""
+msgstr "Granater springer ikke nemt videre på sand eller mudder."
 
 #: ../base/ufos/tips.ufo:40
 msgid "You can include your own maps for multiplayer games or create your own campaigns. Just have a look at our wiki to read about content creation."
@@ -6898,23 +6649,23 @@ msgstr "For at købe/sælge udstyr hurtigt, så hold markøren over pilene og ru
 
 #: ../base/ufos/tips.ufo:57
 msgid "Beware friendly fire! It may be easiest to lob a grenade at that hostile enemy who snuck up on your troops, but if your not careful you do the alien's work for them. The same is said about bullets, make sure once the enemy is dead you wont be shooting your own person on the other side."
-msgstr ""
+msgstr "Pas på egen ild! Det er måske det nemmeste at kaste en granat mod fjenden som dukker op blandt dine tropper, men hvis du ikke er forsigtig så gør du rumvæsenernes arbejde for dem. Det samme kan siges om kugler, vær sikker på at når fjenden er død at du ikke skyder på dine egne på den anden side."
 
 #: ../base/ufos/tips.ufo:58
 msgid "Remember to check your research and production queues often! A good arsenal is an active arsenal!"
-msgstr ""
+msgstr "Husk at undersøge din forskning og produktionskøer ofte! Et godt arsenal er et aktivt arsenal!"
 
 #: ../base/ufos/tips.ufo:59
 msgid "The presence of live civilians probably means that there are no live aliens nearby. This can save time clearing a map."
-msgstr ""
+msgstr "Tilstedeværelsen af levende civile betyder sikkert at der ikke er nogen levende rumvæsener i nærheden. Det kan spare tid når du rydder et kort."
 
 #: ../base/ufos/tips.ufo:60
 msgid "Watch health of your soldiers, do not let them die. Experienced soldiers are more efficient in missions than new recruits."
-msgstr ""
+msgstr "Hold øje med helbredet på dine soldater, lad dem ikke dø for nemt. Erfarne soldater er mere effektive under missioner en nye rekrutter."
 
 #: ../base/ufos/tips.ufo:61
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
-msgstr ""
+msgstr "Du kan forberede dine handlinger for den næste runde mens du venter. Klik 2 gange på knappen [Retur] og alle dine handlinger i køn vil blive udført når det er din tur igen."
 
 #: ../base/ufos/ui/ahud.ufo:81 ../base/ufos/ui/ahud.ufo:112
 #: ../base/ufos/ui/ahud.ufo:143 ../base/ufos/ui/ahud.ufo:174
@@ -7153,7 +6904,7 @@ msgstr "Fjender dræbt:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:553
 msgid "Assign tanks"
-msgstr ""
+msgstr "Tildel kampvogne"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:557
 msgid "Assign soldiers"
@@ -7287,51 +7038,43 @@ msgstr "Brug udstyr"
 
 #: ../base/ufos/ui/basedefence.ufo:10
 msgid "Equip Defence Weapons"
-msgstr ""
+msgstr "Gør forsvarsvåben klar"
 
 #: ../base/ufos/ui/basedefence.ufo:50
-#, fuzzy
 msgid "Missile Defences"
-msgstr "Missil"
+msgstr "Missilforsvar"
 
 #: ../base/ufos/ui/basedefence.ufo:54
-#, fuzzy
 msgid "Laser Defences"
-msgstr "Laserriffel"
+msgstr "Laserforsvar"
 
 #: ../base/ufos/ui/basedefence.ufo:89
-#, fuzzy
 msgid "Weapon slots"
-msgstr "Våben"
+msgstr "Våbenpladser"
 
 #: ../base/ufos/ui/basedefence.ufo:140
 msgid "Add"
-msgstr ""
+msgstr "Tilføj"
 
 #: ../base/ufos/ui/basedefence.ufo:141
-#, fuzzy
 msgid "Equip the selected slot with this weapon"
-msgstr "Udstyr dette forsvarssystem med den valgte ammo"
+msgstr "Udstyr den valgte plads med dette våben"
 
 #: ../base/ufos/ui/basedefence.ufo:152
-#, fuzzy
 msgid "Remove"
-msgstr "Hent"
+msgstr "Fjern"
 
 #: ../base/ufos/ui/basedefence.ufo:153
-#, fuzzy
 msgid "Remove weapon from the selected slot"
-msgstr "Hent hold fra den nuværende valgte plads"
+msgstr "Fjern våben fra den valgte plads"
 
 #: ../base/ufos/ui/basedefence.ufo:170
-#, fuzzy
 msgid "Stores"
 msgstr "Lagerrum"
 
 #: ../base/ufos/ui/basedefence.ufo:226
-#, fuzzy
 msgid "Selected Item"
-msgstr "Valgt udstyr:"
+msgstr "Valgt udstyr"
 
 #: ../base/ufos/ui/bases.ufo:31
 msgid "Back to geoscape"
@@ -8000,15 +7743,15 @@ msgstr "Beskedtyper:"
 
 #: ../base/ufos/ui/geoscape.ufo:2085
 msgid "Enable or disable pause for all notification types\\nPause can't be enabled without notification\\nLeft click enables pause for all, right click disables."
-msgstr ""
+msgstr "Slå pause for alle beskedstyper til eller fra\\nPause kan ikke slås til uden besked\\nVenstreklik slår pause til for alle, højreklik slår den fra."
 
 #: ../base/ufos/ui/geoscape.ufo:2099
 msgid "Enable or disable messages being displayed for all notification types.\\nLeft click enables all notifications, right click disables."
-msgstr ""
+msgstr "Slå beskeder vist for alle beskedstyper til eller fra.\\nVenstreklik slår alle beskeder til, højreklik slår dem fra."
 
 #: ../base/ufos/ui/geoscape.ufo:2108
 msgid "Enable or disable sounds being played for all notification types.\\nLeft click enables all sounds, right click disables."
-msgstr ""
+msgstr "Slå alle lyde afspillet for alle beskedstyper til eller fra.\\nVenstreklik slår alle lyde til, højreklik slår dem fra."
 
 #: ../base/ufos/ui/geoscape.ufo:2154 ../base/ufos/ui/geoscape.ufo:2183
 #: ../base/ufos/ui/geoscape.ufo:2213 ../base/ufos/ui/geoscape.ufo:2243
@@ -8058,7 +7801,7 @@ msgstr "Geoscapeindstillinger"
 
 #: ../base/ufos/ui/geoscape.ufo:2863
 msgid "Geoscape projection mode:"
-msgstr ""
+msgstr "Geoscapens projektionstilstand:"
 
 #: ../base/ufos/ui/geoscape.ufo:2873
 msgid "2D"
@@ -8317,7 +8060,7 @@ msgstr "Sprog:"
 
 #: ../base/ufos/ui/main.ufo:252
 msgid "You have to set the playername and hit the 'OK' button:"
-msgstr "Du skal skrive spillernavnet og trykke på »Ok« knappen:"
+msgstr "Du skal skrive spillernavnet og trykke på »O.k.« knappen:"
 
 #: ../base/ufos/ui/main.ufo:261
 msgid "Save settings"
@@ -8391,15 +8134,15 @@ msgstr "Hårdhedsgrad:"
 
 #: ../base/ufos/ui/material_editor.ufo:94
 msgid "Bump:"
-msgstr ""
+msgstr "Stød:"
 
 #: ../base/ufos/ui/material_editor.ufo:117
 msgid "Specular:"
-msgstr ""
+msgstr "Spekulær:"
 
 #: ../base/ufos/ui/material_editor.ufo:140
 msgid "Parallax:"
-msgstr ""
+msgstr "Parallakse:"
 
 #: ../base/ufos/ui/material_editor.ufo:242
 msgid "+"
@@ -8850,11 +8593,11 @@ msgstr "Vertex buffere:"
 
 #: ../base/ufos/ui/options.ufo:338
 msgid "Multisample buffers:"
-msgstr ""
+msgstr "Flersamplede buffere:"
 
 #: ../base/ufos/ui/options.ufo:361
 msgid "Swap interval:"
-msgstr ""
+msgstr "Swapinterval:"
 
 #: ../base/ufos/ui/options.ufo:385
 msgid "Gamma:"
@@ -9139,7 +8882,7 @@ msgstr "Kampagne"
 
 #: ../base/ufos/ui/singleplayer.ufo:48
 msgid "Skirmish"
-msgstr "Enkelkamp"
+msgstr "En enkel kamp"
 
 #: ../base/ufos/ui/singleplayer.ufo:104
 msgid "Abort"
@@ -9368,14 +9111,12 @@ msgid "Plasma Grenade"
 msgstr "Plasmagranat"
 
 #: ../base/ufos/weapons.ufo:642 ../base/ufos/weapons.ufo:663
-#, fuzzy
 msgid "Bomb"
-msgstr "Bombefly U"
+msgstr "Bombe"
 
 #: ../base/ufos/weapons_aliens.ufo:46
-#, fuzzy
 msgid "Needler Gun Magazine"
-msgstr "Maskinpistol magasin"
+msgstr "Needler pistolmagasin"
 
 #: ../base/ufos/weapons_aliens.ufo:62 ../base/ufos/weapons_aliens.ufo:125
 #: ../base/ufos/weapons_human.ufo:42 ../base/ufos/weapons_human.ufo:124
@@ -9460,7 +9201,7 @@ msgstr "Sigteskud"
 
 #: ../base/ufos/weapons_human.ufo:412
 msgid "Coilgun Clip"
-msgstr ""
+msgstr "Magnetisk pistolmagasin"
 
 #: ../base/ufos/weapons_human.ufo:472
 msgid "7.62mm Pistol"
@@ -9781,7 +9522,7 @@ msgstr "Maskinpistolbælte"
 
 #: ../base/ufos/weapons_ugv.ufo:146
 msgid "Autocannon Module"
-msgstr ""
+msgstr "Modul til autokanon"
 
 #: client/campaign/cp_aircraft.c:446
 msgid "ON RED ALERT"
@@ -9946,12 +9687,11 @@ msgid "Insufficient fuel."
 msgstr "Ikke nok brændstof."
 
 #: client/campaign/cp_aircraft.c:2119
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to base %s."
-msgstr "Dit landingsfly er næsten tomt og returnerer til basen"
+msgstr "Fartøj %s her ikke nok brændstof til angreb på ufo: Flyv tilbage til base %s." 
 
 #: client/campaign/cp_aircraft_callbacks.c:141
-#, fuzzy
 msgid ""
 "No operational Command Centre in this base.\n"
 "\n"
@@ -9962,14 +9702,12 @@ msgstr ""
 "Luftfartøj kan ikke lette.\n"
 
 #: client/campaign/cp_aircraft_callbacks.c:149
-#, fuzzy
 msgid ""
 "There is no pilot assigned to this aircraft.\n"
 "\n"
 "Aircraft can not start.\n"
 msgstr ""
-"Ingen kommandocentral er operationel i dette luftfartøjs\n"
-"base.\n"
+"Der er ingen pilot tildelt dette luftfartøj.\n"
 "\n"
 "Luftfartøj kan ikke lette.\n"
 
@@ -10001,9 +9739,9 @@ msgid "Weapons:\t%i on %i\n"
 msgstr "Våben:\t%i på %i\n"
 
 #: client/campaign/cp_aircraft_callbacks.c:267
-#, fuzzy, c-format
+#, c-format
 msgid "Armour:\t%i on 1\n"
-msgstr "Rustninger:\t%i på 1\n"
+msgstr "Beskyttelse:\t%i på 1\n"
 
 #: client/campaign/cp_aircraft_callbacks.c:268
 #, c-format
@@ -10011,9 +9749,9 @@ msgid "Electronics:\t%i on %i"
 msgstr "Elektronik:\t%i på %i"
 
 #: client/campaign/cp_airfight.c:376
-#, fuzzy, c-format
+#, c-format
 msgid "A UFO is shooting at %s"
-msgstr "En ufo flyver mod %s"
+msgstr "En ufo skyder mod %s"
 
 #: client/campaign/cp_airfight.c:400
 msgid "Our aircraft has no more ammo left - returning to home base now."
@@ -10054,7 +9792,6 @@ msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr "Du kan ikke bearbejde rumvæsenere endnu. Rumvæsenopbevaringsrum er ikke færdig på denne base."
 
 #: client/campaign/cp_aliencont.c:258
-#, fuzzy
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr "Du kan endnu ikke opbevare levende rumvæsener. Rumvæsenerne døde."
 
@@ -10067,18 +9804,16 @@ msgid "You've captured new aliens."
 msgstr "Du har fanget nye rumvæsener."
 
 #: client/campaign/cp_aliencont_callbacks.c:205
-#, fuzzy
 msgid "Already researched"
-msgstr "Før forskningstekst"
+msgstr "Forskning er gennemført"
 
 #: client/campaign/cp_aliencont_callbacks.c:207
 msgid "Needs autopsy!"
 msgstr "Skal obduceres!"
 
 #: client/campaign/cp_aliencont_callbacks.c:230
-#, fuzzy
 msgid "Free slot"
-msgstr "Fremprovoker start"
+msgstr "Ledig plads"
 
 #: client/campaign/cp_aliencont_callbacks.c:231
 #: client/campaign/cp_ufopedia.c:271 client/cl_inventory_callbacks.c:126
@@ -10086,40 +9821,36 @@ msgid "None"
 msgstr "Ingen"
 
 #: client/campaign/cp_base.c:762
-#, fuzzy
 msgid "Base is under attack, you can't destroy buildings !"
-msgstr "Base er under angreb, du kan ikke tilgå denne bygning !"
+msgstr "Base er under angreb, du kan ikke ødelægge bygninger!"
 
 #: client/campaign/cp_base.c:774
-#, fuzzy
 msgid "Destroy Entrance"
-msgstr "Lagerrum"
+msgstr "Ødelæg indgang"
 
 #: client/campaign/cp_base.c:774
-#, fuzzy
 msgid "You can't destroy the entrance of the base!"
-msgstr "Du kan ikke sætte mere udstyr i kø!"
+msgstr "Du kan ikke ødelægge basens indgang!"
 
 #: client/campaign/cp_base.c:783
-#, fuzzy
 msgid "Destroy Hangar"
-msgstr "Ødelæg bygning"
+msgstr "Ødelæg hangar"
 
 #: client/campaign/cp_base.c:783
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
+"Hvis du ødelægger denne hangar, vil du også ødelægge det luftfartøj\n"
+"der er inden i. Er du sikker?"
 
 #: client/campaign/cp_base.c:784
-#, fuzzy
 msgid "Go to hangar"
-msgstr "Tilbage til hangar"
+msgstr "Gå til hangar"
 
 #: client/campaign/cp_base.c:784
-#, fuzzy
 msgid "Go to hangar without destroying building"
-msgstr "Er du sikker på at du ønsker at ødelægge denne bygning?"
+msgstr "Gå til hangar uden at ødelægge bygning"
 
 #: client/campaign/cp_base.c:785 client/campaign/cp_base.c:795
 #: client/campaign/cp_base.c:805 client/campaign/cp_base.c:818
@@ -10128,50 +9859,48 @@ msgstr "Ødelæg bygningen"
 
 #: client/campaign/cp_base.c:787 client/campaign/cp_base.c:797
 #: client/campaign/cp_base.c:807
-#, fuzzy
 msgid "Go to transfer menu without destroying the building"
-msgstr "Er du sikker på at du ønsker at ødelægge denne bygning?"
+msgstr "Gå til overførmenuen uden at ødelægge bygningen"
 
 #: client/campaign/cp_base.c:793
-#, fuzzy
 msgid "Destroy Quarter"
-msgstr "Ødelæg"
+msgstr "Ødelæg beboelseskvarter"
 
 #: client/campaign/cp_base.c:793
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
+"Hvis du ødelægger beboelseskvarteret, vil alle ansatte inden i blive\n"
+"dræbt. Er du sikker?"
 
 #: client/campaign/cp_base.c:794
 msgid "Dismiss"
-msgstr ""
+msgstr "Fjern"
 
 #: client/campaign/cp_base.c:794
-#, fuzzy
 msgid "Go to hiring menu without destroying building"
-msgstr "Er du sikker på at du ønsker at ødelægge denne bygning?"
+msgstr "Gå til menuen for afskedigelse uden at ødelægge bygning"
 
 #: client/campaign/cp_base.c:803
-#, fuzzy
 msgid "Destroy Storage"
-msgstr "Lagerrum"
+msgstr "Ødelæg lagerrum"
 
 #: client/campaign/cp_base.c:803
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
+"Hvis du ødelægger dette lagerrum, vil alt udstyr indenfor blive knust.\n"
+"Er du sikker?"
 
 #: client/campaign/cp_base.c:804
-#, fuzzy
 msgid "Go to buy/sell menu without destroying building"
-msgstr "Er du sikker på at du ønsker at ødelægge denne bygning?"
+msgstr "Gå til menuen køb/sælg uden at ødelægge bygning"
 
 #: client/campaign/cp_base.c:804
-#, fuzzy
 msgid "Go to storage"
-msgstr "Gå til indstillinger"
+msgstr "Gå til lagerrum"
 
 #: client/campaign/cp_base.c:816
 msgid "Are you sure you want to destroy this building?"
@@ -10200,7 +9929,7 @@ msgstr "Arbejder 100 %"
 
 #: client/campaign/cp_base.c:855
 msgid "Not operational, depends on"
-msgstr ""
+msgstr "Ikke funktionsklar, afhænger af"
 
 #: client/campaign/cp_base.c:859
 msgid "Down"
@@ -10276,21 +10005,21 @@ msgid "Not enough storage space in base %s. %s"
 msgstr "Ikke nok lagerrum på base %s. %s"
 
 #: client/campaign/cp_base.c:2514
-#, fuzzy, c-format
+#, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
-msgstr[0] "%i udstyr blev solgt."
-msgstr[1] "%i udstyr blev solgt."
+msgstr[0] "%i udstyr blev solgt for %i kr."
+msgstr[1] "%i udstyr blev solgt for %i kr."
 
 #: client/campaign/cp_base.c:3248
-#, fuzzy, c-format
+#, c-format
 msgid "Base %s does not have Antimatter Storage Facility. %i units of antimatter got removed."
-msgstr "Base %s har ikke antistof lagerrum. %i enheder af antistof blev fjernet."
+msgstr "Base %s har ikke antistoflagerrum. %i enheder af antistof blev fjernet."
 
 #: client/campaign/cp_base_callbacks.c:148
-#, fuzzy, c-format
+#, c-format
 msgid "Base #%i"
-msgstr "Base #2"
+msgstr "Base #%i"
 
 #: client/campaign/cp_base_callbacks.c:152
 msgid "Home"
@@ -10319,14 +10048,13 @@ msgid "Not enough credits to set up a new base."
 msgstr "Ikke nok penge til en ny base."
 
 #: client/campaign/cp_base_callbacks.c:265
-#, fuzzy
 msgid "Buy or produce at least one aircraft first."
-msgstr "Køb eller producer et nyt luftfartøj"
+msgstr "Køb eller producer først et luftfartøj."
 
 #: client/campaign/cp_base_callbacks.c:267
-#, fuzzy, c-format
+#, c-format
 msgid "Build a %s or %s first."
-msgstr "Byg en %s først."
+msgstr "Byg en %s eller %s først."
 
 #: client/campaign/cp_base_callbacks.c:273
 #: client/campaign/cp_base_callbacks.c:283
@@ -10339,14 +10067,13 @@ msgid "Build a %s first."
 msgstr "Byg en %s først."
 
 #: client/campaign/cp_base_callbacks.c:278
-#, fuzzy
 msgid "Build at least a second base to transfer equipment or personnel"
-msgstr "Overfør udstyr eller personale"
+msgstr "Byg mindst endnu en base du kan overføre udstyr eller personale til"
 
 #: client/campaign/cp_base_callbacks.c:293
-#, fuzzy, c-format
+#, c-format
 msgid "Build %s first."
-msgstr "Byg en %s først."
+msgstr "Byg først %s."
 
 #: client/campaign/cp_base_callbacks.c:660
 msgid "Base is under attack, you can't access this building !"
@@ -10533,16 +10260,15 @@ msgstr ""
 "Nuværende udenjordisk virus-infektion: %i%%"
 
 #: client/campaign/cp_campaign.c:1553
-#, fuzzy
 msgid "Collected dead alien bodies"
-msgstr "Indsamlede %i døde rumvæsenkroppe"
+msgstr "Indsamlede døde rumvæsenkroppe"
 
 #: client/campaign/cp_campaign.c:1598
 msgid "Your dropship is not near the landing zone"
 msgstr "Dit landingsfly er ikke nær landingszonen"
 
 #: client/campaign/cp_campaign.c:1651 client/campaign/cp_missions.c:1152
-#, fuzzy, c-format
+#, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Baseforsvar: %s succesfuld!"
 
@@ -10623,11 +10349,13 @@ msgid "%s has been promoted to %s.\n"
 msgstr "%s er blevet forfremmet til %s.\n"
 
 #: client/campaign/cp_campaign.c:1749
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
-msgstr "%s er posthum blevet tildelt range af %s\\for inspirerende mod i mødet med overhængende fare.\n"
+msgstr ""
+"%s er posthum blevet tildelt range af %s\n"
+"for inspirerende mod i mødet med overhængende fare.\n"
 
 #: client/campaign/cp_campaign.c:1750
 msgid "Soldier promoted"
@@ -10650,20 +10378,18 @@ msgstr ""
 "Byg flere rum."
 
 #: client/campaign/cp_employee_callbacks.c:208
-#, fuzzy, c-format
+#, c-format
 msgid "%s [Transferred]"
-msgstr "Overfør"
+msgstr "%s [Overført]"
 
 #: client/campaign/cp_employee_callbacks.c:338
 #: client/campaign/cp_employee_callbacks.c:394
-#, fuzzy
 msgid "Could not fire employee"
-msgstr "Ansæt personale"
+msgstr "Kunne ikke afskedige personale"
 
 #: client/campaign/cp_employee_callbacks.c:400
-#, fuzzy
 msgid "Could not hire employee"
-msgstr "Ansæt personale"
+msgstr "Kunne ikke ansætte personale"
 
 #: client/campaign/cp_event.c:250 client/campaign/cp_save.c:275
 #: client/campaign/cp_save.c:295 client/campaign/cp_time.c:74
@@ -10686,9 +10412,8 @@ msgid "Items"
 msgstr "Udstyr"
 
 #: client/campaign/cp_fightequip_callbacks.c:176
-#, fuzzy
 msgid "Ammo"
-msgstr "Ammo:\t%i\n"
+msgstr "Ammo"
 
 #: client/campaign/cp_fightequip_callbacks.c:178 client/campaign/cp_map.c:378
 msgid "Unknown"
@@ -10713,14 +10438,14 @@ msgid "This item will be installed in %i hours.\n"
 msgstr "Dette udstyr vil være installeret om %i timer.\n"
 
 #: client/campaign/cp_fightequip_callbacks.c:411
-#, fuzzy, c-format
+#, c-format
 msgid "%s will be removed in %i hours.\n"
-msgstr "Dette udstyr vil blive fjernet om %i timer.\n"
+msgstr "%s vil blive fjernet om %i timer.\n"
 
 #: client/campaign/cp_fightequip_callbacks.c:413
-#, fuzzy, c-format
+#, c-format
 msgid "%s will be installed in %i hours.\n"
-msgstr "Dette udstyr vil være installeret om %i timer.\n"
+msgstr "%s vil være installeret om %i timer.\n"
 
 #: client/campaign/cp_fightequip_callbacks.c:416
 #, c-format
@@ -10733,151 +10458,135 @@ msgstr "Intet ammo tildelt dette våben."
 
 #: client/campaign/cp_fightequip_callbacks.c:433
 #: client/campaign/cp_fightequip_callbacks.c:438
-#, fuzzy
 msgid " (unlimited ammos)"
-msgstr " (%i missil tilbage)"
+msgstr " (ubegrænset ammo)"
 
 #: client/campaign/cp_fightequip_callbacks.c:957
-#, fuzzy
 msgid "No defence of this type in this installation"
-msgstr "Intet forsvar af denne type på denne base\n"
+msgstr "Intet forsvar af denne type på denne base"
 
 #: client/campaign/cp_fightequip_callbacks.c:963
 #: client/campaign/cp_fightequip_callbacks.c:991
 #: client/campaign/cp_fightequip_callbacks.c:1019
-#, fuzzy, c-format
+#, c-format
 msgid "Slot %i:\tempty"
-msgstr "Plads %i:\tempty\n"
+msgstr "Plads %i:\tempty"
 
 #: client/campaign/cp_fightequip_callbacks.c:969
 #: client/campaign/cp_fightequip_callbacks.c:997
 #: client/campaign/cp_fightequip_callbacks.c:1025
-#, fuzzy
 msgid "Working"
-msgstr "Arbejder 100 %"
+msgstr "Arbejder"
 
 #: client/campaign/cp_fightequip_callbacks.c:971
 #: client/campaign/cp_fightequip_callbacks.c:999
 #: client/campaign/cp_fightequip_callbacks.c:1027
-#, fuzzy
 msgid "Installing"
-msgstr "Nation"
+msgstr "Installerer"
 
 #: client/campaign/cp_fightequip_callbacks.c:973
 #: client/campaign/cp_fightequip_callbacks.c:1001
 #: client/campaign/cp_fightequip_callbacks.c:1029
-#, fuzzy
 msgid "Replacing"
-msgstr "Forbindelser:"
+msgstr "Omplacerer"
 
 #: client/campaign/cp_fightequip_callbacks.c:975
 #: client/campaign/cp_fightequip_callbacks.c:1003
 #: client/campaign/cp_fightequip_callbacks.c:1031
 msgid "Removing"
-msgstr ""
+msgstr "Fjerner"
 
 #: client/campaign/cp_fightequip_callbacks.c:977
 #: client/campaign/cp_fightequip_callbacks.c:1005
 #: client/campaign/cp_fightequip_callbacks.c:1033
-#, fuzzy, c-format
+#, c-format
 msgid "Slot %i:\t%s (%s)"
-msgstr "Plads %i:\t%s\n"
+msgstr "Plads %i:\t%s (%s)"
 
 #: client/campaign/cp_fightequip_callbacks.c:985
 #: client/campaign/cp_fightequip_callbacks.c:1013
-#, fuzzy
 msgid "No defence of this type in this base"
-msgstr "Intet forsvar af denne type på denne base\n"
+msgstr "Intet forsvar af denne type på denne base"
 
 #: client/campaign/cp_installation.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "Installation %s was destroyed."
-msgstr "Sikret %s blev ødelagt."
+msgstr "Installation %s blev ødelagt."
 
 #: client/campaign/cp_installation.c:238
-#, fuzzy
 msgid "Installation destroyed"
-msgstr "Nation"
+msgstr "Installation ødelagt"
 
 #: client/campaign/cp_installation.c:348
-#, fuzzy, c-format
+#, c-format
 msgid "Construction of installation %s finished."
-msgstr "Bygning færdig"
+msgstr "Opførelse af bygning %s afsluttet."
 
 #: client/campaign/cp_installation.c:349
-#, fuzzy
 msgid "Installation finished"
-msgstr "Nation"
+msgstr "Installation afsluttet"
 
 #: client/campaign/cp_installation.c:458
-#, fuzzy, c-format
+#, c-format
 msgid "%d c"
-msgstr "%i kr"
+msgstr "%d kr"
 
 #: client/campaign/cp_installation.c:469
-#, fuzzy, c-format
+#, c-format
 msgid "%d day\n"
 msgid_plural "%d days\n"
-msgstr[0] "1 dag"
-msgstr[1] "1 dag"
+msgstr[0] "%d dag\n"
+msgstr[1] "%d dage\n"
 
 #: client/campaign/cp_installation_callbacks.c:68
-#, fuzzy, c-format
+#, c-format
 msgid "%d day"
 msgid_plural "%d days"
-msgstr[0] "1 dag"
-msgstr[1] "1 dag"
+msgstr[0] "%d dag"
+msgstr[1] "%d dage"
 
 #: client/campaign/cp_installation_callbacks.c:122
-#, fuzzy, c-format
+#, c-format
 msgid "A new installation has been built: %s (nation: %s)"
-msgstr "En ny base er bygget: %s (nation: %s)"
+msgstr "En ny installation er blevet bygget: %s (nation: %s)"
 
 #: client/campaign/cp_installation_callbacks.c:124
-#, fuzzy, c-format
+#, c-format
 msgid "A new installation has been built: %s"
-msgstr "En ny base er færdigbygget: %s"
+msgstr "En ny installation er færdigbygget: %s"
 
 #: client/campaign/cp_installation_callbacks.c:125
-#, fuzzy
 msgid "Installation building"
-msgstr "Nation"
+msgstr "Installationsbygning"
 
 #: client/campaign/cp_installation_callbacks.c:134
-#, fuzzy
 msgid "Not enough credits to set up a new installation."
-msgstr "Ikke nok penge til en ny base."
+msgstr "Ikke nok penge til en ny installation."
 
 #: client/campaign/cp_installation_callbacks.c:176
 #: client/campaign/cp_map.c:367
-#, fuzzy
 msgid "Installation"
-msgstr "Nation"
+msgstr "Installation"
 
 #: client/campaign/cp_installation_callbacks.c:182
-#, fuzzy
 msgid "You've reached the installation limit."
-msgstr "Du har nået basebegrænsningen."
+msgstr "Du har nået installationsbegrænsningen."
 
 #: client/campaign/cp_installation_callbacks.c:226
-#, fuzzy
 msgid "Destroy Installation"
-msgstr "Nation"
+msgstr "Ødelæg installation"
 
 #: client/campaign/cp_installation_callbacks.c:226
-#, fuzzy
 msgid "Do you really want to destroy this installation?"
-msgstr "Er du sikker på at du ønsker at ødelægge denne bygning?"
+msgstr "Er du sikker på, at du ønsker at ødelægge denne installation?"
 
 #: client/campaign/cp_installation_callbacks.c:228
-#, fuzzy
 msgid "Forget it"
-msgstr "Fremprovoker start"
+msgstr "Glem det"
 
 #: client/campaign/cp_map.c:378
-#, fuzzy
 msgid "UFO Sighting"
-msgstr "Ufo - Jager"
+msgstr "Ufo set"
 
 #: client/campaign/cp_map.c:1270
 msgid "Day"
@@ -10897,9 +10606,8 @@ msgid "Select the desired location of the new base on the map.\n"
 msgstr "Vælg den ønskede placering for den nye base på kortet.\n"
 
 #: client/campaign/cp_map.c:1663
-#, fuzzy
 msgid "Select the desired location of the new installation on the map.\n"
-msgstr "Vælg den ønskede placering for den nye base på kortet.\n"
+msgstr "Vælg den ønskede placering for den nye installation på kortet.\n"
 
 #: client/campaign/cp_map.c:1668
 msgid "Aliens are attacking our base at this very moment.\n"
@@ -10940,44 +10648,44 @@ msgid "Distance to target:\t\t%.0f\n"
 msgstr "Afstand til mål:\t\t%.0f\n"
 
 #: client/campaign/cp_map.c:1704 client/campaign/cp_map.c:1716
-#, fuzzy, c-format
+#, c-format
 msgid "ETA:\t%sh\n"
-msgstr "AAT:\t%s\n"
+msgstr "AAT:\t%st\n"
 
 #: client/campaign/cp_mapfightequip.c:304
 #, c-format
 msgid "%s was successfully installed into aircraft %s at base %s."
-msgstr ""
+msgstr "%s blev med succes installeret på luftfartøj %s på base %s."
 
 #: client/campaign/cp_mapfightequip.c:307
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully installed at installation %s."
-msgstr "Flyudstyr blev med succes installeret."
+msgstr "%s blev med succes installeret på installation %s."
 
 #: client/campaign/cp_mapfightequip.c:310
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully installed at base %s."
-msgstr "Flyudstyr blev med succes installeret."
+msgstr "%s blev med succes installeret på base %s."
 
 #: client/campaign/cp_mapfightequip.c:332
 #, c-format
 msgid "%s was successfully removed from aircraft %s at base %s."
-msgstr ""
+msgstr "%s blev med succes fjernet fra luftfartøj %s på base %s."
 
 #: client/campaign/cp_mapfightequip.c:338
 #, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at base %s"
-msgstr ""
+msgstr "%s blev med succes fjernet, påbegynder installation af %s på luftfartøj %s på base %s"
 
 #: client/campaign/cp_mapfightequip.c:346
 #, c-format
 msgid "%s was successfully removed from installation %s."
-msgstr ""
+msgstr "%s blev med succes fjernet fra installation %s."
 
 #: client/campaign/cp_mapfightequip.c:349
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed from base %s."
-msgstr "Flyudstyr blev med succes installeret."
+msgstr "%s blev med succes fjernet fra base %s."
 
 #: client/campaign/cp_mapfightequip.c:1036
 msgid "Light weight"
@@ -11051,66 +10759,52 @@ msgid "You can't sell an aircraft that is not in base"
 msgstr "Du kan ikke sælge et luftfartøj, som ikke er på en base"
 
 #: client/campaign/cp_messageoptions.c:36
-#, fuzzy
 msgid "installation_installed"
-msgstr "Nation"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:37
-#, fuzzy
 msgid "installation_removed"
-msgstr "Maks. baser nået"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:38
-#, fuzzy
 msgid "installation_replaced"
-msgstr "Maks. baser nået"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:39
-#, fuzzy
 msgid "installation_build_started"
-msgstr "Maks. baser nået"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:40
-#, fuzzy
 msgid "installation_build_finished"
-msgstr "e-post_bygning_færdig"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:41
-#, fuzzy
 msgid "installation_destroyed"
-msgstr "Nation"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:42
-#, fuzzy
 msgid "research_new_proposed"
-msgstr "Vis forskningsforslag"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:43
 msgid "research_completed"
 msgstr ""
 
 #: client/campaign/cp_messageoptions.c:44
-#, fuzzy
 msgid "production_started"
-msgstr "Produktion påbegyndt"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:45
-#, fuzzy
 msgid "production_finished"
-msgstr "Produktion færdig"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:46
-#, fuzzy
 msgid "production_failed"
 msgstr ""
-"The engineering team has completed production of {item} at {location}. All equipment is tested and ready for use.\n"
-"\n"
-"--Cdr. Navarre"
 
 #: client/campaign/cp_messageoptions.c:47
-#, fuzzy
 msgid "production_queue_empty"
-msgstr "Produktionskø tom"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:48
 msgid "nation_happiness_changed"
@@ -11121,32 +10815,28 @@ msgid "nation_unhappy"
 msgstr ""
 
 #: client/campaign/cp_messageoptions.c:50
-#, fuzzy
 msgid "nation_pleased"
-msgstr "Maks. baser nået"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:51
-#, fuzzy
 msgid "transfer_started"
-msgstr "e-post_overførsel_modtaget"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:52
 msgid "transfer_completed_success"
 msgstr ""
 
 #: client/campaign/cp_messageoptions.c:53
-#, fuzzy
 msgid "transfer_lost"
-msgstr "Overfør"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:54
 msgid "transfer_aliens_defered"
 msgstr ""
 
 #: client/campaign/cp_messageoptions.c:55
-#, fuzzy
 msgid "ufo_spotted"
-msgstr "<TODO>"
+msgstr ""
 
 #: client/campaign/cp_messageoptions.c:56
 msgid "ufo_signal_lost"
@@ -11175,6 +10865,18 @@ msgid ""
 "\n"
 "   - The UFO:AI development team"
 msgstr ""
+"Tillykke! Du har nået afslutningen på UFO:AI-kampagnen.\n"
+"Dette er dog ikke den endelige afslutning. Spillet er fortsat under udvikling.\n"
+"Kampagnen vil blive udvidet med nye missioner, nye fjender, nye ufoer, nye kontrollerbare luftfartøjer og flere forskningsemner.\n"
+"\n"
+"Og DU kan hjælpe med dette! Besøg vores forum eller IRC-kanal for at høre\n"
+"mere om hvad du kan gøre for at hjælpe med at gøre spillet færdigt. Alternativt\n"
+"kan du bare komme forbi og snakke om spillet, eller finde nye spillere til et\n"
+"fælles spil.\n"
+"\n"
+"Tak fordi du spillede, og vi håber snart at se dig igen.\n"
+"\n"
+"   - Udviklingsholdet bag UFO:AI"
 
 #: client/campaign/cp_missions.c:425
 msgid "Landed UFO"
@@ -11189,14 +10891,13 @@ msgid "Base attack"
 msgstr "Baseangreb"
 
 #: client/campaign/cp_missions.c:433
-#, fuzzy
 msgid "Harvesting mission"
-msgstr "På vej mod mission"
+msgstr "Høstmission"
 
 #: client/campaign/cp_missions.c:722
-#, fuzzy, c-format
+#, c-format
 msgid "Alien activity has been detected in %s."
-msgstr "Rumvæsenaktivitet rapporteret -- %s"
+msgstr "Rumvæsenaktivitet rapporteret i %s."
 
 #: client/campaign/cp_missions.c:1249
 #: client/campaign/missions/cp_mission_harvest.c:163
@@ -11252,21 +10953,21 @@ msgstr "Overstadig"
 #: client/campaign/cp_nation.c:163
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
-msgstr ""
+msgstr "Nation %s ændrede tilfredshed fra %s til %s"
 
 #: client/campaign/cp_nation.c:167
 #, c-format
 msgid "Nation %s changed happiness to %s"
-msgstr ""
+msgstr "Nation %s ændrede tilfredshed til %s"
 
 #: client/campaign/cp_nation.c:171
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
-msgstr ""
+msgstr "Tilfredsheden hos nation %s er %s og mindre end den minimale tilfredshedsgrad tilladt i kampagnen"
 
 #: client/campaign/cp_nation.c:177
 msgid "Nation changed happiness"
-msgstr ""
+msgstr "Nation ændrede tilfredshedsgrad"
 
 #: client/campaign/cp_nations.c:79
 #, c-format
@@ -11313,9 +11014,9 @@ msgid "Paid %i credits to scientists"
 msgstr "Betalte %i kr til videnskabsmænd"
 
 #: client/campaign/cp_nations.c:125
-#, fuzzy, c-format
+#, c-format
 msgid "Paid %i credits to pilots"
-msgstr "Betalte %i kr til læger"
+msgstr "Betalte %i kr til piloter"
 
 #: client/campaign/cp_nations.c:136
 #, c-format
@@ -11344,22 +11045,19 @@ msgstr "Betalte %i kr i rente for gælden."
 
 #: client/campaign/cp_popup.c:134
 msgid "current homebase of aircraft"
-msgstr ""
+msgstr "Nuværende hovedbase for luftfartøj"
 
 #: client/campaign/cp_popup.c:140
-#, fuzzy
 msgid "base can hold aircraft"
-msgstr "Sælg luftfartøj"
+msgstr "base kan opbevare luftfartøj"
 
 #: client/campaign/cp_popup.c:155
-#, fuzzy
 msgid "Base\tStatus"
-msgstr "Status:"
+msgstr "Base\tStatus"
 
 #: client/campaign/cp_popup.c:155
-#, fuzzy
 msgid "Change homebase of aircraft"
-msgstr "Håndter dit luftfartøj"
+msgstr "Ændr hovedbase for luftfartøj"
 
 #: client/campaign/cp_popup.c:249
 #, c-format
@@ -11371,9 +11069,8 @@ msgid "Stop\n"
 msgstr "Stop\n"
 
 #: client/campaign/cp_popup.c:253
-#, fuzzy
 msgid "Change homebase\n"
-msgstr "På basen"
+msgstr "Skift hovedbase\n"
 
 #: client/campaign/cp_popup.c:265
 #, c-format
@@ -11381,17 +11078,14 @@ msgid "Mission\t%s (%s)\n"
 msgstr "Mission\t%s (%s)\n"
 
 #: client/campaign/cp_popup.c:419
-#, fuzzy
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
-msgstr "Intet fly tilgængelig, eller intet taktisk hold tildelt et tilgængelig fly."
+msgstr "Intet fly tilgængelig, ingen pilot, eller intet taktisk hold tildelt tilgængeligt fly."
 
 #: client/campaign/cp_popup.c:421
-#, fuzzy
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
-msgstr "Intet fly tilgængelig eller ingen våben eller ammo."
+msgstr "Intet fly tilgængelig, ingen pilot, eller ingen våben eller ammo."
 
 #: client/campaign/cp_popup.c:455
-#, fuzzy
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr "Intet forsvarssytem tilgængelig eller ingen våben eller ammo på udstyr."
 
@@ -11422,19 +11116,19 @@ msgid "Not enough credits to finish production in base %s.\n"
 msgstr "Ikke nok penge til at afslutte produktion på base %s.\n"
 
 #: client/campaign/cp_produce.c:357
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in base %s. Production postponed.\n"
-msgstr "Ikke nok lagerrum på base %s. Produktion sat i stå.\n"
+msgstr "Ikke nok lagerrum på base %s. Produktion udskudt.\n"
 
 #: client/campaign/cp_produce.c:378
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free hangar space in base %s. Production postponed.\n"
-msgstr "Ikke nok ledig hangarplads på base %s. Produktion sat i stå.\n"
+msgstr "Ikke nok ledig hangarplads på base %s. Produktion udskudt.\n"
 
 #: client/campaign/cp_produce.c:389
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in base %s. Disassembling postponed.\n"
-msgstr "Ikke nok lagerrum på base %s. Afmontering sat i stå.\n"
+msgstr "Ikke nok lagerrum på base %s. Afmontering udskudt.\n"
 
 #: client/campaign/cp_produce.c:421 client/campaign/cp_produce.c:433
 #, c-format
@@ -11698,18 +11392,16 @@ msgid "Status: Unknown technology"
 msgstr "Status: Ukendt teknologi"
 
 #: client/campaign/cp_research_callbacks.c:257
-#, fuzzy
 msgid "Unassigned scientists"
-msgstr "Ansæt videnskabsmænd"
+msgstr "Ledige videnskabsmænd"
 
 #: client/campaign/cp_research_callbacks.c:293
 msgid "Missing an artifact"
-msgstr ""
+msgstr "Mangler en artefakt"
 
 #: client/campaign/cp_research_callbacks.c:303
-#, fuzzy
 msgid "Unresearchable collected items"
-msgstr "%i indsamlet udstyr"
+msgstr "Indsamlet udstyr der ikke kan undersøges"
 
 #: client/campaign/cp_research_callbacks.c:558
 msgid "This item is currently under research in another base."
@@ -11815,9 +11507,8 @@ msgid "5 mins"
 msgstr "5 min"
 
 #: client/campaign/cp_time.c:45
-#, fuzzy
 msgid "20 mins"
-msgstr "10 min"
+msgstr "20 min"
 
 #: client/campaign/cp_time.c:46
 msgid "1 hour"
@@ -11901,7 +11592,9 @@ msgstr "Manglende lager"
 msgid ""
 "Destination base does not have enough\n"
 "Antimatter Storage space to store more antimatter.\n"
-msgstr "Modtagende base har ikke nok antistof-lagerrum til opbevaring af mere antistof.\n"
+msgstr ""
+"Modtagende base har ikke nok antistoflagerrum\n"
+"til opbevaring af mere antistof.\n"
 
 #: client/campaign/cp_transfer.c:144 client/campaign/cp_transfer.c:183
 #: client/campaign/cp_transfer.c:214 client/campaign/cp_transfer.c:267
@@ -11963,18 +11656,17 @@ msgid "Soldier in aircraft"
 msgstr "Soldat på luftfartøj"
 
 #: client/campaign/cp_transfer.c:231
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s is assigned to aircraft and cannot be\n"
 "transfered to another base.\n"
 msgstr ""
-"%s %s er tildelt luftfartøj og kan ikke \n"
+"%s er tildelt luftfartøj og kan ikke \n"
 "overføres til en anden base.\n"
 
 #: client/campaign/cp_transfer.c:233
-#, fuzzy
 msgid "Pilot in aircraft"
-msgstr "Soldat på luftfartøj"
+msgstr "Pilot på luftfartøj"
 
 #: client/campaign/cp_transfer.c:267
 msgid ""
@@ -12014,44 +11706,43 @@ msgstr ""
 
 #: client/campaign/cp_transfer.c:337 client/campaign/cp_transfer.c:377
 #: client/campaign/cp_transfer.c:406
-#, fuzzy, c-format
+#, c-format
 msgid "%s (%i for transfer)"
-msgstr "%s (%i til overførsel)\n"
+msgstr "%s (%i til overførsel)"
 
 #: client/campaign/cp_transfer.c:357 client/campaign/cp_transfer.c:535
-#, fuzzy, c-format
+#, c-format
 msgid "Soldier %s %s"
-msgstr "Soldat %s %s\n"
+msgstr "Soldat %s %s"
 
 #: client/campaign/cp_transfer.c:359 client/campaign/cp_transfer.c:537
-#, fuzzy, c-format
+#, c-format
 msgid "Pilot %s"
-msgstr "Plads %i:\t%s\n"
+msgstr "Pilot %s"
 
 #: client/campaign/cp_transfer.c:392
-#, fuzzy, c-format
+#, c-format
 msgid "Corpse of %s (%i for transfer)"
-msgstr "Lig af %s (%i til overførsel)\n"
+msgstr "Lig af %s (%i til overførsel)"
 
 #: client/campaign/cp_transfer.c:424 client/campaign/cp_transfer.c:601
-#, fuzzy, c-format
+#, c-format
 msgid "Aircraft %s"
-msgstr "Luftfartøj %s\n"
+msgstr "Luftfartøj %s"
 
 #: client/campaign/cp_transfer.c:509 client/campaign/cp_transfer.c:548
-#, fuzzy, c-format
+#, c-format
 msgid "%s (%i for transfer, %i left)"
-msgstr "%s (%i til overførsel, %i tilbage)\n"
+msgstr "%s (%i til overførsel, %i tilbage)"
 
 #: client/campaign/cp_transfer.c:511 client/campaign/cp_transfer.c:550
-#, fuzzy, c-format
+#, c-format
 msgid "%s (%i available)"
-msgstr "%s (%i tilgængelig)\n"
+msgstr "%s (%i tilgængelig)"
 
 #: client/campaign/cp_transfer.c:516
-#, fuzzy
 msgid "Storage is empty."
-msgstr "Lager er tomt.\n"
+msgstr "Lager er tomt."
 
 #: client/campaign/cp_transfer.c:518
 msgid "Transfer is not possible - the base doesn't have a Storage."
@@ -12062,47 +11753,44 @@ msgid "Transfer is not possible - the base does not have power supplies."
 msgstr "Overførsel er ikke mulig - basen har ikke nogen energiforsyning."
 
 #: client/campaign/cp_transfer.c:557
-#, fuzzy
 msgid "Living Quarters empty."
-msgstr "Beboelseskvarter tomt.\n"
+msgstr "Beboelseskvarter tomt."
 
 #: client/campaign/cp_transfer.c:559
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "Overførsel er ikke tilgængelig - basen har ikke nogen beboelseskvarterer."
 
 #: client/campaign/cp_transfer.c:566
-#, fuzzy, c-format
+#, c-format
 msgid "Corpse of %s (%i for transfer, %i left)"
-msgstr "Lig af %s (%i til overførsel, %i tilbage)\n"
+msgstr "Lig af %s (%i til overførsel, %i tilbage)"
 
 #: client/campaign/cp_transfer.c:570
-#, fuzzy, c-format
+#, c-format
 msgid "Corpse of %s (%i available)"
-msgstr "Lig af %s (%i tilgængelig)\n"
+msgstr "Lig af %s (%i tilgængelig)"
 
 #: client/campaign/cp_transfer.c:577
-#, fuzzy, c-format
+#, c-format
 msgid "Alive %s (%i for transfer, %i left)"
-msgstr "Levende %s (%i til overførsel, %i tilbage)\n"
+msgstr "Levende %s (%i til overførsel, %i tilbage)"
 
 #: client/campaign/cp_transfer.c:581
-#, fuzzy, c-format
+#, c-format
 msgid "Alive %s (%i available)"
-msgstr "Levende %s (%i tilgængelig)\n"
+msgstr "Levende %s (%i tilgængelig)"
 
 #: client/campaign/cp_transfer.c:588
-#, fuzzy
 msgid "Alien Containment is empty."
-msgstr "Rumvæsenopbevaringsrum er tomt.\n"
+msgstr "Rumvæsenopbevaringsrum er tomt."
 
 #: client/campaign/cp_transfer.c:590
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "Overførsel er ikke mulig - basen har ikke et rumvæsenopbevaringsrum."
 
 #: client/campaign/cp_transfer.c:608
-#, fuzzy
 msgid "No aircraft available for transfer."
-msgstr "Intet luftfartøj tilgængelig for overførsel.\n"
+msgstr "Intet luftfartøj tilgængelig for overførsel."
 
 #: client/campaign/cp_transfer.c:610
 msgid "Transfer is not possible - the base doesn't have a functional hangar."
@@ -12141,7 +11829,7 @@ msgid "Transport mission started, cargo is being transported to base %s"
 msgstr "Transportmission påbegyndt, last transporteres til base %s"
 
 #: client/campaign/cp_transfer.c:974
-#, fuzzy, c-format
+#, c-format
 msgid "(can host %i live alien)\n"
 msgid_plural "(can host %i live aliens)\n"
 msgstr[0] "(kan opbevare %i levende rumvæsen)\n"
@@ -12245,11 +11933,11 @@ msgstr "Vores radar har mistet sporingen af en ufo"
 
 #: client/campaign/cp_ufopedia.c:154
 msgid "Cruising speed"
-msgstr ""
+msgstr "Normal hastighed"
 
 #: client/campaign/cp_ufopedia.c:156
 msgid "Maximum speed"
-msgstr ""
+msgstr "Maksimal hastighed"
 
 #: client/campaign/cp_ufopedia.c:160
 msgid "ECM"
@@ -12276,19 +11964,16 @@ msgid "Unknown weapon skill"
 msgstr "Ukendt våbenevne"
 
 #: client/campaign/cp_ufopedia.c:182
-#, fuzzy
 msgid "Small"
-msgstr "alle"
+msgstr "Lille"
 
 #: client/campaign/cp_ufopedia.c:184
-#, fuzzy
 msgid "Large"
-msgstr "Sprog"
+msgstr "Stor"
 
 #: client/campaign/cp_ufopedia.c:186
-#, fuzzy
 msgid "Unknown aircraft size"
-msgstr "Vis luftfartøjudstyr"
+msgstr "Ukendt luftfartøjstørrelse"
 
 #: client/campaign/cp_ufopedia.c:206
 msgid "No requirements"
@@ -12365,9 +12050,9 @@ msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
 #: client/campaign/cp_ufopedia.c:389
-#, fuzzy, c-format
+#, c-format
 msgid "Aircraft size:\t%s\n"
-msgstr "Luftfartøj %s\n"
+msgstr "Luftfartøjstørrelse:\t%s\n"
 
 #: client/campaign/cp_ufopedia.c:393
 #, c-format
@@ -12470,13 +12155,13 @@ msgid "  * %s\n"
 msgstr "  * %s\n"
 
 #: client/campaign/cp_uforecovery_callbacks.c:303
-#, fuzzy, c-format
+#, c-format
 msgid "Replace %s at %s (%i stored available)\n"
-msgstr "Levende %s (%i tilgængelig)\n"
+msgstr "Erstat %s på %s (%i tilgængelig)\n"
 
 #: client/campaign/cp_uforecovery_callbacks.c:310
 msgid "No ufo hangar or ufo yard available."
-msgstr ""
+msgstr "Ingen ufohangar eller ufoopbevaring tilgængelig."
 
 #: client/campaign/cp_uforecovery_callbacks.c:365
 #, c-format
@@ -12489,19 +12174,19 @@ msgid "UFO Recovery"
 msgstr "Ufo indsamling"
 
 #: client/campaign/cp_uforecovery_callbacks.c:423
-#, fuzzy, c-format
+#, c-format
 msgid "previously recovered %s from base %s"
-msgstr "Flyudstyr blev med succes installeret."
+msgstr "tidligere opsamlet %s fra base %s"
 
 #: client/campaign/cp_uforecovery_callbacks.c:424
 #, c-format
 msgid "Storage process for captured %s ongoing."
-msgstr ""
+msgstr "Lagerproces for fanget %s i gang."
 
 #: client/campaign/cp_uforecovery_callbacks.c:508
-#, fuzzy, c-format
+#, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
-msgstr "Fandt %s på slagmarken. Ufo solgt til nation %s, opnåede %i kr."
+msgstr "Solget tidligere opsamlede %s fra %s til land %s, tjente %i kr."
 
 #: client/campaign/cp_uforecovery_callbacks.c:511
 #, c-format
@@ -12509,14 +12194,14 @@ msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credi
 msgstr "Fandt %s på slagmarken. Ufo solgt til nation %s, opnåede %i kr."
 
 #: client/campaign/missions/cp_mission_baseattack.c:126
-#, fuzzy, c-format
+#, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
-msgstr "Din base: %s er blevet plyndret! Alle ansatte er myrdet og alt udstyr er ødelagt."
+msgstr "Din base: %s er blevet ødelagt! Alle ansatte er myrdet og alt udstyr er ødelagt."
 
 #: client/campaign/missions/cp_mission_baseattack.c:211
-#, fuzzy, c-format
+#, c-format
 msgid "Base '%s' is under attack! What to do ?"
-msgstr "Base er under angreb - hvad nu?"
+msgstr "Base »%s« er under angreb - hvad nu?"
 
 #: client/cl_actor.c:107
 msgid "Poor"
@@ -12560,21 +12245,18 @@ msgid "This isn't your round\n"
 msgstr "Det er ikke din runde\n"
 
 #: client/cl_actor.c:1264
-#, fuzzy
 msgid "You cannot reload this unknown item.\n"
-msgstr ""
-"Du kan ikke anvende dette ukendte udstyr.\n"
-"Du må forske i det først.\n"
+msgstr "Du kan ikke anvende dette ukendte udstyr.\n"
 
 #: client/cl_actor.c:1865
-#, fuzzy, c-format
+#, c-format
 msgid "%s was stunned\n"
-msgstr "%s %s blev bedøvet\n"
+msgstr "%s blev bedøvet\n"
 
 #: client/cl_actor.c:1867
-#, fuzzy, c-format
+#, c-format
 msgid "%s was killed\n"
-msgstr "%s %s blev dræbt\n"
+msgstr "%s blev dræbt\n"
 
 #: client/cl_actor.c:1875
 msgid "A civilian was stunned.\n"
@@ -12724,12 +12406,11 @@ msgstr "Du vandt spillet!"
 
 #: client/cl_game_multiplayer.c:203 client/cl_game_skirmish.c:126
 msgid "Congratulations"
-msgstr "Tillyke"
+msgstr "Tillykke"
 
 #: client/cl_game_multiplayer.c:205 client/cl_game_skirmish.c:128
-#, fuzzy
 msgid "You've lost the game!"
-msgstr "Du har tabt spillet"
+msgstr "Du har tabt spillet!"
 
 #: client/cl_game_multiplayer.c:206 client/cl_game_skirmish.c:129
 msgid "Better luck next time"
@@ -12745,11 +12426,11 @@ msgstr "alle"
 
 #: client/cl_hud.c:100 client/cl_hud.c:103
 msgid "Crouch walk"
-msgstr ""
+msgstr "Gå nedknælet"
 
 #: client/cl_hud.c:102
 msgid "Walk"
-msgstr ""
+msgstr "Gå"
 
 #: client/cl_hud.c:274
 #, c-format
@@ -12766,18 +12447,18 @@ msgid "TU: %i"
 msgstr "TE: %i"
 
 #: client/cl_hud.c:283
-#, fuzzy, c-format
+#, c-format
 msgid "Shots: %i"
-msgstr "Skud:%i"
+msgstr "Skud: %i"
 
 #: client/cl_hud.c:370
 msgid "[0 TU] No reservation"
 msgstr "[0 TE] Ingen reservation"
 
 #: client/cl_hud.c:389
-#, fuzzy, c-format
+#, c-format
 msgid "[%i TU] %s"
-msgstr "[%i TE] %s - %s"
+msgstr "[%i TE] %s"
 
 #: client/cl_hud.c:424
 msgid "Reserve TUs for firing/using."
@@ -12832,9 +12513,8 @@ msgstr ""
 "Ikke nok TE'er.\n"
 
 #: client/cl_hud.c:1000
-#, fuzzy
 msgid "Not enough TUs for standing up."
-msgstr "Ikke nok lagerkapacitet"
+msgstr "Ikke nok TE'er til at stå op."
 
 #: client/cl_hud.c:1003
 #, c-format
@@ -12842,9 +12522,8 @@ msgid "Stand up (%i TU)"
 msgstr "Stå op (%i TE)"
 
 #: client/cl_hud.c:1009
-#, fuzzy
 msgid "Not enough TUs for crouching."
-msgstr "Skift indstilling for knæling."
+msgstr "Ikke nok TE'er for knæling."
 
 #: client/cl_hud.c:1012
 #, c-format
@@ -12852,44 +12531,45 @@ msgid "Crouch (%i TU)"
 msgstr "Knæl (%i TE)"
 
 #: client/cl_hud.c:1020
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
-msgstr "Reserver TE for knæl/stå op."
+msgstr ""
+"%i TE'er reserveret for knæl/stå op.\n"
+"Klik for at rydde."
 
 #: client/cl_hud.c:1024
-#, fuzzy, c-format
+#, c-format
 msgid "Reserve %i TUs for crouching/standing up."
-msgstr "Reserver TE for knæl/stå op."
+msgstr "Reserver %i TE'er for knæl/stå op."
 
 #: client/cl_hud.c:1027
-#, fuzzy
 msgid "Not enough TUs left to reserve for crouching/standing up."
-msgstr "Reserver TE for knæl/stå op."
+msgstr "Ikke nok TE'er til at kunne reservere for knæl/stå op."
 
 #: client/cl_hud.c:1033
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
 "Click to change.\n"
 "Right-Click to clear."
-msgstr "Reserver TE for knæl/stå op."
+msgstr ""
+"%i TE'er reserveret til skydning.\n"
+"Klik for at ændre.\n"
+"Højreklik for at rydde."
 
 #: client/cl_hud.c:1037
-#, fuzzy
 msgid "Reserve TUs for shooting."
-msgstr "Reserver TE til skydning/brug."
+msgstr "Reserver TE'er til skydning."
 
 #: client/cl_hud.c:1040
-#, fuzzy
 msgid "Reserving TUs for shooting not possible."
-msgstr "Reserver TE til skydning/brug."
+msgstr "Det er ikke muligt at reservere TE'er til skydning."
 
 #: client/cl_hud.c:1066
-#, fuzzy
 msgid "No reload possible for right hand, already fully loaded."
-msgstr "Kan ikke genlade i højre hånd."
+msgstr "Kan ikke genlade i højre hånd, allerede ladt."
 
 #: client/cl_hud.c:1068
 msgid "No reload possible for right hand."
@@ -12901,9 +12581,8 @@ msgid "Reload weapon (%i TU)."
 msgstr "Lad våben (%i TE)."
 
 #: client/cl_hud.c:1082
-#, fuzzy
 msgid "No reload possible for left hand, already fully loaded."
-msgstr "Kan ikke genlade i venstre hånd."
+msgstr "Kan ikke genlade i venstre hånd, allerede ladt."
 
 #: client/cl_hud.c:1084
 msgid "No reload possible for left hand."
@@ -12933,31 +12612,30 @@ msgid "Morale  %i"
 msgstr "Moral  %i"
 
 #: client/cl_hud.c:1305
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
 "%s %i (%i|%i TU left)\n"
 msgstr ""
-"Moral  %i | Reserverede TE: %i\n"
-"Flyt %i (%i|%i TE tilb.)\n"
+"Moral  %i | Reserverede TE'er: %i\n"
+"%s %i (%i|%i TE tilb.)\n"
 
 #: client/cl_hud.c:1309
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i\n"
 "%s %i (%i TU left)\n"
 msgstr ""
 "Moral  %i\n"
-"Flyt %i (%i TE tilb.)\n"
+"%s %i (%i TE tilb.)\n"
 
 #: client/cl_hud.c:1322
-#, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
 msgstr ""
-"Du kan ikke genlade dette ukendte udstyr.\n"
-"Du må forske i det og dets ammunition først.\n"
+"Du kan ikke anvende dette ukendte udstyr.\n"
+"Du må forske i det først.\n"
 
 #: client/cl_hud.c:1337
 #, c-format
@@ -13054,9 +12732,8 @@ msgid "Turn soldier toward mouse pointer"
 msgstr "Vend soldat mod musen"
 
 #: client/cl_input.c:1444
-#, fuzzy
 msgid "Toggles the hud radar mode"
-msgstr "Skift hovedtøj"
+msgstr "Skift hudradartilstanden"
 
 #: client/cl_input.c:1447
 msgid "Toggle stand/crounch"
@@ -13067,7 +12744,6 @@ msgid "Toggle the headgear"
 msgstr "Skift hovedtøj"
 
 #: client/cl_input.c:1449
-#, fuzzy
 msgid "Toggle to next alien"
 msgstr "Skift til næste rumvæsen"
 
@@ -13076,7 +12752,6 @@ msgid "Draw a line to each alien visible to the current actor."
 msgstr "Tegn en linje til alle synlige rumvæsener for nuværende soldat."
 
 #: client/cl_input.c:1451
-#, fuzzy
 msgid "Toggle to next alien visible from selected actor."
 msgstr "Skift til næste synlig rumvæsen fra valgt soldat."
 
@@ -13109,57 +12784,16 @@ msgid "skill_heavy"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:51
-#, fuzzy
 msgid "skill_assault"
 msgstr ""
-"Tekniske specifikationer: AR-80 Angrebsriffel\n"
-"\n"
-"KLASSIFIKATIONSNIVEAU GUL\n"
-"\n"
-"FALANKS Rumvæsenudrykningsenhed\n"
-"\n"
-"Teknisk dokument, Delta tilladelse\n"
-"\n"
-"Arkiveret: 20. marts 2084\n"
-"\n"
-"Af: Kommandør Paul Navarre, F&U: Ingeniørdivisionen, FALANKS, Atlanterhavskommandoen\n"
-"\n"
-"\n"
-"\n"
-"Overblik\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
-"\n"
-"The French LeBlanc FAA-191 (Fusil Assaut Automatique) provides the most advantageous mix of range, penetration against alien armour, and magazine size in the assault rifle class. It is a bullpup design, meaning the magazine and action of the weapon are located behind the grip to reduce overall weapon length. The 191 fires a 30-round box magazine of 4.7mm caseless ammunition, tungsten-cored steel penetrators with impressive armour-piercing capability over short and medium ranges. The round does not perform well at long range, but then assault rifles aren't meant for long-range firefights.\n"
-"\n"
-"Though the design is far from new, first prototyped in 2057, no other rifle has fully surpassed the 191. It is accurate and quick to reload. Its rugged construction makes it dependable in combat and unlikely to break or jam. It is resistant to heat, cold, dust and humidity all at once. Ammunition and replacement parts are widely available due to the design's maturity and relative popularity among Earth's armed forces. This is a rifle you can entrust your life to.\n"
-"\n"
-"For PHALANX use, we have given this rifle the classification AR-80.\n"
-"\n"
-"\n"
-"Anbefalet doktrin\n"
-"\n"
-"This should be our go-to weapon for medium-range engagements. It can lay down an impressive amount of fire and is deadly out to far longer ranges than any pistol or SMG.\n"
-"\n"
-"However, no one should entertain the illusion that the assault rifle is the end-all be-all of our arsenal. A balance of weapons is required for us to be able to deal with different situations; while the assault rifle remains a good weapon at close range, it can be slow to manoeuvre in tight spaces and is eclipsed by both submachine guns and shotguns at these ranges, weapons which provide a far greater point-blank punch. Any sweep of an urban building should be led by close-range weapons, while rifle-equipped soldiers either secure the perimeter or form a second assault wave to support the others.\n"
-"\n"
-"If our rifle-equipped troops are caught beyond effective weapon range, they should make an advance from cover to cover in order to effectively bring their weapons to bear. Snipers should provide covering fire for the advancing teams or attempt to take out the enemy at range.\n"
-"\n"
-"\n"
-"Tilføjelse\n"
-"\n"
-"While the AR-80 is a fine rifle in all respects, it was not designed to fight an alien invasion force. We should develop our own purpose-built weapons as soon as it becomes feasible to do so."
 
 #: client/cl_inventory_callbacks.c:53
 msgid "skill_sniper"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:55
-#, fuzzy
 msgid "skill_explosive"
-msgstr "Sprængstof"
+msgstr ""
 
 #: client/cl_inventory_callbacks.c:146
 msgid "Type:\tProtection:\n"
@@ -13211,7 +12845,6 @@ msgid "%s ammo-less weapon with\n"
 msgstr "%s uden ammo-våben med\n"
 
 #: client/cl_inventory_callbacks.c:186
-#, fuzzy
 msgid "Weapon for base defence system\n"
 msgstr "Våben til baseforsvarssystem\n"
 
@@ -13226,17 +12859,16 @@ msgid "Action:\t%s\n"
 msgstr "Aktion:\t%s\n"
 
 #: client/cl_inventory_callbacks.c:200
-#, fuzzy
 msgid "Unknown - not useable"
-msgstr "Ukendt teknologi kan undersøges"
+msgstr "Ukendt - kan ikke bruges"
 
 #: client/cl_irc.c:1221
 msgid "Server closed connection"
-msgstr ""
+msgstr "Server lukkede forbindelse"
 
 #: client/cl_language.c:275
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: client/cl_main.c:486
 #, c-format
@@ -13249,7 +12881,7 @@ msgstr "Lokal kortversion afviger fra serveren"
 
 #: client/cl_main.c:498
 msgid "Script files are not the same"
-msgstr "Skript filer er ikke de samme"
+msgstr "Skriptfiler er ikke de samme"
 
 #: client/cl_main.c:505
 #, c-format
@@ -13282,9 +12914,9 @@ msgid "%s ended his round (team %i)\n"
 msgstr "%s afsluttede sin runde (hold %i)\n"
 
 #: client/cl_parse.c:1057
-#, fuzzy, c-format
+#, c-format
 msgid "Enemy spotted: %s!"
-msgstr "Fjende set!\n"
+msgstr "Fjende set: %s!"
 
 #: client/cl_parse.c:1060
 msgid "Enemy spotted!\n"
@@ -13337,18 +12969,16 @@ msgid "Select a soldier from list"
 msgstr "Vælg en soldat fra listen"
 
 #: client/cl_team.c:745
-#, fuzzy
 msgid "Reselect the current soldier"
-msgstr "Den valgte soldat"
+msgstr "Genvælg den aktuelle soldat"
 
 #: client/cl_team.c:746
-#, fuzzy
 msgid "Update a soldier"
-msgstr "Omdøb din soldat"
+msgstr "Opdater en soldat"
 
 #: client/cl_team.c:747
 msgid "Update the GUI with the selected item"
-msgstr ""
+msgstr "Opdater grænsefladen med det valgte udstyr"
 
 #: client/cl_team.c:748
 msgid "Toggle to next soldier"
@@ -13365,11 +12995,11 @@ msgstr "henter modeller..."
 
 #: client/menu/m_main.c:46
 msgid "This change requires a restart"
-msgstr ""
+msgstr "Denne ændring kræver en genstart"
 
 #: client/menu/m_main.c:48
 msgid "This change might require a restart"
-msgstr ""
+msgstr "Denne ændring vil måske kræve en genstart"
 
 #: client/menu/m_menus.c:718
 msgid "Hide the HUD (press ESC to reactivate HUD)"
@@ -13389,7 +13019,7 @@ msgstr[1] "%i dage tilbage"
 
 #: client/menu/node/m_node_base.c:272
 msgid "not operational, depends on"
-msgstr ""
+msgstr "ikke funktionsdygtig, afhænger af"
 
 #: client/menu/node/m_node_container.c:409
 #: client/menu/node/m_node_container.c:414
@@ -13413,12 +13043,11 @@ msgstr "Ind: %i Ud: %i"
 
 #: client/menu/node/m_node_window.c:270
 msgid "Drag to move window"
-msgstr ""
+msgstr "Træk for at flytte vindue"
 
 #: client/menu/node/m_node_window.c:286
-#, fuzzy
 msgid "Close the window"
-msgstr "Luk denne besked"
+msgstr "Luk vinduet"
 
 #: client/multiplayer/mp_callbacks.c:49
 msgid "Assemble a team first"
@@ -13649,56 +13278,49 @@ msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
 msgstr ""
+"Soldat er omtåget!\n"
+"Fjende anvendte blitzgranat!\n"
 
 #: game/g_combat.c:599
-#, fuzzy
 msgid "Can't perform action - impossible throw!\n"
-msgstr "Kan ikke udføre aktion - ikke en spiller!\n"
+msgstr "Kan ikke udføre aktion - ikke et muligt kast!\n"
 
 #: game/g_combat.c:1133
-#, fuzzy
 msgid "Can't perform action - object not activateable!\n"
-msgstr "Kan ikke udføre aktion - genstand er ikke til stede!\n"
+msgstr "Kan ikke udføre aktion - genstand kan ikke aktiveres!\n"
 
 #: game/g_combat.c:1151
-#, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
-msgstr ""
-"Dette våben kan ikke affyres\n"
-"med en hånd\n"
+msgstr "Kan ikke udføre aktion - våben kan ikke affyres med en hånd!\n"
 
 #: game/g_combat.c:1158
-#, fuzzy
 msgid "Can't perform action - no ammo!\n"
-msgstr "Kan ikke udføre aktion - ikke en spiller!\n"
+msgstr "Kan ikke udføre aktion - ingen ammo!\n"
 
 #: game/g_combat.c:1166
-#, fuzzy
 msgid "Can't perform action - target out of range!\n"
-msgstr "Kan ikke udføre aktion - ikke en spiller!\n"
+msgstr "Kan ikke udføre aktion - mål uden for rækkevidde!\n"
 
 #: game/g_combat.c:1212
-#, fuzzy
 msgid "Can't perform action - not enough ammo!\n"
-msgstr "Kan ikke udføre aktion - ikke nok tidsenheder!\n"
+msgstr "Kan ikke udføre aktion - ikke nok ammo!\n"
 
 #: game/g_spawn.c:676
 msgid "Aliens entered target zone\n"
-msgstr ""
+msgstr "Rumvæsener kom ind i målområde\n"
 
 #: game/g_spawn.c:703
-#, fuzzy
 msgid "Item was placed\n"
-msgstr "%i udstyr blev solgt."
+msgstr "Udstyr blev placeret\n"
 
 #: game/g_spawn.c:709
 msgid "Target zone is occupied\n"
-msgstr ""
+msgstr "Målområde er besat\n"
 
 #: game/g_spawn.c:833
 #, c-format
 msgid "Mission won for team %i\n"
-msgstr ""
+msgstr "Mission vundet af hold %i\n"
 
 #: po/OTHER_STRINGS:2
 msgid "human"
@@ -13713,996 +13335,15 @@ msgid "Take a screenshot"
 msgstr "Tag et skærmbillede"
 
 #: po/OTHER_STRINGS:7
-#, fuzzy
 msgid "All"
-msgstr "alle"
+msgstr "Alle"
 
 #: po/OTHER_STRINGS:8
-#, fuzzy
 msgid "Free"
-msgstr "Græsk"
+msgstr "Ledig"
 
 #: po/OTHER_STRINGS:9
 msgid "Playing"
-msgstr ""
+msgstr "Spiller"
 
-#~ msgid "Your are changing this defence system"
-#~ msgstr "Du ændrer dette forsvarssystem"
 
-#~ msgid "Available defence:"
-#~ msgstr "Tilgængelig forsvar:"
-
-#~ msgid "Selected defence:"
-#~ msgstr "Valgt forsvar:"
-
-#~ msgid "Choose missile battery"
-#~ msgstr "Vælg missilbatteri"
-
-#~ msgid "Laser"
-#~ msgstr "Laser"
-
-#~ msgid "Choose laser battery"
-#~ msgstr "Vælg laserbatteri"
-
-#~ msgid "Install selected defence system"
-#~ msgstr "Installer valgt forsvarssystem"
-
-#~ msgid "Remove this defence system"
-#~ msgstr "Fjern dette forsvarssystem"
-
-#~ msgid "Choose defence system to build"
-#~ msgstr "Vælg hvilket forsvarssystem der skal bygges"
-
-#~ msgid "Change ammo in the defence system"
-#~ msgstr "Ændr ammo i forsvarssystemet"
-
-# # in game
-#~ msgid "Current defence system"
-#~ msgstr "Nuværende forsvarssystem"
-
-#~ msgid "Ammo to use with installed system"
-#~ msgstr "Ammo til brug for det installerede system"
-
-#, fuzzy
-#~ msgid "No defence system assigned.\n"
-#~ msgstr "Intet forsvarssystem tildelt.\n"
-
-#, fuzzy
-#~ msgid "This defence system is functional.\n"
-#~ msgstr "Dette forsvarssystem er funktionsdygtigt.\n"
-
-#, fuzzy
-#~ msgid "This defence system will be installed in %i hours.\n"
-#~ msgstr "Dette forsvarssystem vil blive installeret om %i timer.\n"
-
-#, fuzzy
-#~ msgid "This defence system will be removed in %i hours.\n"
-#~ msgstr "Dette forsvarssystem vil blive fjernet om %i timer.\n"
-
-#, fuzzy
-#~ msgid "No ammo assigned to this defence system."
-#~ msgstr "Intet ammo er tildelt dette forsvarssystem."
-
-#, fuzzy
-#~ msgid " (unlimited missiles)"
-#~ msgstr " (%i missil tilbage)"
-
-#~ msgid "Sound is not activated"
-#~ msgstr "Lyd er ikke aktiveret"
-
-#, fuzzy
-#~ msgid "Installation #%i"
-#~ msgstr "Nation"
-
-#~ msgid "Slow down time"
-#~ msgstr "Nedsæt hastigheden"
-
-#~ msgid "Speed up time"
-#~ msgstr "Øg hastigheden"
-
-#, fuzzy
-#~ msgid "%s\n"
-#~ msgstr ""
-#~ "%s\n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid "Could not set up your installation at this location"
-#~ msgstr "Kunne ikke bygge en base på dette sted"
-
-#~ msgid "Could not set up your base at this location"
-#~ msgstr "Kunne ikke bygge en base på dette sted"
-
-# #ufopedia
-#~ msgid "Go to '%s' UFOpaedia entry"
-#~ msgstr "Gå til »%s« Ufopædi artikel"
-
-#~ msgid "10 sec"
-#~ msgstr "10 sec"
-
-#~ msgid "1 min"
-#~ msgstr "1 min"
-
-#~ msgid "10 mins"
-#~ msgstr "10 min"
-
-#~ msgid "Nobody selected\n"
-#~ msgstr "Ingen er valgt\n"
-
-#~ msgid "AI autojoin:"
-#~ msgstr "Automatisk computere:"
-
-#~ msgid "AI autojoin on free teams"
-#~ msgstr "Computere automatisk på ledige hold"
-
-#~ msgid "Assault"
-#~ msgstr "Angreb"
-
-#~ msgid "Sniper"
-#~ msgstr "Snigskytte"
-
-#, fuzzy
-#~ msgid "Store ufo"
-#~ msgstr "Gem ufo"
-
-#, fuzzy
-#~ msgid "Sell ufo"
-#~ msgstr "Sælg faktor:"
-
-#~ msgid "Previous alien containment"
-#~ msgstr "Tidligere opbevaringsrum til rumvæsener"
-
-#~ msgid "Next alien containment"
-#~ msgstr "Næste rumvæsenopbevaringsrum"
-
-#, fuzzy
-#~ msgid "Amounts"
-#~ msgstr "Beskyttelse"
-
-# # in game
-#~ msgid "Current base:"
-#~ msgstr "Nuværende base:"
-
-#~ msgid "Create base"
-#~ msgstr "Opret base"
-
-#~ msgid "Max. bases reached"
-#~ msgstr "Maks. baser nået"
-
-#, fuzzy
-#~ msgid "Max. installations reached"
-#~ msgstr "Maks. baser nået"
-
-#~ msgid "Equip"
-#~ msgstr "Udstyr"
-
-#~ msgid "No UFO hangars or no power supply"
-#~ msgstr "Ingen ufo-hangarer eller ingen strøm"
-
-#~ msgid "No nation with accepted level of alien infiltration"
-#~ msgstr "Ingen nation med accepteret niveau af rumvæseninfiltrering"
-
-#~ msgid "UFO recovery process finished"
-#~ msgstr "Ufo-indsamling afsluttet"
-
-#~ msgid "Store the UFO in base"
-#~ msgstr "Gem ufoen på basen"
-
-#~ msgid "Sell the UFO to desired nation"
-#~ msgstr "Sælg ufoen til valgt nation"
-
-#~ msgid "Destroy UFO"
-#~ msgstr "Ødelæg ufo"
-
-#~ msgid "Destroy recovered UFO"
-#~ msgstr "Ødelæg erobret ufo"
-
-#~ msgid "Select base for UFO recovery"
-#~ msgstr "Vælg base til ufo-indsamling"
-
-#~ msgid "Select nation for UFO recovery"
-#~ msgstr "Vælg nation til ufo-indsamling"
-
-#~ msgid "Couldn't open file"
-#~ msgstr "Kunne ikke åben fil"
-
-#~ msgid "The file is a more recent version than is supported"
-#~ msgstr "Filen er en nyere version der ikke understøttes"
-
-#~ msgid ""
-#~ "Error in loading a subsystem.\n"
-#~ "\n"
-#~ "See game console for more information."
-#~ msgstr ""
-#~ "Fejl under hentning af et undersystem.\n"
-#~ "\n"
-#~ "Se spilkonsolen for yderligere information"
-
-#~ msgid ""
-#~ "Error in loading a subsystem. Sentinel doesn't match.\n"
-#~ "\n"
-#~ "This might be due to an old savegame or a bug in the game.\n"
-#~ "\n"
-#~ "See game console for more information."
-#~ msgstr ""
-#~ "Fejl under hentning af et undersystem. Vagt stemmer ikke.\n"
-#~ "\n"
-#~ "Dette kan skyldes et gammelt gemt spil eller en fejl i spillet.\n"
-#~ "\n"
-#~ "Se spilkonsolen for yderligere information"
-
-#~ msgid "Size mismatch - failed to save the campaign"
-#~ msgstr "Størrelse misforhold - mislykkedes i at gemme kampagnen"
-
-#, fuzzy
-#~ msgid "Error saving xml game."
-#~ msgstr "Fejl under gem spil."
-
-#~ msgid "Secured %s was destroyed."
-#~ msgstr "Sikret %s blev ødelagt."
-
-#, fuzzy
-#~ msgid "Base '%s' is under attack - you can enter this base to change soldiers equipment. What to do ?"
-#~ msgstr "Base er under angreb, du kan ikke tilgå denne bygning !"
-
-#, fuzzy
-#~ msgid "Base '%s' is under attack - you can enter this base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"
-#~ msgstr "Base er under angreb, du kan ikke tilgå denne bygning !"
-
-#~ msgid "Alien spotted: %s!"
-#~ msgstr "Rumvæsen set: %s!"
-
-#~ msgid "Alien spotted!\n"
-#~ msgstr "Rumvæsen set!\n"
-
-#~ msgid "CREDIT"
-#~ msgstr "FINANSER"
-
-#~ msgid "Serverbrowser"
-#~ msgstr "Servernetlæser"
-
-#, fuzzy
-#~ msgid "Production queue/producible items"
-#~ msgstr "Produktionskø tom"
-
-#~ msgid "Q"
-#~ msgstr "K"
-
-#~ msgid "Num"
-#~ msgstr "Ant"
-
-#~ msgid "New game"
-#~ msgstr "Nyt spil"
-
-#~ msgid "No game to save"
-#~ msgstr "Intet spil at gemme"
-
-#~ msgid "Reload"
-#~ msgstr "Hent igen"
-
-#~ msgid "Baseinfo"
-#~ msgstr "Baseinfo"
-
-#~ msgid "Cargo onboard"
-#~ msgstr "Last ombord"
-
-#, fuzzy
-#~ msgid "Primary weapons"
-#~ msgstr "Primær"
-
-#, fuzzy
-#~ msgid "Secondary weapons"
-#~ msgstr "Vis sekundære våben på lager"
-
-#, fuzzy
-#~ msgid "Heavy weapons"
-#~ msgstr "Tunge våben:"
-
-#, fuzzy
-#~ msgid "Personal Armour"
-#~ msgstr "Styrkevest"
-
-#, fuzzy
-#~ msgid "Aircraft equipment"
-#~ msgstr "Tilgængelig udstyr:"
-
-#~ msgid "An alien was stunned: %s\n"
-#~ msgstr "Et rumvæsen blev bedøvet: %s\n"
-
-#~ msgid "An alien was killed: %s\n"
-#~ msgstr "Et rumvæsen blev dræbt: %s\n"
-
-#~ msgid "Toggle first-person/third-person camera mode"
-#~ msgstr "Skift mellem person/tredjemand kamera"
-
-#~ msgid "Base #3"
-#~ msgstr "Base #3"
-
-#~ msgid "Base #4"
-#~ msgstr "Base #4"
-
-#~ msgid "Base #5"
-#~ msgstr "Base #5"
-
-#~ msgid "Base #6"
-#~ msgstr "Base #6"
-
-#~ msgid "Base #7"
-#~ msgstr "Base #7"
-
-#~ msgid "Base #8"
-#~ msgstr "Base #8"
-
-#, fuzzy
-#~ msgid "Buy/Sell Aircraft..."
-#~ msgstr "Køb/sælg luftfartøj"
-
-#~ msgid "Buy or sell aircraft"
-#~ msgstr "Køb eller sælg luftfartøj"
-
-#, fuzzy
-#~ msgid "Produce..."
-#~ msgstr "Byg"
-
-#~ msgid "Produce aircraft or aircraft components"
-#~ msgstr "Byg luftfartøj eller luftfartøjdel"
-
-#, fuzzy
-#~ msgid "Enter base"
-#~ msgstr "Indgang"
-
-#~ msgid "Variable:"
-#~ msgstr "Variabel:"
-
-#~ msgid "Value:"
-#~ msgstr "Værdi:"
-
-# # in game
-#~ msgid "Current Team"
-#~ msgstr "Nuværende hold"
-
-#~ msgid "Edit your team after loading"
-#~ msgstr "Ændr dit hold efter hentning"
-
-#~ msgid "Edit"
-#~ msgstr "Ændr"
-
-#~ msgid "Generate a team automatically"
-#~ msgstr "Opret automatisk et hold"
-
-#~ msgid "Auto"
-#~ msgstr "Auto"
-
-#, fuzzy
-#~ msgid "No pilot assigned."
-#~ msgstr "Intet udstyr tildelt."
-
-#~ msgid "Race:"
-#~ msgstr "Race:"
-
-#~ msgid "Use current skin with every soldier aboard"
-#~ msgstr "Anvend nuværende skin på alle soldater ombord"
-
-#~ msgid "Assign Soldiers"
-#~ msgstr "Tildel soldater"
-
-#~ msgid "Equip aircraft components"
-#~ msgstr "Udstyr luftfartøj med bestanddele"
-
-#~ msgid "Switch to the previous aircraft"
-#~ msgstr "Skift til tidligere luftfartøj"
-
-#~ msgid "Switch to the next aircraft"
-#~ msgstr "Skift til næste luftfartøj"
-
-#~ msgid "Assign your squad"
-#~ msgstr "Fastsæt din gruppe"
-
-#~ msgid "Aircraft absent from base"
-#~ msgstr "Luftfartøj væk fra base"
-
-#~ msgid "Previous aircraft"
-#~ msgstr "Tidligere luftfartøj"
-
-# # in game
-#~ msgid "Currently being healed"
-#~ msgstr "Under sygepleje"
-
-#, fuzzy
-#~ msgid "Show available primary weapons"
-#~ msgstr "Vis primære våben"
-
-#, fuzzy
-#~ msgid "Show available secondary weapons"
-#~ msgstr "Vis kun sekundære våben"
-
-#, fuzzy
-#~ msgid "Show available heavy weapons"
-#~ msgstr "Vis primære våben"
-
-#, fuzzy
-#~ msgid "Show available miscellaneous equipment and weapons"
-#~ msgstr "Vis diverse udstyr på lager"
-
-#, fuzzy
-#~ msgid "Show available armour"
-#~ msgstr "Vis beskyttelse"
-
-#~ msgid "No team assigned"
-#~ msgstr "Intet hold tildelt"
-
-#~ msgid "Please choose and equip your team first"
-#~ msgstr "Vælg venligst først dit hold og holdets udstyr"
-
-#~ msgid "Action"
-#~ msgstr "Aktion"
-
-#~ msgid "You don't have any aircraft in the base - what do you want to do?"
-#~ msgstr "Du har ingen luftfartøjer på basen - hvad vil du gøre?"
-
-#~ msgid "Buy aircraft"
-#~ msgstr "Køb luftfartøj"
-
-#~ msgid "Buy"
-#~ msgstr "Køb"
-
-#~ msgid "Produce aircraft"
-#~ msgstr "Producer luftfartøj"
-
-#~ msgid "Assemble or load a team"
-#~ msgstr "Saml eller hent et hold"
-
-#, fuzzy
-#~ msgid "New team created"
-#~ msgstr "Intet hold tildelt"
-
-#~ msgid ""
-#~ "Aliens captured\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Rumvæsener fanget\t%i\n"
-#~ "\n"
-
-#~ msgid "Enemies killed\t%i\n"
-#~ msgstr "Fjender dræbt\t%i\n"
-
-#~ msgid ""
-#~ "Enemies captured\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Fjender fanget\t%i\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Enemy survivors\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Overlevende fjender\t%i\n"
-#~ "\n"
-
-#~ msgid "Team losses\t%i\n"
-#~ msgstr "Holdtab\t%i\n"
-
-#~ msgid "Team missing in action\t%i\n"
-#~ msgstr "Hold tabt i aktion\t%i\n"
-
-#~ msgid "Friendly fire losses\t%i\n"
-#~ msgstr "Tab til venlig ild\t%i\n"
-
-#~ msgid ""
-#~ "Team survivors\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Hold overlevere\t%i\n"
-#~ "\n"
-
-#~ msgid "Civilians killed by the Aliens\t%i\n"
-#~ msgstr "Civile dræbt af rumvæsener\t%i\n"
-
-#~ msgid "Civilians killed by the Enemies\t%i\n"
-#~ msgstr "Civile dræbt af fjender\t%i\n"
-
-#~ msgid "Civilians killed by your Team\t%i\n"
-#~ msgstr "Civile dræbt af dit hold\t%i\n"
-
-#~ msgid ""
-#~ "Civilians saved\t%i\n"
-#~ "\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Civile reddet\t%i\n"
-#~ "\n"
-#~ "\n"
-
-#, fuzzy
-#~ msgid "Crashed UFO - Scout"
-#~ msgstr "Ufo - rekognoscering"
-
-#, fuzzy
-#~ msgid "Oriental UFO"
-#~ msgstr "Orientalsk stor"
-
-#~ msgid "Aircraft away"
-#~ msgstr "Luftfartøj ude"
-
-#~ msgid "Start your aircraft"
-#~ msgstr "Afsend dit luftfartøj"
-
-#~ msgid "Call back aircraft"
-#~ msgstr "Tilbagekald luftfartøj"
-
-#, fuzzy
-#~ msgid "Stop time"
-#~ msgstr "Øg hastigheden"
-
-#~ msgid "Item to install after removal"
-#~ msgstr "Udstyr til installering efter fjernelse"
-
-#, fuzzy
-#~ msgid "Remove ammo from this defence system"
-#~ msgstr "Fjern ammo fra dette forsvarssystem"
-
-#, fuzzy
-#~ msgid "Choose defence system to build after removing current one"
-#~ msgstr "Vælg forsvarssystem der skal bygges efter fjernelse af nuværende"
-
-#~ msgid "System to install after removal"
-#~ msgstr "System til brug efter fjernelse"
-
-#~ msgid "Hire soldiers"
-#~ msgstr "Ansæt soldater"
-
-#~ msgid "Hire scientists"
-#~ msgstr "Ansæt videnskabsmænd"
-
-#~ msgid "Hire workers"
-#~ msgstr "Ansæt arbejdere"
-
-#, fuzzy
-#~ msgid "Hire pilots"
-#~ msgstr "Ansæt personale"
-
-#, fuzzy
-#~ msgid "No defence system assigned."
-#~ msgstr "Intet forsvarssystem er valgt."
-
-#, fuzzy
-#~ msgid ""
-#~ "%s\n"
-#~ "This defence system will be operational in %i hours.\n"
-#~ msgstr "Dette forsvarssystem vil være operationelt om %i timer.\n"
-
-#~ msgid "No item assigned."
-#~ msgstr "Intet udstyr tildelt."
-
-#~ msgid "This item will be operational in %i hours.\n"
-#~ msgstr "Dette udstyr vil være operationelt om %i timer.\n"
-
-#~ msgid "Now after you have finished the single-player campaigns"
-#~ msgstr "Nu da du har afsluttet enkeltspiller kampagnerne"
-
-#~ msgid "you should try the multiplayer features"
-#~ msgstr "kan du prøve flerspiller-mulighederne"
-
-#~ msgid "Visit http://ufoai.sf.net"
-#~ msgstr "Besøg http://ufoai.sf.net"
-
-#~ msgid "and join irc.freenode.org #ufo:ai"
-#~ msgstr "og tilsut dig irc.freenode.org #ufo:ai"
-
-#, fuzzy
-#~ msgid "Pilot %s %s\n"
-#~ msgstr "Plads %i:\t%s\n"
-
-#~ msgid "Soldier %s %s\n"
-#~ msgstr "Soldat %s %s\n"
-
-#~ msgid "Aircraft %s\n"
-#~ msgstr "Luftfartøj %s\n"
-
-#, fuzzy
-#~ msgid "Close down messages"
-#~ msgstr "Åben beskeder"
-
-#~ msgid "Soldier 1"
-#~ msgstr "Soldat 1"
-
-#~ msgid "Soldier 2"
-#~ msgstr "Soldat 2"
-
-#~ msgid "Soldier 3"
-#~ msgstr "Soldat 3"
-
-#~ msgid "Soldier 4"
-#~ msgstr "Soldat 4"
-
-#~ msgid "Soldier 5"
-#~ msgstr "Soldat 5"
-
-#~ msgid "Soldier 6"
-#~ msgstr "Soldat 6"
-
-#~ msgid "Soldier 7"
-#~ msgstr "Soldat 7"
-
-#~ msgid "Soldier 8"
-#~ msgstr "Soldat 8"
-
-#~ msgid "Increase production by 1"
-#~ msgstr "Øg produktion med 1"
-
-#~ msgid "Decrease production by 1"
-#~ msgstr "Nedsæt produktion med 1"
-
-#~ msgid "Increase production by 10"
-#~ msgstr "Øg produktion med 10"
-
-#~ msgid "Decrease production by 10"
-#~ msgstr "Nedsæt produktion med 10"
-
-#, fuzzy
-#~ msgid "Scroll backward"
-#~ msgstr "Rul ned"
-
-#, fuzzy
-#~ msgid "Scroll forward"
-#~ msgstr "Rul ned"
-
-#~ msgid "mx."
-#~ msgstr "m."
-
-#~ msgid "Buy item"
-#~ msgstr "Køb udstyr"
-
-#~ msgid "Sell item"
-#~ msgstr "Sælg udstyr"
-
-#~ msgid "Add scientist"
-#~ msgstr "Tilføj videnskabsmand"
-
-#~ msgid "Build at least one workshop"
-#~ msgstr "Byg mindst et værksted"
-
-#~ msgid "Build at least one functional Hangar (click for more info)"
-#~ msgstr "Byg mindst en operationsdygtig hangar (klik for yderligere info)"
-
-#~ msgid "Build at least one functional Storage (click for more info)"
-#~ msgstr "Byg mindst et funktionsdygtigt lagerrum (klik for yderligere info)"
-
-#, fuzzy
-#~ msgid "Can't transfer (click for more info)"
-#~ msgstr "Kan ikke overføre - kun en base"
-
-#~ msgid "Build at least one functional Laboratory (click for more info)"
-#~ msgstr "Byg mindst et funktionsdygtigt laboratorium (klik for yderligere info)"
-
-#~ msgid "Build at least one functional Workshop (click for more info)"
-#~ msgstr "Byg mindst et funktionsdygtigt værksted (klik for yderligere info)"
-
-#~ msgid "Build at least one functional Living Quarter (click for more info)"
-#~ msgstr "Byg mindst et funktionsdygtigt beboelseskvarter (klik for yderligere info)"
-
-#~ msgid "Build at least one functional Alien Containment (click for more info)"
-#~ msgstr "Byg mindst et funktionsdygtigt rumvæsenopbevaringsrum (klik for yderligere info)"
-
-#~ msgid "Build at least one functional Hospital (click for more info)"
-#~ msgstr "Byg mindst et funktionsdygtigt hospital (klik for yderligere info)"
-
-#~ msgid "What to do?"
-#~ msgstr "Hvad nu?"
-
-#, fuzzy
-#~ msgid "Enable all pause settings"
-#~ msgstr "Slå moral til:"
-
-#, fuzzy
-#~ msgid "Enable all notification messages"
-#~ msgstr "Joystick fart:"
-
-#, fuzzy
-#~ msgid "Disable all notification messages"
-#~ msgstr "Joystick fart:"
-
-#, fuzzy
-#~ msgid "Change all sound settings"
-#~ msgstr "Lydindstillinger"
-
-#, fuzzy
-#~ msgid "Start base defence"
-#~ msgstr "Ingen base er valgt"
-
-#, fuzzy
-#~ msgid "Automatically resolve mission"
-#~ msgstr "Afslut automatisk mission"
-
-#, fuzzy
-#~ msgid "pause disabled"
-#~ msgstr "Intet automatisk salg af udstyr"
-
-#, fuzzy
-#~ msgid "pause enabled"
-#~ msgstr "Automatisk salg af udstyr"
-
-#, fuzzy
-#~ msgid "notification disabled"
-#~ msgstr "Intet automatisk salg af udstyr"
-
-#, fuzzy
-#~ msgid "xaw95_ammo_txt"
-#~ msgstr ""
-#~ "Commander, we've finalised the design of the Deuterium-Fluoride Cartridges and they're now ready for mass production. They'll be expensive to make and use, but we've done everything we can to keep the costs down.\n"
-#~ "\n"
-#~ "The cartridge is essentially a hard plastic shell containing five separate chambers. These are four pressurised storage reservoirs for ethylene, nitrogen trifluoride, helium and deuterium, plus a small battery to power the laser's electronics.\n"
-#~ "\n"
-#~ "The shell itself is made of the toughest polymer we can produce, reinforced in vulnerable spots with carbon nanotubes, to prevent mixing in case the cartridge receives any shocks or impacts. We can't provide perfect protection against direct hits on the cartridge, but we've done our best. The chance of combat spillage happening during any engagement has been reduced to only a fraction of a percent.\n"
-#~ "\n"
-#~ "Any materials remaining in a used cartridge will be pumped back into base storage upon the dropship's return. However, once they've been used, these cartridges have to be disposed of by a chemohazard team, and we'll have to manufacture replacements. They cannot be reused due to deuterium contamination.\n"
-#~ "\n"
-#~ "--Kommandør Navarre"
-
-#~ msgid "xaw95_ammo_pre_txt"
-#~ msgstr "Ingen information om tidligere forskning tilgængelig"
-
-#~ msgid "chaingun_ammo_txt"
-#~ msgstr "<TODO>"
-
-#~ msgid "chaingun_ammo_pre_txt"
-#~ msgstr "Ingen information om tidligere forskning tilgængelig"
-
-#~ msgid "shotgun_ammo_txt"
-#~ msgstr "<TODO>"
-
-#~ msgid "Moving to mission"
-#~ msgstr "På vej mod mission"
-
-#~ msgid "Ready for drop down"
-#~ msgstr "Klar til landing"
-
-#~ msgid "Being transfered"
-#~ msgstr "Under overførsel"
-
-#~ msgid "Back to base"
-#~ msgstr "Tilbage til base"
-
-#~ msgid "You've got a new aircraft (a %s) in base %s"
-#~ msgstr "Du har et nyt luftfartøj (en/et %s) på base %s"
-
-#, fuzzy
-#~ msgid "not a working hangar"
-#~ msgstr "Tilbage til hangar"
-
-#, fuzzy
-#~ msgid "no more room in storage"
-#~ msgstr "Vis rustning på lager"
-
-#~ msgid "Assign a team to aircraft"
-#~ msgstr "Tildel et hold til luftfartøj"
-
-#~ msgid "Your aircraft doesn't have enough fuel to go there and then come back to its home base."
-#~ msgstr "Dit luftfartøj har ikke nok brændstof til destinationen og tilbage igen."
-
-#~ msgid "Show only items"
-#~ msgstr "Vis kun udstyr"
-
-#~ msgid "Show only employees"
-#~ msgstr "Vis kun ansatte"
-
-#~ msgid "Show only aliens"
-#~ msgstr "Vis kun rumvæsener"
-
-#~ msgid "Show only aircraft"
-#~ msgstr "Vis kun luftfartøj"
-
-#, fuzzy
-#~ msgid "Installation defence item was successfully installed."
-#~ msgstr "Baseforsvarsudstyr blev med succes installeret."
-
-#, fuzzy
-#~ msgid "Base defence item was successfully installed."
-#~ msgstr "Baseforsvarsudstyr blev med succes installeret."
-
-#, fuzzy
-#~ msgid "Installation defence item was successfully removed."
-#~ msgstr "Baseforsvarsudstyr blev med succes installeret."
-
-#, fuzzy
-#~ msgid "Base defence item was successfully removed."
-#~ msgstr "Baseforsvarsudstyr blev med succes installeret."
-
-#~ msgid "Show miscellaneous equipment"
-#~ msgstr "Vis blandet udstyr"
-
-#~ msgid "Show heavy equipment"
-#~ msgstr "Vis tungt udstyr"
-
-#~ msgid "Show other items and materials"
-#~ msgstr "Vis andet udstyr og materialer"
-
-#~ msgid "Sell aircraft"
-#~ msgstr "Sælg luftfartøj"
-
-#~ msgid "Buy craftitem"
-#~ msgstr "Køb luftfartøjudstyr"
-
-#~ msgid "Sell craftitem"
-#~ msgstr "Sælg luftfartøjudstyr"
-
-#~ msgid "No power supplies in this base"
-#~ msgstr "Ingen energiforsyning på denne base"
-
-#~ msgid "No storage in this base"
-#~ msgstr "Intet lager på denne base"
-
-#~ msgid "Show aircraft"
-#~ msgstr "Vis luftfartøj"
-
-#~ msgid "Show craftitems"
-#~ msgstr "Vis luftfartøjudstyr"
-
-#~ msgid "Back to hangar"
-#~ msgstr "Tilbage til hangar"
-
-#~ msgid "Disassembling items"
-#~ msgstr "Demontere udstyr"
-
-#~ msgid "Hangar capacity:"
-#~ msgstr "Hangar kapacitet:"
-
-#~ msgid "Loop"
-#~ msgstr "Gentag"
-
-#~ msgid "Show the particle only once"
-#~ msgstr "Vis partiklen kun engang"
-
-#~ msgid "Loop the particle"
-#~ msgstr "Gentag partiklen"
-
-#~ msgid "Very slow"
-#~ msgstr "Meget langsom"
-
-#~ msgid "Slow"
-#~ msgstr "Langsom"
-
-#~ msgid "Assign heavy equipment"
-#~ msgstr "Tildel tungt udstyr"
-
-#~ msgid "Show primary weapons in store"
-#~ msgstr "Vis primære våben på lager"
-
-#~ msgid "Show armour in store"
-#~ msgstr "Vis rustning på lager"
-
-#~ msgid "Headshot"
-#~ msgstr "Hovedskud"
-
-#~ msgid "Rapid Shots"
-#~ msgstr "Hurtige skud"
-
-#~ msgid "Repeat Fire"
-#~ msgstr "Repeterild"
-
-#~ msgid "No storage in this base."
-#~ msgstr "Intet lager på denne base."
-
-#~ msgid "No particle loaded"
-#~ msgstr "Ingen partikel hentet"
-
-#~ msgid "txt_alien_campaign"
-#~ msgstr "<TODO>"
-
-#~ msgid "Medic"
-#~ msgstr "Læge"
-
-#~ msgid "Hire medics"
-#~ msgstr "Ansæt læger"
-
-#~ msgid "Medics"
-#~ msgstr "Læger"
-
-#~ msgid "Capacity"
-#~ msgstr "Kapacitet"
-
-# # in game
-#~ msgid "Currently healing"
-#~ msgstr "Under sygepleje"
-
-#~ msgid "Heal this soldier"
-#~ msgstr "Giv sygepleje til denne soldat"
-
-#~ msgid "medic"
-#~ msgid_plural "medics"
-#~ msgstr[0] "læge"
-#~ msgstr[1] "læger"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "Selected base:\t\t\t"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "Valgt base:\t\t\t"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "Selected nation:\t\t\t"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "Valgt nation:\t\t\t"
-
-#~ msgid "Healing of %s completed - %i active healing left\n"
-#~ msgid_plural "Healing of %s completed - %i active healings left\n"
-#~ msgstr[0] "Sygepleje af %s færdig - %i i sygepleje tilbage\n"
-#~ msgstr[1] "Sygepleje af %s færdig - %i i sygepleje tilbage\n"
-
-#~ msgid "Healing complete"
-#~ msgstr "Sygepleje færdig"
-
-#~ msgid ""
-#~ " needs to be placed in hospital,\n"
-#~ "but there is not enough room!\n"
-#~ "\n"
-#~ "Build more hospitals.\n"
-#~ msgstr ""
-#~ " har behov for en hospitalseng,\n"
-#~ "men der er ikke nok plads!\n"
-#~ "\n"
-#~ "Byg flere hospitaler.\n"
-
-#~ msgid "Not enough hospital space"
-#~ msgstr "Ikke nok hospitalssenge"
-
-#~ msgid "eXtraterrestial Viral Infection"
-#~ msgstr "udenjordisk virusinfektion"
-
-#~ msgid "alien_xvi_txt"
-#~ msgstr ""
-#~ "God morgen, øverstbefalende\n"
-#~ "\n"
-#~ "RVI folketælling programmet er lige begyndt. Ugentlige rullende tests er startet her til morgen, og jeg har lige fået en rapport om vores forventede effektivitet og operationelle detaljer.\n"
-#~ "\n"
-#~ "Vores strategi er baseret på lokale lægelige centre, hvor RVI tests bliver udført af eksisterende sygepleje personale under opsyn af en lille politi eller militær gruppe. Hvis en test viser sig at være positiv, vil denne gruppe foretage arrestationen og overgive de inficerede personer til FN for indeslutning og studier. Når rumvæsenerne regner vores plan ud -- jeg regner ikke med at det vil tage dem længe -- vil inficerede person begynde at undgå tællingen, og derved give os de data vi har brug, simpelthen ved at blive væk.\n"
-#~ "\n"
-#~ "Som altid er der gode og dårlige nyheder. Jeg vil starte med de dårlige.\n"
-#~ "\n"
-#~ "Uanset hvor godt vi gør det, vil folketællingen have sine begrænsninger. 99,9 % af plantens befolkning er registreret hos en eller anden regering, men ud af 10 milliarder personer efterlader dette stadig adskillige millioner vi ikke kan gøre rede for. Det vil være muligt ekstrapolere tal der er nøjagtige ned til tusinder personer, men den statistik som vi laver vil aldrig være præcis. Det betyder at dette program er mindre god til at identificerer dem som er blevet inficeret, men stadig nyttig for at holde styr på spredningen af RVI og rumvæsen aktivitet på global basis. Efter alt, vi er nødt til at vide hvilke fremskridt vi gør mod denne nye trussel.\n"
-#~ "\n"
-#~ "Den gode nyhed er at FN og dens medlems nationer have indvilliget i at bære de totale omkostninger af folketællings programmet. De håndterer alt udstyr og mandskab lokalt, med grundige kontrol af personales pålidelighed og validiteten af resultaterne. Informationen bliver sendt direkte til vores kommando center, uden omkostning for os.\n"
-#~ "\n"
-#~ "Den bedste ting omkring dette program er at vi nu kan holde øje med infektions niveauet og hvor meget hver region er truet af RVI. Dette vil arbejde sammen med vores øvrige opdagelses metoder, for at advare os om hvor rumvæsen aktivitet er værst og tillade os at gribe ind før situationen bliver kritisk.\n"
-#~ "\n"
-#~ "Ethvert område hvor RVI ser ud til at sprede sig bør have ekstra luft patruljer, og vi bør være opmærksomme for ethvert forsøg fra rumvæsenerne på at styrke deres kontrol på jorden. Rumvæsen aktivitets rapporter i det område bør undersøges og reageres på med ekstrem forudindtagelse.\n"
-#~ "\n"
-#~ "Med venlig hilsen\n"
-#~ "\n"
-#~ "Oberst Falkland"
-
-#~ msgid "alien_xvi_pre_txt"
-#~ msgstr ""
-#~ "God morgen, øverstbefalende\n"
-#~ "\n"
-#~ "Med disse nye udviklinger omkring infektionen af jordens befolkning med rumvæsenernes organisme rejser behovet sig for en måde at bestemme antallet af inficerede personer i de forskellige regioner og med hvilken rate det spreder sig. Nemmere sagt end gjort. Jeg ved det, men det er næsten lige så vigtig som at finde en kur. Vi kan ikke hjælpe alle hvis vi ikke ved at de er syge.\n"
-#~ "\n"
-#~ "Hvad jeg foreslår er at lave en lang tids rullende folketælling som checker alle registrere individer på hele planeten for RVI infektion gennem en lille blodprøve. Alle som aflevere en blodprøve hver uge for at sikre at de ikke er smittede -- oftere hvis de er under mistanke for at have infektionen. Prøven behøves kun at være en enkelt dråbe taget fra en tilfældig åre for at forhindre snyd. Til al held er RVI organismen så stor og udbredt nok at vi kan kontrollerer prøven på stedet med tæt på 100% nøjagtighed.\n"
-#~ "\n"
-#~ "Dette er en kæmpe opgave der kræver omhyggeligt samarbejde med efterretnings væsenerne hos jorden 8 største nationer. Jeg har allerede lavet planer og simuleringer til at demonstrerer operationen og effektiviteten af dette program. Med tid og penge, kan vi overbevise dem om projektets vigtighed og have alting i gang indenfor nogle uger.\n"
-#~ "\n"
-#~ "Alt vi behøver er deres underskrift på den stiplede linje, øverstbefalende.\n"
-#~ "\n"
-#~ "Med venlig hilsen\n"
-#~ "\n"
-#~ "Oberst Falkland"
-
-#~ msgid "Alien Medium Armour"
-#~ msgstr "Rumvæsen mellemrustning"
-
-#~ msgid "UFO - Condor"
-#~ msgstr "Ufo - Condor"
-
-#~ msgid "steelblade"
-#~ msgstr "stålklinge"
-
-#~ msgid "monomolecularblade"
-#~ msgstr "monomolekylærklinge"
