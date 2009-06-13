@@ -28,6 +28,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "defines.h"
 #include "ufotypes.h"
 #include "parse.h"
+#include "../common/common.h"
+
+
+static char com_token[4096];
+static qboolean isUnparsedToken;
+
+/**
+ * @brief Put back the last token into the parser
+ * The next call of Com_Parse will return the token send by Com_UnParse.
+ * @note Only allow to use it one time
+ * @note With it, we can't read to file at the same time
+ */
+void Com_UnParseLastToken (void)
+{
+	if (isUnparsedToken)
+		Sys_Error("Com_UnParse: Cache is full");
+	isUnparsedToken = qtrue;
+}
 
 /**
  * @brief Parse a token out of a string
@@ -42,10 +60,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 const char *Com_Parse (const char *data_p[])
 {
-	static char com_token[4096];
 	int c;
 	size_t len;
 	const char *data;
+
+	if (isUnparsedToken) {
+		isUnparsedToken = qfalse;
+		return com_token;
+	}
 
 	data = *data_p;
 	len = 0;

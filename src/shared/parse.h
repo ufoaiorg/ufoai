@@ -33,6 +33,7 @@ extern "C" {
 #endif
 
 const char *Com_Parse(const char **data_p);
+void Com_UnParseLastToken(void);
 
 #ifdef __cplusplus
 }
