@@ -726,7 +726,6 @@ base/models/objects/aircraft/heli/heli.jpg | GNU General Public License 2.0 | Ce
 base/models/objects/aircraft/heli/heli.md2 | GNU General Public License 2.0 | Ingo Ruhnke <grumbel@gmx.de> with modifications by Werner Höhrer | 'heli_parented.blend' by Ingo Ruhnke <grumbel@gmx.de> released under the GPL and CC-by-sa
 base/models/objects/aircraft/heli/heli_military.jpg | GNU General Public License 2.0 | Cem Cimrin | heli_uvw.tga
 base/models/objects/aircraft/heli/heli_uvw.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/models/objects/aircraft/heli/license.txt | GNU General Public License 2.0
 base/models/objects/aircraft/heli2/heli2.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/aircraft/heli2/heli2.md2 | GNU General Public License 2.0 and Creative Commons attribution share-alike | Ingo Ruhnke <grumbel@gmx.de>
 base/models/objects/aircraft/heli_military/helicopter.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
