@@ -175,7 +175,7 @@ ELEMENTS COMMUNICATED ACROSS THE NET
 */
 
 /** add this flag for instant event execution */
-#define EVENT_INSTANTLY   0x80
+#define EVENT_INSTANTLY		0x80
 
 /**
  * @brief Possible event values
@@ -213,7 +213,7 @@ typedef enum {
 
 	EV_ACTOR_DIE,
 	EV_ACTOR_STATS,
-	EV_ACTOR_STATECHANGE,	/**< set an actor to crounched or reaction fire */
+	EV_ACTOR_STATECHANGE,	/**< set an actor to crouched or reaction fire */
 
 	EV_INV_ADD,
 	EV_INV_DEL,
@@ -223,7 +223,7 @@ typedef enum {
 	EV_INV_TRANSFER,
 
 	/* func_breakables */
-	EV_MODEL_EXPLODE,		/**< delay the event exceution by the impact time */
+	EV_MODEL_EXPLODE,		/**< delay the event execution by the impact time */
 	EV_MODEL_EXPLODE_TRIGGERED,	/**< don't delay the model explode event */
 
 	EV_SPAWN_PARTICLE,
@@ -309,7 +309,7 @@ typedef enum {
 
 /* State flags - transfered as short (so max 16 bits please) */
 /* public states */
-#define STATE_PUBLIC		0x00FF	/**< mask to seperate private flags from events */
+#define STATE_PUBLIC		0x00FF	/**< mask to separate private flags from events */
 #define STATE_DEAD			0x0003	/**< 0 alive, 1-3 different deaths @sa MAX_DEATH*/
 #define STATE_CROUCHED		0x0004
 #define STATE_PANIC			0x0008
