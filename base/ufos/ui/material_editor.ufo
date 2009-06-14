@@ -175,7 +175,7 @@ window material_editor {
 		*cvar:me_tmp <1>
 		*stage_attributes@invis <1>
 		call hidestageattributestabs
-		if "*cvar:me_tmp == false" {
+		if ( *cvar:me_tmp == false ) {
 			*cvar:me_stagetype <2>
 			*stage_attributes.stage_attributes_<cvar:me_stagetype>@invis false
 		}

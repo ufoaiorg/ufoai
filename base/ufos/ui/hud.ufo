@@ -865,7 +865,7 @@ window hud extends ahud
 				*node:this@texh	"32 36"
 			}
 			onClick		{
-				if "*cvar:mn_showchatbuttons != 0" {
+				if ( *cvar:mn_showchatbuttons != 0 ) {
 					*node:parent.bar_chat_bg@image hud/bar_chat
 					*node:parent.bar_chat_bg@pos "192 0"
 					*node:parent.bar_chat_bg@size "64 64"

@@ -53,7 +53,7 @@ window production
 	 * @todo show hangar capacity when aircraft is selected
 	 */
 	func prod_stores {
-		if "*cvar:mn_itemtype ne aircraft" {
+		if ( *cvar:mn_itemtype ne aircraft ) {
 			*node:parent.infopanel.txt_prod_storage_caption@invis	false
 			*node:parent.infopanel.txt_prod_storage@invis	false
 		} else {

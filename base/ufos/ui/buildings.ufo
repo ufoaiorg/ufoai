@@ -102,7 +102,7 @@ window buildings
 		size		"20 20"
 		current		1
 		onChange	{
-			if "*node:root.building_preview@current == 0" {
+			if ( *node:root.building_preview@current == 0 ) {
 				cmd "mn_close popup_buildingpreview;"
 			} else {
 				cmd "mn_push_child popup_buildingpreview buildings;"
@@ -131,7 +131,7 @@ window buildings
 	{
 		cmd "building_init;"
 		call mn_buildings_reset
-		if "*node:root.building_preview@current == 1" {
+		if ( *node:root.building_preview@current == 1 ) {
 			cmd "mn_push_child popup_buildingpreview buildings;"
 		}
 		

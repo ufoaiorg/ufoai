@@ -111,7 +111,7 @@ window team extends iaircraft
 		*check_actor<1>@invis false
 		*txt_actor<1>@invis false
 		*bt_equip<1>@invis false
-		if "*cvar:mn_hirable_count == 0" {
+		if ( *cvar:mn_hirable_count == 0 ) {
 			*(checkbox)check_actor<1>@disabled true
 		}
 	}
@@ -565,7 +565,7 @@ window team extends iaircraft
 	 */
 	confunc aircraft_status_change
 	{
-		if "*cvar:mn_hired_count > 0" {
+		if ( *cvar:mn_hired_count > 0 ) {
 			*bt_equipsoldiers@disabled false
 		} else {
 			*bt_equipsoldiers@disabled true
@@ -581,7 +581,7 @@ window team extends iaircraft
 		*scroll_employees@current 0
 		*aircraft_list@lineselected <1>
 		// absent from base, go back to the main GUI
-		if "*cvar:mn_equipsoldierstate == 1" {
+		if ( *cvar:mn_equipsoldierstate == 1 ) {
 			cmd "mn_pop;mn_push aircraft;"
 		}
 		cmd "aircraft_status_change"

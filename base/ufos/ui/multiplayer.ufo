@@ -1041,13 +1041,13 @@ window mp_create_server extends abstract_multiplayer
 		*panel_map@invis true
 		*panel_option@invis true
 		*panel_security@invis true
-		if "*cvar:mn_server_config_tab == 1" {
+		if ( *cvar:mn_server_config_tab == 1 ) {
 			*panel_map@invis false
 		}
-		elif "*cvar:mn_server_config_tab == 2" {
+		elif ( *cvar:mn_server_config_tab == 2 ) {
 			*panel_option@invis false
 		}
-		elif "*cvar:mn_server_config_tab == 3" {
+		elif ( *cvar:mn_server_config_tab == 3 ) {
 			*panel_security@invis false
 		}
 	}

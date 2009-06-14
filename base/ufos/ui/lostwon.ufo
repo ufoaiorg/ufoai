@@ -59,7 +59,7 @@ window won
 
 	confunc uforecover_check
 	{
-		if "*cvar:mission_uforecovered == 1" {
+		if ( *cvar:mission_uforecovered == 1 ) {
 			cmd "mn_push uforecovery;"
 		}
 	}
@@ -335,10 +335,10 @@ window uforecovery
 	confunc uforecovery_tabchange {
 		*store_panel@invis true
 		*sell_panel@invis true
-		if "*cvar:mn_uforecovery_tab == 0" {
+		if ( *cvar:mn_uforecovery_tab == 0 ) {
 			*store_panel@invis false
 		}
-		if "*cvar:mn_uforecovery_tab == 1" {
+		if ( *cvar:mn_uforecovery_tab == 1 ) {
 			*sell_panel@invis false
 		}
 	}

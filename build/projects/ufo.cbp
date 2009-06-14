@@ -568,10 +568,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_actions.h" />
-		<Unit filename="..\..\src\client\menu\m_condition.c">
+		<Unit filename="..\..\src\client\menu\m_expression.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\menu\m_condition.h" />
+		<Unit filename="..\..\src\client\menu\m_expression.h" />
 		<Unit filename="..\..\src\client\menu\m_data.c">
 			<Option compilerVar="CC" />
 		</Unit>

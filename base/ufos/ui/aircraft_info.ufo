@@ -86,7 +86,7 @@ window aircraft extends iaircraft
 
 	confunc aircraft_checkbuttons
 	{
-		if "*cvar:mn_aircraftinbase > 0" {
+		if ( *cvar:mn_aircraftinbase > 0 ) {
 			*aircraft_navigation@disabled	false
 
 			*aircraft_return@tooltip	"_Start Aircraft"
@@ -101,15 +101,15 @@ window aircraft extends iaircraft
 		}
 
 		// absent from base
-		if "*cvar:mn_equipsoldierstate == 1" {
+		if ( *cvar:mn_equipsoldierstate == 1 ) {
 			*aircraft_navigation@disabled	true
 		}
 		// no soldiers
-		elif "*cvar:mn_equipsoldierstate == 2" {
+		elif ( *cvar:mn_equipsoldierstate == 2 ) {
 			*aircraft_navigation@disabled	false
 		}
 		// normal
-		elif "*cvar:mn_equipsoldierstate == 3" {
+		elif ( *cvar:mn_equipsoldierstate == 3 ) {
 			*aircraft_navigation@disabled	false
 		}
 	}

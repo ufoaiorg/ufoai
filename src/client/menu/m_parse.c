@@ -459,28 +459,31 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			/* then it execute EA_IF, no break */
 
 		case EA_IF:
-			/* get the condition */
-			*token = Com_EParse(text, errhead, NULL);
-			if (!*text)
-				return NULL;
+			{
+				menuCondition_t condition;
 
-			action->d.nonTerminal.left = (void*) MN_AllocCondition(*token);
-			if (action->d.nonTerminal.left == NULL)
-				return NULL;
+				/* get the condition */
+				result = MN_ParseExpression(&condition, text, errhead);
+				if (result == qfalse)
+					return NULL;
+				mn.menuConditions[mn.numConditions] = condition;
+				action->d.nonTerminal.left = (void*) &mn.menuConditions[mn.numConditions];
+				mn.numConditions++;
 
-			/* get the action block */
-			*token = Com_EParse(text, errhead, NULL);
-			if (!*text)
-				return NULL;
-			action->d.nonTerminal.right = MN_ParseActionList(menuNode, text, token);
-			if (action->d.nonTerminal.right == NULL) {
-				if (action->type.op == EA_IF)
-					Com_Printf("MN_ParseActionList: block expected after \"if\" (node: %s)\n", MN_GetPath(menuNode));
-				else
-					Com_Printf("MN_ParseActionList: block expected after \"elif\" (node: %s)\n", MN_GetPath(menuNode));
-				return NULL;
+				/* get the action block */
+				*token = Com_EParse(text, errhead, NULL);
+				if (!*text)
+					return NULL;
+				action->d.nonTerminal.right = MN_ParseActionList(menuNode, text, token);
+				if (action->d.nonTerminal.right == NULL) {
+					if (action->type.op == EA_IF)
+						Com_Printf("MN_ParseActionList: block expected after \"if\" (node: %s)\n", MN_GetPath(menuNode));
+					else
+						Com_Printf("MN_ParseActionList: block expected after \"elif\" (node: %s)\n", MN_GetPath(menuNode));
+					return NULL;
+				}
+				break;
 			}
-			break;
 
 		case EA_ELSE:
 			/* check previous action */
@@ -828,7 +831,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 				if (!*text)
 					return qfalse;
 
-				*condition = MN_AllocCondition(*token);
+				*condition = MN_AllocStringCondition(*token);
 				if (*condition == NULL)
 					return qfalse;
 			}

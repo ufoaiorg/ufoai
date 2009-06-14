@@ -102,10 +102,10 @@ CLIENT_SRCS = \
 	client/multiplayer/mp_team.c \
 	\
 	client/menu/m_actions.c \
-	client/menu/m_condition.c \
 	client/menu/m_data.c \
 	client/menu/m_dragndrop.c \
 	client/menu/m_draw.c \
+	client/menu/m_expression.c \
 	client/menu/m_font.c \
 	client/menu/m_icon.c \
 	client/menu/m_input.c \

@@ -1,5 +1,5 @@
 /**
- * @file m_condition.h
+ * @file m_expression.h
  */
 
 /*
@@ -77,7 +77,7 @@ typedef struct menuCondition_s {
 } menuCondition_t;
 
 qboolean MN_CheckCondition(const struct menuNode_s *source, menuCondition_t *condition);
-qboolean MN_InitCondition(menuCondition_t *condition, const char *token);
-menuCondition_t *MN_AllocCondition(const char *description) __attribute__ ((warn_unused_result));
+menuCondition_t *MN_AllocStringCondition(const char *description) __attribute__ ((warn_unused_result));
+qboolean MN_ParseExpression(menuCondition_t *condition, const char **text, const char *errhead);
 
 #endif

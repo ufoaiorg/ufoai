@@ -29,13 +29,13 @@ window geoscape
 		rows		1
 		dataid		TEXT_MESSAGESYSTEM
 		onMouseEnter {
-			if "*cvar:mn_messagesystem < 2" {
+			if ( *cvar:mn_messagesystem < 2 ) {
 				*node:root.messagesystem@rows 12
 				*node:root.messagesystem@height 240
 			}
 		}
 		onMouseLeave {
-			if "*cvar:mn_messagesystem < 2" {
+			if ( *cvar:mn_messagesystem < 2 ) {
 				cmd "messagesystem_changemode"
 			}
 		}
@@ -65,25 +65,25 @@ window geoscape
 	confunc messagesystem_changemode
 	{
 		/* one line */
-		if "*cvar:mn_messagesystem == 0" {
+		if ( *cvar:mn_messagesystem == 0 ) {
 			*messagesystem@rows	1
 			*messagesystem@size	"768 20"
 			*messagesystem_scroll@invis true
 		}
 		/* 6 lines */
-		if "*cvar:mn_messagesystem == 1" {
+		if ( *cvar:mn_messagesystem == 1 ) {
 			*messagesystem@rows	6
 			*messagesystem@size	"768 120"
 			*messagesystem_scroll@invis true
 		}
 		/* 12 lines */
-		if "*cvar:mn_messagesystem == 2" {
+		if ( *cvar:mn_messagesystem == 2 ) {
 			*messagesystem@rows	12
 			*messagesystem@size	"768 240"
 			*messagesystem_scroll@invis true
 		}
 		/* full screen */
-		if "*cvar:mn_messagesystem == 3" {
+		if ( *cvar:mn_messagesystem == 3 ) {
 			*messagesystem@rows	38
 			*messagesystem@size	"749 768"
 			*messagesystem_scroll@invis false
@@ -760,7 +760,7 @@ window popup_intercept_ready
 
 	confunc popup_intercept_ready_update
 	{
-		if "*cvar:cp_mission_autogo_available == 1" {
+		if ( *cvar:cp_mission_autogo_available == 1 ) {
 			*bt_auto_go@disabled false
 		} else {
 			*bt_auto_go@disabled true
@@ -879,16 +879,16 @@ window popup_baseattack
 		pos			"259 241"
 		size		"176 32"
 		onClick		{
-			if "*node:root.liftcrafts@current > 0" {
+			if ( *node:root.liftcrafts@current > 0 ) {
 				cmd "air_liftall;"
 			}
-			if "*node:root.killaliens@current > 0" {
+			if ( *node:root.killaliens@current > 0 ) {
 				cmd "aliencont_killall;"
 			}
-			if "*node:root.powerdown@current > 0" {
+			if ( *node:root.powerdown@current > 0 ) {
 				cmd "pwr_down;"
 			}
-			if "*node:root.equip@current > 0" {
+			if ( *node:root.equip@current > 0 ) {
 				cmd "mn_addlistener equipment@onClose <path:root>.listen_automission"
 				cmd "mn_push equipment;"
 			} else {
@@ -912,16 +912,16 @@ window popup_baseattack
 		pos			"74 241"
 		size		"176 32"
 		onClick		{
-			if "*node:root.liftcrafts@current > 0" {
+			if ( *node:root.liftcrafts@current > 0 ) {
 				cmd "air_liftall;"
 			}
-			if "*node:root.killaliens@current > 0" {
+			if ( *node:root.killaliens@current > 0 ) {
 				cmd "aliencont_killall;"
 			}
-			if "*node:root.powerdown@current > 0" {
+			if ( *node:root.powerdown@current > 0 ) {
 				cmd "pwr_down;"
 			}
-			if "*node:root.equip@current > 0" {
+			if ( *node:root.equip@current > 0 ) {
 				cmd "mn_addlistener equipment@onClose <path:root>.listen_mission"
 				cmd "mn_push equipment;"
 			} else {
@@ -1036,7 +1036,7 @@ window popup_newbase
 	}
 
 	func chk_checkboxes {
-		if "*node:root.start_building@current > 0" {
+		if ( *node:root.start_building@current > 0 ) {
 			*start_employees@disabled false
 		} else {
 			*(abstractvalue)start_employees@current 0
@@ -1108,7 +1108,7 @@ window popup_newbase
 
 	func onInit
 	{
-		if "*cvar:mn_base_count <= 0" {
+		if ( *cvar:mn_base_count <= 0 ) {
 			*start_employees_str@invis false
 			*start_employees@invis false
 			*start_buildings_str@invis false
@@ -1355,7 +1355,7 @@ window popup_newinstallation_type
 	}
 
 	func onInit {
-		if "*cvar:mn_base_count >= *cvar:mn_base_max" {
+		if ( *cvar:mn_base_count >= *cvar:mn_base_max ) {
 			*click_base@invis true
 			*disabled_base@invis false
 			*base_type@disabled true
@@ -1368,7 +1368,7 @@ window popup_newinstallation_type
 			*base_buildtime@disabled false
 			*base_cost@disabled false
 		}
-		if "*cvar:mn_installation_count >= *cvar:mn_installation_max" {
+		if ( *cvar:mn_installation_count >= *cvar:mn_installation_max ) {
 			*click_ufoyard@invis true
 			*disabled_installation@invis false
 			*ufoyard_type@disabled true
@@ -1481,13 +1481,13 @@ window popup_newinstallation
 
 	func onInit
 	{
-		if "*cvar:mn_installation_type eq radartower" {
+		if ( *cvar:mn_installation_type eq radartower ) {
 			*node:root.title@string "_New radar tower"
 			*node:root.cost@string "*cvar:mn_installation_radartower_cost"
-		} elif "*cvar:mn_installation_type eq samsite" {
+		} elif ( *cvar:mn_installation_type eq samsite ) {
 			*node:root.title@string "_New SAM site"
 			*node:root.cost@string "*cvar:mn_installation_samsite_cost"
-		} elif "*cvar:mn_installation_type eq ufoyard" {
+		} elif ( *cvar:mn_installation_type eq ufoyard ) {
 			*node:root.title@string "_New UFO yard"
 			*node:root.cost@string "*cvar:mn_installation_ufoyard_cost"
 		}		
@@ -1786,11 +1786,11 @@ window popup_intercept
 	}
 
 	confunc popup_intercept_update {
-		if "*cvar:mn_defencetab == 0" {
+		if ( *cvar:mn_defencetab == 0 ) {
 			*node:root.aircraft@invis false
 			*node:root.sam@invis true
 		}
-		if "*cvar:mn_defencetab == 1" {
+		if ( *cvar:mn_defencetab == 1 ) {
 			*node:root.aircraft@invis true
 			*node:root.sam@invis false
 		}
@@ -2791,7 +2791,7 @@ window messageoptions
 	 */
 	confunc ms_btnstate {
 		*cvar:tmp <3>
-		if "*cvar:tmp == 0" {
+		if ( *cvar:tmp == 0 ) {
 			*bt_pause<1>@disabled true
 			*bt_sound<1>@disabled true
 		} else {

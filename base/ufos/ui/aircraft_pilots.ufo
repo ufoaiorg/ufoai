@@ -133,7 +133,7 @@ window aircraft_pilots extends iaircraft
 		*(checkbox)check_actor<1>@current 0
 		*check_actor<1>@invis false
 		*txt_actor<1>@invis false
-		if "*cvar:mn_pilotassigned == 1" {
+		if ( *cvar:mn_pilotassigned == 1 ) {
 			*(checkbox)check_actor<1>@disabled true
 		}
 	}
@@ -380,7 +380,7 @@ window aircraft_pilots extends iaircraft
 		cmd "update_pilot_list 8 0;pilot_select 0;set mn_show_employee 1;"
 		*aircraft_list@lineselected <1>
 		// absent from base, go back to the main GUI
-		if "*cvar:mn_equipsoldierstate == 1" {
+		if ( *cvar:mn_equipsoldierstate == 1 ) {
 			cmd "mn_pop;mn_push aircraft;"
 		}
 	}

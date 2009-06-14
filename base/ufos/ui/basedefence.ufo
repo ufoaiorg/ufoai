@@ -16,23 +16,23 @@ window basedefence
 /*	@note: not working yet as option isn't a node :(	*/
 	confunc set_defencetypes {
 /*		*cvar:mn_cvartmp "<1>"
-		if "*cvar:mn_cvartmp eq enable" {
+		if ( *cvar:mn_cvartmp eq enable ) {
 			*defencetype.missile@invis false
 			*defencetype.missile@disabled false
-		} elif "*cvar:mn_cvartmp eq disable" {
+		} elif ( *cvar:mn_cvartmp eq disable ) {
 			*defencetype.missile@invis false
 			*defencetype.missile@disabled true
-		} elif "*cvar:mn_cvartmp eq na" {
+		} elif ( *cvar:mn_cvartmp eq na ) {
 			*defencetype.missile@invis true
 		}
 		*cvar:mn_cvartmp "<2>"
-		if "*cvar:mn_cvartmp eq enable" {
+		if ( *cvar:mn_cvartmp eq enable ) {
 			*defencetype.laser@invis false
 			*defencetype.laser@disabled false
-		} elif "*cvar:mn_cvartmp eq disable" {
+		} elif ( *cvar:mn_cvartmp eq disable ) {
 			*defencetype.laser@invis false
 			*defencetype.missile@disabled true
-		} elif "*cvar:mn_cvartmp eq na" {
+		} elif ( *cvar:mn_cvartmp eq na ) {
 			*defencetype.laser@invis true
 		}
 		cmd "del mn_cvartmp;"
@@ -60,16 +60,16 @@ window basedefence
 
 	/* @todo: We should check if the slot is empty but can't do from here */
 	confunc update_buttons {
-		if "*node:root.slots.slotlist@lineselected < 0" {
+		if ( *node:root.slots.slotlist@lineselected < 0 ) {
 			*node:root.bt_add@disabled true
 			*node:root.bt_remove@disabled true
-		} elif "*node:root.slots.slotlist@lineselected >= *node:root.slots.slotlist@lines" {
+		} elif ( *node:root.slots.slotlist@lineselected >= *node:root.slots.slotlist@lines ) {
 			*node:root.bt_add@disabled true
 			*node:root.bt_remove@disabled true
-		} elif "*node:root.store.storelist@lineselected < 0" {
+		} elif ( *node:root.store.storelist@lineselected < 0 ) {
 			*node:root.bt_add@disabled true
 			*node:root.bt_remove@disabled false
-		} elif "*node:root.store.storelist@lineselected >= *node:root.store.storelist@lines" {
+		} elif ( *node:root.store.storelist@lineselected >= *node:root.store.storelist@lines ) {
 			*node:root.bt_add@disabled true
 			*node:root.bt_remove@disabled false
 		} else {

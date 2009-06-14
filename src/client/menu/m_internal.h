@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_actions.h"
 #include "m_nodes.h"
 #include "m_icon.h"
-#include "m_condition.h"
+#include "m_expression.h"
 #include "m_data.h"
 #include "node/m_node_model.h"
 

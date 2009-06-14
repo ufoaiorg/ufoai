@@ -22,11 +22,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "m_condition.h"
+#include "m_expression.h"
 #include "m_main.h"
 #include "m_internal.h"
 #include "m_parse.h"
 #include "node/m_node_abstractnode.h"
+#include "../../shared/parse.h"
 
 static const char *const if_strings[] = {
 	"==",
@@ -209,7 +210,7 @@ static int MN_GetOperatorByName (const char* operatorName)
  * @param[out] value Data to identify the value
  * @param[out] type Type on the value
  */
-static inline void MN_SetParam (const char *string, menuConditionOpCodeType_t opCode, const char** value, menuConditionValueType_t* type)
+static inline void MN_SetParam (const char *string, const char** value, menuConditionValueType_t* type)
 {
 	/* it is a cvarname */
 	if (!strncmp(string, "*cvar:", 6)) {
@@ -227,6 +228,9 @@ static inline void MN_SetParam (const char *string, menuConditionOpCodeType_t op
 		return;
 	}
 
+#if 0 /* we can't know the operation before, and token is not typed. then we must copy the string */
+/** @todo we can check the string type vs INT/FLOAT but it can create new problems
+ * (convert the string "1" -> into a float, then then restitute the string "1.0") */
 	/* it is a const float */
 	if (MN_IsFloatOperator(opCode)) {
 		float *f = MN_AllocFloat(1);
@@ -235,6 +239,7 @@ static inline void MN_SetParam (const char *string, menuConditionOpCodeType_t op
 		*type = IF_VALUE_FLOAT;
 		return;
 	}
+#endif
 
 	/* it is a const string */
 	*value = MN_AllocString(string, 0);
@@ -242,40 +247,86 @@ static inline void MN_SetParam (const char *string, menuConditionOpCodeType_t op
 }
 
 #define BUF_SIZE (MAX_VAR - 1)
+
 /**
- * @brief Initialize a condition according to a string
- * @param[out] condition Condition to initialize
+ * @brief Allocate and initialize a condition according to a string
  * @param[in] token String describing a condition
- * @return True if the condition is initialized
+ * @param[out] condition Condition to initialize
+ * @return The condition if everything is ok, NULL otherwise
  */
-qboolean MN_InitCondition (menuCondition_t *condition, const char *token)
+menuCondition_t *MN_AllocStringCondition (const char *description)
 {
+	const char *errhead = "MN_AllocStringCondition: unexpected end of string (object";
+	const char *text, *expression;
+	menuCondition_t condition;
+	qboolean result;
+
+	if (mn.numConditions >= MAX_MENUCONDITIONS)
+		Com_Error(ERR_FATAL, "MN_AllocStringCondition: Too many menu conditions");
+
+	expression = va("( %s )", description);
+	text = expression;
+	result = MN_ParseExpression(&condition, &text, errhead);
+	if (!result) {
+		Com_Printf("MN_AllocStringCondition: Parse error on expression \"%s\"\n", expression);
+		return NULL;
+	}
+
+	/* allocates memory */
+	mn.menuConditions[mn.numConditions] = condition;
+	mn.numConditions++;
+	return &mn.menuConditions[mn.numConditions - 1];
+}
+
+qboolean MN_ParseExpression (menuCondition_t *condition, const char **text, const char *errhead)
+/* menuAction_t* MN_ParseExpression (const char **text, const char *errhead) */
+{
+	const char* token;
 	memset(condition, 0, sizeof(*condition));
-	if (!strstr(token, " ")) {
-		if (strncmp(token, "*cvar:", 6) != 0) {
-			Com_Printf("Invalid 'if' statement. '%s' is not a cvar\n", token);
+
+	token = Com_Parse(text);
+	if (*text == NULL)
+		return qfalse;
+	if (strcmp(token, "(") != 0) {
+		Com_Printf("MN_InitCondition: Token '(' expected\n");
+		return qfalse;
+	}
+
+	token = Com_Parse(text);
+	if (*text == NULL)
+		return qfalse;
+	MN_SetParam(token, &condition->leftValue, &condition->type.left);
+
+	token = Com_Parse(text);
+	if (*text == NULL)
+		return qfalse;
+	if (!strcmp(token, ")")) {
+		if (condition->type.left != IF_VALUE_CVARNAME) {
+			Com_Printf("Invalid 'if' statement. '%s' is not a cvar\n", condition->leftValue);
 			return qfalse;
 		}
-		condition->leftValue = MN_AllocString(token + 6, 0);
 		condition->type.left = IF_VALUE_CVARNAME;
 		condition->type.opCode = IF_EXISTS;
-	} else {
-		char param1[BUF_SIZE + 1];
-		char operator[BUF_SIZE + 1];
-		char param2[BUF_SIZE + 1];
-		if (sscanf(token, "%"DOUBLEQUOTE(MAX_VAR)"s %"DOUBLEQUOTE(MAX_VAR)"s %"DOUBLEQUOTE(MAX_VAR)"s", param1, operator, param2) != 3) {
-			Com_Printf("MN_InitCondition: Could not parse node condition.\n");
-			return qfalse;
-		}
+		return qtrue;
+	}
 
-		/* operator code */
-		condition->type.opCode = MN_GetOperatorByName(operator);
-		if (condition->type.opCode == IF_INVALID) {
-			Com_Printf("Invalid 'if' statement. Unknown '%s' operator from token: '%s'\n", operator, token);
-			return qfalse;
-		}
-		MN_SetParam(param1, condition->type.opCode, &condition->leftValue, &condition->type.left);
-		MN_SetParam(param2, condition->type.opCode, &condition->rightValue, &condition->type.right);
+	condition->type.opCode = MN_GetOperatorByName(token);
+	if (condition->type.opCode == IF_INVALID) {
+		Com_Printf("Invalid 'if' statement. Unknown '%s' operator\n", token);
+		return qfalse;
+	}
+
+	token = Com_Parse(text);
+	if (*text == NULL)
+		return qfalse;
+	MN_SetParam(token, &condition->rightValue, &condition->type.right);
+
+	token = Com_Parse(text);
+	if (*text == NULL)
+		return qfalse;
+	if (strcmp(token, ")") != 0) {
+		Com_Printf("MN_InitCondition: Token ')' expected\n");
+		return qfalse;
 	}
 
 	/* prevent wrong code */
@@ -285,29 +336,4 @@ qboolean MN_InitCondition (menuCondition_t *condition, const char *token)
 	}
 
 	return qtrue;
-}
-
-/**
- * @brief Allocate and initialize a condition according to a string
- * @param[in] token String describing a condition
- * @param[out] condition Condition to initialize
- * @return The condition if everything is ok, NULL otherwise
- */
-menuCondition_t *MN_AllocCondition (const char *description)
-{
-	menuCondition_t condition;
-	qboolean result;
-
-	if (mn.numConditions >= MAX_MENUCONDITIONS)
-		Com_Error(ERR_FATAL, "MN_AllocCondition: Too many menu conditions");
-
-	result = MN_InitCondition(&condition, description);
-	if (!result)
-		return NULL;
-
-	/* allocates memory */
-	mn.menuConditions[mn.numConditions] = condition;
-	mn.numConditions++;
-
-	return &mn.menuConditions[mn.numConditions - 1];
 }

@@ -1,0 +1,58 @@
+Index: src/shared/parse.c
+===================================================================
+--- src/shared/parse.c	(revision 24697)
++++ src/shared/parse.c	(working copy)
+@@ -29,7 +29,24 @@
+ #include "ufotypes.h"
+ #include "parse.h"
+ 
++
++static char com_token[4096];
++static qboolean isUnparsedToken;
++
+ /**
++ * @brief Put back the last token into the parser
++ * The next call of Com_Parse will return the token send by Com_UnParse.
++ * @note Only allow to use it one time
++ * @note With it, we can't read to file at the same time
++ */
++const char *Com_UnParseLastToken (void)
++{
++	if (isUnparsedToken)
++		Sys_Error("Com_UnParse: Cache is full");
++	isUnparsedToken = qtrue;
++}
++
++/**
+  * @brief Parse a token out of a string
+  * @param data_p Pointer to a string which is to be parsed
+  * @pre @c data_p is expected to be null-terminated
+@@ -42,11 +59,15 @@
+  */
+ const char *Com_Parse (const char *data_p[])
+ {
+-	static char com_token[4096];
+ 	int c;
+ 	size_t len;
+ 	const char *data;
+ 
++	if (isUnparsedToken) {
++		isUnparsedToken = qfalse;
++		return com_token;
++	}
++
+ 	data = *data_p;
+ 	len = 0;
+ 	com_token[0] = 0;
+Index: src/shared/parse.h
+===================================================================
+--- src/shared/parse.h	(revision 24697)
++++ src/shared/parse.h	(working copy)
+@@ -33,6 +33,7 @@
+ #endif
+ 
+ const char *Com_Parse(const char **data_p);
++const char *Com_UnParseLastToken(void)
+ 
+ #ifdef __cplusplus
+ }

@@ -77,10 +77,10 @@ window unittest_event
 	}
 
 	func onEvent {
-		if "*cvar:counter == 0" {
+		if ( *cvar:counter == 0 ) {
 			*cvar:counter 1
 			*node:root.test bgcolor "1 0 0 1"
-		} elif "*cvar:counter == 1" {
+		} elif ( *cvar:counter == 1 ) {
 			*cvar:counter 2
 			*node:root.test bgcolor "0 1 0 1"
 		} else {

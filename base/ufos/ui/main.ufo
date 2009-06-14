@@ -350,7 +350,7 @@ window popup_tipoftheday
 
 	confunc check_nexttip
 	{
-		if "*cvar:cl_showTipOfTheDay == 1" {
+		if ( *cvar:cl_showTipOfTheDay == 1 ) {
 			*bt_next@string "_Next"
 			*bt_next@tooltip "_Next tip"
 		} else {
