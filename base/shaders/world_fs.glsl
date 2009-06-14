@@ -22,13 +22,14 @@ void main(void){
 
 	vec2 offset = vec2(0.0);
 	vec3 bump = vec3(1.0);
+	vec3 deluxemap;
 
 	// sample the lightmap
 	vec3 lightmap = texture2D(SAMPLER1, gl_TexCoord[1].st).rgb;
 
 #if r_bumpmap
 	if(BUMPMAP > 0){  // sample deluxemap and normalmap
-		vec3 deluxemap = texture2D(SAMPLER2, gl_TexCoord[1].st).rgb;
+		deluxemap = texture2D(SAMPLER2, gl_TexCoord[1].st).rgb;
 		deluxemap = normalize(two * (deluxemap + negHalf));
 
 		vec4 normalmap = texture2D(SAMPLER3, gl_TexCoord[0].st);
@@ -57,5 +58,12 @@ void main(void){
 #if r_lightmap
 	gl_FragColor.rgb = lightmap;
 	gl_FragColor.a = 1.0;
+#endif
+
+#if r_deluxemap
+	if(BUMPMAP > 0){
+		gl_FragColor.rgb = deluxemap;
+		gl_FragColor.a = 1.0;
+	}
 #endif
 }
