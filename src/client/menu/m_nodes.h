@@ -92,7 +92,7 @@ typedef struct menuNode_s {
 	excludeRect_t *excludeRect;	/**< exclude this for hover or click functions */
 	int excludeRectNum;			/**< how many consecutive exclude rects defined? */
 
-	struct menuCondition_s* visibilityCondition;	/**< cvar condition to display/hide the node */
+	struct menuAction_s* visibilityCondition;	/**< cvar condition to display/hide the node */
 
 	/** @todo needs cleanup */
 	void* image;

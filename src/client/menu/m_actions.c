@@ -301,18 +301,18 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		MN_ExecuteInjectedActions((const menuNode_t *) action->d.terminal.d1.data, qfalse, *(menuAction_t **) action->d.terminal.d2.data);
 		break;
 
-	case EA_SET:
+	case EA_ASSIGN:
 		MN_ExecuteSetAction(source, useCmdParam, action);
 		break;
 
 	case EA_IF:
-		if (MN_CheckCondition(source, (menuCondition_t *) action->d.nonTerminal.left)) {
+		if (MN_CheckBooleanExpression(action->d.nonTerminal.left, source)) {
 			MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
 			return;
 		}
 		action = action->next;
 		while (action && action->type.op == EA_ELIF) {
-			if (MN_CheckCondition(source, (menuCondition_t *) action->d.nonTerminal.left)) {
+			if (MN_CheckBooleanExpression(action->d.nonTerminal.left, source)) {
 				MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
 				return;
 			}

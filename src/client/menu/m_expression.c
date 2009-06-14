@@ -29,59 +29,66 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_abstractnode.h"
 #include "../../shared/parse.h"
 
-static const char *const if_strings[] = {
-	"==",
-	"<=",
-	">=",
-	">",
-	"<",
-	"!=",
-	"",
-	"eq",
-	"ne"
+typedef struct {
+	int operator;
+	char* string;
+} menuActionTypeList_t;
+
+static const menuActionTypeList_t operatorList[] = {
+	{EA_OPERATOR_EQ, "=="},
+	{EA_OPERATOR_LE, "<="},
+	{EA_OPERATOR_GE, ">="},
+	{EA_OPERATOR_GT, ">"},
+	{EA_OPERATOR_LT, "<"},
+	{EA_OPERATOR_NE, "!="},
+	{EA_OPERATOR_STR_EQ, "eq"},
+	{EA_OPERATOR_STR_NE, "ne"},
+	{EA_NULL, ""}
 };
-CASSERT(lengthof(if_strings) == IF_SIZE);
 
 /**
  * @todo code the FLOAT/STRING type into the opcode; we should not check it like that
  */
-static inline qboolean MN_IsFloatOperator (menuConditionOpCodeType_t op)
+static inline qboolean MN_IsFloatOperator (int op)
 {
-	return op == IF_EQ
-	 || op == IF_LE
-	 || op == IF_GE
-	 || op == IF_GT
-	 || op == IF_LT
-	 || op == IF_NE;
+	return op == EA_OPERATOR_EQ
+	 || op == EA_OPERATOR_LE
+	 || op == EA_OPERATOR_GE
+	 || op == EA_OPERATOR_GT
+	 || op == EA_OPERATOR_LT
+	 || op == EA_OPERATOR_NE;
 }
 
 /**
  * @return A float value, else 0
  */
-static float MN_GetFloatFromParam (const menuNode_t *source, const char* value, menuConditionValueType_t type)
+static float MN_GetFloatFromExpression (menuAction_t *expression, const menuNode_t *source)
 {
-	switch (type) {
-	case IF_VALUE_STRING:
-		return atof(value);
-	case IF_VALUE_FLOAT:
-		return *(const float*)value;
-	case IF_VALUE_CVARNAME:
+	switch (expression->type.op) {
+	case EA_NULL:
+		return qfalse;
+	case EA_VALUE_STRING:
+		return atof(expression->d.terminal.d1.string);
+	case EA_VALUE_FLOAT:
+		return expression->d.terminal.d1.number;
+	case EA_VALUE_CVARNAME:
 		{
 			cvar_t *cvar = NULL;
-			cvar = Cvar_Get(value, "", 0, "Menu if condition cvar");
+			cvar = Cvar_Get(expression->d.terminal.d1.string, "", 0, "Menu if condition cvar");
 			return cvar->value;
 		}
-	case IF_VALUE_NODEPROPERTY:
+	case EA_VALUE_NODEPROPERTY:
 		{
 			menuNode_t *node;
 			const value_t *property;
-			MN_ReadNodePath(value, source, &node, &property);
+			const char *path = expression->d.terminal.d1.string;
+			MN_ReadNodePath(path, source, &node, &property);
 			if (!node) {
-				Com_Printf("MN_GetFloatFromParam: Node '%s' wasn't found; '0' returned\n", value);
+				Com_Printf("MN_GetFloatFromParam: Node '%s' wasn't found; '0' returned\n", path);
 				return 0;
 			}
 			if (!property) {
-				Com_Printf("MN_GetFloatFromParam: Property '%s' wasn't found; '0' returned\n", value);
+				Com_Printf("MN_GetFloatFromParam: Property '%s' wasn't found; '0' returned\n", path);
 				return 0;
 			}
 			return MN_GetFloatFromNodeProperty(node, property);
@@ -93,96 +100,114 @@ static float MN_GetFloatFromParam (const menuNode_t *source, const char* value, 
 /**
  * @return A string, else an empty string
  */
-static const char* MN_GetStringFromParam (const menuNode_t *source, const char* value, menuConditionValueType_t type)
+static const char* MN_GetStringFromExpression (menuAction_t *expression, const menuNode_t *source)
 {
-	switch (type) {
-	case IF_VALUE_STRING:
-		return value;
-	case IF_VALUE_FLOAT:
+	switch (expression->type.op) {
+	case EA_VALUE_STRING:
+		return expression->d.terminal.d1.string;
+	case EA_VALUE_FLOAT:
 		assert(qfalse);
-	case IF_VALUE_CVARNAME:
+	case EA_VALUE_CVARNAME:
 	{
 		cvar_t *cvar = NULL;
-		cvar = Cvar_Get(value, "", 0, "Menu if condition cvar");
+		cvar = Cvar_Get(expression->d.terminal.d1.string, "", 0, "Menu if condition cvar");
 		return cvar->string;
 	}
-	case IF_VALUE_NODEPROPERTY:
+	case EA_VALUE_NODEPROPERTY:
 		{
 			menuNode_t *node;
 			const value_t *property;
 			const char* string;
-			MN_ReadNodePath(value, source, &node, &property);
+			const char *path = expression->d.terminal.d1.string;
+			MN_ReadNodePath(expression->d.terminal.d1.string, source, &node, &property);
 			if (!node) {
-				Com_Printf("MN_GetStringFromParam: Node '%s' wasn't found; '' returned\n", value);
+				Com_Printf("MN_GetStringFromParam: Node '%s' wasn't found; '' returned\n", path);
 				return "";
 			}
 			if (!property) {
-				Com_Printf("MN_GetStringFromParam: Property '%s' wasn't found; '' returned\n", value);
+				Com_Printf("MN_GetStringFromParam: Property '%s' wasn't found; '' returned\n", path);
 				return "";
 			}
 			string = MN_GetStringFromNodeProperty(node, property);
 			if (string == NULL) {
-				Com_Printf("MN_GetStringFromParam: String getter for '%s' property do not exists; '' returned\n", value);
+				Com_Printf("MN_GetStringFromParam: String getter for '%s' property do not exists; '' returned\n", path);
 				return "";
 			}
 			return string;
 		}
 		break;
 	}
+
+	Com_Printf("MN_GetStringFromExpression: Unsupported expression type: %i", expression->type.op);
 	return "";
 }
 
-
 /**
- * @brief Check the if conditions for a given node
- * @return True if the condition is qfalse if the node is not drawn
+ * @return A boolean, else 0
  */
-qboolean MN_CheckCondition (const menuNode_t *source, menuCondition_t *condition)
+static qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t *source)
 {
-	if (MN_IsFloatOperator(condition->type.opCode)) {
-		const float value1 = MN_GetFloatFromParam(source, condition->leftValue, condition->type.left);
-		const float value2 = MN_GetFloatFromParam(source, condition->rightValue, condition->type.right);
+	switch (expression->type.op) {
+	case EA_VALUE_STRING:
+	case EA_VALUE_FLOAT:
+	case EA_VALUE_CVARNAME:
+	case EA_VALUE_NODEPROPERTY:
+		return MN_GetFloatFromExpression (expression, source) != 0;
+	}
 
-		switch (condition->type.opCode) {
-		case IF_EQ:
+	if (MN_IsFloatOperator(expression->type.op)) {
+		const float value1 = MN_GetFloatFromExpression(expression->d.nonTerminal.left, source);
+		const float value2 = MN_GetFloatFromExpression(expression->d.nonTerminal.right, source);
+
+		switch (expression->type.op) {
+		case EA_OPERATOR_EQ:
 			return value1 == value2;
-		case IF_LE:
+		case EA_OPERATOR_LE:
 			return value1 <= value2;
-		case IF_GE:
+		case EA_OPERATOR_GE:
 			return value1 >= value2;
-		case IF_GT:
+		case EA_OPERATOR_GT:
 			return value1 > value2;
-		case IF_LT:
+		case EA_OPERATOR_LT:
 			return value1 < value2;
-		case IF_NE:
+		case EA_OPERATOR_NE:
 			return value1 != value2;
 		default:
 			assert(qfalse);
 		}
 	}
 
-	if (condition->type.opCode == IF_EXISTS) {
-		if (condition->type.left == IF_VALUE_CVARNAME) {
-			return Cvar_FindVar(condition->leftValue) != NULL;
-		}
-		assert(qfalse);
+	if (expression->type.op == EA_OPERATOR_EXISTS) {
+		const menuAction_t *e = expression->d.nonTerminal.left;
+		assert(e);
+		assert(e->type.op == EA_VALUE_CVARNAME);
+		return Cvar_FindVar(e->d.terminal.d1.string) != NULL;
 	}
 
-	if (condition->type.opCode == IF_STR_EQ || condition->type.opCode == IF_STR_NE) {
-		const char* value1 = MN_GetStringFromParam(source, condition->leftValue, condition->type.left);
-		const char* value2 = MN_GetStringFromParam(source, condition->rightValue, condition->type.right);
+	if (expression->type.op == EA_OPERATOR_STR_EQ || expression->type.op == EA_OPERATOR_STR_NE) {
+		const char* value1 = MN_GetStringFromExpression(expression->d.nonTerminal.left, source);
+		const char* value2 = MN_GetStringFromExpression(expression->d.nonTerminal.right, source);
 
-		switch (condition->type.opCode) {
-		case IF_STR_EQ:
+		switch (expression->type.op) {
+		case EA_OPERATOR_STR_EQ:
 			return strcmp(value1, value2) == 0;
-		case IF_STR_NE:
+		case EA_OPERATOR_STR_NE:
 			return strcmp(value1, value2) != 0;
 		default:
 			assert(qfalse);
 		}
 	}
 
-	Com_Error(ERR_FATAL, "Unknown condition for if statement: %i", condition->type.opCode);
+	Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: Unsupported expression type: %i", expression->type.op);
+}
+
+/**
+ * @brief Check the if conditions for a given node
+ * @return True if the condition is qfalse if the node is not drawn
+ */
+qboolean MN_CheckBooleanExpression (menuAction_t *expression, const menuNode_t *source)
+{
+	return MN_GetBooleanFromExpression(expression, source);
 }
 
 /**
@@ -191,41 +216,73 @@ qboolean MN_CheckCondition (const menuNode_t *source, menuCondition_t *condition
  * @return menuIfCondition_t value
  * @return enum value for condition string
  * @note Produces a Sys_Error if conditionString was not found in if_strings array
+ * @todo dichotomic search
  */
 static int MN_GetOperatorByName (const char* operatorName)
 {
-	int i;
-	for (i = 0; i < IF_SIZE; i++) {
-		if (!strcmp(if_strings[i], operatorName)) {
-			return i;
-		}
+	int i = 0;
+	while (qtrue) {
+		if (operatorList[i].operator == EA_NULL)
+			break;
+		if (!strcmp(operatorList[i].string, operatorName))
+			return operatorList[i].operator;
+		i++;
 	}
-	return IF_INVALID;
+	return EA_OPERATOR_INVALID;
 }
 
 /**
- * @brief Set a condition param from a string and an opcode
- * @param[in] string Into string
- * @param[in] opCode Current operator type
- * @param[out] value Data to identify the value
- * @param[out] type Type on the value
+ * @brief Allocate and initialize an expression according to a string
+ * @param[in] token String describing a condition
+ * @param[out] condition Condition to initialize
+ * @return The condition if everything is ok, NULL otherwise
  */
-static inline void MN_SetParam (const char *string, const char** value, menuConditionValueType_t* type)
+menuAction_t *MN_AllocStringCondition (const char *description)
 {
+	const char *errhead = "MN_AllocStringCondition: unexpected end of string (object";
+	const char *text, *base;
+	menuAction_t *expression;
+
+	base = va("( %s )", description);
+	text = base;
+	expression = MN_ParseExpression(&text, errhead);
+	if (!expression) {
+		Com_Printf("MN_AllocStringCondition: Parse error on expression \"%s\"\n", base);
+		return NULL;
+	}
+
+	return expression;
+}
+
+/**
+ * @brief Read a value from the stream and init an action with it
+ * @return An initialized action else NULL
+ */
+static menuAction_t *MN_ParseValueExpression (const char **text, const char *errhead)
+{
+	const char* token;
+	menuAction_t *expression = MN_AllocAction();
+
+	token = Com_Parse(text);
+	if (*text == NULL) {
+		Com_Printf("MN_ParseTerminalExpression: Token expected\n");
+		return NULL;
+	}
+
 	/* it is a cvarname */
-	if (!strncmp(string, "*cvar:", 6)) {
-		const char* cvarName = string + 6;
-		*value = MN_AllocString(cvarName, 0);
-		*type = IF_VALUE_CVARNAME;
-		return;
+	if (!strncmp(token, "*cvar:", 6)) {
+		const char* cvarName = token + 6;
+		expression->d.terminal.d1.string = MN_AllocString(cvarName, 0);
+		expression->type.op = EA_VALUE_CVARNAME;
+		return expression;
 	}
 
 	/* it is a node property */
-	if (!strncmp(string, "*node:", 6)) {
-		const char* path = string + 6;
-		*value = MN_AllocString(path, 0);
-		*type = IF_VALUE_NODEPROPERTY;
-		return;
+	if (!strncmp(token, "*node:", 6)) {
+		const char* path = token + 6;
+		expression->d.terminal.d1.string = MN_AllocString(path, 0);
+		expression->type.op = EA_VALUE_NODEPROPERTY;
+		return expression;
 	}
 
 #if 0 /* we can't know the operation before, and token is not typed. then we must copy the string */
@@ -233,107 +290,80 @@ static inline void MN_SetParam (const char *string, const char** value, menuCond
  * (convert the string "1" -> into a float, then then restitute the string "1.0") */
 	/* it is a const float */
 	if (MN_IsFloatOperator(opCode)) {
-		float *f = MN_AllocFloat(1);
-		*f = atof(string);
-		*value = (char*) f;
-		*type = IF_VALUE_FLOAT;
-		return;
+		float f = atof(string);
+		expression->d.terminal.d1.number = f;
+		expression->type.op = EA_VALUE_FLOAT;
+		return expression;
 	}
 #endif
 
 	/* it is a const string */
-	*value = MN_AllocString(string, 0);
-	*type = IF_VALUE_STRING;
+	expression->d.terminal.d1.string = MN_AllocString(token, 0);
+	expression->type.op = EA_VALUE_STRING;
+	return expression;
 }
 
-#define BUF_SIZE (MAX_VAR - 1)
-
-/**
- * @brief Allocate and initialize a condition according to a string
- * @param[in] token String describing a condition
- * @param[out] condition Condition to initialize
- * @return The condition if everything is ok, NULL otherwise
- */
-menuCondition_t *MN_AllocStringCondition (const char *description)
-{
-	const char *errhead = "MN_AllocStringCondition: unexpected end of string (object";
-	const char *text, *expression;
-	menuCondition_t condition;
-	qboolean result;
-
-	if (mn.numConditions >= MAX_MENUCONDITIONS)
-		Com_Error(ERR_FATAL, "MN_AllocStringCondition: Too many menu conditions");
-
-	expression = va("( %s )", description);
-	text = expression;
-	result = MN_ParseExpression(&condition, &text, errhead);
-	if (!result) {
-		Com_Printf("MN_AllocStringCondition: Parse error on expression \"%s\"\n", expression);
-		return NULL;
-	}
-
-	/* allocates memory */
-	mn.menuConditions[mn.numConditions] = condition;
-	mn.numConditions++;
-	return &mn.menuConditions[mn.numConditions - 1];
-}
-
-qboolean MN_ParseExpression (menuCondition_t *condition, const char **text, const char *errhead)
-/* menuAction_t* MN_ParseExpression (const char **text, const char *errhead) */
+menuAction_t *MN_ParseExpression (const char **text, const char *errhead)
 {
 	const char* token;
-	memset(condition, 0, sizeof(*condition));
 
 	token = Com_Parse(text);
 	if (*text == NULL)
-		return qfalse;
-	if (strcmp(token, "(") != 0) {
-		Com_Printf("MN_InitCondition: Token '(' expected\n");
-		return qfalse;
-	}
+		return NULL;
 
-	token = Com_Parse(text);
-	if (*text == NULL)
-		return qfalse;
-	MN_SetParam(token, &condition->leftValue, &condition->type.left);
+	if (!strcmp(token, "(")) {
+		menuAction_t *expression;
+		menuAction_t *e;
 
-	token = Com_Parse(text);
-	if (*text == NULL)
-		return qfalse;
-	if (!strcmp(token, ")")) {
-		if (condition->type.left != IF_VALUE_CVARNAME) {
-			Com_Printf("Invalid 'if' statement. '%s' is not a cvar\n", condition->leftValue);
+		e = MN_ParseExpression(text, errhead);
+
+		token = Com_Parse(text);
+		if (*text == NULL)
+			return NULL;
+
+		/* unary operator or unneed "( ... )" */
+		if (!strcmp(token, ")")) {
+			if (e->type.op == EA_VALUE_CVARNAME) {
+				expression = MN_AllocAction();
+				expression->type.op = EA_OPERATOR_EXISTS;
+				expression->d.nonTerminal.left = e;
+				return expression;
+			} else
+				return e;
+		}
+
+		/* then its an operator */
+		expression = MN_AllocAction();
+		expression->d.nonTerminal.left = e;
+		expression->type.op = MN_GetOperatorByName(token);
+		if (expression->type.op == EA_OPERATOR_INVALID) {
+			Com_Printf("Invalid 'expression' statement. Unknown '%s' operator\n", token);
+			return NULL;
+		}
+
+		e = MN_ParseExpression(text, errhead);
+		expression->d.nonTerminal.right = e;
+
+		token = Com_Parse(text);
+		if (*text == NULL)
+			return qfalse;
+		if (strcmp(token, ")") != 0) {
+			Com_Printf("MN_InitCondition: Token ')' expected\n");
 			return qfalse;
 		}
-		condition->type.left = IF_VALUE_CVARNAME;
-		condition->type.opCode = IF_EXISTS;
-		return qtrue;
+
+		return expression;
+	} else {
+		Com_UnParseLastToken();
+		return MN_ParseValueExpression(text, errhead);
 	}
 
-	condition->type.opCode = MN_GetOperatorByName(token);
-	if (condition->type.opCode == IF_INVALID) {
-		Com_Printf("Invalid 'if' statement. Unknown '%s' operator\n", token);
-		return qfalse;
-	}
-
-	token = Com_Parse(text);
-	if (*text == NULL)
-		return qfalse;
-	MN_SetParam(token, &condition->rightValue, &condition->type.right);
-
-	token = Com_Parse(text);
-	if (*text == NULL)
-		return qfalse;
-	if (strcmp(token, ")") != 0) {
-		Com_Printf("MN_InitCondition: Token ')' expected\n");
-		return qfalse;
-	}
-
+#if 0
 	/* prevent wrong code */
 	if (condition->type.left == condition->type.right
 		 && (condition->type.left == IF_VALUE_STRING || condition->type.left == IF_VALUE_FLOAT)) {
 		Com_Printf("MN_InitCondition: '%s' dont use any var operand.\n", token);
 	}
-
-	return qtrue;
+#endif
+	return NULL;
 }

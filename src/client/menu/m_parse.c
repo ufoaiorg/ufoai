@@ -398,7 +398,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 		}
 		/* short setter form */
 		if (type == EA_NULL && *token[0] == '*') {
-			type = EA_SET;
+			type = EA_ASSIGN;
 		}
 
 		/* unknown, we break the parsing */
@@ -428,7 +428,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			action->d.terminal.d1.string = MN_AllocString(*token, 0);
 			break;
 
-		case EA_SET:
+		case EA_ASSIGN:
 			result = MN_ParseSetAction(menuNode, action, text, token, errhead);
 			if (!result)
 				return NULL;
@@ -460,15 +460,13 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 
 		case EA_IF:
 			{
-				menuCondition_t condition;
+				menuAction_t *expression;
 
 				/* get the condition */
-				result = MN_ParseExpression(&condition, text, errhead);
-				if (result == qfalse)
+				expression = MN_ParseExpression(text, errhead);
+				if (expression == NULL)
 					return NULL;
-				mn.menuConditions[mn.numConditions] = condition;
-				action->d.nonTerminal.left = (void*) &mn.menuConditions[mn.numConditions];
-				mn.numConditions++;
+				action->d.nonTerminal.left = expression;
 
 				/* get the action block */
 				*token = Com_EParse(text, errhead, NULL);
@@ -825,14 +823,14 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		case V_UI_IF:
 			{
-				menuCondition_t **condition = (menuCondition_t **) valuePtr;
+				menuAction_t **expression = (menuAction_t **) valuePtr;
 
 				*token = Com_EParse(text, errhead, objectName);
 				if (!*text)
 					return qfalse;
 
-				*condition = MN_AllocStringCondition(*token);
-				if (*condition == NULL)
+				*expression = MN_AllocStringCondition(*token);
+				if (*expression == NULL)
 					return qfalse;
 			}
 			break;

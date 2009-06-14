@@ -28,56 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"
 
 /* prototype */
-struct cvar_s;
 struct menuNode_s;
+struct menuAction_s;
 
-#define MAX_MENUCONDITIONS 512
-
-/**
- * @brief conditions for V_UI_IF
- */
-typedef enum menuConditionOpCodeType_s {
-	IF_INVALID = -1,
-	/** float compares */
-	IF_EQ = 0, /**< == */
-	IF_LE, /**< <= */
-	IF_GE, /**< >= */
-	IF_GT, /**< > */
-	IF_LT, /**< < */
-	IF_NE = 5, /**< != */
-	IF_EXISTS, /**< only cvar given - check for existence */
-
-	/** string compares */
-	IF_STR_EQ,	/**< eq */
-	IF_STR_NE,	/**< ne */
-
-	IF_SIZE
-} menuConditionOpCodeType_t;
-
-typedef enum {
-	IF_VALUE_STRING,
-	IF_VALUE_FLOAT,
-	IF_VALUE_CVARNAME,
-	IF_VALUE_NODEPROPERTY,
-} menuConditionValueType_t;
-
-typedef struct {
-	menuConditionOpCodeType_t opCode;
-	menuConditionValueType_t left;
-	menuConditionValueType_t right;
-} menuConditionType_t;
-
-/**
- * @sa menuIfCondition_t
- */
-typedef struct menuCondition_s {
-	menuConditionType_t type;
-	const char *leftValue;
-	const char *rightValue;
-} menuCondition_t;
-
-qboolean MN_CheckCondition(const struct menuNode_s *source, menuCondition_t *condition);
-menuCondition_t *MN_AllocStringCondition(const char *description) __attribute__ ((warn_unused_result));
-qboolean MN_ParseExpression(menuCondition_t *condition, const char **text, const char *errhead);
+qboolean MN_CheckBooleanExpression(struct menuAction_s *expression, const struct menuNode_s *source);
+struct menuAction_s *MN_AllocStringCondition(const char *description) __attribute__ ((warn_unused_result));
+struct menuAction_s *MN_ParseExpression(const char **text, const char *errhead) __attribute__ ((warn_unused_result));
 
 #endif

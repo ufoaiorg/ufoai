@@ -183,7 +183,6 @@ static void MN_Memory_f (void)
 	Com_Printf("\t-Action allocation: %i/%i\n", mn.numActions, MAX_MENUACTIONS);
 	Com_Printf("\t-Model allocation: %i/%i\n", mn.numMenuModels, MAX_MENUMODELS);
 	Com_Printf("\t-Exclude rect allocation: %i/%i\n", mn.numExcludeRect, MAX_EXLUDERECTS);
-	Com_Printf("\t-Condition allocation: %i/%i\n", mn.numConditions, MAX_MENUCONDITIONS);
 	Com_Printf("\t-AData allocation: "UFO_SIZE_T"/%i B\n", (ptrdiff_t)(mn.curadata - mn.adata), mn.adataize);
 	Com_Printf("\tMemory:\n");
 	Com_Printf("\t-Option structure size: "UFO_SIZE_T" B\n", sizeof(menuOption_t));
@@ -200,7 +199,6 @@ static void MN_Memory_f (void)
 	Com_Printf("\t\t-window: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.window));
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(menuAction_t));
 	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
-	Com_Printf("\t-Condition structure size: "UFO_SIZE_T" B\n", sizeof(menuCondition_t));
 	Com_Printf("\t-AData size: %i B\n", mn.adataize);
 	Com_Printf("\t-Full size: "UFO_SIZE_T" B\n", sizeof(menuGlobal_t) + mn.adataize);
 }

@@ -79,9 +79,6 @@ typedef struct menuGlobal_s {
 	excludeRect_t excludeRect[MAX_EXLUDERECTS];
 	int numExcludeRect;
 
-	menuCondition_t menuConditions[MAX_MENUCONDITIONS];
-	int numConditions;
-
 	menuIcon_t menuIcons[MAX_MENUICONS];
 	int numIcons;
 } menuGlobal_t;

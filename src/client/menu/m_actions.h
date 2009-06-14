@@ -29,14 +29,37 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief EventActions */
 typedef enum ea_s {
-	EA_NULL,
+	EA_NULL = 0,
 	EA_CMD,
 	EA_CALL,
-	EA_SET,
+	EA_ASSIGN,
 	EA_IF,
 	EA_ELSE,
 	EA_ELIF,
-	EA_NUM_EVENTACTION
+
+	/* invalid operator */
+	EA_OPERATOR_INVALID,
+
+	/* unary operators */
+	EA_OPERATOR_EXISTS, /**< only cvar given - check for existence */
+
+	/* float operators */
+	EA_OPERATOR_EQ, /**< == */
+	EA_OPERATOR_LE, /**< <= */
+	EA_OPERATOR_GE, /**< >= */
+	EA_OPERATOR_GT, /**< > */
+	EA_OPERATOR_LT, /**< < */
+	EA_OPERATOR_NE, /**< != */
+
+	/* string operators */
+	EA_OPERATOR_STR_EQ,	/**< eq */
+	EA_OPERATOR_STR_NE,	/**< ne */
+
+	/* terminal values */
+	EA_VALUE_STRING,
+	EA_VALUE_FLOAT,
+	EA_VALUE_CVARNAME,
+	EA_VALUE_NODEPROPERTY
 } ea_t;
 
 typedef enum {
