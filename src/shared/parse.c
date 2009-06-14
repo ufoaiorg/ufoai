@@ -28,8 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "defines.h"
 #include "ufotypes.h"
 #include "parse.h"
-#include "../common/common.h"
-
 
 static char com_token[4096];
 static qboolean isUnparsedToken;
@@ -42,8 +40,6 @@ static qboolean isUnparsedToken;
  */
 void Com_UnParseLastToken (void)
 {
-	if (isUnparsedToken)
-		Sys_Error("Com_UnParse: Cache is full");
 	isUnparsedToken = qtrue;
 }
 
