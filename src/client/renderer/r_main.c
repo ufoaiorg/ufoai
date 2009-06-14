@@ -59,6 +59,7 @@ cvar_t *r_texture_lod;			/* lod_bias */
 cvar_t *r_screenshot_format;
 cvar_t *r_screenshot_jpeg_quality;
 cvar_t *r_lightmap;
+cvar_t *r_deluxemap;
 cvar_t *r_ext_texture_compression;
 cvar_t *r_ext_s3tc_compression;
 cvar_t *r_intel_hack;
@@ -194,6 +195,16 @@ void R_BeginFrame (void)
 		}
 		/*R_UpdateAnisotropy();*/
 		r_anisotropic->modified = qfalse;
+	}
+
+	if (r_lightmap->modified) {
+		R_RestartPrograms_f();
+		r_lightmap->modified = qfalse;
+	}
+
+	if (r_deluxemap->modified) {
+		R_RestartPrograms_f();
+		r_deluxemap->modified = qfalse;
 	}
 
 	if (r_programs->modified) {
@@ -390,6 +401,7 @@ static void R_RegisterSystemVars (void)
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 	r_lightmap = Cvar_Get("r_lightmap", "0", 0, "Draw only the lightmap");
+	r_deluxemap = Cvar_Get("r_deluxemap", "0", 0, "Draw only the deluxemap");
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");

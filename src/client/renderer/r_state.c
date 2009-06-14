@@ -214,8 +214,7 @@ void R_EnableTexture (gltexunit_t *texunit, qboolean enable)
 
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-		if (texunit == &texunit_lightmap && r_lightmap->modified) {
-			r_lightmap->modified = qfalse;
+		if (texunit == &texunit_lightmap) {
 			if (r_lightmap->integer)
 				R_TexEnv(GL_REPLACE);
 			else
