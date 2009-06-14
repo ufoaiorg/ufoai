@@ -25,14 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_PARSE_H
 #define CLIENT_CL_PARSE_H
 
-extern const char *ev_format[EV_NUM_EVENTS];
-extern cvar_t *cl_log_battlescape_events;
-
-void CL_ResetBattlescapeEvents(void);
-void CL_EnqueueEventForLaterExecution(const int eType, struct dbuffer *msg, const int timeGap);
-void CL_SetLastMoving(struct le_s *le);
 void CL_ParseServerMessage(int cmd, struct dbuffer *msg);
-qboolean CL_CheckOrDownloadFile(const char *filename);
-void CL_DrawLineOfSight(const struct le_s *watcher, const struct le_s *target);
 
 #endif

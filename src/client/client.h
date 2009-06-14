@@ -96,8 +96,6 @@ typedef struct chr_list_s {
 typedef struct client_state_s {
 	int time;					/**< this is the time value that the client
 								 * is rendering at.  always <= cls.realtime */
-	int battlescapeEventTime;	/**< similar to time, but not counting if blockBattlescapeEvents is set */
-
 	camera_t cam;
 
 	struct le_s *teamList[MAX_TEAMLIST];

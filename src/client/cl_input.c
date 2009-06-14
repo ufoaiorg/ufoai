@@ -555,53 +555,6 @@ static void CL_LeftClickUp_f (void)
 	}
 }
 
-/**
- * @brief Draws a line to each alien the selected 'watcher' can see.
- * @sa CL_NextAlienVisibleFromActor_f (Shares quite some code)
- * @todo Save info about displayed traces and combine this function with CL_NextAlienActor_f.
- */
-static void CL_DrawSpottedLines_f (void)
-{
-	le_t *watcher; /** @todo make this a parameter for use in other functions? */
-	int i;
-	trace_t tr;
-	vec3_t from, at;
-
-	if (!selActor)
-		return;
-
-	watcher = selActor;
-
-	for (i = 0; i < numLEs; i++) {
-		const le_t *le = &LEs[i];
-		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
-		 && le->team != TEAM_CIVILIAN) {
-			/* not facing in the direction of the 'target' */
-			if (!FrustumVis(watcher->origin, watcher->dir, le->origin))
-				continue;
-			VectorCopy(watcher->origin, from);
-			VectorCopy(le->origin, at);
-			/* actor eye height */
-			if (watcher->state & STATE_CROUCHED)
-				from[2] += EYE_HT_CROUCH;
-			else
-				from[2] += EYE_HT_STAND;
-			/* target height */
-			if (le->state & STATE_CROUCHED)
-				at[2] += EYE_HT_CROUCH; /** @todo */
-			else
-				at[2] += UNIT_HEIGHT; /* full unit */
-			/** @todo maybe doing more than one trace to different target heights */
-			tr = CL_Trace(from, at, vec3_origin, vec3_origin, watcher, NULL, MASK_SOLID);
-			/* trace didn't reach the target - something was hit before */
-			if (tr.fraction < 1.0)
-				continue;
-			/* draw line from watcher to le */
-			CL_DrawLineOfSight(watcher, le);
-		}
-	}
-}
-
 static int lastAlien = 0;
 
 /**
@@ -1447,7 +1400,6 @@ void IN_Init (void)
 	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch_f, _("Toggle stand/crounch"));
 	Cmd_AddCommand("useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
 	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toggle to next alien"));
-	Cmd_AddCommand("drawspottedlines", CL_DrawSpottedLines_f, _("Draw a line to each alien visible to the current actor."));
 	Cmd_AddCommand("nextalienactor", CL_NextAlienVisibleFromActor_f, _("Toggle to next alien visible from selected actor."));
 
 	Cmd_AddCommand("nextround", CL_NextRound_f, _("Ends current round"));

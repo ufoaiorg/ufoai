@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_hud.h"
 #include "cl_sequence.h"
 #include "cl_parse.h"
+#include "events/e_parse.h"
 #include "cl_inventory.h"
 #include "cl_view.h"
 #include "cl_joystick.h"
@@ -999,7 +1000,6 @@ void CL_SetClientState (int state)
 		CL_Connect();
 		break;
 	case ca_disconnected:
-		CL_ResetBattlescapeEvents();
 		cls.waitingForStart = 0;
 	case ca_connected:
 		break;
@@ -1028,7 +1028,6 @@ void CL_Frame (int now, void *data)
 	cls.realtime = Sys_Milliseconds();
 	cl.time = now;
 	lastFrame = now;
-	cl.battlescapeEventTime += delta;
 
 	/* frame rate calculation */
 	if (delta)

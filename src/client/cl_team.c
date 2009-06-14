@@ -30,9 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_actor.h"
 #include "cl_inventory.h"
 #include "cl_ugv.h"
-#include "cl_parse.h"
+#include "events/e_parse.h"
 #include "cl_menu.h"
 #include "menu/m_nodes.h"
+#include "events/e_main.h"
 
 /** @brief List of currently displayed or equipeable characters. */
 chrList_t chrDisplayList;
@@ -324,57 +325,6 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 		if (!Com_AddToInventory(i, item, &csi.ids[container], x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
 	}
-}
-
-/**
- * @sa G_WriteItem
- * @sa G_ReadItem
- * @note The amount of the item_t struct should not be needed here - because
- * the amount is only valid for idFloor and idEquip
- */
-static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int x, int y)
-{
-	const int ammoIdx = item.m ? item.m->idx : NONE;
-	assert(item.t);
-	Com_DPrintf(DEBUG_CLIENT, "CL_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
-		item.t->id, container, item.t->idx, item.a, ammoIdx, x, y);
-	NET_WriteFormat(buf, ev_format[EV_INV_TRANSFER], item.t->idx, item.a, ammoIdx, container, x, y, item.rotated);
-}
-
-/**
- * @sa G_SendInventory
- */
-void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
-{
-	int j, nr = 0;
-	const invList_t *ic;
-
-	for (j = 0; j < csi.numIDs; j++)
-		for (ic = i->c[j]; ic; ic = ic->next)
-			nr++;
-
-	NET_WriteShort(buf, nr * INV_INVENTORY_BYTES);
-	for (j = 0; j < csi.numIDs; j++)
-		for (ic = i->c[j]; ic; ic = ic->next)
-			CL_NetSendItem(buf, ic->item, j, ic->x, ic->y);
-}
-
-/**
- * @sa G_WriteItem
- * @sa G_ReadItem
- * @note The amount of the item_t struct should not be needed here - because
- * the amount is only valid for idFloor and idEquip
- */
-void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *x, int *y)
-{
-	/* reset */
-	int t, m;
-	item->t = item->m = NULL;
-	item->a = NONE_AMMO;
-	NET_ReadFormat(buf, ev_format[EV_INV_TRANSFER], &t, &item->a, &m, container, x, y, &item->rotated);
-
-	item->t = INVSH_GetItemByIDX(t);
-	item->m = INVSH_GetItemByIDX(m);
 }
 
 /**

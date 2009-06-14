@@ -377,6 +377,55 @@ qboolean CL_PendingHTTPDownloads (void)
 }
 
 /**
+ * @return true if the file exists, otherwise it attempts to start a download via curl
+ * @sa CL_CheckAndQueueDownload
+ * @sa CL_RequestNextDownload
+ */
+qboolean CL_CheckOrDownloadFile (const char *filename)
+{
+	static char lastfilename[MAX_OSPATH] = "";
+
+	if (!filename || filename[0] == '\0')
+		return qtrue;
+
+	/* r1: don't attempt same file many times */
+	if (!strcmp(filename, lastfilename))
+		return qtrue;
+
+	Q_strncpyz(lastfilename, filename, sizeof(lastfilename));
+
+	if (strstr(filename, "..")) {
+		Com_Printf("Refusing to check a path with .. (%s)\n", filename);
+		return qtrue;
+	}
+
+	if (strchr(filename, ' ')) {
+		Com_Printf("Refusing to check a path containing spaces (%s)\n", filename);
+		return qtrue;
+	}
+
+	if (strchr(filename, ':')) {
+		Com_Printf("Refusing to check a path containing a colon (%s)\n", filename);
+		return qtrue;
+	}
+
+	if (filename[0] == '/') {
+		Com_Printf("Refusing to check a path starting with / (%s)\n", filename);
+		return qtrue;
+	}
+
+	if (FS_LoadFile(filename, NULL) != -1) {
+		/* it exists, no need to download */
+		return qtrue;
+	}
+
+	if (CL_QueueHTTPDownload(filename))
+		return qfalse;
+
+	return qtrue;
+}
+
+/**
  * @brief Validate a path supplied by a filelist.
  * @param[in,out] The file to download (high bits will be stripped)
  * @sa CL_QueueHTTPDownload

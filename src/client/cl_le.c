@@ -76,7 +76,7 @@ void CL_CompleteRecalcRouting (void)
 }
 
 /**
- * @sa LE_Explode
+ * @sa CL_Explode
  * @param[in] le A local entity of a brush model (func_breakable, func_door, ...)
  */
 void CL_RecalcRouting (const le_t* le)
@@ -189,97 +189,6 @@ qboolean LE_IsLivingAndVisibleActor (const le_t *le)
 	assert(le->type != ET_ACTORHIDDEN);
 
 	return LE_IsLivingActor(le);
-}
-
-/**
- * @brief Let a particle appear for the client
- * @param[in] msg holds the network data
- * @sa CL_ParticleSpawn
- * @sa EV_SPAWN_PARTICLE
- */
-void LE_ParticleAppear (struct dbuffer *msg)
-{
-	char *particle;
-	int entnum, levelflags;
-	le_t* le;
-
-	/* read data */
-	NET_ReadFormat(msg, ev_format[EV_SPAWN_PARTICLE], &entnum, &levelflags, &particle);
-
-	le = LE_Get(entnum);
-	if (!le)
-		LE_NotFoundError(entnum);
-
-	/* particles don't have a model to add to the scene - we mark them as invisible and
-	 * only render the particle */
-	le->invis = !cl_leshowinvis->integer;
-	le->levelflags = levelflags;
-	le->particleID = Mem_PoolStrDup(particle, cl_genericPool, 0);
-	le->ptl = CL_ParticleSpawn(le->particleID, le->levelflags, le->origin, NULL, NULL);
-	if (!le->ptl)
-		Com_Printf("Could not spawn particle: '%s'\n", le->particleID);
-}
-
-/**
- * @sa EV_DOOR_CLOSE
- * @sa EV_DOOR_OPEN
- * @sa G_ClientUseEdict
- */
-static inline void LE_DoorAction (struct dbuffer *msg, qboolean openDoor)
-{
-	/* get local entity */
-	const int entnum = NET_ReadShort(msg);
-	le_t *le = LE_Get(entnum);
-	if (!le)
-		LE_NotFoundError(entnum);
-
-	if (openDoor) {
-		/** @todo YAW should be the orientation of the door */
-		le->angles[YAW] += DOOR_ROTATION_ANGLE;
-	} else {
-		/** @todo YAW should be the orientation of the door */
-		le->angles[YAW] -= DOOR_ROTATION_ANGLE;
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "Client processed door movement.\n");
-
-	CM_SetInlineModelOrientation(le->inlineModelName, le->origin, le->angles);
-	CL_RecalcRouting(le);
-}
-
-/**
- * @brief Callback for EV_DOOR_CLOSE event - rotates the inline model and recalc routing
- * @sa Touch_DoorTrigger
- */
-void LE_DoorClose (struct dbuffer *msg)
-{
-	LE_DoorAction(msg, qfalse);
-}
-
-/**
- * @brief Callback for EV_DOOR_OPEN event - rotates the inline model and recalc routing
- * @sa Touch_DoorTrigger
- */
-void LE_DoorOpen (struct dbuffer *msg)
-{
-	LE_DoorAction(msg, qtrue);
-}
-
-/**
- * @note e.g. func_breakable or func_door with health
- * @sa EV_MODEL_EXPLODE
- */
-void LE_Explode (struct dbuffer *msg)
-{
-	const int entnum = NET_ReadShort(msg);
-	le_t *le = LE_Get(entnum);
-	if (!le)
-		LE_NotFoundError(entnum);
-
-	le->inuse = qfalse;
-
-	/* Recalc the client routing table because this le (and the inline model) is now gone */
-	CL_RecalcRouting(le);
 }
 
 /**
@@ -796,6 +705,84 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 
 	le->think = LET_Projectile;
 	le->think(le);
+}
+
+/**
+ * @brief Returns the index of the biggest item in the inventory list
+ * @note This item is the only one that will be drawn when lying at the floor
+ * @sa LE_PlaceItem
+ * @return the item index in the @c csi.ods array
+ * @note Only call this for none empty invList_t - see FLOOR, LEFT, RIGHT and so on macros
+ */
+static objDef_t *LE_BiggestItem (const invList_t *ic)
+{
+	objDef_t *max;
+	int maxSize = 0;
+
+	for (max = ic->item.t; ic; ic = ic->next) {
+		const int size = Com_ShapeUsage(ic->item.t->shape);
+		if (size > maxSize) {
+			max = ic->item.t;
+			maxSize = size;
+		}
+	}
+
+	/* there must be an item in the invList_t */
+	assert(max);
+	return max;
+}
+
+/**
+ * @sa CL_BiggestItem
+ * @param[in] le The local entity (ET_ITEM) with the floor container
+ */
+void LE_PlaceItem (le_t *le)
+{
+	le_t *actor;
+	int i;
+
+	assert(le->type == ET_ITEM);
+
+	/* search owners (there can be many, some of them dead) */
+	for (i = 0, actor = LEs; i < numLEs; i++, actor++)
+		if (actor->inuse && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
+		 && VectorCompare(actor->pos, le->pos)) {
+			if (FLOOR(le))
+				FLOOR(actor) = FLOOR(le);
+		}
+
+	/* the le is an ET_ITEM entity, this entity is there to render dropped items
+	 * if there are no items in the floor container, this entity can be
+	 * deactivated */
+	if (FLOOR(le)) {
+		const objDef_t *biggest = LE_BiggestItem(FLOOR(le));
+		le->model1 = cls.model_weapons[biggest->idx];
+		if (!le->model1)
+			Com_Error(ERR_DROP, "Model for item %s is not precached in the cls.model_weapons array",
+				biggest->id);
+		Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
+		VectorSubtract(le->origin, biggest->center, le->origin);
+		le->angles[ROLL] = 90;
+		/*le->angles[YAW] = 10*(int)(le->origin[0] + le->origin[1] + le->origin[2]) % 360; */
+		le->origin[2] -= GROUND_DELTA;
+	} else {
+		/* If no items in floor inventory, don't draw this le - the container is
+		 * maybe empty because an actor picked up the last items here */
+		/** @todo This will prevent LE_Add to get a floor-edict when in
+		 * mid-move. @sa g_client.c:G_ClientInvMove.
+		 * (It will cause asserts/segfaults in e.g. MN_DrawContainerNode)
+		 * mattn: But why do we want to get an empty container? If we don't set
+		 * this to qfalse we get the null model rendered, because the le->model
+		 * is @c NULL, too.
+		 * ---
+		 * I disabled the line again, because I really like having no segfauls/asserts.
+		 * There has to be a better solution/fix for the lila/null dummy models. --Hoehrer 2008-08-27
+		 * See the following link for details:
+		 * https://sourceforge.net/tracker/index.php?func=detail&aid=2071463&group_id=157793&atid=805242
+		le->inuse = qfalse;
+		*/
+		Com_Error(ERR_DROP, "Empty container as floor le with number: %i", le->entnum);
+	}
 }
 
 /**

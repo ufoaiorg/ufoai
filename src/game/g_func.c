@@ -173,7 +173,7 @@ static qboolean Door_Use (edict_t *door)
 
 /**
  * @brief Trigger to open the door we are standing in front of it
- * @sa LE_DoorOpen
+ * @sa CL_DoorOpen
  * @sa LE_CloseOpen
  * @sa CL_ActorDoorAction
  * @sa AI_CheckUsingDoor

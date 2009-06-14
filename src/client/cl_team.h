@@ -44,11 +44,9 @@ qboolean CL_LoadCharacterXML(mxml_node_t *p, character_t *chr);
 
 void CL_SaveInventory(sizebuf_t * buf, const inventory_t * i);
 void CL_SaveInventoryXML(mxml_node_t *p, const inventory_t * i);
-void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y);
 void CL_LoadInventory(sizebuf_t * buf, inventory_t * i);
 void CL_LoadInventoryXML(mxml_node_t *p, inventory_t * i);
 void TEAM_InitStartup(void);
-void CL_NetSendInventory(struct dbuffer *buf, const inventory_t *i);
 item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item);
 
 extern chrList_t chrDisplayList;

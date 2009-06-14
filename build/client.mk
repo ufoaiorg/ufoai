@@ -33,6 +33,43 @@ CLIENT_SRCS = \
 	client/cl_video.c \
 	client/cl_view.c \
 	\
+	client/events/e_main.c \
+	client/events/e_parse.c \
+	client/events/e_time.c \
+	client/events/event/actor/e_event_actoradd.c \
+	client/events/event/actor/e_event_actorappear.c \
+	client/events/event/actor/e_event_actordie.c \
+	client/events/event/actor/e_event_actordooraction.c \
+	client/events/event/actor/e_event_actormove.c \
+	client/events/event/actor/e_event_actorresetclientaction.c \
+	client/events/event/actor/e_event_actorshoot.c \
+	client/events/event/actor/e_event_actorshoothidden.c \
+	client/events/event/actor/e_event_actorstartshoot.c \
+	client/events/event/actor/e_event_actorstatechange.c \
+	client/events/event/actor/e_event_actorstats.c \
+	client/events/event/actor/e_event_actorthrow.c \
+	client/events/event/actor/e_event_actorturn.c \
+	client/events/event/inventory/e_event_invadd.c \
+	client/events/event/inventory/e_event_invammo.c \
+	client/events/event/inventory/e_event_invcheckhands.c \
+	client/events/event/inventory/e_event_invdel.c \
+	client/events/event/inventory/e_event_invreload.c \
+	client/events/event/player/e_event_centerview.c \
+	client/events/event/player/e_event_doendround.c \
+	client/events/event/player/e_event_endroundannounce.c \
+	client/events/event/player/e_event_reset.c \
+	client/events/event/player/e_event_results.c \
+	client/events/event/player/e_event_startgame.c \
+	client/events/event/player/e_event_startgamedone.c \
+	client/events/event/world/e_event_addbrushmodel.c \
+	client/events/event/world/e_event_addedict.c \
+	client/events/event/world/e_event_doorclose.c \
+	client/events/event/world/e_event_dooropen.c \
+	client/events/event/world/e_event_entappear.c \
+	client/events/event/world/e_event_entperish.c \
+	client/events/event/world/e_event_explode.c \
+	client/events/event/world/e_event_particleappear.c \
+	\
 	client/sound/s_music.c \
 	client/sound/s_main.c \
 	client/sound/s_mix.c \

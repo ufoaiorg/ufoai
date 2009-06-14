@@ -201,15 +201,12 @@ void CL_CompleteRecalcRouting(void);
 qboolean LE_IsLivingAndVisibleActor(const le_t *le);
 qboolean LE_IsLivingActor(const le_t *le);
 qboolean LE_IsActor(const le_t *le);
-void LE_Explode(struct dbuffer *msg);
-void LE_DoorOpen(struct dbuffer *msg);
-void LE_DoorClose(struct dbuffer *msg);
-void LE_ParticleAppear(struct dbuffer *msg);
 le_t *LE_Add(int entnum);
 le_t *LE_Get(int entnum);
 #define LE_NotFoundError(entnum) _LE_NotFoundError(entnum, __FILE__, __LINE__)
 void _LE_NotFoundError(int entnum, const char *file, const int line) __attribute__((noreturn));
 le_t *LE_Find(int type, pos3_t pos);
+void LE_PlaceItem(le_t *le);
 void LE_Cleanup(void);
 void LE_AddToScene(void);
 
