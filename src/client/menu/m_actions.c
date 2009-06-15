@@ -76,7 +76,7 @@ static inline const char* MN_GenCommandReadProperty (const char* input, char* ou
  * It's also possible to do something like
  * @code cmd "set someCvar <min>/<max>"
  */
-static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam, const char* input, qboolean addNewLine)
+const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam, const char* input, qboolean addNewLine)
 {
 	static char cmd[256];
 	int length = sizeof(cmd) - (addNewLine ? 2 : 1);

@@ -41,102 +41,189 @@ static const menuActionTypeList_t operatorList[] = {
 	{EA_OPERATOR_GT, ">"},
 	{EA_OPERATOR_LT, "<"},
 	{EA_OPERATOR_NE, "!="},
+
 	{EA_OPERATOR_STR_EQ, "eq"},
 	{EA_OPERATOR_STR_NE, "ne"},
+
+	{EA_OPERATOR_ADD, "+"},
+	{EA_OPERATOR_SUB, "-"},
+	{EA_OPERATOR_MUL, "*"},
+	{EA_OPERATOR_DIV, "/"},
+	{EA_OPERATOR_MOD, "%"},
+
+	{EA_OPERATOR_AND, "and"},
+	{EA_OPERATOR_OR, "or"},
+	{EA_OPERATOR_AND, "&&"},
+	{EA_OPERATOR_OR, "||"},
+	{EA_OPERATOR_XOR, "^"},
+
 	{EA_NULL, ""}
 };
-
-/**
- * @todo code the FLOAT/STRING type into the opcode; we should not check it like that
- */
-static inline qboolean MN_IsFloatOperator (int op)
-{
-	return op == EA_OPERATOR_EQ
-	 || op == EA_OPERATOR_LE
-	 || op == EA_OPERATOR_GE
-	 || op == EA_OPERATOR_GT
-	 || op == EA_OPERATOR_LT
-	 || op == EA_OPERATOR_NE;
-}
 
 /**
  * @return A float value, else 0
  */
 float MN_GetFloatFromExpression (menuAction_t *expression, const menuNode_t *source)
 {
-	switch (expression->type) {
-	case EA_NULL:
-		return qfalse;
-	case EA_VALUE_STRING:
-		return atof(expression->d.terminal.d1.string);
-	case EA_VALUE_FLOAT:
-		return expression->d.terminal.d1.number;
-	case EA_VALUE_CVARNAME:
-		{
-			cvar_t *cvar = NULL;
-			cvar = Cvar_Get(expression->d.terminal.d1.string, "", 0, "Menu if condition cvar");
-			return cvar->value;
-		}
-	case EA_VALUE_PATHPROPERTY:
-		{
-			menuNode_t *node;
-			const value_t *property;
-			const char *path = expression->d.terminal.d1.string;
-			MN_ReadNodePath(path, source, &node, &property);
-			if (!node) {
-				Com_Printf("MN_GetFloatFromParam: Node '%s' wasn't found; '0' returned\n", path);
-				return 0;
+	switch (expression->type & EA_HIGHT_MASK) {
+	case EA_VALUE:
+		switch (expression->type) {
+		case EA_VALUE_STRING:
+		case EA_VALUE_STRING_WITHINJECTION:
+			{
+				const char* string = expression->d.terminal.d1.string;
+				if (expression->type == EA_VALUE_STRING_WITHINJECTION)
+					string = MN_GenInjectedString(source, qtrue, string, qfalse);
+				return atof(string);
 			}
-			if (!property) {
-				Com_Printf("MN_GetFloatFromParam: Property '%s' wasn't found; '0' returned\n", path);
-				return 0;
+		case EA_VALUE_FLOAT:
+			return expression->d.terminal.d1.number;
+		case EA_VALUE_CVARNAME:
+		case EA_VALUE_CVARNAME_WITHINJECTION:
+			{
+				cvar_t *cvar = NULL;
+				const char *cvarName = expression->d.terminal.d1.string;
+				if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
+					cvarName = MN_GenInjectedString(source, qtrue, cvarName, qfalse);
+				cvar = Cvar_Get(cvarName, "", 0, "Cvar from menu expression");
+				return cvar->value;
 			}
-			return MN_GetFloatFromNodeProperty(node, property);
+		case EA_VALUE_PATHPROPERTY:
+		case EA_VALUE_PATHPROPERTY_WITHINJECTION:
+			{
+				menuNode_t *node;
+				const value_t *property;
+				const char *path = expression->d.terminal.d1.string;
+				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
+					path = MN_GenInjectedString(source, qtrue, path, qfalse);
+
+				MN_ReadNodePath(path, source, &node, &property);
+				if (!node) {
+					Com_Printf("MN_GetFloatFromParam: Node '%s' wasn't found; '0' returned\n", path);
+					return 0;
+				}
+				if (!property) {
+					Com_Printf("MN_GetFloatFromParam: Property '%s' wasn't found; '0' returned\n", path);
+					return 0;
+				}
+				return MN_GetFloatFromNodeProperty(node, property);
+			}
 		}
+		break;
+	case EA_OPERATOR_FLOAT2FLOAT:
+		{
+			const float value1 = MN_GetFloatFromExpression(expression->d.nonTerminal.left, source);
+			const float value2 = MN_GetFloatFromExpression(expression->d.nonTerminal.right, source);
+
+			switch (expression->type) {
+			case EA_OPERATOR_ADD:
+				return value1 + value2;
+			case EA_OPERATOR_SUB:
+				return value1 - value2;
+			case EA_OPERATOR_MUL:
+				return value1 * value2;
+			case EA_OPERATOR_DIV:
+				if (value2 == 0) {
+					Com_Printf("MN_GetFloatFromExpression: Div by 0. '0' returned");
+					return 0;
+				} else
+					return value1 / value2;
+			case EA_OPERATOR_MOD:
+				{
+					const int v1 = value1;
+					const int v2 = value2;
+					/** @todo do we have some check to do? */
+					return v1 % v2;
+				}
+			}
+		}
+		break;
+
 	}
+
+	Com_Printf("MN_GetFloatFromExpression: Unsupported expression type: %i. '0' returned", expression->type);
 	return 0;
 }
 
 /**
  * @return A string, else an empty string
+ * @todo this should not work very well, because too much va are used
+ * then we should locally cache values, or manage a temporary string structure
  */
 const char* MN_GetStringFromExpression (menuAction_t *expression, const menuNode_t *source)
 {
-	switch (expression->type) {
-	case EA_VALUE_STRING:
-		return expression->d.terminal.d1.string;
-	case EA_VALUE_FLOAT:
-		assert(qfalse);
-	case EA_VALUE_CVARNAME:
-	{
-		cvar_t *cvar = NULL;
-		cvar = Cvar_Get(expression->d.terminal.d1.string, "", 0, "Menu if condition cvar");
-		return cvar->string;
-	}
-	case EA_VALUE_PATHPROPERTY:
+	switch (expression->type & EA_HIGHT_MASK) {
+	case EA_VALUE:
+		switch (expression->type) {
+		case EA_VALUE_STRING:
+		case EA_VALUE_STRING_WITHINJECTION:
+			{
+				const char* string = expression->d.terminal.d1.string;
+				if (expression->type == EA_VALUE_STRING_WITHINJECTION)
+					string = MN_GenInjectedString(source, qtrue, string, qfalse);
+				return string;
+			}
+		case EA_VALUE_FLOAT:
+			assert(qfalse);
+		case EA_VALUE_CVARNAME:
+		case EA_VALUE_CVARNAME_WITHINJECTION:
 		{
-			menuNode_t *node;
-			const value_t *property;
-			const char* string;
-			const char *path = expression->d.terminal.d1.string;
-			MN_ReadNodePath(expression->d.terminal.d1.string, source, &node, &property);
-			if (!node) {
-				Com_Printf("MN_GetStringFromParam: Node '%s' wasn't found; '' returned\n", path);
-				return "";
-			}
-			if (!property) {
-				Com_Printf("MN_GetStringFromParam: Property '%s' wasn't found; '' returned\n", path);
-				return "";
-			}
-			string = MN_GetStringFromNodeProperty(node, property);
-			if (string == NULL) {
-				Com_Printf("MN_GetStringFromParam: String getter for '%s' property do not exists; '' returned\n", path);
-				return "";
-			}
-			return string;
+			cvar_t *cvar = NULL;
+			const char *cvarName = expression->d.terminal.d1.string;
+			if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
+				cvarName = MN_GenInjectedString(source, qtrue, cvarName, qfalse);
+			cvar = Cvar_Get(cvarName, "", 0, "Cvar from menu expression");
+			return cvar->string;
 		}
-		break;
+		case EA_VALUE_PATHPROPERTY:
+		case EA_VALUE_PATHPROPERTY_WITHINJECTION:
+			{
+				menuNode_t *node;
+				const value_t *property;
+				const char* string;
+				const char *path = expression->d.terminal.d1.string;
+				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
+					path = MN_GenInjectedString(source, qtrue, path, qfalse);
+
+				MN_ReadNodePath(expression->d.terminal.d1.string, source, &node, &property);
+				if (!node) {
+					Com_Printf("MN_GetStringFromParam: Node '%s' wasn't found; '' returned\n", path);
+					return "";
+				}
+				if (!property) {
+					Com_Printf("MN_GetStringFromParam: Property '%s' wasn't found; '' returned\n", path);
+					return "";
+				}
+				string = MN_GetStringFromNodeProperty(node, property);
+				if (string == NULL) {
+					Com_Printf("MN_GetStringFromParam: String getter for '%s' property do not exists; '' returned\n", path);
+					return "";
+				}
+				return string;
+			}
+			break;
+		}
+
+	case EA_OPERATOR_BOOLEAN2BOOLEAN:
+	case EA_OPERATOR_FLOAT2BOOLEAN:
+	case EA_OPERATOR_STRING2BOOLEAN:
+		{
+			const qboolean v = MN_GetBooleanFromExpression(expression, source);
+			return (v)?"1":"0";
+		}
+
+	case EA_OPERATOR_FLOAT2FLOAT:
+		{
+			const float number = MN_GetFloatFromExpression(expression, source);
+			const int integer = number;
+			/** @todo should we add a delta? */
+			if (number == integer)
+				return va("%i", integer);
+			else
+				return va("%f", number);
+		}
 	}
+
 
 	Com_Printf("MN_GetStringFromExpression: Unsupported expression type: %i", expression->type);
 	return "";
@@ -148,58 +235,88 @@ const char* MN_GetStringFromExpression (menuAction_t *expression, const menuNode
  */
 qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t *source)
 {
-	switch (expression->type) {
-	case EA_VALUE_STRING:
-	case EA_VALUE_FLOAT:
-	case EA_VALUE_CVARNAME:
-	case EA_VALUE_NODEPROPERTY:
+	if (expression == NULL)
+		return qfalse;
+
+	switch (expression->type & EA_HIGHT_MASK) {
+	case EA_VALUE:
 		return MN_GetFloatFromExpression (expression, source) != 0;
-	}
 
-	if (MN_IsFloatOperator(expression->type)) {
-		const float value1 = MN_GetFloatFromExpression(expression->d.nonTerminal.left, source);
-		const float value2 = MN_GetFloatFromExpression(expression->d.nonTerminal.right, source);
+	case EA_OPERATOR_BOOLEAN2BOOLEAN:
+		{
+			const qboolean value1 = MN_GetBooleanFromExpression(expression->d.nonTerminal.left, source);
+			const qboolean value2 = MN_GetBooleanFromExpression(expression->d.nonTerminal.right, source);
 
-		switch (expression->type) {
-		case EA_OPERATOR_EQ:
-			return value1 == value2;
-		case EA_OPERATOR_LE:
-			return value1 <= value2;
-		case EA_OPERATOR_GE:
-			return value1 >= value2;
-		case EA_OPERATOR_GT:
-			return value1 > value2;
-		case EA_OPERATOR_LT:
-			return value1 < value2;
-		case EA_OPERATOR_NE:
-			return value1 != value2;
-		default:
-			assert(qfalse);
+			switch (expression->type) {
+			case EA_OPERATOR_AND:
+				return value1 && value2;
+			case EA_OPERATOR_OR:
+				return value1 || value2;
+			case EA_OPERATOR_XOR:
+				return value1 ^ value2;
+			case EA_OPERATOR_NOT:
+				return !value1;
+			default:
+				assert(qfalse);
+			}
 		}
-	}
+		break;
 
-	if (expression->type == EA_OPERATOR_EXISTS) {
-		const menuAction_t *e = expression->d.nonTerminal.left;
-		assert(e);
-		assert(e->type == EA_VALUE_CVARNAME);
-		return Cvar_FindVar(e->d.terminal.d1.string) != NULL;
-	}
+	case EA_OPERATOR_FLOAT2BOOLEAN:
+		{
+			const float value1 = MN_GetFloatFromExpression(expression->d.nonTerminal.left, source);
+			const float value2 = MN_GetFloatFromExpression(expression->d.nonTerminal.right, source);
 
-	if (expression->type == EA_OPERATOR_STR_EQ || expression->type == EA_OPERATOR_STR_NE) {
-		const char* value1 = MN_GetStringFromExpression(expression->d.nonTerminal.left, source);
-		const char* value2 = MN_GetStringFromExpression(expression->d.nonTerminal.right, source);
-
-		switch (expression->type) {
-		case EA_OPERATOR_STR_EQ:
-			return strcmp(value1, value2) == 0;
-		case EA_OPERATOR_STR_NE:
-			return strcmp(value1, value2) != 0;
-		default:
-			assert(qfalse);
+			switch (expression->type) {
+			case EA_OPERATOR_EQ:
+				return value1 == value2;
+			case EA_OPERATOR_LE:
+				return value1 <= value2;
+			case EA_OPERATOR_GE:
+				return value1 >= value2;
+			case EA_OPERATOR_GT:
+				return value1 > value2;
+			case EA_OPERATOR_LT:
+				return value1 < value2;
+			case EA_OPERATOR_NE:
+				return value1 != value2;
+			default:
+				assert(qfalse);
+			}
 		}
-	}
+		break;
 
-	Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: Unsupported expression type: %i", expression->type);
+	case EA_OPERATOR_EXISTS:
+		{
+			const menuAction_t *e = expression->d.nonTerminal.left;
+			const char* cvarName;
+			assert(e);
+			assert(e->type == EA_VALUE_CVARNAME || e->type == EA_VALUE_CVARNAME_WITHINJECTION);
+			cvarName = e->d.terminal.d1.string;
+			if (e->type == EA_VALUE_CVARNAME_WITHINJECTION)
+				cvarName = MN_GenInjectedString(source, qtrue, cvarName, qfalse);
+			return Cvar_FindVar(cvarName) != NULL;
+		}
+		break;
+
+	case EA_OPERATOR_STRING2BOOLEAN:
+		{
+			const char* value1 = MN_GetStringFromExpression(expression->d.nonTerminal.left, source);
+			const char* value2 = MN_GetStringFromExpression(expression->d.nonTerminal.right, source);
+
+			switch (expression->type) {
+			case EA_OPERATOR_STR_EQ:
+				return strcmp(value1, value2) == 0;
+			case EA_OPERATOR_STR_NE:
+				return strcmp(value1, value2) != 0;
+			default:
+				assert(qfalse);
+			}
+		}
+
+	default:
+		Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: Unsupported expression type: %i", expression->type);
+	}
 }
 
 /**
@@ -265,7 +382,10 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 	if (!strncmp(token, "*cvar:", 6)) {
 		const char* cvarName = token + 6;
 		expression->d.terminal.d1.string = MN_AllocString(cvarName, 0);
-		expression->type = EA_VALUE_CVARNAME;
+		if (MN_IsInjectedString(cvarName))
+			expression->type = EA_VALUE_CVARNAME_WITHINJECTION;
+		else
+			expression->type = EA_VALUE_CVARNAME;
 		return expression;
 	}
 
@@ -344,7 +464,10 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 
 	/* it is a const string */
 	expression->d.terminal.d1.string = MN_AllocString(token, 0);
-	expression->type = EA_VALUE_STRING;
+	if (MN_IsInjectedString(token))
+		expression->type = EA_VALUE_STRING_WITHINJECTION;
+	else
+		expression->type = EA_VALUE_STRING;
 	return expression;
 }
 
@@ -368,7 +491,7 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const 
 
 		/* unary operator or unneed "( ... )" */
 		if (!strcmp(token, ")")) {
-			if (e->type == EA_VALUE_CVARNAME) {
+			if (e->type == EA_VALUE_CVARNAME || e->type == EA_VALUE_CVARNAME_WITHINJECTION) {
 				expression = MN_AllocAction();
 				expression->type = EA_OPERATOR_EXISTS;
 				expression->d.nonTerminal.left = e;
