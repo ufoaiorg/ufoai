@@ -48,7 +48,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_view.h"
 #include "cl_parse.h"
 #include "cl_menu.h"
-#include "menu/m_actions.h"
 #include "menu/m_input.h"
 #include "menu/node/m_node_abstractnode.h"
 
@@ -415,16 +414,9 @@ static void CL_ConfirmAction_f (void)
  */
 static void CL_SelectDown_f (void)
 {
-	menuNode_t* menu;
 	if (mouseSpace != MS_WORLD)
 		return;
 	CL_ActorSelectMouse();
-	/* we clicked outside the world but not onto a menu */
-	/* get the current menu */
-	/** @todo should nothing to do here. Check use of leave event and move it into the menu (we should use focus) */
-	menu = MN_GetActiveMenu();
-	if (menu && menu->u.window.onLeave)
-		MN_ExecuteEventActions(menu, menu->u.window.onLeave);
 }
 
 static void CL_SelectUp_f (void)
@@ -536,13 +528,6 @@ static void CL_LeftClickDown_f (void)
 {
 	if (mouseSpace == MS_MENU) {
 		MN_MouseDown(mousePosX, mousePosY, K_MOUSE1);
-	} else if (cls.state == ca_active) {
-		/* we clicked outside the world but not onto a menu */
-		/* get the current menu */
-		/** @todo should nothing to do here. Check use of leave event and move it into the menu (we should use focus) */
-		const menuNode_t *menu = MN_GetActiveMenu();
-		if (menu && menu->u.window.onLeave)
-			MN_ExecuteEventActions(menu, menu->u.window.onLeave);
 	}
 }
 

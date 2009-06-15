@@ -314,7 +314,6 @@ static const value_t windowNodeProperties[] = {
 
 	{"oninit", V_UI_ACTION, offsetof(menuNode_t, u.window.onInit), MEMBER_SIZEOF(menuNode_t, u.window.onInit)},
 	{"onclose", V_UI_ACTION, offsetof(menuNode_t, u.window.onClose), MEMBER_SIZEOF(menuNode_t, u.window.onClose)},
-	{"onleave", V_UI_ACTION, offsetof(menuNode_t, u.window.onLeave), MEMBER_SIZEOF(menuNode_t, u.window.onLeave)},
 	{"onevent", V_UI_ACTION, offsetof(menuNode_t, u.window.onTimeOut), MEMBER_SIZEOF(menuNode_t, u.window.onTimeOut)},
 
 	{NULL, V_NULL, 0, 0}

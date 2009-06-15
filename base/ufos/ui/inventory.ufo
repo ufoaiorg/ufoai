@@ -173,10 +173,6 @@ window hudinv extends inventory
 		size	"36 75"
 		onClick	{ cmd "mn_pop;" }
 	}
-	func onLeave
-	{
-		cmd "mn_pop;"
-	}
 }
 
 // ==================
@@ -192,10 +188,6 @@ window ahudinv extends inventory
 		size    "130 265"
 		onClick   { cmd "mn_pop;" }
 		onRClick  { cmd "mn_pop;" }
-	}
-	func onLeave
-	{
-		cmd "mn_pop;"
 	}
 }
 

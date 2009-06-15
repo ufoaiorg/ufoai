@@ -219,9 +219,4 @@ window irc_popup
 		size		"176 32"
 		onClick		{ cmd "mn_pop;" }
 	}
-
-	func onLeave
-	{
-		cmd "mn_pop;"
-	}
 }

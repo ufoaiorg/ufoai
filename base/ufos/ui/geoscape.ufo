@@ -690,11 +690,6 @@ window popup_button
 	func onInit
 	{
 	}
-
-	func onLeave
-	{
-		cmd	"mn_pop;"
-	}
 }
 
 // ==================
