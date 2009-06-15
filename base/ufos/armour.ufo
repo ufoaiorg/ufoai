@@ -138,47 +138,47 @@ item armour_lightadv
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		20
-		normal_medium		18
-		normal_heavy		11
-		normal_spray        9
+		normal_light		29
+		normal_medium		24
+		normal_heavy		19
+		normal_spray        10
 
-		normal_steelblade			10
-		normal_monomolecularblade	5
+		normal_steelblade			18
+		normal_monomolecularblade	12
 
 		blast				25
 
-		fire_medium			15
-		fire_heavy			15
-		fire_flamer         2
+		fire_medium			19
+		fire_heavy			19
+		fire_flamer         3
 
-		shock				0
+		shock				10
 
-		plasma_light		7
-		plasma_medium		6
-		plasma_heavy		5
+		plasma_light		18
+		plasma_medium		16
+		plasma_heavy		15
 
-		laser_light			12
-		laser_medium		10
-		laser_heavy			10
+		laser_light			20
+		laser_medium		18
+		laser_heavy			17
 
-		particlebeam_light	7
-		particlebeam_medium	6
-		particlebeam_heavy	5
+		particlebeam_light	10
+		particlebeam_medium	10
+		particlebeam_heavy	8
 
-		stun_electro		0
+		stun_electro		5
 		stun_gas			0
 	}
 
 	rating {
-		normal				30
-		blast				30
-		fire				20
-		shock				10
-		plasma				10
-		laser				20
-		particlebeam		10
-		stun_electro		10
+		normal				35
+		blast				35
+		fire				25
+		shock				15
+		plasma				15
+		laser				25
+		particlebeam		15
+		stun_electro		15
 		stun_gas			10
 	}
 }
