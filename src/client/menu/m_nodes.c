@@ -150,7 +150,7 @@ qboolean MN_CheckVisibility (menuNode_t *node)
 {
 	if (!node->visibilityCondition)
 		return qtrue;
-	return MN_CheckBooleanExpression(node->visibilityCondition, node);
+	return MN_GetBooleanFromExpression(node->visibilityCondition, node);
 }
 
 /**

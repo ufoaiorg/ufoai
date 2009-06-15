@@ -1036,12 +1036,12 @@ window popup_newbase
 	}
 
 	func chk_checkboxes {
-		if ( *node:root.start_building@current > 0 ) {
+		if ( *node:(checkbox)root.start_building@current > 0 ) {
 			*start_employees@disabled false
 		} else {
 			*(abstractvalue)start_employees@current 0
 			*start_employees@disabled true
-		}		
+		}
 	}
 
 	// START WITH EMPLOYEES

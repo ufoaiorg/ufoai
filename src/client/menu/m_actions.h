@@ -56,34 +56,27 @@ typedef enum ea_s {
 	EA_OPERATOR_STR_NE,	/**< ne */
 
 	/* terminal values */
-	EA_VALUE_STRING,
-	EA_VALUE_FLOAT,
-	EA_VALUE_CVARNAME,
-	EA_VALUE_NODEPROPERTY
+	EA_VALUE_STRING,						/**< reference to a string */
+	EA_VALUE_FLOAT,							/**< embedded float */
+	EA_VALUE_RAW,							/**< reference to a binary value */
+	EA_VALUE_CVARNAME,						/**< reference to a cvarname */
+	EA_VALUE_CVARNAME_WITHINJECTION,		/**< should be into an extra action type */
+	EA_VALUE_PATHPROPERTY,					/**< reference to a path, and a property (when it is possible) */
+	EA_VALUE_PATHPROPERTY_WITHINJECTION,	/**< should be into an extra action type */
+	EA_VALUE_NODEPROPERTY					/**< reference to a node, and a property (not a string) */
 } ea_t;
-
-typedef enum {
-	EA_VALUE,						/**< char string value */
-	EA_RAWVALUE,					/**< parsed value */
-	EA_CVARNAME,					/**< a cvar name */
-	EA_PATHPROPERTY,				/**< a property identify by a path */
-	EA_PATHPROPERTYWITHINJECTION,	/**< a property identify by a path, but using injection (then its not a const node) */
-} ea_paramType;
-
-typedef struct {
-	unsigned char op;
-	unsigned char param1;
-	unsigned char param2;
-} ea_opcode;
 
 typedef union {
 	float number;
 	char* string;
+	const char* constString;
 	void* data;
+	const void* constData;
 } menuTerminalActionData_t;
 
 typedef struct menuAction_s {
-	ea_opcode type;
+	short type;
+	short subType;
 
 	union {
 		struct {

@@ -60,16 +60,16 @@ window basedefence
 
 	/* @todo: We should check if the slot is empty but can't do from here */
 	confunc update_buttons {
-		if ( *node:root.slots.slotlist@lineselected < 0 ) {
+		if ( *node:(text)root.slots.slotlist@lineselected < 0 ) {
 			*node:root.bt_add@disabled true
 			*node:root.bt_remove@disabled true
-		} elif ( *node:root.slots.slotlist@lineselected >= *node:root.slots.slotlist@lines ) {
+		} elif ( *node:(text)root.slots.slotlist@lineselected >= *node:(text)root.slots.slotlist@lines ) {
 			*node:root.bt_add@disabled true
 			*node:root.bt_remove@disabled true
-		} elif ( *node:root.store.storelist@lineselected < 0 ) {
+		} elif ( *node:(text)root.store.storelist@lineselected < 0 ) {
 			*node:root.bt_add@disabled true
 			*node:root.bt_remove@disabled false
-		} elif ( *node:root.store.storelist@lineselected >= *node:root.store.storelist@lines ) {
+		} elif ( *node:(text)root.store.storelist@lineselected >= *node:(text)root.store.storelist@lines ) {
 			*node:root.bt_add@disabled true
 			*node:root.bt_remove@disabled false
 		} else {

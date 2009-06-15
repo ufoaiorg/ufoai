@@ -62,9 +62,9 @@ static inline qboolean MN_IsFloatOperator (int op)
 /**
  * @return A float value, else 0
  */
-static float MN_GetFloatFromExpression (menuAction_t *expression, const menuNode_t *source)
+float MN_GetFloatFromExpression (menuAction_t *expression, const menuNode_t *source)
 {
-	switch (expression->type.op) {
+	switch (expression->type) {
 	case EA_NULL:
 		return qfalse;
 	case EA_VALUE_STRING:
@@ -77,7 +77,7 @@ static float MN_GetFloatFromExpression (menuAction_t *expression, const menuNode
 			cvar = Cvar_Get(expression->d.terminal.d1.string, "", 0, "Menu if condition cvar");
 			return cvar->value;
 		}
-	case EA_VALUE_NODEPROPERTY:
+	case EA_VALUE_PATHPROPERTY:
 		{
 			menuNode_t *node;
 			const value_t *property;
@@ -100,9 +100,9 @@ static float MN_GetFloatFromExpression (menuAction_t *expression, const menuNode
 /**
  * @return A string, else an empty string
  */
-static const char* MN_GetStringFromExpression (menuAction_t *expression, const menuNode_t *source)
+const char* MN_GetStringFromExpression (menuAction_t *expression, const menuNode_t *source)
 {
-	switch (expression->type.op) {
+	switch (expression->type) {
 	case EA_VALUE_STRING:
 		return expression->d.terminal.d1.string;
 	case EA_VALUE_FLOAT:
@@ -113,7 +113,7 @@ static const char* MN_GetStringFromExpression (menuAction_t *expression, const m
 		cvar = Cvar_Get(expression->d.terminal.d1.string, "", 0, "Menu if condition cvar");
 		return cvar->string;
 	}
-	case EA_VALUE_NODEPROPERTY:
+	case EA_VALUE_PATHPROPERTY:
 		{
 			menuNode_t *node;
 			const value_t *property;
@@ -138,16 +138,17 @@ static const char* MN_GetStringFromExpression (menuAction_t *expression, const m
 		break;
 	}
 
-	Com_Printf("MN_GetStringFromExpression: Unsupported expression type: %i", expression->type.op);
+	Com_Printf("MN_GetStringFromExpression: Unsupported expression type: %i", expression->type);
 	return "";
 }
 
 /**
- * @return A boolean, else 0
+ * @brief Check if an expression is true
+ * @return True if the expression is true
  */
-static qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t *source)
+qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t *source)
 {
-	switch (expression->type.op) {
+	switch (expression->type) {
 	case EA_VALUE_STRING:
 	case EA_VALUE_FLOAT:
 	case EA_VALUE_CVARNAME:
@@ -155,11 +156,11 @@ static qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const men
 		return MN_GetFloatFromExpression (expression, source) != 0;
 	}
 
-	if (MN_IsFloatOperator(expression->type.op)) {
+	if (MN_IsFloatOperator(expression->type)) {
 		const float value1 = MN_GetFloatFromExpression(expression->d.nonTerminal.left, source);
 		const float value2 = MN_GetFloatFromExpression(expression->d.nonTerminal.right, source);
 
-		switch (expression->type.op) {
+		switch (expression->type) {
 		case EA_OPERATOR_EQ:
 			return value1 == value2;
 		case EA_OPERATOR_LE:
@@ -177,18 +178,18 @@ static qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const men
 		}
 	}
 
-	if (expression->type.op == EA_OPERATOR_EXISTS) {
+	if (expression->type == EA_OPERATOR_EXISTS) {
 		const menuAction_t *e = expression->d.nonTerminal.left;
 		assert(e);
-		assert(e->type.op == EA_VALUE_CVARNAME);
+		assert(e->type == EA_VALUE_CVARNAME);
 		return Cvar_FindVar(e->d.terminal.d1.string) != NULL;
 	}
 
-	if (expression->type.op == EA_OPERATOR_STR_EQ || expression->type.op == EA_OPERATOR_STR_NE) {
+	if (expression->type == EA_OPERATOR_STR_EQ || expression->type == EA_OPERATOR_STR_NE) {
 		const char* value1 = MN_GetStringFromExpression(expression->d.nonTerminal.left, source);
 		const char* value2 = MN_GetStringFromExpression(expression->d.nonTerminal.right, source);
 
-		switch (expression->type.op) {
+		switch (expression->type) {
 		case EA_OPERATOR_STR_EQ:
 			return strcmp(value1, value2) == 0;
 		case EA_OPERATOR_STR_NE:
@@ -198,16 +199,7 @@ static qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const men
 		}
 	}
 
-	Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: Unsupported expression type: %i", expression->type.op);
-}
-
-/**
- * @brief Check the if conditions for a given node
- * @return True if the condition is qfalse if the node is not drawn
- */
-qboolean MN_CheckBooleanExpression (menuAction_t *expression, const menuNode_t *source)
-{
-	return MN_GetBooleanFromExpression(expression, source);
+	Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: Unsupported expression type: %i", expression->type);
 }
 
 /**
@@ -245,7 +237,7 @@ menuAction_t *MN_AllocStringCondition (const char *description)
 
 	base = va("( %s )", description);
 	text = base;
-	expression = MN_ParseExpression(&text, errhead);
+	expression = MN_ParseExpression(&text, errhead, NULL);
 	if (!expression) {
 		Com_Printf("MN_AllocStringCondition: Parse error on expression \"%s\"\n", base);
 		return NULL;
@@ -258,7 +250,7 @@ menuAction_t *MN_AllocStringCondition (const char *description)
  * @brief Read a value from the stream and init an action with it
  * @return An initialized action else NULL
  */
-static menuAction_t *MN_ParseValueExpression (const char **text, const char *errhead)
+static menuAction_t *MN_ParseValueExpression (const char **text, const char *errhead, const menuNode_t *source)
 {
 	const char* token;
 	menuAction_t *expression = MN_AllocAction();
@@ -273,15 +265,68 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 	if (!strncmp(token, "*cvar:", 6)) {
 		const char* cvarName = token + 6;
 		expression->d.terminal.d1.string = MN_AllocString(cvarName, 0);
-		expression->type.op = EA_VALUE_CVARNAME;
+		expression->type = EA_VALUE_CVARNAME;
 		return expression;
 	}
 
-	/* it is a node property */
-	if (!strncmp(token, "*node:", 6)) {
-		const char* path = token + 6;
+	/* it is a node property or it is a OLD syntax node property */
+	/** @todo We MUST remove the OLD code as fast as possible */
+	if (!strncmp(token, "*node:", 6) || !strncmp(token, "*", 1)) {
+		const char* path = token + 1;
+		char cast[32] = "abstractnode";
+		const nodeBehaviour_t *castedBehaviour;
+		const char *propertyName;
+		qboolean relativeToNode;
+		const value_t *property;
+
+		relativeToNode = !strncmp(path, "node:", 5);
+		if (relativeToNode)
+			path = path + 5;
+
+		/* check cast */
+		if (path[0] == '(') {
+			const char *end = strchr(path, ')');
+			assert(end != NULL);
+			assert(end - path < sizeof(cast));
+
+			/* copy the cast and update the path */
+			if (end != NULL) {
+				Q_strncpyz(cast, path + 1, end - path);
+				path = end + 1;
+			}
+		}
+
+		if (MN_IsInjectedString(path))
+			expression->type = EA_VALUE_PATHPROPERTY_WITHINJECTION;
+		else
+			expression->type = EA_VALUE_PATHPROPERTY;
+		if (!relativeToNode)
+			path = va("root.%s", path);
 		expression->d.terminal.d1.string = MN_AllocString(path, 0);
-		expression->type.op = EA_VALUE_NODEPROPERTY;
+
+		castedBehaviour = MN_GetNodeBehaviour(cast);
+		if (castedBehaviour == NULL)
+			Com_Error(ERR_FATAL, "MN_ParseValueExpression: Node behaviour cast '%s' doesn't exists\n", cast);
+
+		/* get property name */
+		propertyName = strchr(path, '@');
+		if (propertyName == NULL)
+			Com_Error(ERR_FATAL, "MN_ParseSetAction: Property setter without property ('@' not found in '%s')\n", path);
+		propertyName++;
+
+		property = MN_GetPropertyFromBehaviour(castedBehaviour, propertyName);
+		if (!property && source) {
+			menuNode_t *node;
+			/* do we ALREADY know this node? and his type */
+			MN_ReadNodePath(path, source, &node, &property);
+			if (!node)
+				Com_Printf("MN_ParseSetAction: node \"%s\" not already know (in event), you can cast it\n", path);
+		}
+
+		if (property && property->type) {
+			expression->d.terminal.d2.constData = property;
+		}
+
 		return expression;
 	}
 
@@ -292,18 +337,18 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 	if (MN_IsFloatOperator(opCode)) {
 		float f = atof(string);
 		expression->d.terminal.d1.number = f;
-		expression->type.op = EA_VALUE_FLOAT;
+		expression->type = EA_VALUE_FLOAT;
 		return expression;
 	}
 #endif
 
 	/* it is a const string */
 	expression->d.terminal.d1.string = MN_AllocString(token, 0);
-	expression->type.op = EA_VALUE_STRING;
+	expression->type = EA_VALUE_STRING;
 	return expression;
 }
 
-menuAction_t *MN_ParseExpression (const char **text, const char *errhead)
+menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const menuNode_t *source)
 {
 	const char* token;
 
@@ -315,7 +360,7 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead)
 		menuAction_t *expression;
 		menuAction_t *e;
 
-		e = MN_ParseExpression(text, errhead);
+		e = MN_ParseExpression(text, errhead, source);
 
 		token = Com_Parse(text);
 		if (*text == NULL)
@@ -323,9 +368,9 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead)
 
 		/* unary operator or unneed "( ... )" */
 		if (!strcmp(token, ")")) {
-			if (e->type.op == EA_VALUE_CVARNAME) {
+			if (e->type == EA_VALUE_CVARNAME) {
 				expression = MN_AllocAction();
-				expression->type.op = EA_OPERATOR_EXISTS;
+				expression->type = EA_OPERATOR_EXISTS;
 				expression->d.nonTerminal.left = e;
 				return expression;
 			} else
@@ -335,13 +380,13 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead)
 		/* then its an operator */
 		expression = MN_AllocAction();
 		expression->d.nonTerminal.left = e;
-		expression->type.op = MN_GetOperatorByName(token);
-		if (expression->type.op == EA_OPERATOR_INVALID) {
+		expression->type = MN_GetOperatorByName(token);
+		if (expression->type == EA_OPERATOR_INVALID) {
 			Com_Printf("Invalid 'expression' statement. Unknown '%s' operator\n", token);
 			return NULL;
 		}
 
-		e = MN_ParseExpression(text, errhead);
+		e = MN_ParseExpression(text, errhead, source);
 		expression->d.nonTerminal.right = e;
 
 		token = Com_Parse(text);
@@ -355,7 +400,7 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead)
 		return expression;
 	} else {
 		Com_UnParseLastToken();
-		return MN_ParseValueExpression(text, errhead);
+		return MN_ParseValueExpression(text, errhead, source);
 	}
 
 #if 0

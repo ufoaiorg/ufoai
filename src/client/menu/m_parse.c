@@ -1,5 +1,6 @@
 /**
  * @file m_parse.c
+ * @todo remove all "token" param from function and use Com_UnParseLastToken
  */
 
 /*
@@ -221,133 +222,92 @@ menuAction_t *MN_AllocAction (void)
  */
 static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const char **token, const char *errhead)
 {
-	char cast[32] = "abstractnode";
-	const char *nodeName = *token + 1;
-	nodeBehaviour_t *castedBehaviour;
 	const value_t *property;
-	const char *propertyName;
-	qboolean relativeToNode;
+	int type;
 
 	assert(*token[0] == '*');
 
-	/* cvar setter */
-	if (strncmp(nodeName, "cvar:", 5) == 0) {
-		action->d.terminal.d1.string = MN_AllocString(nodeName + 5, 0);
-		action->type.param1 = EA_CVARNAME;
-		action->type.param2 = EA_VALUE;
+	Com_UnParseLastToken();
+	action->d.nonTerminal.left = MN_ParseExpression(text, errhead, menuNode);
 
-		/* get the value */
-		*token = Com_EParse(text, errhead, NULL);
-		if (!*text)
-			return qfalse;
-
-		/* allow to use "equal" char between name and value */
-		if (!strcmp(*token, "=")) {
-			*token = Com_EParse(text, errhead, NULL);
-			if (!*text)
-				return qfalse;
-		}
-
-		action->d.terminal.d2.string = MN_AllocString(*token, 0);
-		return qtrue;
+	type = action->d.nonTerminal.left->type;
+	if (type != EA_VALUE_CVARNAME && type != EA_VALUE_CVARNAME_WITHINJECTION
+		&& type != EA_VALUE_PATHPROPERTY && type != EA_VALUE_PATHPROPERTY_WITHINJECTION) {
+		Com_Printf("MN_ParseSetAction: Cvar or Node property expected. Type '%i' found\n", type);
+		return qfalse;
 	}
 
-	relativeToNode = !strncmp(nodeName, "node:", 5);
-	if (relativeToNode)
-		nodeName = nodeName + 5;
-
-	/* check cast */
-	if (nodeName[0] == '(') {
-		const char *end = strchr(nodeName, ')');
-		assert(end != NULL);
-		assert(end - nodeName < sizeof(cast));
-
-		/* copy the cast and update the node name */
-		if (end != NULL) {
-			Q_strncpyz(cast, nodeName + 1, end - nodeName);
-			nodeName = end + 1;
-		}
-	}
-
-	/* copy the node path */
-	if (relativeToNode)
-		action->d.terminal.d1.string = MN_AllocString(nodeName, 0);
-	else
-		action->d.terminal.d1.string = MN_AllocString(va("root.%s", nodeName), 0);
-
-	if (MN_IsInjectedString(action->d.terminal.d1.string))
-		action->type.param1 = EA_PATHPROPERTYWITHINJECTION;
-	else
-		action->type.param1 = EA_PATHPROPERTY;
-
-	castedBehaviour = MN_GetNodeBehaviour(cast);
-	if (castedBehaviour == NULL)
-		Com_Error(ERR_FATAL, "MN_ParseSetAction: Node behaviour cast '%s' doesn't exist (%s)\n", cast, MN_GetPath(menuNode));
-
-	/* get property name */
-	propertyName = strchr(nodeName, '@');
-	if (propertyName == NULL)
-		Com_Error(ERR_FATAL, "MN_ParseSetAction: Property setter without property ('@' not found in '%s', node '%s')\n", nodeName, MN_GetPath(menuNode));
-	propertyName++;
-
-	property = MN_GetPropertyFromBehaviour(castedBehaviour, propertyName);
-	if (!property) {
-		menuNode_t *node;
-		/* do we ALREADY know this node? and his type */
-		MN_ReadNodePath(action->d.terminal.d1.string, menuNode, &node, &property);
-		if (!node)
-			Com_Printf("MN_ParseSetAction: node \"%s\" not already know (in event), you can cast it\n", action->d.terminal.d1.string);
-	}
-
-	if (!property || !property->type) {
-		Com_Printf("MN_ParseSetAction: token \"%s\" isn't a node property (in event)\n", *token);
-		action->type.op = EA_NULL;
-		return qtrue;
-	}
+	/* allow to use "equal" char between name and value */
+	*token = Com_EParse(text, errhead, NULL);
+	if (!*text)
+		return qfalse;
+	if (strcmp(*token, "=") != 0)
+		Com_UnParseLastToken();
 
 	/* get the value */
+	if (type == EA_VALUE_CVARNAME || type == EA_VALUE_CVARNAME_WITHINJECTION) {
+		action->d.nonTerminal.right = MN_ParseExpression(text, errhead, menuNode);
+		return qtrue;
+	}
+
+	property = (const value_t *) action->d.nonTerminal.left->d.terminal.d2.data;
+	if (property == NULL) {
+		Com_Printf("MN_ParseSetAction: Typed node property expected. Cast the left operand.\n");
+		return qfalse;
+	}
+
 	*token = Com_EParse(text, errhead, NULL);
 	if (!*text)
 		return qfalse;
 
-	/* allow to use "equal" char between name and value */
-	if (!strcmp(*token, "=")) {
-		*token = Com_EParse(text, errhead, NULL);
-		if (!*text)
-			return qfalse;
+	if (!strcmp(*token, "(")) {
+		Com_UnParseLastToken();
+		action->d.nonTerminal.right = MN_ParseExpression(text, errhead, menuNode);
+		return qtrue;
 	}
 
 	if (property->type == V_UI_ACTION) {
 		menuAction_t** actionRef = (menuAction_t**) MN_AllocPointer(1);
+		menuAction_t*a;
 		*actionRef = MN_ParseActionList(menuNode, text, token);
 		if (*actionRef == NULL)
 			return qfalse;
-		action->type.param2 = EA_RAWVALUE;
-		action->d.terminal.d2.data = actionRef;
+
+		a = MN_AllocAction();
+		a->type = EA_VALUE_RAW;
+		a->d.terminal.d1.data = actionRef;
+		action->d.nonTerminal.right = a;
 	} else if (property->type == V_UI_ICONREF) {
 		menuIcon_t* icon = MN_GetIconByName(*token);
-		menuIcon_t** icomRef;
+		menuAction_t*a;
 		if (icon == NULL) {
 			Com_Printf("MN_ParseSetAction: icon '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 			return qfalse;
 		}
-		icomRef = (menuIcon_t**) MN_AllocPointer(1);
-		*icomRef = icon;
-		action->type.param2 = EA_RAWVALUE;
-		action->d.terminal.d2.data = icomRef;
+		a = MN_AllocAction();
+		a->type = EA_VALUE_RAW;
+		a->d.terminal.d1.data = icon;
+		action->d.nonTerminal.right = a;
 	} else {
 		if (MN_IsInjectedString(*token)) {
-			action->type.param2 = EA_VALUE;
-			action->d.terminal.d2.string = MN_AllocString(*token, 0);
+			menuAction_t *a;
+			a = MN_AllocAction();
+			a->type = EA_VALUE_STRING;
+			a->d.terminal.d1.data = MN_AllocString(*token, 0);
+			action->d.nonTerminal.right = a;
 		} else {
+			menuAction_t *a;
 			const int baseType = property->type & V_UI_MASK;
 			if (baseType != 0 && baseType != V_UI_CVAR) {
 				Com_Printf("MN_ParseSetAction: setter for property '%s' (type %d, 0x%X) is not supported (%s)\n", property->string, property->type, property->type, MN_GetPath(menuNode));
 				return qfalse;
 			}
 			mn.curadata = Com_AlignPtr(mn.curadata, property->type & V_BASETYPEMASK);
-			action->type.param2 = EA_RAWVALUE;
-			action->d.terminal.d2.data = mn.curadata;
+			a = MN_AllocAction();
+			a->type = EA_VALUE_RAW;
+			a->d.terminal.d1.data = mn.curadata;
+			action->d.nonTerminal.right = a;
+			/** @todo we should hide use of mn.curadata */
 			mn.curadata += Com_EParseValue(mn.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size);
 		}
 	}
@@ -414,10 +374,10 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			lastAction->next = action;
 		if (!firstAction)
 			firstAction = action;
-		action->type.op = type;
+		action->type = type;
 
 		/* decode action */
-		switch (action->type.op) {
+		switch (action->type) {
 		case EA_CMD:
 			/* get parameter values */
 			*token = Com_EParse(text, errhead, NULL);
@@ -452,7 +412,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 
 		case EA_ELIF:
 			/* check previous action */
-			if (!lastAction || (lastAction->type.op != EA_IF && lastAction->type.op != EA_ELIF)) {
+			if (!lastAction || (lastAction->type != EA_IF && lastAction->type != EA_ELIF)) {
 				Com_Printf("MN_ParseActionList: 'elif' must be set after an 'if' or an 'elif' (node: %s)\n", MN_GetPath(menuNode));
 				return NULL;
 			}
@@ -463,7 +423,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 				menuAction_t *expression;
 
 				/* get the condition */
-				expression = MN_ParseExpression(text, errhead);
+				expression = MN_ParseExpression(text, errhead, menuNode);
 				if (expression == NULL)
 					return NULL;
 				action->d.nonTerminal.left = expression;
@@ -474,7 +434,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 					return NULL;
 				action->d.nonTerminal.right = MN_ParseActionList(menuNode, text, token);
 				if (action->d.nonTerminal.right == NULL) {
-					if (action->type.op == EA_IF)
+					if (action->type == EA_IF)
 						Com_Printf("MN_ParseActionList: block expected after \"if\" (node: %s)\n", MN_GetPath(menuNode));
 					else
 						Com_Printf("MN_ParseActionList: block expected after \"elif\" (node: %s)\n", MN_GetPath(menuNode));
@@ -485,7 +445,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 
 		case EA_ELSE:
 			/* check previous action */
-			if (!lastAction || (lastAction->type.op != EA_IF && lastAction->type.op != EA_ELIF)) {
+			if (!lastAction || (lastAction->type != EA_IF && lastAction->type != EA_ELIF)) {
 				Com_Printf("MN_ParseActionList: 'else' must be set after an 'if' or an 'elif' (node: %s)\n", MN_GetPath(menuNode));
 				return NULL;
 			}

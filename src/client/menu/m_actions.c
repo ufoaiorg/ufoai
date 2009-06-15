@@ -204,33 +204,49 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 	const char* path;
 	menuNode_t *node;
 	const value_t *property;
+	const menuAction_t *left;
+	menuAction_t *right;
 
-	/** @todo should we remove it? type control the action, not the data */
-	if (action->d.terminal.d1.data == NULL)
+	left = action->d.nonTerminal.left;
+	if (left == NULL) {
+		Com_Printf("MN_ExecuteSetAction: Action without left operand skiped.\n");
 		return;
+	}
 
-	if (action->type.param1 == EA_CVARNAME) {
-		char cvarName[MAX_VAR];
+	right = action->d.nonTerminal.right;
+	if (right == NULL) {
+		Com_Printf("MN_ExecuteSetAction: Action without right operand skiped.\n");
+		return;
+	}
+
+	if (left->type == EA_VALUE_CVARNAME || left->type == EA_VALUE_CVARNAME_WITHINJECTION) {
+		const char *cvarName;
 		const char* textValue;
-		assert(action->type.param2 == EA_VALUE);
-		Q_strncpyz(cvarName, MN_GenInjectedString(source, useCmdParam, action->d.terminal.d1.string, qfalse), MAX_VAR);
 
-		textValue = action->d.terminal.d2.string;
+		if (left->type == EA_VALUE_CVARNAME)
+			cvarName = left->d.terminal.d1.string;
+		else
+			cvarName = MN_GenInjectedString(source, useCmdParam, left->d.terminal.d1.string, qfalse);
+
+		/** @todo with a simple check of the right operand we can read a float when its possible (faster way) */
+		textValue = MN_GetStringFromExpression(right, source);
+		/** @todo we should move it into an expression type, into the expression checker */
 		textValue = MN_GenInjectedString(source, useCmdParam, textValue, qfalse);
-		if (textValue[0] == '_') {
+
+		if (textValue[0] == '_')
 			textValue = _(textValue + 1);
-		}
+
 		Cvar_ForceSet(cvarName, textValue);
 		return;
 	}
 
 	/* search the node */
-	if (action->type.param1 == EA_PATHPROPERTY)
-		path = action->d.terminal.d1.string;
-	else if (action->type.param1 == EA_PATHPROPERTYWITHINJECTION)
-		path = MN_GenInjectedString(source, useCmdParam, action->d.terminal.d1.string, qfalse);
+	if (left->type == EA_VALUE_PATHPROPERTY)
+		path = left->d.terminal.d1.string;
+	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
+		path = MN_GenInjectedString(source, useCmdParam, left->d.terminal.d1.string, qfalse);
 	else
-		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Property setter with wrong object type '%d'", action->type.param1);
+		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Property setter with wrong type '%d'", left->type);
 
 	MN_ReadNodePath(path, source, &node, &property);
 	if (!node) {
@@ -243,38 +259,42 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 	}
 
 	/* decode text value */
-	if (action->type.param2 == EA_VALUE) {
-		const char* v = MN_GenInjectedString(source, useCmdParam, action->d.terminal.d2.string, qfalse);
+	if (right->type == EA_VALUE_STRING) {
+		const char* v = MN_GenInjectedString(source, useCmdParam, right->d.terminal.d1.string, qfalse);
 		MN_NodeSetProperty(node, property, v);
 		return;
 	}
 
 	/* decode RAW value */
-	assert(action->type.param2 == EA_RAWVALUE);
-	if ((property->type & V_UI_MASK) == V_NOT_UI)
-		Com_SetValue(node, action->d.terminal.d2.data, property->type, property->ofs, property->size);
-	else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
+	if (right->type == EA_VALUE_RAW) {
 		void *mem = ((byte *) node + property->ofs);
-		MN_FreeStringProperty(*(void**)mem);
-		switch (property->type & V_BASETYPEMASK) {
-		case V_FLOAT:
-			**(float **) mem = *(float*) action->d.terminal.d2.data;
-			break;
-		case V_INT:
-			**(int **) mem = *(int*) action->d.terminal.d2.data;
-			break;
-		default:
-			*(byte **) mem = action->d.terminal.d2.data;
+		if ((property->type & V_UI_MASK) == V_NOT_UI)
+			Com_SetValue(node, right->d.terminal.d1.data, property->type, property->ofs, property->size);
+		else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
+			MN_FreeStringProperty(*(void**)mem);
+			switch (property->type & V_BASETYPEMASK) {
+			case V_FLOAT:
+				**(float **) mem = *(float*) right->d.terminal.d1.data;
+				break;
+			case V_INT:
+				**(int **) mem = *(int*) right->d.terminal.d1.data;
+				break;
+			default:
+				*(byte **) mem = right->d.terminal.d1.data;
+			}
+		} else if (property->type == V_UI_ACTION) {
+			*(menuAction_t**) mem = (menuAction_t*) right->d.terminal.d1.data;
+		} else if (property->type == V_UI_ICONREF) {
+			*(menuIcon_t**) mem = (menuIcon_t*) right->d.terminal.d1.data;
+		} else {
+			Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Property type '%d' unsupported", property->type);
 		}
-	} else if (property->type == V_UI_ACTION) {
-		void *mem = ((byte *) node + property->ofs);
-		*(menuAction_t**) mem = *(menuAction_t**) action->d.terminal.d2.data;
-	} else if (property->type == V_UI_ICONREF) {
-		void *mem = ((byte *) node + property->ofs);
-		*(menuIcon_t**) mem = *(menuIcon_t**) action->d.terminal.d2.data;
-	} else {
-		assert(qfalse);
+		return;
 	}
+
+	/* expression */
+	/** @todo to be continue... */
+
 }
 
 static void MN_ExecuteInjectedActions(const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction);
@@ -285,7 +305,7 @@ static void MN_ExecuteInjectedActions(const menuNode_t* source, qboolean useCmdP
  */
 static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* action)
 {
-	switch (action->type.op) {
+	switch (action->type) {
 	case EA_NULL:
 		/* do nothing */
 		break;
@@ -306,19 +326,19 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		break;
 
 	case EA_IF:
-		if (MN_CheckBooleanExpression(action->d.nonTerminal.left, source)) {
+		if (MN_GetBooleanFromExpression(action->d.nonTerminal.left, source)) {
 			MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
 			return;
 		}
 		action = action->next;
-		while (action && action->type.op == EA_ELIF) {
-			if (MN_CheckBooleanExpression(action->d.nonTerminal.left, source)) {
+		while (action && action->type == EA_ELIF) {
+			if (MN_GetBooleanFromExpression(action->d.nonTerminal.left, source)) {
 				MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
 				return;
 			}
 			action = action->next;
 		}
-		if (action && action->type.op == EA_ELSE) {
+		if (action && action->type == EA_ELSE) {
 			MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
 		}
 		break;
@@ -411,7 +431,7 @@ void MN_FreeStringProperty (void* pointer)
 menuAction_t* MN_AllocCommandAction (char *command)
 {
 	menuAction_t* action = MN_AllocAction();
-	action->type.op = EA_CMD;
+	action->type = EA_CMD;
 	action->d.terminal.d1.string = command;
 	return action;
 }
@@ -430,7 +450,7 @@ void MN_PoolAllocAction (menuAction_t** action, int type, const void *data)
 	if (*action)
 		Com_Error(ERR_FATAL, "There is already an action assigned");
 	*action = (menuAction_t *)Mem_PoolAlloc(sizeof(**action), mn_sysPool, 0);
-	(*action)->type.op = type;
+	(*action)->type = type;
 	switch (type) {
 	case EA_CMD:
 		(*action)->d.terminal.d1.string = Mem_PoolStrDup((const char *)data, mn_sysPool, 0);
@@ -474,7 +494,7 @@ static void MN_AddListener_f (void)
 
 	/* create the action */
 	action = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
-	action->type.op = EA_CALL;
+	action->type = EA_CALL;
 	action->d.terminal.d1.data = (void*) function;
 	action->d.terminal.d2.data = (void*) &function->onClick;
 	action->next = NULL;
