@@ -732,11 +732,6 @@ window options
 			fullsize	50
 			onChange	{ cmd "mn_textscroll options_keys.keylist <lastdiff>;" }
 		}
-
-		confunc optionkey_count
-		{
-			*(abstractscrollbar)options_keys.keyscroll@fullsize <1>
-		}
 	}
 
 	// ==================

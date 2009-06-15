@@ -64,7 +64,6 @@ void MN_SetViewRect (void)
  */
 static void MN_InitKeyList_f (void)
 {
-	const menuNode_t *node;
 	static char keylist[2048];
 	int i;
 
@@ -83,11 +82,6 @@ static void MN_InitKeyList_f (void)
 			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(battleKeyBindings[i])), sizeof(keylist));
 
 	MN_RegisterText(TEXT_LIST, keylist);
-
-	/* @todo bad size computation, the text node only know the number of line */
-	MN_ExecuteConfunc("mn_textupdated keylist");
-	node = MN_GetNodeByPath("options.options_keys.keylist");
-	MN_ExecuteConfunc("optionkey_count %i", MN_TextNodeGetLines(node));
 }
 
 /**
