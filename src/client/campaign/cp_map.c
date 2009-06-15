@@ -1683,7 +1683,8 @@ void MAP_DrawMap (const menuNode_t* node)
 
 	/* Nothing is displayed yet */
 	if (ccs.selectedMission) {
-		const char *t = va(_("Location: %s\nType: %s\nObjective: %s"), ccs.selectedMission->location,
+		static char t[MAX_SMALLMENUTEXTLEN];
+		Com_sprintf(t, lengthof(t), _("Location: %s\nType: %s\nObjective: %s"), ccs.selectedMission->location,
 			CP_MissionToTypeString(ccs.selectedMission), _(ccs.selectedMission->mapDef->description));
 		MN_RegisterText(TEXT_STANDARD, t);
 	} else if (selectedAircraft) {
