@@ -140,7 +140,7 @@ window ufopedia
 		*ufopedia@mousefx	false
 		*ufopedia@height	360
 		*ufopedia_scroll@height	360
-		cmd "mn_textscroll@ufopedia reset;"
+		cmd "mn_textscroll ufopedia reset;"
 		*ufopedia_scroll@current 0
 	}
 
