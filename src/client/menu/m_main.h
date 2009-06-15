@@ -30,12 +30,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_MENUSTACK		32
 #define MAX_MENUACTIONS		8192
 
-#include "m_actions.h"
 #include "m_data.h"
 #include "m_menus.h"
 
-extern cvar_t *mn_sequence;
-extern cvar_t *mn_hud;
+/** @todo client code should manage itself this vars */
+struct cvar_s;
+extern struct cvar_s *mn_sequence;
+extern struct cvar_s *mn_hud;
 
 /* initialization */
 void MN_Init(void);
@@ -43,5 +44,6 @@ void MN_Shutdown(void);
 
 /* misc */
 void MN_SetCvar(const char *name, const char *str, float value);
+void MN_ExecuteConfunc(const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
 
 #endif

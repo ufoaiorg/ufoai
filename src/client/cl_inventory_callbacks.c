@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_inventory.h"
 #include "cl_inventory_callbacks.h"
-#include "menu/m_actions.h"
-#include "menu/m_data.h"
+#include "menu/m_main.h"
 #include "menu/m_nodes.h"
 #include "cl_game.h"
 

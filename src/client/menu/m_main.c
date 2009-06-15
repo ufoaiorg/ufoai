@@ -29,9 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 
-menuGlobal_t mn;
+/** @todo client code should manage itself this vars */
 cvar_t *mn_sequence;
 cvar_t *mn_hud;
+
+menuGlobal_t mn;
 struct memPool_s *mn_dynStringPool;
 struct memPool_s *mn_sysPool;
 
@@ -203,6 +205,23 @@ static void MN_Memory_f (void)
 	Com_Printf("\t-Full size: "UFO_SIZE_T" B\n", sizeof(menuGlobal_t) + mn.adataize);
 }
 #endif
+
+#define MAX_CONFUNC_SIZE 512
+/**
+ * @brief Executes confunc - just to identify those confuncs in the code - in
+ * this frame.
+ * @param[in] confunc The confunc id that should be executed
+ */
+void MN_ExecuteConfunc (const char *fmt, ...)
+{
+	va_list ap;
+	char confunc[MAX_CONFUNC_SIZE];
+
+	va_start(ap, fmt);
+	Q_vsnprintf(confunc, sizeof(confunc), fmt, ap);
+	Cmd_ExecuteString(confunc);
+	va_end(ap);
+}
 
 /**
  * @brief Reset and free the menu data hunk

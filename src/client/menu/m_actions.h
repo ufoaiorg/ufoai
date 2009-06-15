@@ -117,8 +117,6 @@ typedef struct menuAction_s {
 	struct menuAction_s *next;
 } menuAction_t;
 
-void MN_ExecuteConfunc(const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
-
 /* prototype */
 struct menuNode_s;
 
