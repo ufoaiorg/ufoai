@@ -1457,6 +1457,8 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 			FLOOR(ent) = NULL;
 
 			while (numdv > 0) {
+				int crouchFlag; /**< A flag to see if we needed to change crouch state */
+
 				/* get next dv */
 				numdv--;
 				dv = dvtab[numdv];
@@ -1485,9 +1487,9 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 				ent->speed *= g_actorspeed->value;
 
 				/* move */
-				crouchingState = 0; /* This is now a flag to indicate a change in crouching */
-				PosAddDV(ent->pos, crouchingState, dv);
-				if (crouchingState == 0) { /* No change in crouch */
+				crouchFlag = 0; /* This is now a flag to indicate a change in crouching */
+				PosAddDV(ent->pos, crouchFlag, dv);
+				if (crouchFlag == 0) { /* No change in crouch */
 					gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
 					VectorCopy(ent->origin, pointTrace);
 					pointTrace[2] += PLAYER_MIN;
@@ -1568,9 +1570,9 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 					/* state has changed - maybe we walked on a trigger_hurt */
 					if (oldState != ent->state)
 						status |= VIS_STOP;
-				} else if (crouchingState == 1) { /* Actor is standing */
+				} else if (crouchFlag == 1) { /* Actor is standing */
 					G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
-				} else if (crouchingState == -1) { /* Actor is crouching and should stand up */
+				} else if (crouchFlag == -1) { /* Actor is crouching and should stand up */
 					G_ClientStateChange(player, num, STATE_CROUCHED, qfalse);
 				}
 
