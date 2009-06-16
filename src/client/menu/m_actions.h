@@ -31,9 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef enum ea_s {
 	EA_NULL = 0,
 
-	/* invalid operator */
-	EA_OPERATOR_INVALID,
-
 	/* masks */
 	EA_HIGHT_MASK = 0xFF00,
 

@@ -317,7 +317,7 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t
 /**
  * @brief Return an operator type from a token
  * @param[in] operatorName Operator token
- * @return An operator type, EA_OPERATOR_INVALID
+ * @return An operator type, EA_NULL
  * @todo dichotomic search
  */
 static int MN_GetOperatorByName (const char* operatorName)
@@ -330,7 +330,7 @@ static int MN_GetOperatorByName (const char* operatorName)
 			return operatorTokens[i].operator;
 		i++;
 	}
-	return EA_OPERATOR_INVALID;
+	return EA_NULL;
 }
 
 /**
@@ -497,7 +497,7 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const 
 		expression = MN_AllocAction();
 		expression->d.nonTerminal.left = e;
 		expression->type = MN_GetOperatorByName(token);
-		if (expression->type == EA_OPERATOR_INVALID) {
+		if (expression->type == EA_NULL) {
 			Com_Printf("Invalid 'expression' statement. Unknown '%s' operator\n", token);
 			return NULL;
 		}
