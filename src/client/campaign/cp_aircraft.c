@@ -2555,7 +2555,7 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 		/** @todo Check if we can really ignore them if active is false */
 		if (!ccs.recoveries[i].active)
 			continue;
-		snode = mxml_AddNode(node, "recoverie");
+		snode = mxml_AddNode(node, "recovery");
 		/* mxml_AddBool(snode, "active", ccs.recoveries[i].active); */
 		if (ccs.recoveries[i].base)
 			mxml_AddInt(snode, "targetbase", ccs.recoveries[i].base->idx);
