@@ -292,7 +292,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		if (MN_IsInjectedString(*token)) {
 			menuAction_t *a;
 			a = MN_AllocAction();
-			a->type = EA_VALUE_STRING;
+			a->type = EA_VALUE_STRING_WITHINJECTION;
 			a->d.terminal.d1.data = MN_AllocString(*token, 0);
 			action->d.nonTerminal.right = a;
 		} else {

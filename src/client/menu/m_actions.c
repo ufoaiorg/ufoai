@@ -238,13 +238,6 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		return;
 	}
 
-	/* decode text value */
-	if (right->type == EA_VALUE_STRING) {
-		const char* v = MN_GenInjectedString(source, useCmdParam, right->d.terminal.d1.string, qfalse);
-		MN_NodeSetProperty(node, property, v);
-		return;
-	}
-
 	/* decode RAW value */
 	if (right->type == EA_VALUE_RAW) {
 		void *mem = ((byte *) node + property->ofs);
@@ -272,9 +265,13 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		return;
 	}
 
-	/* expression */
-	/** @todo to be continue... */
-
+	/* else it is an expression */
+	/** @todo we should improve if when the prop is a boolean/int/float */
+	else {
+		const char* value = MN_GetStringFromExpression(right, source);
+		MN_NodeSetProperty(node, property, value);
+		return;
+	}
 }
 
 static void MN_ExecuteInjectedActions(const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction);
