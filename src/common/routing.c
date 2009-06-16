@@ -49,7 +49,31 @@ qboolean debugTrace = qfalse;
   LOCAL TYPES
 ==========================================================
 */
-/* an opening describes the connection between two adjacent spaces where an actor can exist in a cell */
+/* a 'place' is a part of a grid column where an actor can exist */
+/* Unlike for a grid-cell, floor and ceiling are absolute values */
+typedef struct place_s {
+	pos3_t cell;	/**< coordinates of the grid-cell this was derived from. */
+	int floor;		/**< The floor of the place, given in absolute QUANTs */
+	int ceiling;	/**< The ceiling of it, given in absolute QUANTs. */
+	int floorZ;		/**< The level (0-7) of the floor. */
+} place_t;
+
+inline void RT_PlaceInit(routing_t *map, const int actorSize, place_t *p, const int x, const int y, const int z)
+{
+	p->cell[0] = x;
+	p->cell[1] = y;
+	p->cell[2] = z;
+	p->floor = max(0, RT_FLOOR(map, actorSize, x, y, z)) + z * CELL_HEIGHT;
+	p->ceiling = RT_CEILING(map, actorSize, x, y, z) + z * CELL_HEIGHT;
+	p->floorZ =  p->floor / CELL_HEIGHT;
+}
+
+inline qboolean RT_PlaceIsUsable(place_t* p)
+{
+	return (p->ceiling - p->floor) >= PATHFINDING_MIN_OPENING;
+}
+
+/* an 'opening' describes the connection between two adjacent spaces where an actor can exist in a cell */
 /* Note that if size is 0, the other members are undefined. They may contain reasonable values, though */
 typedef struct opening_s {
 	int size;		/**< The opening size (max actor height) that can travel this passage. */
@@ -57,6 +81,7 @@ typedef struct opening_s {
 	int stepup;		/**< The stepup needed to travel through this passage in this direction. */
 	int invstepup;	/**< The stepup needed to travel through this passage in the opposite direction. */
 } opening_t;
+
 /*
 ==========================================================
   GRID ORIENTED MOVEMENT AND SCANNING
@@ -1182,19 +1207,24 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, const int  
  * @param[in] z Starting z coordinate
  * @param[in] ax Ending x coordinate
  * @param[in] ay Ending y coordinate
- * @param[in] az Ending z coordinate
  * @param[out] opening_base Actual height in QUANT units of the detected opening.
  * @param[out] stepup Required stepup to travel in this direction.
  * @return The size in QUANT units of the detected opening.
  */
 static void RT_TracePassage (routing_t * map, const int actorSize, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
 {
-	/* See if there is a passage TO the adjacent cell. */
-	const int bottom = max(0, RT_FLOOR(map, actorSize, x, y, z)) + z * CELL_HEIGHT;
-	const int top = RT_CEILING(map, actorSize, x, y, z) + z * CELL_HEIGHT;
 	const int belowceil = RT_CEILING(map, actorSize, ax, ay, z) + z * CELL_HEIGHT;
-	const int aboveceil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : belowceil;
-	const int lowceil = min(top, (RT_CEILING(map, actorSize, ax, ay, z) == 0 || belowceil - bottom < PATHFINDING_MIN_OPENING) ? aboveceil : belowceil);
+	int aboveceil, lowceil;
+
+	place_t from, to;	/** we don't need the cell below the adjacent cell because we should have already checked it */
+
+	RT_PlaceInit(map, actorSize, &from, x, y, z);
+	RT_PlaceInit(map, actorSize, &to, ax, ay, z);
+//	if (z < PATHFINDING_HEIGHT - 1)
+//		RT_PlaceInit(map, actorSize, &above, ax, ay, z + 1);
+
+	aboveceil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : belowceil;
+	lowceil = min(from.ceiling, (RT_CEILING(map, actorSize, ax, ay, z) == 0 || belowceil - from.floor < PATHFINDING_MIN_OPENING) ? aboveceil : belowceil);
 
 	/*
 	 * First check the ceiling for the cell beneath the adjacent floor to see
@@ -1214,9 +1244,9 @@ static void RT_TracePassage (routing_t * map, const int actorSize, const int x, 
 	 * If there is no passage, then the obstruction may be used as steps to
 	 * climb up to the adjacent floor.
 	 */
-	if (lowceil - bottom < PATHFINDING_MIN_OPENING) {
+	if (lowceil - from.floor < PATHFINDING_MIN_OPENING) {
 		if (debugTrace)
-			Com_Printf(" No opening found. c:%i lc:%i.\n", top, lowceil);
+			Com_Printf(" No opening found. c:%i lc:%i.\n", from.ceiling, lowceil);
 		/* If we got here, then there is no opening from floor to ceiling. */
 		opening->stepup = PATHFINDING_NO_STEPUP;
 		opening->invstepup = PATHFINDING_NO_STEPUP;
@@ -1230,23 +1260,19 @@ static void RT_TracePassage (routing_t * map, const int actorSize, const int x, 
 	 * ceiling below the adjacent cell and the current floor is too small or
 	 * obstructed.  Try to move onto the adjacent floor.
 	 */
-
 	if (debugTrace)
-		Com_Printf(" Testing up c:%i lc:%i.\n", top, lowceil);
+		Com_Printf(" Testing up c:%i lc:%i.\n", from.ceiling, lowceil);
 
-	opening->size = RT_TraceOnePassage(map, actorSize, x, y, z, ax, ay, bottom, lowceil, opening);
-	if (opening->size >= PATHFINDING_MIN_OPENING) {
-		return;
+	opening->size = RT_TraceOnePassage(map, actorSize, x, y, z, ax, ay, from.floor, lowceil, opening);
+	if (opening->size < PATHFINDING_MIN_OPENING) {
+		if (debugTrace)
+			Com_Printf(" No opening found.\n");
+		/* If we got here, then there is no opening from floor to ceiling. */
+		opening->stepup = PATHFINDING_NO_STEPUP;
+		opening->invstepup = PATHFINDING_NO_STEPUP;
+		opening->base = lowceil;
+		opening->size = 0;
 	}
-
-	if (debugTrace)
-		Com_Printf(" No opening found.\n");
-	/* If we got here, then there is no opening from floor to ceiling. */
-	opening->stepup = PATHFINDING_NO_STEPUP;
-	opening->invstepup = PATHFINDING_NO_STEPUP;
-	opening->base = lowceil;
-	opening->size = 0;
-	return;
 }
 
 
