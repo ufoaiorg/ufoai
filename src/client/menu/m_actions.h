@@ -45,6 +45,7 @@ typedef enum ea_s {
 	EA_IF = EA_ACTION + 4,
 	EA_ELSE = EA_ACTION + 5,
 	EA_ELIF = EA_ACTION + 6,
+	EA_WHILE = EA_ACTION + 7,
 
 	/* boolean to boolean operators */
 	EA_OPERATOR_BOOLEAN2BOOLEAN = 0x0300,
@@ -90,6 +91,11 @@ typedef enum ea_s {
 	EA_VALUE_PATHPROPERTY_WITHINJECTION = EA_VALUE + 8,	/**< should be into an extra action type */
 	EA_VALUE_NODEPROPERTY = EA_VALUE + 9				/**< reference to a node, and a property (not a string) */
 } ea_t;
+
+typedef struct {
+	int operator;
+	char* string;
+} menuActionTypeList_t;
 
 typedef union {
 	float number;

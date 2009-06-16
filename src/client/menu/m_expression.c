@@ -29,12 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_abstractnode.h"
 #include "../../shared/parse.h"
 
-typedef struct {
-	int operator;
-	char* string;
-} menuActionTypeList_t;
-
-static const menuActionTypeList_t operatorList[] = {
+static const menuActionTypeList_t operatorTokens[] = {
 	{EA_OPERATOR_EQ, "=="},
 	{EA_OPERATOR_LE, "<="},
 	{EA_OPERATOR_GE, ">="},
@@ -320,21 +315,19 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t
 }
 
 /**
- * @brief Translate the condition string to menuIfCondition_t enum value
- * @param[in] conditionString The string from scriptfiles (see if_strings)
- * @return menuIfCondition_t value
- * @return enum value for condition string
- * @note Produces a Sys_Error if conditionString was not found in if_strings array
+ * @brief Return an operator type from a token
+ * @param[in] operatorName Operator token
+ * @return An operator type, EA_OPERATOR_INVALID
  * @todo dichotomic search
  */
 static int MN_GetOperatorByName (const char* operatorName)
 {
 	int i = 0;
 	while (qtrue) {
-		if (operatorList[i].operator == EA_NULL)
+		if (operatorTokens[i].operator == EA_NULL)
 			break;
-		if (!strcmp(operatorList[i].string, operatorName))
-			return operatorList[i].operator;
+		if (!strcmp(operatorTokens[i].string, operatorName))
+			return operatorTokens[i].operator;
 		i++;
 	}
 	return EA_OPERATOR_INVALID;

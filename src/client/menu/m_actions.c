@@ -302,6 +302,20 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		MN_ExecuteSetAction(source, useCmdParam, action);
 		break;
 
+	case EA_WHILE:
+		{
+			int loop = 0;
+			while (MN_GetBooleanFromExpression(action->d.nonTerminal.left, source)) {
+				MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
+				if (loop > 1000) {
+					Com_Printf("MN_ExecuteInjectedAction: Infinite loop. Force breaking 'while'\n");
+					break;
+				}
+				loop++;
+			}
+			break;
+		}
+
 	case EA_IF:
 		if (MN_GetBooleanFromExpression(action->d.nonTerminal.left, source)) {
 			MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
