@@ -211,10 +211,7 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		else
 			cvarName = MN_GenInjectedString(source, useCmdParam, left->d.terminal.d1.string, qfalse);
 
-		/** @todo with a simple check of the right operand we can read a float when its possible (faster way) */
 		textValue = MN_GetStringFromExpression(right, source);
-		/** @todo we should move it into an expression type, into the expression checker */
-		textValue = MN_GenInjectedString(source, useCmdParam, textValue, qfalse);
 
 		if (textValue[0] == '_')
 			textValue = _(textValue + 1);
