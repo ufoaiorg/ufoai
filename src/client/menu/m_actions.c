@@ -31,6 +31,102 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 
+typedef struct {
+	char* token;
+	int type;
+	int group;
+} menuTypedActionToken_t;
+
+/**
+ * @brief List of typed token
+ * @note token ordered by alphabet, because it use a dichotomic search
+ */
+static const menuTypedActionToken_t actionTokens[] = {
+
+	/* 0x2x */
+	{"!=", EA_OPERATOR_NE, EA_BINARYOPERATOR},
+	{"%", EA_OPERATOR_MOD, EA_BINARYOPERATOR},
+	{"&&", EA_OPERATOR_AND, EA_BINARYOPERATOR},
+	{"*", EA_OPERATOR_MUL, EA_BINARYOPERATOR},
+	{"+", EA_OPERATOR_ADD, EA_BINARYOPERATOR},
+	{"-", EA_OPERATOR_SUB, EA_BINARYOPERATOR},
+	{"/", EA_OPERATOR_DIV, EA_BINARYOPERATOR},
+
+	/* 0x3x */
+	{"<", EA_OPERATOR_LT, EA_BINARYOPERATOR},
+	{"<=", EA_OPERATOR_LE, EA_BINARYOPERATOR},
+	{"==", EA_OPERATOR_EQ, EA_BINARYOPERATOR},
+	{">", EA_OPERATOR_GT, EA_BINARYOPERATOR},
+	{">=", EA_OPERATOR_GE, EA_BINARYOPERATOR},
+
+	/* 0x5x */
+	{"^", EA_OPERATOR_XOR, EA_BINARYOPERATOR},
+
+	/* 'a'..'z' */
+	{"and", EA_OPERATOR_AND, EA_BINARYOPERATOR},
+	{"call", EA_CALL, EA_ACTION},
+	{"cmd", EA_CMD, EA_ACTION},
+	{"elif", EA_ELIF, EA_ACTION},
+	{"else", EA_ELSE, EA_ACTION},
+	{"eq", EA_OPERATOR_STR_EQ, EA_BINARYOPERATOR},
+	{"if", EA_IF, EA_ACTION},
+	{"ne", EA_OPERATOR_STR_NE, EA_BINARYOPERATOR},
+	{"or", EA_OPERATOR_OR, EA_BINARYOPERATOR},
+	{"while", EA_WHILE, EA_ACTION},
+
+	/* 0x7x */
+	{"||", EA_OPERATOR_OR, EA_BINARYOPERATOR},
+};
+
+/**
+ * @brief Check if the action token list is sorted by alphabet,
+ * else dichotomic search can't work
+ */
+static void MN_CheckActionTokenTypeSanity (void)
+{
+	int i;
+	for (i = 0; i < lengthof(actionTokens) - 1; i++) {
+		const char *a = actionTokens[i].token;
+		const char *b = actionTokens[i + 1].token;
+		if (strcmp(a, b) >= 0) {
+			Sys_Error("MN_CheckActionTokenTypeSanity: '%s' is before '%s'. actionList must be sorted by alphabet", a, b);
+		}
+	}
+}
+
+/**
+ * @brief return an action type from a token, and a group
+ * @param[in] token Requested token
+ * @param[in] group Requested group, EA_ACTION, EA_BINARYOPERATOR, or EA_UNARYOPERATOR
+ * @sa actionTokens
+ * @return a action type from the requested group, else EA_NULL
+ */
+int MN_GetActionTokenType (const char* token, int group)
+{
+	unsigned char min = 0;
+	unsigned char max = lengthof(actionTokens);
+
+	while (min != max) {
+		const int mid = (min + max) >> 1;
+		const char diff = strcmp(actionTokens[mid].token, token);
+		assert(mid < max);
+		assert(mid >= min);
+
+		if (diff == 0) {
+			if (actionTokens[mid].group == group)
+				return actionTokens[mid].type;
+			else
+				return EA_NULL;
+		}
+
+		if (diff > 0)
+			max = mid;
+		else
+			min = mid + 1;
+	}
+	return EA_NULL;
+}
+
 /**
  * @brief read a property name from an input buffer to an output
  * @return last position into the input buffer if we find property, else NULL
@@ -562,6 +658,7 @@ static void MN_RemoveListener_f (void)
 
 void MN_InitActions (void)
 {
+	MN_CheckActionTokenTypeSanity();
 	Cmd_AddCommand("mn_addlistener", MN_AddListener_f, "Add a function into a node event");
 	Cmd_AddCommand("mn_removelistener", MN_RemoveListener_f, "Remove a function from a node event");
 }

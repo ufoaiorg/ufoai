@@ -31,6 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef enum ea_s {
 	EA_NULL = 0,
 
+	EA_BINARYOPERATOR,
+	EA_UNARYOPERATOR,
+
 	/* masks */
 	EA_HIGHT_MASK = 0xFF00,
 
@@ -89,11 +92,6 @@ typedef enum ea_s {
 	EA_VALUE_NODEPROPERTY = EA_VALUE + 9				/**< reference to a node, and a property (not a string) */
 } ea_t;
 
-typedef struct {
-	int operator;
-	char* string;
-} menuActionTypeList_t;
-
 typedef union {
 	float number;
 	char* string;
@@ -128,6 +126,7 @@ void MN_ExecuteConFuncActions(const struct menuNode_s* source, const menuAction_
 qboolean MN_IsInjectedString(const char *string);
 void MN_FreeStringProperty(void* pointer);
 const char* MN_GenInjectedString(const struct menuNode_s* source, qboolean useCmdParam, const char* input, qboolean addNewLine);
+int MN_GetActionTokenType(const char* token, int group);
 
 void MN_PoolAllocAction(menuAction_t** action, int type, const void *data);
 menuAction_t* MN_AllocCommandAction(char *command);

@@ -29,32 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_abstractnode.h"
 #include "../../shared/parse.h"
 
-static const menuActionTypeList_t operatorTokens[] = {
-	{EA_OPERATOR_EQ, "=="},
-	{EA_OPERATOR_LE, "<="},
-	{EA_OPERATOR_GE, ">="},
-	{EA_OPERATOR_GT, ">"},
-	{EA_OPERATOR_LT, "<"},
-	{EA_OPERATOR_NE, "!="},
-
-	{EA_OPERATOR_STR_EQ, "eq"},
-	{EA_OPERATOR_STR_NE, "ne"},
-
-	{EA_OPERATOR_ADD, "+"},
-	{EA_OPERATOR_SUB, "-"},
-	{EA_OPERATOR_MUL, "*"},
-	{EA_OPERATOR_DIV, "/"},
-	{EA_OPERATOR_MOD, "%"},
-
-	{EA_OPERATOR_AND, "and"},
-	{EA_OPERATOR_OR, "or"},
-	{EA_OPERATOR_AND, "&&"},
-	{EA_OPERATOR_OR, "||"},
-	{EA_OPERATOR_XOR, "^"},
-
-	{EA_NULL, ""}
-};
-
 /**
  * @return A float value, else 0
  */
@@ -315,25 +289,6 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t
 }
 
 /**
- * @brief Return an operator type from a token
- * @param[in] operatorName Operator token
- * @return An operator type, EA_NULL
- * @todo dichotomic search
- */
-static int MN_GetOperatorByName (const char* operatorName)
-{
-	int i = 0;
-	while (qtrue) {
-		if (operatorTokens[i].operator == EA_NULL)
-			break;
-		if (!strcmp(operatorTokens[i].string, operatorName))
-			return operatorTokens[i].operator;
-		i++;
-	}
-	return EA_NULL;
-}
-
-/**
  * @brief Allocate and initialize an expression according to a string
  * @param[in] token String describing a condition
  * @param[out] condition Condition to initialize
@@ -496,7 +451,7 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const 
 		/* then its an operator */
 		expression = MN_AllocAction();
 		expression->d.nonTerminal.left = e;
-		expression->type = MN_GetOperatorByName(token);
+		expression->type = MN_GetActionTokenType(token, EA_BINARYOPERATOR);
 		if (expression->type == EA_NULL) {
 			Com_Printf("Invalid 'expression' statement. Unknown '%s' operator\n", token);
 			return NULL;

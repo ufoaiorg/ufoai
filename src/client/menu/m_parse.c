@@ -71,17 +71,6 @@ static const value_t menuModelProperties[] = {
 	{NULL, V_NULL, 0, 0},
 };
 
-/** @brief valid actions ID with right tokens */
-static const menuActionTypeList_t actionTokens[] = {
-	{EA_CMD, "cmd"},
-	{EA_CALL, "call"},
-	{EA_IF, "if"},
-	{EA_ELSE, "else"},
-	{EA_ELIF, "elif"},
-	{EA_WHILE, "while"},
-	{EA_NULL, ""}
-};
-
 /** @brief reserved token preventing calling a node with it */
 static const char *reserved_tokens[] = {
 	"this",
@@ -306,25 +295,6 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 }
 
 /**
- * @brief Return an action type from a token
- * @param[in] actionName Action token
- * @return A type, else EA_NULL
- * @todo dichotomic search
- */
-static int MN_GetActionByName (const char* actionName)
-{
-	int i = 0;
-	while (qtrue) {
-		if (actionTokens[i].operator == EA_NULL)
-			break;
-		if (!strcmp(actionTokens[i].string, actionName))
-			return actionTokens[i].operator;
-		i++;
-	}
-	return EA_NULL;
-}
-
-/**
  * @brief Parse actions and return action list
  * @return The first element from a list of action
  * @sa ea_t
@@ -359,7 +329,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			break;
 
 
-		type = MN_GetActionByName(*token);
+		type = MN_GetActionTokenType(*token, EA_ACTION);
 		/* setter form */
 		if (type == EA_NULL && *token[0] == '*')
 			type = EA_ASSIGN;
