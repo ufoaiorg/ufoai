@@ -58,7 +58,7 @@ typedef struct place_s {
 	int floorZ;		/**< The level (0-7) of the floor. */
 } place_t;
 
-inline void RT_PlaceInit(routing_t *map, const int actorSize, place_t *p, const int x, const int y, const int z)
+static inline void RT_PlaceInit (routing_t *map, const int actorSize, place_t *p, const int x, const int y, const int z)
 {
 	p->cell[0] = x;
 	p->cell[1] = y;
@@ -68,7 +68,7 @@ inline void RT_PlaceInit(routing_t *map, const int actorSize, place_t *p, const 
 	p->floorZ =  p->floor / CELL_HEIGHT;
 }
 
-inline qboolean RT_PlaceIsUsable(place_t* p)
+static inline qboolean RT_PlaceIsUsable (place_t* p)
 {
 	return (p->ceiling - p->floor) >= PATHFINDING_MIN_OPENING;
 }
