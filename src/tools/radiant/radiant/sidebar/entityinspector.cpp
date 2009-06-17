@@ -1543,15 +1543,13 @@ static void EntityKeyValueList_updateKeyCombo (GtkTreeViewColumn *column, GtkCel
 	/* prevent update if already displaying anything */
 	{
 		bool editing;
-		g_object_get(G_OBJECT(renderer), "editing", &editing, NULL);
+		g_object_get(G_OBJECT(renderer), "editing", &editing, (const char*)0);
 		if (editing)
 			return;
 	}
 	char *value, *key;
-	int weight;
 	bool initialized;
-	gtk_tree_model_get(model, iter, KEYVALLIST_COLUMN_KEY, &key, KEYVALLIST_COLUMN_VALUE, &value, KEYVALLIST_COLUMN_STYLE, &weight, KEYVALLIST_COLUMN_KEY_PREPARED, &initialized, -1);
-	g_object_set(renderer, "weight", weight, (const char*)0);
+	gtk_tree_model_get(model, iter, KEYVALLIST_COLUMN_KEY, &key, KEYVALLIST_COLUMN_VALUE, &value, KEYVALLIST_COLUMN_KEY_PREPARED, &initialized, -1);
 	/* don't allow to edit keys if value is already set to anything (only remove possible) */
 	if (value != 0 && strlen(value) > 0) {
 		g_object_set(renderer, "editable", FALSE, (const char*)0);
@@ -1612,16 +1610,18 @@ static void EntityKeyValueList_updateValueCombo (GtkCellRenderer *renderer,
 	// prevent update if already displaying anything
 	{
 		bool editing;
-		g_object_get(G_OBJECT(renderer), "editing", &editing, NULL);
+		g_object_get(G_OBJECT(renderer), "editing", &editing, (const char*)0);
 		if (editing)
 			return;
 	}
 	if (g_currentSelectedKey.empty()) {
+		g_warning("leaving updateValueCombo... no g_currentSelectedKey");
 		return;
 	}
 	const char *key = g_currentSelectedKey.c_str();
 	ClassKeyValues::iterator it = g_selectedKeyValues.find(g_current_attributes->m_name);
 	if (it == g_selectedKeyValues.end()) {
+		g_warning("leaving updateValueCombo... no class attributes");
 		return;
 	}
 	KeyValues possibleValues = (*it).second;
@@ -1742,6 +1742,7 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 				GtkCellRenderer* renderer = gtk_cell_renderer_combo_new();
 				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Key"), renderer, "text",
 						KEYVALLIST_COLUMN_KEY, (char const*) 0);
+				gtk_tree_view_column_add_attribute(column, renderer, "weight", KEYVALLIST_COLUMN_STYLE);
 				gtk_tree_view_column_set_cell_data_func(column, renderer, EntityKeyValueList_updateKeyCombo, NULL, NULL);
 				gtk_tree_view_append_column(view, column);
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
@@ -1754,6 +1755,7 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 				GtkCellRenderer* renderer = gtk_cell_renderer_combo_new();
 				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Value"), renderer,
 						"text", KEYVALLIST_COLUMN_VALUE, (char const*) 0);
+				gtk_tree_view_column_add_attribute(column, renderer, "weight", KEYVALLIST_COLUMN_STYLE);
 				gtk_tree_view_append_column(view, column);
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityValueEdited), (gpointer) view);
