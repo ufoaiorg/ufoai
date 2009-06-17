@@ -49,8 +49,11 @@ qboolean debugTrace = qfalse;
   LOCAL TYPES
 ==========================================================
 */
-/* a 'place' is a part of a grid column where an actor can exist */
-/* Unlike for a grid-cell, floor and ceiling are absolute values */
+
+/*
+ * @brief A 'place' is a part of a grid column where an actor can exist
+ * Unlike for a grid-cell, floor and ceiling are absolute values
+ */
 typedef struct place_s {
 	pos3_t cell;	/**< coordinates of the grid-cell this was derived from. */
 	int floor;		/**< The floor of the place, given in absolute QUANTs */
@@ -73,8 +76,10 @@ static inline qboolean RT_PlaceIsUsable (place_t* p)
 	return (p->ceiling - p->floor) >= PATHFINDING_MIN_OPENING;
 }
 
-/* an 'opening' describes the connection between two adjacent spaces where an actor can exist in a cell */
-/* Note that if size is 0, the other members are undefined. They may contain reasonable values, though */
+/*
+ * @brief An 'opening' describes the connection between two adjacent spaces where an actor can exist in a cell
+ * @note Note that if size is @c 0, the other members are undefined. They may contain reasonable values, though
+ */
 typedef struct opening_s {
 	int size;		/**< The opening size (max actor height) that can travel this passage. */
 	int base;		/**< The base height of the opening, given in abs QUANTs */
@@ -283,17 +288,17 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	/* This sets up the size of the box required to stand in a cell by an actor's feet.  */
 	const float halfMicrostepSize = PATHFINDING_MICROSTEP_SIZE / 2;
 	/* This is a template for the extents of the box used by an actor's legs. */
-	const vec3_t floormins = {-halfMicrostepSize + DIST_EPSILON, -halfMicrostepSize + DIST_EPSILON, 0};
-	const vec3_t floormaxs = {halfMicrostepSize - DIST_EPSILON, halfMicrostepSize - DIST_EPSILON, 0};
+	const vec3_t floorMins = {-halfMicrostepSize + DIST_EPSILON, -halfMicrostepSize + DIST_EPSILON, 0};
+	const vec3_t floorMaxs = {halfMicrostepSize - DIST_EPSILON, halfMicrostepSize - DIST_EPSILON, 0};
 	/* This is a template for the extents of the box used by an actor's legs. */
-	const vec3_t footmins = {-halfMicrostepSize + DIST_EPSILON, -halfMicrostepSize + DIST_EPSILON, 0};
-	const vec3_t footmaxs = {halfMicrostepSize - DIST_EPSILON, halfMicrostepSize - DIST_EPSILON, PATHFINDING_MIN_STEPUP * QUANT - DIST_EPSILON * 2};
+	const vec3_t footMins = {-halfMicrostepSize + DIST_EPSILON, -halfMicrostepSize + DIST_EPSILON, 0};
+	const vec3_t footMaxs = {halfMicrostepSize - DIST_EPSILON, halfMicrostepSize - DIST_EPSILON, PATHFINDING_MIN_STEPUP * QUANT - DIST_EPSILON * 2};
 	/* This is a template for the extents of the box used by an actor's torso. */
-	const vec3_t torsomins = {UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, PATHFINDING_MIN_STEPUP * QUANT};
-	const vec3_t torsomaxs = {UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, PATHFINDING_MIN_OPENING * QUANT  - DIST_EPSILON * 2};
+	const vec3_t torsoMins = {UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, PATHFINDING_MIN_STEPUP * QUANT};
+	const vec3_t torsoMaxs = {UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, PATHFINDING_MIN_OPENING * QUANT  - DIST_EPSILON * 2};
 	/* This is a template for the ceiling trace after an actor's torso space has been found. */
-	const vec3_t ceilmins = {UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, 0};
-	const vec3_t ceilmaxs = {UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, 0};
+	const vec3_t ceilMins = {UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, 0};
+	const vec3_t ceilMaxs = {UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, 0};
 
 	vec3_t start, end; /* Start and end of the downward traces. */
 	vec3_t tstart, tend; /* Start and end of the upward traces. */
@@ -341,7 +346,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 			Com_Printf("[(%i, %i, %i, %i)]Casting floor (%f, %f, %f) to (%f, %f, %f)\n",
 				x, y, z, actorSize, start[0], start[1], start[2], end[0], end[1], end[2]);
 
-		tr = RT_COMPLETEBOXTRACE(start, end, floormins, floormaxs, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+		tr = RT_COMPLETEBOXTRACE(start, end, floorMins, floorMaxs, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		if (tr.fraction >= 1.0) {
 			/* There is no brush underneath this starting point. */
 			if (debugTrace)
@@ -368,8 +373,8 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 		VectorCopy(tr.endpos, tstart);
 
 		/* Prep the start and end of the "leg room" test. */
-		VectorAdd(tstart, footmins, bmins); /* Now bmins has the lower required foot space extent */
-		VectorAdd(tstart, footmaxs, bmaxs); /* Now bmaxs has the upper required foot space extent */
+		VectorAdd(tstart, footMins, bmins); /* Now bmins has the lower required foot space extent */
+		VectorAdd(tstart, footMaxs, bmaxs); /* Now bmaxs has the upper required foot space extent */
 
 		/*
 		VectorCopy(start, tstart);
@@ -410,8 +415,8 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 		}
 
 		/* Prep the start and end of the "torso room" test. */
-		VectorAdd(tstart, torsomins, bmins); /* Now bmins has the lower required torso space extent */
-		VectorAdd(tstart, torsomaxs, bmaxs); /* Now bmaxs has the upper required torso space extent */
+		VectorAdd(tstart, torsoMins, bmins); /* Now bmins has the lower required torso space extent */
+		VectorAdd(tstart, torsoMaxs, bmaxs); /* Now bmaxs has the upper required torso space extent */
 
 		if (debugTrace)
 			Com_Printf("    Casting torso room (%f, %f, %f) to (%f, %f, %f)\n",
@@ -457,7 +462,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 			Com_Printf("    Casting ceiling (%f, %f, %f) to (%f, %f, %f)\n",
 				tstart[0], tstart[1], tstart[2], tend[0], tend[1], tend[2]);
 
-		tr = RT_COMPLETEBOXTRACE(tstart, tend, ceilmins, ceilmaxs, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+		tr = RT_COMPLETEBOXTRACE(tstart, tend, ceilMins, ceilMaxs, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 
 		/* We found the ceiling. */
 		top = tr.endpos[2];
@@ -535,9 +540,9 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
  * @param[in] opening_base Absolute height in QUANT units of the bottom of the opening.
  * @param[in] stepup Required stepup to travel in this direction.
  */
-static int RT_FillPassageData (routing_t * map, const int actorSize, const int dir, const int  x, const int y, const int z, const int opening_size, const int opening_base, const int stepup)
+static int RT_FillPassageData (routing_t * map, const int actorSize, const int dir, const int  x, const int y, const int z, const int openingSize, const int openingBase, const int stepup)
 {
-	const int opening_top = opening_base + opening_size;
+	const int openingTop = openingBase + openingSize;
 	int fz, cz; /**< Floor and ceiling Z cell coordinates */
 	int i;
 
@@ -555,7 +560,7 @@ static int RT_FillPassageData (routing_t * map, const int actorSize, const int d
 	 */
 
 	fz = z;
-	cz = min(PATHFINDING_HEIGHT - 1, ceil((float)opening_top / CELL_HEIGHT) - 1);
+	cz = min(PATHFINDING_HEIGHT - 1, ceil((float)openingTop / CELL_HEIGHT) - 1);
 
 	/* last chance- if cz < z, then bail (and there is an error with the ceiling data somewhere */
 	if (cz < z) {
@@ -563,12 +568,12 @@ static int RT_FillPassageData (routing_t * map, const int actorSize, const int d
 		RT_CONN(map, actorSize, x, y, z, dir) = 0;
 		RT_STEPUP(map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
 		if (debugTrace)
-			Com_Printf("Passage found but below current cell, opening_base=%i, opening_top=%i, z = %i, cz = %i.\n", opening_base, opening_top, z, cz);
+			Com_Printf("Passage found but below current cell, opening_base=%i, opening_top=%i, z = %i, cz = %i.\n", openingBase, openingTop, z, cz);
 		return z;
 	}
 
 	if (debugTrace)
-		Com_Printf("Passage found, opening_base=%i, opening_size=%i, opening_top=%i, stepup=%i. (%i to %i)\n", opening_base, opening_size, opening_top, stepup, fz, cz);
+		Com_Printf("Passage found, opening_base=%i, opening_size=%i, opening_top=%i, stepup=%i. (%i to %i)\n", openingBase, openingSize, openingTop, stepup, fz, cz);
 
 	assert(fz <= z && z <= cz);
 
@@ -577,8 +582,8 @@ static int RT_FillPassageData (routing_t * map, const int actorSize, const int d
 		/* Offset from the floor or the bottom of the current cell, whichever is higher. */
 		/* Only if > 0 */
 		RT_CONN_TEST(map, actorSize, x, y, i, dir);
-		assert (opening_top - max(opening_base, i * CELL_HEIGHT) >= 0);
-		RT_CONN(map, actorSize, x, y, i, dir) = opening_top - max(opening_base, i * CELL_HEIGHT);
+		assert (openingTop - max(openingBase, i * CELL_HEIGHT) >= 0);
+		RT_CONN(map, actorSize, x, y, i, dir) = openingTop - max(openingBase, i * CELL_HEIGHT);
 		/* The stepup is 0 for all cells that are not at the floor. */
 		RT_STEPUP(map, actorSize, x, y, i, dir) = 0;
 		if (debugTrace) {
@@ -888,8 +893,8 @@ static int RT_FindOpening (routing_t * map, const int actorSize, const int  x, c
 
 	/* shortcut: if both ceilings are the sky, we can check for walls
 	 * AND determine the bottom of the passage in just one trace */
-	if (   z * CELL_HEIGHT + RT_CEILING(map, actorSize, x, y, z) >= PATHFINDING_HEIGHT * CELL_HEIGHT
-		&& z * CELL_HEIGHT + RT_CEILING(map, actorSize, ax, ay, z) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
+	if (z * CELL_HEIGHT + RT_CEILING(map, actorSize, x, y, z) >= PATHFINDING_HEIGHT * CELL_HEIGHT
+	 && z * CELL_HEIGHT + RT_CEILING(map, actorSize, ax, ay, z) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
 		vec3_t sky, earth;
 		vec3_t bmin, bmax;	/**< Tracing box extents */
 		trace_t tr;
@@ -968,7 +973,7 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
 	const int steps = UNIT_SIZE / PATHFINDING_MICROSTEP_SIZE;
 	trace_t tr;
 	vec3_t bmin, bmax;
-	int i, current_h, highest_h, highest_i = 0, skipped, new_bottom;
+	int i, current_h, highest_h, highest_i = 0, skipped, newBottom;
 	vec3_t start, end;
 	pos3_t pos;
 	int last_step;
@@ -999,7 +1004,7 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
 	VectorSet(bmax, PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON, PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON, 0);
 	VectorSet(bmin, -PATHFINDING_MICROSTEP_SIZE / 2 + DIST_EPSILON, -PATHFINDING_MICROSTEP_SIZE / 2 + DIST_EPSILON, 0);
 
-	new_bottom = max(bases[0], bases[steps]);
+	newBottom = max(bases[0], bases[steps]);
 	/* Now calculate the rest of the microheights. */
 	for (i = 1; i < steps; i++) {
 		start[0] = end[0] = sx + (ex - sx) * (i / (float)steps);
@@ -1017,11 +1022,11 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
 			Com_Printf("Microstep %i from (%f, %f, %f) to (%f, %f, %f) = %i [%f]\n",
 				i, start[0], start[1], start[2], end[0], end[1], end[2], bases[i], tr.endpos[2]);\
 
-		new_bottom = max(new_bottom, bases[i]);
+		newBottom = max(newBottom, bases[i]);
 	}
 
 	if (debugTrace)
-		Com_Printf("z:%i az:%i bottom:%i new_bottom:%i top:%i bases[0]:%i bases[%i]:%i\n", z, az, opening->base, new_bottom, top, bases[0], steps, bases[steps]);
+		Com_Printf("z:%i az:%i bottom:%i new_bottom:%i top:%i bases[0]:%i bases[%i]:%i\n", z, az, opening->base, newBottom, top, bases[0], steps, bases[steps]);
 
 	/** @note This for loop is bi-directional: i may be decremented to retrace prior steps. */
 	/* Now find the maximum stepup moving from (x, y) to (ax, ay). */
@@ -1112,7 +1117,7 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
 	}
 
 	/* Return the confirmed passage opening. */
-	return opening->base - new_bottom;
+	return opening->base - newBottom;
 }
 
 
@@ -1134,7 +1139,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, const int  
 {
 	int hi; /**< absolute ceiling of the passage found. */
 	int az; /**< z height of the actor after moving in this direction. */
-	int bonus_size;
+	int bonusSize;
 
 	az = RT_FindOpening(map, actorSize, x, y, z, ax, ay, lower, upper, &opening->base, &hi);
 	/* calc opening found so far and set stepup */
@@ -1145,22 +1150,22 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, const int  
 	 * wide and not the usual dimensions.
 	 */
 	if (az != RT_NO_OPENING && opening->size >= PATHFINDING_MIN_OPENING - PATHFINDING_MIN_STEPUP) {
-		const int src_floor = RT_FLOOR(map, actorSize, x, y, z) + z * CELL_HEIGHT;
-		const int dst_floor = RT_FLOOR(map, actorSize, ax, ay, az) + az * CELL_HEIGHT;
+		const int srcFloor = RT_FLOOR(map, actorSize, x, y, z) + z * CELL_HEIGHT;
+		const int dstFloor = RT_FLOOR(map, actorSize, ax, ay, az) + az * CELL_HEIGHT;
 		/* if we already have enough headroom, try to skip microtracing */
 		/** @todo CELL_HEIGHT can be replaced with the largest actor height. */
 		if (opening->size < CELL_HEIGHT
-			|| abs(src_floor - opening->base) > PATHFINDING_MIN_STEPUP
-			|| abs(dst_floor - opening->base) > PATHFINDING_MIN_STEPUP) {
+			|| abs(srcFloor - opening->base) > PATHFINDING_MIN_STEPUP
+			|| abs(dstFloor - opening->base) > PATHFINDING_MIN_STEPUP) {
 			/* This returns the total opening height, as the
 			 * microtrace may reveal more passage height from the foot space. */
-			bonus_size = RT_MicroTrace(map, actorSize, x, y, z, ax, ay, az, opening);
-			opening->base += bonus_size;
+			bonusSize = RT_MicroTrace(map, actorSize, x, y, z, ax, ay, az, opening);
+			opening->base += bonusSize;
 			opening->size = hi - opening->base;	/* re-calculate */
 		} else {
 			/* Skipping microtracing, just set the stepup values. */
-			opening->stepup = max(0, opening->base - src_floor);
-			opening->invstepup = max(0, opening->base - dst_floor);
+			opening->stepup = max(0, opening->base - srcFloor);
+			opening->invstepup = max(0, opening->base - dstFloor);
 		}
 
 		/* Now place an upper bound on stepup */
@@ -1213,10 +1218,10 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, const int  
  */
 static void RT_TracePassage (routing_t * map, const int actorSize, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
 {
-	const int belowceil = RT_CEILING(map, actorSize, ax, ay, z) + z * CELL_HEIGHT;
-	int aboveceil, lowceil;
-
-	place_t from, to;	/** we don't need the cell below the adjacent cell because we should have already checked it */
+	const int belowCeil = RT_CEILING(map, actorSize, ax, ay, z) + z * CELL_HEIGHT;
+	int aboveCeil, lowCeil;
+	/** we don't need the cell below the adjacent cell because we should have already checked it */
+	place_t from, to;
 
 	RT_PlaceInit(map, actorSize, &from, x, y, z);
 	RT_PlaceInit(map, actorSize, &to, ax, ay, z);
@@ -1225,8 +1230,8 @@ static void RT_TracePassage (routing_t * map, const int actorSize, const int x, 
  		RT_PlaceInit(map, actorSize, &above, ax, ay, z + 1);
  */
 
-	aboveceil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : belowceil;
-	lowceil = min(from.ceiling, (RT_CEILING(map, actorSize, ax, ay, z) == 0 || belowceil - from.floor < PATHFINDING_MIN_OPENING) ? aboveceil : belowceil);
+	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : belowCeil;
+	lowCeil = min(from.ceiling, (RT_CEILING(map, actorSize, ax, ay, z) == 0 || belowCeil - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : belowCeil);
 
 	/*
 	 * First check the ceiling for the cell beneath the adjacent floor to see
@@ -1246,13 +1251,13 @@ static void RT_TracePassage (routing_t * map, const int actorSize, const int x, 
 	 * If there is no passage, then the obstruction may be used as steps to
 	 * climb up to the adjacent floor.
 	 */
-	if (lowceil - from.floor < PATHFINDING_MIN_OPENING) {
+	if (lowCeil - from.floor < PATHFINDING_MIN_OPENING) {
 		if (debugTrace)
-			Com_Printf(" No opening found. c:%i lc:%i.\n", from.ceiling, lowceil);
+			Com_Printf(" No opening found. c:%i lc:%i.\n", from.ceiling, lowCeil);
 		/* If we got here, then there is no opening from floor to ceiling. */
 		opening->stepup = PATHFINDING_NO_STEPUP;
 		opening->invstepup = PATHFINDING_NO_STEPUP;
-		opening->base = lowceil;
+		opening->base = lowCeil;
 		opening->size = 0;
 		return;
 	}
@@ -1263,16 +1268,16 @@ static void RT_TracePassage (routing_t * map, const int actorSize, const int x, 
 	 * obstructed.  Try to move onto the adjacent floor.
 	 */
 	if (debugTrace)
-		Com_Printf(" Testing up c:%i lc:%i.\n", from.ceiling, lowceil);
+		Com_Printf(" Testing up c:%i lc:%i.\n", from.ceiling, lowCeil);
 
-	opening->size = RT_TraceOnePassage(map, actorSize, x, y, z, ax, ay, from.floor, lowceil, opening);
+	opening->size = RT_TraceOnePassage(map, actorSize, x, y, z, ax, ay, from.floor, lowCeil, opening);
 	if (opening->size < PATHFINDING_MIN_OPENING) {
 		if (debugTrace)
 			Com_Printf(" No opening found.\n");
 		/* If we got here, then there is no opening from floor to ceiling. */
 		opening->stepup = PATHFINDING_NO_STEPUP;
 		opening->invstepup = PATHFINDING_NO_STEPUP;
-		opening->base = lowceil;
+		opening->base = lowCeil;
 		opening->size = 0;
 	}
 }
@@ -1290,13 +1295,13 @@ static void RT_TracePassage (routing_t * map, const int actorSize, const int x, 
 static int RT_UpdateConnection (routing_t * map, const int actorSize, const int x, const int y, const int ax, const int ay, const int z, const int dir)
 {
 	const int ceiling = RT_CEILING(map, actorSize, x, y, z);
-	const int adj_ceiling = RT_CEILING(map, actorSize, ax, ay, z);
-	const int abs_ceiling = ceiling + z * CELL_HEIGHT;
-	const int exadj_ceiling = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actorSize, ax, ay, z + 1) : adj_ceiling;
-	const int exabs_adj_ceiling = (z < PATHFINDING_HEIGHT - 1) ? adj_ceiling + (z + 1) * CELL_HEIGHT : abs_ceiling;
-	const int abs_adj_ceiling = adj_ceiling + z * CELL_HEIGHT;
-	const int abs_floor = RT_FLOOR(map, actorSize, x, y, z) + z * CELL_HEIGHT;
-	const int abs_adj_floor = RT_FLOOR(map, actorSize, ax, ay, z) + z * CELL_HEIGHT;
+	const int adjCeiling = RT_CEILING(map, actorSize, ax, ay, z);
+	const int absCeiling = ceiling + z * CELL_HEIGHT;
+	const int exadjCeiling = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actorSize, ax, ay, z + 1) : adjCeiling;
+	const int exabs_adj_ceiling = (z < PATHFINDING_HEIGHT - 1) ? adjCeiling + (z + 1) * CELL_HEIGHT : absCeiling;
+	const int absAdjCeiling = adjCeiling + z * CELL_HEIGHT;
+	const int absFloor = RT_FLOOR(map, actorSize, x, y, z) + z * CELL_HEIGHT;
+	const int absAdjFloor = RT_FLOOR(map, actorSize, ax, ay, z) + z * CELL_HEIGHT;
 	opening_t opening;	/** the opening between the two cells */
 	int new_z1, new_z2, az = z;
 
@@ -1304,7 +1309,7 @@ static int RT_UpdateConnection (routing_t * map, const int actorSize, const int 
 		Com_Printf("\n(%i, %i, %i) to (%i, %i, %i) as:%i\n", x, y, z, ax, ay, z, actorSize);
 
 	/* test if the adjacent cell and the cell above it are blocked by a loaded model */
-	if (adj_ceiling == 0 && (exadj_ceiling == 0 || ceiling == 0)){
+	if (adjCeiling == 0 && (exadjCeiling == 0 || ceiling == 0)) {
 		/* We can't go this way. */
 		RT_CONN(map, actorSize, x, y, z, dir) = 0;
 		RT_STEPUP(map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
@@ -1316,7 +1321,7 @@ static int RT_UpdateConnection (routing_t * map, const int actorSize, const int 
 	}
 
 	/* In case the adjacent floor has no ceiling, swap the current and adjacent cells. */
-	if (ceiling == 0 && adj_ceiling != 0) {
+	if (ceiling == 0 && adjCeiling != 0) {
 		return RT_UpdateConnection (map, actorSize, ax, ay, x, y, z, dir ^ 1);
 	}
 
@@ -1324,14 +1329,14 @@ static int RT_UpdateConnection (routing_t * map, const int actorSize, const int 
 	 * @note OK, simple test here.  We know both cells have a ceiling, so they are both open.
 	 *  If the absolute ceiling of one is below the absolute floor of the other, then there is no intersection.
 	 */
-	if (abs_ceiling < abs_adj_floor || exabs_adj_ceiling < abs_floor){
+	if (absCeiling < absAdjFloor || exabs_adj_ceiling < absFloor) {
 		/* We can't go this way. */
 		RT_CONN(map, actorSize, x, y, z, dir) = 0;
 		RT_STEPUP(map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
 		RT_CONN(map, actorSize, ax, ay, z, dir ^ 1) = 0;
 		RT_STEPUP(map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
 		if (debugTrace)
-			Com_Printf("Ceiling lower than floor. f:%i c:%i af:%i ac:%i\n", abs_floor, abs_ceiling, abs_adj_floor, abs_adj_ceiling);
+			Com_Printf("Ceiling lower than floor. f:%i c:%i af:%i ac:%i\n", absFloor, absCeiling, absAdjFloor, absAdjCeiling);
 		return z;
 	}
 
