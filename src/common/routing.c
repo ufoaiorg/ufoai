@@ -1220,8 +1220,10 @@ static void RT_TracePassage (routing_t * map, const int actorSize, const int x, 
 
 	RT_PlaceInit(map, actorSize, &from, x, y, z);
 	RT_PlaceInit(map, actorSize, &to, ax, ay, z);
-//	if (z < PATHFINDING_HEIGHT - 1)
-//		RT_PlaceInit(map, actorSize, &above, ax, ay, z + 1);
+/*
+	if (z < PATHFINDING_HEIGHT - 1)
+ 		RT_PlaceInit(map, actorSize, &above, ax, ay, z + 1);
+ */
 
 	aboveceil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : belowceil;
 	lowceil = min(from.ceiling, (RT_CEILING(map, actorSize, ax, ay, z) == 0 || belowceil - from.floor < PATHFINDING_MIN_OPENING) ? aboveceil : belowceil);
