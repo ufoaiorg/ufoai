@@ -15,12 +15,16 @@ if os.name == 'nt':
     UFO2MAP+= '.exe'
 
 URI = 'http://static.ufo.ludwigf.org/maps'
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 """
 written by Florian Ludwig <dino@phidev.org>
 
 Changelog
+
+0.0.4 serverside work
+ * execute ./configure
+ * abort on configure or make errors
 
 0.0.3 windows work
  * URI to maps changed.
@@ -171,8 +175,13 @@ def gen(args):
 
     # run make maps etc.
     # call separately otherwise linking happens last -> building maps fails
-    os.system('make clean')
-    os.system('make ufo2map')
+    def run(cmd):
+        if not os.system(cmd):
+            sys.stderr.write('Faild to run: %s' % cmd)
+            sys.exit(2)
+    run('sh configure  --disable-client --disable-uforadiant --disable-dedicated')
+    run('make clean')
+    run('make ufo2map')
 
     # try to guess if rebuild of all maps is needed.
     old_maps = old.keys()
@@ -184,7 +193,7 @@ def gen(args):
         # all maps changed? wow.
         test_map = False
 
-    if test_map:
+    if test_map and os.path.exists(test_map):
         old_md5 = old[test_map]
         os.unlink(test_map)
 
