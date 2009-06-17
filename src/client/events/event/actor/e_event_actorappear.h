@@ -28,5 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../e_main.h"
 
 void CL_ActorAppear(const eventRegister_t *self, struct dbuffer *msg);
+int CL_ActorAppearTime(const eventRegister_t *self, struct dbuffer *msg, const int dt);
 
 #endif
