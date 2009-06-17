@@ -176,7 +176,7 @@ def gen(args):
     # run make maps etc.
     # call separately otherwise linking happens last -> building maps fails
     def run(cmd):
-        if not os.system(cmd):
+        if os.system(cmd):
             sys.stderr.write('Faild to run: %s' % cmd)
             sys.exit(2)
     run('sh configure  --disable-client --disable-uforadiant --disable-dedicated')
