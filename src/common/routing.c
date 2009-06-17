@@ -76,7 +76,12 @@ static inline qboolean RT_PlaceIsUsable (place_t* p)
 	return (p->ceiling - p->floor) >= PATHFINDING_MIN_OPENING;
 }
 
-/*
+inline qboolean RT_PlaceDoesIntersectEnough(place_t* p, place_t* other)
+{
+	return (abs(p->ceiling - other->ceiling) - abs(p->floor - other->floor) >= PATHFINDING_MIN_OPENING);
+}
+
+/**
  * @brief An 'opening' describes the connection between two adjacent spaces where an actor can exist in a cell
  * @note Note that if size is @c 0, the other members are undefined. They may contain reasonable values, though
  */
@@ -1135,13 +1140,14 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
  * @param[out] stepup Required stepup to travel in this direction.
  * @return The size in QUANT units of the detected opening.
  */
-static int RT_TraceOnePassage (routing_t * map, const int actorSize, const int  x, const int y, const int z, const int ax, const int ay, const int lower, const int upper, opening_t* opening)
+static int RT_TraceOnePassage (routing_t * map, const int actorSize, place_t* from, const int ax, const int ay, const int lower, const int upper, opening_t* opening)
 {
 	int hi; /**< absolute ceiling of the passage found. */
+	const int z = from->cell[2];
 	int az; /**< z height of the actor after moving in this direction. */
 	int bonusSize;
 
-	az = RT_FindOpening(map, actorSize, x, y, z, ax, ay, lower, upper, &opening->base, &hi);
+	az = RT_FindOpening(map, actorSize, from->cell[0], from->cell[1], z, ax, ay, lower, upper, &opening->base, &hi);
 	/* calc opening found so far and set stepup */
 	opening->size = hi - opening->base;
 
@@ -1150,7 +1156,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, const int  
 	 * wide and not the usual dimensions.
 	 */
 	if (az != RT_NO_OPENING && opening->size >= PATHFINDING_MIN_OPENING - PATHFINDING_MIN_STEPUP) {
-		const int srcFloor = RT_FLOOR(map, actorSize, x, y, z) + z * CELL_HEIGHT;
+		const int srcFloor = from->floor;
 		const int dstFloor = RT_FLOOR(map, actorSize, ax, ay, az) + az * CELL_HEIGHT;
 		/* if we already have enough headroom, try to skip microtracing */
 		/** @todo CELL_HEIGHT can be replaced with the largest actor height. */
@@ -1159,7 +1165,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, const int  
 			|| abs(dstFloor - opening->base) > PATHFINDING_MIN_STEPUP) {
 			/* This returns the total opening height, as the
 			 * microtrace may reveal more passage height from the foot space. */
-			bonusSize = RT_MicroTrace(map, actorSize, x, y, z, ax, ay, az, opening);
+			bonusSize = RT_MicroTrace(map, actorSize, from->cell[0], from->cell[1], z, ax, ay, az, opening);
 			opening->base += bonusSize;
 			opening->size = hi - opening->base;	/* re-calculate */
 		} else {
@@ -1218,8 +1224,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, const int  
  */
 static void RT_TracePassage (routing_t * map, const int actorSize, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
 {
-	const int belowCeil = RT_CEILING(map, actorSize, ax, ay, z) + z * CELL_HEIGHT;
-	int aboveCeil, lowCeil;
+	int aboveCeil, belowCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
 	place_t from, to;
 
@@ -1230,6 +1235,7 @@ static void RT_TracePassage (routing_t * map, const int actorSize, const int x, 
  		RT_PlaceInit(map, actorSize, &above, ax, ay, z + 1);
  */
 
+	belowCeil = to.ceiling;
 	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : belowCeil;
 	lowCeil = min(from.ceiling, (RT_CEILING(map, actorSize, ax, ay, z) == 0 || belowCeil - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : belowCeil);
 
@@ -1270,7 +1276,7 @@ static void RT_TracePassage (routing_t * map, const int actorSize, const int x, 
 	if (debugTrace)
 		Com_Printf(" Testing up c:%i lc:%i.\n", from.ceiling, lowCeil);
 
-	opening->size = RT_TraceOnePassage(map, actorSize, x, y, z, ax, ay, from.floor, lowCeil, opening);
+	opening->size = RT_TraceOnePassage(map, actorSize, &from, ax, ay, from.floor, lowCeil, opening);
 	if (opening->size < PATHFINDING_MIN_OPENING) {
 		if (debugTrace)
 			Com_Printf(" No opening found.\n");
