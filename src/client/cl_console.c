@@ -491,16 +491,16 @@ void Con_DrawConsole (float frac)
 	char *text;
 	char consoleMessage[128];
 
-	lines = viddef.virtualHeight * frac;
+	lines = viddef.height * frac;
 	if (lines <= 0)
 		return;
 
-	if (lines > viddef.virtualHeight)
-		lines = viddef.virtualHeight;
+	if (lines > viddef.height)
+		lines = viddef.height;
 
 	/* draw the background */
 	if (con_background->integer)
-		R_DrawStretchImage(0, lines - viddef.virtualHeight, viddef.virtualWidth, viddef.virtualHeight, R_FindImage("pics/conback", it_pic));
+		R_DrawStretchImage(0, viddef.virtualHeight * (frac - 1) , viddef.virtualWidth, viddef.virtualHeight, R_FindImage("pics/conback", it_pic));
 
 	Com_sprintf(consoleMessage, sizeof(consoleMessage), "Hit esc to close - v%s", UFO_VERSION);
 	{
