@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static char com_token[4096];
 static qboolean isUnparsedToken;
+static qboolean isQuotedToken;
 
 /**
  * @brief Put back the last token into the parser
@@ -41,6 +42,16 @@ static qboolean isUnparsedToken;
 void Com_UnParseLastToken (void)
 {
 	isUnparsedToken = qtrue;
+}
+
+/**
+ * @brief Check if the last read token is quoted
+ * @return True if the token is quoted
+ * @sa Com_Parse
+ */
+qboolean Com_ParsedTokenIsQuoted (void)
+{
+	return isQuotedToken;
 }
 
 /**
@@ -66,6 +77,7 @@ const char *Com_Parse (const char *data_p[])
 	}
 
 	data = *data_p;
+	isQuotedToken = qfalse;
 	len = 0;
 	com_token[0] = 0;
 
@@ -103,6 +115,7 @@ skipwhite:
 
 	/* handle quoted strings specially */
 	if (c == '\"') {
+		isQuotedToken = qtrue;
 		data++;
 		while (1) {
 			c = *data++;

@@ -32,8 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern "C" {
 #endif
 
+#include "ufotypes.h"
+
 const char *Com_Parse(const char **data_p);
 void Com_UnParseLastToken(void);
+qboolean Com_ParsedTokenIsQuoted(void);
 
 #ifdef __cplusplus
 }
