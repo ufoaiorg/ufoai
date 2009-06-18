@@ -1454,6 +1454,8 @@ static GtkMenuItem* create_edit_menu (MainFrame *mainFrame)
 	create_menu_item_with_mnemonic(convert_menu, _("To Whole _Entities"), "ExpandSelectionToEntities");
 	create_menu_item_with_mnemonic(convert_menu, _("Select all of _same type"), "SelectAllOfType");
 
+	create_menu_item_with_mnemonic(convert_menu, _("Select all Faces of same te_xture"), "SelectAllFacesOfTex");
+
 	menu_separator(menu);
 
 	create_menu_item_with_mnemonic(menu, _("Shortcuts list"), FreeCaller<DoCommandListDlg> ());
@@ -2400,6 +2402,8 @@ void MainFrame_Construct (void)
 
 	GlobalCommands_insert("SelectAllOfType", FreeCaller<Select_AllOfType> (), Accelerator('A',
 			(GdkModifierType) GDK_SHIFT_MASK));
+
+	GlobalCommands_insert("SelectAllFacesOfTex", FreeCaller<Select_AllFacesWithTexture> ());
 
 	GlobalCommands_insert("TexRotateClock", FreeCaller<Texdef_RotateClockwise> (), Accelerator(GDK_Next,
 			(GdkModifierType) GDK_SHIFT_MASK));

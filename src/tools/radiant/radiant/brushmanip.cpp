@@ -794,6 +794,16 @@ void Scene_BrushSelectByShader_Component (scene::Graph& graph, const char* name)
 	Scene_ForEachSelectedBrush_ForEachFaceInstance(graph, FaceSelectByShader(name));
 }
 
+/**
+ * @brief Select all faces in given graph that use given texture
+ * @param graph scene graph to select faces from
+ * @param name texture name
+ */
+void Scene_BrushFacesSelectByShader_Component (scene::Graph& graph, const char* name)
+{
+	Scene_ForEachBrush_ForEachFaceInstance(graph, FaceSelectByShader(name));
+}
+
 class FaceGetTexdef
 {
 		TextureProjection& m_projection;

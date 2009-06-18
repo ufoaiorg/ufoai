@@ -45,6 +45,7 @@ void Selection_MoveDown();
 void Selection_MoveUp();
 
 void Select_AllOfType();
+void Select_AllFacesWithTexture (void);
 
 void DoRotateDlg();
 void DoScaleDlg();

@@ -604,6 +604,21 @@ void Scene_EntityGetClassnames(scene::Graph& graph, Classnames& classnames)
 	graph.traverse(EntityGetSelectedClassnamesWalker(classnames));
 }
 
+/**
+ * @brief Callback selects all faces with same texure as currently selected face.
+ *
+ */
+void Select_AllFacesWithTexture (void)
+{
+	CopiedString name;
+	Scene_BrushGetShader_Component_Selected(GlobalSceneGraph(), name);
+	if (string_not_empty(name.c_str())) {
+		g_message("Searching all faces with texture '%s'\n", name.c_str());
+		GlobalSelectionSystem().setSelectedAllComponents(false);
+		Scene_BrushFacesSelectByShader_Component(GlobalSceneGraph(), name.c_str());
+	}
+}
+
 void Select_AllOfType (void)
 {
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {

@@ -65,6 +65,7 @@ void Scene_BrushFindReplaceShader_Selected(scene::Graph& graph, const char* find
 void Scene_BrushFindReplaceShader_Component_Selected(scene::Graph& graph, const char* find, const char* replace);
 void Scene_BrushSelectByShader(scene::Graph& graph, const char* name);
 void Scene_BrushSelectByShader_Component(scene::Graph& graph, const char* name);
+void Scene_BrushFacesSelectByShader_Component(scene::Graph& graph, const char* name);
 void Scene_BrushFitTexture_Selected(scene::Graph& graph, float s_repeat, float t_repeat);
 void Scene_BrushFitTexture_Component_Selected(scene::Graph& graph, float s_repeat, float t_repeat);
 
