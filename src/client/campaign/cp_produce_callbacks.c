@@ -660,7 +660,7 @@ static void PR_ProductionType_f (void)
 	}
 	/* update selection index if first entry of actual list was chosen */
 	if (!selectedProduction) {
-		MN_TextNodeSelectLine(prodlist, ccs.productions[base->idx].numItems + QUEUE_SPACERS);
+		Cmd_ExecuteString(va("prod_selectline %i", ccs.productions[base->idx].numItems + QUEUE_SPACERS));
 	}
 
 	/* Update displayed info about selected entry (if any). */
