@@ -228,7 +228,7 @@ static void Brush_ConstructCone (Brush& brush, const AABB& bounds, std::size_t s
 }
 
 static const std::size_t c_brushSphere_minSides = 3;
-static const std::size_t c_brushSphere_maxSides = 7;
+static const std::size_t c_brushSphere_maxSides = 31;
 static const char* const c_brushSphere_name = "brushSphere";
 
 static void Brush_ConstructSphere (Brush& brush, const AABB& bounds, std::size_t sides, const char* shader,
