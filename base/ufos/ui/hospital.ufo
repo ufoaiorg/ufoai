@@ -214,27 +214,27 @@ window hospital
 		pos "665 665"
 	}
 
-	pic hos_icon0	{ visiblewhen "*cvar:mn_hos_item0"		image icons/health_unused 	pos "272  106" }
-	pic hos_icon1	{ visiblewhen "*cvar:mn_hos_item1"		image icons/health_unused 	pos "592  106" }
-	pic hos_icon2	{ visiblewhen "*cvar:mn_hos_item2"		image icons/health_unused 	pos "912  106" }
-	pic hos_icon3	{ visiblewhen "*cvar:mn_hos_item3"		image icons/health_unused 	pos "272 201" }
-	pic hos_icon4	{ visiblewhen "*cvar:mn_hos_item4"		image icons/health_unused 	pos "592 201" }
-	pic hos_icon5	{ visiblewhen "*cvar:mn_hos_item5"		image icons/health_unused 	pos "912 201" }
-	pic hos_icon6	{ visiblewhen "*cvar:mn_hos_item6"		image icons/health_unused 	pos "272 296" }
-	pic hos_icon7	{ visiblewhen "*cvar:mn_hos_item7"		image icons/health_unused 	pos "592 296" }
-	pic hos_icon8	{ visiblewhen "*cvar:mn_hos_item8"		image icons/health_unused 	pos "912 296" }
-	pic hos_icon9	{ visiblewhen "*cvar:mn_hos_item9"		image icons/health_unused 	pos "272 391" }
-	pic hos_icon10	{ visiblewhen "*cvar:mn_hos_item10"	image icons/health_unused 	pos "592 391" }
-	pic hos_icon11	{ visiblewhen "*cvar:mn_hos_item11"	image icons/health_unused 	pos "912 391" }
-	pic hos_icon12	{ visiblewhen "*cvar:mn_hos_item12"	image icons/health_unused 	pos "272 486" }
-	pic hos_icon13	{ visiblewhen "*cvar:mn_hos_item13"	image icons/health_unused 	pos "592 486" }
-	pic hos_icon14	{ visiblewhen "*cvar:mn_hos_item14"	image icons/health_unused 	pos "912 486" }
-	pic hos_icon15	{ visiblewhen "*cvar:mn_hos_item15"	image icons/health_unused 	pos "272 581" }
-	pic hos_icon16	{ visiblewhen "*cvar:mn_hos_item16"	image icons/health_unused 	pos "592 581" }
-	pic hos_icon17	{ visiblewhen "*cvar:mn_hos_item17"	image icons/health_unused 	pos "912 581" }
-	pic hos_icon18	{ visiblewhen "*cvar:mn_hos_item18"	image icons/health_unused 	pos "272 676" }
-	pic hos_icon19	{ visiblewhen "*cvar:mn_hos_item19"	image icons/health_unused 	pos "592 676" }
-	pic hos_icon20	{ visiblewhen "*cvar:mn_hos_item20"	image icons/health_unused 	pos "912 676" }
+	pic hos_icon0	{ visiblewhen "exists *cvar:mn_hos_item0"		image icons/health_unused 	pos "272  106" }
+	pic hos_icon1	{ visiblewhen "exists *cvar:mn_hos_item1"		image icons/health_unused 	pos "592  106" }
+	pic hos_icon2	{ visiblewhen "exists *cvar:mn_hos_item2"		image icons/health_unused 	pos "912  106" }
+	pic hos_icon3	{ visiblewhen "exists *cvar:mn_hos_item3"		image icons/health_unused 	pos "272 201" }
+	pic hos_icon4	{ visiblewhen "exists *cvar:mn_hos_item4"		image icons/health_unused 	pos "592 201" }
+	pic hos_icon5	{ visiblewhen "exists *cvar:mn_hos_item5"		image icons/health_unused 	pos "912 201" }
+	pic hos_icon6	{ visiblewhen "exists *cvar:mn_hos_item6"		image icons/health_unused 	pos "272 296" }
+	pic hos_icon7	{ visiblewhen "exists *cvar:mn_hos_item7"		image icons/health_unused 	pos "592 296" }
+	pic hos_icon8	{ visiblewhen "exists *cvar:mn_hos_item8"		image icons/health_unused 	pos "912 296" }
+	pic hos_icon9	{ visiblewhen "exists *cvar:mn_hos_item9"		image icons/health_unused 	pos "272 391" }
+	pic hos_icon10	{ visiblewhen "exists *cvar:mn_hos_item10"	image icons/health_unused 	pos "592 391" }
+	pic hos_icon11	{ visiblewhen "exists *cvar:mn_hos_item11"	image icons/health_unused 	pos "912 391" }
+	pic hos_icon12	{ visiblewhen "exists *cvar:mn_hos_item12"	image icons/health_unused 	pos "272 486" }
+	pic hos_icon13	{ visiblewhen "exists *cvar:mn_hos_item13"	image icons/health_unused 	pos "592 486" }
+	pic hos_icon14	{ visiblewhen "exists *cvar:mn_hos_item14"	image icons/health_unused 	pos "912 486" }
+	pic hos_icon15	{ visiblewhen "exists *cvar:mn_hos_item15"	image icons/health_unused 	pos "272 581" }
+	pic hos_icon16	{ visiblewhen "exists *cvar:mn_hos_item16"	image icons/health_unused 	pos "592 581" }
+	pic hos_icon17	{ visiblewhen "exists *cvar:mn_hos_item17"	image icons/health_unused 	pos "912 581" }
+	pic hos_icon18	{ visiblewhen "exists *cvar:mn_hos_item18"	image icons/health_unused 	pos "272 676" }
+	pic hos_icon19	{ visiblewhen "exists *cvar:mn_hos_item19"	image icons/health_unused 	pos "592 676" }
+	pic hos_icon20	{ visiblewhen "exists *cvar:mn_hos_item20"	image icons/health_unused 	pos "912 676" }
 
 	string hos_item0	{ string "*cvar:mn_hos_item0"		pos "40 105"	color "1 1 1 1"	size "220 16" }
 	string hos_item1	{ string "*cvar:mn_hos_item1"		pos "360 105"	color "1 1 1 1"	size "220 16" }

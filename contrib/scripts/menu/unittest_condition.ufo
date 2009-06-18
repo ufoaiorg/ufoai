@@ -115,6 +115,16 @@ window unittest_condition
 		string	"t2"
 	}
 
+	string testExists3 {
+		pos		"140 100"
+		string	"t3"
+	}
+
+	string testExists4 {
+		pos		"140 120"
+		string	"t4"
+	}
+
 	string nodeTitle {
 		pos		"200 40"
 		string	"node"
@@ -367,10 +377,14 @@ window unittest_condition
 
 		*cvar:test_exists "aaaa"
 
-		if ( *cvar:test_exists ) { *testExists1@color "0 1 0 1" }
+		if ( exists *cvar:test_exists ) { *testExists1@color "0 1 0 1" }
 		else { *testExists1@color "1 0 0 1" }
-		if ( *cvar:test_not_exists ) { *testExists2@color "1 0 0 1" }
+		if ( exists *cvar:test_not_exists ) { *testExists2@color "1 0 0 1" }
 		else { *testExists2@color "0 1 0 1" }
+		if ( not exists *cvar:test_exists ) { *testExists3@color "1 0 0 1" }
+		else { *testExists3@color "0 1 0 1" }
+		if ( not exists *cvar:test_not_exists ) { *testExists4@color "0 1 0 1" }
+		else { *testExists4@color "1 0 0 1" }
 		
 		*cvar:test_nodefoo 1
 		

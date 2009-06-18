@@ -49,7 +49,7 @@ window multiplayerInGame
 
 	button button_irc
 	{
-		visiblewhen "*cvar:irc_defaultChannel"
+		visiblewhen "exists *cvar:irc_defaultChannel"
 		pos	"640 310"
 		size "256 64"
 		onClick	{ cmd "mn_push irc;" }

@@ -438,22 +438,15 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const 
 			return NULL;
 
 		/* unary operator or unneed "( ... )" */
-		if (!strcmp(token, ")")) {
-			if (e->type == EA_VALUE_CVARNAME || e->type == EA_VALUE_CVARNAME_WITHINJECTION) {
-				expression = MN_AllocAction();
-				expression->type = EA_OPERATOR_EXISTS;
-				expression->d.nonTerminal.left = e;
-				return expression;
-			} else
-				return e;
-		}
+		if (!strcmp(token, ")"))
+			return e;
 
 		/* then its an operator */
 		expression = MN_AllocAction();
 		expression->d.nonTerminal.left = e;
 		expression->type = MN_GetActionTokenType(token, EA_BINARYOPERATOR);
 		if (expression->type == EA_NULL) {
-			Com_Printf("Invalid 'expression' statement. Unknown '%s' operator\n", token);
+			Com_Printf("MN_ParseExpression: Invalid 'expression' statement. Unknown '%s' operator\n", token);
 			return NULL;
 		}
 
@@ -462,16 +455,35 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const 
 
 		token = Com_Parse(text);
 		if (*text == NULL)
-			return qfalse;
+			return NULL;
 		if (strcmp(token, ")") != 0) {
-			Com_Printf("MN_InitCondition: Token ')' expected\n");
-			return qfalse;
+			Com_Printf("MN_ParseExpression: Token ')' expected\n");
+			return NULL;
 		}
 
 		return expression;
 	} else {
-		Com_UnParseLastToken();
-		return MN_ParseValueExpression(text, errhead, source);
+
+		int type = MN_GetActionTokenType(token, EA_UNARYOPERATOR);
+		if (type == EA_NULL) {
+			Com_UnParseLastToken();
+			return MN_ParseValueExpression(text, errhead, source);
+		} else {
+			menuAction_t *expression = MN_AllocAction();
+			menuAction_t *e;
+
+			e = MN_ParseExpression(text, errhead, source);
+			expression->type = type;
+			expression->d.nonTerminal.left = e;
+
+			if (expression->type == EA_OPERATOR_EXISTS) {
+				if (e->type != EA_VALUE_CVARNAME && e->type != EA_VALUE_CVARNAME_WITHINJECTION) {
+					Com_Printf("MN_ParseExpression: Cvar expected, but type %d found\n", e->type);
+					return NULL;
+				}
+			}
+			return expression;
+		}
 	}
 
 #if 0

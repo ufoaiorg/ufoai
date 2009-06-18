@@ -44,6 +44,7 @@ typedef struct {
 static const menuTypedActionToken_t actionTokens[] = {
 
 	/* 0x2x */
+	{"!", EA_OPERATOR_NOT, EA_UNARYOPERATOR},
 	{"!=", EA_OPERATOR_NE, EA_BINARYOPERATOR},
 	{"%", EA_OPERATOR_MOD, EA_BINARYOPERATOR},
 	{"&&", EA_OPERATOR_AND, EA_BINARYOPERATOR},
@@ -69,8 +70,10 @@ static const menuTypedActionToken_t actionTokens[] = {
 	{"elif", EA_ELIF, EA_ACTION},
 	{"else", EA_ELSE, EA_ACTION},
 	{"eq", EA_OPERATOR_STR_EQ, EA_BINARYOPERATOR},
+	{"exists", EA_OPERATOR_EXISTS, EA_UNARYOPERATOR},
 	{"if", EA_IF, EA_ACTION},
 	{"ne", EA_OPERATOR_STR_NE, EA_BINARYOPERATOR},
+	{"not", EA_OPERATOR_NOT, EA_UNARYOPERATOR},
 	{"or", EA_OPERATOR_OR, EA_BINARYOPERATOR},
 	{"while", EA_WHILE, EA_ACTION},
 

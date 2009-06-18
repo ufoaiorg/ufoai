@@ -63,7 +63,7 @@ window mail
 	model sender_body
 	{
 		{
-			visiblewhen "*cvar:mn_sender_head"
+			visiblewhen "exists *cvar:mn_sender_head"
 			model	"civilians/male/body01"
 			anim	"stand_still"
 			angles	"0 85 90"
