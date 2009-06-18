@@ -76,7 +76,7 @@ static inline qboolean RT_PlaceIsUsable (place_t* p)
 	return (p->ceiling - p->floor) >= PATHFINDING_MIN_OPENING;
 }
 
-inline qboolean RT_PlaceDoesIntersectEnough(place_t* p, place_t* other)
+static inline qboolean RT_PlaceDoesIntersectEnough(place_t* p, place_t* other)
 {
 	return (abs(p->ceiling - other->ceiling) - abs(p->floor - other->floor) >= PATHFINDING_MIN_OPENING);
 }
