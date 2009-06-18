@@ -210,13 +210,13 @@ window market
 		pos			"376 180"
 		onChange	{ cmd "mn_buysell 0 <lastdiff>; market_click 0;" }
 	}
-	pic bt_autosell0
+	checkbox bt_autosell0
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 180"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 0;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 0;" }
 	}
 	zone wz_buysell1
 	{
@@ -232,13 +232,13 @@ window market
 		pos			"376 205"
 		onChange	{ cmd "mn_buysell 1 <lastdiff>; market_click 1" }
 	}
-	pic bt_autosell1
+	checkbox bt_autosell1
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 205"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 1;" }
+		size		"16 16"
+		onChange	{	 cmd "buy_autosell 1;" }
 	}
 	zone wz_buysell2
 	{
@@ -254,13 +254,13 @@ window market
 		pos			"376 230"
 		onChange	{ cmd "mn_buysell 2 <lastdiff>; market_click 2" }
 	}
-	pic bt_autosell2
+	checkbox bt_autosell2
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 230"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 2;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 2;" }
 	}
 	zone wz_buysell3
 	{
@@ -276,13 +276,13 @@ window market
 		pos			"376 255"
 		onChange	{ cmd "mn_buysell 3 <lastdiff>; market_click 3" }
 	}
-	pic bt_autosell3
+	checkbox bt_autosell3
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 255"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 3;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 3;" }
 	}
 	zone wz_buysell4
 	{
@@ -298,13 +298,13 @@ window market
 		pos			"376 280"
 		onChange	{ cmd "mn_buysell 4 <lastdiff>; market_click 4" }
 	}
-	pic bt_autosell4
+	checkbox bt_autosell4
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 280"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 4;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 4;" }
 	}
 	zone wz_buysell5
 	{
@@ -320,13 +320,13 @@ window market
 		pos			"376 305"
 		onChange	{ cmd "mn_buysell 5 <lastdiff>; market_click 5" }
 	}
-	pic bt_autosell5
+	checkbox bt_autosell5
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 305"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 5;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 5;" }
 	}
 	zone wz_buysell6
 	{
@@ -342,13 +342,13 @@ window market
 		pos			"376 330"
 		onChange	{ cmd "mn_buysell 6 <lastdiff>; market_click 6" }
 	}
-	pic bt_autosell6
+	checkbox bt_autosell6
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 330"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 6;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 6;" }
 	}
 	zone wz_buysell7
 	{
@@ -364,13 +364,13 @@ window market
 		pos			"376 355"
 		onChange	{ cmd "mn_buysell 7 <lastdiff>; market_click 7" }
 	}
-	pic bt_autosell7
+	checkbox bt_autosell7
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 355"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 7;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 7;" }
 	}
 	zone wz_buysell8
 	{
@@ -386,13 +386,13 @@ window market
 		pos			"376 380"
 		onChange	{ cmd "mn_buysell 8 <lastdiff>; market_click 8" }
 	}
-	pic bt_autosell8
+	checkbox bt_autosell8
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 380"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 8;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 8;" }
 	}
 	zone wz_buysell9
 	{
@@ -408,13 +408,13 @@ window market
 		pos			"376 405"
 		onChange	{ cmd "mn_buysell 9 <lastdiff>; market_click 9" }
 	}
-	pic bt_autosell9
+	checkbox bt_autosell9
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 405"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 9;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 9;" }
 	}
 	zone wz_buysell10
 	{
@@ -430,13 +430,13 @@ window market
 		pos			"376 430"
 		onChange	{ cmd "mn_buysell 10 <lastdiff>; market_click 10" }
 	}
-	pic bt_autosell10
+	checkbox bt_autosell10
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 430"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 10;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 10;" }
 	}
 	zone wz_buysell11
 	{
@@ -452,13 +452,13 @@ window market
 		pos			"376 455"
 		onChange	{ cmd "mn_buysell 11 <lastdiff>; market_click 11" }
 	}
-	pic bt_autosell11
+	checkbox bt_autosell11
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 455"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 11;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 11;" }
 	}
 	zone wz_buysell12
 	{
@@ -474,13 +474,13 @@ window market
 		pos			"376 480"
 		onChange	{ cmd "mn_buysell 12 <lastdiff>; market_click 12" }
 	}
-	pic bt_autosell12
+	checkbox bt_autosell12
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 480"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 12;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 12;" }
 	}
 	zone wz_buysell13
 	{
@@ -496,13 +496,13 @@ window market
 		pos			"376 505"
 		onChange	{ cmd "mn_buysell 13 <lastdiff>; market_click 13" }
 	}
-	pic bt_autosell13
+	checkbox bt_autosell13
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 505"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 13;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 13;" }
 	}
 	zone wz_buysell14
 	{
@@ -518,13 +518,13 @@ window market
 		pos			"376 530"
 		onChange	{ cmd "mn_buysell 14 <lastdiff>; market_click 14" }
 	}
-	pic bt_autosell14
+	checkbox bt_autosell14
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 530"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 14;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 14;" }
 	}
 	zone wz_buysell15
 	{
@@ -540,13 +540,13 @@ window market
 		pos			"376 555"
 		onChange	{ cmd "mn_buysell 15 <lastdiff>; market_click 15" }
 	}
-	pic bt_autosell15
+	checkbox bt_autosell15
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 555"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 15;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 15;" }
 	}
 	zone wz_buysell16
 	{
@@ -562,13 +562,13 @@ window market
 		pos			"376 580"
 		onChange	{ cmd "mn_buysell 16 <lastdiff>; market_click 16" }
 	}
-	pic bt_autosell16
+	checkbox bt_autosell16
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 580"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 16;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 16;" }
 	}
 	zone wz_buysell17
 	{
@@ -584,13 +584,13 @@ window market
 		pos			"376 605"
 		onChange	{ cmd "mn_buysell 17 <lastdiff>; market_click 17" }
 	}
-	pic bt_autosell17
+	checkbox bt_autosell17
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 605"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 17;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 17;" }
 	}
 	zone wz_buysell18
 	{
@@ -606,13 +606,13 @@ window market
 		pos			"376 630"
 		onChange	{ cmd "mn_buysell 18 <lastdiff>; market_click 18" }
 	}
-	pic bt_autosell18
+	checkbox bt_autosell18
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 630"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 18;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 18;" }
 	}
 	zone wz_buysell19
 	{
@@ -628,13 +628,13 @@ window market
 		pos			"376 655"
 		onChange	{ cmd "mn_buysell 19 <lastdiff>; market_click 19" }
 	}
-	pic bt_autosell19
+	checkbox bt_autosell19
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 655"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 19;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 19;" }
 	}
 	zone wz_buysell20
 	{
@@ -650,13 +650,13 @@ window market
 		pos			"376 680"
 		onChange	{ cmd "mn_buysell 20 <lastdiff>; market_click 20" }
 	}
-	pic bt_autosell20
+	checkbox bt_autosell20
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 680"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 20;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 20;" }
 	}
 	zone wz_buysell21
 	{
@@ -672,13 +672,13 @@ window market
 		pos			"376 705"
 		onChange	{ cmd "mn_buysell 21 <lastdiff>; market_click 21" }
 	}
-	pic bt_autosell21
+	checkbox bt_autosell21
 	{
+		current		0
+		image		ui/checkbox_blue
 		pos			"30 705"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "buy_autosell 21;" }
+		size		"16 16"
+		onChange	{ cmd "buy_autosell 21;" }
 	}
 
 	// ==================
@@ -792,7 +792,7 @@ window market
 	 */
 	confunc buy_autoselle {
 		*bt_autosell<1>@invis false
-		*bt_autosell<1>@image ui/button_autosell1
+		*(abstractvalue)bt_autosell<1>@current 1
 		*bt_autosell<1>@tooltip "_Item autosell enabled"
 	}
 	/**
@@ -801,7 +801,7 @@ window market
 	 */
 	confunc buy_autoselld {
 		*bt_autosell<1>@invis false
-		*bt_autosell<1>@image ui/button_autosell2
+		*(abstractvalue)bt_autosell<1>@current 0
 		*bt_autosell<1>@tooltip "_Item autosell disabled"
 	}
 	/**
