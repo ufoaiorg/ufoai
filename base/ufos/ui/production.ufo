@@ -349,6 +349,11 @@ window production
 		}
 	}
 
+	confunc prod_selectline {
+		*node:root.prodlist@lineselected = <1>
+		*node:root.prodlist_amount@lineselected = <1>
+		*node:root.prodlist_queued@lineselected = <1>
+	}
 	// ==================
 	// item
 	// ==================

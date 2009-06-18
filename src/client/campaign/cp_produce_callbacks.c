@@ -810,7 +810,8 @@ static void PR_ProductionIncrease_f (void)
 			/* Oops! Too many items! */
 			MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));
 			return;
-		}
+		} else
+			Cmd_ExecuteString(va("prod_selectline %i", prod->idx));
 
 		if (produceCategory != FILTER_AIRCRAFT) {
 			/* Get technology of the item in the selected queue-entry. */
@@ -886,8 +887,10 @@ static void PR_ProductionStop_f (void)
 
 	if (queue->numItems == 0) {
 		selectedProduction = NULL;
+		Cmd_ExecuteString("prod_selectline -1");
 	} else if (selectedProduction->idx >= queue->numItems) {
 		selectedProduction = &queue->items[queue->numItems - 1];
+		Cmd_ExecuteString(va("prod_selectline %i", selectedProduction->idx));
 	}
 
 	PR_ProductionInfo(base);
