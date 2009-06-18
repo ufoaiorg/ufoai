@@ -275,8 +275,16 @@ window production
 		size		"265 550"
 		mousefx		true
 		longlines	prettychop
-		onClick		{ cmd "prodlist_click <lineselected>" }
-		onRClick	{ cmd "prodlist_rclick <lineselected>" }
+		onClick		{
+			*node:(text)root.prodlist_amount@lineselected <node:this@lineselected>
+			*node:(text)root.prodlist_queued@lineselected <node:this@lineselected>
+			cmd "prodlist_click <lineselected>;"
+		}
+		onRClick	{
+			*node:(text)root.prodlist_amount@lineselected = <node:this@lineselected>
+			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			cmd "prodlist_rclick <lineselected>;"
+		}
 		onWheel		{
 			*(abstractscrollbar)prodlist_scroll@current <text_scroll>
 			cmd "prod_scroll;"
@@ -296,6 +304,16 @@ window production
 		rows		"22"
 		size		"40 550"
 		lineheight	"25"
+		onClick		{
+			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
+			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			cmd "prodlist_click <lineselected>;"
+		}
+		onRClick	{
+			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
+			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			cmd "prodlist_rclick <lineselected>;"
+		}
 	}
 
 	vscrollbar prodlist_scroll {
@@ -305,8 +323,8 @@ window production
 		current		0
 		viewsize	30
 		fullsize	30
-		onChange		{
-			cmd "mn_textscroll prodlist <lastdiff>;mn_textscroll prodlist_amount <lastdiff>;"
+		onChange	{
+			cmd "mn_textscroll prodlist <lastdiff>;mn_textscroll prodlist_amount <lastdiff>;mn_textscroll prodlist_queued <lastdiff>;"
 		}
 	}
 
@@ -319,6 +337,16 @@ window production
 		lineheight	"25"
 		rows		"22"
 		mousefx		true
+		onClick		{
+			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
+			*node:(text)root.prodlist_amount@lineselected = <node:this@lineselected>
+			cmd "prodlist_click <lineselected>;"
+		}
+		onRClick	{
+			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
+			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			cmd "prodlist_rclick <lineselected>;"
+		}
 	}
 
 	// ==================
