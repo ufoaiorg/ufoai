@@ -126,24 +126,6 @@ float* MN_AllocFloat (int count)
 }
 
 /**
- * @brief Allocate pointer into the menu memory
- * @note Its not a dynamic memory allocation. Please only use it at the loading time
- * @param[in] count number of element need to allocate
- * @todo Assert out when we are not in parsing/loading stage
- */
-static void** MN_AllocPointer (int count)
-{
-	void **result;
-	assert(count > 0);
-	mn.curadata = ALIGN_PTR(mn.curadata, sizeof(void*));
-	result = (void**) mn.curadata;
-	mn.curadata += sizeof(void*) * count;
-	if (mn.curadata - mn.adata > mn.adataize)
-		Com_Error(ERR_FATAL, "MN_AllocPointer: Menu memory hunk exceeded - increase the size");
-	return result;
-}
-
-/**
  * @brief Allocate a color into the menu memory
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
  * @param[in] count number of element need to allocate
@@ -247,15 +229,15 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 	}
 
 	if (property->type == V_UI_ACTION) {
-		menuAction_t** actionRef = (menuAction_t**) MN_AllocPointer(1);
+		menuAction_t* actionList;
 		menuAction_t*a;
-		*actionRef = MN_ParseActionList(menuNode, text, token);
-		if (*actionRef == NULL)
+		actionList = MN_ParseActionList(menuNode, text, token);
+		if (actionList == NULL)
 			return qfalse;
 
 		a = MN_AllocAction();
 		a->type = EA_VALUE_RAW;
-		a->d.terminal.d1.data = actionRef;
+		a->d.terminal.d1.data = actionList;
 		action->d.nonTerminal.right = a;
 	} else if (property->type == V_UI_ICONREF) {
 		menuIcon_t* icon = MN_GetIconByName(*token);
