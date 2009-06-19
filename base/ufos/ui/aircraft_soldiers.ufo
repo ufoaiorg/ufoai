@@ -591,6 +591,7 @@ window team extends iaircraft
 	{
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		*scroll_employees@current 0
+		*cvar:mn_relative_id = 0
 		cmd "update_soldier_list 8 0;team_select 0;set mn_show_employee 1;"
 		cmd "aircraft_status_change"
 	}
