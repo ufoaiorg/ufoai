@@ -439,7 +439,7 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		break;
 
 	default:
-		Com_Error(ERR_FATAL, "unknown action type");
+		Com_Error(ERR_FATAL, "MN_ExecuteInjectedAction: Unknown action type %i", action->type);
 	}
 }
 
