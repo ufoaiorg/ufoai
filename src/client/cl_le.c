@@ -34,10 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/tracing.h"
 
 localModel_t LMs[MAX_LOCALMODELS];
-int numLMs;
 
 le_t LEs[MAX_EDICTS];
-int numLEs;
 
 /*===========================================================================
 Local Model (LM) handling
@@ -51,7 +49,7 @@ static inline void LE_GenerateInlineModelList (void)
 	int i, l;
 
 	l = 0;
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && le->model1 && le->inlineModelName[0] == '*')
 			leInlineModelList[l++] = le->inlineModelName;
 	leInlineModelList[l] = NULL;
@@ -67,7 +65,7 @@ void CL_CompleteRecalcRouting (void)
 
 	LE_GenerateInlineModelList();
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
 		/* We ALWAYS check against a model, even if it isn't in use.
 		 * An unused model is NOT included in the inline list, so it doesn't get
 		 * traced against. */
@@ -103,7 +101,7 @@ void LM_AddToScene (void)
 	entity_t ent;
 	int i;
 
-	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
+	for (i = 0, lm = LMs; i < cl.numLMs; i++, lm++) {
 		if (!lm->inuse)
 			continue;
 
@@ -144,7 +142,7 @@ static inline localModel_t *LM_Find (int entnum)
 {
 	int i;
 
-	for (i = 0; i < numLMs; i++)
+	for (i = 0; i < cl.numLMs; i++)
 		if (LMs[i].entnum == entnum)
 			return &LMs[i];
 
@@ -200,7 +198,7 @@ void LM_Register (void)
 	localModel_t *lm;
 	int i;
 
-	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
+	for (i = 0, lm = LMs; i < cl.numLMs; i++, lm++) {
 		/* register the model */
 		lm->model = R_RegisterModelShort(lm->name);
 		if (lm->animname[0]) {
@@ -225,9 +223,9 @@ localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t
 {
 	localModel_t *lm;
 
-	lm = &LMs[numLMs++];
+	lm = &LMs[cl.numLMs++];
 
-	if (numLMs >= MAX_LOCALMODELS)
+	if (cl.numLMs >= MAX_LOCALMODELS)
 		Com_Error(ERR_DROP, "Too many local models\n");
 
 	memset(lm, 0, sizeof(*lm));
@@ -290,7 +288,7 @@ void LE_Think (void)
 	if (cls.state != ca_active)
 		return;
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
 		if (le->inuse && le->think)
 			/* call think function */
 			le->think(le);
@@ -460,7 +458,7 @@ le_t* LE_GetClosestActor (const vec3_t origin)
 	le_t *actor = NULL, *le;
 	vec3_t leOrigin;
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
 		if (!le->inuse || le->pnum != cl.pnum)
 			continue;
 		/* visible because it's our team - so we just check for living actor here */
@@ -744,7 +742,7 @@ void LE_PlaceItem (le_t *le)
 	assert(le->type == ET_ITEM);
 
 	/* search owners (there can be many, some of them dead) */
-	for (i = 0, actor = LEs; i < numLEs; i++, actor++)
+	for (i = 0, actor = LEs; i < cl.numLEs; i++, actor++)
 		if (actor->inuse && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 		 && VectorCompare(actor->pos, le->pos)) {
 			if (FLOOR(le))
@@ -924,20 +922,20 @@ le_t *LE_Add (int entnum)
 	int i;
 	le_t *le;
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
 		if (!le->inuse)
 			/* found a free LE */
 			break;
 
 	/* list full, try to make list longer */
-	if (i == numLEs) {
-		if (numLEs >= MAX_EDICTS) {
+	if (i == cl.numLEs) {
+		if (cl.numLEs >= MAX_EDICTS) {
 			/* no free LEs */
 			Com_Error(ERR_DROP, "Too many LEs");
 		}
 
 		/* list isn't too long */
-		numLEs++;
+		cl.numLEs++;
 	}
 
 	/* initialize the new LE */
@@ -967,7 +965,7 @@ le_t *LE_Get (int entnum)
 	if (entnum == SKIP_LOCAL_ENTITY)
 		return NULL;
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && le->entnum == entnum)
 			/* found the LE */
 			return le;
@@ -986,7 +984,7 @@ le_t *LE_Find (int type, pos3_t pos)
 	int i;
 	le_t *le;
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && le->type == type && VectorCompare(le->pos, pos))
 			/* found the LE */
 			return le;
@@ -1010,7 +1008,7 @@ void LE_AddToScene (void)
 	vec3_t modelOffset;
 	int i;
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
 		if (le->inuse && !le->invis) {
 			if (le->contents & CONTENTS_SOLID) {
 				if (!((1 << cl_worldlevel->integer) & le->levelflags))
@@ -1092,8 +1090,10 @@ void LE_Cleanup (void)
 	le_t *le;
 	inventory_t inv;
 
-	Com_DPrintf(DEBUG_CLIENT, "LE_Cleanup: Clearing up to %i unused LE inventories\n", numLEs);
-	for (i = numLEs - 1, le = &LEs[numLEs - 1]; i >= 0; i--, le--) {
+	Com_DPrintf(DEBUG_CLIENT, "LE_Cleanup: Clearing up to %i unused LE inventories\n", cl.numLEs);
+	for (i = cl.numLEs - 1, le = &LEs[cl.numLEs - 1]; i >= 0; i--, le--) {
+		if (!le->inuse)
+			continue;
 		switch (le->type) {
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
@@ -1117,7 +1117,7 @@ void LE_List_f (void)
 	le_t *le;
 
 	Com_Printf("number | entnum | type | inuse | invis | pnum | team | size |  HP | state | level | model/ptl\n");
-	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
 		Com_Printf("#%5i | #%5i | %4i | %5i | %5i | %4i | %4i | %4i | %3i | %5i | %5i | ",
 			i, le->entnum, le->type, le->inuse, le->invis, le->pnum, le->team,
 			le->fieldSize, le->HP, le->state, le->levelflags);
@@ -1142,7 +1142,7 @@ void LM_List_f (void)
 	localModel_t *lm;
 
 	Com_Printf("number | entnum | skin | frame | lvlflg | renderflags | origin          | name\n");
-	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
+	for (i = 0, lm = LMs; i < cl.numLMs; i++, lm++) {
 		Com_Printf("#%5i | #%5i | #%3i | #%4i | %6i | %11i | %5.0f:%5.0f:%3.0f | %s\n",
 			i, lm->entnum, lm->skin, lm->frame, lm->levelflags, lm->renderFlags,
 			lm->origin[0], lm->origin[1], lm->origin[2], lm->name);
@@ -1184,7 +1184,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 	if (clip->trace.allsolid)
 		return;
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
 		if (!le->inuse || !(le->contents & clip->contentmask))
 			continue;
 		if (le == clip->passle || le == clip->passle2)

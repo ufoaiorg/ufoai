@@ -84,7 +84,7 @@ const eventRegister_t events[] = {
 	{EV_ACTOR_MOVE, "EV_ACTOR_MOVE", "!sbbs", CL_ActorDoMove, NULL}, /* Don't use this format string - see CL_ActorDoMove for more info */
 
 	{EV_ACTOR_START_SHOOT, "EV_ACTOR_START_SHOOT", "ssbbbgg", CL_ActorStartShoot, NULL},
-	{EV_ACTOR_SHOOT, "EV_ACTOR_SHOOT", "sssbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime},
+	{EV_ACTOR_SHOOT, "EV_ACTOR_SHOOT", "sssbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime}, /**< @sa NET_WriteDir */
 	{EV_ACTOR_SHOOT_HIDDEN, "EV_ACTOR_SHOOT_HIDDEN", "bsbb", CL_ActorShootHidden, CL_ActorShootHiddenTime},
 	{EV_ACTOR_THROW, "EV_ACTOR_THROW", "ssbbbpp", CL_ActorDoThrow, CL_ActorDoThrowTime},
 

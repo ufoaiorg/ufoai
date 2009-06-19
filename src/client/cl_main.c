@@ -223,9 +223,6 @@ void CL_ClearState (void)
 	cl.cam.zoom = 1.0;
 	V_CalcFovX();
 
-	numLEs = 0;
-	numLMs = 0;
-	numMapParticles = 0;
 	/* wipe the particles with every new map */
 	r_numParticles = 0;
 }

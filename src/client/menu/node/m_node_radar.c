@@ -433,7 +433,7 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 		MN_DrawNormImageByName(radar.x + image->x, radar.y + image->y, 0, 0, 0, 0, 0, 0, ALIGN_UL, image->path[maxlevel]);
 	}
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
 		if (!le->inuse || le->invis)
 			continue;
 

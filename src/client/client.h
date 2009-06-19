@@ -121,6 +121,10 @@ typedef struct client_state_s {
 	int mapMaxLevel;
 	int mapMaxLevelBase;
 
+	int numMapParticles;
+	int numLEs;
+	int numLMs;
+
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } client_state_t;
 

@@ -85,7 +85,7 @@ void S_Frame (void)
 	}
 
 	/* ambient sounds */
-	for (i = 0; i < numLEs; i++) {
+	for (i = 0; i < cl.numLEs; i++) {
 		const le_t *le = &LEs[i];
 		int j;
 

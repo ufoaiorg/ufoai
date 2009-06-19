@@ -398,7 +398,7 @@ static void CL_ConfirmAction_f (void)
 
 	if (time - cl.time < 1000) {
 		int i;
-		for (i = 0; i < numLEs; i++) {
+		for (i = 0; i < cl.numLEs; i++) {
 			le_t *le = &LEs[i];
 			if (LE_IsLivingActor(le) && le->team == cls.team)
 				CL_ConfirmAction(le);
@@ -561,12 +561,12 @@ static void CL_NextAlienVisibleFromActor_f (void)
 
 	watcher = selActor;
 
-	if (lastAlien >= numLEs)
+	if (lastAlien >= cl.numLEs)
 		lastAlien = 0;
 
 	i = lastAlien;
 	do {
-		if (++i >= numLEs)
+		if (++i >= cl.numLEs)
 			i = 0;
 		le = &LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
@@ -607,12 +607,12 @@ static void CL_NextAlien_f (void)
 	le_t *le;
 	int i;
 
-	if (lastAlien >= numLEs)
+	if (lastAlien >= cl.numLEs)
 		lastAlien = 0;
 
 	i = lastAlien;
 	do {
-		if (++i >= numLEs)
+		if (++i >= cl.numLEs)
 			i = 0;
 		le = &LEs[i];
 		if (le->inuse && !le->invis && LE_IsLivingAndVisibleActor(le) && le->team != cls.team

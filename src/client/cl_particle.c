@@ -37,7 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cvar_t *cl_particleweather;
 
 static mapParticle_t mapParticles[MAX_MAPPARTICLES];
-int numMapParticles;
 
 #define RADR(x)		((x < 0) ? (byte*)p - x : (byte*) pcmdData + x)
 #define RSTACK		-0xFFF0
@@ -214,13 +213,13 @@ void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char 
 {
 	mapParticle_t *mp;
 
-	mp = &mapParticles[numMapParticles];
+	mp = &mapParticles[cl.numMapParticles];
 
-	if (numMapParticles >= MAX_MAPPARTICLES) {
+	if (cl.numMapParticles >= MAX_MAPPARTICLES) {
 		Com_Printf("Too many map particles (don't add %s) - exceeded %i\n", ptl, MAX_MAPPARTICLES);
 		return;
 	}
-	numMapParticles++;
+	cl.numMapParticles++;
 
 	Q_strncpyz(mp->ptl, ptl, sizeof(mp->ptl));
 	VectorCopy(origin, mp->origin);
@@ -230,7 +229,7 @@ void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char 
 	mp->wait[1] = wait[1] * 1000;
 	mp->nextTime = cl.time + wait[0] + wait[1] * frand() + 1;
 
-	Com_DPrintf(DEBUG_CLIENT, "Adding map particle %s (%i) with levelflags %i\n", ptl, numMapParticles, levelflags);
+	Com_DPrintf(DEBUG_CLIENT, "Adding map particle %s (%i) with levelflags %i\n", ptl, cl.numMapParticles, levelflags);
 }
 
 /**
@@ -958,7 +957,7 @@ void CL_RunMapParticles (void)
 	if (cls.state != ca_active)
 		return;
 
-	for (i = 0, mp = mapParticles; i < numMapParticles; i++, mp++)
+	for (i = 0, mp = mapParticles; i < cl.numMapParticles; i++, mp++)
 		if (mp->nextTime && cl.time >= mp->nextTime) {
 			/* spawn a new particle */
 			ptl = CL_ParticleSpawn(mp->ptl, mp->levelflags, mp->origin, NULL, NULL);

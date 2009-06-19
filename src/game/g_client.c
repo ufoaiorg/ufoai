@@ -310,8 +310,7 @@ void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check, 
 			/* parsed in CL_ActorAppear */
 			gi.AddEvent(player_mask, EV_ACTOR_APPEAR);
 			gi.WriteShort(check->number);
-			gi.WriteShort(ent ? ent->number : SKIP_LOCAL_ENTITY);
-
+			gi.WriteShort(ent && ent->number > 0 ? ent->number : SKIP_LOCAL_ENTITY);
 			gi.WriteByte(check->team);
 			gi.WriteByte(check->chr.teamDef ? check->chr.teamDef->idx : NONE);
 			gi.WriteByte(check->chr.gender);

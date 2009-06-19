@@ -68,11 +68,8 @@ static void CL_ParseEntitystring (void)
 		cl.mapMaxLevel = maxLevel = cl.mapMaxLevelBase;
 
 	/* vid restart? */
-	if (numMapParticles || numLMs)
+	if (cl.numMapParticles || cl.numLMs)
 		return;
-
-	/* clear local entities */
-	numLEs = 0;
 
 	/* parse ents */
 	while (1) {
@@ -253,7 +250,7 @@ void V_LoadMedia (void)
 	}
 
 	/* update le model references */
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse) {
 			if (le->modelnum1) {
 				le->model1 = cl.model_draw[le->modelnum1];

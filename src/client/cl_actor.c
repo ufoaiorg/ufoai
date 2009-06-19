@@ -927,7 +927,7 @@ static void CL_BuildForbiddenList (void)
 
 	fb_length = 0;
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
 		if (!le->inuse || le->invis)
 			continue;
 		/* Dead ugv will stop walking, too. */
@@ -958,7 +958,7 @@ void CL_DisplayBlockedPaths_f (void)
 	ptl_t *ptl;
 	vec3_t s;
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
 		if (!le->inuse)
 			continue;
 
@@ -1694,7 +1694,7 @@ void CL_ActorMouseTrace (void)
 
 	/* search for an actor on this field */
 	mouseActor = NULL;
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && LE_IsLivingAndVisibleActor(le))
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
@@ -1918,11 +1918,11 @@ static float CL_TargetingToHit (pos3_t toPos)
 	if (!selActor || !selFD)
 		return 0.0;
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && VectorCompare(le->pos, toPos))
 			break;
 
-	if (i >= numLEs)
+	if (i >= cl.numLEs)
 		/* no target there */
 		return 0.0;
 	/* or suicide attempted */
@@ -2055,7 +2055,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 		return;
 
 	/* search for an actor at target */
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
@@ -2146,7 +2146,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 		return;
 
 	/* search for an actor at target */
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
+	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;

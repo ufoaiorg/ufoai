@@ -35,8 +35,6 @@ typedef struct mp_s {
 	int levelflags;
 } mapParticle_t;							/* mapparticles */
 
-extern int numMapParticles;
-
 void CL_AddMapParticle(const char *particle, vec3_t origin, vec2_t wait, const char *info, int levelflags);
 void CL_ParticleCheckRounds(void);
 void CL_ParticleFree(ptl_t *p);
