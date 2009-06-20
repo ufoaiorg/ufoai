@@ -74,35 +74,54 @@ window aircraft_equip extends iaircraft
 	{
 		model	"*cvar:mn_upmodel_top"
 		autoscale	true
-		pos		"312 517"
-		size	"239 96"
+		pos		"315 517"
+		size	"240 96"
 		view aircraft_equip
 	}
 
 	text airequip_selected_description
 	{
-		pos			"317 623"
-		size		"240 100"
-		lineheight	"20"
-		rows		"5"
-		tabwidth	160
-		scrollbar	true
 		dataid		TEXT_STANDARD
+		pos			"315 623"
+		size		"220 120"
+		lineheight	"20"
+		rows		"6"
+		tabwidth	130
+		onViewChange {
+			*(abstractscrollbar)airequip_seldesc_scroll@fullsize <lines>
+			*(abstractscrollbar)airequip_seldesc_scroll@current <text_scroll>
+		}
+		onWheel		{
+			*(abstractscrollbar)airequip_seldesc_scroll@current <text_scroll>
+		}
+	}
+
+	vscrollbar airequip_seldesc_scroll {
+		image		ui/scrollbar_v_green
+		pos			"535 623"
+		height		"120"
+		current		0
+		viewsize	6
+		fullsize	6
+		hidewhenunused	true
+		onChange 	{
+			cmd "mn_textscroll airequip_selected_description <lastdiff>;"
+		}
 	}
 
 	string airequip_item_name
 	{
 		string		"*cvar:mn_itemname"
-		pos			"307 497"
-		size		"261 20"
+		pos			"315 497"
+		size		"240 20"
 		textalign	cc
 	}
 
 	string airequip_selected
 	{
 		string		"_Selected item:"
-		pos			"307 457"
-		size		"260 25"
+		pos			"315 457"
+		size		"240 25"
 		font		f_big
 		textalign	cc
 
@@ -114,9 +133,21 @@ window aircraft_equip extends iaircraft
 		pos			"28 492"
 		size		"35 35"
 		icon		prev
-		onClick		{ cmd "mn_prev_equiptype;" }
-		onWheelUp	{ cmd "mn_next_equiptype;" }
-		onWheelDown	{ cmd "mn_prev_equiptype;" }
+		onClick		{
+			*cvar:mn_itemname = ""
+			*cvar:mn_upmodel_top = ""
+			cmd "mn_prev_equiptype;"
+		}
+		onWheelUp	{
+			*cvar:mn_itemname = ""
+			*cvar:mn_upmodel_top = ""
+			cmd "mn_next_equiptype;"
+		}
+		onWheelDown	{
+			*cvar:mn_itemname = ""
+			*cvar:mn_upmodel_top = ""
+			cmd "mn_prev_equiptype;"
+		}
 	}
 
 	custombutton bt_next_craftitemtype
@@ -125,9 +156,21 @@ window aircraft_equip extends iaircraft
 		pos			"238 492"
 		size		"35 35"
 		icon		next
-		onClick		{ cmd "mn_next_equiptype;" }
-		onWheelUp	{ cmd "mn_next_equiptype;" }
-		onWheelDown	{ cmd "mn_prev_equiptype;" }
+		onClick		{
+			*cvar:mn_itemname = ""
+			*cvar:mn_upmodel_top = ""
+			cmd "mn_next_equiptype;"
+		}
+		onWheelUp	{
+			*cvar:mn_itemname = ""
+			*cvar:mn_upmodel_top = ""
+			cmd "mn_next_equiptype;"
+		}
+		onWheelDown	{
+			*cvar:mn_itemname = ""
+			*cvar:mn_upmodel_top = ""
+			cmd "mn_prev_equiptype;"
+		}
 	}
 
 	string craftitemtype
@@ -136,8 +179,16 @@ window aircraft_equip extends iaircraft
 		pos			"87 498"
 		size		"120 16"
 		textalign	cc
-		onWheelUp	{ cmd "mn_prev_equiptype;" }
-		onWheelDown	{ cmd "mn_next_equiptype;" }
+		onWheelUp	{
+			*cvar:mn_itemname = ""
+			*cvar:mn_upmodel_top = ""
+			cmd "mn_prev_equiptype;"
+		}
+		onWheelDown	{
+			*cvar:mn_itemname = ""
+			*cvar:mn_upmodel_top = ""
+			cmd "mn_next_equiptype;"
+		}
 	}
 
 	text airequip_list
@@ -453,6 +504,8 @@ window aircraft_equip extends iaircraft
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		cmd "airequip_updatemenu 2;"
 		call airequip_zone1
+		*cvar:mn_itemname = ""
+		*cvar:mn_upmodel_top = ""
 	}
 	func onClose
 	{
