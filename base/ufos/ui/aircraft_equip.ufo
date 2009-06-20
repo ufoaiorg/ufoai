@@ -32,20 +32,20 @@ window aircraft_equip extends iaircraft
 
 	confunc airequip_zone2_off
 	{
-		*airequip_header2@invis true
+		*airequip_header2@invis = true
 	}
 	confunc airequip_zone2_on
 	{
-		*airequip_header2@invis false
+		*airequip_header2@invis = false
 	}
 
 	func airequip_zone1
 	{
-		cmd "airequip_zone_select 1;airequip_updatemenu;"
+		cmd "airequip_zone_select 1; airequip_updatemenu;"
 	}
 	func airequip_zone2
 	{
-		cmd "airequip_zone_select 2;airequip_updatemenu 6;"
+		cmd "airequip_zone_select 2; airequip_updatemenu 6;"
 	}
 
 	// ==================
@@ -54,7 +54,7 @@ window aircraft_equip extends iaircraft
 
 	model aircraftequip
 	{
-		model	*cvar:mn_aircraft_model
+		model	"*cvar:mn_aircraft_model"
 		pos		"482 106"
 		size	"522 259"
 		angles	"90 0 0"
@@ -72,11 +72,11 @@ window aircraft_equip extends iaircraft
 
 	model mdl_top
 	{
-		model	*cvar:mn_upmodel_top
+		model	"*cvar:mn_upmodel_top"
 		autoscale	true
 		pos		"315 517"
 		size	"240 96"
-		view aircraft_equip
+		view	aircraft_equip
 	}
 
 	text airequip_selected_description
@@ -88,11 +88,11 @@ window aircraft_equip extends iaircraft
 		rows		"6"
 		tabwidth	130
 		onViewChange {
-			*(abstractscrollbar)airequip_seldesc_scroll@fullsize <lines>
-			*(abstractscrollbar)airequip_seldesc_scroll@current <text_scroll>
+			*(abstractscrollbar)airequip_seldesc_scroll@fullsize = <lines>
+			*(abstractscrollbar)airequip_seldesc_scroll@current = <viewpos>
 		}
 		onWheel		{
-			*(abstractscrollbar)airequip_seldesc_scroll@current <text_scroll>
+			*(abstractscrollbar)airequip_seldesc_scroll@current = <viewpos>
 		}
 	}
 
@@ -105,13 +105,13 @@ window aircraft_equip extends iaircraft
 		fullsize	6
 		hidewhenunused	true
 		onChange 	{
-			cmd "mn_textscroll airequip_selected_description <lastdiff>;"
+			*airequip_selected_description@viewpos = <current>
 		}
 	}
 
 	string airequip_item_name
 	{
-		string		*cvar:mn_itemname
+		string		"*cvar:mn_itemname"
 		pos			"315 497"
 		size		"240 20"
 		textalign	cc
@@ -175,7 +175,7 @@ window aircraft_equip extends iaircraft
 
 	string craftitemtype
 	{
-		string		*cvar:mn_equip_itemtype_name
+		string		"*cvar:mn_equip_itemtype_name"
 		pos			"87 498"
 		size		"120 16"
 		textalign	cc
@@ -193,15 +193,15 @@ window aircraft_equip extends iaircraft
 
 	text airequip_list
 	{
+		dataid		TEXT_LIST
 		pos			"42 606"
 		size		"248 140"
 		lineheight	"20"
 		rows		"7"
-		dataid		TEXT_LIST
 		mousefx		true
-		onClick		{ cmd "airequip_list_click <lineselected>" }
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
+		onClick		{ cmd "airequip_list_click <lineselected>" }
 	}
 
 	// ==================
@@ -211,41 +211,45 @@ window aircraft_equip extends iaircraft
 	custombutton airequip_button_add1
 	{
 		tooltip		"_Add selected item"
-		image ui/button_background
-		texl "128 0"	size "37 32"
+		image		ui/button_background
 		pos			"592 500"
-		onClick		{ cmd "airequip_add_item 1;" }
+		size		"37 32"
+		texl		"128 0"
 		icon		plus
+		onClick		{ cmd "airequip_add_item 1;" }
 	}
 
 	custombutton airequip_button_remove1
 	{
 		tooltip		"_Remove item from slot"
-		image ui/button_background
-		texl "128 0"	size "37 32"
+		image		ui/button_background
 		pos			"592 550"
+		size		"37 32"
+		texl		"128 0"
+		icon		minus
 		onClick		{ cmd "airequip_del_item 1;" }
-		icon		del
 	}
 
 	custombutton airequip_button_add2
 	{
 		tooltip		"_Add selected item"
-		image ui/button_background
-		texl "128 0"	size "37 32"
+		image		ui/button_background
 		pos			"592 660"
-		onClick		{ cmd "airequip_add_item 2;" }
+		size		"37 32"
+		texl		"128 0"	
 		icon		plus
+		onClick		{ cmd "airequip_add_item 2;" }
 	}
 
 	custombutton airequip_button_remove2
 	{
 		tooltip		"_Remove item from slot"
-		image ui/button_background
-		texl "128 0"	size "37 32"
+		image		ui/button_background
 		pos			"592 695"
+		texl		"128 0"
+		size		"37 32"
+		icon		minus
 		onClick		{ cmd "airequip_del_item 2;" }
-		icon		del
 	}
 
 	pic airequip_zone_select1
@@ -273,23 +277,23 @@ window aircraft_equip extends iaircraft
 
 	pic airequip_zone_select2
 	{
-		invis false
-		tooltip	"_Select this zone"
-		mousefx	true
-		pos	"654 648"
-		image	ui/airequip_selected_element
-		texl	"0 0"
-		texh	"458 82"
+		invis		false
+		tooltip		"_Select this zone"
+		mousefx		true
+		image		ui/airequip_selected_element
+		pos			"654 648"
+		texl		"0 0"
+		texh		"458 82"
 		onClick	{ call airequip_zone2 }
 	}
 
 	text airequip_text_zone2
 	{
+		dataid		TEXT_AIREQUIP_2
 		tooltip		"_Select this zone"
 		pos			"669 689"
 		size		"306 35"
 		lineheight	"16"
-		dataid		TEXT_AIREQUIP_2
 		rows		"2"
 		onClick		{ call airequip_zone2 }
 	}
@@ -332,7 +336,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot0
 	{
-		model		*cvar:mn_aircraft_item_model_slot0
+		model		"*cvar:mn_aircraft_item_model_slot0"
 		pos			"911 123"
 		size		"60 60"
 		autoscale	true
@@ -352,7 +356,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot1
 	{
-		model	*cvar:mn_aircraft_item_model_slot1
+		model	"*cvar:mn_aircraft_item_model_slot1"
 		pos		"911 203"
 		size	"60 60"
 		autoscale	true
@@ -372,7 +376,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot2
 	{
-		model	*cvar:mn_aircraft_item_model_slot2
+		model	"*cvar:mn_aircraft_item_model_slot2"
 		pos		"911 283"
 		size	"60 60"
 		autoscale	true
@@ -392,7 +396,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot3
 	{
-		model	*cvar:mn_aircraft_item_model_slot3
+		model	"*cvar:mn_aircraft_item_model_slot3"
 		pos		"711 123"
 		size	"60 60"
 		autoscale	true
@@ -412,7 +416,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot4
 	{
-		model	*cvar:mn_aircraft_item_model_slot4
+		model	"*cvar:mn_aircraft_item_model_slot4"
 		pos		"711 283"
 		size	"60 60"
 		autoscale	true
@@ -432,7 +436,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot5
 	{
-		model	*cvar:mn_aircraft_item_model_slot5
+		model	"*cvar:mn_aircraft_item_model_slot5"
 		pos		"511 123"
 		size	"60 60"
 		autoscale	true
@@ -452,7 +456,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot6
 	{
-		model	*cvar:mn_aircraft_item_model_slot6
+		model	"*cvar:mn_aircraft_item_model_slot6"
 		pos		"511 203"
 		size	"60 60"
 		autoscale	true
@@ -472,7 +476,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot7
 	{
-		model	*cvar:mn_aircraft_item_model_slot7
+		model	"*cvar:mn_aircraft_item_model_slot7"
 		pos		"511 283"
 		size	"60 60"
 		autoscale	true
@@ -489,12 +493,12 @@ window aircraft_equip extends iaircraft
 	 */
 	confunc aircraft_change
 	{
-		*aircraft_list@lineselected <1>
+		*aircraft_list@lineselected = <1>
 		cmd "airequip_updatemenu 2;"
 		call airequip_zone1
 		// absent from base, go back to the main GUI
 		if ( *cvar:mn_equipsoldierstate == 1 ) {
-			cmd "mn_pop;mn_push aircraft;"
+			cmd "mn_pop; mn_push aircraft;"
 		}
 	}
 
