@@ -279,7 +279,6 @@ static void B_BaseInit_f (void)
 
 	Cvar_SetValue("mn_base_num_aircraft", base->numAircraftInBase);
 
-	MN_ExecuteConfunc("mn_buildings_reset");
 	/* activate or deactivate the aircraft button */
 	if (AIR_AircraftAllowed(base) && base->numAircraftInBase)
 		MN_ExecuteConfunc("update_aircraft false \"%s\"", _("Manage your aircraft"));
@@ -437,6 +436,8 @@ static void B_BuildingInit (base_t* base)
 	}
 	if (base->buildingCurrent)
 		B_DrawBuilding(base, base->buildingCurrent);
+	else
+		MN_ExecuteConfunc("mn_buildings_reset");
 
 	MN_RegisterLinkedListText(TEXT_BUILDINGS, base->buildingList);
 }

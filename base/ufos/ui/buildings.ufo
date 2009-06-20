@@ -82,18 +82,38 @@ window buildings
 
 	text buildings
 	{
-		pos			"770 120"
-		size		"210 540"
+		dataid		TEXT_BUILDINGS
+		pos			"760 120"
+		size		"210 570"
 		lineheight	30
-		tabwidth	700
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		mousefx		true
-		dataid		TEXT_BUILDINGS
-		rows		"18"
+		rows		"19"
+		longlines	prettychop
 		onClick		{ cmd "buildings_click <lineselected>" }
+		onViewChange {
+			*(abstractscrollbar)buildings_scroll@fullsize <lines>
+			*(abstractscrollbar)buildings_scroll@current <text_scroll>
+		}
+		onWheel {
+			*(abstractscrollbar)buildings_scroll@current <text_scroll>
+		}
 	}
-	
+
+	vscrollbar buildings_scroll {
+		image		ui/scrollbar_v_green
+		pos			"976 120"
+		height		"570"
+		current		0
+		viewsize	19
+		fullsize	19
+		hidewhenunused	true
+		onChange	{
+			*node:root.buildings@text_scroll <current>
+		}
+	}
+
 	checkbox building_preview
 	{
 		tooltip		"_Open/close Building preview window"
@@ -150,6 +170,7 @@ window popup_buildingpreview
 		pos			"38 456"
 		size		"526 237"
 		dragbutton	true
+		closebutton	true
 		image		ui/popup_alpha_tile
 		string		"_Building preview"
 	}
@@ -200,5 +221,10 @@ window popup_buildingpreview
 		pos			"320 190"
 		size		"16 16"
 		onClick		{ cmd "building_ufopedia;" }
+	}
+
+	func onClose
+	{
+		*node:buildings.building_preview@current = 0
 	}
 }
