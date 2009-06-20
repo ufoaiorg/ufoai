@@ -115,7 +115,7 @@ window ufopedia
 		current		0
 		viewsize	16
 		fullsize	50
-		onChange	{ cmd "mn_textscroll ufopedia <lastdiff>;" }
+		onChange	{ *ufopedia@text_scroll <current> }
 	}
 
 	confunc mn_upfbig
@@ -127,7 +127,7 @@ window ufopedia
 		*ufopedia@mousefx	true
 		*ufopedia@height	368
 		*ufopedia_scroll@height	368
-		cmd "mn_textscroll ufopedia reset;"
+		*ufopedia@text_scroll 0
 		*ufopedia_scroll@current 0
 	}
 
@@ -140,7 +140,7 @@ window ufopedia
 		*ufopedia@mousefx	false
 		*ufopedia@height	360
 		*ufopedia_scroll@height	360
-		cmd "mn_textscroll ufopedia reset;"
+		*ufopedia@text_scroll 0
 		*ufopedia_scroll@current 0
 	}
 
