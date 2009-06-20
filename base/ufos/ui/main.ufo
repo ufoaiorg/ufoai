@@ -15,7 +15,7 @@ window main
 
 	string version
 	{
-		string	"*cvar:version"
+		string	*cvar:version
 		pos		"10 744"
 	}
 
@@ -137,7 +137,7 @@ window checkcvars
 	}
 	textentry slot_name
 	{
-		string		"*cvar:cl_name"
+		string		*cvar:cl_name
 		image		ui/button_green_verysmall
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
@@ -171,7 +171,7 @@ window checkcvars
 	}
 	bar effects_bar
 	{
-		current		"*cvar:snd_volume"
+		current		*cvar:snd_volume
 		pos			"170 208"
 		size		"245 6"
 		color		"0 .8 0 1"
@@ -190,7 +190,7 @@ window checkcvars
 	}
 	bar music_bar
 	{
-		current		"*cvar:snd_music_volume"
+		current		*cvar:snd_music_volume
 		pos			"170 233"
 		size		"245 6"
 		color		"0 .8 0 1"
@@ -216,7 +216,7 @@ window checkcvars
 	optionlist select_language
 	{
 		pos			"531 78"
-		cvar		"*cvar:s_language"
+		cvar		*cvar:s_language
 		image		"ui/panel_green_slim"
 		size		"155 226"
 		color		"0 .78 0 1"
@@ -312,7 +312,7 @@ window popup_tipoftheday
 
 	checkbox activate
 	{
-		current		"*cvar:cl_showTipOfTheDay"
+		current		*cvar:cl_showTipOfTheDay
 		pos			"36 194"
 		image		"ui/checkbox_blue"
 		size		"20 18"

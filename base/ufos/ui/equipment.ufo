@@ -458,49 +458,49 @@ window equipment
 	// ==================
 
 	string pwr_lbl { pos "34 414" size "200 20" string "_Strength:" }
-	string pwr_val { pos "220 414" size "150 20" string "*cvar:mn_tpwr" textalign ur }
+	string pwr_val { pos "220 414" size "150 20" string *cvar:mn_tpwr textalign ur }
 	pic pwr_bdr    { pos "67 431"  image ui/bar_border }
-	tbar pwr_bar   { pos "70 431"  current "*cvar:mn_vpwr" texl "3 0" image ui/bar_attribute	size "250 16"	max 100 }
+	tbar pwr_bar   { pos "70 431"  current *cvar:mn_vpwr texl "3 0" image ui/bar_attribute	size "250 16"	max 100 }
 
 	string spd_lbl { pos "34 449"  size "200 20" string "_Speed:" }
-	string spd_val { pos "220 449" size "150 20" string "*cvar:mn_tspd" textalign ur }
+	string spd_val { pos "220 449" size "150 20" string *cvar:mn_tspd textalign ur }
 	pic spd_bdr    { pos "67 466"  image ui/bar_border }
-	tbar spd_bar   { pos "70 466"  current "*cvar:mn_vspd" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	tbar spd_bar   { pos "70 466"  current *cvar:mn_vspd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string acc_lbl { pos "34 484"  size "200 20" string "_Accuracy:" }
-	string acc_val { pos "220 484" size "150 20" string "*cvar:mn_tacc" textalign ur }
+	string acc_val { pos "220 484" size "150 20" string *cvar:mn_tacc textalign ur }
 	pic acc_bdr    { pos "67 501"  image ui/bar_border }
-	tbar acc_bar   { pos "70 501"  current "*cvar:mn_vacc" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	tbar acc_bar   { pos "70 501"  current *cvar:mn_vacc texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string mnd_lbl { pos "34 519"  size "200 20" string "_Mind:" }
-	string mnd_val { pos "220 519" size "150 20" string "*cvar:mn_tmnd" textalign ur }
+	string mnd_val { pos "220 519" size "150 20" string *cvar:mn_tmnd textalign ur }
 	pic mnd_bdr    { pos "67 536"  image ui/bar_border }
-	tbar mnd_bar   { pos "70 536"  current "*cvar:mn_vmnd" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	tbar mnd_bar   { pos "70 536"  current *cvar:mn_vmnd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string cls_lbl { pos "34 562"  size "200 20" string "_Close Combat:" }
-	string cls_val { pos "220 562" size "150 20" string "*cvar:mn_tcls" textalign ur }
+	string cls_val { pos "220 562" size "150 20" string *cvar:mn_tcls textalign ur }
 	pic cls_bdr    { pos "67 579"  image ui/bar_border }
-	tbar cls_bar   { pos "70 579"  current "*cvar:mn_vcls" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar cls_bar   { pos "70 579"  current *cvar:mn_vcls texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string hvy_lbl { pos "34 597"  size "200 20" string "_Heavy Weapons:" }
-	string hvy_val { pos "220 597" size "150 20" string "*cvar:mn_thvy" textalign ur }
+	string hvy_val { pos "220 597" size "150 20" string *cvar:mn_thvy textalign ur }
 	pic hvy_bdr    { pos "67 614"  image ui/bar_border }
-	tbar hvy_bar   { pos "70 614"  current "*cvar:mn_vhvy" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar hvy_bar   { pos "70 614"  current *cvar:mn_vhvy texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string ass_lbl { pos "34 632" size "200 20" string "_Assault Weapons:" }
-	string ass_val { pos "220 632" size "150 20" string "*cvar:mn_tass" textalign ur }
+	string ass_val { pos "220 632" size "150 20" string *cvar:mn_tass textalign ur }
 	pic ass_bdr    { pos "67 649"  image ui/bar_border }
-	tbar ass_bar   { pos "70 649"  current "*cvar:mn_vass" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar ass_bar   { pos "70 649"  current *cvar:mn_vass texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string snp_lbl { pos "34 667" size "200 20" string "_Sniper Rifles:" }
-	string snp_val { pos "220 667" size "150 20" string "*cvar:mn_tsnp" textalign ur }
+	string snp_val { pos "220 667" size "150 20" string *cvar:mn_tsnp textalign ur }
 	pic snp_bdr    { pos "67 684"  image ui/bar_border }
-	tbar snp_bar   { pos "70 684"  current "*cvar:mn_vsnp" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar snp_bar   { pos "70 684"  current *cvar:mn_vsnp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string exp_lbl { pos "34 702" size "200 20" string "_High-Explosives:" }
-	string exp_val { pos "220 702" size "150 20" string "*cvar:mn_texp" textalign ur }
+	string exp_val { pos "220 702" size "150 20" string *cvar:mn_texp textalign ur }
 	pic exp_bdr    { pos "67 719"  image ui/bar_border }
-	tbar exp_bar   { pos "70 719"  current "*cvar:mn_vexp" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar exp_bar   { pos "70 719"  current *cvar:mn_vexp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	// ==================
 	// switch

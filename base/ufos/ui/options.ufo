@@ -189,7 +189,7 @@ window options
 		}
 		string aniso_value
 		{
-			string		"*cvar:r_anisotropic"
+			string		*cvar:r_anisotropic
 			pos			"360 215"
 			size		"100 20"
 			textalign	cc
@@ -199,7 +199,7 @@ window options
 		/* @todo update max with GL max anisotropic */
 		spinner aniso_change
 		{
-			current		"*cvar:r_anisotropic"
+			current		*cvar:r_anisotropic
 			image		ui/spinner_blue
 			pos			"466 214"
 			min			0
@@ -215,7 +215,7 @@ window options
 		}
 		checkbox fullscreen
 		{
-			current		"*cvar:vid_fullscreen"
+			current		*cvar:vid_fullscreen
 			pos			"463 240"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -229,7 +229,7 @@ window options
 		}
 		checkbox compression
 		{
-			current		"*cvar:r_ext_texture_compression"
+			current		*cvar:r_ext_texture_compression
 			pos			"463 265"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -243,7 +243,7 @@ window options
 		}
 		checkbox fps
 		{
-			current		"*cvar:cl_fps"
+			current		*cvar:cl_fps
 			pos			"463 290"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -257,7 +257,7 @@ window options
 		}
 		checkbox lod
 		{
-			current		"*cvar:r_texture_lod"
+			current		*cvar:r_texture_lod
 			pos			"463 315"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -271,7 +271,7 @@ window options
 		}
 		checkbox isomode
 		{
-			current		"*cvar:r_isometric"
+			current		*cvar:r_isometric
 			pos			"463 340"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -285,7 +285,7 @@ window options
 		}
 		checkbox glsl
 		{
-			current		"*cvar:r_programs"
+			current		*cvar:r_programs
 			pos			"463 365"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -299,7 +299,7 @@ window options
 		}
 		checkbox light
 		{
-			current		"*cvar:r_lights"
+			current		*cvar:r_lights
 			pos			"463 390"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -313,7 +313,7 @@ window options
 		}
 		checkbox ptlweather
 		{
-			current		"*cvar:cl_particleweather"
+			current		*cvar:cl_particleweather
 			pos			"463 415"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -327,7 +327,7 @@ window options
 		}
 		checkbox vbo
 		{
-			current		"*cvar:r_vertexbuffers"
+			current		*cvar:r_vertexbuffers
 			pos			"463 440"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -341,14 +341,14 @@ window options
 		}
 		string samplebuf_value
 		{
-			string		"*cvar:r_multisample"
+			string		*cvar:r_multisample
 			pos			"360 465"
 			size		"100 20"
 			textalign	cc
 		}
 		spinner samplebuf_change
 		{
-			current		"*cvar:r_multisample"
+			current		*cvar:r_multisample
 			image		ui/spinner_blue
 			pos			"466 464"
 			min			0
@@ -364,7 +364,7 @@ window options
 		}
 		string swapcontrol_value
 		{
-			string		"*cvar:r_swapinterval"
+			string		*cvar:r_swapinterval
 			pos			"360 485"
 			size		"100 20"
 			textalign	cc
@@ -372,7 +372,7 @@ window options
 
 		spinner swapinterval_change
 		{
-			current		"*cvar:r_swapinterval"
+			current		*cvar:r_swapinterval
 			image		ui/spinner_blue
 			pos			"466 484"
 			min			0
@@ -393,7 +393,7 @@ window options
 		}
 		bar gamma_bar
 		{
-			current		"*cvar:vid_gamma"
+			current		*cvar:vid_gamma
 			pos			"253 525"
 			size		"245 6"
 			color		"0 .8 0 1"
@@ -414,7 +414,7 @@ window options
 		}
 		bar contrast_bar
 		{
-			current		"*cvar:r_contrast"
+			current		*cvar:r_contrast
 			pos			"253 550"
 			size		"245 6"
 			color		"0 .8 0 1"
@@ -435,7 +435,7 @@ window options
 		}
 		bar brightness_bar
 		{
-			current		"*cvar:r_brightness"
+			current		*cvar:r_brightness
 			pos			"253 575"
 			size		"245 6"
 			color		"0 .8 0 1"
@@ -456,7 +456,7 @@ window options
 		}
 		bar lightmap_bar
 		{
-			current		"*cvar:r_modulate"
+			current		*cvar:r_modulate
 			pos			"253 600"
 			size		"245 6"
 			color		"0 .8 0 1"
@@ -472,7 +472,7 @@ window options
 		}
 		checkbox strech
 		{
-			current		"*cvar:vid_strech"
+			current		*cvar:vid_strech
 			pos			"463 615"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -480,7 +480,7 @@ window options
 
 		selectbox lightmapres_box
 		{
-			cvar		"*cvar:r_maxlightmap"
+			cvar		*cvar:r_maxlightmap
 			image		"ui/selectbox_green"
 			pos			"359 192"
 			size		"125 20"
@@ -509,7 +509,7 @@ window options
 
 		selectbox texres_box
 		{
-			cvar		"*cvar:r_maxtexres"
+			cvar		*cvar:r_maxtexres
 			image		"ui/selectbox_green"
 			pos			"359 167"
 			size		"125 20"
@@ -548,7 +548,7 @@ window options
 
 		selectbox select_res
 		{
-			cvar		"*cvar:mn_vidmode"
+			cvar		*cvar:mn_vidmode
 			pos			"359 142"
 			size		"125 20"
 			image		"ui/selectbox_green"
@@ -596,7 +596,7 @@ window options
 		}
 		bar effects_bar
 		{
-			current		"*cvar:snd_volume"
+			current		*cvar:snd_volume
 			pos			"239 180"
 			size		"245 6"
 			color		"0 .8 0 1"
@@ -617,7 +617,7 @@ window options
 		}
 		bar music_bar
 		{
-			current		"*cvar:snd_music_volume"
+			current		*cvar:snd_music_volume
 			pos			"239 205"
 			size		"245 6"
 			color		"0 .8 0 1"
@@ -644,7 +644,7 @@ window options
 
 		selectbox rate_box
 		{
-			cvar		"*cvar:snd_rate"
+			cvar		*cvar:snd_rate
 			image		"ui/selectbox_green"
 			pos			"359 245"
 			size		"125 20"
@@ -679,7 +679,7 @@ window options
 		}
 		checkbox sound_init
 		{
-			current		"*cvar:snd_init"
+			current		*cvar:snd_init
 			pos			"463 270"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -765,7 +765,7 @@ window options
 		}
 		textentry slot_name
 		{
-			string		"*cvar:cl_name"
+			string		*cvar:cl_name
 			image		ui/button_green_verysmall
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -787,7 +787,7 @@ window options
 		}
 		selectbox select_hud
 		{
-			cvar		"*cvar:mn_hud"
+			cvar		*cvar:mn_hud
 			image		"ui/selectbox_green"
 			pos			"343 230"
 			size		"155 20"
@@ -817,7 +817,7 @@ window options
 		{
 			dataid		OPTION_LANGUAGES
 			pos			"343 255"
-			cvar		"*cvar:s_language"
+			cvar		*cvar:s_language
 			image		"ui/panel_green_slim"
 			size		"155 220"
 			color		"0 .78 0 1"
@@ -855,7 +855,7 @@ window options
 		}
 		checkbox tooltip
 		{
-			current		"*cvar:mn_show_tooltips"
+			current		*cvar:mn_show_tooltips
 			tooltip		"_Activates tooltips"
 			pos			"425 480"
 			size		"20 18"
@@ -873,7 +873,7 @@ window options
 		}
 		checkbox centerview_value
 		{
-			current		"*cvar:cl_centerview"
+			current		*cvar:cl_centerview
 			tooltip		"_Centring at soldier selecting, shooting and appearing"
 			pos			"425 505"
 			size		"20 18"
@@ -891,7 +891,7 @@ window options
 		}
 		checkbox c_tooltip
 		{
-			current		"*cvar:cl_show_cursor_tooltips"
+			current		*cvar:cl_show_cursor_tooltips
 			tooltip		"_Activates cursor tooltips"
 			pos			"425 530"
 			size		"20 18"
@@ -909,7 +909,7 @@ window options
 		}
 		checkbox 3dmap
 		{
-			current		"*cvar:cl_3dmap"
+			current		*cvar:cl_3dmap
 			tooltip		"_Use 3D geoscape"
 			pos			"425 555"
 			size		"20 18"
@@ -928,7 +928,7 @@ window options
 		}
 		checkbox tipoftheday
 		{
-			current		"*cvar:cl_showTipOfTheDay"
+			current		*cvar:cl_showTipOfTheDay
 			pos			"425 580"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -945,7 +945,7 @@ window options
 		}
 		checkbox precache
 		{
-			current		"*cvar:cl_precache"
+			current		*cvar:cl_precache
 			tooltip		"_Precache models (faster menus)"
 			pos			"425 605"
 			size		"20 18"
@@ -968,7 +968,7 @@ window options
 		}
 		bar actorsspeed_bar
 		{
-			current		"*cvar:g_actorspeed"
+			current		*cvar:g_actorspeed
 			pos			"249 640"
 			size		"245 6"
 			color		"0 .8 0 1"
@@ -1020,7 +1020,7 @@ window options
 		}
 		bar camspeed_bar
 		{
-			current		"*cvar:cl_cammovespeed"
+			current		*cvar:cl_cammovespeed
 			pos			"253 180"
 			size		"245 6"
 			color		"0 .8 0 1"
@@ -1045,7 +1045,7 @@ window options
 		}
 		bar camrot_bar
 		{
-			current		"*cvar:cl_camrotspeed"
+			current		*cvar:cl_camrotspeed
 			pos			"253 205"
 			size		"245 6"
 			color		"0 .8 0 1"
@@ -1070,7 +1070,7 @@ window options
 		}
 		bar cammoveaccel_bar
 		{
-			current		"*cvar:cl_cammoveaccel"
+			current		*cvar:cl_cammoveaccel
 			pos			"253 255"
 			size		"245 6"
 			color		"0 .8 0 1"
@@ -1105,7 +1105,7 @@ window options
 		}
 		bar joystick_threshold_bar
 		{
-			current		"*cvar:in_joystickThreshold"
+			current		*cvar:in_joystickThreshold
 			pos			"253 565"
 			size		"245 6"
 			color		"0 .8 0 1"
@@ -1130,7 +1130,7 @@ window options
 		}
 		bar joystick_speed_bar
 		{
-			current		"*cvar:in_joystickSpeed"
+			current		*cvar:in_joystickSpeed
 			pos			"253 590"
 			size		"245 6"
 			color		"0 .8 0 1"
@@ -1170,7 +1170,7 @@ window options
 		}
 		selectbox select_autostand
 		{
-			cvar		"*cvar:cl_autostand"
+			cvar		*cvar:cl_autostand
 			image		"ui/selectbox_green"
 			pos			"343 310"
 			size		"155 20"
@@ -1198,7 +1198,7 @@ window options
 		}
 		selectbox select_confirmactions
 		{
-			cvar		"*cvar:confirm_actions"
+			cvar		*cvar:confirm_actions
 			image		"ui/selectbox_green"
 			pos			"343 285"
 			size		"155 20"
@@ -1231,7 +1231,7 @@ window options
 		}
 		selectbox select_joystick
 		{
-			cvar		"*cvar:in_joystickNo"
+			cvar		*cvar:in_joystickNo
 			dataid		OPTION_JOYSTICKS
 			image		"ui/selectbox_green"
 			pos			"243 530"

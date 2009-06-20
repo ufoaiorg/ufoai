@@ -16,23 +16,23 @@ window basedefence
 /*	@note: not working yet as option isn't a node :(	*/
 	confunc set_defencetypes {
 /*		*cvar:mn_cvartmp "<1>"
-		if ( *cvar:mn_cvartmp eq enable ) {
+		if ( *cvar:mn_cvartmp eq "enable" ) {
 			*defencetype.missile@invis false
 			*defencetype.missile@disabled false
-		} elif ( *cvar:mn_cvartmp eq disable ) {
+		} elif ( *cvar:mn_cvartmp eq "disable" ) {
 			*defencetype.missile@invis false
 			*defencetype.missile@disabled true
-		} elif ( *cvar:mn_cvartmp eq na ) {
+		} elif ( *cvar:mn_cvartmp eq "na" ) {
 			*defencetype.missile@invis true
 		}
 		*cvar:mn_cvartmp "<2>"
-		if ( *cvar:mn_cvartmp eq enable ) {
+		if ( *cvar:mn_cvartmp eq "enable" ) {
 			*defencetype.laser@invis false
 			*defencetype.laser@disabled false
-		} elif ( *cvar:mn_cvartmp eq disable ) {
+		} elif ( *cvar:mn_cvartmp eq "disable" ) {
 			*defencetype.laser@invis false
 			*defencetype.missile@disabled true
-		} elif ( *cvar:mn_cvartmp eq na ) {
+		} elif ( *cvar:mn_cvartmp eq "na" ) {
 			*defencetype.laser@invis true
 		}
 		cmd "del mn_cvartmp;"
@@ -42,7 +42,7 @@ window basedefence
 	tab defencetype {
 		pos		"17 75"
 		size	"667 38"
-		cvar	"*cvar:mn_bdef_type"
+		cvar	*cvar:mn_bdef_type
 		onChange {
 			cmd "bdef_type >cvar:mn_bdef_type>;"
 		}
@@ -231,7 +231,7 @@ window basedefence
 		}
 		string item_name
 		{
-			string		"*cvar:mn_itemname"
+			string		*cvar:mn_itemname
 			pos			"10 25"
 			size		"290 25"
 			textalign	uc
@@ -239,7 +239,7 @@ window basedefence
 
 		model item_model
 		{
-			model		"*cvar:mn_upmodel_top"
+			model		*cvar:mn_upmodel_top
 			angles		"0 0 120"
 			pos			"786 500"
 			size		"200 175"

@@ -15,7 +15,7 @@ window market
 
 	string name
 	{
-		string		"*cvar:mn_base_title"
+		string		*cvar:mn_base_title
 		tooltip		"_Name of this base"
 		pos			"60 30"
 		size		"240 32"
@@ -52,7 +52,7 @@ window market
 	tab market_navigation {
 		pos		"47 106"
 		size	"938 39"
-		cvar	"*cvar:mn_itemtype"
+		cvar	*cvar:mn_itemtype
 		onChange {
 			cmd "buy_type <cvar:mn_itemtype>;"
 		}
@@ -696,7 +696,7 @@ window market
 	string txt_credits
 	{
 		tooltip		"_Organisation capital"
-		string		"*cvar:mn_credits"
+		string		*cvar:mn_credits
 		pos			"780 30"
 		size		"130 30"
 		font		f_big
@@ -716,7 +716,7 @@ window market
 
 		string txt_storage_caption
 		{
-			visiblewhen "*cvar:mn_itemtype ne aircraft"	// for everything except aircraft
+			visiblewhen "*cvar:mn_itemtype ne \"aircraft\""	// for everything except aircraft
 			string 		"_Storage (used/all):"
 			pos			"62 50"
 			size		"200 20"
@@ -725,8 +725,8 @@ window market
 
 		string txt_storage_value
 		{
-			visiblewhen "*cvar:mn_itemtype ne aircraft"	// for everything except aircraft
-			string 		"*cvar:mn_bs_storage"
+			visiblewhen "*cvar:mn_itemtype ne \"aircraft\""	// for everything except aircraft
+			string 		*cvar:mn_bs_storage
 			pos			"267 50"
 			size		"100 20"
 			font		f_small
@@ -746,16 +746,16 @@ window market
 
 		string itemname
 		{
-			visiblewhen "*cvar:mn_itemtype ne aircraft"	// for everything except aircraft
-			string		"*cvar:mn_itemname"
+			visiblewhen "*cvar:mn_itemtype ne \"aircraft\""	// for everything except aircraft
+			string		*cvar:mn_itemname
 			pos			"22 35"
 			size		"365 20"
 			textalign	uc
 		}
 		string aircraftname
 		{
-			visiblewhen "*cvar:mn_itemtype eq aircraft"	// Only for aircraft.
-			string		"*cvar:mn_aircraftname"
+			visiblewhen "*cvar:mn_itemtype eq \"aircraft\""	// Only for aircraft.
+			string		*cvar:mn_aircraftname
 			pos			"22 35"
 			size		"365 20"
 			textalign	uc
@@ -763,7 +763,7 @@ window market
 
 		item itemmodel
 		{
-			model		"*cvar:mn_item"
+			model		*cvar:mn_item
 			pos			"12 55"
 			size		"385 200"
 			angles		"-10 160 70"

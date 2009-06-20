@@ -40,7 +40,7 @@ window iaircraft
 	string base_name
 	{
 		tooltip	"_Name of this base"
-		string	"*cvar:mn_base_title"
+		string	*cvar:mn_base_title
 		pos	"60 30"
 		size "240 32"
 		textalign	cl
@@ -59,7 +59,7 @@ window iaircraft
 	string base_txt_credits
 	{
 		tooltip		"_Organisation capital"
-		string		"*cvar:mn_credits"
+		string		*cvar:mn_credits
 		pos			"780 30"
 		size		"130 30"
 		font		f_big
@@ -89,7 +89,7 @@ window iaircraft
 	tab aircraft_navigation {
 		pos		"47 396"
 		size	"938 39"
-		cvar	"*cvar:mn_aircrafttab"
+		cvar	*cvar:mn_aircrafttab
 		onChange {
 			cmd "mn_pop; mn_push <cvar:mn_aircrafttab>;"
 		}
@@ -168,7 +168,7 @@ window iaircraft
 
 	string aircraft_selected
 	{
-		string		"*cvar:mn_aircraftname"
+		string		*cvar:mn_aircraftname
 		pos			"46 114"
 		size		"317 21"
 		textalign	cc

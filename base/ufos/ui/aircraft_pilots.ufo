@@ -32,7 +32,7 @@ window aircraft_pilots extends iaircraft
 
 	model aircraft
 	{
-		model		"*cvar:mn_aircraft_model"
+		model		*cvar:mn_aircraft_model
 		pos			"478 107"
 		size		"529 260"
 		origin		"-45 25 0"
@@ -50,8 +50,8 @@ window aircraft_pilots extends iaircraft
 	model assigned_pilot_body
 	{
 		{
-			model	"*cvar:mn_pilot_body"
-			skin	"*cvar:mn_pilot_skin"
+			model	*cvar:mn_pilot_body
+			skin	*cvar:mn_pilot_skin
 			anim	"stand_still"
 			angles	"0 90 90"
 			scale	"5.5 5.5 5.5"
@@ -62,15 +62,15 @@ window aircraft_pilots extends iaircraft
 
 		model assigned_pilot_head
 		{
-			model	"*cvar:mn_pilot_head"
-			skin	"*cvar:mn_pilot_skin"
+			model	*cvar:mn_pilot_head
+			skin	*cvar:mn_pilot_skin
 			tag		"tag_head"
 		}
 	}
 
 	string assigned_pilot_name
 	{
-		string		"*cvar:mn_pilot_name"
+		string		*cvar:mn_pilot_name
 		pos			"480 185"
 		size		"200 20"
 		textalign	ul
@@ -83,14 +83,14 @@ window aircraft_pilots extends iaircraft
 	pic	rank_img {
 		pos "378 465"
 		size "50 50"
-		image "*cvar:mn_chrrank_img"
+		image *cvar:mn_chrrank_img
 	}
 
 	model body
 	{
 		{
-			model	"*cvar:mn_body"
-			skin	"*cvar:mn_skin"
+			model	*cvar:mn_body
+			skin	*cvar:mn_skin
 			anim	"stand2"
 			angles	"0 70 90"
 			scale	"5.5 5.5 5.5"
@@ -101,8 +101,8 @@ window aircraft_pilots extends iaircraft
 		
 		model head
 		{
-			model	"*cvar:mn_head"
-			skin	"*cvar:mn_skin"
+			model	*cvar:mn_head
+			skin	*cvar:mn_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
 		}
@@ -268,7 +268,7 @@ window aircraft_pilots extends iaircraft
 
 	string txt_actor0
 	{
-		string	"*cvar:mn_ename0"
+		string	*cvar:mn_ename0
 		pos		"60 460"
 		size	"190 35"
 		textalign cl
@@ -279,7 +279,7 @@ window aircraft_pilots extends iaircraft
 	}
 	string txt_actor1
 	{
-		string	"*cvar:mn_ename1"
+		string	*cvar:mn_ename1
 		pos		"60 495"
 		size	"190 35"
 		textalign cl
@@ -290,7 +290,7 @@ window aircraft_pilots extends iaircraft
 	}
 	string txt_actor2
 	{
-		string	"*cvar:mn_ename2"
+		string	*cvar:mn_ename2
 		pos		"60 530"
 		size	"190 35"
 		textalign cl
@@ -301,7 +301,7 @@ window aircraft_pilots extends iaircraft
 	}
 	string txt_actor3
 	{
-		string	"*cvar:mn_ename3"
+		string	*cvar:mn_ename3
 		pos		"60 565"
 		size	"190 35"
 		textalign cl
@@ -312,7 +312,7 @@ window aircraft_pilots extends iaircraft
 	}
 	string txt_actor4
 	{
-		string	"*cvar:mn_ename4"
+		string	*cvar:mn_ename4
 		pos		"60 600"
 		size	"190 35"
 		textalign cl
@@ -323,7 +323,7 @@ window aircraft_pilots extends iaircraft
 	}
 	string txt_actor5
 	{
-		string	"*cvar:mn_ename5"
+		string	*cvar:mn_ename5
 		pos		"60 635"
 		size	"190 35"
 		textalign cl
@@ -334,7 +334,7 @@ window aircraft_pilots extends iaircraft
 	}
 	string txt_actor6
 	{
-		string	"*cvar:mn_ename6"
+		string	*cvar:mn_ename6
 		pos		"60 670"
 		size	"190 35"
 		textalign cl
@@ -345,7 +345,7 @@ window aircraft_pilots extends iaircraft
 	}
 	string txt_actor7
 	{
-		string	"*cvar:mn_ename7"
+		string	*cvar:mn_ename7
 		pos		"60 705"
 		size	"190 35"
 		textalign cl

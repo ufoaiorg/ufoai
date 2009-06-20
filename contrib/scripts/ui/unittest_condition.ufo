@@ -226,7 +226,7 @@ window unittest_condition
 	}
 
 	spinner testNodeFoo {
-		current		"*cvar:test_nodefoo"
+		current		*cvar:test_nodefoo
 		min			0
 		max			16
 		invis		true
@@ -245,7 +245,7 @@ window unittest_condition
 
 	spinner testNodeFoo2 {
 		{
-			current		"*cvar:test_nodefoo"
+			current		*cvar:test_nodefoo
 			min			0
 			max			16
 			invis		true
@@ -282,11 +282,11 @@ window unittest_condition
 		cmd "echo node:root.testNodeFooString@string <node:root.testNodeFooString@string>" 
 		cmd "echo node:root.testNodeFooString2@string <node:root.testNodeFooString2@string>" 
 
-		if ( *node:root.testNodeFooString@string eq aaabbb ) { *testNode11@color "0 1 0 1" }
+		if ( *node:root.testNodeFooString@string eq "aaabbb" ) { *testNode11@color "0 1 0 1" }
 		else { *testNode11@color "1 0 0 1" }
-		if ( *node:root.testNodeFooString2@string ne aaabbbcc ) { *testNode12@color "0 1 0 1" }
+		if ( *node:root.testNodeFooString2@string ne "aaabbbcc" ) { *testNode12@color "0 1 0 1" }
 		else { *testNode12@color "1 0 0 1" }
-		if ( aaabbb eq *node:root.testNodeFooString@string ) { *testNode13@color "0 1 0 1" }
+		if ( "aaabbb" eq *node:root.testNodeFooString@string ) { *testNode13@color "0 1 0 1" }
 		else { *testNode13@color "1 0 0 1" }
 		/* @todo test string with space */
 	}
@@ -364,11 +364,11 @@ window unittest_condition
 		*cvar:test_string2 "aaaa"
 		*cvar:test_string3 "bbbbbbbb"
 		
-		if ( 0 eq 0 ) { *testString1@color "0 1 0 1" }
+		if ( "0" eq "0" ) { *testString1@color "0 1 0 1" }
 		else { *testString1@color "1 0 0 1" }
-		if ( 0 eq 1 ) { *testString2@color "1 0 0 1" }
+		if ( "0" eq "1" ) { *testString2@color "1 0 0 1" }
 		else { *testString2@color "0 1 0 1" }
-		if ( *cvar:test_string1 ne aaa ) { *testString3@color "0 1 0 1" }
+		if ( *cvar:test_string1 ne "aaa" ) { *testString3@color "0 1 0 1" }
 		else { *testString3@color "1 0 0 1" }
 		if ( *cvar:test_string1 eq *cvar:test_string2 ) { *testString4@color "0 1 0 1" }
 		else { *testString4@color "1 0 0 1" }

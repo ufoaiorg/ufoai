@@ -113,7 +113,7 @@ window irc
 
 	string irc_server_string
 	{
-		string		"*cvar:irc_server"
+		string		*cvar:irc_server
 		pos			"412 44"
 		size		"200 16"
 		textalign	uc
@@ -122,7 +122,7 @@ window irc
 
 	string irc_server_topic
 	{
-		string		"*cvar:irc_topic"
+		string		*cvar:irc_topic
 		pos			"84 80"
 		size		"512 16"
 		textalign	uc
@@ -131,7 +131,7 @@ window irc
 
 	string irc_server_channel
 	{
-		string		"*cvar:irc_channel"
+		string		*cvar:irc_channel
 		pos			"730 44"
 		size		"240 16"
 		textalign	uc
@@ -140,7 +140,7 @@ window irc
 
 	textentry slot_irc_send_buffer
 	{
-		string		"*cvar:irc_send_buffer"
+		string		*cvar:irc_send_buffer
 		image		ui/button_green_verysmall
 		color 		"0 .78 0 1"
 		selectcolor	"1 1 1 1"

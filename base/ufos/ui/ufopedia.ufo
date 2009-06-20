@@ -169,7 +169,7 @@ window ufopedia
 
 	string title
 	{
-		string		"*cvar:mn_uptitle"
+		string		*cvar:mn_uptitle
 		pos			"205 20"
 		size		"669 43"
 		textalign	cc
@@ -178,7 +178,7 @@ window ufopedia
 
 	pic image_top
 	{
-		image		"*cvar:mn_upimage_top"
+		image		*cvar:mn_upimage_top
 		pos			"750 85"
 		size		"240 380"
 		preventratio	true
@@ -186,7 +186,7 @@ window ufopedia
 
 	model mdl_top
 	{
-		model		"*cvar:mn_upmodel_top"
+		model		*cvar:mn_upmodel_top
 		angles		"0 0 120"
 		pos			"750 85"
 		size		"240 240"
@@ -196,7 +196,7 @@ window ufopedia
 
 	model mdl_bottom
 	{
-		model		"*cvar:mn_upmodel_bottom"
+		model		*cvar:mn_upmodel_bottom
 		angles		"0 0 120"
 		pos			"790 335"
 		size		"120 120"
@@ -276,7 +276,7 @@ window ufopedia
 	string weapon_name
 	{
 		visiblewhen "*cvar:mn_displayweapon > 0"
-		string		"*cvar:mn_researchedlinkname"
+		string		*cvar:mn_researchedlinkname
 		pos			"285 704"
 		size		"230 20"
 		textalign	uc
@@ -317,7 +317,7 @@ window ufopedia
 	string firemode_name
 	{
 		visiblewhen "*cvar:mn_displayfiremode == 1"
-		string		"*cvar:mn_firemodename"
+		string		*cvar:mn_firemodename
 		pos			"285 724"
 		size		"230 20"
 		textalign	cc

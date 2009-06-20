@@ -19,7 +19,7 @@ window aliencont
 	string base_name
 	{
 		tooltip	"_Name of this base"
-		string	"*cvar:mn_base_title"
+		string	*cvar:mn_base_title
 		pos	"60 30"
 		size "240 32"
 		textalign	cl
@@ -38,7 +38,7 @@ window aliencont
 	string txt_credits
 	{
 		tooltip		"_Organisation capital"
-		string		"*cvar:mn_credits"
+		string		*cvar:mn_credits
 		pos			"780 30"
 		size		"130 30"
 		font		f_big
@@ -272,44 +272,44 @@ window aliencont
 		zone autopsy_zone10	{ pos "272 511" size "40 40" onClick { cmd "aliencont_research 10;" } tooltip "_Start autopsy" }
 		zone autopsy_zone11	{ pos "592 511" size "40 40" onClick { cmd "aliencont_research 11;" } tooltip "_Start autopsy" }
 
-		string name0	{ string "*cvar:mn_ac_name0"		pos "40  35"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name1	{ string "*cvar:mn_ac_name1"		pos "360  35"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name2	{ string "*cvar:mn_ac_name2"		pos "40 130"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name3	{ string "*cvar:mn_ac_name3"		pos "360 130"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name4	{ string "*cvar:mn_ac_name4"		pos "40 225"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name5	{ string "*cvar:mn_ac_name5"  	 	pos "360 225"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name6	{ string "*cvar:mn_ac_name6"		pos "40 320"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name7	{ string "*cvar:mn_ac_name7"		pos "360 320"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name8	{ string "*cvar:mn_ac_name8"		pos "40 415"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name9	{ string "*cvar:mn_ac_name9"		pos "360 415"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name10	{ string "*cvar:mn_ac_name10"		pos "40 510"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name11	{ string "*cvar:mn_ac_name11"		pos "360 510"	color "1 1 1 1"	size "220 16"	ghost true }
+		string name0	{ string *cvar:mn_ac_name0		pos "40  35"	color "1 1 1 1"	size "220 16"	ghost true }
+		string name1	{ string *cvar:mn_ac_name1		pos "360  35"	color "1 1 1 1"	size "220 16"	ghost true }
+		string name2	{ string *cvar:mn_ac_name2		pos "40 130"	color "1 1 1 1"	size "220 16"	ghost true }
+		string name3	{ string *cvar:mn_ac_name3		pos "360 130"	color "1 1 1 1"	size "220 16"	ghost true }
+		string name4	{ string *cvar:mn_ac_name4		pos "40 225"	color "1 1 1 1"	size "220 16"	ghost true }
+		string name5	{ string *cvar:mn_ac_name5  	 	pos "360 225"	color "1 1 1 1"	size "220 16"	ghost true }
+		string name6	{ string *cvar:mn_ac_name6		pos "40 320"	color "1 1 1 1"	size "220 16"	ghost true }
+		string name7	{ string *cvar:mn_ac_name7		pos "360 320"	color "1 1 1 1"	size "220 16"	ghost true }
+		string name8	{ string *cvar:mn_ac_name8		pos "40 415"	color "1 1 1 1"	size "220 16"	ghost true }
+		string name9	{ string *cvar:mn_ac_name9		pos "360 415"	color "1 1 1 1"	size "220 16"	ghost true }
+		string name10	{ string *cvar:mn_ac_name10		pos "40 510"	color "1 1 1 1"	size "220 16"	ghost true }
+		string name11	{ string *cvar:mn_ac_name11		pos "360 510"	color "1 1 1 1"	size "220 16"	ghost true }
 
-		string status0	{ string "*cvar:mn_ac_statusstr0"		pos "40  60"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status1	{ string "*cvar:mn_ac_statusstr1"		pos "360  60"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status2	{ string "*cvar:mn_ac_statusstr2"		pos "40 155"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status3	{ string "*cvar:mn_ac_statusstr3"		pos "360 155"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status4	{ string "*cvar:mn_ac_statusstr4"		pos "40 250"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status5 	{ string "*cvar:mn_ac_statusstr5"   	pos "360 250"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status6 	{ string "*cvar:mn_ac_statusstr6"		pos "40 345"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status7	{ string "*cvar:mn_ac_statusstr7"		pos "360 345"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status8	{ string "*cvar:mn_ac_statusstr8"		pos "40 440"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status9	{ string "*cvar:mn_ac_statusstr9"		pos "360 440"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status10	{ string "*cvar:mn_ac_statusstr10"		pos "40 535"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status11	{ string "*cvar:mn_ac_statusstr11"		pos "360 535"	color "1 1 1 1"	size "220 16"	ghost true }
+		string status0	{ string *cvar:mn_ac_statusstr0		pos "40  60"	color "1 1 1 1"	size "220 16"	ghost true }
+		string status1	{ string *cvar:mn_ac_statusstr1		pos "360  60"	color "1 1 1 1"	size "220 16"	ghost true }
+		string status2	{ string *cvar:mn_ac_statusstr2		pos "40 155"	color "1 1 1 1"	size "220 16"	ghost true }
+		string status3	{ string *cvar:mn_ac_statusstr3		pos "360 155"	color "1 1 1 1"	size "220 16"	ghost true }
+		string status4	{ string *cvar:mn_ac_statusstr4		pos "40 250"	color "1 1 1 1"	size "220 16"	ghost true }
+		string status5 	{ string *cvar:mn_ac_statusstr5   	pos "360 250"	color "1 1 1 1"	size "220 16"	ghost true }
+		string status6 	{ string *cvar:mn_ac_statusstr6		pos "40 345"	color "1 1 1 1"	size "220 16"	ghost true }
+		string status7	{ string *cvar:mn_ac_statusstr7		pos "360 345"	color "1 1 1 1"	size "220 16"	ghost true }
+		string status8	{ string *cvar:mn_ac_statusstr8		pos "40 440"	color "1 1 1 1"	size "220 16"	ghost true }
+		string status9	{ string *cvar:mn_ac_statusstr9		pos "360 440"	color "1 1 1 1"	size "220 16"	ghost true }
+		string status10	{ string *cvar:mn_ac_statusstr10		pos "40 535"	color "1 1 1 1"	size "220 16"	ghost true }
+		string status11	{ string *cvar:mn_ac_statusstr11		pos "360 535"	color "1 1 1 1"	size "220 16"	ghost true }
 
-		bar tech_progress0	{ pos "47  90" 	current "*cvar:mn_ac_progress0"		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress1	{ pos "367  90" current "*cvar:mn_ac_progress1"		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress2	{ pos "47 185" 	current "*cvar:mn_ac_progress2"		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress3	{ pos "367 185" current "*cvar:mn_ac_progress3"		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress4	{ pos "47 280" 	current "*cvar:mn_ac_progress4"		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress5	{ pos "367 280" current "*cvar:mn_ac_progress5"		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress6	{ pos "47 375" 	current "*cvar:mn_ac_progress6"		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress7	{ pos "367 375" current "*cvar:mn_ac_progress7"		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress8	{ pos "367 375" current "*cvar:mn_ac_progress8"		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress9	{ pos "367 375" current "*cvar:mn_ac_progress9"		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress10	{ pos "367 375" current "*cvar:mn_ac_progress10"	size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress11	{ pos "367 375" current "*cvar:mn_ac_progress11"	size "263 6" color "0 .8 0 1" max "100" disabled true }
+		bar tech_progress0	{ pos "47  90" 	current *cvar:mn_ac_progress0		size "263 6" color "0 .8 0 1" max "100" disabled true }
+		bar tech_progress1	{ pos "367  90" current *cvar:mn_ac_progress1		size "263 6" color "0 .8 0 1" max "100" disabled true }
+		bar tech_progress2	{ pos "47 185" 	current *cvar:mn_ac_progress2		size "263 6" color "0 .8 0 1" max "100" disabled true }
+		bar tech_progress3	{ pos "367 185" current *cvar:mn_ac_progress3		size "263 6" color "0 .8 0 1" max "100" disabled true }
+		bar tech_progress4	{ pos "47 280" 	current *cvar:mn_ac_progress4		size "263 6" color "0 .8 0 1" max "100" disabled true }
+		bar tech_progress5	{ pos "367 280" current *cvar:mn_ac_progress5		size "263 6" color "0 .8 0 1" max "100" disabled true }
+		bar tech_progress6	{ pos "47 375" 	current *cvar:mn_ac_progress6		size "263 6" color "0 .8 0 1" max "100" disabled true }
+		bar tech_progress7	{ pos "367 375" current *cvar:mn_ac_progress7		size "263 6" color "0 .8 0 1" max "100" disabled true }
+		bar tech_progress8	{ pos "367 375" current *cvar:mn_ac_progress8		size "263 6" color "0 .8 0 1" max "100" disabled true }
+		bar tech_progress9	{ pos "367 375" current *cvar:mn_ac_progress9		size "263 6" color "0 .8 0 1" max "100" disabled true }
+		bar tech_progress10	{ pos "367 375" current *cvar:mn_ac_progress10	size "263 6" color "0 .8 0 1" max "100" disabled true }
+		bar tech_progress11	{ pos "367 375" current *cvar:mn_ac_progress11	size "263 6" color "0 .8 0 1" max "100" disabled true }
 	}
 
 	// ================================================================================
@@ -326,7 +326,7 @@ window aliencont
 
 		string race
 		{
-			string		"*cvar:mn_al_alientype"
+			string		*cvar:mn_al_alientype
 			pos			"20 424"
 			size		"240 20"
 			font		f_small
@@ -335,7 +335,7 @@ window aliencont
 
 		pic image
 		{
-			image			"*cvar:mn_al_alienimage"
+			image			*cvar:mn_al_alienimage
 			pos				"21 23"
 			size			"239 397"
 			preventratio	true
@@ -359,7 +359,7 @@ window aliencont
 
 		string txt_alc_alive_v
 		{
-			string		"*cvar:mn_al_alive"
+			string		*cvar:mn_al_alive
 			pos			"165 445"
 			size		"50 20"
 			font		f_small
@@ -380,7 +380,7 @@ window aliencont
 
 		string txt_alc_dead_v
 		{
-			string		"*cvar:mn_al_dead"
+			string		*cvar:mn_al_dead
 			pos			"165 470"
 			size		"50 20"
 			font		f_small

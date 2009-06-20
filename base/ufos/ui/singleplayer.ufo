@@ -15,7 +15,7 @@ window singleplayer
 
 	string version
 	{
-		string		"*cvar:version"
+		string		*cvar:version
 		pos			"10 744"
 		size		"550 20"
 	}
@@ -78,7 +78,7 @@ window singleplayermission
 
 	string version
 	{
-		string		"*cvar:version"
+		string		*cvar:version
 		pos			"10 744"
 		size		"550 20"
 	}

@@ -92,7 +92,7 @@ window inventory
 
 	string actorname
 	{
-		string	"*cvar:mn_name"
+		string	*cvar:mn_name
 		pos		"34 24"
 	}
 
@@ -103,8 +103,8 @@ window inventory
 	model actor
 	{
 		{
-			model	"*cvar:mn_body"
-			skin	"*cvar:mn_skin"
+			model	*cvar:mn_body
+			skin	*cvar:mn_skin
 			anim	"stand_menu"
 			origin	"0 -25 0"
 			angles	"0 70 90"
@@ -115,8 +115,8 @@ window inventory
 
 		model head
 		{
-			model	"*cvar:mn_head"
-			skin	"*cvar:mn_skin"
+			model	*cvar:mn_head
+			skin	*cvar:mn_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
 		}

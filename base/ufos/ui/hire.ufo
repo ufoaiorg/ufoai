@@ -275,7 +275,7 @@ window employees
 	textentry name
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
-		string		"*cvar:mn_name"
+		string		*cvar:mn_name
 		pos			"465 315"
 		size		"400 32"
 		onChange	{ cmd "employee_changename;" }
@@ -303,7 +303,7 @@ window employees
 	pic	rank_img
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
-		image		"*cvar:mn_chrrank_img"
+		image		*cvar:mn_chrrank_img
 		pos			"473 387"
 	}
 
@@ -311,8 +311,8 @@ window employees
 	{
 		{
 			visiblewhen "*cvar:mn_show_employee >= 1"
-			model		"*cvar:mn_body"
-			skin		"*cvar:mn_skin"
+			model		*cvar:mn_body
+			skin		*cvar:mn_skin
 			anim		"stand2"
 			angles		"0 70 90"
 			scale		"6.7 6.7 6.7"
@@ -324,8 +324,8 @@ window employees
 		model head
 		{
 			visiblewhen "*cvar:mn_show_employee >= 1"
-			model		"*cvar:mn_head"
-			skin		"*cvar:mn_skin"
+			model		*cvar:mn_head
+			skin		*cvar:mn_skin
 			tag			"tag_head"
 			scale		"1.0 1.0 1.0"
 		}
@@ -334,7 +334,7 @@ window employees
 	string	rank_lbl
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
-		string		"*cvar:mn_chrrank"
+		string		*cvar:mn_chrrank
 		pos			"473 717"
 		size		"200 20"
 	}
@@ -348,100 +348,100 @@ window employees
 		}
 
 		string pwr_lbl { pos "5 3" size "180 20" string "_Strength:" }
-		string pwr_val { pos "190 3" size "130 20" string "*cvar:mn_tpwr" textalign ur }
+		string pwr_val { pos "190 3" size "130 20" string *cvar:mn_tpwr textalign ur }
 		pic pwr_brd { pos "30 18"  image ui/bar_border }
 		tbar pwr_bar
 		{
-			pos "33 18"  current "*cvar:mn_vpwr" texl "3 0" image ui/bar_attribute
+			pos "33 18"  current *cvar:mn_vpwr texl "3 0" image ui/bar_attribute
 			size "250 16"	max 100
 		}
 
 		string spd_lbl { pos "010 33" size "180 20" string "_Speed:" }
-		string spd_val { pos "190 33" size "130 20" string "*cvar:mn_tspd" textalign ur }
+		string spd_val { pos "190 33" size "130 20" string *cvar:mn_tspd textalign ur }
 		pic spd_bdr { pos "30 48" image ui/bar_border }
 		tbar spd_bar
 		{
-			pos "33 48" current "*cvar:mn_vspd" texl "3 0" image ui/bar_attribute
+			pos "33 48" current *cvar:mn_vspd texl "3 0" image ui/bar_attribute
 			size "250 16"	max 100
 		}
 
 		string acc_lbl { pos "5 63" size "180 20" string "_Accuracy:" }
-		string acc_val { pos "190 63" size "130 20" string "*cvar:mn_tacc" textalign ur }
+		string acc_val { pos "190 63" size "130 20" string *cvar:mn_tacc textalign ur }
 		pic acc_bdr { pos "30 78" image ui/bar_border }
 		tbar acc_bar
 		{
-			pos "33 78" current "*cvar:mn_vacc" texl "3 0" image ui/bar_attribute
+			pos "33 78" current *cvar:mn_vacc texl "3 0" image ui/bar_attribute
 			size "250 16"	max 100
 		}
 
 		string mnd_lbl { pos "5 93" size "180 20" string "_Mind:" }
-		string mnd_val { pos "190 93" size "130 20" string "*cvar:mn_tmnd" textalign ur }
+		string mnd_val { pos "190 93" size "130 20" string *cvar:mn_tmnd textalign ur }
 		pic mnd_bdr { pos "30 108" image ui/bar_border }
 		tbar mnd_bar
 		{
-			pos "33 108" current "*cvar:mn_vmnd" texl "3 0" image ui/bar_attribute
+			pos "33 108" current *cvar:mn_vmnd texl "3 0" image ui/bar_attribute
 			size "250 16"	max 100
 		}
 
 		string cls_lbl { pos "5 128" size "180 20" string "_Close Combat:" }
-		string cls_val { pos "190 128" size "130 20" string "*cvar:mn_tcls" textalign ur }
+		string cls_val { pos "190 128" size "130 20" string *cvar:mn_tcls textalign ur }
 		pic cls_bdr { pos "30 143" image ui/bar_border }
 		tbar cls_bar
 		{
-			pos "33 143" current "*cvar:mn_vcls" texl "3 0" image ui/bar_skill
+			pos "33 143" current *cvar:mn_vcls texl "3 0" image ui/bar_skill
 			size "250 16"	max 100
 		}
 
 		string hvy_lbl { pos "5 158" size "180 20" string "_Heavy Weapons:" }
-		string hvy_val { pos "190 158" size "130 20" string "*cvar:mn_thvy" textalign ur }
+		string hvy_val { pos "190 158" size "130 20" string *cvar:mn_thvy textalign ur }
 		pic hvy_bdr { pos "30 173" image ui/bar_border }
 		tbar hvy_bar
 		{
-			pos "33 173" current "*cvar:mn_vhvy" texl "3 0" image ui/bar_skill
+			pos "33 173" current *cvar:mn_vhvy texl "3 0" image ui/bar_skill
 			size "250 16"	max 100
 		}
 
 		string ass_lbl { pos "5 188" size "180 20" string "_Assault Weapons:" }
-		string ass_val { pos "190 188" size "130 20" string "*cvar:mn_tass" textalign ur }
+		string ass_val { pos "190 188" size "130 20" string *cvar:mn_tass textalign ur }
 		pic ass_bdr { pos "30 203" image ui/bar_border }
 		tbar ass_bar
 		{
-			pos "33 203" current "*cvar:mn_vass" texl "3 0" image ui/bar_skill
+			pos "33 203" current *cvar:mn_vass texl "3 0" image ui/bar_skill
 			size "250 16"	max 100
 		}
 
 		string snp_lbl { pos "5 218" size "180 20" string "_Sniper Rifles:" }
-		string snp_val { pos "190 218" size "130 20" string "*cvar:mn_tsnp" textalign ur }
+		string snp_val { pos "190 218" size "130 20" string *cvar:mn_tsnp textalign ur }
 		pic snp_bdr { pos "30 233" image ui/bar_border }
 		tbar snp_bar
 		{
-			pos "33 233" current "*cvar:mn_vsnp" texl "3 0" image ui/bar_skill
+			pos "33 233" current *cvar:mn_vsnp texl "3 0" image ui/bar_skill
 			size "250 16"	max 100
 		}
 
 		string exp_lbl { pos "5 248" size "180 20" string "_High-Explosives:" }
-		string exp_val { pos "190 248" size "130 20" string "*cvar:mn_texp" textalign ur }
+		string exp_val { pos "190 248" size "130 20" string *cvar:mn_texp textalign ur }
 		pic exp_bdr { pos "30 263" image ui/bar_border }
 		tbar exp_bar
 		{
-			pos "33 263" current "*cvar:mn_vexp" texl "3 0" image ui/bar_skill
+			pos "33 263" current *cvar:mn_vexp texl "3 0" image ui/bar_skill
 			size "250 16"	max 100
 		}
 
 		string hp_lbl { pos "5 283" size "180 20" string "_Health:" }
-		string hp_val { pos "190 283" size "130 20" string "*cvar:mn_thp" textalign ur }
+		string hp_val { pos "190 283" size "130 20" string *cvar:mn_thp textalign ur }
 		pic hp_bdr { pos "30 298"  image ui/bar_border }
 		tbar hp_bar
 		{
-			pos "33 298" current "*cvar:mn_vhp" max "*cvar:mn_vhpmax" texl "3 0" image ui/bar_health
+			pos "33 298" current *cvar:mn_vhp max *cvar:mn_vhpmax texl "3 0" image ui/bar_health
 			size "250 16"
 		}
 
 		string	missions_lbl { pos "5 318" size "180 20" string "_Missions Performed:" }
-		string	missions_val { pos "190 318" size "130 20" string "*cvar:mn_chrmis" textalign ur }
+		string	missions_val { pos "190 318" size "130 20" string *cvar:mn_chrmis textalign ur }
 
 		string	kills_lbl { pos "5 338" size "180 20" string "_Enemies Killed:" }
-		string	kills_val { pos "190 338" size "130 20" string "*cvar:mn_chrkillalien" textalign ur }
+		string	kills_val { pos "190 338" size "130 20" string *cvar:mn_chrkillalien textalign ur }
 	}
 
 	// ==================
@@ -462,7 +462,7 @@ window employees
 			textalign	uc
 		}
 		string number_people {
-			string	"*cvar:mn_hirepeople"
+			string	*cvar:mn_hirepeople
 			pos		"20 68"
 			size	"150 20"
 			textalign	uc
@@ -474,7 +474,7 @@ window employees
 			size	"42 42"
 		}
 		string number_soldier {
-			string	"*cvar:mn_hiresoldiers"
+			string	*cvar:mn_hiresoldiers
 			pos		"190 68"
 			size	"42 20"
 			textalign	ur
@@ -486,7 +486,7 @@ window employees
 			size	"42 42"
 		}
 		string number_pilot {
-			string	"*cvar:mn_hirepilots"
+			string	*cvar:mn_hirepilots
 			pos		"250 68"
 			size	"42 20"
 			textalign	ur
@@ -498,7 +498,7 @@ window employees
 			size	"42 42"
 		}
 		string number_worker {
-			string	"*cvar:mn_hireworkers"
+			string	*cvar:mn_hireworkers
 			pos		"310 68"
 			size	"42 20"
 			textalign	ur
@@ -510,7 +510,7 @@ window employees
 			size	"42 42"
 		}
 		string number_scientist {
-			string	"*cvar:mn_hirescientists"
+			string	*cvar:mn_hirescientists
 			pos		"370 68"
 			size	"42 20"
 			textalign	ur
@@ -528,7 +528,7 @@ window employees
 	}
 
 	tab empl_switch {
-		cvar		"*cvar:mn_hiretype"
+		cvar		*cvar:mn_hiretype
 		pos			"47 106"
 		size		"938 39"
 		onChange {
@@ -563,7 +563,7 @@ window employees
 
 	string base_name
 	{
-		string		"*cvar:mn_base_title"
+		string		*cvar:mn_base_title
 		tooltip		"_Name of this base"
 		pos			"60 30"
 		size		"240 32"
@@ -583,7 +583,7 @@ window employees
 	string txt_credits
 	{
 		tooltip		"_Organisation capital"
-		string		"*cvar:mn_credits"
+		string		*cvar:mn_credits
 		pos			"780 30"
 		size		"130 30"
 		font		f_big

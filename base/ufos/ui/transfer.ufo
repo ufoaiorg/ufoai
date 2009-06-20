@@ -14,7 +14,7 @@ window transfer
 
 	string name
 	{
-		string		"*cvar:mn_base_title"
+		string		*cvar:mn_base_title
 		tooltip		"_Name of this base"
 		pos			"60 30"
 		size		"240 32"
@@ -53,7 +53,7 @@ window transfer
 	string txt_credits
 	{
 		tooltip		"_Organisation capital"
-		string		"*cvar:mn_credits"
+		string		*cvar:mn_credits
 		pos			"780 30"
 		size		"130 30"
 		font		f_big
@@ -73,7 +73,7 @@ window transfer
 	tab trans_navigation {
 		pos		"47 106"
 		size	"938 39"
-		cvar	"*cvar:mn_itemtype"
+		cvar	*cvar:mn_itemtype
 		onChange	{
 			cmd "trans_type <cvar:mn_itemtype>;"
 		}
@@ -210,7 +210,7 @@ window transfer
 
 	string s_current_base_var
 	{
-		string		"*cvar:mn_trans_base_name"
+		string		*cvar:mn_trans_base_name
 		pos			"681 200"
 		size		"170 20"
 		textalign	uc

@@ -40,7 +40,7 @@ window material_editor {
 	}
 
 	string imagename {
-		string		"*cvar:me_imagename"
+		string		*cvar:me_imagename
 		pos			"270 55"
 		font		"f_verysmall"
 		size		"200 15"
@@ -81,7 +81,7 @@ window material_editor {
 		}
 		bar hardness_bar
 		{
-			current		"*cvar:me_hardness"
+			current		*cvar:me_hardness
 			pos			"94 10"
 			size		"100 5"
 			color		"0 .8 0 1"
@@ -104,7 +104,7 @@ window material_editor {
 		}
 		bar bump_bar
 		{
-			current		"*cvar:me_bump"
+			current		*cvar:me_bump
 			pos			"94 30"
 			size		"100 5"
 			color		"0 .8 0 1"
@@ -127,7 +127,7 @@ window material_editor {
 		}
 		bar specular_bar
 		{
-			current		"*cvar:me_specular"
+			current		*cvar:me_specular
 			pos			"94 50"
 			size		"100 5"
 			color		"0 .8 0 1"
@@ -150,7 +150,7 @@ window material_editor {
 		}
 		bar parallax_bar
 		{
-			current		"*cvar:me_parallax"
+			current		*cvar:me_parallax
 			pos			"94 70"
 			size		"100 5"
 			color		"0 .8 0 1"
@@ -283,7 +283,7 @@ window material_editor {
 		
 			textentry scale_s
 			{
-				string		"*cvar:me_scale_s"
+				string		*cvar:me_scale_s
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -307,7 +307,7 @@ window material_editor {
 	
 			textentry scale_t
 			{
-				string		"*cvar:me_scale_t"
+				string		*cvar:me_scale_t
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -338,7 +338,7 @@ window material_editor {
 		
 			textentry scroll_ds
 			{
-				string		"*cvar:me_scroll_ds"
+				string		*cvar:me_scroll_ds
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -362,7 +362,7 @@ window material_editor {
 	
 			textentry scroll_dt
 			{
-				string		"*cvar:me_scroll_dt"
+				string		*cvar:me_scroll_dt
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -386,7 +386,7 @@ window material_editor {
 		
 			textentry scroll_s
 			{
-				string		"*cvar:me_scroll_s"
+				string		*cvar:me_scroll_s
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -410,7 +410,7 @@ window material_editor {
 	
 			textentry scroll_t
 			{
-				string		"*cvar:me_scroll_t"
+				string		*cvar:me_scroll_t
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -441,7 +441,7 @@ window material_editor {
 		
 			textentry pulse_hz
 			{
-				string		"*cvar:me_pulse_hz"
+				string		*cvar:me_pulse_hz
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -465,7 +465,7 @@ window material_editor {
 	
 			textentry pulse_dhz
 			{
-				string		"*cvar:me_pulse_dhz"
+				string		*cvar:me_pulse_dhz
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -496,7 +496,7 @@ window material_editor {
 		
 			textentry stretch_hz
 			{
-				string		"*cvar:me_stretch_hz"
+				string		*cvar:me_stretch_hz
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -520,7 +520,7 @@ window material_editor {
 	
 			textentry stretch_dhz
 			{
-				string		"*cvar:me_stretch_dhz"
+				string		*cvar:me_stretch_dhz
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -544,7 +544,7 @@ window material_editor {
 		
 			textentry stretch_amp
 			{
-				string		"*cvar:me_stretch_amp"
+				string		*cvar:me_stretch_amp
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -568,7 +568,7 @@ window material_editor {
 	
 			textentry stretch_damp
 			{
-				string		"*cvar:me_stretch_damp"
+				string		*cvar:me_stretch_damp
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -599,7 +599,7 @@ window material_editor {
 		
 			textentry rotate_hz
 			{
-				string		"*cvar:me_rotate_hz"
+				string		*cvar:me_rotate_hz
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -623,7 +623,7 @@ window material_editor {
 	
 			textentry rotate_deg
 			{
-				string		"*cvar:me_rotate_deg"
+				string		*cvar:me_rotate_deg
 				image		ui/button_green_verysmall
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
@@ -642,7 +642,7 @@ window material_editor {
 		{
 			pos		"0 0"
 			size	"280 40"
-			cvar	"*cvar:me_stagetype"
+			cvar	*cvar:me_stagetype
 			font	"f_verysmall"
 
 			onChange {

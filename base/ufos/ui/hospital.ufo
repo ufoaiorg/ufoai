@@ -19,7 +19,7 @@ window hospital
 	string base_name
 	{
 		tooltip	"_Name of this base"
-		string	"*cvar:mn_base_title"
+		string	*cvar:mn_base_title
 		pos	"60 30"
 		size "240 32"
 		textalign	cl
@@ -38,7 +38,7 @@ window hospital
 	string txt_credits
 	{
 		tooltip		"_Organisation capital"
-		string		"*cvar:mn_credits"
+		string		*cvar:mn_credits
 		pos			"780 30"
 		size		"130 30"
 		font		f_big
@@ -236,71 +236,71 @@ window hospital
 	pic hos_icon19	{ visiblewhen "exists *cvar:mn_hos_item19"	image icons/health_unused 	pos "592 676" }
 	pic hos_icon20	{ visiblewhen "exists *cvar:mn_hos_item20"	image icons/health_unused 	pos "912 676" }
 
-	string hos_item0	{ string "*cvar:mn_hos_item0"		pos "40 105"	color "1 1 1 1"	size "220 16" }
-	string hos_item1	{ string "*cvar:mn_hos_item1"		pos "360 105"	color "1 1 1 1"	size "220 16" }
-	string hos_item2	{ string "*cvar:mn_hos_item2"		pos "680 105"	color "1 1 1 1"	size "220 16" }
-	string hos_item3	{ string "*cvar:mn_hos_item3"		pos "40 200"	color "1 1 1 1"	size "220 16" }
-	string hos_item4	{ string "*cvar:mn_hos_item4"		pos "360 200"	color "1 1 1 1"	size "220 16" }
-	string hos_item5	{ string "*cvar:mn_hos_item5"		pos "680 200"	color "1 1 1 1"	size "220 16" }
-	string hos_item6	{ string "*cvar:mn_hos_item6"		pos "40 295"	color "1 1 1 1"	size "220 16" }
-	string hos_item7 	{ string "*cvar:mn_hos_item7"   	pos "360 295"	color "1 1 1 1"	size "220 16" }
-	string hos_item8	{ string "*cvar:mn_hos_item8"		pos "680 295"	color "1 1 1 1"	size "220 16" }
-	string hos_item9 	{ string "*cvar:mn_hos_item9"		pos "40 390"	color "1 1 1 1"	size "220 16" }
-	string hos_item10 	{ string "*cvar:mn_hos_item10"		pos "360 390"	color "1 1 1 1"	size "220 16" }
-	string hos_item11	{ string "*cvar:mn_hos_item11"		pos "680 390"	color "1 1 1 1"	size "220 16" }
-	string hos_item12 	{ string "*cvar:mn_hos_item12"		pos "40 485"	color "1 1 1 1"	size "220 16" }
-	string hos_item13 	{ string "*cvar:mn_hos_item13"		pos "360 485"	color "1 1 1 1"	size "220 16" }
-	string hos_item14	{ string "*cvar:mn_hos_item14"		pos "680 485"	color "1 1 1 1"	size "220 16" }
-	string hos_item15	{ string "*cvar:mn_hos_item15"		pos "40 580"	color "1 1 1 1"	size "220 16" }
-	string hos_item16	{ string "*cvar:mn_hos_item16"		pos "360 580"	color "1 1 1 1"	size "220 16" }
-	string hos_item17	{ string "*cvar:mn_hos_item17"		pos "680 580"	color "1 1 1 1"	size "220 16" }
-	string hos_item18	{ string "*cvar:mn_hos_item18"		pos "40 675"	color "1 1 1 1"	size "220 16" }
-	string hos_item19	{ string "*cvar:mn_hos_item19"		pos "360 675"	color "1 1 1 1"	size "220 16" }
-	string hos_item20	{ string "*cvar:mn_hos_item20"		pos "680 675"	color "1 1 1 1"	size "220 16" }
+	string hos_item0	{ string *cvar:mn_hos_item0		pos "40 105"	color "1 1 1 1"	size "220 16" }
+	string hos_item1	{ string *cvar:mn_hos_item1		pos "360 105"	color "1 1 1 1"	size "220 16" }
+	string hos_item2	{ string *cvar:mn_hos_item2		pos "680 105"	color "1 1 1 1"	size "220 16" }
+	string hos_item3	{ string *cvar:mn_hos_item3		pos "40 200"	color "1 1 1 1"	size "220 16" }
+	string hos_item4	{ string *cvar:mn_hos_item4		pos "360 200"	color "1 1 1 1"	size "220 16" }
+	string hos_item5	{ string *cvar:mn_hos_item5		pos "680 200"	color "1 1 1 1"	size "220 16" }
+	string hos_item6	{ string *cvar:mn_hos_item6		pos "40 295"	color "1 1 1 1"	size "220 16" }
+	string hos_item7 	{ string *cvar:mn_hos_item7   	pos "360 295"	color "1 1 1 1"	size "220 16" }
+	string hos_item8	{ string *cvar:mn_hos_item8		pos "680 295"	color "1 1 1 1"	size "220 16" }
+	string hos_item9 	{ string *cvar:mn_hos_item9		pos "40 390"	color "1 1 1 1"	size "220 16" }
+	string hos_item10 	{ string *cvar:mn_hos_item10		pos "360 390"	color "1 1 1 1"	size "220 16" }
+	string hos_item11	{ string *cvar:mn_hos_item11		pos "680 390"	color "1 1 1 1"	size "220 16" }
+	string hos_item12 	{ string *cvar:mn_hos_item12		pos "40 485"	color "1 1 1 1"	size "220 16" }
+	string hos_item13 	{ string *cvar:mn_hos_item13		pos "360 485"	color "1 1 1 1"	size "220 16" }
+	string hos_item14	{ string *cvar:mn_hos_item14		pos "680 485"	color "1 1 1 1"	size "220 16" }
+	string hos_item15	{ string *cvar:mn_hos_item15		pos "40 580"	color "1 1 1 1"	size "220 16" }
+	string hos_item16	{ string *cvar:mn_hos_item16		pos "360 580"	color "1 1 1 1"	size "220 16" }
+	string hos_item17	{ string *cvar:mn_hos_item17		pos "680 580"	color "1 1 1 1"	size "220 16" }
+	string hos_item18	{ string *cvar:mn_hos_item18		pos "40 675"	color "1 1 1 1"	size "220 16" }
+	string hos_item19	{ string *cvar:mn_hos_item19		pos "360 675"	color "1 1 1 1"	size "220 16" }
+	string hos_item20	{ string *cvar:mn_hos_item20		pos "680 675"	color "1 1 1 1"	size "220 16" }
 
-	string hos_rank0	{ string "*cvar:mn_hos_rank0"		pos "40 130"	color "1 1 1 1"	size "220 16" }
-	string hos_rank1	{ string "*cvar:mn_hos_rank1"		pos "360 130"	color "1 1 1 1"	size "220 16" }
-	string hos_rank2	{ string "*cvar:mn_hos_rank2"		pos "680 130"	color "1 1 1 1"	size "220 16" }
-	string hos_rank3	{ string "*cvar:mn_hos_rank3"		pos "40 225"	color "1 1 1 1"	size "220 16" }
-	string hos_rank4	{ string "*cvar:mn_hos_rank4"		pos "360 225"	color "1 1 1 1"	size "220 16" }
-	string hos_rank5	{ string "*cvar:mn_hos_rank5"		pos "680 225"	color "1 1 1 1"	size "220 16" }
-	string hos_rank6	{ string "*cvar:mn_hos_rank6"		pos "40 320"	color "1 1 1 1"	size "220 16" }
-	string hos_rank7 	{ string "*cvar:mn_hos_rank7"   	pos "360 320"	color "1 1 1 1"	size "220 16" }
-	string hos_rank8	{ string "*cvar:mn_hos_rank8"		pos "680 320"	color "1 1 1 1"	size "220 16" }
-	string hos_rank9 	{ string "*cvar:mn_hos_rank9"		pos "40 415"	color "1 1 1 1"	size "220 16" }
-	string hos_rank10 	{ string "*cvar:mn_hos_rank10"		pos "360 415"	color "1 1 1 1"	size "220 16" }
-	string hos_rank11	{ string "*cvar:mn_hos_rank11"		pos "680 415"	color "1 1 1 1"	size "220 16" }
-	string hos_rank12 	{ string "*cvar:mn_hos_rank12"		pos "40 510"	color "1 1 1 1"	size "220 16" }
-	string hos_rank13 	{ string "*cvar:mn_hos_rank13"		pos "360 510"	color "1 1 1 1"	size "220 16" }
-	string hos_rank14	{ string "*cvar:mn_hos_rank14"		pos "680 510"	color "1 1 1 1"	size "220 16" }
-	string hos_rank15	{ string "*cvar:mn_hos_rank15"		pos "40 605"	color "1 1 1 1"	size "220 16" }
-	string hos_rank16	{ string "*cvar:mn_hos_rank16"		pos "360 605"	color "1 1 1 1"	size "220 16" }
-	string hos_rank17	{ string "*cvar:mn_hos_rank17"		pos "680 605"	color "1 1 1 1"	size "220 16" }
-	string hos_rank18	{ string "*cvar:mn_hos_rank18"		pos "40 700"	color "1 1 1 1"	size "220 16" }
-	string hos_rank19	{ string "*cvar:mn_hos_rank19"		pos "360 700"	color "1 1 1 1"	size "220 16" }
-	string hos_rank20	{ string "*cvar:mn_hos_rank20"		pos "680 700"	color "1 1 1 1"	size "220 16" }
+	string hos_rank0	{ string *cvar:mn_hos_rank0		pos "40 130"	color "1 1 1 1"	size "220 16" }
+	string hos_rank1	{ string *cvar:mn_hos_rank1		pos "360 130"	color "1 1 1 1"	size "220 16" }
+	string hos_rank2	{ string *cvar:mn_hos_rank2		pos "680 130"	color "1 1 1 1"	size "220 16" }
+	string hos_rank3	{ string *cvar:mn_hos_rank3		pos "40 225"	color "1 1 1 1"	size "220 16" }
+	string hos_rank4	{ string *cvar:mn_hos_rank4		pos "360 225"	color "1 1 1 1"	size "220 16" }
+	string hos_rank5	{ string *cvar:mn_hos_rank5		pos "680 225"	color "1 1 1 1"	size "220 16" }
+	string hos_rank6	{ string *cvar:mn_hos_rank6		pos "40 320"	color "1 1 1 1"	size "220 16" }
+	string hos_rank7 	{ string *cvar:mn_hos_rank7   	pos "360 320"	color "1 1 1 1"	size "220 16" }
+	string hos_rank8	{ string *cvar:mn_hos_rank8		pos "680 320"	color "1 1 1 1"	size "220 16" }
+	string hos_rank9 	{ string *cvar:mn_hos_rank9		pos "40 415"	color "1 1 1 1"	size "220 16" }
+	string hos_rank10 	{ string *cvar:mn_hos_rank10		pos "360 415"	color "1 1 1 1"	size "220 16" }
+	string hos_rank11	{ string *cvar:mn_hos_rank11		pos "680 415"	color "1 1 1 1"	size "220 16" }
+	string hos_rank12 	{ string *cvar:mn_hos_rank12		pos "40 510"	color "1 1 1 1"	size "220 16" }
+	string hos_rank13 	{ string *cvar:mn_hos_rank13		pos "360 510"	color "1 1 1 1"	size "220 16" }
+	string hos_rank14	{ string *cvar:mn_hos_rank14		pos "680 510"	color "1 1 1 1"	size "220 16" }
+	string hos_rank15	{ string *cvar:mn_hos_rank15		pos "40 605"	color "1 1 1 1"	size "220 16" }
+	string hos_rank16	{ string *cvar:mn_hos_rank16		pos "360 605"	color "1 1 1 1"	size "220 16" }
+	string hos_rank17	{ string *cvar:mn_hos_rank17		pos "680 605"	color "1 1 1 1"	size "220 16" }
+	string hos_rank18	{ string *cvar:mn_hos_rank18		pos "40 700"	color "1 1 1 1"	size "220 16" }
+	string hos_rank19	{ string *cvar:mn_hos_rank19		pos "360 700"	color "1 1 1 1"	size "220 16" }
+	string hos_rank20	{ string *cvar:mn_hos_rank20		pos "680 700"	color "1 1 1 1"	size "220 16" }
 
-	bar hos_health0     { pos "47 160" 	current "*cvar:mn_hos_hp0" 	size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax0" }
-	bar hos_health1     { pos "367 160" current "*cvar:mn_hos_hp1" 	size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax1" }
-	bar hos_health2     { pos "687 160" current "*cvar:mn_hos_hp2" 	size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax2" }
-	bar hos_health3     { pos "47 255" 	current "*cvar:mn_hos_hp3" 	size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax3" }
-	bar hos_health4     { pos "367 255" current "*cvar:mn_hos_hp4" 	size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax4" }
-	bar hos_health5     { pos "687 255" current "*cvar:mn_hos_hp5" 	size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax5" }
-	bar hos_health6     { pos "47 350" 	current "*cvar:mn_hos_hp6" 	size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax6" }
-	bar hos_health7     { pos "367 350" current "*cvar:mn_hos_hp7" 	size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax7" }
-	bar hos_health8     { pos "687 350" current "*cvar:mn_hos_hp8" 	size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax8" }
-	bar hos_health9     { pos "47 445" 	current "*cvar:mn_hos_hp9" 	size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax9" }
-	bar hos_health10    { pos "367 445" current "*cvar:mn_hos_hp10" size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax10" }
-	bar hos_health11    { pos "687 445" current "*cvar:mn_hos_hp11" size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax11" }
-	bar hos_health12    { pos "47 540" 	current "*cvar:mn_hos_hp12" size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax12" }
-	bar hos_health13    { pos "367 540" current "*cvar:mn_hos_hp13" size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax13" }
-	bar hos_health14    { pos "687 540" current "*cvar:mn_hos_hp14" size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax14" }
-	bar hos_health15    { pos "47 635" 	current "*cvar:mn_hos_hp15" size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax15" }
-	bar hos_health16    { pos "367 635" current "*cvar:mn_hos_hp16" size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax16" }
-	bar hos_health17	{ pos "687 635" current "*cvar:mn_hos_hp17" size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax17" }
-	bar hos_health18    { pos "47 730" 	current "*cvar:mn_hos_hp18" size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax18" }
-	bar hos_health19    { pos "367 730" current "*cvar:mn_hos_hp19" size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax19" }
-	bar hos_health20	{ pos "687 730" current "*cvar:mn_hos_hp20" size "263 6" color "0 .8 0 1" max "*cvar:mn_hos_hpmax20" }
+	bar hos_health0     { pos "47 160" 	current *cvar:mn_hos_hp0 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax0 }
+	bar hos_health1     { pos "367 160" current *cvar:mn_hos_hp1 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax1 }
+	bar hos_health2     { pos "687 160" current *cvar:mn_hos_hp2 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax2 }
+	bar hos_health3     { pos "47 255" 	current *cvar:mn_hos_hp3 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax3 }
+	bar hos_health4     { pos "367 255" current *cvar:mn_hos_hp4 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax4 }
+	bar hos_health5     { pos "687 255" current *cvar:mn_hos_hp5 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax5 }
+	bar hos_health6     { pos "47 350" 	current *cvar:mn_hos_hp6 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax6 }
+	bar hos_health7     { pos "367 350" current *cvar:mn_hos_hp7 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax7 }
+	bar hos_health8     { pos "687 350" current *cvar:mn_hos_hp8 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax8 }
+	bar hos_health9     { pos "47 445" 	current *cvar:mn_hos_hp9 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax9 }
+	bar hos_health10    { pos "367 445" current *cvar:mn_hos_hp10 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax10 }
+	bar hos_health11    { pos "687 445" current *cvar:mn_hos_hp11 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax11 }
+	bar hos_health12    { pos "47 540" 	current *cvar:mn_hos_hp12 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax12 }
+	bar hos_health13    { pos "367 540" current *cvar:mn_hos_hp13 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax13 }
+	bar hos_health14    { pos "687 540" current *cvar:mn_hos_hp14 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax14 }
+	bar hos_health15    { pos "47 635" 	current *cvar:mn_hos_hp15 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax15 }
+	bar hos_health16    { pos "367 635" current *cvar:mn_hos_hp16 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax16 }
+	bar hos_health17	{ pos "687 635" current *cvar:mn_hos_hp17 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax17 }
+	bar hos_health18    { pos "47 730" 	current *cvar:mn_hos_hp18 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax18 }
+	bar hos_health19    { pos "367 730" current *cvar:mn_hos_hp19 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax19 }
+	bar hos_health20	{ pos "687 730" current *cvar:mn_hos_hp20 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax20 }
 
 	zone click_hos_button0 {
 		pos "25 95"
@@ -486,7 +486,7 @@ window hospital_employee
 	string base_name
 	{
 		tooltip	"_Name of this base"
-		string	"*cvar:mn_base_title"
+		string	*cvar:mn_base_title
 		pos	"60 30"
 		size "240 32"
 		textalign	cl
@@ -505,7 +505,7 @@ window hospital_employee
 	string txt_credits
 	{
 		tooltip		"_Organisation capital"
-		string		"*cvar:mn_credits"
+		string		*cvar:mn_credits
 		pos			"780 30"
 		size		"130 30"
 		font		f_big
@@ -534,7 +534,7 @@ window hospital_employee
 
 	string txt_name
 	{
-		string	"*cvar:mn_name"
+		string	*cvar:mn_name
 		pos		"475 118"
 		size	"415 20"
 	}
@@ -542,8 +542,8 @@ window hospital_employee
 	model body
 	{
 		{
-			model	"*cvar:mn_body"
-			skin	"*cvar:mn_skin"
+			model	*cvar:mn_body
+			skin	*cvar:mn_skin
 			anim	"stand2"
 			angles	"0 70 90"
 			scale	"6.7 6.7 6.7"
@@ -554,65 +554,65 @@ window hospital_employee
 		
 		model head
 		{
-			model	"*cvar:mn_head"
-			skin	"*cvar:mn_skin"
+			model	*cvar:mn_head
+			skin	*cvar:mn_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
 		}
 	}
 
-	pic	rank_img { pos "475 470" image "*cvar:mn_chrrank_img" }
-	string	rank_lbl { pos "475 175" size "200 20" string "*cvar:mn_chrrank" longlines prettychop }
+	pic	rank_img { pos "475 470" image *cvar:mn_chrrank_img }
+	string	rank_lbl { pos "475 175" size "200 20" string *cvar:mn_chrrank longlines prettychop }
 
 	string pwr_lbl { pos "690 182" size "180 20" string "_Strength:" longlines prettychop }
-	string pwr_val { pos "860 182" size "130 20" string "*cvar:mn_tpwr" textalign ur longlines prettychop }
+	string pwr_val { pos "860 182" size "130 20" string *cvar:mn_tpwr textalign ur longlines prettychop }
 	pic pwr_bdr    { pos "707 198"  image ui/bar_border }
-	tbar pwr_bar   { pos "710 198"  max 100 current "*cvar:mn_vpwr" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	tbar pwr_bar   { pos "710 198"  max 100 current *cvar:mn_vpwr texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string spd_lbl { pos "690 212" size "180 20" string "_Speed:" longlines prettychop }
-	string spd_val { pos "860 212" size "130 20" string "*cvar:mn_tspd" textalign ur longlines prettychop }
+	string spd_val { pos "860 212" size "130 20" string *cvar:mn_tspd textalign ur longlines prettychop }
 	pic spd_bdr    { pos "707 228" image ui/bar_border }
-	tbar spd_bar   { pos "710 228" current "*cvar:mn_vspd" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	tbar spd_bar   { pos "710 228" current *cvar:mn_vspd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string acc_lbl { pos "690 242" size "180 20" string "_Accuracy:" longlines prettychop }
-	string acc_val { pos "860 242" size "130 20" string "*cvar:mn_tacc" textalign ur longlines prettychop }
+	string acc_val { pos "860 242" size "130 20" string *cvar:mn_tacc textalign ur longlines prettychop }
 	pic acc_brd    { pos "707 258" image ui/bar_border }
-	tbar acc_bar   { pos "710 258" current "*cvar:mn_vacc" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	tbar acc_bar   { pos "710 258" current *cvar:mn_vacc texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string mnd_lbl { pos "690 272" size "180 20" string "_Mind:" longlines prettychop }
-	string mnd_val { pos "860 272" size "130 20" string "*cvar:mn_tmnd" textalign ur longlines prettychop }
+	string mnd_val { pos "860 272" size "130 20" string *cvar:mn_tmnd textalign ur longlines prettychop }
 	pic mnd_brd    { pos "707 288" image ui/bar_border }
-	tbar mnd_bar   { pos "710 288" current "*cvar:mn_vmnd" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	tbar mnd_bar   { pos "710 288" current *cvar:mn_vmnd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string cls_lbl { pos "690 312" size "180 20" string "_Close Combat:" longlines prettychop }
-	string cls_val { pos "860 312" size "130 20" string "*cvar:mn_tcls" textalign ur longlines prettychop }
+	string cls_val { pos "860 312" size "130 20" string *cvar:mn_tcls textalign ur longlines prettychop }
 	pic cls_brd    { pos "707 328" image ui/bar_border }
-	tbar cls_bar   { pos "710 328" current "*cvar:mn_vcls" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar cls_bar   { pos "710 328" current *cvar:mn_vcls texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string hvy_lbl { pos "690 342" size "180 20" string "_Heavy Weapons:" longlines prettychop }
-	string hvy_val { pos "860 342" size "130 20" string "*cvar:mn_thvy" textalign ur longlines prettychop }
+	string hvy_val { pos "860 342" size "130 20" string *cvar:mn_thvy textalign ur longlines prettychop }
 	pic hvy_brd    { pos "707 358" image ui/bar_border }
-	tbar hvy_bar   { pos "710 358" current "*cvar:mn_vhvy" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar hvy_bar   { pos "710 358" current *cvar:mn_vhvy texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string ass_lbl { pos "690 372" size "180 20" string "_Assault Weapons:" longlines prettychop }
-	string ass_val { pos "860 372" size "130 20" string "*cvar:mn_tass" textalign ur longlines prettychop }
+	string ass_val { pos "860 372" size "130 20" string *cvar:mn_tass textalign ur longlines prettychop }
 	pic ass_brd    { pos "707 388" image ui/bar_border }
-	tbar ass_bar   { pos "710 388" current "*cvar:mn_vass" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar ass_bar   { pos "710 388" current *cvar:mn_vass texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string snp_lbl { pos "690 402" size "180 20" string "_Sniper Rifles:" longlines prettychop }
-	string snp_val { pos "860 402" size "130 20" string "*cvar:mn_tsnp" textalign ur longlines prettychop }
+	string snp_val { pos "860 402" size "130 20" string *cvar:mn_tsnp textalign ur longlines prettychop }
 	pic snp_brd    { pos "707 418" image ui/bar_border }
-	tbar snp_bar   { pos "710 418" current "*cvar:mn_vsnp" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar snp_bar   { pos "710 418" current *cvar:mn_vsnp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string exp_lbl { pos "690 432" size "180 20" string "_High-Explosives:" longlines prettychop }
-	string exp_val { pos "860 432" size "130 20" string "*cvar:mn_texp" textalign ur longlines prettychop }
+	string exp_val { pos "860 432" size "130 20" string *cvar:mn_texp textalign ur longlines prettychop }
 	pic exp_brd    { pos "707 448" image ui/bar_border }
-	tbar exp_bar   { pos "710 448" current "*cvar:mn_vexp" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar exp_bar   { pos "710 448" current *cvar:mn_vexp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string health     { pos "690 476" size "180 30" string "_Health:" font f_normal longlines prettychop }
-	string health_val { pos "860 476" size "130 30" string "*cvar:mn_hp" textalign ur font f_normal longlines prettychop }
+	string health_val { pos "860 476" size "130 30" string *cvar:mn_hp textalign ur font f_normal longlines prettychop }
 	pic health_brd    { pos "707 498" image ui/bar_border }
-	tbar health_bar   { pos "710 498" current "*cvar:mn_hp" max "*cvar:mn_hpmax" texl "3 0" image ui/bar_health size "250 16" }
+	tbar health_bar   { pos "710 498" current *cvar:mn_hp max *cvar:mn_hpmax texl "3 0" image ui/bar_health size "250 16" }
 
 	// ==================
 	// action buttons

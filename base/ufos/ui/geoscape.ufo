@@ -115,7 +115,7 @@ window geoscape
 
 		string daytime
 		{
-			string		"*cvar:mn_mapdaytime"
+			string		*cvar:mn_mapdaytime
 			pos			"31 304"
 			size		"195 20"
 			textalign	uc
@@ -175,7 +175,7 @@ window geoscape
 
 		string txt_credits
 		{
-			string		"*cvar:mn_credits"
+			string		*cvar:mn_credits
 			tooltip		"_Organisation capital"
 			pos			"112 54"
 			size		"100 25"
@@ -192,7 +192,7 @@ window geoscape
 			radiobutton bt_timestop0
 			{
 				tooltip		"_Pause"
-				cvar		"*cvar:mn_timelapse_id"	value "0"
+				cvar		*cvar:mn_timelapse_id	value "0"
 				icon		speed_stop
 				pos			"48 10"
 				size		"20 20"
@@ -204,7 +204,7 @@ window geoscape
 			radiobutton bt_timeplay1
 			{
 				tooltip		"_Time lapse: 5 seconds"
-				cvar		"*cvar:mn_timelapse_id"	value "1"
+				cvar		*cvar:mn_timelapse_id	value "1"
 				icon		speed_dot
 				pos			"68 10"
 				size		"20 20"
@@ -216,7 +216,7 @@ window geoscape
 			radiobutton bt_timeplay2
 			{
 				tooltip		"_Time lapse: 5 minutes"
-				cvar		"*cvar:mn_timelapse_id"	value "2"
+				cvar		*cvar:mn_timelapse_id	value "2"
 				icon		speed_play1
 				pos			"88 10"
 				size		"20 20"
@@ -229,7 +229,7 @@ window geoscape
 			radiobutton bt_timeplay3
 			{
 				tooltip		"_Time lapse: 20 minutes"
-				cvar		"*cvar:mn_timelapse_id"	value "3"
+				cvar		*cvar:mn_timelapse_id	value "3"
 				icon		speed_dot
 				pos			"108 10"
 				size		"20 20"
@@ -241,7 +241,7 @@ window geoscape
 			radiobutton bt_timeplay4
 			{
 				tooltip		"_Time lapse: 1 hour"
-				cvar		"*cvar:mn_timelapse_id"	value "4"
+				cvar		*cvar:mn_timelapse_id	value "4"
 				icon		speed_play2
 				pos			"128 10"
 				size		"20 20"
@@ -253,7 +253,7 @@ window geoscape
 			radiobutton bt_timeplay5
 			{
 				tooltip		"_Time lapse: 12 hours"
-				cvar		"*cvar:mn_timelapse_id"	value "5"
+				cvar		*cvar:mn_timelapse_id	value "5"
 				icon		speed_dot
 				pos			"148 10"
 				size		"20 20"
@@ -266,7 +266,7 @@ window geoscape
 			radiobutton bt_timeplay6
 			{
 				tooltip		"_Time lapse: 1 day"
-				cvar		"*cvar:mn_timelapse_id"	value "6"
+				cvar		*cvar:mn_timelapse_id	value "6"
 				icon		speed_dot
 				pos			"168 10"
 				size		"20 20"
@@ -278,7 +278,7 @@ window geoscape
 			radiobutton bt_timeplay7
 			{
 				tooltip		"_Time lapse: 5 days"
-				cvar		"*cvar:mn_timelapse_id"	value "7"
+				cvar		*cvar:mn_timelapse_id	value "7"
 				icon		speed_play3
 				pos			"188 10"
 				size		"20 20"
@@ -289,7 +289,7 @@ window geoscape
 
 			string timelapse
 			{
-				string		"*cvar:mn_timelapse"
+				string		*cvar:mn_timelapse
 				pos			"31 32"
 				size		"195 20"
 				textalign	uc
@@ -653,8 +653,8 @@ window popup_button
 
 	button popup_button_1
 	{
-		string		"*cvar:mn_popup_button_text1"
-		tooltip		"*cvar:mn_popup_button_tooltip1"
+		string		*cvar:mn_popup_button_text1
+		tooltip		*cvar:mn_popup_button_tooltip1
 		image		ui/button_green_small
 		pos			"26 192"
 		size		"176 32"
@@ -665,8 +665,8 @@ window popup_button
 
 	button popup_button_2
 	{
-		string		"*cvar:mn_popup_button_text2"
-		tooltip		"*cvar:mn_popup_button_tooltip2"
+		string		*cvar:mn_popup_button_text2
+		tooltip		*cvar:mn_popup_button_tooltip2
 		image		ui/button_green_small
 		size		"176 32"
 		pos			"296 192"
@@ -677,8 +677,8 @@ window popup_button
 
 	button popup_button_3
 	{
-		string		"*cvar:mn_popup_button_text3"
-		tooltip		"*cvar:mn_popup_button_tooltip3"
+		string		*cvar:mn_popup_button_text3
+		tooltip		*cvar:mn_popup_button_tooltip3
 		image		ui/button_green_small
 		pos			"296 156"
 		size		"176 32"
@@ -999,7 +999,7 @@ window popup_newbase
 	}
 	textentry name
 	{
-		string		"*cvar:mn_base_title"
+		string		*cvar:mn_base_title
 		pos			"46 73"
 		size		"420 25"
 		font		f_big
@@ -1024,7 +1024,7 @@ window popup_newbase
 	}
 	string cost
 	{
-		string		"*cvar:mn_base_cost"
+		string		*cvar:mn_base_cost
 		pos			"26 113"
 		size		"200 25"
 		font		f_big
@@ -1050,7 +1050,7 @@ window popup_newbase
 	checkbox start_employees
 	{
 		tooltip		"_Employees already hired at campaign start"
-		current		"*cvar:cp_start_employees"
+		current		*cvar:cp_start_employees
 		pos			"246 98"
 		size		"20 18"
 		image		"ui/checkbox_blue"
@@ -1067,7 +1067,7 @@ window popup_newbase
 	checkbox start_building
 	{
 		tooltip		"_Buildings already built in the initial base"
-		current		"*cvar:cl_start_buildings"
+		current		*cvar:cl_start_buildings
 		pos			"246 123"
 		image		"ui/checkbox_blue"
 		size		"20 18"
@@ -1176,7 +1176,7 @@ window popup_newinstallation_type
 	}
 	string radar_buildtime
 	{
-		string		"*cvar:mn_installation_radartower_buildtime"
+		string		*cvar:mn_installation_radartower_buildtime
 		pos			"256 78"
 		size		"100 20"
 		textalign	ur
@@ -1184,7 +1184,7 @@ window popup_newinstallation_type
 	}
 	string radar_cost
 	{
-		string		"*cvar:mn_installation_radartower_cost"
+		string		*cvar:mn_installation_radartower_cost
 		pos			"356 78"
 		size		"100 20"
 		textalign	ur
@@ -1213,7 +1213,7 @@ window popup_newinstallation_type
 	}
 	string sam_buildtime
 	{
-		string		"*cvar:mn_installation_samsite_buildtime"
+		string		*cvar:mn_installation_samsite_buildtime
 		pos			"256 98"
 		size		"100 20"
 		textalign	ur
@@ -1221,7 +1221,7 @@ window popup_newinstallation_type
 	}
 	string sam_cost
 	{
-		string		"*cvar:mn_installation_samsite_cost"
+		string		*cvar:mn_installation_samsite_cost
 		pos			"356 98"
 		size		"100 20"
 		textalign	ur
@@ -1250,7 +1250,7 @@ window popup_newinstallation_type
 	}
 	string ufoyard_buildtime
 	{
-		string		"*cvar:mn_installation_ufoyard_buildtime"
+		string		*cvar:mn_installation_ufoyard_buildtime
 		pos			"256 118"
 		size		"100 20"
 		textalign	ur
@@ -1258,7 +1258,7 @@ window popup_newinstallation_type
 	}
 	string ufoyard_cost
 	{
-		string		"*cvar:mn_installation_ufoyard_cost"
+		string		*cvar:mn_installation_ufoyard_cost
 		pos			"356 118"
 		size		"100 20"
 		textalign	ur
@@ -1301,7 +1301,7 @@ window popup_newinstallation_type
 	}
 	string base_cost
 	{
-		string		"*cvar:mn_base_cost"
+		string		*cvar:mn_base_cost
 		pos			"356 138"
 		size		"100 20"
 		textalign	ur
@@ -1420,7 +1420,7 @@ window popup_newinstallation
 	}
 	textentry name
 	{
-		string		"*cvar:mn_installation_title"
+		string		*cvar:mn_installation_title
 		pos			"46 73"
 		size		"420 32"
 		font		f_big
@@ -1476,15 +1476,15 @@ window popup_newinstallation
 
 	func onInit
 	{
-		if ( *cvar:mn_installation_type eq radartower ) {
+		if ( *cvar:mn_installation_type eq "radartower" ) {
 			*node:root.title@string "_New radar tower"
-			*node:root.cost@string "*cvar:mn_installation_radartower_cost"
-		} elif ( *cvar:mn_installation_type eq samsite ) {
+			*node:root.cost@string *cvar:mn_installation_radartower_cost
+		} elif ( *cvar:mn_installation_type eq "samsite" ) {
 			*node:root.title@string "_New SAM site"
-			*node:root.cost@string "*cvar:mn_installation_samsite_cost"
-		} elif ( *cvar:mn_installation_type eq ufoyard ) {
+			*node:root.cost@string *cvar:mn_installation_samsite_cost
+		} elif ( *cvar:mn_installation_type eq "ufoyard" ) {
 			*node:root.title@string "_New UFO yard"
-			*node:root.cost@string "*cvar:mn_installation_ufoyard_cost"
+			*node:root.cost@string *cvar:mn_installation_ufoyard_cost
 		}		
 	}
 }
@@ -1508,7 +1508,7 @@ window radartower
 
 	textentry title
 	{
-		string		"*cvar:mn_installation_title"
+		string		*cvar:mn_installation_title
 		pos			"26 17"
 		size		"420 30"
 		font		f_big
@@ -1552,7 +1552,7 @@ window popup_installationstatus
 	}
 	textentry name
 	{
-		string		"*cvar:mn_installation_title"
+		string		*cvar:mn_installation_title
 		pos			"46 73"
 		size		"420 32"
 		font		f_big
@@ -1572,15 +1572,15 @@ window popup_installationstatus
 
 	string buildtime_label
 	{
-		visiblewhen "*cvar:mn_installation_timetobuild ne -"
+		visiblewhen "*cvar:mn_installation_timetobuild ne \"-\""
 		string		"_Time to build:"
 		pos			"26 118"
 		size		"159 20"
 	}
 	string buildtime
 	{
-		visiblewhen "*cvar:mn_installation_timetobuild ne -"
-		string		"*cvar:mn_installation_timetobuild"
+		visiblewhen "*cvar:mn_installation_timetobuild ne \"-\""
+		string		*cvar:mn_installation_timetobuild
 		pos			"180 118"
 		size		"100 20"
 		textalign	uc
@@ -1599,7 +1599,7 @@ window popup_installationstatus
 	}
 	button bt_enter
 	{
-		visiblewhen "*cvar:mn_installation_timetobuild eq -"
+		visiblewhen "*cvar:mn_installation_timetobuild eq \"-\""
 		string		"_Manage"
 		tooltip		"_Manage installation"
 		color		"0 0.5 0 1"
@@ -1645,7 +1645,7 @@ window popup_intercept
 	tab defence_navigation {
 		pos		"18 55"
 		size	"515 40"
-		cvar	"*cvar:mn_defencetab"
+		cvar	*cvar:mn_defencetab
 		option aircraft {
 			label	"_Aircraft interception"
 			value	"0"
@@ -2861,7 +2861,7 @@ window geoscape_options {
 		selectbox value {
 			pos			"250 0"
 			size		"55 20"
-			cvar		"*cvar:cl_3dmap"
+			cvar		*cvar:cl_3dmap
 			image		"ui/selectbox_green"
 			color		"0.6 0.6 0.6 0.3"
 			option 2d {
@@ -2884,7 +2884,7 @@ window geoscape_options {
 		}
 		checkbox value
 		{
-			current		"*cvar:r_geoscape_overlay_fooooo"
+			current		*cvar:r_geoscape_overlay_fooooo
 			pos			"0 0"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -2909,7 +2909,7 @@ window geoscape_options {
 		}
 		checkbox value
 		{
-			current		"*cvar:r_geoscape_overlay_fooooo"
+			current		*cvar:r_geoscape_overlay_fooooo
 			pos			"0 0"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -2930,7 +2930,7 @@ window geoscape_options {
 		}
 		checkbox value
 		{
-			current		"*cvar:r_geoscape_overlay_fooooo"
+			current		*cvar:r_geoscape_overlay_fooooo
 			pos			"0 0"
 			size		"20 18"
 			image		"ui/checkbox_blue"

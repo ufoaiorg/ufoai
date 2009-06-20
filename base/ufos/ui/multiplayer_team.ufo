@@ -190,7 +190,7 @@ window mp_team_edit
 
 	string txt_actor0
 	{
-		string	"*cvar:mn_name0"
+		string	*cvar:mn_name0
 		pos		"90 13"
 		size	"270 40"
 		textalign cl
@@ -198,7 +198,7 @@ window mp_team_edit
 	}
 	string txt_actor1
 	{
-		string	"*cvar:mn_name1"
+		string	*cvar:mn_name1
 		pos		"90 54"
 		size	"270 40"
 		textalign cl
@@ -206,7 +206,7 @@ window mp_team_edit
 	}
 	string txt_actor2
 	{
-		string	"*cvar:mn_name2"
+		string	*cvar:mn_name2
 		pos		"90 95"
 		size	"270 40"
 		textalign cl
@@ -214,7 +214,7 @@ window mp_team_edit
 	}
 	string txt_actor3
 	{
-		string	"*cvar:mn_name3"
+		string	*cvar:mn_name3
 		pos		"90 136"
 		size	"270 40"
 		textalign cl
@@ -222,7 +222,7 @@ window mp_team_edit
 	}
 	string txt_actor4
 	{
-		string	"*cvar:mn_name4"
+		string	*cvar:mn_name4
 		pos		"90 177"
 		size	"270 40"
 		textalign cl
@@ -230,7 +230,7 @@ window mp_team_edit
 	}
 	string txt_actor5
 	{
-		string	"*cvar:mn_name5"
+		string	*cvar:mn_name5
 		pos		"90 218"
 		size	"270 40"
 		textalign cl
@@ -238,7 +238,7 @@ window mp_team_edit
 	}
 	string txt_actor6
 	{
-		string	"*cvar:mn_name6"
+		string	*cvar:mn_name6
 		pos		"90 259"
 		size	"270 40"
 		textalign cl
@@ -246,7 +246,7 @@ window mp_team_edit
 	}
 	string txt_actor7
 	{
-		string	"*cvar:mn_name7"
+		string	*cvar:mn_name7
 		pos		"90 300"
 		size	"270 40"
 		textalign cl
@@ -286,7 +286,7 @@ window mp_team_edit
 	{
 		pos		"400 365"
 		size	"505 40"
-		cvar	"*cvar:mn_equiptype"
+		cvar	*cvar:mn_equiptype
 		option primary {
 			label	"_Primary"
 			value	"0"
@@ -364,7 +364,7 @@ window mp_team_edit
 
 		string itemname
 		{
-			string	"*cvar:mn_itemname"
+			string	*cvar:mn_itemname
 			pos		"10 6"
 			size	"330 20"
 			textalign	uc
@@ -374,7 +374,7 @@ window mp_team_edit
 		{
 			pos 		"0 30"
 			size 		"350 100"
-			model		"*cvar:mn_item"
+			model		*cvar:mn_item
 			angles		"-10 160 70"
 			autoscale	true
 		}
@@ -432,7 +432,7 @@ window mp_team_edit
 	
 		string item_name
 		{
-			string	"*cvar:mn_linkname"
+			string	*cvar:mn_linkname
 			pos		"140 290"
 			size	"190 16"
 			textalign	cc
@@ -474,7 +474,7 @@ window mp_team_edit
 		
 		string firemode_name
 		{
-			string	"*cvar:mn_firemodename"
+			string	*cvar:mn_firemodename
 			pos		"140 314"
 			size	"190 16"
 			textalign	cc
@@ -498,49 +498,49 @@ window mp_team_edit
 	// ==================
 
 	string pwr_lbl { pos "34 414" size "200 20" string "_Strength:" }
-	string pwr_val { pos "220 414" size "150 20" string "*cvar:mn_tpwr" textalign ur }
+	string pwr_val { pos "220 414" size "150 20" string *cvar:mn_tpwr textalign ur }
 	pic pwr_bdr    { pos "67 431"  image ui/bar_border }
-	tbar pwr_bar   { pos "70 431"  current "*cvar:mn_vpwr" texl "3 0" image ui/bar_attribute	size "250 16"	max 100 }
+	tbar pwr_bar   { pos "70 431"  current *cvar:mn_vpwr texl "3 0" image ui/bar_attribute	size "250 16"	max 100 }
 
 	string spd_lbl { pos "34 449"  size "200 20" string "_Speed:" }
-	string spd_val { pos "220 449" size "150 20" string "*cvar:mn_tspd" textalign ur }
+	string spd_val { pos "220 449" size "150 20" string *cvar:mn_tspd textalign ur }
 	pic spd_bdr    { pos "67 466"  image ui/bar_border }
-	tbar spd_bar   { pos "70 466"  current "*cvar:mn_vspd" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	tbar spd_bar   { pos "70 466"  current *cvar:mn_vspd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string acc_lbl { pos "34 484"  size "200 20" string "_Accuracy:" }
-	string acc_val { pos "220 484" size "150 20" string "*cvar:mn_tacc" textalign ur }
+	string acc_val { pos "220 484" size "150 20" string *cvar:mn_tacc textalign ur }
 	pic acc_bdr    { pos "67 501"  image ui/bar_border }
-	tbar acc_bar   { pos "70 501"  current "*cvar:mn_vacc" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	tbar acc_bar   { pos "70 501"  current *cvar:mn_vacc texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string mnd_lbl { pos "34 519"  size "200 20" string "_Mind:" }
-	string mnd_val { pos "220 519" size "150 20" string "*cvar:mn_tmnd" textalign ur }
+	string mnd_val { pos "220 519" size "150 20" string *cvar:mn_tmnd textalign ur }
 	pic mnd_bdr    { pos "67 536"  image ui/bar_border }
-	tbar mnd_bar   { pos "70 536"  current "*cvar:mn_vmnd" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	tbar mnd_bar   { pos "70 536"  current *cvar:mn_vmnd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string cls_lbl { pos "34 562"  size "200 20" string "_Close Combat:" }
-	string cls_val { pos "220 562" size "150 20" string "*cvar:mn_tcls" textalign ur }
+	string cls_val { pos "220 562" size "150 20" string *cvar:mn_tcls textalign ur }
 	pic cls_bdr    { pos "67 579"  image ui/bar_border }
-	tbar cls_bar   { pos "70 579"  current "*cvar:mn_vcls" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar cls_bar   { pos "70 579"  current *cvar:mn_vcls texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string hvy_lbl { pos "34 597"  size "200 20" string "_Heavy Weapons:" }
-	string hvy_val { pos "220 597" size "150 20" string "*cvar:mn_thvy" textalign ur }
+	string hvy_val { pos "220 597" size "150 20" string *cvar:mn_thvy textalign ur }
 	pic hvy_bdr    { pos "67 614"  image ui/bar_border }
-	tbar hvy_bar   { pos "70 614"  current "*cvar:mn_vhvy" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar hvy_bar   { pos "70 614"  current *cvar:mn_vhvy texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string ass_lbl { pos "34 632" size "200 20" string "_Assault Weapons:" }
-	string ass_val { pos "220 632" size "150 20" string "*cvar:mn_tass" textalign ur }
+	string ass_val { pos "220 632" size "150 20" string *cvar:mn_tass textalign ur }
 	pic ass_bdr    { pos "67 649"  image ui/bar_border }
-	tbar ass_bar   { pos "70 649"  current "*cvar:mn_vass" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar ass_bar   { pos "70 649"  current *cvar:mn_vass texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string snp_lbl { pos "34 667" size "200 20" string "_Sniper Rifles:" }
-	string snp_val { pos "220 667" size "150 20" string "*cvar:mn_tsnp" textalign ur }
+	string snp_val { pos "220 667" size "150 20" string *cvar:mn_tsnp textalign ur }
 	pic snp_bdr    { pos "67 684"  image ui/bar_border }
-	tbar snp_bar   { pos "70 684"  current "*cvar:mn_vsnp" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar snp_bar   { pos "70 684"  current *cvar:mn_vsnp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string exp_lbl { pos "34 702" size "200 20" string "_High-Explosives:" }
-	string exp_val { pos "220 702" size "150 20" string "*cvar:mn_texp" textalign ur }
+	string exp_val { pos "220 702" size "150 20" string *cvar:mn_texp textalign ur }
 	pic exp_bdr    { pos "67 719"  image ui/bar_border }
-	tbar exp_bar   { pos "70 719"  current "*cvar:mn_vexp" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	tbar exp_bar   { pos "70 719"  current *cvar:mn_vexp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	// ==================
 	// switch
@@ -602,7 +602,7 @@ window mp_team_edit
 	tab info {
 		pos		"20 365"
 		size	"355 40"
-		cvar	"*cvar:mn_infotype"
+		cvar	*cvar:mn_infotype
 		option abilities {
 			label	"_Actor Abilities"
 			value	"0"
@@ -621,7 +621,7 @@ window mp_team_edit
 
 	string txt_actorname
 	{
-		string	"*cvar:mn_name"
+		string	*cvar:mn_name
 		pos		"544 24"
 		size	"300 20"
 	}
@@ -629,8 +629,8 @@ window mp_team_edit
 	model body
 	{
 		{
-			model	"*cvar:mn_body"
-			skin	"*cvar:mn_skin"
+			model	*cvar:mn_body
+			skin	*cvar:mn_skin
 			anim	"stand_menu"
 			angles	"0 70 90"
 			scale	"5 5 5"
@@ -642,8 +642,8 @@ window mp_team_edit
 
 		model head
 		{
-			model	"*cvar:mn_head"
-			skin	"*cvar:mn_skin"
+			model	*cvar:mn_head
+			skin	*cvar:mn_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
 		}
@@ -657,7 +657,7 @@ window mp_team_edit
 		image	"ui/selectbox_green"
 		pos		"660 290"
 		size	"120 40"
-		cvar	"*cvar:mn_skin"
+		cvar	*cvar:mn_skin
 		color	"0.6 0.6 0.6 0.3"
 		onChange { cmd "team_changeskin;" }
 		dataid	OPTION_MULTIPLAYER_SKINS
@@ -790,7 +790,7 @@ window mp_team extends abstract_multiplayer
 			disabled	true
 			pos			"85 130"
 			size		"256 34"
-			string		"*cvar:mn_slot0"
+			string		*cvar:mn_slot0
 			onClick		{ cmd "loadteam 0;mn_push mp_team_edit;" }
 		}
 
@@ -805,7 +805,7 @@ window mp_team extends abstract_multiplayer
 			disabled	true
 			pos			"85 165"
 			size		"256 34"
-			string		"*cvar:mn_slot1"
+			string		*cvar:mn_slot1
 			onClick		{ cmd "loadteam 1;mn_push mp_team_edit;" }
 		}
 
@@ -820,7 +820,7 @@ window mp_team extends abstract_multiplayer
 			disabled	true
 			pos			"85 200"
 			size		"256 34"
-			string		"*cvar:mn_slot2"
+			string		*cvar:mn_slot2
 			onClick		{ cmd "loadteam 2;mn_push mp_team_edit;" }
 		}
 
@@ -835,7 +835,7 @@ window mp_team extends abstract_multiplayer
 			disabled	true
 			pos			"85 235"
 			size		"256 34"
-			string		"*cvar:mn_slot3"
+			string		*cvar:mn_slot3
 			onClick		{ cmd "loadteam 3;mn_push mp_team_edit;" }
 		}
 
@@ -850,7 +850,7 @@ window mp_team extends abstract_multiplayer
 			disabled	true
 			pos			"85 270"
 			size		"256 34"
-			string		"*cvar:mn_slot4"
+			string		*cvar:mn_slot4
 			onClick		{ cmd "loadteam 4;mn_push mp_team_edit;" }
 		}
 
@@ -865,7 +865,7 @@ window mp_team extends abstract_multiplayer
 			disabled	true
 			pos			"85 305"
 			size		"256 34"
-			string		"*cvar:mn_slot5"
+			string		*cvar:mn_slot5
 			onClick		{ cmd "loadteam 5;mn_push mp_team_edit;" }
 		}
 
@@ -880,7 +880,7 @@ window mp_team extends abstract_multiplayer
 			disabled	true
 			pos			"85 340"
 			size		"256 34"
-			string		"*cvar:mn_slot6"
+			string		*cvar:mn_slot6
 			onClick		{ cmd "loadteam 6;mn_push mp_team_edit;" }
 		}
 
@@ -895,7 +895,7 @@ window mp_team extends abstract_multiplayer
 			disabled	true
 			pos			"85 375"
 			size		"256 34"
-			string		"*cvar:mn_slot7"
+			string		*cvar:mn_slot7
 			onClick		{ cmd "loadteam 7;mn_push mp_team_edit;" }
 		}
 
@@ -941,7 +941,7 @@ window mp_team extends abstract_multiplayer
 			pos		"200 570"
 			size	"125 20"
 			color	"0.6 0.6 0.6 0.3"
-			cvar	"*cvar:cl_team"
+			cvar	*cvar:cl_team
 			option low_value {
 				label	"_Human"
 				value	"1"
@@ -995,7 +995,7 @@ window mp_team_save_popup
 		font		"f_verysmall"
 		pos			"50 130"
 		size		"256 34"
-		string		"*cvar:mn_slot0"
+		string		*cvar:mn_slot0
 		onChange		{ cmd "saveteam 0;mn_pop;" }
 	}
 
@@ -1009,7 +1009,7 @@ window mp_team_save_popup
 		font		"f_verysmall"
 		pos			"50 165"
 		size		"256 34"
-		string		"*cvar:mn_slot1"
+		string		*cvar:mn_slot1
 		onChange	{ cmd "saveteam 1;mn_pop;" }
 	}
 
@@ -1023,7 +1023,7 @@ window mp_team_save_popup
 		font		"f_verysmall"
 		pos			"50 200"
 		size		"256 34"
-		string		"*cvar:mn_slot2"
+		string		*cvar:mn_slot2
 		onChange	{ cmd "saveteam 2;mn_pop;" }
 	}
 
@@ -1037,7 +1037,7 @@ window mp_team_save_popup
 		font		"f_verysmall"
 		pos			"50 235"
 		size		"256 34"
-		string		"*cvar:mn_slot3"
+		string		*cvar:mn_slot3
 		onChange	{ cmd "saveteam 3;mn_pop;" }
 	}
 
@@ -1051,7 +1051,7 @@ window mp_team_save_popup
 		font		"f_verysmall"
 		pos			"50 270"
 		size		"256 34"
-		string		"*cvar:mn_slot4"
+		string		*cvar:mn_slot4
 		onChange	{ cmd "saveteam 4;mn_pop;" }
 	}
 
@@ -1065,7 +1065,7 @@ window mp_team_save_popup
 		font		"f_verysmall"
 		pos			"50 305"
 		size		"256 34"
-		string		"*cvar:mn_slot5"
+		string		*cvar:mn_slot5
 		onChange	{ cmd "saveteam 5;mn_pop;" }
 	}
 
@@ -1079,7 +1079,7 @@ window mp_team_save_popup
 		font		"f_verysmall"
 		pos			"50 340"
 		size		"256 34"
-		string		"*cvar:mn_slot6"
+		string		*cvar:mn_slot6
 		onChange	{ cmd "saveteam 6;mn_pop;" }
 	}
 
@@ -1093,7 +1093,7 @@ window mp_team_save_popup
 		font		"f_verysmall"
 		pos			"50 375"
 		size		"256 34"
-		string		"*cvar:mn_slot7"
+		string		*cvar:mn_slot7
 		onChange	{ cmd "saveteam 7;mn_pop;" }
 	}
 

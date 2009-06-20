@@ -191,7 +191,7 @@ window unittest_setter
 	//
 
 	spinner testNodeFoo {
-		current		"*cvar:test_nodefoo"
+		current		*cvar:test_nodefoo
 		min			0
 		max			16
 		invis		true
@@ -271,7 +271,7 @@ window unittest_setter
 	//
 
 	spinner testPropFoo1 {
-		current		"*cvar:test_nodefoo"
+		current		*cvar:test_nodefoo
 		min			0
 		max			16
 		invis		true

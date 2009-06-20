@@ -148,8 +148,8 @@ window hud extends ahud
 
 		model head
 		{
-			model	"*cvar:mn_head"
-			skin	"*cvar:mn_skin"
+			model	*cvar:mn_head
+			skin	*cvar:mn_skin
 			angles	"0 60 90"
 			autoscale	true
 			pos		"20 20"
@@ -159,7 +159,7 @@ window hud extends ahud
 
 		string actorname
 		{
-			string	"*cvar:mn_name"
+			string	*cvar:mn_name
 			pos		"130 16"
 			size	"255 20"
 		}
@@ -187,7 +187,7 @@ window hud extends ahud
 		pic bt_actor0
 		{
 			key		"*binding:soldier_select 0"
-			tooltip	"*cvar:mn_soldier0_tt"
+			tooltip	*cvar:mn_soldier0_tt
 			pos		"11 10"
 			texl	"0 0"
 			texh	"28 36"
@@ -197,7 +197,7 @@ window hud extends ahud
 		pic bt_actor1
 		{
 			key		"*binding:soldier_select 1"
-			tooltip	"*cvar:mn_soldier1_tt"
+			tooltip	*cvar:mn_soldier1_tt
 			pos		"42 10"
 			texl	"32 0"
 			texh	"60 36"
@@ -207,7 +207,7 @@ window hud extends ahud
 		pic bt_actor2
 		{
 			key		"*binding:soldier_select 2"
-			tooltip	"*cvar:mn_soldier2_tt"
+			tooltip	*cvar:mn_soldier2_tt
 			pos		"73 10"
 			texl	"64 0"
 			texh	"92 36"
@@ -217,7 +217,7 @@ window hud extends ahud
 		pic bt_actor3
 		{
 			key		"*binding:soldier_select 3"
-			tooltip	"*cvar:mn_soldier3_tt"
+			tooltip	*cvar:mn_soldier3_tt
 			pos		"104 10"
 			texl	"96 0"
 			texh	"124 36"
@@ -227,7 +227,7 @@ window hud extends ahud
 		pic bt_actor4
 		{
 			key		"*binding:soldier_select 4"
-			tooltip	"*cvar:mn_soldier4_tt"
+			tooltip	*cvar:mn_soldier4_tt
 			pos		"135 10"
 			texl	"0 38"
 			texh	"28 74"
@@ -237,7 +237,7 @@ window hud extends ahud
 		pic bt_actor5
 		{
 			key		"*binding:soldier_select 5"
-			tooltip	"*cvar:mn_soldier5_tt"
+			tooltip	*cvar:mn_soldier5_tt
 			pos		"166 10"
 			texl	"32 38"
 			texh	"60 74"
@@ -247,7 +247,7 @@ window hud extends ahud
 		pic bt_actor6
 		{
 			key		"*binding:soldier_select 6"
-			tooltip	"*cvar:mn_soldier6_tt"
+			tooltip	*cvar:mn_soldier6_tt
 			pos		"197 10"
 			texl	"64 38"
 			texh	"92 74"
@@ -257,7 +257,7 @@ window hud extends ahud
 		pic bt_actor7
 		{
 			key		"*binding:soldier_select 7"
-			tooltip	"*cvar:mn_soldier7_tt"
+			tooltip	*cvar:mn_soldier7_tt
 			pos		"228 10"
 			texl	"96 38"
 			texh	"124 74"
@@ -296,7 +296,7 @@ window hud extends ahud
 
 		string numspotted
 		{
-			string	"*cvar:mn_numaliensspotted"
+			string	*cvar:mn_numaliensspotted
 			tooltip	"_Click to cycle through spotted enemies"
 			pos		"8 11"
 			size	"48 34"
@@ -358,7 +358,7 @@ window hud extends ahud
 
 		pic bt_reload
 		{
-			tooltip	"*cvar:mn_reloadright_tt"
+			tooltip	*cvar:mn_reloadright_tt
 			image	hud/buttons2g
 			pos		"103 104"
 			texl	"0 38"
@@ -371,7 +371,7 @@ window hud extends ahud
 
 		string ammoright
 		{
-			string	"*cvar:mn_ammoright"
+			string	*cvar:mn_ammoright
 			pos		"17 113"
 			size	"65 20"
 			textalign	uc
@@ -424,7 +424,7 @@ window hud extends ahud
 
 		pic bt_reload
 		{
-			tooltip	"*cvar:mn_reloadleft_tt"
+			tooltip	*cvar:mn_reloadleft_tt
 			image	hud/buttons2g
 			pos		"89 104"
 			texl	"0 38"
@@ -437,7 +437,7 @@ window hud extends ahud
 
 		string ammoleft
 		{
-			string	"*cvar:mn_ammoleft"
+			string	*cvar:mn_ammoleft
 			pos		"171 116"
 			size	"65 20"
 			textalign	uc
@@ -451,7 +451,7 @@ window hud extends ahud
 		pic bt_duck
 		{
 			key		"*binding:standcrouch"
-			tooltip	"*cvar:mn_crouchstand_tt"
+			tooltip	*cvar:mn_crouchstand_tt
 
 			image	hud/buttons2g
 			pos		"8 107"
@@ -464,7 +464,7 @@ window hud extends ahud
 
 		checkbox bt_crouch_reservation
 		{
-			tooltip	"*cvar:mn_crouch_reservation_tt"
+			tooltip	*cvar:mn_crouch_reservation_tt
 			image	"ui/checkbox_blue"
 			pos		"60 107"
 			size	"20 18"
@@ -512,7 +512,7 @@ window hud extends ahud
 
 		pic bt_shot_reservation
 		{
-			tooltip	"*cvar:mn_shot_reservation_tt"
+			tooltip	*cvar:mn_shot_reservation_tt
 			// key "*binding:sel_shotreservation"
 			image hud/button_reserve_shot
 			pos		"11 32"
@@ -536,7 +536,7 @@ window hud extends ahud
 
 		string tus
 		{
-			string	"*cvar:mn_tu"
+			string	*cvar:mn_tu
 			pos		"85 11"
 			size	"40 20"
 			textalign	uc
@@ -544,7 +544,7 @@ window hud extends ahud
 
 		string hp
 		{
-			string	"*cvar:mn_hp"
+			string	*cvar:mn_hp
 			pos		"85 25"
 			size	"40 20"
 			textalign	uc
@@ -554,7 +554,7 @@ window hud extends ahud
 		string tu_tooltips
 		{
 			string	" "
-			tooltip	"*cvar:mn_tu_tooltips"
+			tooltip	*cvar:mn_tu_tooltips
 			pos		"130 21"
 			size	"305 6"
 		}
@@ -564,8 +564,8 @@ window hud extends ahud
 			pos		"130 21"
 			size	"305 6"
 			color	".1 .1 .7 1"
-			current	"*cvar:mn_tu"
-			max		"*cvar:mn_tumax"
+			current	*cvar:mn_tu
+			max		*cvar:mn_tumax
 			disabled	true
 		}
 		bar timeremain
@@ -573,8 +573,8 @@ window hud extends ahud
 			pos		"130 21"
 			size	"305 6"
 			color	".2 .2 1 1"
-			current	"*cvar:mn_turemain"
-			max		"*cvar:mn_tumax"
+			current	*cvar:mn_turemain
+			max		*cvar:mn_tumax
 			disabled	true
 		}
 
@@ -583,8 +583,8 @@ window hud extends ahud
 			pos		"130 21"
 			size	"305 3"
 			color	"0 .5 0 1"
-			current	"*cvar:mn_tureserved"
-			max		"*cvar:mn_tumax"
+			current	*cvar:mn_tureserved
+			max		*cvar:mn_tumax
 			disabled	true
 		}
 
@@ -593,8 +593,8 @@ window hud extends ahud
 			pos		"130 34"
 			size	"305 6"
 			color	"1 0 0 1"
-			current	"*cvar:mn_hp"
-			max		"*cvar:mn_hpmax"
+			current	*cvar:mn_hp
+			max		*cvar:mn_hpmax
 			disabled	true
 		}
 
@@ -603,14 +603,14 @@ window hud extends ahud
 			pos		"130 34"
 			size	"305 6"
 			color	".3 .3 .3 .9"
-			current	"*cvar:mn_stun"
-			max		"*cvar:mn_hpmax"
+			current	*cvar:mn_stun
+			max		*cvar:mn_hpmax
 			disabled	true
 		}
 
 		string moral_text
 		{
-			string	"*cvar:mn_morale"
+			string	*cvar:mn_morale
 			pos		"85 38"
 			size	"40 20"
 			textalign	uc
@@ -621,8 +621,8 @@ window hud extends ahud
 			pos		"130 46"
 			size	"305 6"
 			color	"1 1 0.5 1"
-			current	"*cvar:mn_morale"
-			max		"*cvar:mn_moralemax"
+			current	*cvar:mn_morale
+			max		*cvar:mn_moralemax
 			disabled	true
 		}
 

@@ -28,7 +28,7 @@ window unittest_option
 	tab tabReferenciel {
 		pos		"10 60"
 		size	"400 40"
-		cvar	"*cvar:mn_unittest_option"
+		cvar	*cvar:mn_unittest_option
 		onChange {
 			cmd "echo \"tabReferenciel <cvar:mn_unittest_option>\";"
 		}
@@ -53,7 +53,7 @@ window unittest_option
 	tab tabTest {
 		pos		"10 100"
 		size	"400 40"
-		cvar	"*cvar:mn_unittest_option2"
+		cvar	*cvar:mn_unittest_option2
 		onChange {
 			cmd "echo \"tabReferenciel <cvar:mn_unittest_option>\";"
 		}
