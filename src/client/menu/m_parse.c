@@ -352,15 +352,28 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 		case EA_CALL:
 			{
 				menuNode_t* callNode = NULL;
+				const value_t* callProperty = NULL;
+				menuAction_t **actionsRef = NULL;
+				const char *path;
 				/* get the function name */
 				*token = Com_EParse(text, errhead, NULL);
-				callNode = MN_GetNodeByPath(va("%s.%s", menuNode->root->name, *token));
-				if (!callNode) {
-					Com_Printf("MN_ParseActionList: function '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
+				path = va("root.%s", *token);
+				MN_ReadNodePath(path, menuNode, &callNode, &callProperty);
+				if (callNode == NULL) {
+					Com_Printf("MN_ParseActionList: function '%s' not found (%s)\n", path, MN_GetPath(menuNode));
 					return NULL;
 				}
+				if (callProperty == NULL) {
+					actionsRef = &callNode->onClick;
+				} else {
+					if (callProperty->type != V_UI_ACTION) {
+						Com_Printf("MN_ParseActionList: Event property exprected. '%i' found (%s)\n", callProperty->type, *token);
+						return NULL;
+					}
+					actionsRef = (menuAction_t **) ((byte *) callNode + callProperty->ofs);
+				}
 				action->d.terminal.d1.data = (void*) callNode;
-				action->d.terminal.d2.data = (void*) &callNode->onClick;
+				action->d.terminal.d2.data = (void*) actionsRef;
 				lastAction = action;
 			}
 			break;

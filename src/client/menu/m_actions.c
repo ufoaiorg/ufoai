@@ -591,11 +591,11 @@ static void MN_AddListener_f (void)
 
 	/* insert the action */
 	lastAction = *(menuAction_t**)((char*)node + property->ofs);
-	while (lastAction)
-		lastAction = lastAction->next;
-	if (lastAction)
+	if (lastAction) {
+		while (lastAction->next)
+			lastAction = lastAction->next;
 		lastAction->next = action;
-	else
+	} else
 		*(menuAction_t**)((char*)node + property->ofs) = action;
 }
 
@@ -638,12 +638,12 @@ static void MN_RemoveListener_f (void)
 	lastAction = *(menuAction_t**)((char*)node + property->ofs);
 	if (lastAction) {
 		menuAction_t *tmp = NULL;
-		if (lastAction->d.terminal.d2.data == data) {
+		if (lastAction->type == EA_CALL && lastAction->d.terminal.d2.data == data) {
 			tmp = lastAction;
 			*(menuAction_t**)((char*)node + property->ofs) = lastAction->next;
 		} else {
 			while (lastAction->next) {
-				if (lastAction->next->d.terminal.d2.data == data)
+				if (lastAction->next->type == EA_CALL && lastAction->next->d.terminal.d2.data == data)
 					break;
 				lastAction = lastAction->next;
 			}
