@@ -975,6 +975,7 @@ static void PR_ProductionUp_f (void)
 	PR_QueueMove(queue, selectedProduction->idx, -1);
 
 	selectedProduction = &queue->items[selectedProduction->idx - 1];
+	Cmd_ExecuteString(va("prod_selectline %i", selectedProduction->idx));
 	PR_UpdateProductionList(base);
 }
 
@@ -997,6 +998,7 @@ static void PR_ProductionDown_f (void)
 	PR_QueueMove(queue, selectedProduction->idx, 1);
 
 	selectedProduction = &queue->items[selectedProduction->idx + 1];
+	Cmd_ExecuteString(va("prod_selectline %i", selectedProduction->idx));
 	PR_UpdateProductionList(base);
 }
 
