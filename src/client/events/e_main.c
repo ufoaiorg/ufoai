@@ -88,7 +88,7 @@ const eventRegister_t events[] = {
 	{EV_ACTOR_SHOOT_HIDDEN, "EV_ACTOR_SHOOT_HIDDEN", "bsbb", CL_ActorShootHidden, CL_ActorShootHiddenTime},
 	{EV_ACTOR_THROW, "EV_ACTOR_THROW", "ssbbbpp", CL_ActorDoThrow, CL_ActorDoThrowTime},
 
-	{EV_ACTOR_DIE, "EV_ACTOR_DIE", "ss", CL_ActorDie, NULL},
+	{EV_ACTOR_DIE, "EV_ACTOR_DIE", "sss", CL_ActorDie, NULL},
 	{EV_ACTOR_STATS, "EV_ACTOR_STATS", "!sbsbb", CL_ActorStats, NULL},
 	{EV_ACTOR_STATECHANGE, "EV_ACTOR_STATECHANGE", "ss", CL_ActorStateChange, NULL},
 
