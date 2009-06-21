@@ -135,10 +135,9 @@ const char* UFO_AircraftToIDOnGeoscape (aircraft_t *ufocraft)
 
 	assert(tech);
 
-	if (RS_IsResearched_ptr(tech))
-		return _(ufocraft->name);
-
-	return _("UFO");
+	if (ufocraft->detectionIdx)
+		return va("%s #%i", (RS_IsResearched_ptr(tech)) ? _(ufocraft->name) : _("UFO"), ufocraft->detectionIdx);
+	return (RS_IsResearched_ptr(tech)) ? _(ufocraft->name) : _("UFO");
 }
 
 /**
@@ -774,6 +773,10 @@ void UFO_DetectNewUFO (aircraft_t *ufocraft)
 {
 	/* Make this UFO detected */
 	ufocraft->detected = qtrue;
+	if (!ufocraft->detectionIdx) {
+		ufocraft->detectionIdx = ++ccs.campaignStats.ufosDetected;
+	}
+	ufocraft->lastSpotted = ccs.date;
 
 	/* If this is the first UFO on geoscape, activate radar */
 	if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))

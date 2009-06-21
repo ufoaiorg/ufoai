@@ -259,6 +259,7 @@ typedef struct stats_s {
 	int moneyBases;
 	int moneyResearch;
 	int moneyWeapons;
+	int ufosDetected;
 } stats_t;
 
 extern stats_t campaignStats;

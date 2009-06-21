@@ -1348,6 +1348,7 @@ qboolean STATS_SaveXML (mxml_node_t *parent)
 	mxml_AddInt(stats, "moneybases", ccs.campaignStats.moneyBases);
 	mxml_AddInt(stats, "moneyresearch", ccs.campaignStats.moneyResearch);
 	mxml_AddInt(stats, "moneyweapons", ccs.campaignStats.moneyWeapons);
+	mxml_AddInt(stats, "ufosdetected", ccs.campaignStats.ufosDetected);
 	return qtrue;
 }
 
@@ -1374,6 +1375,7 @@ qboolean STATS_LoadXML (mxml_node_t *tree)
 	ccs.campaignStats.moneyBases = mxml_GetInt(stats, "moneybases", 0);
 	ccs.campaignStats.moneyResearch = mxml_GetInt(stats, "moneyresearch", 0);
 	ccs.campaignStats.moneyWeapons = mxml_GetInt(stats, "moneyweapons", 0);
+	ccs.campaignStats.ufosDetected = mxml_GetInt(stats, "ufosdetected", 0);
 	/* freeing the memory below this node */
 	mxmlDelete(stats);
 	return qtrue;

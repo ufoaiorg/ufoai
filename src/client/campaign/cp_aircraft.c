@@ -2410,6 +2410,10 @@ void AIR_SaveAircraftXML (mxml_node_t *node, aircraft_t const aircraft, qboolean
 			Com_Printf("Error: UFO '%s'is not linked to any mission\n", aircraft.id);
 #endif
 		mxml_AddString(node, "missionid", aircraft.mission->id);
+		/** detection id and time */
+		mxml_AddInt(node, "detectionidx", aircraft.detectionIdx);
+		mxml_AddInt(node, "lastspotted_day", aircraft.lastSpotted.day);
+		mxml_AddInt(node, "lastspotted_sec", aircraft.lastSpotted.sec);
 	} else {
 		if (aircraft.status == AIR_MISSION) {
 			assert(aircraft.mission);
@@ -2693,9 +2697,13 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 		if (isUfo)
 			Com_Printf("Error: UFO '%s' is not linked to any mission\n", craft->id);
 	}
-	if (isUfo)
+	if (isUfo) {
 		craft->mission = CP_GetMissionByID(s);
-	else if (craft->status == AIR_MISSION)
+		/** detection id and time */
+		craft->detectionIdx = mxml_GetInt(p, "detectionidx", 0);
+		craft->lastSpotted.day = mxml_GetInt(p, "lastspotted_day", 0);
+		craft->lastSpotted.sec = mxml_GetInt(p, "lastspotted_sec", 0);
+	} else if (craft->status == AIR_MISSION)
 		craft->missionID = Mem_PoolStrDup(s, cp_campaignPool, 0);
 
 	for (l = 0, snode = mxml_GetNode(p, "airstats"); snode && l < AIR_STATS_MAX; snode = mxml_GetNextNode(snode, p, "airstats"), l++) {
