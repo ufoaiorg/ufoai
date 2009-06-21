@@ -730,10 +730,10 @@ void CL_ActorCleanup (le_t *le)
 }
 
 /**
- * @brief Removes an actor from the team list.
+ * @brief Removes an actor (from your team) from the team list.
  * @sa CL_ActorStateChange
  * @sa CL_AddActorToTeamList
- * @param le Pointer to local entity struct
+ * @param[in,out] le Pointer to local entity struct of the actor of your team
  */
 void CL_RemoveActorFromTeamList (le_t * le)
 {
