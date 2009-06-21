@@ -211,7 +211,7 @@ window unittest_setter
 		if ( *cvar:test eq "abab" ) { *testCvar13@color "0 1 0 1" }
 		else { *testCvar13@color "1 0 0 1" }
 
-		*cvar:test = mm<3>mm
+		*cvar:test = "mm<3>mm"
 		if ( *cvar:test eq "mmababmm" ) { *testCvar14@color "0 1 0 1" }
 		else { *testCvar14@color "1 0 0 1" }
 		

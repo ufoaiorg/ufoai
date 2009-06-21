@@ -133,7 +133,15 @@ const char* MN_GetStringFromExpression (menuAction_t *expression, const menuNode
 				return string;
 			}
 		case EA_VALUE_FLOAT:
-			assert(qfalse);
+		{
+			const float number = expression->d.terminal.d1.number;
+			const int integer = number;
+			/** @todo should we add a delta? */
+			if (number == integer)
+				return va("%i", integer);
+			else
+				return va("%f", number);
+		}
 		case EA_VALUE_CVARNAME:
 		case EA_VALUE_CVARNAME_WITHINJECTION:
 		{
@@ -326,6 +334,16 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 		return NULL;
 	}
 
+	/* it is a const string (or an injection tag for compatibility) */
+	if (Com_ParsedTokenIsQuoted() || token[0] == '<') {
+		expression->d.terminal.d1.string = MN_AllocString(token, 0);
+		if (MN_IsInjectedString(token))
+			expression->type = EA_VALUE_STRING_WITHINJECTION;
+		else
+			expression->type = EA_VALUE_STRING;
+		return expression;
+	}
+
 	/* it is a cvarname */
 	if (!strncmp(token, "*cvar:", 6)) {
 		const char* cvarName = token + 6;
@@ -398,25 +416,29 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 		return expression;
 	}
 
-#if 0 /* we can't know the operation before, and token is not typed. then we must copy the string */
-/** @todo we can check the string type vs INT/FLOAT but it can create new problems
- * (convert the string "1" -> into a float, then then restitute the string "1.0") */
-	/* it is a const float */
-	if (MN_IsFloatOperator(opCode)) {
-		float f = atof(string);
+	/* unsigned and signed number */
+	if ( (token[0] >= '0' && token[0] <= '9')
+		|| (token[0] == '-' && token[1] >= '0' && token[1] <= '9') ) {
+		/* @todo use a better check */
+		float f = atof(token);
 		expression->d.terminal.d1.number = f;
 		expression->type = EA_VALUE_FLOAT;
 		return expression;
 	}
-#endif
 
-	/* it is a const string */
-	expression->d.terminal.d1.string = MN_AllocString(token, 0);
-	if (MN_IsInjectedString(token))
-		expression->type = EA_VALUE_STRING_WITHINJECTION;
-	else
-		expression->type = EA_VALUE_STRING;
-	return expression;
+	if (!strcmp(token, "true")) {
+		expression->d.terminal.d1.number = 1.0;
+		expression->type = EA_VALUE_FLOAT;
+		return expression;
+	}
+
+	if (!strcmp(token, "false")) {
+		expression->d.terminal.d1.number = 0.0;
+		expression->type = EA_VALUE_FLOAT;
+		return expression;
+	}
+
+	Com_Error(ERR_FATAL, "MN_ParseSetAction: Token \"%s\" unknown. String must use quotes, cvar and nodes must use prefix.\n", token);
 }
 
 menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const menuNode_t *source)
