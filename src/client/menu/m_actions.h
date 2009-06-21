@@ -93,6 +93,7 @@ typedef enum ea_s {
 } ea_t;
 
 typedef union {
+	int integer;
 	float number;
 	char* string;
 	const char* constString;

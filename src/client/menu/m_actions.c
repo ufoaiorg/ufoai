@@ -340,6 +340,14 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 	/* decode RAW value */
 	if (right->type == EA_VALUE_RAW) {
 		void *mem = ((byte *) node + property->ofs);
+		const value_t *rawType = right->d.terminal.d2.constData;
+
+		/** @todo should we only check the type, not the property? IMO yes */
+		if (property != rawType) {
+			Com_Error(ERR_FATAL, "MN_ExecuteSetAction: @%s type %i exprected, but @%s type %i found. Property setter to '%s@%s' skiped", rawType->string, rawType->type, property->string, property->type, MN_GetPath(node), property->string);
+			return;
+		}
+
 		if ((property->type & V_UI_MASK) == V_NOT_UI)
 			Com_SetValue(node, right->d.terminal.d1.data, property->type, property->ofs, property->size);
 		else if ((property->type & V_UI_MASK) == V_UI_CVAR) {

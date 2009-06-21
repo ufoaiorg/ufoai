@@ -238,6 +238,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		a = MN_AllocAction();
 		a->type = EA_VALUE_RAW;
 		a->d.terminal.d1.data = actionList;
+		a->d.terminal.d2.constData = property;
 		action->d.nonTerminal.right = a;
 	} else if (property->type == V_UI_ICONREF) {
 		menuIcon_t* icon = MN_GetIconByName(*token);
@@ -249,6 +250,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		a = MN_AllocAction();
 		a->type = EA_VALUE_RAW;
 		a->d.terminal.d1.data = icon;
+		a->d.terminal.d2.constData = property;
 		action->d.nonTerminal.right = a;
 	} else {
 		if (MN_IsInjectedString(*token)) {
@@ -268,6 +270,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 			a = MN_AllocAction();
 			a->type = EA_VALUE_RAW;
 			a->d.terminal.d1.data = mn.curadata;
+			a->d.terminal.d2.constData = property;
 			action->d.nonTerminal.right = a;
 			/** @todo we should hide use of mn.curadata */
 			mn.curadata += Com_EParseValue(mn.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size);
