@@ -580,6 +580,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			const char *s2;
 			if (s1 && s1[0] != '\0')
 				pq->items[j].item = INVSH_GetItemByID(s1);
+			pq->items[j].idx = j;
 			pq->items[j].amount = mxml_GetInt(ssnode, "amount", 0);
 			pq->items[j].percentDone = mxml_GetFloat(ssnode, "percentdone", 0.0);
 			pq->items[j].production = mxml_GetBool(ssnode, "prod", qfalse);
