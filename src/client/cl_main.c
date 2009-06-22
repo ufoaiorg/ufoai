@@ -562,8 +562,8 @@ static void CL_PrecacheModels (void)
 			continue;
 
 		if (csi.ods[i].model[0] != '\0') {
-			cls.model_weapons[i] = R_RegisterModelShort(csi.ods[i].model);
-			if (cls.model_weapons[i])
+			cls.modelPool[i] = R_RegisterModelShort(csi.ods[i].model);
+			if (cls.modelPool[i])
 				Com_DPrintf(DEBUG_CLIENT, "CL_PrecacheModels: Registered object model: '%s' (%i)\n", csi.ods[i].model, i);
 		}
 		cls.loadingPercent += percent / csi.numODs;

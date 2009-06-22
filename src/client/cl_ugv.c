@@ -67,7 +67,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 		if (le->left != NONE) {
 			memset(&add, 0, sizeof(add));
 
-			add.model = cls.model_weapons[le->left];
+			add.model = cls.modelPool[le->left];
 
 			add.tagent = R_GetFreeEntity() + 2 + (le->right != NONE);
 			add.tagname = "tag_lweapon";
@@ -81,7 +81,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 			memset(&add, 0, sizeof(add));
 
 			add.alpha = le->alpha;
-			add.model = cls.model_weapons[le->right];
+			add.model = cls.modelPool[le->right];
 
 			add.tagent = R_GetFreeEntity() + 2;
 			add.tagname = "tag_rweapon";

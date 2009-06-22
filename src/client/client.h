@@ -191,14 +191,10 @@ typedef struct client_static_s {
 	CURL *curl;
 
 	/** these models must only be loaded once */
-	struct model_s *model_weapons[MAX_OBJDEFS];
+	struct model_s *modelPool[MAX_OBJDEFS];
 
 	/** this pool is reloaded on every sound system restart */
-	s_sample_t *sound_pool[MAX_SOUNDIDS];
-
-	/** Used in team assignment screen to tell if we are assigning soldiers or heavy equipment (ugvs/tanks) */
-	/** @todo this doesn't belong here */
-	qboolean displayHeavyEquipmentList;
+	s_sample_t *soundPool[MAX_SOUNDIDS];
 
 	/* unique character id */
 	int nextUniqueCharacterNumber;

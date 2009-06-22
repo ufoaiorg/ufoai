@@ -399,17 +399,17 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 			/* were we already in the water? */
 			if (le->positionContents & CONTENTS_WATER) {
 				/* play water moving sound */
-				S_PlaySample(le->origin, cls.sound_pool[SOUND_WATER_OUT], SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
+				S_PlaySample(le->origin, cls.soundPool[SOUND_WATER_OUT], SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
 			} else {
 				/* play water entering sound */
-				S_PlaySample(le->origin, cls.sound_pool[SOUND_WATER_IN], SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
+				S_PlaySample(le->origin, cls.soundPool[SOUND_WATER_IN], SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
 			}
 			return;
 		}
 
 		if (le->positionContents & CONTENTS_WATER) {
 			/* play water leaving sound */
-			S_PlaySample(le->origin, cls.sound_pool[SOUND_WATER_MOVE], SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
+			S_PlaySample(le->origin, cls.soundPool[SOUND_WATER_MOVE], SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
 		}
 	}
 }
@@ -754,7 +754,7 @@ void LE_PlaceItem (le_t *le)
 	 * deactivated */
 	if (FLOOR(le)) {
 		const objDef_t *biggest = LE_BiggestItem(FLOOR(le));
-		le->model1 = cls.model_weapons[biggest->idx];
+		le->model1 = cls.modelPool[biggest->idx];
 		if (!le->model1)
 			Com_Error(ERR_DROP, "Model for item %s is not precached in the cls.model_weapons array",
 				biggest->id);

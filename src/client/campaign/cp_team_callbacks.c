@@ -304,7 +304,7 @@ static void CL_AssignSoldier_f (void)
 	int relativeId = 0;
 	int num;
 	const employeeType_t employeeType =
-		cls.displayHeavyEquipmentList
+		ccs.displayHeavyEquipmentList
 			? EMPL_ROBOT
 			: EMPL_SOLDIER;
 
@@ -429,7 +429,7 @@ static void CL_ActorTeamSelect_f (void)
 	character_t *chr;
 	int num;
 	int relativeId = 0;
-	const employeeType_t employeeType = cls.displayHeavyEquipmentList
+	const employeeType_t employeeType = ccs.displayHeavyEquipmentList
 			? EMPL_ROBOT : EMPL_SOLDIER;
 	base_t *base = B_GetCurrentSelectedBase();
 

@@ -1773,7 +1773,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		if (addLeftHandWeapon) {
 			memset(&add, 0, sizeof(add));
 
-			add.model = cls.model_weapons[le->left];
+			add.model = cls.modelPool[le->left];
 			if (!add.model)
 				Com_Error(ERR_DROP, "Actor model for left hand weapon wasn't found");
 
@@ -1790,7 +1790,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			memset(&add, 0, sizeof(add));
 
 			add.alpha = le->alpha;
-			add.model = cls.model_weapons[le->right];
+			add.model = cls.modelPool[le->right];
 			if (!add.model)
 				Com_Error(ERR_DROP, "Actor model for right hand weapon wasn't found");
 

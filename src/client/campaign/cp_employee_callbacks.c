@@ -273,7 +273,7 @@ static void E_ChangeName_f (void)
 int E_GenerateHiredEmployeesList (const base_t *base)
 {
 	const employeeType_t employeeType =
-		cls.displayHeavyEquipmentList
+		ccs.displayHeavyEquipmentList
 			? EMPL_ROBOT
 			: EMPL_SOLDIER;
 

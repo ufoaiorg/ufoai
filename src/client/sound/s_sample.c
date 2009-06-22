@@ -159,7 +159,7 @@ void S_LoadSamples (void)
 	}
 
 	/* precache the sound pool */
-	cls.sound_pool[SOUND_WATER_IN] = S_LoadSample("footsteps/water_in");
-	cls.sound_pool[SOUND_WATER_OUT] = S_LoadSample("footsteps/water_out");
-	cls.sound_pool[SOUND_WATER_MOVE] = S_LoadSample("footsteps/water_under");
+	cls.soundPool[SOUND_WATER_IN] = S_LoadSample("footsteps/water_in");
+	cls.soundPool[SOUND_WATER_OUT] = S_LoadSample("footsteps/water_out");
+	cls.soundPool[SOUND_WATER_MOVE] = S_LoadSample("footsteps/water_under");
 }
