@@ -262,6 +262,7 @@ typedef struct objDef_s {
 	qboolean isMisc;
 	qboolean isUGVitem;
 	qboolean isDummy;
+	qboolean doNotAddWeaponToHand;	/**< True if the weapon should not be visible when adding the actor to the battlescape - e.g. used for the bloodspider weapon definition */
 
 	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 

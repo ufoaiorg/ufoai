@@ -946,6 +946,7 @@ static const value_t od_vals[] = {
 	{"is_misc", V_BOOL, offsetof(objDef_t, isMisc), MEMBER_SIZEOF(objDef_t, isMisc)},
 	{"is_ugvitem", V_BOOL, offsetof(objDef_t, isUGVitem), MEMBER_SIZEOF(objDef_t, isUGVitem)},
 	{"is_dummy", V_BOOL, offsetof(objDef_t, isDummy), MEMBER_SIZEOF(objDef_t, isDummy)},
+	{"nohand", V_BOOL, offsetof(objDef_t, doNotAddWeaponToHand), MEMBER_SIZEOF(objDef_t, doNotAddWeaponToHand)},
 
 	{NULL, V_NULL, 0, 0}
 };
