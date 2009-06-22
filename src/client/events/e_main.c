@@ -63,51 +63,53 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note Functions must be sorted by node name
  */
 const eventRegister_t events[] = {
-	{EV_NULL, "EV_NULL", "", NULL, NULL},
-	{EV_RESET, "EV_RESET", "bb", CL_Reset, NULL},
-	{EV_START, "EV_START", "b", CL_StartGame, NULL},
-	{EV_START_DONE, "EV_START_DONE", "", CL_StartingGameDone, NULL},
-	{EV_ENDROUND, "EV_ENDROUND", "b", CL_DoEndRound, NULL},
-	{EV_ENDROUNDANNOUNCE, "EV_ENDROUNDANNOUNCE", "bb", CL_EndRoundAnnounce, NULL},
+#define E(x) x, STRINGIFY(x)
+	{E(EV_NULL), "", NULL, NULL},
+	{E(EV_RESET), "bb", CL_Reset, NULL},
+	{E(EV_START), "b", CL_StartGame, NULL},
+	{E(EV_START_DONE), "", CL_StartingGameDone, NULL},
+	{E(EV_ENDROUND), "b", CL_DoEndRound, NULL},
+	{E(EV_ENDROUNDANNOUNCE), "bb", CL_EndRoundAnnounce, NULL},
 
-	{EV_RESULTS, "EV_RESULTS", "", CL_ParseResults, NULL}, /* manually parsed */
-	{EV_CENTERVIEW, "EV_CENTERVIEW", "g", CL_CenterView, NULL},
+	{E(EV_RESULTS), "", CL_ParseResults, NULL}, /* manually parsed */
+	{E(EV_CENTERVIEW), "g", CL_CenterView, NULL},
 
-	{EV_ENT_APPEAR, "EV_ENT_APPEAR", "sbg", CL_EntAppear, NULL},
-	{EV_ENT_PERISH, "EV_ENT_PERISH", "s", CL_EntPerish, NULL},
-	{EV_ADD_BRUSH_MODEL, "EV_ADD_BRUSH_MODEL", "sssbppsb", CL_AddBrushModel, NULL},
-	{EV_ADD_EDICT, "EV_ADD_EDICT", "sspp", CL_AddEdict, NULL},
+	{E(EV_ENT_APPEAR), "sbg", CL_EntAppear, NULL},
+	{E(EV_ENT_PERISH), "s", CL_EntPerish, NULL},
+	{E(EV_ADD_BRUSH_MODEL), "sssbppsb", CL_AddBrushModel, NULL},
+	{E(EV_ADD_EDICT), "sspp", CL_AddEdict, NULL},
 
-	{EV_ACTOR_APPEAR, "EV_ACTOR_APPEAR", "!s!sbbbbgbssssbsbbbs", CL_ActorAppear, CL_ActorAppearTime},
-	{EV_ACTOR_ADD, "EV_ACTOR_ADD", "!sbbbbgsb", CL_ActorAdd, NULL},
-	{EV_ACTOR_TURN, "EV_ACTOR_TURN", "sb", CL_ActorDoTurn, NULL},
-	{EV_ACTOR_MOVE, "EV_ACTOR_MOVE", "!sbbs", CL_ActorDoMove, NULL}, /* Don't use this format string - see CL_ActorDoMove for more info */
+	{E(EV_ACTOR_APPEAR), "!s!sbbbbgbssssbsbbbs", CL_ActorAppear, CL_ActorAppearTime},
+	{E(EV_ACTOR_ADD), "!sbbbbgsb", CL_ActorAdd, NULL},
+	{E(EV_ACTOR_TURN), "sb", CL_ActorDoTurn, NULL},
+	{E(EV_ACTOR_MOVE), "!sbbs", CL_ActorDoMove, NULL}, /* Don't use this format string - see CL_ActorDoMove for more info */
 
-	{EV_ACTOR_START_SHOOT, "EV_ACTOR_START_SHOOT", "ssbbbgg", CL_ActorStartShoot, NULL},
-	{EV_ACTOR_SHOOT, "EV_ACTOR_SHOOT", "sssbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime}, /**< @sa NET_WriteDir */
-	{EV_ACTOR_SHOOT_HIDDEN, "EV_ACTOR_SHOOT_HIDDEN", "bsbb", CL_ActorShootHidden, CL_ActorShootHiddenTime},
-	{EV_ACTOR_THROW, "EV_ACTOR_THROW", "ssbbbpp", CL_ActorDoThrow, CL_ActorDoThrowTime},
+	{E(EV_ACTOR_START_SHOOT), "ssbbbgg", CL_ActorStartShoot, NULL},
+	{E(EV_ACTOR_SHOOT), "sssbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime}, /**< @sa NET_WriteDir */
+	{E(EV_ACTOR_SHOOT_HIDDEN), "bsbb", CL_ActorShootHidden, CL_ActorShootHiddenTime},
+	{E(EV_ACTOR_THROW), "ssbbbpp", CL_ActorDoThrow, CL_ActorDoThrowTime},
 
-	{EV_ACTOR_DIE, "EV_ACTOR_DIE", "sss", CL_ActorDie, NULL},
-	{EV_ACTOR_STATS, "EV_ACTOR_STATS", "!sbsbb", CL_ActorStats, NULL},
-	{EV_ACTOR_STATECHANGE, "EV_ACTOR_STATECHANGE", "ss", CL_ActorStateChange, NULL},
+	{E(EV_ACTOR_DIE), "sss", CL_ActorDie, NULL},
+	{E(EV_ACTOR_STATS), "!sbsbb", CL_ActorStats, NULL},
+	{E(EV_ACTOR_STATECHANGE), "ss", CL_ActorStateChange, NULL},
 
-	{EV_INV_ADD, "EV_INV_ADD", "s*", CL_InvAdd, NULL},
-	{EV_INV_DEL, "EV_INV_DEL", "sbbb", CL_InvDel, NULL},
-	{EV_INV_AMMO, "EV_INV_AMMO", "sbbbbb", CL_InvAmmo, NULL},
-	{EV_INV_RELOAD, "EV_INV_RELOAD", "sbbbbb", CL_InvReload, NULL},
-	{EV_INV_HANDS_CHANGED, "EV_INV_HANDS_CHANGED", "ss", CL_InvCheckHands, NULL},
-	{EV_INV_TRANSFER, "EV_INV_TRANSFER", "sbsbbbb", NULL, NULL},
+	{E(EV_INV_ADD), "s*", CL_InvAdd, NULL},
+	{E(EV_INV_DEL), "sbbb", CL_InvDel, NULL},
+	{E(EV_INV_AMMO), "sbbbbb", CL_InvAmmo, NULL},
+	{E(EV_INV_RELOAD), "sbbbbb", CL_InvReload, NULL},
+	{E(EV_INV_HANDS_CHANGED), "ss", CL_InvCheckHands, NULL},
+	{E(EV_INV_TRANSFER), "sbsbbbb", NULL, NULL},
 
-	{EV_MODEL_EXPLODE, "EV_MODEL_EXPLODE", "s", CL_Explode, NULL},
-	{EV_MODEL_EXPLODE_TRIGGERED, "EV_MODEL_EXPLODE_TRIGGERED", "s", CL_Explode, NULL},
+	{E(EV_MODEL_EXPLODE), "s", CL_Explode, NULL},
+	{E(EV_MODEL_EXPLODE_TRIGGERED), "s", CL_Explode, NULL},
 
-	{EV_SPAWN_PARTICLE, "EV_SPAWN_PARTICLE", "ss&", CL_ParticleAppear, NULL},
+	{E(EV_SPAWN_PARTICLE), "ss&", CL_ParticleAppear, NULL},
 
-	{EV_DOOR_OPEN, "EV_DOOR_OPEN", "s", CL_DoorOpen, NULL},
-	{EV_DOOR_CLOSE, "EV_DOOR_CLOSE", "s", CL_DoorClose, NULL},
-	{EV_DOOR_ACTION, "EV_DOOR_ACTION", "ss", CL_ActorDoorAction, NULL},
-	{EV_RESET_CLIENT_ACTION, "EV_RESET_CLIENT_ACTION", "s", CL_ActorResetClientAction, NULL},
+	{E(EV_DOOR_OPEN), "s", CL_DoorOpen, NULL},
+	{E(EV_DOOR_CLOSE), "s", CL_DoorClose, NULL},
+	{E(EV_DOOR_ACTION), "ss", CL_ActorDoorAction, NULL},
+	{E(EV_RESET_CLIENT_ACTION), "s", CL_ActorResetClientAction, NULL},
+#undef E
 };
 CASSERT(lengthof(events) == EV_NUM_EVENTS);
 
