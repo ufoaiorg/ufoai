@@ -1130,14 +1130,9 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
  * @brief Performs traces to find a passage between two points given an upper and lower bound.
  * @param[in] map The map's routing data
  * @param[in] actorSize The actor's size
- * @param[in] x Starting x coordinate
- * @param[in] y Starting y coordinate
- * @param[in] z Starting z coordinate
- * @param[in] ax Ending x coordinate
- * @param[in] ay Ending y coordinate
- * @param[in] az Ending z coordinate
- * @param[out] opening_base Actual height in QUANT units of the detected opening.
- * @param[out] stepup Required stepup to travel in this direction.
+ * @param[in] from Starting place
+ * @param[in] to Ending place
+ * @param[out] opening descriptor of the opening found, if any
  * @return The size in QUANT units of the detected opening.
  */
 static int RT_TraceOnePassage (routing_t * map, const int actorSize, place_t* from, place_t* to, opening_t* opening)
@@ -1154,6 +1149,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, place_t* fr
 	az = RT_FindOpening(map, actorSize, from->cell[0], from->cell[1], z, ax, ay, lower, upper, &opening->base, &hi);
 	/* calc opening found so far and set stepup */
 	opening->size = hi - opening->base;
+	az = to->floorZ;
 
 	/* We subtract MIN_STEPUP because that is foot space-
 	 * the opening there only needs to be the microtrace
@@ -1222,7 +1218,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, place_t* fr
  * @param[in] z Starting z coordinate
  * @param[in] ax Ending x coordinate
  * @param[in] ay Ending y coordinate
- * @param[out] opening descritor of the opening found, in any
+ * @param[out] opening descriptor of the opening found, if any
  */
 static void RT_TracePassage (routing_t * map, const int actorSize, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
 {
