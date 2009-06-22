@@ -57,6 +57,7 @@ static void Select_constructToolbar (GtkToolbar* toolbar)
 	toolbar_append_button(toolbar, _("Select inside"), "selection_selectinside.bmp", "SelectInside");
 	toolbar_append_button(toolbar, _("Select whole entity"), "selection_selectentities.bmp", "ExpandSelectionToEntities");
 	toolbar_append_button(toolbar, _("Select all of type"), "selection_selectcompletetall.bmp", "SelectAllOfType");
+	toolbar_append_button(toolbar, _("Select all Faces of same texture"), "selection_selectallsametex.bmp", "SelectAllFacesOfTex");
 }
 
 static void CSG_constructToolbar (GtkToolbar* toolbar)
