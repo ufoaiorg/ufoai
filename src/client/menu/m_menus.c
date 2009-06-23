@@ -203,6 +203,10 @@ int MN_CompleteWithMenu (const char *partial, const char **match)
  */
 menuNode_t* MN_PushMenu (const char *name, const char *parentName)
 {
+	/* fix mn_active if nothing is set */
+	if (!strcmp(mn_active->string, ""))
+		Cvar_Set("mn_active", name);
+
 	return MN_PushMenuDelete(name, parentName, qtrue);
 }
 
