@@ -744,7 +744,7 @@ namespace
 		KEYVALLIST_COLUMN_KEY,
 		KEYVALLIST_COLUMN_VALUE,
 		KEYVALLIST_COLUMN_STYLE, /**< pango weigth value used to bold classname rows */
-		KEYVALLIST_COLUMN_KEY_PREPARED, /**< flag indicating whether combo for key has been prepared */
+		KEYVALLIST_COLUMN_KEY_EDITABLE, /**< flag indicating whether key should be editable (has no value yet) */
 
 		KEYVALLIST_MAX_COLUMN
 	};
@@ -1128,7 +1128,7 @@ static void EntityInspector_updateKeyValueList (void)
 		GtkTreeIter classTreeIter;
 		gtk_tree_store_append(store, &classTreeIter, NULL);
 		gtk_tree_store_set(store, &classTreeIter, KEYVALLIST_COLUMN_KEY, "classname", KEYVALLIST_COLUMN_VALUE,
-				classname.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_BOLD, KEYVALLIST_COLUMN_KEY_PREPARED, FALSE, -1);
+				classname.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_BOLD, KEYVALLIST_COLUMN_KEY_EDITABLE, FALSE, -1);
 		KeyValues possibleValues = classIter->second;
 		for (KeyValues::iterator i = possibleValues.begin(); i != possibleValues.end(); ++i) {
 			GtkTreeIter iter;
@@ -1138,7 +1138,7 @@ static void EntityInspector_updateKeyValueList (void)
 			StringOutputStream value(64);
 			value << ConvertLocaleToUTF8(Values_getFirstValue((*i).second));
 			gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, key.c_str(), KEYVALLIST_COLUMN_VALUE,
-					value.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_PREPARED, FALSE,
+					value.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_EDITABLE, FALSE,
 					-1);
 		}
 	}
@@ -1243,7 +1243,7 @@ static void EntityInspector_addKeyValue (GtkButton *button, gpointer user_data)
 		gtk_tree_store_append(store, &iter, &parent);
 	}
 
-	gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, "", KEYVALLIST_COLUMN_VALUE, "", KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_PREPARED, FALSE, -1);
+	gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, "", KEYVALLIST_COLUMN_VALUE, "", KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_EDITABLE, TRUE, -1);
 	/* expand to have added line visible (for the case parent was not yet expanded because it had no children */
 	gtk_tree_view_expand_all(g_entityInspectorGui.m_viewKeyValues);
 
@@ -1528,47 +1528,6 @@ static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
 }
 
 /**
- * @brief Callback used to determine combobox content for key column.
- * @note if any value is set, renderer will not be editable
- * @param column the column the renderer is associated with
- * @param renderer the renderer that shows content
- * @param model underlying model
- * @param iter pointer to actual line
- * @param user_data unused
- */
-static void EntityKeyValueList_updateKeyCombo (GtkTreeViewColumn *column, GtkCellRenderer *renderer,
-		GtkTreeModel *model, GtkTreeIter *iter, gpointer user_data)
-{
-
-	/* prevent update if already displaying anything */
-	{
-		bool editing;
-		g_object_get(G_OBJECT(renderer), "editing", &editing, (const char*)0);
-		if (editing)
-			return;
-	}
-	char *value, *key;
-	bool initialized;
-	gtk_tree_model_get(model, iter, KEYVALLIST_COLUMN_KEY, &key, KEYVALLIST_COLUMN_VALUE, &value, KEYVALLIST_COLUMN_KEY_PREPARED, &initialized, -1);
-	/* don't allow to edit keys if value is already set to anything (only remove possible) */
-	if (value != 0 && strlen(value) > 0) {
-		g_object_set(renderer, "editable", FALSE, (const char*)0);
-	} else {
-		g_object_set(renderer, "editable", TRUE, (const char*)0);
-	}
-	/* set combo store and set initial value (current key)*/
-	GtkListStore* store = gtk_list_store_new(1, G_TYPE_STRING);
-	GtkTreeIter storeIter;
-	gtk_list_store_append(store, &storeIter);
-	gtk_list_store_set(store, &storeIter, 0, key, -1);
-	g_object_set(renderer, "model", GTK_TREE_MODEL(store), "text-column", 0, (const char*) 0);
-	g_object_unref( G_OBJECT (store));
-	/** @todo disable edit of combo iff we got parse problems solved */
-	/*		g_object_set(renderer, "has-entry", FALSE, (const char*)0); */
-
-}
-
-/**
  * @brief Callback for "editing-started" signal for key column used to update combo renderer with appropriate values.
  *
  * @param renderer combo renderer used for editing
@@ -1604,7 +1563,15 @@ static void EntityKeyValueList_keyEditingStarted (GtkCellRenderer *renderer,
 	}
 }
 
-static void EntityKeyValueList_updateValueCombo (GtkCellRenderer *renderer,
+/**
+ * @brief Callback for "editing-started" signal for value column used to update combo renderer with appropriate values.
+ *
+ * @param renderer combo renderer used for editing
+ * @param editable unused
+ * @param path unused
+ * @param user_data unused
+ */
+static void EntityKeyValueList_valueEditingStarted (GtkCellRenderer *renderer,
 		GtkCellEditable *editable, const gchar *path , gpointer *user_data)
 {
 	// prevent update if already displaying anything
@@ -1626,9 +1593,11 @@ static void EntityKeyValueList_updateValueCombo (GtkCellRenderer *renderer,
 	}
 	KeyValues possibleValues = (*it).second;
 	KeyValues::const_iterator keyIter = possibleValues.find(key);
-	// end means we don't have it actually in this map, so this is a valid new key
-	GtkListStore* store = gtk_list_store_new(1, G_TYPE_STRING);
+	GtkListStore* store;
+	g_object_get(renderer, "model", &store, (char*)0);
+	gtk_list_store_clear(store);
 	GtkTreeIter storeIter;
+	// end means we don't have it actually in this map, so this is a valid new key
 	if (keyIter != possibleValues.end()) {
 		Values values = (*keyIter).second;
 		for (Values::const_iterator valueIter = values.begin(); valueIter != values.end(); valueIter++) {
@@ -1639,8 +1608,6 @@ static void EntityKeyValueList_updateValueCombo (GtkCellRenderer *renderer,
 		gtk_list_store_append(store, &storeIter);
 		gtk_list_store_set(store, &storeIter, 0, "", -1);
 	}
-	g_object_set(renderer, "model", GTK_TREE_MODEL(store), "text-column", 0, (const char*)0);
-	g_object_unref(G_OBJECT(store));
 }
 
 GtkWidget* EntityInspector_constructNotebookTab (void)
@@ -1743,9 +1710,15 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Key"), renderer, "text",
 						KEYVALLIST_COLUMN_KEY, (char const*) 0);
 				gtk_tree_view_column_add_attribute(column, renderer, "weight", KEYVALLIST_COLUMN_STYLE);
-				gtk_tree_view_column_set_cell_data_func(column, renderer, EntityKeyValueList_updateKeyCombo, NULL, NULL);
+				gtk_tree_view_column_add_attribute(column, renderer, "editable", KEYVALLIST_COLUMN_KEY_EDITABLE);
+				{
+					GtkListStore* rendererStore = gtk_list_store_new(1, G_TYPE_STRING);
+					g_object_set(renderer, "model", GTK_TREE_MODEL(rendererStore), "text-column", 0, (const char*) 0);
+					g_object_unref( G_OBJECT (rendererStore));
+				}
 				gtk_tree_view_append_column(view, column);
-				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
+				/** @todo there seems to be a display problem with has-entries for worldspawn attributes using windows , check that */
+				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, "has-entry", FALSE, (char const*) 0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityKeyEdited), (gpointer) view);
 				g_signal_connect(G_OBJECT(renderer), "editing-canceled", G_CALLBACK(entityKeyEditCanceled), (gpointer) view);
 				g_signal_connect(G_OBJECT(renderer), "editing-started", G_CALLBACK(EntityKeyValueList_keyEditingStarted), (gpointer) view);
@@ -1757,9 +1730,14 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 						"text", KEYVALLIST_COLUMN_VALUE, (char const*) 0);
 				gtk_tree_view_column_add_attribute(column, renderer, "weight", KEYVALLIST_COLUMN_STYLE);
 				gtk_tree_view_append_column(view, column);
+				{
+					GtkListStore* rendererStore = gtk_list_store_new(1, G_TYPE_STRING);
+					g_object_set(renderer, "model", GTK_TREE_MODEL(rendererStore), "text-column", 0, (const char*) 0);
+					g_object_unref( G_OBJECT (rendererStore));
+				}
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityValueEdited), (gpointer) view);
-				g_signal_connect(G_OBJECT(renderer), "editing-started", G_CALLBACK(EntityKeyValueList_updateValueCombo), (gpointer) view);
+				g_signal_connect(G_OBJECT(renderer), "editing-started", G_CALLBACK(EntityKeyValueList_valueEditingStarted), (gpointer) view);
 			}
 
 			{
