@@ -33,19 +33,19 @@ window singleplayer
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		onClick		{ cmd "game_exit; mn_push campaigns;" }
+		onClick		{ cmd "mn_push campaigns;" }
 	}
 
 	button button_skirmish
 	{
+		string	"_Skirmish"
 		pos	"640 240"
 		size "256 64"
-		onClick	{ cmd "mn_push skirmish;" }
 		image	ui/button_green_big
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
-		string	"_Skirmish"
+		onClick	{ cmd "mn_push skirmish;" }
 	}
 
 	button button_back
