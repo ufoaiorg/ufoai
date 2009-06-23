@@ -330,7 +330,7 @@ entity worldspawn {
 	}
 
 	type {
-		max_teams		"UNSIGNED V_INT"
+		maxteams		"UNSIGNED V_INT"
 		maxlevel		"UNSIGNED V_INT"
 		quant			"UNSIGNED V_INT"
 		subdivide		"UNSIGNED V_INT"
@@ -348,7 +348,7 @@ entity worldspawn {
 	}
 
 	default {
-		max_teams		"2"
+		maxteams		"2"
 		angles_night	"-80 220"
 		angles_day		"-75 100"
 		ambient_night	"0.07 0.07 0.08"
