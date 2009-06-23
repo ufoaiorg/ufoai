@@ -103,8 +103,9 @@ void GAME_SetMode (int gametype)
 		Com_Printf("Shutdown gametype '%s'\n", list->name);
 		list->shutdown();
 
-		/* option menu are the same everywhere when shutting down a game type */
-		MN_InitStack("main", "", qtrue, qtrue);
+		/* we dont need to go back to "main" stack if we are already on this stack */
+		if (!MN_IsMenuOnStack("main"))
+			MN_InitStack("main", "", qtrue, qtrue);
 	}
 
 	cls.gametype = gametype;
