@@ -703,7 +703,7 @@ static void MN_FireInit_f (void)
 
 void MN_InitMenus (void)
 {
-	mn_main = Cvar_Get("mn_main", "main", 0, "This is the main menu id that is at the very first menu stack - also see mn_active");
+	mn_main = Cvar_Get("mn_main", "", 0, "This is the main menu id that is at the very first menu stack - also see mn_active");
 	mn_active = Cvar_Get("mn_active", "", 0, "The active menu we will return to when hitting esc once - also see mn_main");
 
 	/* add command */
