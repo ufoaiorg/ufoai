@@ -866,7 +866,6 @@ static void CL_SendChangedUserinfos (void)
  * @note handles multiplayer and singleplayer
  *
  * @return true when we are in battlefield
- * @todo Check cvar mn_main for value
  */
 qboolean CL_OnBattlescape (void)
 {
