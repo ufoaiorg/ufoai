@@ -33,7 +33,7 @@ int CL_ActorShootHiddenTime (const eventRegister_t *self, struct dbuffer *msg, c
 	const objDef_t *obj;
 	int weap_fds_idx, fd_idx;
 
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &objIdx, &weap_fds_idx, &fd_idx);
+	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weap_fds_idx, &fd_idx);
 
 	obj = INVSH_GetItemByIDX(objIdx);
 	if (first) {

@@ -130,6 +130,36 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 			parsedDeath = qfalse;
 		}
 		break;
+	case EV_ACTOR_MOVE:
+		{
+			le_t *le;
+			int number, i;
+			int time = 0;
+			int pathLength;
+
+			number = NET_ReadShort(msg);
+			/* get le */
+			le = LE_Get(number);
+			if (!le)
+				LE_NotFoundError(number);
+
+			pathLength = NET_ReadByte(msg);
+
+			/* Also skip the final position */
+			NET_ReadByte(msg);
+			NET_ReadByte(msg);
+			NET_ReadByte(msg);
+
+			for (i = 0; i < pathLength; i++) {
+				const byte fulldv = NET_ReadByte(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
+				const byte dir = getDVdir(fulldv);
+				/** @todo pos and oldpos aren't working */
+				time += LE_ActorGetStepTime(le, dir, NET_ReadShort(msg));
+				NET_ReadShort(msg);
+			}
+			nextTime += time + 300;
+		}
+		break;
 	case EV_ACTOR_SHOOT:
 		{
 			const fireDef_t	*fd;

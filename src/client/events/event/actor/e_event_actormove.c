@@ -26,6 +26,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_le.h"
 #include "e_event_actormove.h"
 
+int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
+{
+#if 0
+	le_t *le;
+	int number, i;
+	int time = cl.time;
+
+	number = NET_ReadShort(msg);
+	/* get le */
+	le = LE_Get(number);
+	if (!le)
+		LE_NotFoundError(number);
+
+	for (i = 0; i < le->pathLength; i++) {
+		const byte fulldv = le->path[i];
+		const byte dir = getDVdir(fulldv);
+		time += LE_ActorGetStepTime(le, dir, le->pathPos);
+	}
+
+	return time;
+#else
+	return cl.time;
+#endif
+}
+
 /**
  * @brief Moves actor.
  * @param[in] msg The netchannel message
@@ -48,7 +73,10 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 			number, le ? le->type : -1);
 
 	if (LE_IsDead(le))
-		Com_Error(ERR_DROP, "Can't move, actor dead\n");
+		Com_Error(ERR_DROP, "Can't move, actor dead");
+
+	if (le->pathLength > 0)
+		Com_Error(ERR_DROP, "Actor is still moving");
 
 	le->pathLength = NET_ReadByte(msg);
 	if (le->pathLength >= MAX_LE_PATHLENGTH)

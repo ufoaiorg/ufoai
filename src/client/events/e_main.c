@@ -82,7 +82,7 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_APPEAR), "!s!sbbbbgbssssbsbbbs", CL_ActorAppear, CL_ActorAppearTime},
 	{E(EV_ACTOR_ADD), "!sbbbbgsb", CL_ActorAdd, NULL},
 	{E(EV_ACTOR_TURN), "sb", CL_ActorDoTurn, NULL},
-	{E(EV_ACTOR_MOVE), "!sbbs", CL_ActorDoMove, NULL}, /* Don't use this format string - see CL_ActorDoMove for more info */
+	{E(EV_ACTOR_MOVE), "!sbbs", CL_ActorDoMove, CL_ActorDoMoveTime}, /* Don't use this format string - see CL_ActorDoMove for more info */
 
 	{E(EV_ACTOR_START_SHOOT), "ssbbbgg", CL_ActorStartShoot, NULL},
 	{E(EV_ACTOR_SHOOT), "sssbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime}, /**< @sa NET_WriteDir */
