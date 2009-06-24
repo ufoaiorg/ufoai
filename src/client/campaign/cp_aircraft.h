@@ -166,13 +166,13 @@ typedef struct aircraft_s {
 	int idx;			/**< Global index of this aircraft. See also ccs.numAircraft and AIRCRAFT_INVALID
 						 * this index is also updated when AIR_DeleteAircraft was called
 						 * for all the other aircraft.
-						 * For aircraftTemplates[] aicrafts this is the index in that array.
+						 * For aircraftTemplates[] aircraft this is the index in that array.
 						 * this should be references only with the variable name aircraftIdx
 						 * to let us find references all over the code easier @sa AIR_DeleteAircraft  */
 	struct aircraft_s *tpl;	/**< Self-link in aircraft_sample list (i.e. templates). */
 	char *id;			/**< Internal id from script file. */
-	char *name;			/**< Translateable name. */
-	char *shortname;	/**< Translateable shortname (being used in small popups). */
+	char *name;			/**< Translatable name. */
+	char *shortname;	/**< Translatable shortname (being used in small popups). */
 	char *image;		/**< Image on geoscape. */
 	char *model;		/**< Model used on geoscape */
 	aircraftType_t type;/**< Type of aircraft, see aircraftType_t. */
@@ -219,7 +219,7 @@ typedef struct aircraft_s {
 								 * The mission the UFO is involved if this is a UFO */
 	char *missionID;			/**< if this is a crashsite, we need the string here
 								 * this is needed because we won't find the ufocrash mission
-								 * in the parsed missions in csi.missions until we loaded the campaign */
+								 * in the parsed missions in @c ccs.missions until we loaded the campaign */
 	struct base_s *baseTarget;	/**< Target of the aircraft. NULL if the target is an aircraft */
 	struct installation_s *installationTarget;		/**< Target of the aircraft. NULL if the target is an aircraft */
 	struct aircraft_s *aircraftTarget;		/**< Target of the aircraft (ufo or phalanx) */

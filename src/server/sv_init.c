@@ -1038,7 +1038,7 @@ static const char* SV_GetMapTitle (const char* const mapname)
 			if (mAsm->title[0] == '_')
 				return mAsm->title + 1;
 			else {
-				Com_Printf("The assembly title '%s' is not marked as translateable\n", mAsm->title);
+				Com_Printf("The assembly title '%s' is not marked as translatable\n", mAsm->title);
 				return mAsm->title;
 			}
 		}

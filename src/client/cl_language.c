@@ -45,7 +45,7 @@ typedef struct localeMapping_s {
  */
 typedef struct language_s {
 	char *localeID;			/**< short locale id */
-	char *localeString;		/**< translateable locale string to show in menus */
+	char *localeString;		/**< translatable locale string to show in menus */
 	localeMapping_t *localeMapping;	/**< mapping to real locale string for setlocale */
 	struct language_s *next;	/**< next language in this list */
 } language_t;
@@ -123,7 +123,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 			language = NULL;
 		} else {
 			if (*token != '_') {
-				Com_Printf("CL_ParseLanguages: language: '%s' - not marked translateable (%s) - ignore it\n", name, token);
+				Com_Printf("CL_ParseLanguages: language: '%s' - not marked translatable (%s) - ignore it\n", name, token);
 				continue;
 			}
 			language = Mem_PoolAlloc(sizeof(*language), cl_genericPool, 0);

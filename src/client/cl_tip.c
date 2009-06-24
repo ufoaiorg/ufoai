@@ -106,7 +106,7 @@ void CL_ParseTipsOfTheDay (const char *name, const char **text)
 		if (*token == '}')
 			break;
 		if (*token != '_') {
-			Com_Printf("Ignore tip: '%s' - not marked translateable\n", token);
+			Com_Printf("Ignore tip: '%s' - not marked translatable\n", token);
 			continue;
 		}
 		tip = Mem_PoolAlloc(sizeof(*tip), cl_genericPool, 0);

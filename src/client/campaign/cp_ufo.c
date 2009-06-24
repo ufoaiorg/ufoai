@@ -43,7 +43,7 @@ typedef struct ufoTypeList_s {
 /**
  * @brief Valid ufo types
  * @note Use the same values for the names as we are already using in the scriptfiles
- * here, otherwise they are not translateable because they don't appear in the po files
+ * here, otherwise they are not translatable because they don't appear in the po files
  * @note Every ufotype (id) that doesn't have nogeoscape set to true must have an assembly
  * in the ufocrash[dn].ump files
  */

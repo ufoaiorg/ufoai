@@ -96,7 +96,7 @@ typedef struct msgCategoryEntry_s {
 
 typedef struct msgCategory_s {
 	int idx;				/**< self-link */
-	const char *id;			/**< script file id / translateable category name */
+	const char *id;			/**< script file id / translatable category name */
 	qboolean isFolded;		/**< flag indicating that category is folded and so it is not visible in menu */
 	msgCategoryEntry_t *first;
 	msgCategoryEntry_t *last;

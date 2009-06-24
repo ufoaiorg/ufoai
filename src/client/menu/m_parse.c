@@ -637,11 +637,11 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		if (property->type == V_TRANSLATION_STRING) {
 			/* selectbox values are static arrays */
 			char *target = (char*) valuePtr;
-			const char *translateableToken = *token;
+			const char *translatableToken = *token;
 			assert(property->size);
-			if (translateableToken[0] == '_')
-				translateableToken++;
-			Q_strncpyz(target, translateableToken, property->size);
+			if (translatableToken[0] == '_')
+				translatableToken++;
+			Q_strncpyz(target, translatableToken, property->size);
 		} else {
 			result = Com_ParseValue(object, *token, property->type, property->ofs, property->size, &bytes);
 			if (result != RESULT_OK) {

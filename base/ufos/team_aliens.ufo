@@ -12,7 +12,7 @@
 // race		Race of the team (see CL_GetAlienRaceByID() for available values). Default value is phalanx race.
 // robot	Team is a robot team
 // tech		Tech id to link
-// name		Translateable team name
+// name		Translatable team name
 // size		Actorsize
 // ==================
 // Things to come:

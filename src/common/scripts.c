@@ -522,7 +522,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 }
 
 /**
- * @note translateable string are marked with _ at the beginning
+ * @note translatable string are marked with _ at the beginning
  * @code menu exampleName
  * {
  *   string "_this is translatable"
@@ -1787,7 +1787,7 @@ static void Com_ParseActorNames (const char *name, const char **text, teamDef_t*
 					if (*token == '}')
 						break;
 
-					/* some names can be translateable */
+					/* some names can be translatable */
 					if (*token == '_')
 						token++;
 					LIST_AddString(&td->names[i], token);

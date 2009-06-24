@@ -18,7 +18,7 @@
 
 // TODO/FIXME: Is the model parameter needed in the armour definitions?
 
-// if the damage type starts with _ it is marked as translateable and thus shown
+// if the damage type starts with _ it is marked as translatable and thus shown
 // in the menus, if there is no such character the damagetype will not be shown.
 
 damagetypes standard

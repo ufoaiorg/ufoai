@@ -429,7 +429,7 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 }
 
 /**
- * @brief Translates the aircraft status id to a translateable string
+ * @brief Translates the aircraft status id to a translatable string
  * @param[in] aircraft Aircraft to translate the status of
  * @return Translation string of given status.
  * @note Called in: CL_AircraftList_f(), AIR_ListAircraft_f(), AIR_AircraftSelect(),
