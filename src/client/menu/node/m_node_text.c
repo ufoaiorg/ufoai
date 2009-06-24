@@ -280,7 +280,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			/* don't draw images that would be out of visible area */
 			if (y + height > y1 && fullSizeY >= EXTRADATA(node).super.viewPosY) {
 				/** @todo (menu) we should scale the height here with font->height, too */
-				image = MN_DrawNormImageByName(x1, y1, 0, 0, 0, 0, 0, 0, node->textalign, token);
+				image = MN_DrawNormImageByName(x1, y1, 0, 0, 0, 0, 0, 0, ALIGN_UL, token);
 				if (image)
 					x1 += image->height;
 			}
