@@ -19,8 +19,8 @@
 ./client/campaign/cp_market_callbacks.c
 ./client/campaign/cp_messageoptions.c
 ./client/campaign/cp_messages.c
-./client/campaign/cp_missions.c
 ./client/campaign/cp_mission_triggers.c
+./client/campaign/cp_missions.c
 ./client/campaign/cp_nation.c
 ./client/campaign/cp_nations.c
 ./client/campaign/cp_popup.c
@@ -50,10 +50,13 @@
 ./client/cl_irc.c
 ./client/cl_language.c
 ./client/cl_main.c
-./client/cl_parse.c
 ./client/cl_screen.c
 ./client/cl_team.c
 ./client/cl_view.c
+./client/events/event/actor/e_event_actorappear.c
+./client/events/event/actor/e_event_actordie.c
+./client/events/event/player/e_event_doendround.c
+./client/events/event/player/e_event_endroundannounce.c
 ./client/menu/m_main.c
 ./client/menu/m_menus.c
 ./client/menu/m_tooltip.c
