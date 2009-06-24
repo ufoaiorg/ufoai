@@ -239,7 +239,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	float dist, minDist;
 	float bestActionPoints, dmg, maxDmg, bestTime = -1, vis;
 	const objDef_t *ad;
-	int stillSearching = 1;
 
 	bestActionPoints = 0.0;
 	memset(aia, 0, sizeof(*aia));
@@ -402,6 +401,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
 			byte minX, maxX, minY, maxY;
 			const byte crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+			qboolean stillSearching = qtrue;
 			/* reward short walking to shooting spot, when seen by enemies; */
 			/** @todo do this decently, only penalizing the visible part of walk
 			 * and penalizing much more for reaction shooters around;
@@ -431,26 +431,26 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
 						continue;
 
-					stillSearching = 0;
+					stillSearching = qfalse;
 					tu -= delta;
 					break;
 				}
 				if (!stillSearching)
 					break;
 			}
-		}
 
-		if (stillSearching) {
-			/* nothing found */
-			VectorCopy(to, ent->pos);
-			gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
-			/** @todo Try to crouch if no hiding spot was found - randomized */
-		} else {
-			/* found a hiding spot */
-			VectorCopy(ent->pos, aia->stop);
-			bestActionPoints += GUETE_HIDE;
-			/** @todo also add bonus for fleeing from reaction fire
-			 * and a huge malus if more than 1 move under reaction */
+			if (stillSearching) {
+				/* nothing found */
+				VectorCopy(to, ent->pos);
+				gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
+				/** @todo Try to crouch if no hiding spot was found - randomized */
+			} else {
+				/* found a hiding spot */
+				VectorCopy(ent->pos, aia->stop);
+				bestActionPoints += GUETE_HIDE;
+				/** @todo also add bonus for fleeing from reaction fire
+				 * and a huge malus if more than 1 move under reaction */
+			}
 		}
 	}
 

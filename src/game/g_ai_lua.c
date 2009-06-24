@@ -23,9 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-/* uncomment this to try the new lua driven ai */
-/*#define LUA_AI*/
-
 #include "g_local.h"
 #include "g_ai.h"
 #include "lua/lauxlib.h"
@@ -315,17 +312,17 @@ static int actorL_shoot (lua_State *L)
  */
 static int actorL_face (lua_State *L)
 {
-#if 0
 	aiActor_t *target;
 
 	assert(lua_isactor(L, 1));
 
-	/** @todo Get the target */
+	/* Target */
+	target = lua_toactor(L, 1);
 
 	AI_TurnIntoDirection(AIL_ent, target->ent->pos);
 
+	/* Success. */
 	lua_pushboolean(L, 1);
-#endif
 	return 1;
 }
 
@@ -543,7 +540,7 @@ static int AIL_see (lua_State *L)
 	edict_t *check;
 	aiActor_t target;
 	edict_t *sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
-	float dist_lookup[MAX_EDICTS];
+	float distLookup[MAX_EDICTS];
 
 	/* Defaults. */
 	team = TEAM_NO_ACTIVE;
@@ -595,7 +592,7 @@ static int AIL_see (lua_State *L)
 		if (check->inuse && G_IsLivingActor(check) && AIL_ent != check
 		 && vision == 0 /* Vision checks. */
 		 && (team == TEAM_NO_ACTIVE || check->team == team)) {/* Check for team match if needed. */
-			dist_lookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
+			distLookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
 			unsorted[n++] = check;
 		}
 
@@ -604,7 +601,7 @@ static int AIL_see (lua_State *L)
 		cur = -1;
 		for (j = 0; j < n; j++) { /* Check for closest */
 			/* Is shorter then current minimum? */
-			if ((cur < 0) || (dist_lookup[j] < dist_lookup[cur])) {
+			if (cur < 0 || distLookup[j] < distLookup[cur]) {
 				/* Check if not already in sorted. */
 				for (k = 0; k < i; k++)
 					if (sorted[k] == unsorted[j])
