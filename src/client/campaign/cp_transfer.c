@@ -561,25 +561,25 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	case TRANS_TYPE_ALIEN:
 		if (B_GetBuildingStatus(destbase, B_ALIEN_CONTAINMENT)) {
 			for (i = 0; i < ccs.numAliensTD; i++) {
-				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amount_dead > 0) {
+				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amountDead > 0) {
 					if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer, %i left)"),
 						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), td.trAliensTmp[i][TRANS_ALIEN_DEAD],
-						srcbase->alienscont[i].amount_dead);
+						srcbase->alienscont[i].amountDead);
 					else
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i available)"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), srcbase->alienscont[i].amount_dead);
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), srcbase->alienscont[i].amountDead);
 					LIST_AddString(&transferList, str);
 					cnt++;
 				}
-				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amount_alive > 0) {
+				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amountAlive > 0) {
 					if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i for transfer, %i left)"),
 						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), td.trAliensTmp[i][TRANS_ALIEN_ALIVE],
-						srcbase->alienscont[i].amount_alive);
+						srcbase->alienscont[i].amountAlive);
 					else
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i available)"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), srcbase->alienscont[i].amount_alive);
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), srcbase->alienscont[i].amountAlive);
 					LIST_AddString(&transferList, str);
 					cnt++;
 				}
@@ -680,7 +680,7 @@ static void TR_TransferListClear_f (void)
 		if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
 			AL_ChangeAliveAlienNumber(base, &(base->alienscont[i]), td.trAliensTmp[i][TRANS_ALIEN_ALIVE]);
 		if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
-			base->alienscont[i].amount_dead += td.trAliensTmp[i][TRANS_ALIEN_DEAD];
+			base->alienscont[i].amountDead += td.trAliensTmp[i][TRANS_ALIEN_DEAD];
 	}
 
 	/* Clear temporary cargo arrays. */
@@ -746,8 +746,8 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 			}
 			for (i = 0; i < MAX_EMPL; i++) {
 				for (j = 0; j < ccs.numEmployees[i]; j++) {
-					if (transfer->trEmployees[i][j]) {
-						employee_t *employee = transfer->trEmployees[i][j];
+					if (transfer->employeeArray[i][j]) {
+						employee_t *employee = transfer->employeeArray[i][j];
 						employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 						/* every employee that we have transfered should have a
 						 * base he is hire in - otherwise we couldn't have transfered him */
@@ -760,8 +760,8 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 		} else {
 			for (i = 0; i < MAX_EMPL; i++) {
 				for (j = 0; j < ccs.numEmployees[i]; j++) {
-					if (transfer->trEmployees[i][j]) {
-						employee_t *employee = transfer->trEmployees[i][j];
+					if (transfer->employeeArray[i][j]) {
+						employee_t *employee = transfer->employeeArray[i][j];
 						employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 						/* every employee that we have transfered should have a
 						 * base he is hire in - otherwise we couldn't have transfered him */
@@ -786,7 +786,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 					AL_ChangeAliveAlienNumber(destination, &(destination->alienscont[i]), transfer->alienAmount[i][TRANS_ALIEN_ALIVE]);
 				}
 				if (transfer->alienAmount[i][TRANS_ALIEN_DEAD] > 0)
-					destination->alienscont[i].amount_dead += transfer->alienAmount[i][TRANS_ALIEN_DEAD];
+					destination->alienscont[i].amountDead += transfer->alienAmount[i][TRANS_ALIEN_DEAD];
 			}
 		}
 	}
@@ -872,26 +872,26 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	alienCargoTypes = AL_GetAircraftAlienCargoTypes(td.transferStartAircraft);
 	cargo = AL_GetAircraftAlienCargo(td.transferStartAircraft);
 	for (i = 0; i < alienCargoTypes; i++, cargo++) {		/* Aliens. */
-		if (cargo->amount_alive > 0) {
+		if (cargo->amountAlive > 0) {
 			for (j = 0; j < ccs.numAliensTD; j++) {
 				if (!CHRSH_IsTeamDefAlien(&csi.teamDef[j]))
 					continue;
 				if (base->alienscont[j].teamDef == cargo->teamDef) {
 					transfer->hasAliens = qtrue;
-					transfer->alienAmount[j][TRANS_ALIEN_ALIVE] = cargo->amount_alive;
-					cargo->amount_alive = 0;
+					transfer->alienAmount[j][TRANS_ALIEN_ALIVE] = cargo->amountAlive;
+					cargo->amountAlive = 0;
 					break;
 				}
 			}
 		}
-		if (cargo->amount_dead > 0) {
+		if (cargo->amountDead > 0) {
 			for (j = 0; j < ccs.numAliensTD; j++) {
 				if (!CHRSH_IsTeamDefAlien(&csi.teamDef[j]))
 					continue;
 				if (base->alienscont[j].teamDef == cargo->teamDef) {
 					transfer->hasAliens = qtrue;
-					transfer->alienAmount[j][TRANS_ALIEN_DEAD] = cargo->amount_dead;
-					cargo->amount_dead = 0;
+					transfer->alienAmount[j][TRANS_ALIEN_DEAD] = cargo->amountDead;
+					cargo->amountDead = 0;
 					break;
 				}
 			}
@@ -1071,7 +1071,7 @@ static void TR_TransferStart_f (void)
 				assert(employee->baseHired == base);
 
 				E_ResetEmployee(employee);
-				transfer->trEmployees[i][j] = employee;
+				transfer->employeeArray[i][j] = employee;
 				employee->baseHired = NULL;
 				employee->transfer = qtrue;
 			}
@@ -1267,16 +1267,16 @@ static void TR_TransferListSelect_f (void)
 		if (!B_GetBuildingStatus(td.transferBase, B_ALIEN_CONTAINMENT))
 			return;
 		for (i = 0; i < ccs.numAliensTD; i++) {
-			if (base->alienscont[i].teamDef && base->alienscont[i].amount_dead > 0) {
+			if (base->alienscont[i].teamDef && base->alienscont[i].amountDead > 0) {
 				if (cnt == num) {
 					td.trAliensTmp[i][TRANS_ALIEN_DEAD]++;
 					/* Remove the corpse from Alien Containment. */
-					base->alienscont[i].amount_dead--;
+					base->alienscont[i].amountDead--;
 					break;
 				}
 				cnt++;
 			}
-			if (base->alienscont[i].teamDef && base->alienscont[i].amount_alive > 0) {
+			if (base->alienscont[i].teamDef && base->alienscont[i].amountAlive > 0) {
 				if (cnt == num) {
 					if (TR_CheckAlien(i, td.transferBase)) {
 						td.trAliensTmp[i][TRANS_ALIEN_ALIVE]++;
@@ -1592,7 +1592,7 @@ static void TR_CargoListSelect_f (void)
 			if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 				if (cnt == num) {
 					td.trAliensTmp[i][TRANS_ALIEN_DEAD]--;
-					base->alienscont[i].amount_dead++;
+					base->alienscont[i].amountDead++;
 					break;
 				}
 				cnt++;
@@ -1806,7 +1806,7 @@ static void TR_ListTransfers_f (void)
 			for (j = 0; j < MAX_EMPL; j++) {
 				int k;
 				for (k = 0; k < MAX_EMPLOYEES; k++) {
-					const struct employee_s *employee = transfer->trEmployees[j][k];
+					const struct employee_s *employee = transfer->employeeArray[j][k];
 					if (!employee)
 						continue;
 					if (employee->ugv) {
@@ -1894,11 +1894,11 @@ qboolean TR_SaveXML (mxml_node_t *p)
 			for (j = 0; j < MAX_EMPL; j++) {
 				int k;
 				for (k = 0; k < MAX_EMPLOYEES; k++) {
-					if (transfer->trEmployees[j][k]) {
+					if (transfer->employeeArray[j][k]) {
 						mxml_node_t *ss = mxml_AddNode(s, "employee");
 						mxml_AddInt(ss, "group", j);
 						mxml_AddInt(ss, "empl", k);
-						mxml_AddInt(ss, "idx", transfer->trEmployees[j][k]->idx);
+						mxml_AddInt(ss, "idx", transfer->employeeArray[j][k]->idx);
 					}
 				}
 			}
@@ -1955,7 +1955,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		transfer->hasAircraft = qfalse;
 		memset(transfer->itemAmount, 0, sizeof(transfer->itemAmount));
 		memset(transfer->alienAmount, 0, sizeof(transfer->alienAmount));
-		memset(transfer->trEmployees, 0, sizeof(transfer->trEmployees));
+		memset(transfer->employeeArray, 0, sizeof(transfer->employeeArray));
 		memset(transfer->aircraftArray, TRANS_LIST_EMPTY_SLOT, sizeof(transfer->aircraftArray));
 
 		/* If there is at last one element, hasItems is true */
@@ -1993,10 +1993,10 @@ qboolean TR_LoadXML (mxml_node_t *p)
 				const int empl = mxml_GetInt(ss, "empl", 0);
 				if (group >= 0 && group < MAX_EMPL && empl >= 0 && empl < MAX_EMPLOYEES) {
 					if (emplIdx >= 0) {
-						transfer->trEmployees[group][empl] = &ccs.employees[group][emplIdx];
-						transfer->trEmployees[group][empl]->transfer = qtrue;
+						transfer->employeeArray[group][empl] = &ccs.employees[group][emplIdx];
+						transfer->employeeArray[group][empl]->transfer = qtrue;
 					} else {
-						transfer->trEmployees[group][empl] = NULL;
+						transfer->employeeArray[group][empl] = NULL;
 					}
 				}
 			}

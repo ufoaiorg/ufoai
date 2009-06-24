@@ -52,7 +52,7 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 	assert(ufocraft);
 	assert(base);
 
-	if (ccs.missionresults.crashsite) {
+	if (ccs.missionResults.crashsite) {
 		/* take the source mail and create a copy of it */
 		mail = CL_NewEventMail("ufo_crashed_report", va("ufo_crashed_report%i", ccs.date.sec), NULL);
 		if (!mail)
@@ -96,7 +96,7 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 	assert(mail);
 
 	/* don't free the old mail body here - it's the string of the source mail */
-	mail->body = Mem_PoolStrDup(va(_(mail->body), UFO_TypeToName(ccs.missionresults.ufotype), base->name, body), cp_campaignPool, 0);
+	mail->body = Mem_PoolStrDup(va(_(mail->body), UFO_TypeToName(ccs.missionResults.ufotype), base->name, body), cp_campaignPool, 0);
 
 	/* update subject */
 	/* Insert name of the mission in the template */
@@ -249,10 +249,10 @@ static void CP_UFOCrashed_f (void)
 		cargo[aircraft->itemtypes].amount = comp->itemAmount2[i];
 		aircraft->itemtypes++;
 	}
-	/* Put relevant info into missionresults array. */
-	ccs.missionresults.recovery = qtrue;
-	ccs.missionresults.crashsite = qtrue;
-	ccs.missionresults.ufotype = ufocraft->ufotype;
+	/* Put relevant info into missionResults array. */
+	ccs.missionResults.recovery = qtrue;
+	ccs.missionResults.crashsite = qtrue;
+	ccs.missionResults.ufotype = ufocraft->ufotype;
 
 	/* send mail */
 	UR_SendMail(ufocraft, aircraft->homebase);

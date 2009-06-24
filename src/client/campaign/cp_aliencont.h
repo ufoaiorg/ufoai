@@ -49,16 +49,16 @@ typedef enum {
 /** structure of Alien Containment being a member of base_t */
 typedef struct aliensCont_s {
 	const teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
-	int amount_alive;		/**< Amount of live captured aliens. */
-	int amount_dead;		/**< Amount of alien corpses. */
+	int amountAlive;		/**< Amount of live captured aliens. */
+	int amountDead;		/**< Amount of alien corpses. */
 	technology_t *tech;		/**< Related technology. */
 } aliensCont_t;
 
 /** alien cargo in aircraft_t, carrying aliens and bodies from a mission to base */
 typedef struct aliensTmp_s {
 	const teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
-	int amount_alive;		/**< Amount of live captured aliens. */
-	int amount_dead;		/**< Amount of alien corpses. */
+	int amountAlive;		/**< Amount of live captured aliens. */
+	int amountDead;		/**< Amount of alien corpses. */
 } aliensTmp_t;
 
 /**

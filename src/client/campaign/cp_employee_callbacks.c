@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 /** Currently selected employee. @sa cl_employee.h */
-employee_t *selectedEmployee = NULL;
+static employee_t *selectedEmployee = NULL;
 /* Holds the current active employee category */
 static int employeeCategory = 0;
 

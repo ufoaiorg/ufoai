@@ -122,9 +122,9 @@ qboolean AL_AddAlienTypeToAircraftCargo (const aircraft_t *aircraft, const teamD
 	cargo[index].teamDef = teamDef;
 
 	if (dead)
-		cargo[index].amount_dead += amount;
+		cargo[index].amountDead += amount;
 	else
-		cargo[index].amount_alive += amount;
+		cargo[index].amountAlive += amount;
 
 	return qtrue;
 }
@@ -153,8 +153,8 @@ void AL_FillInContainment (base_t *base)
 		if (counter >= MAX_ALIENCONT_CAP)
 			Com_Error(ERR_DROP, "Overflow in AL_FillInContainment");
 		containment[counter].teamDef = &csi.teamDef[i];	/* Link to global race index. */
-		containment[counter].amount_alive = 0;
-		containment[counter].amount_dead = 0;
+		containment[counter].amountAlive = 0;
+		containment[counter].amountDead = 0;
 		/* for sanity checking */
 		containment[counter].tech = RS_GetTechByID(csi.teamDef[i].tech);
 		if (!containment[counter].tech)
@@ -243,16 +243,16 @@ void AL_AddAliens (aircraft_t *aircraft)
 			assert(tobase->alienscont[j].teamDef);
 			assert(cargo[i].teamDef);
 			if (tobase->alienscont[j].teamDef == cargo[i].teamDef) {
-				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
+				tobase->alienscont[j].amountDead += cargo[i].amountDead;
 				/* Add breathing apparatuses to aircraft cargo so that they are processed with other collected items */
-				AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amount_dead);
-				if (cargo[i].amount_alive <= 0)
+				AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amountDead);
+				if (cargo[i].amountAlive <= 0)
 					continue;
 				if (!alienBreathing && !cargo[i].teamDef->robot) {
 					/* We can not store living (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
-					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
+					tobase->alienscont[j].amountDead += cargo[i].amountAlive;
 					/* Add breathing apparatuses as well */
-					AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amount_alive);
+					AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amountAlive);
 					/* only once */
 					if (!messageAlreadySet) {
 						MS_AddNewMessage(_("Notice"), _("You can't hold live aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
@@ -263,7 +263,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 						ccs.breathingMailSent = qtrue;
 					}
 				} else {
-					for (k = 0; k < cargo[i].amount_alive; k++) {
+					for (k = 0; k < cargo[i].amountAlive; k++) {
 						/* Check base capacity. */
 						if (AL_CheckAliveFreeSpace(tobase, NULL, 1)) {
 							AL_ChangeAliveAlienNumber(tobase, &(tobase->alienscont[j]), 1);
@@ -276,7 +276,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 								limit = qtrue;
 							}
 							/* Just kill aliens which don't fit the limit. */
-							tobase->alienscont[j].amount_dead++;
+							tobase->alienscont[j].amountDead++;
 							AII_CollectItem(aircraft, alienBreathingObjDef, 1);
 						}
 					}
@@ -298,14 +298,14 @@ void AL_AddAliens (aircraft_t *aircraft)
 			Sys_Error("AL_AddAliens: Failed to initialize the tech for '%s'\n", tobase->alienscont[i].teamDef->name);
 #endif
 		/* we need this to let RS_Collected_ return true */
-		if (tobase->alienscont[i].amount_alive + tobase->alienscont[i].amount_dead > 0)
+		if (tobase->alienscont[i].amountAlive + tobase->alienscont[i].amountDead > 0)
 			RS_MarkCollected(tech);
 #ifdef DEBUG
 		/* print all of them */
-		if (tobase->alienscont[i].amount_alive > 0)
-			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[i].teamDef->name, tobase->alienscont[i].amount_alive);
-		if (tobase->alienscont[i].amount_dead > 0)
-			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[i].teamDef->name, tobase->alienscont[i].amount_dead);
+		if (tobase->alienscont[i].amountAlive > 0)
+			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[i].teamDef->name, tobase->alienscont[i].amountAlive);
+		if (tobase->alienscont[i].amountDead > 0)
+			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[i].teamDef->name, tobase->alienscont[i].amountDead);
 #endif
 	}
 
@@ -342,8 +342,8 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 			while (amount > 0) {
 				/* Find the type with maxamount. */
 				for (j = 0; j < ccs.numAliensTD; j++) {
-					if (maxamount < containment[j].amount_alive) {
-						maxamount = containment[j].amount_alive;
+					if (maxamount < containment[j].amountAlive) {
+						maxamount = containment[j].amountAlive;
 						maxidx = j;
 					}
 				}
@@ -355,7 +355,7 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 				if (maxamount == 1) {
 					/* If only one here, just remove. */
 					AL_ChangeAliveAlienNumber(base, &containment[maxidx], -1);
-					containment[maxidx].amount_dead++;
+					containment[maxidx].amountDead++;
 					--amount;
 				} else {
 					/* If more than one, remove the amount. */
@@ -363,7 +363,7 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 					if (toremove > amount)
 						toremove = amount;
 					AL_ChangeAliveAlienNumber(base, &containment[maxidx], -toremove);
-					containment[maxidx].amount_dead += toremove;
+					containment[maxidx].amountDead += toremove;
 					amount -= toremove;
 				}
 			}
@@ -372,9 +372,9 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 	case AL_KILL:
 		/* We ignore 2nd and 3rd parameter of AL_RemoveAliens() here. */
 		for (j = 0; j < ccs.numAliensTD; j++) {
-			if (containment[j].amount_alive > 0) {
-				containment[j].amount_dead += containment[j].amount_alive;
-				AL_ChangeAliveAlienNumber(base, &containment[j], -containment[j].amount_alive);
+			if (containment[j].amountAlive > 0) {
+				containment[j].amountDead += containment[j].amountAlive;
+				AL_ChangeAliveAlienNumber(base, &containment[j], -containment[j].amountAlive);
 			}
 		}
 		break;
@@ -383,12 +383,12 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 		for (j = 0; j < ccs.numAliensTD; j++) {
 			assert(containment[j].teamDef);
 			if (containment[j].teamDef == alienType) {
-				if (containment[j].amount_alive == 0)
+				if (containment[j].amountAlive == 0)
 					return;
 				/* We are killing only one here, so we
 				 * don't care about amount param.   */
 				AL_ChangeAliveAlienNumber(base, &containment[j], -1);
-				containment[j].amount_dead++;
+				containment[j].amountDead++;
 				break;
 			}
 		}
@@ -412,7 +412,7 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 		for (j = 0; j < ccs.numAliensTD; j++) {
 			assert(containment[j].teamDef);
 			if (containment[j].teamDef == alienType) {
-				containment[j].amount_dead++;
+				containment[j].amountDead++;
 				break;
 			}
 		}
@@ -492,11 +492,11 @@ int AL_GetAlienAmount (const teamDef_t *alienType, requirementType_t reqtype, co
 
 	switch (reqtype) {
 	case RS_LINK_ALIEN:
-		return containment->amount_alive;
+		return containment->amountAlive;
 	case RS_LINK_ALIEN_DEAD:
-		return containment->amount_dead;
+		return containment->amountDead;
 	default:
-		return containment->amount_dead;
+		return containment->amountDead;
 	}
 }
 
@@ -517,7 +517,7 @@ int AL_CountInBase (const base_t *base)
 
 	for (j = 0; j < ccs.numAliensTD; j++) {
 		if (base->alienscont[j].teamDef)
-			amount += base->alienscont[j].amount_alive;
+			amount += base->alienscont[j].amountAlive;
 	}
 
 	return amount;
@@ -541,7 +541,7 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
 			num, base->capacities[CAP_ALIENS].cur, base->capacities[CAP_ALIENS].max,
 			B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT));
 
-	containment->amount_alive += num;
+	containment->amountAlive += num;
 	base->capacities[CAP_ALIENS].cur += num;
 
 #ifdef DEBUG
@@ -572,7 +572,7 @@ qboolean AL_CheckAliveFreeSpace (const base_t *base, const aliensCont_t *contain
 	} else {
 		if (base->capacities[CAP_ALIENS].cur + num < 0)
 			return qfalse;
-		if (containment && (containment->amount_alive + num < 0))
+		if (containment && (containment->amountAlive + num < 0))
 			return qfalse;
 	}
 
@@ -604,7 +604,7 @@ int AL_CountAll (void)
 			continue;
 		for (j = 0; j < ccs.numAliensTD; j++) {
 			if (base->alienscont[j].teamDef)
-				amount += base->alienscont[j].amount_alive;
+				amount += base->alienscont[j].amountAlive;
 		}
 	}
 	return amount;
@@ -624,7 +624,7 @@ void AC_KillAll (base_t *base)
 
 	/* Are there aliens here at all? */
 	for (i = 0; i < ccs.numAliensTD; i++) {
-		if (base->alienscont[i].amount_alive > 0) {
+		if (base->alienscont[i].amountAlive > 0) {
 			aliens = qtrue;
 			break;
 		}

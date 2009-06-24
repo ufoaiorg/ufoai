@@ -61,12 +61,12 @@ typedef enum ntmask_s {
 	NTMASK_NOTIFY = 1 << 0,
 	NTMASK_PAUSE  = 1 << 1,
 	NTMASK_SOUND  = 1 << 2
-} notifymask_t;
+} notifyMask_t;
 
 /** @brief bitmask values for storing msgcategory state */
 typedef enum msgcategorymask_s {
 	MSGCATMASK_FOLDED = 1 << 0
-} msgcategorymask_t;
+} msgCategoryMask_t;
 
 /** @brief notification type: pause game */
 #define MSO_PAUSE (NTMASK_PAUSE | NTMASK_NOTIFY)
@@ -105,7 +105,7 @@ typedef struct msgCategory_s {
 extern messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE];
 extern const char* nt_strings[NT_NUM_NOTIFYTYPE];
 
-struct message_s *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
+message_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, qboolean popup, messageType_t type, void *pedia);
 void MSO_ParseSettings(const char *name, const char **text);
 void MSO_ParseCategories(const char *name, const char **text);
 void MSO_Set(const int listIndex, const notify_t type, const int optionType, const qboolean activate, const qboolean sendCommands);

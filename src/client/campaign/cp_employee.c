@@ -794,12 +794,12 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 				continue;
 			for (j = 0; j < MAX_EMPL; j++) {
 				for (k = 0; k < MAX_EMPLOYEES; k++) {
-					if (transfer->trEmployees[j][k] > employee)
-						transfer->trEmployees[j][k]--;
-					else if (transfer->trEmployees[j][k] == employee)
+					if (transfer->employeeArray[j][k] > employee)
+						transfer->employeeArray[j][k]--;
+					else if (transfer->employeeArray[j][k] == employee)
 						/** @todo This might not work as expected - maybe we
 						 * have to memmove the array */
-						transfer->trEmployees[j][k] = NULL;
+						transfer->employeeArray[j][k] = NULL;
 				}
 			}
 		}

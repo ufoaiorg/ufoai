@@ -61,9 +61,9 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
 			continue;
 		if (base->alienscont[alienidx].teamDef) {
 			if (!alive)
-				amount += base->alienscont[alienidx].amount_dead;
+				amount += base->alienscont[alienidx].amountDead;
 			else
-				amount += base->alienscont[alienidx].amount_alive;
+				amount += base->alienscont[alienidx].amountAlive;
 		}
 	}
 	return amount;
@@ -129,7 +129,7 @@ static void AC_AlienClick (const base_t *base, int num)
 		int i, step;
 
 		for (i = 0, step = 0; i < ccs.numAliensTD; i++) {
-			if (!containment[i].amount_alive && !containment[i].amount_dead)
+			if (!containment[i].amountAlive && !containment[i].amountDead)
 				continue;
 			if (step == num) {
 				num = i;
@@ -199,13 +199,13 @@ static void AC_UpdateMenu (const base_t *base)
 					if (!aliencontCurrent) {
 						aliencontCurrent = &containment[i];
 					}
-					if (containment[i].amount_alive > 0 || containment[i].amount_dead > 0) {
+					if (containment[i].amountAlive > 0 || containment[i].amountDead > 0) {
 						/* Generate a list entry. */
 						if (RS_IsResearched_ptr(tech)) {
 							Cvar_Set(va("mn_ac_statusstr%i", j), _("Already researched"));
 						} else {
 							Cvar_Set(va("mn_ac_statusstr%i", j), _("Needs autopsy!"));
-							if (!containment[i].amount_dead) {
+							if (!containment[i].amountDead) {
 								MN_ExecuteConfunc("aliencontkill %i", j);
 							} else {
 								MN_ExecuteConfunc("aliencontneedautopsy %i", j);
@@ -215,9 +215,9 @@ static void AC_UpdateMenu (const base_t *base)
 						/* Display name in the correct list-entry. */
 						Cvar_Set(va("mn_ac_name%i", j), _(containment[i].teamDef->name));
 						/* Display amount of dead aliens in the correct list-entry. */
-						Cvar_SetValue(va("mn_ac_dead%i", j), containment[i].amount_dead);
+						Cvar_SetValue(va("mn_ac_dead%i", j), containment[i].amountDead);
 						/* Display number of live aliens in the correct list-entry. */
-						Cvar_SetValue(va("mn_ac_alive%i", j), containment[i].amount_alive);
+						Cvar_SetValue(va("mn_ac_alive%i", j), containment[i].amountAlive);
 						j++;
 					}
 				}
@@ -303,7 +303,7 @@ static void AC_KillOne_f (void)
 	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		aliensCont_t *containment = base->alienscont;
 		for (i = 0, step = 0; i < ccs.numAliensTD; i++) {
-			if (!containment[i].amount_alive && !containment[i].amount_dead)
+			if (!containment[i].amountAlive && !containment[i].amountDead)
 				continue;
 			if (step == num) {
 				num = i;

@@ -827,7 +827,7 @@ static void PR_ProductionIncrease_f (void)
 				if (od->tech) {
 					/* Remove the additionally required items (multiplied by 'producibleAmount') from base-storage.*/
 					PR_UpdateRequiredItemsInBasestorage(base, -amount, &od->tech->requireForProduction);
-					prod->items_cached = qtrue;
+					prod->itemsCached = qtrue;
 				}
 
 				if (producibleAmount < amount) {

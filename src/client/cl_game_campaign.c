@@ -300,8 +300,8 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	counts[MRC_CIVILIAN_KILLED] = civilian_killed;
 	counts[MRC_CIVILIAN_FF_KILLED] = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
 	counts[MRC_CIVILIAN_SURVIVOR] = civilian_survivors;
-	counts[MRC_ITEM_GATHEREDTYPES] = ccs.missionresults.itemtypes;
-	counts[MRC_ITEM_GATHEREDAMOUNT] = ccs.missionresults.itemamount;
+	counts[MRC_ITEM_GATHEREDTYPES] = ccs.missionResults.itemtypes;
+	counts[MRC_ITEM_GATHEREDAMOUNT] = ccs.missionResults.itemamount;
 	CP_InitMissionResults(counts, winner == cls.team);
 
 	MN_InitStack("geoscape", "campaign_main", qtrue, qtrue);

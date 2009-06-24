@@ -1409,8 +1409,8 @@ void CP_StartSelectedMission (void)
 
 	mis = ccs.selectedMission;
 
-	/* Before we start, we should clear the missionresults array. */
-	memset(&ccs.missionresults, 0, sizeof(ccs.missionresults));
+	/* Before we start, we should clear the missionResults array. */
+	memset(&ccs.missionResults, 0, sizeof(ccs.missionResults));
 
 	/* Various sanity checks. */
 	if (!mis->active) {
@@ -1631,7 +1631,7 @@ void CL_GameAutoGo (mission_t *mis)
 	CP_ExecuteMissionTrigger(ccs.selectedMission, won);
 
 	/* if a UFO has been recovered, send it to a base */
-	if (won && ccs.missionresults.recovery) {
+	if (won && ccs.missionResults.recovery) {
 		int counts[MAX_MISSIONRESULTCOUNT];
 		memset(counts,0,sizeof(counts));
 		/** @todo set other counts, use the counts above */
@@ -1696,7 +1696,7 @@ void CP_InitMissionResults (int resultCounts[MAX_MISSIONRESULTCOUNT], qboolean w
 	Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), resultCounts[MRC_ITEM_GATHEREDTYPES],
 			resultCounts[MRC_ITEM_GATHEREDAMOUNT]), sizeof(resultText));
 
-	if (won && ccs.missionresults.recovery)
+	if (won && ccs.missionResults.recovery)
 		Q_strcat(resultText, UFO_MissionResultToString(), sizeof(resultText));
 }
 

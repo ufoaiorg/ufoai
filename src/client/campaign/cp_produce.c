@@ -156,7 +156,7 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 
 	assert(base);
 
-	if (prod->items_cached && !prod->aircraft) {
+	if (prod->itemsCached && !prod->aircraft) {
 		/* Get technology of the item in the selected queue-entry. */
 		od = prod->item;
 		if (od->tech) {
@@ -165,7 +165,7 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "PR_QueueDelete: Problem getting technology entry for %i\n", index);
 		}
-		prod->items_cached = qfalse;
+		prod->itemsCached = qfalse;
 	}
 
 	/* Read disassembly to base storage. */
@@ -343,20 +343,20 @@ void PR_ProductionRun (void)
 			if (!prod->aircraft) {
 				/* Not enough money to produce more items in this base. */
 				if (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
-					if (!prod->creditmessage) {
+					if (!prod->creditMessage) {
 						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in base %s.\n"), base->name);
 						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-						prod->creditmessage = qtrue;
+						prod->creditMessage = qtrue;
 					}
 					PR_ProductionRollBottom_f();
 					continue;
 				}
 				/* Not enough free space in base storage for this item. */
 				if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < od->size) {
-					if (!prod->spacemessage) {
+					if (!prod->spaceMessage) {
 						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in base %s. Production postponed.\n"), base->name);
 						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-						prod->spacemessage = qtrue;
+						prod->spaceMessage = qtrue;
 					}
 					PR_ProductionRollBottom_f();
 					continue;
@@ -364,20 +364,20 @@ void PR_ProductionRun (void)
 			} else {
 				/* Not enough money to produce more items in this base. */
 				if (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
-					if (!prod->creditmessage) {
+					if (!prod->creditMessage) {
 						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in base %s.\n"), base->name);
 						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-						prod->creditmessage = qtrue;
+						prod->creditMessage = qtrue;
 					}
 					PR_ProductionRollBottom_f();
 					continue;
 				}
 				/* Not enough free space in hangars for this aircraft. */
 				if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
-					if (!prod->spacemessage) {
+					if (!prod->spaceMessage) {
 						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free hangar space in base %s. Production postponed.\n"), base->name);
 						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-						prod->spacemessage = qtrue;
+						prod->spaceMessage = qtrue;
 					}
 					PR_ProductionRollBottom_f();
 					continue;
@@ -385,10 +385,10 @@ void PR_ProductionRun (void)
 			}
 		} else {		/* This is disassembling. */
 			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(NULL, CL_GetComponentsByItem(prod->item), qtrue)) {
-				if (!prod->spacemessage) {
+				if (!prod->spaceMessage) {
 					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in base %s. Disassembling postponed.\n"), base->name);
 					MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-					prod->spacemessage = qtrue;
+					prod->spaceMessage = qtrue;
 				}
 				PR_ProductionRollBottom_f();
 				continue;
@@ -549,7 +549,7 @@ qboolean PR_SaveXML (mxml_node_t *p)
 			mxml_AddBool(ssnode, "prod", pq->items[j].production);
 			if (aircraft)
 				mxml_AddString(ssnode, "aircraftid", aircraft->id);
-			mxml_AddBool(ssnode, "items_cached", pq->items[j].items_cached);
+			mxml_AddBool(ssnode, "items_cached", pq->items[j].itemsCached);
 		}
 	}
 	return qtrue;
@@ -586,7 +586,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			s2 = mxml_GetString(ssnode, "aircraftid");
 			if (s2 && s2[0] != '\0')
 				pq->items[j].aircraft = AIR_GetAircraft(s2);
-			pq->items[j].items_cached = mxml_GetBool(ssnode, "items_cached", qfalse);
+			pq->items[j].itemsCached = mxml_GetBool(ssnode, "items_cached", qfalse);
 			if (!pq->items[j].item && *s1)
 				Com_Printf("PR_Load: Could not find item '%s'\n", s1);
 			if (!pq->items[j].aircraft && *s2)

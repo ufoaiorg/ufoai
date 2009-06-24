@@ -78,9 +78,6 @@ typedef struct employee_s {
 	ugv_t *ugv;	/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal emplyoees this is NULL. */
 } employee_t;
 
-/* Currently selected employee. */
-extern employee_t *selectedEmployee;
-
 void E_ResetEmployees(void);
 employee_t* E_CreateEmployee(employeeType_t type, struct nation_s *nation, ugv_t *ugvType);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);

@@ -400,10 +400,10 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 			break;
 		}
 	}
-	/* Fill the missionresults array. */
-	ccs.missionresults.itemtypes = aircraft->itemtypes;
+	/* Fill the missionResults array. */
+	ccs.missionResults.itemtypes = aircraft->itemtypes;
 	for (i = 0; i < aircraft->itemtypes; i++)
-		ccs.missionresults.itemamount += cargo[i].amount;
+		ccs.missionResults.itemamount += cargo[i].amount;
 
 #ifdef DEBUG
 	/* Print all of collected items. */
@@ -2492,8 +2492,8 @@ void AIR_SaveAircraftXML (mxml_node_t *node, aircraft_t const aircraft, qboolean
 			mxml_node_t *ssnode = mxml_AddNode(subnode, "cargo");
 			assert(cargo[l].teamDef);
 			mxml_AddString(ssnode, "teamdefid", cargo[l].teamDef->id);
-			mxml_AddInt(ssnode, "alive", cargo[l].amount_alive);
-			mxml_AddInt(ssnode, "dead", cargo[l].amount_dead);
+			mxml_AddInt(ssnode, "alive", cargo[l].amountAlive);
+			mxml_AddInt(ssnode, "dead", cargo[l].amountDead);
 		}
 	}
 }
@@ -2797,8 +2797,8 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 		cargo[l].teamDef = Com_GetTeamDefinitionByID(mxml_GetString(ssnode, "teamdefid"));
 		if (!cargo[l].teamDef)
 			return qfalse;
-		cargo[l].amount_alive = mxml_GetInt(ssnode, "alive", 0);
-		cargo[l].amount_dead  =	mxml_GetInt(ssnode, "dead", 0);
+		cargo[l].amountAlive = mxml_GetInt(ssnode, "alive", 0);
+		cargo[l].amountDead  =	mxml_GetInt(ssnode, "dead", 0);
 	}
 
 	snode = mxml_GetNode(p, "cargo");

@@ -47,7 +47,7 @@ typedef enum {
 	MSG_EVENT,
 
 	MSG_MAX
-} messagetype_t;
+} messageType_t;
 
 /* Russian timestamp (with UTF-8) is 23 bytes long */
 #define TIMESTAMP_TEXT 24
@@ -55,7 +55,7 @@ typedef struct message_s {
 	char title[MAX_VAR];
 	char timestamp[TIMESTAMP_TEXT];
 	char *text;
-	messagetype_t type;
+	messageType_t type;
 	struct technology_s *pedia;		/**< link to UFOpaedia if a research has finished. */
 	struct eventMail_s *eventMail;
 	struct message_s *next;
@@ -63,8 +63,8 @@ typedef struct message_s {
 	int lineUsed;		/**< used my the node to cache the number of lines need (often =1) */
 } message_t;
 
-message_t *MS_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
-message_t *MS_AddNewMessageSound(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia, qboolean playSound);
+message_t *MS_AddNewMessage(const char *title, const char *text, qboolean popup, messageType_t type, void *pedia);
+message_t *MS_AddNewMessageSound(const char *title, const char *text, qboolean popup, messageType_t type, void *pedia, qboolean playSound);
 void MS_MessageInit(void);
 
 extern char cp_messageBuffer[MAX_MESSAGE_TEXT];

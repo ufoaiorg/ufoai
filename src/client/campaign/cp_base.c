@@ -2774,8 +2774,8 @@ qboolean B_SaveXML (mxml_node_t *parent)
 			assert(b->alienscont[k].teamDef);
 			assert(b->alienscont[k].teamDef->id);
 			mxml_AddString(snode, "id", b->alienscont[k].teamDef->id);
-			mxml_AddInt(snode, "amountalive", b->alienscont[k].amount_alive);
-			mxml_AddInt(snode, "amountdead", b->alienscont[k].amount_dead);
+			mxml_AddInt(snode, "amountalive", b->alienscont[k].amountAlive);
+			mxml_AddInt(snode, "amountdead", b->alienscont[k].amountDead);
 		}
 
 	}
@@ -2964,8 +2964,8 @@ qboolean B_LoadXML (mxml_node_t *parent)
 				/* Fill Alien Containment with default values like the tech pointer. */
 				b->alienscont[k].teamDef = Com_GetTeamDefinitionByID(s);
 				if (b->alienscont[k].teamDef) {
-					b->alienscont[k].amount_alive = mxml_GetInt(snode, "amountalive", 0);
-					b->alienscont[k].amount_dead = mxml_GetInt(snode, "amountdead", 0);
+					b->alienscont[k].amountAlive = mxml_GetInt(snode, "amountalive", 0);
+					b->alienscont[k].amountDead = mxml_GetInt(snode, "amountdead", 0);
 				}
 			}
 		}

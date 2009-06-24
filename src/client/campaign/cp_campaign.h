@@ -538,7 +538,7 @@ typedef struct ccs_s {
 
 	campaign_t *curCampaign;			/**< Current running campaign */
 	stats_t campaignStats;
-	missionResults_t missionresults;
+	missionResults_t missionResults;
 
 	campaign_t campaigns[MAX_CAMPAIGNS];
 	int numCampaigns;

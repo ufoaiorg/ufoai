@@ -164,10 +164,10 @@ static void UR_DialogInit_f (void)
 		return;
 	}
 
-	/* Put relevant info into missionresults array. */
-	ccs.missionresults.recovery = qtrue;
-	ccs.missionresults.crashsite = qfalse;
-	ccs.missionresults.ufotype = ufocraft->ufotype;
+	/* Put relevant info into missionResults array. */
+	ccs.missionResults.recovery = qtrue;
+	ccs.missionResults.crashsite = qfalse;
+	ccs.missionResults.ufotype = ufocraft->ufotype;
 
 	/* Prepare related cvars. */
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
