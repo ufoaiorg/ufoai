@@ -92,7 +92,7 @@ static void MN_EKGNodeDraw (menuNode_t *node)
 			}
 		}
 		MN_DrawNormImage(nodepos[0], nodepos[1], size[0], size[1],
-			node->texh[0], node->texh[1], node->texl[0], node->texl[1], ALIGN_UL, image);
+			node->texh[0], node->texh[1], node->texl[0], node->texl[1], image);
 	}
 }
 

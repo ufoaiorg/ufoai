@@ -187,10 +187,10 @@ static void MN_SpinnerNodeDraw (menuNode_t *node)
 
 	/* draw top button */
 	MN_DrawNormImageByName(pos[0], pos[1], SPINNER_WIDTH, BUTTON_TOP_SIZE,
-		topTexX + SPINNER_WIDTH, topTexY + BUTTON_TOP_SIZE, topTexX, topTexY, ALIGN_UL, image);
+		topTexX + SPINNER_WIDTH, topTexY + BUTTON_TOP_SIZE, topTexX, topTexY, image);
 	/* draw bottom button */
 	MN_DrawNormImageByName(pos[0], pos[1] + BUTTON_TOP_SIZE, SPINNER_WIDTH, BUTTON_BOTTOM_SIZE,
-		bottomTexX + SPINNER_WIDTH, bottomTexY + SPINNER_HEIGHT, bottomTexX, bottomTexY + SPINNER_HEIGHT - BUTTON_BOTTOM_SIZE, ALIGN_UL, image);
+		bottomTexX + SPINNER_WIDTH, bottomTexY + SPINNER_HEIGHT, bottomTexX, bottomTexY + SPINNER_HEIGHT - BUTTON_BOTTOM_SIZE, image);
 }
 
 static void MN_SpinnerNodeLoaded (menuNode_t *node)

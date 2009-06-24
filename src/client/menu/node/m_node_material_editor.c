@@ -176,7 +176,7 @@ static void MN_MaterialEditorNodeDraw (menuNode_t *node)
 #undef MARGIN
 		}
 
-		MN_DrawNormImage(imagepos[0], imagepos[1], IMAGE_WIDTH, IMAGE_WIDTH, 0, 0, 0, 0, ALIGN_UL, image);
+		MN_DrawNormImage(imagepos[0], imagepos[1], IMAGE_WIDTH, IMAGE_WIDTH, 0, 0, 0, 0, image);
 
 		cnt++;
 		cntView++;

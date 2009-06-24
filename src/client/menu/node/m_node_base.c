@@ -185,7 +185,7 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 
 			/* draw tile */
 			if (image[0] != '\0')
-				MN_DrawNormImageByName(pos[0], pos[1], width, height, 0, 0, 0, 0, 0, image);
+				MN_DrawNormImageByName(pos[0], pos[1], width, height, 0, 0, 0, 0, image);
 
 			/* only draw for first part of building */
 			if (building && !secondBuilding) {
@@ -238,9 +238,9 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 			vec2_t pos;
 			MN_GetNodeAbsPos(node, pos);
 			if (isLarge) {
-				MN_DrawNormImageByName(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width + width, height, 0, 0, 0, 0, 0, "base/hover2");
+				MN_DrawNormImageByName(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width + width, height, 0, 0, 0, 0, "base/hover2");
 			} else
-				MN_DrawNormImageByName(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width, height, 0, 0, 0, 0, 0, "base/hover");
+				MN_DrawNormImageByName(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width, height, 0, 0, 0, 0, "base/hover");
 		}
 	}
 }

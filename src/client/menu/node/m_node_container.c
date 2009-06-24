@@ -339,7 +339,7 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 		origin[1] -= od->sy * C_UNIT / 2.0;
 
 		/* Draw the image. */
-		MN_DrawNormImageByName(origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, ALIGN_UL, od->image);
+		MN_DrawNormImageByName(origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
 	} else {
 		menuModel_t *menuModel = NULL;
 		const char *modelName = od->model;

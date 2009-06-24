@@ -68,7 +68,7 @@ static void MN_CheckBoxNodeDraw (menuNode_t* node)
 
 	MN_GetNodeAbsPos(node, pos);
 	MN_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
-		texx + node->size[0], texy + node->size[1], texx, texy, ALIGN_UL, image);
+		texx + node->size[0], texy + node->size[1], texx, texy, image);
 }
 
 /**

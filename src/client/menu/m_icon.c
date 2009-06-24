@@ -100,5 +100,5 @@ void MN_DrawIconInBox (menuIcon_t* icon, int status, int posX, int posY, int siz
 	posY += (sizeY - icon->size[1]) / 2;
 
 	MN_DrawNormImageByName(posX, posY, icon->size[0], icon->size[1],
-		texX + icon->size[0], texY + icon->size[1], texX, texY, ALIGN_UL, icon->image);
+		texX + icon->size[0], texY + icon->size[1], texX, texY, icon->image);
 }

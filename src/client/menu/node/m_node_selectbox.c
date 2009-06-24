@@ -118,13 +118,13 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 
 	/* left border */
 	MN_DrawNormImage(nodepos[0], nodepos[1], SELECTBOX_SIDE_WIDTH, node->size[1],
-		SELECTBOX_SIDE_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 0.0f, 0.0f, ALIGN_UL, image);
+		SELECTBOX_SIDE_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 0.0f, 0.0f, image);
 	/* stretched middle bar */
 	MN_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1], node->size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1],
-		12.0f, SELECTBOX_DEFAULT_HEIGHT, 7.0f, 0.0f, ALIGN_UL, image);
+		12.0f, SELECTBOX_DEFAULT_HEIGHT, 7.0f, 0.0f, image);
 	/* right border (arrow) */
 	MN_DrawNormImage(nodepos[0] + node->size[0] - SELECTBOX_RIGHT_WIDTH, nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
-		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, ALIGN_UL, image);
+		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, image);
 	/* draw the label for the current selected option */
 	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
 		if (!strcmp(option->value, ref)) {
@@ -170,15 +170,15 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 	/* drop down menu */
 	/* left side */
 	MN_DrawNormImage(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->u.option.count,
-		7.0f, 28.0f, 0.0f, 21.0f, ALIGN_UL, image);
+		7.0f, 28.0f, 0.0f, 21.0f, image);
 
 	/* stretched middle bar */
 	MN_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * node->u.option.count,
-		16.0f, 28.0f, 7.0f, 21.0f, ALIGN_UL, image);
+		16.0f, 28.0f, 7.0f, 21.0f, image);
 
 	/* right side */
 	MN_DrawNormImage(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->u.option.count,
-		23.0f, 28.0f, 16.0f, 21.0f, ALIGN_UL, image);
+		23.0f, 28.0f, 16.0f, 21.0f, image);
 
 	/* now draw all available options for this selectbox */
 	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
@@ -195,17 +195,17 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 	}
 	/* left side */
 	MN_DrawNormImage(nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
-		7.0f, 32.0f, 0.0f, 28.0f, ALIGN_UL, image);
+		7.0f, 32.0f, 0.0f, 28.0f, image);
 
 	/* stretched middle bar */
 	MN_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
 			SELECTBOX_BOTTOM_HEIGHT,
-		16.0f, 32.0f, 7.0f, 28.0f, ALIGN_UL, image);
+		16.0f, 32.0f, 7.0f, 28.0f, image);
 
 	/* right bottom side */
 	MN_DrawNormImage(nodepos[0] + node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
 		SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
-		23.0f, 32.0f, 16.0f, 28.0f, ALIGN_UL, image);
+		23.0f, 32.0f, 16.0f, 28.0f, image);
 }
 
 /**

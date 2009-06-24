@@ -77,7 +77,7 @@ const struct image_s *MN_LoadImage (const char *name)
 	return image;
 }
 
-void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, const image_t *image)
+void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image)
 {
 	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
 	float imageTexcoords[8];
@@ -125,40 +125,11 @@ void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, f
 	}
 	tl /= image->height;
 
-	/* alignment */
-	if (align > ALIGN_UL && align < ALIGN_LAST) {
-		/* horizontal (0 is left) */
-		switch (align % 3) {
-		case 1:
-			x1 -= nw * 0.5;
-			break;
-		case 2:
-			x1 -= nw;
-			break;
-		}
-
-		/* vertical (0 is upper) */
-		switch ((align % ALIGN_UL_RSL) / 3) {
-		case 1:
-			y1 -= nh * 0.5;
-			break;
-		case 2:
-			y1 -= nh;
-			break;
-		}
-	}
-
 	/* fill the rest of the coordinates to make a rectangle */
 	x4 = x1;
 	x3 = x2 = x1 + nw;
 	y2 = y1;
 	y4 = y3 = y1 + nh;
-
-	/* slanting */
-	if (align >= ALIGN_UL_RSL && align < ALIGN_LAST) {
-		x1 += nh;
-		x2 += nh;
-	}
 
 	imageTexcoords[0] = sl;
 	imageTexcoords[1] = tl;
@@ -190,14 +161,12 @@ void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, f
  * @param[in] th Lower y corner coord of the square to draw
  * @param[in] sl Left x corner coord of the square to draw
  * @param[in] tl Upper y corner coord of the square to draw
- * @param[in] align The alignment we should use for placing the image onto the screen (see align_t)
- * @param[in] blend Enable the blend mode (for alpha channel images)
  * @param[in] name The name of the image - relative to base/pics
  * @sa R_RegisterImage
  * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are adjusted in this function
  */
-const image_t *MN_DrawNormImageByName (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, const char *name)
+const image_t *MN_DrawNormImageByName (float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name)
 {
 	const struct image_s *image;
 
@@ -207,7 +176,7 @@ const image_t *MN_DrawNormImageByName (float x, float y, float w, float h, float
 		return NULL;
 	}
 
-	MN_DrawNormImage(x, y, w, h, sh, th, sl, tl, align, image);
+	MN_DrawNormImage(x, y, w, h, sh, th, sl, tl, image);
 	return image;
 }
 
@@ -250,30 +219,30 @@ void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
 
 	/* draw top (from left to right) */
 	MN_DrawNormImage(pos[0], pos[1], leftWidth, topHeight, texX + firstPos + leftWidth, texY + firstPosY + topHeight,
-		texX + firstPos, texY + firstPosY, ALIGN_UL, image);
+		texX + firstPos, texY + firstPosY, image);
 	MN_DrawNormImage(pos[0] + leftWidth, pos[1], size[0] - leftWidth - rightWidth, topHeight, texX + secondPos + midWidth, texY + firstPosY + topHeight,
-		texX + secondPos, texY + firstPosY, ALIGN_UL, image);
+		texX + secondPos, texY + firstPosY, image);
 	MN_DrawNormImage(pos[0] + size[0] - rightWidth, pos[1], rightWidth, topHeight, texX + thirdPos + rightWidth, texY + firstPosY + topHeight,
-		texX + thirdPos, texY + firstPosY, ALIGN_UL, image);
+		texX + thirdPos, texY + firstPosY, image);
 
 	/* draw middle (from left to right) */
 	y = pos[1] + topHeight;
 	h = size[1] - topHeight - bottomHeight; /* height of middle */
 	MN_DrawNormImage(pos[0], y, leftWidth, h, texX + firstPos + leftWidth, texY + secondPosY + midHeight,
-		texX + firstPos, texY + secondPosY, ALIGN_UL, image);
+		texX + firstPos, texY + secondPosY, image);
 	MN_DrawNormImage(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, texX + secondPos + midWidth, texY + secondPosY + midHeight,
-		texX + secondPos, texY + secondPosY, ALIGN_UL, image);
+		texX + secondPos, texY + secondPosY, image);
 	MN_DrawNormImage(pos[0] + size[0] - rightWidth, y, rightWidth, h, texX + thirdPos + rightWidth, texY + secondPosY + midHeight,
-		texX + thirdPos, texY + secondPosY, ALIGN_UL, image);
+		texX + thirdPos, texY + secondPosY, image);
 
 	/* draw bottom (from left to right) */
 	y = pos[1] + size[1] - bottomHeight;
 	MN_DrawNormImage(pos[0], y, leftWidth, bottomHeight, texX + firstPos + leftWidth, texY + thirdPosY + bottomHeight,
-		texX + firstPos, texY + thirdPosY, ALIGN_UL, image);
+		texX + firstPos, texY + thirdPosY, image);
 	MN_DrawNormImage(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, bottomHeight, texX + secondPos + midWidth, texY + thirdPosY + bottomHeight,
-		texX + secondPos, texY + thirdPosY, ALIGN_UL, image);
+		texX + secondPos, texY + thirdPosY, image);
 	MN_DrawNormImage(pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
-		texX + thirdPos, texY + thirdPosY, ALIGN_UL, image);
+		texX + thirdPos, texY + thirdPosY, image);
 }
 
 /**

@@ -148,7 +148,7 @@ static inline void MN_TabNodeDrawPlain (const char *image, int x, int y, int wid
 {
 	/* Hack sl=1 to not use the pixel on the left border on the texture (create graphic bug) */
 	MN_DrawNormImageByName(x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
-		1 + TILE_SIZE * 0, 0 + TILE_SIZE * type, ALIGN_UL, image);
+		1 + TILE_SIZE * 0, 0 + TILE_SIZE * type, image);
 }
 
 /**
@@ -162,7 +162,7 @@ static inline void MN_TabNodeDrawPlain (const char *image, int x, int y, int wid
 static inline void MN_TabNodeDrawJunction (const char *image, int x, int y, mn_tab_type_t leftType, mn_tab_type_t rightType)
 {
 	MN_DrawNormImageByName(x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
-		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, ALIGN_UL, image);
+		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, image);
 }
 
 static void MN_TabNodeDraw (menuNode_t *node)
