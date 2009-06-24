@@ -2004,6 +2004,7 @@ tech rs_weapon_coilgun
 	{
 		tech rs_skill_sniper
 		tech rs_weapon_bolterrifle
+		tech rs_weapon_needlergun
 	}
 	provides	coilgun
 	time	600
