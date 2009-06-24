@@ -14,13 +14,17 @@ UFO2MAP = 'ufo2map'
 if os.name == 'nt':
     UFO2MAP+= '.exe'
 
+UFO2MAPFLAGS = ' -v 2 -nice 19 -extra'
 URI = 'http://static.ufo.ludwigf.org/maps'
-__version__ = '0.0.4'
+__version__ = '0.0.4.1'
 
 """
 written by Florian Ludwig <dino@phidev.org>
 
 Changelog
+0.0.4.1
+ * be verbose about executing commands
+ * respect new ufo2map argument syntax
 
 0.0.4 serverside work
  * execute ./configure
@@ -43,6 +47,11 @@ Changelog
 
 # TODO: use os.path.join
 
+def run(cmd, mandatory=True):
+    print cmd
+    if os.system(cmd) and mandatory:
+        sys.stderr.write('Faild to run: %s' % cmd)
+        sys.exit(2)
 
 def md5sum(path):
     # to be used carefully with big files
@@ -175,10 +184,6 @@ def gen(args):
 
     # run make maps etc.
     # call separately otherwise linking happens last -> building maps fails
-    def run(cmd):
-        if os.system(cmd):
-            sys.stderr.write('Faild to run: %s' % cmd)
-            sys.exit(2)
     run('sh configure  --disable-client --disable-uforadiant --disable-dedicated')
     run('make clean')
     run('make ufo2map')
@@ -198,14 +203,13 @@ def gen(args):
         os.unlink(test_map)
 
         # taken from build/maps.mk
-        UFO2MAPFLAGS = ' -v 2 -nice 19 -extra'
-        os.system('./ufo2map %s %s' % (UFO2MAPFLAGS, test_map[:-3] + 'map'))
+        run('./ufo2map %s %s' % (UFO2MAPFLAGS, test_map[5:-3] + 'map'))
         if md5sum(test_map) != old_md5:
             sys.stderr.write('Compiler must have changed significant! Compiling all maps again.\n')
             for i in old_maps:
                 os.unlink(i)
 
-    os.system('make maps -j 2')
+    run('make maps -j 2')
     print
 
     # create md5 sums of .map files
