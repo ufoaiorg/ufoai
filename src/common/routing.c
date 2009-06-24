@@ -1222,7 +1222,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, place_t* fr
  */
 static void RT_TracePassage (routing_t * map, const int actorSize, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
 {
-	int aboveCeil, belowCeil, lowCeil;
+	int aboveCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
 	place_t from, to, above;
 	place_t* placeToCheck = NULL;
@@ -1230,9 +1230,8 @@ static void RT_TracePassage (routing_t * map, const int actorSize, const int x, 
 	RT_PlaceInit(map, actorSize, &from, x, y, z);
 	RT_PlaceInit(map, actorSize, &to, ax, ay, z);
 
-	belowCeil = to.ceiling;
-	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : belowCeil;
-	lowCeil = min(from.ceiling, (RT_CEILING(map, actorSize, ax, ay, z) == 0 || belowCeil - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : belowCeil);
+	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
+	lowCeil = min(from.ceiling, (RT_CEILING(map, actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
 
 	/*
 	 * First check the ceiling for the cell beneath the adjacent floor to see
