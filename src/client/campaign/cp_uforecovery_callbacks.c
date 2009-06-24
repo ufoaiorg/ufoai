@@ -116,7 +116,7 @@ static void UR_DialogSelectStorageBase (const int num)
 	} else {
 		ufoRecovery.selectedStorage = &ufoRecovery.replaceUFOs[num - ufoRecovery.baseHasUFOHangarCount];
 		Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked replace ufo %s from base %s\n",
-				ufoRecovery.selectedStorage->ufoTemplate->name, ufoRecovery.selectedStorage->base->name);
+				ufoRecovery.selectedStorage->ufoTemplate->id, ufoRecovery.selectedStorage->base->name);
 		ufoRecovery.base = ufoRecovery.selectedStorage->base;
 		MN_ExecuteConfunc("btbaserepl_enable");
 	}

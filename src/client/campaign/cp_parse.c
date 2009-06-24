@@ -541,9 +541,9 @@ static void CL_ParseComponents (const char *name, const char **text)
 	memset(comp, 0, sizeof(*comp));
 
 	/* set standard values */
-	Q_strncpyz(comp->asId, name, sizeof(comp->asId));
-	comp->asItem = INVSH_GetItemByID(comp->asId);
-	Com_DPrintf(DEBUG_CLIENT, "CL_ParseComponents: linked item: %s with components: %s\n", name, comp->asId);
+	Q_strncpyz(comp->assemblyId, name, sizeof(comp->assemblyId));
+	comp->assemblyItem = INVSH_GetItemByID(comp->assemblyId);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ParseComponents: linked item: %s with components: %s\n", name, comp->assemblyId);
 
 	do {
 		/* get the name type */
@@ -564,9 +564,9 @@ static void CL_ParseComponents (const char *name, const char **text)
 
 				/* Parse number of items. */
 				token = Com_Parse(text);
-				comp->item_amount[comp->numItemtypes] = atoi(token);
+				comp->itemAmount[comp->numItemtypes] = atoi(token);
 				token = Com_Parse(text);
-				comp->item_amount2[comp->numItemtypes] = atoi(token);
+				comp->itemAmount2[comp->numItemtypes] = atoi(token);
 
 				/** @todo Set item links to NONE if needed */
 				/* comp->item_idx[comp->numItemtypes] = xxx */
@@ -596,8 +596,8 @@ components_t *CL_GetComponentsByItem (const objDef_t *item)
 
 	for (i = 0; i < ccs.numComponents; i++) {
 		components_t *comp = &ccs.components[i];
-		if (comp->asItem == item) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_GetComponentsByItem: found components id: %s\n", comp->asId);
+		if (comp->assemblyItem == item) {
+			Com_DPrintf(DEBUG_CLIENT, "CL_GetComponentsByItem: found components id: %s\n", comp->assemblyId);
 			return comp;
 		}
 	}

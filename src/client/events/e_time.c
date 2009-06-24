@@ -151,7 +151,7 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 			NET_ReadByte(msg);
 
 			for (i = 0; i < pathLength; i++) {
-				const byte fulldv = NET_ReadByte(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
+				const byte fulldv = NET_ReadByte(msg);
 				const byte dir = getDVdir(fulldv);
 				/** @todo pos and oldpos aren't working */
 				time += LE_ActorGetStepTime(le, dir, NET_ReadShort(msg));

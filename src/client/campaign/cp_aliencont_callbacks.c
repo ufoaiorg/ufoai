@@ -211,7 +211,7 @@ static void AC_UpdateMenu (const base_t *base)
 								MN_ExecuteConfunc("aliencontneedautopsy %i", j);
 							}
 						}
-						Cvar_SetValue(va("mn_ac_progress%i", j), (1 - tech->time / tech->overalltime) * 100);
+						Cvar_SetValue(va("mn_ac_progress%i", j), (1 - tech->time / tech->overallTime) * 100);
 						/* Display name in the correct list-entry. */
 						Cvar_Set(va("mn_ac_name%i", j), _(containment[i].teamDef->name));
 						/* Display amount of dead aliens in the correct list-entry. */

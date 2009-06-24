@@ -69,8 +69,8 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 		for (i = 0; i < comp->numItemtypes; i++) {
 			compOd = comp->items[i];
 			assert(compOd);
-			if (comp->item_amount2[i] > 0)
-				Q_strcat(body, va(_("  * %i x\t%s\n"), comp->item_amount2[i], compOd->name), sizeof(body));
+			if (comp->itemAmount2[i] > 0)
+				Q_strcat(body, va(_("  * %i x\t%s\n"), comp->itemAmount2[i], compOd->name), sizeof(body));
 		}
 	} else {
 		/* take the source mail and create a copy of it */
@@ -89,7 +89,7 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 		for (i = 0; i < comp->numItemtypes; i++) {
 			compOd = comp->items[i];
 			assert(compOd);
-			if (comp->item_amount[i] > 0)
+			if (comp->itemAmount[i] > 0)
 				Q_strcat(body, va(_("  * %s\n"), compOd->name), sizeof(body));
 		}
 	}
@@ -165,14 +165,14 @@ void UR_Prepare (base_t *base, ufoType_t ufoType)
 			base->capacities[CAP_UFOHANGARS_LARGE].cur++;
 		else
 			/* no more room -- this shouldn't happen as we've used UR_ConditionsForStoring */
-			Com_Printf("UR_Prepare: No room in large UFO hangars to store %s\n", ufocraft->name);
+			Com_Error(ERR_DROP, "UR_Prepare: No room in large UFO hangars to store %s", ufocraft->id);
 	} else {
 		/* Small UFOs can only fit in small UFO hangars */
 		if (base->capacities[CAP_UFOHANGARS_SMALL].max > base->capacities[CAP_UFOHANGARS_SMALL].cur)
 			base->capacities[CAP_UFOHANGARS_SMALL].cur++;
 		else
 			/* no more room -- this shouldn't happen as we've used UR_ConditionsForStoring */
-			Com_Printf("UR_Prepare: No room in small UFO hangars to store %s\n", ufocraft->name);
+			Com_Error(ERR_DROP, "UR_Prepare: No room in small UFO hangars to store %s", ufocraft->id);
 	}
 
 	Com_DPrintf(DEBUG_CLIENT, "UR_Prepare: the recovery entry in global array is done; base: %s, ufotype: %s, date: %i\n",
@@ -243,10 +243,10 @@ static void CP_UFOCrashed_f (void)
 	for (i = 0; i < comp->numItemtypes; i++) {
 		objDef_t *compOd = comp->items[i];
 		assert(compOd);
-		Com_DPrintf(DEBUG_CLIENT, "CP_UFOCrashed_f: Collected %i of %s\n", comp->item_amount2[i], comp->items[i]->id);
+		Com_DPrintf(DEBUG_CLIENT, "CP_UFOCrashed_f: Collected %i of %s\n", comp->itemAmount2[i], comp->items[i]->id);
 		/* Add items to cargo, increase itemtypes. */
 		cargo[aircraft->itemtypes].item = compOd;
-		cargo[aircraft->itemtypes].amount = comp->item_amount2[i];
+		cargo[aircraft->itemtypes].amount = comp->itemAmount2[i];
 		aircraft->itemtypes++;
 	}
 	/* Put relevant info into missionresults array. */

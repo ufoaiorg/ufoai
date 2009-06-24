@@ -64,9 +64,9 @@ void RS_ResearchFinish (technology_t* tech)
 	 * and any later changes may make the content inconsistent for the player.
 	 * @sa RS_MarkOneResearchable */
 	RS_GetDescription(&tech->description);
-	if (tech->pre_description.usedDescription < 0) {
+	if (tech->preDescription.usedDescription < 0) {
 		/* For some reason the research proposal description was not set at this point - we just make sure it _is_ set. */
-		RS_GetDescription(&tech->pre_description);
+		RS_GetDescription(&tech->preDescription);
 	}
 
 	if (tech->finishedResearchEvent && tech->statusResearch != RS_FINISH)
@@ -113,7 +113,7 @@ void RS_MarkOneResearchable (technology_t* tech)
 	 * That's because this is the first the player will see anything from
 	 * the tech and any later changes may make the content (proposal) of the tech inconsistent for the player.
 	 * @sa RS_ResearchFinish */
-	RS_GetDescription(&tech->pre_description);
+	RS_GetDescription(&tech->preDescription);
 	/* tech->description is checked before a research is finished */
 
 	if (tech->mailSent < MAILSENT_PROPOSAL) {
@@ -353,7 +353,7 @@ void RS_MarkResearchable (qboolean init, const base_t* base)
 				assert(base);
 
 				/* All requirements are met. */
-				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, base)) {
+				if (RS_RequirementsMet(&tech->requireAND, &tech->requireOR, base)) {
 					Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
 					if (init && tech->time == 0)
 						tech->mailSent = MAILSENT_PROPOSAL;
@@ -431,12 +431,12 @@ void RS_RequiredLinksAssign (void)
 
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
-		if (tech->require_AND.numLinks)
-			RS_AssignTechLinks(&tech->require_AND);
-		if (tech->require_OR.numLinks)
-			RS_AssignTechLinks(&tech->require_OR);
-		if (tech->require_for_production.numLinks)
-			RS_AssignTechLinks(&tech->require_for_production);
+		if (tech->requireAND.numLinks)
+			RS_AssignTechLinks(&tech->requireAND);
+		if (tech->requireOR.numLinks)
+			RS_AssignTechLinks(&tech->requireOR);
+		if (tech->requireForProduction.numLinks)
+			RS_AssignTechLinks(&tech->requireForProduction);
 	}
 
 	/* Link the redirected technologies to their correct "parents" */
@@ -492,8 +492,8 @@ void RS_InitTree (qboolean load)
 
 		/* Save the idx to the id-names of the different requirement-types for quicker access.
 		 * The id-strings themself are not really needed afterwards :-/ */
-		RS_AssignTechLinks(&tech->require_AND);
-		RS_AssignTechLinks(&tech->require_OR);
+		RS_AssignTechLinks(&tech->requireAND);
+		RS_AssignTechLinks(&tech->requireOR);
 
 		/* Search in correct data/.ufo */
 		switch (tech->type) {
@@ -557,17 +557,17 @@ void RS_InitTree (qboolean load)
 		case RS_CRAFT:
 			found = qfalse;
 			for (j = 0; j < ccs.numAircraftTemplates; j++) {
-				aircraft_t *air_samp = &ccs.aircraftTemplates[j];
+				aircraft_t *aircraftTemplate = &ccs.aircraftTemplates[j];
 				/* This aircraft has been 'provided'  -> get the correct data. */
-				if (!strcmp(tech->provides, air_samp->id)) {
+				if (!strcmp(tech->provides, aircraftTemplate->id)) {
 					found = qtrue;
 					if (!tech->name)
-						tech->name = Mem_PoolStrDup(air_samp->name, cp_campaignPool, 0);
+						tech->name = Mem_PoolStrDup(aircraftTemplate->name, cp_campaignPool, 0);
 					if (!tech->mdl) {	/* DEBUG testing */
-						tech->mdl = Mem_PoolStrDup(air_samp->model, cp_campaignPool, 0);
-						Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: aircraft model \"%s\" \n", air_samp->model);
+						tech->mdl = Mem_PoolStrDup(aircraftTemplate->model, cp_campaignPool, 0);
+						Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: aircraft model \"%s\" \n", aircraftTemplate->model);
 					}
-					air_samp->tech = tech;
+					aircraftTemplate->tech = tech;
 					break;
 				}
 			}
@@ -905,11 +905,11 @@ static void RS_TechnologyList_f (void)
 		Com_Printf("Tech: %s\n", tech->id);
 		Com_Printf("... time      -> %.2f\n", tech->time);
 		Com_Printf("... name      -> %s\n", tech->name);
-		reqs = &tech->require_AND;
+		reqs = &tech->requireAND;
 		Com_Printf("... requires ALL  ->");
 		for (j = 0; j < reqs->numLinks; j++)
 			Com_Printf(" %s (%s) %s", reqs->links[j].id, RS_TechLinkTypeToName(reqs->links[j].type), RS_TechReqToName(&reqs->links[j]));
-		reqs = &tech->require_OR;
+		reqs = &tech->requireOR;
 		Com_Printf("\n");
 		Com_Printf("... requires ANY  ->");
 		for (j = 0; j < reqs->numLinks; j++)
@@ -1046,7 +1046,7 @@ void RS_ResetTechs (void)
 /**
  * @brief The valid definition names in the research.ufo file.
  * @note Handled in parser below.
- * description, pre_description, require_AND, require_OR, up_chapter
+ * description, preDescription, requireAND, requireOR, up_chapter
  */
 static const value_t valid_tech_vars[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(technology_t, name), 0},
@@ -1129,10 +1129,10 @@ void RS_ParseTechnologies (const char *name, const char **text)
 
 	/* Set the default string for descriptions (available even if numDescriptions is 0) */
 	tech->description.text[0] = _("No description available.");
-	tech->pre_description.text[0] = _("No research proposal available.");
+	tech->preDescription.text[0] = _("No research proposal available.");
 	/* Set desc-indices to undef. */
 	tech->description.usedDescription = -1;
-	tech->pre_description.usedDescription = -1;
+	tech->preDescription.usedDescription = -1;
 
 	/* link the variable in */
 	/* tech_hash should be null on the first run */
@@ -1190,7 +1190,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 
 				/* Link to correct list. */
 				if (!strcmp(token, "pre_description")) {
-					descTemp = &tech->pre_description;
+					descTemp = &tech->preDescription;
 				} else {
 					descTemp = &tech->description;
 				}
@@ -1235,11 +1235,11 @@ void RS_ParseTechnologies (const char *name, const char **text)
 			} else if (!strcmp(token, "require_AND") || !strcmp(token, "require_OR") || !strcmp(token, "require_for_production")) {
 				/* Link to correct list. */
 				if (!strcmp(token, "require_AND")) {
-					requiredTemp = &tech->require_AND;
+					requiredTemp = &tech->requireAND;
 				} else if (!strcmp(token, "require_OR")) {
-					requiredTemp = &tech->require_OR;
-				} else { /* It's "require_for_production" */
-					requiredTemp = &tech->require_for_production;
+					requiredTemp = &tech->requireOR;
+				} else { /* It's "requireForProduction" */
+					requiredTemp = &tech->requireForProduction;
 				}
 
 				token = Com_EParse(text, errhead, name);
@@ -1466,7 +1466,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	}
 
 	/* set the overall reseach time to the one given in the ufo-file. */
-	tech->overalltime = tech->time;
+	tech->overallTime = tech->time;
 }
 
 /**

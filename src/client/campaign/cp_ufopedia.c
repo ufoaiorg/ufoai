@@ -79,7 +79,7 @@ static qboolean UP_TechGetsDisplayed (const technology_t *tech)
 {
 	return (RS_IsResearched_ptr(tech)	/* Is already researched OR ... */
 	 || RS_Collected_(tech)	/* ... has collected items OR ... */
-	 || (tech->statusResearchable && tech->pre_description.numDescriptions > 0))
+	 || (tech->statusResearchable && tech->preDescription.numDescriptions > 0))
 	 && tech->type != RS_LOGIC	/* Is no logic block. */
 	 && !tech->redirect;		/* Another technology will get displayed instead of this one. */
 }
@@ -190,7 +190,7 @@ static const char* CL_AircraftSizeToName (int aircraftSize)
 /**
  * @brief Displays the tech tree dependencies in the UFOpaedia
  * @sa UP_Article
- * @todo Add support for "require_AND"
+ * @todo Add support for "requireAND"
  * @todo re-iterate trough logic blocks (i.e. append the tech-names it references recursively)
  */
 static void UP_DisplayTechTree (const technology_t* t)
@@ -199,7 +199,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 	static char upTechtree[1024];
 	const requirements_t *required;
 
-	required = &t->require_AND;
+	required = &t->requireAND;
 	upTechtree[0] = '\0';
 
 	if (required->numLinks <= 0)
@@ -630,10 +630,10 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 			Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
 			/* If researched -> display research text */
 			MN_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->description)));
-			if (tech->pre_description.numDescriptions > 0) {
+			if (tech->preDescription.numDescriptions > 0) {
 				/* Display pre-research text and the buttons if a pre-research text is available. */
 				if (mn_uppretext->integer) {
-					MN_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->pre_description)));
+					MN_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->preDescription)));
 					UP_SetMailHeader(tech, TECHMAIL_PRE, NULL);
 				} else {
 					UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, NULL);
@@ -675,12 +675,12 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 				break;
 			}
 		/* see also UP_TechGetsDisplayed */
-		} else if (RS_Collected_(tech) || (tech->statusResearchable && tech->pre_description.numDescriptions > 0)) {
+		} else if (RS_Collected_(tech) || (tech->statusResearchable && tech->preDescription.numDescriptions > 0)) {
 			/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
 			Cvar_Set("mn_uptitle", _(tech->name));
 			/* Not researched but some items collected -> display pre-research text if available. */
-			if (tech->pre_description.numDescriptions > 0) {
-				MN_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->pre_description)));
+			if (tech->preDescription.numDescriptions > 0) {
+				MN_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->preDescription)));
 				UP_SetMailHeader(tech, TECHMAIL_PRE, NULL);
 			} else {
 				MN_RegisterText(TEXT_UFOPEDIA, _("No pre-research description available."));
@@ -1035,7 +1035,7 @@ static void UP_TechTreeClick_f (void)
 	if (!upCurrentTech)
 		return;
 
-	required_AND = &upCurrentTech->require_AND;
+	required_AND = &upCurrentTech->requireAND;
 	if (num < 0 || num >= required_AND->numLinks)
 		return;
 

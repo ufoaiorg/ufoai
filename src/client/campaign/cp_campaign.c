@@ -1742,8 +1742,8 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 					const rank_t *rank = &ccs.ranks[j];
 					/** @todo (Zenerka 20080301) extend ranks and change calculations here. */
 					if (rank->type == EMPL_SOLDIER && (chr->score.skills[ABILITY_MIND] >= rank->mind)
-					 && (chr->score.kills[KILLED_ALIENS] >= rank->killed_enemies)
-					 && ((chr->score.kills[KILLED_CIVILIANS] + chr->score.kills[KILLED_TEAM]) <= rank->killed_others)) {
+					 && (chr->score.kills[KILLED_ALIENS] >= rank->killedEnemies)
+					 && ((chr->score.kills[KILLED_CIVILIANS] + chr->score.kills[KILLED_TEAM]) <= rank->killedOthers)) {
 						chr->score.rank = j;
 						if (chr->HP > 0)
 							Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s has been promoted to %s.\n"), chr->name, _(rank->name));

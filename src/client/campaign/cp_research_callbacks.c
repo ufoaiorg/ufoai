@@ -114,15 +114,15 @@ static void RS_UpdateInfo (const base_t* base)
 	}
 
 	Cvar_Set("mn_research_selname", _(tech->name));
-	if (tech->overalltime) {
-		if (tech->time > tech->overalltime) {
+	if (tech->overallTime) {
+		if (tech->time > tech->overallTime) {
 			Com_Printf("RS_UpdateInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", tech->id, tech->time,
-					tech->overalltime);
+					tech->overallTime);
 			/* just in case the values got messed up */
-			tech->time = tech->overalltime;
+			tech->time = tech->overallTime;
 		}
-		Cvar_SetValue("mn_research_seltimebar", 100 - (tech->time * 100 / tech->overalltime));
-		Cvar_Set("mn_research_seltime", va(_("Progress: %.1f%%"), 100 - (tech->time * 100 / tech->overalltime)));
+		Cvar_SetValue("mn_research_seltimebar", 100 - (tech->time * 100 / tech->overallTime));
+		Cvar_Set("mn_research_seltime", va(_("Progress: %.1f%%"), 100 - (tech->time * 100 / tech->overallTime)));
 	} else {
 		Cvar_SetValue("mn_research_seltimebar", 0);
 		Cvar_Set("mn_research_seltime", _("Progress: Not available."));
@@ -227,15 +227,15 @@ static void RS_InitGUI (base_t* base, qboolean update)
 				MN_ExecuteConfunc("research_updateitem %i %i %i", i, value, max);
 				/* How many scis are assigned to this tech. */
 				Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
-				if (element->tech->overalltime) {
+				if (element->tech->overallTime) {
 					float percentage;
-					if (element->tech->time > element->tech->overalltime) {
+					if (element->tech->time > element->tech->overallTime) {
 						Com_Printf("RS_InitGUI: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", element->tech->id, element->tech->time,
-							element->tech->overalltime);
+							element->tech->overallTime);
 						/* just in case the values got messed up */
-						element->tech->time = element->tech->overalltime;
+						element->tech->time = element->tech->overallTime;
 					}
-					percentage = 100 - (element->tech->time * 100 / element->tech->overalltime);
+					percentage = 100 - (element->tech->time * 100 / element->tech->overallTime);
 					if (percentage > 0) {
 						Cvar_Set(va("mn_rsstatus%i", i), va("%.1f%%", percentage));
 					} else {
@@ -264,15 +264,15 @@ static void RS_InitGUI (base_t* base, qboolean update)
 			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
-			if (element->tech->overalltime) {
+			if (element->tech->overallTime) {
 				float percentage;
-				if (element->tech->time > element->tech->overalltime) {
+				if (element->tech->time > element->tech->overallTime) {
 					Com_Printf("RS_InitGUI: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", element->tech->id, element->tech->time,
-						element->tech->overalltime);
+						element->tech->overallTime);
 					/* just in case the values got messed up */
-					element->tech->time = element->tech->overalltime;
+					element->tech->time = element->tech->overallTime;
 				}
-				percentage = 100 - (element->tech->time * 100 / element->tech->overalltime);
+				percentage = 100 - (element->tech->time * 100 / element->tech->overallTime);
 				if (percentage > 0) {
 					Cvar_Set(va("mn_rsstatus%i", i), va("%.1f%%", percentage));
 				} else {
@@ -541,7 +541,7 @@ static void RS_ResearchStart_f (void)
 	if (!tech->statusResearchable) {
 		Com_DPrintf(DEBUG_CLIENT, "RS_ResearchStart_f: %s was not researchable yet. re-checking\n", tech->id);
 		/* If all requirements are met (includes a check for "enough-collected") mark this tech as researchable.*/
-		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, base))
+		if (RS_RequirementsMet(&tech->requireAND, &tech->requireOR, base))
 			RS_MarkOneResearchable(tech);
 		RS_MarkResearchable(qfalse, base);	/* Re-check all other techs in case they depend on the marked one. */
 	}
@@ -641,7 +641,7 @@ static void RS_ShowPedia_f (void)
 
 	/* get the currently selected research-item */
 	tech = researchList2[researchListPos].tech;
-	if (tech->pre_description.numDescriptions > 0) {
+	if (tech->preDescription.numDescriptions > 0) {
 		UP_OpenCopyWith(tech->id);
 	} else {
 		MN_Popup(_("Notice"), _("No research proposal available for this project."));

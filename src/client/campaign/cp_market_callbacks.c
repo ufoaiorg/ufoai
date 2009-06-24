@@ -310,24 +310,24 @@ static void BS_BuyType (const base_t *base)
 	case FILTER_AIRCRAFT:	/* Aircraft */
 		{
 		const technology_t* tech;
-		const aircraft_t *air_samp;
-		for (i = 0, j = 0, air_samp = ccs.aircraftTemplates; i < ccs.numAircraftTemplates; i++, air_samp++) {
-			if (air_samp->type == AIRCRAFT_UFO || air_samp->price == -1)
+		const aircraft_t *aircraftTemplate;
+		for (i = 0, j = 0, aircraftTemplate = ccs.aircraftTemplates; i < ccs.numAircraftTemplates; i++, aircraftTemplate++) {
+			if (aircraftTemplate->type == AIRCRAFT_UFO || aircraftTemplate->price == -1)
 				continue;
-			tech = air_samp->tech;
+			tech = aircraftTemplate->tech;
 			assert(tech);
 			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					MN_ExecuteConfunc("buy_autoselli %i", j - buyList.scroll);
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 				}
-				BS_AddToList(air_samp->name, AIR_GetStorageSupply(base, air_samp->id, qtrue),
-						AIR_GetStorageSupply(base, air_samp->id, qfalse), air_samp->price);
+				BS_AddToList(aircraftTemplate->name, AIR_GetStorageSupply(base, aircraftTemplate->id, qtrue),
+						AIR_GetStorageSupply(base, aircraftTemplate->id, qfalse), aircraftTemplate->price);
 				if (j >= MAX_BUYLIST)
 					Com_Error(ERR_DROP, "Increase the MAX_BUYLIST value to handle that much items\n");
 				buyList.l[j].item = NULL;
 				buyList.l[j].ugv = NULL;
-				buyList.l[j].aircraft = air_samp;
+				buyList.l[j].aircraft = aircraftTemplate;
 				buyList.length = j + 1;
 				BS_UpdateItem(base, j - buyList.scroll);
 				j++;

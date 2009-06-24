@@ -469,7 +469,7 @@ const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
 	case AIR_RETURNING:
 		return _("returning to base");
 	default:
-		Com_Printf("Error: Unknown aircraft status for %s\n", aircraft->name);
+		Com_Printf("Error: Unknown aircraft status for %s\n", aircraft->id);
 	}
 	return NULL;
 }
@@ -635,7 +635,7 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 	if (aircraft && AIR_IsAircraftOnGeoscape(aircraft)) {
 		const base_t *base = aircraft->homebase;
 		assert(base);
-		Com_DPrintf(DEBUG_CLIENT, "return '%s' (%i) to base ('%s').\n", aircraft->name, aircraft->idx, base->name);
+		Com_DPrintf(DEBUG_CLIENT, "return '%s' (%i) to base ('%s').\n", aircraft->id, aircraft->idx, base->name);
 		MAP_MapCalcLine(aircraft->pos, base->pos, &aircraft->route);
 		aircraft->status = AIR_RETURNING;
 		aircraft->time = 0;
@@ -753,7 +753,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
 		/* Update base capacities. */
 		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->size);
-		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
+		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->id, aircraft->idx, base->name);
 		if (!base->aircraftCurrent)
 			base->aircraftCurrent = aircraft;
 		aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->tpl, base);

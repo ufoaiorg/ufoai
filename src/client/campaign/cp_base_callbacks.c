@@ -863,7 +863,7 @@ static void BaseSummary_Init_f (void)
 				const production_t *production = &queue->items[i];
 				const objDef_t *objDef = production->item;
 				const aircraft_t *aircraft = production->aircraft;
-				const char *name = (objDef) ? objDef->name : _(aircraft->name);
+				const char *name = objDef ? _(objDef->name) : _(aircraft->name);
 				assert(name);
 
 				/** @todo use the same method as we do in PR_ProductionInfo */
@@ -882,7 +882,7 @@ static void BaseSummary_Init_f (void)
 			tech = RS_GetTechByIDX(i);
 			if (tech->base == base && (tech->statusResearch == RS_RUNNING || tech->statusResearch == RS_PAUSED)) {
 				Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"), _(tech->name),
-					tech->scientists, (1 - tech->time / tech->overalltime) * 100), sizeof(textStatsBuffer));
+					tech->scientists, (1 - tech->time / tech->overallTime) * 100), sizeof(textStatsBuffer));
 				tmp++;
 			}
 		}
@@ -917,7 +917,7 @@ void B_InitCallbacks (void)
 	Cmd_AddCommand("building_init", B_BuildingInit_f, NULL);
 	Cmd_AddCommand("building_status", B_BuildingStatus_f, NULL);
 	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
-	Cmd_AddCommand("building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed");	
+	Cmd_AddCommand("building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed");
 	Cmd_AddCommand("building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building");
 	Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
 	Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode");

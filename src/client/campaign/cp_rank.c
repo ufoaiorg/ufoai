@@ -47,8 +47,8 @@ static const value_t rankValues[] = {
 	{"shortname", V_TRANSLATION_STRING,	offsetof(rank_t, shortname), 0},
 	{"image", V_CLIENT_HUNK_STRING, offsetof(rank_t, image), 0},
 	{"mind", V_INT, offsetof(rank_t, mind), MEMBER_SIZEOF(rank_t, mind)},
-	{"killed_enemies", V_INT, offsetof(rank_t, killed_enemies), MEMBER_SIZEOF(rank_t, killed_enemies)},
-	{"killed_others", V_INT, offsetof(rank_t, killed_others), MEMBER_SIZEOF(rank_t, killed_others)},
+	{"killed_enemies", V_INT, offsetof(rank_t, killedEnemies), MEMBER_SIZEOF(rank_t, killedEnemies)},
+	{"killed_others", V_INT, offsetof(rank_t, killedOthers), MEMBER_SIZEOF(rank_t, killedOthers)},
 	{"factor", V_FLOAT, offsetof(rank_t, factor), MEMBER_SIZEOF(rank_t, factor)},
 	{NULL, 0, 0, 0}
 };

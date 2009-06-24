@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_RESEARCHDISPLAY 22	/**< Number of the available string (in the list) in the research menu */
 #define MAX_RESEARCHLIST 32
 #define MAX_TECHNOLOGIES 256	/**< Maximum number of technologies overall. */
-#define MAX_TECHLINKS 16	/**< Maximum number of requirements in a technology (i.e in require_AND and require_OR).
+#define MAX_TECHLINKS 16	/**< Maximum number of requirements in a technology (i.e in requireAND and requireOR).
 				 *   Needs to be synced with MAX_TECHLINKS in q_shared.h */
 #define MAX_DESCRIPTIONS 8	/**< Maximum number of descriptions (per tech and description-type). */
 
@@ -146,21 +146,21 @@ typedef struct technology_s {
 	int idx;			/**< Self-link in the global list */
 	char *name;		/**< Full name of this technology. */
 	descriptions_t description;	/**< Descriptions of researched item.  */
-	descriptions_t pre_description;	/**< Descriptions of item before it's researched. */
+	descriptions_t preDescription;	/**< Descriptions of item before it's researched. */
 	researchType_t type;		/**< Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
 
 	struct technology_s *redirect;	/**< Set this to the entry that is supposed to get displayed instead of this one.
 									 * Mopstly used for e.g ammo that doesn't need its own description but rather the one for the weapon. */
 
-	requirements_t require_AND;	/**< A list of requirements that ALL need to be met (= AND-related) See struct above. */
-	requirements_t require_OR;	/**< A list of requirements where ANY need to be met (= OR-related) See struct above. */
+	requirements_t requireAND;	/**< A list of requirements that ALL need to be met (= AND-related) See struct above. */
+	requirements_t requireOR;	/**< A list of requirements where ANY need to be met (= OR-related) See struct above. */
 	qboolean statusCollected;	/**< Did we loot any items of this tech?
-					 * This is updated from the info stored in the require_OR and require_AND lists.
+					 * This is updated from the info stored in the requireOR and requireAND lists.
 					 * @see RS_CheckCollected. */
 
 	char *provides;		/**< The item that this technology enables. */
-	float overalltime, time;	/**< The time that is needed to research this tech. (in days).
-					 * "overalltime" stays always the same,
+	float overallTime, time;	/**< The time that is needed to research this tech. (in days).
+					 * "overallTime" stays always the same,
 					 * "time" will be modified when it is under research.*/
 	int delay;			/**< @todo Number in days the system should wait until the tech is available for research.
 					 * Starting from the first time all other dependencies have been fulfilled and
@@ -182,7 +182,7 @@ typedef struct technology_s {
 	int produceTime;			/**< How many days the production of this items runs. */
 	qboolean pushnews;			/**< Push news about this tech when researched. Note: usually you should use this only for tech with time = 0. */
 	mailSentType_t mailSent;		/**< Store if a Mail has been sent to the commander (player). */
-	requirements_t require_for_production;	/**< A list of items that are needed (and used up) on production of _this_ item.
+	requirements_t requireForProduction;	/**< A list of items that are needed (and used up) on production of _this_ item.
 						 * Only "item"-type is allowed.
 						 * All requirements need to be fulfilled in order for _one_ item to be produced.
 						 * This check is done for each item.*/

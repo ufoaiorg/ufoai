@@ -83,7 +83,7 @@ static qboolean PR_ConditionsDisassembly (const base_t *base, const components_t
 	assert(base);
 	assert(comp);
 
-	od = comp->asItem;
+	od = comp->assemblyItem;
 	assert(od);
 
 	if (RS_IsResearched_ptr(od->tech) && base->storage.num[od->idx] > 0)
@@ -262,7 +262,7 @@ static void PR_UpdateProductionList (const base_t* base)
 	/* Then go through all object definitions ... */
 	if (produceCategory == FILTER_DISASSEMBLY) {
 		for (i = 0; i < ccs.numComponents; i++) {
-			const objDef_t *asOd = ccs.components[i].asItem;
+			const objDef_t *asOd = ccs.components[i].assemblyItem;
 			components_t *comp = &ccs.components[i];
 			if (!asOd)
 				continue;
@@ -284,7 +284,10 @@ static void PR_UpdateProductionList (const base_t* base)
 				Com_Printf("PR_UpdateProductionList: no technology for craft %s!\n", aircraftTemplate->id);
 				continue;
 			}
-			Com_DPrintf(DEBUG_CLIENT, "air: %s ufotype: %i tech: %s time: %i\n", aircraftTemplate->id, aircraftTemplate->ufotype, aircraftTemplate->tech->id, aircraftTemplate->tech->produceTime);
+
+			Com_DPrintf(DEBUG_CLIENT, "air: %s ufotype: %i tech: %s time: %i\n", aircraftTemplate->id,
+					aircraftTemplate->ufotype, aircraftTemplate->tech->id, aircraftTemplate->tech->produceTime);
+
 			if (aircraftTemplate->tech->produceTime > 0 && RS_IsResearched_ptr(aircraftTemplate->tech)) {
 				LIST_AddPointer(&productionItemList, aircraftTemplate);
 
@@ -386,7 +389,7 @@ static void PR_DisassemblyInfo (const base_t *base, const objDef_t *od, const co
 	for (i = 0; i < comp->numItemtypes; i++) {
 		const objDef_t *compOd = comp->items[i];
 		assert(compOd);
-		Q_strcat(productionInfo, va(_("%s (%i) "), _(compOd->name), comp->item_amount[i]),
+		Q_strcat(productionInfo, va(_("%s (%i) "), _(compOd->name), comp->itemAmount[i]),
 			sizeof(productionInfo));
 	}
 	Q_strcat(productionInfo, "\n", sizeof(productionInfo));
@@ -449,7 +452,7 @@ static void PR_ProductionInfo (const base_t *base)
 			} else if (selectedItem) {
 				PR_ItemProductionInfo(base, selectedItem, 0.0);
 			} else if (selectedDisassembly) {
-				PR_DisassemblyInfo(base, selectedDisassembly->asItem, selectedDisassembly, 0.0);
+				PR_DisassemblyInfo(base, selectedDisassembly->assemblyItem, selectedDisassembly, 0.0);
 			}
 		}
 	}
@@ -504,8 +507,8 @@ static void PR_ProductionListRightClick_f (void)
 				UP_OpenWith(aircraftTemplate->tech->id);
 		} else if (produceCategory == FILTER_DISASSEMBLY) {
 			components_t *comp = (components_t*)LIST_GetByIdx(productionItemList, idx);
-			if (comp && comp->asItem && comp->asItem->tech) {
-				UP_OpenWith(comp->asItem->tech->id);
+			if (comp && comp->assemblyItem && comp->assemblyItem->tech) {
+				UP_OpenWith(comp->assemblyItem->tech->id);
 			}
 		} else {
 			objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
@@ -788,12 +791,12 @@ static void PR_ProductionIncrease_f (void)
 			prod = PR_QueueNew(base, queue, selectedItem, selectedAircraft, amount, qfalse);	/* Production. (only of of the "selected" pointer can be nonNULL) */
 		} else {
 			/* We can disassemble only as many items as we have in base storage. */
-			assert(selectedDisassembly && selectedDisassembly->asItem);
+			assert(selectedDisassembly && selectedDisassembly->assemblyItem);
 
-			if (base->storage.num[selectedDisassembly->asItem->idx] > amount)
+			if (base->storage.num[selectedDisassembly->assemblyItem->idx] > amount)
 				amountTemp = amount;
 			else
-				amountTemp = base->storage.num[selectedDisassembly->asItem->idx];
+				amountTemp = base->storage.num[selectedDisassembly->assemblyItem->idx];
 
 			/* Check if we can add more items. */
 			if (amountTemp > MAX_PRODUCTION_AMOUNT) {
@@ -801,7 +804,7 @@ static void PR_ProductionIncrease_f (void)
 				amountTemp = MAX_PRODUCTION_AMOUNT;
 			}
 
-			prod = PR_QueueNew(base, queue, selectedDisassembly->asItem, NULL, amountTemp, qtrue);	/* Disassembling. */
+			prod = PR_QueueNew(base, queue, selectedDisassembly->assemblyItem, NULL, amountTemp, qtrue);	/* Disassembling. */
 		}
 
 		/** prod is NULL when queue limit is reached
@@ -818,12 +821,12 @@ static void PR_ProductionIncrease_f (void)
 			const objDef_t *od = prod->item;
 			int producibleAmount = amount;
 			if (od->tech)
-				producibleAmount = PR_RequirementsMet(amount, &od->tech->require_for_production, base);
+				producibleAmount = PR_RequirementsMet(amount, &od->tech->requireForProduction, base);
 
 			if (producibleAmount > 0) {	/* Check if production requirements have been (even partially) met. */
 				if (od->tech) {
 					/* Remove the additionally required items (multiplied by 'producibleAmount') from base-storage.*/
-					PR_UpdateRequiredItemsInBasestorage(base, -amount, &od->tech->require_for_production);
+					PR_UpdateRequiredItemsInBasestorage(base, -amount, &od->tech->requireForProduction);
 					prod->items_cached = qtrue;
 				}
 
@@ -857,7 +860,7 @@ static void PR_ProductionIncrease_f (void)
 			assert(aircraftTemplate);
 			assert(aircraftTemplate == aircraftTemplate->tpl);
 
-			Com_DPrintf(DEBUG_CLIENT, "Increasing %s\n", aircraftTemplate->name);
+			Com_DPrintf(DEBUG_CLIENT, "Increasing production for '%s'\n", aircraftTemplate->id);
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(aircraftTemplate->name));
 			MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 			/* Now we select the item we just created. */

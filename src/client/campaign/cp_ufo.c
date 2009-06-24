@@ -749,7 +749,7 @@ void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 	/* Remove ufo from ufos list */
 	const ptrdiff_t num = (ptrdiff_t)(ufo - ccs.ufos);
 
-	Com_DPrintf(DEBUG_CLIENT, "Remove ufo from geoscape: '%s'\n", ufo->name);
+	Com_DPrintf(DEBUG_CLIENT, "Remove ufo from geoscape: '%s'\n", ufo->id);
 
 	REMOVE_ELEM_ADJUST_IDX(ccs.ufos, num, ccs.numUFOs);
 }

@@ -35,13 +35,10 @@ extern const float RADAR_AIRCRAFTRANGE;
 extern const float RADAR_AIRCRAFTTRACKINGRANGE;
 
 /**
- * @brief Different status for numAmmo.
+ * @brief Radar has no UFO Sensored.
+ * positive or null values are used for UFO idx
  */
-enum {
-	UFO_NOT_SENSORED = -1,			/**< Radar has no UFO Sensored. */
-
-	/* positive or null values are used for UFO idx */
-};
+#define UFO_NOT_SENSORED -1
 
 typedef struct radar_s {
 	int range;						/**< Range of radar */

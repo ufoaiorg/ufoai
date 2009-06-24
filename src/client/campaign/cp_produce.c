@@ -161,7 +161,7 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 		od = prod->item;
 		if (od->tech) {
 			/* Add all items listed in the prod.-requirements /multiplied by amount) to the storage again. */
-			PR_UpdateRequiredItemsInBasestorage(base, prod->amount, &od->tech->require_for_production);
+			PR_UpdateRequiredItemsInBasestorage(base, prod->amount, &od->tech->requireForProduction);
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "PR_QueueDelete: Problem getting technology entry for %i\n", index);
 		}
@@ -288,14 +288,14 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, qboolean calcul
 	for (i = 0; i < comp->numItemtypes; i++) {
 		const objDef_t *compOd = comp->items[i];
 		assert(compOd);
-		size += compOd->size * comp->item_amount[i];
+		size += compOd->size * comp->itemAmount[i];
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
 		if (!calculate) {
 			if (!strcmp(compOd->id, ANTIMATTER_TECH_ID))
-				B_ManageAntimatter(base, comp->item_amount[i], qtrue);
+				B_ManageAntimatter(base, comp->itemAmount[i], qtrue);
 			else
-				B_UpdateStorageAndCapacity(base, compOd, comp->item_amount[i], qfalse, qfalse);
-			Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", comp->item_amount[i], compOd->id);
+				B_UpdateStorageAndCapacity(base, compOd, comp->itemAmount[i], qfalse, qfalse);
+			Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", comp->itemAmount[i], compOd->id);
 		}
 	}
 	return size;
@@ -395,10 +395,9 @@ void PR_ProductionRun (void)
 			}
 		}
 
-#ifdef DEBUG
 		if (!prod->aircraft && !od->tech)
-			Sys_Error("PR_ProductionRun: No tech pointer for object %s ('%s')\n", prod->item->id, od->id);
-#endif
+			Com_Error(ERR_FATAL, "PR_ProductionRun: No tech pointer for object %s ('%s')", prod->item->id, od->id);
+
 		if (prod->production) {	/* This is production, not disassembling. */
 			if (!prod->aircraft)
 				prod->percentDone += PR_CalculateProductionPercentDone(base, od->tech, NULL, qfalse);
@@ -449,14 +448,14 @@ void PR_ProductionRun (void)
 							base->capacities[CAP_UFOHANGARS_LARGE].cur--;
 						else
 							/* Should never be reached */
-							Com_Printf("PR_ProductionRun: Can not find %s in large UFO Hangar\n", ufocraft->name);
+							Com_Error(ERR_DROP, "PR_ProductionRun: Can not find %s in large UFO Hangar", ufocraft->id);
 					} else {
 						/* Small UFOs can only be stored in Small UFO Hangar */
 						if (base->capacities[CAP_UFOHANGARS_SMALL].cur > 0)
 							base->capacities[CAP_UFOHANGARS_SMALL].cur--;
 						else
 							/* Should never be reached */
-							Com_Printf("PR_ProductionRun: Can not find %s in small UFO Hangar\n", ufocraft->name);
+							Com_Error(ERR_DROP, "PR_ProductionRun: Can not find %s in small UFO Hangar", ufocraft->id);
 						}
 				}
 				if (prod->amount <= 0) {
