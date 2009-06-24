@@ -781,7 +781,7 @@ static int AIL_positionshoot (lua_State *L)
 					const pos_t tu = gi.MoveLength(gi.pathingMap, to,
 							(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
 
-					if (tu == ROUTING_NOT_REACHABLE)
+					if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
 						continue;
 
 					/* Better spot (easier to get to). */
@@ -808,8 +808,68 @@ static int AIL_positionshoot (lua_State *L)
  */
 static int AIL_positionhide (lua_State *L)
 {
-	/** @todo Implement getting a good hiding position. */
-	return 0;
+	pos3_t to, bestPos;
+	edict_t *ent;
+	int dist;
+	int xl, yl, xh, yh;
+	int min_tu;
+	const byte crouchingState = AIL_ent->state & STATE_CROUCHED ? 1 : 0;
+
+	/* Make things more simple. */
+	ent = AIL_ent;
+	dist = ent->TU;
+
+	/* Calculate move table. */
+	G_MoveCalc(0, ent->pos, ent->fieldSize, crouchingState, ent->TU);
+	gi.MoveStore(gi.pathingMap);
+
+	/* set borders */
+	xl = (int) ent->pos[0] - dist;
+	if (xl < 0)
+		xl = 0;
+	yl = (int) ent->pos[1] - dist;
+	if (yl < 0)
+		yl = 0;
+	xh = (int) ent->pos[0] + dist;
+	if (xh > PATHFINDING_WIDTH)
+		xl = PATHFINDING_WIDTH;
+	yh = (int) ent->pos[1] + dist;
+	if (yh > PATHFINDING_WIDTH)
+		yh = PATHFINDING_WIDTH;
+
+	/* evaluate moving to every possible location in the search area,
+	 * including combat considerations */
+	min_tu = INT_MAX;
+	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
+		for (to[1] = yl; to[1] < yh; to[1]++)
+			for (to[0] = xl; to[0] < xh; to[0]++) {
+				const pos_t tu = gi.MoveLength(gi.pathingMap, to,
+						(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
+
+				if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
+					continue;
+
+				/* visibility */
+				gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+				if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
+					continue;
+
+				/* Better spot (easier to get to). */
+				if (tu < min_tu) {
+					VectorCopy(to, bestPos);
+					min_tu = tu;
+				}
+			}
+
+	/* No position found in range. */
+	if (min_tu > ent->TU) {
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	/* Return the spot. */
+	lua_pushpos3(L, &bestPos);
+	return 1;
 }
 
 /**

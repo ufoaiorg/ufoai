@@ -33,7 +33,7 @@ end
 
 --[[
 	Attempts to approach the target.
-]]--
+--]]
 function approach( target )
 	ai.print("Can't get to shoot position.")
 end
@@ -50,17 +50,22 @@ function engage( target )
 	shoot_pos = ai.positionshoot(target) -- Get a shoot position
 	if not shoot_pos then -- No position available
 		approach(target)
+	else
+		-- Go shoot
+		shoot_pos:goto()
 	end
 
-	-- Go shoot
-	shoot_pos:goto()
 	hide_tu = 4 -- Crouch + face
 
 	-- Shoot
 	target:shoot(ai.TU() - hide_tu)
 
 	-- Hide
-	-- ai.positionhide()
+	hide_pos = ai.positionhide()
+	if not hide_pos then -- No position available
+	else
+		hide_pos:goto()
+	end
 	ai.crouch()
 	target:face()
 end
