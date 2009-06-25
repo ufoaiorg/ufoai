@@ -102,8 +102,8 @@ entity info_alien_start {
 
 entity info_2x2_start {
 	description	"Starting point for a ugv 2x2 unit."
-	color	"0 0 1"
-	size	"-32 -32 -24 32 32 32"
+	color		"0 0 1"
+	size		"-32 -32 -24 32 32 32"
 
 	optional {
 		team	"The number of the team for this player starting point. Only for multiplayer teams."
@@ -127,8 +127,8 @@ entity info_2x2_start {
 
 entity info_civilian_start {
 	description	"Starting point for a civilian."
-	color	"0 1 1"
-	size	"-16 -16 -24 16 16 32"
+	color		"0 1 1"
+	size		"-16 -16 -24 16 16 32"
 
 	mandatory {
 		origin	"position"
@@ -151,8 +151,8 @@ entity info_civilian_start {
 
 entity info_null {
 	description	"Used as a positional target for spotlights, etc."
-	color	"0 0.5 0"
-	size	"-4 -4 -4 4 4 4"
+	color		"0 0.5 0"
+	size		"-4 -4 -4 4 4 4"
 
 	mandatory {
 		origin		"position"
