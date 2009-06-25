@@ -613,7 +613,8 @@ msgstr "Zaobserwowano pojazd UFO"
 
 #: ../base/ufos/events.ufo:78
 msgid "mail_from_un"
-msgstr "Sekretarz generalny Mahouf Serra, Organizacja Narodów Zjednoczonych, Nowy Jork"
+msgstr ""
+"Sekretarz generalny Mahouf Serra, Organizacja Narodów Zjednoczonych, Nowy Jork"
 
 #: ../base/ufos/events.ufo:79 ../base/ufos/events.ufo:89
 #: ../base/ufos/events.ufo:99 ../base/ufos/events.ufo:110
@@ -689,7 +690,8 @@ msgstr "Sekretarz generalny Mahouf Serra, Organizacja Narodów Zjednoczonych, No
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4838
 #: ../base/ufos/research.ufo:4845
 msgid "mail_to_base_commander"
-msgstr "Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:80
 msgid "2084 Mar 21"
@@ -753,7 +755,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4554 ../base/ufos/research.ufo:4629
 #: ../base/ufos/research.ufo:4637
 msgid "mail_from_paul_navarre"
-msgstr "mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:90
 msgid "Alien died"
@@ -823,7 +826,8 @@ msgstr "Produkcja ukończona"
 #: ../base/ufos/events.ufo:232 ../base/ufos/events.ufo:243
 #: ../base/ufos/events.ufo:254 ../base/ufos/events.ufo:265
 msgid "mail_from_xo"
-msgstr "Szef sztabu Abel S. Howard, JBR: Centrum Operacyjne, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"Szef sztabu Abel S. Howard, JBR: Centrum Operacyjne, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:157
 msgid "Monthly Report -- %s"
@@ -960,7 +964,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:588 ../base/ufos/research.ufo:4795
 #: ../base/ufos/research.ufo:4804
 msgid "mail_from_col_falkland"
-msgstr "płk Ingrid Falkland, Wywiad Wojskowy, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"płk Ingrid Falkland, Wywiad Wojskowy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:278
 msgid "Response Too Late -- %s"
@@ -991,7 +996,8 @@ msgstr "Raport o aktywności Obcych: '%s'"
 #: ../base/ufos/events.ufo:331 ../base/ufos/events.ufo:342
 #: ../base/ufos/events.ufo:353
 msgid "mail_from_air_cdr"
-msgstr "mjr (pow) Subakh al-Kuhar, Skrzydło Powietrzne, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"mjr (pow) Subakh al-Kuhar, Skrzydło Powietrzne, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:311
 msgid "New Aircraft Arrived -- %s"
@@ -1830,7 +1836,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4764 ../base/ufos/research.ufo:4837
 #: ../base/ufos/research.ufo:4844
 msgid "mail_from_dr_connor"
-msgstr "Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/research.ufo:333 ../base/ufos/research.ufo:373
 msgid "alien_breathing_txt"
@@ -3428,18 +3435,8 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/research.ufo:1570
-#, fuzzy
 msgid "electrolaser_pre_txt"
-msgstr ""
-"Dane, które zebraliśmy od Narodów Zjednoczonych, zawierają mnóstwo cennych informacji dotyczących badań nad uzbrojeniem, przeprowadzanych na Ziemi od początku tego wieku. Jednym z najciekawszych tematów wydaje się być zagadnienie kierunkowych broni energetycznych (czyli takich, których działanie opiera się na przekazywaniu energii do celu w sposób inny niż przy użyciu pocisków), a w szczególności - tematyka laserów o pracy ciągłej.\n"
-"\n"
-"Próby stworzenia ręcznej broni laserowej, podejmowane na przestrzeni lat przez wiele krajów i firm, nigdy nie doprowadziły do skonstruowania prototypu zapewniającego co najmniej taką siłę ognia, jak tradycyjne uzbrojenie. Jednak teraz, po przeanalizowaniu dokumentacji wielu różnych projektów badawczych z tej dziedziny, mamy podstawy sądzić, że połączenie wielu odmiennych podejść pozwoli nam osiągnąć efekt synergii i otworzyć nowy rozdział w badaniach nad uzbrojeniem laserowym.\n"
-"\n"
-"Dowódco, powinniśmy podążyć tą ścieżką tak szybko jak to jest możliwe. Zróżnicowanie naszego arsenału utrudni Obcym wynajdywanie środków zapobiegawczych. Zdobyte w projekcie doświadczenie pozwoli także na konstruowanie laserowych broni z przeznaczeniem użycia w pojazdach powietrznych, które w końcu będą mogły skuteczniej atakować pojazdy UFO - szczególnie te, które mają nad nami przewagę szybkości.\n"
-"\n"
-"Na pierwszy rzut oka przy tym projekcie zamierzamy porwać się z motyką na słońce, ale zrobimy to, jeśli tylko dostaniemy zgodę, dowódco.\n"
-"\n"
-"--mjr Navarre"
+msgstr "Brak informacji przed wynalezieniem."
 
 #: ../base/ufos/research.ufo:1605
 msgid "medikit_txt"
@@ -3694,13 +3691,36 @@ msgid "needlerheavy_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
 #: ../base/ufos/research.ufo:1981
-#, fuzzy
 msgid "coilgun_txt"
-msgstr "W trakcie tłumaczenia."
+msgstr ""
+"Commander, I'd like to present you with the finished plans and prototype for our Coilgun.\n"
+"\n"
+"Combining an alien-inspired power pack and coil arrangement with some of our Bolter technology has solved many of the coilgun design's inherent problems. A hundred years ago, the energy efficiency of coilguns measured less than 2%; meaning, the energy of the projectile at the time of impact was less than 2% of the energy used to fire it. Even with today's technology coilgun efficiency is limited to single digits, but the alien Needler manages efficiency ratings as high as 70%. It may take us years to get to that level, but with the Coilgun we've developed something that is both practical and effective for the war effort.\n"
+"\n"
+"In order to get better acceleration out of the coils, we've created a new kind of ammunition, based on the aliens' needle alloy. In shape it's a fairly standard fin-stabilised penetrator inside a discarding sabot, but it's made from materials never before seen on Earth. Discarding sabot rounds are normally used for much larger calibres -- we've effectively scaled down an anti-tank round -- but the armour-piercing potential is phenomenal, higher than any other weapon we have. In fact, the Coilgun is now the highest-calibre infantry weapon on the planet.\n"
+"\n"
+"We've also incorporated a Needler-style holographic sight, making the Coilgun extremely accurate and comfortable to fire.\n"
+"\n"
+"The advantages of a coilgun as a sniper rifle are obvious. There's no rush of propellant to make noise, no muzzle flash spitting out light and heat. Unlike even our Bolter, nothing comes out the barrel except the bullet -- there's no spray of hot metal from the rails to light up the sniper on infrared. With nothing to reveal the sniper's position except the noise of the bullet itself breaking the sound barrier, it's possible to fire and stay undetected, even against alien technology. Best of all, ballistics tests confirm that it should be able to bring down most aliens in a single shot.\n"
+"\n"
+"Of course we've had to make some sacrifices -- high weight due to the coils and electrical equipment contained in the barrel, low ammunition capacity due to the high calibre, large and heavy magazines/power packs. Despite this, I believe the Coilgun should replace most of our SR-1 Sniper Rifles, as it's proving difficult for our conventional weapons to compete with new enemy armour designs.\n"
+"\n"
+"Keep the SR-1 in light sniper and anti-infantry roles and move the Coilgun forward as our main long-range threat. The aliens will come to fear it.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1984
 msgid "coilgun_pre_txt"
-msgstr "Brak informacji przed wynalezieniem."
+msgstr ""
+"Commander, our brainstorms down at DivEngine have come up with an interesting idea based on the alien Needler technology. When combining the alien fast-changing magnetic generators -- and, even more importantly, their power source -- with human-engineered EM rifle technology, some amazing man-portable weaponry becomes possible. I'd hereby like to propose a new design for a coilgun in the role of a sniper rifle.\n"
+"\n"
+"The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.\n"
+"\n"
+"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
+"\n"
+"Please let me know when you want us to start, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1991 ../base/ufos/research.ufo:1999
 #: ../base/ufos/weapons_human.ufo:392
@@ -5544,7 +5564,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3455
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3480
 msgid "ufo_scout_txt"
@@ -6122,7 +6143,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4125
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4181
 msgid "'Raven' ECM Unit"
@@ -6868,7 +6890,7 @@ msgstr ""
 "\n"
 "We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. DivBio also has a stake; we'd like to examine at least one live human prisoner in our Containment unit so we can run a full physical examination. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.\n"
 "\n"
-"Director Wong (DivInfo) reports that if we hold off too long on implementing a new info strategy, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin to grow. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
+"Director Wong (DivInfo) also asked me to mention that, if we hold off on implementing a new info strategy for too long, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin getting their word out. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
 "\n"
 "Sincerely,\n"
 "\n"
@@ -6879,17 +6901,27 @@ msgid "enemy_on_earth_txt"
 msgstr ""
 "Commander,\n"
 "\n"
-"You need to read this right away. By your request, we've performed several hurried autopsies and done our best to examine the live prisoners taken on our mission against the alien sympathisers. The results are alarming.\n"
+"You need to read this right away. With your authorisation, we've performed several autopsies and done our best to examine the live prisoners taken on our mission against the alien sympathisers. The results are alarming.\n"
 "\n"
-"Do you remember the report I sent you about the first live alien specimen we researched? As you may remember, it had lost all its intellect and became largely unresponsive without fellows to empower the hive mind. Prepare yourself, Commander: The human prisoner in our Containment unit exhibits the very same symptoms. A thorough blood analysis has produced conclusive evidence that the prisoner is infected with an XVI strand.\n"
+"Do you remember the report I sent you about the first live alien specimen we captured? As you may remember, it lost all its intellect and became largely unresponsive without fellows to empower the hive mind. Prepare yourself, Commander: The human prisoners in our Containment unit exhibit the very same symptoms. They do not think for themselves. Their thought processes are firmly suppressed and supplanted by the alien hive mind through a process we currently fail to understand.\n"
 "\n"
-"This new strand is slightly different from the others we've encountered, and we fear it can only be designated \"XVI-H\". It appears to be willfully designed to infect humans with the alien hive mind. It overrides their own rational thought processes and replaces them with a direct link into the group, whether there actually is a group or not, through a process we currently fail to understand. Our subjects run the gamut of the human race; the infection seems to have no preference for IQ or physical potential. The infection method appears to be a direct injection of infected blood into the victim's bloodstream. It is premeditated and ruthless. Any amount of shared blood is enough for the infection to take root.\n"
+"We've run and re-run examinations and blood tests on these people ad nauseum, and there can be no mistake. The blood samples are full of foreign DNA. All these people are carrying something in their bloodstream -- a kind of single-cellular organism present in huge numbers, which appears to replicate like a virus when placed in an uninfected human body and rapidly takes over, enslaving the victim to the alien hive mind.\n"
 "\n"
-"Quarantine procedures have been tightened to the absolute maximum, and we're rushing another full batch of tests on all our personnel. Our field agents remain clean, thank God -- just think if we'd gone into a combat zone with soldiers capable of turning on their teammates at any moment! -- but I fear we have found one conclusive result. It's Dr. Eisenhower, our Director of Administration. He's been away on holiday since last week, but we ran an older sample which has now come up positive. We don't know when or how he was subverted or if he even joined PHALANX with honourable intentions, but it's clear he has acted as an alien spy for some weeks. Unfortunately we can't seem to find him at his announced destination. Internal Security has taken charge of his workstation and is in the process of information control.\n"
+"These subjects run the gamut of the human race; there seems to be no preference for IQ or physical potential. We don't yet know how the infection takes root, but even a few of these organisms entering the bloodstream may be enough to infect and enslave an individual entirely. Not even our own employees are immune, as we discovered to our horror when we screened our base personnel.\n"
 "\n"
-"Things are a bit hectic right now. Dr. Eisenhower's infection implies that other members of a hive mind -- human or alien -- were in close enough proximity to allow him to function at human intelligence. He could have linked up with our subjects in Containment, or a nearby alien cell, or even other infiltrators inside our base. Right now, we don't know, and we most likely never will. We're all frightened in the Bio lab. My assistant has been jumping at shadows all day.\n"
+"Our field agents remain clean, thank God -- just think if we'd gone into a combat zone with soldiers capable of turning on their teammates at any moment! -- but I fear we have found one conclusive result. It's Dr. Eisenhower, our Director of Administration. He's been away on business to the UN since last week, but we ran an older sample which has come up positive. We don't know when or how he was subverted or if he even joined PHALANX with honourable intentions, but it's clear he has acted as an alien spy for some weeks. Unfortunately we can't seem to find him at any of the locations he was scheduled to visit. Internal Security has taken charge of his workstation and is in the process of information control.\n"
 "\n"
-"Commander, we must develop a vaccine against XVI-H as soon as possible. The danger of our soldiers and salvage technicians falling victim to the infection in the field is too great to ignore even for a moment. I hereby request your permission to start work on a vaccine immediately. Please, please respond at your earliest convenience.\n"
+"Things are a bit hectic right now. Dr. Eisenhower's infection implies that other members of a hive mind -- human or alien -- were in close enough proximity to allow him to function at human intelligence. He could have linked up with our subjects in Containment, or a nearby alien cell, or even other infiltrators inside our base. Right now, we don't know. Quarantine procedures have been tightened to the absolute maximum, and we're rushing another full batch of tests on all our personnel. We're all frightened down here in DivBio. My assistant has been jumping at shadows all day.\n"
+"\n"
+"Interestingly, our attempts to infect other terrestrial life -- even intelligent vertebrates such as bottlenose dolphins and elephants -- have failed completely. This organism must have been engineered wholly or in part to specifically infect the human species.\n"
+"\n"
+"We've dubbed the organism the 'EXtraterrestrial Viral Infection', or XVI. This may be somewhat of a misnomer in microbiological terms; XVI is a complex multi-celled organism far larger than any terrestrial virus, but it acts and replicates exactly like one.\n"
+"\n"
+"Really, what we're looking at here is a bio-weapon of unprecedented proportions. Instead of killing its victims it takes control of them with no option of resistance and -- at the moment -- no available cure or defence. The most humble and harmless civilian can be infected and, with the instant shared expertise of the larger hive mind, become an effective warrior for the aliens while reducing our numbers. When the aliens also supply them with weapons, we can see the true face of horror.\n"
+"\n"
+"I couldn't imagine a more nightmarish scenario for us. Our troops will undoubtedly be coming up against more and more human opponents during alien attacks on Earth. We may even find people crewing UFOs for the aliens. It's madness.\n"
+"\n"
+"Commander, we must develop a vaccine against XVI as soon as possible. The danger of our soldiers and salvage technicians falling victim to the infection in the field is too great to ignore even for a moment, let alone allowing the general population to fall prey to this abomination. I hereby request your permission to start work on a vaccine immediately. Please, please respond at your earliest convenience.\n"
 "\n"
 "Sincerely,\n"
 "\n"
@@ -6912,7 +6944,7 @@ msgstr ""
 "\n"
 "We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. DivBio also has a stake; we'd like to examine at least one live human prisoner in our Containment unit so we can run a full physical examination. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.\n"
 "\n"
-"Director Wong (DivInfo) also asked me to mention that, if we hold off on implementing a new info strategy for too long, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin getting their word out. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
+"Director Wong (DivInfo) reports that if we hold off too long on implementing a new info strategy, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin to grow. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
 "\n"
 "Sincerely,\n"
 "\n"
@@ -7222,35 +7254,43 @@ msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Jest rok 2084. Na Ziemi, która nigdy nie była najspokojniejszym miejscem, od pewnego czasu trwa w miarę stabilny pokój. Krwawe początki XXI wieku są już historią, choć nie aż tak odległą, żeby o niej zapomnieć. Dla większości ludzi Druga Zimna Wojna jest tylko mrocznym wspomnieniem przeszłości, traktowanym podobnie jak Wojny Światowe przez tych, którzy urodzili się w końcu XX wieku."
+msgstr ""
+"Jest rok 2084. Na Ziemi, która nigdy nie była najspokojniejszym miejscem, od pewnego czasu trwa w miarę stabilny pokój. Krwawe początki XXI wieku są już historią, choć nie aż tak odległą, żeby o niej zapomnieć. Dla większości ludzi Druga Zimna Wojna jest tylko mrocznym wspomnieniem przeszłości, traktowanym podobnie jak Wojny Światowe przez tych, którzy urodzili się w końcu XX wieku."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "Konflikty stawały się coraz rzadsze wraz ze zbliżającym się końcem wieku. Nowoczesne technologie i powszechna opieka medyczna stały się w końcu dostępne dla krajów trzeciego świata. Nawet pożoga terroru przygasła w obliczu okrucieństw Drugiej Zimnej Wojny, której nieludzkie obrazy pozostają wciąż żywe w pamięci ludzi, od starych Stanów Zjednoczonych aż po zniszczony subkontynent indyjski. Wraz z zagwarantowaniem każdej nacji uczciwej reprezentacji w ONZ, lokalne konflikty zostały przeniesione na szczebel polityki światowej. Standard życia powoli wzrastał, nawet w miejscach które poprzednio były najbiedniejszymi na Ziemi. Granice państw okrzepły i zostały ustabilizowane przez zreformowaną Organizację Narodów Zjednoczonych, która z powodzeniem prowadzi międzynarodowy arbitraż. Najmniejsze państwa, w opozycji do rosnących w polityczną siłę Unii Europejskiej i Chin, uformowały własne unie międzypaństwowe -- jednocześnie okazało się, że nie ma już słabych państw, z którymi można by zaryzykować otwarty konflikt zbrojny. Po raz pierwszy w historii ludzkości został zaprowadzony ład i pokój w ponad trzech czwartych Świata."
+msgstr ""
+"Konflikty stawały się coraz rzadsze wraz ze zbliżającym się końcem wieku. Nowoczesne technologie i powszechna opieka medyczna stały się w końcu dostępne dla krajów trzeciego świata. Nawet pożoga terroru przygasła w obliczu okrucieństw Drugiej Zimnej Wojny, której nieludzkie obrazy pozostają wciąż żywe w pamięci ludzi, od starych Stanów Zjednoczonych aż po zniszczony subkontynent indyjski. Wraz z zagwarantowaniem każdej nacji uczciwej reprezentacji w ONZ, lokalne konflikty zostały przeniesione na szczebel polityki światowej. Standard życia powoli wzrastał, nawet w miejscach które poprzednio były najbiedniejszymi na Ziemi. Granice państw okrzepły i zostały ustabilizowane przez zreformowaną Organizację Narodów Zjednoczonych, która z powodzeniem prowadzi międzynarodowy arbitraż. Najmniejsze państwa, w opozycji do rosnących w polityczną siłę Unii Europejskiej i Chin, uformowały własne unie międzypaństwowe -- jednocześnie okazało się, że nie ma już słabych państw, z którymi można by zaryzykować otwarty konflikt zbrojny. Po raz pierwszy w historii ludzkości został zaprowadzony ład i pokój w ponad trzech czwartych Świata."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Dla wielu ludzi na Ziemi oznacza to, że w końcu nastały spokojne czasy."
+msgstr ""
+"Dla wielu ludzi na Ziemi oznacza to, że w końcu nastały spokojne czasy."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "Celem pierwszego ataku staje się Bombaj w dniu 3 marca 2084 roku. Sześć niewielkich, niezidentyfikowanych obiektów latających, niewykrytych przez większość systemów wczesnego ostrzegania, pojawia się na orbicie znikąd, aby w błyskawicznym tempie wylądować w najgęściej zaludnionym miejscu na Ziemi. Nie było żadnych ostrzeżeń, wyjaśnień, komunikatów. W ciągu dwunastu krwawych godzin zostaje zmasakrowanych dwadzieścia tysięcy ludzi wraz z trzema elitarnymi batalionami wojska, zanim zmasowany kontratak jednostek sił zjednoczonych nie powstrzymał ofensywy Obcych. Wówczas, tak szybko jak przybyli, wycofują się oni do swych statków i znikają na orbicie, pozostawiając za sobą zasłane ciałami ulice Bombaju."
+msgstr ""
+"Celem pierwszego ataku staje się Bombaj w dniu 3 marca 2084 roku. Sześć niewielkich, niezidentyfikowanych obiektów latających, niewykrytych przez większość systemów wczesnego ostrzegania, pojawia się na orbicie znikąd, aby w błyskawicznym tempie wylądować w najgęściej zaludnionym miejscu na Ziemi. Nie było żadnych ostrzeżeń, wyjaśnień, komunikatów. W ciągu dwunastu krwawych godzin zostaje zmasakrowanych dwadzieścia tysięcy ludzi wraz z trzema elitarnymi batalionami wojska, zanim zmasowany kontratak jednostek sił zjednoczonych nie powstrzymał ofensywy Obcych. Wówczas, tak szybko jak przybyli, wycofują się oni do swych statków i znikają na orbicie, pozostawiając za sobą zasłane ciałami ulice Bombaju."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Nadzwyczajne spotkanie Rady Bezpieczeństwa ONZ nie przynosi żadnych konkretnych postanowień. Ataki nasilają się, są przeprowadzane większymi siłami i jeszcze brutalniej niż poprzednio -- tym razem celami są Bonn, Johannesburg i Bangkok. Niektóre państwa próbują negocjować, wysyłając wiadomości w tysiącach różnych języków do Obcych plądrujących ich tereny. Ich próby pozostają bez odpowiedzi. Po kilku godzinach w żadnym z trzech miast nie pozostaje przy życiu ani jeden człowiek. Ataki kończą się, zanim siły wojskowe mają szansę wykonać kontruderzenie. Obcy nie pozostawiają za sobą niczego poza krwią i betonową pustynią. Wszystkie statki Obcych znikają bez śladu -- choć nikt już nie wątpi, że pojawią się ponownie."
+msgstr ""
+"Nadzwyczajne spotkanie Rady Bezpieczeństwa ONZ nie przynosi żadnych konkretnych postanowień. Ataki nasilają się, są przeprowadzane większymi siłami i jeszcze brutalniej niż poprzednio -- tym razem celami są Bonn, Johannesburg i Bangkok. Niektóre państwa próbują negocjować, wysyłając wiadomości w tysiącach różnych języków do Obcych plądrujących ich tereny. Ich próby pozostają bez odpowiedzi. Po kilku godzinach w żadnym z trzech miast nie pozostaje przy życiu ani jeden człowiek. Ataki kończą się, zanim siły wojskowe mają szansę wykonać kontruderzenie. Obcy nie pozostawiają za sobą niczego poza krwią i betonową pustynią. Wszystkie statki Obcych znikają bez śladu -- choć nikt już nie wątpi, że pojawią się ponownie."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Osiemdziesiąt siedem godzin po pierwszym ataku na Bombaj Ziemia wypowiada wojnę. Przez dwa tygodnie armie ludzkości starają się jak mogą najlepiej odeprzeć ataki Obcych. Udaje się osiągnąć kilka jakże cennych zwycięstw."
+msgstr ""
+"Osiemdziesiąt siedem godzin po pierwszym ataku na Bombaj Ziemia wypowiada wojnę. Przez dwa tygodnie armie ludzkości starają się jak mogą najlepiej odeprzeć ataki Obcych. Udaje się osiągnąć kilka jakże cennych zwycięstw."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "W sytuacji bez wyboru, ONZ w końcu wykonuje ruch. Z zakurzonych magazynów wydobyty zostaje ekwipunek bojowy, którego niektóre elementy pamiętają jeszcze poprzedni wiek. Pod flagą ONZ do życia przywrócona zostaje długo nieaktywna agencja byłych Stanów Zjednoczonych, założona do walki z istotami pozaziemskimi -- PHALANX. Jej celem jest likwidacja zagrożenia pozaziemskiego oraz ochrona ludzkiej rasy bez względu na poniesione koszty."
+msgstr ""
+"W sytuacji bez wyboru, ONZ w końcu wykonuje ruch. Z zakurzonych magazynów wydobyty zostaje ekwipunek bojowy, którego niektóre elementy pamiętają jeszcze poprzedni wiek. Pod flagą ONZ do życia przywrócona zostaje długo nieaktywna agencja byłych Stanów Zjednoczonych, założona do walki z istotami pozaziemskimi -- PHALANX. Jej celem jest likwidacja zagrożenia pozaziemskiego oraz ochrona ludzkiej rasy bez względu na poniesione koszty."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Fundowana przez wszystkie osiem potęg politycznych, rekrutująca swoich żołnierzy z ich elitarnych jednostek -- PHALANX to najlepsi z najlepszych. Jest pierwszą i jedyną linią ziemskiej obrony przed najeźdzcami. Nie może zawieść, bo inaczej reszta ludzkości nie będzie miała żadnych szans."
+msgstr ""
+"Fundowana przez wszystkie osiem potęg politycznych, rekrutująca swoich żołnierzy z ich elitarnych jednostek -- PHALANX to najlepsi z najlepszych. Jest pierwszą i jedyną linią ziemskiej obrony przed najeźdzcami. Nie może zawieść, bo inaczej reszta ludzkości nie będzie miała żadnych szans."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

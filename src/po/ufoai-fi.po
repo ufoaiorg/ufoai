@@ -1997,7 +1997,6 @@ msgid "electrolaser_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1570
-#, fuzzy
 msgid "electrolaser_pre_txt"
 msgstr "<TODO>"
 

@@ -720,7 +720,8 @@ msgstr "mejl_från_fn"
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4838
 #: ../base/ufos/research.ufo:4845
 msgid "mail_to_base_commander"
-msgstr "Baskommendör, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Baskommendör, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:80
 msgid "2084 Mar 21"
@@ -784,7 +785,8 @@ msgstr "mejl_prolog"
 #: ../base/ufos/research.ufo:4554 ../base/ufos/research.ufo:4629
 #: ../base/ufos/research.ufo:4637
 msgid "mail_from_paul_navarre"
-msgstr "Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:90
 #, fuzzy
@@ -860,7 +862,8 @@ msgstr "mejl_produktion_klar"
 #: ../base/ufos/events.ufo:232 ../base/ufos/events.ufo:243
 #: ../base/ufos/events.ufo:254 ../base/ufos/events.ufo:265
 msgid "mail_from_xo"
-msgstr "Befälhavare Abel S. Howard, Kommandocentralen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Befälhavare Abel S. Howard, Kommandocentralen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:157
 msgid "Monthly Report -- %s"
@@ -955,7 +958,8 @@ msgstr "mejl_ny_radarkontakt"
 #: ../base/ufos/research.ufo:588 ../base/ufos/research.ufo:4795
 #: ../base/ufos/research.ufo:4804
 msgid "mail_from_col_falkland"
-msgstr "Överste Ingrid Falkland, Underrättelseavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Överste Ingrid Falkland, Underrättelseavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:278
 msgid "Response Too Late -- %s"
@@ -985,7 +989,8 @@ msgstr "mejl_utomjordisk_aktivitet_rapporterad"
 #: ../base/ufos/events.ufo:331 ../base/ufos/events.ufo:342
 #: ../base/ufos/events.ufo:353
 msgid "mail_from_air_cdr"
-msgstr "Kommendör Subakh al-Kuhar, Flygvapnet, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Kommendör Subakh al-Kuhar, Flygvapnet, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:311
 msgid "New Aircraft Arrived -- %s"
@@ -1688,16 +1693,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:131
 msgid "laser_pre_txt"
-msgstr ""
-"Vårt samlade forskningsarkiv från FN har gett oss en stor mängd värdefull information om den vapenutveckling som har gjorts i världen sedan sekelskiftet. Ett av de mer intressanta ämnena har varit produktionen av DEW (Directed Energy Weapons, eller riktade energivapen), det vill säga vapen som överför energi till ett mål på andra sätt än via en projektil. Vi är i synnerhet intresserade av filerna som behandlar kontinuerlig våglaser.\n"
-"\n"
-"Många länder och företag har genom åren försökt att skapa lasrar som är kraftiga nog att användas som vapen, men ingen har kunnat bygga en laser som går att bära med sig och som ger tillräckligt med energi för att kunna jämföra sig med ordinära eldvapen. Nu har vi emellertid fått tillgång till all samlad laserforskning, och även hela bibliotek fyllda med jordens mest avancerade teknologi. Jag anser att vi inte bara kan tillverka ett effektivt bärbart laservapen, utan även bygga det i storlekar som aldrig tidigare setts när det gäller DEW.\n"
-"\n"
-"Vi bör forska i det här området så snart som möjligt. Att variera vår arsenal kommer att göra den mycket svårare att försvara sig emot, och våra erfarenheter kan möjliggöra för oss att utveckla flyglaservapen effektivare än konventionella vapen kan användas mot UFO: n med hög hastighet .\n"
-"\n"
-"Min åsikt är att vi inom PHALANX kommer att göra det omöjliga, och vi kan börja så snart som Ni godkänner det här förslaget.\n"
-"\n"
-"--Kommendör Navarre"
+msgstr "Ingen information om tidigare forskning tillgänglig"
 
 #: ../base/ufos/research.ufo:198 ../base/ufos/research.ufo:236
 msgid "antimatter_txt"
@@ -1833,7 +1829,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4764 ../base/ufos/research.ufo:4837
 #: ../base/ufos/research.ufo:4844
 msgid "mail_from_dr_connor"
-msgstr "Doktor Connor, Forskning och utveckling: Smittskyddsavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Doktor Connor, Forskning och utveckling: Smittskyddsavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:333 ../base/ufos/research.ufo:373
 msgid "alien_breathing_txt"
@@ -3540,18 +3537,8 @@ msgstr ""
 "--Kommendör Navarre"
 
 #: ../base/ufos/research.ufo:1570
-#, fuzzy
 msgid "electrolaser_pre_txt"
-msgstr ""
-"Vårt samlade forskningsarkiv från FN har gett oss en stor mängd värdefull information om den vapenutveckling som har gjorts i världen sedan sekelskiftet. Ett av de mer intressanta ämnena har varit produktionen av DEW (Directed Energy Weapons, eller riktade energivapen), det vill säga vapen som överför energi till ett mål på andra sätt än via en projektil. Vi är i synnerhet intresserade av filerna som behandlar kontinuerlig våglaser.\n"
-"\n"
-"Många länder och företag har genom åren försökt att skapa lasrar som är kraftiga nog att användas som vapen, men ingen har kunnat bygga en laser som går att bära med sig och som ger tillräckligt med energi för att kunna jämföra sig med ordinära eldvapen. Nu har vi emellertid fått tillgång till all samlad laserforskning, och även hela bibliotek fyllda med jordens mest avancerade teknologi. Jag anser att vi inte bara kan tillverka ett effektivt bärbart laservapen, utan även bygga det i storlekar som aldrig tidigare setts när det gäller DEW.\n"
-"\n"
-"Vi bör forska i det här området så snart som möjligt. Att variera vår arsenal kommer att göra den mycket svårare att försvara sig emot, och våra erfarenheter kan möjliggöra för oss att utveckla flyglaservapen effektivare än konventionella vapen kan användas mot UFO: n med hög hastighet .\n"
-"\n"
-"Min åsikt är att vi inom PHALANX kommer att göra det omöjliga, och vi kan börja så snart som Ni godkänner det här förslaget.\n"
-"\n"
-"--Kommendör Navarre"
+msgstr "Ingen information om tidigare forskning tillgänglig"
 
 #: ../base/ufos/research.ufo:1605
 msgid "medikit_txt"
@@ -3806,54 +3793,36 @@ msgid "needlerheavy_pre_txt"
 msgstr "Ingen information om tidigare forskning tillgänglig"
 
 #: ../base/ufos/research.ufo:1981
-#, fuzzy
 msgid "coilgun_txt"
 msgstr ""
-"Technical Specifications: CRC-212 Riot Shotgun\n"
+"Commander, I'd like to present you with the finished plans and prototype for our Coilgun.\n"
 "\n"
-"CLASSIFIED LEVEL YELLOW\n"
+"Combining an alien-inspired power pack and coil arrangement with some of our Bolter technology has solved many of the coilgun design's inherent problems. A hundred years ago, the energy efficiency of coilguns measured less than 2%; meaning, the energy of the projectile at the time of impact was less than 2% of the energy used to fire it. Even with today's technology coilgun efficiency is limited to single digits, but the alien Needler manages efficiency ratings as high as 70%. It may take us years to get to that level, but with the Coilgun we've developed something that is both practical and effective for the war effort.\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"In order to get better acceleration out of the coils, we've created a new kind of ammunition, based on the aliens' needle alloy. In shape it's a fairly standard fin-stabilised penetrator inside a discarding sabot, but it's made from materials never before seen on Earth. Discarding sabot rounds are normally used for much larger calibres -- we've effectively scaled down an anti-tank round -- but the armour-piercing potential is phenomenal, higher than any other weapon we have. In fact, the Coilgun is now the highest-calibre infantry weapon on the planet.\n"
 "\n"
-"Technical Document, Delta Clearance\n"
+"We've also incorporated a Needler-style holographic sight, making the Coilgun extremely accurate and comfortable to fire.\n"
 "\n"
-"Filed: 20 March 2084\n"
+"The advantages of a coilgun as a sniper rifle are obvious. There's no rush of propellant to make noise, no muzzle flash spitting out light and heat. Unlike even our Bolter, nothing comes out the barrel except the bullet -- there's no spray of hot metal from the rails to light up the sniper on infrared. With nothing to reveal the sniper's position except the noise of the bullet itself breaking the sound barrier, it's possible to fire and stay undetected, even against alien technology. Best of all, ballistics tests confirm that it should be able to bring down most aliens in a single shot.\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"Of course we've had to make some sacrifices -- high weight due to the coils and electrical equipment contained in the barrel, low ammunition capacity due to the high calibre, large and heavy magazines/power packs. Despite this, I believe the Coilgun should replace most of our SR-1 Sniper Rifles, as it's proving difficult for our conventional weapons to compete with new enemy armour designs.\n"
 "\n"
+"Keep the SR-1 in light sniper and anti-infantry roles and move the Coilgun forward as our main long-range threat. The aliens will come to fear it.\n"
 "\n"
-"\n"
-"Overview\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
-"\n"
-"From our experiences in Mumbai and other stricken cities, we've concluded that the aliens seem to concentrate their efforts on population centres, especially dense urban areas. A majority of engagements have taken place at knife-fighting range. For the purposes of the Excalibur Program, we've chosen several high-performance weapons for our Close Range Combat package.\n"
-"\n"
-"Many great shotguns have come out of Italy over the past two centuries; the latest is the Rossi AAA, a semi-automatic combat shotgun developed for use by SWAT and anti-terrorist units. It features several ground-breaking technologies, but its most impressive feature is without a doubt the specially-developed 'Twist' barrel. The Twist is a new type of shotgun barrel that, with a sharp twist of the front handguard, can protrude or flatten the rifling inside the barrel. With this mechanism, the AAA can change its barrel from smoothbore to rifled and back in a tenth of a second. The barrel even adjusts its own diameter and choke to fit whatever type of shell is in the chamber. These two innovations allow the AAA to fire any kind of shotgun ammo at a moment's notice.\n"
-"\n"
-"The most commonly used military and SWAT ammunition is the 12mm centerfire flechette shell. Each shell contains 8 tiny flechettes -- solid steel needles with fins to stabilise their flight. This ammunition has superior accuracy compared to buckshot and performs excellently against armour. The flechettes are also prone to tumble after penetration, resulting in impressive wounding capability for such a small projectile. Their drawbacks are vulnerability to wind conditions and other deflecting factors. Other types of ammo are available to deal with these situations, however -- and the AAA can fire them all.\n"
-"\n"
-"In conclusion, the Rossi AAA is a highly versatile shotgun that is among the most effective close-range weapons available. It has a longer range than the CRC-FL Flamethrower and causes more damage than the CRC-8 SMG, providing a good compromise between speed, range and stopping power.\n"
-"\n"
-"For PHALANX use, we have given this shotgun the classification CRC-212.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"The CRC-212 performs very well at close quarters but quickly loses power as the range increases. Flechette shot tends to spread too far to be effective at range (though less so than ordinary buckshot), while rifled slugs suffer a pronounced projectile drop and are highly susceptible to wind conditions. Though the shotgun can shoot out to medium range, don't expect it to be very effective.\n"
-"\n"
-"Where this weapon will truly shine is in urban situations where the enemy has little cover to hide behind and can be engaged at close range. However, it can be too long to manoeuvre properly in tight spaces. The CRC-M9 Micro Shotgun may be preferable in these situations.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1984
 msgid "coilgun_pre_txt"
-msgstr "Ingen information om tidigare forskning tillgänglig"
+msgstr ""
+"Commander, our brainstorms down at DivEngine have come up with an interesting idea based on the alien Needler technology. When combining the alien fast-changing magnetic generators -- and, even more importantly, their power source -- with human-engineered EM rifle technology, some amazing man-portable weaponry becomes possible. I'd hereby like to propose a new design for a coilgun in the role of a sniper rifle.\n"
+"\n"
+"The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.\n"
+"\n"
+"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
+"\n"
+"Please let me know when you want us to start, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1991 ../base/ufos/research.ufo:1999
 #: ../base/ufos/weapons_human.ufo:392
@@ -5073,7 +5042,7 @@ msgstr ""
 "\n"
 "Det finns skäl varför PHALANX labben anses de bästa i USA under de senaste 50 åren. Vi uppfann flygplanens 'Stealth' teknologi på 60-talet med XD4 stealth jagaren och har förblivit vid framkanten med den första produktionen av artificiell spindelväv för fyra år sedan. Det är resultaten från en blandning av de smartaste människorna med den bästa utrustningen som finns att få tag på. Att hålla oss i framkanten säkrar vår beredskap mot ett möjligt utomjordiskt hot.\n"
 "\n"
-"Våra nya laboratorium är utrustade för all sorts forskning; bioteknik, nanoteknik, högenergi lasrar, partikel fysik och mycket mer. Det finns inget som inte får plats inom laboratoriets väggar som inte kan bli ordentligt studerat, dissekerat eller nedplockat. Som standard finns det tankar som kan producera vilken organisk materia som vi kan komma att behöva, hologram projektorer för tester och simulationer, laser och maser installationer, en förminskad tokomak fusionskammare för plasma forskning och en kraftfull partikel accelerator.\n"
+"Våra nya laboratorium är utrustade för all sorts forskning; bioteknik, nanoteknik, högenergi laser, partikel fysik och mycket mer. Det finns inget som inte får plats inom laboratoriets väggar som inte kan bli ordentligt studerat, dissekerat eller nedplockat. Som standard finns det tankar som kan producera vilken organisk materia som vi kan komma att behöva, hologram projektorer för tester och simulationer, laser och maser installationer, en förminskad tokomak fusionskammare för plasma forskning och en kraftfull partikel accelerator.\n"
 "\n"
 "Vilken som helst av dessa installationer skulle kosta en förmögenhet för en civil verksamhet eller en militär entreprenör, men pga våran erfarenhet och effektivitet så kan vi bygga och underhålla alla dessa för en liten del av den kostnaden. Projekttider är också mycket förkortade pga all de typer av utrustning vi kan få fram på ett ögonblick. Våran höga nivå på forskningen gör så att vi fullt och kontinuerligt använder det.\n"
 "\n"
@@ -5336,8 +5305,7 @@ msgstr ""
 "\n"
 "Det är fullständigt klart att soldater i krig lever under en väldig stress. För att bibehålla moralen så behöver de en plats att trappa ner och umgås i en rangfri miljö. Vi har försökt att förse denna sort av vila och rekreation i form av en samlingssal.\n"
 "\n"
-"Den är utrustad med en mångfald av underhållning, allt från biljard bord till högteknologiska spel konsoller. Den innehåller också en blygsam väggmonterad bioduk för gemensam filmvisning. Det finns försäljningsmaskiner med både alkohol och alkoholfria drycker, och separata vardagsrum för att våra soldater ska kunna få någon sorts privatliv från instängdheten från livet i basen. Vardagsrummen kan låsas innefrån upp till 30 minuter per dag av varje lag medlem. Låset kan öppnas i nödfall från Kontrollcentralen, Kommandocentralen eller av sjukvårdsofficeren.\n"
-"\n"
+"Den är utrustad med en mångfald av underhållning, allt från biljard bord till högteknologiska spel konsoller. Den innehåller också en blygsam väggmonterad bioduk för gemensam filmvisning. Det finns försäljningsmaskiner med både alkohol och alkoholfria drycker, och separata vardagsrum för att våra soldater ska kunna få någon sorts privatliv från instängdheten från livet i basen. Vardagsrummen kan låsas innefrån upp till 30 minuter per dag av varje lag medlem. Låset kan öppnas i nödfall från Kontrollcentralen, Kommandocentralen eller av sjukvårdsofficeren.\n\n"
 "\n"
 "All vår utrustning kräver underhåll, och jag skulle kunna hävda att våra soldater behöver mest underhåll. Samlingsalen är det bästa för att hålla dom mentalt hälsosamma och i stridbart skick.\n"
 "\n"
@@ -5858,7 +5826,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3455
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3480
 msgid "ufo_scout_txt"
@@ -6536,7 +6505,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4125
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4181
 msgid "'Raven' ECM Unit"
@@ -7407,15 +7377,13 @@ msgstr ""
 "\n"
 "Den enklaste förklaringen är detta: Det är två typer av DNA i våra blodprover. Det främmande DNA: ts förekommst är total; denna sekvens kan hittas i alla medlemmar av Tamanrasen, och en närmare studie har bekräftat att en liknande sekvens finns i blodet på andra raser vi hittat. Källan verkar vara en sorts encellig organism som finns i stor mängd i det utomjordiska blodomloppet. Det finns flera olika versioner av den, en för varje utomjordisk ras, och alla delar otroliga DNA likheter. Intressant nog så även om alla dessa organismer har lika många kromosomer, så kan ingen av dom överleva i en kropp som inte är medlem av den ursprungliga rasen. Underligt nog så är det helt klart att det är absolut ingen som helst variation på DNA: t mellan organismer från samma version. Detta leder till att vi tror att olika versioner kan ha tillverkats -- helt eller delvis -- för att passa den individuella rasen.\n"
 "\n"
-"Vi antar att alla utomjordingar bär en version av denna micro organisms infektion. Organismens funktion är inte helt klar. Vi har gjort tester på olika experimentella vävnads prover, både infekterade och kontrollprover. Den infekterade vävnaden verkar inte lida av några negativa effekter -- eller positiva heller för den delen -- av organismens närvaro. De är i stort sätt oskiljbara från oinfekterad vävnad. Då organismen kräver en levande värd för sin egna överlevnad, så verkar det inte vara en parasit eller en symbiot, med för närvarande obemärkta fördelar.\n"
-"\n"
+"Vi antar att alla utomjordingar bär en version av denna micro organisms infektion. Organismens funktion är inte helt klar. Vi har gjort tester på olika experimentella vävnads prover, både infekterade och kontrollprover. Den infekterade vävnaden verkar inte lida av några negativa effekter -- eller positiva heller för den delen -- av organismens närvaro. De är i stort sätt oskiljbara från oinfekterad vävnad. Då organismen kräver en levande värd för sin egna överlevnad, så verkar det inte vara en parasit eller en symbiot, med för närvarande obemärkta fördelar.\n\n"
 "\n"
 "Vi har namngett denna organism XVI (EXtraterrestrial Virus Infektion). Detta kan vara en felbeteckning i microbiologiska termer; XVI är långt mer komplicerad än något virus på jorden, men den beter och kopierar sig precis som ett vanligt virus. Därför känner vi att termen är försvarbar. När varje utomjordisk ras bär en unik sträng av infektionen, så har vi gett dem ett alfabetiskt designering efter den ursprungliga ras som strängen hittas i. Tamanerna har XVI-T, Shevaar har XVI-S, osv.\n"
 "\n"
 "Infektionens syfte kvarstår suddig just nu, men det är det enda vi har hittat än så länge som binder ihop dessa olika raser fysiskt. Vi kan bara gissa att olika strängar av infektionen skapades för att passa varje ras.\n"
 "\n"
-"Det finns ingen indikation att denna organism är smittsam för oss människor. När vi injicerar odlingar av männsklig vävnad med färskt utomjordiskt blod så har vi observerat att det utomjordiska blodet har blivit totalt utstött, som väntat. Oväntat nog, så har allt spår av infektionen därefter förintats av vanliga männskliga T celler. Organismen kunde inte slå av vårat immunförsvar för att kunna slå rot.\n"
-"\n"
+"Det finns ingen indikation att denna organism är smittsam för oss människor. När vi injicerar odlingar av männsklig vävnad med färskt utomjordiskt blod så har vi observerat att det utomjordiska blodet har blivit totalt utstött, som väntat. Oväntat nog, så har allt spår av infektionen därefter förintats av vanliga männskliga T celler. Organismen kunde inte slå av vårat immunförsvar för att kunna slå rot.\n\n"
 "\n"
 "Vi tror för närvarande inta att XVI organismen utgör något hot för våra soldater på slagfältet. Men vi kommer forsätta att forska och hålla dig underrättad om något utvecklas. En grundlig blodtestning utförs nu på all vår personal, som en säkerhetsåtgärd, och vanliga karantän procedurer kommer upprätthållas alltigenom laboratoriumet.\n"
 "\n"
@@ -7480,7 +7448,7 @@ msgstr ""
 "\n"
 "We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. DivBio also has a stake; we'd like to examine at least one live human prisoner in our Containment unit so we can run a full physical examination. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.\n"
 "\n"
-"Director Wong (DivInfo) reports that if we hold off too long on implementing a new info strategy, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin to grow. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
+"Director Wong (DivInfo) also asked me to mention that, if we hold off on implementing a new info strategy for too long, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin getting their word out. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
 "\n"
 "Sincerely,\n"
 "\n"
@@ -7491,17 +7459,27 @@ msgid "enemy_on_earth_txt"
 msgstr ""
 "Commander,\n"
 "\n"
-"You need to read this right away. By your request, we've performed several hurried autopsies and done our best to examine the live prisoners taken on our mission against the alien sympathisers. The results are alarming.\n"
+"You need to read this right away. With your authorisation, we've performed several autopsies and done our best to examine the live prisoners taken on our mission against the alien sympathisers. The results are alarming.\n"
 "\n"
-"Do you remember the report I sent you about the first live alien specimen we researched? As you may remember, it had lost all its intellect and became largely unresponsive without fellows to empower the hive mind. Prepare yourself, Commander: The human prisoner in our Containment unit exhibits the very same symptoms. A thorough blood analysis has produced conclusive evidence that the prisoner is infected with an XVI strand.\n"
+"Do you remember the report I sent you about the first live alien specimen we captured? As you may remember, it lost all its intellect and became largely unresponsive without fellows to empower the hive mind. Prepare yourself, Commander: The human prisoners in our Containment unit exhibit the very same symptoms. They do not think for themselves. Their thought processes are firmly suppressed and supplanted by the alien hive mind through a process we currently fail to understand.\n"
 "\n"
-"This new strand is slightly different from the others we've encountered, and we fear it can only be designated \"XVI-H\". It appears to be willfully designed to infect humans with the alien hive mind. It overrides their own rational thought processes and replaces them with a direct link into the group, whether there actually is a group or not, through a process we currently fail to understand. Our subjects run the gamut of the human race; the infection seems to have no preference for IQ or physical potential. The infection method appears to be a direct injection of infected blood into the victim's bloodstream. It is premeditated and ruthless. Any amount of shared blood is enough for the infection to take root.\n"
+"We've run and re-run examinations and blood tests on these people ad nauseum, and there can be no mistake. The blood samples are full of foreign DNA. All these people are carrying something in their bloodstream -- a kind of single-cellular organism present in huge numbers, which appears to replicate like a virus when placed in an uninfected human body and rapidly takes over, enslaving the victim to the alien hive mind.\n"
 "\n"
-"Quarantine procedures have been tightened to the absolute maximum, and we're rushing another full batch of tests on all our personnel. Our field agents remain clean, thank God -- just think if we'd gone into a combat zone with soldiers capable of turning on their teammates at any moment! -- but I fear we have found one conclusive result. It's Dr. Eisenhower, our Director of Administration. He's been away on holiday since last week, but we ran an older sample which has now come up positive. We don't know when or how he was subverted or if he even joined PHALANX with honourable intentions, but it's clear he has acted as an alien spy for some weeks. Unfortunately we can't seem to find him at his announced destination. Internal Security has taken charge of his workstation and is in the process of information control.\n"
+"These subjects run the gamut of the human race; there seems to be no preference for IQ or physical potential. We don't yet know how the infection takes root, but even a few of these organisms entering the bloodstream may be enough to infect and enslave an individual entirely. Not even our own employees are immune, as we discovered to our horror when we screened our base personnel.\n"
 "\n"
-"Things are a bit hectic right now. Dr. Eisenhower's infection implies that other members of a hive mind -- human or alien -- were in close enough proximity to allow him to function at human intelligence. He could have linked up with our subjects in Containment, or a nearby alien cell, or even other infiltrators inside our base. Right now, we don't know, and we most likely never will. We're all frightened in the Bio lab. My assistant has been jumping at shadows all day.\n"
+"Our field agents remain clean, thank God -- just think if we'd gone into a combat zone with soldiers capable of turning on their teammates at any moment! -- but I fear we have found one conclusive result. It's Dr. Eisenhower, our Director of Administration. He's been away on business to the UN since last week, but we ran an older sample which has come up positive. We don't know when or how he was subverted or if he even joined PHALANX with honourable intentions, but it's clear he has acted as an alien spy for some weeks. Unfortunately we can't seem to find him at any of the locations he was scheduled to visit. Internal Security has taken charge of his workstation and is in the process of information control.\n"
 "\n"
-"Commander, we must develop a vaccine against XVI-H as soon as possible. The danger of our soldiers and salvage technicians falling victim to the infection in the field is too great to ignore even for a moment. I hereby request your permission to start work on a vaccine immediately. Please, please respond at your earliest convenience.\n"
+"Things are a bit hectic right now. Dr. Eisenhower's infection implies that other members of a hive mind -- human or alien -- were in close enough proximity to allow him to function at human intelligence. He could have linked up with our subjects in Containment, or a nearby alien cell, or even other infiltrators inside our base. Right now, we don't know. Quarantine procedures have been tightened to the absolute maximum, and we're rushing another full batch of tests on all our personnel. We're all frightened down here in DivBio. My assistant has been jumping at shadows all day.\n"
+"\n"
+"Interestingly, our attempts to infect other terrestrial life -- even intelligent vertebrates such as bottlenose dolphins and elephants -- have failed completely. This organism must have been engineered wholly or in part to specifically infect the human species.\n"
+"\n"
+"We've dubbed the organism the 'EXtraterrestrial Viral Infection', or XVI. This may be somewhat of a misnomer in microbiological terms; XVI is a complex multi-celled organism far larger than any terrestrial virus, but it acts and replicates exactly like one.\n"
+"\n"
+"Really, what we're looking at here is a bio-weapon of unprecedented proportions. Instead of killing its victims it takes control of them with no option of resistance and -- at the moment -- no available cure or defence. The most humble and harmless civilian can be infected and, with the instant shared expertise of the larger hive mind, become an effective warrior for the aliens while reducing our numbers. When the aliens also supply them with weapons, we can see the true face of horror.\n"
+"\n"
+"I couldn't imagine a more nightmarish scenario for us. Our troops will undoubtedly be coming up against more and more human opponents during alien attacks on Earth. We may even find people crewing UFOs for the aliens. It's madness.\n"
+"\n"
+"Commander, we must develop a vaccine against XVI as soon as possible. The danger of our soldiers and salvage technicians falling victim to the infection in the field is too great to ignore even for a moment, let alone allowing the general population to fall prey to this abomination. I hereby request your permission to start work on a vaccine immediately. Please, please respond at your earliest convenience.\n"
 "\n"
 "Sincerely,\n"
 "\n"
@@ -7524,7 +7502,7 @@ msgstr ""
 "\n"
 "We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. DivBio also has a stake; we'd like to examine at least one live human prisoner in our Containment unit so we can run a full physical examination. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.\n"
 "\n"
-"Director Wong (DivInfo) also asked me to mention that, if we hold off on implementing a new info strategy for too long, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin getting their word out. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
+"Director Wong (DivInfo) reports that if we hold off too long on implementing a new info strategy, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin to grow. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
 "\n"
 "Sincerely,\n"
 "\n"
@@ -7844,35 +7822,43 @@ msgstr "För många människor på jorden verkar det äntligen som allt är bra.
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
+msgstr ""
+"Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
+msgstr ""
+"Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "För många människor på jorden verkar det äntligen som allt är bra."
+msgstr ""
+"För många människor på jorden verkar det äntligen som allt är bra."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
+msgstr ""
+"Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
+msgstr ""
+"Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
+msgstr ""
+"87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
+msgstr ""
+"När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
+msgstr ""
+"Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

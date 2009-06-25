@@ -647,7 +647,8 @@ msgstr "Εξωγήινο σκάφος Εντοπίστηκε"
 
 #: ../base/ufos/events.ufo:78
 msgid "mail_from_un"
-msgstr "ΓΓ. Mahouf Serra, Ηνωμένα Έθνη, Πόλη της Νέας Υόρκης"
+msgstr ""
+"ΓΓ. Mahouf Serra, Ηνωμένα Έθνη, Πόλη της Νέας Υόρκης"
 
 #: ../base/ufos/events.ufo:79 ../base/ufos/events.ufo:89
 #: ../base/ufos/events.ufo:99 ../base/ufos/events.ufo:110
@@ -723,7 +724,8 @@ msgstr "ΓΓ. Mahouf Serra, Ηνωμένα Έθνη, Πόλη της Νέας Υ
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4838
 #: ../base/ufos/research.ufo:4845
 msgid "mail_to_base_commander"
-msgstr "Διοικητής Βάσης, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Διοικητής Βάσης, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/events.ufo:80
 msgid "2084 Mar 21"
@@ -798,7 +800,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4554 ../base/ufos/research.ufo:4629
 #: ../base/ufos/research.ufo:4637
 msgid "mail_from_paul_navarre"
-msgstr "Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/events.ufo:90
 #, fuzzy
@@ -884,7 +887,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:232 ../base/ufos/events.ufo:243
 #: ../base/ufos/events.ufo:254 ../base/ufos/events.ufo:265
 msgid "mail_from_xo"
-msgstr "Αξιωματικός Διοίκησης Abel S. Howard, Έλεγχος και Διοίκηση, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Αξιωματικός Διοίκησης Abel S. Howard, Έλεγχος και Διοίκηση, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/events.ufo:157
 msgid "Monthly Report -- %s"
@@ -979,7 +983,8 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:588 ../base/ufos/research.ufo:4795
 #: ../base/ufos/research.ufo:4804
 msgid "mail_from_col_falkland"
-msgstr "Συνταγματάρxης Ingrid Falkland, Τμήμα Πληροφοριών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Συνταγματάρxης Ingrid Falkland, Τμήμα Πληροφοριών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/events.ufo:278
 msgid "Response Too Late -- %s"
@@ -1016,7 +1021,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:331 ../base/ufos/events.ufo:342
 #: ../base/ufos/events.ufo:353
 msgid "mail_from_air_cdr"
-msgstr "Σμήναρχος Subakh al-Kuhar, Πτέρυγα Αεροπορίας, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Σμήναρχος Subakh al-Kuhar, Πτέρυγα Αεροπορίας, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/events.ufo:311
 msgid "New Aircraft Arrived -- %s"
@@ -1880,7 +1886,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4764 ../base/ufos/research.ufo:4837
 #: ../base/ufos/research.ufo:4844
 msgid "mail_from_dr_connor"
-msgstr "Δρ. Connor, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Βιολογίας & Περιορισμού, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Δρ. Connor, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Βιολογίας & Περιορισμού, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/research.ufo:333 ../base/ufos/research.ufo:373
 msgid "alien_breathing_txt"
@@ -3524,32 +3531,32 @@ msgstr ""
 #: ../base/ufos/research.ufo:1528
 msgid "laserrifle_txt"
 msgstr ""
-"It's done, Commander. We are now the proud owners of a working laser rifle, with full production plans loaded into our computers. We've eliminated several moving parts and refined the electronics to bring production and maintenance costs down into our budget range. I believe you'll find the weapon's specs to your satisfaction.\n"
+"Τα καταφέραμε κύριε Διοικητά. Είμαστε πλέον περήφανοι κάτοχοι ενός λειτουργικού τουφεκίου λέιζερ με ολοκληρωμένα πλάνα παραγωγής φορτωμένα στους υπολογιστές μας. Αφαιρέσαμε διάφορα κινητά μέρη και βελτιώσαμε τα ηλεκτρονικά ώστε να μειώσουμε το κόστος παραγωγής και συντήρησης στα επίπεδα του προϋπολογισμού μας. Θεωρώ ότι οι προδιαγραφές του όπλου θα σας ικανοποιήσουν.\n"
 "\n"
-"This rifle is possibly the most accurate weapon ever designed. It's light, rests easily in the shooter's hands, and the focusing lenses automatically correct the user's aim to help bring the beam on target -- and keep it there. It may inflict less damage per shot than its conventional projectile-firing counterparts, but it can do more over time if the shooter keeps the target in his sights. Eight troops with conventional assault rifles firing away at full-auto can easily miss a moving target. With laser rifles, that becomes a near-impossibility.\n"
+"Το τουφέκι αυτό είναι πιθανόν το πιο ακριβές όπλο που έχει σχεδιαστεί ποτέ. Είναι ελαφρύ, άνετο στα χέρια του σκοπευτή και οι εστιακοί φακοί διορθώνουν αυτόματα τη σκόπευση του χρήστη ώστε να φέρει την ακτίνα στο στόχο -- και να την κλειδώσει εκεί. Μπορεί μεν να προκαλεί λιγότερη ζημιά με κάθε βολή από ότι τα αντίστοιχα συμβατικά βλητικά τουφέκια, αλλά μπορεί να προκαλέσει περισσότερη συνολική ζημιά καθόλη τη διάρκεια που ο χρήστης διατηρεί το στόχο στο σκόπευτρό του. Οχτώ στρατιώτες με συμβατικά τουφέκια που πυροβολούν κατά ριπάς μπορεί εύκολα να αστοχήσουν. Με τουφέκια λέιζερ αυτό είναι σχεδόν αδύνατον.\n"
 "\n"
-"It is quick to fire, has a good magazine capacity, no recoil, a respectable range and does away with many other issues that plague conventional firearms. It will never misfire or suffer a jammed mechanism. It will never blow up due to a fouled or bent barrel. It will never have problems with incompatible or faulty ammunition. It can suffer cracked lenses if subjected to severe mistreatment, but those are thoroughly shielded, set into shock-resistant foam and protected from the outside by a metal iris that only opens when the weapon is ready to fire.\n"
+"Πυροβολεί γρήγορα, έχει καλή χωρητικότητα πυρομαχικών, μηδενική ανάκρουση, σεβαστό βεληνεκές και δεν υποφέρει από διάφορα άλλα προβλήματα που μαστίζουν τα συμβατικά όπλα. Δεν θα πάθει ποτέ αφλογιστία ή θα μπλοκάρει. Δεν θα ανατιναχτεί ποτέ εξαιτίας χτυπημένης ή στραβής κάννης. Δεν θα έχει ποτέ προβλήματα από μη συμβατά ή ελαττωματικά πυρομαχικά. Μπορεί να παρουσιάσει πρόβλημα λόγω ραγισμένων φακών έπειτα από αρκετή κακομεταχείριση, αλλά αυτοί είναι επαρκώς προστατευμένοι, στερεοποιημένοι με αντί-κραδασμικό αφρό και θωρακισμένοι από το περιβάλλον με ένα μεταλλικό διάφραγμα που ανοίγει μόνο όταν το όπλο είναι έτοιμο να πυροβολήσει.\n"
 "\n"
-"The laser rifle's biggest weakness is its inability to shoot through clouds of smoke, gas or fire. All our lasers have this problem; clouds of material will quickly refract the beam into harmless light, so we'll have to be careful about our application of smoke and incendiary weapons.\n"
+"Η μεγαλύτερη αδυναμία του τουφεκίου λέιζερ είναι ότι δεν μπορεί να πυροβολήσει διαμέσου καπνού, αερίων ή φωτιάς. Όλα τα όπλα λέιζερ έχουν αυτό το πρόβλημα: παραπέτασμα αερίων διαθλά την ακτίνα τους σε ακίνδυνο φως, γι' αυτό πρέπει να είμαστε προσεκτικοί με τη χρήση εμπρηστικών και καπνογόνων όπλων.\n"
 "\n"
-"We've designed the rifle to use the standard deuterium-fluoride cartridges which we've drawn up to power all of our laser weaponry. This gives it approximately two minutes of continuous wave fire before a new cartridge must be inserted. The cartridges can be popped out and left on the ground without risk of contaminating the area, but they will require special hazard disposal once the mission is completed.\n"
+"Σχεδιάσαμε το τουφέκι αυτό ώστε να χρησιμοποιεί την πρότυπη γεμιστήρα δευτερίου-Φθορίου που καθορίσαμε ότι θα τροφοδοτεί όλα τα λέιζερ οπλικά συστήματά μας. Αυτή παρέχει περίπου δύο λεπτά συνεχούς κύματος πυρός προτού χρειάστεί να βάλουμε καινούρια γεμιστήρα. Οι γεμιστήρες μπορούν να εκτιναχτούν και να αφεθούν στο έδαφος, χωρίς κίνδυνο επιμόλυνσης της περιοχής, αλλά θα χρειαστούν ειδική απόρριψη επικίνδυνων υλικών αφότου η αποστολή ολοκληρωθεί.\n"
 "\n"
-"We'll need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a laser rifle.\n"
+"Χρειάζεται να έχουμε τουλάχιστον μία Γεμιστήρα Λέιζερ εύκαιρη ανά πάσα στιγμή, για να μπορούμε να γεμίσουμε και να χρησιμοποιήσουμε το τουφέκι λέιζερ.\n"
 "\n"
-"--Cdr. Navarre"
+"--Paul Navarre, Διευθυντής"
 
 #: ../base/ufos/research.ufo:1531
 msgid "laserrifle_pre_txt"
 msgstr ""
-"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"Αυτή είναι μία από αρκετές προτάσεις που υποβάλλω για την έρευνα και ανάπτυξη νέων λέιζερ όπλων. Η καθεμία από τις προτάσεις θα πρέπει να αναπτυχθεί ξεχωριστά λόγω της διαφοράς μεγέθους, απαιτούμενης ισχύος και πολυπλοκότητας των απαιτούμενων συστημάτων.\n"
 "\n"
-"The laser rifle is the flagship design of our new deuterium-fluoride laser family. It will be a perfect marriage of power, accuracy, range, manoeuvrability and ammo capacity. Even on paper the laser rifle's specs can compete with any conventional assault rifle. The only problem will be actually building it.\n"
+"Το τουφέκι λέιζερ αποτελεί την επιτομή σχεδιασμού της νέας οικογένειας όπλων λέιζερ Δευτερίου-Φθορίου. Θα είναι ο τέλειος συνδυασμός ισχύος, ακρίβειας, εμβέλειας, ευκινησίας και χωρητικότητας πυρομαχικών. Ακόμη και στο στάδιο σχεδιασμού, οι προδιαγραφές του ανταγωνίζονται οποιοδήποτε συμβατικό τουφέκι. Το μόνο πρόβλημα θα είναι η κατασκευή του στην πραγματικότητα.\n"
 "\n"
-"The components we've been using in our Continuous Wave Laser prototypes have been cumbersome, fragile and very expensive. Our soldiers need ruggedness in a rifle, something that will last through the bumps and bashes of combat, and we badly need to bring down production costs to make the program worthwhile. As it is, the price of a squad of working laser rifles would be on par with your average main battle tank. We need funding and lab time to bring costs down, fix or replace the most sensitive components to make the weapon more reliable, and reduce its form factor to something that can be comfortably fired by a human soldier.\n"
+"Τα εξαρτήματα που χρησιμοποιούμε στο πρωτότυπο Λέιζερ Συνεχούς Κύματος είναι δύσχρηστα, εύθραυστα και ακριβά. Οι στρατιώτες μας χρειάζονται αντοχή στο τουφέκι τους, κάτι που θα αντεπεξέλθει τους κραδασμούς και χτυπήματα της μάχης και πρέπει οπωσδήποτε να χαμηλώσουμε το κόστος παραγωγής ώστε το εγχείρημα να αξίζει τον κόπο. Ως έχει μέχρι στιγμής, το κόστος εξοπλισμού μιας διμοιρίας με λειτουργικά τουφέκια λέιζερ είναι ίσο με το κόστος του μέσου άρματος μάχης. Χρειαζόμαστε χρηματοδότηση και εργαστηριακό χρόνο για να μειώσουμε το κόστος παραγωγής, να ενισχύσουμε ή να αντικαταστήσουμε τα πιο ευαίσθητα εξαρτήματα για να κάνουμε το όπλο πιο αξιόπιστο και να μειώσουμε το μέγεθός του σε σημείο που οι στρατιώτες μας να πυροβολούν με αυτό άνετα.\n"
 "\n"
-"As always, Commander, we'll begin work as soon as you give us your authorisation.\n"
+"Όπως πάντα, κύριε Διοικητά, θα αρχίσουμε τις εργασίες αμέσως μόλις μας δώσετε έγκριση.\n"
 "\n"
-"--Cdr. Navarre"
+"--Paul Navarre, Διευθυντής"
 
 #: ../base/ufos/research.ufo:1567
 #, fuzzy
@@ -3578,18 +3585,8 @@ msgstr ""
 "--Paul Navarre, Διευθυντής"
 
 #: ../base/ufos/research.ufo:1570
-#, fuzzy
 msgid "electrolaser_pre_txt"
-msgstr ""
-"Τα ερευνητικά αρχεία του ΟΗΕ που συλλέξαμε περιέχουν πολύτιμες πληροφορίες σχετικά με την ανάπτυξη της οπλικής τεχνολογίας που επετεύχθηκε στη Γη από την αρχή του αιώνα. Ένα από τα πιο ενδιαφέροντα πεδία ήταν η ανάπτυξη των ΟΚΕ (ή αλλιώς Όπλων Κατευθυνόμενης Ενέργειας), όπλα τα οποία επιφέρουν ζημιά σε στόχους χωρίς τη χρήση βλημάτων. Αυτό που μας κίνησε ιδιαίτερα το ενδιαφέρον ήταν τα αρχεία πάνω στη Χρήση Laser Συνεχούς Κύματος.\n"
-"\n"
-"Πολλές χώρες και εταιρίες προσπαθήσαν στο παρελθόν να αναπτύξουν laser αρκετά δυνατά ώστε να χρησιμεύουν σαν όπλα, όμως κανείς δεν κατάφερε να δημιουργήσει ένα φορητό laser που να έχει ισχύ συγκρίσιμη με τα συμβατικά όπλα. Τώρα πια, όμως, αποκτήσαμε πρόσβαση στο σύνολο της έρευνας που είχε γίνει, καθώς και σε ολόκληρες βιβλιοθήκες γεμάτες με την πιο εξελιγμένη τεχνολογία που αναπτύχθηκε στη Γη. Η πεποίθησή μου είναι ότι μπορούμε όχι μόνο να αναπτύξουμε ένα αποτελεσματικό όπλο laser για τους στρατιωτες μας, αλλά και να το κάνουμε σε μέχρι τώρα ασύλληπτα μικρό μέγεθος για ΟΚΕ.\n"
-"\n"
-"Διοικητά, θα πρέπει να αφωσιοθούμε στο συγκεκριμένο τομέα έρευνας το συντομότερο δυνατόν. Ο εμπλουτισμός του οπλοστασίου μας θα το κάνει πολύ πιο δύσκολο για τους εξωγήινους να αμυνθούν, ενώ η εμπειρία που θα αποκτήσουμε πιθανόν να μας βοηθήσει στην ανάπτυξη κανονιών laser για τα αεροσκάφη μας που θα μπορούν να στοχεύουν τα γρήγορα UFO πιο αποτελεσματικά από τα συμβατικά όπλα.\n"
-"\n"
-"Πεποίθησή μου είναι ότι εμείς στην PHALANX θα επιτύχουμε το αδύνατο. Χρειάζόμαστε μόνο τη δική σας έγκριση σε αυτή μας την πρόταση.\n"
-"\n"
-"--Paul Navarre, Διευθυντής"
+msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
 #: ../base/ufos/research.ufo:1605
 msgid "medikit_txt"
@@ -3844,13 +3841,36 @@ msgid "needlerheavy_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
 #: ../base/ufos/research.ufo:1981
-#, fuzzy
 msgid "coilgun_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, I'd like to present you with the finished plans and prototype for our Coilgun.\n"
+"\n"
+"Combining an alien-inspired power pack and coil arrangement with some of our Bolter technology has solved many of the coilgun design's inherent problems. A hundred years ago, the energy efficiency of coilguns measured less than 2%; meaning, the energy of the projectile at the time of impact was less than 2% of the energy used to fire it. Even with today's technology coilgun efficiency is limited to single digits, but the alien Needler manages efficiency ratings as high as 70%. It may take us years to get to that level, but with the Coilgun we've developed something that is both practical and effective for the war effort.\n"
+"\n"
+"In order to get better acceleration out of the coils, we've created a new kind of ammunition, based on the aliens' needle alloy. In shape it's a fairly standard fin-stabilised penetrator inside a discarding sabot, but it's made from materials never before seen on Earth. Discarding sabot rounds are normally used for much larger calibres -- we've effectively scaled down an anti-tank round -- but the armour-piercing potential is phenomenal, higher than any other weapon we have. In fact, the Coilgun is now the highest-calibre infantry weapon on the planet.\n"
+"\n"
+"We've also incorporated a Needler-style holographic sight, making the Coilgun extremely accurate and comfortable to fire.\n"
+"\n"
+"The advantages of a coilgun as a sniper rifle are obvious. There's no rush of propellant to make noise, no muzzle flash spitting out light and heat. Unlike even our Bolter, nothing comes out the barrel except the bullet -- there's no spray of hot metal from the rails to light up the sniper on infrared. With nothing to reveal the sniper's position except the noise of the bullet itself breaking the sound barrier, it's possible to fire and stay undetected, even against alien technology. Best of all, ballistics tests confirm that it should be able to bring down most aliens in a single shot.\n"
+"\n"
+"Of course we've had to make some sacrifices -- high weight due to the coils and electrical equipment contained in the barrel, low ammunition capacity due to the high calibre, large and heavy magazines/power packs. Despite this, I believe the Coilgun should replace most of our SR-1 Sniper Rifles, as it's proving difficult for our conventional weapons to compete with new enemy armour designs.\n"
+"\n"
+"Keep the SR-1 in light sniper and anti-infantry roles and move the Coilgun forward as our main long-range threat. The aliens will come to fear it.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1984
 msgid "coilgun_pre_txt"
-msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
+msgstr ""
+"Commander, our brainstorms down at DivEngine have come up with an interesting idea based on the alien Needler technology. When combining the alien fast-changing magnetic generators -- and, even more importantly, their power source -- with human-engineered EM rifle technology, some amazing man-portable weaponry becomes possible. I'd hereby like to propose a new design for a coilgun in the role of a sniper rifle.\n"
+"\n"
+"The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.\n"
+"\n"
+"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
+"\n"
+"Please let me know when you want us to start, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1991 ../base/ufos/research.ufo:1999
 #: ../base/ufos/weapons_human.ufo:392
@@ -5827,7 +5847,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3455
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3480
 msgid "ufo_scout_txt"
@@ -6480,7 +6501,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4125
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "Από: Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Από: Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/research.ufo:4181
 msgid "'Raven' ECM Unit"
@@ -6570,7 +6592,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4217
 msgid "craft_shield_plating_pre_txt"
-msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
+msgstr ""
+"Commander, now that we have the ability to produce and work the alien materials, a whole new range of options has opened up to us. These materials are so strong and flexible that they can be used for almost anything. Their most promising uses, however, have been in aircraft design -- specifically armour.\n"
+"\n"
+"We've had an extremely difficult time shooting down UFOs thanks to the resilient outer skin of alien materials. Unfortunately we can't simply slap this same kind of skin onto our own craft because the alien materials are far too heavy. Our craft would struggle to even get off the ground. That needn't be the end of it, though.\n"
+"\n"
+"Commander, if you let us do some research on it, I believe we can come up with an armouring scheme that -- while it might decrease speed and increase fuel consumption a bit -- should give our aircraft a far better survival chance against the alien weapons during interceptions. According to our calculations, aircraft with this kind of armour could withstand several particle beam hits and still remain combat effective.\n"
+"\n"
+"It's a very promising possibility, Commander, one that definitely deserves investigation.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4220
 msgid "craft_shield_plating_txt"
@@ -6685,51 +6716,33 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4351
 msgid "craft_weapon_alc_pre_txt"
-msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
+msgstr ""
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"\n"
+"The Aerial Laser Cannon is the largest and most powerful iteration of our new laser designs. Like our infantry weapons it'll be powered by deuterium-fluoride reaction, but on a much larger scale and amplified by the aircraft's on-board electrical systems. Several exciting ideas are being considered.\n"
+"\n"
+"As well as being the biggest, this may well be our most challenging laser to create. Any aircraft cannon will have to reach across several kilometres of atmosphere -- and therefore loads of atmospheric blooming -- with enough punch at the endpoint to cut into a UFO's fuselage. Those sorts of power levels have been achieved before with massive arrays mounted on jumbo jets, but never in a package small enough to make a jet fighter cannon.\n"
+"\n"
+"The finished product should be able to engage UFOs with bullseye accuracy at ranges well beyond that of the SHIVA cannon, and although damage may be low, we expect that the ability to keep continuous fire and pressure on enemy craft will be valuable in the days to come.\n"
+"\n"
+"Please approve lab time and funding for this program when you're ready, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4354
-#, fuzzy
 msgid "craft_weapon_alc_txt"
 msgstr ""
-"Technical Specifications: SHIVA Rotary Cannon\n"
+"Commander, I've just finished my report on our latest laser program. We've successfully prototyped the new Aerial Laser Cannon and are ready to put it into production.\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"We achieved what we set out to do: create a continuous wave, deuterium-fluoride-powered laser with megawatt-range output, capable of tracking and hitting UFOs at ranges of up to 5 kilometres. Accuracy is excellent, hampered only by enemy ECM (Electronic Countermeasures), and unlike in all our other weapons it is not affected by range. The laser proceeds in a straight line and crosses the distance between gun and target almost instantly. It's hard to miss with it.\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unfortunately atmospheric blooming is still a problem, and the laser rapidly loses power the further it has to travel to the target. At maximum range, 5 kilometres, it takes 32 seconds of continuous fire on the same spot to hole a UFO's hull. We're rarely going to have that much time to wait for a kill. The ideal range for this weapon is between 2 to 3 kilometres where it strikes a good balance between damage and distance. Average damage per second at these distances is slightly less than the SHIVA Rotary Cannon, but range is higher by up to 1.5 kilometres. More so than any of our previous weapons, the Aerial Laser Cannon is ideal for driving and pinning down the enemy behind a wall of laser fire.\n"
 "\n"
-"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
+"The cannon carries an integrated magazine of deuterium-fluoride allowing up to thirty minutes of continuous fire. Since deuterium and fluoride are both too potentially hazardous to store on-base, and we have access to large off-base stockpiles of all the necessary compounds, we will not need to keep laser cannon ammunition in inventory.\n"
 "\n"
-"Filed: 19 March 2084\n"
+"Deployment of the weapon is at your discretion, Commander, but I'd like to recommend we use the new cannons to replace SHIVA guns across our airfleet except for craft specifically equipped for close-in fighting. Anything that's much less manoeuvrable than a UFO will have difficulty keeping hold of the target with SHIVAs, so the laser offers a far better solution with nearly as much staying power.\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"Now that we have aircraft capable of intercepting the attacking UFOs, we need to equip them with armaments that can actually shoot down these alien craft. We have evaluated every available weapon on Earth as part of the Excalibur Program, and we have selected the very best for the defence of our planet.\n"
-"\n"
-"The SHIVA is a four-barreled rotary cannon, firing the 20mm HMG (Heavy Machine Gun) round. It is an externally-powered gun -- rather than being dependent upon recoil to actuate the system, it uses an external motor to produce power. The electric motor which drives the SHIVA is a high-efficiency 20 horse power beast, achieving a rate of fire up to 6,000 rounds a minute with the accurate, hard-hitting 20mm HMG shells.\n"
-"\n"
-"Designed and built in Bangladesh, the SHIVA was first prototyped in 2048, failing every one of its trials during that year. The project was nearly discontinued until, in July 2050, an undercover investigation revealed a long-running sabotage plot by a rival arms company. A new prototype was constructed which showed enough promise justify further development. Eventually all the major bugs were ironed out, at which point the power of this weapon became apparent.\n"
-"\n"
-"The SHIVA is very light for an aircraft weapon of its size and effectiveness, weighing only 250 kilos unloaded, 400 kilos loaded. The rate of fire exceeds that of any other four-barreled cannon in existence. Its sophisticated tracking systems can hold a bead on an enemy for as long as there is a radar, lidar or optical target solution available. The unlinked ammo feeds are highly reliable and no jam has ever been recorded throughout the gun's service history.\n"
-"\n"
-"The SHIVA can fire two varieties of the HMG round; API (Armour-Piercing Incendiary) or HEI (High-Explosive Incendiary). The former achieves better penetration while the latter can do more damage if penetration is achieved. Both these rounds are proven to be capable of penetrating UFO armour to some degree.\n"
-"\n"
-"The largest issue with the SHIVA cannon is that it does only limited damage to a UFO, requiring a fairly long engagement time in order to bring a target down on its own. This also allows the enemy plenty of opportunity to escape or peg our craft with return fire. On the other hand, its large magazine gives it more staying power than most other weapons, and it is not to be underestimated.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"Low damage and long engagement times somewhat limit the SHIVA's usefulness. However, most of these failings can be amended or eliminated if the gun is used in numbers or as part of a mixed gun-and-missiles armament. It can provide continuous automatic fire while the pilot concentrates on delivering his missiles, or it can be part of a gunboat configuration -- one or more interceptors loaded with as many cannons as possible, bringing down a UFO by sheer weight of lead.\n"
-"\n"
-"We currently have too little experience to recommend a most-effective way to engage alien craft with or without this weapon, but until we manage to capture some UFO weapon mounts, the SHIVA will remain the best dogfighting gun Earth has to offer.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4398
 msgid "SHIVA Rotary Cannon"
@@ -6738,45 +6751,45 @@ msgstr "SHIVA Rotary Cannon"
 #: ../base/ufos/research.ufo:4401
 msgid "craft_weapon_shiva_txt"
 msgstr ""
-"Technical Specifications: SHIVA Rotary Cannon\n"
+"Τεχνικές Προδιαγραφές: Κανόνι Περιστρεφόμενης Κεφαλής ΣΙΒΑ\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"ΕΠΙΠΕΔΟ ΑΠΟΡΡΗΤΟΥ ΜΑΥΡΟ\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Μονάδα Αντιμετώπισης Εξωγήινων PHALANX\n"
 "\n"
-"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
+"Τεχνικό έγγραφο, Εξουσιοδότηση Σ' -- Μόνο για τα μάτια του Διοικητή\n"
 "\n"
-"Filed: 19 March 2084\n"
+"Αρχειοθέτηση: 19 Μαρτίου 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"Now that we have aircraft capable of intercepting the attacking UFOs, we need to equip them with armaments that can actually shoot down these alien craft. We have evaluated every available weapon on Earth as part of the Excalibur Program, and we have selected the very best for the defence of our planet.\n"
-"\n"
-"The SHIVA is a four-barreled rotary cannon, firing the 20mm HMG (Heavy Machine Gun) round. It is an externally-powered gun -- rather than being dependent upon recoil to actuate the system, it uses an external motor to produce power. The electric motor which drives the SHIVA is a high-efficiency 20 horse power beast, achieving a rate of fire up to 6,000 rounds a minute with the accurate, hard-hitting 20mm HMG shells.\n"
-"\n"
-"Designed and built in Bangladesh, the SHIVA was first prototyped in 2048, failing every one of its trials during that year. The project was nearly discontinued until, in July 2050, an undercover investigation revealed a long-running sabotage plot by a rival arms company. A new prototype was constructed which showed enough promise justify further development. Eventually all the major bugs were ironed out, at which point the power of this weapon became apparent.\n"
-"\n"
-"The SHIVA is very light for an aircraft weapon of its size and effectiveness, weighing only 250 kilos unloaded, 400 kilos loaded. The rate of fire exceeds that of any other four-barreled cannon in existence. Its sophisticated tracking systems can hold a bead on an enemy for as long as there is a radar, lidar or optical target solution available. The unlinked ammo feeds are highly reliable and no jam has ever been recorded throughout the gun's service history.\n"
-"\n"
-"The SHIVA can fire two varieties of the HMG round; API (Armour-Piercing Incendiary) or HEI (High-Explosive Incendiary). The former achieves better penetration while the latter can do more damage if penetration is achieved. Both these rounds are proven to be capable of penetrating UFO armour to some degree.\n"
-"\n"
-"The largest issue with the SHIVA cannon is that it does only limited damage to a UFO, requiring a fairly long engagement time in order to bring a target down on its own. This also allows the enemy plenty of opportunity to escape or peg our craft with return fire. On the other hand, its large magazine gives it more staying power than most other weapons, and it is not to be underestimated.\n"
+"Από: Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"Low damage and long engagement times somewhat limit the SHIVA's usefulness. However, most of these failings can be amended or eliminated if the gun is used in numbers or as part of a mixed gun-and-missiles armament. It can provide continuous automatic fire while the pilot concentrates on delivering his missiles, or it can be part of a gunboat configuration -- one or more interceptors loaded with as many cannons as possible, bringing down a UFO by sheer weight of lead.\n"
+"Περίληψη\n"
 "\n"
-"We currently have too little experience to recommend a most-effective way to engage alien craft with or without this weapon, but until we manage to capture some UFO weapon mounts, the SHIVA will remain the best dogfighting gun Earth has to offer.\n"
+"Τώρα πια που διαθέτουμε αεροσκάφη ικανά να αναχαιτίσουν τα επιτιθέμενα UFO, θα πρέπει να τα εξοπλίσουμε με όπλα που θα μπορούν να καταρρίψουν τα εξωγήινα σκάφη. Στα πλαίσια του σχεδίου Εξκάλιμπερ αναλύσαμε κάθε διαθέσιμο όπλο στη Γη και επιλέξαμε μόνο τα καλύτερα για την υπεράσπιση του πλανήτη μας.\n"
+"\n"
+"Το ΣΙΒΑ είναι ένα κανόνι περιστρεφόμενης κεφαλής με τέσσερις κάνες το οποίο χρησιμοποιεί βλήματα ΒΠ(Βαρέως Πυροβόλου) 20 χιλιοστών. Πρόκειται για ηλεκτροκίνητο όπλο -- χρησιμοποιεί ένα εξωτερικό μοτέρ για την κίνηση του μηχανισμού αντί να στηρίζεται στην ανάκρουση προηγούμενων βολών. Το ηλεκτρικό μοτέρ του ΣΙΒΑ είναι ένα θηρίο 20 ίππων, ικανό να εκτελεί 6.000 βολές το λεπτό με τα ακριβή και καταστρεπτικά βλήματα ΒΠ 20 χιλ.\n"
+"\n"
+"Σχεδιάστηκε και κατασκευάστηκε στο Μπαγκλαντές. Το αρχικό πρωτότυπο ολοκληρώθηκε το 2048 αλλά απέτυχε σε όλες τις δοκιμές εκείνης της χρονιάς. Το σχέδιο λίγο έλειψε να εγκαταλειφθεί μέχρις ότου μια μυστική έρευνα αποκάλυψε τον Ιούλιο του 2050 ένα μακροχρόνιο σχέδιο δολιοφθοράς από μια ανταγωνιστρια εταιρία οπλισμών. Αμέσως μετά κατασκευάστηκε ένα νέο πρωτότυπο το οποίο αποδείχτηκε αρκετά υποσχόμενο ώστε να συνεχιστεί η ανάπτυξη. Τελικά εξαλείφθηκαν όλα τα μικροπροβλήματα του σχεδίου και αναδείχτηκε η πραγματική του αξία.\n"
+"\n"
+"Το ΣΙΒΑ είναι ένα πολύ ελαφρύ -- συγκριτικά με το μέγεθος και την αποτελεσματικότητά του-- όπλο αεροσκαφών, καθώς ζυγίζει 250 κιλά άδειο και 400 κιλά γεμάτο. Ο ρυθμός βολής του ξεπερνά κατά πολύ οποιοδήποτε άλλο τετράκανο πολυβόλο. Τα εξελιγμένα συστήματα στόχευσης που διαθέτει μπορούν να παρακολουθούν με ακρίβεια έναν εχθρό εφόσον υπάρχει λύση σκόπευσης από ραντάρ ή οπτικά μέσα. Οι ζώνες τροφοδότησης πυρομαχικών δε διαθέτουν συνδέσμους, με συνέπεια να είναι τόσο αξιόπιστο ώστε να μην έχει σημειωθεί καμία εμπλοκή σε ολόκληρο το ιστορικό χρήσης του.\n"
+"\n"
+"Το ΣΙΒΑ μπορεί να χρησιμοποιεί δύο τύπους πυρομαχικών ΒΠ: Διατρητικά και Εκρηκτικά-Εμπρηστικά. Τα πρώτα μπορούν να διαπεράσουν ευκολότερα το στόχο ενώ τα δεύτερα επιφέρουν μεγαλύτερη ζημιά αρκεί να κατορθώσουν να διαπεράσουν το στόχο. Και οι δύο τύποι πυρομαχικών έχουν αποδειχτεί ικανοί να διαπερνούν σε ορισμένο βαθμό τη θωράκιση των UFO.\n"
+"\n"
+"Το μεγαλύτερο ελάττωμα του κανονιού ΣΙΒΑ είναι ότι επιφέρει περιορισμένες ζημιές στα UFO και χρειάζεται σημαντικός χρόνος εμπλοκής για την κατάρριψη του στόχου. Αυτό δίνει στον εχθρό αρκετό στόχο για να αποδράσει ή να ανταποδώσει πυρά. Δεν πρέπει όμως να υποβαθμίζεται η αξία του, καθώς η μεγάλη γεμιστήρα που διαθέτει επιτρέπει τη χρήση του για μεγαλύτερο χρονικό διάστημα.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Προτεινόμενο Δόγμα Χρήσης\n"
 "\n"
-"None."
+"Η χαμηλή ζημιά που προκαλεί και ο εκτεταμένος χρόνος εμπλοκής περιορίζουν κάπως τη χρησιμότητα του ΣΙΒΑ. Παρόλα αυτά, τα περισσότερα μειονεκτήματα του ΣΙΒΑ περιορίζονται όταν αυτό χρησιμοποιείται σε μεγάλους αριθμούς ή ως τμήμα ενός μικτού οπλοστασίου πυροβόλων και πυραύλων. Είναι ικανό να παρέχει διαρκή αυτόματα πυρά όσο ο πιλότος επικεντρώνεται στην αξιοποίηση των πυραύλων του ή μπορεί να χρησιμοποιείται σε κανονιοφόρους -- ένα ή περισσότερα αναχαιτιστικά εξοπλισμένα με φορτωμένα με τον μέγιστο αριθμό κανονιών, τα οποία θα καταρρίπτουν τα UFO μέσω καταιγιστικών πυρών.\n"
+"\n"
+"Προς το παρόν δεν διαθέτουμε αρκετή εμπειρία για να προτείνουμε αν η χρήση ή όχι του συγκεκριμένου όπλου αποτελεί βέλτιστο τρόπο αναχαίτησης των εξωγήινων σκαφών, όμως το κανόνι ΣΙΒΑ θα αποτελεί το καλύτερο γήινο όπλο για κοντινές αερομαχίες μέχρι να αναλύσουμε τα οπλικά συστήματα των UFO.\n"
+"\n"
+"\n"
+"Προσθετα\n"
+"\n"
+"Ουδέν."
 
 #: ../base/ufos/research.ufo:4418
 msgid "craft_ammo_shiva_1_txt"
@@ -6891,7 +6904,7 @@ msgstr ""
 "\n"
 "The Sparrowhawk program was cancelled only months before the design would've been put into service. It was ready to be put into service then, it's ready now, and right now it's the only choice we've got.\n"
 "\n"
-"We've revived the Sparrowhawk AA program and the UN has agreed to put it into mass production. This will give us access to 8-missile racks capable of being mounted on all our interceptors, allowing them to engage UFOs at ranges that would otherwise be closed off to us.\n"
+"We've revived the Sparrowhawk AA program and the UN has agreed to put it into mass production. This will give us access to 7-missile racks capable of being mounted on all our interceptors, allowing them to engage UFOs at ranges that would otherwise be closed off to us.\n"
 "\n"
 "The missile's maximum effective range is twelve kilometres. A fully-loaded \"Sparrowhawk\" rack weighs approximately 600 kilos.\n"
 "\n"
@@ -6938,7 +6951,7 @@ msgstr ""
 "\n"
 "The Sparrowhawk program was cancelled only months before the design would've been put into service. It was ready to be put into service then, and it's ready now. We've revived the Sparrowhawk AA program and the UN has agreed to put it into mass production.\n"
 "\n"
-"The \"Sparrowhawk\" is mounted in 8-missile racks, which can then be mounted to the appropriate weapons hardpoints on our aircraft. The missile's range is far superior to any of the other weapons we have available at this time; it's effective out to twelve kilometres from the aircraft thanks to its unique guidance technology. It's also hardened against EMP to prevent it from being disabled electronically.\n"
+"The \"Sparrowhawk\" is mounted in 7-missile racks, which can then be mounted to the appropriate weapons hardpoints on our aircraft. The missile's range is far superior to any of the other weapons we have available at this time; it's effective out to twelve kilometres from the aircraft thanks to its unique guidance technology. It's also hardened against EMP to prevent it from being disabled electronically.\n"
 "\n"
 "The individual missiles weigh approximately 65 kilos. A fully-loaded rack is approximately 600 kilos.\n"
 "\n"
@@ -6977,11 +6990,11 @@ msgstr ""
 "\n"
 "Now that we have aircraft capable of intercepting the attacking UFOs, we need to equip them with armaments that can actually shoot down these alien craft. We have evaluated every available weapon on Earth as part of the Excalibur Program, and we have selected the very best for the defence of our planet.\n"
 "\n"
-"The TR-20 rocket pod is an interesting departure from conventional air-to-air weapons, in that it was originally designed for air-to-ground operations. The pod contains a total of 128 very small, very fast rockets with depleted uranium tips and powerful pulse detonation engines. No one considered using the TR-20 for anything other than chewing up ground targets until an attack helicopter pilot in Africa discovered their potential.\n"
+"The TR-20 rocket pod is an interesting departure from conventional air-to-air weapons, in that it was originally designed for air-to-ground operations. The pod contains a total of 152 very small, very fast rockets with depleted uranium tips and powerful pulse detonation engines. No one considered using the TR-20 for anything other than chewing up ground targets until an attack helicopter pilot in Africa discovered their potential.\n"
 "\n"
 "At the time, the pilot -- the last surviving member of his flight -- had been cornered against a mountain by three MiG jets which were closing in for the kill. With nearly all his weapons expended, the only thing the pilot had left to fight with was one pod of TR-20 rockets. He made a suicide run with full afterburners, and managed to swat all three MiGs out of the sky with rapid fire before he ran out of fuel and had to crash-land. He returned to his airbase two days later without a scratch on him.\n"
 "\n"
-"Though unguided, TR-20 pods contain such a large number of rockets that they can be used almost like a rocket machine gun. This is because the rockets are stacked nose to tail inside their launch tubes, eight to each tube, and fired electronically in a timed sequence. This system is so fast that all eight rockets in a tube can be ignited and underway before the first rocket actually leaves the tube. At its maximum possible rate of fire, the pod can fire all 128 rockets in 0.2 seconds. However, this is usually throttled back to approx. 300 rounds per minute due to the low accuracy of any single volley.\n"
+"Though unguided, TR-20 pods contain such a large number of rockets that they can be used almost like a rocket machine gun. This is because the rockets are stacked nose to tail inside their launch tubes, eight to each tube, and fired electronically in a timed sequence. This system is so fast that all eight rockets in a tube can be ignited and underway before the first rocket actually leaves the tube. At its maximum possible rate of fire, the pod can fire all 152 rockets in 0.2 seconds. However, this is usually throttled back to approx. 300 rounds per minute due to the low accuracy of any single volley.\n"
 "\n"
 "The advantages of the TR-20 over the SHIVA cannon are increased range and greater hitting power. However, the pod's ammo capacity is limited compared to the SHIVA's large portable magazines, and a single TR-20 pod is unlikely to last through a full UFO engagement.\n"
 "\n"
@@ -7022,7 +7035,7 @@ msgstr ""
 "\n"
 "The TR-20 rocket is essentially a very small, very fast plastic dart moulded around a rod of depleted uranium. It is fin-stabilised and powered by a cheap solid-fuel rocket engine, a civilian model which is also popular in amateur rocketry. One of these engines is capable of propelling an amateur rocket eight kilometres into the sky. It's also capable of propelling a heavy DU penetrator into a fighter jet and out the other side.\n"
 "\n"
-"Though unguided, TR-20 pods contain such a large number of rockets that they can be used almost like a rocket machine gun. This is because the rockets are stacked nose to tail inside their launch tubes, eight to each tube, and fired electronically in a timed sequence. This system is so fast that all eight rockets in a tube can be ignited and underway before the first rocket actually leaves the tube. At its maximum possible rate of fire, the pod can fire all 128 rockets in 0.2 seconds. However, this is usually throttled back to approx. 300 rounds per minute due to the low accuracy of any single volley.\n"
+"Though unguided, TR-20 pods contain such a large number of rockets that they can be used almost like a rocket machine gun. This is because the rockets are stacked nose to tail inside their launch tubes, eight to each tube, and fired electronically in a timed sequence. This system is so fast that all eight rockets in a tube can be ignited and underway before the first rocket actually leaves the tube. At its maximum possible rate of fire, the pod can fire all 152 rockets in 0.2 seconds. However, this is usually throttled back to approx. 300 rounds per minute due to the low accuracy of any single volley.\n"
 "\n"
 "Due to its weight, the TR-20 rocket has a maximum effective range of 4 kilometres, after which the fuel runs out and the rocket rapidly loses power.\n"
 "\n"
@@ -7044,7 +7057,10 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4536
 msgid "craft_weapon_particle_beam_pre_txt"
-msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
+msgstr ""
+"Commander, the UFO we recovered was equipped with a very interesting type of weapon that we'd like to research right away. It seems to fire some kind of high-velocity particle beam; if we can master this technology, or at least adapt it for use on our own aircraft, we could make air engagements with armed alien craft significantly more survivable for our craft and pilots.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4539
 msgid "craft_weapon_particle_beam_txt"
@@ -7781,35 +7797,43 @@ msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Βρισκόμαστε στο έτος 2084. Η Γη, που ποτέ δεν αποτέλεσε ιδιαίτερα ειρηνικό μέρος, απολαμβάνει μια περίοδο σχετικής ηρεμίας. Το βίαιο ξεκίνημα του 21ου αιώνα αποτελεί μακρινή ανάμνηση, όχι όμως τόσο μακρινή ώστε να ξεχαστεί. Για τους περισσότερους κατοίκους της Γης ο Δεύτερος Ψυχρός Πόλεμος είναι μια σκοτεινή σκιά του παρελθόντος, όπως ήταν οι δύο Παγκόσμιοι Πόλεμοι για τα παιδιά στα τέλη του 20ου αιώνα."
+msgstr ""
+"Βρισκόμαστε στο έτος 2084. Η Γη, που ποτέ δεν αποτέλεσε ιδιαίτερα ειρηνικό μέρος, απολαμβάνει μια περίοδο σχετικής ηρεμίας. Το βίαιο ξεκίνημα του 21ου αιώνα αποτελεί μακρινή ανάμνηση, όχι όμως τόσο μακρινή ώστε να ξεχαστεί. Για τους περισσότερους κατοίκους της Γης ο Δεύτερος Ψυχρός Πόλεμος είναι μια σκοτεινή σκιά του παρελθόντος, όπως ήταν οι δύο Παγκόσμιοι Πόλεμοι για τα παιδιά στα τέλη του 20ου αιώνα."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "Οι συρράξεις γίνονται όλο και πιο σπάνιες όσο πλησιάζουμε στο τέλος του 21ου αιώνα καθώς νέες τεχνολογίες και υγειονομική περίθαλψη έγιναν διαθέσιμες στις χώρες του τρίτου κόσμου. Ακόμα και οι φλόγες της τρομοκρατίας έχουν κοπάσει στον απόηχο του Δευτέρου Ψυχρού Πολέμου, αφού η φρίκη και η απανθρωπιά του είναι ακόμα ζωντανή στις μνήμες όλων των ανθρώπων, από τις παλιές Ηνωμένες Πολιτείες μέχρι την πολύπαθη περιοχή της Ινδίας. Στο πολιτικό προσκήνιο βγαίνουν πλέον οι ταξικές διαμάχες τώρα που κάθε έθνος έχει εγγυημένα δίκαιη αντιπροσώπηση στον ΟΗΕ, ενώ το παγκόσμιο επίπεδο ζωής σταδιακά αυξάνεται ακόμα και στις φτωχότερες γωνιές του πλανήτη. Οι χώρες έχουν συνοχή και εσωτερική σταθερότητα καθώς ο αναδομημένος ΟΗΕ επιτηρεί με επιτυχία τις διάφορες κυβερνήσεις. Στον αντίποδα των τεραστίων μπλοκ της Κίνας και της Ευρωπαϊκής Ένωσης και της ισχύος που αυτά συγκέντρωσαν, οι ομάδες των αρχικά φοβισμένων μικρών κρατών ενωθήκαν και φτιάξαν τις δικές τους ισχυρές πολιτικές συμμαχίες -- και ξαφνικά βρέθηκαν χωρίς γείτονες που θα μπορούσαν να πολεμήσουν με ασφάλεια. Για πρώτη φορά στα ανθρώπινα χρονικά επικρατεί νόμος και τάξη σε περισσότερα από τρία τέταρτα της Γης."
+msgstr ""
+"Οι συρράξεις γίνονται όλο και πιο σπάνιες όσο πλησιάζουμε στο τέλος του 21ου αιώνα καθώς νέες τεχνολογίες και υγειονομική περίθαλψη έγιναν διαθέσιμες στις χώρες του τρίτου κόσμου. Ακόμα και οι φλόγες της τρομοκρατίας έχουν κοπάσει στον απόηχο του Δευτέρου Ψυχρού Πολέμου, αφού η φρίκη και η απανθρωπιά του είναι ακόμα ζωντανή στις μνήμες όλων των ανθρώπων, από τις παλιές Ηνωμένες Πολιτείες μέχρι την πολύπαθη περιοχή της Ινδίας. Στο πολιτικό προσκήνιο βγαίνουν πλέον οι ταξικές διαμάχες τώρα που κάθε έθνος έχει εγγυημένα δίκαιη αντιπροσώπηση στον ΟΗΕ, ενώ το παγκόσμιο επίπεδο ζωής σταδιακά αυξάνεται ακόμα και στις φτωχότερες γωνιές του πλανήτη. Οι χώρες έχουν συνοχή και εσωτερική σταθερότητα καθώς ο αναδομημένος ΟΗΕ επιτηρεί με επιτυχία τις διάφορες κυβερνήσεις. Στον αντίποδα των τεραστίων μπλοκ της Κίνας και της Ευρωπαϊκής Ένωσης και της ισχύος που αυτά συγκέντρωσαν, οι ομάδες των αρχικά φοβισμένων μικρών κρατών ενωθήκαν και φτιάξαν τις δικές τους ισχυρές πολιτικές συμμαχίες -- και ξαφνικά βρέθηκαν χωρίς γείτονες που θα μπορούσαν να πολεμήσουν με ασφάλεια. Για πρώτη φορά στα ανθρώπινα χρονικά επικρατεί νόμος και τάξη σε περισσότερα από τρία τέταρτα της Γης."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Για τους περισσότερους ανθρώπους στη Γη, τα πράγματα δείχνουν να πηγαίνουν καλά."
+msgstr ""
+"Για τους περισσότερους ανθρώπους στη Γη, τα πράγματα δείχνουν να πηγαίνουν καλά."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "Η πρώτη επίθεση γίνεται στο Μουμπάι, στις 3 Μαρτίου του 2084. Έξι μικρά UFO εμφανίζονται από το πουθενά, εισέρχονται με τρομακτική ταχύτητα στην ατμόσφαιρα χωρίς να γίνουν αντιληπτά από τις εγκαταστάσεις ρανταρ του Μουμπάι και προσγειωνονται στην πιο πυκνοκατοικημένη πόλη της Γης. Δεν δίνουν καμία προειδοποίηση, καμία εξήγηση. Είκοσι χιλιάδες αθώοι πολίτες και τρια τάγματα επίλεκτων στρατιωτών σφαγιάζονται μέσα σε δώδεκα ώρες, μέχρι να καταφέρει το σύνολο των δυνάμεων της Κοινοπολιτείας να σταματήσει την επέλαση των εξωγήινων. Τότε, όσο ξαφνικά εμφανίστηκαν, οι εξωγήινοι αποσύρονται στα σκάφη τους και φεύγουν στο διάστημα, αφήνοντας πίσω τους ερειπωμένους δρόμους του Μουμπάι ως ενθύμιο."
+msgstr ""
+"Η πρώτη επίθεση γίνεται στο Μουμπάι, στις 3 Μαρτίου του 2084. Έξι μικρά UFO εμφανίζονται από το πουθενά, εισέρχονται με τρομακτική ταχύτητα στην ατμόσφαιρα χωρίς να γίνουν αντιληπτά από τις εγκαταστάσεις ρανταρ του Μουμπάι και προσγειωνονται στην πιο πυκνοκατοικημένη πόλη της Γης. Δεν δίνουν καμία προειδοποίηση, καμία εξήγηση. Είκοσι χιλιάδες αθώοι πολίτες και τρια τάγματα επίλεκτων στρατιωτών σφαγιάζονται μέσα σε δώδεκα ώρες, μέχρι να καταφέρει το σύνολο των δυνάμεων της Κοινοπολιτείας να σταματήσει την επέλαση των εξωγήινων. Τότε, όσο ξαφνικά εμφανίστηκαν, οι εξωγήινοι αποσύρονται στα σκάφη τους και φεύγουν στο διάστημα, αφήνοντας πίσω τους ερειπωμένους δρόμους του Μουμπάι ως ενθύμιο."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Μια έκτακτη σύνοδος του ΟΗΕ δεν καταλήγει σε καθοριστικό τρόπο δράσης. Οι επιθέσεις συνεχίζονται με αυξανόμενη συχνότητα και βιαιότητα. Οι επόμενοι στόχοι είναι η Βόννη, το Γιοχάνεσμπουργκ και η Μπανγκοκ. Ορισμένα έθνη επιχειρούν τη διπλωματική οδό, στέλνοντας μηνύματα σε χίλιες διαφορετικές γλώσσες στους εξωγήινους που λυμαίνονται την περιοχή τους. Τα λόγια τους πέφτουν στο κενό. Λίγες ώρες μετά δεν μένει ίχνος ανθρώπινης ζωής στις τρεις πόλεις. Οι επιθέση έχει τελειώσει μέχρι να δοθεί η εντολή αντεπίθεσης στις διάφορες στρατιωτικές δυνάμεις. Οι εξωγήινοι αφήνουν στο δίαβα τους μόνο τσιμέντο και αίμα. Όλα τα UFO εξαφανίζονται χωρίς ίχνος -- κανείς δεν αμφιβάλει ότι θα επιστρέψουν."
+msgstr ""
+"Μια έκτακτη σύνοδος του ΟΗΕ δεν καταλήγει σε καθοριστικό τρόπο δράσης. Οι επιθέσεις συνεχίζονται με αυξανόμενη συχνότητα και βιαιότητα. Οι επόμενοι στόχοι είναι η Βόννη, το Γιοχάνεσμπουργκ και η Μπανγκοκ. Ορισμένα έθνη επιχειρούν τη διπλωματική οδό, στέλνοντας μηνύματα σε χίλιες διαφορετικές γλώσσες στους εξωγήινους που λυμαίνονται την περιοχή τους. Τα λόγια τους πέφτουν στο κενό. Λίγες ώρες μετά δεν μένει ίχνος ανθρώπινης ζωής στις τρεις πόλεις. Οι επιθέση έχει τελειώσει μέχρι να δοθεί η εντολή αντεπίθεσης στις διάφορες στρατιωτικές δυνάμεις. Οι εξωγήινοι αφήνουν στο δίαβα τους μόνο τσιμέντο και αίμα. Όλα τα UFO εξαφανίζονται χωρίς ίχνος -- κανείς δεν αμφιβάλει ότι θα επιστρέψουν."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Ογδονταεφτά ώρες μετά την αρχική επίθεση στο Μουμπάι, η Γη κυρήσει τον πόλεμο. Για δύο εβδομάδες, οι στρατοί της ανθρωπότητας προσπαθούν ανεξάρτητα να αποκρούσουν τους μυστηριώδεις εξωγήινους κατακτητές με όλες τους τις δυνάμεις. Σημειώνουν ελάχιστες επιτυχίες."
+msgstr ""
+"Ογδονταεφτά ώρες μετά την αρχική επίθεση στο Μουμπάι, η Γη κυρήσει τον πόλεμο. Για δύο εβδομάδες, οι στρατοί της ανθρωπότητας προσπαθούν ανεξάρτητα να αποκρούσουν τους μυστηριώδεις εξωγήινους κατακτητές με όλες τους τις δυνάμεις. Σημειώνουν ελάχιστες επιτυχίες."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Εφόσον δεν υπάρχει άλλη εναλλακτική, ο ΟΗΕ αναλαμβάνει δράση. Ξεσκονίζεται αρχαίος εξοπλισμός, τμήμα του οποίου είναι ηλικίας ενός αιώνα ή και μεγαλύτερο, και αναδημιουργείται η προ-πολλού διαλυμένη υπηρεσία αντιμετώπισης εξωγήινων των Ηνωμένων Πολιτειών -- η PHALANX -- υπό την αιγίδα του ΟΗΕ. Καθήκον της είναι η αντιμετώπιση της εξωγήινης απειλής και η διασφάλιση με κάθε κόστοας της επιβίωσης του ανθρώπινου είδους."
+msgstr ""
+"Εφόσον δεν υπάρχει άλλη εναλλακτική, ο ΟΗΕ αναλαμβάνει δράση. Ξεσκονίζεται αρχαίος εξοπλισμός, τμήμα του οποίου είναι ηλικίας ενός αιώνα ή και μεγαλύτερο, και αναδημιουργείται η προ-πολλού διαλυμένη υπηρεσία αντιμετώπισης εξωγήινων των Ηνωμένων Πολιτειών -- η PHALANX -- υπό την αιγίδα του ΟΗΕ. Καθήκον της είναι η αντιμετώπιση της εξωγήινης απειλής και η διασφάλιση με κάθε κόστοας της επιβίωσης του ανθρώπινου είδους."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Χρηματοδοτούμενη και από τις οχτώ πολιτικές δυνάμεις και αντλώντας προσωπικό από την αφρόκρεμα κάθε στρατού, η PHALANX είναι η καλύτερη των καλύτερων. Είναι η πρώτη και μοναδική άμυνα της Γης. Δεν υπάρχουν περιθώρια αποτυχίας. Χωρίς αυτήν, η ανθρωπότητα δεν έχει ελπίδα."
+msgstr ""
+"Χρηματοδοτούμενη και από τις οχτώ πολιτικές δυνάμεις και αντλώντας προσωπικό από την αφρόκρεμα κάθε στρατού, η PHALANX είναι η καλύτερη των καλύτερων. Είναι η πρώτη και μοναδική άμυνα της Γης. Δεν υπάρχουν περιθώρια αποτυχίας. Χωρίς αυτήν, η ανθρωπότητα δεν έχει ελπίδα."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

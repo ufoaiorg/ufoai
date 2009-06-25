@@ -624,7 +624,8 @@ msgstr "发现外星人飞机"
 
 #: ../base/ufos/events.ufo:78
 msgid "mail_from_un"
-msgstr "秘书长塞纳，联合国，纽约"
+msgstr ""
+"秘书长塞纳，联合国，纽约"
 
 #: ../base/ufos/events.ufo:79 ../base/ufos/events.ufo:89
 #: ../base/ufos/events.ufo:99 ../base/ufos/events.ufo:110
@@ -700,7 +701,8 @@ msgstr "秘书长塞纳，联合国，纽约"
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4838
 #: ../base/ufos/research.ufo:4845
 msgid "mail_to_base_commander"
-msgstr "基地指挥官，PHALANX，大西洋作战司令部"
+msgstr ""
+"基地指挥官，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:80
 msgid "2084 Mar 21"
@@ -775,7 +777,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4554 ../base/ufos/research.ufo:4629
 #: ../base/ufos/research.ufo:4637
 msgid "mail_from_paul_navarre"
-msgstr "司令官保罗纳瓦拉，研究开发工程部，PHALANX，大西洋作战司令部"
+msgstr ""
+"司令官保罗纳瓦拉，研究开发工程部，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:90
 msgid "Alien died"
@@ -849,7 +852,7 @@ msgstr "制造完成 -- %s"
 #: ../base/ufos/events.ufo:147
 msgid "mail_production_finished"
 msgstr ""
-"The engineering team has completed production of {item} at {location}. All equipment is tested and ready for use.\n"
+"{location}已完成{item}的制造，经测试符合使用要求。\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -859,7 +862,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:232 ../base/ufos/events.ufo:243
 #: ../base/ufos/events.ufo:254 ../base/ufos/events.ufo:265
 msgid "mail_from_xo"
-msgstr "霍华德阿贝尔，司令部，PHALANX，大西洋作战司令部"
+msgstr ""
+"霍华德阿贝尔，司令部，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:157
 msgid "Monthly Report -- %s"
@@ -1046,7 +1050,8 @@ msgstr "发现外星人基地 -- %s"
 
 #: ../base/ufos/events.ufo:246
 msgid "mail_alien_base_discovered"
-msgstr "先生，我们的特工在%s发现有个巨大的外星人基地。这个在地球上的基地对PHALANX对人类都是个巨大的威胁，我们必须马上行动。"
+msgstr ""
+"先生，我们的特工在%s发现有个巨大的外星人基地。这个在地球上的基地对PHALANX对人类都是个巨大的威胁，我们必须马上行动。"
 
 #: ../base/ufos/events.ufo:256
 msgid "Lost Radar Tracking -- %s"
@@ -1069,7 +1074,8 @@ msgstr "<TODO: mail_new_radar_contact>"
 #: ../base/ufos/research.ufo:588 ../base/ufos/research.ufo:4795
 #: ../base/ufos/research.ufo:4804
 msgid "mail_from_col_falkland"
-msgstr "英格丽.福克兰上校，情报处，PHALANX，大西洋作战司令部"
+msgstr ""
+"英格丽.福克兰上校，情报处，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:278
 msgid "Response Too Late -- %s"
@@ -1094,19 +1100,18 @@ msgstr "外星人活动报告 -- %s"
 #: ../base/ufos/events.ufo:301
 msgid "mail_alien_activity_reported"
 msgstr ""
-"早安。\n"
+"早上好，先生。\n"
 "\n"
 "我们发现在%s有外星人活动，那里很恐慌。我建议马上派队伍过去。祝你好运。\n"
 "\n"
-"致敬\n"
-"\n"
-"Col. Falkland"
+"法兰克上校"
 
 #: ../base/ufos/events.ufo:309 ../base/ufos/events.ufo:320
 #: ../base/ufos/events.ufo:331 ../base/ufos/events.ufo:342
 #: ../base/ufos/events.ufo:353
 msgid "mail_from_air_cdr"
-msgstr "空军司令官萨巴阿库汗，空军部队，PHALANX，大西洋作战司令部"
+msgstr ""
+"空军司令官萨巴阿库汗，空军部队，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:311
 msgid "New Aircraft Arrived -- %s"
@@ -1125,7 +1130,7 @@ msgid "mail_aircraft_lost_target"
 msgstr ""
 "指挥官，%s追踪%s雷达失去目标。请提供下一步命令。\n"
 "\n"
-"--航管塔"
+"-- 航管塔"
 
 #: ../base/ufos/events.ufo:333
 msgid "Aircraft Ready -- %s"
@@ -1134,9 +1139,9 @@ msgstr "航空机就位 -- %s"
 #: ../base/ufos/events.ufo:334
 msgid "mail_aircraft_ready"
 msgstr ""
-"Commander, %s has been %s and is ready for action.\n"
+"指挥官，%s已经%s，随时待命。\n"
 "\n"
-"-- COMAIR"
+"-- 航管塔"
 
 #: ../base/ufos/events.ufo:344
 msgid "Aircraft Bingo Fuel -- %s"
@@ -1147,7 +1152,7 @@ msgid "mail_aircraft_bingo_fuel"
 msgstr ""
 "指挥官，%s 没燃料了。他只好返回%s。任务放弃。\n"
 "\n"
-"--航管塔"
+"-- 航管塔"
 
 #: ../base/ufos/events.ufo:355
 msgid "Aircraft Landed -- %s"
@@ -1932,7 +1937,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4764 ../base/ufos/research.ufo:4837
 #: ../base/ufos/research.ufo:4844
 msgid "mail_from_dr_connor"
-msgstr "康纳博士，生物工程部，PHALANX，大西洋作战司令部"
+msgstr ""
+"康纳博士，生物工程部，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/research.ufo:333 ../base/ufos/research.ufo:373
 msgid "alien_breathing_txt"
@@ -2106,33 +2112,33 @@ msgstr "外星人基地"
 #: ../base/ufos/research.ufo:507
 msgid "alien_base_txt"
 msgstr ""
-"Proposal\n"
+"草案\n"
 "\n"
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"收信： 基地指挥官，PHALANX，大西洋作战司令部\n"
 "\n"
-"FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command\n"
+"发信： 英格丽.福克兰上校，情报处，PHALANX，大西洋作战司令部\n"
 "\n"
-"DATE: %02i %s %i\n"
+"时间： %02i %s %i\n"
 "\n"
-"SUB: Alien Base\n"
+"内容： 外星人基地\n"
 "\n"
-"Good morning, Sir.\n"
+"早上好，先生\n"
 "\n"
-"As you're aware, we are facing an increasingly worsening threat from the XVI virus. Over the past few weeks, DivIntel has been making a push into the areas in which the infection is most concentrated, in order to try and find some piece of intel that could help us understand how and why this infection spreads so fast from these focal points. I have been personally supervising the effort.\n"
+"正如你所知，XVI病毒对我们的威胁越来越严重。在过去几个星期，基地已经派人进入感染中心地带，试图找到一些有用的线索，可以帮助我们了解为什么这种传播会如此之快。对此我一直在亲自监督。\n"
 "\n"
-"It paid off this morning.\n"
+"在今天上午有了终于有了突破。\n"
 "\n"
-"Our reconnaisance teams have located what appears to be a camouflaged alien installation. The size and purpose of this installation is unknown, but we've established that it is located at the exact heart of an infection hot-spot. I harbour grave suspicions that this facility is directly connected with the lightning spread of XVI in the region. At this point it also seems likely there are more of these planetside installations, built right under our noses, serving as command centres and bases of operation for the alien threat.\n"
+"我们的侦察队发现了一个伪装的外星人设施。其具体规模和作用还不清楚，但我们已经确定它就位于病毒传播源核心地带。我严重怀疑这一设施直接导致了XVI病毒在该地区的蔓延。在设施里很可能有很多星际装置，其作用可能就是在我们眼皮底下指挥外星人的各项侵入活动。\n"
 "\n"
-"Dealing with these bases has to be one of our top priorities. I recommend we send a heavily-armed team to pay them a visit, a bit of reconnaissance-in-force. We need more information about the layout and purpose of the base, and the best way to do that is to capture it. We should eliminate all aliens at the location and, once we've secured the area and salvaged what we need, destroy the entire installation. This should constitute a significant blow to alien operations and restrict -- if not halt -- the spread of XVI in the area.\n"
+"处理这些基地设施将是我们的最高优先事务。我建议，对付它们需要一个全副武装的队伍。我们需要更多的情报，特别是它们的布置和目的，最好的办法就是抓到活口。我们应该销毁外星基地里的所有装备，一旦我们控制了该地区并获得我们所需要的东西以后，就该马上摧毁整个基地。这样就能给外星人一个重大的打击。如果不立即行动，XVI的传播会越来越严重。\n"
 "\n"
-"Of course this mission will be highly dangerous. The base is right in the middle of an infection hot-spot, so the entire area is hostile territory. We may encounter anti-air ordnance and UFOs scrambled to the base's defence. A heavy escort will certainly be required. And . . . there's worse.\n"
+"当然，这种突击任务将是非常危险的。该外星人基地处于感染中心地带，其周围整个地区都是敌对的。我们可能会遇到防空武器和UFO的攻击，小队的护送一定需要大型护卫舰队。\n"
 "\n"
-"Satellite imagery and recon flyovers have indicated that infected humans appear to be actively cooperating with the aliens. There's a good probability our unit will encounter human hostiles during the assault. This may not sit well with everyone, but if they open fire on our troops, we must be ready to respond in kind.\n"
+"卫星图像和录像资料都已经证明了被感染人会积极配合外星人活动。这样我们的作战小队就非常可能会遇到敌对人类的袭击。当然也不能无目的的攻击所看到的任何人类，但如果他们攻击我们，我们必须要立即作出反击。\n"
 "\n"
-"That's all the intel I've got for you on this one, Sir. Good luck and good hunting.\n"
+"这是我们情报中心的共同建议，希望能对你有帮助。\n"
 "\n"
-"With kind regards,Col. Falkland"
+"祝您万事顺心福克兰上校"
 
 #: ../base/ufos/research.ufo:529
 msgid "The Universal Serum"
@@ -3580,18 +3586,8 @@ msgstr ""
 "--指挥官：纳瓦拉"
 
 #: ../base/ufos/research.ufo:1570
-#, fuzzy
 msgid "electrolaser_pre_txt"
-msgstr ""
-"自本世纪初，我们收集联合国的研究档案已经取得了很多关于在地球上完成的武器研制的有价值的情报。其中一个最有趣的题目是生产DEWs（受控能量武器），一种不同于依靠载体的方法将能量传递到目标的武器。我们特别对关于连续波激光器的档案感兴趣。\n"
-"\n"
-"多年以来，很多国家和公司试图制造武器级激光器，但是至今没有人能够制造出便携的并且输出功率足以与普通枪支竞争的激光器。然而，我们现在已经获得了所有这些联合研究，整个实验室都充斥着地球上最先进的技术。我相信，我们不仅能生产出有效的便携激光武器，我们还能将它做成前所未有的适用于受控能量武器的尺寸。\n"
-"\n"
-"指挥官，我们应该尽快从事这项研究，多样化我们的武器库使其更难于抵御，并且，我们的经验可以引领我们发展可行的航空激光器，它能比常规武器更加有效的对付高速飞碟。\n"
-"\n"
-"就我而言，我们要在PHALANX做这不可能的任务，您一批准这个建议我们就开始工作。\n"
-"\n"
-"--指挥官：纳瓦拉"
+msgstr "没有可用的资料。"
 
 #: ../base/ufos/research.ufo:1605
 msgid "medikit_txt"
@@ -3833,11 +3829,35 @@ msgstr "没有可用的资料。"
 
 #: ../base/ufos/research.ufo:1981
 msgid "coilgun_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, I'd like to present you with the finished plans and prototype for our Coilgun.\n"
+"\n"
+"Combining an alien-inspired power pack and coil arrangement with some of our Bolter technology has solved many of the coilgun design's inherent problems. A hundred years ago, the energy efficiency of coilguns measured less than 2%; meaning, the energy of the projectile at the time of impact was less than 2% of the energy used to fire it. Even with today's technology coilgun efficiency is limited to single digits, but the alien Needler manages efficiency ratings as high as 70%. It may take us years to get to that level, but with the Coilgun we've developed something that is both practical and effective for the war effort.\n"
+"\n"
+"In order to get better acceleration out of the coils, we've created a new kind of ammunition, based on the aliens' needle alloy. In shape it's a fairly standard fin-stabilised penetrator inside a discarding sabot, but it's made from materials never before seen on Earth. Discarding sabot rounds are normally used for much larger calibres -- we've effectively scaled down an anti-tank round -- but the armour-piercing potential is phenomenal, higher than any other weapon we have. In fact, the Coilgun is now the highest-calibre infantry weapon on the planet.\n"
+"\n"
+"We've also incorporated a Needler-style holographic sight, making the Coilgun extremely accurate and comfortable to fire.\n"
+"\n"
+"The advantages of a coilgun as a sniper rifle are obvious. There's no rush of propellant to make noise, no muzzle flash spitting out light and heat. Unlike even our Bolter, nothing comes out the barrel except the bullet -- there's no spray of hot metal from the rails to light up the sniper on infrared. With nothing to reveal the sniper's position except the noise of the bullet itself breaking the sound barrier, it's possible to fire and stay undetected, even against alien technology. Best of all, ballistics tests confirm that it should be able to bring down most aliens in a single shot.\n"
+"\n"
+"Of course we've had to make some sacrifices -- high weight due to the coils and electrical equipment contained in the barrel, low ammunition capacity due to the high calibre, large and heavy magazines/power packs. Despite this, I believe the Coilgun should replace most of our SR-1 Sniper Rifles, as it's proving difficult for our conventional weapons to compete with new enemy armour designs.\n"
+"\n"
+"Keep the SR-1 in light sniper and anti-infantry roles and move the Coilgun forward as our main long-range threat. The aliens will come to fear it.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1984
 msgid "coilgun_pre_txt"
-msgstr "没有可用的资料。"
+msgstr ""
+"Commander, our brainstorms down at DivEngine have come up with an interesting idea based on the alien Needler technology. When combining the alien fast-changing magnetic generators -- and, even more importantly, their power source -- with human-engineered EM rifle technology, some amazing man-portable weaponry becomes possible. I'd hereby like to propose a new design for a coilgun in the role of a sniper rifle.\n"
+"\n"
+"The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.\n"
+"\n"
+"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
+"\n"
+"Please let me know when you want us to start, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1991 ../base/ufos/research.ufo:1999
 #: ../base/ufos/weapons_human.ufo:392
@@ -5757,7 +5777,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3455
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3480
 msgid "ufo_scout_txt"
@@ -7684,35 +7705,43 @@ msgstr "<TODO: seq_alienbase_sentence3>"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "这是2084年。地球，还是那么安详和平。21世纪初期的战争只存在遥远的记忆当中。对于大多数人来说第二次冷战只是过去的阴影，他的记忆就像20世纪末出生的人对二次世界大战一样淡漠。"
+msgstr ""
+"公元2084年。我们所认识的地球在长久以来，虽然不是一个非常和平的地方，但也享受了一段相当长的和平。21世纪初期所爆发的战争，虽然已经过了许久，但仍然记忆犹新。对于大多数人来说，第二次的冷战，只是过去的阴影。战争的记忆就像20世纪末出生的人一样，模糊的记得有过第一次世界大战。---Sirine 07: 33, 23 June 2009 (UTC)"
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "在世纪末冲突已变得很罕见，新技术和医疗保健终于普及到第三世界。第二次冷战后恐怖活动也减少了，但还是有不少人对它仍然记忆犹新，特别是旧美国以及印度次大陆的人仍对它心存恐惧。现在的战场已转移到政治平台，每一个国家都有在联合国的公平代表权。全球的生活水准正在逐渐上升，最贫困角落的人生活也有很大改善。成功改组后的联合国在世界各国政府都有很高的权威性。支离破碎的较小国家已联合起来成为强大的政治联盟，由于没有了好斗的邻居，战争越来越少。首次在人类历史上，四分之三以上的世界有了法律和秩序。"
+msgstr ""
+"新科技和医疗知识以及技术，终于普及到了贫困国家，令这世纪末的战争和暴力冲突变得很罕见。旧美国以及印度群国所恐惧的恐怖活动，在第二次《冷战》平静过后也渐渐减少了。每一个国家在联合国里，都被保证拥有着公平的代表权，促使国以国之间的战场转移到政治平台，全球的生活水准已经在逐渐上升，连最贫困角落的人，对生活也有显著的改善。在改组后的联合国的监督下，世界各国，都成功的迈向繁荣和稳定。中国和欧盟的强大和权威，让一些零星小国深感危惧，而纷纷的团结起来，组织自己的政治立场，--最终发觉他们已经没有可以轻易侵略的邻国。这使得在人类的历史上，首次拥有了超过四分之三的国家，都尊奉法律和秩序。---Sirine 07: 33, 23 June 2009 (UTC)"
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "人权也得到了广泛的普及。"
+msgstr ""
+"人权也得到了广泛的普及。"
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "第一次袭击发生在2084年3月3号，孟买这个人口最多的城市。 6个小UFO出现了，呼啸着从孟买天空划过，雷达设施都未能及时预警。没有任何预兆，突如其来，12小时内两万名无辜平民和三个营的精锐部队被屠杀。直到大部分英联邦士兵集结过来以后，异形才停止了屠杀。然后，他们突然消失的无影无踪，只留下被蹂躏后的孟买街道。"
+msgstr ""
+"第一次袭击发生在2084年3月3号，孟买这个人口最多的城市。 6个小UFO出现了，呼啸着从孟买天空划过，雷达设施都未能及时预警。没有任何预兆，突如其来，12小时内两万名无辜平民和三个营的精锐部队被屠杀。直到大部分英联邦士兵集结过来以后，异形才停止了屠杀。然后，他们突然消失的无影无踪，只留下被蹂躏后的孟买街道。"
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "联合国的紧急会议根本没有任何有效的措施。入侵仍在继续，比以前更残酷，这一次是在波恩、约翰内斯堡和曼谷。一些国家试图展开外交活动，用一千种不同的语言向肆虐整个地区的异形发送信息。但完全没有效果。在几个小时内，这三个城市变成了空城。当时的军队也毫无作用。所有的UFO又消失无踪了--但没有人会怀疑他们不会再次回来。"
+msgstr ""
+"联合国的紧急会议根本没有任何有效的措施。入侵仍在继续，比以前更残酷，这一次是在波恩、约翰内斯堡和曼谷。一些国家试图展开外交活动，用一千种不同的语言向肆虐整个地区的异形发送信息。但完全没有效果。在几个小时内，这三个城市变成了空城。当时的军队也毫无作用。所有的UFO又消失无踪了--但没有人会怀疑他们不会再次回来。"
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "在最初的孟买袭击过去87个小时后，地球正式宣战。两个星期以来，军队用他们最好的武器来尝试抵御每一次到来的外星神秘来客。他们只获得了屈指可数的成功经验。"
+msgstr ""
+"在最初的孟买袭击过去87个小时后，地球正式宣战。两个星期以来，军队用他们最好的武器来尝试抵御每一次到来的外星神秘来客。他们只获得了屈指可数的成功经验。"
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "只剩下一个选择，联合国采取了行动。被尘封一个多世纪的古老档案被打开了，美国长期暂停的外星快速反应机构--PHALANX--复活了。根据新的宣誓，该机构由联合国掌管，他的责任就是打击外星威胁，不惜一切代价确保人类的生存。"
+msgstr ""
+"只剩下一个选择，联合国采取了行动。被尘封一个多世纪的古老档案被打开了，美国长期暂停的外星快速反应机构--PHALANX--复活了。根据新的宣誓，该机构由联合国掌管，他的责任就是打击外星威胁，不惜一切代价确保人类的生存。"
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "所有八个政治联盟都出资参与这个项目，并提供最精锐的士兵。PHALANX是集结了最优秀的力量。它是地球上第一个也是唯一的一道防线。它只能成功，不能失败，人类没有其他选择。"
+msgstr ""
+"所有八个政治联盟都出资参与这个项目，并提供最精锐的士兵。PHALANX是集结了最优秀的力量。它是地球上第一个也是唯一的一道防线。它只能成功，不能失败，人类没有其他选择。"
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

@@ -3219,7 +3219,6 @@ msgstr ""
 "--Cmd. Navarre"
 
 #: ../base/ufos/research.ufo:1570
-#, fuzzy
 msgid "electrolaser_pre_txt"
 msgstr "<TODO>"
 
@@ -6035,7 +6034,6 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:3955
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr "<TODO>"
-
 # como traduzir isso?
 #: ../base/ufos/research.ufo:4044 ../base/ufos/team_humans.ufo:1626
 msgid "Phoenix UGV"

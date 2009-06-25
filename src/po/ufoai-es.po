@@ -671,7 +671,8 @@ msgstr "Aeronave"
 
 #: ../base/ufos/events.ufo:78
 msgid "mail_from_un"
-msgstr "Sec. Gen. Mahouf Serra, Naciones Unidas, Ciudad de Nueva York"
+msgstr ""
+"Sec. Gen. Mahouf Serra, Naciones Unidas, Ciudad de Nueva York"
 
 #: ../base/ufos/events.ufo:79 ../base/ufos/events.ufo:89
 #: ../base/ufos/events.ufo:99 ../base/ufos/events.ufo:110
@@ -747,7 +748,8 @@ msgstr "Sec. Gen. Mahouf Serra, Naciones Unidas, Ciudad de Nueva York"
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4838
 #: ../base/ufos/research.ufo:4845
 msgid "mail_to_base_commander"
-msgstr "Comandante de la Base, PHALANX, Centro de Operaciones del Atlántico"
+msgstr ""
+"Comandante de la Base, PHALANX, Centro de Operaciones del Atlántico"
 
 #: ../base/ufos/events.ufo:80
 msgid "2084 Mar 21"
@@ -823,7 +825,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4554 ../base/ufos/research.ufo:4629
 #: ../base/ufos/research.ufo:4637
 msgid "mail_from_paul_navarre"
-msgstr "Cte. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de Operaciones del Atlántico"
+msgstr ""
+"Cte. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de Operaciones del Atlántico"
 
 #: ../base/ufos/events.ufo:90
 #, fuzzy
@@ -911,7 +914,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:232 ../base/ufos/events.ufo:243
 #: ../base/ufos/events.ufo:254 ../base/ufos/events.ufo:265
 msgid "mail_from_xo"
-msgstr "Of. Ejec. Abel S. Howard, Comando y Control, PHALANX, Centro de Operaciones del Atlántico"
+msgstr ""
+"Of. Ejec. Abel S. Howard, Comando y Control, PHALANX, Centro de Operaciones del Atlántico"
 
 #: ../base/ufos/events.ufo:157
 msgid "Monthly Report -- %s"
@@ -1024,7 +1028,8 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:246
 msgid "mail_alien_base_discovered"
-msgstr "Señor, nuestros agentes han descubierto la ubicación de una gran instalación alienígena en la Tierra en el territorio que pertenece a %s. Esta instalación representa una grave amenaza para PHALANX y de la humanidad en general, tenemos que atacarla de inmediato."
+msgstr ""
+"Señor, nuestros agentes han descubierto la ubicación de una gran instalación alienígena en la Tierra en el territorio que pertenece a %s. Esta instalación representa una grave amenaza para PHALANX y de la humanidad en general, tenemos que atacarla de inmediato."
 
 #: ../base/ufos/events.ufo:256
 msgid "Lost Radar Tracking -- %s"
@@ -1047,7 +1052,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:588 ../base/ufos/research.ufo:4795
 #: ../base/ufos/research.ufo:4804
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, División de Inteligencia, PHALANX, Centro de Operaciones del Atlántico"
+msgstr ""
+"Col. Ingrid Falkland, División de Inteligencia, PHALANX, Centro de Operaciones del Atlántico"
 
 #: ../base/ufos/events.ufo:278
 msgid "Response Too Late -- %s"
@@ -1085,7 +1091,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:331 ../base/ufos/events.ufo:342
 #: ../base/ufos/events.ufo:353
 msgid "mail_from_air_cdr"
-msgstr "Cte. (Aire) Subakh al-Kuhar, Fuerza Aérea, PHALANX, Centro de Operaciones del Atlántico"
+msgstr ""
+"Cte. (Aire) Subakh al-Kuhar, Fuerza Aérea, PHALANX, Centro de Operaciones del Atlántico"
 
 #: ../base/ufos/events.ufo:311
 msgid "New Aircraft Arrived -- %s"
@@ -1970,7 +1977,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4764 ../base/ufos/research.ufo:4837
 #: ../base/ufos/research.ufo:4844
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, I+D: División Biología y Contención, PHALANX, Centro de Operaciones del Atlántico"
+msgstr ""
+"Dr. Connor, I+D: División Biología y Contención, PHALANX, Centro de Operaciones del Atlántico"
 
 #: ../base/ufos/research.ufo:333 ../base/ufos/research.ufo:373
 msgid "alien_breathing_txt"
@@ -2143,33 +2151,27 @@ msgstr "Extraterrestre"
 #: ../base/ufos/research.ufo:507
 msgid "alien_base_txt"
 msgstr ""
-"Proposal\n"
+"Propuesta\n"
 "\n"
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"PARA: Comandante de la Base, PHALANX, Comando de Operaciones Atlánticas\n"
 "\n"
-"FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command\n"
+"DE: Dr. Connor, I+D, Sección de Biología y Reclusión, PHALANX, Comando de Operaciones Atlánticas\n"
+"\n"
+"FROM: Col. Ingrid Falkland, División de Inteligencia, PHALANX, Comando de Operaciones Atlánticas\n"
 "\n"
 "DATE: %02i %s %i\n"
 "\n"
-"SUB: Alien Base\n"
+"SUB: Base Alienígena\n"
 "\n"
-"Good morning, Sir.\n"
+"Buenos días, Señor.\n"
 "\n"
-"As you're aware, we are facing an increasingly worsening threat from the XVI virus. Over the past few weeks, DivIntel has been making a push into the areas in which the infection is most concentrated, in order to try and find some piece of intel that could help us understand how and why this infection spreads so fast from these focal points. I have been personally supervising the effort.\n"
+"Como usted sabe, nos enfrentamos a una creciente amenaza del XVI virus. Durante las últimas semanas, DivIntel ha venido haciendo un esfuerzo en las zonas en las que la infección es más concentrada, con el fin de tratar de encontrar alguna pieza de intel que podrían ayudarnos a entender cómo y por qué esta infección se propaga tan rápido desde los puntos focales . He estado personalmente supervisando el esfuerzo.\n"
 "\n"
-"It paid off this morning.\n"
+"Que dio sus frutos de esta mañana.\n"
 "\n"
-"Our reconnaisance teams have located what appears to be a camouflaged alien installation. The size and purpose of this installation is unknown, but we've established that it is located at the exact heart of an infection hot-spot. I harbour grave suspicions that this facility is directly connected with the lightning spread of XVI in the region. At this point it also seems likely there are more of these planetside installations, built right under our noses, serving as command centres and bases of operation for the alien threat.\n"
+"Nuestros equipos de reconocimiento han localizado lo que parece ser una instalación alien camuflada. El tamaño y la finalidad de esta instalación es desconocido, pero hemos demostrado que se encuentra en el centro exacto de la infección por hot-spot.\n"
 "\n"
-"Dealing with these bases has to be one of our top priorities. I recommend we send a heavily-armed team to pay them a visit, a bit of reconnaissance-in-force. We need more information about the layout and purpose of the base, and the best way to do that is to capture it. We should eliminate all aliens at the location and, once we've secured the area and salvaged what we need, destroy the entire installation. This should constitute a significant blow to alien operations and restrict -- if not halt -- the spread of XVI in the area.\n"
-"\n"
-"Of course this mission will be highly dangerous. The base is right in the middle of an infection hot-spot, so the entire area is hostile territory. We may encounter anti-air ordnance and UFOs scrambled to the base's defence. A heavy escort will certainly be required. And . . . there's worse.\n"
-"\n"
-"Satellite imagery and recon flyovers have indicated that infected humans appear to be actively cooperating with the aliens. There's a good probability our unit will encounter human hostiles during the assault. This may not sit well with everyone, but if they open fire on our troops, we must be ready to respond in kind.\n"
-"\n"
-"That's all the intel I've got for you on this one, Sir. Good luck and good hunting.\n"
-"\n"
-"With kind regards,Col. Falkland"
+"Tengo importantes sospechas de que esta instalación está directamente relacionada con la propagación del XVI en la región. En este punto también parece probable que hay más de estas instalaciones en el planeta, construidas delante de nuestras narices, que actúan como centros de mando y las bases del operaciones de la amenaza extraterrestre."
 
 #: ../base/ufos/research.ufo:529
 msgid "The Universal Serum"
@@ -3757,18 +3759,8 @@ msgstr ""
 "--Cte. Navarre"
 
 #: ../base/ufos/research.ufo:1570
-#, fuzzy
 msgid "electrolaser_pre_txt"
-msgstr ""
-"Los archivos recopilados sobre las investigaciones de las Naciones Unidas nos han proporcionado mucha información valiosa sobre el desarrollo armamentístico llevado a cabo en la Tierra desde principios de este siglo. Entre los temas más interesantes se encuentran los proyectos de desarrollo de las AED (Armas de Energía Dirigida), es decir, armas que transfieren energía al objetivo sin emplear proyectiles. Estamos especialmente interesados en los archivos que se refieren a los Láseres de Onda Continua.\n"
-"\n"
-"Son muchas las naciones y las empresas que han intentado crear armas láser a lo largo de los años, pero nadie ha sido capaz de crear un láser tan ligero como para ser transportado por un soldado manteniendo una potencia de emisión elevada que rivalice con las armas de fuego convencionales. Ahora, sin embargo, se nos ha permitido acceder a la totalidad de las investigaciones relacionadas llevadas a cabo hasta la fecha, así como a bibliotecas enteras sobre las tecnologías más avanzadas de la Tierra. Por lo tanto, creo que no solo podremos diseñar un arma láser portable eficaz, sino que incluso podremos reducir sus dimensiones hasta niveles que resultaban inconcebibles para las AED.\n"
-"\n"
-"Comandante, deberíamos llevar a cabo este proyecto de investigación lo antes posible. Cuanto más variado sea nuestro arsenal, más dificultades tendrán nuestros enemigos para protegerse de él, y además la experiencia adquirida podría llevarnos a desarrollar armas láser para nuestros cazas, que serían más eficaces que los misiles convencionales al tratar de apuntar a los rapidísimos OVNIs.\n"
-"\n"
-"En lo que a mí concierne, aquí en PHALANX haremos lo imposible, y podremos empezar en cuanto usted autorize esta propuesta.\n"
-"\n"
-"--Cte. Navarre"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:1605
 msgid "medikit_txt"
@@ -3837,7 +3829,6 @@ msgstr ""
 "I won't pretend to know how the aliens managed to squeeze all this stuff into a pistol, but it does look as though they've made the same tradeoffs between power and size that we have done with our handguns. It's almost certain that larger, more powerful versions of these weapons exist and will appear against us in this war. However, my team and I have figured out the control scheme of the pistols, and we've written an appropriate field manual for human use. Our soldiers will now be able to employ the plasma pistol in a combat scenario as they would any other weapon.\n"
 "\n"
 "--Cdr. Navarre"
-
 # longer bursts recoil
 #: ../base/ufos/research.ufo:1628
 msgid "plasatomizer_pre_txt"
@@ -4030,15 +4021,36 @@ msgid "needlerheavy_pre_txt"
 msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:1981
-#, fuzzy
 msgid "coilgun_txt"
 msgstr ""
-"The Phalanx forces have been using the SG-260 with great success for quite some time now. Compared with the shotguns traditionally used by many SWAT teams, the SG-260 is capable of concentrating the pellets it fires into a smaller area. Therefore, the effective range of this weapon is increased so that it can be used not only at close but also at medium range. The SG-260 is a good choice for urban combat, especially for clearing buildings.\n"
-"Battle Implications: The SG-260 shotgun has tremendous stopping power at close range and, accordingly, considerable recoil. Its main bulk hardly fits in the holster and the double barrel protrudes along the soldier leg. To master this secondary weapon, the soldier needs both hands and considerable skill with heavy weapons. "
+"Commander, I'd like to present you with the finished plans and prototype for our Coilgun.\n"
+"\n"
+"Combining an alien-inspired power pack and coil arrangement with some of our Bolter technology has solved many of the coilgun design's inherent problems. A hundred years ago, the energy efficiency of coilguns measured less than 2%; meaning, the energy of the projectile at the time of impact was less than 2% of the energy used to fire it. Even with today's technology coilgun efficiency is limited to single digits, but the alien Needler manages efficiency ratings as high as 70%. It may take us years to get to that level, but with the Coilgun we've developed something that is both practical and effective for the war effort.\n"
+"\n"
+"In order to get better acceleration out of the coils, we've created a new kind of ammunition, based on the aliens' needle alloy. In shape it's a fairly standard fin-stabilised penetrator inside a discarding sabot, but it's made from materials never before seen on Earth. Discarding sabot rounds are normally used for much larger calibres -- we've effectively scaled down an anti-tank round -- but the armour-piercing potential is phenomenal, higher than any other weapon we have. In fact, the Coilgun is now the highest-calibre infantry weapon on the planet.\n"
+"\n"
+"We've also incorporated a Needler-style holographic sight, making the Coilgun extremely accurate and comfortable to fire.\n"
+"\n"
+"The advantages of a coilgun as a sniper rifle are obvious. There's no rush of propellant to make noise, no muzzle flash spitting out light and heat. Unlike even our Bolter, nothing comes out the barrel except the bullet -- there's no spray of hot metal from the rails to light up the sniper on infrared. With nothing to reveal the sniper's position except the noise of the bullet itself breaking the sound barrier, it's possible to fire and stay undetected, even against alien technology. Best of all, ballistics tests confirm that it should be able to bring down most aliens in a single shot.\n"
+"\n"
+"Of course we've had to make some sacrifices -- high weight due to the coils and electrical equipment contained in the barrel, low ammunition capacity due to the high calibre, large and heavy magazines/power packs. Despite this, I believe the Coilgun should replace most of our SR-1 Sniper Rifles, as it's proving difficult for our conventional weapons to compete with new enemy armour designs.\n"
+"\n"
+"Keep the SR-1 in light sniper and anti-infantry roles and move the Coilgun forward as our main long-range threat. The aliens will come to fear it.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1984
 msgid "coilgun_pre_txt"
-msgstr "No existe información disponible previa a la investigación."
+msgstr ""
+"Commander, our brainstorms down at DivEngine have come up with an interesting idea based on the alien Needler technology. When combining the alien fast-changing magnetic generators -- and, even more importantly, their power source -- with human-engineered EM rifle technology, some amazing man-portable weaponry becomes possible. I'd hereby like to propose a new design for a coilgun in the role of a sniper rifle.\n"
+"\n"
+"The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.\n"
+"\n"
+"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
+"\n"
+"Please let me know when you want us to start, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1991 ../base/ufos/research.ufo:1999
 #: ../base/ufos/weapons_human.ufo:392
@@ -6239,7 +6251,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4125
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "Por: Cte. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de Operaciones del Atlántico"
+msgstr ""
+"Por: Cte. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de Operaciones del Atlántico"
 
 #: ../base/ufos/research.ufo:4181
 msgid "'Raven' ECM Unit"
@@ -6906,35 +6919,43 @@ msgstr "Es durante este tiempo que los extraterrestres invaden la Tierra. Han la
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Es el año 2084. La Tierra, nunca el lugar mas políticamente estable, disfruta de un tiempo de relativa paz. Los violentos inicios del siglo XXI están muy lejos; recuerdos distantes, aunque no tan distantes como para haber sido olvidados. Para la mayoría de la gente de la Tierra la Segunda Guerra Fría es una oscura sombra del pasado, como las guerras mundiales para los hijos de fines del siglo XX."
+msgstr ""
+"Es el año 2084. La Tierra, nunca el lugar mas políticamente estable, disfruta de un tiempo de relativa paz. Los violentos inicios del siglo XXI están muy lejos; recuerdos distantes, aunque no tan distantes como para haber sido olvidados. Para la mayoría de la gente de la Tierra la Segunda Guerra Fría es una oscura sombra del pasado, como las guerras mundiales para los hijos de fines del siglo XX."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "Los conflictos se han vuelto más raros hacia el final del siglo a medida que nuevas tecnologías y el acceso universal a la salud finalmente han llegado al tercer mundo. Incluso los fuegos del terrorismo se han enfriado tras la Segunda Guerra Fría, con sus horrores todavía frescos en la memoria de la gente, desde los antiguos Estados Unidos hasta el arrasado subcontinente Indio. La lucha de clases se ha trasladado a la arena política ahora que todas las naciones tienen garantizada una representación justa en la ONU, y el nivel de calidad de vida sube lentamente hasta en los rincones más pobres del planeta. Los países se han solidificado, estabilizándose alrededor de una reestructurada Organización de las Naciones Unidas, que vigila eficazmente a los gobiernos del mundo. Grupos fragmentados de pequeñas naciones, asustados en principio por el poder de bloques de poder que se acumulaban en torno a China y la Unión Europea, se han unido en poderosas ligas políticas en derecho propio -- encontrándose sin vecinos con los que poder luchar con seguridad. Por primera vez en la historia de la humanidad la ley y el orden reinan por sobre tres cuartas partes del mundo."
+msgstr ""
+"Los conflictos se han vuelto más raros hacia el final del siglo a medida que nuevas tecnologías y el acceso universal a la salud finalmente han llegado al tercer mundo. Incluso los fuegos del terrorismo se han enfriado tras la Segunda Guerra Fría, con sus horrores todavía frescos en la memoria de la gente, desde los antiguos Estados Unidos hasta el arrasado subcontinente Indio. La lucha de clases se ha trasladado a la arena política ahora que todas las naciones tienen garantizada una representación justa en la ONU, y el nivel de calidad de vida sube lentamente hasta en los rincones más pobres del planeta. Los países se han solidificado, estabilizándose alrededor de una reestructurada Organización de las Naciones Unidas, que vigila eficazmente a los gobiernos del mundo. Grupos fragmentados de pequeñas naciones, asustados en principio por el poder de bloques de poder que se acumulaban en torno a China y la Unión Europea, se han unido en poderosas ligas políticas en derecho propio -- encontrándose sin vecinos con los que poder luchar con seguridad. Por primera vez en la historia de la humanidad la ley y el orden reinan por sobre tres cuartas partes del mundo."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Para mucha gente de la Tierra, parece que las cosas van bien."
+msgstr ""
+"Para mucha gente de la Tierra, parece que las cosas van bien."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "El primer ataque golpea la ciudad de Mumbai el 3 de marzo de 2084. Seis pequeños OVNIs aparecen de la nada y descienden chillando de órbita, sin ser detectados por las inmensas instalaciones de radar que cubren los cielos sobre Mumbai, y aterrizan en la ciudad más densamente poblada de la Tierra. No ofrecen ninguna advertencia, ninguna explicación. Veinte mil civiles inocentes y tres batallones de tropas de élite son masacrados en el transcurso de doce horas brutales, antes de que el grueso de los soldados de la Comunidad consigue detener el avance de los alienígena. Entonces, tan súbitamente como aparecieron, los alienígenas se retiran a sus naves y desaparecen de vuelta al espacio, dejando sólo las desoladas calles de Mumbai como evidencia."
+msgstr ""
+"El primer ataque golpea la ciudad de Mumbai el 3 de marzo de 2084. Seis pequeños OVNIs aparecen de la nada y descienden chillando de órbita, sin ser detectados por las inmensas instalaciones de radar que cubren los cielos sobre Mumbai, y aterrizan en la ciudad más densamente poblada de la Tierra. No ofrecen ninguna advertencia, ninguna explicación. Veinte mil civiles inocentes y tres batallones de tropas de élite son masacrados en el transcurso de doce horas brutales, antes de que el grueso de los soldados de la Comunidad consigue detener el avance de los alienígena. Entonces, tan súbitamente como aparecieron, los alienígenas se retiran a sus naves y desaparecen de vuelta al espacio, dejando sólo las desoladas calles de Mumbai como evidencia."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Una reunión de emergencia de la ONU no lleva a ninguna conclusión. Las incursiones continúan, mas rápidas, grandes y salvajes que antes, esta vez en Bonn, Johanesburgo y Bangkok. Algunas naciones intentan la diplomacia, mandando mensajes en miles de idiomas diferentes a los alienígenas que asolaban sus países. Sus palabras fueron ignoradas. En cuestión de horas, las tres ciudades son desprovistas de vida humana. El ataque ha terminado para el momento en que a los militares se les da permiso de contraatacar. Los alienígenas no dejan nada tras de si mas que hormigón y sangre. Todos los OVNIs desaparecen sin dejar rastro, pero nadie duda que volverán."
+msgstr ""
+"Una reunión de emergencia de la ONU no lleva a ninguna conclusión. Las incursiones continúan, mas rápidas, grandes y salvajes que antes, esta vez en Bonn, Johanesburgo y Bangkok. Algunas naciones intentan la diplomacia, mandando mensajes en miles de idiomas diferentes a los alienígenas que asolaban sus países. Sus palabras fueron ignoradas. En cuestión de horas, las tres ciudades son desprovistas de vida humana. El ataque ha terminado para el momento en que a los militares se les da permiso de contraatacar. Los alienígenas no dejan nada tras de si mas que hormigón y sangre. Todos los OVNIs desaparecen sin dejar rastro, pero nadie duda que volverán."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Ochenta y siete horas después del primer ataque sobre Mumbai, la tierra declara la guerra. Por dos semanas, los ejércitos de la Tierra intentan repeler los misteriosos atacantes alienígenas con lo mejor de sus fuerzas. Consiguen escasos, aunque preciosos, éxitos."
+msgstr ""
+"Ochenta y siete horas después del primer ataque sobre Mumbai, la tierra declara la guerra. Por dos semanas, los ejércitos de la Tierra intentan repeler los misteriosos atacantes alienígenas con lo mejor de sus fuerzas. Consiguen escasos, aunque preciosos, éxitos."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Con sólo una alternativa disponible, la ONU entra en acción. Antiguo equipo es desempolvado, alguno con más de un siglo de antigüedad, y la largamente difunta agencia anti-extraterrestre de los antiguos Estados Unidos -- PHALANX -- es resucitada bajo una bandera de la ONU. Su obligación jurada es combatir la amenaza alienígena, y asegurar la sobrevivencia de la raza humana a toda costa."
+msgstr ""
+"Con sólo una alternativa disponible, la ONU entra en acción. Antiguo equipo es desempolvado, alguno con más de un siglo de antigüedad, y la largamente difunta agencia anti-extraterrestre de los antiguos Estados Unidos -- PHALANX -- es resucitada bajo una bandera de la ONU. Su obligación jurada es combatir la amenaza alienígena, y asegurar la sobrevivencia de la raza humana a toda costa."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Financiada por la totalidad de los ocho poderes políticos, y seleccionando a sus soldados de entre la élite de sus ejércitos, PHALANX es lo mejor de lo mejor. Es la primera y única línea de defensa de la Tierra. No puede permitirse fracasar; pues si lo hace la humanidad no tendrá ninguna oportunidad."
+msgstr ""
+"Financiada por la totalidad de los ocho poderes políticos, y seleccionando a sus soldados de entre la élite de sus ejércitos, PHALANX es lo mejor de lo mejor. Es la primera y única línea de defensa de la Tierra. No puede permitirse fracasar; pues si lo hace la humanidad no tendrá ninguna oportunidad."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 #, fuzzy
