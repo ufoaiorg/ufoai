@@ -167,7 +167,7 @@ bool ExportDataAsWavefront::WriteToFile(const std::string& path, collapsemode mo
 		return false;
 	}
 
-	out << "# Wavefront Objectfile exported with radiants brushexport plugin 3.0 by Thomas 'namespace' Nitschke, spam@codecreator.net\n\n";
+	out << "# Wavefront Objectfile exported with radiants brushexport plugin 2.0 by Thomas 'namespace' Nitschke, spam@codecreator.net\n\n";
 
 	if (expmat) {
 		size_t last = mtlFile.find_last_of("//");

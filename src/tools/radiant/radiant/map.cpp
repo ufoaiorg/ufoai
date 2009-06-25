@@ -1522,10 +1522,10 @@ const char* map_save (const char* title)
 
 void OpenMap (void)
 {
-	if (!ConfirmModified("Open Map"))
+	if (!ConfirmModified(_("Open Map")))
 		return;
 
-	const char* filename = map_open("Open Map");
+	const char* filename = map_open(_("Open Map"));
 
 	if (filename != 0) {
 		Map_RegionOff();
@@ -1537,7 +1537,7 @@ void OpenMap (void)
 
 void ImportMap (void)
 {
-	const char* filename = map_open("Import Map");
+	const char* filename = map_open(_("Import Map"));
 
 	if (filename != 0) {
 		UndoableCommand undo("mapImport");
@@ -1547,7 +1547,7 @@ void ImportMap (void)
 
 bool Map_SaveAs (void)
 {
-	const char* filename = map_save("Save Map");
+	const char* filename = map_save(_("Save Map"));
 
 	if (filename != 0) {
 		MRU_AddFile(filename);
@@ -1573,7 +1573,7 @@ void SaveMap (void)
 
 void ExportMap (void)
 {
-	const char* filename = map_save("Export Selection");
+	const char* filename = map_save(_("Export Selection"));
 
 	if (filename != 0) {
 		Map_SaveSelected(filename);
@@ -1582,7 +1582,7 @@ void ExportMap (void)
 
 void SaveRegion (void)
 {
-	const char* filename = map_save("Export Region");
+	const char* filename = map_save(_("Export Region"));
 
 	if (filename != 0) {
 		Map_SaveRegion(filename);
