@@ -450,6 +450,19 @@ class EntityKeyValues : public Entity {
 		}
 	}
 
+	/**
+	 * @brief Searches the value for a given property key, returns 0 if not found.
+	 * @param key the property key to get the value for
+	 * @return the value for the given property or 0
+	 */
+	const char* getKeyValueOrNull(const char* key) const {
+		KeyValues::const_iterator i = m_keyValues.find(key);
+			if (i != m_keyValues.end())
+				return (*i).second->c_str();
+			else
+				return (const char*) 0;
+	}
+
 	public:
 	bool m_isContainer;
 
@@ -568,18 +581,31 @@ class EntityKeyValues : public Entity {
 		}
 		m_entityKeyValueChanged();
 	}
+
 	/**
-	 * @brief Searches the value for a given property key
+	 * @brief Searches the value for a given property key, returns default key if not found.
 	 * @param[in] key The property key to get the value for
 	 * @return The value for the given property key or the default value
 	 */
 	const char* getKeyValue(const char* key) const {
-		KeyValues::const_iterator i = m_keyValues.find(key);
-		if (i != m_keyValues.end()) {
-			return (*i).second->c_str();
-		}
+		const char* value = getKeyValueOrNull(key);
+		if (value)
+			return value;
+		else
+			return EntityClass_valueForKey(*m_eclass, key);
+	}
 
-		return EntityClass_valueForKey(*m_eclass, key);
+	/**
+	 * @brief Add missing mandatory key/value-pairs to actual entity.
+	 */
+	void addMandatoryKeyValues() {
+		for (EntityClassAttributes::const_iterator i = m_eclass->m_attributes.begin(); i
+					!= m_eclass->m_attributes.end(); ++i) {
+			if ((*i).second.m_mandatory && getKeyValueOrNull((*i).first.c_str()) == 0) {
+				this->setKeyValue((*i).first.c_str(), m_eclass->getDefaultForAttribute((*i).first.c_str()));
+				g_debug("addMandatoryKeyValues: adding %s\n", (*i).first.c_str());
+			}
+		}
 	}
 
 	bool isContainer() const {

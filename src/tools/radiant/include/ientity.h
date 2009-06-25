@@ -64,23 +64,10 @@ public:
 	virtual void forEachKeyValue(Visitor& visitor) const = 0;
 	virtual void setKeyValue(const char* key, const char* value) = 0;
 	virtual const char* getKeyValue(const char* key) const = 0;
+	virtual void addMandatoryKeyValues() = 0;
 	virtual bool isContainer() const = 0;
 	virtual void attach(Observer& observer) = 0;
 	virtual void detach(Observer& observer) = 0;
-};
-
-class EntityCopyingVisitor : public Entity::Visitor {
-	Entity& m_entity;
-public:
-	EntityCopyingVisitor(Entity& entity)
-			: m_entity(entity) {
-	}
-
-	void visit(const char* key, const char* value) {
-		if (!string_equal(key, "classname")) {
-			m_entity.setKeyValue(key, value);
-		}
-	}
 };
 
 inline Entity* Node_getEntity(scene::Node& node) {

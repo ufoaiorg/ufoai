@@ -90,6 +90,22 @@ class EntitySetKeyValueSelected: public scene::Graph::Walker
 		}
 };
 
+class EntityCopyingVisitor : public Entity::Visitor {
+	Entity& m_entity;
+public:
+	EntityCopyingVisitor(Entity& entity)
+			: m_entity(entity) {
+	}
+
+	void visit(const char* key, const char* value) {
+		if (!string_equal(key, "classname") && m_entity.getEntityClass().getAttribute(key) != NULL) {
+			m_entity.setKeyValue(key, value);
+		} else {
+			g_debug("EntityCopyingVisitor: skipping %s\n", key);
+		}
+	}
+};
+
 class EntitySetClassnameSelected: public scene::Graph::Walker
 {
 		const char* m_oldClassame;
@@ -112,8 +128,9 @@ class EntitySetClassnameSelected: public scene::Graph::Walker
 						m_newClassname, node_is_group(path.top()))));
 
 				EntityCopyingVisitor visitor(*Node_getEntity(node));
-
 				entity->forEachKeyValue(visitor);
+
+				Node_getEntity(node)->addMandatoryKeyValues();
 
 				NodeSmartReference child(path.top().get());
 				NodeSmartReference parent(path.parent().get());
@@ -303,12 +320,7 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 	// set all mandatory fields to default values
 	// some will be overwritten later
 	Entity *entity = Node_getEntity(node);
-	for (EntityClassAttributes::const_iterator i = entityClass->m_attributes.begin(); i
-			!= entityClass->m_attributes.end(); ++i) {
-		if ((*i).second.m_mandatory) {
-			entity->setKeyValue((*i).first.c_str(), entityClass->getDefaultForAttribute((*i).first.c_str()));
-		}
-	}
+	entity->addMandatoryKeyValues();
 
 	if (entityClass->fixedsize || (isModel && !brushesSelected)) {
 		Select_Delete();
