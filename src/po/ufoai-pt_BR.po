@@ -1213,7 +1213,7 @@ msgstr "Uma faixa limpa no meio da selva."
 
 #: ../base/ufos/maps.ufo:568 ../base/ufos/maps.ufo:599
 #: ../base/ufos/maps.ufo:630 ../base/ufos/maps.ufo:661
-msgid "A peaceful neighborhood on the outskirts of a centre of population."
+msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "Uma vizinhança pacífica nos arredores de um aglomerado populacional."
 
 #: ../base/ufos/maps.ufo:693 ../base/ufos/maps.ufo:729
@@ -1249,7 +1249,7 @@ msgid "An old mine."
 msgstr "Uma mina antiga."
 
 #: ../base/ufos/maps.ufo:1087
-msgid "An industial area, used for loading and unloading goods."
+msgid "An industrial area, used for loading and unloading goods."
 msgstr "Uma área industrial utilizada para carregar e descarregar bens."
 
 #: ../base/ufos/maps.ufo:1126
@@ -1315,7 +1315,7 @@ msgid "A subway station in a suburban part of town."
 msgstr "Uma estação de metrô em uma parte suburbana da cidade."
 
 #: ../base/ufos/maps.ufo:1818
-msgid "An office complex in the center of town."
+msgid "An office complex in the centre of town."
 msgstr "Um complexo de escritórios no centro da cidade."
 
 #: ../base/ufos/maps.ufo:1861
@@ -1331,7 +1331,7 @@ msgid "A small UFO has crashed in this mining region."
 msgstr "Um pequeno OVNI caiu nesta região de mineração."
 
 #: ../base/ufos/maps.ufo:2024
-msgid "An office complex under constuction."
+msgid "An office complex under construction."
 msgstr "Um complexo de escritórios em construção."
 
 #: ../base/ufos/maps.ufo:2064
@@ -1347,7 +1347,7 @@ msgid "A luxurious vacation resort."
 msgstr "Um luxuoso resort de férias."
 
 #: ../base/ufos/maps.ufo:2195
-msgid "An african suburb that has received a visit from a Harvester."
+msgid "An African suburb that has received a visit from a Harvester."
 msgstr "Um subúrbio africano que recebeu a visita de um Harvester."
 
 #: ../base/ufos/maps.ufo:2236

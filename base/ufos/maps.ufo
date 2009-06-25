@@ -565,7 +565,7 @@ mapdef vil_lille
 	map			"+village"
 	param		recreational
 	multiplayer	false
-	description	"_A peaceful neighborhood on the outskirts of a centre of population."
+	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
 //	ufos
@@ -596,7 +596,7 @@ mapdef vil_residential
 	map			"+village"
 	param		residential
 	multiplayer	false
-	description	"_A peaceful neighborhood on the outskirts of a centre of population."
+	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
 //	ufos
@@ -627,7 +627,7 @@ mapdef vil_commercial
 	map			"+village"
 	param		commercial
 	multiplayer	false
-	description	"_A peaceful neighborhood on the outskirts of a centre of population."
+	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
 //	ufos
@@ -658,7 +658,7 @@ mapdef vil_big
 	map			"+village"
 	param		big
 	multiplayer	false
-	description	"_A peaceful neighborhood on the outskirts of a centre of population."
+	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
 //	ufos
@@ -1084,7 +1084,7 @@ mapdef mine
 mapdef transport
 {
 	map			+transport
-	description	"_An industial area, used for loading and unloading goods."
+	description	"_An industrial area, used for loading and unloading goods."
 	multiplayer	true
 	teams		2
 	gametypes {
@@ -1815,7 +1815,7 @@ mapdef subway
 mapdef tower
 {
 	map				tower
-	description		"_An office complex in the center of town."
+	description		"_An office complex in the centre of town."
 	multiplayer		true
 	teams			3
 	gametypes {
@@ -2021,7 +2021,7 @@ mapdef bridge
 mapdef construction
 {
 	map				"+construction"
-	description		"_An office complex under constuction."
+	description		"_An office complex under construction."
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -2192,7 +2192,7 @@ mapdef africa
 		coop3
 		coop4
 	}
-	description		"_An african suburb that has received a visit from a Harvester."
+	description		"_An African suburb that has received a visit from a Harvester."
 	maxaliens		24
 
 	ufos

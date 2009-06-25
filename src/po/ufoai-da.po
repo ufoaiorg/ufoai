@@ -1234,7 +1234,7 @@ msgstr "Et ryddet stykke land i midten af denne jungle."
 
 #: ../base/ufos/maps.ufo:568 ../base/ufos/maps.ufo:599
 #: ../base/ufos/maps.ufo:630 ../base/ufos/maps.ufo:661
-msgid "A peaceful neighborhood on the outskirts of a centre of population."
+msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "Et fredeligt beboelsesområde i udkanten af et befolket område."
 
 #: ../base/ufos/maps.ufo:693 ../base/ufos/maps.ufo:729
@@ -1270,7 +1270,7 @@ msgid "An old mine."
 msgstr "En gammel mine."
 
 #: ../base/ufos/maps.ufo:1087
-msgid "An industial area, used for loading and unloading goods."
+msgid "An industrial area, used for loading and unloading goods."
 msgstr "Et industriområde til brug for transport."
 
 #: ../base/ufos/maps.ufo:1126
@@ -1334,7 +1334,7 @@ msgid "A subway station in a suburban part of town."
 msgstr "En undergrundsstation i en forstad af byen."
 
 #: ../base/ufos/maps.ufo:1818
-msgid "An office complex in the center of town."
+msgid "An office complex in the centre of town."
 msgstr "Et kontorkompleks i centrum af byen."
 
 #: ../base/ufos/maps.ufo:1861
@@ -1350,7 +1350,7 @@ msgid "A small UFO has crashed in this mining region."
 msgstr "En lille ufo er styrtet ned i denne mineregion."
 
 #: ../base/ufos/maps.ufo:2024
-msgid "An office complex under constuction."
+msgid "An office complex under construction."
 msgstr "Et kontorkompleks under opførelse."
 
 #: ../base/ufos/maps.ufo:2064
@@ -1366,7 +1366,7 @@ msgid "A luxurious vacation resort."
 msgstr "Et luksuriøst feriested."
 
 #: ../base/ufos/maps.ufo:2195
-msgid "An african suburb that has received a visit from a Harvester."
+msgid "An African suburb that has received a visit from a Harvester."
 msgstr "En afrikansk forstad som har haft besøg af en ufo-høstmaskine."
 
 #: ../base/ufos/maps.ufo:2236

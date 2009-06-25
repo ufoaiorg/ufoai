@@ -1362,7 +1362,7 @@ msgstr "丛林里的一片空地。"
 
 #: ../base/ufos/maps.ufo:568 ../base/ufos/maps.ufo:599
 #: ../base/ufos/maps.ufo:630 ../base/ufos/maps.ufo:661
-msgid "A peaceful neighborhood on the outskirts of a centre of population."
+msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "郊外的一个小镇。"
 
 #: ../base/ufos/maps.ufo:693 ../base/ufos/maps.ufo:729
@@ -1398,7 +1398,7 @@ msgid "An old mine."
 msgstr "一个废弃矿井。"
 
 #: ../base/ufos/maps.ufo:1087
-msgid "An industial area, used for loading and unloading goods."
+msgid "An industrial area, used for loading and unloading goods."
 msgstr "工业货运站。"
 
 #: ../base/ufos/maps.ufo:1126
@@ -1462,7 +1462,7 @@ msgid "A subway station in a suburban part of town."
 msgstr "地铁车站。"
 
 #: ../base/ufos/maps.ufo:1818
-msgid "An office complex in the center of town."
+msgid "An office complex in the centre of town."
 msgstr "市中心办公楼。"
 
 #: ../base/ufos/maps.ufo:1861
@@ -1478,7 +1478,7 @@ msgid "A small UFO has crashed in this mining region."
 msgstr "小型UFO坠落点。"
 
 #: ../base/ufos/maps.ufo:2024
-msgid "An office complex under constuction."
+msgid "An office complex under construction."
 msgstr "建造中的办公楼。"
 
 #: ../base/ufos/maps.ufo:2064
@@ -1494,7 +1494,7 @@ msgid "A luxurious vacation resort."
 msgstr "豪华度假区。"
 
 #: ../base/ufos/maps.ufo:2195
-msgid "An african suburb that has received a visit from a Harvester."
+msgid "An African suburb that has received a visit from a Harvester."
 msgstr "土著据点。"
 
 #: ../base/ufos/maps.ufo:2236

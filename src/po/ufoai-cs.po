@@ -1248,7 +1248,7 @@ msgstr "Přehledný úsek země uprostřed džungle."
 
 #: ../base/ufos/maps.ufo:568 ../base/ufos/maps.ufo:599
 #: ../base/ufos/maps.ufo:630 ../base/ufos/maps.ufo:661
-msgid "A peaceful neighborhood on the outskirts of a centre of population."
+msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "Poklidná obec na okraji středu populace."
 
 #: ../base/ufos/maps.ufo:693 ../base/ufos/maps.ufo:729
@@ -1284,7 +1284,7 @@ msgid "An old mine."
 msgstr "Starý důl."
 
 #: ../base/ufos/maps.ufo:1087
-msgid "An industial area, used for loading and unloading goods."
+msgid "An industrial area, used for loading and unloading goods."
 msgstr "Průmyslová oblast užívaná pro nakládání a vykládání zboží."
 
 #: ../base/ufos/maps.ufo:1126
@@ -1348,7 +1348,7 @@ msgid "A subway station in a suburban part of town."
 msgstr "Stanice metra v okrajové části velkoměsta."
 
 #: ../base/ufos/maps.ufo:1818
-msgid "An office complex in the center of town."
+msgid "An office complex in the centre of town."
 msgstr "Kancelářský komplex v centru velkoměsta."
 
 #: ../base/ufos/maps.ufo:1861
@@ -1364,7 +1364,7 @@ msgid "A small UFO has crashed in this mining region."
 msgstr "Místo havárie malého UFO v této hornické oblasti."
 
 #: ../base/ufos/maps.ufo:2024
-msgid "An office complex under constuction."
+msgid "An office complex under construction."
 msgstr "Kancelářský komplex ve výstavbě."
 
 #: ../base/ufos/maps.ufo:2064
@@ -1380,7 +1380,7 @@ msgid "A luxurious vacation resort."
 msgstr "Přepychové prázdninové letovisko."
 
 #: ../base/ufos/maps.ufo:2195
-msgid "An african suburb that has received a visit from a Harvester."
+msgid "An African suburb that has received a visit from a Harvester."
 msgstr "Africké předměstí navštívené Sklízečem."
 
 #: ../base/ufos/maps.ufo:2236

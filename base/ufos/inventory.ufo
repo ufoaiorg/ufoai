@@ -6,7 +6,7 @@
 // temp - a temporary container - such a container is not cleared - it's just a pointer to another one
 // armour - only armours can be placed here
 // all - everything can be placed here - even armours
-// headgear - headgear slot - only useable for headgear
+// headgear - headgear slot - only usable for headgear
 // extension - the extension slot - only weapon or item extension can be placed here
 
 // What's this "extension" exactly?

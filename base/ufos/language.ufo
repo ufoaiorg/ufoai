@@ -71,7 +71,7 @@ language es {
 		es_CR.UTF-8
 		es_DO.UTF-8
 		es_EC.UTF-8
-		es_ES.UTF-8	/* FIXME: This should go in a seperate column */
+		es_ES.UTF-8	/* FIXME: This should go in a separate column */
 		es_GT.UTF-8
 		es_HN.UTF-8
 		es_MX.UTF-8
@@ -90,7 +90,7 @@ language es {
 		es_CR.utf8
 		es_DO.utf8
 		es_EC.utf8
-		es_ES.utf8	/* FIXME: This should go in a seperate column */
+		es_ES.utf8	/* FIXME: This should go in a separate column */
 		es_GT.utf8
 		es_HN.utf8
 		es_MX.utf8

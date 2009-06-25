@@ -8,7 +8,7 @@
 // size:	(int)		pixel size for font
 // font		(string)	path to truetype font file
 
-// The fonts are marked as translatble to let the translators decide which font they want to use
+// The fonts are marked as translatable to let the translators decide which font they want to use
 
 font f_verysmall_bold
 {
