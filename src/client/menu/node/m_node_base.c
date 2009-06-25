@@ -270,7 +270,7 @@ static void MN_BaseMapNodeDrawTooltip (menuNode_t *node, int x, int y)
 	tooltipText = _(building->name);
 	if (!B_CheckBuildingDependencesStatus(base, building))
 		tooltipText = va("%s\n%s %s", tooltipText, _("not operational, depends on"), _(building->dependsBuilding->name));
-	MN_DrawTooltip("f_small", tooltipText, x, y, itemToolTipWidth, 0);
+	MN_DrawTooltip(tooltipText, x, y, itemToolTipWidth, 0);
 }
 
 /**

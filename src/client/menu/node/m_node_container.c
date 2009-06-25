@@ -1139,7 +1139,7 @@ static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
 		/* Display stored container-coordinates of the item. */
 		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->x, itemHover->y), sizeof(tooltiptext));
 #endif
-		MN_DrawTooltip("f_small", tooltiptext, x, y, itemToolTipWidth, 0);
+		MN_DrawTooltip(tooltiptext, x, y, itemToolTipWidth, 0);
 	}
 }
 

@@ -299,7 +299,7 @@ static void MN_TabNodeDrawTooltip (menuNode_t *node, int x, int y)
 	if (!option->truncated)
 		return;
 
-	MN_DrawTooltip("f_small", _(option->label), x, y, tooltipWidth, 0);
+	MN_DrawTooltip(_(option->label), x, y, tooltipWidth, 0);
 }
 
 /** called when the window is pushed

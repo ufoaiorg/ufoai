@@ -36,8 +36,9 @@ static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 /**
  * @brief Generic tooltip function
  */
-int MN_DrawTooltip (const char *font, const char *string, int x, int y, int maxWidth, int maxHeight)
+int MN_DrawTooltip (const char *string, int x, int y, int maxWidth, int maxHeight)
 {
+	const char *font = "f_small";
 	int height = 0, width = 0;
 	int lines = 5;
 
@@ -101,5 +102,5 @@ void MN_Tooltip (menuNode_t *node, int x, int y)
 		return;
 	}
 
-	MN_DrawTooltip("f_verysmall", string, x, y, maxWidth, 0);
+	MN_DrawTooltip(string, x, y, maxWidth, 0);
 }

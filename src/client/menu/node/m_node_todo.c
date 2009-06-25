@@ -50,7 +50,7 @@ static void MN_TodoNodeDrawTooltip (menuNode_t *node, int x, int y)
 
 	tooltiptext[0] = '\0';
 	Q_strcat(tooltiptext, text, sizeof(tooltiptext));
-	MN_DrawTooltip("f_small", tooltiptext, x, y, tooltipWidth, 0);
+	MN_DrawTooltip(tooltiptext, x, y, tooltipWidth, 0);
 }
 
 static void MN_TodoNodeDraw (menuNode_t *node)

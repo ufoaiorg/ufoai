@@ -78,7 +78,7 @@ static void MN_StringNodeDrawTooltip (menuNode_t *node, int x, int y)
 			static char tooltiptext[MAX_VAR * 4];
 			tooltiptext[0] = '\0';
 			Q_strcat(tooltiptext, text, sizeof(tooltiptext));
-			MN_DrawTooltip("f_small", tooltiptext, x, y, tooltipWidth, 0);
+			MN_DrawTooltip(tooltiptext, x, y, tooltipWidth, 0);
 		}
 	}
 }
