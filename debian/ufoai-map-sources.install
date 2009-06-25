@@ -24,7 +24,6 @@ base/maps/laboratory/*.map /usr/share/games/ufoai/base/maps/laboratory
 base/maps/mart/*.map /usr/share/games/ufoai/base/maps/mart
 base/maps/military_convoy/*.map /usr/share/games/ufoai/base/maps/military_convoy
 base/maps/oriental/*.map /usr/share/games/ufoai/base/maps/oriental
-base/maps/prefabs/*.map /usr/share/games/ufoai/base/maps/prefabs
 base/maps/shelter/*.map /usr/share/games/ufoai/base/maps/shelter
 base/maps/spedition/*.map /usr/share/games/ufoai/base/maps/spedition
 base/maps/stadium/*.map /usr/share/games/ufoai/base/maps/stadium
