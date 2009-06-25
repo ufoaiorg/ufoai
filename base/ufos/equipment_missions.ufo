@@ -29,7 +29,7 @@
 // 1a. Get a primary weapon:
 //    A primary weapon is randomly picked in all primary weapon available. The sum of the
 //    probability for all primary weapon must not exceed 100. If this sum is below 100 --
-//    let's say 80 -- there is 20 % proability that the alien has no primary weapon.
+//    let's say 80 -- there is 20 % probability that the alien has no primary weapon.
 // 1b. Select an ammo:
 //    There is an equal probability to get any ammo in equipment definition that fits the weapon obtained in 1.a.
 //    The number of ammo added (weapon being already loaded) is the number entered in equipment definition.
@@ -39,7 +39,7 @@
 // 2. Get a secondary weapon with reload (sidearms):
 //    The procedure is the same as for primary weapon.
 //    If alien got a primary weapon in first step with damage type 'particle' or 'normal', then
-//       all probabilities are divided by 2 (therefore, you have a maximum 50 % probabilty to have
+//       all probabilities are divided by 2 (therefore, you have a maximum 50 % probability to have
 //       a secondary weapon)
 //    If alien got no primary weapon, but got a secondary weapon, there is 30 % that he gets a second one. He
 //       may also have a few more ammos.
@@ -86,7 +86,7 @@
 // Notes:
 //  * There are different types of alien equipment. The one that will be used is the one which name starts with the
 //    equipment name defined in alientype_missions.ufo.
-//    For example, if alientype_missions.ufo states that 'alien_workers' may be used, every equipment pack begining
+//    For example, if alientype_missions.ufo states that 'alien_workers' may be used, every equipment pack beginning
 //    with this string (like 'alien_workers1' or 'alien_workers_explosive3') with overall alien interest between
 //    mininterest and maxinterest may be used with the same probability.
 //  * Note that all equipment definitions must have different names.

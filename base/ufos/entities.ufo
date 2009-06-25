@@ -284,7 +284,7 @@ entity light_spot {
 	spawnflags	"day"
 
 	mandatory {
-		_color	"Color for the light RGB"
+		_color	"Colour for the light RGB"
 		light	"Intensity (e.g. 300) - the entity_scale is applied to these values"
 		origin	"position"
 	}
@@ -316,17 +316,17 @@ entity worldspawn {
 		randomspawn		"Use random spawn positions for the actors to spawn them"
 		light_night		"Controls sunlight intensity. All positive values are valid, values from 80 to 300 typically produce good results."
 		angles_night	"Controls sunlight direction, specified as pitch and yaw in degrees, e.g. -80 220."
-		color_night		"Controls sunlight color, specified as rgb floating point values, e.g. 1.0 0.9 0.8."
-		ambient_night	"Specifies ambient light, or the minimum global lighting value for all light samples, as an rgb color, e.g. 0.07 0.06 0.06. A small ambient factor is recommended for most levels."
+		color_night		"Controls sunlight colour, specified as rgb floating point values, e.g. 1.0 0.9 0.8."
+		ambient_night	"Specifies ambient light, or the minimum global lighting value for all light samples, as an rgb colour, e.g. 0.07 0.06 0.06. A small ambient factor is recommended for most levels."
 		light_day		"Controls sunlight intensity. All positive values are valid, values from 80 to 300 typically produce good results."
 		angles_day		"Controls sunlight direction, specified as pitch and yaw in degrees, e.g. -80 220."
-		color_day		"Controls sunlight color, specified as rgb floating point values, e.g. 1.0 0.9 0.8."
-		ambient_day		"Specifies ambient light, or the minimum global lighting value for all light samples, as an rgb color, e.g. 0.07 0.06 0.06. A small ambient factor is recommended for most levels."
+		color_day		"Controls sunlight colour, specified as rgb floating point values, e.g. 1.0 0.9 0.8."
+		ambient_day		"Specifies ambient light, or the minimum global lighting value for all light samples, as an rgb colour, e.g. 0.07 0.06 0.06. A small ambient factor is recommended for most levels."
 		brightness		"Controls light intensity. This is used to uniformly brighten or darken your level. 1.0 is default, all positive floating point values are valid."
-		saturation		"Controls light saturation, or color influence. This can be used to make a level look more colorful, or more pale. The default value is 1.0. Values from 0.5 to 3.0 are most useful."
+		saturation		"Controls light saturation, or colour influence. This can be used to make a level look more colourful, or more pale. The default value is 1.0. Values from 0.5 to 3.0 are most useful."
 		contrast		"Controls light contrast. This can be used to create darker dark areas and lighter light areas. The default value is 1.0. Values significantly higher than 1.0 are not recommended."
 		quant			"Controls lightmap resolution, which is relative to texture size. Default is 4 (1 << 4). A value of 3 will produce sharper lightmaps, but will dramatically lengthen your radiosity compile times. In fact, setting this to 5 during development is a nice trick for speeding up your level design process."
-		subdivide		"Controls maximum surface size for the bsp stage of the compile. Generally, the default value 1024 is recommended. Lower values may reduce artifacts, while higher values may reduce r_speeds."
+		subdivide		"Controls maximum surface size for the bsp stage of the compile. Generally, the default value 1024 is recommended. Lower values may reduce artefacts, while higher values may reduce r_speeds."
 	}
 
 	type {

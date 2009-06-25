@@ -13,16 +13,16 @@
 //		contains	- technology of the item in the slot at the beginning of the game.
 //		ammo		- Technology of the ammo loading the weapon (only for weapon slots).
 //
-//	--vv-- Parameters which can get influenced by craft equipement ("craftitem"). --vv--
+//	--vv-- Parameters which can get influenced by craft equipment ("craftitem"). --vv--
 //	speed - The speed of the aircraft, which tells how fast the aircraft is.
 //		to convert in km/h, multiply speed by 111 (= pi / 180 * radius_of_earth)
 //	shield - The parameter of aircraft shield, which tells aircraft's protection. This value is subtracted from the damage of any weapon hit.
 //	ecm - The parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy. Chance to hit equals Accuracy/ECM.
 //	damage - The parameter of aircraft hit points, which tells how much damage aircraft can suffer.
 //	accuracy - The parameter of accuracy, the bigger, the bigger possibility to hit an enemy. Chance to hit equals Accuracy/ECM.
-//	range - operationnal range of the aircraft (in degree). 180 degrees is the range between one point and the opposite
+//	range - operational range of the aircraft (in degree). 180 degrees is the range between one point and the opposite
 //			point on earth. Used to defined fuelsize. This value must be AFTER speed value.
-//	wrange - Not defined here for aircrafts (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard.
+//	wrange - Not defined here for aircraft (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard.
 //	---------------------------------------------------------------------
 //
 // craftitem
@@ -48,7 +48,7 @@
 //	ecm			- Modifier for craft ECM rating.
 //	installationTime -
 //		The time needed to install/remove the item from the aircraft
-//		any param of aircraft param{}. These values are V_RELABS, and will modifiy
+//		any param of aircraft param{}. These values are V_RELABS, and will modify
 //		the values of the aircraft. Understanding the values:
 //		shield 1.50	means: the shield of the aircraft is 50% stronger
 //		shield +10	means: the shield of the aircraft is stronger by 10 points
