@@ -62,8 +62,12 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
 	const char *font;
 	menuOption_t* option;
 	menuOption_t* prev = NULL;
+	int allowedWidth;
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+
+	/** @todo this dont work when an option is hidden */
+	allowedWidth = node->size[0] - TILE_WIDTH * (node->u.option.count + 1);
 
 	/* Bounded box test (shound not need, but there are problem) */
 	if (x < 0 || y < 0 || x >= node->size[0] || y >= node->size[1])
@@ -73,7 +77,7 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
 
 	/* Text box test */
 	for (option = node->u.option.first; option; option = option->next) {
-		int fontWidth;
+		int tabWidth;
 
 		/* skip hidden options */
 		if (option->invis)
@@ -82,16 +86,26 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
 		if (x < TILE_WIDTH / 2)
 			return prev;
 
-		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &fontWidth, NULL, NULL, NULL);
-		if (option->icon) {
-			fontWidth += option->icon->size[0];
+		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &tabWidth, NULL, NULL, NULL);
+		if (option->icon && option->icon->size[0] < allowedWidth) {
+			tabWidth += option->icon->size[0];
 		}
-		if (x < TILE_WIDTH + fontWidth)
+		if (tabWidth > allowedWidth) {
+			if (allowedWidth > 0)
+				tabWidth = allowedWidth;
+			else
+				tabWidth = 0;
+		}
+
+		if (x < tabWidth + TILE_WIDTH)
 			return option;
 
-		x -= TILE_WIDTH + fontWidth;
+		allowedWidth -= tabWidth;
+		x -= tabWidth + TILE_WIDTH;
 		prev = option;
 	}
+	if (x < TILE_WIDTH / 2)
+		return prev;
 	return NULL;
 }
 
@@ -190,6 +204,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 	MN_GetNodeAbsPos(node, pos);
 	currentX = pos[0];
 	option = node->u.option.first;
+	/** @todo this dont work when an option is hidden */
 	allowedWidth = node->size[0] - TILE_WIDTH * (node->u.option.count + 1);
 
 	while (option) {
