@@ -1493,19 +1493,19 @@ static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
 		char* attribKey;
 		char* classname;
 		gtk_tree_selection_get_selected(selection, &model, &iter);
+		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_KEY, &attribKey, -1);
+		ASSERT_NOTNULL(attribKey);
+		if (strlen(attribKey) == 0) {
+			/* new attribute, don't check for remove yet */
+			removeAllowed = false;
+		}
 		if (gtk_tree_model_iter_parent(model, &parent, &iter) == FALSE)
 		{
 			// no parent -> top level = classname selected, may not be removed
 			removeAllowed = false;
 			gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_VALUE, &classname, -1);
 		} else {
-			gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_KEY, &attribKey, -1);
 			gtk_tree_model_get(model, &parent, KEYVALLIST_COLUMN_VALUE, &classname, -1);
-			ASSERT_NOTNULL(attribKey);
-			if (strlen(attribKey) == 0) {
-				/* new attribute, don't check for remove yet */
-				removeAllowed = false;
-			}
 		}
 		/* check whether attributes reflect current keyvalue list selected class */
 		if (strcmp(g_current_attributes->name(),classname)) {
@@ -1518,8 +1518,7 @@ static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
 		}
 		if (removeAllowed) {
 			EntityClassAttribute *attribute = g_current_attributes->getAttribute(attribKey);
-			ASSERT_NOTNULL(attribute);
-			if (attribute->m_mandatory)
+			if (attribute && attribute->m_mandatory)
 				removeAllowed = false;
 		}
 		g_object_set(g_entityInspectorGui.m_btnRemoveKey, "sensitive", removeAllowed, (const char*) 0);
@@ -1564,6 +1563,44 @@ static void EntityKeyValueList_keyEditingStarted (GtkCellRenderer *renderer,
 }
 
 /**
+ * @brief visitor class used to add entity classes into given store for value combobox.
+ */
+class EntityKeyValueComboListStoreAppend: public EntityClassVisitor
+{
+		GtkListStore* store;
+		bool onlyFixedsize;
+	public:
+		EntityKeyValueComboListStoreAppend (GtkListStore* store_, bool onlyFixedsize_) :
+			store(store_), onlyFixedsize(onlyFixedsize_)
+		{
+		}
+		void visit (EntityClass* e)
+		{
+			if (!strcmp("worldspawn", e->name()))
+				return; //don't add worldspawn
+			if (onlyFixedsize && !e->fixedsize)
+				return; //don't add non-fixedsize if we have no brush actually
+			GtkTreeIter iter;
+			gtk_list_store_append(store, &iter);
+			gtk_list_store_set(store, &iter, 0, e->name(), -1);
+		}
+};
+
+/**
+ * @brief Helper method fills all classnames into given renderer combo model.
+ * @param renderer value combo renderer
+ */
+static void EntityKeyValueList_fillValueComboWithClassnames (GtkCellRenderer *renderer)
+{
+	GtkListStore* store;
+	g_object_get(renderer, "model", &store, (char*)0);
+	gtk_list_store_clear(store);
+	EntityKeyValueComboListStoreAppend append(store, g_current_attributes->fixedsize);
+	GlobalEntityClassManager().forEach(append);
+
+}
+
+/**
  * @brief Callback for "editing-started" signal for value column used to update combo renderer with appropriate values.
  *
  * @param renderer combo renderer used for editing
@@ -1586,6 +1623,10 @@ static void EntityKeyValueList_valueEditingStarted (GtkCellRenderer *renderer,
 		return;
 	}
 	const char *key = g_currentSelectedKey.c_str();
+	if (!strcmp(key, "classname")) {
+		EntityKeyValueList_fillValueComboWithClassnames(renderer);
+		return;
+	}
 	ClassKeyValues::iterator it = g_selectedKeyValues.find(g_current_attributes->m_name);
 	if (it == g_selectedKeyValues.end()) {
 		g_warning("leaving updateValueCombo... no class attributes");
