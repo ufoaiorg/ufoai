@@ -42,6 +42,7 @@ typedef struct menuOption_s {
 	struct menuIcon_s *icon;	/**< Facultative icon */
 	qboolean disabled;		/**< If true, the option is not selectable */
 	qboolean invis;			/**< If true, the option is not displayed */
+	qboolean truncated;		/**< If true, the label is not fully displayed */
 
 	/**
 	 * @brief True if the element is hovered

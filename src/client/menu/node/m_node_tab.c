@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 #include "../m_icon.h"
 #include "../m_render.h"
+#include "../m_tooltip.h"
 #include "m_node_tab.h"
 #include "m_node_abstractnode.h"
 
@@ -208,7 +209,9 @@ static void MN_TabNodeDraw (menuNode_t *node)
 	allowedWidth = node->size[0] - TILE_WIDTH * (node->u.option.count + 1);
 
 	while (option) {
-		int fontHeight, tabWidth;
+		int fontHeight;
+		int fontWidth;
+		int tabWidth;
 		int textPos;
 		qboolean drawIcon = qfalse;
 		mn_tab_type_t status = MN_TAB_NORMAL;
@@ -232,7 +235,8 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		MN_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
-		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &tabWidth, &fontHeight, NULL, NULL);
+		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &fontWidth, &fontHeight, NULL, NULL);
+		tabWidth = fontWidth;
 		if (option->icon && option->icon->size[0] < allowedWidth) {
 			tabWidth += option->icon->size[0];
 			drawIcon = qtrue;
@@ -257,6 +261,8 @@ static void MN_TabNodeDraw (menuNode_t *node)
 			MN_DrawIconInBox(option->icon, iconStatus, currentX, pos[1], option->icon->size[0], TILE_HEIGHT);
 			textPos += option->icon->size[0];
 		}
+		/** @todo fontWidth can be =0, maybe a bug from the font cache */
+		option->truncated = tabWidth < fontWidth || tabWidth == 0;
 		MN_DrawString(font, ALIGN_UL, textPos, pos[1] + ((node->size[1] - fontHeight) / 2),
 			textPos, pos[1], tabWidth + 1, TILE_HEIGHT,
 			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
@@ -273,6 +279,27 @@ static void MN_TabNodeDraw (menuNode_t *node)
 	currentX += TILE_WIDTH;
 	if (currentX < pos[0] + node->size[0])
 		MN_TabNodeDrawPlain(image, currentX, pos[1], pos[0] + node->size[0] - currentX, MN_TAB_NOTHING);
+}
+
+/**
+ * @brief Custom tooltip of tab node
+ * @param[in] node Node we request to draw tooltip
+ * @param[in] x Position x of the mouse
+ * @param[in] y Position y of the mouse
+ */
+static void MN_TabNodeDrawTooltip (menuNode_t *node, int x, int y)
+{
+	menuOption_t *option;
+	const int tooltipWidth = 250;
+
+	option = MN_TabNodeTabAtPosition(node, x, y);
+	if (option == NULL)
+		return;
+
+	if (!option->truncated)
+		return;
+
+	MN_DrawTooltip("f_small", _(option->label), x, y, tooltipWidth, 0);
 }
 
 /** called when the window is pushed
@@ -309,6 +336,7 @@ void MN_RegisterTabNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "tab";
 	behaviour->extends = "abstractoption";
 	behaviour->draw = MN_TabNodeDraw;
+	behaviour->drawTooltip = MN_TabNodeDrawTooltip;
 	behaviour->leftClick = MN_TabNodeClick;
 	behaviour->init = MN_TabNodeInit;
 }
