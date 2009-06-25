@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-24 21:24+0200\n"
-"PO-Revision-Date: 2009-06-24 21:28+0100\n"
+"PO-Revision-Date: 2009-06-25 08:03+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -298,15 +298,13 @@ msgid "UFO - Carrier"
 msgstr "UFO - Transporter"
 
 #: ../base/ufos/aircraftmanagement.ufo:558
-#, fuzzy
 msgid "Carrier U"
-msgstr "Carrier U"
+msgstr "UFO-Trspt"
 
 #: ../base/ufos/aircraftmanagement.ufo:574
 #: ../base/ufos/research.ufo:4349
-#, fuzzy
 msgid "Aerial Laser Cannon"
-msgstr "Aerial Laser Cannon"
+msgstr "Luft Lasergeschütz"
 
 #: ../base/ufos/aircraftmanagement.ufo:584
 #: ../base/ufos/research.ufo:4388
@@ -541,9 +539,8 @@ msgid "Antimatter Storage"
 msgstr "Antimaterie-Lager"
 
 #: ../base/ufos/basemanagement.ufo:381
-#, fuzzy
 msgid "Laser Battery"
-msgstr "Raketengeschütze"
+msgstr "Lasergeschütze"
 
 #: ../base/ufos/campaign.ufo:3
 msgid "Very Hard Campaign"
@@ -647,8 +644,7 @@ msgstr "UFO gesichtet"
 
 #: ../base/ufos/events.ufo:78
 msgid "mail_from_un"
-msgstr ""
-"SecGen. Mahouf Serra, Vereinte Nationen, New York City"
+msgstr "SecGen. Mahouf Serra, Vereinte Nationen, New York City"
 
 #: ../base/ufos/events.ufo:79
 #: ../base/ufos/events.ufo:89
@@ -796,8 +792,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4838
 #: ../base/ufos/research.ufo:4845
 msgid "mail_to_base_commander"
-msgstr ""
-"Basiskommandeur, PHALANX, Atlantisches Operationskommando"
+msgstr "Basiskommandeur, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:80
 msgid "2084 Mar 21"
@@ -920,8 +915,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4629
 #: ../base/ufos/research.ufo:4637
 msgid "mail_from_paul_navarre"
-msgstr ""
-"Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
+msgstr "Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:90
 msgid "Alien died"
@@ -1020,8 +1014,7 @@ msgstr "<TODO>"
 #: ../base/ufos/events.ufo:254
 #: ../base/ufos/events.ufo:265
 msgid "mail_from_xo"
-msgstr ""
-"XO Abel S. Howard, Kommando & Kontrolle, PHALANX, Atlantisches Operationskommando"
+msgstr "XO Abel S. Howard, Kommando & Kontrolle, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:157
 msgid "Monthly Report -- %s"
@@ -1130,8 +1123,7 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:4795
 #: ../base/ufos/research.ufo:4804
 msgid "mail_from_col_falkland"
-msgstr ""
-"Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando"
+msgstr "Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:278
 msgid "Response Too Late -- %s"
@@ -1170,8 +1162,7 @@ msgstr ""
 #: ../base/ufos/events.ufo:342
 #: ../base/ufos/events.ufo:353
 msgid "mail_from_air_cdr"
-msgstr ""
-"Cdr. (Luft) Subakh al-Kuhar, Luftgeschwader, PHALANX, Atlantisches Operationskommando"
+msgstr "Cdr. (Luft) Subakh al-Kuhar, Luftgeschwader, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:311
 msgid "New Aircraft Arrived -- %s"
@@ -1450,7 +1441,7 @@ msgstr "Ein Anwesen von reichen und einflussreichen Leuten"
 
 #: ../base/ufos/maps.ufo:919
 msgid "A small village in England."
-msgstr ""
+msgstr "Ein kleines Dorf in England."
 
 #: ../base/ufos/maps.ufo:959
 msgid "A small office in a mountainous region."
@@ -1506,7 +1497,7 @@ msgstr "Ein von Äckern und Scheunen umgebenes Bauernhaus. Ein UFO ist auf einem
 
 #: ../base/ufos/maps.ufo:1490
 msgid "A ferry."
-msgstr ""
+msgstr "Eine Fähre."
 
 #: ../base/ufos/maps.ufo:1533
 msgid "A rather old-fashioned suburban district."
@@ -1966,9 +1957,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:254
-#, fuzzy
 msgid "Upgrade - Antimatter engines"
-msgstr "Baupläne - Antimaterie-Triebwerk"
+msgstr "Update - Antimaterie-Triebwerke"
 
 #: ../base/ufos/research.ufo:256
 #, fuzzy
@@ -2054,8 +2044,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4837
 #: ../base/ufos/research.ufo:4844
 msgid "mail_from_dr_connor"
-msgstr ""
-"Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando"
+msgstr "Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/research.ufo:333
 #: ../base/ufos/research.ufo:373
@@ -5913,8 +5902,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3455
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3480
 msgid "ufo_scout_txt"
@@ -6578,8 +6566,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4125
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4181
 msgid "'Raven' ECM Unit"
@@ -7600,9 +7587,8 @@ msgstr ""
 "Col. Falkland"
 
 #: ../base/ufos/research.ufo:4824
-#, fuzzy
 msgid "The Enemy On Earth - Revisited"
-msgstr "Die Bedrohung auf der Erde"
+msgstr "Die Bedrohung auf der Erde - Neue Entwicklung"
 
 #: ../base/ufos/research.ufo:4829
 #, fuzzy
@@ -7862,43 +7848,35 @@ msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr ""
-"Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
+msgstr "Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr ""
-"Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als drei Vierteln der Erde."
+msgstr "Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als drei Vierteln der Erde."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr ""
-"Für viele Menschen scheint es, als würde alles gut laufen."
+msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr ""
-"Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
+msgstr "Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr ""
-"Eine Notfallversammlung der UN ergibt keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie zurückkehren werden."
+msgstr "Eine Notfallversammlung der UN ergibt keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie zurückkehren werden."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr ""
-"87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
+msgstr "87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr ""
-"Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
+msgstr "Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr ""
-"Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
+msgstr "Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -8211,9 +8189,8 @@ msgid "You can use [space] to cycle between all geoscape items."
 msgstr "Mit der Leertaste kann zwischen den verschiedenen Geoscape-Einträgen gewechselt werden."
 
 #: ../base/ufos/tips.ufo:42
-#, fuzzy
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel on the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
-msgstr "Man kann die Zeit im Geoscape beschleunigen/verlangsamen, indem man das Mausrad überdie Zeit-Knöpfe bewegt oder durch die Tasten [-] und [+]. [Rückschritt] benutzt."
+msgstr "Man kann die Zeit im Geoscape beschleunigen/verlangsamen, indem man das Mausrad über die Zeit-Knöpfe bewegt oder durch die Tasten [-] und [+/=] steuert. Alternativ kann man auch [n] und [m] benutzen. [Rückschritt] hält die Zeit an."
 
 #: ../base/ufos/tips.ufo:43
 msgid "Be sure to equip your interceptor with weapons before launching it."
@@ -8265,7 +8242,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:55
 msgid "To catch fast UFOs send interceptors in from several directions."
-msgstr ""
+msgstr "Um schnelle UFOs abfangen zu können muss man Abfangjäger aus verschiedenen Richtungen angreifen lassen."
 
 #: ../base/ufos/tips.ufo:56
 msgid "To buy/sell items fast, hover over the arrows and roll your mousewheel."
@@ -8752,7 +8729,7 @@ msgstr "Benutze Gegenstand"
 
 #: ../base/ufos/ui/basedefence.ufo:10
 msgid "Equip Defence Weapons"
-msgstr ""
+msgstr "Rüste Verteidigungsgeschütze aus"
 
 #: ../base/ufos/ui/basedefence.ufo:50
 #, fuzzy
@@ -8773,9 +8750,8 @@ msgid "Add"
 msgstr "Hinzufügen"
 
 #: ../base/ufos/ui/basedefence.ufo:141
-#, fuzzy
 msgid "Equip the selected slot with this weapon"
-msgstr "Dieses Verteidigungssystem mit Munition ausrüsten"
+msgstr "Aktiven Slot mit dieser Waffe bestücken"
 
 #: ../base/ufos/ui/basedefence.ufo:152
 msgid "Remove"
@@ -8792,9 +8768,8 @@ msgid "Stores"
 msgstr "Lager"
 
 #: ../base/ufos/ui/basedefence.ufo:226
-#, fuzzy
 msgid "Selected Item"
-msgstr "Gewählter Gegenstand:"
+msgstr "Gewählter Gegenstand"
 
 #: ../base/ufos/ui/bases.ufo:31
 msgid "Back to geoscape"
@@ -8897,9 +8872,8 @@ msgstr "Zur nächsten Basis"
 
 #: ../base/ufos/ui/buildings.ufo:119
 #: ../base/ufos/ui/buildings.ufo:135
-#, fuzzy
 msgid "Open/close Building preview window"
-msgstr "Gebäude Vorschau"
+msgstr "Öffne/Schließe Gebäude Vorschau"
 
 #: ../base/ufos/ui/buildings.ufo:134
 #: ../base/ufos/ui/buildings.ufo:175
@@ -8987,23 +8961,20 @@ msgid "Capture mode"
 msgstr ""
 
 #: ../base/ufos/ui/debug.ufo:33
-#, fuzzy
 msgid "Extract window"
-msgstr "Ziehen um das Fenster zu bewegen"
+msgstr "Fenster extrahieren"
 
 #: ../base/ufos/ui/debug.ufo:34
 msgid "Extract the window of the last/current selected node"
 msgstr ""
 
 #: ../base/ufos/ui/debug.ufo:47
-#, fuzzy
 msgid "Current window:"
-msgstr "Fenster schließen"
+msgstr "Aktives Fenster:"
 
 #: ../base/ufos/ui/debug.ufo:61
-#, fuzzy
 msgid "Current node:"
-msgstr "Gerade geladen:"
+msgstr "Aktive Node:"
 
 #: ../base/ufos/ui/equipment.ufo:20
 #: ../base/ufos/ui/inventory.ufo:25
@@ -9301,9 +9272,8 @@ msgid "Base is under attack"
 msgstr "Basis wird angegriffen"
 
 #: ../base/ufos/ui/geoscape.ufo:806
-#, fuzzy
 msgid "Go to soldier equipment screen before the battle"
-msgstr "Soldat ausrüsten"
+msgstr "Öffne den Ausrüsten-Dialog vor der Schlacht"
 
 #: ../base/ufos/ui/geoscape.ufo:820
 msgid "Kill aliens in container"
@@ -9478,7 +9448,6 @@ msgid "Destroy installation"
 msgstr "Zerstöre externe Einrichtung"
 
 #: ../base/ufos/ui/geoscape.ufo:1642
-#, fuzzy
 msgid "Anti-UFO defence"
 msgstr "UFO-Abwehr"
 
@@ -9983,9 +9952,8 @@ msgstr "Fenster schließen"
 
 #: ../base/ufos/ui/market.ufo:81
 #: ../base/ufos/ui/production.ufo:95
-#, fuzzy
 msgid "Craft items"
-msgstr "Komponenten"
+msgstr "Flugzeug Gegenstände"
 
 #: ../base/ufos/ui/market.ufo:89
 #: ../base/ufos/ui/production.ufo:107
@@ -9994,9 +9962,8 @@ msgstr "Andere"
 
 #: ../base/ufos/ui/market.ufo:93
 #: ../base/ufos/ui/production.ufo:103
-#, fuzzy
 msgid "UGV items"
-msgstr "UGVs"
+msgstr "UGV Gegenstände"
 
 #: ../base/ufos/ui/market.ufo:208
 #: ../base/ufos/ui/market.ufo:230
@@ -10040,9 +10007,8 @@ msgid "Material editor"
 msgstr "Materialeditor"
 
 #: ../base/ufos/ui/material_editor.ufo:71
-#, fuzzy
 msgid "Hardness:"
-msgstr "Schwer"
+msgstr "Hardness:"
 
 #: ../base/ufos/ui/material_editor.ufo:94
 msgid "Bump:"
@@ -10053,9 +10019,8 @@ msgid "Specular:"
 msgstr "Specular:"
 
 #: ../base/ufos/ui/material_editor.ufo:140
-#, fuzzy
 msgid "Parallax:"
-msgstr "Phalanx"
+msgstr "Parallax:"
 
 #: ../base/ufos/ui/material_editor.ufo:242
 msgid "+"
@@ -10458,7 +10423,7 @@ msgstr "Sound aktivieren"
 
 #: ../base/ufos/ui/options.ufo:86
 msgid "Sound is currently not activated. Click here to activate it."
-msgstr ""
+msgstr "Der Sound ist derzeit nicht aktiviert. Hier klicken um ihn zu aktivieren."
 
 #: ../base/ufos/ui/options.ufo:100
 msgid "Input"
@@ -11351,9 +11316,8 @@ msgid "Heavy Laser"
 msgstr "Schwerer Laser"
 
 #: ../base/ufos/weapons_laser.ufo:76
-#, fuzzy
 msgid "Electro Laser"
-msgstr "Wähle Basis"
+msgstr "Elektrolaser"
 
 #: ../base/ufos/weapons_laser.ufo:96
 msgid "D-F Cartridge"
@@ -11372,9 +11336,8 @@ msgid "Pulsed Fire"
 msgstr "Pulsfeuer"
 
 #: ../base/ufos/weapons_laser.ufo:241
-#, fuzzy
 msgid "Stun Shot"
-msgstr "Schnellschuss"
+msgstr "Betäubungsschuss"
 
 #: ../base/ufos/weapons_melee.ufo:6
 msgid "Combat Knife"
@@ -12059,7 +12022,7 @@ msgstr "Basis %s hat kein Antimaterielager. %i Einheiten Antimaterie gingen verl
 #: client/campaign/cp_base_callbacks.c:61
 #, c-format
 msgid "%s has been destroyed by an antimatter storage breach."
-msgstr ""
+msgstr "%s wurde aufgrund eines Hüllenbruchs im Antimaterielager zerstört."
 
 #: client/campaign/cp_base_callbacks.c:171
 #, c-format
@@ -12519,16 +12482,15 @@ msgid " (unlimited ammos)"
 msgstr " (unendliche Munition)"
 
 #: client/campaign/cp_fightequip_callbacks.c:944
-#, fuzzy
 msgid "No defence of this type in this installation"
-msgstr "Keine Verteidigungsanlagen dieser Art in dieser externen Einrichtung.\n"
+msgstr "Keine Verteidigungsanlagen dieser Art in dieser externen Einrichtung"
 
 #: client/campaign/cp_fightequip_callbacks.c:950
 #: client/campaign/cp_fightequip_callbacks.c:978
 #: client/campaign/cp_fightequip_callbacks.c:1006
-#, fuzzy, c-format
+#, c-format
 msgid "Slot %i:\tempty"
-msgstr "Slot %i:\tleer\n"
+msgstr "Slot %i:\tleer"
 
 #: client/campaign/cp_fightequip_callbacks.c:956
 #: client/campaign/cp_fightequip_callbacks.c:984
@@ -14266,7 +14228,7 @@ msgid "UFO Recovery"
 msgstr "UFO Bergung"
 
 #: client/campaign/cp_uforecovery_callbacks.c:423
-#, fuzzy, c-format
+#, c-format
 msgid "previously recovered %s from base %s"
 msgstr "zuvor geborgenes %s aus Basis %s"
 
