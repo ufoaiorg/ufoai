@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Fills a box of pixels with a single color
  */
-void MN_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
+void MN_DrawFill (int x, int y, int w, int h, const vec4_t color)
 {
 	R_DrawFill(x, y, w, h, color);
 }

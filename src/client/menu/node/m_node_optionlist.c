@@ -107,7 +107,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 
 		/* draw the hover effect */
 		if (option->hovered)
-			MN_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, elementHeight, ALIGN_UL, node->color);
+			MN_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, elementHeight, node->color);
 
 		/* text color */
 		if (!strcmp(option->value, ref)) {

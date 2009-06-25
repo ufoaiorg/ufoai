@@ -185,7 +185,7 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 		/* draw the hover effect */
 		if (option->hovered)
 			MN_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
-					SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
+					SELECTBOX_DEFAULT_HEIGHT, node->color);
 		/* print the option label */
 		MN_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, nodepos[1] + node->size[1], node->size[0] - 4, 0,

@@ -113,7 +113,7 @@ static void MN_HighlightNode (const menuNode_t *node, const vec4_t color)
 		for (i = 0; i < node->excludeRectNum; i++) {
 			const int x = pos[0] + node->excludeRect[i].pos[0];
 			const int y = pos[1] + node->excludeRect[i].pos[1];
-			MN_DrawFill(x, y, node->excludeRect[i].size[0], node->excludeRect[i].size[1], ALIGN_UL, trans);
+			MN_DrawFill(x, y, node->excludeRect[i].size[0], node->excludeRect[i].size[1], trans);
 		}
 	}
 
@@ -154,7 +154,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 	debugTextPositionY += 15;
 
 	/* background */
-	MN_DrawFill(debugPositionX, debugTextPositionY, DEBUG_PANEL_WIDTH, VID_NORM_HEIGHT - debugTextPositionY - 100, ALIGN_UL, background);
+	MN_DrawFill(debugPositionX, debugTextPositionY, DEBUG_PANEL_WIDTH, VID_NORM_HEIGHT - debugTextPositionY - 100, background);
 
 	/* menu stack */
 	R_Color(white);
@@ -221,7 +221,7 @@ static void MN_DrawNode (menuNode_t *node)
 		vec2_t pos;
 		MN_GetNodeAbsPos(node, pos);
 		if (node->bgcolor[3] != 0)
-			MN_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, node->bgcolor);
+			MN_DrawFill(pos[0], pos[1], node->size[0], node->size[1], node->bgcolor);
 
 		if (node->border && node->bordercolor[3] != 0) {
 			R_DrawRect(pos[0], pos[1], node->size[0], node->size[1],
@@ -268,7 +268,7 @@ static int MN_DrawNotice (int x, int y, const char *noticeText)
 	else
 		dx = 0;
 
-	MN_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, ALIGN_UL, noticeBG);
+	MN_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, noticeBG);
 	R_Color(noticeColor);
 	MN_DrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 	R_Color(NULL);

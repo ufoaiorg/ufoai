@@ -398,7 +398,7 @@ static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
 	/* relative to screen */
 	const int x = (radar.x + pos[0] * radar.gridWidth) * viddef.rx;
 	const int y = (radar.y + (radar.h - pos[1] * radar.gridHeight)) * viddef.ry;
-	MN_DrawFill(x, y, radar.gridWidth, radar.gridHeight, ALIGN_UL, color);
+	MN_DrawFill(x, y, radar.gridWidth, radar.gridHeight, color);
 }
 
 /**

@@ -130,11 +130,11 @@ static void MN_DrawScrollBar (const menuNode_t *node)
 
 		MN_DrawFill(scrollbarX, nodepos[1],
 			MN_SCROLLBAR_WIDTH, node->size[1],
-			ALIGN_UL, scrollbarBackground);
+			scrollbarBackground);
 
 		MN_DrawFill(scrollbarX, nodepos[1] + (node->size[1] - scrollbarY) * EXTRADATA(node).super.viewPosY / (EXTRADATA(node).super.fullSizeY - EXTRADATA(node).super.viewSizeY),
 			MN_SCROLLBAR_WIDTH, scrollbarY,
-			ALIGN_UL, scrollbarColor);
+			scrollbarColor);
 	}
 }
 

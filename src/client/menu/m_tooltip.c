@@ -58,7 +58,7 @@ int MN_DrawTooltip (const char *font, const char *string, int x, int y, int maxW
 	if (y + height + 3 > VID_NORM_HEIGHT)
 		y -= height + 10;
 
-	MN_DrawFill(x - 1, y - 1, width + 4, height + 4, ALIGN_UL, tooltipBG);
+	MN_DrawFill(x - 1, y - 1, width + 4, height + 4, tooltipBG);
 	R_Color(tooltipColor);
 	MN_DrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 	R_Color(NULL);

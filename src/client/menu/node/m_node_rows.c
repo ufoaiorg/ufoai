@@ -43,7 +43,7 @@ static void MN_RowsNodeDraw (menuNode_t *node)
 			color = node->color;
 		else
 			color = node->selectedColor;
-		MN_DrawFill(pos[0], pos[1] + current, node->size[0], node->texh[1], ALIGN_UL, color);
+		MN_DrawFill(pos[0], pos[1] + current, node->size[0], node->texh[1], color);
 		current += node->texh[1];
 		i++;
 	}

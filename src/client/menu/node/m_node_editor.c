@@ -52,10 +52,10 @@ static void MN_EditorNodeHighlightNode (menuNode_t *node, const vec4_t color, qb
 	R_DrawRect(pos[0] - 1, pos[1] - 1, node->size[0] + 2, node->size[1] + 2, color, 1.0, 0x3333);
 
 	if (displayAnchor) {
-		MN_DrawFill(pos[0] - anchorSize, pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
-		MN_DrawFill(pos[0] - anchorSize, pos[1] + node->size[1], anchorSize, anchorSize, ALIGN_UL, color);
-		MN_DrawFill(pos[0] + node->size[0], pos[1] + node->size[1], anchorSize, anchorSize, ALIGN_UL, color);
-		MN_DrawFill(pos[0] + node->size[0], pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
+		MN_DrawFill(pos[0] - anchorSize, pos[1] - anchorSize, anchorSize, anchorSize, color);
+		MN_DrawFill(pos[0] - anchorSize, pos[1] + node->size[1], anchorSize, anchorSize, color);
+		MN_DrawFill(pos[0] + node->size[0], pos[1] + node->size[1], anchorSize, anchorSize, color);
+		MN_DrawFill(pos[0] + node->size[0], pos[1] - anchorSize, anchorSize, anchorSize, color);
 	}
 }
 

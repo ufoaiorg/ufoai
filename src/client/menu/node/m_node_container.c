@@ -443,7 +443,7 @@ static void MN_DrawDisabled (const menuNode_t* node)
 	vec2_t nodepos;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	MN_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], ALIGN_UL, color);
+	MN_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], color);
 }
 
 /**
@@ -456,7 +456,7 @@ static void MN_DrawFree (int container, const menuNode_t *node, int posx, int po
 	vec2_t nodepos;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	MN_DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
+	MN_DrawFill(posx, posy, sizex, sizey, color);
 
 	/* if showTUs is true (only the first time in none single containers)
 	 * and we are connected to a game */

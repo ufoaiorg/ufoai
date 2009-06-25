@@ -73,11 +73,11 @@ static void MN_BaseLayoutNodeDraw (menuNode_t * node)
 		int x = nodepos[0] + node->padding;
 		for (col = 0; col < BASE_SIZE; col++) {
 			if (base->map[row][col].blocked) {
-				MN_DrawFill(x, y, width, height, ALIGN_UL, c_gray);
+				MN_DrawFill(x, y, width, height, c_gray);
 			} else if (base->map[row][col].building) {
 				/* maybe destroyed in the meantime */
 				if (base->founded)
-					MN_DrawFill(x, y, width, height, ALIGN_UL, node->color);
+					MN_DrawFill(x, y, width, height, node->color);
 			}
 			x += width + node->padding;
 		}

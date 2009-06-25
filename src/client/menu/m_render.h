@@ -34,7 +34,7 @@ void MN_DrawNormImage(float x, float y, float w, float h, float sh, float th, fl
 const image_t *MN_DrawNormImageByName(float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name);
 
 void MN_DrawPanel(const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int panelDef[6]);
-void MN_DrawFill(int x, int y, int w, int h, int align, const vec4_t color);
+void MN_DrawFill(int x, int y, int w, int h, const vec4_t color);
 int MN_DrawStringInBox(const menuNode_t *node, int align, int x, int y, int width, int height, const char *text, longlines_t method);
 int MN_DrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, longlines_t method);
 void MN_Transform(const vec3_t transform, const vec3_t rotate, const vec3_t scale);

@@ -59,7 +59,7 @@ static void MN_TodoNodeDraw (menuNode_t *node)
 	vec2_t pos;
 
 	MN_GetNodeAbsPos(node, pos);
-	MN_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, red);
+	MN_DrawFill(pos[0], pos[1], node->size[0], node->size[1], red);
 
 	if (node->state)
 		MN_CaptureDrawOver(node);

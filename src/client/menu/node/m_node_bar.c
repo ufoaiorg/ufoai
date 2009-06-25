@@ -49,7 +49,7 @@ static void MN_BarNodeDraw (menuNode_t *node)
 
 	fac = node->size[0] / (max - min);
 	bar_width = (value - min) * fac;
-	MN_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], ALIGN_UL, node->state ? color : node->color);
+	MN_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], node->state ? color : node->color);
 }
 
 /**
