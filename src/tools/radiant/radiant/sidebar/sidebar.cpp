@@ -19,6 +19,25 @@
 #include "../commands.h"
 #include "gtkutil/widget.h"
 
+static void Sidebar_constructPrefabs (GtkWidget *notebook)
+{
+	GtkWidget *label = gtk_label_new_with_mnemonic(_("Prefabs"));
+	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
+
+	// scrollable window settings
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+
+	// prefabs
+	GtkWidget *pagePrefabs = Prefabs_constructNotebookTab();
+	gtk_container_add(GTK_CONTAINER(vbox), pagePrefabs);
+
+	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
+
+	gtk_widget_show_all(swin);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
+}
+
 static void Sidebar_constructEntities (GtkWidget *notebook)
 {
 	GtkWidget *label = gtk_label_new_with_mnemonic(_("_Entities"));
@@ -131,6 +150,7 @@ GtkWidget *Sidebar_construct (void)
 	Sidebar_constructEntities(notebook);
 	Sidebar_constructSurfaces(notebook);
 	Sidebar_constructMapInfo(notebook);
+	Sidebar_constructPrefabs(notebook);
 	Sidebar_constructJobInfo(notebook);
 
 	gtk_widget_show_all(vbox);

@@ -21,6 +21,7 @@
 #include "entityinspector.h"
 #include "mapinfo.h"
 #include "surfaceinspector.h"
+#include "prefabs.h"
 #include "jobinfo.h"
 
 GtkWidget *Sidebar_construct(void);
