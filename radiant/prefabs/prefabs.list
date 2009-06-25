@@ -2,7 +2,7 @@ drop_firebird.map "" ""
 drop_herakles.map "" ""
 household.map "" ""
 inter_saracen.map "" ""
-inter_stiletto.map "" ""
+inter_stiletto.map "" inter_stiletto.jpg
 machines.map "" ""
 misc.map "" ""
 mountain.map "" ""
@@ -11,7 +11,7 @@ pipes.map "" ""
 shop.map "" ""
 terrain.map "" ""
 ufo_fighter.map "" ufo_fighter.jpg
-ufo_scout.map "" ""
-ufo_supply.map "" ""
+ufo_scout.map "" ufo_scout.jpg
+ufo_supply.map "" ufo_supply.jpg
 vegetation.map "" ""
 
