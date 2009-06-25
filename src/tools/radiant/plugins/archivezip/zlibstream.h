@@ -47,6 +47,11 @@ public:
 	~DeflatedInputStream() {
 		inflateEnd(&m_zipstream);
 	}
+
+	std::size_t size() {
+		return 0;
+	}
+
 	size_type read(byte_type* buffer, size_type length) {
 		m_zipstream.next_out = buffer;
 		m_zipstream.avail_out = static_cast<uInt>(length);

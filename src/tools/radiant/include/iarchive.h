@@ -48,6 +48,9 @@ class TextInputStream;
 class ArchiveTextFile {
 public:
 	virtual ~ArchiveTextFile() {}
+
+	virtual std::size_t size() = 0;
+
 	/// \brief Returns the stream associated with this file.
 	/// Subsequent calls return the same stream.
 	/// The stream may be read forwards until it is exhausted.

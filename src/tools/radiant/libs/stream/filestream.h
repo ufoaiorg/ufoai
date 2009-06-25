@@ -74,6 +74,21 @@ public:
 		return ftell(m_file);
 	}
 
+	std::size_t size() {
+		std::size_t pos;
+		std::size_t endpos;
+
+		if (failed())
+			return 0;
+
+		pos = tell();
+		seek(0, SeekableStream::end);
+		endpos = tell();
+		seek(pos);
+
+		return endpos;
+	}
+
 	std::FILE* file() {
 		return m_file;
 	}
@@ -86,12 +101,17 @@ public:
 class SubFileInputStream : public InputStream {
 	FileInputStream& m_istream;
 	size_type m_remaining;
+	size_type m_size;
 public:
 	typedef FileInputStream::position_type position_type;
 
 	SubFileInputStream(FileInputStream& istream, position_type offset, size_type size)
-			: m_istream(istream), m_remaining(size) {
+			: m_istream(istream), m_remaining(size), m_size(size) {
 		m_istream.seek(offset);
+	}
+
+	std::size_t size() {
+		return m_size;
 	}
 
 	size_type read(byte_type* buffer, size_type length) {

@@ -135,6 +135,10 @@ public:
 		return New<StoredArchiveTextFile>().scalar(name, archiveName, position, stream_size);
 	}
 
+	std::size_t size() {
+		return m_filestream.size();
+	}
+
 	const char* getName() const {
 		return m_name.c_str();
 	}
@@ -187,6 +191,10 @@ public:
 	}
 	bool failed() const {
 		return m_inputStream.failed();
+	}
+
+	std::size_t size() {
+		return m_inputStream.size();
 	}
 
 	const char* getName() const {

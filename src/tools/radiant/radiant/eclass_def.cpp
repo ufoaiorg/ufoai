@@ -34,7 +34,10 @@
 #include "gtkutil/messagebox.h"
 #include "modulesystem/moduleregistry.h"
 #include "os/path.h"
-#include "os/file.h"
+#include "autoptr.h"
+#include "ifilesystem.h"
+#include "archivelib.h"
+#include "script/scripttokeniser.h"
 #include "../../../shared/parse.h"
 #include "../../../shared/entitiesdef.h"
 
@@ -194,8 +197,8 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 {
 	EntityClass *e;
 
-	TextFileInputStream file(filename);
-	if (file.failed()) {
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
+	if (!file) {
 		StringOutputStream buffer;
 		buffer << "Could not load " << filename;
 		gtk_MessageBox(0, buffer.c_str(), _("Radiant - Error"), eMB_OK, eMB_ICONERROR);
@@ -203,12 +206,14 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 	}
 	g_message("ScanFile: '%s'\n", filename);
 
-	const std::size_t size = file_size(filename);
+	const std::size_t size = file->size();
 	char *entities = (char *)malloc(size + 1);
-	file.read(entities, size);
+	TextInputStream &stream = file->getInputStream();
+	stream.read(entities, size);
 	entities[size] = '\0';
 	if (ED_Parse(entities) == ED_ERROR) {
 		g_message("Parsing of entities definition file failed, returned error was %s\n", ED_GetLastError());
+		free(entities);
 		return;
 	}
 	for (int i = 0; i < numEntityDefs; i++) {
@@ -216,4 +221,5 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 		if (e)
 			collector.insert(e);
 	}
+	free(entities);
 }

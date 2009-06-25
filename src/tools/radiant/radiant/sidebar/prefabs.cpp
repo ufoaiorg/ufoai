@@ -24,15 +24,53 @@
 
 #include "prefabs.h"
 #include "radiant_i18n.h"
+#include "stream/stringstream.h"
+#include "gtkutil/messagebox.h"
+#include "../mainframe.h"
+#include "autoptr.h"
+#include "ifilesystem.h"
+#include "archivelib.h"
+#include "script/scripttokeniser.h"
 
-
-GtkWidget* Prefabs_constructNotebookTab (void)
-{
+GtkWidget* Prefabs_constructNotebookTab(void) {
 	GtkWidget* pageframe = gtk_frame_new(_("Prefabs"));
 	GtkWidget* vbox = gtk_vbox_new(FALSE, 2);
+	GtkTable* prefabsTable = GTK_TABLE(gtk_table_new(0, 2, FALSE));
 
 	gtk_container_set_border_width(GTK_CONTAINER(pageframe), 2);
 	gtk_container_add(GTK_CONTAINER(pageframe), vbox);
+
+	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(prefabsTable), FALSE, TRUE, 0);
+
+	StringOutputStream fullpath(256);
+	fullpath << AppPath_get() << "prefabs/prefabs.list";
+
+	TextFileInputStream file(fullpath.c_str());
+	if (file.failed()) {
+		StringOutputStream buffer;
+		buffer << "Could not load " << fullpath.c_str();
+		gtk_MessageBox(0, buffer.c_str(), _("Radiant - Error"), eMB_OK,
+				eMB_ICONERROR);
+	} else {
+		g_message("ScanFile: '%s'\n", fullpath.c_str());
+
+		AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(
+				fullpath.c_str()));
+		if (file) {
+			AutoPtr<Tokeniser> tokeniser(NewScriptTokeniser(
+					file->getInputStream()));
+
+			for (;;) {
+				const char* token = tokeniser->getToken();
+
+				if (token == 0) {
+					break;
+				}
+
+			}
+		}
+
+	}
 
 	return pageframe;
 }

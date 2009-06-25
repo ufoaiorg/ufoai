@@ -58,6 +58,7 @@ public:
 
 class DeflatedArchiveTextFile : public ArchiveTextFile {
 	CopiedString m_name;
+	std::size_t m_size;
 	FileInputStream m_istream;
 	SubFileInputStream m_substream;
 	DeflatedInputStream m_zipstream;
@@ -67,7 +68,11 @@ public:
 	typedef FileInputStream::position_type position_type;
 
 	DeflatedArchiveTextFile(const char* name, const char* archiveName, position_type position, size_type stream_size)
-			: m_name(name), m_istream(archiveName), m_substream(m_istream, position, stream_size), m_zipstream(m_substream), m_textStream(m_zipstream) {
+			: m_name(name), m_size(stream_size), m_istream(archiveName), m_substream(m_istream, position, stream_size), m_zipstream(m_substream), m_textStream(m_zipstream) {
+	}
+
+	std::size_t size() {
+		return m_size;
 	}
 
 	TextInputStream& getInputStream() {

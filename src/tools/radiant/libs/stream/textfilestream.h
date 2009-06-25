@@ -37,6 +37,21 @@ public:
 			fclose(m_file);
 	}
 
+	std::size_t size() {
+		std::size_t pos;
+		std::size_t end;
+
+		if (failed())
+			return 0;
+
+		pos = ftell(m_file);
+		fseek(m_file, 0, SEEK_END);
+		end = ftell(m_file);
+		fseek(m_file, pos, SEEK_SET);
+
+		return end;
+	}
+
 	bool failed() const {
 		return m_file == 0;
 	}
