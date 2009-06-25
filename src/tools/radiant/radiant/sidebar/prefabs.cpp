@@ -151,6 +151,8 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 			AutoPtr<Tokeniser> tokeniser(NewScriptTokeniser(
 					file->getInputStream()));
 
+			tokeniser->nextLine();
+
 			int rows = 0;
 			for (;;) {
 				StringOutputStream map(256);
@@ -159,29 +161,23 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 
 				// mapname
 				const char* token = tokeniser->getToken();
-				if (token == 0) {
+				if (token == 0)
 					break;
-				}
 
 				map << token;
 
 				// description
 				token = tokeniser->getToken();
-				if (token == 0) {
-					break;
-				}
+				if (token != 0) {
+					description << token;
 
-				description << token;
-
-				// image
-				token = tokeniser->getToken();
-				if (token == 0) {
-					break;
+					// image
+					token = tokeniser->getToken();
+					if (token != 0)
+						image << token;
 				}
 
 				rows++;
-
-				image << token;
 
 				PrefabAdd(map.c_str(), description.c_str(), image.c_str());
 			}
