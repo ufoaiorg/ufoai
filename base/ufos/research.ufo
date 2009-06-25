@@ -1910,7 +1910,7 @@ tech rs_weapon_needlergun
 		item needlergun 1
 	}
 	provides	needlergun
-	time	500
+	time		500
 	producetime	120
 }
 
@@ -1956,8 +1956,8 @@ tech rs_weapon_needlerheavy
 
 tech rs_weapon_needlergun_ammo
 {
-	name	"_Needler Gun"
-	type	weapon
+	name		"_Needler Gun"
+	type		weapon
 	up_chapter	equipment
 
 	redirect	rs_weapon_needlergun
@@ -1969,7 +1969,7 @@ tech rs_weapon_needlergun_ammo
 		item needlergun_ammo 1
 	}
 	provides	needlergun_ammo
-	time	0
+	time		0
 	producetime	24
 }
 
@@ -2007,13 +2007,13 @@ tech rs_weapon_coilgun
 		tech rs_weapon_needlergun
 	}
 	provides	coilgun
-	time	600
+	time		600
 	producetime	120
 }
 
 tech rs_weapon_coilgun_ammo
 {
-	type	weapon
+	type		weapon
 	up_chapter	equipment
 
 	redirect	rs_weapon_coilgun
@@ -2024,14 +2024,14 @@ tech rs_weapon_coilgun_ammo
 		tech rs_weapon_coilgun
 	}
 	provides	coilgun_ammo
-	time	0
+	time		0
 	producetime	24
 }
 
 tech rs_weapon_shotgun2
 {
 	// Riot Shotgun
-	type	weapon
+	type		weapon
 	up_chapter	equipment
 	description {
 		default "_shotgun2_txt"
@@ -2044,13 +2044,13 @@ tech rs_weapon_shotgun2
 	}
 
 	provides	shotgun2
-	time	0
+	time		0
 	producetime	140
 }
 
 tech rs_weapon_shotgun2_slug_ammo
 {
-	type	weapon
+	type		weapon
 	up_chapter	equipment
 	description {
 		default "_shotgun2_slug_ammo_txt"
@@ -2064,7 +2064,7 @@ tech rs_weapon_shotgun2_slug_ammo
 	}
 
 	provides	shotgun2_slug_ammo
-	time	0
+	time		0
 	producetime	18
 }
 
@@ -2084,13 +2084,13 @@ tech rs_weapon_shotgun_micro
 	}
 
 	provides	shotgun_micro
-	time	0
+	time		0
 	producetime	80
 }
 
 tech rs_weapon_shotgun_micro_ammo
 {
-	type	weapon
+	type		weapon
 	up_chapter	equipment
 	description {
 		default "_shotgun_micro_ammo_txt"
@@ -2104,7 +2104,7 @@ tech rs_weapon_shotgun_micro_ammo
 	}
 
 	provides	shotgun_micro_ammo
-	time	0
+	time		0
 	producetime	12
 }
 
@@ -2123,13 +2123,13 @@ tech rs_weapon_smg
 	}
 
 	provides	smg
-	time	0
+	time		0
 	producetime	120
 }
 
 tech rs_weapon_smg_ammo
 {
-	type	weapon
+	type		weapon
 	up_chapter	equipment
 	description {
 		default "_smg_mag_txt"
@@ -2143,13 +2143,13 @@ tech rs_weapon_smg_ammo
 	}
 
 	provides	smg_ammo
-	time	0
+	time		0
 	producetime	12
 }
 
 tech rs_weapon_smokegren
 {
-	type	weapon
+	type		weapon
 	up_chapter	equipment
 	description {
 		default "_smokegren_txt"
@@ -2162,13 +2162,13 @@ tech rs_weapon_smokegren
 	}
 
 	provides	smokegrenade
-	time	0
+	time		0
 	producetime	20
 }
 
 tech rs_weapon_sniper
 {
-	type	weapon
+	type		weapon
 	up_chapter	equipment
 	description {
 		default "_sniper_txt"
@@ -2181,13 +2181,13 @@ tech rs_weapon_sniper
 	}
 
 	provides	sniper
-	time	0
+	time		0
 	producetime	120
 }
 
 tech rs_weapon_sniper_ammo
 {
-	type	weapon
+	type		weapon
 	up_chapter	equipment
 	description {
 		default "_sniper_mag_txt"
@@ -2201,14 +2201,14 @@ tech rs_weapon_sniper_ammo
 	}
 
 	provides	sniper_ammo
-	time	0
+	time		0
 	producetime	12
 }
 
 // Just for searching: uses "anti alien gas"
 tech rs_weapon_stungren
 {
-	name	"_Anti-Alien Gas"
+	name		"_Anti-Alien Gas"
 	type		weapon
 	up_chapter	equipment
 
@@ -2250,12 +2250,12 @@ tech rs_weapon_stungren
 	provides	stungrenade
 	time		2100
 	producetime	24
-//	image	techs/anti_alien_gas
+//	image		techs/anti_alien_gas
 }
 
 tech rs_weapon_stungren_alien
 {
-	name	"_Alien Anti-Human Gas"
+	name		"_Alien Anti-Human Gas"
 	type		weapon
 	up_chapter	artifacts
 
@@ -2332,14 +2332,14 @@ tech rs_weapon_stunrod
 	}
 
 	provides	stunrod
-	time	500
+	time		500
 	producetime	70
 }
 
 tech rs_weapon_pbeampistol
 {
-	name	"_Alien Artifact - Particle Beam Pistol"
-	type	weapon
+	name		"_Alien Artifact - Particle Beam Pistol"
+	type		weapon
 	up_chapter	artifacts
 
 	description {
@@ -2372,13 +2372,13 @@ tech rs_weapon_pbeampistol
 	}
 
 	provides	pbeampistol
-	time	3750
+	time		3750
 	producetime	160
 }
 
 tech rs_weapon_pbeampistol_ammo
 {
-	name	"_Alien Artifact - Particle Beam Pistol"
+	name		"_Alien Artifact - Particle Beam Pistol"
 	type		weapon
 	up_chapter	artifacts
 
@@ -2397,7 +2397,7 @@ tech rs_weapon_pbeampistol_ammo
 
 tech rs_weapon_pbeamcannon
 {
-	name	"_Alien Artifact - Particle Beam Cannon"
+	name		"_Alien Artifact - Particle Beam Cannon"
 	type		weapon
 	up_chapter	artifacts
 
@@ -2432,13 +2432,13 @@ tech rs_weapon_pbeamcannon
 	}
 
 	provides	pbeamcannon
-	time	6000
+	time		6000
 	producetime	220
 }
 
 tech rs_weapon_pbeamcannon_ammo
 {
-	name	"_Alien Artifact - Particle Beam Cannon"
+	name		"_Alien Artifact - Particle Beam Cannon"
 	type		weapon
 	up_chapter	artifacts
 
@@ -2451,13 +2451,13 @@ tech rs_weapon_pbeamcannon_ammo
 	}
 
 	provides	pbeamcannon_ammo
-	time	0
+	time		0
 	producetime	-1
 }
 
 tech rs_weapon_pbeamrifle
 {
-	name	"_Alien Artifact - Particle Beam Rifle"
+	name		"_Alien Artifact - Particle Beam Rifle"
 	type		weapon
 	up_chapter	artifacts
 
@@ -2491,13 +2491,13 @@ tech rs_weapon_pbeamrifle
 	}
 
 	provides	pbeamrifle
-	time	7750
+	time		7750
 	producetime	200
 }
 
 tech rs_weapon_pbeamrifle_ammo
 {
-	name	"_Alien Artifact - Particle Beam Rifle"
+	name		"_Alien Artifact - Particle Beam Rifle"
 	type		weapon
 	up_chapter	artifacts
 
@@ -2510,7 +2510,7 @@ tech rs_weapon_pbeamrifle_ammo
 	}
 
 	provides	pbeamrifle_ammo
-	time	0
+	time		0
 	producetime	-1
 }
 
@@ -2561,7 +2561,7 @@ tech rs_weapon_pbeam_ammo
 
 tech rs_combat_armour
 {
-	type	armour
+	type		armour
 	up_chapter	equipment
 	description {
 		default "_combat_armour_txt"
@@ -2569,13 +2569,13 @@ tech rs_combat_armour
 	// pre_description	"_combat_armour_pre_txt"
 
 	provides	armour_light
-	time	0
+	time		0
 	producetime	72
 }
 
 tech rs_advanced_combat_armour
 {
-	type	armour
+	type		armour
 	up_chapter	equipment
 	description {
 		default "_advanced_combat_armour_txt"
@@ -2583,13 +2583,13 @@ tech rs_advanced_combat_armour
 	// pre_description	"_advanced_combat_armour_pre_txt"
 
 	provides	armour_lightadv
-	time	0
+	time		0
 	producetime	72
 }
 
 tech rs_nano_armour
 {
-	type	armour
+	type		armour
 	up_chapter	equipment
 
 	description {
@@ -2620,7 +2620,7 @@ tech rs_nano_armour
 		tech rs_alien_body_armour
 	}
 	provides	armour_medium
-	time	2000
+	time		2000
 	producetime	168
 }
 
@@ -2659,8 +2659,8 @@ tech rs_power_armour
 	}
 	provides	armour_power
 
-//	time	3000
-	time	-1
+//	time		3000
+	time		-1
 //	producetime	180
 	producetime	-1
 }
@@ -2698,7 +2698,7 @@ tech rs_alien_body_armour
 		item armour_light_alien 1
 	}
 	provides	armour_light_alien
-	time	2500
+	time		2500
 	producetime	-1
 }
 
@@ -2717,7 +2717,7 @@ tech rs_alien_medium_armour
 	mail_pre
 	{
 		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
 		icon	icons/tech
 	}
@@ -2725,7 +2725,7 @@ tech rs_alien_medium_armour
 	mail
 	{
 		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		icon	icons/tech
 	}
@@ -2735,7 +2735,7 @@ tech rs_alien_medium_armour
 		item armour_medium_alien 1
 	}
 	provides	armour_medium_alien
-	time	2500
+	time		2500
 	producetime	-1
 }
 
@@ -2746,7 +2746,7 @@ tech rs_alien_medium_armour
 tech rs_damage_blast
 {
 	type	tech
-	name "_Blast Damage Type"
+	name	"_Blast Damage Type"
 	up_chapter damage
 	description {
 		default "_none"
@@ -2759,7 +2759,7 @@ tech rs_damage_blast
 tech rs_damage_fire
 {
 	type	tech
-	name "_Fire Damage Type"
+	name	"_Fire Damage Type"
 	up_chapter	damage
 	description {
 		default "_none"
@@ -2772,7 +2772,7 @@ tech rs_damage_fire
 tech rs_damage_laser
 {
 	type	tech
-	name "_Laser Damage Type"
+	name	"_Laser Damage Type"
 	up_chapter	damage
 	description {
 		default "_none"
@@ -2790,7 +2790,7 @@ tech rs_damage_laser
 tech rs_damage_normal
 {
 	type	tech
-	name "_Impact Damage Type"
+	name	"_Impact Damage Type"
 	up_chapter	damage
 	description {
 		default "_none"
@@ -2815,8 +2815,8 @@ tech rs_damage_shock
 
 tech rs_damage_plasma
 {
-	type	tech
-	name "_Plasma Damage Type"
+	type		tech
+	name		"_Plasma Damage Type"
 	up_chapter	damage
 	description {
 		default "_none"
@@ -2836,8 +2836,8 @@ tech rs_damage_plasma
 
 tech rs_damage_stun
 {
-	type	tech
-	name "_Stun Damage Type"
+	type		tech
+	name		"_Stun Damage Type"
 	up_chapter	damage
 	description {
 		default "_none"
@@ -2867,8 +2867,8 @@ tech rs_damage_pbeam
 
 tech rs_skill_accuracy
 {
-	type	tech
-	name "_Accuracy Attribute"
+	type		tech
+	name		"_Accuracy Attribute"
 	up_chapter	skill
 	description {
 		default "_none"
@@ -2880,8 +2880,8 @@ tech rs_skill_accuracy
 
 tech rs_skill_assault
 {
-	type	tech
-	name "_Assault Guns Proficiency"
+	type		tech
+	name		"_Assault Guns Proficiency"
 	up_chapter	skill
 	description {
 		default "_none"
@@ -2893,8 +2893,8 @@ tech rs_skill_assault
 
 tech rs_skill_close
 {
-	type	tech
-	name "_Close Combat Proficiency"
+	type		tech
+	name		"_Close Combat Proficiency"
 	up_chapter	skill
 	description {
 		default "_none"
@@ -2906,8 +2906,8 @@ tech rs_skill_close
 
 tech rs_skill_explosive
 {
-	type	tech
-	name "_High-Explosives Proficiency"
+	type		tech
+	name		"_High-Explosives Proficiency"
 	up_chapter	skill
 	description {
 		default "_none"
@@ -2919,8 +2919,8 @@ tech rs_skill_explosive
 
 tech rs_skill_heavy
 {
-	type	tech
-	name "_Heavy Weapons Proficiency"
+	type		tech
+	name		"_Heavy Weapons Proficiency"
 	up_chapter	skill
 	description {
 		default "_none"
@@ -2932,8 +2932,8 @@ tech rs_skill_heavy
 
 tech rs_skill_mind
 {
-	type	tech
-	name "_Mind Attribute"
+	type		tech
+	name		"_Mind Attribute"
 	up_chapter	skill
 	description {
 		default "_none"
@@ -2945,8 +2945,8 @@ tech rs_skill_mind
 
 tech rs_skill_power
 {
-	type	tech
-	name "_Power Attribute"
+	type		tech
+	name		"_Power Attribute"
 	up_chapter	skill
 	description {
 		default "_none"
@@ -2958,8 +2958,8 @@ tech rs_skill_power
 
 tech rs_skill_sniper
 {
-	type	tech
-	name "_Sniper Rifles Proficiency"
+	type		tech
+	name		"_Sniper Rifles Proficiency"
 	up_chapter	skill
 	description {
 		default "_none"
@@ -2971,8 +2971,8 @@ tech rs_skill_sniper
 
 tech rs_skill_speed
 {
-	type	tech
-	name "_Speed Attribute"
+	type		tech
+	name		"_Speed Attribute"
 	up_chapter	skill
 	description {
 		default "_none"
@@ -3001,7 +3001,7 @@ tech rs_building_aliencontainment
 	}
 
 	provides	building_aliencontainment
-	time	0
+	time		0
 }
 
 tech rs_building_command
@@ -3019,7 +3019,7 @@ tech rs_building_command
 	}
 
 	provides	building_command
-	time	0
+	time		0
 }
 
 tech rs_building_entrance
