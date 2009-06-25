@@ -1853,7 +1853,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, qboolean multiplayer)
 	/* Abilities and skills -- random within the range */
 	for (i = 0; i < SKILL_NUM_TYPES; i++) {
 		const int abilityWindow = chrTemplate[i][1] - chrTemplate[i][0];
-		/* Reminder: In case if abilityWindow==0 the ability will get set to the lower limit. */
+		/* Reminder: In case if abilityWindow==0 the ability will be set to the lower limit. */
 		const int temp = (frand() * abilityWindow) + chrTemplate[i][0];
 		chr->score.skills[i] = temp;
 		chr->score.initialSkills[i] = temp;

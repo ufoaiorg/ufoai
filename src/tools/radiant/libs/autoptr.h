@@ -4,7 +4,7 @@
 template<typename T> class AutoPtr
 {
 	public:
-		AutoPtr(T* const p = 0) : p_(p) {}
+		explicit AutoPtr(T* const p = 0) : p_(p) {}
 
 		~AutoPtr() { if (p_) delete p_; }
 
@@ -25,15 +25,15 @@ template<typename T> class AutoPtr
 
 		T* operator ->() const { return p_; }
 
-		T& operator *() const { return *p_; }
+		operator T*() const { return p_; }
 
 		operator bool() const { return p_; }
 
 	private:
 		T* p_;
 
-		AutoPtr(AutoPtr const&);         /* no copy */
-		void operator =(AutoPtr const&); /* no assignment */
+		AutoPtr(const AutoPtr&);   /* no copy */
+		void operator =(AutoPtr&); /* no assignment */
 };
 
 #endif
