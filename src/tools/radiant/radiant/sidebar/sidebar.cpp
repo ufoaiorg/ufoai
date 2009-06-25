@@ -21,6 +21,11 @@
 
 static void Sidebar_constructPrefabs (GtkWidget *notebook)
 {
+	// prefabs
+	GtkWidget *pagePrefabs = Prefabs_constructNotebookTab();
+	if (!pagePrefabs)
+		return;
+
 	GtkWidget *label = gtk_label_new_with_mnemonic(_("Prefabs"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
@@ -28,8 +33,7 @@ static void Sidebar_constructPrefabs (GtkWidget *notebook)
 	// scrollable window settings
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
-	// prefabs
-	GtkWidget *pagePrefabs = Prefabs_constructNotebookTab();
+
 	gtk_container_add(GTK_CONTAINER(vbox), pagePrefabs);
 
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));

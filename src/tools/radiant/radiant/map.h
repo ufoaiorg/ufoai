@@ -134,7 +134,7 @@ void SaveMapAs();
 void SaveMap();
 void ExportMap();
 void SaveRegion();
-
+bool Map_ImportFile(const char* filename);
 
 void Map_Traverse(scene::Node& root, const scene::Traversable::Walker& walker);
 
