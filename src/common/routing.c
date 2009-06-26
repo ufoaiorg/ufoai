@@ -68,12 +68,12 @@ static inline void RT_PlaceInit (routing_t *map, const int actorSize, place_t *p
 	p->cell[2] = z;
 	p->floor = max(0, RT_FLOOR(map, actorSize, x, y, z)) + z * CELL_HEIGHT;
 	p->ceiling = RT_CEILING(map, actorSize, x, y, z) + z * CELL_HEIGHT;
-	p->floorZ =  p->floor / CELL_HEIGHT;
+	p->floorZ =  (p->floor - 1) / CELL_HEIGHT;
 }
 
 static inline qboolean RT_PlaceIsUsable (place_t* p)
 {
-	return (p->ceiling - p->floor) >= PATHFINDING_MIN_OPENING;
+	return (p->ceiling && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING);
 }
 
 static inline qboolean RT_PlaceDoesIntersectEnough(place_t* p, place_t* other)
