@@ -10,6 +10,7 @@ office.map "" ""
 pipes.map "" ""
 shop.map "" ""
 terrain.map "" ""
+ufo_bomber.map "" ufo_bomber.jpg
 ufo_corrupter.map "" ufo_corrupter.jpg
 ufo_fighter.map "" ufo_fighter.jpg
 ufo_harvester.map "" ufo_harvester.jpg
