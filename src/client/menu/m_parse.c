@@ -1357,7 +1357,6 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 		const char *token;
 
 		/* get the reference and the name */
-		/** @todo merge this function here, it is only used here */
 		token = Com_MacroExpandString(ref);
 		if (token)
 			return token;
