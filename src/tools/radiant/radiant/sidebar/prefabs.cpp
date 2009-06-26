@@ -40,6 +40,7 @@
 static const int TABLE_COLUMS = 3;
 static GtkListStore* store;
 static GtkTreeView* view;
+static GtkTextView* prefabDescription;
 static int unselectAfterInsert = 0;
 static int replaceSelection = 0;
 
@@ -92,6 +93,18 @@ static void PrefabAdd(const char *name, const char *description) {
 	gtk_list_store_set(store, &iter, 0, name, 1, description, 2, img, -1);
 }
 
+static void PrefabList_selection_changed (GtkTreeSelection* selection, gpointer data)
+{
+	GtkTreeModel* model;
+	GtkTreeIter selected;
+	if (gtk_tree_selection_get_selected(selection, &model, &selected)) {
+		char *description;
+		gtk_tree_model_get(model, &selected, 1, &description, -1);
+		GtkTextBuffer* buffer = gtk_text_view_get_buffer(prefabDescription);
+		gtk_text_buffer_set_text(buffer, description, -1);
+	}
+}
+
 static void Unselect_toggled (GtkWidget *widget, gpointer data)
 {
 	unselectAfterInsert = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
@@ -118,11 +131,7 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 		AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(
 				fullpath.c_str()));
 		if (file) {
-			GtkWidget* pageFrame = gtk_frame_new(_("Prefabs"));
 			GtkWidget* vbox = gtk_vbox_new(FALSE, 2);
-			gtk_container_add(GTK_CONTAINER(pageFrame), vbox);
-
-			// prefab list
 			GtkWidget* scr = gtk_scrolled_window_new(0, 0);
 			gtk_box_pack_start(GTK_BOX(vbox), scr, TRUE, TRUE, 0);
 			gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr),
@@ -131,12 +140,13 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 					GTK_SHADOW_IN);
 
 			{
+				// prefab list
 				store = gtk_list_store_new(3, G_TYPE_STRING, G_TYPE_STRING,
 						GDK_TYPE_PIXBUF);
 				view
 						= GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
-				gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), FALSE);
-				gtk_tree_view_set_headers_visible(view, FALSE);
+				gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), TRUE);
+				gtk_tree_view_set_headers_visible(view, TRUE);
 				g_signal_connect(G_OBJECT(view), "button_press_event", G_CALLBACK(PrefabList_button_press), 0);
 
 				{
@@ -158,8 +168,13 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 				}
 
 				gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
-
 				g_object_unref(G_OBJECT(store));
+			}
+
+			{
+				GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
+				g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(PrefabList_selection_changed),
+						0);
 			}
 
 			{
@@ -170,15 +185,16 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 				gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
 
 				{
-					GtkTextView* text = GTK_TEXT_VIEW(gtk_text_view_new());
-					widget_set_size(GTK_WIDGET(text), 0, 0); // as small as possible
-					gtk_text_view_set_wrap_mode(text, GTK_WRAP_WORD);
-					gtk_text_view_set_editable(text, FALSE);
-					gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(text));
+					prefabDescription = GTK_TEXT_VIEW(gtk_text_view_new());
+					widget_set_size(GTK_WIDGET(prefabDescription), 0, 0); // as small as possible
+					gtk_text_view_set_wrap_mode(prefabDescription, GTK_WRAP_WORD);
+					gtk_text_view_set_editable(prefabDescription, FALSE);
+					gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(prefabDescription));
 				}
 			}
 
 			{
+				// options
 				GtkWidget* vboxOptions = gtk_vbox_new(FALSE, 2);
 				gtk_box_pack_start(GTK_BOX(vbox), vboxOptions, FALSE, TRUE, 0);
 				GtkCheckButton* checkUnselect = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(_("Deselect before insert")));
@@ -223,7 +239,7 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 			}
 			if (rows) {
 				g_message("Found %i prefabs\n", rows);
-				return pageFrame;
+				return vbox;
 			}
 		}
 	}
