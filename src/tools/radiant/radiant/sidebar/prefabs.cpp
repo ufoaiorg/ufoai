@@ -32,6 +32,7 @@
 #include "../map.h"
 #include "../select.h"
 #include "os/path.h"
+#include "os/dir.h"
 #include "autoptr.h"
 #include "ifilesystem.h"
 #include "archivelib.h"
@@ -137,128 +138,102 @@ static void Replace_toggled (GtkWidget *widget, gpointer data)
 	replaceSelection = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
 }
 
+class CLoadPrefab
+{
+	public:
+		CLoadPrefab (const char* path)
+		{
+		}
+		void operator() (const char* name) const
+		{
+			PrefabAdd(name);
+		}
+};
+
 GtkWidget* Prefabs_constructNotebookTab(void) {
 	StringOutputStream fullpath(256);
-	fullpath << AppPath_get() << "prefabs/prefabs.list";
+	fullpath << AppPath_get() << "prefabs/";
 
-	g_message("ScanFile: '%s'\n", fullpath.c_str());
+	GtkWidget* vbox = gtk_vbox_new(FALSE, 2);
+	GtkWidget* scr = gtk_scrolled_window_new(0, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), scr, TRUE, TRUE, 0);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr),
+			GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr),
+			GTK_SHADOW_IN);
 
-	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(
-			fullpath.c_str()));
-	if (file) {
-		GtkWidget* vbox = gtk_vbox_new(FALSE, 2);
-		GtkWidget* scr = gtk_scrolled_window_new(0, 0);
-		gtk_box_pack_start(GTK_BOX(vbox), scr, TRUE, TRUE, 0);
-		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr),
-				GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-		gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr),
-				GTK_SHADOW_IN);
+	{
+		// prefab list
+		store = gtk_list_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING,
+				GDK_TYPE_PIXBUF);
+		view
+				= GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
+		gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), TRUE);
+		gtk_tree_view_set_headers_visible(view, TRUE);
+		g_signal_connect(G_OBJECT(view), "button_press_event", G_CALLBACK(PrefabList_button_press), 0);
 
 		{
-			// prefab list
-			store = gtk_list_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING,
-					GDK_TYPE_PIXBUF);
-			view
-					= GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
-			gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), TRUE);
-			gtk_tree_view_set_headers_visible(view, TRUE);
-			g_signal_connect(G_OBJECT(view), "button_press_event", G_CALLBACK(PrefabList_button_press), 0);
-
-			{
-				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-				GtkTreeViewColumn* column =
-						gtk_tree_view_column_new_with_attributes(
-								_("Prefab"), renderer, "text", PREFAB_NAME,
-								(char const*) 0);
-				gtk_tree_view_append_column(view, column);
-			}
-
-			{
-				GtkCellRenderer* renderer = gtk_cell_renderer_pixbuf_new();
-				GtkTreeViewColumn* column =
-						gtk_tree_view_column_new_with_attributes(
-								_("Image"), renderer, "pixbuf", PREFAB_IMAGE,
-								(char const*) 0);
-				gtk_tree_view_append_column(view, column);
-			}
-
-			gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
-			g_object_unref(G_OBJECT(store));
+			GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
+			GtkTreeViewColumn* column =
+					gtk_tree_view_column_new_with_attributes(
+							_("Prefab"), renderer, "text", PREFAB_NAME,
+							(char const*) 0);
+			gtk_tree_view_append_column(view, column);
 		}
 
 		{
-			GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
-			g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(PrefabList_selection_changed),
-					0);
+			GtkCellRenderer* renderer = gtk_cell_renderer_pixbuf_new();
+			GtkTreeViewColumn* column =
+					gtk_tree_view_column_new_with_attributes(
+							_("Image"), renderer, "pixbuf", PREFAB_IMAGE,
+							(char const*) 0);
+			gtk_tree_view_append_column(view, column);
 		}
 
-		{
-			// prefab description
-			GtkWidget* scr = gtk_scrolled_window_new(0, 0);
-			gtk_box_pack_start(GTK_BOX(vbox), scr, FALSE, TRUE, 0);
-			gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-			gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
-
-			{
-				prefabDescription = GTK_TEXT_VIEW(gtk_text_view_new());
-				widget_set_size(GTK_WIDGET(prefabDescription), 0, 0); // as small as possible
-				gtk_text_view_set_wrap_mode(prefabDescription, GTK_WRAP_WORD);
-				gtk_text_view_set_editable(prefabDescription, FALSE);
-				gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(prefabDescription));
-			}
-		}
-
-		{
-			// options
-			GtkWidget* vboxOptions = gtk_vbox_new(FALSE, 2);
-			gtk_box_pack_start(GTK_BOX(vbox), vboxOptions, FALSE, TRUE, 0);
-			GtkCheckButton* checkUnselect = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(_("Deselect before insert")));
-			gtk_widget_ref(GTK_WIDGET(checkUnselect));
-			gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(checkUnselect), TRUE, TRUE, 0);
-			g_object_set_data(G_OBJECT(checkUnselect), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(checkUnselect),
-					"toggled", G_CALLBACK(Unselect_toggled), 0)));
-
-			GtkCheckButton* checkReplace = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(_("Replace current selection")));
-			gtk_widget_ref(GTK_WIDGET(checkReplace));
-			gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(checkReplace), TRUE, TRUE, 0);
-			g_object_set_data(G_OBJECT(checkReplace), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(checkReplace),
-					"toggled", G_CALLBACK(Replace_toggled), 0)));
-		}
-
-		AutoPtr<Tokeniser> tokeniser(NewScriptTokeniser(
-				file->getInputStream()));
-
-		tokeniser->nextLine();
-
-		int rows = 0;
-		for (;;) {
-			StringOutputStream map(256);
-			StringOutputStream description(256);
-			StringOutputStream image(256);
-
-			// mapname
-			const char* token = tokeniser->getToken();
-			if (token == 0)
-				break;
-
-			map << token;
-
-			rows++;
-
-			PrefabAdd(map.c_str());
-		}
-		if (rows) {
-			g_message("Found %i prefabs\n", rows);
-			return vbox;
-		}
-	} else {
-		StringOutputStream buffer;
-		buffer << "Could not load " << fullpath.c_str();
-		gtk_MessageBox(0, buffer.c_str(), _("Radiant - Error"), eMB_OK,
-				eMB_ICONERROR);
+		gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
+		g_object_unref(G_OBJECT(store));
 	}
 
-	g_message("No prefabs found in the prefabs/prefabs.list file\n");
+	{
+		GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
+		g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(PrefabList_selection_changed),
+				0);
+	}
 
-	return 0;
+	{
+		// prefab description
+		GtkWidget* scr = gtk_scrolled_window_new(0, 0);
+		gtk_box_pack_start(GTK_BOX(vbox), scr, FALSE, TRUE, 0);
+		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+		gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
+
+		{
+			prefabDescription = GTK_TEXT_VIEW(gtk_text_view_new());
+			widget_set_size(GTK_WIDGET(prefabDescription), 0, 0); // as small as possible
+			gtk_text_view_set_wrap_mode(prefabDescription, GTK_WRAP_WORD);
+			gtk_text_view_set_editable(prefabDescription, FALSE);
+			gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(prefabDescription));
+		}
+	}
+
+	{
+		// options
+		GtkWidget* vboxOptions = gtk_vbox_new(FALSE, 2);
+		gtk_box_pack_start(GTK_BOX(vbox), vboxOptions, FALSE, TRUE, 0);
+		GtkCheckButton* checkUnselect = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(_("Deselect before insert")));
+		gtk_widget_ref(GTK_WIDGET(checkUnselect));
+		gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(checkUnselect), TRUE, TRUE, 0);
+		g_object_set_data(G_OBJECT(checkUnselect), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(checkUnselect),
+				"toggled", G_CALLBACK(Unselect_toggled), 0)));
+
+		GtkCheckButton* checkReplace = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(_("Replace current selection")));
+		gtk_widget_ref(GTK_WIDGET(checkReplace));
+		gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(checkReplace), TRUE, TRUE, 0);
+		g_object_set_data(G_OBJECT(checkReplace), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(checkReplace),
+				"toggled", G_CALLBACK(Replace_toggled), 0)));
+	}
+
+	Directory_forEach(fullpath.c_str(), MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab(fullpath.c_str())));
+
+	return vbox;
 }
