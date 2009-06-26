@@ -11,6 +11,7 @@ pipes.map "" ""
 shop.map "" ""
 terrain.map "" ""
 ufo_fighter.map "" ufo_fighter.jpg
+ufo_harvester.map "" ufo_harvester.jpg
 ufo_scout.map "" ufo_scout.jpg
 ufo_supply.map "" ufo_supply.jpg
 vegetation.map "" ""
