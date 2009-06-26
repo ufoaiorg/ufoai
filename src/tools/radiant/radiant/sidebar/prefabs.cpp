@@ -77,13 +77,17 @@ static gint PrefabList_button_press(GtkWidget *widget, GdkEventButton *event,
 	return FALSE;
 }
 
-static void PrefabAdd(const char *name, const char *description,
-		const char *image) {
+static void PrefabAdd(const char *name, const char *description) {
 	StringOutputStream fullpath(256);
 	GtkTreeIter iter;
-	GdkPixbuf *img = pixbuf_new_from_file_with_mask(Prefab_GetPath(fullpath, image));
+
+	// remove extension from prefab filename
+	CopiedString image = StringRange(name, path_get_filename_base_end(name));
+	Prefab_GetPath(fullpath, image.c_str());
+	fullpath << ".jpg";
+	GdkPixbuf *img = pixbuf_new_from_file_with_mask(fullpath.c_str());
 	if (!img)
-		g_warning("Could not find image (%s) for prefab %s\n", image, name);
+		g_warning("Could not find image (%s) for prefab %s\n", image.c_str(), name);
 	gtk_list_store_append(store, &iter);
 	gtk_list_store_set(store, &iter, 0, name, 1, description, 2, img, -1);
 }
@@ -141,15 +145,6 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 							gtk_tree_view_column_new_with_attributes(
 									_("Prefab"), renderer, "text", 0,
 									(char const*) 0);
-					gtk_tree_view_append_column(view, column);
-				}
-
-				{
-					GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-					GtkTreeViewColumn* column =
-							gtk_tree_view_column_new_with_attributes(
-									_("Description"), renderer, "text",
-									1, (char const*) 0);
 					gtk_tree_view_append_column(view, column);
 				}
 
@@ -219,18 +214,12 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 
 				// description
 				token = tokeniser->getToken();
-				if (token != 0) {
+				if (token != 0)
 					description << token;
-
-					// image
-					token = tokeniser->getToken();
-					if (token != 0)
-						image << token;
-				}
 
 				rows++;
 
-				PrefabAdd(map.c_str(), description.c_str(), image.c_str());
+				PrefabAdd(map.c_str(), description.c_str());
 			}
 			if (rows) {
 				g_message("Found %i prefabs\n", rows);
