@@ -27,8 +27,10 @@
 #include "stream/stringstream.h"
 #include "gtkutil/messagebox.h"
 #include "gtkutil/image.h"
+#include "gtkutil/pointer.h"
 #include "../mainframe.h"
 #include "../map.h"
+#include "../select.h"
 #include "os/path.h"
 #include "autoptr.h"
 #include "ifilesystem.h"
@@ -38,6 +40,8 @@
 static const int TABLE_COLUMS = 3;
 static GtkListStore* store;
 static GtkTreeView* view;
+static int unselectAfterInsert = 0;
+static int replaceSelection = 0;
 
 static const char *Prefab_GetPath(StringOutputStream &fullpath, const char *file) {
 	fullpath << AppPath_get() << "prefabs/" << PathCleaned(file);
@@ -59,6 +63,11 @@ static gint PrefabList_button_press(GtkWidget *widget, GdkEventButton *event,
 
 			gtk_tree_model_get(model, &iter, 0, &text, -1);
 
+			if (replaceSelection)
+				Select_Delete();
+			if (unselectAfterInsert)
+				Selection_Deselect();
+
 			Map_ImportFile(Prefab_GetPath(fullpath, text));
 			g_free(text);
 
@@ -77,6 +86,16 @@ static void PrefabAdd(const char *name, const char *description,
 		g_warning("Could not find image (%s) for prefab %s\n", image, name);
 	gtk_list_store_append(store, &iter);
 	gtk_list_store_set(store, &iter, 0, name, 1, description, 2, img, -1);
+}
+
+static void Unselect_toggled (GtkWidget *widget, gpointer data)
+{
+	unselectAfterInsert = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+}
+
+static void Replace_toggled (GtkWidget *widget, gpointer data)
+{
+	replaceSelection = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
 }
 
 GtkWidget* Prefabs_constructNotebookTab(void) {
@@ -146,6 +165,38 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 				gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
 
 				g_object_unref(G_OBJECT(store));
+			}
+
+			{
+				// prefab description
+				GtkWidget* scr = gtk_scrolled_window_new(0, 0);
+				gtk_box_pack_start(GTK_BOX(vbox), scr, FALSE, TRUE, 0);
+				gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+				gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
+
+				{
+					GtkTextView* text = GTK_TEXT_VIEW(gtk_text_view_new());
+					widget_set_size(GTK_WIDGET(text), 0, 0); // as small as possible
+					gtk_text_view_set_wrap_mode(text, GTK_WRAP_WORD);
+					gtk_text_view_set_editable(text, FALSE);
+					gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(text));
+				}
+			}
+
+			{
+				GtkWidget* vboxOptions = gtk_vbox_new(FALSE, 2);
+				gtk_box_pack_start(GTK_BOX(vbox), vboxOptions, FALSE, TRUE, 0);
+				GtkCheckButton* checkUnselect = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(_("Deselect before insert")));
+				gtk_widget_ref(GTK_WIDGET(checkUnselect));
+				gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(checkUnselect), TRUE, TRUE, 0);
+				g_object_set_data(G_OBJECT(checkUnselect), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(checkUnselect),
+						"toggled", G_CALLBACK(Unselect_toggled), 0)));
+
+				GtkCheckButton* checkReplace = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(_("Replace current selection")));
+				gtk_widget_ref(GTK_WIDGET(checkReplace));
+				gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(checkReplace), TRUE, TRUE, 0);
+				g_object_set_data(G_OBJECT(checkReplace), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(checkReplace),
+						"toggled", G_CALLBACK(Replace_toggled), 0)));
 			}
 
 			AutoPtr<Tokeniser> tokeniser(NewScriptTokeniser(
