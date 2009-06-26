@@ -1,7 +1,7 @@
-drop_firebird.map "" ""
-drop_herakles.map "" ""
+drop_firebird.map "" drop_firebird.jpg
+drop_herakles.map "" drop_herakles.jpg
 household.map "" ""
-inter_saracen.map "" ""
+inter_saracen.map "" inter_saracen.jpg
 inter_stiletto.map "" inter_stiletto.jpg
 machines.map "" ""
 misc.map "" ""
