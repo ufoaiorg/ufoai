@@ -57,29 +57,28 @@ static gint editor_delete(GtkWidget *widget, gpointer data) {
 
 static void editor_save(GtkWidget *widget, gpointer data) {
 	char *filename = (char*) g_object_get_data(G_OBJECT(data), "filename");
-	FILE *f = fopen(filename, "w");
-	gpointer text = g_object_get_data(G_OBJECT(data), "text");
 
-	if (f == NULL) {
-		gtk_MessageBox(GTK_WIDGET(data), _("Error saving file."));
+	StringOutputStream fullpath(256);
+	const char *enginePath = GlobalRadiant().getEnginePath();
+	const char *baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
+	fullpath << enginePath << baseGame << "/" << filename;
+
+	TextFileOutputStream out(fullpath.c_str());
+	if (out.failed()) {
+		g_message("Error saving file to '%s'.", fullpath.c_str());
+		gtk_MessageBox(GTK_WIDGET(data), _("Error saving file"));
 		return;
 	}
 
+	gpointer text = g_object_get_data(G_OBJECT(data), "text");
 	GtkTextBuffer* text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text));
 	GtkTextIter iterEnd, iterStart;
 	gtk_text_buffer_get_start_iter(text_buffer, &iterStart);
 	gtk_text_buffer_get_end_iter(text_buffer, &iterEnd);
 	gchar *str = gtk_text_buffer_get_text(text_buffer, &iterStart, &iterEnd,
 			FALSE);
-	if (str) {
-		const int len = strlen(str);
-		file_write(str, len, f);
-		g_message("Wrote %i bytes to file: '%s'\n", len, filename);
-		/* ensure newline at eof */
-		if (str[len - 1] != '\n')
-			file_write("\n", 1, f);
-	}
-	fclose(f);
+	if (str)
+		out << str << '\n';
 }
 
 static void editor_close(GtkWidget *widget, gpointer data) {
@@ -171,7 +170,7 @@ void DoTextEditor(const char* filename, int cursorpos,
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
 	if (file) {
 		const std::size_t size = file->size();
-		char *buf = (char *)malloc(size + 1);
+		char *buf = (char *) malloc(size + 1);
 		TextInputStream &stream = file->getInputStream();
 		stream.read(buf, size);
 		buf[size] = '\0';
@@ -181,11 +180,14 @@ void DoTextEditor(const char* filename, int cursorpos,
 		free(buf);
 	}
 
-	if (appendContent) {
+	if (appendContent && strlen(appendContent)) {
 		GtkTextIter iter;
+		GtkTextTag *tag = gtk_text_buffer_create_tag(text_buffer,
+				"newly-added", "weight", PANGO_WEIGHT_BOLD, "foreground",
+				"red", NULL);
 		gtk_text_buffer_get_end_iter(text_buffer, &iter);
-		gtk_text_buffer_insert(text_buffer, &iter, appendContent, strlen(
-				appendContent));
+		gtk_text_buffer_insert_with_tags(text_buffer, &iter, appendContent,
+				strlen(appendContent), tag, (const char *) 0);
 	}
 
 	old_filename = g_object_get_data(G_OBJECT(text_editor), "filename");
