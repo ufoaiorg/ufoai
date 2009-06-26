@@ -204,12 +204,7 @@ public:
 	}
 
 	ArchiveFile* openFile(const char* name) {
-		ZipFileSystem::iterator i = m_filesystem.begin();
-		while (i != m_filesystem.end()) {
-			g_debug("%s\n", i->first.c_str());
-			i++;
-		}
-		i = m_filesystem.find(name);
+		ZipFileSystem::iterator i = m_filesystem.find(name);
 		if (i != m_filesystem.end() && !i->second.is_directory()) {
 			ZipRecord* file = i->second.file();
 
@@ -232,12 +227,7 @@ public:
 	}
 	ArchiveTextFile* openTextFile(const char* name) {
 		g_message("Searching %s for %s\n", m_name.c_str(), name);
-		ZipFileSystem::iterator i = m_filesystem.begin();
-		while (i != m_filesystem.end()) {
-			g_debug("%s\n", i->first.c_str());
-			i++;
-		}
-		i = m_filesystem.find(name);
+		ZipFileSystem::iterator i = m_filesystem.find(name);
 		if (i != m_filesystem.end() && !i->second.is_directory()) {
 			ZipRecord* file = i->second.file();
 
