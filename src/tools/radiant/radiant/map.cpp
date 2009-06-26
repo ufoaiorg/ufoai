@@ -1289,6 +1289,8 @@ bool Map_ImportFile (const char* filename)
 {
 	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Map"));
 
+	Selection_Deselect();
+
 	bool success = false;
 	{
 		Resource* resource = GlobalReferenceCache().capture(filename);

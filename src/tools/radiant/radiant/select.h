@@ -27,6 +27,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 void Select_GetBounds(Vector3& mins, Vector3& maxs);
 void Select_GetMid(Vector3& mid);
 
+void Selection_Deselect(void);
+
 void Select_Delete();
 void Select_Invert();
 void Select_Inside();
