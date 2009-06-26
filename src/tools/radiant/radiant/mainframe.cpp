@@ -1491,6 +1491,7 @@ static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 	create_menu_item_with_mnemonic(menu, _("Toggle Sidebar"), "ToggleSidebar");
 	create_menu_item_with_mnemonic(menu, _("Toggle EntityInspector"), "ToggleEntityInspector");
 	create_menu_item_with_mnemonic(menu, _("Toggle SurfaceInspector"), "ToggleSurfaceInspector");
+	create_menu_item_with_mnemonic(menu, _("Toggle Prefabs"), "TogglePrefabs");
 
 	menu_separator(menu);
 	{

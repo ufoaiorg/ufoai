@@ -19,8 +19,7 @@
 #include "../commands.h"
 #include "gtkutil/widget.h"
 
-static void Sidebar_constructPrefabs (GtkWidget *notebook)
-{
+static void Sidebar_constructPrefabs(GtkWidget *notebook) {
 	// prefabs
 	GtkWidget *pagePrefabs = Prefabs_constructNotebookTab();
 	if (!pagePrefabs)
@@ -31,25 +30,26 @@ static void Sidebar_constructPrefabs (GtkWidget *notebook)
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
 	// scrollable window settings
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER,
+			GTK_POLICY_AUTOMATIC);
 
 	gtk_container_add(GTK_CONTAINER(vbox), pagePrefabs);
 
-	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
+	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin),
+			GTK_WIDGET(vbox));
 
 	gtk_widget_show_all(swin);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
 }
 
-static void Sidebar_constructEntities (GtkWidget *notebook)
-{
+static void Sidebar_constructEntities(GtkWidget *notebook) {
 	GtkWidget *label = gtk_label_new_with_mnemonic(_("_Entities"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
 	// scrollable window settings
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER,
+			GTK_POLICY_AUTOMATIC);
 
 	// entity list
 	GtkWidget *pageEntityList = EntityList_constructNotebookTab();
@@ -59,64 +59,68 @@ static void Sidebar_constructEntities (GtkWidget *notebook)
 	GtkWidget *pageEntityInspector = EntityInspector_constructNotebookTab();
 	gtk_container_add(GTK_CONTAINER(vbox), pageEntityInspector);
 
-	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
+	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin),
+			GTK_WIDGET(vbox));
 
 	gtk_widget_show_all(swin);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
 }
 
-static void Sidebar_constructSurfaces (GtkWidget *notebook)
-{
+static void Sidebar_constructSurfaces(GtkWidget *notebook) {
 	GtkWidget *label = gtk_label_new_with_mnemonic(_("_Surfaces"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
 	// scrollable window settings
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER,
+			GTK_POLICY_AUTOMATIC);
 
 	// surface inspector
 	GtkWidget *pageSurfaceInspector = SurfaceInspector_constructNotebookTab();
 	gtk_container_add(GTK_CONTAINER(vbox), pageSurfaceInspector);
 
-	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
+	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin),
+			GTK_WIDGET(vbox));
 
 	gtk_widget_show_all(swin);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
 }
 
-static void Sidebar_constructMapInfo (GtkWidget *notebook)
-{
+static void Sidebar_constructMapInfo(GtkWidget *notebook) {
 	GtkWidget *label = gtk_label_new(_("Map Info"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
 	// scrollable window settings
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER,
+			GTK_POLICY_AUTOMATIC);
 
 	// map info frame
 	GtkWidget *pageMapInfo = MapInfo_constructNotebookTab();
 	gtk_container_add(GTK_CONTAINER(vbox), pageMapInfo);
 
-	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
+	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin),
+			GTK_WIDGET(vbox));
 
 	gtk_widget_show_all(swin);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
 }
 
-static void Sidebar_constructJobInfo (GtkWidget *notebook)
-{
+static void Sidebar_constructJobInfo(GtkWidget *notebook) {
 	GtkWidget *label = gtk_label_new(_("Job Info"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
 	// scrollable window settings
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER,
+			GTK_POLICY_AUTOMATIC);
 
 	// job info frame
 	GtkWidget *pageJobInfo = JobInfo_constructNotebookTab();
 	gtk_container_add(GTK_CONTAINER(vbox), pageJobInfo);
 
-	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
+	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin),
+			GTK_WIDGET(vbox));
 
 	gtk_widget_show_all(swin);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
@@ -124,27 +128,29 @@ static void Sidebar_constructJobInfo (GtkWidget *notebook)
 
 static GtkWidget *notebook;
 
-void ToggleSidebar (void)
-{
+void ToggleSidebar(void) {
 	widget_toggle_visible(notebook);
 }
 
-void ToggleSurfaceInspector (void)
-{
+void TogglePrefabs(void) {
+	if (!widget_is_visible(GTK_WIDGET(notebook)))
+		widget_set_visible(GTK_WIDGET(notebook), TRUE);
+	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 3);
+}
+
+void ToggleSurfaceInspector(void) {
 	if (!widget_is_visible(GTK_WIDGET(notebook)))
 		widget_set_visible(GTK_WIDGET(notebook), TRUE);
 	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 1);
 }
 
-void ToggleEntityInspector (void)
-{
+void ToggleEntityInspector(void) {
 	if (!widget_is_visible(GTK_WIDGET(notebook)))
 		widget_set_visible(GTK_WIDGET(notebook), TRUE);
 	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
 }
 
-GtkWidget *Sidebar_construct (void)
-{
+GtkWidget *Sidebar_construct(void) {
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
 	notebook = gtk_notebook_new();
@@ -159,9 +165,16 @@ GtkWidget *Sidebar_construct (void)
 
 	gtk_widget_show_all(vbox);
 
-	GlobalCommands_insert("ToggleSidebar", FreeCaller<ToggleSidebar> (), Accelerator('B'));
-	GlobalCommands_insert("ToggleSurfaceInspector", FreeCaller<ToggleSurfaceInspector> (), Accelerator('S'));
-	GlobalCommands_insert("ToggleEntityInspector", FreeCaller<ToggleEntityInspector> (), Accelerator('E'));
+	GlobalCommands_insert("ToggleSidebar", FreeCaller<ToggleSidebar> (),
+			Accelerator('B'));
+	GlobalCommands_insert("ToggleSurfaceInspector", FreeCaller<
+			ToggleSurfaceInspector> (), Accelerator('S',
+			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalCommands_insert("ToggleEntityInspector", FreeCaller<
+			ToggleEntityInspector> (), Accelerator('E',
+			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalCommands_insert("TogglePrefabs", FreeCaller<TogglePrefabs> (),
+			Accelerator('P', (GdkModifierType) GDK_SHIFT_MASK));
 
 	return vbox;
 }
