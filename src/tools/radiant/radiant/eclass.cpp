@@ -117,44 +117,34 @@ const ListAttributeType* EntityClass_findListType (const char* name)
 class EntityClassesLoadFile
 {
 		const EntityClassScanner& scanner;
-		const char *m_directory;
 		const char *m_filename;
 	public:
-		EntityClassesLoadFile (const EntityClassScanner& scanner, const char* directory, const char *filename) :
-			scanner(scanner), m_directory(directory), m_filename(filename)
+		EntityClassesLoadFile (const EntityClassScanner& scanner, const char *filename) :
+			scanner(scanner), m_filename(filename)
 		{
-			// for a given name, we grab the first .def in the vfs
-			// this allows to override base/entities.def for instance
-			StringOutputStream relPath(256);
-			relPath << m_directory << m_filename;
-
-			g_message("Load entity definition file from '%s'\n", relPath.c_str());
-			scanner.scanFile(g_collector, relPath.c_str());
+			g_message("Load entity definition file from '%s'\n", m_filename);
+			scanner.scanFile(g_collector, m_filename);
 		}
 };
 
 void EntityClassUFO_Construct ()
 {
-	StringOutputStream gameDir(256);
-	gameDir << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") << "/";
-
 	/** @todo remove this visitor - we only have one entity def parser */
 	class LoadEntityDefinitionsVisitor: public EClassModules::Visitor
 	{
-			const char* gameDir;
 		public:
-			LoadEntityDefinitionsVisitor (const char* gameDir) :
-				gameDir(gameDir)
+			LoadEntityDefinitionsVisitor()
 			{
 			}
+
 			void visit (const char* name, const EntityClassScanner& table) const
 			{
-				g_message("Try to load '%s' from '%s'\n", table.getFilename(), gameDir);
-				EntityClassesLoadFile(table, gameDir, table.getFilename());
+				g_message("Try to load '%s'\n", table.getFilename());
+				EntityClassesLoadFile(table, table.getFilename());
 			}
 	};
 
-	EntityClassManager_getEClassModules().foreachModule(LoadEntityDefinitionsVisitor(gameDir.c_str()));
+	EntityClassManager_getEClassModules().foreachModule(LoadEntityDefinitionsVisitor());
 }
 
 EntityClass *Eclass_ForName (const char *name, bool has_brushes)

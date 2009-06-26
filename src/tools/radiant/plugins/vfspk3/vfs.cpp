@@ -128,8 +128,8 @@ static void InitPK3File (ArchiveModules& archiveModules, const char *filename)
 		archive_entry_t entry;
 		entry.name = filename;
 
-		entry.archive = table->m_pfnOpenArchive(filename);
 		entry.is_pakfile = true;
+		entry.archive = table->m_pfnOpenArchive(filename);
 		g_archives.push_back(entry);
 		g_message("  pk3 file: %s\n", filename);
 	}

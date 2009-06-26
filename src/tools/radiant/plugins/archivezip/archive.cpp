@@ -59,6 +59,7 @@ public:
 class DeflatedArchiveTextFile : public ArchiveTextFile {
 	CopiedString m_name;
 	std::size_t m_size;
+	std::size_t m_filesize;
 	FileInputStream m_istream;
 	SubFileInputStream m_substream;
 	DeflatedInputStream m_zipstream;
@@ -67,12 +68,13 @@ public:
 	typedef FileInputStream::size_type size_type;
 	typedef FileInputStream::position_type position_type;
 
-	DeflatedArchiveTextFile(const char* name, const char* archiveName, position_type position, size_type stream_size)
-			: m_name(name), m_size(stream_size), m_istream(archiveName), m_substream(m_istream, position, stream_size), m_zipstream(m_substream), m_textStream(m_zipstream) {
+	DeflatedArchiveTextFile(const char* name, const char* archiveName, position_type position, size_type stream_size, size_type filesize)
+			: m_name(name), m_size(stream_size), m_filesize(filesize), m_istream(archiveName), m_substream(m_istream, position, stream_size), m_zipstream(m_substream), m_textStream(m_zipstream) {
 	}
 
+	/** @brief returns the uncompressed size of the file */
 	std::size_t size() {
-		return m_size;
+		return m_filesize;
 	}
 
 	TextInputStream& getInputStream() {
@@ -172,6 +174,7 @@ class ZipArchive : public Archive {
 			}
 
 			m_istream.seek(disk_trailer.z_rootseek);
+			g_message("... %u entries\n", disk_trailer.z_entries);
 			for (unsigned int i = 0; i < disk_trailer.z_entries; ++i) {
 				if (!read_record()) {
 					return false;
@@ -223,7 +226,13 @@ public:
 		return 0;
 	}
 	ArchiveTextFile* openTextFile(const char* name) {
-		ZipFileSystem::iterator i = m_filesystem.find(name);
+		g_message("Searching %s for %s\n", m_name.c_str(), name);
+		ZipFileSystem::iterator i = m_filesystem.begin();
+		while (i != m_filesystem.end()) {
+			g_message("%s\n", i->first.c_str());
+			i++;
+		}
+		i = m_filesystem.find(name);
 		if (i != m_filesystem.end() && !i->second.is_directory()) {
 			ZipRecord* file = i->second.file();
 
@@ -239,7 +248,7 @@ public:
 			case ZipRecord::eStored:
 				return StoredArchiveTextFile::create(name, m_name.c_str(), m_istream.tell(), file->m_stream_size);
 			case ZipRecord::eDeflated:
-				return new DeflatedArchiveTextFile(name, m_name.c_str(), m_istream.tell(), file->m_stream_size);
+				return new DeflatedArchiveTextFile(name, m_name.c_str(), m_istream.tell(), file->m_stream_size, file->m_file_size);
 			}
 		}
 		return 0;
