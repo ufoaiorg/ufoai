@@ -169,7 +169,10 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 		view
 				= GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
 		gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), TRUE);
-		gtk_tree_view_set_headers_visible(view, TRUE);
+		gtk_tree_view_set_search_column(GTK_TREE_VIEW(view), PREFAB_NAME);
+		gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(view), TRUE);
+		gtk_tree_view_set_headers_clickable(GTK_TREE_VIEW(view), TRUE);
+		gtk_tree_view_set_reorderable(GTK_TREE_VIEW(view), TRUE);
 		g_signal_connect(G_OBJECT(view), "button_press_event", G_CALLBACK(PrefabList_button_press), 0);
 
 		{
@@ -179,6 +182,8 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 							_("Prefab"), renderer, "text", PREFAB_NAME,
 							(char const*) 0);
 			gtk_tree_view_append_column(view, column);
+			gtk_tree_view_column_set_sort_indicator(column, TRUE);
+			gtk_tree_view_column_set_sort_column_id(column, PREFAB_NAME);
 		}
 
 		{
