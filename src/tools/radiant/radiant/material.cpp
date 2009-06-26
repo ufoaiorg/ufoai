@@ -99,9 +99,7 @@ const char *Material_GetFilename (void)
 {
 	static char materialFileName[256];
 	const char *mapname = Map_Name(g_map);
-	const char *enginePath = GlobalRadiant().getEnginePath();
-	const char *baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
-	snprintf(materialFileName, sizeof(materialFileName), "%s%s/materials/%s", enginePath, baseGame, path_get_filename_start(mapname));
+	snprintf(materialFileName, sizeof(materialFileName), "materials/%s", path_get_filename_start(mapname));
 	materialFileName[strlen(materialFileName) - 1] = 't'; /* map => mat */
 	return materialFileName;
 }

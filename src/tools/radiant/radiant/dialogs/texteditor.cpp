@@ -5,25 +5,25 @@
  */
 
 /*
-Copyright(C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright(C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "gtkutil/messagebox.h"
 #include "radiant_i18n.h"
@@ -33,6 +33,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/widget.h"
 #include "../exec.h"
 #include "os/file.h"
+#include "autoptr.h"
+#include "ifilesystem.h"
+#include "archivelib.h"
 #ifdef WIN32
 #include "../gtkmisc.h"
 #include "../mainframe.h"
@@ -42,9 +45,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 static GtkWidget *text_editor = 0;
 static GtkWidget *text_widget; // slave, text widget from the gtk editor
 
-static gint editor_delete (GtkWidget *widget, gpointer data)
-{
-	if (gtk_MessageBox(widget, _("Close the editor?"), _("UFORadiant"), eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
+static gint editor_delete(GtkWidget *widget, gpointer data) {
+	if (gtk_MessageBox(widget, _("Close the editor?"), _("UFORadiant"),
+			eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
 		return TRUE;
 
 	gtk_widget_hide(text_editor);
@@ -52,9 +55,8 @@ static gint editor_delete (GtkWidget *widget, gpointer data)
 	return TRUE;
 }
 
-static void editor_save (GtkWidget *widget, gpointer data)
-{
-	char *filename = (char*)g_object_get_data(G_OBJECT(data), "filename");
+static void editor_save(GtkWidget *widget, gpointer data) {
+	char *filename = (char*) g_object_get_data(G_OBJECT(data), "filename");
 	FILE *f = fopen(filename, "w");
 	gpointer text = g_object_get_data(G_OBJECT(data), "text");
 
@@ -67,7 +69,8 @@ static void editor_save (GtkWidget *widget, gpointer data)
 	GtkTextIter iterEnd, iterStart;
 	gtk_text_buffer_get_start_iter(text_buffer, &iterStart);
 	gtk_text_buffer_get_end_iter(text_buffer, &iterEnd);
-	gchar *str = gtk_text_buffer_get_text(text_buffer, &iterStart, &iterEnd, FALSE);
+	gchar *str = gtk_text_buffer_get_text(text_buffer, &iterStart, &iterEnd,
+			FALSE);
 	if (str) {
 		const int len = strlen(str);
 		file_write(str, len, f);
@@ -79,16 +82,15 @@ static void editor_save (GtkWidget *widget, gpointer data)
 	fclose(f);
 }
 
-static void editor_close (GtkWidget *widget, gpointer data)
-{
-	if (gtk_MessageBox(text_editor, _("Close the editor?"), _("UFORadiant"), eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
+static void editor_close(GtkWidget *widget, gpointer data) {
+	if (gtk_MessageBox(text_editor, _("Close the editor?"), _("UFORadiant"),
+			eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
 		return;
 
 	gtk_widget_hide(text_editor);
 }
 
-static void CreateGtkTextEditor (void)
-{
+static void CreateGtkTextEditor(void) {
 	GtkWidget *dlg;
 	GtkWidget *vbox, *hbox, *button, *scr, *text;
 
@@ -105,7 +107,8 @@ static void CreateGtkTextEditor (void)
 	scr = gtk_scrolled_window_new(0, 0);
 	gtk_widget_show(scr);
 	gtk_box_pack_start(GTK_BOX(vbox), scr, TRUE, TRUE, 0);
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr),
+			GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
 
 	text = gtk_text_view_new();
@@ -139,49 +142,50 @@ static void CreateGtkTextEditor (void)
  * @param[in] cursorpos Offset to place the cursor to
  * @sa editor_save
  */
-void DoTextEditor (const char* filename, int cursorpos, const char *appendContent)
-{
+void DoTextEditor(const char* filename, int cursorpos,
+		const char *appendContent) {
 	if (!text_editor)
 		CreateGtkTextEditor(); // build it the first time we need it
 	else if (widget_is_visible(text_editor)) {
 		if (appendContent) {
 			GtkTextIter iter;
-			GtkTextBuffer* text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_widget));
+			GtkTextBuffer* text_buffer = gtk_text_view_get_buffer(
+					GTK_TEXT_VIEW(text_widget));
 			gtk_text_buffer_get_end_iter(text_buffer, &iter);
-			gtk_text_buffer_insert(text_buffer, &iter, appendContent, strlen(appendContent));
+			gtk_text_buffer_insert(text_buffer, &iter, appendContent, strlen(
+					appendContent));
 		}
 		return;
 	} else {
-		GtkTextBuffer* text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_widget));
+		GtkTextBuffer* text_buffer = gtk_text_view_get_buffer(
+				GTK_TEXT_VIEW(text_widget));
 		gtk_text_buffer_set_text(text_buffer, "", 0);
 	}
-
-	// Load file
-	FILE *f = fopen(filename, "r");
 
 	void *old_filename;
 
 	gtk_window_set_title(GTK_WINDOW(text_editor), filename);
-	GtkTextBuffer* text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_widget));
+	GtkTextBuffer* text_buffer = gtk_text_view_get_buffer(
+			GTK_TEXT_VIEW(text_widget));
 
-	if (f != 0) {
-		fseek(f, 0, SEEK_END);
-		const int len = ftell(f);
-		void *buf = malloc(len);
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
+	if (file) {
+		const std::size_t size = file->size();
+		char *buf = (char *)malloc(size + 1);
+		TextInputStream &stream = file->getInputStream();
+		stream.read(buf, size);
+		buf[size] = '\0';
 
-		rewind(f);
-		fread(buf, 1, len, f);
-
-		gtk_text_buffer_set_text(text_buffer, (char *)buf, len);
+		gtk_text_buffer_set_text(text_buffer, (char *) buf, size);
 
 		free(buf);
-		fclose(f);
 	}
 
 	if (appendContent) {
 		GtkTextIter iter;
 		gtk_text_buffer_get_end_iter(text_buffer, &iter);
-		gtk_text_buffer_insert(text_buffer, &iter, appendContent, strlen(appendContent));
+		gtk_text_buffer_insert(text_buffer, &iter, appendContent, strlen(
+				appendContent));
 	}
 
 	old_filename = g_object_get_data(G_OBJECT(text_editor), "filename");
