@@ -181,9 +181,10 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 					gtk_tree_view_column_new_with_attributes(
 							_("Prefab"), renderer, "text", PREFAB_NAME,
 							(char const*) 0);
-			gtk_tree_view_append_column(view, column);
+			gtk_tree_view_column_set_expand(column, TRUE);
 			gtk_tree_view_column_set_sort_indicator(column, TRUE);
 			gtk_tree_view_column_set_sort_column_id(column, PREFAB_NAME);
+			gtk_tree_view_append_column(view, column);
 		}
 
 		{
@@ -192,6 +193,7 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 					gtk_tree_view_column_new_with_attributes(
 							_("Image"), renderer, "pixbuf", PREFAB_IMAGE,
 							(char const*) 0);
+			gtk_tree_view_column_set_fixed_width(column, 128);
 			gtk_tree_view_append_column(view, column);
 		}
 
