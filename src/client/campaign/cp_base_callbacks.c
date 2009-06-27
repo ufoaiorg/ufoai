@@ -56,6 +56,8 @@ static void B_Destroy_AntimaterStorage_f (void)
 		return;
 	if (base->baseStatus != BASE_WORKING)
 		return;
+	if (base->capacities[CAP_ANTIMATTER].cur <= 0)
+		return;
 
 	if (prob < atof(Cmd_Argv(1))) {
 		MS_AddNewMessage(_("Notice"), va(_("%s has been destroyed by an antimatter storage breach."), base->name), qfalse, MSG_STANDARD, NULL);
