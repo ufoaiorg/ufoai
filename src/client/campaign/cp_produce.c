@@ -575,6 +575,12 @@ qboolean PR_LoadXML (mxml_node_t *p)
 				pq->items[j].item = INVSH_GetItemByID(s1);
 			pq->items[j].idx = j;
 			pq->items[j].amount = mxml_GetInt(ssnode, "amount", 0);
+			if (pq->items[j].amount <= 0) {
+				Com_Printf("PR_Load: Production with amount <= 0 dropped (baseidx=%i, production idx=%i).\n", i, j);
+				j--;
+				pq->numItems--;
+				continue;
+			}
 			pq->items[j].percentDone = mxml_GetFloat(ssnode, "percentdone", 0.0);
 			pq->items[j].production = mxml_GetBool(ssnode, "prod", qfalse);
 			s2 = mxml_GetString(ssnode, "aircraftid");
