@@ -59,21 +59,24 @@ typedef struct place_s {
 	int floor;		/**< The floor of the place, given in absolute QUANTs */
 	int ceiling;	/**< The ceiling of it, given in absolute QUANTs. */
 	int floorZ;		/**< The level (0-7) of the floor. */
+	qboolean usable;/**< does an actor fit in here ? */
 } place_t;
 
 static inline void RT_PlaceInit (routing_t *map, const int actorSize, place_t *p, const int x, const int y, const int z)
 {
+	int relCeiling = RT_CEILING(map, actorSize, x, y, z);
 	p->cell[0] = x;
 	p->cell[1] = y;
 	p->cell[2] = z;
 	p->floor = max(0, RT_FLOOR(map, actorSize, x, y, z)) + z * CELL_HEIGHT;
-	p->ceiling = RT_CEILING(map, actorSize, x, y, z) + z * CELL_HEIGHT;
-	p->floorZ =  (p->floor - 1) / CELL_HEIGHT;
+	p->ceiling = relCeiling + z * CELL_HEIGHT;
+	p->floorZ =  p->floor / CELL_HEIGHT;
+	p->usable = (relCeiling && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? qtrue : qfalse;
 }
 
 static inline qboolean RT_PlaceIsUsable (place_t* p)
 {
-	return (p->ceiling && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING);
+	return p->usable;
 }
 
 static inline qboolean RT_PlaceDoesIntersectEnough(place_t* p, place_t* other)
