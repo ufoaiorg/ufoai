@@ -446,17 +446,11 @@ void PR_ProductionRun (void)
 						/* Large UFOs can only be stored in Large UFO Hangar */
 						if (base->capacities[CAP_UFOHANGARS_LARGE].cur > 0)
 							base->capacities[CAP_UFOHANGARS_LARGE].cur--;
-						else
-							/* Should never be reached */
-							Com_Error(ERR_DROP, "PR_ProductionRun: Can not find %s in large UFO Hangar", ufocraft->id);
 					} else {
 						/* Small UFOs can only be stored in Small UFO Hangar */
 						if (base->capacities[CAP_UFOHANGARS_SMALL].cur > 0)
 							base->capacities[CAP_UFOHANGARS_SMALL].cur--;
-						else
-							/* Should never be reached */
-							Com_Error(ERR_DROP, "PR_ProductionRun: Can not find %s in small UFO Hangar", ufocraft->id);
-						}
+					}
 				}
 				if (prod->amount <= 0) {
 					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s has finished."), _(od->name));
