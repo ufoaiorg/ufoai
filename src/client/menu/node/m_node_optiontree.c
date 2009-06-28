@@ -270,9 +270,9 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 		}
 
 		/* print the option label */
-		R_Color(textColor);
 		decX = pos[0] + node->padding + iterator.depthPos * DEPTH_WIDTH;
 
+		R_Color(NULL);
 		if (option->firstChild) {
 			menuIcon_t *icon = (option->collapsed)?systemExpand:systemCollapse;
 			MN_DrawIconInBox(icon, 0, decX, currentY, icon->size[0], ELEMENT_HEIGHT);
@@ -288,6 +288,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 			decX += option->icon->size[0];
 		}
 
+		R_Color(textColor);
 		MN_DrawString(font, ALIGN_UL, decX, currentY,
 			pos[0], currentY, node->size[0] - node->padding - node->padding, node->size[1],
 			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
@@ -332,7 +333,7 @@ static void MN_OptionTreeNodeClick (menuNode_t * node, int x, int y)
 	}
 
 	/* no cvar? */
-	if (strncmp((const char *)node->cvar, "*cvar", 5))
+	if (strncmp((const char *)node->cvar, "*cvar:", 6))
 		return;
 
 	/* select the right option */

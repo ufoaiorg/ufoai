@@ -1353,7 +1353,7 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 		return NULL;
 
 	/* its a cvar */
-	if (*ref == '*') {
+	if (ref[0] == '*') {
 		const char *token;
 
 		/* get the reference and the name */
@@ -1396,7 +1396,7 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 		}
 
 	/* traslatable string */
-	} else if (*ref == '_') {
+	} else if (ref[0] == '_') {
 		ref++;
 		return _(ref);
 

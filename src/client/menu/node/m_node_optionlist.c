@@ -124,6 +124,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 			int iconStatus = 0;
 			if (option->disabled)
 				iconStatus = 2;
+			R_Color(NULL);
 			MN_DrawIconInBox(option->icon, iconStatus, decX, currentY, option->icon->size[0], ELEMENT_HEIGHT);
 			decX += option->icon->size[0];
 		}
@@ -196,7 +197,7 @@ static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 	}
 
 	/* no cvar? */
-	if (strncmp((const char *)node->cvar, "*cvar", 5))
+	if (strncmp((const char *)node->cvar, "*cvar:", 6))
 		return;
 
 	/* select the right option */
