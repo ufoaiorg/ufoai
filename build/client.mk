@@ -176,6 +176,7 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_material_editor.c \
 	client/menu/node/m_node_model.c \
 	client/menu/node/m_node_optionlist.c \
+	client/menu/node/m_node_optiontree.c \
 	client/menu/node/m_node_panel.c \
 	client/menu/node/m_node_radar.c \
 	client/menu/node/m_node_radiobutton.c \

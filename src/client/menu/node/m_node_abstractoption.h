@@ -40,17 +40,19 @@ typedef struct menuOption_s {
 	char action[MAX_VAR];	/**< execute this when the value is selected */
 	char value[MAX_VAR];	/**< the value the cvar should get */
 	struct menuIcon_s *icon;	/**< Facultative icon */
+	struct menuOption_s	*firstChild;	/** first child of an option tree */
+	struct menuOption_s *next;	/**< Next element into a linked list of option */
+
+	/* status */
 	qboolean disabled;		/**< If true, the option is not selectable */
 	qboolean invis;			/**< If true, the option is not displayed */
+	qboolean collapsed;		/**< If true, child are not displayed */
+
+	/* cache */
 	qboolean truncated;		/**< If true, the label is not fully displayed */
+	int childCount;			/**< Number of visible recursive child */
+	qboolean hovered;		/**< true if the element is hovered. Deprecated */
 
-	/**
-	 * @brief True if the element is hovered
-	 * @todo remove it, deprecated, we should use optionExtraData_t->hovered
-	 */
-	qboolean hovered;
-
-	struct menuOption_s *next;	/**< Next element into a linked list of option */
 } menuOption_t;
 
 typedef struct {

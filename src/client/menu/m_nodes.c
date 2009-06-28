@@ -48,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_material_editor.h"
 #include "node/m_node_model.h"
 #include "node/m_node_optionlist.h"
+#include "node/m_node_optiontree.h"
 #include "node/m_node_panel.h"
 #include "node/m_node_radar.h"
 #include "node/m_node_radiobutton.h"
@@ -98,6 +99,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterMaterialEditorNode,
 	MN_RegisterModelNode,
 	MN_RegisterOptionListNode,
+	MN_RegisterOptionTreeNode,
 	MN_RegisterPanelNode,
 	MN_RegisterImageNode,	/* pic */
 	MN_RegisterRadarNode,
