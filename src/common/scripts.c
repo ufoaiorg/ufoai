@@ -247,9 +247,9 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_BOOL:
 		if (!strcmp(token, "true") || *token == '1')
-			*b = qtrue;
+			*(qboolean *)b = qtrue;
 		else if (!strcmp(token, "false") || *token == '0')
-			*b = qfalse;
+			*(qboolean *)b = qfalse;
 		else {
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal bool statement '%s'", token);
 			return RESULT_ERROR;
