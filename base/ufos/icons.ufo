@@ -1,5 +1,27 @@
 // icon definitions for GUI
 
+//
+// icons hard coded into the ui code 
+//
+
+icon system_expand {
+	image "ui/icon_open"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+icon system_collapse {
+	image "ui/icon_close"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+//
+// icons scripted into ui scrips
+//
+
 icon geoscape {
 	image "ui/icon_pack1"
 	texl "0 0"

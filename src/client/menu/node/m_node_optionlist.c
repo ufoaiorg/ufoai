@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_actions.h"
 #include "../m_font.h"
+#include "../m_icon.h"
 #include "../m_render.h"
 #include "m_node_abstractoption.h"
 #include "m_node_abstractnode.h"
@@ -51,7 +52,7 @@ static menuOption_t*  MN_OptionListNodeGetFirstOption (menuNode_t * node)
 		return node->u.option.first;
 	} else {
 		const int v = MN_GetDataVersion(node->u.option.dataId);
-		if (v != node->u.option.dataId) {
+		if (v != node->u.option.versionId) {
 			/* we should update and fire event here */
 			node->u.option.versionId = v;
 		}
@@ -99,6 +100,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 
 	/* draw all available options for this selectbox */
 	for (; option; option = option->next) {
+		int decX = pos[0] + node->padding;
 		/* outside the node */
 		if (currentY + elementHeight > pos[1] + node->size[1] - node->padding) {
 			count++;
@@ -118,9 +120,17 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 			textColor = node->color;
 		}
 
+		if (option->icon) {
+			int iconStatus = 0;
+			if (option->disabled)
+				iconStatus = 2;
+			MN_DrawIconInBox(option->icon, iconStatus, decX, currentY, option->icon->size[0], ELEMENT_HEIGHT);
+			decX += option->icon->size[0];
+		}
+
 		/* print the option label */
 		R_Color(textColor);
-		MN_DrawString(font, ALIGN_UL, pos[0] + node->padding, currentY,
+		MN_DrawString(font, ALIGN_UL, decX, currentY,
 			pos[0], currentY, node->size[0] - node->padding - node->padding, node->size[1],
 			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 

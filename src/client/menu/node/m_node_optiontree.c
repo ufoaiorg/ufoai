@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_actions.h"
 #include "../m_font.h"
+#include "../m_icon.h"
 #include "../m_render.h"
 #include "m_node_abstractoption.h"
 #include "m_node_abstractnode.h"
@@ -44,12 +45,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define COLLAPSEBUTTON_WIDTH 20		/**< Size used for the collapse button */
 #define DEPTH_WIDTH 25				/**< Width between each depth level */
 
+static menuIcon_t *systemCollapse;
+static menuIcon_t *systemExpand;
+
 /**
  * @brief update option cache about child, according to collapse and visible status
  * @note can be a common function for all option node
  * @return number of visible elements
  */
-static int MN_OptionTreeNodeUpdateCache (menuOption_t* option)
+static int MN_OptionUpdateCache (menuOption_t* option)
 {
 	int count = 0;
 	while (option) {
@@ -65,7 +69,7 @@ static int MN_OptionTreeNodeUpdateCache (menuOption_t* option)
 			continue;
 		}
 		if (option->firstChild)
-			localCount = MN_OptionTreeNodeUpdateCache(option->firstChild);
+			localCount = MN_OptionUpdateCache(option->firstChild);
 		option->childCount = localCount;
 		count += 1 + localCount;
 		option = option->next;
@@ -73,26 +77,43 @@ static int MN_OptionTreeNodeUpdateCache (menuOption_t* option)
 	return count;
 }
 
+/** @todo we should remove this call loop */
+static menuOption_t* MN_OptionTreeNodeGetFirstOption (menuNode_t * node);
+
+static void MN_OptionTreeNodeUpdateCache (menuNode_t * node)
+{
+	menuOption_t* option = MN_OptionTreeNodeGetFirstOption(node);
+	int viewSize;
+
+	int count = 0;
+	if (option)
+		count = MN_OptionUpdateCache(option);
+	if (node->u.option.count == count)
+		return;
+
+	viewSize = (node->size[1] - node->padding - node->padding) / ELEMENT_HEIGHT;
+	node->u.option.count = count;
+	if (count - node->u.option.pos < viewSize)
+		node->u.option.pos = count - viewSize;
+	if (node->u.option.pos < 0)
+		node->u.option.pos = 0;
+	MN_ExecuteEventActions(node, node->u.option.onViewChange);
+}
+
 /**
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-static menuOption_t*  MN_OptionTreeNodeGetFirstOption (menuNode_t * node)
+static menuOption_t* MN_OptionTreeNodeGetFirstOption (menuNode_t * node)
 {
 	if (node->u.option.first) {
 		return node->u.option.first;
 	} else {
 		const int v = MN_GetDataVersion(node->u.option.dataId);
 		menuOption_t *option = MN_GetOption(node->u.option.dataId);
-		if (v != node->u.option.dataId) {
-			int count = 0;
-			if (option)
-				count = MN_OptionTreeNodeUpdateCache(option);
-			if (node->u.option.count != count) {
-				node->u.option.count = count;
-				MN_ExecuteEventActions(node, node->u.option.onViewChange);
-			}
+		if (v != node->u.option.versionId) {
 			node->u.option.versionId = v;
+			MN_OptionTreeNodeUpdateCache(node);
 		}
 		return option;
 	}
@@ -203,6 +224,11 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 
 	memset(&iterator, 0, sizeof(iterator));
 
+	if (!systemExpand)
+		systemExpand = MN_GetIconByName("system_expand");
+	if (!systemCollapse)
+		systemCollapse = MN_GetIconByName("system_collapse");
+
 	if (!node->cvar)
 		return;
 
@@ -223,6 +249,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	/* draw all available options for this selectbox */
 	for (; option; option = MN_OptionTreeNextOption(&iterator)) {
 		int decX;
+
 		/* outside the node */
 		if (currentY + elementHeight > pos[1] + node->size[1] - node->padding) {
 			count++;
@@ -244,18 +271,24 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 
 		/* print the option label */
 		R_Color(textColor);
-		decX = iterator.depthPos * DEPTH_WIDTH;
+		decX = pos[0] + node->padding + iterator.depthPos * DEPTH_WIDTH;
 
 		if (option->firstChild) {
-			const char *collapseString = (option->collapsed) ? "[+]" : "[-]";
-			MN_DrawString(font, ALIGN_UL, pos[0] + node->padding + decX, currentY,
-				pos[0], currentY, node->size[0] - node->padding - node->padding, node->size[1],
-				0, collapseString, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			menuIcon_t *icon = (option->collapsed)?systemExpand:systemCollapse;
+			MN_DrawIconInBox(icon, 0, decX, currentY, icon->size[0], ELEMENT_HEIGHT);
 		}
 
-
 		decX += COLLAPSEBUTTON_WIDTH;
-		MN_DrawString(font, ALIGN_UL, pos[0] + node->padding + decX, currentY,
+
+		if (option->icon) {
+			int iconStatus = 0;
+			if (option->disabled)
+				iconStatus = 2;
+			MN_DrawIconInBox(option->icon, iconStatus, decX, currentY, option->icon->size[0], ELEMENT_HEIGHT);
+			decX += option->icon->size[0];
+		}
+
+		MN_DrawString(font, ALIGN_UL, decX, currentY,
 			pos[0], currentY, node->size[0] - node->padding - node->padding, node->size[1],
 			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
@@ -311,14 +344,8 @@ static void MN_OptionTreeNodeClick (menuNode_t * node, int x, int y)
 	x -= depth * DEPTH_WIDTH;
 	if (x >= 0 && x < COLLAPSEBUTTON_WIDTH) {
 		if (option && option->firstChild) {
-			int count;
 			option->collapsed = !option->collapsed;
-			option = MN_OptionTreeNodeGetFirstOption(node);
-			count = MN_OptionTreeNodeUpdateCache(option);
-			if (node->u.option.count != count) {
-				node->u.option.count = count;
-				MN_ExecuteEventActions(node, node->u.option.onViewChange);
-			}
+			MN_OptionTreeNodeUpdateCache(node);
 		}
 		return;
 	}
@@ -345,10 +372,6 @@ static void MN_OptionTreeNodeLoading (menuNode_t *node)
 	Vector4Set(node->color, 1, 1, 1, 1);
 	node->u.option.versionId = -1;
 	node->padding = 3;
-}
-
-static void MN_OptionTreeNodeLoaded (menuNode_t *node)
-{
 }
 
 #ifdef DEBUG
@@ -378,9 +401,23 @@ static void MN_InitInlineTest (void)
 	options[5].firstChild = &options[20];
 	options[6].firstChild = &options[25];
 
+	options[0].icon = MN_GetIconByName("smallhead_scientist");
+	options[1].icon = MN_GetIconByName("smallhead_pilot");
+	options[2].icon = MN_GetIconByName("smallhead_worker");
+
 	MN_RegisterOption(OPTION_TEST, options);
 }
 #endif
+
+static void MN_OptionTreeNodeLoaded (menuNode_t *node)
+{
+#ifdef DEBUG
+	static int i = 0;
+	if (i == 0)
+		MN_InitInlineTest();
+	i++;
+#endif
+}
 
 void MN_RegisterOptionTreeNode (nodeBehaviour_t *behaviour)
 {
@@ -390,7 +427,4 @@ void MN_RegisterOptionTreeNode (nodeBehaviour_t *behaviour)
 	behaviour->leftClick = MN_OptionTreeNodeClick;
 	behaviour->loading = MN_OptionTreeNodeLoading;
 	behaviour->loaded = MN_OptionTreeNodeLoaded;
-#ifdef DEBUG
-	MN_InitInlineTest();
-#endif
 }

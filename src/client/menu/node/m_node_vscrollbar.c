@@ -95,6 +95,8 @@ static void MN_VScrollbarNodeSet (menuNode_t *node, int value)
 	} else if (pos > EXTRADATA(node).fullsize - EXTRADATA(node).viewsize) {
 		pos = EXTRADATA(node).fullsize - EXTRADATA(node).viewsize;
 	}
+	if (pos < 0)
+		pos = 0;
 
 	/* nothing change */
 	if (EXTRADATA(node).pos == pos)
