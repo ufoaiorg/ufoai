@@ -223,7 +223,6 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	/* draw all available options for this selectbox */
 	for (; option; option = MN_OptionTreeNextOption(&iterator)) {
 		int decX;
-		const char *collapseString;
 		/* outside the node */
 		if (currentY + elementHeight > pos[1] + node->size[1] - node->padding) {
 			count++;
@@ -248,7 +247,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 		decX = iterator.depthPos * DEPTH_WIDTH;
 
 		if (option->firstChild) {
-			collapseString = (option->collapsed)?"[+]":"[-]";
+			const char *collapseString = (option->collapsed) ? "[+]" : "[-]";
 			MN_DrawString(font, ALIGN_UL, pos[0] + node->padding + decX, currentY,
 				pos[0], currentY, node->size[0] - node->padding - node->padding, node->size[1],
 				0, collapseString, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
@@ -271,7 +270,7 @@ static menuOption_t* MN_OptionTreeNodeGetOptionAtPosition (menuNode_t * node, in
 {
 	menuOption_t* option;
 	const int elementHeight = ELEMENT_HEIGHT;	/**< @todo fix it with text font */
-	int count = 0;
+	int count;
 	menuOptionIterator_t iterator;
 	memset(&iterator, 0, sizeof(iterator));
 
