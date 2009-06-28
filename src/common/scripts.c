@@ -183,8 +183,8 @@ CASSERT(lengthof(vt_aligns) == V_NUM_TYPES);
 static char parseErrorMessage[256];
 
 /**
- * Return the last error message
- * @return adresse containe the last message
+ * Returns the last error message
+ * @return string that contains the last error message
  */
 const char* Com_GetLastParseError (void)
 {
@@ -192,7 +192,7 @@ const char* Com_GetLastParseError (void)
 }
 
 /**
- * @brief Align a memory to use a natural adress for the data type we will write
+ * @brief Align a memory to use a natural address for the data type we will write
  * @note it speed up data read, and fix crash on PPC processors
  */
 void* Com_AlignPtr (void *memory, valueTypes_t type)
