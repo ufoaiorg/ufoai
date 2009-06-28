@@ -398,9 +398,9 @@ static void E_EmployeeHire_f (void)
 		if (!E_HireEmployee(base, employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
 			MN_DisplayNotice(_("Could not hire employee"), 2000);
-			Cmd_ExecuteString(va("employeedel %i", button));
+			MN_ExecuteConfunc("employeedel %i", button);
 		} else
-			Cmd_ExecuteString(va("employeeadd %i", button));
+			MN_ExecuteConfunc("employeeadd %i", button);
 	}
 	Cbuf_AddText(va("employee_select %i\n", num));
 	E_UpdateGUICount_f();
