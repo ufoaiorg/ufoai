@@ -94,6 +94,7 @@ void MN_DrawIconInBox (menuIcon_t* icon, int status, int posX, int posY, int siz
 	if (icon->single)
 		texY = icon->pos[1];
 	else
+		/** @todo use an enum for status and document what the expected image format is */
 		texY = icon->pos[1] + (TILE_HEIGHT * status);
 
 	posX += (sizeX - icon->size[0]) / 2;
