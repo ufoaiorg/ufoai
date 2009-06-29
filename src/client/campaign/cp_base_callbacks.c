@@ -888,9 +888,9 @@ static void BaseSummary_SelectBase_f (void)
 	i = atoi(Cmd_Argv(1));
 	if (i >= 0 || i < ccs.numBases) {
 		const base_t *base = B_GetFoundedBaseByIDX(i);
-		if (base) {
-			B_SetCurrentSelectedBase(base);
+		if (base != NULL) {
 			BaseSummary_Init(base);
+			MN_ExecuteConfunc("basesummary_change_color %i", base->idx);
 		}
 	}
 }

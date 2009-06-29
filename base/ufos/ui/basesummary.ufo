@@ -23,7 +23,7 @@ window basesummary
 		*basenavigation.base7@bgcolor "1 1 1 0.4"
 	}
 
-	confunc change_color {
+	confunc basesummary_change_color {
 		call reset_color
 		*basenavigation.base<1>@bgcolor "1 1 1 0.7"
 	}
@@ -55,7 +55,6 @@ window basesummary
 			baseid		0
 			onClick 		{
 				cmd "basesummary_selectbase <baseid>;"
-				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -68,7 +67,6 @@ window basesummary
 			baseid		1
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
-				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -81,7 +79,6 @@ window basesummary
 			baseid		2
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
-				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -94,7 +91,6 @@ window basesummary
 			baseid		3
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
-				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -107,7 +103,6 @@ window basesummary
 			baseid		4
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
-				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -120,7 +115,6 @@ window basesummary
 			baseid		5
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
-				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -133,7 +127,6 @@ window basesummary
 			baseid		6
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
-				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -146,7 +139,6 @@ window basesummary
 			baseid		7
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
-				cmd "change_color <baseid>;"
 			}
 		}
 	}
@@ -245,6 +237,5 @@ window basesummary
 	func onInit
 	{
 		cmd "basesummary_selectbase 0;"
-		cmd "change_color 0;"
 	}
 }
