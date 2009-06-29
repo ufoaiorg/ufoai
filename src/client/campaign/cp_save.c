@@ -578,7 +578,7 @@ static void SAV_GameQuickLoadInit_f (void)
 		return;
 	}
 
-	FS_OpenFile("save/slotquick.sav", &f, FILE_READ);
+	FS_OpenFile("save/slotquick.xml", &f, FILE_READ);
 	if (!f.f && !f.z)
 		MN_PopMenu(qfalse);
 	else
