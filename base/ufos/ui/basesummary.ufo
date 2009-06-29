@@ -12,6 +12,22 @@ window basesummary
 		image	ui/base_bg
 	}
 
+	func reset_color {
+		*basenavigation.base0@bgcolor "1 1 1 0.4"
+		*basenavigation.base1@bgcolor "1 1 1 0.4"
+		*basenavigation.base2@bgcolor "1 1 1 0.4"
+		*basenavigation.base3@bgcolor "1 1 1 0.4"
+		*basenavigation.base4@bgcolor "1 1 1 0.4"
+		*basenavigation.base5@bgcolor "1 1 1 0.4"
+		*basenavigation.base6@bgcolor "1 1 1 0.4"
+		*basenavigation.base7@bgcolor "1 1 1 0.4"
+	}
+
+	confunc change_color {
+		call reset_color
+		*basenavigation.base<1>@bgcolor "1 1 1 0.7"
+	}
+
 	panel basenavigation {
 		{
 			pos		"621 115"
@@ -39,6 +55,7 @@ window basesummary
 			baseid		0
 			onClick 		{
 				cmd "basesummary_selectbase <baseid>;"
+				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -51,6 +68,7 @@ window basesummary
 			baseid		1
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
+				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -63,6 +81,7 @@ window basesummary
 			baseid		2
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
+				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -75,6 +94,7 @@ window basesummary
 			baseid		3
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
+				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -87,6 +107,7 @@ window basesummary
 			baseid		4
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
+				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -99,6 +120,7 @@ window basesummary
 			baseid		5
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
+				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -111,6 +133,7 @@ window basesummary
 			baseid		6
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
+				cmd "change_color <baseid>;"
 			}
 		}
 
@@ -123,6 +146,7 @@ window basesummary
 			baseid		7
 			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
+				cmd "change_color <baseid>;"
 			}
 		}
 	}
@@ -220,15 +244,7 @@ window basesummary
 	// ==================
 	func onInit
 	{
-		*basenavigation.base0@bgcolor "1 1 1 0.4"
-		*basenavigation.base1@bgcolor "1 1 1 0.4"
-		*basenavigation.base2@bgcolor "1 1 1 0.4"
-		*basenavigation.base3@bgcolor "1 1 1 0.4"
-		*basenavigation.base4@bgcolor "1 1 1 0.4"
-		*basenavigation.base5@bgcolor "1 1 1 0.4"
-		*basenavigation.base6@bgcolor "1 1 1 0.4"
-		*basenavigation.base7@bgcolor "1 1 1 0.4"
-		*basenavigation.base<cvar:mn_base_id>@bgcolor "1 1 1 0.7"
-		cmd "basesummary_init;"
+		cmd "basesummary_selectbase 0;"
+		cmd "change_color 0;"
 	}
 }

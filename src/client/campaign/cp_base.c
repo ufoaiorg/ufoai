@@ -1844,7 +1844,6 @@ void B_SetCurrentSelectedBase (const base_t *base)
 		INS_SetCurrentSelectedInstallation(NULL);
 		Cvar_Set("mn_base_title", base->name);
 		Cvar_SetValue("mn_base_status_id", base->baseStatus);
-		Cvar_SetValue("mn_base_id", base->idx);
 	} else {
 		Cvar_Set("mn_base_title", "");
 		Cvar_Set("mn_base_status_id", "");
