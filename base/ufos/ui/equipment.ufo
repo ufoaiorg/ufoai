@@ -349,10 +349,10 @@ window equipment
 			dataid		TEXT_STANDARD
 			onViewChange {
 				*(abstractscrollbar)itemdescription.description_scroll@fullsize <lines>
-				*(abstractscrollbar)itemdescription.description_scroll@current <text_scroll>
+				*(abstractscrollbar)itemdescription.description_scroll@current <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)itemdescription.description_scroll@current <text_scroll>
+				*(abstractscrollbar)itemdescription.description_scroll@current <viewpos>
 			}
 		}
 		vscrollbar description_scroll {
@@ -364,7 +364,7 @@ window equipment
 			fullsize	7
 			hidewhenunused true
 			onChange {
-				*itemdescription.description@text_scroll <current>
+				*itemdescription.description@viewpos <current>
 			}
 		}
 

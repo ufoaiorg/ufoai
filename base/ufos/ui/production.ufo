@@ -286,12 +286,12 @@ window production
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onWheel		{
-			*(abstractscrollbar)prodlist_scroll@current <text_scroll>
+			*(abstractscrollbar)prodlist_scroll@current <viewpos>
 			cmd "prod_scroll;"
 		}
 		onViewChange	{
 			*(abstractscrollbar)prodlist_scroll@fullsize <lines>
-			*(abstractscrollbar)prodlist_scroll@current <text_scroll>
+			*(abstractscrollbar)prodlist_scroll@current <viewpos>
 		}
 	}
 

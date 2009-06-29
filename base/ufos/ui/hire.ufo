@@ -256,7 +256,7 @@ window employees
 		onWheelDown		{ cmd "mn_textscroll employee_list 1; employee_scroll;" }
 		onViewChange	{
 			*(abstractscrollbar)scroll@fullsize <lines>
-			*(abstractscrollbar)scroll@current <text_scroll>
+			*(abstractscrollbar)scroll@current <viewpos>
 		}
 	}
 

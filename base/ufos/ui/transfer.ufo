@@ -153,11 +153,11 @@ window transfer
 		rows		"9"
 		onClick		{ cmd "trans_cargolist_click <lineselected>" }
 		onWheel		{
-			*(abstractscrollbar)trans_cargolist_scroll@current <text_scroll>
+			*(abstractscrollbar)trans_cargolist_scroll@current <viewpos>
 		}
 		onViewChange	{
 			*(abstractscrollbar)trans_cargolist_scroll@fullsize <lines>
-			*(abstractscrollbar)trans_cargolist_scroll@current <text_scroll>
+			*(abstractscrollbar)trans_cargolist_scroll@current <viewpos>
 		}
 	}
 
@@ -238,11 +238,11 @@ window transfer
 		rows		"22"
 		onClick		{ cmd "trans_list_click <lineselected>" }
 		onWheel		{
-			*(abstractscrollbar)trans_list_scroll@current <text_scroll>
+			*(abstractscrollbar)trans_list_scroll@current <viewpos>
 		}
 		onViewChange	{
 			*(abstractscrollbar)trans_list_scroll@fullsize <lines>
-			*(abstractscrollbar)trans_list_scroll@current <text_scroll>
+			*(abstractscrollbar)trans_list_scroll@current <viewpos>
 		}
 	}
 

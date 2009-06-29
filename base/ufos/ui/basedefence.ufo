@@ -115,10 +115,10 @@ window basedefence
 			}
 			onViewChange {
 				*(abstractscrollbar)slots.slotlist_scroll@fullsize <lines>
-				*(abstractscrollbar)slots.slotlist_scroll@current <text_scroll>
+				*(abstractscrollbar)slots.slotlist_scroll@current <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)slots.slotlist_scroll@current <text_scroll>
+				*(abstractscrollbar)slots.slotlist_scroll@current <viewpos>
 			}
 		}
 		vscrollbar slotlist_scroll
@@ -195,10 +195,10 @@ window basedefence
 			}
 			onViewChange {
 				*(abstractscrollbar)store.storelist_scroll@fullsize <lines>
-				*(abstractscrollbar)store.storelist_scroll@current <text_scroll>
+				*(abstractscrollbar)store.storelist_scroll@current <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)store.storelist_scroll@current <text_scroll>
+				*(abstractscrollbar)store.storelist_scroll@current <viewpos>
 			}
 		}
 		vscrollbar storelist_scroll
@@ -258,10 +258,10 @@ window basedefence
 			mousefx		true
 			onViewChange {
 				*(abstractscrollbar)descpanel.description_scroll@fullsize <lines>
-				*(abstractscrollbar)descpanel.description_scroll@current <text_scroll>
+				*(abstractscrollbar)descpanel.description_scroll@current <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)descpanel.description_scroll@current <text_scroll>
+				*(abstractscrollbar)descpanel.description_scroll@current <viewpos>
 			}
 		}
 		vscrollbar description_scroll

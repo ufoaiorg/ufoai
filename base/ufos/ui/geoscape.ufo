@@ -40,11 +40,11 @@ window geoscape
 			}
 		}
 		onWheel		{
-			*node:(abstractscrollbar)root.messagesystem_scroll@current <text_scroll>
+			*node:(abstractscrollbar)root.messagesystem_scroll@current <viewpos>
 		}
 		onViewChange {
 			*node:(abstractscrollbar)root.messagesystem_scroll@fullsize <lines>
-			*node:(abstractscrollbar)root.messagesystem_scroll@current <text_scroll>
+			*node:(abstractscrollbar)root.messagesystem_scroll@current <viewpos>
 		}
 	}
 	vscrollbar messagesystem_scroll {
@@ -131,10 +131,10 @@ window geoscape
 			rows		8
 			onViewChange {
 				*node:(abstractscrollbar)parent.description_scroll@fullsize <lines>
-				*node:(abstractscrollbar)parent.description_scroll@current <text_scroll>
+				*node:(abstractscrollbar)parent.description_scroll@current <viewpos>
 			}
 			onWheel {
-				*node:(abstractscrollbar)parent.description_scroll@current <text_scroll>
+				*node:(abstractscrollbar)parent.description_scroll@current <viewpos>
 			}
 		}
 
@@ -1698,10 +1698,10 @@ window popup_intercept
 			longlines	prettychop
 			onViewChange {
 				*(abstractscrollbar)aircraft.ships_scroll@fullsize <lines>
-				*(abstractscrollbar)aircraft.ships_scroll@current <text_scroll>
+				*(abstractscrollbar)aircraft.ships_scroll@current <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)aircraft.ships_scroll@current <text_scroll>
+				*(abstractscrollbar)aircraft.ships_scroll@current <viewpos>
 			}
 			onClick		{ cmd "ships_click <lineselected>" }
 			onRClick	{ cmd "ships_rclick <lineselected>" }
@@ -1746,10 +1746,10 @@ window popup_intercept
 			rows		"13"
 			onViewChange {
 				*(abstractscrollbar)sam.bases_scroll@fullsize <lines>
-				*(abstractscrollbar)sam.bases_scroll@current <text_scroll>
+				*(abstractscrollbar)sam.bases_scroll@current <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)sam.bases_scroll@current <text_scroll>
+				*(abstractscrollbar)sam.bases_scroll@current <viewpos>
 			}
 			onClick	{ cmd "bases_click <lineselected>" }
 		}
@@ -2119,12 +2119,12 @@ window messageoptions
 		longlines	prettychop
 		onClick		{ cmd "messagetypes_click <lineselected>" }
 		onWheel		{
-			*(abstractscrollbar)messagetypes_scroll@current <text_scroll>
+			*(abstractscrollbar)messagetypes_scroll@current <viewpos>
 			cmd "msgoptions_scroll;"
 		}
 		onViewChange	{
 			*(abstractscrollbar)messagetypes_scroll@fullsize <lines>
-			*(abstractscrollbar)messagetypes_scroll@current <text_scroll>
+			*(abstractscrollbar)messagetypes_scroll@current <viewpos>
 		}
 	}
 

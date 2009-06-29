@@ -625,7 +625,6 @@ static const value_t properties[] = {
 
 	/* translate text properties into the scrollable data; for a smoth scroll we should split that */
 	{"rows", V_INT, offsetof(menuNode_t, u.text.super.viewSizeY), MEMBER_SIZEOF(menuNode_t, u.text.super.viewSizeY)},
-	{"text_scroll", V_INT, offsetof(menuNode_t, u.text.super.viewPosY), MEMBER_SIZEOF(menuNode_t, u.text.super.viewPosY)},
 	{"lines", V_INT, offsetof(menuNode_t, u.text.super.fullSizeY), MEMBER_SIZEOF(menuNode_t, u.text.super.fullSizeY)},
 
 	/** @todo delete it went its possible (need to create a textlist) */

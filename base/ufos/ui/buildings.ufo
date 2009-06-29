@@ -94,10 +94,10 @@ window buildings
 		onClick		{ cmd "buildings_click <lineselected>" }
 		onViewChange {
 			*(abstractscrollbar)buildings_scroll@fullsize <lines>
-			*(abstractscrollbar)buildings_scroll@current <text_scroll>
+			*(abstractscrollbar)buildings_scroll@current <viewpos>
 		}
 		onWheel {
-			*(abstractscrollbar)buildings_scroll@current <text_scroll>
+			*(abstractscrollbar)buildings_scroll@current <viewpos>
 		}
 	}
 
@@ -110,7 +110,7 @@ window buildings
 		fullsize	19
 		hidewhenunused	true
 		onChange	{
-			*node:root.buildings@text_scroll <current>
+			*node:root.buildings@viewpos <current>
 		}
 	}
 

@@ -133,11 +133,11 @@ window ufopedia
 		onClick		{ cmd "ufopedia_click <lineselected>" }
 		onRClick	{ cmd "ufopedia_rclick <lineselected>" }
 		onWheel		{
-			*(abstractscrollbar)ufopedia_scroll@current <text_scroll>
+			*(abstractscrollbar)ufopedia_scroll@current <viewpos>
 		}
 		onViewChange	{
 			*(abstractscrollbar)ufopedia_scroll@fullsize <lines>
-			*(abstractscrollbar)ufopedia_scroll@current <text_scroll>
+			*(abstractscrollbar)ufopedia_scroll@current <viewpos>
 		}
 	}
 
@@ -148,7 +148,7 @@ window ufopedia
 		current		0
 		viewsize	16
 		fullsize	50
-		onChange	{ *ufopedia@text_scroll <current> }
+		onChange	{ *ufopedia@viewpos <current> }
 	}
 
 	confunc mn_upfbig
@@ -170,7 +170,7 @@ window ufopedia
 		*ufopedia@invis = false
 		*ufopedia_scroll@invis = false
 
-		*ufopedia@text_scroll = 0
+		*ufopedia@viewpos = 0
 		*ufopedia_scroll@current = 0
 	}
 

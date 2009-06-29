@@ -328,11 +328,11 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			onClick		{ cmd "servers_click <lineselected>" }
 			onRClick	{ cmd "pingservers;" }
 			onWheel {
-				*(abstractscrollbar)content.servers_scroll@current <text_scroll>
+				*(abstractscrollbar)content.servers_scroll@current <viewpos>
 			}
 			onViewChange {
 				*(abstractscrollbar)content.servers_scroll@fullsize <lines>
-				*(abstractscrollbar)content.servers_scroll@current <text_scroll>
+				*(abstractscrollbar)content.servers_scroll@current <viewpos>
 			}
 		}
 
