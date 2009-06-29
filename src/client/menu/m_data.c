@@ -89,6 +89,7 @@ static const char *const menutextid_names[] = {
 	"OPTION_SINGLEPLAYER_SKINS",
 	"OPTION_MULTIPLAYER_SKINS",
 	"OPTION_TEST",
+	"OPTION_UFOPEDIA",
 
 	"LINESTRIP_FUNDING",
 	"LINESTRIP_COLOR"

@@ -89,14 +89,47 @@ window ufopedia
 	// text and info
 	// ==================
 
+	optionlist ufopedia_summary
+	{
+		cvar		*cvar:ufopedia_element
+		dataid		OPTION_UFOPEDIA
+		pos			"40 85"
+		size		"640 368"
+		font		f_big
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+
+		onChange	{
+			cmd "ufopedia_click <cvar:ufopedia_element>"
+		}
+		onWheel		{
+			*(abstractscrollbar)ufopedia_summary_scroll@current <viewpos>
+		}
+		onViewChange	{
+			*(abstractscrollbar)ufopedia_summary_scroll@fullsize <count>
+			*(abstractscrollbar)ufopedia_summary_scroll@current <viewpos>
+		}
+	}
+
+	vscrollbar ufopedia_summary_scroll {
+		image		ui/scrollbar_v_green
+		pos			"704 85"
+		height		"368"
+		current		0
+		viewsize	16
+		fullsize	50
+		onChange	{ *ufopedia_summary@viewpos <current> }
+	}
+
 	text ufopedia
 	{
 		dataid		TEXT_UFOPEDIA
 		pos			"40 85"
-		size		"640 368"
-		lineheight	23
+		size		"640 360"
+		font		f_small
+		lineheight	18
 		tabwidth	100
-		rows		16
+		rows		20
 		onClick		{ cmd "ufopedia_click <lineselected>" }
 		onRClick	{ cmd "ufopedia_rclick <lineselected>" }
 		onWheel		{
@@ -111,7 +144,7 @@ window ufopedia
 	vscrollbar ufopedia_scroll {
 		image		ui/scrollbar_v_green
 		pos			"704 85"
-		height		"368"
+		height		"360"
 		current		0
 		viewsize	16
 		fullsize	50
@@ -120,28 +153,25 @@ window ufopedia
 
 	confunc mn_upfbig
 	{
-		*ufopedia@lineheight	"23"
-		*ufopedia@rows	"16"
-		*ufopedia_scroll@viewsize	16
-		*ufopedia@font		f_big
-		*ufopedia@mousefx	true
-		*ufopedia@height	368
-		*ufopedia_scroll@height	368
-		*ufopedia@text_scroll 0
-		*ufopedia_scroll@current 0
+		*ufopedia_summary@invis = false
+		*ufopedia_summary_scroll@invis = false
+		*ufopedia@invis = true
+		*ufopedia_scroll@invis = true
+
+		*ufopedia_summary@viewpos = 0
+		*ufopedia_summary_scroll@current = 0
+		*cvar:ufopedia_element = ""
 	}
 
 	confunc mn_upfsmall
 	{
-		*ufopedia@lineheight	"18"
-		*ufopedia@rows	"20"
-		*ufopedia_scroll@viewsize	20
-		*ufopedia@font		f_small
-		*ufopedia@mousefx	false
-		*ufopedia@height	360
-		*ufopedia_scroll@height	360
-		*ufopedia@text_scroll 0
-		*ufopedia_scroll@current 0
+		*ufopedia_summary@invis = true
+		*ufopedia_summary_scroll@invis = true
+		*ufopedia@invis = false
+		*ufopedia_scroll@invis = false
+
+		*ufopedia@text_scroll = 0
+		*ufopedia_scroll@current = 0
 	}
 
 	text description
@@ -339,10 +369,12 @@ window ufopedia
 	func onInit
 	{
 		cmd "mn_upcontent;"
+		*cvar:ufopedia_element = ""
 	}
 
 	func onClose
 	{
 		cmd "mn_fireinit ufopedia;"
+		cmd "del ufopedia_element"
 	}
 }

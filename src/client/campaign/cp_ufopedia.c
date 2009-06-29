@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_game.h"
 #include "../cl_menu.h"
 #include "../menu/m_nodes.h"
+#include "../menu/m_icon.h"
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -782,6 +783,8 @@ static void UP_FindEntry_f (void)
 	UP_Article(tech, NULL);
 }
 
+static menuOption_t *chapters;
+
 /**
  * @brief Displays the chapters in the UFOpaedia
  * @sa UP_Next_f
@@ -790,9 +793,16 @@ static void UP_FindEntry_f (void)
 static void UP_Content_f (void)
 {
 	int i;
+	menuOption_t *chapter;
+	menuOption_t *last = NULL;
+	int num = 0;
 
 	numChaptersDisplayList = 0;
-	upBuffer[0] = 0;
+
+	/* alloc options only one time */
+	if (!chapters)
+		chapters = MN_AllocOption(ccs.numChapters);
+	chapter = chapters;
 
 	for (i = 0; i < ccs.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
@@ -815,14 +825,20 @@ static void UP_Content_f (void)
 			if (numChaptersDisplayList >= MAX_PEDIACHAPTERS)
 				Com_Error(ERR_DROP, "MAX_PEDIACHAPTERS hit");
 			upChaptersDisplayList[numChaptersDisplayList++] = &ccs.upChapters[i];
-			/** @todo integrate images into text better */
-			Q_strcat(upBuffer, va(TEXT_IMAGETAG"icons/ufopedia_%s %s\n", ccs.upChapters[i].id, _(ccs.upChapters[i].name)), sizeof(upBuffer));
+
+			MN_InitOption(chapter, ccs.upChapters[i].id, ccs.upChapters[i].name, va("%i", num));
+			chapter->icon = MN_GetIconByName(va("ufopedia_%s", ccs.upChapters[i].id));
+			if (last)
+				last->next = chapter;
+			last = chapter;
+			chapter++;
+			num++;
 		}
 	}
 
 	UP_ChangeDisplay(UFOPEDIA_CHAPTERS);
 
-	MN_RegisterText(TEXT_UFOPEDIA, upBuffer);
+	MN_RegisterOption(OPTION_UFOPEDIA, chapters);
 	Cvar_Set("mn_uptitle", _("UFOpaedia Content"));
 }
 

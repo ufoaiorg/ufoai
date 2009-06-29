@@ -312,3 +312,63 @@ icon bordered_cross {
 	texl	"55 46"
 	size	"16 16"
 }
+
+//
+// ufopedia icons
+//
+
+icon ufopedia_aliens {
+	image "icons/ufopedia_aliens"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+icon ufopedia_artifacts {
+	image "icons/ufopedia_artifacts"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+icon ufopedia_buildings {
+	image "icons/ufopedia_buildings"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+icon ufopedia_crafts {
+	image "icons/ufopedia_crafts"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+icon ufopedia_equipment {
+	image "icons/ufopedia_equipment"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+icon ufopedia_tech {
+	image "icons/ufopedia_tech"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+icon ufopedia_threat {
+	image "icons/ufopedia_threat"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+icon ufopedia_news {
+	image "icons/ufopedia_news"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
