@@ -40,8 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MID_SIZE 1
 #define MARGE 3
 
-#define ELEMENT_HEIGHT 20	/**< @todo remove it, should be computed with the font */
-
 /**
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
@@ -72,7 +70,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	const char *font;
 	vec2_t pos;
 	const char* image;
-	int elementHeight = ELEMENT_HEIGHT;	/**< fix it with text font */
+	int fontHeight;
 	int currentY;
 	const float *textColor;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
@@ -89,6 +87,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 
 	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFontFromNode(node);
+	fontHeight = MN_FontGetHeight(font);
 	currentY = pos[1] + node->padding;
 
 	/* skip option over current position */
@@ -102,14 +101,14 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	for (; option; option = option->next) {
 		int decX = pos[0] + node->padding;
 		/* outside the node */
-		if (currentY + elementHeight > pos[1] + node->size[1] - node->padding) {
+		if (currentY + fontHeight > pos[1] + node->size[1] - node->padding) {
 			count++;
 			break;
 		}
 
 		/* draw the hover effect */
 		if (option->hovered)
-			MN_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, elementHeight, node->color);
+			MN_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, fontHeight, node->color);
 
 		/* text color */
 		if (!strcmp(option->value, ref)) {
@@ -125,8 +124,8 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 			if (option->disabled)
 				iconStatus = 2;
 			R_Color(NULL);
-			MN_DrawIconInBox(option->icon, iconStatus, decX, currentY, option->icon->size[0], ELEMENT_HEIGHT);
-			decX += option->icon->size[0];
+			MN_DrawIconInBox(option->icon, iconStatus, decX, currentY, option->icon->size[0], fontHeight);
+			decX += option->icon->size[0] + fontHeight / 4;
 		}
 
 		/* print the option label */
@@ -136,7 +135,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
-		currentY += elementHeight;
+		currentY += fontHeight;
 		count++;
 	}
 	R_Color(NULL);
@@ -158,12 +157,16 @@ static menuOption_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, in
 {
 	menuOption_t* option;
 	vec2_t pos;
-	int elementHeight = ELEMENT_HEIGHT;	/**< @todo fix it with text font */
+	int fontHeight;
 	int currentY;
 	int count = 0;
+	const char *font;
 
 	MN_GetNodeAbsPos(node, pos);
 	currentY = pos[1] + node->padding;
+
+	font = MN_GetFontFromNode(node);
+	fontHeight = MN_FontGetHeight(font);
 
 	option = MN_OptionListNodeGetFirstOption(node);
 	while (option && count < node->u.option.pos) {
@@ -173,11 +176,11 @@ static menuOption_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, in
 
 	/* now draw all available options for this selectbox */
 	for (; option; option = option->next) {
-		if (y < currentY + elementHeight)
+		if (y < currentY + fontHeight)
 			return option;
-		if (currentY + elementHeight > pos[1] + node->size[1] - node->padding)
+		if (currentY + fontHeight > pos[1] + node->size[1] - node->padding)
 			break;
-		currentY += elementHeight;
+		currentY += fontHeight;
 	}
 	return NULL;
 }
@@ -207,6 +210,7 @@ static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 	if (option) {
 		const char *cvarName = &((const char *)node->cvar)[6];
 		MN_SetCvar(cvarName, option->value, 0);
+		MN_ExecuteEventActions(node, node->onChange);
 		if (option->action[0] != '\0') {
 #ifdef DEBUG
 			if (option->action[strlen(option->action) - 1] != ';')

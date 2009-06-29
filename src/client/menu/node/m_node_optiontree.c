@@ -40,8 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MID_SIZE 1
 #define MARGE 3
 
-#define ELEMENT_HEIGHT 20	/**< @todo remove it, should be computed with the font */
-
 #define COLLAPSEBUTTON_WIDTH 20		/**< Size used for the collapse button */
 #define DEPTH_WIDTH 25				/**< Width between each depth level */
 
@@ -84,6 +82,8 @@ static void MN_OptionTreeNodeUpdateCache (menuNode_t * node)
 {
 	menuOption_t* option = MN_OptionTreeNodeGetFirstOption(node);
 	int viewSize;
+	const char *font;
+	int fontHeight;
 
 	int count = 0;
 	if (option)
@@ -91,7 +91,10 @@ static void MN_OptionTreeNodeUpdateCache (menuNode_t * node)
 	if (node->u.option.count == count)
 		return;
 
-	viewSize = (node->size[1] - node->padding - node->padding) / ELEMENT_HEIGHT;
+	font = MN_GetFontFromNode(node);
+	fontHeight = MN_FontGetHeight(font);
+
+	viewSize = (node->size[1] - node->padding - node->padding) / fontHeight;
 	node->u.option.count = count;
 	if (count - node->u.option.pos < viewSize)
 		node->u.option.pos = count - viewSize;
@@ -215,7 +218,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	const char *font;
 	vec2_t pos;
 	const char* image;
-	int elementHeight = ELEMENT_HEIGHT;	/**< fix it with text font */
+	int fontHeight;
 	int currentY;
 	const float *textColor;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
@@ -240,6 +243,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 
 	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFontFromNode(node);
+	fontHeight = MN_FontGetHeight(font);
 	currentY = pos[1] + node->padding;
 
 	/* skip option over current position */
@@ -251,14 +255,14 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 		int decX;
 
 		/* outside the node */
-		if (currentY + elementHeight > pos[1] + node->size[1] - node->padding) {
+		if (currentY + fontHeight > pos[1] + node->size[1] - node->padding) {
 			count++;
 			break;
 		}
 
 		/* draw the hover effect */
 		if (option->hovered)
-			MN_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, elementHeight, node->color);
+			MN_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, fontHeight, node->color);
 
 		/* text color */
 		if (!strcmp(option->value, ref)) {
@@ -275,7 +279,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 		R_Color(NULL);
 		if (option->firstChild) {
 			menuIcon_t *icon = (option->collapsed)?systemExpand:systemCollapse;
-			MN_DrawIconInBox(icon, 0, decX, currentY, icon->size[0], ELEMENT_HEIGHT);
+			MN_DrawIconInBox(icon, 0, decX, currentY, icon->size[0], fontHeight);
 		}
 
 		decX += COLLAPSEBUTTON_WIDTH;
@@ -284,8 +288,8 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 			int iconStatus = 0;
 			if (option->disabled)
 				iconStatus = 2;
-			MN_DrawIconInBox(option->icon, iconStatus, decX, currentY, option->icon->size[0], ELEMENT_HEIGHT);
-			decX += option->icon->size[0];
+			MN_DrawIconInBox(option->icon, iconStatus, decX, currentY, option->icon->size[0], fontHeight);
+			decX += option->icon->size[0] + fontHeight / 4;
 		}
 
 		R_Color(textColor);
@@ -294,7 +298,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
-		currentY += elementHeight;
+		currentY += fontHeight;
 		count++;
 	}
 	R_Color(NULL);
@@ -303,15 +307,19 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 static menuOption_t* MN_OptionTreeNodeGetOptionAtPosition (menuNode_t * node, int x, int y, int *depth)
 {
 	menuOption_t* option;
-	const int elementHeight = ELEMENT_HEIGHT;	/**< @todo fix it with text font */
+	const char *font;
+	int fontHeight;
 	int count;
 	menuOptionIterator_t iterator;
 	memset(&iterator, 0, sizeof(iterator));
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 
+	font = MN_GetFontFromNode(node);
+	fontHeight = MN_FontGetHeight(font);
+
 	option = MN_OptionTreeNodeGetFirstOption(node);
-	count = node->u.option.pos + (y - node->padding) / elementHeight;
+	count = node->u.option.pos + (y - node->padding) / fontHeight;
 	option = MN_OptionTreeFindFirstOption(count, option, &iterator);
 	*depth = iterator.depthPos;
 	return option;
@@ -355,6 +363,7 @@ static void MN_OptionTreeNodeClick (menuNode_t * node, int x, int y)
 	if (option) {
 		const char *cvarName = &((const char *)node->cvar)[6];
 		MN_SetCvar(cvarName, option->value, 0);
+		MN_ExecuteEventActions(node, node->onChange);
 		if (option->action[0] != '\0') {
 #ifdef DEBUG
 			if (option->action[strlen(option->action) - 1] != ';')
