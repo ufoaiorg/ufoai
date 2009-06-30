@@ -89,8 +89,8 @@ start_downloads()
  	download_archive http://downloads.sourceforge.net/mingw/ automake-3-1-bin.tar.bz2 msys-automake.tar.bz2
  	download_archive http://downloads.sourceforge.net/mingw/ automake1.10-1.10-1-bin.tar.bz2 msys-automake1.10.tar.bz2
  	
-	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-core.tar.gz gcc.tar.gz
-	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-g++.tar.gz g++.tar.gz
+	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.0-tdm-1-core-2.tar.gz gcc.tar.gz
+	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.0-tdm-1-g++-2.tar.gz g++.tar.gz
 
 	download_archive http://downloads.sourceforge.net/gnuwin32/ freetype-2.3.5-1-lib.zip freetype.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ gettext-0.14.4-bin.zip gettext.zip
@@ -284,7 +284,7 @@ SDL_TTF_VERSION=2.0.9
 SDL_IMAGE_VERSION=1.2.6
 CURL_VERSION=7.16.4
 
-TEMP_DIR=$(pwd)/tmp_codeblocks
+TEMP_DIR=/tmp/tmp_codeblocks
 TARGET_DIR=${TEMP_DIR}/codeblocks
 DOWNLOAD_DIR=${TEMP_DIR}/downloads
 MINGW_DIR=${TARGET_DIR}/MinGW
@@ -400,3 +400,4 @@ elif [ "$ACTION" == "clean" ]; then
 else
 	echo "unknown action given"
 fi
+
