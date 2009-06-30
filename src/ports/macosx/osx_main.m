@@ -32,9 +32,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <dlfcn.h>
 
-#include "../../common/common.h"
 #include <Carbon/Carbon.h>
 #include <Cocoa/Cocoa.h>
+
+#include "../../common/common.h"
 
 uid_t saved_euid;	/* extern in vid_so */
 

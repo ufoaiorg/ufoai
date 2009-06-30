@@ -2149,35 +2149,43 @@ then
 
 	CFLAGS="$CFLAGS -F$with_opengl_framework"
 	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL"
+
 	# fix this darn SDL stuff....
-	if test -d /Library/Frameworks/SDL.framework
+	if test -x /opt/local/bin/sdl-config
 	then
-		sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL.framework/Headers"
-		sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL"
+		# SDL installed using MacPorts
+		sdl_mac_cflags=`/opt/local/bin/sdl-config --cflags`
+		sdl_mac_ldflags=`/opt/local/bin/sdl-config --libs`
 	else
-		# should test for different framework locations, like /System/Library/Frameworks
-		# and ~/Library/Frameworks..... later....
-		{ { echo "$as_me:$LINENO: error: Could not find SDL Framework at /Library/Frameworks." >&5
-echo "$as_me: error: Could not find SDL Framework at /Library/Frameworks." >&2;}
+		if test -d /Library/Frameworks/SDL.framework
+		then
+			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL.framework/Headers"
+			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL"
+		else
+			# should test for different framework locations, like /System/Library/Frameworks
+			# and ~/Library/Frameworks..... later....
+			{ { $as_echo "$as_me:$LINENO: error: Could not find SDL Framework at /Library/Frameworks." >&5
+$as_echo "$as_me: error: Could not find SDL Framework at /Library/Frameworks." >&2;}
    { (exit 1); exit 1; }; }
-	fi
-	if test -d /Library/Frameworks/SDL_mixer.framework
-	then
-		sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_mixer.framework/Headers"
-		sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_mixer"
-	else
-		{ { echo "$as_me:$LINENO: error: Could not find SDL_mixer Framework at /Library/Frameworks." >&5
-echo "$as_me: error: Could not find SDL_mixer Framework at /Library/Frameworks." >&2;}
+		fi
+		if test -d /Library/Frameworks/SDL_mixer.framework
+		then
+			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_mixer.framework/Headers"
+			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_mixer"
+		else
+			{ { $as_echo "$as_me:$LINENO: error: Could not find SDL_mixer Framework at /Library/Frameworks." >&5
+$as_echo "$as_me: error: Could not find SDL_mixer Framework at /Library/Frameworks." >&2;}
    { (exit 1); exit 1; }; }
-	fi
-	if test -d /Library/Frameworks/SDL_ttf.framework
-	then
-		sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_ttf.framework/Headers"
-		sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_ttf"
-	else
-		{ { echo "$as_me:$LINENO: error: Could not find SDL_ttf Framework at /Library/Frameworks." >&5
-echo "$as_me: error: Could not find SDL_ttf Framework at /Library/Frameworks." >&2;}
+		fi
+		if test -d /Library/Frameworks/SDL_ttf.framework
+		then
+			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_ttf.framework/Headers"
+			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_ttf"
+		else
+			{ { $as_echo "$as_me:$LINENO: error: Could not find SDL_ttf Framework at /Library/Frameworks." >&5
+$as_echo "$as_me: error: Could not find SDL_ttf Framework at /Library/Frameworks." >&2;}
    { (exit 1); exit 1; }; }
+		fi
 	fi
 	### most mac users will have their additional libs and headers under /opt/local,
 	### check for that, and if present, add to CFLAGS/LDFLAGS (really convenient!)
@@ -2185,6 +2193,13 @@ echo "$as_me: error: Could not find SDL_ttf Framework at /Library/Frameworks." >
 	then
 		CFLAGS="$CFLAGS -I/opt/local/include"
 		LDFLAGS="$LDFLAGS -L/opt/local/lib"
+	fi
+
+	### Check for universal binaries
+	if test "$enable_universal" = "yes"
+	then
+		CFLAGS="$CFLAGS -arch i386 -arch ppc"
+		LDFLAGS="$LDFLAGS -arch i386 -arch ppc"
 	fi
 else
 	{ { echo "$as_me:$LINENO: error: The target operating system '$target_os' is unknown, please contact the developers" >&5

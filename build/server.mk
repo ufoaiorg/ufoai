@@ -90,7 +90,7 @@ $(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/server/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [DED] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $<
 
 ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module
@@ -102,4 +102,4 @@ endif
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/server/%.o: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
 	@echo " * [DED] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $<

@@ -154,12 +154,12 @@ $(CLIENT_TARGET): $(CLIENT_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $<
 
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $<
 
 ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module

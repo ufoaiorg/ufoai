@@ -28,4 +28,4 @@ $(GAME_TARGET) : $(GAME_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/game/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [GAM] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) -DNO_GETTEXT -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) -DNO_GETTEXT -o $@ -c $<

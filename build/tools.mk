@@ -46,4 +46,4 @@ $(UFO2MAP_TARGET): $(UFO2MAP_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [MAP] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
