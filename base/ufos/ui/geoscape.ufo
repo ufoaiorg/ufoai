@@ -721,7 +721,7 @@ window popup_intercept_ready
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		pos			"266 188"
+		pos			"259 188"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
@@ -737,7 +737,7 @@ window popup_intercept_ready
 		font		f_menu
 		image		ui/button_green_small
 		pos			"66 125"
-		size		"176 40"
+		size		"176 32"
 		onClick		{ cmd "game_go;" }
 	}
 
@@ -749,7 +749,7 @@ window popup_intercept_ready
 		font		f_menu
 		image		ui/button_green_small
 		pos			"259 125"
-		size		"176 40"
+		size		"176 32"
 		onClick		{ cmd "cp_mission_autogo;" }
 	}
 
