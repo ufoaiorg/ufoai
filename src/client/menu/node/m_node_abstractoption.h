@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_NODE_ABSTRACTOPTION_H
 
 #include "../../../shared/shared.h"
+#include "m_node_abstractscrollable.h"
 
 #define MAX_MENUOPTIONS 256
 #define OPTION_MAX_VALUE_LENGTH 32
@@ -67,7 +68,9 @@ typedef struct {
 	menuOption_t *selected;				/**< current selected option */
 	menuOption_t *hovered;				/**< current hovered option */
 	int count;							/**< number of elements */
-	int pos;							/**< position of the view */
+
+	menuScroll_t scrollY;				/**< Scroll position, if need */
+
 	struct menuAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } optionExtraData_t;
 

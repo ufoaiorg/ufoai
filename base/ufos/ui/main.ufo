@@ -224,11 +224,9 @@ window checkcvars
 		dataid		OPTION_LANGUAGES
 		onViewChange {
 			*(vscrollbar)select_language_scroll@current <viewpos>
-			*(vscrollbar)select_language_scroll@fullsize <count>
-			*(vscrollbar)select_language_scroll@viewsize 19
+			*(vscrollbar)select_language_scroll@fullsize <fullsize>
+			*(vscrollbar)select_language_scroll@viewsize <viewsize>
 		}
-		onWheelUp	{ cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 0" } // 0: click on top
-		onWheelDown	{ cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 4" } // 4: click on bottom
 	}
 
 	vscrollbar select_language_scroll {

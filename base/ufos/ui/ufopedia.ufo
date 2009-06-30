@@ -98,16 +98,13 @@ window ufopedia
 		font		f_big
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-
 		onChange	{
 			cmd "ufopedia_click <cvar:ufopedia_element>"
 		}
-		onWheel		{
-			*(abstractscrollbar)ufopedia_summary_scroll@current <viewpos>
-		}
 		onViewChange	{
-			*(abstractscrollbar)ufopedia_summary_scroll@fullsize <count>
 			*(abstractscrollbar)ufopedia_summary_scroll@current <viewpos>
+			*(abstractscrollbar)ufopedia_summary_scroll@fullsize <fullsize>
+			*(abstractscrollbar)ufopedia_summary_scroll@viewsize <viewsize>
 		}
 	}
 

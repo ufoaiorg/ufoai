@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-static menuOption_t*  MN_OptionListNodeGetFirstOption (menuNode_t * node)
+static menuOption_t* MN_OptionListNodeGetFirstOption (menuNode_t * node)
 {
 	if (node->u.option.first) {
 		return node->u.option.first;
@@ -58,6 +58,26 @@ static menuOption_t*  MN_OptionListNodeGetFirstOption (menuNode_t * node)
 	}
 }
 
+/**
+ * @brief Update the scroll according to the number
+ * of items and the size of the node
+ */
+static void MN_OptionListNodeUpdateScroll (menuNode_t *node)
+{
+	const char *font;
+	int fontHeight;
+	qboolean updated;
+	int elements;
+
+	font = MN_GetFontFromNode(node);
+	fontHeight = MN_FontGetHeight(font);
+
+	elements = (node->size[1] - node->padding - node->padding) / fontHeight;
+	updated = MN_SetScroll(&node->u.option.scrollY, -1, elements, node->u.option.count);
+	if (updated && node->u.option.onViewChange)
+		MN_ExecuteEventActions(node, node->u.option.onViewChange);
+}
+
 static void MN_OptionListNodeDraw (menuNode_t *node)
 {
 	static const int panelTemplate[] = {
@@ -68,9 +88,9 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	menuOption_t* option;
 	const char *ref;
 	const char *font;
+	int fontHeight;
 	vec2_t pos;
 	const char* image;
-	int fontHeight;
 	int currentY;
 	const float *textColor;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
@@ -92,7 +112,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 
 	/* skip option over current position */
 	option = MN_OptionListNodeGetFirstOption(node);
-	while (option && count < node->u.option.pos) {
+	while (option && count < node->u.option.scrollY.viewPos) {
 		option = option->next;
 		count++;
 	}
@@ -147,10 +167,9 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 
 	if (node->u.option.count != count) {
 		node->u.option.count = count;
-		if (node->u.option.onViewChange) {
-			MN_ExecuteEventActions(node, node->u.option.onViewChange);
-		}
 	}
+
+	MN_OptionListNodeUpdateScroll(node);
 }
 
 static menuOption_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, int x, int y)
@@ -169,7 +188,7 @@ static menuOption_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, in
 	fontHeight = MN_FontGetHeight(font);
 
 	option = MN_OptionListNodeGetFirstOption(node);
-	while (option && count < node->u.option.pos) {
+	while (option && count < node->u.option.scrollY.viewPos) {
 		option = option->next;
 		count++;
 	}
@@ -222,6 +241,24 @@ static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 }
 
 /**
+ * @brief Auto scroll the list
+ */
+static void MN_OptionListNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+{
+	qboolean updated;
+	updated = MN_SetScroll(&node->u.option.scrollY, node->u.option.scrollY.viewPos + (down ? 1 : -1), -1, -1);
+	if (node->u.option.onViewChange && updated)
+		MN_ExecuteEventActions(node, node->u.option.onViewChange);
+
+	if (node->onWheelUp && !down)
+		MN_ExecuteEventActions(node, node->onWheelUp);
+	if (node->onWheelDown && down)
+		MN_ExecuteEventActions(node, node->onWheelDown);
+	if (node->onWheel)
+		MN_ExecuteEventActions(node, node->onWheel);
+}
+
+/**
  * @brief Called before loading. Used to set default attribute values
  */
 static void MN_OptionListNodeLoading (menuNode_t *node)
@@ -241,6 +278,7 @@ void MN_RegisterOptionListNode (nodeBehaviour_t *behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->draw = MN_OptionListNodeDraw;
 	behaviour->leftClick = MN_OptionListNodeClick;
+	behaviour->mouseWheel = MN_OptionListNodeMouseWheel;
 	behaviour->loading = MN_OptionListNodeLoading;
 	behaviour->loaded = MN_OptionListNodeLoaded;
 }

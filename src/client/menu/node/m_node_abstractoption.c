@@ -121,7 +121,11 @@ static void MN_UpdateOption_f (void)
 static const value_t properties[] = {
 	{"dataid", V_UI_DATAID, offsetof(menuNode_t, u.option.dataId), MEMBER_SIZEOF(menuNode_t, u.option.dataId)},
 	{"option", V_UI_OPTIONNODE, offsetof(menuNode_t, u.option.first), 0},
-	{"viewpos", V_INT, offsetof(menuNode_t, u.option.pos),  MEMBER_SIZEOF(menuNode_t, u.option.pos)},
+
+	{"viewpos", V_INT, offsetof(menuNode_t, u.option.scrollY.viewPos),  MEMBER_SIZEOF(menuNode_t, u.option.scrollY.viewPos)},
+	{"viewsize", V_INT, offsetof(menuNode_t, u.option.scrollY.viewSize),  MEMBER_SIZEOF(menuNode_t, u.option.scrollY.viewSize)},
+	{"fullsize", V_INT, offsetof(menuNode_t, u.option.scrollY.fullSize),  MEMBER_SIZEOF(menuNode_t, u.option.scrollY.fullSize)},
+
 	{"count", V_INT, offsetof(menuNode_t, u.option.count),  MEMBER_SIZEOF(menuNode_t, u.option.count)},
 	{"onviewchange", V_UI_ACTION, offsetof(menuNode_t, u.option.onViewChange), MEMBER_SIZEOF(menuNode_t, u.option.onViewChange)},
 

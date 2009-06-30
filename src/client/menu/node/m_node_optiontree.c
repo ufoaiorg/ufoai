@@ -75,32 +75,34 @@ static int MN_OptionUpdateCache (menuOption_t* option)
 	return count;
 }
 
+/**
+ * @brief Update the scroll according to the number
+ * of items and the size of the node
+ */
+static void MN_OptionTreeNodeUpdateScroll (menuNode_t *node)
+{
+	const char *font;
+	int fontHeight;
+	qboolean updated;
+	int elements;
+
+	font = MN_GetFontFromNode(node);
+	fontHeight = MN_FontGetHeight(font);
+
+	elements = (node->size[1] - node->padding - node->padding) / fontHeight;
+	updated = MN_SetScroll(&node->u.option.scrollY, -1, elements, node->u.option.count);
+	if (updated && node->u.option.onViewChange)
+		MN_ExecuteEventActions(node, node->u.option.onViewChange);
+}
+
 /** @todo we should remove this call loop */
 static menuOption_t* MN_OptionTreeNodeGetFirstOption (menuNode_t * node);
 
 static void MN_OptionTreeNodeUpdateCache (menuNode_t * node)
 {
 	menuOption_t* option = MN_OptionTreeNodeGetFirstOption(node);
-	int viewSize;
-	const char *font;
-	int fontHeight;
-
-	int count = 0;
 	if (option)
-		count = MN_OptionUpdateCache(option);
-	if (node->u.option.count == count)
-		return;
-
-	font = MN_GetFontFromNode(node);
-	fontHeight = MN_FontGetHeight(font);
-
-	viewSize = (node->size[1] - node->padding - node->padding) / fontHeight;
-	node->u.option.count = count;
-	if (count - node->u.option.pos < viewSize)
-		node->u.option.pos = count - viewSize;
-	if (node->u.option.pos < 0)
-		node->u.option.pos = 0;
-	MN_ExecuteEventActions(node, node->u.option.onViewChange);
+		node->u.option.count = MN_OptionUpdateCache(option);
 }
 
 /**
@@ -248,7 +250,8 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 
 	/* skip option over current position */
 	option = MN_OptionTreeNodeGetFirstOption(node);
-	option = MN_OptionTreeFindFirstOption(node->u.option.pos, option, &iterator);
+	MN_OptionTreeNodeUpdateScroll(node);
+	option = MN_OptionTreeFindFirstOption(node->u.option.scrollY.viewPos, option, &iterator);
 
 	/* draw all available options for this selectbox */
 	for (; option; option = MN_OptionTreeNextOption(&iterator)) {
@@ -319,7 +322,7 @@ static menuOption_t* MN_OptionTreeNodeGetOptionAtPosition (menuNode_t * node, in
 	fontHeight = MN_FontGetHeight(font);
 
 	option = MN_OptionTreeNodeGetFirstOption(node);
-	count = node->u.option.pos + (y - node->padding) / fontHeight;
+	count = node->u.option.scrollY.viewPos + (y - node->padding) / fontHeight;
 	option = MN_OptionTreeFindFirstOption(count, option, &iterator);
 	*depth = iterator.depthPos;
 	return option;
@@ -372,6 +375,24 @@ static void MN_OptionTreeNodeClick (menuNode_t * node, int x, int y)
 			Cbuf_AddText(option->action);
 		}
 	}
+}
+
+/**
+ * @brief Auto scroll the list
+ */
+static void MN_OptionTreeNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+{
+	qboolean updated;
+	updated = MN_SetScroll(&node->u.option.scrollY, node->u.option.scrollY.viewPos + (down ? 1 : -1), -1, -1);
+	if (node->u.option.onViewChange && updated)
+		MN_ExecuteEventActions(node, node->u.option.onViewChange);
+
+	if (node->onWheelUp && !down)
+		MN_ExecuteEventActions(node, node->onWheelUp);
+	if (node->onWheelDown && down)
+		MN_ExecuteEventActions(node, node->onWheelDown);
+	if (node->onWheel)
+		MN_ExecuteEventActions(node, node->onWheel);
 }
 
 /**
@@ -435,6 +456,7 @@ void MN_RegisterOptionTreeNode (nodeBehaviour_t *behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->draw = MN_OptionTreeNodeDraw;
 	behaviour->leftClick = MN_OptionTreeNodeClick;
+	behaviour->mouseWheel = MN_OptionTreeNodeMouseWheel;
 	behaviour->loading = MN_OptionTreeNodeLoading;
 	behaviour->loaded = MN_OptionTreeNodeLoaded;
 }
