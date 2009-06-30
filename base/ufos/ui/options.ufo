@@ -63,8 +63,6 @@ window options
 
 	button button_sound
 	{
-		visiblewhen "*cvar:snd_init == 1"
-
 		string		"_Sound"
 		pos			"80 310"
 		size		"256 64"
@@ -75,23 +73,6 @@ window options
 		onClick		{
 			call hidepanels
 			*(panel)options_sound@invis = false
-		}
-	}
-
-	button button_sound_na
-	{
-		visiblewhen "*cvar:snd_init == 0"
-
-		string		"_Activate Sound"
-		tooltip		"_Sound is currently not activated. Click here to activate it."
-		pos			"80 310"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		onClick		{
-			cmd "snd_init 1;"
 		}
 	}
 
