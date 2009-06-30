@@ -642,7 +642,7 @@ static void PR_ProductionType_f (void)
 	Cvar_Set("mn_itemtype", INV_GetFilterType(produceCategory));
 
 	/* Reset scroll values of the list. */
-	node1->u.text.super.viewPosY = node2->u.text.super.viewPosY = prodlist->u.text.super.viewPosY = 0;
+	node1->u.text.super.scrollY.viewPos = node2->u.text.super.scrollY.viewPos = prodlist->u.text.super.scrollY.viewPos = 0;
 
 	/* Update list of entries for current production tab. */
 	PR_UpdateProductionList(base);
@@ -714,7 +714,7 @@ static void PR_ProductionListScroll_f (void)
 	assert(node2);
 	assert(prodlist);
 
-	node1->u.text.super.viewPosY = node2->u.text.super.viewPosY = prodlist->u.text.super.viewPosY;
+	node1->u.text.super.scrollY.viewPos = node2->u.text.super.scrollY.viewPos = prodlist->u.text.super.scrollY.viewPos;
 }
 
 /**

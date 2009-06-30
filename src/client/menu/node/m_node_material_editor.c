@@ -157,7 +157,7 @@ static void MN_MaterialEditorNodeDraw (menuNode_t *node)
 #endif
 
 		/* skip images before the scroll position */
-		if (cnt / imagesPerLine < node->u.abstractscrollable.viewPosY) {
+		if (cnt / imagesPerLine < node->u.abstractscrollable.scrollY.viewPos) {
 			cnt++;
 			continue;
 		}
@@ -227,7 +227,7 @@ static int MN_MaterialEditorNodeGetImageAtPosition (menuNode_t *node, int x, int
 #endif
 
 		/* skip images before the scroll position */
-		if (cnt / imagesPerLine < node->u.abstractscrollable.viewPosY) {
+		if (cnt / imagesPerLine < node->u.abstractscrollable.scrollY.viewPos) {
 			cnt++;
 			continue;
 		}

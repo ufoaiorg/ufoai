@@ -477,7 +477,7 @@ static void TR_ResetScrolling_f (void)
 		return;
 	}
 
-	trans_list->u.text.super.viewPosY = 0;
+	trans_list->u.text.super.scrollY.viewPos = 0;
 	trans_list_scroll->u.abstractscrollbar.pos = 0;
 }
 

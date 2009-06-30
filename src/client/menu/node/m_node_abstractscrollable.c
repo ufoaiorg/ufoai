@@ -51,24 +51,24 @@ qboolean MN_AbstractScrollableNodeIsSizeChange (menuNode_t *node)
 }
 
 /**
- * @brief Set the Y scroll to a position, and call event if need
+ * @brief Set the scroll to a position
+ * @param[in] scroll scroll to edit
  * @param[in] viewPos New position to set, else -1 if no change
  * @param[in] viewSize New view size to set, else -1 if no change
  * @param[in] fullSize New full size to set, else -1 if no change
  * @return True, if something have change
  */
-qboolean MN_AbstractScrollableNodeSetY (menuNode_t *node, int viewPos, int viewSize, int fullSize)
+qboolean MN_SetScroll (menuScroll_t *scroll, int viewPos, int viewSize, int fullSize)
 {
 	qboolean updated = qfalse;
-	assert(MN_NodeInstanceOf(node, "abstractscrollable"));
 
 	/* default values */
 	if (viewPos == -1)
-		viewPos = node->u.abstractscrollable.viewPosY;
+		viewPos = scroll->viewPos;
 	if (viewSize == -1)
-		viewSize = node->u.abstractscrollable.viewSizeY;
+		viewSize = scroll->viewSize;
 	if (fullSize == -1)
-		fullSize = node->u.abstractscrollable.fullSizeY;
+		fullSize = scroll->fullSize;
 
 	/* fix limits */
 	if (viewSize < 0)
@@ -85,18 +85,35 @@ qboolean MN_AbstractScrollableNodeSetY (menuNode_t *node, int viewPos, int viewS
 		viewPos = fullSize - viewSize;
 
 	/* update */
-	if (node->u.abstractscrollable.viewPosY != viewPos) {
-		node->u.abstractscrollable.viewPosY = viewPos;
+	if (scroll->viewPos != viewPos) {
+		scroll->viewPos = viewPos;
 		updated = qtrue;
 	}
-	if (node->u.abstractscrollable.viewSizeY != viewSize) {
-		node->u.abstractscrollable.viewSizeY = viewSize;
+	if (scroll->viewSize != viewSize) {
+		scroll->viewSize = viewSize;
 		updated = qtrue;
 	}
-	if (node->u.abstractscrollable.fullSizeY != fullSize) {
-		node->u.abstractscrollable.fullSizeY = fullSize;
+	if (scroll->fullSize != fullSize) {
+		scroll->fullSize = fullSize;
 		updated = qtrue;
 	}
+
+	return updated;
+}
+
+/**
+ * @brief Set the Y scroll to a position, and call event if need
+ * @param[in] viewPos New position to set, else -1 if no change
+ * @param[in] viewSize New view size to set, else -1 if no change
+ * @param[in] fullSize New full size to set, else -1 if no change
+ * @return True, if something have change
+ */
+qboolean MN_AbstractScrollableNodeSetY (menuNode_t *node, int viewPos, int viewSize, int fullSize)
+{
+	qboolean updated = qfalse;
+	assert(MN_NodeInstanceOf(node, "abstractscrollable"));
+
+	updated = MN_SetScroll(&node->u.abstractscrollable.scrollY, viewPos, viewSize, fullSize);
 
 	if (updated && node->u.abstractscrollable.onViewChange)
 		MN_ExecuteEventActions(node, node->u.abstractscrollable.onViewChange);
@@ -111,13 +128,13 @@ qboolean MN_AbstractScrollableNodeSetY (menuNode_t *node, int viewPos, int viewS
 qboolean MN_AbstractScrollableNodeScrollY (menuNode_t *node, int offset)
 {
 	assert(MN_NodeInstanceOf(node, "abstractscrollable"));
-	return MN_AbstractScrollableNodeSetY(node, node->u.abstractscrollable.viewPosY + offset, -1, -1);
+	return MN_AbstractScrollableNodeSetY(node, node->u.abstractscrollable.scrollY.viewPos + offset, -1, -1);
 }
 
 static const value_t properties[] = {
-	{"viewpos", V_INT, offsetof(menuNode_t, u.abstractscrollable.viewPosY),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.viewPosY)},
-	{"viewsize", V_INT, offsetof(menuNode_t, u.abstractscrollable.viewSizeY),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.viewSizeY)},
-	{"fullsize", V_INT, offsetof(menuNode_t, u.abstractscrollable.fullSizeY),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.fullSizeY)},
+	{"viewpos", V_INT, offsetof(menuNode_t, u.abstractscrollable.scrollY.viewPos),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.scrollY.viewPos)},
+	{"viewsize", V_INT, offsetof(menuNode_t, u.abstractscrollable.scrollY.viewSize),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.scrollY.viewSize)},
+	{"fullsize", V_INT, offsetof(menuNode_t, u.abstractscrollable.scrollY.fullSize),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.scrollY.fullSize)},
 
 	{"onviewchange", V_UI_ACTION, offsetof(menuNode_t, u.abstractscrollable.onViewChange), MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.onViewChange)},
 

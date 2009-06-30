@@ -32,17 +32,23 @@ struct nodeBehaviour_s;
 struct menuAction_s;
 struct menuNode_s;
 
+/**
+ * @brief Scroll representation
+ */
+typedef struct {
+	int viewPos;			/**< Position of the view */
+	int viewSize;			/**< Visible size */
+	int fullSize;			/**< Full size allowed */
+} menuScroll_t;
+
+qboolean MN_SetScroll(menuScroll_t *scroll, int viewPos, int viewSize, int fullSize);
+
 typedef struct {
 	vec2_t cacheSize;		/**< check the size change while we dont have a realy event from property setter */
 
 	/** yet implemented nowhere */
-	int viewPosX;			/**< Position of the view */
-	int viewSizeX;			/**< Visible size */
-	int fullSizeX;			/**< Full size allowed */
-
-	int viewPosY;			/**< Position of the view */
-	int viewSizeY;			/**< Visible size */
-	int fullSizeY;			/**< Full size allowed */
+	menuScroll_t scrollX;
+	menuScroll_t scrollY;
 
 	struct menuAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } abstractScrollableExtraData_t;
