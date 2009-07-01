@@ -127,7 +127,6 @@ window ufopedia
 		lineheight	18
 		tabwidth	100
 		rows		20
-		onClick		{ cmd "ufopedia_click <lineselected>" }
 		onWheel		{
 			*(abstractscrollbar)ufopedia_scroll@current <viewpos>
 		}

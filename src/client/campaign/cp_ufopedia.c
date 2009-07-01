@@ -785,6 +785,12 @@ static void UP_FindEntry_f (void)
 
 static menuOption_t *upChapters;
 
+/**
+ * @brief Alloc an array of option for all chapters and articles we can have
+ * @note only alloc one time the memory, else return the last allocated memory
+ * @return An array of options
+ * @sa upChapters
+ */
 static menuOption_t * UP_AllocOptions()
 {
 	int count = 0;
@@ -812,6 +818,13 @@ static menuOption_t * UP_AllocOptions()
 	return upChapters;
 }
 
+/**
+ * @brief Generate a list of options for all allowed articles of a chapter
+ * @param[in] parentChapter requested chapter
+ * @param[in] array first element of the array of option we can update
+ * @param[out] count number of generated options/articles
+ * @return The first option of the list, else NULL if no articles
+ */
 static menuOption_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter, menuOption_t* array, int *count)
 {
 	technology_t *tech = parentChapter->first;
@@ -839,9 +852,8 @@ static menuOption_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter, 
 }
 
 /**
- * @brief Displays the chapters in the UFOpaedia
- * @sa UP_Next_f
- * @sa UP_Prev_f
+ * @brief Generate a tree of option for all allowed chapters and articles
+ * @note it update OPTION_UFOPEDIA
  */
 static void UP_GenerateSummary (void)
 {
@@ -895,22 +907,20 @@ static void UP_GenerateSummary (void)
 		}
 	}
 
-	UP_ChangeDisplay(UFOPEDIA_CHAPTERS);
-
 	MN_RegisterOption(OPTION_UFOPEDIA, chapters);
 	Cvar_Set("mn_uptitle", _("UFOpaedia Content"));
 }
 
 /**
  * @brief Displays the chapters in the UFOpaedia
- * @sa UP_Next_f
- * @sa UP_Prev_f
  */
 static void UP_Content_f (void)
 {
 	UP_GenerateSummary();
+	UP_ChangeDisplay(UFOPEDIA_CHAPTERS);
 }
 
+#if 0
 /**
  * @brief Displays the index of the current chapter
  * @sa UP_Content_f
@@ -950,7 +960,9 @@ static void UP_Index_f (void)
 		t = t->upNext;
 	}
 }
+#endif
 
+#if 0
 /**
  * @brief Displays the index of the current chapter
  * @sa UP_Content_f
@@ -1032,9 +1044,12 @@ static void UP_Next_f (void)
 	/* Go to chapter index if no more previous entries available. */
 	UP_Index_f();
 }
+#endif
 
 /**
- * @sa UP_RightClick_f
+ * @brief Callback when we click on the ufopedia summary
+ * @note when we click on a chapter, param=chapterId,
+ * when we click on an article, param='@'+techId
  */
 static void UP_Click_f (void)
 {
@@ -1432,11 +1447,13 @@ static void UP_SetAllMailsRead_f (void)
 void UP_InitStartup (void)
 {
 	/* add commands and cvars */
-	Cmd_AddCommand("mn_upindex", UP_Index_f, "Shows the UFOpaedia index for the current chapter");
 	Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the UFOpaedia chapters");
+#if 0
+	Cmd_AddCommand("mn_upindex", UP_Index_f, "Shows the UFOpaedia index for the current chapter");
 	Cmd_AddCommand("mn_upback", UP_Back_f, "Goes back from article to index or from index to chapters");
 	Cmd_AddCommand("mn_upprev", UP_Prev_f, "Goes to the previous entry in the UFOpaedia");
 	Cmd_AddCommand("mn_upnext", UP_Next_f, "Goes to the next entry in the UFOpaedia");
+#endif
 	Cmd_AddCommand("mn_upupdate", UP_Update_f, "Redraw the current UFOpaedia article");
 	Cmd_AddCommand("ufopedia", UP_FindEntry_f, "Open the UFOpaedia with the given article");
 	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
