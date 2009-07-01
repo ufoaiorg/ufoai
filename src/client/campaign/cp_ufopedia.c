@@ -923,132 +923,6 @@ static void UP_Content_f (void)
 	UP_ChangeDisplay(UFOPEDIA_CHAPTERS);
 }
 
-#if 0
-/**
- * @brief Displays the index of the current chapter
- * @sa UP_Content_f
- */
-static void UP_Index_f (void)
-{
-	technology_t* t;
-
-	if (Cmd_Argc() < 2 && !currentChapter) {
-		Com_Printf("Usage: %s <chapter-id>\n", Cmd_Argv(0));
-		return;
-	} else if (Cmd_Argc() == 2) {
-		const int chapter = atoi(Cmd_Argv(1));
-		if (chapter < ccs.numChapters && chapter >= 0) {
-			currentChapter = &ccs.upChapters[chapter];
-		}
-	}
-
-	if (!currentChapter)
-		return;
-
-	UP_ChangeDisplay(UFOPEDIA_INDEX);
-
-	upBuffer[0] = '\0';
-	MN_RegisterText(TEXT_UFOPEDIA, upBuffer);
-
-	Cvar_Set("mn_uptitle", va(_("UFOpaedia Index: %s"), _(currentChapter->name)));
-
-	t = currentChapter->first;
-
-	/* get next entry */
-	while (t) {
-		if (UP_TechGetsDisplayed(t)) {
-			/* Add this tech to the index - it gets displayed. */
-			Q_strcat(upBuffer, va("%s\n", _(t->name)), sizeof(upBuffer));
-		}
-		t = t->upNext;
-	}
-}
-#endif
-
-#if 0
-/**
- * @brief Displays the index of the current chapter
- * @sa UP_Content_f
- * @sa UP_ChangeDisplay
- * @sa UP_Index_f
- * @sa UP_Article
- */
-static void UP_Back_f (void)
-{
-	switch (upDisplay) {
-	case UFOPEDIA_ARTICLE:
-		UP_Index_f();
-		break;
-	case UFOPEDIA_INDEX:
-		UP_Content_f();
-		break;
-	default:
-		break;
-	}
-}
-
-/**
- * @brief Displays the previous entry in the UFOpaedia
- * @sa UP_Next_f
- */
-static void UP_Prev_f (void)
-{
-	technology_t *tech = upCurrentTech;
-
-	if (!tech) /* if called from console */
-		return;
-
-	/* get previous entry */
-	if (tech->upPrev) {
-		/* Check if the previous entry is researched already otherwise go to the next entry. */
-		do {
-			tech = tech->upPrev;
-			assert(tech);
-			if (tech == tech->upPrev)
-				Com_Error(ERR_DROP, "UP_Prev_f: The 'prev': %s entry is equal to '%s'.", tech->upPrev->id, tech->id);
-		} while (tech->upPrev && !UP_TechGetsDisplayed(tech));
-
-		if (UP_TechGetsDisplayed(tech)) {
-			UP_Article(tech, NULL);
-			return;
-		}
-	}
-
-	/* Go to chapter index if no more previous entries available. */
-	UP_Index_f();
-}
-
-/**
- * @brief Displays the next entry in the UFOpaedia
- * @sa UP_Prev_f
- */
-static void UP_Next_f (void)
-{
-	technology_t *tech = upCurrentTech;
-
-	if (!tech) /* if called from console */
-		return;
-
-	/* get next entry */
-	if (tech && tech->upNext) {
-		/* Check if the next entry is researched already otherwise go to the next entry. */
-		do {
-			tech = tech->upNext;
-			if (tech == tech->upNext)
-				Com_Error(ERR_DROP, "UP_Next_f: The 'next': %s entry is equal to '%s'.", tech->upNext->id, tech->id);
-		} while (tech->upNext && !UP_TechGetsDisplayed(tech));
-
-		if (UP_TechGetsDisplayed(tech)) {
-			UP_Article(tech, NULL);
-			return;
-		}
-	}
-
-	/* Go to chapter index if no more previous entries available. */
-	UP_Index_f();
-}
-#endif
-
 /**
  * @brief Callback when we click on the ufopedia summary
  * @note when we click on a chapter, param=chapterId,
@@ -1056,14 +930,6 @@ static void UP_Next_f (void)
  */
 static void UP_Click_f (void)
 {
-#if 0
-	int num;
-
-	if (Cmd_Argc() < 2)
-		return;
-	num = atoi(Cmd_Argv(1));
-#endif
-
 	/* article index start with a @ */
 	if (Cmd_Argv(1)[0] == '@') {
 		const int techId = atoi(Cmd_Argv(1) + 1);
@@ -1071,19 +937,6 @@ static void UP_Click_f (void)
 		assert(techId >= 0);
 		assert(techId < ccs.numTechnologies);
 		tech = &ccs.technologies[techId];
-#if 0
-		/* get next entry */
-		while (tech) {
-			if (UP_TechGetsDisplayed(tech)) {
-				/* Add this tech to the index - it gets displayed. */
-				if (num > 0)
-					num--;
-				else
-					break;
-			}
-			tech = tech->upNext;
-		}
-#endif
 		if (tech)
 			UP_Article(tech, NULL);
 		return;
@@ -1396,10 +1249,6 @@ static void UP_OpenMail_f (void)
 		default:
 			break;
 		}
-#if 0
-		if (m->pedia)
-			Com_Printf("list: '%s'\n", m->pedia->id);
-#endif
 		m = m->next;
 	}
 	MN_RegisterText(TEXT_UFOPEDIA_MAIL, mailBuffer);
@@ -1451,12 +1300,6 @@ void UP_InitStartup (void)
 {
 	/* add commands and cvars */
 	Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the UFOpaedia chapters");
-#if 0
-	Cmd_AddCommand("mn_upindex", UP_Index_f, "Shows the UFOpaedia index for the current chapter");
-	Cmd_AddCommand("mn_upback", UP_Back_f, "Goes back from article to index or from index to chapters");
-	Cmd_AddCommand("mn_upprev", UP_Prev_f, "Goes to the previous entry in the UFOpaedia");
-	Cmd_AddCommand("mn_upnext", UP_Next_f, "Goes to the next entry in the UFOpaedia");
-#endif
 	Cmd_AddCommand("mn_upupdate", UP_Update_f, "Redraw the current UFOpaedia article");
 	Cmd_AddCommand("ufopedia", UP_FindEntry_f, "Open the UFOpaedia with the given article");
 	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
