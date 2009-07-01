@@ -598,13 +598,16 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 	UP_ChangeDisplay(UFOPEDIA_ARTICLE);
 
 	if (tech) {
-		if (tech->mdl) {
+		if (tech->mdl)
 			Cvar_Set("mn_upmodel_top", tech->mdl);
-			Cvar_Set("mn_upimage_top", "");
-		} else if (tech->image) {
+		else
 			Cvar_Set("mn_upmodel_top", "");
+
+		if (tech->image)
 			Cvar_Set("mn_upimage_top", tech->image);
-		}
+		else
+			Cvar_Set("mn_upimage_top", "");
+
 		Cvar_Set("mn_upmodel_bottom", "");
 
 		if (tech->type == RS_WEAPON)
