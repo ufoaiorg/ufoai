@@ -127,9 +127,6 @@ window ufopedia
 		lineheight	18
 		tabwidth	100
 		rows		20
-		onWheel		{
-			*(abstractscrollbar)ufopedia_scroll@current <viewpos>
-		}
 		onViewChange	{
 			*(abstractscrollbar)ufopedia_scroll@fullsize <lines>
 			*(abstractscrollbar)ufopedia_scroll@current <viewpos>
