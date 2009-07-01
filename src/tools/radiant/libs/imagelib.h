@@ -56,27 +56,6 @@ public:
 	}
 };
 
-class RGBAImageFlags : public RGBAImage {
-public:
-	int m_surfaceFlags;
-	int m_contentFlags;
-	int m_value;
-	RGBAImageFlags(unsigned short _width, unsigned short _height, int surfaceFlags, int contentFlags, int value) :
-			RGBAImage(_width, _height), m_surfaceFlags(surfaceFlags), m_contentFlags(contentFlags), m_value(value) {
-	}
-
-	int getSurfaceFlags() const {
-		return m_surfaceFlags;
-	}
-	int getContentFlags() const {
-		return m_contentFlags;
-	}
-	int getValue() const {
-		return m_value;
-	}
-};
-
-
 inline InputStream::byte_type* ArchiveFile_loadBuffer(ArchiveFile& file, std::size_t& length) {
 	InputStream::byte_type* buffer = (InputStream::byte_type*)malloc(file.size() + 1);
 	length = file.getInputStream().read(buffer, file.size());

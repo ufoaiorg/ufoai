@@ -755,7 +755,7 @@ void Shaders_Free() {
 
 static ModuleObservers g_observers;
 
-/** @brief wait until filesystem and is realised before loading anything */
+/** @brief wait until filesystem is realised before loading anything */
 static std::size_t g_shaders_unrealised = 1;
 
 bool Shaders_realised() {

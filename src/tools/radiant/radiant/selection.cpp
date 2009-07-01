@@ -3417,7 +3417,7 @@ class Selector_
 		RectangleCallback m_window_update;
 
 		Selector_ () :
-			m_start(0.0f, 0.0f), m_current(0.0f, 0.0f), m_unmoved_replaces(0), m_state(c_modifierNone)
+			m_start(0.0f, 0.0f), m_current(0.0f, 0.0f), m_epsilon(0.0f, 0.0f), m_unmoved_replaces(0), m_state(c_modifierNone)
 		{
 		}
 
