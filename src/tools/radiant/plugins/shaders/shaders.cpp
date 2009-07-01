@@ -143,7 +143,6 @@ public:
 	TextureExpression m_textureName;
 	TextureExpression m_diffuse;
 	TextureExpression m_bump;
-	ShaderValue m_heightmapScale;
 	TextureExpression m_specular;
 
 	int m_nFlags;
@@ -237,9 +236,8 @@ public:
 	BlendFuncExpression m_blendFunc;
 	bool m_clampToBorder;
 	ShaderValue m_alphaTest;
-	ShaderValue m_heightmapScale;
 
-	LayerTemplate() : m_type(LAYER_NONE), m_blendFunc("GL_ONE", "GL_ZERO"), m_clampToBorder(false), m_alphaTest("-1"), m_heightmapScale("0") {
+	LayerTemplate() : m_type(LAYER_NONE), m_blendFunc("GL_ONE", "GL_ZERO"), m_clampToBorder(false), m_alphaTest("-1") {
 	}
 };
 
@@ -409,7 +407,6 @@ class CShader : public IShader {
 
 	qtexture_t* m_pTexture;
 	qtexture_t* m_notfound;
-	float m_heightmapScale;
 	BlendFunc m_blendFunc;
 
 	bool m_bInUse;
@@ -524,58 +521,7 @@ public:
 	void setName(const char* name) {
 		m_Name = name;
 	}
-
-class MapLayer : public ShaderLayer {
-		qtexture_t* m_texture;
-		BlendFunc m_blendFunc;
-		bool m_clampToBorder;
-		float m_alphaTest;
-	public:
-		MapLayer(qtexture_t* texture, BlendFunc blendFunc, bool clampToBorder, float alphaTest) :
-				m_texture(texture),
-				m_blendFunc(blendFunc),
-				m_clampToBorder(false),
-				m_alphaTest(alphaTest) {
-		}
-		qtexture_t* texture() const {
-			return m_texture;
-		}
-		BlendFunc blendFunc() const {
-			return m_blendFunc;
-		}
-		bool clampToBorder() const {
-			return m_clampToBorder;
-		}
-		float alphaTest() const {
-			return m_alphaTest;
-		}
-	};
-
-	static MapLayer evaluateLayer(const ShaderTemplate::MapLayerTemplate& layerTemplate, const ShaderParameters& params, const ShaderArguments& args) {
-		return MapLayer(
-		           evaluateTexture(layerTemplate.texture(), params, args),
-		           evaluateBlendFunc(layerTemplate.blendFunc(), params, args),
-		           layerTemplate.clampToBorder(),
-		           evaluateFloat(layerTemplate.alphaTest(), params, args)
-		       );
-	}
-
-	typedef std::vector<MapLayer> MapLayers;
-	MapLayers m_layers;
-
-	const ShaderLayer* firstLayer() const {
-		if (m_layers.empty()) {
-			return 0;
-		}
-		return &m_layers.front();
-	}
-	void forEachLayer(const ShaderLayerCallback& callback) const {
-		for (MapLayers::const_iterator i = m_layers.begin(); i != m_layers.end(); ++i) {
-			callback(*i);
-		}
-	}
 };
-
 bool CShader::m_lightingEnabled = false;
 
 typedef SmartPointer<CShader> ShaderPointer;
@@ -691,9 +637,8 @@ public:
 	BlendFunc m_blendFunc;
 	bool m_clampToBorder;
 	float m_alphaTest;
-	float m_heightmapScale;
 
-	Layer() : m_type(LAYER_NONE), m_blendFunc(BLEND_ONE, BLEND_ZERO), m_clampToBorder(false), m_alphaTest(-1), m_heightmapScale(0) {
+	Layer() : m_type(LAYER_NONE), m_blendFunc(BLEND_ONE, BLEND_ZERO), m_clampToBorder(false), m_alphaTest(-1) {
 	}
 };
 

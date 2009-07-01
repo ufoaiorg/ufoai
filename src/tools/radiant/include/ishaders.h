@@ -108,9 +108,6 @@ public:
 	virtual ECull getCull() = 0;
 	// get shader file name (ie the file where this one is defined)
 	virtual const char* getShaderFileName() const = 0;
-
-	virtual const ShaderLayer* firstLayer() const = 0;
-	virtual void forEachLayer(const ShaderLayerCallback& layer) const = 0;
 };
 
 typedef struct _GSList GSList;
