@@ -119,6 +119,7 @@ binary-arch: install-arch
 	dh_installdocs
 	dh_installexamples
 	dh_installmenu
+	dh_installmime
 	dh_installman
 	dh_link
 	dh_strip

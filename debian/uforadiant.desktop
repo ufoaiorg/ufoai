@@ -9,4 +9,5 @@ Icon=uforadiant.xpm
 Terminal=false
 Type=Application
 Categories=Application;Game;StrategyGame;
+MimeType=application/x-ufomap
 StartupNotify=true
