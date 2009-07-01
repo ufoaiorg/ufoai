@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct nodeBehaviour_s;
 struct menuAction_s;
 
-void MN_TextScrollBottom(const char* nodeName);
+void MN_TextScrollBottom(const char* nodePath);
 qboolean MN_TextScroll(struct menuNode_s *node, int offset);
 int MN_TextNodeGetLine(const struct menuNode_s *node, int x, int y);
 int MN_TextNodeGetLines(const struct menuNode_s *node);

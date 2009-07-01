@@ -94,13 +94,18 @@ static void MN_TextScroll_f (void)
 
 /**
  * @brief Scroll to the bottom
- * @todo fix param to use absolute path
+ * @param[in] nodePath absolute path
  */
-void MN_TextScrollBottom (const char* nodeName)
+void MN_TextScrollBottom (const char* nodePath)
 {
-	menuNode_t *node = MN_GetNode(MN_GetActiveMenu(), nodeName);
+	menuNode_t *node = MN_GetNodeByPath(nodePath);
 	if (!node) {
-		Com_DPrintf(DEBUG_CLIENT, "Node '%s' could not be found\n", nodeName);
+		Com_DPrintf(DEBUG_CLIENT, "Node '%s' could not be found\n", nodePath);
+		return;
+	}
+
+	if (!MN_NodeInstanceOf(node, "text")) {
+		Com_Printf("MN_TextScrollBottom: '%s' node is not an 'text'.\n", Cmd_Argv(1));
 		return;
 	}
 
