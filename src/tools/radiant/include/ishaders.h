@@ -111,8 +111,6 @@ public:
 
 	virtual const ShaderLayer* firstLayer() const = 0;
 	virtual void forEachLayer(const ShaderLayerCallback& layer) const = 0;
-
-	virtual qtexture_t* lightFalloffImage() const = 0;
 };
 
 typedef struct _GSList GSList;

@@ -145,7 +145,6 @@ public:
 	TextureExpression m_bump;
 	ShaderValue m_heightmapScale;
 	TextureExpression m_specular;
-	TextureExpression m_lightFalloffImage;
 
 	int m_nFlags;
 	float m_fTrans;
@@ -411,7 +410,6 @@ class CShader : public IShader {
 	qtexture_t* m_pTexture;
 	qtexture_t* m_notfound;
 	float m_heightmapScale;
-	qtexture_t* m_pLightFalloffImage;
 	BlendFunc m_blendFunc;
 
 	bool m_bInUse;
@@ -504,12 +502,7 @@ public:
 
 		if (m_pTexture->texture_number == 0) {
 			m_notfound = m_pTexture;
-
-			{
-				StringOutputStream name(256);
-				name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") <<  "/textures/tex_common/nodraw";
-				m_pTexture = GlobalTexturesCache().capture(name.c_str());
-			}
+			m_pTexture = GlobalTexturesCache().capture("textures/tex_common/nodraw");
 		}
 	}
 
@@ -580,13 +573,6 @@ class MapLayer : public ShaderLayer {
 		for (MapLayers::const_iterator i = m_layers.begin(); i != m_layers.end(); ++i) {
 			callback(*i);
 		}
-	}
-
-	qtexture_t* lightFalloffImage() const {
-		if (!string_empty(m_template.m_lightFalloffImage.c_str())) {
-			return m_pLightFalloffImage;
-		}
-		return 0;
 	}
 };
 
