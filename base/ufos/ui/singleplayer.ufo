@@ -176,12 +176,27 @@ window lostgame
 		color		"0 0.8 0 0.9"
 		textalign	uc
 		pos			"256 640"
-		size		"512 100"
+		size		"492 100"
 		lineheight	"20"
 		rows		"5"
 		font		"f_normal"
-		scrollbar	 true
 		dataid	TEXT_STANDARD
+		onViewChange	{
+			*(abstractscrollbar)reason_scroll@fullsize <lines>
+			*(abstractscrollbar)reason_scroll@current <viewpos>
+			*(abstractscrollbar)reason_scroll@viewsize <viewsize>
+		}
+	}
+
+	vscrollbar reason_scroll {
+		image		ui/scrollbar_v_green
+		pos			"752 640"
+		height		"100"
+		current		0
+		viewsize	5
+		fullsize	5
+		hidewhenunused true
+		onChange	{ *reason@viewpos <current> }
 	}
 
 	string lostgame_click
@@ -236,12 +251,27 @@ window endgame
 		color		"0 0.8 0 0.9"
 		textalign	uc
 		pos			"256 640"
-		size		"512 100"
+		size		"492 100"
 		lineheight	"20"
 		rows		"5"
 		font		"f_normal"
-		scrollbar	true
 		dataid	TEXT_STANDARD
+		onViewChange	{
+			*(abstractscrollbar)reason_scroll@fullsize <lines>
+			*(abstractscrollbar)reason_scroll@current <viewpos>
+			*(abstractscrollbar)reason_scroll@viewsize <viewsize>
+		}
+	}
+
+	vscrollbar reason_scroll {
+		image		ui/scrollbar_v_green
+		pos			"752 640"
+		height		"100"
+		current		0
+		viewsize	5
+		fullsize	5
+		hidewhenunused true
+		onChange	{ *reason@viewpos <current> }
 	}
 
 	string endgame_click

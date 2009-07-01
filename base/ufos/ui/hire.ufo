@@ -566,7 +566,7 @@ window employees
 		string		*cvar:mn_base_title
 		tooltip		"_Name of this base"
 		pos			"60 30"
-		size		"240 32"
+		size		"500 32"
 		textalign	cl
 		padding		8
 		font		f_big

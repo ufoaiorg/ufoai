@@ -34,15 +34,31 @@ window tutorials
 
 	text tutoriallist
 	{
-		pos	"640 220"
-		lineheight	"20"
-		size	"260 280"
 		dataid		TEXT_LIST
-		rows	"14"
-		mousefx true
-		scrollbar true
-		onClick	{ cmd "tutoriallist_click <lineselected>" }
+		pos			"640 220"
+		size		"240 280"
+		lineheight	"20"
+		rows		"14"
+		mousefx		true
+		onClick		{ cmd "tutoriallist_click <lineselected>" }
+		onViewChange	{
+			*(abstractscrollbar)tutoriallist_scroll@fullsize <lines>
+			*(abstractscrollbar)tutoriallist_scroll@current <viewpos>
+			*(abstractscrollbar)tutoriallist_scroll@viewsize <viewsize>
+		}
 	}
+
+	vscrollbar tutoriallist_scroll {
+		image		ui/scrollbar_v_green
+		pos			"885 220"
+		height		"280"
+		current		0
+		viewsize	14
+		fullsize	14
+		hidewhenunused true
+		onChange	{ *tutoriallist@viewpos <current> }
+	}
+
 	func onInit
 	{
 		cmd	"gettutorials;"

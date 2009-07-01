@@ -204,7 +204,7 @@ window bases
 		string		*cvar:mn_base_title
 		tooltip		"_Name of this base"
 		pos			"60 30"
-		size		"240 32"
+		size		"500 32"
 		font		f_big
 		onChange {
 			// stores the value of the cvar in the base structure

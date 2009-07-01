@@ -594,12 +594,26 @@ window popup_list
 	text popup_list
 	{
 		pos			"26 96"
-		size		"446 96"
+		size		"426 96"
 		dataid		TEXT_LIST
 		lineheight	16
 		tabwidth	100
 		rows		6
-		scrollbar	true
+		onViewChange	{
+			*(abstractscrollbar)popup_list_scroll@fullsize <lines>
+			*(abstractscrollbar)popup_list_scroll@current <viewpos>
+			*(abstractscrollbar)popup_list_scroll@viewsize <viewsize>
+		}
+	}
+	vscrollbar popup_list_scroll {
+		image		ui/scrollbar_v_green
+		pos			"457 96"
+		height		"96"
+		current		0
+		viewsize	6
+		fullsize	6
+		hidewhenunused true
+		onChange	{ *popup_list@viewpos <current> }
 	}
 
 	button bt_ok
@@ -643,12 +657,27 @@ window popup_button
 	text popup_text
 	{
 		pos			"26 58"
-		size		"446 128"
+		size		"426 128"
 		dataid		TEXT_POPUP_INFO
 		lineheight	16
 		tabwidth	100
 		rows		8
-		scrollbar	true
+		onViewChange	{
+			*(abstractscrollbar)popup_text_scroll@fullsize <lines>
+			*(abstractscrollbar)popup_text_scroll@current <viewpos>
+			*(abstractscrollbar)popup_text_scroll@viewsize <viewsize>
+		}
+	}
+
+	vscrollbar popup_text_scroll {
+		image		ui/scrollbar_v_green
+		pos			"457 58"
+		height		"128"
+		current		0
+		viewsize	8
+		fullsize	8
+		hidewhenunused true
+		onChange	{ *popup_text@viewpos <current> }
 	}
 
 	button popup_button_1
@@ -2006,11 +2035,26 @@ window popup
 	{
 		dataid		TEXT_POPUP_INFO
 		pos			"26 58"
-		size		"446 128"
+		size		"426 128"
 		lineheight	16
 		tabwidth	100
 		rows		8
-		scrollbar	true
+		onViewChange	{
+			*(abstractscrollbar)popup_text@fullsize <lines>
+			*(abstractscrollbar)popup_text@current <viewpos>
+			*(abstractscrollbar)popup_text@viewsize <viewsize>
+		}
+	}
+
+	vscrollbar popup_text_scroll {
+		image		ui/scrollbar_v_green
+		pos			"457 58"
+		height		"128"
+		current		0
+		viewsize	8
+		fullsize	8
+		hidewhenunused true
+		onChange	{ *popup_text@viewpos <current> }
 	}
 	button button_ok
 	{

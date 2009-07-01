@@ -92,7 +92,7 @@ window ufopedia
 		font		f_small
 		lineheight	18
 		tabwidth	100
-		rows		20
+		rows		22
 		onViewChange	{
 			*(abstractscrollbar)ufopedia_scroll@fullsize <lines>
 			*(abstractscrollbar)ufopedia_scroll@current <viewpos>
@@ -148,12 +148,27 @@ window ufopedia
 	{
 		dataid		TEXT_LIST
 		pos			"550 495"
-		size		"354 246"
+		size		"334 246"
 		lineheight	"20"
 		rows		"12"
 		mousefx		true
-		scrollbar	true
 		onClick		{ cmd "techtree_click <lineselected>" }
+		onViewChange	{
+			*(abstractscrollbar)techtree_scroll@fullsize <lines>
+			*(abstractscrollbar)techtree_scroll@current <viewpos>
+			*(abstractscrollbar)techtree_scroll@viewsize <viewsize>
+		}
+	}
+
+	vscrollbar techtree_scroll {
+		image		ui/scrollbar_v_green
+		pos			"890 495"
+		height		"246"
+		current		0
+		viewsize	12
+		fullsize	12
+		hidewhenunused true
+		onChange	{ *techtree@viewpos <current> }
 	}
 
 	string title

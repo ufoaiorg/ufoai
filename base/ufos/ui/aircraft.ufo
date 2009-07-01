@@ -42,7 +42,7 @@ window iaircraft
 		tooltip	"_Name of this base"
 		string	*cvar:mn_base_title
 		pos	"60 30"
-		size "240 32"
+		size "500 32"
 		textalign	cl
 		padding	8
 		font	f_big

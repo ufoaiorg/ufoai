@@ -156,14 +156,29 @@ window basesummary
 	text txt_base_summary
 	{
 		dataid		TEXT_STATS_BASESUMMARY
-		pos			"34 124"
-		size		"507 608"
+		pos			"35 124"
+		size		"485 608"
 		lineheight	16
 		tabwidth	42
 		font		f_small
-		scrollbar	true
 		rows		"38"
 		longlines	prettychop
+		onViewChange	{
+			*(abstractscrollbar)base_summary_scroll@fullsize <lines>
+			*(abstractscrollbar)base_summary_scroll@current <viewpos>
+			*(abstractscrollbar)base_summary_scroll@viewsize <viewsize>
+		}
+	}
+
+	vscrollbar base_summary_scroll {
+		image		ui/scrollbar_v_green
+		pos			"525 124"
+		height		"608"
+		current		0
+		viewsize	38
+		fullsize	38
+		hidewhenunused true
+		onChange	{ *txt_base_summary@viewpos <current> }
 	}
 
 	// ==================
@@ -179,13 +194,28 @@ window basesummary
 	text txt_info
 	{
 		pos			"615 362"
-		size		"350 370"
+		size		"330 370"
 		font		f_small
 		lineheight		16
 		tabwidth	50
-		scrollbar	true
 		rows		"23"
 		dataid			TEXT_STANDARD
+		onViewChange	{
+			*(abstractscrollbar)info_scroll@fullsize <lines>
+			*(abstractscrollbar)info_scroll@current <viewpos>
+			*(abstractscrollbar)info_scroll@viewsize <viewsize>
+		}
+	}
+
+	vscrollbar info_scroll {
+		image		ui/scrollbar_v_green
+		pos			"950 362"
+		height		"370"
+		current		0
+		viewsize	38
+		fullsize	38
+		hidewhenunused true
+		onChange	{ *txt_info@viewpos <current> }
 	}
 
 	// ==================
@@ -197,7 +227,7 @@ window basesummary
 		tooltip	"_Name of this base"
 		string	*cvar:mn_base_title
 		pos	"60 30"
-		size "240 32"
+		size "500 32"
 		textalign	cl
 		padding	8
 		font	f_big

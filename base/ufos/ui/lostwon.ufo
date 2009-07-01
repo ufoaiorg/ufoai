@@ -197,7 +197,7 @@ window uforecovery
 		}
 		rows lines {
 			pos			"25 50"
-			size		"610 128"
+			size		"590 128"
 			color1		"0 0.08 0 1"
 			color2		"0 0.16 0 1"
 			lineheight	16
@@ -207,15 +207,30 @@ window uforecovery
 		{
 			dataid		TEXT_UFORECOVERY_BASESTORAGE
 			pos			"25 50"
-			size		"610 128"
+			size		"590 128"
 			color		"0.60 0.60 0.60 1"
 			selectcolor	"1 1 1 1"
 			lineheight	16
 			tabwidth	100
 			rows		"8"
-			scrollbar	true
 			mousefx		true
+			longlines	prettychop
 			onClick		{ cmd "cp_uforecovery_baselist_click <lineselected>" }
+			onViewChange	{
+				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@fullsize <lines>
+				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@current <viewpos>
+				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@viewsize <viewsize>
+			}
+		}
+		vscrollbar cp_ur_baselist_scroll {
+			image		ui/scrollbar_v_green
+			pos			"620 50"
+			height		"128"
+			current		0
+			viewsize	8
+			fullsize	8
+			hidewhenunused true
+			onChange	{ *store_panel.cp_uforecovery_baselist@viewpos <current> }
 		}
 
 		string selected_base_str
@@ -284,7 +299,7 @@ window uforecovery
 
 		rows lines {
 			pos			"25 50"
-			size		"610 128"
+			size		"590 128"
 			color1		"0 0.08 0 1"
 			color2		"0 0.16 0 1"
 			lineheight	16
@@ -294,14 +309,30 @@ window uforecovery
 		{
 			dataid		TEXT_UFORECOVERY_NATIONS
 			pos			"25 50"
-			size		"610 128"
+			size		"590 128"
 			lineheight	16
 			tabwidth	100
 			color		"0.60 0.60 0.60 1"
 			selectcolor	"1 1 1 1"
 			rows		"8"		// max. nations
+			mousefx		true
+			longlines	prettychop
 			onClick		{ cmd "cp_uforecovery_nationlist_click <lineselected>" }
-			mousefx true
+			onViewChange	{
+				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@fullsize <lines>
+				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@current <viewpos>
+				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@viewsize <viewsize>
+			}
+		}
+		vscrollbar cp_ur_nationlist_scroll {
+			image		ui/scrollbar_v_green
+			pos			"620 50"
+			height		"128"
+			current		0
+			viewsize	8
+			fullsize	8
+			hidewhenunused true
+			onChange	{ *sell_panel.cp_uforecovery_nationlist@viewpos <current> }
 		}
 
 		string selected_nation_str

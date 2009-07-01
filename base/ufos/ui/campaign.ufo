@@ -83,7 +83,7 @@ window campaigns
 	text campaignlist
 	{
 		pos		"500 140"
-		size	"420 120"
+		size	"400 120"
 		mousefx	true
 		lineheight	"20"
 		dataid		TEXT_CAMPAIGN_LIST
@@ -91,7 +91,22 @@ window campaigns
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
 		rows	"6"
-		scrollbar true
+		onViewChange	{
+			*(abstractscrollbar)campaignlist_scroll@fullsize <lines>
+			*(abstractscrollbar)campaignlist_scroll@current <viewpos>
+			*(abstractscrollbar)campaignlist_scroll@viewsize <viewsize>
+		}
+	}
+
+	vscrollbar campaignlist_scroll {
+		image		ui/scrollbar_v_green
+		pos			"905 140"
+		height		"120"
+		current		0
+		viewsize	6
+		fullsize	6
+		hidewhenunused true
+		onChange	{ *campaignlist@viewpos <current> }
 	}
 
 	text campaign_desc

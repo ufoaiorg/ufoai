@@ -17,7 +17,7 @@ window production
 		string		*cvar:mn_base_title
 		tooltip		"_Name of this base"
 		pos			"60 30"
-		size		"240 32"
+		size		"500 32"
 		textalign	cl
 		padding		8
 		font		f_big
@@ -552,11 +552,26 @@ window production
 	{
 		dataid		TEXT_PRODUCTION_INFO
 		pos			"610 528"
-		size		"366 100"
+		size		"346 100"
 		lineheight	20
 		tabwidth	260
 		rows		"5"
-		scrollbar	true
+		onViewChange	{
+			*(abstractscrollbar)description_scroll@fullsize <lines>
+			*(abstractscrollbar)description_scroll@current <viewpos>
+			*(abstractscrollbar)description_scroll@viewsize <viewsize>
+		}
+	}
+
+	vscrollbar description_scroll {
+		image		ui/scrollbar_v_green
+		pos			"960 528"
+		height		"100"
+		current		0
+		viewsize	5
+		fullsize	5
+		hidewhenunused true
+		onChange	{ *description@viewpos <current> }
 	}
 
 	// ==================
