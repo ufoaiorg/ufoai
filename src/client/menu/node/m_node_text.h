@@ -58,7 +58,6 @@ typedef struct {
 
 	int dataID;					/**< ID of a shared data @sa src/client/menu/m_data.h */
 
-	qboolean scrollbar;			/**< if you want to add a scrollbar to a text node, set this to true */
 	int textLineSelected;		/**< Which line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
 	int lineUnderMouse;			/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
 	int lineHeight;				/**< size between two lines */

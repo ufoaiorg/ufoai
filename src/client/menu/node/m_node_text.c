@@ -110,34 +110,6 @@ void MN_TextScrollBottom (const char* nodeName)
 	}
 }
 
-/**
- * @brief Draw a scrollbar, if necessary
- * @note Needs node->super.fullSizeY to be accurate
- */
-static void MN_DrawScrollBar (const menuNode_t *node)
-{
-	static const vec4_t scrollbarBackground = {0.03, 0.41, 0.05, 0.5};
-	static const vec4_t scrollbarColor = {0.03, 0.41, 0.05, 1.0};
-
-	if (EXTRADATA(node).scrollbar && EXTRADATA(node).super.scrollY.viewSize && EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {
-		vec2_t nodepos;
-		int scrollbarX;
-		float scrollbarY;
-
-		MN_GetNodeAbsPos(node, nodepos);
-		scrollbarX = nodepos[0] + node->size[0] - MN_SCROLLBAR_WIDTH;
-		scrollbarY = node->size[1] * EXTRADATA(node).super.scrollY.viewSize / EXTRADATA(node).super.scrollY.fullSize * MN_SCROLLBAR_HEIGHT;
-
-		MN_DrawFill(scrollbarX, nodepos[1],
-			MN_SCROLLBAR_WIDTH, node->size[1],
-			scrollbarBackground);
-
-		MN_DrawFill(scrollbarX, nodepos[1] + (node->size[1] - scrollbarY) * EXTRADATA(node).super.scrollY.viewPos / (EXTRADATA(node).super.scrollY.fullSize - EXTRADATA(node).super.scrollY.viewSize),
-			MN_SCROLLBAR_WIDTH, scrollbarY,
-			scrollbarColor);
-	}
-}
-
 int MN_TextNodeGetLines (const struct menuNode_s *node)
 {
 	return EXTRADATA(node).super.scrollY.fullSize;
@@ -228,10 +200,6 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 	/* Hover darkening effect for selected text lines. */
 	VectorScale(node->selectedColor, 0.8, colorSelectedHover);
 	colorSelectedHover[3] = node->selectedColor[3];
-
-	/* scrollbar space */
-	if (EXTRADATA(node).scrollbar)
-		width -= MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
 
 	/* fix position of the start of the draw according to the align */
 	switch (node->textalign % 3) {
@@ -369,7 +337,6 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 	MN_AbstractScrollableNodeSetY(node, -1, viewSizeY, fullSizeY);
 
 	R_Color(NULL);
-	MN_DrawScrollBar(node);
 }
 
 /**
@@ -450,10 +417,6 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, message_t *messageStac
 	width = node->size[0] - node->padding - node->padding;
 	height = node->size[1] - node->padding - node->padding;
 
-	/* scrollbar space */
-	if (EXTRADATA(node).scrollbar)
-		width -= MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
-
 	/* found the first message we must display */
 	message = messageStack;
 	posY = EXTRADATA(node).super.scrollY.viewPos;
@@ -474,9 +437,6 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, message_t *messageStac
 			break;
 		message = message->next;
 	}
-
-	if (EXTRADATA(node).scrollbar && EXTRADATA(node).super.scrollY.viewSize)
-		MN_DrawScrollBar(node);
 }
 
 /**
@@ -616,7 +576,6 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 }
 
 static const value_t properties[] = {
-	{"scrollbar", V_BOOL, offsetof(menuNode_t, u.text.scrollbar), MEMBER_SIZEOF(menuNode_t, u.text.scrollbar)},
 	{"lineselected", V_INT, offsetof(menuNode_t, u.text.textLineSelected), MEMBER_SIZEOF(menuNode_t, u.text.textLineSelected)},
 	{"dataid", V_UI_DATAID, offsetof(menuNode_t, u.text.dataID), MEMBER_SIZEOF(menuNode_t, u.text.dataID)},
 	{"lineheight", V_INT, offsetof(menuNode_t, u.text.lineHeight), MEMBER_SIZEOF(menuNode_t, u.text.lineHeight)},
