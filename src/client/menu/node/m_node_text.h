@@ -39,7 +39,6 @@ struct nodeBehaviour_s;
 struct menuAction_s;
 
 void MN_TextScrollBottom(const char* nodePath);
-int MN_TextNodeGetLine(const struct menuNode_s *node, int x, int y);
 int MN_TextNodeGetLines(const struct menuNode_s *node);
 void MN_TextNodeSelectLine(struct menuNode_s *node, int num);
 

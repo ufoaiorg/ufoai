@@ -88,7 +88,7 @@ int MN_TextNodeGetLines (const struct menuNode_s *node)
  * @param[in] y position y on the screen
  * @return The line number under the position (0 = first line)
  */
-int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
+static int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 {
 	assert(MN_NodeInstanceOf(node, "text"));
 
