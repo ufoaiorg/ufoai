@@ -783,26 +783,81 @@ static void UP_FindEntry_f (void)
 	UP_Article(tech, NULL);
 }
 
-static menuOption_t *chapters;
+static menuOption_t *upChapters;
+
+static menuOption_t * UP_AllocOptions()
+{
+	int count = 0;
+	int i;
+
+	if (upChapters)
+		return upChapters;
+
+	/* one option per chapters */
+	count += ccs.numChapters;
+
+	/* one option per used tech */
+	for (i = 0; i < ccs.numChapters; i++) {
+		technology_t *tech = ccs.upChapters[i].first;
+		while (tech) {
+			count++;
+			/* @todo is it really need? */
+			if (tech == tech->upNext)
+				break;
+			tech = tech->upNext;
+		}
+	}
+
+	upChapters = (menuOption_t *) Mem_PoolAlloc(sizeof(*upChapters) * count, cp_campaignPool, 0);
+	return upChapters;
+}
+
+static menuOption_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter, menuOption_t* array, int *count)
+{
+	technology_t *tech = parentChapter->first;
+	int articleCount = 0;
+	menuOption_t* option = array;
+	menuOption_t *last = NULL;
+
+	while (tech) {
+		if (UP_TechGetsDisplayed(tech)) {
+			const char* id = va("@%i", tech->idx);
+			MN_InitOption(option, id, tech->name, id);
+			articleCount++;
+			if (last)
+				last->next = option;
+			last = option;
+			option++;
+		}
+		tech = tech->upNext;
+	}
+
+	*count = articleCount;
+	if (articleCount == 0)
+		return NULL;
+	return array;
+}
 
 /**
  * @brief Displays the chapters in the UFOpaedia
  * @sa UP_Next_f
  * @sa UP_Prev_f
  */
-static void UP_Content_f (void)
+static void UP_GenerateSummary (void)
 {
 	int i;
+	menuOption_t *chapters;
 	menuOption_t *chapter;
+	menuOption_t *articleOptions;
 	menuOption_t *last = NULL;
 	int num = 0;
 
+	/* alloc options only one time */
+	chapters = UP_AllocOptions();
+	chapter = chapters;
 	numChaptersDisplayList = 0;
 
-	/* alloc options only one time */
-	if (!chapters)
-		chapters = MN_AllocOption(ccs.numChapters);
-	chapter = chapters;
+	articleOptions = chapters + ccs.numChapters;
 
 	for (i = 0; i < ccs.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
@@ -813,21 +868,25 @@ static void UP_Content_f (void)
 				researchedEntries = qtrue;
 				break;
 			}
-			if (upCurrentTech != upCurrentTech->upNext && upCurrentTech->upNext)
-				upCurrentTech = upCurrentTech->upNext;
-			else {
-				upCurrentTech = NULL;
-			}
+			upCurrentTech = upCurrentTech->upNext;
 		} while (upCurrentTech);
 
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researchedEntries) {
+			int articleCount = 0;
 			if (numChaptersDisplayList >= MAX_PEDIACHAPTERS)
 				Com_Error(ERR_DROP, "MAX_PEDIACHAPTERS hit");
 			upChaptersDisplayList[numChaptersDisplayList++] = &ccs.upChapters[i];
 
+			/* chapter section*/
 			MN_InitOption(chapter, ccs.upChapters[i].id, ccs.upChapters[i].name, va("%i", num));
 			chapter->icon = MN_GetIconByName(va("ufopedia_%s", ccs.upChapters[i].id));
+
+			/* articles */
+			chapter->firstChild = UP_GenerateArticlesSummary(&ccs.upChapters[i], articleOptions, &articleCount);
+			articleOptions += articleCount;
+
+			/* link chapters together */
 			if (last)
 				last->next = chapter;
 			last = chapter;
@@ -840,6 +899,16 @@ static void UP_Content_f (void)
 
 	MN_RegisterOption(OPTION_UFOPEDIA, chapters);
 	Cvar_Set("mn_uptitle", _("UFOpaedia Content"));
+}
+
+/**
+ * @brief Displays the chapters in the UFOpaedia
+ * @sa UP_Next_f
+ * @sa UP_Prev_f
+ */
+static void UP_Content_f (void)
+{
+	UP_GenerateSummary();
 }
 
 /**
@@ -964,51 +1033,27 @@ static void UP_Next_f (void)
 	UP_Index_f();
 }
 
-
-/**
- * @sa UP_Click_f
- */
-static void UP_RightClick_f (void)
-{
-	switch (upDisplay) {
-	case UFOPEDIA_INDEX:
-	case UFOPEDIA_ARTICLE:
-		UP_Back_f();
-		break;
-	default:
-		break;
-	}
-}
-
 /**
  * @sa UP_RightClick_f
  */
 static void UP_Click_f (void)
 {
+#if 0
 	int num;
-	technology_t *tech;
 
 	if (Cmd_Argc() < 2)
 		return;
 	num = atoi(Cmd_Argv(1));
+#endif
 
-	switch (upDisplay) {
-	case UFOPEDIA_CHAPTERS:
-		if (num < numChaptersDisplayList && upChaptersDisplayList[num]->first) {
-			upCurrentTech = upChaptersDisplayList[num]->first;
-			do {
-				if (UP_TechGetsDisplayed(upCurrentTech)) {
-					Cbuf_AddText(va("mn_upindex %i;", upCurrentTech->upChapter->idx));
-					return;
-				}
-				upCurrentTech = upCurrentTech->upNext;
-			} while (upCurrentTech);
-		}
-		break;
-	case UFOPEDIA_INDEX:
-		assert(currentChapter);
-		tech = currentChapter->first;
-
+	/* article index start with a @ */
+	if (Cmd_Argv(1)[0] == '@') {
+		const int techId = atoi(Cmd_Argv(1) + 1);
+		technology_t* tech;
+		assert(techId >= 0);
+		assert(techId < ccs.numTechnologies);
+		tech = &ccs.technologies[techId];
+#if 0
 		/* get next entry */
 		while (tech) {
 			if (UP_TechGetsDisplayed(tech)) {
@@ -1020,18 +1065,14 @@ static void UP_Click_f (void)
 			}
 			tech = tech->upNext;
 		}
+#endif
 		if (tech)
 			UP_Article(tech, NULL);
-		break;
-	case UFOPEDIA_ARTICLE:
-		/* we don't want the click function parameter in our index function */
-		Cmd_BufClear();
-		/* return back to the index */
-		UP_Index_f();
-		break;
-	default:
-		Com_Printf("Unknown UFOpaedia display value\n");
+		return;
 	}
+
+	/* it clean up the display */
+	UP_ChangeDisplay(UFOPEDIA_CHAPTERS);
 }
 
 /**
@@ -1401,7 +1442,6 @@ void UP_InitStartup (void)
 	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
 	Cmd_AddCommand("mailclient_click", UP_MailClientClick_f, NULL);
 	Cmd_AddCommand("mn_mail_readall", UP_SetAllMailsRead_f, "Mark all mails read");
-	Cmd_AddCommand("ufopedia_rclick", UP_RightClick_f, NULL);
 	Cmd_AddCommand("ufopedia_openmail", UP_OpenMail_f, "Start the mailclient");
 	Cmd_AddCommand("ufopedia_scrollmail", UP_SetMailButtons_f, NULL);
 	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
