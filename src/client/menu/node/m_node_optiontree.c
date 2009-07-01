@@ -405,49 +405,8 @@ static void MN_OptionTreeNodeLoading (menuNode_t *node)
 	node->padding = 3;
 }
 
-#ifdef DEBUG
-static void MN_InitInlineTest (void)
-{
-	menuOption_t* options;
-	int i;
-
-	options = MN_AllocOption(30);
-	for (i = 0; i < 30; i++) {
-		const char *value = va("Foo%i", i);
-		MN_InitOption(&options[i], value, value, value);
-	}
-
-	/* 6*5 sisters options */
-	for (i = 0; i < 30; i += 5) {
-		options[i + 0].next = &options[i + 1];
-		options[i + 1].next = &options[i + 2];
-		options[i + 2].next = &options[i + 3];
-		options[i + 3].next = &options[i + 4];
-	}
-
-	/* create a tree */
-	options[0].firstChild = &options[5];
-	options[1].firstChild = &options[10];
-	options[3].firstChild = &options[15];
-	options[5].firstChild = &options[20];
-	options[6].firstChild = &options[25];
-
-	options[0].icon = MN_GetIconByName("smallhead_scientist");
-	options[1].icon = MN_GetIconByName("smallhead_pilot");
-	options[2].icon = MN_GetIconByName("smallhead_worker");
-
-	MN_RegisterOption(OPTION_TEST, options);
-}
-#endif
-
 static void MN_OptionTreeNodeLoaded (menuNode_t *node)
 {
-#ifdef DEBUG
-	static int i = 0;
-	if (i == 0)
-		MN_InitInlineTest();
-	i++;
-#endif
 }
 
 void MN_RegisterOptionTreeNode (nodeBehaviour_t *behaviour)
