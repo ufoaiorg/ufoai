@@ -54,45 +54,6 @@ void MN_TextNodeSelectLine (menuNode_t *node, int num)
 }
 
 /**
- * @brief Scriptfunction that gets the wanted text node and scrolls the text.
- */
-static void MN_TextScroll_f (void)
-{
-	int offset = 0;
-	menuNode_t *node;
-	menuNode_t *menu;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <nodename> <+/-offset>\n", Cmd_Argv(0));
-		return;
-	}
-
-	menu = MN_GetActiveMenu();
-	if (!menu) {
-		Com_Printf("MN_TextScroll_f: No active menu\n");
-		return;
-	}
-
-	node = MN_GetNodeByPath(va("%s.%s", menu->name, Cmd_Argv(1)));
-	if (!node) {
-		Com_DPrintf(DEBUG_CLIENT, "MN_TextScroll_f: Node '%s' not found.\n", Cmd_Argv(1));
-		return;
-	}
-
-	if (!strncmp(Cmd_Argv(2), "reset", 5)) {
-		MN_AbstractScrollableNodeSetY(node, 0, -1, -1);
-		return;
-	}
-
-	offset = atoi(Cmd_Argv(2));
-
-	if (offset == 0)
-		return;
-
-	MN_AbstractScrollableNodeScrollY(node, offset);
-}
-
-/**
  * @brief Scroll to the bottom
  * @param[in] nodePath absolute path
  */
@@ -608,7 +569,4 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	behaviour->loading = MN_TextNodeLoading;
 	behaviour->loaded = MN_TextNodeLoaded;
 	behaviour->properties = properties;
-
-	/** @todo we should not need anymore this function */
-	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
 }

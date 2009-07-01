@@ -143,9 +143,7 @@ window iaircraft
 		longlines	prettychop
 		onViewChange {
 			*(abstractscrollbar)aircraft_list_scroll@fullsize <lines>
-			*(abstractscrollbar)aircraft_list_scroll@current <viewpos>
-		}
-		onWheel {
+			*(abstractscrollbar)aircraft_list_scroll@viewsize <viewsize>
 			*(abstractscrollbar)aircraft_list_scroll@current <viewpos>
 		}
 		onClick {
@@ -162,7 +160,7 @@ window iaircraft
 		fullsize		19
 		hidewhenunused	true
 		onChange {
-			cmd "mn_textscroll aircraft_list <lastdiff>;"
+			*aircraft_list@viewpos = <current>
 		}
 	}
 

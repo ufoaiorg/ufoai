@@ -229,17 +229,6 @@ window employees
 		*(rows)list_background@current <1>
 	}
 
-	vscrollbar scroll
-	{
-		image		ui/scrollbar_v_green
-		pos			"368 182"
-		height		"558"
-		current		0
-		viewsize	15
-		fullsize	50
-		onChange	{ cmd "mn_textscroll employee_list <lastdiff>; employee_scroll;" }
-	}
-
 	text employee_list
 	{
 		dataid		TEXT_LIST
@@ -252,11 +241,25 @@ window employees
 		selectcolor	"1 1 1 1"
 		mousefx		true
 		onClick			{ cmd "employee_list_click <lineselected>" }
-		onWheelUp		{ cmd "mn_textscroll employee_list -1; employee_scroll;" }
-		onWheelDown		{ cmd "mn_textscroll employee_list 1; employee_scroll;" }
 		onViewChange	{
-			*(abstractscrollbar)scroll@fullsize <lines>
+			*(abstractscrollbar)scroll@fullsize <fullsize>
 			*(abstractscrollbar)scroll@current <viewpos>
+			*(abstractscrollbar)scroll@viewsize <viewsize>
+			cmd "employee_scroll;"
+		}
+	}
+
+	vscrollbar scroll
+	{
+		image		ui/scrollbar_v_green
+		pos			"368 182"
+		height		"558"
+		current		0
+		viewsize	15
+		fullsize	50
+		onChange	{
+			*employee_list@viewpos = <current>
+			cmd "employee_scroll;"
 		}
 	}
 

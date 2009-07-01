@@ -116,12 +116,10 @@ window campaigns
 		size		"415 360"
 		lineheight	20
 		rows		18
-		onWheel		{
-			*(abstractscrollbar)campaign_desc_scroll@current <viewpos>
-		}
 		onViewChange {
-			*(abstractscrollbar)campaign_desc_scroll@fullsize <lines>
-			*(abstractscrollbar)campaign_desc_scroll@current <viewpos>
+			*(abstractscrollbar)campaign_desc_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)campaign_desc_scroll@current = <viewpos>
+			*(abstractscrollbar)campaign_desc_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -134,7 +132,7 @@ window campaigns
 		fullsize	19
 		hidewhenunused true
 		onChange	{
-			cmd "mn_textscroll campaign_desc <lastdiff>;"
+			*campaign_desc@viewpos = <current>
 		}
 	}
 

@@ -39,12 +39,10 @@ window geoscape
 				cmd "messagesystem_changemode"
 			}
 		}
-		onWheel		{
-			*node:(abstractscrollbar)root.messagesystem_scroll@current <viewpos>
-		}
 		onViewChange {
-			*node:(abstractscrollbar)root.messagesystem_scroll@fullsize <lines>
+			*node:(abstractscrollbar)root.messagesystem_scroll@fullsize <fullsize>
 			*node:(abstractscrollbar)root.messagesystem_scroll@current <viewpos>
+			*node:(abstractscrollbar)root.messagesystem_scroll@viewsize <viewsize>
 		}
 	}
 	vscrollbar messagesystem_scroll {
@@ -58,7 +56,7 @@ window geoscape
 		fullsize	50
 		hidewhenunused true
 		onChange	{
-			cmd "mn_textscroll messagesystem <lastdiff>;"
+			*node:parent.messagesystem@viewpos = <current>
 		}
 	}
 
@@ -130,11 +128,9 @@ window geoscape
 			tabwidth	70
 			rows		8
 			onViewChange {
-				*node:(abstractscrollbar)parent.description_scroll@fullsize <lines>
+				*node:(abstractscrollbar)parent.description_scroll@fullsize <fullsize>
 				*node:(abstractscrollbar)parent.description_scroll@current <viewpos>
-			}
-			onWheel {
-				*node:(abstractscrollbar)parent.description_scroll@current <viewpos>
+				*node:(abstractscrollbar)parent.description_scroll@viewsize <viewsize>
 			}
 		}
 
@@ -147,7 +143,7 @@ window geoscape
 			fullsize	8
 			hidewhenunused	true
 			onChange {
-				cmd "mn_textscroll control.description <lastdiff>;"
+				*node:parent.description@viewpos = <current>
 			}
 		}
 
@@ -1726,11 +1722,9 @@ window popup_intercept
 			rows		"13"
 			longlines	prettychop
 			onViewChange {
-				*(abstractscrollbar)aircraft.ships_scroll@fullsize <lines>
-				*(abstractscrollbar)aircraft.ships_scroll@current <viewpos>
-			}
-			onWheel {
-				*(abstractscrollbar)aircraft.ships_scroll@current <viewpos>
+				*(abstractscrollbar)aircraft.ships_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)aircraft.ships_scroll@current = <viewpos>
+				*(abstractscrollbar)aircraft.ships_scroll@viewsize = <viewsize>
 			}
 			onClick		{ cmd "ships_click <lineselected>" }
 			onRClick	{ cmd "ships_rclick <lineselected>" }
@@ -1745,7 +1739,7 @@ window popup_intercept
 			fullsize	19
 			hidewhenunused	true
 			onChange {
-				cmd "mn_textscroll aircraft.ships <lastdiff>;"
+				*node:parent.ships@viewpos = <current>
 			}
 		}
 	}
@@ -1774,11 +1768,9 @@ window popup_intercept
 			mousefx		true
 			rows		"13"
 			onViewChange {
-				*(abstractscrollbar)sam.bases_scroll@fullsize <lines>
+				*(abstractscrollbar)sam.bases_scroll@fullsize <fullsize>
 				*(abstractscrollbar)sam.bases_scroll@current <viewpos>
-			}
-			onWheel {
-				*(abstractscrollbar)sam.bases_scroll@current <viewpos>
+				*(abstractscrollbar)sam.bases_scroll@viewsize <viewsize>
 			}
 			onClick	{ cmd "bases_click <lineselected>" }
 		}
@@ -1792,7 +1784,7 @@ window popup_intercept
 			fullsize	19
 			hidewhenunused	true
 			onChange {
-				cmd "mn_textscroll sam.bases <lastdiff>;"
+				*node:parent.bases@viewpos = <current>
 			}
 		}
 	}
@@ -2162,13 +2154,11 @@ window messageoptions
 		mousefx		true
 		longlines	prettychop
 		onClick		{ cmd "messagetypes_click <lineselected>" }
-		onWheel		{
+		onViewChange {
+			*(abstractscrollbar)messagetypes_scroll@fullsize <fullsize>
 			*(abstractscrollbar)messagetypes_scroll@current <viewpos>
+			*(abstractscrollbar)messagetypes_scroll@viewsize <viewsize>
 			cmd "msgoptions_scroll;"
-		}
-		onViewChange	{
-			*(abstractscrollbar)messagetypes_scroll@fullsize <lines>
-			*(abstractscrollbar)messagetypes_scroll@current <viewpos>
 		}
 	}
 
@@ -2180,7 +2170,7 @@ window messageoptions
 		viewsize	12
 		fullsize	12
 		onChange	{
-			cmd "mn_textscroll messagetypes <lastdiff>;"
+			*messagetypes@viewpos = <current>
 			cmd "msgoptions_scroll;"
 		}
 	}

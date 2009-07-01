@@ -114,11 +114,9 @@ window basedefence
 				call update_buttons
 			}
 			onViewChange {
-				*(abstractscrollbar)slots.slotlist_scroll@fullsize <lines>
-				*(abstractscrollbar)slots.slotlist_scroll@current <viewpos>
-			}
-			onWheel {
-				*(abstractscrollbar)slots.slotlist_scroll@current <viewpos>
+				*(abstractscrollbar)slots.slotlist_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)slots.slotlist_scroll@current = <viewpos>
+				*(abstractscrollbar)slots.slotlist_scroll@viewsize = <viewsize>
 			}
 		}
 		vscrollbar slotlist_scroll
@@ -130,7 +128,7 @@ window basedefence
 			viewsize	4
 			fullsize	4
 			hidewhenunused	true
-			onChange	{ cmd "mn_textscroll slots.slotlist <lastdiff>;" }
+			onChange	{ *node:parent.slotlist@viewpos = <current> }
 		}
 	}
 
@@ -194,11 +192,9 @@ window basedefence
 				cmd "basedef_list_click <lineselected>;"
 			}
 			onViewChange {
-				*(abstractscrollbar)store.storelist_scroll@fullsize <lines>
-				*(abstractscrollbar)store.storelist_scroll@current <viewpos>
-			}
-			onWheel {
-				*(abstractscrollbar)store.storelist_scroll@current <viewpos>
+				*(abstractscrollbar)store.storelist_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)store.storelist_scroll@current = <viewpos>
+				*(abstractscrollbar)store.storelist_scroll@viewsize = <viewsize>
 			}
 		}
 		vscrollbar storelist_scroll
@@ -210,7 +206,7 @@ window basedefence
 			viewsize	4
 			fullsize	4
 			hidewhenunused	true
-			onChange	{ cmd "mn_textscroll store.storelist <lastdiff>;" }
+			onChange	{ *node:parent.storelist@viewpos = <current> }
 		}
 	}
 
@@ -257,11 +253,9 @@ window basedefence
 			rows		"6"
 			mousefx		true
 			onViewChange {
-				*(abstractscrollbar)descpanel.description_scroll@fullsize <lines>
+				*(abstractscrollbar)descpanel.description_scroll@fullsize <fullsize>
 				*(abstractscrollbar)descpanel.description_scroll@current <viewpos>
-			}
-			onWheel {
-				*(abstractscrollbar)descpanel.description_scroll@current <viewpos>
+				*(abstractscrollbar)descpanel.description_scroll@viewsize <viewsize>
 			}
 		}
 		vscrollbar description_scroll
@@ -273,7 +267,7 @@ window basedefence
 			viewsize	6
 			fullsize	6
 			hidewhenunused	true
-			onChange	{ cmd "mn_textscroll descpanel.description <lastdiff>;" }
+			onChange	{ *node:parent.description@viewpos = <current> }
 		}
 
 		todo descript

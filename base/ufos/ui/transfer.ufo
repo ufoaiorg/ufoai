@@ -152,12 +152,10 @@ window transfer
 		longlines	prettychop
 		rows		"9"
 		onClick		{ cmd "trans_cargolist_click <lineselected>" }
-		onWheel		{
-			*(abstractscrollbar)trans_cargolist_scroll@current <viewpos>
-		}
 		onViewChange	{
-			*(abstractscrollbar)trans_cargolist_scroll@fullsize <lines>
-			*(abstractscrollbar)trans_cargolist_scroll@current <viewpos>
+			*(abstractscrollbar)trans_cargolist_scroll@fullsize = <lines>
+			*(abstractscrollbar)trans_cargolist_scroll@current = <viewpos>
+			*(abstractscrollbar)trans_cargolist_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -169,7 +167,7 @@ window transfer
 		viewsize	9
 		fullsize	9
 		hidewhenunused	true
-		onChange	{ cmd "mn_textscroll trans_cargolist <lastdiff>;" }
+		onChange	{ *trans_cargolist@viewpos = <current> }
 	}
 
 	// ==================
@@ -237,12 +235,10 @@ window transfer
 		lineheight	"25"
 		rows		"22"
 		onClick		{ cmd "trans_list_click <lineselected>" }
-		onWheel		{
-			*(abstractscrollbar)trans_list_scroll@current <viewpos>
-		}
 		onViewChange	{
 			*(abstractscrollbar)trans_list_scroll@fullsize <lines>
 			*(abstractscrollbar)trans_list_scroll@current <viewpos>
+			*(abstractscrollbar)trans_list_scroll@viewsize <viewsize>
 		}
 	}
 
@@ -254,7 +250,7 @@ window transfer
 		viewsize	22
 		fullsize	22
 		hidewhenunused	true
-		onChange	{ cmd "mn_textscroll trans_list <lastdiff>;" }
+		onChange	{ *trans_list@viewpos = <current> }
 	}
 
 	// ==================

@@ -327,12 +327,10 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			dataid		TEXT_LIST
 			onClick		{ cmd "servers_click <lineselected>" }
 			onRClick	{ cmd "pingservers;" }
-			onWheel {
-				*(abstractscrollbar)content.servers_scroll@current <viewpos>
-			}
 			onViewChange {
-				*(abstractscrollbar)content.servers_scroll@fullsize <lines>
-				*(abstractscrollbar)content.servers_scroll@current <viewpos>
+				*(abstractscrollbar)content.servers_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)content.servers_scroll@current = <viewpos>
+				*(abstractscrollbar)content.servers_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -343,7 +341,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			current		0
 			viewsize	22
 			fullsize	22
-			onChange		{ cmd "mn_textscroll content.servers <lastdiff>;" }
+			onChange	{ *node:parent.servers@viewpos = <current> }
 		}
 
 		button button_serverbrowser_refresh

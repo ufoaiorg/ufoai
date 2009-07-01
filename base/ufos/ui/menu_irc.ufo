@@ -65,12 +65,10 @@ window irc
 		mousefx		true
 		onClick		{ cmd "irc_userlist_click <lineselected>" }
 		onRClick	{ cmd "irc_userlist_rclick <lineselected>" }
-		onWheel {
-			*(abstractscrollbar)irc_userlist_scroll@current <viewpos>
-		}
 		onViewChange {
-			*(abstractscrollbar)irc_userlist_scroll@fullsize <lines>
+			*(abstractscrollbar)irc_userlist_scroll@fullsize <fullsize>
 			*(abstractscrollbar)irc_userlist_scroll@current <viewpos>
+			*(abstractscrollbar)irc_userlist_scroll@viewsize <viewsize>
 		}
 	}
 
@@ -82,7 +80,7 @@ window irc
 		viewsize	27
 		fullsize	27
 		hidewhenunused	true
-		onChange		{ cmd "mn_textscroll irc_userlist <lastdiff>;" }
+		onChange		{ *irc_userlist@viewpos = <current> }
 	}
 
 	text irc_data
@@ -92,12 +90,10 @@ window irc
 		rows		"24"
 		lineheight  "22"
 		dataid		TEXT_STANDARD
-		onWheel {
-			*(abstractscrollbar)irc_data_scroll@current <viewpos>
-		}
 		onViewChange {
-			*(abstractscrollbar)irc_data_scroll@fullsize <lines>
+			*(abstractscrollbar)irc_data_scroll@fullsize <fullsize>
 			*(abstractscrollbar)irc_data_scroll@current <viewpos>
+			*(abstractscrollbar)irc_data_scroll@viewsize <viewsize>
 		}
 	}
 
@@ -108,7 +104,7 @@ window irc
 		current		0
 		viewsize	24
 		fullsize	24
-		onChange	{ cmd "mn_textscroll irc_data <lastdiff>;" }
+		onChange	{ *irc_data@viewpos = <current> }
 	}
 
 	string irc_server_string

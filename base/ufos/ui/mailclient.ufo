@@ -40,12 +40,10 @@ window mail
 		lineheight	24
 		tabwidth	100
 		rows		"20"
-		onWheel		{
-			*(abstractscrollbar)mail_scroll@current <viewpos>
-		}
 		onViewChange	{
-			*(abstractscrollbar)mail_scroll@fullsize <lines>
-			*(abstractscrollbar)mail_scroll@current <viewpos>
+			*(abstractscrollbar)mail_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)mail_scroll@current = <viewpos>
+			*(abstractscrollbar)mail_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -57,7 +55,7 @@ window mail
 		viewsize	20
 		fullsize	50
 		hidewhenunused true
-		onChange	{ cmd "mn_textscroll mail <lastdiff>;" }
+		onChange	{ *mail@viewpos = <current> }
 	}
 
 	model sender_body
@@ -534,13 +532,11 @@ window mailclient
 		tabwidth	700
 		mousefx		true
 		onClick		{ cmd "mailclient_click <lineselected>" }
-		onWheel		{
-			*(abstractscrollbar)mailclient_scroll@current <viewpos>
-			cmd "ufopedia_scrollmail;"
-		}
 		onViewChange	{
-			*(abstractscrollbar)mailclient_scroll@fullsize <lines>
+			*(abstractscrollbar)mailclient_scroll@fullsize <fullsize>
 			*(abstractscrollbar)mailclient_scroll@current <viewpos>
+			*(abstractscrollbar)mailclient_scroll@viewsize <viewsize>
+			cmd "ufopedia_scrollmail;"
 		}
 	}
 
@@ -553,7 +549,7 @@ window mailclient
 		fullsize	50
 		hidewhenunused true
 		onChange		{
-			cmd "mn_textscroll mailclient <lastdiff>;"
+			*mailclient@viewpos = <current>
 			cmd "ufopedia_scrollmail;"
 		}
 	}

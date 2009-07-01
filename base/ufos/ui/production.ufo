@@ -316,18 +316,6 @@ window production
 		}
 	}
 
-	vscrollbar prodlist_scroll {
-		image		ui/scrollbar_v_green
-		pos			"428 180"
-		height		"550"
-		current		0
-		viewsize	30
-		fullsize	30
-		onChange	{
-			cmd "mn_textscroll prodlist <lastdiff>;mn_textscroll prodlist_amount <lastdiff>;mn_textscroll prodlist_queued <lastdiff>;"
-		}
-	}
-
 	text prodlist_queued
 	{
 		dataid		TEXT_PRODUCTION_QUEUED
@@ -346,6 +334,20 @@ window production
 			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
 			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_rclick <lineselected>;"
+		}
+	}
+
+	vscrollbar prodlist_scroll {
+		image		ui/scrollbar_v_green
+		pos			"428 180"
+		height		"550"
+		current		0
+		viewsize	30
+		fullsize	30
+		onChange	{
+			*prodlist@viewpos = <viewpos>
+			*prodlist_amount@viewpos = <viewpos>
+			*prodlist_queued@viewpos = <viewpos>
 		}
 	}
 
