@@ -16,40 +16,6 @@ window ufopedia
 	// ==================
 	// buttons
 	// ==================
-/*
-	custombutton bt_prev
-	{
-		tooltip		"_Previous entry"
-		image		ui/button_background
-		texl		"192 0"
-		pos			"10 10"
-		size		"64 37"
-		icon		prev
-		onClick		{ cmd mn_upprev; }
-	}
-
-	custombutton bt_next
-	{
-		tooltip		"_Next entry"
-		image		ui/button_background
-		texl		"192 0"
-		pos			"950 10"
-		size		"64 37"
-		icon		next
-		onClick		{ cmd mn_upnext; }
-	}
-
-	custombutton button_content
-	{
-		tooltip		"_Back to content"
-		image		ui/button_background
-		texl		"192 0"
-		pos			"10 720"
-		size		"64 37"
-		icon		list
-		onClick		{ cmd "mn_upback;" }
-	}
-*/
 	custombutton button_text_pre
 	{
 		visiblewhen "*cvar:mn_uppreavailable == 1"
@@ -121,8 +87,8 @@ window ufopedia
 	text ufopedia
 	{
 		dataid		TEXT_UFOPEDIA
-		pos			"325 81"
-		size		"393 387"
+		pos			"325 75"
+		size		"393 403"
 		font		f_small
 		lineheight	18
 		tabwidth	100
@@ -136,8 +102,8 @@ window ufopedia
 
 	vscrollbar ufopedia_scroll {
 		image		ui/scrollbar_v_green
-		pos			"725 84"
-		height		"360"
+		pos			"725 75"
+		height		"403"
 		current		0
 		viewsize	16
 		fullsize	50
@@ -156,11 +122,26 @@ window ufopedia
 	{
 		dataid		TEXT_STANDARD
 		pos			"30 495"
-		size		"495 200"
+		size		"475 200"
 		lineheight	20
 		tabwidth	230
 		rows		"10"
-		scrollbar	true
+		onViewChange	{
+			*(abstractscrollbar)description_scroll@fullsize <lines>
+			*(abstractscrollbar)description_scroll@current <viewpos>
+			*(abstractscrollbar)description_scroll@viewsize <viewsize>
+		}
+	}
+
+	vscrollbar description_scroll {
+		image		ui/scrollbar_v_green
+		pos			"510 495"
+		height		"200"
+		current		0
+		viewsize	10
+		fullsize	10
+		hidewhenunused true
+		onChange	{ *description@viewpos <current> }
 	}
 
 	text techtree
