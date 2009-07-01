@@ -930,7 +930,6 @@ void B_InitCallbacks (void)
 /** @todo unify the names into mn_base_* */
 void B_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("basesummary_init");
 	Cmd_RemoveCommand("basesummary_selectbase");
 	Cmd_RemoveCommand("mn_prev_base");
 	Cmd_RemoveCommand("mn_next_base");
