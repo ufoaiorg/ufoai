@@ -172,7 +172,7 @@ void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const
 void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt);
 void LE_AddAmbientSound(const char *sound, const vec3_t origin, int levelflags, float volume);
 le_t *LE_GetClosestActor(const vec3_t origin);
-int LE_ActorGetStepTime(const le_t *le, const int dir, const int sped);
+int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, const int dir, const int sped);
 
 #define LE_IsStunned(le)	(((le)->state & STATE_STUN) & ~STATE_DEAD)
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */

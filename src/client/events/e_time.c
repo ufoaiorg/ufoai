@@ -136,6 +136,8 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 			int number, i;
 			int time = 0;
 			int pathLength;
+			byte crouchingState;
+			pos3_t pos, oldPos;
 
 			number = NET_ReadShort(msg);
 			/* get le */
@@ -150,14 +152,18 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 			NET_ReadByte(msg);
 			NET_ReadByte(msg);
 
+			VectorCopy(le->pos, pos);
+			crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
+
 			for (i = 0; i < pathLength; i++) {
 				const byte fulldv = NET_ReadByte(msg);
 				const byte dir = getDVdir(fulldv);
-				/** @todo pos and oldpos aren't working */
-				time += LE_ActorGetStepTime(le, dir, NET_ReadShort(msg));
+				VectorCopy(pos, oldPos);
+				PosAddDV(pos, crouchingState, fulldv);
+				time += LE_ActorGetStepTime(le, pos, oldPos, dir, NET_ReadShort(msg));
 				NET_ReadShort(msg);
 			}
-			nextTime += time + 300;
+			nextTime += time + 400;
 		}
 		break;
 	case EV_ACTOR_SHOOT:

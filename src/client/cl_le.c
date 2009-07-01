@@ -478,15 +478,15 @@ le_t* LE_GetClosestActor (const vec3_t origin)
 /**
  * sqrt(2) for diagonal movement
  */
-int LE_ActorGetStepTime (const le_t *le, const int dir, const int speed)
+int LE_ActorGetStepTime (const le_t *le, const pos3_t pos, const pos3_t oldPos, const int dir, const int speed)
 {
 	if (dir != DIRECTION_FALL) {
 		return (((dir & (CORE_DIRECTIONS - 1)) >= BASE_DIRECTIONS ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / speed);
 	} else {
 		vec3_t start, dest;
 		/* This needs to account for the distance of the fall. */
-		Grid_PosToVec(clMap, le->fieldSize, le->oldPos, start);
-		Grid_PosToVec(clMap, le->fieldSize, le->pos, dest);
+		Grid_PosToVec(clMap, le->fieldSize, oldPos, start);
+		Grid_PosToVec(clMap, le->fieldSize, pos, dest);
 		/* 1/1000th of a second per model unit in height change */
 		return (start[2] - dest[2]);
 	}
@@ -547,7 +547,7 @@ static void LET_PathMove (le_t * le)
 			le->startTime = le->endTime;
 			/* check for straight movement or diagonal movement */
 			assert(le->speed[le->pathPos]);
-			le->endTime += LE_ActorGetStepTime(le, dir, le->speed[le->pathPos]);
+			le->endTime += LE_ActorGetStepTime(le, le->pos, le->oldPos, dir, le->speed[le->pathPos]);
 
 			le->positionContents = le->pathContents[le->pathPos];
 			le->pathPos++;
