@@ -229,14 +229,8 @@ static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 	if (option) {
 		const char *cvarName = &((const char *)node->cvar)[6];
 		MN_SetCvar(cvarName, option->value, 0);
-		MN_ExecuteEventActions(node, node->onChange);
-		if (option->action[0] != '\0') {
-#ifdef DEBUG
-			if (option->action[strlen(option->action) - 1] != ';')
-				Com_Printf("MN_OptionListNodeClick: Option with none terminated action command (%s)\n", MN_GetPath(node));
-#endif
-			Cbuf_AddText(option->action);
-		}
+		if (node->onChange)
+			MN_ExecuteEventActions(node, node->onChange);
 	}
 }
 
