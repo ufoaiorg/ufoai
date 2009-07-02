@@ -487,8 +487,10 @@ void MN_MouseWheel (qboolean down, int x, int y)
 		if (hoveredNode->behaviour->mouseWheel) {
 			hoveredNode->behaviour->mouseWheel(hoveredNode, down, x, y);
 		} else {
-			if (hoveredNode->onWheelUp && hoveredNode->onWheelDown)
-				MN_ExecuteEventActions(hoveredNode, (down ? hoveredNode->onWheelDown : hoveredNode->onWheelUp));
+			if (hoveredNode->onWheelUp && !down)
+				MN_ExecuteEventActions(hoveredNode, hoveredNode->onWheelUp);
+			if (hoveredNode->onWheelDown && down)
+				MN_ExecuteEventActions(hoveredNode, hoveredNode->onWheelDown);
 			else
 				MN_ExecuteEventActions(hoveredNode, hoveredNode->onWheel);
 		}
