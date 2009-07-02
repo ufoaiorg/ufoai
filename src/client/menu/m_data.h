@@ -152,6 +152,14 @@ typedef struct menuSharedData_s {
 	int versionId;				/**< Id identify the value, to check changes */
 } menuSharedData_t;
 
+#define MAX_DEPTH_OPTIONITERATORCACHE 8
+
+typedef struct {
+	menuOption_t* option;	/**< current option */
+	menuOption_t* depthCache[MAX_DEPTH_OPTIONITERATORCACHE];	/**< parent link */
+	int depthPos;	/**< current cache position */
+} menuOptionIterator_t;
+
 /* common */
 int MN_GetDataVersion(int textId) __attribute__ ((warn_unused_result));
 void MN_ResetData(int dataId);
@@ -171,6 +179,9 @@ void MN_RegisterOption(int dataId, struct menuOption_s *option);
 struct menuOption_s *MN_GetOption(int dataId) __attribute__ ((warn_unused_result));
 void MN_SortOptions(struct menuOption_s **option);
 void MN_InitOption(struct menuOption_s *option, const char* name, const char* label, const char* value);
+int MN_OptionUpdateCache (menuOption_t* option);
+menuOption_t* MN_InitOptionIteratorAtIndex(int index, menuOption_t* option, menuOptionIterator_t* iterator);
+menuOption_t* MN_OptionIteratorNextOption(menuOptionIterator_t* iterator);
 
 /* line strip */
 void MN_RegisterLineStrip(int dataId, struct lineStrip_s *text);

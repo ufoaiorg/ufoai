@@ -268,6 +268,129 @@ menuOption_t* MN_AllocOption (int count)
 }
 
 /**
+ * @brief update option cache about child, according to collapse and visible status
+ * @note can be a common function for all option node
+ * @return number of visible elements
+ */
+int MN_OptionUpdateCache (menuOption_t* option)
+{
+	int count = 0;
+	while (option) {
+		int localCount = 0;
+		if (option->invis) {
+			option = option->next;
+			continue;
+		}
+		if (option->collapsed) {
+			option->childCount = 0;
+			option = option->next;
+			count++;
+			continue;
+		}
+		if (option->firstChild)
+			localCount = MN_OptionUpdateCache(option->firstChild);
+		option->childCount = localCount;
+		count += 1 + localCount;
+		option = option->next;
+	}
+	return count;
+}
+
+
+/**
+ * @brief find an option why index (0 is the first option)
+ * @param[in] index Requested index (0 is the first option)
+ * @param[in] option First element of options (it can be a tree)
+ * @param[inout] iterator need an initialised iterator, and update it into the write index
+ */
+static menuOption_t* MN_FindOptionAtIndex (int index, menuOption_t* option, menuOptionIterator_t* iterator)
+{
+	while (option) {
+		if (option->invis) {
+			option = option->next;
+			continue;
+		}
+
+		/* we are on the right element */
+		if (index == 0) {
+			iterator->option = option;
+			return option;
+		}
+
+		/* not the parent */
+		index--;
+
+		if (option->collapsed) {
+			option = option->next;
+			continue;
+		}
+
+		/* its a child */
+		if (index < option->childCount) {
+			if(iterator->depthPos >= MAX_DEPTH_OPTIONITERATORCACHE)
+				assert(qfalse);
+			iterator->depthCache[iterator->depthPos] = option;
+			iterator->depthPos++;
+			return MN_FindOptionAtIndex(index, option->firstChild, iterator);
+		}
+		index -= option->childCount;
+		option = option->next;
+	}
+
+	iterator->option = NULL;
+	return NULL;
+}
+
+/**
+ * @brief Init an option iterator at an index
+ * @node invis option are skiped, and child are counted
+ * @param[in] index Requested index (0 is the first option)
+ * @param[in] option First element of options (it can be a tree)
+ * @param[out] iterator Initialised iterator
+ * @return the first option element found (current position of the iterator)
+ */
+menuOption_t* MN_InitOptionIteratorAtIndex (int index, menuOption_t* option, menuOptionIterator_t* iterator)
+{
+	memset(iterator, 0, sizeof(*iterator));
+	return MN_FindOptionAtIndex(index, option, iterator);
+}
+
+/**
+ * @breif Find the next element from the iterator
+ */
+menuOption_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
+{
+	menuOption_t* option;
+
+	option = iterator->option;
+	assert(iterator->depthPos < MAX_DEPTH_OPTIONITERATORCACHE);
+	iterator->depthCache[iterator->depthPos] = option;
+	iterator->depthPos++;
+
+	if (option->collapsed)
+		option = NULL;
+	else
+		option = option->firstChild;
+
+	while (qtrue) {
+		while (option) {
+			if (!option->invis) {
+				iterator->option = option;
+				return option;
+			}
+			option = option->next;
+		}
+		if (iterator->depthPos == 0)
+			break;
+		iterator->depthPos--;
+		option = iterator->depthCache[iterator->depthPos]->next;
+	}
+
+	iterator->option = NULL;
+	return NULL;
+}
+
+/**
  * @brief Resets the mn.menuText pointers from a func node
  * @note You can give this function a parameter to only delete a specific data
  * @sa menutextid_names

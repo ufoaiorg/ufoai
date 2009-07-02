@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_actions.h"
 #include "../m_font.h"
+#include "../m_data.h"
 #include "../m_icon.h"
 #include "../m_render.h"
 #include "m_node_abstractoption.h"
@@ -45,35 +46,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static menuIcon_t *systemCollapse;
 static menuIcon_t *systemExpand;
-
-/**
- * @brief update option cache about child, according to collapse and visible status
- * @note can be a common function for all option node
- * @return number of visible elements
- */
-static int MN_OptionUpdateCache (menuOption_t* option)
-{
-	int count = 0;
-	while (option) {
-		int localCount = 0;
-		if (option->invis) {
-			option = option->next;
-			continue;
-		}
-		if (option->collapsed) {
-			option->childCount = 0;
-			option = option->next;
-			count++;
-			continue;
-		}
-		if (option->firstChild)
-			localCount = MN_OptionUpdateCache(option->firstChild);
-		option->childCount = localCount;
-		count += 1 + localCount;
-		option = option->next;
-	}
-	return count;
-}
 
 /**
  * @brief Update the scroll according to the number
@@ -124,90 +96,6 @@ static menuOption_t* MN_OptionTreeNodeGetFirstOption (menuNode_t * node)
 	}
 }
 
-#define MAX_DEPTH_OPTIONITERATORCACHE 8
-
-typedef struct {
-	menuOption_t* option;	/**< current option */
-	menuOption_t* depthCache[MAX_DEPTH_OPTIONITERATORCACHE];	/**< parent link */
-	int depthPos;	/**< current cache position */
-} menuOptionIterator_t;
-
-/**
- * @brief find an option why index (0 is the first option)
- */
-static menuOption_t* MN_OptionTreeFindFirstOption (int pos, menuOption_t* option, menuOptionIterator_t* iterator)
-{
-	while (option) {
-		if (option->invis) {
-			option = option->next;
-			continue;
-		}
-
-		/* we are on the right element */
-		if (pos == 0) {
-			iterator->option = option;
-			return option;
-		}
-
-		/* not the parent */
-		pos--;
-
-		if (option->collapsed) {
-			option = option->next;
-			continue;
-		}
-
-		/* its a child */
-		if (pos < option->childCount) {
-			if(iterator->depthPos >= MAX_DEPTH_OPTIONITERATORCACHE)
-				assert(qfalse);
-			iterator->depthCache[iterator->depthPos] = option;
-			iterator->depthPos++;
-			return MN_OptionTreeFindFirstOption(pos, option->firstChild, iterator);
-		}
-		pos -= option->childCount;
-		option = option->next;
-	}
-
-	iterator->option = NULL;
-	return NULL;
-}
-
-/**
- * @breif Find the next element from the iterator
- */
-static menuOption_t* MN_OptionTreeNextOption (menuOptionIterator_t* iterator)
-{
-	menuOption_t* option;
-
-	option = iterator->option;
-	assert(iterator->depthPos < MAX_DEPTH_OPTIONITERATORCACHE);
-	iterator->depthCache[iterator->depthPos] = option;
-	iterator->depthPos++;
-
-	if (option->collapsed)
-		option = NULL;
-	else
-		option = option->firstChild;
-
-	while (qtrue) {
-		while (option) {
-			if (!option->invis) {
-				iterator->option = option;
-				return option;
-			}
-			option = option->next;
-		}
-		if (iterator->depthPos == 0)
-			break;
-		iterator->depthPos--;
-		option = iterator->depthCache[iterator->depthPos]->next;
-	}
-
-	iterator->option = NULL;
-	return NULL;
-}
-
 static void MN_OptionTreeNodeDraw (menuNode_t *node)
 {
 	static const int panelTemplate[] = {
@@ -226,8 +114,6 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int count = 0;
 	menuOptionIterator_t iterator;
-
-	memset(&iterator, 0, sizeof(iterator));
 
 	if (!systemExpand)
 		systemExpand = MN_GetIconByName("system_expand");
@@ -251,10 +137,10 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	/* skip option over current position */
 	option = MN_OptionTreeNodeGetFirstOption(node);
 	MN_OptionTreeNodeUpdateScroll(node);
-	option = MN_OptionTreeFindFirstOption(node->u.option.scrollY.viewPos, option, &iterator);
+	option = MN_InitOptionIteratorAtIndex(node->u.option.scrollY.viewPos, option, &iterator);
 
 	/* draw all available options for this selectbox */
-	for (; option; option = MN_OptionTreeNextOption(&iterator)) {
+	for (; option; option = MN_OptionIteratorNextOption(&iterator)) {
 		int decX;
 
 		/* outside the node */
@@ -314,7 +200,6 @@ static menuOption_t* MN_OptionTreeNodeGetOptionAtPosition (menuNode_t * node, in
 	int fontHeight;
 	int count;
 	menuOptionIterator_t iterator;
-	memset(&iterator, 0, sizeof(iterator));
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 
@@ -323,7 +208,7 @@ static menuOption_t* MN_OptionTreeNodeGetOptionAtPosition (menuNode_t * node, in
 
 	option = MN_OptionTreeNodeGetFirstOption(node);
 	count = node->u.option.scrollY.viewPos + (y - node->padding) / fontHeight;
-	option = MN_OptionTreeFindFirstOption(count, option, &iterator);
+	option = MN_InitOptionIteratorAtIndex(count, option, &iterator);
 	*depth = iterator.depthPos;
 	return option;
 }
