@@ -479,13 +479,13 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
  */
 static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
-	if (node->onWheelUp && node->onWheelDown) {
-		MN_ExecuteEventActions(node, (down ? node->onWheelDown : node->onWheelUp));
-	} else {
-		MN_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
-		/* they can also have script commands assigned */
+	MN_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
+	if (node->onWheelUp && !down)
+		MN_ExecuteEventActions(node, node->onWheelUp);
+	if (node->onWheelDown && down)
+		MN_ExecuteEventActions(node, node->onWheelDown);
+	if (node->onWheel)
 		MN_ExecuteEventActions(node, node->onWheel);
-	}
 }
 
 static void MN_TextNodeLoading (menuNode_t *node)
