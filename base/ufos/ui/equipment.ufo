@@ -564,12 +564,17 @@ window equipment
 		option abilities {
 			label	"_Actor Abilities"
 			value	"0"
-			action "actor_stats;"
 		}
 		option weaponinfo {
 			label	"_Object Info"
 			value	"1"
-			action "weapon_stats;"
+		}
+		onChange {
+			if ( *cvar:mn_infotype == 0 ) {
+				cmd "actor_stats;"
+			} elif ( *cvar:mn_infotype == 1 ) {
+				cmd "weapon_stats;"
+			}
 		}
 	}
 

@@ -1674,12 +1674,13 @@ window popup_intercept
 		option aircraft {
 			label	"_Aircraft interception"
 			value	"0"
-			action "popup_intercept_update;"
 		}
 		option sam {
 			label	"_SAM defence"
 			value	"1"
-			action "popup_intercept_update;"
+		}
+		onChange {
+			cmd "popup_intercept_update;"
 		}
 	}
 
@@ -2901,12 +2902,10 @@ window geoscape_options {
 			option 2d {
 				label	"_2D"
 				value	"0"
-				action	""
 			}
 			option 3d {
 				label	"_3D"
 				value	"1"
-				action	""
 			}
 		}
 	}

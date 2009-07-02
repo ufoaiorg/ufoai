@@ -469,22 +469,18 @@ window options
 			option low_value {
 				label	"_Low"
 				value	"256"
-				action	""
 			}
 			option medium_value {
 				label	"_Medium"
 				value	"512"
-				action	""
 			}
 			option normal_value {
 				label	"_Normal"
 				value	"1024"
-				action	""
 			}
 			option high_value {
 				label	"_High"
 				value	"2048"
-				action	""
 			}
 		}
 
@@ -498,32 +494,26 @@ window options
 			option low_value {
 				label	"_Low"
 				value	"256"
-				action	""
 			}
 			option medium_value {
 				label	"_Medium"
 				value	"512"
-				action	""
 			}
 			option normal_value {
 				label	"_Normal"
 				value	"1024"
-				action	""
 			}
 			option high_value {
 				label	"_High"
 				value	"2048"
-				action	""
 			}
 			option excellent_value {
 				label	"_Excellent"
 				value	"4096"
-				action	""
 			}
 			option extrem_value {
 				label	"_Extreme"
 				value	"8192"
-				action	""
 			}
 		}
 
@@ -633,22 +623,18 @@ window options
 			option low_value {
 				label	"11025"
 				value	"11025"
-				action	""
 			}
 			option medium_value {
 				label	"22050"
 				value	"22050"
-				action	""
 			}
 			option normal_value {
 				label	"44100"
 				value	"44100"
-				action	""
 			}
 			option high_value {
 				label	"48000"
 				value	"48000"
-				action	""
 			}
 		}
 
@@ -776,12 +762,10 @@ window options
 			option hud_value {
 				label	"_Original HUD"
 				value	"hud"
-				action	""
 			}
 			option althud_value {
 				label	"_Alternative HUD"
 				value	"althud"
-				action	""
 			}
 		}
 
@@ -1157,12 +1141,10 @@ window options
 			option confirm_value {
 				label	"_Yes"
 				value	"1"
-				action	""
 			}
 			option noconfirm_value {
 				label	"_No"
 				value	"0"
-				action	""
 			}
 		}
 
@@ -1185,17 +1167,14 @@ window options
 			option confirm_value {
 				label	"_Yes"
 				value	"1"
-				action	""
 			}
 			option noconfirm_value {
 				label	"_No"
 				value	"0"
-				action	""
 			}
 			option moveconfirm_value {
 				label	"_Only for moving"
 				value	"2"
-				action	""
 			}
 		}
 

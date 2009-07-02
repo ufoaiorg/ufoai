@@ -230,12 +230,10 @@ window skirmish
 		option low_value {
 			label	"_Human"
 			value	"1"
-			action	""
 		}
 		option medium_value {
 			label	"_Alien"
 			value	"7"
-			action	""
 		}
 	}
 

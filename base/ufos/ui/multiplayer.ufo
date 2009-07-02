@@ -106,27 +106,33 @@ window abstract_multiplayer_join extends abstract_multiplayer {
 		option internet {
 			label	"_Internet/Lan"
 			value	"1"
-			action "mn_pop;mn_push mp_serverbrowser;"
 		}
 /*		option lan {
 			label	"_Lan"
 			value	"2"
-			action ""
 		}
 */
 		option bookmark {
 			label	"_Bookmark"
 			value	"3"
-			action "mn_pop;mn_push mp_bookmarks;"
 		}
 /*
 		option bookmark {
 			label	"_Lobby"
 			value	"4"
-			// action "mn_pop;mn_push mp_lobby;"
-			action "irc_connect; mn_push irc;"
 		}
 */
+		onChange {
+			if ( *cvar:mn_multiplayer_tab == 1 ) {
+				cmd "mn_pop;mn_push mp_serverbrowser;"
+			} elif ( *cvar:mn_multiplayer_tab == 2 ) {
+	
+			} elif ( *cvar:mn_multiplayer_tab == 3 ) {
+				cmd "mn_pop;mn_push mp_bookmarks;"
+			} elif ( *cvar:mn_multiplayer_tab == 4 ) {
+				cmd "irc_connect; mn_push irc;"
+			}
+		}
 	}
 }
 
@@ -524,17 +530,17 @@ window mp_create_server extends abstract_multiplayer
 		option map {
 			label	"_Map"
 			value	"1"
-			action "mp_update_config_navigation;"
 		}
 		option option {
 			label	"_Options"
 			value	"2"
-			action "mp_update_config_navigation;"
 		}
 		option security {
 			label	"_Security/registration"
 			value	"3"
-			action "mp_update_config_navigation;"
+		}
+		onChange {
+			cmd "mp_update_config_navigation;"
 		}
 	}
 

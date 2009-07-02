@@ -169,12 +169,13 @@ window uforecovery
 		option store {
 			label	"_Store UFO"
 			value	"0"
-			action	"uforecovery_tabchange;"
 		}
 		option sell {
 			label	"_Sell UFO"
 			value	"1"
-			action	"uforecovery_tabchange;"
+		}
+		onChange {
+			cmd "uforecovery_tabchange;"
 		}
 	}
 
