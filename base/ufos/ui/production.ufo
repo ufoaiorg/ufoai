@@ -285,13 +285,10 @@ window production
 			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_rclick <lineselected>;"
 		}
-		onWheel		{
-			*(abstractscrollbar)prodlist_scroll@current <viewpos>
-			cmd "prod_scroll;"
-		}
 		onViewChange	{
 			*(abstractscrollbar)prodlist_scroll@fullsize <lines>
 			*(abstractscrollbar)prodlist_scroll@current <viewpos>
+			*(abstractscrollbar)prodlist_scroll@viewsize <viewsize>
 		}
 	}
 

@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_menu.h"
 #include "../menu/m_popup.h"
-#include "../menu/m_nodes.h"
 #include "cp_campaign.h"
 #include "cp_market.h"
 #include "cp_produce.h"
@@ -56,8 +55,6 @@ static aircraft_t *selectedAircraft = NULL;
 
 /** @brief Number of blank lines between queued items and tech list. */
 static const int QUEUE_SPACERS = 2;
-
-static menuNode_t *node1, *node2, *prodlist;
 
 /**
  * @brief Resets all "selected" pointers to NULL.
@@ -641,9 +638,6 @@ static void PR_ProductionType_f (void)
 	produceCategory = cat;
 	Cvar_Set("mn_itemtype", INV_GetFilterType(produceCategory));
 
-	/* Reset scroll values of the list. */
-	node1->u.text.super.scrollY.viewPos = node2->u.text.super.scrollY.viewPos = prodlist->u.text.super.scrollY.viewPos = 0;
-
 	/* Update list of entries for current production tab. */
 	PR_UpdateProductionList(base);
 
@@ -703,18 +697,6 @@ static void PR_ProductionList_f (void)
 	Cvar_Set("mn_production_storage", tmpbuf);
 
 	PR_ClearSelected();
-}
-
-/**
- * @brief Function binding for prod_scroll that scrolls other text nodes, too
- */
-static void PR_ProductionListScroll_f (void)
-{
-	assert(node1);
-	assert(node2);
-	assert(prodlist);
-
-	node1->u.text.super.scrollY.viewPos = node2->u.text.super.scrollY.viewPos = prodlist->u.text.super.scrollY.viewPos;
 }
 
 /**
@@ -1007,16 +989,8 @@ static void PR_ProductionDown_f (void)
 
 void PR_InitCallbacks (void)
 {
-	prodlist = MN_GetNodeByPath("production.prodlist");
-	node1 = MN_GetNodeByPath("production.prodlist_amount");
-	node2 = MN_GetNodeByPath("production.prodlist_queued");
-
-	if (!prodlist || !node1 || !node2)
-		Com_Error(ERR_DROP, "Could not find the needed menu nodes in production menu");
-
 	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
 	Cmd_AddCommand("prod_type", PR_ProductionType_f, NULL);
-	Cmd_AddCommand("prod_scroll", PR_ProductionListScroll_f, "Scrolls the production lists");
 	Cmd_AddCommand("prod_up", PR_ProductionUp_f, "Move production item up in the queue");
 	Cmd_AddCommand("prod_down", PR_ProductionDown_f, "Move production item down in the queue");
 	Cmd_AddCommand("prod_change", PR_ProductionChange_f, "Change production amount");
@@ -1031,7 +1005,6 @@ void PR_ShutdownCallbacks (void)
 {
 	Cmd_RemoveCommand("prod_init");
 	Cmd_RemoveCommand("prod_type");
-	Cmd_RemoveCommand("prod_scroll");
 	Cmd_RemoveCommand("prod_up");
 	Cmd_RemoveCommand("prod_down");
 	Cmd_RemoveCommand("prod_change");

@@ -536,7 +536,7 @@ window mailclient
 			*(abstractscrollbar)mailclient_scroll@fullsize <fullsize>
 			*(abstractscrollbar)mailclient_scroll@current <viewpos>
 			*(abstractscrollbar)mailclient_scroll@viewsize <viewsize>
-			cmd "ufopedia_scrollmail;"
+			cmd "ufopedia_scrollmail <viewpos>;"
 		}
 	}
 
@@ -550,7 +550,7 @@ window mailclient
 		hidewhenunused true
 		onChange		{
 			*mailclient@viewpos = <current>
-			cmd "ufopedia_scrollmail;"
+			cmd "ufopedia_scrollmail <current>;"
 		}
 	}
 

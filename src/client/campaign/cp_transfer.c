@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_team.h"
 #include "../cl_menu.h"
 #include "../menu/m_popup.h"
-#include "../menu/m_nodes.h"
 #include "../mxml/mxml_ufoai.h"
 #include "cp_campaign.h"
 #include "cp_uforecovery.h"
@@ -456,31 +455,6 @@ static qboolean TR_AircraftListSelect (int i)
 	return qtrue;
 }
 
-/**
- * @brief Reset scrolling of node containing item-in-base list.
- */
-static void TR_ResetScrolling_f (void)
-{
-	/* for reseting the scrolling */
-	static menuNode_t *trans_list = NULL;
-	static menuNode_t *trans_list_scroll = NULL;
-
-	if (!trans_list) {
-		trans_list = MN_GetNodeByPath("transfer.trans_list");
-	}
-	if (!trans_list_scroll) {
-		trans_list_scroll = MN_GetNodeByPath("transfer.trans_list_scroll");
-	}
-
-	/* maybe we call this function and transfer menu is not on the menu stack */
-	if (!trans_list || !trans_list_scroll) {
-		return;
-	}
-
-	trans_list->u.text.super.scrollY.viewPos = 0;
-	trans_list_scroll->u.abstractscrollbar.pos = 0;
-}
-
 static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t transferType)
 {
 	linkedList_t *transferList = NULL;
@@ -691,7 +665,7 @@ static void TR_TransferListClear_f (void)
 	/* Update cargo list and items list. */
 	TR_CargoList();
 	TR_TransferSelect(base, td.transferBase, td.currentTransferType);
-	TR_ResetScrolling_f();
+	MN_ExecuteConfunc("trans_resetscroll");
 }
 
 /**
@@ -1727,7 +1701,7 @@ static void TR_Init_f (void)
 	Cvar_Set("mn_itemtype", transferTypeIDs[0]);
 
 	/* Reset scrolling for item-in-base list */
-	TR_ResetScrolling_f();
+	MN_ExecuteConfunc("trans_resetscroll");
 }
 
 /**
@@ -2033,7 +2007,6 @@ void TR_InitStartup (void)
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
 	Cmd_AddCommand("trans_start", TR_TransferStart_f, "Starts the tranfer");
 	Cmd_AddCommand("trans_type", TR_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
-	Cmd_AddCommand("trans_resetscroll", TR_ResetScrolling_f, "Reset scrolling items-in-base list");
 	Cmd_AddCommand("trans_emptyairstorage", TR_TransferListClear_f, "Unload everything from transfer cargo back to base");
 	Cmd_AddCommand("trans_list_click", TR_TransferListSelect_f, "Callback for transfer list node click");
 	Cmd_AddCommand("trans_cargolist_click", TR_CargoListSelect_f, "Callback for cargo list node click");

@@ -27,9 +27,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_DATA_H
 #define CLIENT_MENU_M_DATA_H
 
+#include "../../shared/ufotypes.h"
+#include "../../shared/shared.h"
+
 /* prototype */
 struct linkedList_s;
-struct menuOption_s;
+struct menuIcon_s;
+
+#define MAX_MENUOPTIONS 256
+#define OPTION_MAX_VALUE_LENGTH 32
 
 /** @brief linked into mn.menuText - defined in menu scripts via num */
 typedef enum {
@@ -108,6 +114,28 @@ typedef enum {
 	MN_SHARED_OPTION,
 	MN_SHARED_LINESTRIP
 } menuSharedType_t;
+
+/** @brief Option definition */
+typedef struct menuOption_s {
+	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION_STRING */
+	char label[OPTION_MAX_VALUE_LENGTH];	/**< text for the select box - V_TRANSLATION_STRING */
+	char action[MAX_VAR];	/**< execute this when the value is selected */
+	char value[MAX_VAR];	/**< the value the cvar should get */
+	struct menuIcon_s *icon;	/**< Facultative icon */
+	struct menuOption_s	*firstChild;	/** first child of an option tree */
+	struct menuOption_s *next;	/**< Next element into a linked list of option */
+
+	/* status */
+	qboolean disabled;		/**< If true, the option is not selectable */
+	qboolean invis;			/**< If true, the option is not displayed */
+	qboolean collapsed;		/**< If true, child are not displayed */
+
+	/* cache */
+	qboolean truncated;		/**< If true, the label is not fully displayed */
+	int childCount;			/**< Number of visible recursive child */
+	qboolean hovered;		/**< true if the element is hovered. Deprecated */
+
+} menuOption_t;
 
 typedef struct menuSharedData_s {
 	menuSharedType_t type;		/**< Type of the shared data */

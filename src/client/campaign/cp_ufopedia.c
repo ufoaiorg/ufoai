@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_game.h"
 #include "../cl_menu.h"
-#include "../menu/m_nodes.h"
+#include "../menu/m_data.h"
 #include "../menu/m_icon.h"
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
@@ -52,9 +52,6 @@ static char upBuffer[MAX_UPTEXT];
 static char mailBuffer[MAIL_BUFFER_SIZE];
 #define CHECK_MAIL_EOL if (tempBuf[MAIL_LENGTH-3] != '\n') tempBuf[MAIL_LENGTH-2] = '\n';
 #define MAIL_CLIENT_LINES 15
-
-/* the menu node of the mail client list */
-static menuNode_t *mailClientListNode;
 
 /**
  * @note don't change the order or you have to change the if statements about mn_updisplay cvar
@@ -91,29 +88,12 @@ static qboolean UP_TechGetsDisplayed (const technology_t *tech)
  */
 static void UP_ChangeDisplay (int newDisplay)
 {
-	/* for reseting the scrolling */
-	static menuNode_t *ufopedia = NULL, *ufopediaMail = NULL;
-
 	if (newDisplay < UFOPEDIA_DISPLAYEND && newDisplay >= 0)
 		upDisplay = newDisplay;
 	else
 		Com_Printf("Error in UP_ChangeDisplay (%i)\n", newDisplay);
 
 	Cvar_SetValue("mn_uppreavailable", 0);
-
-	/**
-	 * only fetch this once after UFOpaedia menu was on the stack (was the
-	 * current menu)
-	 */
-	if (!ufopedia || !ufopediaMail) {
-		ufopedia = MN_GetNodeByPath("ufopedia.ufopedia");
-		ufopediaMail = MN_GetNodeByPath("ufopedia.mailclient");
-	}
-
-	/* maybe we call this function and the UFOpaedia is not on the menu stack */
-	if (ufopedia && ufopediaMail) {
-		ufopedia->u.text.super.scrollY.viewPos = ufopediaMail->u.text.super.scrollY.viewPos = 0;
-	}
 
 	/* make sure, that we leave the mail header space */
 	MN_ResetData(TEXT_UFOPEDIA_MAILHEADER);
@@ -1089,11 +1069,12 @@ static void UP_SetMailButtons_f (void)
 	int i = 0, num;
 	const message_t *m = cp_messageStack;
 
-	/* maybe we called this from the console and UP_OpenMail_f wasn't called yet */
-	if (!mailClientListNode)
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <pos>\n", Cmd_Argv(0));
 		return;
+	}
 
-	num = mailClientListNode->u.text.super.scrollY.viewPos;
+	num = atoi(Cmd_Argv(1));
 
 	while (m && (i < MAIL_CLIENT_LINES)) {
 		switch (m->type) {
@@ -1167,10 +1148,6 @@ static void UP_OpenMail_f (void)
 	char tempBuf[MAIL_LENGTH] = "";
 	const message_t *m = cp_messageStack;
 	dateLong_t date;
-
-	mailClientListNode = MN_GetNodeByPath("mailclient.mailclient");
-	if (!mailClientListNode)
-		Com_Error(ERR_DROP, "Could not find the mailclient node in mailclient menu");
 
 	mailBuffer[0] = '\0';
 

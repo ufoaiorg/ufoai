@@ -253,6 +253,11 @@ window transfer
 		onChange	{ *trans_list@viewpos = <current> }
 	}
 
+	confunc trans_resetscroll {
+		*trans_list@viewpos = 0
+		*trans_list_scroll@current = 0
+	}
+
 	// ==================
 	// buttons
 	// ==================

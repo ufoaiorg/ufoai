@@ -76,11 +76,6 @@ void MN_TextScrollBottom (const char* nodePath)
 	}
 }
 
-int MN_TextNodeGetLines (const struct menuNode_s *node)
-{
-	return EXTRADATA(node).super.scrollY.fullSize;
-}
-
 /**
  * @brief Get the line number under an absolute position
  * @param[in] node a text node
