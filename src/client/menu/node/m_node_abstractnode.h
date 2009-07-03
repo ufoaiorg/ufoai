@@ -42,7 +42,6 @@ void MN_HideNode(struct menuNode_s* node);
 void MN_Invalidate(struct menuNode_s* node);
 
 /* position */
-void MN_SetNewNodePos(struct menuNode_s* node, int x, int y);
 void MN_GetNodeAbsPos(const struct menuNode_s* node, vec2_t pos);
 void MN_NodeAbsoluteToRelativePos(const struct menuNode_s* node, int *x, int *y);
 void MN_NodeRelativeToAbsolutePoint(const menuNode_t* node, vec2_t pos);

@@ -214,18 +214,6 @@ void MN_HideNode (menuNode_t* node)
 }
 
 /**
- * @brief Script command to hide a given menu node
- * @todo fix param to use absolute path
- */
-static void MN_HideNode_f (void)
-{
-	if (Cmd_Argc() == 2)
-		MN_HideNode(MN_GetNode(MN_GetActiveMenu(), Cmd_Argv(1)));
-	else
-		Com_Printf("Usage: %s <node>\n", Cmd_Argv(0));
-}
-
-/**
  * @brief Unhides a given menu node
  * @note Sanity check whether node is null included
  */
@@ -235,18 +223,6 @@ void MN_UnHideNode (menuNode_t* node)
 		node->invis = qfalse;
 	else
 		Com_Printf("MN_UnHideNode: No node given\n");
-}
-
-/**
- * @brief Script command to unhide a given menu node
- * @todo fix param to use absolute path
- */
-static void MN_UnHideNode_f (void)
-{
-	if (Cmd_Argc() == 2)
-		MN_UnHideNode(MN_GetNode(MN_GetActiveMenu(), Cmd_Argv(1)));
-	else
-		Com_Printf("Usage: %s <node>\n", Cmd_Argv(0));
 }
 
 /**
@@ -304,17 +280,6 @@ void MN_InsertNode (menuNode_t* const node, menuNode_t *prevNode, menuNode_t *ne
 void MN_AppendNode (menuNode_t* const node, menuNode_t *newNode)
 {
 	MN_InsertNode(node, node->lastChild, newNode);
-}
-
-/**
- * @brief Sets new x and y coordinates for a given node
- */
-void MN_SetNewNodePos (menuNode_t* node, int x, int y)
-{
-	if (node) {
-		node->pos[0] = x;
-		node->pos[1] = y;
-	}
 }
 
 /**
@@ -596,8 +561,6 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	behaviour->clone = MN_AbstractNodeClone;
 
 	/* some commands */
-	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
-	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mnsetnodeproperty", MN_NodeSetProperty_f, "Set a node property");
 	Cmd_AddCommand("debug_mngetnodeproperty", MN_NodeGetProperty_f, "Get a node property");
