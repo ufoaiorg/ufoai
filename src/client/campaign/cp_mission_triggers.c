@@ -134,7 +134,7 @@ static void CP_EndGame_f (void)
 static const cmdList_t cp_commands[] = {
 	{"cp_add_researchable", CP_AddTechAsResearchable_f, "Add a tech as researchable"},
 	{"cp_add_item", CP_AddItemAsCollected_f, "Add an item as collected"},
-	{"cp_changehappiness", CP_ChangeNationHappiness_f, "Function to raise or lower nation hapiness."},
+	{"cp_changehappiness", CP_ChangeNationHappiness_f, "Function to raise or lower nation happiness."},
 	{"cp_endgame", CP_EndGame_f, "This command will end the current campaign"},
 
 	{NULL, NULL, NULL}

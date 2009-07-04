@@ -543,7 +543,7 @@ static int CL_NationsMaxFunding (void)
 	int max = 0;
 
 	for (n = 0; n < ccs.numNations; n++) {
-		nation_t *nation = &ccs.nations[n];
+		const nation_t *nation = &ccs.nations[n];
 		for (m = 0; m < MONTHS_PER_YEAR; m++) {
 			if (nation->stats[m].inuse) {
 				const int funding = NAT_GetFunding(nation, m);

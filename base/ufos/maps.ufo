@@ -8,6 +8,17 @@
 // * urban, suburban, village, rural, nopopulation
 // See also http://ufoai.ninex.info/wiki/index.php/Mapping/Terrain_Types
 //
+// Triggers:
+// onwin onlose
+// * cp_add_researchable <tech-id>
+//   "Add a tech as researchable"
+// * cp_add_item <item-id>
+//   "Add an item as collected"
+// * cp_changehappiness <absolute-happiness-value>
+//   "Function to raise or lower nation happiness."
+// * cp_endgame
+//   "This command will end the current campaign"
+//
 // valid UFO values:
 // * craft_ufo_scout, craft_crash_scout,
 // * craft_ufo_fighter, craft_crash_fighter,
