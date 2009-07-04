@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_fightequip_callbacks.h"
 #include "cp_mapfightequip.h"
+#include "cp_ufo.h"
 
 static int airequipID = -1;				/**< value of aircraftItemType_t that defines what item we are installing. */
 
@@ -900,6 +901,23 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 		return;
 	}
 
+	if (installation) {
+		/** Every slot aims the same target */
+		if (installation->numBatteries && installation->batteries[0].target) {
+			Cvar_ForceSet("mn_target", UFO_AircraftToIDOnGeoscape(installation->batteries[0].target));
+		} else
+			Cvar_ForceSet("mn_target", _("None"));
+		Cmd_ExecuteString(va("setautofire %i", installation->batteries[0].autofire));
+	} else if (base) {
+		/** Every slot aims the same target */
+		if (base->numBatteries && base->batteries[0].target) {
+			Cvar_ForceSet("mn_target", UFO_AircraftToIDOnGeoscape(base->batteries[0].target));
+		} else
+			Cvar_ForceSet("mn_target", _("None"));
+		Cmd_ExecuteString(va("setautofire %i", base->batteries[0].autofire));
+	} else
+		Cvar_ForceSet("mn_target", _("None"));
+
 	/* Check that the base or installation has at least 1 battery */
 	if (base) {
 		if (base->numBatteries + base->numLasers < 1) {
@@ -1291,6 +1309,33 @@ static void BDEF_AddBattery_f (void)
 	BDEF_AddBattery(basedefType, B_GetBaseByIDX(baseIdx));
 }
 
+/**
+ * @brief Menu callback for changing autofire state
+ * Command: basedef_autofire <0|1>
+ */
+static void BDEF_ChangeAutoFire (void)
+{
+	installation_t* installation = INS_GetCurrentSelectedInstallation();
+	base_t *base = B_GetCurrentSelectedBase();
+	int i;
+
+	if (!base && !installation)
+		return;
+	if (base && installation)
+		return;
+	if (Cmd_Argc() < 2)
+		return;
+
+	if (base) {
+		for (i = 0; i < base->numBatteries; i++)
+			base->batteries[i].autofire = atoi(Cmd_Argv(1));
+		for (i = 0; i < base->numLasers; i++)
+			base->lasers[i].autofire = atoi(Cmd_Argv(1));
+	} else if (installation)
+		for (i = 0; i < installation->numBatteries; i++)
+			installation->batteries[i].autofire = atoi(Cmd_Argv(1));
+}
+
 void AIM_InitCallbacks (void)
 {
 	Cmd_AddCommand("mn_next_equiptype", AIM_NextItemtype_f, "Shows the next aircraft equip category.");
@@ -1309,6 +1354,7 @@ void AIM_InitCallbacks (void)
 	Cmd_AddCommand("basedef_list_click", AIM_AircraftEquipMenuClick_f, NULL);
 	Cmd_AddCommand("basedef_additem", BDEF_AddItem_f, "Add item to slot");
 	Cmd_AddCommand("basedef_removeitem", BDEF_RemoveItem_f, "Remove item from slot");
+	Cmd_AddCommand("basedef_autofire", BDEF_ChangeAutoFire, "Change autofire option for selected defence system");
 }
 
 void AIM_ShutdownCallbacks (void)
@@ -1325,6 +1371,7 @@ void AIM_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("basedef_list_click");
 	Cmd_RemoveCommand("basedef_additem");
 	Cmd_RemoveCommand("basedef_removeitem");
+	Cmd_RemoveCommand("basedef_autofire");
 
 	Cmd_RemoveCommand("mn_next_equiptype");
 	Cmd_RemoveCommand("mn_prev_equiptype");

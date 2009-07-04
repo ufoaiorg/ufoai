@@ -44,7 +44,18 @@ window basedefence
 		size	"667 38"
 		cvar	*cvar:mn_bdef_type
 		onChange {
-			cmd "bdef_type >cvar:mn_bdef_type>;"
+			if ( *cvar:mn_bdef_type ne "info" ) {
+				*infopanel@invis = true
+				*equippanel@invis = false
+				cmd "bdef_type <cvar:mn_bdef_type>;"
+			} else {
+				*infopanel@invis = false
+				*equippanel@invis = true
+			}
+		}
+		option info {
+			label	"_Information"
+			value	"info"
 		}
 		option missile {
 			label	"_Missile Defences"
@@ -57,230 +68,292 @@ window basedefence
 		}
 	}
 
+	panel equippanel {
+		{
+			pos			"15 115"
+			size		"670 305"
+			invis		true
+		}
+	
+		/* @todo: We should check if the slot is empty but can't do from here */
+		confunc update_buttons {
+			if ( *node:(text)parent.slots.slotlist@lineselected < 0 ) {
+				*node:parent.bt_add@disabled true
+				*node:parent.bt_remove@disabled true
+			} elif ( *node:(text)parent.slots.slotlist@lineselected >= *node:(text)parent.slots.slotlist@lines ) {
+				*node:parent.bt_add@disabled true
+				*node:parent.bt_remove@disabled true
+			} elif ( *node:(text)parent.store.storelist@lineselected < 0 ) {
+				*node:parent.bt_add@disabled true
+				*node:parent.bt_remove@disabled false
+			} elif ( *node:(text)parent.store.storelist@lineselected >= *node:(text)parent.store.storelist@lines ) {
+				*node:parent.bt_add@disabled true
+				*node:parent.bt_remove@disabled false
+			} else {
+				*node:parent.bt_add@disabled false
+				*node:parent.bt_remove@disabled false
+			}
+		}
 
-	/* @todo: We should check if the slot is empty but can't do from here */
-	confunc update_buttons {
-		if ( *node:(text)root.slots.slotlist@lineselected < 0 ) {
-			*node:root.bt_add@disabled true
-			*node:root.bt_remove@disabled true
-		} elif ( *node:(text)root.slots.slotlist@lineselected >= *node:(text)root.slots.slotlist@lines ) {
-			*node:root.bt_add@disabled true
-			*node:root.bt_remove@disabled true
-		} elif ( *node:(text)root.store.storelist@lineselected < 0 ) {
-			*node:root.bt_add@disabled true
-			*node:root.bt_remove@disabled false
-		} elif ( *node:(text)root.store.storelist@lineselected >= *node:(text)root.store.storelist@lines ) {
-			*node:root.bt_add@disabled true
-			*node:root.bt_remove@disabled false
-		} else {
-			*node:root.bt_add@disabled false
-			*node:root.bt_remove@disabled false
+		panel slots {
+			{
+				pos		"5 5"
+				size	"335 115"
+			}
+			
+			string slotlist_title
+			{
+				string		"_Weapon slots"
+				pos			"5 5"
+				size		"300 25"
+				font		f_small_bold
+			}
+			rows slotback {
+				pos			"5 30"
+				size		"300 80"
+				color1		"0 0.08 0 1"
+				color2		"0 0.16 0 1"
+				lineheight	20
+			}
+			text slotlist
+			{
+				dataid		TEXT_BASEDEFENCE_LIST
+				pos			"5 30"
+				size		"300 80"
+				lineheight	20
+				color		"0.60 0.60 0.60 1"
+				selectcolor	"1 1 1 1"
+				rows		"4"
+				mousefx		true
+				tabwidth	50
+				longlines	prettychop
+				onClick		{
+					call equippanel.update_buttons
+				}
+				onViewChange {
+					*node:(abstractscrollbar)parent.slotlist_scroll@fullsize = <fullsize>
+					*node:(abstractscrollbar)parent.slotlist_scroll@current = <viewpos>
+					*node:(abstractscrollbar)parent.slotlist_scroll@viewsize = <viewsize>
+				}
+			}
+			vscrollbar slotlist_scroll
+			{
+				image		ui/scrollbar_v_green
+				pos			"310 30"
+				height		"80"
+				current		0
+				viewsize	4
+				fullsize	4
+				hidewhenunused	true
+				onChange	{ *node:parent.slotlist@viewpos = <current> }
+			}
+		}
+
+		button bt_add
+		{
+			icon		varrow_swap
+			string		"_Add"
+			tooltip		"_Equip the selected slot with this weapon"
+			image		ui/button_green_small
+			pos			"10 130"
+			size		"150 32"
+			onClick		{
+				cmd "basedef_additem <cvar:mn_bdef_type> <node:parent.slots.slotlist@lineselected> <node:parent.store.storelist@lineselected>;"
+			}
+		}
+		button bt_remove
+		{
+			icon		varrow_top_bottom
+			string		"_Remove"
+			tooltip		"_Remove weapon from the selected slot"
+			image		ui/button_green_small
+			pos			"180 130"
+			size		"150 32"
+			onClick		{
+				cmd "basedef_removeitem <cvar:mn_bdef_type> <node:parent.slots.slotlist@lineselected>;"
+			}
+		}
+
+		panel store {
+			{
+				pos		"5 175"
+				size	"335 115"
+			}
+
+			string storelist_title
+			{
+				string		"_Stores"
+				pos			"5 5"
+				size		"300 25"
+				font		f_small_bold
+			}
+			rows storeback {
+				pos			"5 30"
+				size		"300 80"
+				color1		"0 0.08 0 1"
+				color2		"0 0.16 0 1"
+				lineheight	20
+			}
+			text storelist
+			{
+				dataid		TEXT_LIST
+				pos			"5 30"
+				size		"300 80"
+				lineheight	20
+				color		"0.60 0.60 0.60 1"
+				selectcolor	"1 1 1 1"
+				rows		"4"
+				mousefx		true
+				onClick		{
+					call equippanel.update_buttons
+					cmd "basedef_list_click <lineselected>;"
+				}
+				onViewChange {
+					*node:(abstractscrollbar)parent.storelist_scroll@fullsize = <fullsize>
+					*node:(abstractscrollbar)parent.storelist_scroll@current = <viewpos>
+					*node:(abstractscrollbar)parent.storelist_scroll@viewsize = <viewsize>
+				}
+			}
+			vscrollbar storelist_scroll
+			{
+				image		ui/scrollbar_v_green
+				pos			"310 30"
+				height		"80"
+				current		0
+				viewsize	4
+				fullsize	4
+				hidewhenunused	true
+				onChange	{ *node:parent.storelist@viewpos = <current> }
+			}
+		}
+
+		panel descpanel {
+			{
+				pos		"355 5"
+				size	"310 285"
+				image	ui/panel_green
+			}
+	
+			string description_title
+			{
+				string		"_Selected Item"
+				pos			"10 5"
+				size		"290 25"
+				textalign	uc
+				font		f_small_bold
+			}
+			string item_name
+			{
+				string		*cvar:mn_itemname
+				pos			"10 25"
+				size		"290 25"
+				textalign	uc
+			}
+	
+			model item_model
+			{
+				model		*cvar:mn_upmodel_top
+				angles		"0 0 120"
+				pos			"786 500"
+				size		"200 175"
+				origin		"0 -42 0"
+			}
+
+			text description
+			{
+				dataid		TEXT_STANDARD
+				pos			"10 155"
+				size		"260 120"
+				lineheight	20
+				color		"0.60 0.60 0.60 1"
+				selectcolor	"1 1 1 1"
+				rows		"6"
+				mousefx		true
+				onViewChange {
+					*node:(abstractscrollbar)parent.description_scroll@fullsize <fullsize>
+					*node:(abstractscrollbar)parent.description_scroll@current <viewpos>
+					*node:(abstractscrollbar)parent.description_scroll@viewsize <viewsize>
+				}
+			}
+			vscrollbar description_scroll
+			{
+				image		ui/scrollbar_v_green
+				pos			"280 155"
+				height		"120"
+				current		0
+				viewsize	6
+				fullsize	6
+				hidewhenunused	true
+				onChange	{ *node:parent.description@viewpos = <current> }
+			}
+
+			todo descript
+			{
+				pos			"30 155"
+				string		"Base defence weapon descriptions not yet shown"
+			}
 		}
 	}
 
-	panel slots {
+	panel infopanel {
 		{
-			pos		"20 120"
-			size	"335 115"
+			pos			"15 115"
+			size		"670 305"
 		}
 
-		string slotlist_title
+		string infopanel_title
 		{
-			string		"_Weapon slots"
-			pos			"5 5"
+			string		"_Surface to Air defences"
+			pos			"10 10"
 			size		"300 25"
 			font		f_small_bold
 		}
-		rows slotback {
-			pos			"5 30"
-			size		"300 80"
-			color1		"0 0.08 0 1"
-			color2		"0 0.16 0 1"
-			lineheight	20
-		}
-		text slotlist
+
+		todo infos
 		{
-			dataid		TEXT_BASEDEFENCE_LIST
-			pos			"5 30"
-			size		"300 80"
-			lineheight	20
-			color		"0.60 0.60 0.60 1"
-			selectcolor	"1 1 1 1"
-			rows		"4"
-			mousefx		true
-			tabwidth	50
-			longlines	prettychop
-			onClick		{
-				call update_buttons
-			}
-			onViewChange {
-				*(abstractscrollbar)slots.slotlist_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)slots.slotlist_scroll@current = <viewpos>
-				*(abstractscrollbar)slots.slotlist_scroll@viewsize = <viewsize>
-			}
+			pos			"30 200"
+			string		"Informations about working/max weapons, range, damage should come here"
 		}
-		vscrollbar slotlist_scroll
+
+		string target_title
 		{
-			image		ui/scrollbar_v_green
-			pos			"310 30"
-			height		"80"
-			current		0
-			viewsize	4
-			fullsize	4
-			hidewhenunused	true
-			onChange	{ *node:parent.slotlist@viewpos = <current> }
+			string		"_Targetted UFO:"
+			pos			"10 100"
+			size		"200 25"
+		}
+		string target_value
+		{
+			string		*cvar:mn_target
+			pos			"210 100"
+			size		"200 25"
+		}
+		
+		
+		checkbox autofire
+		{
+			image		ui/checkbox_green
+			pos			"30 250"
+			size		"20 20"
+			current		1
+			onChange	{ cmd "basedef_autofire <current>;" }
+		}
+		string autofire_title
+		{
+			string		"_Autofire"
+			pos			"60 250"
+			size		"150 25"
 		}
 	}
 
-	button bt_add
-	{
-		icon		varrow_swap
-		string		"_Add"
-		tooltip		"_Equip the selected slot with this weapon"
-		image		ui/button_green_small
-		pos			"25 245"
-		size		"150 32"
-		onClick		{
-			cmd "basedef_additem <cvar:mn_bdef_type> <node:root.slots.slotlist@lineselected> <node:root.store.storelist@lineselected>;"
-		}
-	}
-	button bt_remove
-	{
-		icon		varrow_top_bottom
-		string		"_Remove"
-		tooltip		"_Remove weapon from the selected slot"
-		image		ui/button_green_small
-		pos			"195 245"
-		size		"150 32"
-		onClick		{
-			cmd "basedef_removeitem <cvar:mn_bdef_type> <node:root.slots.slotlist@lineselected>;"
-		}
-	}
-
-	panel store {
-		{
-			pos		"20 290"
-			size	"335 115"
-		}
-
-		string storelist_title
-		{
-			string		"_Stores"
-			pos			"5 5"
-			size		"300 25"
-			font		f_small_bold
-		}
-		rows storeback {
-			pos			"5 30"
-			size		"300 80"
-			color1		"0 0.08 0 1"
-			color2		"0 0.16 0 1"
-			lineheight	20
-		}
-		text storelist
-		{
-			dataid		TEXT_LIST
-			pos			"5 30"
-			size		"300 80"
-			lineheight	20
-			color		"0.60 0.60 0.60 1"
-			selectcolor	"1 1 1 1"
-			rows		"4"
-			mousefx		true
-			onClick		{
-				call update_buttons
-				cmd "basedef_list_click <lineselected>;"
-			}
-			onViewChange {
-				*(abstractscrollbar)store.storelist_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)store.storelist_scroll@current = <viewpos>
-				*(abstractscrollbar)store.storelist_scroll@viewsize = <viewsize>
-			}
-		}
-		vscrollbar storelist_scroll
-		{
-			image		ui/scrollbar_v_green
-			pos			"310 30"
-			height		"80"
-			current		0
-			viewsize	4
-			fullsize	4
-			hidewhenunused	true
-			onChange	{ *node:parent.storelist@viewpos = <current> }
-		}
-	}
-
-	panel descpanel {
-		{
-			pos		"370 120"
-			size	"310 285"
-			image	ui/panel_green
-		}
-
-		string description_title
-		{
-			string		"_Selected Item"
-			pos			"10 5"
-			size		"290 25"
-			textalign	uc
-			font		f_small_bold
-		}
-		string item_name
-		{
-			string		*cvar:mn_itemname
-			pos			"10 25"
-			size		"290 25"
-			textalign	uc
-		}
-
-		model item_model
-		{
-			model		*cvar:mn_upmodel_top
-			angles		"0 0 120"
-			pos			"786 500"
-			size		"200 175"
-			origin		"0 -42 0"
-		}
-
-		text description
-		{
-			dataid		TEXT_STANDARD
-			pos			"10 155"
-			size		"260 120"
-			lineheight	20
-			color		"0.60 0.60 0.60 1"
-			selectcolor	"1 1 1 1"
-			rows		"6"
-			mousefx		true
-			onViewChange {
-				*(abstractscrollbar)descpanel.description_scroll@fullsize <fullsize>
-				*(abstractscrollbar)descpanel.description_scroll@current <viewpos>
-				*(abstractscrollbar)descpanel.description_scroll@viewsize <viewsize>
-			}
-		}
-		vscrollbar description_scroll
-		{
-			image		ui/scrollbar_v_green
-			pos			"280 155"
-			height		"120"
-			current		0
-			viewsize	6
-			fullsize	6
-			hidewhenunused	true
-			onChange	{ *node:parent.description@viewpos = <current> }
-		}
-
-		todo descript
-		{
-			pos			"30 155"
-			string		"Base defence weapon descriptions not yet shown"
-		}
+	confunc setautofire	{
+		*node:root.infopanel.autofire@current <1>
+	
 	}
 
 	func onInit {
 		*cvar:mn_itemname ""
 		*cvar:mn_upmodel_top ""
 		cmd "basedef_updatemenu;"
-		call update_buttons
+		call equippanel.update_buttons
 	}
 }

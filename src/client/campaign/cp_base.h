@@ -190,6 +190,7 @@ typedef struct baseWeapon_s {
 	/* int idx; */
 	aircraftSlot_t slot;	/**< Weapon. */
 	aircraft_t *target;		/**< Aimed target for the weapon. */
+	qboolean autofire;		/**< If it should automatically open fire on ufos */
 } baseWeapon_t;
 
 /** @brief A base with all it's data */

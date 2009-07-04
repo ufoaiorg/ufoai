@@ -69,6 +69,7 @@ void BDEF_RemoveBattery(base_t *base, basedefenceType_t basedefType, int idx);
 void BDEF_InitialiseBaseSlots(base_t *base);
 void BDEF_InitialiseInstallationSlots(installation_t *installation);
 void BDEF_ReloadBattery(void);
+void BDEF_AutoSelectTarget(void);
 
 technology_t **AII_GetCraftitemTechsByType(int type);
 void AII_UpdateInstallationDelay(void);

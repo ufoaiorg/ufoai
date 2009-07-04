@@ -773,6 +773,7 @@ void CL_CampaignRun (void)
 		AIRFIGHT_CampaignRunProjectiles(dt);
 		/* Check if there is a base attack mission */
 		CP_CheckBaseAttacks_f();
+		BDEF_AutoSelectTarget();
 
 		/* set time cvars */
 		CL_DateConvertLong(&ccs.date, &date);

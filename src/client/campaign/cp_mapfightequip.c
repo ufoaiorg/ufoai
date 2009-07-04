@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
 #include "cp_fightequip_callbacks.h"
+#include "cp_ufo.h"
+#include "cp_map.h"
 
 /**
  * @brief Returns a list of craftitem technologies for the given type.
@@ -171,7 +173,7 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 			Com_Printf("BDEF_AddBattery: too many missile batteries in base\n");
 			return;
 		}
-
+		base->batteries[base->numBatteries].autofire = qtrue;
 		base->numBatteries++;
 		break;
 	case BASEDEF_LASER:
@@ -182,7 +184,7 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 		/* slots has a lot of ammo for now */
 		/** @todo it should be unlimited, no ? check that when we'll know how laser battery work */
 		base->lasers[base->numLasers].slot.ammoLeft = 9999;
-
+		base->lasers[base->numLasers].autofire = qtrue;
 		base->numLasers++;
 		break;
 	default:
@@ -1025,6 +1027,112 @@ qboolean AII_InstallationCanShoot (const installation_t *installation)
 	}
 
 	return qfalse;
+}
+
+/**
+ * @brief Chooses a target for surface to air defences automatically
+ * @param[in] weapons Weapons array
+ * @param[in] maxWeapons Number of weapons
+ */
+static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
+{
+	installation_t *inst;
+	base_t *base;
+	aircraft_t *closestCraft = NULL;
+	float minCraftDistance = -1;
+	aircraft_t *closestAttacker = NULL;
+	float minAttackerDistance = -1;
+	aircraftSlot_t *slot;
+	int i;
+
+	if (maxWeapons <= 0)
+		return;
+
+	slot = &weapons[0].slot;
+	/** Check if it's a Base or an Installation */
+	if (slot->installation) {
+		inst = slot->installation;
+		base = NULL;
+	} else if (slot->base) {
+		base = slot->base;
+		inst = NULL;
+	} else
+		Com_Error(ERR_DROP, "BDEF_AutoSelectTarget: slot doesn't belong to any base or installation");
+
+	/** Get closest UFO(s) */
+	for (i = 0; i < ccs.numUFOs; i++) {
+		aircraft_t *ufo = &ccs.ufos[i];
+		float distance;
+
+		if (!UFO_IsUFOSeenOnGeoscape(ufo))
+			continue;
+		distance = MAP_GetDistance((inst) ? inst->pos : base->pos, ufo->pos);
+		if (minCraftDistance < 0 || minCraftDistance > distance) {
+			minCraftDistance = distance;
+			closestCraft = ufo;		
+		}
+		if ((minAttackerDistance < 0 || minCraftDistance > distance) && 
+			((inst && ufo->installationTarget == inst) || (base && ufo->baseTarget == base))) {
+			minAttackerDistance = distance;
+			closestAttacker = ufo;		
+		}
+	}
+
+	/** Loop weaponslots */
+	for (i = 0; i < maxWeapons; i++) {
+		int test;
+
+		slot = &weapons[i].slot;
+		/** skip if autofire is disabled */
+		if (!weapons[i].autofire)
+			continue;
+		/** skip if no weapon or ammo assigned */
+		if (!slot->item || !slot->ammo)
+			continue;
+		/** skip if weapon installation not yet finished */
+		if (slot->installationTime > 0)
+			continue;
+		/** skip if no more ammo left */
+		/** @note it's not really needed but it's cheaper not to check ufos in this case */
+		if (slot->ammoLeft <= 0 && slot->ammoLeft != AMMO_STATUS_UNLIMITED)
+			continue;
+
+		if (closestAttacker) {
+			test = AIRFIGHT_CheckWeapon(slot, minAttackerDistance);
+			if (test != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT
+			 && test != AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT
+			 && (minAttackerDistance <= slot->ammo->craftitem.stats[AIR_STATS_WRANGE]))
+			 	weapons[i].target = closestAttacker;
+		} else if (closestCraft) {
+			test = AIRFIGHT_CheckWeapon(slot, minCraftDistance);
+			if (test != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT
+			 && test != AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT
+			 && (minCraftDistance <= slot->ammo->craftitem.stats[AIR_STATS_WRANGE]))
+			 	weapons[i].target = closestCraft;
+		}
+	}
+}
+
+
+void BDEF_AutoSelectTarget (void)
+{
+	int i;
+
+	for (i = 0; i < ccs.numBases; i++) {
+		base_t *base = B_GetFoundedBaseByIDX(i);
+
+		if (!base)
+			continue;
+		BDEF_AutoTarget(base->batteries, base->numBatteries);
+		BDEF_AutoTarget(base->lasers, base->numLasers);
+	}
+	for (i = 0; i < ccs.numInstallations; i++) {
+		installation_t *inst = INS_GetFoundedInstallationByIDX(i);
+
+		if (!inst)
+			continue;
+		BDEF_AutoTarget(inst->batteries, inst->numBatteries);
+	}
 }
 
 /**
