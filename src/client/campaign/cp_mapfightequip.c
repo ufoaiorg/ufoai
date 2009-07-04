@@ -1031,18 +1031,18 @@ qboolean AII_InstallationCanShoot (const installation_t *installation)
 
 /**
  * @brief Chooses a target for surface to air defences automatically
- * @param[in] weapons Weapons array
+ * @param[in,out] weapons Weapons array
  * @param[in] maxWeapons Number of weapons
  */
 static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 {
-	installation_t *inst;
-	base_t *base;
+	const installation_t *inst;
+	const base_t *base;
 	aircraft_t *closestCraft = NULL;
 	float minCraftDistance = -1;
 	aircraft_t *closestAttacker = NULL;
 	float minAttackerDistance = -1;
-	aircraftSlot_t *slot;
+	const aircraftSlot_t *slot;
 	int i;
 
 	if (maxWeapons <= 0)
@@ -1080,8 +1080,6 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 
 	/** Loop weaponslots */
 	for (i = 0; i < maxWeapons; i++) {
-		int test;
-
 		slot = &weapons[i].slot;
 		/** skip if autofire is disabled */
 		if (!weapons[i].autofire)
@@ -1098,13 +1096,13 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 			continue;
 
 		if (closestAttacker) {
-			test = AIRFIGHT_CheckWeapon(slot, minAttackerDistance);
+			const int test = AIRFIGHT_CheckWeapon(slot, minAttackerDistance);
 			if (test != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT
 			 && test != AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT
 			 && (minAttackerDistance <= slot->ammo->craftitem.stats[AIR_STATS_WRANGE]))
 			 	weapons[i].target = closestAttacker;
 		} else if (closestCraft) {
-			test = AIRFIGHT_CheckWeapon(slot, minCraftDistance);
+			const int test = AIRFIGHT_CheckWeapon(slot, minCraftDistance);
 			if (test != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT
 			 && test != AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT
 			 && (minCraftDistance <= slot->ammo->craftitem.stats[AIR_STATS_WRANGE]))
