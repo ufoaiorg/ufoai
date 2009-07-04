@@ -3,5 +3,5 @@ all:
 	pdflatex ufo-manual_EN.tex
 
 clean:
-	-rm chapters/*.aux
-	-rm *.aux *.log *.out *.toc *.pdf *.pdfsync
+	-rm -f chapters/*.aux
+	-rm -f *.aux *.log *.out *.toc *.pdf *.pdfsync

@@ -65,6 +65,14 @@ stamps/build-indep: config.status
 	mkdir -p stamps
 	touch $@
 
+patch: patch-stamp
+stamps/patch-stamp:
+	dpatch apply-all
+
+unpatch:
+	dpatch deapply-all
+	rm -rf stampts/patch-stamp
+
 really_clean:
 	dh_testdir
 	dh_testroot
@@ -74,12 +82,14 @@ really_clean:
 	$(MAKE) -C src/docs/tex clean
 	# WARNING: building maps takes ages
 	# find base/maps -name '*.bsp' | xargs --no-run-if-empty rm
-	-rm base/*.pk3
-	-rm Makefile config.h config.log config.status
+	-rm -f base/*.pk3
+	-rm -f Makefile config.h config.log config.status
 	-rm -rf base/i18n
+	-rm -rf debian/files debian/substvars
+
 	dh_clean
 
-clean: really_clean
+clean: really_clean unpatch
 
 install-arch: stamps/build-arch
 	dh_testdir
@@ -133,4 +143,4 @@ binary-arch: install-arch
 
 build: build-arch build-indep
 binary: binary-indep binary-arch
-.PHONY: build build-arch build-indep clean binary-indep binary-arch binary install
+.PHONY: build build-arch build-indep clean binary-indep binary-arch binary install patch unpatch

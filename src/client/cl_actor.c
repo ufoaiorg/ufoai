@@ -71,14 +71,14 @@ static pos3_t mouseLastPos;
  * @param[in] player_action
  * @param[in] entnum The server side edict number of the actor
  */
-void MSG_Write_PA (player_action_t player_action, int entnum, ...)
+void MSG_Write_PA (player_action_t playerAction, int entnum, ...)
 {
 	va_list ap;
 	struct dbuffer *msg = new_dbuffer();
 
 	va_start(ap, entnum);
-	NET_WriteFormat(msg, "bbs", clc_action, player_action, entnum);
-	NET_vWriteFormat(msg, pa_format[player_action], ap);
+	NET_WriteFormat(msg, "bbs", clc_action, playerAction, entnum);
+	NET_vWriteFormat(msg, pa_format[playerAction], ap);
 	va_end(ap);
 	NET_WriteMsg(cls.netStream, msg);
 }
