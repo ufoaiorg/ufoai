@@ -1,0 +1,804 @@
+// ==================
+// MENU FOR PAUSE/MESSAGES
+// ==================
+
+window messageoptions
+{
+	{
+		pos			"256 256"
+		size		"496 496"
+		dragbutton	true
+		closebutton	true
+		modal		true
+		image		ui/popup_alpha_tile
+		string		"_Pause/message settings"
+	}
+
+	button button_apply
+	{
+		string		"_Apply"
+		tooltip		"_Apply changes"
+		pos			"109 436"
+		size		"176 32"
+		image		ui/button_green_small
+		font		f_menu
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		onClick		{ cmd "mn_pop;msgoptions_backup;" }
+	}
+
+	button button_revert
+	{
+		string		"_Cancel"
+		tooltip		"_Revert changes"
+		pos			"296 437"
+		size		"176 32"
+		image		ui/button_green_small
+		font		f_menu
+		color		"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		onClick		{ cmd "mn_pop;" }
+	}
+
+	string header_messagetype
+	{
+		string		"_Notify types:"
+		pos			"30 60"
+		size		"300 25"
+		font		f_small
+	}
+
+	pic header_pause
+	{
+		tooltip		"_Enable or disable pause for all notification types\nPause can't be enabled without notification\nLeft click enables pause for all, right click disables."
+		pos			"356 60"
+		image		ui/notify_pause
+		onClick		{ cmd "msgoptions_setall pause 1;" }
+		onRClick		{ cmd "msgoptions_setall pause 0;" }
+	}
+
+	todo position {
+		pos		"386 45"
+		string	"'Notify' should be the first check"
+	}
+
+	pic header_notify
+	{
+		tooltip		"_Enable or disable messages being displayed for all notification types.\nLeft click enables all notifications, right click disables."
+		pos			"386 60"
+		image		ui/notify_notice
+		onClick		{ cmd "msgoptions_setall notify 1;" }
+		onRClick		{ cmd "msgoptions_setall notify 0;" }
+	}
+
+	pic header_sound
+	{
+		tooltip		"_Enable or disable sounds being played for all notification types.\nLeft click enables all sounds, right click disables."
+		pos			"416 60"
+		image		ui/notify_sound
+		onClick		{ cmd "msgoptions_setall sound 1;" }
+		onRClick		{ cmd "msgoptions_setall sound 0;" }
+	}
+
+	text messagetypes
+	{
+		dataid		TEXT_MESSAGEOPTIONS
+		color		"0 .78 0 1"
+		rows		"12"
+		lineheight	"25"
+		pos			"30 90"
+		size		"440 300"
+		mousefx		true
+		longlines	prettychop
+		onClick		{ cmd "messagetypes_click <lineselected>" }
+		onViewChange {
+			*(abstractscrollbar)messagetypes_scroll@fullsize <fullsize>
+			*(abstractscrollbar)messagetypes_scroll@current <viewpos>
+			*(abstractscrollbar)messagetypes_scroll@viewsize <viewsize>
+			cmd "msgoptions_scroll;"
+		}
+	}
+
+	vscrollbar messagetypes_scroll {
+		image		ui/scrollbar_v_green
+		pos			"455 90"
+		height		"300"
+		current		0
+		viewsize	12
+		fullsize	12
+		onChange	{
+			*messagetypes@viewpos = <current>
+			cmd "msgoptions_scroll;"
+		}
+	}
+
+	// ===================
+	// All checkbox
+	// ===================
+
+	checkbox bt_pause0 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 90"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 0 pause;" }
+	}
+
+	checkbox bt_notify0 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 90"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 0 notify;" }
+	}
+
+	checkbox bt_sound0 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 90"
+		image		"ui/checkbox_blue"	size	"20 18"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 0 sound;" }
+	}
+
+	checkbox bt_pause1 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 115"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 1 pause;" }
+	}
+
+	checkbox bt_notify1 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 115"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 1 notify;" }
+	}
+
+	checkbox bt_sound1 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 115"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 1 sound;" }
+	}
+
+	checkbox bt_pause2 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 140"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 2 pause;" }
+	}
+
+	checkbox bt_notify2 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 140"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 2 notify;" }
+	}
+
+	checkbox bt_sound2 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 140"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 2 sound;" }
+	}
+
+	checkbox bt_pause3 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 165"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 3 pause;" }
+	}
+
+	checkbox bt_notify3 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 165"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 3 notify;" }
+	}
+
+	checkbox bt_sound3 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 165"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 3 sound;" }
+	}
+
+	checkbox bt_pause4 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 190"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 4 pause;" }
+	}
+
+	checkbox bt_notify4 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 190"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 4 notify;" }
+	}
+
+	checkbox bt_sound4 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 190"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 4 sound;" }
+	}
+
+	checkbox bt_pause5 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 215"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 5 pause;" }
+	}
+
+	checkbox bt_notify5 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 215"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 5 notify;" }
+	}
+
+	checkbox bt_sound5 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 215"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 5 sound;" }
+	}
+
+	checkbox bt_pause6 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 240"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 6 pause;" }
+	}
+
+	checkbox bt_notify6 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 240"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 6 notify;" }
+	}
+
+	checkbox bt_sound6 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 240"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 6 sound;" }
+	}
+
+	checkbox bt_pause7 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 265"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 7 pause;" }
+	}
+
+	checkbox bt_notify7 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 265"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 7 notify;" }
+	}
+
+	checkbox bt_sound7 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 265"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 7 sound;" }
+	}
+
+	checkbox bt_pause8 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 290"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 8 pause;" }
+	}
+
+	checkbox bt_notify8 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 290"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 8 notify;" }
+	}
+
+	checkbox bt_sound8 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 290"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 8 sound;" }
+	}
+
+	checkbox bt_pause9 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 315"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 9 pause;" }
+	}
+
+	checkbox bt_notify9 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 315"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 9 notify;" }
+	}
+
+	checkbox bt_sound9 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 315"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 9 sound;" }
+	}
+
+	checkbox bt_pause10 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 340"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 10 pause;" }
+	}
+
+	checkbox bt_notify10 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 340"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		 true
+		onChange	{ cmd "msgoptions_toggle 10 notify;" }
+	}
+
+	checkbox bt_sound10 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 340"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 10 sound;" }
+	}
+
+	checkbox bt_pause11 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 365"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 11 pause;" }
+	}
+
+	checkbox bt_notify11 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 365"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 11 notify;" }
+	}
+
+	checkbox bt_sound11 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 365"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 11 sound;" }
+	}
+
+	checkbox bt_pause12 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 390"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 12 pause;" }
+	}
+
+	checkbox bt_notify12 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 390"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 12 notify;" }
+	}
+
+	checkbox bt_sound12 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 390"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 12 sound;" }
+	}
+
+	checkbox bt_pause13 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 415"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 13 pause;" }
+	}
+
+	checkbox bt_notify13 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 415"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 13 notify;" }
+	}
+
+	checkbox bt_sound13 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 415"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 13 sound;" }
+	}
+
+	checkbox bt_pause14 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 440"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 14 pause;" }
+	}
+
+	checkbox bt_notify14 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 440"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 14 notify;" }
+	}
+
+	checkbox bt_sound14 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 440"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 14 sound;" }
+	}
+
+	checkbox bt_pause15 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 465"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 15 pause;" }
+	}
+
+	checkbox bt_notify15 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 465"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 15 notify;" }
+	}
+
+	checkbox bt_sound15 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 465"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 15 sound;" }
+	}
+
+	checkbox bt_pause16 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 490"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 16 pause;" }
+	}
+
+	checkbox bt_notify16 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 490"
+		image		"ui/checkbox_blue"
+		size		"20 18"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 16 notify;" }
+	}
+
+	checkbox bt_sound16 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 490"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 16 sound;" }
+	}
+
+	checkbox bt_pause17 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 515"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 17 pause;" }
+	}
+
+	checkbox bt_notify17 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 515"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 17 notify;" }
+	}
+
+	checkbox bt_sound17 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 515"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 17 sound;" }
+	}
+
+	checkbox bt_pause18 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 540"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 18 pause;" }
+	}
+
+	checkbox bt_notify18 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 540"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 18 notify;" }
+	}
+
+	checkbox bt_sound18 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 540"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 18 sound;" }
+	}
+
+	checkbox bt_pause19 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 565"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 19 pause;" }
+	}
+
+	checkbox bt_notify19 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 565"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 19 notify;" }
+	}
+
+	checkbox bt_sound19 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 565"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 19 sound;" }
+	}
+
+	checkbox bt_pause20 {
+		tooltip		"_enable or disable game stopping"
+		pos			"360 590"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 20 pause;" }
+	}
+
+	checkbox bt_notify20 {
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 590"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 20 notify;" }
+	}
+
+	checkbox bt_sound20 {
+		tooltip		"_enable or disable playing sound"
+		pos			"420 590"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+		current		0
+		invis		true
+		onChange	{ cmd "msgoptions_toggle 20 sound;" }
+	}
+
+	// ===================
+	// confuncs to update widgets
+	// ===================
+
+	/**
+	 * @param[in] <1> row in current view
+	 * @param[in] <2> state for pause button
+	 * @param[in] <3> state for notification button
+	 * @param[in] <4> state for sound notification button
+	 */
+	confunc ms_btnstate {
+		*cvar:tmp <3>
+		if ( *cvar:tmp == 0 ) {
+			*bt_pause<1>@disabled true
+			*bt_sound<1>@disabled true
+		} else {
+			*bt_pause<1>@disabled false
+			*bt_sound<1>@disabled false
+		}
+		*(abstractvalue)bt_pause<1>@current <2>
+		*(abstractvalue)bt_notify<1>@current <3>
+		*(abstractvalue)bt_sound<1>@current <4>
+	}
+
+	// ===================
+	// confuncs to enable/disable lines
+	// ===================
+
+	/**
+	 * @param[in] <1> row into the current view
+	 */
+	confunc ms_enable {
+		*bt_pause<1>@invis false
+		*bt_notify<1>@invis false
+		*bt_sound<1>@invis false
+	}
+
+	/**
+	 * @param[in] <1> row into the current view
+	 */
+	confunc ms_disable {
+		*bt_pause<1>@invis true
+		*bt_notify<1>@invis true
+		*bt_sound<1>@invis true
+	}
+
+	func onInit
+	{
+		cmd "game_timestop;msgoptions_init;msgoptions_backup;"
+	}
+
+	func onClose
+	{
+		cmd "del tmp;"
+		cmd "msgoptions_restore;"
+	}
+}
