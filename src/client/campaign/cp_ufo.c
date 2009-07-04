@@ -712,7 +712,7 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 	ufo = &ccs.ufos[ccs.numUFOs];
 	*ufo = ccs.aircraftTemplates[newUFONum];
 	Com_DPrintf(DEBUG_CLIENT, "New UFO on geoscape: '%s' (ccs.numUFOs: %i, newUFONum: %i)\n", ufo->id, ccs.numUFOs, newUFONum);
-	ccs.numUFOs++;
+	ufo->idx = ccs.numUFOs++;
 
 	/* Update Stats of UFO */
 	AII_UpdateAircraftStats(ufo);
