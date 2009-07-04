@@ -129,7 +129,7 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
 
 	base = AB_BuildBase(mission->pos);
 	if (!base) {
-		Com_Printf("CP_BuildBaseSetUpBase: could not create base\n");
+		Com_DPrintf(DEBUG_CLIENT, "CP_BuildBaseSetUpBase: could not create alien base\n");
 		CP_MissionRemove(mission);
 		return;
 	}
