@@ -46,8 +46,6 @@ VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION \
 
 #######################################################################################################
 
-.PHONY: all all2 clean echo_info
-
 include build/platform_specific.mk
 include build/defs.mk
 
@@ -183,3 +181,6 @@ install_exec: $(TARGETS)
 #######################################################################
 
 -include $(ALL_DEPS)
+
+.PHONY: all all2 clean echo_info $(BUILDDIR)/.dirs
+
