@@ -234,7 +234,7 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t
 			case EA_OPERATOR_NOT:
 				return !value1;
 			default:
-				assert(qfalse);
+				Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: (BOOL2BOOL) Invalid expression type");
 			}
 		}
 		break;
@@ -258,7 +258,7 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t
 			case EA_OPERATOR_NE:
 				return value1 != value2;
 			default:
-				assert(qfalse);
+				Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: (FLOAT2BOOL) Invalid expression type");
 			}
 		}
 		break;
@@ -287,13 +287,14 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t
 			case EA_OPERATOR_STR_NE:
 				return strcmp(value1, value2) != 0;
 			default:
-				assert(qfalse);
+				Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: (STRING2BOOL) Invalid expression type");
 			}
 		}
 
 	default:
 		Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: Unsupported expression type: %i", expression->type);
 	}
+	return qfalse;
 }
 
 /**
