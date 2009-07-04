@@ -901,6 +901,8 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 		return;
 	}
 
+#if 0
+	/** Disable this (temporary) until I can fix ufo idx-es (with this an assert is hit) */
 	if (installation) {
 		/** Every slot aims the same target */
 		if (installation->numBatteries && installation->batteries[0].target) {
@@ -933,6 +935,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 			return;
 		}
 	}
+#endif
 
 	if (Cmd_Argc() != 2) {
 		type[0] = '\0';
