@@ -519,7 +519,8 @@ trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end
 
 	/* clip to world - 0x1FF = all levels */
 	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask, 0);
-	/** @todo There is more than one world in case of a map assembly */
+	/** @todo There is more than one world in case of a map assembly - use
+	 * @c clip.trace.mapTile to get the correct one */
 	clip.trace.ent = ge->edicts; /* g_edicts[0] is the world */
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */
@@ -665,7 +666,6 @@ static void SV_ModLoadObjModel (sv_model_t* mod, const byte *buffer, int bufferL
  * @param[in] model The relative model path to load the mins, maxs for
  * @param[out] mins The mins vector of the model
  * @param[out] maxs The maxs vector of the model
- * @todo Implement the model loading
  */
 qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t maxs)
 {
