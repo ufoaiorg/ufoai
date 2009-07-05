@@ -2363,54 +2363,95 @@ base/pics/tutorial/gameplay8a.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/gameplay8b.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/tactical1.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/ufoai.jpg | GNU General Public License 2.0
-base/pics/ui/airequip_no_shield.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/airequip_no_weapon.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/airequip_selected_element.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/bar_attribute.tga | GNU General Public License 2.0 | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
-base/pics/ui/bar_border.tga | GNU General Public License 2.0 | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
-base/pics/ui/bar_health.tga | GNU General Public License 2.0 | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
-base/pics/ui/bar_rahmen.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/bar_skill.tga | GNU General Public License 2.0 | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
-base/pics/ui/base_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/base_ul.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/base_ur.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_autosell1.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_autosell2.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_big_menu.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_equip.tga | GNU General Public License 2.0 | Gerd Heisse
-base/pics/ui/button_produce.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_square.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/buttons_small.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/buttons_time.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/close.tga | GNU General Public License 2.0
-base/pics/ui/equipment_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/airequip_element.tga | GNU General Public License 2.0 or later
+base/pics/ui/airequip_no_shield.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/airequip_no_weapon.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/airequip_selected_element.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/bar_attribute.tga | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
+base/pics/ui/bar_border.tga | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
+base/pics/ui/bar_health.tga | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
+base/pics/ui/bar_rahmen.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/bar_skill.tga | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
+base/pics/ui/base_bg.jpg | GNU General Public License 2.0 or later
+base/pics/ui/base_lr.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/base_ul.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/base_ur.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/button_autosell1.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/button_autosell2.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/button_background.tga | GNU General Public License 2.0 or later
+base/pics/ui/button_big_menu.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/button_blue.tga | GNU General Public License 2.0 or later
+base/pics/ui/button_equip.tga | GNU General Public License 2.0 or later | Gerd Heisse
+base/pics/ui/button_geoscape.tga | GNU General Public License 2.0 or later
+base/pics/ui/button_green_big.tga | GNU General Public License 2.0 or later
+base/pics/ui/button_green_small.tga | GNU General Public License 2.0 or later
+base/pics/ui/button_green_verysmall.tga | GNU General Public License 2.0 or later
+base/pics/ui/button_pack1.tga | GNU General Public License 2.0 or later
+base/pics/ui/button_produce.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/button_square.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/buttons_combatzoom.tga | GNU General Public License 2.0 or later
+base/pics/ui/buttons_small.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/buttons_time.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/checkbox_blue.tga | GNU General Public License 2.0 or later
+base/pics/ui/checkbox_green.tga | GNU General Public License 2.0 or later
+base/pics/ui/close.tga | GNU General Public License 2.0 or later
+base/pics/ui/equipment_bg.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/geo_menu.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/ui/geo_nations_highlight.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Based on the original menu artwork by Sparx and Rasta
+base/pics/ui/geo_menu_mini.tga | GNU General Public License 2.0 or later
+base/pics/ui/geo_miniglobe.tga | GNU General Public License 2.0 or later
+base/pics/ui/geo_nations_highlight.tga | GNU General Public License 2.0 or later | Werner "hoehrer" Höhrer | Based on the original menu artwork by Sparx and Rasta
 base/pics/ui/geo_radar.tga | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/pics/ui/hosp_button_blue.tga | GNU General Public License 2.0
-base/pics/ui/hosp_button_green.tga | GNU General Public License 2.0
-base/pics/ui/hosp_button_light.tga | GNU General Public License 2.0
-base/pics/ui/losegame_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/mail_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/mail_button.tga | GNU General Public License 2.0
-base/pics/ui/mailclient.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/main_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/map_ll.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/map_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/map_ul.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/map_ur.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/multiplayer_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/multiplayer_teamsel.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/options_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/selectbox.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/selectbox_green.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/skirmish_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/stats_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/ufopedia_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/ufopedia_buttons2.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/vertical_bar.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/wingame_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/won_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/hosp_button_blue.tga | GNU General Public License 2.0 or later
+base/pics/ui/hosp_button_green.tga | GNU General Public License 2.0 or later
+base/pics/ui/hosp_button_light.tga | GNU General Public License 2.0 or later
+base/pics/ui/icon_close.tga | GNU General Public License 2.0 or later
+base/pics/ui/icon_open.tga | GNU General Public License 2.0 or later
+base/pics/ui/icon_pack1.tga | GNU General Public License 2.0 or later
+base/pics/ui/icon_pack2.tga | GNU General Public License 2.0 or later
+base/pics/ui/icon_pack3.tga | GNU General Public License 2.0 or later
+base/pics/ui/irc_bg.jpg | GNU General Public License 2.0 or later
+base/pics/ui/losegame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/lost_bg.tga | GNU General Public License 2.0 or later
+base/pics/ui/mail_bg.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/mail_button.tga | GNU General Public License 2.0 or later
+base/pics/ui/mailclient.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/mailclient_bg.tga | GNU General Public License 2.0 or later
+base/pics/ui/main_bg.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/map_ll.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/map_lr.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/map_ul.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/map_ur.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/mp_team_edit_bg.tga | GNU General Public License 2.0 or later
+base/pics/ui/multiplayer_bg.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/multiplayer_teamsel.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/notify_notice.tga | GNU General Public License 2.0 or later
+base/pics/ui/notify_pause.tga | GNU General Public License 2.0 or later
+base/pics/ui/notify_sound.tga | GNU General Public License 2.0 or later
+base/pics/ui/options_bg.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_green.tga | GNU General Public License 2.0 or later
+base/pics/ui/panel_green_slim.tga | GNU General Public License 2.0 or later
+base/pics/ui/panel_grey.tga | GNU General Public License 2.0 or later
+base/pics/ui/panel_grey_black.tga | GNU General Public License 2.0 or later
+base/pics/ui/panel_grey_green.tga | GNU General Public License 2.0 or later
+base/pics/ui/panel_grey_green_large.tga | GNU General Public License 2.0 or later
+base/pics/ui/panel_grey_green_large2.tga | GNU General Public License 2.0 or later
+base/pics/ui/panel_tab.tga | GNU General Public License 2.0 or later
+base/pics/ui/popup_alpha_tile.tga | GNU General Public License 2.0 or later
+base/pics/ui/popup_button_hl.tga | GNU General Public License 2.0 or later
+base/pics/ui/popup_tile.tga | GNU General Public License 2.0 or later
+base/pics/ui/scrollbar_v_green.tga | GNU General Public License 2.0 or later
+base/pics/ui/selectbox.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/selectbox_green.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/skirmish_bg.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/spinner_blue.tga | GNU General Public License 2.0 or later
+base/pics/ui/stats_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/tab.tga | GNU General Public License 2.0 or later
+base/pics/ui/transtypebox.tga | GNU General Public License 2.0 or later
+base/pics/ui/ufopedia_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/ufopedia_buttons2.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/vertical_bar.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/won_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/sound/aliens/aliendeath01.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath02.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath03.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
