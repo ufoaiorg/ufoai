@@ -1571,4 +1571,5 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->dndLeave = MN_ContainerNodeDNDLeave;
 	behaviour->mouseWheel = MN_ContainerNodeWheel;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(containerExtraData_t);
 }

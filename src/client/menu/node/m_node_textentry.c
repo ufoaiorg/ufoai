@@ -335,6 +335,7 @@ void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_TextEntryNodeDraw;
 	behaviour->loading = MN_TextEntryNodeLoading;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(textEntryExtraData_t);
 
 	Cmd_AddCommand("mn_edittextentry", MN_EditTextEntry_f, "Force edition of the textentry.");
 }

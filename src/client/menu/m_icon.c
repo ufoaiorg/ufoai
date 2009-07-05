@@ -53,9 +53,9 @@ menuIcon_t* MN_GetIconByName (const char* name)
 	int i;
 
 	for (i = 0; i < mn.numIcons; i++) {
-		if (strncmp(name, mn.menuIcons[i].name, MEMBER_SIZEOF(menuIcon_t, name)) != 0)
+		if (strncmp(name, mn.icons[i].name, MEMBER_SIZEOF(menuIcon_t, name)) != 0)
 			continue;
-		return &mn.menuIcons[i];
+		return &mn.icons[i];
 	}
 	return NULL;
 }
@@ -73,7 +73,7 @@ menuIcon_t* MN_AllocIcon (const char* name)
 	if (mn.numIcons >= MAX_MENUICONS)
 		Com_Error(ERR_FATAL, "MN_AllocIcon: MAX_MENUICONS hit");
 
-	result = &mn.menuIcons[mn.numIcons];
+	result = &mn.icons[mn.numIcons];
 	mn.numIcons++;
 
 	memset(result, 0, sizeof(*result));

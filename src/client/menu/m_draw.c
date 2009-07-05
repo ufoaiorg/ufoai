@@ -160,8 +160,8 @@ static void MN_DrawDebugMenuNodeNames (void)
 	R_Color(white);
 	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "menu stack:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	for (stackPosition = 0; stackPosition < mn.menuStackPos; stackPosition++) {
-		menuNode_t *menu = mn.menuStack[stackPosition];
+	for (stackPosition = 0; stackPosition < mn.windowStackPos; stackPosition++) {
+		menuNode_t *menu = mn.windowStack[stackPosition];
 		MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, menu->name, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 	}
@@ -289,7 +289,7 @@ void MN_Draw (void)
 
 	MN_HandleTimers();
 
-	assert(mn.menuStackPos >= 0);
+	assert(mn.windowStackPos >= 0);
 
 	mouseMoved = MN_CheckMouseMove();
 	hoveredNode = MN_GetHoveredNode();
@@ -308,8 +308,8 @@ void MN_Draw (void)
 		return;
 
 	/* draw all visible menus */
-	for (; pos < mn.menuStackPos; pos++) {
-		menu = mn.menuStack[pos];
+	for (; pos < mn.windowStackPos; pos++) {
+		menu = mn.windowStack[pos];
 
 		/* update the layout */
 		menu->behaviour->doLayout(menu);

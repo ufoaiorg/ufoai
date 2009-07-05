@@ -39,4 +39,5 @@ void MN_RegisterAbstractScrollbarNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "abstractscrollbar";
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(abstractScrollbarExtraData_t);
 }

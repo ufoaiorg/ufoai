@@ -84,7 +84,7 @@ static void MN_SetModelTransform_f (void)
 	const nodeBehaviour_t *modelBehaviour = MN_GetNodeBehaviour("model");
 
 	/* not initialized yet - commandline? */
-	if (mn.menuStackPos <= 0)
+	if (mn.windowStackPos <= 0)
 		return;
 
 	if (Cmd_Argc() < 5) {
@@ -677,6 +677,7 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	behaviour->clone = MN_ModelNodeClone;
 	behaviour->capturedMouseMove = MN_ModelNodeCapturedMouseMove;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(modelExtraData_t);
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");

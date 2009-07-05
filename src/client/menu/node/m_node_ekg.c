@@ -119,4 +119,5 @@ void MN_RegisterEKGNode (nodeBehaviour_t* behaviour)
 	behaviour->extends = "pic";
 	behaviour->draw = MN_EKGNodeDraw;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(ekgExtraData_t);
 }

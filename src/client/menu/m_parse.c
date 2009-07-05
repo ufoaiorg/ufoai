@@ -174,7 +174,7 @@ menuAction_t *MN_AllocAction (void)
 {
 	if (mn.numActions >= MAX_MENUACTIONS)
 		Com_Error(ERR_FATAL, "MN_AllocAction: Too many menu actions");
-	return &mn.menuActions[mn.numActions++];
+	return &mn.actions[mn.numActions++];
 }
 
 /**
@@ -806,13 +806,15 @@ static qboolean MN_ParseFunction (menuNode_t * node, const char **text, const ch
 	assert (node->behaviour->isFunction);
 
 	/* add new actions to end of list */
+	/** @todo [begin] this code look stange */
 	action = &node->onClick;
 	for (; *action; action = &(*action)->next) {}
 
 	if (mn.numActions >= MAX_MENUACTIONS)
 		Com_Error(ERR_FATAL, "MN_ParseFunction: MAX_MENUACTIONS exceeded (%i)", mn.numActions);
-	*action = &mn.menuActions[mn.numActions++];
+	*action = &mn.actions[mn.numActions++];
 	memset(*action, 0, sizeof(**action));
+	/** @todo [end] this code look strange */
 
 	*action = MN_ParseActionList(node, text, token);
 	if (*action == NULL)
@@ -1265,15 +1267,15 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 	}
 
 	/* search for menus with same name */
-	for (i = 0; i < mn.numMenus; i++)
-		if (!strncmp(name, mn.menus[i]->name, sizeof(mn.menus[i]->name)))
+	for (i = 0; i < mn.numWindows; i++)
+		if (!strncmp(name, mn.windows[i]->name, sizeof(mn.windows[i]->name)))
 			break;
 
-	if (i < mn.numMenus) {
+	if (i < mn.numWindows) {
 		Com_Printf("MN_ParseMenus: %s \"%s\" with same name found, second ignored\n", type, name);
 	}
 
-	if (mn.numMenus >= MAX_MENUS) {
+	if (mn.numWindows >= MAX_MENUS) {
 		Com_Error(ERR_FATAL, "MN_ParseMenu: max menus exceeded (%i) - ignore '%s'\n", MAX_MENUS, name);
 		return;	/* never reached */
 	}

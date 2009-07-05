@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_INTERNAL_H
 #define CLIENT_MENU_M_INTERNAL_H
 
-#define MAX_MENUS			128
+#define MAX_WINDOWS			128
 #define MAX_MENUNODES		8192
 #define MAX_MENUSTACK		32
 #define MAX_MENUACTIONS		8192
@@ -55,22 +55,22 @@ typedef struct menuGlobal_s {
 	 */
 	menuSharedData_t sharedData[MAX_MENUTEXTS];
 
-	menuOption_t menuOptions[MAX_MENUOPTIONS];
+	menuOption_t options[MAX_MENUOPTIONS];
 	int numOptions;
 
-	menuNode_t menuNodes[MAX_MENUNODES];
+	menuNode_t nodes[MAX_MENUNODES];
 	int numNodes;
 
-	menuNode_t* menus[MAX_MENUS];
-	int numMenus;
+	menuNode_t* windows[MAX_WINDOWS];
+	int numWindows;
 
 	byte *adata, *curadata;
 	int adataize;
 
-	menuNode_t *menuStack[MAX_MENUSTACK];
-	int menuStackPos;
+	menuNode_t *windowStack[MAX_MENUSTACK];
+	int windowStackPos;
 
-	menuAction_t menuActions[MAX_MENUACTIONS];
+	menuAction_t actions[MAX_MENUACTIONS];
 	int numActions;
 
 	menuModel_t menuModels[MAX_MENUMODELS];
@@ -79,7 +79,7 @@ typedef struct menuGlobal_s {
 	excludeRect_t excludeRect[MAX_EXLUDERECTS];
 	int numExcludeRect;
 
-	menuIcon_t menuIcons[MAX_MENUICONS];
+	menuIcon_t icons[MAX_MENUICONS];
 	int numIcons;
 } menuGlobal_t;
 

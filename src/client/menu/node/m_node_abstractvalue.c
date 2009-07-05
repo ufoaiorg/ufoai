@@ -84,4 +84,5 @@ void MN_RegisterAbstractValueNode (nodeBehaviour_t *behaviour)
 	behaviour->clone = MN_AbstractValueClone;
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(abstractValueExtraData_t);
 }

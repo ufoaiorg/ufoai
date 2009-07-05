@@ -172,7 +172,11 @@ typedef struct nodeBehaviour_s {
 	qboolean drawItselfChild;		/**< if true, the node draw function must draw child, the core code will not do it */
 	const value_t* properties;		/**< list of properties of the node */
 	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
+	intptr_t extraDataSize;			/**< Size of the extra data used (it come from "u" attribute) @note use intptr_t because we use the virtual inheritance function (see virtualFunctions) */
 	struct nodeBehaviour_s *super;	/**< link to the extended node */
+#if DEBUG
+	int count;						/**< number of node allocated */
+#endif
 
 	/* draw callback */
 	void (*draw)(menuNode_t *node);							/**< how to draw a node */
@@ -231,6 +235,8 @@ qboolean MN_CheckVisibility(menuNode_t *node);
 
 /* behaviours */
 nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
+nodeBehaviour_t* MN_GetNodeBehaviourByIndex(int index);
+int MN_GetNodeBehaviourCount(void);
 const struct value_s *MN_GetPropertyFromBehaviour(const nodeBehaviour_t *behaviour, const char* name);
 
 #endif

@@ -422,4 +422,5 @@ void MN_RegisterBaseLayoutNode (nodeBehaviour_t *behaviour)
 	behaviour->extends = "abstractbase";
 	behaviour->draw = MN_BaseLayoutNodeDraw;
 	behaviour->loading = MN_BaseLayoutNodeLoading;
+	behaviour->extraDataSize = sizeof(baseExtraData_t);
 }

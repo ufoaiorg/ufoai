@@ -90,4 +90,5 @@ void MN_RegisterLineChartNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "linechart";
 	behaviour->draw = MN_LineChartNodeDraw;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(lineChartExtraData_t);
 }

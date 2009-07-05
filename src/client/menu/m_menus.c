@@ -47,9 +47,9 @@ static cvar_t *mn_active;
 int MN_GetLastFullScreenWindow (void)
 {
 	/* stack pos */
-	int pos = mn.menuStackPos - 1;
+	int pos = mn.windowStackPos - 1;
 	while (pos > 0) {
-		if (MN_WindowIsFullScreen(mn.menuStack[pos]))
+		if (MN_WindowIsFullScreen(mn.windowStack[pos]))
 			break;
 		pos--;
 	}
@@ -66,15 +66,15 @@ static void MN_DeleteMenuFromStack (menuNode_t * menu)
 {
 	int i;
 
-	for (i = 0; i < mn.menuStackPos; i++) {
-		if (mn.menuStack[i] != menu)
+	for (i = 0; i < mn.windowStackPos; i++) {
+		if (mn.windowStack[i] != menu)
 			continue;
 
 		/** @todo (menu) don't leave the loop even if we found it - there still
 		 * may be other copies around in the stack of the same menu
 		 * @sa MN_PushCopyMenu_f */
-		for (mn.menuStackPos--; i < mn.menuStackPos; i++)
-			mn.menuStack[i] = mn.menuStack[i + 1];
+		for (mn.windowStackPos--; i < mn.windowStackPos; i++)
+			mn.windowStack[i] = mn.windowStack[i + 1];
 
 		MN_InvalidateMouse();
 		return;
@@ -88,8 +88,8 @@ static void MN_DeleteMenuFromStack (menuNode_t * menu)
 static inline int MN_GetMenuPositionFromStackByName (const char *name)
 {
 	int i;
-	for (i = 0; i < mn.menuStackPos; i++)
-		if (!strcmp(mn.menuStack[i]->name, name))
+	for (i = 0; i < mn.windowStackPos; i++)
+		if (!strcmp(mn.windowStack[i]->name, name))
 			return i;
 
 	return -1;
@@ -103,17 +103,17 @@ static inline int MN_GetMenuPositionFromStackByName (const char *name)
 static inline void MN_InsertMenuIntoStack (menuNode_t *menu, int position)
 {
 	int i;
-	assert(position <= mn.menuStackPos);
+	assert(position <= mn.windowStackPos);
 	assert(position > 0);
 	assert(menu != NULL);
 
 	/* create space for the new menu */
-	for (i = mn.menuStackPos; i > position; i--) {
-		mn.menuStack[i] = mn.menuStack[i - 1];
+	for (i = mn.windowStackPos; i > position; i--) {
+		mn.windowStack[i] = mn.windowStack[i - 1];
 	}
 	/* insert */
-	mn.menuStack[position] = menu;
-	mn.menuStackPos++;
+	mn.windowStack[position] = menu;
+	mn.windowStackPos++;
 }
 
 /**
@@ -138,7 +138,7 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
 	if (delete)
 		MN_DeleteMenuFromStack(menu);
 
-	if (mn.menuStackPos < MAX_MENUSTACK)
+	if (mn.windowStackPos < MAX_MENUSTACK)
 		if (parent) {
 			const int parentPos = MN_GetMenuPositionFromStackByName(parent);
 			if (parentPos == -1) {
@@ -146,9 +146,9 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
 				return NULL;
 			}
 			MN_InsertMenuIntoStack(menu, parentPos + 1);
-			menu->u.window.parent = mn.menuStack[parentPos];
+			menu->u.window.parent = mn.windowStack[parentPos];
 		} else
-			mn.menuStack[mn.menuStackPos++] = menu;
+			mn.windowStack[mn.windowStackPos++] = menu;
 	else
 		Com_Printf("Menu stack overflow\n");
 
@@ -177,16 +177,16 @@ int MN_CompleteWithMenu (const char *partial, const char **match)
 	const size_t len = strlen(partial);
 
 	if (len == 0) {
-		for (i = 0; i < mn.numMenus; i++)
-			Com_Printf("%s\n", mn.menus[i]->name);
+		for (i = 0; i < mn.numWindows; i++)
+			Com_Printf("%s\n", mn.windows[i]->name);
 		return 0;
 	}
 
 	/* check for partial matches */
-	for (i = 0; i < mn.numMenus; i++)
-		if (!strncmp(partial, mn.menus[i]->name, len)) {
-			Com_Printf("%s\n", mn.menus[i]->name);
-			localMatch[matches++] = mn.menus[i]->name;
+	for (i = 0; i < mn.numWindows; i++)
+		if (!strncmp(partial, mn.windows[i]->name, len)) {
+			Com_Printf("%s\n", mn.windows[i]->name);
+			localMatch[matches++] = mn.windows[i]->name;
 			if (matches >= MAX_COMPLETE) {
 				Com_Printf("MN_CompleteWithMenu: hit MAX_COMPLETE\n");
 				break;
@@ -333,29 +333,29 @@ static void MN_PushCopyMenu_f (void)
 static void MN_RemoveMenuAtPositionFromStack (int position)
 {
 	int i;
-	assert(position < mn.menuStackPos);
+	assert(position < mn.windowStackPos);
 	assert(position >= 0);
 
 	/* create space for the new menu */
-	for (i = position; i < mn.menuStackPos; i++) {
-		mn.menuStack[i] = mn.menuStack[i + 1];
+	for (i = position; i < mn.windowStackPos; i++) {
+		mn.windowStack[i] = mn.windowStack[i + 1];
 	}
-	mn.menuStack[mn.menuStackPos--] = NULL;
+	mn.windowStack[mn.windowStackPos--] = NULL;
 }
 
 static void MN_CloseAllMenu (void)
 {
 	int i;
-	for (i = mn.menuStackPos - 1; i >= 0; i--) {
-		menuNode_t *menu = mn.menuStack[i];
+	for (i = mn.windowStackPos - 1; i >= 0; i--) {
+		menuNode_t *menu = mn.windowStack[i];
 
 		if (menu->u.window.onClose)
 			MN_ExecuteEventActions(menu, menu->u.window.onClose);
 
 		/* safe: unlink window */
 		menu->u.window.parent = NULL;
-		mn.menuStackPos--;
-		mn.menuStack[mn.menuStackPos] = NULL;
+		mn.windowStackPos--;
+		mn.windowStack[mn.windowStackPos] = NULL;
 	}
 }
 
@@ -402,7 +402,7 @@ static void MN_CloseMenuByRef (menuNode_t *menu)
 	/** @todo If the focus is not on the menu we close, we don't need to remove it */
 	MN_ReleaseInput();
 
-	assert(mn.menuStackPos);
+	assert(mn.windowStackPos);
 	i = MN_GetMenuPositionFromStackByName(menu->name);
 	if (i == -1) {
 		Com_Printf("Menu '%s' is not on the active stack\n", menu->name);
@@ -410,8 +410,8 @@ static void MN_CloseMenuByRef (menuNode_t *menu)
 	}
 
 	/* close child */
-	while (i + 1 < mn.menuStackPos) {
-		menuNode_t *m = mn.menuStack[i + 1];
+	while (i + 1 < mn.windowStackPos) {
+		menuNode_t *m = mn.windowStack[i + 1];
 		if (m->u.window.parent != menu) {
 			break;
 		}
@@ -449,31 +449,31 @@ void MN_CloseMenu (const char* name)
  */
 void MN_PopMenu (qboolean all)
 {
-	menuNode_t *oldfirst = mn.menuStack[0];
+	menuNode_t *oldfirst = mn.windowStack[0];
 
 	if (all) {
 		MN_CloseAllMenu();
 	} else {
-		menuNode_t *mainMenu = mn.menuStack[mn.menuStackPos - 1];
-		if (!mn.menuStackPos)
+		menuNode_t *mainMenu = mn.windowStack[mn.windowStackPos - 1];
+		if (!mn.windowStackPos)
 			return;
 		if (mainMenu->u.window.parent)
 			mainMenu = mainMenu->u.window.parent;
 		MN_CloseMenuByRef(mainMenu);
 
-		if (mn.menuStackPos == 0) {
+		if (mn.windowStackPos == 0) {
 			/* mn_main contains the menu that is the very first menu and should be
 			 * pushed back onto the stack (otherwise there would be no menu at all
 			 * right now) */
 			if (!strcmp(oldfirst->name, mn_main->string)) {
 				if (mn_active->string[0] != '\0')
 					MN_PushMenu(mn_active->string, NULL);
-				if (!mn.menuStackPos)
+				if (!mn.windowStackPos)
 					MN_PushMenu(mn_main->string, NULL);
 			} else {
 				if (mn_main->string[0] != '\0')
 					MN_PushMenu(mn_main->string, NULL);
-				if (!mn.menuStackPos)
+				if (!mn.windowStackPos)
 					MN_PushMenu(mn_active->string, NULL);
 			}
 		}
@@ -503,10 +503,10 @@ static void MN_CloseMenu_f (void)
 
 void MN_PopMenuWithEscKey (void)
 {
-	const menuNode_t *menu = mn.menuStack[mn.menuStackPos - 1];
+	const menuNode_t *menu = mn.windowStack[mn.windowStackPos - 1];
 
 	/* nothing if stack is empty */
-	if (mn.menuStackPos == 0)
+	if (mn.windowStackPos == 0)
 		return;
 
 	/* some window can prevent escape */
@@ -537,7 +537,7 @@ static void MN_PopMenu_f (void)
  */
 menuNode_t* MN_GetActiveMenu (void)
 {
-	return (mn.menuStackPos > 0 ? mn.menuStack[mn.menuStackPos - 1] : NULL);
+	return (mn.windowStackPos > 0 ? mn.windowStack[mn.windowStackPos - 1] : NULL);
 }
 
 /**
@@ -564,8 +564,8 @@ qboolean MN_IsPointOnMenu (int x, int y)
 	if (MN_GetMouseCapture() != NULL)
 		return qtrue;
 
-	if (mn.menuStackPos != 0) {
-		if (mn.menuStack[mn.menuStackPos - 1]->u.window.dropdown)
+	if (mn.windowStackPos != 0) {
+		if (mn.windowStack[mn.windowStackPos - 1]->u.window.dropdown)
 			return qtrue;
 	}
 
@@ -591,16 +591,16 @@ qboolean MN_IsPointOnMenu (int x, int y)
 menuNode_t *MN_GetMenu (const char *name)
 {
 	unsigned char min = 0;
-	unsigned char max = mn.numMenus;
+	unsigned char max = mn.numWindows;
 
 	while (min != max) {
 		const int mid = (min + max) >> 1;
-		const char diff = strcmp(mn.menus[mid]->name, name);
+		const char diff = strcmp(mn.windows[mid]->name, name);
 		assert(mid < max);
 		assert(mid >= min);
 
 		if (diff == 0)
-			return mn.menus[mid];
+			return mn.windows[mid];
 
 		if (diff > 0)
 			max = mid;
@@ -617,8 +617,8 @@ menuNode_t *MN_GetMenu (const char *name)
 void MN_InvalidateStack (void)
 {
 	int pos;
-	for (pos = 0; pos < mn.menuStackPos; pos++) {
-		MN_Invalidate(mn.menuStack[pos]);
+	for (pos = 0; pos < mn.windowStackPos; pos++) {
+		MN_Invalidate(mn.windowStack[pos]);
 	}
 }
 
@@ -640,23 +640,23 @@ void MN_InsertMenu(menuNode_t* menu)
 	int pos = 0;
 	int i;
 
-	if (mn.numMenus + 1 > MAX_MENUS)
+	if (mn.numWindows + 1 > MAX_MENUS)
 		Com_Error(ERR_FATAL, "MN_InsertMenu: hit MAX_MENUS");
 
 	/* search the insertion position */
-	for (pos = 0; pos < mn.numMenus; pos++) {
-		const menuNode_t* node = mn.menus[pos];
+	for (pos = 0; pos < mn.numWindows; pos++) {
+		const menuNode_t* node = mn.windows[pos];
 		if (strcmp(menu->name, node->name) < 0)
 			break;
 	}
 
 	/* create the space */
-	for (i = mn.numMenus - 1; i >= pos; i--)
-		mn.menus[i + 1] = mn.menus[i];
+	for (i = mn.numWindows - 1; i >= pos; i--)
+		mn.windows[i + 1] = mn.windows[i];
 
 	/* insert */
-	mn.menus[pos] = menu;
-	mn.numMenus++;
+	mn.windows[pos] = menu;
+	mn.numWindows++;
 }
 
 /**

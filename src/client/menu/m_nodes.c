@@ -311,13 +311,16 @@ menuNode_t* MN_GetNodeByPath (const char* path)
  */
 menuNode_t* MN_AllocNode (const char* type)
 {
-	menuNode_t* node = &mn.menuNodes[mn.numNodes++];
+	menuNode_t* node = &mn.nodes[mn.numNodes++];
 	if (mn.numNodes >= MAX_MENUNODES)
 		Com_Error(ERR_FATAL, "MN_AllocNode: MAX_MENUNODES hit");
 	memset(node, 0, sizeof(*node));
 	node->behaviour = MN_GetNodeBehaviour(type);
 	if (node->behaviour == NULL)
 		Com_Error(ERR_FATAL, "MN_AllocNode: Node behaviour '%s' doesn't exist", type);
+#if DEBUG
+	node->behaviour->count++;
+#endif
 	if (node->behaviour->isAbstract)
 		Com_Error(ERR_FATAL, "MN_AllocNode: We can't allocate the abstract node behaviour '%s'", type);
 	return node;
@@ -383,8 +386,8 @@ menuNode_t *MN_GetNodeAtPosition (int x, int y)
 	int pos;
 
 	/* find the first menu under the mouse */
-	for (pos = mn.menuStackPos - 1; pos >= 0; pos--) {
-		menuNode_t *menu = mn.menuStack[pos];
+	for (pos = mn.windowStackPos - 1; pos >= 0; pos--) {
+		menuNode_t *menu = mn.windowStack[pos];
 		menuNode_t *find;
 
 		/* update the layout */
@@ -433,6 +436,16 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 	}
 
 	return NULL;
+}
+
+nodeBehaviour_t* MN_GetNodeBehaviourByIndex(int index)
+{
+	return &nodeBehaviourList[index];
+}
+
+int MN_GetNodeBehaviourCount(void)
+{
+	return NUMBER_OF_BEHAVIOURS;
 }
 
 /**
@@ -493,6 +506,7 @@ static const int virtualFunctions[] = {
 	offsetof(nodeBehaviour_t, dndFinished),
 	offsetof(nodeBehaviour_t, focusGained),
 	offsetof(nodeBehaviour_t, focusLost),
+	offsetof(nodeBehaviour_t, extraDataSize),
 	-1
 };
 

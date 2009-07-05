@@ -262,7 +262,7 @@ menuOption_t* MN_AllocOption (int count)
 	if (mn.numOptions + count >= MAX_MENUOPTIONS)
 		Com_Error(ERR_FATAL, "MN_AllocOption: numOptions exceeded - increase MAX_MENUOPTIONS");
 
-	newOptions = &mn.menuOptions[mn.numOptions];
+	newOptions = &mn.options[mn.numOptions];
 	mn.numOptions += count;
 	return newOptions;
 }

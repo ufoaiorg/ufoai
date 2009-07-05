@@ -395,8 +395,8 @@ static void MN_LeftClick (int x, int y)
 	/* if we click out side a dropdown menu, we close it */
 	/** @todo need to refactoring it with a the focus code (cleaner) */
 	/** @todo at least should be moved on the mouse down event (when the focus should change) */
-	if (!hoveredNode && mn.menuStackPos != 0) {
-		if (mn.menuStack[mn.menuStackPos - 1]->u.window.dropdown) {
+	if (!hoveredNode && mn.windowStackPos != 0) {
+		if (mn.windowStack[mn.windowStackPos - 1]->u.window.dropdown) {
 			MN_PopMenu(qfalse);
 		}
 	}

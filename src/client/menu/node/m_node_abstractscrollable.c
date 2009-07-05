@@ -146,4 +146,5 @@ void MN_RegisterAbstractScrollableNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "abstractscrollable";
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(abstractScrollableExtraData_t);
 }

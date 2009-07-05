@@ -102,7 +102,7 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 	}
 
 	/* darker background if last window is a modal */
-	if (node->u.window.modal && mn.menuStack[mn.menuStackPos - 1] == node)
+	if (node->u.window.modal && mn.windowStack[mn.windowStackPos - 1] == node)
 		MN_DrawFill(0, 0, viddef.virtualWidth, viddef.virtualHeight, modalBackground);
 
 	/* draw the background */
@@ -333,4 +333,5 @@ void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_WindowNodeDraw;
 	behaviour->doLayout = MN_WindowNodeDoLayout;
 	behaviour->properties = windowNodeProperties;
+	behaviour->extraDataSize = sizeof(windowExtraData_t);
 }

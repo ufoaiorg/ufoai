@@ -564,4 +564,5 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	behaviour->loading = MN_TextNodeLoading;
 	behaviour->loaded = MN_TextNodeLoaded;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(textExtraData_t);
 }
