@@ -1,1 +1,2 @@
-application/x-ufomap; viewer=uforadiant; test=/usr/bin/test -n "$DISPLAY"; description=UFORadiant; nametemplate=%s.map; priority=6
+application/x-ufomap; viewer=uforadiant; test=/usr/bin/test -n "$DISPLAY"; description=UFO: Alien Invasion Map Source; nametemplate=%s.map; priority=6
+application/x-uforandommap; viewer=gedit; test=/usr/bin/test -n "$DISPLAY"; description=UFO: Alien Invasion Random Map Assembly; nametemplate=%s.ump; priority=6
