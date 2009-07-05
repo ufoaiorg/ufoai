@@ -61,7 +61,7 @@ all: all2
 
 ALL_DEPS = $(patsubst %.o, %.d, $(ALL_OBJS) $(ALL_RADIANT_OBJS))
 
-all2: Makefile $(TARGETS) echo_info
+all2: Makefile $(BUILDDIR)/.dirs $(TARGETS) echo_info
 
 # check that the makefile is up to date
 Makefile: Makefile.in
@@ -182,5 +182,5 @@ install_exec: $(TARGETS)
 
 -include $(ALL_DEPS)
 
-.PHONY: all all2 clean echo_info $(BUILDDIR)/.dirs
+.PHONY: all all2 clean echo_info
 
