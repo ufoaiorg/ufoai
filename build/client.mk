@@ -317,23 +317,23 @@ ifeq ($(BUILD_CLIENT),1)
 endif
 
 # Say how to link the exe
-$(CLIENT_TARGET): $(CLIENT_OBJS) $(BUILDDIR)/.dirs
+$(CLIENT_TARGET): $(CLIENT_OBJS)
 	@echo " * [UFO] ... linking $(LNKFLAGS) ($(CLIENT_LIBS) $(SDL_LIBS))"; \
 		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LNKFLAGS) $(CLIENT_LIBS) $(SDL_LIBS)
 
 # Say how to build .o files from .c files for this module
-$(BUILDDIR)/client/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
+$(BUILDDIR)/client/%.o: $(SRCDIR)/%.c
 	@echo " * [UFO] $<"; \
 		$(CC) $(CFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 # Say how to build .o files from .m files for this module
-$(BUILDDIR)/client/%.o: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
+$(BUILDDIR)/client/%.o: $(SRCDIR)/%.m
 	@echo " * [UFO] $<"; \
 		$(CC) $(CFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module
-$(BUILDDIR)/client/%.o: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
+$(BUILDDIR)/client/%.o: $(SRCDIR)/%.rc
 	@echo " * [RC ] $<"; \
 		$(WINDRES) -DCROSSBUILD -i $< -o $@
 endif

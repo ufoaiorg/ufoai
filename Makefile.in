@@ -182,5 +182,5 @@ install_exec: $(TARGETS)
 
 -include $(ALL_DEPS)
 
-.PHONY: all all2 clean echo_info
+.PHONY: all all2 clean echo_info $(BUILDDIR)/.dirs
 

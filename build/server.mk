@@ -86,23 +86,23 @@ ifeq ($(BUILD_DEDICATED),1)
 endif
 
 # Say how to link the exe
-$(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
+$(SERVER_TARGET): $(SERVER_OBJS)
 	@echo " * [DED] ... linking $(LNKFLAGS) ($(SERVER_LIBS))"; \
 		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) $(SERVER_LIBS) $(SDL_LIBS)
 
 # Say how to build .o files from .c files for this module
-$(BUILDDIR)/server/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
+$(BUILDDIR)/server/%.o: $(SRCDIR)/%.c
 	@echo " * [DED] $<"; \
 		$(CC) $(CFLAGS) $(DEDICATED_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module
-$(BUILDDIR)/server/%.o: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
+$(BUILDDIR)/server/%.o: $(SRCDIR)/%.rc
 	@echo " * [RC ] $<"; \
 		$(WINDRES) -DCROSSBUILD -i $< -o $@
 endif
 
 # Say how to build .o files from .m files for this module
-$(BUILDDIR)/server/%.o: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
+$(BUILDDIR)/server/%.o: $(SRCDIR)/%.m
 	@echo " * [DED] $<"; \
 		$(CC) $(CFLAGS) $(DEDICATED_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)

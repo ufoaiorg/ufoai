@@ -65,13 +65,13 @@ ifeq ($(BUILD_UFO2MAP),1)
 endif
 
 # Say how to link the exe
-$(UFO2MAP_TARGET): $(UFO2MAP_OBJS) $(BUILDDIR)/.dirs
+$(UFO2MAP_TARGET): $(UFO2MAP_OBJS)
 	@echo " * [MAP] ... linking $(LNKFLAGS) ($(TOOLS_LIBS) $(SDL_LIBS))"; \
 		$(CC) $(LDFLAGS) -o $@ $(UFO2MAP_OBJS) $(TOOLS_LIBS) $(SDL_LIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 # -ffloat-store option to ensure that maps are the same on every plattform
 # store the float values in buffers, not in cpu registers, maybe slower
-$(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
+$(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c
 	@echo " * [MAP] $<"; \
 		$(CC) $(CFLAGS) $(UFO2MAP_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
