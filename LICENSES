@@ -703,8 +703,11 @@ base/models/geoscape/ufoyard.md2 | GNU General Public License 2.0 or later | Wil
 base/models/geoscape/ufoyard.tga | GNU General Public License 2.0 or later | TimberDragon
 base/models/objects/abrams/abrams.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams.tga | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_bottom.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_bump.tga | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_gun.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_spec.tga | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_turret.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/aircraft/airplane/airplane_1.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/aircraft/airplane/airplane_2.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/aircraft/airplane/airplane_b.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
