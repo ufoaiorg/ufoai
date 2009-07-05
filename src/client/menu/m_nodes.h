@@ -45,6 +45,7 @@ struct value_s;
 #include "node/m_node_text.h"
 #include "node/m_node_textentry.h"
 #include "node/m_node_window.h"
+#include "node/m_node_zone.h"
 
 /* exclude rect */
 #define MAX_EXLUDERECTS	64
@@ -134,10 +135,6 @@ typedef struct menuNode_s {
 	/** @todo remove it  from 'string node', need to full implement MN_DrawStringInBox */
 	byte longlines;				/**< what to do with long lines */
 
-	/* zone */
-	qboolean repeat;			/**< repeat action when "click" is held */
-	int clickDelay;				/**< for nodes that have repeat set, this is the delay for the next click */
-
 	/** union will contain all extradata for a node */
 	union {
 		abstractValueExtraData_t abstractvalue;
@@ -152,6 +149,7 @@ typedef struct menuNode_s {
 		textEntryExtraData_t textentry;
 		textExtraData_t text;
 		windowExtraData_t window;
+		zoneExtraData_t zone;
 	} u;
 
 } menuNode_t;

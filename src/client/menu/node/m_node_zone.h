@@ -25,8 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_ZONE_H
 #define CLIENT_MENU_M_NODE_ZONE_H
 
-#include "../m_nodes.h"
+typedef struct {
+	qboolean repeat;			/**< repeat action when "click" is held */
+	int clickDelay;				/**< delay for the next "click" */
+} zoneExtraData_t;
 
-void MN_RegisterZoneNode(nodeBehaviour_t *behaviour);
+struct nodeBehaviour_s;
+
+void MN_RegisterZoneNode(struct nodeBehaviour_s *behaviour);
 
 #endif

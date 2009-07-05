@@ -43,18 +43,18 @@ static void MN_ZoneNodeRepeat (menuNode_t *node, menuTimer_t *timer)
 
 static void MN_ZoneNodeDown (menuNode_t *node, int x, int y, int button)
 {
-	if (!node->repeat)
+	if (!node->u.zone.repeat)
 		return;
 	if (button == K_MOUSE1) {
 		MN_SetMouseCapture(node);
-		capturedTimer = MN_AllocTimer(node, node->clickDelay, MN_ZoneNodeRepeat);
+		capturedTimer = MN_AllocTimer(node, node->u.zone.clickDelay, MN_ZoneNodeRepeat);
 		MN_TimerStart(capturedTimer);
 	}
 }
 
 static void MN_ZoneNodeUp (menuNode_t *node, int x, int y, int button)
 {
-	if (!node->repeat)
+	if (!node->u.zone.repeat)
 		return;
 	if (button == K_MOUSE1) {
 		MN_MouseRelease();
@@ -78,7 +78,7 @@ static void MN_ZoneNodeCapturedMouseLost (menuNode_t *node)
  */
 static void MN_ZoneNodeLoading (menuNode_t *node)
 {
-	node->clickDelay = 1000;
+	node->u.zone.clickDelay = 1000;
 }
 
 /**
@@ -96,8 +96,8 @@ static void MN_ZoneNodeLoaded (menuNode_t *node)
 }
 
 static const value_t properties[] = {
-	{"repeat", V_BOOL, offsetof(menuNode_t, repeat), MEMBER_SIZEOF(menuNode_t, repeat)},
-	{"clickdelay", V_INT, offsetof(menuNode_t, clickDelay), MEMBER_SIZEOF(menuNode_t, clickDelay)},
+	{"repeat", V_BOOL, offsetof(menuNode_t, u.zone.repeat), MEMBER_SIZEOF(menuNode_t, u.zone.repeat)},
+	{"clickdelay", V_INT, offsetof(menuNode_t, u.zone.clickDelay), MEMBER_SIZEOF(menuNode_t, u.zone.clickDelay)},
 	/** @todo delete it went its possible */
 	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
 	{NULL, V_NULL, 0, 0}
@@ -112,4 +112,5 @@ void MN_RegisterZoneNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseUp = MN_ZoneNodeUp;
 	behaviour->capturedMouseLost = MN_ZoneNodeCapturedMouseLost;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(zoneExtraData_t);
 }
