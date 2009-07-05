@@ -461,8 +461,6 @@ int SV_PointContents (vec3_t p)
 {
 	/* clip to world - 0x1FF = all levels */
 	trace_t trace = TR_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, 0x1FF, MASK_ALL, 0);
-	/** @todo There is more than one world in case of a map assembly */
-	trace.ent = ge->edicts; /* g_edicts[0] is the world */
 	if (trace.fraction == 0)
 		return trace.contentFlags;		/* blocked by the world */
 	return 0;
