@@ -47,7 +47,7 @@ window basedefence
 			if ( *cvar:mn_bdef_type ne "info" ) {
 				*infopanel@invis = true
 				*equippanel@invis = false
-				cmd "bdef_type <cvar:mn_bdef_type>;"
+				cmd "basedef_updatemenu <cvar:mn_bdef_type>;"
 			} else {
 				*infopanel@invis = false
 				*equippanel@invis = true
