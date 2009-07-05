@@ -411,9 +411,13 @@ static void R_DrawBlendMeshEntities (entity_t *ents)
 	if (!ents)
 		return;
 
+	if (!(refdef.rdflags & RDF_NOWORLDMODEL))
+		R_EnableLighting(r_state.mesh_program, qtrue);
 	R_EnableBlend(qtrue);
 	R_DrawMeshEntities(ents);
 	R_EnableBlend(qfalse);
+	if (!(refdef.rdflags & RDF_NOWORLDMODEL))
+		R_EnableLighting(NULL, qfalse);
 }
 
 /**
