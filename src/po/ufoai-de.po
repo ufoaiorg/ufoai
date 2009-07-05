@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-24 21:24+0200\n"
-"PO-Revision-Date: 2009-06-25 08:03+0100\n"
+"PO-Revision-Date: 2009-07-05 11:02+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -8732,14 +8732,12 @@ msgid "Equip Defence Weapons"
 msgstr "Rüste Verteidigungsgeschütze aus"
 
 #: ../base/ufos/ui/basedefence.ufo:50
-#, fuzzy
 msgid "Missile Defences"
-msgstr "Rakete"
+msgstr "Raketenabwehr"
 
 #: ../base/ufos/ui/basedefence.ufo:54
-#, fuzzy
 msgid "Laser Defences"
-msgstr "Lasergewehr"
+msgstr "Laserabwehr"
 
 #: ../base/ufos/ui/basedefence.ufo:89
 msgid "Weapon slots"
@@ -8758,14 +8756,12 @@ msgid "Remove"
 msgstr "Entfernen"
 
 #: ../base/ufos/ui/basedefence.ufo:153
-#, fuzzy
 msgid "Remove weapon from the selected slot"
-msgstr "Markiertes Team laden"
+msgstr "Waffe aus dem gewählten Slot entfernen"
 
 #: ../base/ufos/ui/basedefence.ufo:170
-#, fuzzy
 msgid "Stores"
-msgstr "Lager"
+msgstr "Im Lager"
 
 #: ../base/ufos/ui/basedefence.ufo:226
 msgid "Selected Item"
@@ -9452,14 +9448,12 @@ msgid "Anti-UFO defence"
 msgstr "UFO-Abwehr"
 
 #: ../base/ufos/ui/geoscape.ufo:1650
-#, fuzzy
 msgid "Aircraft interception"
-msgstr "Abfangen"
+msgstr "Flugzeug abfangen"
 
 #: ../base/ufos/ui/geoscape.ufo:1655
-#, fuzzy
 msgid "SAM defence"
-msgstr "Gewählte Verteidigung:"
+msgstr "Boden-Luft Verteidigung"
 
 #: ../base/ufos/ui/geoscape.ufo:1670
 msgid "Aircraft:"
@@ -9626,7 +9620,6 @@ msgid "Geoscape options"
 msgstr "Geoscape Optionen"
 
 #: ../base/ufos/ui/geoscape.ufo:2858
-#, fuzzy
 msgid "Geoscape projection mode:"
 msgstr "Geoscape Darstellung:"
 
@@ -10857,9 +10850,8 @@ msgid "Nations"
 msgstr "Nationen"
 
 #: ../base/ufos/ui/stats.ufo:140
-#, fuzzy
 msgid "Click for funding graphs"
-msgstr "Autopsie durch Klick starten"
+msgstr "Klicken für die Finanzierungsgraphen"
 
 #: ../base/ufos/ui/stats.ufo:203
 msgid "Nation Statistics"
@@ -12495,9 +12487,8 @@ msgstr "Slot %i:\tleer"
 #: client/campaign/cp_fightequip_callbacks.c:956
 #: client/campaign/cp_fightequip_callbacks.c:984
 #: client/campaign/cp_fightequip_callbacks.c:1012
-#, fuzzy
 msgid "Working"
-msgstr "Arbeitet: 50%"
+msgstr "Arbeitet"
 
 #: client/campaign/cp_fightequip_callbacks.c:958
 #: client/campaign/cp_fightequip_callbacks.c:986
@@ -14966,14 +14957,12 @@ msgid "Select a soldier from list"
 msgstr "Einen Soldaten aus der Liste auswählen"
 
 #: client/cl_team.c:695
-#, fuzzy
 msgid "Reselect the current soldier"
 msgstr "Den ausgewählten Soldaten zentrieren"
 
 #: client/cl_team.c:696
-#, fuzzy
 msgid "Update a soldier"
-msgstr "Soldat umbenennen"
+msgstr "Variablen für Soldaten erneuern"
 
 #: client/cl_team.c:697
 msgid "Update the GUI with the selected item"
