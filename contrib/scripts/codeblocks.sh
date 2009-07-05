@@ -378,7 +378,7 @@ if [ "$ACTION" == "create" ]; then
 elif [ "$ACTION" == "download" ]; then
 	download
 elif [ "$ACTION" == "help" ]; then
-	echo "Valid parameters are: help, create and clean"
+	echo "Valid parameters are:"
 	echo " - create   : creates the ${ARCHIVE_NAME} with the latest versions"
 	echo "              of the needed programs and libs"
 	echo " - download : only performs the downloading"
