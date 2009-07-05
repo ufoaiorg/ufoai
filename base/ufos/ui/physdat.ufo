@@ -156,8 +156,6 @@ window hudphysdat extends physdata
 {
 	zone bt_physdata
 	{
-		image		hud/buttons1
-		mousefx		true
 		pos			"983 266"
 		size		"36 75"
 		onClick		{ cmd "mn_pop;" }
@@ -165,8 +163,6 @@ window hudphysdat extends physdata
 
 	zone bt_inventory
 	{
-		image		hud/buttons1
-		mousefx		true
 		pos			"983 376"
 		size		"36 75"
 		onClick		{ cmd "mn_pop;" }
