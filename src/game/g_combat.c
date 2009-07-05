@@ -903,7 +903,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		/* set flags when trace hit something */
 		if (tr.fraction < 1.0) {
 			if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2)
-				/* check if we differenciate between body and wall */
+				/* check if we differentiate between body and wall */
 				&& !fd->delay)
 				flags |= SF_BODY;
 			else if (bounce < fd->bounce)
@@ -1107,7 +1107,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
  * @param[in] firemode The firemode index of the ammo for the used weapon.
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] allowReaction Set to qtrue to check whether this has forced any reaction fire, otherwise qfalse.
- * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
+ * @return qtrue if everything went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  * @param[in] z_align This value may change the target z height
  */
 qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shootType,
