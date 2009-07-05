@@ -66,7 +66,7 @@ window unittest_event
 		selectcolor "1 1 1 1"
 		string "Stop"
 		onClick {
-			*node:root@timeout 0	
+			*node:root@timeout 0
 		}
 	}
 

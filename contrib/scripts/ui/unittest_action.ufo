@@ -184,7 +184,7 @@ window unittest_action
 		if ( *cvar:test == 2 ) { *testCommon4@color "0 1 0 1" }
 		else { *testCommon4@color "1 0 0 1" }
 	}
-	
+
 	confunc testActionEvent {
 		if ( *cvar:test == 4 ) { *testCommon5@color "0 1 0 1" }
 		else { *testCommon5@color "1 0 0 1" }
@@ -197,7 +197,7 @@ window unittest_action
 	func testCommon {
 
 		// func
-		
+
 		call set0
 		if ( *cvar:test == 0 ) { *testCommon1@color "0 1 0 1" }
 		else { *testCommon1@color "1 0 0 1" }
@@ -206,7 +206,7 @@ window unittest_action
 		else { *testCommon2@color "1 0 0 1" }
 
 		// confunc
-		
+
 		*cvar:test = 0
 		cmd "unittest_action_inject 2"
 		if ( *cvar:test == 0 ) { *testCommon3@color "0 1 0 1" }
@@ -214,7 +214,7 @@ window unittest_action
 		cmd "testActionInjection"
 
 		// node event
-		
+
 		*testCommon5@color "1 0 0 1"
 		cmd "mn_push unittest_action_eventtest"
 		cmd "testActionEvent"
@@ -225,14 +225,14 @@ window unittest_action
 		call testFoo@onClick
 		*node:root.testFoo@onClick = { *testCommon7@color "0 1 0 1" }
 		call testFoo@onClick
-		
+
 		*cvar:test = 1
 		while ( *cvar:test == 1 ) {
 			if ( *cvar:test == 1 ) { *testCommon8@color "0 1 0 1" }
 			else { *testCommon8@color "1 0 0 1" }
 			*cvar:test = 0
 		}
-		
+
 		*cvar:test = 0
 		while ( *cvar:test < 3 ) {
 			// we dont use expression, to have no problem with it
@@ -270,11 +270,11 @@ window unittest_action
 		// no listener
 		cmd "mn_addlistener <path:root>.sender2@onClick <path:root>.listener2"
 		cmd "mn_removelistener <path:root>.sender2@onClick <path:root>.listener2"
-		
+
 		// two listener
 		cmd "mn_addlistener <path:root>.sender3@onClick <path:root>.listener3-1"
 		cmd "mn_addlistener <path:root>.sender3@onClick <path:root>.listener3-2"
-		
+
 		// one listener
 		cmd "mn_addlistener <path:root>.sender4@onClick <path:root>.listener4-1"
 		cmd "mn_addlistener <path:root>.sender4@onClick <path:root>.listener4-2"
@@ -284,14 +284,14 @@ window unittest_action
 	confunc testListenerTest {
 		// one listener
 		call sender1@onClick
-		
+
 		// no listener
 		*testListener4@color "0 1 0 1"
 		call sender2@onClick
-		
+
 		// two listener
 		call sender3@onClick
-		
+
 		// one listener
 		*testListener9@color "0 1 0 1"
 		call sender4@onClick
@@ -303,13 +303,13 @@ window unittest_action
 	confunc testListenerTearDown {
 		// one listener
 		cmd "mn_removelistener <path:root>.sender1@onClick <path:root>.listener1"
-		
+
 		// no listener
-		
+
 		// two listener
 		cmd "mn_removelistener <path:root>.sender3@onClick <path:root>.listener3-1"
 		cmd "mn_removelistener <path:root>.sender3@onClick <path:root>.listener3-2"
-		
+
 		// one listener
 		cmd "mn_removelistener <path:root>.sender4@onClick <path:root>.listener4-2"
 	}
@@ -326,21 +326,21 @@ window unittest_action
 
 	func testLack {
 		// @todo
-		
+
 		// 1) use mixture of anonymous setter and listener should not work
 		// (can be a right behaviour)
-		
+
 		// 1-1) add a listener can change an already set anonymous function
 		*testLack1@color "1 0 0 1"
 
 		// 1-2) set an anonymous function will remove an existing listener
 		*testLack2@color "1 0 0 1"
-		
+
 		// 2) listener into an inherited event should also change the super event
 		// (wrong behaviour)
 		*testLack3@color "1 0 0 1"
 	}
-	
+
 	//
 	// Main
 	//
