@@ -1918,19 +1918,23 @@ base/pics/icons/un.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/loading.tga | GNU General Public License 2.0
 base/pics/maps/loading/README | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/africa.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/bomber_city.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/bridge.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/bunker.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/city_disco.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/city_train.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/construction.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/corrupter_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/dam.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/default.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/druglord.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/eaglenest.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/england.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/estate.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/excavation.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/farm.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/fighter_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/frozen.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/fueldump.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/gasstation.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/harbour.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -1954,11 +1958,15 @@ base/pics/maps/loading/stadium.jpg | GNU General Public License 2.0 or later | M
 base/pics/maps/loading/subway.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/tower.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/transport.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/tropic.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/village.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/README | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/africa.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/africa_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/africa_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/bomber_city.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/bomber_city_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/bomber_city_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/bridge.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bridge_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bridge_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -1968,12 +1976,21 @@ base/pics/maps/shots/bunker_3.jpg | GNU General Public License 2.0 or later | Ma
 base/pics/maps/shots/city_disco.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/city_disco_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/city_disco_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/city_train.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/city_train_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/city_train_3.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/community_centre.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/community_centre_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/community_centre_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/construction.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/construction_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/construction_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/corrupter_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/corrupter_crash_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/corrupter_crash_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/country.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/country_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/country_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/dam.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/dam_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/dam_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -1983,6 +2000,10 @@ base/pics/maps/shots/druglord_2.jpg | GNU General Public License 2.0 or later | 
 base/pics/maps/shots/druglord_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/eaglenest.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/eaglenest_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/eaglenest_3.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/england.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/england_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/england_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/estate.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/estate_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/estate_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -1992,9 +2013,18 @@ base/pics/maps/shots/excavation_3.jpg | GNU General Public License 2.0 or later 
 base/pics/maps/shots/farm.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/farm_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/farm_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/ferry.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/ferry_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/ferry_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/fighter_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/fighter_crash_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/fighter_crash_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/forest.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/forest_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/forest_3.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/frozen.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/frozen_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/frozen_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/fueldump.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/fueldump_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/fueldump_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2016,6 +2046,9 @@ base/pics/maps/shots/italy_3.jpg | GNU General Public License 2.0 or later | Mar
 base/pics/maps/shots/japan.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/japan_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/japan_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/laboratory.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/laboratory_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/laboratory_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/lake_ice.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/lake_ice_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/lake_ice_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2026,6 +2059,8 @@ base/pics/maps/shots/mart.jpg | GNU General Public License 2.0 or later | Martin
 base/pics/maps/shots/mart_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/mart_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/military_convoy.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/military_convoy_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/military_convoy_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/mine.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/mine_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/mine_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2047,6 +2082,9 @@ base/pics/maps/shots/rivertown_3.jpg | GNU General Public License 2.0 or later |
 base/pics/maps/shots/scout_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/scout_crash_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/scout_crash_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/shelter.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/shelter_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/shelter_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/spedition.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/spedition_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/spedition_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2062,9 +2100,15 @@ base/pics/maps/shots/tower_3.jpg | GNU General Public License 2.0 or later | Mar
 base/pics/maps/shots/transport.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/transport_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/transport_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/tropic.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/tropic_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/tropic_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/village.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/wilderness.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/wilderness_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/wilderness_3.jpg | GNU General Public License 2.0 or later
 base/pics/nations/africa.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/nations/africa2.png | GNU General Public License 2.0 | UlteriorMotives
 base/pics/nations/asia.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -2083,6 +2127,119 @@ base/pics/nations/states.png | GNU General Public License 2.0 | John W. Bjerk (e
 base/pics/nations/states2.png | GNU General Public License 2.0 | UlteriorMotives
 base/pics/phalanx_badge.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/phalanx_badge_big.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/radars/estate_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/estate_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/estate_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/estate_4.tga | GNU General Public License 2.0 or later
+base/pics/radars/estate_5.tga | GNU General Public License 2.0 or later
+base/pics/radars/estate_6.tga | GNU General Public License 2.0 or later
+base/pics/radars/estate_7.tga | GNU General Public License 2.0 or later
+base/pics/radars/farm_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/farm_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/farm_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_a1_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_a1_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_a1_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_a2_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_a2_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_a2_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_craft_crash_scout_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_craft_crash_scout_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_craft_crash_scout_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_craft_ufo_scout_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_craft_ufo_scout_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_craft_ufo_scout_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_drop_firebird_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_drop_firebird_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f10_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f10_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f10_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f10_4.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f1_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f1_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f1_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f2_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f3_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f3_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f3_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f4_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f4_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f4_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f5_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f5_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f5_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f6_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f6_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f6_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f7_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f7_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f7_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f8_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f8_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f8_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f9_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f9_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_f9_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_h1_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_h1_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_h1_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w1_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w2_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w3_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w4_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w5_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w5_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w5_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w6_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w6_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w6_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w7_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w7_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w7_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w8_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w8_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/forest/fr_w8_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_craft_ufo_fighter_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_craft_ufo_fighter_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_drop_firebird_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_drop_firebird_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_h01_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_h01_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_h02_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_h02_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_h03_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_h04_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_h04_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_h05_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_h05_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i01_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i01_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i01_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i01_4.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i02_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i02_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i02_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i03_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i03_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i04_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i04_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i04_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i05_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i05_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i06_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i07_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_i07_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_mp_t2_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_mp_t2_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_n01_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_n02_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_n03_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_n04_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/frozen/st_n05_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/industrial_1.tga | GNU General Public License 2.0 or later
+base/pics/radars/industrial_2.tga | GNU General Public License 2.0 or later
+base/pics/radars/industrial_3.tga | GNU General Public License 2.0 or later
+base/pics/radars/industrial_4.tga | GNU General Public License 2.0 or later
 base/pics/ranks/rank_01.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/ranks/rank_02.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/ranks/rank_03.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
