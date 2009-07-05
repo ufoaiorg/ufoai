@@ -1635,6 +1635,10 @@ void MAP_DrawMap (const menuNode_t* node)
 	MN_GetNodeAbsPos(node, pos);
 	Vector2Copy(pos, ccs.mapPos);
 	Vector2Copy(node->size, ccs.mapSize);
+	if (cl_3dmap->integer) {
+		/* remove the left padding */
+		ccs.mapSize[0] -= node->extraData1;
+	}
 
 	/* Draw the map and markers */
 	if (cl_3dmap->integer) {

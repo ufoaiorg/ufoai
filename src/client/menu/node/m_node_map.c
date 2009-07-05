@@ -203,9 +203,16 @@ static void MN_MapNodeLoading (menuNode_t *node)
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
 
+
+static const value_t properties[] = {
+	{"padding-right", V_FLOAT, offsetof(menuNode_t, extraData1), MEMBER_SIZEOF(menuNode_t, extraData1)},
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterMapNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "map";
+	behaviour->properties = properties;
 	behaviour->draw = MN_MapNodeDraw;
 	behaviour->leftClick = MAP_MapClick;
 	behaviour->mouseDown = MN_MapNodeMouseDown;

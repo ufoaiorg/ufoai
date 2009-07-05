@@ -14,10 +14,11 @@ window geoscape
 
 	map themap
 	{
-		pos			"0 0"
-		size		"1024 768"
+		pos				"0 0"
+		size			"1024 768"
 		onRClick		{ cmd "mn_mapaction_reset;" }
-		num			10
+		num				10
+		padding-right	256
 	}
 
 	text messagesystem
