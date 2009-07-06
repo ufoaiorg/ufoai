@@ -51,6 +51,10 @@ AC_ARG_WITH(curses,
 	[AS_HELP_STRING([--with-curses], [compile with curses console support @<:@default=check@:>@])],
 	[], [with_curses=check])
 
+AC_ARG_WITH(msys,
+	[AS_HELP_STRING([--with-msys], [compile with msys support @<:@default=no@:>@])],
+	[], [with_msys=no])
+
 AC_ARG_WITH(opengl_framework,
 	[AS_HELP_STRING([--with-opengl-framework], [compile with given opengl framework @<:@default=/System/Library/Frameworks/OpenGL.framework@:>@])],
 	[], [with_opengl_framework=/System/Library/Frameworks/OpenGL.framework])
@@ -578,14 +582,6 @@ then
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL mixer headers and libraries
 	#---------------------------------------------------------------------------------------------
-	# multiple main functions error for SDL_mixer and SDL_ttf otherwise
-	# problem might be that -L<SDL_dir> might be missing then
-	# (no issue at mac)
-	if test $TARGET_OS != "darwin"
-	then
-		LDFLAGS=$OLD_LDFLAGS
-	fi
-
 	AC_CHECK_HEADERS([SDL_mixer.h])
 	if test "$ac_cv_header_SDL_mixer_h" != "yes"
 	then
@@ -707,6 +703,19 @@ then
 	fi
 else
 	AC_MSG_NOTICE([Without curses])
+fi
+SERVER_LIBS="$SERVER_LIBS $LIBS"
+
+#---------------------------------------------------------------------------------------------
+# Check for msys
+#---------------------------------------------------------------------------------------------
+
+LIBS=
+if test "$with_msys" = "yes"
+then
+	AC_SUBST([MSYS],1)
+	AC_DEFINE([MSYS],[1],[Use msys])
+	AC_MSG_NOTICE([With msys])
 fi
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 
