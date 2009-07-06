@@ -52,8 +52,8 @@ AC_ARG_WITH(curses,
 	[], [with_curses=check])
 
 AC_ARG_WITH(msys,
-	[AS_HELP_STRING([--with-msys], [compile with msys support @<:@default=no@:>@])],
-	[], [with_msys=no])
+	[AS_HELP_STRING([--with-msys], [compile with msys support @<:@default=check@:>@])],
+	[], [with_msys=check])
 
 AC_ARG_WITH(opengl_framework,
 	[AS_HELP_STRING([--with-opengl-framework], [compile with given opengl framework @<:@default=/System/Library/Frameworks/OpenGL.framework@:>@])],
@@ -717,7 +717,19 @@ then
 	AC_DEFINE([MSYS],[1],[Use msys])
 	AC_MSG_NOTICE([With msys])
 fi
-SERVER_LIBS="$SERVER_LIBS $LIBS"
+if test "$with_msys" = "check"
+then
+	case "$MACHTYPE" in
+		*msys)
+			AC_SUBST([MSYS],1)
+			AC_DEFINE([MSYS],[1],[Use msys])
+			AC_MSG_NOTICE([With msys])
+			;;
+		*)
+			AC_MSG_NOTICE([Without msys])
+			;;
+	esac
+fi
 
 #---------------------------------------------------------------------------------------------
 # Check for radiant

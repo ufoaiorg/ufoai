@@ -1420,7 +1420,7 @@ Optional Packages:
   --with-curl-config=FILE using the given curl-config [default=curl-config]
   --with-xml2-config=FILE using the given xml2-config [default=xml2-config]
   --with-curses           compile with curses console support [default=check]
-  --with-msys             compile with msys support [default=no]
+  --with-msys             compile with msys support [default=check]
   --with-opengl-framework compile with given opengl framework
                           [default=/System/Library/Frameworks/OpenGL.framework]
 
@@ -2134,7 +2134,7 @@ fi
 if test "${with_msys+set}" = set; then
   withval=$with_msys;
 else
-  with_msys=no
+  with_msys=check
 fi
 
 
@@ -11940,7 +11940,26 @@ _ACEOF
 	{ $as_echo "$as_me:$LINENO: With msys" >&5
 $as_echo "$as_me: With msys" >&6;}
 fi
-SERVER_LIBS="$SERVER_LIBS $LIBS"
+if test "$with_msys" = "check"
+then
+	case "$MACHTYPE" in
+		*msys)
+			MSYS=1
+
+
+cat >>confdefs.h <<\_ACEOF
+#define MSYS 1
+_ACEOF
+
+			{ $as_echo "$as_me:$LINENO: With msys" >&5
+$as_echo "$as_me: With msys" >&6;}
+			;;
+		*)
+			{ $as_echo "$as_me:$LINENO: Without msys" >&5
+$as_echo "$as_me: Without msys" >&6;}
+			;;
+	esac
+fi
 
 #---------------------------------------------------------------------------------------------
 # Check for radiant
