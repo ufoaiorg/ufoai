@@ -178,8 +178,8 @@ static void MN_Translate_f (void)
 static void MN_Memory_f (void)
 {
 	int i;
-	const int nodeSize = sizeof(menuNode_t) - MEMBER_SIZEOF(menuNode_t, u);
-	int size;
+	const size_t nodeSize = sizeof(menuNode_t) - MEMBER_SIZEOF(menuNode_t, u);
+	size_t size;
 	Com_Printf("^BAllocation:\n");
 	Com_Printf("\t-Option allocation: %i/%i\n", mn.numOptions, MAX_MENUOPTIONS);
 	Com_Printf("\t-Node allocation: %i/%i\n", mn.numNodes, MAX_MENUNODES);
