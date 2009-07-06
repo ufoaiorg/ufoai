@@ -24,7 +24,7 @@ else
 		NUMTHREADS ?= $(shell grep -c ^processor /proc/cpuinfo)
 	else
 		ifeq ($(TARGET_OS),mingw32)
-			NUMTHREADS = $(shell echo %NUMBER_OF_PROCESSORS%)
+			NUMTHREADS = $(shell echo ${NUMBER_OF_PROCESSORS})
 		else
 			NUMTHREADS ?= 1
 		endif
