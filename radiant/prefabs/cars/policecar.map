@@ -1,0 +1,41 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( -704 396 31 ) ( -704 342 31 ) ( -828 396 31 ) tex_common/nodraw 1 40 0 1 1 0 128 0
+( 65 128 59 ) ( 1 128 59 ) ( 65 128 27 ) tex_common/nodraw 0 11 0 1 1 0 128 0
+( 56 120 59 ) ( 56 120 27 ) ( 56 -8 59 ) tex_common/nodraw 40 11 0 1 1 0 128 0
+( -128 3 11 ) ( -64 3 11 ) ( -128 131 11 ) tex_common/nodraw 0 40 0 1 1 0 128 0
+( 0 4 27 ) ( 0 4 59 ) ( 64 4 27 ) tex_common/nodraw 0 11 0 1 1 0 128 0
+( 8 -8 27 ) ( 8 120 27 ) ( 8 -8 59 ) tex_common/nodraw 40 11 0 1 1 0 128 0
+( -192 4 26 ) ( -192 33 31 ) ( -64 4 26 ) tex_common/nodraw 1 36 0 1 1 0 128 0
+( -192 83 31 ) ( -192 127 24 ) ( -64 83 31 ) tex_common/nodraw 1 36 0 1 1 0 128 0
+}
+// brush 1
+{
+( 64 120 41 ) ( 64 -8 41 ) ( 0 120 41 ) tex_common/nodraw 0 40 0 1 1 0 128 0
+( 0 -7 31 ) ( 64 -7 31 ) ( 0 121 31 ) tex_common/nodraw 0 41 0 1 1 0 128 0
+( -192 33 31 ) ( -192 40 41 ) ( -64 33 31 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( -192 75 41 ) ( -192 83 31 ) ( -64 75 41 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 8 537 31 ) ( 15 537 41 ) ( 8 409 31 ) tex_common/nodraw 39 0 0 1 1 0 128 0
+( 49 537 41 ) ( 56 537 31 ) ( 49 409 41 ) tex_common/nodraw 39 0 0 1 1 0 128 0
+}
+// brush 2
+{
+( 64 120 75 ) ( 64 -8 75 ) ( 0 120 75 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 65 128 59 ) ( 1 128 59 ) ( 65 128 27 ) tex_common/actorclip 15 11 0 1 1 65536 0 0
+( 64 120 59 ) ( 64 120 27 ) ( 64 -8 59 ) tex_common/actorclip 40 11 0 1 1 65536 0 0
+( -672 -192 0 ) ( -608 -192 0 ) ( -672 -64 0 ) tex_common/actorclip 0 39 0 1 1 65536 0 0
+( 0 0 27 ) ( 0 0 59 ) ( 64 0 27 ) tex_common/actorclip 0 11 0 1 1 65536 0 0
+( 0 -8 27 ) ( 0 120 27 ) ( 0 -8 59 ) tex_common/actorclip 40 11 0 1 1 65536 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "32 57 0"
+"model" "models/objects/cars/policecar/policecar.md2"
+"spawnflags" "255"
+}

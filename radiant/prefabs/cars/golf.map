@@ -1,0 +1,47 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( -544 -672 0 ) ( -480 -672 0 ) ( -544 -544 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 516 0 40 ) ( 516 128 40 ) ( 572 128 40 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 516 0 28 ) ( 572 0 28 ) ( 572 0 12 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 576 -192 96 ) ( 576 -192 0 ) ( 576 -288 96 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 574 96 28 ) ( 518 96 28 ) ( 518 96 12 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 512 128 28 ) ( 512 0 28 ) ( 512 0 12 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+}
+// brush 1
+{
+( -146 64 10 ) ( -146 114 10 ) ( -166 114 10 ) tex_common/nodraw 0 6 0 0.5 0.5 0 128 0
+( -448 -92 28 ) ( -332 -92 28 ) ( -332 -148 28 ) tex_common/nodraw 0 6 0 0.5 0.5 0 128 0
+( 516 7 28 ) ( 572 7 28 ) ( 572 7 12 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 567 -5 28 ) ( 567 123 28 ) ( 567 123 12 ) tex_common/nodraw 10 0 0 0.5 0.5 0 128 0
+( 574 91 28 ) ( 518 91 28 ) ( 518 91 12 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 520 123 28 ) ( 520 -5 28 ) ( 520 -5 12 ) tex_common/nodraw 10 0 0 0.5 0.5 0 128 0
+( -248 7 24 ) ( -248 31 28 ) ( -120 7 24 ) tex_common/nodraw 8 11 0 1 1 0 128 0
+}
+// brush 2
+{
+( -270 -136 26 ) ( -270 -104 26 ) ( -272 -104 26 ) tex_common/nodraw 8 0 0 0.5 0.5 0 128 0
+( 523 80 38 ) ( 566 80 38 ) ( 566 43 38 ) tex_common/nodraw 8 8 0 0.5 0.5 0 128 0
+( 523 43 38 ) ( 566 43 38 ) ( 566 35 26 ) tex_common/nodraw 8 0 0 0.5 0.5 0 128 0
+( 566 0 40 ) ( 566 104 40 ) ( 566 104 4 ) tex_common/nodraw 8 0 0 0.5 0.5 0 128 0
+( 566 80 38 ) ( 523 80 38 ) ( 566 92 26 ) tex_common/nodraw 8 8 0 0.5 0.5 0 128 0
+( 523 43 40 ) ( 523 -61 40 ) ( 523 -61 4 ) tex_common/nodraw 4 0 0 0.5 0.5 0 128 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "545 47 19"
+"model" "models/objects/cars/golf/car1t.md2"
+"spawnflags" "255"
+}
+// entity 2
+{
+"classname" "misc_model"
+"origin" "545 47 19"
+"model" "models/objects/cars/golf/car1.md2"
+"spawnflags" "255"
+}

@@ -1,0 +1,50 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 128 96 96 ) ( 128 0 96 ) ( 96 96 96 ) tex_common/actorclip 0 32 0 1 1 65536 0 0
+( 128 96 96 ) ( 96 96 96 ) ( 128 96 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 192 96 96 ) ( 192 96 0 ) ( 192 0 96 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
+( -928 -384 0 ) ( -864 -384 0 ) ( -928 -256 0 ) tex_common/actorclip 0 32 0 1 1 65536 0 0
+( 96 0 0 ) ( 96 0 96 ) ( 128 0 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 0 0 0 ) ( 0 96 0 ) ( 0 0 96 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
+}
+// brush 1
+{
+( 202 96 78 ) ( 202 0 78 ) ( 170 96 78 ) tex_common/weaponclip 6 32 0 1 1 33554432 0 0
+( 72 88 30 ) ( -8 88 30 ) ( 72 88 16 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( -1052 144 54 ) ( -994 144 54 ) ( -1052 146 54 ) tex_common/weaponclip 2 32 0 1 1 33554432 0 0
+( -8 10 16 ) ( -8 10 30 ) ( 72 10 16 ) tex_common/weaponclip 2 0 0 1 1 33554432 0 0
+( 72 0 0 ) ( 72 96 0 ) ( 72 0 96 ) tex_common/weaponclip 32 0 0 1 1 33554432 0 0
+( 126 -1632 78 ) ( 130 -1632 54 ) ( 126 -1760 78 ) tex_common/weaponclip 32 0 0 1 1 33554432 0 0
+}
+// brush 2
+{
+( -1029 222 54 ) ( -1029 190 54 ) ( -1071 190 54 ) tex_common/weaponclip 6 32 0 1 1 33554432 0 0
+( 72 88 30 ) ( -8 88 30 ) ( 72 88 16 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 190 96 96 ) ( 190 96 0 ) ( 190 0 96 ) tex_common/weaponclip 32 0 0 1 1 33554432 0 0
+( -112 536 12 ) ( -124 536 12 ) ( -124 524 12 ) tex_common/weaponclip 2 32 0 1 1 33554432 0 0
+( -8 10 16 ) ( -8 10 30 ) ( 72 10 16 ) tex_common/weaponclip 2 0 0 1 1 33554432 0 0
+( 72 0 0 ) ( 72 96 0 ) ( 72 0 96 ) tex_common/weaponclip 32 0 0 1 1 33554432 0 0
+( 130 -1632 54 ) ( 190 -1632 42 ) ( 130 -1760 54 ) tex_common/weaponclip 0 32 0 1 1 33554432 0 0
+}
+// brush 3
+{
+( -720 124 30 ) ( -720 118 30 ) ( -724 118 30 ) tex_common/weaponclip 0 32 0 1 1 33554432 0 0
+( 72 88 30 ) ( -8 88 30 ) ( 72 88 16 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 72 88 30 ) ( 72 88 16 ) ( 72 10 30 ) tex_common/weaponclip 32 0 0 1 1 33554432 0 0
+( -726 116 16 ) ( -718 116 16 ) ( -718 124 16 ) tex_common/weaponclip 0 32 0 1 1 33554432 0 0
+( -8 10 16 ) ( -8 10 30 ) ( 72 10 16 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( -8 10 16 ) ( -8 88 16 ) ( -8 10 30 ) tex_common/weaponclip 32 0 0 1 1 33554432 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "98 49 -11"
+"model" "models/objects/trucks/truck/truck.md2"
+"spawnflags" "255"
+"angles" "0 -90 0"
+}
