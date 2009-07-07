@@ -13,30 +13,28 @@ window basedefence
 	/**
 	 * @brief sets available defencetypes
 	 */
-/*	@note: not working yet as option isn't a node :(	*/
 	confunc set_defencetypes {
-/*		*cvar:mn_cvartmp "<1>"
+		*cvar:mn_cvartmp "<1>"
 		if ( *cvar:mn_cvartmp eq "enable" ) {
-			*defencetype.missile@invis false
-			*defencetype.missile@disabled false
+			cmd "mn_updateoption <path:root>.defencetype missile enable;"
+			cmd "mn_updateoption <path:root>.defencetype missile display;"
 		} elif ( *cvar:mn_cvartmp eq "disable" ) {
-			*defencetype.missile@invis false
-			*defencetype.missile@disabled true
+			cmd "mn_updateoption <path:root>.defencetype missile disable;"
+			cmd "mn_updateoption <path:root>.defencetype missile display;"
 		} elif ( *cvar:mn_cvartmp eq "na" ) {
-			*defencetype.missile@invis true
+			cmd "mn_updateoption <path:root>.defencetype missile hide;"
 		}
 		*cvar:mn_cvartmp "<2>"
 		if ( *cvar:mn_cvartmp eq "enable" ) {
-			*defencetype.laser@invis false
-			*defencetype.laser@disabled false
+			cmd "mn_updateoption <path:root>.defencetype laser enable;"
+			cmd "mn_updateoption <path:root>.defencetype laser display;"
 		} elif ( *cvar:mn_cvartmp eq "disable" ) {
-			*defencetype.laser@invis false
-			*defencetype.missile@disabled true
+			cmd "mn_updateoption <path:root>.defencetype laser disable;"
+			cmd "mn_updateoption <path:root>.defencetype laser display;"
 		} elif ( *cvar:mn_cvartmp eq "na" ) {
-			*defencetype.laser@invis true
+			cmd "mn_updateoption <path:root>.defencetype laser hide;"
 		}
 		cmd "del mn_cvartmp;"
-*/
 	}
 
 	tab defencetype {
@@ -47,11 +45,11 @@ window basedefence
 			if ( *cvar:mn_bdef_type ne "info" ) {
 				*infopanel@invis = true
 				*equippanel@invis = false
-				cmd "basedef_updatemenu <cvar:mn_bdef_type>;"
 			} else {
 				*infopanel@invis = false
 				*equippanel@invis = true
 			}
+			cmd "basedef_updatemenu <cvar:mn_bdef_type>;"
 		}
 		option info {
 			label	"_Information"
@@ -304,45 +302,96 @@ window basedefence
 		string infopanel_title
 		{
 			string		"_Surface to Air defences"
-			pos			"10 10"
-			size		"300 25"
-			font		f_small_bold
+			pos			"50 30"
+			size		"300 35"
+			font		f_normal_bold
 		}
 
-		todo infos
+		string name_title
 		{
-			pos			"30 200"
-			string		"Informations about working/max weapons, range, damage should come here"
+			string		"Name:"
+			pos			"50 95"
+			size		"200 25"
+			font		f_small_bold
+		}
+		textentry name
+		{
+			string		*cvar:mn_installation_title
+			pos			"260 90"
+			size		"256 34"
+			image		ui/button_green_verysmall
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			onChange	{ }
+			clickoutabort	true
 		}
 
 		string target_title
 		{
 			string		"_Targetted UFO:"
-			pos			"10 100"
-			size		"200 25"
+			pos			"50 150"
+			size		"150 25"
 		}
 		string target_value
 		{
 			string		*cvar:mn_target
-			pos			"210 100"
-			size		"200 25"
+			pos			"260 150"
+			size		"150 25"
+		}
+
+		string buildtime_label
+		{
+			string		"_Time to build:"
+			pos			"50 175"
+			size		"159 20"
+		}
+		string buildtime
+		{
+			string		*cvar:mn_installation_timetobuild
+			pos			"260 175"
+			size		"100 20"
 		}
 		
-		
+		string autofire_title
+		{
+			string		"_Autofire"
+			pos			"50 200"
+			size		"150 25"
+		}
 		checkbox autofire
 		{
 			image		ui/checkbox_green
-			pos			"30 250"
+			pos			"260 200"
 			size		"20 20"
 			current		1
 			onChange	{ cmd "basedef_autofire <current>;" }
 		}
-		string autofire_title
+
+		button destroy
 		{
-			string		"_Autofire"
-			pos			"60 250"
-			size		"150 25"
+			string		"_Destroy"
+			tooltip		"_Destroy installation"
+			color		"0 0.5 0 1"
+			font		f_menu
+			image		ui/button_green_small
+			pos			"50 250"
+			size		"176 32"
+			onClick		{ cmd "mn_pop; mn_destroyinstallation;" }
 		}
+		button close
+		{
+			string		"_Close"
+			color		"0 0.5 0 1"
+			font		f_menu
+			image		ui/button_green_small
+			pos			"425 250"
+			size		"176 32"
+			onClick		{ cmd "mn_pop;" }
+		}
+		
 	}
 
 	confunc setautofire	{
@@ -351,9 +400,31 @@ window basedefence
 	}
 
 	func onInit {
-		*cvar:mn_itemname ""
-		*cvar:mn_upmodel_top ""
-		cmd "basedef_updatemenu;"
+		*cvar:mn_itemname = ""
+		*cvar:mn_upmodel_top = ""
+		*cvar:mn_bdef_type = "info"
+		*node:root.infopanel@invis = false
+		*node:root.equippanel@invis = true
+		if ( *cvar:mn_installation_type ne "" ) {
+			*node:root.infopanel.name@string = *cvar:mn_installation_title
+			*node:root.infopanel.name@onChange = { cmd "mn_installation_changename;" }
+			*node:root.infopanel.destroy@invis = false
+			/** Show building time */
+			if ( *cvar:mn_installation_timetobuild ne "-" ) {
+				*node:root.infopanel.buildtime_label@invis = false
+				*node:root.infopanel.buildtime@invis = false
+			} else {
+				*node:root.infopanel.buildtime_label@invis = true
+				*node:root.infopanel.buildtime@invis = true
+			}
+		} else {
+			*node:root.infopanel.name@string = *cvar:mn_base_title
+			*node:root.infopanel.name@onChange = { cmd "base_changename;" }
+			*node:root.infopanel.buildtime_label@invis = true
+			*node:root.infopanel.buildtime@invis = true
+			*node:root.infopanel.destroy@invis = true
+		}
+		cmd "basedef_updatemenu info;"
 		call equippanel.update_buttons
 	}
 }

@@ -1650,6 +1650,9 @@ window popup_installationstatus
 	func onInit
 	{
 		cmd "game_timestop;"
+		if ( *cvar:mn_installation_type eq "samsite" ) {
+			cmd "mn_pop; mn_push basedefence;"
+		}
 	}
 }
 
