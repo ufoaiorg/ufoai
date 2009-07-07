@@ -1294,144 +1294,137 @@
 // entity 26
 {
 "classname" "misc_model"
-"origin" "-1088 -32 4"
-"model" "models/objects/vegi/fern/fern.md2"
-"spawnflags" "65280"
-}
-// entity 27
-{
-"classname" "misc_model"
 "spawnflags" "254"
 "origin" "-816 176 4"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 }
-// entity 28
+// entity 27
 {
 "classname" "misc_model"
 "origin" "-530 -84 26"
 "model" "models/objects/vegi/cactus/cactus2.md2"
 "spawnflags" "255"
 }
-// entity 29
+// entity 28
 {
 "classname" "misc_model"
 "origin" "-576 -128 8"
 "model" "models/objects/vegi/tropic/tropic02.md2"
 "spawnflags" "255"
 }
-// entity 30
+// entity 29
 {
 "classname" "misc_model"
 "origin" "-496 -16 4"
 "model" "models/objects/vegi/plant_v1/plant_v1.md2"
 "spawnflags" "255"
 }
-// entity 31
+// entity 30
 {
 "classname" "misc_model"
 "origin" "-464 -180 4"
 "model" "models/objects/vegi/plant/plant.md2"
 "spawnflags" "65280"
 }
-// entity 32
+// entity 31
 {
 "classname" "misc_model"
 "origin" "-431 -80 4"
 "model" "models/objects/vegi/plant/plant2.md2"
 "spawnflags" "65280"
 }
-// entity 33
+// entity 32
 {
 "classname" "misc_model"
 "origin" "-305 -208 35"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "spawnflags" "254"
 }
-// entity 34
+// entity 33
 {
 "classname" "misc_model"
 "origin" "-369 80 4"
 "model" "models/objects/vegi/palm_v3/palm_v3.md2"
 "spawnflags" "255"
 }
-// entity 35
+// entity 34
 {
 "classname" "misc_model"
 "origin" "-433 144 4"
 "model" "models/objects/vegi/palm_v2/palm_v2.md2"
 "spawnflags" "255"
 }
-// entity 36
+// entity 35
 {
 "classname" "misc_model"
 "origin" "-337 208 4"
 "model" "models/objects/vegi/palm_v1/palm_v1.md2"
 "spawnflags" "255"
 }
-// entity 37
+// entity 36
 {
 "classname" "misc_model"
 "origin" "-305 -208 35"
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 }
-// entity 38
+// entity 37
 {
 "classname" "misc_model"
 "origin" "-122 -210 8"
 "model" "models/objects/vegi/palm6/palm6.md2"
 "spawnflags" "255"
 }
-// entity 39
+// entity 38
 {
 "classname" "misc_model"
 "origin" "-43 -239 38"
 "model" "models/objects/vegi/palm4/palm4.md2"
 "spawnflags" "255"
 }
-// entity 40
+// entity 39
 {
 "classname" "misc_model"
 "origin" "-10 -140 11"
 "model" "models/objects/vegi/palm5/palm5.md2"
 "spawnflags" "255"
 }
-// entity 41
+// entity 40
 {
 "classname" "misc_model"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "-206 144 35"
 }
-// entity 42
+// entity 41
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "-206 144 35"
 }
-// entity 43
+// entity 42
 {
 "classname" "misc_model"
 "origin" "-210 -338 5"
 "model" "models/objects/vegi/banana/banana.md2"
 "spawnflags" "65280"
 }
-// entity 44
+// entity 43
 {
 "classname" "misc_model"
 "origin" "-408 341 133"
 "model" "models/objects/vegi/plant_hang/plant1.md2"
 "spawnflags" "252"
 }
-// entity 45
+// entity 44
 {
 "classname" "misc_model"
 "origin" "-87 299 118"
 "model" "models/objects/vegi/plant_hang/plant2.md2"
 "spawnflags" "252"
 }
-// entity 46
+// entity 45
 {
 "classname" "misc_model"
 "origin" "400 400 0"
@@ -1439,7 +1432,7 @@
 "spawnflags" "254"
 "modelscale_vec" "1.5 1.5 1.5"
 }
-// entity 47
+// entity 46
 {
 "classname" "misc_model"
 "origin" "400 400 0"

@@ -1,0 +1,8 @@
+
+// entity 0
+{
+"classname" "misc_model"
+"origin" "12 16 4"
+"model" "models/objects/vegi/fern/fern.md2"
+"spawnflags" "65280"
+}
