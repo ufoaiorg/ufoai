@@ -186,7 +186,6 @@ window hud extends ahud
 
 		pic bt_actor0
 		{
-			key		"*binding:soldier_select 0"
 			tooltip	*cvar:mn_soldier0_tt
 			pos		"11 10"
 			texl	"0 0"
@@ -196,7 +195,6 @@ window hud extends ahud
 		}
 		pic bt_actor1
 		{
-			key		"*binding:soldier_select 1"
 			tooltip	*cvar:mn_soldier1_tt
 			pos		"42 10"
 			texl	"32 0"
@@ -206,7 +204,6 @@ window hud extends ahud
 		}
 		pic bt_actor2
 		{
-			key		"*binding:soldier_select 2"
 			tooltip	*cvar:mn_soldier2_tt
 			pos		"73 10"
 			texl	"64 0"
@@ -216,7 +213,6 @@ window hud extends ahud
 		}
 		pic bt_actor3
 		{
-			key		"*binding:soldier_select 3"
 			tooltip	*cvar:mn_soldier3_tt
 			pos		"104 10"
 			texl	"96 0"
@@ -226,7 +222,6 @@ window hud extends ahud
 		}
 		pic bt_actor4
 		{
-			key		"*binding:soldier_select 4"
 			tooltip	*cvar:mn_soldier4_tt
 			pos		"135 10"
 			texl	"0 38"
@@ -236,7 +231,6 @@ window hud extends ahud
 		}
 		pic bt_actor5
 		{
-			key		"*binding:soldier_select 5"
 			tooltip	*cvar:mn_soldier5_tt
 			pos		"166 10"
 			texl	"32 38"
@@ -246,7 +240,6 @@ window hud extends ahud
 		}
 		pic bt_actor6
 		{
-			key		"*binding:soldier_select 6"
 			tooltip	*cvar:mn_soldier6_tt
 			pos		"197 10"
 			texl	"64 38"
@@ -256,7 +249,6 @@ window hud extends ahud
 		}
 		pic bt_actor7
 		{
-			key		"*binding:soldier_select 7"
 			tooltip	*cvar:mn_soldier7_tt
 			pos		"228 10"
 			texl	"96 38"
@@ -284,7 +276,6 @@ window hud extends ahud
 
 		custombutton bt_nextround
 		{
-			key		"*binding:nextround"
 			tooltip	"_Finish round"
 			image	ui/button_background
 			pos		"142 10"
@@ -301,7 +292,6 @@ window hud extends ahud
 			pos		"8 11"
 			size	"48 34"
 			textalign	cc
-			key		"*binding:nextalien"
 			onClick	{ cmd "nextalien;" }
 		}
 	}
@@ -450,7 +440,6 @@ window hud extends ahud
 
 		pic bt_duck
 		{
-			key		"*binding:standcrouch"
 			tooltip	*cvar:mn_crouchstand_tt
 
 			image	hud/buttons2g
@@ -513,7 +502,6 @@ window hud extends ahud
 		pic bt_shot_reservation
 		{
 			tooltip	*cvar:mn_shot_reservation_tt
-			// key "*binding:sel_shotreservation"
 			image hud/button_reserve_shot
 			pos		"11 32"
 			texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
@@ -526,7 +514,6 @@ window hud extends ahud
 		pic bt_reaction_s
 		{
 			image	hud/button_guard
-			key		"*binding:togglereaction"
 			pos		"11 74"
 			texl	"0 32"	// Inital pic - will be overwritten once the game's compeletly started.
 			texh	"31 63"
@@ -804,7 +791,6 @@ window hud extends ahud
 			visiblewhen	"*cvar:mn_showchatbuttons == 1"
 
 			tooltip		"_Chat"
-			key			"*binding:messagesay"
 			image		hud/button_chat
 			pos			"176 12"
 			size		"32 32"
@@ -816,7 +802,6 @@ window hud extends ahud
 		{
 			visiblewhen	"*cvar:mn_showchatbuttons == 1"
 			tooltip		"_Teamchat"
-			key			"*binding:messagesayteam"
 			image		hud/button_chat
 			pos			"138 12"
 			size		"32 32"
@@ -828,7 +813,6 @@ window hud extends ahud
 		{
 			visiblewhen	"*cvar:mn_showchatbuttons == 1"
 			tooltip		"_Show chat history"
-			key			"*binding:showchat"
 			image		hud/button_chat
 			pos			"100 12"
 			size		"32 32"

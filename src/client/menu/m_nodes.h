@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct menuIcon_s;
 struct menuCondition_s;
 struct value_s;
+struct nodeKeyBinding_s;
 
 /* extradata struct */
 #include "node/m_node_abstractoption.h"
@@ -86,7 +87,7 @@ typedef struct menuNode_s {
 	char* text;
 	const char* font;			/**< Font to draw text */
 	const char* tooltip;		/**< holds the tooltip */
-	const char *key;			/**< key bindings - used as tooltip */
+	struct menuKeyBinding_s *key;	/**< key bindings - used as tooltip */
 	struct menuIcon_s *icon;	/**< Link to an icon */
 
 	/** @todo use a linked list of excluderect? */

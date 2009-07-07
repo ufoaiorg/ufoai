@@ -63,7 +63,6 @@ static const value_t properties[] = {
 	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor), MEMBER_SIZEOF(menuNode_t, bgcolor)},
 	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
 	/** @todo use V_REF_OF_STRING when its possible ('image' is never a cvar) */
-	{"key", V_CVAR_OR_STRING, offsetof(menuNode_t, key), 0},
 	{"num", V_INT, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
 
 	{"tooltip", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, tooltip), 0},	/* translated in MN_Tooltip */

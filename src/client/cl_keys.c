@@ -729,7 +729,9 @@ static void Key_Bind_f (void)
 			Q_strcat(cmd, " ", sizeof(cmd));
 	}
 
-	if (!strcmp(Cmd_Argv(0), "bindmenu"))
+	if (!strcmp(Cmd_Argv(0), "bindui")) {
+		MN_SetKeyBinding(cmd, b);
+	} else if (!strcmp(Cmd_Argv(0), "bindmenu"))
 		Key_SetBinding(b, cmd, KEYSPACE_MENU);
 	else if (!strcmp(Cmd_Argv(0), "bindbattle"))
 		Key_SetBinding(b, cmd, KEYSPACE_BATTLE);
@@ -867,6 +869,7 @@ void Key_Init (void)
 	keyLinePos = 1;
 
 	/* register our functions */
+	Cmd_AddCommand("bindui", Key_Bind_f, "Bind a key to a ui node");
 	Cmd_AddCommand("bindmenu", Key_Bind_f, "Bind a key to a console command - only executed when hovering a menu");
 	Cmd_AddCommand("bind", Key_Bind_f, "Bind a key to a console command");
 	Cmd_AddCommand("bindbattle", Key_Bind_f, "Bind a key to a console command - only executed when in battlescape");

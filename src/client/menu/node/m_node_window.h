@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct menuNode_s;
 struct menuAction_s;
 struct nodeBehaviour_s;
+struct menuKeyBinding_s;
 
 /**
  * @brief extradata for the window node
@@ -51,6 +52,8 @@ typedef struct {
 
 	/** @todo we can remove it if we create a node for the battlescape */
 	struct menuNode_s *renderNode;
+
+	struct menuKeyBinding_s *keyList;	/** list of key binding */
 
 	/** @todo think about converting it to action instead of node */
 	struct menuAction_s *onInit; 	/**< Call when the menu is push */

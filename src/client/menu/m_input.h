@@ -28,6 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototype */
 struct menuNode_s;
 
+#define MAX_MENUKEYBINDING	128
+typedef struct menuKeyBinding_s {
+	struct menuNode_s *node;
+	int key;
+	struct menuKeyBinding_s *next;	/* next binding from the window list */
+} menuKeyBinding_t;
+void MN_SetKeyBinding(const char* path, int key);
+
 /* mouse input */
 void MN_MouseWheel(qboolean down, int x, int y);
 void MN_MouseMove(int x, int y);

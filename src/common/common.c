@@ -885,7 +885,6 @@ void Qcommon_Init (int argc, const char **argv)
 	Cbuf_AddText("exec dedconfig.cfg\n");
 #else
 	Cbuf_AddText("exec config.cfg\n");
-	Cbuf_AddText("exec keys.cfg\n");
 #endif
 
 	Cbuf_AddEarlyCommands(qtrue);
@@ -942,6 +941,9 @@ void Qcommon_Init (int argc, const char **argv)
 	CL_Init();
 
 	Com_ParseScripts();
+#ifndef DEDICATED_ONLY
+	Cbuf_AddText("exec keys.cfg\n");
+#endif
 
 	if (!sv_dedicated->integer)
 		Cbuf_AddText("init\n");

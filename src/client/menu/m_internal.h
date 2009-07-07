@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_actions.h"
 #include "m_nodes.h"
 #include "m_icon.h"
+#include "m_input.h"
 #include "m_expression.h"
 #include "m_data.h"
 #include "node/m_node_model.h"
@@ -81,6 +82,10 @@ typedef struct menuGlobal_s {
 
 	menuIcon_t icons[MAX_MENUICONS];
 	int numIcons;
+
+	menuKeyBinding_t keyBindings[MAX_MENUKEYBINDING];
+	int numKeyBindings;
+
 } menuGlobal_t;
 
 extern menuGlobal_t mn;

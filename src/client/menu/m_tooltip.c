@@ -22,11 +22,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../client.h"
 #include "node/m_node_window.h"
 #include "m_tooltip.h"
 #include "m_nodes.h"
 #include "m_parse.h"
 #include "m_render.h"
+#include "m_input.h"
 
 #include "../client.h" /* gettext _() */
 
@@ -79,7 +81,7 @@ void MN_Tooltip (menuNode_t *node, int x, int y)
 
 	/* check values */
 	if (node->key)
-		key = MN_GetReferenceString(node, node->key);
+		key = Key_KeynumToString(node->key->key);
 	if (node->tooltip)
 		tooltip = MN_GetReferenceString(node, node->tooltip);
 

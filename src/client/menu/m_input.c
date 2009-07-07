@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_internal.h"
 #include "m_actions.h"
 #include "m_input.h"
+#include "m_internal.h"
 #include "m_nodes.h"
 #include "m_draw.h"
 #include "m_dragndrop.h"
@@ -214,6 +215,76 @@ void MN_RemoveFocus (void)
 	}
 }
 
+static menuKeyBinding_t* MN_AllocKeyBinding()
+{
+	menuKeyBinding_t* result;
+	if (mn.numKeyBindings >= MAX_MENUKEYBINDING)
+		Com_Error(ERR_FATAL, "MN_AllocKeyBinding: MAX_MENUKEYBINDING hit");
+
+	result = &mn.keyBindings[mn.numKeyBindings];
+	mn.numKeyBindings++;
+
+	memset(result, 0, sizeof(*result));
+	return result;
+}
+
+/**
+ * @todo check: only one binding per nodes
+ * @todo check: key per window must be unique
+ * @todo check: key used into MN_KeyPressed can't be used
+ */
+void MN_SetKeyBinding(const char* path, int key)
+{
+	menuNode_t *node;
+	menuKeyBinding_t *binding;
+	node = MN_GetNodeByPath(path);
+	if (node == NULL)
+		Com_Error(ERR_FATAL, "MN_SetKeyBinding: node \"%s\" not found.", path);
+
+	/* init and link the keybinding */
+	binding = MN_AllocKeyBinding();
+	binding->node = node;
+	binding->key = key;
+	node->key = binding;
+	binding->next = node->root->u.window.keyList;
+	node->root->u.window.keyList = binding;
+}
+
+static qboolean MN_KeyPressedInActiveWindow (unsigned int key)
+{
+	menuNode_t *node;
+	menuKeyBinding_t *binding;
+
+	node = MN_GetActiveMenu();
+	if (!node)
+		return qfalse;
+
+	/* search requested key binding */
+	binding = node->u.window.keyList;
+	while (binding) {
+		if (binding->key == key)
+			break;
+		binding = binding->next;
+
+	}
+	if (!binding)
+		return qfalse;
+
+	/* check node visibility */
+	node = binding->node;
+	while (node) {
+		if (node->disabled || node->invis)
+			return qfalse;
+		node = node->parent;
+	}
+
+	/* execute event */
+	node = binding->node;
+	if (node)
+		MN_ExecuteEventActions(node, node->onClick);
+	return qtrue;
+}
+
 /**
  * @brief Called by the client when the user type a key
  * @param[in] key key code, either K_ value or lowercase ascii
@@ -247,6 +318,9 @@ qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 		MN_PopMenuWithEscKey();
 		return qtrue;
 	}
+
+	if (MN_KeyPressedInActiveWindow(key))
+		return qtrue;
 
 	return qfalse;
 }

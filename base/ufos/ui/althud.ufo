@@ -84,7 +84,6 @@ window althud extends ahud
 	{
 		visiblewhen	"*cvar:mn_showchatbuttons == 1"
 		tooltip		"_Chat"
-		key			"*binding:messagesay"
 		image		hud/button_chat
 		pos			"944 76"
 		size		"32 32"
@@ -98,7 +97,6 @@ window althud extends ahud
 	{
 		visiblewhen	"*cvar:mn_showchatbuttons == 1"
 		tooltip		"_Teamchat"
-		key			"*binding:messagesayteam"
 		image		hud/button_chat
 		pos			"906 592"
 		texl		"32 0"
@@ -112,7 +110,6 @@ window althud extends ahud
 	{
 		visiblewhen	"*cvar:mn_showchatbuttons == 1"
 		tooltip		"_Show chat history"
-		key			"*binding:showchat"
 		image		hud/button_chat
 		pos			"868 592"
 		size		"32 32"
@@ -164,7 +161,6 @@ window althud extends ahud
 
 	pic bar_teambox0
 	{
-		key			"*binding:soldier_select 0"
 		image		althud/bar_teambox
 		pos			"856 640"
 		size		"64 128"
@@ -179,7 +175,6 @@ window althud extends ahud
 	}
 	pic bar_teambox1
 	{
-		key			"*binding:soldier_select 1"
 		image		althud/bar_teambox
 		pos			"776 640"
 		size		"64 128"
@@ -194,7 +189,6 @@ window althud extends ahud
 	}
 	pic bar_teambox2
 	{
-		key			"*binding:soldier_select 2"
 		image		althud/bar_teambox
 		pos			"696 640"
 		size		"64 128"
@@ -209,7 +203,6 @@ window althud extends ahud
 	}
 	pic bar_teambox3
 	{
-		key			"*binding:soldier_select 3"
 		image		althud/bar_teambox
 		pos			"616 640"
 		size		"64 128"
@@ -224,7 +217,6 @@ window althud extends ahud
 	}
 	pic bar_teambox4
 	{
-		key			"*binding:soldier_select 4"
 		image		althud/bar_teambox
 		pos			"536 640"
 		size		"64 128"
@@ -239,7 +231,6 @@ window althud extends ahud
 	}
 	pic bar_teambox5
 	{
-		key			"*binding:soldier_select 5"
 		image		althud/bar_teambox
 		pos			"456 640"
 		size		"64 128"
@@ -254,7 +245,6 @@ window althud extends ahud
 	}
 	pic bar_teambox6
 	{
-		key			"*binding:soldier_select 6"
 		image		althud/bar_teambox
 		pos			"376 640"
 		size		"64 128"
@@ -269,7 +259,6 @@ window althud extends ahud
 	}
 	pic bar_teambox7
 	{
-		key			"*binding:soldier_select 7"
 		image		althud/bar_teambox
 		pos			"296 640"
 		size		"64 128"
@@ -512,7 +501,6 @@ window althud extends ahud
 	zone spotted
 	{
 		tooltip		"_Enemy spotted"
-		key			"*binding:nextalien"
 		pos			"841 12"
 		size		"48 34"
 		onClick		{ cmd "nextalien;" }
@@ -521,7 +509,6 @@ window althud extends ahud
 	{
 		string		*cvar:mn_numaliensspotted
 		tooltip		"_Click to cycle through spotted enemies"
-		key			"*binding:nextalien"
 		pos			"841 13"
 		size	    "48 34"
 		textalign	cc
@@ -529,7 +516,6 @@ window althud extends ahud
 	pic nextround
 	{
 		tooltip		"_Finish round"
-		key			"*binding:nextround"
 		image		althud/buttons_althud1g
 		pos			"888 11"
 		texl		"0 0"
@@ -614,7 +600,6 @@ window althud extends ahud
 
 	pic bt_reaction_a
 	{
-		key			"*binding:togglereaction"
 		image		althud/buttons_althud1g
 		pos			"900 497"
 		texl		"81 37"
@@ -671,7 +656,6 @@ window althud extends ahud
 
 	pic bt_duck
 	{
-		key			"*binding:standcrouch"
 		tooltip		*cvar:mn_crouchstand_tt
 		image		althud/buttons_althud1g
 		mousefx		true
@@ -724,7 +708,6 @@ window althud extends ahud
 	pic bt_shot_reservation
 	{
 		tooltip	*cvar:mn_shot_reservation_tt
-		// key "*binding:sel_shotreservation"
 		image		hud/button_reserve_shot	// fixme
 		pos			"965 497"
 		texl		"64 32"	// Inital pic - will be overwritten once the game's completely started.
@@ -736,7 +719,6 @@ window althud extends ahud
 
 	pic bt_floorup
 	{
-		key			"*binding:levelup"
 		tooltip		"_Level up"
 		image		althud/buttons_althud1
 		mousefx		true
@@ -747,7 +729,6 @@ window althud extends ahud
 	}
 	pic bt_floordown
 	{
-		key			"*binding:leveldown"
 		tooltip		"_Level down"
 		image		althud/buttons_althud1
 		mousefx		true
