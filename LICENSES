@@ -3925,10 +3925,10 @@ base/ufos/weapons_ugv.ufo | GNU General Public License 2.0
 contrib/7th.zip |  | 2002 Iconian Fonts - Daniel Zadorozny - http://www.iconian.com/
 contrib/scripts/compile_po.bat |  | Kostia "Kildor" Romanov
 contrib/scripts/update_potfiles_in.bat |  | Kostia "Kildor" Romanov
-radiant/prefabs/drop_firebird.map | GNU General Public License 2.0
+radiant/prefabs/dropships/drop_firebird.map | GNU General Public License 2.0
 radiant/prefabs/household.map | GNU General Public License 2.0
-radiant/prefabs/inter_saracen.map | GNU General Public License 2.0
-radiant/prefabs/inter_stiletto.map | GNU General Public License 2.0
+radiant/prefabs/interceptors/inter_saracen.map | GNU General Public License 2.0
+radiant/prefabs/interceptors/inter_stiletto.map | GNU General Public License 2.0
 radiant/prefabs/machines.map | GNU General Public License 2.0
 radiant/prefabs/misc.map | GNU General Public License 2.0
 radiant/prefabs/mountain.map | GNU General Public License 2.0
@@ -3936,9 +3936,9 @@ radiant/prefabs/office.map | GNU General Public License 2.0
 radiant/prefabs/pipes.map | GNU General Public License 2.0
 radiant/prefabs/shop.map | GNU General Public License 2.0
 radiant/prefabs/terrain.map | GNU General Public License 2.0
-radiant/prefabs/ufo_fighter.map | GNU General Public License 2.0
-radiant/prefabs/ufo_scout.map | GNU General Public License 2.0
-radiant/prefabs/ufo_supply.map | GNU General Public License 2.0
+radiant/prefabs/ufos/ufo_fighter.map | GNU General Public License 2.0
+radiant/prefabs/ufos/ufo_scout.map | GNU General Public License 2.0
+radiant/prefabs/ufos/ufo_supply.map | GNU General Public License 2.0
 radiant/prefabs/vegetation.map | GNU General Public License 2.0
 src/common/pqueue.c | Public Domain
 src/common/pqueue.h | Public Domain
