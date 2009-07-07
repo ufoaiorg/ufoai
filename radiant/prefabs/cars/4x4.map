@@ -1,0 +1,46 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 192 120 75 ) ( 192 -8 75 ) ( 128 120 75 ) tex_common/actorclip 0 4 0 0.5 0.5 65536 0 0
+( 65 160 59 ) ( 1 160 59 ) ( 65 160 27 ) tex_common/actorclip 15 11 0 1 1 65536 0 0
+( 64 131 91 ) ( 64 131 59 ) ( 64 3 91 ) tex_common/actorclip 46 11 0 1 1 65536 0 0
+( -544 -192 0 ) ( -480 -192 0 ) ( -544 -64 0 ) tex_common/actorclip 0 34 0 1 1 65536 0 0
+( 128 0 27 ) ( 128 0 59 ) ( 192 0 27 ) tex_common/actorclip 0 11 0 1 1 65536 0 0
+( 0 3 59 ) ( 0 131 59 ) ( 0 3 91 ) tex_common/actorclip 46 11 0 1 1 65536 0 0
+}
+// brush 1
+{
+( 64 131 43 ) ( 64 3 43 ) ( 0 131 43 ) tex_common/nodraw 0 35 0 1 1 0 128 0
+( 64 147 59 ) ( 0 147 59 ) ( 64 147 27 ) tex_common/nodraw 0 11 0 1 1 0 128 0
+( 64 131 91 ) ( 64 131 59 ) ( 64 3 91 ) tex_common/nodraw 45 11 0 1 1 0 128 0
+( 0 3 11 ) ( 64 3 11 ) ( 0 131 11 ) tex_common/nodraw 0 35 0 1 1 0 128 0
+( 0 11 27 ) ( 0 11 59 ) ( 64 11 27 ) tex_common/nodraw 0 11 0 1 1 0 128 0
+( 0 3 59 ) ( 0 131 59 ) ( 0 3 91 ) tex_common/nodraw 45 11 0 1 1 0 128 0
+}
+// brush 2
+{
+( 0 139 67 ) ( 64 139 67 ) ( 64 67 67 ) tex_common/nodraw 0 35 0 1 1 0 128 0
+( 64 139 67 ) ( 0 139 67 ) ( 64 147 43 ) tex_common/nodraw 0 11 0 1 1 0 128 0
+( 64 131 91 ) ( 64 131 59 ) ( 64 3 91 ) tex_common/nodraw 45 11 0 1 1 0 128 0
+( 0 3 43 ) ( 64 3 43 ) ( 0 131 43 ) tex_common/nodraw 0 35 0 1 1 0 128 0
+( 0 67 67 ) ( 64 67 67 ) ( 64 51 43 ) tex_common/nodraw 0 11 0 1 1 0 128 0
+( 0 3 59 ) ( 0 131 59 ) ( 0 3 91 ) tex_common/nodraw 45 11 0 1 1 0 128 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "32 79 35"
+"model" "models/objects/cars/4x4/4x4.md2"
+"spawnflags" "255"
+}
+// entity 2
+{
+"classname" "misc_model"
+"origin" "32 79 35"
+"model" "models/objects/cars/4x4/4x4_t.md2"
+"spawnflags" "255"
+}

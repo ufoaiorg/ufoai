@@ -1,0 +1,127 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 64 383 107 ) ( 64 255 107 ) ( 0 383 107 ) tex_common/actorclip 0 14 0 0.5 0.5 65536 0 0
+( 857 256 59 ) ( 793 256 59 ) ( 857 256 27 ) tex_common/actorclip 0 8 0 1 1 65536 0 0
+( 64 216 32 ) ( 64 216 16 ) ( 64 80 32 ) tex_common/actorclip 1 11 0 1 1 65536 0 0
+( 0 128 0 ) ( 64 128 0 ) ( 0 256 0 ) tex_common/actorclip 0 14 0 1 1 65536 0 0
+( -318 0 27 ) ( -318 0 59 ) ( -254 0 27 ) tex_common/actorclip 14 11 0 1 1 65536 0 0
+( 0 80 16 ) ( 0 216 16 ) ( 0 80 32 ) tex_common/actorclip 1 11 0 1 1 65536 0 0
+}
+// brush 1
+{
+( 115 174 79 ) ( -13 174 79 ) ( 115 238 79 ) tex_common/nodraw 30 3 -90 1 1 0 128 0
+( 64 216 32 ) ( 64 216 16 ) ( 64 80 32 ) tex_common/nodraw 9 14 0 -1 1 0 128 0
+( 115 5 92 ) ( 115 5 60 ) ( -13 5 92 ) tex_common/nodraw 13 12 0 1 1 0 128 0
+( 0 192 32 ) ( 64 192 32 ) ( 0 248 32 ) tex_common/nodraw 30 6 -90 1 1 0 128 0
+( 0 80 16 ) ( 0 216 16 ) ( 0 80 32 ) tex_common/nodraw 30 15 0 -1 1 0 128 0
+( -34 191 62 ) ( 94 191 62 ) ( -34 191 94 ) tex_common/nodraw 2 14 0 1 1 0 128 0
+( 4 238 65 ) ( 4 5 65 ) ( 0 5 56 ) tex_common/nodraw 30 16 0 -1 1 0 128 0
+( 4 5 65 ) ( 4 238 65 ) ( 20 5 79 ) tex_common/nodraw 30 3 -90 1 1 0 128 0
+( 64 238 56 ) ( 64 5 56 ) ( 60 238 65 ) tex_common/nodraw 30 16 0 -1 1 0 128 0
+( 44 1339 79 ) ( 58 1339 67 ) ( 44 1211 79 ) tex_common/nodraw 30 13 -90 1 1 0 128 0
+}
+// brush 2
+{
+( 64 216 32 ) ( 64 80 32 ) ( 0 216 32 ) tex_common/nodraw 0 38 0 1 1 0 128 0
+( 64 246 58 ) ( 0 246 58 ) ( 64 246 -6 ) tex_common/nodraw 0 58 0 1 1 0 128 0
+( 64 216 32 ) ( 64 216 16 ) ( 64 80 32 ) tex_common/nodraw 26 0 0 1 1 0 128 0
+( 0 128 0 ) ( 64 128 0 ) ( 0 256 0 ) tex_common/nodraw 0 38 0 1 1 0 128 0
+( 0 212 -2 ) ( 0 212 62 ) ( 64 212 -2 ) tex_common/nodraw 0 62 0 1 1 0 128 0
+( 0 80 16 ) ( 0 216 16 ) ( 0 80 32 ) tex_common/nodraw 26 0 0 1 1 0 128 0
+( 448 246 14 ) ( 448 234 2 ) ( 576 246 14 ) tex_common/nodraw 0 38 0 1 1 0 128 0
+( 448 222 0 ) ( 448 212 12 ) ( 576 222 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+}
+// brush 3
+{
+( 64 216 32 ) ( 64 80 32 ) ( 0 216 32 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 64 80 58 ) ( 0 80 58 ) ( 64 80 -6 ) tex_common/nodraw 0 58 0 1 1 0 128 0
+( 64 216 32 ) ( 64 216 16 ) ( 64 80 32 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 0 128 0 ) ( 64 128 0 ) ( 0 256 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 0 20 -2 ) ( 0 20 62 ) ( 64 20 -2 ) tex_common/nodraw 0 62 0 1 1 0 128 0
+( 0 80 16 ) ( 0 216 16 ) ( 0 80 32 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 448 80 14 ) ( 448 68 2 ) ( 576 80 14 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 448 30 0 ) ( 448 20 12 ) ( 576 30 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+}
+// brush 4
+{
+( 64 248 48 ) ( 0 248 48 ) ( 64 248 16 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 64 216 32 ) ( 64 216 16 ) ( 64 80 32 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 0 192 32 ) ( 64 192 32 ) ( 0 248 32 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 0 192 16 ) ( 0 192 48 ) ( 64 192 16 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 0 80 16 ) ( 0 216 16 ) ( 0 80 32 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 448 192 49 ) ( 448 248 42 ) ( 576 192 49 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+}
+// brush 5
+{
+( 64 216 32 ) ( 64 80 32 ) ( 0 216 32 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 64 212 32 ) ( 0 212 32 ) ( 64 212 16 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 64 216 32 ) ( 64 216 16 ) ( 64 80 32 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 202 628 16 ) ( 210 628 16 ) ( 210 636 16 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 0 80 16 ) ( 0 80 32 ) ( 64 80 16 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+( 0 80 16 ) ( 0 216 16 ) ( 0 80 32 ) tex_common/nodraw 0 0 0 1 1 0 128 0
+}
+// brush 6
+{
+( 115 174 79 ) ( -13 174 79 ) ( 115 238 79 ) tex_common/weaponclip 30 3 -90 1 1 33554432 0 0
+( 64 216 32 ) ( 64 216 16 ) ( 64 80 32 ) tex_common/weaponclip 9 14 0 -1 1 33554432 0 0
+( 115 5 92 ) ( 115 5 60 ) ( -13 5 92 ) tex_common/weaponclip 13 12 0 1 1 33554432 0 0
+( 0 192 32 ) ( 64 192 32 ) ( 0 248 32 ) tex_common/weaponclip 30 6 -90 1 1 33554432 0 0
+( 0 80 16 ) ( 0 216 16 ) ( 0 80 32 ) tex_common/weaponclip 30 15 0 -1 1 33554432 0 0
+( -34 191 62 ) ( 94 191 62 ) ( -34 191 94 ) tex_common/weaponclip 2 14 0 1 1 33554432 0 0
+( 4 238 65 ) ( 4 5 65 ) ( 0 5 56 ) tex_common/weaponclip 30 16 0 -1 1 33554432 0 0
+( 4 5 65 ) ( 4 238 65 ) ( 20 5 79 ) tex_common/weaponclip 30 3 -90 1 1 33554432 0 0
+( 64 238 56 ) ( 64 5 56 ) ( 60 238 65 ) tex_common/weaponclip 30 16 0 -1 1 33554432 0 0
+( 44 1339 79 ) ( 58 1339 67 ) ( 44 1211 79 ) tex_common/weaponclip 30 13 -90 1 1 33554432 0 0
+}
+// brush 7
+{
+( 64 216 32 ) ( 64 80 32 ) ( 0 216 32 ) tex_common/weaponclip 0 38 0 1 1 33554432 0 0
+( 64 246 58 ) ( 0 246 58 ) ( 64 246 -6 ) tex_common/weaponclip 0 58 0 1 1 33554432 0 0
+( 64 216 32 ) ( 64 216 16 ) ( 64 80 32 ) tex_common/weaponclip 26 0 0 1 1 33554432 0 0
+( 0 128 0 ) ( 64 128 0 ) ( 0 256 0 ) tex_common/weaponclip 0 38 0 1 1 33554432 0 0
+( 0 212 -2 ) ( 0 212 62 ) ( 64 212 -2 ) tex_common/weaponclip 0 62 0 1 1 33554432 0 0
+( 0 80 16 ) ( 0 216 16 ) ( 0 80 32 ) tex_common/weaponclip 26 0 0 1 1 33554432 0 0
+( 448 246 14 ) ( 448 234 2 ) ( 576 246 14 ) tex_common/weaponclip 0 38 0 1 1 33554432 0 0
+( 448 222 0 ) ( 448 212 12 ) ( 576 222 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+}
+// brush 8
+{
+( 64 216 32 ) ( 64 80 32 ) ( 0 216 32 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 64 80 58 ) ( 0 80 58 ) ( 64 80 -6 ) tex_common/weaponclip 0 58 0 1 1 33554432 0 0
+( 64 216 32 ) ( 64 216 16 ) ( 64 80 32 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 0 128 0 ) ( 64 128 0 ) ( 0 256 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 0 20 -2 ) ( 0 20 62 ) ( 64 20 -2 ) tex_common/weaponclip 0 62 0 1 1 33554432 0 0
+( 0 80 16 ) ( 0 216 16 ) ( 0 80 32 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 448 80 14 ) ( 448 68 2 ) ( 576 80 14 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 448 30 0 ) ( 448 20 12 ) ( 576 30 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+}
+// brush 9
+{
+( 64 248 48 ) ( 0 248 48 ) ( 64 248 16 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 64 216 32 ) ( 64 216 16 ) ( 64 80 32 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 0 192 32 ) ( 64 192 32 ) ( 0 248 32 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 0 192 16 ) ( 0 192 48 ) ( 64 192 16 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 0 80 16 ) ( 0 216 16 ) ( 0 80 32 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 448 192 49 ) ( 448 248 42 ) ( 576 192 49 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+}
+// brush 10
+{
+( 64 216 32 ) ( 64 80 32 ) ( 0 216 32 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 64 212 32 ) ( 0 212 32 ) ( 64 212 16 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 64 216 32 ) ( 64 216 16 ) ( 64 80 32 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 202 628 16 ) ( 210 628 16 ) ( 210 636 16 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 0 80 16 ) ( 0 80 32 ) ( 64 80 16 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( 0 80 16 ) ( 0 216 16 ) ( 0 80 32 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "32 120 42"
+"model" "models/objects/trucks/watertruck/watertruck.md2"
+"spawnflags" "255"
+}
