@@ -1,0 +1,77 @@
+
+// entity 0
+{
+"classname" "func_group"
+// brush 0
+{
+( 4 22 56 ) ( 28 22 56 ) ( 28 20 56 ) tex_material/c_gray255 0 2 0 1 1 65280 0 0
+( 28 20 48 ) ( 4 20 48 ) ( 28 34 4 ) tex_material/c_gray255 0 0 0 1 1 65280 0 0
+( 28 32 56 ) ( 28 32 4 ) ( 28 30 56 ) tex_material/c_gray255 0 0 0 1 1 65280 0 0
+( 4 28 18 ) ( 28 28 18 ) ( 4 30 18 ) tex_material/c_gray255 0 28 0 1 1 65280 0 0
+( 4 18 48 ) ( 28 18 48 ) ( 28 32 4 ) tex_material/c_gray255 0 0 0 1 1 65280 0 0
+( 4 30 4 ) ( 4 32 4 ) ( 4 30 56 ) tex_material/c_gray255 0 0 0 1 1 65280 0 0
+}
+// brush 1
+{
+( 28 16 48 ) ( 26 16 48 ) ( 26 18 48 ) tex_furniture/textil001 32 64 0 1 1 65280 0 0
+( 26 18 50 ) ( 6 18 50 ) ( 26 18 14 ) tex_furniture/textil001 32 28 0 1 1 65280 0 0
+( 26 18 50 ) ( 26 18 14 ) ( 26 16 50 ) tex_furniture/textil001 64 28 0 1 1 65280 0 0
+( 6 16 46 ) ( 26 16 46 ) ( 6 18 46 ) tex_furniture/textil001 32 64 0 1 1 65280 0 0
+( 6 16 14 ) ( 6 16 50 ) ( 26 16 14 ) tex_furniture/textil001 32 28 0 1 1 65280 0 0
+( 6 16 14 ) ( 6 18 14 ) ( 6 16 50 ) tex_furniture/textil001 64 28 0 1 1 65280 0 0
+}
+// brush 2
+{
+( 26 26 22 ) ( 26 8 22 ) ( 6 26 22 ) tex_furniture/textil001 10 64 0 1 1 65280 0 0
+( 28 32 56 ) ( 28 32 4 ) ( 28 30 56 ) tex_furniture/textil001 64 0 0 1 1 65280 0 0
+( 6 8 20 ) ( 26 8 20 ) ( 6 26 20 ) tex_furniture/textil001 10 64 0 1 1 65280 0 0
+( 26 30 -4 ) ( 26 32 -4 ) ( 26 30 48 ) tex_furniture/textil001 64 0 0 1 1 65280 0 0
+( 6 30 4 ) ( 6 16 48 ) ( 4 16 48 ) tex_common/nodraw 6 0 0 1 1 65280 128 0
+( 4 4 4 ) ( 4 18 48 ) ( 6 18 48 ) tex_common/nodraw 60 0 0 -1 1 65280 128 0
+}
+// brush 3
+{
+( 28 16 48 ) ( 26 16 48 ) ( 26 18 48 ) tex_furniture/textil001 102 86 180 1 1 65280 0 0
+( 26 16 48 ) ( 28 16 48 ) ( 26 2 4 ) tex_furniture/textil001 102 0 0 -1 1 65280 0 0
+( 4 30 4 ) ( 4 32 4 ) ( 4 30 56 ) tex_furniture/textil001 106 0 0 -1 1 65280 0 0
+( 133 42 4 ) ( 133 54 4 ) ( 131 54 4 ) tex_furniture/textil001 102 86 180 1 1 65280 0 0
+( 28 18 48 ) ( 26 18 48 ) ( 26 4 4 ) tex_furniture/textil001 102 0 0 -1 1 65280 0 0
+( 6 32 48 ) ( 6 32 -4 ) ( 6 30 48 ) tex_furniture/textil001 106 56 0 -1 1 65280 0 0
+}
+// brush 4
+{
+( 28 16 48 ) ( 26 16 48 ) ( 26 18 48 ) tex_furniture/textil001 124 86 180 1 1 65280 0 0
+( 26 16 48 ) ( 28 16 48 ) ( 26 2 4 ) tex_furniture/textil001 124 0 0 -1 1 65280 0 0
+( 26 30 -4 ) ( 26 32 -4 ) ( 26 30 48 ) tex_furniture/textil001 106 56 0 -1 1 65280 0 0
+( 133 42 4 ) ( 133 54 4 ) ( 131 54 4 ) tex_furniture/textil001 124 86 180 1 1 65280 0 0
+( 28 18 48 ) ( 26 18 48 ) ( 26 4 4 ) tex_furniture/textil001 124 0 0 -1 1 65280 0 0
+( 28 32 56 ) ( 28 32 4 ) ( 28 30 56 ) tex_furniture/textil001 106 0 0 -1 1 65280 0 0
+}
+// brush 5
+{
+( 26 26 22 ) ( 26 8 22 ) ( 6 26 22 ) tex_furniture/textil001 32 64 0 1 1 65280 0 0
+( 6 32 48 ) ( 6 32 -4 ) ( 6 30 48 ) tex_furniture/textil001 64 0 0 1 1 65280 0 0
+( 6 8 20 ) ( 26 8 20 ) ( 6 26 20 ) tex_furniture/textil001 32 64 0 1 1 65280 0 0
+( 4 30 4 ) ( 4 32 4 ) ( 4 30 56 ) tex_furniture/textil001 64 0 0 1 1 65280 0 0
+( 4 4 4 ) ( 4 18 48 ) ( 6 18 48 ) tex_common/nodraw 38 0 0 -1 1 65280 128 0
+( 6 30 4 ) ( 6 16 48 ) ( 4 16 48 ) tex_common/nodraw 28 0 0 1 1 65280 128 0
+}
+// brush 6
+{
+( 6 18 48 ) ( 4 18 48 ) ( 6 32 4 ) tex_furniture/textil001 70 0 0 1 1 65280 0 0
+( 28 32 56 ) ( 28 32 4 ) ( 28 30 56 ) tex_furniture/textil001 72 0 0 1 1 65280 0 0
+( 133 42 4 ) ( 133 54 4 ) ( 131 54 4 ) tex_furniture/textil001 70 56 0 1 1 65280 0 0
+( 4 16 48 ) ( 6 16 48 ) ( 6 30 4 ) tex_furniture/textil001 70 0 0 1 1 65280 0 0
+( 26 30 -4 ) ( 26 32 -4 ) ( 26 30 48 ) tex_furniture/textil001 72 56 0 1 1 65280 0 0
+( 4 4 4 ) ( 4 18 48 ) ( 6 18 48 ) tex_common/nodraw 60 0 0 -1 1 65280 128 0
+}
+// brush 7
+{
+( 6 18 48 ) ( 4 18 48 ) ( 6 32 4 ) tex_furniture/textil001 28 0 0 1 1 65280 0 0
+( 6 32 48 ) ( 6 32 -4 ) ( 6 30 48 ) tex_furniture/textil001 72 56 0 1 1 65280 0 0
+( 133 42 4 ) ( 133 54 4 ) ( 131 54 4 ) tex_furniture/textil001 28 56 0 1 1 65280 0 0
+( 4 16 48 ) ( 6 16 48 ) ( 6 30 4 ) tex_furniture/textil001 28 0 0 1 1 65280 0 0
+( 4 30 4 ) ( 4 32 4 ) ( 4 30 56 ) tex_furniture/textil001 72 0 0 1 1 65280 0 0
+( 4 4 4 ) ( 4 18 48 ) ( 6 18 48 ) tex_common/nodraw 38 0 0 -1 1 65280 128 0
+}
+}
