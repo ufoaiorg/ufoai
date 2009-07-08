@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_cinematic.h"
 #include "cl_console.h"
 #include "menu/m_input.h"
+#include "menu/m_nodes.h"
 #include "../shared/utf8.h"
 
 char keyLines[MAXKEYLINES][MAXCMDLINE];
@@ -783,6 +784,15 @@ void Key_WriteBindings (const char* filename)
 				delete = qtrue;
 			cnt++;
 		}
+
+	for (i = 0; i < MN_GetKeyBindingCount(); i++) {
+		menuKeyBinding_t*binding = MN_GetKeyBindingByIndex (i);
+		if (binding->node == NULL)
+			continue;
+		if (FS_Printf(&f, "bindui %s \"%s\"\n", Key_KeynumToString(binding->key), MN_GetPath(binding->node)) < 0)
+			delete = qtrue;
+	}
+
 	FS_CloseFile(&f);
 	if (!delete && cnt)
 		Com_Printf("Wrote %s\n", filename);

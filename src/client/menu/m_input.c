@@ -228,6 +228,16 @@ static menuKeyBinding_t* MN_AllocKeyBinding (void)
 	return result;
 }
 
+int MN_GetKeyBindingCount (void)
+{
+	return mn.numKeyBindings;
+}
+
+menuKeyBinding_t* MN_GetKeyBindingByIndex (int index)
+{
+	return &mn.keyBindings[index];
+}
+
 /**
  * @todo check: only one binding per nodes
  * @todo check: key per window must be unique
