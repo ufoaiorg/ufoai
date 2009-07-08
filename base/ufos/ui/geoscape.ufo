@@ -186,6 +186,13 @@ window geoscape
 				size	"256 55"
 			}
 
+			func faster {
+				cmd "game_timefast;"
+			}
+			func slower {
+				cmd "game_timeslow;"
+			}
+
 			radiobutton bt_timestop0
 			{
 				tooltip		"_Pause"
