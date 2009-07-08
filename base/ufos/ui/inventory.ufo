@@ -145,7 +145,7 @@ window inventory
 	// buttons
 	// ==================
 
-	custombutton button_exit
+	custombutton bt_exit
 	{
 		image	ui/button_background
 		texl	"192 0"	size "64 37"
