@@ -33,13 +33,14 @@
 #include "../select.h"
 #include "os/path.h"
 #include "os/dir.h"
+#include "os/file.h"
 #include "autoptr.h"
 #include "ifilesystem.h"
 #include "archivelib.h"
 #include "script/scripttokeniser.h"
 
 static const int TABLE_COLUMS = 3;
-static GtkListStore* store;
+static GtkTreeStore* store;
 static GtkTreeView* view;
 static GtkTextView* prefabDescription;
 static int unselectAfterInsert = 0;
@@ -88,7 +89,12 @@ static gint PrefabList_button_press(GtkWidget *widget, GdkEventButton *event,
 	return FALSE;
 }
 
-static void PrefabAdd(const char *name) {
+/**
+ * @brief callback function used to add prefab entries to store
+ * @param name filename relativ to prefabs directory
+ * @param parentIter parent iterator to add content to, used for tree structure of directories
+ */
+void PrefabAdd(const char *name, GtkTreeIter* parentIter) {
 	StringOutputStream fullBaseNamePath(256);
 	StringOutputStream imagePath(256);
 	StringOutputStream descriptionPath(256);
@@ -112,8 +118,8 @@ static void PrefabAdd(const char *name) {
 	GdkPixbuf *img = pixbuf_new_from_file_with_mask(imagePath.c_str());
 	if (!img)
 		g_warning("Could not find image (%s) for prefab %s\n", baseName.c_str(), name);
-	gtk_list_store_append(store, &iter);
-	gtk_list_store_set(store, &iter, PREFAB_NAME, name, PREFAB_DESCRIPTION, description, PREFAB_IMAGE, img, -1);
+	gtk_tree_store_append(store, &iter, parentIter);
+	gtk_tree_store_set(store, &iter, PREFAB_NAME, name, PREFAB_DESCRIPTION, description, PREFAB_IMAGE, img, -1);
 }
 
 static void PrefabList_selection_changed (GtkTreeSelection* selection, gpointer data)
@@ -124,7 +130,11 @@ static void PrefabList_selection_changed (GtkTreeSelection* selection, gpointer 
 		char *description;
 		gtk_tree_model_get(model, &selected, PREFAB_DESCRIPTION, &description, -1);
 		GtkTextBuffer* buffer = gtk_text_view_get_buffer(prefabDescription);
-		gtk_text_buffer_set_text(buffer, description, -1);
+		if (description) {
+			gtk_text_buffer_set_text(buffer, description, -1);
+		} else {
+			gtk_text_buffer_set_text(buffer, "", -1);
+		}
 	}
 }
 
@@ -138,15 +148,83 @@ static void Replace_toggled (GtkWidget *widget, gpointer data)
 	replaceSelection = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
 }
 
+/**
+ * @brief Callback class invoked for adding prefab map files
+ */
 class CLoadPrefab
 {
+	private:
+		CopiedString m_path;
+		GtkTreeIter* m_parentIter;
 	public:
-		CLoadPrefab (const char* path)
+		/**
+		 * @param path relative to 'prefabs/' into directory where file hits were found
+		 * @param parentIter parent iterator to add content to
+		 */
+		CLoadPrefab (const char* path, GtkTreeIter* parentIter) :
+			m_path(path), m_parentIter(parentIter)
 		{
 		}
+
+		/**
+		 * @brief called for every file matching map prefix
+		 * @param name found filename
+		 */
 		void operator() (const char* name) const
 		{
-			PrefabAdd(name);
+			StringOutputStream fullpath(256);
+			fullpath << m_path.c_str() << "/" << name;
+			PrefabAdd(fullpath.c_str(), m_parentIter);
+			g_debug("file: %s\n", fullpath.c_str());
+		}
+};
+
+/**
+ * @brief Callback class for searching for subdirectories to add prefab map files
+ */
+class CLoadPrefabSubdir
+{
+	private:
+		CopiedString m_path;
+		CopiedString m_subpath;
+		GtkTreeIter* m_parentIter;
+	public:
+		/**
+		 * @param path base path to prefab directory
+		 * @param subpath path relative to prefabs directory which is examined
+		 * @param parentIter parent iterator to add found prefab map files to
+		 */
+		CLoadPrefabSubdir (const char* path, const char* subpath, GtkTreeIter* parentIter): m_path(path), m_subpath(subpath), m_parentIter(parentIter)
+		{
+		}
+
+		/**
+		 * @brief called for every file or directory entry in basepath/subpath directory
+		 * @param name found filename
+		 * @note for every directory entry a sub iterator is created, afterwards this sub directory is examined
+		 */
+		void operator() (const char* name) const
+		{
+			if (strstr(name, ".svn") != 0)
+				return;
+			StringOutputStream fullpath(256);
+			fullpath << m_path.c_str() << "/";
+			if (!m_subpath.empty())
+				fullpath << m_subpath.c_str() << "/";
+			fullpath << name;
+			if (file_is_directory(fullpath.c_str())) {
+				GtkTreeIter subIter;
+				gtk_tree_store_append(store, &subIter, m_parentIter);
+				gtk_tree_store_set(store, &subIter, PREFAB_NAME, name, -1);
+				g_debug("directory: %s\n", name);
+				StringOutputStream subPath(128);
+				subPath << m_subpath.c_str() << "/" << name;
+				Directory_forEach(fullpath.c_str(), CLoadPrefabSubdir(m_path.c_str(), subPath.c_str(), &subIter));
+				Directory_forEach(fullpath.c_str(), MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab(
+						subPath.c_str(), &subIter)));
+			} else {
+				g_debug("ignoring %s as directory\n", name);
+			}
 		}
 };
 
@@ -164,7 +242,7 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 
 	{
 		// prefab list
-		store = gtk_list_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING,
+		store = gtk_tree_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING,
 				GDK_TYPE_PIXBUF);
 		view
 				= GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
@@ -240,8 +318,8 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 		g_object_set_data(G_OBJECT(checkReplace), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(checkReplace),
 				"toggled", G_CALLBACK(Replace_toggled), 0)));
 	}
-
-	Directory_forEach(fullpath.c_str(), MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab(fullpath.c_str())));
-
+	/* fill prefab store with data */
+	Directory_forEach(fullpath.c_str(), CLoadPrefabSubdir(fullpath.c_str(),"", NULL));
+	Directory_forEach(fullpath.c_str(), MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab("",NULL)));
 	return vbox;
 }
