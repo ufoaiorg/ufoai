@@ -833,7 +833,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	transfer->event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
 	transfer->event.sec = ccs.date.sec + round(time);
-	/* check if event is not the followinf day */
+	/* check if event is not the following day */
 	if (transfer->event.sec > SECONDS_PER_DAY) {
 		transfer->event.sec -= SECONDS_PER_DAY;
 		transfer->event.day++;
@@ -962,8 +962,8 @@ static void TR_TransferEnd (transfer_t *transfer)
 
 	if (!destination->founded) {
 		TR_EmptyTransferCargo(NULL, transfer, qfalse);
-		MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), _("The destination base no longer exists! Transfer cargo are lost, personel got unhired."), qfalse, MSG_TRANSFERFINISHED, NULL);
-		/** @todo what if source base is lost? we won't be able to unhire transfered personel. */
+		MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), _("The destination base no longer exists! Transfer cargo are lost, personnel got unhired."), qfalse, MSG_TRANSFERFINISHED, NULL);
+		/** @todo what if source base is lost? we won't be able to unhire transfered employees. */
 	} else {
 		char message[256];
 		TR_EmptyTransferCargo(destination, transfer, qtrue);
@@ -1017,7 +1017,7 @@ static void TR_TransferStart_f (void)
 	transfer->event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
 	transfer->event.sec = ccs.date.sec + round(time);
-	/* check if event is not the followinf day */
+	/* check if event is not the following day */
 	if (transfer->event.sec > SECONDS_PER_DAY) {
 		transfer->event.sec -= SECONDS_PER_DAY;
 		transfer->event.day++;
@@ -1034,7 +1034,7 @@ static void TR_TransferStart_f (void)
 			transfer->itemAmount[i] = td.trItemsTmp[i];
 		}
 	}
-	/* Note that personel remains hired in source base during the transfer, that is
+	/* Note that the employee remains hired in source base during the transfer, that is
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
 		for (j = 0; j < ccs.numEmployees[i]; j++) {
@@ -1130,7 +1130,7 @@ static void TR_TransferListSelect_f (void)
 		return;
 
 	switch (td.currentTransferType) {
-	case TRANS_TYPE_INVALID:	/**< No list was inited before you call this. */
+	case TRANS_TYPE_INVALID:	/**< No list was initialized before you call this. */
 		return;
 	case TRANS_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
@@ -1459,7 +1459,7 @@ static void TR_CargoListSelect_f (void)
 			if (td.trItemsTmp[i] > 0) {
 				if (cnt == num) {
 					const int amount = min(TR_GetTransferFactor(), td.trItemsTmp[i]);
-					/* you can't transfer more item than there are in current tranfer */
+					/* you can't transfer more item than there are in current transfer */
 					td.trItemsTmp[i] -= amount;
 					if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
 						B_ManageAntimatter(base, amount, qfalse);
@@ -1784,7 +1784,7 @@ static void TR_ListTransfers_f (void)
 					if (!employee)
 						continue;
 					if (employee->ugv) {
-						/* @todo: imrove ugv listing when they're implemented */
+						/* @todo: improve ugv listing when they're implemented */
 						Com_Printf("......ugv: %s [idx: %i]\n", employee->ugv->id, employee->idx);
 					} else {
 						Com_Printf("......%s (%s) / %s [idx: %i ucn: %i]\n", employee->chr.name,
@@ -1922,7 +1922,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		transfer->active = mxml_GetBool(s, "active", qfalse);
 		if (transfer->active)
 			ccs.numTransfers++;
-		/* initialising some variables */
+		/* Initializing some variables */
 		transfer->hasItems = qfalse;
 		transfer->hasEmployees = qfalse;
 		transfer->hasAliens = qfalse;
@@ -2005,7 +2005,7 @@ void TR_InitStartup (void)
 {
 	/* add commands */
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
-	Cmd_AddCommand("trans_start", TR_TransferStart_f, "Starts the tranfer");
+	Cmd_AddCommand("trans_start", TR_TransferStart_f, "Starts the transfer");
 	Cmd_AddCommand("trans_type", TR_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
 	Cmd_AddCommand("trans_emptyairstorage", TR_TransferListClear_f, "Unload everything from transfer cargo back to base");
 	Cmd_AddCommand("trans_list_click", TR_TransferListSelect_f, "Callback for transfer list node click");
