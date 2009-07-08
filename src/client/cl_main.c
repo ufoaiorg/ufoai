@@ -69,7 +69,6 @@ cvar_t *cl_lastsave;
 
 static cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 
-static cvar_t *cl_shownet;
 static cvar_t *cl_precache;
 static cvar_t *cl_introshown;
 
@@ -773,7 +772,6 @@ static void CL_InitLocal (void)
 	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
 	cl_leshowinvis = Cvar_Get("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entities as null models");
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
-	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
 	cl_log_battlescape_events = Cvar_Get("cl_log_battlescape_events", "1", 0, "Log all battlescape events to events.log");
 	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode");
 	cl_worldlevel->modified = qfalse;

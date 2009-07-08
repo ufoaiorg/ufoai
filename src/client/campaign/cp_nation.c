@@ -513,9 +513,11 @@ static void CP_NationStatsClick_f (void)
 	Cbuf_AddText(va("nation_select %i;", num));
 }
 
-static screenPoint_t fundingPts[MAX_NATIONS][MONTHS_PER_YEAR]; /* Space for month-lines with 12 points for each nation. */
+/** Space for month-lines with 12 points for each nation. */
+static screenPoint_t fundingPts[MAX_NATIONS][MONTHS_PER_YEAR];
 static int usedFundPtslist = 0;
-static screenPoint_t colorLinePts[MAX_NATIONS][2]; /* Space for 1 line (2 points) for each nation. */
+/** Space for 1 line (2 points) for each nation. */
+static screenPoint_t colorLinePts[MAX_NATIONS][2];
 static int usedColPtslists = 0;
 
 static const vec4_t graphColors[MAX_NATIONS] = {
@@ -566,9 +568,9 @@ static lineStrip_t fundingLineStrip[MAX_NATIONS];
  * @brief Draws a graph for the funding values over time.
  * @param[in] nation The nation to draw the graph for.
  * @param[in] node A pointer to a "linestrip" node that we want to draw in.
- * @param[in] maxFunding The upper limit of the graph - all values willb e scaled to this one.
+ * @param[in] maxFunding The upper limit of the graph - all values will be scaled to this one.
  * @param[in] color If this is -1 draw the line for the current selected nation
- * @todo Somehow the display of the months isnt really correct right now (straight line :-/)
+ * @todo Somehow the display of the months isn't really correct right now (straight line :-/)
  */
 static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, lineStrip_t *funding, int maxFunding, int color)
 {
@@ -606,7 +608,7 @@ static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, lineSt
 
 	/* Guarantee displayable data even for only one month */
 	if (ptsNumber == 1) {
-		/* Set the second point haft the distance to the next month to the right - small horiz line. */
+		/* Set the second point half the distance to the next month to the right - small horizontal line. */
 		fundingPts[usedFundPtslist][1].x = fundingPts[usedFundPtslist][0].x + (int)(0.5 * width / MONTHS_PER_YEAR);
 		fundingPts[usedFundPtslist][1].y = fundingPts[usedFundPtslist][0].y;
 		ptsNumber++;

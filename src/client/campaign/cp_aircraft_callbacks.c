@@ -213,7 +213,7 @@ static int AIR_GetSlotItems (aircraftItemType_t type, const aircraft_t *aircraft
 		max = MAX_AIRCRAFTSLOT;
 		break;
 	default:
-		Com_Printf("AIR_GetSlotItems: Unknow type of slot : %i", type);
+		Com_Printf("AIR_GetSlotItems: Unknown type of slot : %i", type);
 		return 0;
 	}
 
