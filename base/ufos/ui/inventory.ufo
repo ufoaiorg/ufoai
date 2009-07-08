@@ -188,7 +188,7 @@ window ahudinv extends inventory
 		pos     "878 84"
 		size    "130 265"
 		onClick   { call hideinventory }
-		onRClick  { cmd "mn_pop;" }
+		onRClick  { call hideinventory }
 	}
 }
 
