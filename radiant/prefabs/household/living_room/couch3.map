@@ -1,0 +1,54 @@
+
+// entity 0
+{
+"classname" "func_group"
+// brush 0
+{
+( 212 572 16 ) ( 204 572 16 ) ( 204 576 16 ) tex_furniture/couch_d 0 30 0 1 1 65280 0 0
+( 58 24 20 ) ( 58 24 12 ) ( 58 4 20 ) tex_furniture/couch_d 98 0 0 1 1 65280 0 0
+( 24 -98 12 ) ( 24 -92 12 ) ( 6 -98 12 ) tex_furniture/couch_d 0 30 0 1 1 65280 0 0
+( 96 4 4 ) ( 96 4 24 ) ( 122 4 4 ) tex_furniture/couch_d 0 0 0 1 1 65280 0 0
+( 6 4 12 ) ( 6 24 12 ) ( 6 4 20 ) tex_furniture/couch_d 98 0 0 1 1 65280 0 0
+( -192 2 12 ) ( -192 8 18 ) ( -64 2 12 ) tex_furniture/couch_d 0 30 0 1 1 65280 0 0
+( 0 24 30 ) ( 0 22 12 ) ( 64 22 12 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
+}
+// brush 1
+{
+( 0 -66 32 ) ( 6 -66 32 ) ( 0 -130 32 ) tex_furniture/couch_d 0 30 0 1 1 65280 0 0
+( 64 30 32 ) ( 0 30 32 ) ( 64 30 12 ) tex_furniture/couch_d 0 0 0 1 1 65280 0 0
+( 64 22 4 ) ( 64 6 4 ) ( 64 6 22 ) tex_furniture/couch_d 98 0 0 1 1 65280 0 0
+( 36 -68 4 ) ( 34 -68 4 ) ( 34 -70 4 ) tex_furniture/couch_d 0 30 0 1 1 65280 0 0
+( 64 22 12 ) ( 0 22 12 ) ( 0 24 30 ) tex_furniture/couch_d 0 0 0 1 1 65280 0 0
+( 0 -98 4 ) ( 0 -60 4 ) ( 0 -60 32 ) tex_furniture/couch_d 98 0 0 1 1 65280 0 0
+( -192 22 28 ) ( -192 28 34 ) ( -64 22 28 ) tex_furniture/couch_d 0 30 0 1 1 65280 0 0
+}
+// brush 2
+{
+( 128 -34 12 ) ( 128 -54 12 ) ( 102 -34 12 ) tex_common/nodraw 0 30 0 1 1 65280 128 0
+( 64 22 12 ) ( 0 22 12 ) ( 64 22 4 ) tex_furniture/couch_d 0 0 0 1 1 65280 0 0
+( 58 6 12 ) ( 58 30 12 ) ( 64 6 4 ) tex_furniture/couch_d 98 0 0 1 1 65280 0 0
+( 36 -68 4 ) ( 34 -68 4 ) ( 34 -70 4 ) tex_furniture/couch_d 0 30 0 1 1 65280 0 0
+( 98 6 4 ) ( 94 6 12 ) ( 98 6 12 ) tex_furniture/couch_d 0 0 0 1 1 65280 0 0
+( 6 30 12 ) ( 6 6 12 ) ( 0 30 4 ) tex_furniture/couch_d 98 0 0 1 1 65280 0 0
+}
+// brush 3
+{
+( 214 570 22 ) ( 212 570 22 ) ( 212 576 22 ) tex_furniture/couch_d 0 30 0 1 1 65280 0 0
+( 6 24 34 ) ( 6 24 14 ) ( 6 6 34 ) tex_furniture/couch_d 98 0 0 1 1 65280 0 0
+( 0 22 4 ) ( 0 6 4 ) ( 6 6 12 ) tex_common/nodraw 34 0 0 1 1 65280 128 0
+( 98 6 4 ) ( 94 6 12 ) ( 98 6 12 ) tex_furniture/couch_d 0 0 0 1 1 65280 0 0
+( 0 -98 4 ) ( 0 -60 4 ) ( 0 -60 32 ) tex_furniture/couch_d 98 0 0 1 1 65280 0 0
+( 8 478 18 ) ( 2 606 24 ) ( 8 606 18 ) tex_furniture/couch_d 0 30 0 1 1 65280 0 0
+( 0 24 30 ) ( 0 22 12 ) ( 64 22 12 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
+}
+// brush 4
+{
+( 214 570 22 ) ( 212 570 22 ) ( 212 576 22 ) tex_furniture/couch_d 0 30 0 1 1 65280 0 0
+( 64 22 4 ) ( 64 6 4 ) ( 64 6 22 ) tex_furniture/couch_d 98 0 0 1 1 65280 0 0
+( 64 6 4 ) ( 64 22 4 ) ( 58 22 12 ) tex_common/nodraw 34 0 0 1 1 65280 128 0
+( 98 6 4 ) ( 94 6 12 ) ( 98 6 12 ) tex_furniture/couch_d 0 0 0 1 1 65280 0 0
+( 58 6 12 ) ( 58 24 12 ) ( 58 6 20 ) tex_furniture/couch_d 98 0 0 1 1 65280 0 0
+( 56 606 18 ) ( 62 606 24 ) ( 56 478 18 ) tex_furniture/couch_d 0 30 0 1 1 65280 0 0
+( 0 24 30 ) ( 0 22 12 ) ( 64 22 12 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
+}
+}

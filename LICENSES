@@ -3926,7 +3926,7 @@ contrib/7th.zip |  | 2002 Iconian Fonts - Daniel Zadorozny - http://www.iconian.
 contrib/scripts/compile_po.bat |  | Kostia "Kildor" Romanov
 contrib/scripts/update_potfiles_in.bat |  | Kostia "Kildor" Romanov
 radiant/prefabs/dropships/drop_firebird.map | GNU General Public License 2.0
-radiant/prefabs/household.map | GNU General Public License 2.0
+radiant/prefabs/household/living_room/couch_corner.map | GNU General Public License 2.0
 radiant/prefabs/interceptors/inter_saracen.map | GNU General Public License 2.0
 radiant/prefabs/interceptors/inter_stiletto.map | GNU General Public License 2.0
 radiant/prefabs/misc.map | GNU General Public License 2.0
