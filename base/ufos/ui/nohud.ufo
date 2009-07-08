@@ -5,6 +5,11 @@
 
 window nohud
 {
+	func showinventory 
+	{
+		cmd "mn_push hudinv;"
+	}
+
 	// ==================
 	// render rectangle
 	// ==================

@@ -794,7 +794,6 @@ static void CL_InitLocal (void)
 	/* register our commands */
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
 	Cmd_AddCommand("targetalign", CL_ActorTargetAlign_f, _("Target your shot to the ground"));
-	Cmd_AddCommand("invopen", CL_ActorInventoryOpen_f, _("Open the actors inventory while we are in tactical mission"));
 
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
 	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");

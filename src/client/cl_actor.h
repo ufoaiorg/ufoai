@@ -140,7 +140,6 @@ qboolean CL_AddUGV(le_t *le, entity_t *ent);
 void CL_AddTargeting(void);
 void CL_AddPathing(void);
 void CL_ActorTargetAlign_f(void);
-void CL_ActorInventoryOpen_f(void);
 
 void CL_CharacterSetShotSettings(character_t *chr, int hand, int fireModeIndex, const objDef_t *weapon);
 void CL_CharacterSetRFMode(character_t *chr, int hand, int fireModeInde, const objDef_t *weapon);

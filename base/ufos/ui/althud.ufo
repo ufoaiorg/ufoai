@@ -8,6 +8,11 @@ window althud extends ahud
 		timeout	10000
 	}
 
+	func showinventory 
+	{
+		cmd "mn_push ahudinv;"
+	}
+	
 	// ==================
 	// render rectangle
 	// ==================
@@ -397,7 +402,7 @@ window althud extends ahud
 			size		"120 260"
 			scale		"4 4 4"
 	
-			onClick		{ cmd "mn_push ahudinv;" }
+			onClick		{ call showinventory }
 			onRClick		{ cmd "mn_push ahudphysdat;" }
 		}
 

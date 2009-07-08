@@ -10,6 +10,11 @@ window hud extends ahud
 		timeout		10000
 	}
 
+	func showinventory 
+	{
+		cmd "mn_push hudinv;"
+	}
+
 	// ==================
 	// render rectangle
 	// ==================
@@ -748,7 +753,7 @@ window hud extends ahud
 			pos		"6 247"
 			texl	"128 0"
 			texh	"164 75"
-			onClick	{ cmd "mn_push hudinv;" }
+			onClick	{ call showinventory }
 		}
 	}
 

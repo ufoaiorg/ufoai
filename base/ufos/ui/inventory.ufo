@@ -9,6 +9,11 @@ window inventory
 		size "512 512"
 	}
 
+	func hideinventory
+	{
+		cmd "mn_pop;"
+	}
+
 	// ==================
 	// background
 	// ==================
@@ -146,7 +151,7 @@ window inventory
 		texl	"192 0"	size "64 37"
 		pos		"428 458"
 		icon return
-		onClick	{ cmd mn_pop }
+		onClick	{ call hideinventory }
 	}
 }
 
@@ -160,14 +165,14 @@ window hudinv extends inventory
 	{
 		pos		"983 266"
 		size	"36 75"
-		onClick	{ cmd "mn_pop;" }
+		onClick	{ call hideinventory }
 	}
 
 	zone bt_inventory
 	{
 		pos		"983 376"
 		size	"36 75"
-		onClick	{ cmd "mn_pop;" }
+		onClick	{ call hideinventory }
 	}
 }
 
@@ -182,7 +187,7 @@ window ahudinv extends inventory
 		tooltip "_Inventory and physical stats"
 		pos     "878 84"
 		size    "130 265"
-		onClick   { cmd "mn_pop;" }
+		onClick   { call hideinventory }
 		onRClick  { cmd "mn_pop;" }
 	}
 }
