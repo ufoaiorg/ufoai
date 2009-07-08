@@ -280,8 +280,7 @@ static qboolean MN_KeyPressedInActiveWindow (unsigned int key)
 
 	/* execute event */
 	node = binding->node;
-	if (node)
-		MN_ExecuteEventActions(node, node->onClick);
+	node->behaviour->activate(node);
 	return qtrue;
 }
 

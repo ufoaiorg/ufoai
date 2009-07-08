@@ -529,6 +529,15 @@ static void MN_AbstractNodeClone (const menuNode_t *source, menuNode_t *clone)
 }
 
 /**
+ * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
+ */
+static void MN_AbstractNodeActivate (menuNode_t *node)
+{
+	if (node->onClick)
+		MN_ExecuteEventActions(node, node->onClick);
+}
+
+/**
  * @brief Call to update the node layout. This common code revalidates the node tree.
  */
 static void MN_AbstractNodeDoLayout (menuNode_t *node)
@@ -558,6 +567,7 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	behaviour->dndFinished = MN_AbstractNodeDNDFinished;
 	behaviour->doLayout = MN_AbstractNodeDoLayout;
 	behaviour->clone = MN_AbstractNodeClone;
+	behaviour->activate = MN_AbstractNodeActivate;
 
 	/* some commands */
 #ifdef DEBUG

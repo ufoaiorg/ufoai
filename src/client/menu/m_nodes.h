@@ -199,6 +199,7 @@ typedef struct nodeBehaviour_s {
 	void (*init)(menuNode_t *node);			/**< call every time we push the parent menu */
 	void (*clone)(const menuNode_t *source, menuNode_t *clone);			/**< call to initialize a cloned node */
 	void (*doLayout)(menuNode_t *node);		/**< call to update node layout */
+	void (*activate)(menuNode_t *node);		/**< Activate the node. Can be used without the mouse (ie. a button will execute onClick) */
 
 	/* drag and drop callback */
 	qboolean (*dndEnter)(menuNode_t *node);							/**< Send to the target when we enter first, return true if we can drop the DND somewhere on the node */

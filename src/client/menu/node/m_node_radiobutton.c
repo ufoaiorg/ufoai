@@ -67,14 +67,13 @@ static void MN_RadioButtonNodeDraw (menuNode_t *node)
 }
 
 /**
- * @brief Handles radio button clicks
+ * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-static void MN_RadioButtonNodeClick (menuNode_t * node, int x, int y)
+static void MN_RadioButtonNodeActivate (menuNode_t * node)
 {
 	float current;
 
-	/* the cvar string is stored in dataModelSkinOrCVar
-	 * no cvar given? */
+	/* no cvar given? */
 	if (!node->cvar || !*(char*)node->cvar) {
 		Com_Printf("MN_RadioButtonNodeClick: node '%s' doesn't have a valid cvar assigned\n", MN_GetPath(node));
 		return;
@@ -99,6 +98,14 @@ static void MN_RadioButtonNodeClick (menuNode_t * node, int x, int y)
 	}
 }
 
+/**
+ * @brief Handles radio button clicks
+ */
+static void MN_RadioButtonNodeClick (menuNode_t * node, int x, int y)
+{
+	MN_RadioButtonNodeActivate(node);
+}
+
 static const value_t properties[] = {
 	{"value", V_FLOAT, offsetof(menuNode_t, extraData1), MEMBER_SIZEOF(menuNode_t, extraData1)},
 	{NULL, V_NULL, 0, 0}
@@ -109,5 +116,6 @@ void MN_RegisterRadioButtonNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "radiobutton";
 	behaviour->draw = MN_RadioButtonNodeDraw;
 	behaviour->leftClick = MN_RadioButtonNodeClick;
+	behaviour->activate = MN_RadioButtonNodeActivate;
 	behaviour->properties = properties;
 }
