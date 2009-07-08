@@ -215,7 +215,7 @@ void MN_RemoveFocus (void)
 	}
 }
 
-static menuKeyBinding_t* MN_AllocKeyBinding()
+static menuKeyBinding_t* MN_AllocKeyBinding (void)
 {
 	menuKeyBinding_t* result;
 	if (mn.numKeyBindings >= MAX_MENUKEYBINDING)
@@ -233,7 +233,7 @@ static menuKeyBinding_t* MN_AllocKeyBinding()
  * @todo check: key per window must be unique
  * @todo check: key used into MN_KeyPressed can't be used
  */
-void MN_SetKeyBinding(const char* path, int key)
+void MN_SetKeyBinding (const char* path, int key)
 {
 	menuNode_t *node;
 	menuKeyBinding_t *binding;
