@@ -962,7 +962,7 @@ static void TR_TransferEnd (transfer_t *transfer)
 
 	if (!destination->founded) {
 		TR_EmptyTransferCargo(NULL, transfer, qfalse);
-		MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), _("The destination base no longer exists! Transfer cargo are lost, personnel got unhired."), qfalse, MSG_TRANSFERFINISHED, NULL);
+		MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), _("The destination base no longer exists! Transfer carge was lost, personnel has been discharged."), qfalse, MSG_TRANSFERFINISHED, NULL);
 		/** @todo what if source base is lost? we won't be able to unhire transfered employees. */
 	} else {
 		char message[256];
