@@ -42,7 +42,6 @@
 static const int TABLE_COLUMS = 3;
 static GtkTreeStore* store;
 static GtkTreeView* view;
-static GtkTextView* prefabDescription;
 static int unselectAfterInsert = 0;
 static int replaceSelection = 0;
 
@@ -102,10 +101,11 @@ void PrefabAdd(const char *name, GtkTreeIter* parentIter) {
 	const char *description = "";
 	char buffer[256];
 	StringOutputStream nameContent(256);
-	nameContent << "<b>" << name << "</b>";
 	// remove extension from prefab filename
 	CopiedString baseName = StringRange(name, path_get_filename_base_end(name));
+	CopiedString fileName = StringRange(path_get_filename_start(name), path_get_filename_base_end(name));
 	Prefab_GetPath(fullBaseNamePath, baseName.c_str());
+	nameContent << "<b>" << fileName.c_str() << "</b>";
 	imagePath << fullBaseNamePath.c_str() << ".jpg";
 	descriptionPath << fullBaseNamePath.c_str() << ".txt";
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(
@@ -122,22 +122,6 @@ void PrefabAdd(const char *name, GtkTreeIter* parentIter) {
 		g_warning("Could not find image (%s) for prefab %s\n", baseName.c_str(), name);
 	gtk_tree_store_append(store, &iter, parentIter);
 	gtk_tree_store_set(store, &iter, PREFAB_NAME, name, PREFAB_DESCRIPTION, nameContent.c_str(), PREFAB_IMAGE, img, -1);
-}
-
-static void PrefabList_selection_changed (GtkTreeSelection* selection, gpointer data)
-{
-	GtkTreeModel* model;
-	GtkTreeIter selected;
-	if (gtk_tree_selection_get_selected(selection, &model, &selected)) {
-		char *description;
-		gtk_tree_model_get(model, &selected, PREFAB_DESCRIPTION, &description, -1);
-		GtkTextBuffer* buffer = gtk_text_view_get_buffer(prefabDescription);
-		if (description) {
-			gtk_text_buffer_set_text(buffer, description, -1);
-		} else {
-			gtk_text_buffer_set_text(buffer, "", -1);
-		}
-	}
 }
 
 static void Unselect_toggled (GtkWidget *widget, gpointer data)
@@ -216,8 +200,10 @@ class CLoadPrefabSubdir
 			fullpath << name;
 			if (file_is_directory(fullpath.c_str())) {
 				GtkTreeIter subIter;
+				StringOutputStream sectionDescription(256);
+				sectionDescription << "<b>" << name << "</b>";
 				gtk_tree_store_append(store, &subIter, m_parentIter);
-				gtk_tree_store_set(store, &subIter, PREFAB_NAME, name, PREFAB_DESCRIPTION, name, -1);
+				gtk_tree_store_set(store, &subIter, PREFAB_NAME, name, PREFAB_DESCRIPTION, sectionDescription.c_str(), -1);
 				g_debug("directory: %s\n", name);
 				StringOutputStream subPath(128);
 				subPath << m_subpath.c_str() << "/" << name;
@@ -274,28 +260,6 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 
 		gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
 		g_object_unref(G_OBJECT(store));
-	}
-
-	{
-		GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
-		g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(PrefabList_selection_changed),
-				0);
-	}
-
-	{
-		// prefab description
-		GtkWidget* scr = gtk_scrolled_window_new(0, 0);
-		gtk_box_pack_start(GTK_BOX(vbox), scr, FALSE, TRUE, 0);
-		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-		gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
-
-		{
-			prefabDescription = GTK_TEXT_VIEW(gtk_text_view_new());
-			widget_set_size(GTK_WIDGET(prefabDescription), 0, 0); // as small as possible
-			gtk_text_view_set_wrap_mode(prefabDescription, GTK_WRAP_WORD);
-			gtk_text_view_set_editable(prefabDescription, FALSE);
-			gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(prefabDescription));
-		}
 	}
 
 	{
