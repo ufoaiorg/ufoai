@@ -55,6 +55,9 @@ static const ufoTypeList_t ufoTypeList[] = {
 	{"craft_ufo_harvester", "craft_crash_harvester", UFO_HARVESTER},
 	{"craft_ufo_scout", "craft_crash_scout", UFO_SCOUT},
 	{"craft_ufo_supply", "craft_crash_supply", UFO_SUPPLY},
+	{"craft_ufo_gunboat", "craft_crash_gunboat", UFO_GUNBOAT},
+	{"craft_ufo_ripper", "craft_crash_ripper", UFO_RIPPER},
+	{"craft_ufo_mothership", "craft_crash_mothership", UFO_MOTHERSHIP},
 
 	{NULL, 0}
 };

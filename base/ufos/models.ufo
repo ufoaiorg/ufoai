@@ -356,6 +356,24 @@ menu_model ufo_carrier
 	}
 }
 
+// ============== UFO Ripper ======================
+menu_model ufo_ripper
+{
+	model	"aircraft/ufo_ripper/ufo_ripper"
+}
+
+// ============== UFO Gunboat ======================
+menu_model ufo_gunboat
+{
+	model	"aircraft/ufo_gunboat/ufo_gunboat"
+}
+
+// ============== UFO Mothership ======================
+menu_model ufo_mothership
+{
+	model	"aircraft/ufo_mothership/ufo_mothership"
+}
+
 // ============== UFO Harvester ======================
 menu_model ufo_harvester
 {

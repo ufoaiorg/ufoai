@@ -627,6 +627,8 @@ tech rs_alien_ufo_theory
 
 	require_OR
 	{
+		item craft_ufo_ripper 1
+		item craft_ufo_gunboat 1
 		item craft_ufo_scout 1
 		item craft_ufo_fighter 1
 		item craft_ufo_supply 1
@@ -3727,6 +3729,92 @@ tech rs_craft_ufo_corrupter
 	mdl		ufo_corrupter
 }
 
+tech rs_craft_ufo_gunboat
+{
+	name	"_UFO - Gunboat"
+	type	craft
+	up_chapter	crafts
+
+	description {
+		default "_ufo_gunboat_txt"
+	}
+	pre_description {
+		default "_ufo_gunboat_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+		item craft_ufo_gunboat 1
+	}
+
+	provides	"craft_ufo_gunboat"
+	time	2500
+	producetime -1
+
+	mdl		ufo_gunboat
+}
+
+tech rs_craft_ufo_ripper
+{
+	name	"_UFO - Ripper"
+	type	craft
+	up_chapter	crafts
+
+	description {
+		default "_ufo_ripper_txt"
+	}
+	pre_description {
+		default "_ufo_ripper_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+		item craft_ufo_ripper 1
+	}
+
+	provides	"craft_ufo_ripper"
+	time	2500
+	producetime -1
+
+	mdl		ufo_ripper
+}
+
 tech rs_craft_ufo_harvester
 {
 	name	"_UFO - Harvester"
@@ -3768,6 +3856,49 @@ tech rs_craft_ufo_harvester
 	producetime -1
 
 	mdl		ufo_harvester
+}
+
+tech rs_craft_ufo_mothership
+{
+	name	"_UFO - Mothership"
+	type	craft
+	up_chapter	crafts
+
+	description {
+		default "_ufo_mothership_txt"
+	}
+	pre_description {
+		default "_ufo_mothership_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+		item craft_ufo_mothership 1
+	}
+
+	provides	"craft_ufo_mothership"
+	time	2500
+	producetime -1
+
+	mdl		ufo_mothership
 }
 
 //========================

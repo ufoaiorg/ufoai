@@ -67,6 +67,33 @@ item craft_ufo_bomber
 	notonmarket	true
 }
 
+item craft_ufo_ripper
+{
+	name		"_UFO - Ripper"
+	is_dummy	true
+	weapon		false
+	model		objects/alien/disassembled/ufo_ripper
+	notonmarket	true
+}
+
+item craft_ufo_mothership
+{
+	name		"_UFO - Mothership"
+	is_dummy	true
+	weapon		false
+	model		objects/alien/disassembled/ufo_mothership
+	notonmarket	true
+}
+
+item craft_ufo_gunboat
+{
+	name		"_UFO - Gunboat"
+	is_dummy	true
+	weapon		false
+	model		objects/alien/disassembled/ufo_gunboat
+	notonmarket	true
+}
+
 item craft_ufo_corrupter
 {
 	name		"_UFO - Corrupter"

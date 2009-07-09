@@ -142,6 +142,9 @@ typedef enum {
 	UFO_BOMBER,
 	UFO_CARRIER,
 	UFO_SUPPLY,
+	UFO_GUNBOAT,
+	UFO_RIPPER,
+	UFO_MOTHERSHIP,
 
 	UFO_MAX
 } ufoType_t;

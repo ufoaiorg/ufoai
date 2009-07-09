@@ -457,7 +457,44 @@ aircraft craft_ufo_harvester
 	}
 }
 
-// TODO: Gunboat goes here
+aircraft craft_ufo_gunboat
+{
+	param {
+		speed		13
+		maxspeed	17
+		shield		4
+		ecm			100
+		damage		300
+		accuracy	80
+		range		347
+	}
+	name		"_UFO - Gunboat"
+	shortname	"_Gunboat U"
+	type		ufo
+	model		"geoscape/ufo_gunboat"
+	size		2
+	building	building_big_ufo_hangar
+	price		230000
+	image		"geoscape/air_ufo"
+	slot {
+		type		weapon
+		size		heavy
+		contains	rs_craft_weapon_sparrowhawk
+		ammo		rs_craft_ammo_sparrowhawk
+	}
+	slot {
+		type		weapon
+		size		heavy
+		contains	rs_craft_weapon_sparrowhawk
+		ammo		rs_craft_ammo_sparrowhawk
+	}
+	slot {
+		type		weapon
+		size		heavy
+		contains	rs_craft_weapon_sparrowhawk
+		ammo		rs_craft_ammo_sparrowhawk
+	}
+}
 
 aircraft craft_ufo_corrupter
 {
@@ -507,7 +544,32 @@ aircraft craft_ufo_supply
 	image		"geoscape/air_ufo"
 }
 
-// TODO: Ripper goes here
+aircraft craft_ufo_ripper
+{
+	param {
+		speed		10
+		maxspeed	14
+		shield		3
+		ecm			100
+		damage		500
+		accuracy	80
+		range		500
+	}
+	name		"_UFO - Ripper"
+	shortname	"_Ripper U"
+	type		ufo
+	model		"geoscape/ufo_ripper"
+	size		2
+	building	building_big_ufo_hangar
+	price		250000
+	image		"geoscape/air_ufo"
+	slot {
+		type		weapon
+		size		light
+		contains	rs_craft_weapon_sparrowhawk
+		ammo		rs_craft_ammo_sparrowhawk
+	}
+}
 
 aircraft craft_ufo_bomber
 {
@@ -558,6 +620,29 @@ aircraft craft_ufo_carrier
 	shortname	"_Carrier U"
 	type		ufo
 	model		"geoscape/ufo_carrier"
+	size		1
+	building	building_small_ufo_hangar
+	price		1000000
+	image		"geoscape/air_ufo"
+	nogeoscape	true
+}
+
+// The mothership UFO does not appear on the geoscape.
+aircraft craft_ufo_mothership
+{
+	param {
+		speed		13
+		maxspeed	20
+		shield		0
+		ecm			100
+		damage		60
+		accuracy	50
+		range		347
+	}
+	name		"_UFO - Mothership"
+	shortname	"_Mothership U"
+	type		ufo
+	model		"geoscape/ufo_mothership"
 	size		1
 	building	building_small_ufo_hangar
 	price		1000000
