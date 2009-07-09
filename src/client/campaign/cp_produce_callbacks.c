@@ -656,9 +656,8 @@ static void PR_ProductionType_f (void)
 			selectedItem = (objDef_t*)LIST_GetByIdx(productionItemList, 0);
 	}
 	/* update selection index if first entry of actual list was chosen */
-	if (!selectedProduction) {
-		Cmd_ExecuteString(va("prod_selectline %i", ccs.productions[base->idx].numItems + QUEUE_SPACERS));
-	}
+	if (!selectedProduction)
+		MN_ExecuteConfunc("prod_selectline %i", ccs.productions[base->idx].numItems + QUEUE_SPACERS);
 
 	/* Update displayed info about selected entry (if any). */
 	PR_ProductionInfo(base);
@@ -796,7 +795,7 @@ static void PR_ProductionIncrease_f (void)
 			MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));
 			return;
 		} else
-			Cmd_ExecuteString(va("prod_selectline %i", prod->idx));
+			MN_ExecuteConfunc("prod_selectline %i", prod->idx);
 
 		if (produceCategory != FILTER_AIRCRAFT) {
 			/* Get technology of the item in the selected queue-entry. */
@@ -872,10 +871,10 @@ static void PR_ProductionStop_f (void)
 
 	if (queue->numItems == 0) {
 		selectedProduction = NULL;
-		Cmd_ExecuteString("prod_selectline -1");
+		MN_ExecuteConfunc("prod_selectline -1");
 	} else if (selectedProduction->idx >= queue->numItems) {
 		selectedProduction = &queue->items[queue->numItems - 1];
-		Cmd_ExecuteString(va("prod_selectline %i", selectedProduction->idx));
+		MN_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
 	}
 
 	PR_ProductionInfo(base);
@@ -960,7 +959,7 @@ static void PR_ProductionUp_f (void)
 	PR_QueueMove(queue, selectedProduction->idx, -1);
 
 	selectedProduction = &queue->items[selectedProduction->idx - 1];
-	Cmd_ExecuteString(va("prod_selectline %i", selectedProduction->idx));
+	MN_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
 	PR_UpdateProductionList(base);
 }
 
@@ -983,7 +982,7 @@ static void PR_ProductionDown_f (void)
 	PR_QueueMove(queue, selectedProduction->idx, 1);
 
 	selectedProduction = &queue->items[selectedProduction->idx + 1];
-	Cmd_ExecuteString(va("prod_selectline %i", selectedProduction->idx));
+	MN_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
 	PR_UpdateProductionList(base);
 }
 
