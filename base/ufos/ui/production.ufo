@@ -474,27 +474,6 @@ window production
 		onWheelDown	{ cmd "prod_down;" }
 	}
 
-	// ==========================================
-	// confunc to enable/disable priority buttons
-	// ==========================================
-
-	confunc prod_priodecr_off
-	{
-		//decrease and prio off
-		*prod_dec@invis true
-		*prod_stop@invis true
-		*prod_inc@invis false
-		*prod_down@invis true
-		*prod_up@invis true
-	}
-
-	confunc prod_inc_off
-	{
-		//increase off (used in combination with prod_priodecr_off
-		*prod_inc@invis true
-		*prod_inc2@invis true
-	}
-
 	/**
 	 * @brief nothing is selected
 	 */

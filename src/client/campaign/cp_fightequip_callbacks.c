@@ -841,7 +841,7 @@ static void AIM_PreviousItemtype_f (void)
 
 
 /**
- * @brief returns the itemtype index from string identifier
+ * @brief returns the itemtype index from a string identifier
  */
 static aircraftItemType_t BDEF_GetItemTypeFromID (const char *type)
 {
@@ -855,7 +855,7 @@ static aircraftItemType_t BDEF_GetItemTypeFromID (const char *type)
 	}
 }
 /**
- * @brief returns the itemtype index from string identifier
+ * @brief returns the string identifier from an itemtype index
  */
 static const char *BDEF_GetIDFromItemType (aircraftItemType_t type)
 {
@@ -872,7 +872,6 @@ static const char *BDEF_GetIDFromItemType (aircraftItemType_t type)
 /**
  * @brief Fills the battery list, descriptions, and weapons in slots
  * of the basedefence equip menu
- * @sa BDEF_MenuInit_f
  */
 static void BDEF_BaseDefenseMenuUpdate_f (void)
 {
@@ -880,7 +879,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 	char type[MAX_VAR];
 	base_t *base = B_GetCurrentSelectedBase();
 	installation_t *installation = INS_GetCurrentSelectedInstallation();
-	aircraftItemType_t bdefType = 0;
+	aircraftItemType_t bdefType;
 	char defBuffer[MAX_SMALLMENUTEXTLEN];
 	linkedList_t *slotList = NULL;
 	const qboolean missileResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"));
@@ -929,11 +928,12 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 		Com_sprintf(defBuffer, lengthof(defBuffer), "set_defencetypes %s %s",
 			(!missileResearched) ? "na" : (base && base->numBatteries > 0) ? "enable" : "disable",
 			(!laserResearched) ? "na" : (base && base->numLasers > 0) ? "enable" : "disable");
+		MN_ExecuteConfunc("%s", defBuffer);
 	} else if (installation) {
 		Com_sprintf(defBuffer, lengthof(defBuffer), "set_defencetypes %s %s",
 			(!missileResearched) ? "na" : (installation && installation->installationStatus == INSTALLATION_WORKING && installation->numBatteries > 0) ? "enable" : "disable", "na");
+		MN_ExecuteConfunc("%s", defBuffer);
 	}
-	MN_ExecuteConfunc("%s", defBuffer);
 
 	if (!strcmp(type, "missile"))
 		bdefType = AC_ITEM_BASE_MISSILE;
