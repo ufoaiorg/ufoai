@@ -680,7 +680,6 @@ static void UFO_ListOnGeoscape_f (void)
  * @param[in] ufoType The type of ufo (fighter, scout, ...).
  * @param[in] destination Position where the ufo should go. NULL is randomly chosen
  * @param[in] mission Pointer to the mission the UFO is involved in
- * @todo UFOs are not assigned unique idx fields. Could be handy...
  * @sa UFO_RemoveFromGeoscape
  * @sa UFO_RemoveFromGeoscape_f
  */
