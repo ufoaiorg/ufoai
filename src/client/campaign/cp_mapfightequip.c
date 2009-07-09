@@ -1071,7 +1071,7 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 			minCraftDistance = distance;
 			closestCraft = ufo;		
 		}
-		if ((minAttackerDistance < 0 || minCraftDistance > distance) && (inst && ufo->installationTarget == inst)) {
+		if (minAttackerDistance < 0 || minCraftDistance > distance) {
 			minAttackerDistance = distance;
 			closestAttacker = ufo;		
 		}

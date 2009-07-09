@@ -2420,9 +2420,6 @@ void AIR_SaveAircraftXML (mxml_node_t *node, aircraft_t const aircraft, qboolean
 		}
 	}
 
-	if (aircraft.installationTarget)
-		mxml_AddInt(node, "installationtarget", aircraft.installationTarget->idx);
-
 	if (aircraft.aircraftTarget) {
 		if (isUfo)
 			mxml_AddInt(node, "aircrafttarget", aircraft.aircraftTarget->idx);

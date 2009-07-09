@@ -75,7 +75,7 @@ static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
  * @sa AIRFIGHT_RemoveProjectile
  * @sa AII_ReloadWeapon for the aircraft item reload code
  */
-static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const installation_t* attackingInstallation, aircraft_t *attacker, installation_t* aimedInstallation, aircraft_t *target, aircraftSlot_t *weaponSlot)
+static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const installation_t* attackingInstallation, aircraft_t *attacker, aircraft_t *target, aircraftSlot_t *weaponSlot)
 {
 	aircraftProjectile_t *projectile;
 
@@ -109,17 +109,10 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 
 	projectile->numProjectiles++;
 
-	/* if we are not aiming to a base - we are aiming towards an aircraft */
-	if (aimedInstallation) {
-		projectile->aimedAircraft = NULL;
-		projectile->aimedInstallation = aimedInstallation;
-		VectorSet(projectile->idleTarget, aimedInstallation->pos[0], aimedInstallation->pos[1], 0);
-	} else {
-		assert(target);
-		projectile->aimedAircraft = target;
-		projectile->aimedInstallation = NULL;
-		VectorSet(projectile->idleTarget, 0, 0, 0);
-	}
+	assert(target);
+	projectile->aimedAircraft = target;
+	VectorSet(projectile->idleTarget, 0, 0, 0);
+
 	projectile->time = 0;
 	projectile->angle = 0.0f;
 
@@ -347,7 +340,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 		const objDef_t *ammo = shooter->weapons[slotIdx].ammo;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(NULL, NULL, shooter, shooter->installationTarget, target, shooter->weapons + slotIdx)) {
+		if (AIRFIGHT_AddProjectile(NULL, NULL, shooter, target, shooter->weapons + slotIdx)) {
 			shooter->weapons[slotIdx].delayNextShot = ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			probability = frand();
@@ -702,7 +695,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 			continue;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(base, NULL, NULL, NULL, weapons[i].target, &weapons[i].slot + i)) {
+		if (AIRFIGHT_AddProjectile(base, NULL, NULL, weapons[i].target, &weapons[i].slot + i)) {
 			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot + i))
@@ -757,7 +750,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 			continue;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(NULL, installation, NULL, NULL, weapons[i].target, &weapons[i].slot + i)) {
+		if (AIRFIGHT_AddProjectile(NULL, installation, NULL, weapons[i].target, &weapons[i].slot + i)) {
 			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot + i))

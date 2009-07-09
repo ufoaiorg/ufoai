@@ -53,8 +53,6 @@ typedef struct aircraftProjectile_s {
 	vec3_t idleTarget;		/**< target of the projectile
 							 ** used only if the projectile will miss its target (that is if aimedAircraft is NULL) */
 	aircraft_t *attackingAircraft;	/**< Aircraft which shooted the projectile. NULL if aircraft is destroyed or base is shooting */
-
-	struct installation_s* aimedInstallation;	/**< aimed installation - NULL if the target is an aircraft */
 	aircraft_t *aimedAircraft;	/**< target of the projectile/
 								 ** used only if the projectile will touch its target (otherwise it's NULL) */
 	int time;				/**< time since the projectile has been launched */
