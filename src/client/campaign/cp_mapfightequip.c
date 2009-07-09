@@ -1069,11 +1069,13 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 		distance = MAP_GetDistance((inst) ? inst->pos : base->pos, ufo->pos);
 		if (minCraftDistance < 0 || minCraftDistance > distance) {
 			minCraftDistance = distance;
-			closestCraft = ufo;		
+			closestCraft = ufo;
 		}
-		if (minAttackerDistance < 0 || minCraftDistance > distance) {
+		if ((minAttackerDistance < 0 || minAttackerDistance > distance) && ufo->mission
+		 && ((base && ufo->mission->category == INTERESTCATEGORY_BASE_ATTACK && ufo->mission->data == base)
+		 || (inst && ufo->mission->category == INTERESTCATEGORY_INTERCEPT && ufo->mission->data == inst))) {
 			minAttackerDistance = distance;
-			closestAttacker = ufo;		
+			closestAttacker = ufo;
 		}
 	}
 
