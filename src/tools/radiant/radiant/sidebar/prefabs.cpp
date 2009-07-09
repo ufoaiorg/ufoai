@@ -101,7 +101,8 @@ void PrefabAdd(const char *name, GtkTreeIter* parentIter) {
 	GtkTreeIter iter;
 	const char *description = "";
 	char buffer[256];
-
+	StringOutputStream nameContent(256);
+	nameContent << "<b>" << name << "</b>";
 	// remove extension from prefab filename
 	CopiedString baseName = StringRange(name, path_get_filename_base_end(name));
 	Prefab_GetPath(fullBaseNamePath, baseName.c_str());
@@ -114,12 +115,13 @@ void PrefabAdd(const char *name, GtkTreeIter* parentIter) {
 		stream.read(buffer, file->size());
 		buffer[file->size()] = '\0';
 		description = buffer;
+		nameContent << "\n" << description;
 	}
 	GdkPixbuf *img = pixbuf_new_from_file_with_mask(imagePath.c_str());
 	if (!img)
 		g_warning("Could not find image (%s) for prefab %s\n", baseName.c_str(), name);
 	gtk_tree_store_append(store, &iter, parentIter);
-	gtk_tree_store_set(store, &iter, PREFAB_NAME, name, PREFAB_DESCRIPTION, description, PREFAB_IMAGE, img, -1);
+	gtk_tree_store_set(store, &iter, PREFAB_NAME, name, PREFAB_DESCRIPTION, nameContent.c_str(), PREFAB_IMAGE, img, -1);
 }
 
 static void PrefabList_selection_changed (GtkTreeSelection* selection, gpointer data)
@@ -215,7 +217,7 @@ class CLoadPrefabSubdir
 			if (file_is_directory(fullpath.c_str())) {
 				GtkTreeIter subIter;
 				gtk_tree_store_append(store, &subIter, m_parentIter);
-				gtk_tree_store_set(store, &subIter, PREFAB_NAME, name, -1);
+				gtk_tree_store_set(store, &subIter, PREFAB_NAME, name, PREFAB_DESCRIPTION, name, -1);
 				g_debug("directory: %s\n", name);
 				StringOutputStream subPath(128);
 				subPath << m_subpath.c_str() << "/" << name;
@@ -236,44 +238,38 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 	GtkWidget* scr = gtk_scrolled_window_new(0, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), scr, TRUE, TRUE, 0);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr),
-			GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+			GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr),
 			GTK_SHADOW_IN);
 
 	{
 		// prefab list
-		store = gtk_tree_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING,
-				GDK_TYPE_PIXBUF);
+		store = gtk_tree_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF);
 		view
 				= GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
 		gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), TRUE);
 		gtk_tree_view_set_search_column(GTK_TREE_VIEW(view), PREFAB_NAME);
 		gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(view), TRUE);
 		gtk_tree_view_set_headers_clickable(GTK_TREE_VIEW(view), TRUE);
-		gtk_tree_view_set_reorderable(GTK_TREE_VIEW(view), TRUE);
 		gtk_tree_view_set_grid_lines(GTK_TREE_VIEW(view), GTK_TREE_VIEW_GRID_LINES_HORIZONTAL);
 		g_signal_connect(G_OBJECT(view), "button_press_event", G_CALLBACK(PrefabList_button_press), 0);
 
 		{
-			GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
 			GtkTreeViewColumn* column =
-					gtk_tree_view_column_new_with_attributes(
-							_("Prefab"), renderer, "text", PREFAB_NAME,
-							(char const*) 0);
-			gtk_tree_view_column_set_expand(column, TRUE);
+					gtk_tree_view_column_new();
+			gtk_tree_view_column_set_title(column,
+							_("Prefab"));
+			gtk_tree_view_column_set_expand(column, FALSE);
 			gtk_tree_view_column_set_sort_indicator(column, TRUE);
 			gtk_tree_view_column_set_sort_column_id(column, PREFAB_NAME);
 			gtk_tree_view_append_column(view, column);
-		}
-
-		{
-			GtkCellRenderer* renderer = gtk_cell_renderer_pixbuf_new();
-			GtkTreeViewColumn* column =
-					gtk_tree_view_column_new_with_attributes(
-							_("Image"), renderer, "pixbuf", PREFAB_IMAGE,
-							(char const*) 0);
-			gtk_tree_view_column_set_fixed_width(column, 128);
-			gtk_tree_view_append_column(view, column);
+			GtkCellRenderer* imageRenderer = gtk_cell_renderer_pixbuf_new();
+			gtk_cell_renderer_set_fixed_size(imageRenderer, 128, -1);
+			gtk_tree_view_column_pack_start(column, imageRenderer, false);
+			gtk_tree_view_column_add_attribute(column, imageRenderer, "pixbuf", PREFAB_IMAGE);
+			GtkCellRenderer* nameRenderer = gtk_cell_renderer_text_new();
+			gtk_tree_view_column_pack_end(column, nameRenderer, false);
+			gtk_tree_view_column_add_attribute(column, nameRenderer, "markup", PREFAB_DESCRIPTION);
 		}
 
 		gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
