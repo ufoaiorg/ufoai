@@ -29,9 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define BULLETS_PER_SHOT	1
 #define MAX_MULTIPLE_PROJECTILES	10
 
-/* Remove attack of base by ufo for 2.2: doesn't match storyline. */
-/* #define UFO_ATTACK_BASES */
-
 /**
  * @note 0 if the weapon can shoot
  * @note -1 if it can't shoot atm
@@ -57,11 +54,9 @@ typedef struct aircraftProjectile_s {
 							 ** used only if the projectile will miss its target (that is if aimedAircraft is NULL) */
 	aircraft_t *attackingAircraft;	/**< Aircraft which shooted the projectile. NULL if aircraft is destroyed or base is shooting */
 
-	struct base_s* aimedBase;		/**< aimed base - NULL if the target is an aircraft */
 	struct installation_s* aimedInstallation;	/**< aimed installation - NULL if the target is an aircraft */
 	aircraft_t *aimedAircraft;	/**< target of the projectile/
-								 ** used only if the projectile will touch its target (otherwise it's NULL)
-									and if aimedBase != NULL */
+								 ** used only if the projectile will touch its target (otherwise it's NULL) */
 	int time;				/**< time since the projectile has been launched */
 	float angle;			/**< angle of the missile on the geoscape */
 	qboolean bullets;		/**< projectile has active bullets on geoscape */

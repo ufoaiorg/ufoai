@@ -1184,9 +1184,6 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings, vec2_t pos)
 	/* a new base is not discovered (yet) */
 	base->alienInterest = newBaseAlienInterest;
 
-	/* intialise hit points */
-	base->batteryDamage = MAX_BATTERY_DAMAGE;
-	base->baseDamage = MAX_BASE_DAMAGE;
 	BDEF_InitialiseBaseSlots(base);
 
 	/* Reset Radar range */
@@ -2379,18 +2376,6 @@ void B_UpdateBaseData (void)
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), ccs.bases[baseIdx].name);
 				MS_AddNewMessage(_("Building finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
-		}
-
-		/* Repair base buildings */
-		if (ccs.bases[baseIdx].batteryDamage <= MAX_BATTERY_DAMAGE) {
-			ccs.bases[baseIdx].batteryDamage += 20;
-			if (ccs.bases[baseIdx].batteryDamage > MAX_BATTERY_DAMAGE)
-				ccs.bases[baseIdx].batteryDamage = MAX_BATTERY_DAMAGE;
-		}
-		if (ccs.bases[baseIdx].baseDamage <= MAX_BASE_DAMAGE) {
-			ccs.bases[baseIdx].baseDamage += 20;
-			if (ccs.bases[baseIdx].baseDamage > MAX_BASE_DAMAGE)
-				ccs.bases[baseIdx].baseDamage = MAX_BASE_DAMAGE;
 		}
 	}
 }

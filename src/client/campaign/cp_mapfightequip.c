@@ -1071,8 +1071,7 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 			minCraftDistance = distance;
 			closestCraft = ufo;		
 		}
-		if ((minAttackerDistance < 0 || minCraftDistance > distance) && 
-			((inst && ufo->installationTarget == inst) || (base && ufo->baseTarget == base))) {
+		if ((minAttackerDistance < 0 || minCraftDistance > distance) && (inst && ufo->installationTarget == inst)) {
 			minAttackerDistance = distance;
 			closestAttacker = ufo;		
 		}
@@ -1111,24 +1110,24 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 	}
 }
 
-
 void BDEF_AutoSelectTarget (void)
 {
 	int i;
 
 	for (i = 0; i < ccs.numBases; i++) {
 		base_t *base = B_GetFoundedBaseByIDX(i);
-
 		if (!base)
 			continue;
+
 		BDEF_AutoTarget(base->batteries, base->numBatteries);
 		BDEF_AutoTarget(base->lasers, base->numLasers);
 	}
+
 	for (i = 0; i < ccs.numInstallations; i++) {
 		installation_t *inst = INS_GetFoundedInstallationByIDX(i);
-
 		if (!inst)
 			continue;
+
 		BDEF_AutoTarget(inst->batteries, inst->numBatteries);
 	}
 }

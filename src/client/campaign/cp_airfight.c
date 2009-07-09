@@ -69,14 +69,13 @@ static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
  * @brief Add a projectile in ccs.projectiles
  * @param[in] attackingBase the attacking base in ccs.bases[]. NULL is the attacker is an aircraft.
  * @param[in] attacker Pointer to the attacking aircraft
- * @param[in] aimedBase the aimed base (NULL if the target is an aircraft)
  * @param[in] target Pointer to the target aircraft
  * @param[in] weaponSlot Pointer to the weapon slot that fires the projectile.
  * @note we already checked in AIRFIGHT_ChooseWeapon that the weapon has still ammo
  * @sa AIRFIGHT_RemoveProjectile
  * @sa AII_ReloadWeapon for the aircraft item reload code
  */
-static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const installation_t* attackingInstallation, aircraft_t *attacker, base_t* aimedBase, installation_t* aimedInstallation, aircraft_t *target, aircraftSlot_t *weaponSlot)
+static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const installation_t* attackingInstallation, aircraft_t *attacker, installation_t* aimedInstallation, aircraft_t *target, aircraftSlot_t *weaponSlot)
 {
 	aircraftProjectile_t *projectile;
 
@@ -111,18 +110,14 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 	projectile->numProjectiles++;
 
 	/* if we are not aiming to a base - we are aiming towards an aircraft */
-	if (aimedBase) {
-		projectile->aimedAircraft = NULL;
-		projectile->aimedBase = aimedBase;
-		VectorSet(projectile->idleTarget, aimedBase->pos[0], aimedBase->pos[1], 0);
-	} else if (aimedInstallation) {
+	if (aimedInstallation) {
 		projectile->aimedAircraft = NULL;
 		projectile->aimedInstallation = aimedInstallation;
 		VectorSet(projectile->idleTarget, aimedInstallation->pos[0], aimedInstallation->pos[1], 0);
 	} else {
 		assert(target);
 		projectile->aimedAircraft = target;
-		projectile->aimedBase = NULL;
+		projectile->aimedInstallation = NULL;
 		VectorSet(projectile->idleTarget, 0, 0, 0);
 	}
 	projectile->time = 0;
@@ -164,8 +159,6 @@ static void AIRFIGHT_ProjectileList_f (void)
 			Com_Printf("... base is shooting, or shooting aircraft is destroyed\n");
 		if (ccs.projectiles[i].aimedAircraft)
 			Com_Printf("... aiming aircraft '%s'\n", ccs.projectiles[i].aimedAircraft->id);
-		else if (ccs.projectiles[i].aimedBase)
-			Com_Printf("... aiming base '%s'\n", ccs.projectiles[i].aimedBase->name);
 		else
 			Com_Printf("... aiming iddle target at (%.02f, %.02f)\n",
 				ccs.projectiles[i].idleTarget[0], ccs.projectiles[i].idleTarget[1]);
@@ -191,7 +184,6 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean retu
 		projectile->aimedAircraft = NULL;
 	} else {
 		VectorCopy(projectile->idleTarget, newTarget);
-		projectile->aimedBase = NULL;
 	}
 
 	/* get the distance between the projectile and target */
@@ -345,21 +337,17 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 
 	/* some asserts */
 	assert(shooter);
+	assert(target);
 
-	if (!shooter->baseTarget) {
-		assert(target);
-
-		/* Check if the attacking aircraft can shoot */
-		slotIdx = AIRFIGHT_ChooseWeapon(shooter->weapons, shooter->maxWeapons, shooter->pos, target->pos);
-	} else
-		slotIdx = AIRFIGHT_ChooseWeapon(shooter->weapons, shooter->maxWeapons, shooter->pos, shooter->baseTarget->pos);
+	/* Check if the attacking aircraft can shoot */
+	slotIdx = AIRFIGHT_ChooseWeapon(shooter->weapons, shooter->maxWeapons, shooter->pos, target->pos);
 
 	/* if weapon found that can shoot */
 	if (slotIdx >= AIRFIGHT_WEAPON_CAN_SHOOT) {
 		const objDef_t *ammo = shooter->weapons[slotIdx].ammo;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(NULL, NULL, shooter, shooter->baseTarget, shooter->installationTarget, target, shooter->weapons + slotIdx)) {
+		if (AIRFIGHT_AddProjectile(NULL, NULL, shooter, shooter->installationTarget, target, shooter->weapons + slotIdx)) {
 			shooter->weapons[slotIdx].delayNextShot = ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			probability = frand();
@@ -382,13 +370,9 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 	} else if (slotIdx == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT) {
 		/* no ammo to fire atm (too far or reloading), pursue target */
 		if (shooter->type == AIRCRAFT_UFO) {
-			if (!shooter->baseTarget)
-				/** @todo This should be calculated only when target destination changes, or when aircraft speed changes.
-				 *  @sa AIR_GetDestination */
-				UFO_SendPursuingAircraft(shooter, target);
-			else
-				/* ufo is attacking a base */
-				return;
+			/** @todo This should be calculated only when target destination changes, or when aircraft speed changes.
+			 *  @sa AIR_GetDestination */
+			UFO_SendPursuingAircraft(shooter, target);
 		} else
 			AIR_SendAircraftPursuingUFO(shooter, target);
 	} else {
@@ -594,81 +578,6 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 }
 
 /**
- * @brief Solve the result of one projectile hitting a base.
- * @param[in] projectile Pointer to the projectile.
- * @sa B_UpdateBaseData
- * @note Not possible without UFO_ATTACK_BASES set
- */
-static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
-{
-	base_t *base;
-	int damage = 0;
-	int i, rnd;
-	qboolean baseAttack = qfalse;
-
-	assert(projectile);
-	base = projectile->aimedBase;
-	assert(base);
-
-	/* base damage is given by the ammo */
-	damage = projectile->aircraftItem->craftitem.weaponDamage;
-
-	/* damages are divided between defence system and base. */
-	damage = frand() * damage;
-	base->batteryDamage -= damage;
-	base->baseDamage -= projectile->aircraftItem->craftitem.weaponDamage - damage;
-
-	if (base->batteryDamage <= 0) {
-		/* projectile destroyed a base defence system */
-		base->batteryDamage = MAX_BATTERY_DAMAGE;
-		rnd = rand() % 2;
-		if (base->numBatteries + base->numLasers <= 0)
-			rnd = -1;
-		else if (rnd == 0 && base->numBatteries <= 0)
-			rnd = 1;
-		else if (rnd == 1 && base->numLasers <= 0)
-			rnd = 0;
-
-		if (rnd == 0) {
-			/* Add message to message-system. */
-			MS_AddNewMessage(_("Base facility destroyed"), _("You've lost a missile battery system."), qfalse, MSG_CRASHSITE, NULL);
-			for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-				if (ccs.buildings[base->idx][i].buildingType == B_DEFENCE_MISSILE) {
-					/** @todo Destroy a random one - otherwise the player might 'cheat' with this
-					 * e.g. just building an empty defence station (a lot cheaper) */
-					B_BuildingDestroy(base, &ccs.buildings[base->idx][i]);
-					baseAttack = qtrue;
-					break;
-				}
-			}
-		} else if (rnd == 1) {
-			/* Add message to message-system. */
-			MS_AddNewMessage(_("Base facility destroyed"), _("You've lost a laser battery system."), qfalse, MSG_CRASHSITE, NULL);
-			for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-				if (ccs.buildings[base->idx][i].buildingType == B_DEFENCE_LASER) {
-					/** @todo Destroy a random one - otherwise the player might 'cheat' with this
-					 * e.g. just building an empty defence station (a lot cheaper) */
-					B_BuildingDestroy(base, &ccs.buildings[base->idx][i]);
-					baseAttack = qtrue;
-					break;
-				}
-			}
-		}
-	}
-
-	if (base->baseDamage <= 0) {
-		/* projectile destroyed a building */
-		base->baseDamage = MAX_BASE_DAMAGE;
-		rnd = frand() * ccs.numBuildings[base->idx];
-		/* Add message to message-system. */
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("You've lost a base facility (%s)."), _(ccs.buildings[base->idx][rnd].name));
-		MS_AddNewMessage(_("Base facility destroyed"), cp_messageBuffer, qfalse, MSG_BASEATTACK, NULL);
-		B_BuildingDestroy(base, &ccs.buildings[base->idx][rnd]);
-		baseAttack = qtrue;
-	}
-}
-
-/**
  * @brief Get the next point in the object path based on movement converting the positions from
  * polar coordinates to vector for the calculation and back again to be returned.
  * @param[in] movement The distance that the object needs to move.
@@ -720,9 +629,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 		/* Check if the projectile reached its destination (aircraft or idle point) */
 		if (AIRFIGHT_ProjectileReachedTarget(projectile, movement)) {
 			/* check if it got the ennemy */
-			if (projectile->aimedBase)
-				AIRFIGHT_ProjectileHitsBase(projectile);
-			else if (projectile->aimedAircraft)
+			if (projectile->aimedAircraft)
 				AIRFIGHT_ProjectileHits(projectile);
 
 			/* remove the missile from ccs.projectiles[] */
@@ -795,7 +702,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 			continue;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(base, NULL, NULL, NULL, NULL, weapons[i].target, &weapons[i].slot + i)) {
+		if (AIRFIGHT_AddProjectile(base, NULL, NULL, NULL, weapons[i].target, &weapons[i].slot + i)) {
 			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot + i))
@@ -850,7 +757,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 			continue;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(NULL, installation, NULL, NULL, NULL, weapons[i].target, &weapons[i].slot + i)) {
+		if (AIRFIGHT_AddProjectile(NULL, installation, NULL, NULL, weapons[i].target, &weapons[i].slot + i)) {
 			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot + i))

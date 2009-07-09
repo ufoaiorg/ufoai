@@ -2127,7 +2127,6 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 	aircraft->time = 0;
 	aircraft->point = 0;
 	aircraft->aircraftTarget = ufo;
-	aircraft->baseTarget = NULL;
 	return qtrue;
 }
 
@@ -2421,9 +2420,6 @@ void AIR_SaveAircraftXML (mxml_node_t *node, aircraft_t const aircraft, qboolean
 		}
 	}
 
-	if (aircraft.baseTarget)
-		mxml_AddInt(node, "basetarget", aircraft.baseTarget->idx);
-
 	if (aircraft.installationTarget)
 		mxml_AddInt(node, "installationtarget", aircraft.installationTarget->idx);
 
@@ -2537,8 +2533,6 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 				mxml_AddInt(snode, "attackingaircraft", ccs.projectiles[i].attackingAircraft->idx);
 		}
 		/* No attacking Aircraft */
-		if (ccs.projectiles[i].aimedBase)
-			mxml_AddInt(snode, "aimedbaseidx", ccs.projectiles[i].aimedBase->idx);
 		if (ccs.projectiles[i].aimedAircraft) {
 			mxml_AddBool(snode, "hasaimedaircraft", qtrue);
 			mxml_AddBool(snode, "aimedaircraftisufo", ccs.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO);
@@ -2718,12 +2712,6 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 	craft->detected = mxml_GetBool(p, "detected", qfalse);
 	craft->landed = mxml_GetBool(p, "landed", qfalse);
 
-	tmp_int = mxml_GetInt(p, "basetarget", -1);
-	if (tmp_int == -1)
-		craft->baseTarget = NULL;
-	else
-		craft->baseTarget = B_GetBaseByIDX(tmp_int);
-
 	tmp_int = mxml_GetInt(p, "aircrafttarget", -1);
 	if (tmp_int == -1)
 		craft->aircraftTarget = NULL;
@@ -2851,7 +2839,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 			snode = mxml_GetNextNode(snode, node, "projectile"), i++) {
 		technology_t *tech = RS_GetTechByProvided(mxml_GetString(snode, "aircraftitemid"));
 		if (tech) {
-			int tmp_int, j;
+			int j;
 			ccs.projectiles[i].aircraftItem = AII_GetAircraftItemByID(tech->provides);
 			ccs.projectiles[i].idx = i;
 			for (j = 0, ssnode=mxml_GetPos2(snode, "pos", ccs.projectiles[i].pos[0]); j < MAX_MULTIPLE_PROJECTILES && ssnode;
@@ -2865,11 +2853,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 					ccs.projectiles[i].attackingAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, "attackingaircraft", 0));
 			} else
 				ccs.projectiles[i].attackingAircraft = NULL;
-			tmp_int = mxml_GetInt(snode, "aimedbaseidx", 0);
-			if (tmp_int > 0)
-				ccs.projectiles[i].aimedBase = B_GetBaseByIDX(tmp_int);
-			else
-				ccs.projectiles[i].aimedBase = NULL;
+
 			if (mxml_GetBool(snode, "hasaimedaircraft", qfalse)) {
 				if (mxml_GetBool(snode, "aimedaircraftisufo", qfalse))
 					ccs.projectiles[i].aimedAircraft = ccs.ufos + mxml_GetInt(snode, "aimedaircraft", 0);

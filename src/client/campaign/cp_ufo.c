@@ -204,68 +204,6 @@ static void UFO_SetRandomPos (aircraft_t* ufocraft)
 	Vector2Copy(pos, ufocraft->pos);
 }
 
-#ifdef UFO_ATTACK_BASES
-/**
- * @brief Make the specified UFO attack a base.
- * @param[in] ufo Pointer to the UFO.
- * @param[in] base Pointer to the target base.
- * @sa AIR_SendAircraftPursuingUFO
- */
-static qboolean UFO_SendAttackBase (aircraft_t* ufo, base_t* base)
-{
-	int slotIdx;
-
-	assert(ufo);
-	assert(base);
-
-	/* check whether the ufo can shoot the base - if not, don't try it even */
-	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, base->pos);
-	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
-		return qfalse;
-
-	MAP_MapCalcLine(ufo->pos, base->pos, &ufo->route);
-	ufo->baseTarget = base;
-	ufo->aircraftTarget = NULL;
-	ufo->status = AIR_UFO; /** @todo Might crash in cl_map.c MAP_DrawMapMarkers */
-	ufo->time = 0;
-	ufo->point = 0;
-	return qtrue;
-}
-
-/**
- * @brief Check if the ufo can shoot at a Base
- */
-static void UFO_SearchBaseTarget (aircraft_t *ufo)
-{
-	float distance = 999999., dist;
-	int baseIdx;
-
-	/* check if the ufo is already attacking an aircraft */
-	if (ufo->aircraftTarget)
-		return;
-
-	/* check if the ufo is already attacking a base */
-	if (ufo->baseTarget) {
-		AIRFIGHT_ExecuteActions(ufo, NULL);
-		return;
-	}
-
-	/* No target, try to find a new base to attack */
-	ufo->status = AIR_TRANSIT;
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-		/* check if the ufo can attack a base (if it's not too far) */
-		if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < MAX_DETECTING_RANGE)) {
-			if (UFO_SendAttackBase(ufo, base))
-				/* don't check for aircraft if we can destroy a base */
-				continue;
-		}
-	}
-}
-#endif
-
 /**
  * @brief Check if a UFO is the target of a base
  * @param[in] ufo The UFO to check
@@ -447,12 +385,6 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 		return;
 	}
 
-#ifdef UFO_ATTACK_BASES
-	/* check if the ufo is already attacking a base */
-	if (ufo->baseTarget)
-		return;
-#endif
-
 	/* check if the ufo is already attacking an aircraft */
 	if (ufo->aircraftTarget) {
 		/* check if the target disappeared from geoscape (fled in a base) */
@@ -520,7 +452,6 @@ qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	ufo->time = 0;
 	ufo->point = 0;
 	ufo->aircraftTarget = aircraft;
-	ufo->baseTarget = NULL;
 
 	return qtrue;
 }
@@ -546,11 +477,8 @@ void UFO_SendToDestination (aircraft_t* ufo, vec2_t dest)
  */
 void UFO_CheckShootBack (aircraft_t *ufo, aircraft_t* phalanxAircraft)
 {
-	/* check if the ufo is already attacking a base */
-	if (ufo->baseTarget) {
-		AIRFIGHT_ExecuteActions(ufo, NULL);
 	/* check if the ufo is already attacking an aircraft */
-	} else if (ufo->aircraftTarget) {
+	if (ufo->aircraftTarget) {
 		/* check if the target flee in a base */
 		if (AIR_IsAircraftOnGeoscape(ufo->aircraftTarget))
 			AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
@@ -589,11 +517,6 @@ void UFO_CampaignRunUFOs (int dt)
 		/* Every UFO on geoscape should have a mission assigned */
 		assert(ufo->mission);
 
-#ifdef UFO_ATTACK_BASES
-		/* Check if the UFO found a new base */
-		UFO_FoundNewBase(ufo, dt);
-#endif
-
 		/* reached target and not following a phalanx aircraft? then we need a new destination */
 		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO) {
 			float *end;
@@ -612,11 +535,6 @@ void UFO_CampaignRunUFOs (int dt)
 
 		/* is there a PHALANX aircraft to shoot at ? */
 		UFO_SearchAircraftTarget(ufo);
-
-#ifdef UFO_ATTACK_BASES
-		/* is there a PHALANX base to shoot at ? */
-		UFO_SearchBaseTarget(ufo);
-#endif
 
 		/* antimatter tanks */
 		if (ufo->fuel <= 0)
