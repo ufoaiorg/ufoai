@@ -312,8 +312,9 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	vec3_t tstart, tend; /* Start and end of the upward traces. */
 	vec3_t bmins, bmaxs; /* Holds the exact bounds to be traced for legs and torso. */
 	pos3_t pos;
-	float bottom, top; /* Floor and ceiling model distances from the cell base. */
+	float bottom, top; /* Floor and ceiling model distances from the cell base. (in mapunits) */
 	float initial; /* Cell floor and ceiling z coordinate. */
+	int bottomQ; /* The floor in QUANTs */
 	int i;
 	int fz, cz; /* Floor and ceiling Z cell coordinates */
 	trace_t tr;
@@ -493,8 +494,12 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 
 	assert(bottom <= top);
 
-	/* top and bottom are absolute model heights.  Find the actual cell z coordinates for these heights. */
-	fz = (int)(floor(bottom / UNIT_HEIGHT));
+	/* top and bottom are absolute model heights.  Find the actual cell z coordinates for these heights.
+	 * ...but before rounding, give back the DIST_EPSILON that was added by the trace */
+	bottom -= DIST_EPSILON;
+	top += DIST_EPSILON;
+	bottomQ = ceil(bottom / QUANT);
+	fz = bottomQ / CELL_HEIGHT;
 	cz = min(z, (int)(ceil(top / UNIT_HEIGHT) - 1)); /* Use the lower of z or the calculated ceiling */
 
 	assert(fz <= cz);
@@ -502,14 +507,10 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	if (debugTrace)
 		Com_Printf("Valid ceiling found, bottom=%f, top=%f, fz=%i, cz=%i.\n", bottom, top, fz, cz);
 
-	/* Last, update the floors and ceilings of cells from (x, y, fz) to (x, y, cz)
-	 * ...but before rounding, give back the DIST_EPSILON that was added by the trace
-	 * Well, give back two DIST_EPSILON just to be sure */
-	bottom -= 2 * DIST_EPSILON;
-	top += 2 * DIST_EPSILON;
+	/* Last, update the floors and ceilings of cells from (x, y, fz) to (x, y, cz) */
 	for (i = fz; i <= cz; i++) {
 		/* Round up floor to keep feet out of model. */
-		RT_FLOOR(map, actorSize, x, y, i) = (int)ceil((bottom - i * UNIT_HEIGHT) / QUANT);
+		RT_FLOOR(map, actorSize, x, y, i) = bottomQ - i * CELL_HEIGHT;
 		/* Round down ceiling to heep head out of model.  Also offset by floor and max at 255. */
 		RT_CEILING(map, actorSize, x, y, i) = (int)floor((top - i * UNIT_HEIGHT) / QUANT);
 		if (debugTrace) {
