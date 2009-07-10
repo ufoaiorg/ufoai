@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
+#define EXTRADATA(node) (node->u.textentry)
+
 #define TILE_SIZE 64
 #define CORNER_SIZE 17
 #define MID_SIZE 1
@@ -83,8 +85,8 @@ static void MN_TextEntryNodeAbortEdition (menuNode_t *node)
 	cvarValueBackup[0] = '\0';
 
 	/* fire abort event */
-	if (node->u.textentry.onAbort) {
-		MN_ExecuteEventActions(node, node->u.textentry.onAbort);
+	if (EXTRADATA(node).onAbort) {
+		MN_ExecuteEventActions(node, EXTRADATA(node).onAbort);
 	}
 }
 
@@ -160,7 +162,7 @@ static void MN_TextEntryFocusLost (menuNode_t *node)
 		return;
 
 	/* release the keyboard */
-	if (isAborted || node->u.textentry.clickOutAbort) {
+	if (isAborted || EXTRADATA(node).clickOutAbort) {
 		MN_TextEntryNodeAbortEdition(node);
 	} else {
 		MN_TextEntryNodeValidateEdition(node);
@@ -274,7 +276,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 			}
 		}
 
-		if (node->u.textentry.isPassword) {
+		if (EXTRADATA(node).isPassword) {
 			char *c = va("%s", text);
 			int size = UTF8_strlen(c);
 			text = c;

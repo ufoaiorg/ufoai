@@ -33,6 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
+#define EXTRADATA(node) (node->u.abstractscrollable)
+
 /**
  * @brief return true if the node size change and update the cache
  */
@@ -40,11 +42,11 @@ qboolean MN_AbstractScrollableNodeIsSizeChange (menuNode_t *node)
 {
 	assert(MN_NodeInstanceOf(node, "abstractscrollable"));
 
-	if (node->size[0] != node->u.abstractscrollable.cacheSize[0]
-		|| node->size[1] != node->u.abstractscrollable.cacheSize[1])
+	if (node->size[0] != EXTRADATA(node).cacheSize[0]
+		|| node->size[1] != EXTRADATA(node).cacheSize[1])
 	{
-		node->u.abstractscrollable.cacheSize[0] = node->size[0];
-		node->u.abstractscrollable.cacheSize[1] = node->size[1];
+		EXTRADATA(node).cacheSize[0] = node->size[0];
+		EXTRADATA(node).cacheSize[1] = node->size[1];
 		return qtrue;
 	}
 	return qfalse;
@@ -113,10 +115,10 @@ qboolean MN_AbstractScrollableNodeSetY (menuNode_t *node, int viewPos, int viewS
 	qboolean updated = qfalse;
 	assert(MN_NodeInstanceOf(node, "abstractscrollable"));
 
-	updated = MN_SetScroll(&node->u.abstractscrollable.scrollY, viewPos, viewSize, fullSize);
+	updated = MN_SetScroll(&EXTRADATA(node).scrollY, viewPos, viewSize, fullSize);
 
-	if (updated && node->u.abstractscrollable.onViewChange)
-		MN_ExecuteEventActions(node, node->u.abstractscrollable.onViewChange);
+	if (updated && EXTRADATA(node).onViewChange)
+		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 
 	return updated;
 }
@@ -128,7 +130,7 @@ qboolean MN_AbstractScrollableNodeSetY (menuNode_t *node, int viewPos, int viewS
 qboolean MN_AbstractScrollableNodeScrollY (menuNode_t *node, int offset)
 {
 	assert(MN_NodeInstanceOf(node, "abstractscrollable"));
-	return MN_AbstractScrollableNodeSetY(node, node->u.abstractscrollable.scrollY.viewPos + offset, -1, -1);
+	return MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + offset, -1, -1);
 }
 
 static const value_t properties[] = {

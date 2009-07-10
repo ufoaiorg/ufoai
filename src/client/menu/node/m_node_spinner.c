@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_input.h"
 #include "../../cl_keys.h"
 
+#define EXTRADATA(node) (node->u.abstractvalue)
+
 static const nodeBehaviour_t const *localBehaviour;
 
 static const int TILE_SIZE = 32;
@@ -51,19 +53,19 @@ static const int BUTTON_BOTTOM_SIZE = 10;
  */
 static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 {
-	float value = MN_GetReferenceFloat(node, node->u.abstractvalue.value);
+	float value = MN_GetReferenceFloat(node, EXTRADATA(node).value);
 	const float last = value;
-	const float delta = MN_GetReferenceFloat(node, node->u.abstractvalue.delta);
+	const float delta = MN_GetReferenceFloat(node, EXTRADATA(node).delta);
 
 	if (!down) {
-		const float max = MN_GetReferenceFloat(node, node->u.abstractvalue.max);
+		const float max = MN_GetReferenceFloat(node, EXTRADATA(node).max);
 		if (value + delta <= max) {
 			value += delta;
 		} else {
 			value = max;
 		}
 	} else {
-		const float min = MN_GetReferenceFloat(node, node->u.abstractvalue.min);
+		const float min = MN_GetReferenceFloat(node, EXTRADATA(node).min);
 		if (value - delta >= min) {
 			value -= delta;
 		} else {
@@ -76,11 +78,11 @@ static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 		return;
 
 	/* save result */
-	node->u.abstractvalue.lastdiff = value - last;
-	if (!strncmp(node->u.abstractvalue.value, "*cvar", 5)) {
-		MN_SetCvar(&((char*)node->u.abstractvalue.value)[6], NULL, value);
+	EXTRADATA(node).lastdiff = value - last;
+	if (!strncmp(EXTRADATA(node).value, "*cvar", 5)) {
+		MN_SetCvar(&((char*)EXTRADATA(node).value)[6], NULL, value);
 	} else {
-		*(float*) node->u.abstractvalue.value = value;
+		*(float*) EXTRADATA(node).value = value;
 	}
 
 	/* fire change event */
@@ -144,7 +146,7 @@ static void MN_SpinnerNodeDraw (menuNode_t *node)
 	int topTexX, topTexY;
 	int bottomTexX, bottomTexY;
 	const char* image = MN_GetReferenceString(node, node->image);
-	const float delta = MN_GetReferenceFloat(node, node->u.abstractvalue.delta);
+	const float delta = MN_GetReferenceFloat(node, EXTRADATA(node).delta);
 
 	if (!image)
 		return;
@@ -157,9 +159,9 @@ static void MN_SpinnerNodeDraw (menuNode_t *node)
 		bottomTexX = TILE_SIZE;
 		bottomTexY = TILE_SIZE;
 	} else {
-		const float value = MN_GetReferenceFloat(node, node->u.abstractvalue.value);
-		const float min = MN_GetReferenceFloat(node, node->u.abstractvalue.min);
-		const float max = MN_GetReferenceFloat(node, node->u.abstractvalue.max);
+		const float value = MN_GetReferenceFloat(node, EXTRADATA(node).value);
+		const float min = MN_GetReferenceFloat(node, EXTRADATA(node).min);
+		const float max = MN_GetReferenceFloat(node, EXTRADATA(node).max);
 
 		/* top button status */
 		if (value >= max) {

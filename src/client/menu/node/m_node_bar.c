@@ -34,14 +34,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_keys.h"
 
+#define EXTRADATA(node) (node->u.abstractvalue)
+
 static void MN_BarNodeDraw (menuNode_t *node)
 {
 	vec4_t color;
 	float fac, bar_width;
 	vec2_t nodepos;
-	const float min = MN_GetReferenceFloat(node, node->u.abstractvalue.min);
-	const float max = MN_GetReferenceFloat(node, node->u.abstractvalue.max);
-	const float value = MN_GetReferenceFloat(node, node->u.abstractvalue.value);
+	const float min = MN_GetReferenceFloat(node, EXTRADATA(node).min);
+	const float max = MN_GetReferenceFloat(node, EXTRADATA(node).max);
+	const float value = MN_GetReferenceFloat(node, EXTRADATA(node).value);
 
 	MN_GetNodeAbsPos(node, nodepos);
 	VectorScale(node->color, 0.8, color);
@@ -68,13 +70,13 @@ static void MN_BarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 		x = node->size[0];
 
 	MN_GetNodeAbsPos(node, pos);
-	Q_strncpyz(var, node->u.abstractvalue.value, sizeof(var));
+	Q_strncpyz(var, EXTRADATA(node).value, sizeof(var));
 	/* no cvar? */
 	if (!strncmp(var, "*cvar", 5)) {
 		/* normalize it */
 		const float frac = (float) x / node->size[0];
-		const float min = MN_GetReferenceFloat(node, node->u.abstractvalue.min);
-		const float value = min + frac * (MN_GetReferenceFloat(node, node->u.abstractvalue.max) - min);
+		const float min = MN_GetReferenceFloat(node, EXTRADATA(node).min);
+		const float value = min + frac * (MN_GetReferenceFloat(node, EXTRADATA(node).max) - min);
 		MN_SetCvar(&var[6], NULL, value);
 	}
 

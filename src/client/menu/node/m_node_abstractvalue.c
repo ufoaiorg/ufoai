@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "m_node_abstractvalue.h"
 
+#define EXTRADATA(node) (node->u.abstractvalue)
+
 static const nodeBehaviour_t const *localBehaviour;
 
 static inline void MN_InitCvarOrFloat (float** adress, float defaultValue)
@@ -38,10 +40,10 @@ static inline void MN_InitCvarOrFloat (float** adress, float defaultValue)
 
 static void MN_AbstractValueLoaded (menuNode_t * node)
 {
-	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.value, 0);
-	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.delta, 1);
-	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.max, 0);
-	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.min, 0);
+	MN_InitCvarOrFloat((float**)&EXTRADATA(node).value, 0);
+	MN_InitCvarOrFloat((float**)&EXTRADATA(node).delta, 1);
+	MN_InitCvarOrFloat((float**)&EXTRADATA(node).max, 0);
+	MN_InitCvarOrFloat((float**)&EXTRADATA(node).min, 0);
 }
 
 static void MN_CloneCvarOrFloat (const float*const* source, float** clone)
@@ -61,10 +63,10 @@ static void MN_CloneCvarOrFloat (const float*const* source, float** clone)
 static void MN_AbstractValueClone (const menuNode_t *source, menuNode_t *clone)
 {
 	localBehaviour->super->clone(source, clone);
-	MN_CloneCvarOrFloat((const float*const*)&source->u.abstractvalue.value, (float**)&clone->u.abstractvalue.value);
-	MN_CloneCvarOrFloat((const float*const*)&source->u.abstractvalue.delta, (float**)&clone->u.abstractvalue.delta);
-	MN_CloneCvarOrFloat((const float*const*)&source->u.abstractvalue.max, (float**)&clone->u.abstractvalue.max);
-	MN_CloneCvarOrFloat((const float*const*)&source->u.abstractvalue.min, (float**)&clone->u.abstractvalue.min);
+	MN_CloneCvarOrFloat((const float*const*)&EXTRADATA(source).value, (float**)&EXTRADATA(clone).value);
+	MN_CloneCvarOrFloat((const float*const*)&EXTRADATA(source).delta, (float**)&EXTRADATA(clone).delta);
+	MN_CloneCvarOrFloat((const float*const*)&EXTRADATA(source).max, (float**)&EXTRADATA(clone).max);
+	MN_CloneCvarOrFloat((const float*const*)&EXTRADATA(source).min, (float**)&EXTRADATA(clone).min);
 }
 
 static const value_t properties[] = {

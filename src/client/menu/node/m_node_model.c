@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_mesh.h"
 #include "../../renderer/r_mesh_anim.h"
 
+#define EXTRADATA(node) (node->u.model)
+
 #define ROTATE_SPEED	0.5
 #define MAX_OLDREFVALUE MAX_VAR
 
@@ -154,11 +156,11 @@ static void MN_SetModelTransform_f (void)
 		}
 
 		if (!strcmp(command, "debug_mnscale")) {
-			VectorCopy(value, node->u.model.scale);
+			VectorCopy(value, EXTRADATA(node).scale);
 		} else if (!strcmp(command, "debug_mnangles")) {
-			VectorCopy(value, node->u.model.angles);
+			VectorCopy(value, EXTRADATA(node).angles);
 		} else if (!strcmp(command, "debug_mnorigin")) {
-			VectorCopy(value, node->u.model.origin);
+			VectorCopy(value, EXTRADATA(node).origin);
 		}
 	}
 }
@@ -166,7 +168,7 @@ static void MN_SetModelTransform_f (void)
 
 static void MN_ModelNodeDraw (menuNode_t *node)
 {
-	const char* ref = MN_GetReferenceString(node, node->u.model.model);
+	const char* ref = MN_GetReferenceString(node, EXTRADATA(node).model);
 	char source[MAX_VAR];
 	if (ref == NULL || ref[0] == '\0')
 		source[0] = '\0';
@@ -185,17 +187,17 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 	qboolean isInitialised = qfalse;
 	vec3_t nodeorigin;
 	MN_GetNodeAbsPos(node, nodeorigin);
-	nodeorigin[0] += node->size[0] / 2 + node->u.model.origin[0];
-	nodeorigin[1] += node->size[1] / 2 + node->u.model.origin[1];
-	nodeorigin[2] = node->u.model.origin[2];
+	nodeorigin[0] += node->size[0] / 2 + EXTRADATA(node).origin[0];
+	nodeorigin[1] += node->size[1] / 2 + EXTRADATA(node).origin[1];
+	nodeorigin[2] = EXTRADATA(node).origin[2];
 
 	if (menuModel->menuTransformCnt) {
 		int i;
 		/* search a menuTransforme */
 		for (i = 0; i < menuModel->menuTransformCnt; i++) {
-			if (node->u.model.viewName != NULL) {
+			if (EXTRADATA(node).viewName != NULL) {
 				/** @todo improve the test when its possible */
-				if (!strcmp(node->u.model.viewName, menuModel->menuTransform[i].menuID))
+				if (!strcmp(EXTRADATA(node).viewName, menuModel->menuTransform[i].menuID))
 					break;
 			}
 		}
@@ -206,14 +208,14 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 			if (menuModel->menuTransform[i].useScale) {
 				VectorCopy(menuModel->menuTransform[i].scale, mi->scale);
 			} else {
-				VectorCopy(node->u.model.scale, mi->scale);
+				VectorCopy(EXTRADATA(node).scale, mi->scale);
 			}
 
 			/* Use menu angles if defined. */
 			if (menuModel->menuTransform[i].useAngles) {
 				VectorCopy(menuModel->menuTransform[i].angles, mi->angles);
 			} else {
-				VectorCopy(node->u.model.angles, mi->angles);
+				VectorCopy(EXTRADATA(node).angles, mi->angles);
 			}
 
 			/* Use menu origin if defined. */
@@ -224,20 +226,20 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 			}
 			isInitialised = qtrue;
 		}
-		mi->angles[0] += node->u.model.angles[0];
-		mi->angles[1] += node->u.model.angles[1];
-		mi->angles[2] += node->u.model.angles[2];
+		mi->angles[0] += EXTRADATA(node).angles[0];
+		mi->angles[1] += EXTRADATA(node).angles[1];
+		mi->angles[2] += EXTRADATA(node).angles[2];
 	}
 
 	if (!isInitialised) {
-		VectorCopy(node->u.model.scale, mi->scale);
-		VectorCopy(node->u.model.angles, mi->angles);
+		VectorCopy(EXTRADATA(node).scale, mi->scale);
+		VectorCopy(EXTRADATA(node).angles, mi->angles);
 		VectorCopy(nodeorigin, mi->origin);
 	}
 
 	VectorCopy(nullVector, mi->center);
 
-	if (node->u.model.autoscale) {
+	if (EXTRADATA(node).autoscale) {
 		mi->scale = NULL;
 		mi->center = node->size;
 	}
@@ -313,7 +315,7 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 			 * it think its the bigger of composite models.
 			 * All next elements use the same result
 			 */
-			if (node->u.model.autoscale) {
+			if (EXTRADATA(node).autoscale) {
 				if (!autoScaleComputed) {
 					MN_AutoScale(node, mi, autoScale, autoCenter);
 					autoScaleComputed = qtrue;
@@ -323,8 +325,8 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 			}
 
 			/* get the animation given by menu node properties */
-			if (node->u.model.animation && *(char *) node->u.model.animation) {
-				ref = MN_GetReferenceString(node, node->u.model.animation);
+			if (EXTRADATA(node).animation && *(char *) EXTRADATA(node).animation) {
+				ref = MN_GetReferenceString(node, EXTRADATA(node).animation);
 			/* otherwise use the standard animation from modelmenu definition */
 			} else
 				ref = menuModel->anim;
@@ -380,7 +382,7 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 			mi->origin[1] -= node->root->pos[1];
 
 			/* autoscale? */
-			if (node->u.model.autoscale) {
+			if (EXTRADATA(node).autoscale) {
 				pmi.scale = NULL;
 				pmi.center = node->size;
 			}
@@ -430,21 +432,21 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 	/* compute the absolute origin ('origin' property is relative to the node center) */
 	MN_GetNodeAbsPos(node, nodeorigin);
-	if (node->u.model.clipOverflow)
+	if (EXTRADATA(node).clipOverflow)
 		R_BeginClipRect(nodeorigin[0], nodeorigin[1], node->size[0], node->size[1]);
-	nodeorigin[0] += node->size[0] / 2 + node->u.model.origin[0];
-	nodeorigin[1] += node->size[1] / 2 + node->u.model.origin[1];
-	nodeorigin[2] = node->u.model.origin[2];
+	nodeorigin[0] += node->size[0] / 2 + EXTRADATA(node).origin[0];
+	nodeorigin[1] += node->size[1] / 2 + EXTRADATA(node).origin[1];
+	nodeorigin[2] = EXTRADATA(node).origin[2];
 
 	mi.origin = nodeorigin;
-	mi.angles = node->u.model.angles;
-	mi.scale = node->u.model.scale;
+	mi.angles = EXTRADATA(node).angles;
+	mi.scale = EXTRADATA(node).scale;
 	mi.center = nullVector;
 	mi.color = node->color;
 	mi.mesh = 0;
 
 	/* autoscale? */
-	if (node->u.model.autoscale) {
+	if (EXTRADATA(node).autoscale) {
 		mi.scale = NULL;
 		mi.center = node->size;
 	}
@@ -452,14 +454,14 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	/* special case to draw models with "menu model" */
 	if (menuModel) {
 		MN_DrawModelNodeWithMenuModel(node, source, &mi, menuModel);
-		if (node->u.model.clipOverflow)
+		if (EXTRADATA(node).clipOverflow)
 			R_EndClipRect();
 		return;
 	}
 
 	/* if the node is linked to a parent, the parent will display it */
-	if (node->u.model.tag) {
-		if (node->u.model.clipOverflow)
+	if (EXTRADATA(node).tag) {
+		if (EXTRADATA(node).clipOverflow)
 			R_EndClipRect();
 		return;
 	}
@@ -470,36 +472,36 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	mi.backlerp = 0;
 
 	/* get skin */
-	if (node->u.model.skin && *(char *) node->u.model.skin)
-		mi.skin = atoi(MN_GetReferenceString(node, node->u.model.skin));
+	if (EXTRADATA(node).skin && *(char *) EXTRADATA(node).skin)
+		mi.skin = atoi(MN_GetReferenceString(node, EXTRADATA(node).skin));
 	else
 		mi.skin = 0;
 
 	/* do animations */
-	if (node->u.model.animation && *(char *) node->u.model.animation) {
+	if (EXTRADATA(node).animation && *(char *) EXTRADATA(node).animation) {
 		animState_t *as;
 		const char *ref;
-		ref = MN_GetReferenceString(node, node->u.model.animation);
+		ref = MN_GetReferenceString(node, EXTRADATA(node).animation);
 
 		/* check whether the cvar value changed */
-		if (strncmp(node->u.model.oldRefValue, source, MAX_OLDREFVALUE)) {
-			Q_strncpyz(node->u.model.oldRefValue, source, MAX_OLDREFVALUE);
+		if (strncmp(EXTRADATA(node).oldRefValue, source, MAX_OLDREFVALUE)) {
+			Q_strncpyz(EXTRADATA(node).oldRefValue, source, MAX_OLDREFVALUE);
 			/* model has changed but mem is already reserved in pool */
-			if (node->u.model.animationState) {
-				Mem_Free(node->u.model.animationState);
-				node->u.model.animationState = NULL;
+			if (EXTRADATA(node).animationState) {
+				Mem_Free(EXTRADATA(node).animationState);
+				EXTRADATA(node).animationState = NULL;
 			}
 		}
-		if (!node->u.model.animationState) {
+		if (!EXTRADATA(node).animationState) {
 			as = (animState_t *) Mem_PoolAlloc(sizeof(*as), cl_genericPool, 0);
 			if (!as)
 				Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 			R_AnimChange(as, mi.model, ref);
-			node->u.model.animationState = as;
+			EXTRADATA(node).animationState = as;
 		} else {
 			const char *anim;
 			/* change anim if needed */
-			as = node->u.model.animationState;
+			as = EXTRADATA(node).animationState;
 			if (!as)
 				Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 			anim = R_AnimGetName(as, mi.model);
@@ -534,17 +536,17 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 				continue;
 
 			memset(&mi, 0, sizeof(mi));
-			mi.angles = child->u.model.angles;
-			mi.scale = child->u.model.scale;
+			mi.angles = EXTRADATA(child).angles;
+			mi.scale = EXTRADATA(child).scale;
 			mi.center = nullVector;
-			mi.origin = child->u.model.origin;
+			mi.origin = EXTRADATA(child).origin;
 			mi.color = pmi.color;
 
 			/* get the anchor name to link the model into the parent */
-			tag = child->u.model.tag;
+			tag = EXTRADATA(child).tag;
 
 			/* init model name */
-			childRef = MN_GetReferenceString(child, child->u.model.model);
+			childRef = MN_GetReferenceString(child, EXTRADATA(child).model);
 			if (childRef == NULL || childRef[0] == '\0')
 				childSource[0] = '\0';
 			else
@@ -553,8 +555,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			mi.name = childSource;
 
 			/* init skin */
-			if (child->u.model.skin && *(char *) child->u.model.skin)
-				mi.skin = atoi(MN_GetReferenceString(child, child->u.model.skin));
+			if (EXTRADATA(child).skin && *(char *) EXTRADATA(child).skin)
+				mi.skin = atoi(MN_GetReferenceString(child, EXTRADATA(child).skin));
 			else
 				mi.skin = 0;
 
@@ -562,7 +564,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 		}
 	}
 
-	if (node->u.model.clipOverflow)
+	if (EXTRADATA(node).clipOverflow)
 		R_EndClipRect();
 }
 
@@ -571,7 +573,7 @@ static int oldMousePosY = 0;
 
 static void MN_ModelNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 {
-	float *rotateAngles = node->u.model.angles;
+	float *rotateAngles = EXTRADATA(node).angles;
 
 	/* rotate a model */
 	rotateAngles[YAW] -= ROTATE_SPEED * (x - oldMousePosX);
@@ -596,7 +598,7 @@ static void MN_ModelNodeMouseDown (menuNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
-	if (!node->u.model.rotateWithMouse)
+	if (!EXTRADATA(node).rotateWithMouse)
 		return;
 	MN_SetMouseCapture(node);
 	oldMousePosX = x;
@@ -618,9 +620,9 @@ static void MN_ModelNodeMouseUp (menuNode_t *node, int x, int y, int button)
 static void MN_ModelNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
-	node->u.model.oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
-	VectorSet(node->u.model.scale, 1, 1, 1);
-	node->u.model.clipOverflow = qtrue;
+	EXTRADATA(node).oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
+	VectorSet(EXTRADATA(node).scale, 1, 1, 1);
+	EXTRADATA(node).clipOverflow = qtrue;
 }
 
 /**
@@ -629,19 +631,19 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 static void MN_ModelNodeClone (const menuNode_t *source, menuNode_t *clone)
 {
 	localBehaviour->super->clone(source, clone);
-	clone->u.model.oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
+	EXTRADATA(clone).oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
 }
 
 static void MN_ModelNodeLoaded (menuNode_t *node)
 {
 	/* a tag without but not a submodel */
-	if (node->u.model.tag != NULL && node->behaviour != node->parent->behaviour) {
+	if (EXTRADATA(node).tag != NULL && node->behaviour != node->parent->behaviour) {
 		Com_Printf("MN_ModelNodeLoaded: '%s' use a tag but is not a submodel. Tag removed.\n", MN_GetPath(node));
-		node->u.model.tag = NULL;
+		EXTRADATA(node).tag = NULL;
 	}
 
 	/* no tag but no size */
-	if (node->u.model.tag == NULL && (node->size[0] == 0 || node->size[1] == 0)) {
+	if (EXTRADATA(node).tag == NULL && (node->size[0] == 0 || node->size[1] == 0)) {
 		Com_Printf("MN_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", MN_GetPath(node));
 	}
 }

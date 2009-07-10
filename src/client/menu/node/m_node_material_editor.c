@@ -39,6 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_model.h"
 #include "m_node_material_editor.h"
 
+#define EXTRADATA(node) (node->u.abstractscrollable)
+
 /*#define ANYIMAGES*/
 /** @todo Replace magic number 64 by some script definition */
 #define IMAGE_WIDTH 64
@@ -157,7 +159,7 @@ static void MN_MaterialEditorNodeDraw (menuNode_t *node)
 #endif
 
 		/* skip images before the scroll position */
-		if (cnt / imagesPerLine < node->u.abstractscrollable.scrollY.viewPos) {
+		if (cnt / imagesPerLine < EXTRADATA(node).scrollY.viewPos) {
 			cnt++;
 			continue;
 		}
@@ -227,7 +229,7 @@ static int MN_MaterialEditorNodeGetImageAtPosition (menuNode_t *node, int x, int
 #endif
 
 		/* skip images before the scroll position */
-		if (cnt / imagesPerLine < node->u.abstractscrollable.scrollY.viewPos) {
+		if (cnt / imagesPerLine < EXTRADATA(node).scrollY.viewPos) {
 			cnt++;
 			continue;
 		}

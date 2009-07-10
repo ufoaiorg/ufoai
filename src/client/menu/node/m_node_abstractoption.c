@@ -37,13 +37,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SELECTBOX_SPACER 2.0f
 #define SELECTBOX_BOTTOM_HEIGHT 4.0f
 
+#define EXTRADATA(node) (node->u.option)
+
 /**
  * @brief Sort options by alphabet
  */
 void MN_OptionNodeSortOptions (menuNode_t *node)
 {
 	assert(MN_NodeInstanceOf(node, "abstractoption"));
-	MN_SortOptions(&node->u.option.first);
+	MN_SortOptions(&EXTRADATA(node).first);
 }
 
 /**
@@ -59,16 +61,16 @@ menuOption_t* MN_NodeAppendOption (menuNode_t *node, menuOption_t *newOption)
 	assert(newOption);
 	assert(MN_NodeInstanceOf(node, "abstractoption"));
 
-	if (!node->u.option.first)
-		node->u.option.first = newOption;
+	if (!EXTRADATA(node).first)
+		EXTRADATA(node).first = newOption;
 	else {
 		/* link it in */
-		menuOption_t *option = node->u.option.first;
+		menuOption_t *option = EXTRADATA(node).first;
 		while (option->next)
 			option = option->next;
 		option->next = newOption;
 	}
-	node->u.option.count++;
+	EXTRADATA(node).count++;
 	return newOption;
 }
 
@@ -93,7 +95,7 @@ static void MN_UpdateOption_f (void)
 		return;
 	}
 
-	option = node->u.option.first;
+	option = EXTRADATA(node).first;
 	while (option) {
 		if (!strcmp(option->id, Cmd_Argv(2)))
 			break;

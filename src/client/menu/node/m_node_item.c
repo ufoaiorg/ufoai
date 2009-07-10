@@ -32,13 +32,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../campaign/cp_campaign.h"
 
+#define EXTRADATA(node) (node->u.model)
+
 /**
  * @brief Draw an item node
  */
 static void MN_ItemNodeDraw (menuNode_t *node)
 {
 	const objDef_t *od;
-	const char* ref = MN_GetReferenceString(node, node->u.model.model);
+	const char* ref = MN_GetReferenceString(node, EXTRADATA(node).model);
 
 	if (!ref || ref[0] == '\0')
 		return;
@@ -58,7 +60,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 			pos[1] += node->size[1] / 2.0;
 			pos[2] = 0;
 			/** @todo we should not use DrawItem but draw the image with render function (remove dependency with container) */
-			MN_DrawItem(node, pos, &item, -1, -1, node->u.model.scale, color);
+			MN_DrawItem(node, pos, &item, -1, -1, EXTRADATA(node).scale, color);
 		} else {
 			MN_DrawModelNode(node, item.t->model);
 		}

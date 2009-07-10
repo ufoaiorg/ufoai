@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h" /* gettext _() */
 #include "../../cl_input.h"
 
+#define EXTRADATA(node) (node->u.option)
+
 typedef enum {
 	MN_TAB_NOTHING = 0,
 	MN_TAB_NORMAL = 1,
@@ -68,7 +70,7 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/** @todo this dont work when an option is hidden */
-	allowedWidth = node->size[0] - TILE_WIDTH * (node->u.option.count + 1);
+	allowedWidth = node->size[0] - TILE_WIDTH * (EXTRADATA(node).count + 1);
 
 	/* Bounded box test (shound not need, but there are problem) */
 	if (x < 0 || y < 0 || x >= node->size[0] || y >= node->size[1])
@@ -77,7 +79,7 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
 	font = MN_GetFontFromNode(node);
 
 	/* Text box test */
-	for (option = node->u.option.first; option; option = option->next) {
+	for (option = EXTRADATA(node).first; option; option = option->next) {
 		int tabWidth;
 
 		/* skip hidden options */
@@ -196,9 +198,9 @@ static void MN_TabNodeDraw (menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, pos);
 	currentX = pos[0];
-	option = node->u.option.first;
+	option = EXTRADATA(node).first;
 	/** @todo this dont work when an option is hidden */
-	allowedWidth = node->size[0] - TILE_WIDTH * (node->u.option.count + 1);
+	allowedWidth = node->size[0] - TILE_WIDTH * (EXTRADATA(node).count + 1);
 
 	while (option) {
 		int fontHeight;
@@ -317,7 +319,7 @@ static void MN_TabNodeInit (menuNode_t *node)
 	cvarName = &((const char *)node->cvar)[6];
 	if (Cvar_FindVar(cvarName) == NULL) {
 		/* search default value, if possible */
-		menuOption_t* option = node->u.option.first;
+		menuOption_t* option = EXTRADATA(node).first;
 		if (option)
 			Cvar_ForceSet(cvarName, option->value);
 	}

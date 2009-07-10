@@ -34,12 +34,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../campaign/cp_campaign.h"
 
+#define EXTRADATA(node) (node->u.base)
+
 /**
  * @brief Called after the end of the node load from script (all data and/or child are set)
  */
 static void MN_AbstractBaseNodeLoaded (menuNode_t * node)
 {
-	const int id = node->u.base.baseid;
+	const int id = EXTRADATA(node).baseid;
 	if (id < 0 || id >= MAX_BASES) {
 		Com_Printf("MN_AbstractBaseNodeLoaded: Invalid baseid given %i", id);
 	}
@@ -57,7 +59,7 @@ static void MN_BaseLayoutNodeDraw (menuNode_t * node)
 	vec2_t nodepos;
 	int totalMarge;
 
-	if (node->u.base.baseid >= MAX_BASES || node->u.base.baseid < 0)
+	if (EXTRADATA(node).baseid >= MAX_BASES || EXTRADATA(node).baseid < 0)
 		return;
 
 	totalMarge = node->padding * (BASE_SIZE + 1);
@@ -66,7 +68,7 @@ static void MN_BaseLayoutNodeDraw (menuNode_t * node)
 
 	MN_GetNodeAbsPos(node, nodepos);
 
-	base = B_GetBaseByIDX(node->u.base.baseid);
+	base = B_GetBaseByIDX(EXTRADATA(node).baseid);
 
 	y = nodepos[1] + node->padding;
 	for (row = 0; row < BASE_SIZE; row++) {

@@ -36,10 +36,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_checkbox.h"
 #include "m_node_abstractnode.h"
 
+#define EXTRADATA(node) (node->u.abstractvalue)
 
 static void MN_CheckBoxNodeDraw (menuNode_t* node)
 {
-	const float value = MN_GetReferenceFloat(node, node->u.abstractvalue.value);
+	const float value = MN_GetReferenceFloat(node, EXTRADATA(node).value);
 	vec2_t pos;
 	const char *image = MN_GetReferenceString(node, node->image);
 	int texx, texy;
@@ -76,7 +77,7 @@ static void MN_CheckBoxNodeDraw (menuNode_t* node)
  */
 static void MN_CheckBoxNodeActivate (menuNode_t *node)
 {
-	const float last = MN_GetReferenceFloat(node, node->u.abstractvalue.value);
+	const float last = MN_GetReferenceFloat(node, EXTRADATA(node).value);
 	float value;
 
 	/* update value */
@@ -85,11 +86,11 @@ static void MN_CheckBoxNodeActivate (menuNode_t *node)
 		return;
 
 	/* save result */
-	node->u.abstractvalue.lastdiff = value - last;
-	if (!strncmp(node->u.abstractvalue.value, "*cvar:", 6)) {
-		MN_SetCvar(&((char*)node->u.abstractvalue.value)[6], NULL, value);
+	EXTRADATA(node).lastdiff = value - last;
+	if (!strncmp(EXTRADATA(node).value, "*cvar:", 6)) {
+		MN_SetCvar(&((char*)EXTRADATA(node).value)[6], NULL, value);
 	} else {
-		*(float*) node->u.abstractvalue.value = value;
+		*(float*) EXTRADATA(node).value = value;
 	}
 
 	/* fire change event */

@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
+#define EXTRADATA(node) (node->u.option)
+
 #define SELECTBOX_DEFAULT_HEIGHT 20.0f
 
 #define SELECTBOX_SIDE_WIDTH 7.0f
@@ -49,22 +51,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static menuOption_t*  MN_SelectBoxNodeGetFirstOption (menuNode_t * node)
 {
-	if (node->u.option.first) {
-		return node->u.option.first;
+	if (EXTRADATA(node).first) {
+		return EXTRADATA(node).first;
 	} else {
-		const int v = MN_GetDataVersion(node->u.option.dataId);
-		if (v != node->u.option.dataId) {
+		const int v = MN_GetDataVersion(EXTRADATA(node).dataId);
+		if (v != EXTRADATA(node).dataId) {
 			int count = 0;
-			menuOption_t *option = MN_GetOption(node->u.option.dataId);
+			menuOption_t *option = MN_GetOption(EXTRADATA(node).dataId);
 			while (option) {
 				count++;
 				option = option->next;
 			}
-			node->u.option.count = count;
+			EXTRADATA(node).count = count;
 
-			node->u.option.versionId = v;
+			EXTRADATA(node).versionId = v;
 		}
-		return MN_GetOption(node->u.option.dataId);
+		return MN_GetOption(EXTRADATA(node).dataId);
 	}
 }
 
@@ -80,7 +82,7 @@ static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/* test bounded box */
-	if (x < 0 || y < 0 || x > node->size[0] || y > node->size[1] * (node->u.option.count + 1)) {
+	if (x < 0 || y < 0 || x > node->size[0] || y > node->size[1] * (EXTRADATA(node).count + 1)) {
 		return;
 	}
 
@@ -169,15 +171,15 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 
 	/* drop down menu */
 	/* left side */
-	MN_DrawNormImage(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->u.option.count,
+	MN_DrawNormImage(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * EXTRADATA(node).count,
 		7.0f, 28.0f, 0.0f, 21.0f, image);
 
 	/* stretched middle bar */
-	MN_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * node->u.option.count,
+	MN_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * EXTRADATA(node).count,
 		16.0f, 28.0f, 7.0f, 21.0f, image);
 
 	/* right side */
-	MN_DrawNormImage(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->u.option.count,
+	MN_DrawNormImage(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * EXTRADATA(node).count,
 		23.0f, 28.0f, 16.0f, 21.0f, image);
 
 	/* now draw all available options for this selectbox */
@@ -227,7 +229,7 @@ static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 	clickedAtOption = (y - pos[1]);
 
 	/* we click outside */
-	if (x < pos[0] || y < pos[1] || x >= pos[0] + node->size[0] || y >= pos[1] + node->size[1] * (node->u.option.count + 1)) {
+	if (x < pos[0] || y < pos[1] || x >= pos[0] + node->size[0] || y >= pos[1] + node->size[1] * (EXTRADATA(node).count + 1)) {
 		MN_MouseRelease();
 		return;
 	}
@@ -239,7 +241,7 @@ static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 	}
 
 	clickedAtOption = (clickedAtOption - node->size[1]) / node->size[1];
-	if (clickedAtOption < 0 || clickedAtOption >= node->u.option.count)
+	if (clickedAtOption < 0 || clickedAtOption >= EXTRADATA(node).count)
 		return;
 
 	/* the cvar string is stored in dataModelSkinOrCVar */

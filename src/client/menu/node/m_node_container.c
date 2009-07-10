@@ -224,8 +224,8 @@ void MN_ContainerNodeSetFilter (menuNode_t* node, int num)
  */
 static void MN_ContainerNodeUpdateScroll (menuNode_t* node)
 {
-	if (node->u.container.onViewChange) {
-		MN_ExecuteEventActions(node, node->u.container.onViewChange);
+	if (EXTRADATA(node).onViewChange) {
+		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 	}
 }
 
@@ -666,7 +666,7 @@ static int MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *h
 		const float *color;
 		qboolean isHighlight = qfalse;
 		int amount;
-		const int col = items % node->u.container.columns;
+		const int col = items % EXTRADATA(node).columns;
 		int cellHeight = 0;
 		invList_t *icItem = iterator.itemFound;
 
@@ -977,7 +977,7 @@ static invList_t *MN_ContainerNodeGetItemFromBaseInventory (const menuNode_t* co
 		objDef_t *obj = &csi.ods[id];
 		vec2_t pos;
 		vec2_t ammopos;
-		const int col = items % node->u.container.columns;
+		const int col = items % EXTRADATA(node).columns;
 		int cellHeight = 0;
 		invList_t *icItem = iterator.itemFound;
 		int height;

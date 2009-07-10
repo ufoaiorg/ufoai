@@ -88,14 +88,14 @@ static int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 	assert(MN_NodeInstanceOf(node, "text"));
 
 	/* if no texh, its not a text list, result is not important */
-	if (!node->u.text.lineHeight)
+	if (!EXTRADATA(node).lineHeight)
 		return 0;
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 	if (EXTRADATA(node).super.scrollY.viewPos)
-		return (int) (y / node->u.text.lineHeight) + EXTRADATA(node).super.scrollY.viewPos;
+		return (int) (y / EXTRADATA(node).lineHeight) + EXTRADATA(node).super.scrollY.viewPos;
 	else
-		return (int) (y / node->u.text.lineHeight);
+		return (int) (y / EXTRADATA(node).lineHeight);
 }
 
 static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y)
@@ -129,7 +129,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 	MN_GetNodeAbsPos(node, pos);
 
 	if (MN_AbstractScrollableNodeIsSizeChange(node)) {
-		int lineheight = node->u.text.lineHeight;
+		int lineheight = EXTRADATA(node).lineHeight;
 		if (lineheight == 0) {
 			const char *font = MN_GetFontFromNode(node);
 			lineheight = MN_FontGetHeight(font) / 2;
@@ -205,7 +205,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			token = Com_Parse((const char **)&cur);
 			/** @todo fix scrolling images */
 			if (fullSizeY > EXTRADATA(node).super.scrollY.viewPos)
-				y1 += (fullSizeY - EXTRADATA(node).super.scrollY.viewPos) * node->u.text.lineHeight;
+				y1 += (fullSizeY - EXTRADATA(node).super.scrollY.viewPos) * EXTRADATA(node).lineHeight;
 			/* don't draw images that would be out of visible area */
 			if (y + height > y1 && fullSizeY >= EXTRADATA(node).super.scrollY.viewPos) {
 				/** @todo (menu) we should scale the height here with font->height, too */
@@ -251,10 +251,10 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 
 			/* use tab stop as given via menu definition format string
 			 * or use 1/3 of the node size (width) */
-			if (!node->u.text.tabWidth)
+			if (!EXTRADATA(node).tabWidth)
 				tabwidth = width / 3;
 			else
-				tabwidth = node->u.text.tabWidth;
+				tabwidth = EXTRADATA(node).tabWidth;
 
 			numtabs = strspn(tab, "\t");
 			tabwidth *= numtabs;
@@ -262,7 +262,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 				*tab++ = '\0';
 
 			/*Com_Printf("tab - first part - lines: %i \n", lines);*/
-			MN_DrawString(font, node->textalign, x1, y, x, y, tabwidth - 1, height, node->u.text.lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
+			MN_DrawString(font, node->textalign, x1, y, x, y, tabwidth - 1, height, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
 			x1 += tabwidth;
 			/* now skip to the first char after the \t */
 			cur = tab;
@@ -276,7 +276,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			if (!cur) {
 				fullSizeY++;
 			} else {
-				MN_DrawString(font, node->textalign, x1, y, x, y, width, height, node->u.text.lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).longlines);
+				MN_DrawString(font, node->textalign, x1, y, x, y, width, height, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).longlines);
 			}
 		}
 
@@ -329,10 +329,10 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, message_t *messageStac
 #endif
 	MN_GetNodeAbsPos(node, pos);
 
-	if (node->u.text.lineHeight == 0)
+	if (EXTRADATA(node).lineHeight == 0)
 		defaultHeight = MN_FontGetHeight(font);
 	else
-		defaultHeight = node->u.text.lineHeight;
+		defaultHeight = EXTRADATA(node).lineHeight;
 
 #ifdef AUTOSCROLL
 	autoscroll = (EXTRADATA(node).super.scrollY.viewPos + EXTRADATA(node).super.scrollY.viewSize == EXTRADATA(node).super.scrollY.fullSize)
@@ -393,7 +393,7 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, message_t *messageStac
 	screenLines = posY;
 	while (message) {
 		const char* text = va("%s%s", message->timestamp, message->text);
-		MN_DrawString(font, node->textalign, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).super.scrollY.viewSize, 0, &screenLines, qtrue, EXTRADATA(node).longlines);
+		MN_DrawString(font, node->textalign, x, y, x, y, width, height, EXTRADATA(node).lineHeight, text, EXTRADATA(node).super.scrollY.viewSize, 0, &screenLines, qtrue, EXTRADATA(node).longlines);
 		if (screenLines - EXTRADATA(node).super.scrollY.viewPos >= EXTRADATA(node).super.scrollY.viewSize)
 			break;
 		message = message->next;
@@ -497,9 +497,9 @@ static void MN_TextNodeLoading (menuNode_t *node)
 
 static void MN_TextNodeLoaded (menuNode_t *node)
 {
-	int lineheight = node->u.text.lineHeight;
+	int lineheight = EXTRADATA(node).lineHeight;
 	/* auto compute lineheight */
-	/* we don't overwrite node->u.text.lineHeight, because "0" is dynamically replaced by font height on draw function */
+	/* we don't overwrite EXTRADATA(node).lineHeight, because "0" is dynamically replaced by font height on draw function */
 	if (lineheight == 0) {
 		/* the font is used */
 		const char *font = MN_GetFontFromNode(node);

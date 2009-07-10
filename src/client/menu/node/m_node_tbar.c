@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractvalue.h"
 #include "m_node_abstractnode.h"
 
+#define EXTRADATA(node) (node->u.abstractvalue)
+
 #define TEXTURE_WIDTH 250.0
 
 static void MN_TBarNodeDraw (menuNode_t *node)
@@ -48,9 +50,9 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 
 	{
 		float ps;
-		const float min = MN_GetReferenceFloat(node, node->u.abstractvalue.min);
-		const float max = MN_GetReferenceFloat(node, node->u.abstractvalue.max);
-		float value = MN_GetReferenceFloat(node, node->u.abstractvalue.value);
+		const float min = MN_GetReferenceFloat(node, EXTRADATA(node).min);
+		const float max = MN_GetReferenceFloat(node, EXTRADATA(node).max);
+		float value = MN_GetReferenceFloat(node, EXTRADATA(node).value);
 		/* clamp the value */
 		if (value > max)
 			value = max;

@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
+#define EXTRADATA(node) (node->u.option)
+
 #define CORNER_SIZE 25
 #define MID_SIZE 1
 #define MARGE 3
@@ -62,9 +64,9 @@ static void MN_OptionTreeNodeUpdateScroll (menuNode_t *node)
 	fontHeight = MN_FontGetHeight(font);
 
 	elements = (node->size[1] - node->padding - node->padding) / fontHeight;
-	updated = MN_SetScroll(&node->u.option.scrollY, -1, elements, node->u.option.count);
-	if (updated && node->u.option.onViewChange)
-		MN_ExecuteEventActions(node, node->u.option.onViewChange);
+	updated = MN_SetScroll(&EXTRADATA(node).scrollY, -1, elements, EXTRADATA(node).count);
+	if (updated && EXTRADATA(node).onViewChange)
+		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 }
 
 /** @todo we should remove this call loop */
@@ -74,7 +76,7 @@ static void MN_OptionTreeNodeUpdateCache (menuNode_t * node)
 {
 	menuOption_t* option = MN_OptionTreeNodeGetFirstOption(node);
 	if (option)
-		node->u.option.count = MN_OptionUpdateCache(option);
+		EXTRADATA(node).count = MN_OptionUpdateCache(option);
 }
 
 /**
@@ -83,13 +85,13 @@ static void MN_OptionTreeNodeUpdateCache (menuNode_t * node)
  */
 static menuOption_t* MN_OptionTreeNodeGetFirstOption (menuNode_t * node)
 {
-	if (node->u.option.first) {
-		return node->u.option.first;
+	if (EXTRADATA(node).first) {
+		return EXTRADATA(node).first;
 	} else {
-		const int v = MN_GetDataVersion(node->u.option.dataId);
-		menuOption_t *option = MN_GetOption(node->u.option.dataId);
-		if (v != node->u.option.versionId) {
-			node->u.option.versionId = v;
+		const int v = MN_GetDataVersion(EXTRADATA(node).dataId);
+		menuOption_t *option = MN_GetOption(EXTRADATA(node).dataId);
+		if (v != EXTRADATA(node).versionId) {
+			EXTRADATA(node).versionId = v;
 			MN_OptionTreeNodeUpdateCache(node);
 		}
 		return option;
@@ -137,7 +139,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	/* skip option over current position */
 	option = MN_OptionTreeNodeGetFirstOption(node);
 	MN_OptionTreeNodeUpdateScroll(node);
-	option = MN_InitOptionIteratorAtIndex(node->u.option.scrollY.viewPos, option, &iterator);
+	option = MN_InitOptionIteratorAtIndex(EXTRADATA(node).scrollY.viewPos, option, &iterator);
 
 	/* draw all available options for this selectbox */
 	for (; option; option = MN_OptionIteratorNextOption(&iterator)) {
@@ -207,7 +209,7 @@ static menuOption_t* MN_OptionTreeNodeGetOptionAtPosition (menuNode_t * node, in
 	fontHeight = MN_FontGetHeight(font);
 
 	option = MN_OptionTreeNodeGetFirstOption(node);
-	count = node->u.option.scrollY.viewPos + (y - node->padding) / fontHeight;
+	count = EXTRADATA(node).scrollY.viewPos + (y - node->padding) / fontHeight;
 	option = MN_InitOptionIteratorAtIndex(count, option, &iterator);
 	*depth = iterator.depthPos;
 	return option;
@@ -262,9 +264,9 @@ static void MN_OptionTreeNodeClick (menuNode_t * node, int x, int y)
 static void MN_OptionTreeNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
 	qboolean updated;
-	updated = MN_SetScroll(&node->u.option.scrollY, node->u.option.scrollY.viewPos + (down ? 1 : -1), -1, -1);
-	if (node->u.option.onViewChange && updated)
-		MN_ExecuteEventActions(node, node->u.option.onViewChange);
+	updated = MN_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
+	if (EXTRADATA(node).onViewChange && updated)
+		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 
 	if (node->onWheelUp && !down)
 		MN_ExecuteEventActions(node, node->onWheelUp);
@@ -280,7 +282,7 @@ static void MN_OptionTreeNodeMouseWheel (menuNode_t *node, qboolean down, int x,
 static void MN_OptionTreeNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
-	node->u.option.versionId = -1;
+	EXTRADATA(node).versionId = -1;
 	node->padding = 3;
 }
 

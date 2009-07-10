@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
+#define EXTRADATA(node) node->u.window
+
 /* constants defining all tile of the texture */
 
 #define LEFT_WIDTH 20
@@ -69,7 +71,7 @@ static const vec4_t anamorphicBorder = {0, 0, 0, 1};
 qboolean MN_WindowIsFullScreen (menuNode_t* const node)
 {
 	assert(MN_NodeInstanceOf(node, "window"));
-	return node->u.window.isFullScreen;
+	return EXTRADATA(node).isFullScreen;
 }
 
 static void MN_WindowNodeDraw (menuNode_t *node)
@@ -102,7 +104,7 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 	}
 
 	/* darker background if last window is a modal */
-	if (node->u.window.modal && mn.windowStack[mn.windowStackPos - 1] == node)
+	if (EXTRADATA(node).modal && mn.windowStack[mn.windowStackPos - 1] == node)
 		MN_DrawFill(0, 0, viddef.virtualWidth, viddef.virtualHeight, modalBackground);
 
 	/* draw the background */
@@ -116,13 +118,13 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 		MN_DrawStringInBox(node, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
 
 	/* embedded timer */
-	if (node->u.window.onTimeOut && node->timeOut) {
+	if (EXTRADATA(node).onTimeOut && node->timeOut) {
 		if (node->lastTime == 0)
 			node->lastTime = cls.realtime;
 		if (node->lastTime + node->timeOut < cls.realtime) {
 			node->lastTime = 0;	/**< allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
 			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", node->name);
-			MN_ExecuteEventActions(node, node->u.window.onTimeOut);
+			MN_ExecuteEventActions(node, EXTRADATA(node).onTimeOut);
 		}
 	}
 }
@@ -188,7 +190,7 @@ static void MN_WindowNodeDoLayout (menuNode_t *node)
 		return;
 
 	/* use a the space */
-	if (node->u.window.fill) {
+	if (EXTRADATA(node).fill) {
 		if (node->size[0] != viddef.virtualWidth) {
 			node->size[0] = viddef.virtualWidth;
 			resized = qtrue;
@@ -208,7 +210,7 @@ static void MN_WindowNodeDoLayout (menuNode_t *node)
 	/** @todo check and fix here window outside the screen */
 
 	if (resized) {
-		if (node->u.window.starLayout) {
+		if (EXTRADATA(node).starLayout) {
 			MN_WindowNodeDoStarLayout(node);
 		}
 	}
@@ -236,8 +238,8 @@ static void MN_WindowNodeInit (menuNode_t *node)
 	}
 
 	/* script callback */
-	if (node->u.window.onInit)
-		MN_ExecuteEventActions(node, node->u.window.onInit);
+	if (EXTRADATA(node).onInit)
+		MN_ExecuteEventActions(node, EXTRADATA(node).onInit);
 
 	MN_Invalidate(node);
 }
@@ -261,7 +263,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 	static char* closeCommand = "mn_close <path:root>;";
 
 	/* if it need, construct the drag button */
-	if (node->u.window.dragButton) {
+	if (EXTRADATA(node).dragButton) {
 		menuNode_t *control = MN_AllocNode("controls");
 		Q_strncpyz(control->name, "move_window_button", sizeof(control->name));
 		control->root = node;
@@ -276,7 +278,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 	}
 
 	/* if the menu should have a close button, add it here */
-	if (node->u.window.closeButton) {
+	if (EXTRADATA(node).closeButton) {
 		menuNode_t *button = MN_AllocNode("pic");
 		const int positionFromRight = CONTROLS_PADDING;
 		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
@@ -293,7 +295,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 	}
 
 	if (node->size[0] == VID_NORM_WIDTH && node->size[1] == VID_NORM_HEIGHT) {
-		node->u.window.isFullScreen = qtrue;
+		EXTRADATA(node).isFullScreen = qtrue;
 	}
 
 #ifdef DEBUG

@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_keys.h"
 
+#define EXTRADATA(node) node->u.zone
+
 static menuTimer_t *capturedTimer;
 
 static void MN_ZoneNodeRepeat (menuNode_t *node, menuTimer_t *timer)
@@ -43,18 +45,18 @@ static void MN_ZoneNodeRepeat (menuNode_t *node, menuTimer_t *timer)
 
 static void MN_ZoneNodeDown (menuNode_t *node, int x, int y, int button)
 {
-	if (!node->u.zone.repeat)
+	if (!EXTRADATA(node).repeat)
 		return;
 	if (button == K_MOUSE1) {
 		MN_SetMouseCapture(node);
-		capturedTimer = MN_AllocTimer(node, node->u.zone.clickDelay, MN_ZoneNodeRepeat);
+		capturedTimer = MN_AllocTimer(node, EXTRADATA(node).clickDelay, MN_ZoneNodeRepeat);
 		MN_TimerStart(capturedTimer);
 	}
 }
 
 static void MN_ZoneNodeUp (menuNode_t *node, int x, int y, int button)
 {
-	if (!node->u.zone.repeat)
+	if (!EXTRADATA(node).repeat)
 		return;
 	if (button == K_MOUSE1) {
 		MN_MouseRelease();
@@ -78,7 +80,7 @@ static void MN_ZoneNodeCapturedMouseLost (menuNode_t *node)
  */
 static void MN_ZoneNodeLoading (menuNode_t *node)
 {
-	node->u.zone.clickDelay = 1000;
+	EXTRADATA(node).clickDelay = 1000;
 }
 
 /**

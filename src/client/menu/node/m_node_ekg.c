@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
+#define EXTRADATA(node) (node->u.ekg)
+
 static void MN_EKGNodeDraw (menuNode_t *node)
 {
 	vec2_t size;
@@ -61,15 +63,15 @@ static void MN_EKGNodeDraw (menuNode_t *node)
 		/** @todo these cvars should come from the script */
 		/* ekg_morale and ekg_hp are the node names */
 		if (node->name[0] == 'm')
-			current = Cvar_GetValue("mn_morale") / node->u.ekg.scaleCvarValue;
+			current = Cvar_GetValue("mn_morale") / EXTRADATA(node).scaleCvarValue;
 		else
-			current = Cvar_GetValue("mn_hp") / node->u.ekg.scaleCvarValue;
+			current = Cvar_GetValue("mn_hp") / EXTRADATA(node).scaleCvarValue;
 
 		ekgValue = min(current, ekgMaxValue);
 
 		node->texl[1] = (ekgMaxIndex - (int)(ekgValue / ekgDivide)) * ekgHeight;
 		node->texh[1] = node->texl[1] + ekgHeight;
-		node->texl[0] = -(int) (node->u.ekg.scrollSpeed * cls.realtime) % ekgWidth;
+		node->texl[0] = -(int) (EXTRADATA(node).scrollSpeed * cls.realtime) % ekgWidth;
 		node->texh[0] = node->texl[0] + node->size[0];
 		/** @todo code is duplicated in the image node code */
 		if (node->size[0] && !node->size[1]) {
@@ -101,8 +103,8 @@ static void MN_EKGNodeDraw (menuNode_t *node)
  */
 static void MN_EKGNodeLoading (menuNode_t *node)
 {
-	node->u.ekg.scaleCvarValue = 1.0f;
-	node->u.ekg.scrollSpeed= 0.07f;
+	EXTRADATA(node).scaleCvarValue = 1.0f;
+	EXTRADATA(node).scrollSpeed= 0.07f;
 }
 
 static const value_t properties[] = {

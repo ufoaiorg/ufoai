@@ -31,10 +31,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../renderer/r_draw.h"
 
+#define EXTRADATA(node) (node->u.linechart)
+
 static void MN_LineChartNodeDraw (menuNode_t *node)
 {
 	lineStrip_t *lineStrip;
-	const int dataId = node->u.linechart.dataId;
+	const int dataId = EXTRADATA(node).dataId;
 	vec3_t pos;
 
 	if (dataId == 0)
@@ -42,7 +44,7 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 
 	if (mn.sharedData[dataId].type != MN_SHARED_LINESTRIP) {
 		Com_Printf("MN_LineStripNodeDraw: Node '%s' have use an invalide dataId type. LineStrip expected. dataId invalidated\n", MN_GetPath(node));
-		node->u.linechart.dataId = 0;
+		EXTRADATA(node).dataId = 0;
 		return;
 	}
 
@@ -52,7 +54,7 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 	MN_Transform(pos, NULL, NULL);
 
 	/* Draw axes */
-	if (node->u.linechart.displayAxes) {
+	if (EXTRADATA(node).displayAxes) {
 		int axes[6];
 		axes[0] = 0;
 		axes[1] = 0;
@@ -60,7 +62,7 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 		axes[3] = (int) node->size[1];
 		axes[4] = (int) node->size[0];
 		axes[5] = (int) node->size[1];
-		R_Color(node->u.linechart.axesColor);
+		R_Color(EXTRADATA(node).axesColor);
 		R_DrawLineStrip(3, axes);
 	}
 

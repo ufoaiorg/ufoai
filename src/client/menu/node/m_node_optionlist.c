@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
+#define EXTRADATA(node) (node->u.option)
+
 #define CORNER_SIZE 25
 #define MID_SIZE 1
 #define MARGE 3
@@ -46,15 +48,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static menuOption_t* MN_OptionListNodeGetFirstOption (menuNode_t * node)
 {
-	if (node->u.option.first) {
-		return node->u.option.first;
+	if (EXTRADATA(node).first) {
+		return EXTRADATA(node).first;
 	} else {
-		const int v = MN_GetDataVersion(node->u.option.dataId);
-		if (v != node->u.option.versionId) {
+		const int v = MN_GetDataVersion(EXTRADATA(node).dataId);
+		if (v != EXTRADATA(node).versionId) {
 			/* we should update and fire event here */
-			node->u.option.versionId = v;
+			EXTRADATA(node).versionId = v;
 		}
-		return MN_GetOption(node->u.option.dataId);
+		return MN_GetOption(EXTRADATA(node).dataId);
 	}
 }
 
@@ -73,9 +75,9 @@ static void MN_OptionListNodeUpdateScroll (menuNode_t *node)
 	fontHeight = MN_FontGetHeight(font);
 
 	elements = (node->size[1] - node->padding - node->padding) / fontHeight;
-	updated = MN_SetScroll(&node->u.option.scrollY, -1, elements, node->u.option.count);
-	if (updated && node->u.option.onViewChange)
-		MN_ExecuteEventActions(node, node->u.option.onViewChange);
+	updated = MN_SetScroll(&EXTRADATA(node).scrollY, -1, elements, EXTRADATA(node).count);
+	if (updated && EXTRADATA(node).onViewChange)
+		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 }
 
 static void MN_OptionListNodeDraw (menuNode_t *node)
@@ -112,7 +114,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 
 	/* skip option over current position */
 	option = MN_OptionListNodeGetFirstOption(node);
-	while (option && count < node->u.option.scrollY.viewPos) {
+	while (option && count < EXTRADATA(node).scrollY.viewPos) {
 		option = option->next;
 		count++;
 	}
@@ -165,8 +167,8 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 		count++;
 	}
 
-	if (node->u.option.count != count) {
-		node->u.option.count = count;
+	if (EXTRADATA(node).count != count) {
+		EXTRADATA(node).count = count;
 	}
 
 	MN_OptionListNodeUpdateScroll(node);
@@ -188,7 +190,7 @@ static menuOption_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, in
 	fontHeight = MN_FontGetHeight(font);
 
 	option = MN_OptionListNodeGetFirstOption(node);
-	while (option && count < node->u.option.scrollY.viewPos) {
+	while (option && count < EXTRADATA(node).scrollY.viewPos) {
 		option = option->next;
 		count++;
 	}
@@ -240,9 +242,9 @@ static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 static void MN_OptionListNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
 	qboolean updated;
-	updated = MN_SetScroll(&node->u.option.scrollY, node->u.option.scrollY.viewPos + (down ? 1 : -1), -1, -1);
-	if (node->u.option.onViewChange && updated)
-		MN_ExecuteEventActions(node, node->u.option.onViewChange);
+	updated = MN_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
+	if (EXTRADATA(node).onViewChange && updated)
+		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 
 	if (node->onWheelUp && !down)
 		MN_ExecuteEventActions(node, node->onWheelUp);
@@ -258,7 +260,7 @@ static void MN_OptionListNodeMouseWheel (menuNode_t *node, qboolean down, int x,
 static void MN_OptionListNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
-	node->u.option.versionId = -1;
+	EXTRADATA(node).versionId = -1;
 	node->padding = 3;
 }
 
