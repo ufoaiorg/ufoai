@@ -650,18 +650,18 @@ static void MN_ModelNodeLoaded (menuNode_t *node)
 
 /** @brief valid properties for model */
 static const value_t properties[] = {
-	{"anim", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.animation), 0},
-	{"angles", V_VECTOR, offsetof(menuNode_t, u.model.angles), MEMBER_SIZEOF(menuNode_t, u.model.angles)},
-	{"origin", V_VECTOR, offsetof(menuNode_t, u.model.origin), MEMBER_SIZEOF(menuNode_t, u.model.origin)},
-	{"scale", V_VECTOR, offsetof(menuNode_t, u.model.scale), MEMBER_SIZEOF(menuNode_t, u.model.scale)},
-	{"tag", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.tag), 0},
+	{"anim", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, animation), 0},
+	{"angles", V_VECTOR, MN_EXTRADATA_OFFSETOF(modelExtraData_t, angles), MEMBER_SIZEOF(modelExtraData_t, angles)},
+	{"origin", V_VECTOR, MN_EXTRADATA_OFFSETOF(modelExtraData_t, origin), MEMBER_SIZEOF(modelExtraData_t, origin)},
+	{"scale", V_VECTOR, MN_EXTRADATA_OFFSETOF(modelExtraData_t, scale), MEMBER_SIZEOF(modelExtraData_t, scale)},
+	{"tag", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, tag), 0},
 	/** @todo use V_REF_OF_STRING when its possible ('viewName' is never a cvar) */
-	{"view", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.viewName), 0},
-	{"autoscale", V_BOOL, offsetof(menuNode_t, u.model.autoscale), MEMBER_SIZEOF(menuNode_t, u.model.autoscale)},
-	{"rotatewithmouse", V_BOOL, offsetof(menuNode_t, u.model.rotateWithMouse), MEMBER_SIZEOF(menuNode_t, u.model.rotateWithMouse)},
-	{"clipoverflow", V_BOOL, offsetof(menuNode_t, u.model.clipOverflow), MEMBER_SIZEOF(menuNode_t, u.model.clipOverflow)},
-	{"model", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.model), 0},
-	{"skin", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.skin), 0},
+	{"view", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, viewName), 0},
+	{"autoscale", V_BOOL, MN_EXTRADATA_OFFSETOF(modelExtraData_t, autoscale), MEMBER_SIZEOF(modelExtraData_t, autoscale)},
+	{"rotatewithmouse", V_BOOL, MN_EXTRADATA_OFFSETOF(modelExtraData_t, rotateWithMouse), MEMBER_SIZEOF(modelExtraData_t, rotateWithMouse)},
+	{"clipoverflow", V_BOOL, MN_EXTRADATA_OFFSETOF(modelExtraData_t, clipOverflow), MEMBER_SIZEOF(modelExtraData_t, clipOverflow)},
+	{"model", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, model), 0},
+	{"skin", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, skin), 0},
 
 	{NULL, V_NULL, 0, 0}
 };

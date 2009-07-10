@@ -395,7 +395,7 @@ static void MN_BaseLayoutNodeLoading (menuNode_t *node)
 }
 
 static const value_t properties[] = {
-	{"baseid", V_INT, offsetof(menuNode_t, u.base.baseid), MEMBER_SIZEOF(menuNode_t, u.base.baseid)},
+	{"baseid", V_INT, MN_EXTRADATA_OFFSETOF(baseExtraData_t, baseid), MEMBER_SIZEOF(baseExtraData_t, baseid)},
 	{NULL, V_NULL, 0, 0}
 };
 

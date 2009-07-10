@@ -26,11 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractscrollbar.h"
 
 static const value_t properties[] = {
-	{"current", V_INT, offsetof(menuNode_t, u.abstractscrollbar.pos),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.pos)},
-	{"viewsize", V_INT, offsetof(menuNode_t, u.abstractscrollbar.viewsize),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.viewsize)},
-	{"fullsize", V_INT, offsetof(menuNode_t, u.abstractscrollbar.fullsize),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.fullsize)},
-	{"lastdiff", V_INT, offsetof(menuNode_t, u.abstractscrollbar.lastdiff),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.lastdiff)},
-	{"hidewhenunused", V_BOOL, offsetof(menuNode_t, u.abstractscrollbar.hideWhenUnused),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.hideWhenUnused)},
+	{"current", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollbarExtraData_t, pos),  MEMBER_SIZEOF(abstractScrollbarExtraData_t, pos)},
+	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollbarExtraData_t, viewsize),  MEMBER_SIZEOF(abstractScrollbarExtraData_t, viewsize)},
+	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollbarExtraData_t, fullsize),  MEMBER_SIZEOF(abstractScrollbarExtraData_t, fullsize)},
+	{"lastdiff", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollbarExtraData_t, lastdiff),  MEMBER_SIZEOF(abstractScrollbarExtraData_t, lastdiff)},
+	{"hidewhenunused", V_BOOL, MN_EXTRADATA_OFFSETOF(abstractScrollbarExtraData_t, hideWhenUnused),  MEMBER_SIZEOF(abstractScrollbarExtraData_t, hideWhenUnused)},
 	{NULL, V_NULL, 0, 0}
 };
 

@@ -256,7 +256,7 @@ void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
 
 	for (i = 0; i < csi.numODs; i++) {
-		/* Don't allow to show armour for other teams in the menu. */
+		/* Don't allow to show armour for other teams in the menu */
 		if (!INVSH_UseableForTeam(&csi.ods[i], GAME_GetCurrentTeam()))
 			continue;
 
@@ -1535,22 +1535,22 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 }
 
 static const value_t properties[] = {
-	{"displayweapon", V_BOOL, offsetof(menuNode_t, u.container.displayWeapon),  MEMBER_SIZEOF(menuNode_t, u.container.displayWeapon)},
-	{"displayammo", V_BOOL, offsetof(menuNode_t, u.container.displayAmmo),  MEMBER_SIZEOF(menuNode_t, u.container.displayAmmo)},
-	{"displayunavailableitem", V_BOOL, offsetof(menuNode_t, u.container.displayUnavailableItem),  MEMBER_SIZEOF(menuNode_t, u.container.displayUnavailableItem)},
-	{"displayavailableontop", V_BOOL, offsetof(menuNode_t, u.container.displayAvailableOnTop),  MEMBER_SIZEOF(menuNode_t, u.container.displayAvailableOnTop)},
-	{"displayammoofweapon", V_BOOL, offsetof(menuNode_t, u.container.displayAmmoOfWeapon),  MEMBER_SIZEOF(menuNode_t, u.container.displayAmmoOfWeapon)},
-	{"displayunavailableammoofweapon", V_BOOL, offsetof(menuNode_t, u.container.displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(menuNode_t, u.container.displayUnavailableAmmoOfWeapon)},
-	{"columns", V_INT, offsetof(menuNode_t, u.container.columns),  MEMBER_SIZEOF(menuNode_t, u.container.columns)},
-	{"filter", V_INT, offsetof(menuNode_t, u.container.filterEquipType),  MEMBER_SIZEOF(menuNode_t, u.container.filterEquipType)},
+	{"displayweapon", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayWeapon)},
+	{"displayammo", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayAmmo),  MEMBER_SIZEOF(containerExtraData_t, displayAmmo)},
+	{"displayunavailableitem", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableItem),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableItem)},
+	{"displayavailableontop", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayAvailableOnTop),  MEMBER_SIZEOF(containerExtraData_t, displayAvailableOnTop)},
+	{"displayammoofweapon", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayAmmoOfWeapon)},
+	{"displayunavailableammoofweapon", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableAmmoOfWeapon)},
+	{"columns", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, columns),  MEMBER_SIZEOF(containerExtraData_t, columns)},
+	{"filter", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, filterEquipType),  MEMBER_SIZEOF(containerExtraData_t, filterEquipType)},
 
-	{"lastselectedid", V_INT, offsetof(menuNode_t, u.container.lastSelectedId),  MEMBER_SIZEOF(menuNode_t, u.container.lastSelectedId)},
-	{"onselect", V_UI_ACTION, offsetof(menuNode_t, u.container.onSelect),  MEMBER_SIZEOF(menuNode_t, u.container.onSelect)},
+	{"lastselectedid", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, lastSelectedId),  MEMBER_SIZEOF(containerExtraData_t, lastSelectedId)},
+	{"onselect", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(containerExtraData_t, onSelect),  MEMBER_SIZEOF(containerExtraData_t, onSelect)},
 
-	{"scrollpos", V_INT, offsetof(menuNode_t, u.container.scrollCur),  MEMBER_SIZEOF(menuNode_t, u.container.scrollCur)},
-	{"viewsize", V_INT, offsetof(menuNode_t, u.container.scrollNum),  MEMBER_SIZEOF(menuNode_t, u.container.scrollNum)},
-	{"fullsize", V_INT, offsetof(menuNode_t, u.container.scrollTotalNum),  MEMBER_SIZEOF(menuNode_t, u.container.scrollTotalNum)},
-	{"onviewchange", V_UI_ACTION, offsetof(menuNode_t, u.container.onViewChange), MEMBER_SIZEOF(menuNode_t, u.container.onViewChange)},
+	{"scrollpos", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, scrollCur),  MEMBER_SIZEOF(containerExtraData_t, scrollCur)},
+	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, scrollNum),  MEMBER_SIZEOF(containerExtraData_t, scrollNum)},
+	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, scrollTotalNum),  MEMBER_SIZEOF(containerExtraData_t, scrollTotalNum)},
+	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(containerExtraData_t, onViewChange), MEMBER_SIZEOF(containerExtraData_t, onViewChange)},
 
 	{NULL, V_NULL, 0, 0}
 };

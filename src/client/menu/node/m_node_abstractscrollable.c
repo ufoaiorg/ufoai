@@ -134,11 +134,11 @@ qboolean MN_AbstractScrollableNodeScrollY (menuNode_t *node, int offset)
 }
 
 static const value_t properties[] = {
-	{"viewpos", V_INT, offsetof(menuNode_t, u.abstractscrollable.scrollY.viewPos),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.scrollY.viewPos)},
-	{"viewsize", V_INT, offsetof(menuNode_t, u.abstractscrollable.scrollY.viewSize),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.scrollY.viewSize)},
-	{"fullsize", V_INT, offsetof(menuNode_t, u.abstractscrollable.scrollY.fullSize),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.scrollY.fullSize)},
+	{"viewpos", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollableExtraData_t, scrollY.viewPos),  MEMBER_SIZEOF(abstractScrollableExtraData_t, scrollY.viewPos)},
+	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollableExtraData_t, scrollY.viewSize),  MEMBER_SIZEOF(abstractScrollableExtraData_t, scrollY.viewSize)},
+	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollableExtraData_t, scrollY.fullSize),  MEMBER_SIZEOF(abstractScrollableExtraData_t, scrollY.fullSize)},
 
-	{"onviewchange", V_UI_ACTION, offsetof(menuNode_t, u.abstractscrollable.onViewChange), MEMBER_SIZEOF(menuNode_t, u.abstractscrollable.onViewChange)},
+	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(abstractScrollableExtraData_t, onViewChange), MEMBER_SIZEOF(abstractScrollableExtraData_t, onViewChange)},
 
 	{NULL, V_NULL, 0, 0}
 };

@@ -40,8 +40,8 @@ typedef struct menuTransform_s {
 	qboolean useAngles;	/**< Is the angles value used? */
 	qboolean useOrigin;	/**< Is the origin value used? */
 
-	vec3_t scale;		/**< Scale values to be used instead of the ones defined in the menu. */
-	vec3_t angles;		/**< Angle values to be used instead of the ones defined in the menu. */
+	vec3_t scale;		/**< Scale values to be used instead of the ones defined in the menu */
+	vec3_t angles;		/**< Angle values to be used instead of the ones defined in the menu */
 	vec3_t origin;		/**< The _relative_ offset on the screen. It is added to the "origin" value defined in the menu (-file). */
 } menuTransform_t;
 
@@ -54,7 +54,7 @@ typedef struct menuModel_s {
 	char *tag;	/**< the tag the model should placed onto */
 	int skin;		/**< skin number to use - default 0 (first skin) */
 	char *model;
-	menuTransform_t menuTransform[MAX_MENUMODELS_SCALEMENUS];	/**< The various transform values for the specific menu. */
+	menuTransform_t menuTransform[MAX_MENUMODELS_SCALEMENUS];	/**< The various transform values for the specific menu */
 	int menuTransformCnt;			/**< Nubmer of parsed menutransform menus. */
 	animState_t animState;
 	vec3_t origin, scale, angles, center;

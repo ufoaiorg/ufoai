@@ -33,9 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_textentry.h"
 #include "m_node_abstractnode.h"
 #include "m_node_panel.h"
-#include "../../../shared/utf8.h"
 
 #include "../../client.h"
+#include "../../../shared/utf8.h"
 
 #define EXTRADATA(node) (node->u.textentry)
 
@@ -320,9 +320,9 @@ static void MN_TextEntryNodeLoading (menuNode_t *node)
 }
 
 static const value_t properties[] = {
-	{"ispassword", V_BOOL, offsetof(menuNode_t, u.textentry.isPassword), MEMBER_SIZEOF(menuNode_t, u.textentry.isPassword) },
-	{"clickoutabort", V_BOOL, offsetof(menuNode_t, u.textentry.clickOutAbort), MEMBER_SIZEOF(menuNode_t, u.textentry.clickOutAbort)},
-	{"onabort", V_UI_ACTION, offsetof(menuNode_t, u.textentry.onAbort), MEMBER_SIZEOF(menuNode_t, u.textentry.onAbort)},
+	{"ispassword", V_BOOL, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, isPassword), MEMBER_SIZEOF(textEntryExtraData_t, isPassword)},
+	{"clickoutabort", V_BOOL, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, clickOutAbort), MEMBER_SIZEOF(textEntryExtraData_t, clickOutAbort)},
+	{"onabort", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, onAbort), MEMBER_SIZEOF(textEntryExtraData_t, onAbort)},
 
 	{NULL, V_NULL, 0, 0}
 };

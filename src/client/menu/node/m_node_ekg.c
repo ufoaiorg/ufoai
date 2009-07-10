@@ -108,8 +108,8 @@ static void MN_EKGNodeLoading (menuNode_t *node)
 }
 
 static const value_t properties[] = {
-	{"scrollspeed", V_FLOAT, offsetof(menuNode_t, u.ekg.scrollSpeed), MEMBER_SIZEOF(menuNode_t, u.ekg.scrollSpeed)},
-	{"scale", V_FLOAT, offsetof(menuNode_t, u.ekg.scaleCvarValue), MEMBER_SIZEOF(menuNode_t, u.ekg.scaleCvarValue)},
+	{"scrollspeed", V_FLOAT, MN_EXTRADATA_OFFSETOF(ekgExtraData_t, scrollSpeed), MEMBER_SIZEOF(ekgExtraData_t, scrollSpeed)},
+	{"scale", V_FLOAT, MN_EXTRADATA_OFFSETOF(ekgExtraData_t, scaleCvarValue), MEMBER_SIZEOF(ekgExtraData_t, scaleCvarValue)},
 
 	{NULL, V_NULL, 0, 0}
 };

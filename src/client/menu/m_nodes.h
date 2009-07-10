@@ -156,6 +156,14 @@ typedef struct menuNode_s {
 } menuNode_t;
 
 /**
+ * @brief Return the offset of an extradata node attribute
+ * @param TYPE Extradata type
+ * @param MEMBER Attribute name
+ * @sa offsetof
+ */
+#define MN_EXTRADATA_OFFSETOF(TYPE, MEMBER) ((size_t) &((TYPE *)(&((menuNode_t *)0)->u))->MEMBER)
+
+/**
  * @brief node behaviour, how a node work
  * @sa virtualFunctions
  */

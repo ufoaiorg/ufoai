@@ -81,9 +81,9 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 }
 
 static const value_t properties[] = {
-	{"dataid", V_UI_DATAID, offsetof(menuNode_t, u.linechart.dataId), MEMBER_SIZEOF(menuNode_t, u.linechart.dataId)},
-	{"displayaxes", V_BOOL, offsetof(menuNode_t, u.linechart.displayAxes), MEMBER_SIZEOF(menuNode_t, u.linechart.displayAxes)},
-	{"axescolor", V_COLOR, offsetof(menuNode_t, u.linechart.axesColor), MEMBER_SIZEOF(menuNode_t, u.linechart.axesColor)},
+	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(lineChartExtraData_t, dataId), MEMBER_SIZEOF(lineChartExtraData_t, dataId)},
+	{"displayaxes", V_BOOL, MN_EXTRADATA_OFFSETOF(lineChartExtraData_t, displayAxes), MEMBER_SIZEOF(lineChartExtraData_t, displayAxes)},
+	{"axescolor", V_COLOR, MN_EXTRADATA_OFFSETOF(lineChartExtraData_t, axesColor), MEMBER_SIZEOF(lineChartExtraData_t, axesColor)},
 	{NULL, V_NULL, 0, 0}
 };
 

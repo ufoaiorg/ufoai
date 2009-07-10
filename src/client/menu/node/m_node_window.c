@@ -308,19 +308,19 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
  * @brief Valid properties for a window node (called yet 'menu')
  */
 static const value_t windowNodeProperties[] = {
-	{"noticepos", V_POS, offsetof(menuNode_t, u.window.noticePos), MEMBER_SIZEOF(menuNode_t, u.window.noticePos)},
-	{"dragbutton", V_BOOL, offsetof(menuNode_t, u.window.dragButton), MEMBER_SIZEOF(menuNode_t, u.window.dragButton)},
-	{"closebutton", V_BOOL, offsetof(menuNode_t, u.window.closeButton), MEMBER_SIZEOF(menuNode_t, u.window.closeButton)},
-	{"modal", V_BOOL, offsetof(menuNode_t, u.window.modal), MEMBER_SIZEOF(menuNode_t, u.window.modal)},
-	{"dropdown", V_BOOL, offsetof(menuNode_t, u.window.dropdown), MEMBER_SIZEOF(menuNode_t, u.window.dropdown)},
-	{"preventtypingescape", V_BOOL, offsetof(menuNode_t, u.window.preventTypingEscape), MEMBER_SIZEOF(menuNode_t, u.window.preventTypingEscape)},
-	{"fill", V_BOOL, offsetof(menuNode_t, u.window.fill), MEMBER_SIZEOF(menuNode_t, u.window.fill)},
-	{"starlayout", V_BOOL, offsetof(menuNode_t, u.window.starLayout), MEMBER_SIZEOF(menuNode_t, u.window.starLayout)},
+	{"noticepos", V_POS, MN_EXTRADATA_OFFSETOF(windowExtraData_t, noticePos), MEMBER_SIZEOF(windowExtraData_t, noticePos)},
+	{"dragbutton", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, dragButton), MEMBER_SIZEOF(windowExtraData_t, dragButton)},
+	{"closebutton", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, closeButton), MEMBER_SIZEOF(windowExtraData_t, closeButton)},
+	{"modal", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, modal), MEMBER_SIZEOF(windowExtraData_t, modal)},
+	{"dropdown", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, dropdown), MEMBER_SIZEOF(windowExtraData_t, dropdown)},
+	{"preventtypingescape", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, preventTypingEscape), MEMBER_SIZEOF(windowExtraData_t, preventTypingEscape)},
+	{"fill", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, fill), MEMBER_SIZEOF(windowExtraData_t, fill)},
+	{"starlayout", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, starLayout), MEMBER_SIZEOF(windowExtraData_t, starLayout)},
 	{"timeout", V_INT, offsetof(menuNode_t, timeOut), MEMBER_SIZEOF(menuNode_t, timeOut)},
 
-	{"oninit", V_UI_ACTION, offsetof(menuNode_t, u.window.onInit), MEMBER_SIZEOF(menuNode_t, u.window.onInit)},
-	{"onclose", V_UI_ACTION, offsetof(menuNode_t, u.window.onClose), MEMBER_SIZEOF(menuNode_t, u.window.onClose)},
-	{"onevent", V_UI_ACTION, offsetof(menuNode_t, u.window.onTimeOut), MEMBER_SIZEOF(menuNode_t, u.window.onTimeOut)},
+	{"oninit", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(windowExtraData_t, onInit), MEMBER_SIZEOF(windowExtraData_t, onInit)},
+	{"onclose", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(windowExtraData_t, onClose), MEMBER_SIZEOF(windowExtraData_t, onClose)},
+	{"onevent", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(windowExtraData_t, onTimeOut), MEMBER_SIZEOF(windowExtraData_t, onTimeOut)},
 
 	{NULL, V_NULL, 0, 0}
 };

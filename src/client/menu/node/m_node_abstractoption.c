@@ -121,15 +121,15 @@ static void MN_UpdateOption_f (void)
 }
 
 static const value_t properties[] = {
-	{"dataid", V_UI_DATAID, offsetof(menuNode_t, u.option.dataId), MEMBER_SIZEOF(menuNode_t, u.option.dataId)},
-	{"option", V_UI_OPTIONNODE, offsetof(menuNode_t, u.option.first), 0},
+	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(optionExtraData_t, dataId), MEMBER_SIZEOF(optionExtraData_t, dataId)},
+	{"option", V_UI_OPTIONNODE, MN_EXTRADATA_OFFSETOF(optionExtraData_t, first), 0},
 
-	{"viewpos", V_INT, offsetof(menuNode_t, u.option.scrollY.viewPos),  MEMBER_SIZEOF(menuNode_t, u.option.scrollY.viewPos)},
-	{"viewsize", V_INT, offsetof(menuNode_t, u.option.scrollY.viewSize),  MEMBER_SIZEOF(menuNode_t, u.option.scrollY.viewSize)},
-	{"fullsize", V_INT, offsetof(menuNode_t, u.option.scrollY.fullSize),  MEMBER_SIZEOF(menuNode_t, u.option.scrollY.fullSize)},
+	{"viewpos", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, scrollY.viewPos),  MEMBER_SIZEOF(optionExtraData_t, scrollY.viewPos)},
+	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, scrollY.viewSize),  MEMBER_SIZEOF(optionExtraData_t, scrollY.viewSize)},
+	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, scrollY.fullSize),  MEMBER_SIZEOF(optionExtraData_t, scrollY.fullSize)},
 
-	{"count", V_INT, offsetof(menuNode_t, u.option.count),  MEMBER_SIZEOF(menuNode_t, u.option.count)},
-	{"onviewchange", V_UI_ACTION, offsetof(menuNode_t, u.option.onViewChange), MEMBER_SIZEOF(menuNode_t, u.option.onViewChange)},
+	{"count", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, count),  MEMBER_SIZEOF(optionExtraData_t, count)},
+	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(optionExtraData_t, onViewChange), MEMBER_SIZEOF(optionExtraData_t, onViewChange)},
 
 	{NULL, V_NULL, 0, 0}
 };

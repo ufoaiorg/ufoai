@@ -537,15 +537,15 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 }
 
 static const value_t properties[] = {
-	{"lineselected", V_INT, offsetof(menuNode_t, u.text.textLineSelected), MEMBER_SIZEOF(menuNode_t, u.text.textLineSelected)},
-	{"dataid", V_UI_DATAID, offsetof(menuNode_t, u.text.dataID), MEMBER_SIZEOF(menuNode_t, u.text.dataID)},
-	{"lineheight", V_INT, offsetof(menuNode_t, u.text.lineHeight), MEMBER_SIZEOF(menuNode_t, u.text.lineHeight)},
-	{"tabwidth", V_INT, offsetof(menuNode_t, u.text.tabWidth), MEMBER_SIZEOF(menuNode_t, u.text.tabWidth)},
-	{"longlines", V_LONGLINES, offsetof(menuNode_t, u.text.longlines), MEMBER_SIZEOF(menuNode_t, u.text.longlines)},
+	{"lineselected", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, textLineSelected), MEMBER_SIZEOF(textExtraData_t, textLineSelected)},
+	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(textExtraData_t, dataID), MEMBER_SIZEOF(textExtraData_t, dataID)},
+	{"lineheight", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, lineHeight), MEMBER_SIZEOF(textExtraData_t, lineHeight)},
+	{"tabwidth", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, tabWidth), MEMBER_SIZEOF(textExtraData_t, tabWidth)},
+	{"longlines", V_LONGLINES, MN_EXTRADATA_OFFSETOF(textExtraData_t, longlines), MEMBER_SIZEOF(textExtraData_t, longlines)},
 
 	/* translate text properties into the scrollable data; for a smoth scroll we should split that */
-	{"rows", V_INT, offsetof(menuNode_t, u.text.super.scrollY.viewSize), MEMBER_SIZEOF(menuNode_t, u.text.super.scrollY.viewSize)},
-	{"lines", V_INT, offsetof(menuNode_t, u.text.super.scrollY.fullSize), MEMBER_SIZEOF(menuNode_t, u.text.super.scrollY.fullSize)},
+	{"rows", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, super.scrollY.viewSize), MEMBER_SIZEOF(textExtraData_t, super.scrollY.viewSize)},
+	{"lines", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, super.scrollY.fullSize), MEMBER_SIZEOF(textExtraData_t, super.scrollY.fullSize)},
 
 	/** @todo delete it went its possible (need to create a textlist) */
 	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},

@@ -70,11 +70,11 @@ static void MN_AbstractValueClone (const menuNode_t *source, menuNode_t *clone)
 }
 
 static const value_t properties[] = {
-	{"current", V_CVAR_OR_FLOAT, offsetof(menuNode_t, u.abstractvalue.value), 0},
-	{"delta", V_CVAR_OR_FLOAT, offsetof(menuNode_t, u.abstractvalue.delta), 0},
-	{"max", V_CVAR_OR_FLOAT, offsetof(menuNode_t, u.abstractvalue.max), 0},
-	{"min", V_CVAR_OR_FLOAT, offsetof(menuNode_t, u.abstractvalue.min), 0},
-	{"lastdiff", V_FLOAT, offsetof(menuNode_t, u.abstractvalue.lastdiff), MEMBER_SIZEOF(menuNode_t, u.abstractvalue.lastdiff)},
+	{"current", V_CVAR_OR_FLOAT, MN_EXTRADATA_OFFSETOF(abstractValueExtraData_t, value), 0},
+	{"delta", V_CVAR_OR_FLOAT, MN_EXTRADATA_OFFSETOF(abstractValueExtraData_t, delta), 0},
+	{"max", V_CVAR_OR_FLOAT, MN_EXTRADATA_OFFSETOF(abstractValueExtraData_t, max), 0},
+	{"min", V_CVAR_OR_FLOAT, MN_EXTRADATA_OFFSETOF(abstractValueExtraData_t, min), 0},
+	{"lastdiff", V_FLOAT, MN_EXTRADATA_OFFSETOF(abstractValueExtraData_t, lastdiff), MEMBER_SIZEOF(abstractValueExtraData_t, lastdiff)},
 	{NULL, V_NULL, 0, 0}
 };
 
