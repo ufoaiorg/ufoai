@@ -72,9 +72,9 @@ static void MN_CheckBoxNodeDraw (menuNode_t* node)
 }
 
 /**
- * @brief Handles checkboxes clicks
+ * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
+static void MN_CheckBoxNodeActivate (menuNode_t *node)
 {
 	const float last = MN_GetReferenceFloat(node, node->u.abstractvalue.value);
 	float value;
@@ -86,7 +86,7 @@ static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
 
 	/* save result */
 	node->u.abstractvalue.lastdiff = value - last;
-	if (!strncmp(node->u.abstractvalue.value, "*cvar", 5)) {
+	if (!strncmp(node->u.abstractvalue.value, "*cvar:", 6)) {
 		MN_SetCvar(&((char*)node->u.abstractvalue.value)[6], NULL, value);
 	} else {
 		*(float*) node->u.abstractvalue.value = value;
@@ -96,6 +96,14 @@ static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
 	if (node->onChange) {
 		MN_ExecuteEventActions(node, node->onChange);
 	}
+}
+
+/**
+ * @brief Handles checkboxes clicks
+ */
+static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
+{
+	MN_CheckBoxNodeActivate(node);
 }
 
 /**
@@ -112,4 +120,5 @@ void MN_RegisterCheckBoxNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_CheckBoxNodeDraw;
 	behaviour->leftClick = MN_CheckBoxNodeClick;
 	behaviour->loading = MN_CheckBoxNodeLoading;
+	behaviour->activate = MN_CheckBoxNodeActivate;
 }
