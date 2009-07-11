@@ -662,6 +662,7 @@ craftitem craft_weapon_alc
 	installationTime	2
 	price				12000
 	bullets				false
+	model				"aircraft/craft_weapon_alc/alc"
 }
 
 craftitem craft_ammo_alc
@@ -688,6 +689,7 @@ craftitem craft_weapon_shiva
 	installationTime	2
 	price				12000
 	bullets				true
+	model				"aircraft/craft_weapon_shiva/shiva"
 }
 
 craftitem craft_ammo_shiva_API
@@ -729,6 +731,7 @@ craftitem craft_el_raven
 	size				20 // light
 	installationTime	1
 	price				20000
+	model				"aircraft/craft_item_raven_ecm/ecm"
 
 	ecm		1.25
 }
@@ -740,6 +743,7 @@ craftitem craft_weapon_sparrowhawk
 	size				90 // medium
 	installationTime	3
 	price				27000
+	model				"aircraft/craft_weapon_sparrow/sparrowhawk_rack"
 }
 
 craftitem craft_ammo_sparrowhawk
@@ -766,6 +770,7 @@ craftitem craft_weapon_tr20
 	size				90 // medium
 	installationTime	2
 	price				25000
+	model				"aircraft/craft_weapon_tr20/tr20"
 
 	speed		.9
 	maxspeed	.9
@@ -797,6 +802,7 @@ craftitem craft_weapon_particle_beam
 	size				90 // medium
 	installationTime	4
 	price				45000
+	model				"aircraft/craft_weapon_particle/pbw"
 
 	wdamage		21
 	speed		0.8
@@ -811,6 +817,7 @@ craftitem craft_el_targeting
 	installationTime	1
 	price				25600
 	size				20 // light
+	model				"aircraft/craft_item_target/craft_item_target"
 
 	accuracy	1.25
 }
@@ -822,6 +829,7 @@ craftitem craft_el_fuelpod
 	installationTime	2
 	price				4000
 	size				20 // light
+	model				"aircraft/craft_item_fuel/fuel"
 
 	fuelsize	+7000
 	speed		0.9
@@ -835,6 +843,7 @@ craftitem craft_shield_polymer
 	installationTime	24
 	price				33600
 	size				40 // light
+	model				"aircraft/craft_arm_poly/polymer"
 
 	shield		+2
 	speed		0.9
@@ -848,6 +857,7 @@ craftitem craft_shield_plating
 	installationTime	36
 	price				50000
 	size				50 // light
+	model				"aircraft/craft_arm_plate/plating"
 
 	shield		+4
 	speed		0.8
