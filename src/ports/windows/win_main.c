@@ -37,10 +37,6 @@ qboolean s_win95, s_win2k, s_winxp, s_vista;
 static int argc;
 static const char *argv[MAX_NUM_ARGVS];
 
-cvar_t* sys_priority;
-cvar_t* sys_affinity;
-cvar_t* sys_os;
-
 void Sys_Init (void)
 {
 	OSVERSIONINFO vinfo;

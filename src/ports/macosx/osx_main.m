@@ -50,10 +50,6 @@ extern OSErr CPSGetCurrentProcess(CPSProcessSerNum *psn);
 extern OSErr CPSEnableForegroundOperation(CPSProcessSerNum *psn, UInt32 _arg2, UInt32 _arg3, UInt32 _arg4, UInt32 _arg5);
 extern OSErr CPSSetFrontProcess(CPSProcessSerNum *psn);
 
-cvar_t* sys_priority;
-cvar_t* sys_affinity;
-cvar_t* sys_os;
-
 /* ======================================================================= */
 /* General routines */
 /* ======================================================================= */
