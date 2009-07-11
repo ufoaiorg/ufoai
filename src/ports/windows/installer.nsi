@@ -86,6 +86,9 @@ SectionGroup /e "Game" SECGROUP01
 		SetOverwrite ifnewer
 		
 		SetOutPath "$INSTDIR"
+			File "..\..\..\COPYING"
+			File "..\..\..\README"
+			File "..\..\..\CONTRIBUTORS"
 			File /nonfatal "..\..\..\src\docs\tex\*.pdf"
 			File "..\..\..\contrib\dlls\*.dll"
 			File "..\..\..\ufo.exe"
@@ -145,13 +148,23 @@ SectionGroupEnd
 
 Section "Source Code" SEC03
 	SetOverwrite ifnewer
-	
+	SetOutPath "$INSTDIR"
+		File "..\..\..\Makefile.in"
+		File "..\..\..\configure"
+		File "..\..\..\configure.ac"
+		File "..\..\..\config.h.in"
+		File "..\..\..\config.sub"
+		File "..\..\..\config.guess"
+		File "..\..\..\install-sh"
+		File "..\..\..\INSTALL"
 	SetOutPath "$INSTDIR\build"
 		File "..\..\..\build\*.bmp"
+		File "..\..\..\build\*.mk"
 	SetOutPath "$INSTDIR\build\projects"
 		File "..\..\..\build\projects\*.cbp"
 		File "..\..\..\build\projects\*.ico"
 		File "..\..\..\build\projects\*.workspace"
+		File "..\..\..\build\projects\*.manifest"
 	SetOutPath "$INSTDIR\src"
 		File /r /x *.svn /x CVS "..\..\*.h"
 		File /r /x *.svn /x CVS "..\..\*.c"
