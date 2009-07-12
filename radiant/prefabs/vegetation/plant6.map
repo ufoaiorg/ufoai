@@ -1,0 +1,12 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "9 11 -10"
+"model" "models/objects/vegi/plant_hang/plant2.md2"
+"spawnflags" "252"
+}
