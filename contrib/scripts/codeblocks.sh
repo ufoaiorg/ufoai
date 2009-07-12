@@ -2,8 +2,6 @@
 
 export LC_ALL=C
 
-DOWNLOADING=
-
 #######################################################
 # functions
 #######################################################
@@ -23,18 +21,11 @@ function download_archive()
 	baseurl=${1}
 	filename=${2}
 	targetname=${3}
-	if [ -e "${DOWNLOAD_DIR}/${targetname}" ]
-	then
-		echo "${3} already exists"
-	else
-		DOWNLOADING="${targetname}"
-		echo "downloading ${3}..."
-		pushd ${DOWNLOAD_DIR} > /dev/null
-		${WGET} -q ${baseurl}${filename} -O ${targetname} >> ${LOGFILE_NAME} 2>&1
-		popd > /dev/null
-		DOWNLOADING=
-		check_error "Could not fetch ${baseurl}${filename}"
-	fi
+	echo "downloading ${3}..."
+	pushd ${DOWNLOAD_DIR} > /dev/null
+	${WGET} -nc ${baseurl}${filename} -O ${targetname} >> ${LOGFILE_NAME} 2>&1
+	popd > /dev/null
+	check_error "Could not fetch ${baseurl}${filename}"
 }
 
 function extract_archive_gz() 
@@ -286,10 +277,6 @@ function extract_ogg()
 
 function exitscript() 
 {
-	if [ -n "${DOWNLOADING}" ]; then
-		echo "remove ${DOWNLOADING}"
-		rm -f ${DOWNLOADING} >> /dev/null
-	fi
 	exit 2
 }
 
