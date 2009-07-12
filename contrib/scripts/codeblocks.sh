@@ -33,7 +33,7 @@ function download_archive()
 	targetname=${3}
 	echo "downloading ${targetname}..."
 	pushd ${DOWNLOAD_DIR} > /dev/null
-	${WGET} -nc ${baseurl}${filename} -O ${targetname} || true >> ${LOGFILE_NAME} 2>&1
+	${WGET} -q -nc ${baseurl}${filename} -O ${targetname} || true >> ${LOGFILE_NAME} 2>&1
 	popd > /dev/null
 	if [ ! -e "${DOWNLOAD_DIR}/${targetname}" ]; then
 		failure "Could not fetch ${baseurl}${filename}"
