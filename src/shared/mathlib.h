@@ -174,6 +174,14 @@ extern const byte dvleft[CORE_DIRECTIONS];
 int AngleToDir(int angle);
 #define AngleToDV(x)	(AngleToDir(x) << DV_Z_BIT_SHIFT)
 
+/** @brief  These macros are meant to correctly convert from model units to QUANT units and back. */
+/* Surfaces used as floors are rounded up. */
+#define ModelFloorToQuant(x)	(ceil((x) / QUANT))
+/* Surfaces used as ceilings are rounded down. */
+#define ModelCeilingToQuant(x)	(floor((x) / QUANT))
+/* Going from QUANT units back to model units returns the approximation of the QUANT unit. */
+#define QuantToModel(x)			((x) * QUANT)
+
 void VectorMA(const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc);
 void VectorClampMA(vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc);
 void VectorMix(const vec3_t v1, const vec3_t v2, const float mix, vec3_t out);

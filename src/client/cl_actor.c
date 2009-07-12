@@ -2483,7 +2483,7 @@ static void CL_AddPathingBox (pos3_t pos)
 	/* Paint the box green if it is reachable,
 	 * yellow if it can be entered but is too far,
 	 * or red if it cannot be entered ever. */
-	if (base < -PATHFINDING_MAX_FALL * QUANT) {
+	if (base < -QuantToModel(PATHFINDING_MAX_FALL)) {
 		VectorSet(ent.color, 0.0, 0.0, 0.0); /* Can't enter - black */
 	} else {
 		/* Can reach - green

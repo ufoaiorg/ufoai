@@ -300,10 +300,10 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	const vec3_t floorMaxs = {halfMicrostepSize - DIST_EPSILON, halfMicrostepSize - DIST_EPSILON, 0};
 	/* This is a template for the extents of the box used by an actor's legs. */
 	const vec3_t footMins = {-halfMicrostepSize + DIST_EPSILON, -halfMicrostepSize + DIST_EPSILON, 0};
-	const vec3_t footMaxs = {halfMicrostepSize - DIST_EPSILON, halfMicrostepSize - DIST_EPSILON, PATHFINDING_MIN_STEPUP * QUANT - DIST_EPSILON * 2};
+	const vec3_t footMaxs = {halfMicrostepSize - DIST_EPSILON, halfMicrostepSize - DIST_EPSILON, QuantToModel(PATHFINDING_MIN_STEPUP) - DIST_EPSILON * 2};
 	/* This is a template for the extents of the box used by an actor's torso. */
-	const vec3_t torsoMins = {UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, PATHFINDING_MIN_STEPUP * QUANT};
-	const vec3_t torsoMaxs = {UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, PATHFINDING_MIN_OPENING * QUANT  - DIST_EPSILON * 2};
+	const vec3_t torsoMins = {UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, QuantToModel(PATHFINDING_MIN_STEPUP)};
+	const vec3_t torsoMaxs = {UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, QuantToModel(PATHFINDING_MIN_OPENING)  - DIST_EPSILON * 2};
 	/* This is a template for the ceiling trace after an actor's torso space has been found. */
 	const vec3_t ceilMins = {UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, 0};
 	const vec3_t ceilMaxs = {UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, 0};
@@ -314,7 +314,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	pos3_t pos;
 	float bottom, top; /* Floor and ceiling model distances from the cell base. (in mapunits) */
 	float initial; /* Cell floor and ceiling z coordinate. */
-	int bottomQ; /* The floor in QUANTs */
+	int bottomQ, topQ; /* The floor and ceiling in QUANTs */
 	int i;
 	int fz, cz; /* Floor and ceiling Z cell coordinates */
 	trace_t tr;
@@ -334,8 +334,8 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	/*
 	 * Adjust these points so that start to end is from the top of the cell to the bottom of the model.
 	 */
-	initial = start[2] + UNIT_HEIGHT / 2; /* This is the top-most starting point. */
-	start[2] += UNIT_HEIGHT / 2 - QUANT;
+	initial = start[2] + UNIT_HEIGHT / 2; /* This is the top-most starting point in this cell. */
+	start[2] += UNIT_HEIGHT / 2 - QUANT; /* This one QUANT unit below initial. */
 	end[2] = -UNIT_HEIGHT * 2; /* To the bottom of the model! (Plus some for good measure) */
 
 
@@ -385,13 +385,6 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 		VectorAdd(tstart, footMins, bmins); /* Now bmins has the lower required foot space extent */
 		VectorAdd(tstart, footMaxs, bmaxs); /* Now bmaxs has the upper required foot space extent */
 
-		/*
-		VectorCopy(start, tstart);
-		tstart[2] = bottom;
-		VectorCopy(tstart, tend);
-		tend[2] += PATHFINDING_MIN_STEPUP * QUANT; / * tend is now MIN_STEPUP above tstart * /
-		*/
-
 		if (debugTrace)
 			Com_Printf("    Casting leg room (%f, %f, %f) to (%f, %f, %f)\n",
 				bmins[0], bmins[1], bmins[2], bmaxs[0], bmaxs[1], bmaxs[2]);
@@ -404,9 +397,9 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 			 * Check under start.  We need to have at least the minimum amount of clearance from our ceiling,
 			 * So start at that point.
 			 */
-			start[2] = bottom - PATHFINDING_MIN_OPENING * QUANT;
+			start[2] = bottom - QuantToModel(PATHFINDING_MIN_OPENING);
 			/* Check in case we are trying to scan too close to the bottom of the model. */
-			if (start[2] <= PATHFINDING_MIN_OPENING * QUANT) {
+			if (start[2] <= QuantToModel(PATHFINDING_MIN_OPENING)) {
 				/* There is no brush underneath this starting point. */
 				if (debugTrace)
 					Com_Printf("Reached bottom of map.  No floor in cell(s).\n");
@@ -439,9 +432,9 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 			 * Check under start.  We need to have at least the minimum amount of clearance from our ceiling,
 			 * So start at that point.
 			 */
-			start[2] = bottom - PATHFINDING_MIN_OPENING * QUANT;
+			start[2] = bottom - QuantToModel(PATHFINDING_MIN_OPENING);
 			/* Check in case we are trying to scan too close to the bottom of the model. */
-			if (start[2] <= PATHFINDING_MIN_OPENING * QUANT) {
+			if (start[2] <= QuantToModel(PATHFINDING_MIN_OPENING)) {
 				/* There is no brush underneath this starting point. */
 				if (debugTrace)
 					Com_Printf("Reached bottom of map.  No floor in cell(s).\n");
@@ -483,7 +476,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 		 * ceiling if it is lower than our found ceiling.
 		 */
 		if (tr.endpos[2] > (z + 1) * UNIT_HEIGHT)
-			top = min(tr.endpos[2], (z + 1) * UNIT_HEIGHT + (RT_FLOOR(map, actorSize, x, y, z + 1) - 1) * QUANT);
+			top = min(tr.endpos[2], (z + 1) * UNIT_HEIGHT + QuantToModel(RT_FLOOR(map, actorSize, x, y, z + 1) - 1));
 
 		/* We found the ceiling. */
 		top = tr.endpos[2];
@@ -498,9 +491,11 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	 * ...but before rounding, give back the DIST_EPSILON that was added by the trace */
 	bottom -= DIST_EPSILON;
 	top += DIST_EPSILON;
-	bottomQ = ceil(bottom / QUANT);
-	fz = bottomQ / CELL_HEIGHT;
-	cz = min(z, (int)(ceil(top / UNIT_HEIGHT) - 1)); /* Use the lower of z or the calculated ceiling */
+	bottomQ = ModelFloorToQuant(bottom); /* Convert to QUANT units to ensure the floor is rounded up to the correct value. */
+	topQ = ModelCeilingToQuant(top); /* Convert to QUANT units to ensure the floor is rounded down to the correct value. */
+	fz = floor(bottomQ / CELL_HEIGHT); /* Ensure we round down to get the bottom-most affected cell */
+	/** @note Remember that ceiling values of 1-16 belong to a cell.  We need to adjust topQ by 1 to round to the correct z value. */
+	cz = min(z, (int)(floor((topQ - 1) / CELL_HEIGHT))); /* Use the lower of z or the calculated ceiling */
 
 	assert(fz <= cz);
 
@@ -512,7 +507,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 		/* Round up floor to keep feet out of model. */
 		RT_FLOOR(map, actorSize, x, y, i) = bottomQ - i * CELL_HEIGHT;
 		/* Round down ceiling to heep head out of model.  Also offset by floor and max at 255. */
-		RT_CEILING(map, actorSize, x, y, i) = (int)floor((top - i * UNIT_HEIGHT) / QUANT);
+		RT_CEILING(map, actorSize, x, y, i) = topQ - i * CELL_HEIGHT;
 		if (debugTrace) {
 			Com_Printf("floor(%i, %i, %i, %i)=%i.\n", x, y, i, actorSize, RT_FLOOR(map, actorSize, x, y, i));
 			Com_Printf("ceil(%i, %i, %i, %i)=%i.\n", x, y, i, actorSize, RT_CEILING(map, actorSize, x, y, i));
@@ -626,8 +621,8 @@ static trace_t RT_ObstructedTrace (const vec3_t start, const vec3_t end, int act
 	vec3_t bmin, bmax; /**< Tracing box extents */
 
 	/* Configure the box trace extents. The box is relative to the original floor. */
-	VectorSet(bmax, UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON, hi * QUANT - DIST_EPSILON);
-	VectorSet(bmin, -UNIT_SIZE * actorSize / 2 + WALL_SIZE + DIST_EPSILON, -UNIT_SIZE * actorSize / 2 + WALL_SIZE + DIST_EPSILON, lo * QUANT + DIST_EPSILON);
+	VectorSet(bmax, UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON, QuantToModel(hi) - DIST_EPSILON);
+	VectorSet(bmin, -UNIT_SIZE * actorSize / 2 + WALL_SIZE + DIST_EPSILON, -UNIT_SIZE * actorSize / 2 + WALL_SIZE + DIST_EPSILON, QuantToModel(lo)  + DIST_EPSILON);
 
 	/* perform the trace, then return true if the trace was obstructed. */
 	return RT_COMPLETEBOXTRACE(start, end, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
@@ -656,7 +651,7 @@ static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const 
 	/* Position mstart and mend at the fraction point */
 	VectorInterpolation(start, end, frac, mstart);
 	VectorCopy(mstart, mend);
-	mstart[2] = startingHeight * QUANT + (QUANT / 2); /* Set at the starting height, plus a little more to keep us off a potential surface. */
+	mstart[2] = QuantToModel(startingHeight) + (QUANT / 2); /* Set at the starting height, plus a little more to keep us off a potential surface. */
 	mend[2] = -QUANT;  /* Set below the model. */
 
 	tr = RT_COMPLETEBOXTRACE(mstart, mend, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
@@ -667,7 +662,7 @@ static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const 
 	/* OK, now we have the floor height value in tr.endpos[2].
 	 * Divide by QUANT and round up.
 	 */
-	return ceil((tr.endpos[2] - DIST_EPSILON) / QUANT);
+	return ModelFloorToQuant(tr.endpos[2] - DIST_EPSILON);
 }
 
 
@@ -693,7 +688,7 @@ static int RT_FindOpeningCeilingFrac (const vec3_t start, const vec3_t end, cons
 	/* Position mstart and mend at the midpoint */
 	VectorInterpolation(start, end, frac, mstart);
 	VectorCopy(mstart, mend);
-	mstart[2] = startingHeight * QUANT - (QUANT / 2); /* Set at the starting height, minus a little more to keep us off a potential surface. */
+	mstart[2] = QuantToModel(startingHeight) - (QUANT / 2); /* Set at the starting height, minus a little more to keep us off a potential surface. */
 	mend[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT + QUANT;  /* Set above the model. */
 
 	tr = RT_COMPLETEBOXTRACE(mstart, mend, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
@@ -703,7 +698,7 @@ static int RT_FindOpeningCeilingFrac (const vec3_t start, const vec3_t end, cons
 
 	/* OK, now we have the floor height value in tr.endpos[2].
 	 * Divide by QUANT and round down. */
-	return floor((tr.endpos[2] + DIST_EPSILON) / QUANT);
+	return ModelCeilingToQuant(tr.endpos[2] + DIST_EPSILON);
 }
 
 
@@ -912,11 +907,11 @@ static int RT_FindOpening (routing_t * map, const int actorSize, const int  x, c
 		VectorInterpolation(start, end, 0.5, sky);	/* center it halfway between the cells */
 		VectorCopy(sky, earth);
 		sky[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT;  /* Set to top of model. */
-		earth[2] = bottom * QUANT;
+		earth[2] = QuantToModel(bottom);
 		VectorSet(bmin, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, 0);
 		VectorSet(bmax, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, 0);
 		tr = RT_COMPLETEBOXTRACE(sky, earth, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
-		tempBottom = tr.endpos[2] / QUANT;
+		tempBottom = ModelFloorToQuant(tr.endpos[2]);
 		if (tempBottom <= bottom + PATHFINDING_MIN_STEPUP) {
 			const int hi = bottom + PATHFINDING_MIN_OPENING;
 			*lo_val = tempBottom;
@@ -1000,7 +995,7 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
 	SizedPosToVec(pos, actorSize, end);
 
 	/* Now prep the z values for start and end. */
-	start[2] = opening->base * QUANT + 1; /**< Just above the bottom of the found passage */
+	start[2] = QuantToModel(opening->base) + 1; /**< Just above the bottom of the found passage */
 	end[2] = -QUANT;
 
 	/* Memorize the start and end x,y points */
@@ -1024,7 +1019,7 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
 		if (tr.fraction >= 1.0) {
 			bases[i] = -1;
 		} else {
-			bases[i] = ceil((tr.endpos[2] - DIST_EPSILON) / QUANT);
+			bases[i] = ModelFloorToQuant(tr.endpos[2] - DIST_EPSILON);
 		}
 
 		if (debugTrace)

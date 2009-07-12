@@ -66,6 +66,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	DEBUG_SOUND		(1<<9)
 #define DEBUG_EVENTSYS	(1<<10)
 #define DEBUG_PATHING	(1<<11)
+#define DEBUG_ROUTING	(1<<12)
 
 /* {game}, [client], common/scripts.c */
 #define	NONE		-1
@@ -348,14 +349,14 @@ COLLISION DETECTION
 /** @brief A cell's height in QUANT sized units */
 #define CELL_HEIGHT (UNIT_HEIGHT / QUANT)
 
-/* Maximum falling distance in step units (model units / QUANT) */
+/* Maximum falling distance in QUANT units (model units / QUANT) */
 /* common/routing.c */
 #define	PATHFINDING_MAX_FALL	16
-/* Minimum step-up height in step units (model units/QUANT)
+/* Minimum step-up height in QUANT units (model units/QUANT)
  * Note that 4 is the minimum to rise one cell every 4 moved horizontally. */
 /* common/routing.c */
 #define	PATHFINDING_MIN_STEPUP		2
-/* Minimum step-up height in step units (model units/QUANT)
+/* Minimum step-up height in QUANT units (model units/QUANT)
  * Note that 4 is the minimum to rise one cell every 4 moved horizontally. */
 /* common/routing.c */
 #define	PATHFINDING_MAX_STEPUP		4

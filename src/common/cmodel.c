@@ -1612,8 +1612,8 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
 	 */
 	const int coreDir = dir % CORE_DIRECTIONS;/**< The compass direction of this move if less than CORE_DIRECTIONS or at least FLYING_DIRECTIONS */
 
-	/** @note This is the actor's height. */
-	const int actorHeight = ceil(((float)(crouchingState ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)) / QUANT); /**< The actor's height */
+	/** @note This is the actor's height in QUANT units. */
+	const int actorHeight = ModelCeilingToQuant((float)(crouchingState ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)); /**< The actor's height */
 
 	/* Ensure that dir is in bounds. */
 	if (dir < 0 || dir >= PATHFINDING_DIRECTIONS)
@@ -1674,7 +1674,7 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
 			return;
 		}
 		/* Can't stand up if there's not enough head room. */
-		if (dir == DIRECTION_STAND_UP && Grid_Height(map, actorSize, pos) * QUANT >= PLAYER_STANDING_HEIGHT) {
+		if (dir == DIRECTION_STAND_UP && QuantToModel(Grid_Height(map, actorSize, pos)) >= PLAYER_STANDING_HEIGHT) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't stand under a short ceiling.\n");
 			return;
 		}
@@ -1858,8 +1858,8 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
 			return;
 		}
 	} else if (dir == DIRECTION_CLIMB_UP) {
-		if (flier && RT_CEILING(map, actorSize, x, y, z) * QUANT < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* up */
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not enough headroom to fly up. passage:%i actor:%i\n", RT_CEILING(map, actorSize, x, y, z) * QUANT, UNIT_HEIGHT * 2 - PLAYER_HEIGHT);
+		if (flier && QuantToModel(RT_CEILING(map, actorSize, x, y, z)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* up */
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not enough headroom to fly up. passage:%i actor:%i\n", QuantToModel(RT_CEILING(map, actorSize, x, y, z)), UNIT_HEIGHT * 2 - PLAYER_HEIGHT);
 			return;
 		}
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
@@ -2033,7 +2033,7 @@ int Grid_MoveNext (const struct routing_s *map, const int actorSize, struct path
 	const pos_t l = RT_AREA(path, from[0], from[1], from[2], crouchingState); /**< Get TUs for this square */
 
 	/* Check to see if the TUs needed to move here are greater than 0 and less then ROUTING_NOT_REACHABLE */
-	if (!l && l != ROUTING_NOT_REACHABLE) {
+	if (!l || l == ROUTING_NOT_REACHABLE) {
 		/* ROUTING_UNREACHABLE means, not possible/reachable */
 		return ROUTING_UNREACHABLE;
 	}
@@ -2056,7 +2056,7 @@ unsigned int Grid_Ceiling (const struct routing_s *map, const int actorSize, con
 		Com_Printf("Grid_Height: Warning: z level is bigger than %i: %i\n",
 			(PATHFINDING_HEIGHT - 1), pos[2]);
 	}
-	return RT_CEILING(map, actorSize, pos[0], pos[1], pos[2] & 7) * QUANT;
+	return QuantToModel(RT_CEILING(map, actorSize, pos[0], pos[1], pos[2] & 7));
 }
 
 
@@ -2073,8 +2073,8 @@ int Grid_Height (const struct routing_s *map, const int actorSize, const pos3_t 
 		Com_Printf("Grid_Height: Warning: z level is bigger than %i: %i\n",
 			(PATHFINDING_HEIGHT - 1), pos[2]);
 	}
-	return (RT_CEILING(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
-		- RT_FLOOR(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))) * QUANT;
+	return QuantToModel(RT_CEILING(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
+		- RT_FLOOR(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 }
 
 
@@ -2091,7 +2091,7 @@ int Grid_Floor (const struct routing_s *map, const int actorSize, const pos3_t p
 		Com_Printf("Grid_Floor: Warning: z level is bigger than %i: %i\n",
 			(PATHFINDING_HEIGHT - 1), pos[2]);
 	}
-	return RT_FLOOR(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)) * QUANT;
+	return QuantToModel(RT_FLOOR(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 }
 
 
@@ -2107,7 +2107,7 @@ pos_t Grid_StepUp (const struct routing_s *map, const int actorSize, const pos3_
 	if (pos[2] >= PATHFINDING_HEIGHT) {
 		Com_Printf("Grid_StepUp: Warning: z level is bigger than 7: %i\n", pos[2]);
 	}
-	return RT_STEPUP(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1), dir) * QUANT;
+	return QuantToModel(RT_STEPUP(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1), dir));
 }
 
 
@@ -2364,7 +2364,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 	inlineList = NULL;
 
 	end = time(NULL);
-	Com_Printf("Retracing for model %s in %5.1fs\n", name, end - start);
+	Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n", name, min[0], min[1], min[2], max[0], max[1], max[2], end - start);
 }
 
 
