@@ -1,6 +1,6 @@
 textures/tex_common/actorclip
 {
-	trans 0.20
+	trans 0.15
 	param clip
 }
 
