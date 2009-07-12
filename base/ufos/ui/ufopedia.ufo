@@ -66,6 +66,8 @@ window ufopedia
 		selectcolor	"1 1 1 1"
 		onChange	{
 			cmd "ufopedia_click <cvar:ufopedia_element>"
+			*node:(abstractscrollbar)root.ufopedia_scroll@current 0
+			*node:(text)root.ufopedia@viewpos 0
 		}
 		onViewChange	{
 			*(abstractscrollbar)ufopedia_summary_scroll@current <viewpos>
