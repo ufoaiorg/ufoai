@@ -42,8 +42,14 @@
 static const int TABLE_COLUMS = 3;
 static GtkTreeStore* store;
 static GtkTreeView* view;
-static int unselectAfterInsert = 0;
-static int replaceSelection = 0;
+namespace {
+	enum selectionStrategy {
+		PREFAB_SELECT_EXTEND,
+		PREFAB_SELECT_REPLACE,
+		PREFAB_SELECT_UNSELECT
+	} ;
+}
+static int selectedSelectionStrategy = PREFAB_SELECT_EXTEND;
 
 namespace {
 	enum {
@@ -74,10 +80,17 @@ static gint PrefabList_button_press(GtkWidget *widget, GdkEventButton *event,
 
 			gtk_tree_model_get(model, &iter, PREFAB_NAME, &text, -1);
 
-			if (replaceSelection)
+			switch (selectedSelectionStrategy) {
+			case PREFAB_SELECT_REPLACE:
 				Select_Delete();
-			if (unselectAfterInsert)
+				break;
+			case PREFAB_SELECT_UNSELECT:
 				Selection_Deselect();
+				break;
+			case PREFAB_SELECT_EXTEND:
+				//do nothing
+				break;
+			}
 
 			Map_ImportFile(Prefab_GetPath(fullpath, text));
 			g_free(text);
@@ -124,14 +137,10 @@ void PrefabAdd(const char *name, GtkTreeIter* parentIter) {
 	gtk_tree_store_set(store, &iter, PREFAB_NAME, name, PREFAB_DESCRIPTION, nameContent.c_str(), PREFAB_IMAGE, img, -1);
 }
 
-static void Unselect_toggled (GtkWidget *widget, gpointer data)
+static void Prefab_SelectionOptions_toggled (GtkWidget *widget, gpointer buttonID)
 {
-	unselectAfterInsert = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
-}
-
-static void Replace_toggled (GtkWidget *widget, gpointer data)
-{
-	replaceSelection = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)))
+		selectedSelectionStrategy = gpointer_to_int(buttonID);
 }
 
 /**
@@ -264,19 +273,25 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 
 	{
 		// options
-		GtkWidget* vboxOptions = gtk_vbox_new(FALSE, 2);
+		GtkWidget* vboxOptions = gtk_vbox_new(FALSE, 3);
 		gtk_box_pack_start(GTK_BOX(vbox), vboxOptions, FALSE, TRUE, 0);
-		GtkCheckButton* checkUnselect = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(_("Deselect before insert")));
-		gtk_widget_ref(GTK_WIDGET(checkUnselect));
-		gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(checkUnselect), TRUE, TRUE, 0);
-		g_object_set_data(G_OBJECT(checkUnselect), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(checkUnselect),
-				"toggled", G_CALLBACK(Unselect_toggled), 0)));
+		GtkRadioButton* radioExtendSelection = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label(NULL, _("Extend current selection")));
+		gtk_widget_ref(GTK_WIDGET(radioExtendSelection));
+		gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(radioExtendSelection), TRUE, TRUE, 0);
+		g_object_set_data(G_OBJECT(radioExtendSelection), "handler", gint_to_pointer(g_signal_connect(radioExtendSelection,
+				"toggled", G_CALLBACK(Prefab_SelectionOptions_toggled), gint_to_pointer(PREFAB_SELECT_EXTEND))));
 
-		GtkCheckButton* checkReplace = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(_("Replace current selection")));
-		gtk_widget_ref(GTK_WIDGET(checkReplace));
-		gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(checkReplace), TRUE, TRUE, 0);
-		g_object_set_data(G_OBJECT(checkReplace), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(checkReplace),
-				"toggled", G_CALLBACK(Replace_toggled), 0)));
+		GtkRadioButton* radioUnselect = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label_from_widget(radioExtendSelection, _("Deselect before insert")));
+		gtk_widget_ref(GTK_WIDGET(radioUnselect));
+		gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(radioUnselect), TRUE, TRUE, 0);
+		g_object_set_data(G_OBJECT(radioUnselect), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(radioUnselect),
+				"toggled", G_CALLBACK(Prefab_SelectionOptions_toggled), gint_to_pointer(PREFAB_SELECT_UNSELECT))));
+
+		GtkRadioButton* radioReplace = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label_from_widget(radioUnselect, _("Replace current selection")));
+		gtk_widget_ref(GTK_WIDGET(radioReplace));
+		gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(radioReplace), TRUE, TRUE, 0);
+		g_object_set_data(G_OBJECT(radioReplace), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(radioReplace),
+				"toggled", G_CALLBACK(Prefab_SelectionOptions_toggled), gint_to_pointer(PREFAB_SELECT_REPLACE))));
 	}
 	/* fill prefab store with data */
 	Directory_forEach(fullpath.c_str(), CLoadPrefabSubdir(fullpath.c_str(),"", NULL));
