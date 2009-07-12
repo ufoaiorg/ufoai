@@ -238,7 +238,7 @@ menuNode_t* MN_GetNodeByPath(const char* path);
 void MN_ReadNodePath(const char* path, const menuNode_t *relativeNode, menuNode_t** resultNode, const value_t **resultProperty);
 struct menuNode_s *MN_GetNodeAtPosition(int x, int y);
 const char* MN_GetPath(const menuNode_t* node);
-menuNode_t* MN_CloneNode(const menuNode_t* node, struct menuNode_s *targetMenu, qboolean recursive);
+struct menuNode_s *MN_CloneNode(const struct menuNode_s * node, struct menuNode_s *newMenu, qboolean recursive, const char *newName);
 qboolean MN_CheckVisibility(menuNode_t *node);
 
 /* behaviours */

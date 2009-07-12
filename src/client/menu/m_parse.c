@@ -1280,59 +1280,26 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 		return;	/* never reached */
 	}
 
-	/* initialize the menu */
-	menu = MN_AllocNode(type);
-	Q_strncpyz(menu->name, name, sizeof(menu->name));
-	if (strlen(menu->name) != strlen(name))
-		Com_Printf("MN_ParseMenu: Menu name \"%s\" truncated. New name is \"%s\"\n", name, menu->name);
-	menu->root = menu;
-
-	menu->behaviour->loading(menu);
-
-	MN_InsertMenu(menu);
-
-	/* get it's body */
+	/* get menu body */
 	token = Com_Parse(text);
 
 	/* does this menu inherit data from another menu? */
-	if (!strncmp(token, "extends", 7)) {
+	if (!strcmp(token, "extends")) {
 		menuNode_t *superMenu;
-		menuNode_t *newNode;
-		menuNode_t *node;
-
 		token = Com_Parse(text);
-		Com_DPrintf(DEBUG_CLIENT, "MN_ParseMenus: %s \"%s\" inheriting node \"%s\"\n", type, name, token);
 		superMenu = MN_GetMenu(token);
-		if (!superMenu)
-			Com_Error(ERR_FATAL, "MN_ParseMenu: %s '%s' can't inherit from node '%s' - because '%s' was not found\n", type, name, token, token);
-		*menu = *superMenu;
-		menu->super = superMenu;
-		menu->root = menu;
-		Q_strncpyz(menu->name, name, sizeof(menu->name));
-
-		/* start a new list */
-		menu->firstChild = NULL;
-		menu->lastChild = NULL;
-
-		/* clone all super menu's nodes */
-		for (node = superMenu->firstChild; node; node = node->next) {
-			if (mn.numNodes >= MAX_MENUNODES)
-				Com_Error(ERR_FATAL, "MAX_MENUNODES exceeded\n");
-
-			newNode = MN_CloneNode(node, menu, qtrue);
-			newNode->super = node;
-			MN_AppendNode(menu, newNode);
-
-			/* update special links */
-			if (superMenu->u.window.renderNode == node)
-				menu->u.window.renderNode = newNode;
-			else if (superMenu->u.window.onTimeOut == node->onClick) {
-				menu->u.window.onTimeOut = newNode->onClick;
-			}
-		}
-
+		menu = MN_CloneNode(superMenu, NULL, qtrue, name);
 		token = Com_Parse(text);
+	} else {
+		menu = MN_AllocNode(type);
+		menu->root = menu;
+		menu->behaviour->loading(menu);
+		Q_strncpyz(menu->name, name, sizeof(menu->name));
+		if (strlen(menu->name) != strlen(name))
+			Com_Printf("MN_ParseMenu: Menu name \"%s\" truncated. New name is \"%s\"\n", name, menu->name);
 	}
+
+	MN_InsertMenu(menu);
 
 	/* parse it's body */
 	result = MN_ParseNodeBody(menu, text, &token, errhead);

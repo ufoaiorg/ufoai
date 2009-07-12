@@ -453,33 +453,45 @@ int MN_GetNodeBehaviourCount(void)
  * @param[in] node Node to clone
  * @param[in] recursive True if we also must clone subnodes
  * @param[in] newMenu Menu where the nodes must be add (this function only link node into menu, note menu into the new node)
+ * @param[in] newName New node name, else NULL to use the source name
  * @todo exclude rect is not safe cloned.
  * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
  */
-menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive)
+menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive, const char *newName)
 {
 	menuNode_t* newNode = MN_AllocNode(node->behaviour->name);
 
 	/* clone all data */
 	*newNode = *node;
 
+	/* custom name */
+	if (newName != NULL) {
+		Q_strncpyz(newNode->name, newName, sizeof(newNode->name));
+		if (strlen(newNode->name) != strlen(newName))
+			Com_Printf("MN_CloneNode: Node name \"%s\" truncated. New name is \"%s\"\n", newName, newNode->name);
+	}
+
 	/* clean up node navigation */
+	if (node->root == node && newMenu == NULL)
+		newMenu = newNode;
 	newNode->root = newMenu;
 	newNode->parent = NULL;
 	newNode->firstChild = NULL;
 	newNode->lastChild = NULL;
 	newNode->next = NULL;
-
-	newNode->behaviour->clone(node, newNode);
+	newNode->super = *(menuNode_t**) ((void*)&node);
 
 	/* clone child */
 	if (recursive) {
 		menuNode_t* childNode;
 		for (childNode = node->firstChild; childNode; childNode = childNode->next) {
-			menuNode_t* newChildNode = MN_CloneNode(childNode, newMenu, recursive);
+			menuNode_t* newChildNode = MN_CloneNode(childNode, newMenu, recursive, NULL);
 			MN_AppendNode(newNode, newChildNode);
 		}
 	}
+
+	newNode->behaviour->clone(node, newNode);
+
 	return newNode;
 }
 

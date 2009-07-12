@@ -319,6 +319,15 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 #endif
 }
 
+static void MN_WindowNodeClone (const menuNode_t *source, menuNode_t *clone)
+{
+	/** @todo anyway we should remove soon renderNode */
+	if (source->u.window.renderNode != NULL) {
+		Com_Printf("MN_WindowNodeClone: Do not inherite window using a render node. Render node ignored (\"%s\")\n", MN_GetPath(clone));
+		clone->u.window.renderNode = NULL;
+	}
+}
+
 /**
  * @brief Valid properties for a window node (called yet 'menu')
  */
@@ -349,6 +358,7 @@ void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 	behaviour->init = MN_WindowNodeInit;
 	behaviour->draw = MN_WindowNodeDraw;
 	behaviour->doLayout = MN_WindowNodeDoLayout;
+	behaviour->clone = MN_WindowNodeClone;
 	behaviour->properties = windowNodeProperties;
 	behaviour->extraDataSize = sizeof(windowExtraData_t);
 }
