@@ -542,6 +542,57 @@ static void CL_Precache_f (void)
 }
 
 /**
+ * @brief Precache all menu models for faster access
+ * @sa CL_PrecacheModels
+ */
+static void CL_PrecacheCharacterModels (void)
+{
+	teamDef_t *td;
+	int i, j, num;
+	char model[MAX_QPATH];
+	const char *path;
+	float loading = cls.loadingPercent;
+	linkedList_t *list;
+	const float percent = 55.0f;
+
+	/* search the name */
+	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
+		for (j = NAME_NEUTRAL; j < NAME_LAST; j++) {
+			/* no models for this gender */
+			if (!td->numModels[j])
+				continue;
+			/* search one of the model definitions */
+			list = td->models[j];
+			assert(list);
+			for (num = 0; num < td->numModels[j]; num++) {
+				assert(list);
+				path = (const char*)list->data;
+				list = list->next;
+				/* register body */
+				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
+				if (!R_RegisterModelShort(model))
+					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
+				list = list->next;
+				/* register head */
+				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
+				if (!R_RegisterModelShort(model))
+					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
+
+				/* skip skin */
+				list = list->next;
+
+				/* new path */
+				list = list->next;
+
+				cls.loadingPercent += percent / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
+				SCR_DrawPrecacheScreen(qtrue);
+			}
+		}
+	/* some genders may not have models - ensure that we do the wanted percent step */
+	cls.loadingPercent = loading + percent;
+}
+
+/**
  * @brief Precaches all models at game startup - for faster access
  * @todo In case of vid restart due to changed settings the @c vid_genericPool is
  * wiped away, too. So the models has to be reloaded with every map change
@@ -552,7 +603,7 @@ static void CL_PrecacheModels (void)
 	float percent = 40.0f;
 
 	if (cl_precache->integer)
-		Com_PrecacheCharacterModels(); /* 55% */
+		CL_PrecacheCharacterModels(); /* 55% */
 	else
 		percent = 95.0f;
 
