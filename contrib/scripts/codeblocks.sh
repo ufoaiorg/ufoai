@@ -382,7 +382,7 @@ create()
 
 	start_downloads
 
-	echo "Start to extract and prepare the downloaded archives"
+	echo "Start to extract and prepare the downloaded archives into ${MINGW_DIR}"
 
 	extract_codeblocks
 
@@ -413,7 +413,7 @@ create()
 		exit 1;
 	fi
 	echo $(date) >> ${LOGFILE_NAME} 2>&1
-	echo "finished creating ${ARCHIVE_NAME} in $(pwd)"
+	echo "finished creating $(du -h ${ARCHIVE_NAME})"
 }
 
 download() 
