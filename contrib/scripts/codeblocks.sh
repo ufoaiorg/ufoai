@@ -1,10 +1,14 @@
 #!/bin/bash
 
+export LC_ALL=C
+
+DOWNLOADING=
+
 #######################################################
 # functions
 #######################################################
 
-check_error() 
+function check_error() 
 {
 	errormessage=${1}
 	if [ $? -ne "0" ]; then
@@ -14,7 +18,7 @@ check_error()
 	fi
 }
 
-download_archive()
+function download_archive()
 {
 	baseurl=${1}
 	filename=${2}
@@ -23,15 +27,17 @@ download_archive()
 	then
 		echo "${3} already exists"
 	else
+		DOWNLOADING="${targetname}"
 		echo "downloading ${3}..."
 		pushd ${DOWNLOAD_DIR} > /dev/null
 		${WGET} -q ${baseurl}${filename} -O ${targetname} >> ${LOGFILE_NAME} 2>&1
 		popd > /dev/null
+		DOWNLOADING=
 		check_error "Could not fetch ${baseurl}${filename}"
 	fi
 }
 
-extract_archive_gz() 
+function extract_archive_gz() 
 {
 	file=${1}
 	target=${2}
@@ -41,7 +47,7 @@ extract_archive_gz()
 	check_error "Failed to extract ${file}"
 }
 
-extract_archive_bz2() 
+function extract_archive_bz2() 
 {
 	file=${1}
 	target=${2}
@@ -51,7 +57,7 @@ extract_archive_bz2()
 	check_error "Failed to extract ${file}"
 }
 
-extract_archive_zip() 
+function extract_archive_zip() 
 {
 	file=${1}
 	target=${2}
@@ -59,7 +65,7 @@ extract_archive_zip()
 	check_error "Failed to extract ${file}"
 }
 
-extract_archive_7z() 
+function extract_archive_7z() 
 {
 	file=${1}
 	target=${2}
@@ -67,7 +73,7 @@ extract_archive_7z()
 	check_error "Failed to extract ${file}"
 }
 
-start_downloads()
+function start_downloads()
 {
 	# using an older version here - as windres is buggy in higher versions. Latest tested version is 2.19.1
 	download_archive http://downloads.sourceforge.net/mingw/ binutils-2.16.91-20060119-1.tar.gz binutils.tar.gz
@@ -132,8 +138,7 @@ start_downloads()
 
 	download_archive http://download.berlios.de/codeblocks/ wxmsw28u_gcc_cb_wx2810.7z codeblocks_gcc.7z
 	download_archive http://download.berlios.de/codeblocks/ mingwm10_gcc421.7z codeblocks_mingw.7z
-	download_archive http://download.berlios.de/codeblocks/ CB_20090601_rev5616_win32.7z codeblocks.7z
-
+	download_archive http://download.berlios.de/codeblocks/ CB_20090621_rev5678_win32.7z codeblocks.7z
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib_2.20.3-1_win32.zip glib.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib-dev_2.20.3-1_win32.zip glib-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.16/ gtk+-dev_2.16.2-1_win32.zip gtk+-dev.zip
@@ -149,14 +154,14 @@ start_downloads()
 	download_archive http://www.libsdl.org/extras/win32/common/ directx-devel.tar.gz directx.tar.gz
 }
 
-extract_codeblocks()
+function extract_codeblocks()
 {
 	extract_archive_7z codeblocks_mingw.7z "${CODEBLOCKS_DIR}"
 	extract_archive_7z codeblocks_gcc.7z "${CODEBLOCKS_DIR}"
 	extract_archive_7z codeblocks.7z "${CODEBLOCKS_DIR}"
 }
 
-extract_mingw()
+function extract_mingw()
 {
 	extract_archive_gz binutils.tar.gz "${MINGW_DIR}"
 	extract_archive_gz mingwrt.tar.gz "${MINGW_DIR}"
@@ -182,7 +187,7 @@ extract_mingw()
 	rm -rf ${MINGW_DIR}/coreutils*
 }
 
-extract_libs()
+function extract_libs()
 {
 	extract_archive_zip zlib.zip "${MINGW_DIR}"
 	extract_archive_zip libjpeg.zip "${MINGW_DIR}"
@@ -202,7 +207,7 @@ extract_libs()
 	rm -rf ${MINGW_DIR}/include/libxml2 >> ${LOGFILE_NAME} 2>&1
 }
 
-extract_libcurl()
+function extract_libcurl()
 {
 	mkdir ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
 	extract_archive_zip libcurl.zip "${TEMP_DIR}/tmp"
@@ -210,7 +215,7 @@ extract_libcurl()
 	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
 }
 
-extract_sdl()
+function extract_sdl()
 {
 	mkdir ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
 	extract_archive_zip sdl_mixer.zip "${TEMP_DIR}/tmp"
@@ -229,7 +234,7 @@ extract_sdl()
 	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
 }
 
-extract_tools()
+function extract_tools()
 {
 	mkdir ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
 	extract_archive_zip wget.zip "${MINGW_DIR}"
@@ -250,7 +255,7 @@ extract_tools()
 	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
 }
 
-extract_gtk()
+function extract_gtk()
 {
 	extract_archive_zip glib.zip "${MINGW_DIR}"
 	extract_archive_zip glib-dev.zip "${MINGW_DIR}"
@@ -268,13 +273,27 @@ extract_gtk()
 	done
 }
 
-extract_ogg()
+function extract_ogg()
 {
 	extract_archive_bz2 libogg.tar.bz2 "${MINGW_DIR}"
 	extract_archive_bz2 xvidcore.tar.bz2 "${MINGW_DIR}"
 	extract_archive_bz2 libtheora.tar.bz2 "${MINGW_DIR}"
 	extract_archive_bz2 libvorbis.tar.bz2 "${MINGW_DIR}"
 }
+
+function exitscript() 
+{
+	# remove in progress downloads
+	if [ -n "${DOWNLOADING}" ]; then
+		rm -f ${DOWNLOADING} >> /dev/null
+	fi
+}
+
+###################################################
+# signal handlers
+###################################################
+trap exitscript EXIT
+trap exitscript SIGINT
 
 #######################################################
 # variables
