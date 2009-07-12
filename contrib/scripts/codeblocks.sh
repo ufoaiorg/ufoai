@@ -18,7 +18,7 @@ function check_error()
 {
 	errormessage=${1}
 	if [ $? -ne "0" ]; then
-		failure ${errormessage}
+		failure "Error: ${errormessage}"
 	fi
 }
 
@@ -400,7 +400,7 @@ create()
 
 	extract_tools
 
-	echo -n "Used space: "
+	echo -n "Used space in ${CODEBLOCKS_DIR}: "
 	echo $(du -h -c ${CODEBLOCKS_DIR} | tail -1)
 
 	echo "Start to create ${ARCHIVE_NAME}"
