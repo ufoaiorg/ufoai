@@ -6,13 +6,19 @@ export LC_ALL=C
 # functions
 #######################################################
 
+function failure() 
+{
+	errormessage=${1}
+	echo ${errormessage}
+	echo ${errormessage} >> ${LOGFILE_NAME} 2>&1
+	exit 1
+}
+
 function check_error() 
 {
 	errormessage=${1}
 	if [ $? -ne "0" ]; then
-		echo ${errormessage}
-		echo ${errormessage} >> ${LOGFILE_NAME} 2>&1
-		exit 1
+		failure ${errormessage}
 	fi
 }
 
@@ -21,11 +27,13 @@ function download_archive()
 	baseurl=${1}
 	filename=${2}
 	targetname=${3}
-	echo "downloading ${3}..."
+	echo "downloading ${targetname}..."
 	pushd ${DOWNLOAD_DIR} > /dev/null
 	${WGET} -nc ${baseurl}${filename} -O ${targetname} >> ${LOGFILE_NAME} 2>&1
 	popd > /dev/null
-	check_error "Could not fetch ${baseurl}${filename}"
+	if [ ! -e "${DOWNLOAD_DIR}/${targetname}" ]; then
+		failure "Could not fetch ${baseurl}${filename}"
+	fi
 }
 
 function extract_archive_gz() 
