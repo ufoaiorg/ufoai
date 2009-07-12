@@ -183,9 +183,13 @@ function extract_mingw()
 	extract_archive_bz2 msys-automake1.10tar.bz2 "${MINGW_DIR}"
 	extract_archive_bz2 msys-coreutils.tar.bz2 "${MINGW_DIR}"
 	cp -R ${MINGW_DIR}/usr/local/* "${MINGW_DIR}"
+	check_error "Could not copy mingw files"
 	rm -rf ${MINGW_DIR}/usr/local
+	check_error "Could not remove mingw files"
 	cp -R ${MINGW_DIR}/coreutils*/* "${MINGW_DIR}"
+	check_error "Could not copy coreutils files"
 	rm -rf ${MINGW_DIR}/coreutils*
+	check_error "Could not remove coreutils files"
 }
 
 function extract_libs()
@@ -203,41 +207,58 @@ function extract_libs()
 	extract_archive_zip libpdcurses.zip "${MINGW_DIR}"
 	extract_archive_zip libxml2.zip "${MINGW_DIR}"
 	cp -R "${MINGW_DIR}/libxml2-*.win32/*" ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not copy libxml2 files"
 	rm -rf "${MINGW_DIR}/libxml2-*.win32/" >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not remove libxml2 files"
 	cp -R ${MINGW_DIR}/include/libxml2/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not copy libxml2 header files"
 	rm -rf ${MINGW_DIR}/include/libxml2 >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not remove libxml2 header files"
 }
 
 function extract_libcurl()
 {
 	mkdir ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not create temp libcurl directory"
 	extract_archive_zip libcurl.zip "${TEMP_DIR}/tmp"
 	cp ${TEMP_DIR}/tmp/libcurl-${CURL_VERSION}/* -R ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not copy libcurl files"
 	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not remove libcurl files"
 }
 
 function extract_sdl()
 {
 	mkdir ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not create temp sdl directory"
 	extract_archive_zip sdl_mixer.zip "${TEMP_DIR}/tmp"
 	extract_archive_zip sdl_ttf.zip "${TEMP_DIR}/tmp"
 	extract_archive_zip sdl_image.zip "${TEMP_DIR}/tmp"
 	extract_archive_gz sdl.tar.gz "${TEMP_DIR}/tmp"
 	pushd ${TEMP_DIR}/tmp/SDL-${SDL_VERSION} > /dev/null
 	make install-sdl prefix="${MINGW_DIR}" >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not install sdl files"
 	popd > /dev/null
 	cp ${TEMP_DIR}/tmp/SDL_mixer-${SDL_MIXER_VERSION}/include/* ${MINGW_DIR}/include/SDL >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not copy sdl mixer header files"
 	cp ${TEMP_DIR}/tmp/SDL_mixer-${SDL_MIXER_VERSION}/lib/* ${MINGW_DIR}/lib >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not copy sdl mixer files"
 	cp ${TEMP_DIR}/tmp/SDL_ttf-${SDL_TTF_VERSION}/include/* ${MINGW_DIR}/include/SDL >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not copy sdl ttf header files"
 	cp ${TEMP_DIR}/tmp/SDL_ttf-${SDL_TTF_VERSION}/lib/* ${MINGW_DIR}/lib >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not copy sdl ttf files"
 	cp ${TEMP_DIR}/tmp/SDL_image-${SDL_IMAGE_VERSION}/include/* ${MINGW_DIR}/include/SDL >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not copy sdl image header files"
 	cp ${TEMP_DIR}/tmp/SDL_image-${SDL_IMAGE_VERSION}/lib/* ${MINGW_DIR}/lib >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not copy sdl image files"
 	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not remove sdl files"
 }
 
 function extract_tools()
 {
 	mkdir ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not create temp tools directory"
 	extract_archive_zip wget.zip "${MINGW_DIR}"
 	extract_archive_zip unzip.zip "${MINGW_DIR}"
 	extract_archive_zip openssl.zip "${MINGW_DIR}"
@@ -252,9 +273,13 @@ function extract_tools()
 	extract_archive_zip svn.zip "${TEMP_DIR}/tmp"
 	#some parts of openssl are also included in the svn package
 	cp ${TEMP_DIR}/tmp/7za.exe ${MINGW_DIR}/bin/7z.exe >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not copy 7za files"
 	cp ${TEMP_DIR}/tmp/7za.exe ${MINGW_DIR}/bin/7za.exe >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not copy 7za files"
 	cp -R ${TEMP_DIR}/tmp/svn-win32*/* ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not copy svn files"
 	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not remove tools files"
 }
 
 function extract_gtk()
@@ -269,9 +294,13 @@ function extract_gtk()
 
 	for i in $(echo "glib-2.0 gail-1.0 gtk-2.0 pango-1.0 atk-1.0 cairo gtkglext-1.0 gtkglextmm-1.2"); do
 		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
+		check_error "Could not copy $i include files"
 		rm -r ${MINGW_DIR}/include/${i} >> ${LOGFILE_NAME} 2>&1
+		check_error "Could not remove $i include files"
 		cp -R ${MINGW_DIR}/lib/${i}/include/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
+		check_error "Could not copy $i lib/include files"
 		rm -r ${MINGW_DIR}/lib/${i} >> ${LOGFILE_NAME} 2>&1
+		check_error "Could not remove $i lib/include files"
 	done
 }
 
@@ -371,7 +400,13 @@ create()
 
 	extract_tools
 
-	${UN7ZIP} a -tzip -mx=9 ${ARCHIVE_NAME} ${CODEBLOCKS_DIR}
+	echo -n "Used space: "
+	echo $(du -h -c ${CODEBLOCKS_DIR} | tail -1)
+
+	echo "Start to create ${ARCHIVE_NAME}"
+
+	${UN7ZIP} a -tzip -mx=9 ${ARCHIVE_NAME} ${CODEBLOCKS_DIR} >> ${LOGFILE_NAME} 2>&1
+	check_error "Could not create ${ARCHIVE_NAME}"
 
 	if [ ! -e "${ARCHIVE_NAME}" ]; then
 		echo "Failed to create ${ARCHIVE_NAME}"
