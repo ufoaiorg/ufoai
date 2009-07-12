@@ -1,0 +1,68 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 64 64 44 ) ( 64 0 44 ) ( 0 0 44 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 0 0 40 ) ( 64 0 40 ) ( 64 64 40 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 64 32 40 ) ( 64 32 104 ) ( 64 64 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 62 44 40 ) ( 62 44 104 ) ( 50 74 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 55 55 40 ) ( 55 55 104 ) ( 32 78 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 44 62 40 ) ( 44 62 104 ) ( 14 74 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 32 64 40 ) ( 32 64 104 ) ( 0 64 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 20 62 40 ) ( 20 62 104 ) ( -10 50 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 9 55 40 ) ( 9 55 104 ) ( -14 32 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 2 44 40 ) ( 2 44 104 ) ( -10 14 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 0 32 40 ) ( 0 32 104 ) ( 0 0 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 2 20 40 ) ( 2 20 104 ) ( 14 -10 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 9 9 40 ) ( 9 9 104 ) ( 32 -14 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 20 2 40 ) ( 20 2 104 ) ( 50 -10 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 32 0 40 ) ( 32 0 104 ) ( 64 0 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 44 2 40 ) ( 44 2 104 ) ( 74 14 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 55 9 40 ) ( 55 9 104 ) ( 78 32 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 62 20 40 ) ( 62 20 104 ) ( 74 50 104 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+}
+// brush 1
+{
+( 64 64 4 ) ( 64 0 4 ) ( 0 0 4 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 0 0 0 ) ( 64 0 0 ) ( 64 64 0 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 64 32 0 ) ( 64 32 64 ) ( 64 64 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 62 44 0 ) ( 62 44 64 ) ( 50 74 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 55 55 0 ) ( 55 55 64 ) ( 32 78 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 44 62 0 ) ( 44 62 64 ) ( 14 74 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 32 64 0 ) ( 32 64 64 ) ( 0 64 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 20 62 0 ) ( 20 62 64 ) ( -10 50 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 9 55 0 ) ( 9 55 64 ) ( -14 32 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 2 44 0 ) ( 2 44 64 ) ( -10 14 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 0 32 0 ) ( 0 32 64 ) ( 0 0 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 2 20 0 ) ( 2 20 64 ) ( 14 -10 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 9 9 0 ) ( 9 9 64 ) ( 32 -14 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 20 2 0 ) ( 20 2 64 ) ( 50 -10 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 32 0 0 ) ( 32 0 64 ) ( 64 0 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 44 2 0 ) ( 44 2 64 ) ( 74 14 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 55 9 0 ) ( 55 9 64 ) ( 78 32 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+( 62 20 0 ) ( 62 20 64 ) ( 74 50 64 ) tex_buildings/wizwood1_2 0 0 0 0.2 0.2
+}
+// brush 2
+{
+( 56 56 40 ) ( 56 8 40 ) ( 8 8 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 8 8 4 ) ( 56 8 4 ) ( 56 56 4 ) tex_buildings/step 1 1 0 0.1 0.1
+( 56 32 4 ) ( 56 32 40 ) ( 56 56 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 54 41 4 ) ( 54 41 40 ) ( 45 63 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 49 49 4 ) ( 49 49 40 ) ( 32 66 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 41 54 4 ) ( 41 54 40 ) ( 19 63 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 32 56 4 ) ( 32 56 40 ) ( 8 56 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 23 54 4 ) ( 23 54 40 ) ( 1 45 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 15 49 4 ) ( 15 49 40 ) ( -2 32 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 10 41 4 ) ( 10 41 40 ) ( 1 19 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 8 32 4 ) ( 8 32 40 ) ( 8 8 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 10 23 4 ) ( 10 23 40 ) ( 19 1 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 15 15 4 ) ( 15 15 40 ) ( 32 -2 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 23 10 4 ) ( 23 10 40 ) ( 45 1 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 32 8 4 ) ( 32 8 40 ) ( 56 8 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 41 10 4 ) ( 41 10 40 ) ( 63 19 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 49 15 4 ) ( 49 15 40 ) ( 66 32 40 ) tex_buildings/step 1 1 0 0.1 0.1
+( 54 23 4 ) ( 54 23 40 ) ( 63 45 40 ) tex_buildings/step 1 1 0 0.1 0.1
+}
+}
