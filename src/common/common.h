@@ -288,13 +288,14 @@ typedef struct date_s {
 } date_t;
 
 /* Time Constants */
-#define DAYS_PER_YEAR 365
-#define DAYS_PER_YEAR_AVG 365.25
+#define DAYS_PER_YEAR		365
+#define DAYS_PER_YEAR_AVG	365.25
 /** DAYS_PER_MONTH -> @sa monthLength[] array in campaign.c */
 #define MONTHS_PER_YEAR		12
 #define SECONDS_PER_DAY		86400	/**< (24 * 60 * 60) */
 #define SECONDS_PER_HOUR	3600	/**< (60 * 60) */
 #define SECONDS_PER_MINUTE	60		/**< (60) */
+#define MINUTES_PER_HOUR	60		/**< (60) */
 
 #define MAX_CVARLISTINGAMETYPE 16
 typedef struct cvarlist_s {
