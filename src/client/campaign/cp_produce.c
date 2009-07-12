@@ -400,11 +400,11 @@ void PR_ProductionRun (void)
 
 		if (prod->production) {	/* This is production, not disassembling. */
 			if (!prod->aircraft)
-				prod->percentDone += PR_CalculateProductionPercentDone(base, od->tech, NULL, qfalse);
+				prod->percentDone += (PR_CalculateProductionPercentDone(base, od->tech, NULL, qfalse) / SECONDS_PER_MINUTE);
 			else
-				prod->percentDone += PR_CalculateProductionPercentDone(base, aircraft->tech, NULL, qfalse);
+				prod->percentDone += (PR_CalculateProductionPercentDone(base, aircraft->tech, NULL, qfalse) / SECONDS_PER_MINUTE);
 		} else /* This is disassembling. */
-			prod->percentDone += PR_CalculateProductionPercentDone(base, od->tech, CL_GetComponentsByItem(prod->item), qtrue);
+			prod->percentDone += (PR_CalculateProductionPercentDone(base, od->tech, CL_GetComponentsByItem(prod->item), qtrue) / SECONDS_PER_MINUTE);
 
 		if (prod->percentDone >= 1.0f) {
 			if (prod->production) {	/* This is production, not disassembling. */

@@ -724,19 +724,27 @@ void CL_CampaignRun (void)
 	if (ccs.timer >= 1.0) {
 		/* calculate new date */
 		int currenthour;
+		int currentmin;
 		dateLong_t date;
 
 		dt = (int)floor(ccs.timer);
 		currenthour = (int)floor(ccs.date.sec / SECONDS_PER_HOUR);
+		currentmin = (int)floor(ccs.date.sec / SECONDS_PER_MINUTE);
 		ccs.date.sec += dt;
 		ccs.timer -= dt;
+
+		/* compute minutely events  */
+		/* (this may run multiple times if the time stepping is > 1 minute at a time) */
+		while (currentmin < (int)floor(ccs.date.sec / SECONDS_PER_MINUTE)) {
+			currentmin++;
+			PR_ProductionRun();
+		}
 
 		/* compute hourly events  */
 		/* (this may run multiple times if the time stepping is > 1 hour at a time) */
 		while (currenthour < (int)floor(ccs.date.sec / SECONDS_PER_HOUR)) {
 			currenthour++;
 			RS_ResearchRun();
-			PR_ProductionRun();
 			UR_ProcessActive();
 			AII_UpdateInstallationDelay();
 			AII_RepairAircraft();
