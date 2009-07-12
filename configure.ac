@@ -741,20 +741,7 @@ then
 	OLD_RADIANT_LIBS="$RADIANT_LIBS"
 	RADIANT_LIBS=
 	AC_MSG_NOTICE([UFORadiant dependencies: gtk2, gtkglext, glib2 and libxml2])
-	PKG_CHECK_MODULES([RADIANT], [gtk+-2.0 gtkglext-1.0 glib-2.0])
-
-	#---------------------------------------------------------------------------------------------
-	# Check for libxml2
-	#---------------------------------------------------------------------------------------------
-	LIBS=
-	AC_CHECK_PROG(HAVE_XML2_CONFIG,$with_xml2_config,yes)
-	if test "$ac_cv_prog_HAVE_XML2_CONFIG" = "yes"
-	then
-		RADIANT_LIBS="$RADIANT_LIBS `$with_xml2_config --libs`"
-		RADIANT_CFLAGS="$RADIANT_CFLAGS `$with_xml2_config --cflags`"
-	else
-		AC_MSG_ERROR([You must have the libxml2 development headers])
-	fi
+	PKG_CHECK_MODULES([RADIANT], [gtk+-2.0 gtkglext-1.0 glib-2.0 libxml-2.0])
 
 	RADIANT_LIBS="$RADIANT_LIBS $OLD_RADIANT_LIBS"
 else
