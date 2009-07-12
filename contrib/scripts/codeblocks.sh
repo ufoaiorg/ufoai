@@ -1,5 +1,9 @@
 #!/bin/bash
 
+## activate both for error checking
+#set -e
+#set -x
+
 export LC_ALL=C
 
 #######################################################
@@ -29,7 +33,7 @@ function download_archive()
 	targetname=${3}
 	echo "downloading ${targetname}..."
 	pushd ${DOWNLOAD_DIR} > /dev/null
-	${WGET} -nc ${baseurl}${filename} -O ${targetname} >> ${LOGFILE_NAME} 2>&1
+	${WGET} -nc ${baseurl}${filename} -O ${targetname} || true >> ${LOGFILE_NAME} 2>&1
 	popd > /dev/null
 	if [ ! -e "${DOWNLOAD_DIR}/${targetname}" ]; then
 		failure "Could not fetch ${baseurl}${filename}"
@@ -180,7 +184,7 @@ function extract_mingw()
 	extract_archive_bz2 msys-autoconf.tar.bz2 "${MINGW_DIR}"
 	extract_archive_bz2 msys-autoconf2.5.tar.bz2 "${MINGW_DIR}"
 	extract_archive_bz2 msys-automake.tar.bz2 "${MINGW_DIR}"
-	extract_archive_bz2 msys-automake1.10tar.bz2 "${MINGW_DIR}"
+	extract_archive_bz2 msys-automake1.10.tar.bz2 "${MINGW_DIR}"
 	extract_archive_bz2 msys-coreutils.tar.bz2 "${MINGW_DIR}"
 	cp -R ${MINGW_DIR}/usr/local/* "${MINGW_DIR}"
 	check_error "Could not copy mingw files"
@@ -206,19 +210,19 @@ function extract_libs()
 	extract_archive_gz directx.tar.gz "${MINGW_DIR}"
 	extract_archive_zip libpdcurses.zip "${MINGW_DIR}"
 	extract_archive_zip libxml2.zip "${MINGW_DIR}"
-	cp -R "${MINGW_DIR}/libxml2-*.win32/*" ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
+	cp -R "${MINGW_DIR}"/libxml2-*.win32/* ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
 	check_error "Could not copy libxml2 files"
-	rm -rf "${MINGW_DIR}/libxml2-*.win32/" >> ${LOGFILE_NAME} 2>&1
+	rm -rf "${MINGW_DIR}"/libxml2-*.win32/ >> ${LOGFILE_NAME} 2>&1
 	check_error "Could not remove libxml2 files"
-	cp -R ${MINGW_DIR}/include/libxml2/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not copy libxml2 header files"
-	rm -rf ${MINGW_DIR}/include/libxml2 >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not remove libxml2 header files"
+#	cp -R ${MINGW_DIR}/include/libxml2/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
+#	check_error "Could not copy libxml2 header files"
+#	rm -rf ${MINGW_DIR}/include/libxml2 >> ${LOGFILE_NAME} 2>&1
+#	check_error "Could not remove libxml2 header files"
 }
 
 function extract_libcurl()
 {
-	mkdir ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
+	mkdir -p ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
 	check_error "Could not create temp libcurl directory"
 	extract_archive_zip libcurl.zip "${TEMP_DIR}/tmp"
 	cp ${TEMP_DIR}/tmp/libcurl-${CURL_VERSION}/* -R ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
@@ -229,7 +233,7 @@ function extract_libcurl()
 
 function extract_sdl()
 {
-	mkdir ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
+	mkdir -p ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
 	check_error "Could not create temp sdl directory"
 	extract_archive_zip sdl_mixer.zip "${TEMP_DIR}/tmp"
 	extract_archive_zip sdl_ttf.zip "${TEMP_DIR}/tmp"
@@ -257,7 +261,7 @@ function extract_sdl()
 
 function extract_tools()
 {
-	mkdir ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
+	mkdir -p ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
 	check_error "Could not create temp tools directory"
 	extract_archive_zip wget.zip "${MINGW_DIR}"
 	extract_archive_zip unzip.zip "${MINGW_DIR}"
@@ -292,7 +296,7 @@ function extract_gtk()
 	extract_archive_zip cairo-dev.zip "${MINGW_DIR}"
 	extract_archive_zip gtkglext-dev.zip "${MINGW_DIR}"
 
-	for i in $(echo "glib-2.0 gail-1.0 gtk-2.0 pango-1.0 atk-1.0 cairo gtkglext-1.0 gtkglextmm-1.2"); do
+	for i in $(echo "glib-2.0 gtk-2.0 gtkglext-1.0"); do
 		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
 		check_error "Could not copy $i include files"
 		rm -r ${MINGW_DIR}/include/${i} >> ${LOGFILE_NAME} 2>&1
@@ -301,6 +305,13 @@ function extract_gtk()
 		check_error "Could not copy $i lib/include files"
 		rm -r ${MINGW_DIR}/lib/${i} >> ${LOGFILE_NAME} 2>&1
 		check_error "Could not remove $i lib/include files"
+	done
+
+	for i in $(echo "gail-1.0 pango-1.0 atk-1.0 cairo" ); do
+		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
+		check_error "Could not copy $i include files"
+		rm -r ${MINGW_DIR}/include/${i} >> ${LOGFILE_NAME} 2>&1
+		check_error "Could not remove $i include files"
 	done
 }
 
