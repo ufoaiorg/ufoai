@@ -1209,7 +1209,17 @@ static void BDEF_RemoveBattery_f (void)
 		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
 		return;
 	} else {
-		basedefType = atoi(Cmd_Argv(1));
+		char type[MAX_VAR];
+
+		Q_strncpyz(type, Cmd_Argv(1), sizeof(type));
+		if (!strcmp(type, "missile"))
+			basedefType = BASEDEF_MISSILE;
+		else if (!strcmp(type, "laser"))
+			basedefType = BASEDEF_LASER;
+		else if (!strcmp(type, "random"))
+			basedefType = BASEDEF_RANDOM;
+		else
+			return;
 		baseIdx = atoi(Cmd_Argv(2));
 	}
 
@@ -1292,7 +1302,17 @@ static void BDEF_AddBattery_f (void)
 		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
 		return;
 	} else {
-		basedefType = atoi(Cmd_Argv(1));
+		char type[MAX_VAR];
+
+		Q_strncpyz(type, Cmd_Argv(1), sizeof(type));
+		if (!strcmp(type, "missile"))
+			basedefType = BASEDEF_MISSILE;
+		else if (!strcmp(type, "laser"))
+			basedefType = BASEDEF_LASER;
+		else if (!strcmp(type, "random"))
+			basedefType = BASEDEF_RANDOM;
+		else
+			return;
 		baseIdx = atoi(Cmd_Argv(2));
 	}
 

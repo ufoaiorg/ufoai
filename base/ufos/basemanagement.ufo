@@ -110,8 +110,8 @@ building building_missile
 	map_name		"missile"
 	pedia			rs_building_missile
 	max_count		4
-	onconstruct		"add_battery 1"
-	ondestroy		"remove_battery 1"
+	onconstruct		"add_battery missile"
+	ondestroy		"remove_battery missile"
 }
 
 building building_storage
@@ -388,8 +388,8 @@ building building_laser
 	map_name		"laser"
 	pedia			rs_building_laser
 	max_count		4
-	onconstruct		"add_battery 1"
-	ondestroy		"remove_battery 1"
+	onconstruct		"add_battery laser"
+	ondestroy		"remove_battery laser"
 }
 
 basetemplate balanced {
