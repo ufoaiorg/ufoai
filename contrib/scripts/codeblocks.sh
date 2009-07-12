@@ -341,7 +341,8 @@ SDL_TTF_VERSION=2.0.9
 SDL_IMAGE_VERSION=1.2.6
 CURL_VERSION=7.16.4
 
-TEMP_DIR=$(readlink /tmp/tmp_codeblocks)
+# Use an absolute path here
+TEMP_DIR=/tmp/tmp_codeblocks
 TARGET_DIR=${TEMP_DIR}/codeblocks
 DOWNLOAD_DIR=${TEMP_DIR}/downloads
 MINGW_DIR=${TARGET_DIR}/MinGW
