@@ -139,6 +139,7 @@ start_downloads()
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.22/ pango-dev_1.22.4-1_win32.zip pango-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.24/ atk-dev_1.24.0-1_win32.zip atk-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.6-1_win32.zip cairo-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ pkg-config-0.23-2.zip pkg-config.zip
 
 	download_archive http://mattn.ninex.info/download/ gtkglext-1.2.zip gtkglext-dev.zip
 
@@ -238,6 +239,7 @@ extract_tools()
 	extract_archive_zip regex.zip "${MINGW_DIR}"
 	extract_archive_zip pcre.zip "${MINGW_DIR}"
 	extract_archive_zip grep.zip "${MINGW_DIR}"
+	extract_archive_zip pkg-config.zip "${MINGW_DIR}"
 	extract_archive_zip 7zip.zip "${TEMP_DIR}/tmp"
 	extract_archive_zip svn.zip "${TEMP_DIR}/tmp"
 	#some parts of openssl are also included in the svn package
