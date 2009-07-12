@@ -255,6 +255,21 @@ static void MN_WindowNodeLoading (menuNode_t *node)
 	node->padding = 5;
 }
 
+void MN_WindowNodeSetRenderNode (menuNode_t *node, menuNode_t *renderNode)
+{
+	if (!MN_NodeInstanceOf(node, "window")) {
+		Com_Printf("MN_WindowNodeSetRenderNode: '%s' node is not an 'window'.\n", MN_GetPath(node));
+		return;
+	}
+
+	if (EXTRADATA(node).renderNode) {
+		Com_Printf("MN_WindowNodeSetRenderNode: second render node ignored (\"%s\")\n", MN_GetPath(renderNode));
+		return;
+	}
+
+	EXTRADATA(node).renderNode = renderNode;
+}
+
 /**
  * @brief Called at the end of the load from script
  */

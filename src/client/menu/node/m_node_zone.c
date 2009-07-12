@@ -88,13 +88,8 @@ static void MN_ZoneNodeLoading (menuNode_t *node)
  */
 static void MN_ZoneNodeLoaded (menuNode_t *node)
 {
-	menuNode_t * root = node->root;
-	if (!strncmp(node->name, "render", 6)) {
-		if (!root->u.window.renderNode)
-			root->u.window.renderNode = node;
-		else
-			Com_Printf("MN_ZoneNodeLoaded: second render node ignored (\"%s\")\n", MN_GetPath(node));
-	}
+	if (!strcmp(node->name, "render"))
+		MN_WindowNodeSetRenderNode(node->root, node);
 }
 
 static const value_t properties[] = {
