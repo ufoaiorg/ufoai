@@ -1,0 +1,131 @@
+
+// entity 0
+{
+"classname" "func_group"
+// brush 0
+{
+( 4 24 16 ) ( 90 28 15 ) ( 90 24 16 ) tex_material/c_orange3 14 0 0 1 1 65280 1024 0
+( 90 30 14 ) ( 90 28 15 ) ( 4 30 14 ) tex_material/c_orange3 14 2 0 1 1 65280 1024 0
+( 90 24 14 ) ( 90 28 15 ) ( 90 30 14 ) tex_material/c_orange3 0 2 0 1 1 65280 1024 0
+( 4 24 14 ) ( 90 24 14 ) ( 4 30 14 ) tex_material/c_orange3 14 0 0 1 1 65280 1024 0
+( 4 24 14 ) ( 4 24 16 ) ( 90 24 14 ) tex_material/c_orange3 14 2 0 1 1 65280 1024 0
+( 4 24 14 ) ( 4 30 14 ) ( 4 24 16 ) tex_material/c_orange3 0 2 0 1 1 65280 1024 0
+}
+// brush 1
+{
+( 4 20 16 ) ( 90 15 15 ) ( 4 15 15 ) tex_material/c_orange3 14 12 0 1 1 65280 1024 0
+( 90 20 16 ) ( 4 20 16 ) ( 90 20 14 ) tex_material/c_orange3 14 -0 0 1 1 65280 1024 0
+( 90 20 16 ) ( 90 15 13 ) ( 90 15 15 ) tex_material/c_orange3 4 -0 0 1 1 65280 1024 0
+( 90 20 14 ) ( 4 15 13 ) ( 90 15 13 ) tex_material/c_orange3 14 12 0 1 1 65280 1024 0
+( 4 15 15 ) ( 90 15 13 ) ( 4 15 13 ) tex_material/c_orange3 14 -0 0 1 1 65280 1024 0
+( 4 20 14 ) ( 4 15 15 ) ( 4 15 13 ) tex_material/c_orange3 4 -0 0 1 1 65280 1024 0
+}
+// brush 2
+{
+( 4 15 15 ) ( 90 8 16 ) ( 4 8 16 ) tex_material/c_orange3 14 7 0 1 1 65280 1024 0
+( 90 15 15 ) ( 4 15 15 ) ( 90 15 13 ) tex_material/c_orange3 14 15 0 1 1 65280 1024 0
+( 90 9 14 ) ( 90 8 16 ) ( 90 15 13 ) tex_material/c_orange3 9 15 0 1 1 65280 1024 0
+( 90 15 13 ) ( 4 9 14 ) ( 90 9 14 ) tex_material/c_orange3 14 7 0 1 1 65280 1024 0
+( 90 9 14 ) ( 4 8 16 ) ( 90 8 16 ) tex_material/c_orange3 14 15 0 1 1 65280 1024 0
+( 4 15 13 ) ( 4 8 16 ) ( 4 9 14 ) tex_material/c_orange3 9 15 0 1 1 65280 1024 0
+}
+// brush 3
+{
+( 90 24 16 ) ( 90 17 16 ) ( 4 24 16 ) tex_material/c_orange3 14 0 0 1 1 65280 1024 0
+( 90 24 16 ) ( 4 24 16 ) ( 90 24 14 ) tex_material/c_orange3 14 -0 0 1 1 65280 1024 0
+( 90 24 16 ) ( 90 24 14 ) ( 90 17 16 ) tex_material/c_orange3 0 -0 0 1 1 65280 1024 0
+( 4 17 14 ) ( 90 17 14 ) ( 4 24 14 ) tex_material/c_orange3 14 0 0 1 1 65280 1024 0
+( 4 20 14 ) ( 4 20 16 ) ( 90 20 14 ) tex_material/c_orange3 14 -0 0 1 1 65280 1024 0
+( 4 17 14 ) ( 4 24 14 ) ( 4 17 16 ) tex_material/c_orange3 0 -0 0 1 1 65280 1024 0
+}
+// brush 4
+{
+( 16 2 29 ) ( 13 4 29 ) ( 16 4 29 ) tex_material/c_orange 30 29 0 1 1 65280 1024 0
+( 16 9 14 ) ( 16 6 25 ) ( 13 6 25 ) tex_material/c_orange 30 -0 0 1 1 65280 1024 0
+( 16 7 14 ) ( 16 4 25 ) ( 16 6 25 ) tex_material/c_orange 1 -0 0 1 1 65280 1024 0
+( 13 6 14 ) ( 16 6 14 ) ( 13 29 14 ) tex_material/c_orange 30 31 0 1 1 65280 1024 0
+( 16 7 14 ) ( 13 4 25 ) ( 16 4 25 ) tex_material/c_orange 30 -0 0 1 1 65280 1024 0
+( 13 9 14 ) ( 13 6 25 ) ( 13 4 25 ) tex_material/c_orange 1 -0 0 1 1 65280 1024 0
+}
+// brush 5
+{
+( 81 2 29 ) ( 78 4 29 ) ( 81 4 29 ) tex_material/c_orange 29 29 0 1 1 65280 1024 0
+( 81 9 14 ) ( 81 6 25 ) ( 78 6 25 ) tex_material/c_orange 29 -0 0 1 1 65280 1024 0
+( 81 7 14 ) ( 81 4 25 ) ( 81 6 25 ) tex_material/c_orange 1 -0 0 1 1 65280 1024 0
+( 78 6 14 ) ( 81 6 14 ) ( 78 29 14 ) tex_material/c_orange 29 31 0 1 1 65280 1024 0
+( 81 7 14 ) ( 78 4 25 ) ( 81 4 25 ) tex_material/c_orange 29 -0 0 1 1 65280 1024 0
+( 78 9 14 ) ( 78 6 25 ) ( 78 4 25 ) tex_material/c_orange 1 -0 0 1 1 65280 1024 0
+}
+// brush 6
+{
+( 16 29 14 ) ( 16 6 14 ) ( 13 29 14 ) tex_material/c_orange 30 31 0 1 1 65280 1024 0
+( 16 29 16 ) ( 13 29 16 ) ( 16 29 13 ) tex_material/c_orange 30 -0 0 1 1 65280 1024 0
+( 16 29 16 ) ( 16 29 13 ) ( 16 6 16 ) tex_material/c_orange 1 -0 0 1 1 65280 1024 0
+( 13 6 13 ) ( 16 6 13 ) ( 13 29 13 ) tex_material/c_orange 30 31 0 1 1 65280 1024 0
+( 13 7 13 ) ( 13 7 16 ) ( 16 7 13 ) tex_material/c_orange 30 -0 0 1 1 65280 1024 0
+( 13 6 13 ) ( 13 29 13 ) ( 13 6 16 ) tex_material/c_orange 1 -0 0 1 1 65280 1024 0
+}
+// brush 7
+{
+( 13 3 13 ) ( 16 26 13 ) ( 16 3 13 ) tex_material/c_orange 30 31 0 1 -1 65280 1024 0
+( 16 24 2 ) ( 13 24 2 ) ( 16 20 13 ) tex_material/c_orange 30 21 0 1 1 65280 1024 0
+( 16 29 2 ) ( 16 27 2 ) ( 16 25 13 ) tex_material/c_orange 1 31 0 -1 1 65280 1024 0
+( 16 29 2 ) ( 13 29 2 ) ( 16 27 2 ) tex_material/c_orange 30 11 0 1 -1 65280 1024 0
+( 13 29 2 ) ( 16 29 2 ) ( 13 25 13 ) tex_material/c_orange 30 31 0 1 1 65280 1024 0
+( 13 27 2 ) ( 13 29 2 ) ( 13 23 13 ) tex_material/c_orange 1 31 0 -1 1 65280 1024 0
+}
+// brush 8
+{
+( 81 7 23 ) ( 81 6 23 ) ( 13 7 23 ) tex_material/c_orange3 14 0 0 1 1 65280 1024 0
+( 81 7 23 ) ( 13 9 16 ) ( 81 9 16 ) tex_material/c_orange3 14 14 0 1 1 65280 1024 0
+( 90 6 23 ) ( 90 9 16 ) ( 90 8 16 ) tex_material/c_orange3 0 14 0 1 1 65280 1024 0
+( 81 8 18 ) ( 13 7 18 ) ( 81 7 18 ) tex_material/c_orange3 14 15 0 1 1 65280 1024 0
+( 13 6 23 ) ( 81 8 16 ) ( 13 8 16 ) tex_material/c_orange3 14 14 0 1 1 65280 1024 0
+( 4 7 23 ) ( 4 8 16 ) ( 4 9 16 ) tex_material/c_orange3 0 14 0 1 1 65280 1024 0
+}
+// brush 9
+{
+( 81 6 30 ) ( 81 5 30 ) ( 13 6 30 ) tex_material/c_orange3 14 15 0 1 1 65280 1024 0
+( 81 4 34 ) ( 13 6 27 ) ( 81 6 27 ) tex_material/c_orange3 14 9 0 1 1 65280 1024 0
+( 90 3 34 ) ( 90 6 27 ) ( 90 5 27 ) tex_material/c_orange3 3 9 0 1 1 65280 1024 0
+( 81 7 24 ) ( 13 6 24 ) ( 81 6 24 ) tex_material/c_orange3 14 14 0 1 1 65280 1024 0
+( 13 3 34 ) ( 81 5 27 ) ( 13 5 27 ) tex_material/c_orange3 14 9 0 1 1 65280 1024 0
+( 4 4 34 ) ( 4 5 27 ) ( 4 6 27 ) tex_material/c_orange3 3 9 0 1 1 65280 1024 0
+}
+// brush 10
+{
+( 81 29 14 ) ( 81 6 14 ) ( 78 29 14 ) tex_material/c_orange 29 31 0 1 1 65280 1024 0
+( 81 29 16 ) ( 78 29 16 ) ( 81 29 13 ) tex_material/c_orange 29 -0 0 1 1 65280 1024 0
+( 81 29 16 ) ( 81 29 13 ) ( 81 6 16 ) tex_material/c_orange 1 -0 0 1 1 65280 1024 0
+( 78 6 13 ) ( 81 6 13 ) ( 78 29 13 ) tex_material/c_orange 29 31 0 1 1 65280 1024 0
+( 78 7 13 ) ( 78 7 16 ) ( 81 7 13 ) tex_material/c_orange 29 -0 0 1 1 65280 1024 0
+( 78 6 13 ) ( 78 29 13 ) ( 78 6 16 ) tex_material/c_orange 1 -0 0 1 1 65280 1024 0
+}
+// brush 11
+{
+( 16 32 13 ) ( 16 9 13 ) ( 13 32 13 ) tex_material/c_orange 30 2 0 1 1 65280 1024 0
+( 16 15 13 ) ( 13 11 2 ) ( 16 11 2 ) tex_material/c_orange 30 21 0 1 1 65280 1024 0
+( 16 10 13 ) ( 16 8 2 ) ( 16 6 2 ) tex_material/c_orange 30 31 0 1 1 65280 1024 0
+( 16 8 2 ) ( 13 6 2 ) ( 16 6 2 ) tex_material/c_orange 30 14 0 1 1 65280 1024 0
+( 13 10 13 ) ( 16 6 2 ) ( 13 6 2 ) tex_material/c_orange 30 31 0 1 1 65280 1024 0
+( 13 12 13 ) ( 13 6 2 ) ( 13 8 2 ) tex_material/c_orange 30 31 0 1 1 65280 1024 0
+}
+// brush 12
+{
+( 78 3 13 ) ( 81 26 13 ) ( 81 3 13 ) tex_material/c_orange 29 31 0 1 -1 65280 1024 0
+( 81 24 2 ) ( 78 24 2 ) ( 81 20 13 ) tex_material/c_orange 29 21 0 1 1 65280 1024 0
+( 81 29 2 ) ( 81 27 2 ) ( 81 25 13 ) tex_material/c_orange 1 31 0 -1 1 65280 1024 0
+( 81 29 2 ) ( 78 29 2 ) ( 81 27 2 ) tex_material/c_orange 29 11 0 1 -1 65280 1024 0
+( 78 29 2 ) ( 81 29 2 ) ( 78 25 13 ) tex_material/c_orange 29 31 0 1 1 65280 1024 0
+( 78 27 2 ) ( 78 29 2 ) ( 78 23 13 ) tex_material/c_orange 1 31 0 -1 1 65280 1024 0
+}
+// brush 13
+{
+( 81 32 13 ) ( 81 9 13 ) ( 78 32 13 ) tex_material/c_orange 29 2 0 1 1 65280 1024 0
+( 81 15 13 ) ( 78 11 2 ) ( 81 11 2 ) tex_material/c_orange 29 21 0 1 1 65280 1024 0
+( 81 10 13 ) ( 81 8 2 ) ( 81 6 2 ) tex_material/c_orange 30 31 0 1 1 65280 1024 0
+( 81 8 2 ) ( 78 6 2 ) ( 81 6 2 ) tex_material/c_orange 29 14 0 1 1 65280 1024 0
+( 78 10 13 ) ( 81 6 2 ) ( 78 6 2 ) tex_material/c_orange 29 31 0 1 1 65280 1024 0
+( 78 12 13 ) ( 78 6 2 ) ( 78 8 2 ) tex_material/c_orange 30 31 0 1 1 65280 1024 0
+}
+}
