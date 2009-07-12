@@ -214,10 +214,6 @@ function extract_libs()
 	check_error "Could not copy libxml2 files"
 	rm -rf "${MINGW_DIR}"/libxml2-*.win32/ >> ${LOGFILE_NAME} 2>&1
 	check_error "Could not remove libxml2 files"
-#	cp -R ${MINGW_DIR}/include/libxml2/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
-#	check_error "Could not copy libxml2 header files"
-#	rm -rf ${MINGW_DIR}/include/libxml2 >> ${LOGFILE_NAME} 2>&1
-#	check_error "Could not remove libxml2 header files"
 }
 
 function extract_libcurl()
