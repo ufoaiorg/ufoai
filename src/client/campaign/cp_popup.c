@@ -213,10 +213,8 @@ static void CL_PopupChangeHomebase_f (void)
 			break;
 	}
 
-	if (popupListNode) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_PopupChangeHomebase_f: Setting currently selected line (from %i) to %i.\n", popupListNode->u.text.textLineSelected, selectedPopupIndex);
+	if (popupListNode)
 		MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
-	}
 
 	AIR_MoveAircraftIntoNewHomebase(selectedAircraft, base);
 
