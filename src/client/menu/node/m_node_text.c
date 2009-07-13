@@ -103,6 +103,8 @@ static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y)
 	EXTRADATA(node).lineUnderMouse = MN_TextNodeGetLine(node, x, y);
 }
 
+#define MAX_MENUTEXTLEN		32768
+
 /**
  * @brief Handles line breaks and drawing for MN_TEXT menu nodes
  * @param[in] text Text to draw

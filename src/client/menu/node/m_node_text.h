@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_node_abstractscrollable.h"
 
-#define MAX_MENUTEXTLEN		32768
 /* used to speed up buffer safe string copies */
 #define MAX_SMALLMENUTEXTLEN	1024
 
