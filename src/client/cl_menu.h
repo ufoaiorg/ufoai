@@ -31,8 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototype */
 struct menuNode_s;
 
-void MN_SetViewRect(void);
-
 void MN_InitStartup(void);
 
 #endif /* CLIENT_CL_MENU_H */

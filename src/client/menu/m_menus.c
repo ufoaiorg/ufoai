@@ -541,6 +541,34 @@ menuNode_t* MN_GetActiveMenu (void)
 }
 
 /**
+ * @brief Determine the position and size of render
+ * @param[in] menu : use its position and size properties
+ */
+void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
+{
+	menuNode_t *menu = MN_GetActiveMenu();
+
+	/** @todo the better way is to add a 'battlescape' node */
+	if (!menu || !menu->u.window.renderNode)
+		if (MN_IsMenuOnStack(mn_hud->string))
+			menu = MN_GetMenu(mn_hud->string);
+
+	if (menu && menu->u.window.renderNode) {
+		menuNode_t* node = menu->u.window.renderNode;
+		vec2_t pos;
+		MN_GetNodeAbsPos(node, pos);
+		viddef.x = pos[0] * viddef.rx;
+		viddef.y = pos[1] * viddef.ry;
+		viddef.viewWidth = node->size[0] * viddef.rx;
+		viddef.viewHeight = node->size[1] * viddef.ry;
+	} else {
+		viddef.x = viddef.y = 0;
+		viddef.viewWidth = 0;
+		viddef.viewHeight = 0;
+	}
+}
+
+/**
  * @brief Returns the name of the current menu
  * @return Active menu name, else empty string
  * @sa MN_GetActiveMenu

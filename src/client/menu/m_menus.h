@@ -49,6 +49,7 @@ void MN_InsertMenu(struct menuNode_s* menu);
 
 /* deprecated */
 const char* MN_GetActiveMenuName(void);
+void MN_GetActiveRenderRect(int *x, int *y, int *width, int *height);
 
 /** @todo move it on m_nodes, its a common getter/setter */
 void MN_SetNewMenuPos(struct menuNode_s* menu, int x, int y);

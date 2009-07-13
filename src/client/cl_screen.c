@@ -45,6 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "renderer/r_draw.h"
 #include "menu/m_draw.h"
 #include "menu/m_nodes.h"
+#include "menu/m_menus.h"
 #include "menu/m_dragndrop.h"
 #include "menu/m_render.h"
 
@@ -483,7 +484,7 @@ void SCR_UpdateScreen (void)
 	if (screenDrawLoading)
 		SCR_DrawLoading();
 	else {
-		MN_SetViewRect();
+		MN_GetActiveRenderRect(&viddef.x, &viddef.y, &viddef.viewWidth, &viddef.viewHeight);
 
 		if (cls.playingCinematic == CIN_STATUS_FULLSCREEN) {
 			CIN_RunCinematic();
