@@ -56,6 +56,7 @@ namespace {
 		PREFAB_NAME,
 		PREFAB_DESCRIPTION,
 		PREFAB_IMAGE,
+		PREFAB_SHORTNAME, /**< filename or directory name for searching */
 		PREFAB_STORE_SIZE
 	};
 }
@@ -134,7 +135,8 @@ void PrefabAdd(const char *name, GtkTreeIter* parentIter) {
 	if (!img)
 		g_warning("Could not find image (%s) for prefab %s\n", baseName.c_str(), name);
 	gtk_tree_store_append(store, &iter, parentIter);
-	gtk_tree_store_set(store, &iter, PREFAB_NAME, name, PREFAB_DESCRIPTION, nameContent.c_str(), PREFAB_IMAGE, img, -1);
+	gtk_tree_store_set(store, &iter, PREFAB_NAME, name, PREFAB_DESCRIPTION, nameContent.c_str(), PREFAB_IMAGE, img,
+			PREFAB_SHORTNAME, fileName.c_str(), -1);
 }
 
 static void Prefab_SelectionOptions_toggled (GtkWidget *widget, gpointer buttonID)
@@ -212,7 +214,8 @@ class CLoadPrefabSubdir
 				StringOutputStream sectionDescription(256);
 				sectionDescription << "<b>" << name << "</b>";
 				gtk_tree_store_append(store, &subIter, m_parentIter);
-				gtk_tree_store_set(store, &subIter, PREFAB_NAME, name, PREFAB_DESCRIPTION, sectionDescription.c_str(), -1);
+				gtk_tree_store_set(store, &subIter, PREFAB_NAME, name, PREFAB_DESCRIPTION, sectionDescription.c_str(),
+						PREFAB_SHORTNAME, name, -1);
 				g_debug("directory: %s\n", name);
 				StringOutputStream subPath(128);
 				subPath << m_subpath.c_str() << "/" << name;
@@ -239,11 +242,11 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 
 	{
 		// prefab list
-		store = gtk_tree_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF);
+		store = gtk_tree_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF, G_TYPE_STRING);
 		view
 				= GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
 		gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), TRUE);
-		gtk_tree_view_set_search_column(GTK_TREE_VIEW(view), PREFAB_NAME);
+		gtk_tree_view_set_search_column(GTK_TREE_VIEW(view), PREFAB_SHORTNAME);
 		gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(view), TRUE);
 		gtk_tree_view_set_headers_clickable(GTK_TREE_VIEW(view), TRUE);
 		gtk_tree_view_set_grid_lines(GTK_TREE_VIEW(view), GTK_TREE_VIEW_GRID_LINES_HORIZONTAL);
