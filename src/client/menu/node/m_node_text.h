@@ -33,8 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define TEXT_IMAGETAG "img:"
 
-#define MAX_MESSAGE_TEXT 256
-
 struct nodeBehaviour_s;
 struct menuAction_s;
 

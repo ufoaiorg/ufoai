@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CP_MESSAGES_H
 #define CLIENT_CP_MESSAGES_H
 
-#include "../menu/node/m_node_text.h"
+#define MAX_MESSAGE_TEXT 256
 
 /* message systems */
 typedef enum {

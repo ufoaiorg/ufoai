@@ -24,12 +24,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_menu.h"
-#include "../menu/m_nodes.h"
+#include "../menu/m_data.h"
+#include "../menu/node/m_node_text.h"
+#include "mp_callbacks.h"
 #include "mp_chatmessages.h"
 
 /**< @brief buffer that hold all printed chat messages for menu display */
 static char *chatBuffer = NULL;
-static menuNode_t* chatBufferNode = NULL;
 
 /** @brief Stores all chat messages from a multiplayer game */
 typedef struct chatMessage_s {
@@ -61,10 +62,6 @@ void MP_AddChatMessage (const char *text)
 		/* only link this once */
 		MN_RegisterText(TEXT_CHAT_WINDOW, chatBuffer);
 	}
-	if (!chatBufferNode) {
-		/** @todo What if we change mn_hud after finishing a match? The wrong node would get updated. */
-		chatBufferNode = MN_GetNodeByPath(va("%s.chatscreen", mn_hud->string));
-	}
 
 	*chatBuffer = '\0'; /* clear buffer */
 	do {
@@ -74,9 +71,5 @@ void MP_AddChatMessage (const char *text)
 		chat = chat->next;
 	} while (chat);
 
-	/* maybe the hud doesn't have a chatscreen node - or we don't have a hud */
-	if (chatBufferNode) {
-		Cmd_ExecuteString("unhide_chatscreen");
-		chatBufferNode->root->u.window.eventTime = cls.realtime;
-	}
+	Cmd_ExecuteString("unhide_chatscreen");
 }

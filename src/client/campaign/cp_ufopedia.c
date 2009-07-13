@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_menu.h"
 #include "../menu/m_data.h"
 #include "../menu/m_icon.h"
+#include "../menu/node/m_node_text.h"
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
