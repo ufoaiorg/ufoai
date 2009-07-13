@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_game.h"
 #include "../cl_menu.h"
-#include "../menu/m_nodes.h"
-#include "../menu/node/m_node_window.h"
+#include "../menu/m_data.h"
 #include "../menu/m_draw.h"
 #include "../cl_le.h"	/**< cl_actor.h needs this */
 #include "../cl_actor.h"
@@ -43,8 +42,7 @@ static int employeeCategory = 0;
 
 static const int maxEmployeesPerPage = 15;
 
-/* the menu node of the employee list */
-static menuNode_t *employeeListNode;
+static int employeeScrollPos = 0;
 
 /* List of (hired) employees in the current category (employeeType). */
 linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
@@ -104,7 +102,11 @@ static void E_EmployeeListScroll_f (void)
 	if (!base)
 		return;
 
-	j = employeeListNode->u.text.super.scrollY.viewPos;
+	if (Cmd_Argc() < 2)
+		return;
+
+	employeeScrollPos = atoi(Cmd_Argv(1));
+	j = employeeScrollPos;
 
 	for (i = 0, employee = &(ccs.employees[employeeCategory][0]); i < ccs.numEmployees[employeeCategory]; i++, employee++) {
 		/* don't show employees of other bases */
@@ -137,7 +139,7 @@ static void E_EmployeeListScroll_f (void)
 		MN_ExecuteConfunc("employeedisable %i", cnt);
 	}
 
-	MN_ExecuteConfunc("hire_fix_scroll %i", employeeListNode->u.text.super.scrollY.viewPos);
+	MN_ExecuteConfunc("hire_fix_scroll %i", employeeScrollPos);
 }
 
 /**
@@ -146,7 +148,7 @@ static void E_EmployeeListScroll_f (void)
  */
 static void E_EmployeeList_f (void)
 {
-	int i, j;
+	int j;
 	employee_t* employee;
 	int hiredEmployeeIdx;
 	linkedList_t *employeeListName;
@@ -173,18 +175,6 @@ static void E_EmployeeList_f (void)
 	employeesInCurrentList = 0;
 
 	LIST_Delete(&employeeList);
-
-	if (hiredEmployeeIdx < 0) {
-		/* Reset scrolling when no specific entry was given. */
-		/** @todo Is there a case where hiredEmployeeIdx is < 0 and the
-		 * textScroll must be reset? */
-		employeeListNode->u.text.super.scrollY.viewPos = 0;
-	} else {
-		/** @todo If employee is given but outside the current visible list
-		 * (defined by employeeListNode->textScroll) we need to calculate the
-		 * new employeeListNode->textScroll */
-	}
-
 	/* make sure, that we are using the linked list */
 	MN_ResetData(TEXT_LIST);
 	employeeListName = NULL;
@@ -194,26 +184,8 @@ static void E_EmployeeList_f (void)
 		/* don't show employees of other bases */
 		if (employee->baseHired != base && employee->hired)
 			continue;
-
 		LIST_AddPointer(&employeeListName, employee->chr.name);
 		LIST_AddPointer(&employeeList, employee);
-		/* Change/Display the buttons if the employee is currently displayed (i.e. visible in the on-screen list) .*/
-		/** @todo Check if the "textScroll % maxEmployeesPerPage" calculation
-		 * is still ok when _very_ long lists (i.e. more than 2x19 right now) are used. */
-		if (employeesInCurrentList >= employeeListNode->u.text.super.scrollY.viewPos
-		 && employeesInCurrentList < employeeListNode->u.text.super.scrollY.viewPos + maxEmployeesPerPage) {
-			if (employee->hired) {
-				if (employee->baseHired == base) {
-					if (employee->transfer)
-						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), va(_("%s [Transferred]"), employee->chr.name));
-					else
-						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
-					Cbuf_AddText(va("employeeadd %i\n", employeesInCurrentList - (employeeListNode->u.text.super.scrollY.viewPos % maxEmployeesPerPage)));
-				} else
-					Cbuf_AddText(va("employeedisable %i\n", employeesInCurrentList - (employeeListNode->u.text.super.scrollY.viewPos % maxEmployeesPerPage)));
-			} else
-				Cbuf_AddText(va("employeedel %i\n", employeesInCurrentList));
-		}
 		employeesInCurrentList++;
 	}
 	MN_RegisterLinkedListText(TEXT_LIST, employeeListName);
@@ -232,13 +204,6 @@ static void E_EmployeeList_f (void)
 		else
 			Cvar_Set("mn_show_employee", "1");
 	}
-
-	i = employeesInCurrentList;
-	for (;i < maxEmployeesPerPage;i++) {
-		Cvar_ForceSet(va("mn_name%i", i), "");
-		Cbuf_AddText(va("employeedisable %i\n", i));
-	}
-
 	/* Select the current employee if name was changed or first one. Use the direct string
 	 * execution here - otherwise the employeeCategory might be out of sync */
 	if (hiredEmployeeIdx < 0 || selectedEmployee == NULL)
@@ -248,6 +213,7 @@ static void E_EmployeeList_f (void)
 
 	/* update scroll */
 	MN_ExecuteConfunc("hire_update_number %i", employeesInCurrentList);
+	MN_ExecuteConfunc("employee_scroll 0");
 }
 
 
@@ -316,7 +282,6 @@ static void E_EmployeeDelete_f (void)
 {
 	/* num - menu index (line in text) */
 	int num;
-	const int scroll = employeeListNode->u.text.super.scrollY.viewPos;
 	employee_t* employee;
 
 	/* Check syntax. */
@@ -325,8 +290,7 @@ static void E_EmployeeDelete_f (void)
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
-	num += employeeListNode->u.text.super.scrollY.viewPos;
+	num = employeeScrollPos + atoi(Cmd_Argv(1));
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	/* empty slot selected */
@@ -342,8 +306,6 @@ static void E_EmployeeDelete_f (void)
 	}
 	E_DeleteEmployee(employee, employee->type);
 	Cbuf_AddText(va("employee_init %i\n", employeeCategory));
-	/** @todo horrible */
-	employeeListNode->u.text.super.scrollY.viewPos = scroll;
 }
 
 /**
@@ -375,12 +337,12 @@ static void E_EmployeeHire_f (void)
 	 * maxEmployeesPerPage) possible ... */
 	if (arg[0] == '+') {
 		num = atoi(arg + 1);
-		button = num - employeeListNode->u.text.super.scrollY.viewPos;
+		button = num - employeeScrollPos;
 	/* ... or with the hire pictures that are using only values from
 	 * 0 - maxEmployeesPerPage */
 	} else {
 		button = atoi(Cmd_Argv(1));
-		num = button + employeeListNode->u.text.super.scrollY.viewPos;
+		num = button + employeeScrollPos;
 	}
 
 	employee = E_GetEmployeeByMenuIndex(num);
@@ -434,18 +396,11 @@ static void E_EmployeeSelect_f (void)
 
 		/* set info cvars */
 		CL_CharacterCvars(&(selectedEmployee->chr));
-
-		/* Set the value of the selected line in the scroll-text to the correct number. */
-		MN_TextNodeSelectLine(employeeListNode, num);
 	}
 }
 
 void E_InitCallbacks (void)
 {
-	employeeListNode = MN_GetNodeByPath("employees.employee_list");
-	if (!employeeListNode)
-		Com_Error(ERR_DROP, "Could not find the 'employee_list' node in 'employees' menu");
-
 	Cmd_AddCommand("employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI");
 	Cmd_AddCommand("employee_list_click", E_EmployeeListClick_f, "Callback for employee_list click function");
 

@@ -36,10 +36,6 @@ window employees
 		image	ui/panel_grey_green_large2
 	}
 
-	func employee_clear
-	{
-	}
-
 	/**
 	 * @param[in] <1> row of the employee in the view
 	 */
@@ -245,7 +241,7 @@ window employees
 			*(abstractscrollbar)scroll@fullsize <fullsize>
 			*(abstractscrollbar)scroll@current <viewpos>
 			*(abstractscrollbar)scroll@viewsize <viewsize>
-			cmd "employee_scroll;"
+			cmd "employee_scroll <viewpos>;"
 		}
 	}
 
@@ -259,7 +255,7 @@ window employees
 		fullsize	50
 		onChange	{
 			*employee_list@viewpos = <current>
-			cmd "employee_scroll;"
+			cmd "employee_scroll <current>;"
 		}
 	}
 
@@ -536,6 +532,9 @@ window employees
 		size		"938 39"
 		onChange {
 			cmd "employee_init <cvar:mn_hiretype>;"
+			*node:root.employee_list@lineselected = 0
+			*node:root.employee_list@viewpos = 0
+			*node:root.scroll@current = 0
 		}
 
 		option soldier {
@@ -610,7 +609,9 @@ window employees
 
 	func onInit
 	{
-		call employee_clear
+		*node:root.employee_list@viewpos = 0
+		*node:root.employee_list@lineselected = 0
+		*node:root.scroll@current = 0
 		cmd "employee_init 0;"
 		*cvar:mn_hiretype 0
 		cmd "employee_update_count"
