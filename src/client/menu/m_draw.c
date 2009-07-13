@@ -46,8 +46,8 @@ static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip
 static qboolean tooltipVisible = qfalse;
 static menuTimer_t *tooltipTimer;
 
-static int msgTime;
-static char msgText[256];
+static int noticeTime;
+static char noticeText[256];
 
 /**
  * @brief Node we will draw over
@@ -335,11 +335,11 @@ void MN_Draw (void)
 
 	/* draw a special notice */
 	menu = MN_GetActiveMenu();
-	if (cls.realtime < msgTime) {
+	if (cls.realtime < noticeTime) {
 		if (menu && (menu->u.window.noticePos[0] || menu->u.window.noticePos[1]))
-			MN_DrawNotice(menu->u.window.noticePos[0], menu->u.window.noticePos[1], msgText);
+			MN_DrawNotice(menu->u.window.noticePos[0], menu->u.window.noticePos[1], noticeText);
 		else
-			MN_DrawNotice(500, 110, msgText);
+			MN_DrawNotice(500, 110, noticeText);
 	}
 
 #ifdef DEBUG
@@ -363,8 +363,8 @@ void MN_DrawCursor (void)
  */
 void MN_DisplayNotice (const char *text, int time)
 {
-	msgTime = cls.realtime + time;
-	Q_strncpyz(msgText, text, sizeof(msgText));
+	noticeTime = cls.realtime + time;
+	Q_strncpyz(noticeText, text, sizeof(noticeText));
 }
 
 void MN_InitDraw (void)
