@@ -352,7 +352,9 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableTexture(&texunit_lightmap, qfalse);
 
-	glEnable(GL_POLYGON_OFFSET_FILL);  /* all stages use depth offset */
+	glEnable(GL_POLYGON_OFFSET_LINE);
+	glPolygonOffset(-1.f, -1.f);
+
 	glMatrixMode(GL_TEXTURE);  /* some stages will manipulate texcoords */
 
 	for (i = 0; i < surfs->count; i++) {
@@ -370,8 +372,6 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 			if (!(s->flags & STAGE_RENDER))
 				continue;
 
-			glPolygonOffset(j, 1.0);  /* increase depth offset for each stage */
-
 			R_SetSurfaceStageState(surf, s);
 
 			R_DrawSurfaceStage(surf, s);
@@ -382,7 +382,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	/* polygon offset parameters */
 	glPolygonOffset(0.0, 0.0);
-	glDisable(GL_POLYGON_OFFSET_FILL);
+	glDisable(GL_POLYGON_OFFSET_LINE);
 
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
