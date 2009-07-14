@@ -72,7 +72,7 @@ static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex (const int selec
  * @brief Initializes menu texts for scrollable area
  * @sa MSO_Init_f
  */
-static void MSO_InitTextList (void)
+static void MSO_InitList (void)
 {
 	char lineprefix[64], categoryLine[128];
 	int idx;
@@ -141,10 +141,10 @@ static void MSO_UpdateVisibleButtons (void)
  * reenabled if settings are changed via MSO_Set_f. If text list is not initialized
  * after parsing, MSO_InitTextList will be called first.
  */
-static void MSO_Init (void)
+static void MSOCB_Init (void)
 {
 	if (msoMenuState < MSO_MSTATE_PREPARED) {
-		MSO_InitTextList();
+		MSO_InitList();
 		msoMenuState = MSO_MSTATE_PREPARED;
 	}
 
@@ -164,7 +164,7 @@ static void MSO_Init_f (void)
 		messageList_size = atoi(Cmd_Argv(1));
 	}
 
-	MSO_Init();
+	MSOCB_Init();
 }
 
 /**
@@ -281,7 +281,7 @@ void MSO_SetMenuState (const msoMenuState_t newState, const qboolean callInit, c
 		messageList_scroll = 0;
 	}
 	if (callInit)
-		MSO_Init();
+		MSOCB_Init();
 
 }
 
