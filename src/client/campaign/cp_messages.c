@@ -181,7 +181,7 @@ static void MS_MessageSaveXML (mxml_node_t *p, message_t * message)
 		mxml_AddBool(n, "eventmailread", message->eventMail->read);
 	}
 	if (message->pedia)
-		mxml_AddInt(n, "idx", message->pedia->idx);
+		mxml_AddString(n, "id", message->pedia->id);
 	mxml_AddInt(n, "day", message->date.day);
 	mxml_AddInt(n, "sec", message->date.sec);
 }
@@ -229,8 +229,19 @@ qboolean MS_LoadXML (mxml_node_t *p)
 
 		/* event and not mail means, dynamic mail - we don't save or load them */
 		if (!((mtype == MSG_EVENT && !mail) || (mtype == MSG_DEBUG && developer->integer != 1))) {
-			const int idx = mxml_GetInt(sn, "idx", -1);
-			message_t *mess = MS_AddNewMessageSound(title, text, qfalse, mtype, RS_GetTechByIDX(idx), qfalse);
+			char id[MAX_VAR];
+			technology_t *tech;
+			message_t *mess;
+
+			Q_strncpyz(id, mxml_GetString(sn, "id"), sizeof(id));
+			if (id[0] == '\0') {
+				const int idx = mxml_GetInt(sn, "idx", -1);
+				tech = RS_GetTechByIDX(idx);
+			} else {
+				tech = RS_GetTechByID(id);
+			}
+			
+			mess = MS_AddNewMessageSound(title, text, qfalse, mtype, tech, qfalse);
 			mess->eventMail = mail;
 			mess->date.day = mxml_GetInt(sn, "day", 0);
 			mess->date.sec = mxml_GetInt(sn, "sec", 0);

@@ -150,44 +150,44 @@ tech rs_laser
 	time	1500
 	image	techs/continuous_wave_laser_operation
 }
+/*
+tech rs_baselaser
+{
+	name "_Base Defence Laser Turret"
+	type	tech
+	up_chapter	tech
 
-//tech rs_baselaser
-//{
-//	name "_Base Defence Laser Turret"
-//	type	tech
-//	up_chapter	tech
-//
-//	description {
-//		default "_baselaser_txt"
-//	}
-//	pre_description {
-//		default "_baselaser_pre_txt"
-//	}
-//
-//	mail_pre
-//	{
-//		from	"_mail_from_paul_navarre"
-//		to		"_mail_to_base_commander"
-//		// subject	defined by "name"
-//		icon	icons/tech
-//	}
-//
-//	mail
-//	{
-//		from	"_mail_from_paul_navarre"
-//		to		"_mail_to_base_commander"
-//		// subject	defined by "name"
-//		icon	icons/tech
-//	}
-//
-//	require_AND
-//	{
-//		tech rs_laser
-//	}
-//	time	2000
-//	image	techs/base_defence_laser_turret
-//}
+	description {
+		default "_baselaser_txt"
+	}
+	pre_description {
+		default "_baselaser_pre_txt"
+	}
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	require_AND
+	{
+		tech rs_laser
+	}
+	time	2000
+	image	techs/base_defence_laser_turret
+}
+*/
 tech rs_antimatter
 {
 	name		"_Antimatter"
