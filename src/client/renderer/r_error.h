@@ -25,18 +25,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #define R_CheckError() R_CheckErrorDebug(__FILE__, __LINE__, __PRETTY_FUNCTION__)
+#define GL_ERROR_TRANSLATE(e) case e: return #e;
 
 static inline const char* R_TranslateError (GLenum error)
 {
 	switch (error) {
-	case GL_INVALID_ENUM:
-		return "GL_INVALID_ENUM";
-	case GL_INVALID_VALUE:
-		return "GL_INVALID_VALUE";
-	case GL_INVALID_OPERATION:
-		return "GL_INVALID_OPERATION";
-	case GL_OUT_OF_MEMORY:
-		return "GL_OUT_OF_MEMORY";
+	GL_ERROR_TRANSLATE(GL_INVALID_ENUM)
+	GL_ERROR_TRANSLATE(GL_INVALID_VALUE)
+	GL_ERROR_TRANSLATE(GL_INVALID_OPERATION)
+	GL_ERROR_TRANSLATE(GL_OUT_OF_MEMORY)
+	GL_ERROR_TRANSLATE(GL_STACK_OVERFLOW)
+	GL_ERROR_TRANSLATE(GL_STACK_UNDERFLOW)
+	GL_ERROR_TRANSLATE(GL_INVALID_FRAMEBUFFER_OPERATION_EXT)
 	default:
 		return "UNKNOWN";
 	}
@@ -48,9 +48,14 @@ static inline const char* R_TranslateError (GLenum error)
 static inline void R_CheckErrorDebug (const char *file, int line, const char *function)
 {
 	if (r_checkerror && r_checkerror->integer) {
-		GLenum error = glGetError();
-		if (error != GL_NO_ERROR)
-			Com_Printf("OpenGL err: %s (%d): %s %s (0x%X)\n", file, line, function, R_TranslateError(error), error);
+		/* can return multiple errors */
+		for (;;) {
+			GLenum error = glGetError();
+			if (error != GL_NO_ERROR)
+				Com_Printf("OpenGL err: %s (%d): %s %s (0x%X)\n", file, line, function, R_TranslateError(error), error);
+			else
+				break;
+		}
 	} else
 		glGetError();
 }
