@@ -18131,3 +18131,9 @@
 "noise" "ambience/firesoft.wav"
 "spawnflags" "255"
 }
+// entity 311
+{
+"classname" "misc_sound"
+"origin" "-32 336 16"
+"noise" "sound/ambience/tv_newswav.iletypes"
+}
