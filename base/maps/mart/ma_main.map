@@ -12257,3 +12257,10 @@
 ( 284 1791 60 ) ( 288 1791 60 ) ( 288 1787 60 ) tex_buildings/metal_duct_rust 64 9.143066 90 0.015625 0.21875 3840 0 0
 }
 }
+// entity 242
+{
+"classname" "misc_sound"
+"origin" "978 760 40"
+"noise" "sound/ambience/tv_static.iletypes"
+"angle" "90"
+}
