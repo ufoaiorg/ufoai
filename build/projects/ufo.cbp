@@ -184,6 +184,48 @@
 		<Unit filename="..\..\base\ufos\team_humans.ufo" />
 		<Unit filename="..\..\base\ufos\terrain.ufo" />
 		<Unit filename="..\..\base\ufos\tips.ufo" />
+		<Unit filename="..\..\base\ufos\ui\ahud.ufo" />
+		<Unit filename="..\..\base\ufos\ui\aircraft.ufo" />
+		<Unit filename="..\..\base\ufos\ui\aircraft_equip.ufo" />
+		<Unit filename="..\..\base\ufos\ui\aircraft_info.ufo" />
+		<Unit filename="..\..\base\ufos\ui\aircraft_pilots.ufo" />
+		<Unit filename="..\..\base\ufos\ui\aircraft_soldiers.ufo" />
+		<Unit filename="..\..\base\ufos\ui\aliencont.ufo" />
+		<Unit filename="..\..\base\ufos\ui\althud.ufo" />
+		<Unit filename="..\..\base\ufos\ui\basedefence.ufo" />
+		<Unit filename="..\..\base\ufos\ui\bases.ufo" />
+		<Unit filename="..\..\base\ufos\ui\basesummary.ufo" />
+		<Unit filename="..\..\base\ufos\ui\buildings.ufo" />
+		<Unit filename="..\..\base\ufos\ui\campaign.ufo" />
+		<Unit filename="..\..\base\ufos\ui\debug.ufo" />
+		<Unit filename="..\..\base\ufos\ui\equipment.ufo" />
+		<Unit filename="..\..\base\ufos\ui\geoscape.ufo" />
+		<Unit filename="..\..\base\ufos\ui\hire.ufo" />
+		<Unit filename="..\..\base\ufos\ui\hospital.ufo" />
+		<Unit filename="..\..\base\ufos\ui\hud.ufo" />
+		<Unit filename="..\..\base\ufos\ui\inventory.ufo" />
+		<Unit filename="..\..\base\ufos\ui\lostwon.ufo" />
+		<Unit filename="..\..\base\ufos\ui\mailclient.ufo" />
+		<Unit filename="..\..\base\ufos\ui\main.ufo" />
+		<Unit filename="..\..\base\ufos\ui\market.ufo" />
+		<Unit filename="..\..\base\ufos\ui\material_editor.ufo" />
+		<Unit filename="..\..\base\ufos\ui\menu_irc.ufo" />
+		<Unit filename="..\..\base\ufos\ui\messageoptions.ufo" />
+		<Unit filename="..\..\base\ufos\ui\modeltest.ufo" />
+		<Unit filename="..\..\base\ufos\ui\multiplayer.ufo" />
+		<Unit filename="..\..\base\ufos\ui\multiplayer_team.ufo" />
+		<Unit filename="..\..\base\ufos\ui\multiplayeringame.ufo" />
+		<Unit filename="..\..\base\ufos\ui\nohud.ufo" />
+		<Unit filename="..\..\base\ufos\ui\options.ufo" />
+		<Unit filename="..\..\base\ufos\ui\physdat.ufo" />
+		<Unit filename="..\..\base\ufos\ui\production.ufo" />
+		<Unit filename="..\..\base\ufos\ui\research.ufo" />
+		<Unit filename="..\..\base\ufos\ui\singleplayer.ufo" />
+		<Unit filename="..\..\base\ufos\ui\skirmish.ufo" />
+		<Unit filename="..\..\base\ufos\ui\stats.ufo" />
+		<Unit filename="..\..\base\ufos\ui\transfer.ufo" />
+		<Unit filename="..\..\base\ufos\ui\tutorials.ufo" />
+		<Unit filename="..\..\base\ufos\ui\ufopedia.ufo" />
 		<Unit filename="..\..\base\ufos\weapons.ufo" />
 		<Unit filename="..\..\base\ufos\weapons_aliens.ufo" />
 		<Unit filename="..\..\base\ufos\weapons_human.ufo" />
@@ -423,150 +465,6 @@
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\events\e_main.h" />
-		<Unit filename="..\..\src\client\events\e_main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\e_parse.h" />
-		<Unit filename="..\..\src\client\events\e_parse.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\e_time.h" />
-		<Unit filename="..\..\src\client\events\e_time.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actoradd.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actoradd.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorappear.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorappear.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actordie.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actordie.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actordooraction.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actordooraction.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actormove.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actormove.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorresetclientaction.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorresetclientaction.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorshoot.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorshoot.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorshoothidden.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorshoothidden.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorstartshoot.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorstartshoot.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorstatechange.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorstatechange.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorstats.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorstats.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorthrow.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorthrow.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorturn.h" />
-		<Unit filename="..\..\src\client\events\event\actor\e_event_actorturn.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\inventory\e_event_invadd.h" />
-		<Unit filename="..\..\src\client\events\event\inventory\e_event_invadd.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\inventory\e_event_invammo.h" />
-		<Unit filename="..\..\src\client\events\event\inventory\e_event_invammo.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\inventory\e_event_invcheckhands.h" />
-		<Unit filename="..\..\src\client\events\event\inventory\e_event_invcheckhands.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\inventory\e_event_invdel.h" />
-		<Unit filename="..\..\src\client\events\event\inventory\e_event_invdel.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\inventory\e_event_invreload.h" />
-		<Unit filename="..\..\src\client\events\event\inventory\e_event_invreload.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\player\e_event_centerview.h" />
-		<Unit filename="..\..\src\client\events\event\player\e_event_centerview.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\player\e_event_doendround.h" />
-		<Unit filename="..\..\src\client\events\event\player\e_event_doendround.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\player\e_event_endroundannounce.h" />
-		<Unit filename="..\..\src\client\events\event\player\e_event_endroundannounce.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\player\e_event_reset.h" />
-		<Unit filename="..\..\src\client\events\event\player\e_event_reset.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\player\e_event_results.h" />
-		<Unit filename="..\..\src\client\events\event\player\e_event_results.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\player\e_event_startgame.h" />
-		<Unit filename="..\..\src\client\events\event\player\e_event_startgame.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\player\e_event_startgamedone.h" />
-		<Unit filename="..\..\src\client\events\event\player\e_event_startgamedone.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\world\e_event_addbrushmodel.h" />
-		<Unit filename="..\..\src\client\events\event\world\e_event_addbrushmodel.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\world\e_event_addedict.h" />
-		<Unit filename="..\..\src\client\events\event\world\e_event_addedict.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\world\e_event_doorclose.h" />
-		<Unit filename="..\..\src\client\events\event\world\e_event_doorclose.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\world\e_event_dooropen.h" />
-		<Unit filename="..\..\src\client\events\event\world\e_event_dooropen.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\world\e_event_entappear.h" />
-		<Unit filename="..\..\src\client\events\event\world\e_event_entappear.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\world\e_event_entperish.h" />
-		<Unit filename="..\..\src\client\events\event\world\e_event_entperish.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\world\e_event_explode.h" />
-		<Unit filename="..\..\src\client\events\event\world\e_event_explode.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\events\event\world\e_event_particleappear.h" />
-		<Unit filename="..\..\src\client\events\event\world\e_event_particleappear.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\cl_actor.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -650,18 +548,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_menu.h" />
-		<Unit filename="..\..\src\client\sound\s_music.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\sound\s_music.h" />
-		<Unit filename="..\..\src\client\sound\s_sample.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\sound\s_sample.h" />
-		<Unit filename="..\..\src\client\sound\s_mix.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\sound\s_mix.h" />
 		<Unit filename="..\..\src\client\cl_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -679,10 +565,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_sequence.h" />
-		<Unit filename="..\..\src\client\sound\s_main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\sound\s_main.h" />
 		<Unit filename="..\..\src\client\cl_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -708,14 +590,154 @@
 		</Unit>
 		<Unit filename="..\..\src\client\cl_view.h" />
 		<Unit filename="..\..\src\client\client.h" />
+		<Unit filename="..\..\src\client\events\e_main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\e_main.h" />
+		<Unit filename="..\..\src\client\events\e_parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\e_parse.h" />
+		<Unit filename="..\..\src\client\events\e_time.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\e_time.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actoradd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actoradd.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorappear.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorappear.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actordie.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actordie.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actordooraction.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actordooraction.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actormove.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actormove.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorresetclientaction.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorresetclientaction.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorshoot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorshoot.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorshoothidden.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorshoothidden.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorstartshoot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorstartshoot.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorstatechange.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorstatechange.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorstats.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorstats.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorthrow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorthrow.h" />
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorturn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\actor\e_event_actorturn.h" />
+		<Unit filename="..\..\src\client\events\event\inventory\e_event_invadd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\inventory\e_event_invadd.h" />
+		<Unit filename="..\..\src\client\events\event\inventory\e_event_invammo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\inventory\e_event_invammo.h" />
+		<Unit filename="..\..\src\client\events\event\inventory\e_event_invcheckhands.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\inventory\e_event_invcheckhands.h" />
+		<Unit filename="..\..\src\client\events\event\inventory\e_event_invdel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\inventory\e_event_invdel.h" />
+		<Unit filename="..\..\src\client\events\event\inventory\e_event_invreload.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\inventory\e_event_invreload.h" />
+		<Unit filename="..\..\src\client\events\event\player\e_event_centerview.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\player\e_event_centerview.h" />
+		<Unit filename="..\..\src\client\events\event\player\e_event_doendround.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\player\e_event_doendround.h" />
+		<Unit filename="..\..\src\client\events\event\player\e_event_endroundannounce.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\player\e_event_endroundannounce.h" />
+		<Unit filename="..\..\src\client\events\event\player\e_event_reset.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\player\e_event_reset.h" />
+		<Unit filename="..\..\src\client\events\event\player\e_event_results.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\player\e_event_results.h" />
+		<Unit filename="..\..\src\client\events\event\player\e_event_startgame.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\player\e_event_startgame.h" />
+		<Unit filename="..\..\src\client\events\event\player\e_event_startgamedone.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\player\e_event_startgamedone.h" />
+		<Unit filename="..\..\src\client\events\event\world\e_event_addbrushmodel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\world\e_event_addbrushmodel.h" />
+		<Unit filename="..\..\src\client\events\event\world\e_event_addedict.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\world\e_event_addedict.h" />
+		<Unit filename="..\..\src\client\events\event\world\e_event_doorclose.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\world\e_event_doorclose.h" />
+		<Unit filename="..\..\src\client\events\event\world\e_event_dooropen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\world\e_event_dooropen.h" />
+		<Unit filename="..\..\src\client\events\event\world\e_event_entappear.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\world\e_event_entappear.h" />
+		<Unit filename="..\..\src\client\events\event\world\e_event_entperish.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\world\e_event_entperish.h" />
+		<Unit filename="..\..\src\client\events\event\world\e_event_explode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\world\e_event_explode.h" />
+		<Unit filename="..\..\src\client\events\event\world\e_event_particleappear.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\events\event\world\e_event_particleappear.h" />
 		<Unit filename="..\..\src\client\menu\m_actions.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_actions.h" />
-		<Unit filename="..\..\src\client\menu\m_expression.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\menu\m_expression.h" />
 		<Unit filename="..\..\src\client\menu\m_data.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -728,6 +750,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_draw.h" />
+		<Unit filename="..\..\src\client\menu\m_expression.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_expression.h" />
 		<Unit filename="..\..\src\client\menu\m_font.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1093,6 +1119,22 @@
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_thread.h" />
 		<Unit filename="..\..\src\client\renderer\r_warpsin.h" />
+		<Unit filename="..\..\src\client\sound\s_main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\sound\s_main.h" />
+		<Unit filename="..\..\src\client\sound\s_mix.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\sound\s_mix.h" />
+		<Unit filename="..\..\src\client\sound\s_music.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\sound\s_music.h" />
+		<Unit filename="..\..\src\client\sound\s_sample.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\sound\s_sample.h" />
 		<Unit filename="..\..\src\common\cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>
