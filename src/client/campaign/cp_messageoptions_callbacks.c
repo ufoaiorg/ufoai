@@ -25,15 +25,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_menu.h"
-#include "../menu/m_nodes.h"
+#include "../menu/m_data.h"
+#include "../menu/node/m_node_text.h"
 #include "cp_campaign.h"
 #include "cp_messageoptions.h"
 #include "cp_messageoptions_callbacks.h"
 
 static msoMenuState_t msoMenuState = MSO_MSTATE_REINIT;
-int messageList_scroll = 0; /**< actual messageSettings list begin index due to scrolling */
-int visibleMSOEntries = 0; /**< actual visible entry count */
-static menuNode_t *msoTextNode; /**< reference to text node for easier references */
+static int messageList_size = 0; /**< actual messageSettings list size */
+static int messageList_scroll = 0; /**< actual messageSettings list begin index due to scrolling */
+static int visibleMSOEntries = 0; /**< actual visible entry count */
 messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding backup message settings (used for restore function in options popup) */
 
 
@@ -75,7 +76,6 @@ static void MSO_InitTextList (void)
 {
 	char lineprefix[64], categoryLine[128];
 	int idx;
-	const int oldVisibleEntries = visibleMSOEntries;
 
 	linkedList_t *messageSettingsList = NULL;
 
@@ -96,12 +96,7 @@ static void MSO_InitTextList (void)
 	}
 	MN_RegisterLinkedListText(TEXT_MESSAGEOPTIONS, messageSettingsList);
 	MSO_SetMenuState(MSO_MSTATE_PREPARED, qfalse, qtrue);
-	if (oldVisibleEntries > visibleMSOEntries && messageList_scroll > visibleMSOEntries - msoTextNode->u.text.super.scrollY.viewSize) {
-		messageList_scroll = visibleMSOEntries - msoTextNode->u.text.super.scrollY.viewSize;
-		if (messageList_scroll < 0)
-			messageList_scroll = 0;
-		msoTextNode->u.text.super.scrollY.viewPos = messageList_scroll;
-	}
+	messageList_scroll = 0;
 }
 
 /**
@@ -114,7 +109,7 @@ static void MSO_UpdateVisibleButtons (void)
 	int visible = 0;/* visible lines*/
 
 	/* update visible button lines based on current displayed values */
-	for (idx = 0; visible < msoTextNode->u.text.super.scrollY.viewSize && idx < ccs.numMsgCategoryEntries; idx++) {
+	for (idx = 0; visible < messageList_size && idx < ccs.numMsgCategoryEntries; idx++) {
 		const msgCategoryEntry_t *entry = MSO_GetEntryFromSelectionIndex(idx,qtrue);
 		if (!entry)
 			break;
@@ -133,7 +128,7 @@ static void MSO_UpdateVisibleButtons (void)
 		}
 	}
 
-	for (; visible < msoTextNode->u.text.super.scrollY.viewSize && idx < lengthof(ccs.msgCategoryEntries); idx++) {
+	for (; visible < messageList_size && idx < lengthof(ccs.msgCategoryEntries); idx++) {
 		MN_ExecuteConfunc("ms_disable %i", visible);
 		visible++;
 	}
@@ -146,10 +141,8 @@ static void MSO_UpdateVisibleButtons (void)
  * reenabled if settings are changed via MSO_Set_f. If text list is not initialized
  * after parsing, MSO_InitTextList will be called first.
  */
-static void MSO_Init_f (void)
+static void MSO_Init (void)
 {
-	if (!msoTextNode)
-		msoTextNode = MN_GetNodeByPath("messageoptions.messagetypes");
 	if (msoMenuState < MSO_MSTATE_PREPARED) {
 		MSO_InitTextList();
 		msoMenuState = MSO_MSTATE_PREPARED;
@@ -159,6 +152,19 @@ static void MSO_Init_f (void)
 		MSO_UpdateVisibleButtons();
 		msoMenuState = MSO_MSTATE_INITIALIZED;
 	}
+}
+
+/**
+ * @brief initializes message options menu by showing as much button lines as needed.
+ * @note First facultative param (from Cmd_Arg) init messageList_size (the number of rows of button)
+ */
+static void MSO_Init_f (void)
+{
+	if (Cmd_Argc() == 2) {
+		messageList_size = atoi(Cmd_Argv(1));
+	}
+
+	MSO_Init();
 }
 
 /**
@@ -213,19 +219,11 @@ static void MSO_Scroll_f (void)
 {
 	const int oldScrollIdx = messageList_scroll;
 
-	if (!msoTextNode)
+	if (Cmd_Argc() < 2)
 		return;
 
 	/* no scrolling if visible entry count is less than max on page (due to folding) */
-	if (visibleMSOEntries < msoTextNode->u.text.super.scrollY.viewSize)
-		return;
-
-	messageList_scroll = msoTextNode->u.text.super.scrollY.viewPos;
-
-	if (messageList_scroll >= visibleMSOEntries - msoTextNode->u.text.super.scrollY.viewSize) {
-		messageList_scroll = visibleMSOEntries - msoTextNode->u.text.super.scrollY.viewSize;
-		msoTextNode->u.text.super.scrollY.viewPos = messageList_scroll;
-	}
+	messageList_scroll = atoi(Cmd_Argv(1));
 
 	if (messageList_scroll != oldScrollIdx)
 		MSO_UpdateVisibleButtons();
@@ -234,7 +232,7 @@ static void MSO_Scroll_f (void)
 /**
  * @brief Function toggles visibility of a message category to show or hide entries associated to this category.
  */
-static void MSO_OptionsClick_f(void)
+static void MSO_OptionsClick_f (void)
 {
 	int num;
 	const msgCategoryEntry_t *category;
@@ -249,9 +247,6 @@ static void MSO_OptionsClick_f(void)
 		return;
 
 	category = MSO_GetEntryFromSelectionIndex(num, qfalse);
-	assert(msoTextNode);
-	/* don't highlight selection */
-	MN_TextNodeSelectLine(msoTextNode, -1);
 	if (!category || !category->isCategory)
 		return;
 	category->category->isFolded = !category->category->isFolded;
@@ -286,7 +281,7 @@ void MSO_SetMenuState (const msoMenuState_t newState, const qboolean callInit, c
 		messageList_scroll = 0;
 	}
 	if (callInit)
-		MSO_Init_f();
+		MSO_Init();
 
 }
 

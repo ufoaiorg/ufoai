@@ -84,6 +84,7 @@ window messageoptions
 	{
 		dataid		TEXT_MESSAGEOPTIONS
 		color		"0 .78 0 1"
+		selectcolor "0 .78 0 1"
 		rows		"12"
 		lineheight	"25"
 		pos			"30 90"
@@ -95,7 +96,7 @@ window messageoptions
 			*(abstractscrollbar)messagetypes_scroll@fullsize <fullsize>
 			*(abstractscrollbar)messagetypes_scroll@current <viewpos>
 			*(abstractscrollbar)messagetypes_scroll@viewsize <viewsize>
-			cmd "msgoptions_scroll;"
+			cmd "msgoptions_scroll <viewpos>;"
 		}
 	}
 
@@ -108,7 +109,7 @@ window messageoptions
 		fullsize	12
 		onChange	{
 			*messagetypes@viewpos = <current>
-			cmd "msgoptions_scroll;"
+			cmd "msgoptions_scroll <current>;"
 		}
 	}
 
@@ -793,7 +794,9 @@ window messageoptions
 
 	func onInit
 	{
-		cmd "game_timestop;msgoptions_init;msgoptions_backup;"
+		*node:root.messagetypes@viewpos = 0
+		*node:root.messagetypes_scroll@current = 0
+		cmd "game_timestop;msgoptions_init 12;msgoptions_backup;"
 	}
 
 	func onClose
