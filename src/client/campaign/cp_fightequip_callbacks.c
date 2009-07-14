@@ -1261,7 +1261,7 @@ static void BDEF_RemoveBattery_f (void)
 			max = base->numBatteries;
 			break;
 		case BASEDEF_LASER:
-			type = B_DEFENCE_MISSILE;
+			type = B_DEFENCE_LASER;
 			max = base->numLasers;
 			break;
 		default:
@@ -1271,14 +1271,14 @@ static void BDEF_RemoveBattery_f (void)
 
 		for (i = 0; i < ccs.numBuildings[baseIdx]; i++) {
 			if (ccs.buildings[baseIdx][i].buildingType == type
-				&& ccs.buildings[baseIdx][i].buildingStatus == B_STATUS_WORKING)
+			 && ccs.buildings[baseIdx][i].buildingStatus == B_STATUS_WORKING)
 				workingNum++;
 		}
 
 		if (workingNum == max) {
 			/* Removed building was under construction, do nothing */
 			return;
-		} else if ((workingNum != max - 1)) {
+		} else if (workingNum != max - 1) {
 			/* Should never happen, we only remove building one by one */
 			Com_Printf("BDEF_RemoveBattery_f: Error while checking number of batteries (%i instead of %i) in base '%s'.\n",
 				workingNum, max, base->name);

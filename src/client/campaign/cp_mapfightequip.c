@@ -232,7 +232,6 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 		REMOVE_ELEM(base->batteries, idx, base->numBatteries);
 		/* just for security */
 		AII_InitialiseSlot(&base->batteries[base->numBatteries].slot, NULL, base, NULL, AC_ITEM_BASE_MISSILE);
-		base->numBatteries--;
 		break;
 	case BASEDEF_LASER: /* this is a laser battery */
 		/* we must have at least one laser battery to remove it */
@@ -242,7 +241,6 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 		REMOVE_ELEM(base->lasers, idx, base->numLasers);
 		/* just for security */
 		AII_InitialiseSlot(&base->lasers[base->numLasers].slot, NULL, base, NULL, AC_ITEM_BASE_LASER);
-		base->numLasers--;
 		break;
 	default:
 		Com_Printf("BDEF_RemoveBattery_f: unknown type of base defence system.\n");
