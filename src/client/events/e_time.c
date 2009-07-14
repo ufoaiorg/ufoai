@@ -110,16 +110,16 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 			int first;
 			int objIdx;
 			const objDef_t *obj;
-			int weap_fds_idx, fd_idx;
+			int weapFdsIdx, fireDefIndex;
 
-			NET_ReadFormat(msg, eventData->formatString, &first, &objIdx, &weap_fds_idx, &fd_idx);
+			NET_ReadFormat(msg, eventData->formatString, &first, &objIdx, &weapFdsIdx, &fireDefIndex);
 
 			obj = INVSH_GetItemByIDX(objIdx);
 			if (first) {
 				nextTime += 500;
 				impactTime = shootTime = nextTime;
 			} else {
-				const fireDef_t *fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
+				const fireDef_t *fd = FIRESH_GetFiredef(obj, weapFdsIdx, fireDefIndex);
 				/* impact right away - we don't see it at all
 				 * bouncing is not needed here, too (we still don't see it) */
 				impactTime = shootTime;

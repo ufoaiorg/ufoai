@@ -52,8 +52,8 @@ void INVSH_InitCSI (csi_t * import)
 /**
  * @brief Get the fire definitions for a given object
  * @param[in] obj The object to get the firedef for
- * @param[in] weapFdsIdx
- * @param[in] fdIdx
+ * @param[in] weapFdsIdx the weapon index in the fire definition array
+ * @param[in] fdIdx the fire definition index for the weapon (given by @c weapFdsIdx)
  * @return Will never return NULL
  * @sa FIRESH_FiredefForWeapon
  */
@@ -2049,7 +2049,7 @@ FIREMODE MANAGEMENT FUNCTIONS
 */
 
 /**
- * @brief Returns the index of the array that has the firedefinitions for a given weapon/ammo (-index)
+ * @brief Returns the firedefinitions for a given weapon/ammo
  * @return The array (one-dimensional) of the firedefs of the ammo for a given weapon, or @c NULL if the ammo
  * doesn't support the given weapon
  * @sa FIRESH_GetFiredef

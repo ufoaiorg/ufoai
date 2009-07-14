@@ -225,9 +225,34 @@ static qboolean AI_NoHideNeeded (edict_t *ent)
 	return qfalse;
 }
 
+static const item_t *AI_GetItemForShootType (int shootType, const edict_t *ent)
+{
+	/* optimization: reaction fire is automatic */
+	if (IS_SHOT_REACTION(shootType))
+		return NULL;
+
+	if (IS_SHOT_RIGHT(shootType) && RIGHT(ent)
+		&& RIGHT(ent)->item.m
+		&& RIGHT(ent)->item.t->weapon
+		&& (!RIGHT(ent)->item.t->reload
+			|| RIGHT(ent)->item.a > 0)) {
+		return &RIGHT(ent)->item;
+	} else if (IS_SHOT_LEFT(shootType) && LEFT(ent)
+		&& LEFT(ent)->item.m
+		&& LEFT(ent)->item.t->weapon
+		&& (!LEFT(ent)->item.t->reload
+			|| LEFT(ent)->item.a > 0)) {
+		return &LEFT(ent)->item;
+	} else {
+		Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: todo - grenade/knife toss from inventory using empty hand\n");
+		/** @todo grenade/knife toss from inventory using empty hand */
+		/** @todo evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
+		return NULL;
+	}
+}
+
 /**
  * @sa AI_ActorThink
- * @todo fix firedef stuff
  * @todo fill z_align values
  */
 static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
@@ -263,29 +288,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		int fdIdx;
 		const fireDef_t *fdArray;
 
-		/* optimization: reaction fire is automatic */
-		if (IS_SHOT_REACTION(fm))
-			continue;
-
-		if (IS_SHOT_RIGHT(fm) && RIGHT(ent)
-			&& RIGHT(ent)->item.m
-			&& RIGHT(ent)->item.t->weapon
-			&& (!RIGHT(ent)->item.t->reload
-				|| RIGHT(ent)->item.a > 0)) {
-			item = &RIGHT(ent)->item;
-		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)
-			&& LEFT(ent)->item.m
-			&& LEFT(ent)->item.t->weapon
-			&& (!LEFT(ent)->item.t->reload
-				|| LEFT(ent)->item.a > 0)) {
-			item = &LEFT(ent)->item;
-		} else {
-			item = NULL;
-			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: todo - grenade/knife toss from inventory using empty hand\n");
-			/** @todo grenade/knife toss from inventory using empty hand */
-			/** @todo evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
-		}
-
+		item = AI_GetItemForShootType(fm, ent);
 		if (!item)
 			continue;
 
@@ -294,7 +297,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			continue;
 
 		/** @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance */
-		for (fdIdx = 0; fdIdx < item->t->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+		for (fdIdx = 0; fdIdx < item->m->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 			const fireDef_t *fd = &fdArray[fdIdx];
 			const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
 				GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
