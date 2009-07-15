@@ -40,9 +40,11 @@
 #include "script/scripttokeniser.h"
 
 static const int TABLE_COLUMS = 3;
-static GtkTreeStore* store;
-static GtkTreeView* view;
 namespace {
+	static GtkTreeStore* store;
+	static GtkTreeModel *fileFiltered;
+	static GtkTreeView* view;
+
 	enum selectionStrategy {
 		PREFAB_SELECT_EXTEND,
 		PREFAB_SELECT_REPLACE,
@@ -139,10 +141,47 @@ void PrefabAdd(const char *name, GtkTreeIter* parentIter) {
 			PREFAB_SHORTNAME, fileName.c_str(), -1);
 }
 
+/**
+ * @brief callback function for selection buttons to update current selected selection strategy.
+ * @param widget button that was invoked
+ * @param buttonID buttonID for selected strategy
+ */
 static void Prefab_SelectionOptions_toggled (GtkWidget *widget, gpointer buttonID)
 {
 	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)))
 		selectedSelectionStrategy = gpointer_to_int(buttonID);
+}
+
+/**
+ * @brief This method does the filtering work for prefab list
+ * @param model current model to filter
+ * @param iter iterator to current row which should be checked
+ * @param entry search entry with content to search
+ * @return true if entry should be visible (being a directory or matching search content), otherwise false
+ */
+static gboolean Prefab_FilterFiles (GtkTreeModel *model, GtkTreeIter *iter, GtkEntry *entry)
+{
+	if (gtk_entry_get_text_length(entry) == 0)
+		return true;
+	const char* searchText = gtk_entry_get_text(entry);
+	char* currentEntry;
+	gtk_tree_model_get(model, iter, PREFAB_SHORTNAME, &currentEntry, -1);
+	if (strstr(currentEntry, searchText) != 0)
+		return true;
+	else
+		// check whether there are children in base model (directory)
+		return gtk_tree_model_iter_has_child(model, iter);
+}
+
+/**
+ * @brief Callback for 'changed' event of search entry used to reinit file filter
+ * @param entry search entry
+ * @return false
+ */
+static gboolean Prefab_Refilter (GtkEditable *entry)
+{
+	gtk_tree_model_filter_refilter(GTK_TREE_MODEL_FILTER(fileFiltered));
+	return false;
 }
 
 /**
@@ -243,8 +282,10 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 	{
 		// prefab list
 		store = gtk_tree_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF, G_TYPE_STRING);
+		//prepare file filter
+		fileFiltered = gtk_tree_model_filter_new(GTK_TREE_MODEL(store), NULL);
 		view
-				= GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
+				= GTK_TREE_VIEW(gtk_tree_view_new_with_model(fileFiltered));
 		gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), TRUE);
 		gtk_tree_view_set_search_column(GTK_TREE_VIEW(view), PREFAB_SHORTNAME);
 		gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(view), TRUE);
@@ -274,10 +315,12 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 		g_object_unref(G_OBJECT(store));
 	}
 
+	GtkWidget* hboxFooter = gtk_hbox_new(TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox),hboxFooter, FALSE, TRUE, 0);
 	{
 		// options
 		GtkWidget* vboxOptions = gtk_vbox_new(FALSE, 3);
-		gtk_box_pack_start(GTK_BOX(vbox), vboxOptions, FALSE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(hboxFooter), vboxOptions, FALSE, TRUE, 0);
 		GtkRadioButton* radioExtendSelection = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label(NULL, _("Extend current selection")));
 		gtk_widget_ref(GTK_WIDGET(radioExtendSelection));
 		gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(radioExtendSelection), TRUE, TRUE, 0);
@@ -296,8 +339,22 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 		g_object_set_data(G_OBJECT(radioReplace), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(radioReplace),
 				"toggled", G_CALLBACK(Prefab_SelectionOptions_toggled), gint_to_pointer(PREFAB_SELECT_REPLACE))));
 	}
+	{
+		//search entry, connect to file filter
+		GtkWidget* vboxSearch = gtk_vbox_new(FALSE, 3);
+		gtk_box_pack_start(GTK_BOX(hboxFooter), vboxSearch, FALSE, TRUE, 3);
+		GtkWidget* searchEntry = gtk_entry_new();
+		gtk_box_pack_start(GTK_BOX(vboxSearch), searchEntry, FALSE, TRUE, 3);
+		gtk_widget_show(searchEntry);
+
+		gtk_tree_model_filter_set_visible_func(GTK_TREE_MODEL_FILTER(fileFiltered), (GtkTreeModelFilterVisibleFunc) Prefab_FilterFiles,
+				searchEntry, NULL);
+		g_signal_connect(G_OBJECT(searchEntry), "changed", G_CALLBACK(Prefab_Refilter), NULL );
+
+	}
 	/* fill prefab store with data */
 	Directory_forEach(fullpath.c_str(), CLoadPrefabSubdir(fullpath.c_str(),"", NULL));
 	Directory_forEach(fullpath.c_str(), MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab("",NULL)));
+	gtk_tree_model_filter_refilter(GTK_TREE_MODEL_FILTER(fileFiltered));
 	return vbox;
 }
