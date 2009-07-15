@@ -903,14 +903,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		R_DrawTexture(sun->texnum, earthPos[0] - 64.0 * viddef.rx + celestialDist * v[1] * viddef.rx , earthPos[1] - 64.0 * viddef.ry + celestialDist * v[0] * viddef.ry, 128.0 * viddef.rx, 128.0 * viddef.ry);
 	}
 
-	/* Draw atmosphere */
-	halo = R_FindImage("pics/geoscape/map_earth_halo", it_pic);
-	if (halo != r_noTexture) {
-		const float earthSizeX = fullscale * 20500.0 * viddef.rx;
-		const float earthSizeY = fullscale * 20500.0 * viddef.ry;
-		R_DrawTexture(halo->texnum,  earthPos[0] - earthSizeX * 0.5, earthPos[1] - earthSizeY * 0.5, earthSizeX, earthSizeY);
-	}
-
 	/* load earth image */
 	r_globeEarth.texture = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
 	if (r_globeEarth.texture == r_noTexture) {
@@ -946,8 +938,28 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLightColor);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLightColor);
 
-	/* Enable depth (to draw the moon behind the earth if needed) */
-	glEnable(GL_DEPTH_TEST);
+	/* draw the moon */
+	if (r_globeMoon.texture != r_noTexture && moonPos[2] > 0 && !disableSolarRender)
+		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize , NULL);
+
+	/* Draw earth atmosphere */
+	glMatrixMode(GL_TEXTURE);
+	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
+	glDisable(GL_LIGHTING);
+	halo = R_FindImage("pics/geoscape/map_earth_halo", it_pic);
+	if (halo != r_noTexture) {
+		const float earthSizeX = fullscale * 20500.0 * viddef.rx;
+		const float earthSizeY = fullscale * 20500.0 * viddef.ry;
+		R_DrawTexture(halo->texnum,  earthPos[0] - earthSizeX * 0.5, earthPos[1] - earthSizeY * 0.5, earthSizeX, earthSizeY);
+	}
+	glEnable(GL_LIGHTING);
+
+	/* globe texture scaling */
+	glMatrixMode(GL_TEXTURE);
+	glLoadIdentity();
+	glScalef(2, 1, 1);
+	glMatrixMode(GL_MODELVIEW);
 
 	/* draw the globe */
 	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
@@ -971,13 +983,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 		r_globeEarth.overlay = NULL;
 	}
-
-	/* draw the moon */
-	if (r_globeMoon.texture != r_noTexture && moonPos[2] > 0 && !disableSolarRender)
-		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize , NULL);
-
-	/* Disable depth */
-	glDisable(GL_DEPTH_TEST);
 
 	/* disable 3d geoscape lighting */
 	glDisable(GL_LIGHTING);
