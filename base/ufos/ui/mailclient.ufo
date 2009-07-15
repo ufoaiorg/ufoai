@@ -170,7 +170,7 @@ window mailclient
 		pos			"50 50"
 		texl		"0 32"
 		texh		"32 64"
-		onClick		{ cmd "mn_mail_readall;" }
+		onClick		{ cmd "mn_mail_readall 0;" }
 	}
 
 	pic mail_icon_0

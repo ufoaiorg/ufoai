@@ -552,8 +552,10 @@ window geoscape
 	func onInit
 	{
 		cmd	"music_change geoscape;"
-		cmd "set mn_messagesystem 0;"
-		cmd "messagesystem_changemode"
+		if ( not exists *cvar:mn_messagesystem ) {
+			*cvar:mn_messagesystem = 0
+			cmd "messagesystem_changemode;"
+		}
 	}
 }
 
