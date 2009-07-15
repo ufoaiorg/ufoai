@@ -88,6 +88,7 @@ extern cvar_t *vid_fullscreen;
 extern cvar_t *vid_strech;
 extern cvar_t *vid_mode;
 extern cvar_t *vid_gamma;
+extern cvar_t *vid_ignoregamma;
 extern cvar_t *vid_grabmouse;
 
 /* Video module initialisation etc */

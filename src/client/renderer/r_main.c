@@ -336,8 +336,10 @@ void R_RenderFrame (void)
 void R_EndFrame (void)
 {
 	if (vid_gamma->modified) {
-		const float g = vid_gamma->value;
-		SDL_SetGamma(g, g, g);
+		if (!vid_ignoregamma->integer) {
+			const float g = vid_gamma->value;
+			SDL_SetGamma(g, g, g);
+		}
 		vid_gamma->modified = qfalse;
 	}
 
