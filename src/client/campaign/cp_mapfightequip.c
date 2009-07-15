@@ -478,7 +478,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 			/* there is anoter item to install after this one */
 			slot->item = slot->nextItem;
 			/* we already removed nextItem from storage when it has been added to slot: don't use B_UpdateStorageAndCapacity */
-			slot->item = slot->nextItem;
+			slot->ammo = slot->nextAmmo;
 			slot->installationTime = slot->item->craftitem.installationTime;
 			slot->nextItem = NULL;
 		} else {
