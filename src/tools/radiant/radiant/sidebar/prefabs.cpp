@@ -38,6 +38,7 @@
 #include "ifilesystem.h"
 #include "archivelib.h"
 #include "script/scripttokeniser.h"
+#include "../camwindow.h"
 
 static const int TABLE_COLUMS = 3;
 namespace {
@@ -97,7 +98,7 @@ static gint PrefabList_button_press(GtkWidget *widget, GdkEventButton *event,
 
 			Map_ImportFile(Prefab_GetPath(fullpath, text));
 			g_free(text);
-
+			gtk_widget_grab_focus(CamWnd_getWidget(*g_pParentWnd->GetCamWnd()));
 			return TRUE;
 		}
 	}
