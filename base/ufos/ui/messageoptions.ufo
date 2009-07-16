@@ -80,18 +80,15 @@ window messageoptions
 		onRClick		{ cmd "msgoptions_setall sound 0;" }
 	}
 
-	text messagetypes
+	optiontree messagetypes
 	{
+		cvar		*cvar:mn_messagetype
 		dataid		TEXT_MESSAGEOPTIONS
 		color		"0 .78 0 1"
 		selectcolor "0 .78 0 1"
-		rows		"12"
 		lineheight	"25"
 		pos			"30 90"
 		size		"440 300"
-		mousefx		true
-		longlines	prettychop
-		onClick		{ cmd "messagetypes_click <lineselected>" }
 		onViewChange {
 			*(abstractscrollbar)messagetypes_scroll@fullsize <fullsize>
 			*(abstractscrollbar)messagetypes_scroll@current <viewpos>
@@ -803,5 +800,6 @@ window messageoptions
 	{
 		cmd "del tmp;"
 		cmd "msgoptions_restore;"
+		cmd "del mn_messagetype;"
 	}
 }

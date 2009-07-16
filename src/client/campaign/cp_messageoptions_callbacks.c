@@ -37,36 +37,7 @@ static int messageList_scroll = 0; /**< actual messageSettings list begin index 
 static int visibleMSOEntries = 0; /**< actual visible entry count */
 messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding backup message settings (used for restore function in options popup) */
 
-
-/**
- * @brief Returns the category entry that is shown at given selection index.
- * @param selection index in visible list as returned by text list
- * @param visibleIndex flag indicating that index is from visible lines, not from text row
- * @return category entry from ccs.msgCategoryEntries
- * @note this method takes into account scroll index and folding state of categories.
- * @sa MSO_Toggle_f
- * @sa MSO_OptionsClick_f
- */
-static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex (const int selection, const qboolean visibleIndex)
-{
-	int entriesToCheck = visibleIndex ? selection + messageList_scroll : selection;
-	int realIndex = 0;
-	for (; entriesToCheck > 0; realIndex++) {
-		const msgCategoryEntry_t *entry = &ccs.msgCategoryEntries[realIndex];
-		entriesToCheck--;
-		if (entry->isCategory && entry->category->isFolded) {
-			/* first entry of category is category itself, count other entries */
-			const msgCategoryEntry_t *invisibleEntry = entry->next;
-			while (invisibleEntry) {
-				realIndex++;
-				invisibleEntry = invisibleEntry->next;
-			}
-		}
-	}
-	if (realIndex >= ccs.numMsgCategoryEntries)
-		return NULL;
-	return &ccs.msgCategoryEntries[realIndex];
-}
+menuOption_t *messageSettingOptions;
 
 /**
  * @brief Initializes menu texts for scrollable area
@@ -74,29 +45,42 @@ static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex (const int selec
  */
 static void MSO_InitList (void)
 {
-	char lineprefix[64], categoryLine[128];
+	menuOption_t *current;
+	menuOption_t *lastCategory = NULL;
+	menuOption_t *lastElement = NULL;
 	int idx;
 
-	linkedList_t *messageSettingsList = NULL;
+	/* option already allocated, nothing to do */
+	if (messageSettingOptions)
+		return;
+
+	messageSettingOptions = (menuOption_t *) Mem_PoolAlloc(sizeof(*messageSettingOptions) * ccs.numMsgCategoryEntries, cp_campaignPool, 0);
+	current = messageSettingOptions;
 
 	MN_ResetData(TEXT_MESSAGEOPTIONS);
-	visibleMSOEntries = 0;
-
 	for (idx = 0; idx < ccs.numMsgCategoryEntries; idx++) {
 		const msgCategoryEntry_t *entry = &ccs.msgCategoryEntries[idx];
-		if (!entry->isCategory && entry->category->isFolded)
-			continue;
+		const char *id = va("%d", idx);
+		MN_InitOption(current, id, entry->notifyType, id);
+
 		if (entry->isCategory) {
-			Com_sprintf(lineprefix, sizeof(lineprefix), TEXT_IMAGETAG"ui/icon_%s", entry->category->isFolded ? "open" : "close");
-		} else
-			Com_sprintf(lineprefix, sizeof(lineprefix), "   ");
-		Com_sprintf(categoryLine, sizeof(categoryLine), "%s %s", lineprefix, _(entry->notifyType));
-		LIST_AddString(&messageSettingsList, categoryLine);
-		visibleMSOEntries++;
+			if (lastCategory)
+				lastCategory->next = current;
+			lastCategory = current;
+			lastElement = NULL;
+		} else {
+			if (lastElement)
+				lastElement->next = current;
+			else if (lastCategory)
+				lastCategory->firstChild = current;
+			else
+				Sys_Error("MSO_InitList: The first entry must be a category");
+			lastElement = current;
+		}
+		current++;
 	}
-	MN_RegisterLinkedListText(TEXT_MESSAGEOPTIONS, messageSettingsList);
+	MN_RegisterOption(TEXT_MESSAGEOPTIONS, messageSettingOptions);
 	MSO_SetMenuState(MSO_MSTATE_PREPARED, qfalse, qtrue);
-	messageList_scroll = 0;
 }
 
 /**
@@ -105,33 +89,40 @@ static void MSO_InitList (void)
  */
 static void MSO_UpdateVisibleButtons (void)
 {
-	int idx;
-	int visible = 0;/* visible lines*/
+	int visible;/* current line */
+	menuOptionIterator_t iterator;
+
+	MN_InitOptionIteratorAtIndex(messageList_scroll, messageSettingOptions, &iterator);
 
 	/* update visible button lines based on current displayed values */
-	for (idx = 0; visible < messageList_size && idx < ccs.numMsgCategoryEntries; idx++) {
-		const msgCategoryEntry_t *entry = MSO_GetEntryFromSelectionIndex(idx,qtrue);
+	for (visible = 0; visible < messageList_size; visible++) {
+		const menuOption_t *option = iterator.option;
+		int idx;
+		msgCategoryEntry_t *entry;
+
+		if (!option)
+			break;
+		idx = atoi(option->value);
+
+		entry = &ccs.msgCategoryEntries[idx];
 		if (!entry)
 			break;
 		if (entry->isCategory) {
 			/* category is visible anyway*/
 			MN_ExecuteConfunc("ms_disable %i", visible);
-			visible++;
+
 		} else {
 			assert(entry->category);
-			if (!entry->category->isFolded) {
-				MN_ExecuteConfunc("ms_enable %i", visible);
-				MN_ExecuteConfunc("ms_btnstate %i %i %i %i", visible, entry->settings->doPause,
-						entry->settings->doNotify, entry->settings->doSound);
-				visible++;
-			}
+			MN_ExecuteConfunc("ms_enable %i", visible);
+			MN_ExecuteConfunc("ms_btnstate %i %i %i %i", visible, entry->settings->doPause,
+				entry->settings->doNotify, entry->settings->doSound);
 		}
+
+		MN_OptionIteratorNextOption(&iterator);
 	}
 
-	for (; visible < messageList_size && idx < lengthof(ccs.msgCategoryEntries); idx++) {
+	for (; visible < messageList_size; visible++)
 		MN_ExecuteConfunc("ms_disable %i", visible);
-		visible++;
-	}
 }
 
 /**
@@ -176,12 +167,20 @@ static void MSO_Toggle_f (void)
 	if (Cmd_Argc() != 3)
 		Com_Printf("Usage: %s <listId> <pause|notify|sound>\n", Cmd_Argv(0));
 	else {
+		menuOptionIterator_t iterator;
 		const int listIndex = atoi(Cmd_Argv(1));
-		const msgCategoryEntry_t *selectedEntry = MSO_GetEntryFromSelectionIndex(listIndex,qtrue);
+		int idx;
+		const msgCategoryEntry_t *selectedEntry;
 		int optionType;
 		qboolean activate;
 		notify_t type;
 
+		MN_InitOptionIteratorAtIndex(messageList_scroll + listIndex, messageSettingOptions, &iterator);
+		if (!iterator.option)
+			return;
+
+		idx = atoi(iterator.option->value);
+		selectedEntry = &ccs.msgCategoryEntries[idx];
 		if (!selectedEntry)
 			return;
 		if (selectedEntry->isCategory) {
@@ -217,42 +216,14 @@ static void MSO_Toggle_f (void)
  */
 static void MSO_Scroll_f (void)
 {
-	const int oldScrollIdx = messageList_scroll;
-
 	if (Cmd_Argc() < 2)
 		return;
 
 	/* no scrolling if visible entry count is less than max on page (due to folding) */
 	messageList_scroll = atoi(Cmd_Argv(1));
 
-	if (messageList_scroll != oldScrollIdx)
-		MSO_UpdateVisibleButtons();
+	MSO_UpdateVisibleButtons();
 }
-
-/**
- * @brief Function toggles visibility of a message category to show or hide entries associated to this category.
- */
-static void MSO_OptionsClick_f (void)
-{
-	int num;
-	const msgCategoryEntry_t *category;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num >= ccs.numMsgCategoryEntries || num < 0)
-		return;
-
-	category = MSO_GetEntryFromSelectionIndex(num, qfalse);
-	if (!category || !category->isCategory)
-		return;
-	category->category->isFolded = !category->category->isFolded;
-	MSO_SetMenuState(MSO_MSTATE_REINIT, qtrue, qtrue);
-}
-
 
 /**
  * @brief Saves actual settings into backup settings variable.
@@ -290,7 +261,6 @@ void MSO_InitCallbacks(void)
 	memset(backupMessageSettings, 1, sizeof(backupMessageSettings));
 	Cmd_AddCommand("msgoptions_toggle", MSO_Toggle_f, "Toggles pause, notification or sound setting for a message category");
 	Cmd_AddCommand("msgoptions_scroll", MSO_Scroll_f, "Scroll callback function for message options menu text");
-	Cmd_AddCommand("messagetypes_click", MSO_OptionsClick_f, "Callback function to (un-)fold visible categories");
 	Cmd_AddCommand("msgoptions_init", MSO_Init_f, "Initializes message options menu");
 	Cmd_AddCommand("msgoptions_backup", MSO_BackupSettings_f, "Backup message settings");
 	Cmd_AddCommand("msgoptions_restore",MSO_RestoreSettings_f, "Restore message settings from backup");
@@ -305,5 +275,8 @@ void MSO_ShutdownCallbacks(void)
 	Cmd_RemoveCommand("msgoptions_init");
 	Cmd_RemoveCommand("msgoptions_backup");
 	Cmd_RemoveCommand("msgoptions_restore");
-
+	if (messageSettingOptions) {
+		Mem_Free(messageSettingOptions);
+		messageSettingOptions = NULL;
+	}
 }
