@@ -3117,6 +3117,9 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
 		}
 	}
 
+	/* Remove pilot */
+	aircraft->pilot = NULL;
+
 	if (aircraft->teamSize > 0)
 		Com_Error(ERR_DROP, "AIR_RemoveEmployees: Error, there went something wrong with soldier-removing from aircraft.");
 }
