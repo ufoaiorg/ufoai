@@ -294,19 +294,21 @@ NEW MAP TRACING FUNCTIONS
 int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y, const int z)
 {
 	/* This sets up the size of the box required to stand in a cell by an actor's feet.  */
-	const float halfMicrostepSize = PATHFINDING_MICROSTEP_SIZE / 2;
+	const float halfMicrostepSize = PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON;
+	/* ... and the same for the torso box */
+	const float halfActorWidth = UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON;
 	/* This is a template for the extents of the box used by an actor's legs. */
-	const vec3_t floorMins = {-halfMicrostepSize + DIST_EPSILON, -halfMicrostepSize + DIST_EPSILON, 0};
-	const vec3_t floorMaxs = {halfMicrostepSize - DIST_EPSILON, halfMicrostepSize - DIST_EPSILON, 0};
+	const vec3_t floorMins = {-halfMicrostepSize, -halfMicrostepSize, 0};
+	const vec3_t floorMaxs = { halfMicrostepSize,  halfMicrostepSize, 0};
 	/* This is a template for the extents of the box used by an actor's legs. */
-	const vec3_t footMins = {-halfMicrostepSize + DIST_EPSILON, -halfMicrostepSize + DIST_EPSILON, 0};
-	const vec3_t footMaxs = {halfMicrostepSize - DIST_EPSILON, halfMicrostepSize - DIST_EPSILON, QuantToModel(PATHFINDING_MIN_STEPUP) - DIST_EPSILON * 2};
+	const vec3_t footMins = {-halfMicrostepSize, -halfMicrostepSize, 0};
+	const vec3_t footMaxs = { halfMicrostepSize,  halfMicrostepSize, QuantToModel(PATHFINDING_MIN_STEPUP) - DIST_EPSILON * 2};
 	/* This is a template for the extents of the box used by an actor's torso. */
-	const vec3_t torsoMins = {UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, QuantToModel(PATHFINDING_MIN_STEPUP)};
-	const vec3_t torsoMaxs = {UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, QuantToModel(PATHFINDING_MIN_OPENING)  - DIST_EPSILON * 2};
+	const vec3_t torsoMins = {-halfActorWidth, -halfActorWidth, QuantToModel(PATHFINDING_MIN_STEPUP)};
+	const vec3_t torsoMaxs = { halfActorWidth,  halfActorWidth, QuantToModel(PATHFINDING_MIN_OPENING) - DIST_EPSILON * 2};
 	/* This is a template for the ceiling trace after an actor's torso space has been found. */
-	const vec3_t ceilMins = {UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, 0};
-	const vec3_t ceilMaxs = {UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, 0};
+	const vec3_t ceilMins = {-halfActorWidth, -halfActorWidth, 0};
+	const vec3_t ceilMaxs = { halfActorWidth,  halfActorWidth, 0};
 
 	vec3_t start, end; /* Start and end of the downward traces. */
 	vec3_t tstart, tend; /* Start and end of the upward traces. */
