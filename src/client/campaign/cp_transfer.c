@@ -306,7 +306,7 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 	/* Is there a place for this aircraft in destination base? */
 	hangarStorage = AIR_CalculateHangarStorage(aircraft->tpl, destbase, numAircraftTransfer);
 	if (hangarStorage == 0) {
-		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin hangars.\n"));
+		MN_Popup(_("Not enough space"), _("Destination base does not have enough space in hangars.\n"));
 		return qfalse;
 	} else if (hangarStorage > 0) {
 		return qtrue;

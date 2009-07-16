@@ -3106,7 +3106,7 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
 		return;
 
 	/* Counting backwards because aircraft->acTeam[] is changed in AIR_RemoveEmployee */
-	for (i = aircraft->maxTeamSize; i >= 0; i--) {
+	for (i = aircraft->maxTeamSize - 1; i >= 0; i--) {
 		/* use global aircraft index here */
 		if (AIR_RemoveEmployee(aircraft->acTeam[i], aircraft)) {
 			/* if the acTeam is not NULL the acTeam list and AIR_IsEmployeeInAircraft
