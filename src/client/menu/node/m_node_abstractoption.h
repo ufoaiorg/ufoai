@@ -43,6 +43,7 @@ typedef struct {
 	struct menuOption_s *selected;		/**< current selected option */
 	struct menuOption_s *hovered;		/**< current hovered option */
 	int count;							/**< number of elements */
+	int lineHeight;
 
 	menuScroll_t scrollY;				/**< Scroll position, if need */
 

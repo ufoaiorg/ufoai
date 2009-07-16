@@ -123,6 +123,8 @@ static void MN_UpdateOption_f (void)
 static const value_t properties[] = {
 	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(optionExtraData_t, dataId), MEMBER_SIZEOF(optionExtraData_t, dataId)},
 	{"option", V_UI_OPTIONNODE, MN_EXTRADATA_OFFSETOF(optionExtraData_t, first), 0},
+	{"lineheight", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, lineHeight),  MEMBER_SIZEOF(optionExtraData_t, lineHeight)},
+
 
 	{"viewpos", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, scrollY.viewPos),  MEMBER_SIZEOF(optionExtraData_t, scrollY.viewPos)},
 	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, scrollY.viewSize),  MEMBER_SIZEOF(optionExtraData_t, scrollY.viewSize)},

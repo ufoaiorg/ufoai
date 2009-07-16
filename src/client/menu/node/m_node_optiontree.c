@@ -61,7 +61,9 @@ static void MN_OptionTreeNodeUpdateScroll (menuNode_t *node)
 	int elements;
 
 	font = MN_GetFontFromNode(node);
-	fontHeight = MN_FontGetHeight(font);
+	fontHeight = EXTRADATA(node).lineHeight;
+	if (fontHeight == 0)
+		fontHeight = MN_FontGetHeight(font);
 
 	elements = (node->size[1] - node->padding - node->padding) / fontHeight;
 	updated = MN_SetScroll(&EXTRADATA(node).scrollY, -1, elements, EXTRADATA(node).count);
@@ -112,6 +114,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	const char* image;
 	int fontHeight;
 	int currentY;
+	int currentDecY = 0;
 	const float *textColor;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int count = 0;
@@ -133,7 +136,14 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 
 	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFontFromNode(node);
-	fontHeight = MN_FontGetHeight(font);
+	fontHeight = EXTRADATA(node).lineHeight;
+	if (fontHeight == 0)
+		fontHeight = MN_FontGetHeight(font);
+	else {
+		const int height = MN_FontGetHeight(font);
+		currentDecY = (fontHeight - height) / 2;
+		currentY += currentDecY;
+	}
 	currentY = pos[1] + node->padding;
 
 	/* skip option over current position */
@@ -170,7 +180,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 		R_Color(NULL);
 		if (option->firstChild) {
 			menuIcon_t *icon = (option->collapsed)?systemExpand:systemCollapse;
-			MN_DrawIconInBox(icon, 0, decX, currentY, icon->size[0], fontHeight);
+			MN_DrawIconInBox(icon, 0, decX, currentY - currentDecY, icon->size[0], fontHeight);
 		}
 
 		decX += COLLAPSEBUTTON_WIDTH;
@@ -206,7 +216,9 @@ static menuOption_t* MN_OptionTreeNodeGetOptionAtPosition (menuNode_t * node, in
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	font = MN_GetFontFromNode(node);
-	fontHeight = MN_FontGetHeight(font);
+	fontHeight = EXTRADATA(node).lineHeight;
+	if (fontHeight == 0)
+		fontHeight = MN_FontGetHeight(font);
 
 	option = MN_OptionTreeNodeGetFirstOption(node);
 	count = EXTRADATA(node).scrollY.viewPos + (y - node->padding) / fontHeight;
