@@ -1671,25 +1671,22 @@ void TR_TransferCheck (void)
  */
 static void TR_Init_f (void)
 {
-	td.transferBase = NULL;
-
 	/* Clear employees temp array. */
 	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
-
 	/* Clear aircraft temp array. */
 	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
 
-	/* Select first available item */
-	TR_TransferSelect_f();
-
 	/* Select first available base. */
+	td.transferBase = NULL;
 	TR_NextBase_f();
-
 	/* Set up cvar used to display transferBase. */
 	if (td.transferBase)
 		Cvar_Set("mn_trans_base_name", td.transferBase->name);
+
 	/* Set up cvar used with tabset */
 	Cvar_Set("mn_itemtype", transferTypeIDs[0]);
+	/* Select first available item */
+	Cmd_ExecuteString(va("trans_type %s", transferTypeIDs[0]));
 
 	/* Reset scrolling for item-in-base list */
 	MN_ExecuteConfunc("trans_resetscroll");
