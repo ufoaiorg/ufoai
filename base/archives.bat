@@ -10,4 +10,4 @@ rem -r recurse subdirectories. for example, this ensures that 0models.pk3 will c
 7za u -r -tzip 0pics.pk3 pics\*.jpg pics\*.tga pics\*.png textures\*.jpg textures\*.tga textures\*.png -x!".svn"
 7za u -r -tzip 0snd.pk3 sound\*.ogg sound\*.wav -x!".svn"
 7za u -r -tzip 0ufos.pk3 ufos\*.ufo -x!".svn"
-7za u -r -tzip 0vids.pk3 videos\*.roq -x!".svn"
+7za u -r -tzip 0vids.pk3 videos\*.roq videos\*.ogm -x!".svn"
