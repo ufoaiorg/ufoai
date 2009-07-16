@@ -775,15 +775,6 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				assert(aircraft);
 
 				if (AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) > 0) {
-					int j;
-					/* Remove pilot */
-					aircraft->pilot = NULL;
-					/* Remove soldiers */
-					for (j = 0; j < aircraft->maxTeamSize; j++) {
-						if (!aircraft->acTeam[j])
-							continue;
-						AIR_RemoveEmployee(aircraft->acTeam[j], aircraft);
-					}
 					/* Move aircraft */
 					AIR_MoveAircraftIntoNewHomebase(aircraft, destination);
 				} else {

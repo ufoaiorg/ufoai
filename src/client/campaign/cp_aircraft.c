@@ -864,6 +864,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 {
 	base_t *oldBase;
 	baseCapacities_t capacity;
+	aircraft_t *aircraftDest;
 	int i;
 
 	assert(aircraft);
@@ -898,9 +899,19 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	}
 
 	/* Move aircraft to new base */
-	base->aircraft[base->numAircraftInBase] = *aircraft;
+	aircraftDest = &base->aircraft[base->numAircraftInBase];
+	*aircraftDest = *aircraft;
 	base->capacities[capacity].cur++;
 	base->numAircraftInBase++;
+
+	/* Correct aircraftSlots' backreference */
+	for (i = 0; i < aircraftDest->maxWeapons; i++) {
+		aircraftDest->weapons[i].aircraft = aircraftDest;
+	}
+	for (i = 0; i < aircraftDest->maxElectronics; i++) {
+		aircraftDest->electronics[i].aircraft = aircraftDest;
+	}
+	aircraftDest->shield.aircraft = aircraftDest;
 
 	/* Remove aircraft from old base */
 	i = AIR_GetAircraftIdxInBase(aircraft);
