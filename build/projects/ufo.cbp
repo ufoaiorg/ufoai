@@ -1005,7 +1005,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\mxml\mxml_ufoai.h" />
-		<Unit filename="..\..\src\client\renderer\anormtab.h" />
 		<Unit filename="..\..\src\client\renderer\r_array.c">
 			<Option compilerVar="CC" />
 		</Unit>
