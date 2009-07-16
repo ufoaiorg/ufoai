@@ -10071,3 +10071,17 @@
 ( 176 540 84 ) ( 176 516 84 ) ( 185 516 82 ) tex_misc/box009 2 0 0 -0.75 0.5 134218240 0 0
 }
 }
+// entity 179
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/palm8/palm1.md2"
+"origin" "184 312 32"
+"spawnflags" "255"
+}
+// entity 180
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/palm8/palm2.md2"
+"origin" "184 312 32"
+"spawnflags" "254"
+}
