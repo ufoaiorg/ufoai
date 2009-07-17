@@ -56,6 +56,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_market.h"
 #include "cp_employee_callbacks.h"
 #include "cp_market_callbacks.h"
+#include "cp_research_callbacks.h"
 
 struct memPool_s *cp_campaignPool;		/**< reset on every game restart */
 ccs_t ccs;
@@ -1972,6 +1973,7 @@ static void CP_AddCampaignCallbackCommands (void)
 	INS_InitCallbacks();
 	TR_InitCallbacks();
 	PR_InitCallbacks();
+	RS_InitCallbacks();
 }
 
 static void CP_AddCampaignCommands (void)
@@ -2003,6 +2005,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 	INS_ShutdownCallbacks();
 	TR_ShutdownCallbacks();
 	PR_ShutdownCallbacks();
+	RS_ShutdownCallbacks();
 }
 
 static void CP_RemoveCampaignCommands (void)

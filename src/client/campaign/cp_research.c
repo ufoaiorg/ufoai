@@ -36,7 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_research.h"
-#include "cp_research_callbacks.h"
 
 #define TECH_HASH_SIZE 64
 static technology_t *techHash[TECH_HASH_SIZE];
@@ -1027,7 +1026,6 @@ void RS_InitStartup (void)
 	Cmd_AddCommand("debug_researchall", RS_DebugResearchAll, "Mark all techs as researched");
 	Cmd_AddCommand("debug_researchableall", RS_DebugResearchableAll, "Mark all techs as researchable");
 #endif
-	RS_InitCallbacks();
 }
 
 /**
