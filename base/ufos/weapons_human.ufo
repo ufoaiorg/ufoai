@@ -387,6 +387,7 @@ item sniper_ammo
 //========================
 // COILGUN
 //========================
+/*
 item coilgun
 {
 	name			"_Coilgun"
@@ -463,7 +464,7 @@ item coilgun_ammo
 	}
 }
 
-
+*/
 // =======================
 // PISTOL
 // =======================
@@ -1865,6 +1866,7 @@ item grenl_plasma_ammo
 // =======================
 // BOLTER RIFLE
 // =======================
+/*
 item bolterrifle
 {
 	name			"_Bolter Rifle"
@@ -1963,3 +1965,4 @@ item bolterrifle_ammo
 		}
 	}
 }
+*/

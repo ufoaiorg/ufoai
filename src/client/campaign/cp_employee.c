@@ -1257,6 +1257,7 @@ qboolean E_LoadXML (mxml_node_t *p)
 			base = mxml_GetInt(ssnode, "basehired", -1);
 			e->baseHired = (base >= 0) ? B_GetBaseByIDX(base) : NULL;
 
+			/** @todo: if research was removed we should free the scientists */
 			building = mxml_GetInt(ssnode, "building", -1);
 			e->building = (e->baseHired && building >= 0) ? &ccs.buildings[e->baseHired->idx][building] : NULL;
 
