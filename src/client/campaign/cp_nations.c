@@ -43,7 +43,9 @@ void CP_NationHandleBudget (void)
 	int i, j;
 	char message[1024];
 	int cost;
-	int initial_credits = ccs.credits;
+	int totalIncome = 0;
+	int totalExpenditure = 0;
+	int initialCredits = ccs.credits;
 
 	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
@@ -53,7 +55,8 @@ void CP_NationHandleBudget (void)
 		nation_t *nation = &ccs.nations[i];
 		const int funding = NAT_GetFunding(nation, 0);
 		int new_scientists = 0, new_soldiers = 0, new_workers = 0;
-		CL_UpdateCredits(ccs.credits + funding);
+
+		totalIncome += funding;
 
 		for (j = 0; 0.25 + j < (float) nation->maxScientists * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 			/* Create a scientist, but don't auto-hire her. */
@@ -90,9 +93,9 @@ void CP_NationHandleBudget (void)
 		if (ccs.employees[EMPL_SOLDIER][i].hired)
 			cost += SALARY_SOLDIER_BASE + ccs.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
 	}
+	totalExpenditure += cost;
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to soldiers"), cost);
-	CL_UpdateCredits(ccs.credits - cost);
 	/* only this message is played with sound as previous are added for every nation */
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qtrue);
 
@@ -101,9 +104,9 @@ void CP_NationHandleBudget (void)
 		if (ccs.employees[EMPL_WORKER][i].hired)
 			cost += SALARY_WORKER_BASE + ccs.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
 	}
+	totalExpenditure += cost;
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to workers"), cost);
-	CL_UpdateCredits(ccs.credits - cost);
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
 	cost = 0;
@@ -111,9 +114,9 @@ void CP_NationHandleBudget (void)
 		if (ccs.employees[EMPL_SCIENTIST][i].hired)
 			cost += SALARY_SCIENTIST_BASE + ccs.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
 	}
+	totalExpenditure += cost;
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to scientists"), cost);
-	CL_UpdateCredits(ccs.credits - cost);
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
 	cost = 0;
@@ -121,9 +124,9 @@ void CP_NationHandleBudget (void)
 		if (ccs.employees[EMPL_PILOT][i].hired)
 			cost += SALARY_PILOT_BASE + ccs.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
 	}
+	totalExpenditure += cost;
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to pilots"), cost);
-	CL_UpdateCredits(ccs.credits - cost);
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
 	cost = 0;
@@ -131,10 +134,10 @@ void CP_NationHandleBudget (void)
 		if (ccs.employees[EMPL_ROBOT][i].hired)
 			cost += SALARY_ROBOT_BASE + ccs.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
 	}
+	totalExpenditure += cost;
 
 	if (cost != 0) {
 		Com_sprintf(message, sizeof(message), _("Paid %i credits for robots"), cost);
-		CL_UpdateCredits(ccs.credits - cost);
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
@@ -147,10 +150,10 @@ void CP_NationHandleBudget (void)
 			cost += base->aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
 		}
 	}
+	totalExpenditure += cost;
 
 	if (cost != 0) {
 		Com_sprintf(message, sizeof(message), _("Paid %i credits for aircraft"), cost);
-		CL_UpdateCredits(ccs.credits - cost);
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
@@ -162,25 +165,26 @@ void CP_NationHandleBudget (void)
 		for (j = 0; j < ccs.numBuildings[i]; j++) {
 			cost += ccs.buildings[i][j].varCosts;
 		}
+		totalExpenditure += cost;
 
 		Com_sprintf(message, sizeof(message), _("Paid %i credits for upkeep of base %s"), cost, base->name);
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
-		CL_UpdateCredits(ccs.credits - cost);
 	}
 
 	cost = SALARY_ADMIN_INITIAL + ccs.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + ccs.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + ccs.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + ccs.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + ccs.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
 	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
-	CL_UpdateCredits(ccs.credits - cost);
+	totalExpenditure += cost;
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
-	if (initial_credits < 0) {
-		float interest = initial_credits * SALARY_DEBT_INTEREST;
+	if (initialCredits < 0) {
+		float interest = initialCredits * SALARY_DEBT_INTEREST;
 
 		cost = (int)ceil(interest);
 		Com_sprintf(message, sizeof(message), _("Paid %i credits in interest on your debt."), cost);
-		CL_UpdateCredits(ccs.credits - cost);
+		totalExpenditure += cost;
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
+	CL_UpdateCredits(ccs.credits - totalExpenditure + totalIncome);
 	CL_GameTimeStop();
 }
 
