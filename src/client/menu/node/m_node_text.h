@@ -30,8 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* used to speed up buffer safe string copies */
 #define MAX_SMALLMENUTEXTLEN	1024
 
-#define TEXT_IMAGETAG "img:"
-
 struct nodeBehaviour_s;
 struct menuAction_s;
 

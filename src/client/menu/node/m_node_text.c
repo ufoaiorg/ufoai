@@ -198,23 +198,6 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 				cur += 2; /* don't print the format string */
 				break;
 			}
-		} else if (!strncmp(cur, TEXT_IMAGETAG, strlen(TEXT_IMAGETAG))) {
-			const char *token;
-			const image_t *image;
-			int y1 = y;
-			/* cut the image tag */
-			cur += strlen(TEXT_IMAGETAG);
-			token = Com_Parse((const char **)&cur);
-			/** @todo fix scrolling images */
-			if (fullSizeY > EXTRADATA(node).super.scrollY.viewPos)
-				y1 += (fullSizeY - EXTRADATA(node).super.scrollY.viewPos) * EXTRADATA(node).lineHeight;
-			/* don't draw images that would be out of visible area */
-			if (y + height > y1 && fullSizeY >= EXTRADATA(node).super.scrollY.viewPos) {
-				/** @todo (menu) we should scale the height here with font->height, too */
-				image = MN_DrawNormImageByName(x1, y1, 0, 0, 0, 0, 0, 0, token);
-				if (image)
-					x1 += image->height;
-			}
 		}
 
 		/* get the position of the next newline - otherwise end will be null */
