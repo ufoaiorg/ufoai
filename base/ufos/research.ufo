@@ -1016,7 +1016,7 @@ tech rs_weapon_shotgun_ammo
 	time	-1
 	producetime	-1
 }
-/*
+
 tech rs_weapon_bolterrifle
 {
 	name	"_Electromagnetic Rifle"	// Called differently than the item in the equipment (Bolter).
@@ -1073,7 +1073,7 @@ tech rs_weapon_bolterrifle_ammo
 	time	0
 	producetime	24
 }
-*/
+
 tech rs_weapon_combatknife
 {
 	type	weapon
@@ -1974,7 +1974,7 @@ tech rs_weapon_needlergun_ammo
 	time		0
 	producetime	24
 }
-/*
+
 tech rs_weapon_coilgun
 {
 	type	weapon
@@ -2029,7 +2029,7 @@ tech rs_weapon_coilgun_ammo
 	time		0
 	producetime	24
 }
-*/
+
 tech rs_weapon_shotgun2
 {
 	// Riot Shotgun
