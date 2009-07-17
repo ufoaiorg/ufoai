@@ -178,7 +178,6 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 
 	R_Color(node->color);
 
-	/*Com_Printf("\n\n\nEXTRADATA(node).super.scrollY.fullSize: %i \n", EXTRADATA(node).super.scrollY.fullSize);*/
 	fullSizeY = 0;
 	do {
 		/* new line starts from node x position */
