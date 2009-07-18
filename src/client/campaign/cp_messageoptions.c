@@ -62,26 +62,6 @@ CASSERT(lengthof(nt_strings) == NT_NUM_NOTIFYTYPE);
 messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding actual message settings for every notify type */
 
 /**
- * @brief Function tries to retrieve actual category entry for given category id.
- * @param categoryid id of category to search
- * @return category entry or @code NULL @endcode
- */
-static msgCategory_t *MSO_GetCategoryFromName(const char* categoryid)
-{
-	msgCategory_t *categoryEntry = NULL;
-	int idx;
-
-	for (idx = 0; idx < ccs.numMsgCategories; idx++) {
-		if (!strcmp(ccs.messageCategories[idx].id, categoryid)) {
-			categoryEntry = &ccs.messageCategories[idx];
-			break;
-		}
-	}
-
-	return categoryEntry;
-}
-
-/**
  * @brief Function updates pause or notification settings.
  * @param listIndex listIndex in menu to update via confunc
  * @param type notification type to update
@@ -221,7 +201,6 @@ message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *t
 qboolean MSO_SaveXML (mxml_node_t *p)
 {
 	notify_t type;
-	int idx;
 	mxml_node_t *n = mxml_AddNode(p, "messageoptions");
 
 	/* save positive values */
@@ -399,4 +378,11 @@ void MSO_Init (void)
 	Cmd_AddCommand("msgoptions_setall", MSO_SetAll_f, "Sets pause, notification or sound setting for all message categories");
 	Cmd_AddCommand("msgoptions_set", MSO_Set_f, "Sets pause, notification or sound setting for a message category");
 	MSO_InitCallbacks();
+}
+
+void MSO_Shutdown (void)
+{
+	Cmd_RemoveCommand("msgoptions_setall");
+	Cmd_RemoveCommand("msgoptions_set");
+	MSO_ShutdownCallbacks();
 }

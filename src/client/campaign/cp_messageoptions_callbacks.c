@@ -256,7 +256,7 @@ void MSO_SetMenuState (const msoMenuState_t newState, const qboolean callInit, c
 
 }
 
-void MSO_InitCallbacks(void)
+void MSO_InitCallbacks (void)
 {
 	memset(backupMessageSettings, 1, sizeof(backupMessageSettings));
 	Cmd_AddCommand("msgoptions_toggle", MSO_Toggle_f, "Toggles pause, notification or sound setting for a message category");
@@ -267,7 +267,7 @@ void MSO_InitCallbacks(void)
 
 }
 
-void MSO_ShutdownCallbacks(void)
+void MSO_ShutdownCallbacks (void)
 {
 	Cmd_RemoveCommand("msgoptions_toggle");
 	Cmd_RemoveCommand("msgoptions_scroll");
