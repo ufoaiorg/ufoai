@@ -124,24 +124,6 @@ void MSO_Set (const int listIndex, const notify_t type, const int optionType, co
 }
 
 /**
- * @brief Function updates given category based on state.
- * @param categoryEntry category entry to update
- * @param state new folding state of category
- * @param callInit @code qtrue @endcode to trigger initialization of messageoptions text
- * @sa MSO_Init_f
- */
-static void MSO_SetCategoryState (msgCategory_t *categoryEntry, const byte state, const qboolean callInit)
-{
-	if ((state & MSGCATMASK_FOLDED) == MSGCATMASK_FOLDED)
-		categoryEntry->isFolded = qtrue;
-	else
-		categoryEntry->isFolded = qfalse;
-
-	MSO_SetMenuState(MSO_MSTATE_REINIT, callInit, qtrue);
-}
-
-
-/**
  * @brief Function callback used to initialize values for messageoptions and for manual setting changes.
  * @sa MSO_Set
  */
@@ -210,28 +192,6 @@ static void MSO_SetAll_f(void)
 }
 
 /**
- * @brief Function callback that sets the current state of a messageoptions category.
- * @note Calling this function causes the messageoptions to be reinitialized.
- * @sa MSO_SetCategoryState
- */
-static void MSO_SetCategoryState_f(void)
-{
-	if (Cmd_Argc() != 3)
-		Com_Printf("Usage: %s <categoryid> <state>\n", Cmd_Argv(0));
-	else {
-		const char *categoryId = Cmd_Argv(1);
-		const byte state = atoi(Cmd_Argv(2));
-		msgCategory_t *categoryEntry = MSO_GetCategoryFromName(categoryId);
-
-		if (!categoryEntry) {
-			Com_Printf("Unrecognized categoryid during setCategoryState '%s' ignored\n", categoryId);
-			return;
-		}
-		MSO_SetCategoryState(categoryEntry, state, qtrue);
-	}
-}
-
-/**
  * @brief Adds a new message to message stack. It uses message settings to
  * verify whether sound should be played and whether game should stop.
  * @param messagecategory category for notification
@@ -262,12 +222,7 @@ qboolean MSO_SaveXML (mxml_node_t *p)
 {
 	notify_t type;
 	int idx;
-	const int optionsCount = NT_NUM_NOTIFYTYPE;
-	const int categoryCount = ccs.numMsgCategories;
 	mxml_node_t *n = mxml_AddNode(p, "messageoptions");
-
-	/* save amount of available entries (forward compatible for additional types) */
-	mxml_AddInt(n, "optionscount", optionsCount);
 
 	/* save positive values */
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
@@ -279,13 +234,6 @@ qboolean MSO_SaveXML (mxml_node_t *p)
 		mxml_AddBool(s, "sound", actualSetting.doSound);
 	}
 
-	mxml_AddInt(n, "categorycount",categoryCount);
-	for (idx = 0; idx < categoryCount; idx++) {
-		msgCategory_t actualCategory = ccs.messageCategories[idx];
-		mxml_node_t *s = mxml_AddNode(n, "category");
-		mxml_AddString(s, "name", actualCategory.id);
-		mxml_AddBool(s, "folded", actualCategory.isFolded);
-	}
 	return qtrue;
 }
 
@@ -295,8 +243,6 @@ qboolean MSO_SaveXML (mxml_node_t *p)
  */
 qboolean MSO_LoadXML (mxml_node_t *p)
 {
-	int optionsCount;
-	int categoryCount;
 	mxml_node_t *n, *s;
 	/* reset current message settings (default to set for undefined settings)*/
 	memset(messageSettings, 1, sizeof(messageSettings));
@@ -304,13 +250,6 @@ qboolean MSO_LoadXML (mxml_node_t *p)
 	n = mxml_GetNode(p, "messageoptions");
 	if (!n)
 		return qfalse;
-
-	/* load all msgoptions settings */
-	optionsCount = mxml_GetInt(n, "optionscount", 0);
-	if (optionsCount < 0) {
-		Com_Printf("Can't load negative number of message settings, probably old savegame.\n");
-		return qfalse;
-	}
 
 	for (s = mxml_GetNode(n, "type"); s; s = mxml_GetNextNode(s,n, "type")) {
 		const char *messagetype = mxml_GetString(s, "name");
@@ -329,22 +268,6 @@ qboolean MSO_LoadXML (mxml_node_t *p)
 		MSO_Set(0, type, MSO_NOTIFY, mxml_GetBool(s, "notify", qfalse), qfalse);
 		MSO_Set(0, type, MSO_PAUSE, mxml_GetBool(s, "pause", qfalse), qfalse);
 		MSO_Set(0, type, MSO_SOUND, mxml_GetBool(s, "sound", qfalse), qfalse);
-	}
-
-	categoryCount = mxml_GetInt(n, "categorycount",0);
-	if (categoryCount < 0) {
-		Com_Printf("Can't load negative number of message category settings, probably old savegame.\n");
-		return qfalse;
-	}
-
-	for (s = mxml_GetNode(n, "category"); s; s = mxml_GetNextNode(s,n, "category")) {
-		const char *categoryId = mxml_GetString(s, "name");
-		msgCategory_t *category = MSO_GetCategoryFromName(categoryId);
-		if (!category) {
-			Com_Printf("Unrecognized messagecategoryid '%s' ignored while loading\n", categoryId);
-			continue;
-		}
-		MSO_SetCategoryState(category, mxml_GetBool(s, "folded", qfalse)?MSGCATMASK_FOLDED:0, qfalse);
 	}
 
 	MSO_SetMenuState(MSO_MSTATE_REINIT,qfalse, qfalse);
@@ -423,7 +346,6 @@ void MSO_ParseCategories (const char *name, const char **text)
 	memset(category, 0, sizeof(*category));
 	category->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 	category->idx = ccs.numMsgCategories;	/* set self-link */
-	category->isFolded = qtrue;
 
 	entry = &ccs.msgCategoryEntries[ccs.numMsgCategoryEntries];
 
@@ -476,6 +398,5 @@ void MSO_Init (void)
 {
 	Cmd_AddCommand("msgoptions_setall", MSO_SetAll_f, "Sets pause, notification or sound setting for all message categories");
 	Cmd_AddCommand("msgoptions_set", MSO_Set_f, "Sets pause, notification or sound setting for a message category");
-	Cmd_AddCommand("msgoptions_setcat", MSO_SetCategoryState_f, "Sets the new state for a category");
 	MSO_InitCallbacks();
 }
