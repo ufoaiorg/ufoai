@@ -540,7 +540,7 @@ void DoCommandListDlg (void)
 
 #include "profile/profile.h"
 
-static const char* const COMMANDS_VERSION = "1.0-gtk-accelnames";//"1.0-gtk-accelnames"
+static const char* const COMMANDS_VERSION = "1.0.gtk-accelnames";//"1.0-gtk-accelnames"
 
 /**
  * @sa LoadCommandMap
