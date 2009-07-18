@@ -4,93 +4,158 @@
 
 window ufopedia
 {
-	// ==================
-	// background
-	// ==================
-
-	pic background
 	{
-		image		ui/ufopedia_bg
+		pos			"50 50"
+		size		"1060 619"
+		dragbutton	true
+		closebutton	true
+		image		ui/popup_alpha_tile
+		string		"_Ufopedia"
+		modal		true				// we can't click out
+	}
+
+	string nameentry
+	{
+		string		*cvar:mn_uptitle
+		pos			"33 49"
+		size		"298 39"
+		font		f_normal
+	}
+
+	panel navigation_panel {
+		pos		"349 87"
+		size	"691 510"
+		image	"ui/panel_green_tab"
+	}
+
+	tab navigation {
+		cvar	*cvar:ufopedia_content
+		pos		"350 55"
+		size	"685 43"
+		
+		option description {
+			label	"_Description"
+			value	"description"
+		}
+		option preresearch {
+			label	"_Pre research text"
+			value	"preresearch"
+		}
+		option stats {
+			label	"_Statistics"
+			value	"stats"
+		}
+		onChange {
+			cmd "update_ufopedia_layout"
+		}
+	}
+
+	todo todounneedtab {
+		pos		"350 45"
+		string	"We must hide/disable unneed tabs"
+	}
+
+	todo todoweaponinfo {
+		pos		"370 45"
+		string	"Weapon info are missing???"
+	}
+
+	todo todopreresearch {
+		pos		"390 45"
+		string	"Is description/preresearch working?"
+	}
+
+	todo todorequiremement {
+		pos		"410 45"
+		string	"Can we move requirement into the description tab (under the image)?"
 	}
 
 	// ==================
-	// buttons
+	// summary
 	// ==================
-	custombutton button_text_pre
-	{
-		visiblewhen "*cvar:mn_uppreavailable == 1"
-		tooltip		"_Pre research text"
-		image		ui/button_background
-		texl		"128 0"
-		pos			"90 14"
-		size		"37 32"
-		icon		prev
-		onClick		{ cmd "set mn_uppretext 1; mn_upupdate;" }
+
+	panel summary {
+		{
+			pos		"27 95"
+			size	"307 501"
+			image	"ui/panel_green"
+		}
+		
+		optiontree ufopedia_summary
+		{
+			cvar		*cvar:ufopedia_element
+			dataid		OPTION_UFOPEDIA
+			pos			"10 10"
+			size		"257 484"
+			font		f_small
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			onChange	{
+				cmd "ufopedia_click <cvar:ufopedia_element>"
+				*node:(abstractscrollbar)root.ufopedia_scroll@current 0
+				*node:(text)root.ufopedia@viewpos 0
+				cmd "update_ufopedia_layout"
+			}
+			onViewChange	{
+				*node:(abstractscrollbar)parent.ufopedia_summary_scroll@current <viewpos>
+				*node:(abstractscrollbar)parent.ufopedia_summary_scroll@fullsize <fullsize>
+				*node:(abstractscrollbar)parent.ufopedia_summary_scroll@viewsize <viewsize>
+			}
+		}
+	
+		vscrollbar ufopedia_summary_scroll {
+			image		ui/scrollbar_v_green
+			pos			"277 10"
+			height		"484"
+			current		0
+			viewsize	16
+			fullsize	50
+			onChange	{ *node:parent.ufopedia_summary@viewpos <current> }
+		}
+		
 	}
 
-	custombutton button_text_normal
+	// ==================
+	// deco
+	// ==================
+	
+	pic image_top
 	{
-		visiblewhen "*cvar:mn_updisplay == 2"
-		tooltip		"_Research results"
-		image		ui/button_background
-		texl		"128 0"
-		pos			"140 14"
-		size		"37 32"
-		icon		next
-		onClick		{ cmd "set mn_uppretext 0; mn_upupdate;" }
+		image		*cvar:mn_upimage_top
+		pos			"782 120"
+		size		"208 345"
+		preventratio	true
 	}
 
-	custombutton button_exit
+	model mdl_top
 	{
-		tooltip		"_Leave UFOpaedia"
-		image		ui/button_background
-		texl		"192 0"
-		pos			"950 720"
-		size		"64 37"
-		icon		return
-		onClick		{ cmd "mn_pop;" }
+		model		*cvar:mn_upmodel_top
+		angles		"0 0 120"
+		pos			"783 119"
+		size		"206 206"
+		autoscale	true
+		rotatewithmouse	true
+	}
+
+	model mdl_bottom
+	{
+		model		*cvar:mn_upmodel_bottom
+		angles		"0 0 120"
+		pos			"831 342"
+		size		"120 120"
+		autoscale	true
+		rotatewithmouse	true
 	}
 
 	// ==================
 	// text and info
 	// ==================
 
-	optiontree ufopedia_summary
-	{
-		cvar		*cvar:ufopedia_element
-		dataid		OPTION_UFOPEDIA
-		pos			"27 75"
-		size		"260 403"
-		font		f_small
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		onChange	{
-			cmd "ufopedia_click <cvar:ufopedia_element>"
-			*node:(abstractscrollbar)root.ufopedia_scroll@current 0
-			*node:(text)root.ufopedia@viewpos 0
-		}
-		onViewChange	{
-			*(abstractscrollbar)ufopedia_summary_scroll@current <viewpos>
-			*(abstractscrollbar)ufopedia_summary_scroll@fullsize <fullsize>
-			*(abstractscrollbar)ufopedia_summary_scroll@viewsize <viewsize>
-		}
-	}
-
-	vscrollbar ufopedia_summary_scroll {
-		image		ui/scrollbar_v_green
-		pos			"292 75"
-		height		"403"
-		current		0
-		viewsize	16
-		fullsize	50
-		onChange	{ *ufopedia_summary@viewpos <current> }
-	}
-
 	text ufopedia
 	{
 		dataid		TEXT_UFOPEDIA
-		pos			"325 75"
-		size		"393 403"
+		pos			"364 110"
+		size		"395 473"
 		font		f_small
 		lineheight	18
 		tabwidth	100
@@ -104,27 +169,19 @@ window ufopedia
 
 	vscrollbar ufopedia_scroll {
 		image		ui/scrollbar_v_green
-		pos			"725 75"
-		height		"403"
+		pos			"1016 105"
+		height		"473"
 		current		0
 		viewsize	16
 		fullsize	50
 		onChange	{ *ufopedia@viewpos <current> }
 	}
 
-	confunc mn_upfbig
-	{
-	}
-
-	confunc mn_upfsmall
-	{
-	}
-
 	text description
 	{
 		dataid		TEXT_STANDARD
-		pos			"30 495"
-		size		"475 200"
+		pos			"368 116"
+		size		"412 200"
 		lineheight	20
 		tabwidth	230
 		rows		"10"
@@ -137,7 +194,7 @@ window ufopedia
 
 	vscrollbar description_scroll {
 		image		ui/scrollbar_v_green
-		pos			"510 495"
+		pos			"780 116"
 		height		"200"
 		current		0
 		viewsize	10
@@ -149,7 +206,7 @@ window ufopedia
 	text techtree
 	{
 		dataid		TEXT_LIST
-		pos			"550 495"
+		pos			"363 326"
 		size		"334 246"
 		lineheight	"20"
 		rows		"12"
@@ -164,7 +221,7 @@ window ufopedia
 
 	vscrollbar techtree_scroll {
 		image		ui/scrollbar_v_green
-		pos			"890 495"
+		pos			"780 326"
 		height		"246"
 		current		0
 		viewsize	12
@@ -173,42 +230,10 @@ window ufopedia
 		onChange	{ *techtree@viewpos <current> }
 	}
 
-	string title
-	{
-		string		*cvar:mn_uptitle
-		pos			"205 20"
-		size		"669 43"
-		textalign	cc
-		font		f_big
-	}
-
-	pic image_top
-	{
-		image		*cvar:mn_upimage_top
-		pos			"750 85"
-		size		"240 380"
-		preventratio	true
-	}
-
-	model mdl_top
-	{
-		model		*cvar:mn_upmodel_top
-		angles		"0 0 120"
-		pos			"750 85"
-		size		"240 240"
-		autoscale	true
-		rotatewithmouse	true
-	}
-
-	model mdl_bottom
-	{
-		model		*cvar:mn_upmodel_bottom
-		angles		"0 0 120"
-		pos			"790 335"
-		size		"120 120"
-		autoscale	true
-		rotatewithmouse	true
-	}
+	// ==================
+	// weapon info
+	// @todo never displayed??? can we fix something
+	// ==================
 
 	pic weapon_dec
 	{
@@ -342,11 +367,78 @@ window ufopedia
 		onClick		{ cmd "mn_increasefiremode;" }
 	}
 
+	confunc update_ufopedia_layout {
+		
+		// is right column is empty?
+		if ( ( ( *cvar:mn_upimage_top eq "" ) and ( *cvar:mn_upmodel_top eq "" ) ) and ( *cvar:mn_upmodel_bottom eq "" ) ) {
+			*cvar:mn_expend = 1
+		} else {
+			*cvar:mn_expend = 0
+		}
+
+		// update tab
+		if ( *cvar:mn_uppreavailable == 1 ) {
+			cmd "mn_updateoption <path:root>.navigation preresearch display" 
+		} else {
+			cmd "mn_updateoption <path:root>.navigation preresearch hide"
+			// update the tab if the hiden one is selected
+			if ( *cvar:ufopedia_content eq "preresearch" ) {
+				*cvar:ufopedia_content = "description"
+			} 
+		}
+
+		if ( *cvar:ufopedia_content eq "description" ) {
+			*ufopedia@invis = false
+			*ufopedia_scroll@invis = false
+			*description@invis = true
+			*description_scroll@invis = true
+			*techtree@invis = true
+			*techtree_scroll@invis = true
+			if ( *cvar:mn_expend == 1 ) {
+				*ufopedia@width = 605
+			} else {
+				*ufopedia@width = 395
+			}
+			cmd "set mn_uppretext 0; mn_upupdate;"
+		} elif ( *cvar:ufopedia_content eq "preresearch" ) {
+			*ufopedia@invis = false
+			*ufopedia_scroll@invis = false
+			*description@invis = true
+			*description_scroll@invis = true
+			*techtree@invis = true
+			*techtree_scroll@invis = true
+			if ( *cvar:mn_expend == 1 ) {
+				*ufopedia@width = 605
+			} else {
+				*ufopedia@width = 395
+			}
+			cmd "set mn_uppretext 1; mn_upupdate;"
+		} elif ( *cvar:ufopedia_content eq "stats" ) {
+			*ufopedia@invis = true
+			*ufopedia_scroll@invis = true
+			*description@invis = false
+			*description_scroll@invis = false
+			*techtree@invis = false
+			*techtree_scroll@invis = false
+		}
+		
+		cmd "del mn_expend"
+	}
+
+	confunc mn_upfbig
+	{
+	}
+
+	confunc mn_upfsmall
+	{
+	}
+
 	func onInit
 	{
+		*cvar:ufopedia_content = "description"
 		cmd "mn_upcontent;"
-		*ufopedia_summary@viewpos = 0
-		*ufopedia_summary_scroll@current = 0
+		*node:root.summary.ufopedia_summary@viewpos = 0
+		*node:root.summary.ufopedia_summary_scroll@current = 0
 		*cvar:ufopedia_element = ""
 	}
 
