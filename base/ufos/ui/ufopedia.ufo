@@ -5,8 +5,8 @@
 window ufopedia
 {
 	{
-		pos			"50 50"
-		size		"1060 619"
+		pos			"10 50"
+		size		"1000 619"
 		dragbutton	true
 		closebutton	true
 		image		ui/popup_alpha_tile
@@ -24,14 +24,14 @@ window ufopedia
 
 	panel navigation_panel {
 		pos		"349 87"
-		size	"691 510"
+		size	"628 510"
 		image	"ui/panel_green_tab"
 	}
 
 	tab navigation {
 		cvar	*cvar:ufopedia_content
 		pos		"350 55"
-		size	"685 43"
+		size	"622 43"
 		
 		option description {
 			label	"_Description"
@@ -123,7 +123,7 @@ window ufopedia
 	{
 		image		*cvar:mn_upimage_top
 		pos			"782 120"
-		size		"208 345"
+		size		"153 341"
 		preventratio	true
 	}
 
@@ -132,7 +132,7 @@ window ufopedia
 		model		*cvar:mn_upmodel_top
 		angles		"0 0 120"
 		pos			"783 119"
-		size		"206 206"
+		size		"151 151"
 		autoscale	true
 		rotatewithmouse	true
 	}
@@ -141,7 +141,7 @@ window ufopedia
 	{
 		model		*cvar:mn_upmodel_bottom
 		angles		"0 0 120"
-		pos			"831 342"
+		pos			"797 321"
 		size		"120 120"
 		autoscale	true
 		rotatewithmouse	true
@@ -155,7 +155,7 @@ window ufopedia
 	{
 		dataid		TEXT_UFOPEDIA
 		pos			"364 110"
-		size		"395 473"
+		size		"406 473"
 		font		f_small
 		lineheight	18
 		tabwidth	100
@@ -169,7 +169,7 @@ window ufopedia
 
 	vscrollbar ufopedia_scroll {
 		image		ui/scrollbar_v_green
-		pos			"1016 105"
+		pos			"953 105"
 		height		"473"
 		current		0
 		viewsize	16
@@ -395,9 +395,9 @@ window ufopedia
 			*techtree@invis = true
 			*techtree_scroll@invis = true
 			if ( *cvar:mn_expend == 1 ) {
-				*ufopedia@width = 605
+				*ufopedia@width = 583
 			} else {
-				*ufopedia@width = 395
+				*ufopedia@width = 406
 			}
 			cmd "set mn_uppretext 0; mn_upupdate;"
 		} elif ( *cvar:ufopedia_content eq "preresearch" ) {
@@ -408,9 +408,9 @@ window ufopedia
 			*techtree@invis = true
 			*techtree_scroll@invis = true
 			if ( *cvar:mn_expend == 1 ) {
-				*ufopedia@width = 605
+				*ufopedia@width = 583
 			} else {
-				*ufopedia@width = 395
+				*ufopedia@width = 406
 			}
 			cmd "set mn_uppretext 1; mn_upupdate;"
 		} elif ( *cvar:ufopedia_content eq "stats" ) {
