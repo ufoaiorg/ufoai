@@ -163,12 +163,12 @@ CLICK ON MAP and MULTI SELECTION FUNCTIONS
 /**
  * @brief Add an element in the multiselection list
  */
-static void MAP_MultiSelectListAddItem (multiSelectType_t item_type, int item_id,
-	const char* item_description, const char* item_name)
+static void MAP_MultiSelectListAddItem (multiSelectType_t itemType, int itemID,
+	const char* itemDescription, const char* itemName)
 {
-	Q_strcat(multiSelect.popupText, va("%s\t%s\n", item_description, item_name), sizeof(multiSelect.popupText));
-	multiSelect.selectType[multiSelect.nbSelect] = item_type;
-	multiSelect.selectId[multiSelect.nbSelect] = item_id;
+	Q_strcat(multiSelect.popupText, va("%s\t%s\n", itemDescription, itemName), sizeof(multiSelect.popupText));
+	multiSelect.selectType[multiSelect.nbSelect] = itemType;
+	multiSelect.selectId[multiSelect.nbSelect] = itemID;
 	multiSelect.nbSelect++;
 }
 
