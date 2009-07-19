@@ -118,6 +118,7 @@ int MN_GetDataIDByName (const char* name)
  */
 void MN_RegisterText (int textId, const char *text)
 {
+	MN_ResetData(textId);
 	mn.sharedData[textId].type = MN_SHARED_TEXT;
 	mn.sharedData[textId].data.text = text;
 	mn.sharedData[textId].versionId++;
@@ -129,6 +130,7 @@ void MN_RegisterText (int textId, const char *text)
  */
 void MN_RegisterLinkedListText (int textId, linkedList_t *text)
 {
+	MN_ResetData(textId);
 	mn.sharedData[textId].type = MN_SHARED_LINKEDLISTTEXT;
 	mn.sharedData[textId].data.linkedListText = text;
 	mn.sharedData[textId].versionId++;
@@ -244,6 +246,7 @@ void MN_InitOption (menuOption_t* option, const char* nameID, const char* label,
 
 void MN_RegisterOption (int dataId, menuOption_t *option)
 {
+	MN_ResetData(dataId);
 	mn.sharedData[dataId].type = MN_SHARED_OPTION;
 	mn.sharedData[dataId].data.option = option;
 	mn.sharedData[dataId].versionId++;
@@ -251,6 +254,7 @@ void MN_RegisterOption (int dataId, menuOption_t *option)
 
 void MN_RegisterLineStrip(int dataId, lineStrip_t *lineStrip)
 {
+	MN_ResetData(dataId);
 	mn.sharedData[dataId].type = MN_SHARED_LINESTRIP;
 	mn.sharedData[dataId].data.lineStrip = lineStrip;
 	mn.sharedData[dataId].versionId++;
