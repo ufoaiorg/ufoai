@@ -73,8 +73,6 @@ typedef struct {
 	r_program_t *warp_program;
 	r_program_t *active_program;
 
-	vec4_t color;
-
 	/* blend function */
 	GLenum blend_src, blend_dest;
 

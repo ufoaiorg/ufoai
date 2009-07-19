@@ -577,11 +577,6 @@ void R_Color (const vec4_t rgba)
 	else
 		color = color_white;
 
+	glColor4fv(color);
 	R_CheckError();
-	if (r_state.color[0] != color[0] || r_state.color[1] != color[1]
-	 || r_state.color[2] != color[2] || r_state.color[3] != color[3]) {
-		Vector4Copy(color, r_state.color);
-		glColor4fv(r_state.color);
-		R_CheckError();
-	}
 }
