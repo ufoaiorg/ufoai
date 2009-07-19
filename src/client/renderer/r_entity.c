@@ -582,7 +582,6 @@ void R_DrawEntities (void)
 	entity_t **chain;
 	entity_t *r_bsp_entities, *r_opaque_mesh_entities;
 	entity_t *r_blend_mesh_entities, *r_null_entities;
-	image_t *skin;
 
 	if (!r_drawentities->integer)
 		return;
@@ -605,6 +604,7 @@ void R_DrawEntities (void)
 			else
 				chain = &r_null_entities;
 		} else {
+			const image_t *skin;
 			switch (e->model->type) {
 			case mod_bsp_submodel:
 				chain = &r_bsp_entities;
@@ -614,10 +614,8 @@ void R_DrawEntities (void)
 			case mod_alias_md3:
 			case mod_obj:
 				skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
-				if (skin == NULL) {
-					Com_Printf("Model '%s' is broken\n", e->model->name);
-					continue;
-				}
+				if (skin == NULL)
+					Com_Error(ERR_DROP, "Model '%s' has no skin assigned", e->model->name);
 				if (skin->has_alpha || e->flags & RF_TRANSLUCENT)
 					chain = &r_blend_mesh_entities;
 				else
