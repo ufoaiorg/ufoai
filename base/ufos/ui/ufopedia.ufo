@@ -392,7 +392,7 @@ window ufopedia
 			// update the tab if the hiden one is selected
 			if ( *cvar:ufopedia_content eq "stats" ) {
 				*cvar:ufopedia_content = "description"
-			} 
+			}
 		}
 
 		if ( *cvar:ufopedia_content eq "description" ) {
