@@ -206,7 +206,7 @@ static void CP_UFOCrashed_f (void)
 	if ((atoi(Cmd_Argv(1)) >= 0) && (atoi(Cmd_Argv(1)) < UFO_MAX)) {
 		UFOtype = atoi(Cmd_Argv(1));
 	} else {
-		UFOtype = UFO_ShortNameToID(Cmd_Argv(1));
+		UFOtype = Com_UFOShortNameToID(Cmd_Argv(1));
 		if (UFOtype == UFO_MAX) {
 			Com_Printf("CP_UFOCrashed_f: UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
 			return;

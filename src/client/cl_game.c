@@ -485,6 +485,33 @@ static void GAME_Exit_f (void)
 	GAME_SetMode(GAME_NONE);
 }
 
+static void GAME_InitMenuOptions (void)
+{
+	int i, cnt;
+	menuOption_t* ufoOptions = MN_AllocOption(UFO_MAX * 2);
+	menuOption_t* dropOptions = MN_AllocOption(DROPSHIP_MAX);
+	if (ufoOptions == NULL || dropOptions == NULL)
+		return;
+
+	cnt = 0;
+	for (i = 0; i < UFO_MAX; i++) {
+		const char *shortName = Com_UFOTypeToShortName(i);
+		MN_InitOption(&ufoOptions[cnt++], "", shortName, shortName);
+	}
+	for (i = 0; i < UFO_MAX; i++) {
+		const char *shortName = Com_UFOCrashedTypeToShortName(i);
+		MN_InitOption(&ufoOptions[cnt++], "", shortName, shortName);
+	}
+	MN_RegisterOption(OPTION_UFOS, ufoOptions);
+
+	cnt = 0;
+	for (i = 0; i < DROPSHIP_MAX; i++) {
+		const char *shortName = Com_DropShipTypeToShortName(i);
+		MN_InitOption(&dropOptions[cnt++], "", shortName, shortName);
+	}
+	MN_RegisterOption(OPTION_DROPSHIPS, dropOptions);
+}
+
 void GAME_InitStartup (void)
 {
 	Cmd_AddCommand("game_setmode", GAME_SetMode_f, "Decides with game mode should be set - takes the menu as reference");
@@ -494,4 +521,6 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("mn_nextmap", MN_ChangeMap_f, "Switch to the next valid map for the selected gametype");
 	Cmd_AddCommand("mn_prevmap", MN_ChangeMap_f, "Switch to the previous valid map for the selected gametype");
 	Cmd_AddCommand("mn_selectmap", MN_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
+
+	GAME_InitMenuOptions();
 }

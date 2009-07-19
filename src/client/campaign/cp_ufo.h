@@ -31,9 +31,6 @@ enum {
 	UFO_IS_TARGET_OF_LASER
 };
 
-ufoType_t UFO_ShortNameToID(const char *token);
-const char* UFO_TypeToShortName(ufoType_t type);
-const char* UFO_CrashedTypeToShortName(ufoType_t type);
 const char* UFO_TypeToName(ufoType_t type);
 const char* UFO_AircraftToIDOnGeoscape(aircraft_t *ufocraft);
 const char* UFO_MissionResultToString(void);

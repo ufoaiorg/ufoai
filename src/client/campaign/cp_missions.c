@@ -331,7 +331,7 @@ void CP_CreateBattleParameters (mission_t *mission)
 	if (ccs.selectedMission->ufo) {
 		const char *shortUFOType;
 		if (mission->crashed) {
-			shortUFOType = UFO_CrashedTypeToShortName(ccs.selectedMission->ufo->ufotype);
+			shortUFOType = Com_UFOCrashedTypeToShortName(ccs.selectedMission->ufo->ufotype);
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+') {
 				/* set battleParameters.param to the ufo type: used for ufocrash random map */
@@ -339,7 +339,7 @@ void CP_CreateBattleParameters (mission_t *mission)
 					ccs.battleParameters.param = Mem_PoolStrDup(shortUFOType, cp_campaignPool, 0);
 			}
 		} else {
-			shortUFOType = UFO_TypeToShortName(ccs.selectedMission->ufo->ufotype);
+			shortUFOType = Com_UFOTypeToShortName(ccs.selectedMission->ufo->ufotype);
 		}
 
 		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery_init %i;", mission->ufo->ufotype);
@@ -1285,7 +1285,7 @@ qboolean CP_MissionCreate (mission_t *mission)
 	} else {
 		mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
 		if (!mission->ufo) {
-			Com_Printf("CP_MissionCreate: Could not add UFO '%s', remove mission\n", UFO_TypeToShortName(ufoType));
+			Com_Printf("CP_MissionCreate: Could not add UFO '%s', remove mission\n", Com_UFOTypeToShortName(ufoType));
 			CP_MissionRemove(mission);
 			return qfalse;
 		}

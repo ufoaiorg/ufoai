@@ -463,7 +463,7 @@ qboolean NAT_ScriptSanityCheck (void)
 
 				/* loop must be backward, as we remove items */
 				for (i = numTypes - 1 ; i >= 0; i--) {
-					if (LIST_ContainsString(md->ufos, UFO_TypeToShortName(ufoTypes[i]))) {
+					if (LIST_ContainsString(md->ufos, Com_UFOTypeToShortName(ufoTypes[i]))) {
 						REMOVE_ELEM(ufoTypes, i, numTypes);
 					}
 				}
@@ -480,7 +480,7 @@ qboolean NAT_ScriptSanityCheck (void)
 			if (parametersFit) {
 				Com_Printf("      (No map fitting");
 				for (i = 0 ; i < numTypes; i++)
-					Com_Printf(" %s", UFO_TypeToShortName(ufoTypes[i]));
+					Com_Printf(" %s", Com_UFOTypeToShortName(ufoTypes[i]));
 				Com_Printf(")\n");
 			}
 			MAP_PrintParameterStringByPos(pos);

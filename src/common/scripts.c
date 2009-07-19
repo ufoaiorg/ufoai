@@ -79,7 +79,10 @@ const char *const vt_names[] = {
 	"client_hunk_string",
 	"longlines",	/* 25 */
 	"team",
-	"race"
+	"race",
+	"ufo",
+	"ufocrashed",
+	"dropship"
 };
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
@@ -137,7 +140,10 @@ static const size_t vt_sizes[] = {
 	0,	/* V_CLIENT_HUNK_STRING */
 	sizeof(byte), 	/* V_LONGLINES */
 	sizeof(int),		/* V_TEAM */
-	sizeof(int)		/* V_RACE */
+	sizeof(int),		/* V_RACE */
+	sizeof(int),		/* V_UFO */
+	sizeof(int),		/* V_UFOCRASHED */
+	sizeof(int)		/* V_DROPSHIP */
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
@@ -170,7 +176,10 @@ static const size_t vt_aligns[] = {
 	sizeof(char),	/* V_CLIENT_HUNK_STRING */
 	sizeof(byte), 	/* V_LONGLINES */
 	sizeof(int),		/* V_TEAM */
-	sizeof(int)		/* V_RACE */
+	sizeof(int),		/* V_RACE */
+	sizeof(int),		/* V_UFO */
+	sizeof(int),		/* V_UFOCRASHED */
+	sizeof(int)		/* V_DROPSHIP */
 };
 CASSERT(lengthof(vt_aligns) == V_NUM_TYPES);
 
@@ -285,6 +294,68 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = RACE_SHEVAAR;
 		else
 			Sys_Error("Unknown race type: '%s'", token);
+		*writtenBytes = sizeof(int);
+		break;
+
+	case V_DROPSHIP:
+		if (!strcmp(token, "craft_drop_firebird"))
+			*(int *) b = DROPSHIP_FIREBIRD;
+		else if (!strcmp(token, "craft_drop_herakles"))
+			*(int *) b = DROPSHIP_HERAKLES;
+		else
+			Sys_Error("Unknown dropship type: '%s'", token);
+		*writtenBytes = sizeof(int);
+		break;
+
+	case V_UFO:
+		if (!strcmp(token, "craft_ufo_bomber"))
+			*(int *) b = UFO_BOMBER;
+		else if (!strcmp(token, "craft_ufo_carrier"))
+			*(int *) b = UFO_CARRIER;
+		else if (!strcmp(token, "craft_ufo_corrupter"))
+			*(int *) b = UFO_CORRUPTER;
+		else if (!strcmp(token, "craft_ufo_fighter"))
+			*(int *) b = UFO_FIGHTER;
+		else if (!strcmp(token, "craft_ufo_harvester"))
+			*(int *) b = UFO_HARVESTER;
+		else if (!strcmp(token, "craft_ufo_scout"))
+			*(int *) b = UFO_SCOUT;
+		else if (!strcmp(token, "craft_ufo_supply"))
+			*(int *) b = UFO_SUPPLY;
+		else if (!strcmp(token, "craft_ufo_gunboat"))
+			*(int *) b = UFO_GUNBOAT;
+		else if (!strcmp(token, "craft_ufo_ripper"))
+			*(int *) b = UFO_RIPPER;
+		else if (!strcmp(token, "craft_ufo_mothership"))
+			*(int *) b = UFO_MOTHERSHIP;
+		else
+			Sys_Error("Unknown ufo type: '%s'", token);
+		*writtenBytes = sizeof(int);
+		break;
+
+	case V_UFOCRASHED:
+		if (!strcmp(token, "craft_crash_bomber"))
+			*(int *) b = UFO_BOMBER;
+		else if (!strcmp(token, "craft_crash_carrier"))
+			*(int *) b = UFO_CARRIER;
+		else if (!strcmp(token, "craft_crash_corrupter"))
+			*(int *) b = UFO_CORRUPTER;
+		else if (!strcmp(token, "craft_crash_fighter"))
+			*(int *) b = UFO_FIGHTER;
+		else if (!strcmp(token, "craft_crash_harvester"))
+			*(int *) b = UFO_HARVESTER;
+		else if (!strcmp(token, "craft_crash_scout"))
+			*(int *) b = UFO_SCOUT;
+		else if (!strcmp(token, "craft_crash_supply"))
+			*(int *) b = UFO_SUPPLY;
+		else if (!strcmp(token, "craft_crash_gunboat"))
+			*(int *) b = UFO_GUNBOAT;
+		else if (!strcmp(token, "craft_crash_ripper"))
+			*(int *) b = UFO_RIPPER;
+		else if (!strcmp(token, "craft_crash_mothership"))
+			*(int *) b = UFO_MOTHERSHIP;
+		else
+			Sys_Error("Unknown ufo type: '%s'", token);
 		*writtenBytes = sizeof(int);
 		break;
 
@@ -629,6 +700,65 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			Sys_Error("Unknown race type: '%s'", (const char *)set);
 		return sizeof(int);
 
+	case V_DROPSHIP:
+		if (!strcmp(set, "craft_drop_firebird"))
+			*(int *) b = DROPSHIP_FIREBIRD;
+		else if (!strcmp(set, "craft_drop_herakles"))
+			*(int *) b = DROPSHIP_HERAKLES;
+		else
+			Sys_Error("Unknown dropship type: '%s'", (const char *)set);
+		return sizeof(int);
+
+	case V_UFO:
+		if (!strcmp(set, "craft_ufo_bomber"))
+			*(int *) b = UFO_BOMBER;
+		else if (!strcmp(set, "craft_ufo_carrier"))
+			*(int *) b = UFO_CARRIER;
+		else if (!strcmp(set, "craft_ufo_corrupter"))
+			*(int *) b = UFO_CORRUPTER;
+		else if (!strcmp(set, "craft_ufo_fighter"))
+			*(int *) b = UFO_FIGHTER;
+		else if (!strcmp(set, "craft_ufo_harvester"))
+			*(int *) b = UFO_HARVESTER;
+		else if (!strcmp(set, "craft_ufo_scout"))
+			*(int *) b = UFO_SCOUT;
+		else if (!strcmp(set, "craft_ufo_supply"))
+			*(int *) b = UFO_SUPPLY;
+		else if (!strcmp(set, "craft_ufo_gunboat"))
+			*(int *) b = UFO_GUNBOAT;
+		else if (!strcmp(set, "craft_ufo_ripper"))
+			*(int *) b = UFO_RIPPER;
+		else if (!strcmp(set, "craft_ufo_mothership"))
+			*(int *) b = UFO_MOTHERSHIP;
+		else
+			Sys_Error("Unknown ufo type: '%s'", (const char *)set);
+		return sizeof(int);
+
+	case V_UFOCRASHED:
+		if (!strcmp(set, "craft_crash_bomber"))
+			*(int *) b = UFO_BOMBER;
+		else if (!strcmp(set, "craft_crash_carrier"))
+			*(int *) b = UFO_CARRIER;
+		else if (!strcmp(set, "craft_crash_corrupter"))
+			*(int *) b = UFO_CORRUPTER;
+		else if (!strcmp(set, "craft_crash_fighter"))
+			*(int *) b = UFO_FIGHTER;
+		else if (!strcmp(set, "craft_crash_harvester"))
+			*(int *) b = UFO_HARVESTER;
+		else if (!strcmp(set, "craft_crash_scout"))
+			*(int *) b = UFO_SCOUT;
+		else if (!strcmp(set, "craft_crash_supply"))
+			*(int *) b = UFO_SUPPLY;
+		else if (!strcmp(set, "craft_crash_gunboat"))
+			*(int *) b = UFO_GUNBOAT;
+		else if (!strcmp(set, "craft_crash_ripper"))
+			*(int *) b = UFO_RIPPER;
+		else if (!strcmp(set, "craft_crash_mothership"))
+			*(int *) b = UFO_MOTHERSHIP;
+		else
+			Sys_Error("Unknown ufo type: '%s'", (const char *)set);
+		return sizeof(int);
+
 	case V_INT:
 		*(int *) b = *(const int *) set;
 		return sizeof(int);
@@ -773,6 +903,68 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			return "shevaar";
 		default:
 			Sys_Error("Unknown race type: '%i'", *(const int *) b);
+		}
+
+	case V_DROPSHIP:
+		switch (*(const int *) b) {
+		case DROPSHIP_FIREBIRD:
+			return "craft_drop_firebird";
+		case DROPSHIP_HERAKLES:
+			return "craft_drop_herakles";
+		default:
+			Sys_Error("Unknown dropship type: '%i'", *(const int *) b);
+		}
+
+	case V_UFO:
+		switch (*(const int *) b) {
+		case UFO_BOMBER:
+			return "craft_ufo_bomber";
+		case UFO_CARRIER:
+			return "craft_ufo_carrier";
+		case UFO_CORRUPTER:
+			return "craft_ufo_corrupter";
+		case UFO_FIGHTER:
+			return "craft_ufo_fighter";
+		case UFO_HARVESTER:
+			return "craft_ufo_harvester";
+		case UFO_SCOUT:
+			return "craft_ufo_harvester";
+		case UFO_SUPPLY:
+			return "craft_ufo_supply";
+		case UFO_GUNBOAT:
+			return "craft_ufo_supply";
+		case UFO_RIPPER:
+			return "craft_ufo_ripper";
+		case UFO_MOTHERSHIP:
+			return "craft_ufo_ripper";
+		default:
+			Sys_Error("Unknown ufo type: '%i'", *(const int *) b);
+		}
+
+	case V_UFOCRASHED:
+		switch (*(const int *) b) {
+		case UFO_BOMBER:
+			return "craft_crash_bomber";
+		case UFO_CARRIER:
+			return "craft_crash_carrier";
+		case UFO_CORRUPTER:
+			return "craft_crash_corrupter";
+		case UFO_FIGHTER:
+			return "craft_crash_fighter";
+		case UFO_HARVESTER:
+			return "craft_crash_harvester";
+		case UFO_SCOUT:
+			return "craft_crash_harvester";
+		case UFO_SUPPLY:
+			return "craft_crash_supply";
+		case UFO_GUNBOAT:
+			return "craft_crash_supply";
+		case UFO_RIPPER:
+			return "craft_crash_ripper";
+		case UFO_MOTHERSHIP:
+			return "craft_crash_ripper";
+		default:
+			Sys_Error("Unknown crashed ufo type: '%i'", *(const int *) b);
 		}
 
 	case V_INT:
@@ -2338,6 +2530,60 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 MAIN SCRIPT PARSING FUNCTION
 ==============================================================================
 */
+
+
+/**
+ * @brief Translate DropShip type to short name.
+ * @sa Com_DropShipTypeToShortName
+ */
+ufoType_t Com_DropShipShortNameToID (const char *token)
+{
+	int dropShipType;
+	size_t dummy;
+	Com_ParseValue(&dropShipType, token, V_DROPSHIP, 0, sizeof(dropShipType), &dummy);
+	return dropShipType;
+}
+
+/**
+ * @brief Translate DropShip type to short name.
+ * @sa Com_DropShipShortNameToID
+ */
+const char* Com_DropShipTypeToShortName (dropShipType_t type)
+{
+	return Com_ValueToStr(&type, V_DROPSHIP, 0);
+}
+
+/**
+ * @brief Translate UFO type to short name.
+ * @sa UFO_TypeToName
+ * @sa Com_UFOTypeToShortName
+ */
+ufoType_t Com_UFOShortNameToID (const char *token)
+{
+	int ufoType;
+	size_t dummy;
+	Com_ParseValue(&ufoType, token, V_UFO, 0, sizeof(ufoType), &dummy);
+	return ufoType;
+}
+
+/**
+ * @brief Translate UFO type to short name.
+ * @sa UFO_TypeToName
+ * @sa Com_UFOShortNameToID
+ */
+const char* Com_UFOTypeToShortName (ufoType_t type)
+{
+	return Com_ValueToStr(&type, V_UFO, 0);
+}
+
+/**
+ * @brief Translate UFO type to short name when UFO is crashed.
+ * @sa Com_UFOTypeToShortName
+ */
+const char* Com_UFOCrashedTypeToShortName (ufoType_t type)
+{
+	return Com_ValueToStr(&type, V_UFOCRASHED, 0);
+}
 
 /**
  * @brief Creates links to other items (i.e. ammo<->weapons)

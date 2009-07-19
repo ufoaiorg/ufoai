@@ -174,10 +174,10 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t
 		if (!md->ufos)
 			return qfalse;
 		if (ufoCrashed) {
-			if (!LIST_ContainsString(md->ufos, UFO_CrashedTypeToShortName(mission->ufo->ufotype)))
+			if (!LIST_ContainsString(md->ufos, Com_UFOCrashedTypeToShortName(mission->ufo->ufotype)))
 				return qfalse;
 		} else {
-			if (!LIST_ContainsString(md->ufos, UFO_TypeToShortName(mission->ufo->ufotype)))
+			if (!LIST_ContainsString(md->ufos, Com_UFOTypeToShortName(mission->ufo->ufotype)))
 				return qfalse;
 		}
 	}
@@ -241,7 +241,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
 			return qtrue;
 		} else {
 			Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
-			Com_Printf("  ufo: %s -- pos: ", mission->ufo ? UFO_TypeToShortName(mission->ufo->ufotype) : "none");
+			Com_Printf("  ufo: %s -- pos: ", mission->ufo ? Com_UFOTypeToShortName(mission->ufo->ufotype) : "none");
 			if (pos)
 				Com_Printf("%s",MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)) ? " (in water) " : "");
 			if (pos)

@@ -41,88 +41,15 @@ typedef struct ufoTypeList_s {
 } ufoTypeList_t;
 
 /**
- * @brief Valid ufo types
- * @note Use the same values for the names as we are already using in the scriptfiles
- * here, otherwise they are not translatable because they don't appear in the po files
- * @note Every ufotype (id) that doesn't have nogeoscape set to true must have an assembly
- * in the ufocrash[dn].ump files
- */
-static const ufoTypeList_t ufoTypeList[] = {
-	{"craft_ufo_bomber", "craft_crash_bomber", UFO_BOMBER},
-	{"craft_ufo_carrier", "craft_crash_carrier", UFO_CARRIER},
-	{"craft_ufo_corrupter", "craft_crash_corrupter", UFO_CORRUPTER},
-	{"craft_ufo_fighter", "craft_crash_fighter", UFO_FIGHTER},
-	{"craft_ufo_harvester", "craft_crash_harvester", UFO_HARVESTER},
-	{"craft_ufo_scout", "craft_crash_scout", UFO_SCOUT},
-	{"craft_ufo_supply", "craft_crash_supply", UFO_SUPPLY},
-	{"craft_ufo_gunboat", "craft_crash_gunboat", UFO_GUNBOAT},
-	{"craft_ufo_ripper", "craft_crash_ripper", UFO_RIPPER},
-	{"craft_ufo_mothership", "craft_crash_mothership", UFO_MOTHERSHIP},
-
-	{NULL, 0}
-};
-
-/**
- * @brief Translate UFO type to short name.
- * @sa UFO_TypeToName
- * @sa UFO_TypeToShortName
- */
-ufoType_t UFO_ShortNameToID (const char *token)
-{
-	const ufoTypeList_t *list = ufoTypeList;
-
-	while (list->id) {
-		if (!strcmp(list->id, token))
-			return list->ufoType;
-		list++;
-	}
-	Com_Printf("UFO_ShortNameToID: Unknown ufo-type: %s\n", token);
-	return UFO_MAX;
-}
-
-/**
- * @brief Translate UFO type to short name.
- * @sa UFO_TypeToName
- * @sa UFO_ShortNameToID
- */
-const char* UFO_TypeToShortName (ufoType_t type)
-{
-	const ufoTypeList_t *list = ufoTypeList;
-
-	while (list->id) {
-		if (list->ufoType == type)
-			return list->id;
-		list++;
-	}
-	Com_Error(ERR_DROP, "UFO_TypeToShortName(): Unknown UFO type %i", type);
-}
-
-/**
- * @brief Translate UFO type to short name when UFO is crashed.
- * @sa UFO_TypeToShortName
- */
-const char* UFO_CrashedTypeToShortName (ufoType_t type)
-{
-	const ufoTypeList_t *list = ufoTypeList;
-
-	while (list->id) {
-		if (list->ufoType == type)
-			return list->crashedId;
-		list++;
-	}
-	Com_Error(ERR_DROP, "UFO_TypeToShortName(): Unknown UFO type %i", type);
-}
-
-/**
  * @brief Translate UFO type to name.
  * @param[in] type UFO type in ufoType_t.
  * @return Translated UFO name.
- * @sa UFO_TypeToShortName
- * @sa UFO_ShortNameToID
+ * @sa Com_UFOTypeToShortName
+ * @sa Com_UFOShortNameToID
  */
 const char* UFO_TypeToName (ufoType_t type)
 {
-	const char *id = UFO_TypeToShortName(type);
+	const char *id = Com_UFOTypeToShortName(type);
 	const technology_t *tech = RS_GetTechByProvided(id);
 	if (tech)
 		return _(tech->name);

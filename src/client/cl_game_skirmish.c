@@ -145,26 +145,15 @@ const mapDef_t* GAME_SK_MapInfo (int step)
 {
 	const mapDef_t *md = &csi.mds[cls.currentSelectedMap];
 	if (md->map[0] == '+') {
-		const linkedList_t *l = md->ufos;
-		const int num = LIST_Count(l);
-		if (num) {
-			menuOption_t* ufoOptions = MN_AllocOption(num);
-			if (ufoOptions != NULL) {
-				int i = 0;
-				while (l) {
-					const char *shortName = (const char *)l->data;
-					MN_InitOption(&ufoOptions[i], "", shortName, shortName);
-					l = l->next;
-					i++;
-				}
-
-				MN_RegisterOption(OPTION_UFOS, &ufoOptions[0]);
-			}
-		} else {
-			MN_ResetData(OPTION_UFOS);
-		}
-
-		/** @todo fill supported dropships */
+		linkedList_t *ufos = md->ufos;
+		if (ufos)
+			Cvar_Set("rm_ufo", (const char *)ufos->data);
+		/** @todo only show those that are in md->ufos */
+		MN_ExecuteConfunc("skirmish_hide_ufos false");
+		MN_ExecuteConfunc("skirmish_hide_dropships false");
+	} else {
+		MN_ExecuteConfunc("skirmish_hide_ufos true");
+		MN_ExecuteConfunc("skirmish_hide_dropships true");
 	}
 
 	return md;

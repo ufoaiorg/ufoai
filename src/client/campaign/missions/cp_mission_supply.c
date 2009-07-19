@@ -155,7 +155,7 @@ static void CP_SupplyMissionCreate (mission_t *mission)
 		CP_MissionDisableTimeLimit(mission);
 		mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
 		if (!mission->ufo) {
-			Com_Printf("CP_SupplyMissionCreate: Could not add UFO '%s', remove mission\n", UFO_TypeToShortName(ufoType));
+			Com_Printf("CP_SupplyMissionCreate: Could not add UFO '%s', remove mission\n", Com_UFOTypeToShortName(ufoType));
 			CP_MissionRemove(mission);
 		}
 	}

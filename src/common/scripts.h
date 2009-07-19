@@ -73,6 +73,13 @@ typedef enum {
 	V_LONGLINES = 25,
 	V_TEAM,					/**< team string to int mapper */
 	V_RACE,
+	V_UFO,					/**< @brief Valid ufo types
+							 * @note Use the same values for the names as we are already using in the scriptfiles
+							 * here, otherwise they are not translatable because they don't appear in the po files
+							 * @note Every ufotype (id) that doesn't have nogeoscape set to true must have an assembly
+							 * in the ufocrash[dn].ump files */
+	V_UFOCRASHED,
+	V_DROPSHIP,
 
 	V_NUM_TYPES
 } valueTypes_t;
@@ -146,6 +153,32 @@ typedef enum {
 	LONGLINES_LAST
 } longlines_t;
 
+
+/**
+ * @brief All different types of UFOs.
+ */
+typedef enum {
+	UFO_SCOUT,
+	UFO_FIGHTER,
+	UFO_HARVESTER,
+	UFO_CORRUPTER,
+	UFO_BOMBER,
+	UFO_CARRIER,
+	UFO_SUPPLY,
+	UFO_GUNBOAT,
+	UFO_RIPPER,
+	UFO_MOTHERSHIP,
+
+	UFO_MAX
+} ufoType_t;
+
+typedef enum {
+	DROPSHIP_FIREBIRD,
+	DROPSHIP_HERAKLES,
+
+	DROPSHIP_MAX
+} dropShipType_t;
+
 extern const char *const align_names[];
 extern const char *const blend_names[];
 extern const char *const style_names[];
@@ -203,6 +236,11 @@ const char *Com_GiveName(int gender, teamDef_t *td);
 const char *Com_GiveModel(int type, int gender, const teamDef_t *td);
 void Com_GetCharacterValues(const char *teamDefition, character_t * chr);
 const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
+ufoType_t Com_UFOShortNameToID(const char *token);
+const char* Com_UFOTypeToShortName(ufoType_t type);
+const char* Com_UFOCrashedTypeToShortName(ufoType_t type);
+const char* Com_DropShipTypeToShortName(dropShipType_t type);
+ufoType_t Com_DropShipShortNameToID(const char *token);
 teamDef_t* Com_GetTeamDefinitionByID(const char *team);
 mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
 void Com_ParseScripts(void);

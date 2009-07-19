@@ -1506,7 +1506,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 			aircraftTemplate->maxElectronics = 0;
 
 			if (aircraftTemplate->type == AIRCRAFT_UFO)
-				aircraftTemplate->ufotype = UFO_ShortNameToID(aircraftTemplate->id);
+				aircraftTemplate->ufotype = Com_UFOShortNameToID(aircraftTemplate->id);
 		} else {
 			Com_Error(ERR_DROP, "AIR_ParseAircraft: aircraft not found - can not link (%s) - parsed aircraft amount: %i\n",
 					name, ccs.numAircraftTemplates);
