@@ -126,7 +126,7 @@ window aircraft extends iaircraft
 	func onInit
 	{
 		*cvar:mn_aircrafttab "aircraft"
-		cmd "aircraft_update_list;"
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"
+		cmd "aircraft_update_list;"
 	}
 }

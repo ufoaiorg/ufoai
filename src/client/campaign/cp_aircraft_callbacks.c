@@ -75,7 +75,7 @@ static void AIM_SelectAircraft_f (void)
 
 	i = atoi(Cmd_Argv(1));
 	if (i < 0 || i >= base->numAircraftInBase)
-		return;
+		i = 0;
 
 	AIR_AircraftSelect(&base->aircraft[i]);
 }
