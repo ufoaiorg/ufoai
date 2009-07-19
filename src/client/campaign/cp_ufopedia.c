@@ -105,12 +105,12 @@ static void UP_ChangeDisplay (int newDisplay)
 
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
-		MN_ExecuteConfunc("mn_upfbig");
 		currentChapter = NULL;
 		upCurrentTech = NULL;
 		Cvar_Set("mn_upmodel_top", "");
 		Cvar_Set("mn_upmodel_bottom", "");
 		Cvar_Set("mn_upimage_top", "base/empty");
+		MN_ExecuteConfunc("mn_up_empty");
 		break;
 	case UFOPEDIA_INDEX:
 		Cvar_Set("mn_upmodel_top", "");
@@ -118,7 +118,7 @@ static void UP_ChangeDisplay (int newDisplay)
 		Cvar_Set("mn_upimage_top", "base/empty");
 		/* no break here */
 	case UFOPEDIA_ARTICLE:
-		MN_ExecuteConfunc("mn_upfsmall");
+		MN_ExecuteConfunc("mn_up_article");
 		break;
 	}
 	Cvar_SetValue("mn_updisplay", upDisplay);
