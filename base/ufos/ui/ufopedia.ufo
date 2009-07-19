@@ -142,7 +142,7 @@ window ufopedia
 			font		f_small
 			lineheight	18
 			tabwidth	100
-			rows		22
+			rows		26
 			onViewChange	{
 				*node:(abstractscrollbar)parent.ufopedia_scroll@fullsize <lines>
 				*node:(abstractscrollbar)parent.ufopedia_scroll@current <viewpos>
@@ -155,7 +155,7 @@ window ufopedia
 			pos			"603 50"
 			height		"473"
 			current		0
-			viewsize	16
+			viewsize	26
 			fullsize	50
 			onChange	{ *node:parent.ufopedia@viewpos <current> }
 		}
@@ -167,7 +167,7 @@ window ufopedia
 			size		"412 400"
 			lineheight	20
 			tabwidth	230
-			rows		"10"
+			rows		20
 			onViewChange	{
 				*node:(abstractscrollbar)parent.description_scroll@fullsize <lines>
 				*node:(abstractscrollbar)parent.description_scroll@current <viewpos>
@@ -180,8 +180,8 @@ window ufopedia
 			pos			"425 61"
 			height		"400"
 			current		0
-			viewsize	10
-			fullsize	10
+			viewsize	20
+			fullsize	20
 			hidewhenunused true
 			onChange	{ *node:parent.description@viewpos <current> }
 		}
