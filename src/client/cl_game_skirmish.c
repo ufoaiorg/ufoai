@@ -101,7 +101,7 @@ static void GAME_SK_ChangeEquip_f (void)
 void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	char resultText[MAX_SMALLMENUTEXTLEN];
-	int their_killed, their_stunned;
+	int theirKilled, theirStunned;
 	int i;
 
 	CL_Drop();
@@ -112,15 +112,15 @@ void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		return;
 	}
 
-	their_killed = their_stunned = 0;
+	theirKilled = theirStunned = 0;
 	for (i = 0; i < MAX_TEAMS; i++) {
 		if (i != cls.team) {
-			their_killed += numKilled[cls.team][i];
-			their_stunned += numStunned[cls.team][i];
+			theirKilled += numKilled[cls.team][i];
+			theirStunned += numStunned[cls.team][i];
 		}
 	}
 
-	Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), their_killed + their_stunned, numAlive[cls.team]);
+	Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), theirKilled + theirStunned, numAlive[cls.team]);
 	if (winner == cls.team) {
 		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You won the game!"), resultText);
 		MN_Popup(_("Congratulations"), popupText);
