@@ -143,7 +143,27 @@ qboolean GAME_SK_Spawn (void)
 
 const mapDef_t* GAME_SK_MapInfo (int step)
 {
-	return &csi.mds[cls.currentSelectedMap];
+	const mapDef_t *md = &csi.mds[cls.currentSelectedMap];
+	if (md->map[0] == '+') {
+		const linkedList_t *l = md->ufos;
+		const int num = LIST_Count(l);
+		menuOption_t* ufoOptions = MN_AllocOption(num);
+		if (ufoOptions != NULL) {
+			int i = 0;
+			while (l) {
+				const char *shortName = (const char *)l->data;
+				MN_InitOption(&ufoOptions[i], "", shortName, shortName);
+				l = l->next;
+				i++;
+			}
+
+			MN_RegisterOption(OPTION_UFOS, &ufoOptions[0]);
+		}
+
+		/** @todo fill supported dropships */
+	}
+
+	return md;
 }
 
 int GAME_SK_GetTeam (void)

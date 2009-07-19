@@ -651,7 +651,7 @@ void CL_InitAfter (void)
 	SCR_DrawPrecacheScreen(qtrue);
 
 	vidModesOptions = MN_AllocOption(VID_GetModeNums());
-	if (vidModesOptions == 0)
+	if (vidModesOptions == NULL)
 		return;
 
 	for (i = 0; i < VID_GetModeNums(); i++) {

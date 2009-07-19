@@ -92,6 +92,8 @@ static const char *const menutextid_names[] = {
 	"OPTION_SINGLEPLAYER_SKINS",
 	"OPTION_MULTIPLAYER_SKINS",
 	"OPTION_UFOPEDIA",
+	"OPTION_UFOS",
+	"OPTION_DROPSHIPS",
 
 	"LINESTRIP_FUNDING",
 	"LINESTRIP_COLOR"
@@ -252,7 +254,7 @@ void MN_RegisterOption (int dataId, menuOption_t *option)
 	mn.sharedData[dataId].versionId++;
 }
 
-void MN_RegisterLineStrip(int dataId, lineStrip_t *lineStrip)
+void MN_RegisterLineStrip (int dataId, lineStrip_t *lineStrip)
 {
 	MN_ResetData(dataId);
 	mn.sharedData[dataId].type = MN_SHARED_LINESTRIP;
