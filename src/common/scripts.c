@@ -2736,6 +2736,8 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 			linkedList_t **list;
 			if (!strcmp(token, "ufos")) {
 				list = &md->ufos;
+			} else if (!strcmp(token, "aircraft")) {
+				list = &md->aircraft;
 			} else if (!strcmp(token, "terrains")) {
 				list = &md->terrains;
 			} else if (!strcmp(token, "populations")) {

@@ -41,6 +41,11 @@ mapdef oilpipes_small
 	multiplayer	false
 	maxaliens	6
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_ufo_scout
@@ -81,6 +86,11 @@ mapdef or_small
 	multiplayer	false
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_ufo_scout
@@ -113,6 +123,11 @@ mapdef or_medium
 	size		"small"
 	multiplayer	false
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 	ufos
 	{
@@ -147,6 +162,11 @@ mapdef or_large
 	size		"small"
 	multiplayer	false
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -184,6 +204,11 @@ mapdef farm_small
 	multiplayer	false
 	maxaliens	6
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_ufo_scout
@@ -219,6 +244,11 @@ mapdef farm_medium
 	multiplayer	false
 	maxaliens	11
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_ufo_harvester
@@ -252,6 +282,11 @@ mapdef farm_large
 	teams		4
 	multiplayer	false
 	maxaliens	16
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 	ufos
 	{
@@ -291,6 +326,11 @@ mapdef frozen_alienlandingindustrial
 	description	"_An industrial area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_ufo_scout
@@ -326,6 +366,11 @@ mapdef frozen_small
 	description	"_An underpopulated area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -357,6 +402,11 @@ mapdef frozen_alienlandingnature
 	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 	ufos
 	{
@@ -391,6 +441,11 @@ mapdef frozen_industrial
 	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -435,6 +490,11 @@ mapdef alienlandingindustrial_fix
 	}
 	maxaliens		20
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_ufo_fighter
@@ -472,6 +532,11 @@ mapdef tropic_river
 	multiplayer	false
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_ufo_scout
@@ -506,6 +571,11 @@ mapdef tropic_drug
 	param		drug
 	multiplayer	false
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 	ufos
 	{
@@ -543,6 +613,11 @@ mapdef tropic_bigufo
 	multiplayer	false
 	maxaliens	18 //TODO: This is an arbitrary value right now.
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_ufo_corrupter
@@ -565,7 +640,7 @@ mapdef tropic_bigufo
 		rural
 		village
 		suburban
- }
+	}
 }
 
 //////////////////////
@@ -579,6 +654,11 @@ mapdef vil_lille
 	size "small"
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 	ufos
 	{
@@ -612,6 +692,11 @@ mapdef vil_residential
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_ufo_scout
@@ -644,6 +729,11 @@ mapdef vil_commercial
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -674,6 +764,11 @@ mapdef vil_big
 	multiplayer	false
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -707,6 +802,11 @@ mapdef forest_small
 	description	"_Aliens are up to no good in this sparsely populated forest region."
 	size		"small"
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 	ufos
 	{
@@ -744,6 +844,11 @@ mapdef forest_large
 	multiplayer	false
 	maxaliens	15 //TODO: This is an arbitrary value right now.
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_ufo_fighter
@@ -780,6 +885,11 @@ mapdef country_large
 	multiplayer	false
 	maxaliens	10 //TODO: This is an arbitrary value right now.
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_ufo_fighter
@@ -815,6 +925,11 @@ mapdef country_street
 	size		"large"
 	multiplayer	false
 	maxaliens	15 //TODO: This is an arbitrary value right now.
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 	ufos
 	{
@@ -862,6 +977,11 @@ mapdef excavation
 
 	maxaliens	17
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -903,6 +1023,11 @@ mapdef estate
 
 	maxaliens		12
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -941,6 +1066,11 @@ mapdef england
 	}
 
 	maxaliens		8
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -982,6 +1112,11 @@ mapdef italy
 
 	maxaliens		22
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1022,6 +1157,11 @@ mapdef mart
 	}
 
 	maxaliens		16
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -1067,6 +1207,11 @@ mapdef mine
 	}
 	maxaliens	15
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1089,7 +1234,6 @@ mapdef mine
 		rural
 		nonpopulation
 	}
-
 }
 
 mapdef transport
@@ -1108,6 +1252,11 @@ mapdef transport
 		coop4
 	}
 	maxaliens	19
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -1147,6 +1296,11 @@ mapdef bunker
 		coop4
 	}
 	maxaliens	8
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -1189,6 +1343,11 @@ mapdef dam
 	}
 	maxaliens	10
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1229,6 +1388,11 @@ mapdef japan
 	}
 	maxaliens	16
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1266,6 +1430,11 @@ mapdef spedition
 		coop4
 	}
 	maxaliens	7
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -1306,6 +1475,11 @@ mapdef stadium
 	}
 
 	maxaliens		5
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -1348,6 +1522,11 @@ mapdef druglord
 	}
 	maxaliens		11
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1386,6 +1565,11 @@ mapdef eaglenest
 	}
 	maxaliens		9
 	description		"_A small estate in the mountains"
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -1428,6 +1612,11 @@ mapdef scout_crash
 	}
 	maxaliens		4
 	description		"_A crashed Scout UFO"
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 	ufos
 	{
@@ -1472,6 +1661,11 @@ mapdef farm
 	}
 	maxaliens		12
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1512,6 +1706,11 @@ mapdef ferry
 		coop4
 	}
 	maxaliens		12
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -1559,6 +1758,11 @@ mapdef rivertown
 	}
 	maxaliens		16
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1598,6 +1802,11 @@ mapdef city_disco
 		coop4
 	}
 	maxaliens		6
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -1639,6 +1848,11 @@ mapdef city_train
 	}
 	maxaliens		6
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1678,6 +1892,11 @@ mapdef gasstation
 		coop4
 	}
 	maxaliens		4
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -1721,6 +1940,11 @@ mapdef oriental
 	}
 	maxaliens		16
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1760,6 +1984,11 @@ mapdef oriental_mosque
 	}
 	maxaliens		16
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1798,6 +2027,11 @@ mapdef subway
 		coop4
 	}
 	maxaliens		8
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -1842,6 +2076,11 @@ mapdef tower
 	}
 	maxaliens		8
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1883,6 +2122,11 @@ mapdef village
 	}
 	maxaliens		11
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1923,6 +2167,11 @@ mapdef military_convoy
 	}
 	maxaliens		11
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -1962,6 +2211,11 @@ mapdef fighter_crash
 		coop4
 	}
 	maxaliens		19
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 	ufos
 	{
@@ -2006,6 +2260,11 @@ mapdef bridge
 	}
 	maxaliens		19
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_crash_fighter
@@ -2045,6 +2304,11 @@ mapdef construction
 		coop4
 	}
 	maxaliens		8
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -2086,6 +2350,11 @@ mapdef harbour
 	}
 	maxaliens		8
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -2125,6 +2394,11 @@ mapdef office
 		coop4
 	}
 	maxaliens		18
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -2166,6 +2440,11 @@ mapdef resort
 	}
 	maxaliens		8
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -2205,6 +2484,11 @@ mapdef africa
 	}
 	description		"_An African suburb that has received a visit from a Harvester."
 	maxaliens		24
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 	ufos
 	{
@@ -2247,6 +2531,11 @@ mapdef harvester_crash
 	description		"_An alien Harvester has crashed in the wastelands."
 	maxaliens		24
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_crash_harvester
@@ -2286,6 +2575,11 @@ mapdef lake_ice
 	description		"_A small settlement in winter."
 	maxaliens		16
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -2324,6 +2618,11 @@ mapdef lake_ice_big
 		coop3
 		coop4
 	}
+	
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 }
 
 mapdef shelter
@@ -2347,6 +2646,11 @@ mapdef shelter
 		coop4
 	}
 	maxaliens		21
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -2390,6 +2694,11 @@ mapdef bomber_city
 	}
 	maxaliens		16
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 	ufos
 	{
 		craft_ufo_bomber
@@ -2432,6 +2741,11 @@ mapdef community_centre
 	}
 	maxaliens		8
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -2473,6 +2787,11 @@ mapdef laboratory
 	}
 	maxaliens		8
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -2511,6 +2830,11 @@ mapdef fueldump
 	}
 	maxaliens		8
 
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
 //	ufos
 //	{
 //	}
@@ -2545,6 +2869,11 @@ mapdef wilderness
 		coop2
 	}
 	maxaliens		8
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
 
 //	ufos
 //	{
@@ -2585,6 +2914,11 @@ mapdef ufocrash
 		craft_crash_corrupter
 		craft_crash_harvester
 		craft_crash_supply
+	}
+	
+	aircraft 
+	{
+		craft_drop_firebird
 	}
 }
 

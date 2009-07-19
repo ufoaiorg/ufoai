@@ -150,7 +150,7 @@ const mapDef_t* GAME_SK_MapInfo (int step)
 			Cvar_Set("rm_ufo", va("+%s", (const char *)ufos->data));
 		else
 			Cvar_Set("rm_ufo", "");
-		/** @todo only show those that are in md->ufos */
+		/** @todo only show those that are in md->ufos and md->aircraft */
 		/** @todo implement different dropships for ump files and mapdefs */
 		Cvar_Set("rm_drop", va("+%s", Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD)));
 		MN_ExecuteConfunc("skirmish_hide_ufos false");
