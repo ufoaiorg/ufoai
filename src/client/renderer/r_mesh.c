@@ -390,12 +390,12 @@ qboolean R_CullMeshModel (entity_t *e)
  */
 static void R_ModelViewTransform (const vec3_t in, vec3_t out)
 {
-       const float *v = in;
-       const float *m = r_locals.world_matrix;
+	const float *v = in;
+	const float *m = r_locals.world_matrix;
 
-       out[0] = m[0] * v[0] + m[4] * v[1] + m[8]  * v[2] + m[12];
-       out[1] = m[1] * v[0] + m[5] * v[1] + m[9]  * v[2] + m[13];
-       out[2] = m[2] * v[0] + m[6] * v[1] + m[10] * v[2] + m[14];
+	out[0] = m[0] * v[0] + m[4] * v[1] + m[8]  * v[2] + m[12];
+	out[1] = m[1] * v[0] + m[5] * v[1] + m[9]  * v[2] + m[13];
+	out[2] = m[2] * v[0] + m[6] * v[1] + m[10] * v[2] + m[14];
 }
 
 /**

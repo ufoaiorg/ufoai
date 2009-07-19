@@ -569,7 +569,7 @@ const vec4_t color_white = {1, 1, 1, 1};
  * @param[in] rgba A pointer to a vec4_t with rgba color value
  * @note To reset the color let rgba be NULL
  */
-void R_Color (const float *rgba)
+void R_Color (const vec4_t rgba)
 {
 	const float *color;
 	if (rgba)
