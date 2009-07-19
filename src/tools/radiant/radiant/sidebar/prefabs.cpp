@@ -45,6 +45,7 @@ namespace {
 	static GtkTreeStore* store;
 	static GtkTreeModel *fileFiltered;
 	static GtkTreeView* view;
+	static GtkEntry *filterEntry;
 
 	enum selectionStrategy {
 		PREFAB_SELECT_EXTEND,
@@ -153,33 +154,71 @@ static void Prefab_SelectionOptions_toggled (GtkWidget *widget, gpointer buttonI
 		selectedSelectionStrategy = gpointer_to_int(buttonID);
 }
 
+/* forward declaration */
+static gboolean Prefab_FilterDirectory (GtkTreeModel *model, GtkTreeIter *possibleDirectory);
+
 /**
- * @brief This method does the filtering work for prefab list
- * @param model current model to filter
- * @param iter iterator to current row which should be checked
- * @param entry search entry with content to search
- * @return true if entry should be visible (being a directory or matching search content), otherwise false
+ * @brief This method decides whether a given prefab entry should be visible or not.
+ * For this it checks whether name contains searched text. If not, it checks whether entry
+ * is a directory and whether sub-entries will be valid after filtering.
+ * @param model tree model to get content from
+ * @param entry entry to decide whether it should be visible
+ * @return true if entry should be visible because it matches the searched pattern or is a directory with content
  */
-static gboolean Prefab_FilterFiles (GtkTreeModel *model, GtkTreeIter *iter, GtkEntry *entry)
+static gboolean Prefab_FilterFileOrDirectory (GtkTreeModel *model, GtkTreeIter *entry)
 {
-	if (gtk_entry_get_text_length(entry) == 0)
-		return true;
-	const char* searchText = gtk_entry_get_text(entry);
+	const char* searchText = gtk_entry_get_text(filterEntry);
 	char* currentEntry;
-	gtk_tree_model_get(model, iter, PREFAB_SHORTNAME, &currentEntry, -1);
+	gtk_tree_model_get(model, entry, PREFAB_SHORTNAME, &currentEntry, -1);
 	if (strstr(currentEntry, searchText) != 0)
 		return true;
 	else
 		// check whether there are children in base model (directory)
-		return gtk_tree_model_iter_has_child(model, iter);
+		if (gtk_tree_model_iter_has_child(model, entry))
+			return Prefab_FilterDirectory(model, entry);
+		else
+			return false;
+}
+
+/**
+ * @brief This method decides whether a given prefab directory entry should be visible.
+ * It checks whether any of the children should be visible and is itself visible if so.
+ * @param model tree model to get content from
+ * @param possibleDirectory directory entry which should be checked for visibility
+ * @return true if directory will have content after filtering
+ */
+static gboolean Prefab_FilterDirectory(GtkTreeModel *model, GtkTreeIter *possibleDirectory)
+{
+	int children = gtk_tree_model_iter_n_children(model, possibleDirectory);
+	int unfilteredChildren = 0;
+	for (int i = 0; i < children; i++) {
+		GtkTreeIter *child;
+		gtk_tree_model_iter_nth_child(model, child, possibleDirectory, i);
+		if (Prefab_FilterFileOrDirectory(model, child))
+			unfilteredChildren++;
+	}
+	return unfilteredChildren > 0;
+
+}
+
+/**
+ * @brief This method does the filtering work for prefab list
+ * @param model current model to filter
+ * @param iter iterator to current row which should be checked
+ * @return true if entry should be visible (being a directory or matching search content), otherwise false
+ */
+static gboolean Prefab_FilterFiles (GtkTreeModel *model, GtkTreeIter *iter)
+{
+	if (gtk_entry_get_text_length(filterEntry) == 0)
+		return true;
+	return Prefab_FilterFileOrDirectory(model, iter);
 }
 
 /**
  * @brief Callback for 'changed' event of search entry used to reinit file filter
- * @param entry search entry
  * @return false
  */
-static gboolean Prefab_Refilter (GtkEditable *entry)
+static gboolean Prefab_Refilter ()
 {
 	gtk_tree_model_filter_refilter(GTK_TREE_MODEL_FILTER(fileFiltered));
 	return false;
@@ -285,8 +324,9 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 		store = gtk_tree_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF, G_TYPE_STRING);
 		//prepare file filter
 		fileFiltered = gtk_tree_model_filter_new(GTK_TREE_MODEL(store), NULL);
-		view
-				= GTK_TREE_VIEW(gtk_tree_view_new_with_model(fileFiltered));
+
+		view = GTK_TREE_VIEW(gtk_tree_view_new_with_model(fileFiltered));
+
 		gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), TRUE);
 		gtk_tree_view_set_search_column(GTK_TREE_VIEW(view), PREFAB_SHORTNAME);
 		gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(view), TRUE);
@@ -344,14 +384,14 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 		//search entry, connect to file filter
 		GtkWidget* vboxSearch = gtk_vbox_new(FALSE, 3);
 		gtk_box_pack_start(GTK_BOX(hboxFooter), vboxSearch, FALSE, TRUE, 3);
-		GtkWidget* searchEntry = gtk_entry_new();
+		GtkWidget *searchEntry = gtk_entry_new();
 		gtk_box_pack_start(GTK_BOX(vboxSearch), searchEntry, FALSE, TRUE, 3);
 		gtk_widget_show(searchEntry);
 
-		gtk_tree_model_filter_set_visible_func(GTK_TREE_MODEL_FILTER(fileFiltered), (GtkTreeModelFilterVisibleFunc) Prefab_FilterFiles,
-				searchEntry, NULL);
+		gtk_tree_model_filter_set_visible_func(GTK_TREE_MODEL_FILTER(fileFiltered), (GtkTreeModelFilterVisibleFunc) Prefab_FilterFiles, NULL, NULL);
 		g_signal_connect(G_OBJECT(searchEntry), "changed", G_CALLBACK(Prefab_Refilter), NULL );
-		gtk_tree_view_set_search_entry(view, GTK_ENTRY(searchEntry));
+		filterEntry = GTK_ENTRY(searchEntry);
+		gtk_tree_view_set_search_entry(view, filterEntry);
 
 	}
 	/* fill prefab store with data */
