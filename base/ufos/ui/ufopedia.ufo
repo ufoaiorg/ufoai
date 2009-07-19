@@ -10,16 +10,8 @@ window ufopedia
 		dragbutton	true
 		closebutton	true
 		image		ui/popup_alpha_tile
-		string		"_Ufopedia"
-		modal		true				// we can't click out
-	}
-
-	string nameentry
-	{
 		string		*cvar:mn_uptitle
-		pos			"33 59"
-		size		"298 39"
-		font		f_small_bold
+		modal		true				// we can't click out
 	}
 
 	todo todoweaponinfo {

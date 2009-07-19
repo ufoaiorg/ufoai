@@ -111,6 +111,7 @@ static void UP_ChangeDisplay (int newDisplay)
 		Cvar_Set("mn_upmodel_bottom", "");
 		Cvar_Set("mn_upimage_top", "base/empty");
 		MN_ExecuteConfunc("mn_up_empty");
+		Cvar_Set("mn_uptitle", _("UFOpaedia"));
 		break;
 	case UFOPEDIA_INDEX:
 		Cvar_Set("mn_upmodel_top", "");
@@ -622,7 +623,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		upCurrentTech = tech;
 
 		if (RS_IsResearched_ptr(tech)) {
-			Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
+			Cvar_Set("mn_uptitle", va("%s: %s %s", _("UFOpaedia"), _(tech->name), _("(complete)")));
 			/* If researched -> display research text */
 			MN_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->description)));
 			if (tech->preDescription.numDescriptions > 0) {
@@ -672,7 +673,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		/* see also UP_TechGetsDisplayed */
 		} else if (RS_Collected_(tech) || (tech->statusResearchable && tech->preDescription.numDescriptions > 0)) {
 			/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
-			Cvar_Set("mn_uptitle", _(tech->name));
+			Cvar_Set("mn_uptitle", va("%s: %s", _("UFOpaedia"), _(tech->name)));
 			/* Not researched but some items collected -> display pre-research text if available. */
 			if (tech->preDescription.numDescriptions > 0) {
 				MN_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->preDescription)));
@@ -681,7 +682,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 				MN_RegisterText(TEXT_UFOPEDIA, _("No pre-research description available."));
 			}
 		} else {
-			Cvar_Set("mn_uptitle", _(tech->name));
+			Cvar_Set("mn_uptitle", va("%s: %s", _("UFOpaedia"), _(tech->name)));
 			MN_ResetData(TEXT_UFOPEDIA);
 		}
 	} else {
@@ -905,7 +906,7 @@ static void UP_GenerateSummary (void)
 	}
 
 	MN_RegisterOption(OPTION_UFOPEDIA, chapters);
-	Cvar_Set("mn_uptitle", _("UFOpaedia Content"));
+	Cvar_Set("mn_uptitle", _("UFOpaedia"));
 }
 
 /**
