@@ -1293,6 +1293,33 @@ void UP_InitStartup (void)
 }
 
 /**
+ * @sa MN_InitStartup
+ */
+void UP_Shutdown (void)
+{
+	/* add commands and cvars */
+	Cmd_RemoveCommand("mn_upcontent");
+	Cmd_RemoveCommand("mn_upupdate");
+	Cmd_RemoveCommand("ufopedia");
+	Cmd_RemoveCommand("ufopedia_click");
+	Cmd_RemoveCommand("mailclient_click");
+	Cmd_RemoveCommand("mn_mail_readall");
+	Cmd_RemoveCommand("ufopedia_openmail");
+	Cmd_RemoveCommand("ufopedia_scrollmail");
+	Cmd_RemoveCommand("techtree_click");
+	Cmd_RemoveCommand("mn_upgotoresearchedlink");
+
+	Cvar_Delete("mn_uppretext");
+	Cvar_Delete("mn_uppreavailable");
+
+	if (upChapters) {
+		Mem_Free(upChapters);
+		upChapters = NULL;
+	}
+
+}
+
+/**
  * @brief Parse the UFOpaedia chapters from scripts
  * @param[in] name Chapter ID
  * @param[in] text Text for chapter ID

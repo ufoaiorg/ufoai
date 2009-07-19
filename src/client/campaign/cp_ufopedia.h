@@ -37,6 +37,8 @@ typedef struct pediaChapter_s {
 } pediaChapter_t;
 
 void UP_InitStartup(void);
+void UP_Shutdown(void);
+
 void UP_ParseChapters(const char *name, const char **text);
 void UP_OpenWith(const char *name);
 void UP_OpenCopyWith(const char *name);

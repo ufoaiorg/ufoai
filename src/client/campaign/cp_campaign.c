@@ -2007,6 +2007,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 	PR_ShutdownCallbacks();
 	RS_ShutdownCallbacks();
 	MSO_Shutdown();
+	UP_Shutdown();
 }
 
 static void CP_RemoveCampaignCommands (void)
