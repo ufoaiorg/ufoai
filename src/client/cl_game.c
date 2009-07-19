@@ -155,10 +155,13 @@ static void MN_MapInfo (int step)
 
 	mapname = md->map;
 	/* skip random map char */
-	if (mapname[0] == '+')
+	if (mapname[0] == '+') {
+		Cvar_Set("mn_svmapname", va("%s %s", md->map, md->param ? md->param : ""));
 		mapname++;
+	} else {
+		Cvar_Set("mn_svmapname", md->map);
+	}
 
-	Cvar_Set("mn_svmapname", md->map);
 	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", mapname)) != -1)
 		Cvar_Set("mn_mappic", va("maps/shots/%s", mapname));
 	else
