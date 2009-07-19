@@ -104,7 +104,6 @@ mapdef or_small
 	}
 }
 
-/* @todo fix it. It's impossible to assemble (r25230)
 mapdef or_medium
 {
 	map			"+oriental"
@@ -138,7 +137,6 @@ mapdef or_medium
 		village
 	}
 }
-*/
 
 mapdef or_large
 {

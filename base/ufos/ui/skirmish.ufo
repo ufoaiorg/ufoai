@@ -97,13 +97,13 @@ window skirmish
 	string daynight_str
 	{
 		string		"_Day version:"
-		pos			"500 260"
+		pos			"500 250"
 		size		"300 20"
 	}
 	checkbox daynight_value
 	{
 		current		*cvar:mn_serverday
-		pos			"825 260"
+		pos			"825 250"
 		image		"ui/checkbox_blue"
 		size		"20 18"
 	}
@@ -114,14 +114,14 @@ window skirmish
 	string ai_numactors_str
 	{
 		string		"_Max. AI actors:"
-		pos			"500 280"
+		pos			"500 275"
 		size		"300 20"
 		tooltip		"_Max AI actors for this game"
 	}
 	string ai_numactors_value
 	{
 		string		*cvar:ai_numaliens
-		pos			"810 280"
+		pos			"810 275"
 		size		"50 20"
 		textalign	cc
 	}
@@ -129,7 +129,7 @@ window skirmish
 	{
 		current		*cvar:ai_numaliens
 		image		ui/spinner_blue
-		pos			"868 279"
+		pos			"868 274"
 		min			1
 		max			30
 		delta		1
@@ -181,7 +181,7 @@ window skirmish
 	pic mappic
 	{
 		image		*cvar:mn_mappic
-		pos			"500 430"
+		pos			"500 400"
 		texl		"0 0"
 		texh		"128 96"
 		onWheelUp	{ cmd "mn_prevmap;" }
@@ -192,7 +192,7 @@ window skirmish
 	pic mappic2
 	{
 		image		*cvar:mn_mappic2
-		pos			"650 430"
+		pos			"650 400"
 		texl		"0 0"
 		texh		"128 96"
 		onWheelUp	{ cmd "mn_prevmap;" }
@@ -203,7 +203,7 @@ window skirmish
 	pic mappic3
 	{
 		image		*cvar:mn_mappic3
-		pos			"800 430"
+		pos			"800 400"
 		texl		"0 0"
 		texh		"128 96"
 		onWheelUp	{ cmd "mn_prevmap;" }
@@ -211,6 +211,10 @@ window skirmish
 		onClick		{ cmd "mn_nextmap;" }
 		onRClick		{ cmd "mn_prevmap;" }
 	}
+
+	// ===================
+	// TEAM
+	// ===================	
 
 	string team_str
 	{
@@ -236,7 +240,51 @@ window skirmish
 			value	"7"
 		}
 	}
+	
+	// ===================
+	// UFOS
+	// ===================	
 
+	string ufos_str
+	{
+		string		"_UFO:"
+		pos			"500 325"
+		size		"300 20"
+		tooltip		"_Select the ufo that should be used"
+	}
+
+	selectbox ufos_box
+	{
+		image	"ui/selectbox_green"
+		pos		"780 325"
+		size	"125 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	*cvar:rm_ufo
+		dataid	OPTION_UFOS
+	}
+	
+	// ===================
+	// DROPSHIPS
+	// ===================	
+
+	string dropships_str
+	{
+		string		"_Dropship:"
+		pos			"500 350"
+		size		"300 20"
+		tooltip		"_Select the dropship that should be used"
+	}
+
+	selectbox dropships_box
+	{
+		image	"ui/selectbox_green"
+		pos		"780 350"
+		size	"125 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	*cvar:rm_drop
+		dataid	OPTION_DROPSHIPS
+	}
+	
 	// ===================
 	// INIT
 	// ===================
