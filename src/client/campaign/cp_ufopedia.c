@@ -205,6 +205,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 		}
 
 	/* and now register the buffer */
+	Cvar_Set("mn_uprequirement", "1");
 	MN_RegisterText(TEXT_LIST, upTechtree);
 }
 
@@ -593,6 +594,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 
 		if (tech->type == RS_WEAPON)
 			UP_DrawAssociatedAmmo(tech);
+		Cvar_Set("mn_uprequirement", "");
 	}
 
 	MN_ResetData(TEXT_UFOPEDIA);
@@ -1314,6 +1316,7 @@ void UP_Shutdown (void)
 
 	Cvar_Delete("mn_uppretext");
 	Cvar_Delete("mn_uppreavailable");
+	Cvar_Delete("mn_uprequirement");
 
 	if (upChapters) {
 		Mem_Free(upChapters);

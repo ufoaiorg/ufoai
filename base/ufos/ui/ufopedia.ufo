@@ -129,7 +129,7 @@ window ufopedia
 		{
 			image		*cvar:mn_upimage_top
 			pos			"432 65"
-			size		"153 341"
+			size		"163 298"
 			preventratio	true
 		}
 	
@@ -147,7 +147,7 @@ window ufopedia
 		{
 			model		*cvar:mn_upmodel_bottom
 			angles		"0 0 120"
-			pos			"447 266"
+			pos			"451 246"
 			size		"120 120"
 			autoscale	true
 			rotatewithmouse	true
@@ -209,32 +209,47 @@ window ufopedia
 			onChange	{ *node:parent.description@viewpos <current> }
 		}
 	
-		text techtree
-		{
-			dataid		TEXT_LIST
-			pos			"13 271"
-			size		"334 246"
-			lineheight	"20"
-			rows		"12"
-			mousefx		true
-			onClick		{ cmd "techtree_click <lineselected>" }
-			onViewChange	{
-				*node:(abstractscrollbar)parent.techtree_scroll@fullsize <lines>
-				*node:(abstractscrollbar)parent.techtree_scroll@current <viewpos>
-				*node:(abstractscrollbar)parent.techtree_scroll@viewsize <viewsize>
+		panel requirement {
+			{
+				pos		"430 373"
+				size	"166 128"
+				image	"ui/panel_green_slim"
 			}
+			
+			string label {
+				pos "5 5"
+				size "120 20"
+				font	f_small
+				string "_Requirement:"
+			}
+			
+			text techtree
+			{
+				dataid		TEXT_LIST
+				pos			"5 31"
+				size		"156 92"
+				font		f_verysmall
+				mousefx		true
+				onClick		{ cmd "techtree_click <lineselected>" }
+				onViewChange	{
+					*node:(abstractscrollbar)parent.techtree_scroll@fullsize <lines>
+					*node:(abstractscrollbar)parent.techtree_scroll@current <viewpos>
+					*node:(abstractscrollbar)parent.techtree_scroll@viewsize <viewsize>
+				}
+			}
+		
+			vscrollbar techtree_scroll {
+				image		ui/scrollbar_v_green
+				invis		true
+				pos			"142 7"
+				height		"117"
+				current		0
+				hidewhenunused true
+				onChange	{ *node:parent.techtree@viewpos <current> }
+			}
+
 		}
 	
-		vscrollbar techtree_scroll {
-			image		ui/scrollbar_v_green
-			pos			"430 271"
-			height		"246"
-			current		0
-			viewsize	12
-			fullsize	12
-			hidewhenunused true
-			onChange	{ *node:parent.techtree@viewpos <current> }
-		}
 	}
 
 	// ==================
@@ -376,12 +391,12 @@ window ufopedia
 
 	confunc update_ufopedia_layout {
 		
-		// is right column is empty?
-		if ( ( ( *cvar:mn_upimage_top eq "" ) and ( *cvar:mn_upmodel_top eq "" ) ) and ( *cvar:mn_upmodel_bottom eq "" ) ) {
-			*cvar:mn_expend = 1
-		} else {
-			*cvar:mn_expend = 0
-		}
+		// is right column is not empty?
+		*cvar:mn_rightpanel = 0
+		if ( *cvar:mn_upimage_top ne "" ) { *cvar:mn_rightpanel = 1 } 
+		if ( *cvar:mn_upmodel_top ne "" ) { *cvar:mn_rightpanel = 1 } 
+		if ( *cvar:mn_upmodel_bottom ne "" ) { *cvar:mn_rightpanel = 1 } 
+		if ( *cvar:mn_uprequirement ne "" ) { *cvar:mn_rightpanel = 1 } 
 
 		// update tab
 		if ( *cvar:mn_uppreavailable == 1 ) {
@@ -399,12 +414,11 @@ window ufopedia
 			*content.ufopedia_scroll@invis = false
 			*content.description@invis = true
 			*content.description_scroll@invis = true
-			*content.techtree@invis = true
-			*content.techtree_scroll@invis = true
-			if ( *cvar:mn_expend == 1 ) {
-				*content.ufopedia@width = 583
-			} else {
+			*content.requirement@invis = false
+			if ( *cvar:mn_rightpanel == 1 ) {
 				*content.ufopedia@width = 406
+			} else {
+				*content.ufopedia@width = 583
 			}
 			cmd "set mn_uppretext 0; mn_upupdate;"
 		} elif ( *cvar:ufopedia_content eq "preresearch" ) {
@@ -412,12 +426,11 @@ window ufopedia
 			*content.ufopedia_scroll@invis = false
 			*content.description@invis = true
 			*content.description_scroll@invis = true
-			*content.techtree@invis = true
-			*content.techtree_scroll@invis = true
-			if ( *cvar:mn_expend == 1 ) {
-				*content.ufopedia@width = 583
-			} else {
+			*content.requirement@invis = false
+			if ( *cvar:mn_rightpanel == 1 ) {
 				*content.ufopedia@width = 406
+			} else {
+				*content.ufopedia@width = 583
 			}
 			cmd "set mn_uppretext 1; mn_upupdate;"
 		} elif ( *cvar:ufopedia_content eq "stats" ) {
@@ -425,11 +438,15 @@ window ufopedia
 			*content.ufopedia_scroll@invis = true
 			*content.description@invis = false
 			*content.description_scroll@invis = false
-			*content.techtree@invis = false
-			*content.techtree_scroll@invis = false
+			*content.requirement@invis = true
 		}
-		
-		cmd "del mn_expend"
+
+		// anyway we do not display requirement if it is not need
+		if ( *cvar:mn_uprequirement eq "" ) {
+			*content.requirement@invis = true
+		}
+
+		cmd "del mn_rightpanel"
 	}
 
 	confunc mn_up_empty
