@@ -17,3 +17,9 @@
 		lightmap
 	}
 }
+{
+	material tex_nature/water
+	{
+		envmap 0
+	}
+}

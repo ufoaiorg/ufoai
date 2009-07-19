@@ -20,12 +20,12 @@
 //   "This command will end the current campaign"
 //
 // valid UFO values:
-// * craft_ufo_scout, craft_crash_scout,
-// * craft_ufo_fighter, craft_crash_fighter,
-// * craft_ufo_harvester, craft_crash_harvester,
-// * craft_ufo_bomber, craft_crash_bomber
-// * craft_ufo_corrupter, craft_crash_corrupter
-// * craft_crash_supply
+// * craft_ufo_scout,       craft_crash_scout,
+// * craft_ufo_fighter,     craft_crash_fighter,
+// * craft_ufo_harvester,   craft_crash_harvester,
+// * craft_ufo_bomber,      craft_crash_bomber
+// * craft_ufo_corrupter,   craft_crash_corrupter
+// *                        craft_crash_supply
 
 ////////////////////////
 // INDUSTRIAL RANDOM MAPS
@@ -574,14 +574,16 @@ mapdef tropic_bigufo
 mapdef vil_lille
 {
 	map			"+village"
-	param		recreational
+	param		ufo_small
 	multiplayer	false
+	size "small"
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_ufo_scout
+	}
 
 	terrains
 	{
@@ -601,7 +603,7 @@ mapdef vil_lille
 		suburban
 	}
 }
-
+/*
 mapdef vil_residential
 {
 	map			"+village"
@@ -610,9 +612,10 @@ mapdef vil_residential
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_ufo_scout
+	}
 
 	terrains
 	{
@@ -694,7 +697,7 @@ mapdef vil_big
 		suburban
 	}
 }
-
+*/
 
 mapdef forest_small
 {
@@ -703,7 +706,6 @@ mapdef forest_small
 	multiplayer	false
 	description	"_Aliens are up to no good in this sparsely populated forest region."
 	size		"small"
-	multiplayer	false
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
 	ufos
@@ -837,8 +839,6 @@ mapdef country_street
 		nopopulation
 	}
 }
-
-
 
 /////////////
 // FIXED MAPS
