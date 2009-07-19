@@ -108,9 +108,9 @@ CVARS (console variables)
 typedef struct cvar_s {
 	char *name;				/**< cvar name */
 	char *string;			/**< value as string */
-	char *latched_string;	/**< for CVAR_LATCH vars */
+	char *latchedString;	/**< for CVAR_LATCH vars */
 	char *default_string;	/**< default string set on first init - only set for CVAR_CHEAT */
-	char *old_string;		/**< value of the cvar before we changed it */
+	char *oldString;		/**< value of the cvar before we changed it */
 	const char *description;		/**< cvar description */
 	int flags;				/**< cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */
 	qboolean modified;		/**< set each time the cvar is changed */

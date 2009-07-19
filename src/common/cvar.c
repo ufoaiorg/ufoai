@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define CVAR_HASH_SIZE          64
 
-static cvar_t *cvar_vars_hash[CVAR_HASH_SIZE];
+static cvar_t *cvarVarsHash[CVAR_HASH_SIZE];
 
 /**
  * @brief This is set each time a CVAR_USERINFO variable is changed
@@ -44,7 +44,7 @@ qboolean userinfoModified;
 /**
  * @brief Cvar list
  */
-static cvar_t *cvar_vars;
+static cvar_t *cvarVars;
 
 static qboolean Cvar_InfoValidate (const char *s)
 {
@@ -59,18 +59,18 @@ static qboolean Cvar_InfoValidate (const char *s)
 
 /**
  * @brief Searches for a cvar given by parameter
- * @param var_name The cvar name as string
+ * @param varName The cvar name as string
  * @return Pointer to cvar_t struct
  * @sa Cvar_GetString
  * @sa Cvar_SetValue
  */
-cvar_t *Cvar_FindVar (const char *var_name)
+cvar_t *Cvar_FindVar (const char *varName)
 {
 	cvar_t *var;
-	const unsigned hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
+	const unsigned hash = Com_HashKey(varName, CVAR_HASH_SIZE);
 
-	for (var = cvar_vars_hash[hash]; var; var = var->hash_next)
-		if (!strcmp(var_name, var->name))
+	for (var = cvarVarsHash[hash]; var; var = var->hash_next)
+		if (!strcmp(varName, var->name))
 			return var;
 
 	return NULL;
@@ -83,11 +83,11 @@ cvar_t *Cvar_FindVar (const char *var_name)
  * @sa Cvar_GetInteger
  * @return 0 if not defined
  */
-float Cvar_GetValue (const char *var_name)
+float Cvar_GetValue (const char *varName)
 {
 	cvar_t *var;
 
-	var = Cvar_FindVar(var_name);
+	var = Cvar_FindVar(varName);
 	if (!var)
 		return 0.0;
 	return atof(var->string);
@@ -99,13 +99,13 @@ float Cvar_GetValue (const char *var_name)
  * @sa Cvar_FindVar
  * @return true if set
  */
-qboolean Cvar_SetCheckFunction (const char *var_name, qboolean (*check) (cvar_t* cvar))
+qboolean Cvar_SetCheckFunction (const char *varName, qboolean (*check) (cvar_t* cvar))
 {
 	cvar_t *var;
 
-	var = Cvar_FindVar(var_name);
+	var = Cvar_FindVar(varName);
 	if (!var) {
-		Com_Printf("Could not set check function for cvar '%s'\n", var_name);
+		Com_Printf("Could not set check function for cvar '%s'\n", varName);
 		return qfalse;
 	}
 	var->check = check;
@@ -174,8 +174,8 @@ qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize)
 
 	Com_Printf("Cvar '%s' has not a valid value\n", cvar->name);
 
-	if (cvar->old_string)
-		Cvar_Set(cvar->name, cvar->old_string);
+	if (cvar->oldString)
+		Cvar_Set(cvar->name, cvar->oldString);
 
 	/* not a valid value */
 	return qtrue;
@@ -188,14 +188,14 @@ qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize)
  * @sa Cvar_FindVar
  * @return 0 if not defined
  */
-int Cvar_GetInteger (const char *var_name)
+int Cvar_GetInteger (const char *varName)
 {
-	cvar_t *var;
+	const cvar_t *var;
 
-	var = Cvar_FindVar(var_name);
+	var = Cvar_FindVar(varName);
 	if (!var)
 		return 0;
-	return atoi(var->string);
+	return var->integer;
 }
 
 /**
@@ -206,11 +206,11 @@ int Cvar_GetInteger (const char *var_name)
  * Even if the cvar does not exist this function will not return a null pointer
  * but an empty string
  */
-const char *Cvar_GetString (const char *var_name)
+const char *Cvar_GetString (const char *varName)
 {
-	cvar_t *var;
+	const cvar_t *var;
 
-	var = Cvar_FindVar(var_name);
+	var = Cvar_FindVar(varName);
 	if (!var)
 		return "";
 	return var->string;
@@ -224,15 +224,15 @@ const char *Cvar_GetString (const char *var_name)
  * Even if the cvar does not exist this function will not return a null pointer
  * but an empty string
  */
-const char *Cvar_VariableStringOld (const char *var_name)
+const char *Cvar_VariableStringOld (const char *varName)
 {
 	cvar_t *var;
 
-	var = Cvar_FindVar(var_name);
+	var = Cvar_FindVar(varName);
 	if (!var)
 		return "";
-	if (var->old_string)
-		return var->old_string;
+	if (var->oldString)
+		return var->oldString;
 	else
 		return "";
 }
@@ -257,7 +257,7 @@ int Cvar_CompleteVariable (const char *partial, const char **match)
 	localMatch[matches] = NULL;
 
 	/* check for partial matches */
-	for (cvar = cvar_vars; cvar; cvar = cvar->next)
+	for (cvar = cvarVars; cvar; cvar = cvar->next)
 		if (!strncmp(partial, cvar->name, len)) {
 #ifndef DEBUG
 			if (cvar->flags & CVAR_DEVELOPER)
@@ -283,7 +283,7 @@ qboolean Cvar_Delete (const char *var_name)
 	cvar_t *var, *previousVar = NULL;
 
 	hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
-	for (var = cvar_vars_hash[hash]; var; var = var->hash_next) {
+	for (var = cvarVarsHash[hash]; var; var = var->hash_next) {
 		if (!Q_strcasecmp(var_name, var->name)) {
 			if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO | CVAR_NOSET | CVAR_LATCH)) {
 				Com_Printf("Can't delete the cvar '%s' - it's a special cvar\n", var_name);
@@ -293,7 +293,7 @@ qboolean Cvar_Delete (const char *var_name)
 				assert(var->prev->next == var);
 				var->prev->next = var->next;
 			} else
-				cvar_vars = var->next;
+				cvarVars = var->next;
 			if (var->next) {
 				assert(var->next->prev == var);
 				var->next->prev = var->prev;
@@ -302,16 +302,16 @@ qboolean Cvar_Delete (const char *var_name)
 				assert(previousVar->hash_next == var);
 				previousVar->hash_next = var->hash_next;
 			} else {
-				cvar_vars_hash[hash] = var->hash_next;
+				cvarVarsHash[hash] = var->hash_next;
 			}
 			Mem_Free(var->name);
 			Mem_Free(var->string);
-			if (var->old_string)
-				Mem_Free(var->old_string);
+			if (var->oldString)
+				Mem_Free(var->oldString);
 			if (var->default_string)
 				Mem_Free(var->default_string);
 			/* latched cvars should not be removable */
-			assert(var->latched_string == NULL);
+			assert(var->latchedString == NULL);
 			Mem_Free(var);
 			return qtrue;
 		}
@@ -370,7 +370,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 	var = Mem_PoolAlloc(sizeof(*var), com_cvarSysPool, 0);
 	var->name = Mem_PoolStrDup(var_name, com_cvarSysPool, 0);
 	var->string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
-	var->old_string = NULL;
+	var->oldString = NULL;
 	var->modified = qtrue;
 	var->value = atof(var->string);
 	var->integer = atoi(var->string);
@@ -378,15 +378,15 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 
 	/* link the variable in */
 	/* cvar_vars_hash should be null on the first run */
-	var->hash_next = cvar_vars_hash[hash];
+	var->hash_next = cvarVarsHash[hash];
 	/* set the cvar_vars_hash pointer to the current cvar */
 	/* if there were already others in cvar_vars_hash at position hash, they are
 	 * now accessible via var->hash_next - loop until var->hash_next is null (the first
 	 * cvar at that position)
 	 */
-	cvar_vars_hash[hash] = var;
-	var->next = cvar_vars;
-	cvar_vars = var;
+	cvarVarsHash[hash] = var;
+	var->next = cvarVars;
+	cvarVars = var;
 	if (var->next)
 		var->next->prev = var;
 
@@ -435,11 +435,11 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 #endif
 
 		if (var->flags & CVAR_LATCH) {
-			if (var->latched_string) {
-				if (!strcmp(value, var->latched_string))
+			if (var->latchedString) {
+				if (!strcmp(value, var->latchedString))
 					return var;
-				Mem_Free(var->latched_string);
-				var->latched_string = NULL;
+				Mem_Free(var->latchedString);
+				var->latchedString = NULL;
 			} else {
 				if (!strcmp(value, var->string))
 					return var;
@@ -448,11 +448,11 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 			/* if we are running a server */
 			if (Com_ServerState()) {
 				Com_Printf("%s will be changed for next game.\n", var_name);
-				var->latched_string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
+				var->latchedString = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 			} else {
-				if (var->old_string)
-					Mem_Free(var->old_string);
-				var->old_string = var->string;
+				if (var->oldString)
+					Mem_Free(var->oldString);
+				var->oldString = var->string;
 				var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 				var->value = atof(var->string);
 				var->integer = atoi(var->string);
@@ -465,18 +465,18 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 			return var;
 		}
 	} else {
-		if (var->latched_string) {
-			Mem_Free(var->latched_string);
-			var->latched_string = NULL;
+		if (var->latchedString) {
+			Mem_Free(var->latchedString);
+			var->latchedString = NULL;
 		}
 	}
 
 	if (!strcmp(value, var->string))
 		return var;				/* not changed */
 
-	if (var->old_string)
-		Mem_Free(var->old_string);		/* free the old value string */
-	var->old_string = var->string;
+	if (var->oldString)
+		Mem_Free(var->oldString);		/* free the old value string */
+	var->oldString = var->string;
 	var->modified = qtrue;
 
 	if (var->flags & CVAR_USERINFO)
@@ -505,13 +505,13 @@ cvar_t *Cvar_ForceSet (const char *var_name, const char *value)
 
 /**
  * @brief Sets a cvar value
- * @param var_name Which cvar should be set
+ * @param varName Which cvar should be set
  * @param value Which value should the cvar get
  * @note Look after the CVAR_LATCH stuff and check for write protected cvars
  */
-cvar_t *Cvar_Set (const char *var_name, const char *value)
+cvar_t *Cvar_Set (const char *varName, const char *value)
 {
-	return Cvar_Set2(var_name, value, qfalse);
+	return Cvar_Set2(varName, value, qfalse);
 }
 
 /**
@@ -523,22 +523,22 @@ cvar_t *Cvar_Set (const char *var_name, const char *value)
  * CVAR_NOSET Don't allow change from console at all but can be set from the command line.
  * CVAR_LATCH Save changes until server restart.
  *
- * @param var_name Which cvar
+ * @param varName Which cvar
  * @param value Which value for the cvar
  * @param flags which flags
  * @sa Cvar_Set_f
  */
-cvar_t *Cvar_FullSet (const char *var_name, const char *value, int flags)
+cvar_t *Cvar_FullSet (const char *varName, const char *value, int flags)
 {
 	cvar_t *var;
 
 	if (!value)
 		return NULL;
 
-	var = Cvar_FindVar(var_name);
+	var = Cvar_FindVar(varName);
 	/* create it */
 	if (!var)
-		return Cvar_Get(var_name, value, flags, NULL);
+		return Cvar_Get(varName, value, flags, NULL);
 
 	var->modified = qtrue;
 
@@ -546,9 +546,9 @@ cvar_t *Cvar_FullSet (const char *var_name, const char *value, int flags)
 	if (var->flags & CVAR_USERINFO)
 		userinfoModified = qtrue;
 
-	if (var->old_string)
-		Mem_Free(var->old_string);		/* free the old value string */
-	var->old_string = var->string;
+	if (var->oldString)
+		Mem_Free(var->oldString);		/* free the old value string */
+	var->oldString = var->string;
 
 	var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 	var->value = atof(var->string);
@@ -561,7 +561,7 @@ cvar_t *Cvar_FullSet (const char *var_name, const char *value, int flags)
 /**
  * @brief Expands value to a string and calls Cvar_Set
  */
-void Cvar_SetValue (const char *var_name, float value)
+void Cvar_SetValue (const char *varName, float value)
 {
 	char val[32];
 
@@ -569,7 +569,7 @@ void Cvar_SetValue (const char *var_name, float value)
 		Com_sprintf(val, sizeof(val), "%i", (int) value);
 	else
 		Com_sprintf(val, sizeof(val), "%1.2f", value);
-	Cvar_Set(var_name, val);
+	Cvar_Set(varName, val);
 }
 
 
@@ -581,12 +581,12 @@ void Cvar_UpdateLatchedVars (void)
 {
 	cvar_t *var;
 
-	for (var = cvar_vars; var; var = var->next) {
-		if (!var->latched_string)
+	for (var = cvarVars; var; var = var->next) {
+		if (!var->latchedString)
 			continue;
-		var->old_string = var->string;
-		var->string = var->latched_string;
-		var->latched_string = NULL;
+		var->oldString = var->string;
+		var->string = var->latchedString;
+		var->latchedString = NULL;
 		var->value = atof(var->string);
 		var->integer = atoi(var->string);
 	}
@@ -641,8 +641,8 @@ static void Cvar_SetOld_f (void)
 		Com_Printf("cvar '%s' not found\n", Cmd_Argv(1));
 		return;
 	}
-	if (v->old_string)
-		Cvar_Set(Cmd_Argv(1), v->old_string);
+	if (v->oldString)
+		Cvar_Set(Cmd_Argv(1), v->oldString);
 }
 
 /**
@@ -709,7 +709,7 @@ void Cvar_WriteVariables (qFILE *f)
 {
 	const cvar_t *var;
 
-	for (var = cvar_vars; var; var = var->next)
+	for (var = cvarVars; var; var = var->next)
 		if (var->flags & CVAR_ARCHIVE)
 			FS_Printf(f, "set %s \"%s\" a\n", var->name, var->string);
 }
@@ -723,7 +723,7 @@ qboolean Cvar_PendingCvars (int flags)
 {
 	const cvar_t *var;
 
-	for (var = cvar_vars; var; var = var->next)
+	for (var = cvarVars; var; var = var->next)
 		if ((var->flags & flags) && var->modified)
 			return qtrue;
 
@@ -734,7 +734,7 @@ void Cvar_ClearVars (int flags)
 {
 	cvar_t *var;
 
-	for (var = cvar_vars; var; var = var->next)
+	for (var = cvarVars; var; var = var->next)
 		if ((var->flags & flags) && var->modified)
 			var->modified = qfalse;
 }
@@ -756,7 +756,7 @@ static void Cvar_List_f (void)
 	}
 
 	i = 0;
-	for (var = cvar_vars; var; var = var->next, i++) {
+	for (var = cvarVars; var; var = var->next, i++) {
 		if (c == 2 && strncmp(var->name, token, l)) {
 			i--;
 			continue;
@@ -824,7 +824,7 @@ static char *Cvar_BitInfo (int bit)
 
 	info[0] = 0;
 
-	for (var = cvar_vars; var; var = var->next)
+	for (var = cvarVars; var; var = var->next)
 		if (var->flags & bit)
 			Info_SetValueForKey(info, var->name, var->string);
 	return info;
@@ -919,7 +919,7 @@ void Cvar_FixCheatVars (void)
 	if (!(Com_ServerState() && !Cvar_GetInteger("sv_cheats")))
 		return;
 
-	for (var = cvar_vars; var; var = var->next) {
+	for (var = cvarVars; var; var = var->next) {
 		if (!(var->flags & CVAR_CHEAT))
 			continue;
 
@@ -927,10 +927,10 @@ void Cvar_FixCheatVars (void)
 			Com_Printf("Cheat cvars: Cvar %s has no default value\n", var->name);
 			continue;
 		}
-		/* also remove the old_string value here */
-		if (var->old_string) {
-			Mem_Free(var->old_string);
-			var->old_string = NULL;
+		/* also remove the oldString value here */
+		if (var->oldString) {
+			Mem_Free(var->oldString);
+			var->oldString = NULL;
 		}
 		Mem_Free(var->string);
 		var->string = Mem_PoolStrDup(var->default_string, com_cvarSysPool, 0);
