@@ -172,8 +172,8 @@ void DoTextEditor(const char* filename, int cursorpos,
 		const std::size_t size = file->size();
 		char *buf = (char *) malloc(size + 1);
 		TextInputStream &stream = file->getInputStream();
-		stream.read(buf, size);
-		buf[size] = '\0';
+		const std::size_t realsize = stream.read(buf, size);
+		buf[realsize] = '\0';
 
 		gtk_text_buffer_set_text(text_buffer, (char *) buf, size);
 
