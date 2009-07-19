@@ -266,6 +266,6 @@ window basesummary
 	// ==================
 	func onInit
 	{
-		cmd "basesummary_selectbase 0;"
+		cmd "basesummary_selectbase;"
 	}
 }

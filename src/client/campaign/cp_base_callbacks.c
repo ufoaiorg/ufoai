@@ -878,20 +878,23 @@ static void BaseSummary_Init (const base_t *base)
  */
 static void BaseSummary_SelectBase_f (void)
 {
-	int i;
+	const base_t *base;
 
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <baseid>\n", Cmd_Argv(0));
-		return;
+	if (Cmd_Argc() >= 2) {
+		int i = atoi(Cmd_Argv(1));;
+
+		if (i < 0 || i >= ccs.numBases) {
+			Com_Printf("Usage: %s [baseIdx]\nWithout baseIdx the current base is selected.\n", Cmd_Argv(0));
+			return;
+		}
+		base = B_GetFoundedBaseByIDX(i);
+	} else {
+		base = B_GetCurrentSelectedBase();
 	}
 
-	i = atoi(Cmd_Argv(1));
-	if (i >= 0 || i < ccs.numBases) {
-		const base_t *base = B_GetFoundedBaseByIDX(i);
-		if (base != NULL) {
-			BaseSummary_Init(base);
-			MN_ExecuteConfunc("basesummary_change_color %i", base->idx);
-		}
+	if (base != NULL) {
+		BaseSummary_Init(base);
+		MN_ExecuteConfunc("basesummary_change_color %i", base->idx);
 	}
 }
 
