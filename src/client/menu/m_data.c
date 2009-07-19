@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../client.h"
 #include "m_main.h"
 #include "m_internal.h"
 
@@ -161,19 +162,29 @@ void MN_ResetData (int dataId)
 
 /**
  * @brief Remove the higher element (in alphabet) from a list
+ * @todo option should start with '_' if we need to translate it
  */
 static menuOption_t *MN_OptionNodeRemoveHigherOption (menuOption_t **option)
 {
-	menuOption_t *prev = NULL;
+	menuOption_t *prev = *option;
 	menuOption_t *prevfind = NULL;
 	menuOption_t *search = (*option)->next;
-	char *label = (*option)->label;
+	const char *label = (*option)->label;
+#if 0
+	if (label[0] == '_')
+#endif
+		label = _(label);
 
 	/* search the smaller element */
 	while (search) {
-		if (strcmp(label, search->label) < 0) {
+		const char *searchlabel = search->label;
+#if 0
+		if (searchlabel[0] == '_')
+#endif
+			searchlabel = _(searchlabel);
+		if (strcmp(label, searchlabel) < 0) {
 			prevfind = prev;
-			label = search->label;
+			label = searchlabel;
 		}
 		prev = search;
 		search = search->next;

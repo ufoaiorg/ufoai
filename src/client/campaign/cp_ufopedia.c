@@ -832,6 +832,9 @@ static menuOption_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter, 
 	*count = articleCount;
 	if (articleCount == 0)
 		return NULL;
+
+	MN_SortOptions(&array);
+
 	return array;
 }
 

@@ -17,9 +17,9 @@ window ufopedia
 	string nameentry
 	{
 		string		*cvar:mn_uptitle
-		pos			"33 49"
+		pos			"33 59"
 		size		"298 39"
-		font		f_normal
+		font		f_small_bold
 	}
 
 	panel navigation_panel {
@@ -440,6 +440,7 @@ window ufopedia
 		*node:root.summary.ufopedia_summary@viewpos = 0
 		*node:root.summary.ufopedia_summary_scroll@current = 0
 		*cvar:ufopedia_element = ""
+		cmd "update_ufopedia_layout"
 	}
 
 	func onClose
