@@ -22,24 +22,9 @@ window ufopedia
 		font		f_small_bold
 	}
 
-	todo todounneedtab {
-		pos		"350 45"
-		string	"We must hide/disable unneed tabs"
-	}
-
 	todo todoweaponinfo {
 		pos		"370 45"
 		string	"Weapon info are missing???"
-	}
-
-	todo todopreresearch {
-		pos		"390 45"
-		string	"Is description/preresearch working?"
-	}
-
-	todo todorequiremement {
-		pos		"410 45"
-		string	"Can we move requirement into the description tab (under the image)?"
 	}
 
 	// ==================
@@ -185,9 +170,9 @@ window ufopedia
 	
 		text description
 		{
-			dataid		TEXT_STANDARD
-			pos			"18 61"
-			size		"412 200"
+			dataid		TEXT_UFOPEDIA_METADATA
+			pos			"10 61"
+			size		"412 400"
 			lineheight	20
 			tabwidth	230
 			rows		"10"
@@ -200,8 +185,8 @@ window ufopedia
 	
 		vscrollbar description_scroll {
 			image		ui/scrollbar_v_green
-			pos			"430 61"
-			height		"200"
+			pos			"425 61"
+			height		"400"
 			current		0
 			viewsize	10
 			fullsize	10
@@ -225,7 +210,7 @@ window ufopedia
 			
 			text techtree
 			{
-				dataid		TEXT_LIST
+				dataid		TEXT_UFOPEDIA_REQUIREMENT
 				pos			"5 31"
 				size		"156 92"
 				font		f_verysmall
@@ -405,6 +390,15 @@ window ufopedia
 			cmd "mn_updateoption <path:root>.content.navigation preresearch hide"
 			// update the tab if the hiden one is selected
 			if ( *cvar:ufopedia_content eq "preresearch" ) {
+				*cvar:ufopedia_content = "description"
+			} 
+		}
+		if ( *cvar:mn_upmetadata == 1 ) {
+			cmd "mn_updateoption <path:root>.content.navigation stats display" 
+		} else {
+			cmd "mn_updateoption <path:root>.content.navigation stats hide"
+			// update the tab if the hiden one is selected
+			if ( *cvar:ufopedia_content eq "stats" ) {
 				*cvar:ufopedia_content = "description"
 			} 
 		}

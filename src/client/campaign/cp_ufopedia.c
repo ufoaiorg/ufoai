@@ -99,8 +99,8 @@ static void UP_ChangeDisplay (int newDisplay)
 	/* make sure, that we leave the mail header space */
 	MN_ResetData(TEXT_UFOPEDIA_MAILHEADER);
 	MN_ResetData(TEXT_UFOPEDIA_MAIL);
-	MN_ResetData(TEXT_LIST);
-	MN_ResetData(TEXT_STANDARD);
+	MN_ResetData(TEXT_UFOPEDIA_REQUIREMENT);
+	MN_ResetData(TEXT_UFOPEDIA_METADATA);
 	MN_ResetData(TEXT_UFOPEDIA);
 
 	switch (upDisplay) {
@@ -206,7 +206,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 
 	/* and now register the buffer */
 	Cvar_Set("mn_uprequirement", "1");
-	MN_RegisterText(TEXT_LIST, upTechtree);
+	MN_RegisterText(TEXT_UFOPEDIA_REQUIREMENT, upTechtree);
 }
 
 /**
@@ -236,7 +236,8 @@ static void UP_ArmourDescription (const technology_t* t)
 		Q_strcat(upBuffer, va(_("%s:\tProtection: %i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(upBuffer));
 	}
 
-	MN_RegisterText(TEXT_STANDARD, upBuffer);
+	Cvar_Set("mn_upmetadata", "1");
+	MN_RegisterText(TEXT_UFOPEDIA_METADATA, upBuffer);
 	UP_DisplayTechTree(t);
 }
 
@@ -256,7 +257,9 @@ static void UP_BuildingDescription (const technology_t* t)
 		Q_strcat(upBuffer, va(_("Cost:\t%i c\n"), b->fixCosts), sizeof(upBuffer));
 		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), b->varCosts), sizeof(upBuffer));
 	}
-	MN_RegisterText(TEXT_STANDARD, upBuffer);
+
+	Cvar_Set("mn_upmetadata", "1");
+	MN_RegisterText(TEXT_UFOPEDIA_METADATA, upBuffer);
 	UP_DisplayTechTree(t);
 }
 
@@ -324,7 +327,8 @@ void UP_AircraftItemDescription (const objDef_t *item)
 		}
 	}
 
-	MN_RegisterText(TEXT_STANDARD, itemText);
+	Cvar_Set("mn_upmetadata", "1");
+	MN_RegisterText(TEXT_UFOPEDIA_METADATA, itemText);
 }
 
 /**
@@ -381,7 +385,9 @@ void UP_AircraftDescription (const technology_t* tech)
 	} else {
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
 	}
-	MN_RegisterText(TEXT_STANDARD, upBuffer);
+
+	Cvar_Set("mn_upmetadata", "1");
+	MN_RegisterText(TEXT_UFOPEDIA_METADATA, upBuffer);
 	UP_DisplayTechTree(tech);
 }
 
@@ -406,17 +412,18 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	/* Set name of ugv/robot */
 	Cvar_Set("mn_itemname", _(tech->name));
 
+	Cvar_Set("mn_upmetadata", "1");
 	if (RS_IsResearched_ptr(tech)) {
 		/** @todo make me shiny */
 		Com_sprintf(itemText, sizeof(itemText), _("%s\n%s"), _(tech->name), ugvType->weapon);
-		MN_RegisterText(TEXT_STANDARD, itemText);
+		MN_RegisterText(TEXT_UFOPEDIA_METADATA, itemText);
 	} else if (RS_Collected_(tech)) {
 		/** @todo Display crippled info and pre-research text here */
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
-		MN_RegisterText(TEXT_STANDARD, itemText);
+		MN_RegisterText(TEXT_UFOPEDIA_METADATA, itemText);
 	} else {
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
-		MN_RegisterText(TEXT_STANDARD, itemText);
+		MN_RegisterText(TEXT_UFOPEDIA_METADATA, itemText);
 	}
 }
 
@@ -595,10 +602,11 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		if (tech->type == RS_WEAPON)
 			UP_DrawAssociatedAmmo(tech);
 		Cvar_Set("mn_uprequirement", "");
+		Cvar_Set("mn_upmetadata", "");
 	}
 
 	MN_ResetData(TEXT_UFOPEDIA);
-	MN_ResetData(TEXT_LIST);
+	MN_ResetData(TEXT_UFOPEDIA_REQUIREMENT);
 
 	if (mail) {
 		/* event mail */
@@ -1317,6 +1325,7 @@ void UP_Shutdown (void)
 	Cvar_Delete("mn_uppretext");
 	Cvar_Delete("mn_uppreavailable");
 	Cvar_Delete("mn_uprequirement");
+	Cvar_Delete("mn_upmetadata");
 
 	if (upChapters) {
 		Mem_Free(upChapters);
