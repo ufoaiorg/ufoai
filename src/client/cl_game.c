@@ -489,27 +489,47 @@ static void GAME_InitMenuOptions (void)
 {
 	int i, cnt;
 	menuOption_t* ufoOptions = MN_AllocOption(UFO_MAX * 2);
-	menuOption_t* dropOptions = MN_AllocOption(DROPSHIP_MAX);
-	if (ufoOptions == NULL || dropOptions == NULL)
+	menuOption_t* aircraftOptions = MN_AllocOption(DROPSHIP_MAX);
+	menuOption_t *last = NULL;
+	if (ufoOptions == NULL || aircraftOptions == NULL)
 		return;
 
 	cnt = 0;
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOTypeToShortName(i);
-		MN_InitOption(&ufoOptions[cnt++], "", shortName, va("+%s", shortName));
+		menuOption_t *entry = &ufoOptions[cnt++];
+		MN_InitOption(entry, "", shortName, va("+%s", shortName));
+
+		/* link together */
+		if (last)
+			last->next = entry;
+		last = entry;
 	}
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOCrashedTypeToShortName(i);
-		MN_InitOption(&ufoOptions[cnt++], "", shortName, va("+%s", shortName));
+		menuOption_t *entry = &ufoOptions[cnt++];
+		MN_InitOption(entry, "", shortName, va("+%s", shortName));
+
+		/* link together */
+		if (last)
+			last->next = entry;
+		last = entry;
 	}
 	MN_RegisterOption(OPTION_UFOS, ufoOptions);
 
 	cnt = 0;
+	last = NULL;
 	for (i = 0; i < DROPSHIP_MAX; i++) {
 		const char *shortName = Com_DropShipTypeToShortName(i);
-		MN_InitOption(&dropOptions[cnt++], "", shortName, va("+%s", shortName));
+		menuOption_t *entry = &aircraftOptions[cnt++];
+		MN_InitOption(entry, "", shortName, va("+%s", shortName));
+
+		/* link together */
+		if (last)
+			last->next = entry;
+		last = entry;
 	}
-	MN_RegisterOption(OPTION_DROPSHIPS, dropOptions);
+	MN_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
 }
 
 void GAME_InitStartup (void)
