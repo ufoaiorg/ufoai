@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cvar_t *mn_base_title;
 static cvar_t *cl_start_buildings;
 static building_t *buildingConstructionList[MAX_BUILDINGS];
+static int buildingNumber = 0;
 
 static void B_Destroy_AntimaterStorage_f (void)
 {
@@ -74,15 +75,14 @@ static void B_Destroy_AntimaterStorage_f (void)
  * get available. The content is updated everytime B_BuildingInit is called
  * (i.e everytime the buildings-list is displayed/updated)
  */
-static void B_BuildingAddToList (base_t *base, building_t *building)
+static void B_BuildingAddToList (linkedList_t **buildingList, building_t *building)
 {
 	int count;
-	assert(base);
 	assert(building);
 	assert(building->name);
 
-	count = LIST_Count(base->buildingList);
-	LIST_AddPointer(&base->buildingList, _(building->name));
+	count = LIST_Count(*buildingList);
+	LIST_AddPointer(buildingList, _(building->name));
 	buildingConstructionList[count] = building->tpl;
 }
 
@@ -403,6 +403,7 @@ static void B_BuildingOnDestroy_f (void)
 static void B_BuildingInit (base_t* base)
 {
 	int i;
+	linkedList_t *buildingList = NULL;
 
 	/* maybe someone call this command before the bases are parsed?? */
 	if (!base)
@@ -410,9 +411,6 @@ static void B_BuildingInit (base_t* base)
 
 	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Updating b-list for '%s' (%i)\n", base->name, base->idx);
 	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Buildings in base: %i\n", ccs.numBuildings[base->idx]);
-
-	/* delete the whole linked list - it's rebuild in the loop below */
-	LIST_Delete(&base->buildingList);
 
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
 		building_t *tpl = &ccs.buildingTemplates[i];
@@ -429,7 +427,7 @@ static void B_BuildingInit (base_t* base)
 
 			/* if the building is researched add it to the list */
 			if (RS_IsResearched_ptr(tpl->tech)) {
-				B_BuildingAddToList(base, tpl);
+				B_BuildingAddToList(&buildingList, tpl);
 			} else {
 				Com_DPrintf(DEBUG_CLIENT, "Building not researched yet %s (tech idx: %i)\n",
 					tpl->id, tpl->tech ? tpl->tech->idx : 0);
@@ -441,7 +439,8 @@ static void B_BuildingInit (base_t* base)
 	else
 		MN_ExecuteConfunc("mn_buildings_reset");
 
-	MN_RegisterLinkedListText(TEXT_BUILDINGS, base->buildingList);
+	buildingNumber = LIST_Count(buildingList);
+	MN_RegisterLinkedListText(TEXT_BUILDINGS, buildingList);
 }
 
 /**
@@ -476,7 +475,7 @@ static void B_BuildingInfoClick_f (void)
  */
 static void B_BuildingClick_f (void)
 {
-	int num, count;
+	int num;
 	building_t *building;
 	base_t *base = B_GetCurrentSelectedBase();
 
@@ -493,9 +492,8 @@ static void B_BuildingClick_f (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: listnumber %i base %i\n", num, base->idx);
 
-	count = LIST_Count(base->buildingList);
-	if (num > count || num < 0) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: max exceeded %i/%i\n", num, count);
+	if (num > buildingNumber || num < 0) {
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: max exceeded %i/%i\n", num, buildingNumber);
 		return;
 	}
 

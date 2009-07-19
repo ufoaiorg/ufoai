@@ -210,9 +210,6 @@ typedef struct base_s {
 	 */
 	qboolean hasBuilding[MAX_BUILDING_TYPE];
 
-	/** this is here to allocate the needed memory for the buildinglist */
-	linkedList_t *buildingList;
-
 	/** All aircraft in this base
 	  @todo make me a linked list (see cl_market.c aircraft selling) */
 	aircraft_t aircraft[MAX_AIRCRAFT];
