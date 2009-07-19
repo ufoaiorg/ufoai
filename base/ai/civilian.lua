@@ -32,7 +32,8 @@ end
 function friend( target )
 
 	-- Move until target in sight
-	target:pos:goto()
+	target_pos = target:pos()
+	target_pos:goto()
 
 	-- Hide
 	hide_pos = ai.positionhide()
