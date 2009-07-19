@@ -1069,17 +1069,19 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		/** @todo move aircraft to .ufo */
 		/* buy two first aircraft and hire pilots for them. */
 		if (B_GetBuildingStatus(base, B_HANGAR)) {
-			aircraft_t *aircraft = AIR_GetAircraft("craft_drop_firebird");
+			const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
+			aircraft_t *aircraft = AIR_GetAircraft(firebird);
 			if (!aircraft)
-				Com_Error(ERR_DROP, "Could not find craft_drop_firebird definition");
-			AIR_NewAircraft(base, "craft_drop_firebird");
+				Com_Error(ERR_DROP, "Could not find %s definition", firebird);
+			AIR_NewAircraft(base, firebird);
 			CL_UpdateCredits(ccs.credits - aircraft->price);
 		}
 		if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			aircraft_t *aircraft = AIR_GetAircraft("craft_inter_stiletto");
+			const char *stiletto = Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
+			aircraft_t *aircraft = AIR_GetAircraft(stiletto);
 			if (!aircraft)
-				Com_Error(ERR_DROP, "Could not find craft_inter_stiletto definition");
-			AIR_NewAircraft(base, "craft_inter_stiletto");
+				Com_Error(ERR_DROP, "Could not find %s definition", stiletto);
+			AIR_NewAircraft(base, stiletto);
 			CL_UpdateCredits(ccs.credits - aircraft->price);
 		}
 

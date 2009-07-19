@@ -82,7 +82,7 @@ const char *const vt_names[] = {
 	"race",
 	"ufo",
 	"ufocrashed",
-	"dropship"
+	"aircrafttype"
 };
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
@@ -143,7 +143,7 @@ static const size_t vt_sizes[] = {
 	sizeof(int),		/* V_RACE */
 	sizeof(int),		/* V_UFO */
 	sizeof(int),		/* V_UFOCRASHED */
-	sizeof(int)		/* V_DROPSHIP */
+	sizeof(int)		/* V_AIRCRAFTTYPE */
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
@@ -179,7 +179,7 @@ static const size_t vt_aligns[] = {
 	sizeof(int),		/* V_RACE */
 	sizeof(int),		/* V_UFO */
 	sizeof(int),		/* V_UFOCRASHED */
-	sizeof(int)		/* V_DROPSHIP */
+	sizeof(int)		/* V_AIRCRAFTTYPE */
 };
 CASSERT(lengthof(vt_aligns) == V_NUM_TYPES);
 
@@ -297,13 +297,15 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		*writtenBytes = sizeof(int);
 		break;
 
-	case V_DROPSHIP:
+	case V_AIRCRAFTTYPE:
 		if (!strcmp(token, "craft_drop_firebird"))
 			*(int *) b = DROPSHIP_FIREBIRD;
 		else if (!strcmp(token, "craft_drop_herakles"))
 			*(int *) b = DROPSHIP_HERAKLES;
+		else if (!strcmp(token, "craft_inter_stiletto"))
+			*(int *) b = INTERCEPTOR_STILETTO;
 		else
-			Sys_Error("Unknown dropship type: '%s'", token);
+			Sys_Error("Unknown aircrafttype type: '%s'", token);
 		*writtenBytes = sizeof(int);
 		break;
 
@@ -700,13 +702,15 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			Sys_Error("Unknown race type: '%s'", (const char *)set);
 		return sizeof(int);
 
-	case V_DROPSHIP:
+	case V_AIRCRAFTTYPE:
 		if (!strcmp(set, "craft_drop_firebird"))
 			*(int *) b = DROPSHIP_FIREBIRD;
 		else if (!strcmp(set, "craft_drop_herakles"))
 			*(int *) b = DROPSHIP_HERAKLES;
+		else if (!strcmp(set, "craft_inter_stiletto"))
+			*(int *) b = INTERCEPTOR_STILETTO;
 		else
-			Sys_Error("Unknown dropship type: '%s'", (const char *)set);
+			Sys_Error("Unknown aircrafttype type: '%s'", (const char *)set);
 		return sizeof(int);
 
 	case V_UFO:
@@ -905,14 +909,16 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			Sys_Error("Unknown race type: '%i'", *(const int *) b);
 		}
 
-	case V_DROPSHIP:
+	case V_AIRCRAFTTYPE:
 		switch (*(const int *) b) {
 		case DROPSHIP_FIREBIRD:
 			return "craft_drop_firebird";
 		case DROPSHIP_HERAKLES:
 			return "craft_drop_herakles";
+		case INTERCEPTOR_STILETTO:
+			return "craft_inter_stiletto";
 		default:
-			Sys_Error("Unknown dropship type: '%i'", *(const int *) b);
+			Sys_Error("Unknown aircrafttype type: '%i'", *(const int *) b);
 		}
 
 	case V_UFO:
@@ -2536,21 +2542,21 @@ MAIN SCRIPT PARSING FUNCTION
  * @brief Translate DropShip type to short name.
  * @sa Com_DropShipTypeToShortName
  */
-ufoType_t Com_DropShipShortNameToID (const char *token)
+humanAircraftType_t Com_DropShipShortNameToID (const char *token)
 {
-	int dropShipType;
+	int aircraftType;
 	size_t dummy;
-	Com_ParseValue(&dropShipType, token, V_DROPSHIP, 0, sizeof(dropShipType), &dummy);
-	return dropShipType;
+	Com_ParseValue(&aircraftType, token, V_AIRCRAFTTYPE, 0, sizeof(aircraftType), &dummy);
+	return aircraftType;
 }
 
 /**
  * @brief Translate DropShip type to short name.
  * @sa Com_DropShipShortNameToID
  */
-const char* Com_DropShipTypeToShortName (dropShipType_t type)
+const char* Com_DropShipTypeToShortName (humanAircraftType_t type)
 {
-	return Com_ValueToStr(&type, V_DROPSHIP, 0);
+	return Com_ValueToStr(&type, V_AIRCRAFTTYPE, 0);
 }
 
 /**

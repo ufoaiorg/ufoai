@@ -496,18 +496,18 @@ static void GAME_InitMenuOptions (void)
 	cnt = 0;
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOTypeToShortName(i);
-		MN_InitOption(&ufoOptions[cnt++], "", shortName, shortName);
+		MN_InitOption(&ufoOptions[cnt++], "", shortName, va("+%s", shortName));
 	}
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOCrashedTypeToShortName(i);
-		MN_InitOption(&ufoOptions[cnt++], "", shortName, shortName);
+		MN_InitOption(&ufoOptions[cnt++], "", shortName, va("+%s", shortName));
 	}
 	MN_RegisterOption(OPTION_UFOS, ufoOptions);
 
 	cnt = 0;
 	for (i = 0; i < DROPSHIP_MAX; i++) {
 		const char *shortName = Com_DropShipTypeToShortName(i);
-		MN_InitOption(&dropOptions[cnt++], "", shortName, shortName);
+		MN_InitOption(&dropOptions[cnt++], "", shortName, va("+%s", shortName));
 	}
 	MN_RegisterOption(OPTION_DROPSHIPS, dropOptions);
 }

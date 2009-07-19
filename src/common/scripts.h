@@ -79,7 +79,7 @@ typedef enum {
 							 * @note Every ufotype (id) that doesn't have nogeoscape set to true must have an assembly
 							 * in the ufocrash[dn].ump files */
 	V_UFOCRASHED,
-	V_DROPSHIP,
+	V_AIRCRAFTTYPE,
 
 	V_NUM_TYPES
 } valueTypes_t;
@@ -175,9 +175,11 @@ typedef enum {
 typedef enum {
 	DROPSHIP_FIREBIRD,
 	DROPSHIP_HERAKLES,
+	INTERCEPTOR_STILETTO,
 
-	DROPSHIP_MAX
-} dropShipType_t;
+	AIRCRAFTTYPE_MAX
+} humanAircraftType_t;
+#define DROPSHIP_MAX DROPSHIP_HERAKLES
 
 extern const char *const align_names[];
 extern const char *const blend_names[];
@@ -239,8 +241,8 @@ const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType)
 ufoType_t Com_UFOShortNameToID(const char *token);
 const char* Com_UFOTypeToShortName(ufoType_t type);
 const char* Com_UFOCrashedTypeToShortName(ufoType_t type);
-const char* Com_DropShipTypeToShortName(dropShipType_t type);
-ufoType_t Com_DropShipShortNameToID(const char *token);
+const char* Com_DropShipTypeToShortName(humanAircraftType_t type);
+humanAircraftType_t Com_DropShipShortNameToID(const char *token);
 teamDef_t* Com_GetTeamDefinitionByID(const char *team);
 mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
 void Com_ParseScripts(void);

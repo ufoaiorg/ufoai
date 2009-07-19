@@ -806,7 +806,7 @@ static qboolean SV_AddMissingTiles (void)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static void SV_AddMapTiles (void)
+static void SV_AddMapTiles (const char *name, const char *assembly)
 {
 	int idx, pos;
 	const int start = numPlaced;
@@ -853,7 +853,8 @@ static void SV_AddMapTiles (void)
 		} else {
 			/* no more retries */
 			if (start == numPlaced) {
-				Com_Error(ERR_DROP, "SV_AddMapTiles: Impossible to assemble map\n");
+				Com_Error(ERR_DROP, "SV_AddMapTiles: Impossible to assemble map '%s' with assembly '%s'\n",
+						name, assembly ? assembly : "");
 			}
 			SV_RemoveTile(&idx, &pos);
 			pos++;
@@ -995,7 +996,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 	mapH = mAsm->h;
 	mapSize = mapW * mapH;
 
-	SV_AddMapTiles();
+	SV_AddMapTiles(name, assembly);
 
 	/* prepare map and pos strings */
 	if (basePath[0]) {
