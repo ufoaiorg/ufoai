@@ -130,8 +130,8 @@ void PrefabAdd(const char *name, GtkTreeIter* parentIter) {
 			descriptionPath.c_str()));
 	if (file) {
 		TextInputStream &stream = file->getInputStream();
-		stream.read(buffer, file->size());
-		buffer[file->size()] = '\0';
+		const std::size_t realsize = stream.read(buffer, file->size());
+		buffer[realsize] = '\0';
 		description = buffer;
 		nameContent << "\n" << description;
 	}

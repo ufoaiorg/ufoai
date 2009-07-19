@@ -209,8 +209,8 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 	const std::size_t size = file->size();
 	char *entities = (char *)malloc(size + 1);
 	TextInputStream &stream = file->getInputStream();
-	stream.read(entities, size);
-	entities[size] = '\0';
+	const std::size_t realsize = stream.read(entities, size);
+	entities[realsize] = '\0';
 	if (ED_Parse(entities) == ED_ERROR) {
 		StringOutputStream buffer;
 		buffer << "Parsing of entities definition file failed, returned error was " << ED_GetLastError();
