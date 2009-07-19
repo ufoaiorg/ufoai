@@ -669,6 +669,22 @@ int AIR_GetAircraftIdxInBase (const aircraft_t* aircraft)
 }
 
 /**
+ * @param base The base to get the aircraft from
+ * @param index The index of the aircraft in the given base
+ * @return @c NULL if there is no such aircraft in the given base, or the aircraft pointer that belongs to the given index.
+ */
+aircraft_t *AIR_GetAircraftFromBaseByIDX (base_t* base, int index)
+{
+	if (!base->numAircraftInBase)
+		return NULL;
+
+	if (index < 0 || index >= base->numAircraftInBase)
+		return NULL;
+
+	return &base->aircraft[index];
+}
+
+/**
  * @brief Searches the global array of aircraft types for a given aircraft.
  * @param[in] name Aircraft id.
  * @return aircraft_t pointer or NULL if not found.

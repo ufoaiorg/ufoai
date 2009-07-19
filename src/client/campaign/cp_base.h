@@ -284,9 +284,6 @@ int B_GetNumberOfBuildingsInBaseByBuildingType(const base_t *base, const buildin
 void B_BuildingOpenAfterClick(const base_t *base, const building_t *building);
 int B_ItemInBase(const objDef_t *item, const base_t *base);
 
-aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base, int index);
-void B_ReviveSoldiersInBase(base_t* base); /** @todo */
-
 qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
 qboolean B_GetBuildingStatus(const base_t* const base, const buildingType_t type);
 void B_SetBuildingStatus(base_t* const base, const buildingType_t type, qboolean newStatus);

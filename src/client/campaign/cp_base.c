@@ -2420,22 +2420,6 @@ int B_GetNumOnTeam (const aircraft_t *aircraft)
 }
 
 /**
- * @brief Returns the aircraft pointer from the given base and perform some sanity checks
- * @param[in] base Base the to get the aircraft from - may not be null
- * @param[in] index Base aircraft index
- */
-aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base, int index)
-{
-	assert(base);
-	if (index < base->numAircraftInBase) {
-		return &base->aircraft[index];
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "B_GetAircraftFromBaseByIndex: error: index bigger than number of aircraft in this base\n");
-		return NULL;
-	}
-}
-
-/**
  * @brief Sell items to the market or add them to base storage.
  * @param[in] aircraft Pointer to an aircraft landing in base.
  * @sa CL_AircraftReturnedToHomeBase

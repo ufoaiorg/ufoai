@@ -248,6 +248,7 @@ void AIR_ListCraftIndexes_f(void);
 #endif
 
 int AIR_GetAircraftIdxInBase(const aircraft_t* aircraft);
+aircraft_t *AIR_GetAircraftFromBaseByIDX(struct base_s *base, int index);
 const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(const aircraft_t *aircraft);
 qboolean AIR_IsAircraftOnGeoscape(const aircraft_t *aircraft);
