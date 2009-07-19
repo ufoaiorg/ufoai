@@ -147,17 +147,21 @@ const mapDef_t* GAME_SK_MapInfo (int step)
 	if (md->map[0] == '+') {
 		const linkedList_t *l = md->ufos;
 		const int num = LIST_Count(l);
-		menuOption_t* ufoOptions = MN_AllocOption(num);
-		if (ufoOptions != NULL) {
-			int i = 0;
-			while (l) {
-				const char *shortName = (const char *)l->data;
-				MN_InitOption(&ufoOptions[i], "", shortName, shortName);
-				l = l->next;
-				i++;
-			}
+		if (num) {
+			menuOption_t* ufoOptions = MN_AllocOption(num);
+			if (ufoOptions != NULL) {
+				int i = 0;
+				while (l) {
+					const char *shortName = (const char *)l->data;
+					MN_InitOption(&ufoOptions[i], "", shortName, shortName);
+					l = l->next;
+					i++;
+				}
 
-			MN_RegisterOption(OPTION_UFOS, &ufoOptions[0]);
+				MN_RegisterOption(OPTION_UFOS, &ufoOptions[0]);
+			}
+		} else {
+			MN_ResetData(OPTION_UFOS);
 		}
 
 		/** @todo fill supported dropships */
