@@ -699,7 +699,7 @@ aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (base_t* base, int index)
 	if (!aircraft && base->numAircraftInBase)
 		return &base->aircraft[0];
 
-	return NULL;
+	return aircraft;
 }
 
 /**
