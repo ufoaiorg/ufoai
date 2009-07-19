@@ -98,7 +98,7 @@ window skirmish
 	{
 		string		"_Day version:"
 		pos			"500 250"
-		size		"300 20"
+		size		"200 20"
 	}
 	checkbox daynight_value
 	{
@@ -115,7 +115,7 @@ window skirmish
 	{
 		string		"_Max. AI actors:"
 		pos			"500 275"
-		size		"300 20"
+		size		"200 20"
 		tooltip		"_Max AI actors for this game"
 	}
 	string ai_numactors_value
@@ -133,6 +133,95 @@ window skirmish
 		min			1
 		max			30
 		delta		1
+	}
+
+	// ===================
+	// TEAM
+	// ===================	
+
+	string team_str
+	{
+		string		"_Team:"
+		pos			"500 300"
+		size		"200 20"
+		tooltip		"_Select which side you want to play with"
+	}
+
+	selectbox team_box
+	{
+		image	"ui/selectbox_green"
+		pos		"730 300"
+		size	"200 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	*cvar:cl_team
+		option low_value {
+			label	"_Human"
+			value	"1"
+		}
+		option medium_value {
+			label	"_Alien"
+			value	"7"
+		}
+	}
+
+	// ===================
+	// UFOS
+	// ===================	
+	
+	/**
+	 * @param<1> boolean to hide or show
+	 */
+	confunc skirmish_hide_ufos {
+		*ufos_str@invis <1>
+		*ufos_box@invis <1>
+	}
+
+	string ufos_str
+	{
+		string		"_UFO:"
+		pos			"500 325"
+		size		"200 20"
+		tooltip		"_Select the ufo that should be used"
+	}
+
+	selectbox ufos_box
+	{
+		image	"ui/selectbox_green"
+		pos		"730 325"
+		size	"200 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	*cvar:rm_ufo
+		dataid	OPTION_UFOS
+	}
+	
+	// ===================
+	// DROPSHIPS
+	// ===================	
+
+	/**
+	 * @param<1> boolean to hide or show
+	 */
+	confunc skirmish_hide_dropships {
+		*dropships_str@invis <1>
+		*dropships_box@invis <1>
+	}
+
+	string dropships_str
+	{
+		string		"_Dropship:"
+		pos			"500 350"
+		size		"200 20"
+		tooltip		"_Select the dropship that should be used"
+	}
+
+	selectbox dropships_box
+	{
+		image	"ui/selectbox_green"
+		pos		"730 350"
+		size	"200 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	*cvar:rm_drop
+		dataid	OPTION_DROPSHIPS
 	}
 
 	// ===================
@@ -212,95 +301,6 @@ window skirmish
 		onRClick		{ cmd "mn_prevmap;" }
 	}
 
-	// ===================
-	// TEAM
-	// ===================	
-
-	string team_str
-	{
-		string		"_Team:"
-		pos			"500 300"
-		size		"300 20"
-		tooltip		"_Select which side you want to play with"
-	}
-
-	selectbox team_box
-	{
-		image	"ui/selectbox_green"
-		pos		"780 300"
-		size	"125 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	*cvar:cl_team
-		option low_value {
-			label	"_Human"
-			value	"1"
-		}
-		option medium_value {
-			label	"_Alien"
-			value	"7"
-		}
-	}
-	
-	// ===================
-	// UFOS
-	// ===================	
-	
-	/**
-	 * @param<1> boolean to hide or show
-	 */
-	confunc skirmish_hide_ufos {
-		*ufos_str@invis <1>
-		*ufos_box@invis <1>
-	}
-
-	string ufos_str
-	{
-		string		"_UFO:"
-		pos			"500 325"
-		size		"300 20"
-		tooltip		"_Select the ufo that should be used"
-	}
-
-	selectbox ufos_box
-	{
-		image	"ui/selectbox_green"
-		pos		"780 325"
-		size	"125 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	*cvar:rm_ufo
-		dataid	OPTION_UFOS
-	}
-	
-	// ===================
-	// DROPSHIPS
-	// ===================	
-
-	/**
-	 * @param<1> boolean to hide or show
-	 */
-	confunc skirmish_hide_dropships {
-		*dropships_str@invis <1>
-		*dropships_box@invis <1>
-	}
-
-	string dropships_str
-	{
-		string		"_Dropship:"
-		pos			"500 350"
-		size		"300 20"
-		tooltip		"_Select the dropship that should be used"
-	}
-
-	selectbox dropships_box
-	{
-		image	"ui/selectbox_green"
-		pos		"780 350"
-		size	"125 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	*cvar:rm_drop
-		dataid	OPTION_DROPSHIPS
-	}
-	
 	// ===================
 	// INIT
 	// ===================
