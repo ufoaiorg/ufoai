@@ -86,7 +86,6 @@ static popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
 
 /** Reservation-popup info */
 static int popupNum;							/**< Number of entries in the popup list */
-static linkedList_t* popupListText = NULL;		/**< Text to display in the popup list */
 static linkedList_t* popupListData = NULL;		/**< Further datas needed when popup is clicked */
 static menuNode_t* popupListNode = NULL;		/**< Node used for popup */
 
@@ -107,16 +106,12 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 	int baseIdx, homebase, numAvailableBases = 0;
 	baseCapacities_t capacity;
 	buildingType_t buildingType;
+	linkedList_t* popupListText = NULL;
 
 	assert(aircraft);
 
 	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
 	buildingType = B_GetBuildingTypeByCapacity(capacity);
-
-	LIST_Delete(&popupListText);
-	/* also reset mn.menuTextLinkedList here - otherwise the
-	 * pointer is no longer valid (because the list was freed) */
-	MN_RegisterLinkedListText(TEXT_LIST, NULL);
 
 	LIST_Delete(&popupListData);
 
