@@ -61,23 +61,20 @@ static void AIM_AircraftReturnToBase_f (void)
 static void AIM_SelectAircraft_f (void)
 {
 	base_t *base = B_GetCurrentSelectedBase();
-	int i;
 
-	if (!base || base->numAircraftInBase <= 0)
+	if (!base)
 		return;
 
 	if (Cmd_Argc() < 2) {
-		if (base->aircraftCurrent) {
+		if (base->aircraftCurrent)
 			AIR_AircraftSelect(base->aircraftCurrent);
-		}
 		return;
+	} else {
+		const int i = atoi(Cmd_Argv(1));
+		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDXSafe(base, i);
+		if (aircraft != NULL)
+			AIR_AircraftSelect(aircraft);
 	}
-
-	i = atoi(Cmd_Argv(1));
-	if (i < 0 || i >= base->numAircraftInBase)
-		i = 0;
-
-	AIR_AircraftSelect(&base->aircraft[i]);
 }
 
 /**

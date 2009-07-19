@@ -2719,7 +2719,7 @@ qboolean B_SaveXML (mxml_node_t *parent)
 		node = mxml_AddNode(act_base, "lasers");
 		B_SaveBaseSlotsXML(b->lasers, b->numLasers, node);
 
-		mxml_AddInt(act_base, "currentaircraftidx", AIR_GetAircraftIdxInBase(b->aircraftCurrent));
+		mxml_AddInt(act_base, "currentaircraftidx", AIR_GetAircraftIDXInBase(b->aircraftCurrent));
 		node = mxml_AddNode(act_base, "aircrafts");
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			const aircraft_t *aircraft = &b->aircraft[k];

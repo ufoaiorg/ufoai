@@ -649,7 +649,7 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
  * @param[in] aircraft The aircraft to get the index for.
  * @return The array index or AIRCRAFT_INBASE_INVALID on error.
  */
-int AIR_GetAircraftIdxInBase (const aircraft_t* aircraft)
+int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
 {
 	int i;
 	const base_t *base;
@@ -669,19 +669,37 @@ int AIR_GetAircraftIdxInBase (const aircraft_t* aircraft)
 }
 
 /**
+ * @brief Returns the aircraft with the index or if the index is bigger than the amount of
+ * aircraft in the base it returns the first aircraft.
  * @param base The base to get the aircraft from
  * @param index The index of the aircraft in the given base
- * @return @c NULL if there is no such aircraft in the given base, or the aircraft pointer that belongs to the given index.
+ * @return @c NULL if there are no aircraft in the given base, the aircraft pointer that belongs to
+ * the given index, or the first aircraft in the base if the index is bigger as the amount of aircraft
+ * in the base.
  */
 aircraft_t *AIR_GetAircraftFromBaseByIDX (base_t* base, int index)
 {
-	if (!base->numAircraftInBase)
+	if (base->numAircraftInBase <= 0)
 		return NULL;
 
 	if (index < 0 || index >= base->numAircraftInBase)
 		return NULL;
 
 	return &base->aircraft[index];
+}
+
+/**
+ * @param base The base to get the aircraft from
+ * @param index The index of the aircraft in the given base
+ * @return @c NULL if there is no such aircraft in the given base, or the aircraft pointer that belongs to the given index.
+ */
+aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (base_t* base, int index)
+{
+	aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, index);
+	if (!aircraft && base->numAircraftInBase)
+		return &base->aircraft[0];
+
+	return NULL;
 }
 
 /**
@@ -930,7 +948,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	aircraftDest->shield.aircraft = aircraftDest;
 
 	/* Remove aircraft from old base */
-	i = AIR_GetAircraftIdxInBase(aircraft);
+	i = AIR_GetAircraftIDXInBase(aircraft);
 	REMOVE_ELEM(oldBase->aircraft, i, oldBase->numAircraftInBase);
 	oldBase->capacities[capacity].cur--;
 
@@ -1021,7 +1039,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	/** @todo use REMOVE_ELEM_ADJUST_IDX here */
 	/* rearrange the aircraft-list (in base) */
 	/* Find the index of aircraft in base */
-	i = AIR_GetAircraftIdxInBase(aircraft);
+	i = AIR_GetAircraftIDXInBase(aircraft);
 	/* move other aircraft if the deleted aircraft was not the last one of the base */
 	if (i != AIRCRAFT_INBASE_INVALID)
 		memmove(aircraft, aircraft + 1, (base->numAircraftInBase - i) * sizeof(*aircraft));
@@ -2244,7 +2262,7 @@ qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *emp
 	assert(aircraft->homebase);
 	Com_Printf("AIR_RemoveFromAircraftTeam: error: idx '%d' (type: %i) not on aircraft %i (size: %i) (base: %i) in base %i\n",
 		employee->idx, employee->type, aircraft->idx, aircraft->maxTeamSize,
-		AIR_GetAircraftIdxInBase(aircraft), aircraft->homebase->idx);
+		AIR_GetAircraftIDXInBase(aircraft), aircraft->homebase->idx);
 	return qfalse;
 }
 
