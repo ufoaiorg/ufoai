@@ -1859,9 +1859,10 @@ mapdef city_train
 		craft_drop_firebird
 	}
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_ufo_fighter
+	}
 
 	terrains
 	{
