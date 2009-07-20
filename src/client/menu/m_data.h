@@ -120,7 +120,7 @@ typedef enum {
 
 /** @brief Option definition */
 typedef struct menuOption_s {
-	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION_STRING */
+	char id[MAX_VAR];	/**< text for the select box */
 	char label[OPTION_MAX_VALUE_LENGTH];	/**< text for the select box - V_TRANSLATION_STRING */
 	char value[MAX_VAR];	/**< the value the cvar should get */
 	struct menuIcon_s *icon;	/**< Facultative icon */
