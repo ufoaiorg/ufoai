@@ -239,7 +239,7 @@ void MN_UpdateInvisOptions (menuOption_t *option, linkedList_t *stringList)
 		return;
 
 	while (option) {
-		if (LIST_ContainsString(stringList, option->value))
+		if (LIST_ContainsString(stringList, option->label))
 			option->invis = qfalse;
 		else
 			option->invis = qtrue;
