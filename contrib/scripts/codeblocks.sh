@@ -122,8 +122,6 @@ function start_downloads()
 	
 	download_archive http://downloads.sourceforge.net/sevenzip/ 7za465.zip 7zip.zip
 
-	download_archive http://www.zlatkovic.com/pub/libxml/ libxml2-2.7.3.win32.zip libxml2.zip
-
 	download_archive http://curl.de-mirror.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
 
 	download_archive http://www.libsdl.org/release/ SDL-devel-${SDL_VERSION}-mingw32.tar.gz sdl.tar.gz
@@ -131,7 +129,7 @@ function start_downloads()
 	download_archive http://www.libsdl.org/projects/SDL_mixer/release/ SDL_mixer-devel-${SDL_MIXER_VERSION}-VC8.zip sdl_mixer.zip
 	download_archive http://www.libsdl.org/projects/SDL_image/release/ SDL_image-devel-${SDL_IMAGE_VERSION}-VC8.zip sdl_image.zip
 
-	download_archive http://oss.netfarm.it/mplayer/pkgs/ libvorbis-mingw32-1.2.2rc1-gcc45.tar.bz2 libvorbis.tar.bz2
+	download_archive http://oss.netfarm.it/mplayer/pkgs/ libvorbis-mingw32-1.2.3-gcc45.tar.bz2 libvorbis.tar.bz2
 	download_archive http://oss.netfarm.it/mplayer/pkgs/ libtheora-mingw32-1.1alpha2-gcc45.tar.bz2 libtheora.tar.bz2
 	download_archive http://oss.netfarm.it/mplayer/pkgs/ xvidcore-mingw32-1.2.1-gcc45.tar.bz2 xvidcore.tar.bz2
 	download_archive http://oss.netfarm.it/mplayer/pkgs/ libogg-mingw32-1.1.4rc1-gcc45.tar.bz2 libogg.tar.bz2
@@ -151,6 +149,7 @@ function start_downloads()
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.6-1_win32.zip cairo-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ pkg-config-0.23-2.zip pkg-config.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-0.17-1.zip gettext-runtime.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ libxml2-dev-2.6.27.zip libxml2.zip
 
 	download_archive http://mattn.ninex.info/download/ gtkglext-1.2.zip gtkglext-dev.zip
 
@@ -210,10 +209,6 @@ function extract_libs()
 	extract_archive_gz directx.tar.gz "${MINGW_DIR}"
 	extract_archive_zip libpdcurses.zip "${MINGW_DIR}"
 	extract_archive_zip libxml2.zip "${MINGW_DIR}"
-	cp -R "${MINGW_DIR}"/libxml2-*.win32/* ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not copy libxml2 files"
-	rm -rf "${MINGW_DIR}"/libxml2-*.win32/ >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not remove libxml2 files"
 }
 
 function extract_libcurl()
