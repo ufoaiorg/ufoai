@@ -184,7 +184,7 @@ void MN_InitOption(struct menuOption_s *option, const char* name, const char* la
 int MN_OptionUpdateCache (menuOption_t* option);
 menuOption_t* MN_InitOptionIteratorAtIndex(int index, menuOption_t* option, menuOptionIterator_t* iterator);
 menuOption_t* MN_OptionIteratorNextOption(menuOptionIterator_t* iterator);
-void MN_UpdateInvisOptions(menuOption_t *option, struct linkedList_s *stringList);
+void MN_UpdateInvisOptions(menuOption_t *option, const struct linkedList_s *stringList);
 
 /* line strip */
 void MN_RegisterLineStrip(int dataId, struct lineStrip_s *text);

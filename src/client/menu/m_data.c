@@ -233,7 +233,7 @@ void MN_SortOptions (menuOption_t **first)
 /**
  * @brief Unhide those options that are stored in the linked list and hide the others
  */
-void MN_UpdateInvisOptions (menuOption_t *option, linkedList_t *stringList)
+void MN_UpdateInvisOptions (menuOption_t *option, const linkedList_t *stringList)
 {
 	if (option == NULL || stringList == NULL)
 		return;
