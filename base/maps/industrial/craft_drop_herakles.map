@@ -50,12 +50,12 @@
 }
 // brush 5
 {
-( 128 192 96 ) ( 672 192 96 ) ( 128 160 96 ) tex_common/actorclip 64 -0 90 1 1 65536 0 0
-( 224 416 96 ) ( 224 384 96 ) ( 224 416 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 96 192 96 ) ( 640 192 96 ) ( 96 160 96 ) tex_common/actorclip 0 32 90 1 1 65536 0 0
+( 192 416 96 ) ( 192 384 96 ) ( 192 416 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 ( 128 160 96 ) ( 128 160 0 ) ( 672 160 96 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
-( 768 0 0 ) ( 768 512 0 ) ( 0 0 0 ) tex_common/actorclip 64 -0 90 1 1 65536 0 0
+( 736 0 0 ) ( 736 512 0 ) ( -32 0 0 ) tex_common/actorclip 0 32 90 1 1 65536 0 0
 ( 256 384 0 ) ( 256 384 96 ) ( 256 416 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 672 128 0 ) ( 128 128 0 ) ( 672 128 96 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 640 128 0 ) ( 96 128 0 ) ( 640 128 96 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
 }
 // brush 6
 {
@@ -68,12 +68,12 @@
 }
 // brush 7
 {
-( 128 192 96 ) ( 672 192 96 ) ( 128 160 96 ) tex_common/actorclip 64 -0 90 1 1 65536 0 0
-( 224 416 96 ) ( 224 384 96 ) ( 224 416 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 128 416 96 ) ( 128 416 0 ) ( 672 416 96 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
-( 768 0 0 ) ( 768 512 0 ) ( 0 0 0 ) tex_common/actorclip 64 -0 90 1 1 65536 0 0
+( 96 192 96 ) ( 640 192 96 ) ( 96 160 96 ) tex_common/actorclip 0 32 90 1 1 65536 0 0
+( 192 416 96 ) ( 192 384 96 ) ( 192 416 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 96 416 96 ) ( 96 416 0 ) ( 640 416 96 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
+( 736 0 0 ) ( 736 512 0 ) ( -32 0 0 ) tex_common/actorclip 0 32 90 1 1 65536 0 0
 ( 256 384 0 ) ( 256 384 96 ) ( 256 416 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 672 384 0 ) ( 128 384 0 ) ( 672 384 96 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 640 384 0 ) ( 96 384 0 ) ( 640 384 96 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
 }
 // brush 8
 {
@@ -193,18 +193,18 @@
 // entity 1
 {
 "classname" "misc_model"
-"origin" "364 274 24"
+"origin" "460 274 -8"
 "model" "models/aircraft/drop_herakles/herakles_int.md2"
 "spawnflags" "255"
-"angle" "2.50448e-006"
+"angles" "0 -180 0"
 }
 // entity 2
 {
 "classname" "misc_model"
-"origin" "364 274 24"
+"origin" "365 275 32"
 "model" "models/aircraft/drop_herakles/herakles_top.md2"
 "spawnflags" "254"
-"angle" "2.50448e-006"
+"angles" "0 2.50448e-06 0"
 }
 // entity 3
 {
