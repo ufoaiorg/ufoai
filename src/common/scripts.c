@@ -2537,6 +2537,18 @@ MAIN SCRIPT PARSING FUNCTION
 ==============================================================================
 */
 
+/**
+ * @brief Returns the name of an aircraft or an ufo that is used in the ump files for
+ * the random map assembly
+ * @see cvar rm_drop, rm_ufo
+ * @note Uses a static buffer - so after you got the name you should ensure that you
+ * put it into a proper location. Otherwise it will get overwritten with the next call
+ * of this function.
+ */
+const char *Com_GetRandomMapAssemblyNameForCraft (const char *craftID)
+{
+	return va("+%s", craftID);
+}
 
 /**
  * @brief Translate DropShip type to short name.

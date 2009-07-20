@@ -238,6 +238,7 @@ const char *Com_GiveName(int gender, teamDef_t *td);
 const char *Com_GiveModel(int type, int gender, const teamDef_t *td);
 void Com_GetCharacterValues(const char *teamDefition, character_t * chr);
 const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
+const char *Com_GetRandomMapAssemblyNameForCraft(const char *craftID);
 ufoType_t Com_UFOShortNameToID(const char *token);
 const char* Com_UFOTypeToShortName(ufoType_t type);
 const char* Com_UFOCrashedTypeToShortName(ufoType_t type);
