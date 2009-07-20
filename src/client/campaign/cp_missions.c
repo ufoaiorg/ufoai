@@ -346,7 +346,7 @@ void CP_CreateBattleParameters (mission_t *mission)
 		/* Set random map UFO if this is a random map */
 		if (mission->mapDef->map[0] == '+') {
 			/* set rm_ufo to the ufo type used */
-			Cvar_Set("rm_ufo", va("+%s", shortUFOType));
+			Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(shortUFOType));
 		}
 	}
 	/** @todo change dropship to any possible aircraft when random assembly tiles will be created */

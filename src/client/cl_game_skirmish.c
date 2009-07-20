@@ -146,13 +146,14 @@ const mapDef_t* GAME_SK_MapInfo (int step)
 	const mapDef_t *md = &csi.mds[cls.currentSelectedMap];
 	if (md->map[0] == '+') {
 		linkedList_t *ufos = md->ufos;
+		const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
 		if (ufos)
-			Cvar_Set("rm_ufo", va("+%s", (const char *)ufos->data));
+			Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft((const char *)ufos->data));
 		else
 			Cvar_Set("rm_ufo", "");
 		/** @todo only show those that are in md->ufos and md->aircraft */
 		/** @todo implement different dropships for ump files and mapdefs */
-		Cvar_Set("rm_drop", va("+%s", Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD)));
+		Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(firebird));
 		MN_ExecuteConfunc("skirmish_hide_ufos false");
 		MN_ExecuteConfunc("skirmish_hide_dropships false");
 	} else {

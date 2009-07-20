@@ -498,7 +498,7 @@ static void GAME_InitMenuOptions (void)
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOTypeToShortName(i);
 		menuOption_t *entry = &ufoOptions[cnt++];
-		MN_InitOption(entry, "", shortName, va("+%s", shortName));
+		MN_InitOption(entry, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 
 		/* link together */
 		if (last)
@@ -508,7 +508,7 @@ static void GAME_InitMenuOptions (void)
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOCrashedTypeToShortName(i);
 		menuOption_t *entry = &ufoOptions[cnt++];
-		MN_InitOption(entry, "", shortName, va("+%s", shortName));
+		MN_InitOption(entry, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 
 		/* link together */
 		if (last)
@@ -522,7 +522,7 @@ static void GAME_InitMenuOptions (void)
 	for (i = 0; i < DROPSHIP_MAX; i++) {
 		const char *shortName = Com_DropShipTypeToShortName(i);
 		menuOption_t *entry = &aircraftOptions[cnt++];
-		MN_InitOption(entry, "", shortName, va("+%s", shortName));
+		MN_InitOption(entry, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 
 		/* link together */
 		if (last)
