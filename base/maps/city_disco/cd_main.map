@@ -9072,17 +9072,17 @@
 {
 "classname" "misc_sound"
 "noise" "ambience/disco"
-"volume" "120"
 "spawnflags" "1"
-"origin" "1016 816 32"
+"origin" "1008 680 32"
+"angle" "-90"
 }
 // entity 158
 {
 "classname" "misc_sound"
 "noise" "ambience/disco"
-"volume" "120"
 "spawnflags" "1"
-"origin" "1016 560 32"
+"origin" "656 680 32"
+"angle" "-90"
 }
 // entity 159
 {
@@ -10809,4 +10809,76 @@
 "spawnflags" "255"
 "origin" "1012 456 19"
 "angles" "0 90 0"
+}
+// entity 191
+{
+"classname" "misc_sound"
+"noise" "ambience/disco"
+"spawnflags" "1"
+"origin" "1016 816 32"
+}
+// entity 192
+{
+"classname" "misc_sound"
+"noise" "ambience/disco"
+"spawnflags" "1"
+"origin" "1016 560 32"
+}
+// entity 193
+{
+"classname" "misc_sound"
+"noise" "ambience/disco"
+"spawnflags" "1"
+"origin" "952 816 32"
+}
+// entity 194
+{
+"classname" "misc_sound"
+"noise" "ambience/disco"
+"spawnflags" "1"
+"origin" "952 560 32"
+}
+// entity 195
+{
+"classname" "misc_sound"
+"noise" "ambience/disco"
+"spawnflags" "1"
+"origin" "824 816 32"
+}
+// entity 196
+{
+"classname" "misc_sound"
+"noise" "ambience/disco"
+"spawnflags" "1"
+"origin" "824 560 32"
+}
+// entity 197
+{
+"classname" "misc_sound"
+"noise" "ambience/disco"
+"spawnflags" "1"
+"origin" "760 816 32"
+}
+// entity 198
+{
+"classname" "misc_sound"
+"noise" "ambience/disco"
+"spawnflags" "1"
+"origin" "760 560 32"
+}
+// entity 199
+{
+"classname" "misc_sound"
+"noise" "ambience/disco"
+"spawnflags" "1"
+"origin" "912 680 32"
+"angle" "-90"
+}
+// entity 200
+{
+"classname" "misc_sound"
+"noise" "ambience/disco"
+"spawnflags" "1"
+"origin" "816 680 32"
+"angle" "-90"
 }
