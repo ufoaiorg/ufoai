@@ -216,6 +216,9 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 		break;
 	}
 
+	Com_DPrintf(DEBUG_EVENTSYS, "%s => eventTime: %i, nextTime: %i, impactTime: %i, shootTime: %i\n",
+			eventData->name, eventTime, nextTime, impactTime, shootTime);
+
 	return eventTime;
 #else
 	if (!eventData->timeCallback)
