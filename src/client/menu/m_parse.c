@@ -112,7 +112,7 @@ const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* n
  * @param[in] count number of element need to allocate
  * @todo Assert out when we are not in parsing/loading stage
  */
-float* MN_AllocFloat (int count)
+float* MN_AllocStaticFloat (int count)
 {
 	float *result;
 	assert(count > 0);
@@ -130,7 +130,7 @@ float* MN_AllocFloat (int count)
  * @param[in] count number of element need to allocate
  * @todo Assert out when we are not in parsing/loading stage
  */
-vec4_t* MN_AllocColor (int count)
+vec4_t* MN_AllocStaticColor (int count)
 {
 	vec4_t *result;
 	assert(count > 0);
@@ -149,7 +149,7 @@ vec4_t* MN_AllocColor (int count)
  * @param[in] size request a fixed memory size, if 0 the string size is used
  * @todo Assert out when we are not in parsing/loading stage
  */
-char* MN_AllocString (const char* string, int size)
+char* MN_AllocStaticString (const char* string, int size)
 {
 	char* result = (char *)mn.curadata;
 	mn.curadata = ALIGN_PTR(mn.curadata, sizeof(char));
@@ -170,7 +170,7 @@ char* MN_AllocString (const char* string, int size)
  * @brief Allocate an action
  * @return An action
  */
-menuAction_t *MN_AllocAction (void)
+menuAction_t *MN_AllocStaticAction (void)
 {
 	if (mn.numActions >= MAX_MENUACTIONS)
 		Com_Error(ERR_FATAL, "MN_AllocAction: Too many menu actions");
@@ -234,7 +234,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		if (actionList == NULL)
 			return qfalse;
 
-		a = MN_AllocAction();
+		a = MN_AllocStaticAction();
 		a->type = EA_VALUE_RAW;
 		a->d.terminal.d1.data = actionList;
 		a->d.terminal.d2.constData = property;
@@ -246,7 +246,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 			Com_Printf("MN_ParseSetAction: icon '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 			return qfalse;
 		}
-		a = MN_AllocAction();
+		a = MN_AllocStaticAction();
 		a->type = EA_VALUE_RAW;
 		a->d.terminal.d1.data = icon;
 		a->d.terminal.d2.constData = property;
@@ -254,9 +254,9 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 	} else {
 		if (MN_IsInjectedString(*token)) {
 			menuAction_t *a;
-			a = MN_AllocAction();
+			a = MN_AllocStaticAction();
 			a->type = EA_VALUE_STRING_WITHINJECTION;
-			a->d.terminal.d1.data = MN_AllocString(*token, 0);
+			a->d.terminal.d1.data = MN_AllocStaticString(*token, 0);
 			action->d.nonTerminal.right = a;
 		} else {
 			menuAction_t *a;
@@ -266,7 +266,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 				return qfalse;
 			}
 			mn.curadata = Com_AlignPtr(mn.curadata, property->type & V_BASETYPEMASK);
-			a = MN_AllocAction();
+			a = MN_AllocStaticAction();
 			a->type = EA_VALUE_RAW;
 			a->d.terminal.d1.data = mn.curadata;
 			a->d.terminal.d2.constData = property;
@@ -325,7 +325,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 		}
 
 		/* add the action */
-		action = MN_AllocAction();
+		action = MN_AllocStaticAction();
 		/** @todo better to append the action after initialization */
 		if (lastAction)
 			lastAction->next = action;
@@ -342,7 +342,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 				return NULL;
 
 			/* get the value */
-			action->d.terminal.d1.string = MN_AllocString(*token, 0);
+			action->d.terminal.d1.string = MN_AllocStaticString(*token, 0);
 			break;
 
 		case EA_ASSIGN:
@@ -447,7 +447,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 
 	/* return non NULL value */
 	if (firstAction == NULL) {
-		firstAction = MN_AllocAction();
+		firstAction = MN_AllocStaticAction();
 	}
 
 	return firstAction;
@@ -476,7 +476,7 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 	if (!*text)
 		return qfalse;
 
-	option = MN_AllocOption(1);
+	option = MN_AllocStaticOption(1);
 	if (option == NULL) {
 		Com_Printf("MN_ParseOption: Too many option entries for node %s\n", MN_GetPath(node));
 
@@ -762,7 +762,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 				if (!*text)
 					return qfalse;
 
-				*expression = MN_AllocStringCondition(*token);
+				*expression = MN_AllocStaticStringCondition(*token);
 				if (*expression == NULL)
 					return qfalse;
 			}
@@ -1026,7 +1026,7 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 
 	/* else initialize node */
 	} else {
-		node = MN_AllocNode(behaviour->name);
+		node = MN_AllocStaticNode(behaviour->name);
 		node->parent = parent;
 		node->root = parent->root;
 		Q_strncpyz(node->name, *token, sizeof(node->name));
@@ -1210,7 +1210,7 @@ void MN_ParseIcon (const char *name, const char **text)
 	const char *token;
 
 	/* search for menus with same name */
-	icon = MN_AllocIcon(name);
+	icon = MN_AllocStaticIcon(name);
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -1291,7 +1291,7 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 		menu = MN_CloneNode(superMenu, NULL, qtrue, name);
 		token = Com_Parse(text);
 	} else {
-		menu = MN_AllocNode(type);
+		menu = MN_AllocStaticNode(type);
 		menu->root = menu;
 		menu->behaviour->loading(menu);
 		Q_strncpyz(menu->name, name, sizeof(menu->name));

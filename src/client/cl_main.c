@@ -650,7 +650,7 @@ void CL_InitAfter (void)
 	cls.loadingPercent = 100.0f;
 	SCR_DrawPrecacheScreen(qtrue);
 
-	vidModesOptions = MN_AllocOption(VID_GetModeNums());
+	vidModesOptions = MN_AllocStaticOption(VID_GetModeNums());
 	if (vidModesOptions == NULL)
 		return;
 

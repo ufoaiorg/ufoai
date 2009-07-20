@@ -309,20 +309,20 @@ menuNode_t* MN_GetNodeByPath (const char* path)
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
  * @todo Assert out when we are not in parsing/loading stage
  */
-menuNode_t* MN_AllocNode (const char* type)
+menuNode_t* MN_AllocStaticNode (const char* type)
 {
 	menuNode_t* node = &mn.nodes[mn.numNodes++];
 	if (mn.numNodes >= MAX_MENUNODES)
-		Com_Error(ERR_FATAL, "MN_AllocNode: MAX_MENUNODES hit");
+		Com_Error(ERR_FATAL, "MN_AllocStaticNode: MAX_MENUNODES hit");
 	memset(node, 0, sizeof(*node));
 	node->behaviour = MN_GetNodeBehaviour(type);
 	if (node->behaviour == NULL)
-		Com_Error(ERR_FATAL, "MN_AllocNode: Node behaviour '%s' doesn't exist", type);
+		Com_Error(ERR_FATAL, "MN_AllocStaticNode: Node behaviour '%s' doesn't exist", type);
 #if DEBUG
 	node->behaviour->count++;
 #endif
 	if (node->behaviour->isAbstract)
-		Com_Error(ERR_FATAL, "MN_AllocNode: We can't allocate the abstract node behaviour '%s'", type);
+		Com_Error(ERR_FATAL, "MN_AllocStaticNode: We can't allocate the abstract node behaviour '%s'", type);
 	return node;
 }
 
@@ -459,7 +459,7 @@ int MN_GetNodeBehaviourCount(void)
  */
 menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive, const char *newName)
 {
-	menuNode_t* newNode = MN_AllocNode(node->behaviour->name);
+	menuNode_t* newNode = MN_AllocStaticNode(node->behaviour->name);
 
 	/* clone all data */
 	*newNode = *node;

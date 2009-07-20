@@ -290,13 +290,13 @@ menuOption_t *MN_GetOption (int dataId)
 /**
  * @brief Allocates an array of option
  */
-menuOption_t* MN_AllocOption (int count)
+menuOption_t* MN_AllocStaticOption (int count)
 {
 	menuOption_t* newOptions;
 	assert(count > 0);
 
 	if (mn.numOptions + count >= MAX_MENUOPTIONS)
-		Com_Error(ERR_FATAL, "MN_AllocOption: numOptions exceeded - increase MAX_MENUOPTIONS");
+		Com_Error(ERR_FATAL, "MN_AllocStaticOption: numOptions exceeded - increase MAX_MENUOPTIONS");
 
 	newOptions = &mn.options[mn.numOptions];
 	mn.numOptions += count;

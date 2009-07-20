@@ -620,7 +620,7 @@ static void MN_ModelNodeMouseUp (menuNode_t *node, int x, int y, int button)
 static void MN_ModelNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
-	EXTRADATA(node).oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
+	EXTRADATA(node).oldRefValue = MN_AllocStaticString("", MAX_OLDREFVALUE);
 	VectorSet(EXTRADATA(node).scale, 1, 1, 1);
 	EXTRADATA(node).clipOverflow = qtrue;
 }
@@ -631,7 +631,7 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 static void MN_ModelNodeClone (const menuNode_t *source, menuNode_t *clone)
 {
 	localBehaviour->super->clone(source, clone);
-	EXTRADATA(clone).oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
+	EXTRADATA(clone).oldRefValue = MN_AllocStaticString("", MAX_OLDREFVALUE);
 }
 
 static void MN_ModelNodeLoaded (menuNode_t *node)

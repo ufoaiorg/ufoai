@@ -215,11 +215,11 @@ void MN_RemoveFocus (void)
 	}
 }
 
-static menuKeyBinding_t* MN_AllocKeyBinding (void)
+static menuKeyBinding_t* MN_AllocStaticKeyBinding (void)
 {
 	menuKeyBinding_t* result;
 	if (mn.numKeyBindings >= MAX_MENUKEYBINDING)
-		Com_Error(ERR_FATAL, "MN_AllocKeyBinding: MAX_MENUKEYBINDING hit");
+		Com_Error(ERR_FATAL, "MN_AllocStaticKeyBinding: MAX_MENUKEYBINDING hit");
 
 	result = &mn.keyBindings[mn.numKeyBindings];
 	mn.numKeyBindings++;
@@ -252,7 +252,7 @@ void MN_SetKeyBinding (const char* path, int key)
 		Com_Error(ERR_FATAL, "MN_SetKeyBinding: node \"%s\" not found.", path);
 
 	/* init and link the keybinding */
-	binding = MN_AllocKeyBinding();
+	binding = MN_AllocStaticKeyBinding();
 	binding->node = node;
 	binding->key = key;
 	node->key = binding;

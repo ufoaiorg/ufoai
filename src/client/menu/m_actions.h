@@ -130,7 +130,7 @@ const char* MN_GenInjectedString(const struct menuNode_s* source, qboolean useCm
 int MN_GetActionTokenType(const char* token, int group);
 
 void MN_PoolAllocAction(menuAction_t** action, int type, const void *data);
-menuAction_t* MN_AllocCommandAction(char *command);
+menuAction_t* MN_AllocStaticCommandAction(char *command);
 void MN_InitActions(void);
 
 #endif

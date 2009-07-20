@@ -34,10 +34,10 @@ void MN_ParseMenuModel(const char *name, const char **text);
 float MN_GetReferenceFloat(const struct menuNode_s* const node, const void *ref);
 const char *MN_GetReferenceString(const struct menuNode_s* const node, const char *ref) __attribute__ ((warn_unused_result));
 const value_t* MN_FindPropertyByName(const value_t* propertyList, const char* name) __attribute__ ((warn_unused_result));
-char* MN_AllocString(const char* string, int size) __attribute__ ((warn_unused_result));
-float* MN_AllocFloat(int count) __attribute__ ((warn_unused_result));
-vec4_t* MN_AllocColor(int count) __attribute__ ((warn_unused_result));
-struct menuAction_s *MN_AllocAction(void) __attribute__ ((warn_unused_result));
+char* MN_AllocStaticString(const char* string, int size) __attribute__ ((warn_unused_result));
+float* MN_AllocStaticFloat(int count) __attribute__ ((warn_unused_result));
+vec4_t* MN_AllocStaticColor(int count) __attribute__ ((warn_unused_result));
+struct menuAction_s *MN_AllocStaticAction(void) __attribute__ ((warn_unused_result));
 
 /* main special type */
 /** @todo we should split/flag parse type (type need only 1 lex; and other) */

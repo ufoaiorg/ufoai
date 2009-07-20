@@ -526,9 +526,9 @@ void MN_FreeStringProperty (void* pointer)
  * @param[in] command A command for the action
  * @return An initialised action
  */
-menuAction_t* MN_AllocCommandAction (char *command)
+menuAction_t* MN_AllocStaticCommandAction (char *command)
 {
-	menuAction_t* action = MN_AllocAction();
+	menuAction_t* action = MN_AllocStaticAction();
 	action->type = EA_CMD;
 	action->d.terminal.d1.string = command;
 	return action;

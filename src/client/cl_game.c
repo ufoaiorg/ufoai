@@ -488,8 +488,8 @@ static void GAME_Exit_f (void)
 static void GAME_InitMenuOptions (void)
 {
 	int i, cnt;
-	menuOption_t* ufoOptions = MN_AllocOption(UFO_MAX * 2);
-	menuOption_t* aircraftOptions = MN_AllocOption(DROPSHIP_MAX);
+	menuOption_t* ufoOptions = MN_AllocStaticOption(UFO_MAX * 2);
+	menuOption_t* aircraftOptions = MN_AllocStaticOption(DROPSHIP_MAX);
 	menuOption_t *last = NULL;
 	if (ufoOptions == NULL || aircraftOptions == NULL)
 		return;

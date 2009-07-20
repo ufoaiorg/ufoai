@@ -233,7 +233,7 @@ typedef struct nodeBehaviour_s {
 void MN_InitNodes(void);
 
 /* nodes */
-menuNode_t* MN_AllocNode(const char* type) __attribute__ ((warn_unused_result));
+menuNode_t* MN_AllocStaticNode(const char* type) __attribute__ ((warn_unused_result));
 menuNode_t* MN_GetNodeByPath(const char* path);
 void MN_ReadNodePath(const char* path, const menuNode_t *relativeNode, menuNode_t** resultNode, const value_t **resultProperty);
 struct menuNode_s *MN_GetNodeAtPosition(int x, int y);

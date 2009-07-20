@@ -303,9 +303,9 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t
  * @param[out] condition Condition to initialize
  * @return The condition if everything is ok, NULL otherwise
  */
-menuAction_t *MN_AllocStringCondition (const char *description)
+menuAction_t *MN_AllocStaticStringCondition (const char *description)
 {
-	const char *errhead = "MN_AllocStringCondition: unexpected end of string (object";
+	const char *errhead = "MN_AllocStaticStringCondition: unexpected end of string (object";
 	const char *text, *base;
 	menuAction_t *expression;
 
@@ -313,7 +313,7 @@ menuAction_t *MN_AllocStringCondition (const char *description)
 	text = base;
 	expression = MN_ParseExpression(&text, errhead, NULL);
 	if (!expression) {
-		Com_Printf("MN_AllocStringCondition: Parse error on expression \"%s\"\n", base);
+		Com_Printf("MN_AllocStaticStringCondition: Parse error on expression \"%s\"\n", base);
 		return NULL;
 	}
 
@@ -327,7 +327,7 @@ menuAction_t *MN_AllocStringCondition (const char *description)
 static menuAction_t *MN_ParseValueExpression (const char **text, const char *errhead, const menuNode_t *source)
 {
 	const char* token;
-	menuAction_t *expression = MN_AllocAction();
+	menuAction_t *expression = MN_AllocStaticAction();
 
 	token = Com_Parse(text);
 	if (*text == NULL) {
@@ -337,7 +337,7 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 
 	/* it is a const string (or an injection tag for compatibility) */
 	if (Com_ParsedTokenIsQuoted() || token[0] == '<') {
-		expression->d.terminal.d1.string = MN_AllocString(token, 0);
+		expression->d.terminal.d1.string = MN_AllocStaticString(token, 0);
 		if (MN_IsInjectedString(token))
 			expression->type = EA_VALUE_STRING_WITHINJECTION;
 		else
@@ -348,7 +348,7 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 	/* it is a cvarname */
 	if (!strncmp(token, "*cvar:", 6)) {
 		const char* cvarName = token + 6;
-		expression->d.terminal.d1.string = MN_AllocString(cvarName, 0);
+		expression->d.terminal.d1.string = MN_AllocStaticString(cvarName, 0);
 		if (MN_IsInjectedString(cvarName))
 			expression->type = EA_VALUE_CVARNAME_WITHINJECTION;
 		else
@@ -389,7 +389,7 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 			expression->type = EA_VALUE_PATHPROPERTY;
 		if (!relativeToNode)
 			path = va("root.%s", path);
-		expression->d.terminal.d1.string = MN_AllocString(path, 0);
+		expression->d.terminal.d1.string = MN_AllocStaticString(path, 0);
 
 		castedBehaviour = MN_GetNodeBehaviour(cast);
 		if (castedBehaviour == NULL)
@@ -465,7 +465,7 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const 
 			return e;
 
 		/* then its an operator */
-		expression = MN_AllocAction();
+		expression = MN_AllocStaticAction();
 		expression->d.nonTerminal.left = e;
 		expression->type = MN_GetActionTokenType(token, EA_BINARYOPERATOR);
 		if (expression->type == EA_NULL) {
@@ -492,7 +492,7 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const 
 			Com_UnParseLastToken();
 			return MN_ParseValueExpression(text, errhead, source);
 		} else {
-			menuAction_t *expression = MN_AllocAction();
+			menuAction_t *expression = MN_AllocStaticAction();
 			menuAction_t *e;
 
 			e = MN_ParseExpression(text, errhead, source);

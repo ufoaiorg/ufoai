@@ -274,7 +274,7 @@ void IN_JoystickInitMenu (void)
 	const int total = SDL_NumJoysticks();
 
 	if (total == 0) {
-		menuOption_t *option = MN_AllocOption(1);
+		menuOption_t *option = MN_AllocStaticOption(1);
 		if (option) {
 			MN_InitOption(option, "", "None", "0");
 			joystickOptions = option;
@@ -282,7 +282,7 @@ void IN_JoystickInitMenu (void)
 	} else {
 		int i;
 		menuOption_t* optionArray;
-		optionArray = MN_AllocOption(total);
+		optionArray = MN_AllocStaticOption(total);
 		if (optionArray == NULL)
 			return;
 

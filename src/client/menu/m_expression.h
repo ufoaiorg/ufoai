@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct menuNode_s;
 struct menuAction_s;
 
-struct menuAction_s *MN_AllocStringCondition(const char *description) __attribute__ ((warn_unused_result));
+struct menuAction_s *MN_AllocStaticStringCondition(const char *description) __attribute__ ((warn_unused_result));
 struct menuAction_s *MN_ParseExpression(const char **text, const char *errhead, const struct menuNode_s *source) __attribute__ ((warn_unused_result));
 
 qboolean MN_GetBooleanFromExpression(struct menuAction_s *expression, const struct menuNode_s *source) __attribute__ ((warn_unused_result));

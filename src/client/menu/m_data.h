@@ -176,7 +176,7 @@ const char *MN_GetText(int textId) __attribute__ ((warn_unused_result));
 void MN_RegisterLinkedListText(int textId, struct linkedList_s *text);
 
 /* option */
-struct menuOption_s* MN_AllocOption(int count) __attribute__ ((warn_unused_result));
+struct menuOption_s* MN_AllocStaticOption(int count) __attribute__ ((warn_unused_result));
 void MN_RegisterOption(int dataId, struct menuOption_s *option);
 struct menuOption_s *MN_GetOption(int dataId) __attribute__ ((warn_unused_result));
 void MN_SortOptions(struct menuOption_s **option);

@@ -33,7 +33,7 @@ static const nodeBehaviour_t const *localBehaviour;
 static inline void MN_InitCvarOrFloat (float** adress, float defaultValue)
 {
 	if (*adress == NULL) {
-		*adress = MN_AllocFloat(1);
+		*adress = MN_AllocStaticFloat(1);
 		**adress = defaultValue;
 	}
 }
@@ -53,7 +53,7 @@ static void MN_CloneCvarOrFloat (const float*const* source, float** clone)
 		return;
 
 	/* clone float */
-	*clone = MN_AllocFloat(1);
+	*clone = MN_AllocStaticFloat(1);
 	**clone = **source;
 }
 

@@ -367,7 +367,7 @@ static void CL_InitSkin_f (void)
 		int i;
 		menuOption_t *skins;
 		assert(NUM_TEAMSKINS_SINGLEPLAYER >= 4);	/*< the current code create 4 skins */
-		skins = MN_AllocOption(NUM_TEAMSKINS_SINGLEPLAYER);
+		skins = MN_AllocStaticOption(NUM_TEAMSKINS_SINGLEPLAYER);
 		MN_InitOption(&skins[0], "urban", N_("Urban"), "0");
 		MN_InitOption(&skins[1], "jungle", N_("Jungle"), "1");
 		MN_InitOption(&skins[2], "desert", N_("Desert"), "2");
@@ -382,7 +382,7 @@ static void CL_InitSkin_f (void)
 		int i;
 		menuOption_t *skins;
 		assert(NUM_TEAMSKINS >= 6);		/*< the current code create 6 skins */
-		skins = MN_AllocOption(NUM_TEAMSKINS);
+		skins = MN_AllocStaticOption(NUM_TEAMSKINS);
 		MN_InitOption(&skins[0], "urban", N_("Urban"), "0");
 		MN_InitOption(&skins[1], "jungle", N_("Jungle"), "1");
 		MN_InitOption(&skins[2], "desert", N_("Desert"), "2");

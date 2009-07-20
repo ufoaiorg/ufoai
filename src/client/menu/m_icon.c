@@ -66,12 +66,12 @@ menuIcon_t* MN_GetIconByName (const char* name)
  * @param[in] name Name of the icon
  * @todo Assert out when we are not in parsing/loading stage
  */
-menuIcon_t* MN_AllocIcon (const char* name)
+menuIcon_t* MN_AllocStaticIcon (const char* name)
 {
 	menuIcon_t* result;
 	assert(MN_GetIconByName(name) == NULL);
 	if (mn.numIcons >= MAX_MENUICONS)
-		Com_Error(ERR_FATAL, "MN_AllocIcon: MAX_MENUICONS hit");
+		Com_Error(ERR_FATAL, "MN_AllocStaticIcon: MAX_MENUICONS hit");
 
 	result = &mn.icons[mn.numIcons];
 	mn.numIcons++;

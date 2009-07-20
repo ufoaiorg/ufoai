@@ -279,7 +279,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 
 	/* if it need, construct the drag button */
 	if (EXTRADATA(node).dragButton) {
-		menuNode_t *control = MN_AllocNode("controls");
+		menuNode_t *control = MN_AllocStaticNode("controls");
 		Q_strncpyz(control->name, "move_window_button", sizeof(control->name));
 		control->root = node;
 		control->image = NULL;
@@ -294,7 +294,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 
 	/* if the menu should have a close button, add it here */
 	if (EXTRADATA(node).closeButton) {
-		menuNode_t *button = MN_AllocNode("pic");
+		menuNode_t *button = MN_AllocStaticNode("pic");
 		const int positionFromRight = CONTROLS_PADDING;
 		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
 		button->root = node;
@@ -305,7 +305,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 		button->pos[0] = node->size[0] - positionFromRight - button->size[0];
 		button->pos[1] = CONTROLS_PADDING;
 		button->tooltip = _("Close the window");
-		button->onClick = MN_AllocCommandAction(closeCommand);
+		button->onClick = MN_AllocStaticCommandAction(closeCommand);
 		MN_AppendNode(node, button);
 	}
 
