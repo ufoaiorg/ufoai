@@ -190,14 +190,13 @@ static gboolean Prefab_FilterFileOrDirectory (GtkTreeModel *model, GtkTreeIter *
 static gboolean Prefab_FilterDirectory(GtkTreeModel *model, GtkTreeIter *possibleDirectory)
 {
 	int children = gtk_tree_model_iter_n_children(model, possibleDirectory);
-	int unfilteredChildren = 0;
 	for (int i = 0; i < children; i++) {
-		GtkTreeIter *child;
-		gtk_tree_model_iter_nth_child(model, child, possibleDirectory, i);
-		if (Prefab_FilterFileOrDirectory(model, child))
-			unfilteredChildren++;
+		GtkTreeIter child;
+		if (gtk_tree_model_iter_nth_child(model, &child, possibleDirectory, i))
+			if (Prefab_FilterFileOrDirectory(model, &child))
+				return true;
 	}
-	return unfilteredChildren > 0;
+	return false;
 
 }
 
