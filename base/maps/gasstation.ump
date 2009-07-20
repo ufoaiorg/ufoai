@@ -34,6 +34,17 @@ tile +craft_drop_firebird
 0      0      0      0      0
 }
 
+tile +craft_drop_herakles
+{
+4 5
+
+0      0      0      0
+0      +b     +b     a 
+0      +b     +b     a 
+0      +b     +b     a 
+0      a      a      a
+}
+
 // ########################################
 // ########### Maps for the game ##########
 

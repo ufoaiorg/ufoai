@@ -23,6 +23,19 @@ a      +b      +b      +b      a
 }
 
 // ---------------------------------
+// Herakles dropship
+tile +craft_drop_herakles
+{
+4 5
+
+0      0      0      0
+0      +b     +b     a 
+0      +b     +b     a 
+0      +b     +b     a 
+0      a      a      a
+}
+
+// ---------------------------------
 // Small filler
 tile +filler_s
 {

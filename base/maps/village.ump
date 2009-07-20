@@ -317,6 +317,18 @@ ac     +a     +a     +a     ac
 }
 
 // ---------------------------------
+tile +craft_drop_herakles
+{
+4 5
+
+0      0      0      0
+0      +b     +b     a 
+0      +b     +b     a 
+0      +b     +b     a 
+0      a      a      a
+}
+
+// ---------------------------------
 tile +craft_ufo_scout
 {
 4 5

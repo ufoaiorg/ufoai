@@ -44,6 +44,20 @@ acdrst  +a       +a       +a       acdopq
 acdrst  +a       +a       +a       acdopq
 0       abdijk   abdijk   abdijk   0
 }
+
+//--
+
+tile +craft_drop_herakles
+{
+4 5
+
+0      0      0      0
+0      +b     +b     a 
+0      +b     +b     a 
+0      +b     +b     a 
+0      a      a      a
+}
+
 //--
 
 // UFO - Harvester
