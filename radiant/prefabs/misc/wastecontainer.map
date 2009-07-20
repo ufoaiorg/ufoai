@@ -1,0 +1,39 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 64 64 64 ) ( 64 32 64 ) ( 0 64 64 ) tex_common/actorclip 0 32 0 1 1
+( 64 64 32 ) ( 0 64 32 ) ( 64 64 0 ) tex_common/actorclip 0 0 0 1 1
+( 32 64 32 ) ( 32 64 0 ) ( 32 32 32 ) tex_common/actorclip 32 0 0 1 1
+( 0 32 0 ) ( 64 32 0 ) ( 0 64 0 ) tex_common/actorclip 0 32 0 1 1
+( 0 32 0 ) ( 0 32 32 ) ( 64 32 0 ) tex_common/actorclip 0 0 0 1 1
+( 0 32 0 ) ( 0 64 0 ) ( 0 32 32 ) tex_common/actorclip 32 0 0 1 1
+}
+// brush 1
+{
+( 64 32 64 ) ( 64 0 64 ) ( 0 32 64 ) tex_common/actorclip 0 0 0 1 1
+( 64 32 32 ) ( 0 32 32 ) ( 64 32 0 ) tex_common/actorclip 0 0 0 1 1
+( 64 32 32 ) ( 64 32 0 ) ( 64 0 32 ) tex_common/actorclip 0 0 0 1 1
+( 0 0 0 ) ( 64 0 0 ) ( 0 32 0 ) tex_common/actorclip 0 0 0 1 1
+( 0 0 0 ) ( 0 0 32 ) ( 64 0 0 ) tex_common/actorclip 0 0 0 1 1
+( 0 0 0 ) ( 0 32 0 ) ( 0 0 32 ) tex_common/actorclip 0 0 0 1 1
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "32 16 4"
+"model" "models/objects/city/waste/container_closed.md2"
+"spawnflags" "255"
+"angles" "0 -90 0"
+}
+// entity 2
+{
+"classname" "misc_model"
+"origin" "9.929 53.73 5.1414"
+"model" "models/objects/city/waste/bag.md2"
+"angles" "-19.9708 166.74 -11.0744"
+"spawnflags" "255"
+}
