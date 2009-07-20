@@ -26,6 +26,10 @@
 // * craft_ufo_bomber,      craft_crash_bomber
 // * craft_ufo_corrupter,   craft_crash_corrupter
 // *                        craft_crash_supply
+//
+// valid aircraft values:
+// * craft_drop_firebird
+// * craft_drop_herakles
 
 ////////////////////////
 // INDUSTRIAL RANDOM MAPS
@@ -44,6 +48,7 @@ mapdef oilpipes_small
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
 	}
 
 	ufos
@@ -1806,6 +1811,7 @@ mapdef city_disco
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
 	}
 
 //	ufos
@@ -2263,6 +2269,7 @@ mapdef bridge
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
 	}
 
 	ufos
@@ -2308,6 +2315,7 @@ mapdef construction
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
 	}
 
 //	ufos
@@ -2488,6 +2496,7 @@ mapdef africa
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
 	}
 
 	ufos
@@ -2697,6 +2706,7 @@ mapdef bomber_city
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
 	}
 
 	ufos
@@ -2744,6 +2754,7 @@ mapdef community_centre
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
 	}
 
 //	ufos
