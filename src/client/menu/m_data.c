@@ -231,6 +231,23 @@ void MN_SortOptions (menuOption_t **first)
 }
 
 /**
+ * @brief Unhide those options that are stored in the linked list and hide the others
+ */
+void MN_UpdateInvisOptions (menuOption_t *option, linkedList_t *stringList)
+{
+	if (option == NULL || stringList == NULL)
+		return;
+
+	while (option) {
+		if (LIST_ContainsString(stringList, option->value))
+			option->invis = qfalse;
+		else
+			option->invis = qtrue;
+		option = option->next;
+	}
+}
+
+/**
  * @brief Init an option with a very little set of value.
  * @note need you abstract menuOption_t values
  * @param[in] nameID name of the option (should be unique into the option list)
@@ -346,7 +363,7 @@ static menuOption_t* MN_FindOptionAtIndex (int index, menuOption_t* option, menu
 
 		/* its a child */
 		if (index < option->childCount) {
-			if(iterator->depthPos >= MAX_DEPTH_OPTIONITERATORCACHE)
+			if (iterator->depthPos >= MAX_DEPTH_OPTIONITERATORCACHE)
 				assert(qfalse);
 			iterator->depthCache[iterator->depthPos] = option;
 			iterator->depthPos++;
@@ -362,7 +379,7 @@ static menuOption_t* MN_FindOptionAtIndex (int index, menuOption_t* option, menu
 
 /**
  * @brief Init an option iterator at an index
- * @node invis option are skiped, and child are counted
+ * @node invis option are skipped, and child are counted
  * @param[in] index Requested index (0 is the first option)
  * @param[in] option First element of options (it can be a tree)
  * @param[out] iterator Initialised iterator
@@ -375,7 +392,7 @@ menuOption_t* MN_InitOptionIteratorAtIndex (int index, menuOption_t* option, men
 }
 
 /**
- * @breif Find the next element from the iterator
+ * @brief Find the next element from the iterator
  */
 menuOption_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
 {

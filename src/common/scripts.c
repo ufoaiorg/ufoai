@@ -934,15 +934,15 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		case UFO_HARVESTER:
 			return "craft_ufo_harvester";
 		case UFO_SCOUT:
-			return "craft_ufo_harvester";
+			return "craft_ufo_scout";
 		case UFO_SUPPLY:
 			return "craft_ufo_supply";
 		case UFO_GUNBOAT:
-			return "craft_ufo_supply";
+			return "craft_ufo_gunboat";
 		case UFO_RIPPER:
 			return "craft_ufo_ripper";
 		case UFO_MOTHERSHIP:
-			return "craft_ufo_ripper";
+			return "craft_ufo_mothership";
 		default:
 			Sys_Error("Unknown ufo type: '%i'", *(const int *) b);
 		}
@@ -960,15 +960,15 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		case UFO_HARVESTER:
 			return "craft_crash_harvester";
 		case UFO_SCOUT:
-			return "craft_crash_harvester";
+			return "craft_crash_scout";
 		case UFO_SUPPLY:
 			return "craft_crash_supply";
 		case UFO_GUNBOAT:
-			return "craft_crash_supply";
+			return "craft_crash_gunboat";
 		case UFO_RIPPER:
 			return "craft_crash_ripper";
 		case UFO_MOTHERSHIP:
-			return "craft_crash_ripper";
+			return "craft_crash_mothership";
 		default:
 			Sys_Error("Unknown crashed ufo type: '%i'", *(const int *) b);
 		}
