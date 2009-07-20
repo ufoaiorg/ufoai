@@ -175,11 +175,12 @@ typedef enum {
 typedef enum {
 	DROPSHIP_FIREBIRD,
 	DROPSHIP_HERAKLES,
+
 	INTERCEPTOR_STILETTO,
 
 	AIRCRAFTTYPE_MAX
 } humanAircraftType_t;
-#define DROPSHIP_MAX DROPSHIP_HERAKLES
+#define DROPSHIP_MAX INTERCEPTOR_STILETTO
 
 extern const char *const align_names[];
 extern const char *const blend_names[];

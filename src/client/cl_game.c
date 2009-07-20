@@ -519,7 +519,7 @@ static void GAME_InitMenuOptions (void)
 
 	cnt = 0;
 	last = NULL;
-	for (i = 0; i <= DROPSHIP_MAX; i++) {
+	for (i = 0; i < DROPSHIP_MAX; i++) {
 		const char *shortName = Com_DropShipTypeToShortName(i);
 		menuOption_t *entry = &aircraftOptions[cnt++];
 		MN_InitOption(entry, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
