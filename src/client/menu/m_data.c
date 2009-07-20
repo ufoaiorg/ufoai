@@ -384,6 +384,14 @@ static menuOption_t* MN_FindOptionAtIndex (int index, menuOption_t* option, menu
  * @param[in] option First element of options (it can be a tree)
  * @param[out] iterator Initialised iterator
  * @return the first option element found (current position of the iterator)
+ * @code
+ * menuOptionIterator_t iterator;
+ * MN_InitOptionIteratorAtIndex(index, firstOption, &iterator);	// also return the option
+ * while (iterator.option) {
+ *     ...
+ *     MN_OptionIteratorNextOption(&iterator);	// also return the option
+ * }
+ * @endcode
  */
 menuOption_t* MN_InitOptionIteratorAtIndex (int index, menuOption_t* option, menuOptionIterator_t* iterator)
 {
