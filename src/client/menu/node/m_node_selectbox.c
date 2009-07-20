@@ -59,7 +59,8 @@ static menuOption_t*  MN_SelectBoxNodeGetFirstOption (menuNode_t * node)
 			int count = 0;
 			menuOption_t *option = MN_GetOption(EXTRADATA(node).dataId);
 			while (option) {
-				count++;
+				if (option->invis == qfalse)
+					count++;
 				option = option->next;
 			}
 			EXTRADATA(node).count = count;
@@ -88,7 +89,9 @@ static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 
 	posy = node->size[1];
 	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
-		option->hovered = (posy <= y && y < posy + node->size[1]) ? qtrue : qfalse;
+		if (option->invis)
+			continue;
+		option->hovered = (posy <= y && y < posy + node->size[1]);
 		posy += node->size[1];
 	}
 }
@@ -129,6 +132,8 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, image);
 	/* draw the label for the current selected option */
 	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
+		if (option->invis)
+			continue;
 		if (!strcmp(option->value, ref)) {
 			MN_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 				selBoxX, selBoxY, node->size[0] - 4, 0,
@@ -184,6 +189,8 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 
 	/* now draw all available options for this selectbox */
 	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
+		if (option->invis)
+			continue;
 		/* draw the hover effect */
 		if (option->hovered)
 			MN_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
@@ -258,6 +265,8 @@ static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 	/* select the right option */
 	option = MN_SelectBoxNodeGetFirstOption(node);
 	for (; clickedAtOption > 0 && option; option = option->next) {
+		if (option->invis)
+			continue;
 		clickedAtOption--;
 	}
 
