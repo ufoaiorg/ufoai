@@ -164,7 +164,7 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 				NET_ReadShort(msg);
 			}
 			if (le->eventDelayTime)
-				nextTime += le->eventDelayTime;
+				eventTime += le->eventDelayTime;
 			le->eventDelayTime += (time + 1000);
 		}
 		break;
