@@ -165,7 +165,7 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 			}
 			if (le->eventDelayTime)
 				eventTime += le->eventDelayTime;
-			le->eventDelayTime += (time + 1000);
+			le->eventDelayTime += (time + 300);
 		}
 		break;
 	case EV_ACTOR_SHOOT:
