@@ -141,30 +141,46 @@ qboolean GAME_SK_Spawn (void)
 	return qtrue;
 }
 
+static inline void GAME_SK_HideDropships (qboolean hide)
+{
+	if (hide) {
+		MN_ExecuteConfunc("skirmish_hide_dropships true");
+		Cvar_Set("rm_drop", "");
+	} else {
+		MN_ExecuteConfunc("skirmish_hide_dropships false");
+	}
+}
+
+static inline void GAME_SK_HideUFOs (qboolean hide)
+{
+	if (hide) {
+		MN_ExecuteConfunc("skirmish_hide_ufos true");
+		Cvar_Set("rm_ufo", "");
+	} else {
+		MN_ExecuteConfunc("skirmish_hide_ufos false");
+	}
+}
+
 const mapDef_t* GAME_SK_MapInfo (int step)
 {
 	const mapDef_t *md = &csi.mds[cls.currentSelectedMap];
 	if (md->map[0] == '+') {
 		if (md->ufos) {
 			MN_UpdateInvisOptions(MN_GetOption(OPTION_UFOS), md->ufos);
+			/** @todo get the first visible element */
 			Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft((const char *)md->ufos->data));
-			MN_ExecuteConfunc("skirmish_hide_ufos false");
-		} else {
-			MN_ExecuteConfunc("skirmish_hide_ufos true");
-			Cvar_Set("rm_ufo", "");
 		}
+		GAME_SK_HideUFOs(md->ufos == NULL);
 
 		if (md->aircraft) {
 			MN_UpdateInvisOptions(MN_GetOption(OPTION_DROPSHIPS), md->aircraft);
-			Cvar_Set("rm_drop", (const char *)md->aircraft->data);
-			MN_ExecuteConfunc("skirmish_hide_dropships false");
-		} else {
-			MN_ExecuteConfunc("skirmish_hide_dropships true");
-			Cvar_Set("rm_drop", "");
+			/** @todo get the first visible element */
+			Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft((const char *)md->aircraft->data));
 		}
+		GAME_SK_HideUFOs(md->aircraft == NULL);
 	} else {
-		MN_ExecuteConfunc("skirmish_hide_ufos true");
-		MN_ExecuteConfunc("skirmish_hide_dropships true");
+		GAME_SK_HideUFOs(qtrue);
+		GAME_SK_HideDropships(qtrue);
 	}
 
 	return md;
