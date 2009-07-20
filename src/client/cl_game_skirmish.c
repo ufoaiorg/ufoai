@@ -177,7 +177,7 @@ const mapDef_t* GAME_SK_MapInfo (int step)
 			/** @todo get the first visible element */
 			Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft((const char *)md->aircraft->data));
 		}
-		GAME_SK_HideUFOs(md->aircraft == NULL);
+		GAME_SK_HideDropships(md->aircraft == NULL);
 	} else {
 		GAME_SK_HideUFOs(qtrue);
 		GAME_SK_HideDropships(qtrue);
