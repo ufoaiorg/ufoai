@@ -23,7 +23,7 @@ tile +main
 0      0      0      0       0      0     0
 }
 
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 5 4
 
@@ -41,5 +41,5 @@ assembly default
 size "5 5"
 title "_Italy"
 +main "1 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }

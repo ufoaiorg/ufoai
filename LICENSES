@@ -1,7 +1,7 @@
 filename | license | author | source
 base/maps/africa.ump | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/maps/africa/af_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/maps/africa/af_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/africa/af_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/africa/af_craft_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/africa/af_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/alienb/a_empty.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/alienb/a_hangar.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -32,17 +32,17 @@ base/maps/b/ufohangar.map | GNU General Public License 2.0 or later | Martin Ger
 base/maps/b/ufohangar_l.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/b/workshop.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/bomber_city.ump | GNU General Public License 2.0 or later
-base/maps/bomber_city/bc_drop_firebird.map | GNU General Public License 2.0 or later
-base/maps/bomber_city/bc_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/bomber_city/bc_craft_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/bomber_city/bc_craft_drop_herakles.map | GNU General Public License 2.0 or later
 base/maps/bomber_city/bc_main.map | GNU General Public License 2.0 or later
 base/maps/bridge.ump | GNU General Public License 2.0 or later
-base/maps/bridge/br_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/bridge/br_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/bridge/br_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/bridge/br_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/bridge/br_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/bunker.map | GNU General Public License 2.0 or later
 base/maps/cemetery.ump | GNU General Public License 2.0 or later
+base/maps/cemetery/cem_craft_drop_firebird.map | GNU General Public License 2.0 or later | wotwot
 base/maps/cemetery/cem_d01.map | GNU General Public License 2.0 or later | wotwot
-base/maps/cemetery/cem_drop_firebird.map | GNU General Public License 2.0 or later | wotwot
 base/maps/cemetery/cem_g01.map | GNU General Public License 2.0 or later | wotwot
 base/maps/cemetery/cem_g02.map | GNU General Public License 2.0 or later | wotwot
 base/maps/cemetery/cem_p01.map | GNU General Public License 2.0 or later | wotwot
@@ -59,22 +59,23 @@ base/maps/cemetery/cem_p11.map | GNU General Public License 2.0 or later | wotwo
 base/maps/cemetery/cem_p12.map | GNU General Public License 2.0 or later | wotwot
 base/maps/cemetery/cem_p13.map | GNU General Public License 2.0 or later | wotwot
 base/maps/city_disco.ump | GNU General Public License 2.0 or later
-base/maps/city_disco/cd_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/maps/city_disco/cd_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/city_disco/cd_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/city_disco/cd_craft_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/city_disco/cd_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/city_train.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/community_centre.ump | GNU General Public License 2.0 or later
-base/maps/community_centre/cm_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/community_centre/cm_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/community_centre/cm_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/community_centre/cm_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/community_centre/cm_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/construction.ump | GNU General Public License 2.0 or later
-base/maps/construction/cs_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/maps/construction/cs_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/construction/cs_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/construction/cs_craft_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/construction/cs_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/corrupter_crash.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country.ump | GNU General Public License 2.0 or later
 base/maps/country/c_c01.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/c_c02.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/country/c_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/c_craft_ufo_fighter.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/c_craft_ufo_harvester.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/c_d01.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -87,7 +88,6 @@ base/maps/country/c_d07.map | GNU General Public License 2.0 or later | Martin G
 base/maps/country/c_d08.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/c_d09.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/c_d10.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/country/c_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/c_h01.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/c_h02.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/c_h03.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -129,11 +129,11 @@ base/maps/country/c_v01.map | GNU General Public License 2.0 or later | Martin G
 base/maps/country/c_v01_2.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/dam.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/druglord.ump | GNU General Public License 2.0 or later
-base/maps/druglord/dl_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/druglord/dl_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/druglord/dl_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/druglord/dl_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/druglord/dl_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/eaglenest.ump | GNU General Public License 2.0 or later
-base/maps/eaglenest/en_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/eaglenest/en_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/eaglenest/en_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/england.map | GNU General Public License 2.0 or later
 base/maps/estate.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -142,11 +142,11 @@ base/maps/farm.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/farm.ump | GNU General Public License 2.0 or later
 base/maps/farm/f_barn_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_barn_b.map | GNU General Public License 2.0 or later
+base/maps/farm/f_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_bomber.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_scout.map | GNU General Public License 2.0 or later
-base/maps/farm/f_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/farm/f_farmhouse_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_farmhouse_b.map | GNU General Public License 2.0 or later
 base/maps/farm/f_field_a.map | GNU General Public License 2.0 or later
@@ -168,10 +168,10 @@ base/maps/forest/fr_a2.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_crash_fighter.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_crash_harvester.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_crash_scout.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_craft_drop_firebird.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_ufo_scout.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_drop_firebird.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_f1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_f10.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_f2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
@@ -192,10 +192,10 @@ base/maps/forest/fr_w6.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_w7.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_w8.map | GNU General Public License 2.0 or later
 base/maps/frozen.ump | GNU General Public License 2.0 or later
+base/maps/frozen/st_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_ufo_supply.map | GNU General Public License 2.0 or later
-base/maps/frozen/st_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_h01.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_h02.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_h03.map | GNU General Public License 2.0 or later
@@ -216,21 +216,21 @@ base/maps/frozen/st_n04.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_n05.map | GNU General Public License 2.0 or later
 base/maps/fueldump.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/gasstation.ump | GNU General Public License 2.0 or later
-base/maps/gasstation/gas_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/gasstation/gas_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/gasstation/gas_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/harbour.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/harvester_crash.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/ice.ump | GNU General Public License 2.0 or later
-base/maps/ice/ice_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/ice/ice_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/ice/ice_r01.map | GNU General Public License 2.0 or later
 base/maps/ice/ice_r02.map | GNU General Public License 2.0 or later
 base/maps/ice/ice_r03.map | GNU General Public License 2.0 or later
 base/maps/industrial.ump | GNU General Public License 2.0 or later
+base/maps/industrial/craft_drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/craft_drop_herakles.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/craft_ufo_fighter.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/craft_ufo_scout.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/craft_ufo_supply.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/drop_herakles.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/fr01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/fr02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/fr03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
@@ -250,29 +250,29 @@ base/maps/industrial/fr16_5x1.map | GNU General Public License 2.0 or later | Ma
 base/maps/industrial/inter_saracen.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/inter_stiletto.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/italy.ump | GNU General Public License 2.0 or later
-base/maps/italy/it_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/italy/it_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/italy/it_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/japan.ump | GNU General Public License 2.0 or later
-base/maps/japan/ja_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/japan/ja_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/japan/ja_main.map | GNU General Public License 2.0 or later
 base/maps/laboratory.ump | GNU General Public License 2.0 or later
-base/maps/laboratory/lab_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/laboratory/lab_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/laboratory/lab_main.map | GNU General Public License 2.0 or later
 base/maps/lake_ice.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/lake_ice_big.map | GNU General Public License 2.0 or later | 'SparX' Beyeler, Martin Gerhardy
 base/maps/mart.ump | GNU General Public License 2.0 or later
-base/maps/mart/ma_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/mart/ma_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/mart/ma_main.map | GNU General Public License 2.0 or later | Drew Babkirk (Druterium)
 base/maps/military_convoy.ump | GNU General Public License 2.0 or later
-base/maps/military_convoy/mc_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy   Maciej Wierzbicki
+base/maps/military_convoy/mc_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy   Maciej Wierzbicki
 base/maps/military_convoy/mc_main.map | GNU General Public License 2.0 or later | Martin Gerhardy   Maciej Wierzbicki
 base/maps/mine.map | GNU General Public License 2.0 or later
 base/maps/office.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/oriental.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/oriental.ump | GNU General Public License 2.0 or later
 base/maps/oriental/or_craft_crash_fighter.map | GNU General Public License 2.0 or later
+base/maps/oriental/or_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_craft_ufo_scout.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_a.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_c.map | GNU General Public License 2.0 or later
@@ -308,24 +308,24 @@ base/maps/shelter/shelter_room_w_a.map | GNU General Public License 2.0 or later
 base/maps/shelter/shelter_room_w_b.map | GNU General Public License 2.0 or later | Bas Fournier
 base/maps/shelter/shelter_solid.map | GNU General Public License 2.0 or later | Bas Fournier
 base/maps/spedition.ump | GNU General Public License 2.0 or later
-base/maps/spedition/sp_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/spedition/sp_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/spedition/sp_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/stadium.ump | GNU General Public License 2.0 or later
-base/maps/stadium/st_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/stadium/st_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/stadium/st_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/subway.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/tower.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/transport.ump | GNU General Public License 2.0 or later
-base/maps/transport/tra_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/transport/tra_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/transport/tra_main.map | GNU General Public License 2.0 or later
 base/maps/tropic.ump | GNU General Public License 2.0 or later
 base/maps/tropic/tr_craft_crash_fighter.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_craft_crash_scout.map | GNU General Public License 2.0 or later
+base/maps/tropic/tr_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_craft_ufo_corrupter.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_craft_ufo_scout.map | GNU General Public License 2.0 or later
-base/maps/tropic/tr_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_f01.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_f02.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_f03.map | GNU General Public License 2.0 or later
@@ -345,6 +345,7 @@ base/maps/tropic/tr_r03.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r04.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r05.map | GNU General Public License 2.0 or later
 base/maps/ufocrash.ump | GNU General Public License 2.0 or later
+base/maps/ufocrash/uc_craft_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_craft_crash_corrupter.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_craft_crash_fighter.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_craft_crash_harvester.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -353,7 +354,6 @@ base/maps/ufocrash/uc_craft_crash_supply.map | GNU General Public License 2.0 or
 base/maps/ufocrash/uc_d01.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_d02_harvester.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_d03.map | GNU General Public License 2.0 or later
-base/maps/ufocrash/uc_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_h01.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_h02.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_h03.map | GNU General Public License 2.0 or later | Martin Gerhardy | Based on city04 house
@@ -367,6 +367,7 @@ base/maps/village/vil_c01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_c02.map | GNU General Public License 2.0 or later
 base/maps/village/vil_c03.map | GNU General Public License 2.0 or later
 base/maps/village/vil_c04.map | GNU General Public License 2.0 or later
+base/maps/village/vil_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d02.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d03.map | GNU General Public License 2.0 or later
@@ -374,7 +375,6 @@ base/maps/village/vil_d04.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d05.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d06.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d07.map | GNU General Public License 2.0 or later
-base/maps/village/vil_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/village/vil_h01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_h02.map | GNU General Public License 2.0 or later
 base/maps/village/vil_h03.map | GNU General Public License 2.0 or later

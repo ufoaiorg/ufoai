@@ -23,7 +23,7 @@ tile +main
 0      0      0      0      0      0      0      0
 }
 
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 4 5
 
@@ -42,5 +42,5 @@ assembly default
 size "6 5"
 title "_Stadium"
 +main "1 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }

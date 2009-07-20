@@ -22,7 +22,7 @@ tile +main
 0      b      b      b      0
 }
 
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 5 4
 
@@ -32,7 +32,7 @@ tile +drop_firebird
 0      0      0      0      0
 }
 
-tile +drop_herakles
+tile +craft_drop_herakles
 {
 5 4
 
@@ -50,5 +50,5 @@ assembly default
 size "3 6"
 title "_Community_centre"
 +main "1 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }

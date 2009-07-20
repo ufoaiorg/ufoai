@@ -221,7 +221,7 @@ abc     +a     abc
 }
 
 // drop_firebird
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 5 4
 
@@ -357,7 +357,7 @@ title "_Tropical river"
 +p01 "0 3"
 +p02 "0 3"
                               
-*rm_drop +drop_firebird       "1 1"
+*rm_drop +craft_drop_firebird       "1 1"
 *rm_ufo +craft_ufo_scout      "1 1"
 
 }
@@ -383,7 +383,7 @@ title "_Tropical drug"
 +p01 "0 8"
 +p02 "0 8"
 
-*rm_drop +drop_firebird       "1 1"
+*rm_drop +craft_drop_firebird       "1 1"
 *rm_ufo  +craft_ufo_scout     "1 1"
 }
 
@@ -405,7 +405,7 @@ title "_Tropical UFO"
                       
 +p02 "0 8"
                               
-*rm_drop +drop_firebird       "1 1"
+*rm_drop +craft_drop_firebird       "1 1"
 *rm_ufo  +craft_ufo_corrupter "1 1"
 }
 

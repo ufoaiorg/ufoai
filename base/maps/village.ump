@@ -306,7 +306,7 @@ ac    +a     +a     ac
 }
 
 // ---------------------------------
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 5 4
 
@@ -358,7 +358,7 @@ title "_Village residential"
 +c02 "0 1"
 +c03 "0 1"
 *rm_ufo +craft_ufo_scout "1 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
 /*
 assembly residential
@@ -390,7 +390,7 @@ title "_Village residential"
 +c02 "0 1"
 +c03 "0 1"
 *rm_ufo +craft_ufo_scout "1 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
 
 assembly commercial
@@ -422,7 +422,7 @@ title "_Village commercial"
 +c02 "0 2"
 +c03 "1 1"
 +c04 "1 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
 
 assembly recreational
@@ -452,7 +452,7 @@ title "_Village recreational"
 +c01 "0 1"
 +c02 "0 1"
 +c03 "0 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
 */
 /*
@@ -483,6 +483,6 @@ title "_Village big"
 +c02 "0 2"
 +c03 "0 2"
 +c04 "0 2"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
 */

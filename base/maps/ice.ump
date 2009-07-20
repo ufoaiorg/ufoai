@@ -13,7 +13,7 @@ base ice/ice_
 
 // ---------------------------------
 // Dropship on ice map
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 4 4
 0      abc     abc     0
@@ -76,7 +76,7 @@ size "6 6"
 +r02 "1 8"
 +r03 "0 8"
 //+r04 "1 6"
-+drop_firebird "1 1"
++craft_drop_firebird "1 1"
 }
 
 // *********************************
@@ -85,7 +85,7 @@ size "6 6"
 // assembly drop_firebird
 // {
 // size "2 2"
-// +drop_firebird "1 1"
+// +craft_drop_firebird "1 1"
 // }
 //
 // assembly r1

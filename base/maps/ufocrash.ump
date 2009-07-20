@@ -21,7 +21,7 @@ base ufocrash/uc_
 // ---------------------------------
 // Dropship
 // ---------------------------------
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 5 4
 0      audbh     audbh      audbh      0
@@ -390,5 +390,5 @@ size "7 5"
 +d01 "0 2"
 +d03 "0 2"
 *rm_ufo +craft_crash_scout "1 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }

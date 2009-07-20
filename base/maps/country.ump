@@ -35,7 +35,7 @@ base country/c_
 //--------------------------------------------------
 
 // Dropship
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 5 4
 
@@ -714,7 +714,7 @@ size "7 8"
 +re02_2 "0 1"
 +re03_2 "0 1"
 +re04_2 "0 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_fighter "1 1"
 }
 
@@ -759,7 +759,7 @@ size "7 7"
 +re02_2 "0 1"
 +re03_2 "0 1"
 +re04_2 "0 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_fighter "1 1"
 }
 
@@ -788,6 +788,6 @@ size "10 10"
 +d08 "0 2"
 +d09 "0 2"
 +d10 "0 20"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 }

@@ -201,7 +201,7 @@ a      +a     +a     +a     +a     a
 // ########################################
 // ### Tiles with crafts on them        ###
 
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 5 4
 
@@ -258,7 +258,7 @@ title "_Snow"
 +h03 "0 2"
 +h04 "0 2"
 +h05 "0 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
 
 assembly alienlandingnature
@@ -274,7 +274,7 @@ title "_Alien landing - Snow"
 +h03 "1 2"
 +h04 "1 2"
 +h05 "0 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_fighter "1 1"
 }
 
@@ -295,7 +295,7 @@ title "_Industrial"
 +i06 "0 3"
 +i07 "0 1"
 
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
 
 assembly alienlandingindustrial
@@ -316,7 +316,7 @@ title "_Alien landing - Industrial"
 +i06 "0 3"
 +i07 "0 1"
 *rm_ufo +craft_ufo_fighter "1 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
 
 assembly multiplayercoop
@@ -336,7 +336,7 @@ title "_Multiplayer Coop"
 +i05 "0 2"
 +i06 "0 3"
 *rm_ufo +craft_ufo_fighter "1 1"
-+drop_firebird "1 1"
++craft_drop_firebird "1 1"
 }
 
 assembly multiplayerdeathmatch
@@ -356,7 +356,7 @@ title "_Multiplayer Deathmatch"
 +i05 "0 2"
 +i06 "0 3"
 +mp_t2 "1 1"
-+drop_firebird "1 1"
++craft_drop_firebird "1 1"
 }
 
 //Assembly to replace industrial.map
@@ -373,7 +373,7 @@ fix +n05 "6 0"
 fix +i01 "0 2"
 fix +i02 "4 2"
 fix +n01 "5 3"
-fix +drop_firebird "0 4"
+fix +craft_drop_firebird "0 4"
 fix +h02 "4 4"
 fix +h05 "3 4"
 +n05 "0 10" //These Mapparts are just here to fill gaps that may appear after

@@ -13,7 +13,7 @@ base farm/f_
 
 // ---------------------------------
 // Firebird dropship
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 5 4
 0      a       a       a       0
@@ -268,7 +268,7 @@ grid "1 1"
 +barn_b "0 1"
 +stables_a "0 1"
 +stables_b "0 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
 
@@ -292,7 +292,7 @@ grid "1 1"
 +barn_b "0 1"
 +stables_a "0 1"
 +stables_b "0 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 }
 
@@ -316,6 +316,6 @@ grid "1 1"
 +barn_b "0 1"
 +stables_a "0 1"
 +stables_b "0 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_bomber "1 1"
 }

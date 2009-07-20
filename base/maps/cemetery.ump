@@ -8,7 +8,7 @@ base cemetery/cem_
 // ##### Dropship #####
 
 // Firebird on grass with 3 trees
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 5 4
 
@@ -214,5 +214,5 @@ title "_Small cemetery"
 +p13 "0 3"
 +g01 "1 3"
 +g02 "1 3"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }

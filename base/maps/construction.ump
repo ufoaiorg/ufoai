@@ -22,7 +22,7 @@ tile +main
 0      0      0      0      0      0      0      0      0
 }
 
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 4 5
 
@@ -33,7 +33,7 @@ a      +b     +b     0
 a      a      a      0
 }
 
-tile +drop_herakles
+tile +craft_drop_herakles
 {
 4 5
 
@@ -52,5 +52,5 @@ assembly default
 size "7 4"
 title "_Construction"
 +main "1 1"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }

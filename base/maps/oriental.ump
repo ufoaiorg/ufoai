@@ -5,7 +5,7 @@
 base oriental/or_
 
 // or_drop_firebird - Dropship
-tile +drop_firebird
+tile +craft_drop_firebird
 {
 5 4
 
@@ -211,7 +211,7 @@ a      +a     +a     +a     a      0
 //+trees_a "0 2"
 //+stand_a "0 2"
 //+stand_b "0 2"
-//*rm_drop +drop_firebird "1 1"
+//*rm_drop +craft_drop_firebird "1 1"
 //}
 
 //assembly tiny
@@ -223,7 +223,7 @@ a      +a     +a     +a     a      0
 //+trees_a "0 2"
 //+stand_a "0 2"
 //+stand_b "0 2"
-//*rm_drop +drop_firebird "1 1"
+//*rm_drop +craft_drop_firebird "1 1"
 //}
 
 // *********************************
@@ -247,7 +247,7 @@ title "_Oriental small"
 +house_g "0 3"
 +house_h "0 3"
 +trees_b "0 2"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
 
@@ -270,7 +270,7 @@ title "_Oriental medium"
 +house_h "0 3"
 +mosque "0 1"
 +trees_b "0 2"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
 
@@ -293,6 +293,6 @@ title "_Oriental big"
 +house_h "0 3"
 +mosque "0 1"
 +trees_b "0 2"
-*rm_drop +drop_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
