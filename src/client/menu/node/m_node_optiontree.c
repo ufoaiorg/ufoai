@@ -43,8 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MID_SIZE 1
 #define MARGE 3
 
-#define COLLAPSEBUTTON_WIDTH 20		/**< Size used for the collapse button */
-#define DEPTH_WIDTH 25				/**< Width between each depth level */
+static const int COLLAPSEBUTTON_WIDTH = 20;		/**< Size used for the collapse button */
+static const int DEPTH_WIDTH = 25;				/**< Width between each depth level */
 
 static menuIcon_t *systemCollapse;
 static menuIcon_t *systemExpand;
@@ -72,7 +72,7 @@ static void MN_OptionTreeNodeUpdateScroll (menuNode_t *node)
 }
 
 /** @todo we should remove this call loop */
-static menuOption_t* MN_OptionTreeNodeGetFirstOption (menuNode_t * node);
+static menuOption_t* MN_OptionTreeNodeGetFirstOption(menuNode_t * node);
 
 static void MN_OptionTreeNodeUpdateCache (menuNode_t * node)
 {
@@ -116,7 +116,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	int currentY;
 	int currentDecY = 0;
 	const float *textColor;
-	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
+	vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int count = 0;
 	menuOptionIterator_t iterator;
 
@@ -179,7 +179,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 
 		R_Color(NULL);
 		if (option->firstChild) {
-			menuIcon_t *icon = (option->collapsed)?systemExpand:systemCollapse;
+			menuIcon_t *icon = option->collapsed ? systemExpand : systemCollapse;
 			MN_DrawIconInBox(icon, 0, decX, currentY - currentDecY, icon->size[0], fontHeight);
 		}
 
