@@ -439,7 +439,7 @@ void AIM_AutoAddAmmo (aircraftSlot_t *slot)
 		if (ammo) {
 			const technology_t *ammo_tech = ammo->tech;
 			if (ammo_tech && AIM_SelectableCraftItem(slot, ammo_tech)) {
-				AII_AddAmmoToSlot((ammo->notOnMarket || ammo->craftitem.unlimitedAmmo) ? NULL : slot->base, ammo_tech, slot);
+				AII_AddAmmoToSlot((ammo->notOnMarket || ammo->craftitem.unlimitedAmmo) ? NULL : (slot->aircraft) ? slot->aircraft->homebase : slot->base, ammo_tech, slot);
 				break;
 			}
 		}
