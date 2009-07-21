@@ -352,6 +352,8 @@ COLLISION DETECTION
 /* Maximum falling distance in QUANT units (model units / QUANT) */
 /* common/routing.c */
 #define	PATHFINDING_MAX_FALL	16
+/* The height of the box where we don't need the full actor's torso width */
+#define	PATHFINDING_LEGROOMHEIGHT	4
 /* Minimum step-up height in QUANT units (model units/QUANT)
  * Note that 4 is the minimum to rise one cell every 4 moved horizontally. */
 /* common/routing.c */
