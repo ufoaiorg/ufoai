@@ -871,7 +871,7 @@
 // entity 14
 {
 "classname" "info_player_start"
-"origin" "304 432 28"
+"origin" "48 464 28"
 "team" "1"
 }
 // entity 15
@@ -899,7 +899,7 @@
 // entity 19
 {
 "classname" "info_human_start"
-"origin" "304 48 32"
+"origin" "432 48 32"
 }
 // entity 20
 {
