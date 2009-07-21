@@ -794,3 +794,11 @@
 "light" "100"
 "origin" "445 423 77"
 }
+// entity 6
+{
+"classname" "misc_model"
+"model" "models/aircraft/drop_raptor/drop_raptor_gear.md2"
+"origin" "255 256 68"
+"spawnflags" "255"
+"angles" "0 2.50448e-06 0"
+}
