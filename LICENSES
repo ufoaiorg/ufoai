@@ -345,12 +345,12 @@ base/maps/tropic/tr_r03.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r04.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r05.map | GNU General Public License 2.0 or later
 base/maps/ufocrash.ump | GNU General Public License 2.0 or later
-base/maps/ufocrash/uc_craft_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_craft_crash_corrupter.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_craft_crash_fighter.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_craft_crash_harvester.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_craft_crash_scout.map | GNU General Public License 2.0 or later | Martin Gerhardy | prefab_ufo_scout
 base/maps/ufocrash/uc_craft_crash_supply.map | GNU General Public License 2.0 or later | Martin Gerhardy | prefab_ufo_supply and terrain08
+base/maps/ufocrash/uc_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_d01.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_d02_harvester.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_d03.map | GNU General Public License 2.0 or later
