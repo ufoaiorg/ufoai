@@ -163,10 +163,10 @@ mapdef or_medium
 	}
 }
 
-mapdef or_large
+mapdef or_big
 {
 	map			"+oriental"
-	param		large
+	param		big
 	multiplayer	false
 	description	"_A suburban district of an oriental area."
 	size		"small"
@@ -2284,6 +2284,7 @@ mapdef bridge
 	{
 		craft_drop_firebird
 		craft_drop_herakles
+		craft_drop_raptor
 	}
 
 	ufos
@@ -2511,6 +2512,7 @@ mapdef africa
 	{
 		craft_drop_firebird
 		craft_drop_herakles
+		craft_drop_raptor
 	}
 
 	ufos
@@ -2721,6 +2723,7 @@ mapdef bomber_city
 	{
 		craft_drop_firebird
 		craft_drop_herakles
+		craft_drop_raptor
 	}
 
 	ufos
