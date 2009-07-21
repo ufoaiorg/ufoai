@@ -302,6 +302,8 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = DROPSHIP_FIREBIRD;
 		else if (!strcmp(token, "craft_drop_herakles"))
 			*(int *) b = DROPSHIP_HERAKLES;
+		else if (!strcmp(token, "craft_drop_raptor"))
+			*(int *) b = DROPSHIP_RAPTOR;
 		else if (!strcmp(token, "craft_inter_stiletto"))
 			*(int *) b = INTERCEPTOR_STILETTO;
 		else
@@ -707,6 +709,8 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			*(int *) b = DROPSHIP_FIREBIRD;
 		else if (!strcmp(set, "craft_drop_herakles"))
 			*(int *) b = DROPSHIP_HERAKLES;
+		else if (!strcmp(set, "craft_drop_raptor"))
+			*(int *) b = DROPSHIP_RAPTOR;
 		else if (!strcmp(set, "craft_inter_stiletto"))
 			*(int *) b = INTERCEPTOR_STILETTO;
 		else
@@ -915,6 +919,8 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			return "craft_drop_firebird";
 		case DROPSHIP_HERAKLES:
 			return "craft_drop_herakles";
+		case DROPSHIP_RAPTOR:
+			return "craft_drop_raptor";
 		case INTERCEPTOR_STILETTO:
 			return "craft_inter_stiletto";
 		default:
