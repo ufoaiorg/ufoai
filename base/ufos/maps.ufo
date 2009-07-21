@@ -30,6 +30,7 @@
 // valid aircraft values:
 // * craft_drop_firebird
 // * craft_drop_herakles
+// * craft_drop_raptor
 
 ////////////////////////
 // INDUSTRIAL RANDOM MAPS
@@ -94,6 +95,8 @@ mapdef or_small
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -132,6 +135,8 @@ mapdef or_medium
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -171,11 +176,15 @@ mapdef or_large
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_ufo_scout
+		craft_crash_fighter
+	}
 
 	terrains
 	{
