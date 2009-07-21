@@ -172,12 +172,12 @@ static void MN_TextListNodeClick (menuNode_t * node, int x, int y)
 	if (line < 0 || line >= EXTRADATA(node).super.scrollY.fullSize)
 		return;
 
-	if (line == EXTRADATA(node).textLineSelected)
-		return;
+	if (line != EXTRADATA(node).textLineSelected) {
+		EXTRADATA(node).textLineSelected = line;
+		if (node->onChange)
+			MN_ExecuteEventActions(node, node->onChange);
+	}
 
-	EXTRADATA(node).textLineSelected = line;
-	if (node->onChange)
-		MN_ExecuteEventActions(node, node->onChange);
 	if (node->onClick)
 		MN_ExecuteEventActions(node, node->onClick);
 }
@@ -193,12 +193,12 @@ static void MN_TextListNodeRightClick (menuNode_t * node, int x, int y)
 	if (line < 0 || line >= EXTRADATA(node).super.scrollY.fullSize)
 		return;
 
-	if (line == EXTRADATA(node).textLineSelected)
-		return;
+	if (line != EXTRADATA(node).textLineSelected) {
+		EXTRADATA(node).textLineSelected = line;
+		if (node->onChange)
+			MN_ExecuteEventActions(node, node->onChange);
+	}
 
-	EXTRADATA(node).textLineSelected = line;
-	if (node->onChange)
-		MN_ExecuteEventActions(node, node->onChange);
 	if (node->onRightClick)
 		MN_ExecuteEventActions(node, node->onRightClick);
 }
