@@ -60,6 +60,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_tab.h"
 #include "node/m_node_tbar.h"
 #include "node/m_node_text.h"
+#include "node/m_node_textlist.h"
 #include "node/m_node_textentry.h"
 #include "node/m_node_todo.h"
 #include "node/m_node_vscrollbar.h"
@@ -112,6 +113,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterTBarNode,
 	MN_RegisterTextNode,
 	MN_RegisterTextEntryNode,
+	MN_RegisterTextListNode,
 	MN_RegisterTodoNode,
 	MN_RegisterVScrollbarNode,
 	MN_RegisterWindowNode,
