@@ -137,6 +137,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFontFromNode(node);
 	fontHeight = EXTRADATA(node).lineHeight;
+	currentY = pos[1] + node->padding;
 	if (fontHeight == 0)
 		fontHeight = MN_FontGetHeight(font);
 	else {
@@ -144,7 +145,6 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 		currentDecY = (fontHeight - height) / 2;
 		currentY += currentDecY;
 	}
-	currentY = pos[1] + node->padding;
 
 	/* skip option over current position */
 	option = MN_OptionTreeNodeGetFirstOption(node);
