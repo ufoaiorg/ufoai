@@ -50,10 +50,11 @@ static int MN_TextListNodeGetLine (const menuNode_t *node, int x, int y)
 	int lineHeight = EXTRADATA(node).lineHeight;
 	if (lineHeight == 0) {
 		const char *font = MN_GetFontFromNode(node);
-		lineHeight = MN_FontGetHeight(font) / 2;
+		lineHeight = MN_FontGetHeight(font);
 	}
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	y -= node->padding;
 	return (int) (y / lineHeight) + EXTRADATA(node).super.scrollY.viewPos;
 }
 
@@ -82,10 +83,8 @@ static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
 	int lineHeight;
 
 	lineHeight = EXTRADATA(node).lineHeight;
-	if (lineHeight == 0) {
-		const char *font = MN_GetFontFromNode(node);
-		lineHeight = MN_FontGetHeight(font) / 2;
-	}
+	if (lineHeight == 0)
+		lineHeight = MN_FontGetHeight(font);
 
 	if (MN_AbstractScrollableNodeIsSizeChange(node))
 		viewSizeY = node->size[1] / lineHeight;

@@ -134,7 +134,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 		int lineheight = EXTRADATA(node).lineHeight;
 		if (lineheight == 0) {
 			const char *font = MN_GetFontFromNode(node);
-			lineheight = MN_FontGetHeight(font) / 2;
+			lineheight = MN_FontGetHeight(font);
 		}
 		viewSizeY = node->size[1] / lineheight;
 	} else {
@@ -487,7 +487,7 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 	if (lineheight == 0) {
 		/* the font is used */
 		const char *font = MN_GetFontFromNode(node);
-		lineheight = MN_FontGetHeight(font) / 2;
+		lineheight = MN_FontGetHeight(font);
 	}
 
 	/* auto compute rows (super.viewSizeY) */
