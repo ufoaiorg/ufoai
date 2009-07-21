@@ -200,14 +200,15 @@ window ufopedia
 				string "_Requirement:"
 			}
 			
-			text techtree
+			textlist techtree
 			{
 				dataid		TEXT_UFOPEDIA_REQUIREMENT
 				pos			"5 31"
 				size		"156 92"
 				font		f_verysmall
-				mousefx		true
-				onClick		{ cmd "techtree_click <lineselected>" }
+				color		"0 .78 0 1"
+				selectcolor	"0 .78 0 1"
+				onChange		{ cmd "techtree_click <lineselected>" }
 				onViewChange	{
 					*node:(abstractscrollbar)parent.techtree_scroll@fullsize <lines>
 					*node:(abstractscrollbar)parent.techtree_scroll@current <viewpos>
@@ -374,6 +375,9 @@ window ufopedia
 		if ( *cvar:mn_upmodel_top ne "" ) { *cvar:mn_rightpanel = 1 } 
 		if ( *cvar:mn_upmodel_bottom ne "" ) { *cvar:mn_rightpanel = 1 } 
 		if ( *cvar:mn_uprequirement ne "" ) { *cvar:mn_rightpanel = 1 } 
+
+		// invalidate techtree selection
+		*content.requirement.techtree@lineselected = -1
 
 		// update tab
 		if ( *cvar:mn_uppreavailable == 1 ) {

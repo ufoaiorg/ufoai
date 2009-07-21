@@ -179,14 +179,14 @@ static const char* CL_AircraftSizeToName (int aircraftSize)
 static void UP_DisplayTechTree (const technology_t* t)
 {
 	int i;
-	static char upTechtree[1024];
+	linkedList_t *upTechtree;
 	const requirements_t *required;
 
 	required = &t->requireAND;
-	upTechtree[0] = '\0';
+	upTechtree = NULL;
 
 	if (required->numLinks <= 0)
-		Q_strcat(upTechtree, _("No requirements"), sizeof(upTechtree));
+		LIST_AddString(&upTechtree, _("No requirements"));
 	else
 		for (i = 0; i < required->numLinks; i++) {
 			const requirement_t *req = &required->links[i];
@@ -200,14 +200,13 @@ static void UP_DisplayTechTree (const technology_t* t)
 				if (!UP_TechGetsDisplayed(techRequired))
 					continue;
 
-				Q_strcat(upTechtree, _(techRequired->name), sizeof(upTechtree));
-				Q_strcat(upTechtree, "\n", sizeof(upTechtree));
+				LIST_AddString(&upTechtree, _(techRequired->name));
 			}
 		}
 
 	/* and now register the buffer */
 	Cvar_Set("mn_uprequirement", "1");
-	MN_RegisterText(TEXT_UFOPEDIA_REQUIREMENT, upTechtree);
+	MN_RegisterLinkedListText(TEXT_UFOPEDIA_REQUIREMENT, upTechtree);
 }
 
 /**
