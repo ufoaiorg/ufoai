@@ -17,24 +17,22 @@ a      +a     +a    +a    a
 
 tile +craft_drop_herakles
 {
-4 5
+5 4
 
-0      0      0      0
-0      +b     +b     a 
-0      +b     +b     a 
-0      +b     +b     a 
-0      a      a      a
+0      a      a	    a	  0
+a      +a     +a    +a    a
+a      +a     +a    +a    a
+0      a      a     a     0
 }
 
 tile +craft_drop_raptor
 {
-4 5
+5 4
 
-0      0      0      0
-0      +b     +b     a 
-0      +b     +b     a 
-0      +b     +b     a 
-0      a      a      a
+0      a      a	    a	  0
+a      +a     +a    +a    a
+a      +a     +a    +a    a
+0      a      a     a     0
 }
 
 // or_house_a - Small house: 2 rooms, outside stairs to roof
