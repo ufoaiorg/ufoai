@@ -688,6 +688,45 @@ mapdef vil_lille
 		suburban
 	}
 }
+
+mapdef vil_commercial
+{
+	map			"+village"
+	param		commercial
+	multiplayer	false
+	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
+	maxaliens	8 //TODO: This is an arbitrary value right now.
+
+	aircraft 
+	{
+		craft_drop_firebird
+	}
+
+	ufos
+	{
+		craft_ufo_harvester
+	}
+
+	terrains
+	{
+		grass
+		cold
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
+
 /*
 mapdef vil_residential
 {
@@ -726,41 +765,6 @@ mapdef vil_residential
 	}
 }
 
-mapdef vil_commercial
-{
-	map			"+village"
-	param		commercial
-	multiplayer	false
-	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
-	maxaliens	8 //TODO: This is an arbitrary value right now.
-
-	aircraft 
-	{
-		craft_drop_firebird
-	}
-
-//	ufos
-//	{
-//	}
-
-	terrains
-	{
-		grass
-		cold
-		tropical
-	}
-
-	cultures
-	{
-		//any
-	}
-
-	populations
-	{
-		village
-		suburban
-	}
-}
 
 mapdef vil_big
 {
