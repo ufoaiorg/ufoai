@@ -462,11 +462,11 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 	if (ammo) {
 		/* only remove the ammo */
 		if (slot->nextAmmo) {
-			if (base)
+			if (base && !slot->nextAmmo->craftitem.unlimitedAmmo)
 				B_UpdateStorageAndCapacity(base, slot->nextAmmo, 1, qfalse, qfalse);
 			slot->nextAmmo = NULL;
 		} else if (slot->ammo) {
-			if (base)
+			if (base && !slot->ammo->craftitem.unlimitedAmmo)
 				B_UpdateStorageAndCapacity(base, slot->ammo, 1, qfalse, qfalse);
 			slot->ammo = NULL;
 		}
