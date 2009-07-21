@@ -302,9 +302,9 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	const vec3_t floorMaxs = { halfMicrostepSize,  halfMicrostepSize, 0};
 	/* This is a template for the extents of the box used by an actor's legs. */
 	const vec3_t footMins = {-halfMicrostepSize, -halfMicrostepSize, 0};
-	const vec3_t footMaxs = { halfMicrostepSize,  halfMicrostepSize, QuantToModel(PATHFINDING_MIN_STEPUP) - DIST_EPSILON * 2};
+	const vec3_t footMaxs = { halfMicrostepSize,  halfMicrostepSize, QuantToModel(PATHFINDING_LEGROOMHEIGHT) - DIST_EPSILON * 2};
 	/* This is a template for the extents of the box used by an actor's torso. */
-	const vec3_t torsoMins = {-halfActorWidth, -halfActorWidth, QuantToModel(PATHFINDING_MIN_STEPUP)};
+	const vec3_t torsoMins = {-halfActorWidth, -halfActorWidth, QuantToModel(PATHFINDING_LEGROOMHEIGHT)};
 	const vec3_t torsoMaxs = { halfActorWidth,  halfActorWidth, QuantToModel(PATHFINDING_MIN_OPENING) - DIST_EPSILON * 2};
 	/* This is a template for the ceiling trace after an actor's torso space has been found. */
 	const vec3_t ceilMins = {-halfActorWidth, -halfActorWidth, 0};
@@ -345,7 +345,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	 * Trace for a floor.  Steps:
 	 * 1. Start at the top of the designated cell and scan toward the model's base.
 	 * 2. If we do not find a brush, then this cell is bottomless and not enterable.
-	 * 3. We have found an upward facing brush.  Scan up PATHFINDING_MIN_STEPUP height.
+	 * 3. We have found an upward facing brush.  Scan up PATHFINDING_LEGROOMHEIGHT height.
 	 * 4. If we find anything, then this space is too small of an opening.  Restart just below our current floor.
 	 * 5. Trace up towards the model ceiling with a box as large as the actor.  The first obstruction encountered
 	 *      marks the ceiling.  If there are no obstructions, the model ceiling is the ceiling.
