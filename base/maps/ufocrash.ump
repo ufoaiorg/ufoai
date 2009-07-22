@@ -39,7 +39,7 @@ audc      +a        +a         +a   audc
 0      audbh     audbh      audbh      0
 }
 
-tile +craft_drop_raptor
+tile +craft_drop_dragon
 {
 5 4
 0      audbh     audbh      audbh      0
