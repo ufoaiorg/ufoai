@@ -48,7 +48,7 @@ static menuTimer_t *tooltipTimer;
 
 static int noticeTime;
 static char noticeText[256];
-static char noticeMenu[MAX_VAR];
+static menuNode_t *noticeMenu;
 
 /**
  * @brief Node we will draw over
@@ -260,29 +260,25 @@ static void MN_DrawNotice (void)
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
 	int x, y;
-	menuNode_t *menu;
 
-	if (cls.realtime >= noticeTime)
-		return;
-
-	menu = MN_GetActiveMenu();
-	if (menu && (menu->u.window.noticePos[0] || menu->u.window.noticePos[1])) {
-		x = menu->u.window.noticePos[0];
-		y = menu->u.window.noticePos[1];
+	if (noticeMenu->u.window.noticePos[0] || noticeMenu->u.window.noticePos[1]) {
+		x = noticeMenu->u.window.noticePos[0];
+		y = noticeMenu->u.window.noticePos[1];
 	} else {
 		x = 500;
 		y = 110;
 	}
 
-	if (strcmp(noticeMenu, MN_GetActiveMenuName()))
-		return;
+	/* relative to the menu */
+	x += noticeMenu->pos[0];
+	y += noticeMenu->pos[1];
 
 	R_FontTextSize(font, noticeText, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);
 
 	if (!width)
 		return;
 
-	if (x + width + 3 > VID_NORM_WIDTH)
+	if (x + width + 3 > viddef.virtualWidth)
 		dx = -(width + 10);
 	else
 		dx = 0;
@@ -335,11 +331,19 @@ void MN_Draw (void)
 
 		MN_DrawNode(menu);
 
+		/* draw a special notice */
+		if (menu == noticeMenu && cls.realtime < noticeTime)
+			MN_DrawNotice();
+
 		/* draw a node over the menu */
 		if (drawOverNode && drawOverNode->behaviour->drawOverMenu) {
 			drawOverNode->behaviour->drawOverMenu(drawOverNode);
 		}
 	}
+
+	/* unactive notice */
+	if (cls.realtime >= noticeTime && noticeMenu != NULL)
+		noticeMenu = NULL;
 
 	/* draw tooltip */
 	if (hoveredNode && tooltipVisible && !MN_DNDIsDragging()) {
@@ -349,9 +353,6 @@ void MN_Draw (void)
 			MN_Tooltip(hoveredNode, mousePosX, mousePosY);
 		}
 	}
-
-	/* draw a special notice */
-	MN_DrawNotice();
 
 #ifdef DEBUG
 	/* debug information */
@@ -371,12 +372,22 @@ void MN_DrawCursor (void)
  * @sa HUD_DisplayMessage
  * @param[in] time is a ms values
  * @param[in] text text is already translated here
+ * @param[in] windowName Window name where we must display the notice; else NULL to use the current active window
  */
-void MN_DisplayNotice (const char *text, int time)
+void MN_DisplayNotice (const char *text, int time, const char* windowName)
 {
 	noticeTime = cls.realtime + time;
 	Q_strncpyz(noticeText, text, sizeof(noticeText));
-	Q_strncpyz(noticeMenu, MN_GetActiveMenuName(), sizeof(noticeMenu));
+
+	if (windowName == NULL) {
+		noticeMenu = MN_GetActiveMenu();
+		if (noticeMenu == NULL)
+			Com_Printf("MN_DisplayNotice: No active menu\n");
+	} else {
+		noticeMenu = MN_GetMenu(windowName);
+		if (noticeMenu == NULL)
+			Com_Printf("MN_DisplayNotice: '%s' not found\n", windowName);
+	}
 }
 
 void MN_InitDraw (void)

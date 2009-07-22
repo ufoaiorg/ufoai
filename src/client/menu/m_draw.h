@@ -33,7 +33,7 @@ void MN_InitDraw(void);
 
 /* draw */
 void MN_Draw(void);
-void MN_DisplayNotice(const char *text, int time);
+void MN_DisplayNotice(const char *text, int time, const char *menuName);
 void MN_DrawCursor(void);
 void MN_CaptureDrawOver(struct menuNode_s *node);
 

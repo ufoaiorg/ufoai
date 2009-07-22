@@ -299,7 +299,7 @@ static void E_EmployeeDelete_f (void)
 
 	if (employee->hired) {
 		if (!E_UnhireEmployee(employee)) {
-			MN_DisplayNotice(_("Could not fire employee"), 2000);
+			MN_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			return;
 		}
@@ -353,13 +353,13 @@ static void E_EmployeeHire_f (void)
 	if (employee->hired) {
 		if (!E_UnhireEmployee(employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
-			MN_DisplayNotice(_("Could not fire employee"), 2000);
+			MN_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 		} else
 			Cbuf_AddText(va("employeedel %i\n", button));
 	} else {
 		if (!E_HireEmployee(base, employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
-			MN_DisplayNotice(_("Could not hire employee"), 2000);
+			MN_DisplayNotice(_("Could not hire employee"), 2000, "employees");
 			MN_ExecuteConfunc("employeedel %i", button);
 		} else
 			MN_ExecuteConfunc("employeeadd %i", button);
