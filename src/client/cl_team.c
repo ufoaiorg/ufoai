@@ -167,7 +167,7 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 		}
 	}
 	chr->score.assignedMissions = mxml_GetInt(p, "score.assignedmissions", 0);
-	chr->score.rank = mxml_GetInt(p, "score.rank", 0);
+	chr->score.rank = mxml_GetInt(p, "score.rank", -1);
 	chr->reservedTus.reserveReaction = STATE_REACTION_ONCE;
 
 	/*memset(&chr->inv, 0, sizeof(inventory_t));*/
