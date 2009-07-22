@@ -124,5 +124,8 @@ void CL_ParseRanks (const char *name, const char **text)
 		} else if (!v->string)
 			Com_Printf("CL_ParseRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, name);
 	} while (*text);
+
+	if (!strlen(rank->shortname) || !strlen(rank->name))
+		Com_Error(ERR_DROP, "CL_ParseRanks: shortname or name are missing for rank %s", rank->id);
 }
 
