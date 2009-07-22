@@ -1071,12 +1071,14 @@ void WriteMapFile (const char *filename)
 		if (i == 0) {
 			int numToAdd, k;
 			mapbrush_t **brushesToAdd = Check_ExtraBrushesForWorldspawn(&numToAdd);
-			for (k = 0; k < numToAdd; k++) {
-				if (brushesToAdd[k]->skipWriteBack)
-					continue;
-				WriteMapBrush(brushesToAdd[k], j++, &f);
+			if (brushesToAdd != NULL) {
+				for (k = 0; k < numToAdd; k++) {
+					if (brushesToAdd[k]->skipWriteBack)
+						continue;
+					WriteMapBrush(brushesToAdd[k], j++, &f);
+				}
+				Mem_Free(brushesToAdd);
 			}
-			Mem_Free(brushesToAdd);
 		}
 		FS_Printf(&f, "}\n");
 	}

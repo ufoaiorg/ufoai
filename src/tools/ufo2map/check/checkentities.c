@@ -259,23 +259,26 @@ static void Check_MapSize (vec3_t mapSize)
 mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 {
 	int i, j;
-	mapbrush_t **brushesToMove = (mapbrush_t **)Mem_Alloc(numToMoveToWorldspawn * sizeof(*brushesToMove));
-
-	if (!brushesToMove)
-		Sys_Error("Check_ExtraBrushesForWorldspawn: out of memory");
+	mapbrush_t **brushesToMove;
 
 	*numBrushes = numToMoveToWorldspawn;
 
 	if (!numToMoveToWorldspawn)
-		return brushesToMove;
+		return NULL;
+
+	brushesToMove = (mapbrush_t **)Mem_Alloc(numToMoveToWorldspawn * sizeof(*brushesToMove));
+	if (!brushesToMove)
+		Sys_Error("Check_ExtraBrushesForWorldspawn: out of memory");
 
 	/* 0 is the world - start at 1 */
 	for (i = 1, j = 0; i < num_entities; i++) {
 		const entity_t *e = &entities[i];
 		const char *name = ValueForKey(e, "classname");
 
-		if (e->numbrushes == 1 && !strcmp(name, "func_group"))
+		if (e->numbrushes == 1 && !strcmp(name, "func_group")) {
+			assert(j < numToMoveToWorldspawn);
 			brushesToMove[j++] = &mapbrushes[e->firstbrush];
+		}
 	}
 
 	return brushesToMove;
