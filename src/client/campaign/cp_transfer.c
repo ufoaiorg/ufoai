@@ -506,7 +506,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 						continue;
 					if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 						if (emplType == EMPL_SOLDIER)
-							Com_sprintf(str, sizeof(str), _("Soldier %s %s"), _(ccs.ranks[employee->chr.score.rank].shortname), employee->chr.name);
+							Com_sprintf(str, sizeof(str), _("Soldier %s %s"), E_GetRankShortName(employee), employee->chr.name);
 						else
 							Com_sprintf(str, sizeof(str), _("Pilot %s"), employee->chr.name);
 						LIST_AddString(&transferList, str);
