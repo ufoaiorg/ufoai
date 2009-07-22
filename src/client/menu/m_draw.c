@@ -48,6 +48,7 @@ static menuTimer_t *tooltipTimer;
 
 static int noticeTime;
 static char noticeText[256];
+static char noticeMenu[MAX_VAR];
 
 /**
  * @brief Node we will draw over
@@ -258,6 +259,9 @@ static int MN_DrawNotice (int x, int y, const char *noticeText)
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
 
+	if (strcmp(noticeMenu, MN_GetActiveMenuName()))
+		return 0;
+
 	R_FontTextSize(font, noticeText, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);
 
 	if (!width)
@@ -365,6 +369,7 @@ void MN_DisplayNotice (const char *text, int time)
 {
 	noticeTime = cls.realtime + time;
 	Q_strncpyz(noticeText, text, sizeof(noticeText));
+	Q_strncpyz(noticeMenu, MN_GetActiveMenuName(), sizeof(noticeMenu));
 }
 
 void MN_InitDraw (void)
