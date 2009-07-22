@@ -71,6 +71,7 @@ building building_aliencontainment
 	needs			building_aliencontainment2
 	pos				"0 1"
 	capacity		10
+	ondestroy		"building_ondestroy"
 }
 
 building building_aliencontainment2
