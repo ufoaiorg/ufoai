@@ -110,7 +110,7 @@ static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
 	}
 
 	currentY = pos[1];
-	maxHeight = currentY + node->size[1] - node->padding - node->padding - lineHeight;
+	maxHeight = currentY + node->size[1] - node->padding - node->padding - node->padding - lineHeight;
 	while (list) {
 		if (currentY > maxHeight)
 			break;
