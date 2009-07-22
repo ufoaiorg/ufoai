@@ -81,9 +81,10 @@ static void HOS_UpdateMenu (void)
 				/* Print name. */
 				Q_strncpyz(name, employee->chr.name, sizeof(name));
 				/* Print rank for soldiers or type for other personel. */
-				if (type == EMPL_SOLDIER)
-					Q_strncpyz(rank, _(ccs.ranks[employee->chr.score.rank].name), sizeof(rank));
-				else
+				if (type == EMPL_SOLDIER) {
+					const rank_t *rankPtr = CL_GetRankByIdx(employee->chr.score.rank);
+					Q_strncpyz(rank, _(rankPtr->name), sizeof(rank));
+				} else
 					Q_strncpyz(rank, E_GetEmployeeString(employee->type), sizeof(rank));
 				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i entry: %i\n", name, employee->idx, entry);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */

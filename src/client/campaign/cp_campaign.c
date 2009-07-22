@@ -1506,7 +1506,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 					const chrScoreGlobal_t *score = &chr->score;
 					/* if the soldier was ever on a mission */
 					if (score->assignedMissions) {
-						const rank_t *rank = &ccs.ranks[score->rank];
+						const rank_t *rank = CL_GetRankByIdx(score->rank);
 						/* @sa CHRSH_CharGetMaxExperiencePerMission */
 						if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
 							increaseWinProbability *= rank->factor;
@@ -1523,7 +1523,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 				if (E_EmployeeIsCurrentlyInBase(employee)) {
 					const character_t *chr = &employee->chr;
 					const chrScoreGlobal_t *score = &chr->score;
-					const rank_t *rank = &ccs.ranks[score->rank];
+					const rank_t *rank = CL_GetRankByIdx(score->rank);
 					/* @sa CHRSH_CharGetMaxExperiencePerMission */
 					if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
 						increaseWinProbability *= rank->factor;
@@ -1749,7 +1749,7 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 			 * and do a promotion. */
 			if (ccs.numRanks >= 2) {
 				for (j = ccs.numRanks - 1; j > chr->score.rank; j--) {
-					const rank_t *rank = &ccs.ranks[j];
+					const rank_t *rank = CL_GetRankByIdx(j);
 					/** @todo (Zenerka 20080301) extend ranks and change calculations here. */
 					if (rank->type == EMPL_SOLDIER && (chr->score.skills[ABILITY_MIND] >= rank->mind)
 					 && (chr->score.kills[KILLED_ALIENS] >= rank->killedEnemies)

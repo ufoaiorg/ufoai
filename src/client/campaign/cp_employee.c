@@ -75,12 +75,6 @@ qboolean E_IsAwayFromBase (const employee_t *employee)
 	return qfalse;
 }
 
-const char *E_GetRankShortName (const employee_t *employee)
-{
-	assert(employee->chr.score.rank < ccs.numRanks);
-	return _(ccs.ranks[employee->chr.score.rank].shortname);
-}
-
 /**
  * @brief  Hires some employees of appropriate type for a building
  * @param[in] building in which building

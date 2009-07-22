@@ -38,8 +38,14 @@ int CL_GetRankIdx (const char* rankID)
 		if (!strcmp(ccs.ranks[i].id, rankID))
 			return i;
 	}
-	Com_Printf("Could not find rank '%s'\n", rankID);
-	return -1;
+	Com_Error(ERR_DROP, "Could not find rank '%s'\n", rankID);
+}
+
+rank_t *CL_GetRankByIdx (const int index)
+{
+	assert(index >= 0);
+	assert(index < ccs.numRanks);
+	return &ccs.ranks[index];
 }
 
 static const value_t rankValues[] = {

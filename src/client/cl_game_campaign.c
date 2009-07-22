@@ -391,9 +391,10 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 	/* Display rank if the character has one. */
 	if (chr->score.rank >= 0) {
 		char buf[MAX_VAR];
-		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(ccs.ranks[chr->score.rank].name));
+		const rank_t *rank = CL_GetRankByIdx(chr->score.rank);
+		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(rank->name));
 		Cvar_Set("mn_chrrank", buf);
-		Cvar_Set("mn_chrrank_img", ccs.ranks[chr->score.rank].image);
+		Cvar_Set("mn_chrrank_img", rank->image);
 	}
 }
 

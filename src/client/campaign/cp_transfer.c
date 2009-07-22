@@ -218,8 +218,9 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 	case EMPL_SOLDIER:
 		/* Is this a soldier assigned to aircraft? */
 		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
+			const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 			Com_sprintf(popupText, sizeof(popupText), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
-				_(ccs.ranks[employee->chr.score.rank].shortname), employee->chr.name);
+				_(rank->shortname), employee->chr.name);
 			MN_Popup(_("Soldier in aircraft"), popupText);
 			return qfalse;
 		}
@@ -352,9 +353,10 @@ static void TR_CargoList (void)
 			if (td.trEmployeesTmp[emplType][i]) {
 				if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 					employee_t *employee = td.trEmployeesTmp[emplType][i];
-					if (emplType == EMPL_SOLDIER)
-						Com_sprintf(str, lengthof(str), _("Soldier %s %s"), _(ccs.ranks[employee->chr.score.rank].shortname), employee->chr.name);
-					else
+					if (emplType == EMPL_SOLDIER) {
+						const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
+						Com_sprintf(str, lengthof(str), _("Soldier %s %s"), _(rank->shortname), employee->chr.name);
+					} else
 						Com_sprintf(str, lengthof(str), _("Pilot %s"), employee->chr.name);
 					LIST_AddString(&cargoList, str);
 					td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
@@ -505,9 +507,10 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 					if (td.trEmployeesTmp[emplType][i])	/* Already on transfer list. */
 						continue;
 					if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
-						if (emplType == EMPL_SOLDIER)
-							Com_sprintf(str, sizeof(str), _("Soldier %s %s"), E_GetRankShortName(employee), employee->chr.name);
-						else
+						if (emplType == EMPL_SOLDIER) {
+							const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
+							Com_sprintf(str, sizeof(str), _("Soldier %s %s"), rank->shortname, employee->chr.name);
+						} else
 							Com_sprintf(str, sizeof(str), _("Pilot %s"), employee->chr.name);
 						LIST_AddString(&transferList, str);
 						cnt++;
