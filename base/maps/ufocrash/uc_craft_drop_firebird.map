@@ -403,12 +403,12 @@
 // entity 9
 {
 "classname" "info_2x2_start"
-"origin" "608 256 32"
+"origin" "544 384 32"
 }
 // entity 10
 {
 "classname" "info_2x2_start"
-"origin" "64 256 32"
+"origin" "288 416 32"
 "angle" "180"
 }
 // entity 11
