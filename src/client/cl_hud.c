@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_game.h"
 #include "menu/m_popup.h"
 #include "menu/m_nodes.h"
+#include "menu/m_draw.h"
 #include "renderer/r_mesh_anim.h"
 
 /** If this is set to qfalse HUD_DisplayFiremodes_f will not attempt to hide the list */
@@ -119,8 +120,8 @@ static char hudText[256];
  */
 void HUD_DisplayMessage (const char *text)
 {
-	hudTime = cl.time + cl_hud_message_timeout->integer;
-	Q_strncpyz(hudText, text, sizeof(hudText));
+	assert(text);
+	MN_DisplayNotice(text, cl_hud_message_timeout->integer);
 }
 
 static void HUD_RefreshWeaponButtons(const le_t* le, int additionalTime);

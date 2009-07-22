@@ -5,6 +5,7 @@
 window althud extends ahud
 {
 	{
+		noticepos	"400 100"
 		timeout	10000
 	}
 
