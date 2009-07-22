@@ -291,8 +291,6 @@ static void MN_DrawNotice (void)
 	R_Color(noticeColor);
 	MN_DrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 	R_Color(NULL);
-
-	return;
 }
 
 /**
