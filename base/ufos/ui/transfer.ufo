@@ -142,12 +142,11 @@ window transfer
 		image	ui/panel_grey_green_large2
 	}
 
-	text trans_cargolist
+	textlist trans_cargolist
 	{
 		dataid		TEXT_CARGO_LIST
 		pos			"604 463"
 		size		"345 225"
-		mousefx		true
 		lineheight	"25"
 		longlines	prettychop
 		rows		"9"
@@ -225,12 +224,11 @@ window transfer
 		rows		"9"
 	}
 
-	text trans_list
+	textlist trans_list
 	{
 		dataid		TEXT_TRANSFER_LIST
 		pos			"37 180"
 		size		"483 550"
-		mousefx		true
 		longlines	prettychop
 		lineheight	"25"
 		rows		"22"

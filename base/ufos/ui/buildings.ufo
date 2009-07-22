@@ -80,7 +80,7 @@ window buildings
 		textalign	ur
 	}
 
-	text buildings
+	textlist buildings
 	{
 		dataid		TEXT_BUILDINGS
 		pos			"760 120"
@@ -88,7 +88,6 @@ window buildings
 		lineheight	30
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		mousefx		true
 		rows		"19"
 		longlines	prettychop
 		onClick		{ cmd "buildings_click <lineselected>" }
