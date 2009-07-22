@@ -121,7 +121,7 @@ static char hudText[256];
 void HUD_DisplayMessage (const char *text)
 {
 	assert(text);
-	MN_DisplayNotice(text, cl_hud_message_timeout->integer, mn_hud->name);
+	MN_DisplayNotice(text, cl_hud_message_timeout->integer, mn_hud->string);
 }
 
 static void HUD_RefreshWeaponButtons(const le_t* le, int additionalTime);
