@@ -856,9 +856,7 @@ static int RT_TraceOpening (routing_t * map, const int actorSize, const vec3_t s
  * @brief Performs traces to find a passage between two points given an upper and lower bound.
  * @param[in] map The map's routing data
  * @param[in] actorSize The actor's size
- * @param[in] x Starting x coordinate
- * @param[in] y Starting y coordinate
- * @param[in] z Starting z coordinate
+ * @param[in] from Starting place
  * @param[in] ax Ending x coordinate
  * @param[in] ay Ending y coordinate
  * @param[in] bottom Actual height of the starting floor.
@@ -867,13 +865,13 @@ static int RT_TraceOpening (routing_t * map, const int actorSize, const vec3_t s
  * @param[out] hi_val Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_FindOpening (routing_t * map, const int actorSize, const int  x, const int y, const int z, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val)
+static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val)
 {
 	vec3_t start, end;
 	pos3_t pos;
 	int temp_z;
 
-	const int endfloor = RT_FLOOR(map, actorSize, ax, ay, z) + z * CELL_HEIGHT;
+	const int endfloor = RT_FLOOR(map, actorSize, ax, ay, from->cell[2]) + from->cell[2] * CELL_HEIGHT;
 	const int hifloor = max (endfloor, bottom);
 
 	if (debugTrace)
@@ -887,11 +885,10 @@ static int RT_FindOpening (routing_t * map, const int actorSize, const int  x, c
 	}
 
 	/* Initialize the starting vector */
-	VectorSet(pos, x, y, z);
-	SizedPosToVec(pos, actorSize, start);
+	SizedPosToVec(from->cell, actorSize, start);
 
 	/* Initialize the ending vector */
-	VectorSet(pos, ax, ay, z);
+	VectorSet(pos, ax, ay, from->cell[2]);
 	SizedPosToVec(pos, actorSize, end);
 
 	/* Initialize the z component of both vectors */
@@ -899,8 +896,8 @@ static int RT_FindOpening (routing_t * map, const int actorSize, const int  x, c
 
 	/* shortcut: if both ceilings are the sky, we can check for walls
 	 * AND determine the bottom of the passage in just one trace */
-	if (z * CELL_HEIGHT + RT_CEILING(map, actorSize, x, y, z) >= PATHFINDING_HEIGHT * CELL_HEIGHT
-	 && z * CELL_HEIGHT + RT_CEILING(map, actorSize, ax, ay, z) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
+	if (from->ceiling >= PATHFINDING_HEIGHT * CELL_HEIGHT
+	 && from->cell[2] * CELL_HEIGHT + RT_CEILING(map, actorSize, ax, ay, from->cell[2]) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
 		vec3_t sky, earth;
 		vec3_t bmin, bmax;	/**< Tracing box extents */
 		trace_t tr;
@@ -1147,7 +1144,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, place_t* fr
 	const int ax = to->cell[0];
 	const int ay = to->cell[1];
 
-	az = RT_FindOpening(map, actorSize, from->cell[0], from->cell[1], z, ax, ay, lower, upper, &opening->base, &hi);
+	az = RT_FindOpening(map, actorSize, from, ax, ay, lower, upper, &opening->base, &hi);
 	/* calc opening found so far and set stepup */
 	opening->size = hi - opening->base;
 	az = to->floorZ;
