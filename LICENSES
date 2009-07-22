@@ -457,7 +457,6 @@ base/models/aircraft/drop_herakles/herakles_int_top.png | GNU General Public Lic
 base/models/aircraft/drop_herakles/herakles_nm.png |  |  | data_source/models/sitters/craft_drop_herakles/dropship_normal.bmp
 base/models/aircraft/drop_herakles/herakles_pod.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles_pod_back.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/drop_herakles/herakles_top.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/seats.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/seats.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/seats_2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
