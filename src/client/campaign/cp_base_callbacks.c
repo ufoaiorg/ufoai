@@ -772,6 +772,7 @@ static void BaseSummary_Init (const base_t *base)
 {
 	static char textStatsBuffer[1024];
 	static char textInfoBuffer[256];
+	const aliensCont_t *containment = base->alienscont;
 	int i;
 
 	baseCapacities_t cap;
@@ -795,6 +796,17 @@ static void BaseSummary_Init (const base_t *base)
 		tmp = E_CountHired(base, i);
 		totalEmployees += tmp;
 		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", E_GetEmployeeString(i), tmp), sizeof(textInfoBuffer));
+	}
+
+	Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
+
+	Q_strcat(textInfoBuffer, _("^BAliens\n"), sizeof(textInfoBuffer));
+	for (i = 0; i < ccs.numAliensTD; i++) {
+		if (!containment[i].amountAlive && !containment[i].amountDead)
+			continue;
+		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i/%i\n",
+			_(containment[i].teamDef->name), containment[i].amountAlive,
+			containment[i].amountDead), sizeof(textInfoBuffer));
 	}
 
 	/* link into the menu */
