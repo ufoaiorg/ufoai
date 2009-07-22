@@ -74,7 +74,6 @@ static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
 {
 	vec4_t colorHover;
 	vec4_t colorSelectedHover;
-	int fullSizeY;
 	int count; /* variable x position */
 	const char *font = MN_GetFontFromNode(node);
 	vec2_t pos;
@@ -120,7 +119,7 @@ static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
 
 		/* highlight line under mouse */
 		if (node->state && count == EXTRADATA(node).lineUnderMouse) {
-			if (fullSizeY == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0)
+			if (count == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0)
 				R_Color(colorSelectedHover);
 			else
 				R_Color(colorHover);
@@ -139,7 +138,7 @@ static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
 	}
 
 	/* update scroll status */
-	MN_AbstractScrollableNodeSetY(node, -1, viewSizeY, fullSizeY);
+	MN_AbstractScrollableNodeSetY(node, -1, viewSizeY, count);
 
 	R_Color(NULL);
 }
