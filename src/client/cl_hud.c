@@ -356,6 +356,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 		return;
 	}
 
+	/** @todo If popupListData/popupListText is stored into a dataid , next use of this dataid can crash the game */
 	/** @todo Why not using the MN_ResetData function here? */
 	LIST_Delete(&popupListText);
 	/* also reset mn.menuTextLinkedList here - otherwise the

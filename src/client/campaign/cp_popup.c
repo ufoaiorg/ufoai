@@ -113,6 +113,7 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
 	buildingType = B_GetBuildingTypeByCapacity(capacity);
 
+	/** @todo If popupListData is stored into a dataid , next use of this dataid can crash the game */
 	LIST_Delete(&popupListData);
 
 	popupNum = 0;
