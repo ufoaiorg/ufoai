@@ -80,6 +80,7 @@ static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
 	int currentY;
 	int viewSizeY;
 	int lineHeight;
+	int maxHeight;
 
 	lineHeight = EXTRADATA(node).lineHeight;
 	if (lineHeight == 0)
@@ -109,7 +110,10 @@ static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
 	}
 
 	currentY = pos[1];
+	maxHeight = currentY + node->size[1] - node->padding - node->padding - lineHeight;
 	while (list) {
+		if (currentY > maxHeight)
+			break;
 
 		/* highlight selected line */
 		if (count == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0)
@@ -133,6 +137,12 @@ static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
 		currentY += lineHeight;
 
 
+		list = list->next;
+		count++;
+	}
+
+	/* count all elements */
+	while (list) {
 		list = list->next;
 		count++;
 	}
