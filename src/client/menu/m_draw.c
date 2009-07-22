@@ -249,7 +249,7 @@ static void MN_DrawNode (menuNode_t *node)
  * @brief Generic notice function that renders a message to the screen
  * @todo Move it into Window node, and/or convert it in a reserved named string node and update the protocol
  */
-static int MN_DrawNotice (int x, int y, const char *noticeText)
+static void MN_DrawNotice (void)
 {
 	const vec4_t noticeBG = { 1.0f, 0.0f, 0.0f, 0.2f };
 	const vec4_t noticeColor = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -259,14 +259,28 @@ static int MN_DrawNotice (int x, int y, const char *noticeText)
 	const char *font = "f_normal";
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
+	int x, y;
+	menuNode_t *menu;
+
+	if (cls.realtime >= noticeTime)
+		return;
+
+	menu = MN_GetActiveMenu();
+	if (menu && (menu->u.window.noticePos[0] || menu->u.window.noticePos[1])) {
+		x = menu->u.window.noticePos[0];
+		y = menu->u.window.noticePos[1];
+	} else {
+		x = 500;
+		y = 110;
+	}
 
 	if (strcmp(noticeMenu, MN_GetActiveMenuName()))
-		return 0;
+		return;
 
 	R_FontTextSize(font, noticeText, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);
 
 	if (!width)
-		return 0;
+		return;
 
 	if (x + width + 3 > VID_NORM_WIDTH)
 		dx = -(width + 10);
@@ -278,7 +292,7 @@ static int MN_DrawNotice (int x, int y, const char *noticeText)
 	MN_DrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 	R_Color(NULL);
 
-	return width;
+	return;
 }
 
 /**
@@ -339,13 +353,7 @@ void MN_Draw (void)
 	}
 
 	/* draw a special notice */
-	menu = MN_GetActiveMenu();
-	if (cls.realtime < noticeTime) {
-		if (menu && (menu->u.window.noticePos[0] || menu->u.window.noticePos[1]))
-			MN_DrawNotice(menu->u.window.noticePos[0], menu->u.window.noticePos[1], noticeText);
-		else
-			MN_DrawNotice(500, 110, noticeText);
-	}
+	MN_DrawNotice();
 
 #ifdef DEBUG
 	/* debug information */
