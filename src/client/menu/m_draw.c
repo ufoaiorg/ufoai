@@ -247,6 +247,7 @@ static void MN_DrawNode (menuNode_t *node)
 
 /**
  * @brief Generic notice function that renders a message to the screen
+ * @todo Move it into Window node, and/or convert it in a reserved named string node and update the protocol
  */
 static int MN_DrawNotice (int x, int y, const char *noticeText)
 {
