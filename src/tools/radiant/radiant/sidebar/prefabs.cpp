@@ -208,8 +208,13 @@ static gboolean Prefab_FilterDirectory(GtkTreeModel *model, GtkTreeIter *possibl
  */
 static gboolean Prefab_FilterFiles (GtkTreeModel *model, GtkTreeIter *iter)
 {
+#if GTK_CHECK_VERSION(2,14,0)
 	if (gtk_entry_get_text_length(filterEntry) == 0)
 		return true;
+#else
+	if (strlen(gtk_entry_get_text(filterEntry)) == 0)
+		return true;
+#endif
 	return Prefab_FilterFileOrDirectory(model, iter);
 }
 
