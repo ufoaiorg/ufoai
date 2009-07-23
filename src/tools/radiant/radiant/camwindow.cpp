@@ -30,6 +30,7 @@
 
 #include "debugging/debugging.h"
 
+#include "ientity.h"
 #include "iscenegraph.h"
 #include "irender.h"
 #include "igl.h"
@@ -77,6 +78,7 @@ struct camwindow_globals_private_t
 	bool m_bCamLinkSpeed;
 	int m_nAngleSpeed;
 	bool m_bCamInverseMouse;
+	bool m_bLightRadius;
 	bool m_bCamDiscrete;
 	bool m_bCubicClipping;
 	bool m_showStats;
@@ -84,7 +86,8 @@ struct camwindow_globals_private_t
 
 	camwindow_globals_private_t () :
 		m_nMoveSpeed(100), m_bCamLinkSpeed(true), m_nAngleSpeed(3), m_bCamInverseMouse(false),
-				m_bCamDiscrete(true), m_bCubicClipping(true), m_showStats(true), m_nStrafeMode(0)
+		m_bLightRadius(false), m_bCamDiscrete(true), m_bCubicClipping(true), m_showStats(true),
+		m_nStrafeMode(0)
 	{
 	}
 };
@@ -1641,6 +1644,33 @@ void Camera_ToggleFarClip ()
 	Camera_SetFarClip(!Camera_GetFarClip());
 }
 
+void ShowLightRadiusExport (const BoolImportCallback& importer)
+{
+	g_camwindow_globals_private.m_bLightRadius = GlobalEntityCreator().getShowLightRadii();
+	importer(g_camwindow_globals_private.m_bLightRadius);
+}
+typedef FreeCaller1<const BoolImportCallback&, ShowLightRadiusExport> ShowLightRadiusExportCaller;
+
+ShowLightRadiusExportCaller g_show_light_radius_caller;
+BoolExportCallback g_getshow_light_radius_callback (g_show_light_radius_caller);
+ToggleItem g_getshow_light_radius (g_getshow_light_radius_callback);
+
+void Camera_SetShowLightRadius (bool value)
+{
+	CamWnd& camwnd = *g_camwnd;
+	GlobalEntityCreator().setShowLightRadii(value);
+	g_camwindow_globals_private.m_bLightRadius = value;
+	g_getshow_light_radius.update();
+	CamWnd_Update(camwnd);
+	XY_UpdateAllWindows();
+}
+
+void ShowLightRadiusToggle (void)
+{
+	Camera_SetShowLightRadius(!g_camwindow_globals_private.m_bLightRadius);
+}
+typedef FreeCaller<ShowLightRadiusToggle> ShowLightRadiusToggleCaller;
+
 void CamWnd_constructToolbar (GtkToolbar* toolbar)
 {
 	toolbar_append_toggle_button(toolbar, _("Cubic clip the camera view (\\)"), "view_cubicclipping.bmp",
@@ -1796,6 +1826,9 @@ void Camera_constructPreferences (PreferencesPage& page)
 
 	const char* strafe_mode[] = { C_("Strafe Mode", "Both"), C_("Strafe Mode", "Forward"), C_("Strafe Mode", "Up") };
 	page.appendCombo(_("Strafe Mode"), g_camwindow_globals_private.m_nStrafeMode, STRING_ARRAY_RANGE(strafe_mode));
+
+	page.appendCheckBox("", _("Show light radius"), FreeCaller1<bool, Camera_SetShowLightRadius> (), BoolExportCaller(
+			g_camwindow_globals_private.m_bLightRadius));
 }
 
 void Camera_constructPage (PreferenceGroup& group)
@@ -1875,6 +1908,7 @@ void CamWnd_Construct ()
 	GlobalShortcuts_insert("CameraFreeMoveRight", Accelerator(GDK_Right));
 
 	GlobalToggles_insert("ShowStats", ShowStatsToggleCaller(), ToggleItem::AddCallbackCaller(g_show_stats));
+	GlobalToggles_insert("ShowLightRadius", ShowLightRadiusToggleCaller(), ToggleItem::AddCallbackCaller(g_getshow_light_radius));
 
 	GlobalPreferenceSystem().registerPreference("ShowStats", BoolImportStringCaller(
 			g_camwindow_globals_private.m_showStats), BoolExportStringCaller(g_camwindow_globals_private.m_showStats));

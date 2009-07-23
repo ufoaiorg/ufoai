@@ -62,7 +62,6 @@ public:
 	virtual ~RendererLight(){}
 	virtual Shader* getShader() const = 0;
 	virtual const Vector3& colour() const = 0;
-	virtual bool isProjected() const = 0;
 };
 
 class LightCullable {

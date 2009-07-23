@@ -1164,13 +1164,6 @@ void OpenGLShader::construct (const char* name)
 			hiddenLine.m_sort = OpenGLState::eSortGUI0;
 			hiddenLine.m_linewidth = 2;
 			hiddenLine.m_depthfunc = GL_GREATER;
-		} else if (string_equal(name + 1, "LATTICE")) {
-			state.m_colour[0] = 1;
-			state.m_colour[1] = 0.5;
-			state.m_colour[2] = 0;
-			state.m_colour[3] = 1;
-			state.m_state = RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
-			state.m_sort = OpenGLState::eSortControlFirst;
 		} else if (string_equal(name + 1, "WIREFRAME")) {
 			state.m_state = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 			state.m_sort = OpenGLState::eSortFullbright;
@@ -1209,24 +1202,6 @@ void OpenGLShader::construct (const char* name)
 		} else if (string_equal(name + 1, "DEBUG_CLIPPED")) {
 			state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 			state.m_sort = OpenGLState::eSortLast;
-		} else if (string_equal(name + 1, "POINTFILE")) {
-			state.m_colour[0] = 1;
-			state.m_colour[1] = 0;
-			state.m_colour[2] = 0;
-			state.m_colour[3] = 1;
-			state.m_state = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
-			state.m_sort = OpenGLState::eSortFullbright;
-			state.m_linewidth = 4;
-		} else if (string_equal(name + 1, "LIGHT_SPHERE")) {
-			state.m_colour[0] = .15f * .95f;
-			state.m_colour[1] = .15f * .95f;
-			state.m_colour[2] = .15f * .95f;
-			state.m_colour[3] = 1;
-			state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_BLEND | RENDER_FILL | RENDER_COLOURWRITE
-					| RENDER_DEPTHWRITE;
-			state.m_blend_src = GL_ONE;
-			state.m_blend_dst = GL_ONE;
-			state.m_sort = OpenGLState::eSortTranslucent;
 		} else if (string_equal(name + 1, "Q3MAP2_LIGHT_SPHERE")) {
 			state.m_colour[0] = .05f;
 			state.m_colour[1] = .05f;

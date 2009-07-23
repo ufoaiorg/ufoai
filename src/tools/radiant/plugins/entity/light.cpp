@@ -192,24 +192,20 @@ static void light_draw_box_lines (const Vector3& origin, const Vector3 points[8]
 	glEnd();
 }
 
-static void light_draw_radius_wire (const Vector3& origin, const float envelope[3])
+static void light_draw_radius_wire (const Vector3& origin, const float envelope[2])
 {
 	if (envelope[0] > 0)
 		sphere_draw_wire(origin, envelope[0], 24);
 	if (envelope[1] > 0)
 		sphere_draw_wire(origin, envelope[1], 24);
-	if (envelope[2] > 0)
-		sphere_draw_wire(origin, envelope[2], 24);
 }
 
-static void light_draw_radius_fill (const Vector3& origin, const float envelope[3])
+static void light_draw_radius_fill (const Vector3& origin, const float envelope[2])
 {
 	if (envelope[0] > 0)
 		sphere_draw_fill(origin, envelope[0], 16);
 	if (envelope[1] > 0)
 		sphere_draw_fill(origin, envelope[1], 16);
-	if (envelope[2] > 0)
-		sphere_draw_fill(origin, envelope[2], 16);
 }
 
 static void light_vertices (const AABB& aabb_light, Vector3 points[6])
@@ -291,73 +287,39 @@ static void light_draw (const AABB& aabb_light, RenderStateFlags state)
 	}
 }
 
-/// setting to default here as there is no way to find out what the user actually
-/// uses right now. \todo Maybe move them to worldspawn?
-static const float fPointScale = 7500.f;
-
-static float light_radius (float fIntensity, float fFalloffTolerance)
-{
-	return sqrt(fIntensity * fPointScale / fFalloffTolerance);
-}
-
 class LightRadii
 {
 	public:
-		float m_radii[3];
+		float m_radii[2];
 
 	private:
-		float m_primaryIntensity;
-		float m_secondaryIntensity;
+		float m_intensity;
 		int m_flags;
-		float m_fade;
-		float m_scale;
 
 		void calculateRadii ()
 		{
 			float intensity = 300.0f;
 
-			if (m_primaryIntensity != 0.0f) {
-				intensity = m_primaryIntensity;
-			} else if (m_secondaryIntensity != 0.0f) {
-				intensity = m_secondaryIntensity;
-			}
+			if (m_intensity != 0.0f)
+				intensity = m_intensity;
 
-			intensity *= m_scale;
-
-			m_radii[0] = light_radius(intensity, 1.0f);
-			m_radii[1] = light_radius(intensity, 48.0f);
-			m_radii[2] = light_radius(intensity, 255.0f);
+			m_radii[0] = intensity;
+			m_radii[1] = intensity * 2;
 		}
 
 	public:
 		LightRadii () :
-			m_primaryIntensity(0), m_secondaryIntensity(0), m_flags(0), m_fade(1), m_scale(1)
+			m_intensity(0), m_flags(0)
 		{
 		}
 
 		void primaryIntensityChanged (const char* value)
 		{
-			m_primaryIntensity = string_read_float(value);
+			m_intensity = string_read_float(value);
 			calculateRadii();
 		}
 		typedef MemberCaller1<LightRadii, const char*, &LightRadii::primaryIntensityChanged>
 				PrimaryIntensityChangedCaller;
-		void secondaryIntensityChanged (const char* value)
-		{
-			m_secondaryIntensity = string_read_float(value);
-			calculateRadii();
-		}
-		typedef MemberCaller1<LightRadii, const char*, &LightRadii::secondaryIntensityChanged>
-				SecondaryIntensityChangedCaller;
-		void scaleChanged (const char* value)
-		{
-			m_scale = string_read_float(value);
-			if (m_scale <= 0.0f) {
-				m_scale = 1.0f;
-			}
-			calculateRadii();
-		}
-		typedef MemberCaller1<LightRadii, const char*, &LightRadii::scaleChanged> ScaleChangedCaller;
 		void flagsChanged (const char* value)
 		{
 			m_flags = string_read_int(value);
@@ -544,14 +506,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 
 		Vector3 m_lightTarget;
 		bool m_useLightTarget;
-		Vector3 m_lightUp;
-		bool m_useLightUp;
-		Vector3 m_lightRight;
-		bool m_useLightRight;
-		Vector3 m_lightStart;
-		bool m_useLightStart;
-		Vector3 m_lightEnd;
-		bool m_useLightEnd;
 
 		LightShader m_shader;
 
@@ -570,9 +524,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 			m_keyObservers.insert("_color", Colour::ColourChangedCaller(m_colour));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
-			m_keyObservers.insert("_light", LightRadii::PrimaryIntensityChangedCaller(m_radii));
-			m_keyObservers.insert("light", LightRadii::SecondaryIntensityChangedCaller(m_radii));
-			m_keyObservers.insert("scale", LightRadii::ScaleChangedCaller(m_radii));
+			m_keyObservers.insert("light", LightRadii::PrimaryIntensityChangedCaller(m_radii));
 			m_keyObservers.insert("spawnflags", LightRadii::FlagsChangedCaller(m_radii));
 		}
 		void destroy ()
@@ -608,42 +560,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			projectionChanged();
 		}
 		typedef MemberCaller1<Light, const char*, &Light::lightTargetChanged> LightTargetChangedCaller;
-		void lightUpChanged (const char* value)
-		{
-			m_useLightUp = !string_empty(value);
-			if (m_useLightUp) {
-				read_origin(m_lightUp, value);
-			}
-			projectionChanged();
-		}
-		typedef MemberCaller1<Light, const char*, &Light::lightUpChanged> LightUpChangedCaller;
-		void lightRightChanged (const char* value)
-		{
-			m_useLightRight = !string_empty(value);
-			if (m_useLightRight) {
-				read_origin(m_lightRight, value);
-			}
-			projectionChanged();
-		}
-		typedef MemberCaller1<Light, const char*, &Light::lightRightChanged> LightRightChangedCaller;
-		void lightStartChanged (const char* value)
-		{
-			m_useLightStart = !string_empty(value);
-			if (m_useLightStart) {
-				read_origin(m_lightStart, value);
-			}
-			projectionChanged();
-		}
-		typedef MemberCaller1<Light, const char*, &Light::lightStartChanged> LightStartChangedCaller;
-		void lightEndChanged (const char* value)
-		{
-			m_useLightEnd = !string_empty(value);
-			if (m_useLightEnd) {
-				read_origin(m_lightEnd, value);
-			}
-			projectionChanged();
-		}
-		typedef MemberCaller1<Light, const char*, &Light::lightEndChanged> LightEndChangedCaller;
 
 	public:
 
@@ -831,10 +747,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			return m_colour.m_colour;
 		}
 
-		bool isProjected () const
-		{
-			return m_useLightTarget && m_useLightUp && m_useLightRight;
-		}
 		void projectionChanged ()
 		{
 			SceneChangeNotify();
@@ -946,11 +858,6 @@ class LightInstance: public TargetableInstance,
 		const Vector3& colour () const
 		{
 			return m_contained.colour();
-		}
-
-		bool isProjected () const
-		{
-			return m_contained.isProjected();
 		}
 };
 
