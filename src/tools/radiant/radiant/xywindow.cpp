@@ -2593,6 +2593,18 @@ class EntityClassMenu: public ModuleObserver
 
 EntityClassMenu g_EntityClassMenu;
 
+void ShowLightRadiusToggle (void)
+{
+	GlobalEntityCreator().setShowLightRadii(!GlobalEntityCreator().getShowLightRadii());
+	XY_UpdateAllWindows();
+}
+typedef FreeCaller<ShowLightRadiusToggle> ShowLightRadiusToggleCaller;
+void ShowLightRadiusExport (const BoolImportCallback& importer)
+{
+	importer(GlobalEntityCreator().getShowLightRadii());
+}
+typedef FreeCaller1<const BoolImportCallback&, ShowLightRadiusExport> ShowLightRadiusExportCaller;
+
 void ShowNamesToggle (void)
 {
 	GlobalEntityCreator().setShowNames(!GlobalEntityCreator().getShowNames());
@@ -2677,6 +2689,10 @@ void ShowWorkzoneExport (const BoolImportCallback& importer)
 }
 typedef FreeCaller1<const BoolImportCallback&, ShowWorkzoneExport> ShowWorkzoneExportCaller;
 
+ShowLightRadiusExportCaller g_show_light_radius_caller;
+BoolExportCallback g_show_light_radius_callback (g_show_light_radius_caller);
+ToggleItem g_show_light_radius (g_show_light_radius_callback);
+
 ShowNamesExportCaller g_show_names_caller;
 BoolExportCallback g_show_names_callback (g_show_names_caller);
 ToggleItem g_show_names (g_show_names_callback);
@@ -2707,6 +2723,7 @@ ToggleItem g_show_workzone (g_show_workzone_callback);
 
 void XYShow_registerCommands (void)
 {
+	GlobalToggles_insert("ShowLightRadius", ShowLightRadiusToggleCaller(), ToggleItem::AddCallbackCaller(g_show_light_radius));
 	GlobalToggles_insert("ShowAngles", ShowAnglesToggleCaller(), ToggleItem::AddCallbackCaller(g_show_angles));
 	GlobalToggles_insert("ShowNames", ShowNamesToggleCaller(), ToggleItem::AddCallbackCaller(g_show_names));
 	GlobalToggles_insert("ShowBlocks", ShowBlocksToggleCaller(), ToggleItem::AddCallbackCaller(g_show_blocks));
