@@ -238,63 +238,47 @@ static void light_draw (const AABB& aabb_light, RenderStateFlags state)
 		const Vector3 normals[8] = { Vector3(0, f, f), Vector3(f, 0, f), Vector3(0, -f, f), Vector3(-f, 0, f), Vector3(
 				0, f, -f), Vector3(f, 0, -f), Vector3(0, -f, -f), Vector3(-f, 0, -f), };
 
-#if !defined(USE_TRIANGLE_FAN)
 		glBegin(GL_TRIANGLES);
-#else
-		glBegin(GL_TRIANGLE_FAN);
-#endif
+
 		glVertex3fv(vector3_to_array(points[0]));
 		glVertex3fv(vector3_to_array(points[2]));
 		glNormal3fv(vector3_to_array(normals[0]));
 		glVertex3fv(vector3_to_array(points[3]));
 
-#if !defined(USE_TRIANGLE_FAN)
 		glVertex3fv(vector3_to_array(points[0]));
 		glVertex3fv(vector3_to_array(points[3]));
-#endif
 		glNormal3fv(vector3_to_array(normals[1]));
 		glVertex3fv(vector3_to_array(points[4]));
 
-#if !defined(USE_TRIANGLE_FAN)
 		glVertex3fv(vector3_to_array(points[0]));
 		glVertex3fv(vector3_to_array(points[4]));
-#endif
 		glNormal3fv(vector3_to_array(normals[2]));
 		glVertex3fv(vector3_to_array(points[5]));
-#if !defined(USE_TRIANGLE_FAN)
 		glVertex3fv(vector3_to_array(points[0]));
 		glVertex3fv(vector3_to_array(points[5]));
-#endif
+
 		glNormal3fv(vector3_to_array(normals[3]));
 		glVertex3fv(vector3_to_array(points[2]));
-#if defined(USE_TRIANGLE_FAN)
 		glEnd();
 		glBegin(GL_TRIANGLE_FAN);
-#endif
 
 		glVertex3fv(vector3_to_array(points[1]));
 		glVertex3fv(vector3_to_array(points[2]));
 		glNormal3fv(vector3_to_array(normals[7]));
 		glVertex3fv(vector3_to_array(points[5]));
 
-#if !defined(USE_TRIANGLE_FAN)
 		glVertex3fv(vector3_to_array(points[1]));
 		glVertex3fv(vector3_to_array(points[5]));
-#endif
 		glNormal3fv(vector3_to_array(normals[6]));
 		glVertex3fv(vector3_to_array(points[4]));
 
-#if !defined(USE_TRIANGLE_FAN)
 		glVertex3fv(vector3_to_array(points[1]));
 		glVertex3fv(vector3_to_array(points[4]));
-#endif
 		glNormal3fv(vector3_to_array(normals[5]));
 		glVertex3fv(vector3_to_array(points[3]));
 
-#if !defined(USE_TRIANGLE_FAN)
 		glVertex3fv(vector3_to_array(points[1]));
 		glVertex3fv(vector3_to_array(points[3]));
-#endif
 		glNormal3fv(vector3_to_array(normals[4]));
 		glVertex3fv(vector3_to_array(points[2]));
 
