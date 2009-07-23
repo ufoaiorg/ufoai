@@ -434,7 +434,7 @@ void Entity_setColour ()
 						g_entity_globals.color_entity[1],
 						g_entity_globals.color_entity[2]);
 
-				Scene_EntitySetKeyValue_Selected(entity->getKeyValue("classname"), "_color", buffer);
+				Scene_EntitySetKeyValue_Selected(entity->getKeyValue("classname"), "color", buffer);
 			}
 		}
 	}
