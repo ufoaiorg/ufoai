@@ -421,7 +421,7 @@ void Entity_setColour ()
 		const scene::Path& path = GlobalSelectionSystem().ultimateSelected().path();
 		Entity* entity = Node_getEntity(path.top());
 		if (entity != 0) {
-			const char* strColor = entity->getKeyValue("color");
+			const char* strColor = entity->getKeyValue("_color");
 			if (!string_empty(strColor)) {
 				Vector3 rgb;
 				if (string_parse_vector3(strColor, rgb)) {
@@ -434,7 +434,7 @@ void Entity_setColour ()
 						g_entity_globals.color_entity[1],
 						g_entity_globals.color_entity[2]);
 
-				Scene_EntitySetKeyValue_Selected(entity->getKeyValue("classname"), "color", buffer);
+				Scene_EntitySetKeyValue_Selected(entity->getKeyValue("classname"), "_color", buffer);
 			}
 		}
 	}
