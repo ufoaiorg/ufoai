@@ -421,6 +421,8 @@ void Entity_setColour ()
 		const scene::Path& path = GlobalSelectionSystem().ultimateSelected().path();
 		Entity* entity = Node_getEntity(path.top());
 		if (entity != 0) {
+			if (entity->getEntityClass().getAttribute("_color") == 0)
+				return;
 			const char* strColor = entity->getKeyValue("_color");
 			if (!string_empty(strColor)) {
 				Vector3 rgb;

@@ -574,6 +574,8 @@ class EntityKeyValues : public Entity {
 	 * @param[in] value If empty, the property will be removed
 	 */
 	void setKeyValue(const char* key, const char* value) {
+		if (getEntityClass().getAttribute(key) == 0)
+			return;
 		if (value[0] == '\0') {
 			erase(key);
 		} else {
