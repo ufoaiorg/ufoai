@@ -96,6 +96,14 @@ MACROS
 														assert((state) == 0 || (state) == 1);
 
 
+/** @brief  These macros are meant to correctly convert from model units to QUANT units and back. */
+/* Surfaces used as floors are rounded up. */
+#define ModelFloorToQuant(x)	(ceil((x) / QUANT))
+/* Surfaces used as ceilings are rounded down. */
+#define ModelCeilingToQuant(x)	(floor((x) / QUANT))
+/* Going from QUANT units back to model units returns the approximation of the QUANT unit. */
+#define QuantToModel(x)			((x) * QUANT)
+
 /**
  * @brief SizedPosToVect locates the center of an actor based on size and position.
  */
