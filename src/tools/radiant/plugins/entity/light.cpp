@@ -293,18 +293,13 @@ class LightRadii
 		float m_radii[2];
 
 	private:
-		float m_intensity;
+		int m_intensity;
 		int m_flags;
 
 		void calculateRadii ()
 		{
-			float intensity = 300.0f;
-
-			if (m_intensity != 0.0f)
-				intensity = m_intensity;
-
-			m_radii[0] = intensity;
-			m_radii[1] = intensity * 2;
+			m_radii[0] = m_intensity * 1.0f;
+			m_radii[1] = m_intensity * 2.0f;
 		}
 
 	public:
@@ -315,11 +310,11 @@ class LightRadii
 
 		void primaryIntensityChanged (const char* value)
 		{
-			m_intensity = string_read_float(value);
+			m_intensity = string_read_int(value);
 			calculateRadii();
 		}
 		typedef MemberCaller1<LightRadii, const char*, &LightRadii::primaryIntensityChanged>
-				PrimaryIntensityChangedCaller;
+				IntensityChangedCaller;
 		void flagsChanged (const char* value)
 		{
 			m_flags = string_read_int(value);
@@ -524,7 +519,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 			m_keyObservers.insert("_color", Colour::ColourChangedCaller(m_colour));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
-			m_keyObservers.insert("light", LightRadii::PrimaryIntensityChangedCaller(m_radii));
+			m_keyObservers.insert("light", LightRadii::IntensityChangedCaller(m_radii));
 			m_keyObservers.insert("spawnflags", LightRadii::FlagsChangedCaller(m_radii));
 		}
 		void destroy ()
