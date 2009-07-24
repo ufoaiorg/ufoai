@@ -296,7 +296,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	/* This sets up the size of the box required to stand in a cell by an actor's feet.  */
 	const float halfMicrostepSize = PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON;
 	/* ... and the same for the torso box */
-	const float halfActorWidth = UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON;
+	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 	/* This is a template for the extents of the box used by an actor's legs. */
 	const vec3_t floorMins = {-halfMicrostepSize, -halfMicrostepSize, 0};
 	const vec3_t floorMaxs = { halfMicrostepSize,  halfMicrostepSize, 0};
@@ -621,10 +621,11 @@ static int RT_FillPassageData (routing_t * map, const int actorSize, const int d
 static trace_t RT_ObstructedTrace (const vec3_t start, const vec3_t end, int actorSize, int hi, int lo)
 {
 	vec3_t bmin, bmax; /**< Tracing box extents */
+	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 
 	/* Configure the box trace extents. The box is relative to the original floor. */
-	VectorSet(bmax, UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON, QuantToModel(hi) - DIST_EPSILON);
-	VectorSet(bmin, -UNIT_SIZE * actorSize / 2 + WALL_SIZE + DIST_EPSILON, -UNIT_SIZE * actorSize / 2 + WALL_SIZE + DIST_EPSILON, QuantToModel(lo)  + DIST_EPSILON);
+	VectorSet(bmax, halfActorWidth, halfActorWidth, QuantToModel(hi) - DIST_EPSILON);
+	VectorSet(bmin, -halfActorWidth, -halfActorWidth, QuantToModel(lo)  + DIST_EPSILON);
 
 	/* perform the trace, then return true if the trace was obstructed. */
 	return RT_COMPLETEBOXTRACE(start, end, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
@@ -645,10 +646,11 @@ static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const 
 	vec3_t bmin, bmax; /**< Tracing box extents */
 	vec3_t mstart, mend; /**< Midpoint line to trace across */
 	trace_t tr;
+	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 
 	/* Configure bmin and bmax for the floor scan */
-	VectorSet(bmin, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, 0);
-	VectorSet(bmax, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, 0);
+	VectorSet(bmin, -halfActorWidth, -halfActorWidth, 0);
+	VectorSet(bmax, halfActorWidth, halfActorWidth, 0);
 
 	/* Position mstart and mend at the fraction point */
 	VectorInterpolation(start, end, frac, mstart);
@@ -682,10 +684,11 @@ static int RT_FindOpeningCeilingFrac (const vec3_t start, const vec3_t end, cons
 	vec3_t bmin, bmax; /**< Tracing box extents */
 	vec3_t mstart, mend; /**< Midpoint line to trace across */
 	trace_t tr;
+	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 
 	/* Configure bmin and bmax for the floor scan */
-	VectorSet(bmin, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, 0);
-	VectorSet(bmax, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, 0);
+	VectorSet(bmin, -halfActorWidth, -halfActorWidth, 0);
+	VectorSet(bmax, halfActorWidth, halfActorWidth, 0);
 
 	/* Position mstart and mend at the midpoint */
 	VectorInterpolation(start, end, frac, mstart);
@@ -902,13 +905,14 @@ static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, 
 		vec3_t bmin, bmax;	/**< Tracing box extents */
 		trace_t tr;
 		int tempBottom;
+		const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 
 		VectorInterpolation(start, end, 0.5, sky);	/* center it halfway between the cells */
 		VectorCopy(sky, earth);
 		sky[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT;  /* Set to top of model. */
 		earth[2] = QuantToModel(bottom);
-		VectorSet(bmin, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actorSize / -2 + WALL_SIZE + DIST_EPSILON, 0);
-		VectorSet(bmax, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actorSize /  2 - WALL_SIZE - DIST_EPSILON, 0);
+		VectorSet(bmin, -halfActorWidth, -halfActorWidth, 0);
+		VectorSet(bmax, halfActorWidth, halfActorWidth, 0);
 		tr = RT_COMPLETEBOXTRACE(sky, earth, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		tempBottom = ModelFloorToQuant(tr.endpos[2]);
 		if (tempBottom <= bottom + PATHFINDING_MIN_STEPUP) {
