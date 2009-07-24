@@ -80,11 +80,10 @@ window campaigns
 		string	"_Back"
 	}
 
-	text campaignlist
+	textlist campaignlist
 	{
 		pos		"500 140"
 		size	"400 120"
-		mousefx	true
 		lineheight	"20"
 		dataid		TEXT_CAMPAIGN_LIST
 		onClick	{ cmd "campaignlist_click <lineselected>" }

@@ -140,7 +140,6 @@ static inline const char* CP_ToDifficultyName (int difficulty)
 }
 
 #define MAXCAMPAIGNTEXT 4096
-static char campaignText[MAXCAMPAIGNTEXT];
 static char campaignDesc[MAXCAMPAIGNTEXT];
 /**
  * @brief Fill the campaign list with available campaigns
@@ -149,14 +148,15 @@ static void GAME_CP_GetCampaigns_f (void)
 {
 	int i;
 
-	*campaignText = *campaignDesc = '\0';
+	linkedList_t *campaignList = NULL;
+	*campaignDesc = '\0';
 	for (i = 0; i < ccs.numCampaigns; i++) {
 		if (ccs.campaigns[i].visible)
-			Q_strcat(campaignText, va("%s\n", _(ccs.campaigns[i].name)), MAXCAMPAIGNTEXT);
+			LIST_AddString(&campaignList, va("%s", _(ccs.campaigns[i].name)));
 	}
 	/* default campaign */
 	MN_RegisterText(TEXT_STANDARD, campaignDesc);
-	MN_RegisterText(TEXT_CAMPAIGN_LIST, campaignText);
+	MN_RegisterLinkedListText(TEXT_CAMPAIGN_LIST, campaignList);
 
 	/* select main as default */
 	for (i = 0; i < ccs.numCampaigns; i++)
