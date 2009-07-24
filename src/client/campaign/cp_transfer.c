@@ -921,9 +921,7 @@ static void TR_TransferBaseListClick_f (void)
 void TR_TransferAircraftMenu (aircraft_t* aircraft)
 {
 	int i, num;
-	static char transferBaseSelectPopup[512];
-
-	transferBaseSelectPopup[0] = '\0';
+	static linkedList_t *transfer = NULL;
 
 	/* store the aircraft to be able to remove alien bodies */
 	td.transferStartAircraft = aircraft;
@@ -931,6 +929,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 	/* make sure that all tests here are the same than in TR_TransferBaseListClick_f */
 	for (i = 0; i < MAX_BASES; i++) {
 		const base_t *base = B_GetFoundedBaseByIDX(i);
+		const char* string;
 		if (!base)
 			continue;
 		/* don't display bases without Alien Containment */
@@ -938,10 +937,11 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 			continue;
 
 		num = (base->capacities[CAP_ALIENS].max - base->capacities[CAP_ALIENS].cur);
-		Q_strcat(transferBaseSelectPopup, va("  %s ", base->name), sizeof(transferBaseSelectPopup));
-		Q_strcat(transferBaseSelectPopup, va(ngettext("(can host %i live alien)\n", "(can host %i live aliens)\n", num), num), sizeof(transferBaseSelectPopup));
+		string = va(ngettext("(can host %i live alien)", "(can host %i live aliens)", num), num);
+		string = va("%s %s", base->name, string);
+		LIST_AddString(&transfer, string);
 	}
-	MN_RegisterText(TEXT_LIST, transferBaseSelectPopup);
+	MN_RegisterLinkedListText(TEXT_LIST, transfer);
 	MN_PushMenu("popup_transferbaselist", NULL);
 }
 

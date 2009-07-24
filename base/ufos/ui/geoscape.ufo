@@ -986,7 +986,7 @@ window popup_transferbaselist
 		size		"450 20"
 	}
 
-	text trans_baselist
+	textlist trans_baselist
 	{
 		dataid		TEXT_LIST
 		pos			"26 74"
@@ -994,7 +994,6 @@ window popup_transferbaselist
 		lineheight	16
 		tabwidth	100
 		rows		7
-		mousefx		true
 		onClick		{ cmd "trans_baselist_click <lineselected>" }
 		onRClick	{ cmd "mn_pop; aircraft_return;" }
 	}
