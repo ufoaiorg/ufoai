@@ -490,16 +490,80 @@ const char* misc_sound_dialog (GtkWidget* parent)
 	return filename;
 }
 
+namespace {
+	GtkMenuItem *g_menuItemRegroup = 0;
+	GtkMenuItem *g_menuItemUngroup = 0;
+	GtkMenuItem *g_menuItemSelectColor = 0;
+	GtkMenuItem *g_menuItemConnectSelection = 0;
+}
+
 void Entity_constructMenu (GtkMenu* menu)
 {
-	create_menu_item_with_mnemonic(menu, _("_Regroup"), "GroupSelection");
-	create_menu_item_with_mnemonic(menu, _("_Ungroup"), "UngroupSelection");
-	create_menu_item_with_mnemonic(menu, _("_Connect"), "ConnectSelection");
-	create_menu_item_with_mnemonic(menu, _("_Select Color..."), "EntityColor");
+	g_menuItemRegroup = create_menu_item_with_mnemonic(menu, _("_Regroup"), "GroupSelection");
+	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemRegroup), FALSE);
+	g_menuItemUngroup = create_menu_item_with_mnemonic(menu, _("_Ungroup"), "UngroupSelection");
+	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemUngroup), FALSE);
+	g_menuItemConnectSelection = create_menu_item_with_mnemonic(menu, _("_Connect"), "ConnectSelection");
+	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemConnectSelection), FALSE);
+	g_menuItemSelectColor = create_menu_item_with_mnemonic(menu, _("_Select Color..."), "EntityColor");
+	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemSelectColor), FALSE);
+}
+
+/**
+ * @brief callback evaluates current selection to decide which entity menu items should be sensitive
+ */
+void Entity_MenuStateReevaluate (void) {
+	const int selected = GlobalSelectionSystem().countSelected();
+	bool enableSelectColor = false;
+	bool enableConnect = false;
+	bool enableGroup = false;
+	if (selected > 0) {
+		if (selected == 2) {
+			enableConnect = true;
+		}
+		/** @todo should group/ungroup really be available for single selection?*/
+		enableGroup = true;
+		const scene::Path& path = GlobalSelectionSystem().ultimateSelected().path();
+		Entity* entity = Node_getEntity(path.top());
+		if (entity != 0) {
+			if (entity->getEntityClass().getAttribute("_color")) {
+				enableSelectColor = true;
+			}
+		}
+	}
+	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemSelectColor), enableSelectColor);
+	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemConnectSelection), enableConnect);
+	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemRegroup), enableGroup);
+	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemUngroup), enableGroup);
+}
+
+/**
+ * @brief Class instance for asynchronous menu state update after selection change
+ */
+class EntityMenuDraw {
+	IdleDraw m_idleDraw;
+public:
+	EntityMenuDraw() :
+		m_idleDraw(FreeCaller<Entity_MenuStateReevaluate> ()) {
+	}
+	void queueDraw(void) {
+		m_idleDraw.queueDraw();
+	}
+};
+static EntityMenuDraw g_EntityMenuDraw;
+
+/**
+ * @brief Selection changed callback used to reevaluate menu state based on current selection.
+ * @param selectable unused
+ */
+void Entity_ColorPickerSelectionChanged (const Selectable& selectable)
+{
+	g_EntityMenuDraw.queueDraw();
 }
 
 #include "preferencesystem.h"
 #include "stringio.h"
+#include "signal/isignal.h"
 
 void Entity_Construct ()
 {
@@ -513,6 +577,9 @@ void Entity_Construct ()
 			Vector3ExportStringCaller(g_entity_globals.color_entity));
 	GlobalPreferenceSystem().registerPreference("LastLightIntensity", IntImportStringCaller(g_iLastLightIntensity),
 			IntExportStringCaller(g_iLastLightIntensity));
+
+	typedef FreeCaller1<const Selectable&, Entity_ColorPickerSelectionChanged> EntityColorPickerSelectionChangedCaller;
+	GlobalSelectionSystem().addSelectionChangeCallback(EntityColorPickerSelectionChangedCaller());
 }
 
 void Entity_Destroy ()
