@@ -204,7 +204,7 @@ window uforecovery
 			lineheight	16
 		}
 
-		text cp_uforecovery_baselist
+		textlist cp_uforecovery_baselist
 		{
 			dataid		TEXT_UFORECOVERY_BASESTORAGE
 			pos			"25 50"
@@ -214,8 +214,6 @@ window uforecovery
 			lineheight	16
 			tabwidth	100
 			rows		"8"
-			mousefx		true
-			longlines	prettychop
 			onClick		{ cmd "cp_uforecovery_baselist_click <lineselected>" }
 			onViewChange	{
 				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@fullsize <lines>
@@ -306,6 +304,7 @@ window uforecovery
 			lineheight	16
 		}
 
+		/* tabbed textlist */
 		text cp_uforecovery_nationlist
 		{
 			dataid		TEXT_UFORECOVERY_NATIONS

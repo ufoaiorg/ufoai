@@ -217,7 +217,7 @@ static void UR_DialogInitStore_f (void)
 {
 	int i,j, replaceTemplates = 0;
 	aircraft_t *ufocraft;
-	static char recoveryBaseSelectPopup[MAX_SMALLMENUTEXTLEN];
+	linkedList_t *recoveryBaseSelectPopup = NULL;
 	qboolean ufofound = qfalse;
 	linkedList_t *validReplaceTemplateList = NULL, *replaceObjDefList = NULL;
 
@@ -263,15 +263,13 @@ static void UR_DialogInitStore_f (void)
 	/* Clear UFObases. */
 	memset(ufoRecovery.UFObases, 0, sizeof(ufoRecovery.UFObases));
 
-	recoveryBaseSelectPopup[0] = '\0';
 	/* Check how many bases can store this UFO. */
 	for (i = 0; i < MAX_BASES; i++) {
 		base_t *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
 		if (UR_ConditionsForStoring(base, ufocraft)) {
-			Q_strcat(recoveryBaseSelectPopup, base->name, sizeof(recoveryBaseSelectPopup));
-			Q_strcat(recoveryBaseSelectPopup, "\n", sizeof(recoveryBaseSelectPopup));
+			LIST_AddString(&recoveryBaseSelectPopup, base->name);
 			ufoRecovery.UFObases[ufoRecovery.baseHasUFOHangarCount++] = base;
 		} else {
 			int baseCapacity = UR_GetBaseCapacityForUfotype(base, ufocraft);
@@ -300,14 +298,14 @@ static void UR_DialogInitStore_f (void)
 	for (i = 0; i < ufoRecovery.replaceCount; i++)
 	{
 		ufoRecoveryStorage_t store = ufoRecovery.replaceUFOs[i];
-		Q_strcat(recoveryBaseSelectPopup, va(_("Replace %s at %s (%i stored available)\n"), _(store.ufoItem->name), store.base->name, store.base->storage.num[store.ufoItem->idx] ), sizeof(recoveryBaseSelectPopup));
+		LIST_AddString(&recoveryBaseSelectPopup, va(_("Replace %s at %s (%i stored available)\n"), _(store.ufoItem->name), store.base->name, store.base->storage.num[store.ufoItem->idx] ));
 	}
 
 	/* If only one base with UFO hangars, the recovery will be done in this base. */
 	switch (ufoRecovery.baseHasUFOHangarCount + ufoRecovery.replaceCount) {
 	case 0:
 		/* No UFO base with proper conditions, show a hint and disable list. */
-		Q_strcat(recoveryBaseSelectPopup, _("No ufo hangar or ufo yard available."), sizeof(recoveryBaseSelectPopup));
+		LIST_AddString(&recoveryBaseSelectPopup, _("No ufo hangar or ufo yard available."));
 		MN_ExecuteConfunc("cp_basesel_disable");
 		break;
 	case 1:
@@ -329,7 +327,7 @@ static void UR_DialogInitStore_f (void)
 		break;
 	}
 	Cvar_Set("mn_uforecovery_actualufo",UFO_MissionResultToString());
-	MN_RegisterText(TEXT_UFORECOVERY_BASESTORAGE, recoveryBaseSelectPopup);
+	MN_RegisterLinkedListText(TEXT_UFORECOVERY_BASESTORAGE, recoveryBaseSelectPopup);
 }
 
 /**
@@ -393,7 +391,7 @@ static void UR_DialogStartStore_f (void)
  */
 static void UR_DialogStartReplace_f (void)
 {
-	static char replacetext[MAX_SMALLMENUTEXTLEN];
+	linkedList_t *replacetext = NULL;
 	ufoRecoveryStorage_t *storage = ufoRecovery.selectedStorage;
 	if (!storage)
 		return;
@@ -421,8 +419,8 @@ static void UR_DialogStartReplace_f (void)
 	UR_DialogInitSell(storage->ufoTemplate);
 	/* update other menu texts */
 	Cvar_Set("mn_uforecovery_actualufo",va(_("previously recovered %s from base %s"),UFO_TypeToName(storage->ufoTemplate->type), storage->base->name));
-	Com_sprintf(replacetext, sizeof(replacetext), _("Storage process for captured %s ongoing."), UFO_TypeToName(ufoRecovery.ufoType));
-	MN_RegisterText(TEXT_UFORECOVERY_BASESTORAGE,replacetext);
+	LIST_AddString(&replacetext, va(_("Storage process for captured %s ongoing."), UFO_TypeToName(ufoRecovery.ufoType)));
+	MN_RegisterLinkedListText(TEXT_UFORECOVERY_BASESTORAGE, replacetext);
 	/* start storage process for recovered ufo */
 	UR_DialogStartStore(qfalse);
 }
