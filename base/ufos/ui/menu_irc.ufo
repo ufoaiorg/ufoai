@@ -55,14 +55,13 @@ window irc
 		font		f_small
 	}
 
-	text irc_userlist
+	textlist irc_userlist
 	{
 		pos			"750 100"
 		size		"240 594"
 		lineheight	22
-		dataid		TEXT_LIST
+		dataid		TEXT_IRCUSERS
 		rows		"27"
-		mousefx		true
 		onClick		{ cmd "irc_userlist_click <lineselected>" }
 		onRClick	{ cmd "irc_userlist_rclick <lineselected>" }
 		onViewChange {

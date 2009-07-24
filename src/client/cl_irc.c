@@ -65,7 +65,6 @@ static irc_channel_t ircChan;
 static irc_channel_t *chan;
 
 static char irc_buffer[4096];
-static char irc_names_buffer[1024];
 
 static void Irc_Logic_RemoveChannelName(irc_channel_t *channel, const char *nick);
 static void Irc_Logic_AddChannelName(irc_channel_t *channel, irc_nick_prefix_t prefix, const char *nick);
@@ -1554,7 +1553,7 @@ static void Irc_Client_Names_f (void)
 
 	irc_user_t* user;
 	if (chan) {
-		irc_names_buffer[0] = '\0';
+		linkedList_t *irc_names_buffer = NULL;
 		user = chan->user;
 		for (i = 0; i < chan->users; i++) {
 			if (i >= IRC_MAX_USERLIST)
@@ -1565,8 +1564,9 @@ static void Irc_Client_Names_f (void)
 		if (i > 0) {
 			qsort((void *)irc_userListOrdered, i, MAX_VAR, Q_StringSort);
 			while (i--)
-				Q_strcat(irc_names_buffer, va("%s\n", irc_userListOrdered[i]), sizeof(irc_names_buffer));
+				LIST_AddString(&irc_names_buffer, irc_userListOrdered[i]);
 		}
+		MN_RegisterLinkedListText(TEXT_IRCUSERS, irc_names_buffer);
 	} else
 		Com_Printf("Not joined\n");
 }
@@ -1632,7 +1632,7 @@ static void Irc_UserClick_f (void)
 	if (Cmd_Argc() != 2)
 		return;
 
-	if (!chan || irc_names_buffer[0] == '\0')
+	if (!chan)
 		return;
 
 	num = atoi(Cmd_Argv(1));
@@ -1658,7 +1658,7 @@ static void Irc_UserRightClick_f (void)
 	if (Cmd_Argc() != 2)
 		return;
 
-	if (!chan || irc_names_buffer[0] == '\0')
+	if (!chan)
 		return;
 
 	num = atoi(Cmd_Argv(1));
@@ -1730,7 +1730,6 @@ void Irc_Input_Activate (void)
 	/* in case of a failure we need this in MN_PopMenu */
 	if (irc_connected && irc_defaultChannel->string[0] != '\0') {
 		MN_RegisterText(TEXT_STANDARD, irc_buffer);
-		MN_RegisterText(TEXT_LIST, irc_names_buffer);
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
 		MN_PopMenu(qfalse);
@@ -1748,5 +1747,5 @@ void Irc_Input_Deactivate (void)
 	irc_send_buffer->modified = qfalse;
 
 	MN_ResetData(TEXT_STANDARD);
-	MN_ResetData(TEXT_LIST);
+	MN_ResetData(TEXT_IRCUSERS);
 }
