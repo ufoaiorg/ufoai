@@ -71,6 +71,7 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int iconPadding = 0;
 	int iconStatus = 0;
+	const char *font = MN_GetFontFromNode(node);
 
 	if (!node->onClick || node->disabled) {
 		/** @todo need custom color when button is disabled */
@@ -110,7 +111,7 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 	if (text != NULL && *text != '\0') {
 		R_Color(textColor);
 		text = _(text);
-		MN_DrawStringInBox(node, node->textalign,
+		MN_DrawStringInBox(font, node->textalign,
 			pos[0] + node->padding + iconPadding, pos[1] + node->padding,
 			node->size[0] - node->padding - node->padding - iconPadding, node->size[1] - node->padding - node->padding,
 			text, LONGLINES_PRETTYCHOP);

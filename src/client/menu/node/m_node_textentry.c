@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_main.h"
 #include "../m_nodes.h"
+#include "../m_font.h"
 #include "../m_parse.h"
 #include "../m_input.h"
 #include "../m_actions.h"
@@ -243,6 +244,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 	const char *image;
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
+	const char *font = MN_GetFontFromNode(node);
 
 	if (node->disabled) {
 		/** @todo need custom color when node is disabled */
@@ -298,7 +300,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 
 		if (*text != '\0') {
 			R_Color(textColor);
-			MN_DrawStringInBox(node, node->textalign,
+			MN_DrawStringInBox(font, node->textalign,
 				pos[0] + node->padding, pos[1] + node->padding,
 				node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
 				text, LONGLINES_PRETTYCHOP);

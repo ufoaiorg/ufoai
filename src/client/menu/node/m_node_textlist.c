@@ -112,6 +112,8 @@ static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
 	currentY = pos[1];
 	maxHeight = currentY + node->size[1] - node->padding - node->padding - node->padding - lineHeight;
 	while (list) {
+		const int width = node->size[0] - node->padding - node->padding;
+		const char* text = (const char*) list->data;
 		if (currentY > maxHeight)
 			break;
 
@@ -129,9 +131,7 @@ static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
 				R_Color(colorHover);
 		}
 
-		MN_DrawString(font, ALIGN_UL, pos[0], currentY,
-			pos[0], currentY, node->size[0] - node->padding - node->padding, node->size[1],
-			0, (const char*)list->data, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+		MN_DrawStringInBox(font, node->textalign, pos[0], currentY, width, lineHeight, text, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
 		currentY += lineHeight;
@@ -224,6 +224,14 @@ static void MN_TextListNodeMouseWheel (menuNode_t *node, qboolean down, int x, i
 		MN_ExecuteEventActions(node, node->onWheel);
 }
 
+static void MN_TextListNodeLoading (menuNode_t *node)
+{
+	EXTRADATA(node).textLineSelected = -1; /**< Invalid/no line selected per default. */
+	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
+	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
+	node->textalign = ALIGN_CL;	/**< left center of each cells */
+}
+
 void MN_RegisterTextListNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "textlist";
@@ -233,4 +241,5 @@ void MN_RegisterTextListNode (nodeBehaviour_t *behaviour)
 	behaviour->rightClick = MN_TextListNodeRightClick;
 	behaviour->mouseWheel = MN_TextListNodeMouseWheel;
 	behaviour->mouseMove = MN_TextListNodeMouseMove;
+	behaviour->loading = MN_TextListNodeLoading;
 }

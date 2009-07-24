@@ -263,9 +263,8 @@ void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
  * @todo test the code for multiline?
  * @todo fix problem with truncation (maybe problem into MN_DrawString)
  */
-int MN_DrawStringInBox (const menuNode_t *node, int align, int x, int y, int width, int height, const char *text, longlines_t method)
+int MN_DrawStringInBox (const char *fontID, int align, int x, int y, int width, int height, const char *text, longlines_t method)
 {
-	const char *font = MN_GetFontFromNode(node);
 	const int horizontalAlign = align % 3; /* left, center, right */
 	const int verticalAlign = align / 3;  /* top, center, bottom */
 
@@ -273,7 +272,7 @@ int MN_DrawStringInBox (const menuNode_t *node, int align, int x, int y, int wid
 	const int xx = x + ((width * horizontalAlign) >> 1);
 	const int yy = y + ((height * verticalAlign) >> 1);
 
-	return MN_DrawString(font, align, xx, yy, xx, yy, width, height,
+	return MN_DrawString(fontID, align, xx, yy, xx, yy, width, height,
 		0, text, 0, 0, NULL, qfalse, method);
 }
 
