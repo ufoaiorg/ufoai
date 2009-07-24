@@ -215,14 +215,13 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 static void PR_UpdateProductionList (const base_t* base)
 {
 	int i, j, counter;
-	static char productionList[1024];
-	static char productionQueued[256];
-	static char productionAmount[256];
+	linkedList_t *productionList = NULL;
+	linkedList_t *productionQueued = NULL;
+	linkedList_t *productionAmount = NULL;
 	const production_queue_t *queue;
 
 	assert(base);
 
-	productionAmount[0] = productionList[0] = productionQueued[0] = '\0';
 	queue = &ccs.productions[base->idx];
 
 	/* First add all the queue items ... */
@@ -230,28 +229,28 @@ static void PR_UpdateProductionList (const base_t* base)
 		const production_t *prod = &queue->items[i];
 		if (!prod->aircraft) {
 			const objDef_t *od = prod->item;
-			Q_strcat(productionList, va("%s\n", _(od->name)), sizeof(productionList));
-			Q_strcat(productionAmount, va("%i\n", base->storage.num[prod->item->idx]), sizeof(productionAmount));
-			Q_strcat(productionQueued, va("%i\n", prod->amount), sizeof(productionQueued));
+			LIST_AddString(&productionList, va("%s", _(od->name)));
+			LIST_AddString(&productionAmount, va("%i", base->storage.num[prod->item->idx]));
+			LIST_AddString(&productionQueued, va("%i", prod->amount));
 		} else {
 			const aircraft_t *aircraftTemplate = prod->aircraft;
-			Q_strcat(productionList, va("%s\n", _(aircraftTemplate->name)), sizeof(productionList));
+			LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
 			for (j = 0, counter = 0; j < ccs.numAircraft; j++) {
 				const aircraft_t *aircraftBase = AIR_AircraftGetFromIDX(j);
 				assert(aircraftBase);
 				if (aircraftBase->homebase == base && aircraftBase->tpl == aircraftTemplate)
 					counter++;
 			}
-			Q_strcat(productionAmount, va("%i\n", counter), sizeof(productionAmount));
-			Q_strcat(productionQueued, va("%i\n", prod->amount), sizeof(productionQueued));
+			LIST_AddString(&productionAmount, va("%i", counter));
+			LIST_AddString(&productionQueued, va("%i", prod->amount));
 		}
 	}
 
 	/* Then spacers ... */
 	for (i = 0; i < QUEUE_SPACERS; i++) {
-		Q_strcat(productionList, "\n", sizeof(productionList));
-		Q_strcat(productionAmount, "\n", sizeof(productionAmount));
-		Q_strcat(productionQueued, "\n", sizeof(productionQueued));
+		LIST_AddString(&productionList, "");
+		LIST_AddString(&productionAmount, "");
+		LIST_AddString(&productionQueued, "");
 	}
 
 	LIST_Delete(&productionItemList);
@@ -266,9 +265,9 @@ static void PR_UpdateProductionList (const base_t* base)
 			if (PR_ConditionsDisassembly(base, comp)) {
 				LIST_AddPointer(&productionItemList, comp);
 
-				Q_strcat(productionList, va("%s\n", _(asOd->name)), sizeof(productionList));
-				Q_strcat(productionAmount, va("%i\n", base->storage.num[asOd->idx]), sizeof(productionAmount));
-				Q_strcat(productionQueued, "\n", sizeof(productionQueued));
+				LIST_AddString(&productionList, va("%s", _(asOd->name)));
+				LIST_AddString(&productionAmount, va("%i", base->storage.num[asOd->idx]));
+				LIST_AddString(&productionQueued, "");
 			}
 		}
 	} else if (produceCategory == FILTER_AIRCRAFT) {
@@ -288,15 +287,15 @@ static void PR_UpdateProductionList (const base_t* base)
 			if (aircraftTemplate->tech->produceTime > 0 && RS_IsResearched_ptr(aircraftTemplate->tech)) {
 				LIST_AddPointer(&productionItemList, aircraftTemplate);
 
-				Q_strcat(productionList, va("%s\n", _(aircraftTemplate->name)), sizeof(productionList));
+				LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
 				for (j = 0, counter = 0; j < ccs.numAircraft; j++) {
 					const aircraft_t *aircraftBase = AIR_AircraftGetFromIDX(j);
 					assert(aircraftBase);
 					if (aircraftBase->homebase == base && aircraftBase->tpl == aircraftTemplate)
 						counter++;
 				}
-				Q_strcat(productionAmount, va("%i\n", counter), sizeof(productionAmount));
-				Q_strcat(productionQueued, "\n", sizeof(productionQueued));
+				LIST_AddString(&productionAmount, va("%i", counter));
+				LIST_AddString(&productionQueued, "");
 			}
 		}
 	} else {
@@ -309,19 +308,19 @@ static void PR_UpdateProductionList (const base_t* base)
 			 && INV_ItemMatchesFilter(od, produceCategory)) {
 				LIST_AddPointer(&productionItemList, od);
 
-				Q_strcat(productionList, va("%s\n", _(od->name)), sizeof(productionList));
-				Q_strcat(productionAmount, va("%i\n", base->storage.num[i]), sizeof(productionAmount));
-				Q_strcat(productionQueued, "\n", sizeof(productionQueued));
+				LIST_AddString(&productionList, va("%s", _(od->name)));
+				LIST_AddString(&productionAmount, va("%i", base->storage.num[i]));
+				LIST_AddString(&productionQueued, "");
 			}
 		}
 	}
 
 	/* bind the menu text to our static char array */
-	MN_RegisterText(TEXT_PRODUCTION_LIST, productionList);
+	MN_RegisterLinkedListText(TEXT_PRODUCTION_LIST, productionList);
 	/* bind the amount of available items */
-	MN_RegisterText(TEXT_PRODUCTION_AMOUNT, productionAmount);
+	MN_RegisterLinkedListText(TEXT_PRODUCTION_AMOUNT, productionAmount);
 	/* bind the amount of queued items */
-	MN_RegisterText(TEXT_PRODUCTION_QUEUED, productionQueued);
+	MN_RegisterLinkedListText(TEXT_PRODUCTION_QUEUED, productionQueued);
 }
 
 /**

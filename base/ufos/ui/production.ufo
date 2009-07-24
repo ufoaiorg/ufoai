@@ -265,7 +265,7 @@ window production
 	// list
 	// ==================
 
-	text prodlist
+	textlist prodlist
 	{
 		dataid		TEXT_PRODUCTION_LIST
 		color		"0 .78 0 1"
@@ -273,7 +273,6 @@ window production
 		lineheight	"25"
 		pos			"55 180"
 		size		"265 550"
-		mousefx		true
 		longlines	prettychop
 		onClick		{
 			*node:(text)root.prodlist_amount@lineselected <node:this@lineselected>
@@ -292,11 +291,11 @@ window production
 		}
 	}
 
-	text prodlist_amount
+	textlist prodlist_amount
 	{
 		dataid		TEXT_PRODUCTION_AMOUNT
 		color		"0 .78 0 1"
-		textalign	ur
+		textalign	cr
 		pos			"330 180"
 		rows		"22"
 		size		"40 550"
@@ -313,7 +312,7 @@ window production
 		}
 	}
 
-	text prodlist_queued
+	textlist prodlist_queued
 	{
 		dataid		TEXT_PRODUCTION_QUEUED
 		pos			"465 180"
@@ -321,7 +320,6 @@ window production
 		color		"0 .78 0 1"
 		lineheight	"25"
 		rows		"22"
-		mousefx		true
 		onClick		{
 			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
 			*node:(text)root.prodlist_amount@lineselected = <node:this@lineselected>
