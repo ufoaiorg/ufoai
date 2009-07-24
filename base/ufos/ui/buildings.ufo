@@ -202,11 +202,11 @@ window popup_buildingpreview
 		font		f_small
 	}
 
+	/* text using tabbed text */
 	text buildinginfo
 	{
 		pos			"30 100"
 		size		"300 80"
-		mousefx	 	false
 		lineheight	20
 		tabwidth	140
 		dataid		TEXT_BUILDING_INFO
