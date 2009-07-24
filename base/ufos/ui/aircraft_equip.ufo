@@ -191,14 +191,13 @@ window aircraft_equip extends iaircraft
 		}
 	}
 
-	text airequip_list
+	textlist airequip_list
 	{
 		dataid		TEXT_LIST
 		pos			"42 606"
 		size		"248 140"
 		lineheight	"20"
 		rows		"7"
-		mousefx		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		onClick		{ cmd "airequip_list_click <lineselected>" }
