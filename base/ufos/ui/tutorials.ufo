@@ -32,14 +32,13 @@ window tutorials
 		string	"_Back"
 	}
 
-	text tutoriallist
+	textlist tutoriallist
 	{
 		dataid		TEXT_LIST
 		pos			"640 220"
 		size		"240 280"
 		lineheight	"20"
 		rows		"14"
-		mousefx		true
 		onClick		{ cmd "tutoriallist_click <lineselected>" }
 		onViewChange	{
 			*(abstractscrollbar)tutoriallist_scroll@fullsize <lines>

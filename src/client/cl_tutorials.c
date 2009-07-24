@@ -36,19 +36,16 @@ typedef struct tutorial_s {
 static tutorial_t tutorials[MAX_TUTORIALS];
 static int numTutorials;
 
-#define MAX_TUTORIALLIST 512
-static char tutorialList[MAX_TUTORIALLIST];
-
 static void TUT_GetTutorials_f (void)
 {
 	int i;
+	linkedList_t *tutorialList = NULL;
 
-	MN_RegisterText(TEXT_LIST, tutorialList);
-	tutorialList[0] = 0;
 	for (i = 0; i < numTutorials; i++) {
 		const tutorial_t *t = &tutorials[i];
-		Q_strcat(tutorialList, va("%s\n", _(t->name)), sizeof(tutorialList));
+		LIST_AddString(&tutorialList, va("%s", _(t->name)));
 	}
+	MN_RegisterLinkedListText(TEXT_LIST, tutorialList);
 }
 
 static void TUT_List_f (void)
