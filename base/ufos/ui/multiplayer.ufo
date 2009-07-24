@@ -317,6 +317,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		// ====================
 
 		// servers_click is CL_ServerListClick_f in cl_main.c
+		/* textlist using tabbed text */
 		text servers
 		{
 			pos			"65 40"

@@ -205,7 +205,7 @@ window material_editor {
 			pos		"280 75"
 			size	"180 130"
 		}
-		text stages {
+		textlist stages {
 			dataid		TEXT_MATERIAL_STAGES
 			pos			"0 0"
 			size		"160 90"
@@ -214,7 +214,6 @@ window material_editor {
 			color		"0.6 0.6 0.6 1"
 			font		"f_verysmall"
 			lineheight	15
-			mousefx		true
 			rows		6
 			onClick		{
 				*cvar:me_stage_id <lineselected>

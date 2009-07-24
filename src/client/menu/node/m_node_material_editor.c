@@ -45,8 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @todo Replace magic number 64 by some script definition */
 #define IMAGE_WIDTH 64
 
-static char materialStagesList[512];
-
 typedef struct materialDescription_s {
 	const char *name;
 	const int stageFlag;
@@ -267,6 +265,7 @@ static void MN_MaterialEditorStagesToName (const materialStage_t *stage, char *b
 static void MN_MaterialEditorUpdate (image_t *image, materialStage_t *materialStage)
 {
 	int i;
+	linkedList_t *materialStagesList = NULL;
 
 	if (image->normalmap == NULL)
 		MN_ExecuteConfunc("hideshaders true 0 0 0 0");
@@ -278,8 +277,6 @@ static void MN_MaterialEditorUpdate (image_t *image, materialStage_t *materialSt
 		Cvar_Set("me_imagename", image->name);
 	else
 		Cvar_Set("me_imagename", va("%s (nm)", image->name));
-
-	materialStagesList[0] = '\0';
 
 	if (!image->material.num_stages) {
 		MN_ExecuteConfunc("hidestages true");
@@ -303,10 +300,10 @@ static void MN_MaterialEditorUpdate (image_t *image, materialStage_t *materialSt
 						stage->scale.s, stage->scale.t);
 			}
 			MN_MaterialEditorStagesToName(stage, stageName, sizeof(stageName) - 1);
-			Q_strcat(materialStagesList, va("%s\n", stageName), sizeof(materialStagesList));
+			LIST_AddString(&materialStagesList, stageName);
 		}
 	}
-	MN_RegisterText(TEXT_MATERIAL_STAGES, materialStagesList);
+	MN_RegisterLinkedListText(TEXT_MATERIAL_STAGES, materialStagesList);
 }
 
 /**

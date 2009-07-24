@@ -135,6 +135,8 @@ window stats
 		textalign	uc
 		font		f_small
 	}
+	
+	/* textlist using tabbed text */
 	text nation_stats
 	{
 		tooltip		"_Click for funding graphs"
