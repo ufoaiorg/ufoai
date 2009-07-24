@@ -119,7 +119,7 @@ window market
 		image	ui/panel_grey_green_large2
 	}
 
-	text market
+	textlist market
 	{
 		dataid		TEXT_MARKET_NAMES
 		color		"0 .78 0 1"
@@ -127,17 +127,15 @@ window market
 		lineheight	"25"
 		pos			"55 180"
 		size		"265 550"
-		mousefx		true
-		longlines	prettychop
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
 
-	text market_storage
+	textlist market_storage
 	{
 		dataid		TEXT_MARKET_STORAGE
 		color		"0 .78 0 1"
-		textalign	ur
+		textalign	cr
 		pos			"330 180"
 		rows		"22"
 		size		"40 550"
@@ -146,11 +144,11 @@ window market
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
 
-	text market_market
+	textlist market_market
 	{
 		dataid		TEXT_MARKET_MARKET
 		color		"0 .78 0 1"
-		textalign	ur
+		textalign	cr
 		pos			"406 180"
 		rows		"22"
 		size		"40 550"
@@ -159,11 +157,11 @@ window market
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
 
-	text market_prices
+	textlist market_prices
 	{
 		dataid		TEXT_MARKET_PRICES
 		color		"0 .78 0 1"
-		textalign	ur
+		textalign	cr
 		rows		"22"
 		size		"80 550"
 		lineheight	"25"

@@ -526,6 +526,7 @@ window mailclient
 		texh		"852 56"
 	}
 
+	/* tabbed and bolded textlist */
 	text mailclient
 	{
 		dataid		TEXT_UFOPEDIA_MAIL

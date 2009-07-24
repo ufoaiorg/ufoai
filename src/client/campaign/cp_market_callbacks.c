@@ -253,10 +253,10 @@ static void BS_MarketClick_f (void)
 }
 
 /** @brief Market text nodes buffers */
-static char bsMarketNames[1024];
-static char bsMarketStorage[256];
-static char bsMarketMarket[256];
-static char bsMarketPrices[256];
+static linkedList_t *bsMarketNames;
+static linkedList_t *bsMarketStorage;
+static linkedList_t *bsMarketMarket;
+static linkedList_t *bsMarketPrices;
 
 /**
  * @brief Appends a new entry to the market buffers
@@ -265,23 +265,11 @@ static char bsMarketPrices[256];
  */
 static void BS_AddToList (const char *name, int storage, int market, int price)
 {
-	char shortString[36];
-
-	/* MAX_MARKET_MENU_ENTRIES items in the list (of length 1024) */
-	Q_strcat(bsMarketNames, _(name), sizeof(bsMarketNames));
-	Q_strcat(bsMarketNames, "\n", sizeof(bsMarketNames));
-
-	Com_sprintf(shortString, sizeof(shortString), "%i\n", storage);
-	Q_strcat(bsMarketStorage, shortString, sizeof(bsMarketStorage));
-
-	Com_sprintf(shortString, sizeof(shortString), "%i\n", market);
-	Q_strcat(bsMarketMarket, shortString, sizeof(bsMarketMarket));
-
-	Com_sprintf(shortString, sizeof(shortString), _("%i c\n"), price);
-	Q_strcat(bsMarketPrices, shortString, sizeof(bsMarketPrices));
+	LIST_AddString(&bsMarketNames, _(name));
+	LIST_AddString(&bsMarketStorage, va("%i", storage));
+	LIST_AddString(&bsMarketMarket, va("%i", market));
+	LIST_AddString(&bsMarketPrices, va(_("%i c"), price));
 }
-
-
 
 /**
  * @brief Updates the Buy/Sell menu list.
@@ -298,12 +286,11 @@ static void BS_BuyType (const base_t *base)
 
 	CL_UpdateCredits(ccs.credits);
 
-	*bsMarketNames = *bsMarketStorage = *bsMarketMarket = *bsMarketPrices = '\0';
+	bsMarketNames = NULL;
+	bsMarketStorage = NULL;
+	bsMarketMarket = NULL;
+	bsMarketPrices = NULL;
 	MN_ResetData(TEXT_STANDARD);
-	MN_RegisterText(TEXT_MARKET_NAMES, bsMarketNames);
-	MN_RegisterText(TEXT_MARKET_STORAGE, bsMarketStorage);
-	MN_RegisterText(TEXT_MARKET_MARKET, bsMarketMarket);
-	MN_RegisterText(TEXT_MARKET_PRICES, bsMarketPrices);
 
 	/* 'normal' items */
 	switch (buyCat) {
@@ -507,6 +494,11 @@ static void BS_BuyType (const base_t *base)
 		/* reset description */
 		INV_ItemDescription(NULL);
 	}
+
+	MN_RegisterLinkedListText(TEXT_MARKET_NAMES, bsMarketNames);
+	MN_RegisterLinkedListText(TEXT_MARKET_STORAGE, bsMarketStorage);
+	MN_RegisterLinkedListText(TEXT_MARKET_MARKET, bsMarketMarket);
+	MN_RegisterLinkedListText(TEXT_MARKET_PRICES, bsMarketPrices);
 }
 
 /**
