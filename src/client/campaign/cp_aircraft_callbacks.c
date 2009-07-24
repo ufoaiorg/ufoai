@@ -287,22 +287,19 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
  */
 static void AIR_AircraftUpdateList_f (void)
 {
-	static char buffer[1024];
+	linkedList_t *list = NULL;
 	int i;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
 
-	buffer[0] = '\0';
-
 	for (i = 0; i < base->numAircraftInBase; i++) {
 		const aircraft_t * aircraft = &base->aircraft[i];
-		Q_strcat(buffer, _(aircraft->name), sizeof(buffer));
-		Q_strcat(buffer, "\n", sizeof(buffer));
+		LIST_AddString(&list, _(aircraft->name));
 	}
 
-	MN_RegisterText(TEXT_AIRCRAFT_LIST, buffer);
+	MN_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
 }
 
 void AIR_InitCallbacks (void)

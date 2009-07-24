@@ -1725,6 +1725,7 @@ window popup_intercept
 			size		"150 20"
 		}
 
+		/* tabbed and bolded textlist */
 		text ships
 		{
 			dataid		TEXT_AIRCRAFT_LIST
@@ -1879,6 +1880,7 @@ window popup_mission
 		size		"150 25"
 	}
 
+	/* tabbed and bolded textlist */
 	text ships
 	{
 		dataid		TEXT_AIRCRAFT_LIST

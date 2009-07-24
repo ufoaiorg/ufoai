@@ -130,7 +130,7 @@ window iaircraft
 	// aircraft list
 	// ==================
 
-	text aircraft_list
+	textlist aircraft_list
 	{
 		pos			"51 153"
 		size		"350 220"
@@ -139,8 +139,6 @@ window iaircraft
 		dataid		TEXT_AIRCRAFT_LIST
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		mousefx		true
-		longlines	prettychop
 		onViewChange {
 			*(abstractscrollbar)aircraft_list_scroll@fullsize <lines>
 			*(abstractscrollbar)aircraft_list_scroll@viewsize <viewsize>
