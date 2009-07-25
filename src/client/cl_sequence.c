@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_DATA_LENGTH 2048
 
 typedef struct seqCmd_s {
-	int (*handler) (const char *name, char *data);
+	int (*handler) (const char *name, const char *data);
 	char name[MAX_VAR];
 	char data[MAX_DATA_LENGTH];
 } seqCmd_t;
@@ -112,16 +112,16 @@ typedef struct seq2D_s {
 	qboolean relativePos;	/**< useful for translations when sentence length may differ */
 } seq2D_t;
 
-static int SEQ_Click(const char *name, char *data);
-static int SEQ_Wait(const char *name, char *data);
-static int SEQ_Precache(const char *name, char *data);
-static int SEQ_Camera(const char *name, char *data);
-static int SEQ_Model(const char *name, char *data);
-static int SEQ_2Dobj(const char *name, char *data);
-static int SEQ_Remove(const char *name, char *data);
-static int SEQ_Command(const char *name, char *data);
+static int SEQ_Click(const char *name, const char *data);
+static int SEQ_Wait(const char *name, const char *data);
+static int SEQ_Precache(const char *name, const char *data);
+static int SEQ_Camera(const char *name, const char *data);
+static int SEQ_Model(const char *name, const char *data);
+static int SEQ_2Dobj(const char *name, const char *data);
+static int SEQ_Remove(const char *name, const char *data);
+static int SEQ_Command(const char *name, const char *data);
 
-static int (*seqCmdFunc[SEQ_NUMCMDS]) (const char *name, char *data) = {
+static int (*seqCmdFunc[SEQ_NUMCMDS]) (const char *name, const char *data) = {
 	NULL,
 	SEQ_Wait,
 	SEQ_Click,
@@ -502,7 +502,7 @@ static const value_t seq2D_vals[] = {
  * @return 0 if you wait for the click
  * @return 1 if the click occured
  */
-static int SEQ_Click (const char *name, char *data)
+static int SEQ_Click (const char *name, const char *data)
 {
 	/* if a CL_SequenceClick_f event was called */
 	if (seqEndClickLoop) {
@@ -521,7 +521,7 @@ static int SEQ_Click (const char *name, char *data)
  * @brief Increase the sequence time
  * @return 1 - increase the command position of the sequence by one
  */
-static int SEQ_Wait (const char *name, char *data)
+static int SEQ_Wait (const char *name, const char *data)
 {
 	seqTime += 1000 * atof(name);
 	return 1;
@@ -533,7 +533,7 @@ static int SEQ_Wait (const char *name, char *data)
  * @sa R_RegisterModelShort
  * @sa R_RegisterImage
  */
-static int SEQ_Precache (const char *name, char *data)
+static int SEQ_Precache (const char *name, const char *data)
 {
 	if (!strcmp(name, "models")) {
 		while (*data) {
@@ -555,12 +555,11 @@ static int SEQ_Precache (const char *name, char *data)
 /**
  * @brief Parse the values for the camera like given in seqCamera
  */
-static int SEQ_Camera (const char *name, char *data)
+static int SEQ_Camera (const char *name, const char *data)
 {
-	const value_t *vp;
-
 	/* get values */
 	while (*data) {
+		const value_t *vp;
 		for (vp = seqCamera_vals; vp->string; vp++)
 			if (!strcmp(data, vp->string)) {
 				data += strlen(data) + 1;
@@ -581,15 +580,12 @@ static int SEQ_Camera (const char *name, char *data)
  * @sa seqEnt_vals
  * @sa CL_SequenceFindEnt
  */
-static int SEQ_Model (const char *name, char *data)
+static int SEQ_Model (const char *name, const char *data)
 {
-	seqEnt_t *se;
-	const value_t *vp;
-	int i;
-
 	/* get sequence entity */
-	se = CL_SequenceFindEnt(name);
+	seqEnt_t *se = CL_SequenceFindEnt(name);
 	if (!se) {
+		int i;
 		/* create new sequence entity */
 		for (i = 0, se = seqEnts; i < numSeqEnts; i++, se++)
 			if (!se->inuse)
@@ -608,6 +604,7 @@ static int SEQ_Model (const char *name, char *data)
 
 	/* get values */
 	while (*data) {
+		const value_t *vp;
 		for (vp = seqEnt_vals; vp->string; vp++)
 			if (!strcmp(data, vp->string)) {
 				data += strlen(data) + 1;
@@ -638,7 +635,7 @@ static int SEQ_Model (const char *name, char *data)
  * @sa seq2D_vals
  * @sa CL_SequenceFind2D
  */
-static int SEQ_2Dobj (const char *name, char *data)
+static int SEQ_2Dobj (const char *name, const char *data)
 {
 	seq2D_t *s2d;
 	const value_t *vp;
@@ -697,7 +694,7 @@ static int SEQ_2Dobj (const char *name, char *data)
  * @sa CL_SequenceFind2D
  * @sa CL_SequenceFindEnt
  */
-static int SEQ_Remove (const char *name, char *data)
+static int SEQ_Remove (const char *name, const char *data)
 {
 	seqEnt_t *se;
 	seq2D_t *s2d;
@@ -726,7 +723,7 @@ static int SEQ_Remove (const char *name, char *data)
  * @return 1 - increase the command position of the sequence by one
  * @sa Cbuf_AddText
  */
-static int SEQ_Command (const char *name, char *data)
+static int SEQ_Command (const char *name, const char *data)
 {
 	/* add the command */
 	Cbuf_AddText(name);
