@@ -1810,7 +1810,7 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping down into lower cell.\n");
 			nz--;
 		} else {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up into higher cell.\n");
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up or down.\n");
 		}
 		heightChange = RT_FLOOR(map, actorSize, nx, ny, nz) - RT_FLOOR(map, actorSize, x, y, z) + (nz - z) * CELL_HEIGHT;
 
@@ -1826,9 +1826,9 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
 		 * The actor enters the cell.
 		 * The actor will be forced to fall (dir 13) from the destination cell to the cell below. */
 		if (RT_FLOOR(map, actorSize, nx, ny, nz) < 0) {
-			/* We cannot fall if STEPDOWN is not defined. */
-			if (!(stepup & PATHFINDING_BIG_STEPDOWN)) {
-				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: There is no stepdown from here.\n");
+			/* We cannot fall if STEPDOWN is defined. */
+			if (stepup & PATHFINDING_BIG_STEPDOWN) {
+				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: There is stepdown from here.\n");
 				return;
 			}
 			/* We cannot fall if there is an entity below the cell we want to move to. */
