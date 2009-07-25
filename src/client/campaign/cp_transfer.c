@@ -462,6 +462,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 {
 	linkedList_t *transferList = NULL;
 	linkedList_t *transferListAmount = NULL;
+	linkedList_t *transferListTransfered = NULL;
 	int numempl[MAX_EMPL], trempl[MAX_EMPL];
 	int i, j, cnt = 0;
 	char str[128];
@@ -469,6 +470,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	/* reset for every new call */
 	MN_ResetData(TEXT_TRANSFER_LIST);
 	MN_ResetData(TEXT_TRANSFER_LIST_AMOUNT);
+	MN_ResetData(TEXT_TRANSFER_LIST_TRANSFERED);
 
 	/* Reset and fill temp employees arrays. */
 	for (i = 0; i < MAX_EMPL; i++) {
@@ -485,9 +487,10 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			for (i = 0; i < csi.numODs; i++)
 				if (srcbase->storage.num[i]) {
 					if (td.trItemsTmp[i] > 0)
-						Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"), _(csi.ods[i].name), td.trItemsTmp[i]);
+						LIST_AddString(&transferListTransfered, va("%i", td.trItemsTmp[i]));
 					else
-						Com_sprintf(str, sizeof(str), _("%s"), _(csi.ods[i].name));
+						LIST_AddString(&transferListTransfered, "");
+					Com_sprintf(str, sizeof(str), _("%s"), _(csi.ods[i].name));
 					LIST_AddString(&transferList, str);
 					LIST_AddString(&transferListAmount, va("%i", srcbase->storage.num[i]));
 					cnt++;
@@ -495,13 +498,16 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			if (!cnt) {
 				LIST_AddString(&transferList, _("Storage is empty."));
 				LIST_AddString(&transferListAmount, "");
+				LIST_AddString(&transferListTransfered, "");
 			}
 		} else if (B_GetBuildingStatus(destbase, B_POWER)) {
 			LIST_AddString(&transferList, _("Transfer is not possible - the base doesn't have a Storage."));
 			LIST_AddString(&transferListAmount, "");
+			LIST_AddString(&transferListTransfered, "");
 		} else {
 			LIST_AddString(&transferList, _("Transfer is not possible - the base does not have power supplies."));
 			LIST_AddString(&transferListAmount, "");
+			LIST_AddString(&transferListTransfered, "");
 		}
 		break;
 	case TRANS_TYPE_EMPLOYEE:
@@ -522,6 +528,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 							Com_sprintf(str, sizeof(str), _("Pilot %s"), employee->chr.name);
 						LIST_AddString(&transferList, str);
 						LIST_AddString(&transferListAmount, "1");
+						LIST_AddString(&transferListTransfered, "");
 						cnt++;
 					}
 					numempl[emplType]++;
@@ -530,65 +537,66 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			for (i = 0; i < MAX_EMPL; i++) {
 				if (i == EMPL_SOLDIER || i == EMPL_PILOT)
 					continue;
-				if ((trempl[i] > 0) && (numempl[i] > 0)) {
-					LIST_AddString(&transferList, va(_("%s (%i for transfer)"), E_GetEmployeeString(i), trempl[i]));
-					LIST_AddString(&transferListAmount, va("%i", numempl[i]));
-					cnt++;
-				} else if (numempl[i] > 0) {
-					Com_sprintf(str, sizeof(str), _("%s"), E_GetEmployeeString(i), numempl[i]);
+				if (numempl[i] > 0) {
 					LIST_AddString(&transferList, E_GetEmployeeString(i));
 					LIST_AddString(&transferListAmount, va("%i", numempl[i]));
+					if (trempl[i] > 0)
+						LIST_AddString(&transferListTransfered, va("%i", trempl[i]));
+					else
+						LIST_AddString(&transferListTransfered, "");
 					cnt++;
 				}
 			}
 			if (!cnt) {
 				LIST_AddString(&transferList, _("Living Quarters empty."));
 				LIST_AddString(&transferListAmount, "");
+				LIST_AddString(&transferListTransfered, "");
 			}
 		} else {
 			LIST_AddString(&transferList, _("Transfer is not possible - the base doesn't have Living Quarters."));
 			LIST_AddString(&transferListAmount, "");
+			LIST_AddString(&transferListTransfered, "");
 		}
 		break;
 	case TRANS_TYPE_ALIEN:
 		if (B_GetBuildingStatus(destbase, B_ALIEN_CONTAINMENT)) {
 			for (i = 0; i < ccs.numAliensTD; i++) {
 				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amountDead > 0) {
-					if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
-						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), td.trAliensTmp[i][TRANS_ALIEN_DEAD]);
-						LIST_AddString(&transferList, str);
-						LIST_AddString(&transferListAmount, va("%i", srcbase->alienscont[i].amountDead));
-					} else {
-						Com_sprintf(str, sizeof(str), _("Corpse of %s"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
-						LIST_AddString(&transferList, str);
-						LIST_AddString(&transferListAmount, va("%i", srcbase->alienscont[i].amountDead));
-					}
+					Com_sprintf(str, sizeof(str), _("Corpse of %s"),
+					_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
+					LIST_AddString(&transferList, str);
+					LIST_AddString(&transferListAmount, va("%i", srcbase->alienscont[i].amountDead));
+					if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
+						LIST_AddString(&transferListTransfered, va("%i", td.trAliensTmp[i][TRANS_ALIEN_DEAD]));
+					else
+						LIST_AddString(&transferListTransfered, "");
 					cnt++;
 				}
 				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amountAlive > 0) {
-					if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
-						Com_sprintf(str, sizeof(str), _("Alive %s (%i for transfer)"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), td.trAliensTmp[i][TRANS_ALIEN_ALIVE]);
-					else
-						Com_sprintf(str, sizeof(str), _("Alive %s"),
+					Com_sprintf(str, sizeof(str), _("Alive %s"),
 						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
 					LIST_AddString(&transferList, str);
 					LIST_AddString(&transferListAmount, va("%i", srcbase->alienscont[i].amountAlive));
+					if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
+						LIST_AddString(&transferListTransfered, va("%i", td.trAliensTmp[i][TRANS_ALIEN_ALIVE]));
+					else
+						LIST_AddString(&transferListTransfered, "");
 					cnt++;
 				}
 			}
 			if (!cnt) {
 				LIST_AddString(&transferList, _("Alien Containment is empty."));
 				LIST_AddString(&transferListAmount, "");
+				LIST_AddString(&transferListTransfered, "");
 			}
 		} else if (B_GetBuildingStatus(destbase, B_POWER)) {
 			LIST_AddString(&transferList, _("Transfer is not possible - the base doesn't have an Alien Containment."));
 			LIST_AddString(&transferListAmount, "");
+			LIST_AddString(&transferListTransfered, "");
 		} else {
 			LIST_AddString(&transferList, _("Transfer is not possible - the base does not have power supplies."));
 			LIST_AddString(&transferListAmount, "");
+			LIST_AddString(&transferListTransfered, "");
 		}
 		break;
 	case TRANS_TYPE_AIRCRAFT:
@@ -600,6 +608,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 						Com_sprintf(str, sizeof(str), _("Aircraft %s"), _(aircraft->name));
 						LIST_AddString(&transferList, str);
 						LIST_AddString(&transferListAmount, "1");
+						LIST_AddString(&transferListTransfered, "");
 						cnt++;
 					}
 				}
@@ -607,10 +616,12 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			if (!cnt) {
 				LIST_AddString(&transferList, _("No aircraft available for transfer."));
 				LIST_AddString(&transferListAmount, "");
+				LIST_AddString(&transferListTransfered, "");
 			}
 		} else {
 			LIST_AddString(&transferList, _("Transfer is not possible - the base doesn't have a functional hangar."));
 			LIST_AddString(&transferListAmount, "");
+			LIST_AddString(&transferListTransfered, "");
 		}
 		break;
 	default:
@@ -624,6 +635,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	td.currentTransferType = transferType;
 	MN_RegisterLinkedListText(TEXT_TRANSFER_LIST, transferList);
 	MN_RegisterLinkedListText(TEXT_TRANSFER_LIST_AMOUNT, transferListAmount);
+	MN_RegisterLinkedListText(TEXT_TRANSFER_LIST_TRANSFERED, transferListTransfered);
 }
 
 /**

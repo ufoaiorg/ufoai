@@ -238,6 +238,21 @@ window transfer
 		rows		"9"
 	}
 
+	todo addheaders {
+		pos			"50 150"
+		string		"add string node for table header"
+	}
+
+	todo splitwarns {
+		pos			"70 150"
+		string		"split warning message outside of the textlist"
+	}
+
+	todo addspinners {
+		pos			"90 150"
+		string		"add spinners (harder)"
+	}
+
 	textlist trans_list
 	{
 		dataid		TEXT_TRANSFER_LIST
@@ -246,6 +261,24 @@ window transfer
 		lineheight	"25"
 		onClick		{ cmd "trans_list_click <lineselected>" }
 		onViewChange	{
+			*(textlist)trans_list_amount@viewpos = <viewpos>
+			*(textlist)trans_list_transfered@viewpos = <viewpos>
+			*(abstractscrollbar)trans_list_scroll@fullsize = <lines>
+			*(abstractscrollbar)trans_list_scroll@current = <viewpos>
+			*(abstractscrollbar)trans_list_scroll@viewsize = <viewsize>
+		}
+	}
+
+	textlist trans_list_transfered
+	{
+		dataid		TEXT_TRANSFER_LIST_TRANSFERED
+		pos			"407 180"
+		size		"50 550"
+		lineheight	"25"
+		textalign	"cr"
+		onClick		{ cmd "trans_list_click <lineselected>" }
+		onViewChange	{
+			*(textlist)trans_list@viewpos = <viewpos>
 			*(textlist)trans_list_amount@viewpos = <viewpos>
 			*(abstractscrollbar)trans_list_scroll@fullsize = <lines>
 			*(abstractscrollbar)trans_list_scroll@current = <viewpos>
@@ -256,13 +289,14 @@ window transfer
 	textlist trans_list_amount
 	{
 		dataid		TEXT_TRANSFER_LIST_AMOUNT
-		pos			"357 180"
-		size		"100 550"
+		pos			"457 180"
+		size		"50 550"
 		lineheight	"25"
 		textalign	"cr"
 		onClick		{ cmd "trans_list_click <lineselected>" }
 		onViewChange	{
 			*(textlist)trans_list@viewpos = <viewpos>
+			*(textlist)trans_list_transfered@viewpos = <viewpos>
 			*(abstractscrollbar)trans_list_scroll@fullsize = <lines>
 			*(abstractscrollbar)trans_list_scroll@current = <viewpos>
 			*(abstractscrollbar)trans_list_scroll@viewsize = <viewsize>
@@ -278,6 +312,7 @@ window transfer
 			*trans_list_scroll@current = <current>
 			*trans_list@viewpos = <current>
 			*trans_list_amount@viewpos = <current>
+			*trans_list_transfered@viewpos = <current>
 		}
 	}
 
@@ -285,6 +320,7 @@ window transfer
 		*trans_list_scroll@current = 0 
 		*trans_list@viewpos = 0
 		*trans_list_amount@viewpos = 0
+		*trans_list_transfered@viewpos = 0
 	}
 
 	// ==================
