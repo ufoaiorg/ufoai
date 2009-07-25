@@ -1,91 +1,232 @@
 sequence intro
 {
-//	cmd "snd_music PsymongN3;"
+
 	cmd "seq_animspeed 100;"
+
+	precache pics
+	{
+		ui/options_bg
+		phalanx_badge
+		geoscape/map_earth_night
+		geoscape/mission
+	}
+
+
+//	do nothing for geoscape track
+	cmd "snd_music PsymongN5;"
+//	cmd "snd_music PsymongN3;"
+	
+
+	2dobj i_menufade
+	{
+		image	pics/ui/options_bg
+		pos	"0 0"
+		speed	"0 0"
+		fade "0 0 0 -1"		
+	}
+	wait 3
+	rem i_menufade
+
+	2dobj i_background
+	{
+		image	pics/geoscape/map_earth_night
+		pos	"-900 -50"
+		speed	"0 0"
+		color "1 1 1 0"
+		fade "0 0 0 0.2"
+	}
+	wait 5
 
 	2dobj i_sentence1
 	{
 		text	"_intro_sentence1"
-		pos		"512 485"		align	uc
-		color	"0 1 0 1"
-		speed	"0 -9"
-		relative	true
+		pos	"512 100"		align	uc
+		color	"0.2 1 0.5 0"
+		fade "0 0 0 0.5"
+		speed	"0 0"
+		relative	false
+		//enlarge "0.5 0"
+		//font f_small
+		//size "20"
 	}
+	wait 16 //4 lines
+
 	2dobj i_sentence2
 	{
 		text	"_intro_sentence2"
-		pos		"512 510"		align	uc
-		color	"0 1 0 1"
-		speed	"0 -9"
+		pos		"512 120"		align	uc
+		color	"0.2 1 0.5 0"
+		fade "0 0 0 0.5"
+		speed	"0 0"
 		relative	true
 	}
+	wait 44 //11 lines
+
 	2dobj i_sentence3
 	{
 		text	"_intro_sentence3"
-		pos		"512 535"		align	uc
-		color	"0 1 0 1"
-		speed	"0 -9"
+		pos		"512 140"		align	uc
+		color	"0.2 1 0.5 0"
+		fade "0 0 0 0.5"
 		relative	true
 	}
-	2dobj i_sentence4
-	{
-		text	"_intro_sentence4"
-		pos		"512 560"		align	uc
-		color	"0 1 0 1"
-		speed	"0 -9"
-		relative	true
-	}
-	2dobj i_sentence5
-	{
-		text	"_intro_sentence5"
-		pos		"512 585"		align	uc
-		color	"0 1 0 1"
-		speed	"0 -9"
-		relative	true
-	}
-	2dobj i_sentence6
-	{
-		text	"_intro_sentence6"
-		pos		"512 610"		align	uc
-		color	"0 1 0 1"
-		speed	"0 -9"
-		relative	true
-	}
-	2dobj i_sentence7
-	{
-		text	"_intro_sentence7"
-		pos		"512 635"		align	uc
-		color	"0 1 0 1"
-		speed	"0 -9"
-		relative	true
-	}
-	2dobj i_sentence8
-	{
-		text	"_intro_sentence8"
-		pos		"512 660"		align	uc
-		color	"0 1 0 1"
-		speed	"0 -9"
-		relative	true
-	}
+	wait 4 //1 line
 
-	2dobj i_continue_txt
-	{
-		text	"_Click to continue"
-		pos	"1020 750"
-		align	ur
-		color	"0 0.6 0 1"
-		font	f_small
-	}
-
-	wait 165.0
+	wait 6.4 //16 lines total
 
 	rem i_sentence1
 	rem i_sentence2
 	rem i_sentence3
+	
+
+	cmd "snd_music AlexSullencity;"
+//	cmd "snd_music alBasrahM;"
+//	cmd "snd_music David03;"
+//	cmd "snd_music greecei;"
+	wait 2
+
+	2dobj i_xmumbai-1
+	{
+		image	pics/geoscape/mission
+		pos	"532 346"
+	}
+
+	wait 1
+
+	2dobj i_sentence4
+	{
+		text	"_intro_sentence4"
+		pos		"512 100"		align	uc
+		color	"0.2 1 0.5 0"
+		fade "0 0 0 0.5"
+		speed	"0 0"
+		relative	true
+	}
+	wait 18 //7 lines
+
+	rem i_xmumbai-1
+	2dobj i_xmumbai-2
+	{
+		image	pics/geoscape/mission
+		pos	"532 346"
+		fade "0 0 0 -0.1"		
+	}
+
+	wait 10 // now 28
+
+	2dobj i_sentence5
+	{
+		text	"_intro_sentence5"
+		pos		"512 120"		align	uc
+		color	"0.2 1 0.5 0"
+		fade "0 0 0 0.5"
+		speed	"0 0"
+		relative	true
+	}
+	// 7 lines
+
+	wait 5
+
+	2dobj i_xbonn
+	{
+		image	pics/geoscape/mission
+		pos	"163 169"
+		fade "0 0 0 -0.05"		
+	}
+
+	wait 5
+
+	2dobj i_xjohannes
+	{
+		image	pics/geoscape/mission
+		pos	"276 603"
+		fade "0 0 0 -0.05"		
+	}
+
+	wait 3
+
+	2dobj i_xbangkok
+	{
+		image	pics/geoscape/mission
+		pos	"688 376"
+		fade "0 0 0 -0.05"		
+	}
+
+	wait 15 // now 28
+	wait 5.6 //14 lines total
+
 	rem i_sentence4
 	rem i_sentence5
+	rem i_xmumbai-2
+	rem i_xbonn
+	rem i_xjohannes
+	rem i_xbangkok
+
+	wait 0.7 //music cutoff adjust
+
+	cmd "snd_music space;"
+//	cmd "snd_music van_theme;"
+//	cmd "snd_music David01;"
+//	cmd "snd_music David04;"
+	wait 3
+
+
+	2dobj i_sentence6
+	{
+		text	"_intro_sentence6"
+		pos		"512 100"		align	uc
+		color	"0.2 1 0.5 0"
+		fade "0 0 0 0.5"
+		speed	"0 0"
+		relative	true		
+	}
+	wait 12 // 3 lines
+
+	2dobj i_sentence7
+	{
+		text	"_intro_sentence7"
+		pos		"512 120"		align	uc
+		color	"0.2 1 0.5 0"
+		fade "0 0 0 0.5"
+		speed	"0 0"
+		relative	true
+	}
+	wait 16 // 4 lines
+
+
+	2dobj i_sentence8
+	{
+		text	"_intro_sentence8"
+		pos	"512 140"		align	uc
+		color	"0.2 1 0.5 0"
+		fade "0 0 0 0.5"
+		speed	"0 0"
+		relative	true
+	}
+
+	wait 2 // 3 lines
+
+	2dobj i_phalanxlogo
+	{
+		image	pics/phalanx_badge
+		pos	"490 450"
+		//enlarge "3 3"
+		//speed "0 -3"
+		color "1 1 1 0"
+		fade "0 0 0 0.05"
+		relative false
+	}
+
+	wait 10 // now 12
+	wait 4 // 10 lines total
+
 	rem i_sentence6
 	rem i_sentence7
 	rem i_sentence8
-	rem i_continue_txt
+	wait 9
+	rem i_phalanxlogo
+	rem i_background
+
+	cmd "snd_music van_geoscape;"
+	wait 2
 }
