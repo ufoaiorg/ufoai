@@ -146,12 +146,26 @@ window transfer
 	{
 		dataid		TEXT_CARGO_LIST
 		pos			"604 463"
-		size		"345 225"
+		size		"295 225"
 		lineheight	"25"
-		longlines	prettychop
-		rows		"9"
 		onClick		{ cmd "trans_cargolist_click <lineselected>" }
 		onViewChange	{
+			*(textlist)trans_cargolist_amount@viewpos = <viewpos>
+			*(abstractscrollbar)trans_cargolist_scroll@fullsize = <lines>
+			*(abstractscrollbar)trans_cargolist_scroll@current = <viewpos>
+			*(abstractscrollbar)trans_cargolist_scroll@viewsize = <viewsize>
+		}
+	}
+
+	textlist trans_cargolist_amount
+	{
+		dataid		TEXT_CARGO_LIST_AMOUNT
+		pos			"900 463"
+		size		"50 225"
+		lineheight	"25"
+		onClick		{ cmd "trans_cargolist_click <lineselected>" }
+		onViewChange	{
+			*(textlist)trans_cargolist@viewpos = <viewpos>
 			*(abstractscrollbar)trans_cargolist_scroll@fullsize = <lines>
 			*(abstractscrollbar)trans_cargolist_scroll@current = <viewpos>
 			*(abstractscrollbar)trans_cargolist_scroll@viewsize = <viewsize>
@@ -162,11 +176,11 @@ window transfer
 		image		ui/scrollbar_v_green
 		pos			"960 461"
 		height		"220"
-		current		0
-		viewsize	9
-		fullsize	9
 		hidewhenunused	true
-		onChange	{ *trans_cargolist@viewpos = <current> }
+		onChange	{
+			*trans_cargolist@viewpos = <current>
+			*trans_cargolist_amount@viewpos = <current>
+		}
 	}
 
 	// ==================
@@ -228,15 +242,30 @@ window transfer
 	{
 		dataid		TEXT_TRANSFER_LIST
 		pos			"37 180"
-		size		"483 550"
-		longlines	prettychop
+		size		"333 550"
 		lineheight	"25"
-		rows		"22"
 		onClick		{ cmd "trans_list_click <lineselected>" }
 		onViewChange	{
-			*(abstractscrollbar)trans_list_scroll@fullsize <lines>
-			*(abstractscrollbar)trans_list_scroll@current <viewpos>
-			*(abstractscrollbar)trans_list_scroll@viewsize <viewsize>
+			*(textlist)trans_list_amount@viewpos = <viewpos>
+			*(abstractscrollbar)trans_list_scroll@fullsize = <lines>
+			*(abstractscrollbar)trans_list_scroll@current = <viewpos>
+			*(abstractscrollbar)trans_list_scroll@viewsize = <viewsize>
+		}
+	}
+
+	textlist trans_list_amount
+	{
+		dataid		TEXT_TRANSFER_LIST_AMOUNT
+		pos			"357 180"
+		size		"100 550"
+		lineheight	"25"
+		textalign	"cr"
+		onClick		{ cmd "trans_list_click <lineselected>" }
+		onViewChange	{
+			*(textlist)trans_list@viewpos = <viewpos>
+			*(abstractscrollbar)trans_list_scroll@fullsize = <lines>
+			*(abstractscrollbar)trans_list_scroll@current = <viewpos>
+			*(abstractscrollbar)trans_list_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -244,16 +273,18 @@ window transfer
 		image		ui/scrollbar_v_green
 		pos			"522 180"
 		height		"554"
-		current		0
-		viewsize	22
-		fullsize	22
 		hidewhenunused	true
-		onChange	{ *trans_list@viewpos = <current> }
+		onChange	{
+			*trans_list_scroll@current = <current>
+			*trans_list@viewpos = <current>
+			*trans_list_amount@viewpos = <current>
+		}
 	}
 
 	confunc trans_resetscroll {
+		*trans_list_scroll@current = 0 
 		*trans_list@viewpos = 0
-		*trans_list_scroll@current = 0
+		*trans_list_amount@viewpos = 0
 	}
 
 	// ==================
