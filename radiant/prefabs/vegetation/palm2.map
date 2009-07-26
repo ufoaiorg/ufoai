@@ -142,7 +142,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "254"
-"model" "models/objects/vegi/palm2/palm2.md2"
+"model" "models/objects/vegi/palm1/palm2_1.md2"
 "origin" "18 16 35"
 }
 // entity 2
