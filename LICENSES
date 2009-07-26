@@ -817,6 +817,11 @@ base/models/objects/alien/ufo_crashed/ufo_scout_engines.jpg | GNU General Public
 base/models/objects/alien/ufo_crashed/ufo_scout_engines.md2 | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/ufo_scout_hull.jpg | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/ufo_scout_hull.md2 | GNU General Public License 2.0
+base/models/objects/barrel/barrel2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/barrel/barrel2_1.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/barrel/barrel2_2.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/barrel/barrel3.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/barrel/barrel3.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/base/minicrane/minicrane.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/base/minicrane/minicrane.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/base/radar/radar_a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -848,6 +853,8 @@ base/models/objects/cars/car3/car3.jpg | GNU General Public License 2.0 or later
 base/models/objects/cars/car3/car3.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/car4/car.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/car4/car.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/car5/car5.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/car5/car5.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/carcrashed/car1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/carcrashed/car1.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/carcrashed/car2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -869,6 +876,9 @@ base/models/objects/cars/landy/landy.jpg | GNU General Public License 2.0 or lat
 base/models/objects/cars/landy/landy.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/policecar/policecar.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/policecar/policecar.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/puma/puma.obj | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/puma/puma.png | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/cars/puma/puma_nm.png | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/transporter/transporter.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/transporter/transporter.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/van/cars_tires.jpg | GNU General Public License 2.0
@@ -1012,6 +1022,8 @@ base/models/objects/gascylinder/gascylinder.png | GNU General Public License 2.0
 base/models/objects/hovercraft/hover_down.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/hovercraft/hover_up.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/hovercraft/hovercraft.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/industrial/cond.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/industrial/cond.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/console/cabels.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/console/console.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/console/console.png | GNU General Public License 2.0 or later | Willem "Sitters"
