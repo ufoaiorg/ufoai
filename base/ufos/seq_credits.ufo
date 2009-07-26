@@ -9,6 +9,7 @@ sequence credits
 		aircraft/ufo_fighter/ufo_fighter_engines_1
 		aircraft/ufo_fighter/ufo_fighter_engines_2
 		aircraft/ufo_fighter/ufo_fighter_wings
+		aircraft/inter_starchaser/starchaser
 		soldiers/male/body
 		soldiers/male/head01b
 		soldiers/male/head03a
@@ -750,41 +751,45 @@ sequence credits
 		angles	"20 240 0"
 		dist	500
 	}
+
 	model ship_hull
+	{
+		model	aircraft/ufo_fighter/ufo_fighter_hull
+		origin	"0 -4000 0"
+		speed	"0 3000 0"
+	}
+	model ship_wings
+	{
+		model	aircraft/ufo_fighter/ufo_fighter_wings
+		origin	"0 -4000 0"
+		speed	"0 3000 0"
+	}
+	model ship_engine1
+	{
+		model	aircraft/ufo_fighter/ufo_fighter_engines_1
+		origin	"0 -4000 0"
+		speed	"0 3000 0"
+	}
+	model ship_engine2
+	{
+		model	aircraft/ufo_fighter/ufo_fighter_engines_2
+		origin	"0 -4000 0"
+		speed	"0 3000 0"
+	}
+
+	wait 1.0
+
+	model interceptor_hull
 	{
 		model	aircraft/inter_starchaser/starchaser
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
-//	model ship_hull
-//	{
-//		model	aircraft/ufo_fighter/ufo_fighter_hull
-//		origin	"0 -4000 0"
-//		speed	"0 3000 0"
-//	}
-//	model ship_wings
-//	{
-//		model	aircraft/ufo_fighter/ufo_fighter_wings
-//		origin	"0 -4000 0"
-//		speed	"0 3000 0"
-//	}
-//	model ship_engine1
-//	{
-//		model	aircraft/ufo_fighter/ufo_fighter_engines_1
-//		origin	"0 -4000 0"
-//		speed	"0 3000 0"
-//	}
-//	model ship_engine2
-//	{
-//		model	aircraft/ufo_fighter/ufo_fighter_engines_2
-//		origin	"0 -4000 0"
-//		speed	"0 3000 0"
-//	}
-	wait 2.0
+	wait 4.0
 
+	rem interceptor_hull
 	rem ship_hull
-//	rem ship_wings
-//	rem ship_engine1
-//	rem ship_engine2
-	wait 2.0
+	rem ship_wings
+	rem ship_engine1
+	rem ship_engine2
 }
