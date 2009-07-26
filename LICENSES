@@ -1137,8 +1137,8 @@ base/models/objects/vegi/plant_hang/plant2.png | GNU General Public License 2.0 
 base/models/objects/vegi/plant_hang/plant_hang.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plant_v1/plant_v1.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/plant_v1/plant_v1.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/vegi/plants/plant.bmp | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plants/plant.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/plants/plant.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plants/plant1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plants/plant_a.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/vegi/plants/plantb.md2 | GNU General Public License 2.0 | Yoshiboy
@@ -1598,8 +1598,6 @@ base/models/soldiers/ugv_ares/ares_w.tga | GNU General Public License 2.0 or lat
 base/models/soldiers/ugv_ares/ares_w_turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_heli/ugv_heli.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_heli/ugv_heli.obj | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/soldiers/ugv_heli/ugv_wheel.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/soldiers/ugv_heli/ugv_wheel.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/phoenix.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/phoenix.blend | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/phoenix.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1613,6 +1611,8 @@ base/models/soldiers/ugv_phoenix/rocket_pods.obj | GNU General Public License 2.
 base/models/soldiers/ugv_phoenix/rocket_pods.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_robot/robot.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_robot/robot.obj | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_wheel/ugv_wheel.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_wheel/ugv_wheel.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/weapons/assault/assault.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/assault/assault.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/assault/assault_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
