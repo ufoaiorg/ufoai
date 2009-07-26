@@ -5545,82 +5545,82 @@
 // entity 41
 {
 "classname" "misc_model"
-"origin" "704 992 192"
+"origin" "834 546 168"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_wings.md2"
-"angle" "90"
+"angles" "0 2.50448e-06 0"
 }
 // entity 42
 {
 "classname" "misc_model"
-"origin" "704 992 192"
+"origin" "834 546 168"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2"
-"angle" "90"
+"angles" "0 2.50448e-06 0"
 }
 // entity 43
 {
 "classname" "misc_model"
-"origin" "704 992 192"
+"origin" "834 546 168"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2"
-"angle" "90"
+"angles" "0 2.50448e-06 0"
 }
 // entity 44
 {
 "classname" "misc_model"
-"origin" "704 992 192"
+"origin" "834 546 168"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_hull.md2"
-"angle" "90"
+"angles" "0 2.50448e-06 0"
 }
 // entity 45
 {
 "classname" "misc_model"
-"origin" "704 992 192"
+"origin" "834 546 168"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_upper.md2"
 "spawnflags" "248"
-"angle" "90"
+"angles" "0 2.50448e-06 0"
 }
 // entity 46
 {
 "classname" "misc_model"
-"origin" "896 544 192"
+"origin" "766 990 168"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_hull.md2"
-"angle" "-90"
+"angles" "0 -180 0"
 }
 // entity 47
 {
 "classname" "misc_model"
-"origin" "896 544 192"
+"origin" "766 990 168"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_upper.md2"
 "spawnflags" "248"
-"angle" "-90"
+"angles" "0 -180 0"
 }
 // entity 48
 {
 "classname" "misc_model"
-"origin" "896 544 192"
+"origin" "766 990 168"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_wings.md2"
-"angle" "-90"
+"angles" "0 -180 0"
 }
 // entity 49
 {
 "classname" "misc_model"
-"origin" "896 544 192"
+"origin" "766 990 168"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2"
-"angle" "-90"
+"angles" "0 -180 0"
 }
 // entity 50
 {
 "classname" "misc_model"
-"origin" "896 544 192"
+"origin" "766 990 168"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2"
-"angle" "-90"
+"angles" "0 -180 0"
 }
 // entity 51
 {
