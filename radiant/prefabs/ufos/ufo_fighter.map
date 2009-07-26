@@ -839,3 +839,50 @@
 "spawnflags" "254"
 "angles" "0 90 0"
 }
+// entity 6
+{
+"classname" "light"
+"origin" "32 54 65"
+"_color" "1 0.2 0"
+"light" "80"
+}
+// entity 7
+{
+"classname" "light"
+"light" "200"
+"_color" "0 1 0.2"
+"origin" "-120 56 104"
+"spawnflags" "1"
+}
+// entity 8
+{
+"classname" "light"
+"origin" "184 56 104"
+"_color" "0 1 0.2"
+"light" "200"
+"spawnflags" "1"
+}
+// entity 9
+{
+"classname" "light"
+"origin" "32 280 104"
+"_color" "0 1 0.2"
+"light" "200"
+"spawnflags" "1"
+}
+// entity 10
+{
+"classname" "light"
+"light" "200"
+"_color" "0 1 0.2"
+"origin" "264 -64 104"
+"spawnflags" "1"
+}
+// entity 11
+{
+"classname" "light"
+"light" "200"
+"_color" "0 1 0.2"
+"origin" "-184 -56 104"
+"spawnflags" "1"
+}
