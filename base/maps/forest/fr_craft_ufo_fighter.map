@@ -1165,42 +1165,42 @@
 // entity 8
 {
 "classname" "misc_model"
-"origin" "401.362 503.558 64"
+"origin" "432.442 425.362 38"
 "spawnflags" "254"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_wings.md2"
-"angle" "22.3983"
+"angles" "0 112.398 0"
 }
 // entity 9
 {
 "classname" "misc_model"
-"origin" "401.362 503.558 64"
+"origin" "432.442 425.362 38"
 "spawnflags" "254"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2"
-"angle" "22.3983"
+"angles" "0 112.398 0"
 }
 // entity 10
 {
 "classname" "misc_model"
-"origin" "401.362 503.558 64"
+"origin" "432.442 425.362 38"
 "spawnflags" "255"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2"
-"angle" "22.3983"
+"angles" "0 112.398 0"
 }
 // entity 11
 {
 "classname" "misc_model"
-"origin" "401.362 503.558 64"
+"origin" "432.442 425.362 38"
 "spawnflags" "255"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_hull.md2"
-"angle" "22.3983"
+"angles" "0 112.398 0"
 }
 // entity 12
 {
 "classname" "misc_model"
-"origin" "401.362 503.558 64"
+"origin" "432.442 425.362 38"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_upper.md2"
 "spawnflags" "254"
-"angle" "22.3983"
+"angles" "0 112.398 0"
 }
 // entity 13
 {
