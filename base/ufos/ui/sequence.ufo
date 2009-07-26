@@ -1,0 +1,27 @@
+// ==================
+// SEQUENCE MENU
+// ==================
+
+window sequence
+{
+	zone render
+	{
+		size		"1024 768"
+	}
+
+	zone onClick
+	{
+		size		"1024 768"
+		onClick		{ cmd "seq_click;" }
+	}
+
+	confunc end 
+	{
+		cmd			"seq_end;"
+	}
+
+	func onClose
+	{
+		call end
+	}
+}

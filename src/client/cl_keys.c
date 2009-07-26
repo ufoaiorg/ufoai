@@ -922,13 +922,9 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		return;
 
 	/* any key (except F1-F12) during the sequence mode will bring up the menu */
-	if (!(key >= K_F1 && key <= K_F12)) {
-		if (cls.state == ca_sequence)
-			key = K_ESCAPE;
-
+	if (key == K_ESCAPE)
 		if (down && cls.playingCinematic == CIN_STATUS_FULLSCREEN)
 			CIN_StopCinematic();
-	}
 
 	if (cls.keyDest != key_console && down) {
 		if (MN_KeyPressed(key, unicode))

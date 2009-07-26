@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_DATA_LENGTH 2048
 
 typedef struct seqCmd_s {
+	/** @returns 0 if the same command should be executed again - or 1 to execute the next event */
 	int (*handler) (const char *name, const char *data);
 	char name[MAX_VAR];
 	char data[MAX_DATA_LENGTH];
@@ -64,7 +65,7 @@ typedef enum {
 	SEQ_NUMCMDS
 } seqCmdEnum_t;
 
-static const char *seqCmdName[SEQ_NUMCMDS] = {
+static const char *seqCmdName[] = {
 	"end",
 	"wait",
 	"click",
@@ -75,6 +76,7 @@ static const char *seqCmdName[SEQ_NUMCMDS] = {
 	"rem",
 	"cmd"
 };
+CASSERT(lengthof(seqCmdName) == SEQ_NUMCMDS);
 
 typedef struct seqCamera_s {
 	vec3_t origin, speed;
@@ -121,7 +123,7 @@ static int SEQ_2Dobj(const char *name, const char *data);
 static int SEQ_Remove(const char *name, const char *data);
 static int SEQ_Command(const char *name, const char *data);
 
-static int (*seqCmdFunc[SEQ_NUMCMDS]) (const char *name, const char *data) = {
+static int (*seqCmdFunc[]) (const char *name, const char *data) = {
 	NULL,
 	SEQ_Wait,
 	SEQ_Click,
@@ -132,6 +134,7 @@ static int (*seqCmdFunc[SEQ_NUMCMDS]) (const char *name, const char *data) = {
 	SEQ_Remove,
 	SEQ_Command
 };
+CASSERT(lengthof(seqCmdFunc) == SEQ_NUMCMDS);
 
 #define MAX_SEQCMDS		8192
 #define MAX_SEQUENCES	32
@@ -144,10 +147,10 @@ static int numSeqCmds;
 static sequence_t sequences[MAX_SEQUENCES];
 static int numSequences;
 
-static int seqTime;	/**< miliseconds the sequence is already running */
-static qboolean seqLocked = qfalse; /**< if a click event is triggered this is true */
+static int seqTime;	/**< milliseconds the sequence is already running */
 static qboolean seqEndClickLoop = qfalse; /**< if the menu node the sequence is rendered in fetches a click this is true */
-static int seqCmd, seqEndCmd;
+static int seqCmd;	/**< current position in the sequence command array of the current running sequence */
+static int seqEndCmd; /**< the number of all sequence commands in the current running sequence */
 
 static seqCamera_t seqCamera;
 
@@ -250,6 +253,15 @@ void CL_SequenceRender (void)
 	seqCmd_t *sc;
 	seqEnt_t *se;
 	int i;
+
+	/* we are inside a waiting command */
+	if (seqTime > cl.time) {
+		/* if we clicked a button we end the waiting loop */
+		if (seqEndClickLoop) {
+			seqTime = cl.time;
+			seqEndClickLoop = qfalse;
+		}
+	}
 
 	/* run script */
 	while (seqTime <= cl.time) {
@@ -379,11 +391,7 @@ void CL_Sequence2D (void)
  */
 static void CL_SequenceClick_f (void)
 {
-	if (seqLocked) {
-		seqEndClickLoop = qtrue;
-		seqLocked = qfalse;
-	} else
-		MN_PopMenu(qfalse);
+	seqEndClickLoop = qtrue;
 }
 
 /**
@@ -507,12 +515,10 @@ static int SEQ_Click (const char *name, const char *data)
 	/* if a CL_SequenceClick_f event was called */
 	if (seqEndClickLoop) {
 		seqEndClickLoop = qfalse;
-		seqLocked = qfalse;
 		/* increase the command counter by 1 */
 		return 1;
 	}
 	seqTime += 1000;
-	seqLocked = qtrue;
 	/* don't increase the command counter - stay at click command */
 	return 0;
 }
@@ -738,10 +744,8 @@ void CL_ParseSequence (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseSequence: unexpected end of file (sequence ";
 	sequence_t *sp;
-	seqCmd_t *sc;
 	const char *token;
-	char *data;
-	int i, depth, maxLength;
+	int i;
 
 	/* search for sequences with same name */
 	for (i = 0; i < numSequences; i++)
@@ -782,7 +786,11 @@ void CL_ParseSequence (const char *name, const char **text)
 		/* check for commands */
 		for (i = 0; i < SEQ_NUMCMDS; i++)
 			if (!strcmp(token, seqCmdName[i])) {
-				maxLength = MAX_DATA_LENGTH;
+				int maxLength = MAX_DATA_LENGTH;
+				int depth;
+				char *data;
+				seqCmd_t *sc;
+
 				/* found a command */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
