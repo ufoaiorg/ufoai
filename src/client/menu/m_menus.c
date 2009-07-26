@@ -61,23 +61,24 @@ int MN_GetLastFullScreenWindow (void)
  * @brief Remove the menu from the menu stack
  * @param[in] menu The menu to remove from the stack
  * @sa MN_PushMenuDelete
+ * @todo Why dont we call onClose?
  */
 static void MN_DeleteMenuFromStack (menuNode_t * menu)
 {
 	int i;
 
+	/* get window index */
 	for (i = 0; i < mn.windowStackPos; i++) {
-		if (mn.windowStack[i] != menu)
-			continue;
+		if (mn.windowStack[i] == menu)
+			break;
+	}
 
-		/** @todo (menu) don't leave the loop even if we found it - there still
-		 * may be other copies around in the stack of the same menu
-		 * @sa MN_PushCopyMenu_f */
-		for (mn.windowStackPos--; i < mn.windowStackPos; i++)
+	/* update stack */
+	if (i < mn.windowStackPos) {
+		mn.windowStackPos--;
+		for (; i < mn.windowStackPos; i++)
 			mn.windowStack[i] = mn.windowStack[i + 1];
-
 		MN_InvalidateMouse();
-		return;
 	}
 }
 
@@ -314,20 +315,6 @@ static void MN_PushNoHud_f (void)
 		return;
 
 	MN_PushMenu("nohud", NULL);
-}
-
-/**
- * @brief Console function to push a menu, without deleting its copies
- * @sa MN_PushMenu
- * @todo It's technically not possible to use multi instance menu. Is this fuction is realy need? Ufopedia dont need more than one instance?
- */
-static void MN_PushCopyMenu_f (void)
-{
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
-		return;
-	}
-	MN_PushMenuDelete(Cmd_Argv(1), NULL, qfalse);
 }
 
 static void MN_RemoveMenuAtPositionFromStack (int position)
@@ -744,7 +731,6 @@ void MN_InitMenus (void)
 	Cmd_AddParamCompleteFunction("mn_push", MN_CompleteWithMenu);
 	Cmd_AddCommand("mn_push_dropdown", MN_PushDropDownMenu_f, "Push a dropdown menu at a position");
 	Cmd_AddCommand("mn_push_child", MN_PushChildMenu_f, "Push a menu to the menustack with a big dependancy to a parent menu");
-	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
 	Cmd_AddCommand("mn_close", MN_CloseMenu_f, "Close a menu");
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
