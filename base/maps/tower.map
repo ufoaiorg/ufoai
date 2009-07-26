@@ -19706,14 +19706,6 @@
 "spawnflags" "254"
 "origin" "32 0 36"
 }
-// entity 243
-{
-"classname" "misc_model"
-"model" "models/aircraft/drop_firebird/firebird_glass.md2"
-"angles" "0 180 0"
-"origin" "32 0 36"
-"spawnflags" "255"
-}
 // entity 244
 {
 "classname" "misc_model"

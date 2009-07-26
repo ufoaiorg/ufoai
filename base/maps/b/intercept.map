@@ -2901,13 +2901,6 @@
 "spawnflags" "4"
 "model" "models/aircraft/inter_stiletto/stiletto_engines.md2"
 }
-// entity 15
-{
-"classname" "misc_model"
-"origin" "272 228 192"
-"model" "models/aircraft/inter_stiletto/stiletto_glass.md2"
-"spawnflags" "4"
-}
 // entity 16
 {
 "classname" "misc_model"
