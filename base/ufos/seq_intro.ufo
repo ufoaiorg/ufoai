@@ -1,4 +1,5 @@
-sequence intro
+sequence intro // Last change 25-07-2009 by Vio
+
 {
 
 	cmd "seq_animspeed 100;"
@@ -12,16 +13,13 @@ sequence intro
 	}
 
 
-//	do nothing for geoscape track
+	//fitting music, deactivate for geoscape track
 	cmd "snd_music PsymongN5;"
-//	cmd "snd_music PsymongN3;"
 	
 
 	2dobj i_menufade
 	{
 		image	pics/ui/options_bg
-		pos	"0 0"
-		speed	"0 0"
 		fade "0 0 0 -1"		
 	}
 	wait 3
@@ -31,11 +29,11 @@ sequence intro
 	{
 		image	pics/geoscape/map_earth_night
 		pos	"-900 -50"
-		speed	"0 0"
+		//speed	"0 0"
 		color "1 1 1 0"
 		fade "0 0 0 0.2"
 	}
-	wait 5
+	wait 5.5
 
 	2dobj i_sentence1
 	{
@@ -45,11 +43,10 @@ sequence intro
 		fade "0 0 0 0.5"
 		speed	"0 0"
 		relative	false
-		//enlarge "0.5 0"
+		//enlarge "0.9 0.9"
 		//font f_small
-		//size "20"
 	}
-	wait 16 //4 lines
+	wait 20 //4 lines
 
 	2dobj i_sentence2
 	{
@@ -60,7 +57,7 @@ sequence intro
 		speed	"0 0"
 		relative	true
 	}
-	wait 44 //11 lines
+	wait 52 //11 lines, abbreviated
 
 	2dobj i_sentence3
 	{
@@ -70,25 +67,41 @@ sequence intro
 		fade "0 0 0 0.5"
 		relative	true
 	}
-	wait 4 //1 line
+	wait 5 //1 line
 
-	wait 6.4 //16 lines total
+	wait 5.4 //16 lines total -1
 
+
+	2dobj i_sentence1
+	{
+		fade "0 0 0 -2"
+	}
+	2dobj i_sentence2
+	{
+		fade "0 0 0 -2"
+	}
+	2dobj i_sentence3
+	{
+		fade "0 0 0 -2"
+	}
+	wait 1
 	rem i_sentence1
 	rem i_sentence2
 	rem i_sentence3
 	
 
 	cmd "snd_music AlexSullencity;"
-//	cmd "snd_music alBasrahM;"
-//	cmd "snd_music David03;"
-//	cmd "snd_music greecei;"
+	//cmd "snd_music alBasrahM;"
+	//cmd "snd_music David03;"
+	//cmd "snd_music greecei;"
 	wait 2
 
-	2dobj i_xmumbai-1
+	2dobj i_xmumbai
 	{
 		image	pics/geoscape/mission
 		pos	"532 346"
+		color "1 1 1 0"
+		fade "0 0 0 5"
 	}
 
 	wait 1
@@ -102,17 +115,14 @@ sequence intro
 		speed	"0 0"
 		relative	true
 	}
-	wait 18 //7 lines
+	wait 21 //7 lines
 
-	rem i_xmumbai-1
-	2dobj i_xmumbai-2
+	2dobj i_xmumbai
 	{
-		image	pics/geoscape/mission
-		pos	"532 346"
 		fade "0 0 0 -0.1"		
 	}
 
-	wait 10 // now 28
+	wait 14 // now 35
 
 	2dobj i_sentence5
 	{
@@ -123,18 +133,18 @@ sequence intro
 		speed	"0 0"
 		relative	true
 	}
-	// 7 lines
+	
 
-	wait 5
+	wait 8 // 7 lines
 
-	2dobj i_xbonn
+	2dobj i_xbonn // timed with Sullencity sirens 
 	{
 		image	pics/geoscape/mission
 		pos	"163 169"
 		fade "0 0 0 -0.05"		
 	}
 
-	wait 5
+	wait 4.5
 
 	2dobj i_xjohannes
 	{
@@ -143,7 +153,7 @@ sequence intro
 		fade "0 0 0 -0.05"		
 	}
 
-	wait 3
+	wait 9
 
 	2dobj i_xbangkok
 	{
@@ -152,22 +162,32 @@ sequence intro
 		fade "0 0 0 -0.05"		
 	}
 
-	wait 15 // now 28
-	wait 5.6 //14 lines total
+	wait 13.5 // now 35
+	wait 5.6 //14 lines total -1
+
+	2dobj i_sentence4
+	{
+		fade "0 0 0 -2"
+	}
+	2dobj i_sentence5
+	{
+		fade "0 0 0 -2"
+	}
+	wait 1
 
 	rem i_sentence4
 	rem i_sentence5
-	rem i_xmumbai-2
+	rem i_xmumbai
 	rem i_xbonn
 	rem i_xjohannes
 	rem i_xbangkok
 
-	wait 0.7 //music cutoff adjust
+	wait 0 //music cutoff adjust
+
 
 	cmd "snd_music space;"
 //	cmd "snd_music van_theme;"
 //	cmd "snd_music David01;"
-//	cmd "snd_music David04;"
 	wait 3
 
 
@@ -180,7 +200,7 @@ sequence intro
 		speed	"0 0"
 		relative	true		
 	}
-	wait 12 // 3 lines
+	wait 13 // 2.5 lines
 
 	2dobj i_sentence7
 	{
@@ -191,7 +211,7 @@ sequence intro
 		speed	"0 0"
 		relative	true
 	}
-	wait 16 // 4 lines
+	wait 17 // 3.5 lines
 
 
 	2dobj i_sentence8
@@ -204,29 +224,64 @@ sequence intro
 		relative	true
 	}
 
-	wait 2 // 3 lines
+	wait 14 // 3 lines
 
 	2dobj i_phalanxlogo
 	{
-		image	pics/phalanx_badge
-		pos	"490 450"
-		//enlarge "3 3"
-		//speed "0 -3"
+		image	pics/phalanx_badge_big
+		pos	"384 500"
+		speed "0 -16"
 		color "1 1 1 0"
 		fade "0 0 0 0.05"
 		relative false
 	}
 
-	wait 10 // now 12
-	wait 4 // 10 lines total
+	wait 1 // now 15
+	wait 3 // 10 lines total -1
+
+	2dobj i_sentence6
+	{
+		fade "0 0 0 -2"
+	}
+	2dobj i_sentence7
+	{
+		fade "0 0 0 -2"
+	}
+	2dobj i_sentence8
+	{
+		fade "0 0 0 -2"
+	}
+	wait 2
 
 	rem i_sentence6
 	rem i_sentence7
 	rem i_sentence8
-	wait 9
-	rem i_phalanxlogo
+
+	2dobj i_background
+	{
+		fade "0 0 0 -0.1"
+	}
+
+	wait 10
+
+	2dobj i_phalanxlogo
+	{
+		speed "0 0"
+	}
+	wait 1
+
 	rem i_background
+	
+	wait 4
+
+	2dobj i_phalanxlogo
+	{
+		fade "0 0 0 -1"
+	}
 
 	cmd "snd_music van_geoscape;"
-	wait 2
+	wait 4
+	
+	rem i_phalanxlogo
 }
+
