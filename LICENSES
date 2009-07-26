@@ -876,6 +876,8 @@ base/models/objects/cars/policecar/policecar.md2 | GNU General Public License 2.
 base/models/objects/cars/policecar/policecar.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/puma/puma.png | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/puma/puma_nm.png | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/cars/trailer/boxtrailer.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/trailer/boxtrailer.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/transporter/transporter.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/transporter/transporter.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/van/cars_tires.jpg | GNU General Public License 2.0
@@ -1071,6 +1073,10 @@ base/models/objects/rubbish/woodern_plank2.md2 | GNU General Public License 2.0 
 base/models/objects/rubbish/yellow_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/snowman/snowman.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/snowman/snowman.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/store/box.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/store/box.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/store/pellet.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/store/pellet.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/tanker/small_pipes.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/tanker/tanker.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/tanker/tanker_a.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1131,6 +1137,9 @@ base/models/objects/vegi/plant_hang/plant2.png | GNU General Public License 2.0 
 base/models/objects/vegi/plant_hang/plant_hang.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plant_v1/plant_v1.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/plant_v1/plant_v1.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/plants/plant.bmp | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/plants/plant.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/plants/plant1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plants/plant_a.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/vegi/plants/plantb.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/vegi/plants/plantc.md2 | GNU General Public License 2.0 | Yoshiboy
@@ -1139,6 +1148,8 @@ base/models/objects/vegi/plants/plante.md2 | GNU General Public License 2.0 | Yo
 base/models/objects/vegi/plants/plants.tga | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/vegi/tree03/tree03.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/tree03/tree03.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/tree_dead/tree_dead.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/tree_dead/tree_dead.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/water_lily/lily_bloom.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/models/objects/vegi/water_lily/lily_bloom.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
 base/models/objects/vegi/water_lily/lily_leaf.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
@@ -1585,6 +1596,10 @@ base/models/soldiers/ugv_ares/ares_w.obj | GNU General Public License 2.0 or lat
 base/models/soldiers/ugv_ares/ares_w.tag | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_w.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_w_turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_heli/ugv_heli.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_heli/ugv_heli.obj | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_heli/ugv_wheel.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_heli/ugv_wheel.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/phoenix.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/phoenix.blend | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/phoenix.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1596,6 +1611,8 @@ base/models/soldiers/ugv_phoenix/phoenix_turret.md2 | GNU General Public License
 base/models/soldiers/ugv_phoenix/rocket_pods.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/rocket_pods.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/rocket_pods.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_robot/robot.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_robot/robot.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/weapons/assault/assault.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/assault/assault.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/assault/assault_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
