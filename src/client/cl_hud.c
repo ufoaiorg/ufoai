@@ -323,7 +323,6 @@ static qboolean CL_CheckFiremodeReservation (void)
 	return qfalse;
 }
 
-static linkedList_t* popupListText = NULL;
 static linkedList_t* popupListData = NULL;
 static menuNode_t* popupListNode = NULL;
 
@@ -342,6 +341,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 	int i;
 	static char text[MAX_VAR];
 	int selectedEntry;
+	static linkedList_t* popupListText = NULL;
 
 	if (!selActor)
 		return;
@@ -356,12 +356,8 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 		return;
 	}
 
-	/** @todo If popupListData/popupListText is stored into a dataid , next use of this dataid can crash the game */
-	/** @todo Why not using the MN_ResetData function here? */
-	LIST_Delete(&popupListText);
-	/* also reset mn.menuTextLinkedList here - otherwise the
-	 * pointer is no longer valid (because the list was freed) */
-	MN_RegisterLinkedListText(TEXT_LIST, NULL);
+	/* reset the list */
+	MN_ResetData(TEXT_LIST);
 
 	LIST_Delete(&popupListData);
 
