@@ -554,9 +554,13 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 			return;
 		}
 	}
-	Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s%s\n"),
-		_(from), _(to), dateBuf, subjectType, _(subject));
-	Cvar_Set("mn_sender_head", model ? model : "");
+	Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s"),
+		_(from), _(to), dateBuf);
+	Cvar_Set("mn_mail_sender_head", model ? model : "");
+	Cvar_Set("mn_mail_from", _(from));
+	Cvar_Set("mn_mail_subject", va("%s%s", subjectType, _(subject)));
+	Cvar_Set("mn_mail_to", _(to));
+	Cvar_Set("mn_mail_date", dateBuf);
 	MN_RegisterText(TEXT_UFOPEDIA_MAILHEADER, mailHeader);
 }
 

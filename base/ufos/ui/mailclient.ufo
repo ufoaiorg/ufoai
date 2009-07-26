@@ -8,24 +8,13 @@ window mail
 	// background
 	// ==================
 
-	pic background
 	{
-		image		ui/mailclient_bg
-	}
-
-	// ==================
-	// buttons
-	// ==================
-
-	custombutton button_exit
-	{
-		tooltip		"_Close mail"
-		image		ui/button_background
-		texl		"192 0"
-		pos			"950 720"
-		size		"64 37"
-		icon		return
-		onClick		{ cmd "mn_pop;" }
+		pos			"10 20"
+		size		"1000 700"
+		dragbutton	true
+		closebutton	true
+		image		ui/popup_alpha_tile
+		string		"*cvar:mn_mail_subject"
 	}
 
 	// ==================
@@ -35,11 +24,10 @@ window mail
 	text mail
 	{
 		dataid		TEXT_UFOPEDIA
-		pos			"50 208"
+		pos			"50 200"
 		size		"904 480"
 		lineheight	24
 		tabwidth	100
-		rows		"20"
 		onViewChange	{
 			*(abstractscrollbar)mail_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)mail_scroll@current = <viewpos>
@@ -51,17 +39,23 @@ window mail
 		image		ui/scrollbar_v_green
 		pos			"960 208"
 		height		"470"
-		current		0
-		viewsize	20
-		fullsize	50
 		hidewhenunused true
 		onChange	{ *mail@viewpos = <current> }
+	}
+
+
+	pic sender_slot
+	{
+		image	ui/button_square
+		pos		"62 82"
+		size	"64 64"
+		texh	"64 64"
 	}
 
 	model sender_body
 	{
 		{
-			visiblewhen "exists *cvar:mn_sender_head"
+			visiblewhen "exists *cvar:mn_mail_sender_head"
 			model	"civilians/male/body01"
 			anim	"stand_still"
 			angles	"0 85 90"
@@ -73,17 +67,9 @@ window mail
 		
 		model sender_head
 		{
-			model	*cvar:mn_sender_head
+			model	*cvar:mn_mail_sender_head
 			tag		"tag_head"
 		}
-	}
-
-	pic sender_slot
-	{
-		image	ui/button_square
-		pos		"62 82"
-		size	"64 64"
-		texh	"64 64"
 	}
 
 	text mail_header
@@ -96,8 +82,17 @@ window mail
 		font		"f_small_bold"
 	}
 
+	/*
+	string date {
+		pos		"63 175"
+		size	"300 25"
+		string	"*cvar:mn_mail_date"
+	}
+	*/
+
 	func onClose
 	{
+		/** @todo we should remove that call. */
 		cmd "mn_fireinit mailclient;"
 	}
 	func onInit
