@@ -328,8 +328,8 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 		store = gtk_tree_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF, G_TYPE_STRING);
 		//prepare file filter
 		fileFiltered = gtk_tree_model_filter_new(GTK_TREE_MODEL(store), NULL);
-
-		view = GTK_TREE_VIEW(gtk_tree_view_new_with_model(fileFiltered));
+		GtkTreeModel *fileSorted = gtk_tree_model_sort_new_with_model(fileFiltered);
+		view = GTK_TREE_VIEW(gtk_tree_view_new_with_model(fileSorted));
 
 		gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), TRUE);
 		gtk_tree_view_set_search_column(GTK_TREE_VIEW(view), PREFAB_SHORTNAME);
