@@ -877,7 +877,7 @@ base/models/objects/cars/policecar/policecar.tga | GNU General Public License 2.
 base/models/objects/cars/puma/puma.png | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/puma/puma_nm.png | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/trailer/boxtrailer.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/cars/trailer/boxtrailer.obj | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/trailer/boxtrailer.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/transporter/transporter.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/transporter/transporter.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/van/cars_tires.jpg | GNU General Public License 2.0
