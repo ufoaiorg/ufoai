@@ -323,14 +323,14 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr),
 			GTK_SHADOW_IN);
 
-	{
 		// prefab list
-		store = gtk_tree_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF, G_TYPE_STRING);
-		//prepare file filter
-		fileFiltered = gtk_tree_model_filter_new(GTK_TREE_MODEL(store), NULL);
-		GtkTreeModel *fileSorted = gtk_tree_model_sort_new_with_model(fileFiltered);
-		view = GTK_TREE_VIEW(gtk_tree_view_new_with_model(fileSorted));
+	store = gtk_tree_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF, G_TYPE_STRING);
+	//prepare file filter
+	fileFiltered = gtk_tree_model_filter_new(GTK_TREE_MODEL(store), NULL);
+	GtkTreeModel *fileSorted = gtk_tree_model_sort_new_with_model(fileFiltered);
+	view = GTK_TREE_VIEW(gtk_tree_view_new_with_model(fileSorted));
 
+	{
 		gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), TRUE);
 		gtk_tree_view_set_search_column(GTK_TREE_VIEW(view), PREFAB_SHORTNAME);
 		gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(view), TRUE);
@@ -345,7 +345,7 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 							_("Prefab"));
 			gtk_tree_view_column_set_expand(column, FALSE);
 			gtk_tree_view_column_set_sort_indicator(column, TRUE);
-			gtk_tree_view_column_set_sort_column_id(column, PREFAB_NAME);
+			gtk_tree_view_column_set_sort_column_id(column, PREFAB_SHORTNAME);
 			gtk_tree_view_append_column(view, column);
 			GtkCellRenderer* imageRenderer = gtk_cell_renderer_pixbuf_new();
 			gtk_cell_renderer_set_fixed_size(imageRenderer, 128, -1);
@@ -402,5 +402,6 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 	Directory_forEach(fullpath.c_str(), CLoadPrefabSubdir(fullpath.c_str(),"", NULL));
 	Directory_forEach(fullpath.c_str(), MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab("",NULL)));
 	gtk_tree_model_filter_refilter(GTK_TREE_MODEL_FILTER(fileFiltered));
+	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(fileSorted), PREFAB_SHORTNAME, GTK_SORT_ASCENDING);
 	return vbox;
 }
