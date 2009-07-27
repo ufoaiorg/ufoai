@@ -30,6 +30,7 @@ MSYS=@MSYS@
 PROFILING=@PROFILING@
 PARANOID=@PARANOID@
 BUILD_CLIENT=@BUILD_CLIENT@
+BUILD_TESTS=@BUILD_TESTS@
 BUILD_DEDICATED=@BUILD_DEDICATED@
 BUILD_UFO2MAP=@BUILD_UFO2MAP@
 BUILD_UFORADIANT=@BUILD_UFORADIANT@
@@ -53,7 +54,7 @@ include build/defs.mk
 #######################################################################################################
 
 # define all the modules that need to be compiled
-MODULES = radiant client server tools game sound masterserver
+MODULES = radiant client server tools game sound masterserver tests
 
 all: all2
 

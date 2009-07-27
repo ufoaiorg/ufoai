@@ -647,6 +647,7 @@ CLIENT_LIBS
 EXE_EXT
 BINDIR
 PKGDATADIR
+BUILD_TESTS
 PROFILING
 PARANOID
 BUILD_DEBUG
@@ -754,6 +755,7 @@ enable_uforadiant
 enable_release
 enable_paranoid
 enable_profiling
+enable_tests
 enable_universal
 '
       ac_precious_vars='build_alias
@@ -1409,6 +1411,7 @@ Optional Features:
                           [default=disabled]
   --enable-paranoid       enable PARANOID checks [default=disabled]
   --enable-profiling      build with profiling for gprof [default=disabled]
+  --enable-tests          build with tests [default=disabled]
   --enable-universal      build universal binaries on Mac OS X
                           [default=disabled]
 
@@ -2199,6 +2202,14 @@ if test "${enable_profiling+set}" = set; then
   enableval=$enable_profiling;
 else
   enable_profiling=no
+fi
+
+
+# Check whether --enable-tests was given.
+if test "${enable_tests+set}" = set; then
+  enableval=$enable_tests;
+else
+  enable_tests=no
 fi
 
 
@@ -12195,6 +12206,19 @@ else
 
 fi
 
+#---------------------------------------------------------------------------------------------
+# Check for tests
+#---------------------------------------------------------------------------------------------
+
+BUILD_TESTS=0
+
+if test "$enable_tests" = "yes"
+then
+	{ $as_echo "$as_me:$LINENO: Enabling tests" >&5
+$as_echo "$as_me: Enabling tests" >&6;}
+	BUILD_TESTS=1
+
+fi
 
 #---------------------------------------------------------------------------------------------
 # Fill in path variables

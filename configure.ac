@@ -87,6 +87,10 @@ AC_ARG_ENABLE(profiling,
 	[AS_HELP_STRING([--enable-profiling], [build with profiling for gprof @<:@default=disabled@:>@])],
 	[], [enable_profiling=no])
 
+AC_ARG_ENABLE(tests,
+	[AS_HELP_STRING([--enable-tests], [build with tests @<:@default=disabled@:>@])],
+	[], [enable_tests=no])
+
 AC_ARG_ENABLE(universal,
 	[AS_HELP_STRING([--enable-universal], [build universal binaries on Mac OS X @<:@default=disabled@:>@])],
 	[], [enable_universal=no])
@@ -832,6 +836,16 @@ else
 	AC_SUBST([PROFILING],0)
 fi
 
+#---------------------------------------------------------------------------------------------
+# Check for tests
+#---------------------------------------------------------------------------------------------
+
+AC_SUBST([BUILD_TESTS],0)
+if test "$enable_tests" = "yes"
+then
+	AC_MSG_NOTICE([Enabling tests])
+	AC_SUBST([BUILD_TESTS],1)
+fi
 
 #---------------------------------------------------------------------------------------------
 # Fill in path variables
