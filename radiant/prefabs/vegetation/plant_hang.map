@@ -1,0 +1,8 @@
+
+// entity 0
+{
+"classname" "misc_model"
+"origin" "16 21 45"
+"model" "models/objects/vegi/plant_hang/plant1.md2"
+"spawnflags" "255"
+}
