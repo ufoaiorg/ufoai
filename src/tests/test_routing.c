@@ -30,7 +30,7 @@ static int UFO_InitSuiteRouting (void)
 	/**
 	 * @todo use a special testmap
 	 */
-	CM_LoadMap("maps/fueldump", qtrue, "", &checksum);
+	/*CM_LoadMap("maps/fueldump", qtrue, "", &checksum);*/
 	return 0;
 }
 
@@ -40,8 +40,8 @@ static int UFO_InitSuiteRouting (void)
  */
 static int UFO_CleanSuiteRouting (void)
 {
-	Mem_Shutdown();
 	FS_Shutdown();
+	Mem_Shutdown();
 	return 0;
 }
 
