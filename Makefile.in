@@ -184,5 +184,13 @@ install_exec: $(TARGETS)
 
 -include $(ALL_DEPS)
 
+clean-radiant:
+	@echo "Making clean radiant"
+	@rm -f $(ALL_RADIANT_OBJS) $(RADIANT_DEPS)
+
+clean-tests:
+	@echo "Making clean tests"
+	@rm -f $(TESTS_TARGET) $(TESTS_OBJS)
+
 .PHONY: all all2 clean echo_info $(BUILDDIR)/.dirs
 
