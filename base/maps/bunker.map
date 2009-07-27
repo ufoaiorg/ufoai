@@ -15790,3 +15790,10 @@
 ( -96 447 68 ) ( -96 449 68 ) ( -96 447 128 ) tex_buildings/concrete006 176 -236 0 0.5 0.5 7680 0 0
 }
 }
+// entity 156
+{
+"classname" "misc_model"
+"model" "models/objects/industrial/console/cabels.md2"
+"origin" "-448 256 128"
+"spawnflags" "252"
+}
