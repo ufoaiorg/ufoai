@@ -137,7 +137,8 @@ function start_downloads()
 
 	download_archive http://download.berlios.de/codeblocks/ wxmsw28u_gcc_cb_wx2810.7z codeblocks_gcc.7z
 	download_archive http://download.berlios.de/codeblocks/ mingwm10_gcc421.7z codeblocks_mingw.7z
-	download_archive http://download.berlios.de/codeblocks/ CB_20090721_rev5696_win32.7z codeblocks.7z
+	download_archive http://download.berlios.de/codeblocks/ CB_20090727_rev5716_win32.7z codeblocks.7z
+
 
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib_2.20.3-1_win32.zip glib.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib-dev_2.20.3-1_win32.zip glib-dev.zip
