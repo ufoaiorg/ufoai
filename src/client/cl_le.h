@@ -107,8 +107,6 @@ typedef struct le_s {
 	int startTime, endTime;
 	int speed[MAX_LE_PATHLENGTH];			/**< the speed the le is moving with */
 	float rotationSpeed;
-	int eventDelayTime;				/**< some events must be executed sequentiell - this is the time 
-							 * that the next event have to wait to get executed (in ms) */
 
 	/** sound effects */
 	struct s_sample_s* sample;

@@ -163,9 +163,7 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 				time += LE_ActorGetStepTime(le, pos, oldPos, dir, NET_ReadShort(msg));
 				NET_ReadShort(msg);
 			}
-			if (le->eventDelayTime)
-				eventTime += le->eventDelayTime;
-			le->eventDelayTime += (time + 300);
+			nextTime += time + 400;
 		}
 		break;
 	case EV_ACTOR_SHOOT:

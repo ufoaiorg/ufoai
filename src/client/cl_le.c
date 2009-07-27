@@ -569,7 +569,6 @@ static void LET_PathMove (le_t * le)
 
 			le->lighting.dirty = qtrue;
 			le->think = LET_StartIdle;
-			le->eventDelayTime = 0;
 			return;
 		}
 	}
