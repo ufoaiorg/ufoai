@@ -953,3 +953,9 @@ void Cvar_Init (void)
 	Cmd_AddCommand("copy", Cvar_Copy_f, "Copy cvar target to source");
 	Cmd_AddCommand("cvarlist", Cvar_List_f, "Show all cvars");
 }
+
+void Cvar_Shutdown (void)
+{
+	cvarVars = NULL;
+	memset(cvarVarsHash, 0, sizeof(cvarVarsHash));
+}

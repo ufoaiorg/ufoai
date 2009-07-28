@@ -84,6 +84,7 @@ typedef struct cmdList_s {
 } cmdList_t;
 
 void Cmd_Init(void);
+void Cmd_Shutdown(void);
 
 /**
  * @brief called by the init functions of other parts of the program to

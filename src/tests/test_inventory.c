@@ -1,5 +1,5 @@
 /**
- * @file test_routing.c
+ * @file test_inventory.c
  */
 
 /*
@@ -22,22 +22,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "CUnit/Basic.h"
-#include "test_routing.h"
 
+#include "CUnit/Basic.h"
+#include "test_inventory.h"
 #include "../common/common.h"
-#include "../common/routing.h"
-#include "../common/tracing.h"
-#include "../common/cmodel.h"
+#include "../game/inv_shared.h"
 
 /**
  * The suite initialization function.
  * Returns zero on success, non-zero otherwise.
  */
-static int UFO_InitSuiteRouting (void)
+static int UFO_InitSuiteInventory (void)
 {
-	unsigned int checksum;
-
 	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
 	com_cmdSysPool = Mem_CreatePool("Common: Command system");
 	com_cmodelSysPool = Mem_CreatePool("Common: Collision model");
@@ -45,15 +41,14 @@ static int UFO_InitSuiteRouting (void)
 	com_fileSysPool = Mem_CreatePool("Common: File system");
 	com_genericPool = Mem_CreatePool("Generic");
 
+	sv_dedicated = Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
+
 	Mem_Init();
 	Cmd_Init();
 	Cvar_Init();
 	FS_InitFilesystem(qtrue);
+	Com_ParseScripts();
 
-	/**
-	 * @todo use a special testmap
-	 */
-	/*CM_LoadMap("maps/fueldump", qtrue, "", &checksum);*/
 	return 0;
 }
 
@@ -61,7 +56,7 @@ static int UFO_InitSuiteRouting (void)
  * The suite cleanup function.
  * Returns zero on success, non-zero otherwise.
  */
-static int UFO_CleanSuiteRouting (void)
+static int UFO_CleanSuiteInventory (void)
 {
 	FS_Shutdown();
 	Cmd_Shutdown();
@@ -70,21 +65,48 @@ static int UFO_CleanSuiteRouting (void)
 	return 0;
 }
 
-static void testConnection (void)
+static void testItemAdd (void)
 {
 	/**
 	 * @todo implement the test
 	 */
 }
 
-int UFO_AddRoutingTests (void) {
+static void testItemDel (void)
+{
+	/**
+	 * @todo implement the test
+	 */
+}
+
+static void testItemMove (void)
+{
+	/**
+	 * @todo implement the test
+	 */
+}
+
+static void testItemMassActions (void)
+{
+	/**
+	 * @todo implement the test
+	 */
+}
+
+int UFO_AddInventoryTests (void) {
 	/* add a suite to the registry */
-	CU_pSuite routingSuite = CU_add_suite("RoutingTests", UFO_InitSuiteRouting, UFO_CleanSuiteRouting);
-	if (routingSuite == NULL)
+	CU_pSuite InventorySuite = CU_add_suite("InventoryTests", UFO_InitSuiteInventory, UFO_CleanSuiteInventory);
+	if (InventorySuite == NULL)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(routingSuite, testConnection) == NULL)
+	if (CU_ADD_TEST(InventorySuite, testItemAdd) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(InventorySuite, testItemDel) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(InventorySuite, testItemMove) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(InventorySuite, testItemMassActions) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

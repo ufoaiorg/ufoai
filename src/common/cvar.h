@@ -95,6 +95,7 @@ void Cvar_UpdateLatchedVars(void);
 qboolean Cvar_Command(void);
 
 void Cvar_Init(void);
+void Cvar_Shutdown(void);
 
 /**
  * @brief returns an info string containing all the CVAR_USERINFO cvars

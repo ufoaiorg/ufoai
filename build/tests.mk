@@ -4,6 +4,7 @@ TESTS_LIBS+=-lcunit
 TESTS_SRCS = \
 	tests/test_all.c \
 	tests/test_routing.c \
+	tests/test_inventory.c \
 	\
 	common/cmd.c \
 	common/http.c \

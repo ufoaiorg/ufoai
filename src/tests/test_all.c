@@ -3,9 +3,11 @@ typedef int (*testSuite_t) (void);
 
 /* include the tests here */
 #include "test_routing.h"
+#include "test_inventory.h"
 
 static const testSuite_t testSuites[] = {
 	UFO_AddRoutingTests,
+	UFO_AddInventoryTests,
 	NULL
 };
 #define NUMBER_OF_TESTS (sizeof(testSuites) / sizeof(*(testSuites)))

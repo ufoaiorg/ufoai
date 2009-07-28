@@ -1164,6 +1164,8 @@ void Qcommon_Shutdown (void)
 {
 	HTTP_Cleanup();
 
+	Cmd_Shutdown();
+	Cvar_Shutdown();
 	Mem_Shutdown();
 }
 

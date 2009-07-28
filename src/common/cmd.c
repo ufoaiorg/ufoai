@@ -1030,3 +1030,10 @@ void Cmd_Init (void)
 	Cmd_AddCommand("debug_cmdtest", Cmd_Test_f, "Calls every command in the current list");
 #endif
 }
+
+void Cmd_Shutdown (void)
+{
+	memset(cmd_functions_hash, 0, sizeof(cmd_functions_hash));
+	memset(cmd_functions, 0, sizeof(cmd_functions));
+	cmd_argc = 0;
+}
