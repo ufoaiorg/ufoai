@@ -65,9 +65,30 @@ static int UFO_CleanSuiteInventory (void)
 
 static void testItemAdd (void)
 {
-	/**
-	 * @todo implement the test
-	 */
+	inventory_t inv;
+	objDef_t *od;
+	item_t item;
+	invDef_t *container;
+
+	memset(&inv, 0, sizeof(inv));
+	INVSH_DestroyInventory(&inv);
+
+	od = INVSH_GetItemByIDSilent("assault");
+	CU_ASSERT_PTR_NOT_NULL(od);
+
+	container = INVSH_GetInventoryDefinitionByID("left");
+	CU_ASSERT_PTR_NOT_NULL(container);
+	INVSH_InitInventory(container, qfalse);
+
+	item.t = od;
+	item.m = NULL;
+	item.a = 0;
+
+	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
+
+	Com_AddToInventory(&inv, item, &csi.ids[csi.idLeft], NONE, NONE, 1);
+
+	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qtrue);
 }
 
 static void testItemDel (void)

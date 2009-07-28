@@ -1328,7 +1328,7 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 	/* Get weapon */
 	obj = chr->teamDef->onlyWeapon;
 	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee: team %i: %s, weapon: %s\n",
-	chr->teamDef->idx, chr->teamDef->id, obj->id);
+		chr->teamDef->idx, chr->teamDef->id, obj->id);
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
 	item.t = obj;
@@ -1996,6 +1996,23 @@ objDef_t *INVSH_GetItemByID (const char *id)
 		Com_Printf("INVSH_GetItemByID: Item \"%s\" not found.\n", id);
 
 	return od;
+}
+
+/**
+ * Searched an inventory container by a given container id
+ * @param[in] id ID or name of the inventory container to search for
+ * @return @c NULL if not found
+ */
+invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
+{
+	int i;
+	invDef_t *container;
+
+ 	for (i = 0, container = CSI->ids; i < CSI->numIDs; container++, i++)
+ 		if (!strcmp(id, container->name))
+ 			return container;
+
+ 	return NULL;
 }
 
 /**

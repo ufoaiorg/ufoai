@@ -533,12 +533,8 @@ static void MN_ContainerNodeLoaded (menuNode_t* const node)
 	if (!strncmp(node->name, "equip_", 6))
 		name = "equip";
 
-	for (i = 0, container = csi.ids; i < csi.numIDs; container++, i++)
-		if (!strcmp(name, container->name))
-			break;
-
-	/* not find */
-	if (i == csi.numIDs)
+	container = INVSH_GetInventoryDefinitionByID(name);
+	if (container == NULL)
 		return;
 
 	EXTRADATA(node).container = container;
