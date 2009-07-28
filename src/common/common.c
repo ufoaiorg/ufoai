@@ -943,7 +943,7 @@ void Qcommon_Init (int argc, const char **argv)
 	/* e.g. init the client hunk that is used in script parsing */
 	CL_Init();
 
-	Com_ParseScripts();
+	Com_ParseScripts(sv_dedicated->integer);
 #ifndef DEDICATED_ONLY
 	Cbuf_AddText("exec keys.cfg\n");
 #endif

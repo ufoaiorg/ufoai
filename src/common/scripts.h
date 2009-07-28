@@ -248,7 +248,7 @@ const char* Com_DropShipTypeToShortName(humanAircraftType_t type);
 humanAircraftType_t Com_DropShipShortNameToID(const char *token);
 teamDef_t* Com_GetTeamDefinitionByID(const char *team);
 mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
-void Com_ParseScripts(void);
+void Com_ParseScripts(qboolean onlyServer);
 const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
 
 #endif /* SCRIPTS_H */

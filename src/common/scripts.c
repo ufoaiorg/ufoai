@@ -2816,7 +2816,7 @@ static int Com_MapDefSort (const void *mapDef1, const void *mapDef2)
  * @sa CL_ParseScriptSecond
  * @sa Qcommon_Init
  */
-void Com_ParseScripts (void)
+void Com_ParseScripts (qboolean onlyServer)
 {
 	const char *type, *name, *text;
 
@@ -2853,7 +2853,7 @@ void Com_ParseScripts (void)
 			Com_ParseInventory(name, &text);
 		else if (!strcmp(type, "terrain"))
 			Com_ParseTerrain(name, &text);
-		else if (!sv_dedicated->integer)
+		else if (!onlyServer)
 			CL_ParseClientData(type, name, &text);
 	}
 
@@ -2872,13 +2872,12 @@ void Com_ParseScripts (void)
 	Com_AddObjectLinks();	/* Add ammo<->weapon links to items.*/
 
 	/* parse ui node script */
-	if (!sv_dedicated->integer) {
+	if (!onlyServer) {
 		FS_BuildFileList("ufos/ui/*.ufo");
 		FS_NextScriptHeader(NULL, NULL, NULL);
 		text = NULL;
-		while ((type = FS_NextScriptHeader("ufos/ui/*.ufo", &name, &text)) != NULL) {
+		while ((type = FS_NextScriptHeader("ufos/ui/*.ufo", &name, &text)) != NULL)
 			CL_ParseClientData(type, name, &text);
-		}
 	}
 
 	/* sort the mapdef array */

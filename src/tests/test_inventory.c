@@ -41,13 +41,11 @@ static int UFO_InitSuiteInventory (void)
 	com_fileSysPool = Mem_CreatePool("Common: File system");
 	com_genericPool = Mem_CreatePool("Generic");
 
-	sv_dedicated = Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
-
 	Mem_Init();
 	Cmd_Init();
 	Cvar_Init();
 	FS_InitFilesystem(qtrue);
-	Com_ParseScripts();
+	Com_ParseScripts(qfalse);
 
 	return 0;
 }
