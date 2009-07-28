@@ -401,8 +401,17 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		break;
 
 	case EA_CALL:
-		/* call another function */
-		MN_ExecuteInjectedActions((const menuNode_t *) action->d.terminal.d1.data, qfalse, *(menuAction_t **) action->d.terminal.d2.data);
+		switch (action->subType) {
+		case EA_CALL_NORMAL:	/* call a function */
+			MN_ExecuteInjectedActions((const menuNode_t *) action->d.terminal.d1.data, qfalse, *(menuAction_t **) action->d.terminal.d2.data);
+			break;
+		case EA_CALL_NODEFUNCTION:	/* call a node function */
+			{
+				menuNodeFunction_t func = (menuNodeFunction_t) action->d.terminal.d2.data;
+				func((menuNode_t *) action->d.terminal.d1.data);
+			}
+			break;
+		}
 		break;
 
 	case EA_ASSIGN:

@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 #include "../m_input.h"
+#include "../m_parse.h"
 #include "m_node_abstractnode.h"
 #include "m_node_map.h"
 
@@ -178,9 +179,9 @@ static void MN_MapNodeCapturedMouseLost (menuNode_t *node)
 	mode = MODE_NULL;
 }
 
-static void MN_MapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_MapNodeZoom (menuNode_t *node, qboolean out)
 {
-	ccs.zoom *= pow(0.995, (down ? 10: -10));
+	ccs.zoom *= pow(0.995, (out ? 10: -10));
 	if (ccs.zoom < cl_mapzoommin->value)
 		ccs.zoom = cl_mapzoommin->value;
 	else if (ccs.zoom > cl_mapzoommax->value)
@@ -195,6 +196,21 @@ static void MN_MapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 	MAP_StopSmoothMovement();
 }
 
+static void MN_MapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+{
+	MN_MapNodeZoom(node, down);
+}
+
+static void MN_MapNodeZoomIn (menuNode_t *node)
+{
+	MN_MapNodeZoom(node, qfalse);
+}
+
+static void MN_MapNodeZoomOut (menuNode_t *node)
+{
+	MN_MapNodeZoom(node, qtrue);
+}
+
 /**
  * @brief Called before loading. Used to set default attribute values
  */
@@ -206,6 +222,8 @@ static void MN_MapNodeLoading (menuNode_t *node)
 
 static const value_t properties[] = {
 	{"padding-right", V_FLOAT, offsetof(menuNode_t, extraData1), MEMBER_SIZEOF(menuNode_t, extraData1)},
+	{"zoomin", V_UI_NODEFUNCTION, ((size_t) MN_MapNodeZoomIn), 0},
+	{"zoomout", V_UI_NODEFUNCTION, ((size_t) MN_MapNodeZoomOut), 0},
 	{NULL, V_NULL, 0, 0}
 };
 

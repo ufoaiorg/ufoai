@@ -359,7 +359,7 @@ window geoscape
 				size		"20 60"
 				repeat		true
 				clickdelay	100
-				onClick		{ cmd "map_zoom in;" }
+				onClick		{ call themap@zoomin }
 			}
 
 			zone panel_zoom_out
@@ -368,7 +368,7 @@ window geoscape
 				size		"20 60"
 				repeat		true
 				clickdelay	100
-				onClick		{ cmd "map_zoom out;" }
+				onClick		{ call themap@zoomout }
 			}
 		}
 

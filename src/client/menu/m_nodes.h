@@ -55,6 +55,8 @@ typedef struct excludeRect_s {
 	vec2_t pos, size;
 } excludeRect_t;
 
+typedef void (*menuNodeFunction_t)(struct menuNode_s*node);
+
 /**
  * @brief menu node
  */

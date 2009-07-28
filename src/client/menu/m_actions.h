@@ -92,6 +92,9 @@ typedef enum ea_s {
 	EA_VALUE_NODEPROPERTY = EA_VALUE + 9				/**< reference to a node, and a property (not a string) */
 } ea_t;
 
+#define EA_CALL_NORMAL			0x0
+#define EA_CALL_NODEFUNCTION	0x1
+
 typedef union {
 	int integer;
 	float number;
