@@ -341,7 +341,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 	int i;
 	static char text[MAX_VAR];
 	int selectedEntry;
-	static linkedList_t* popupListText = NULL;
+	linkedList_t* popupListText = NULL;
 
 	if (!selActor)
 		return;
