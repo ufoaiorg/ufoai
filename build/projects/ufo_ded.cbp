@@ -52,6 +52,13 @@
 				<Option object_output=".objs\ufo_ded" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="`sdl-config --cflags`" />
+				</Compiler>
+				<Linker>
+					<Add option="`sdl-config --libs`" />
+					<Add library="GL" />
+				</Linker>
 				<Linker>
 					<Add library="dl" />
 				</Linker>
