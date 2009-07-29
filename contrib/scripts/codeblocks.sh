@@ -108,6 +108,7 @@ function start_downloads()
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-lib.zip libiconv.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-bin.zip libiconv-bin.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libintl-0.14.4-lib.zip libintl.zip
+	download_archive http://downloads.sourceforge.net/gnuwin32/ libintl-0.14.4-bin.zip libintl-bin.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libpng-1.2.35-lib.zip libpng.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ pdcurses-2.6-lib.zip libpdcurses.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ tiff-3.8.2-1-lib.zip libtiff.zip
@@ -150,6 +151,7 @@ function start_downloads()
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.24/ pango-dev_1.24.2-1_win32.zip pango-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.26/ atk-dev_1.26.0-1_win32.zip atk-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-tools-0.17.zip gettext-tools.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-dev-0.17-1.zip gettext-runtime-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.6-1_win32.zip cairo-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ pkg-config-0.23-2.zip pkg-config.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-0.17-1.zip gettext-runtime.zip
@@ -202,6 +204,7 @@ function extract_libs()
 	extract_archive_zip libiconv-bin.zip "${MINGW_DIR}"
 	extract_archive_zip libiconv.zip "${MINGW_DIR}"
 	extract_archive_zip libintl.zip "${MINGW_DIR}"
+	extract_archive_zip libintl-bin.zip "${MINGW_DIR}"
 	extract_archive_zip freetype.zip "${MINGW_DIR}"
 	extract_archive_zip libtiff.zip "${MINGW_DIR}"
 	extract_archive_gz directx.tar.gz "${MINGW_DIR}"
@@ -274,6 +277,7 @@ function extract_tools()
 	extract_archive_zip pkg-config.zip "${MINGW_DIR}"
 	extract_archive_zip gettext-runtime.zip "${MINGW_DIR}"
 	extract_archive_zip gettext-tools.zip "${MINGW_DIR}"
+	extract_archive_zip gettext-runtime-dev.zip "${MINGW_DIR}"
 	extract_archive_zip 7zip.zip "${TEMP_DIR}/tmp"
 	extract_archive_zip svn.zip "${TEMP_DIR}/tmp"
 	#some parts of openssl are also included in the svn package
