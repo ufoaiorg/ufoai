@@ -3,6 +3,9 @@
 /* Define this to the path containing the game binary. */
 #undef BINDIR
 
+/* Have cunit library */
+#undef BUILD_TESTS
+
 /* OpenGL header path */
 #undef GL_H_WITHOUT_GL_DIR
 
