@@ -75,6 +75,7 @@
 				<Linker>
 					<Add option="-framework IOKit" />
 					<Add option="-framework,Cocoa" />
+					<Add option="-framework SDL" />
 					<Add option="-framework foundation" />
 					<Add library="z" />
 					<Add library="dl" />
