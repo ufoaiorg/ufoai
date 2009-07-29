@@ -115,7 +115,7 @@ GtkWindow* FindTextureDialog::BuildDialog() {
 	GtkWidget* vbox, *hbox, *table, *label;
 	GtkWidget* button, *check, *entry;
 
-	GtkWindow* dlg = create_floating_window(_("Find / Replace Texture(s)"), m_parent);
+	GtkWindow* dlg = create_floating_window(_("Find/replace texture"), m_parent);
 
 	hbox = gtk_hbox_new (FALSE, 5);
 	gtk_widget_show (hbox);
