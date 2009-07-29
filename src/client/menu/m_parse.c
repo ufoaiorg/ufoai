@@ -355,7 +355,6 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			{
 				menuNode_t* callNode = NULL;
 				const value_t* callProperty = NULL;
-				menuAction_t **actionsRef = NULL;
 				const char *path;
 				/* get the function name */
 				*token = Com_EParse(text, errhead, NULL);
