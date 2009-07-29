@@ -49,11 +49,12 @@ static int UFO_InitSuiteRouting (void)
 	Cmd_Init();
 	Cvar_Init();
 	FS_InitFilesystem(qtrue);
+	Swap_Init();
 
 	/**
 	 * @todo use a special testmap
 	 */
-	/*CM_LoadMap("maps/fueldump", qtrue, "", &checksum);*/
+	CM_LoadMap("fueldump", qtrue, "", &checksum);
 	return 0;
 }
 
