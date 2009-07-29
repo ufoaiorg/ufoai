@@ -20,8 +20,9 @@ function failure()
 
 function check_error() 
 {
-	errormessage=${1}
-	if [ $? -ne "0" ]; then
+	error=${1}
+	errormessage=${2}
+	if [ $error -ne 0 ]; then
 		failure "Error: ${errormessage}"
 	fi
 }
@@ -31,7 +32,7 @@ function download_archive()
 	baseurl=${1}
 	filename=${2}
 	targetname=${3}
-	echo "downloading ${targetname}..."
+	echo "downloading ${filename}..."
 	pushd ${DOWNLOAD_DIR} > /dev/null
 	${WGET} -q -nc ${baseurl}${filename} -O ${targetname} || true >> ${LOGFILE_NAME} 2>&1
 	popd > /dev/null
@@ -47,7 +48,7 @@ function extract_archive_gz()
 	pushd "${target}" > /dev/null
 	${TAR} -xzf "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
 	popd > /dev/null
-	check_error "Failed to extract ${file}"
+	check_error $? "Failed to extract ${file}"
 }
 
 function extract_archive_bz2() 
@@ -57,7 +58,7 @@ function extract_archive_bz2()
 	pushd "${target}" > /dev/null
 	${TAR} -xjf "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
 	popd > /dev/null
-	check_error "Failed to extract ${file}"
+	check_error $? "Failed to extract ${file}"
 }
 
 function extract_archive_zip() 
@@ -65,7 +66,7 @@ function extract_archive_zip()
 	file=${1}
 	target=${2}
 	${UNZIP} -o "${DOWNLOAD_DIR}/${file}" -d "${target}" >> ${LOGFILE_NAME} 2>&1
-	check_error "Failed to extract ${file}"
+	check_error $? "Failed to extract ${file}"
 }
 
 function extract_archive_7z() 
@@ -73,7 +74,7 @@ function extract_archive_7z()
 	file=${1}
 	target=${2}
 	${UN7ZIP} x -y -o"${target}" "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
-	check_error "Failed to extract ${file}"
+	check_error $? "Failed to extract ${file}"
 }
 
 function start_downloads()
@@ -117,7 +118,9 @@ function start_downloads()
 	download_archive http://downloads.sourceforge.net/gnuwin32/ regex-2.7-bin.zip regex.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ pcre-7.0-bin.zip pcre.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ grep-2.5.4-bin.zip grep.zip
-	
+
+	download_archive http://downloads.sourceforge.net/cunit/ CUnit-${CUNIT_VERSION}-winlib.zip cunit.zip
+
 	download_archive http://downloads.sourceforge.net/sevenzip/ 7za465.zip 7zip.zip
 
 	download_archive http://curl.de-mirror.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
@@ -185,13 +188,13 @@ function extract_mingw()
 	extract_archive_bz2 msys-automake1.10.tar.bz2 "${MINGW_DIR}"
 	extract_archive_bz2 msys-coreutils.tar.bz2 "${MINGW_DIR}"
 	cp -R ${MINGW_DIR}/usr/local/* "${MINGW_DIR}"
-	check_error "Could not copy mingw files"
+	check_error $? "Could not copy mingw files"
 	rm -rf ${MINGW_DIR}/usr/local
-	check_error "Could not remove mingw files"
+	check_error $? "Could not remove mingw files"
 	cp -R ${MINGW_DIR}/coreutils*/* "${MINGW_DIR}"
-	check_error "Could not copy coreutils files"
+	check_error $? "Could not copy coreutils files"
 	rm -rf ${MINGW_DIR}/coreutils*
-	check_error "Could not remove coreutils files"
+	check_error $? "Could not remove coreutils files"
 }
 
 function extract_libs()
@@ -210,49 +213,60 @@ function extract_libs()
 	extract_archive_zip libxml2.zip "${MINGW_DIR}"
 }
 
+function extrace_cunit() 
+{
+	mkdir -p ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
+	check_error $? "Could not create temp cunit directory"
+	extract_archive_zip cunit.zip "${TEMP_DIR}/tmp"
+	cp ${TEMP_DIR}/tmp/CUnit-${CUNIT_VERSION}/* -R ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
+	check_error $? "Could not copy cunit files"
+	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
+	check_error $? "Could not remove cunit files"
+}
+
 function extract_libcurl()
 {
 	mkdir -p ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not create temp libcurl directory"
+	check_error $? "Could not create temp libcurl directory"
 	extract_archive_zip libcurl.zip "${TEMP_DIR}/tmp"
 	cp ${TEMP_DIR}/tmp/libcurl-${CURL_VERSION}/* -R ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not copy libcurl files"
+	check_error $? "Could not copy libcurl files"
 	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not remove libcurl files"
+	check_error $? "Could not remove libcurl files"
 }
 
 function extract_sdl()
 {
 	mkdir -p ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not create temp sdl directory"
+	check_error $? "Could not create temp sdl directory"
 	extract_archive_zip sdl_mixer.zip "${TEMP_DIR}/tmp"
 	extract_archive_zip sdl_ttf.zip "${TEMP_DIR}/tmp"
 	extract_archive_zip sdl_image.zip "${TEMP_DIR}/tmp"
 	extract_archive_gz sdl.tar.gz "${TEMP_DIR}/tmp"
 	pushd ${TEMP_DIR}/tmp/SDL-${SDL_VERSION} > /dev/null
 	make install-sdl prefix="${MINGW_DIR}" >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not install sdl files"
+	check_error $? "Could not install sdl files"
 	popd > /dev/null
 	cp ${TEMP_DIR}/tmp/SDL_mixer-${SDL_MIXER_VERSION}/include/* ${MINGW_DIR}/include/SDL >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not copy sdl mixer header files"
+	check_error $? "Could not copy sdl mixer header files"
 	cp ${TEMP_DIR}/tmp/SDL_mixer-${SDL_MIXER_VERSION}/lib/* ${MINGW_DIR}/lib >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not copy sdl mixer files"
+	check_error $? "Could not copy sdl mixer files"
 	cp ${TEMP_DIR}/tmp/SDL_ttf-${SDL_TTF_VERSION}/include/* ${MINGW_DIR}/include/SDL >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not copy sdl ttf header files"
+	check_error $? "Could not copy sdl ttf header files"
 	cp ${TEMP_DIR}/tmp/SDL_ttf-${SDL_TTF_VERSION}/lib/* ${MINGW_DIR}/lib >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not copy sdl ttf files"
+	check_error $? "Could not copy sdl ttf files"
 	cp ${TEMP_DIR}/tmp/SDL_image-${SDL_IMAGE_VERSION}/include/* ${MINGW_DIR}/include/SDL >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not copy sdl image header files"
+	check_error $? "Could not copy sdl image header files"
 	cp ${TEMP_DIR}/tmp/SDL_image-${SDL_IMAGE_VERSION}/lib/* ${MINGW_DIR}/lib >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not copy sdl image files"
+	check_error $? "Could not copy sdl image files"
 	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not remove sdl files"
+	check_error $? "Could not remove sdl files"
 }
 
 function extract_tools()
 {
 	mkdir -p ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not create temp tools directory"
+	check_error $? "Could not create temp tools directory"
 	extract_archive_zip wget.zip "${MINGW_DIR}"
 	extract_archive_zip unzip.zip "${MINGW_DIR}"
 	extract_archive_zip openssl.zip "${MINGW_DIR}"
@@ -267,13 +281,13 @@ function extract_tools()
 	extract_archive_zip svn.zip "${TEMP_DIR}/tmp"
 	#some parts of openssl are also included in the svn package
 	cp ${TEMP_DIR}/tmp/7za.exe ${MINGW_DIR}/bin/7z.exe >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not copy 7za files"
+	check_error $? "Could not copy 7za files"
 	cp ${TEMP_DIR}/tmp/7za.exe ${MINGW_DIR}/bin/7za.exe >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not copy 7za files"
+	check_error $? "Could not copy 7za files"
 	cp -R ${TEMP_DIR}/tmp/svn-win32*/* ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not copy svn files"
+	check_error $? "Could not copy svn files"
 	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not remove tools files"
+	check_error $? "Could not remove tools files"
 }
 
 function extract_gtk()
@@ -288,20 +302,20 @@ function extract_gtk()
 
 	for i in $(echo "glib-2.0 gtk-2.0 gtkglext-1.0"); do
 		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
-		check_error "Could not copy $i include files"
+		check_error $? "Could not copy $i include files"
 		rm -r ${MINGW_DIR}/include/${i} >> ${LOGFILE_NAME} 2>&1
-		check_error "Could not remove $i include files"
+		check_error $? "Could not remove $i include files"
 		cp -R ${MINGW_DIR}/lib/${i}/include/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
-		check_error "Could not copy $i lib/include files"
+		check_error $? "Could not copy $i lib/include files"
 		rm -r ${MINGW_DIR}/lib/${i} >> ${LOGFILE_NAME} 2>&1
-		check_error "Could not remove $i lib/include files"
+		check_error $? "Could not remove $i lib/include files"
 	done
 
 	for i in $(echo "gail-1.0 pango-1.0 atk-1.0 cairo" ); do
 		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
-		check_error "Could not copy $i include files"
+		check_error $? "Could not copy $i include files"
 		rm -r ${MINGW_DIR}/include/${i} >> ${LOGFILE_NAME} 2>&1
-		check_error "Could not remove $i include files"
+		check_error $? "Could not remove $i include files"
 	done
 }
 
@@ -334,6 +348,7 @@ SDL_MIXER_VERSION=1.2.8
 SDL_TTF_VERSION=2.0.9
 SDL_IMAGE_VERSION=1.2.6
 CURL_VERSION=7.16.4
+CUNIT_VERSION=2.1-0
 
 # Use an absolute path here
 TEMP_DIR=/tmp/tmp_codeblocks
@@ -396,6 +411,8 @@ create()
 
 	extract_libcurl
 
+	extrace_cunit
+
 	extract_gtk
 
 	extract_ogg
@@ -408,7 +425,7 @@ create()
 	echo "Start to create ${ARCHIVE_NAME}"
 
 	${UN7ZIP} a -tzip -mx=9 ${ARCHIVE_NAME} ${CODEBLOCKS_DIR} >> ${LOGFILE_NAME} 2>&1
-	check_error "Could not create ${ARCHIVE_NAME}"
+	check_error $? "Could not create ${ARCHIVE_NAME}"
 
 	if [ ! -e "${ARCHIVE_NAME}" ]; then
 		echo "Failed to create ${ARCHIVE_NAME}"
