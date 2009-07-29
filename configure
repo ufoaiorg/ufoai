@@ -647,7 +647,6 @@ CLIENT_LIBS
 EXE_EXT
 BINDIR
 PKGDATADIR
-BUILD_TESTS
 PROFILING
 PARANOID
 BUILD_DEBUG
@@ -655,6 +654,7 @@ BUILD_UFORADIANT
 BUILD_UFO2MAP
 BUILD_DEDICATED
 BUILD_CLIENT
+BUILD_TESTS
 RADIANT_LIBS
 RADIANT_CFLAGS
 MSYS
@@ -11918,8 +11918,8 @@ _ACEOF
 
 	elif test "$with_curses" = "yes"
 	then
-		{ { $as_echo "$as_me:$LINENO: error: --with-curses specified but could not find newwin" >&5
-$as_echo "$as_me: error: --with-curses specified but could not find newwin" >&2;}
+		{ { $as_echo "$as_me:$LINENO: error: --with-curses specified but could not find curses lib" >&5
+$as_echo "$as_me: error: --with-curses specified but could not find curses lib" >&2;}
    { (exit 1); exit 1; }; }
 	else
 		HAVE_CURSES=0
@@ -12103,6 +12103,123 @@ $as_echo "$as_me: Without UFORadiant" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
+# Check for tests
+#---------------------------------------------------------------------------------------------
+
+BUILD_TESTS=0
+
+if test "$enable_tests" = "yes"
+then
+	{ $as_echo "$as_me:$LINENO: checking for library containing CU_initialize_registry" >&5
+$as_echo_n "checking for library containing CU_initialize_registry... " >&6; }
+if test "${ac_cv_search_CU_initialize_registry+set}" = set; then
+  $as_echo_n "(cached) " >&6
+else
+  ac_func_search_save_LIBS=$LIBS
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char CU_initialize_registry ();
+int
+main ()
+{
+return CU_initialize_registry ();
+  ;
+  return 0;
+}
+_ACEOF
+for ac_lib in '' cunit; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  rm -f conftest.$ac_objext conftest$ac_exeext
+if { (ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
+$as_echo "$ac_try_echo") >&5
+  (eval "$ac_link") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && {
+	 test -z "$ac_c_werror_flag" ||
+	 test ! -s conftest.err
+       } && test -s conftest$ac_exeext && {
+	 test "$cross_compiling" = yes ||
+	 $as_test_x conftest$ac_exeext
+       }; then
+  ac_cv_search_CU_initialize_registry=$ac_res
+else
+  $as_echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+
+fi
+
+rm -rf conftest.dSYM
+rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
+      conftest$ac_exeext
+  if test "${ac_cv_search_CU_initialize_registry+set}" = set; then
+  break
+fi
+done
+if test "${ac_cv_search_CU_initialize_registry+set}" = set; then
+  :
+else
+  ac_cv_search_CU_initialize_registry=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:$LINENO: result: $ac_cv_search_CU_initialize_registry" >&5
+$as_echo "$ac_cv_search_CU_initialize_registry" >&6; }
+ac_res=$ac_cv_search_CU_initialize_registry
+if test "$ac_res" != no; then
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+
+fi
+
+	if test "$ac_cv_search_cu_initialize_registry" != "no"
+	then
+		BUILD_TESTS=1
+
+
+cat >>confdefs.h <<\_ACEOF
+#define BUILD_TESTS 1
+_ACEOF
+
+	elif test "$enable_tests" = "yes"
+	then
+		{ { $as_echo "$as_me:$LINENO: error: --enable-tests specified but could not find cunit lib" >&5
+$as_echo "$as_me: error: --enable-tests specified but could not find cunit lib" >&2;}
+   { (exit 1); exit 1; }; }
+	else
+		BUILD_TESTS=0
+
+		{ $as_echo "$as_me:$LINENO: Without tests" >&5
+$as_echo "$as_me: Without tests" >&6;}
+	fi
+fi
+
+#---------------------------------------------------------------------------------------------
 # Wipe the LIBS string
 #---------------------------------------------------------------------------------------------
 
@@ -12203,20 +12320,6 @@ then
 $as_echo "$as_me: Enabling profiling" >&6;}
 else
 	PROFILING=0
-
-fi
-
-#---------------------------------------------------------------------------------------------
-# Check for tests
-#---------------------------------------------------------------------------------------------
-
-BUILD_TESTS=0
-
-if test "$enable_tests" = "yes"
-then
-	{ $as_echo "$as_me:$LINENO: Enabling tests" >&5
-$as_echo "$as_me: Enabling tests" >&6;}
-	BUILD_TESTS=1
 
 fi
 

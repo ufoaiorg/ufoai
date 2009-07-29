@@ -700,7 +700,7 @@ then
 		AC_DEFINE([HAVE_CURSES],[1],[Have curses library])
 	elif test "$with_curses" = "yes"
 	then
-		AC_MSG_ERROR([--with-curses specified but could not find newwin])
+		AC_MSG_ERROR([--with-curses specified but could not find curses lib])
 	else
 		AC_SUBST([HAVE_CURSES],0)
 		AC_MSG_NOTICE([Without curses])
@@ -750,6 +750,27 @@ then
 	RADIANT_LIBS="$RADIANT_LIBS $OLD_RADIANT_LIBS"
 else
 	AC_MSG_NOTICE([Without UFORadiant])
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for tests
+#---------------------------------------------------------------------------------------------
+
+AC_SUBST([BUILD_TESTS],0)
+if test "$enable_tests" = "yes"
+then
+	AC_SEARCH_LIBS([CU_initialize_registry], [cunit])
+	if test "$ac_cv_search_cu_initialize_registry" != "no"
+	then
+		AC_SUBST([BUILD_TESTS],1)
+		AC_DEFINE([BUILD_TESTS],[1],[Have cunit library])
+	elif test "$enable_tests" = "yes"
+	then
+		AC_MSG_ERROR([--enable-tests specified but could not find cunit lib])
+	else
+		AC_SUBST([BUILD_TESTS],0)
+		AC_MSG_NOTICE([Without tests])
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -834,17 +855,6 @@ then
 	AC_MSG_NOTICE([Enabling profiling])
 else
 	AC_SUBST([PROFILING],0)
-fi
-
-#---------------------------------------------------------------------------------------------
-# Check for tests
-#---------------------------------------------------------------------------------------------
-
-AC_SUBST([BUILD_TESTS],0)
-if test "$enable_tests" = "yes"
-then
-	AC_MSG_NOTICE([Enabling tests])
-	AC_SUBST([BUILD_TESTS],1)
 fi
 
 #---------------------------------------------------------------------------------------------
