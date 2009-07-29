@@ -1,23 +1,23 @@
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
+ Copyright (C) 2001-2006, William Joseph.
+ All Rights Reserved.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "filters.h"
 #include "radiant_i18n.h"
@@ -39,19 +39,21 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 struct filters_globals_t {
 	std::size_t exclude;
 
-	filters_globals_t() : exclude(0) {
+	filters_globals_t() :
+		exclude(0) {
 	}
 };
 
 filters_globals_t g_filters_globals;
 
-inline bool filter_active(int mask) {
+static inline bool filter_active(int mask) {
 	return (g_filters_globals.exclude & mask) > 0;
 }
 
 class FilterWrapper {
 public:
-	FilterWrapper(Filter& filter, int mask) : m_filter(filter), m_mask(mask) {
+	FilterWrapper(Filter& filter, int mask) :
+		m_filter(filter), m_mask(mask) {
 	}
 	void update() {
 		m_filter.setActive(filter_active(m_mask));
@@ -62,10 +64,10 @@ private:
 };
 
 typedef std::list<FilterWrapper> Filters;
-Filters g_filters;
+static Filters g_filters;
 
 typedef std::set<Filterable*> Filterables;
-Filterables g_filterables;
+static Filterables g_filterables;
 
 void UpdateFilters() {
 	{
@@ -75,14 +77,14 @@ void UpdateFilters() {
 	}
 
 	{
-		for (Filterables::iterator i = g_filterables.begin(); i != g_filterables.end(); ++i) {
+		for (Filterables::iterator i = g_filterables.begin(); i
+				!= g_filterables.end(); ++i) {
 			(*i)->updateFiltered();
 		}
 	}
 }
 
-
-class BasicFilterSystem : public FilterSystem {
+class BasicFilterSystem: public FilterSystem {
 public:
 	void addFilter(Filter& filter, int mask) {
 		g_filters.push_back(FilterWrapper(filter, mask));
@@ -105,7 +107,7 @@ FilterSystem& GetFilterSystem() {
 	return g_FilterSystem;
 }
 
-void PerformFiltering() {
+static void PerformFiltering() {
 	UpdateFilters();
 	SceneChangeNotify();
 }
@@ -115,14 +117,17 @@ class ToggleFilterFlag {
 public:
 	ToggleItem m_item;
 
-	ToggleFilterFlag(unsigned int mask) : m_mask(mask), m_item(ActiveCaller(*this)) {
+	ToggleFilterFlag(unsigned int mask) :
+		m_mask(mask), m_item(ActiveCaller(*this)) {
 	}
-	ToggleFilterFlag(const ToggleFilterFlag& other) : m_mask(other.m_mask), m_item(ActiveCaller(*this)) {
+	ToggleFilterFlag(const ToggleFilterFlag& other) :
+		m_mask(other.m_mask), m_item(ActiveCaller(*this)) {
 	}
 	void active(const BoolImportCallback& importCallback) {
 		importCallback((g_filters_globals.exclude & m_mask) != 0);
 	}
-	typedef MemberCaller1<ToggleFilterFlag, const BoolImportCallback&, &ToggleFilterFlag::active> ActiveCaller;
+	typedef MemberCaller1<ToggleFilterFlag, const BoolImportCallback&,
+			&ToggleFilterFlag::active> ActiveCaller;
 	void toggle() {
 		g_filters_globals.exclude ^= m_mask;
 		m_item.update();
@@ -133,16 +138,19 @@ public:
 		m_item.update();
 		PerformFiltering();
 	}
-	typedef MemberCaller<ToggleFilterFlag, &ToggleFilterFlag::toggle> ToggleCaller;
+	typedef MemberCaller<ToggleFilterFlag, &ToggleFilterFlag::toggle>
+			ToggleCaller;
 };
-
 
 typedef std::list<ToggleFilterFlag> ToggleFilterFlags;
 ToggleFilterFlags g_filter_items;
 
-void add_filter_command(unsigned int flag, const char* command, const Accelerator& accelerator) {
+static void add_filter_command(unsigned int flag, const char* command,
+		const Accelerator& accelerator) {
 	g_filter_items.push_back(ToggleFilterFlag(flag));
-	GlobalToggles_insert(command, ToggleFilterFlag::ToggleCaller(g_filter_items.back()), ToggleItem::AddCallbackCaller(g_filter_items.back().m_item), accelerator);
+	GlobalToggles_insert(command, ToggleFilterFlag::ToggleCaller(
+			g_filter_items.back()), ToggleItem::AddCallbackCaller(
+			g_filter_items.back().m_item), accelerator);
 }
 
 void InvertFilters() {
@@ -162,58 +170,98 @@ void ResetFilters() {
 }
 
 void Filters_constructMenu(GtkMenu* menu_in_menu) {
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "World"), "FilterWorldBrushes");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Entities"), "FilterEntities");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Translucent"), "FilterTranslucent");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Liquids"), "FilterLiquids");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Caulk"), "FilterCaulk");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Clips"), "FilterClips");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "ActorClips"), "FilterActorClips");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "WeaponClips"), "FilterWeaponClips");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Lights"), "FilterLights");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "NoSurfLights"), "FilterNoSurfLights");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "NoFootsteps"), "FilterNoFootsteps");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Structural"), "FilterStructural");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Nodraw"), "FilterNodraw");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Phong"), "FilterPhong");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Details"), "FilterDetails");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Hints"), "FilterHintsSkips");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Models"), "FilterModels");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Triggers"), "FilterTriggers");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "World"), "FilterWorldBrushes");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Entities"), "FilterEntities");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Translucent"), "FilterTranslucent");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Liquids"), "FilterLiquids");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Caulk"), "FilterCaulk");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Clips"), "FilterClips");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "ActorClips"), "FilterActorClips");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "WeaponClips"), "FilterWeaponClips");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Lights"), "FilterLights");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "NoSurfLights"), "FilterNoSurfLights");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "NoFootsteps"), "FilterNoFootsteps");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Structural"), "FilterStructural");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Nodraw"), "FilterNodraw");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Phong"), "FilterPhong");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Details"), "FilterDetails");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Hints"), "FilterHintsSkips");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Models"), "FilterModels");
+	create_check_menu_item_with_mnemonic(menu_in_menu,
+			C_("Filter Menu", "Triggers"), "FilterTriggers");
 	// filter manipulation
 	menu_separator(menu_in_menu);
-	create_menu_item_with_mnemonic(menu_in_menu, _("Invert filters"), "InvertFilters");
-	create_menu_item_with_mnemonic(menu_in_menu, _("Reset filters"), "ResetFilters");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Invert filters"),
+			"InvertFilters");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Reset filters"),
+			"ResetFilters");
 }
-
 
 #include "preferencesystem.h"
 #include "stringio.h"
 
 void ConstructFilters() {
-	GlobalPreferenceSystem().registerPreference("SI_Exclude", SizeImportStringCaller(g_filters_globals.exclude), SizeExportStringCaller(g_filters_globals.exclude));
+	GlobalPreferenceSystem().registerPreference("SI_Exclude",
+			SizeImportStringCaller(g_filters_globals.exclude),
+			SizeExportStringCaller(g_filters_globals.exclude));
 
-	GlobalCommands_insert("InvertFilters", FreeCaller<InvertFilters>());
-	GlobalCommands_insert("ResetFilters", FreeCaller<ResetFilters>());
+	GlobalCommands_insert("InvertFilters", FreeCaller<InvertFilters> ());
+	GlobalCommands_insert("ResetFilters", FreeCaller<ResetFilters> ());
 
-	add_filter_command(EXCLUDE_WORLD, "FilterWorldBrushes", Accelerator('1', (GdkModifierType)GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_ENT, "FilterEntities", Accelerator('2', (GdkModifierType)GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_TRANSLUCENT, "FilterTranslucent", Accelerator('3', (GdkModifierType)GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_LIQUIDS, "FilterLiquids", Accelerator('4', (GdkModifierType)GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_CAULK, "FilterCaulk", Accelerator('5', (GdkModifierType)GDK_MOD1_MASK ));
-	add_filter_command(EXCLUDE_CLIP, "FilterClips", Accelerator('6', (GdkModifierType)GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_ACTORCLIP, "FilterActorClips", Accelerator('7', (GdkModifierType)GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_WEAPONCLIP, "FilterWeaponClips", Accelerator('8', (GdkModifierType)GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_LIGHTS, "FilterLights", Accelerator('9', (GdkModifierType)GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_NO_SURFLIGHTS, "FilterNoSurfLights", Accelerator('9', (GdkModifierType)(GDK_MOD1_MASK | GDK_CONTROL_MASK)));
-	add_filter_command(EXCLUDE_STRUCTURAL, "FilterStructural", Accelerator('0', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
-	add_filter_command(EXCLUDE_NODRAW, "FilterNodraw", Accelerator('N', (GdkModifierType)GDK_CONTROL_MASK));
-	add_filter_command(EXCLUDE_DETAILS, "FilterDetails", Accelerator('D', (GdkModifierType)GDK_CONTROL_MASK));
-	add_filter_command(EXCLUDE_HINTSSKIPS, "FilterHintsSkips", Accelerator('H', (GdkModifierType)GDK_CONTROL_MASK));
-	add_filter_command(EXCLUDE_MODELS, "FilterModels", Accelerator('M', (GdkModifierType)GDK_SHIFT_MASK));
-	add_filter_command(EXCLUDE_TRIGGERS, "FilterTriggers", Accelerator('T', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
-	add_filter_command(EXCLUDE_PHONG, "FilterPhong", Accelerator('P', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
-	add_filter_command(EXCLUDE_NO_FOOTSTEPS, "FilterNoFootsteps", Accelerator('F', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
+	add_filter_command(EXCLUDE_WORLD, "FilterWorldBrushes", Accelerator('1',
+			(GdkModifierType) GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_ENT, "FilterEntities", Accelerator('2',
+			(GdkModifierType) GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_TRANSLUCENT, "FilterTranslucent", Accelerator(
+			'3', (GdkModifierType) GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_LIQUIDS, "FilterLiquids", Accelerator('4',
+			(GdkModifierType) GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_CAULK, "FilterCaulk", Accelerator('5',
+			(GdkModifierType) GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_CLIP, "FilterClips", Accelerator('6',
+			(GdkModifierType) GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_ACTORCLIP, "FilterActorClips", Accelerator('7',
+			(GdkModifierType) GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_WEAPONCLIP, "FilterWeaponClips", Accelerator(
+			'8', (GdkModifierType) GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_LIGHTS, "FilterLights", Accelerator('9',
+			(GdkModifierType) GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_NO_SURFLIGHTS, "FilterNoSurfLights",
+			Accelerator('9', (GdkModifierType) (GDK_MOD1_MASK
+					| GDK_CONTROL_MASK)));
+	add_filter_command(EXCLUDE_STRUCTURAL, "FilterStructural", Accelerator('0',
+			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
+	add_filter_command(EXCLUDE_NODRAW, "FilterNodraw", Accelerator('N',
+			(GdkModifierType) GDK_CONTROL_MASK));
+	add_filter_command(EXCLUDE_DETAILS, "FilterDetails", Accelerator('D',
+			(GdkModifierType) GDK_CONTROL_MASK));
+	add_filter_command(EXCLUDE_HINTSSKIPS, "FilterHintsSkips", Accelerator('H',
+			(GdkModifierType) GDK_CONTROL_MASK));
+	add_filter_command(EXCLUDE_MODELS, "FilterModels", Accelerator('M',
+			(GdkModifierType) GDK_SHIFT_MASK));
+	add_filter_command(EXCLUDE_TRIGGERS, "FilterTriggers", Accelerator('T',
+			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
+	add_filter_command(EXCLUDE_PHONG, "FilterPhong", Accelerator('P',
+			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
+	add_filter_command(EXCLUDE_NO_FOOTSTEPS, "FilterNoFootsteps", Accelerator(
+			'F', (GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
 	PerformFiltering();
 }

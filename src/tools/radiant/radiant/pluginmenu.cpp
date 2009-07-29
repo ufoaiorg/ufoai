@@ -49,8 +49,7 @@ typedef std::stack<GtkWidget*> WidgetStack;
 
 static void PlugInMenu_Add (GtkMenu* plugin_menu, IPlugIn* pPlugIn)
 {
-	GtkWidget *menu, *item, *parent, *subMenu;
-	const char *menuText, *menuCommand;
+	GtkWidget *item, *parent, *subMenu;
 	WidgetStack menuStack;
 
 	parent = gtk_menu_item_new_with_label(pPlugIn->getMenuName());
@@ -59,12 +58,12 @@ static void PlugInMenu_Add (GtkMenu* plugin_menu, IPlugIn* pPlugIn)
 
 	std::size_t nCount = pPlugIn->getCommandCount();
 	if (nCount > 0) {
-		menu = gtk_menu_new();
+		GtkWidget *menu = gtk_menu_new();
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(GTK_MENU(menu));
 		while (nCount > 0) {
-			menuText = pPlugIn->getCommandTitle(--nCount);
-			menuCommand = pPlugIn->getCommand(nCount);
+			const char *menuText = pPlugIn->getCommandTitle(--nCount);
+			const char *menuCommand = pPlugIn->getCommand(nCount);
 
 			if (menuText != 0 && strlen(menuText) > 0) {
 				if (!strcmp(menuText, "-")) {

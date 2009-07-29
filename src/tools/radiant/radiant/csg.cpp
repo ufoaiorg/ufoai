@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "brushnode.h"
 #include "grid.h"
 
-void Face_makeBrush(Face& face, const Brush& brush, brush_vector_t& out, float offset) {
+static void Face_makeBrush(Face& face, const Brush& brush, brush_vector_t& out, float offset) {
 	if (face.contributes()) {
 		out.push_back(new Brush(brush));
 		Face* newFace = out.back()->addFace(face);
@@ -55,7 +55,7 @@ public:
 	}
 };
 
-void Brush_makeHollow(const Brush& brush, brush_vector_t& out, float offset) {
+static void Brush_makeHollow(const Brush& brush, brush_vector_t& out, float offset) {
 	Brush_forEachFace(brush, FaceMakeBrush(brush, out, offset));
 }
 
@@ -118,7 +118,7 @@ public:
 	}
 };
 
-void Scene_BrushMakeHollow_Selected(scene::Graph& graph) {
+static void Scene_BrushMakeHollow_Selected(scene::Graph& graph) {
 	GlobalSceneGraph().traverse(BrushHollowSelectedWalker(GetGridSize()));
 	GlobalSceneGraph().traverse(BrushDeleteSelected());
 }
@@ -213,24 +213,7 @@ inline bool Face_testPlane(const Face& face, const Plane3& plane, bool flipped) 
 }
 typedef Function3<const Face&, const Plane3&, bool, bool, Face_testPlane> FaceTestPlane;
 
-
-
-/**
- * @brief Returns true if
- * @li !flipped && brush is BACK or ON
- * @li flipped && brush is FRONT or ON
- */
-bool Brush_testPlane(const Brush& brush, const Plane3& plane, bool flipped) {
-	brush.evaluateBRep();
-	for (Brush::const_iterator i(brush.begin()); i != brush.end(); ++i) {
-		if (Face_testPlane(*(*i), plane, flipped)) {
-			return false;
-		}
-	}
-	return true;
-}
-
-brushsplit_t Brush_classifyPlane(const Brush& brush, const Plane3& plane) {
+static brushsplit_t Brush_classifyPlane(const Brush& brush, const Plane3& plane) {
 	brush.evaluateBRep();
 	brushsplit_t split;
 	for (Brush::const_iterator i(brush.begin()); i != brush.end(); ++i) {
@@ -241,7 +224,7 @@ brushsplit_t Brush_classifyPlane(const Brush& brush, const Plane3& plane) {
 	return split;
 }
 
-bool Brush_subtract(const Brush& brush, const Brush& other, brush_vector_t& ret_fragments) {
+static bool Brush_subtract(const Brush& brush, const Brush& other, brush_vector_t& ret_fragments) {
 	if (aabb_intersects_aabb(brush.localAABB(), other.localAABB())) {
 		brush_vector_t fragments;
 		fragments.reserve(other.size());
@@ -445,7 +428,7 @@ void Scene_BrushSetClipPlane(scene::Graph& graph, const Plane3& plane) {
 CSG_Merge
 =============
 */
-bool Brush_merge(Brush& brush, const brush_vector_t& in, bool onlyshape) {
+static bool Brush_merge(Brush& brush, const brush_vector_t& in, bool onlyshape) {
 	// gather potential outer faces
 
 	{
