@@ -1227,8 +1227,6 @@ static GtkMenuItem* TextureBrowser_constructToolsMenu (GtkMenu* menu)
 		menu_tearoff(menu);
 
 	create_menu_item_with_mnemonic(menu, _("Flush & Reload Shaders"), "RefreshShaders");
-	//! @todo some better place for this?
-	create_menu_item_with_mnemonic(menu, _("Find / Replace..."), "FindReplaceTextures");
 
 	return textures_menu_item;
 }

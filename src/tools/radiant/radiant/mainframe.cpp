@@ -1665,6 +1665,7 @@ static GtkMenuItem* create_tools_menu (void)
 	create_menu_item_with_mnemonic(menu, _("Compile the map"), "ToolsCompile");
 	create_menu_item_with_mnemonic(menu, _("Generate materials"), "ToolsGenerateMaterials");
 	create_menu_item_with_mnemonic(menu, _("Show pathfinding info"), "ShowPathfinding");
+	create_menu_item_with_mnemonic(menu, _("Replace textures"), "FindReplaceTextures");
 
 	return tools_menu_item;
 }
