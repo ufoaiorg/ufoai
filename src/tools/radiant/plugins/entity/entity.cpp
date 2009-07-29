@@ -171,22 +171,6 @@ class UFOEntityCreator: public EntityCreator
 
 			SceneChangeNotify();
 		}
-		void setShowLightRadii (bool lightRadii)
-		{
-			g_lightRadii = lightRadii;
-		}
-		bool getShowLightRadii ()
-		{
-			return g_lightRadii;
-		}
-		void setForceLightRadii (bool forceLightRadii)
-		{
-			g_forceLightRadii = forceLightRadii;
-		}
-		bool getForceLightRadii ()
-		{
-			return g_forceLightRadii;
-		}
 		void setShowNames (bool showNames)
 		{
 			g_showNames = showNames;
@@ -202,6 +186,22 @@ class UFOEntityCreator: public EntityCreator
 		bool getShowAngles ()
 		{
 			return g_showAngles;
+		}
+		void setShowLightRadii (bool lightRadii)
+		{
+			g_lightRadii = lightRadii;
+		}
+		bool getShowLightRadii ()
+		{
+			return g_lightRadii;
+		}
+		void setForceLightRadii (bool forceLightRadii)
+		{
+			g_forceLightRadii = forceLightRadii;
+		}
+		bool getForceLightRadii ()
+		{
+			return g_forceLightRadii;
 		}
 
 		void printStatistics () const
