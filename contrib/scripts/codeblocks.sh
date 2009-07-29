@@ -92,16 +92,18 @@ function start_downloads()
 	download_archive http://downloads.sourceforge.net/mingw/ findutils-4.3.0-MSYS-1.0.11-3-bin.tar.gz msys-findutils.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ MSYS-1.0.11-20090120-dll.tar.gz msys.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ msysCORE-1.0.11-20080826.tar.gz msys-core.tar.gz
-	download_archive http://downloads.sourceforge.net/mingw/ autoconf-4-1-bin.tar.bz2 msys-autoconf.tar.bz2
-	download_archive http://downloads.sourceforge.net/mingw/ autoconf2.5-2.61-1-bin.tar.bz2 msys-autoconf2.5.tar.bz2 
- 	download_archive http://downloads.sourceforge.net/mingw/ automake-3-1-bin.tar.bz2 msys-automake.tar.bz2
- 	download_archive http://downloads.sourceforge.net/mingw/ automake1.10-1.10-1-bin.tar.bz2 msys-automake1.10.tar.bz2
- 	
+#	download_archive http://downloads.sourceforge.net/mingw/ msys-autoconf-2.59.tar.bz2 msys-autoconf.tar.bz2
+	download_archive http://downloads.sourceforge.net/mingw/ autoconf-2.61-MSYS-1.0.11-1.tar.bz2 msys-autoconf.tar.bz2
+#	download_archive http://downloads.sourceforge.net/mingw/ msys-automake-1.8.2.tar.bz2 msys-automake.tar.bz2
+	download_archive http://downloads.sourceforge.net/mingw/ automake-1.10-MSYS-1.0.11-1.tar.bz2 msys-automake.tar.bz2
+#	download_archive http://downloads.sourceforge.net/mingw/ msys-libtool-1.5.tar.bz2 msys-libtool.tar.bz2
+	download_archive http://downloads.sourceforge.net/mingw/ libtool1.5-1.5.25a-20070701-MSYS-1.0.11-1.tar.bz2 msys-libtool.tar.bz2
+#	download_archive http://downloads.sourceforge.net/mingw/ gettext-0.17-1-mingw32-dev.tar.lzma gettext.lzma
+
 	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.0-tdm-1-core-2.tar.gz gcc.tar.gz
 	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.0-tdm-1-g++-2.tar.gz g++.tar.gz
 
 	download_archive http://downloads.sourceforge.net/gnuwin32/ freetype-2.3.5-1-lib.zip freetype.zip
-	download_archive http://downloads.sourceforge.net/gnuwin32/ gettext-0.14.4-bin.zip gettext.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ jpeg-6b-4-lib.zip libjpeg.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-lib.zip libiconv.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-bin.zip libiconv-bin.zip
@@ -142,12 +144,12 @@ function start_downloads()
 	download_archive http://download.berlios.de/codeblocks/ mingwm10_gcc421.7z codeblocks_mingw.7z
 	download_archive http://download.berlios.de/codeblocks/ CB_20090727_rev5716_win32.7z codeblocks.7z
 
-
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib_2.20.3-1_win32.zip glib.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib-dev_2.20.3-1_win32.zip glib-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.16/ gtk+-dev_2.16.2-1_win32.zip gtk+-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.24/ pango-dev_1.24.2-1_win32.zip pango-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.26/ atk-dev_1.26.0-1_win32.zip atk-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-tools-0.17.zip gettext-tools.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.6-1_win32.zip cairo-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ pkg-config-0.23-2.zip pkg-config.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-0.17-1.zip gettext-runtime.zip
@@ -183,14 +185,9 @@ function extract_mingw()
 	extract_archive_gz msys.tar.gz "${MINGW_DIR}"
 	extract_archive_gz msys-core.tar.gz "${MINGW_DIR}"
 	extract_archive_bz2 msys-autoconf.tar.bz2 "${MINGW_DIR}"
-	extract_archive_bz2 msys-autoconf2.5.tar.bz2 "${MINGW_DIR}"
 	extract_archive_bz2 msys-automake.tar.bz2 "${MINGW_DIR}"
-	extract_archive_bz2 msys-automake1.10.tar.bz2 "${MINGW_DIR}"
+	extract_archive_bz2 msys-libtool.tar.bz2 "${MINGW_DIR}"
 	extract_archive_bz2 msys-coreutils.tar.bz2 "${MINGW_DIR}"
-	cp -R ${MINGW_DIR}/usr/local/* "${MINGW_DIR}"
-	check_error $? "Could not copy mingw files"
-	rm -rf ${MINGW_DIR}/usr/local
-	check_error $? "Could not remove mingw files"
 	cp -R ${MINGW_DIR}/coreutils*/* "${MINGW_DIR}"
 	check_error $? "Could not copy coreutils files"
 	rm -rf ${MINGW_DIR}/coreutils*
@@ -207,7 +204,6 @@ function extract_libs()
 	extract_archive_zip libintl.zip "${MINGW_DIR}"
 	extract_archive_zip freetype.zip "${MINGW_DIR}"
 	extract_archive_zip libtiff.zip "${MINGW_DIR}"
-	extract_archive_zip gettext.zip "${MINGW_DIR}"
 	extract_archive_gz directx.tar.gz "${MINGW_DIR}"
 	extract_archive_zip libpdcurses.zip "${MINGW_DIR}"
 	extract_archive_zip libxml2.zip "${MINGW_DIR}"
@@ -277,6 +273,7 @@ function extract_tools()
 	extract_archive_zip grep.zip "${MINGW_DIR}"
 	extract_archive_zip pkg-config.zip "${MINGW_DIR}"
 	extract_archive_zip gettext-runtime.zip "${MINGW_DIR}"
+	extract_archive_zip gettext-tools.zip "${MINGW_DIR}"
 	extract_archive_zip 7zip.zip "${TEMP_DIR}/tmp"
 	extract_archive_zip svn.zip "${TEMP_DIR}/tmp"
 	#some parts of openssl are also included in the svn package
