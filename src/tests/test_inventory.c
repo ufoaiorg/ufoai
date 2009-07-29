@@ -28,6 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../game/inv_shared.h"
 
+static invList_t invList[MAX_INVLIST];
+
+static inline void ResetInventoryList (void)
+{
+	memset(&invList, 0, sizeof(invList));
+	INVSH_InitInventory(invList, qfalse);
+}
+
 /**
  * The suite initialization function.
  * Returns zero on success, non-zero otherwise.
@@ -70,15 +78,15 @@ static void testItemAdd (void)
 	item_t item;
 	invDef_t *container;
 
+	ResetInventoryList();
+
 	memset(&inv, 0, sizeof(inv));
-	INVSH_DestroyInventory(&inv);
 
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL(od);
 
 	container = INVSH_GetInventoryDefinitionByID("left");
 	CU_ASSERT_PTR_NOT_NULL(container);
-	INVSH_InitInventory(container, qfalse);
 
 	item.t = od;
 	item.m = NULL;
@@ -86,30 +94,153 @@ static void testItemAdd (void)
 
 	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
 
-	Com_AddToInventory(&inv, item, &csi.ids[csi.idLeft], NONE, NONE, 1);
+	Com_AddToInventory(&inv, item, container, NONE, NONE, 1);
 
 	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qtrue);
 }
 
 static void testItemDel (void)
 {
-	/**
-	 * @todo implement the test
-	 */
+	inventory_t inv;
+	objDef_t *od;
+	item_t item;
+	invDef_t *container;
+	invList_t *addedItem;
+
+	ResetInventoryList();
+
+	memset(&inv, 0, sizeof(inv));
+
+	od = INVSH_GetItemByIDSilent("assault");
+	CU_ASSERT_PTR_NOT_NULL(od);
+
+	container = INVSH_GetInventoryDefinitionByID("left");
+	CU_ASSERT_PTR_NOT_NULL(container);
+
+	item.t = od;
+	item.m = NULL;
+	item.a = 0;
+
+	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
+
+	addedItem = Com_AddToInventory(&inv, item, container, NONE, NONE, 1);
+
+	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qtrue);
+
+	Com_RemoveFromInventory(&inv, container, addedItem);
+
+	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
 }
 
 static void testItemMove (void)
 {
-	/**
-	 * @todo implement the test
-	 */
+	inventory_t inv;
+	objDef_t *od;
+	item_t item;
+	invDef_t *container, *containerTo;
+	invList_t *addedItem;
+
+	ResetInventoryList();
+
+	memset(&inv, 0, sizeof(inv));
+
+	od = INVSH_GetItemByIDSilent("assault");
+	CU_ASSERT_PTR_NOT_NULL(od);
+
+	container = INVSH_GetInventoryDefinitionByID("left");
+	CU_ASSERT_PTR_NOT_NULL(container);
+
+	item.t = od;
+	item.m = NULL;
+	item.a = 0;
+
+	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
+
+	addedItem = Com_AddToInventory(&inv, item, container, NONE, NONE, 1);
+
+	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qtrue);
+
+	containerTo = INVSH_GetInventoryDefinitionByID("right");
+
+	Com_MoveInInventory(&inv, container, addedItem, containerTo, NONE, NONE, NULL, NULL);
+
+	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
+	CU_ASSERT(Com_ExistsInInventory(&inv, containerTo, item) == qtrue);
+}
+
+static qboolean testAddSingle (inventory_t *inv, objDef_t *od, invDef_t *container)
+{
+	item_t item;
+
+	item.t = od;
+	item.m = NULL;
+	item.a = 0;
+
+	return Com_TryAddToInventory(inv, item, container);
 }
 
 static void testItemMassActions (void)
 {
-	/**
-	 * @todo implement the test
-	 */
+	inventory_t inv;
+	objDef_t *od;
+	invDef_t *container;
+	qboolean addedItem;
+	int i;
+
+	ResetInventoryList();
+
+	memset(&inv, 0, sizeof(inv));
+
+	od = INVSH_GetItemByIDSilent("assault");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
+
+	container = INVSH_GetInventoryDefinitionByID("right");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
+
+	addedItem = testAddSingle(&inv, od, container);
+	CU_ASSERT(addedItem == qtrue);
+
+	/* second try should fail as the right container is a single container */
+	addedItem = testAddSingle(&inv, od, container);
+	CU_ASSERT(addedItem == qfalse);
+
+	container = INVSH_GetInventoryDefinitionByID("left");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
+
+	od = INVSH_GetItemByIDSilent("fraggrenade");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
+
+	addedItem = testAddSingle(&inv, od, container);
+	CU_ASSERT(addedItem == qtrue);
+
+	container = INVSH_GetInventoryDefinitionByID("equip");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
+
+	for (i = 0; i < csi.numODs; i++) {
+		objDef_t *od = &csi.ods[i];
+		int j;
+		/* every item should be placable on the ground container and there should really be enough space */
+		addedItem = testAddSingle(&inv, od, container);
+		CU_ASSERT(addedItem == qtrue);
+		addedItem = testAddSingle(&inv, od, container);
+		CU_ASSERT(addedItem == qtrue);
+		addedItem = testAddSingle(&inv, od, container);
+		CU_ASSERT(addedItem == qtrue);
+		for (j = 0; j < od->numAmmos; j++) {
+ 			addedItem = testAddSingle(&inv, od->ammos[j], container);
+			CU_ASSERT(addedItem == qtrue);
+ 			addedItem = testAddSingle(&inv, od->ammos[j], container);
+			CU_ASSERT(addedItem == qtrue);
+ 			addedItem = testAddSingle(&inv, od->ammos[j], container);
+			CU_ASSERT(addedItem == qtrue);
+ 			addedItem = testAddSingle(&inv, od->ammos[j], container);
+			CU_ASSERT(addedItem == qtrue);
+ 			addedItem = testAddSingle(&inv, od->ammos[j], container);
+			CU_ASSERT(addedItem == qtrue);
+ 			addedItem = testAddSingle(&inv, od->ammos[j], container);
+			CU_ASSERT(addedItem == qtrue);
+ 		}
+	}
 }
 
 int UFO_AddInventoryTests (void) {

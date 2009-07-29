@@ -68,7 +68,8 @@ const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, c
 
 /**
  * @brief Initializes the inventory definition by linking the ->next pointers properly.
- * @param[in] invList Pointer to invList_t definition being initialized.
+ * @param[in] invList Pointer to invList_t definition being initialized. This array must have at
+ * least the size @c MAX_INVLIST.
  * @sa G_Init
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
