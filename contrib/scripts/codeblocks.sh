@@ -213,7 +213,7 @@ function extract_libs()
 	extract_archive_zip libxml2.zip "${MINGW_DIR}"
 }
 
-function extrace_cunit() 
+function extract_cunit() 
 {
 	mkdir -p ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
 	check_error $? "Could not create temp cunit directory"
@@ -411,7 +411,7 @@ create()
 
 	extract_libcurl
 
-	extrace_cunit
+	extract_cunit
 
 	extract_gtk
 
