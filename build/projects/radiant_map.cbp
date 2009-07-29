@@ -51,16 +51,9 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="`pkg-config gtk+-2.0 --cflags`" />
-					<Add option="`pkg-config gtkglext-1.0 --cflags`" />
 					<Add option="`pkg-config glib-2.0 --cflags`" />
 					<Add option="-fPIC" />
 				</Compiler>
-				<Linker>
-					<Add option="`pkg-config gtk+-2.0 --libs`" />
-					<Add option="`pkg-config gtkglext-1.0 --libs`" />
-					<Add option="`pkg-config glib-2.0 --libs`" />
-				</Linker>
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />

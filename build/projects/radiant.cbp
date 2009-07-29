@@ -106,6 +106,7 @@
 					<Add option="`pkg-config gtk+-2.0 --libs`" />
 					<Add option="`pkg-config gtkglext-1.0 --libs`" />
 					<Add option="`pkg-config glib-2.0 --libs`" />
+					<Add library="gthread-2.0" />
 					<Add option="`xml2-config --libs`" />
 				</Linker>
 			</Target>
@@ -127,6 +128,7 @@
 					<Add option="`pkg-config gtk+-2.0 --libs`" />
 					<Add option="`pkg-config gtkglext-1.0 --libs`" />
 					<Add option="`pkg-config glib-2.0 --libs`" />
+					<Add library="gthread-2.0" />
 					<Add option="`xml2-config --libs`" />
 					<Add directory="/sw/lib" />
 				</Linker>
