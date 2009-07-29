@@ -21,6 +21,7 @@ class NodeBehaviour:
 		self.name = ""
 		self.extends = "abstractnode"
 		self.properties = {}
+		self.methods = {}
 		pass
 
 	def init(self, dic):
@@ -32,6 +33,9 @@ class NodeBehaviour:
 
 	def initProperties(self, dic):
 		self.properties = dic
+
+	def initMethods(self, dic):
+		self.methods = dic
 		
 	def genDot(self):
 		result = ""
@@ -48,10 +52,21 @@ class NodeBehaviour:
 				if p != '':
 					p = p + '<br />'
 				p = p + '+ ' + name + ': ' + type
-			label = label + '<tr><td balign="left">' + p + '</td></tr>'
+			label = label + '<tr><td align="left" balign="left">' + p + '</td></tr>'
+		
+		if len(self.methods) != 0:
+			p = ''
+			names = self.methods.keys()
+			names.sort()
+			for name in names:
+				type = self.methods[name]
+				if p != '':
+					p = p + '<br />'
+				p = p + '+ ' + name + ' ()'
+			label = label + '<tr><td align="left" balign="left">' + p + '</td></tr>'
 
 		label = '<table border="0" cellborder="1" cellspacing="0" cellpadding="4">\n' + label + '\n</table>'
-			
+
 		result = result + "\t_%s [rankdir=TB,shape=plaintext,label=<\n%s>]\n" % (self.name, label)
 		if self.extends != None:
 			result = result + "\t_%s -> _%s\n" % (self.name, self.extends)
@@ -87,6 +102,17 @@ def extractProperties(filedata, structName):
 		result[name] = type
 
 	return result
+
+def extractMethods(props):
+	p = {}
+	m = {}
+	
+	for propName, propType in props.iteritems():
+		if propType == "V_UI_NODEFUNCTION":
+			m[propName] = propType
+		else:
+			p[propName] = propType
+	return m, p
 
 # @brief Extract each body of registration function into a text
 def extractRegistrationFunctions(filedata):
@@ -132,7 +158,9 @@ def extractData():
 			n.init(dic)
 			if 'properties' in dic:
 				props = extractProperties(data, dic['properties'])
+				methods, props = extractMethods(props)
 				n.initProperties(props)
+				n.initMethods(methods)
 			result.append(n)
 
 	return result
