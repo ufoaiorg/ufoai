@@ -91,6 +91,7 @@ Counter* EntityKeyValues::m_counter = 0;
 bool g_showNames = true;
 bool g_showAngles = true;
 bool g_lightRadii = false;
+bool g_forceLightRadii = false;
 
 class ConnectEntities
 {
@@ -177,6 +178,14 @@ class UFOEntityCreator: public EntityCreator
 		bool getShowLightRadii ()
 		{
 			return g_lightRadii;
+		}
+		void setForceLightRadii (bool forceLightRadii)
+		{
+			g_forceLightRadii = forceLightRadii;
+		}
+		bool getForceLightRadii ()
+		{
+			return g_forceLightRadii;
 		}
 		void setShowNames (bool showNames)
 		{

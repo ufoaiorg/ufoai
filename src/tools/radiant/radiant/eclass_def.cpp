@@ -215,6 +215,7 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 		StringOutputStream buffer;
 		buffer << "Parsing of entities definition file failed, returned error was " << ED_GetLastError();
 		gtk_MessageBox(0, buffer.c_str(), _("Radiant - Error"), eMB_OK, eMB_ICONERROR);
+		g_warning("%s\n", buffer.c_str());
 		free(entities);
 		return;
 	}

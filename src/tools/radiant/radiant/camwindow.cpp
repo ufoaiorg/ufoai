@@ -79,6 +79,7 @@ struct camwindow_globals_private_t
 	int m_nAngleSpeed;
 	bool m_bCamInverseMouse;
 	bool m_bLightRadius;
+	bool m_bForceLightRadius;
 	bool m_bCamDiscrete;
 	bool m_bCubicClipping;
 	bool m_showStats;
@@ -86,7 +87,7 @@ struct camwindow_globals_private_t
 
 	camwindow_globals_private_t () :
 		m_nMoveSpeed(100), m_bCamLinkSpeed(true), m_nAngleSpeed(3), m_bCamInverseMouse(false),
-		m_bLightRadius(false), m_bCamDiscrete(true), m_bCubicClipping(true), m_showStats(true),
+		m_bLightRadius(false), m_bForceLightRadius(false), m_bCamDiscrete(true), m_bCubicClipping(true), m_showStats(true),
 		m_nStrafeMode(0)
 	{
 	}
@@ -1671,10 +1672,39 @@ void ShowLightRadiusToggle (void)
 }
 typedef FreeCaller<ShowLightRadiusToggle> ShowLightRadiusToggleCaller;
 
+void ForceLightRadiusExport (const BoolImportCallback& importer)
+{
+	g_camwindow_globals_private.m_bForceLightRadius = GlobalEntityCreator().getForceLightRadii();
+	importer(g_camwindow_globals_private.m_bForceLightRadius);
+}
+typedef FreeCaller1<const BoolImportCallback&, ForceLightRadiusExport> ForceLightRadiusExportCaller;
+
+ForceLightRadiusExportCaller g_force_light_radius_caller;
+BoolExportCallback g_getforce_light_radius_callback (g_force_light_radius_caller);
+ToggleItem g_getforce_light_radius (g_getforce_light_radius_callback);
+
+void Camera_SetForceLightRadius (bool value)
+{
+	CamWnd& camwnd = *g_camwnd;
+	GlobalEntityCreator().setForceLightRadii(value);
+	g_camwindow_globals_private.m_bForceLightRadius = value;
+	g_getforce_light_radius.update();
+	CamWnd_Update(camwnd);
+	XY_UpdateAllWindows();
+}
+
+void ForceLightRadiusToggle (void)
+{
+	Camera_SetForceLightRadius(!g_camwindow_globals_private.m_bForceLightRadius);
+}
+typedef FreeCaller<ForceLightRadiusToggle> ForceLightRadiusToggleCaller;
+
 void CamWnd_constructToolbar (GtkToolbar* toolbar)
 {
 	toolbar_append_toggle_button(toolbar, _("Cubic clip the camera view (\\)"), "view_cubicclipping.bmp",
 			"ToggleCubicClip");
+	toolbar_append_toggle_button(toolbar, _("Show light radius of all lights"), "view_forcelight.bmp",
+			"ToggleForceLightRadius");
 }
 
 void CamWnd_registerShortcuts ()
@@ -1909,6 +1939,7 @@ void CamWnd_Construct ()
 
 	GlobalToggles_insert("ShowStats", ShowStatsToggleCaller(), ToggleItem::AddCallbackCaller(g_show_stats));
 	GlobalToggles_insert("ShowLightRadius", ShowLightRadiusToggleCaller(), ToggleItem::AddCallbackCaller(g_getshow_light_radius));
+	GlobalToggles_insert("ToggleForceLightRadius", ForceLightRadiusToggleCaller(), ToggleItem::AddCallbackCaller(g_getforce_light_radius));
 
 	GlobalPreferenceSystem().registerPreference("ShowStats", BoolImportStringCaller(
 			g_camwindow_globals_private.m_showStats), BoolExportStringCaller(g_camwindow_globals_private.m_showStats));

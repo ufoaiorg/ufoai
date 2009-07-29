@@ -661,7 +661,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			renderer.SetState(m_colour.state(), Renderer::eFullMaterials);
 			renderer.addRenderable(*this, localToWorld);
 
-			if (selected && g_lightRadii && string_empty(m_entity.getKeyValue("target"))) {
+			if ((g_forceLightRadii || (selected && g_lightRadii)) && string_empty(m_entity.getKeyValue("target"))) {
 				if (renderer.getStyle() == Renderer::eFullMaterials) {
 					renderer.SetState(RenderLightRadiiFill::m_state, Renderer::eFullMaterials);
 					renderer.Highlight(Renderer::ePrimitive, false);

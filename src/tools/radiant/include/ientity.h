@@ -114,6 +114,8 @@ public:
 	virtual bool getShowAngles() = 0;
 	virtual void setShowLightRadii(bool lightRadii) = 0;
 	virtual bool getShowLightRadii() = 0;
+	virtual void setForceLightRadii(bool forceLightRadii) = 0;
+	virtual bool getForceLightRadii() = 0;
 
 	virtual void printStatistics() const = 0;
 };

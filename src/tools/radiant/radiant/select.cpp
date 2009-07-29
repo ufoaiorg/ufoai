@@ -204,7 +204,7 @@ public:
 		if (selectable != 0 && selectable->isSelected() && path.size() > 1 &&
 			!path.top().get().isRoot()) {
 			m_remove = true;
-			/* dont traverse into child elements */
+			/* don't traverse into child elements */
 			return false;
 		}
 		return true;

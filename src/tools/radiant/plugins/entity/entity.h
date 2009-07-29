@@ -35,5 +35,6 @@ void P_Entity_Destroy();
 extern bool g_showNames;
 extern bool g_showAngles;
 extern bool g_lightRadii;
+extern bool g_forceLightRadii;
 
 #endif
