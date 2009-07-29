@@ -58,29 +58,29 @@
 
 struct Pivot2World
 {
-		Matrix4 m_worldSpace;
-		Matrix4 m_viewpointSpace;
-		Matrix4 m_viewplaneSpace;
-		Vector3 m_axis_screen;
+	Matrix4 m_worldSpace;
+	Matrix4 m_viewpointSpace;
+	Matrix4 m_viewplaneSpace;
+	Vector3 m_axis_screen;
 
-		void update (const Matrix4& pivot2world, const Matrix4& modelview, const Matrix4& projection,
-				const Matrix4& viewport)
-		{
-			Pivot2World_worldSpace(m_worldSpace, pivot2world, modelview, projection, viewport);
-			Pivot2World_viewpointSpace(m_viewpointSpace, m_axis_screen, pivot2world, modelview, projection, viewport);
-			Pivot2World_viewplaneSpace(m_viewplaneSpace, pivot2world, modelview, projection, viewport);
-		}
+	void update (const Matrix4& pivot2world, const Matrix4& modelview, const Matrix4& projection,
+			const Matrix4& viewport)
+	{
+		Pivot2World_worldSpace(m_worldSpace, pivot2world, modelview, projection, viewport);
+		Pivot2World_viewpointSpace(m_viewpointSpace, m_axis_screen, pivot2world, modelview, projection, viewport);
+		Pivot2World_viewplaneSpace(m_viewplaneSpace, pivot2world, modelview, projection, viewport);
+	}
 };
 
 /**
  * @brief transform from normalised device coords to object coords
  */
-void point_for_device_point (Vector3& point, const Matrix4& device2object, const float x, const float y, const float z)
+static void point_for_device_point (Vector3& point, const Matrix4& device2object, const float x, const float y, const float z)
 {
 	point = vector4_projected(matrix4_transformed_vector4(device2object, Vector4(x, y, z, 1)));
 }
 
-void ray_for_device_point (Ray& ray, const Matrix4& device2object, const float x, const float y)
+static void ray_for_device_point (Ray& ray, const Matrix4& device2object, const float x, const float y)
 {
 	// point at x, y, zNear
 	point_for_device_point(ray.origin, device2object, x, y, -1);
@@ -93,7 +93,7 @@ void ray_for_device_point (Ray& ray, const Matrix4& device2object, const float x
 	vector3_normalise(ray.direction);
 }
 
-bool sphere_intersect_ray (const Vector3& origin, float radius, const Ray& ray, Vector3& intersection)
+static bool sphere_intersect_ray (const Vector3& origin, float radius, const Ray& ray, Vector3& intersection)
 {
 	intersection = vector3_subtracted(origin, ray.origin);
 	const double a = vector3_dot(intersection, ray.direction);
@@ -108,7 +108,7 @@ bool sphere_intersect_ray (const Vector3& origin, float radius, const Ray& ray, 
 	}
 }
 
-void ray_intersect_ray (const Ray& ray, const Ray& other, Vector3& intersection)
+static void ray_intersect_ray (const Ray& ray, const Ray& other, Vector3& intersection)
 {
 	intersection = vector3_subtracted(ray.origin, other.origin);
 	//float a = 1;//vector3_dot(ray.direction, ray.direction);        // always >= 0
@@ -126,24 +126,24 @@ void ray_intersect_ray (const Ray& ray, const Ray& other, Vector3& intersection)
 	}
 }
 
-const Vector3 g_origin(0, 0, 0);
-const float g_radius = 64;
+static const Vector3 g_origin(0, 0, 0);
+static const float g_radius = 64;
 
-void point_on_sphere (Vector3& point, const Matrix4& device2object, const float x, const float y)
+static void point_on_sphere (Vector3& point, const Matrix4& device2object, const float x, const float y)
 {
 	Ray ray;
 	ray_for_device_point(ray, device2object, x, y);
 	sphere_intersect_ray(g_origin, g_radius, ray, point);
 }
 
-void point_on_axis (Vector3& point, const Vector3& axis, const Matrix4& device2object, const float x, const float y)
+static void point_on_axis (Vector3& point, const Vector3& axis, const Matrix4& device2object, const float x, const float y)
 {
 	Ray ray;
 	ray_for_device_point(ray, device2object, x, y);
 	ray_intersect_ray(ray, Ray(Vector3(0, 0, 0), axis), point);
 }
 
-void point_on_plane (Vector3& point, const Matrix4& device2object, const float x, const float y)
+static void point_on_plane (Vector3& point, const Matrix4& device2object, const float x, const float y)
 {
 	Matrix4 object2device(matrix4_full_inverse(device2object));
 	point = vector4_projected(matrix4_transformed_vector4(device2object, Vector4(x, y, object2device[14]
@@ -151,20 +151,20 @@ void point_on_plane (Vector3& point, const Matrix4& device2object, const float x
 }
 
 //! a and b are unit vectors .. returns angle in radians
-inline float angle_between (const Vector3& a, const Vector3& b)
+static inline float angle_between (const Vector3& a, const Vector3& b)
 {
 	return static_cast<float> (2.0 * atan2(vector3_length(vector3_subtracted(a, b)),
 			vector3_length(vector3_added(a, b))));
 }
 
 //! axis is a unit vector
-inline void constrain_to_axis (Vector3& vec, const Vector3& axis)
+static inline void constrain_to_axis (Vector3& vec, const Vector3& axis)
 {
 	vec = vector3_normalised(vector3_added(vec, vector3_scaled(axis, -vector3_dot(vec, axis))));
 }
 
 //! a and b are unit vectors .. a and b must be orthogonal to axis .. returns angle in radians
-float angle_for_axis (const Vector3& a, const Vector3& b, const Vector3& axis)
+static float angle_for_axis (const Vector3& a, const Vector3& b, const Vector3& axis)
 {
 	if (vector3_dot(axis, vector3_cross(a, b)) > 0.0)
 		return angle_between(a, b);
@@ -172,7 +172,7 @@ float angle_for_axis (const Vector3& a, const Vector3& b, const Vector3& axis)
 		return -angle_between(a, b);
 }
 
-float distance_for_axis (const Vector3& a, const Vector3& b, const Vector3& axis)
+static float distance_for_axis (const Vector3& a, const Vector3& b, const Vector3& axis)
 {
 	return static_cast<float> (vector3_dot(b, axis) - vector3_dot(a, axis));
 }
@@ -187,12 +187,6 @@ class Manipulatable
 		virtual void
 				Transform (const Matrix4& manip2object, const Matrix4& device2manip, const float x, const float y) = 0;
 };
-
-void transform_local2object (Matrix4& object, const Matrix4& local, const Matrix4& local2object)
-{
-	object = matrix4_multiplied_by_matrix4(matrix4_multiplied_by_matrix4(local2object, local), matrix4_full_inverse(
-			local2object));
-}
 
 class Rotatable
 {
@@ -259,7 +253,7 @@ class RotateAxis: public Manipulatable
 		}
 };
 
-void translation_local2object (Vector3& object, const Vector3& local, const Matrix4& local2object)
+static void translation_local2object (Vector3& object, const Vector3& local, const Matrix4& local2object)
 {
 	object = matrix4_get_translation_vec3(matrix4_multiplied_by_matrix4(
 			matrix4_translated_by_vec3(local2object, local), matrix4_full_inverse(local2object)));
@@ -494,13 +488,13 @@ class Segment3D
 
 typedef Vector3 Point3D;
 
-inline double vector3_distance_squared (const Point3D& a, const Point3D& b)
+static inline double vector3_distance_squared (const Point3D& a, const Point3D& b)
 {
 	return vector3_length_squared(b - a);
 }
 
 //! get the distance of a point to a segment.
-Point3D segment_closest_point_to_point (const Segment3D& segment, const Point3D& point)
+static Point3D segment_closest_point_to_point (const Segment3D& segment, const Point3D& point)
 {
 	Vector3 v = segment.p1 - segment.p0;
 	Vector3 w = point - segment.p0;
@@ -516,11 +510,6 @@ Point3D segment_closest_point_to_point (const Segment3D& segment, const Point3D&
 	return Point3D(segment.p0 + v * (c1 / c2));
 }
 
-double segment_dist_to_point_3d (const Segment3D& segment, const Point3D& point)
-{
-	return vector3_distance_squared(point, segment_closest_point_to_point(segment, point));
-}
-
 typedef Vector3 point_t;
 typedef const Vector3* point_iterator_t;
 
@@ -528,7 +517,7 @@ typedef const Vector3* point_iterator_t;
  * @brief transform from normalised device coords to object coords
  * @note This code is patterned after [Franklin, 2000]
  */
-bool point_test_polygon_2d (const point_t& P, point_iterator_t start, point_iterator_t finish)
+static bool point_test_polygon_2d (const point_t& P, point_iterator_t start, point_iterator_t finish)
 {
 	std::size_t crossings = 0;
 
@@ -546,7 +535,7 @@ bool point_test_polygon_2d (const point_t& P, point_iterator_t start, point_iter
 	return (crossings & 0x1) != 0; // 0 if even (out), and 1 if odd (in)
 }
 
-inline double triangle_signed_area_XY (const Vector3& p0, const Vector3& p1, const Vector3& p2)
+static inline double triangle_signed_area_XY (const Vector3& p0, const Vector3& p1, const Vector3& p2)
 {
 	return ((p1[0] - p0[0]) * (p2[1] - p0[1])) - ((p2[0] - p0[0]) * (p1[1] - p0[1]));
 }
@@ -556,13 +545,13 @@ enum clipcull_t
 	eClipCullNone, eClipCullCW, eClipCullCCW,
 };
 
-inline SelectionIntersection select_point_from_clipped (Vector4& clipped)
+static inline SelectionIntersection select_point_from_clipped (Vector4& clipped)
 {
 	return SelectionIntersection(clipped[2] / clipped[3], static_cast<float> (vector3_length_squared(Vector3(clipped[0]
 			/ clipped[3], clipped[1] / clipped[3], 0))));
 }
 
-void BestPoint (std::size_t count, Vector4 clipped[9], SelectionIntersection& best, clipcull_t cull)
+static void BestPoint (std::size_t count, Vector4 clipped[9], SelectionIntersection& best, clipcull_t cull)
 {
 	Vector3 normalised[9];
 
@@ -603,11 +592,11 @@ void BestPoint (std::size_t count, Vector4 clipped[9], SelectionIntersection& be
 
 #if defined(DEBUG_SELECTION)
 	if (count >= 2)
-	g_render_clipped.insert(clipped, count);
+		g_render_clipped.insert(clipped, count);
 #endif
 }
 
-void LineStrip_BestPoint (const Matrix4& local2view, const PointVertex* vertices, const std::size_t size,
+static void LineStrip_BestPoint (const Matrix4& local2view, const PointVertex* vertices, const std::size_t size,
 		SelectionIntersection& best)
 {
 	Vector4 clipped[2];
@@ -618,7 +607,7 @@ void LineStrip_BestPoint (const Matrix4& local2view, const PointVertex* vertices
 	}
 }
 
-void LineLoop_BestPoint (const Matrix4& local2view, const PointVertex* vertices, const std::size_t size,
+static void LineLoop_BestPoint (const Matrix4& local2view, const PointVertex* vertices, const std::size_t size,
 		SelectionIntersection& best)
 {
 	Vector4 clipped[2];
@@ -629,7 +618,7 @@ void LineLoop_BestPoint (const Matrix4& local2view, const PointVertex* vertices,
 	}
 }
 
-void Line_BestPoint (const Matrix4& local2view, const PointVertex vertices[2], SelectionIntersection& best)
+static void Line_BestPoint (const Matrix4& local2view, const PointVertex vertices[2], SelectionIntersection& best)
 {
 	Vector4 clipped[2];
 	const std::size_t count = matrix4_clip_line(local2view, vertex3f_to_vector3(vertices[0].vertex),
@@ -637,7 +626,7 @@ void Line_BestPoint (const Matrix4& local2view, const PointVertex vertices[2], S
 	BestPoint(count, clipped, best, eClipCullNone);
 }
 
-void Circle_BestPoint (const Matrix4& local2view, clipcull_t cull, const PointVertex* vertices, const std::size_t size,
+static void Circle_BestPoint (const Matrix4& local2view, clipcull_t cull, const PointVertex* vertices, const std::size_t size,
 		SelectionIntersection& best)
 {
 	Vector4 clipped[9];
@@ -648,7 +637,7 @@ void Circle_BestPoint (const Matrix4& local2view, clipcull_t cull, const PointVe
 	}
 }
 
-void Quad_BestPoint (const Matrix4& local2view, clipcull_t cull, const PointVertex* vertices,
+static void Quad_BestPoint (const Matrix4& local2view, clipcull_t cull, const PointVertex* vertices,
 		SelectionIntersection& best)
 {
 	Vector4 clipped[9];
@@ -676,7 +665,7 @@ struct FlatShadedVertex
 };
 
 typedef FlatShadedVertex* FlatShadedVertexIterator;
-void Triangles_BestPoint (const Matrix4& local2view, clipcull_t cull, FlatShadedVertexIterator first,
+static void Triangles_BestPoint (const Matrix4& local2view, clipcull_t cull, FlatShadedVertexIterator first,
 		FlatShadedVertexIterator last, SelectionIntersection& best)
 {
 	for (FlatShadedVertexIterator x(first), y(first + 1), z(first + 2); x != last; x += 3, y += 3, z += 3) {
@@ -735,17 +724,17 @@ class SelectionPool: public Selector
 		}
 };
 
-const Colour4b g_colour_sphere(0, 0, 0, 255);
-const Colour4b g_colour_screen(0, 255, 255, 255);
-const Colour4b g_colour_selected(255, 255, 0, 255);
+static const Colour4b g_colour_sphere(0, 0, 0, 255);
+static const Colour4b g_colour_screen(0, 255, 255, 255);
+static const Colour4b g_colour_selected(255, 255, 0, 255);
 
-inline const Colour4b& colourSelected (const Colour4b& colour, bool selected)
+static inline const Colour4b& colourSelected (const Colour4b& colour, bool selected)
 {
 	return (selected) ? g_colour_selected : colour;
 }
 
 template<typename remap_policy>
-inline void draw_semicircle (const std::size_t segments, const float radius, PointVertex* vertices, remap_policy remap)
+static inline void draw_semicircle (const std::size_t segments, const float radius, PointVertex* vertices, remap_policy remap)
 {
 	const double increment = c_pi / double(segments << 2);
 
@@ -793,7 +782,7 @@ class Manipulator
 		virtual bool isSelected () const = 0;
 };
 
-inline Vector3 normalised_safe (const Vector3& self)
+static inline Vector3 normalised_safe (const Vector3& self)
 {
 	if (vector3_equal(self, g_vector3_identity)) {
 		return g_vector3_identity;
@@ -1055,10 +1044,10 @@ class RotateManipulator: public Manipulator
 
 Shader* RotateManipulator::m_state_outer;
 
-const float arrowhead_length = 16;
-const float arrowhead_radius = 4;
+static const float arrowhead_length = 16;
+static const float arrowhead_radius = 4;
 
-inline void draw_arrowline (const float length, PointVertex* line, const std::size_t axis)
+static inline void draw_arrowline (const float length, PointVertex* line, const std::size_t axis)
 {
 	(*line++).vertex = vertex3f_identity;
 	(*line).vertex = vertex3f_identity;
@@ -1066,7 +1055,7 @@ inline void draw_arrowline (const float length, PointVertex* line, const std::si
 }
 
 template<typename VertexRemap, typename NormalRemap>
-inline void draw_arrowhead (const std::size_t segments, const float length, FlatShadedVertex* vertices, VertexRemap,
+static inline void draw_arrowhead (const std::size_t segments, const float length, FlatShadedVertex* vertices, VertexRemap,
 		NormalRemap)
 {
 	std::size_t head_tris = (segments << 3);
@@ -1183,11 +1172,6 @@ class TripleRemapZXY
 			return triple.y();
 		}
 };
-
-void vector3_print (const Vector3& v)
-{
-	globalOutputStream() << "( " << v.x() << " " << v.y() << " " << v.z() << " )";
-}
 
 class TranslateManipulator: public Manipulator
 {
@@ -1600,7 +1584,7 @@ class ScaleManipulator: public Manipulator
 		}
 };
 
-inline PlaneSelectable* Instance_getPlaneSelectable (scene::Instance& instance)
+static inline PlaneSelectable* Instance_getPlaneSelectable (scene::Instance& instance)
 {
 	return InstanceTypeCast<PlaneSelectable>::cast(instance);
 }
@@ -1655,13 +1639,13 @@ class PlaneSelectableSelectReversedPlanes: public scene::Graph::Walker
 		}
 };
 
-void Scene_forEachPlaneSelectable_selectPlanes (scene::Graph& graph, Selector& selector, SelectionTest& test,
+static void Scene_forEachPlaneSelectable_selectPlanes (scene::Graph& graph, Selector& selector, SelectionTest& test,
 		const PlaneCallback& selectedPlaneCallback)
 {
 	graph.traverse(PlaneSelectableSelectPlanes(selector, test, selectedPlaneCallback));
 }
 
-void Scene_forEachPlaneSelectable_selectReversedPlanes (scene::Graph& graph, Selector& selector,
+static void Scene_forEachPlaneSelectable_selectReversedPlanes (scene::Graph& graph, Selector& selector,
 		const SelectedPlanes& selectedPlanes)
 {
 	graph.traverse(PlaneSelectableSelectReversedPlanes(selector, selectedPlanes));
@@ -1706,12 +1690,12 @@ class PlaneLess
 
 typedef std::set<Plane3, PlaneLess> PlaneSet;
 
-inline void PlaneSet_insert (PlaneSet& self, const Plane3& plane)
+static inline void PlaneSet_insert (PlaneSet& self, const Plane3& plane)
 {
 	self.insert(plane);
 }
 
-inline bool PlaneSet_contains (const PlaneSet& self, const Plane3& plane)
+static inline bool PlaneSet_contains (const PlaneSet& self, const Plane3& plane)
 {
 	return self.find(plane) != self.end();
 }
@@ -1736,7 +1720,7 @@ class SelectedPlaneSet: public SelectedPlanes
 		typedef MemberCaller1<SelectedPlaneSet, const Plane3&, &SelectedPlaneSet::insert> InsertCaller;
 };
 
-bool Scene_forEachPlaneSelectable_selectPlanes (scene::Graph& graph, Selector& selector, SelectionTest& test)
+static bool Scene_forEachPlaneSelectable_selectPlanes (scene::Graph& graph, Selector& selector, SelectionTest& test)
 {
 	SelectedPlaneSet selectedPlanes;
 
@@ -1746,14 +1730,14 @@ bool Scene_forEachPlaneSelectable_selectPlanes (scene::Graph& graph, Selector& s
 	return !selectedPlanes.empty();
 }
 
-void Scene_Translate_Component_Selected (scene::Graph& graph, const Vector3& translation);
-void Scene_Translate_Selected (scene::Graph& graph, const Vector3& translation);
-void Scene_TestSelect_Primitive (Selector& selector, SelectionTest& test, const VolumeTest& volume);
-void Scene_TestSelect_Component (Selector& selector, SelectionTest& test, const VolumeTest& volume,
+static void Scene_Translate_Component_Selected (scene::Graph& graph, const Vector3& translation);
+static void Scene_Translate_Selected (scene::Graph& graph, const Vector3& translation);
+static void Scene_TestSelect_Primitive (Selector& selector, SelectionTest& test, const VolumeTest& volume);
+static void Scene_TestSelect_Component (Selector& selector, SelectionTest& test, const VolumeTest& volume,
 		SelectionSystem::EComponentMode componentMode);
-void Scene_TestSelect_Component_Selected (Selector& selector, SelectionTest& test, const VolumeTest& volume,
+static void Scene_TestSelect_Component_Selected (Selector& selector, SelectionTest& test, const VolumeTest& volume,
 		SelectionSystem::EComponentMode componentMode);
-void Scene_SelectAll_Component (bool select, SelectionSystem::EComponentMode componentMode);
+static void Scene_SelectAll_Component (bool select, SelectionSystem::EComponentMode componentMode);
 
 class ResizeTranslatable: public Translatable
 {
@@ -1938,12 +1922,12 @@ class SelectionCounter
 		SelectionChangeCallback m_onchanged;
 };
 
-inline void ConstructSelectionTest (View& view, const rect_t selection_box)
+static inline void ConstructSelectionTest (View& view, const rect_t selection_box)
 {
 	view.EnableScissor(selection_box.min[0], selection_box.max[0], selection_box.min[1], selection_box.max[1]);
 }
 
-inline const rect_t SelectionBoxForPoint (const float device_point[2], const float device_epsilon[2])
+static inline const rect_t SelectionBoxForPoint (const float device_point[2], const float device_epsilon[2])
 {
 	rect_t selection_box;
 	selection_box.min[0] = device_point[0] - device_epsilon[0];
@@ -1953,7 +1937,7 @@ inline const rect_t SelectionBoxForPoint (const float device_point[2], const flo
 	return selection_box;
 }
 
-inline const rect_t SelectionBoxForArea (const float device_point[2], const float device_delta[2])
+static inline const rect_t SelectionBoxForArea (const float device_point[2], const float device_delta[2])
 {
 	rect_t selection_box;
 	selection_box.min[0] = (device_delta[0] < 0) ? (device_point[0] + device_delta[0]) : (device_point[0]);
@@ -1963,13 +1947,7 @@ inline const rect_t SelectionBoxForArea (const float device_point[2], const floa
 	return selection_box;
 }
 
-Quaternion construct_local_rotation (const Quaternion& world, const Quaternion& localToWorld)
-{
-	return quaternion_normalised(quaternion_multiplied_by_quaternion(quaternion_normalised(
-			quaternion_multiplied_by_quaternion(quaternion_inverse(localToWorld), world)), localToWorld));
-}
-
-inline void matrix4_assign_rotation (Matrix4& matrix, const Matrix4& other)
+static inline void matrix4_assign_rotation (Matrix4& matrix, const Matrix4& other)
 {
 	matrix[0] = other[0];
 	matrix[1] = other[1];
@@ -1982,7 +1960,7 @@ inline void matrix4_assign_rotation (Matrix4& matrix, const Matrix4& other)
 	matrix[10] = other[10];
 }
 
-void matrix4_assign_rotation_for_pivot (Matrix4& matrix, scene::Instance& instance)
+static void matrix4_assign_rotation_for_pivot (Matrix4& matrix, scene::Instance& instance)
 {
 	Editable* editable = Node_getEditable(instance.path().top());
 	if (editable != 0) {
@@ -1993,7 +1971,7 @@ void matrix4_assign_rotation_for_pivot (Matrix4& matrix, scene::Instance& instan
 	}
 }
 
-inline bool Instance_isSelectedComponents (scene::Instance& instance)
+static inline bool Instance_isSelectedComponents (scene::Instance& instance)
 {
 	ComponentSelectionTestable* componentSelectionTestable = Instance_getComponentSelectionTestable(instance);
 	return componentSelectionTestable != 0 && componentSelectionTestable->isSelectedComponents();
@@ -2018,19 +1996,19 @@ class TranslateSelected: public SelectionSystem::Visitor
 		}
 };
 
-void Scene_Translate_Selected (scene::Graph& graph, const Vector3& translation)
+static void Scene_Translate_Selected (scene::Graph& graph, const Vector3& translation)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		GlobalSelectionSystem().foreachSelected(TranslateSelected(translation));
 	}
 }
 
-Vector3 get_local_pivot (const Vector3& world_pivot, const Matrix4& localToWorld)
+static Vector3 get_local_pivot (const Vector3& world_pivot, const Matrix4& localToWorld)
 {
 	return Vector3(matrix4_transformed_point(matrix4_full_inverse(localToWorld), world_pivot));
 }
 
-void translation_for_pivoted_rotation (Vector3& parent_translation, const Quaternion& local_rotation,
+static void translation_for_pivoted_rotation (Vector3& parent_translation, const Quaternion& local_rotation,
 		const Vector3& world_pivot, const Matrix4& localToWorld, const Matrix4& localToParent)
 {
 	Vector3 local_pivot(get_local_pivot(world_pivot, localToWorld));
@@ -2045,7 +2023,7 @@ void translation_for_pivoted_rotation (Vector3& parent_translation, const Quater
 	//globalOutputStream() << "parent_translation: " << parent_translation << "\n";
 }
 
-void translation_for_pivoted_scale (Vector3& parent_translation, const Vector3& local_scale,
+static void translation_for_pivoted_scale (Vector3& parent_translation, const Vector3& local_scale,
 		const Vector3& world_pivot, const Matrix4& localToWorld, const Matrix4& localToParent)
 {
 	Vector3 local_pivot(get_local_pivot(world_pivot, localToWorld));
@@ -2093,7 +2071,7 @@ class rotate_selected: public SelectionSystem::Visitor
 		}
 };
 
-void Scene_Rotate_Selected (scene::Graph& graph, const Quaternion& rotation, const Vector3& world_pivot)
+static void Scene_Rotate_Selected (scene::Graph& graph, const Quaternion& rotation, const Vector3& world_pivot)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		GlobalSelectionSystem().foreachSelected(rotate_selected(rotation, world_pivot));
@@ -2137,7 +2115,7 @@ class scale_selected: public SelectionSystem::Visitor
 		}
 };
 
-void Scene_Scale_Selected (scene::Graph& graph, const Vector3& scaling, const Vector3& world_pivot)
+static void Scene_Scale_Selected (scene::Graph& graph, const Vector3& scaling, const Vector3& world_pivot)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		GlobalSelectionSystem().foreachSelected(scale_selected(scaling, world_pivot));
@@ -2162,7 +2140,7 @@ class translate_component_selected: public SelectionSystem::Visitor
 		}
 };
 
-void Scene_Translate_Component_Selected (scene::Graph& graph, const Vector3& translation)
+static void Scene_Translate_Component_Selected (scene::Graph& graph, const Vector3& translation)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		GlobalSelectionSystem().foreachSelectedComponent(translate_component_selected(translation));
@@ -2193,7 +2171,7 @@ class rotate_component_selected: public SelectionSystem::Visitor
 		}
 };
 
-void Scene_Rotate_Component_Selected (scene::Graph& graph, const Quaternion& rotation, const Vector3& world_pivot)
+static void Scene_Rotate_Component_Selected (scene::Graph& graph, const Quaternion& rotation, const Vector3& world_pivot)
 {
 	if (GlobalSelectionSystem().countSelectedComponents() != 0) {
 		GlobalSelectionSystem().foreachSelectedComponent(rotate_component_selected(rotation, world_pivot));
@@ -2224,7 +2202,7 @@ class scale_component_selected: public SelectionSystem::Visitor
 		}
 };
 
-void Scene_Scale_Component_Selected (scene::Graph& graph, const Vector3& scaling, const Vector3& world_pivot)
+static void Scene_Scale_Component_Selected (scene::Graph& graph, const Vector3& scaling, const Vector3& world_pivot)
 {
 	if (GlobalSelectionSystem().countSelectedComponents() != 0) {
 		GlobalSelectionSystem().foreachSelectedComponent(scale_component_selected(scaling, world_pivot));
@@ -2430,7 +2408,7 @@ class select_all_component: public scene::Graph::Walker
 		}
 };
 
-void Scene_SelectAll_Component (bool select, SelectionSystem::EComponentMode componentMode)
+static void Scene_SelectAll_Component (bool select, SelectionSystem::EComponentMode componentMode)
 {
 	GlobalSceneGraph().traverse(select_all_component(select, componentMode));
 }
@@ -3079,19 +3057,19 @@ class testselect_component_visible_selected: public scene::Graph::Walker
 		}
 };
 
-void Scene_TestSelect_Primitive (Selector& selector, SelectionTest& test, const VolumeTest& volume)
+static void Scene_TestSelect_Primitive (Selector& selector, SelectionTest& test, const VolumeTest& volume)
 {
 	Scene_forEachVisible(GlobalSceneGraph(), volume, testselect_primitive_visible(selector, test));
 }
 
-void Scene_TestSelect_Component_Selected (Selector& selector, SelectionTest& test, const VolumeTest& volume,
+static void Scene_TestSelect_Component_Selected (Selector& selector, SelectionTest& test, const VolumeTest& volume,
 		SelectionSystem::EComponentMode componentMode)
 {
 	Scene_forEachVisible(GlobalSceneGraph(), volume, testselect_component_visible_selected(selector, test,
 			componentMode));
 }
 
-void Scene_TestSelect_Component (Selector& selector, SelectionTest& test, const VolumeTest& volume,
+static void Scene_TestSelect_Component (Selector& selector, SelectionTest& test, const VolumeTest& volume,
 		SelectionSystem::EComponentMode componentMode)
 {
 	Scene_forEachVisible(GlobalSceneGraph(), volume, testselect_component_visible(selector, test, componentMode));
@@ -3170,7 +3148,7 @@ void RadiantSelectionSystem::endMove ()
 
 }
 
-inline AABB Instance_getPivotBounds (scene::Instance& instance)
+static inline AABB Instance_getPivotBounds (scene::Instance& instance)
 {
 	Entity* entity = Node_getEntity(instance.path().top());
 	if (entity != 0 && (entity->getEntityClass().fixedsize || !node_is_group(instance.path().top()))) {
@@ -3233,7 +3211,7 @@ void Scene_BoundsSelected (scene::Graph& graph, AABB& bounds)
 	graph.traverse(bounds_selected(bounds));
 }
 
-void Scene_BoundsSelectedComponent (scene::Graph& graph, AABB& bounds)
+static void Scene_BoundsSelectedComponent (scene::Graph& graph, AABB& bounds)
 {
 	graph.traverse(bounds_selected_component(bounds));
 }
@@ -3333,34 +3311,34 @@ void SelectionSystem_Destroy ()
 	RadiantSelectionSystem::destroyStatic();
 }
 
-inline float screen_normalised (float pos, std::size_t size)
+static inline float screen_normalised (float pos, std::size_t size)
 {
 	return ((2.0f * pos) / size) - 1.0f;
 }
 
 typedef Vector2 DeviceVector;
 
-inline DeviceVector window_to_normalised_device (WindowVector window, std::size_t width, std::size_t height)
+static inline DeviceVector window_to_normalised_device (WindowVector window, std::size_t width, std::size_t height)
 {
 	return DeviceVector(screen_normalised(window.x(), width), screen_normalised(height - 1 - window.y(), height));
 }
 
-inline float device_constrained (float pos)
+static inline float device_constrained (float pos)
 {
 	return std::min(1.0f, std::max(-1.0f, pos));
 }
 
-inline DeviceVector device_constrained (DeviceVector device)
+static inline DeviceVector device_constrained (DeviceVector device)
 {
 	return DeviceVector(device_constrained(device.x()), device_constrained(device.y()));
 }
 
-inline float window_constrained (float pos, std::size_t origin, std::size_t size)
+static inline float window_constrained (float pos, std::size_t origin, std::size_t size)
 {
 	return std::min(static_cast<float> (origin + size), std::max(static_cast<float> (origin), pos));
 }
 
-inline WindowVector window_constrained (WindowVector window, std::size_t x, std::size_t y, std::size_t width,
+static inline WindowVector window_constrained (WindowVector window, std::size_t x, std::size_t y, std::size_t width,
 		std::size_t height)
 {
 	return WindowVector(window_constrained(window.x(), x, width), window_constrained(window.y(), y, height));
@@ -3368,20 +3346,20 @@ inline WindowVector window_constrained (WindowVector window, std::size_t x, std:
 
 typedef Callback1<DeviceVector> MouseEventCallback;
 
-Single<MouseEventCallback> g_mouseMovedCallback;
-Single<MouseEventCallback> g_mouseUpCallback;
+static Single<MouseEventCallback> g_mouseMovedCallback;
+static Single<MouseEventCallback> g_mouseUpCallback;
 
-const ButtonIdentifier c_button_select = c_buttonLeft;
-const ModifierFlags c_modifier_manipulator = c_modifierNone;
-const ModifierFlags c_modifier_toggle = c_modifierShift;
-const ModifierFlags c_modifier_replace = c_modifierShift | c_modifierAlt;
-const ModifierFlags c_modifier_face = c_modifierControl;
-const ModifierFlags c_modifier_toggle_face = c_modifier_toggle | c_modifier_face;
-const ModifierFlags c_modifier_replace_face = c_modifier_replace | c_modifier_face;
+static const ButtonIdentifier c_button_select = c_buttonLeft;
+static const ModifierFlags c_modifier_manipulator = c_modifierNone;
+static const ModifierFlags c_modifier_toggle = c_modifierShift;
+static const ModifierFlags c_modifier_replace = c_modifierShift | c_modifierAlt;
+static const ModifierFlags c_modifier_face = c_modifierControl;
+static const ModifierFlags c_modifier_toggle_face = c_modifier_toggle | c_modifier_face;
+static const ModifierFlags c_modifier_replace_face = c_modifier_replace | c_modifier_face;
 
-const ButtonIdentifier c_button_texture = c_buttonMiddle;
-const ModifierFlags c_modifier_apply_texture = c_modifierControl | c_modifierShift;
-const ModifierFlags c_modifier_copy_texture = c_modifierNone;
+static const ButtonIdentifier c_button_texture = c_buttonMiddle;
+static const ModifierFlags c_modifier_apply_texture = c_modifierControl | c_modifierShift;
+static const ModifierFlags c_modifier_copy_texture = c_modifierNone;
 
 class Selector_
 {
