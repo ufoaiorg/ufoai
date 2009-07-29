@@ -299,6 +299,9 @@ window popup_tipoftheday
 		pos			"58 194"
 		size		"200 25"
 		font		f_small
+		onClick		{
+			call activate@toggle
+		}
 	}
 
 	text popup_tipoftheday_text

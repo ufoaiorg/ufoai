@@ -114,6 +114,11 @@ static void MN_CheckBoxNodeLoading (menuNode_t *node)
 {
 }
 
+static const value_t properties[] = {
+	{"toggle", V_UI_NODEFUNCTION, ((size_t) MN_CheckBoxNodeActivate), 0},
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterCheckBoxNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "checkbox";
@@ -122,4 +127,5 @@ void MN_RegisterCheckBoxNode (nodeBehaviour_t *behaviour)
 	behaviour->leftClick = MN_CheckBoxNodeClick;
 	behaviour->loading = MN_CheckBoxNodeLoading;
 	behaviour->activate = MN_CheckBoxNodeActivate;
+	behaviour->properties = properties;
 }
