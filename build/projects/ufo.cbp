@@ -77,6 +77,9 @@
 				<Compiler>
 					<Add option="`sdl-config --cflags`" />
 					<Add option="`curl-config --cflags`" />
+					<Add option="-DHAVE_VORBIS_CODEC_H" />
+					<Add option="-DHAVE_XVID_H" />
+					<Add option="-DHAVE_THEORA_THEORA_H" />
 				</Compiler>
 				<Linker>
 					<Add option="`sdl-config --libs`" />
@@ -98,6 +101,9 @@
 				<Compiler>
 					<Add directory="\sw\include" />
 					<Add directory="\Library\Frameworks\SDL.framework\Versions\A\Headers" />
+					<Add option="-DHAVE_VORBIS_CODEC_H" />
+					<Add option="-DHAVE_XVID_H" />
+					<Add option="-DHAVE_THEORA_THEORA_H" />
 				</Compiler>
 				<Linker>
 					<Add option="-framework OpenGL" />
