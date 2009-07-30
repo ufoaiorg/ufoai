@@ -61,7 +61,7 @@
 #include "gtkutil/glwidget.h"
 #include "gtkutil/messagebox.h"
 
-#include "error.h"
+#include "../error.h"
 #include "../map.h"
 #include "../qgl.h"
 #include "../select.h"
