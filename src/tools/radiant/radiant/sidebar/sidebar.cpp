@@ -170,10 +170,22 @@ void ToggleSidebar(void) {
 	widget_toggle_visible(notebook);
 }
 
-void TogglePrefabs(void) {
+void ToggleParticleBrowser(void) {
+	if (!widget_is_visible(GTK_WIDGET(notebook)))
+		widget_set_visible(GTK_WIDGET(notebook), TRUE);
+	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 4);
+}
+
+void ToggleTextureBrowser(void) {
 	if (!widget_is_visible(GTK_WIDGET(notebook)))
 		widget_set_visible(GTK_WIDGET(notebook), TRUE);
 	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 3);
+}
+
+void TogglePrefabs(void) {
+	if (!widget_is_visible(GTK_WIDGET(notebook)))
+		widget_set_visible(GTK_WIDGET(notebook), TRUE);
+	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 2);
 }
 
 void ToggleSurfaceInspector(void) {
@@ -216,6 +228,10 @@ GtkWidget *Sidebar_construct(void) {
 			(GdkModifierType) GDK_SHIFT_MASK));
 	GlobalCommands_insert("TogglePrefabs", FreeCaller<TogglePrefabs> (),
 			Accelerator('P', (GdkModifierType) GDK_SHIFT_MASK));
+	GlobalCommands_insert("ToggleTextureBrowser", FreeCaller<
+			ToggleTextureBrowser> (), Accelerator('T'));
+	GlobalCommands_insert("ToggleParticleBrowser", FreeCaller<
+			ToggleTextureBrowser> (), Accelerator('P'));
 
 	return vbox;
 }

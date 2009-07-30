@@ -2334,7 +2334,7 @@ void MainFrame_Construct (void)
 	GlobalCommands_insert("SelectTouching", FreeCaller<Select_Touching> ());
 	GlobalCommands_insert("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities> (), Accelerator('E',
 			(GdkModifierType) (GDK_MOD1_MASK | GDK_CONTROL_MASK)));
-	GlobalCommands_insert("Preferences", FreeCaller<PreferencesDialog_showDialog> (), Accelerator('P'));
+	GlobalCommands_insert("Preferences", FreeCaller<PreferencesDialog_showDialog> ());
 
 	GlobalCommands_insert("ShowHidden", FreeCaller<Select_ShowAllHidden> (), Accelerator('H',
 			(GdkModifierType) GDK_SHIFT_MASK));
