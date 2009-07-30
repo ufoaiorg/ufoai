@@ -223,27 +223,13 @@ static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
 	}
 }
 
-static void MN_EditorNodeStart_f (void)
+static void MN_EditorNodeStart (menuNode_t *node)
 {
-	menuNode_t* node;
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <nodepath>\n", Cmd_Argv(0));
-		return;
-	}
-	node = MN_GetNodeByPath(Cmd_Argv(1));
-	assert(node);
 	MN_SetMouseCapture(node);
 }
 
-static void MN_EditorNodeStop_f (void)
+static void MN_EditorNodeStop (menuNode_t *node)
 {
-	menuNode_t* node;
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <nodepath>\n", Cmd_Argv(0));
-		return;
-	}
-	node = MN_GetNodeByPath(Cmd_Argv(1));
-	/* assert(MN_GetMouseCapture() == node);*/
 	MN_MouseRelease();
 }
 
@@ -282,6 +268,10 @@ static void MN_EditorNodeExtractNode (qFILE *file, menuNode_t *node, int depth)
 	FS_Printf(file, "%s}\n", tab);
 }
 
+/**
+ * @note not moved into V_UI_NODEFUNCTION because it is more a generic
+ * tool than a method of the node editor
+ */
 static void MN_EditorNodeExtract_f (void)
 {
 	menuNode_t* menu;
@@ -304,6 +294,12 @@ static void MN_EditorNodeExtract_f (void)
 	Com_Printf("Menu '%s' extracted.\n", Cmd_Argv(1));
 }
 
+static const value_t properties[] = {
+	{"start", V_UI_NODEFUNCTION, ((size_t) MN_EditorNodeStart), 0},
+	{"stop", V_UI_NODEFUNCTION, ((size_t) MN_EditorNodeStop), 0},
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterEditorNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "editor";
@@ -312,9 +308,8 @@ void MN_RegisterEditorNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseUp = MN_EditorNodeMouseUp;
 	behaviour->capturedMouseMove = MN_EditorNodeCapturedMouseMove;
 	behaviour->capturedMouseLost = MN_EditorNodeCapturedMouseLost;
+	behaviour->properties = properties;
 
-	Cmd_AddCommand("mn_editornode_start", MN_EditorNodeStart_f, "Start node edition");
-	Cmd_AddCommand("mn_editornode_stop", MN_EditorNodeStop_f, "Stop node edition");
 	Cmd_AddCommand("mn_extract", MN_EditorNodeExtract_f, "Extract position and size of nodes into a file");
 	Cmd_AddParamCompleteFunction("mn_extract", MN_CompleteWithMenu);
 }

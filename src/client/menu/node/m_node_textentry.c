@@ -95,23 +95,8 @@ static void MN_TextEntryNodeAbortEdition (menuNode_t *node)
  * @brief force edition of a textentry node
  * @note the textentry must be on the active menu
  */
-static void MN_EditTextEntry_f (void)
+static void MN_TextEntryNodeFocus (menuNode_t *node)
 {
-	menuNode_t *node;
-	const char* name;
-
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <textentrynode>\n", Cmd_Argv(0));
-		return;
-	}
-
-	name = Cmd_Argv(1);
-	node = MN_GetNode(MN_GetActiveMenu(), name);
-	if (!node) {
-		Com_Printf("MN_EditTextEntry_f: node '%s' doesn't exist on the current active menu '%s'\n", name, MN_GetActiveMenu()->name);
-		return;
-	}
-
 	/* remove the focus to show changes */
 	if (!MN_HasFocus(node)) {
 		MN_RequestFocus(node);
@@ -325,6 +310,7 @@ static const value_t properties[] = {
 	{"ispassword", V_BOOL, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, isPassword), MEMBER_SIZEOF(textEntryExtraData_t, isPassword)},
 	{"clickoutabort", V_BOOL, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, clickOutAbort), MEMBER_SIZEOF(textEntryExtraData_t, clickOutAbort)},
 	{"onabort", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, onAbort), MEMBER_SIZEOF(textEntryExtraData_t, onAbort)},
+	{"edit", V_UI_NODEFUNCTION, ((size_t) MN_TextEntryNodeFocus), 0},
 
 	{NULL, V_NULL, 0, 0}
 };
@@ -340,6 +326,4 @@ void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 	behaviour->loading = MN_TextEntryNodeLoading;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(textEntryExtraData_t);
-
-	Cmd_AddCommand("mn_edittextentry", MN_EditTextEntry_f, "Force edition of the textentry.");
 }

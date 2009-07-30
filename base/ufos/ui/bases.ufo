@@ -229,7 +229,7 @@ window bases
 		texh	"16 64"
 		onClick
 		{
-			cmd "mn_edittextentry name;"
+			call name@edit
 		}
 	}
 

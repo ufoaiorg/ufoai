@@ -1047,7 +1047,7 @@ window popup_newbase
 		texl		"0 48"
 		texh		"16 64"
 		mousefx		false
-		onClick		{ cmd "mn_edittextentry name;" }
+		onClick		{ call name@edit }
 	}
 
 	string cost_label
@@ -1468,7 +1468,7 @@ window popup_newinstallation
 		texl		"0 48"
 		texh		"16 64"
 		mousefx		false
-		onClick		{ cmd "mn_edittextentry name;" }
+		onClick		{ call name@edit }
 	}
 
 	string cost_label
@@ -1601,7 +1601,7 @@ window popup_installationstatus
 		texl		"0 48"
 		texh		"16 64"
 		mousefx		false
-		onClick		{ cmd "mn_edittextentry name;" }
+		onClick		{ call name@edit }
 	}
 
 	string buildtime_label
