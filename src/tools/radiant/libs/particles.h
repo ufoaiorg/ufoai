@@ -16,6 +16,17 @@
 #include <map>
 #include <list>
 
+/** possible blend modes - see also blend_names */
+typedef enum {
+	BLEND_REPLACE,
+	BLEND_BLEND,
+	BLEND_ADD,
+	BLEND_FILTER,
+	BLEND_INVFILTER,
+
+	BLEND_LAST
+} blend_t;
+
 class ParticleDefinition {
 
 private:
@@ -43,11 +54,17 @@ private:
 public:
 	ParticleDefinition(const char *id) : m_copy(false), m_modelName((char *)0), m_imageName((char *)0), m_image((qtexture_t *)0) {
 		m_id = strdup(id);
+		m_blend = BLEND_REPLACE;
+		m_width = 0;
+		m_height = 0;
 	}
 
-	ParticleDefinition(const char* id, const char *modelName, const char *imageName)
+	ParticleDefinition(const char* id, const char *modelName, const char *imageName, int blend, int width, int height)
 		: m_copy(false), m_image((qtexture_t *)0) {
 		m_id = strdup(id);
+		m_blend = blend;
+		m_width = width;
+		m_height = height;
 
 		if (imageName != (char *)0)
 			m_imageName = strdup(imageName);
@@ -65,6 +82,9 @@ public:
 	/** @brief copy constructor */
 	ParticleDefinition(ParticleDefinition const& copy): m_copy(true), m_image(copy.m_image) {
 		m_id = strdup(copy.m_id);
+		m_blend = copy.m_blend;
+		m_width = copy.m_width;
+		m_height = copy.m_height;
 
 		if (copy.m_imageName != (char *)0)
 			m_imageName = strdup(copy.m_imageName);
@@ -72,7 +92,7 @@ public:
 			m_imageName = (char *)0;
 
 		if (copy.m_modelName != (char *)0)
-			m_imageName = strdup(copy.m_modelName);
+			m_modelName = strdup(copy.m_modelName);
 		else
 			m_modelName = (char *)0;
 	}
@@ -91,6 +111,9 @@ public:
 	char *m_modelName;
 	char *m_imageName;
 	qtexture_t *m_image;
+	int m_blend;
+	int m_width;
+	int m_height;
 
 	void loadTextureForCopy() {
 		if (!m_copy)

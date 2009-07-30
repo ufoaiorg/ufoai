@@ -30,12 +30,28 @@
 #include "gtkutil/dialog.h"
 #include "../mainframe.h"
 #include "particles.h"
+#include <stdlib.h>
 
 // the list of ufos/*.ufo files we need to work with
 static GSList *l_ufofiles = 0;
 static std::list<CopiedString> g_ufoFilenames;
 
 ParticleDefinitionMap g_particleDefinitions;
+
+static const char *const blend_names[] = {
+	"replace", "blend", "add", "filter", "invfilter"
+};
+
+static int GetBlendMode (const char *token) {
+	int i;
+
+	for (i = 0; i < BLEND_LAST; i++) {
+		if (string_equal(token, blend_names[i])) {
+			return i;
+		}
+	}
+	return BLEND_REPLACE;
+}
 
 static void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 	g_ufoFilenames.push_back(filename);
@@ -65,8 +81,11 @@ static void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 				return;
 			}
 
-			const char *model = NULL;
-			const char *image = NULL;
+			char model[128] = "";
+			char image[128] = "";
+			int blend = BLEND_REPLACE;
+			int width = 0;
+			int height = 0;
 			for (;;) {
 				token = tokeniser.getToken();
 				if (string_equal(token, "init")) {
@@ -79,13 +98,26 @@ static void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 						if (string_equal(option, "}")) {
 							break;
 						} else if (string_equal(option, "image")) {
-							image = tokeniser.getToken();
-							token = "}";
-							break;
+							strncpy(image, tokeniser.getToken(), sizeof(image));
 						} else if (string_equal(option, "model")) {
-							model = tokeniser.getToken();
-							token = "}";
-							break;
+							strncpy(model, tokeniser.getToken(), sizeof(model));
+						} else if (string_equal(option, "blend")) {
+							blend = GetBlendMode(tokeniser.getToken());
+						} else if (string_equal(option, "size")) {
+							const char *sizeVector2 = tokeniser.getToken();
+							char size[64];
+							char *seperator;
+							strncpy(size, sizeVector2, sizeof(size));
+							seperator = size;
+							while (seperator != '\0') {
+								seperator++;
+								if (*seperator == ' ') {
+									*seperator = '\0';
+									width = atoi(size);
+									height = atoi(++seperator);
+									break;
+								}
+							}
 						}
 					}
 				} else if (string_equal(token, "think")) {
@@ -120,9 +152,9 @@ static void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 				if (string_equal(token, "}"))
 					break;
 			}
-			if (!kill && (model || image)) {
+			if (!kill && (model[0] != '\0' || image[0] != '\0')) {
 				// do we already have this particle?
-				if (!g_particleDefinitions.insert(ParticleDefinitionMap::value_type(pID, ParticleDefinition(pID, model, image))).second)
+				if (!g_particleDefinitions.insert(ParticleDefinitionMap::value_type(pID, ParticleDefinition(pID, model, image, blend, width, height))).second)
 					g_warning("Particle '%s' is already in memory, definition in '%s' ignored.\n", pID, filename);
 			}
 		}

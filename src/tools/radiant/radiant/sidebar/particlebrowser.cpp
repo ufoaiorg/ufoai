@@ -116,7 +116,32 @@ static inline int ParticleBrowser_fontHeight(ParticleBrowser& ParticleBrowser) {
 	return GlobalOpenGL().m_fontHeight;
 }
 
+static void Particle_SetBlendMode (ParticleDefinition *particle)
+{
+	switch (particle->m_blend) {
+	case BLEND_REPLACE:
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+		break;
+	case BLEND_BLEND:
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		break;
+	case BLEND_ADD:
+		glBlendFunc(GL_ONE, GL_ONE);
+		break;
+	case BLEND_FILTER:
+		glBlendFunc(GL_ZERO, GL_SRC_COLOR);
+		break;
+	case BLEND_INVFILTER:
+		glBlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_COLOR);
+		break;
+	}
+}
+
 static void Particle_Draw(ParticleBrowser& particleBrowser) {
+	 ParticleDefinition *particle = g_currentSelectedParticle;
+
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+
 	glClearColor(particleBrowser.color_textureback[0],
 			particleBrowser.color_textureback[1],
 			particleBrowser.color_textureback[2], 0);
@@ -128,23 +153,35 @@ static void Particle_Draw(ParticleBrowser& particleBrowser) {
 	glOrtho(0, particleBrowser.width, particleBrowser.height, 0, -100, 100);
 	glEnable(GL_TEXTURE_2D);
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	if (g_currentSelectedParticle) {
+	if (particle) {
 		const int fontGap = ParticleBrowser_fontHeight(particleBrowser);
 		int x = 10, y = 0;
 
 		// Draw the texture
 		const qtexture_t *q = g_currentSelectedParticle->m_image;
 		if (q) {
-			const int nWidth = particleBrowser.getTextureWidth(q);
-			const int nHeight = particleBrowser.getTextureHeight(q);
+			int nWidth = particle->m_width ? particle->m_width : particleBrowser.getTextureWidth(q);
+			int nHeight = particle->m_height ? particle->m_height : particleBrowser.getTextureHeight(q);
+
+			// should be at least visible - and some might really be very small
+			if (nWidth < 10)
+				nWidth *= 3;
+			if (nHeight < 10)
+				nHeight *= 3;
 
 			x = (particleBrowser.width) / 2 - (nWidth / 2);
 			y = (particleBrowser.height) / 2 - (nHeight / 2);
 
+			Particle_SetBlendMode(particle);
+
 			glBindTexture(GL_TEXTURE_2D, q->texture_number);
-			glColor3f(1, 1, 1);
+			glColor4f(1, 1, 1, 1);
 			glBegin(GL_QUADS);
 			glTexCoord2i(0, 0);
 			glVertex2i(x, y - fontGap);
@@ -155,18 +192,22 @@ static void Particle_Draw(ParticleBrowser& particleBrowser) {
 			glTexCoord2i(0, 1);
 			glVertex2i(x, y - fontGap - nHeight);
 			glEnd();
+
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		}
 
 		// draw the particle name
 		glDisable(GL_TEXTURE_2D);
-		glColor3f(1, 1, 1);
+		glColor4f(1, 1, 1, 1);
 		glRasterPos2i(10, particleBrowser.height - fontGap + 5);
-		GlobalOpenGL().drawString(g_currentSelectedParticle->m_id);
+		GlobalOpenGL().drawString(particle->m_id);
 		glEnable(GL_TEXTURE_2D);
 	}
 
 	// reset the current texture
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glPopAttrib();
 }
 
 static void ParticleBrowser_Selection_MouseDown (ParticleBrowser& ParticleBrowser, guint32 flags, int pointx, int pointy)
