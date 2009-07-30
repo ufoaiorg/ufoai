@@ -72,7 +72,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "archivelib.h"
 #include "imagelib.h"
 
-const char* g_texturePrefix = "textures/";
+static const char* g_texturePrefix = "textures/";
 
 static Callback g_ActiveShadersChangedNotify;
 

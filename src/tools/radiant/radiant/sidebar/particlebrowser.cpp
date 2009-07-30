@@ -59,8 +59,6 @@ static ParticleDefinition *g_currentSelectedParticle;
 class ParticleBrowser {
 public:
 	int width, height;
-	int originy;
-	int m_nTotalHeight;
 
 	GtkWindow* m_parent;
 	GtkWidget* m_gl_widget;
@@ -71,12 +69,8 @@ public:
 	guint m_sizeHandler;
 	guint m_exposeHandler;
 
-	bool m_heightChanged;
-	bool m_originInvalid;
-
 	Vector3 color_textureback;
 	// the increment step we use against the wheel mouse
-	std::size_t m_mouseWheelScrollIncrement;
 	std::size_t m_textureScale;
 	// Return the display width of a texture in the texture browser
 	int getTextureWidth(const qtexture_t* tex) {
@@ -94,29 +88,17 @@ public:
 	}
 
 	ParticleBrowser() :
-		m_heightChanged(true), m_originInvalid(true),
-				color_textureback(0.25f, 0.25f, 0.25f),
-				m_mouseWheelScrollIncrement(64), m_textureScale(50) {
+		color_textureback(0.25f, 0.25f, 0.25f),
+		m_textureScale(50) {
 	}
-};
-
-class TextureLayout {
-public:
-	// texture layout functions
-	// TTimo: now based on shaders
-	int current_x, current_y, current_row;
 };
 
 static ParticleBrowser g_ParticleBrowser;
 
-static void ParticleBrowser_queueDraw(ParticleBrowser& ParticleBrowser) {
-	if (ParticleBrowser.m_gl_widget != 0) {
-		gtk_widget_queue_draw(ParticleBrowser.m_gl_widget);
+static void ParticleBrowser_queueDraw(ParticleBrowser& particleBrowser) {
+	if (particleBrowser.m_gl_widget != 0) {
+		gtk_widget_queue_draw(particleBrowser.m_gl_widget);
 	}
-}
-
-static inline int ParticleBrowser_fontHeight(ParticleBrowser& ParticleBrowser) {
-	return GlobalOpenGL().m_fontHeight;
 }
 
 static void Particle_SetBlendMode (ParticleDefinition *particle)
@@ -163,7 +145,7 @@ static void Particle_Draw(ParticleBrowser& particleBrowser) {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	if (particle) {
-		const int fontGap = ParticleBrowser_fontHeight(particleBrowser);
+		const int fontGap = GlobalOpenGL().m_fontHeight;
 		int x = 10, y = 0;
 
 		// Draw the texture
@@ -218,42 +200,34 @@ static void Particle_Draw(ParticleBrowser& particleBrowser) {
 	glPopAttrib();
 }
 
-static void ParticleBrowser_Selection_MouseDown (ParticleBrowser& ParticleBrowser, guint32 flags, int pointx, int pointy)
+static void ParticleBrowser_Selection_MouseDown (ParticleBrowser& particleBrowser, guint32 flags, int pointx, int pointy)
 {
 }
 
 static gboolean ParticleBrowser_button_press(GtkWidget* widget, GdkEventButton* event,
-		ParticleBrowser* ParticleBrowser) {
+		ParticleBrowser* particleBrowser) {
 	if (event->type == GDK_BUTTON_PRESS) {
 		if (event->button == 1) {
-			ParticleBrowser_Selection_MouseDown(*ParticleBrowser, event->state,
+			ParticleBrowser_Selection_MouseDown(*particleBrowser, event->state,
 					static_cast<int> (event->x), static_cast<int> (event->y));
 		}
 	}
 	return FALSE;
 }
 
-static void ParticleBrowser_heightChanged(ParticleBrowser& particleBrowser) {
-	particleBrowser.m_heightChanged = true;
-
-	ParticleBrowser_queueDraw(particleBrowser);
-}
-
 static gboolean ParticleBrowser_size_allocate(GtkWidget* widget,
-		GtkAllocation* allocation, ParticleBrowser* ParticleBrowser) {
-	ParticleBrowser->width = allocation->width;
-	ParticleBrowser->height = allocation->height;
-	ParticleBrowser_heightChanged(*ParticleBrowser);
-	ParticleBrowser->m_originInvalid = true;
-	ParticleBrowser_queueDraw(*ParticleBrowser);
+		GtkAllocation* allocation, ParticleBrowser* particleBrowser) {
+	particleBrowser->width = allocation->width;
+	particleBrowser->height = allocation->height;
+	ParticleBrowser_queueDraw(*particleBrowser);
 	return FALSE;
 }
 
 static gboolean ParticleBrowser_expose(GtkWidget* widget,
-		GdkEventExpose* event, ParticleBrowser* ParticleBrowser) {
-	if (glwidget_make_current(ParticleBrowser->m_gl_widget) != FALSE) {
-		Particle_Draw(*ParticleBrowser);
-		glwidget_swap_buffers(ParticleBrowser->m_gl_widget);
+		GdkEventExpose* event, ParticleBrowser* particleBrowser) {
+	if (glwidget_make_current(particleBrowser->m_gl_widget) != FALSE) {
+		Particle_Draw(*particleBrowser);
+		glwidget_swap_buffers(particleBrowser->m_gl_widget);
 	}
 	return FALSE;
 }
