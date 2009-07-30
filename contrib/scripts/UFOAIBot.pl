@@ -24,15 +24,15 @@ sub handleCommand($$) {
 	my ($receiver, $text) = @_;
 
 	if ($text =~ /^\!bug #?(\d+)/) {
-		$conn->privmsg($receiver, "https://sourceforge.net/tracker/?func=detail&aid=$1&group_id=157793&atid=805242");
+		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805242");
 	} elsif ($text =~ /^\!fr #?(\d+)/) {
-		$conn->privmsg($receiver, "https://sourceforge.net/tracker/?func=detail&aid=$1&group_id=157793&atid=805244");
+		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805244");
 	} elsif ($text =~ /^\!patch #?(\d+)/) {
-		$conn->privmsg($receiver, "https://sourceforge.net/tracker/?func=detail&aid=$1&group_id=157793&atid=805245");
+		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805245");
 	} elsif ($text =~ /^\!rev #?(\d+)/) {
 		$conn->privmsg($receiver, "http://ufoai.svn.sourceforge.net/viewvc/ufoai?view=rev&revision=$1");
 	} elsif ($text =~ /\s+#?(\d+)\s*/) {
-		$conn->privmsg($receiver, "https://sourceforge.net/tracker/?func=detail&aid=$1&group_id=157793&atid=805242");
+		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805242");
 	} else {
 		# unknown command
 		return 0;
