@@ -230,7 +230,7 @@ void Grid_registerPreferencesPage() {
 	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Grid_constructPage>());
 }
 
-void Grid_construct() {
+void Grid_Construct() {
 	Grid_registerPreferencesPage();
 
 	g_grid_default = GridDefault_forGridPower(GRIDPOWER_8);
@@ -241,5 +241,5 @@ void Grid_construct() {
 	g_gridsize = GridSize_forGridPower(g_grid_power);
 }
 
-void Grid_destroy() {
+void Grid_Destroy() {
 }

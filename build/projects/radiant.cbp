@@ -325,6 +325,9 @@
 		<Unit filename="../../src/tools/radiant/radiant/material.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/particles.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/map.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

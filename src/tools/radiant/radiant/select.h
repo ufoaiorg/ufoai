@@ -72,8 +72,8 @@ void Select_ShowAllHidden();
 
 // updating workzone to a given brush (depends on current view)
 
-void Selection_construct();
-void Selection_destroy();
+void Selection_Construct();
+void Selection_Destroy();
 
 
 struct select_workzone_t {

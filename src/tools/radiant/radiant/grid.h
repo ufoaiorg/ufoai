@@ -35,7 +35,7 @@ void Grid_constructMenu(GtkMenu* menu);
 
 void Grid_registerShortcuts();
 
-void Grid_construct();
-void Grid_destroy();
+void Grid_Construct();
+void Grid_Destroy();
 
 #endif

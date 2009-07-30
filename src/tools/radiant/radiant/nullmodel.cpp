@@ -199,9 +199,9 @@ NodeSmartReference NewNullModel ()
 	return NodeSmartReference((new NullModelNode)->node());
 }
 
-void NullModel_construct ()
+void NullModel_Construct ()
 {
 }
-void NullModel_destroy ()
+void NullModel_Destroy ()
 {
 }

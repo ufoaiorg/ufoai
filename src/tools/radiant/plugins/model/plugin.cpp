@@ -88,7 +88,7 @@ static void PicoFreeFileFunc (void* file)
 	vfsFreeFile(file);
 }
 
-void pico_initialise ()
+static void pico_initialise (void)
 {
 	PicoInit();
 	PicoSetMallocFunc(malloc);

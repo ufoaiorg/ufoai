@@ -30,7 +30,7 @@ class Node;
 typedef SmartReference<scene::Node, IncRefDecRefCounter<scene::Node> > NodeSmartReference;
 NodeSmartReference NewNullModel();
 
-void NullModel_construct();
-void NullModel_destroy();
+void NullModel_Construct();
+void NullModel_Destroy();
 
 #endif

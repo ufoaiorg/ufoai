@@ -173,7 +173,7 @@ NullModelLoader g_NullModelLoader;
 /**
  * @brief Returns the model loader for the model \p type or 0 if the model \p type has no loader module
  */
-static ModelLoader* ModelLoader_forType(const char* type) {
+ModelLoader* ModelLoader_forType(const char* type) {
 	const char* moduleName = findModuleName(&GlobalFiletypes(),
 			ModelLoader::Name(), type);
 	if (string_not_empty(moduleName)) {
@@ -559,12 +559,12 @@ public:
 	}
 
 	Resource* capture(const char* path) {
-		//globalOutputStream() << "capture: \"" << path << "\"\n";
+		g_debug("capture: \"%s\"\n", path);
 		return m_references.capture(CopiedString(path)).get();
 	}
 	void release(const char* path) {
 		m_references.release(CopiedString(path));
-		//globalOutputStream() << "release: \"" << path << "\"\n";
+		g_debug("release: \"%s\"\n", path);
 	}
 
 	void setEntityCreator(EntityCreator& entityCreator) {

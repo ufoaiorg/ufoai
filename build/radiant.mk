@@ -32,6 +32,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/lastused.cpp \
 	$(RADIANT_BASE)/radiant/material.cpp \
+	$(RADIANT_BASE)/radiant/particles.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
 	$(RADIANT_BASE)/radiant/map.cpp \

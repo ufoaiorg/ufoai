@@ -797,7 +797,7 @@ void SceneSelectionChange (const Selectable& selectable)
 
 SignalHandlerId Selection_boundsChanged;
 
-void Selection_construct (void)
+void Selection_Construct (void)
 {
 	typedef FreeCaller1<const Selectable&, SceneSelectionChange> SceneSelectionChangeCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(SceneSelectionChangeCaller());
@@ -807,7 +807,7 @@ void Selection_construct (void)
 	Selection_boundsChanged = GlobalSceneGraph().addBoundsChangedCallback(UpdateWorkzoneForSelectionCaller());
 }
 
-void Selection_destroy (void)
+void Selection_Destroy (void)
 {
 	GlobalSceneGraph().removeBoundsChangedCallback(Selection_boundsChanged);
 }

@@ -25,7 +25,7 @@
 #include <gtk/gtk.h>
 
 GtkWidget *EntityInspector_constructNotebookTab(void);
-void EntityInspector_construct();
-void EntityInspector_destroy();
+void EntityInspector_Construct();
+void EntityInspector_Destroy();
 
 #endif

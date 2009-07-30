@@ -1909,10 +1909,10 @@ EntityInspector g_EntityInspector;
 #include "preferencesystem.h"
 #include "stringio.h"
 
-void EntityInspector_construct(void) {
+void EntityInspector_Construct(void) {
 	GlobalEntityClassManager().attach(g_EntityInspector);
 }
 
-void EntityInspector_destroy(void) {
+void EntityInspector_Destroy(void) {
 	GlobalEntityClassManager().detach(g_EntityInspector);
 }

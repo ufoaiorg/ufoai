@@ -217,10 +217,10 @@ public:
 	}
 };
 
-inline void MapRoot_construct() {
+inline void MapRoot_Construct() {
 }
 
-inline void MapRoot_destroy() {
+inline void MapRoot_Destroy() {
 }
 
 inline NodeSmartReference NewMapRoot(const char* name) {

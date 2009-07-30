@@ -74,6 +74,7 @@
 #include "nullmodel.h"
 #include "grid.h"
 #include "material.h"
+#include "particles.h"
 
 #include "modulesystem/modulesmap.h"
 #include "modulesystem/singletonmodule.h"
@@ -233,10 +234,10 @@ class Radiant: public TypeSystemRef
 			GlobalFiletypes().addType("sound", "wav", filetype_t("PCM sound files", "*.wav"));
 			GlobalFiletypes().addType("sound", "ogg", filetype_t("OGG sound files", "*.ogg"));
 
-			Selection_construct();
+			Selection_Construct();
 			HomePaths_Construct();
 			VFS_Construct();
-			Grid_construct();
+			Grid_Construct();
 			MRU_Construct();
 			GLWindow_Construct();
 			Map_Construct();
@@ -251,24 +252,28 @@ class Radiant: public TypeSystemRef
 			ParticleBrowser_Construct();
 			Entity_Construct();
 			Autosave_Construct();
-			EntityInspector_construct();
+			EntityInspector_Construct();
 			FindTextureDialog_Construct();
-			NullModel_construct();
-			MapRoot_construct();
+			NullModel_Construct();
+			MapRoot_Construct();
 			Material_Construct();
 
 			EnginePath_verify();
 			EnginePath_Realise();
+
+			Particles_Construct();
 		}
 		~Radiant ()
 		{
+			Particles_Destroy();
+
 			EnginePath_Unrealise();
 
 			Material_Destroy();
-			MapRoot_destroy();
-			NullModel_destroy();
+			MapRoot_Destroy();
+			NullModel_Destroy();
 			FindTextureDialog_Destroy();
-			EntityInspector_destroy();
+			EntityInspector_Destroy();
 			Autosave_Destroy();
 			Entity_Destroy();
 			ParticleBrowser_Destroy();
@@ -283,10 +288,10 @@ class Radiant: public TypeSystemRef
 			Map_Destroy();
 			GLWindow_Destroy();
 			MRU_Destroy();
-			Grid_destroy();
+			Grid_Destroy();
 			VFS_Destroy();
 			HomePaths_Destroy();
-			Selection_destroy();
+			Selection_Destroy();
 		}
 };
 

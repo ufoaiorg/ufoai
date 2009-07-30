@@ -46,6 +46,9 @@
 #include "stream/stringstream.h"
 #include "particles.h"
 
+#include "../mainframe.h"
+#include "../referencecache.h"
+
 #include "gtkutil/nonmodal.h"
 #include "gtkutil/widget.h"
 #include "gtkutil/glwidget.h"
@@ -196,6 +199,11 @@ static void Particle_Draw(ParticleBrowser& particleBrowser) {
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		}
 
+		// Draw the model
+		if (particle->m_model) {
+			//particle->m_model;
+		}
+
 		// draw the particle name
 		glDisable(GL_TEXTURE_2D);
 		glColor4f(1, 1, 1, 1);
@@ -254,15 +262,11 @@ static void ParticleBrowser_constructTreeStore(void) {
 	GtkTreeStore* store = gtk_tree_store_new(1, G_TYPE_STRING);
 	GtkTreeIter iter;
 
-	Particles_Init();
-
 	for (ParticleDefinitionMap::const_iterator i =
 			g_particleDefinitions.begin(); i != g_particleDefinitions.end(); ++i) {
 		gtk_tree_store_append(store, &iter, (GtkTreeIter*) 0);
 		gtk_tree_store_set(store, &iter, 0, (*i).first.c_str(), -1);
 	}
-
-	Particles_Shutdown();
 
 	GtkTreeModel* model = GTK_TREE_MODEL(store);
 
@@ -271,6 +275,42 @@ static void ParticleBrowser_constructTreeStore(void) {
 	gtk_tree_view_expand_all(GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree));
 
 	g_object_unref(G_OBJECT(store));
+}
+
+static const char *GetModelTypeForParticle(ParticleDefinition *particle)
+{
+	StringOutputStream buf(128);
+
+	buf << "models/" << particle->m_modelName << ".md2";
+
+	const char *model = GlobalFileSystem().findFile(buf.c_str());
+	if (model)
+		return "md2";
+	return (const char *)0;
+}
+
+static void ParticleBrowser_loadModel(ParticleDefinition *particle)
+{
+	if (particle->m_modelName) {
+		const char *modelType = GetModelTypeForParticle(particle);
+		if (!modelType)
+			return;
+		ModelLoader *loader = ModelLoader_forType(modelType);
+		if (!loader)
+			return;
+
+		ScopeDisableScreenUpdates disableScreenUpdates(
+				path_get_filename_start(particle->m_modelName), _("Loading Model"));
+
+		StringOutputStream buf(128);
+		buf << "models/" << particle->m_modelName << "." << modelType;
+		AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(buf.c_str()));
+		if (file) {
+			particle->loadModel(loader, *file);
+		} else {
+			g_warning("Model load failed: '%s'\n", buf.c_str());
+		}
+	}
 }
 
 static void TreeView_onRowActivated(GtkTreeView* treeview, GtkTreePath* path,
@@ -287,8 +327,6 @@ static void TreeView_onRowActivated(GtkTreeView* treeview, GtkTreePath* path,
 		strcpy(particleName, buffer);
 		g_free(buffer);
 
-		Particles_Init();
-
 		ParticleDefinitionMap::iterator i = g_particleDefinitions.find(
 				particleName);
 		if (i != g_particleDefinitions.end()) {
@@ -299,11 +337,10 @@ static void TreeView_onRowActivated(GtkTreeView* treeview, GtkTreePath* path,
 			g_currentSelectedParticle = new ParticleDefinition(particle);
 			// capture the particle texture
 			g_currentSelectedParticle->loadTextureForCopy();
+			ParticleBrowser_loadModel(g_currentSelectedParticle);
 
 			ParticleBrowser_queueDraw(g_ParticleBrowser);
 		}
-
-		Particles_Shutdown();
 	}
 }
 
