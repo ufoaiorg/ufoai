@@ -172,10 +172,6 @@ GtkToolbar* create_main_toolbar_vertical (MainFrame::EViewStyle style)
 
 	toolbar_append_toggle_button(toolbar, _("Texture Lock (SHIFT + T)"), "texture_lock.bmp", "TogTexLock");
 
-	if (style != MainFrame::eRegular) {
-		toolbar_append_button(toolbar, _("Texture Browser (T)"), "texture_browser.bmp", "ToggleTextures");
-	}
-
 	return toolbar;
 }
 

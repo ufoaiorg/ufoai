@@ -126,6 +126,44 @@ static void Sidebar_constructJobInfo(GtkWidget *notebook) {
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
 }
 
+static void Sidebar_constructTextureBrowser(GtkWidget *notebook) {
+	GtkWidget *label = gtk_label_new(_("Textures"));
+	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
+
+	// scrollable window settings
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER,
+			GTK_POLICY_AUTOMATIC);
+
+	GtkWidget *pageTextureBrowser = TextureBrowser_constructNotebookTab();
+	gtk_container_add(GTK_CONTAINER(vbox), pageTextureBrowser);
+
+	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin),
+			GTK_WIDGET(vbox));
+
+	gtk_widget_show_all(swin);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
+}
+
+static void Sidebar_constructParticleBrowser(GtkWidget *notebook) {
+	GtkWidget *label = gtk_label_new(_("Particles"));
+	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
+
+	// scrollable window settings
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER,
+			GTK_POLICY_AUTOMATIC);
+
+	GtkWidget *pageParticleBrowser = ParticleBrowser_constructNotebookTab();
+	gtk_container_add(GTK_CONTAINER(vbox), pageParticleBrowser);
+
+	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin),
+			GTK_WIDGET(vbox));
+
+	gtk_widget_show_all(swin);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
+}
+
 static GtkWidget *notebook;
 
 void ToggleSidebar(void) {
@@ -155,12 +193,15 @@ GtkWidget *Sidebar_construct(void) {
 
 	notebook = gtk_notebook_new();
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(notebook), TRUE, TRUE, 0);
+	gtk_notebook_set_scrollable(GTK_NOTEBOOK(notebook), TRUE);
 
 	/* if you change the order here - make sure to also change the toggle functions tab page indices */
 	Sidebar_constructEntities(notebook);
 	Sidebar_constructSurfaces(notebook);
-	Sidebar_constructMapInfo(notebook);
 	Sidebar_constructPrefabs(notebook);
+	Sidebar_constructTextureBrowser(notebook);
+	Sidebar_constructParticleBrowser(notebook);
+	Sidebar_constructMapInfo(notebook);
 	Sidebar_constructJobInfo(notebook);
 
 	gtk_widget_show_all(vbox);

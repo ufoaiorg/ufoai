@@ -31,15 +31,10 @@ typedef struct _GtkWidget GtkWidget;
 class TextureBrowser;
 TextureBrowser& GlobalTextureBrowser();
 
-typedef struct _GtkWindow GtkWindow;
-GtkWidget* TextureBrowser_constructWindow(GtkWindow* toplevel, bool applySizeAndPosition);
-void TextureBrowser_destroyWindow();
-
-
-void TextureBrowser_ShowDirectory(TextureBrowser& textureBrowser, const char* name);
-void TextureBrowser_ShowStartupShaders(TextureBrowser& textureBrowser);
+GtkWidget* TextureBrowser_constructNotebookTab();
 
 const char* TextureBrowser_GetSelectedShader(TextureBrowser& textureBrower);
+void TextureBrowser_ShowStartupShaders(TextureBrowser& textureBrowser);
 
 void TextureBrowser_Construct();
 void TextureBrowser_Destroy();
@@ -48,12 +43,9 @@ typedef Callback1<const char*> StringImportCallback;
 template < typename FirstArgument, void (*func)(FirstArgument) >
 class FreeCaller1;
 
-extern GtkWindow* g_window_textures;
-
 const Vector3& TextureBrowser_getBackgroundColour(TextureBrowser& textureBrowser);
 void TextureBrowser_setBackgroundColour(TextureBrowser& textureBrowser, const Vector3& colour);
 
 void TextureBrowser_addActiveShadersChangedCallback(const SignalHandler& handler);
-void TextureBrowser_addShadersRealiseCallback(const SignalHandler& handler);
 
 #endif

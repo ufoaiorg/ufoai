@@ -54,7 +54,6 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/stacktrace.cpp \
 	$(RADIANT_BASE)/radiant/texmanip.cpp \
 	$(RADIANT_BASE)/radiant/textures.cpp \
-	$(RADIANT_BASE)/radiant/texwindow.cpp \
 	$(RADIANT_BASE)/radiant/timer.cpp \
 	$(RADIANT_BASE)/radiant/toolbars.cpp \
 	$(RADIANT_BASE)/radiant/treemodel.cpp \
@@ -72,6 +71,8 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/sidebar/prefabs.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/mapinfo.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/jobinfo.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/texturebrowser.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/particlebrowser.cpp \
 	\
 	$(RADIANT_BASE)/radiant/dialogs/texteditor.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/about.cpp \

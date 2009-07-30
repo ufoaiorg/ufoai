@@ -97,7 +97,6 @@
 #include "select.h"
 #include "server.h"
 #include "textures.h"
-#include "texwindow.h"
 #include "url.h"
 #include "xywindow.h"
 #include "windowobservers.h"
@@ -1485,9 +1484,6 @@ static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	if (style == MainFrame::eSplit) {
-		create_menu_item_with_mnemonic(menu, _("Texture Browser"), "ToggleTextures");
-	}
 	create_menu_item_with_mnemonic(menu, _("Toggle Sidebar"), "ToggleSidebar");
 	create_menu_item_with_mnemonic(menu, _("Toggle EntityInspector"), "ToggleEntityInspector");
 	create_menu_item_with_mnemonic(menu, _("Toggle SurfaceInspector"), "ToggleSurfaceInspector");
@@ -2094,8 +2090,8 @@ void MainFrame::Create (void)
 				gtk_paned_add1(GTK_PANED(vsplit2), GTK_WIDGET(camera_window));
 
 				// textures
-				GtkFrame* texture_window = create_framed_widget(TextureBrowser_constructWindow(window,false));
-				gtk_paned_add2(GTK_PANED(vsplit2), GTK_WIDGET(texture_window));
+				//GtkFrame* texture_window = create_framed_widget(TextureBrowser_constructNotebookTab(window,false));
+				//gtk_paned_add2(GTK_PANED(vsplit2), GTK_WIDGET(texture_window));
 			}
 		}
 		gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
@@ -2135,16 +2131,6 @@ void MainFrame::Create (void)
 		// split view (4 views)
 		GtkHPaned* split = create_split_views(camera, yz, xy, xz);
 		gtk_paned_pack1(GTK_PANED(m_vSplit), GTK_WIDGET(split), TRUE, TRUE);
-
-		// textures
-		g_window_textures = create_persistent_floating_window("Textures", window);
-		global_accel_connect_window(g_window_textures);
-		window_connect_focus_in_clear_focus_widget(g_window_textures);
-		GtkWidget *textureBox = gtk_hbox_new(FALSE, 0);
-		gtk_container_add(GTK_CONTAINER(g_window_textures), GTK_WIDGET(textureBox));
-		GtkWidget *table = TextureBrowser_constructWindow(g_window_textures,true);
-		gtk_box_pack_start(GTK_BOX(textureBox), GTK_WIDGET(table), TRUE, TRUE, 2);
-		gtk_widget_show_all(textureBox);
 
 		// console
 		GtkWidget* console_window = Console_constructWindow(window);
@@ -2211,8 +2197,6 @@ void MainFrame::Shutdown (void)
 	m_pYZWnd = 0;
 	delete m_pXZWnd;
 	m_pXZWnd = 0;
-
-	TextureBrowser_destroyWindow();
 
 	DeleteCamWnd(m_pCamWnd);
 	m_pCamWnd = 0;

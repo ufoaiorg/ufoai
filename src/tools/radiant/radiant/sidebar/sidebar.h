@@ -23,6 +23,8 @@
 #include "surfaceinspector.h"
 #include "prefabs.h"
 #include "jobinfo.h"
+#include "texturebrowser.h"
+#include "particlebrowser.h"
 
 GtkWidget *Sidebar_construct(void);
 
