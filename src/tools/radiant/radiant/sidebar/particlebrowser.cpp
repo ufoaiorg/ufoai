@@ -51,44 +51,7 @@
 #include "gtkutil/glwidget.h"
 #include "gtkutil/messagebox.h"
 
-void ParticleBrowser_scrollChanged(void* data, gdouble value);
-
-class DeferredAdjustment {
-	gdouble m_value;
-	guint m_handler;
-	typedef void (*ValueChangedFunction)(void* data, gdouble value);
-	ValueChangedFunction m_function;
-	void* m_data;
-
-	static gboolean deferred_value_changed(gpointer data) {
-		reinterpret_cast<DeferredAdjustment*> (data)->m_function(
-				reinterpret_cast<DeferredAdjustment*> (data)->m_data,
-				reinterpret_cast<DeferredAdjustment*> (data)->m_value);
-		reinterpret_cast<DeferredAdjustment*> (data)->m_handler = 0;
-		reinterpret_cast<DeferredAdjustment*> (data)->m_value = 0;
-		return FALSE;
-	}
-public:
-	DeferredAdjustment(ValueChangedFunction function, void* data) :
-		m_value(0), m_handler(0), m_function(function), m_data(data) {
-	}
-	void flush() {
-		if (m_handler != 0) {
-			g_source_remove(m_handler);
-			deferred_value_changed(this);
-		}
-	}
-	void value_changed(gdouble value) {
-		m_value = value;
-		if (m_handler == 0) {
-			m_handler = g_idle_add(deferred_value_changed, this);
-		}
-	}
-	static void adjustment_value_changed(GtkAdjustment *adjustment,
-			DeferredAdjustment* self) {
-		self->value_changed(adjustment->value);
-	}
-};
+static ParticleDefinition *g_currentSelectedParticle;
 
 class ParticleBrowser {
 public:
@@ -98,19 +61,9 @@ public:
 
 	GtkWindow* m_parent;
 	GtkWidget* m_gl_widget;
-	GtkWidget* m_texture_scroll;
 	GtkWidget* m_treeViewTree;
-	GtkWidget* m_tag_frame;
-	GtkListStore* m_assigned_store;
-	GtkListStore* m_available_store;
-	GtkWidget* m_assigned_tree;
-	GtkWidget* m_available_tree;
 	GtkWidget* m_scr_win_tree;
 	GtkWidget* m_scr_win_tags;
-	GtkWidget* m_tag_notebook;
-	GtkWidget* m_search_button;
-
-	GtkListStore* m_all_tags_list;
 
 	guint m_sizeHandler;
 	guint m_exposeHandler;
@@ -118,21 +71,10 @@ public:
 	bool m_heightChanged;
 	bool m_originInvalid;
 
-	DeferredAdjustment m_scrollAdjustment;
-
 	Vector3 color_textureback;
 	// the increment step we use against the wheel mouse
 	std::size_t m_mouseWheelScrollIncrement;
 	std::size_t m_textureScale;
-	// make the texture increments match the grid changes
-	bool m_showShaders;
-	bool m_showTextureScrollbar;
-	// if true, the texture window will only display in-use shaders
-	// if false, all the shaders in memory are displayed
-	bool m_hideUnused;
-	bool m_rmbSelected;
-	// The uniform size (in pixels) that textures are resized to when m_resizeTextures is true.
-	int m_uniformTextureSize;
 	// Return the display width of a texture in the texture browser
 	int getTextureWidth(const qtexture_t* tex) {
 		// Don't use uniform size
@@ -147,208 +89,103 @@ public:
 	}
 
 	ParticleBrowser() :
-		m_texture_scroll(0), m_heightChanged(true), m_originInvalid(true),
-				m_scrollAdjustment(ParticleBrowser_scrollChanged, this),
+		m_heightChanged(true), m_originInvalid(true),
 				color_textureback(0.25f, 0.25f, 0.25f),
-				m_mouseWheelScrollIncrement(64), m_textureScale(50),
-				m_showTextureScrollbar(true) {
+				m_mouseWheelScrollIncrement(64), m_textureScale(50) {
 	}
 };
 
-class TextureLayout
-{
-	public:
-		// texture layout functions
-		// TTimo: now based on shaders
-		int current_x, current_y, current_row;
+class TextureLayout {
+public:
+	// texture layout functions
+	// TTimo: now based on shaders
+	int current_x, current_y, current_row;
 };
 
 static ParticleBrowser g_ParticleBrowser;
-static void ParticleBrowser_updateScroll(ParticleBrowser& ParticleBrowser);
 
-static void ParticleBrowser_evaluateHeight (ParticleBrowser& ParticleBrowser)
-{
-	if (ParticleBrowser.m_heightChanged) {
-		ParticleBrowser.m_heightChanged = false;
-	}
-}
-
-static int ParticleBrowser_TotalHeight (ParticleBrowser& ParticleBrowser)
-{
-	ParticleBrowser_evaluateHeight(ParticleBrowser);
-	return ParticleBrowser.m_nTotalHeight;
-}
-
-static void ParticleBrowser_queueDraw (ParticleBrowser& ParticleBrowser)
-{
+static void ParticleBrowser_queueDraw(ParticleBrowser& ParticleBrowser) {
 	if (ParticleBrowser.m_gl_widget != 0) {
 		gtk_widget_queue_draw(ParticleBrowser.m_gl_widget);
 	}
 }
 
-static void ParticleBrowser_clampOriginY (ParticleBrowser& ParticleBrowser)
-{
-	if (ParticleBrowser.originy > 0) {
-		ParticleBrowser.originy = 0;
-	}
-	const int lower = std::min(ParticleBrowser.height - ParticleBrowser_TotalHeight(ParticleBrowser), 0);
-	if (ParticleBrowser.originy < lower) {
-		ParticleBrowser.originy = lower;
-	}
-}
-
-static int ParticleBrowser_getOriginY (ParticleBrowser& particleBrowser)
-{
-	if (particleBrowser.m_originInvalid) {
-		particleBrowser.m_originInvalid = false;
-		ParticleBrowser_clampOriginY(particleBrowser);
-		ParticleBrowser_updateScroll(particleBrowser);
-	}
-	return particleBrowser.originy;
-}
-
-static void ParticleBrowser_setOriginY (ParticleBrowser& particleBrowser, int originy)
-{
-	particleBrowser.originy = originy;
-	ParticleBrowser_clampOriginY(particleBrowser);
-	ParticleBrowser_updateScroll(particleBrowser);
-	ParticleBrowser_queueDraw(particleBrowser);
-}
-
-static inline int ParticleBrowser_fontHeight (ParticleBrowser& ParticleBrowser)
-{
+static inline int ParticleBrowser_fontHeight(ParticleBrowser& ParticleBrowser) {
 	return GlobalOpenGL().m_fontHeight;
+}
+
+static void Particle_Draw(ParticleBrowser& particleBrowser) {
+	int x, y;
+	glClearColor(particleBrowser.color_textureback[0],
+			particleBrowser.color_textureback[1],
+			particleBrowser.color_textureback[2], 0);
+	glViewport(0, 0, particleBrowser.width, particleBrowser.height);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_TEXTURE_2D);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	if (g_currentSelectedParticle) {
+		const int fontGap = ParticleBrowser_fontHeight(particleBrowser);
+
+		// Draw the texture
+		const qtexture_t *q = g_currentSelectedParticle->m_image;
+		if (q) {
+			const int nWidth = particleBrowser.getTextureWidth(q);
+			const int nHeight = particleBrowser.getTextureHeight(q);
+
+			glBindTexture(GL_TEXTURE_2D, q->texture_number);
+			glColor3f(1, 1, 1);
+			glBegin(GL_QUADS);
+			glTexCoord2i(0, 0);
+			glVertex2i(x, y - fontGap);
+			glTexCoord2i(1, 0);
+			glVertex2i(x + nWidth, y - fontGap);
+			glTexCoord2i(1, 1);
+			glVertex2i(x + nWidth, y - fontGap - nHeight);
+			glTexCoord2i(0, 1);
+			glVertex2i(x, y - fontGap - nHeight);
+			glEnd();
+		}
+
+		// draw the particle name
+		glDisable(GL_TEXTURE_2D);
+		glColor3f(1, 1, 1);
+		glRasterPos2i(10, particleBrowser.height - fontGap + 5);
+		GlobalOpenGL().drawString(g_currentSelectedParticle->m_id);
+		glEnable(GL_TEXTURE_2D);
+	}
+
+	// reset the current texture
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 static void ParticleBrowser_Selection_MouseDown (ParticleBrowser& ParticleBrowser, guint32 flags, int pointx, int pointy)
 {
 }
 
-static void Particle_Draw (ParticleBrowser& ParticleBrowser)
-{
-	int x, y;
-	glClearColor(ParticleBrowser.color_textureback[0], ParticleBrowser.color_textureback[1],
-			ParticleBrowser.color_textureback[2], 0);
-	glViewport(0, 0, ParticleBrowser.width, ParticleBrowser.height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_TEXTURE_2D);
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-
-	// draw the particle name
-	glDisable(GL_TEXTURE_2D);
-	glColor3f(1, 1, 1);
-
-	glRasterPos2i(x, y - ParticleBrowser_fontHeight(ParticleBrowser) + 5);
-
-	GlobalOpenGL().drawString("particleName");
-	glEnable(GL_TEXTURE_2D);
-
-	// reset the current texture
-	glBindTexture(GL_TEXTURE_2D, 0);
-}
-
-void ParticleBrowser_setScale (ParticleBrowser& ParticleBrowser, std::size_t scale)
-{
-	ParticleBrowser.m_textureScale = scale;
-
-	ParticleBrowser_queueDraw(ParticleBrowser);
-}
-
-void ParticleBrowser_MouseWheel (ParticleBrowser& particleBrowser, bool bUp)
-{
-	int originy = ParticleBrowser_getOriginY(particleBrowser);
-
-	if (bUp) {
-		originy += int(particleBrowser.m_mouseWheelScrollIncrement);
-	} else {
-		originy -= int(particleBrowser.m_mouseWheelScrollIncrement);
-	}
-
-	ParticleBrowser_setOriginY(particleBrowser, originy);
-}
-
-gboolean ParticleBrowser_button_press (GtkWidget* widget, GdkEventButton* event, ParticleBrowser* ParticleBrowser)
-{
+static gboolean ParticleBrowser_button_press(GtkWidget* widget, GdkEventButton* event,
+		ParticleBrowser* ParticleBrowser) {
 	if (event->type == GDK_BUTTON_PRESS) {
 		if (event->button == 1) {
-			ParticleBrowser_Selection_MouseDown(*ParticleBrowser, event->state, static_cast<int> (event->x),
-					static_cast<int> (event->y));
+			ParticleBrowser_Selection_MouseDown(*ParticleBrowser, event->state,
+					static_cast<int> (event->x), static_cast<int> (event->y));
 		}
 	}
 	return FALSE;
 }
 
-gboolean ParticleBrowser_button_release (GtkWidget* widget, GdkEventButton* event, ParticleBrowser* ParticleBrowser)
-{
-	if (event->type == GDK_BUTTON_RELEASE) {
-		if (event->button == 1) {
-		}
-	}
-	return FALSE;
-}
-
-gboolean ParticleBrowser_motion (GtkWidget *widget, GdkEventMotion *event, ParticleBrowser* particleBrowser)
-{
-	return FALSE;
-}
-
-gboolean ParticleBrowser_scroll (GtkWidget* widget, GdkEventScroll* event, ParticleBrowser* particleBrowser)
-{
-	if (event->direction == GDK_SCROLL_UP) {
-		ParticleBrowser_MouseWheel(*particleBrowser, true);
-	} else if (event->direction == GDK_SCROLL_DOWN) {
-		ParticleBrowser_MouseWheel(*particleBrowser, false);
-	}
-	return FALSE;
-}
-
-void ParticleBrowser_scrollChanged (void* data, gdouble value)
-{
-	//globalOutputStream() << "vertical scroll\n";
-	ParticleBrowser_setOriginY(*reinterpret_cast<ParticleBrowser*> (data), -(int) value);
-}
-
-static void ParticleBrowser_verticalScroll (GtkAdjustment *adjustment, ParticleBrowser* particleBrowser)
-{
-	particleBrowser->m_scrollAdjustment.value_changed(adjustment->value);
-}
-
-static void ParticleBrowser_updateScroll (ParticleBrowser& ParticleBrowser)
-{
-	if (ParticleBrowser.m_showTextureScrollbar) {
-		int totalHeight = ParticleBrowser_TotalHeight(ParticleBrowser);
-
-		totalHeight = std::max(totalHeight, ParticleBrowser.height);
-
-		GtkAdjustment *vadjustment = gtk_range_get_adjustment(GTK_RANGE(ParticleBrowser.m_texture_scroll));
-
-		vadjustment->value = -ParticleBrowser_getOriginY(ParticleBrowser);
-		vadjustment->page_size = ParticleBrowser.height;
-		vadjustment->page_increment = ParticleBrowser.height / 2;
-		vadjustment->step_increment = 20;
-		vadjustment->lower = 0;
-		vadjustment->upper = totalHeight;
-
-		g_signal_emit_by_name(G_OBJECT (vadjustment), "changed");
-	}
-}
-
-static void ParticleBrowser_heightChanged (ParticleBrowser& particleBrowser)
-{
+static void ParticleBrowser_heightChanged(ParticleBrowser& particleBrowser) {
 	particleBrowser.m_heightChanged = true;
 
-	ParticleBrowser_updateScroll(particleBrowser);
 	ParticleBrowser_queueDraw(particleBrowser);
 }
 
-static gboolean ParticleBrowser_size_allocate (GtkWidget* widget, GtkAllocation* allocation,
-		ParticleBrowser* ParticleBrowser)
-{
+static gboolean ParticleBrowser_size_allocate(GtkWidget* widget,
+		GtkAllocation* allocation, ParticleBrowser* ParticleBrowser) {
 	ParticleBrowser->width = allocation->width;
 	ParticleBrowser->height = allocation->height;
 	ParticleBrowser_heightChanged(*ParticleBrowser);
@@ -357,25 +194,24 @@ static gboolean ParticleBrowser_size_allocate (GtkWidget* widget, GtkAllocation*
 	return FALSE;
 }
 
-static gboolean ParticleBrowser_expose (GtkWidget* widget, GdkEventExpose* event, ParticleBrowser* ParticleBrowser)
-{
+static gboolean ParticleBrowser_expose(GtkWidget* widget,
+		GdkEventExpose* event, ParticleBrowser* ParticleBrowser) {
 	if (glwidget_make_current(ParticleBrowser->m_gl_widget) != FALSE) {
-		ParticleBrowser_evaluateHeight(*ParticleBrowser);
 		Particle_Draw(*ParticleBrowser);
 		glwidget_swap_buffers(ParticleBrowser->m_gl_widget);
 	}
 	return FALSE;
 }
 
-static void ParticleBrowser_constructTreeStore (void)
-{
+static void ParticleBrowser_constructTreeStore(void) {
 	GtkTreeStore* store = gtk_tree_store_new(1, G_TYPE_STRING);
 	GtkTreeIter iter;
 
 	Particles_Init();
 
-	for (ParticleDefinitionMap::const_iterator i = g_particleDefinitions.begin(); i != g_particleDefinitions.end(); ++i) {
-		gtk_tree_store_append(store, &iter, (GtkTreeIter*)0);
+	for (ParticleDefinitionMap::const_iterator i =
+			g_particleDefinitions.begin(); i != g_particleDefinitions.end(); ++i) {
+		gtk_tree_store_append(store, &iter, (GtkTreeIter*) 0);
 		gtk_tree_store_set(store, &iter, 0, (*i).first.c_str(), -1);
 	}
 
@@ -383,15 +219,15 @@ static void ParticleBrowser_constructTreeStore (void)
 
 	GtkTreeModel* model = GTK_TREE_MODEL(store);
 
-	gtk_tree_view_set_model(GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree), model);
+	gtk_tree_view_set_model(GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree),
+			model);
 	gtk_tree_view_expand_all(GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree));
 
 	g_object_unref(G_OBJECT(store));
 }
 
-static void TreeView_onRowActivated (GtkTreeView* treeview, GtkTreePath* path, GtkTreeViewColumn* col,
-		gpointer userdata)
-{
+static void TreeView_onRowActivated(GtkTreeView* treeview, GtkTreePath* path,
+		GtkTreeViewColumn* col, gpointer userdata) {
 	GtkTreeIter iter;
 
 	GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(treeview));
@@ -404,23 +240,40 @@ static void TreeView_onRowActivated (GtkTreeView* treeview, GtkTreePath* path, G
 		strcpy(particleName, buffer);
 		g_free(buffer);
 
-		// TODO: Load the particle
+		Particles_Init();
 
-		ParticleBrowser_queueDraw(g_ParticleBrowser);
+		ParticleDefinitionMap::iterator i = g_particleDefinitions.find(
+				particleName);
+		if (i != g_particleDefinitions.end()) {
+			ParticleDefinition particle = (*i).second;
+
+			if (g_currentSelectedParticle)
+				delete g_currentSelectedParticle;
+			g_currentSelectedParticle = new ParticleDefinition(particle);
+			// capture the particle texture
+			g_currentSelectedParticle->loadTextureForCopy();
+
+			ParticleBrowser_queueDraw(g_ParticleBrowser);
+		}
+
+		Particles_Shutdown();
 	}
 }
 
-static void ParticleBrowser_createTreeViewTree (void)
-{
+static void ParticleBrowser_createTreeViewTree(void) {
 	GtkCellRenderer* renderer;
 	g_ParticleBrowser.m_treeViewTree = GTK_WIDGET(gtk_tree_view_new());
-	gtk_tree_view_set_enable_search(GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree), TRUE);
+	gtk_tree_view_set_enable_search(
+			GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree), TRUE);
 
-	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree), FALSE);
+	gtk_tree_view_set_headers_visible(
+			GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree), FALSE);
 	g_signal_connect(g_ParticleBrowser.m_treeViewTree, "row-activated", (GCallback) TreeView_onRowActivated, NULL);
 
 	renderer = gtk_cell_renderer_text_new();
-	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree), -1, "", renderer, "text", 0, (char const*)0);
+	gtk_tree_view_insert_column_with_attributes(
+			GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree), -1, "", renderer,
+			"text", 0, (char const*) 0);
 
 	ParticleBrowser_constructTreeStore();
 }
@@ -452,22 +305,6 @@ GtkWidget* ParticleBrowser_constructNotebookTab() {
 						g_ParticleBrowser.m_treeViewTree));
 		gtk_widget_show(GTK_WIDGET(g_ParticleBrowser.m_treeViewTree));
 	}
-	{ // gl_widget scrollbar
-		GtkWidget* w = gtk_vscrollbar_new(
-				GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 0, 1, 1, 1)));
-		gtk_table_attach(GTK_TABLE(table), w, 2, 3, 1, 2, GTK_SHRINK, GTK_FILL,
-				0, 0);
-		gtk_widget_show(w);
-		g_ParticleBrowser.m_texture_scroll = w;
-
-		GtkAdjustment *vadjustment = gtk_range_get_adjustment(
-				GTK_RANGE(g_ParticleBrowser.m_texture_scroll));
-		g_signal_connect(G_OBJECT(vadjustment), "value_changed", G_CALLBACK(ParticleBrowser_verticalScroll),
-				&g_ParticleBrowser);
-
-		widget_set_visible(g_ParticleBrowser.m_texture_scroll,
-				g_ParticleBrowser.m_showTextureScrollbar);
-	}
 	{ // gl_widget
 		g_ParticleBrowser.m_gl_widget = glwidget_new(TRUE);
 		gtk_widget_ref(g_ParticleBrowser.m_gl_widget);
@@ -491,12 +328,6 @@ GtkWidget* ParticleBrowser_constructNotebookTab() {
 
 		g_signal_connect(G_OBJECT(g_ParticleBrowser.m_gl_widget), "button_press_event", G_CALLBACK(
 						ParticleBrowser_button_press), &g_ParticleBrowser);
-		g_signal_connect(G_OBJECT(g_ParticleBrowser.m_gl_widget), "button_release_event", G_CALLBACK(
-						ParticleBrowser_button_release), &g_ParticleBrowser);
-		g_signal_connect(G_OBJECT(g_ParticleBrowser.m_gl_widget), "motion_notify_event", G_CALLBACK(
-						ParticleBrowser_motion), &g_ParticleBrowser);
-		g_signal_connect(G_OBJECT(g_ParticleBrowser.m_gl_widget), "scroll_event", G_CALLBACK(ParticleBrowser_scroll),
-				&g_ParticleBrowser);
 	}
 
 	gtk_box_pack_start(GTK_BOX(vbox), g_ParticleBrowser.m_scr_win_tree, TRUE,
@@ -504,3 +335,14 @@ GtkWidget* ParticleBrowser_constructNotebookTab() {
 
 	return table;
 }
+
+void ParticleBrowser_Construct(void) {
+}
+
+void ParticleBrowser_Destroy(void) {
+	if (g_currentSelectedParticle) {
+		delete g_currentSelectedParticle;
+		g_currentSelectedParticle = (ParticleDefinition *) 0;
+	}
+}
+

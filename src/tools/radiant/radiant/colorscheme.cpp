@@ -7,7 +7,7 @@
 #include "colorscheme.h"
 #include "mainframe.h"
 #include "camwindow.h"
-#include "texwindow.h"
+#include "sidebar/sidebar.h"
 #include "xywindow.h"
 #include "eclasslib.h"
 #include "commands.h"

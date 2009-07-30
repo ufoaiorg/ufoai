@@ -178,15 +178,8 @@ class TextureBrowser
 		GtkWidget* m_gl_widget;
 		GtkWidget* m_texture_scroll;
 		GtkWidget* m_treeViewTree;
-		GtkWidget* m_tag_frame;
-		GtkListStore* m_assigned_store;
-		GtkListStore* m_available_store;
-		GtkWidget* m_assigned_tree;
-		GtkWidget* m_available_tree;
 		GtkWidget* m_scr_win_tree;
 		GtkWidget* m_scr_win_tags;
-		GtkWidget* m_tag_notebook;
-		GtkWidget* m_search_button;
 
 		ToggleItem m_hideunused_item;
 		ToggleItem m_showshaders_item;
@@ -571,7 +564,7 @@ void TextureDirectory_loadTexture (const char* directory, const char* texture)
 	}
 
 	/* don't load textures with '_nm' = normalmaps in its name */
-	if (strstr(texture,"_nm")!= 0) {
+	if (strstr(texture,"_nm") != 0) {
 		g_warning("Skipping normalmap texture: [%s]\n", name.c_str());
 		return;
 	}
@@ -986,7 +979,8 @@ static void TextureBrowser_updateScroll (TextureBrowser& textureBrowser)
 		totalHeight = std::max(totalHeight, textureBrowser.height);
 
 		GtkAdjustment *vadjustment = gtk_range_get_adjustment(GTK_RANGE(textureBrowser.m_texture_scroll));
-
+		if (!vadjustment)
+			return;
 		vadjustment->value = -TextureBrowser_getOriginY(textureBrowser);
 		vadjustment->page_size = textureBrowser.height;
 		vadjustment->page_increment = textureBrowser.height / 2;
@@ -1344,7 +1338,7 @@ typedef ReferenceCaller1<TextureBrowser, std::size_t, TextureBrowser_setScale> T
 
 void TextureClipboard_textureSelected (const char* shader);
 
-void TextureBrowser_Construct (void)
+void TextureBrowser_Construct(void)
 {
 	GlobalCommands_insert("RefreshShaders", FreeCaller<RefreshShaders> ());
 	GlobalToggles_insert("ShowInUse", FreeCaller<TextureBrowser_ToggleHideUnused> (), ToggleItem::AddCallbackCaller(

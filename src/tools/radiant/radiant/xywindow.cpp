@@ -62,7 +62,6 @@
 #include "selection.h"
 #include "entity.h"
 #include "camwindow.h"
-#include "texwindow.h"
 #include "mainframe.h"
 #include "preferences.h"
 #include "commands.h"

@@ -29,4 +29,7 @@ typedef struct _GtkWidget GtkWidget;
 
 GtkWidget* ParticleBrowser_constructNotebookTab();
 
+void ParticleBrowser_Construct(void);
+void ParticleBrowser_Destroy(void);
+
 #endif

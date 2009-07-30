@@ -25,64 +25,84 @@ private:
 			return;
 
 		if (m_imageName) {
-#if 1
 			StringOutputStream name(256);
-			name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") << "/" << "pics/" << m_imageName << ".tga";
+			name << "pics/" << m_imageName;
+			m_copy = false;
 			m_image = GlobalTexturesCache().capture(name.c_str());
-			if (!m_image) {
-				name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") << "/" << "pics/" << m_imageName << ".jpg";
-				m_image = GlobalTexturesCache().capture(name.c_str());
-				if (!m_image)
-					g_warning("Particle image: %s wasn't found\n", m_imageName);
-			}
-#endif
+			if (!m_image)
+				g_warning("Particle image: pics/%s wasn't found\n", m_imageName);
 		}
 	}
 
 	void freeParticleTexture (void) {
 		if (m_image && !m_copy) {
-#if 1
 			GlobalTexturesCache().release(m_image);
-#endif
-			m_image = NULL;
+			m_image = (qtexture_t *)0;
 		}
 	}
 public:
-	ParticleDefinition(const char *id) : m_copy(false), m_id(id), m_modelName(NULL), m_imageName(NULL), m_image(NULL) {
-		reloadParticleTextureName();
-		loadParticleTexture();
+	ParticleDefinition(const char *id) : m_copy(false), m_modelName((char *)0), m_imageName((char *)0), m_image((qtexture_t *)0) {
+		m_id = strdup(id);
 	}
 
 	ParticleDefinition(const char* id, const char *modelName, const char *imageName)
-		: m_copy(false), m_id(id), m_modelName(modelName), m_imageName(imageName), m_image(NULL) {
+		: m_copy(false), m_image((qtexture_t *)0) {
+		m_id = strdup(id);
+
+		if (imageName != (char *)0)
+			m_imageName = strdup(imageName);
+		else
+			m_imageName = (char *)0;
+
+		if (modelName != (char *)0)
+			m_modelName = strdup(modelName);
+		else
+			m_modelName = (char *)0;
+
 		loadParticleTexture();
 	}
 
-	ParticleDefinition(ParticleDefinition const& copy): m_copy(true), m_id(copy.m_id), m_modelName(copy.m_modelName), m_imageName(copy.m_imageName), m_image(copy.m_image) {
-		/* copy constructor */
+	/** @brief copy constructor */
+	ParticleDefinition(ParticleDefinition const& copy): m_copy(true), m_image(copy.m_image) {
+		m_id = strdup(copy.m_id);
+
+		if (copy.m_imageName != (char *)0)
+			m_imageName = strdup(copy.m_imageName);
+		else
+			m_imageName = (char *)0;
+
+		if (copy.m_modelName != (char *)0)
+			m_imageName = strdup(copy.m_modelName);
+		else
+			m_modelName = (char *)0;
 	}
 
 	~ParticleDefinition () {
 		freeParticleTexture();
+		if (m_id != (char *)0)
+			free(m_id);
+		if (m_modelName != (char *)0)
+			free(m_modelName);
+		if (m_imageName != (char *)0)
+			free(m_imageName);
 	}
 
-	const char *m_id;
-	const char *m_modelName;
-	const char *m_imageName;
+	char *m_id;
+	char *m_modelName;
+	char *m_imageName;
 	qtexture_t *m_image;
 
-	void reloadParticleTextureName (void) {
-		// TODO: Reload particle def and parse image name
-		m_imageName = NULL;
+	void loadTextureForCopy() {
+		if (!m_copy)
+			return;
+
+		/* this reference was not captured */
+		m_image = (qtexture_t *)0;
+		loadParticleTexture();
 	}
 
 	void particleChanged(const char* id) {
-		m_id = id;
-		g_message("ID is now: %s\n", m_id);
 		g_warning("TODO: Implement particle changing\n");
-		freeParticleTexture();
-		reloadParticleTextureName();
-		loadParticleTexture();
 	}
 	typedef MemberCaller1<ParticleDefinition, const char*, &ParticleDefinition::particleChanged> ParticleChangedCaller;
 };

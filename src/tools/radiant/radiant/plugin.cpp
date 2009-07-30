@@ -61,7 +61,6 @@
 #include "qe3.h"
 #include "sidebar/sidebar.h"
 #include "gtkmisc.h"
-#include "texwindow.h"
 #include "mainframe.h"
 #include "lastused.h"
 #include "camwindow.h"
@@ -249,6 +248,7 @@ class Radiant: public TypeSystemRef
 			CamWnd_Construct();
 			XYWindow_Construct();
 			TextureBrowser_Construct();
+			ParticleBrowser_Construct();
 			Entity_Construct();
 			Autosave_Construct();
 			EntityInspector_construct();
@@ -271,6 +271,7 @@ class Radiant: public TypeSystemRef
 			EntityInspector_destroy();
 			Autosave_Destroy();
 			Entity_Destroy();
+			ParticleBrowser_Destroy();
 			TextureBrowser_Destroy();
 			XYWindow_Destroy();
 			CamWnd_Destroy();

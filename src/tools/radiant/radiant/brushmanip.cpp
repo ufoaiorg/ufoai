@@ -29,7 +29,7 @@
 #include "gtkmisc.h"
 #include "brushnode.h"
 #include "map.h"
-#include "texwindow.h"
+#include "sidebar/sidebar.h"
 #include "dialogs/prism.h"
 #include "commands.h"
 #include "mainframe.h"

@@ -41,7 +41,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "brushmanip.h"
 #include "brush.h"
 #include "selection.h"
-#include "texwindow.h"
+#include "sidebar/sidebar.h"
 #include "gtkmisc.h"
 #include "mainframe.h"
 #include "grid.h"
