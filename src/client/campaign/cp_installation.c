@@ -2,7 +2,6 @@
  * @file cp_installation.c
  * @brief Handles everything that is located in or accessed through an installation.
  * @note Installation functions prefix: INS_*
- * @todo Allow transfer of items to installations
  */
 
 /*
@@ -98,7 +97,6 @@ installationTemplate_t* INS_GetInstallationTemplateFromInstallationID (const cha
 void INS_SetUpInstallation (installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos)
 {
 	const int newInstallationAlienInterest = 1.0f;
-	int i;
 
 	Vector2Copy(pos, installation->pos);
 
@@ -108,10 +106,9 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	installation->installationTemplate = installationTemplate;
 	installation->buildStart = ccs.date.day;
 
-	/* Reset current capacities. */
-	installation->aircraftCapacity.cur = 0;
-
-	installation->numUFOsInInstallation = 0;
+	/* Reset capacities. */
+	installation->ufoCapacity.max = installationTemplate->maxUFOsStored;
+	installation->ufoCapacity.cur = 0;
 
 	/* a new installation is not discovered (yet) */
 	installation->alienInterest = newInstallationAlienInterest;
@@ -121,14 +118,6 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 
 	/* initialise Batteries */
 	installation->numBatteries = installation->installationTemplate->maxBatteries;
-
-	/* Add defenceweapons to storage */
-	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *item = &csi.ods[i];
-		/* this is a craftitem but also dummy */
-		if (INV_IsBaseDefenceItem(item))
-			installation->storage.num[item->idx] = installation->installationTemplate->maxBatteries;
-	}
 	BDEF_InitialiseInstallationSlots(installation);
 
 	Com_DPrintf(DEBUG_CLIENT, "INS_SetUpInstallation: id = %s, range = %i, batteries = %i, ufos = %i\n",
@@ -179,12 +168,15 @@ static void INS_InstallationList_f (void)
 		Com_Printf("Installation idx %i\n", installation->idx);
 		Com_Printf("Installation name %s\n", installation->name);
 		Com_Printf("Installation founded %i\n", installation->founded);
-		Com_Printf("Installation numUFOsInInstallation %i\n", installation->numUFOsInInstallation);
-		Com_Printf("Installation sensorWidth %i\n", installation->radar.range);
-		Com_Printf("Installation numSensoredAircraft %i\n", installation->radar.numUFOs);
-		Com_Printf("Installation Alien interest %f\n", installation->alienInterest);
-		Com_Printf("\nInstallation aircraft %i\n", installation->numUFOsInInstallation);
 		Com_Printf("Installation pos %.02f:%.02f\n", installation->pos[0], installation->pos[1]);
+		Com_Printf("Installation Alien interest %f\n", installation->alienInterest);
+
+		Com_Printf("\nInstallation sensorWidth %i\n", installation->radar.range);
+		Com_Printf("Installation numSensoredAircraft %i\n\n", installation->radar.numUFOs);
+
+		Com_Printf("\nInstallation numBatteries %i\n", installation->numBatteries);
+
+		Com_Printf("\nInstallation stored UFOs %i/%i\n", installation->ufoCapacity.cur, installation->ufoCapacity.max);
 		Com_Printf("\n\n");
 	}
 }
@@ -502,10 +494,6 @@ qboolean INS_SaveXML (mxml_node_t *p)
 		mxml_AddInt(ss, "num", inst->numBatteries);
 		B_SaveBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
 
-		/* store equipments */
-		/* reducing redundant code */
-		B_SaveStorageXML(s, inst->storage);
-
 		/** @todo aircraft (don't save capacities, they should
 		 * be recalculated after loading) */
 	}
@@ -569,7 +557,6 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		}
 		B_LoadBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
 
-		B_LoadStorageXML(s, &inst->storage);
 		/** @todo aircraft */
 		/** @todo don't forget to recalc the capacities like we do for bases */
 	}

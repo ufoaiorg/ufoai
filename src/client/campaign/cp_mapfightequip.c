@@ -117,15 +117,13 @@ qboolean AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t
 		return qfalse;
 
 	/* you can't install an item that you don't possess
-	 * unlimited ammo don't need to be possessed */
+	 * unlimited ammo don't need to be possessed
+	 * installations always have weapon and ammo */
 	if (slot->aircraft) {
 		if (slot->aircraft->homebase->storage.num[item->idx] <= 0 && !item->notOnMarket  && !item->craftitem.unlimitedAmmo)
 			return qfalse;
 	} else if (slot->base) {
 		if (slot->base->storage.num[item->idx] <= 0 && !item->notOnMarket && !item->craftitem.unlimitedAmmo)
-			return qfalse;
-	} else if (slot->installation) {
-		if (slot->installation->storage.num[item->idx] <= 0 && !item->notOnMarket && !item->craftitem.unlimitedAmmo)
 			return qfalse;
 	}
 

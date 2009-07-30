@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -61,17 +61,6 @@ typedef struct installationTemplate_s {
 	char *image;			/**< Image used on 2D geoscape */
 } installationTemplate_t;
 
-typedef struct installationUFOs_s {
-	aircraft_t *aircraftTemplate;
-	int amount;
-} installationUFOs_t;
-
-typedef struct installationWeapon_s {
-	/* int idx; */
-	aircraftSlot_t slot;	/**< Weapon. */
-	aircraft_t *target;		/**< Aimed target for the weapon. */
-} installationWeapon_t;
-
 typedef enum {
 	INSTALLATION_RADAR,
 	INSTALLATION_DEFENCE,
@@ -99,13 +88,7 @@ typedef struct installation_s {
 	baseWeapon_t batteries[MAX_INSTALLATION_BATTERIES];	/**< Missile/Laser batteries assigned to this installation. For Sam Sites only. */
 	int numBatteries;		/**< how many batteries are installed? */
 
-	equipDef_t storage;	/**< weapons, etc. stored in base */
-
-	/** All ufo aircraft in this installation. This is used for UFO Yards. **/
-	installationUFOs_t installationUFOs[MAX_AIRCRAFT];
-	int numUFOsInInstallation;	/**< How many ufos are in this installation. */
-
-	capacities_t aircraftCapacity;		/**< Capacity of UFO Yard. */
+	capacities_t ufoCapacity;		/**< Capacity of UFO Yard. */
 
 	int installationDamage;			/**< Hit points of installation */
 	int buildStart;					/**< Date when the installation building started */
