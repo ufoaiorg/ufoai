@@ -115,7 +115,7 @@ static void MN_CheckBoxNodeLoading (menuNode_t *node)
 }
 
 static const value_t properties[] = {
-	{"toggle", V_UI_NODEFUNCTION, ((size_t) MN_CheckBoxNodeActivate), 0},
+	{"toggle", V_UI_NODEMETHOD, ((size_t) MN_CheckBoxNodeActivate), 0},
 	{NULL, V_NULL, 0, 0}
 };
 

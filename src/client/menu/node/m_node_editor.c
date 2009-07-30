@@ -269,7 +269,7 @@ static void MN_EditorNodeExtractNode (qFILE *file, menuNode_t *node, int depth)
 }
 
 /**
- * @note not moved into V_UI_NODEFUNCTION because it is more a generic
+ * @note not moved into V_UI_NODEMETHOD because it is more a generic
  * tool than a method of the node editor
  */
 static void MN_EditorNodeExtract_f (void)
@@ -295,8 +295,8 @@ static void MN_EditorNodeExtract_f (void)
 }
 
 static const value_t properties[] = {
-	{"start", V_UI_NODEFUNCTION, ((size_t) MN_EditorNodeStart), 0},
-	{"stop", V_UI_NODEFUNCTION, ((size_t) MN_EditorNodeStop), 0},
+	{"start", V_UI_NODEMETHOD, ((size_t) MN_EditorNodeStart), 0},
+	{"stop", V_UI_NODEMETHOD, ((size_t) MN_EditorNodeStop), 0},
 	{NULL, V_NULL, 0, 0}
 };
 

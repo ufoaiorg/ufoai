@@ -405,9 +405,9 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		case EA_CALL_NORMAL:	/* call a function */
 			MN_ExecuteInjectedActions((const menuNode_t *) action->d.terminal.d1.data, qfalse, *(menuAction_t **) action->d.terminal.d2.data);
 			break;
-		case EA_CALL_NODEFUNCTION:	/* call a node function */
+		case EA_CALL_NODEMETHOD:	/* call a node function */
 			{
-				menuNodeFunction_t func = (menuNodeFunction_t) action->d.terminal.d2.data;
+				menuNodeMethod_t func = (menuNodeMethod_t) action->d.terminal.d2.data;
 				func((menuNode_t *) action->d.terminal.d1.data);
 			}
 			break;

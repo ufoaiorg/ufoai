@@ -52,7 +52,7 @@ struct menuAction_s *MN_AllocStaticAction(void) __attribute__ ((warn_unused_resu
 #define V_UI_DATAID			(V_UI + 5)
 #define V_UI_CVAR			(V_UI + 0x0100) /**< Property is a CVAR string (mix this flag with base type, see bellow) */
 #define V_UI_REF			(V_UI + 0x0200) /**< Property is a ref into a value (mix this flag with base type, see bellow) */
-#define V_UI_NODEFUNCTION	(V_UI + 0x0400) /**< Property is a function */
+#define V_UI_NODEMETHOD		(V_UI + 0x0400) /**< Property is a function */
 
 /* composite special type */
 #define V_CVAR_OR_FLOAT			(V_UI_CVAR + V_FLOAT)

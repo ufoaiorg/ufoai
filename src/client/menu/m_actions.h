@@ -93,7 +93,7 @@ typedef enum ea_s {
 } ea_t;
 
 #define EA_CALL_NORMAL			0x0
-#define EA_CALL_NODEFUNCTION	0x1
+#define EA_CALL_NODEMETHOD		0x1
 
 typedef union {
 	int integer;

@@ -108,7 +108,7 @@ def extractMethods(props):
 	m = {}
 	
 	for propName, propType in props.iteritems():
-		if propType == "V_UI_NODEFUNCTION":
+		if propType == "V_UI_NODEMETHOD":
 			m[propName] = propType
 		else:
 			p[propName] = propType

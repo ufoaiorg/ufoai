@@ -310,7 +310,7 @@ static const value_t properties[] = {
 	{"ispassword", V_BOOL, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, isPassword), MEMBER_SIZEOF(textEntryExtraData_t, isPassword)},
 	{"clickoutabort", V_BOOL, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, clickOutAbort), MEMBER_SIZEOF(textEntryExtraData_t, clickOutAbort)},
 	{"onabort", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, onAbort), MEMBER_SIZEOF(textEntryExtraData_t, onAbort)},
-	{"edit", V_UI_NODEFUNCTION, ((size_t) MN_TextEntryNodeFocus), 0},
+	{"edit", V_UI_NODEMETHOD, ((size_t) MN_TextEntryNodeFocus), 0},
 
 	{NULL, V_NULL, 0, 0}
 };

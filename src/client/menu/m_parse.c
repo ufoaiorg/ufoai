@@ -373,8 +373,8 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 					action->subType = EA_CALL_NORMAL;
 					action->d.terminal.d1.data = (void*) callNode;
 					action->d.terminal.d2.data = (void*) actionsRef;
-				} else if (callProperty->type == V_UI_NODEFUNCTION) {
-					action->subType = EA_CALL_NODEFUNCTION;
+				} else if (callProperty->type == V_UI_NODEMETHOD) {
+					action->subType = EA_CALL_NODEMETHOD;
 					action->d.terminal.d1.data = (void*) callNode;
 					action->d.terminal.d2.data = (void*) callProperty->ofs;
 				} else {
