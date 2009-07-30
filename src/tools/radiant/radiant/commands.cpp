@@ -179,6 +179,15 @@ static inline const char* stringrange_find (const char* first, const char* last,
 	return p;
 }
 
+namespace {
+	enum {
+		CMDLIST_COMMAND,
+		CMDLIST_SHORTCUT,
+		CMDLIST_WEIGHTSET,
+		CMDLIST_WEIGHT,
+		CMDLIST_STORE_SIZE
+	};
+}
 static void keyShortcutEdited (GtkCellRendererText *renderer, gchar* path, gchar *newText, GtkTreeView *treeview)
 {
 	GtkTreeIter iter;
@@ -224,7 +233,10 @@ static void keyShortcutEdited (GtkCellRendererText *renderer, gchar* path, gchar
 				accelerator.modifiers = (GdkModifierType)modifiers;
 			}
 		}
-		gtk_list_store_set(GTK_LIST_STORE(model), &iter, 1, newText, -1);
+		GtkListStore *store = GTK_LIST_STORE(gtk_tree_model_filter_get_model(GTK_TREE_MODEL_FILTER(model)));
+		GtkTreeIter child;
+		gtk_tree_model_filter_convert_iter_to_child_iter(GTK_TREE_MODEL_FILTER(model), &child, &iter);
+		gtk_list_store_set(GTK_LIST_STORE(store), &child, CMDLIST_SHORTCUT, newText, -1);
 	}
 
 	SaveCommandMap(SettingsPath_get());
@@ -251,7 +263,7 @@ void accelerator_clear_button_clicked(GtkButton *btn, gpointer dialogptr)
 	{
 		// just unhighlight, user wanted to cancel
 		dialog.m_waiting_for_key = false;
-		gtk_list_store_set(GTK_LIST_STORE(dialog.m_model), &dialog.m_command_iter, 2, false, -1);
+		gtk_list_store_set(GTK_LIST_STORE(dialog.m_model), &dialog.m_command_iter, CMDLIST_WEIGHTSET, false, -1);
 		gtk_widget_set_sensitive(GTK_WIDGET(dialog.m_list), true);
 		dialog.m_model = NULL;
 		return;
@@ -265,7 +277,7 @@ void accelerator_clear_button_clicked(GtkButton *btn, gpointer dialogptr)
 
 	GValue val;
 	memset(&val, 0, sizeof(val));
-	gtk_tree_model_get_value(GTK_TREE_MODEL(model), &iter, 0, &val);
+	gtk_tree_model_get_value(GTK_TREE_MODEL(model), &iter, CMDLIST_COMMAND, &val);
 	const char *commandName = g_value_get_string(&val);;
 
 	// clear the ACTUAL accelerator too!
@@ -276,7 +288,10 @@ void accelerator_clear_button_clicked(GtkButton *btn, gpointer dialogptr)
 		return;
 	thisShortcutIterator->second.first = accelerator_null();
 
-	gtk_list_store_set(GTK_LIST_STORE(model), &iter, 1, "", -1);
+	GtkListStore *store = GTK_LIST_STORE(gtk_tree_model_filter_get_model(GTK_TREE_MODEL_FILTER(model)));
+	GtkTreeIter child;
+	gtk_tree_model_filter_convert_iter_to_child_iter(GTK_TREE_MODEL_FILTER(model), &child, &iter);
+	gtk_list_store_set(GTK_LIST_STORE(store), &child, CMDLIST_SHORTCUT, "", -1);
 
 	g_value_unset(&val);
 }
@@ -291,14 +306,17 @@ void accelerator_edit_button_clicked(GtkButton *btn, gpointer dialogptr)
 	GtkTreeIter iter;
 	if(!gtk_tree_selection_get_selected(sel, &model, &iter))
 		return;
-	dialog.m_command_iter = iter;
-	dialog.m_model = model;
+	GtkTreeIter child;
+	gtk_tree_model_filter_convert_iter_to_child_iter(GTK_TREE_MODEL_FILTER(model), &child, &iter);
+
+	dialog.m_command_iter = child;
+	dialog.m_model = gtk_tree_model_filter_get_model(GTK_TREE_MODEL_FILTER(model));
 
 	// 2. disallow changing the row
 	//gtk_widget_set_sensitive(GTK_WIDGET(dialog.m_list), false);
 
 	// 3. highlight the row
-	gtk_list_store_set(GTK_LIST_STORE(model), &iter, 2, true, -1);
+	gtk_list_store_set(GTK_LIST_STORE(dialog.m_model), &child, CMDLIST_WEIGHTSET, true, -1);
 
 	// 4. grab keyboard focus
 	dialog.m_waiting_for_key = true;
@@ -340,12 +358,12 @@ gboolean accelerator_window_key_press(GtkWidget *widget, GdkEventKey *event, gpo
 	// 7. find the name of the accelerator
 	GValue val;
 	memset(&val, 0, sizeof(val));
-	gtk_tree_model_get_value(GTK_TREE_MODEL(dialog.m_model), &dialog.m_command_iter, 0, &val);
+	gtk_tree_model_get_value(GTK_TREE_MODEL(dialog.m_model), &dialog.m_command_iter, CMDLIST_COMMAND, &val);
 	const char *commandName = g_value_get_string(&val);;
 	Shortcuts::iterator thisShortcutIterator = g_shortcuts.find(commandName);
 	if(thisShortcutIterator == g_shortcuts.end())
 	{
-		gtk_list_store_set(GTK_LIST_STORE(dialog.m_model), &dialog.m_command_iter, 2, false, -1);
+		gtk_list_store_set(GTK_LIST_STORE(dialog.m_model), &dialog.m_command_iter, CMDLIST_WEIGHTSET, false, -1);
 		gtk_widget_set_sensitive(GTK_WIDGET(dialog.m_list), true);
 		return true;
 	}
@@ -393,10 +411,10 @@ gboolean accelerator_window_key_press(GtkWidget *widget, GdkEventKey *event, gpo
 						{
 							GValue val;
 							memset(&val, 0, sizeof(val));
-							gtk_tree_model_get_value(GTK_TREE_MODEL(model), &i, 0, &val);
+							gtk_tree_model_get_value(GTK_TREE_MODEL(model), &i, CMDLIST_COMMAND, &val);
 							const char *thisName = g_value_get_string(&val);;
 							if(!strcmp(thisName, name))
-								gtk_list_store_set(GTK_LIST_STORE(model), &i, 1, "", -1);
+								gtk_list_store_set(GTK_LIST_STORE(model), &i, CMDLIST_SHORTCUT, "", -1);
 							g_value_unset(&val);
 							if(!gtk_tree_model_iter_next(GTK_TREE_MODEL(model), &i))
 								break;
@@ -412,8 +430,7 @@ gboolean accelerator_window_key_press(GtkWidget *widget, GdkEventKey *event, gpo
 		}
 	} verify_visitor(commandName, newAccel, widget, dialog.m_model);
 	GlobalShortcuts_foreach(verify_visitor);
-
-	gtk_list_store_set(GTK_LIST_STORE(dialog.m_model), &dialog.m_command_iter, 2, false, -1);
+	gtk_list_store_set(GTK_LIST_STORE(dialog.m_model), &dialog.m_command_iter, CMDLIST_WEIGHTSET, false, -1);
 	gtk_widget_set_sensitive(GTK_WIDGET(dialog.m_list), true);
 
 	if(verify_visitor.allow)
@@ -426,7 +443,7 @@ gboolean accelerator_window_key_press(GtkWidget *widget, GdkEventKey *event, gpo
 		// write into the cell
 		StringOutputStream modifiers;
 		modifiers << newAccel;
-		gtk_list_store_set(GTK_LIST_STORE(dialog.m_model), &dialog.m_command_iter, 1, modifiers.c_str(), -1);
+		gtk_list_store_set(GTK_LIST_STORE(dialog.m_model), &dialog.m_command_iter, CMDLIST_SHORTCUT, modifiers.c_str(), -1);
 
 		// set the ACTUAL accelerator too!
 		connect_accelerator(commandName);
@@ -457,6 +474,37 @@ gboolean accelerator_window_key_press(GtkWidget *widget, GdkEventKey *event, gpo
 	}
 };
 */
+namespace {
+	static GtkTreeModelFilter *g_filterModel = 0;
+	static GtkEntry *g_searchEntry = 0;
+}
+
+static gboolean CommandListDlg_FilterCommands (GtkTreeModel *model, GtkTreeIter *iter)
+{
+	if (!g_searchEntry)
+		return true;
+#if GTK_CHECK_VERSION(2,14,0)
+	if (gtk_entry_get_text_length(g_searchEntry) == 0)
+		return true;
+#else
+	if (strlen(gtk_entry_get_text(g_searchEntry)) == 0)
+		return true;
+#endif
+	const char* searchText = gtk_entry_get_text(g_searchEntry);
+	char *currentEntry, *currentShortcut;
+	gtk_tree_model_get(model, iter, CMDLIST_COMMAND, &currentEntry, CMDLIST_SHORTCUT, &currentShortcut, -1);
+	return (strstr(currentEntry, searchText) != 0 || strstr(currentShortcut, searchText) != 0);
+}
+
+/**
+ * @brief Callback for 'changed' event of search entry used to reinit file filter
+ * @return false
+ */
+static gboolean CommandListDlg_Refilter (void)
+{
+	gtk_tree_model_filter_refilter(g_filterModel);
+	return false;
+}
 
 void DoCommandListDlg (void)
 {
@@ -476,22 +524,25 @@ void DoCommandListDlg (void)
 		gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(scr), TRUE, TRUE, 0);
 
 		{
-			GtkListStore* store = gtk_list_store_new(4, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_INT);
+			GtkListStore* store = gtk_list_store_new(CMDLIST_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_INT);
 
-			GtkWidget* view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+			GtkTreeModel *filteredStore = gtk_tree_model_filter_new(GTK_TREE_MODEL(store), NULL);
+			GtkWidget* view = gtk_tree_view_new_with_model(filteredStore);
 			dialog.m_list = GTK_TREE_VIEW(view);
+			g_filterModel = GTK_TREE_MODEL_FILTER(filteredStore);
+			gtk_tree_model_filter_set_visible_func(g_filterModel, (GtkTreeModelFilterVisibleFunc) CommandListDlg_FilterCommands, NULL, NULL);
 
-			gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), false); // annoying
+			gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), true); // annoying
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Command", renderer, "text", 0, "weight-set", 2, "weight", 3, NULL);
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Command", renderer, "text", CMDLIST_COMMAND, "weight-set", CMDLIST_WEIGHTSET, "weight", CMDLIST_WEIGHT, NULL);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 			}
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text", 1, "weight-set", 2, "weight", 3, NULL);
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text", CMDLIST_SHORTCUT, "weight-set", CMDLIST_WEIGHTSET, "weight", CMDLIST_WEIGHT, NULL);
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*)0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(keyShortcutEdited), (gpointer)view);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
@@ -500,14 +551,28 @@ void DoCommandListDlg (void)
 			gtk_widget_show(view);
 			gtk_container_add(GTK_CONTAINER (scr), view);
 
-			/**@todo NetRadiant uses a Visitor to init dialog */
-			for (Shortcuts::iterator i = g_shortcuts.begin(); i != g_shortcuts.end(); ++i) {
-				GtkTreeIter iter;
-				StringOutputStream modifiers;
-				modifiers << (*i).second.first;
-				gtk_list_store_append(store, &iter);
-				gtk_list_store_set(store, &iter, 0, (*i).first.c_str(), 1, modifiers.c_str(), 2, false, 3, 800, -1);
-			}
+			class BuildCommandlist: public CommandVisitor
+			{
+					GtkListStore* m_store;
+				public:
+					BuildCommandlist (GtkListStore * store) :
+						m_store(store)
+					{
+					}
+					void visit (const char* name, Accelerator& accelerator)
+					{
+						StringOutputStream modifiers;
+						modifiers << accelerator;
+
+						{
+							GtkTreeIter iter;
+							gtk_list_store_append(m_store, &iter);
+							gtk_list_store_set(m_store, &iter, CMDLIST_COMMAND, name, CMDLIST_SHORTCUT, modifiers.c_str(), CMDLIST_WEIGHTSET, false, CMDLIST_WEIGHT, 800, -1);
+						}
+					}
+
+			} visitor(store);
+			GlobalShortcuts_foreach(visitor);
 
 			g_object_unref(G_OBJECT(store));
 		}
@@ -526,6 +591,14 @@ void DoCommandListDlg (void)
 		gtk_widget_show(spacer);
 		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(spacer), TRUE, TRUE, 0);
 
+		GtkWidget *searchEntry = gtk_entry_new();
+		gtk_box_pack_start(GTK_BOX(vbox), searchEntry, FALSE, FALSE, 0);
+		gtk_widget_show(searchEntry);
+
+		gtk_tree_view_set_search_entry(dialog.m_list, GTK_ENTRY(searchEntry));
+		g_signal_connect(G_OBJECT(searchEntry), "changed", G_CALLBACK(CommandListDlg_Refilter), NULL);
+		g_searchEntry = GTK_ENTRY(searchEntry);
+
 		GtkButton* button = create_modal_dialog_button(_("Close"), dialog.m_close_button);
 		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
 		widget_make_default(GTK_WIDGET(button));
@@ -533,9 +606,10 @@ void DoCommandListDlg (void)
 		gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return, (GdkModifierType)0, (GtkAccelFlags)0);
 		gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape, (GdkModifierType)0, (GtkAccelFlags)0);
 	}
-
 	modal_dialog_show(window, dialog);
 	gtk_widget_destroy(GTK_WIDGET(window));
+	g_filterModel = 0;
+	g_searchEntry = 0;
 }
 
 #include "profile/profile.h"
