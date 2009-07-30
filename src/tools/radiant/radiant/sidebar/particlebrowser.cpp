@@ -77,15 +77,17 @@ public:
 	std::size_t m_textureScale;
 	// Return the display width of a texture in the texture browser
 	int getTextureWidth(const qtexture_t* tex) {
+		return 128;
 		// Don't use uniform size
-		const int width = (int) (tex->width * ((float) m_textureScale / 100));
-		return width;
+		//const int width = (int) (tex->width * ((float) m_textureScale / 100));
+		//return width;
 	}
 	// Return the display height of a texture in the texture browser
 	int getTextureHeight(const qtexture_t* tex) {
+		return 128;
 		// Don't use uniform size
-		const int height = (int) (tex->height * ((float) m_textureScale / 100));
-		return height;
+		//const int height = (int) (tex->height * ((float) m_textureScale / 100));
+		//return height;
 	}
 
 	ParticleBrowser() :
@@ -115,7 +117,6 @@ static inline int ParticleBrowser_fontHeight(ParticleBrowser& ParticleBrowser) {
 }
 
 static void Particle_Draw(ParticleBrowser& particleBrowser) {
-	int x, y;
 	glClearColor(particleBrowser.color_textureback[0],
 			particleBrowser.color_textureback[1],
 			particleBrowser.color_textureback[2], 0);
@@ -124,18 +125,23 @@ static void Particle_Draw(ParticleBrowser& particleBrowser) {
 	glLoadIdentity();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glOrtho(0, particleBrowser.width, particleBrowser.height, 0, -100, 100);
 	glEnable(GL_TEXTURE_2D);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	if (g_currentSelectedParticle) {
 		const int fontGap = ParticleBrowser_fontHeight(particleBrowser);
+		int x = 10, y = 0;
 
 		// Draw the texture
 		const qtexture_t *q = g_currentSelectedParticle->m_image;
 		if (q) {
 			const int nWidth = particleBrowser.getTextureWidth(q);
 			const int nHeight = particleBrowser.getTextureHeight(q);
+
+			x = (particleBrowser.width) / 2 - (nWidth / 2);
+			y = (particleBrowser.height) / 2 - (nHeight / 2);
 
 			glBindTexture(GL_TEXTURE_2D, q->texture_number);
 			glColor3f(1, 1, 1);

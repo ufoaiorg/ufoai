@@ -833,6 +833,7 @@ static void Texture_Draw (TextureBrowser& textureBrowser)
 			} else {
 				glLineWidth(1);
 				// shader border:
+				// TODO: Highlight if material is available for this texture (mattn)
 				if (!shader->IsDefault()) {
 					glColor3f(1, 1, 1);
 					glDisable(GL_TEXTURE_2D);
