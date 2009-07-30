@@ -53,7 +53,10 @@ public:
 	STRING_CONSTANT(Name, "reference");
 
 	virtual ~ReferenceCache(){}
+	/* load a resource with a path relative to base/
+	 * don't forget to call load() on the resource */
 	virtual Resource* capture(const char* path) = 0;
+	/* release the captured resource and reduce the reference counter */
 	virtual void release(const char* path) = 0;
 
 	virtual void setEntityCreator(EntityCreator& entityCreator) = 0;

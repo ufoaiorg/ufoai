@@ -30,12 +30,20 @@ class Node;
 
 class ArchiveFile;
 
+/**
+ * @brief Model loader module API interface.
+ */
 class ModelLoader {
 public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "model");
 
 	virtual ~ModelLoader(){}
+	/**
+	 * @brief Returns a newly created model node for the given model name.
+	 * @param file
+	 * @returns: the newly created modelnode (can be NULL if the model was not found).
+	 */
 	virtual scene::Node& loadModel(ArchiveFile& file) = 0;
 };
 
