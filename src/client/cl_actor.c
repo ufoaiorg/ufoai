@@ -23,23 +23,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_le.h"
-#include "cl_team.h"
-#include "sound/s_main.h"
-#include "cl_particle.h"
 #include "cl_actor.h"
+#include "cl_game.h"
 #include "cl_hud.h"
-#include "cl_view.h"
-#include "cl_parse.h"
 #include "cl_menu.h"
+#include "cl_parse.h"
+#include "cl_particle.h"
+#include "cl_team.h"
+#include "cl_ugv.h"
+#include "cl_view.h"
+#include "menu/m_popup.h"
+#include "menu/node/m_node_container.h"
 #include "renderer/r_entity.h"
 #include "renderer/r_mesh_anim.h"
-#include "menu/m_popup.h"
+#include "sound/s_main.h"
 #include "../common/routing.h"
-#include "cl_ugv.h"
-#include "menu/node/m_node_container.h"
-#include "cl_game.h"
 
 /** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
 static cvar_t *confirm_actions;
@@ -2659,7 +2657,7 @@ void CL_DebugPath_f (void)
 	const pos_t y = mousePos[1];
 	const pos_t z = mousePos[2];
 	int dir;
-	dir = 2;
+	dir = 3;
 
 	if (mouseSpace != MS_WORLD)
 		return;
@@ -2685,7 +2683,7 @@ void CL_DebugPath_f (void)
 
 #if 0
 	Com_Printf("performing RT_UpdateConnection() in dir: %i\n", dir);
-	RT_UpdateConnectionColumn(clMap, actor_size, x, y, dir);
+	RT_UpdateConnectionColumn(clMap, actorSize, x, y, dir);
 	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
 		RT_CONN_PX(clMap, actorSize, x, y, z),
 		RT_CONN_NX(clMap, actorSize, x, y, z),
@@ -2698,7 +2696,8 @@ void CL_DebugPath_f (void)
 		RT_CONN_PX_NY(clMap, actorSize, x, y, z) );// 7
 #endif
 #if 0
-	int new_z = RT_CheckCell(clMap, actor_size, x, y, z);
+//	int new_z = RT_CheckCell(clMap, actorSize, x, y, z);
+	int new_z = RT_CheckCell(clMap, actorSize, 138, 146, 5);
 	Com_Printf("check returns: Z=%i\n", new_z);
 #endif
 #if 0
