@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_GAME_H
 #define CL_GAME_H
 
+#include "client.h"
+
 #define GAME_NONE			0
 #define GAME_SINGLEPLAYER	(1 << 0)
 #define GAME_MULTIPLAYER	(1 << 1)
