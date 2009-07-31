@@ -777,28 +777,36 @@ void RS_ResearchRun (void)
 
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
-		if (tech->statusResearch == RS_RUNNING) {
-			/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
-			if (tech->time > 0 && tech->scientists > 0) {
-				base_t *base = tech->base;
-				assert(tech->base);	/**< If there are scientitsts there _has_ to be a base. */
-				if (RS_ResearchAllowed(base)) {
-					/** @todo Just for testing, better formular may be needed. Include employee-skill in calculation. */
-					tech->time -= tech->scientists * 0.8;
-					/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
-					if (tech->time <= 0) {
-						/* Remove all scientists from the technology. */
-						while (tech->scientists > 0)
-							RS_RemoveScientist(tech, NULL);
 
-						RS_MarkResearched(tech, base);
+		if (tech->statusResearch != RS_RUNNING)
+			continue;
 
-						newResearch++;
-						/* Add this base to the list that needs an update call.
-						 * tech->base was set to NULL with the last call of RS_RemoveScientist. */
-						checkBases[base->idx] = base;
-						tech->time = 0;
-					}
+		if (!RS_RequirementsMet(&tech->requireAND, &tech->requireOR, tech->base)) {
+			while (tech->scientists > 0)
+				RS_RemoveScientist(tech, NULL);
+			assert(tech->statusResearch == RS_PAUSED);
+			continue;
+		}
+
+		/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
+		if (tech->time > 0 && tech->scientists > 0) {
+			base_t *base = tech->base;
+			assert(tech->base);	/**< If there are scientitsts there _has_ to be a base. */
+			if (RS_ResearchAllowed(base)) {
+				/** @todo Just for testing, better formular may be needed. Include employee-skill in calculation. */
+				tech->time -= tech->scientists * 0.8;
+				/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
+				if (tech->time <= 0) {
+					/* Remove all scientists from the technology. */
+					while (tech->scientists > 0)
+						RS_RemoveScientist(tech, NULL);
+					RS_MarkResearched(tech, base);
+
+					newResearch++;
+					/* Add this base to the list that needs an update call.
+					 * tech->base was set to NULL with the last call of RS_RemoveScientist. */
+					checkBases[base->idx] = base;
+					tech->time = 0;
 				}
 			}
 		}
