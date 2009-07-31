@@ -124,6 +124,7 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 	case MSG_RESEARCH_PROPOSAL:
 	case MSG_RESEARCH_FINISHED:
 		assert(pedia);
+	case MSG_RESEARCH_HALTED:
 	case MSG_EVENT:
 	case MSG_NEWS:
 		/* reread the new mails in UP_GetUnreadMails */

@@ -25,6 +25,9 @@ msgoptions default
 	research_new_proposed notify
 	research_new_proposed pause
 	research_new_proposed sound
+	research_halted notify
+	research_halted pause
+	research_halted sound
 	research_completed notify
 	research_completed pause
 	research_completed sound

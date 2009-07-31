@@ -21,6 +21,7 @@ msgcategory "_installation_construction"
 msgcategory "_research"
 {
 	research_new_proposed
+	research_halted
 	research_completed
 }
 

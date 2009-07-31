@@ -40,6 +40,7 @@ const char *nt_strings[NT_NUM_NOTIFYTYPE] = {
 	N_("installation_build_finished"),
 	N_("installation_destroyed"),
 	N_("research_new_proposed"),
+	N_("research_halted"),
 	N_("research_completed"),
 	N_("production_started"),
 	N_("production_finished"),
