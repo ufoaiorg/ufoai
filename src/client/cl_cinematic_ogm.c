@@ -16,11 +16,11 @@
  * <li>theora doxygen docs (1.0beta1)
  */
 
-#include "client.h"
-#include "cl_cinematic.h"
 #include "cl_cinematic_ogm.h"
-#include "sound/s_music.h"
+#include "cl_cinematic.h"
 #include "renderer/r_draw.h"
+#include "sound/s_main.h"
+#include "sound/s_music.h"
 
 #if !defined(HAVE_VORBIS_CODEC_H) || (!defined(HAVE_XVID_H) && !defined(HAVE_THEORA_THEORA_H))
 #error "No ogm support compiled into the binary"
@@ -35,9 +35,6 @@
 #ifdef HAVE_THEORA_THEORA_H
 #include <theora/theora.h>
 #endif
-
-#include "client.h"
-#include "sound/s_main.h"
 
 
 typedef struct {

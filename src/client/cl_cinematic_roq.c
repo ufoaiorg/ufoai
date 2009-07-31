@@ -24,12 +24,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#include "client.h"
-#include "cl_cinematic.h"
 #include "cl_cinematic_roq.h"
+#include "cl_cinematic.h"
+#include "renderer/r_draw.h"
 #include "sound/s_main.h"
 #include "sound/s_music.h"
-#include "renderer/r_draw.h"
 
 typedef struct {
 	int vr[256];

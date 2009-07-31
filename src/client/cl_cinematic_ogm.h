@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifndef CLIENT_CL_CINEMATIC_OGM_H
 
+#include "../shared/ufotypes.h"	/* just for qboolean */
+
 int CIN_OGM_PlayCinematic(const char* filename);
 void CIN_OGM_Init(void);
 qboolean CIN_OGM_RunCinematic(void);

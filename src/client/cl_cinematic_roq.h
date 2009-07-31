@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifndef CLIENT_CL_CINEMATIC_ROQ_H
 
+#include "../shared/ufotypes.h"	/* just for qboolean */
+
 void CIN_ROQ_PlayCinematic(const char *fileName);
 void CIN_ROQ_Init(void);
 qboolean CIN_ROQ_RunCinematic(void);

@@ -23,13 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#include "client.h"
 #include "cl_cinematic.h"
-#include "cl_cinematic_roq.h"
 #include "cl_cinematic_ogm.h"
+#include "cl_cinematic_roq.h"
+#include "cl_console.h"
 #include "sound/s_main.h"
 #include "sound/s_music.h"
-#include "cl_console.h"
 
 cinematic_t cin;
 
