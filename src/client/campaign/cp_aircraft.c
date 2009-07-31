@@ -802,11 +802,20 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 
 int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 {
-	switch (aircraft->size) {
-	case AIRCRAFT_SMALL:
-		return CAP_AIRCRAFT_SMALL;
-	case AIRCRAFT_LARGE:
-		return CAP_AIRCRAFT_BIG;
+	if (aircraft->ufotype == UFO_MAX) {
+		switch (aircraft->size) {
+		case AIRCRAFT_SMALL:
+			return CAP_AIRCRAFT_SMALL;
+		case AIRCRAFT_LARGE:
+			return CAP_AIRCRAFT_BIG;
+		}
+	} else {
+		switch (aircraft->size) {
+		case AIRCRAFT_SMALL:
+			return CAP_UFOHANGARS_SMALL;
+		case AIRCRAFT_LARGE:
+			return CAP_UFOHANGARS_LARGE;
+		}
 	}
 	Com_Error(ERR_DROP, "AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->size);
 }
