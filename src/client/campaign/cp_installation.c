@@ -527,6 +527,8 @@ qboolean INS_LoadXML (mxml_node_t *p)
 			Com_Printf("Could not find installation template\n");
 			return qfalse;
 		}
+		inst->ufoCapacity.max = inst->installationTemplate->maxUFOsStored;
+		inst->ufoCapacity.cur = 0;
 		ccs.numInstallations++;
 		Q_strncpyz(inst->name, mxml_GetString(s, "name"), sizeof(inst->name));
 
