@@ -47,7 +47,8 @@ void MN_Popup (const char *title, const char *text)
 {
 	Cvar_Set("mn_sys_popup_title", title);
 	MN_RegisterText(TEXT_POPUP_INFO, text);
-	MN_PushMenu(POPUP_MENU_NAME, NULL);
+	if (!MN_IsMenuOnStack(POPUP_MENU_NAME))
+		MN_PushMenu(POPUP_MENU_NAME, NULL);
 }
 
 /**
@@ -92,7 +93,8 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 		listNode->onClick = NULL;
 	}
 
-	MN_PushMenu(popupListMenu->name, NULL);
+	if (!MN_IsMenuOnStack(popupListMenu->name))
+		MN_PushMenu(popupListMenu->name, NULL);
 	return listNode;
 }
 
@@ -191,5 +193,6 @@ void MN_PopupButton (const char *title, const char *text,
 			clickAction3 ? clickAction3 : popupAction3);
 	}
 
-	MN_PushMenu(popupButtonMenu->name, NULL);
+	if (!MN_IsMenuOnStack(popupButtonMenu->name))
+		MN_PushMenu(popupButtonMenu->name, NULL);
 }

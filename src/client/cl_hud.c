@@ -1128,8 +1128,8 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 			 * no firemode is available because of insufficient TUs. */
 			popupReload = qtrue;
 
-			/* Close and reload firemode reservation popup. */
-			MN_PopMenu(qfalse);
+			/* Update firemode reservation popup. */
+			/* @todo this is called every frames... is it really need? */
 			HUD_PopupFiremodeReservation(qfalse);
 		}
 	}
