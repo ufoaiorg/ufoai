@@ -348,7 +348,7 @@ window equipment
 			rows		"7"
 			dataid		TEXT_STANDARD
 			onViewChange {
-				*(abstractscrollbar)itemdescription.description_scroll@fullsize <lines>
+				*(abstractscrollbar)itemdescription.description_scroll@fullsize <fullsize>
 				*(abstractscrollbar)itemdescription.description_scroll@current <viewpos>
 			}
 			onWheel {

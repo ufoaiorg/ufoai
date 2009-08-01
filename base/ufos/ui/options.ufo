@@ -682,7 +682,7 @@ window options
 			rows		"28"
 			lineheight	"20"
 			onViewChange {
-				*(abstractscrollbar)options_keys.keyscroll@fullsize = <lines>
+				*(abstractscrollbar)options_keys.keyscroll@fullsize = <fullsize>
 				*(abstractscrollbar)options_keys.keyscroll@current = <viewpos>
 			}
 			onWheel		{

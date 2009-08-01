@@ -92,7 +92,7 @@ window buildings
 		longlines	prettychop
 		onClick		{ cmd "buildings_click <lineselected>" }
 		onViewChange {
-			*(abstractscrollbar)buildings_scroll@fullsize <lines>
+			*(abstractscrollbar)buildings_scroll@fullsize <fullsize>
 			*(abstractscrollbar)buildings_scroll@current <viewpos>
 		}
 		onWheel {

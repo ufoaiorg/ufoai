@@ -164,7 +164,7 @@ window basesummary
 		rows		"38"
 		longlines	prettychop
 		onViewChange	{
-			*(abstractscrollbar)base_summary_scroll@fullsize <lines>
+			*(abstractscrollbar)base_summary_scroll@fullsize <fullsize>
 			*(abstractscrollbar)base_summary_scroll@current <viewpos>
 			*(abstractscrollbar)base_summary_scroll@viewsize <viewsize>
 		}
@@ -201,7 +201,7 @@ window basesummary
 		rows		"23"
 		dataid			TEXT_STANDARD
 		onViewChange	{
-			*(abstractscrollbar)info_scroll@fullsize <lines>
+			*(abstractscrollbar)info_scroll@fullsize <fullsize>
 			*(abstractscrollbar)info_scroll@current <viewpos>
 			*(abstractscrollbar)info_scroll@viewsize <viewsize>
 		}

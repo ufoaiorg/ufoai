@@ -88,7 +88,7 @@ window aircraft_equip extends iaircraft
 		rows		"6"
 		tabwidth	130
 		onViewChange {
-			*(abstractscrollbar)airequip_seldesc_scroll@fullsize = <lines>
+			*(abstractscrollbar)airequip_seldesc_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)airequip_seldesc_scroll@current = <viewpos>
 		}
 		onWheel		{

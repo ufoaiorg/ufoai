@@ -285,7 +285,7 @@ window production
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*(abstractscrollbar)prodlist_scroll@fullsize <lines>
+			*(abstractscrollbar)prodlist_scroll@fullsize <fullsize>
 			*(abstractscrollbar)prodlist_scroll@current <viewpos>
 			*(abstractscrollbar)prodlist_scroll@viewsize <viewsize>
 		}
@@ -533,7 +533,7 @@ window production
 		tabwidth	260
 		rows		"5"
 		onViewChange	{
-			*(abstractscrollbar)description_scroll@fullsize <lines>
+			*(abstractscrollbar)description_scroll@fullsize <fullsize>
 			*(abstractscrollbar)description_scroll@current <viewpos>
 			*(abstractscrollbar)description_scroll@viewsize <viewsize>
 		}

@@ -28,7 +28,7 @@ window popup
 		tabwidth	100
 		rows		8
 		onViewChange	{
-			*(abstractscrollbar)popup_text_scroll@fullsize <lines>
+			*(abstractscrollbar)popup_text_scroll@fullsize <fullsize>
 			*(abstractscrollbar)popup_text_scroll@current <viewpos>
 			*(abstractscrollbar)popup_text_scroll@viewsize <viewsize>
 		}
@@ -90,7 +90,7 @@ window popup_list
 		tabwidth	100
 		rows		6
 		onViewChange	{
-			*(abstractscrollbar)popup_list_scroll@fullsize <lines>
+			*(abstractscrollbar)popup_list_scroll@fullsize <fullsize>
 			*(abstractscrollbar)popup_list_scroll@current <viewpos>
 			*(abstractscrollbar)popup_list_scroll@viewsize <viewsize>
 		}
@@ -144,7 +144,7 @@ window popup_button
 		tabwidth	100
 		rows		8
 		onViewChange	{
-			*(abstractscrollbar)popup_text_scroll@fullsize <lines>
+			*(abstractscrollbar)popup_text_scroll@fullsize <fullsize>
 			*(abstractscrollbar)popup_text_scroll@current <viewpos>
 			*(abstractscrollbar)popup_text_scroll@viewsize <viewsize>
 		}

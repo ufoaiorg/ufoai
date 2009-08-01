@@ -91,7 +91,7 @@ window campaigns
 		selectcolor	"1 1 1 1"
 		rows	"6"
 		onViewChange	{
-			*(abstractscrollbar)campaignlist_scroll@fullsize <lines>
+			*(abstractscrollbar)campaignlist_scroll@fullsize <fullsize>
 			*(abstractscrollbar)campaignlist_scroll@current <viewpos>
 			*(abstractscrollbar)campaignlist_scroll@viewsize <viewsize>
 		}

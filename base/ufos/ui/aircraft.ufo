@@ -140,7 +140,7 @@ window iaircraft
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		onViewChange {
-			*(abstractscrollbar)aircraft_list_scroll@fullsize <lines>
+			*(abstractscrollbar)aircraft_list_scroll@fullsize <fullsize>
 			*(abstractscrollbar)aircraft_list_scroll@viewsize <viewsize>
 			*(abstractscrollbar)aircraft_list_scroll@current <viewpos>
 		}

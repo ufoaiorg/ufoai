@@ -144,7 +144,7 @@ window ufopedia
 			tabwidth	100
 			rows		26
 			onViewChange	{
-				*node:(abstractscrollbar)parent.ufopedia_scroll@fullsize <lines>
+				*node:(abstractscrollbar)parent.ufopedia_scroll@fullsize <fullsize>
 				*node:(abstractscrollbar)parent.ufopedia_scroll@current <viewpos>
 				*node:(abstractscrollbar)parent.ufopedia_scroll@viewsize <viewsize>
 			}
@@ -169,7 +169,7 @@ window ufopedia
 			tabwidth	230
 			rows		20
 			onViewChange	{
-				*node:(abstractscrollbar)parent.description_scroll@fullsize <lines>
+				*node:(abstractscrollbar)parent.description_scroll@fullsize <fullsize>
 				*node:(abstractscrollbar)parent.description_scroll@current <viewpos>
 				*node:(abstractscrollbar)parent.description_scroll@viewsize <viewsize>
 			}
@@ -210,7 +210,7 @@ window ufopedia
 				selectcolor	"0 .78 0 1"
 				onChange		{ cmd "techtree_click <lineselected>" }
 				onViewChange	{
-					*node:(abstractscrollbar)parent.techtree_scroll@fullsize <lines>
+					*node:(abstractscrollbar)parent.techtree_scroll@fullsize <fullsize>
 					*node:(abstractscrollbar)parent.techtree_scroll@current <viewpos>
 					*node:(abstractscrollbar)parent.techtree_scroll@viewsize <viewsize>
 				}

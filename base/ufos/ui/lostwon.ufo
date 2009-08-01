@@ -216,7 +216,7 @@ window uforecovery
 			rows		"8"
 			onClick		{ cmd "cp_uforecovery_baselist_click <lineselected>" }
 			onViewChange	{
-				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@fullsize <lines>
+				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@fullsize <fullsize>
 				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@current <viewpos>
 				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@viewsize <viewsize>
 			}
@@ -319,7 +319,7 @@ window uforecovery
 			longlines	prettychop
 			onClick		{ cmd "cp_uforecovery_nationlist_click <lineselected>" }
 			onViewChange	{
-				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@fullsize <lines>
+				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@fullsize <fullsize>
 				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@current <viewpos>
 				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@viewsize <viewsize>
 			}

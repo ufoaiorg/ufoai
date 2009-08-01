@@ -151,7 +151,7 @@ window transfer
 		onClick		{ cmd "trans_cargolist_click <lineselected>" }
 		onViewChange	{
 			*(textlist)trans_cargolist_amount@viewpos = <viewpos>
-			*(abstractscrollbar)trans_cargolist_scroll@fullsize = <lines>
+			*(abstractscrollbar)trans_cargolist_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)trans_cargolist_scroll@current = <viewpos>
 			*(abstractscrollbar)trans_cargolist_scroll@viewsize = <viewsize>
 		}
@@ -166,7 +166,7 @@ window transfer
 		onClick		{ cmd "trans_cargolist_click <lineselected>" }
 		onViewChange	{
 			*(textlist)trans_cargolist@viewpos = <viewpos>
-			*(abstractscrollbar)trans_cargolist_scroll@fullsize = <lines>
+			*(abstractscrollbar)trans_cargolist_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)trans_cargolist_scroll@current = <viewpos>
 			*(abstractscrollbar)trans_cargolist_scroll@viewsize = <viewsize>
 		}
@@ -263,7 +263,7 @@ window transfer
 		onViewChange	{
 			*(textlist)trans_list_amount@viewpos = <viewpos>
 			*(textlist)trans_list_transfered@viewpos = <viewpos>
-			*(abstractscrollbar)trans_list_scroll@fullsize = <lines>
+			*(abstractscrollbar)trans_list_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)trans_list_scroll@current = <viewpos>
 			*(abstractscrollbar)trans_list_scroll@viewsize = <viewsize>
 		}
@@ -280,7 +280,7 @@ window transfer
 		onViewChange	{
 			*(textlist)trans_list@viewpos = <viewpos>
 			*(textlist)trans_list_amount@viewpos = <viewpos>
-			*(abstractscrollbar)trans_list_scroll@fullsize = <lines>
+			*(abstractscrollbar)trans_list_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)trans_list_scroll@current = <viewpos>
 			*(abstractscrollbar)trans_list_scroll@viewsize = <viewsize>
 		}
@@ -297,7 +297,7 @@ window transfer
 		onViewChange	{
 			*(textlist)trans_list@viewpos = <viewpos>
 			*(textlist)trans_list_transfered@viewpos = <viewpos>
-			*(abstractscrollbar)trans_list_scroll@fullsize = <lines>
+			*(abstractscrollbar)trans_list_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)trans_list_scroll@current = <viewpos>
 			*(abstractscrollbar)trans_list_scroll@viewsize = <viewsize>
 		}

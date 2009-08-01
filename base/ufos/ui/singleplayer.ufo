@@ -182,7 +182,7 @@ window lostgame
 		font		"f_normal"
 		dataid	TEXT_STANDARD
 		onViewChange	{
-			*(abstractscrollbar)reason_scroll@fullsize <lines>
+			*(abstractscrollbar)reason_scroll@fullsize <fullsize>
 			*(abstractscrollbar)reason_scroll@current <viewpos>
 			*(abstractscrollbar)reason_scroll@viewsize <viewsize>
 		}
@@ -257,7 +257,7 @@ window endgame
 		font		"f_normal"
 		dataid	TEXT_STANDARD
 		onViewChange	{
-			*(abstractscrollbar)reason_scroll@fullsize <lines>
+			*(abstractscrollbar)reason_scroll@fullsize <fullsize>
 			*(abstractscrollbar)reason_scroll@current <viewpos>
 			*(abstractscrollbar)reason_scroll@viewsize <viewsize>
 		}
