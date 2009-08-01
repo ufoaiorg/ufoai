@@ -31,5 +31,6 @@ void MN_RegisterConFuncNode(nodeBehaviour_t *behaviour);
 void MN_RegisterCvarFuncNode(nodeBehaviour_t *behaviour);
 void MN_RegisterFuncNode(nodeBehaviour_t *behaviour);
 void MN_RegisterNullNode(nodeBehaviour_t *behaviour);
+void MN_RegisterSpecialNode(nodeBehaviour_t *behaviour);
 
 #endif

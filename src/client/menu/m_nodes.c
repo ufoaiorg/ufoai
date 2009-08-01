@@ -107,6 +107,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterRadioButtonNode,
 	MN_RegisterRowsNode,
 	MN_RegisterSelectBoxNode,
+	MN_RegisterSpecialNode,
 	MN_RegisterSpinnerNode,
 	MN_RegisterStringNode,
 	MN_RegisterTabNode,

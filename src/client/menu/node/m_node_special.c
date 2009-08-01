@@ -47,10 +47,16 @@ static void MN_FuncNodeLoaded (menuNode_t *node)
 	}
 }
 
+void MN_RegisterSpecialNode (nodeBehaviour_t *behaviour)
+{
+	behaviour->name = "special";
+	behaviour->isVirtual = qtrue;
+}
+
 void MN_RegisterFuncNode (nodeBehaviour_t *behaviour)
 {
-	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = "func";
+	behaviour->extends = "special";
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
 	behaviour->loaded = MN_FuncNodeLoaded;
@@ -58,8 +64,8 @@ void MN_RegisterFuncNode (nodeBehaviour_t *behaviour)
 
 void MN_RegisterNullNode (nodeBehaviour_t *behaviour)
 {
-	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = "";
+	behaviour->extends = "special";
 	behaviour->isVirtual = qtrue;
 }
 
@@ -105,8 +111,8 @@ static void MN_ConFuncNodeInit (menuNode_t *node)
 
 void MN_RegisterConFuncNode (nodeBehaviour_t *behaviour)
 {
-	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = "confunc";
+	behaviour->extends = "special";
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
 	behaviour->loaded = MN_ConFuncNodeLoaded;
@@ -115,8 +121,8 @@ void MN_RegisterConFuncNode (nodeBehaviour_t *behaviour)
 
 void MN_RegisterCvarFuncNode (nodeBehaviour_t *behaviour)
 {
-	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = "cvarfunc";
+	behaviour->extends = "special";
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
 }

@@ -303,6 +303,7 @@ static const value_t properties[] = {
 void MN_RegisterEditorNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "editor";
+	behaviour->extends = "special";
 	behaviour->draw = MN_EditorNodeDraw;
 	behaviour->mouseDown = MN_EditorNodeMouseDown;
 	behaviour->mouseUp = MN_EditorNodeMouseUp;
