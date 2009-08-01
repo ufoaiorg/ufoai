@@ -45,7 +45,7 @@ static char popupAction3[MAX_SMALLMENUTEXTLEN];
  */
 void MN_Popup (const char *title, const char *text)
 {
-	MN_RegisterText(TEXT_POPUP, title);
+	Cvar_Set("mn_sys_popup_title", title);
 	MN_RegisterText(TEXT_POPUP_INFO, text);
 	MN_PushMenu(POPUP_MENU_NAME, NULL);
 }
@@ -62,7 +62,7 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 	menuNode_t* popupListMenu;
 	menuNode_t* listNode;
 
-	MN_RegisterText(TEXT_POPUP, title);
+	Cvar_Set("mn_sys_popup_title", title);
 	MN_RegisterText(TEXT_POPUP_INFO, headline);
 
 	/* make sure, that we are using the linked list */
@@ -153,7 +153,7 @@ void MN_PopupButton (const char *title, const char *text,
 {
 	menuNode_t* popupButtonMenu;
 
-	MN_RegisterText(TEXT_POPUP, title);
+	Cvar_Set("mn_sys_popup_title", title);
 	if (text)
 		MN_RegisterText(TEXT_POPUP_INFO, text);
 	else
