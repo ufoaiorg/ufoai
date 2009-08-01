@@ -543,6 +543,10 @@ void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 	if (menu && menu->u.window.renderNode) {
 		menuNode_t* node = menu->u.window.renderNode;
 		vec2_t pos;
+
+		/* update the layout */
+		menu->behaviour->doLayout(menu);
+
 		MN_GetNodeAbsPos(node, pos);
 		viddef.x = pos[0] * viddef.rx;
 		viddef.y = pos[1] * viddef.ry;
