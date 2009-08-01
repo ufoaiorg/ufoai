@@ -49,9 +49,13 @@ static void MN_BarNodeDraw (menuNode_t *node)
 	VectorScale(node->color, 0.8, color);
 	color[3] = node->color[3];
 
-	fac = node->size[0] / (max - min);
+	if (max > min)
+		fac = node->size[0] / (max - min);
+	else
+		fac = 0;
 	bar_width = (value - min) * fac;
-	MN_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], node->state ? color : node->color);
+	if (bar_width)
+		MN_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], node->state ? color : node->color);
 }
 
 /**
