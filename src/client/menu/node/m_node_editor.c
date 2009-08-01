@@ -218,8 +218,8 @@ static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
 	/* select the node */
 	if (hovered && hovered->root != node->root) {
 		anchoredNode = hovered;
-		Cvar_Set("mn_editor_node", anchoredNode->name);
-		Cvar_Set("mn_editor_window", anchoredNode->root->name);
+		Cvar_Set("mn_sys_editor_node", anchoredNode->name);
+		Cvar_Set("mn_sys_editor_window", anchoredNode->root->name);
 	}
 }
 

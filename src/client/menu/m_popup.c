@@ -163,8 +163,8 @@ void MN_PopupButton (const char *title, const char *text,
 	if (!popupButtonMenu)
 		Com_Error(ERR_FATAL, "Could not get "POPUPBUTTON_MENU_NAME" menu");
 
-	Cvar_Set("mn_popup_button_text1", clickText1);
-	Cvar_Set("mn_popup_button_tooltip1", tooltip1);
+	Cvar_Set("mn_sys_popup_button_text1", clickText1);
+	Cvar_Set("mn_sys_popup_button_tooltip1", tooltip1);
 	if (!clickAction1 && !clickText1) {
 		MN_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME),
 			NULL);
@@ -173,8 +173,8 @@ void MN_PopupButton (const char *title, const char *text,
 			clickAction1 ? clickAction1 : popupAction1);
 	}
 
-	Cvar_Set("mn_popup_button_text2", clickText2);
-	Cvar_Set("mn_popup_button_tooltip2", tooltip2);
+	Cvar_Set("mn_sys_popup_button_text2", clickText2);
+	Cvar_Set("mn_sys_popup_button_tooltip2", tooltip2);
 	if (!clickAction2 && !clickText2) {
 		MN_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME), NULL);
 	} else {
@@ -182,8 +182,8 @@ void MN_PopupButton (const char *title, const char *text,
 			clickAction2 ? clickAction2 : popupAction2);
 	}
 
-	Cvar_Set("mn_popup_button_text3", clickText3);
-	Cvar_Set("mn_popup_button_tooltip3", tooltip3);
+	Cvar_Set("mn_sys_popup_button_text3", clickText3);
+	Cvar_Set("mn_sys_popup_button_tooltip3", tooltip3);
 	if (!clickAction3 && !clickText3) {
 		MN_SetOneButton(popupButtonMenu, va("%s3", POPUPBUTTON_NODE_NAME), NULL);
 	} else {

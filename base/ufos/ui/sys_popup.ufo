@@ -163,8 +163,8 @@ window popup_button
 
 	button popup_button_1
 	{
-		string		*cvar:mn_popup_button_text1
-		tooltip		*cvar:mn_popup_button_tooltip1
+		string		*cvar:mn_sys_popup_button_text1
+		tooltip		*cvar:mn_sys_popup_button_tooltip1
 		image		ui/button_green_small
 		pos			"26 192"
 		size		"176 32"
@@ -175,8 +175,8 @@ window popup_button
 
 	button popup_button_2
 	{
-		string		*cvar:mn_popup_button_text2
-		tooltip		*cvar:mn_popup_button_tooltip2
+		string		*cvar:mn_sys_popup_button_text2
+		tooltip		*cvar:mn_sys_popup_button_tooltip2
 		image		ui/button_green_small
 		size		"176 32"
 		pos			"296 192"
@@ -187,8 +187,8 @@ window popup_button
 
 	button popup_button_3
 	{
-		string		*cvar:mn_popup_button_text3
-		tooltip		*cvar:mn_popup_button_tooltip3
+		string		*cvar:mn_sys_popup_button_text3
+		tooltip		*cvar:mn_sys_popup_button_tooltip3
 		image		ui/button_green_small
 		pos			"296 156"
 		size		"176 32"

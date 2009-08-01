@@ -33,12 +33,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Menu name use as alternative for option
  */
-static cvar_t *mn_main;
+static cvar_t *mn_sys_main;
 
 /**
  * @brief Main menu of a stack
  */
-static cvar_t *mn_active;
+static cvar_t *mn_sys_active;
 
 /**
  * @brief Returns the ID of the last fullscreen ID. Before this, window should be hidden.
@@ -205,8 +205,8 @@ int MN_CompleteWithMenu (const char *partial, const char **match)
 menuNode_t* MN_PushMenu (const char *name, const char *parentName)
 {
 	/* fix mn_active if nothing is set */
-	if (!strcmp(mn_active->string, ""))
-		Cvar_Set("mn_active", name);
+	if (!strcmp(mn_sys_active->string, ""))
+		Cvar_Set("mn_sys_active", name);
 
 	return MN_PushMenuDelete(name, parentName, qtrue);
 }
@@ -362,13 +362,13 @@ void MN_InitStack (char* activeMenu, char* mainMenu, qboolean popAll, qboolean p
 	if (popAll)
 		MN_PopMenu(qtrue);
 	if (activeMenu) {
-		Cvar_Set("mn_active", activeMenu);
+		Cvar_Set("mn_sys_active", activeMenu);
 		if (pushActive)
 			MN_PushMenu(activeMenu, NULL);
 	}
 
 	if (mainMenu)
-		Cvar_Set("mn_main", mainMenu);
+		Cvar_Set("mn_sys_main", mainMenu);
 }
 
 /**
@@ -452,16 +452,16 @@ void MN_PopMenu (qboolean all)
 			/* mn_main contains the menu that is the very first menu and should be
 			 * pushed back onto the stack (otherwise there would be no menu at all
 			 * right now) */
-			if (!strcmp(oldfirst->name, mn_main->string)) {
-				if (mn_active->string[0] != '\0')
-					MN_PushMenu(mn_active->string, NULL);
+			if (!strcmp(oldfirst->name, mn_sys_main->string)) {
+				if (mn_sys_active->string[0] != '\0')
+					MN_PushMenu(mn_sys_active->string, NULL);
 				if (!mn.windowStackPos)
-					MN_PushMenu(mn_main->string, NULL);
+					MN_PushMenu(mn_sys_main->string, NULL);
 			} else {
-				if (mn_main->string[0] != '\0')
-					MN_PushMenu(mn_main->string, NULL);
+				if (mn_sys_main->string[0] != '\0')
+					MN_PushMenu(mn_sys_main->string, NULL);
 				if (!mn.windowStackPos)
-					MN_PushMenu(mn_active->string, NULL);
+					MN_PushMenu(mn_sys_active->string, NULL);
 			}
 		}
 	}
@@ -722,8 +722,8 @@ static void MN_FireInit_f (void)
 
 void MN_InitMenus (void)
 {
-	mn_main = Cvar_Get("mn_main", "", 0, "This is the main menu id that is at the very first menu stack - also see mn_active");
-	mn_active = Cvar_Get("mn_active", "", 0, "The active menu we will return to when hitting esc once - also see mn_main");
+	mn_sys_main = Cvar_Get("mn_sys_main", "", 0, "This is the main menu id that is at the very first menu stack - also see mn_sys_active");
+	mn_sys_active = Cvar_Get("mn_sys_active", "", 0, "The active menu we will return to when hitting esc once - also see mn_sys_main");
 
 	/* add command */
 	Cmd_AddCommand("mn_fireinit", MN_FireInit_f, "Call the init function of a menu");
@@ -733,6 +733,8 @@ void MN_InitMenus (void)
 	Cmd_AddCommand("mn_push_child", MN_PushChildMenu_f, "Push a menu to the menustack with a big dependancy to a parent menu");
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
 	Cmd_AddCommand("mn_close", MN_CloseMenu_f, "Close a menu");
-	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 	Cmd_AddCommand("mn_move", MN_SetNewMenuPos_f, "Moves the menu to a new position.");
+
+	/** @todo move it outside */
+	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 }
