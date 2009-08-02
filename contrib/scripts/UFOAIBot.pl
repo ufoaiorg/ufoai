@@ -10,7 +10,7 @@ my $irc = new Net::IRC;
 # IRC object, but we'll just be working with one.
 my $conn = $irc->newconn(
 	Server 		=> shift || 'irc.freenode.org',
-	Port		=> shift || '6667', 
+	Port		=> shift || '6667',
 	Nick		=> 'UFOAIBot',
 	Ircname		=> 'UFOAIBot',
 	Username	=> 'UFOAIBot'

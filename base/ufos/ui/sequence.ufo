@@ -15,7 +15,7 @@ window sequence
 		onClick		{ cmd "seq_click;" }
 	}
 
-	confunc end 
+	confunc end
 	{
 		cmd			"seq_end;"
 	}

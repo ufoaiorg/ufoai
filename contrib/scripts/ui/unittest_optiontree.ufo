@@ -17,14 +17,14 @@ window unittest_optiontree
 		size "240 430"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		
+
 		onViewchange	{
 			*(vscrollbar)root.scroll@current = <viewpos>
 			*(vscrollbar)root.scroll@fullsize = <fullsize>
 			*(vscrollbar)root.scroll@viewsize = <viewsize>
 		}
 	}
-	
+
 	vscrollbar scroll {
 		image		ui/scrollbar_v_green
 		pos			"270 50"
