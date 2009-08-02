@@ -45,6 +45,7 @@ void R_DrawCircle2D(int x, int y, float radius, qboolean fill, const vec4_t colo
 void R_DrawPolygon(int points, int *verts);
 void R_BeginClipRect(int x, int y, int width, int height);
 void R_EndClipRect(void);
+void R_CleanupDepthBuffer(int x, int y, int width, int height);
 
 extern cvar_t *r_geoscape_overlay;
 

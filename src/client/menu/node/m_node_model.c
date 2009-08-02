@@ -432,6 +432,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 	/* compute the absolute origin ('origin' property is relative to the node center) */
 	MN_GetNodeAbsPos(node, nodeorigin);
+	R_CleanupDepthBuffer(nodeorigin[0], nodeorigin[1], node->size[0], node->size[1]);
 	if (EXTRADATA(node).clipOverflow)
 		R_BeginClipRect(nodeorigin[0], nodeorigin[1], node->size[0], node->size[1]);
 	nodeorigin[0] += node->size[0] / 2 + EXTRADATA(node).origin[0];

@@ -959,3 +959,53 @@ void R_EndClipRect (void)
 {
 	glDisable(GL_SCISSOR_TEST);
 }
+
+/**
+ * @todo can we use a draw rect with the biggest Z? it should be faster than a buffer copy
+ */
+void R_CleanupDepthBuffer(int x, int y, int width, int height)
+{
+#if 1
+	void *buffer;
+	const int nx = x * viddef.rx;
+	const int ny = y * viddef.ry;
+	const int nwidth = width * viddef.rx;
+	const int nheight = height * viddef.ry;
+	const GLboolean hasDepthTest = glIsEnabled(GL_DEPTH_TEST);
+	GLint depthFunc;
+	GLint rowPack;
+	int memorySize;
+	glGetIntegerv(GL_DEPTH_FUNC, &depthFunc);
+	glGetIntegerv(GL_PACK_ALIGNMENT, &rowPack);
+
+	/* we want to overwrite depth buffer not to have his constraints */
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_ALWAYS);
+
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+	glRasterPos2i(nx, ny + nheight);
+
+	/* @todo we can cache it with the bigger memorySize we found (in runtime) */
+	#define ALIGN(value,size) ((value + (size - 1)) & (~(size - 1)))
+	memorySize = ALIGN(nwidth, rowPack) * nheight;
+	#undef ALIGN
+
+	buffer = malloc(memorySize);
+	memset(buffer, 255, memorySize);
+	glDrawPixels(nwidth, nheight, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, buffer);
+	free(buffer);
+
+	/* @todo should we restore old rasterpos */
+	glRasterPos2i(0, 0);
+
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	if (!hasDepthTest)
+		glDisable(GL_DEPTH_TEST);
+	glDepthFunc(depthFunc);
+
+	glFlush();
+#else
+	/* brute force */
+	glClear(GL_DEPTH_BUFFER_BIT);
+#endif
+}

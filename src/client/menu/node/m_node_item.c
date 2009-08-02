@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "../../campaign/cp_campaign.h"
+#include "../../renderer/r_draw.h"
 
 #define EXTRADATA(node) (node->u.model)
 
@@ -41,9 +42,13 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 {
 	const objDef_t *od;
 	const char* ref = MN_GetReferenceString(node, EXTRADATA(node).model);
+	vec2_t pos;
 
 	if (!ref || ref[0] == '\0')
 		return;
+
+	MN_GetNodeAbsPos(node, pos);
+	R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
 
 	od = INVSH_GetItemByIDSilent(ref);
 	if (od) {
