@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_game.h"
-#include "../cl_menu.h"
+#include "../menu/m_main.h"
 #include "cp_campaign.h"
 #include "cp_installation_callbacks.h"
 #include "cp_installation.h"

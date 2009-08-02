@@ -45,12 +45,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_view.h"
 #include "cl_joystick.h"
 #include "cl_cinematic.h"
-#include "cl_http.h"
 #include "cl_menu.h"
+#include "cl_http.h"
 #include "sound/s_music.h"
 #include "../shared/infostring.h"
 #include "renderer/r_main.h"
 #include "renderer/r_particle.h"
+#include "menu/m_main.h"
 #include "menu/m_popup.h"
 #include "menu/m_main.h"
 #include "menu/m_font.h"
@@ -806,7 +807,7 @@ static void CL_InitLocal (void)
 
 	IN_Init();
 
-	MN_InitStartup();
+	CLMN_InitStartup();
 	TUT_InitStartup();
 	PTL_InitStartup();
 	GAME_InitStartup();

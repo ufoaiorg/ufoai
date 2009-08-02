@@ -26,11 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_game.h"
 #include "cl_team.h"
-#include "cl_menu.h"
 #include "cl_inventory.h"
 #include "multiplayer/mp_callbacks.h"
 #include "multiplayer/mp_serverlist.h"
 #include "multiplayer/mp_team.h"
+#include "menu/m_main.h"
 #include "menu/m_popup.h"
 
 static void GAME_MP_AutoTeam (void)

@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Prints a list of tab and newline separated string to keylist char array that hold the key and the command desc
  * @todo Use a linked list here, no static buffer
  */
-static void MN_InitKeyList_f (void)
+static void CLMN_InitKeyList_f (void)
 {
 	static char keylist[2048];
 	int i;
@@ -62,10 +62,10 @@ static void MN_InitKeyList_f (void)
  * @sa MN_Shutdown
  * @sa CL_InitLocal
  */
-void MN_InitStartup (void)
+void CLMN_InitStartup (void)
 {
 	/* print the keyBindings to mn.menuText */
-	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);
+	Cmd_AddCommand("mn_init_keylist", CLMN_InitKeyList_f, NULL);
 
 	MN_Init();
 }

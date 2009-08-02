@@ -247,9 +247,9 @@ void MN_ExecuteConfunc (const char *fmt, ...)
 /**
  * @brief Reset and free the menu data hunk
  * @note Even called in case of an error when CL_Shutdown was called - maybe even
- * before CL_InitLocal (and thus MN_InitStartup) was called
+ * before CL_InitLocal (and thus MN_Init) was called
  * @sa CL_Shutdown
- * @sa MN_InitStartup
+ * @sa MN_Init
  */
 void MN_Shutdown (void)
 {

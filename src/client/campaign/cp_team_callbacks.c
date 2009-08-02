@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_actor.h"
 #include "../cl_team.h"
 #include "../cl_ugv.h"
-#include "../cl_menu.h"
+#include "../menu/m_main.h"
 #include "../menu/m_nodes.h"	/**< menuInventory */
 #include "cp_campaign.h"
 #include "cp_team.h"
