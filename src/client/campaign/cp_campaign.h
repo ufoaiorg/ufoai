@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern struct memPool_s *cp_campaignPool;
 
 struct aircraft_s;
-struct base_s;
 struct installation_s;
 struct employee_s;
 struct menuNode_s; /**< @todo remove this once the menuNode_t usage is cleaned up */
@@ -47,10 +46,10 @@ struct menuNode_s; /**< @todo remove this once the menuNode_t usage is cleaned u
 #include "cp_employee.h"
 #include "cp_transfer.h"
 #include "cp_nation.h"
-#include "cp_uforecovery.h"
-#include "cp_produce.h"
-#include "cp_airfight.h"
 #include "cp_installation.h"
+#include "cp_produce.h"
+#include "cp_uforecovery.h"
+#include "cp_airfight.h"
 #include "cp_messageoptions.h"
 #include "cp_alienbase.h"
 
