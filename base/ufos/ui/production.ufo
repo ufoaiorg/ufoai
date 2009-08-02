@@ -340,9 +340,9 @@ window production
 		viewsize	30
 		fullsize	30
 		onChange	{
-			*prodlist@viewpos = <viewpos>
-			*prodlist_amount@viewpos = <viewpos>
-			*prodlist_queued@viewpos = <viewpos>
+			*prodlist@viewpos = <current>
+			*prodlist_amount@viewpos = <current>
+			*prodlist_queued@viewpos = <current>
 		}
 	}
 
