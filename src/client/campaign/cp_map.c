@@ -133,7 +133,6 @@ static float smoothDeltaLength = 0.0f;		/**< angle/position difference that we n
 static float smoothFinalZoom = 0.0f;		/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
 static float smoothDeltaZoom = 0.0f;		/**< zoom difference that we need to change when smoothing */
 static float smoothAcceleration = 0.0f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
-static qboolean smoothNewClick = qfalse;		/**< New click on control panel to make geoscape rotate */
 
 static const float safeAcceleration = 0.06f;
 
@@ -1153,30 +1152,29 @@ static void MAP3D_SmoothRotate (void)
 	const float epsilon = 0.1f;
 	const float epsilonZoom = 0.01f;
 
-	static float rotationSpeed = 0.0f;
-
 	diff_zoom = smoothFinalZoom - ccs.zoom;
 
 	VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
 	diff_angle = VectorLength(diff);
 
-	if (smoothNewClick)
-		smoothNewClick = qfalse;
-
 	if (smoothDeltaLength > smoothDeltaZoom) {
+		/* when we rotate (and zoom) */
 		if (diff_angle > epsilon) {
-			rotationSpeed = smoothDeltaLength * sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle / smoothDeltaLength;
+			const float rotationSpeed = smoothDeltaLength * sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle / smoothDeltaLength;
 			VectorScale(diff, smoothAcceleration / diff_angle * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
 			ccs.zoom = ccs.zoom + smoothAcceleration * diff_zoom / diff_angle * rotationSpeed;
 			return;
 		}
 	} else {
+		/* when we zoom only */
 		if (fabs(diff_zoom) > epsilonZoom) {
-			rotationSpeed = smoothDeltaZoom * sin(3.05f * (diff_zoom / smoothDeltaZoom)) * diff_zoom / smoothDeltaZoom;
-			VectorScale(diff, smoothAcceleration * diff_angle / fabs(diff_zoom) * rotationSpeed, diff);
+			// rotationSpeed = smoothDeltaZoom * sin(3.05f * (diff_zoom / smoothDeltaZoom)) * diff_zoom / smoothDeltaZoom;
+			// VectorScale(diff, smoothAcceleration * diff_angle / fabs(diff_zoom) * rotationSpeed, diff);
+			const float speed = sin(3.05f * (fabs(diff_zoom) / smoothDeltaZoom)) * smoothAcceleration * 2.0;
+			VectorScale(diff, speed * diff_angle / diff_zoom, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
-			ccs.zoom = ccs.zoom + smoothAcceleration * rotationSpeed;
+			ccs.zoom = ccs.zoom + diff_zoom * speed;
 			return;
 		}
 	}
@@ -2266,9 +2264,6 @@ void MAP_Zoom_f (void)
 	} else {
 		VectorCopy(ccs.angles, smoothFinalGlobeAngle);
 		smoothDeltaLength = 0;
-		if (smoothRotation)
-			/* geoscape is already smooth rotating */
-			smoothNewClick = qtrue;
 		smoothRotation = qtrue;
 		smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
 	}
@@ -2339,9 +2334,6 @@ void MAP_Scroll_f (void)
 		smoothFinalZoom = ccs.zoom;
 		smoothDeltaZoom = 0.0f;
 		smoothAcceleration = safeAcceleration;
-		if (smoothRotation)
-			/* geoscape is already smooth rotating */
-			smoothNewClick = qtrue;
 		smoothRotation = qtrue;
 	} else {
 		int i;
