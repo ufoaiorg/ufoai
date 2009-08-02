@@ -132,9 +132,7 @@ static vec2_t smoothFinal2DGeoscapeCenter = {0.5, 0.5};		/**< value of ccs.cente
 static float smoothDeltaLength = 0.0f;		/**< angle/position difference that we need to change when smoothing */
 static float smoothFinalZoom = 0.0f;		/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
 static float smoothDeltaZoom = 0.0f;		/**< zoom difference that we need to change when smoothing */
-static float smoothAcceleration = 0.0f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
-
-static const float safeAcceleration = 0.06f;
+static const float smoothAcceleration = 0.06f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
 
 static byte *terrainPic = NULL;			/**< this is the terrain mask for separating the clima
 											zone and water by different color values */
@@ -1134,7 +1132,6 @@ void MAP_CenterOnPoint_f (void)
 	smoothFinalZoom = ZOOM_LIMIT;
 
 	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
-	smoothAcceleration = safeAcceleration;
 
 	smoothRotation = qtrue;
 }
@@ -2248,8 +2245,6 @@ void MAP_Zoom_f (void)
 		return;
 	}
 
-	smoothAcceleration = safeAcceleration;
-
 	if (smoothFinalZoom < cl_mapzoommin->value)
 		smoothFinalZoom = cl_mapzoommin->value;
 	else if (smoothFinalZoom > cl_mapzoommax->value)
@@ -2333,7 +2328,6 @@ void MAP_Scroll_f (void)
 
 		smoothFinalZoom = ccs.zoom;
 		smoothDeltaZoom = 0.0f;
-		smoothAcceleration = safeAcceleration;
 		smoothRotation = qtrue;
 	} else {
 		int i;
