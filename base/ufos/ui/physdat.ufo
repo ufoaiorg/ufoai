@@ -26,6 +26,11 @@ window physdata
 		size		"165 20"
 	}
 
+	controls drag {
+		pos		"10 10"
+		size	"200 50"
+	}
+
 	// ==================
 	// model
 	// ==================

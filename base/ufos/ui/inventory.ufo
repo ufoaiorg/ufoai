@@ -101,6 +101,11 @@ window inventory
 		pos		"34 24"
 	}
 
+	controls drag {
+		pos		"10 10"
+		size	"300 50"
+	}
+
 	// ==================
 	// model
 	// ==================
