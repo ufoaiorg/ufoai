@@ -228,7 +228,7 @@ window employees
 	textlist employee_list
 	{
 		dataid		TEXT_LIST
-		pos			"45 185"
+		pos			"45 170"
 		width		280
 		lineheight	38
 		tabwidth	100
