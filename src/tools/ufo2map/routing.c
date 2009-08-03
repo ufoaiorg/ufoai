@@ -95,10 +95,11 @@ static void CheckUnitThread (unsigned int unitnum)
 static void CheckConnectionsThread (unsigned int unitnum)
 {
 	/* get coordinates of that unit */
-	const int dir = (unitnum % (CORE_DIRECTIONS / 2)) * 2;
-	const int y = (unitnum / (CORE_DIRECTIONS / 2)) % PATHFINDING_WIDTH;
-	const int x = (unitnum / (CORE_DIRECTIONS / 2) / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
-	const int actorSize = unitnum / PATHFINDING_WIDTH / PATHFINDING_WIDTH / (CORE_DIRECTIONS / 2);
+	const int numDirs = CORE_DIRECTIONS / (1 + RT_IS_BIDIRECTIONAL);
+	const int dir = (unitnum % numDirs) * (RT_IS_BIDIRECTIONAL ? 2 : 1);
+	const int y = (unitnum / numDirs) % PATHFINDING_WIDTH;
+	const int x = (unitnum / numDirs / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
+	const int actorSize = unitnum / numDirs / PATHFINDING_WIDTH / PATHFINDING_WIDTH;
 
 
 	/* test bounds - the size adjustment is needed because large actor cells occupy multiple cell units. */
@@ -162,7 +163,7 @@ void DoRouting (void)
 
 	/* scan connections */
 	/** @note The (ACTOR_MAX_SIZE / 2) is so we don't trace for 2x2 actors (yet). */
-	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * (CORE_DIRECTIONS / 2) * (ACTOR_MAX_SIZE / 2), config.verbosity >= VERB_NORMAL, "CONNCHECK");
+	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * (CORE_DIRECTIONS / (1 + RT_IS_BIDIRECTIONAL)) * (ACTOR_MAX_SIZE / 2), config.verbosity >= VERB_NORMAL, "CONNCHECK");
 
 	/* Try to shrink the world bounds along the x and y coordinates */
 	for (i = 0; i < 2; i++) {

@@ -43,6 +43,10 @@ GLOBAL TYPES
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
 #endif
 
+/* Decide whether we are doing uni- or bidirectional conclusions from our traces.
+ * This constant is used in both a boolean aand an integer way,
+ * so it must only be set to 0 or 1 ! */
+#define RT_IS_BIDIRECTIONAL 1
 
 /*==============================================================
 MACROS

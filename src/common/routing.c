@@ -1324,16 +1324,20 @@ static int RT_UpdateConnection (routing_t * map, const int actorSize, const int 
 		/* We can't go this way. */
 		RT_CONN(map, actorSize, x, y, z, dir) = 0;
 		RT_STEPUP(map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
-		RT_CONN(map, actorSize, ax, ay, z, dir ^ 1) = 0;
-		RT_STEPUP(map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		if (RT_IS_BIDIRECTIONAL) {
+			RT_CONN(map, actorSize, ax, ay, z, dir ^ 1) = 0;
+			RT_STEPUP(map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		}
 		if (debugTrace)
 			Com_Printf("Current cell filled. c:%i ac:%i\n", RT_CEILING(map, actorSize, x, y, z), RT_CEILING(map, actorSize, ax, ay, z));
 		return z;
 	}
 
 	/* In case the adjacent floor has no ceiling, swap the current and adjacent cells. */
-	if (ceiling == 0 && adjCeiling != 0) {
-		return RT_UpdateConnection (map, actorSize, ax, ay, x, y, z, dir ^ 1);
+	if (RT_IS_BIDIRECTIONAL) {
+		if (ceiling == 0 && adjCeiling != 0) {
+			return RT_UpdateConnection (map, actorSize, ax, ay, x, y, z, dir ^ 1);
+		}
 	}
 
 	/**
@@ -1344,8 +1348,10 @@ static int RT_UpdateConnection (routing_t * map, const int actorSize, const int 
 		/* We can't go this way. */
 		RT_CONN(map, actorSize, x, y, z, dir) = 0;
 		RT_STEPUP(map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
-		RT_CONN(map, actorSize, ax, ay, z, dir ^ 1) = 0;
-		RT_STEPUP(map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		if (RT_IS_BIDIRECTIONAL) {
+			RT_CONN(map, actorSize, ax, ay, z, dir ^ 1) = 0;
+			RT_STEPUP(map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		}
 		if (debugTrace)
 			Com_Printf("Ceiling lower than floor. f:%i c:%i af:%i ac:%i\n", absFloor, absCeiling, absAdjFloor, absAdjCeiling);
 		return z;
@@ -1362,18 +1368,23 @@ static int RT_UpdateConnection (routing_t * map, const int actorSize, const int 
 
 	if (opening.stepup & PATHFINDING_BIG_STEPUP) {
 		/* ^ 1 reverses the direction of dir */
-		RT_CONN(map, actorSize, ax, ay, z, dir ^ 1) = 0;
-		RT_STEPUP(map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		if (RT_IS_BIDIRECTIONAL) {
+			RT_CONN(map, actorSize, ax, ay, z, dir ^ 1) = 0;
+			RT_STEPUP(map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		}
 		az++;
 	} else if (opening.stepup & PATHFINDING_BIG_STEPDOWN) {
 		az--;
 		RT_CONN(map, actorSize, x, y, az, dir) = 0;
 		RT_STEPUP(map, actorSize, x, y, az, dir) = PATHFINDING_NO_STEPUP;
 	}
-	new_z2 = RT_FillPassageData(map, actorSize, dir ^ 1, ax, ay, az, opening.size, opening.base, opening.invstepup);
-	if (new_z2 == az && az < z)
-		new_z2++;
-	return min(new_z1, new_z2);
+	if (RT_IS_BIDIRECTIONAL) {
+		new_z2 = RT_FillPassageData(map, actorSize, dir ^ 1, ax, ay, az, opening.size, opening.base, opening.invstepup);
+		if (new_z2 == az && az < z)
+			new_z2++;
+		return min(new_z1, new_z2);
+	}
+	return new_z1;
 }
 
 
