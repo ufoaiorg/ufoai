@@ -134,6 +134,7 @@ window buildings
 		tooltip		"_Open/close Building preview window"
 		pos			"800 700"
 		size		"180 20"
+		onClick		{ call building_preview@toggle }
 	}
 
 	confunc mn_buildings_reset

@@ -909,39 +909,41 @@ window popup_newbase
 		}
 	}
 
-	// START WITH EMPLOYEES
-	string start_employees_str
-	{
-		string		"_Start with employees"
-		pos			"270 98"
-		size		"180 20"
-		textalign	ul
-	}
-	checkbox start_employees
-	{
-		tooltip		"_Employees already hired at campaign start"
-		current		*cvar:cp_start_employees
-		pos			"246 98"
-		size		"20 18"
-		image		"ui/checkbox_blue"
-	}
-
 	// START WITH BUILDINGS
-	string start_buildings_str
-	{
-		string		"_Start with buildings"
-		pos			"270 123"
-		size		"180 20"
-		textalign	ul
-	}
 	checkbox start_building
 	{
 		tooltip		"_Buildings already built in the initial base"
 		current		*cvar:cl_start_buildings
-		pos			"246 123"
+		pos			"246 98"
 		image		"ui/checkbox_blue"
 		size		"20 18"
 		onChange 	{ call chk_checkboxes }
+	}
+	string start_buildings_str
+	{
+		string		"_Start with buildings"
+		pos			"270 98"
+		size		"180 20"
+		textalign	ul
+		onClick		{ call start_building@toggle }
+	}
+
+	// START WITH EMPLOYEES
+	checkbox start_employees
+	{
+		tooltip		"_Employees already hired at campaign start"
+		current		*cvar:cp_start_employees
+		pos			"246 123"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+	}
+	string start_employees_str
+	{
+		string		"_Start with employees"
+		pos			"270 123"
+		size		"180 20"
+		textalign	ul
+		onClick		{ call start_employees@toggle }
 	}
 
 	button bt_cancel

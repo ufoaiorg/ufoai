@@ -80,6 +80,9 @@ static void MN_CheckBoxNodeActivate (menuNode_t *node)
 	const float last = MN_GetReferenceFloat(node, EXTRADATA(node).value);
 	float value;
 
+	if (node->disabled)
+		return;
+
 	/* update value */
 	value = (last > 0) ? 0 : 1;
 	if (last == value)
