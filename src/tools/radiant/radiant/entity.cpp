@@ -527,7 +527,7 @@ void Entity_constructPreferences (PreferencesPage& page)
 }
 void Entity_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage("Entities", "Entity Display Preferences"));
+	PreferencesPage page(group.createPage(_("Entities"), _("Entity Display Preferences")));
 	Entity_constructPreferences(page);
 }
 void Entity_registerPreferencesPage ()
