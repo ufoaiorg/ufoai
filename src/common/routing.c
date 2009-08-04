@@ -958,15 +958,11 @@ static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, 
  * @brief Performs small traces to find places when an actor can step up.
  * @param[in] map The map's routing data
  * @param[in] actorSize The actor's size
- * @param[in] x Starting x coordinate
- * @param[in] y Starting y coordinate
- * @param[in] z Starting z coordinate
+ * @param[in] from Starting place
  * @param[in] ax Ending x coordinate
  * @param[in] ay Ending y coordinate
  * @param[in] az Ending z coordinate
- * @param[out] bottom Actual height of the bottom of the found passage.
- * @param[out] top Actual height of the top of the found passage.
- * @param[out] stepup Required stepup to travel in this direction.
+ * @param[out] opening descriptor of the opening found, if any
  * @return The change in floor height in QUANT units because of the additional trace.
 */
 static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, const int ax, const int ay, const int az, opening_t* opening)
@@ -991,7 +987,6 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, c
 	bases[steps] = last_step = max(0, RT_FLOOR(map, actorSize, ax, ay, az)) + az * CELL_HEIGHT;
 
 	/* Initialize the starting vector */
-//	VectorSet(pos, x, y, z);
 	SizedPosToVec(from->cell, actorSize, start);
 
 	/* Initialize the ending vector */
