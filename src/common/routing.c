@@ -68,10 +68,10 @@ static inline void RT_PlaceInit (routing_t *map, const int actorSize, place_t *p
 	p->cell[0] = x;
 	p->cell[1] = y;
 	p->cell[2] = z;
-	p->floor = max(0, RT_FLOOR(map, actorSize, x, y, z)) + z * CELL_HEIGHT;
+	p->floor = RT_FLOOR(map, actorSize, x, y, z) + z * CELL_HEIGHT;
 	p->ceiling = relCeiling + z * CELL_HEIGHT;
-	p->floorZ =  p->floor / CELL_HEIGHT;
-	p->usable = (relCeiling && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? qtrue : qfalse;
+	p->floorZ =  max(0, p->floor / CELL_HEIGHT) ;
+	p->usable = (relCeiling && p->floor > -1 &&	p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? qtrue : qfalse;
 }
 
 static inline qboolean RT_PlaceIsUsable (place_t* p)
