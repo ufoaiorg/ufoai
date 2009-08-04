@@ -969,7 +969,7 @@ static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, 
  * @param[out] stepup Required stepup to travel in this direction.
  * @return The change in floor height in QUANT units because of the additional trace.
 */
-static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, const int y, const int z, const int ax, const int ay, const int az, opening_t* opening)
+static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, const int ax, const int ay, const int az, opening_t* opening)
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
@@ -987,12 +987,12 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
 	float width;
 
 	/* First prepare the two known end values. */
-	bases[0] = max(0, RT_FLOOR(map, actorSize, x, y, z)) + z * CELL_HEIGHT;
+	bases[0] = from->floor;
 	bases[steps] = last_step = max(0, RT_FLOOR(map, actorSize, ax, ay, az)) + az * CELL_HEIGHT;
 
 	/* Initialize the starting vector */
-	VectorSet(pos, x, y, z);
-	SizedPosToVec(pos, actorSize, start);
+//	VectorSet(pos, x, y, z);
+	SizedPosToVec(from->cell, actorSize, start);
 
 	/* Initialize the ending vector */
 	VectorSet(pos, ax, ay, az);
@@ -1035,7 +1035,7 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
 	}
 
 	if (debugTrace)
-		Com_Printf("z:%i az:%i bottom:%i new_bottom:%i top:%i bases[0]:%i bases[%i]:%i\n", z, az, opening->base, newBottom, top, bases[0], steps, bases[steps]);
+		Com_Printf("z:%i az:%i bottom:%i new_bottom:%i top:%i bases[0]:%i bases[%i]:%i\n", from->cell[2], az, opening->base, newBottom, top, bases[0], steps, bases[steps]);
 
 	/** @note This for loop is bi-directional: i may be decremented to retrace prior steps. */
 	/* Now find the maximum stepup moving from (x, y) to (ax, ay). */
@@ -1169,7 +1169,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, place_t* fr
 			|| abs(dstFloor - opening->base) > PATHFINDING_MIN_STEPUP) {
 			/* This returns the total opening height, as the
 			 * microtrace may reveal more passage height from the foot space. */
-			bonusSize = RT_MicroTrace(map, actorSize, from->cell[0], from->cell[1], z, ax, ay, az, opening);
+			bonusSize = RT_MicroTrace(map, actorSize, from, ax, ay, az, opening);
 			opening->base += bonusSize;
 			opening->size = hi - opening->base;	/* re-calculate */
 		} else {
