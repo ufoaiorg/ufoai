@@ -116,7 +116,7 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 	LIST_Delete(&popupListData);
 
 	popupNum = 0;
-	homebase = 0;
+	homebase = -1;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		char text[MAX_VAR];
@@ -164,10 +164,11 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
  */
 static void CL_PopupChangeHomebase_f (void)
 {
-	linkedList_t* popup = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
+	linkedList_t* data = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
 	int selectedPopupIndex;
 	int i;
 	base_t *base;
+	int baseIdx;
 
 	/* If popup is opened, that means an aircraft is selected */
 	if (!selectedAircraft) {
@@ -186,30 +187,20 @@ static void CL_PopupChangeHomebase_f (void)
 	if (selectedPopupIndex < 0 || selectedPopupIndex >= popupNum)
 		return;
 
-	if (!popup || !popup->next)
-		return;
-
-	base = NULL;
-	/* Get data from popup-list index */
-	for (i = 0; popup; popup = popup->next, i++) {
-		const int baseIdx = *(int*)popup->data;
-
-		/* did we click on an invalid base ? */
-		if (baseIdx == INVALID_BASE) {
-			if (i == selectedPopupIndex)
-				return;
-			else
-				continue;
-		}
-
-		base = B_GetFoundedBaseByIDX(baseIdx);
-
-		if (i == selectedPopupIndex)
+	/* Convert list index to base idx */
+	baseIdx = INVALID_BASE;
+	for (i = 0; data; data = data->next, i++) {
+		if (i == selectedPopupIndex) {
+			baseIdx = *(int*)data->data;
 			break;
+		}
 	}
 
-	if (popupListNode)
-		MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
+	/* did we click on an invalid base ? */
+	if (baseIdx == INVALID_BASE)
+		return;
+
+	base = B_GetFoundedBaseByIDX(baseIdx);
 
 	AIR_MoveAircraftIntoNewHomebase(selectedAircraft, base);
 
