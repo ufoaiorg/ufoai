@@ -187,11 +187,11 @@ class UFOEntityCreator: public EntityCreator
 		{
 			return g_showAngles;
 		}
-		void setShowLightRadii (bool lightRadii)
+		void setLightRadii (bool lightRadii)
 		{
 			g_lightRadii = lightRadii;
 		}
-		bool getShowLightRadii ()
+		bool getLightRadii ()
 		{
 			return g_lightRadii;
 		}
@@ -274,6 +274,8 @@ void P_Entity_Construct ()
 			BoolExportStringCaller(g_showAngles));
 	GlobalPreferenceSystem().registerPreference("LightRadiuses", BoolImportStringCaller(g_lightRadii),
 			BoolExportStringCaller(g_lightRadii));
+	GlobalPreferenceSystem().registerPreference("ForceLightRadiuses", BoolImportStringCaller(g_forceLightRadii),
+			BoolExportStringCaller(g_forceLightRadii));
 
 	Entity_InitFilters();
 	MiscModel_construct();

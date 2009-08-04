@@ -112,8 +112,8 @@ public:
 	virtual bool getShowNames() = 0;
 	virtual void setShowAngles(bool showAngles) = 0;
 	virtual bool getShowAngles() = 0;
-	virtual void setShowLightRadii(bool lightRadii) = 0;
-	virtual bool getShowLightRadii() = 0;
+	virtual void setLightRadii(bool lightRadii) = 0;
+	virtual bool getLightRadii() = 0;
 	virtual void setForceLightRadii(bool forceLightRadii) = 0;
 	virtual bool getForceLightRadii() = 0;
 

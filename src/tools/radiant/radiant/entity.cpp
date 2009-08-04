@@ -90,20 +90,23 @@ class EntitySetKeyValueSelected: public scene::Graph::Walker
 		}
 };
 
-class EntityCopyingVisitor : public Entity::Visitor {
-	Entity& m_entity;
-public:
-	EntityCopyingVisitor(Entity& entity)
-			: m_entity(entity) {
-	}
-
-	void visit(const char* key, const char* value) {
-		if (!string_equal(key, "classname") && m_entity.getEntityClass().getAttribute(key) != NULL) {
-			m_entity.setKeyValue(key, value);
-		} else {
-			g_debug("EntityCopyingVisitor: skipping %s\n", key);
+class EntityCopyingVisitor: public Entity::Visitor
+{
+		Entity& m_entity;
+	public:
+		EntityCopyingVisitor (Entity& entity) :
+			m_entity(entity)
+		{
 		}
-	}
+
+		void visit (const char* key, const char* value)
+		{
+			if (!string_equal(key, "classname") && m_entity.getEntityClass().getAttribute(key) != NULL) {
+				m_entity.setKeyValue(key, value);
+			} else {
+				g_debug("EntityCopyingVisitor: skipping %s\n", key);
+			}
+		}
 };
 
 class EntitySetClassnameSelected: public scene::Graph::Walker
@@ -177,68 +180,70 @@ void Entity_ungroupSelected ()
 	}
 }
 
-class EntityFindSelected : public scene::Graph::Walker
+class EntityFindSelected: public scene::Graph::Walker
 {
-public:
-	mutable const scene::Path *groupPath;
-	mutable scene::Instance *groupInstance;
+	public:
+		mutable const scene::Path *groupPath;
+		mutable scene::Instance *groupInstance;
 
-	EntityFindSelected(): groupPath(0), groupInstance(0)
-	{
-	}
-
-	bool pre (const scene::Path& path, scene::Instance& instance) const
-	{
-		return true;
-	}
-
-	void post (const scene::Path& path, scene::Instance& instance) const
-	{
-		Entity* entity = Node_getEntity(path.top());
-		if (entity != 0 && Instance_getSelectable(instance)->isSelected()
-		 && node_is_group(path.top()) && !groupPath) {
-			groupPath = &path;
-			groupInstance = &instance;
+		EntityFindSelected () :
+			groupPath(0), groupInstance(0)
+		{
 		}
-	}
+
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			return true;
+		}
+
+		void post (const scene::Path& path, scene::Instance& instance) const
+		{
+			Entity* entity = Node_getEntity(path.top());
+			if (entity != 0 && Instance_getSelectable(instance)->isSelected() && node_is_group(path.top())
+					&& !groupPath) {
+				groupPath = &path;
+				groupInstance = &instance;
+			}
+		}
 };
 
-class EntityGroupSelected : public scene::Graph::Walker
+class EntityGroupSelected: public scene::Graph::Walker
 {
-	NodeSmartReference group;
-public:
-	EntityGroupSelected (const scene::Path &p): group(p.top().get())
-	{
-	}
+		NodeSmartReference group;
+	public:
+		EntityGroupSelected (const scene::Path &p) :
+			group(p.top().get())
+		{
+		}
 
-	bool pre (const scene::Path& path, scene::Instance& instance) const
-	{
-		return true;
-	}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			return true;
+		}
 
-	void post (const scene::Path& path, scene::Instance& instance) const
-	{
-		if (Instance_getSelectable(instance)->isSelected()) {
-			Entity* entity = Node_getEntity(path.top());
-			if (entity == 0 && Node_isPrimitive(path.top())) {
-				NodeSmartReference child(path.top().get());
-				NodeSmartReference parent(path.parent().get());
+		void post (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (Instance_getSelectable(instance)->isSelected()) {
+				Entity* entity = Node_getEntity(path.top());
+				if (entity == 0 && Node_isPrimitive(path.top())) {
+					NodeSmartReference child(path.top().get());
+					NodeSmartReference parent(path.parent().get());
 
-				if (path.size() >= 3 && parent != Map_FindOrInsertWorldspawn(g_map)) {
-					NodeSmartReference parentparent(path[path.size() - 3].get());
-					Node_getTraversable(parent)->erase(child);
-					Node_getTraversable(group)->insert(child);
+					if (path.size() >= 3 && parent != Map_FindOrInsertWorldspawn(g_map)) {
+						NodeSmartReference parentparent(path[path.size() - 3].get());
+						Node_getTraversable(parent)->erase(child);
+						Node_getTraversable(group)->insert(child);
 
-					if (Node_getTraversable(parent)->empty()) {
-						Node_getTraversable(parentparent)->erase(parent);
+						if (Node_getTraversable(parent)->empty()) {
+							Node_getTraversable(parentparent)->erase(parent);
+						}
+					} else {
+						Node_getTraversable(parent)->erase(child);
+						Node_getTraversable(group)->insert(child);
 					}
-				} else {
-					Node_getTraversable(parent)->erase(child);
-					Node_getTraversable(group)->insert(child);
 				}
 			}
 		}
-	}
 };
 
 /**
@@ -432,8 +437,7 @@ void Entity_setColour ()
 			}
 			if (DoNormalisedColor(g_entity_globals.color_entity)) {
 				char buffer[128];
-				sprintf(buffer, "%g %g %g", g_entity_globals.color_entity[0],
-						g_entity_globals.color_entity[1],
+				sprintf(buffer, "%g %g %g", g_entity_globals.color_entity[0], g_entity_globals.color_entity[1],
 						g_entity_globals.color_entity[2]);
 
 				Scene_EntitySetKeyValue_Selected(entity->getEntityClass().name(), "_color", buffer);
@@ -490,7 +494,49 @@ const char* misc_sound_dialog (GtkWidget* parent)
 	return filename;
 }
 
-namespace {
+void LightRadiiImport (EntityCreator& self, bool value)
+{
+	self.setLightRadii(value);
+}
+typedef ReferenceCaller1<EntityCreator, bool, LightRadiiImport> LightRadiiImportCaller;
+
+void LightRadiiExport (EntityCreator& self, const BoolImportCallback& importer)
+{
+	importer(self.getLightRadii());
+}
+typedef ReferenceCaller1<EntityCreator, const BoolImportCallback&, LightRadiiExport> LightRadiiExportCaller;
+
+void ForceLightRadiiImport (EntityCreator& self, bool value)
+{
+	self.setForceLightRadii(value);
+}
+typedef ReferenceCaller1<EntityCreator, bool, ForceLightRadiiImport> ForceLightRadiiImportCaller;
+
+void ForceLightRadiiExport (EntityCreator& self, const BoolImportCallback& importer)
+{
+	importer(self.getForceLightRadii());
+}
+typedef ReferenceCaller1<EntityCreator, const BoolImportCallback&, ForceLightRadiiExport> ForceLightRadiiExportCaller;
+
+void Entity_constructPreferences (PreferencesPage& page)
+{
+	page.appendCheckBox(_("Show"), _("Light Radii"), LightRadiiImportCaller(GlobalEntityCreator()),
+			LightRadiiExportCaller(GlobalEntityCreator()));
+	page.appendCheckBox(_("Force"), _("Force Light Radii"), ForceLightRadiiImportCaller(GlobalEntityCreator()),
+			ForceLightRadiiExportCaller(GlobalEntityCreator()));
+}
+void Entity_constructPage (PreferenceGroup& group)
+{
+	PreferencesPage page(group.createPage("Entities", "Entity Display Preferences"));
+	Entity_constructPreferences(page);
+}
+void Entity_registerPreferencesPage ()
+{
+	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Entity_constructPage> ());
+}
+
+namespace
+{
 	GtkMenuItem *g_menuItemRegroup = 0;
 	GtkMenuItem *g_menuItemUngroup = 0;
 	GtkMenuItem *g_menuItemSelectColor = 0;
@@ -512,7 +558,8 @@ void Entity_constructMenu (GtkMenu* menu)
 /**
  * @brief callback evaluates current selection to decide which entity menu items should be sensitive
  */
-void Entity_MenuStateReevaluate (void) {
+void Entity_MenuStateReevaluate (void)
+{
 	const int selected = GlobalSelectionSystem().countSelected();
 	bool enableSelectColor = false;
 	bool enableConnect = false;
@@ -540,15 +587,18 @@ void Entity_MenuStateReevaluate (void) {
 /**
  * @brief Class instance for asynchronous menu state update after selection change
  */
-class EntityMenuDraw {
-	IdleDraw m_idleDraw;
-public:
-	EntityMenuDraw() :
-		m_idleDraw(FreeCaller<Entity_MenuStateReevaluate> ()) {
-	}
-	void queueDraw(void) {
-		m_idleDraw.queueDraw();
-	}
+class EntityMenuDraw
+{
+		IdleDraw m_idleDraw;
+	public:
+		EntityMenuDraw () :
+			m_idleDraw(FreeCaller<Entity_MenuStateReevaluate> ())
+		{
+		}
+		void queueDraw (void)
+		{
+			m_idleDraw.queueDraw();
+		}
 };
 static EntityMenuDraw g_EntityMenuDraw;
 
@@ -570,7 +620,7 @@ void Entity_Construct ()
 	GlobalCommands_insert("EntityColor", FreeCaller<Entity_setColour> (), Accelerator('K'));
 	GlobalCommands_insert("ConnectSelection", FreeCaller<Entity_connectSelected> (), Accelerator('K',
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("GroupSelection", FreeCaller<Entity_groupSelected>());
+	GlobalCommands_insert("GroupSelection", FreeCaller<Entity_groupSelected> ());
 	GlobalCommands_insert("UngroupSelection", FreeCaller<Entity_ungroupSelected> ());
 
 	GlobalPreferenceSystem().registerPreference("SI_Colors5", Vector3ImportStringCaller(g_entity_globals.color_entity),
@@ -580,6 +630,8 @@ void Entity_Construct ()
 
 	typedef FreeCaller1<const Selectable&, Entity_ColorPickerSelectionChanged> EntityColorPickerSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(EntityColorPickerSelectionChangedCaller());
+
+	Entity_registerPreferencesPage();
 }
 
 void Entity_Destroy ()

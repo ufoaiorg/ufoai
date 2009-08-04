@@ -1311,7 +1311,7 @@ typedef ReferenceCaller1<TextureBrowser, const IntImportCallback&, TextureScaleE
 
 static void TextureBrowser_constructPreferences (PreferencesPage& page)
 {
-	page.appendCheckBox("", "Texture scrollbar", TextureBrowserImportShowScrollbarCaller(GlobalTextureBrowser()),
+	page.appendCheckBox("", _("Texture scrollbar"), TextureBrowserImportShowScrollbarCaller(GlobalTextureBrowser()),
 			BoolExportCaller(GlobalTextureBrowser().m_showTextureScrollbar));
 	{
 		const char* texture_scale[] = { "10%", "25%", "50%", "100%", "200%" };
