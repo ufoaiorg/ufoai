@@ -64,14 +64,14 @@ typedef struct place_s {
 
 static inline void RT_PlaceInit (routing_t *map, const int actorSize, place_t *p, const int x, const int y, const int z)
 {
-	int relCeiling = RT_CEILING(map, actorSize, x, y, z);
+	const int relCeiling = RT_CEILING(map, actorSize, x, y, z);
 	p->cell[0] = x;
 	p->cell[1] = y;
 	p->cell[2] = z;
 	p->floor = RT_FLOOR(map, actorSize, x, y, z) + z * CELL_HEIGHT;
 	p->ceiling = relCeiling + z * CELL_HEIGHT;
 	p->floorZ =  max(0, p->floor / CELL_HEIGHT) ;
-	p->usable = (relCeiling && p->floor > -1 &&	p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? qtrue : qfalse;
+	p->usable = (relCeiling && p->floor > -1 && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? qtrue : qfalse;
 }
 
 static inline qboolean RT_PlaceIsUsable (place_t* p)
