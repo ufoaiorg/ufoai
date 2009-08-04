@@ -131,12 +131,12 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 	MN_GetNodeAbsPos(node, pos);
 
 	if (MN_AbstractScrollableNodeIsSizeChange(node)) {
-		int lineheight = EXTRADATA(node).lineHeight;
-		if (lineheight == 0) {
+		int lineHeight = EXTRADATA(node).lineHeight;
+		if (lineHeight == 0) {
 			const char *font = MN_GetFontFromNode(node);
-			lineheight = MN_FontGetHeight(font);
+			lineHeight = MN_FontGetHeight(font);
 		}
-		viewSizeY = node->size[1] / lineheight;
+		viewSizeY = node->size[1] / lineHeight;
 	} else {
 		viewSizeY = EXTRADATA(node).super.scrollY.viewSize;
 	}
@@ -180,6 +180,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 
 	fullSizeY = 0;
 	do {
+		qboolean haveTab;
 		/* new line starts from node x position */
 		x1 = x;
 		if (oldFont) {
@@ -225,32 +226,49 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 		}
 
 		/* tabulation, we assume all the tabs fit on a single line */
-		do {
-			int tabwidth;
-			int numtabs;
+		haveTab = strchr(cur, '\t') != NULL;
+		if (haveTab) {
+			while (cur && *cur) {
+				int tabwidth;
 
-			tab = strchr(cur, '\t');
-			if (!tab)
-				break;
+				tab = strchr(cur, '\t');
 
-			/* use tab stop as given via menu definition format string
-			 * or use 1/3 of the node size (width) */
-			if (!EXTRADATA(node).tabWidth)
-				tabwidth = width / 3;
-			else
-				tabwidth = EXTRADATA(node).tabWidth;
+				/* use tab stop as given via menu definition format string
+				 * or use 1/3 of the node size (width) */
+				if (!EXTRADATA(node).tabWidth)
+					tabwidth = width / 3;
+				else
+					tabwidth = EXTRADATA(node).tabWidth;
 
-			numtabs = strspn(tab, "\t");
-			tabwidth *= numtabs;
-			while (*tab == '\t')
-				*tab++ = '\0';
+				if (tab) {
+					int numtabs = strspn(tab, "\t");
+					tabwidth *= numtabs;
+					while (*tab == '\t')
+						*tab++ = '\0';
+				} else {
+					/* maximise width for the last element */
+					tabwidth = width - (x1 - x);
+					if (tabwidth < 0)
+						tabwidth = 0;
+				}
 
-			/*Com_Printf("tab - first part - lines: %i \n", lines);*/
-			MN_DrawString(font, node->textalign, x1, y, x, y, tabwidth - 1, height, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
-			x1 += tabwidth;
-			/* now skip to the first char after the \t */
-			cur = tab;
-		} while (1);
+				/* minimise width for element outside node */
+				if ((x1 - x) + tabwidth > width)
+					tabwidth = width - (x1 - x);
+
+				/* make sure it is positive */
+				if (tabwidth < 0)
+					tabwidth = 0;
+
+				if (tabwidth != 0)
+					MN_DrawString(font, node->textalign, x1, y, x1, y, tabwidth - 1, height, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
+
+				/* next */
+				x1 += tabwidth;
+				cur = tab;
+			}
+			fullSizeY++;
+		}
 
 		/*Com_Printf("until newline - lines: %i\n", lines);*/
 		/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
