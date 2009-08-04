@@ -984,6 +984,7 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
 	vec3_t start, end;
 	pos3_t pos;
 	int last_step;
+	float width;
 
 	/* First prepare the two known end values. */
 	bases[0] = max(0, RT_FLOOR(map, actorSize, x, y, z)) + z * CELL_HEIGHT;
@@ -1008,8 +1009,9 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, const int x, con
 	ey = end[1];
 
 	/* Configure the box trace extents. */
-	VectorSet(bmax, PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON, PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON, 0);
-	VectorSet(bmin, -PATHFINDING_MICROSTEP_SIZE / 2 + DIST_EPSILON, -PATHFINDING_MICROSTEP_SIZE / 2 + DIST_EPSILON, 0);
+	width = PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON;
+	VectorSet(bmax, width, width, 0);
+	VectorSet(bmin, -width, -width, 0);
 
 	newBottom = max(bases[0], bases[steps]);
 	/* Now calculate the rest of the microheights. */
