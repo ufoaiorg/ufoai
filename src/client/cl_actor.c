@@ -2650,18 +2650,8 @@ void CL_DumpTUs_f (void)
  * directly use the debugger on some vital pathfinding functions.
  * Will probably be removed for the release.
  */
-void CL_DebugPath_f (void)
+static void CL_DebugPathDisplay (int actorSize, int x, int y, int z)
 {
-	const int actorSize = 1;
-	const pos_t x = mousePos[0];
-	const pos_t y = mousePos[1];
-	const pos_t z = mousePos[2];
-	int dir;
-	dir = 3;
-
-	if (mouseSpace != MS_WORLD)
-		return;
-
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
 		RT_FLOOR(clMap, actorSize, x, y, z),
 		RT_CEILING(clMap, actorSize, x, y, z) );
@@ -2680,20 +2670,26 @@ void CL_DebugPath_f (void)
 		RT_STEPUP_NX(clMap, actorSize, x, y, z),		// 1
 		RT_STEPUP_PY(clMap, actorSize, x, y, z),		// 2
 		RT_STEPUP_NY(clMap, actorSize, x, y, z) );		// 3
+}
+
+void CL_DebugPath_f (void)
+{
+	const int actorSize = 1;
+	const pos_t x = mousePos[0];
+	const pos_t y = mousePos[1];
+	const pos_t z = mousePos[2];
+	int dir;
+	dir = 3;
+
+	if (mouseSpace != MS_WORLD)
+		return;
+
+	CL_DebugPathDisplay(actorSize, x, y, z);
 
 #if 0
 	Com_Printf("performing RT_UpdateConnection() in dir: %i\n", dir);
 	RT_UpdateConnectionColumn(clMap, actorSize, x, y, dir);
-	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
-		RT_CONN_PX(clMap, actorSize, x, y, z),
-		RT_CONN_NX(clMap, actorSize, x, y, z),
-		RT_CONN_PY(clMap, actorSize, x, y, z),
-		RT_CONN_NY(clMap, actorSize, x, y, z) );
-	Com_Printf("connections diago: (PX_PY=%i, NX_NY=%i, NX_PY=%i, PX_NY=%i))\n",
-		RT_CONN_PX_PY(clMap, actorSize, x, y, z),	// dir = 4
-		RT_CONN_NX_NY(clMap, actorSize, x, y, z),	// 5
-		RT_CONN_NX_PY(clMap, actorSize, x, y, z),	// 6
-		RT_CONN_PX_NY(clMap, actorSize, x, y, z) );// 7
+	CL_DebugPathDisplay(actorSize, x, y, z);
 #endif
 #if 0
 //	int new_z = RT_CheckCell(clMap, actorSize, x, y, z);
