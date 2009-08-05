@@ -485,7 +485,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	case TRANS_TYPE_ITEM:
 		if (B_GetBuildingStatus(destbase, B_STORAGE)) {
 			for (i = 0; i < csi.numODs; i++)
-				if (srcbase->storage.num[i]) {
+				if (srcbase->storage.num[i] || td.trItemsTmp[i]) {
 					if (td.trItemsTmp[i] > 0)
 						LIST_AddString(&transferListTransfered, va("%i", td.trItemsTmp[i]));
 					else
@@ -1167,12 +1167,14 @@ static void TR_TransferListSelect_f (void)
 		return;
 	case TRANS_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
-			if (base->storage.num[i]) {
+			if (base->storage.num[i] || td.trItemsTmp[i]) {
 				if (cnt == num) {
 					int amount = TR_GetTransferFactor();
 					const objDef_t *od = &csi.ods[i];
 					/* you can't transfer more item than you have */
 					amount = min(amount, base->storage.num[i]);
+					if (amount <= 0)
+						return;
 					/* you can only transfer items that destination base can accept */
 					amount = TR_CheckItem(od, td.transferBase, amount);
 					if (amount) {
