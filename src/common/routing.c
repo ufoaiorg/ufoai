@@ -84,6 +84,21 @@ static inline qboolean RT_PlaceDoesIntersectEnough(place_t* p, place_t* other)
 	return (min(p->ceiling, other->ceiling) - max(p->floor, other->floor) >= PATHFINDING_MIN_OPENING);
 }
 
+/* This function detects a special stairway situation, where one place is right
+ * in front of a stairway and has a floor at eg.1 and a ceiling at eg.16.
+ * The other place has the beginning of the stairway, so the floor is at eg. 6
+ * and the ceiling is that of the higher level, eg.32.*/
+static inline int RT_PlaceIsShifted(place_t* p, place_t* other)
+{
+	if (!RT_PlaceIsUsable(p) || !RT_PlaceIsUsable(other))
+		return 0;
+	if (p->floor < other->floor && p->ceiling < other->ceiling)
+		return 1;	/* stepping up */
+	if (p->floor > other->floor && p->ceiling > other->ceiling)
+		return 2;	/* stepping down */
+	return 0;
+}
+
 /**
  * @brief An 'opening' describes the connection between two adjacent spaces where an actor can exist in a cell
  * @note Note that if size is @c 0, the other members are undefined. They may contain reasonable values, though
@@ -965,7 +980,7 @@ static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, 
  * @param[out] opening descriptor of the opening found, if any
  * @return The change in floor height in QUANT units because of the additional trace.
 */
-static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, const int ax, const int ay, const int az, opening_t* opening)
+static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
@@ -1120,6 +1135,23 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, c
 		}
 	}
 
+	if (stairwaySituation) {
+		const int middle = bases[4];	/* terrible hack by Duke. This relies on PATHFINDING_MICROSTEP_SIZE being set to 4 !! */
+
+		if (stairwaySituation == 1) {		/* stepping up */
+			if (bases[1] <= middle &&		/* if nothing in the 1st part of the passage is higher than what's at the border */
+				bases[2] <= middle &&
+				bases[3] <= middle ) {
+				return opening->base - middle;
+			}
+		} else if (stairwaySituation == 2) {/* stepping down */
+			if (bases[5] <= middle &&		/* same for the 2nd part of the passage */
+				bases[6] <= middle &&
+				bases[7] <= middle )
+				return opening->base - middle;
+		}
+	}
+
 	/* Return the confirmed passage opening. */
 	return opening->base - newBottom;
 }
@@ -1162,10 +1194,11 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, place_t* fr
 		if (opening->size < CELL_HEIGHT
 			|| abs(srcFloor - opening->base) > PATHFINDING_MIN_STEPUP
 			|| abs(dstFloor - opening->base) > PATHFINDING_MIN_STEPUP) {
+			int stairway = RT_PlaceIsShifted(from,to);
 			/* This returns the total opening height, as the
 			 * microtrace may reveal more passage height from the foot space. */
-			bonusSize = RT_MicroTrace(map, actorSize, from, ax, ay, az, opening);
-			opening->base += bonusSize;
+			bonusSize = RT_MicroTrace(map, actorSize, from, ax, ay, az, stairway, opening);
+			opening->base -= bonusSize;
 			opening->size = hi - opening->base;	/* re-calculate */
 		} else {
 			/* Skipping microtracing, just set the stepup values. */
