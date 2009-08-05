@@ -39,12 +39,14 @@ static void MN_RowsNodeDraw (menuNode_t *node)
 
 	while (current < node->size[1]) {
 		const float *color;
+		const int height = min(node->texh[1], node->size[1] - current);
+
 		if (i % 2)
 			color = node->color;
 		else
 			color = node->selectedColor;
-		MN_DrawFill(pos[0], pos[1] + current, node->size[0], node->texh[1], color);
-		current += node->texh[1];
+		MN_DrawFill(pos[0], pos[1] + current, node->size[0], height, color);
+		current += height;
 		i++;
 	}
 }
