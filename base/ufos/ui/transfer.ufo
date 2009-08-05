@@ -100,86 +100,143 @@ window transfer
 	// lists
 	// ==================
 
-	rows lines {
-		pos			"28 175"
-		size		"530 568"
-		color1		"0 0.08 0 1"
-		color2		"0 0.16 0 1"
-		lineheight	25
-	}
-
 	panel itemlist {
-		pos		"12 160"
-		size	"553 597"
-		image	ui/panel_grey_green_large2
+		{
+			pos			"12 160"
+			size		"552 582"
+			image		ui/panel_grey_green_large2
+		}
+
+		rows lines {
+			pos			"16 16"
+			size		"520 550"
+			color1		"0 0.08 0 1"
+			color2		"0 0.16 0 1"
+			lineheight	25
+		}
+
+		textlist trans_list
+		{
+			dataid		TEXT_TRANSFER_LIST
+			pos			"25 16"
+			size		"325 550"
+			lineheight	"25"
+			onClick		{ cmd "trans_list_click <lineselected>" }
+			onViewChange	{
+				*(textlist)itemlist.trans_list_amount@viewpos = <viewpos>
+				*(textlist)itemlist.trans_list_transfered@viewpos = <viewpos>
+				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
+				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
+			}
+		}
+
+		textlist trans_list_transfered
+		{
+			dataid		TEXT_TRANSFER_LIST_TRANSFERED
+			pos			"360 16"
+			size		"50 550"
+			lineheight	"25"
+			textalign	"cr"
+			onClick		{ cmd "trans_list_click <lineselected>" }
+			onViewChange	{
+				*(textlist)itemlist.trans_list@viewpos = <viewpos>
+				*(textlist)itemlist.trans_list_amount@viewpos = <viewpos>
+				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
+				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
+			}
+		}
+
+		textlist trans_list_amount
+		{
+			dataid		TEXT_TRANSFER_LIST_AMOUNT
+			pos			"410 16"
+			size		"50 550"
+			lineheight	"25"
+			textalign	"cr"
+			onClick		{ cmd "trans_list_click <lineselected>" }
+			onViewChange	{
+				*(textlist)itemlist.trans_list@viewpos = <viewpos>
+				*(textlist)itemlist.trans_list_transfered@viewpos = <viewpos>
+				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
+				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
+			}
+		}
+
+		vscrollbar trans_list_scroll {
+			image		ui/scrollbar_v_green
+			pos			"510 18"
+			height		"546"
+			hidewhenunused	true
+			onChange	{
+				*itemlist.trans_list_scroll@current = <current>
+				*itemlist.trans_list@viewpos = <current>
+				*itemlist.trans_list_amount@viewpos = <current>
+				*itemlist.trans_list_transfered@viewpos = <current>
+			}
+		}
 	}
 
-	// ==================
-	// transfer info panel
-	// ==================
-
-	panel infopanel {
-		pos		"580 160"
-		size	"420 260"
-		image	ui/panel_grey_green_large
-	}
-
-	// ==================
-	// added to aircraft
-	// ==================
-
-	rows lines_transfer_cargolist {
-		pos			"592 456"
-		size		"390 236"
-		color1		"0 0.08 0 1"
-		color2		"0 0.16 0 1"
-		lineheight	25
-	}
-
+	/**
+	 * @brief Cargolist
+	 */
 	panel transfer_cargolist {
-		pos		"580 440"
-		size	"420 269"
-		image	ui/panel_grey_green_large2
-	}
-
-	textlist trans_cargolist
-	{
-		dataid		TEXT_CARGO_LIST
-		pos			"604 463"
-		size		"295 225"
-		lineheight	"25"
-		onClick		{ cmd "trans_cargolist_click <lineselected>" }
-		onViewChange	{
-			*(textlist)trans_cargolist_amount@viewpos = <viewpos>
-			*(abstractscrollbar)trans_cargolist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)trans_cargolist_scroll@current = <viewpos>
-			*(abstractscrollbar)trans_cargolist_scroll@viewsize = <viewsize>
+		{
+			pos		"580 440"
+			size	"420 257"
+			image	ui/panel_grey_green_large2
 		}
-	}
 
-	textlist trans_cargolist_amount
-	{
-		dataid		TEXT_CARGO_LIST_AMOUNT
-		pos			"900 463"
-		size		"50 225"
-		lineheight	"25"
-		onClick		{ cmd "trans_cargolist_click <lineselected>" }
-		onViewChange	{
-			*(textlist)trans_cargolist@viewpos = <viewpos>
-			*(abstractscrollbar)trans_cargolist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)trans_cargolist_scroll@current = <viewpos>
-			*(abstractscrollbar)trans_cargolist_scroll@viewsize = <viewsize>
+		rows lines_transfer_cargolist {
+			pos			"16 16"
+			size		"388 225"
+			color1		"0 0.08 0 1"
+			color2		"0 0.16 0 1"
+			lineheight	25
 		}
-	}
 
-	vscrollbar trans_cargolist_scroll {
-		image		ui/scrollbar_v_green
-		pos			"960 461"
-		height		"220"
-		hidewhenunused	true
-		onChange	{
-			*trans_cargolist@viewpos = <current>
-			*trans_cargolist_amount@viewpos = <current>
+		textlist trans_cargolist
+		{
+			dataid		TEXT_CARGO_LIST
+			pos			"25 16"
+			size		"290 225"
+			lineheight	"25"
+			onClick		{ cmd "trans_cargolist_click <lineselected>" }
+			onViewChange	{
+				*(textlist)transfer_cargolist.trans_cargolist_amount@viewpos = <viewpos>
+				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
+				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
+			}
+		}
+
+		textlist trans_cargolist_amount
+		{
+			dataid		TEXT_CARGO_LIST_AMOUNT
+			pos			"320 16"
+			size		"50 225"
+			lineheight	"25"
+			textalign	"cr"
+			onClick		{ cmd "trans_cargolist_click <lineselected>" }
+			onViewChange	{
+				*(textlist)transfer_cargolist.trans_cargolist@viewpos = <viewpos>
+				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
+				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
+			}
+		}
+
+		vscrollbar trans_cargolist_scroll {
+			image		ui/scrollbar_v_green
+			pos			"380 18"
+			height		"221"
+			hidewhenunused	true
+			onChange	{
+				*transfer_cargolist.trans_cargolist@viewpos = <current>
+				*transfer_cargolist.trans_cargolist_amount@viewpos = <current>
+			}
 		}
 	}
 
@@ -187,55 +244,78 @@ window transfer
 	// change target base
 	// ==================
 
-	pic prev_base
-	{
-		tooltip		"_Select previous base for transfer"
-		image		ui/buttons_small
-		pos			"686 184"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "trans_prevbase;" }
-	}
 
-	string s_current_base
-	{
-		string		"_Selected base"
-		pos			"698 182"
-		size		"135 20"
-		textalign	uc
-		color		"0.7 0.7 0.7 1"
-		font		f_small
-	}
+	// ==================
+	// transfer info panel
+	// ==================
 
-	pic next_base
-	{
-		tooltip		"_Select next base for transfer"
-		image		ui/buttons_small
-		pos			"831 184"
-		texl		"16 0"
-		texh		"32 16"
-		mousefx		true
-		onClick		{ cmd "trans_nextbase;" }
-	}
+	panel infopanel {
+		{
+			pos		"580 160"
+			size	"420 260"
+			image	ui/panel_grey_green_large
+		}
 
-	string s_current_base_var
-	{
-		string		*cvar:mn_trans_base_name
-		pos			"681 200"
-		size		"170 20"
-		textalign	uc
-		color		"1 1 1 1"
-		font		f_small
-	}
+		custombutton prev_base
+		{
+			tooltip		"_Select previous base for transfer"
+			pos			"32 30"
+			size		"32 32"
+			icon prev
+			onClick		{ cmd "trans_prevbase;" }
+		}
 
-	text t_baseinfo
-	{
-		dataid		TEXT_BASE_INFO
-		pos			"598 220"
-		size		"378 180"
-		lineheight	"20"
-		rows		"9"
+		string s_current_base
+		{
+			string		"_Selected base"
+			pos			"64 22"
+			size		"288 20"
+			textalign	uc
+			color		"0.7 0.7 0.7 1"
+			font		f_small
+		}
+
+		string s_current_base_var
+		{
+			string		*cvar:mn_trans_base_name
+			pos			"64 50"
+			size		"288 20"
+			textalign	uc
+			color		"1 1 1 1"
+			font		f_small_bold
+		}
+
+		custombutton next_base
+		{
+			tooltip		"_Select next base for transfer"
+			pos			"356 30"
+			size		"32 32"
+			icon		next
+			onClick		{ cmd "trans_nextbase;" }
+		}
+
+		text t_baseinfo
+		{
+			dataid		TEXT_BASE_INFO
+			pos			"18 80"
+			size		"360 160"
+			lineheight	"20"
+			onViewChange	{
+				*(abstractscrollbar)infopanel.t_baseinfo_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)infopanel.t_baseinfo_scroll@current = <viewpos>
+				*(abstractscrollbar)infopanel.t_baseinfo_scroll@viewsize = <viewsize>
+			}
+		}
+
+		vscrollbar t_baseinfo_scroll {
+			image		ui/scrollbar_v_green
+			pos			"380 80"
+			height		"160"
+			hidewhenunused	true
+			onChange	{
+				*infopanel.t_baseinfo@viewpos = <current>
+			}
+		}
 	}
 
 	todo addheaders {
@@ -253,74 +333,11 @@ window transfer
 		string		"add spinners (harder)"
 	}
 
-	textlist trans_list
-	{
-		dataid		TEXT_TRANSFER_LIST
-		pos			"37 180"
-		size		"333 550"
-		lineheight	"25"
-		onClick		{ cmd "trans_list_click <lineselected>" }
-		onViewChange	{
-			*(textlist)trans_list_amount@viewpos = <viewpos>
-			*(textlist)trans_list_transfered@viewpos = <viewpos>
-			*(abstractscrollbar)trans_list_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)trans_list_scroll@current = <viewpos>
-			*(abstractscrollbar)trans_list_scroll@viewsize = <viewsize>
-		}
-	}
-
-	textlist trans_list_transfered
-	{
-		dataid		TEXT_TRANSFER_LIST_TRANSFERED
-		pos			"407 180"
-		size		"50 550"
-		lineheight	"25"
-		textalign	"cr"
-		onClick		{ cmd "trans_list_click <lineselected>" }
-		onViewChange	{
-			*(textlist)trans_list@viewpos = <viewpos>
-			*(textlist)trans_list_amount@viewpos = <viewpos>
-			*(abstractscrollbar)trans_list_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)trans_list_scroll@current = <viewpos>
-			*(abstractscrollbar)trans_list_scroll@viewsize = <viewsize>
-		}
-	}
-
-	textlist trans_list_amount
-	{
-		dataid		TEXT_TRANSFER_LIST_AMOUNT
-		pos			"457 180"
-		size		"50 550"
-		lineheight	"25"
-		textalign	"cr"
-		onClick		{ cmd "trans_list_click <lineselected>" }
-		onViewChange	{
-			*(textlist)trans_list@viewpos = <viewpos>
-			*(textlist)trans_list_transfered@viewpos = <viewpos>
-			*(abstractscrollbar)trans_list_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)trans_list_scroll@current = <viewpos>
-			*(abstractscrollbar)trans_list_scroll@viewsize = <viewsize>
-		}
-	}
-
-	vscrollbar trans_list_scroll {
-		image		ui/scrollbar_v_green
-		pos			"522 180"
-		height		"554"
-		hidewhenunused	true
-		onChange	{
-			*trans_list_scroll@current = <current>
-			*trans_list@viewpos = <current>
-			*trans_list_amount@viewpos = <current>
-			*trans_list_transfered@viewpos = <current>
-		}
-	}
-
 	confunc trans_resetscroll {
-		*trans_list_scroll@current = 0 
-		*trans_list@viewpos = 0
-		*trans_list_amount@viewpos = 0
-		*trans_list_transfered@viewpos = 0
+		*itemlist.trans_list_scroll@current = 0 
+		*itemlist.trans_list@viewpos = 0
+		*itemlist.trans_list_amount@viewpos = 0
+		*itemlist.trans_list_transfered@viewpos = 0
 	}
 
 	// ==================
