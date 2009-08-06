@@ -108,7 +108,7 @@ echo_info:
 ifeq ($(BUILD_UFORADIANT),1)
 	@echo "UFORadiant"
 	@echo "-----------------------"
-	@echo "Type '$(MAKE) radiant' to compile radiant mapeditor"
+	@echo "Type '$(MAKE) uforadiant' to compile radiant mapeditor"
 	@echo
 endif
 	@echo "Built for $(BUILDDIR)"
@@ -184,8 +184,8 @@ install_exec: $(TARGETS)
 
 -include $(ALL_DEPS)
 
-clean-radiant:
-	@echo "Making clean radiant"
+clean-uforadiant:
+	@echo "Making clean uforadiant"
 	@rm -f $(ALL_RADIANT_OBJS) $(RADIANT_DEPS)
 
 clean-tests:
