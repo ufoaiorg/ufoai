@@ -87,6 +87,10 @@ static transferData_t td;
 /** @brief Max values for transfer factors. */
 static const int MAX_TR_FACTORS = 500;
 
+
+static const int MAX_TRANSLIST_MENU_ENTRIES = 22;
+
+
 static transferType_t TR_GetTransferType (const char *id)
 {
 	int i;
@@ -509,6 +513,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			LIST_AddString(&transferListAmount, "");
 			LIST_AddString(&transferListTransfered, "");
 		}
+		MN_ExecuteConfunc(va("trans_display_spinners %i", cnt));
 		break;
 	case TRANS_TYPE_EMPLOYEE:
 		if (B_GetBuildingStatus(destbase, B_QUARTERS)) {
@@ -557,6 +562,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			LIST_AddString(&transferListAmount, "");
 			LIST_AddString(&transferListTransfered, "");
 		}
+		MN_ExecuteConfunc("trans_display_spinners 0");
 		break;
 	case TRANS_TYPE_ALIEN:
 		if (B_GetBuildingStatus(destbase, B_ALIEN_CONTAINMENT)) {
@@ -598,6 +604,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			LIST_AddString(&transferListAmount, "");
 			LIST_AddString(&transferListTransfered, "");
 		}
+		MN_ExecuteConfunc("trans_display_spinners 0");
 		break;
 	case TRANS_TYPE_AIRCRAFT:
 		if (B_GetBuildingStatus(destbase, B_HANGAR) || B_GetBuildingStatus(destbase, B_SMALL_HANGAR)) {
@@ -623,9 +630,11 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			LIST_AddString(&transferListAmount, "");
 			LIST_AddString(&transferListTransfered, "");
 		}
+		MN_ExecuteConfunc("trans_display_spinners 0");
 		break;
 	default:
 		Com_Printf("TR_TransferSelect: Unknown transferType id %i\n", transferType);
+		MN_ExecuteConfunc("trans_display_spinners 0");
 		return;
 	}
 
@@ -1169,14 +1178,25 @@ static void TR_TransferListSelect_f (void)
 		for (i = 0; i < csi.numODs; i++) {
 			if (base->storage.num[i] || td.trItemsTmp[i]) {
 				if (cnt == num) {
-					int amount = TR_GetTransferFactor();
+					int amount;
 					const objDef_t *od = &csi.ods[i];
+
+					if (Cmd_Argc() == 3)
+						amount = atoi(Cmd_Argv(2));
+					else
+						amount = TR_GetTransferFactor();
+
 					/* you can't transfer more item than you have */
-					amount = min(amount, base->storage.num[i]);
-					if (amount <= 0)
-						return;
-					/* you can only transfer items that destination base can accept */
-					amount = TR_CheckItem(od, td.transferBase, amount);
+					if (amount > 0) {
+						amount = min(amount, base->storage.num[i]);
+						if (amount == 0)
+							return;
+						/* you can only transfer items that destination base can accept */
+						amount = TR_CheckItem(od, td.transferBase, amount);
+					} else if (amount < 0) {
+						amount = max(amount, - td.trItemsTmp[i]);
+					}
+
 					if (amount) {
 						td.trItemsTmp[i] += amount;
 						if (!strcmp(od->id, ANTIMATTER_TECH_ID))
@@ -2030,6 +2050,43 @@ qboolean TR_LoadXML (mxml_node_t *p)
 }
 
 /**
+ * @brief Callback for adjusting spinner controls of item transferlist on scrolling
+ */
+static void TR_TransferList_Scroll_f (void)
+{
+	int i;
+	int cnt = 0;
+	int transferType;
+	int viewPos;
+	base_t *srcBase = B_GetCurrentSelectedBase();
+
+	if (!srcBase)
+		return;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <transferType> <viewPos>\n", Cmd_Argv(0));
+		return;
+	}
+
+	transferType = TR_GetTransferType(Cmd_Argv(1));
+	viewPos = atoi(Cmd_Argv(2));
+
+	/* spinners are only on items screen */
+	if (transferType != TRANS_TYPE_ITEM)
+		return;
+	
+	for (i = 0; i < csi.numODs; i++) {
+		if (srcBase->storage.num[i] || td.trItemsTmp[i]) {
+			if (cnt >= (viewPos + MAX_TRANSLIST_MENU_ENTRIES))
+				break;
+			if (cnt >= viewPos)
+				MN_ExecuteConfunc(va("trans_updatespinners %i %i %i %i", cnt - viewPos, td.trItemsTmp[i], 0, srcBase->storage.num[i] + td.trItemsTmp[i]));
+			cnt++;
+		}
+	}
+}
+
+/**
  * @brief Defines commands and cvars for the Transfer menu(s).
  * @sa MN_InitStartup
  */
@@ -2046,6 +2103,7 @@ void TR_InitStartup (void)
 	Cmd_AddCommand("trans_nextbase", TR_NextBase_f, "Callback for selecting next base");
 	Cmd_AddCommand("trans_prevbase", TR_PrevBase_f, "Callback for selecting previous base");
 	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");
+	Cmd_AddCommand("trans_list_scroll", TR_TransferList_Scroll_f, "");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listtransfers", TR_ListTransfers_f, "Lists an/all active transfer(s)");
 #endif

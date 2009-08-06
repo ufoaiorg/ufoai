@@ -128,6 +128,7 @@ window transfer
 				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
 				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
 				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
+				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
 			}
 		}
 
@@ -145,6 +146,7 @@ window transfer
 				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
 				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
 				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
+				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
 			}
 		}
 
@@ -162,6 +164,7 @@ window transfer
 				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
 				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
 				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
+				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
 			}
 		}
 
@@ -175,8 +178,288 @@ window transfer
 				*itemlist.trans_list@viewpos = <current>
 				*itemlist.trans_list_amount@viewpos = <current>
 				*itemlist.trans_list_transfered@viewpos = <current>
+				cmd "trans_list_scroll <cvar:mn_itemtype> <current>;"
 			}
 		}
+
+		spinner t_spinner0
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 18"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 0 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner1
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 43"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 1 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner2
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 68"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 2 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner3
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 93"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 3 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+
+		spinner t_spinner4
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 118"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 4 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner5
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 143"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 5 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner6
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 168"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 6 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner7
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 193"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 7 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner8
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 218"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 8 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner9
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 243"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 9 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner10
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 268"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 10 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner11
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 293"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 11 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+
+		spinner t_spinner12
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 318"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 12 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner13
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 343"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 13 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner14
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 368"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 14 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner15
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 393"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 15 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner16
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 418"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 16 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner17
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 443"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 17 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner18
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 468"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 18 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner19
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 493"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 19 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner20
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 518"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + 20 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+		spinner t_spinner21
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		ui/spinner_blue
+			pos			"485 543"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				cmd "echo <cvar:tline>"
+				*cvar:tline = ( *cvar:tline + 21 )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+	}
+
+	/**
+	 * @brief display N spinners
+	 * @param[in] <1> number of spinners to show
+	 */
+	confunc trans_display_spinners {
+		*cvar:loop_max = <1>
+		*cvar:i = 0
+
+		if ( *cvar:loop_max > 22 ) {
+			*cvar:loop_max = 22
+		}
+		while ( *cvar:i < *cvar:loop_max ) {
+			*itemlist.t_spinner<cvar:i>@invis false
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		while ( *cvar:i < 22 ) {
+			*itemlist.t_spinner<cvar:i>@invis true
+			*cvar:i = ( *cvar:i + 1 )
+		}
+	}
+	/**
+	 * @brief sets the correct values for spinner controls
+	 * @param[in] <1> row of the item
+	 * @param[in] <2> quantity of the item in cargo
+	 * @param[in] <3> min value allowed
+	 * @param[in] <4> max value allowed
+	 */
+	confunc trans_updatespinners {
+		*(abstractvalue)itemlist.t_spinner<1>@current <2>
+		*(abstractvalue)itemlist.t_spinner<1>@min <3>
+		*(abstractvalue)itemlist.t_spinner<1>@max <4>
 	}
 
 	/**
