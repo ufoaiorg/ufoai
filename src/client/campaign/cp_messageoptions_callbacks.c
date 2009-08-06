@@ -271,7 +271,6 @@ void MSO_ShutdownCallbacks (void)
 {
 	Cmd_RemoveCommand("msgoptions_toggle");
 	Cmd_RemoveCommand("msgoptions_scroll");
-	Cmd_RemoveCommand("messagetypes_click");
 	Cmd_RemoveCommand("msgoptions_init");
 	Cmd_RemoveCommand("msgoptions_backup");
 	Cmd_RemoveCommand("msgoptions_restore");
