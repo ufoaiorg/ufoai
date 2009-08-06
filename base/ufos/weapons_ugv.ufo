@@ -144,7 +144,7 @@ item ugv_chaingun_belt
 item ugv_weapon_autocannon
 {
 	name			"_Autocannon Module"
-	model			weapons/autocannon/autocannon
+	model			weapons/autocannon/ugv_autocannon
 	weapon			true
 	type			biggun
 	animationindex	1
