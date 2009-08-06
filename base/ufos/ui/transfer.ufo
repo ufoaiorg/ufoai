@@ -139,7 +139,6 @@ window transfer
 			size		"50 550"
 			lineheight	"25"
 			textalign	"cr"
-			onClick		{ cmd "trans_list_click <lineselected>" }
 			onViewChange	{
 				*(textlist)itemlist.trans_list@viewpos = <viewpos>
 				*(textlist)itemlist.trans_list_amount@viewpos = <viewpos>
@@ -157,7 +156,6 @@ window transfer
 			size		"50 550"
 			lineheight	"25"
 			textalign	"cr"
-			onClick		{ cmd "trans_list_click <lineselected>" }
 			onViewChange	{
 				*(textlist)itemlist.trans_list@viewpos = <viewpos>
 				*(textlist)itemlist.trans_list_transfered@viewpos = <viewpos>
@@ -502,7 +500,6 @@ window transfer
 			size		"50 225"
 			lineheight	"25"
 			textalign	"cr"
-			onClick		{ cmd "trans_cargolist_click <lineselected>" }
 			onViewChange	{
 				*(textlist)transfer_cargolist.trans_cargolist@viewpos = <viewpos>
 				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
