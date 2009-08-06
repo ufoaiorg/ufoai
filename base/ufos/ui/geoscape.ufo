@@ -306,7 +306,7 @@ window geoscape
 
 		panel geoscape_control {
 			{
-				pos		"48 350"
+				pos		"48 340"
 				size	"164 164"
 			}
 
@@ -384,7 +384,7 @@ window geoscape
 			tooltip		"_INBOX (with unread mails)"
 			color		"1 1 1 1"
 			font	 	f_small
-			pos			"41 556"
+			pos			"41 595"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
 			image		ui/button_geoscape
@@ -400,7 +400,7 @@ window geoscape
 			tooltip		"_INBOX"
 			color		"0 0.5 0 1"
 			font	 	f_small
-			pos			"41 556"
+			pos			"41 595"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
 			image		ui/button_geoscape
@@ -412,7 +412,7 @@ window geoscape
 		{
 			string		"_Statistics"
 			tooltip		"_Organisation statistics"
-			pos			"41 597"
+			pos			"41 630"
 			size		"175 34"
 			color		"0 0.5 0 1"
 			font	 	f_small
@@ -426,7 +426,7 @@ window geoscape
 		{
 			string		"_UFOpaedia"
 			tooltip		"_Open UFOpaedia"
-			pos			"41 638"
+			pos			"41 665"
 			size		"175 34"
 			color		"0 0.5 0 1"
 			font	 	f_small
@@ -441,7 +441,7 @@ window geoscape
 			string		"_Create installation"
 			tooltip		"_Create installation"
 			color		"0 0.5 0 1"
-			pos			"41 679"
+			pos			"41 700"
 			size		"175 34"
 			font	 	f_small
 			selectcolor	"1 1 1 1"
@@ -458,7 +458,7 @@ window geoscape
 		{
 			tooltip		"_Highlight nation borders"
 			image		ui/geo_nations_highlight
-			pos			"40 320"
+			pos			"40 515"
 			texl		"0 0"
 			texh		"32 32"
 			mousefx		false
@@ -471,7 +471,7 @@ window geoscape
 		{
 			tooltip		"_Show radar range"
 			image		ui/geo_radar
-			pos			"40 350"
+			pos			"75 515"
 			texl		"0 0"
 			texh		"32 32"
 			mousefx		false
@@ -485,7 +485,7 @@ window geoscape
 			visiblewhen "*cvar:mn_xvimap == 1"
 			tooltip		"_Show XVI map"
 			image		ui/geo_nations_highlight
-			pos			"182 350"
+			pos			"110 515"
 			texl		"0 0"
 			texh		"32 32"
 			mousefx		false
@@ -494,13 +494,24 @@ window geoscape
 			onMouseEnter			{ *node:this@texl "32 0" *node:this@texh "64 32" }
 		}
 
+		custombutton bt_mapcenter
+		{
+			tooltip		"_Center objects on the map"
+			image		ui/button_background
+			icon		geo_center
+			pos			"190 520"
+			size		"28 25"
+			texl		"193 38"
+			onClick		{ cmd "map_center;" }
+		}
+
 		custombutton bt_messagesystem
 		{
 			// @todo: better -more verbose- tooltip
 			tooltip		"_Open up messages"
 			image		ui/button_background
 			icon		geo_messagelog
-			pos			"82 324"
+			pos			"80 570"
 			size		"28 25"
 			texl		"193 38"
 			onClick	{
@@ -519,21 +530,10 @@ window geoscape
 			tooltip		"_Change message and pause settings"
 			image		ui/button_background
 			icon		geo_messageoption
-			pos			"82 354"
+			pos			"115 570"
 			size		"28 25"
 			texl		"193 38"
 			onClick		{ cmd "mn_push messageoptions;" }
-		}
-
-		custombutton bt_mapcenter
-		{
-			tooltip		"_Center objects on the map"
-			image		ui/button_background
-			icon		geo_center
-			pos			"124 324"
-			size		"28 25"
-			texl		"193 38"
-			onClick		{ cmd "map_center;" }
 		}
 
 		custombutton bt_menu
@@ -541,7 +541,7 @@ window geoscape
 			tooltip		"_Go to Options"
 			image		ui/button_background
 			icon		geo_option
-			pos			"182 324"
+			pos			"150 570"
 			size		"28 25"
 			texl		"193 38"
 			onClick		{ cmd mn_pop; }
