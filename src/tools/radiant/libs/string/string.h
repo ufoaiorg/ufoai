@@ -232,6 +232,11 @@ inline char* string_to_uppercase(char* string) {
 	return string;
 }
 
+/// \brief case-insensitive strstr
+inline char* string_contains_nocase(char* haystack, char* needle) {
+	return std::strstr(string_to_lowercase(haystack), string_to_lowercase(needle));
+}
+
 /// \brief A re-entrant string tokeniser similar to strchr.
 class StringTokeniser {
 	bool istoken(char c) const {

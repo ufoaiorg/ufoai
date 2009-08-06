@@ -490,10 +490,10 @@ static gboolean CommandListDlg_FilterCommands (GtkTreeModel *model, GtkTreeIter 
 	if (strlen(gtk_entry_get_text(g_searchEntry)) == 0)
 		return true;
 #endif
-	const char* searchText = gtk_entry_get_text(g_searchEntry);
+	char* searchText = const_cast<char*>(gtk_entry_get_text(g_searchEntry));
 	char *currentEntry, *currentShortcut;
 	gtk_tree_model_get(model, iter, CMDLIST_COMMAND, &currentEntry, CMDLIST_SHORTCUT, &currentShortcut, -1);
-	return (strstr(currentEntry, searchText) != 0 || strstr(currentShortcut, searchText) != 0);
+	return (string_contains_nocase(currentEntry, searchText) != 0 || string_contains_nocase(currentShortcut, searchText) != 0);
 }
 
 /**
