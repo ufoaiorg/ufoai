@@ -2306,13 +2306,11 @@ void MAP_Scroll_f (void)
 		smoothFinalGlobeAngle[PITCH] += ROTATE_SPEED * (scrollX) / ccs.zoom;
 		smoothFinalGlobeAngle[YAW] -= ROTATE_SPEED * (scrollY) / ccs.zoom;
 
-		while (smoothFinalGlobeAngle[YAW] > 180.0) {
-			smoothFinalGlobeAngle[YAW] -= 360.0;
-			ccs.angles[YAW] -= 360.0;
-		}
 		while (smoothFinalGlobeAngle[YAW] < -180.0) {
-			smoothFinalGlobeAngle[YAW] += 360.0;
-			ccs.angles[YAW] += 360.0;
+			smoothFinalGlobeAngle[YAW] = -180.0;
+		}
+		while (smoothFinalGlobeAngle[YAW] > 0.0) {
+			smoothFinalGlobeAngle[YAW] = 0.0;
 		}
 
 		while (smoothFinalGlobeAngle[PITCH] > 180.0) {
