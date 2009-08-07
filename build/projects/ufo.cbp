@@ -885,6 +885,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_material_editor.h" />
+		<Unit filename="..\..\src\client\menu\node\m_node_messagelist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\node\m_node_messagelist.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_model.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -21,14 +21,12 @@ window geoscape
 		padding-right	256
 	}
 
-	text messagesystem
+	messagelist messagesystem
 	{
 		pos			"0 0"
 		size		"768 20"
 		bgcolor		"0 0 0 .5"
 		lineheight	"20"
-		rows		1
-		dataid		TEXT_MESSAGESYSTEM
 		onMouseEnter {
 			if ( *cvar:mn_messagesystem < 2 ) {
 				*node:root.messagesystem@height 240

@@ -52,7 +52,6 @@ typedef enum {
 	TEXT_POPUP_INFO,
 	TEXT_AIRCRAFT_LIST,
 	TEXT_AIRCRAFT_INFO,
-	TEXT_MESSAGESYSTEM,			/**< just a dummy for messagesystem - we use a global var */
 	TEXT_CAMPAIGN_LIST,
 	TEXT_MULTISELECTION,
 	TEXT_PRODUCTION_LIST,

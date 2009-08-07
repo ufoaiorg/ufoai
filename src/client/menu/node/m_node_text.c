@@ -33,8 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
-/** @todo remove this dependency from the text node */
-#include "../../campaign/cp_campaign.h" /**< message_t */
 #include "../../../shared/parse.h"
 
 #define EXTRADATA(node) (node->u.text)
@@ -303,106 +301,6 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 }
 
 /**
- * @brief Draws the TEXT_MESSAGESYSTEM node
- * @param[in] font Font string to use
- * @param[in] node The current menu node
- * @param[in] x The fixed x position every new line starts
- * @param[in] y The fixed y position the text node starts
- * @note For efficiency, scrolling is based on the count of messages
- * rather than a count of linewrapped lines. The result is that
- * scrolling of the message window scrolls message by message,
- * which looks better anyway.
- * @todo Campaign mode only function
- */
-static void MN_TextNodeDrawMessageList (menuNode_t *node, message_t *messageStack)
-{
-	message_t *message;
-	int screenLines;
-	const char *font = MN_GetFontFromNode(node);
-	vec2_t pos;
-	int x, y, width, height;
-	int defaultHeight;
-	int lineNumber = 0;
-	int posY;
-
-/* #define AUTOSCROLL */		/**< if newer messages are on top, autoscroll is not need */
-#ifdef AUTOSCROLL
-	qboolean autoscroll;
-#endif
-	MN_GetNodeAbsPos(node, pos);
-
-	if (EXTRADATA(node).lineHeight == 0)
-		defaultHeight = MN_FontGetHeight(font);
-	else
-		defaultHeight = EXTRADATA(node).lineHeight;
-
-#ifdef AUTOSCROLL
-	autoscroll = (EXTRADATA(node).super.scrollY.viewPos + EXTRADATA(node).super.scrollY.viewSize == EXTRADATA(node).super.scrollY.fullSize)
-		|| (EXTRADATA(node).super.scrollY.fullSize < EXTRADATA(node).super.scrollY.viewSize);
-#endif
-
-	/* update message cache */
-	if (MN_AbstractScrollableNodeIsSizeChange(node)) {
-		/* recompute all line size */
-		message = messageStack;
-		while (message) {
-			const char* text = va("%s%s", message->timestamp, message->text);
-			R_FontTextSize(font, text, node->size[0], EXTRADATA(node).longlines, NULL, NULL, &message->lineUsed, NULL);
-			lineNumber += message->lineUsed;
-			message = message->next;
-		}
-	} else {
-		/* only check unvalidated messages */
-		message = messageStack;
-		while (message) {
-			if (message->lineUsed == 0) {
-				const char* text = va("%s%s", message->timestamp, message->text);
-				R_FontTextSize(font, text, node->size[0], EXTRADATA(node).longlines, NULL, NULL, &message->lineUsed, NULL);
-			}
-			lineNumber += message->lineUsed;
-			message = message->next;
-		}
-	}
-
-	/* update scroll status */
-#ifdef AUTOSCROLL
-	if (autoscroll)
-		MN_AbstractScrollableNodeSetY(node, lineNumber, node->size[1] / defaultHeight, lineNumber);
-	else
-		MN_AbstractScrollableNodeSetY(node, -1, node->size[1] / defaultHeight, lineNumber);
-#else
-	MN_AbstractScrollableNodeSetY(node, -1, node->size[1] / defaultHeight, lineNumber);
-#endif
-
-	/* text box */
-	x = pos[0] + node->padding;
-	y = pos[1] + node->padding;
-	width = node->size[0] - node->padding - node->padding;
-	height = node->size[1] - node->padding - node->padding;
-
-	/* found the first message we must display */
-	message = messageStack;
-	posY = EXTRADATA(node).super.scrollY.viewPos;
-	while (message && posY > 0) {
-		posY -= message->lineUsed;
-		if (posY < 0)
-			break;
-		message = message->next;
-	}
-
-	/* draw */
-	/** @note posY can be negative (if we must display last line of the first message) */
-	screenLines = posY;
-	while (message) {
-		const char* text = va("%s%s", message->timestamp, message->text);
-		MN_DrawString(font, node->textalign, x, y, x, y, width, height, EXTRADATA(node).lineHeight, text, EXTRADATA(node).super.scrollY.viewSize, 0, &screenLines, qtrue, EXTRADATA(node).longlines);
-		if (screenLines - EXTRADATA(node).super.scrollY.viewPos >= EXTRADATA(node).super.scrollY.viewSize)
-			break;
-		message = message->next;
-	}
-}
-
-/**
  * @brief Draw a text node
  */
 static void MN_TextNodeDraw (menuNode_t *node)
@@ -414,12 +312,6 @@ static void MN_TextNodeDraw (menuNode_t *node)
 		if (t[0] == '_')
 			t = _(++t);
 		MN_TextNodeDrawText(node, t, NULL);
-		return;
-	}
-
-	/** @todo Very special case, merge it with shared type, or split it into another node */
-	if (EXTRADATA(node).dataID == TEXT_MESSAGESYSTEM) {
-		MN_TextNodeDrawMessageList(node, cp_messageStack);
 		return;
 	}
 
