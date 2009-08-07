@@ -103,6 +103,25 @@ window geoscape
 			pos			"0 0"
 		}
 
+		button bt_messagesystem
+		{
+			// @todo: better -more verbose- tooltip
+			tooltip		"_Open up messages"
+			padding		0
+			icon		change_height
+			pos			"6 6"
+			size		"23 23"
+			onClick	{
+				cmd "add mn_messagesystem 1;"
+				cmd "mod mn_messagesystem 4;"
+				cmd "messagesystem_changemode"
+			}
+			onRClick	{
+				cmd "set mn_messagesystem 3;"
+				cmd "messagesystem_changemode"
+			}
+		}
+
 		// ==================
 		// texts
 		// ==================
@@ -371,6 +390,20 @@ window geoscape
 		// buttons
 		// ==================
 
+		button bt_messagesettings
+		{
+			string		"_Message settings"
+			tooltip		"_Change message and pause settings"
+			color		"0 0.5 0 1"
+			font	 	f_small
+			pos			"41 560"
+			size		"175 34"
+			selectcolor	"1 1 1 1"
+			image		ui/button_geoscape
+
+			onClick		{ cmd "mn_push messageoptions;" }
+		}
+
 		button bt_mailclient
 		{
 			visiblewhen "*cvar:mn_upunreadmail != 0"
@@ -466,7 +499,7 @@ window geoscape
 		{
 			tooltip		"_Show radar range"
 			image		ui/geo_radar
-			pos			"75 515"
+			pos			"70 515"
 			texl		"0 0"
 			texh		"32 32"
 			mousefx		false
@@ -480,7 +513,7 @@ window geoscape
 			visiblewhen "*cvar:mn_xvimap == 1"
 			tooltip		"_Show XVI map"
 			image		ui/geo_nations_highlight
-			pos			"110 515"
+			pos			"100 515"
 			texl		"0 0"
 			texh		"32 32"
 			mousefx		false
@@ -494,41 +527,10 @@ window geoscape
 			tooltip		"_Center objects on the map"
 			image		ui/button_background
 			icon		geo_center
-			pos			"190 520"
+			pos			"145 520"
 			size		"28 25"
 			texl		"193 38"
 			onClick		{ cmd "map_center;" }
-		}
-
-		custombutton bt_messagesystem
-		{
-			// @todo: better -more verbose- tooltip
-			tooltip		"_Open up messages"
-			image		ui/button_background
-			icon		geo_messagelog
-			pos			"80 570"
-			size		"28 25"
-			texl		"193 38"
-			onClick	{
-				cmd "add mn_messagesystem 1;"
-				cmd "mod mn_messagesystem 4;"
-				cmd "messagesystem_changemode"
-			}
-			onRClick	{
-				cmd "set mn_messagesystem 3;"
-				cmd "messagesystem_changemode"
-			}
-		}
-
-		custombutton bt_messagesettings
-		{
-			tooltip		"_Change message and pause settings"
-			image		ui/button_background
-			icon		geo_messageoption
-			pos			"115 570"
-			size		"28 25"
-			texl		"193 38"
-			onClick		{ cmd "mn_push messageoptions;" }
 		}
 
 		custombutton bt_menu
@@ -536,7 +538,7 @@ window geoscape
 			tooltip		"_Go to Options"
 			image		ui/button_background
 			icon		geo_option
-			pos			"150 570"
+			pos			"190 520"
 			size		"28 25"
 			texl		"193 38"
 			onClick		{ cmd mn_pop; }
