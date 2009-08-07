@@ -1152,3 +1152,28 @@ const char* AII_WeightToName (itemWeight_t weight)
 		break;
 	}
 }
+
+/**
+ * @brief resets aircraftSlots' backreference pointers for aircraft
+ * @param[in] aircraft Pointer to the aircraft
+ */
+void AII_CorrectAircraftSlotPointers (aircraft_t *aircraft)
+{
+	int i;
+
+	assert(aircraft);
+
+	for (i = 0; i < aircraft->maxWeapons; i++) {
+		aircraft->weapons[i].aircraft = aircraft;
+		aircraft->weapons[i].base = NULL;
+		aircraft->weapons[i].installation = NULL;
+	}
+	for (i = 0; i < aircraft->maxElectronics; i++) {
+		aircraft->electronics[i].aircraft = aircraft;
+		aircraft->electronics[i].base = NULL;
+		aircraft->electronics[i].installation = NULL;
+	}
+	aircraft->shield.aircraft = aircraft;
+	aircraft->shield.base = NULL;
+	aircraft->shield.installation = NULL;
+}

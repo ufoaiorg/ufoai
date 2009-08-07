@@ -1039,23 +1039,29 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	 * mission_t->ufo
 	 * baseWeapon_t->target
 	 */
-	base->numAircraftInBase--;
+
 	/* Update index of aircraftCurrent in base if it is affected by the index-change. */
 	/* We have to check that we do NOT decrease the counter under the first Aircraft.... */
 	if (base->aircraftCurrent >= aircraft && base->aircraftCurrent->homebase == aircraft->homebase && !(base->aircraftCurrent == &base->aircraft[0]))
 		base->aircraftCurrent--;
 
-	/** @todo use REMOVE_ELEM_ADJUST_IDX here */
 	/* rearrange the aircraft-list (in base) */
 	/* Find the index of aircraft in base */
 	i = AIR_GetAircraftIDXInBase(aircraft);
 	/* move other aircraft if the deleted aircraft was not the last one of the base */
-	if (i != AIRCRAFT_INBASE_INVALID)
-		memmove(aircraft, aircraft + 1, (base->numAircraftInBase - i) * sizeof(*aircraft));
-	/* don't use the aircraft pointer after this memmove */
-	aircraft = NULL;
-	/* wipe the now vacant last slot */
-	memset(&base->aircraft[base->numAircraftInBase], 0, sizeof(base->aircraft[base->numAircraftInBase]));
+	if (i != AIRCRAFT_INBASE_INVALID) {
+		int j;
+		
+		REMOVE_ELEM(base->aircraft, i, base->numAircraftInBase);
+		
+		for (j = i; j < base->numAircraftInBase; j++) {
+			aircraft_t *aircraft_temp = AIR_GetAircraftFromBaseByIDX(base, j);
+
+			if (!aircraft_temp)
+				continue;
+			AII_CorrectAircraftSlotPointers(aircraft_temp);
+		}
+	}
 
 	if (base->numAircraftInBase < 1) {
 		Cvar_SetValue("mn_equipsoldierstate", 0);
@@ -1102,8 +1108,8 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 	/* the craft may no longer have any employees assigned */
 	assert(aircraft->teamSize == 0);
 	/* remove the pilot */
-	if (aircraft->pilot) {
-		E_DeleteEmployee(aircraft->pilot, aircraft->pilot->type);
+	if (aircraft->pilot && E_DeleteEmployee(aircraft->pilot, aircraft->pilot->type)) {
+		aircraft->pilot = NULL;		
 	} else {
 		/* This shouldn't ever happen. */
 		Com_DPrintf(DEBUG_CLIENT, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
