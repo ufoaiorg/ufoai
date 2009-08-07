@@ -184,9 +184,11 @@ install_exec: $(TARGETS)
 
 -include $(ALL_DEPS)
 
+ifeq ($(BUILD_UFORADIANT),1)
 clean-uforadiant:
 	@echo "Making clean uforadiant"
 	@rm -f $(ALL_RADIANT_OBJS) $(RADIANT_DEPS)
+endif
 
 clean-tests:
 	@echo "Making clean tests"
