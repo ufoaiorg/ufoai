@@ -112,7 +112,7 @@ qboolean MN_SetScroll (menuScroll_t *scroll, int viewPos, int viewSize, int full
  */
 qboolean MN_AbstractScrollableNodeSetY (menuNode_t *node, int viewPos, int viewSize, int fullSize)
 {
-	qboolean updated = qfalse;
+	qboolean updated;
 	assert(MN_NodeInstanceOf(node, "abstractscrollable"));
 
 	updated = MN_SetScroll(&EXTRADATA(node).scrollY, viewPos, viewSize, fullSize);
