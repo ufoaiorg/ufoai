@@ -787,6 +787,8 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 					if (aircraft->acTeam[l] >= employee)
 						aircraft->acTeam[l]--;
 				}
+				if (aircraft->pilot >= employee)
+					aircraft->pilot--;			
 			}
 		}
 		for (i = 0, transfer = ccs.transfers; i < ccs.numTransfers; i++, transfer++) {
