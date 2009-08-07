@@ -31,7 +31,6 @@ window geoscape
 		dataid		TEXT_MESSAGESYSTEM
 		onMouseEnter {
 			if ( *cvar:mn_messagesystem < 2 ) {
-				*node:root.messagesystem@rows 12
 				*node:root.messagesystem@height 240
 			}
 		}
@@ -65,25 +64,21 @@ window geoscape
 	{
 		/* one line */
 		if ( *cvar:mn_messagesystem == 0 ) {
-			*messagesystem@rows	1
 			*messagesystem@size	"768 20"
 			*messagesystem_scroll@invis true
 		}
 		/* 6 lines */
 		if ( *cvar:mn_messagesystem == 1 ) {
-			*messagesystem@rows	6
 			*messagesystem@size	"768 120"
 			*messagesystem_scroll@invis true
 		}
 		/* 12 lines */
 		if ( *cvar:mn_messagesystem == 2 ) {
-			*messagesystem@rows	12
 			*messagesystem@size	"768 240"
 			*messagesystem_scroll@invis true
 		}
 		/* full screen */
 		if ( *cvar:mn_messagesystem == 3 ) {
-			*messagesystem@rows	38
 			*messagesystem@size	"749 768"
 			*messagesystem_scroll@invis false
 			cmd "game_timestop;"
