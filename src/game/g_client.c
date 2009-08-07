@@ -2194,6 +2194,10 @@ int G_ClientAction (player_t * player)
 
 		ent = g_edicts + num;
 
+		/* if something was thrown, the floor must be updated even if the actor that is trying to pick
+		 * the item up hasn't moved at all */
+		G_GetFloorItems(ent);
+
 		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
 			gi.dprintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
 		} else {
