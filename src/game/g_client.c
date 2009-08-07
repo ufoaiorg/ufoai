@@ -914,7 +914,8 @@ static edict_t *G_GetFloorItemsFromPos (pos3_t pos)
 /**
  * @brief Prepares a list of items on the floor at given entity position.
  * @param[in] ent Pointer to an entity being an actor.
- * @return pointer to edict_t being a floor (with items).
+ * @return pointer to edict_t being a floor (with items) or @c NULL in case no items were found
+ * on the edict grid position.
  * @note This function is somehow broken - it returns NULL in some cases of items on the floor.
  */
 edict_t *G_GetFloorItems (edict_t * ent)
