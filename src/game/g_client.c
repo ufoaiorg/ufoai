@@ -136,7 +136,7 @@ static void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 		item->m = &gi.csi->ods[m];
 
 	if (containerID >= 0 && containerID < gi.csi->numIDs)
-		*container = &gi.csi->ids[containerID];
+		*container = INVDEF(containerID);
 	else
 		*container = NULL;
 }
@@ -274,7 +274,7 @@ void G_SendInventory (unsigned int player_mask, edict_t * ent)
 	for (j = 0; j < gi.csi->numIDs; j++)
 		for (ic = ent->i.c[j]; ic; ic = ic->next) {
 			/* send a single item */
-			G_WriteItem(ic->item, &gi.csi->ids[j], ic->x, ic->y);
+			G_WriteItem(ic->item, INVDEF(j), ic->x, ic->y);
 		}
 }
 
@@ -933,8 +933,7 @@ edict_t *G_GetFloorItems (edict_t * ent)
 
 /**
  * @brief Moves an item inside an inventory. Floors are handled special.
- * @param[in] player The player the edict/soldier belongs to.
- * @param[in] num The edict number of the selected/used edict/soldier.
+ * @param[in] entNum The edict number of the selected/used edict/soldier.
  * @param[in] from The container (-id) the item should be moved from.
  * @param[in] fItem The item you want to move.
  * @param[in] to The container (-id) the item should be moved to.
@@ -945,9 +944,10 @@ edict_t *G_GetFloorItems (edict_t * ent)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
+void G_ClientInvMove (int entNum, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
 		int ty, qboolean checkaction, qboolean quiet)
 {
+	player_t *player;
 	edict_t *ent, *floor;
 	invList_t *ic;
 	qboolean newFloor;
@@ -959,7 +959,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 	const invList_t* fItemBackupPtr;
 	int fx, fy;
 
-	ent = g_edicts + num;
+	ent = g_edicts + entNum;
+	player = G_PLAYER_FROM_ENT(ent);
 	msglevel = quiet ? PRINT_NONE : PRINT_HUD;
 
 	assert(fItem);
@@ -1058,7 +1059,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 	} else {
 		/* Tell the client to remove the item from the container */
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_DEL);
-		gi.WriteShort(num);
+		gi.WriteShort(entNum);
 		gi.WriteByte(from->id);
 		gi.WriteByte(fx);
 		gi.WriteByte(fy);
@@ -1081,7 +1082,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 
 		/* send ammo message to all --- it's fun to hear that sound */
 		gi.AddEvent(PM_ALL, EV_INV_RELOAD);
-		gi.WriteShort(to->id == gi.csi->idFloor ? floor->number : num);
+		gi.WriteShort(to->id == gi.csi->idFloor ? floor->number : entNum);
 		gi.WriteByte(item.t->ammo);
 		gi.WriteByte(item.m->idx);
 		gi.WriteByte(to->id);
@@ -1127,7 +1128,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 	} else {
 		/* Tell the client to add the item to the container. */
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_ADD);
-		gi.WriteShort(num);
+		gi.WriteShort(entNum);
 		gi.WriteShort(INV_INVENTORY_BYTES);
 		G_WriteItem(item, to, tx, ty);
 	}
@@ -1135,11 +1136,11 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 	/* Update reaction firemode when something is moved from/to a hand. */
 	if (from->id == gi.csi->idRight || to->id == gi.csi->idRight) {
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
-		gi.WriteShort(num);
+		gi.WriteShort(entNum);
 		gi.WriteShort(0); /**< hand = right */
 	} else if (from->id == gi.csi->idLeft || to->id == gi.csi->idLeft) {
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
-		gi.WriteShort(num);
+		gi.WriteShort(entNum);
 		gi.WriteShort(1); /**< hand = left */
 	}
 
@@ -1148,14 +1149,14 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 	if (mask) {
 		if (from->id == gi.csi->idRight || from->id == gi.csi->idLeft) {
 			gi.AddEvent(mask, EV_INV_DEL);
-			gi.WriteShort(num);
+			gi.WriteShort(entNum);
 			gi.WriteByte(from->id);
 			gi.WriteByte(fx);
 			gi.WriteByte(fy);
 		}
 		if (to->id == gi.csi->idRight || to->id == gi.csi->idLeft) {
 			gi.AddEvent(mask, EV_INV_ADD);
-			gi.WriteShort(num);
+			gi.WriteShort(entNum);
 			gi.WriteShort(INV_INVENTORY_BYTES);
 			G_WriteItem(item, to, tx, ty);
 		}
@@ -1225,7 +1226,7 @@ static void G_InventoryToFloor (edict_t * ent)
 			 * unless you want an endless loop. ;) */
 			next = ic->next;
 			/* find the coordinates for the current item on floor */
-			Com_FindSpace(&floor->i, &ic->item, &gi.csi->ids[gi.csi->idFloor], &x, &y, ic);
+			Com_FindSpace(&floor->i, &ic->item, INVDEF(gi.csi->idFloor), &x, &y, ic);
 			if (x == NONE) {
 				assert(y == NONE);
 				/* Run out of space on the floor or the item is armour
@@ -1248,7 +1249,7 @@ static void G_InventoryToFloor (edict_t * ent)
 						floorAdjacent->visflags = 0;
 					}
 
-					Com_FindSpace(&floorAdjacent->i, &ic->item, &gi.csi->ids[gi.csi->idFloor], &x, &y, ic);
+					Com_FindSpace(&floorAdjacent->i, &ic->item, INVDEF(gi.csi->idFloor], &x, &y, ic);
 					if (x != NONE) {
 						ic->x = x;
 						ic->y = y;
@@ -1267,7 +1268,7 @@ static void G_InventoryToFloor (edict_t * ent)
 					continue;
 				}
 #endif
-				Com_RemoveFromInventory(&ent->i, &gi.csi->ids[k], ic);
+				Com_RemoveFromInventory(&ent->i, INVDEF(k), ic);
 			} else {
 				ic->x = x;
 				ic->y = y;
@@ -1771,11 +1772,11 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 	/* drop items in hands */
 	if (!sanity && ent->chr.teamDef->weapons) {
 		if (RIGHT(ent))
-			G_ClientInvMove(G_PLAYER_FROM_ENT(ent), ent->number, &gi.csi->ids[gi.csi->idRight], RIGHT(ent),
-					&gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
+			G_ClientInvMove(ent->number, INVDEF(gi.csi->idRight), RIGHT(ent),
+					INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, quiet);
 		if (LEFT(ent))
-			G_ClientInvMove(G_PLAYER_FROM_ENT(ent), ent->number, &gi.csi->ids[gi.csi->idLeft], LEFT(ent),
-					&gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
+			G_ClientInvMove(ent->number, INVDEF(gi.csi->idLeft), LEFT(ent),
+					INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, quiet);
 	}
 
 	/* get up */
@@ -1922,7 +1923,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
  * @brief Reload weapon with actor.
  * @sa AI_ActorThink
  */
-void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean quiet)
+void G_ClientReload (int entnum, shoot_types_t st, qboolean quiet)
 {
 	edict_t *ent;
 	invList_t *ic;
@@ -1938,15 +1939,16 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	/* search for clips and select the one that is available easily */
 	icFinal = NULL;
 	tu = 100;
-	hand = st == ST_RIGHT_RELOAD ? &gi.csi->ids[gi.csi->idRight] : &gi.csi->ids[gi.csi->idLeft];
+	hand = (st == ST_RIGHT_RELOAD) ? INVDEF(gi.csi->idRight) : INVDEF(gi.csi->idLeft);
 	bestContainer = NULL;
 
-	if (ent->i.c[hand->id]) {
-		weapon = ent->i.c[hand->id]->item.t;
-	} else if (hand->id == gi.csi->idLeft && ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
+	if (CONTAINER(ent, hand->id)) {
+		weapon = CONTAINER(ent, hand->id)->item.t;
+	/** @todo What if there is no item in the right hand - this would segfault then */
+	} else if (hand->id == gi.csi->idLeft && RIGHT(ent)->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
-		hand = &gi.csi->ids[gi.csi->idRight];
-		weapon = ent->i.c[hand->id]->item.t;
+		hand = INVDEF(gi.csi->idRight);
+		weapon = CONTAINER(ent, hand->id)->item.t;
 	} else
 		return;
 
@@ -1957,7 +1959,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	 * network buffer, and in multiplayer everything is researched */
 
 	for (containerID = 0; containerID < gi.csi->numIDs; containerID++) {
-		if (gi.csi->ids[containerID].out < tu) {
+		if (INVDEF(containerID)->out < tu) {
 			/* Once we've found at least one clip, there's no point
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
@@ -1965,8 +1967,8 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 			for (ic = ent->i.c[containerID]; ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
 					icFinal = ic;
-					tu = gi.csi->ids[containerID].out;
-					bestContainer = &gi.csi->ids[containerID];
+					tu = INVDEF(containerID)->out;
+					bestContainer = INVDEF(containerID);
 					break;
 				}
 		}
@@ -1974,7 +1976,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 
 	/* send request */
 	if (bestContainer)
-		G_ClientInvMove(player, entnum, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
+		G_ClientInvMove(entnum, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
 }
 
 /**
@@ -2035,7 +2037,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 
 	/* search for weapons and select the one that is available easily */
 	tu = 100;
-	hand = &gi.csi->ids[gi.csi->idRight];
+	hand = INVDEF(gi.csi->idRight);
 	bestContainer = NULL;
 	icFinal = NULL;
 
@@ -2049,8 +2051,8 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 				assert(ic->item.t);
 				if (ic->item.t->weapon && (ic->item.a > 0 || !ic->item.t->reload)) {
 					icFinal = ic;
-					tu = gi.csi->ids[container].out;
-					bestContainer = &gi.csi->ids[container];
+					bestContainer = INVDEF(container);
+					tu = bestContainer->out;
 					break;
 				}
 			}
@@ -2059,7 +2061,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 
 	/* send request */
 	if (bestContainer)
-		G_ClientInvMove(player, entnum, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
+		G_ClientInvMove(entnum, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
 }
 
 /**
@@ -2195,11 +2197,13 @@ int G_ClientAction (player_t * player)
 		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
 			gi.dprintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
 		} else {
-			invDef_t *fromPtr = &gi.csi->ids[from];
-			invDef_t *toPtr = &gi.csi->ids[to];
+			invDef_t *fromPtr = INVDEF(from);
+			invDef_t *toPtr = INVDEF(to);
 			invList_t *fromItem = Com_SearchInInventory(&ent->i, fromPtr, fx, fy);
-			assert(fromItem);
-			G_ClientInvMove(player, num, fromPtr, fromItem, toPtr, tx, ty, qtrue, NOISY);
+			if (!fromItem)
+				gi.error("Could not find item in inventory of ent %i (type %i) at %i:%i",
+						ent->number, ent->type, fx, fy);
+			G_ClientInvMove(num, fromPtr, fromItem, toPtr, tx, ty, qtrue, NOISY);
 		}
 		break;
 

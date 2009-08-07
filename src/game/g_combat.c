@@ -700,7 +700,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 							gi.WriteShort(floor->number);
 							floor->visflags = 0;
 						}
-						Com_TryAddToInventory(&floor->i, *weapon, &gi.csi->ids[gi.csi->idFloor]);
+						Com_TryAddToInventory(&floor->i, *weapon, INVDEF(gi.csi->idFloor));
 
 						/* send item info to the clients */
 						G_CheckVis(floor, qtrue);
@@ -1023,7 +1023,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 				gi.WriteShort(floor->number);
 				floor->visflags = 0;
 			}
-			Com_TryAddToInventory(&floor->i, *weapon, &gi.csi->ids[gi.csi->idFloor]);
+			Com_TryAddToInventory(&floor->i, *weapon, INVDEF(gi.csi->idFloor));
 
 			/* send item info to the clients */
 			G_CheckVis(floor, qtrue);
@@ -1283,11 +1283,12 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 				else
 					gi.WriteByte(gi.csi->idLeft);
 			} else { /* delete the knife or the rifle without ammo */
+				const invDef_t *invDef = INVDEF(container);
 				gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
 				gi.WriteShort(entnum);
 				gi.WriteByte(container);
-				assert(gi.csi->ids[container].single);
-				INVSH_EmptyContainer(&ent->i, &gi.csi->ids[container]);
+				assert(invDef->single);
+				INVSH_EmptyContainer(&ent->i, invDef);
 
 				itemAlreadyRemoved = qtrue;	/**< for assert only */
 			}
@@ -1298,12 +1299,13 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 
 		/* remove throwable oneshot && deplete weapon from inventory */
 		if (weapon->t->thrown && weapon->t->oneshot && weapon->t->deplete) {
+			const invDef_t *invDef = INVDEF(container);
 			assert(!itemAlreadyRemoved);
 			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
 			gi.WriteShort(entnum);
 			gi.WriteByte(container);
-			assert(gi.csi->ids[container].single);
-			INVSH_EmptyContainer(&ent->i, &gi.csi->ids[container]);
+			assert(invDef->single);
+			INVSH_EmptyContainer(&ent->i, invDef);
 			/* x and y value */
 			gi.WriteByte(0);
 			gi.WriteByte(0);

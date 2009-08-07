@@ -697,8 +697,8 @@ static qboolean Touch_Mission (edict_t *self, edict_t *activator)
 							 * actor's inventory */
 							if (!strcmp(od->id, self->owner->item)) {
 								/* drop the weapon - even if out of TUs */
-								G_ClientInvMove(G_PLAYER_FROM_ENT(activator), activator->number,
-									&gi.csi->ids[j], ic, &gi.csi->ids[gi.csi->idFloor],
+								G_ClientInvMove(activator->number,
+									INVDEF(j), ic, INVDEF(gi.csi->idFloor),
 									NONE, NONE, qfalse, QUIET);
 								gi.BroadcastPrintf(PRINT_HUD, _("Item was placed\n"));
 								self->owner->count = level.actualRound;
@@ -964,7 +964,7 @@ static void SP_misc_item (edict_t *ent)
 		floor = G_SpawnFloor(ent->pos);
 
 	item.t = od;
-	Com_TryAddToInventory(&floor->i, item, &gi.csi->ids[gi.csi->idFloor]);
+	Com_TryAddToInventory(&floor->i, item, INVDEF(gi.csi->idFloor));
 
 	/* now we can free the original edict */
 	G_FreeEdict(ent);
