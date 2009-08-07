@@ -44,6 +44,8 @@ public:
 
 typedef std::set<Targetable*> targetables_t;
 
+static const double TARGET_MAX_ARROW_LENGTH = 10;
+
 extern const char* g_targetable_nameKey;
 
 targetables_t* getTargetables(const char* targetname);
@@ -174,10 +176,50 @@ public:
 	TargetLinesPushBack(RenderablePointVector& targetLines, const Vector3& worldPosition, const VolumeTest& volume) :
 			m_targetLines(targetLines), m_worldPosition(worldPosition), m_volume(volume) {
 	}
-	void operator()(const Vector3& worldPosition) const {
-		if (m_volume.TestLine(segment_for_startend(m_worldPosition, worldPosition))) {
-			m_targetLines.push_back(PointVertex(reinterpret_cast<const Vertex3f&>(m_worldPosition)));
-			m_targetLines.push_back(PointVertex(reinterpret_cast<const Vertex3f&>(worldPosition)));
+	void operator()(const Vector3& targetPosition) const {
+		if (m_volume.TestLine(segment_for_startend(m_worldPosition, targetPosition))) {
+			// Take the mid-point
+			Vector3 mid((m_worldPosition + targetPosition) * 0.5f);
+
+			// Get the normalised target direction
+			Vector3 targetDir = (targetPosition - m_worldPosition);
+
+			// Normalise the length manually to get the scale for the arrows
+			double length = targetDir.getLength();
+			targetDir *= 1 / length;
+
+			// Get the orthogonal direction (in the xy plane)
+			Vector3 xyDir(targetPosition.y() - m_worldPosition.y(), m_worldPosition.x() - targetPosition.x(), 0);
+			xyDir.normalise();
+
+			// Let the target arrow not be any longer than one tenth of the total distance
+			double targetArrowLength = length * 0.10f;
+
+			// Clamp the length to a few units anyway
+			if (targetArrowLength > TARGET_MAX_ARROW_LENGTH) {
+				targetArrowLength = TARGET_MAX_ARROW_LENGTH;
+			}
+
+			targetDir *= targetArrowLength;
+			xyDir *= targetArrowLength;
+
+			// Get a point slightly away from the target
+			Vector3 arrowBase(mid - targetDir);
+
+			// The arrow points for the XY plane
+			Vector3 xyPoint1 = arrowBase + xyDir;
+			Vector3 xyPoint2 = arrowBase - xyDir;
+
+			// The line from this to the other entity
+			m_targetLines.push_back(PointVertex(m_worldPosition));
+			m_targetLines.push_back(PointVertex(targetPosition));
+
+			// The "arrow indicators" in the xy plane
+			m_targetLines.push_back(PointVertex(mid));
+			m_targetLines.push_back(PointVertex(xyPoint1));
+
+			m_targetLines.push_back(PointVertex(mid));
+			m_targetLines.push_back(PointVertex(xyPoint2));
 		}
 	}
 };

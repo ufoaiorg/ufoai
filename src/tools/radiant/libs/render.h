@@ -307,6 +307,10 @@ struct Vertex3f : public Vector3 {
 	Vertex3f(float _x, float _y, float _z)
 			: Vector3(_x, _y, _z) {
 	}
+
+	// Construct from a Vector3
+	Vertex3f(const Vector3& other) : Vector3(other) {
+	}
 };
 
 inline bool operator<(const Vertex3f& self, const Vertex3f& other) {
@@ -718,11 +722,17 @@ struct PointVertex {
 
 	PointVertex() {
 	}
-	PointVertex(Vertex3f _vertex)
+
+	PointVertex(const Vertex3f _vertex)
 			: colour(Colour4b(255, 255, 255, 255)), vertex(_vertex) {
 	}
-	PointVertex(Vertex3f _vertex, Colour4b _colour)
+
+	PointVertex(const Vertex3f _vertex, const Colour4b _colour)
 			: colour(_colour), vertex(_vertex) {
+	}
+
+	PointVertex(const Vector3& point, const Colour4b& _colour)
+			: colour(_colour), vertex(point) {
 	}
 };
 

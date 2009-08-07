@@ -2,6 +2,7 @@
 #define INCLUDED_VECTOR_H
 
 #include <cstddef>
+#include <math.h>
 
 template <typename Element>
 class BasicVector2 {
@@ -93,6 +94,37 @@ class BasicVector3 {
 	}
 	const Element* data() const {
 		return m_elements;
+	}
+
+	/**
+	 * Return the length of this vector.
+	 *
+	 * @return The Pythagorean length of this vector.
+	 */
+	double getLength () const
+	{
+		const double lenSquared = getLengthSquared();
+		return sqrt(lenSquared);
+	}
+
+	/**
+	 * Return the squared length of this vector.
+	 */
+	double getLengthSquared () const
+	{
+		const double lenSquared = double(m_elements[0]) * double(m_elements[0]) + double(m_elements[1])
+				* double(m_elements[1]) + double(m_elements[2]) * double(m_elements[2]);
+		return lenSquared;
+	}
+
+	/**
+	 * Normalise this vector in-place by scaling by the inverse of its size.
+	 */
+	void normalise() {
+		const double inverseLength = 1 / getLength();
+		m_elements[0] *= inverseLength;
+		m_elements[1] *= inverseLength;
+		m_elements[2] *= inverseLength;
 	}
 };
 
