@@ -252,9 +252,27 @@ static void MN_MessageListNodeDraw (menuNode_t *node)
 	}
 }
 
+#ifdef DEBUG
+static void MN_MessageDebugUseAllIcons_f (void)
+{
+	message_t *message;
+	int i = 0;
+	message = cp_messageStack;
+	while (message) {
+		message->type = i % MSG_MAX;
+		message = message->next;
+		i++;
+	}
+
+}
+#endif
+
 void MN_RegisterMessageListNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "messagelist";
 	behaviour->extends = "text";
 	behaviour->draw = MN_MessageListNodeDraw;
+#ifdef DEBUG
+	Cmd_AddCommand("debug_mn_message_useallicons", MN_MessageDebugUseAllIcons_f, "Update message to use all icons");
+#endif
 }
