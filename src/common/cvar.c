@@ -400,36 +400,36 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 /**
  * @brief Sets a cvar values
  * Handles write protection and latched cvars as expected
- * @param[in] var_name Which cvar
+ * @param[in] varName Which cvar
  * @param[in] value Set the cvar to the value specified by 'value'
  * @param[in] force Force the update of the cvar
  */
-static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean force)
+static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force)
 {
 	cvar_t *var;
 
 	if (!value)
 		return NULL;
 
-	var = Cvar_FindVar(var_name);
+	var = Cvar_FindVar(varName);
 	/* create it */
 	if (!var)
-		return Cvar_Get(var_name, value, 0, NULL);
+		return Cvar_Get(varName, value, 0, NULL);
 
 	if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO))
 		if (!Cvar_InfoValidate(value)) {
-			Com_Printf("invalid info cvar value '%s' of cvar '%s'\n", value, var_name);
+			Com_Printf("invalid info cvar value '%s' of cvar '%s'\n", value, varName);
 			return var;
 		}
 
 	if (!force) {
 		if (var->flags & CVAR_NOSET) {
-			Com_Printf("%s is write protected.\n", var_name);
+			Com_Printf("%s is write protected.\n", varName);
 			return var;
 		}
 #ifndef DEBUG
 		if (var->flags & CVAR_DEVELOPER) {
-			Com_Printf("%s is a developer cvar.\n", var_name);
+			Com_Printf("%s is a developer cvar.\n", varName);
 			return var;
 		}
 #endif
@@ -447,7 +447,7 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 
 			/* if we are running a server */
 			if (Com_ServerState()) {
-				Com_Printf("%s will be changed for next game.\n", var_name);
+				Com_Printf("%s will be changed for next game.\n", varName);
 				var->latchedString = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 			} else {
 				if (var->oldString)
@@ -460,7 +460,7 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 
 			if (var->check)
 				if (var->check(var))
-					Com_Printf("Invalid value for cvar %s\n", var_name);
+					Com_Printf("Invalid value for cvar %s\n", varName);
 
 			return var;
 		}
@@ -488,7 +488,7 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 
 	if (var->check)
 		if (var->check(var)) {
-			Com_Printf("Invalid value for cvar %s\n", var_name);
+			Com_Printf("Invalid value for cvar %s\n", varName);
 			return var;
 		}
 
@@ -560,6 +560,7 @@ cvar_t *Cvar_FullSet (const char *varName, const char *value, int flags)
 
 /**
  * @brief Expands value to a string and calls Cvar_Set
+ * @note Float values are in the format #.##
  */
 void Cvar_SetValue (const char *varName, float value)
 {
