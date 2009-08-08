@@ -175,7 +175,7 @@ static void MN_MessageListNodeDraw (menuNode_t *node)
 	screenLines = posY;
 	while (message) {
 		MN_MessageDraw(node, message, font, x, y, width, height, &screenLines);
-		if (screenLines - EXTRADATA(node).super.scrollY.viewPos >= EXTRADATA(node).super.scrollY.viewSize)
+		if (screenLines >= EXTRADATA(node).super.scrollY.viewSize)
 			break;
 		message = message->next;
 	}
