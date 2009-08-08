@@ -513,7 +513,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			LIST_AddString(&transferListAmount, "");
 			LIST_AddString(&transferListTransfered, "");
 		}
-		MN_ExecuteConfunc(va("trans_display_spinners %i", cnt));
+		MN_ExecuteConfunc("trans_display_spinners %i", cnt);
 		break;
 	case TRANS_TYPE_EMPLOYEE:
 		if (B_GetBuildingStatus(destbase, B_QUARTERS)) {
@@ -2080,7 +2080,7 @@ static void TR_TransferList_Scroll_f (void)
 			if (cnt >= (viewPos + MAX_TRANSLIST_MENU_ENTRIES))
 				break;
 			if (cnt >= viewPos)
-				MN_ExecuteConfunc(va("trans_updatespinners %i %i %i %i", cnt - viewPos, td.trItemsTmp[i], 0, srcBase->storage.num[i] + td.trItemsTmp[i]));
+				MN_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos, td.trItemsTmp[i], 0, srcBase->storage.num[i] + td.trItemsTmp[i]);
 			cnt++;
 		}
 	}
