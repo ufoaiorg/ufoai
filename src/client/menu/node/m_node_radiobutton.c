@@ -48,8 +48,11 @@ static void MN_RadioButtonNodeDraw (menuNode_t *node)
 	vec2_t pos;
 	int status = 0;
 	const float current = MN_GetReferenceFloat(node, node->cvar);
+	qboolean disabled = node->disabled;
+	if (node->parent->disabled)
+		disabled = qtrue;
 
-	if (node->disabled) {
+	if (disabled) {
 		status = 2;
 	} else if (current > node->extraData1 - EPSILON && current < node->extraData1 + EPSILON) {
 		status = 3;

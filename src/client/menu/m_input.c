@@ -465,6 +465,7 @@ void MN_MouseMove (int x, int y)
  */
 static void MN_LeftClick (int x, int y)
 {
+	qboolean disabled;
 	if (MN_IsMouseInvalidate)
 		return;
 
@@ -484,7 +485,8 @@ static void MN_LeftClick (int x, int y)
 		}
 	}
 
-	if (hoveredNode && !hoveredNode->disabled) {
+	disabled = (hoveredNode == NULL) || (hoveredNode->disabled) || (hoveredNode->parent && hoveredNode->parent->disabled);
+	if (!disabled) {
 		if (hoveredNode->behaviour->leftClick) {
 			hoveredNode->behaviour->leftClick(hoveredNode, x, y);
 		} else {
@@ -502,6 +504,7 @@ static void MN_LeftClick (int x, int y)
  */
 static void MN_RightClick (int x, int y)
 {
+	qboolean disabled;
 	if (MN_IsMouseInvalidate)
 		return;
 
@@ -512,7 +515,8 @@ static void MN_RightClick (int x, int y)
 		return;
 	}
 
-	if (hoveredNode && !hoveredNode->disabled) {
+	disabled = (hoveredNode == NULL) || (hoveredNode->disabled) || (hoveredNode->parent && hoveredNode->parent->disabled);
+	if (!disabled) {
 		if (hoveredNode->behaviour->rightClick) {
 			hoveredNode->behaviour->rightClick(hoveredNode, x, y);
 		} else {
@@ -528,6 +532,7 @@ static void MN_RightClick (int x, int y)
  */
 static void MN_MiddleClick (int x, int y)
 {
+	qboolean disabled;
 	if (MN_IsMouseInvalidate)
 		return;
 
@@ -538,7 +543,8 @@ static void MN_MiddleClick (int x, int y)
 		return;
 	}
 
-	if (hoveredNode && !hoveredNode->disabled) {
+	disabled = (hoveredNode == NULL) || (hoveredNode->disabled) || (hoveredNode->parent && hoveredNode->parent->disabled);
+	if (!disabled) {
 		if (hoveredNode->behaviour->middleClick) {
 			hoveredNode->behaviour->middleClick(hoveredNode, x, y);
 		} else {
