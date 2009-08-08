@@ -55,16 +55,33 @@ static int MN_MessageGetLines(const menuNode_t *node, message_t *message, const 
 	return max(lines1, lines2);
 }
 
+static char *lastDate;
+
 static void MN_MessageDraw(const menuNode_t *node, message_t *message, const char *fontID, int x, int y, int width, int height, int *screenLines)
 {
 	const int column1 = DATETIME_COLUMN_SIZE;
 	const int column2 = width - DATETIME_COLUMN_SIZE - node->padding;
 	int lines1 = *screenLines;
 	int lines2 = *screenLines;
-	MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column1, height, EXTRADATA(node).lineHeight, message->timestamp, EXTRADATA(node).super.scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
+
+	/* also display the first date on wraped message we only see the end */
+	if (lines1 < 0)
+		lines1 = 0;
+
+	/* display the date */
+	if (lastDate == NULL || strcmp(lastDate, message->timestamp) != 0)
+		MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column1, height, EXTRADATA(node).lineHeight, message->timestamp, EXTRADATA(node).super.scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
+
 	x += DATETIME_COLUMN_SIZE + node->padding;
+
+	/* identify the begin of a message */
+	/** @todo Use an icon instead of this star */
+	MN_DrawStringInBox(fontID, ALIGN_UL, x-10, y + EXTRADATA(node).lineHeight * lines2, 20, 20, "*", LONGLINES_WRAP);
+
+	/* draw the message */
 	MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column2, height, EXTRADATA(node).lineHeight, message->text, EXTRADATA(node).super.scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
 	*screenLines = max(lines1, lines2);
+	lastDate = message->timestamp;
 }
 
 /**
@@ -154,6 +171,7 @@ static void MN_MessageListNodeDraw (menuNode_t *node)
 
 	/* draw */
 	/** @note posY can be negative (if we must display last line of the first message) */
+	lastDate = NULL;
 	screenLines = posY;
 	while (message) {
 		MN_MessageDraw(node, message, font, x, y, width, height, &screenLines);
