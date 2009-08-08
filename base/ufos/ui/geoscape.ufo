@@ -62,22 +62,29 @@ window geoscape
 	{
 		/* one line */
 		if ( *cvar:mn_messagesystem == 0 ) {
-			*messagesystem@size	"768 20"
+			*messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
+			*messagesystem@height	= 20
 			*messagesystem_scroll@invis true
 		}
 		/* 6 lines */
 		if ( *cvar:mn_messagesystem == 1 ) {
-			*messagesystem@size	"768 120"
+			*messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
+			*messagesystem@height	= 120
 			*messagesystem_scroll@invis true
 		}
 		/* 12 lines */
 		if ( *cvar:mn_messagesystem == 2 ) {
-			*messagesystem@size	"768 240"
+			*messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
+			*messagesystem@height	= 240
 			*messagesystem_scroll@invis true
 		}
 		/* full screen */
 		if ( *cvar:mn_messagesystem == 3 ) {
-			*messagesystem@size	"749 768"
+			*messagesystem@width = ( ( *cvar:mn_sys_screenwidth - 256 ) - 19 )
+			*cvar:foo = ( ( *cvar:mn_sys_screenwidth - 256 ) - 19 )
+			cmd "echo <cvar:foo>"
+			*messagesystem@height = 768
+			*messagesystem_scroll@left = ( ( *cvar:mn_sys_screenwidth - 256 ) - 19 )
 			*messagesystem_scroll@invis false
 			cmd "game_timestop;"
 		}

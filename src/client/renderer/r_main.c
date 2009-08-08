@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_misc.h"
 #include "r_error.h"
 #include "../../common/tracing.h"
+#include "../menu/m_menus.h"
 
 refdef_t refdef;
 
@@ -498,6 +499,8 @@ qboolean R_SetMode (void)
 
 	result = R_InitGraphics();
 	R_UpdateVidDef();
+	MN_InvalidateStack();
+
 	Com_Printf(" %dx%d (fullscreen: %s)\n", viddef.width, viddef.height, viddef.fullscreen ? "yes" : "no");
 	if (result)
 		return qtrue;
@@ -519,6 +522,7 @@ qboolean R_SetMode (void)
 
 	result = R_InitGraphics();
 	R_UpdateVidDef();
+	MN_InvalidateStack();
 	return result;
 }
 

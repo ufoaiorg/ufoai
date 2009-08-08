@@ -639,6 +639,8 @@ void MN_InvalidateStack (void)
 	for (pos = 0; pos < mn.windowStackPos; pos++) {
 		MN_Invalidate(mn.windowStack[pos]);
 	}
+	Cvar_SetValue("mn_sys_screenwidth", viddef.virtualWidth);
+	Cvar_SetValue("mn_sys_screenheight", viddef.virtualHeight);
 }
 
 /**
