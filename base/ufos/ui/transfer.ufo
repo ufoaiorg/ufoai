@@ -132,16 +132,16 @@ window transfer
 			}
 		}
 
-		textlist trans_list_transfered
+		textlist trans_list_amount
 		{
-			dataid		TEXT_TRANSFER_LIST_TRANSFERED
-			pos			"360 16"
+			dataid		TEXT_TRANSFER_LIST_AMOUNT
+			pos			"350 16"
 			size		"50 550"
 			lineheight	"25"
 			textalign	"cr"
 			onViewChange	{
 				*(textlist)itemlist.trans_list@viewpos = <viewpos>
-				*(textlist)itemlist.trans_list_amount@viewpos = <viewpos>
+				*(textlist)itemlist.trans_list_transfered@viewpos = <viewpos>
 				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
 				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
 				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
@@ -149,16 +149,16 @@ window transfer
 			}
 		}
 
-		textlist trans_list_amount
+		textlist trans_list_transfered
 		{
-			dataid		TEXT_TRANSFER_LIST_AMOUNT
-			pos			"410 16"
+			dataid		TEXT_TRANSFER_LIST_TRANSFERED
+			pos			"425 16"
 			size		"50 550"
 			lineheight	"25"
 			textalign	"cr"
 			onViewChange	{
 				*(textlist)itemlist.trans_list@viewpos = <viewpos>
-				*(textlist)itemlist.trans_list_transfered@viewpos = <viewpos>
+				*(textlist)itemlist.trans_list_amount@viewpos = <viewpos>
 				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
 				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
 				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
