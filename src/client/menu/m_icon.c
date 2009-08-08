@@ -85,7 +85,7 @@ menuIcon_t* MN_AllocStaticIcon (const char* name)
  * @param[in] status 0:normal, 1:hover, 2:disabled, 3:clicked
  * @todo use named const for status
  */
-void MN_DrawIconInBox (menuIcon_t* icon, int status, int posX, int posY, int sizeX, int sizeY)
+void MN_DrawIconInBox (const menuIcon_t* icon, int status, int posX, int posY, int sizeX, int sizeY)
 {
 	const int texX = icon->pos[0];
 	int texY;

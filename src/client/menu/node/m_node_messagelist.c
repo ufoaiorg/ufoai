@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_actions.h"
 #include "../m_parse.h"
 #include "../m_render.h"
+#include "../m_icon.h"
 #include "m_node_text.h"
 #include "m_node_messagelist.h"
 #include "m_node_abstractnode.h"
@@ -57,6 +58,73 @@ static int MN_MessageGetLines(const menuNode_t *node, message_t *message, const 
 
 static char *lastDate;
 
+/**
+ * @todo do not hard code icons
+ * @todo cache icon result
+ */
+static menuIcon_t *MN_MessageGetIcon(const message_t *message) {
+	const char* iconName;
+
+	switch (message->type) {
+	case MSG_DEBUG:			/**< only save them in debug mode */
+		iconName = "message_debug";
+		break;
+	case MSG_INFO:			/**< don't save these messages */
+		iconName = "message_info";
+		break;
+	case MSG_STANDARD:
+		iconName = "message_info";
+		break;
+	case MSG_RESEARCH_PROPOSAL:
+		iconName = "message_research";
+		break;
+	case MSG_RESEARCH_HALTED:
+		iconName = "message_research";
+		break;
+	case MSG_RESEARCH_FINISHED:
+		iconName = "message_research";
+		break;
+	case MSG_CONSTRUCTION:
+		iconName = "message_construction";
+		break;
+	case MSG_UFOSPOTTED:
+		iconName = "message_ufo";
+		break;
+	case MSG_TERRORSITE:
+		iconName = "message_ufo";
+		break;
+	case MSG_BASEATTACK:
+		iconName = "message_ufo";
+		break;
+	case MSG_TRANSFERFINISHED:
+		iconName = "message_transfer";
+		break;
+	case MSG_PROMOTION:
+		iconName = "message_promotion";
+		break;
+	case MSG_PRODUCTION:
+		iconName = "message_production";
+		break;
+	case MSG_NEWS:
+		iconName = "message_info";
+		break;
+	case MSG_DEATH:
+		iconName = "message_death";
+		break;
+	case MSG_CRASHSITE:
+		iconName = "message_ufo";
+		break;
+	case MSG_EVENT:
+		iconName = "message_info";
+		break;
+	default:
+		iconName = "message_info";
+		break;
+	}
+
+	return MN_GetIconByName(iconName);
+}
+
 static void MN_MessageDraw(const menuNode_t *node, message_t *message, const char *fontID, int x, int y, int width, int height, int *screenLines)
 {
 	const int column1 = DATETIME_COLUMN_SIZE;
@@ -74,9 +142,12 @@ static void MN_MessageDraw(const menuNode_t *node, message_t *message, const cha
 
 	x += DATETIME_COLUMN_SIZE + node->padding;
 
-	/* identify the begin of a message */
-	/** @todo Use an icon instead of this star */
-	MN_DrawStringInBox(fontID, ALIGN_UL, x-10, y + EXTRADATA(node).lineHeight * lines2, 20, 20, "*", LONGLINES_WRAP);
+	/* identify the begin of a message with a mark */
+	if (lines2 >= 0) {
+		const menuIcon_t *icon;
+		icon = MN_MessageGetIcon(message);
+		MN_DrawIconInBox(icon, 0, x - 25, y + EXTRADATA(node).lineHeight * lines2 - 1, 19, 19);
+	}
 
 	/* draw the message */
 	MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column2, height, EXTRADATA(node).lineHeight, message->text, EXTRADATA(node).super.scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);

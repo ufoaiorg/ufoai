@@ -378,3 +378,70 @@ icon ufopedia_news {
 	size	"16 16"
 	single	true
 }
+
+//
+// messagelist icons
+//
+
+icon message_debug {
+	image "ui/icon_message"
+	texl	"0 16"
+	size	"15 15"
+	single	true
+}
+
+icon message_info {
+	image "ui/icon_message"
+	texl	"16 16"
+	size	"15 15"
+	single	true
+}
+
+icon message_research {
+	image "ui/icon_message"
+	texl	"16 0"
+	size	"15 15"
+	single	true
+}
+
+icon message_construction {
+	image "ui/icon_message"
+	texl	"0 0"
+	size	"15 15"
+	single	true
+}
+
+icon message_transfer {
+	image "ui/icon_message"
+	texl	"48 0"
+	size	"15 15"
+	single	true
+}
+
+icon message_promotion {
+	image "ui/icon_message"
+	texl	"48 16"
+	size	"15 15"
+	single	true
+}
+
+icon message_production {
+	image "ui/icon_message"
+	texl	"32 0"
+	size	"15 15"
+	single	true
+}
+
+icon message_death {
+	image "ui/icon_message"
+	texl	"32 16"
+	size	"15 15"
+	single	true
+}
+
+icon message_ufo {
+	image "ui/icon_message"
+	texl	"32 16"
+	size	"15 15"
+	single	true
+}

@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_ICON_H
 #define CLIENT_MENU_M_ICON_H
 
-#define MAX_MENUICONS 64
+#define MAX_MENUICONS 128
 
 typedef struct menuIcon_s {
 	char name[MAX_VAR];
@@ -39,6 +39,6 @@ extern const value_t mn_iconProperties[];
 
 menuIcon_t* MN_GetIconByName(const char* name);
 menuIcon_t* MN_AllocStaticIcon(const char* name) __attribute__ ((warn_unused_result));
-void MN_DrawIconInBox(menuIcon_t* icon, int status, int posX, int posY, int sizeX, int sizeY);
+void MN_DrawIconInBox(const menuIcon_t* icon, int status, int posX, int posY, int sizeX, int sizeY);
 
 #endif
