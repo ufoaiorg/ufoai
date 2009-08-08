@@ -18,7 +18,7 @@ window employees
 
 	rows list_background {
 		pos			"29 170"
-		size		"370 566"
+		size		"370 580"
 		color1		"0 0.08 0 1"
 		color2		"0 0.16 0 1"
 		lineheight	38
@@ -31,8 +31,8 @@ window employees
 	}
 
 	panel list_border {
-		pos		"13 163"
-		size	"393 595"
+		pos		"13 155"
+		size	"393 605"
 		image	ui/panel_grey_green_large2
 	}
 
@@ -247,8 +247,8 @@ window employees
 	vscrollbar scroll
 	{
 		image		ui/scrollbar_v_green
-		pos			"368 182"
-		height		"558"
+		pos			"368 175"
+		height		"560"
 		current		0
 		viewsize	15
 		fullsize	50
