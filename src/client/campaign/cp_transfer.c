@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_team.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
+#include "../menu/m_data.h"
 #include "../mxml/mxml_ufoai.h"
 #include "cp_campaign.h"
 #include "cp_uforecovery.h"
@@ -1404,9 +1405,58 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 	/* Set global pointer to current selected base. */
 	td.transferBase = destbase;
 	Cvar_Set("mn_trans_base_name", destbase->name);
+	Cvar_SetValue("mn_trans_base_id", destbase->idx);
 
 	/* Update stuff-in-base list. */
 	TR_TransferSelect(srcbase, destbase, td.currentTransferType);
+}
+
+static menuOption_t *baseList;
+
+static void TR_InitBaseList (void) {
+	int baseIdx;
+	base_t *currentBase = B_GetCurrentSelectedBase();
+	int previous = -1;
+	menuOption_t *first = NULL;
+
+	if (baseList == NULL) {
+		baseList = (menuOption_t *) Mem_PoolAlloc(sizeof(*baseList) * MAX_BASES, cp_campaignPool, 0);
+	}
+
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+		if (base == currentBase)
+			continue;
+
+		if (first == NULL)
+			first = &baseList[baseIdx];
+
+		MN_InitOption(&baseList[baseIdx], va("base%i", baseIdx), base->name, va("%i", baseIdx));
+		if (previous != -1)
+			baseList[previous].next = &baseList[baseIdx];
+		previous = baseIdx;
+	}
+
+	MN_RegisterOption(OPTION_BASELIST, first);
+}
+
+static void TR_SelectBase_f (void)
+{
+	int baseIdx;
+	base_t *base = B_GetCurrentSelectedBase();
+	base_t *destbase;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseIdx>\n", Cmd_Argv(0));
+		return;
+	}
+
+	baseIdx = atoi(Cmd_Argv(1));
+	destbase = B_GetFoundedBaseByIDX(baseIdx);
+
+	TR_TransferBaseSelect(base, destbase);
 }
 
 /**
@@ -1740,12 +1790,19 @@ static void TR_Init_f (void)
 	/* Clear aircraft temp array. */
 	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
 
+	/* Update destination base list */
+	TR_InitBaseList();
+
 	/* Select first available base. */
 	td.transferBase = NULL;
 	TR_NextBase_f();
 	/* Set up cvar used to display transferBase. */
-	if (td.transferBase)
+	if (td.transferBase) {
 		Cvar_Set("mn_trans_base_name", td.transferBase->name);
+		Cvar_SetValue("mn_trans_base_id", td.transferBase->idx);
+	} else {
+		Cvar_Set("mn_trans_base_id", "");
+	}
 
 	/* Set up cvar used with tabset */
 	Cvar_Set("mn_itemtype", transferTypeIDs[0]);
@@ -1774,6 +1831,9 @@ static void TR_TransferClose_f (void)
 	memset(td.trAliensTmp, 0, sizeof(td.trAliensTmp));
 	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
 	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
+
+	Mem_Free(baseList);
+	baseList = NULL;
 }
 
 #ifdef DEBUG
@@ -2074,7 +2134,7 @@ static void TR_TransferList_Scroll_f (void)
 	/* spinners are only on items screen */
 	if (transferType != TRANS_TYPE_ITEM)
 		return;
-	
+
 	for (i = 0; i < csi.numODs; i++) {
 		if (srcBase->storage.num[i] || td.trItemsTmp[i]) {
 			if (cnt >= (viewPos + MAX_TRANSLIST_MENU_ENTRIES))
@@ -2100,6 +2160,7 @@ void TR_InitStartup (void)
 	Cmd_AddCommand("trans_list_click", TR_TransferListSelect_f, "Callback for transfer list node click");
 	Cmd_AddCommand("trans_cargolist_click", TR_CargoListSelect_f, "Callback for cargo list node click");
 	Cmd_AddCommand("trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu");
+	Cmd_AddCommand("trans_selectbase", TR_SelectBase_f, "Callback for selecting a base");
 	Cmd_AddCommand("trans_nextbase", TR_NextBase_f, "Callback for selecting next base");
 	Cmd_AddCommand("trans_prevbase", TR_PrevBase_f, "Callback for selecting previous base");
 	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");

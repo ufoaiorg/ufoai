@@ -97,6 +97,7 @@ static const char *const menutextid_names[] = {
 	"OPTION_UFOPEDIA",
 	"OPTION_UFOS",
 	"OPTION_DROPSHIPS",
+	"OPTION_BASELIST",
 
 	"LINESTRIP_FUNDING",
 	"LINESTRIP_COLOR"

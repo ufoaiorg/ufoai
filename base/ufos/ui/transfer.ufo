@@ -536,18 +536,9 @@ window transfer
 			image	ui/panel_grey_green_large
 		}
 
-		custombutton prev_base
-		{
-			tooltip		"_Select previous base for transfer"
-			pos			"32 30"
-			size		"32 32"
-			icon prev
-			onClick		{ cmd "trans_prevbase;" }
-		}
-
 		string s_current_base
 		{
-			string		"_Selected base"
+			string		"_Destination base"
 			pos			"64 22"
 			size		"288 20"
 			textalign	uc
@@ -555,23 +546,17 @@ window transfer
 			font		f_small
 		}
 
-		string s_current_base_var
+		selectbox destination_base
 		{
-			string		*cvar:mn_trans_base_name
+			cvar		*cvar:mn_trans_base_id
+			image		"ui/selectbox_green"
 			pos			"64 50"
 			size		"288 20"
-			textalign	uc
-			color		"1 1 1 1"
-			font		f_small_bold
-		}
-
-		custombutton next_base
-		{
-			tooltip		"_Select next base for transfer"
-			pos			"356 30"
-			size		"32 32"
-			icon		next
-			onClick		{ cmd "trans_nextbase;" }
+			color		"0.6 0.6 0.6 0.3"
+			dataid		OPTION_BASELIST
+			onChange {
+				cmd "trans_selectbase <cvar:mn_trans_base_id>"
+			}
 		}
 
 		text t_baseinfo
@@ -624,30 +609,30 @@ window transfer
 	// buttons
 	// ==================
 
-	button bt_emptycraftstorage
-	{
-		string		"_Unload"
-		tooltip		"_Empty the aircraft storage"
-		image		ui/button_blue
-		pos			"619 711"
-		size		"128 52"
-		color		"1 1 1 0.6"
-		selectcolor	"1 1 1 1"
-		font		f_normal
-		onClick		{ cmd "trans_emptyairstorage;" }
-	}
-
 	button bt_starttrans
 	{
 		string		"_Transfer"
 		tooltip		"_Start the transfer"
 		image		ui/button_blue
-		pos			"830 711"
+		pos			"650 711"
 		size		"128 52"
 		color		"1 1 1 0.6"
 		selectcolor	"1 1 1 0.6"
 		font		f_normal
 		onClick		{ cmd "trans_start;" }
+	}
+
+	button bt_emptycraftstorage
+	{
+		string		"_Cancel"
+		tooltip		"_Empty the aircraft storage"
+		image		ui/button_blue
+		pos			"790 711"
+		size		"128 52"
+		color		"1 1 1 0.6"
+		selectcolor	"1 1 1 1"
+		font		f_normal
+		onClick		{ cmd "trans_emptyairstorage;" }
 	}
 
 	// ==================
