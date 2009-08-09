@@ -652,8 +652,14 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 			case RS_WEAPON:
 				for (i = 0; i < csi.numODs; i++) {
 					if (!strcmp(tech->provides, csi.ods[i].id)) {
+						const char *text;
 						INV_ItemDescription(&csi.ods[i]);
 						UP_DisplayTechTree(tech);
+						/* translate info */
+						text = MN_GetText(TEXT_STANDARD);
+						MN_RegisterText(TEXT_UFOPEDIA_METADATA, text);
+						if (text != NULL)
+							Cvar_Set("mn_upmetadata", "1");
 						break;
 					}
 				}
