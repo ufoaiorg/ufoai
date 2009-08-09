@@ -301,7 +301,7 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
  */
 static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t *attacker, shot_mock_t *mock)
 {
-	const qboolean stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
+	const qboolean stunEl = (fd->dmgweight == gi.csi->damStunElectro);
 	const qboolean stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
 	const qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
 	qboolean isRobot;
