@@ -232,9 +232,9 @@ static qboolean MN_CheckRadarImage (const char *imageName, const int level)
 	const char **ext = imageExtensions;
 
 	while (*ext) {
-		Com_sprintf(imagePath, sizeof(imagePath), "pics/radars/%s_%i.%s", imageName, level, *ext);
+		Com_sprintf(imagePath, sizeof(imagePath), "radars/%s_%i.%s", imageName, level, *ext);
 
-		if (FS_CheckFile(imagePath) > 0)
+		if (FS_CheckFile(va("pics/%s", imagePath)) > 0)
 			return qtrue;
 		ext++;
 	}
@@ -271,17 +271,17 @@ static void MN_InitRadar (const menuNode_t *node)
 				if (i == 0) {
 					/* there should be at least one level */
 					Com_Printf("No radar images for map: '%s'\n", hudRadarImage->name);
-					cl.skipRadarNodes = qtrue;
+					radar.numImages = 0;
 					return;
 				}
 			} else {
 				char imagePath[MAX_QPATH];
 				const image_t *image;
-				Com_sprintf(imagePath, sizeof(imagePath), "pics/radars/%s_%i", hudRadarImage->name, i + 1);
+				Com_sprintf(imagePath, sizeof(imagePath), "radars/%s_%i", hudRadarImage->name, i + 1);
 				hudRadarImage->path[i] = Mem_StrDup(imagePath);
 				hudRadarImage->maxlevel++;
 
-				image = R_FindImage(hudRadarImage->path[i], it_pic);
+				image = R_FindImage(va("pics/%s", hudRadarImage->path[i]), it_pic);
 				hudRadarImage->w = image->width;
 				hudRadarImage->h = image->height;
 				if (hudRadarImage->w > VID_NORM_WIDTH || hudRadarImage->h > VID_NORM_HEIGHT)
@@ -323,8 +323,6 @@ static void MN_InitRadar (const menuNode_t *node)
 	/* now align the screen coordinates like it's given by the menu node */
 	radar.x -= (radar.w / 2);
 	radar.y -= (radar.h / 2);
-
-	cl.radarInited = qtrue;
 }
 
 /*=========================================
@@ -341,8 +339,8 @@ static void MN_DrawActor (const le_t *le, const vec3_t pos)
 	const int interpolateY = (int)le->origin[1] % (UNIT_SIZE / 2);
 #endif
 	/* relative to screen */
-	const int x = (radar.x + pos[0] * radar.gridWidth + radar.gridWidth / 2) * viddef.rx;
-	const int y = (radar.y + (radar.h - pos[1] * radar.gridHeight) + radar.gridWidth / 2) * viddef.ry;
+	const int x = pos[0];
+	const int y = pos[1];
 
 	/* use different alpha values for different levels */
 	if (actorLevel < cl_worldlevel->integer)
@@ -396,8 +394,8 @@ static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
 {
 	const vec4_t color = {0, 1, 0, 1};
 	/* relative to screen */
-	const int x = (radar.x + pos[0] * radar.gridWidth) * viddef.rx;
-	const int y = (radar.y + (radar.h - pos[1] * radar.gridHeight)) * viddef.ry;
+	const int x = pos[0];
+	const int y = pos[1];
 	MN_DrawFill(x, y, radar.gridWidth, radar.gridHeight, color);
 }
 
@@ -413,16 +411,44 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	int i;
 	vec3_t pos;
 
-	if (cls.state != ca_active || cl.skipRadarNodes)
+	static const vec4_t grey = {0.7, 0.7, 0.7, 1};
+	static const vec4_t blue = {0, 0, 1, 1};
+	const int mapWidth = mapMax[0] - mapMin[0];
+	const int mapHeight = mapMax[1] - mapMin[1];
+
+	/** @todo i dont really understand why the ratio is not the same, but
+	 * i use an existing image to compute that */
+	const float imageCoefX = (float) node->size[0] / 456.0f;
+	const float imageCoefY = (float) node->size[1] / 461.0f;
+	const float mapCoefX = (float) node->size[0] / (float) mapWidth;
+	const float mapCoefY = (float) node->size[1] / (float) mapHeight;
+
+	/** @todo remove cl.skipRadarNodes from the code */
+	if (cls.state != ca_active)
 		return;
+
+	MN_GetNodeAbsPos(node, pos);
+	R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
+	MN_DrawFill(pos[0], pos[1], mapWidth * mapCoefX, mapHeight * mapCoefY, grey);
+	R_BeginClipRect(pos[0], pos[1], node->size[0], node->size[1]);
 
 	/* the cl struct is wiped with every new map */
-	if (!cl.radarInited)
+	if (!cl.radarInited) {
 		MN_InitRadar(node);
+		cl.radarInited = qtrue;
+	}
 
-	if (!cl.radarInited)
-		return;
+	/* update context */
+	radar.x = pos[0];
+	radar.y = pos[1];
+	radar.w = node->size[0];
+	radar.h = node->size[1];
+	if (radar.gridWidth < 6)
+		radar.gridWidth = 6;
+	if (radar.gridHeight < 6)
+		radar.gridHeight = 6;
 
+	/* draw background */
 	for (i = 0; i < radar.numImages; i++) {
 		hudRadarImage_t *image = &radar.images[i];
 		int maxlevel = cl_worldlevel->integer;
@@ -430,29 +456,33 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 		if (maxlevel >= image->maxlevel)
 			maxlevel = image->maxlevel - 1;
 		assert(image->path[maxlevel]);
-		MN_DrawNormImageByName(radar.x + image->x, radar.y + image->y, 0, 0, 0, 0, 0, 0, image->path[maxlevel]);
+		MN_DrawNormImageByName(
+				radar.x + imageCoefX * image->x, radar.y + imageCoefY * image->y,
+				imageCoefX * image->w, imageCoefY * image->h,
+				0, 0, 0, 0, image->path[maxlevel]);
 	}
 
 	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
+		vec3_t itempos;
 		if (!le->inuse || le->invis)
 			continue;
 
-		VectorCopy(le->pos, pos);
-
 		/* convert to radar area coordinates */
-		pos[0] -= GRID_WIDTH + (radar.a[0] / UNIT_SIZE);
-		pos[1] -= GRID_WIDTH + ((radar.a[1] - UNIT_SIZE) / UNIT_SIZE);
+		itempos[0] = pos[0] + (le->origin[0] - mapMin[0]) * mapCoefX;
+		itempos[1] = pos[1] + (mapHeight - (le->origin[1] - mapMin[1])) * mapCoefY;
 
 		switch (le->type) {
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
-			MN_DrawActor(le, pos);
+			MN_DrawActor(le, itempos);
 			break;
 		case ET_ITEM:
-			MN_RadarNodeDrawItem(le, pos);
+			MN_RadarNodeDrawItem(le, itempos);
 			break;
 		}
 	}
+
+	R_EndClipRect();
 }
 
 void MN_RegisterRadarNode (nodeBehaviour_t *behaviour)

@@ -14,17 +14,31 @@ window ahud {
 	confunc crouch_checkbox_check_s	{ }
 
 	confunc unhide_chatscreen { }
+	
+	confunc openradar {
+		cmd "mn_push radarwindow"
+	}
 }
 
-window radarmenu {
+window radarwindow {
 	{
+		pos			"256 100"
+		size		"547 580"
+		dragbutton	true
+		closebutton	true
+		image		ui/popup_alpha_tile
+		string		"_Radar"
 		modal true
+	}
+
+	confunc closeradar {
+		cmd "mn_close radarwindow"
 	}
 
 	radar hudradar
 	{
-		pos	"0 0"
-		size "1024 768"
+		pos	"25 55"
+		size "500 500"
 	}
 }
 
