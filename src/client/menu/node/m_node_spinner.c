@@ -79,16 +79,14 @@ static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 
 	/* save result */
 	EXTRADATA(node).lastdiff = value - last;
-	if (!strncmp(EXTRADATA(node).value, "*cvar", 5)) {
+	if (!strncmp(EXTRADATA(node).value, "*cvar:", 6))
 		MN_SetCvar(&((char*)EXTRADATA(node).value)[6], NULL, value);
-	} else {
+	else
 		*(float*) EXTRADATA(node).value = value;
-	}
 
 	/* fire change event */
-	if (node->onChange) {
+	if (node->onChange)
 		MN_ExecuteEventActions(node, node->onChange);
-	}
 }
 
 static qboolean capturedDownButton;
@@ -135,8 +133,14 @@ static void MN_SpinnerNodeCapturedMouseLost (menuNode_t *node)
 	}
 }
 
+/**
+ * @note Mouse wheel is not inhibited when node is disabled
+ */
 static void MN_SpinnerNodeWheel (menuNode_t *node, qboolean down, int x, int y)
 {
+	const qboolean disabled = node->disabled || node->parent->disabled;
+	if (disabled)
+		return;
 	MN_SpinnerNodeStep(node, down);
 }
 
@@ -147,13 +151,14 @@ static void MN_SpinnerNodeDraw (menuNode_t *node)
 	int bottomTexX, bottomTexY;
 	const char* image = MN_GetReferenceString(node, node->image);
 	const float delta = MN_GetReferenceFloat(node, EXTRADATA(node).delta);
+	const qboolean disabled = node->disabled || node->parent->disabled;
 
 	if (!image)
 		return;
 
 	MN_GetNodeAbsPos(node, pos);
 
-	if (node->disabled || delta == 0) {
+	if (disabled || delta == 0) {
 		topTexX = TILE_SIZE;
 		topTexY = TILE_SIZE;
 		bottomTexX = TILE_SIZE;
