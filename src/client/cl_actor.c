@@ -784,8 +784,13 @@ qboolean CL_ActorSelect (le_t * le)
 		return qfalse;
 	}
 
-	if (le->team != cls.team || LE_IsDead(le) || !le->inuse || le->selected)
+	if (le->team != cls.team || LE_IsDead(le) || !le->inuse)
 		return qfalse;
+
+	if (le->selected) {
+		mousePosTargettingAlign = 0;
+		return qtrue;
+	}
 
 	if (selActor)
 		selActor->selected = qfalse;
