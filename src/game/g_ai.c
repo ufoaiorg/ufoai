@@ -268,7 +268,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	bestActionPoints = 0.0;
 	memset(aia, 0, sizeof(*aia));
 	move = gi.MoveLength(gi.pathingMap, to,
-			(ent->state & STATE_CROUCHED), qtrue);
+			(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
