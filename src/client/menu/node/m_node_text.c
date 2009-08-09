@@ -369,7 +369,6 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 }
 
 /**
- * @todo we should anyway scroll the text (if its possible)
  */
 static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {

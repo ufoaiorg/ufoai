@@ -38,7 +38,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../campaign/cp_campaign.h" /**< message_t */
 #include "../../../shared/parse.h"
 
-#define EXTRADATA(node) (node->u.text)
+#define EXTRADATA(node) (node->u.abstractscrollable)
+
+/** @todo use the font height? */
+static const int LINEHEIGHT	= 20;
 
 static const int DATETIME_COLUMN_SIZE = 180;
 
@@ -138,7 +141,7 @@ static void MN_MessageDraw(const menuNode_t *node, message_t *message, const cha
 
 	/* display the date */
 	if (lastDate == NULL || strcmp(lastDate, message->timestamp) != 0)
-		MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column1, height, EXTRADATA(node).lineHeight, message->timestamp, EXTRADATA(node).super.scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
+		MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column1, height, LINEHEIGHT, message->timestamp, EXTRADATA(node).scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
 
 	x += DATETIME_COLUMN_SIZE + node->padding;
 
@@ -146,11 +149,11 @@ static void MN_MessageDraw(const menuNode_t *node, message_t *message, const cha
 	if (lines2 >= 0) {
 		const menuIcon_t *icon;
 		icon = MN_MessageGetIcon(message);
-		MN_DrawIconInBox(icon, 0, x - 25, y + EXTRADATA(node).lineHeight * lines2 - 1, 19, 19);
+		MN_DrawIconInBox(icon, 0, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
 	}
 
 	/* draw the message */
-	MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column2, height, EXTRADATA(node).lineHeight, message->text, EXTRADATA(node).super.scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
+	MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column2, height, LINEHEIGHT, message->text, EXTRADATA(node).scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
 	*screenLines = max(lines1, lines2);
 	lastDate = message->timestamp;
 }
@@ -184,14 +187,11 @@ static void MN_MessageListNodeDraw (menuNode_t *node)
 #endif
 	MN_GetNodeAbsPos(node, pos);
 
-	if (EXTRADATA(node).lineHeight == 0)
-		defaultHeight = MN_FontGetHeight(font);
-	else
-		defaultHeight = EXTRADATA(node).lineHeight;
+	defaultHeight = LINEHEIGHT;
 
 #ifdef AUTOSCROLL
-	autoscroll = (EXTRADATA(node).super.scrollY.viewPos + EXTRADATA(node).super.scrollY.viewSize == EXTRADATA(node).super.scrollY.fullSize)
-		|| (EXTRADATA(node).super.scrollY.fullSize < EXTRADATA(node).super.scrollY.viewSize);
+	autoscroll = (EXTRADATA(node).scrollY.viewPos + EXTRADATA(node).scrollY.viewSize == EXTRADATA(node).scrollY.fullSize)
+		|| (EXTRADATA(node).scrollY.fullSize < EXTRADATA(node).scrollY.viewSize);
 #endif
 
 	/* text box */
@@ -232,7 +232,7 @@ static void MN_MessageListNodeDraw (menuNode_t *node)
 
 	/* found the first message we must display */
 	message = cp_messageStack;
-	posY = EXTRADATA(node).super.scrollY.viewPos;
+	posY = EXTRADATA(node).scrollY.viewPos;
 	while (message && posY > 0) {
 		posY -= message->lineUsed;
 		if (posY < 0)
@@ -246,10 +246,21 @@ static void MN_MessageListNodeDraw (menuNode_t *node)
 	screenLines = posY;
 	while (message) {
 		MN_MessageDraw(node, message, font, x, y, width, height, &screenLines);
-		if (screenLines >= EXTRADATA(node).super.scrollY.viewSize)
+		if (screenLines >= EXTRADATA(node).scrollY.viewSize)
 			break;
 		message = message->next;
 	}
+}
+
+static void MN_MessageListNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+{
+	MN_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
+	if (node->onWheelUp && !down)
+		MN_ExecuteEventActions(node, node->onWheelUp);
+	if (node->onWheelDown && down)
+		MN_ExecuteEventActions(node, node->onWheelDown);
+	if (node->onWheel)
+		MN_ExecuteEventActions(node, node->onWheel);
 }
 
 #ifdef DEBUG
@@ -270,8 +281,9 @@ static void MN_MessageDebugUseAllIcons_f (void)
 void MN_RegisterMessageListNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "messagelist";
-	behaviour->extends = "text";
+	behaviour->extends = "abstractscrollable";
 	behaviour->draw = MN_MessageListNodeDraw;
+	behaviour->mouseWheel = MN_MessageListNodeMouseWheel;
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mn_message_useallicons", MN_MessageDebugUseAllIcons_f, "Update message to use all icons");
 #endif
