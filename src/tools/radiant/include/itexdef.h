@@ -22,6 +22,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined (INCLUDED_ITEXDEF_H)
 #define INCLUDED_ITEXDEF_H
 
+/* greebo: The texture definition structure, containing the scale,
+ * rotation and shift values of an applied texture.
+ * At some places this is referred to as "fake" texture coordinates.
+ */
+// TODO: Rename GenericTextureDefinition
 class texdef_t {
 public:
 	float	shift[2];

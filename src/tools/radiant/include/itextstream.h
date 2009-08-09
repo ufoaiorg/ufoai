@@ -33,23 +33,29 @@
 #include "generic/static.h"
 
 /// \brief A read-only character-stream.
-class TextInputStream {
+class TextInputStream
+{
 	public:
-	virtual ~TextInputStream() {}
+		virtual ~TextInputStream ()
+		{
+		}
 
-	/// \brief Attempts to read the next \p length characters from the stream to \p buffer.
-	/// Returns the number of characters actually stored in \p buffer.
-	virtual std::size_t read(char* buffer, std::size_t length) = 0;
+		/// \brief Attempts to read the next \p length characters from the stream to \p buffer.
+		/// Returns the number of characters actually stored in \p buffer.
+		virtual std::size_t read (char* buffer, std::size_t length) = 0;
 };
 
 /// \brief A write-only character-stream.
-class TextOutputStream {
+class TextOutputStream
+{
 	public:
-	virtual ~TextOutputStream() {}
+		virtual ~TextOutputStream ()
+		{
+		}
 
-	/// \brief Attempts to write \p length characters to the stream from \p buffer.
-	/// Returns the number of characters actually read from \p buffer.
-	virtual std::size_t write(const char* buffer, std::size_t length) = 0;
+		/// \brief Attempts to write \p length characters to the stream from \p buffer.
+		/// Returns the number of characters actually read from \p buffer.
+		virtual std::size_t write (const char* buffer, std::size_t length) = 0;
 };
 
 /// \brief Calls the overloaded function ostream_write() to perform text formatting specific to the type being written.
@@ -67,52 +73,70 @@ class TextOutputStream {
  This overload writes a single character to any text-output-stream - ostream_write(TextOutputStreamType& ostream, char c).
  */
 template<typename T>
-inline TextOutputStream& operator<<(TextOutputStream& ostream, const T& t) {
+inline TextOutputStream& operator<< (TextOutputStream& ostream, const T& t)
+{
 	return ostream_write(ostream, t);
 }
 
-class NullOutputStream : public TextOutputStream {
+class NullOutputStream: public TextOutputStream
+{
 	public:
-	std::size_t write(const char*, std::size_t length) {
-		return length;
-	}
+		std::size_t write (const char*, std::size_t length)
+		{
+			return length;
+		}
 };
 
-class OutputStreamHolder {
-	NullOutputStream m_nullOutputStream;
-	TextOutputStream* m_outputStream;
+/**
+ * greebo: This is a simple container holding a single output stream.
+ * Use the getStream() method to acquire a reference to the stream.
+ */
+class OutputStreamHolder
+{
+		NullOutputStream m_nullOutputStream;
+		TextOutputStream* m_outputStream;
 	public:
-	OutputStreamHolder()
-	: m_outputStream(&m_nullOutputStream) {
-	}
-	void setOutputStream(TextOutputStream& outputStream) {
-		m_outputStream = &outputStream;
-	}
-	TextOutputStream& getOutputStream() {
-		return *m_outputStream;
-	}
+		OutputStreamHolder () :
+			m_outputStream(&m_nullOutputStream)
+		{
+		}
+		void setOutputStream (TextOutputStream& outputStream)
+		{
+			m_outputStream = &outputStream;
+		}
+		TextOutputStream& getOutputStream ()
+		{
+			return *m_outputStream;
+		}
 };
 
 typedef Static<OutputStreamHolder> GlobalOutputStream;
 
 /// \brief Returns the global output stream. Used to display messages to the user.
-inline TextOutputStream& globalOutputStream() {
+inline TextOutputStream& globalOutputStream ()
+{
 	return GlobalOutputStream::instance().getOutputStream();
 }
 
-class ErrorStreamHolder : public OutputStreamHolder {};
+class ErrorStreamHolder: public OutputStreamHolder
+{
+};
 typedef Static<ErrorStreamHolder> GlobalErrorStream;
 
 /// \brief Returns the global error stream. Used to display error messages to the user.
-inline TextOutputStream& globalErrorStream() {
+inline TextOutputStream& globalErrorStream ()
+{
 	return GlobalErrorStream::instance().getOutputStream();
 }
 
-class WarningStreamHolder : public OutputStreamHolder {};
+class WarningStreamHolder: public OutputStreamHolder
+{
+};
 typedef Static<WarningStreamHolder> GlobalWarningStream;
 
 /// \brief Returns the global warning stream. Used to display warning messages to the user.
-inline TextOutputStream& globalWarningStream() {
+inline TextOutputStream& globalWarningStream ()
+{
 	return GlobalWarningStream::instance().getOutputStream();
 }
 

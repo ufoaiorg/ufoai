@@ -52,6 +52,9 @@ public:
 	virtual void setActive(bool active) = 0;
 };
 
+/**
+* Interface for objects which can be filtered by the FilterSystem.
+*/
 class Filterable {
 public:
 	virtual ~Filterable(){}
