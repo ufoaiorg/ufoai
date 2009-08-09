@@ -22,12 +22,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "image.h"
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include "ifilesystem.h"
-
 #include "imagelib.h"
-
-#include "ifilesystem.h"
 #include "iimage.h"
-
 #include "modulesystem/singletonmodule.h"
 
 class ImageDependencies : public GlobalFileSystemModuleRef {
