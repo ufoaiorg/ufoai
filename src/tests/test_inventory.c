@@ -243,7 +243,8 @@ static void testItemMassActions (void)
 	}
 }
 
-int UFO_AddInventoryTests (void) {
+int UFO_AddInventoryTests (void)
+{
 	/* add a suite to the registry */
 	CU_pSuite InventorySuite = CU_add_suite("InventoryTests", UFO_InitSuiteInventory, UFO_CleanSuiteInventory);
 	if (InventorySuite == NULL)

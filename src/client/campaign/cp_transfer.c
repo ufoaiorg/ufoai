@@ -1413,9 +1413,10 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 
 static menuOption_t *baseList;
 
-static void TR_InitBaseList (void) {
+static void TR_InitBaseList (void)
+{
 	int baseIdx;
-	base_t *currentBase = B_GetCurrentSelectedBase();
+	const base_t *currentBase = B_GetCurrentSelectedBase();
 	int previous = -1;
 	menuOption_t *first = NULL;
 
@@ -1424,7 +1425,7 @@ static void TR_InitBaseList (void) {
 	}
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 		if (base == currentBase)
