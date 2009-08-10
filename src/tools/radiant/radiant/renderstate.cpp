@@ -95,30 +95,6 @@ const char* Renderer_GetStats ()
 	return g_renderer_stats.c_str();
 }
 
-// ARB path
-
-void createProgram (const char* filename, GLenum type)
-{
-	std::size_t size = file_size(filename);
-	FileInputStream file(filename);
-	ASSERT_MESSAGE(!file.failed(), "failed to open " << makeQuoted(filename));
-	Array<GLcharARB> buffer(size);
-	size = file.read(reinterpret_cast<StreamBase::byte_type*> (buffer.data()), size);
-
-	glProgramStringARB(type, GL_PROGRAM_FORMAT_ASCII_ARB, GLsizei(size), buffer.data());
-
-	if (GL_INVALID_OPERATION==glGetError()) {
-		GLint errPos;
-		glGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB, &errPos);
-		const GLubyte* errString = glGetString(GL_PROGRAM_ERROR_STRING_ARB);
-
-		globalErrorStream() << reinterpret_cast<const char*> (filename) << ":" << errPos << "\n"
-				<< reinterpret_cast<const char*> (errString);
-
-		ERROR_MESSAGE("error in gl program");
-	}
-}
-
 inline bool OpenGLState_less (const OpenGLState& self, const OpenGLState& other)
 {
 	// Sort by sort-order override.
@@ -516,13 +492,6 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 			if (GlobalOpenGL().GL_1_3()) {
 				glActiveTexture(GL_TEXTURE0);
 				glClientActiveTexture(GL_TEXTURE0);
-			}
-
-			if (GlobalOpenGL().ARB_shader_objects()) {
-				glUseProgramObjectARB(0);
-				glDisableVertexAttribArrayARB(c_attr_TexCoord0);
-				glDisableVertexAttribArrayARB(c_attr_Tangent);
-				glDisableVertexAttribArrayARB(c_attr_Binormal);
 			}
 
 			if (globalstate & RENDER_TEXTURE) {
