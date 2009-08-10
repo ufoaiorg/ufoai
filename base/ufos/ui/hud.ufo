@@ -166,7 +166,7 @@ window hud extends ahud
 		string actorname
 		{
 			string	*cvar:mn_name
-			pos		"130 16"
+			pos		"130 13"
 			size	"255 20"
 		}
 	}
@@ -368,7 +368,7 @@ window hud extends ahud
 		string ammoright
 		{
 			string	*cvar:mn_ammoright
-			pos		"17 113"
+			pos		"17 112"
 			size	"65 20"
 			textalign	uc
 		}
@@ -434,7 +434,7 @@ window hud extends ahud
 		string ammoleft
 		{
 			string	*cvar:mn_ammoleft
-			pos		"171 116"
+			pos		"171 112"
 			size	"65 20"
 			textalign	uc
 		}
@@ -530,17 +530,17 @@ window hud extends ahud
 		string tus
 		{
 			string	*cvar:mn_tu
-			pos		"85 11"
+			pos		"82 11"
 			size	"40 20"
-			textalign	uc
+			textalign	ur
 		}
 
 		string hp
 		{
 			string	*cvar:mn_hp
-			pos		"85 25"
+			pos		"82 25"
 			size	"40 20"
-			textalign	uc
+			textalign	ur
 		}
 
 		//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_althud.
@@ -555,7 +555,7 @@ window hud extends ahud
 		bar timeall
 		{
 			pos		"130 21"
-			size	"305 6"
+			size	"298 6"
 			color	".1 .1 .7 1"
 			current	*cvar:mn_tu
 			max		*cvar:mn_tumax
@@ -564,7 +564,7 @@ window hud extends ahud
 		bar timeremain
 		{
 			pos		"130 21"
-			size	"305 6"
+			size	"298 6"
 			color	".2 .2 1 1"
 			current	*cvar:mn_turemain
 			max		*cvar:mn_tumax
@@ -574,7 +574,7 @@ window hud extends ahud
 		bar timereserved
 		{
 			pos		"130 21"
-			size	"305 3"
+			size	"298 3"
 			color	"0 .5 0 1"
 			current	*cvar:mn_tureserved
 			max		*cvar:mn_tumax
@@ -583,8 +583,8 @@ window hud extends ahud
 
 		bar health
 		{
-			pos		"130 34"
-			size	"305 6"
+			pos		"130 33"
+			size	"298 6"
 			color	"1 0 0 1"
 			current	*cvar:mn_hp
 			max		*cvar:mn_hpmax
@@ -593,8 +593,8 @@ window hud extends ahud
 
 		bar stun
 		{
-			pos		"130 34"
-			size	"305 6"
+			pos		"130 33"
+			size	"298 6"
 			color	".3 .3 .3 .9"
 			current	*cvar:mn_stun
 			max		*cvar:mn_hpmax
@@ -604,15 +604,15 @@ window hud extends ahud
 		string moral_text
 		{
 			string	*cvar:mn_morale
-			pos		"85 38"
+			pos		"82 38"
 			size	"40 20"
-			textalign	uc
+			textalign	ur
 		}
 
 		bar morale
 		{
-			pos		"130 46"
-			size	"305 6"
+			pos		"130 45"
+			size	"298 6"
 			color	"1 1 0.5 1"
 			current	*cvar:mn_morale
 			max		*cvar:mn_moralemax
