@@ -61,7 +61,6 @@ extern cvar_t *r_monochrome;
 extern cvar_t *r_saturation;
 
 extern cvar_t *r_drawworld;
-extern cvar_t *r_drawspecialbrushes;
 extern cvar_t *r_drawentities;
 extern cvar_t *r_nocull;
 extern cvar_t *r_isometric;

@@ -52,7 +52,6 @@ cvar_t *r_monochrome;
 cvar_t *r_saturation;
 cvar_t *r_drawentities;
 cvar_t *r_drawworld;
-cvar_t *r_drawspecialbrushes;
 cvar_t *r_nocull;
 cvar_t *r_isometric;
 cvar_t *r_anisotropic;
@@ -384,7 +383,6 @@ static void R_RegisterSystemVars (void)
 	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE | CVAR_R_CONTEXT, "You can define the opengl driver you want to use - empty if you want to use the system default");
 	r_drawentities = Cvar_Get("r_drawentities", "1", 0, "Draw the local entities");
 	r_drawworld = Cvar_Get("r_drawworld", "1", 0, "Draw the world brushes");
-	r_drawspecialbrushes = Cvar_Get("r_drawspecialbrushes", "0", 0, "Draw stuff like actorclip");
 	r_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
 	r_nocull = Cvar_Get("r_nocull", "0", 0, "Don't perform culling for brushes and entities");
 	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
