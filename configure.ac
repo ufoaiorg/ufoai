@@ -59,6 +59,10 @@ AC_ARG_WITH(opengl_framework,
 	[AS_HELP_STRING([--with-opengl-framework], [compile with given opengl framework @<:@default=/System/Library/Frameworks/OpenGL.framework@:>@])],
 	[], [with_opengl_framework=/System/Library/Frameworks/OpenGL.framework])
 
+AC_ARG_WITH(openal_framework,
+	[AS_HELP_STRING([--with-openal-framework], [compile with given openal framework @<:@default=/System/Library/Frameworks/OpenAL.framework@:>@])],
+	[], [with_openal_framework=/System/Library/Frameworks/OpenAL.framework])
+
 AC_ARG_ENABLE(dedicated,
 	[AS_HELP_STRING([--disable-dedicated], [build dedicated server @<:@default=enabled@:>@])],
 	[], [enable_dedicated=yes])
@@ -147,6 +151,8 @@ elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	AC_SUBST([TARGET_OS],[darwin])
 	CFLAGS="$CFLAGS -F$with_opengl_framework"
+	RADIANT_CFLAGS="$RADIANT_CFLAGS -F$with_openal_framework"
+	RADIANT_LIBS="$RADIANT_LIBS -framework OpenAL"
 	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL -framework Cocoa"
 	SERVER_LIBS="$SERVER_LIBS"
 

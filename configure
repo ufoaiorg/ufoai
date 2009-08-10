@@ -748,6 +748,7 @@ with_xml2_config
 with_curses
 with_msys
 with_opengl_framework
+with_openal_framework
 enable_dedicated
 enable_client
 enable_ufo2map
@@ -1425,6 +1426,8 @@ Optional Packages:
   --with-msys             compile with msys support [default=check]
   --with-opengl-framework compile with given opengl framework
                           [default=/System/Library/Frameworks/OpenGL.framework]
+  --with-openal-framework compile with given openal framework
+                          [default=/System/Library/Frameworks/OpenAL.framework]
 
 Some influential environment variables:
   CC          C compiler command
@@ -2149,6 +2152,15 @@ else
 fi
 
 
+
+# Check whether --with-openal_framework was given.
+if test "${with_openal_framework+set}" = set; then
+  withval=$with_openal_framework;
+else
+  with_openal_framework=/System/Library/Frameworks/OpenAL.framework
+fi
+
+
 # Check whether --enable-dedicated was given.
 if test "${enable_dedicated+set}" = set; then
   enableval=$enable_dedicated;
@@ -2355,6 +2367,8 @@ then
 	TARGET_OS=darwin
 
 	CFLAGS="$CFLAGS -F$with_opengl_framework"
+	RADIANT_CFLAGS="$RADIANT_CFLAGS -F$with_openal_framework"
+	RADIANT_LIBS="$RADIANT_LIBS -framework OpenAL"
 	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL -framework Cocoa"
 	SERVER_LIBS="$SERVER_LIBS"
 
