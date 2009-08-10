@@ -162,7 +162,7 @@ void R_ScreenShot_f (void)
 	/* Write */
 	switch (type) {
 	case SSHOTTYPE_TGA:
-		R_WriteTGA(&f, buffer, viddef.width, viddef.height);
+		R_WriteTGA(&f, buffer, viddef.width, viddef.height, 3);
 		break;
 
 	case SSHOTTYPE_TGA_COMP:
