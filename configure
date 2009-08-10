@@ -2367,8 +2367,6 @@ then
 	TARGET_OS=darwin
 
 	CFLAGS="$CFLAGS -F$with_opengl_framework"
-	RADIANT_CFLAGS="$RADIANT_CFLAGS -F$with_openal_framework"
-	RADIANT_LIBS="$RADIANT_LIBS -framework OpenAL"
 	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL -framework Cocoa"
 	SERVER_LIBS="$SERVER_LIBS"
 
@@ -12111,6 +12109,12 @@ $as_echo "yes" >&6; }
 	:
 fi
 	RADIANT_CFLAGS="$RADIANT_CFLAGS $CPPFLAGS"
+
+	if test $TARGET_OS == "darwin"
+	then
+		RADIANT_CFLAGS="$RADIANT_CFLAGS -F$with_openal_framework"
+		RADIANT_LIBS="$RADIANT_LIBS -framework OpenAL"
+	fi
 else
 	{ $as_echo "$as_me:$LINENO: Without UFORadiant" >&5
 $as_echo "$as_me: Without UFORadiant" >&6;}

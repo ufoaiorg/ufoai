@@ -151,8 +151,6 @@ elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	AC_SUBST([TARGET_OS],[darwin])
 	CFLAGS="$CFLAGS -F$with_opengl_framework"
-	RADIANT_CFLAGS="$RADIANT_CFLAGS -F$with_openal_framework"
-	RADIANT_LIBS="$RADIANT_LIBS -framework OpenAL"
 	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL -framework Cocoa"
 	SERVER_LIBS="$SERVER_LIBS"
 
@@ -754,6 +752,12 @@ then
 	AC_MSG_NOTICE([UFORadiant dependencies: gtk2, gtkglext, glib2 and libxml2])
 	PKG_CHECK_MODULES([RADIANT], [gtk+-2.0 gtkglext-1.0 glib-2.0 libxml-2.0])
 	RADIANT_CFLAGS="$RADIANT_CFLAGS $CPPFLAGS"
+
+	if test $TARGET_OS == "darwin"
+	then
+		RADIANT_CFLAGS="$RADIANT_CFLAGS -F$with_openal_framework"
+		RADIANT_LIBS="$RADIANT_LIBS -framework OpenAL"
+	fi	
 else
 	AC_MSG_NOTICE([Without UFORadiant])
 fi
