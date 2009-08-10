@@ -402,7 +402,9 @@ static void R_RegisterSystemVars (void)
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 	r_lightmap = Cvar_Get("r_lightmap", "0", 0, "Draw only the lightmap");
+	r_lightmap->modified = qfalse;
 	r_deluxemap = Cvar_Get("r_deluxemap", "0", 0, "Draw only the deluxemap");
+	r_deluxemap->modified = qfalse;
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");
