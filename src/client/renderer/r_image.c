@@ -39,6 +39,8 @@ int r_numImages;
 /* generic environment map */
 image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
 
+#define MAX_TEXTURE_SIZE 8192
+
 /**
  * @brief Free previously loaded materials and their stages
  * @sa R_LoadMaterials
@@ -274,7 +276,7 @@ void R_WritePNG (qFILE *f, byte *buffer, int width, int height)
 	png_infop	info_ptr;
 	png_bytep	*row_pointers;
 
-	png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr) {
 		Com_Printf("R_WritePNG: LibPNG Error!\n");
 		return;
@@ -552,10 +554,9 @@ static void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
  * @sa R_LoadTGA
  * @sa R_WriteCompressedTGA
  */
-void R_WriteTGA (qFILE *f, byte *buffer, int width, int height)
+void R_WriteTGA (qFILE *f, const byte *buffer, int width, int height, int channels)
 {
 	int i, temp;
-	const int channels = 3;
 	byte *out;
 	size_t size;
 
@@ -599,7 +600,7 @@ void R_WriteTGA (qFILE *f, byte *buffer, int width, int height)
  * @sa R_LoadTGA
  * @sa R_WriteTGA
  */
-void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
+void R_WriteCompressedTGA (qFILE *f, const byte *buffer, int width, int height)
 {
 	byte pixel_data[TGA_CHANNELS];
 	byte block_data[TGA_CHANNELS * 128];
@@ -626,7 +627,7 @@ void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 	/* image height */
 	header[14] = height & 255;
 	header[15] = (height >> 8) & 255;
-	header[16] = 24;	/* Pixel size 24 (RGB) or 32 (RGBA) */
+	header[16] = 8 * TGA_CHANNELS;	/* Pixel size 24 (RGB) or 32 (RGBA) */
 	header[17] = 0x20;	/* Origin at bottom left */
 
 	/* write header */
@@ -966,11 +967,10 @@ static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *o
 {
 	int i, j;
 	unsigned frac;
-	unsigned *p1, *p2;
+	unsigned p1[MAX_TEXTURE_SIZE], p2[MAX_TEXTURE_SIZE];
 	const unsigned fracstep = inwidth * 0x10000 / outwidth;
 
-	p1 = (unsigned *)Mem_PoolAllocExt(outwidth * outheight * sizeof(unsigned), qfalse, vid_imagePool, 0);
-	p2 = (unsigned *)Mem_PoolAllocExt(outwidth * outheight * sizeof(unsigned), qfalse, vid_imagePool, 0);
+	assert(outwidth <= MAX_TEXTURE_SIZE);
 
 	frac = fracstep >> 2;
 	for (i = 0; i < outwidth; i++) {
@@ -983,11 +983,15 @@ static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *o
 		frac += fracstep;
 	}
 
-	frac = fracstep >> 1;
-
 	for (i = 0; i < outheight; i++, out += outwidth) {
-		const unsigned *inrow = in + inwidth * (int) ((i + 0.25) * inheight / outheight);
-		const unsigned *inrow2 = in + inwidth * (int) ((i + 0.75) * inheight / outheight);
+		const int index = inwidth * (int) ((i + 0.25) * inheight / outheight);
+		const unsigned *inrow = in + index;
+		const int index2 = inwidth * (int) ((i + 0.75) * inheight / outheight);
+		const unsigned *inrow2 = in + index2;
+
+		assert(index < inwidth * inheight);
+		assert(index2 < inwidth * inheight);
+
 		for (j = 0; j < outwidth; j++) {
 			const byte *pix1 = (const byte *) inrow + p1[j];
 			const byte *pix2 = (const byte *) inrow + p2[j];
@@ -999,8 +1003,6 @@ static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *o
 			((byte *) (out + j))[3] = (pix1[3] + pix2[3] + pix3[3] + pix4[3]) >> 2;
 		}
 	}
-	Mem_Free(p1);
-	Mem_Free(p2);
 }
 
 /**
@@ -1110,6 +1112,7 @@ void R_FilterTexture (byte *in, int width, int height, imagetype_t type, int bpp
 
 /**
  * @brief Uploads the opengl texture to the server
+ * @param[in] data Must be in RGBA format
  */
 void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 {
@@ -1129,6 +1132,10 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		scaledHeight >>= 1;
 	}
 
+	if (scaledWidth > MAX_TEXTURE_SIZE)
+		scaledWidth = MAX_TEXTURE_SIZE;
+	if (scaledHeight > MAX_TEXTURE_SIZE)
+		scaledHeight = MAX_TEXTURE_SIZE;
 	if (scaledWidth < 1)
 		scaledWidth = 1;
 	if (scaledHeight < 1)

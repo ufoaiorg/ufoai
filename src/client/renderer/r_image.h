@@ -77,8 +77,8 @@ extern int r_numImages;
 
 void R_WritePNG(qFILE *f, byte *buffer, int width, int height);
 void R_WriteJPG(qFILE *f, byte *buffer, int width, int height, int quality);
-void R_WriteTGA(qFILE *f, byte *buffer, int width, int height);
-void R_WriteCompressedTGA(qFILE *f, byte *buffer, int width, int height);
+void R_WriteTGA(qFILE *f, const byte *buffer, int width, int height, int channels);
+void R_WriteCompressedTGA(qFILE *f, const byte *buffer, int width, int height);
 
 void R_UploadTexture(unsigned *data, int width, int height, image_t* image);
 void R_SoftenTexture(byte *in, int width, int height, int bpp);
