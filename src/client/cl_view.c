@@ -63,8 +63,8 @@ static void CL_ParseEntitystring (void)
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 	const char *es = CM_EntityString();
 
-	cl.mapMaxLevel = 8;
-	if (cl.mapMaxLevelBase >= 1)
+	cl.mapMaxLevel = PATHFINDING_HEIGHT;
+	if (cl.mapMaxLevelBase > 0 && cl.mapMaxLevelBase < PATHFINDING_HEIGHT)
 		cl.mapMaxLevel = maxLevel = cl.mapMaxLevelBase;
 
 	/* vid restart? */
@@ -369,7 +369,7 @@ void V_RenderView (void)
 		break;
 	}
 
-	/* update ref def - do this even in non 3d mode - we need shaders at loading time */
+	/* update ref def */
 	V_UpdateRefDef();
 
 	/* render the world */
