@@ -749,12 +749,11 @@ fi
 if test "x$enable_uforadiant" = "xyes"
 then
 	LIBS=
-	OLD_RADIANT_LIBS="$RADIANT_LIBS"
+	CPPFLAGS=
 	RADIANT_LIBS=
 	AC_MSG_NOTICE([UFORadiant dependencies: gtk2, gtkglext, glib2 and libxml2])
 	PKG_CHECK_MODULES([RADIANT], [gtk+-2.0 gtkglext-1.0 glib-2.0 libxml-2.0])
-
-	RADIANT_LIBS="$RADIANT_LIBS $OLD_RADIANT_LIBS"
+	RADIANT_CFLAGS="$RADIANT_CFLAGS $CPPFLAGS"
 else
 	AC_MSG_NOTICE([Without UFORadiant])
 fi

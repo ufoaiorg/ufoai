@@ -11993,7 +11993,7 @@ fi
 if test "x$enable_uforadiant" = "xyes"
 then
 	LIBS=
-	OLD_RADIANT_LIBS="$RADIANT_LIBS"
+	CPPFLAGS=
 	RADIANT_LIBS=
 	{ $as_echo "$as_me:$LINENO: UFORadiant dependencies: gtk2, gtkglext, glib2 and libxml2" >&5
 $as_echo "$as_me: UFORadiant dependencies: gtk2, gtkglext, glib2 and libxml2" >&6;}
@@ -12110,8 +12110,7 @@ else
 $as_echo "yes" >&6; }
 	:
 fi
-
-	RADIANT_LIBS="$RADIANT_LIBS $OLD_RADIANT_LIBS"
+	RADIANT_CFLAGS="$RADIANT_CFLAGS $CPPFLAGS"
 else
 	{ $as_echo "$as_me:$LINENO: Without UFORadiant" >&5
 $as_echo "$as_me: Without UFORadiant" >&6;}
