@@ -192,6 +192,7 @@ then
 	### Check for universal binaries
 	if test "$enable_universal" = "yes"
 	then
+		CPPFLAGS="$CPPFLAGS -arch i386 -arch ppc"
 		CFLAGS="$CFLAGS -arch i386 -arch ppc"
 		LDFLAGS="$LDFLAGS -arch i386 -arch ppc"
 	fi
