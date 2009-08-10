@@ -1,10 +1,7 @@
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
+This file is part of UFORadiant.
 
-This file is part of GtkRadiant.
-
-GtkRadiant is free software; you can redistribute it and/or modify
+UFORadiant is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
@@ -19,7 +16,11 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#if !defined(INCLUDED_PLUGIN_H)
-#define INCLUDED_PLUGIN_H
+#if !defined(INCLUDED_MISCSOUND_H)
+#define INCLUDED_MISCSOUND_H
+
+scene::Node& New_MiscSound(EntityClass* eclass);
+void MiscSound_construct();
+void MiscSound_destroy();
 
 #endif

@@ -42,15 +42,18 @@
 #include "eclassmodel.h"
 #include "generic.h"
 #include "miscparticle.h"
+#include "miscsound.h"
 
 inline scene::Node& entity_for_eclass (EntityClass* eclass)
 {
 	if (classname_equal(eclass->name(), "misc_model")) {
 		return New_MiscModel(eclass);
-	} else if (classname_equal(eclass->name(), "light")) {
-		return New_Light(eclass);
+	} else if (classname_equal(eclass->name(), "misc_sound")) {
+		return New_MiscSound(eclass);
 	} else if (classname_equal(eclass->name(), "misc_particle")) {
 		return New_MiscParticle(eclass);
+	} else if (classname_equal(eclass->name(), "light")) {
+		return New_Light(eclass);
 	} else if (!eclass->fixedsize) {
 		return New_Group(eclass);
 	} else if (!string_empty(eclass->modelpath())) {
@@ -217,11 +220,11 @@ EntityCreator& GetEntityCreator ()
 	return g_UFOEntityCreator;
 }
 
-class filter_entity_classname: public EntityFilter
+class FilterEntityClassname: public EntityFilter
 {
 		const char* m_classname;
 	public:
-		filter_entity_classname (const char* classname) :
+		FilterEntityClassname (const char* classname) :
 			m_classname(classname)
 		{
 		}
@@ -231,12 +234,12 @@ class filter_entity_classname: public EntityFilter
 		}
 };
 
-class filter_entity_classgroup: public EntityFilter
+class FilterEntityClassgroup: public EntityFilter
 {
 		const char* m_classgroup;
 		std::size_t m_length;
 	public:
-		filter_entity_classgroup (const char* classgroup) :
+		FilterEntityClassgroup (const char* classgroup) :
 			m_classgroup(classgroup), m_length(string_length(m_classgroup))
 		{
 		}
@@ -246,11 +249,11 @@ class filter_entity_classgroup: public EntityFilter
 		}
 };
 
-filter_entity_classname g_filter_entity_world("worldspawn");
-filter_entity_classname g_filter_entity_func_group("func_group");
-filter_entity_classname g_filter_entity_light("light");
-filter_entity_classname g_filter_entity_misc_model("misc_model");
-filter_entity_classgroup g_filter_entity_trigger("trigger_");
+FilterEntityClassname g_filter_entity_world("worldspawn");
+FilterEntityClassname g_filter_entity_func_group("func_group");
+FilterEntityClassname g_filter_entity_light("light");
+FilterEntityClassname g_filter_entity_misc_model("misc_model");
+FilterEntityClassgroup g_filter_entity_trigger("trigger_");
 
 void Entity_InitFilters ()
 {
@@ -279,6 +282,8 @@ void P_Entity_Construct ()
 
 	Entity_InitFilters();
 	MiscModel_construct();
+	MiscSound_construct();
+	MiscParticle_construct();
 	Light_Construct();
 
 	RenderablePivot::StaticShader::instance() = GlobalShaderCache().capture("$PIVOT");
@@ -293,6 +298,7 @@ void P_Entity_Destroy ()
 	GlobalShaderCache().release("$PIVOT");
 
 	MiscParticle_destroy();
+	MiscSound_destroy();
 	MiscModel_destroy();
 	Light_Destroy();
 }

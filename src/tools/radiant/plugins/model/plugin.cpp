@@ -19,8 +19,6 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "plugin.h"
-
 #include <stdio.h>
 #include "picomodel.h"
 typedef unsigned char byte;
@@ -139,8 +137,8 @@ class ModelPicoAPI: public TypeSystemRef
 
 			GlobalPreferenceSystem().registerPreference("ShowModelNormals", BoolImportStringCaller(g_showModelNormals),
 					BoolExportStringCaller(g_showModelNormals));
-			GlobalPreferenceSystem().registerPreference("ShowModelBoundingBoxes", BoolImportStringCaller(g_showModelBoundingBoxes),
-					BoolExportStringCaller(g_showModelBoundingBoxes));
+			GlobalPreferenceSystem().registerPreference("ShowModelBoundingBoxes", BoolImportStringCaller(
+					g_showModelBoundingBoxes), BoolExportStringCaller(g_showModelBoundingBoxes));
 		}
 		ModelLoader* getTable ()
 		{
@@ -175,16 +173,17 @@ typedef SingletonModule<ModelPicoAPI, ModelPicoDependencies, PicoModelAPIConstru
 typedef std::list<PicoModelModule> PicoModelModules;
 PicoModelModules g_PicoModelModules;
 
-extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules(ModuleServer& server) {
+extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules (ModuleServer& server)
+{
 	initialiseModule(server);
 
 	pico_initialise();
 
-	const picoModule_t** modules = PicoModuleList( 0 );
+	const picoModule_t** modules = PicoModuleList(0);
 	while (*modules != 0) {
 		const picoModule_t* module = *modules++;
 		if (module->canload && module->load) {
-			for (const char* const* ext = module->defaultExts; *ext != 0; ++ext) {
+			for (const char* const * ext = module->defaultExts; *ext != 0; ++ext) {
 				g_PicoModelModules.push_back(PicoModelModule(PicoModelAPIConstructor(*ext, module)));
 				g_PicoModelModules.back().selfRegister();
 			}

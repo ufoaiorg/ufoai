@@ -39,8 +39,6 @@
 #include "entitylib.h"
 #include "render.h"
 #include "eclasslib.h"
-#include "math/line.h"
-
 #include "targetable.h"
 #include "origin.h"
 #include "angle.h"
@@ -50,22 +48,7 @@
 #include "namekeys.h"
 
 #include "entity.h"
-
-class RenderableArrow: public OpenGLRenderable
-{
-		const Ray& m_ray;
-
-	public:
-		RenderableArrow (const Ray& ray) :
-			m_ray(ray)
-		{
-		}
-
-		void render (RenderStateFlags state) const
-		{
-			arrow_draw(m_ray.origin, m_ray.direction);
-		}
-};
+#include "arrow.h"
 
 inline void read_aabb (AABB& aabb, const EntityClass& eclass)
 {
@@ -313,8 +296,7 @@ class GenericEntityInstance: public TargetableInstance,
 			return m_contained;
 		}
 
-		STRING_CONSTANT(Name, "GenericEntityInstance")
-		;
+		STRING_CONSTANT(Name, "GenericEntityInstance");
 
 		GenericEntityInstance (const scene::Path& path, scene::Instance* parent, GenericEntity& contained) :
 			TargetableInstance(path, parent, this, StaticTypeCasts::instance().get(), contained.getEntity(), *this),

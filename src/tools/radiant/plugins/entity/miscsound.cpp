@@ -1,10 +1,11 @@
+/**
+ * @file miscsound.cpp
+ */
+
 /*
- Copyright (C) 2001-2006, William Joseph.
- All Rights Reserved.
+ This file is part of UFORadiant.
 
- This file is part of GtkRadiant.
-
- GtkRadiant is free software; you can redistribute it and/or modify
+ UFORadiant is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
@@ -19,12 +20,6 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-///\file
-///\brief Represents the misc_particle entity.
-///
-/// This entity displays the particle specified in its "particle" key.
-/// The "origin" key directly controls the entity's local-to-parent transform.
-
 #include "cullable.h"
 #include "renderable.h"
 #include "editable.h"
@@ -36,73 +31,23 @@
 #include "entitylib.h"
 #include "render.h"
 #include "eclasslib.h"
-#include "math/line.h"
-
-#include "ifilesystem.h"
-#include <glib/gslist.h>
-
 #include "targetable.h"
 #include "origin.h"
+#include "angle.h"
 #include "filters.h"
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"
-#include "model.h"
+
 #include "entity.h"
-#include "particles.h"
-
-void MiscParticle_construct ()
-{
-}
-
-void MiscParticle_destroy ()
-{
-}
-
-/**
- * @brief Render class for the grid windows
- */
-class RenderableParticleID: public OpenGLRenderable
-{
-		const ParticleDefinition &m_particle;
-		const Vector3 &m_origin;
-	public:
-		RenderableParticleID (const ParticleDefinition &particle, const Vector3 &origin) :
-			m_particle(particle), m_origin(origin)
-		{
-		}
-
-		void render (RenderStateFlags state) const
-		{
-			glRasterPos3fv(vector3_to_array(m_origin));
-			GlobalOpenGL().drawString(m_particle.m_id);
-		}
-};
-
-/**
- * @brief Render class for the 3d view
- */
-class RenderableParticle: public OpenGLRenderable
-{
-		const ParticleDefinition &m_particle;
-	public:
-		RenderableParticle (const ParticleDefinition &particle) :
-			m_particle(particle)
-		{
-		}
-
-		void render (RenderStateFlags state) const
-		{
-			/** @todo render the image and/or model */
-		}
-};
+#include "arrow.h"
 
 inline void read_aabb (AABB& aabb, const EntityClass& eclass)
 {
 	aabb = aabb_for_minmax(eclass.mins, eclass.maxs);
 }
 
-class MiscParticle: public Cullable, public Bounded, public Snappable
+class MiscSound: public Cullable, public Bounded, public Snappable
 {
 		EntityKeyValues m_entity;
 		KeyObserverMap m_keyObservers;
@@ -110,19 +55,18 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 
 		OriginKey m_originKey;
 		Vector3 m_origin;
+		AngleKey m_angleKey;
+		float m_angle;
 
 		ClassnameFilter m_filter;
 		NamedEntity m_named;
 		NameKeys m_nameKeys;
-		ParticleDefinition m_particle;
-		mutable Vector3 m_id_origin;
 
-		// bounding box
 		AABB m_aabb_local;
+		Ray m_ray;
 
+		RenderableArrow m_arrow;
 		RenderableSolidAABB m_renderAABBSolid;
-		RenderableParticle m_renderParticle;
-		RenderableParticleID m_renderParticleID;
 		RenderableWireframeAABB m_renderAABBWire;
 		RenderableNamedEntity m_renderName;
 
@@ -132,48 +76,57 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		void construct ()
 		{
 			read_aabb(m_aabb_local, m_entity.getEntityClass());
+			m_ray.origin = m_aabb_local.origin;
+			m_ray.direction[0] = 1;
+			m_ray.direction[1] = 0;
+			m_ray.direction[2] = 0;
 
 			m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
+			m_keyObservers.insert("angle", AngleKey::AngleChangedCaller(m_angleKey));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
-			m_keyObservers.insert("particle", ParticleDefinition::ParticleChangedCaller(m_particle));
 		}
 
 		void updateTransform ()
 		{
 			m_transform.localToParent() = g_matrix4_identity;
 			matrix4_translate_by_vec3(m_transform.localToParent(), m_origin);
+			m_ray.direction = matrix4_transformed_direction(matrix4_rotation_for_z(degrees_to_radians(m_angle)),
+					Vector3(1, 0, 0));
 			m_transformChanged();
 		}
-		typedef MemberCaller<MiscParticle, &MiscParticle::updateTransform> UpdateTransformCaller;
+		typedef MemberCaller<MiscSound, &MiscSound::updateTransform> UpdateTransformCaller;
 		void originChanged ()
 		{
 			m_origin = m_originKey.m_origin;
 			updateTransform();
 		}
-		typedef MemberCaller<MiscParticle, &MiscParticle::originChanged> OriginChangedCaller;
-
+		typedef MemberCaller<MiscSound, &MiscSound::originChanged> OriginChangedCaller;
+		void angleChanged ()
+		{
+			m_angle = m_angleKey.m_angle;
+			updateTransform();
+		}
+		typedef MemberCaller<MiscSound, &MiscSound::angleChanged> AngleChangedCaller;
 	public:
 
-		MiscParticle (EntityClass* eclass, scene::Node& node, const Callback& transformChanged,
+		MiscSound (EntityClass* eclass, scene::Node& node, const Callback& transformChanged,
 				const Callback& evaluateTransform) :
-			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY), m_filter(m_entity,
-					node), m_named(m_entity), m_nameKeys(m_entity), m_particle("unset"),
-					m_id_origin(g_vector3_identity), m_renderAABBSolid(m_aabb_local), m_renderParticle(m_particle),
-					m_renderParticleID(m_particle, m_id_origin), m_renderAABBWire(m_aabb_local), m_renderName(m_named,
-							g_vector3_identity), m_transformChanged(transformChanged), m_evaluateTransform(
-							evaluateTransform)
+			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY), m_angleKey(
+					AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY), m_filter(m_entity, node),
+					m_named(m_entity), m_nameKeys(m_entity), m_arrow(m_ray), m_renderAABBSolid(m_aabb_local),
+					m_renderAABBWire(m_aabb_local), m_renderName(m_named, g_vector3_identity), m_transformChanged(
+							transformChanged), m_evaluateTransform(evaluateTransform)
 		{
 			construct();
 		}
-		MiscParticle (const MiscParticle& other, scene::Node& node, const Callback& transformChanged,
+		MiscSound (const MiscSound& other, scene::Node& node, const Callback& transformChanged,
 				const Callback& evaluateTransform) :
-			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY), m_filter(
-					m_entity, node), m_named(m_entity), m_nameKeys(m_entity), m_particle("unset"), m_id_origin(
-					g_vector3_identity), m_renderAABBSolid(m_aabb_local), m_renderParticle(m_particle),
-					m_renderParticleID(m_particle, m_id_origin), m_renderAABBWire(m_aabb_local), m_renderName(m_named,
-							g_vector3_identity), m_transformChanged(transformChanged), m_evaluateTransform(
-							evaluateTransform)
+			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY),
+					m_angleKey(AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY), m_filter(m_entity, node),
+					m_named(m_entity), m_nameKeys(m_entity), m_arrow(m_ray), m_renderAABBSolid(m_aabb_local),
+					m_renderAABBWire(m_aabb_local), m_renderName(m_named, g_vector3_identity), m_transformChanged(
+							transformChanged), m_evaluateTransform(evaluateTransform)
 		{
 			construct();
 		}
@@ -228,22 +181,25 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 			return volume.TestAABB(localAABB(), localToWorld);
 		}
 
+		void renderArrow (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
+		{
+			if (g_showAngles) {
+				renderer.addRenderable(m_arrow, localToWorld);
+			}
+		}
 		void renderSolid (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
 		{
 			renderer.SetState(m_entity.getEntityClass().m_state_fill, Renderer::eFullMaterials);
-			if (m_particle.m_image)
-				renderer.addRenderable(m_renderParticle, localToWorld);
-			else
-				renderer.addRenderable(m_renderAABBSolid, localToWorld);
+			renderer.addRenderable(m_renderAABBSolid, localToWorld);
+			renderArrow(renderer, volume, localToWorld);
 		}
 		void renderWireframe (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
 		{
 			renderer.SetState(m_entity.getEntityClass().m_state_wire, Renderer::eWireframeOnly);
 			renderer.addRenderable(m_renderAABBWire, localToWorld);
+			renderArrow(renderer, volume, localToWorld);
 			if (g_showNames) {
 				renderer.addRenderable(m_renderName, localToWorld);
-				m_id_origin = Vector3(-10, -10, -10);
-				renderer.addRenderable(m_renderParticleID, localToWorld);
 			}
 		}
 
@@ -264,6 +220,7 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		}
 		void rotate (const Quaternion& rotation)
 		{
+			m_angle = angle_rotated(m_angle, rotation);
 		}
 		void snapto (float snap)
 		{
@@ -273,11 +230,14 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		void revertTransform ()
 		{
 			m_origin = m_originKey.m_origin;
+			m_angle = m_angleKey.m_angle;
 		}
 		void freezeTransform ()
 		{
 			m_originKey.m_origin = m_origin;
 			m_originKey.write(&m_entity);
+			m_angleKey.m_angle = m_angle;
+			m_angleKey.write(&m_entity);
 		}
 		void transformChanged ()
 		{
@@ -285,10 +245,10 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 			m_evaluateTransform();
 			updateTransform();
 		}
-		typedef MemberCaller<MiscParticle, &MiscParticle::transformChanged> TransformChangedCaller;
+		typedef MemberCaller<MiscSound, &MiscSound::transformChanged> TransformChangedCaller;
 };
 
-class MiscParticleInstance: public TargetableInstance,
+class MiscSoundInstance: public TargetableInstance,
 		public TransformModifier,
 		public Renderable,
 		public SelectionTestable
@@ -300,12 +260,12 @@ class MiscParticleInstance: public TargetableInstance,
 				TypeCasts ()
 				{
 					m_casts = TargetableInstance::StaticTypeCasts::instance().get();
-					InstanceContainedCast<MiscParticleInstance, Bounded>::install(m_casts);
-					InstanceContainedCast<MiscParticleInstance, Cullable>::install(m_casts);
-					InstanceStaticCast<MiscParticleInstance, Renderable>::install(m_casts);
-					InstanceStaticCast<MiscParticleInstance, SelectionTestable>::install(m_casts);
-					InstanceStaticCast<MiscParticleInstance, Transformable>::install(m_casts);
-					InstanceIdentityCast<MiscParticleInstance>::install(m_casts);
+					InstanceContainedCast<MiscSoundInstance, Bounded>::install(m_casts);
+					InstanceContainedCast<MiscSoundInstance, Cullable>::install(m_casts);
+					InstanceStaticCast<MiscSoundInstance, Renderable>::install(m_casts);
+					InstanceStaticCast<MiscSoundInstance, SelectionTestable>::install(m_casts);
+					InstanceStaticCast<MiscSoundInstance, Transformable>::install(m_casts);
+					InstanceIdentityCast<MiscSoundInstance>::install(m_casts);
 				}
 				InstanceTypeCastTable& get ()
 				{
@@ -313,7 +273,7 @@ class MiscParticleInstance: public TargetableInstance,
 				}
 		};
 
-		MiscParticle& m_contained;
+		MiscSound& m_contained;
 		mutable AABB m_bounds;
 	public:
 
@@ -328,18 +288,18 @@ class MiscParticleInstance: public TargetableInstance,
 			return m_contained;
 		}
 
-		STRING_CONSTANT(Name, "MiscParticleInstance");
+		STRING_CONSTANT(Name, "MiscSoundInstance");
 
-		MiscParticleInstance (const scene::Path& path, scene::Instance* parent, MiscParticle& contained) :
+		MiscSoundInstance (const scene::Path& path, scene::Instance* parent, MiscSound& contained) :
 			TargetableInstance(path, parent, this, StaticTypeCasts::instance().get(), contained.getEntity(), *this),
-					TransformModifier(MiscParticle::TransformChangedCaller(contained), ApplyTransformCaller(*this)),
+					TransformModifier(MiscSound::TransformChangedCaller(contained), ApplyTransformCaller(*this)),
 					m_contained(contained)
 		{
 			m_contained.instanceAttach(Instance::path());
 
 			StaticRenderableConnectionLines::instance().attach(*this);
 		}
-		~MiscParticleInstance ()
+		~MiscSoundInstance ()
 		{
 			StaticRenderableConnectionLines::instance().detach(*this);
 
@@ -373,10 +333,10 @@ class MiscParticleInstance: public TargetableInstance,
 			evaluateTransform();
 			m_contained.freezeTransform();
 		}
-		typedef MemberCaller<MiscParticleInstance, &MiscParticleInstance::applyTransform> ApplyTransformCaller;
+		typedef MemberCaller<MiscSoundInstance, &MiscSoundInstance::applyTransform> ApplyTransformCaller;
 };
 
-class MiscParticleNode: public scene::Node::Symbiot, public scene::Instantiable, public scene::Cloneable
+class MiscSoundNode: public scene::Node::Symbiot, public scene::Instantiable, public scene::Cloneable
 {
 		class TypeCasts
 		{
@@ -384,13 +344,13 @@ class MiscParticleNode: public scene::Node::Symbiot, public scene::Instantiable,
 			public:
 				TypeCasts ()
 				{
-					NodeStaticCast<MiscParticleNode, scene::Instantiable>::install(m_casts);
-					NodeStaticCast<MiscParticleNode, scene::Cloneable>::install(m_casts);
-					NodeContainedCast<MiscParticleNode, Snappable>::install(m_casts);
-					NodeContainedCast<MiscParticleNode, TransformNode>::install(m_casts);
-					NodeContainedCast<MiscParticleNode, Entity>::install(m_casts);
-					NodeContainedCast<MiscParticleNode, Nameable>::install(m_casts);
-					NodeContainedCast<MiscParticleNode, Namespaced>::install(m_casts);
+					NodeStaticCast<MiscSoundNode, scene::Instantiable>::install(m_casts);
+					NodeStaticCast<MiscSoundNode, scene::Cloneable>::install(m_casts);
+					NodeContainedCast<MiscSoundNode, Snappable>::install(m_casts);
+					NodeContainedCast<MiscSoundNode, TransformNode>::install(m_casts);
+					NodeContainedCast<MiscSoundNode, Entity>::install(m_casts);
+					NodeContainedCast<MiscSoundNode, Nameable>::install(m_casts);
+					NodeContainedCast<MiscSoundNode, Namespaced>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -401,7 +361,7 @@ class MiscParticleNode: public scene::Node::Symbiot, public scene::Instantiable,
 		InstanceSet m_instances;
 
 		scene::Node m_node;
-		MiscParticle m_contained;
+		MiscSound m_contained;
 
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
@@ -427,17 +387,17 @@ class MiscParticleNode: public scene::Node::Symbiot, public scene::Instantiable,
 			return m_contained.getNamespaced();
 		}
 
-		MiscParticleNode (EntityClass* eclass) :
+		MiscSoundNode (EntityClass* eclass) :
 			m_node(this, this, StaticTypeCasts::instance().get()), m_contained(eclass, m_node,
 					InstanceSet::TransformChangedCaller(m_instances),
-					InstanceSetEvaluateTransform<MiscParticleInstance>::Caller(m_instances))
+					InstanceSetEvaluateTransform<MiscSoundInstance>::Caller(m_instances))
 		{
 		}
-		MiscParticleNode (const MiscParticleNode& other) :
+		MiscSoundNode (const MiscSoundNode& other) :
 			scene::Node::Symbiot(other), scene::Instantiable(other), scene::Cloneable(other), m_node(this, this,
 					StaticTypeCasts::instance().get()), m_contained(other.m_contained, m_node,
 					InstanceSet::TransformChangedCaller(m_instances),
-					InstanceSetEvaluateTransform<MiscParticleInstance>::Caller(m_instances))
+					InstanceSetEvaluateTransform<MiscSoundInstance>::Caller(m_instances))
 		{
 		}
 
@@ -448,12 +408,12 @@ class MiscParticleNode: public scene::Node::Symbiot, public scene::Instantiable,
 
 		scene::Node& clone () const
 		{
-			return (new MiscParticleNode(*this))->node();
+			return (new MiscSoundNode(*this))->node();
 		}
 
 		scene::Instance* create (const scene::Path& path, scene::Instance* parent)
 		{
-			return new MiscParticleInstance(path, parent, m_contained);
+			return new MiscSoundInstance(path, parent, m_contained);
 		}
 		void forEachInstance (const scene::Instantiable::Visitor& visitor)
 		{
@@ -469,7 +429,15 @@ class MiscParticleNode: public scene::Node::Symbiot, public scene::Instantiable,
 		}
 };
 
-scene::Node& New_MiscParticle (EntityClass* eclass)
+scene::Node& New_MiscSound (EntityClass* eclass)
 {
-	return (new MiscParticleNode(eclass))->node();
+	return (new MiscSoundNode(eclass))->node();
+}
+
+void MiscSound_construct ()
+{
+}
+
+void MiscSound_destroy ()
+{
 }

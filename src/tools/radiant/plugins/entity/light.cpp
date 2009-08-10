@@ -313,8 +313,7 @@ class LightRadii
 			m_intensity = string_read_int(value);
 			calculateRadii();
 		}
-		typedef MemberCaller1<LightRadii, const char*, &LightRadii::primaryIntensityChanged>
-				IntensityChangedCaller;
+		typedef MemberCaller1<LightRadii, const char*, &LightRadii::primaryIntensityChanged> IntensityChangedCaller;
 		void flagsChanged (const char* value)
 		{
 			m_flags = string_read_int(value);
@@ -791,8 +790,7 @@ class LightInstance: public TargetableInstance,
 			return m_contained;
 		}
 
-		STRING_CONSTANT(Name, "LightInstance")
-		;
+		STRING_CONSTANT(Name, "LightInstance");
 
 		LightInstance (const scene::Path& path, scene::Instance* parent, Light& contained) :
 			TargetableInstance(path, parent, this, StaticTypeCasts::instance().get(), contained.getEntity(), *this),

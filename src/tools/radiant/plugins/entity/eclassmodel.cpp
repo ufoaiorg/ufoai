@@ -277,8 +277,7 @@ class EclassModelInstance: public TargetableInstance, public TransformModifier, 
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		STRING_CONSTANT(Name, "EclassModelInstance")
-		;
+		STRING_CONSTANT(Name, "EclassModelInstance");
 
 		EclassModelInstance (const scene::Path& path, scene::Instance* parent, EclassModel& contained) :
 			TargetableInstance(path, parent, this, StaticTypeCasts::instance().get(), contained.getEntity(), *this),

@@ -89,12 +89,14 @@ class PicoSurface: public OpenGLRenderable
 
 	public:
 
-		PicoSurface () : m_renderAABBWire(m_aabb_local)
+		PicoSurface () :
+			m_renderAABBWire(m_aabb_local)
 		{
 			constructNull();
 			CaptureShader();
 		}
-		PicoSurface (picoSurface_t* surface) : m_renderAABBWire(m_aabb_local)
+		PicoSurface (picoSurface_t* surface) :
+			m_renderAABBWire(m_aabb_local)
 		{
 			CopyPicoSurface(surface);
 			CaptureShader();

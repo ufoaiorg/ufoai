@@ -205,5 +205,4 @@ public:
 	}
 };
 
-
 #endif
