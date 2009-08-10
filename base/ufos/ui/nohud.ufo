@@ -5,6 +5,11 @@
 
 window nohud
 {
+	{
+		fill		true
+		starlayout	true
+	}
+
 	func showinventory 
 	{
 		cmd "mn_push hudinv;"
@@ -17,6 +22,7 @@ window nohud
 	{
 		pos		"0 0"
 		size	"1024 768"
+		num			10	/* fill layout */
 	}
 
 	// ==================
