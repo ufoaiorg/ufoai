@@ -1843,6 +1843,7 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
 			}
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", heightChange, -actorStepupHeight);
 			heightChange = 0;
+			nz--;
 		}
 
 	}
