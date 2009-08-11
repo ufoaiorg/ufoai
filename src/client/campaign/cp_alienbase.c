@@ -291,7 +291,7 @@ qboolean AB_CheckSupplyMissionPossible (void)
 alienBase_t* AB_ChooseBaseToSupply (void)
 {
 	const int baseIDX = rand() % ccs.numAlienBases;
-	return &ccs.alienBases[baseIDX];
+	return AB_GetBase(baseIDX, qtrue);
 }
 
 /**
