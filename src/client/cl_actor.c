@@ -43,6 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cvar_t *confirm_actions;
 /** @brief Player preference: should the server make guys stand for long walks, to save TU. */
 static cvar_t *cl_autostand;
+static cvar_t *cl_showactors;
 
 /* public */
 le_t *selActor;
@@ -1768,6 +1769,9 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 {
 	entity_t add;
 
+	if (!cl_showactors->integer)
+		return qfalse;
+
 	/* add the weapons to the actor's hands */
 	if (!LE_IsDead(le)) {
 		const qboolean addLeftHandWeapon = CL_AddActorWeapon(le->left);
@@ -2252,6 +2256,9 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	vec3_t realBoxSize;
 	vec3_t cursorOffset;
 
+	if (!cl_showactors->integer)
+		return;
+
 	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
@@ -2714,4 +2721,5 @@ void ACTOR_InitStartup (void)
 {
 	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Save accidental TU waste by allowing server to autostand before long walks");
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
+	cl_showactors = Cvar_Get("cl_showactors", "1", 0, "Show actors on the battlefield");
 }

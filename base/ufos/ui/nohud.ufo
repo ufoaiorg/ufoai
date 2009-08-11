@@ -79,9 +79,11 @@ window nohud
 	
 	func onInit {
 		*cvar:scr_showcursor = 0
+		*cvar:cl_showactors = 0
 	}
 	
 	func onClose {
 		*cvar:scr_showcursor = 1
+		*cvar:cl_showactors = 1
 	}
 }
