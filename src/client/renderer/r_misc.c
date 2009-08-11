@@ -95,9 +95,9 @@ void R_ScreenShot_f (void)
 	else
 		ext = r_screenshot_format->string;
 
-	if (!Q_strcasecmp (ext, "png"))
+	if (!Q_strcasecmp(ext, "png"))
 		type = SSHOTTYPE_PNG;
-	else if (!Q_strcasecmp (ext, "jpg"))
+	else if (!Q_strcasecmp(ext, "jpg"))
 		type = SSHOTTYPE_JPG;
 	else
 		type = SSHOTTYPE_TGA_COMP;

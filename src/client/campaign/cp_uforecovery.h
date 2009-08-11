@@ -38,7 +38,7 @@ typedef struct ufoRecoveries_s {
 	date_t event;				/**< When the process will start (UFO got transported to base). */
 } ufoRecoveries_t;
 
-void UR_Prepare (base_t *base, ufoType_t ufoType);
+void UR_Prepare(base_t *base, ufoType_t ufoType);
 void UR_UpdateUFOHangarCapForAll(base_t *base);
 void UR_ProcessActive(void);
 qboolean UR_ConditionsForStoring(const base_t *base, const aircraft_t *ufocraft);

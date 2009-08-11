@@ -488,8 +488,7 @@ static void R_LightPointColor (static_lighting_t *lighting)
 static void R_LightPointPosition (static_lighting_t *lighting)
 {
 	mBspLight_t *l;
-	float light, best;
-	vec3_t delta;
+	float best;
 	int i;
 
 	if (!r_state.lighting_enabled)  /* don't bother */
@@ -505,6 +504,8 @@ static void R_LightPointPosition (static_lighting_t *lighting)
 
 	l = r_mapTiles[refdef.trace.mapTile]->bsp.bsplights;
 	for (i = 0; i < r_mapTiles[refdef.trace.mapTile]->bsp.numbsplights; i++, l++) {
+		float light;
+		vec3_t delta;
 		VectorSubtract(l->org, lighting->origin, delta);
 		light = l->radius - VectorLength(delta);
 

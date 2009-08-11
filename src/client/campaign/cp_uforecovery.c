@@ -45,7 +45,6 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 {
 	int i;
 	components_t *comp;
-	objDef_t *compOd;
 	eventMail_t *mail;
 	char body[512] = "";
 
@@ -67,7 +66,7 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 
 		/* List all components of crashed UFO. */
 		for (i = 0; i < comp->numItemtypes; i++) {
-			compOd = comp->items[i];
+			const objDef_t *compOd = comp->items[i];
 			assert(compOd);
 			if (comp->itemAmount2[i] > 0)
 				Q_strcat(body, va(_("  * %i x\t%s\n"), comp->itemAmount2[i], compOd->name), sizeof(body));
@@ -87,7 +86,7 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 
 		/* List all components of crashed UFO. */
 		for (i = 0; i < comp->numItemtypes; i++) {
-			compOd = comp->items[i];
+			const objDef_t *compOd = comp->items[i];
 			assert(compOd);
 			if (comp->itemAmount[i] > 0)
 				Q_strcat(body, va(_("  * %s\n"), compOd->name), sizeof(body));
@@ -129,7 +128,10 @@ void UR_Prepare (base_t *base, ufoType_t ufoType)
 		if (ufocraft->ufotype == ufoType)
 			break;
 	}
-	assert(ufocraft);
+	if (ufocraft == NULL) {
+		Com_DPrintf(DEBUG_CLIENT, "UR_Prepare: no ufo with the type %i found.\n", ufoType);
+		return;
+	}
 
 	/* Find free uforecovery slot. */
 	for (i = 0; i < MAX_RECOVERIES; i++) {
@@ -140,12 +142,10 @@ void UR_Prepare (base_t *base, ufoType_t ufoType)
 			break;
 		}
 	}
-
 	if (!recovery) {
-		Com_Printf("UR_Prepare: free recovery slot not found.\n");
+		Com_DPrintf(DEBUG_CLIENT, "UR_Prepare: free recovery slot not found.\n");
 		return;
 	}
-	assert(recovery);
 
 	/* Prepare date of the recovery event - always two days after mission. */
 	event = ccs.date;
@@ -189,12 +189,13 @@ void UR_Prepare (base_t *base, ufoType_t ufoType)
 static void CP_UFOCrashed_f (void)
 {
 	int i;
-	ufoType_t UFOtype;
+	ufoType_t ufoType;
 	aircraft_t *aircraft, *ufocraft;
 	qboolean ufofound = qfalse;
 	components_t *comp;
 	itemsTmp_t *cargo;
 
+	/** @todo There can be more than one interception at the same time... */
 	if (!ccs.interceptAircraft)
 		return;
 
@@ -203,11 +204,11 @@ static void CP_UFOCrashed_f (void)
 		return;
 	}
 
-	if ((atoi(Cmd_Argv(1)) >= 0) && (atoi(Cmd_Argv(1)) < UFO_MAX)) {
-		UFOtype = atoi(Cmd_Argv(1));
+	if (atoi(Cmd_Argv(1)) >= 0 && atoi(Cmd_Argv(1)) < UFO_MAX) {
+		ufoType = atoi(Cmd_Argv(1));
 	} else {
-		UFOtype = Com_UFOShortNameToID(Cmd_Argv(1));
-		if (UFOtype == UFO_MAX) {
+		ufoType = Com_UFOShortNameToID(Cmd_Argv(1));
+		if (ufoType == UFO_MAX) {
 			Com_Printf("CP_UFOCrashed_f: UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
 			return;
 		}
@@ -218,7 +219,7 @@ static void CP_UFOCrashed_f (void)
 		ufocraft = &ccs.aircraftTemplates[i];
 		if (ufocraft->type != AIRCRAFT_UFO)
 			continue;
-		if (ufocraft->ufotype == UFOtype) {
+		if (ufocraft->ufotype == ufoType) {
 			ufofound = qtrue;
 			break;
 		}
@@ -336,7 +337,8 @@ void UR_ProcessActive (void)
 			/* Get item. */
 			/* We can do this because aircraft id is the same as dummy item id. */
 			od = INVSH_GetItemByID(ufocraft->id);
-			assert(od);
+			if (!od)
+				Com_Error(ERR_DROP, "Could not find ufo with id '%s'\n", ufocraft->id);
 
 			/* Process UFO recovery. */
 			/* don't call B_UpdateStorageAndCapacity here - it's a dummy item */
