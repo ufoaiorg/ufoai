@@ -500,6 +500,9 @@ static void R_LightPointPosition (static_lighting_t *lighting)
 
 	best = -99999.0;
 
+	assert(refdef.trace.mapTile >= 0);
+	assert(refdef.trace.mapTile < r_numMapTiles);
+
 	l = r_mapTiles[refdef.trace.mapTile]->bsp.bsplights;
 	for (i = 0; i < r_mapTiles[refdef.trace.mapTile]->bsp.numbsplights; i++, l++) {
 		VectorSubtract(l->org, lighting->origin, delta);

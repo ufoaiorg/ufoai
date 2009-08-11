@@ -1020,6 +1020,13 @@ static void TR_RecursiveHullCheck (boxtrace_t *traceData, int num, float p1f, fl
 }
 
 /**
+ * @brief This function traces a line from start to end.  It returns a trace_t indicating what portion of the line
+ * can be traveled from start to end before hitting a brush that meets the criteria in brushmask.  The point that
+ * this line intersects that brush is also returned.
+ * There is a special case when start and end are the same vector.  In this case, the bounding box formed by mins
+ * and maxs offset from start is examined for any brushes that meet the criteria.  The first brush found inside
+ * the bounding box is returned.
+ * There is another special case when mins and maxs are both origin vectors (0, 0, 0).  In this case, the
  * @param[in] start trace start vector
  * @param[in] end trace end vector
  * @param[in] mins box mins
@@ -1032,13 +1039,6 @@ static void TR_RecursiveHullCheck (boxtrace_t *traceData, int num, float p1f, fl
  * @sa TR_CompleteBoxTrace
  * @sa TR_RecursiveHullCheck
  * @sa TR_BoxLeafnums_headnode
- * @brief This function traces a line from start to end.  It returns a trace_t indicating what portion of the line
- *  can be traveled from start to end before hitting a brush that meets the criteria in brushmask.  The point that
- *  this line intersects that brush is also returned.
- *  There is a special case when start and end are the same vector.  In this case, the bounding box formed by mins
- *  and maxs offset from start is examined for any brushes that meet the criteria.  The first brush found inside
- *  the bounding box is returned.
- *  There is another special case when mins and maxs are both origin vectors (0, 0, 0).  In this case, the
  */
 static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const float fraction)
 {
@@ -1139,7 +1139,9 @@ static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
-trace_t TR_HintedTransformedBoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const vec3_t origin, const vec3_t angles, const float fraction)
+trace_t TR_HintedTransformedBoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins,
+		const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const vec3_t origin,
+		const vec3_t angles, const float fraction)
 {
 	trace_t trace;
 	vec3_t start_l, end_l;
