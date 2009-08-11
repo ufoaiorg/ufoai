@@ -14,7 +14,11 @@
 //	race
 //
 //	robot
-//
+//		Boolean - team is for robots
+//	armour
+//		Boolean - team can carry armour
+//	weapons
+//		Boolean - team can carry weapons
 //	names <lang-id> {}
 //		A list of actor-names for the given language.
 //		Uses sub-lists as follows:
