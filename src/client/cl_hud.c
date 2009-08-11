@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_actor.h"
 #include "cl_hud.h"
 #include "cl_game.h"
+#include "cl_view.h"
 #include "menu/m_main.h"
 #include "menu/m_popup.h"
 #include "menu/m_nodes.h"
@@ -1569,6 +1570,13 @@ static void CL_ReloadRight_f (void)
 	CL_ActorReload(selActor, csi.idRight);
 }
 
+static void CL_CenterCameraIntoMap_f (void)
+{
+	vec3_t center;
+	VectorCenterFromMinsMaxs(mapMin, mapMax, center);
+	VectorCopy(center, cl.cam.origin);
+	V_UpdateRefDef();
+}
 
 void HUD_InitStartup (void)
 {
@@ -1583,6 +1591,7 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("list_firemodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
 	Cmd_AddCommand("fireweap", HUD_FireWeapon_f, "Start aiming the weapon.");
+	Cmd_AddCommand("centercamera", CL_CenterCameraIntoMap_f, "Center camera into the map.");
 
 	cl_hud_message_timeout = Cvar_Get("cl_hud_message_timeout", "2000", CVAR_ARCHIVE, "Timeout for HUD messages (milliseconds)");
 }
