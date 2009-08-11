@@ -327,6 +327,8 @@ building building_radar_adv
 	map_name		"radar_adv"
 	pedia			rs_building_radar_adv
 	type			radar
+	onconstruct		"update_base_radar_coverage"
+	ondestroy		"update_base_radar_coverage"
 	level			2.0
 }
 
