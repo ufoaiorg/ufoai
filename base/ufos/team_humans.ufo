@@ -3,37 +3,44 @@
 //========================================================================
 // Description:
 //
-// names <lang-id> {}
-//	A list of actor-names for the given language.
-//	Uses sub-lists as follows:
-//		neutral {}
-//		female {}
-//		male {}
-//		lastname {}
-//		female_lastname {}
-//		male_lastname {}
-// actors <actor-id> {}
-//	A List of model-paths with the following syntax:
-//		<path/to/model> <model_file_name> <model_head_filename> <skinnumber>
-//	Uses sub-lists as follows:
-//		neutral {}
-//		female {}
-//		male {}
-// teamdesc <actor-id> {}
-//	Defines the values of such actor
-// team <team-id> {{ }}
-//	Defines which actors are in given team.
-//	The list of actors in inside a second pair of {} (with no name)
-// actorsounds <lang-id> {}
-//	A list of soundfiles for the various sound-events. Syntax
-//		<sound-event> <path/to/soundfile/soundfile>
-//	Uses sub-lists as follows:
-//		neutral {}
-//		female {}
-//		male {}
-//	Possible sound-events are:
-//		hurtsound
-//		deathsound
+// team <team-id> {}
+//	Defines a team.
+//	size
+//		The field size on battlefield
+//	hit_particle
+//		The particle that is shown if an actor from the given team was hit
+//	name
+//		The name of the team (translatable)
+//	race
+//
+//	robot
+//
+//	names <lang-id> {}
+//		A list of actor-names for the given language.
+//		Uses sub-lists as follows:
+//			neutral {}
+//			female {}
+//			male {}
+//			lastname {}
+//			female_lastname {}
+//			male_lastname {}
+//	models {}
+//			A List of model-paths with the following syntax:
+//			<path/to/model/relative/to/base/models> <model_file_name> <model_head_filename> <skinnumber>
+//		Uses sub-lists as follows:
+//			neutral {}
+//			female {}
+//			male {}
+//	actorsounds {}
+//		A list of soundfiles for the various sound-events. Syntax
+//		<sound-event> <path/to/soundfile/soundfile/relative/to/base/sounds>
+//		Uses sub-lists as follows:
+//			neutral {}
+//			female {}
+//			male {}
+//		Possible sound-events are:
+//			hurtsound
+//			deathsound
 //========================================================================
 
 //========================================================================
