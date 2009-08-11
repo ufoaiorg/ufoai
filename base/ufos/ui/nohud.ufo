@@ -76,4 +76,12 @@ window nohud
 
 	confunc startround { cmd "startrounds;startrounda;" }
 	confunc endround { cmd "endrounds;endrounda;" }
+	
+	func onInit {
+		*cvar:scr_showcursor = 0
+	}
+	
+	func onClose {
+		*cvar:scr_showcursor = 1
+	}
 }
