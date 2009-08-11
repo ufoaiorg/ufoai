@@ -114,6 +114,8 @@ static void CP_SupplySetStayAtBase (mission_t *mission)
  */
 static void CP_SupplyGoToBase (mission_t *mission)
 {
+	alienBase_t *alienBase;
+
 	assert(mission->ufo);
 
 	mission->stage = STAGE_MISSION_GOTO;
@@ -125,7 +127,9 @@ static void CP_SupplyGoToBase (mission_t *mission)
 		return;
 	}
 
-	mission->data = (void *) AB_ChooseBaseToSupply(mission->pos);
+	alienBase = AB_ChooseBaseToSupply();
+	mission->data = (void *) alienBase;
+	Vector2Copy(alienBase->pos, mission->pos);
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
 }

@@ -36,14 +36,14 @@ typedef struct alienBase_s {
 						 * and base is known if stealth < 0 */
 } alienBase_t;
 
-void AB_SetAlienBasePosition(vec2_t position);
-alienBase_t* AB_BuildBase(vec2_t pos);
+void AB_SetAlienBasePosition(vec2_t pos);
+alienBase_t* AB_BuildBase(const vec2_t pos);
 void AB_DestroyBase(alienBase_t *base);
 alienBase_t* AB_GetBase(int baseIDX, qboolean checkIdx);
 void AB_UpdateStealthForAllBase(void);
 void AB_BaseSearchedByNations(void);
 qboolean AB_CheckSupplyMissionPossible(void);
-alienBase_t* AB_ChooseBaseToSupply(vec2_t pos);
+alienBase_t* AB_ChooseBaseToSupply(void);
 void AB_SupplyBase(alienBase_t *base, qboolean decreaseStealth);
 int AB_GetAlienBaseNumber(void);
 void AB_InitStartup(void);
