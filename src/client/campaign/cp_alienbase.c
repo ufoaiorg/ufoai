@@ -291,9 +291,6 @@ qboolean AB_CheckSupplyMissionPossible (void)
 alienBase_t* AB_ChooseBaseToSupply (void)
 {
 	const int baseIDX = rand() % ccs.numAlienBases;
-
-	Vector2Copy(ccs.alienBases[baseIDX].pos, pos);
-
 	return &ccs.alienBases[baseIDX];
 }
 
