@@ -2255,13 +2255,12 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	entity_t ent;
 	vec3_t realBoxSize;
 	vec3_t cursorOffset;
-
-	if (!cl_showactors->integer)
-		return;
-
 	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
+
+	if (!cl_showactors->integer)
+		return;
 
 	memset(&ent, 0, sizeof(ent));
 	ent.flags = RF_BOX;

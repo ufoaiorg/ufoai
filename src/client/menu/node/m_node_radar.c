@@ -412,7 +412,6 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	vec3_t pos;
 
 	static const vec4_t grey = {0.7, 0.7, 0.7, 1};
-	static const vec4_t blue = {0, 0, 1, 1};
 	const int mapWidth = mapMax[0] - mapMin[0];
 	const int mapHeight = mapMax[1] - mapMin[1];
 
