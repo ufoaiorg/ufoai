@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "console.h"
 #include "radiant_i18n.h"
 
+#include <iostream>
 #include <time.h>
 
 #include "gtkutil/accelerator.h"
@@ -148,8 +149,11 @@ public:
 std::size_t Sys_Print(int level, const char* buf, std::size_t length) {
 	bool contains_newline = std::find(buf, buf + length, '\n') != buf + length;
 
-	if (level == SYS_ERR) {
+	if (level == SYS_ERR || level == SYS_WRN) {
 		Sys_LogFile(true);
+		std::cerr << buf;
+	} else {
+		std::cout << buf;
 	}
 
 	if (g_hLogFile != 0) {

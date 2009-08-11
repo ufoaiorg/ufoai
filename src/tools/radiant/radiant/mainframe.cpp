@@ -46,6 +46,7 @@
 #include "ishaders.h"
 #include "igl.h"
 #include "moduleobserver.h"
+#include "server.h"
 
 #include <ctime>
 
@@ -95,7 +96,6 @@
 #include "qe3.h"
 #include "qgl.h"
 #include "select.h"
-#include "server.h"
 #include "textures.h"
 #include "url.h"
 #include "xywindow.h"
@@ -103,6 +103,7 @@
 #include "renderstate.h"
 #include "referencecache.h"
 #include "toolbars.h"
+#include "exception/RadiantException.h"
 
 struct layout_globals_t
 {
@@ -472,16 +473,22 @@ void Radiant_detachGameToolsPathObserver (ModuleObserver& observer)
 	g_gameToolsPathObservers.detach(observer);
 }
 
+// This is called from main() to start up the Radiant stuff.
 void Radiant_Initialise (void)
 {
 	GlobalModuleServer_Initialise();
 
+	// Load the Radiant modules from the modules/ dir.
 	Radiant_loadModulesFromRoot(AppPath_get());
 
 	Preferences_Load();
 
-	bool success = Radiant_Construct(GlobalModuleServer_get());
-	ASSERT_MESSAGE(success, "module system failed to initialise - see radiant.log for error messages");
+	try {
+		Radiant_Construct(GlobalModuleServer_get());
+	} catch (RadiantException e) {
+		e.printError();
+		abort();
+	}
 
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();

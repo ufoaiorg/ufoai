@@ -308,7 +308,7 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 	const bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
 
 	if (!(entityClass->fixedsize || isModel) && !brushesSelected) {
-		g_warning("failed to create a group entity - no brushes are selected\n");
+		gtkutil::errorDialog(MainFrame_getWindow(), "Unable to create entity - no brushes selected");
 		return;
 	}
 

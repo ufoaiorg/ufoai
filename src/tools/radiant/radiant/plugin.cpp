@@ -81,6 +81,8 @@
 
 #include "generic/callback.h"
 
+#include "exception/RadiantException.h"
+
 const char* GameDescription_getKeyValue (const char* key)
 {
 	return g_pGameDescription->getKeyValue(key);
@@ -314,8 +316,7 @@ bool Radiant_Construct (ModuleServer& server)
 	if (g_RadiantInitialised) {
 		g_Radiant = new Radiant;
 	} else {
-		std::cout << "Unable to construct Radiant, module server failed to initialise." << std::endl;
-		abort();
+		throw RadiantException("Radiant_Construct: Failed to initialise Radiant");
 	}
 
 	return g_RadiantInitialised;

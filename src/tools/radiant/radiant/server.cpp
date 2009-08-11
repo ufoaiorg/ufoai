@@ -29,9 +29,13 @@
 
 #include <vector>
 #include <map>
+#include <iostream>
 #include "os/path.h"
 
 #include "modulesystem.h"
+
+#include "exception/RadiantException.h"
+#include "exception/ModuleSystemException.h"
 
 class RadiantModuleServer: public ModuleServer
 {
@@ -107,42 +111,41 @@ class RadiantModuleServer: public ModuleServer
 #include <windows.h>
 
 #define FORMAT_BUFSIZE 2048
-const char* FormatGetLastError() {
+const char* FormatGetLastError ()
+{
 	static char buf[FORMAT_BUFSIZE];
-	FormatMessage(
-			FORMAT_MESSAGE_FROM_SYSTEM |
-			FORMAT_MESSAGE_IGNORE_INSERTS,
-			NULL,
-			GetLastError(),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-			buf,
-			FORMAT_BUFSIZE,
-			NULL
-	);
+	FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, GetLastError(), MAKELANGID(
+					LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+			buf, FORMAT_BUFSIZE, NULL);
 	return buf;
 }
 
-class DynamicLibrary {
+// WIN32 DynamicLibrary. Loads a DLL given in the constructor.
+class DynamicLibrary
+{
 	HMODULE m_library;
 	public:
-	typedef int (__stdcall* FunctionPointer)();
+	typedef int (__stdcall* FunctionPointer) ();
 
-	DynamicLibrary(const char* filename) {
+	DynamicLibrary (const char* filename)
+	{
 		m_library = LoadLibrary(filename);
 		if (m_library == 0) {
-			globalErrorStream() << "LoadLibrary failed: '" << filename << "'\n";
-			globalErrorStream() << "GetLastError: " << FormatGetLastError();
+			throw ModuleSystemException(std::string("Unable to load library from file ") + filename);
 		}
 	}
-	~DynamicLibrary() {
+	~DynamicLibrary ()
+	{
 		if (!failed()) {
 			FreeLibrary(m_library);
 		}
 	}
-	bool failed() {
+	bool failed ()
+	{
 		return m_library == 0;
 	}
-	FunctionPointer findSymbol(const char* symbol) {
+	FunctionPointer findSymbol (const char* symbol)
+	{
 		FunctionPointer address = GetProcAddress(m_library, symbol);
 		if (address == 0) {
 			globalErrorStream() << "GetProcAddress failed: '" << symbol << "'\n";
@@ -156,39 +159,46 @@ class DynamicLibrary {
 
 #include <dlfcn.h>
 
-class DynamicLibrary {
-	void* m_library;
+class DynamicLibrary
+{
+		void* dlHandle;
 	public:
-	typedef int (* FunctionPointer)();
+		typedef int (* FunctionPointer) ();
 
-	DynamicLibrary(const char* filename) {
-		m_library = dlopen(filename, RTLD_NOW);
-		if (!m_library) {
-			const char* error = reinterpret_cast<const char*>(dlerror());
-			globalErrorStream() << error << "\n";
+		DynamicLibrary (const char* filename)
+		{
+			dlHandle = dlopen(filename, RTLD_NOW);
+			if (!dlHandle) {
+				const char* error = reinterpret_cast<const char*> (dlerror());
+				globalErrorStream() << error << "\n";
+			}
 		}
-	}
-	~DynamicLibrary() {
-		if (!failed())
-		dlclose(m_library);
-	}
-	bool failed() {
-		return (m_library == NULL);
-	}
-	FunctionPointer findSymbol(const char* symbol) {
-		FunctionPointer p = (FunctionPointer)dlsym(m_library, symbol);
-		if (p == 0) {
-			const char* error = reinterpret_cast<const char*>(dlerror());
-			globalErrorStream() << error << "\n";
+		~DynamicLibrary ()
+		{
+			if (!failed())
+				dlclose(dlHandle);
 		}
-		return p;
-	}
+		bool failed ()
+		{
+			return (dlHandle == NULL);
+		}
+		// Find a symbol in the library
+		FunctionPointer findSymbol (const char* symbol)
+		{
+			void * address = dlsym(dlHandle, symbol);
+			if (address == 0) {
+				std::string theError = std::string(dlerror());
+				throw ModuleSystemException(theError);
+			}
+			return reinterpret_cast<FunctionPointer> (address);
+		}
 };
 
 #else
 #error "unsupported platform"
 #endif
 
+// Construct a DynamicLibraryModule from the filename of a DLL/so
 class DynamicLibraryModule
 {
 		typedef void (RADIANT_DLLIMPORT* RegisterModulesFunc) (ModuleServer& server);
@@ -201,6 +211,11 @@ class DynamicLibraryModule
 			if (!m_library.failed()) {
 				m_registerModule = reinterpret_cast<RegisterModulesFunc> (m_library.findSymbol(
 						"Radiant_RegisterModules"));
+			} else {
+				g_warning("WARNING: Failed to load module %s\n", filename);
+#ifdef __linux__
+				g_warning("%s", dlerror());
+#endif
 			}
 		}
 		bool failed ()
