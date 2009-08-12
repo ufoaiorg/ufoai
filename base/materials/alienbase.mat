@@ -5,3 +5,10 @@
 		scroll.s 1
 	}
 }
+{
+	material tex_lights/mtl_l1_fx1
+	{
+		texture tex_lights/mtl_l1_fx1
+		scroll.s 2
+	}
+}

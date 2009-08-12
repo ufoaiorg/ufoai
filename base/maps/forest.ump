@@ -37,13 +37,12 @@ acdg     +a     +a     +a	  acef
 
 tile +craft_drop_herakles
 {
-4 5
+5 4
 
-0     abfg    abfg    0
-acdg   +a      +a     acef
-acdg   +a      +a     acef
-acdg   +a      +a     acef 
-0     abde    abde	  0
+0     abfg    abfg    abfg    0
+acdg   +a      +a      +a     acef
+acdg   +a      +a      +a     acef 
+0     abde    abde    abde	  0
 }
 
 tile +craft_crash_scout
