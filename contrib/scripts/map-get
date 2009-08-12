@@ -2,7 +2,10 @@
 # -*- coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
 
 import sys, os
-from md5 import md5
+try:
+	from hashlib import md5
+except ImportError:
+	from md5 import md5
 import urllib2
 from gzip import GzipFile
 from tempfile import mkstemp
