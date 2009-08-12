@@ -47,7 +47,7 @@ static void plugin_activated (GtkWidget* widget, gpointer data)
 #include <stack>
 typedef std::stack<GtkWidget*> WidgetStack;
 
-static void PlugInMenu_Add (GtkMenu* plugin_menu, IPlugIn* pPlugIn)
+static void PlugInMenu_Add (GtkMenu* plugin_menu, IPlugin* pPlugIn)
 {
 	GtkWidget *item, *parent, *subMenu;
 	WidgetStack menuStack;
@@ -134,7 +134,7 @@ static void PluginsMenu_populate ()
 				m_menu(menu)
 			{
 			}
-			void visit (IPlugIn& plugin)
+			void visit (IPlugin& plugin)
 			{
 				PlugInMenu_Add(m_menu, &plugin);
 			}

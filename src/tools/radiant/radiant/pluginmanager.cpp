@@ -42,7 +42,7 @@
 #include <list>
 
 /** @brief plugin manager */
-class CPluginSlot: public IPlugIn
+class CPluginSlot: public IPlugin
 {
 		CopiedString m_menu_name;
 		const _QERPluginTable *mpTable;

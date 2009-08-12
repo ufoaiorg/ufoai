@@ -31,10 +31,10 @@ typedef struct _GtkWidget GtkWidget;
 pure virtual interface for a plugin
 temporary solution for migration from old plugin tech to synapse plugins
 */
-class IPlugIn {
+class IPlugin {
 public:
-	IPlugIn() { }
-	virtual ~IPlugIn() { }
+	IPlugin() { }
+	virtual ~IPlugin() { }
 
 	virtual const char* getMenuName() = 0;
 	virtual std::size_t getCommandCount() = 0;
@@ -47,7 +47,7 @@ public:
 class PluginsVisitor {
 public:
 	virtual ~PluginsVisitor(){}
-	virtual void visit(IPlugIn& plugin) = 0;
+	virtual void visit(IPlugin& plugin) = 0;
 };
 
 class CPlugInManager {
