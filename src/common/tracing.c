@@ -1177,7 +1177,9 @@ trace_t TR_HintedTransformedBoxTrace (TR_TILE_TYPE *tile, const vec3_t start, co
 
 	/* sweep the box through the model */
 	trace = TR_BoxTrace(tile, start_l, end_l, mins, maxs, headnode, brushmask, brushreject, fraction);
-	trace.mapTile = mapTiles - tile;
+	trace.mapTile = (ptrdiff_t)(tile - mapTiles);
+	assert(trace.mapTile >= 0);
+	assert(trace.mapTile < numTiles);
 
 	if (rotated && trace.fraction != 1.0) {
 		/** @todo figure out how to do this with existing angles */

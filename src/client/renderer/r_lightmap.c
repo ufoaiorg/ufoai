@@ -341,6 +341,9 @@ static void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
 			frac = tr.fraction;
 		}
 	}
+
+	assert(refdef.trace.mapTile >= 0);
+	assert(refdef.trace.mapTile < r_numMapTiles);
 }
 
 
