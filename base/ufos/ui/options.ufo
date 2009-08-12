@@ -376,7 +376,7 @@ window options
 		{
 			current		*cvar:vid_gamma
 			pos			"253 525"
-			size		"245 6"
+			size		"238 6"
 			color		"0 .8 0 1"
 			max			3.0
 			onClick		{ }
@@ -397,7 +397,7 @@ window options
 		{
 			current		*cvar:r_contrast
 			pos			"253 550"
-			size		"245 6"
+			size		"238 6"
 			color		"0 .8 0 1"
 			max			2.0
 			onClick		{ }
@@ -418,7 +418,7 @@ window options
 		{
 			current		*cvar:r_brightness
 			pos			"253 575"
-			size		"245 6"
+			size		"238 6"
 			color		"0 .8 0 1"
 			max			2.0
 			onClick		{ }
@@ -439,7 +439,7 @@ window options
 		{
 			current		*cvar:r_modulate
 			pos			"253 600"
-			size		"245 6"
+			size		"238 6"
 			color		"0 .8 0 1"
 			max			4.0
 			onClick		{ }
@@ -569,7 +569,7 @@ window options
 		{
 			current		*cvar:snd_volume
 			pos			"239 180"
-			size		"245 6"
+			size		"238 6"
 			color		"0 .8 0 1"
 			max			1.0
 			onClick		{ }
@@ -590,7 +590,7 @@ window options
 		{
 			current		*cvar:snd_music_volume
 			pos			"239 205"
-			size		"245 6"
+			size		"238 6"
 			color		"0 .8 0 1"
 			max			128
 			onClick		{ }
@@ -933,7 +933,7 @@ window options
 		{
 			current		*cvar:g_actorspeed
 			pos			"249 640"
-			size		"245 6"
+			size		"238 6"
 			color		"0 .8 0 1"
 			max			9
 			onClick		{ }
@@ -985,7 +985,7 @@ window options
 		{
 			current		*cvar:cl_cammovespeed
 			pos			"253 180"
-			size		"245 6"
+			size		"238 6"
 			color		"0 .8 0 1"
 			min			150
 			max			3000
@@ -1010,7 +1010,7 @@ window options
 		{
 			current		*cvar:cl_camrotspeed
 			pos			"253 205"
-			size		"245 6"
+			size		"238 6"
 			color		"0 .8 0 1"
 			min			50
 			max			1000
@@ -1035,7 +1035,7 @@ window options
 		{
 			current		*cvar:cl_cammoveaccel
 			pos			"253 255"
-			size		"245 6"
+			size		"238 6"
 			color		"0 .8 0 1"
 			min			150
 			max			3000
@@ -1070,7 +1070,7 @@ window options
 		{
 			current		*cvar:in_joystickThreshold
 			pos			"253 565"
-			size		"245 6"
+			size		"238 6"
 			color		"0 .8 0 1"
 			min			0.0
 			max			1.0
@@ -1095,7 +1095,7 @@ window options
 		{
 			current		*cvar:in_joystickSpeed
 			pos			"253 590"
-			size		"245 6"
+			size		"238 6"
 			color		"0 .8 0 1"
 			min			5
 			max			30
