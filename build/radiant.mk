@@ -85,6 +85,9 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/dialogs/findtextures.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/modelselector.cpp \
 	\
+	$(RADIANT_BASE)/radiant/ui/common/ModelPreview.cpp \
+	$(RADIANT_BASE)/radiant/ui/common/RenderableAABB.cpp \
+	\
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/clipboard.cpp \

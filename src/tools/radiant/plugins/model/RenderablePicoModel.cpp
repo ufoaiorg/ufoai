@@ -37,8 +37,11 @@ namespace model
 		glEnable(GL_VERTEX_ARRAY);
 		glEnable(GL_NORMAL_ARRAY);
 		glEnable(GL_TEXTURE_COORD_ARRAY);
-		glEnable(GL_TEXTURE_2D);
-		glShadeModel(GL_SMOOTH);
+		// Render options
+		if (flags & RENDER_TEXTURE)
+			glEnable(GL_TEXTURE_2D);
+		if (flags & RENDER_SMOOTH)
+			glShadeModel(GL_SMOOTH);
 
 		// Iterate over the surfaces, calling the render function on each one
 		for (SurfaceList::const_iterator i = _surfVec.begin(); i != _surfVec.end(); ++i) {

@@ -7,9 +7,27 @@
 #include "math/matrix.h"
 #include "igl.h"
 #include "imodel.h"
+#include "../ui/common/ModelPreview.h"
 
 namespace ui
 {
+
+	/** Data structure containing both a model and a skin name, to be returned from
+	 * the Model Selector.
+	 */
+	struct ModelAndSkin
+	{
+			// Model and skin strings
+			std::string model;
+			std::string skin;
+
+			// Constructor
+			ModelAndSkin (const std::string& m, const std::string& s) :
+				model(m), skin(s)
+			{
+			}
+	};
+
 	/** Singleton class encapsulating the Model Selector dialog and methods required to display the
 	 * dialog and retrieve the selected model.
 	 */
@@ -20,8 +38,8 @@ namespace ui
 			// Main dialog widget
 			GtkWidget* _widget;
 
-			// GL preview widget
-			GtkWidget* _glWidget;
+			// Model preview widget
+			ModelPreview _modelPreview;
 
 			// Tree store containing model names
 			GtkTreeStore* _treeStore;
@@ -35,15 +53,7 @@ namespace ui
 			// Last selected model, which will be returned by showAndBlock() once the
 			// recursive main loop exits.
 			std::string _lastModel;
-
-			// Current distance between camera and preview
-			GLfloat _camDist;
-
-			// Current rotation matrix
-			Matrix4 _rotation;
-
-			// Current model to display
-			model::IModelPtr _model;
+			std::string _lastSkin;
 
 		private:
 
@@ -51,13 +61,12 @@ namespace ui
 			ModelSelector ();
 
 			// Show the dialog, called internally by chooseModel(). Return the selected model path
-			std::string showAndBlock ();
+			ModelAndSkin showAndBlock ();
 
 			// Helper function to construct the TreeView
 			GtkWidget* createTreeView ();
 			GtkWidget* createButtons ();
 			GtkWidget* createPreviewAndInfoPanel ();
-			GtkWidget* createGLWidget ();
 
 			// Initialise the GL widget, to avoid doing this every frame
 			void initialisePreview ();
@@ -74,9 +83,6 @@ namespace ui
 			static void callbackSelChanged (GtkWidget*, ModelSelector*);
 			static void callbackOK (GtkWidget*, ModelSelector*);
 			static void callbackCancel (GtkWidget*, ModelSelector*);
-			static void callbackGLDraw (GtkWidget*, GdkEventExpose*, ModelSelector*);
-			static void callbackGLMotion (GtkWidget*, GdkEventMotion*, ModelSelector*);
-			static void callbackGLScroll (GtkWidget*, GdkEventScroll*, ModelSelector*);
 
 		public:
 
@@ -85,7 +91,7 @@ namespace ui
 			 * it will enter a recursive gtk_main loop, blocking execution of the calling
 			 * function until destroyed.
 			 */
-			static std::string chooseModel ();
+			static ModelAndSkin chooseModel ();
 	};
 }
 

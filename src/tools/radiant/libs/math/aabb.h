@@ -29,6 +29,10 @@
 #include "math/plane.h"
 #include <algorithm>
 
+/** An Axis Aligned Bounding Box is a simple cuboid which encloses a given set of points,
+ * such as the vertices of a model. It is defined by an origin, located at the centre of
+ * the AABB, and symmetrical extents in 3 dimension which determine its size.
+ */
 class AABB
 {
 	public:
@@ -124,15 +128,10 @@ class AABBExtend
 		}
 };
 
-inline void aabb_extend_by_point (AABB& aabb, const Vector3& point)
-{
-	aabb.includePoint(point);
-}
-
 inline void aabb_extend_by_point_safe (AABB& aabb, const Vector3& point)
 {
 	if (aabb_valid(aabb)) {
-		aabb_extend_by_point(aabb, point);
+		aabb.includePoint(point);
 	} else {
 		aabb.origin = point;
 		aabb.extents = Vector3(0, 0, 0);
