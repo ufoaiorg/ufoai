@@ -1,9 +1,11 @@
 // ==================
-// EMPTY HUD
+// GENRADAR HUD
+// hude used to generate radar maps
+// run the game with "ufo +set vid_mode -1 +set vid_width 1024 +set vid_height 1024"
+// use the command "gen_radarmap"
 // ==================
-// with console command forwarding
 
-window nohud
+window genradarhud
 {
 	{
 		fill		true
@@ -76,4 +78,21 @@ window nohud
 
 	confunc startround { cmd "startrounds;startrounda;" }
 	confunc endround { cmd "endrounds;endrounda;" }
+	
+	confunc gen_radarmap {
+		cmd "mn_push genradarhud"
+	}
+
+	func onInit {
+		cmd "echo Run the game in 1024x1024:"
+		cmd "echo ufo +set vid_mode -1 +set vid_width 1024 +set vid_height 1024;"
+		cmd "r_isometric 1;centercamera;camsetangles 90 90;camsetzoom 0.5;"
+		*cvar:scr_showcursor = 0
+		*cvar:cl_showactors = 0
+	}
+	
+	func onClose {
+		*cvar:scr_showcursor = 1
+		*cvar:cl_showactors = 1
+	}
 }

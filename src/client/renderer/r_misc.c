@@ -81,18 +81,97 @@ enum {
 	SSHOTTYPE_TGA_COMP,
 };
 
-void R_ScreenShot_f (void)
+/**
+ * Compute the position of the map into the frame buffer
+ * before taking a screen shot for the minimap
+ * @todo we can speed up the thing if we only read one row and one column
+ * @todo we may speed up the thing if we use GL_DEPTH_COMPONENT instead of GL_RGB
+ */
+void R_FrameBufferMapSize (int *x, int *y, int *width, int *height)
+{
+	int left = 0;
+	int top = 0;
+	int right = viddef.width;
+	int bottom = viddef.height;
+	GLint rowPack;
+	int rowMemory;
+	unsigned char *buffer;
+	const unsigned char* pixel;
+
+	glGetIntegerv(GL_PACK_ALIGNMENT, &rowPack);
+	#define ALIGN(value,size) ((value + (size - 1)) & (~(size - 1)))
+	rowMemory = ALIGN(viddef.width * 3, rowPack);
+	#undef ALIGN
+
+	buffer = Mem_PoolAlloc(rowMemory * viddef.height, vid_imagePool, 0);
+	glReadPixels(0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+
+	/* fix left */
+	pixel = buffer + rowMemory * (viddef.height / 2);
+	while (left < right) {
+		if (pixel[0] != 0 || pixel[1] != 0 || pixel[2] != 0)
+			break;
+		left++;
+		pixel += 3;
+	}
+
+	/* fix right */
+	pixel = buffer + rowMemory * (viddef.height / 2) + (viddef.width - 1) * 3;
+	while (right > left) {
+		if (pixel[0] != 0 || pixel[1] != 0 || pixel[2] != 0)
+			break;
+		right--;
+		pixel -= 3;
+	}
+
+	/* fix top */
+	pixel = buffer + (viddef.width / 2) * 3;
+	while (top < bottom) {
+		if (pixel[0] != 0 || pixel[1] != 0 || pixel[2] != 0)
+			break;
+		top++;
+		pixel += rowMemory;
+	}
+
+	/* fix bottom */
+	pixel = buffer + (viddef.width / 2) * 3 + (viddef.height - 1) * rowMemory;
+	while (bottom > top) {
+		if (pixel[0] != 0 || pixel[1] != 0 || pixel[2] != 0)
+			break;
+		bottom--;
+		pixel -= rowMemory;
+	}
+
+	Mem_Free(buffer);
+
+	*x = left;
+	*y = top;
+	*width = right - left;
+	*height = bottom - top;
+}
+
+/**
+ * Take a screenshot of the frame buffer
+ * @param[in] x
+ * @param[in] y
+ * @param[in] width
+ * @param[in] height
+ * @param[in] filename Force to use a filename. Else NULL to autogen a filename
+ * @param[in] ext Force to use an image format (tga/png/jpg). Else NULL to use value of r_screenshot_format
+ */
+void R_ScreenShot (int x, int y, int width, int height, const char *filename, const char *ext)
 {
 	char	checkName[MAX_OSPATH];
 	int		type, shotNum, quality = 100;
-	const char	*ext;
 	byte	*buffer;
 	qFILE	f;
+	int rowPack;
+
+	glGetIntegerv(GL_PACK_ALIGNMENT, &rowPack);
+	glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
 	/* Find out what format to save in */
-	if (Cmd_Argc() > 1)
-		ext = Cmd_Argv(1);
-	else
+	if (ext == NULL)
 		ext = r_screenshot_format->string;
 
 	if (!Q_strcasecmp(ext, "png"))
@@ -129,15 +208,18 @@ void R_ScreenShot_f (void)
 	}
 
 	/* Find a file name to save it to */
-	for (shotNum = 0; shotNum < 1000; shotNum++) {
-		Com_sprintf(checkName, sizeof(checkName), "scrnshot/ufo%i%i.%s", shotNum / 10, shotNum % 10, ext);
-		if (FS_CheckFile(checkName) == -1)
-			break;
-	}
-
-	if (shotNum == 1000) {
-		Com_Printf("R_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
-		return;
+	if (filename) {
+		Com_sprintf(checkName, sizeof(checkName), "scrnshot/%s.%s", filename, ext);
+	} else {
+		for (shotNum = 0; shotNum < 1000; shotNum++) {
+			Com_sprintf(checkName, sizeof(checkName), "scrnshot/ufo%i%i.%s", shotNum / 10, shotNum % 10, ext);
+			if (FS_CheckFile(checkName) == -1)
+				break;
+		}
+		if (shotNum == 1000) {
+			Com_Printf("R_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
+			return;
+		}
 	}
 
 	/* Open it */
@@ -148,33 +230,33 @@ void R_ScreenShot_f (void)
 	}
 
 	/* Allocate room for a copy of the framebuffer */
-	buffer = Mem_PoolAlloc(viddef.width * viddef.height * 3, vid_imagePool, 0);
+	buffer = Mem_PoolAlloc(width * height * 3, vid_imagePool, 0);
 	if (!buffer) {
-		Com_Printf("R_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", viddef.width * viddef.height * 3);
+		Com_Printf("R_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", width * height * 3);
 		FS_CloseFile(&f);
 		return;
 	}
 
 	/* Read the framebuffer into our storage */
-	glReadPixels(0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	glReadPixels(x, y, width, height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
 	R_CheckError();
 
 	/* Write */
 	switch (type) {
 	case SSHOTTYPE_TGA:
-		R_WriteTGA(&f, buffer, viddef.width, viddef.height, 3);
+		R_WriteTGA(&f, buffer, width, height, 3);
 		break;
 
 	case SSHOTTYPE_TGA_COMP:
-		R_WriteCompressedTGA(&f, buffer, viddef.width, viddef.height);
+		R_WriteCompressedTGA(&f, buffer, width, height);
 		break;
 
 	case SSHOTTYPE_PNG:
-		R_WritePNG(&f, buffer, viddef.width, viddef.height);
+		R_WritePNG(&f, buffer, width, height);
 		break;
 
 	case SSHOTTYPE_JPG:
-		R_WriteJPG(&f, buffer, viddef.width, viddef.height, quality);
+		R_WriteJPG(&f, buffer, width, height, quality);
 		break;
 	}
 
@@ -183,6 +265,15 @@ void R_ScreenShot_f (void)
 	Mem_Free(buffer);
 
 	Com_Printf("Wrote %s to %s\n", checkName, FS_Gamedir());
+	glPixelStorei(GL_PACK_ALIGNMENT, rowPack);
+}
+
+void R_ScreenShot_f (void)
+{
+	const char *ext = NULL;
+	if (Cmd_Argc() > 1)
+		ext = Cmd_Argv(1);
+	R_ScreenShot(0, 0, viddef.width, viddef.height, NULL, ext);
 }
 
 /**

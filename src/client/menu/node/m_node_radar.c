@@ -25,9 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_radar.h"
 #include "m_node_abstractnode.h"
 #include "../m_render.h"
+#include "../m_timer.h"
+#include "../m_menus.h"
 
 #include "../../client.h"
 #include "../../renderer/r_draw.h"
+#include "../../renderer/r_misc.h"
 #include "../../cl_le.h"	/**< cl_actor.h needs this */
 #include "../../../shared/parse.h"
 
@@ -399,6 +402,8 @@ static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
 	MN_DrawFill(x, y, radar.gridWidth, radar.gridHeight, color);
 }
 
+#define RADARSIZE_DEBUG
+
 /**
  * @sa CMod_GetMapSize
  * @todo Show frustum view area for actors (@sa FrustumVis)
@@ -410,17 +415,22 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	const le_t *le;
 	int i;
 	vec3_t pos;
+#ifdef RADARSIZE_DEBUG
+	int textposy = 40;
+	static const vec4_t red = {1, 0, 0, 0.5};
+#endif
 
 	static const vec4_t grey = {0.7, 0.7, 0.7, 1};
-	const int mapWidth = mapMax[0] - mapMin[0];
-	const int mapHeight = mapMax[1] - mapMin[1];
+	const float mapWidth = mapMax[0] - mapMin[0];
+	const float mapHeight = mapMax[1] - mapMin[1];
 
-	/** @todo i dont really understand why the ratio is not the same, but
-	 * i use an existing image to compute that */
-	const float imageCoefX = (float) node->size[0] / 456.0f;
-	const float imageCoefY = (float) node->size[1] / 461.0f;
+	/** @todo use the same coef for x and y */
 	const float mapCoefX = (float) node->size[0] / (float) mapWidth;
 	const float mapCoefY = (float) node->size[1] / (float) mapHeight;
+	/** @todo understand this coef */
+	const float MAGIC_COEF = 1.0f; //(500.0f / 338.0f);
+	const float imageCoefX = mapCoefX * MAGIC_COEF;
+	const float imageCoefY = mapCoefY * MAGIC_COEF;
 
 	/** @todo remove cl.skipRadarNodes from the code */
 	if (cls.state != ca_active)
@@ -429,7 +439,9 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	MN_GetNodeAbsPos(node, pos);
 	R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
 	MN_DrawFill(pos[0], pos[1], mapWidth * mapCoefX, mapHeight * mapCoefY, grey);
+#ifndef RADARSIZE_DEBUG
 	R_BeginClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+#endif
 
 	/* the cl struct is wiped with every new map */
 	if (!cl.radarInited) {
@@ -447,6 +459,13 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	if (radar.gridHeight < 6)
 		radar.gridHeight = 6;
 
+#ifdef RADARSIZE_DEBUG
+		MN_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %fx%f map", mapMin[0], mapMin[1], mapMax[0], mapMax[1]), LONGLINES_PRETTYCHOP);
+		textposy += 25;
+		MN_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f map", mapWidth, mapHeight), LONGLINES_PRETTYCHOP);
+		textposy += 25;
+#endif
+
 	/* draw background */
 	for (i = 0; i < radar.numImages; i++) {
 		hudRadarImage_t *image = &radar.images[i];
@@ -459,7 +478,16 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 				radar.x + imageCoefX * image->x, radar.y + imageCoefY * image->y,
 				imageCoefX * image->w, imageCoefY * image->h,
 				0, 0, 0, 0, image->path[maxlevel]);
+#ifdef RADARSIZE_DEBUG
+		MN_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%dx%d %dx%d %s", image->x, image->y, image->w, image->h, image->path[maxlevel]), LONGLINES_PRETTYCHOP);
+		textposy += 25;
+#endif
 	}
+
+#ifdef RADARSIZE_DEBUG
+	MN_DrawFill(pos[0], pos[1], 100.0f * mapCoefX, 100.0f * mapCoefY, red);
+	MN_DrawFill(pos[0], pos[1], UNIT_SIZE * mapCoefX, UNIT_SIZE * mapCoefY, red);
+#endif
 
 	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
 		vec3_t itempos;
@@ -479,13 +507,83 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 			MN_RadarNodeDrawItem(le, itempos);
 			break;
 		}
+#ifdef RADARSIZE_DEBUG
+		MN_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %dx%d actor", le->origin[0], le->origin[1], le->pos[0], le->pos[1]), LONGLINES_PRETTYCHOP);
+		textposy += 25;
+		MN_DrawFill(itempos[0], itempos[1], UNIT_SIZE * mapCoefX, 1, red);
+		MN_DrawFill(itempos[0], itempos[1], 1, UNIT_SIZE * mapCoefY, red);
+#endif
 	}
 
+#ifndef RADARSIZE_DEBUG
 	R_EndClipRect();
+#endif
+}
+
+/**
+ * Take a screen shot of the map with the position of the radar
+ *
+ * We add 1 pixel into the border to easy check the result:
+ * the screen shot must have a border of 1 black pixel
+ */
+static void MN_GenRadarMap_f (void)
+{
+	const int border = 1;
+	const char *mapName = Cvar_GetString("sv_mapname");
+	const int level = Cvar_GetInteger("cl_worldlevel");
+	const char *filename = NULL;
+	int x, y, width, height;
+
+	R_FrameBufferMapSize(&x, &y, &width, &height);
+	Com_Printf("Radar map size from frame buffer: %i %i %i %i\n", x, y, width, height);
+	if (mapName)
+		filename = va("%s_%i", mapName, level);
+	R_ScreenShot(x - border, y - border, width + border * 2, height + border * 2, filename, NULL);
+}
+
+static void MN_GenAllRadarMap (menuNode_t *node, menuTimer_t *timer)
+{
+	int level = timer->calledTime / 2;
+	int mode = timer->calledTime % 2;
+
+	if (level >= cl.mapMaxLevel) {
+		Cbuf_AddText("mn_genallradarmaprelease");
+		return;
+	}
+
+	if (mode == 0)
+		Cvar_SetValue("cl_worldlevel", level);
+	else
+		Cmd_ExecuteString("mn_genradarmap");
+}
+
+menuTimer_t* timer;
+
+/**
+ * @todo allow to call MN_TimerRelease into timer callback
+ */
+static void MN_GenAllRadarMapRelease_f (void) {
+	if (MN_IsMenuOnStack("nohud"))
+		MN_PopMenu(qfalse);
+	MN_TimerRelease(timer);
+}
+
+/**
+ * Take all screenshots from lower to upper map level.
+ * Use a timer to delay each capture
+ */
+static void MN_GenAllRadarMap_f (void)
+{
+	const int delay = 1000;
+	timer = MN_AllocTimer(NULL, delay, MN_GenAllRadarMap);
+	MN_TimerStart(timer);
 }
 
 void MN_RegisterRadarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
 	behaviour->draw = MN_RadarNodeDraw;
+	Cmd_AddCommand("mn_genradarmap", MN_GenRadarMap_f, NULL);
+	Cmd_AddCommand("mn_genallradarmap", MN_GenAllRadarMap_f, NULL);
+	Cmd_AddCommand("mn_genallradarmaprelease", MN_GenAllRadarMapRelease_f, NULL);
 }
