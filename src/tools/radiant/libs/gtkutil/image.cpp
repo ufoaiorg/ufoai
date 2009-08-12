@@ -75,3 +75,13 @@ GtkImage* new_local_image(const char* filename) {
 	fullPath << g_bitmapsPath.c_str() << filename;
 	return new_image(fullPath.c_str());
 }
+
+namespace gtkutil {
+
+	// Return a GdkPixbuf from a local image
+	GdkPixbuf* getLocalPixbuf(const std::string& fileName) {
+		std::string fullFileName(std::string(g_bitmapsPath.c_str()) + fileName);
+		return gdk_pixbuf_new_from_file(fullFileName.c_str(), NULL);
+	}
+
+} // namespace gtkutil

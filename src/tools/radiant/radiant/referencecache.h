@@ -40,4 +40,8 @@ typedef void(*GraphTraversalFunc)(scene::Node& root, const scene::Traversable::W
 bool MapResource_saveFile(const MapFormat& format, scene::Node& root, GraphTraversalFunc traverse, const char* filename);
 ModelLoader* ModelLoader_forType(const char* type);
 
+// Get the ModelLoader class for the given model type
+class ModelLoader;
+ModelLoader* ModelLoader_forType(const char* type);
+
 #endif

@@ -47,6 +47,7 @@
 #include "moduleobserver.h"
 #include "convert.h"
 #include "stringio.h"
+#include "../dialogs/modelselector.h"
 
 #include "gtkutil/accelerator.h"
 #include "gtkutil/dialog.h"
@@ -291,8 +292,7 @@ class ModelAttribute: public EntityAttribute
 		typedef MemberCaller<ModelAttribute, &ModelAttribute::update> UpdateCaller;
 		void browse (const BrowsedPathEntry::SetPathCallback& setPath)
 		{
-			const char *filename = misc_model_dialog(gtk_widget_get_toplevel(GTK_WIDGET(m_entry.m_entry.m_frame)));
-
+			const char *filename = ui::ModelSelector::chooseModel().c_str();
 			if (filename != 0) {
 				setPath(filename);
 				apply();

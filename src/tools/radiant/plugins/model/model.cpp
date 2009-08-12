@@ -600,6 +600,9 @@ size_t picoInputStreamReam (void* inputStream, unsigned char* buffer, size_t len
 	return reinterpret_cast<InputStream*> (inputStream)->read(buffer, length);
 }
 
+/* Use the picomodel library to load the contents of the given file
+ * and return a Node containing the model.
+ */
 scene::Node& loadPicoModel (const picoModule_t* module, ArchiveFile& file)
 {
 	picoModel_t* model = PicoModuleLoadModelStream(module, file.getName(), &file.getInputStream(), picoInputStreamReam,
@@ -607,4 +610,18 @@ scene::Node& loadPicoModel (const picoModule_t* module, ArchiveFile& file)
 	PicoModelNode* modelNode = new PicoModelNode(model);
 	PicoFreeModel(model);
 	return modelNode->node();
+}
+
+#include "RenderablePicoModel.h"
+
+/* Load the provided file as a model object and return as an IModel
+ * shared pointer.
+ */
+model::IModelPtr loadIModel (const picoModule_t* module, ArchiveFile& file)
+{
+	picoModel_t* model = PicoModuleLoadModelStream(module, file.getName(), &file.getInputStream(), picoInputStreamReam,
+			file.size(), 0);
+	model::IModelPtr modelObj(new model::RenderablePicoModel(model));
+	PicoFreeModel(model);
+	return modelObj;
 }

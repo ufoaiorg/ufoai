@@ -78,6 +78,15 @@ class BasicVector3
 			z() = z_;
 		}
 
+		/** Construct a BasicVector3 from a 3-element array. The array must be
+		 * valid as no bounds checking is done.
+		 */
+		BasicVector3 (const Element* array)
+		{
+			for (int i = 0; i < 3; ++i)
+				m_elements[i] = array[i];
+		}
+
 		Element& x ()
 		{
 			return m_elements[0];
@@ -151,6 +160,22 @@ class BasicVector3
 			m_elements[0] *= inverseLength;
 			m_elements[1] *= inverseLength;
 			m_elements[2] *= inverseLength;
+		}
+
+		/* Cross-product this vector with another Vector3, returning the result
+		 * in a new Vector3.
+		 *
+		 * @param other
+		 * The Vector3 to cross-product with this Vector3.
+		 *
+		 * @returns
+		 * The cross-product of the two vectors.
+		 */
+		template<typename OtherT>
+		BasicVector3<Element> crossProduct (const BasicVector3<OtherT>& other)
+		{
+			return BasicVector3<Element> (y() * other.z() - z() * other.y(), z() * other.x() - x() * other.z(), x()
+					* other.y() - y() * other.x());
 		}
 };
 

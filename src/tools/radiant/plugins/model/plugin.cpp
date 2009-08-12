@@ -108,6 +108,18 @@ class PicoModelLoader: public ModelLoader
 		{
 			return loadPicoModel(m_module, file);
 		}
+
+		// Load the given model from the VFS path
+		model::IModelPtr loadModelFromPath (const std::string& name)
+		{
+			// Open an ArchiveFile to load
+			ArchiveFile* file = GlobalFileSystem().openFile(name.c_str());
+
+			if (file != NULL) {
+				// Load the model and return the RenderablePtr
+				return loadIModel(m_module, *file);
+			}
+		}
 };
 
 class ModelPicoDependencies: public GlobalFileSystemModuleRef,

@@ -27,6 +27,8 @@
 #include "modelskin.h"
 
 #include <map>
+#include <string>
+#include <vector>
 
 #include "stream/stringstream.h"
 #include "generic/callback.h"
@@ -37,11 +39,25 @@
 #include "modulesystem/singletonmodule.h"
 #include "stringio.h"
 
+/** A single instance of a UFO model skin. This structure stores a set of maps
+ * between an existing texture and a new texture, and possibly the name of the model
+ * that this skin is associated with.
+ */
 class UFOModelSkin
 {
+		// Map of texture switches
 		typedef std::map<CopiedString, CopiedString> Remaps;
 		Remaps m_remaps;
+		// Associated model
+		std::string _model;
+
 	public:
+		// Constructor
+		UFOModelSkin () :
+			_model("")
+		{
+		}
+
 		const char* getRemap (const char* name) const
 		{
 			Remaps::const_iterator i = m_remaps.find(name);
@@ -56,13 +72,28 @@ class UFOModelSkin
 				callback(SkinRemap((*i).first.c_str(), (*i).second.c_str()));
 			}
 		}
+
+		// Return the model associated with this skin.
+		std::string getModel ()
+		{
+			return _model;
+		}
 };
 
+/** Singleton class to retain a mapping between skin names and skin objects.
+ */
 class GlobalSkins
 {
 	public:
+		// Map of skin names to skin objects
 		typedef std::map<CopiedString, UFOModelSkin> SkinMap;
 		SkinMap m_skins;
+
+		// Map between model paths and a vector of names of the associated skins,
+		// which are contained in the main SkinMap.
+		typedef std::map<std::string, std::vector<std::string> > ModelSkinMap;
+		ModelSkinMap _mSkinMap;
+
 		UFOModelSkin g_nullSkin;
 
 		UFOModelSkin& getSkin (const char* name)
@@ -73,6 +104,12 @@ class GlobalSkins
 			}
 
 			return g_nullSkin;
+		}
+
+		// Return the vector of skin names corresponding to the given model
+		const std::vector<std::string>& getSkinsForModel (const std::string& model)
+		{
+			return _mSkinMap[model];
 		}
 
 		void construct ()
@@ -225,6 +262,13 @@ class UFOModelSkinCache: public ModelSkinCache, public ModuleObserver
 				(*i).value->unrealise();
 			}
 			g_skins.unrealise();
+		}
+
+		// Get the vector of skin names corresponding to the given model.
+		const ModelSkinList& getSkinsForModel (const std::string& model)
+		{
+			// Pass on call to the GlobalSkins class
+			return g_skins.getSkinsForModel(model);
 		}
 };
 

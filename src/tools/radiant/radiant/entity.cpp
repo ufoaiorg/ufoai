@@ -53,6 +53,7 @@
 #include "commands.h"
 #include "dialogs/light.h"
 #include "dialogs/particle.h"
+#include "dialogs/modelselector.h"
 
 struct entity_globals_t
 {
@@ -355,6 +356,7 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 
 		Instance_setSelected(instance, true);
 	} else {
+		// Add selected brushes as children of non-fixed entity
 		Scene_parentSelectedBrushesToEntity(GlobalSceneGraph(), node);
 		Scene_forEachChildSelectable(SelectableSetSelected(true), instance.path());
 	}
@@ -372,7 +374,7 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 	}
 
 	if (isModel) {
-		const char* model = misc_model_dialog(GTK_WIDGET(MainFrame_getWindow()));
+		const char* model = ui::ModelSelector::chooseModel().c_str();
 		if (model != 0) {
 			entity->setKeyValue("model", model);
 		}
@@ -444,27 +446,6 @@ void Entity_setColour ()
 			}
 		}
 	}
-}
-
-/**
- * @todo Support pk3 files
- */
-const char* misc_model_dialog (GtkWidget* parent)
-{
-	StringOutputStream buffer(1024);
-
-	buffer << g_qeglobals.m_userGamePath.c_str() << "models/";
-
-	const char *filename = file_dialog(parent, TRUE, _("Choose Model"), buffer.c_str(), ModelLoader::Name());
-	if (filename != 0) {
-		// use VFS to get the correct relative path
-		const char* relative = path_make_relative(filename, GlobalFileSystem().findRoot(filename));
-		if (relative == filename) {
-			g_warning("Could not extract the relative path, using full path instead\n");
-		}
-		return relative;
-	}
-	return 0;
 }
 
 char* misc_particle_dialog (GtkWidget* parent)

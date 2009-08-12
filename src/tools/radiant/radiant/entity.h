@@ -32,7 +32,6 @@ void Scene_EntitySetClassname_Selected(const char* classname, const char* newCla
 
 
 typedef struct _GtkWidget GtkWidget;
-const char* misc_model_dialog(GtkWidget* parent);
 const char* misc_sound_dialog(GtkWidget* parent);
 char* misc_particle_dialog(GtkWidget* parent);
 

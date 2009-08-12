@@ -172,6 +172,10 @@ class NullModelLoader: public ModelLoader
 		{
 			return g_nullModel;
 		}
+
+		model::IModelPtr loadModelFromPath (const std::string& name)
+		{
+		}
 };
 
 namespace

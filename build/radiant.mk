@@ -83,6 +83,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findtextures.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/modelselector.cpp \
 	\
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
@@ -118,7 +119,9 @@ RADIANT_TARGET=radiant/uforadiant$(EXE_EXT)
 # model plugin
 RADIANT_PLUGIN_MODEL_SRCS_CPP = \
 	$(RADIANT_BASE)/plugins/model/plugin.cpp \
-	$(RADIANT_BASE)/plugins/model/model.cpp
+	$(RADIANT_BASE)/plugins/model/model.cpp \
+	$(RADIANT_BASE)/plugins/model/RenderablePicoSurface.cpp \
+	$(RADIANT_BASE)/plugins/model/RenderablePicoModel.cpp
 RADIANT_PLUGIN_MODEL_SRCS_C = \
 	$(RADIANT_BASE)/libs/picomodel/picointernal.c \
 	$(RADIANT_BASE)/libs/picomodel/picomodel.c \

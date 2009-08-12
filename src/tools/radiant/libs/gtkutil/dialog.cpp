@@ -294,7 +294,7 @@ namespace gtkutil
 	// Display a Gtk Error dialog
 	void errorDialog (GtkWindow* window, const std::string& errorText)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new(window, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
+		GtkWidget* dialog = gtk_message_dialog_new_with_markup(window, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_CLOSE, "%s", errorText.c_str());
 		gtk_dialog_run(GTK_DIALOG (dialog));
 		gtk_widget_destroy(dialog);

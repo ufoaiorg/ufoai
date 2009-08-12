@@ -449,11 +449,25 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 				globalOutputStream() << "leaked shader: " << makeQuoted((*i).key.c_str()) << "\n";
 			}
 		}
+		/* Capture the given shader.
+		 */
+		Shader* capture (const std::string& name)
+		{
+			return m_shaders.capture(name.c_str()).get();
+		}
+
 		Shader* capture (const char* name)
 		{
 			ASSERT_MESSAGE(name[0] == '$' || *name == '[' || *name == '<' || *name == '(' || strchr(name, '\\') == 0,
 					"shader name contains invalid characters: \"" << name << "\"");
 			return m_shaders.capture(name).get();
+		}
+
+		/* Release the given shader.
+		 */
+		void release (const std::string& name)
+		{
+			m_shaders.release(name.c_str());
 		}
 		void release (const char *name)
 		{
@@ -1286,8 +1300,7 @@ class OpenGLStateLibraryAPI
 		OpenGLStateMap m_stateMap;
 	public:
 		typedef OpenGLStateLibrary Type;
-		STRING_CONSTANT(Name, "*")
-		;
+		STRING_CONSTANT(Name, "*");
 
 		OpenGLStateLibraryAPI ()
 		{
@@ -1305,7 +1318,7 @@ class OpenGLStateLibraryAPI
 
 typedef SingletonModule<OpenGLStateLibraryAPI> OpenGLStateLibraryModule;
 typedef Static<OpenGLStateLibraryModule> StaticOpenGLStateLibraryModule;
-StaticRegisterModule staticRegisterOpenGLStateLibrary (StaticOpenGLStateLibraryModule::instance ());
+StaticRegisterModule staticRegisterOpenGLStateLibrary(StaticOpenGLStateLibraryModule::instance());
 
 class ShaderCacheDependencies: public GlobalShadersModuleRef,
 		public GlobalTexturesModuleRef,
@@ -1323,8 +1336,7 @@ class ShaderCacheAPI
 		ShaderCache* m_shaderCache;
 	public:
 		typedef ShaderCache Type;
-		STRING_CONSTANT(Name, "*")
-		;
+		STRING_CONSTANT(Name, "*");
 
 		ShaderCacheAPI ()
 		{
@@ -1344,4 +1356,4 @@ class ShaderCacheAPI
 
 typedef SingletonModule<ShaderCacheAPI, ShaderCacheDependencies> ShaderCacheModule;
 typedef Static<ShaderCacheModule> StaticShaderCacheModule;
-StaticRegisterModule staticRegisterShaderCache (StaticShaderCacheModule::instance ());
+StaticRegisterModule staticRegisterShaderCache(StaticShaderCacheModule::instance());
