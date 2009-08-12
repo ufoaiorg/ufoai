@@ -612,33 +612,17 @@ class EntityKeyValues: public Entity
 			}
 		}
 
-		/** Set a keyvalue on the entity. For now this function just calls the
-		 * const char* version.
-		 */
-		void setKeyValue (const std::string& key, const std::string& value)
-		{
-			if (value.empty()) {
-				erase(key.c_str());
-				m_entityKeyValueChanged();
-			} else {
-				setKeyValue(key.c_str(), value.c_str());
-			}
-		}
-
 		/**
 		 * @brief Sets or deletes properties for the entity
 		 * @param[in] key The property key
 		 * @param[in] value If empty, the property will be removed
 		 */
-		void setKeyValue (const char* key, const char* value)
+		void setKeyValue (const std::string& key, const std::string& value)
 		{
-			// don't set key if not applicable, but set classname (will not be set as valid attribute)
-			if (getEntityClass().getAttribute(key) == 0 && strcmp(key, "classname"))
-				return;
-			if (value[0] == '\0') {
-				erase(key);
+			if (value.empty()) {
+				erase(key.c_str());
 			} else {
-				insert(key, value);
+				insert(key.c_str(), value.c_str());
 			}
 			m_entityKeyValueChanged();
 		}
