@@ -1,22 +1,25 @@
 #include "RenderablePicoSurface.h"
+#include "modelskin.h"
 
 namespace model
 {
 	// Constructor. Copy the provided picoSurface_t structure into this object
 	RenderablePicoSurface::RenderablePicoSurface (picoSurface_t* surf) :
-		_shaderName("")
+		_originalShaderName(""), _mappedShaderName("")
 	{
 		// Get the shader from the picomodel struct. If this is a LWO model, use
 		// the material name to select the shader, while for an ASE model the
 		// bitmap path should be used.
 		picoShader_t* shader = PicoGetSurfaceShader(surf);
 		if (shader != 0) {
-			_shaderName = PicoGetShaderName(shader);
+			_originalShaderName = PicoGetShaderName(shader);
 		}
-		globalOutputStream() << "  RenderablePicoSurface: using shader " << _shaderName.c_str() << "\n";
+		globalOutputStream() << "  RenderablePicoSurface: using shader " << _originalShaderName.c_str() << "\n";
+
+		_mappedShaderName = _originalShaderName; // no skin at this time
 
 		// Capture the shader
-		_shader = GlobalShaderCache().capture(_shaderName);
+		_shader = GlobalShaderCache().capture(_originalShaderName);
 
 		// Get the number of vertices and indices, and reserve capacity in our vectors in advance
 		// by populating them with empty structs.
@@ -53,4 +56,26 @@ namespace model
 		glDrawElements(GL_TRIANGLES, _nIndices, GL_UNSIGNED_INT, &_indices[0]);
 	}
 
+	// Apply a skin to this surface
+	void RenderablePicoSurface::applySkin (const ModelSkin& skin)
+	{
+		// Look up the remap for this surface's material name. If there is a remap
+		// change the Shader* to point to the new shader.
+		std::string remap = skin.getRemap(_originalShaderName);
+		if (remap != "" && remap != _mappedShaderName) { // change to a new shader
+			// Switch shader objects
+			GlobalShaderCache().release(_mappedShaderName);
+			_shader = GlobalShaderCache().capture(remap);
+
+			// Save the remapped shader name
+			_mappedShaderName = remap;
+		} else if (remap == "" && _mappedShaderName != _originalShaderName) {
+			// No remap, so reset our shader to the original unskinned shader
+			GlobalShaderCache().release(_mappedShaderName);
+			_shader = GlobalShaderCache().capture(_originalShaderName);
+
+			// Reset the remapped shader name
+			_mappedShaderName = _originalShaderName;
+		}
+	}
 } // namespace model

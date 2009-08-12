@@ -162,6 +162,20 @@ class BasicVector3
 			m_elements[2] *= inverseLength;
 		}
 
+		// Return a new BasicVector3 equivalent to this BasicVector3
+		// scaled by a constant amount
+		BasicVector3<Element> getScaledBy (double scale) const
+		{
+			return BasicVector3<Element> (x() * scale, y() * scale, z() * scale);
+		}
+
+		// Return a new BasicVector3 equivalent to the normalised
+		// version of this BasicVector3 (scaled by the inverse of its size)
+		BasicVector3<Element> getNormalised () const
+		{
+			return getScaledBy(1.0 / getLength());
+		}
+
 		/* Cross-product this vector with another Vector3, returning the result
 		 * in a new Vector3.
 		 *

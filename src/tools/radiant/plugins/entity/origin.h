@@ -49,8 +49,8 @@ inline void write_origin (const Vector3& origin, Entity* entity, const char* key
 
 inline Vector3 origin_translated (const Vector3& origin, const Vector3& translation)
 {
-	return matrix4_get_translation_vec3(matrix4_multiplied_by_matrix4(matrix4_translation_for_vec3(origin),
-			matrix4_translation_for_vec3(translation)));
+	return matrix4_get_translation_vec3(matrix4_multiplied_by_matrix4(Matrix4::getTranslation(origin),
+			Matrix4::getTranslation(translation)));
 }
 
 inline Vector3 origin_snapped (const Vector3& origin, float snap)

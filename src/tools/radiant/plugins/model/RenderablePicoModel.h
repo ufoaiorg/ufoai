@@ -74,6 +74,10 @@ namespace model
 			{
 				return _localAABB;
 			}
+
+			/** Apply the given skin to this model.
+			 */
+			void applySkin (const ModelSkin& skin);
 	};
 }
 

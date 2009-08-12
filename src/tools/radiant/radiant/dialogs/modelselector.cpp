@@ -10,6 +10,7 @@
 #include "ifilesystem.h"
 #include "math/aabb.h"
 
+#include <cmath>
 #include <iostream>
 #include <vector>
 #include <sstream>
@@ -50,7 +51,7 @@ namespace ui
 	ModelSelector::ModelSelector () :
 		_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)), _treeStore(gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING,
 				G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF)), _infoStore(gtk_list_store_new(2, G_TYPE_STRING,
-				G_TYPE_STRING)), _lastModel(""), _camDist(-5.0f)
+				G_TYPE_STRING)), _lastModel(""), _camDist(-5.0f), _rotation(Matrix4::getIdentity())
 	{
 		// Window properties
 
@@ -398,8 +399,9 @@ namespace ui
 			// Set up the camera
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			MYgluPerspective(PREVIEW_FOV, 1, 1.0, 1000);
+			MYgluPerspective(PREVIEW_FOV, 1., 0.1, 1000);
 			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
 
 			// Set up the lights
 			glEnable(GL_LIGHTING);
@@ -408,12 +410,12 @@ namespace ui
 			glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
 
 			glEnable(GL_LIGHT0);
-			glEnable(GL_COLOR_MATERIAL);
-			glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
+			GLfloat l0Amb[] = { 0.5, 0.5, 0.5, 1.0 };
 			GLfloat l0Dif[] = { 1.0, 1.0, 1.0, 1.0 };
 			GLfloat l0Pos[] = { 1.0, 1.0, 1.0, 0.0 };
 
+			glLightfv(GL_LIGHT0, GL_AMBIENT, l0Amb);
 			glLightfv(GL_LIGHT0, GL_DIFFUSE, l0Dif);
 			glLightfv(GL_LIGHT0, GL_POSITION, l0Pos);
 
@@ -460,13 +462,25 @@ namespace ui
 		if (mName.empty())
 			return;
 
+		// Get the skin if set
+		std::string skinName = getSelectedValue(SKIN_COLUMN);
+		ModelSkin& mSkin = GlobalModelSkinCache().capture(skinName);
+
 		// Update the previewed model
 
 		ModelLoader* loader = ModelLoader_forType(path_get_extension(mName.c_str()));
 		if (loader != NULL) {
 			_model = loader->loadModelFromPath(mName);
+			_model->applySkin(mSkin);
 		}
 
+		// Calculate camera distance so model is appropriately zoomed
+		_camDist = -(_model->getAABB().getRadius() * 2.0);
+
+		// Reset the rotation
+		_rotation = Matrix4::getIdentity();
+
+		// Draw the model
 		gtk_widget_queue_draw(_widget);
 
 		// Update the text in the info table
@@ -475,6 +489,9 @@ namespace ui
 		gtk_list_store_set(_infoStore, &iter, 0, "Model name", 1, mName.c_str(), -1);
 
 		gtk_list_store_append(_infoStore, &iter);
+
+		gtk_list_store_append(_infoStore, &iter);
+		gtk_list_store_set(_infoStore, &iter, 0, "Skin name", 1, skinName.c_str(), -1);
 		//		gtk_list_store_set(_infoStore, &iter, 0, "Material surfaces", 1, boost::lexical_cast<std::string>(
 		//				_model->getSurfaceCount()).c_str(), -1);
 		//		gtk_list_store_append(_infoStore, &iter);
@@ -489,6 +506,7 @@ namespace ui
 
 	void ModelSelector::callbackHide (GtkWidget* widget, GdkEvent* ev, ModelSelector* self)
 	{
+		self->_lastModel = "";
 		gtk_main_quit(); // exit recursive main loop
 		gtk_widget_hide(self->_widget);
 	}
@@ -527,23 +545,14 @@ namespace ui
 
 			aabb = model->getAABB();
 
-			// Push the current rotation matrix, then premultiply with the
-			// view transformation. We must keep the translation separate so
-			// it does not get mixed up with the incremental rotations.
-			glPushMatrix();
-
-			GLfloat curMv[16];
-			glGetFloatv(GL_MODELVIEW_MATRIX, curMv); // store current modelview
+			// Premultiply with the translations
 			glLoadIdentity();
 			glTranslatef(0, 0, self->_camDist); // camera translation
-			glMultMatrixf(curMv); // post multiply with previous (rotations)
+			glMultMatrixf(self->_rotation); // post multiply with rotations
 			glTranslatef(-aabb.origin.x(), -aabb.origin.y(), -aabb.origin.z()); // model translation
 
 			// Render the actual model.
 			self->_model->render(RENDER_DEFAULT);
-
-			// Pop back to rotation-only matrix
-			glPopMatrix();
 
 			swapAndReturn:
 
@@ -574,13 +583,14 @@ namespace ui
 			if (glwidget_make_current(widget) != FALSE) {
 				// Premultiply the current modelview matrix with the rotation,
 				// in order to achieve rotations in eye space rather than object
-				// space.
-				GLfloat curMv[16];
-				glGetFloatv(GL_MODELVIEW_MATRIX, curMv);
-
+				// space. At this stage we are only calculating and storing the
+				// matrix for the GLDraw callback to use.
 				glLoadIdentity();
 				glRotatef(-2, axisRot.x(), axisRot.y(), axisRot.z());
-				glMultMatrixf(curMv);
+				glMultMatrixf(self->_rotation);
+
+				// Save the new GL matrix for GL draw
+				glGetFloatv(GL_MODELVIEW_MATRIX, self->_rotation);
 
 				gtk_widget_queue_draw(widget); // trigger the GLDraw method to draw the actual model
 			}
@@ -589,10 +599,11 @@ namespace ui
 
 	void ModelSelector::callbackGLScroll (GtkWidget* widget, GdkEventScroll* ev, ModelSelector* self)
 	{
+		const float inc = self->_model->getAABB().getRadius() * 0.1; // Scroll increment is a fraction of the AABB radius
 		if (ev->direction == GDK_SCROLL_UP)
-			self->_camDist += 1.0f;
+			self->_camDist += inc;
 		else if (ev->direction == GDK_SCROLL_DOWN)
-			self->_camDist -= 1.0f;
+			self->_camDist -= inc;
 		gtk_widget_queue_draw(widget);
 	}
 

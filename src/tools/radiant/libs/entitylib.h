@@ -47,7 +47,8 @@
 #include <list>
 #include <set>
 
-inline void arrow_draw(const Vector3& origin, const Vector3& direction) {
+inline void arrow_draw (const Vector3& origin, const Vector3& direction)
+{
 	Vector3 up(0, 0, 1);
 	Vector3 left(-direction[1], direction[0], 0);
 
@@ -58,7 +59,7 @@ inline void arrow_draw(const Vector3& origin, const Vector3& direction) {
 	Vector3 tip3(vector3_added(vector3_added(endpoint, vector3_scaled(direction, -8.0)), vector3_scaled(left, -4.0)));
 	Vector3 tip4(vector3_added(tip3, vector3_scaled(left, 8.0)));
 
-	glBegin (GL_LINES);
+	glBegin(GL_LINES);
 
 	glVertex3fv(vector3_to_array(origin));
 	glVertex3fv(vector3_to_array(endpoint));
@@ -92,19 +93,15 @@ inline void arrow_draw(const Vector3& origin, const Vector3& direction) {
 
 class SelectionIntersection;
 
-inline void aabb_testselect(const AABB& aabb, SelectionTest& test, SelectionIntersection& best) {
-	const IndexPointer::index_type indices[24] = {
-		2, 1, 5, 6,
-		1, 0, 4, 5,
-		0, 1, 2, 3,
-		3, 7, 4, 0,
-		3, 2, 6, 7,
-		7, 6, 5, 4
-	};
+inline void aabb_testselect (const AABB& aabb, SelectionTest& test, SelectionIntersection& best)
+{
+	const IndexPointer::index_type indices[24] = { 2, 1, 5, 6, 1, 0, 4, 5, 0, 1, 2, 3, 3, 7, 4, 0, 3, 2, 6, 7, 7, 6, 5,
+			4 };
 
 	Vector3 points[8];
 	aabb_corners(aabb, points);
-	test.TestQuads(VertexPointer(reinterpret_cast<VertexPointer::pointer>(points), sizeof(Vector3)), IndexPointer(indices, 24), best);
+	test.TestQuads(VertexPointer(reinterpret_cast<VertexPointer::pointer> (points), sizeof(Vector3)), IndexPointer(
+			indices, 24), best);
 }
 
 inline void aabb_draw_wire (const Vector3 points[8])
@@ -157,19 +154,22 @@ inline void aabb_draw_flatshade (const Vector3 points[8])
 	glEnd();
 }
 
-inline void aabb_draw_wire(const AABB& aabb) {
+inline void aabb_draw_wire (const AABB& aabb)
+{
 	Vector3 points[8];
 	aabb_corners(aabb, points);
 	aabb_draw_wire(points);
 }
 
-inline void aabb_draw_flatshade(const AABB& aabb) {
+inline void aabb_draw_flatshade (const AABB& aabb)
+{
 	Vector3 points[8];
 	aabb_corners(aabb, points);
 	aabb_draw_flatshade(points);
 }
 
-inline void aabb_draw_textured(const AABB& aabb) {
+inline void aabb_draw_textured (const AABB& aabb)
+{
 	Vector3 points[8];
 	aabb_corners(aabb, points);
 
@@ -238,7 +238,8 @@ inline void aabb_draw_textured(const AABB& aabb) {
 	glEnd();
 }
 
-inline void aabb_draw_solid(const AABB& aabb, RenderStateFlags state) {
+inline void aabb_draw_solid (const AABB& aabb, RenderStateFlags state)
+{
 	if (state & RENDER_TEXTURE) {
 		aabb_draw_textured(aabb);
 	} else {
@@ -246,7 +247,8 @@ inline void aabb_draw_solid(const AABB& aabb, RenderStateFlags state) {
 	}
 }
 
-inline void aabb_draw(const AABB& aabb, RenderStateFlags state) {
+inline void aabb_draw (const AABB& aabb, RenderStateFlags state)
+{
 	if (state & RENDER_FILL) {
 		aabb_draw_solid(aabb, state);
 	} else {
@@ -254,104 +256,126 @@ inline void aabb_draw(const AABB& aabb, RenderStateFlags state) {
 	}
 }
 
-class RenderableSolidAABB : public OpenGLRenderable {
-	const AABB& m_aabb;
+class RenderableSolidAABB: public OpenGLRenderable
+{
+		const AABB& m_aabb;
 	public:
-	RenderableSolidAABB(const AABB& aabb) : m_aabb(aabb) {
-	}
-	void render(RenderStateFlags state) const {
-		aabb_draw_solid(m_aabb, state);
-	}
+		RenderableSolidAABB (const AABB& aabb) :
+			m_aabb(aabb)
+		{
+		}
+		void render (RenderStateFlags state) const
+		{
+			aabb_draw_solid(m_aabb, state);
+		}
 };
 
-class RenderableWireframeAABB : public OpenGLRenderable {
-	const AABB& m_aabb;
+class RenderableWireframeAABB: public OpenGLRenderable
+{
+		const AABB& m_aabb;
 	public:
-	RenderableWireframeAABB(const AABB& aabb) : m_aabb(aabb) {
-	}
-	void render(RenderStateFlags state) const {
-		aabb_draw_wire(m_aabb);
-	}
+		RenderableWireframeAABB (const AABB& aabb) :
+			m_aabb(aabb)
+		{
+		}
+		void render (RenderStateFlags state) const
+		{
+			aabb_draw_wire(m_aabb);
+		}
 };
 
 /// \brief A key/value pair of strings.
 ///
 /// - Notifies observers when value changes - value changes to "" on destruction.
 /// - Provides undo support through the global undo system.
-class KeyValue : public EntityKeyValue {
-	typedef UnsortedSet<KeyObserver> KeyObservers;
+class KeyValue: public EntityKeyValue
+{
+		typedef UnsortedSet<KeyObserver> KeyObservers;
 
-	std::size_t m_refcount;
-	KeyObservers m_observers;
-	CopiedString m_string;
-	const char* m_empty;
-	ObservedUndoableObject<CopiedString> m_undo;
-	static EntityCreator::KeyValueChangedFunc m_entityKeyValueChanged;
+		std::size_t m_refcount;
+		KeyObservers m_observers;
+		CopiedString m_string;
+		const char* m_empty;
+		ObservedUndoableObject<CopiedString> m_undo;
+		static EntityCreator::KeyValueChangedFunc m_entityKeyValueChanged;
 	public:
 
-	KeyValue(const char* string, const char* empty)
-	: m_refcount(0), m_string(string), m_empty(empty), m_undo(m_string, UndoImportCaller(*this)) {
-		notify();
-	}
-	~KeyValue() {
-		ASSERT_MESSAGE(m_observers.empty(), "KeyValue::~KeyValue: observers still attached");
-	}
-
-	static void setKeyValueChangedFunc(EntityCreator::KeyValueChangedFunc func) {
-		m_entityKeyValueChanged = func;
-	}
-
-	void IncRef() {
-		++m_refcount;
-	}
-	void DecRef() {
-		if (--m_refcount == 0) {
-			delete this;
-		}
-	}
-
-	void instanceAttach(MapFile* map) {
-		m_undo.instanceAttach(map);
-	}
-	void instanceDetach(MapFile* map) {
-		m_undo.instanceDetach(map);
-	}
-
-	void attach(const KeyObserver& observer) {
-		(*m_observers.insert(observer))(c_str());
-	}
-	void detach(const KeyObserver& observer) {
-		observer(m_empty);
-		m_observers.erase(observer);
-	}
-	const char* c_str() const {
-		if (string_empty(m_string.c_str())) {
-			return m_empty;
-		}
-		return m_string.c_str();
-	}
-	void assign(const char* other) {
-		if (!string_equal(m_string.c_str(), other)) {
-			m_undo.save();
-			m_string = other;
+		KeyValue (const char* string, const char* empty) :
+			m_refcount(0), m_string(string), m_empty(empty), m_undo(m_string, UndoImportCaller(*this))
+		{
 			notify();
 		}
-	}
-
-	void notify() {
-		m_entityKeyValueChanged();
-		KeyObservers::reverse_iterator i = m_observers.rbegin();
-		while (i != m_observers.rend()) {
-			(*i++)(c_str());
+		~KeyValue ()
+		{
+			ASSERT_MESSAGE(m_observers.empty(), "KeyValue::~KeyValue: observers still attached");
 		}
-	}
 
-	void importState(const CopiedString& string) {
-		m_string = string;
+		static void setKeyValueChangedFunc (EntityCreator::KeyValueChangedFunc func)
+		{
+			m_entityKeyValueChanged = func;
+		}
 
-		notify();
-	}
-	typedef MemberCaller1<KeyValue, const CopiedString&, &KeyValue::importState> UndoImportCaller;
+		void IncRef ()
+		{
+			++m_refcount;
+		}
+		void DecRef ()
+		{
+			if (--m_refcount == 0) {
+				delete this;
+			}
+		}
+
+		void instanceAttach (MapFile* map)
+		{
+			m_undo.instanceAttach(map);
+		}
+		void instanceDetach (MapFile* map)
+		{
+			m_undo.instanceDetach(map);
+		}
+
+		void attach (const KeyObserver& observer)
+		{
+			(*m_observers.insert(observer))(c_str());
+		}
+		void detach (const KeyObserver& observer)
+		{
+			observer(m_empty);
+			m_observers.erase(observer);
+		}
+		const char* c_str () const
+		{
+			if (string_empty(m_string.c_str())) {
+				return m_empty;
+			}
+			return m_string.c_str();
+		}
+		void assign (const char* other)
+		{
+			if (!string_equal(m_string.c_str(), other)) {
+				m_undo.save();
+				m_string = other;
+				notify();
+			}
+		}
+
+		void notify ()
+		{
+			m_entityKeyValueChanged();
+			KeyObservers::reverse_iterator i = m_observers.rbegin();
+			while (i != m_observers.rend()) {
+				(*i++)(c_str());
+			}
+		}
+
+		void importState (const CopiedString& string)
+		{
+			m_string = string;
+
+			notify();
+		}
+		typedef MemberCaller1<KeyValue, const CopiedString&, &KeyValue::importState> UndoImportCaller;
 };
 
 /// \brief An unsorted list of key/value pairs.
@@ -359,319 +383,370 @@ class KeyValue : public EntityKeyValue {
 /// - Notifies observers when a pair is inserted or removed.
 /// - Provides undo support through the global undo system.
 /// - New keys are appended to the end of the list.
-class EntityKeyValues : public Entity {
+class EntityKeyValues: public Entity
+{
 	public:
-	typedef KeyValue Value;
+		typedef KeyValue Value;
 
-	static StringPool& getPool() {
-		return Static<StringPool, KeyContext>::instance();
-	}
+		static StringPool& getPool ()
+		{
+			return Static<StringPool, KeyContext>::instance();
+		}
 	private:
-	static EntityCreator::KeyValueChangedFunc m_entityKeyValueChanged;
-	static Counter* m_counter;
+		static EntityCreator::KeyValueChangedFunc m_entityKeyValueChanged;
+		static Counter* m_counter;
 
-	EntityClass* m_eclass;
+		EntityClass* m_eclass;
 
-	class KeyContext {};
-	typedef Static<StringPool, KeyContext> KeyPool;
-	typedef PooledString<KeyPool> Key;
-	typedef SmartPointer<KeyValue> KeyValuePtr;
-	typedef UnsortedMap<Key, KeyValuePtr> KeyValues;
-	KeyValues m_keyValues;
+		class KeyContext
+		{
+		};
+		typedef Static<StringPool, KeyContext> KeyPool;
+		typedef PooledString<KeyPool> Key;
+		typedef SmartPointer<KeyValue> KeyValuePtr;
+		typedef UnsortedMap<Key, KeyValuePtr> KeyValues;
+		KeyValues m_keyValues;
 
-	typedef UnsortedSet<Observer*> Observers;
-	Observers m_observers;
+		typedef UnsortedSet<Observer*> Observers;
+		Observers m_observers;
 
-	ObservedUndoableObject<KeyValues> m_undo;
-	bool m_instanced;
+		ObservedUndoableObject<KeyValues> m_undo;
+		bool m_instanced;
 
-	bool m_observerMutex;
+		bool m_observerMutex;
 
-	void notifyInsert(const char* key, Value& value) {
-		m_observerMutex = true;
-		for (Observers::iterator i = m_observers.begin(); i != m_observers.end(); ++i) {
-			(*i)->insert(key, value);
+		void notifyInsert (const char* key, Value& value)
+		{
+			m_observerMutex = true;
+			for (Observers::iterator i = m_observers.begin(); i != m_observers.end(); ++i) {
+				(*i)->insert(key, value);
+			}
+			m_observerMutex = false;
 		}
-		m_observerMutex = false;
-	}
-	void notifyErase(const char* key, Value& value) {
-		m_observerMutex = true;
-		for (Observers::iterator i = m_observers.begin(); i != m_observers.end(); ++i) {
-			(*i)->erase(key, value);
+		void notifyErase (const char* key, Value& value)
+		{
+			m_observerMutex = true;
+			for (Observers::iterator i = m_observers.begin(); i != m_observers.end(); ++i) {
+				(*i)->erase(key, value);
+			}
+			m_observerMutex = false;
 		}
-		m_observerMutex = false;
-	}
-	void forEachKeyValue_notifyInsert() {
-		for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-			notifyInsert((*i).first.c_str(), *(*i).second);
+		void forEachKeyValue_notifyInsert ()
+		{
+			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
+				notifyInsert((*i).first.c_str(), *(*i).second);
+			}
 		}
-	}
-	void forEachKeyValue_notifyErase() {
-		for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-			notifyErase((*i).first.c_str(), *(*i).second);
-		}
-	}
-
-	void insert(const char* key, const KeyValuePtr& keyValue) {
-		KeyValues::iterator i = m_keyValues.insert(KeyValues::value_type(key, keyValue));
-		notifyInsert(key, *(*i).second);
-
-		if (m_instanced) {
-			(*i).second->instanceAttach(m_undo.map());
-		}
-	}
-
-	void insert(const char* key, const char* value) {
-		KeyValues::iterator i = m_keyValues.find(key);
-		if (i != m_keyValues.end()) {
-			(*i).second->assign(value);
-		} else {
-			m_undo.save();
-			insert(key, KeyValuePtr(new KeyValue(value, EntityClass_valueForKey(*m_eclass, key))));
-		}
-	}
-
-	void erase(KeyValues::iterator i) {
-		if (m_instanced) {
-			(*i).second->instanceDetach(m_undo.map());
+		void forEachKeyValue_notifyErase ()
+		{
+			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
+				notifyErase((*i).first.c_str(), *(*i).second);
+			}
 		}
 
-		Key key((*i).first);
-		KeyValuePtr value((*i).second);
-		m_keyValues.erase(i);
-		notifyErase(key.c_str(), *value);
-	}
+		void insert (const char* key, const KeyValuePtr& keyValue)
+		{
+			KeyValues::iterator i = m_keyValues.insert(KeyValues::value_type(key, keyValue));
+			notifyInsert(key, *(*i).second);
 
-	void erase(const char* key) {
-		KeyValues::iterator i = m_keyValues.find(key);
-		if (i != m_keyValues.end()) {
-			m_undo.save();
-			erase(i);
+			if (m_instanced) {
+				(*i).second->instanceAttach(m_undo.map());
+			}
 		}
-	}
 
-	/**
-	 * @brief Searches the value for a given property key, returns 0 if not found.
-	 * @param key the property key to get the value for
-	 * @return the value for the given property or 0
-	 */
-	const char* getKeyValueOrNull(const char* key) const {
-		KeyValues::const_iterator i = m_keyValues.find(key);
+		void insert (const char* key, const char* value)
+		{
+			KeyValues::iterator i = m_keyValues.find(key);
+			if (i != m_keyValues.end()) {
+				(*i).second->assign(value);
+			} else {
+				m_undo.save();
+				insert(key, KeyValuePtr(new KeyValue(value, EntityClass_valueForKey(*m_eclass, key))));
+			}
+		}
+
+		void erase (KeyValues::iterator i)
+		{
+			if (m_instanced) {
+				(*i).second->instanceDetach(m_undo.map());
+			}
+
+			Key key((*i).first);
+			KeyValuePtr value((*i).second);
+			m_keyValues.erase(i);
+			notifyErase(key.c_str(), *value);
+		}
+
+		void erase (const char* key)
+		{
+			KeyValues::iterator i = m_keyValues.find(key);
+			if (i != m_keyValues.end()) {
+				m_undo.save();
+				erase(i);
+			}
+		}
+
+		/**
+		 * @brief Searches the value for a given property key, returns 0 if not found.
+		 * @param key the property key to get the value for
+		 * @return the value for the given property or 0
+		 */
+		const char* getKeyValueOrNull (const char* key) const
+		{
+			KeyValues::const_iterator i = m_keyValues.find(key);
 			if (i != m_keyValues.end())
 				return (*i).second->c_str();
 			else
 				return (const char*) 0;
-	}
+		}
 
 	public:
-	bool m_isContainer;
+		bool m_isContainer;
 
-	EntityKeyValues(EntityClass* eclass) :
-	m_eclass(eclass),
-	m_undo(m_keyValues, UndoImportCaller(*this)),
-	m_instanced(false),
-	m_observerMutex(false),
-	m_isContainer(!eclass->fixedsize) {
-	}
-	EntityKeyValues(const EntityKeyValues& other) :
-	Entity(other),
-	m_eclass(&other.getEntityClass()),
-	m_undo(m_keyValues, UndoImportCaller(*this)),
-	m_instanced(false),
-	m_observerMutex(false),
-	m_isContainer(other.m_isContainer) {
-		for (KeyValues::const_iterator i = other.m_keyValues.begin(); i != other.m_keyValues.end(); ++i) {
-			insert((*i).first.c_str(), (*i).second->c_str());
+		EntityKeyValues (EntityClass* eclass) :
+			m_eclass(eclass), m_undo(m_keyValues, UndoImportCaller(*this)), m_instanced(false), m_observerMutex(false),
+					m_isContainer(!eclass->fixedsize)
+		{
 		}
-	}
-	~EntityKeyValues() {
-		for (Observers::iterator i = m_observers.begin(); i != m_observers.end();) {
-			// post-increment to allow current element to be removed safely
-			(*i++)->clear();
-		}
-		ASSERT_MESSAGE(m_observers.empty(), "EntityKeyValues::~EntityKeyValues: observers still attached");
-	}
-
-	static void setKeyValueChangedFunc(EntityCreator::KeyValueChangedFunc func) {
-		m_entityKeyValueChanged = func;
-		KeyValue::setKeyValueChangedFunc(func);
-	}
-	static void setCounter(Counter* counter) {
-		m_counter = counter;
-	}
-
-	void importState(const KeyValues& keyValues) {
-		for (KeyValues::iterator i = m_keyValues.begin(); i != m_keyValues.end();) {
-			erase(i++);
-		}
-
-		for (KeyValues::const_iterator i = keyValues.begin(); i != keyValues.end(); ++i) {
-			insert((*i).first.c_str(), (*i).second);
-		}
-
-		m_entityKeyValueChanged();
-	}
-	typedef MemberCaller1<EntityKeyValues, const KeyValues&, &EntityKeyValues::importState> UndoImportCaller;
-
-	void attach(Observer& observer) {
-		ASSERT_MESSAGE(!m_observerMutex, "observer cannot be attached during iteration");
-		m_observers.insert(&observer);
-		for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-			observer.insert((*i).first.c_str(), *(*i).second);
-		}
-	}
-	void detach(Observer& observer) {
-		ASSERT_MESSAGE(!m_observerMutex, "observer cannot be detached during iteration");
-		m_observers.erase(&observer);
-		for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-			observer.erase((*i).first.c_str(), *(*i).second);
-		}
-	}
-
-	void forEachKeyValue_instanceAttach(MapFile* map) {
-		for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-			(*i).second->instanceAttach(map);
-		}
-	}
-	void forEachKeyValue_instanceDetach(MapFile* map) {
-		for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-			(*i).second->instanceDetach(map);
-		}
-	}
-
-	void instanceAttach(MapFile* map) {
-		if (m_counter != 0) {
-			m_counter->increment();
-		}
-
-		m_instanced = true;
-		forEachKeyValue_instanceAttach(map);
-		m_undo.instanceAttach(map);
-	}
-	void instanceDetach(MapFile* map) {
-		if (m_counter != 0) {
-			m_counter->decrement();
-		}
-
-		m_undo.instanceDetach(map);
-		forEachKeyValue_instanceDetach(map);
-		m_instanced = false;
-	}
-
-	// entity
-	EntityClass& getEntityClass() const {
-		return *m_eclass;
-	}
-	void forEachKeyValue(Visitor& visitor) const {
-		for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-			visitor.visit((*i).first.c_str(), (*i).second->c_str());
-		}
-	}
-
-	/**
-	 * @brief Sets or deletes properties for the entity
-	 * @param[in] key The property key
-	 * @param[in] value If empty, the property will be removed
-	 */
-	void setKeyValue(const char* key, const char* value) {
-		// don't set key if not applicable, but set classname (will not be set as valid attribute)
-		if (getEntityClass().getAttribute(key) == 0 && strcmp(key, "classname"))
-			return;
-		if (value[0] == '\0') {
-			erase(key);
-		} else {
-			insert(key, value);
-		}
-		m_entityKeyValueChanged();
-	}
-
-	/**
-	 * @brief Searches the value for a given property key, returns default key if not found.
-	 * @param[in] key The property key to get the value for
-	 * @return The value for the given property key or the default value
-	 */
-	const char* getKeyValue(const char* key) const {
-		const char* value = getKeyValueOrNull(key);
-		if (value)
-			return value;
-		else
-			return EntityClass_valueForKey(*m_eclass, key);
-	}
-
-	/**
-	 * @brief Add missing mandatory key/value-pairs to actual entity.
-	 */
-	void addMandatoryKeyValues() {
-		for (EntityClassAttributes::const_iterator i = m_eclass->m_attributes.begin(); i
-					!= m_eclass->m_attributes.end(); ++i) {
-			if ((*i).second.m_mandatory && getKeyValueOrNull((*i).first.c_str()) == 0) {
-				this->setKeyValue((*i).first.c_str(), m_eclass->getDefaultForAttribute((*i).first.c_str()));
-				g_debug("addMandatoryKeyValues: adding %s\n", (*i).first.c_str());
+		EntityKeyValues (const EntityKeyValues& other) :
+			Entity(other), m_eclass(&other.getEntityClass()), m_undo(m_keyValues, UndoImportCaller(*this)),
+					m_instanced(false), m_observerMutex(false), m_isContainer(other.m_isContainer)
+		{
+			for (KeyValues::const_iterator i = other.m_keyValues.begin(); i != other.m_keyValues.end(); ++i) {
+				insert((*i).first.c_str(), (*i).second->c_str());
 			}
 		}
-	}
+		~EntityKeyValues ()
+		{
+			for (Observers::iterator i = m_observers.begin(); i != m_observers.end();) {
+				// post-increment to allow current element to be removed safely
+				(*i++)->clear();
+			}
+			ASSERT_MESSAGE(m_observers.empty(), "EntityKeyValues::~EntityKeyValues: observers still attached");
+		}
 
-	bool isContainer() const {
-		return m_isContainer;
-	}
+		static void setKeyValueChangedFunc (EntityCreator::KeyValueChangedFunc func)
+		{
+			m_entityKeyValueChanged = func;
+			KeyValue::setKeyValueChangedFunc(func);
+		}
+		static void setCounter (Counter* counter)
+		{
+			m_counter = counter;
+		}
+
+		void importState (const KeyValues& keyValues)
+		{
+			for (KeyValues::iterator i = m_keyValues.begin(); i != m_keyValues.end();) {
+				erase(i++);
+			}
+
+			for (KeyValues::const_iterator i = keyValues.begin(); i != keyValues.end(); ++i) {
+				insert((*i).first.c_str(), (*i).second);
+			}
+
+			m_entityKeyValueChanged();
+		}
+		typedef MemberCaller1<EntityKeyValues, const KeyValues&, &EntityKeyValues::importState> UndoImportCaller;
+
+		void attach (Observer& observer)
+		{
+			ASSERT_MESSAGE(!m_observerMutex, "observer cannot be attached during iteration");
+			m_observers.insert(&observer);
+			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
+				observer.insert((*i).first.c_str(), *(*i).second);
+			}
+		}
+		void detach (Observer& observer)
+		{
+			ASSERT_MESSAGE(!m_observerMutex, "observer cannot be detached during iteration");
+			m_observers.erase(&observer);
+			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
+				observer.erase((*i).first.c_str(), *(*i).second);
+			}
+		}
+
+		void forEachKeyValue_instanceAttach (MapFile* map)
+		{
+			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
+				(*i).second->instanceAttach(map);
+			}
+		}
+		void forEachKeyValue_instanceDetach (MapFile* map)
+		{
+			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
+				(*i).second->instanceDetach(map);
+			}
+		}
+
+		void instanceAttach (MapFile* map)
+		{
+			if (m_counter != 0) {
+				m_counter->increment();
+			}
+
+			m_instanced = true;
+			forEachKeyValue_instanceAttach(map);
+			m_undo.instanceAttach(map);
+		}
+		void instanceDetach (MapFile* map)
+		{
+			if (m_counter != 0) {
+				m_counter->decrement();
+			}
+
+			m_undo.instanceDetach(map);
+			forEachKeyValue_instanceDetach(map);
+			m_instanced = false;
+		}
+
+		// entity
+		EntityClass& getEntityClass () const
+		{
+			return *m_eclass;
+		}
+		void forEachKeyValue (Visitor& visitor) const
+		{
+			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
+				visitor.visit((*i).first.c_str(), (*i).second->c_str());
+			}
+		}
+
+		/** Set a keyvalue on the entity. For now this function just calls the
+		 * const char* version.
+		 */
+		void setKeyValue (const std::string& key, const std::string& value)
+		{
+			if (value.empty()) {
+				erase(key.c_str());
+				m_entityKeyValueChanged();
+			} else {
+				setKeyValue(key.c_str(), value.c_str());
+			}
+		}
+
+		/**
+		 * @brief Sets or deletes properties for the entity
+		 * @param[in] key The property key
+		 * @param[in] value If empty, the property will be removed
+		 */
+		void setKeyValue (const char* key, const char* value)
+		{
+			// don't set key if not applicable, but set classname (will not be set as valid attribute)
+			if (getEntityClass().getAttribute(key) == 0 && strcmp(key, "classname"))
+				return;
+			if (value[0] == '\0') {
+				erase(key);
+			} else {
+				insert(key, value);
+			}
+			m_entityKeyValueChanged();
+		}
+
+		/**
+		 * @brief Searches the value for a given property key, returns default key if not found.
+		 * @param[in] key The property key to get the value for
+		 * @return The value for the given property key or the default value
+		 */
+		const char* getKeyValue (const char* key) const
+		{
+			const char* value = getKeyValueOrNull(key);
+			if (value)
+				return value;
+			else
+				return EntityClass_valueForKey(*m_eclass, key);
+		}
+
+		/**
+		 * @brief Add missing mandatory key/value-pairs to actual entity.
+		 */
+		void addMandatoryKeyValues ()
+		{
+			for (EntityClassAttributes::const_iterator i = m_eclass->m_attributes.begin(); i
+					!= m_eclass->m_attributes.end(); ++i) {
+				if ((*i).second.m_mandatory && getKeyValueOrNull((*i).first.c_str()) == 0) {
+					this->setKeyValue((*i).first.c_str(), m_eclass->getDefaultForAttribute((*i).first.c_str()));
+					g_debug("addMandatoryKeyValues: adding %s\n", (*i).first.c_str());
+				}
+			}
+		}
+
+		bool isContainer () const
+		{
+			return m_isContainer;
+		}
 };
 
 /// \brief A Resource reference with a controlled lifetime.
 /// \brief The resource is released when the ResourceReference is destroyed.
-class ResourceReference {
-	CopiedString m_name;
-	Resource* m_resource;
+class ResourceReference
+{
+		CopiedString m_name;
+		Resource* m_resource;
 	public:
-	ResourceReference(const char* name)
-	: m_name(name) {
-		capture();
-	}
-	ResourceReference(const ResourceReference& other)
-	: m_name(other.m_name) {
-		capture();
-	}
-	ResourceReference& operator=(const ResourceReference& other) {
-		ResourceReference tmp(other);
-		tmp.swap(*this);
-		return *this;
-	}
-	~ResourceReference() {
-		GlobalReferenceCache().release(m_name.c_str());
-	}
+		ResourceReference (const char* name) :
+			m_name(name)
+		{
+			capture();
+		}
+		ResourceReference (const ResourceReference& other) :
+			m_name(other.m_name)
+		{
+			capture();
+		}
+		ResourceReference& operator= (const ResourceReference& other)
+		{
+			ResourceReference tmp(other);
+			tmp.swap(*this);
+			return *this;
+		}
+		~ResourceReference ()
+		{
+			GlobalReferenceCache().release(m_name.c_str());
+		}
 
-	void capture() {
-		m_resource = GlobalReferenceCache().capture(m_name.c_str());
-	}
+		void capture ()
+		{
+			m_resource = GlobalReferenceCache().capture(m_name.c_str());
+		}
 
-	const char* getName() const {
-		return m_name.c_str();
-	}
-	void setName(const char* name) {
-		ResourceReference tmp(name);
-		tmp.swap(*this);
-	}
+		const char* getName () const
+		{
+			return m_name.c_str();
+		}
+		void setName (const char* name)
+		{
+			ResourceReference tmp(name);
+			tmp.swap(*this);
+		}
 
-	void swap(ResourceReference& other) {
-		std::swap(m_resource, other.m_resource);
-		std::swap(m_name, other.m_name);
-	}
+		void swap (ResourceReference& other)
+		{
+			std::swap(m_resource, other.m_resource);
+			std::swap(m_name, other.m_name);
+		}
 
-	void attach(ModuleObserver& observer) {
-		m_resource->attach(observer);
-	}
-	void detach(ModuleObserver& observer) {
-		m_resource->detach(observer);
-	}
+		void attach (ModuleObserver& observer)
+		{
+			m_resource->attach(observer);
+		}
+		void detach (ModuleObserver& observer)
+		{
+			m_resource->detach(observer);
+		}
 
-	Resource* get() {
-		return m_resource;
-	}
+		Resource* get ()
+		{
+			return m_resource;
+		}
 };
 
-namespace std {
+namespace std
+{
 	/// \brief Swaps the values of \p self and \p other.
 	/// Overloads std::swap.
-	inline void swap(ResourceReference& self, ResourceReference& other) {
+	inline void swap (ResourceReference& self, ResourceReference& other)
+	{
 		self.swap(other);
 	}
 }

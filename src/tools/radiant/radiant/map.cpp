@@ -76,6 +76,8 @@
 #include "lastused.h"
 #include "commands.h"
 #include "autosave.h"
+#include "brush.h"
+#include "brushnode.h"
 
 class NameObserver
 {
@@ -201,8 +203,7 @@ class NamespaceAPI
 		Namespace* m_namespace;
 	public:
 		typedef Namespace Type;
-		STRING_CONSTANT(Name, "*")
-		;
+		STRING_CONSTANT(Name, "*");
 
 		NamespaceAPI (void)
 		{
@@ -216,7 +217,7 @@ class NamespaceAPI
 
 typedef SingletonModule<NamespaceAPI> NamespaceModule;
 typedef Static<NamespaceModule> StaticNamespaceModule;
-StaticRegisterModule staticRegisterDefaultNamespace (StaticNamespaceModule::instance ());
+StaticRegisterModule staticRegisterDefaultNamespace(StaticNamespaceModule::instance());
 
 std::list<Namespaced*> g_cloned;
 
@@ -1097,8 +1098,8 @@ extern void ConstructRegionBrushes (scene::Node* brushes[6], const Vector3& regi
  ===========================================================
  */
 static bool region_active;
-Vector3 region_mins (g_MinWorldCoord, g_MinWorldCoord, g_MinWorldCoord);
-Vector3 region_maxs (g_MaxWorldCoord, g_MaxWorldCoord, g_MaxWorldCoord);
+Vector3 region_mins(g_MinWorldCoord, g_MinWorldCoord, g_MinWorldCoord);
+Vector3 region_maxs(g_MaxWorldCoord, g_MaxWorldCoord, g_MaxWorldCoord);
 
 static scene::Node* region_sides[6];
 static scene::Node* region_startpoint = 0;
@@ -1316,9 +1317,9 @@ bool Map_SaveFile (const char* filename)
 	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse, filename);
 }
 
-	/**
-	 * @brief Saves selected world brushes and whole entities with partial/full selections
-	 */
+/**
+ * @brief Saves selected world brushes and whole entities with partial/full selections
+ */
 bool Map_SaveSelected (const char* filename)
 {
 	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse_Selected, filename);
@@ -1361,6 +1362,66 @@ class ParentSelectedBrushesToEntityWalker: public scene::Graph::Walker
 void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& parent)
 {
 	graph.traverse(ParentSelectedBrushesToEntityWalker(parent));
+}
+
+namespace map
+{
+	namespace
+	{
+		/* Walker class to subtract a Vector3 origin from each selected brush
+		 * that it visits.
+		 */
+		class BrushOriginSubtractor: public scene::Graph::Walker
+		{
+				// The translation matrix from the vector3
+				Matrix4 _transMat;
+
+			public:
+
+				// Constructor
+				BrushOriginSubtractor (const Vector3& origin) :
+					_transMat(Matrix4::getTranslation(origin.getScaledBy(-1)))
+				{
+				}
+
+				// Pre visit function
+				bool pre (const scene::Path& path, scene::Instance& instance) const
+				{
+					if (Node_isPrimitive(path.top())) {
+						Selectable* selectable = Instance_getSelectable(instance);
+						if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
+							return false;
+						}
+					}
+					return true;
+				}
+
+				// Post visit function
+				void post (const scene::Path& path, scene::Instance& instance) const
+				{
+					if (Node_isPrimitive(path.top())) {
+						Selectable* selectable = Instance_getSelectable(instance);
+						if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
+							// Node is selected, check if it is a brush.
+							Brush* brush = Node_getBrush(path.top());
+							if (brush != 0) {
+								// We have a brush, apply the transformation
+								brush->transform(_transMat);
+							}
+						}
+					}
+				} // post()
+		}; // BrushOriginSubtractor
+	} // namespace
+
+	/* Subtract the given origin from all selected brushes in the map. Uses
+	 * a BrushOriginSubtractor walker class to subtract the origin from
+	 * each selected brush in the scene.
+	 */
+	void selectedBrushesSubtractOrigin (const Vector3& origin)
+	{
+		GlobalSceneGraph().traverse(BrushOriginSubtractor(origin));
+	}
 }
 
 class CountSelectedBrushes: public scene::Graph::Walker
@@ -1711,7 +1772,8 @@ class MapEntityClasses: public ModuleObserver
 				}
 			}
 		}
-		void unrealise (void) {
+		void unrealise (void)
+		{
 			if (++m_unrealised == 1) {
 				if (g_map.m_resource != 0) {
 					g_map.m_resource->flush();
@@ -1719,7 +1781,7 @@ class MapEntityClasses: public ModuleObserver
 				}
 			}
 		}
-	};
+};
 
 MapEntityClasses g_MapEntityClasses;
 

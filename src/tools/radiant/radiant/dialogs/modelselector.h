@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 #include <string>
 #include "modelskin.h"
+#include "math/matrix.h"
 #include "igl.h"
 #include "imodel.h"
 
@@ -34,8 +35,12 @@ namespace ui
 			// Last selected model, which will be returned by showAndBlock() once the
 			// recursive main loop exits.
 			std::string _lastModel;
+
 			// Current distance between camera and preview
 			GLfloat _camDist;
+
+			// Current rotation matrix
+			Matrix4 _rotation;
 
 			// Current model to display
 			model::IModelPtr _model;

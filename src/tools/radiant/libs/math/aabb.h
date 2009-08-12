@@ -46,6 +46,22 @@ class AABB
 		{
 		}
 
+		/**
+		 * @returns A const reference to a Vector3 containing the AABB's origin.
+		 */
+		const Vector3& getOrigin () const
+		{
+			return origin;
+		}
+
+		/** Get the radius of the smallest sphere which encloses this
+		 * bounding box.
+		 */
+		float getRadius () const
+		{
+			return extents.getLength(); // Pythagorean length of extents vector
+		}
+
 		// Expand this AABB to include the given point
 		void includePoint (const Vector3& point)
 		{

@@ -58,18 +58,20 @@ class UFOModelSkin
 		{
 		}
 
-		const char* getRemap (const char* name) const
+		// Get this skin's remap for the provided material name (if any).
+		const char* getRemap (const std::string& name) const
 		{
-			Remaps::const_iterator i = m_remaps.find(name);
+			Remaps::const_iterator i = m_remaps.find(name.c_str());
 			if (i != m_remaps.end()) {
-				return (*i).second.c_str();
+				return i->second.c_str();
+			} else { // none found
+				return "";
 			}
-			return "";
 		}
 		void forEachRemap (const SkinRemapCallback& callback) const
 		{
 			for (Remaps::const_iterator i = m_remaps.begin(); i != m_remaps.end(); ++i) {
-				callback(SkinRemap((*i).first.c_str(), (*i).second.c_str()));
+				callback(SkinRemap(i->first.c_str(), i->second.c_str()));
 			}
 		}
 
@@ -172,7 +174,7 @@ class UFOModelSkinCacheElement: public ModelSkin
 			m_observers.unrealise();
 			m_skin = 0;
 		}
-		const char* getRemap (const char* name) const
+		const char* getRemap (const std::string& name) const
 		{
 			ASSERT_MESSAGE(realised(), "UFOModelSkinCacheElement::getRemap: not realised");
 			return m_skin->getRemap(name);
@@ -234,13 +236,13 @@ class UFOModelSkinCache: public ModelSkinCache, public ModuleObserver
 			GlobalFileSystem().detach(*this);
 		}
 
-		ModelSkin& capture (const char* name)
+		ModelSkin& capture (const std::string& name)
 		{
-			return *m_cache.capture(name);
+			return *m_cache.capture(name.c_str());
 		}
-		void release (const char* name)
+		void release (const std::string& name)
 		{
-			m_cache.release(name);
+			m_cache.release(name.c_str());
 		}
 
 		bool realised () const

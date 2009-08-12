@@ -57,7 +57,7 @@ class ModelSkin
 		/// \brief Returns true if this skin is currently loaded.
 		virtual bool realised () const = 0;
 		/// \brief Returns the shader identifier that \p name remaps to, or "" if not found or not realised.
-		virtual const char* getRemap (const char* name) const = 0;
+		virtual const char* getRemap (const std::string& name) const = 0;
 		/// \brief Calls \p callback for each remap pair. Has no effect if not realised.
 		virtual void forEachRemap (const SkinRemapCallback& callback) const = 0;
 };
@@ -85,9 +85,9 @@ class ModelSkinCache
 		{
 		}
 		/// \brief Increments the reference count of and returns a reference to the skin uniquely identified by 'name'.
-		virtual ModelSkin& capture (const char* name) = 0;
+		virtual ModelSkin& capture (const std::string& name) = 0;
 		/// \brief Decrements the reference-count of the skin uniquely identified by 'name'.
-		virtual void release (const char* name) = 0;
+		virtual void release (const std::string& name) = 0;
 
 		/**
 		 * @brief Return the skins associated with the given model.

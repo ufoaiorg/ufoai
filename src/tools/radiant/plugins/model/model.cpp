@@ -23,6 +23,8 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <string>
+
 #include "model.h"
 
 #include "picomodel.h"
@@ -80,7 +82,7 @@ class VectorLightList: public LightList
 class PicoSurface: public OpenGLRenderable
 {
 		AABB m_aabb_local;
-		CopiedString m_shader;
+		std::string m_shader;
 		Shader* m_state;
 		RenderableWireframeAABB m_renderAABBWire;
 
@@ -161,9 +163,9 @@ class PicoSurface: public OpenGLRenderable
 			}
 		}
 
-		const char* getShader () const
+		const std::string& getShader () const
 		{
-			return m_shader.c_str();
+			return m_shader;
 		}
 		Shader* getState () const
 		{
