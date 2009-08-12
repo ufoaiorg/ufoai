@@ -39,11 +39,11 @@ tile +craft_drop_herakles
 {
 4 5
 
-0      0      0      0
-0      +b     +b     a 
-0      +b     +b     a 
-0      +b     +b     a 
-0      a      a      a
+0     abfg    abfg    0
+acdg   +a      +a     acef
+acdg   +a      +a     acef
+acdg   +a      +a     acef 
+0     abde    abde	  0
 }
 
 tile +craft_crash_scout

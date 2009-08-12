@@ -22,6 +22,7 @@ ah     +a     +a     ah
 0      av     av     0
 }
 
+// vertical connection
 tile +tunnel_h
 {
 4 4
@@ -32,6 +33,7 @@ v      +v    +v    v
 0      av    av    0
 }
 
+// horizontal connection
 tile +tunnel_v
 {
 4 4
@@ -51,6 +53,63 @@ ah   +a   +a   ah
 ah   +a   +a   ah
 0    av   av   0
 }
+
+// t-connection, missed top side
+tile +tunnel_mt
+{
+4 4
+
+0     h    h   0
+ah   +h   +h   ah
+ah   +a   +a   ah
+0    av   av   0
+}
+
+// t-connection, missed right side
+tile +tunnel_mr
+{
+4 4
+
+0    av   av   0
+ah   +a   +v   v
+ah   +a   +v   v
+0    av   av   0
+}
+
+// t-connection, missed bottom side
+tile +tunnel_mb
+{
+4 4
+
+0    av   av   0
+ah   +a   +a   ah
+ah   +h   +h   ah
+0     h    h   0
+}
+
+// t-connection, missed left side
+tile +tunnel_ml
+{
+4 4
+
+0    av   av   0
+v    +v   +a   ah
+v    +v   +a   ah
+0    av   av   0
+}
+
+tile +entrance
+{
+4 6
+
+0     av      av      0
+r     +a     +a      ah
+r     +a     +a      ah
+r     +a     +a      ah
+r     +a     +a      ah
+0     av      av      0
+}
+
 
 tile +lab
 {
@@ -81,13 +140,18 @@ ah  +a   +a   +a   +a  +a   +a  ah
 
 assembly alienbase1
 {
-size "10 10"
-title "_Alienbase"
-grid "2 2"
-+empty "1 8"
-+hangar "1 1"
-+tunnel_h "0 4"
-+tunnel_v "0 4"
-+tunnel_x "1 12"
-+lab "1 2"
+size          "10 10"
+title         "_Alienbase"
+grid          "2 2"
++empty        "1 8"
++entrance     "1 1"
++hangar       "1 1"
++tunnel_h     "1 2"
++tunnel_v     "1 2"
++tunnel_mt    "0 3"
++tunnel_mr    "0 3"
++tunnel_mb    "0 3"
++tunnel_ml    "0 3"
++tunnel_x     "1 12"
++lab          "1 2"
 }
