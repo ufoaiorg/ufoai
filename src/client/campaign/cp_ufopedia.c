@@ -230,10 +230,11 @@ static void UP_ArmourDescription (const technology_t* t)
 	Com_sprintf(upBuffer, sizeof(upBuffer), _("Size:\t%i\n"), od->size);
 	Q_strcat(upBuffer, "\n", sizeof(upBuffer));
 
+	Q_strcat(upBuffer, _("^BDamage type\tProtection\n"), sizeof(upBuffer));
 	for (i = 0; i < csi.numDTs; i++) {
 		if (!csi.dts[i].showInMenu)
 			continue;
-		Q_strcat(upBuffer, va(_("%s:\tProtection: %i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("%s\t%i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(upBuffer));
 	}
 
 	Cvar_Set("mn_upmetadata", "1");
