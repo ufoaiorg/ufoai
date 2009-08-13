@@ -95,6 +95,7 @@ class InsertModules: public ModuleServer::Visitor
 			m_modules(modules)
 		{
 		}
+
 		void visit (const char* name, Module& module) const
 		{
 			m_modules.insert(name, module);

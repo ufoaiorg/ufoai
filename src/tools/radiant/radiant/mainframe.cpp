@@ -89,7 +89,7 @@
 #include "map.h"
 #include "lastused.h"
 #include "plugin.h"
-#include "pluginmanager.h"
+#include "plugin/PluginManager.h"
 #include "pluginmenu.h"
 #include "plugintoolbar.h"
 #include "preferences.h"

@@ -32,7 +32,7 @@
 #include "gtkutil/pointer.h"
 #include "gtkutil/menu.h"
 
-#include "pluginmanager.h"
+#include "plugin/PluginManager.h"
 #include "mainframe.h"
 #include "preferences.h"
 

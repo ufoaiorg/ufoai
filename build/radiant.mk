@@ -40,7 +40,6 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/parse.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
-	$(RADIANT_BASE)/radiant/pluginmanager.cpp \
 	$(RADIANT_BASE)/radiant/pluginmenu.cpp \
 	$(RADIANT_BASE)/radiant/plugintoolbar.cpp \
 	$(RADIANT_BASE)/radiant/preferences.cpp \
@@ -64,6 +63,9 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/winding.cpp \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/xywindow.cpp \
+	\
+	$(RADIANT_BASE)/radiant/plugin/PluginManager.cpp \
+	$(RADIANT_BASE)/radiant/plugin/PluginSlots.cpp \
 	\
 	$(RADIANT_BASE)/radiant/sidebar/sidebar.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entitylist.cpp \
