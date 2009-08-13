@@ -67,6 +67,7 @@
 #include "gtkutil/menu.h"
 #include "gtkutil/paned.h"
 #include "gtkutil/widget.h"
+#include "gtkutil/messagebox.h"
 
 #include "autosave.h"
 #include "brushmanip.h"
@@ -81,6 +82,7 @@
 #include "filters.h"
 #include "dialogs/findtextures.h"
 #include "grid.h"
+#include "brushexport/BrushExportOBJ.h"
 #include "dialogs/about.h"
 #include "dialogs/findbrush.h"
 #include "dialogs/maptools.h"
@@ -347,7 +349,7 @@ class PathsDialog: public Dialog
 
 			return create_simple_modal_dialog_window(_("Engine Path Not Found"), m_modal, GTK_WIDGET(frame));
 		}
-	};
+};
 
 PathsDialog g_PathsDialog;
 
@@ -650,18 +652,18 @@ class BoolFunctionExport
 
 typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<EdgeMode>::apply> EdgeModeApplyCaller;
 EdgeModeApplyCaller g_edgeMode_button_caller;
-BoolExportCallback g_edgeMode_button_callback (g_edgeMode_button_caller);
-ToggleItem g_edgeMode_button (g_edgeMode_button_callback);
+BoolExportCallback g_edgeMode_button_callback(g_edgeMode_button_caller);
+ToggleItem g_edgeMode_button(g_edgeMode_button_callback);
 
 typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<VertexMode>::apply> VertexModeApplyCaller;
 VertexModeApplyCaller g_vertexMode_button_caller;
-BoolExportCallback g_vertexMode_button_callback (g_vertexMode_button_caller);
-ToggleItem g_vertexMode_button (g_vertexMode_button_callback);
+BoolExportCallback g_vertexMode_button_callback(g_vertexMode_button_caller);
+ToggleItem g_vertexMode_button(g_vertexMode_button_callback);
 
 typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<FaceMode>::apply> FaceModeApplyCaller;
 FaceModeApplyCaller g_faceMode_button_caller;
-BoolExportCallback g_faceMode_button_callback (g_faceMode_button_caller);
-ToggleItem g_faceMode_button (g_faceMode_button_callback);
+BoolExportCallback g_faceMode_button_callback(g_faceMode_button_caller);
+ToggleItem g_faceMode_button(g_faceMode_button_callback);
 
 void ComponentModeChanged (void)
 {
@@ -927,24 +929,24 @@ void ClipperToolExport (const BoolImportCallback& importCallback)
 }
 
 FreeCaller1<const BoolImportCallback&, TranslateToolExport> g_translatemode_button_caller;
-BoolExportCallback g_translatemode_button_callback (g_translatemode_button_caller);
-ToggleItem g_translatemode_button (g_translatemode_button_callback);
+BoolExportCallback g_translatemode_button_callback(g_translatemode_button_caller);
+ToggleItem g_translatemode_button(g_translatemode_button_callback);
 
 FreeCaller1<const BoolImportCallback&, RotateToolExport> g_rotatemode_button_caller;
-BoolExportCallback g_rotatemode_button_callback (g_rotatemode_button_caller);
-ToggleItem g_rotatemode_button (g_rotatemode_button_callback);
+BoolExportCallback g_rotatemode_button_callback(g_rotatemode_button_caller);
+ToggleItem g_rotatemode_button(g_rotatemode_button_callback);
 
 FreeCaller1<const BoolImportCallback&, ScaleToolExport> g_scalemode_button_caller;
-BoolExportCallback g_scalemode_button_callback (g_scalemode_button_caller);
-ToggleItem g_scalemode_button (g_scalemode_button_callback);
+BoolExportCallback g_scalemode_button_callback(g_scalemode_button_caller);
+ToggleItem g_scalemode_button(g_scalemode_button_callback);
 
 FreeCaller1<const BoolImportCallback&, DragToolExport> g_dragmode_button_caller;
-BoolExportCallback g_dragmode_button_callback (g_dragmode_button_caller);
-ToggleItem g_dragmode_button (g_dragmode_button_callback);
+BoolExportCallback g_dragmode_button_callback(g_dragmode_button_caller);
+ToggleItem g_dragmode_button(g_dragmode_button_callback);
 
 FreeCaller1<const BoolImportCallback&, ClipperToolExport> g_clipper_button_caller;
-BoolExportCallback g_clipper_button_callback (g_clipper_button_caller);
-ToggleItem g_clipper_button (g_clipper_button_callback);
+BoolExportCallback g_clipper_button_callback(g_clipper_button_caller);
+ToggleItem g_clipper_button(g_clipper_button_callback);
 
 void ToolChanged (void)
 {
@@ -1464,6 +1466,10 @@ static GtkMenuItem* create_edit_menu (MainFrame *mainFrame)
 
 	menu_separator(menu);
 
+	create_menu_item_with_mnemonic(menu, _("Export Selected Brushes to _OBJ"), "BrushExportOBJ");
+
+	menu_separator(menu);
+
 	create_menu_item_with_mnemonic(menu, _("Shortcuts list"), FreeCaller<DoCommandListDlg> ());
 	create_menu_item_with_mnemonic(menu, _("Pre_ferences..."), "Preferences");
 
@@ -1637,6 +1643,15 @@ static GtkMenuItem* create_grid_menu (void)
 	return grid_menu_item;
 }
 
+void CallBrushExportOBJ ()
+{
+	if (GlobalSelectionSystem().countSelected() != 0) {
+		export_selected(MainFrame_getWindow());
+	} else {
+		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("No Brushes Selected!"), _("Error"), eMB_OK, eMB_ICONERROR);
+	}
+}
+
 static GtkMenuItem* create_misc_menu (void)
 {
 	// Misc menu
@@ -1648,12 +1663,12 @@ static GtkMenuItem* create_misc_menu (void)
 	gtk_container_add(GTK_CONTAINER(menu), GTK_WIDGET(create_colours_menu()));
 
 	create_menu_item_with_mnemonic(menu, _("Find brush..."), "FindBrush");
-	create_menu_item_with_mnemonic(menu, _("_Print XY View"), FreeCaller<WXY_Print>());
-	create_menu_item_with_mnemonic(menu, _("_Background select"), FreeCaller<WXY_BackgroundSelect>());
+	create_menu_item_with_mnemonic(menu, _("_Print XY View"), FreeCaller<WXY_Print> ());
+	create_menu_item_with_mnemonic(menu, _("_Background select"), FreeCaller<WXY_BackgroundSelect> ());
 	//	create_menu_item_with_mnemonic(menu, _("_Benchmark"), FreeCaller<GlobalCamera_Benchmark>());
 
-			return misc_menu_item;
-		}
+	return misc_menu_item;
+}
 
 static GtkMenuItem* create_tools_menu (void)
 {
@@ -1999,8 +2014,8 @@ void MainFrame::Create (void)
 		g_message("trying to maximize, recorded size was %ix%i@%ix%iy (not used)\n",g_layout_globals.m_position.w,g_layout_globals.m_position.h,g_layout_globals.m_position.x,g_layout_globals.m_position.y);
 #endif
 		/* set stored position and default height/width, otherwise problems with extended screens */
-		g_layout_globals.m_position.h=800;
-		g_layout_globals.m_position.w=600;
+		g_layout_globals.m_position.h = 800;
+		g_layout_globals.m_position.w = 600;
 #ifdef DEBUG
 		gtk_window_get_size(window, &width,&height);
 		gtk_window_get_position(window,&posx,&posy);
@@ -2032,14 +2047,13 @@ void MainFrame::Create (void)
 	int state = gdk_window_get_state(GTK_WIDGET(window)->window);
 	g_message("size after show: %ix%i@%ix%iy state %i;\n",width,height,posx,posy,state);
 	if (state != stateBackup)
-		if (stateBackup & GDK_WINDOW_STATE_MAXIMIZED) {
-			gtk_window_maximize(window);
-			g_message("another try to maximize\n");
-		}
+	if (stateBackup & GDK_WINDOW_STATE_MAXIMIZED) {
+		gtk_window_maximize(window);
+		g_message("another try to maximize\n");
+	}
 	state = gdk_window_get_state(GTK_WIDGET(window)->window);
 	g_message("state after retry maximize: %i;\n",state);
 #endif
-
 
 	GtkWidget* mainHBox = gtk_hbox_new(0, 0);
 	gtk_box_pack_start(GTK_BOX(hbox), mainHBox, TRUE, TRUE, 0);
@@ -2053,8 +2067,7 @@ void MainFrame::Create (void)
 
 	// create edit windows according to user setable style
 	switch (CurrentStyle()) {
-	case eRegular:
-	{
+	case eRegular: {
 		GtkWidget* vsplit = gtk_vpaned_new();
 		m_vSplit = vsplit;
 		gtk_box_pack_start(GTK_BOX(mainHBox), vsplit, TRUE, TRUE, 0);
@@ -2106,8 +2119,7 @@ void MainFrame::Create (void)
 		break;
 	}
 
-	case eSplit:
-	{
+	case eSplit: {
 		GtkWidget* vsplit = gtk_vpaned_new();
 		m_vSplit = vsplit;
 		gtk_box_pack_start(GTK_BOX(mainHBox), vsplit, TRUE, TRUE, 0);
@@ -2155,7 +2167,7 @@ void MainFrame::Create (void)
 
 	SetActiveXY(m_pXYWnd);
 
-	AddGridChangeCallback(ReferenceCaller<MainFrame, XY_UpdateAllWindows>(*this));
+	AddGridChangeCallback(ReferenceCaller<MainFrame, XY_UpdateAllWindows> (*this));
 
 	g_defaultToolMode = DragMode;
 	g_defaultToolMode();
@@ -2171,7 +2183,6 @@ void MainFrame::Create (void)
 
 	gtk_widget_set_sensitive(GTK_WIDGET(this->GetRedoMenuItem()), false);
 	gtk_widget_set_sensitive(GTK_WIDGET(this->GetRedoButton()), false);
-
 
 	EverySecondTimer_enable();
 
@@ -2268,9 +2279,9 @@ void GlobalGL_sharedContextCreated (void)
 	Textures_Realise();
 
 	/* use default font here (Sans 10 is gtk default) */
-	GtkSettings *settings = gtk_settings_get_default ();
+	GtkSettings *settings = gtk_settings_get_default();
 	gchar *fontname;
-	g_object_get(settings, "gtk-font-name", &fontname, (char*)0);
+	g_object_get(settings, "gtk-font-name", &fontname, (char*) 0);
 	g_font = glfont_create(fontname);
 
 	GlobalOpenGL().m_font = g_font.getDisplayList();
@@ -2289,12 +2300,13 @@ void Layout_constructPreferences (PreferencesPage& page)
 {
 	{
 		const char* layouts[] = { "window_regular.bmp", "window_split.bmp" };
-		page.appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), LatchedIntImportCaller(g_Layout_viewStyle), IntExportCaller(g_Layout_viewStyle.m_latched));
+		page.appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), LatchedIntImportCaller(
+				g_Layout_viewStyle), IntExportCaller(g_Layout_viewStyle.m_latched));
 	}
 	page.appendCheckBox("", _("Detachable Menus"), LatchedBoolImportCaller(g_Layout_enableDetachableMenus),
 			BoolExportCaller(g_Layout_enableDetachableMenus.m_latched));
-	page.appendCheckBox("", _("Plugin Toolbar"), LatchedBoolImportCaller(g_Layout_enablePluginToolbar), BoolExportCaller(
-			g_Layout_enablePluginToolbar.m_latched));
+	page.appendCheckBox("", _("Plugin Toolbar"), LatchedBoolImportCaller(g_Layout_enablePluginToolbar),
+			BoolExportCaller(g_Layout_enablePluginToolbar.m_latched));
 }
 
 void Layout_constructPage (PreferenceGroup& group)
@@ -2431,6 +2443,8 @@ void MainFrame_Construct (void)
 	GlobalCommands_insert("SelectNudgeDown", FreeCaller<Selection_NudgeDown> (), Accelerator(GDK_Down,
 			(GdkModifierType) GDK_MOD1_MASK));
 
+	GlobalCommands_insert("BrushExportOBJ", FreeCaller<CallBrushExportOBJ> ());
+
 	XYShow_registerCommands();
 
 	typedef FreeCaller1<const Selectable&, ComponentMode_SelectionChanged> ComponentModeSelectionChangedCaller;
@@ -2474,8 +2488,10 @@ void MainFrame_Construct (void)
 	g_strCompilerBinaryWithPath = ufo2mapPath.c_str();
 #endif
 
-	GlobalPreferenceSystem().registerPreference("EnginePath", CopiedStringImportStringCaller(g_strEnginePath), CopiedStringExportStringCaller(g_strEnginePath));
-	GlobalPreferenceSystem().registerPreference("CompilerBinary", CopiedStringImportStringCaller(g_strCompilerBinaryWithPath), CopiedStringExportStringCaller(g_strCompilerBinaryWithPath));
+	GlobalPreferenceSystem().registerPreference("EnginePath", CopiedStringImportStringCaller(g_strEnginePath),
+			CopiedStringExportStringCaller(g_strEnginePath));
+	GlobalPreferenceSystem().registerPreference("CompilerBinary", CopiedStringImportStringCaller(
+			g_strCompilerBinaryWithPath), CopiedStringExportStringCaller(g_strCompilerBinaryWithPath));
 
 	g_Layout_viewStyle.useLatched();
 	g_Layout_enableDetachableMenus.useLatched();
@@ -2484,8 +2500,8 @@ void MainFrame_Construct (void)
 	Layout_registerPreferencesPage();
 	Paths_registerPreferencesPage();
 
-	g_brushCount.setCountChangedCallback(FreeCaller<QE_brushCountChanged>());
-	g_entityCount.setCountChangedCallback(FreeCaller<QE_entityCountChanged>());
+	g_brushCount.setCountChangedCallback(FreeCaller<QE_brushCountChanged> ());
+	g_entityCount.setCountChangedCallback(FreeCaller<QE_entityCountChanged> ());
 	GlobalEntityCreator().setCounter(&g_entityCount);
 
 	GLWidget_sharedContextCreated = GlobalGL_sharedContextCreated;
@@ -2539,7 +2555,7 @@ void UndoSaveStateTracker::UpdateSensitiveStates (void)
 /**
  * Called whenever save was completed. This causes the UndoSaveTracker to mark this point as saved.
  */
-void MainFrame::SaveComplete()
+void MainFrame::SaveComplete ()
 {
 	m_saveStateTracker.storeState();
 }
@@ -2579,8 +2595,8 @@ void UndoSaveStateTracker::clear (void)
  */
 void UndoSaveStateTracker::redo (void)
 {
-	m_redoSteps --;
-	m_undoSteps ++;
+	m_redoSteps--;
+	m_undoSteps++;
 	UpdateSensitiveStates();
 }
 

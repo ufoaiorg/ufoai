@@ -64,6 +64,8 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/xywindow.cpp \
 	\
+	$(RADIANT_BASE)/radiant/brushexport/BrushExportOBJ.cpp \
+	\
 	$(RADIANT_BASE)/radiant/plugin/PluginManager.cpp \
 	$(RADIANT_BASE)/radiant/plugin/PluginSlots.cpp \
 	\
