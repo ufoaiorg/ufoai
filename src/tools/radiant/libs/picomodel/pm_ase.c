@@ -1,37 +1,36 @@
 /* -----------------------------------------------------------------------------
 
-PicoModel Library
+ PicoModel Library
 
-Copyright (c) 2002, Randy Reddig & seaw0lf
-All rights reserved.
+ Copyright (c) 2002, Randy Reddig & seaw0lf
+ All rights reserved.
 
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
+ Redistribution and use in source and binary forms, with or without modification,
+ are permitted provided that the following conditions are met:
 
-Redistributions of source code must retain the above copyright notice, this list
-of conditions and the following disclaimer.
+ Redistributions of source code must retain the above copyright notice, this list
+ of conditions and the following disclaimer.
 
-Redistributions in binary form must reproduce the above copyright notice, this
-list of conditions and the following disclaimer in the documentation and/or
-other aseMaterialList provided with the distribution.
+ Redistributions in binary form must reproduce the above copyright notice, this
+ list of conditions and the following disclaimer in the documentation and/or
+ other aseMaterialList provided with the distribution.
 
-Neither the names of the copyright holders nor the names of its contributors may
-be used to endorse or promote products derived from this software without
-specific prior written permission.
+ Neither the names of the copyright holders nor the names of its contributors may
+ be used to endorse or promote products derived from this software without
+ specific prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
------------------------------------------------------------------------------ */
-
+ ----------------------------------------------------------------------------- */
 
 /* marker */
 #define PM_ASE_C
@@ -39,7 +38,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* uncomment when debugging this module */
 /* #define DEBUG_PM_ASE */
 /* #define DEBUG_PM_ASE_EX */
-
 
 /* dependencies */
 #include "picointernal.h"
@@ -85,9 +83,9 @@ static aseMaterial_t* _ase_get_material (aseMaterial_t* list, int mtlIdParent)
 	return mtl;
 }
 
-static aseSubMaterial_t* _ase_get_submaterial (aseMaterial_t* list, int  mtlIdParent, int subMtlId)
+static aseSubMaterial_t* _ase_get_submaterial (aseMaterial_t* list, int mtlIdParent, int subMtlId)
 {
-	aseMaterial_t* parent = _ase_get_material (list, mtlIdParent);
+	aseMaterial_t* parent = _ase_get_material(list, mtlIdParent);
 	aseSubMaterial_t* subMtl = NULL;
 
 	if (!parent) {
@@ -105,7 +103,7 @@ static aseSubMaterial_t* _ase_get_submaterial (aseMaterial_t* list, int  mtlIdPa
 	return subMtl;
 }
 
-static aseSubMaterial_t* _ase_get_submaterial_or_default (aseMaterial_t* materials, int  mtlIdParent, int subMtlId)
+static aseSubMaterial_t* _ase_get_submaterial_or_default (aseMaterial_t* materials, int mtlIdParent, int subMtlId)
 {
 	aseSubMaterial_t* subMtl = _ase_get_submaterial(materials, mtlIdParent, subMtlId);
 	if (subMtl != NULL) {
@@ -133,13 +131,14 @@ static aseMaterial_t* _ase_add_material (aseMaterial_t **list, int mtlIdParent)
 	return mtl;
 }
 
-static aseSubMaterial_t* _ase_add_submaterial (aseMaterial_t **list, int mtlIdParent, int subMtlId, picoShader_t* shader)
+static aseSubMaterial_t* _ase_add_submaterial (aseMaterial_t **list, int mtlIdParent, int subMtlId,
+		picoShader_t* shader)
 {
-	aseMaterial_t *parent = _ase_get_material(*list,  mtlIdParent);
-	aseSubMaterial_t *subMtl = _pico_calloc(1, sizeof (aseSubMaterial_t));
+	aseMaterial_t *parent = _ase_get_material(*list, mtlIdParent);
+	aseSubMaterial_t *subMtl = _pico_calloc(1, sizeof(aseSubMaterial_t));
 
 	if (!parent) {
-		parent = _ase_add_material (list, mtlIdParent);
+		parent = _ase_add_material(list, mtlIdParent);
 	}
 
 	subMtl->shader = shader;
@@ -162,11 +161,11 @@ static void _ase_free_materials (aseMaterial_t **list)
 		subMtl = mtl->subMtls;
 		while (subMtl) {
 			subMtlTemp = subMtl->next;
-			_pico_free (subMtl);
+			_pico_free(subMtl);
 			subMtl = subMtlTemp;
 		}
 		mtlTemp = mtl->next;
-		_pico_free (mtl);
+		_pico_free(mtl);
 		mtl = mtlTemp;
 	}
 	(*list) = NULL;
@@ -263,7 +262,8 @@ typedef aseFace_t* aseFacesIter_t;
  * indexes 3 4 5 = st indexes
  * indexes 6 7 8 = color indexes (new)
  */
-static void _ase_submit_triangles (picoModel_t* model, aseMaterial_t* materials, aseVertex_t* vertices, aseTexCoord_t* texcoords, aseColor_t* colors, aseFace_t* faces, int numFaces)
+static void _ase_submit_triangles (picoModel_t* model, aseMaterial_t* materials, aseVertex_t* vertices,
+		aseTexCoord_t* texcoords, aseColor_t* colors, aseFace_t* faces, int numFaces)
 {
 	aseFacesIter_t i = faces, end = faces + numFaces;
 	for (; i != end; ++i) {
@@ -280,7 +280,7 @@ static void _ase_submit_triangles (picoModel_t* model, aseMaterial_t* materials,
 			picoIndex_t smooth[3];
 			int j;
 			/* we pull the data from the vertex, color and texcoord arrays using the face index data */
-			for (j = 0 ; j < 3 ; j ++) {
+			for (j = 0; j < 3; j++) {
 				xyz[j] = &vertices[(*i).indices[j]].xyz;
 				normal[j] = &vertices[(*i).indices[j]].normal;
 				st[j] = &texcoords[(*i).indices[j + 3]].texcoord;
@@ -296,7 +296,7 @@ static void _ase_submit_triangles (picoModel_t* model, aseMaterial_t* materials,
 			}
 
 			/* submit the triangle to the model */
-			PicoAddTriangleToModel (model, xyz, normal, 1, st, 1, color, subMtl->shader, smooth);
+			PicoAddTriangleToModel(model, xyz, normal, 1, st, 1, color, subMtl->shader, smooth);
 		}
 	}
 }
@@ -311,7 +311,6 @@ static void shadername_convert (char* shaderName)
 		}
 	}
 }
-
 
 /**
  * @brief loads a 3dsmax ase model file.
@@ -351,7 +350,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 		return NULL; \
 	}
 	/* create a new pico parser */
-	p = _pico_new_parser((picoByte_t *)buffer, bufSize);
+	p = _pico_new_parser((picoByte_t *) buffer, bufSize);
 	if (p == NULL)
 		return NULL;
 
@@ -425,7 +424,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 				_ase_error_return("Missing MESH_NUMCVERTEX value");
 
 			colors = _pico_calloc(numColorVertices, sizeof(aseColor_t));
-			memset(colors, 255, numColorVertices * sizeof(aseColor_t));	/* ydnar: force colors to white initially */
+			memset(colors, 255, numColorVertices * sizeof(aseColor_t)); /* ydnar: force colors to white initially */
 		} else if (!_pico_stricmp(p->token, "*mesh_numcvfaces")) {
 			if (!_pico_parse_int(p, &numColorVertexFaces))
 				_ase_error_return("Missing MESH_NUMCVFACES value");
@@ -438,7 +437,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 			int mtlId;
 
 			/* get the material ref (0..n) */
-			if (!_pico_parse_int(p,&mtlId))
+			if (!_pico_parse_int(p, &mtlId))
 				_ase_error_return("Missing material reference ID");
 
 			{
@@ -458,9 +457,9 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 				_ase_error_return("Vertex parse error");
 
 			/* get vertex data (orig: index +y -x +z) */
-			if (!_pico_parse_int(p,&index))
+			if (!_pico_parse_int(p, &index))
 				_ase_error_return("Vertex parse error");
-			if (!_pico_parse_vec(p,vertices[index].xyz))
+			if (!_pico_parse_vec(p, vertices[index].xyz))
 				_ase_error_return("Vertex parse error");
 
 			vertices[index].id = vertexId++;
@@ -473,9 +472,9 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 				_ase_error_return("Vertex parse error");
 
 			/* get vertex data (orig: index +y -x +z) */
-			if (!_pico_parse_int(p,&index))
+			if (!_pico_parse_int(p, &index))
 				_ase_error_return("Vertex parse error");
-			if (!_pico_parse_vec(p,vertices[index].normal))
+			if (!_pico_parse_vec(p, vertices[index].normal))
 				_ase_error_return("Vertex parse error");
 		}
 		/* model mesh face */
@@ -487,34 +486,34 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 				_ase_error_return("Face parse error");
 
 			/* get face index */
-			if (!_pico_parse_int(p,&index))
+			if (!_pico_parse_int(p, &index))
 				_ase_error_return("Face parse error");
 
 			/* get 1st vertex index */
 			_pico_parse(p, 0);
-			if (!_pico_parse_int(p,&indexes[0]))
+			if (!_pico_parse_int(p, &indexes[0]))
 				_ase_error_return("Face parse error");
 
 			/* get 2nd vertex index */
 			_pico_parse(p, 0);
-			if (!_pico_parse_int(p,&indexes[1]))
+			if (!_pico_parse_int(p, &indexes[1]))
 				_ase_error_return("Face parse error");
 
 			/* get 3rd vertex index */
 			_pico_parse(p, 0);
-			if (!_pico_parse_int(p,&indexes[2]))
+			if (!_pico_parse_int(p, &indexes[2]))
 				_ase_error_return("Face parse error");
 
 			/* parse to the subMaterial ID */
 			while (1) {
-				if (!_pico_parse (p, 0)) { /* EOL */
+				if (!_pico_parse(p, 0)) { /* EOL */
 					break;
 				}
-				if (!_pico_stricmp (p->token, "*MESH_SMOOTHING")) {
-					_pico_parse_int (p, &faces[index].smoothingGroup);
+				if (!_pico_stricmp(p->token, "*MESH_SMOOTHING")) {
+					_pico_parse_int(p, &faces[index].smoothingGroup);
 				}
-				if (!_pico_stricmp (p->token, "*MESH_MTLID")) {
-					_pico_parse_int (p, &faces[index].subMaterialId);
+				if (!_pico_stricmp(p->token, "*MESH_MTLID")) {
+					_pico_parse_int(p, &faces[index].subMaterialId);
 				}
 			}
 
@@ -531,15 +530,15 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 				_ase_error_return("Texture Vertex parse error");
 
 			/* get uv vertex index */
-			if (!_pico_parse_int(p,&index) || index >= numTextureVertices)
+			if (!_pico_parse_int(p, &index) || index >= numTextureVertices)
 				_ase_error_return("Texture vertex parse error");
 
 			/* get uv vertex s */
-			if (!_pico_parse_float(p,&texcoords[index].texcoord[0]))
+			if (!_pico_parse_float(p, &texcoords[index].texcoord[0]))
 				_ase_error_return("Texture vertex parse error");
 
 			/* get uv vertex t */
-			if (!_pico_parse_float(p,&texcoords[index].texcoord[1]))
+			if (!_pico_parse_float(p, &texcoords[index].texcoord[1]))
 				_ase_error_return("Texture vertex parse error");
 
 			/* ydnar: invert t */
@@ -554,19 +553,19 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 				_ase_error_return("Texture face parse error");
 
 			/* get face index */
-			if (!_pico_parse_int(p,&index))
+			if (!_pico_parse_int(p, &index))
 				_ase_error_return("Texture face parse error");
 
 			/* get 1st vertex index */
-			if (!_pico_parse_int(p,&indexes[0]))
+			if (!_pico_parse_int(p, &indexes[0]))
 				_ase_error_return("Texture face parse error");
 
 			/* get 2nd vertex index */
-			if (!_pico_parse_int(p,&indexes[1]))
+			if (!_pico_parse_int(p, &indexes[1]))
 				_ase_error_return("Texture face parse error");
 
 			/* get 3rd vertex index */
-			if (!_pico_parse_int(p,&indexes[2]))
+			if (!_pico_parse_int(p, &indexes[2]))
 				_ase_error_return("Texture face parse error");
 
 			faces[index].indices[3] = indexes[2];
@@ -582,23 +581,23 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 				_ase_error_return("Color Vertex parse error");
 
 			/* get color vertex index */
-			if (!_pico_parse_int(p,&index))
+			if (!_pico_parse_int(p, &index))
 				_ase_error_return("Color vertex parse error");
 
 			/* get R component */
-			if (!_pico_parse_float(p,&colorInput))
+			if (!_pico_parse_float(p, &colorInput))
 				_ase_error_return("Color vertex parse error");
-			colors[index].color[0] = (picoByte_t)(colorInput * 255);
+			colors[index].color[0] = (picoByte_t) (colorInput * 255);
 
 			/* get G component */
-			if (!_pico_parse_float(p,&colorInput))
+			if (!_pico_parse_float(p, &colorInput))
 				_ase_error_return("Color vertex parse error");
-			colors[index].color[1] = (picoByte_t)(colorInput * 255);
+			colors[index].color[1] = (picoByte_t) (colorInput * 255);
 
 			/* get B component */
-			if (!_pico_parse_float(p,&colorInput))
+			if (!_pico_parse_float(p, &colorInput))
 				_ase_error_return("Color vertex parse error");
-			colors[index].color[2] = (picoByte_t)(colorInput * 255);
+			colors[index].color[2] = (picoByte_t) (colorInput * 255);
 
 			/* leave alpha alone since we don't get any data from the ASE format */
 			colors[index].color[3] = 255;
@@ -612,19 +611,19 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 				_ase_error_return("Face parse error");
 
 			/* get face index */
-			if (!_pico_parse_int(p,&index))
+			if (!_pico_parse_int(p, &index))
 				_ase_error_return("Face parse error");
 
 			/* get 1st cvertex index */
-			if (!_pico_parse_int(p,&indexes[0]))
+			if (!_pico_parse_int(p, &indexes[0]))
 				_ase_error_return("Face parse error");
 
 			/* get 2nd cvertex index */
-			if (!_pico_parse_int(p,&indexes[1]))
+			if (!_pico_parse_int(p, &indexes[1]))
 				_ase_error_return("Face parse error");
 
 			/* get 3rd cvertex index */
-			if (!_pico_parse_int(p,&indexes[2]))
+			if (!_pico_parse_int(p, &indexes[2]))
 				_ase_error_return("Face parse error");
 
 			faces[index].indices[6] = indexes[2];
@@ -643,7 +642,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 			int subMtlId, subMaterialLevel = -1;
 
 			/* get material index */
-			_pico_parse_int(p,&index);
+			_pico_parse_int(p, &index);
 
 			/* check brace */
 			if (!_pico_parse_check(p, 1, "{"))
@@ -672,22 +671,22 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 					PicoSetShaderName(shader, materialName);
 
 					/* set shader's transparency */
-					PicoSetShaderTransparency(shader,transValue);
+					PicoSetShaderTransparency(shader, transValue);
 
 					/* set shader's ambient color */
-					PicoSetShaderAmbientColor(shader,ambientColor);
+					PicoSetShaderAmbientColor(shader, ambientColor);
 
 					/* set diffuse alpha to transparency */
-					diffuseColor[3] = (picoByte_t)(transValue * 255.0);
+					diffuseColor[3] = (picoByte_t) (transValue * 255.0);
 
 					/* set shader's diffuse color */
-					PicoSetShaderDiffuseColor(shader,diffuseColor);
+					PicoSetShaderDiffuseColor(shader, diffuseColor);
 
 					/* set shader's specular color */
-					PicoSetShaderSpecularColor(shader,specularColor);
+					PicoSetShaderSpecularColor(shader, specularColor);
 
 					/* set shader's shininess */
-					PicoSetShaderShininess(shader,shineValue);
+					PicoSetShaderShininess(shader, shineValue);
 
 					/* set material map name */
 					PicoSetShaderMapName(shader, mapname);
@@ -714,7 +713,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 					if (name == NULL)
 						_ase_error_return("Missing material name");
 
-					strcpy (materialName, name);
+					strcpy(materialName, name);
 					/* skip rest and continue with next token */
 					_pico_parse_skip_rest(p);
 					continue;
@@ -722,7 +721,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 				/* parse material transparency */
 				else if (!_pico_stricmp(p->token, "*material_transparency")) {
 					/* get transparency value from ase */
-					if (!_pico_parse_float(p,&transValue))
+					if (!_pico_parse_float(p, &transValue))
 						_ase_error_return("Material transparency parse error");
 
 					/* skip rest and continue with next token */
@@ -736,7 +735,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 					 *   need to use '*material_shinestrength' */
 
 					/* get shine value from ase */
-					if (!_pico_parse_float(p,&shineValue))
+					if (!_pico_parse_float(p, &shineValue))
 						_ase_error_return("Material shine parse error");
 
 					/* scale ase shine range 0..1 to pico range 0..127 */
@@ -748,16 +747,16 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 				}
 				/* parse ambient material color */
 				else if (!_pico_stricmp(p->token, "*material_ambient")) {
-					picoVec3_t  vec;
+					picoVec3_t vec;
 					/* get r,g,b float values from ase */
-					if (!_pico_parse_vec(p,vec))
+					if (!_pico_parse_vec(p, vec))
 						_ase_error_return("Material color parse error");
 
 					/* setup 0..255 range color values */
-					ambientColor[0] = (int)(vec[0] * 255.0);
-					ambientColor[1] = (int)(vec[1] * 255.0);
-					ambientColor[2] = (int)(vec[2] * 255.0);
-					ambientColor[3] = (int)(255);
+					ambientColor[0] = (int) (vec[0] * 255.0);
+					ambientColor[1] = (int) (vec[1] * 255.0);
+					ambientColor[2] = (int) (vec[2] * 255.0);
+					ambientColor[3] = (int) (255);
 
 					/* skip rest and continue with next token */
 					_pico_parse_skip_rest(p);
@@ -768,14 +767,14 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 					picoVec3_t vec;
 
 					/* get r,g,b float values from ase */
-					if (!_pico_parse_vec(p,vec))
+					if (!_pico_parse_vec(p, vec))
 						_ase_error_return("Material color parse error");
 
 					/* setup 0..255 range color */
-					diffuseColor[0] = (int)(vec[0] * 255.0);
-					diffuseColor[1] = (int)(vec[1] * 255.0);
-					diffuseColor[2] = (int)(vec[2] * 255.0);
-					diffuseColor[3] = (int)(255);
+					diffuseColor[0] = (int) (vec[0] * 255.0);
+					diffuseColor[1] = (int) (vec[1] * 255.0);
+					diffuseColor[2] = (int) (vec[2] * 255.0);
+					diffuseColor[3] = (int) (255);
 
 					/* skip rest and continue with next token */
 					_pico_parse_skip_rest(p);
@@ -786,14 +785,14 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 					picoVec3_t vec;
 
 					/* get r,g,b float values from ase */
-					if (!_pico_parse_vec(p,vec))
+					if (!_pico_parse_vec(p, vec))
 						_ase_error_return("Material color parse error");
 
 					/* setup 0..255 range color */
-					specularColor[0] = (int)(vec[0] * 255);
-					specularColor[1] = (int)(vec[1] * 255);
-					specularColor[2] = (int)(vec[2] * 255);
-					specularColor[3] = (int)(255);
+					specularColor[0] = (int) (vec[0] * 255);
+					specularColor[1] = (int) (vec[1] * 255);
+					specularColor[2] = (int) (vec[2] * 255);
+					specularColor[3] = (int) (255);
 
 					/* skip rest and continue with next token */
 					_pico_parse_skip_rest(p);
@@ -824,8 +823,8 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 							char* name = _pico_parse(p, 0);
 							if (name == NULL)
 								_ase_error_return("Missing material map bitmap name");
-							mapname = _pico_alloc (strlen (name) + 1);
-							strcpy (mapname, name);
+							mapname = _pico_alloc(strlen(name) + 1);
+							strcpy(mapname, name);
 							/* skip rest and continue with next token */
 							_pico_parse_skip_rest(p);
 							continue;
@@ -846,25 +845,25 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 
 				/* set material name */
 				shadername_convert(materialName);
-				PicoSetShaderName(shader,materialName);
+				PicoSetShaderName(shader, materialName);
 
 				/* set shader's transparency */
-				PicoSetShaderTransparency(shader,transValue);
+				PicoSetShaderTransparency(shader, transValue);
 
 				/* set shader's ambient color */
-				PicoSetShaderAmbientColor(shader,ambientColor);
+				PicoSetShaderAmbientColor(shader, ambientColor);
 
 				/* set diffuse alpha to transparency */
-				diffuseColor[3] = (picoByte_t)(transValue * 255.0);
+				diffuseColor[3] = (picoByte_t) (transValue * 255.0);
 
 				/* set shader's diffuse color */
-				PicoSetShaderDiffuseColor(shader,diffuseColor);
+				PicoSetShaderDiffuseColor(shader, diffuseColor);
 
 				/* set shader's specular color */
-				PicoSetShaderSpecularColor(shader,specularColor);
+				PicoSetShaderSpecularColor(shader, specularColor);
 
 				/* set shader's shininess */
-				PicoSetShaderShininess(shader,shineValue);
+				PicoSetShaderShininess(shader, shineValue);
 
 				/* set material map name */
 				PicoSetShaderMapName(shader, mapname);
@@ -892,7 +891,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 
 					if (*p != '\0') {
 						/* set material name */
-						PicoSetShaderName(shader,p);
+						PicoSetShaderName(shader, p);
 					}
 				}
 
@@ -932,16 +931,13 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 }
 
 /* pico file format module definition */
-const picoModule_t picoModuleASE = {
-	"1.0",					/* module version string */
-	"Autodesk 3DSMAX ASCII",	/* module display name */
-	"Jared Hefty, seaw0lf",					/* author's name */
-	"2003 Jared Hefty, 2002 seaw0lf",				/* module copyright */
-	{
-		"ase",NULL,NULL,NULL	/* default extensions to use */
-	},
-	_ase_canload,				/* validation routine */
-	_ase_load,					/* load routine */
-	NULL,						/* save validation routine */
-	NULL						/* save routine */
+const picoModule_t picoModuleASE = { "1.0", /* module version string */
+"Autodesk 3DSMAX ASCII", /* module display name */
+"Jared Hefty, seaw0lf", /* author's name */
+"2003 Jared Hefty, 2002 seaw0lf", /* module copyright */
+{ "ase", NULL, NULL, NULL /* default extensions to use */
+}, _ase_canload, /* validation routine */
+_ase_load, /* load routine */
+NULL, /* save validation routine */
+NULL /* save routine */
 };

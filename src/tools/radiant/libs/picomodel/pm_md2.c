@@ -1,48 +1,46 @@
 /* -----------------------------------------------------------------------------
 
-PicoModel Library
+ PicoModel Library
 
-Copyright (c) 2002, Randy Reddig & seaw0lf
-All rights reserved.
+ Copyright (c) 2002, Randy Reddig & seaw0lf
+ All rights reserved.
 
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
+ Redistribution and use in source and binary forms, with or without modification,
+ are permitted provided that the following conditions are met:
 
-Redistributions of source code must retain the above copyright notice, this list
-of conditions and the following disclaimer.
+ Redistributions of source code must retain the above copyright notice, this list
+ of conditions and the following disclaimer.
 
-Redistributions in binary form must reproduce the above copyright notice, this
-list of conditions and the following disclaimer in the documentation and/or
-other materials provided with the distribution.
+ Redistributions in binary form must reproduce the above copyright notice, this
+ list of conditions and the following disclaimer in the documentation and/or
+ other materials provided with the distribution.
 
-Neither the names of the copyright holders nor the names of its contributors may
-be used to endorse or promote products derived from this software without
-specific prior written permission.
+ Neither the names of the copyright holders nor the names of its contributors may
+ be used to endorse or promote products derived from this software without
+ specific prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
------------------------------------------------------------------------------ */
+ ----------------------------------------------------------------------------- */
 
 /*
-Nurail: Used pm_md3.c (Randy Reddig) as a template.
-*/
-
+ Nurail: Used pm_md3.c (Randy Reddig) as a template.
+ */
 
 /* marker */
 #define PM_MD2_C
 
 /* dependencies */
 #include "picointernal.h"
-
 
 /* md2 model format */
 #define MD2_MAGIC				"IDP2"
@@ -60,226 +58,132 @@ Nurail: Used pm_md3.c (Randy Reddig) as a template.
 #define byte unsigned char
 #endif
 
-typedef struct index_LUT_s {
-	short	Vert;
-	short	ST;
+typedef struct index_LUT_s
+{
+	short Vert;
+	short ST;
 } index_LUT_t;
 
-typedef struct index_DUP_LUT_s {
-	short			ST;
-	short			OldVert;
+typedef struct index_DUP_LUT_s
+{
+	short ST;
+	short OldVert;
 } index_DUP_LUT_t;
 
-typedef struct {
-	short   s;
-	short   t;
+typedef struct
+{
+	short s;
+	short t;
 } md2St_t;
 
-typedef struct {
-	short   index_xyz[3];
-	short   index_st[3];
+typedef struct
+{
+	short index_xyz[3];
+	short index_st[3];
 } md2Triangle_t;
 
-typedef struct {
-	byte	v[3];                   /* scaled byte to fit in frame mins/maxs */
-	byte	lightnormalindex;
+typedef struct
+{
+	byte v[3]; /* scaled byte to fit in frame mins/maxs */
+	byte lightnormalindex;
 } md2XyzNormal_t;
 
-typedef struct md2Frame_s {
-	float           scale[3];       /* multiply byte verts by this */
-	float           translate[3];   /* then add this */
-	char            name[16];       /* frame name from grabbing */
-	md2XyzNormal_t  verts[1];       /* variable sized */
+typedef struct md2Frame_s
+{
+	float scale[3]; /* multiply byte verts by this */
+	float translate[3]; /* then add this */
+	char name[16]; /* frame name from grabbing */
+	md2XyzNormal_t verts[1]; /* variable sized */
 } md2Frame_t;
 
 /* md2 model file md2 structure */
-typedef struct md2_s {
-	char	magic[4];
-	int	version;
+typedef struct md2_s
+{
+	char magic[4];
+	int version;
 
-	int	skinWidth;
-	int	skinHeight;
-	int	frameSize;
+	int skinWidth;
+	int skinHeight;
+	int frameSize;
 
-	int	numSkins;
-	int	numXYZ;
-	int	numST;
-	int	numTris;
-	int	numGLCmds;
-	int	numFrames;
+	int numSkins;
+	int numXYZ;
+	int numST;
+	int numTris;
+	int numGLCmds;
+	int numFrames;
 
-	int	ofsSkins;
-	int	ofsST;
-	int	ofsTris;
-	int	ofsFrames;
-	int	ofsGLCmds;
-	int	ofsEnd;
+	int ofsSkins;
+	int ofsST;
+	int ofsTris;
+	int ofsFrames;
+	int ofsGLCmds;
+	int ofsEnd;
 } md2_t;
 
-static const float md2_normals[MD2_NUMVERTEXNORMALS][3] = {
-	{-0.525731f, 0.000000f, 0.850651f},
-	{-0.442863f, 0.238856f, 0.864188f},
-	{-0.295242f, 0.000000f, 0.955423f},
-	{-0.309017f, 0.500000f, 0.809017f},
-	{-0.162460f, 0.262866f, 0.951056f},
-	{0.000000f, 0.000000f, 1.000000f},
-	{0.000000f, 0.850651f, 0.525731f},
-	{-0.147621f, 0.716567f, 0.681718f},
-	{0.147621f, 0.716567f, 0.681718f},
-	{0.000000f, 0.525731f, 0.850651f},
-	{0.309017f, 0.500000f, 0.809017f},
-	{0.525731f, 0.000000f, 0.850651f},
-	{0.295242f, 0.000000f, 0.955423f},
-	{0.442863f, 0.238856f, 0.864188f},
-	{0.162460f, 0.262866f, 0.951056f},
-	{-0.681718f, 0.147621f, 0.716567f},
-	{-0.809017f, 0.309017f, 0.500000f},
-	{-0.587785f, 0.425325f, 0.688191f},
-	{-0.850651f, 0.525731f, 0.000000f},
-	{-0.864188f, 0.442863f, 0.238856f},
-	{-0.716567f, 0.681718f, 0.147621f},
-	{-0.688191f, 0.587785f, 0.425325f},
-	{-0.500000f, 0.809017f, 0.309017f},
-	{-0.238856f, 0.864188f, 0.442863f},
-	{-0.425325f, 0.688191f, 0.587785f},
-	{-0.716567f, 0.681718f, -0.147621f},
-	{-0.500000f, 0.809017f, -0.309017f},
-	{-0.525731f, 0.850651f, 0.000000f},
-	{0.000000f, 0.850651f, -0.525731f},
-	{-0.238856f, 0.864188f, -0.442863f},
-	{0.000000f, 0.955423f, -0.295242f},
-	{-0.262866f, 0.951056f, -0.162460f},
-	{0.000000f, 1.000000f, 0.000000f},
-	{0.000000f, 0.955423f, 0.295242f},
-	{-0.262866f, 0.951056f, 0.162460f},
-	{0.238856f, 0.864188f, 0.442863f},
-	{0.262866f, 0.951056f, 0.162460f},
-	{0.500000f, 0.809017f, 0.309017f},
-	{0.238856f, 0.864188f, -0.442863f},
-	{0.262866f, 0.951056f, -0.162460f},
-	{0.500000f, 0.809017f, -0.309017f},
-	{0.850651f, 0.525731f, 0.000000f},
-	{0.716567f, 0.681718f, 0.147621f},
-	{0.716567f, 0.681718f, -0.147621f},
-	{0.525731f, 0.850651f, 0.000000f},
-	{0.425325f, 0.688191f, 0.587785f},
-	{0.864188f, 0.442863f, 0.238856f},
-	{0.688191f, 0.587785f, 0.425325f},
-	{0.809017f, 0.309017f, 0.500000f},
-	{0.681718f, 0.147621f, 0.716567f},
-	{0.587785f, 0.425325f, 0.688191f},
-	{0.955423f, 0.295242f, 0.000000f},
-	{1.000000f, 0.000000f, 0.000000f},
-	{0.951056f, 0.162460f, 0.262866f},
-	{0.850651f, -0.525731f, 0.000000f},
-	{0.955423f, -0.295242f, 0.000000f},
-	{0.864188f, -0.442863f, 0.238856f},
-	{0.951056f, -0.162460f, 0.262866f},
-	{0.809017f, -0.309017f, 0.500000f},
-	{0.681718f, -0.147621f, 0.716567f},
-	{0.850651f, 0.000000f, 0.525731f},
-	{0.864188f, 0.442863f, -0.238856f},
-	{0.809017f, 0.309017f, -0.500000f},
-	{0.951056f, 0.162460f, -0.262866f},
-	{0.525731f, 0.000000f, -0.850651f},
-	{0.681718f, 0.147621f, -0.716567f},
-	{0.681718f, -0.147621f, -0.716567f},
-	{0.850651f, 0.000000f, -0.525731f},
-	{0.809017f, -0.309017f, -0.500000f},
-	{0.864188f, -0.442863f, -0.238856f},
-	{0.951056f, -0.162460f, -0.262866f},
-	{0.147621f, 0.716567f, -0.681718f},
-	{0.309017f, 0.500000f, -0.809017f},
-	{0.425325f, 0.688191f, -0.587785f},
-	{0.442863f, 0.238856f, -0.864188f},
-	{0.587785f, 0.425325f, -0.688191f},
-	{0.688191f, 0.587785f, -0.425325f},
-	{-0.147621f, 0.716567f, -0.681718f},
-	{-0.309017f, 0.500000f, -0.809017f},
-	{0.000000f, 0.525731f, -0.850651f},
-	{-0.525731f, 0.000000f, -0.850651f},
-	{-0.442863f, 0.238856f, -0.864188f},
-	{-0.295242f, 0.000000f, -0.955423f},
-	{-0.162460f, 0.262866f, -0.951056f},
-	{0.000000f, 0.000000f, -1.000000f},
-	{0.295242f, 0.000000f, -0.955423f},
-	{0.162460f, 0.262866f, -0.951056f},
-	{-0.442863f, -0.238856f, -0.864188f},
-	{-0.309017f, -0.500000f, -0.809017f},
-	{-0.162460f, -0.262866f, -0.951056f},
-	{0.000000f, -0.850651f, -0.525731f},
-	{-0.147621f, -0.716567f, -0.681718f},
-	{0.147621f, -0.716567f, -0.681718f},
-	{0.000000f, -0.525731f, -0.850651f},
-	{0.309017f, -0.500000f, -0.809017f},
-	{0.442863f, -0.238856f, -0.864188f},
-	{0.162460f, -0.262866f, -0.951056f},
-	{0.238856f, -0.864188f, -0.442863f},
-	{0.500000f, -0.809017f, -0.309017f},
-	{0.425325f, -0.688191f, -0.587785f},
-	{0.716567f, -0.681718f, -0.147621f},
-	{0.688191f, -0.587785f, -0.425325f},
-	{0.587785f, -0.425325f, -0.688191f},
-	{0.000000f, -0.955423f, -0.295242f},
-	{0.000000f, -1.000000f, 0.000000f},
-	{0.262866f, -0.951056f, -0.162460f},
-	{0.000000f, -0.850651f, 0.525731f},
-	{0.000000f, -0.955423f, 0.295242f},
-	{0.238856f, -0.864188f, 0.442863f},
-	{0.262866f, -0.951056f, 0.162460f},
-	{0.500000f, -0.809017f, 0.309017f},
-	{0.716567f, -0.681718f, 0.147621f},
-	{0.525731f, -0.850651f, 0.000000f},
-	{-0.238856f, -0.864188f, -0.442863f},
-	{-0.500000f, -0.809017f, -0.309017f},
-	{-0.262866f, -0.951056f, -0.162460f},
-	{-0.850651f, -0.525731f, 0.000000f},
-	{-0.716567f, -0.681718f, -0.147621f},
-	{-0.716567f, -0.681718f, 0.147621f},
-	{-0.525731f, -0.850651f, 0.000000f},
-	{-0.500000f, -0.809017f, 0.309017f},
-	{-0.238856f, -0.864188f, 0.442863f},
-	{-0.262866f, -0.951056f, 0.162460f},
-	{-0.864188f, -0.442863f, 0.238856f},
-	{-0.809017f, -0.309017f, 0.500000f},
-	{-0.688191f, -0.587785f, 0.425325f},
-	{-0.681718f, -0.147621f, 0.716567f},
-	{-0.442863f, -0.238856f, 0.864188f},
-	{-0.587785f, -0.425325f, 0.688191f},
-	{-0.309017f, -0.500000f, 0.809017f},
-	{-0.147621f, -0.716567f, 0.681718f},
-	{-0.425325f, -0.688191f, 0.587785f},
-	{-0.162460f, -0.262866f, 0.951056f},
-	{0.442863f, -0.238856f, 0.864188f},
-	{0.162460f, -0.262866f, 0.951056f},
-	{0.309017f, -0.500000f, 0.809017f},
-	{0.147621f, -0.716567f, 0.681718f},
-	{0.000000f, -0.525731f, 0.850651f},
-	{0.425325f, -0.688191f, 0.587785f},
-	{0.587785f, -0.425325f, 0.688191f},
-	{0.688191f, -0.587785f, 0.425325f},
-	{-0.955423f, 0.295242f, 0.000000f},
-	{-0.951056f, 0.162460f, 0.262866f},
-	{-1.000000f, 0.000000f, 0.000000f},
-	{-0.850651f, 0.000000f, 0.525731f},
-	{-0.955423f, -0.295242f, 0.000000f},
-	{-0.951056f, -0.162460f, 0.262866f},
-	{-0.864188f, 0.442863f, -0.238856f},
-	{-0.951056f, 0.162460f, -0.262866f},
-	{-0.809017f, 0.309017f, -0.500000f},
-	{-0.864188f, -0.442863f, -0.238856f},
-	{-0.951056f, -0.162460f, -0.262866f},
-	{-0.809017f, -0.309017f, -0.500000f},
-	{-0.681718f, 0.147621f, -0.716567f},
-	{-0.681718f, -0.147621f, -0.716567f},
-	{-0.850651f, 0.000000f, -0.525731f},
-	{-0.688191f, 0.587785f, -0.425325f},
-	{-0.587785f, 0.425325f, -0.688191f},
-	{-0.425325f, 0.688191f, -0.587785f},
-	{-0.425325f, -0.688191f, -0.587785f},
-	{-0.587785f, -0.425325f, -0.688191f},
-	{-0.688191f, -0.587785f, -0.425325f},
-};
+static const float md2_normals[MD2_NUMVERTEXNORMALS][3] = { { -0.525731f, 0.000000f, 0.850651f }, { -0.442863f,
+		0.238856f, 0.864188f }, { -0.295242f, 0.000000f, 0.955423f }, { -0.309017f, 0.500000f, 0.809017f }, {
+		-0.162460f, 0.262866f, 0.951056f }, { 0.000000f, 0.000000f, 1.000000f }, { 0.000000f, 0.850651f, 0.525731f }, {
+		-0.147621f, 0.716567f, 0.681718f }, { 0.147621f, 0.716567f, 0.681718f }, { 0.000000f, 0.525731f, 0.850651f }, {
+		0.309017f, 0.500000f, 0.809017f }, { 0.525731f, 0.000000f, 0.850651f }, { 0.295242f, 0.000000f, 0.955423f }, {
+		0.442863f, 0.238856f, 0.864188f }, { 0.162460f, 0.262866f, 0.951056f }, { -0.681718f, 0.147621f, 0.716567f }, {
+		-0.809017f, 0.309017f, 0.500000f }, { -0.587785f, 0.425325f, 0.688191f }, { -0.850651f, 0.525731f, 0.000000f },
+		{ -0.864188f, 0.442863f, 0.238856f }, { -0.716567f, 0.681718f, 0.147621f },
+		{ -0.688191f, 0.587785f, 0.425325f }, { -0.500000f, 0.809017f, 0.309017f },
+		{ -0.238856f, 0.864188f, 0.442863f }, { -0.425325f, 0.688191f, 0.587785f },
+		{ -0.716567f, 0.681718f, -0.147621f }, { -0.500000f, 0.809017f, -0.309017f }, { -0.525731f, 0.850651f,
+				0.000000f }, { 0.000000f, 0.850651f, -0.525731f }, { -0.238856f, 0.864188f, -0.442863f }, { 0.000000f,
+				0.955423f, -0.295242f }, { -0.262866f, 0.951056f, -0.162460f }, { 0.000000f, 1.000000f, 0.000000f }, {
+				0.000000f, 0.955423f, 0.295242f }, { -0.262866f, 0.951056f, 0.162460f }, { 0.238856f, 0.864188f,
+				0.442863f }, { 0.262866f, 0.951056f, 0.162460f }, { 0.500000f, 0.809017f, 0.309017f }, { 0.238856f,
+				0.864188f, -0.442863f }, { 0.262866f, 0.951056f, -0.162460f }, { 0.500000f, 0.809017f, -0.309017f }, {
+				0.850651f, 0.525731f, 0.000000f }, { 0.716567f, 0.681718f, 0.147621f }, { 0.716567f, 0.681718f,
+				-0.147621f }, { 0.525731f, 0.850651f, 0.000000f }, { 0.425325f, 0.688191f, 0.587785f }, { 0.864188f,
+				0.442863f, 0.238856f }, { 0.688191f, 0.587785f, 0.425325f }, { 0.809017f, 0.309017f, 0.500000f }, {
+				0.681718f, 0.147621f, 0.716567f }, { 0.587785f, 0.425325f, 0.688191f }, { 0.955423f, 0.295242f,
+				0.000000f }, { 1.000000f, 0.000000f, 0.000000f }, { 0.951056f, 0.162460f, 0.262866f }, { 0.850651f,
+				-0.525731f, 0.000000f }, { 0.955423f, -0.295242f, 0.000000f }, { 0.864188f, -0.442863f, 0.238856f }, {
+				0.951056f, -0.162460f, 0.262866f }, { 0.809017f, -0.309017f, 0.500000f }, { 0.681718f, -0.147621f,
+				0.716567f }, { 0.850651f, 0.000000f, 0.525731f }, { 0.864188f, 0.442863f, -0.238856f }, { 0.809017f,
+				0.309017f, -0.500000f }, { 0.951056f, 0.162460f, -0.262866f }, { 0.525731f, 0.000000f, -0.850651f }, {
+				0.681718f, 0.147621f, -0.716567f }, { 0.681718f, -0.147621f, -0.716567f }, { 0.850651f, 0.000000f,
+				-0.525731f }, { 0.809017f, -0.309017f, -0.500000f }, { 0.864188f, -0.442863f, -0.238856f }, {
+				0.951056f, -0.162460f, -0.262866f }, { 0.147621f, 0.716567f, -0.681718f }, { 0.309017f, 0.500000f,
+				-0.809017f }, { 0.425325f, 0.688191f, -0.587785f }, { 0.442863f, 0.238856f, -0.864188f }, { 0.587785f,
+				0.425325f, -0.688191f }, { 0.688191f, 0.587785f, -0.425325f }, { -0.147621f, 0.716567f, -0.681718f }, {
+				-0.309017f, 0.500000f, -0.809017f }, { 0.000000f, 0.525731f, -0.850651f }, { -0.525731f, 0.000000f,
+				-0.850651f }, { -0.442863f, 0.238856f, -0.864188f }, { -0.295242f, 0.000000f, -0.955423f }, {
+				-0.162460f, 0.262866f, -0.951056f }, { 0.000000f, 0.000000f, -1.000000f }, { 0.295242f, 0.000000f,
+				-0.955423f }, { 0.162460f, 0.262866f, -0.951056f }, { -0.442863f, -0.238856f, -0.864188f }, {
+				-0.309017f, -0.500000f, -0.809017f }, { -0.162460f, -0.262866f, -0.951056f }, { 0.000000f, -0.850651f,
+				-0.525731f }, { -0.147621f, -0.716567f, -0.681718f }, { 0.147621f, -0.716567f, -0.681718f }, {
+				0.000000f, -0.525731f, -0.850651f }, { 0.309017f, -0.500000f, -0.809017f }, { 0.442863f, -0.238856f,
+				-0.864188f }, { 0.162460f, -0.262866f, -0.951056f }, { 0.238856f, -0.864188f, -0.442863f }, {
+				0.500000f, -0.809017f, -0.309017f }, { 0.425325f, -0.688191f, -0.587785f }, { 0.716567f, -0.681718f,
+				-0.147621f }, { 0.688191f, -0.587785f, -0.425325f }, { 0.587785f, -0.425325f, -0.688191f }, {
+				0.000000f, -0.955423f, -0.295242f }, { 0.000000f, -1.000000f, 0.000000f }, { 0.262866f, -0.951056f,
+				-0.162460f }, { 0.000000f, -0.850651f, 0.525731f }, { 0.000000f, -0.955423f, 0.295242f }, { 0.238856f,
+				-0.864188f, 0.442863f }, { 0.262866f, -0.951056f, 0.162460f }, { 0.500000f, -0.809017f, 0.309017f }, {
+				0.716567f, -0.681718f, 0.147621f }, { 0.525731f, -0.850651f, 0.000000f }, { -0.238856f, -0.864188f,
+				-0.442863f }, { -0.500000f, -0.809017f, -0.309017f }, { -0.262866f, -0.951056f, -0.162460f }, {
+				-0.850651f, -0.525731f, 0.000000f }, { -0.716567f, -0.681718f, -0.147621f }, { -0.716567f, -0.681718f,
+				0.147621f }, { -0.525731f, -0.850651f, 0.000000f }, { -0.500000f, -0.809017f, 0.309017f }, {
+				-0.238856f, -0.864188f, 0.442863f }, { -0.262866f, -0.951056f, 0.162460f }, { -0.864188f, -0.442863f,
+				0.238856f }, { -0.809017f, -0.309017f, 0.500000f }, { -0.688191f, -0.587785f, 0.425325f }, {
+				-0.681718f, -0.147621f, 0.716567f }, { -0.442863f, -0.238856f, 0.864188f }, { -0.587785f, -0.425325f,
+				0.688191f }, { -0.309017f, -0.500000f, 0.809017f }, { -0.147621f, -0.716567f, 0.681718f }, {
+				-0.425325f, -0.688191f, 0.587785f }, { -0.162460f, -0.262866f, 0.951056f }, { 0.442863f, -0.238856f,
+				0.864188f }, { 0.162460f, -0.262866f, 0.951056f }, { 0.309017f, -0.500000f, 0.809017f }, { 0.147621f,
+				-0.716567f, 0.681718f }, { 0.000000f, -0.525731f, 0.850651f }, { 0.425325f, -0.688191f, 0.587785f }, {
+				0.587785f, -0.425325f, 0.688191f }, { 0.688191f, -0.587785f, 0.425325f }, { -0.955423f, 0.295242f,
+				0.000000f }, { -0.951056f, 0.162460f, 0.262866f }, { -1.000000f, 0.000000f, 0.000000f }, { -0.850651f,
+				0.000000f, 0.525731f }, { -0.955423f, -0.295242f, 0.000000f }, { -0.951056f, -0.162460f, 0.262866f }, {
+				-0.864188f, 0.442863f, -0.238856f }, { -0.951056f, 0.162460f, -0.262866f }, { -0.809017f, 0.309017f,
+				-0.500000f }, { -0.864188f, -0.442863f, -0.238856f }, { -0.951056f, -0.162460f, -0.262866f }, {
+				-0.809017f, -0.309017f, -0.500000f }, { -0.681718f, 0.147621f, -0.716567f }, { -0.681718f, -0.147621f,
+				-0.716567f }, { -0.850651f, 0.000000f, -0.525731f }, { -0.688191f, 0.587785f, -0.425325f }, {
+				-0.587785f, 0.425325f, -0.688191f }, { -0.425325f, 0.688191f, -0.587785f }, { -0.425325f, -0.688191f,
+				-0.587785f }, { -0.587785f, -0.425325f, -0.688191f }, { -0.688191f, -0.587785f, -0.425325f }, };
 
 /**
  * @brief Checks whether this module can load the given file
@@ -312,30 +216,29 @@ static int _md2_canload (PM_PARAMS_CANLOAD)
  */
 static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 {
-	int				i, j;
-	short			tot_numVerts;
-	index_LUT_t		*p_index_LUT;
-	md2Triangle_t	*p_md2Triangle;
+	int i, j;
+	short tot_numVerts;
+	index_LUT_t *p_index_LUT;
+	md2Triangle_t *p_md2Triangle;
 
-	char			skinname[MD2_MAX_SKINNAME];
-	md2_t			*md2;
-	md2St_t			*texCoord;
-	md2Frame_t		*frame;
-	md2Triangle_t	*triangle;
-	md2XyzNormal_t	*vertex;
+	char skinname[MD2_MAX_SKINNAME];
+	md2_t *md2;
+	md2St_t *texCoord;
+	md2Frame_t *frame;
+	md2Triangle_t *triangle;
+	md2XyzNormal_t *vertex;
 
-	picoByte_t      *bb;
-	picoModel_t		*picoModel;
-	picoSurface_t	*picoSurface;
-	picoShader_t	*picoShader;
-	picoVec3_t		xyz, normal;
-	picoVec2_t		st;
-	picoColor_t		color;
-
+	picoByte_t *bb;
+	picoModel_t *picoModel;
+	picoSurface_t *picoSurface;
+	picoShader_t *picoShader;
+	picoVec3_t xyz, normal;
+	picoVec2_t st;
+	picoColor_t color;
 
 	/* set as md2 */
 	bb = (picoByte_t*) buffer;
-	md2	= (md2_t*) buffer;
+	md2 = (md2_t*) buffer;
 
 	/* check ident and version */
 	if (*((int*) md2->magic) != *((int*) MD2_MAGIC) || _pico_little_long(md2->version) != MD2_VERSION) {
@@ -402,7 +305,7 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	}
 
 	/* set Skin Name */
-	strncpy(skinname, (char*)(bb + md2->ofsSkins), MD2_MAX_SKINNAME);
+	strncpy(skinname, (char*) (bb + md2->ofsSkins), MD2_MAX_SKINNAME);
 
 	/* detox Skin name */
 	if (skinname[0] == '.') {/* special case ufoai skinpath */
@@ -421,7 +324,8 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	_pico_setfext(skinname, "");
 
 	/* Print out md2 values */
-	_pico_printf(PICO_VERBOSE, "Skins: %d  Verts: %d  STs: %d  Triangles: %d  Frames: %d\nSkin Name \"%s\"\n", md2->numSkins, md2->numXYZ, md2->numST, md2->numTris, md2->numFrames, &skinname);
+	_pico_printf(PICO_VERBOSE, "Skins: %d  Verts: %d  STs: %d  Triangles: %d  Frames: %d\nSkin Name \"%s\"\n",
+			md2->numSkins, md2->numXYZ, md2->numST, md2->numTris, md2->numFrames, &skinname);
 
 	/* create new pico model */
 	picoModel = PicoNewModel();
@@ -444,7 +348,6 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 		return NULL;
 	}
 
-
 	PicoSetSurfaceType(picoSurface, PICO_TRIANGLES);
 	PicoSetSurfaceName(picoSurface, frame->name);
 	picoShader = PicoNewShader(picoModel);
@@ -460,7 +363,7 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	PicoSetSurfaceShader(picoSurface, picoShader);
 
 	/* Init LUT for Verts */
-	p_index_LUT = (index_LUT_t *)_pico_alloc(sizeof(index_LUT_t) * md2->numXYZ);
+	p_index_LUT = (index_LUT_t *) _pico_alloc(sizeof(index_LUT_t) * md2->numXYZ);
 	for (i = 0; i < md2->numXYZ; i++) {
 		p_index_LUT[i].Vert = -1;
 		p_index_LUT[i].ST = -1;
@@ -502,8 +405,8 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 		PicoSetSurfaceNormal(picoSurface, i, normal);
 
 		/* set st coords */
-		st[0] = (float)texCoord[p_index_LUT[i].ST].s / (float)md2->skinWidth;
-		st[1] = (float)texCoord[p_index_LUT[i].ST].t / (float)md2->skinHeight;
+		st[0] = (float) texCoord[p_index_LUT[i].ST].s / (float) md2->skinWidth;
+		st[1] = (float) texCoord[p_index_LUT[i].ST].t / (float) md2->skinHeight;
 		PicoSetSurfaceST(picoSurface, 0, i, st);
 
 		/* set color */
@@ -518,16 +421,13 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 }
 
 /* pico file format module definition */
-const picoModule_t picoModuleMD2 = {
-	"0.875",						/* module version string */
-	"Quake 2 MD2",					/* module display name */
-	"Nurail",						/* author's name */
-	"2003 Nurail",					/* module copyright */
-	{
-		"md2", NULL, NULL, NULL		/* default extensions to use */
-	},
-	_md2_canload,					/* validation routine */
-	_md2_load,						/* load routine */
-	NULL,							/* save validation routine */
-	NULL							/* save routine */
+const picoModule_t picoModuleMD2 = { "0.875", /* module version string */
+"Quake 2 MD2", /* module display name */
+"Nurail", /* author's name */
+"2003 Nurail", /* module copyright */
+{ "md2", NULL, NULL, NULL /* default extensions to use */
+}, _md2_canload, /* validation routine */
+_md2_load, /* load routine */
+NULL, /* save validation routine */
+NULL /* save routine */
 };
