@@ -374,9 +374,9 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 	}
 
 	if (isModel) {
-		const char* model = ui::ModelSelector::chooseModel().c_str();
-		if (model != 0) {
-			entity->setKeyValue("model", model);
+		ui::ModelAndSkin modelAndSkin = ui::ModelSelector::chooseModel();
+		if (!modelAndSkin.model.empty()) {
+			entity->setKeyValue("model", modelAndSkin.model);
 		}
 	} else if (isSound) {
 		const char* sound = misc_sound_dialog(GTK_WIDGET(MainFrame_getWindow()));

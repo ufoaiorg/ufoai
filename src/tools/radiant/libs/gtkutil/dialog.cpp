@@ -238,11 +238,11 @@ PathEntry PathEntry_new ()
 	return PathEntry(frame, entry, button);
 }
 
-void PathEntry_setPath (PathEntry& self, const char* path)
+void PathEntry_setPath (PathEntry& self, std::string path)
 {
-	gtk_entry_set_text(self.m_entry, path);
+	gtk_entry_set_text(self.m_entry, path.c_str());
 }
-typedef ReferenceCaller1<PathEntry, const char*, PathEntry_setPath> PathEntrySetPathCaller;
+typedef ReferenceCaller1<PathEntry, std::string, PathEntry_setPath> PathEntrySetPathCaller;
 
 void BrowsedPathEntry_clicked (GtkWidget* widget, BrowsedPathEntry* self)
 {

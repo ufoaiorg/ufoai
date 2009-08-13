@@ -292,9 +292,9 @@ class ModelAttribute: public EntityAttribute
 		typedef MemberCaller<ModelAttribute, &ModelAttribute::update> UpdateCaller;
 		void browse (const BrowsedPathEntry::SetPathCallback& setPath)
 		{
-			const char *filename = ui::ModelSelector::chooseModel().c_str();
-			if (filename != 0) {
-				setPath(filename);
+			ui::ModelAndSkin modelAndSkin = ui::ModelSelector::chooseModel();
+			if (!modelAndSkin.model.empty()) {
+				setPath(modelAndSkin.model);
 				apply();
 			}
 		}

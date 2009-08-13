@@ -397,17 +397,17 @@ namespace ui
 		gtk_list_store_set(_infoStore, &iter, 0, _("Model name"), 1, mName.c_str(), -1);
 
 		gtk_list_store_append(_infoStore, &iter);
+		gtk_list_store_set(_infoStore, &iter, 0, _("Skin name"), 1, skinName.c_str(), -1);
 
 		gtk_list_store_append(_infoStore, &iter);
-		gtk_list_store_set(_infoStore, &iter, 0, _("Skin name"), 1, skinName.c_str(), -1);
-		// gtk_list_store_set(_infoStore, &iter, 0, _("Material surfaces"), 1, static_cast<std::string>(
-		// 		_modelPreview.getModel()->getSurfaceCount()).c_str(), -1);
-		// gtk_list_store_append(_infoStore, &iter);
-		// gtk_list_store_set(_infoStore, &iter, 0, _("Total vertices"), 1, static_cast<std::string>(
-		// 		_modelPreview.getModel()->getVertexCount()).c_str(), -1);
-		// gtk_list_store_append(_infoStore, &iter);
-		// gtk_list_store_set(_infoStore, &iter, 0, _("Total polys"), 1, static_cast<std::string>(
-		// 		_modelPreview.getModel()->getPolyCount()).c_str(), -1);
+		// static_cast<std::string> (_modelPreview.getModel()->getSurfaceCount()).c_str();
+		gtk_list_store_set(_infoStore, &iter, 0, _("Material surfaces"), 1, "", -1);
+		gtk_list_store_append(_infoStore, &iter);
+		// static_cast<std::string> (_modelPreview.getModel()->getVertexCount()).c_str()
+		gtk_list_store_set(_infoStore, &iter, 0, _("Total vertices"), 1, "", -1);
+		gtk_list_store_append(_infoStore, &iter);
+		// static_cast<std::string> (_modelPreview.getModel()->getPolyCount()).c_str()
+		gtk_list_store_set(_infoStore, &iter, 0, _("Total polys"), 1, "", -1);
 	}
 
 	/* GTK CALLBACKS */

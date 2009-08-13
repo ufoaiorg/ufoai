@@ -126,7 +126,7 @@ PathEntry PathEntry_new ();
 class BrowsedPathEntry
 {
 	public:
-		typedef Callback1<const char*> SetPathCallback;
+		typedef Callback1<std::string> SetPathCallback;
 		typedef Callback1<const SetPathCallback&> BrowseCallback;
 
 		PathEntry m_entry;
