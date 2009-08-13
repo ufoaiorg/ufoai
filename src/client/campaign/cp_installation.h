@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_INSTALLATION_H
-#define CLIENT_CL_INSTALLATION_H
+#ifndef CLIENT_CP_INSTALLATION_H
+#define CLIENT_CP_INSTALLATION_H
 
 #define MAX_INSTALLATIONS	16
 #define MAX_INSTALLTAIONS_PER_BASE 3
@@ -32,9 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_INSTALLATION_DAMAGE	100
 #define MAX_INSTALLATION_BATTERIES	5
-#define MAX_INSTALLATION_SLOT	4
 
 #define INS_GetInstallationIDX(installation) ((ptrdiff_t)((installation) - ccs.installations))
+#define INS_GetFoundedInstallationCount() (ccs.numInstallations)
 
 /**
  * @brief Possible installation states
@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef enum {
 	INSTALLATION_NOT_USED,				/**< installation is not set yet */
 	INSTALLATION_UNDER_CONSTRUCTION,	/**< installation is under construction */
-	INSTALLATION_WORKING				/**< nothing special */
+	INSTALLATION_WORKING				/**< nothing special, it's working */
 } installationStatus_t;
 
 typedef struct installationTemplate_s {
@@ -98,34 +98,29 @@ typedef struct installation_s {
 /** Currently displayed/accessed base. */
 extern installation_t *installationCurrent;
 
-installation_t* INS_GetInstallationByIDX(int instIdx);
-void INS_SetUpInstallation(installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos);
-
-installationType_t INS_GetType(const installation_t *installation);
-
 /** Coordinates to place the new installation at (long, lat) */
 extern vec2_t newInstallationPos;
 
-int INS_GetFoundedInstallationCount(void);
+/* Functions */
+installation_t *INS_GetInstallationByIDX(int instIdx);
 installation_t* INS_GetFoundedInstallationByIDX(int installationIdx);
 installation_t *INS_GetFirstUnfoundedInstallation(void);
 
-void INS_SelectInstallation(installation_t *installation);
+installationTemplate_t* INS_GetInstallationTemplateFromInstallationID(const char *id);
+
+installationType_t INS_GetType(const installation_t *installation);
+
+void INS_SetUpInstallation(installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos);
 
 installation_t *INS_GetCurrentSelectedInstallation(void);
 void INS_SetCurrentSelectedInstallation(const installation_t *installation);
+void INS_SelectInstallation(installation_t *installation);
 
-installationTemplate_t* INS_GetInstallationTemplateFromInstallationID(const char *id);
-
-aircraft_t *INS_GetAircraftFromInstallationByIndex(installation_t* installation, int index);
+void INS_UpdateInstallationData(void);
 
 void INS_DestroyInstallation(installation_t *installation);
 
 void INS_InitStartup(void);
 void INS_ParseInstallations(const char *name, const char **text);
-void INS_UpdateInstallationData(void);
 
-qboolean INS_Load(sizebuf_t* sb, void* data);
-qboolean INS_Save(sizebuf_t* sb, void* data);
-
-#endif /* CLIENT_CL_INSTALLATION_H */
+#endif /* CLIENT_CP_INSTALLATION_H */

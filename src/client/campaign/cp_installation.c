@@ -36,6 +36,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_installation.h"
 #include "cp_installation_callbacks.h"
 
+/**
+ * @brief Get the type of an installation
+ * @param[in] installation Pointer to the isntallation
+ * @return type of the installation
+ * @SA installationType_t
+ */
 installationType_t INS_GetType (const installation_t *installation)
 {
 	if (installation->installationTemplate->maxBatteries > 0)
@@ -54,8 +60,9 @@ installationType_t INS_GetType (const installation_t *installation)
  */
 installation_t* INS_GetInstallationByIDX (int instIdx)
 {
-	assert(instIdx < MAX_INSTALLATIONS);
-	assert(instIdx >= 0);
+	if (instIdx < 0 || instIdx >= MAX_INSTALLATIONS)
+		return NULL;
+
 	return &ccs.installations[instIdx];
 }
 
@@ -68,7 +75,7 @@ installation_t* INS_GetFoundedInstallationByIDX (int instIdx)
 {
 	installation_t *installation = INS_GetInstallationByIDX(instIdx);
 
-	if (installation->founded)
+	if (installation && installation->founded)
 		return installation;
 
 	return NULL;
@@ -106,111 +113,37 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	installation->installationTemplate = installationTemplate;
 	installation->buildStart = ccs.date.day;
 
-	/* Reset capacities. */
-	installation->ufoCapacity.max = installationTemplate->maxUFOsStored;
-	installation->ufoCapacity.cur = 0;
-
 	/* a new installation is not discovered (yet) */
 	installation->alienInterest = newInstallationAlienInterest;
 
 	/* intialise hit points */
 	installation->installationDamage = installation->installationTemplate->maxDamage;
 
-	/* initialise Batteries */
-	installation->numBatteries = installation->installationTemplate->maxBatteries;
-	BDEF_InitialiseInstallationSlots(installation);
+	/* Reset UFO Yard capacities. */
+	installation->ufoCapacity.max = 0;
+	installation->ufoCapacity.cur = 0;
+	/* Reset Batteries */
+	installation->numBatteries = 0;
+	/* Reset Radar */
+	RADAR_Initialise(&(installation->radar), 0.0f, 0.0f, 0.0f, qfalse);
 
-	Com_DPrintf(DEBUG_CLIENT, "INS_SetUpInstallation: id = %s, range = %i, batteries = %i, ufos = %i\n",
-		installation->installationTemplate->id, installation->installationTemplate->radarRange,
-		installation->installationTemplate->maxBatteries, installation->installationTemplate->maxUFOsStored);
-
-	/* Reset Radar range */
-	RADAR_Initialise(&(installation->radar), 0.0f, 0.0f, 1.0f, qtrue);
-	RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange, installation->installationTemplate->trackingRange);
+	Com_DPrintf(DEBUG_CLIENT, "INS_SetUpInstallation: Installation %s (idx: %i), type: %s has been set up. Will be finished in %i day(s).\n", installation->name, installation->idx, installation->installationTemplate->id, installation->installationTemplate->buildTime);
 }
 
 /**
- * @brief Get and not yet founded installation.
+ * @brief Get first not yet founded installation.
+ * @returns installation Pointer to the first unfounded installation
+ * @note it returns NULL if installation limit has reached
  */
 installation_t *INS_GetFirstUnfoundedInstallation (void)
 {
-	int instIdx;
 	const int maxInstallations = B_GetInstallationLimit();
 
-	for (instIdx = 0; instIdx < maxInstallations; instIdx++) {
-		installation_t *installation = INS_GetInstallationByIDX(instIdx);
-		if (!installation->founded)
-			return installation;
-	}
+	if (ccs.numInstallations >= maxInstallations)
+		return NULL;
 
-	return NULL;
+	return INS_GetInstallationByIDX(ccs.numInstallations);
 }
-
-#ifdef DEBUG
-
-/**
- * @brief Just lists all installations with their data
- * @note called with debug_listinstallation
- * @note Just for debugging purposes - not needed in game
- * @todo To be extended for load/save purposes
- */
-static void INS_InstallationList_f (void)
-{
-	int i;
-	installation_t *installation;
-
-	for (i = 0, installation = ccs.installations; i < MAX_INSTALLATIONS; i++, installation++) {
-		if (!installation->founded) {
-			Com_Printf("Installation idx %i not founded\n\n", i);
-			continue;
-		}
-
-		Com_Printf("Installation idx %i\n", installation->idx);
-		Com_Printf("Installation name %s\n", installation->name);
-		Com_Printf("Installation founded %i\n", installation->founded);
-		Com_Printf("Installation pos %.02f:%.02f\n", installation->pos[0], installation->pos[1]);
-		Com_Printf("Installation Alien interest %f\n", installation->alienInterest);
-
-		Com_Printf("\nInstallation sensorWidth %i\n", installation->radar.range);
-		Com_Printf("Installation numSensoredAircraft %i\n\n", installation->radar.numUFOs);
-
-		Com_Printf("\nInstallation numBatteries %i\n", installation->numBatteries);
-
-		Com_Printf("\nInstallation stored UFOs %i/%i\n", installation->ufoCapacity.cur, installation->ufoCapacity.max);
-		Com_Printf("\n\n");
-	}
-}
-
-/**
- * @brief Finishes the construction of an/all installation(s)
- */
-static void INS_ConstructionFinished_f (void)
-{
-	int i;
-	int idx = -1;
-
-	if (Cmd_Argc() == 2) {
-		idx = atoi(Cmd_Argv(1));
-		if (idx < 0 || idx > MAX_INSTALLATIONS) {
-			Com_Printf("Usage: %s [installationIDX]\nWithout parameter it builds up all.\n", Cmd_Argv(0));
-			return;
-		}
-	}
-
-	for (i = 0; i < ccs.numInstallations; i++) {
-		installation_t *ins;
-
-		if (idx >= 0 && i != idx)
-			continue;
-
-		ins = INS_GetInstallationByIDX(i);
-		if (ins && ins->founded) {
-			ins->installationStatus = INSTALLATION_WORKING;
-			RADAR_UpdateInstallationRadarCoverage(ins, ins->installationTemplate->radarRange, ins->installationTemplate->trackingRange);
-		}
-	}
-}
-#endif
 
 /**
  * @brief Destroys an installation
@@ -275,6 +208,106 @@ void INS_SetCurrentSelectedInstallation (const installation_t *installation)
 }
 
 /**
+ * @brief Finishes an installation
+ * @param[in, out] installation Pointer to the installation to be finished
+ * @SA INS_UpdateInstallationData
+ * @SA INS_ConstructionFinished_f
+ */
+static void INS_FinishInstallation (installation_t *installation)
+{
+	if (!installation)
+		Com_Error(ERR_DROP, "INS_FinishInstallation: No Installation.\n");
+	if (!installation->installationTemplate)
+		Com_Error(ERR_DROP, "INS_FinishInstallation: No Installation template.\n");
+	if (!installation->founded)
+		Com_Error(ERR_DROP, "INS_FinishInstallation: Finish a not founded Installation?\n");
+	if (installation->installationStatus != INSTALLATION_UNDER_CONSTRUCTION) {
+		Com_DPrintf(DEBUG_CLIENT, "INS_FinishInstallation: Installation is not being built.\n");
+		return;
+	}
+
+	installation->installationStatus = INSTALLATION_WORKING;
+	/* if Radar Tower */
+	RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange, installation->installationTemplate->trackingRange);
+	/* if SAM Site */
+	installation->numBatteries = installation->installationTemplate->maxBatteries;
+	BDEF_InitialiseInstallationSlots(installation);
+	/* if UFO Yard */
+	installation->ufoCapacity.max = installation->installationTemplate->maxUFOsStored;
+}
+
+#ifdef DEBUG
+
+/**
+ * @brief Just lists all installations with their data
+ * @note called with debug_listinstallation
+ * @note Just for debugging purposes - not needed in game
+ * @todo To be extended for load/save purposes
+ */
+static void INS_InstallationList_f (void)
+{
+	int i;
+	
+	for (i = 0; i < ccs.numInstallations; i++) {
+		const installation_t *installation = INS_GetInstallationByIDX(i);
+
+		if (!installation->founded) {
+			Com_Printf("Installation idx %i not founded\n\n", i);
+			continue;
+		}
+
+		Com_Printf("Installation idx %i\n", installation->idx);
+		Com_Printf("Installation name %s\n", installation->name);
+		Com_Printf("Installation founded %i\n", installation->founded);
+		Com_Printf("Installation pos %.02f:%.02f\n", installation->pos[0], installation->pos[1]);
+		Com_Printf("Installation Alien interest %f\n", installation->alienInterest);
+
+		Com_Printf("\nInstallation sensorWidth %i\n", installation->radar.range);
+		Com_Printf("\nInstallation trackingWidth %i\n", installation->radar.trackingRange);
+		Com_Printf("Installation numSensoredAircraft %i\n\n", installation->radar.numUFOs);
+
+		Com_Printf("\nInstallation numBatteries %i\n", installation->numBatteries);
+		/** @todo list batteries */
+
+		Com_Printf("\nInstallation stored UFOs %i/%i\n", installation->ufoCapacity.cur, installation->ufoCapacity.max);
+		/** @todo list stored Ufos*/
+		
+		Com_Printf("\n\n");
+	}
+}
+
+/**
+ * @brief Finishes the construction of an/all installation(s)
+ */
+static void INS_ConstructionFinished_f (void)
+{
+	int i;
+	int idx = -1;
+
+	if (Cmd_Argc() == 2) {
+		idx = atoi(Cmd_Argv(1));
+		if (idx < 0 || idx >= MAX_INSTALLATIONS) {
+			Com_Printf("Usage: %s [installationIDX]\nWithout parameter it builds up all.\n", Cmd_Argv(0));
+			return;
+		}
+	}
+
+	for (i = 0; i < ccs.numInstallations; i++) {
+		installation_t *ins;
+
+		if (idx >= 0 && i != idx)
+			continue;
+
+		ins = INS_GetInstallationByIDX(i);
+
+		if (ins && ins->founded)
+			INS_FinishInstallation(ins);
+	}
+}
+#endif
+
+
+/**
  * @brief Resets console commands.
  * @sa MN_ResetMenus
  */
@@ -302,23 +335,6 @@ void INS_InitStartup (void)
 }
 
 /**
- * @brief Counts the number of installations.
- * @return The number of founded installations.
- */
-int INS_GetFoundedInstallationCount (void)
-{
-	int i, cnt = 0;
-
-	for (i = 0; i < MAX_INSTALLATIONS; i++) {
-		if (!ccs.installations[i].founded)
-			continue;
-		cnt++;
-	}
-
-	return cnt;
-}
-
-/**
  * @brief Check if some installation are build.
  * @note Daily called.
  */
@@ -334,11 +350,11 @@ void INS_UpdateInstallationData (void)
 		if ((installation->installationStatus == INSTALLATION_UNDER_CONSTRUCTION)
 		 && installation->buildStart
 		 && installation->buildStart + installation->installationTemplate->buildTime <= ccs.date.day) {
-			installation->installationStatus = INSTALLATION_WORKING;
-			RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange, installation->installationTemplate->trackingRange);
+		
+		 	INS_FinishInstallation(installation);
 
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Construction of installation %s finished."), installation->name);
-				MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+			Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Construction of installation %s finished."), installation->name);
+			MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 		}
 	}
 }
