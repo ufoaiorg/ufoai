@@ -13,25 +13,14 @@ namespace routing
 	{
 	}
 
-	void renderRoutingLumpEntryToRenderer(RoutingLumpEntry& entry) {
-		// TODO:
-		//_renderable.add(entry.get....);
-	}
-
-	template<typename Functor>
-	void visit (routing::RoutingLump& lump, const Functor& functor)
-	{
-		routing::RoutingLumpEntries& entries = lump.getEntries();
-		for (routing::RoutingLumpEntries::iterator i = entries.begin(); i != entries.end(); ++i) {
-			functor(*i);
-		}
-	}
-
 	/** Submit renderable geometry when rendering takes place in Solid mode. */
 	void Routing::renderSolid (Renderer& renderer, const VolumeTest& volume)
 	{
 		routing::RoutingLump& lump = _loader.getRoutingLump();
-		visit(lump, renderRoutingLumpEntryToRenderer);
+		routing::RoutingLumpEntries& entries = lump.getEntries();
+		for (routing::RoutingLumpEntries::iterator i = entries.begin(); i != entries.end(); ++i) {
+			_renderable.add(i->getOrigin());
+		}
 		renderer.addRenderable(_renderable, g_matrix4_identity);
 	}
 
