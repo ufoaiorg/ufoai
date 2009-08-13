@@ -47,6 +47,21 @@ const char *Com_EParse (const char **text, const char *errhead, const char *erri
 	return token;
 }
 
+static qboolean versionParsed;
+
+static void Com_ParseVersion (const char *name, const char **text)
+{
+	if (!versionParsed) {
+		const char *token = Com_Parse(text);
+		if (strcmp(token, UFO_VERSION))
+			Sys_Error("You are mixing versions of the binary and the script files.");
+	} else {
+		Sys_Error("More than one version string found in the script files.");
+	}
+
+	versionParsed = qtrue;
+}
+
 /**
  * @brief possible values for parsing functions
  * @sa valueTypes_t
@@ -2847,6 +2862,8 @@ void Com_ParseScripts (qboolean onlyServer)
 			Com_ParseItem(name, &text, qfalse);
 		else if (!strcmp(type, "mapdef"))
 			Com_ParseMapDefinition(name, &text);
+		else if (!strcmp(type, "version"))
+			Com_ParseVersion(name, &text);
 		else if (!strcmp(type, "craftitem"))
 			Com_ParseItem(name, &text, qtrue);
 		else if (!strcmp(type, "inventory"))
@@ -2856,6 +2873,9 @@ void Com_ParseScripts (qboolean onlyServer)
 		else if (!onlyServer)
 			CL_ParseClientData(type, name, &text);
 	}
+
+	if (!versionParsed)
+		Sys_Error("Could not find version string for script files");
 
 	/* Stage two parsing (weapon/inventory dependant stuff). */
 	FS_NextScriptHeader(NULL, NULL, NULL);
