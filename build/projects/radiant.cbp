@@ -370,6 +370,9 @@
 		<Unit filename="../../src/tools/radiant/radiant/pathfinding/RoutingRenderable.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/pathfinding/Routing.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -9,4 +9,9 @@ namespace routing
 	RoutingLump::~RoutingLump ()
 	{
 	}
+
+	routing::RoutingLumpEntries& RoutingLump::getEntries()
+	{
+		return _entries;
+	}
 }

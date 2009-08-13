@@ -2,17 +2,30 @@
 
 namespace routing
 {
-	RoutingRenderer::RoutingRenderer (Vector3& origin) :
-		m_origin(origin)
+	RoutingRenderable::RoutingRenderable ()
 	{
 	}
 
-	RoutingRenderer::~RoutingRenderer ()
+	RoutingRenderable::~RoutingRenderable ()
 	{
+		for (routing::RoutingRenderableEntries::const_iterator i = _entries.begin(); i != _entries.end(); ++i) {
+			delete *i;
+		}
 	}
 
-	void RoutingRenderer::render (RenderStateFlags state) const
+	void RoutingRenderable::render (RenderStateFlags state) const
 	{
+		for (routing::RoutingRenderableEntries::const_iterator i = _entries.begin(); i != _entries.end(); ++i) {
+			const routing::RoutingRenderableEntry* entry = *i;
+			// TODO: Render it
+			//entry->_origin;
+		}
+	}
 
+	//TODO: origin isn't enough
+	void RoutingRenderable::add (const Vector3& origin)
+	{
+		routing::RoutingRenderableEntry* entry = new RoutingRenderableEntry(origin);
+		_entries.push_back(entry);
 	}
 }

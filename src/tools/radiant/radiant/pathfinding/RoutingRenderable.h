@@ -1,24 +1,41 @@
-#ifndef ROUTINGRENDERER_H_
-#define ROUTINGRENDERER_H_
+#ifndef ROUTINGRENDERABLE_H_
+#define ROUTINGRENDERABLE_H_
 
 #include "irender.h"
+#include <list>
 
 namespace routing
 {
-	class RoutingRenderer: public OpenGLRenderable
+	class RoutingRenderableEntry
 	{
 		private:
-			Vector3 m_origin;
-
+			Vector3 _origin;
 		public:
-			RoutingRenderer (Vector3& origin);
+			RoutingRenderableEntry (const Vector3& origin) :
+				_origin(origin)
+			{
+			}
+	};
 
-			~RoutingRenderer ();
+	typedef std::list<RoutingRenderableEntry*> RoutingRenderableEntries;
+
+	class RoutingRenderable: public OpenGLRenderable
+	{
+		private:
+			RoutingRenderableEntries _entries;
+		public:
+			RoutingRenderable ();
+
+			~RoutingRenderable ();
 
 			/** Render function from OpenGLRenderable
 			 */
 			void render (RenderStateFlags flags) const;
+
+			/** Adds a new renderable object to the list
+			 */
+			void add (const Vector3& origin);
 	};
 }
 
-#endif /* ROUTINGRENDERER_H_ */
+#endif /* ROUTINGRENDERABLE_H_ */
