@@ -1,4 +1,4 @@
-#include "modelselector.h"
+#include "ModelSelector.h"
 
 #include "../mainframe.h"
 #include "radiant_i18n.h"

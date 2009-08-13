@@ -53,7 +53,7 @@
 #include "commands.h"
 #include "dialogs/light.h"
 #include "dialogs/particle.h"
-#include "dialogs/modelselector.h"
+#include "dialogs/ModelSelector.h"
 
 struct entity_globals_t
 {
@@ -295,8 +295,13 @@ static int g_iLastLightIntensity = 100;
 
 void Entity_createFromSelection (const char* name, const Vector3& origin)
 {
+	StringOutputStream command;
+	command << "entityCreate -class " << name;
+	UndoableCommand undo(command.c_str());
+
 	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name, true);
 
+	bool revert = false;
 	const bool isModel = string_equal_nocase(name, "misc_model");
 	const bool isSound = string_equal_nocase(name, "misc_sound");
 	const bool isParticle = string_equal_nocase(name, "misc_particle");
@@ -375,20 +380,27 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 
 	if (isModel) {
 		ui::ModelAndSkin modelAndSkin = ui::ModelSelector::chooseModel();
-		if (!modelAndSkin.model.empty()) {
+		if (!modelAndSkin.model.empty())
 			entity->setKeyValue("model", modelAndSkin.model);
-		}
+		else
+			revert = true;
 	} else if (isSound) {
 		const char* sound = misc_sound_dialog(GTK_WIDGET(MainFrame_getWindow()));
-		if (sound != 0) {
+		if (sound != 0)
 			entity->setKeyValue("noise", sound);
-		}
+		else
+			revert = true;
 	} else if (isParticle) {
 		char* particle = misc_particle_dialog(GTK_WIDGET(MainFrame_getWindow()));
 		if (particle != 0) {
 			entity->setKeyValue("particle", particle);
 			free(particle);
-		}
+		} else
+			revert = true;
+	}
+	if (revert) {
+		GlobalUndoSystem().undo();
+		GlobalSceneGraph().sceneChanged();
 	}
 }
 

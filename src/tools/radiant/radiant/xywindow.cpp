@@ -2416,9 +2416,6 @@ void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
 
 void XYWnd::OnEntityCreate (const char* item)
 {
-	StringOutputStream command;
-	command << "entityCreate -class " << item;
-	UndoableCommand undo(command.c_str());
 	Vector3 point;
 	XYWnd_MouseToPoint(this, m_entityCreate_x, m_entityCreate_y, point);
 	Entity_createFromSelection(item, point);

@@ -26,6 +26,7 @@ typedef unsigned char byte;
 #include <algorithm>
 #include <list>
 
+#include "autoptr.h"
 #include "iscenegraph.h"
 #include "irender.h"
 #include "iselection.h"
@@ -113,12 +114,12 @@ class PicoModelLoader: public ModelLoader
 		model::IModelPtr loadModelFromPath (const std::string& name)
 		{
 			// Open an ArchiveFile to load
-			ArchiveFile* file = GlobalFileSystem().openFile(name.c_str());
-
-			if (file != NULL) {
+			AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(name.c_str()));
+			if (file) {
 				// Load the model and return the RenderablePtr
 				return loadIModel(m_module, *file);
 			}
+			return model::IModelPtr();
 		}
 };
 

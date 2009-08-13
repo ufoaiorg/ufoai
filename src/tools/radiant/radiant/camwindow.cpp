@@ -74,23 +74,23 @@ void CameraMovedNotify ()
 
 struct camwindow_globals_private_t
 {
-	int m_nMoveSpeed;
-	bool m_bCamLinkSpeed;
-	int m_nAngleSpeed;
-	bool m_bCamInverseMouse;
-	bool m_bLightRadius;
-	bool m_bForceLightRadius;
-	bool m_bCamDiscrete;
-	bool m_bCubicClipping;
-	bool m_showStats;
-	int m_nStrafeMode;
+		int m_nMoveSpeed;
+		bool m_bCamLinkSpeed;
+		int m_nAngleSpeed;
+		bool m_bCamInverseMouse;
+		bool m_bLightRadius;
+		bool m_bForceLightRadius;
+		bool m_bCamDiscrete;
+		bool m_bCubicClipping;
+		bool m_showStats;
+		int m_nStrafeMode;
 
-	camwindow_globals_private_t () :
-		m_nMoveSpeed(100), m_bCamLinkSpeed(true), m_nAngleSpeed(3), m_bCamInverseMouse(false),
-		m_bLightRadius(false), m_bForceLightRadius(false), m_bCamDiscrete(true), m_bCubicClipping(true), m_showStats(true),
-		m_nStrafeMode(0)
-	{
-	}
+		camwindow_globals_private_t () :
+			m_nMoveSpeed(100), m_bCamLinkSpeed(true), m_nAngleSpeed(3), m_bCamInverseMouse(false),
+					m_bLightRadius(false), m_bForceLightRadius(false), m_bCamDiscrete(true), m_bCubicClipping(true),
+					m_showStats(true), m_nStrafeMode(0)
+		{
+		}
 };
 
 camwindow_globals_private_t g_camwindow_globals_private;
@@ -109,48 +109,48 @@ enum camera_draw_mode
 
 struct camera_t
 {
-	int width, height;
+		int width, height;
 
-	bool timing;
+		bool timing;
 
-	Vector3 origin;
-	Vector3 angles;
+		Vector3 origin;
+		Vector3 angles;
 
-	Vector3 color; // background
+		Vector3 color; // background
 
-	Vector3 forward, right; // move matrix (TTimo: used to have up but it was not updated)
-	Vector3 vup, vpn, vright; // view matrix (taken from the modelview matrix)
+		Vector3 forward, right; // move matrix (TTimo: used to have up but it was not updated)
+		Vector3 vup, vpn, vright; // view matrix (taken from the modelview matrix)
 
-	Matrix4 projection;
-	Matrix4 modelview;
+		Matrix4 projection;
+		Matrix4 modelview;
 
-	bool m_strafe; // true when in strafemode toggled by the ctrl-key
-	bool m_strafe_forward; // true when in strafemode by ctrl-key and shift is pressed for forward strafing
+		bool m_strafe; // true when in strafemode toggled by the ctrl-key
+		bool m_strafe_forward; // true when in strafemode by ctrl-key and shift is pressed for forward strafing
 
-	unsigned int movementflags; // movement flags
-	Timer m_keycontrol_timer;
-	guint m_keymove_handler;
+		unsigned int movementflags; // movement flags
+		Timer m_keycontrol_timer;
+		guint m_keymove_handler;
 
-	float fieldOfView;
+		float fieldOfView;
 
-	DeferredMotionDelta m_mouseMove;
+		DeferredMotionDelta m_mouseMove;
 
-	static void motionDelta (int x, int y, void* data)
-	{
-		Camera_mouseMove(*reinterpret_cast<camera_t*> (data), x, y);
-	}
+		static void motionDelta (int x, int y, void* data)
+		{
+			Camera_mouseMove(*reinterpret_cast<camera_t*> (data), x, y);
+		}
 
-	View* m_view;
-	Callback m_update;
+		View* m_view;
+		Callback m_update;
 
-	static camera_draw_mode draw_mode;
+		static camera_draw_mode draw_mode;
 
-	camera_t (View* view, const Callback& update) :
-		width(0), height(0), timing(false), origin(0, 0, 0), angles(0, 0, 0), color(0, 0, 0), projection(
-				g_matrix4_identity), modelview(g_matrix4_identity), movementflags(0), m_keymove_handler(0),
-				fieldOfView(90.0f), m_mouseMove(motionDelta, this), m_view(view), m_update(update)
-	{
-	}
+		camera_t (View* view, const Callback& update) :
+			width(0), height(0), timing(false), origin(0, 0, 0), angles(0, 0, 0), color(0, 0, 0), projection(
+					g_matrix4_identity), modelview(g_matrix4_identity), movementflags(0), m_keymove_handler(0),
+					fieldOfView(90.0f), m_mouseMove(motionDelta, this), m_view(view), m_update(update)
+		{
+		}
 };
 
 camera_draw_mode camera_t::draw_mode = cd_texture;
@@ -841,6 +841,8 @@ gboolean selection_button_press (GtkWidget* widget, GdkEventButton* event, Windo
 	return FALSE;
 }
 
+/* greebo: GTK Callback: This gets called on "button_release_event" and basically just passes the call on
+ * to the according window observer. */
 gboolean selection_button_release (GtkWidget* widget, GdkEventButton* event, WindowObserver* observer)
 {
 	if (event->type == GDK_BUTTON_RELEASE) {
@@ -862,6 +864,7 @@ inline WindowVector windowvector_for_widget_centre (GtkWidget* widget)
 			static_cast<float> (widget->allocation.height / 2));
 }
 
+// greebo: The GTK Callback during freemove mode for mouseDown. Passes the call on to the Windowobserver
 gboolean selection_button_press_freemove (GtkWidget* widget, GdkEventButton* event, WindowObserver* observer)
 {
 	if (event->type == GDK_BUTTON_PRESS) {
@@ -871,6 +874,7 @@ gboolean selection_button_press_freemove (GtkWidget* widget, GdkEventButton* eve
 	return FALSE;
 }
 
+// greebo: The GTK Callback during freemove mode for mouseUp. Passes the call on to the Windowobserver
 gboolean selection_button_release_freemove (GtkWidget* widget, GdkEventButton* event, WindowObserver* observer)
 {
 	if (event->type == GDK_BUTTON_RELEASE) {
@@ -880,14 +884,17 @@ gboolean selection_button_release_freemove (GtkWidget* widget, GdkEventButton* e
 	return FALSE;
 }
 
+// greebo: The GTK Callback during freemove mode for mouseMoved. Passes the call on to the Windowobserver
 gboolean selection_motion_freemove (GtkWidget *widget, GdkEventMotion *event, WindowObserver* observer)
 {
 	observer->onMouseMotion(windowvector_for_widget_centre(widget), modifiers_for_state(event->state));
 	return FALSE;
 }
 
+// greebo: The GTK Callback during freemove mode for scroll events.
 gboolean wheelmove_scroll (GtkWidget* widget, GdkEventScroll* event, CamWnd* camwnd)
 {
+	// Determine the direction we are moving.
 	if (event->direction == GDK_SCROLL_UP) {
 		Camera_Freemove_updateAxes(camwnd->getCamera());
 		Camera_setOrigin(*camwnd, vector3_added(Camera_getOrigin(*camwnd), vector3_scaled(camwnd->getCamera().forward,
@@ -1291,7 +1298,7 @@ void CamWnd::EnableFreeMove ()
 
 	gtk_window_set_focus(m_parent, m_gl_widget);
 	m_freemove_handle_focusout = g_signal_connect(G_OBJECT(m_gl_widget), "focus_out_event", G_CALLBACK(
-			camwindow_freemove_focusout), this);
+					camwindow_freemove_focusout), this);
 	m_freezePointer.freeze_pointer(m_parent, Camera_motionDelta, &m_Camera);
 
 	CamWnd_Update(*this);
@@ -1407,8 +1414,8 @@ void ShowStatsExport (const BoolImportCallback& importer)
 typedef FreeCaller1<const BoolImportCallback&, ShowStatsExport> ShowStatsExportCaller;
 
 ShowStatsExportCaller g_show_stats_caller;
-BoolExportCallback g_show_stats_callback (g_show_stats_caller);
-ToggleItem g_show_stats (g_show_stats_callback);
+BoolExportCallback g_show_stats_callback(g_show_stats_caller);
+ToggleItem g_show_stats(g_show_stats_callback);
 
 void CamWnd::Cam_Draw ()
 {
@@ -1427,7 +1434,7 @@ void CamWnd::Cam_Draw ()
 	}
 
 	glClearColor(clearColour[0], clearColour[1], clearColour[2], 0);
-	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	extern void Renderer_ResetStats ();
 	Renderer_ResetStats();
@@ -1629,7 +1636,7 @@ bool Camera_GetFarClip ()
 }
 
 BoolExportCaller g_getfarclip_caller(g_camwindow_globals_private.m_bCubicClipping);
-ToggleItem g_getfarclip_item (g_getfarclip_caller);
+ToggleItem g_getfarclip_item(g_getfarclip_caller);
 
 void Camera_SetFarClip (bool value)
 {
@@ -1687,8 +1694,7 @@ void CamWnd_SetMode (camera_draw_mode mode)
 class CameraModel
 {
 	public:
-		STRING_CONSTANT(Name, "CameraModel")
-		;
+		STRING_CONSTANT(Name, "CameraModel");
 		virtual ~CameraModel ()
 		{
 		}
@@ -1784,19 +1790,20 @@ typedef FreeCaller1<const IntImportCallback&, RenderModeExport> RenderModeExport
 
 void Camera_constructPreferences (PreferencesPage& page)
 {
-	page.appendSlider(_("Movement Speed"), g_camwindow_globals_private.m_nMoveSpeed, TRUE, 0, 0, 100,
-			MIN_CAM_SPEED, MAX_CAM_SPEED, 1, 10, 10);
+	page.appendSlider(_("Movement Speed"), g_camwindow_globals_private.m_nMoveSpeed, TRUE, 0, 0, 100, MIN_CAM_SPEED,
+			MAX_CAM_SPEED, 1, 10, 10);
 	page.appendCheckBox("", _("Link strafe speed to movement speed"), g_camwindow_globals_private.m_bCamLinkSpeed);
 	page.appendSlider(_("Rotation Speed"), g_camwindow_globals_private.m_nAngleSpeed, TRUE, 0, 0, 3, 1, 180, 1, 10, 10);
 	page.appendCheckBox("", _("Invert mouse vertical axis"), g_camwindow_globals_private.m_bCamInverseMouse);
-	page.appendCheckBox("", _("Discrete movement"), FreeCaller1<bool, CamWnd_Move_Discrete_Import> (), BoolExportCaller(
-			g_camwindow_globals_private.m_bCamDiscrete));
+	page.appendCheckBox("", _("Discrete movement"), FreeCaller1<bool, CamWnd_Move_Discrete_Import> (),
+			BoolExportCaller(g_camwindow_globals_private.m_bCamDiscrete));
 	page.appendCheckBox("", _("Enable far-clip plane"), FreeCaller1<bool, Camera_SetFarClip> (), BoolExportCaller(
 			g_camwindow_globals_private.m_bCubicClipping));
 
-	const char* render_mode[] = { C_("Render Mode", "Wireframe"), C_("Render Mode", "Flatshade"), C_("Render Mode", "Textured") };
-	page.appendCombo(_("Render Mode"), STRING_ARRAY_RANGE(render_mode),
-	IntImportCallback(RenderModeImportCaller()), IntExportCallback(RenderModeExportCaller()));
+	const char* render_mode[] = { C_("Render Mode", "Wireframe"), C_("Render Mode", "Flatshade"),
+			C_("Render Mode", "Textured") };
+	page.appendCombo(_("Render Mode"), STRING_ARRAY_RANGE(render_mode), IntImportCallback(RenderModeImportCaller()),
+			IntExportCallback(RenderModeExportCaller()));
 
 	const char* strafe_mode[] = { C_("Strafe Mode", "Both"), C_("Strafe Mode", "Forward"), C_("Strafe Mode", "Up") };
 	page.appendCombo(_("Strafe Mode"), g_camwindow_globals_private.m_nStrafeMode, STRING_ARRAY_RANGE(strafe_mode));
@@ -1820,7 +1827,7 @@ typedef FreeCaller1<bool, CamWnd_Move_Discrete_Import> CamWndMoveDiscreteImportC
 
 void CameraSpeed_increase ()
 {
-	if (g_camwindow_globals_private.m_nMoveSpeed <= (MAX_CAM_SPEED- CAM_SPEED_STEP - 10)) {
+	if (g_camwindow_globals_private.m_nMoveSpeed <= (MAX_CAM_SPEED - CAM_SPEED_STEP - 10)) {
 		g_camwindow_globals_private.m_nMoveSpeed += CAM_SPEED_STEP;
 	} else {
 		g_camwindow_globals_private.m_nMoveSpeed = MAX_CAM_SPEED - 10;
@@ -1829,7 +1836,7 @@ void CameraSpeed_increase ()
 
 void CameraSpeed_decrease ()
 {
-	if (g_camwindow_globals_private.m_nMoveSpeed >= (MIN_CAM_SPEED+ CAM_SPEED_STEP)) {
+	if (g_camwindow_globals_private.m_nMoveSpeed >= (MIN_CAM_SPEED + CAM_SPEED_STEP)) {
 		g_camwindow_globals_private.m_nMoveSpeed -= CAM_SPEED_STEP;
 	} else {
 		g_camwindow_globals_private.m_nMoveSpeed = MIN_CAM_SPEED;

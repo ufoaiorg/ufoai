@@ -47,7 +47,7 @@
 #include "moduleobserver.h"
 #include "convert.h"
 #include "stringio.h"
-#include "../dialogs/modelselector.h"
+#include "../dialogs/ModelSelector.h"
 
 #include "gtkutil/accelerator.h"
 #include "gtkutil/dialog.h"
@@ -1271,15 +1271,7 @@ static void EntityClassList_createEntity (void)
 
 	char* text;
 	gtk_tree_model_get(model, &iter, 0, &text, -1);
-
-	{
-		StringOutputStream command;
-		command << "entityCreate -class " << text;
-
-		UndoableCommand undo(command.c_str());
-
-		Entity_createFromSelection(text, g_vector3_identity);
-	}
+	Entity_createFromSelection(text, g_vector3_identity);
 	g_free(text);
 }
 

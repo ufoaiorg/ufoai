@@ -472,8 +472,8 @@ Entity* Scene_FindEntityByClass (const char* name)
 Entity *Scene_FindPlayerStart (void)
 {
 	typedef const char* StaticString;
-	StaticString strings[] = { "info_player_start", "info_player_deathmatch", "team_CTF_redplayer",
-			"team_CTF_blueplayer", "team_CTF_redspawn", "team_CTF_bluespawn", };
+	StaticString strings[] = { "info_player_start", "info_human_deathmatch", "team_civilian_start",
+			"info_alien_deathmatch", "info_ugv_deathmatch", };
 	typedef const StaticString* StaticStringIterator;
 	for (StaticStringIterator i = strings, end = strings + (sizeof(strings) / sizeof(StaticString)); i != end; ++i) {
 		Entity* entity = Scene_FindEntityByClass(*i);
@@ -768,6 +768,19 @@ class ScopeTimer
 		}
 };
 
+static void Map_StartPosition (void)
+{
+	Entity* entity = Scene_FindPlayerStart();
+
+	if (entity) {
+		Vector3 origin;
+		string_parse_vector3(entity->getKeyValue("origin"), origin);
+		FocusViews(origin, string_read_float(entity->getKeyValue("angle")));
+	} else {
+		FocusViews(g_vector3_identity, 0);
+	}
+}
+
 /**
  * @brief Loads a map file
  * @param[in] filename The filename of the map to load
@@ -802,7 +815,7 @@ bool Map_LoadFile (const char *filename)
 	g_message("LoadMapFile: %s\n", g_map.m_name.c_str());
 
 	// move the view to a start position
-	FocusViews(g_vector3_identity, 0);
+	Map_StartPosition();
 
 	g_currentMap = &g_map;
 
