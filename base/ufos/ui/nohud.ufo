@@ -3,7 +3,7 @@
 // ==================
 // with console command forwarding
 
-window nohud
+window nohud extends ahud
 {
 	{
 		fill		true
@@ -25,55 +25,4 @@ window nohud
 		num			10	/* fill layout */
 	}
 
-	// ==================
-	// cmd forwarding
-	// ==================
-
-	confunc	hudselect0 { cmd "hudselects0;hudselecta0;" }
-	confunc	hudselect1 { cmd "hudselects1;hudselecta1;" }
-	confunc	hudselect2 { cmd "hudselects2;hudselecta2;" }
-	confunc	hudselect3 { cmd "hudselects3;hudselecta3;" }
-	confunc	hudselect4 { cmd "hudselects4;hudselecta4;" }
-	confunc	hudselect5 { cmd "hudselects5;hudselecta5;" }
-	confunc	hudselect6 { cmd "hudselects6;hudselecta6;" }
-	confunc	hudselect7 { cmd "hudselects7;hudselecta7;" }
-
-	confunc selpl { cmd "selpls;selpla;" }
-	confunc selpr { cmd "selprs;selpra;" }
-
-	confunc deselpl { cmd "deselpls;deselpla;" }
-	confunc deselpr { cmd "deselprs;deselpra;" }
-	confunc deselrl { cmd "deselrls;deselrla;" }
-	confunc deselrr { cmd "deselrrs;deselrra;" }
-
-	confunc displ { cmd "displs;displa;" }
-	confunc dispr { cmd "disprs;dispra;" }
-	confunc disrl { cmd "disrls;disrla;" }
-	confunc disrr { cmd "disrrs;disrra;" }
-
-	confunc deselstand { cmd "deselstands;deselstanda;" }
-	confunc deselcrouch { cmd "deselcrouchs;deselcroucha;" }
-	confunc disstand { cmd "disstands;disstanda;" }
-	confunc discrouch { cmd "discrouchs;discroucha;" }
-
-	confunc crouch_checkbox_disable { cmd "crouch_checkbox_disable_s;" }
-	confunc crouch_checkbox_clear	{ cmd "crouch_checkbox_clear_s;" }
-	confunc crouch_checkbox_check	{ cmd "crouch_checkbox_check_s;" }
-
-	confunc reserve_shot_clear	{ cmd "reserve_shot_clear_s;reserve_shot_clear_a;" }
-	confunc reserve_shot_check	{ cmd "reserve_shot_check_s;reserve_shot_check_a;" }
-	confunc reserve_shot_disable	{ cmd "reserve_shot_disable_s;reserve_shot_disable_a;" }
-
-	confunc startreactionmany { cmd "startreactionmanys;startreactionmanya;" }
-	confunc startreactionmany_impos { cmd "startreactionmanys_impos;startreactionmanya_impos;" }
-	confunc startreactiononce { cmd "startreactiononces;startreactiononcea;" }
-	confunc startreactiononce_impos { cmd "startreactiononces_impos;startreactiononcea_impos;" }
-	confunc deselreaction { cmd "deselreactions;deselreactiona;" }
-	confunc disreaction { cmd "disreactions;disreactiona;" }
-
-	confunc deselheadgear { cmd "hud_deselheadgear;althud_deselheadgear;" }
-	confunc disheadgear { cmd "hud_disheadgear;althud_disheadgear;" }
-
-	confunc startround { cmd "startrounds;startrounda;" }
-	confunc endround { cmd "endrounds;endrounda;" }
 }

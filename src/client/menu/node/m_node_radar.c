@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_render.h"
 #include "../m_timer.h"
 #include "../m_menus.h"
+#include "../m_main.h"
 
 #include "../../client.h"
 #include "../../renderer/r_draw.h"
@@ -520,6 +521,22 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 #endif
 }
 
+static void MN_GenPreviewRadarMap_f (void)
+{
+	int x, y, width, height;
+	// map into screen
+	R_FrameBufferMapSize(&x, &y, &width, &height);
+
+	// from screen to virtual screen
+	x /= viddef.rx;
+	width /= viddef.rx;
+	y /= viddef.ry;
+	height /= viddef.ry;
+	y = viddef.virtualHeight - y - height;
+
+	MN_ExecuteConfunc("mn_radarhud_setmapborder %d %d %d %d", x, y, width, height);
+}
+
 /**
  * Take a screen shot of the map with the position of the radar
  *
@@ -563,9 +580,8 @@ menuTimer_t* timer;
  * @todo allow to call MN_TimerRelease into timer callback
  */
 static void MN_GenAllRadarMapRelease_f (void) {
-	if (MN_IsMenuOnStack("nohud"))
-		MN_PopMenu(qfalse);
 	MN_TimerRelease(timer);
+	MN_ExecuteConfunc("mn_radarhud_reinit");
 }
 
 /**
@@ -583,6 +599,8 @@ void MN_RegisterRadarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
 	behaviour->draw = MN_RadarNodeDraw;
+
+	Cmd_AddCommand("mn_genpreviewradarmap", MN_GenPreviewRadarMap_f, NULL);
 	Cmd_AddCommand("mn_genradarmap", MN_GenRadarMap_f, NULL);
 	Cmd_AddCommand("mn_genallradarmap", MN_GenAllRadarMap_f, NULL);
 	Cmd_AddCommand("mn_genallradarmaprelease", MN_GenAllRadarMapRelease_f, NULL);

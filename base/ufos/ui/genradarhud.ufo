@@ -5,7 +5,7 @@
 // use the command "gen_radarmap"
 // ==================
 
-window genradarhud
+window genradarhud extends ahud
 {
 	{
 		fill		true
@@ -28,66 +28,111 @@ window genradarhud
 	}
 
 	// ==================
-	// cmd forwarding
+	// generator interface
 	// ==================
 
-	confunc	hudselect0 { cmd "hudselects0;hudselecta0;" }
-	confunc	hudselect1 { cmd "hudselects1;hudselecta1;" }
-	confunc	hudselect2 { cmd "hudselects2;hudselecta2;" }
-	confunc	hudselect3 { cmd "hudselects3;hudselecta3;" }
-	confunc	hudselect4 { cmd "hudselects4;hudselecta4;" }
-	confunc	hudselect5 { cmd "hudselects5;hudselecta5;" }
-	confunc	hudselect6 { cmd "hudselects6;hudselecta6;" }
-	confunc	hudselect7 { cmd "hudselects7;hudselecta7;" }
-
-	confunc selpl { cmd "selpls;selpla;" }
-	confunc selpr { cmd "selprs;selpra;" }
-
-	confunc deselpl { cmd "deselpls;deselpla;" }
-	confunc deselpr { cmd "deselprs;deselpra;" }
-	confunc deselrl { cmd "deselrls;deselrla;" }
-	confunc deselrr { cmd "deselrrs;deselrra;" }
-
-	confunc displ { cmd "displs;displa;" }
-	confunc dispr { cmd "disprs;dispra;" }
-	confunc disrl { cmd "disrls;disrla;" }
-	confunc disrr { cmd "disrrs;disrra;" }
-
-	confunc deselstand { cmd "deselstands;deselstanda;" }
-	confunc deselcrouch { cmd "deselcrouchs;deselcroucha;" }
-	confunc disstand { cmd "disstands;disstanda;" }
-	confunc discrouch { cmd "discrouchs;discroucha;" }
-
-	confunc crouch_checkbox_disable { cmd "crouch_checkbox_disable_s;" }
-	confunc crouch_checkbox_clear	{ cmd "crouch_checkbox_clear_s;" }
-	confunc crouch_checkbox_check	{ cmd "crouch_checkbox_check_s;" }
-
-	confunc reserve_shot_clear	{ cmd "reserve_shot_clear_s;reserve_shot_clear_a;" }
-	confunc reserve_shot_check	{ cmd "reserve_shot_check_s;reserve_shot_check_a;" }
-	confunc reserve_shot_disable	{ cmd "reserve_shot_disable_s;reserve_shot_disable_a;" }
-
-	confunc startreactionmany { cmd "startreactionmanys;startreactionmanya;" }
-	confunc startreactionmany_impos { cmd "startreactionmanys_impos;startreactionmanya_impos;" }
-	confunc startreactiononce { cmd "startreactiononces;startreactiononcea;" }
-	confunc startreactiononce_impos { cmd "startreactiononces_impos;startreactiononcea_impos;" }
-	confunc deselreaction { cmd "deselreactions;deselreactiona;" }
-	confunc disreaction { cmd "disreactions;disreactiona;" }
-
-	confunc deselheadgear { cmd "hud_deselheadgear;althud_deselheadgear;" }
-	confunc disheadgear { cmd "hud_disheadgear;althud_disheadgear;" }
-
-	confunc startround { cmd "startrounds;startrounda;" }
-	confunc endround { cmd "endrounds;endrounda;" }
-	
 	confunc gen_radarmap {
 		cmd "mn_push genradarhud"
 	}
 
+	panel mapborder {
+		bordercolor	"1 0 0 1"
+		border 2
+	}
+
+	panel control {
+		{
+			pos "0 0"
+			size "255 200"
+			num		1	/* float top-left */
+		}
+	
+		button reinit
+		{
+			pos	"5 5"
+			size "250 30"
+			image	ui/button_green_small
+			font	f_small
+			color	"0 0.5 0 1"
+			selectcolor "1 1 1 1"
+			string	"_Reinit"
+			onClick {
+				*mapborder@invis = true
+				cmd "r_isometric 1;centercamera;camsetangles 90 90;camsetzoom 0.5;"
+			}
+		}
+
+		button preview
+		{
+			pos	"5 40"
+			size "250 30"
+			image	ui/button_green_small
+			font	f_small
+			color	"0 0.5 0 1"
+			selectcolor "1 1 1 1"
+			string	"_Preview"
+			onClick {
+				*control@invis = true
+				*mapborder@invis = true
+				cmd "mn_genpreviewradarmap"
+			}
+		}
+	
+		button genlevel
+		{
+			pos	"5 75"
+			size "250 30"
+			image	ui/button_green_small
+			font	f_small
+			color	"0 0.5 0 1"
+			selectcolor "1 1 1 1"
+			string	"_Gen this level"
+			onClick {
+				*mapborder@invis = true
+				cmd "mn_genradarmap"
+			}
+		}
+
+		button genalllevels
+		{
+			pos	"5 110"
+			size "250 30"
+			image	ui/button_green_small
+			font	f_small
+			color	"0 0.5 0 1"
+			selectcolor "1 1 1 1"
+			string	"_Gen all levels"
+			onClick {
+				*cvar:scr_showcursor = 0
+				*control@invis = true
+				*mapborder@invis = true
+				cmd "mn_genallradarmap"
+			}
+		}
+	}
+
+	confunc	mn_radarhud_setmapborder
+	{
+		*mapborder@left = ( <1> - 10 )
+		*mapborder@top = ( <2> - 10 )
+		*mapborder@width = ( <3> + 20 )
+		*mapborder@height = ( <4> + 20 )
+		*mapborder@invis = false
+		*control@invis = false
+	}
+
+	confunc	mn_radarhud_reinit
+	{
+		*control@invis = false
+		*mapborder@invis = false
+		*cvar:scr_showcursor = 1
+	}
+
 	func onInit {
+		cmd "mn_radarhud_reinit"
 		cmd "echo Run the game in 1024x1024:"
 		cmd "echo ufo +set vid_mode -1 +set vid_width 1024 +set vid_height 1024;"
 		cmd "r_isometric 1;centercamera;camsetangles 90 90;camsetzoom 0.5;"
-		*cvar:scr_showcursor = 0
 		*cvar:cl_showactors = 0
 	}
 	
