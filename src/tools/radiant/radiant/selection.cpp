@@ -58,24 +58,25 @@
 
 struct Pivot2World
 {
-	Matrix4 m_worldSpace;
-	Matrix4 m_viewpointSpace;
-	Matrix4 m_viewplaneSpace;
-	Vector3 m_axis_screen;
+		Matrix4 m_worldSpace;
+		Matrix4 m_viewpointSpace;
+		Matrix4 m_viewplaneSpace;
+		Vector3 m_axis_screen;
 
-	void update (const Matrix4& pivot2world, const Matrix4& modelview, const Matrix4& projection,
-			const Matrix4& viewport)
-	{
-		Pivot2World_worldSpace(m_worldSpace, pivot2world, modelview, projection, viewport);
-		Pivot2World_viewpointSpace(m_viewpointSpace, m_axis_screen, pivot2world, modelview, projection, viewport);
-		Pivot2World_viewplaneSpace(m_viewplaneSpace, pivot2world, modelview, projection, viewport);
-	}
+		void update (const Matrix4& pivot2world, const Matrix4& modelview, const Matrix4& projection,
+				const Matrix4& viewport)
+		{
+			Pivot2World_worldSpace(m_worldSpace, pivot2world, modelview, projection, viewport);
+			Pivot2World_viewpointSpace(m_viewpointSpace, m_axis_screen, pivot2world, modelview, projection, viewport);
+			Pivot2World_viewplaneSpace(m_viewplaneSpace, pivot2world, modelview, projection, viewport);
+		}
 };
 
 /**
  * @brief transform from normalised device coords to object coords
  */
-static void point_for_device_point (Vector3& point, const Matrix4& device2object, const float x, const float y, const float z)
+static void point_for_device_point (Vector3& point, const Matrix4& device2object, const float x, const float y,
+		const float z)
 {
 	point = vector4_projected(matrix4_transformed_vector4(device2object, Vector4(x, y, z, 1)));
 }
@@ -136,7 +137,8 @@ static void point_on_sphere (Vector3& point, const Matrix4& device2object, const
 	sphere_intersect_ray(g_origin, g_radius, ray, point);
 }
 
-static void point_on_axis (Vector3& point, const Vector3& axis, const Matrix4& device2object, const float x, const float y)
+static void point_on_axis (Vector3& point, const Vector3& axis, const Matrix4& device2object, const float x,
+		const float y)
 {
 	Ray ray;
 	ray_for_device_point(ray, device2object, x, y);
@@ -185,7 +187,7 @@ class Manipulatable
 		}
 		virtual void Construct (const Matrix4& device2manip, const float x, const float y) = 0;
 		virtual void
-				Transform (const Matrix4& manip2object, const Matrix4& device2manip, const float x, const float y) = 0;
+		Transform (const Matrix4& manip2object, const Matrix4& device2manip, const float x, const float y) = 0;
 };
 
 class Rotatable
@@ -196,6 +198,13 @@ class Rotatable
 		}
 		virtual void rotate (const Quaternion& rotation) = 0;
 };
+
+/* greebo: The following are specialised manipulatables that provide the methods as described in the ABC.
+ * They basically prepare and constraing the transformations of the three base movements above (Translatable, etc.)
+ *
+ * So, for example, the TranslateAxis class takes care that the Translatable is only moved in the axis directions.
+ * The necessary device pointer >> translation vector calculations are performed within Transform()
+ */
 
 class RotateFree: public Manipulatable
 {
@@ -592,7 +601,7 @@ static void BestPoint (std::size_t count, Vector4 clipped[9], SelectionIntersect
 
 #if defined(DEBUG_SELECTION)
 	if (count >= 2)
-		g_render_clipped.insert(clipped, count);
+	g_render_clipped.insert(clipped, count);
 #endif
 }
 
@@ -626,8 +635,8 @@ static void Line_BestPoint (const Matrix4& local2view, const PointVertex vertice
 	BestPoint(count, clipped, best, eClipCullNone);
 }
 
-static void Circle_BestPoint (const Matrix4& local2view, clipcull_t cull, const PointVertex* vertices, const std::size_t size,
-		SelectionIntersection& best)
+static void Circle_BestPoint (const Matrix4& local2view, clipcull_t cull, const PointVertex* vertices,
+		const std::size_t size, SelectionIntersection& best)
 {
 	Vector4 clipped[9];
 	for (std::size_t i = 0; i < size; ++i) {
@@ -679,6 +688,9 @@ static void Triangles_BestPoint (const Matrix4& local2view, clipcull_t cull, Fla
 
 typedef std::multimap<SelectionIntersection, Selectable*> SelectableSortedSet;
 
+/* greebo: The SelectionPool contains all the instances that come into question for a selection operation.
+ * It can be seen as some kind of stack that can be traversed through
+ */
 class SelectionPool: public Selector
 {
 		SelectableSortedSet m_pool;
@@ -734,7 +746,8 @@ static inline const Colour4b& colourSelected (const Colour4b& colour, bool selec
 }
 
 template<typename remap_policy>
-static inline void draw_semicircle (const std::size_t segments, const float radius, PointVertex* vertices, remap_policy remap)
+static inline void draw_semicircle (const std::size_t segments, const float radius, PointVertex* vertices,
+		remap_policy remap)
 {
 	const double increment = c_pi / double(segments << 2);
 
@@ -1055,8 +1068,8 @@ static inline void draw_arrowline (const float length, PointVertex* line, const 
 }
 
 template<typename VertexRemap, typename NormalRemap>
-static inline void draw_arrowhead (const std::size_t segments, const float length, FlatShadedVertex* vertices, VertexRemap,
-		NormalRemap)
+static inline void draw_arrowhead (const std::size_t segments, const float length, FlatShadedVertex* vertices,
+		VertexRemap, NormalRemap)
 {
 	std::size_t head_tris = (segments << 3);
 	const double head_segment = c_2pi / head_tris;
@@ -1927,6 +1940,7 @@ static inline void ConstructSelectionTest (View& view, const rect_t selection_bo
 	view.EnableScissor(selection_box.min[0], selection_box.max[0], selection_box.min[1], selection_box.max[1]);
 }
 
+// greebo: This returns the coordinates of a rectangle at the mouse position with edge length 2*epsilon
 static inline const rect_t SelectionBoxForPoint (const float device_point[2], const float device_epsilon[2])
 {
 	rect_t selection_box;
@@ -1937,6 +1951,8 @@ static inline const rect_t SelectionBoxForPoint (const float device_point[2], co
 	return selection_box;
 }
 
+/* greebo: Returns the coordinates of the selected rectangle,
+ * it is assured that the min values are smaller than the max values */
 static inline const rect_t SelectionBoxForArea (const float device_point[2], const float device_delta[2])
 {
 	rect_t selection_box;
@@ -1977,14 +1993,22 @@ static inline bool Instance_isSelectedComponents (scene::Instance& instance)
 	return componentSelectionTestable != 0 && componentSelectionTestable->isSelectedComponents();
 }
 
+/* greebo: Visitor classes that apply a transformation to the instance passed to visit()
+ *
+ * The constructor expects the according transformation vectors to be passed.
+ * The visit function is called with the scene::instance to be modified.
+ */
 class TranslateSelected: public SelectionSystem::Visitor
 {
+		// The translation vector3 (initialised in the constructor)
 		const Vector3& m_translate;
 	public:
+		// The constructor. Instantiate this class with the translation vector3
 		TranslateSelected (const Vector3& translate) :
 			m_translate(translate)
 		{
 		}
+		// The visitor function that applies the actual transformation to the instance
 		void visit (scene::Instance& instance) const
 		{
 			Transformable* transform = Instance_getTransformable(instance);
@@ -1996,6 +2020,10 @@ class TranslateSelected: public SelectionSystem::Visitor
 		}
 };
 
+/* greebo: This is called when a selected item is to be translated
+ * This basically cycles through all selected objects with a translation
+ * visitor class (which derives from SelectionSystem::Visitor)
+ */
 static void Scene_Translate_Selected (scene::Graph& graph, const Vector3& translation)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
@@ -2003,11 +2031,17 @@ static void Scene_Translate_Selected (scene::Graph& graph, const Vector3& transl
 	}
 }
 
+/* greebo: This is needed e.g. to calculate the translation vector of a rotation transformation
+ * It combines the local and the world pivot point, it seems
+ */
 static Vector3 get_local_pivot (const Vector3& world_pivot, const Matrix4& localToWorld)
 {
 	return Vector3(matrix4_transformed_point(matrix4_full_inverse(localToWorld), world_pivot));
 }
 
+/* greebo: This calculates the translation vector of a rotation with a pivot point,
+ * but I'm not sure about this :)
+ */
 static void translation_for_pivoted_rotation (Vector3& parent_translation, const Quaternion& local_rotation,
 		const Vector3& world_pivot, const Matrix4& localToWorld, const Matrix4& localToParent)
 {
@@ -2023,6 +2057,8 @@ static void translation_for_pivoted_rotation (Vector3& parent_translation, const
 	//globalOutputStream() << "parent_translation: " << parent_translation << "\n";
 }
 
+/* greebo: This calculates the translation vector of a scale transformation with a pivot point,
+ */
 static void translation_for_pivoted_scale (Vector3& parent_translation, const Vector3& local_scale,
 		const Vector3& world_pivot, const Matrix4& localToWorld, const Matrix4& localToParent)
 {
@@ -2035,13 +2071,16 @@ static void translation_for_pivoted_scale (Vector3& parent_translation, const Ve
 
 class rotate_selected: public SelectionSystem::Visitor
 {
+		// The internal transformation vectors
 		const Quaternion& m_rotate;
 		const Vector3& m_world_pivot;
 	public:
+		// Call this constructor with the rotation and pivot vectors
 		rotate_selected (const Quaternion& rotation, const Vector3& world_pivot) :
 			m_rotate(rotation), m_world_pivot(world_pivot)
 		{
 		}
+		// This actually applies the rotation the the instance
 		void visit (scene::Instance& instance) const
 		{
 			TransformNode* transformNode = Node_getTransformNode(instance.path().top());
@@ -2071,6 +2110,10 @@ class rotate_selected: public SelectionSystem::Visitor
 		}
 };
 
+/* greebo: This is called when a selected item is to be rotated
+ * This basically cycles through all selected objects with a rotation
+ * visitor class (which derives from SelectionSystem::Visitor)
+ */
 static void Scene_Rotate_Selected (scene::Graph& graph, const Quaternion& rotation, const Vector3& world_pivot)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
@@ -2080,6 +2123,7 @@ static void Scene_Rotate_Selected (scene::Graph& graph, const Quaternion& rotati
 
 class scale_selected: public SelectionSystem::Visitor
 {
+		// The internal vectors of the transformation to be applied
 		const Vector3& m_scale;
 		const Vector3& m_world_pivot;
 	public:
@@ -2087,6 +2131,7 @@ class scale_selected: public SelectionSystem::Visitor
 			m_scale(scaling), m_world_pivot(world_pivot)
 		{
 		}
+		// This actually applies the scale the the instance
 		void visit (scene::Instance& instance) const
 		{
 			TransformNode* transformNode = Node_getTransformNode(instance.path().top());
@@ -2115,6 +2160,10 @@ class scale_selected: public SelectionSystem::Visitor
 		}
 };
 
+/* greebo: This is called when a selected item is to be scaled
+ * This basically cycles through all selected objects with a scale
+ * visitor class (which derives from SelectionSystem::Visitor)
+ */
 static void Scene_Scale_Selected (scene::Graph& graph, const Vector3& scaling, const Vector3& world_pivot)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
@@ -2140,6 +2189,7 @@ class translate_component_selected: public SelectionSystem::Visitor
 		}
 };
 
+// The same as Scene_Translate_Selected, just that components are translated
 static void Scene_Translate_Component_Selected (scene::Graph& graph, const Vector3& translation)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
@@ -2171,7 +2221,9 @@ class rotate_component_selected: public SelectionSystem::Visitor
 		}
 };
 
-static void Scene_Rotate_Component_Selected (scene::Graph& graph, const Quaternion& rotation, const Vector3& world_pivot)
+// The same as Scene_Rotate_Selected, just that components are rotated
+static void Scene_Rotate_Component_Selected (scene::Graph& graph, const Quaternion& rotation,
+		const Vector3& world_pivot)
 {
 	if (GlobalSelectionSystem().countSelectedComponents() != 0) {
 		GlobalSelectionSystem().foreachSelectedComponent(rotate_component_selected(rotation, world_pivot));
@@ -2202,6 +2254,7 @@ class scale_component_selected: public SelectionSystem::Visitor
 		}
 };
 
+// The same as Scene_Scale_Selected, just that components are scaled
 static void Scene_Scale_Component_Selected (scene::Graph& graph, const Vector3& scaling, const Vector3& world_pivot)
 {
 	if (GlobalSelectionSystem().countSelectedComponents() != 0) {
@@ -3395,7 +3448,8 @@ class Selector_
 		RectangleCallback m_window_update;
 
 		Selector_ () :
-			m_start(0.0f, 0.0f), m_current(0.0f, 0.0f), m_epsilon(0.0f, 0.0f), m_unmoved_replaces(0), m_state(c_modifierNone)
+			m_start(0.0f, 0.0f), m_current(0.0f, 0.0f), m_epsilon(0.0f, 0.0f), m_unmoved_replaces(0), m_state(
+					c_modifierNone)
 		{
 		}
 
@@ -3616,8 +3670,7 @@ class SelectionAPI: public TypeSystemRef
 		SelectionSystem* m_selection;
 	public:
 		typedef SelectionSystem Type;
-		STRING_CONSTANT(Name, "*")
-		;
+		STRING_CONSTANT(Name, "*");
 
 		SelectionAPI ()
 		{
@@ -3637,4 +3690,4 @@ class SelectionAPI: public TypeSystemRef
 
 typedef SingletonModule<SelectionAPI, SelectionDependencies> SelectionModule;
 typedef Static<SelectionModule> StaticSelectionModule;
-StaticRegisterModule staticRegisterSelection (StaticSelectionModule::instance ());
+StaticRegisterModule staticRegisterSelection(StaticSelectionModule::instance());
