@@ -49,12 +49,11 @@ const char *Com_EParse (const char **text, const char *errhead, const char *erri
 
 static qboolean versionParsed;
 
-static void Com_ParseVersion (const char *name, const char **text)
+static void Com_ParseVersion (const char *version)
 {
 	if (!versionParsed) {
-		const char *token = Com_Parse(text);
-		if (strcmp(token, UFO_VERSION))
-			Sys_Error("You are mixing versions of the binary and the script files.");
+		if (strcmp(version, UFO_VERSION))
+			Sys_Error("You are mixing versions of the binary ("UFO_VERSION") and the script (%s) files.", version);
 	} else {
 		Sys_Error("More than one version string found in the script files.");
 	}
@@ -2851,6 +2850,8 @@ void Com_ParseScripts (qboolean onlyServer)
 			Com_ParseDamageTypes(name, &text);
 		else if (!strcmp(type, "gametype"))
 			Com_ParseGameTypes(name, &text);
+		else if (!strcmp(type, "version"))
+			Com_ParseVersion(name);
 
 	/* stage one parsing */
 	FS_NextScriptHeader(NULL, NULL, NULL);
@@ -2862,8 +2863,6 @@ void Com_ParseScripts (qboolean onlyServer)
 			Com_ParseItem(name, &text, qfalse);
 		else if (!strcmp(type, "mapdef"))
 			Com_ParseMapDefinition(name, &text);
-		else if (!strcmp(type, "version"))
-			Com_ParseVersion(name, &text);
 		else if (!strcmp(type, "craftitem"))
 			Com_ParseItem(name, &text, qtrue);
 		else if (!strcmp(type, "inventory"))
