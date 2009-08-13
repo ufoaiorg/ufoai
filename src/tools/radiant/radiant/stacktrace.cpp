@@ -27,21 +27,21 @@
 #ifdef __linux__
 #include <execinfo.h>
 
-void write_stack_trace(TextOutputStream& outputStream) {
+void write_stack_trace (TextOutputStream& outputStream)
+{
 	const unsigned int MAX_SYMBOLS = 256;
 	void* symbols[MAX_SYMBOLS];
 
 	// get return addresses
 	int symbol_count = backtrace(symbols, MAX_SYMBOLS);
-
 	if (!symbol_count)
-	return;
+		return;
 
 	// resolve and print names
 	char** symbol_names = backtrace_symbols(symbols, symbol_count);
 	if (symbol_names) {
 		for (int i = 0; (i < symbol_count); ++i)
-		outputStream << symbol_names[i] << "\n";
+			outputStream << symbol_names[i] << "\n";
 
 		// not a memleak, see www.gnu.org/software/libc/manual (Debugging Support, Backtraces)
 		free(symbol_names);

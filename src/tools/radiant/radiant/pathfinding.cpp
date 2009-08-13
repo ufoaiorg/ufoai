@@ -25,54 +25,18 @@
  */
 
 #include "pathfinding.h"
-#include "radiant_i18n.h"
+#include "pathfinding/RoutingLumpLoader.h"
 
-#include "mainframe.h"
-#include "os/path.h"
-#include "os/file.h"
-#include "gtkutil/filechooser.h"
-#include "autoptr.h"
-#include "ifilesystem.h"
-#include "archivelib.h"
-#include "script/scripttokeniser.h"
-
-/**
- * @brief Parses the ufo2map pathfinding output to be able to display it afterwards
- * @returns 0 on success
- * @note >>mapname<<.elevation.csv and >>mapname<<.walls.csv are the files we have to parse
- */
-static int ParsePathfindingLogFile (const char *filename)
+namespace routing
 {
-	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
-	if (file) {
-		AutoPtr<Tokeniser> tokeniser(NewScriptTokeniser(file->getInputStream()));
-
-		for (;;) {
-			const char* token = tokeniser->getToken();
-
-			if (token == 0) {
-				break;
-			}
-
-			/** @todo parse the data */
-		}
+	static bool showPathfinding;
+	/**
+	 * @todo Maybe also use the ufo2map output directly
+	 * @sa ToolsCompile
+	 */
+	void ShowPathfinding (void)
+	{
+		showPathfinding ^= true;
+		/** @todo render the parsed data */
 	}
-
-	return 0;
-}
-
-/**
- * @todo Maybe also use the ufo2map output directly
- * @sa ToolsCompile
- */
-void ShowPathfinding (void)
-{
-	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Pathfinding log file"), 0, 0);
-	if (!filename)
-		return;
-	const int retVal = ParsePathfindingLogFile(filename);
-	if (retVal)
-		return;
-
-	/** @todo render the parsed data */
 }

@@ -2386,7 +2386,7 @@ void MainFrame_Construct (void)
 	GlobalCommands_insert("ToolsCheckErrors", FreeCaller<ToolsCheckErrors> ());
 	GlobalCommands_insert("ToolsCompile", FreeCaller<ToolsCompile> ());
 	GlobalCommands_insert("ToolsGenerateMaterials", FreeCaller<ToolsGenerateMaterials> ());
-	GlobalCommands_insert("ShowPathfinding", FreeCaller<ShowPathfinding> ());
+	GlobalCommands_insert("ShowPathfinding", FreeCaller<routing::ShowPathfinding> ());
 
 	GlobalToggles_insert("ToggleClipper", FreeCaller<ClipperMode> (), ToggleItem::AddCallbackCaller(g_clipper_button),
 			Accelerator('X'));
