@@ -19,9 +19,9 @@ namespace sound
 		std::string name = fileName;
 
 		// Try to open the file as it is
-		ArchiveFile* file = GlobalFileSystem().openFile(name.c_str());
+		AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(name.c_str()));
 		std::cout << "Trying: " << name << std::endl;
-		if (file != NULL) {
+		if (file) {
 			// File found, play it
 			std::cout << "Found file: " << name << std::endl;
 			_soundPlayer.play(*file);
@@ -37,20 +37,20 @@ namespace sound
 		// Try to open the .ogg variant
 		name = root + ".ogg";
 		std::cout << "Trying: " << name << std::endl;
-		file = GlobalFileSystem().openFile(name.c_str());
-		if (file != NULL) {
+		AutoPtr<ArchiveFile> oggFile(GlobalFileSystem().openFile(name.c_str()));
+		if (oggFile) {
 			std::cout << "Found file: " << name << std::endl;
-			_soundPlayer.play(*file);
+			_soundPlayer.play(*oggFile);
 			return true;
 		}
 
 		// Try to open the file with .wav extension
 		name = root + ".wav";
 		std::cout << "Trying: " << name << std::endl;
-		file = GlobalFileSystem().openFile(name.c_str());
-		if (file != NULL) {
+		AutoPtr<ArchiveFile> wavFile(GlobalFileSystem().openFile(name.c_str()));
+		if (wavFile) {
 			std::cout << "Found file: " << name << std::endl;
-			_soundPlayer.play(*file);
+			_soundPlayer.play(*wavFile);
 			return true;
 		}
 

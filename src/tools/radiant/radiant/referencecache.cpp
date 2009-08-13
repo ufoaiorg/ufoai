@@ -175,6 +175,7 @@ class NullModelLoader: public ModelLoader
 
 		model::IModelPtr loadModelFromPath (const std::string& name)
 		{
+				return model::IModelPtr();
 		}
 };
 

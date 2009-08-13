@@ -35,6 +35,7 @@ namespace ui
 		{
 			NAME_COLUMN, // e.g. "chair1.md2"
 			FULLNAME_COLUMN, // e.g. "models/objects/chair1.md2"
+			// TODO: Fix skins
 			SKIN_COLUMN, // e.e. "chair1_brown_wood", or "" for no skin
 			IMAGE_COLUMN, // icon to display
 			N_COLUMNS
