@@ -92,6 +92,10 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/ui/common/ModelPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/RenderableAABB.cpp \
 	\
+	$(RADIANT_BASE)/radiant/pathfinding/RoutingLumpLoader.cpp \
+	$(RADIANT_BASE)/radiant/pathfinding/RoutingLump.cpp \
+	$(RADIANT_BASE)/radiant/pathfinding/RoutingRenderer.cpp \
+	\
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/clipboard.cpp \

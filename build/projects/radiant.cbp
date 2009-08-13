@@ -361,6 +361,15 @@
 		<Unit filename="../../src/tools/radiant/radiant/pathfinding.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/pathfinding/RoutingLump.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/pathfinding/RoutingLumpLoader.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/pathfinding/RoutingRenderer.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
