@@ -293,29 +293,26 @@ void Entity_connectSelected ()
 
 static int g_iLastLightIntensity = 100;
 
-void Entity_createFromSelection (const char* name, const Vector3& origin)
+static bool Entity_create (const std::string& name, const Vector3& origin)
 {
-	StringOutputStream command;
-	command << "entityCreate -class " << name;
+	std::string command = "entityCreate -class " + name;
 	UndoableCommand undo(command.c_str());
 
-	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name, true);
+	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name.c_str(), true);
 
 	bool revert = false;
-	const bool isModel = string_equal_nocase(name, "misc_model");
-	const bool isSound = string_equal_nocase(name, "misc_sound");
-	const bool isParticle = string_equal_nocase(name, "misc_particle");
-	const bool isStartingPositionActor = string_equal_nocase(name, "info_player_start") || string_equal_nocase(name,
-			"info_human_start") || string_equal_nocase(name, "info_alien_start") || string_equal_nocase(name,
-			"info_civilian_start");
-	const bool isStartingPositionUGV = string_equal_nocase(name, "info_2x2_start");
+	const bool isModel = (name == "misc_model");
+	const bool isSound = (name == "misc_sound");
+	const bool isParticle = (name == "misc_particle");
+	const bool isStartingPositionActor = (name == "info_player_start") || (name == "info_human_start") || (name == "info_alien_start") || (name == "info_civilian_start");
+	const bool isStartingPositionUGV = (name == "info_2x2_start");
 	const bool isStartingPosition = isStartingPositionActor || isStartingPositionUGV;
 
 	const bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
 
 	if (!(entityClass->fixedsize || isModel) && !brushesSelected) {
 		gtkutil::errorDialog(MainFrame_getWindow(), "Unable to create entity - no brushes selected");
-		return;
+		return revert;
 	}
 
 	AABB workzone(aabb_for_minmax(Select_getWorkZone().d_work_min, Select_getWorkZone().d_work_max));
@@ -347,8 +344,8 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 				const int y = ((int) origin.y() / UNIT_SIZE) * UNIT_SIZE - sizeY;
 				const int z = ((int) origin.z() / UNIT_HEIGHT) * UNIT_HEIGHT + sizeZ;
 				const Vector3 vec(x, y, z);
-				g_warning("original %s origin: %.0f %.0f %.0f\n", name, origin.x(), origin.y(), origin.z());
-				g_warning("     new %s origin: %i %i %i\n", name, x, y, z);
+				g_warning("original %s origin: %.0f %.0f %.0f\n", name.c_str(), origin.x(), origin.y(), origin.z());
+				g_warning("     new %s origin: %i %i %i\n", name.c_str(), x, y, z);
 
 				transform->setTranslation(vec);
 			} else {
@@ -367,7 +364,7 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 	}
 
 	// TODO tweaking: when right click dropping a light entity, ask for light value in a custom dialog box
-	if (string_equal_nocase(name, "light")) {
+	if (name == "light") {
 		int intensity = g_iLastLightIntensity;
 
 		if (DoLightIntensityDlg(&intensity) == eIDOK) {
@@ -398,6 +395,14 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 		} else
 			revert = true;
 	}
+
+	return revert;
+}
+
+void Entity_createFromSelection (const std::string& name, const Vector3& origin)
+{
+	bool revert = Entity_create(name, origin);
+
 	if (revert) {
 		GlobalUndoSystem().undo();
 		GlobalSceneGraph().sceneChanged();

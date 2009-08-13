@@ -555,8 +555,8 @@ void WXY_Print (void)
 	if (!filename)
 		return;
 
-	img = (unsigned char*)malloc ((width+1) * (height+1) * 3);
-	glReadPixels (0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, img);
+	img = (unsigned char*) malloc((width + 1) * (height + 1) * 3);
+	glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, img);
 
 	FILE *fp;
 	fp = fopen(filename, "wb");
@@ -611,7 +611,7 @@ void WXY_Print (void)
 		file_write(&cmap, 4, fp);
 		byteswritten += 4;// biClrImportant
 
-		file_write(img,width*height*3,fp);
+		file_write(img, width * height * 3, fp);
 
 		fclose(fp);
 	}
@@ -836,8 +836,8 @@ XYWnd::XYWnd () :
 	updateProjection();
 	updateModelview();
 
-	AddSceneChangeCallback(ReferenceCaller<XYWnd, &XYWnd_Update>(*this));
-	AddCameraMovedCallback(ReferenceCaller<XYWnd, &XYWnd_CameraMoved>(*this));
+	AddSceneChangeCallback(ReferenceCaller<XYWnd, &XYWnd_Update> (*this));
+	AddCameraMovedCallback(ReferenceCaller<XYWnd, &XYWnd_CameraMoved> (*this));
 
 	PressedButtons_connect(g_pressedButtons, m_gl_widget);
 
@@ -1066,14 +1066,14 @@ void XYWnd::NewBrushDrag (int x, int y)
  */
 static void entitycreate_activated (GtkWidget* item)
 {
-	scene::Node* world_node = Map_FindWorldspawn(g_map);
-	const char* entity_name = gtk_label_get_text(GTK_LABEL(GTK_BIN(item)->child));
+	scene::Node* worldNode = Map_FindWorldspawn(g_map);
+	const char* entityName = gtk_label_get_text(GTK_LABEL(GTK_BIN(item)->child));
 
-	if (!(world_node && string_equal(entity_name, "worldspawn"))) {
-		g_pParentWnd->ActiveXY()->OnEntityCreate(entity_name);
+	if (!(worldNode && string_equal(entityName, "worldspawn"))) {
+		g_pParentWnd->ActiveXY()->OnEntityCreate(entityName);
 	} else {
-		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("There's already a worldspawn in your map!"),
-			_("Info"), eMB_OK, eMB_ICONDEFAULT);
+		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("There's already a worldspawn in your map!"), _("Info"),
+				eMB_OK, eMB_ICONDEFAULT);
 	}
 }
 
@@ -1093,7 +1093,7 @@ static void EntityClassMenu_addItem (GtkMenu* menu, const char* name)
 /**
  * @brief Adds a context sensitive action to the entity drop down menu
  */
-static GtkMenuItem* EntityClassMenu_addAction (GtkMenu* menu, const char* name, void (*callback)(gpointer data))
+static GtkMenuItem* EntityClassMenu_addAction (GtkMenu* menu, const char* name, void(*callback) (gpointer data))
 {
 	GtkMenuItem* item = GTK_MENU_ITEM(gtk_menu_item_new_with_label(name));
 	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(callback), item);
@@ -1138,19 +1138,20 @@ class EntityClassMenuInserter: public EntityClassVisitor
 
 			m_stack.push_back(MenuPair(submenu, name));
 		}
-		void popMenu(void) {
+		void popMenu (void)
+		{
 			m_stack.pop_back();
 		}
-		void addItem(const char* name, const char* next) {
+		void addItem (const char* name, const char* next)
+		{
 			const char* underscore = strchr(name, '_');
 
 			if (underscore != 0 && underscore != name) {
 				bool nextEqual = string_equal_n(name, next, (underscore + 1) - name);
 				const char* parent = m_stack.back().second.c_str();
 
-				if (!string_empty(parent)
-						&& string_length(parent) == std::size_t(underscore - name)
-						&& string_equal_n(name, parent, underscore - name)) {
+				if (!string_empty(parent) && string_length(parent) == std::size_t(underscore - name) && string_equal_n(
+						name, parent, underscore - name)) {
 					// this is a child
 				} else if (nextEqual) {
 					if (m_stack.size() == 2) {
@@ -1168,11 +1169,13 @@ class EntityClassMenuInserter: public EntityClassVisitor
 		}
 };
 
-static void Entity_connectSelectedCallback (void *data) {
+static void Entity_connectSelectedCallback (void *data)
+{
 	Entity_connectSelected();
 }
 
-static void Texture_FitFace (void *data) {
+static void Texture_FitFace (void *data)
+{
 	SurfaceInspector_FitTexture();
 }
 
@@ -1576,8 +1579,8 @@ void WXY_BackgroundSelect (void)
 {
 	bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
 	if (!brushesSelected) {
-		gtk_MessageBox(0, _("You have to select some brushes to get the bounding box for.\n"), _("No selection"), eMB_OK,
-				eMB_ICONERROR);
+		gtk_MessageBox(0, _("You have to select some brushes to get the bounding box for.\n"), _("No selection"),
+				eMB_OK, eMB_ICONERROR);
 		return;
 	}
 
@@ -1588,10 +1591,10 @@ void WXY_BackgroundSelect (void)
 }
 
 /*
-============================================================================
-DRAWING
-============================================================================
-*/
+ ============================================================================
+ DRAWING
+ ============================================================================
+ */
 
 static inline double two_to_the_power (int power)
 {
@@ -2414,7 +2417,7 @@ void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
 	point[nDim] = float_snapped(fWorkMid, GetGridSize());
 }
 
-void XYWnd::OnEntityCreate (const char* item)
+void XYWnd::OnEntityCreate (const std::string& item)
 {
 	Vector3 point;
 	XYWnd_MouseToPoint(this, m_entityCreate_x, m_entityCreate_y, point);
@@ -2674,32 +2677,32 @@ void ShowWorkzoneExport (const BoolImportCallback& importer)
 typedef FreeCaller1<const BoolImportCallback&, ShowWorkzoneExport> ShowWorkzoneExportCaller;
 
 ShowNamesExportCaller g_show_names_caller;
-BoolExportCallback g_show_names_callback (g_show_names_caller);
-ToggleItem g_show_names (g_show_names_callback);
+BoolExportCallback g_show_names_callback(g_show_names_caller);
+ToggleItem g_show_names(g_show_names_callback);
 
 ShowAnglesExportCaller g_show_angles_caller;
-BoolExportCallback g_show_angles_callback (g_show_angles_caller);
-ToggleItem g_show_angles (g_show_angles_callback);
+BoolExportCallback g_show_angles_callback(g_show_angles_caller);
+ToggleItem g_show_angles(g_show_angles_callback);
 
 ShowBlocksExportCaller g_show_blocks_caller;
-BoolExportCallback g_show_blocks_callback (g_show_blocks_caller);
-ToggleItem g_show_blocks (g_show_blocks_callback);
+BoolExportCallback g_show_blocks_callback(g_show_blocks_caller);
+ToggleItem g_show_blocks(g_show_blocks_callback);
 
 ShowCoordinatesExportCaller g_show_coordinates_caller;
-BoolExportCallback g_show_coordinates_callback (g_show_coordinates_caller);
-ToggleItem g_show_coordinates (g_show_coordinates_callback);
+BoolExportCallback g_show_coordinates_callback(g_show_coordinates_caller);
+ToggleItem g_show_coordinates(g_show_coordinates_callback);
 
 ShowOutlineExportCaller g_show_outline_caller;
-BoolExportCallback g_show_outline_callback (g_show_outline_caller);
-ToggleItem g_show_outline (g_show_outline_callback);
+BoolExportCallback g_show_outline_callback(g_show_outline_caller);
+ToggleItem g_show_outline(g_show_outline_callback);
 
 ShowAxesExportCaller g_show_axes_caller;
-BoolExportCallback g_show_axes_callback (g_show_axes_caller);
-ToggleItem g_show_axes (g_show_axes_callback);
+BoolExportCallback g_show_axes_callback(g_show_axes_caller);
+ToggleItem g_show_axes(g_show_axes_callback);
 
 ShowWorkzoneExportCaller g_show_workzone_caller;
-BoolExportCallback g_show_workzone_callback (g_show_workzone_caller);
-ToggleItem g_show_workzone (g_show_workzone_callback);
+BoolExportCallback g_show_workzone_callback(g_show_workzone_caller);
+ToggleItem g_show_workzone(g_show_workzone_callback);
 
 void XYShow_registerCommands (void)
 {

@@ -212,7 +212,7 @@ public:
 	void EntityCreate_MouseMove(int x, int y);
 	void EntityCreate_MouseUp(int x, int y);
 
-	void OnEntityCreate(const char* item);
+	void OnEntityCreate(const std::string& item);
 	VIEWTYPE GetViewType() {
 		return m_viewType;
 	}

@@ -22,9 +22,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_ENTITY_H)
 #define INCLUDED_ENTITY_H
 
+#include <string>
+
 template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;
-void Entity_createFromSelection(const char* name, const Vector3& origin);
+void Entity_createFromSelection(const std::string& name, const Vector3& origin);
 void Entity_connectSelected();
 
 void Scene_EntitySetKeyValue_Selected(const char* classname, const char* key, const char* value);
