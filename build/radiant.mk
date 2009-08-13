@@ -108,6 +108,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/libs/gtkutil/timer.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/toolbar.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/ModelProgressDialog.cpp \
 	\
 	$(RADIANT_BASE)/libs/profile/profile.cpp \
 	$(RADIANT_BASE)/libs/profile/file.cpp \
