@@ -2,14 +2,14 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="uforadiant_entity" />
+		<Option title="uforadiant_sound" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="../../radiant/modules/entity" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs/radiant_entity" />
+				<Option output="..\..\radiant\modules\sound" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\radiant_sound" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -22,60 +22,72 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="--export-all-symbols" />
-					<Add library="libglib-2.0" />
+					<Add library="libgdk_pixbuf-2.0" />
+					<Add library="gobject-2.0" />
+					<Add library="openal" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="../../radiant/modules/entity" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs/radiant_entity" />
+				<Option output="..\..\radiant\modules\sound" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\radiant_sound" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-Wall" />
-					<Add option="-Wno-non-virtual-dtor" />
 					<Add option="-g" />
+					<Add option="-Wno-non-virtual-dtor" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DDEBUG" />
 				</Compiler>
 				<Linker>
 					<Add option="--export-all-symbols" />
-					<Add library="libglib-2.0" />
+					<Add library="libgdk_pixbuf-2.0" />
+					<Add library="gobject-2.0" />
+					<Add library="openal" />
 				</Linker>
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="../../radiant/modules/entity" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs/radiant_entity" />
+				<Option output="..\..\radiant\modules\sound" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\radiant_sound" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="`pkg-config gtk+-2.0 --cflags`" />
+					<Add option="`pkg-config gtkglext-1.0 --cflags`" />
 					<Add option="`pkg-config glib-2.0 --cflags`" />
+					<Add option="`pkg-config gdk-2.0 --cflags`" />
 					<Add option="-fPIC" />
 				</Compiler>
 				<Linker>
+					<Add option="`pkg-config gtk+-2.0 --libs`" />
+					<Add option="`pkg-config gtkglext-1.0 --libs`" />
 					<Add option="`pkg-config glib-2.0 --libs`" />
+					<Add option="`pkg-config gdk-2.0 --libs`" />
+					<Add library="openal" />
 				</Linker>
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
-				<Option output="../../radiant/modules/entity" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs/radiant_entity" />
+				<Option output="..\..\radiant\modules\sound" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\radiant_sound" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
-					<Add directory="/sw/include" />
+					<Add directory="\sw\include" />
 				</Compiler>
 				<Linker>
 					<Add option="-dynamiclib" />
 					<Add option="-single_module" />
 					<Add option="-compatibility_version 1" />
-					<Add directory="/sw/lib" />
+					<Add directory="\sw\lib" />
+					<Add library="openal" />
 				</Linker>
 			</Target>
 		</Build>
@@ -84,43 +96,19 @@
 			<Add option="-I../../src/tools/radiant/libs" />
 			<Add option="-I../../src/tools/radiant/include" />
 		</Compiler>
-		<Unit filename="../../src/tools/radiant/plugins/entity/eclassmodel.cpp">
+		<Linker>
+			<Add library="libjpeg" />
+		</Linker>
+		<Unit filename="..\..\src\tools\radiant\plugins\export.def">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/plugins/entity/entity.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\sound\sound.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/plugins/entity/filters.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\sound\soundplayer.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/plugins/entity/generic.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/plugins/entity/group.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/plugins/entity/light.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/plugins/entity/miscmodel.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/plugins/entity/miscsound.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/plugins/entity/miscparticle.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/plugins/entity/plugin.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/plugins/entity/skincache.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/plugins/entity/targetable.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/plugins/export.def">
+		<Unit filename="..\..\src\tools\radiant\plugins\sound\soundmanager.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

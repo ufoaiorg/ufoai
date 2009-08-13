@@ -145,6 +145,12 @@
 		<Unit filename="../../src/tools/radiant/radiant/exec.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/exception/RadiantException.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/exception/ModuleSystemException.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/libs/gtkutil/accelerator.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -184,10 +190,16 @@
 		<Unit filename="../../src/tools/radiant/libs/gtkutil/paned.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/gtkutil/timer.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/libs/gtkutil/toolbar.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/libs/gtkutil/window.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/gtkutil/ModelProgressDialog.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/libs/profile/file.cpp">
@@ -265,6 +277,9 @@
 		<Unit filename="../../src/tools/radiant/radiant/dialogs/findtextures.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/dialogs/modelselector.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/dialogs/light.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -278,6 +293,12 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/dialogs/texteditor.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ui/common/ModelPreview.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ui/common/RenderableAABB.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/eclass.cpp">
@@ -343,9 +364,6 @@
 		<Unit filename="../../src/tools/radiant/radiant/plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/pluginmanager.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/pluginmenu.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -359,6 +377,15 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/qgl.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/plugin/PluginManager.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/plugin/PluginSlots.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/brushexport/BrushExportOBJ.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/radiant.rc">

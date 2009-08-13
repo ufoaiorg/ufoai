@@ -116,6 +116,12 @@
 		<Unit filename="../../src/tools/radiant/plugins/model/plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/plugins/model/RenderablePicoSurface.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/plugins/model/RenderablePicoModel.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
