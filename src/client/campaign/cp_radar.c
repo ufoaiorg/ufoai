@@ -336,8 +336,9 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
  * @brief Set radar range to new value
  * @param[in,out] radar The radar to update/initialize
  * @param[in] range New range of the radar
+ * @param[in] trackingRange New tracking range of the radar
  * @param[in] level The tech level of the radar
- * @param[in] updateSourceRadarMap
+ * @param[in] updateSourceRadarMap if the radar overlay should be updated.
  */
 void RADAR_Initialise (radar_t *radar, float range, float trackingRange, float level, qboolean updateSourceRadarMap)
 {
@@ -353,7 +354,7 @@ void RADAR_Initialise (radar_t *radar, float range, float trackingRange, float l
 
 	assert(radar->numUFOs >= 0);
 
-	if (updateSourceRadarMap && !equal(radar->range,oldrange)) {
+	if (updateSourceRadarMap && !equal(radar->range, oldrange)) {
 		RADAR_UpdateStaticRadarCoverage();
 		RADAR_UpdateWholeRadarOverlay();
 	}
@@ -409,13 +410,29 @@ void RADAR_UpdateBaseRadarCoverage_f (void)
 
 /**
  * @brief Update radar coverage when building/destroying new radar
+ * @param[in,out] installation The radartower to update
+ * @param[in] range New range of the radar
+ * @param[in] trackingRange New tracking range of the radar
  */
 void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const float radarRange, const float trackingRadarRange)
 {
-	if (installation && installation->founded && (installation->installationStatus == INSTALLATION_WORKING)) {
-		RADAR_Initialise(&installation->radar, radarRange, trackingRadarRange, RADAR_INSTALLATIONLEVEL, qtrue);
-		CP_UpdateMissionVisibleOnGeoscape();
-	}
+	/* Sanity check */
+	if (!installation || !installation->installationTemplate)
+		Com_Error(ERR_DROP, "RADAR_UpdateInstallationRadarCoverage: No installation or no template!\n");
+
+	/* Do nothing if installation not founded */
+	if (!installation->founded)
+		return;
+	/* Do nothing if installation not finished */
+	if (installation->installationStatus != INSTALLATION_WORKING)
+		return;
+	/* Do nothing if this isn't a RadarTower */
+	if (installation->installationTemplate->radarRange <= 0
+	 || installation->installationTemplate->trackingRange <= 0)
+	 	return;
+
+	RADAR_Initialise(&installation->radar, radarRange, trackingRadarRange, RADAR_INSTALLATIONLEVEL, qtrue);
+	CP_UpdateMissionVisibleOnGeoscape();
 }
 
 /**
