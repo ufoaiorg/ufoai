@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_BarNodeDraw (menuNode_t *node)
 {
 	vec4_t color;
-	float fac, bar_width;
+	float fac, barWidth;
 	vec2_t nodepos;
 	const float min = MN_GetReferenceFloat(node, EXTRADATA(node).min);
 	const float max = MN_GetReferenceFloat(node, EXTRADATA(node).max);
@@ -53,9 +53,9 @@ static void MN_BarNodeDraw (menuNode_t *node)
 		fac = node->size[0] / (max - min);
 	else
 		fac = 0;
-	bar_width = (value - min) * fac;
-	if (bar_width)
-		MN_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], node->state ? color : node->color);
+	barWidth = (value - min) * fac;
+	if (barWidth > 0)
+		MN_DrawFill(nodepos[0], nodepos[1], barWidth, node->size[1], node->state ? color : node->color);
 }
 
 /**
