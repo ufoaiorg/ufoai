@@ -10,20 +10,18 @@ import os, fnmatch, sys, stat, platform
 extra = "-extra"
 
 def getFile(root):
+    pattern = "*.map"
+    antipathpattern = "*prefabs*"
     for path, subdirs, files in os.walk(root):
         if ".svn" in subdirs: subdirs.remove(".svn")
-        patterns = ["*.map"]
-        antipatterns = ["prefab_*.map"]
         files.sort()
+        if fnmatch.fnmatch(path, antipathpattern):
+            continue
         for name in files:
-            for pattern in patterns:
-                if fnmatch.fnmatch(name, pattern):
-                    for apattern in antipatterns:
-                        if fnmatch.fnmatch(name, apattern):
-                            break
-                    else:
-                        yield os.path.join(path, name)
-                        break
+            if fnmatch.fnmatch(name, pattern):
+                file = os.path.join(path, name)
+                file = file.replace("base/", "").replace("base\\", "")
+                yield file
 
 
 def compile(root):
@@ -72,7 +70,7 @@ def compile(root):
 
 #read the given dir
 if len(sys.argv) < 2:
-    mapdir = "."
+    mapdir = "base"
 else:
     mapdir = sys.argv[1]
 
