@@ -26,8 +26,8 @@
 #define IPARTICLES_H_
 
 #include "generic/constant.h"
-#include "stringio.h"
 #include <map>
+#include <string>
 
 class IParticleDefinition
 {
@@ -35,28 +35,18 @@ class IParticleDefinition
 		virtual ~IParticleDefinition ()
 		{
 		}
-		virtual const char *getModel () const
-		{
-			return (const char *) 0;
-		}
-		virtual const char *getImage () const
-		{
-			return (const char *) 0;
-		}
-		virtual void render (int x, int y) const
-		{
-		}
-		virtual int getHeight () const
-		{
-			return 0;
-		}
-		virtual int getWidth () const
-		{
-			return 0;
-		}
+		virtual std::string& getModel () const = 0;
+
+		virtual std::string& getImage () const = 0;
+
+		virtual void render (int x, int y) const = 0;
+
+		virtual int getHeight () const = 0;
+
+		virtual int getWidth () const = 0;
 };
 
-typedef std::map<CopiedString, IParticleDefinition> ParticleDefinitionMap;
+typedef std::map<std::string, IParticleDefinition> ParticleDefinitionMap;
 
 class ParticleSystem
 {

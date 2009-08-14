@@ -11,7 +11,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-#include <ext/hash_map>
+#include <map>
 
 namespace ui
 {
@@ -106,15 +106,6 @@ namespace ui
 
 	namespace
 	{
-		struct string_hash: public __gnu_cxx::hash<char*>
-		{
-				inline
-				size_t operator() (const std::string& s) const
-				{
-					return __gnu_cxx::hash<char*>::operator()(s.c_str());
-				}
-		};
-
 		struct ModelFileFunctor
 		{
 				typedef const char* first_argument_type;
@@ -127,7 +118,7 @@ namespace ui
 				// a GtkTreeIter pointing to the equivalent row in the TreeModel. Subsequent
 				// modelpaths with this directory will be added as children of this iter.
 
-				typedef __gnu_cxx ::hash_map<std::string, GtkTreeIter*, string_hash> DirIterMap;
+				typedef std::map<std::string, GtkTreeIter*> DirIterMap;
 				DirIterMap _dirIterMap;
 
 				// Constructor
