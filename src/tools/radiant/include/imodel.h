@@ -23,7 +23,7 @@
 #define INCLUDED_IMODEL_H
 
 #include <string>
-#include <auto_ptr.h>
+#include <memory>
 #include "generic/constant.h"
 #include "irender.h"
 
