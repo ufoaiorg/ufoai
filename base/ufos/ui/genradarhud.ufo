@@ -1,6 +1,6 @@
 // ==================
 // GENRADAR HUD
-// hude used to generate radar maps
+// hud used to generate radar maps
 // run the game with "ufo +set vid_mode -1 +set vid_width 1024 +set vid_height 1024"
 // use the command "gen_radarmap"
 // ==================
