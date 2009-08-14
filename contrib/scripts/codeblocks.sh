@@ -158,6 +158,7 @@ function start_downloads()
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ libxml2-dev-2.6.27.zip libxml2.zip
 
 	download_archive http://mattn.ninex.info/download/ gtkglext-1.2.zip gtkglext-dev.zip
+	download_archive http://mattn.ninex.info/download/ openal.zip libopenal-dev.zip
 
 	download_archive http://subversion.tigris.org/files/documents/15/45600/ svn-win32-1.6.1.zip svn.zip
 
@@ -320,6 +321,11 @@ function extract_gtk()
 	done
 }
 
+function extract_openal()
+{
+	extract_archive_zip libopenal-dev.zip "${MINGW_DIR}"
+}
+
 function extract_ogg()
 {
 	extract_archive_bz2 libogg.tar.bz2 "${MINGW_DIR}"
@@ -415,6 +421,8 @@ create()
 	extract_cunit
 
 	extract_gtk
+
+	extract_openal
 
 	extract_ogg
 
