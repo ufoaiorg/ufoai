@@ -26,14 +26,14 @@ a +a +a  a
 
 tile +craft_ufo_harvester
 {
-13 6
+10 6
 
-0      0      0      0      0      0      0      0      0      0      0      0      0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
-0      b      b      +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
-0      b      b      +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
-0      b      b      +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
-0      0      0      0      0      0      0      0      0      0      0      0      0
+0       0      0      0      0      0      0      0      0     0
+a      +a     +a     +a     +a     +a     +a     +a     +a     0 
+a      +a     +a     +a     +a     +a     +a     +a     +a     0 
+0       a     +a     +a     +a     +a     +a     +a     +a     0 
+0       a     +a     +a     +a     +a     +a     +a     +a     0 
+0       0      0      0      0      0      0      0      0     0
 }
 
 tile +craft_drop_firebird
@@ -43,7 +43,7 @@ tile +craft_drop_firebird
 0      a      a      0
 a      +b     +b     a 
 a      +b     +b     a 
-a      +b     +b     a 
+z      +b     +b     a 
 0      a      a      0
 }
 
@@ -54,7 +54,7 @@ tile +craft_drop_herakles
 0      a      a      0
 a      +b     +b     a 
 a      +b     +b     a 
-a      +b     +b     a 
+z      +b     +b     a 
 0      a      a      0
 }
 
@@ -65,7 +65,7 @@ tile +craft_drop_raptor
 0      a      a      0
 a      +b     +b     a 
 a      +b     +b     a 
-a      +b     +b     a 
+z      +b     +b     a 
 0      a      a      0
 }
 
@@ -175,12 +175,21 @@ ab  +a  +a  ab
 0   ab  ab  0
 }
 
+tile +house5
+{
+4 3
+
+0   ab  ab  0
+ab  +a  +a  ab
+0   ab  ab  0
+}
+
 
 // ########################################
 // ########### Maps for the game ###########
 assembly default
 {
-size "5 4"
+size "6 4"
 title "_Africa"
 +empty1 "1 1"
 +empty2 "1 1"
@@ -189,9 +198,10 @@ title "_Africa"
 +house2 "1 4"
 +house3 "1 4"
 +house4 "1 1"
-+fence1 "0 2"
-+fence2 "0 2"
-+fence3 "0 2"
++house5 "1 1"
++fence1 "0 1"
++fence2 "0 1"
++fence3 "0 1"
 +misc1  "1 4"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
@@ -201,6 +211,18 @@ assembly harvester
 {
 size "11 4"
 title "_Africa"
++empty1 "0 1"
++empty2 "0 1"
++empty5 "0 1"
++house1 "0 4"
++house2 "0 4"
++house3 "0 4"
++house4 "0 1"
++house5 "0 1"
++fence1 "0 2"
++fence2 "0 2"
++fence3 "0 2"
++misc1  "0 4"
 *rm_ufo +craft_ufo_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
