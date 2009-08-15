@@ -29,6 +29,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #if defined(WIN32)
 #define QGL_DLLEXPORT __stdcall
+#include <GL/glext.h>
 #else
 #define QGL_DLLEXPORT
 #endif
