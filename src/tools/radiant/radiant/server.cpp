@@ -213,7 +213,7 @@ class DynamicLibraryModule
 				m_registerModule = reinterpret_cast<RegisterModulesFunc> (m_library.findSymbol(
 						"Radiant_RegisterModules"));
 			} else {
-				g_warning("WARNING: Failed to load module %s\n", filename);
+				g_warning("WARNING: Failed to load module %s\n", filename.c_str());
 #ifdef __linux__
 				g_warning("%s", dlerror());
 #endif
