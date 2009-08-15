@@ -49,7 +49,10 @@ typedef struct hudRadarImage_s {
 	float mapWidth;
 	float mapHeight;
 
+	qboolean isTile;
 	int gridX, gridY;	/**< random map assembly x and y positions, @sa UNIT_SIZE */
+	int gridHeight;
+	int gridWidth;
 	int maxlevel;	/**< the maxlevel for this image */
 } hudRadarImage_t;
 
@@ -99,8 +102,13 @@ static void MN_FreeRadarImages (void)
  */
 static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 {
+	const float mapMidX = (mapMax[0] + mapMin[0]) * 0.5;
+	const float mapMidY = (mapMax[1] + mapMin[1]) * 0.5;
+
 	/* load tiles */
 	while (tiles) {
+		int i;
+		vec3_t sh;
 		char name[MAX_VAR];
 		hudRadarImage_t *image;
 		/* get tile name */
@@ -124,29 +132,28 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 		image = &radar.images[radar.numImages++];
 		image->name = Mem_StrDup(name);
 
-		if (pos && pos[0]) {
-			int i;
-			vec3_t sh;
-			/* get grid position and add a tile */
-			for (i = 0; i < 3; i++) {
-				token = Com_Parse(&pos);
-				if (!pos)
-					Com_Error(ERR_DROP, "MN_BuildRadarImageList: invalid positions\n");
-				sh[i] = atoi(token);
-			}
-			image->gridX = sh[0];
-			image->gridY = sh[1];
-			image->mapX = sh[0] * UNIT_SIZE;
-			image->mapY = sh[1] * UNIT_SIZE;
-
-			if (radar.gridMin[0] > sh[0])
-				radar.gridMin[0] = sh[0];
-			if (radar.gridMin[1] > sh[1])
-				radar.gridMin[1] = sh[1];
-		} else {
-			/* load only a single tile, if no positions are specified */
+		image->isTile = pos && pos[0];
+		if (!image->isTile)
+			/* it is a single background image*/
 			return;
+
+		/* get grid position and add a tile */
+		for (i = 0; i < 3; i++) {
+			token = Com_Parse(&pos);
+			if (!pos)
+				Com_Error(ERR_DROP, "MN_BuildRadarImageList: invalid positions\n");
+			sh[i] = atoi(token);
 		}
+		image->gridX = sh[0];
+		image->gridY = sh[1];
+		image->mapX = mapMidX + sh[0] * UNIT_SIZE;
+		image->mapY = mapMidY + sh[1] * UNIT_SIZE;
+		Com_Printf("radar %s %dx%d\n", name, image->gridX, image->gridY);
+
+		if (radar.gridMin[0] > sh[0])
+			radar.gridMin[0] = sh[0];
+		if (radar.gridMin[1] > sh[1])
+			radar.gridMin[1] = sh[1];
 	}
 }
 
@@ -268,6 +275,8 @@ static void MN_InitRadar (const menuNode_t *node)
 	float distAB, distBC;
 	vec2_t gridSize;		/**< Size of the whole grid (in tiles units) */
 	vec2_t nodepos;
+	vec2_t min;
+	vec2_t max;
 
 	MN_FreeRadarImages();
 	MN_BuildRadarImageList(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
@@ -277,29 +286,67 @@ static void MN_InitRadar (const menuNode_t *node)
 	radar.y = nodepos[1] + node->size[1] / 2;
 
 	/* only check once per map whether all the needed images exist */
-	for (i = 0; i < PATHFINDING_HEIGHT; i++) {
+	for (j = 0; j < radar.numImages; j++) {
+		hudRadarImage_t *tile = &radar.images[j];
 		/* map_mins, map_maxs */
-		for (j = 0; j < radar.numImages; j++) {
-			hudRadarImage_t *hudRadarImage = &radar.images[j];
-			if (!MN_CheckRadarImage(hudRadarImage->name, i + 1)) {
+		for (i = 0; i < PATHFINDING_HEIGHT; i++) {
+			char imagePath[MAX_QPATH];
+			const image_t *image;
+			if (!MN_CheckRadarImage(tile->name, i + 1)) {
 				if (i == 0) {
 					/* there should be at least one level */
-					Com_Printf("No radar images for map: '%s'\n", hudRadarImage->name);
+					Com_Printf("No radar images for map: '%s'\n", tile->name);
 					radar.numImages = 0;
 					return;
 				}
-			} else {
-				char imagePath[MAX_QPATH];
-				const image_t *image;
-				Com_sprintf(imagePath, sizeof(imagePath), "radars/%s_%i", hudRadarImage->name, i + 1);
-				hudRadarImage->path[i] = Mem_StrDup(imagePath);
-				hudRadarImage->maxlevel++;
+				continue;
+			}
 
-				image = R_FindImage(va("pics/%s", hudRadarImage->path[i]), it_pic);
-				hudRadarImage->width = image->width;
-				hudRadarImage->height = image->height;
+			Com_sprintf(imagePath, sizeof(imagePath), "radars/%s_%i", tile->name, i + 1);
+			tile->path[i] = Mem_StrDup(imagePath);
+			tile->maxlevel++;
+
+			image = R_FindImage(va("pics/%s", tile->path[i]), it_pic);
+			tile->width = image->width;
+			tile->height = image->height;
+			if (tile->isTile) {
+				tile->gridWidth = round(image->width / 94.0f);
+				tile->gridHeight = round(image->height / 94.0f);
+				tile->mapWidth = tile->gridWidth * 8 * UNIT_SIZE;
+				tile->mapHeight = tile->gridHeight * 8 * UNIT_SIZE;
+			} else {
+				tile->mapX = mapMin[0];
+				tile->mapY = mapMin[1];
+				tile->mapWidth = mapMax[0] - mapMin[0];
+				tile->mapHeight = mapMax[1] - mapMin[1];
 			}
 		}
+		if (tile->isTile) {
+			tile->mapY = mapMax[1] - tile->mapY - tile->mapHeight;
+		}
+	}
+
+	/* center tiles into the minMap/maxMap */
+	Vector2Copy(mapMax, min);
+	Vector2Copy(mapMin, max);
+	for (j = 0; j < radar.numImages; j++) {
+		hudRadarImage_t *tile = &radar.images[j];
+		if (tile->mapX < min[0])
+			min[0] = tile->mapX;
+		if (tile->mapY < min[1])
+			min[1] = tile->mapY;
+		if (tile->mapX + tile->mapWidth > max[0])
+			max[0] = tile->mapX + tile->mapWidth;
+		if (tile->mapY + tile->mapHeight > max[1])
+			max[1] = tile->mapY + tile->mapHeight;
+	}
+	/* compute translation */
+	min[0] = mapMin[0] + (mapMax[0] - mapMin[0] - (max[0] - min[0])) * 0.5 - min[0];
+	min[1] = mapMin[1] + (mapMax[1] - mapMin[1] - (max[1] - min[1])) * 0.5 - min[1];
+	for (j = 0; j < radar.numImages; j++) {
+		hudRadarImage_t *tile = &radar.images[j];
+		tile->mapX += min[0];
+		tile->mapY += min[1];
 	}
 
 	/* get the three points of the triangle */
@@ -411,7 +458,7 @@ static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
 	MN_DrawFill(x, y, radar.gridWidth, radar.gridHeight, color);
 }
 
-/* #define RADARSIZE_DEBUG */
+/*#define RADARSIZE_DEBUG*/
 
 /**
  * @sa CMod_GetMapSize
@@ -429,17 +476,13 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	static const vec4_t red = {1, 0, 0, 0.5};
 #endif
 
-	static const vec4_t grey = {0.7, 0.7, 0.7, 1};
+	static const vec4_t backgroundColor = {0.0, 0.0, 0.0, 1};
 	const float mapWidth = mapMax[0] - mapMin[0];
 	const float mapHeight = mapMax[1] - mapMin[1];
 
 	/** @todo use the same coef for x and y */
 	const float mapCoefX = (float) node->size[0] / (float) mapWidth;
 	const float mapCoefY = (float) node->size[1] / (float) mapHeight;
-	/** @todo understand this coef */
-	const float MAGIC_COEF = 1.0f / 0.351f;
-	const float imageCoefX = mapCoefX * MAGIC_COEF;
-	const float imageCoefY = mapCoefY * MAGIC_COEF;
 
 	/** @todo remove cl.skipRadarNodes from the code */
 	if (cls.state != ca_active)
@@ -447,7 +490,7 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, pos);
 	R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
-	MN_DrawFill(pos[0], pos[1], mapWidth * mapCoefX, mapHeight * mapCoefY, grey);
+	MN_DrawFill(pos[0], pos[1], mapWidth * mapCoefX, mapHeight * mapCoefY, backgroundColor);
 #ifndef RADARSIZE_DEBUG
 	R_BeginClipRect(pos[0], pos[1], node->size[0], node->size[1]);
 #endif
@@ -477,19 +520,25 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 
 	/* draw background */
 	for (i = 0; i < radar.numImages; i++) {
-		hudRadarImage_t *image = &radar.images[i];
+		vec2_t imagePos;
+		hudRadarImage_t *tile = &radar.images[i];
 		int maxlevel = cl_worldlevel->integer;
+
 		/* check the max level value for this map tile */
-		if (maxlevel >= image->maxlevel)
-			maxlevel = image->maxlevel - 1;
-		assert(image->path[maxlevel]);
-		MN_DrawNormImageByName(
-				radar.x + imageCoefX * image->x, radar.y + imageCoefY * image->y,
-				imageCoefX * image->width, imageCoefY * image->height,
-				0, 0, 0, 0, image->path[maxlevel]);
+		if (maxlevel >= tile->maxlevel)
+			maxlevel = tile->maxlevel - 1;
+		assert(tile->path[maxlevel]);
+		imagePos[0] = radar.x + mapCoefX * (tile->mapX - mapMin[0]);
+		imagePos[1] = radar.y + mapCoefY * (tile->mapY - mapMin[1]);
+
+		MN_DrawNormImageByName(imagePos[0], imagePos[1],
+				mapCoefX * tile->mapWidth, mapCoefY * tile->mapHeight,
+				0, 0, 0, 0, tile->path[maxlevel]);
 #ifdef RADARSIZE_DEBUG
-		MN_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%dx%d %dx%d %s", image->x, image->y, image->width, image->height, image->path[maxlevel]), LONGLINES_PRETTYCHOP);
+		MN_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%dx%d %dx%d %s", tile->x, tile->y, tile->width, tile->height, tile->path[maxlevel]), LONGLINES_PRETTYCHOP);
 		textposy += 25;
+		MN_DrawStringInBox("f_small", 0, imagePos[0], imagePos[1],
+				500, 25, va("%dx%d", tile->gridX, tile->gridY), LONGLINES_PRETTYCHOP);
 #endif
 	}
 
@@ -583,7 +632,6 @@ static void MN_GenRadarMap_f (void)
 	int x, y, width, height;
 
 	MN_GetRadarMapInFrameBuffer(&x, &y, &width, &height);
-	Com_Printf("Radar map size from frame buffer: %i %i %i %i\n", x, y, width, height);
 	if (mapName)
 		filename = va("%s_%i", mapName, level + 1);
 	R_ScreenShot(x - border, y - border, width + border * 2, height + border * 2, filename, NULL);
