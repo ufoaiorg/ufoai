@@ -298,8 +298,6 @@ static void MN_InitRadar (const menuNode_t *node)
 				image = R_FindImage(va("pics/%s", hudRadarImage->path[i]), it_pic);
 				hudRadarImage->width = image->width;
 				hudRadarImage->height = image->height;
-				if (hudRadarImage->width > VID_NORM_WIDTH || hudRadarImage->height > VID_NORM_HEIGHT)
-					Com_Printf("Image '%s' is too big\n", hudRadarImage->path[i]);
 			}
 		}
 	}
