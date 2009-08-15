@@ -17,6 +17,7 @@
 			<Depends filename="radiant_image.cbp" />
 			<Depends filename="radiant_map.cbp" />
 			<Depends filename="radiant_shader.cbp" />
+			<Depends filename="radiant_sound.cbp" />
 			<Depends filename="radiant_vfspk3.cbp" />
 			<Depends filename="radiant_archivezip.cbp" />
 			<Depends filename="radiant_ufoai.cbp" />
