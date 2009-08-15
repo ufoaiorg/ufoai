@@ -24,7 +24,7 @@
 					<Add option="--export-all-symbols" />
 					<Add library="libgdk_pixbuf-2.0" />
 					<Add library="gobject-2.0" />
-					<Add library="openal" />
+					<Add library="openal32" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
@@ -47,7 +47,7 @@
 					<Add option="--export-all-symbols" />
 					<Add library="libgdk_pixbuf-2.0" />
 					<Add library="gobject-2.0" />
-					<Add library="openal" />
+					<Add library="openal32" />
 				</Linker>
 			</Target>
 			<Target title="linux">

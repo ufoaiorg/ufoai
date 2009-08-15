@@ -21,6 +21,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="libglib-2.0" />
+					<Add library="opengl32" />
 					<Add option="--export-all-symbols" />
 				</Linker>
 			</Target>
@@ -41,6 +42,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="--export-all-symbols" />
+					<Add library="opengl32" />
 					<Add library="libglib-2.0" />
 				</Linker>
 			</Target>
@@ -56,6 +58,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config glib-2.0 --libs`" />
+					<Add library="GL" />
 				</Linker>
 			</Target>
 			<Target title="macosx">
@@ -70,6 +73,7 @@
 					<Add directory="/sw/include" />
 				</Compiler>
 				<Linker>
+					<Add option="-framework OpenGL" />
 					<Add option="-dynamiclib" />
 					<Add option="-single_module" />
 					<Add option="-compatibility_version 1" />
