@@ -34,9 +34,6 @@
 
 #include "modulesystem.h"
 
-#include "exception/RadiantException.h"
-#include "exception/ModuleSystemException.h"
-
 class RadiantModuleServer: public ModuleServer
 {
 		typedef std::pair<CopiedString, int> ModuleType;
@@ -127,11 +124,12 @@ class DynamicLibrary
 	public:
 	typedef int (__stdcall* FunctionPointer) ();
 
-	DynamicLibrary (const char* filename)
+	DynamicLibrary (const std::string& filename)
 	{
-		m_library = LoadLibrary(filename);
+		m_library = LoadLibrary(filename.c_str());
 		if (m_library == 0) {
-			throw ModuleSystemException(std::string("Unable to load library from file ") + filename);
+			globalErrorStream() << "LoadLibrary failed: '" << filename.c_str() << "'\n";
+			globalErrorStream() << "GetLastError: " << FormatGetLastError();
 		}
 	}
 	~DynamicLibrary ()
@@ -165,9 +163,9 @@ class DynamicLibrary
 	public:
 		typedef int (* FunctionPointer) ();
 
-		DynamicLibrary (const char* filename)
+		DynamicLibrary (const std::string& filename)
 		{
-			dlHandle = dlopen(filename, RTLD_NOW);
+			dlHandle = dlopen(filename.c_str(), RTLD_NOW);
 			if (!dlHandle) {
 				const char* error = reinterpret_cast<const char*> (dlerror());
 				globalErrorStream() << error << "\n";
@@ -180,17 +178,19 @@ class DynamicLibrary
 		}
 		bool failed ()
 		{
-			return (dlHandle == NULL);
+			return dlHandle == 0;
 		}
 		// Find a symbol in the library
 		FunctionPointer findSymbol (const char* symbol)
 		{
-			void * address = dlsym(dlHandle, symbol);
-			if (address == 0) {
-				std::string theError = std::string(dlerror());
-				throw ModuleSystemException(theError);
+			FunctionPointer p = reinterpret_cast<FunctionPointer> (dlsym(dlHandle, symbol));
+			if (p == 0) {
+				const char* error = reinterpret_cast<const char*> (dlerror());
+				if (error != 0) {
+					globalErrorStream() << error;
+				}
 			}
-			return reinterpret_cast<FunctionPointer> (address);
+			return p;
 		}
 };
 
@@ -201,11 +201,12 @@ class DynamicLibrary
 // Construct a DynamicLibraryModule from the filename of a DLL/so
 class DynamicLibraryModule
 {
-		typedef void (RADIANT_DLLIMPORT* RegisterModulesFunc) (ModuleServer& server);
+		typedef void (RADIANT_DLLEXPORT* RegisterModulesFunc) (ModuleServer& server);
 		DynamicLibrary m_library;
 		RegisterModulesFunc m_registerModule;
 	public:
-		DynamicLibraryModule (const char* filename) :
+		// Construct a DynamicLibraryModule from the filename of a DLL/so
+		DynamicLibraryModule (const std::string& filename) :
 			m_library(filename), m_registerModule(0)
 		{
 			if (!m_library.failed()) {
@@ -240,7 +241,7 @@ class Libraries
 				delete *i;
 			}
 		}
-		void registerLibrary (const char* filename, ModuleServer& server)
+		void registerLibrary (const std::string& filename, ModuleServer& server)
 		{
 			DynamicLibraryModule* library = new DynamicLibraryModule(filename);
 
@@ -266,7 +267,7 @@ ModuleServer& GlobalModuleServer_get ()
 	return g_server;
 }
 
-void GlobalModuleServer_loadModule (const char* filename)
+void GlobalModuleServer_loadModule (const std::string& filename)
 {
 	g_libraries.registerLibrary(filename, g_server);
 }

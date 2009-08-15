@@ -116,10 +116,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/libs/gtkutil/ModelProgressDialog.cpp \
 	\
 	$(RADIANT_BASE)/libs/profile/profile.cpp \
-	$(RADIANT_BASE)/libs/profile/file.cpp \
-	\
-	$(RADIANT_BASE)/libs/exception/RadiantException.cpp \
-	$(RADIANT_BASE)/libs/exception/ModuleSystemException.cpp
+	$(RADIANT_BASE)/libs/profile/file.cpp
 
 RADIANT_SRCS_C = \
 	shared/parse.c \

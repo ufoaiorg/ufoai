@@ -28,8 +28,6 @@
 #include <set>
 #include <iostream>
 
-#include "exception/ModuleSystemException.h"
-
 template<typename Type>
 class ModulesMap: public Modules<Type>
 {
@@ -127,8 +125,7 @@ class ModulesRef
 						// Module not found in the global module server
 						if (module == 0) {
 							globalModuleServer().setError(true);
-							throw ModuleSystemException(std::string("ModulesRef: unable to add requested module ")
-									+ name);
+							break;
 						} else {
 							m_modules.insert(name, *module);
 						}

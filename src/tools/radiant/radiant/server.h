@@ -22,9 +22,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_SERVER_H)
 #define INCLUDED_SERVER_H
 
+#include <string>
+
 class ModuleServer;
 ModuleServer& GlobalModuleServer_get();
-void GlobalModuleServer_loadModule(const char* filename);
+void GlobalModuleServer_loadModule(const std::string& filename);
 void GlobalModuleServer_Initialise();
 void GlobalModuleServer_Shutdown();
 

@@ -49,6 +49,7 @@
 #include "server.h"
 
 #include <ctime>
+#include <string>
 
 #include "scenelib.h"
 #include "stream/stringstream.h"
@@ -105,7 +106,6 @@
 #include "renderstate.h"
 #include "referencecache.h"
 #include "toolbars.h"
-#include "exception/RadiantException.h"
 
 struct layout_globals_t
 {
@@ -414,53 +414,61 @@ void Radiant_detachGameModeObserver (ModuleObserver& observer)
 
 #include "os/dir.h"
 
-class CLoadModule
+/** Module loader functor class. This class is used to traverse a directory and
+ * load each module into the GlobalModuleServer.
+ */
+class ModuleLoader
 {
-		const char* m_path;
+		// The path of the directory we are in
+		const std::string _path;
+
+		// The filename extension which indicates a module (platform-specific)
+		const std::string _ext;
+
 	public:
-		CLoadModule (const char* path) :
-			m_path(path)
+		ModuleLoader (const std::string& path) :
+			_path(path),
+#if defined(WIN32)
+					_ext("dll")
+#elif defined (__APPLE__)
+					_ext("dylib")
+#elif defined(__linux__) || defined (__FreeBSD__)
+					_ext("so")
+#endif
+
 		{
 		}
-		void operator() (const char* name) const
+		void operator() (const std::string& name) const
 		{
-			char fullname[1024];
-			ASSERT_MESSAGE(strlen(m_path) + strlen(name) < 1024, "");
-			strcpy(fullname, m_path);
-			strcat(fullname, name);
-			g_message("Found '%s'\n", fullname);
-			GlobalModuleServer_loadModule(fullname);
+			if (string_equal_nocase(path_get_extension(name.c_str()), _ext.c_str())) {
+				std::string fullname = _path + name;
+				g_message("Found '%s'\n", fullname.c_str());
+				GlobalModuleServer_loadModule(fullname);
+			}
 		}
 };
 
-const char* const c_library_extension =
-#if defined(WIN32)
-		"dll"
-#elif defined (__APPLE__)
-		"dylib"
-#elif defined(__linux__) || defined (__FreeBSD__)
-		"so"
-#endif
-;
-
-void Radiant_loadModules (const char* path)
+/** Load modules from a specified directory.
+ * 
+ * @param path
+ * The directory path to load from.
+ */
+void Radiant_loadModules (const std::string& path)
 {
-	Directory_forEach(path, MatchFileExtension<CLoadModule> (c_library_extension, CLoadModule(path)));
+	ModuleLoader loader(path);
+	Directory_forEach(path, loader);
 }
 
-void Radiant_loadModulesFromRoot (const char* directory)
+/** Load all of the modules in the DarkRadiant install directory. Modules
+ * are loaded from modules/ and plugins/.
+ * 
+ * @param directory
+ * The root directory to search.
+ */
+void Radiant_loadModulesFromRoot (const std::string& directory)
 {
-	{
-		StringOutputStream path(256);
-		path << directory << g_pluginsDir;
-		Radiant_loadModules(path.c_str());
-	}
-
-	if (!string_equal(g_pluginsDir, g_modulesDir)) {
-		StringOutputStream path(256);
-		path << directory << g_modulesDir;
-		Radiant_loadModules(path.c_str());
-	}
+	Radiant_loadModules(directory + g_modulesDir);
+	Radiant_loadModules(directory + g_pluginsDir);
 }
 
 ModuleObservers g_gameToolsPathObservers;
@@ -485,12 +493,7 @@ void Radiant_Initialise (void)
 
 	Preferences_Load();
 
-	try {
-		Radiant_Construct(GlobalModuleServer_get());
-	} catch (RadiantException e) {
-		e.printError();
-		abort();
-	}
+	Radiant_Construct(GlobalModuleServer_get());
 
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();
