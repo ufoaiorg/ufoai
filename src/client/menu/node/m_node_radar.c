@@ -587,7 +587,7 @@ static void MN_GenRadarMap_f (void)
 	MN_GetRadarMapInFrameBuffer(&x, &y, &width, &height);
 	Com_Printf("Radar map size from frame buffer: %i %i %i %i\n", x, y, width, height);
 	if (mapName)
-		filename = va("%s_%i", mapName, level);
+		filename = va("%s_%i", mapName, level + 1);
 	R_ScreenShot(x - border, y - border, width + border * 2, height + border * 2, filename, NULL);
 }
 
