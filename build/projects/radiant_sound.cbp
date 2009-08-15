@@ -77,6 +77,9 @@
 					<Add option="`pkg-config glib-2.0 --libs`" />
 					<Add option="`pkg-config gdk-2.0 --libs`" />
 					<Add library="openal" />
+					<Add library="vorbisfile" />
+					<Add library="vorbis" />
+					<Add library="ogg" />
 				</Linker>
 			</Target>
 			<Target title="macosx">
@@ -95,7 +98,12 @@
 					<Add option="-single_module" />
 					<Add option="-compatibility_version 1" />
 					<Add directory="\sw\lib" />
+					<Add library="gobject-2.0" />
+					<Add library="glib-2.0" />
 					<Add library="openal" />
+					<Add library="vorbisfile" />
+					<Add library="vorbis" />
+					<Add library="ogg" />
 				</Linker>
 			</Target>
 		</Build>
