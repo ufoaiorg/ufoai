@@ -490,14 +490,14 @@ qboolean INS_SaveXML (mxml_node_t *p)
 	int i;
 	mxml_node_t *n;
 	n = mxml_AddNode(p, "installations");
-	for (i = 0; i < MAX_INSTALLATIONS; i++) {
+	for (i = 0; i < ccs.numInstallations; i++) {
 		const installation_t *inst = INS_GetInstallationByIDX(i);
 		mxml_node_t *s, *ss;
+
 		if (!inst->founded)
 			continue;
+
 		s = mxml_AddNode(n, "installation");
-		mxml_AddInt(s, "idx", inst->idx);
-		mxml_AddBool(s, "founded", inst->founded);
 		mxml_AddString(s, "templateid", inst->installationTemplate->id);
 		mxml_AddString(s, "name", inst->name);
 		mxml_AddPos3(s, "pos", inst->pos);
@@ -509,9 +509,6 @@ qboolean INS_SaveXML (mxml_node_t *p)
 		ss = mxml_AddNode(s, "batteries");
 		mxml_AddInt(ss, "num", inst->numBatteries);
 		B_SaveBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
-
-		/** @todo aircraft (don't save capacities, they should
-		 * be recalculated after loading) */
 	}
 	return qtrue;
 }
@@ -526,43 +523,45 @@ qboolean INS_LoadXML (mxml_node_t *p)
 {
 	mxml_node_t *s;
 	mxml_node_t *n = mxml_GetNode(p, "installations");
+	int i;
+
 	if (!n)
 		return qfalse;
 
-	for (s = mxml_GetNode(n, "installation"); s ; s = mxml_GetNextNode(s,n, "installation")) {
+	for (i = 0, s = mxml_GetNode(n, "installation"); s && i < MAX_INSTALLATIONS; s = mxml_GetNextNode(s,n, "installation"), i++) {
 		mxml_node_t *ss;
-		const int idx = mxml_GetInt(s, "idx", 0);
-		installation_t *inst = INS_GetInstallationByIDX(idx);
+		installation_t *inst = INS_GetInstallationByIDX(i);
 		inst->idx = INS_GetInstallationIDX(inst);
-		inst->founded = mxml_GetBool(s, "founded", inst->founded);
-		/* should never happen, we only save founded installations */
-		if (!inst->founded)
-			continue;
+		inst->founded = qtrue;
+
 		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationID(mxml_GetString(s, "templateid"));
 		if (!inst->installationTemplate) {
 			Com_Printf("Could not find installation template\n");
 			return qfalse;
 		}
-		inst->ufoCapacity.max = inst->installationTemplate->maxUFOsStored;
-		inst->ufoCapacity.cur = 0;
-		ccs.numInstallations++;
-		Q_strncpyz(inst->name, mxml_GetString(s, "name"), sizeof(inst->name));
 
+		Q_strncpyz(inst->name, mxml_GetString(s, "name"), sizeof(inst->name));
 		mxml_GetPos3(s, "pos", inst->pos);
 
 		inst->installationStatus = mxml_GetInt(s, "status", 0);
 		inst->installationDamage = mxml_GetInt(s, "damage", 0);
 		inst->alienInterest = mxml_GetFloat(s, "alieninterest", 0.0);
+		inst->buildStart = mxml_GetInt(s, "buildstart", 0);
 
+		/* Radar */
 		RADAR_InitialiseUFOs(&inst->radar);
 		RADAR_Initialise(&(inst->radar), 0.0f, 0.0f, 1.0f, qtrue);
-		RADAR_UpdateInstallationRadarCoverage(inst, inst->installationTemplate->radarRange, inst->installationTemplate->trackingRange);
-
-		inst->buildStart = mxml_GetInt(s, "buildstart", 0);
+		if (inst->installationStatus == INSTALLATION_WORKING) {
+			RADAR_UpdateInstallationRadarCoverage(inst, inst->installationTemplate->radarRange, inst->installationTemplate->trackingRange);
+			/* UFO Yard */	
+			inst->ufoCapacity.max = inst->installationTemplate->maxUFOsStored;
+		} else {
+			inst->ufoCapacity.max = 0;
+		}
+		inst->ufoCapacity.cur = 0;
 
 		/* read battery slots */
 		BDEF_InitialiseInstallationSlots(inst);
-
 		ss = mxml_GetNode(s, "batteries");
 		if (!ss) {
 			Com_Printf("INS_LoadXML: Batteries not defined!\n");
@@ -575,8 +574,7 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		}
 		B_LoadBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
 
-		/** @todo aircraft */
-		/** @todo don't forget to recalc the capacities like we do for bases */
+		ccs.numInstallations++;
 	}
 
 	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
