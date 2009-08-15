@@ -25,6 +25,10 @@
 					<Add library="libgdk_pixbuf-2.0" />
 					<Add library="gobject-2.0" />
 					<Add library="openal32" />
+					<Add library="glib-2.0" />
+					<Add library="vorbisfile" />
+					<Add library="vorbis" />
+					<Add library="ogg" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
@@ -48,6 +52,10 @@
 					<Add library="libgdk_pixbuf-2.0" />
 					<Add library="gobject-2.0" />
 					<Add library="openal32" />
+					<Add library="glib-2.0" />
+					<Add library="vorbisfile" />
+					<Add library="vorbis" />
+					<Add library="ogg" />
 				</Linker>
 			</Target>
 			<Target title="linux">
@@ -109,6 +117,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\sound\soundmanager.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\timer.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
