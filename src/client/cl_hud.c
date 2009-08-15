@@ -1575,7 +1575,6 @@ static void CL_CenterCameraIntoMap_f (void)
 	vec3_t center;
 	VectorCenterFromMinsMaxs(mapMin, mapMax, center);
 	VectorCopy(center, cl.cam.origin);
-	V_UpdateRefDef();
 }
 
 void HUD_InitStartup (void)

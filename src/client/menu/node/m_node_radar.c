@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_timer.h"
 #include "../m_menus.h"
 #include "../m_main.h"
+#include "../m_input.h"
 
 #include "../../client.h"
 #include "../../renderer/r_draw.h"
@@ -579,6 +580,45 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 }
 
 /**
+ * @brief Called when the node is captured by the mouse
+ */
+static void MN_RadarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+{
+	const float mapWidth = mapMax[0] - mapMin[0];
+	const float mapHeight = mapMax[1] - mapMin[1];
+	const float mapCoefX = (float) node->size[0] / (float) mapWidth;
+	const float mapCoefY = (float) node->size[1] / (float) mapHeight;
+	vec3_t pos;
+
+	/* from absolute to relative to node */
+	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+
+	/* from node to map */
+	VectorCenterFromMinsMaxs(mapMin, mapMax, pos);
+	pos[0] = mapMin[0] + x / mapCoefX;
+	pos[1] = mapMax[1] - y / mapCoefY;
+
+	VectorCopy(pos, cl.cam.origin);
+}
+
+static void MN_RadarNodeMouseDown (menuNode_t *node, int x, int y, int button)
+{
+	if (node->disabled)
+		return;
+
+	if (button == K_MOUSE1) {
+		MN_SetMouseCapture(node);
+		MN_RadarNodeCapturedMouseMove(node, x, y);
+	}
+}
+
+static void MN_RadarNodeMouseUp (menuNode_t *node, int x, int y, int button)
+{
+	if (button == K_MOUSE1)
+		MN_MouseRelease();
+}
+
+/**
  * Return the rect where the radarmap should be, when we generate radar images
  * @param[out] y Y position of the rect in the frame buffer (from bottom-to-top according to the screen)
  * @todo fix that function, map is not well captured
@@ -639,8 +679,8 @@ static void MN_GenRadarMap_f (void)
 
 static void MN_GenAllRadarMap (menuNode_t *node, menuTimer_t *timer)
 {
-	int level = timer->calledTime / 2;
-	int mode = timer->calledTime % 2;
+	int level = (timer->calledTime - 1) / 2;
+	int mode = (timer->calledTime - 1) % 2;
 
 	if (level >= cl.mapMaxLevel) {
 		Cbuf_AddText("mn_genallradarmaprelease");
@@ -678,6 +718,9 @@ void MN_RegisterRadarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
 	behaviour->draw = MN_RadarNodeDraw;
+	behaviour->mouseDown = MN_RadarNodeMouseDown;
+	behaviour->mouseUp = MN_RadarNodeMouseUp;
+	behaviour->capturedMouseMove = MN_RadarNodeCapturedMouseMove;
 
 	Cmd_AddCommand("mn_genpreviewradarmap", MN_GenPreviewRadarMap_f, NULL);
 	Cmd_AddCommand("mn_genradarmap", MN_GenRadarMap_f, NULL);

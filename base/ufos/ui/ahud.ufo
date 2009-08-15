@@ -81,7 +81,6 @@ window radarwindow {
 		closebutton	true
 		image		ui/popup_alpha_tile
 		string		"_Radar"
-		modal true
 	}
 
 	confunc closeradar {
