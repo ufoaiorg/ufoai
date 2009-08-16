@@ -576,6 +576,7 @@ window popup_intercept_ready
 		dragbutton	true
 		image		ui/popup_alpha_tile
 		string		"_Ready"
+		modal		true
 	}
 
 	string name_label
