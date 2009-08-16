@@ -8,163 +8,45 @@
 #
 
 import os, os.path, sys
+from ExtractNodeBehaviour import *
 
-# path where exists ufo binary
-UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../../..')
+def genBehaviourDot(node):
+	result = ""
+	label = ""
 
-dir = UFOAI_ROOT + '/src/client/menu/node'
+	label = '<tr><td align="center">' + node.name + '</td></tr>\n'
+	
+	if len(node.properties) != 0:
+		p = ''
+		names = node.properties.keys()
+		names.sort()
+		for name in names:
+			e = node.properties[name]
+			if p != '':
+				p = p + '<br />'
+			p = p + '+ ' + e.name + ': ' + e.type
+		label = label + '<tr><td align="left" balign="left">' + p + '</td></tr>'
+	
+	if len(node.methods) != 0:
+		p = ''
+		names = node.methods.keys()
+		names.sort()
+		for name in names:
+			e = node.methods[name]
+			if p != '':
+				p = p + '<br />'
+			p = p + '+ ' + e.name + ' ()'
+		label = label + '<tr><td align="left" balign="left">' + p + '</td></tr>'
 
+	label = '<table border="0" cellborder="1" cellspacing="0" cellpadding="4">\n' + label + '\n</table>'
 
-class NodeBehaviour:
-
-	def __init__(self):
-		self.name = ""
-		self.extends = "abstractnode"
-		self.properties = {}
-		self.methods = {}
-		pass
-
-	def init(self, dic):
-		self.name = dic['name']
-		if (self.name == "abstractnode"):
-			self.extends = None
-		elif 'extends' in dic:
-			self.extends = dic['extends']
-
-	def initProperties(self, dic):
-		self.properties = dic
-
-	def initMethods(self, dic):
-		self.methods = dic
-		
-	def genDot(self):
-		result = ""
-		label = ""
-
-		label = '<tr><td align="center">' + self.name + '</td></tr>\n'
-		
-		if len(self.properties) != 0:
-			p = ''
-			names = self.properties.keys()
-			names.sort()
-			for name in names:
-				type = self.properties[name]
-				if p != '':
-					p = p + '<br />'
-				p = p + '+ ' + name + ': ' + type
-			label = label + '<tr><td align="left" balign="left">' + p + '</td></tr>'
-		
-		if len(self.methods) != 0:
-			p = ''
-			names = self.methods.keys()
-			names.sort()
-			for name in names:
-				type = self.methods[name]
-				if p != '':
-					p = p + '<br />'
-				p = p + '+ ' + name + ' ()'
-			label = label + '<tr><td align="left" balign="left">' + p + '</td></tr>'
-
-		label = '<table border="0" cellborder="1" cellspacing="0" cellpadding="4">\n' + label + '\n</table>'
-
-		result = result + "\t_%s [rankdir=TB,shape=plaintext,label=<\n%s>]\n" % (self.name, label)
-		if self.extends != None:
-			result = result + "\t_%s -> _%s\n" % (self.name, self.extends)
-		
-		return result
-
-# @brief Extract each properties into a text according to the structure name
-def extractProperties(filedata, structName):
-	signature = "const value_t %s[]" % structName
-	properties = filedata.split(signature)
-	properties = properties[1]
-
-	i = properties.find('{')
-	j = properties.find('};')
-	properties = properties[i+1:j]
-
-	result = {}
-	for line in properties.split('},'):
-		i = line.find('{')
-		if i == -1:
-			continue
-		line = line[i+1:]
-		e = line.split(',')
-
-		name = e[0].strip()
-		if name[0] == '"':
-			name = name[1:len(name)-1]
-
-		if name == 'NULL':
-			continue
-
-		type = e[1].strip()
-		result[name] = type
-
+	result = result + "\t_%s [rankdir=TB,shape=plaintext,label=<\n%s>]\n" % (node.name, label)
+	if node.extends != None:
+		result = result + "\t_%s -> _%s\n" % (node.name, node.extends)
+	
 	return result
 
-def extractMethods(props):
-	p = {}
-	m = {}
-	
-	for propName, propType in props.iteritems():
-		if propType == "V_UI_NODEMETHOD":
-			m[propName] = propType
-		else:
-			p[propName] = propType
-	return m, p
 
-# @brief Extract each body of registration function into a text
-def extractRegistrationFunctions(filedata):
-	result = []
-	
-	register = filedata.split("\nvoid MN_Register")
-	register.pop(0)
-	
-	for body in register:
-		body = body.split('{')[1]
-		body = body.split('}')[0]
-		result.append(body)
-
-	return result
-
-def extractData():
-	result = []
-	
-	# all nodes
-	for f in os.listdir(dir):
-		if ".c" not in f:
-			continue
-
-		file = open(dir + '/' + f, "rt")
-		data = file.read()
-		file.close()
-
-		for code in extractRegistrationFunctions(data):
-			lines = code.split('\n')
-			dic = {}
-			for l in lines:
-				l = l.replace("behaviour->", "")
-				l = l.replace(";", "")
-				e = l.split('=')
-				if len(e) != 2:
-					continue
-				v = e[1].strip()
-				if v[0] == '"':
-					v = v[1:len(v)-1]
-				dic[e[0].strip()] = v
-			
-			n = NodeBehaviour()
-			n.init(dic)
-			if 'properties' in dic:
-				props = extractProperties(data, dic['properties'])
-				methods, props = extractMethods(props)
-				n.initProperties(props)
-				n.initMethods(methods)
-			result.append(n)
-
-	return result
-			
 def genDot(nodeList):
 	print "// contrib/scripts/menu/nodeInheritance.py > inheritance.dot"
 	print "// dot -Tpng -oinheritance.png < inheritance.dot"
@@ -173,9 +55,14 @@ def genDot(nodeList):
 	print "\tnode [shape=box]"
 	print "\tedge [arrowhead=onormal]"
 	print ""
-	for n in nodeList:
-		print n.genDot()
+
+	list = nodeList.keys()
+	list.sort()
+	for name in list:
+		node = nodeList[name]
+		print genBehaviourDot(node)
 	print "}"
 
-nodeList = extractData()
-genDot(nodeList)
+extract = ExtractNodeBehaviour()
+behaviours = extract.getBehaviours()
+genDot(behaviours)
