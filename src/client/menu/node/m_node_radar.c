@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include <math.h>
+
 #include "m_node_radar.h"
 #include "m_node_abstractnode.h"
 #include "../m_render.h"
@@ -389,18 +391,14 @@ static void MN_InitRadar (const menuNode_t *node)
  DRAW FUNCTIONS
 =========================================*/
 
-static void MN_DrawActor (const le_t *le, const vec3_t pos)
-{
-	vec4_t color = {0, 1, 0, 1};
-	const int actorLevel = le->pos[2];
-#if 0
-	/* used to interpolate movement on the radar */
-	const int interpolateX = (int)le->origin[0] % (UNIT_SIZE / 2);
-	const int interpolateY = (int)le->origin[1] % (UNIT_SIZE / 2);
+#ifndef M_PI
+#define M_PI		3.14159265358979323846
 #endif
-	/* relative to screen */
-	const int x = pos[0];
-	const int y = pos[1];
+
+static void MN_RadarNodeGetActorColor (const le_t *le, vec4_t color)
+{
+	const int actorLevel = le->pos[2];
+	Vector4Set(color, 0, 1, 0, 1);
 
 	/* use different alpha values for different levels */
 	if (actorLevel < cl_worldlevel->integer)
@@ -418,45 +416,146 @@ static void MN_DrawActor (const le_t *le, const vec3_t pos)
 
 	/* show dead actors in full black */
 	if (LE_IsDead(le)) {
-		/* low alpha because we want to see items on the floor, too */
 		Vector4Set(color, 0, 0, 0, 0.3);
-	} else {
-		/* draw direction line only for living actors */
-		int verts[4];
-		const float actorDirection = directionAngles[le->dir] * torad;
-		verts[0] = x;
-		verts[1] = y;
-		verts[2] = x + (radar.gridWidth * cos(actorDirection));
-		verts[3] = y - (radar.gridWidth * sin(actorDirection));
-		R_DrawLine(verts, 3);
-
-		/* 120 degree frustum view - see FrustumVis */
-		verts[2] = x + (radar.gridWidth * cos((directionAngles[le->dir] + 60) * torad)) * 5;
-		verts[3] = y - (radar.gridWidth * sin((directionAngles[le->dir] + 60) * torad)) * 5;
-		R_DrawLine(verts, 0.1);
-
-		verts[2] = x + (radar.gridWidth * cos((directionAngles[le->dir] - 60) * torad)) * 5;
-		verts[3] = y - (radar.gridWidth * sin((directionAngles[le->dir] - 60) * torad)) * 5;
-		R_DrawLine(verts, 0.1);
 	}
-
-	/* draw player circles */
-	R_DrawCircle2D(x, y, radar.gridWidth / 2, qtrue, color, 1);
-	if (le->selected)
-		Vector4Set(color, 1.0, 1.0, 1.0, 1.0);
-	else
-		Vector4Set(color, 0.8, 0.8, 0.8, 1.0);
-	/* outline */
-	R_DrawCircle2D(x, y, radar.gridWidth / 2, qfalse, color, 2);
 }
 
+static void MN_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
+{
+	float coords[4 * 2];
+	short vertices[4 * 2];
+	int i;
+	const float size = 10;
+	const int tileSize = 28;
+	int tilePos = 4;
+	const image_t *image;
+	vec4_t color;
+	const float pov = directionAngles[le->dir] * torad + M_PI;
+
+	image = MN_LoadImage("ui/radar");
+	if (image == NULL)
+		return;
+
+	/* draw FOV */
+	if (le->selected) {
+		vertices[0] = - size * 4;
+		vertices[1] = + 0;
+		vertices[2] = + size * 4;
+		vertices[3] = + 0;
+		vertices[4] = + size * 4;
+		vertices[5] = - size * 4;
+		vertices[6] = - size * 4;
+		vertices[7] = - size * 4;
+		coords[0] = (7) / 128.0f;
+		coords[1] = (37 + 63) / 128.0f;
+		coords[2] = (7 + 114) / 128.0f;
+		coords[3] = (37 + 63) / 128.0f;
+		coords[4] = (7 + 114) / 128.0f;
+		coords[5] = (37) / 128.0f;
+		coords[6] = (7) / 128.0f;
+		coords[7] = (37) / 128.0f;
+
+		/* affine transformation */
+		for (i = 0; i < 8; i += 2) {
+			float dx = vertices[i + 0];
+			float dy = vertices[i + 1];
+			vertices[i + 0] = pos[0] + dx * sin(pov) + dy * cos(pov);
+			vertices[i + 1] = pos[1] + dx * cos(pov) - dy * sin(pov);
+		}
+
+		MN_RadarNodeGetActorColor(le, color);
+		Vector4Set(color, 1, 1, 1, color[3] * 0.75);
+		R_Color(color);
+		R_DrawImageArray(coords, vertices, image);
+		R_Color(NULL);
+	}
+
+	if (LE_IsDead(le))
+		tilePos = 4;
+	else if (le->selected)
+		tilePos = 66;
+	else
+		tilePos = 36;
+
+	/* a 0,0 centered square */
+	vertices[0] = - size;
+	vertices[1] = + size;
+	vertices[2] = + size;
+	vertices[3] = + size;
+	vertices[4] = + size;
+	vertices[5] = - size;
+	vertices[6] = - size;
+	vertices[7] = - size;
+	coords[0] = (tilePos) / 128.0f;
+	coords[1] = (5 + tileSize) / 128.0f;
+	coords[2] = (tilePos + tileSize) / 128.0f;
+	coords[3] = (5 + tileSize) / 128.0f;
+	coords[4] = (tilePos + tileSize) / 128.0f;
+	coords[5] = (5) / 128.0f;
+	coords[6] = (tilePos) / 128.0f;
+	coords[7] = (5) / 128.0f;
+
+	/* affine transformation */
+	for (i = 0; i < 8; i += 2) {
+		float dx = vertices[i + 0];
+		float dy = vertices[i + 1];
+		vertices[i + 0] = pos[0] + dx * sin(pov) + dy * cos(pov);
+		vertices[i + 1] = pos[1] + dx * cos(pov) - dy * sin(pov);
+	}
+
+	MN_RadarNodeGetActorColor(le, color);
+	R_Color(color);
+	R_DrawImageArray(coords, vertices, image);
+	R_Color(NULL);
+}
+
+/**
+ * @todo We can merge actor and items draw function
+ */
 static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
 {
-	const vec4_t color = {0, 1, 0, 1};
-	/* relative to screen */
-	const int x = pos[0];
-	const int y = pos[1];
-	MN_DrawFill(x, y, radar.gridWidth, radar.gridHeight, color);
+	float coords[4 * 2];
+	short vertices[4 * 2];
+	vec4_t color;
+	int i;
+	const float size = 10;
+	const int tileSize = 28;
+	int tilePos = 96;
+	const image_t *image;
+
+	image = MN_LoadImage("ui/radar");
+	if (image == NULL)
+		return;
+
+	/* a 0,0 centered square */
+	vertices[0] = - size;
+	vertices[1] = + size;
+	vertices[2] = + size;
+	vertices[3] = + size;
+	vertices[4] = + size;
+	vertices[5] = - size;
+	vertices[6] = - size;
+	vertices[7] = - size;
+	coords[0] = (tilePos) / 128.0f;
+	coords[1] = (5 + tileSize) / 128.0f;
+	coords[2] = (tilePos + tileSize) / 128.0f;
+	coords[3] = (5 + tileSize) / 128.0f;
+	coords[4] = (tilePos + tileSize) / 128.0f;
+	coords[5] = (5) / 128.0f;
+	coords[6] = (tilePos) / 128.0f;
+	coords[7] = (5) / 128.0f;
+
+	/* affine transformation */
+	for (i = 0; i < 8; i += 2) {
+		vertices[i + 0] += pos[0];
+		vertices[i + 1] += pos[1];
+	}
+
+	MN_RadarNodeGetActorColor(le, color);
+	Vector4Set(color, 0, 1, 0, color[3]);
+	R_Color(color);
+	R_DrawImageArray(coords, vertices, image);
+	R_Color(NULL);
 }
 
 /*#define RADARSIZE_DEBUG*/
@@ -560,7 +659,7 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 		switch (le->type) {
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
-			MN_DrawActor(le, itempos);
+			MN_RadarNodeDrawActor(le, itempos);
 			break;
 		case ET_ITEM:
 			MN_RadarNodeDrawItem(le, itempos);
