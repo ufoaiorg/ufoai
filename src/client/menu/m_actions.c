@@ -67,6 +67,7 @@ static const menuTypedActionToken_t actionTokens[] = {
 	{"and", EA_OPERATOR_AND, EA_BINARYOPERATOR},
 	{"call", EA_CALL, EA_ACTION},
 	{"cmd", EA_CMD, EA_ACTION},
+	{"delete", EA_DELETE, EA_ACTION},
 	{"elif", EA_ELIF, EA_ACTION},
 	{"else", EA_ELSE, EA_ACTION},
 	{"eq", EA_OPERATOR_STR_EQ, EA_BINARYOPERATOR},
@@ -417,6 +418,13 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 	case EA_ASSIGN:
 		MN_ExecuteSetAction(source, useCmdParam, action);
 		break;
+
+	case EA_DELETE:
+		{
+			const char* cvarname = action->d.nonTerminal.left->d.terminal.d1.constString;
+			Cvar_Delete(cvarname);
+			break;
+		}
 
 	case EA_WHILE:
 		{

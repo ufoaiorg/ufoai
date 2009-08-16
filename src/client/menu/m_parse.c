@@ -385,6 +385,22 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			}
 			break;
 
+		case EA_DELETE:
+			{
+				menuAction_t *expression;
+				expression = MN_ParseExpression(text, errhead, menuNode);
+				if (expression == NULL)
+					return NULL;
+
+				if (expression->type != EA_VALUE_CVARNAME) {
+					Com_Printf("MN_ParseActionList: \"delete\" keyword only support cvarname (node: %s)\n", MN_GetPath(menuNode));
+					return NULL;
+				}
+
+				action->d.nonTerminal.left = expression;
+				break;
+			}
+
 		case EA_ELIF:
 			/* check previous action */
 			if (!lastAction || (lastAction->type != EA_IF && lastAction->type != EA_ELIF)) {
@@ -392,7 +408,6 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 				return NULL;
 			}
 			/* then it execute EA_IF, no break */
-
 		case EA_WHILE:
 		case EA_IF:
 			{

@@ -186,6 +186,21 @@ window unittest_setter
 		string	"t16"
 	}
 
+	string deleteTitle {
+		pos		"140 40"
+		string	"del"
+	}
+
+	string testDelete1 {
+		pos		"140 60"
+		string	"t1"
+	}
+
+	string testDelete2 {
+		pos		"140 80"
+		string	"t2"
+	}
+
 	//
 	// Cvar tests
 	//
@@ -375,9 +390,20 @@ window unittest_setter
 		cmd "testPropertyInjection 1 2 3"
 	}
 
+	func testDelete {
+		*cvar:foo = "aaaa"
+		if ( exists *cvar:foo ) { *testDelete1@color "0 1 0 1" }
+		else { *testDelete1@color "1 0 0 1" }		
+		delete *cvar:foo
+		if ( exists *cvar:foo ) { *testDelete2@color "1 0 0 1" }
+		else { *testDelete2@color "0 1 0 1" }		
+		
+	}
+
 	func onInit {
 		call testCvar
 		call testProperty
+		call testDelete
 	}
 
 	func onClose {
