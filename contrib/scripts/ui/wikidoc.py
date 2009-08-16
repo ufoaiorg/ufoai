@@ -10,6 +10,18 @@
 import os, os.path, sys
 from ExtractNodeBehaviour import *
 
+def genPropertyDoc(element):
+	result = ""
+	
+	for d in element.doc:
+		if d.startswith("@todo"):
+			result += '<div style="border:2px solid red;padding:2px;">' + d + '</div> '
+		elif d.startswith("@"):
+			result += '<div style="border:2px solid green;padding:2px;">' + d + '</div> '
+		else:
+			result += d + ' '
+	return result
+
 def genBehaviourDoc(node):
 	result = ""
 	label = ""
@@ -31,21 +43,21 @@ def genBehaviourDoc(node):
 		for name in list:
 			e = node.properties[name]
 			result += '|-\n'
-			result += '| ' + e.name + ' || [[' + e.type + ']] || ' + e.doc + '\n'
+			result += '| ' + e.name + ' || [[' + e.type + ']] || ' + genPropertyDoc(e) + '\n'
 			pass
 		list = node.methods.keys()
 		list.sort()
 		for name in list:
 			e = node.methods[name]
 			result += '|-\n'
-			result += '| ' + e.name + ' || [[' + e.type + ']] || ' + e.doc + '\n'
+			result += '| ' + e.name + ' || [[' + e.type + ']] || ' + genPropertyDoc(e) + '\n'
 			pass
 		list = node.confuncs.keys()
 		list.sort()
 		for name in list:
 			e = node.confuncs[name]
 			result += '|-\n'
-			result += '| ' + e.name + ' || [[' + e.type + ']] || ' + e.doc + '\n'
+			result += '| ' + e.name + ' || [[' + e.type + ']] || ' + genPropertyDoc(e) + '\n'
 			pass
 		result += '|}\n'
 

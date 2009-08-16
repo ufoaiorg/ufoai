@@ -14,10 +14,13 @@ dir = UFOAI_ROOT + '/src/client/menu/node'
 
 class Element:
 	def __init__(self, name, type):
-		self.doc = ""
+		self.doc = []
 		self.name = name
 		self.type = type
 		pass
+		
+	def addDoc(self, comments):
+		self.doc = comments
 
 class NodeBehaviour:
 
@@ -72,10 +75,20 @@ class ExtractNodeBehaviour:
 		properties = properties[i+1:j]
 
 		result = {}
-		for line in properties.split('},'):
+		comments = []
+		for line in properties.splitlines():
+			line = line.strip()
+			
+			if line.startswith("/*"):
+				line = line.replace('/**', '').replace('/*', '').replace('*/', '')
+				line = line.strip()
+				comments.append(line)
+				continue
+			
 			i = line.find('{')
 			if i == -1:
 				continue
+
 			line = line[i+1:]
 			e = line.split(',')
 
@@ -89,7 +102,9 @@ class ExtractNodeBehaviour:
 			type = e[1].strip()
 			
 			element = Element(name, type)
+			element.addDoc(comments)
 			node.addProperty(element)
+			comments = []
 
 	# @brief Extract each body of registration function into a text
 	def extractRegistrationFunctions(self, filedata):
