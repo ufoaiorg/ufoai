@@ -30,15 +30,6 @@ window aircraft_equip extends iaircraft
 	// functions
 	// ==================
 
-	confunc airequip_zone2_off
-	{
-		*airequip_header2@invis = true
-	}
-	confunc airequip_zone2_on
-	{
-		*airequip_header2@invis = false
-	}
-
 	func airequip_zone1
 	{
 		cmd "airequip_zone_select 1; airequip_updatemenu;"
@@ -96,6 +87,16 @@ window aircraft_equip extends iaircraft
 		}
 	}
 
+	todo unusable_item {
+		pos		"320 700"
+		string	"Display here the reason why we can't use an item"
+	}
+
+	todo move_add_button {
+		pos		"320 715"
+		string	"Move the button to add items here"
+	}
+
 	vscrollbar airequip_seldesc_scroll {
 		image		ui/scrollbar_v_green
 		pos			"535 623"
@@ -127,75 +128,49 @@ window aircraft_equip extends iaircraft
 
 	}
 
-	custombutton bt_prev_craftitemtype
+	selectbox craftitemtypeselector
 	{
-		tooltip		"_Previous category"
-		pos			"28 492"
-		size		"35 35"
-		icon		prev
-		onClick		{
-			*cvar:mn_itemname = ""
-			*cvar:mn_upmodel_top = ""
-			cmd "mn_prev_equiptype;"
+		cvar		*cvar:mn_equip_itemtype
+		image		"ui/selectbox_green"
+		pos			"53 497"
+		size		"125 20"
+		color		"0.6 0.6 0.6 0.3"
+		option armour {
+			label	"_Armour"
+			value	"armour"
 		}
-		onWheelUp	{
-			*cvar:mn_itemname = ""
-			*cvar:mn_upmodel_top = ""
-			cmd "mn_next_equiptype;"
+		option items {
+			label	"_Items"
+			value	"item"
 		}
-		onWheelDown	{
-			*cvar:mn_itemname = ""
-			*cvar:mn_upmodel_top = ""
-			cmd "mn_prev_equiptype;"
+		option weapons {
+			label	"_Weapons"
+			value	"weapon"
+		}
+		option ammo {
+			label	"_Ammo"
+			value	"ammo"
+		}
+		onChange {
+			cmd "airequip_selectcategory <cvar:mn_equip_itemtype>"
 		}
 	}
 
-	custombutton bt_next_craftitemtype
-	{
-		tooltip		"_Next category"
-		pos			"238 492"
-		size		"35 35"
-		icon		next
-		onClick		{
-			*cvar:mn_itemname = ""
-			*cvar:mn_upmodel_top = ""
-			cmd "mn_next_equiptype;"
-		}
-		onWheelUp	{
-			*cvar:mn_itemname = ""
-			*cvar:mn_upmodel_top = ""
-			cmd "mn_next_equiptype;"
-		}
-		onWheelDown	{
-			*cvar:mn_itemname = ""
-			*cvar:mn_upmodel_top = ""
-			cmd "mn_prev_equiptype;"
-		}
+	todo disable_items {
+		pos		"40 540"
+		string	"Disable items we can't apply on the current slot"
 	}
 
-	string craftitemtype
-	{
-		string		"*cvar:mn_equip_itemtype_name"
-		pos			"87 498"
-		size		"120 16"
-		textalign	cc
-		onWheelUp	{
-			*cvar:mn_itemname = ""
-			*cvar:mn_upmodel_top = ""
-			cmd "mn_prev_equiptype;"
-		}
-		onWheelDown	{
-			*cvar:mn_itemname = ""
-			*cvar:mn_upmodel_top = ""
-			cmd "mn_next_equiptype;"
-		}
+	todo count_items {
+		pos		"40 555"
+		string	"Display item count"
 	}
 
 	textlist airequip_list
 	{
 		dataid		TEXT_LIST
-		pos			"42 606"
-		size		"248 140"
+		pos			"54 529"
+		size		"215 209"
 		lineheight	"20"
 		rows		"7"
 		color		"0 .78 0 1"
@@ -227,6 +202,11 @@ window aircraft_equip extends iaircraft
 		texl		"128 0"
 		icon		minus
 		onClick		{ cmd "airequip_del_item 1;" }
+	}
+
+	todo add_ammoo_unprotected {
+		pos		"575 670"
+		string	"Apply ammo into a weapon is not protected. We can apply anything we want."
 	}
 
 	custombutton airequip_button_add2
@@ -481,6 +461,32 @@ window aircraft_equip extends iaircraft
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 		view		item
+	}
+
+	// ==================
+	// functions
+	// ==================
+
+	confunc airequip_zone2_off
+	{
+		*airequip_header2@invis = true
+		*airequip_text_zone2@invis = true
+		*airequip_zone_select2@invis = true
+		*airequip_button_remove2@invis = true
+		*airequip_button_add2@invis = true
+		*equipment_background@texh = "432 160"
+		*equipment_background@size = "432 160"
+	}
+	
+	confunc airequip_zone2_on
+	{
+		*airequip_header2@invis = false
+		*airequip_text_zone2@invis = false
+		*airequip_zone_select2@invis = false
+		*airequip_button_remove2@invis = false
+		*airequip_button_add2@invis = false
+		*equipment_background@texh = "432 293"
+		*equipment_background@size = "432 293"
 	}
 
 	// ==================

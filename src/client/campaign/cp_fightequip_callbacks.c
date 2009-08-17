@@ -124,14 +124,6 @@ static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 	/* You can choose an ammo only if a weapon has already been selected */
 	if (airequipID >= AC_ITEM_AMMO && !slot->item) {
 		airequipSelectedZone = ZONE_MAIN;
-		switch (airequipID) {
-		case AC_ITEM_AMMO:
-			airequipID = AC_ITEM_WEAPON;
-			break;
-		default:
-			Com_Printf("AIM_CheckAirequipSelectedZone: aircraftItemType_t must end with ammos !!!\n");
-			return;
-		}
 	}
 }
 
@@ -181,6 +173,43 @@ static inline const char *AIM_AircraftItemtypeName (const int equiptype)
 }
 
 /**
+ * @brief True if the tech is available and mach the filter
+ * @
+ */
+static qboolean AIM_CrafttypeFilter (base_t *base, int filterType, const technology_t *tech)
+{
+	objDef_t *item;
+	if (!base)
+		return qfalse;
+
+	if (!RS_IsResearched_ptr(tech))
+		return qfalse;
+
+	item = AII_GetAircraftItemByID(tech->provides);
+	if (!item)
+		return qfalse;
+
+	if (base->storage.num[item->idx] <= 0)
+		return qfalse;
+
+	/* filter by type: special case for ammo because more than 1 type is an ammo type */
+	if (filterType != AC_ITEM_AMMO) {
+		if (item->craftitem.type != filterType)
+			return qfalse;
+	} else {
+		if (item->craftitem.type < AC_ITEM_AMMO)
+			return qfalse;
+	}
+
+	/* you can't install an item that does not have an installation time (alien item)
+	 * except for ammo which does not have installation time */
+	if (item->craftitem.installationTime == -1 && filterType >= AC_ITEM_AMMO)
+		return qfalse;
+
+	return qtrue;
+}
+
+/**
  * @brief Update the list of item you can choose
  * @param[in] slot Pointer to aircraftSlot where items can be equiped
  * @param[in] tech Pointer to the technolgy to select if needed (NULL if no selected technology).
@@ -193,12 +222,15 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot, const techno
 	assert(slot);
 
 	/* Add all items corresponding to airequipID to list */
-	list = AII_GetCraftitemTechsByType(slot->type);
+	list = AII_GetCraftitemTechsByType(airequipID);
 
 	/* Copy only those which are researched to buffer */
 	while (*list) {
-		if (AIM_SelectableCraftItem(slot, *list))
+		if (AIM_CrafttypeFilter(slot->aircraft->homebase, airequipID, *list)) {
+			/** @todo disable unusable thing for the current slot here */
+			/** @todo compute item count here */
 			LIST_AddString(&itemList, _((*list)->name));
+		}
 		list++;
 	}
 
@@ -206,25 +238,6 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot, const techno
 	MN_RegisterLinkedListText(TEXT_LIST, itemList);
 }
 
-/**
- * @brief Highlight selected zone
- */
-static void AIM_DrawSelectedZone (void)
-{
-	menuNode_t *node;
-
-	node = MN_GetNodeByPath("aircraft_equip.airequip_zone_select1");
-	if (airequipSelectedZone == ZONE_MAIN)
-		MN_HideNode(node);
-	else
-		MN_UnHideNode(node);
-
-	node = MN_GetNodeByPath("aircraft_equip.airequip_zone_select2");
-	if (airequipSelectedZone == ZONE_AMMO)
-		MN_HideNode(node);
-	else
-		MN_UnHideNode(node);
-}
 /**
  * @brief Draw only slots existing for this aircraft, and emphases selected one
  * @return[out] aircraft Pointer to the aircraft
@@ -320,6 +333,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 {
 	static char smallbuffer1[256];
 	static char smallbuffer2[128];
+	const char *typeName;
 	int type;
 	menuNode_t *node;
 	aircraft_t *aircraft;
@@ -344,15 +358,12 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	} else {
 		type = atoi(Cmd_Argv(1));
 		switch (type) {
-		case AC_ITEM_AMMO:
-			if (airequipID == AC_ITEM_WEAPON)
-				airequipID = AC_ITEM_AMMO;
-			break;
 		case AC_ITEM_ELECTRONICS:
 		case AC_ITEM_SHIELD:
 			airequipID = type;
 			MN_ExecuteConfunc("airequip_zone2_off");
 			break;
+		case AC_ITEM_AMMO:
 		case AC_ITEM_WEAPON:
 			airequipID = type;
 			MN_ExecuteConfunc("airequip_zone2_on");
@@ -392,6 +403,21 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	AIM_UpdateAircraftItemList(slot, AII_GetTechnologyToDisplay(slot));
 
 	Cvar_Set("mn_equip_itemtype_name", AIM_AircraftItemtypeName(airequipID));
+	switch (airequipID) {
+	case AC_ITEM_ELECTRONICS:
+		typeName = "item";
+		break;
+	case AC_ITEM_SHIELD:
+		typeName = "armour";
+		break;
+	case AC_ITEM_AMMO:
+		typeName = "ammo";
+		break;
+	case AC_ITEM_WEAPON:
+		typeName = "weapon";
+		break;
+	}
+	Cvar_Set("mn_equip_itemtype", typeName);
 
 	/* First slot: item currently assigned */
 	if (!slot->item) {
@@ -446,9 +472,6 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 
 	/* Draw existing slots for this aircraft */
 	AIM_DrawAircraftSlots(aircraft);
-
-	/* Draw selected zone */
-	AIM_DrawSelectedZone();
 }
 
 /**
@@ -564,9 +587,6 @@ void AIM_AircraftEquipZoneSelect_f (void)
 
 	/* Check that the selected zone is OK */
 	AIM_CheckAirequipSelectedZone(slot);
-
-	/* Draw selected zone */
-	AIM_DrawSelectedZone();
 }
 
 /**
@@ -774,7 +794,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 		slot = AII_SelectAircraftSlot(aircraft, airequipID);
 	if (slot)
 		while (*list) {
-			if (AIM_SelectableCraftItem(slot, *list)) {
+			if (AIM_CrafttypeFilter(aircraft->homebase, airequipID, *list)) {
 				/* found it */
 				if (num <= 0) {
 					airequipSelectedTechnology = *list;
@@ -813,6 +833,35 @@ static void AIM_NextItemtype_f (void)
 	/* you should never be able to reach ammo by using this button */
 	airequipSelectedZone = ZONE_MAIN;
 
+	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
+}
+
+
+/**
+ * @brief Update the GUI with a named itemtype
+ */
+static void AIM_AircraftItemtypeByName_f (void)
+{
+	int i;
+	const char *name;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <weapon|ammo|armour|item>\n", Cmd_Argv(0));
+		return;
+	}
+
+	name = Cmd_Argv(1);
+
+	if (!strcmp(name, "weapon"))
+		i = AC_ITEM_WEAPON;
+	else if (!strcmp(name, "ammo"))
+		i = AC_ITEM_AMMO;
+	else if (!strcmp(name, "armour"))
+		i = AC_ITEM_SHIELD;
+	else if (!strcmp(name, "item"))
+		i = AC_ITEM_ELECTRONICS;
+
+	airequipID = i;
 	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
 }
 
@@ -1365,6 +1414,7 @@ void AIM_InitCallbacks (void)
 	Cmd_AddCommand("airequip_zone_select", AIM_AircraftEquipZoneSelect_f, NULL);
 
 	Cmd_AddCommand("airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu");
+	Cmd_AddCommand("airequip_selectcategory", AIM_AircraftItemtypeByName_f, "Select an item category and update the GUI");
 	Cmd_AddCommand("airequip_list_click", AIM_AircraftEquipMenuClick_f, NULL);
 	Cmd_AddCommand("airequip_slot_select", AIM_AircraftEquipSlotSelect_f, NULL);
 	Cmd_AddCommand("airequip_add_item", AIM_AircraftEquipAddItem_f, "Add item to slot");
