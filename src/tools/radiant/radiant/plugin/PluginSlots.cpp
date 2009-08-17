@@ -104,7 +104,7 @@ void CPluginSlots::PopulateMenu (PluginsVisitor& menu)
 	}
 }
 
-// Dispatches a command to all the plugins  
+// Dispatches a command to all the plugins
 bool CPluginSlots::Dispatch (std::size_t n, const std::string& p)
 {
 	std::list<CPluginSlot *>::iterator iPlug;

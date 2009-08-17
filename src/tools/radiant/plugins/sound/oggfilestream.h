@@ -4,8 +4,8 @@
 /** greebo: A wrapper class for use with the ov_open_callbacks() method
  * 			in vorbsfile.h. This provides the four callback
  * 			functions required by the OGG libs, simulating a file stream.
- * 
- * 			Parts of this code has been written after 
+ *
+ * 			Parts of this code has been written after
  * 			http://www.devmaster.net/articles/openal-ogg-file/
  */
 namespace sound

@@ -2,14 +2,14 @@
 #define WAVEFRONTBRUSHVISITOR_H_
 
 /* greebo: This visits every brush/face and exports it into the given TextFileOutputStream
- * 
- * Inherits from BrushVisitor class in radiant/brush.h 
+ *
+ * Inherits from BrushVisitor class in radiant/brush.h
  */
 #include "../brush.h"	// for BrushVisitor declaration
 #include "stream/stringstream.h"
 #include "stream/textfilestream.h"
 
-/* Exporterclass which will pass every visit-call to a special formatexporter. 
+/* Exporterclass which will pass every visit-call to a special formatexporter.
  */
 class CExportFormatWavefront: public BrushVisitor
 {

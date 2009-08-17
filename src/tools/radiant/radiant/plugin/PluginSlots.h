@@ -2,7 +2,7 @@
 #define PLUGINSLOTS_H_
 
 /* greebo: A plugin is contained in the class CPluginSlot and multiple PluginSlots are
- * owned by the class CPluginSlots. 
+ * owned by the class CPluginSlots.
  */
 
 #include <list>
@@ -15,9 +15,9 @@ typedef struct _GtkWidget GtkWidget;
 
 // =================================================================================
 
-/* greebo: This is a PlugInSlot containing a single plugin. It maintains a list of 
+/* greebo: This is a PlugInSlot containing a single plugin. It maintains a list of
  * commands that are necessary to integrate it into the radiant core and the
- * plugin interface. 
+ * plugin interface.
  */
 class CPluginSlot: public IPlugin
 {

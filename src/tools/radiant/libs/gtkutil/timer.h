@@ -5,7 +5,7 @@
 
 /* greebo: This is an encapsulation of the gtk_timeout_ methods that
  * periodically call a certain function in the given intervals (resolution: 1 ms).
- * 
+ *
  * Instantiate this Timer with a timeout in ms and a GTK-compatible callback.
  * (e.g. a static member function that can be cast by using G_CALLBACK()).
  */

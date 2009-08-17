@@ -20,16 +20,16 @@
  */
 
 /* greebo: The plugin system is organised like this:
- * 
+ *
  * Each PlugIn is "stored" in a CPluginSlot class. All of these slots are stored
  * in a list owned by the surrounding CPlugInSlots class (note the plural s :).
- * 
+ *
  * The class CPlugInSlots is in turn controlled by the CPluginManager class, which
- * passes its calles to the according CPlugInSlots methods. 
- * 
+ * passes its calles to the according CPlugInSlots methods.
+ *
  * If the "world" calls a method, the call is dispatched this way:
- * "World" > CPluginManager > CPlugInSlots > CPluginSlot 
- *  
+ * "World" > CPluginManager > CPlugInSlots > CPluginSlot
+ *
  */
 
 #if !defined(INCLUDED_PLUGINMANAGER_H)
