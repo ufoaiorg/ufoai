@@ -12,7 +12,7 @@ from ExtractNodeBehaviour import *
 
 def genPropertyDoc(element):
 	result = ""
-	
+
 	for d in element.doc:
 		if d.startswith("@todo"):
 			result += '<div style="border:2px solid red;padding:2px;">' + d + '</div> '
@@ -37,7 +37,7 @@ def genBehaviourDoc(node):
 		result += '\n'
 		result += '{| border="1" cellpadding="5" cellspacing="0"\n'
 		result += '! Name !! Type !! Description\n'
-		
+
 		list = node.properties.keys()
 		list.sort()
 		for name in list:

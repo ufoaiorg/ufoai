@@ -18,7 +18,7 @@ class Element:
 		self.name = name
 		self.type = type
 		pass
-		
+
 	def addDoc(self, comments):
 		self.doc = comments
 
@@ -63,7 +63,7 @@ class ExtractNodeBehaviour:
 
 	def getBehaviours(self):
 		return self.behaviours
-		
+
 	# @brief Extract each properties into a text according to the structure name
 	def extractProperties(self, node, filedata, structName):
 		signature = "const value_t %s[]" % structName
@@ -78,13 +78,13 @@ class ExtractNodeBehaviour:
 		comments = []
 		for line in properties.splitlines():
 			line = line.strip()
-			
+
 			if line.startswith("/*"):
 				line = line.replace('/**', '').replace('/*', '').replace('*/', '')
 				line = line.strip()
 				comments.append(line)
 				continue
-			
+
 			i = line.find('{')
 			if i == -1:
 				continue
@@ -100,7 +100,7 @@ class ExtractNodeBehaviour:
 				continue
 
 			type = e[1].strip()
-			
+
 			element = Element(name, type)
 			element.addDoc(comments)
 			node.addProperty(element)
@@ -109,10 +109,10 @@ class ExtractNodeBehaviour:
 	# @brief Extract each body of registration function into a text
 	def extractRegistrationFunctions(self, filedata):
 		result = []
-		
+
 		register = filedata.split("\nvoid MN_Register")
 		register.pop(0)
-		
+
 		for body in register:
 			body = body.split('{')[1]
 			body = body.split('}')[0]
@@ -143,7 +143,7 @@ class ExtractNodeBehaviour:
 					if v[0] == '"':
 						v = v[1:len(v)-1]
 					dic[e[0].strip()] = v
-				
+
 				node = NodeBehaviour()
 				node.init(dic)
 				if 'properties' in dic:
