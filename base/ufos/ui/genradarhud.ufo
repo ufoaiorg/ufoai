@@ -24,7 +24,7 @@ window genradarhud extends ahud
 	{
 		pos		"0 0"
 		size	"1024 768"
-		num			10	/* fill layout */
+		num		10	/* fill layout */
 	}
 
 	// ==================
@@ -37,25 +37,25 @@ window genradarhud extends ahud
 
 	panel mapborder {
 		bordercolor	"1 0 0 1"
-		border 2
+		border		2
 	}
 
 	panel control {
 		{
-			pos "0 0"
-			size "255 200"
+			pos		"0 0"
+			size	"255 200"
 			num		1	/* float top-left */
 		}
 
 		button reinit
 		{
-			pos	"5 5"
-			size "250 30"
-			image	ui/button_green_small
-			font	f_small
-			color	"0 0.5 0 1"
-			selectcolor "1 1 1 1"
-			string	"_Reinit"
+			pos			"5 5"
+			size		"250 30"
+			image		ui/button_green_small
+			font		f_small
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			string		"_Reinit"
 			onClick {
 				*mapborder@invis = true
 				cmd "r_isometric 1;centercamera;camsetangles 90 90;camsetzoom 0.5;"
@@ -64,13 +64,13 @@ window genradarhud extends ahud
 
 		button preview
 		{
-			pos	"5 40"
-			size "250 30"
-			image	ui/button_green_small
-			font	f_small
-			color	"0 0.5 0 1"
-			selectcolor "1 1 1 1"
-			string	"_Preview"
+			pos			"5 40"
+			size		"250 30"
+			image		ui/button_green_small
+			font		f_small
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			string		"_Preview"
 			onClick {
 				*control@invis = true
 				*mapborder@invis = true
@@ -80,13 +80,13 @@ window genradarhud extends ahud
 
 		button genlevel
 		{
-			pos	"5 75"
-			size "250 30"
-			image	ui/button_green_small
-			font	f_small
-			color	"0 0.5 0 1"
-			selectcolor "1 1 1 1"
-			string	"_Gen this level"
+			pos			"5 75"
+			size		"250 30"
+			image		ui/button_green_small
+			font		f_small
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			string		"_Gen this level"
 			onClick {
 				*mapborder@invis = true
 				cmd "mn_genradarmap"
@@ -95,13 +95,13 @@ window genradarhud extends ahud
 
 		button genalllevels
 		{
-			pos	"5 110"
-			size "250 30"
-			image	ui/button_green_small
-			font	f_small
-			color	"0 0.5 0 1"
-			selectcolor "1 1 1 1"
-			string	"_Gen all levels"
+			pos			"5 110"
+			size		"250 30"
+			image		ui/button_green_small
+			font		f_small
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			string		"_Gen all levels"
 			onClick {
 				*cvar:scr_showcursor = 0
 				*control@invis = true
