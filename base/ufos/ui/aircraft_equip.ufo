@@ -204,11 +204,6 @@ window aircraft_equip extends iaircraft
 		onClick		{ cmd "airequip_del_item 1;" }
 	}
 
-	todo add_ammoo_unprotected {
-		pos		"575 670"
-		string	"Apply ammo into a weapon is not protected. We can apply anything we want."
-	}
-
 	custombutton airequip_button_add2
 	{
 		tooltip		"_Add selected item"

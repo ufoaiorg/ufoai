@@ -507,8 +507,11 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *slot)
 {
 	const objDef_t *ammo;
+	int k;
 
-	assert(slot);
+	if (slot == NULL || slot->item == NULL)
+		return qfalse;
+
 	assert(tech);
 
 	ammo = AII_GetAircraftItemByID(tech->provides);
@@ -516,6 +519,15 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 		Com_Printf("AII_AddAmmoToSlot: Could not add item (%s) to slot\n", tech->provides);
 		return qfalse;
 	}
+
+	/* Is the ammo is usable with the slot */
+	for (k = 0; k < slot->item->numAmmos; k++) {
+		const objDef_t *usable = slot->item->ammos[k];
+		if (usable && ammo->idx == usable->idx)
+			break;
+	}
+	if (k >= slot->item->numAmmos)
+		return qfalse;
 
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO
 	 * and base ammo defence are not stored in storage */
