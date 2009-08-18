@@ -834,6 +834,66 @@ void AIM_AircraftEquipMenuClick_f (void)
 		}
 }
 
+/**
+ * @brief Set airequipSelectedTechnology to the technology of current selected aircraft item.
+ * @sa AIM_AircraftEquipMenuUpdate_f
+ */
+static void BDEF_AircraftEquipMenuClick_f (void)
+{
+	aircraft_t *aircraft;
+	int num;
+	technology_t **list;
+	installation_t* installation = INS_GetCurrentSelectedInstallation();
+	base_t *base = B_GetCurrentSelectedBase();
+	aircraftSlot_t *slot = NULL;
+
+	if ((!base && !installation) || (base && installation) || airequipID == -1)
+		return;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	/* check in which menu we are */
+	if (!strcmp(MN_GetActiveMenuName(), "aircraft_equip")) {
+		if (base->aircraftCurrent == NULL)
+			return;
+		aircraft = base->aircraftCurrent;
+		base = NULL;
+		installation = NULL;
+	} else if (!strcmp(MN_GetActiveMenuName(), "basedefence")) {
+		aircraft = NULL;
+	} else
+		return;
+
+	/* Which entry in the list? */
+	num = atoi(Cmd_Argv(1));
+
+	/* make sure that airequipSelectedTechnology is NULL if no tech is found */
+	airequipSelectedTechnology = NULL;
+
+	/* build the list of all aircraft items of type airequipID - null terminated */
+	list = AII_GetCraftitemTechsByType(airequipID);
+	/* to prevent overflows we go through the list instead of address it directly */
+	if (aircraft)
+		slot = AII_SelectAircraftSlot(aircraft, airequipID);
+	if (slot)
+		while (*list) {
+			if (AIM_SelectableCraftItem(slot, *list)) {
+				/* found it */
+				if (num <= 0) {
+					airequipSelectedTechnology = *list;
+					UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides));
+					break;
+				}
+				num--;
+			}
+			/* next item in the tech pointer list */
+			list++;
+		}
+}
+
 void AIM_ResetEquipAircraftMenu (void)
 {
 	/* Reset all used menu variables/nodes. */
@@ -1449,7 +1509,7 @@ void AIM_InitCallbacks (void)
 	Cmd_AddCommand("add_battery", BDEF_AddBattery_f, "Add a new battery to base");
 	Cmd_AddCommand("remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base");
 	Cmd_AddCommand("basedef_updatemenu", BDEF_BaseDefenseMenuUpdate_f, "Inits base defence menu");
-	Cmd_AddCommand("basedef_list_click", AIM_AircraftEquipMenuClick_f, NULL);
+	Cmd_AddCommand("basedef_list_click", BDEF_AircraftEquipMenuClick_f, NULL);
 	Cmd_AddCommand("basedef_additem", BDEF_AddItem_f, "Add item to slot");
 	Cmd_AddCommand("basedef_removeitem", BDEF_RemoveItem_f, "Remove item from slot");
 	Cmd_AddCommand("basedef_autofire", BDEF_ChangeAutoFire, "Change autofire option for selected defence system");
