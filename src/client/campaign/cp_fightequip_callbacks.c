@@ -239,6 +239,32 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot, const techno
 }
 
 /**
+ * @brief Update the list of item you can choose
+ * @param[in] slot Pointer to aircraftSlot where items can be equiped
+ * @param[in] tech Pointer to the technolgy to select if needed (NULL if no selected technology).
+ */
+static void BDEF_UpdateAircraftItemList (const aircraftSlot_t *slot, const technology_t *tech)
+{
+	linkedList_t *itemList = NULL;
+	technology_t **list;
+
+	assert(slot);
+
+	/* Add all items corresponding to airequipID to list */
+	list = AII_GetCraftitemTechsByType(slot->type);
+
+	/* Copy only those which are researched to buffer */
+	while (*list) {
+		if (AIM_SelectableCraftItem(slot, *list))
+			LIST_AddString(&itemList, _((*list)->name));
+		list++;
+	}
+
+	/* copy buffer to mn.menuText to display it on screen */
+	MN_RegisterLinkedListText(TEXT_LIST, itemList);
+}
+
+/**
  * @brief Draw only slots existing for this aircraft, and emphases selected one
  * @return[out] aircraft Pointer to the aircraft
  */
@@ -1013,7 +1039,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 			Q_strncpyz(defBuffer, _("No defence of this type in this installation"), lengthof(defBuffer));
 			LIST_AddString(&slotList, defBuffer);
 		} else {
-			AIM_UpdateAircraftItemList(&installation->batteries[0].slot, NULL);
+			BDEF_UpdateAircraftItemList(&installation->batteries[0].slot, NULL);
 			for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
 				if (!installation->batteries[i].slot.item) {
 					Com_sprintf(defBuffer, lengthof(defBuffer), _("Slot %i:\tempty"), i);
@@ -1041,7 +1067,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 			Q_strncpyz(defBuffer, _("No defence of this type in this base"), lengthof(defBuffer));
 			LIST_AddString(&slotList, defBuffer);
 		} else {
-			AIM_UpdateAircraftItemList(&base->batteries[0].slot, NULL);
+			BDEF_UpdateAircraftItemList(&base->batteries[0].slot, NULL);
 			for (i = 0; i < base->numBatteries; i++) {
 				if (!base->batteries[i].slot.item) {
 					Com_sprintf(defBuffer, lengthof(defBuffer), _("Slot %i:\tempty"), i);
@@ -1069,7 +1095,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 			Q_strncpyz(defBuffer, _("No defence of this type in this base"), lengthof(defBuffer));
 			LIST_AddString(&slotList, defBuffer);
 		} else {
-			AIM_UpdateAircraftItemList(&base->lasers[0].slot, NULL);
+			BDEF_UpdateAircraftItemList(&base->lasers[0].slot, NULL);
 			for (i = 0; i < base->numLasers; i++) {
 				if (!base->lasers[i].slot.item) {
 					Com_sprintf(defBuffer, lengthof(defBuffer), _("Slot %i:\tempty"), i);
