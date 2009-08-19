@@ -1799,8 +1799,10 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 
 			GtkTreeView * view = GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
 			gtk_tree_view_set_enable_search(view, FALSE);
+#if GTK_CHECK_VERSION(2,12,0)
 			gtk_tree_view_set_show_expanders(view, FALSE);
 			gtk_tree_view_set_level_indentation(view, 10);
+#endif
 			/* expand all rows after the treeview widget has been realized */
 			g_signal_connect(view, "realize", G_CALLBACK(gtk_tree_view_expand_all), NULL);
 			{
