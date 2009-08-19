@@ -376,7 +376,11 @@ static void compileReadProgress (void *ex, void *buffer)
 	} else {
 		const char **step = steps;
 		while (*step) {
+#if GLIB_CHECK_VERSION(2,16,0)
 			if (g_strcmp0(*step, buf)) {
+#else
+			if (buf != 0 && strcmp(*step,buf)) {
+#endif
 				job->parse_progress = TRUE;
 				break;
 			}
