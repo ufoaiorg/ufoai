@@ -335,7 +335,9 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 		gtk_tree_view_set_search_column(GTK_TREE_VIEW(view), PREFAB_SHORTNAME);
 		gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(view), TRUE);
 		gtk_tree_view_set_headers_clickable(GTK_TREE_VIEW(view), TRUE);
+#if GTK_CHECK_VERSION(2,10,0)
 		gtk_tree_view_set_grid_lines(GTK_TREE_VIEW(view), GTK_TREE_VIEW_GRID_LINES_HORIZONTAL);
+#endif
 		g_signal_connect(G_OBJECT(view), "button_press_event", G_CALLBACK(PrefabList_button_press), 0);
 
 		{
