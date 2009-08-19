@@ -355,7 +355,7 @@ static inline void AIM_NoEmphazeAmmoSlotText (void)
  * @brief Fills the weapon and shield list of the aircraft equip menu
  * @sa AIM_AircraftEquipMenuClick_f
  */
-void AIM_AircraftEquipMenuUpdate_f (void)
+static void AIM_AircraftEquipMenuUpdate_f (void)
 {
 	static char smallbuffer1[256];
 	static char smallbuffer2[128];
@@ -507,7 +507,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
  * @brief Select the current slot you want to assign the item to.
  * @note This function is only for aircraft and not far bases.
  */
-void AIM_AircraftEquipSlotSelect_f (void)
+static void AIM_AircraftEquipSlotSelect_f (void)
 {
 	int i, pos;
 	aircraft_t *aircraft;
@@ -565,7 +565,7 @@ void AIM_AircraftEquipSlotSelect_f (void)
 /**
  * @brief Select the current zone you want to assign the item to.
  */
-void AIM_AircraftEquipZoneSelect_f (void)
+static void AIM_AircraftEquipZoneSelect_f (void)
 {
 	int zone;
 	aircraft_t *aircraft;
@@ -623,7 +623,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
  * @note Called from airequip menu
  * @sa aircraftItemType_t
  */
-void AIM_AircraftEquipAddItem_f (void)
+static void AIM_AircraftEquipAddItem_f (void)
 {
 	int zone;
 	aircraftSlot_t *slot;
@@ -713,7 +713,7 @@ void AIM_AircraftEquipAddItem_f (void)
 /**
  * @brief Delete an object from a zone.
  */
-void AIM_AircraftEquipDeleteItem_f (void)
+static void AIM_AircraftEquipDeleteItem_f (void)
 {
 	int zone;
 	aircraftSlot_t *slot;
@@ -781,7 +781,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
  * @brief Set airequipSelectedTechnology to the technology of current selected aircraft item.
  * @sa AIM_AircraftEquipMenuUpdate_f
  */
-void AIM_AircraftEquipMenuClick_f (void)
+static void AIM_AircraftEquipMenuClick_f (void)
 {
 	aircraft_t *aircraft;
 	int num;
@@ -895,16 +895,6 @@ static void BDEF_AircraftEquipMenuClick_f (void)
 			/* next item in the tech pointer list */
 			list++;
 		}
-}
-
-void AIM_ResetEquipAircraftMenu (void)
-{
-	/* Reset all used menu variables/nodes. */
-	Cvar_Set("mn_itemname", "");
-	Cvar_Set("mn_item", "");
-	Cvar_Set("mn_upmodel_top", "");
-
-	MN_RegisterText(TEXT_STANDARD, "");
 }
 
 /**

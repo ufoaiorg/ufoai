@@ -25,14 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CAMPAIGN_CL_FIGHTEQUIP_CALLBACKS_H
 #define CLIENT_CAMPAIGN_CL_FIGHTEQUIP_CALLBACKS_H
 
-void AIM_AircraftEquipMenuUpdate_f(void);
-void AIM_AircraftEquipSlotSelect_f(void);
-void AIM_AircraftEquipZoneSelect_f(void);
-void AIM_AircraftEquipAddItem_f(void);
-void AIM_AircraftEquipDeleteItem_f(void);
-void AIM_AircraftEquipMenuClick_f(void);
-void AIM_ResetEquipAircraftMenu(void);
-
 aircraftSlot_t *AII_SelectAircraftSlot(aircraft_t *aircraft, const int airequipID);
 aircraftSlot_t *BDEF_SelectBaseSlot(base_t *base, const int airequipID);
 aircraftSlot_t *BDEF_SelectInstallationSlot(installation_t *installation, const int airequipID);
