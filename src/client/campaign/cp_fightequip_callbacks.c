@@ -1056,10 +1056,13 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 		Cmd_ExecuteString(va("setautofire %i", installation->batteries[0].autofire));
 	} else if (base) {
 		/** Every slot aims the same target */
-		if (base->numBatteries && base->batteries[0].target) {
+		if (base->numBatteries && base->batteries[0].target)
 			Cvar_ForceSet("mn_target", UFO_AircraftToIDOnGeoscape(base->batteries[0].target));
-		} else
+		else if (base->numLasers && base->lasers[0].target)
+			Cvar_ForceSet("mn_target", UFO_AircraftToIDOnGeoscape(base->lasers[0].target));
+		else
 			Cvar_ForceSet("mn_target", _("None"));
+
 		Cmd_ExecuteString(va("setautofire %i", base->batteries[0].autofire));
 	} else
 		Cvar_ForceSet("mn_target", _("None"));
