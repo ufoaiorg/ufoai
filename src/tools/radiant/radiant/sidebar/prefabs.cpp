@@ -395,7 +395,9 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 		gtk_tree_model_filter_set_visible_func(GTK_TREE_MODEL_FILTER(fileFiltered), (GtkTreeModelFilterVisibleFunc) Prefab_FilterFiles, NULL, NULL);
 		g_signal_connect(G_OBJECT(searchEntry), "changed", G_CALLBACK(Prefab_Refilter), NULL );
 		filterEntry = GTK_ENTRY(searchEntry);
+#if GTK_CHECK_VERSION(2,8,0)
 		gtk_tree_view_set_search_entry(view, filterEntry);
+#endif
 
 	}
 	/* fill prefab store with data */

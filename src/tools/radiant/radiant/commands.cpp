@@ -473,6 +473,13 @@ namespace
 	static GtkEntry *g_searchEntry = 0;
 }
 
+/**
+ * @brief filter implementation that uses actual search entry content to decide whether an entry should be included.
+ * Comparing is case-insensitive for both command name and command shortcut
+ * @param model data model for dialog
+ * @param iter current entry to decide whether it should be filtered
+ * @return @q true if entry should be shown
+ */
 static gboolean CommandListDlg_FilterCommands (GtkTreeModel *model, GtkTreeIter *iter)
 {
 	if (!g_searchEntry)
@@ -595,7 +602,9 @@ void DoCommandListDlg (void)
 		gtk_box_pack_start(GTK_BOX(vbox), searchEntry, FALSE, FALSE, 0);
 		gtk_widget_show(searchEntry);
 
+#if GTK_CHECK_VERSION(2,8,0)
 		gtk_tree_view_set_search_entry(dialog.m_list, GTK_ENTRY(searchEntry));
+#endif
 		g_signal_connect(G_OBJECT(searchEntry), "changed", G_CALLBACK(CommandListDlg_Refilter), NULL);
 		g_searchEntry = GTK_ENTRY(searchEntry);
 
