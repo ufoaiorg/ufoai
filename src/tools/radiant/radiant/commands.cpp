@@ -602,7 +602,7 @@ void DoCommandListDlg (void)
 		gtk_box_pack_start(GTK_BOX(vbox), searchEntry, FALSE, FALSE, 0);
 		gtk_widget_show(searchEntry);
 
-#if GTK_CHECK_VERSION(2,8,0)
+#if GTK_CHECK_VERSION(2,10,0)
 		gtk_tree_view_set_search_entry(dialog.m_list, GTK_ENTRY(searchEntry));
 #endif
 		g_signal_connect(G_OBJECT(searchEntry), "changed", G_CALLBACK(CommandListDlg_Refilter), NULL);
