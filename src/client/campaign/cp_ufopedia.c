@@ -281,8 +281,12 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	INV_ItemDescription(NULL);
 
 	/* no valid item id given */
-	if (!item)
+	if (!item) {
+		Cvar_Set("mn_item", "");
+		Cvar_Set("mn_itemname", "");
+		Cvar_Set("mn_upmodel_top", "");
 		return;
+	}
 
 	/* select item */
 	assert(item->craftitem.type >= 0);

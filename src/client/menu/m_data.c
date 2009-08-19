@@ -33,6 +33,7 @@ static const char *const menutextid_names[] = {
 	"", /**< NULL value */
 	"TEXT_STANDARD",
 	"TEXT_LIST",
+	"TEXT_LIST2",
 	"TEXT_UFOPEDIA",
 	"TEXT_UFOPEDIA_METADATA",
 	"TEXT_UFOPEDIA_REQUIREMENT",

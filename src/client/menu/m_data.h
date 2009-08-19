@@ -42,6 +42,7 @@ typedef enum {
 	TEXT_NULL,		/**< default value, should not be used */
 	TEXT_STANDARD,
 	TEXT_LIST,
+	TEXT_LIST2,
 	TEXT_UFOPEDIA,
 	TEXT_UFOPEDIA_METADATA,
 	TEXT_UFOPEDIA_REQUIREMENT,

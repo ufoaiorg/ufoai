@@ -176,7 +176,7 @@ static inline const char *AIM_AircraftItemtypeName (const int equiptype)
  * @brief True if the tech is available and mach the filter
  * @
  */
-static qboolean AIM_CrafttypeFilter (base_t *base, int filterType, const technology_t *tech)
+static qboolean AIM_CrafttypeFilter (const base_t *base, int filterType, const technology_t *tech)
 {
 	objDef_t *item;
 	if (!base)
@@ -214,10 +214,12 @@ static qboolean AIM_CrafttypeFilter (base_t *base, int filterType, const technol
  * @param[in] slot Pointer to aircraftSlot where items can be equiped
  * @param[in] tech Pointer to the technolgy to select if needed (NULL if no selected technology).
  */
-static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot, const technology_t *tech)
+static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 {
 	linkedList_t *itemList = NULL;
+	linkedList_t *amountList = NULL;
 	technology_t **list;
+	const base_t *base = slot->aircraft->homebase;
 
 	assert(slot);
 
@@ -226,16 +228,21 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot, const techno
 
 	/* Copy only those which are researched to buffer */
 	while (*list) {
-		if (AIM_CrafttypeFilter(slot->aircraft->homebase, airequipID, *list)) {
+		if (AIM_CrafttypeFilter(base, airequipID, *list)) {
+			int amount;
 			/** @todo disable unusable thing for the current slot here */
-			/** @todo compute item count here */
+			objDef_t *item = AII_GetAircraftItemByID((*list)->provides);
+			assert(item);
+			amount = base->storage.num[item->idx];
+
 			LIST_AddString(&itemList, _((*list)->name));
+			LIST_AddString(&amountList, va("%d", amount));
 		}
 		list++;
 	}
 
-	/* copy buffer to mn.menuText to display it on screen */
 	MN_RegisterLinkedListText(TEXT_LIST, itemList);
+	MN_RegisterLinkedListText(TEXT_LIST2, amountList);
 }
 
 /**
@@ -370,7 +377,7 @@ static void AIM_AircraftEquipMenuUpdate_f (void)
 		return;
 
 	/* don't let old links appear on this menu */
-	MN_ResetData(TEXT_STANDARD);
+	MN_ResetData(TEXT_UFOPEDIA_METADATA);
 	MN_ResetData(TEXT_AIREQUIP_1);
 	MN_ResetData(TEXT_AIREQUIP_2);
 	MN_ResetData(TEXT_LIST);
@@ -426,7 +433,8 @@ static void AIM_AircraftEquipMenuUpdate_f (void)
 	AIM_CheckAirequipSelectedZone(slot);
 
 	/* Fill the list of item you can equip your aircraft with */
-	AIM_UpdateAircraftItemList(slot, AII_GetTechnologyToDisplay(slot));
+	AIM_UpdateAircraftItemList(slot);
+	MN_ExecuteConfunc("aircraft_equip_unselectlist");
 
 	Cvar_Set("mn_equip_itemtype_name", AIM_AircraftItemtypeName(airequipID));
 	switch (airequipID) {
@@ -512,6 +520,7 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 	int i, pos;
 	aircraft_t *aircraft;
 	base_t *base = B_GetCurrentSelectedBase();
+	aircraftSlot_t *slot;
 
 	if (!base)
 		return;
@@ -560,6 +569,10 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 	/* Update menu after changing slot */
 	noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
 	AIM_AircraftEquipMenuUpdate_f();
+
+	/* update description with the selected slot */
+	slot = AII_GetAircraftSlotByIDX(aircraft, airequipID, airequipSelectedSlot);
+	UP_AircraftItemDescription(slot->item);
 }
 
 /**
@@ -612,7 +625,7 @@ static void AIM_AircraftEquipZoneSelect_f (void)
 	airequipSelectedZone = zone;
 
 	/* Fill the list of item you can equip your aircraft with */
-	AIM_UpdateAircraftItemList(slot, AII_GetTechnologyToDisplay(slot));
+	AIM_UpdateAircraftItemList(slot);
 
 	/* Check that the selected zone is OK */
 	AIM_CheckAirequipSelectedZone(slot);
@@ -1025,7 +1038,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 	/* don't let old links appear on this menu */
 	MN_ResetData(TEXT_BASEDEFENCE_LIST);
 	MN_ResetData(TEXT_LIST);
-	MN_ResetData(TEXT_STANDARD);
+	MN_ResetData(TEXT_UFOPEDIA_METADATA);
 
 	/* base or installation should not be NULL because we are in the menu of this base or installation */
 	if (!base && !installation)

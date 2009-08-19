@@ -9,13 +9,13 @@ window aircraft_equip extends iaircraft
 
 	panel type_background {
 		pos		"24 441"
-		size	"270 319"
+		size	"292 319"
 		image	"ui/panel_grey_green"
 	}
 
 	panel items_background {
-		pos		"299 441"
-		size	"270 319"
+		pos		"317 441"
+		size	"252 319"
 		image	"ui/panel_grey_green"
 	}
 
@@ -55,8 +55,8 @@ window aircraft_equip extends iaircraft
 	string airequip_available
 	{
 		string		"_Available equipment:"
-		pos			"28 457"
-		size		"250 25"
+		pos			"41 457"
+		size		"240 25"
 		font		f_big
 		textalign	cc
 	}
@@ -72,38 +72,22 @@ window aircraft_equip extends iaircraft
 
 	text airequip_selected_description
 	{
-		dataid		TEXT_STANDARD
-		pos			"315 623"
-		size		"220 120"
-		lineheight	"20"
-		rows		"6"
+		dataid		TEXT_UFOPEDIA_METADATA
+		pos			"331 623"
+		size		"204 120"
 		tabwidth	130
+		font		"f_verysmall"
 		onViewChange {
 			*(abstractscrollbar)airequip_seldesc_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)airequip_seldesc_scroll@viewsize = <viewsize>
 			*(abstractscrollbar)airequip_seldesc_scroll@current = <viewpos>
 		}
-		onWheel		{
-			*(abstractscrollbar)airequip_seldesc_scroll@current = <viewpos>
-		}
-	}
-
-	todo unusable_item {
-		pos		"320 700"
-		string	"Display here the reason why we can't use an item"
-	}
-
-	todo move_add_button {
-		pos		"320 715"
-		string	"Move the button to add items here"
 	}
 
 	vscrollbar airequip_seldesc_scroll {
 		image		ui/scrollbar_v_green
 		pos			"535 623"
 		height		"120"
-		current		0
-		viewsize	6
-		fullsize	6
 		hidewhenunused	true
 		onChange 	{
 			*airequip_selected_description@viewpos = <current>
@@ -121,8 +105,8 @@ window aircraft_equip extends iaircraft
 	string airequip_selected
 	{
 		string		"_Selected item:"
-		pos			"315 457"
-		size		"240 25"
+		pos			"333 457"
+		size		"224 25"
 		font		f_big
 		textalign	cc
 
@@ -161,21 +145,62 @@ window aircraft_equip extends iaircraft
 		string	"Disable items we can't apply on the current slot"
 	}
 
-	todo count_items {
-		pos		"40 555"
-		string	"Display item count"
-	}
-
 	textlist airequip_list
 	{
 		dataid		TEXT_LIST
-		pos			"54 529"
-		size		"215 209"
+		pos			"43 529"
+		size		"215 132"
 		lineheight	"20"
 		rows		"7"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		onClick		{ cmd "airequip_list_click <lineselected>" }
+		onClick		{
+			*(textlist)airequip_list_amount@lineselected = <lineselected>
+			cmd "airequip_list_click <lineselected>"
+		}
+		onViewChange {
+			*(abstractscrollbar)airequip_list_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)airequip_list_scroll@viewsize = <viewsize>
+			*(abstractscrollbar)airequip_list_scroll@current = <viewpos>
+			*(textlist)airequip_list_amount@viewpos = <viewpos>
+		}
+	}
+
+	textlist airequip_list_amount
+	{
+		dataid		TEXT_LIST2
+		pos			"258 529"
+		size		"25 132"
+		textalign	cr
+		lineheight	"20"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		onClick		{
+			*(textlist)airequip_list@lineselected = <lineselected>
+			cmd "airequip_list_click <lineselected>"
+		}
+		onViewChange {
+			*(abstractscrollbar)airequip_list_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)airequip_list_scroll@viewsize = <viewsize>
+			*(abstractscrollbar)airequip_list_scroll@current = <viewpos>
+			*(textlist)airequip_list@viewpos = <viewpos>
+		}
+	}
+
+	vscrollbar airequip_list_scroll {
+		image		ui/scrollbar_v_green
+		pos			"283 529"
+		height		"132"
+		hidewhenunused	true
+		onChange {
+			*airequip_list@viewpos = <current>
+			*airequip_list_amount@viewpos = <current>
+		}
+	}
+
+	confunc aircraft_equip_unselectlist {
+		*airequip_list@lineselected = -1
+		*airequip_list_amount@lineselected = -1
 	}
 
 	// ==================
