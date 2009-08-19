@@ -43,7 +43,7 @@ namespace gtkutil
 	void Timer::enable ()
 	{
 		if (_timerID == 0) {
-			_timerID = gtk_timeout_add(_timeout, _callback, _data);
+			_timerID = g_timeout_add(_timeout, _callback, _data);
 		}
 	}
 
@@ -51,7 +51,7 @@ namespace gtkutil
 	void Timer::disable ()
 	{
 		if (_timerID != 0) {
-			gtk_timeout_remove(_timerID);
+			g_source_remove(_timerID);
 			_timerID = 0;
 		}
 	}
