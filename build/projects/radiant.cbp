@@ -145,12 +145,6 @@
 		<Unit filename="../../src/tools/radiant/radiant/exec.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/exception/RadiantException.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/exception/ModuleSystemException.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/tools/radiant/libs/gtkutil/accelerator.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
