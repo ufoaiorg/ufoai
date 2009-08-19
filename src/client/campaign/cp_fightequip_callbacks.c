@@ -442,6 +442,9 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	case AC_ITEM_WEAPON:
 		typeName = "weapon";
 		break;
+	default:
+		typeName = "unknown";
+		break;
 	}
 	Cvar_Set("mn_equip_itemtype", typeName);
 
@@ -946,6 +949,10 @@ static void AIM_AircraftItemtypeByName_f (void)
 		i = AC_ITEM_SHIELD;
 	else if (!strcmp(name, "item"))
 		i = AC_ITEM_ELECTRONICS;
+	else {
+		Com_Printf("AIM_AircraftItemtypeByName_f: Invalid itemtype!\n");
+		return;
+	}
 
 	airequipID = i;
 	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
