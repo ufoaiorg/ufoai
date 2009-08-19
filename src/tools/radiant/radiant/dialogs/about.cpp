@@ -162,18 +162,26 @@ void DoAbout (void)
 						GdkPixbufFormat *pixbuf_format = (GdkPixbufFormat*)format->data;
 						gchar *name = gdk_pixbuf_format_get_name(pixbuf_format);
 						if (!list) {
+#if GLIB_CHECK_VERSION(2,16,0)
 							if (!g_strcmp0(name, "jpeg") || !g_strcmp0(name, "tga") || !g_strcmp0(name, "png")) {
+#endif
 								list = g_strconcat("<b>", name, "</b> ", (void *)0);
+#if GLIB_CHECK_VERSION(2,16,0)
 							} else {
 								list = g_strconcat(name, " ", (void *)0);
 							}
+#endif
 						} else {
 							gchar *tmp;
+#if GLIB_CHECK_VERSION (2,16,0)
 							if (!g_strcmp0(name, "jpeg") || !g_strcmp0(name, "tga") || !g_strcmp0(name, "png")) {
+#endif
 								tmp = g_strconcat(list, "<b>", name, "</b> ", (void *)0);
+#if GLIB_CHECK_VERSION (2,16,0)
 							} else {
 								tmp = g_strconcat(list, name, " ", (void *)0);
 							}
+#endif
 							g_free(list);
 							list = tmp;
 						}
