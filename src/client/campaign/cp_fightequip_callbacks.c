@@ -571,8 +571,10 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 	AIM_AircraftEquipMenuUpdate_f();
 
 	/* update description with the selected slot */
+	/** @todo if slot is NULL, should we clean up description? */
 	slot = AII_GetAircraftSlotByIDX(aircraft, airequipID, airequipSelectedSlot);
-	UP_AircraftItemDescription(slot->item);
+	if (slot)
+		UP_AircraftItemDescription(slot->item);
 }
 
 /**
