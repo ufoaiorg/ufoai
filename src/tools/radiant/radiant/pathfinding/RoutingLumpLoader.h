@@ -16,8 +16,10 @@ namespace routing
 			void loadRoutingLump (const ArchiveFile& file);
 
 		public:
+			RoutingLumpLoader ();
+
 			// loads the routing lump for the given bsp file
-			RoutingLumpLoader (const std::string& bspFileName);
+			void loadRouting(const std::string& bspFileName);
 
 			virtual ~RoutingLumpLoader ();
 

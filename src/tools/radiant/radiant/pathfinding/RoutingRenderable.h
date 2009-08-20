@@ -3,18 +3,25 @@
 
 #include "irender.h"
 #include <list>
+#include "RoutingLump.h"
 
 namespace routing
 {
 	class RoutingRenderableEntry
 	{
 		private:
-			Vector3 _origin;
+			RoutingLumpEntry _data;
+			void renderWireframe (void) const;
+			void renderAccessability (RenderStateFlags state) const;
+			void renderConnections (void) const;
+			void renderConnection (int direction) const;
 		public:
-			RoutingRenderableEntry (const Vector3& origin) :
-				_origin(origin)
+			RoutingRenderableEntry (const RoutingLumpEntry& data) :
+				_data(data)
 			{
 			}
+
+			void render (RenderStateFlags state) const;
 	};
 
 	typedef std::list<RoutingRenderableEntry*> RoutingRenderableEntries;
@@ -32,9 +39,9 @@ namespace routing
 			 */
 			void render (RenderStateFlags flags) const;
 
-			/** Adds a new renderable object to the list
+			/** Creates a new renderable object for given data lump and adds it to the list
 			 */
-			void add (const Vector3& origin);
+			void add (const RoutingLumpEntry& data);
 	};
 }
 

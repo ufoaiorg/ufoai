@@ -22,4 +22,9 @@ namespace routing
 	{
 		return _entries;
 	}
+
+	void RoutingLump::add (const RoutingLumpEntry& dataEntry)
+	{
+		_entries.push_back(dataEntry);
+	}
 }

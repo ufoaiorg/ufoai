@@ -30,6 +30,9 @@ namespace routing
 			virtual ~RoutingLump ();
 
 			RoutingLumpEntries& getEntries ();
+
+			/**@todo check whether this function should be private */
+			void add(const RoutingLumpEntry& dataEntry);
 	};
 }
 #endif /* ROUTINGLUMP_H_ */

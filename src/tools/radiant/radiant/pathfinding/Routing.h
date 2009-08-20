@@ -8,25 +8,37 @@
 
 namespace routing
 {
+	static Shader *m_routingShader;
+
 	class Routing: public Renderable
 	{
 		private:
 			// responsible for rendering the routing data
 			RoutingRenderable _renderable;
 			RoutingLumpLoader _loader;
+			bool _showPathfinding;
+
 
 		public:
-			Routing (const std::string& bspFileName);
+
+			Routing ();
 
 			virtual ~Routing ();
 
 			/** Submit renderable geometry when rendering takes place in Solid mode. */
-			void renderSolid (Renderer& renderer, const VolumeTest& volume);
+			void renderSolid (Renderer& renderer, const VolumeTest& volume) const;
 
 			/** Submit renderable geometry when rendering takes place in Wireframe mode */
-			void renderWireframe (Renderer& renderer, const VolumeTest& volume);
+			void renderWireframe (Renderer& renderer, const VolumeTest& volume) const;
 
 			void renderComponents (Renderer&, const VolumeTest&);
+
+			void updateRouting(const std::string& bspFileName);
+
+			void setShowPathfinding(bool showPathfinding)
+			{
+				_showPathfinding = showPathfinding;
+			}
 	};
 }
 

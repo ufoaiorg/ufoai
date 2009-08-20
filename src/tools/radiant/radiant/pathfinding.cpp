@@ -25,11 +25,12 @@
  */
 
 #include "pathfinding.h"
-#include "pathfinding/RoutingLumpLoader.h"
+#include "pathfinding/Routing.h"
 
 namespace routing
 {
 	static bool showPathfinding;
+	static Routing routingRender = Routing();
 	/**
 	 * @todo Maybe also use the ufo2map output directly
 	 * @sa ToolsCompile
@@ -37,6 +38,20 @@ namespace routing
 	void ShowPathfinding (void)
 	{
 		showPathfinding ^= true;
+		routingRender.setShowPathfinding(showPathfinding);
+
+		/** @todo test code, remove */
+		routingRender.updateRouting("test");
 		/** @todo render the parsed data */
 	}
+}
+
+void Pathfinding_Construct (void)
+{
+	GlobalShaderCache().attachRenderable(routing::routingRender);
+}
+
+void Pathfinding_Destroy (void)
+{
+	GlobalShaderCache().detachRenderable(routing::routingRender);
 }

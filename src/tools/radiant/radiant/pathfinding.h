@@ -22,3 +22,5 @@ namespace routing
 {
 	void ShowPathfinding (void);
 }
+void Pathfinding_Construct (void);
+void Pathfinding_Destroy (void);

@@ -75,6 +75,7 @@
 #include "grid.h"
 #include "material.h"
 #include "particles.h"
+#include "pathfinding.h"
 
 #include "modulesystem/modulesmap.h"
 #include "modulesystem/singletonmodule.h"
@@ -248,6 +249,7 @@ class Radiant: public TypeSystemRef
 			MainFrame_Construct();
 			SurfaceInspector_Construct();
 			CamWnd_Construct();
+			Pathfinding_Construct();
 			XYWindow_Construct();
 			TextureBrowser_Construct();
 			ParticleBrowser_Construct();
@@ -280,6 +282,7 @@ class Radiant: public TypeSystemRef
 			ParticleBrowser_Destroy();
 			TextureBrowser_Destroy();
 			XYWindow_Destroy();
+			Pathfinding_Destroy();
 			CamWnd_Destroy();
 			SurfaceInspector_Destroy();
 			MainFrame_Destroy();
