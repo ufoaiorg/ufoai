@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFORadiant\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-06-28 20:49+0100\n"
+"PO-Revision-Date: 2009-08-20 08:23+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI Team <martin.gerhardy@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -954,9 +954,8 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1578
 #: src/tools/radiant/radiant/mainframe.cpp:1582
 #: src/tools/radiant/radiant/mainframe.cpp:1585
-#, fuzzy
 msgid "_Edges"
-msgstr "Zeichne keine Kanten"
+msgstr "Kant_en"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1579
 #: src/tools/radiant/radiant/mainframe.cpp:1583
@@ -1939,9 +1938,8 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:408
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:410
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:436
-#, fuzzy
 msgid "Generate Materials"
-msgstr "Datenbank erstellen"
+msgstr "Material generieren"
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:393
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:421
@@ -1951,9 +1949,8 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1658
 #: src/tools/radiant/radiant/mainframe.cpp:1662
 #: src/tools/radiant/radiant/mainframe.cpp:1665
-#, fuzzy
 msgid "Generate materials"
-msgstr "Datenbank erstellen"
+msgstr "Material generieren"
 
 #: src/tools/radiant/radiant/preferences.cpp:61
 #: src/tools/radiant/radiant/preferences.cpp:58
@@ -2289,7 +2286,6 @@ msgid "x-axis Flip"
 msgstr "Vertikal spiegeln"
 
 #: src/tools/radiant/radiant/toolbars.cpp:47
-#, fuzzy
 msgid "x-axis Rotate"
 msgstr "x-Achsen Rotation"
 
@@ -2299,7 +2295,6 @@ msgid "y-axis Flip"
 msgstr "Vertikal spiegeln"
 
 #: src/tools/radiant/radiant/toolbars.cpp:49
-#, fuzzy
 msgid "y-axis Rotate"
 msgstr "y-Achsen Rotation"
 
@@ -2309,7 +2304,6 @@ msgid "z-axis Flip"
 msgstr "Vertikal spiegeln"
 
 #: src/tools/radiant/radiant/toolbars.cpp:51
-#, fuzzy
 msgid "z-axis Rotate"
 msgstr "z-Achsen Rotation"
 
@@ -2346,19 +2340,16 @@ msgid "Hollow"
 msgstr "Aushöhlen"
 
 #: src/tools/radiant/radiant/toolbars.cpp:71
-#, fuzzy
 msgid "Select Vertices (V)"
-msgstr "Wähle das Spiel:"
+msgstr "Vertices auswählen (V)"
 
 #: src/tools/radiant/radiant/toolbars.cpp:72
-#, fuzzy
 msgid "Select Edges (E)"
-msgstr "Wähle das Spiel:"
+msgstr "Kanten auswählen (E)"
 
 #: src/tools/radiant/radiant/toolbars.cpp:73
-#, fuzzy
 msgid "Select Faces (F)"
-msgstr "Wähle das Spiel:"
+msgstr "Flächen auswählen (F)"
 
 #: src/tools/radiant/radiant/toolbars.cpp:78
 #: src/tools/radiant/radiant/toolbars.cpp:79
@@ -2774,13 +2765,12 @@ msgid "Select all of _same type"
 msgstr "(De)Selektiere alles"
 
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:69
-#, fuzzy
 msgid "Error saving file"
-msgstr "Fehler beim Speichern der Datei."
+msgstr "Fehler beim Speichern der Datei"
 
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:183
 msgid "Prefab"
-msgstr ""
+msgstr "Prefab"
 
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:195
 msgid "Image"
@@ -2797,7 +2787,7 @@ msgstr "Deckel Auswahl"
 
 #: src/tools/radiant/radiant/sidebar/sidebar.cpp:28
 msgid "Prefabs"
-msgstr ""
+msgstr "Prefabs"
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1313
 msgid "Rock..."
@@ -2813,33 +2803,28 @@ msgid "Select all Faces of same te_xture"
 msgstr "(De)Selektiere alles"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1494
-#, fuzzy
 msgid "Toggle Prefabs"
-msgstr "Fadenkreuz umschalten"
+msgstr "Prefabs umschalten"
 
 #: src/tools/radiant/radiant/map.cpp:794
 msgid "Error during load of map."
 msgstr ""
 
 #: src/tools/radiant/radiant/map.cpp:1540
-#, fuzzy
 msgid "Import Map"
-msgstr "_Importieren..."
+msgstr "Importiere Map"
 
 #: src/tools/radiant/radiant/map.cpp:1550
-#, fuzzy
 msgid "Save Map"
 msgstr "Speichere Map"
 
 #: src/tools/radiant/radiant/map.cpp:1576
-#, fuzzy
 msgid "Export Selection"
-msgstr "Erweitere Auswahl"
+msgstr "Exportiere Auswahl"
 
 #: src/tools/radiant/radiant/map.cpp:1585
-#, fuzzy
 msgid "Export Region"
-msgstr "Region"
+msgstr "Exportiere Region"
 
 #: src/tools/radiant/radiant/toolbars.cpp:60
 msgid "Select all Faces of same texture"

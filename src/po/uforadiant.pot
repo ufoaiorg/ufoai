@@ -26,11 +26,21 @@
 #: src/tools/radiant/radiant/map.cpp:1290
 #: src/tools/radiant/radiant/map.cpp:1315
 #: src/tools/radiant/radiant/map.cpp:1709
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1243
+#: src/tools/radiant/radiant/mainframe.cpp:279
+#: src/tools/radiant/radiant/map.cpp:795
+#: src/tools/radiant/radiant/map.cpp:1061
+#: src/tools/radiant/radiant/map.cpp:1304
+#: src/tools/radiant/radiant/map.cpp:1329
+#: src/tools/radiant/radiant/map.cpp:1783
+#: src/tools/radiant/radiant/referencecache.cpp:677
+#: src/tools/radiant/radiant/referencecache.cpp:700
 msgid "Processing..."
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:277
 #: src/tools/radiant/radiant/mainframe.cpp:274
+#: src/tools/radiant/radiant/mainframe.cpp:279
 msgid "Changing Engine Path"
 msgstr ""
 
@@ -46,6 +56,9 @@ msgstr ""
 #: src/tools/radiant/radiant/map.cpp:781
 #: src/tools/radiant/radiant/map.cpp:1290
 #: src/tools/radiant/radiant/map.cpp:1709
+#: src/tools/radiant/radiant/map.cpp:795
+#: src/tools/radiant/radiant/map.cpp:1304
+#: src/tools/radiant/radiant/map.cpp:1783
 msgid "Loading Map"
 msgstr ""
 
@@ -61,22 +74,29 @@ msgstr ""
 #: src/tools/radiant/radiant/map.cpp:1302
 #: src/tools/radiant/radiant/map.cpp:1047
 #: src/tools/radiant/radiant/map.cpp:1315
+#: src/tools/radiant/radiant/map.cpp:1061
+#: src/tools/radiant/radiant/map.cpp:1329
+#: src/tools/radiant/radiant/referencecache.cpp:677
 msgid "Saving Map"
 msgstr ""
 
 #: src/tools/radiant/radiant/referencecache.cpp:187
 #: src/tools/radiant/radiant/referencecache.cpp:197
+#: src/tools/radiant/radiant/sidebar/particlebrowser.cpp:286
+#: src/tools/radiant/radiant/referencecache.cpp:207
 msgid "Loading Model"
 msgstr ""
 
 #: src/tools/radiant/radiant/referencecache.cpp:621
 #: src/tools/radiant/radiant/referencecache.cpp:690
+#: src/tools/radiant/radiant/referencecache.cpp:700
 msgid "Refreshing Models"
 msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1110
 #: src/tools/radiant/radiant/texwindow.cpp:1178
 #: src/tools/radiant/radiant/texwindow.cpp:1184
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1094
 msgid "Loading Textures"
 msgstr ""
 
@@ -84,6 +104,7 @@ msgstr ""
 #: src/tools/radiant/radiant/texwindow.cpp:1334
 #: src/tools/radiant/radiant/texwindow.cpp:1347
 #: src/tools/radiant/radiant/texwindow.cpp:1353
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1243
 msgid "Loading Shaders"
 msgstr ""
 
@@ -141,77 +162,91 @@ msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1787
 #: src/tools/radiant/radiant/camwindow.cpp:1783
+#: src/tools/radiant/radiant/camwindow.cpp:1793
 msgid "Movement Speed"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1789
 #: src/tools/radiant/radiant/camwindow.cpp:1785
+#: src/tools/radiant/radiant/camwindow.cpp:1795
 msgid "Link strafe speed to movement speed"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1790
 #: src/tools/radiant/radiant/camwindow.cpp:1786
+#: src/tools/radiant/radiant/camwindow.cpp:1796
 msgid "Rotation Speed"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1791
 #: src/tools/radiant/radiant/camwindow.cpp:1787
+#: src/tools/radiant/radiant/camwindow.cpp:1797
 msgid "Invert mouse vertical axis"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1792
 #: src/tools/radiant/radiant/camwindow.cpp:1788
+#: src/tools/radiant/radiant/camwindow.cpp:1798
 msgid "Discrete movement"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1794
 #: src/tools/radiant/radiant/camwindow.cpp:1790
+#: src/tools/radiant/radiant/camwindow.cpp:1800
 msgid "Enable far-clip plane"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1797
 #: src/tools/radiant/radiant/camwindow.cpp:1793
+#: src/tools/radiant/radiant/camwindow.cpp:1803
 msgctxt "Render Mode"
 msgid "Wireframe"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1797
 #: src/tools/radiant/radiant/camwindow.cpp:1793
+#: src/tools/radiant/radiant/camwindow.cpp:1803
 msgctxt "Render Mode"
 msgid "Flatshade"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1797
 #: src/tools/radiant/radiant/camwindow.cpp:1793
+#: src/tools/radiant/radiant/camwindow.cpp:1804
 msgctxt "Render Mode"
 msgid "Textured"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1798
 #: src/tools/radiant/radiant/camwindow.cpp:1794
+#: src/tools/radiant/radiant/camwindow.cpp:1805
 msgid "Render Mode"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1801
 #: src/tools/radiant/radiant/camwindow.cpp:1797
+#: src/tools/radiant/radiant/camwindow.cpp:1808
 msgctxt "Strafe Mode"
 msgid "Both"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1801
 #: src/tools/radiant/radiant/camwindow.cpp:1797
+#: src/tools/radiant/radiant/camwindow.cpp:1808
 msgctxt "Strafe Mode"
 msgid "Forward"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1801
 #: src/tools/radiant/radiant/camwindow.cpp:1797
+#: src/tools/radiant/radiant/camwindow.cpp:1808
 msgctxt "Strafe Mode"
 msgid "Up"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1802
 #: src/tools/radiant/radiant/camwindow.cpp:1798
+#: src/tools/radiant/radiant/camwindow.cpp:1809
 msgid "Strafe Mode"
 msgstr ""
 
@@ -220,11 +255,14 @@ msgstr ""
 #: src/tools/radiant/radiant/camwindow.cpp:1803
 #: src/tools/radiant/radiant/mainframe.cpp:1495
 #: src/tools/radiant/radiant/mainframe.cpp:1498
+#: src/tools/radiant/radiant/camwindow.cpp:1814
+#: src/tools/radiant/radiant/mainframe.cpp:1516
 msgid "Camera"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1807
 #: src/tools/radiant/radiant/camwindow.cpp:1803
+#: src/tools/radiant/radiant/camwindow.cpp:1814
 msgid "Camera View Preferences"
 msgstr ""
 
@@ -339,6 +377,8 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1734
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1641
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1710
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1738
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1810
 msgid "Key"
 msgstr ""
 
@@ -352,6 +392,7 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:214
 #: src/tools/radiant/radiant/commands.cpp:529
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:123
+#: src/tools/radiant/radiant/commands.cpp:611
 msgid "Close"
 msgstr ""
 
@@ -359,6 +400,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1693
 #: src/tools/radiant/radiant/mainframe.cpp:1697
 #: src/tools/radiant/radiant/mainframe.cpp:1700
+#: src/tools/radiant/radiant/mainframe.cpp:1728
 msgid "_Help"
 msgstr ""
 
@@ -366,6 +408,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1698
 #: src/tools/radiant/radiant/mainframe.cpp:1702
 #: src/tools/radiant/radiant/mainframe.cpp:1705
+#: src/tools/radiant/radiant/mainframe.cpp:1733
 msgid "Manual"
 msgstr ""
 
@@ -373,6 +416,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1700
 #: src/tools/radiant/radiant/mainframe.cpp:1704
 #: src/tools/radiant/radiant/mainframe.cpp:1707
+#: src/tools/radiant/radiant/mainframe.cpp:1735
 msgid "Bug report"
 msgstr ""
 
@@ -380,54 +424,63 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1701
 #: src/tools/radiant/radiant/mainframe.cpp:1705
 #: src/tools/radiant/radiant/mainframe.cpp:1708
+#: src/tools/radiant/radiant/mainframe.cpp:1736
 msgid "_About"
 msgstr ""
 
 #: src/tools/radiant/radiant/pluginmenu.cpp:144
 #: src/tools/radiant/radiant/pluginmenu.cpp:154
 #: src/tools/radiant/radiant/pluginmenu.cpp:151
+#: src/tools/radiant/radiant/pluginmenu.cpp:150
 msgid "_Plugins"
 msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1131
 #: src/tools/radiant/radiant/texwindow.cpp:1201
 #: src/tools/radiant/radiant/texwindow.cpp:1207
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1117
 msgid "_View"
 msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1136
 #: src/tools/radiant/radiant/texwindow.cpp:1206
 #: src/tools/radiant/radiant/texwindow.cpp:1212
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1122
 msgid "Hide _Unused"
 msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1139
 #: src/tools/radiant/radiant/texwindow.cpp:1209
 #: src/tools/radiant/radiant/texwindow.cpp:1215
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1125
 msgid "Show All"
 msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1140
 #: src/tools/radiant/radiant/texwindow.cpp:1210
 #: src/tools/radiant/radiant/texwindow.cpp:1216
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1126
 msgid "Show shaders"
 msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1141
 #: src/tools/radiant/radiant/texwindow.cpp:1211
 #: src/tools/radiant/radiant/texwindow.cpp:1217
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1127
 msgid "Fixed Size"
 msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1147
 #: src/tools/radiant/radiant/texwindow.cpp:1218
 #: src/tools/radiant/radiant/texwindow.cpp:1224
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1134
 msgid "_Tools"
 msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1152
 #: src/tools/radiant/radiant/texwindow.cpp:1223
 #: src/tools/radiant/radiant/texwindow.cpp:1229
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1139
 msgid "Flush & Reload Shaders"
 msgstr ""
 
@@ -441,6 +494,7 @@ msgstr ""
 #: src/tools/radiant/radiant/texwindow.cpp:1409
 #: src/tools/radiant/radiant/texwindow.cpp:1422
 #: src/tools/radiant/radiant/texwindow.cpp:1428
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1318
 msgid "Texture Thumbnail Scale"
 msgstr ""
 
@@ -448,6 +502,7 @@ msgstr ""
 #: src/tools/radiant/radiant/texwindow.cpp:1412
 #: src/tools/radiant/radiant/texwindow.cpp:1425
 #: src/tools/radiant/radiant/texwindow.cpp:1431
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1321
 msgid "Mousewheel Increment"
 msgstr ""
 
@@ -458,6 +513,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1487
 #: src/tools/radiant/radiant/texwindow.cpp:1436
 #: src/tools/radiant/radiant/mainframe.cpp:1489
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1326
 msgid "Texture Browser"
 msgstr ""
 
@@ -465,6 +521,7 @@ msgstr ""
 #: src/tools/radiant/radiant/texwindow.cpp:1417
 #: src/tools/radiant/radiant/texwindow.cpp:1430
 #: src/tools/radiant/radiant/texwindow.cpp:1436
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1326
 msgid "Texture Browser Preferences"
 msgstr ""
 
@@ -474,6 +531,8 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1396
 #: src/tools/radiant/radiant/mainframe.cpp:2297
 #: src/tools/radiant/radiant/mainframe.cpp:2300
+#: src/tools/radiant/radiant/mainframe.cpp:1413
+#: src/tools/radiant/radiant/mainframe.cpp:2312
 msgid "Window Layout"
 msgstr ""
 
@@ -483,6 +542,8 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1397
 #: src/tools/radiant/radiant/mainframe.cpp:2299
 #: src/tools/radiant/radiant/mainframe.cpp:2302
+#: src/tools/radiant/radiant/mainframe.cpp:1414
+#: src/tools/radiant/radiant/mainframe.cpp:2315
 msgid "Detachable Menus"
 msgstr ""
 
@@ -492,215 +553,256 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1398
 #: src/tools/radiant/radiant/mainframe.cpp:2301
 #: src/tools/radiant/radiant/mainframe.cpp:2304
+#: src/tools/radiant/radiant/mainframe.cpp:1415
+#: src/tools/radiant/radiant/mainframe.cpp:2317
 msgid "Plugin Toolbar"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1400
 #: src/tools/radiant/radiant/mainframe.cpp:1403
+#: src/tools/radiant/radiant/mainframe.cpp:1420
 msgid "_File"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1405
 #: src/tools/radiant/radiant/mainframe.cpp:1408
+#: src/tools/radiant/radiant/mainframe.cpp:1425
 msgid "_New Map"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1407
 #: src/tools/radiant/radiant/mainframe.cpp:1410
+#: src/tools/radiant/radiant/mainframe.cpp:1427
 msgid "_Open..."
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1408
 #: src/tools/radiant/radiant/mainframe.cpp:1411
+#: src/tools/radiant/radiant/mainframe.cpp:1428
 msgid "_Import..."
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1409
 #: src/tools/radiant/radiant/mainframe.cpp:1412
+#: src/tools/radiant/radiant/mainframe.cpp:1429
 msgid "_Save"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1410
 #: src/tools/radiant/radiant/mainframe.cpp:1413
+#: src/tools/radiant/radiant/mainframe.cpp:1430
 msgid "Save _as..."
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1411
 #: src/tools/radiant/radiant/mainframe.cpp:1414
+#: src/tools/radiant/radiant/mainframe.cpp:1431
 msgid "Save s_elected..."
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1413
 #: src/tools/radiant/radiant/mainframe.cpp:1416
+#: src/tools/radiant/radiant/mainframe.cpp:1433
 msgid "Save re_gion..."
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1415
 #: src/tools/radiant/radiant/mainframe.cpp:1418
+#: src/tools/radiant/radiant/mainframe.cpp:1435
 msgid "_Refresh models"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1419
 #: src/tools/radiant/radiant/mainframe.cpp:1422
+#: src/tools/radiant/radiant/mainframe.cpp:1439
 msgid "E_xit"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1427
 #: src/tools/radiant/radiant/mainframe.cpp:1430
+#: src/tools/radiant/radiant/mainframe.cpp:1447
 msgid "_Edit"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1431
 #: src/tools/radiant/radiant/mainframe.cpp:1434
+#: src/tools/radiant/radiant/mainframe.cpp:1451
 msgid "_Undo"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1432
 #: src/tools/radiant/radiant/mainframe.cpp:1435
+#: src/tools/radiant/radiant/mainframe.cpp:1452
 msgid "_Redo"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1434
 #: src/tools/radiant/radiant/mainframe.cpp:1437
+#: src/tools/radiant/radiant/mainframe.cpp:1454
 msgid "_Copy"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1435
 #: src/tools/radiant/radiant/mainframe.cpp:1438
+#: src/tools/radiant/radiant/mainframe.cpp:1455
 msgid "_Paste"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1436
 #: src/tools/radiant/radiant/mainframe.cpp:1439
+#: src/tools/radiant/radiant/mainframe.cpp:1456
 msgid "P_aste To Camera"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1438
 #: src/tools/radiant/radiant/mainframe.cpp:1441
+#: src/tools/radiant/radiant/mainframe.cpp:1458
 msgid "_Duplicate"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1439
 #: src/tools/radiant/radiant/mainframe.cpp:1442
+#: src/tools/radiant/radiant/mainframe.cpp:1459
 msgid "D_elete"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1441
 #: src/tools/radiant/radiant/mainframe.cpp:1444
+#: src/tools/radiant/radiant/mainframe.cpp:1461
 msgid "Pa_rent"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1443
 #: src/tools/radiant/radiant/mainframe.cpp:1446
+#: src/tools/radiant/radiant/mainframe.cpp:1463
 msgid "C_lear Selection"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1444
 #: src/tools/radiant/radiant/mainframe.cpp:1447
+#: src/tools/radiant/radiant/mainframe.cpp:1464
 msgid "_Invert Selection"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1445
 #: src/tools/radiant/radiant/mainframe.cpp:1452
+#: src/tools/radiant/radiant/mainframe.cpp:1469
 msgid "Select i_nside"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1446
 #: src/tools/radiant/radiant/mainframe.cpp:1453
+#: src/tools/radiant/radiant/mainframe.cpp:1470
 msgid "Select _touching"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1448
 #: src/tools/radiant/radiant/mainframe.cpp:1449
+#: src/tools/radiant/radiant/mainframe.cpp:1466
 msgid "E_xpand Selection"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1451
 #: src/tools/radiant/radiant/mainframe.cpp:1454
+#: src/tools/radiant/radiant/mainframe.cpp:1471
 msgid "To Whole _Entities"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1455
 #: src/tools/radiant/radiant/mainframe.cpp:1459
 #: src/tools/radiant/radiant/mainframe.cpp:1461
+#: src/tools/radiant/radiant/mainframe.cpp:1482
 msgid "Shortcuts list"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1456
 #: src/tools/radiant/radiant/mainframe.cpp:1460
 #: src/tools/radiant/radiant/mainframe.cpp:1462
+#: src/tools/radiant/radiant/mainframe.cpp:1483
 msgid "Pre_ferences..."
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1464
 #: src/tools/radiant/radiant/mainframe.cpp:1468
 #: src/tools/radiant/radiant/mainframe.cpp:1470
+#: src/tools/radiant/radiant/mainframe.cpp:1491
 msgid "Filter"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1477
 #: src/tools/radiant/radiant/mainframe.cpp:1481
 #: src/tools/radiant/radiant/mainframe.cpp:1483
+#: src/tools/radiant/radiant/mainframe.cpp:1504
 msgid "Vie_w"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1485
 #: src/tools/radiant/radiant/mainframe.cpp:1489
 #: src/tools/radiant/radiant/mainframe.cpp:1491
+#: src/tools/radiant/radiant/mainframe.cpp:1509
 msgid "Toggle Sidebar"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1486
 #: src/tools/radiant/radiant/mainframe.cpp:1490
 #: src/tools/radiant/radiant/mainframe.cpp:1492
+#: src/tools/radiant/radiant/mainframe.cpp:1510
 msgid "Toggle EntityInspector"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1487
 #: src/tools/radiant/radiant/mainframe.cpp:1491
 #: src/tools/radiant/radiant/mainframe.cpp:1493
+#: src/tools/radiant/radiant/mainframe.cpp:1511
 msgid "Toggle SurfaceInspector"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1494
 #: src/tools/radiant/radiant/mainframe.cpp:1498
 #: src/tools/radiant/radiant/mainframe.cpp:1501
+#: src/tools/radiant/radiant/mainframe.cpp:1519
 msgid "_Center"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1495
 #: src/tools/radiant/radiant/mainframe.cpp:1499
 #: src/tools/radiant/radiant/mainframe.cpp:1502
+#: src/tools/radiant/radiant/mainframe.cpp:1520
 msgid "_Up Floor"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1496
 #: src/tools/radiant/radiant/mainframe.cpp:1500
 #: src/tools/radiant/radiant/mainframe.cpp:1503
+#: src/tools/radiant/radiant/mainframe.cpp:1521
 msgid "_Down Floor"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1498
 #: src/tools/radiant/radiant/mainframe.cpp:1502
 #: src/tools/radiant/radiant/mainframe.cpp:1505
+#: src/tools/radiant/radiant/mainframe.cpp:1523
 msgid "Far Clip Plane In"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1499
 #: src/tools/radiant/radiant/mainframe.cpp:1503
 #: src/tools/radiant/radiant/mainframe.cpp:1506
+#: src/tools/radiant/radiant/mainframe.cpp:1524
 msgid "Far Clip Plane Out"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1501
 #: src/tools/radiant/radiant/mainframe.cpp:1505
 #: src/tools/radiant/radiant/mainframe.cpp:1508
+#: src/tools/radiant/radiant/mainframe.cpp:1526
 msgid "Look Through Selected"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1502
 #: src/tools/radiant/radiant/mainframe.cpp:1506
 #: src/tools/radiant/radiant/mainframe.cpp:1509
+#: src/tools/radiant/radiant/mainframe.cpp:1527
 msgid "Look Through Camera"
 msgstr ""
 
@@ -711,228 +813,268 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1511
 #: src/tools/radiant/radiant/xywindow.cpp:2735
 #: src/tools/radiant/radiant/mainframe.cpp:1514
+#: src/tools/radiant/radiant/mainframe.cpp:1532
+#: src/tools/radiant/radiant/xywindow.cpp:2734
 msgid "Orthographic"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1511
 #: src/tools/radiant/radiant/mainframe.cpp:1515
 #: src/tools/radiant/radiant/mainframe.cpp:1518
+#: src/tools/radiant/radiant/mainframe.cpp:1536
 msgid "_Next (XY, YZ, YZ)"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1512
 #: src/tools/radiant/radiant/mainframe.cpp:1516
 #: src/tools/radiant/radiant/mainframe.cpp:1519
+#: src/tools/radiant/radiant/mainframe.cpp:1537
 msgid "XY (Top)"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1513
 #: src/tools/radiant/radiant/mainframe.cpp:1517
 #: src/tools/radiant/radiant/mainframe.cpp:1520
+#: src/tools/radiant/radiant/mainframe.cpp:1538
 msgid "XZ (Side)"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1514
 #: src/tools/radiant/radiant/mainframe.cpp:1518
 #: src/tools/radiant/radiant/mainframe.cpp:1521
+#: src/tools/radiant/radiant/mainframe.cpp:1539
 msgid "YZ (Front)"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1518
 #: src/tools/radiant/radiant/mainframe.cpp:1522
 #: src/tools/radiant/radiant/mainframe.cpp:1525
+#: src/tools/radiant/radiant/mainframe.cpp:1543
 msgid "_XY 100%"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1519
 #: src/tools/radiant/radiant/mainframe.cpp:1523
 #: src/tools/radiant/radiant/mainframe.cpp:1526
+#: src/tools/radiant/radiant/mainframe.cpp:1544
 msgid "XY Zoom _In"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1520
 #: src/tools/radiant/radiant/mainframe.cpp:1524
 #: src/tools/radiant/radiant/mainframe.cpp:1527
+#: src/tools/radiant/radiant/mainframe.cpp:1545
 msgid "XY Zoom _Out"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1525
 #: src/tools/radiant/radiant/mainframe.cpp:1529
 #: src/tools/radiant/radiant/mainframe.cpp:1532
+#: src/tools/radiant/radiant/entity.cpp:521
+#: src/tools/radiant/radiant/mainframe.cpp:1550
 msgid "Show"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1528
 #: src/tools/radiant/radiant/mainframe.cpp:1532
 #: src/tools/radiant/radiant/mainframe.cpp:1535
+#: src/tools/radiant/radiant/mainframe.cpp:1553
 msgid "Toggle Grid"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1529
 #: src/tools/radiant/radiant/mainframe.cpp:1533
 #: src/tools/radiant/radiant/mainframe.cpp:1536
+#: src/tools/radiant/radiant/mainframe.cpp:1554
 msgid "Toggle Crosshairs"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1530
 #: src/tools/radiant/radiant/mainframe.cpp:1534
 #: src/tools/radiant/radiant/mainframe.cpp:1537
+#: src/tools/radiant/radiant/mainframe.cpp:1555
 msgid "Toggle Sizeinfo"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1531
 #: src/tools/radiant/radiant/mainframe.cpp:1535
 #: src/tools/radiant/radiant/mainframe.cpp:1538
+#: src/tools/radiant/radiant/mainframe.cpp:1556
 msgid "Show _Angles"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1532
 #: src/tools/radiant/radiant/mainframe.cpp:1536
 #: src/tools/radiant/radiant/mainframe.cpp:1539
+#: src/tools/radiant/radiant/mainframe.cpp:1557
 msgid "Show _Names"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1533
 #: src/tools/radiant/radiant/mainframe.cpp:1537
 #: src/tools/radiant/radiant/mainframe.cpp:1540
+#: src/tools/radiant/radiant/mainframe.cpp:1558
 msgid "Show Blocks"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1534
 #: src/tools/radiant/radiant/mainframe.cpp:1538
 #: src/tools/radiant/radiant/mainframe.cpp:1541
+#: src/tools/radiant/radiant/mainframe.cpp:1559
 msgid "Show C_oordinates"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1535
 #: src/tools/radiant/radiant/mainframe.cpp:1539
 #: src/tools/radiant/radiant/mainframe.cpp:1542
+#: src/tools/radiant/radiant/mainframe.cpp:1560
 msgid "Show Window Outline"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1536
 #: src/tools/radiant/radiant/mainframe.cpp:1540
 #: src/tools/radiant/radiant/mainframe.cpp:1543
+#: src/tools/radiant/radiant/mainframe.cpp:1561
 msgid "Show Axes"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1537
 #: src/tools/radiant/radiant/mainframe.cpp:1541
 #: src/tools/radiant/radiant/mainframe.cpp:1544
+#: src/tools/radiant/radiant/mainframe.cpp:1562
 msgid "Show Workzone"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1538
 #: src/tools/radiant/radiant/mainframe.cpp:1542
 #: src/tools/radiant/radiant/mainframe.cpp:1545
+#: src/tools/radiant/radiant/mainframe.cpp:1563
 msgid "Show Stats"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1543
 #: src/tools/radiant/radiant/mainframe.cpp:1547
 #: src/tools/radiant/radiant/mainframe.cpp:1550
+#: src/tools/radiant/radiant/mainframe.cpp:1568
 msgid "Hide/Show"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1546
 #: src/tools/radiant/radiant/mainframe.cpp:1550
 #: src/tools/radiant/radiant/mainframe.cpp:1553
+#: src/tools/radiant/radiant/mainframe.cpp:1571
 msgid "Hide Selected"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1547
 #: src/tools/radiant/radiant/mainframe.cpp:1551
 #: src/tools/radiant/radiant/mainframe.cpp:1554
+#: src/tools/radiant/radiant/mainframe.cpp:1572
 msgid "Show Hidden"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1552
 #: src/tools/radiant/radiant/mainframe.cpp:1556
 #: src/tools/radiant/radiant/mainframe.cpp:1559
+#: src/tools/radiant/radiant/mainframe.cpp:1577
 msgid "Region"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1555
 #: src/tools/radiant/radiant/mainframe.cpp:1559
 #: src/tools/radiant/radiant/mainframe.cpp:1562
+#: src/tools/radiant/radiant/mainframe.cpp:1580
 msgid "_Off"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1556
 #: src/tools/radiant/radiant/mainframe.cpp:1560
 #: src/tools/radiant/radiant/mainframe.cpp:1563
+#: src/tools/radiant/radiant/mainframe.cpp:1581
 msgid "_Set XY"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1557
 #: src/tools/radiant/radiant/mainframe.cpp:1561
 #: src/tools/radiant/radiant/mainframe.cpp:1564
+#: src/tools/radiant/radiant/mainframe.cpp:1582
 msgid "Set _Brush"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1558
 #: src/tools/radiant/radiant/mainframe.cpp:1562
 #: src/tools/radiant/radiant/mainframe.cpp:1565
+#: src/tools/radiant/radiant/mainframe.cpp:1583
 msgid "Set Se_lected Brushes"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1569
 #: src/tools/radiant/radiant/mainframe.cpp:1573
 #: src/tools/radiant/radiant/mainframe.cpp:1576
+#: src/tools/radiant/radiant/mainframe.cpp:1594
 msgid "M_odify"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1575
 #: src/tools/radiant/radiant/mainframe.cpp:1579
 #: src/tools/radiant/radiant/mainframe.cpp:1582
+#: src/tools/radiant/radiant/mainframe.cpp:1600
 msgid "Components"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1578
 #: src/tools/radiant/radiant/mainframe.cpp:1582
 #: src/tools/radiant/radiant/mainframe.cpp:1585
+#: src/tools/radiant/radiant/mainframe.cpp:1603
 msgid "_Edges"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1579
 #: src/tools/radiant/radiant/mainframe.cpp:1583
 #: src/tools/radiant/radiant/mainframe.cpp:1586
+#: src/tools/radiant/radiant/mainframe.cpp:1604
 msgid "_Vertices"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1580
 #: src/tools/radiant/radiant/mainframe.cpp:1584
 #: src/tools/radiant/radiant/mainframe.cpp:1587
+#: src/tools/radiant/radiant/mainframe.cpp:1605
 msgid "_Faces"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1585
 #: src/tools/radiant/radiant/mainframe.cpp:1589
 #: src/tools/radiant/radiant/mainframe.cpp:1592
+#: src/tools/radiant/radiant/mainframe.cpp:1610
 msgid "Nudge"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1588
 #: src/tools/radiant/radiant/mainframe.cpp:1592
 #: src/tools/radiant/radiant/mainframe.cpp:1595
+#: src/tools/radiant/radiant/mainframe.cpp:1613
 msgid "Nudge Left"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1589
 #: src/tools/radiant/radiant/mainframe.cpp:1593
 #: src/tools/radiant/radiant/mainframe.cpp:1596
+#: src/tools/radiant/radiant/mainframe.cpp:1614
 msgid "Nudge Right"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1590
 #: src/tools/radiant/radiant/mainframe.cpp:1594
 #: src/tools/radiant/radiant/mainframe.cpp:1597
+#: src/tools/radiant/radiant/mainframe.cpp:1615
 msgid "Nudge Up"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1591
 #: src/tools/radiant/radiant/mainframe.cpp:1595
 #: src/tools/radiant/radiant/mainframe.cpp:1598
+#: src/tools/radiant/radiant/mainframe.cpp:1616
 msgid "Nudge Down"
 msgstr ""
 
@@ -943,108 +1085,126 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:609
 #: src/tools/radiant/radiant/mainframe.cpp:1598
 #: src/tools/radiant/radiant/mainframe.cpp:1601
+#: src/tools/radiant/radiant/mainframe.cpp:1619
 msgid "Rotate"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1597
 #: src/tools/radiant/radiant/mainframe.cpp:1601
 #: src/tools/radiant/radiant/mainframe.cpp:1604
+#: src/tools/radiant/radiant/mainframe.cpp:1622
 msgid "Rotate X"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1598
 #: src/tools/radiant/radiant/mainframe.cpp:1602
 #: src/tools/radiant/radiant/mainframe.cpp:1605
+#: src/tools/radiant/radiant/mainframe.cpp:1623
 msgid "Rotate Y"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1599
 #: src/tools/radiant/radiant/mainframe.cpp:1603
 #: src/tools/radiant/radiant/mainframe.cpp:1606
+#: src/tools/radiant/radiant/mainframe.cpp:1624
 msgid "Rotate Z"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1602
 #: src/tools/radiant/radiant/mainframe.cpp:1606
 #: src/tools/radiant/radiant/mainframe.cpp:1609
+#: src/tools/radiant/radiant/mainframe.cpp:1627
 msgid "Flip"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1605
 #: src/tools/radiant/radiant/mainframe.cpp:1609
 #: src/tools/radiant/radiant/mainframe.cpp:1612
+#: src/tools/radiant/radiant/mainframe.cpp:1630
 msgid "Flip _X"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1606
 #: src/tools/radiant/radiant/mainframe.cpp:1610
 #: src/tools/radiant/radiant/mainframe.cpp:1613
+#: src/tools/radiant/radiant/mainframe.cpp:1631
 msgid "Flip _Y"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1607
 #: src/tools/radiant/radiant/mainframe.cpp:1611
 #: src/tools/radiant/radiant/mainframe.cpp:1614
+#: src/tools/radiant/radiant/mainframe.cpp:1632
 msgid "Flip _Z"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1611
 #: src/tools/radiant/radiant/mainframe.cpp:1615
 #: src/tools/radiant/radiant/mainframe.cpp:1618
+#: src/tools/radiant/radiant/mainframe.cpp:1636
 msgid "Arbitrary rotation..."
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1612
 #: src/tools/radiant/radiant/mainframe.cpp:1616
 #: src/tools/radiant/radiant/mainframe.cpp:1619
+#: src/tools/radiant/radiant/mainframe.cpp:1637
 msgid "Arbitrary scale..."
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1620
 #: src/tools/radiant/radiant/mainframe.cpp:1624
 #: src/tools/radiant/radiant/mainframe.cpp:1627
+#: src/tools/radiant/radiant/mainframe.cpp:1645
 msgid "_Grid"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1633
 #: src/tools/radiant/radiant/mainframe.cpp:1637
 #: src/tools/radiant/radiant/mainframe.cpp:1640
+#: src/tools/radiant/radiant/mainframe.cpp:1667
 msgid "M_isc"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1640
 #: src/tools/radiant/radiant/mainframe.cpp:1644
 #: src/tools/radiant/radiant/mainframe.cpp:1647
+#: src/tools/radiant/radiant/mainframe.cpp:1674
 msgid "Find brush..."
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1641
 #: src/tools/radiant/radiant/mainframe.cpp:1645
 #: src/tools/radiant/radiant/mainframe.cpp:1648
+#: src/tools/radiant/radiant/mainframe.cpp:1675
 msgid "_Print XY View"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1642
 #: src/tools/radiant/radiant/mainframe.cpp:1646
 #: src/tools/radiant/radiant/mainframe.cpp:1649
+#: src/tools/radiant/radiant/mainframe.cpp:1676
 msgid "_Background select"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1651
 #: src/tools/radiant/radiant/mainframe.cpp:1655
 #: src/tools/radiant/radiant/mainframe.cpp:1658
+#: src/tools/radiant/radiant/mainframe.cpp:1685
 msgid "Tools"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1656
 #: src/tools/radiant/radiant/mainframe.cpp:1660
 #: src/tools/radiant/radiant/mainframe.cpp:1663
+#: src/tools/radiant/radiant/mainframe.cpp:1690
 msgid "Check for errors"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1657
 #: src/tools/radiant/radiant/mainframe.cpp:1661
 #: src/tools/radiant/radiant/mainframe.cpp:1664
+#: src/tools/radiant/radiant/mainframe.cpp:1691
 msgid "Compile the map"
 msgstr ""
 
@@ -1052,6 +1212,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1659
 #: src/tools/radiant/radiant/mainframe.cpp:1663
 #: src/tools/radiant/radiant/mainframe.cpp:1666
+#: src/tools/radiant/radiant/mainframe.cpp:1693
 msgid "Show pathfinding info"
 msgstr ""
 
@@ -1059,6 +1220,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1667
 #: src/tools/radiant/radiant/mainframe.cpp:1671
 #: src/tools/radiant/radiant/mainframe.cpp:1674
+#: src/tools/radiant/radiant/mainframe.cpp:1702
 msgid "E_ntity"
 msgstr ""
 
@@ -1066,6 +1228,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1680
 #: src/tools/radiant/radiant/mainframe.cpp:1684
 #: src/tools/radiant/radiant/mainframe.cpp:1687
+#: src/tools/radiant/radiant/mainframe.cpp:1715
 msgid "B_rush"
 msgstr ""
 
@@ -1213,6 +1376,11 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1746
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:817
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1729
+#: src/tools/radiant/radiant/dialogs/ModelSelector.cpp:259
+#: src/tools/radiant/radiant/dialogs/ModelSelector.cpp:329
+#: src/tools/radiant/radiant/dialogs/ParticleSelector.cpp:161
+#: src/tools/radiant/radiant/dialogs/ParticleSelector.cpp:231
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1829
 msgid "Value"
 msgstr ""
 
@@ -1254,24 +1422,28 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/about.cpp:103
 #: src/tools/radiant/radiant/dialogs/about.cpp:151
 #: src/tools/radiant/radiant/dialogs/about.cpp:209
+#: src/tools/radiant/radiant/dialogs/about.cpp:217
 msgid "<b>OpenGL Properties</b>"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:109
 #: src/tools/radiant/radiant/dialogs/about.cpp:157
 #: src/tools/radiant/radiant/dialogs/about.cpp:215
+#: src/tools/radiant/radiant/dialogs/about.cpp:223
 msgid "Vendor:"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:117
 #: src/tools/radiant/radiant/dialogs/about.cpp:165
 #: src/tools/radiant/radiant/dialogs/about.cpp:223
+#: src/tools/radiant/radiant/dialogs/about.cpp:231
 msgid "Version:"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:125
 #: src/tools/radiant/radiant/dialogs/about.cpp:173
 #: src/tools/radiant/radiant/dialogs/about.cpp:231
+#: src/tools/radiant/radiant/dialogs/about.cpp:239
 msgid "Renderer:"
 msgstr ""
 
@@ -1321,6 +1493,7 @@ msgstr ""
 #: src/tools/radiant/radiant/preferences.cpp:399
 #: src/tools/radiant/radiant/select.cpp:964
 #: src/tools/radiant/radiant/select.cpp:1108
+#: src/tools/radiant/radiant/dialogs/particle.cpp:92
 msgid "OK"
 msgstr ""
 
@@ -1334,6 +1507,7 @@ msgstr ""
 #: src/tools/radiant/radiant/preferences.cpp:403
 #: src/tools/radiant/radiant/select.cpp:970
 #: src/tools/radiant/radiant/select.cpp:1114
+#: src/tools/radiant/radiant/dialogs/particle.cpp:98
 msgid "Cancel"
 msgstr ""
 
@@ -1377,6 +1551,8 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:345
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:453
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:477
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:457
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:481
 msgid "Map compiling"
 msgstr ""
 
@@ -1395,12 +1571,14 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:382
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:425
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:453
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:457
 msgid "Nothing to compile in this map\n"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:392
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:436
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:464
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:468
 msgid "Compiles the current map with the mapcompiler"
 msgstr ""
 
@@ -1417,6 +1595,7 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1299
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1639
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1615
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1712
 msgid "Entity Inspector"
 msgstr ""
 
@@ -1469,6 +1648,8 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1812
 #: src/tools/radiant/radiant/mainframe.cpp:1801
 #: src/tools/radiant/radiant/mainframe.cpp:1815
+#: src/tools/radiant/radiant/mainframe.cpp:1829
+#: src/tools/radiant/radiant/mainframe.cpp:1843
 msgid "Label"
 msgstr ""
 
@@ -1597,16 +1778,19 @@ msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:315
 #: src/tools/radiant/radiant/mainframe.cpp:318
+#: src/tools/radiant/radiant/mainframe.cpp:320
 msgid "Engine Path"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:317
 #: src/tools/radiant/radiant/mainframe.cpp:320
+#: src/tools/radiant/radiant/mainframe.cpp:322
 msgid "Compiler Binary"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:321
 #: src/tools/radiant/radiant/mainframe.cpp:324
+#: src/tools/radiant/radiant/mainframe.cpp:326
 msgid "Paths"
 msgstr ""
 
@@ -1614,6 +1798,8 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:335
 #: src/tools/radiant/radiant/mainframe.cpp:324
 #: src/tools/radiant/radiant/mainframe.cpp:338
+#: src/tools/radiant/radiant/mainframe.cpp:326
+#: src/tools/radiant/radiant/mainframe.cpp:340
 msgid "Path Settings"
 msgstr ""
 
@@ -1623,6 +1809,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:345
 #: src/tools/radiant/radiant/mainframe.cpp:348
+#: src/tools/radiant/radiant/mainframe.cpp:350
 msgid "Engine Path Not Found"
 msgstr ""
 
@@ -1630,6 +1817,7 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:2701
 #: src/tools/radiant/radiant/xywindow.cpp:2685
 #: src/tools/radiant/radiant/xywindow.cpp:2728
+#: src/tools/radiant/radiant/xywindow.cpp:2727
 msgid "Solid selection boxes"
 msgstr ""
 
@@ -1637,6 +1825,7 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:2702
 #: src/tools/radiant/radiant/xywindow.cpp:2686
 #: src/tools/radiant/radiant/xywindow.cpp:2729
+#: src/tools/radiant/radiant/xywindow.cpp:2728
 msgid "Display size info"
 msgstr ""
 
@@ -1644,6 +1833,7 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:2703
 #: src/tools/radiant/radiant/xywindow.cpp:2687
 #: src/tools/radiant/radiant/xywindow.cpp:2730
+#: src/tools/radiant/radiant/xywindow.cpp:2729
 msgid "Chase mouse during drags"
 msgstr ""
 
@@ -1651,6 +1841,7 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:2704
 #: src/tools/radiant/radiant/xywindow.cpp:2688
 #: src/tools/radiant/radiant/xywindow.cpp:2731
+#: src/tools/radiant/radiant/xywindow.cpp:2730
 msgid "Update views on camera move"
 msgstr ""
 
@@ -1658,6 +1849,7 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:2708
 #: src/tools/radiant/radiant/xywindow.cpp:2692
 #: src/tools/radiant/radiant/xywindow.cpp:2735
+#: src/tools/radiant/radiant/xywindow.cpp:2734
 msgid "Orthographic View Preferences"
 msgstr ""
 
@@ -1665,6 +1857,7 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:2718
 #: src/tools/radiant/radiant/xywindow.cpp:2702
 #: src/tools/radiant/radiant/xywindow.cpp:2745
+#: src/tools/radiant/radiant/xywindow.cpp:2744
 msgid "Clipper tool uses nodraw"
 msgstr ""
 
@@ -1674,6 +1867,7 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:2706
 #: src/tools/radiant/radiant/xywindow.cpp:2749
 #: src/tools/radiant/radiant/brushmanip.cpp:1325
+#: src/tools/radiant/radiant/xywindow.cpp:2748
 msgid "Clipper"
 msgstr ""
 
@@ -1681,6 +1875,7 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:2722
 #: src/tools/radiant/radiant/xywindow.cpp:2706
 #: src/tools/radiant/radiant/xywindow.cpp:2749
+#: src/tools/radiant/radiant/xywindow.cpp:2748
 msgid "Clipper Tool Settings"
 msgstr ""
 
@@ -1698,6 +1893,8 @@ msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/particle.cpp:49
 #: src/tools/radiant/radiant/dialogs/particle.cpp:71
+#: src/tools/radiant/radiant/dialogs/particle.cpp:47
+#: src/tools/radiant/radiant/dialogs/particle.cpp:69
 msgid "Particle"
 msgstr ""
 
@@ -1849,6 +2046,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:382
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:410
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:414
 msgid "Nothing to generate materials from in this map\n"
 msgstr ""
 
@@ -1856,17 +2054,21 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:408
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:410
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:436
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:414
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:440
 msgid "Generate Materials"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:393
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:421
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:425
 msgid "Generate materials from the current map"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1658
 #: src/tools/radiant/radiant/mainframe.cpp:1662
 #: src/tools/radiant/radiant/mainframe.cpp:1665
+#: src/tools/radiant/radiant/mainframe.cpp:1692
 msgid "Generate materials"
 msgstr ""
 
@@ -1908,6 +2110,7 @@ msgid "Hardware Texture Compression"
 msgstr ""
 
 #: src/tools/radiant/radiant/textures.cpp:682
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:130
 msgid "Textures"
 msgstr ""
 
@@ -1924,38 +2127,49 @@ msgid "Collapse mesh"
 msgstr ""
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:69
+#: src/tools/radiant/plugins/brushexport/interface.cpp:70
 msgid "Collapse all brushes into a single group"
 msgstr ""
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:75
+#: src/tools/radiant/plugins/brushexport/interface.cpp:76
 msgid "Collapse by material"
 msgstr ""
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:77
+#: src/tools/radiant/plugins/brushexport/interface.cpp:78
+#: src/tools/radiant/plugins/brushexport/interface.cpp:79
 msgid "Collapse into groups by material"
 msgstr ""
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:83
+#: src/tools/radiant/plugins/brushexport/interface.cpp:85
 msgid "Don't collapse"
 msgstr ""
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:85
+#: src/tools/radiant/plugins/brushexport/interface.cpp:87
+#: src/tools/radiant/plugins/brushexport/interface.cpp:88
 msgid "Every brush is stored in its own group"
 msgstr ""
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:114
+#: src/tools/radiant/plugins/brushexport/interface.cpp:117
 msgid "Ignored materials:"
 msgstr ""
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:153
+#: src/tools/radiant/plugins/brushexport/interface.cpp:156
 msgid "Use short material names (max. 20 chars)"
 msgstr ""
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:158
+#: src/tools/radiant/plugins/brushexport/interface.cpp:161
 msgid "Create (o)bjects instead of (g)roups"
 msgstr ""
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:163
+#: src/tools/radiant/plugins/brushexport/interface.cpp:166
 msgid "Create material information (.mtl file)"
 msgstr ""
 
@@ -1985,6 +2199,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1078
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1209
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1268
 msgid "You must have a selected class to create an entity"
 msgstr ""
 
@@ -1993,23 +2208,28 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:1074
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1209
 #: src/tools/radiant/radiant/xywindow.cpp:1077
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1268
+#: src/tools/radiant/radiant/xywindow.cpp:1075
 msgid "Info"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1261
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1418
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1421
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1475
 msgid "Cannot change \"classname\" key back to worldspawn."
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1267
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1424
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1427
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1481
 msgid "No spaces are allowed in entity keys."
 msgstr ""
 
 #: src/tools/radiant/radiant/console.cpp:76
 #: src/tools/radiant/radiant/console.cpp:75
+#: src/tools/radiant/radiant/console.cpp:77
 msgid "Console logging"
 msgstr ""
 
@@ -2061,30 +2281,35 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:1090
 #: src/tools/radiant/radiant/xywindow.cpp:1073
 #: src/tools/radiant/radiant/xywindow.cpp:1076
+#: src/tools/radiant/radiant/xywindow.cpp:1075
 msgid "There's already a worldspawn in your map!"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:1554
 #: src/tools/radiant/radiant/xywindow.cpp:1537
 #: src/tools/radiant/radiant/xywindow.cpp:1580
+#: src/tools/radiant/radiant/xywindow.cpp:1582
 msgid "You have to select some brushes to get the bounding box for.\n"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:1554
 #: src/tools/radiant/radiant/xywindow.cpp:1537
 #: src/tools/radiant/radiant/xywindow.cpp:1580
+#: src/tools/radiant/radiant/xywindow.cpp:1582
 msgid "No selection"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:1559
 #: src/tools/radiant/radiant/xywindow.cpp:1542
 #: src/tools/radiant/radiant/xywindow.cpp:1585
+#: src/tools/radiant/radiant/xywindow.cpp:1587
 msgid "Background Image"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:1213
 #: src/tools/radiant/radiant/xywindow.cpp:1196
 #: src/tools/radiant/radiant/xywindow.cpp:1202
+#: src/tools/radiant/radiant/xywindow.cpp:1204
 msgctxt "Context Menu Action"
 msgid "Connect"
 msgstr ""
@@ -2092,6 +2317,7 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:1215
 #: src/tools/radiant/radiant/xywindow.cpp:1198
 #: src/tools/radiant/radiant/xywindow.cpp:1216
+#: src/tools/radiant/radiant/xywindow.cpp:1218
 msgctxt "Context Menu Action"
 msgid "Fit Face"
 msgstr ""
@@ -2143,6 +2369,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/gtkmisc.cpp:139
 #: src/tools/radiant/radiant/gtkmisc.cpp:145
+#: src/tools/radiant/radiant/gtkmisc.cpp:157
 msgid "Choose File"
 msgstr ""
 
@@ -2150,6 +2377,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:2267
 #: src/tools/radiant/radiant/mainframe.cpp:2307
 #: src/tools/radiant/radiant/mainframe.cpp:2310
+#: src/tools/radiant/radiant/mainframe.cpp:2323
 msgid "Layout"
 msgstr ""
 
@@ -2157,6 +2385,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:2267
 #: src/tools/radiant/radiant/mainframe.cpp:2307
 #: src/tools/radiant/radiant/mainframe.cpp:2310
+#: src/tools/radiant/radiant/mainframe.cpp:2323
 msgid "Layout Preferences"
 msgstr ""
 
@@ -2316,6 +2545,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:553
 #: src/tools/radiant/radiant/xywindow.cpp:555
+#: src/tools/radiant/radiant/xywindow.cpp:554
 msgid "Save Image"
 msgstr ""
 
@@ -2426,126 +2656,151 @@ msgstr ""
 #: src/tools/radiant/radiant/entity.cpp:463
 #: src/tools/radiant/radiant/entity.cpp:482
 #: src/tools/radiant/radiant/entity.cpp:485
+#: src/tools/radiant/radiant/entity.cpp:546
 msgid "_Regroup"
 msgstr ""
 
 #: src/tools/radiant/radiant/entity.cpp:464
 #: src/tools/radiant/radiant/entity.cpp:483
 #: src/tools/radiant/radiant/entity.cpp:486
+#: src/tools/radiant/radiant/entity.cpp:548
 msgid "_Ungroup"
 msgstr ""
 
 #: src/tools/radiant/radiant/entity.cpp:465
 #: src/tools/radiant/radiant/entity.cpp:484
 #: src/tools/radiant/radiant/entity.cpp:487
+#: src/tools/radiant/radiant/entity.cpp:550
 msgid "_Connect"
 msgstr ""
 
 #: src/tools/radiant/radiant/entity.cpp:466
 #: src/tools/radiant/radiant/entity.cpp:485
 #: src/tools/radiant/radiant/entity.cpp:488
+#: src/tools/radiant/radiant/entity.cpp:552
 msgid "_Select Color..."
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:165
+#: src/tools/radiant/radiant/filters.cpp:174
 msgctxt "Filter Menu"
 msgid "World"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:166
+#: src/tools/radiant/radiant/filters.cpp:176
 msgctxt "Filter Menu"
 msgid "Entities"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:167
+#: src/tools/radiant/radiant/filters.cpp:178
 msgctxt "Filter Menu"
 msgid "Translucent"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:168
+#: src/tools/radiant/radiant/filters.cpp:180
 msgctxt "Filter Menu"
 msgid "Liquids"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:169
+#: src/tools/radiant/radiant/filters.cpp:182
 msgctxt "Filter Menu"
 msgid "Caulk"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:170
+#: src/tools/radiant/radiant/filters.cpp:184
 msgctxt "Filter Menu"
 msgid "Clips"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:171
+#: src/tools/radiant/radiant/filters.cpp:186
 msgctxt "Filter Menu"
 msgid "ActorClips"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:172
+#: src/tools/radiant/radiant/filters.cpp:188
 msgctxt "Filter Menu"
 msgid "WeaponClips"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:173
+#: src/tools/radiant/radiant/filters.cpp:190
 msgctxt "Filter Menu"
 msgid "Lights"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:174
+#: src/tools/radiant/radiant/filters.cpp:192
 msgctxt "Filter Menu"
 msgid "NoSurfLights"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:175
+#: src/tools/radiant/radiant/filters.cpp:194
 msgctxt "Filter Menu"
 msgid "NoFootsteps"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:176
+#: src/tools/radiant/radiant/filters.cpp:196
 msgctxt "Filter Menu"
 msgid "Structural"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:177
+#: src/tools/radiant/radiant/filters.cpp:198
 msgctxt "Filter Menu"
 msgid "Nodraw"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:178
+#: src/tools/radiant/radiant/filters.cpp:200
 msgctxt "Filter Menu"
 msgid "Phong"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:179
+#: src/tools/radiant/radiant/filters.cpp:202
 msgctxt "Filter Menu"
 msgid "Details"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:180
+#: src/tools/radiant/radiant/filters.cpp:204
 msgctxt "Filter Menu"
 msgid "Hints"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:181
+#: src/tools/radiant/radiant/filters.cpp:206
 msgctxt "Filter Menu"
 msgid "Models"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:182
+#: src/tools/radiant/radiant/filters.cpp:208
 msgctxt "Filter Menu"
 msgid "Triggers"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:185
+#: src/tools/radiant/radiant/filters.cpp:211
 msgid "Invert filters"
 msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:186
+#: src/tools/radiant/radiant/filters.cpp:213
 msgid "Reset filters"
 msgstr ""
 
 #: src/tools/radiant/plugins/brushexport/callbacks.cpp:24
+#: src/tools/radiant/radiant/brushexport/BrushExportOBJ.cpp:10
 msgid "Save as Obj"
 msgstr ""
 
@@ -2558,11 +2813,13 @@ msgid "Arbitrary sides"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1646
+#: src/tools/radiant/radiant/camwindow.cpp:1657
 msgid "Cubic clip the camera view (\\)"
 msgstr ""
 
 #: src/tools/radiant/radiant/commands.cpp:206
 #: src/tools/radiant/radiant/commands.cpp:465
+#: src/tools/radiant/radiant/commands.cpp:515
 msgid "Mapped Commands"
 msgstr ""
 
@@ -2575,6 +2832,8 @@ msgstr ""
 #: src/tools/radiant/radiant/lastused.cpp:187
 #: src/tools/radiant/radiant/map.cpp:1525
 #: src/tools/radiant/radiant/map.cpp:1528
+#: src/tools/radiant/radiant/map.cpp:1599
+#: src/tools/radiant/radiant/map.cpp:1602
 msgid "Open Map"
 msgstr ""
 
@@ -2629,6 +2888,7 @@ msgid "Direction"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1455
+#: src/tools/radiant/radiant/mainframe.cpp:1472
 msgid "Select all of _same type"
 msgstr ""
 
@@ -2637,6 +2897,7 @@ msgid "Error saving file"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:183
+#: src/tools/radiant/radiant/sidebar/prefabs.cpp:347
 msgid "Prefab"
 msgstr ""
 
@@ -2645,10 +2906,12 @@ msgid "Image"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:231
+#: src/tools/radiant/radiant/sidebar/prefabs.cpp:377
 msgid "Deselect before insert"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:237
+#: src/tools/radiant/radiant/sidebar/prefabs.cpp:383
 msgid "Replace current selection"
 msgstr ""
 
@@ -2661,37 +2924,138 @@ msgid "Rock..."
 msgstr ""
 
 #: src/tools/radiant/radiant/entity.cpp:469
+#: src/tools/radiant/radiant/entity.cpp:481
 msgid "Open Sound File"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1457
+#: src/tools/radiant/radiant/mainframe.cpp:1474
 msgid "Select all Faces of same te_xture"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1494
+#: src/tools/radiant/radiant/mainframe.cpp:1512
 msgid "Toggle Prefabs"
 msgstr ""
 
-#: src/tools/radiant/radiant/map.cpp:794
+#: src/tools/radiant/radiant/map.cpp:794 src/tools/radiant/radiant/map.cpp:808
 msgid "Error during load of map."
 msgstr ""
 
 #: src/tools/radiant/radiant/map.cpp:1540
+#: src/tools/radiant/radiant/map.cpp:1614
 msgid "Import Map"
 msgstr ""
 
 #: src/tools/radiant/radiant/map.cpp:1550
+#: src/tools/radiant/radiant/map.cpp:1624
 msgid "Save Map"
 msgstr ""
 
 #: src/tools/radiant/radiant/map.cpp:1576
+#: src/tools/radiant/radiant/map.cpp:1650
 msgid "Export Selection"
 msgstr ""
 
 #: src/tools/radiant/radiant/map.cpp:1585
+#: src/tools/radiant/radiant/map.cpp:1659
 msgid "Export Region"
 msgstr ""
 
 #: src/tools/radiant/radiant/toolbars.cpp:60
 msgid "Select all Faces of same texture"
+msgstr ""
+
+#: src/tools/radiant/radiant/brushexport/BrushExportOBJ.cpp:21
+msgid "Unable to write to file"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/ModelSelector.cpp:22
+msgid "Choose model"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/ModelSelector.cpp:324
+#: src/tools/radiant/radiant/dialogs/ParticleSelector.cpp:226
+msgid "Attribute"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/ModelSelector.cpp:389
+msgid "Model name"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/ModelSelector.cpp:392
+msgid "Skin name"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/ModelSelector.cpp:396
+msgid "Material surfaces"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/ModelSelector.cpp:399
+msgid "Total vertices"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/ModelSelector.cpp:402
+msgid "Total polys"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/ParticleSelector.cpp:11
+msgid "Choose particle"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/ParticleSelector.cpp:287
+msgid "Particle name"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:118
+#: src/tools/radiant/radiant/mainframe.cpp:1694
+msgid "Find/replace texture"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/prefabs.cpp:371
+msgid "Extend current selection"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:149
+msgid "Particles"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1314
+msgid "Texture scrollbar"
+msgstr ""
+
+#: src/tools/radiant/radiant/entity.cpp:521
+msgid "Light Radii"
+msgstr ""
+
+#: src/tools/radiant/radiant/entity.cpp:523
+msgid "Force"
+msgstr ""
+
+#: src/tools/radiant/radiant/entity.cpp:523
+msgid "Force Light Radii"
+msgstr ""
+
+#: src/tools/radiant/radiant/entity.cpp:528
+msgid "Entities"
+msgstr ""
+
+#: src/tools/radiant/radiant/entity.cpp:528
+msgid "Entity Display Preferences"
+msgstr ""
+
+#: src/tools/radiant/radiant/gtkmisc.cpp:169
+msgid "Choose Directory"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1478
+msgid "Export Selected Brushes to _OBJ"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1660
+msgid "No Brushes Selected!"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1660
+msgid "Error"
 msgstr ""

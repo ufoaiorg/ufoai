@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFORadiant\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-06-28 20:50+0100\n"
+"PO-Revision-Date: 2009-08-20 08:19+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI Team\n"
 "MIME-Version: 1.0\n"
@@ -2657,78 +2657,66 @@ msgid "Select all of _same type"
 msgstr "Select all of _same type"
 
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:69
-#, fuzzy
 msgid "Error saving file"
-msgstr "Error saving file."
+msgstr "Error saving file"
 
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:183
 msgid "Prefab"
-msgstr ""
+msgstr "Prefab"
 
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:195
-#, fuzzy
 msgid "Image"
-msgstr "Save Image"
+msgstr "Image"
 
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:231
 msgid "Deselect before insert"
-msgstr ""
+msgstr "Deselect before insert"
 
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:237
-#, fuzzy
 msgid "Replace current selection"
-msgstr "Split selection"
+msgstr "Replace current selection"
 
 #: src/tools/radiant/radiant/sidebar/sidebar.cpp:28
 msgid "Prefabs"
-msgstr ""
+msgstr "Prefabs"
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1313
-#, fuzzy
 msgid "Rock..."
-msgstr "Grid Block..."
+msgstr "Rock..."
 
 #: src/tools/radiant/radiant/entity.cpp:469
-#, fuzzy
 msgid "Open Sound File"
-msgstr "Open File"
+msgstr "Open Sound File"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1457
-#, fuzzy
 msgid "Select all Faces of same te_xture"
-msgstr "Select all of _same type"
+msgstr "Select all Faces of same te_xture"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1494
-#, fuzzy
 msgid "Toggle Prefabs"
-msgstr "Toggle Crosshairs"
+msgstr "Toggle Prefabs"
 
 #: src/tools/radiant/radiant/map.cpp:794
 msgid "Error during load of map."
-msgstr ""
+msgstr "Error during load of map."
 
 #: src/tools/radiant/radiant/map.cpp:1540
-#, fuzzy
 msgid "Import Map"
-msgstr "_Import..."
+msgstr "Import Map"
 
 #: src/tools/radiant/radiant/map.cpp:1550
-#, fuzzy
 msgid "Save Map"
-msgstr "Saving Map"
+msgstr "Save Map"
 
 #: src/tools/radiant/radiant/map.cpp:1576
-#, fuzzy
 msgid "Export Selection"
-msgstr "E_xpand Selection"
+msgstr "Export Selection"
 
 #: src/tools/radiant/radiant/map.cpp:1585
-#, fuzzy
 msgid "Export Region"
-msgstr "Region"
+msgstr "Export Region"
 
 #: src/tools/radiant/radiant/toolbars.cpp:60
-#, fuzzy
 msgid "Select all Faces of same texture"
-msgstr "Select all of _same type"
+msgstr "Select all Faces of same texture"
 
