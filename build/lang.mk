@@ -18,7 +18,7 @@ lang: $(UFOAI_MOFILES) $(RADIANT_MOFILES)
 update-po: po-check
 	$(MAKE) -C src/po update-po
 
-update-po-radiant: po-check
+update-po-uforadiant: po-check
 	xgettext -j --keyword="_" --keyword="C_:1c,2" -C -o src/po/uforadiant.pot --omit-header \
 		src/tools/radiant/libs/*.h \
 		src/tools/radiant/libs/*/*.h \
