@@ -1005,15 +1005,15 @@ int AII_BaseCanShoot (const base_t *base)
 {
 	assert(base);
 
-	if (B_GetBuildingStatus(base, B_DEFENCE_MISSILE)) {
-		/* base has missile battery and any needed building */
-		return AII_WeaponsCanShoot(base->batteries, base->numBatteries);
-	}
+	/* If we can shoot with missile defences */
+	if (B_GetBuildingStatus(base, B_DEFENCE_MISSILE)
+	 && AII_WeaponsCanShoot(base->batteries, base->numBatteries))
+	 	return qtrue;
 
-	if (B_GetBuildingStatus(base, B_DEFENCE_LASER)) {
-		/* base has laser battery and any needed building */
-		return AII_WeaponsCanShoot(base->lasers, base->numLasers);
-	}
+	/* If we can shoot with beam defences */
+	if (B_GetBuildingStatus(base, B_DEFENCE_LASER)
+	 && AII_WeaponsCanShoot(base->lasers, base->numLasers))
+	 	return qtrue;
 
 	return qfalse;
 }
