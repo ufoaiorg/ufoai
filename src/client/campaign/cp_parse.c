@@ -605,6 +605,24 @@ components_t *CL_GetComponentsByItem (const objDef_t *item)
 }
 
 /**
+ * @brief Returns components definition by ID.
+ * @param[in] id assemblyId of the component definition.
+ * @return comp Pointer to components_t definition.
+ */
+components_t *CL_GetComponentsByID(const char *id)
+{
+	int i;
+
+	for (i = 0; i < ccs.numComponents; i++) {
+		components_t *comp = &ccs.components[i];
+		if (!strcmp(comp->assemblyId, id)) {
+			return comp;
+		}
+	}
+	Com_Error(ERR_DROP, "CL_GetComponentsByItem: could not find components id for: %s", id);
+}
+
+/**
  * @brief Parsing only for singleplayer
  *
  * parsed if we are no dedicated server

@@ -5,7 +5,7 @@
  */
 
 /*
-Copyright (C) 1997-2008 UFO:AI Team
+Copyright (C) 1997-2009 UFO:AI Team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_popup.h"
 #include "cp_campaign.h"
 #include "cp_market.h"
+#include "cp_ufo.h"
 #include "cp_produce.h"
 #include "cp_produce_callbacks.h"
 
@@ -50,7 +51,7 @@ static linkedList_t *productionItemList;
 
 /** Currently selected entry in the productionItemList (depends on content) */
 static objDef_t *selectedItem = NULL;
-static components_t *selectedDisassembly = NULL;
+static storedUFO_t *selectedDisassembly = NULL;
 static aircraft_t *selectedAircraft = NULL;
 
 /** @brief Number of blank lines between queued items and tech list. */
@@ -65,28 +66,6 @@ static void PR_ClearSelected (void)
 	selectedAircraft = NULL;
 	selectedItem = NULL;
 	selectedDisassembly = NULL;
-}
-
-/**
- * @brief Conditions for disassembling.
- * @param[in] base Pointer to base where the component is stored.
- * @param[in] comp Pointer to components definition.
- * @return qtrue if disassembling is ready, qfalse otherwise.
- */
-static qboolean PR_ConditionsDisassembly (const base_t *base, const components_t *comp)
-{
-	const objDef_t *od;
-
-	assert(base);
-	assert(comp);
-
-	od = comp->assemblyItem;
-	assert(od);
-
-	if (RS_IsResearched_ptr(od->tech) && base->storage.num[od->idx] > 0)
-		return qtrue;
-	else
-		return qfalse;
 }
 
 /**
@@ -112,6 +91,12 @@ static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
 					producible = qfalse;
 				}
 			}
+			if (req->type == RS_LINK_UFO) {
+				/* The same code is used in "RS_RequirementsMet" */
+				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s\n", req->id);
+				if (US_UFOsInStorage(req->link, NULL) < req->amount)
+					producible = qfalse;
+			}
 		}
 		if (producible)
 			producibleAmount++;
@@ -130,13 +115,13 @@ static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
  * @param[in] amount Desired amount to produce.
  * @param[in] disassembling True if this is disassembling, false if production.
  */
-static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, signed int amount, qboolean disassembling)
+static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, storedUFO_t *ufo, signed int amount)
 {
 	int numWorkshops = 0;
 	production_t *prod;
 	const technology_t *tech;
 
-	assert((item && !aircraftTemplate) || (!item && aircraftTemplate));
+	assert((item && !aircraftTemplate && !ufo) || (!item && aircraftTemplate && !ufo) || (!item && !aircraftTemplate && ufo));
 	assert(base);
 
 	if (queue->numItems >= MAX_PRODUCTIONS)
@@ -161,13 +146,15 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 	/* self-reference. */
 	prod->idx = queue->numItems;
 
-	if (produceCategory != FILTER_AIRCRAFT)
+	if (item) 
 		tech = item->tech;
-	else
+	else if (aircraftTemplate)
 		tech = aircraftTemplate->tech;
+	else
+		tech = ufo->ufoTemplate->tech;
 
 	/* We cannot queue new aircraft if no free hangar space. */
-	if (produceCategory == FILTER_AIRCRAFT) {
+	if (aircraftTemplate) {
 		if (!B_GetBuildingStatus(base, B_COMMAND)) {
 			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
 			return NULL;
@@ -184,18 +171,19 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 
 	prod->item = item;
 	prod->aircraft = aircraftTemplate;
-	prod->amount = amount;
-	if (disassembling) {
+	prod->ufo = ufo;
+	
+	if (ufo) {
 		/* Disassembling. */
 		prod->production = qfalse;
+		prod->amount = 1;
 
-		/* We have to remove amount of items being disassembled from base storage. */
-		base->storage.num[item->idx] -= amount;
-		/* Now find related components definition. */
+		ufo->disassembly = prod;
 		prod->percentDone = 0.0f;
 	} else {
 		/* Production. */
 		prod->production = qtrue;
+		prod->amount = amount;
 
 		/* Don't try to add to queue an item which is not producible. */
 		if (tech->produceTime < 0)
@@ -227,12 +215,12 @@ static void PR_UpdateProductionList (const base_t* base)
 	/* First add all the queue items ... */
 	for (i = 0; i < queue->numItems; i++) {
 		const production_t *prod = &queue->items[i];
-		if (!prod->aircraft) {
+		if (prod->item) {
 			const objDef_t *od = prod->item;
 			LIST_AddString(&productionList, va("%s", _(od->name)));
 			LIST_AddString(&productionAmount, va("%i", base->storage.num[prod->item->idx]));
 			LIST_AddString(&productionQueued, va("%i", prod->amount));
-		} else {
+		} else if (prod->aircraft) {
 			const aircraft_t *aircraftTemplate = prod->aircraft;
 			LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
 			for (j = 0, counter = 0; j < ccs.numAircraft; j++) {
@@ -243,6 +231,12 @@ static void PR_UpdateProductionList (const base_t* base)
 			}
 			LIST_AddString(&productionAmount, va("%i", counter));
 			LIST_AddString(&productionQueued, va("%i", prod->amount));
+		} else if (prod->ufo) {
+			const storedUFO_t *ufo = prod->ufo;
+
+			LIST_AddString(&productionList, va("%s (at %s)", _(UFO_TypeToName(ufo->ufoTemplate->ufotype)), ufo->installation->name));
+			LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
+			LIST_AddString(&productionQueued, "1");
 		}
 	}
 
@@ -257,18 +251,26 @@ static void PR_UpdateProductionList (const base_t* base)
 
 	/* Then go through all object definitions ... */
 	if (produceCategory == FILTER_DISASSEMBLY) {
-		for (i = 0; i < ccs.numComponents; i++) {
-			const objDef_t *asOd = ccs.components[i].assemblyItem;
-			components_t *comp = &ccs.components[i];
-			if (!asOd)
-				continue;
-			if (PR_ConditionsDisassembly(base, comp)) {
-				LIST_AddPointer(&productionItemList, comp);
+		/** UFOs at UFO stores */
+		for (i = 0; i < ccs.numStoredUFOs; i++) {
+			storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
 
-				LIST_AddString(&productionList, va("%s", _(asOd->name)));
-				LIST_AddString(&productionAmount, va("%i", base->storage.num[asOd->idx]));
-				LIST_AddString(&productionQueued, "");
-			}
+			if (!ufo)
+				continue;
+			/* The UFO is being disassembled aready */
+			if (ufo->disassembly)
+				continue;
+			/* UFO not researched */
+			if (!RS_IsResearched_ptr(ufo->ufoTemplate->tech))
+				continue;
+			/* UFO is being transported */
+			if (ufo->arrive.day > ccs.date.day || (ufo->arrive.day == ccs.date.day && ufo->arrive.sec > ccs.date.sec))
+			 	continue;
+
+			LIST_AddPointer(&productionItemList, ufo);
+			LIST_AddString(&productionList, va("%s (at %s)", _(UFO_TypeToName(ufo->ufoTemplate->ufotype)), ufo->installation->name));
+			LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
+			LIST_AddString(&productionQueued, "");
 		}
 	} else if (produceCategory == FILTER_AIRCRAFT) {
 		for (i = 0; i < ccs.numAircraftTemplates; i++) {
@@ -343,7 +345,7 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, float
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
 		Cvar_Set("mn_item", "");
 	} else {
-		prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, NULL, qfalse);
+		prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, NULL);
 		/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
 		assert(prodPerHour > 0);
 		time = ceil((1.0f - percentDone) / prodPerHour);
@@ -363,35 +365,35 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, float
  * @param[in] base Pointer to the base where informations should be printed.
  * @sa PR_ProductionInfo
  */
-static void PR_DisassemblyInfo (const base_t *base, const objDef_t *od, const components_t *comp, float percentDone)
+static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, float percentDone)
 {
 	static char productionInfo[512];
 	int time, i;
 	float prodPerHour;
 
 	assert(base);
-	assert(od);
-	assert(comp);
-	assert(od->tech);
+	assert(ufo);
+	assert(ufo->ufoTemplate);
+	assert(ufo->ufoTemplate->tech);
 
-	prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, comp, qtrue);
+	prodPerHour = PR_CalculateProductionPercentDone(base, ufo->ufoTemplate->tech, ufo->comp);
 	/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
 	assert(prodPerHour > 0);
 	time = ceil((1.0f - percentDone) / prodPerHour);
 
-	Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), _(od->name));
-	Q_strcat(productionInfo, _("Components: "), sizeof(productionInfo));
+	Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), _(UFO_TypeToName(ufo->ufoTemplate->ufotype)));
+	Q_strcat(productionInfo, _("Components:\n"), sizeof(productionInfo));
 	/* Print components. */
-	for (i = 0; i < comp->numItemtypes; i++) {
-		const objDef_t *compOd = comp->items[i];
+	for (i = 0; i < ufo->comp->numItemtypes; i++) {
+		const objDef_t *compOd = ufo->comp->items[i];
 		assert(compOd);
-		Q_strcat(productionInfo, va(_("%s (%i) "), _(compOd->name), comp->itemAmount[i]),
+		Q_strcat(productionInfo, va("  %s (%i)\n", _(compOd->name), ufo->comp->itemAmount[i]),
 			sizeof(productionInfo));
 	}
 	Q_strcat(productionInfo, "\n", sizeof(productionInfo));
 	Q_strcat(productionInfo, va(_("Disassembly time\t%ih\n"), time), sizeof(productionInfo));
-	Cvar_Set("mn_item", od->id);
 	MN_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
+	Cvar_Set("mn_item", ufo->id);
 }
 
 /**
@@ -427,10 +429,15 @@ static void PR_ProductionInfo (const base_t *base)
 		MN_ExecuteConfunc("prod_taskselected");
 		if (prod->aircraft) {
 			PR_AircraftInfo(prod->aircraft);
-		} else if (prod->production) {
+			MN_ExecuteConfunc("amountsetter enable");
+		} else if (prod->item) {
 			PR_ItemProductionInfo(base, prod->item, prod->percentDone);
+			MN_ExecuteConfunc("amountsetter enable");
+		} else if (prod->ufo) {
+			PR_DisassemblyInfo(base, prod->ufo, prod->percentDone);
+			MN_ExecuteConfunc("amountsetter disable");
 		} else {
-			PR_DisassemblyInfo(base, prod->item, CL_GetComponentsByItem(prod->item), prod->percentDone);
+			Com_Error(ERR_DROP, "PR_ProductionInfo: Selected production is not item nor aircraft nor ufo.\n");
 		}
 		Cvar_SetValue("mn_production_amount", selectedProduction->amount);
 	} else {
@@ -448,7 +455,7 @@ static void PR_ProductionInfo (const base_t *base)
 			} else if (selectedItem) {
 				PR_ItemProductionInfo(base, selectedItem, 0.0);
 			} else if (selectedDisassembly) {
-				PR_DisassemblyInfo(base, selectedDisassembly->assemblyItem, selectedDisassembly, 0.0);
+				PR_DisassemblyInfo(base, selectedDisassembly, 0.0);
 			}
 		}
 	}
@@ -485,10 +492,12 @@ static void PR_ProductionListRightClick_f (void)
 		if (selectedProduction->aircraft) {
 			assert(selectedProduction->aircraft->tech);
 			UP_OpenWith(selectedProduction->aircraft->tech->id);
-		} else {
+		} else if (selectedProduction->item) {
 			const objDef_t *od = selectedProduction->item;
 			assert(od->tech);
 			UP_OpenWith(od->tech->id);
+		} else if (selectedProduction->ufo) {
+			UP_OpenWith(selectedProduction->ufo->ufoTemplate->tech->id);
 		}
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
@@ -502,9 +511,9 @@ static void PR_ProductionListRightClick_f (void)
 			if (aircraftTemplate && aircraftTemplate->tech)
 				UP_OpenWith(aircraftTemplate->tech->id);
 		} else if (produceCategory == FILTER_DISASSEMBLY) {
-			components_t *comp = (components_t*)LIST_GetByIdx(productionItemList, idx);
-			if (comp && comp->assemblyItem && comp->assemblyItem->tech) {
-				UP_OpenWith(comp->assemblyItem->tech->id);
+			storedUFO_t *ufo = (storedUFO_t*)LIST_GetByIdx(productionItemList, idx);
+			if (ufo && ufo->ufoTemplate && ufo->ufoTemplate->tech) {
+				UP_OpenWith(ufo->ufoTemplate->tech->id);
 			}
 		} else {
 			objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
@@ -568,10 +577,10 @@ static void PR_ProductionListClick_f (void)
 		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
 		if (produceCategory == FILTER_DISASSEMBLY) {
-			components_t *comp = (components_t*)LIST_GetByIdx(productionItemList, idx);
+			storedUFO_t *ufo = (storedUFO_t*)LIST_GetByIdx(productionItemList, idx);
 
 			PR_ClearSelected();
-			selectedDisassembly = comp;
+			selectedDisassembly = ufo;
 
 			PR_ProductionInfo(base);
 		} else if (produceCategory == FILTER_AIRCRAFT) {
@@ -650,7 +659,7 @@ static void PR_ProductionType_f (void)
 		if (produceCategory == FILTER_AIRCRAFT)
 			selectedAircraft = (aircraft_t*)LIST_GetByIdx(productionItemList, 0);
 		else if (produceCategory == FILTER_DISASSEMBLY)
-			selectedDisassembly = (components_t*)LIST_GetByIdx(productionItemList, 0);
+			selectedDisassembly = (storedUFO_t*)LIST_GetByIdx(productionItemList, 0);
 		else
 			selectedItem = (objDef_t*)LIST_GetByIdx(productionItemList, 0);
 	}
@@ -702,7 +711,7 @@ static void PR_ProductionList_f (void)
  */
 static void PR_ProductionIncrease_f (void)
 {
-	int amount = 1, amountTemp = 0;
+	int amount = 1;
 	production_queue_t *queue;
 	production_t *prod;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -741,26 +750,8 @@ static void PR_ProductionIncrease_f (void)
 				prod->amount += amount;
 			}
 		} else {	/* Disassembling. */
-			/* We can disassembly only as many items as we have in base storage. */
-			if (base->storage.num[prod->item->idx] > amount)
-				amountTemp = amount;
-			else
-				amountTemp = base->storage.num[prod->item->idx];
-			Com_DPrintf(DEBUG_CLIENT, "PR_ProductionIncrease_f: amounts: storage: %i, param: %i, temp: %i\n", base->storage.num[prod->item->idx], amount, amountTemp);
-
-			/* Now check if we can add more items and
-			 * remove the amount we just added to queue from base storage. */
-			if (prod->amount + amountTemp > MAX_PRODUCTION_AMOUNT) {
-				if (MAX_PRODUCTION_AMOUNT - prod->amount >= 0) {
-					/* Calculate the maximum allowed amount to be added. */
-					amountTemp = MAX_PRODUCTION_AMOUNT - prod->amount;
-				} else {
-					return;
-				}
-			}
-
-			base->storage.num[prod->item->idx] -= amountTemp;
-			prod->amount += amountTemp;
+			/* We can disassembly UFOs only one-by-one. */
+			return;
 		}
 	} else {
 		if (!selectedDisassembly) {
@@ -768,23 +759,11 @@ static void PR_ProductionIncrease_f (void)
 				MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 				return;
 			}
-			prod = PR_QueueNew(base, queue, selectedItem, selectedAircraft, amount, qfalse);	/* Production. (only of of the "selected" pointer can be nonNULL) */
+			/* Production. (only one of the "selected" pointers can be non-NULL) */
+			prod = PR_QueueNew(base, queue, selectedItem, selectedAircraft, NULL, amount);
 		} else {
-			/* We can disassemble only as many items as we have in base storage. */
-			assert(selectedDisassembly && selectedDisassembly->assemblyItem);
-
-			if (base->storage.num[selectedDisassembly->assemblyItem->idx] > amount)
-				amountTemp = amount;
-			else
-				amountTemp = base->storage.num[selectedDisassembly->assemblyItem->idx];
-
-			/* Check if we can add more items. */
-			if (amountTemp > MAX_PRODUCTION_AMOUNT) {
-				/* Add as many items as possible. */
-				amountTemp = MAX_PRODUCTION_AMOUNT;
-			}
-
-			prod = PR_QueueNew(base, queue, selectedDisassembly->assemblyItem, NULL, amountTemp, qtrue);	/* Disassembling. */
+			/* We can disassemble UFOs only one-by-one. */
+			prod = PR_QueueNew(base, queue, NULL, NULL, selectedDisassembly, 1);	/* Disassembling. */
 		}
 
 		/** prod is NULL when queue limit is reached
@@ -796,7 +775,8 @@ static void PR_ProductionIncrease_f (void)
 		} else
 			MN_ExecuteConfunc("prod_selectline %i", prod->idx);
 
-		if (produceCategory != FILTER_AIRCRAFT) {
+		
+		if (prod->item) {
 			/* Get technology of the item in the selected queue-entry. */
 			const objDef_t *od = prod->item;
 			int producibleAmount = amount;
@@ -816,13 +796,8 @@ static void PR_ProductionIncrease_f (void)
 						amount, producibleAmount));
 				}
 
-				if (!selectedDisassembly) {
-					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(od->name));
-					MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
-				} else {
-					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Disassembling of %s started"), _(od->name));
-					MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
-				}
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(od->name));
+				MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 
 				/* Now we select the item we just created. */
 				PR_ClearSelected();
@@ -835,7 +810,7 @@ static void PR_ProductionIncrease_f (void)
 				 *     This info should also be displayed in the item-info.
 				 *  -) can can (if possible) change the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/
 			}
-		} else {
+		} else if (prod->aircraft) {
 			const aircraft_t *aircraftTemplate = prod->aircraft;
 			assert(aircraftTemplate);
 			assert(aircraftTemplate == aircraftTemplate->tpl);
@@ -844,6 +819,14 @@ static void PR_ProductionIncrease_f (void)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(aircraftTemplate->name));
 			MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 			/* Now we select the item we just created. */
+			PR_ClearSelected();
+			selectedProduction = &queue->items[queue->numItems - 1];
+		} else { /* Disassembly */
+			storedUFO_t *ufo = prod->ufo;
+
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Disassembling of %s started"), _(UFO_TypeToName(ufo->ufoTemplate->ufotype)));
+			MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, ufo->ufoTemplate->tech);
+
 			PR_ClearSelected();
 			selectedProduction = &queue->items[queue->numItems - 1];
 		}
@@ -860,20 +843,22 @@ static void PR_ProductionStop_f (void)
 {
 	production_queue_t *queue;
 	base_t *base = B_GetCurrentSelectedBase();
+	int prodIDX;
 
 	if (!base || !selectedProduction)
 		return;
 
+	prodIDX = selectedProduction->idx;
 	queue = &ccs.productions[base->idx];
 
-	PR_QueueDelete(base, queue, selectedProduction->idx);
+	PR_QueueDelete(base, queue, prodIDX);
 
 	if (queue->numItems == 0) {
 		selectedProduction = NULL;
 		MN_ExecuteConfunc("prod_selectline -1");
-	} else if (selectedProduction->idx >= queue->numItems) {
+	} else if (prodIDX >= queue->numItems) {
 		selectedProduction = &queue->items[queue->numItems - 1];
-		MN_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
+		MN_ExecuteConfunc("prod_selectline %i", prodIDX);
 	}
 
 	PR_ProductionInfo(base);
@@ -904,9 +889,6 @@ static void PR_ProductionDecrease_f (void)
 		amountTemp = prod->amount;
 
 	prod->amount -= amountTemp;
-	/* We need to readd items being disassembled to base storage. */
-	if (!prod->production)
-		base->storage.num[prod->item->idx] += amountTemp;
 
 	if (prod->amount <= 0) {
 		PR_ProductionStop_f();

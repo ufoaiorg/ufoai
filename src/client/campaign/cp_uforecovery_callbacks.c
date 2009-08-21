@@ -1,11 +1,12 @@
 /**
  * @file cp_uforecovery_callbacks.c
- * @brief UFO recovery callback functions
- * @note Functions with UR_*
+ * @brief UFO recovery and storing callback functions
+ * @note UFO recovery functions with UR_*
+ * @note UFO storing functions with US_*
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -33,24 +34,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_main.h"
 #include "../menu/node/m_node_text.h"
 
-typedef struct ufoRecoveryStorage_s {
-	base_t *base; /**< base where actual ufo is located */
-	aircraft_t *ufoTemplate; /**< template of ufo for storage id and name */
-	objDef_t *ufoItem; /**< object definition of aircraft, used for capacity check */
-} ufoRecoveryStorage_t;
+#ifdef DEBUG
+#include "cp_time.h"
+#endif
 
 /** @sa ufoRecoveries_t */
 typedef struct ufoRecovery_s {
-	base_t *base;			/**< selected base for current selected ufo recovery */
-	ufoType_t ufoType;		/**< the ufo type of the current ufo recovery */
+	installation_t *installation;			/**< selected ufoyard for current selected ufo recovery */
+	aircraft_t *ufoTemplate;		/**< the ufo type of the current ufo recovery */
 	nation_t *nation;		/**< selected nation to sell to for current ufo recovery */
 	qboolean recoveryDone;	/**< recoveryDone? Then the buttons are disabled */
-	base_t *UFObases[MAX_BASES];	/**< Array of base indexes where we can store UFO. */
-	int baseHasUFOHangarCount;		/**< number of entries in the UFObases array */
+
 	int UFOprices[MAX_NATIONS];		/**< Array of prices proposed by nation. */
-	ufoRecoveryStorage_t replaceUFOs[MAX_BASES * UFO_MAX]; /**< Array of replaceable ufos in all bases */
-	ufoRecoveryStorage_t *selectedStorage; /**< selected storage for replace */
-	int replaceCount; 		/**< number of replaceable ufos in all bases */
 } ufoRecovery_t;
 
 static ufoRecovery_t ufoRecovery;
@@ -64,148 +59,39 @@ static void UR_DialogRecoveryDone (void)
 }
 
 /**
- * @brief Checks conditions for storing given ufo in given base.
- * @param[in] base Pointer to the base, where we are going to store UFO.
- * @param[in] ufocraft Pointer to ufocraft which we are going to store.
- * @return qtrue if given base can store given ufo.
- */
-static int UR_GetBaseCapacityForUfotype (const base_t *base, const aircraft_t *ufocraft)
-{
-	assert(base && ufocraft);
-
-	if (ufocraft->size == AIRCRAFT_LARGE) {
-		/* Large UFOs can only fit large UFO hangars */
-		if (!B_GetBuildingStatus(base, B_UFO_HANGAR))
-			return -1;
-
-		/* Check there is still enough room for this UFO */
-		return base->capacities[CAP_UFOHANGARS_LARGE].max;
-	} else {
-		/* This is a small UFO, can only fit in small hangar */
-
-		/* There's no small hangar functional */
-		if (!B_GetBuildingStatus(base, B_UFO_SMALL_HANGAR))
-			return -1;
-
-		/* Check there is still enough room for this UFO */
-		return base->capacities[CAP_UFOHANGARS_SMALL].max;
-	}
-}
-
-
-/**
- * @brief Select appropriate the base or replace option from list
- * @param num selected index must be within valid range
- */
-static void UR_DialogSelectStorageBase (const int num)
-{
-	qboolean useBase = qtrue;
-	if (num < ufoRecovery.baseHasUFOHangarCount) {
-		if (!ufoRecovery.UFObases[num])
-			return;
-	} else {
-		useBase = qfalse;
-		if (!ufoRecovery.replaceUFOs[num - ufoRecovery.baseHasUFOHangarCount].base)
-			return;
-	}
-
-	if (useBase) {
-		ufoRecovery.base = ufoRecovery.UFObases[num];
-		Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked base: %s\n", ufoRecovery.base->name);
-		MN_ExecuteConfunc("btbasesel_enable");
-	} else {
-		ufoRecovery.selectedStorage = &ufoRecovery.replaceUFOs[num - ufoRecovery.baseHasUFOHangarCount];
-		Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked replace ufo %s from base %s\n",
-				ufoRecovery.selectedStorage->ufoTemplate->id, ufoRecovery.selectedStorage->base->name);
-		ufoRecovery.base = ufoRecovery.selectedStorage->base;
-		MN_ExecuteConfunc("btbaserepl_enable");
-	}
-	Cvar_Set("mission_recoverybase", ufoRecovery.base->name);
-}
-
-/**
  * @brief Function to trigger UFO Recovered event.
  * @note This function prepares related cvars for the recovery dialog.
  * @note Command to call this: cp_uforecovery_init.
  */
 static void UR_DialogInit_f (void)
 {
-	int i;
-	ufoType_t UFOtype;
-	aircraft_t *ufocraft;
-	qboolean ufofound = qfalse;
+	char ufoID[MAX_VAR];
+	aircraft_t *ufoCraft = NULL;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <UFOType>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <ufoID>\n", Cmd_Argv(0));
 		return;
 	}
 
-	if ((atoi(Cmd_Argv(1)) >= 0) && (atoi(Cmd_Argv(1)) < UFO_MAX)) {
-		UFOtype = atoi(Cmd_Argv(1));
-	} else {
-		Com_Printf("CP_UFORecovered: UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
-		return;
-	}
-
-	ufocraft = NULL;
-	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < ccs.numAircraftTemplates; i++) {
-		ufocraft = &ccs.aircraftTemplates[i];
-		if (ufocraft->type != AIRCRAFT_UFO)
-			continue;
-		if (ufocraft->ufotype == UFOtype) {
-			ufofound = qtrue;
-			break;
-		}
-	}
+	Q_strncpyz(ufoID, Cmd_Argv(1), sizeof(ufoID));
+	ufoCraft = AIR_GetAircraft(ufoID);
 	/* Do nothing without UFO of this type. */
-	if (!ufofound) {
-		Com_Printf("CP_UFORecovered: UFOType: %i does not have valid craft definition!\n", atoi(Cmd_Argv(1)));
+	if (!ufoCraft) {
+		Com_Printf("CP_UFORecovered: UFO Type: %s is not a valid craft definition!\n", ufoID);
 		return;
 	}
 
 	/* Put relevant info into missionResults array. */
 	ccs.missionResults.recovery = qtrue;
 	ccs.missionResults.crashsite = qfalse;
-	ccs.missionResults.ufotype = ufocraft->ufotype;
+	ccs.missionResults.ufotype = ufoCraft->ufotype;
 
 	/* Prepare related cvars. */
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
 	memset(&ufoRecovery, 0, sizeof(ufoRecovery));
-	ufoRecovery.ufoType = UFOtype;
+	ufoRecovery.ufoTemplate = ufoCraft;
 
-}
-
-/**
- * @brief Function calculates prices for actual ufo to sell and initializes menu text.
- * @param ufocraft the ufo type to sell
- * @note called by UR_DialogInitSell_f and UR_DialogStartReplace
- */
-static void UR_DialogInitSell (aircraft_t *ufocraft)
-{
-	int i, nations = 0;
-	static char recoveryNationSelectPopup[MAX_SMALLMENUTEXTLEN];
-
-	recoveryNationSelectPopup[0] = '\0';
-
-	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = &ccs.nations[i];
-		nations++;
-		/* Calculate price offered by nation only if this is first popup opening. */
-		if (!ufoRecovery.nation) {
-			ufoRecovery.UFOprices[i] = (int) (ufocraft->price * (.85f + frand() * .3f));
-			/* Nation will pay less if corrupted */
-			ufoRecovery.UFOprices[i] = (int) (ufoRecovery.UFOprices[i] * exp(-nation->stats[0].xviInfection / 20.0f));
-		}
-		Com_sprintf(recoveryNationSelectPopup + strlen(recoveryNationSelectPopup), sizeof(recoveryNationSelectPopup),
-				"%s\t\t\t%i\t\t%s\n", _(nation->name), ufoRecovery.UFOprices[i], NAT_GetHappinessString(nation));
-	}
-
-	/* Do nothing without at least one nation. */
-	if (nations == 0)
-		return;
-
-	MN_RegisterText(TEXT_UFORECOVERY_NATIONS, recoveryNationSelectPopup);
+	Cvar_Set("mn_uforecovery_actualufo", UFO_MissionResultToString());
 }
 
 /**
@@ -215,214 +101,90 @@ static void UR_DialogInitSell (aircraft_t *ufocraft)
  */
 static void UR_DialogInitStore_f (void)
 {
-	int i,j, replaceTemplates = 0;
-	aircraft_t *ufocraft;
-	linkedList_t *recoveryBaseSelectPopup = NULL;
-	qboolean ufofound = qfalse;
-	linkedList_t *validReplaceTemplateList = NULL, *replaceObjDefList = NULL;
-
-	/* Do nothing without any base. */
-	if (!ccs.numBases)
-		return;
+	int i;
+	int count = 0;
+	linkedList_t *recoveryYardSelectPopup = NULL;
 
 	/* Do nothing if recovery process is finished. */
 	if (ufoRecovery.recoveryDone)
 		return;
 
-	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < ccs.numAircraftTemplates; i++) {
-		ufocraft = &ccs.aircraftTemplates[i];
-		if (ufocraft->type != AIRCRAFT_UFO)
-			continue;
-		if (ufocraft->ufotype == ufoRecovery.ufoType) {
-			ufofound = qtrue;
-			break;
-		}
-	}
-
-	/* Do nothing without UFO of this type. */
-	if (!ufofound) {
-		Com_Printf("CP_UFORecoveredStore_f: UFOType: %i does not have valid craft definition!\n", ufoRecovery.ufoType);
-		return;
-	}
-
-	/* find valid replace templates */
-	for (i = 0; i < ccs.numAircraftTemplates; i++) {
-		aircraft_t *tempcraft = &ccs.aircraftTemplates[i];
-		if (tempcraft == ufocraft)
-			continue;
-		if (tempcraft->type != AIRCRAFT_UFO)
-			continue;
-		if (tempcraft->size == ufocraft->size) {
-			LIST_AddPointer(&validReplaceTemplateList,tempcraft);
-			LIST_AddPointer(&replaceObjDefList,INVSH_GetItemByID(tempcraft->id));
-			replaceTemplates++;
-		}
-	}
-
-	/* Clear UFObases. */
-	memset(ufoRecovery.UFObases, 0, sizeof(ufoRecovery.UFObases));
-
 	/* Check how many bases can store this UFO. */
-	for (i = 0; i < MAX_BASES; i++) {
-		base_t *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
+	for (i = 0; i < ccs.numInstallations; i++) {
+		installation_t *installation = INS_GetFoundedInstallationByIDX(i);
+
+		if (!installation)
 			continue;
-		if (UR_ConditionsForStoring(base, ufocraft)) {
-			LIST_AddString(&recoveryBaseSelectPopup, base->name);
-			ufoRecovery.UFObases[ufoRecovery.baseHasUFOHangarCount++] = base;
-		} else {
-			int baseCapacity = UR_GetBaseCapacityForUfotype(base, ufocraft);
-			if (baseCapacity > 0)
-			{
-				linkedList_t *curTemplate = validReplaceTemplateList;
-				linkedList_t *curObjID = replaceObjDefList;
-				for (j = 0; j < replaceTemplates; j++) {
-					objDef_t *obj = (objDef_t*)curObjID->data;
-					aircraft_t *craft = (aircraft_t *)curTemplate->data;
-					if (base->storage.num[obj->idx] > 0) {
-						/* found a valid replace, add it */
-						ufoRecoveryStorage_t *store = &ufoRecovery.replaceUFOs[ufoRecovery.replaceCount];
-						store->base = base;
-						store->ufoItem = obj;
-						store->ufoTemplate = craft;
-						ufoRecovery.replaceCount++;
-					}
-					curObjID = curObjID->next;
-					curTemplate = curTemplate->next;
-				}
-			}
+
+		if (installation->ufoCapacity.max > 0
+		 && installation->ufoCapacity.max > installation->ufoCapacity.cur) {
+			LIST_AddString(&recoveryYardSelectPopup, installation->name);
+			count++;
 		}
 	}
 
-	for (i = 0; i < ufoRecovery.replaceCount; i++)
-	{
-		ufoRecoveryStorage_t store = ufoRecovery.replaceUFOs[i];
-		LIST_AddString(&recoveryBaseSelectPopup, va(_("Replace %s at %s (%i stored available)\n"), _(store.ufoItem->name), store.base->name, store.base->storage.num[store.ufoItem->idx] ));
-	}
-
-	/* If only one base with UFO hangars, the recovery will be done in this base. */
-	switch (ufoRecovery.baseHasUFOHangarCount + ufoRecovery.replaceCount) {
-	case 0:
+	Cvar_Set("mn_uforecovery_actualufo", UFO_MissionResultToString());
+	if (count == 0) {
 		/* No UFO base with proper conditions, show a hint and disable list. */
-		LIST_AddString(&recoveryBaseSelectPopup, _("No ufo hangar or ufo yard available."));
-		MN_ExecuteConfunc("cp_basesel_disable");
-		break;
-	case 1:
-		/* there should only be one entry in UFObases - so use that one. */
-		if (ufoRecovery.baseHasUFOHangarCount)
-			ufoRecovery.base = ufoRecovery.UFObases[0];
-		else
-			ufoRecovery.selectedStorage = &ufoRecovery.replaceUFOs[0];
-		UR_DialogSelectStorageBase(0);
-		/** @todo some better way to do so without the need of a confunc? */
-		MN_ExecuteConfunc("cp_basesel_select");
-		break;
-	default:
-		/** @todo check whether this is needed */
-		if (!ufoRecovery.base)
-			ufoRecovery.base = ufoRecovery.UFObases[0];
-		if (ufoRecovery.base)
-			Cvar_Set("mission_recoverybase", ufoRecovery.base->name);
-		break;
+		LIST_AddString(&recoveryYardSelectPopup, _("No free ufo yard available."));
+		MN_ExecuteConfunc("uforecovery_tabselect sell");
+		MN_ExecuteConfunc("btbasesel disable");
+	} else {
+		MN_ExecuteConfunc("cp_basesel_select 0");
+		MN_ExecuteConfunc("btbasesel enable");
 	}
-	Cvar_Set("mn_uforecovery_actualufo",UFO_MissionResultToString());
-	MN_RegisterLinkedListText(TEXT_UFORECOVERY_BASESTORAGE, recoveryBaseSelectPopup);
-}
-
-/**
- * @brief Finds the destination base for UFO recovery.
- * @note The base selection is being done here.
- * @note Callback command: cp_uforecovery_baselist_click.
- */
-static void UR_DialogSelectStorageBase_f (void)
-{
-	int num;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseid>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= ufoRecovery.replaceCount + ufoRecovery.baseHasUFOHangarCount)
-		return;
-
-	UR_DialogSelectStorageBase(num);
-}
-
-/**
- * @brief Function starts the UFO recovery process.
- * @note Called by UR_DialogStartStore_f and UR_DialogStartReplace_f
- * @note uforecovery base value must be set
- * @param finish flag indicating whether uforecovery should me marked as done
- */
-static void UR_DialogStartStore (qboolean finish)
-{
-	base_t *base = ufoRecovery.base;
-	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO is being transported to base %s."), UFO_TypeToName(
-			ufoRecovery.ufoType), base->name);
-	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-	UR_Prepare(base, ufoRecovery.ufoType);
-
-	if (finish)
-		/* UFO recovery process is done, disable buttons. */
-		UR_DialogRecoveryDone();
+	MN_RegisterLinkedListText(TEXT_UFORECOVERY_BASESTORAGE, recoveryYardSelectPopup);
 }
 
 /**
  * @brief Function to start UFO recovery process.
  * @note Command to call this: cp_uforecovery_store_start.
- * @note This needs the ufoRecovery base value set
  */
 static void UR_DialogStartStore_f (void)
 {
-	base_t *base = ufoRecovery.base;
-	if (!base)
+	installation_t *UFOYard = NULL;
+	int idx;
+	int i;
+	int count = 0;
+	date_t date;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <installationIDX>\n", Cmd_Argv(0));
 		return;
-
-	UR_DialogStartStore(qtrue);
-}
-
-/**
- * @brief Function to start replace process
- * @note Command to call this: cp_uforecovery_replace
- * @note This needs the uforecovery selectedStorage value set
- */
-static void UR_DialogStartReplace_f (void)
-{
-	linkedList_t *replacetext = NULL;
-	ufoRecoveryStorage_t *storage = ufoRecovery.selectedStorage;
-	if (!storage)
-		return;
-	/** @todo can these asserts be merged into one? */
-	assert(storage->base);
-	assert(storage->ufoItem);
-	assert(storage->ufoTemplate);
-
-	/* update hangar cap, remove old ufo*/
-	storage->base->storage.num[storage->ufoItem->idx]--;
-	if (storage->ufoTemplate->size == AIRCRAFT_LARGE) {
-		if (storage->base->capacities[CAP_UFOHANGARS_LARGE].cur > 0)
-			storage->base->capacities[CAP_UFOHANGARS_LARGE].cur--;
-		else
-			Com_Printf("UR_DialogStartReplace_f: Large UFO-hangar capacity is not greater than zero for replacing a UFO.");
-	} else {
-		if (storage->base->capacities[CAP_UFOHANGARS_SMALL].cur > 0)
-			storage->base->capacities[CAP_UFOHANGARS_SMALL].cur--;
-		else
-			Com_Printf("UR_DialogStartReplace_f: Small UFO-hangar capacity is not greater than zero for replacing a UFO.");
 	}
-	/* reinit sell values for replaced ufo */
-	memset(ufoRecovery.UFOprices,-1,sizeof(ufoRecovery.UFOprices));
-	ufoRecovery.nation = NULL;
-	UR_DialogInitSell(storage->ufoTemplate);
-	/* update other menu texts */
-	Cvar_Set("mn_uforecovery_actualufo",va(_("previously recovered %s from base %s"),UFO_TypeToName(storage->ufoTemplate->type), storage->base->name));
-	LIST_AddString(&replacetext, va(_("Storage process for captured %s ongoing."), UFO_TypeToName(ufoRecovery.ufoType)));
-	MN_RegisterLinkedListText(TEXT_UFORECOVERY_BASESTORAGE, replacetext);
-	/* start storage process for recovered ufo */
-	UR_DialogStartStore(qfalse);
+
+	idx = atoi(Cmd_Argv(1));
+
+	for (i = 0; i < ccs.numInstallations; i++) {
+		installation_t *installation = INS_GetFoundedInstallationByIDX(i);
+
+		if (!installation)
+			continue;
+
+		if (installation->ufoCapacity.max <= 0
+		 || installation->ufoCapacity.max <= installation->ufoCapacity.cur)
+		 	continue;
+		
+		if (count == idx) {
+			UFOYard = installation;
+			break;
+		}
+		count++;
+	}
+
+	if (!UFOYard)
+		return;
+
+	Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO is being transported to %s."), _(UFO_TypeToName(ufoRecovery.ufoTemplate->ufotype)), UFOYard->name);
+	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+/*	UR_Prepare(UFOYard, ufoRecovery.ufoTemplate->ufotype); */
+	date = ccs.date;
+	date.day += (int) RECOVERY_DELAY;
+/*	date.sec += (RECOVERY_DELAY - (int) RECOVERY_DELAY) % SECONDS_PER_DAY;*/
+
+	US_StoreUFO(ufoRecovery.ufoTemplate, UFOYard, date);
+
+	UR_DialogRecoveryDone();
 }
 
 /**
@@ -432,27 +194,39 @@ static void UR_DialogStartReplace_f (void)
 static void UR_DialogInitSell_f (void)
 {
 	int i;
-	aircraft_t *ufocraft;
+	int nations = 0;
+	static char recoveryNationSelectPopup[MAX_SMALLMENUTEXTLEN];
 
 	/* Do nothing if recovery process is finished. */
 	if (ufoRecovery.recoveryDone)
 		return;
 
-	ufocraft = NULL;
-	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < ccs.numAircraftTemplates; i++) {
-		ufocraft = &ccs.aircraftTemplates[i];
-		if (ufocraft->type != AIRCRAFT_UFO)
-			continue;
-		if (ufocraft->ufotype == ufoRecovery.ufoType)
-			break;
-	}
-	if (!ufocraft)
+	if (!ufoRecovery.ufoTemplate)
 		return;
 
 	memset(ufoRecovery.UFOprices, -1, sizeof(ufoRecovery.UFOprices));
 
-	UR_DialogInitSell(ufocraft);
+	recoveryNationSelectPopup[0] = '\0';
+
+	for (i = 0; i < ccs.numNations; i++) {
+		const nation_t *nation = &ccs.nations[i];
+		nations++;
+		/* Calculate price offered by nation only if this is first popup opening. */
+		if (!ufoRecovery.nation) {
+			ufoRecovery.UFOprices[i] = (int) (ufoRecovery.ufoTemplate->price * (.85f + frand() * .3f));
+			/* Nation will pay less if corrupted */
+			ufoRecovery.UFOprices[i] = (int) (ufoRecovery.UFOprices[i] * exp(-nation->stats[0].xviInfection / 20.0f));
+		}
+		Com_sprintf(recoveryNationSelectPopup + strlen(recoveryNationSelectPopup), lengthof(recoveryNationSelectPopup),
+				"%s\t\t\t%i\t\t%s\n", _(nation->name), ufoRecovery.UFOprices[i], NAT_GetHappinessString(nation));
+	}
+
+	/* Do nothing without at least one nation. */
+	if (nations == 0)
+		return;
+
+	MN_RegisterText(TEXT_UFORECOVERY_NATIONS, recoveryNationSelectPopup);
+	MN_ExecuteConfunc("btnatsel disable");
 }
 
 /**
@@ -481,7 +255,7 @@ static void UR_DialogSelectSellNation_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
 
 	Cvar_Set("mission_recoverynation", _(nation->name));
-	MN_ExecuteConfunc("btnatsel_enable");
+	MN_ExecuteConfunc("btnatsel enable");
 }
 
 /**
@@ -502,13 +276,15 @@ static void UR_DialogStartSell_f (void)
 		Com_Printf("CP_UFOSellStart_f: Error: ufo price of -1 - nation: '%s'\n", nation->id);
 		return;
 	}
+#if 0
 	if (ufoRecovery.selectedStorage) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Sold previously recovered %s from %s to nation %s, gained %i credits."), UFO_TypeToName(
 				ufoRecovery.selectedStorage->ufoTemplate->ufotype), ufoRecovery.selectedStorage->base->name, _(nation->name), ufoRecovery.UFOprices[nation->idx]);
 	} else {
+#endif
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."), UFO_TypeToName(
-				ufoRecovery.ufoType), _(nation->name), ufoRecovery.UFOprices[nation->idx]);
-	}
+				ufoRecovery.ufoTemplate->ufotype), _(nation->name), ufoRecovery.UFOprices[nation->idx]);
+/*	}*/
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CL_UpdateCredits(ccs.credits + ufoRecovery.UFOprices[nation->idx]);
 
@@ -526,16 +302,121 @@ static void UR_DialogStartSell_f (void)
 	UR_DialogRecoveryDone();
 }
 
+
+/* === UFO Storing === */
+
+#ifdef DEBUG
+/**
+ * @brief Debug callback to list ufostores
+ */
+static void US_ListStoredUFOs_f (void)
+{
+	int i;
+
+	Com_Printf("Number of stored UFOs: %i\n", ccs.numStoredUFOs);
+	for (i = 0; i < ccs.numStoredUFOs; i++) {
+		const storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
+		const base_t *prodBase = PR_ProductionBase(ufo->disassembly);
+		dateLong_t date;
+
+		Com_Printf("IDX: %i\n", ufo->idx);
+		Com_Printf("id: %s\n", ufo->id);
+		Com_Printf("stored at %s\n", (ufo->installation) ? ufo->installation->name : "NOWHERE");
+
+		CL_DateConvertLong(&(ufo->arrive), &date);
+		Com_Printf("arrived at: %i %s %02i, %02i:%02i\n", date.year,
+		Date_GetMonthName(date.month - 1), date.day, date.hour, date.min);
+
+		if (ufo->ufoTemplate->tech->base)
+			Com_Printf("tech being researched at %s\n", ufo->ufoTemplate->tech->base->name);
+		if (prodBase)
+			Com_Printf("being disassembled at %s\n", prodBase->name);
+	}
+}
+
+/**
+ * @brief Adds an UFO to the stores
+ */
+static void US_StoreUFO_f (void)
+{
+	char ufoId[MAX_VAR];
+	int installationIDX;
+	installation_t *installation;
+	aircraft_t *ufoType = NULL;
+	int i;
+
+	if (Cmd_Argc() <= 2) {
+		Com_Printf("Usage: %s <ufoType> <installationIdx>\n", Cmd_Argv(0));
+		return;
+	}
+
+	Q_strncpyz(ufoId, Cmd_Argv(1), sizeof(ufoId));
+	installationIDX = atoi(Cmd_Argv(2));
+
+	/* Get The UFO Yard */
+	if (installationIDX < 0 || installationIDX >= MAX_INSTALLATIONS) {
+		Com_Printf("US_StoreUFO_f: Invalid Installation index.\n");
+		return;
+	}		
+	installation = INS_GetFoundedInstallationByIDX(installationIDX);
+	if (!installation) {
+		Com_Printf("US_StoreUFO_f: There is no Installation: idx=%i.\n", installationIDX);
+		return;
+	}
+
+	/** Get UFO Type */
+	for (i = 0; i < ccs.numAircraftTemplates; i++) {
+		if (strstr(ccs.aircraftTemplates[i].id, ufoId)) {
+			ufoType = &ccs.aircraftTemplates[i];
+			break;
+		}
+	}
+	if (ufoType == NULL) {
+		Com_Printf("US_StoreUFO_f: In valid UFO Id.\n");
+		return;
+	}
+
+	US_StoreUFO(ufoType, installation, ccs.date);
+}
+
+/**
+ * @brief Removes an UFO from the stores
+ */
+static void US_RemoveStoredUFO_f (void)
+{
+	int idx;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <idx>\n", Cmd_Argv(0));
+		return;
+	}
+	idx = atoi(Cmd_Argv(1));
+
+	if (idx < 0 || idx >= ccs.numStoredUFOs) {
+		Com_Printf("US_RemoveStoredUFO_f: No such ufo index.\n");
+		return;
+	}
+
+	US_RemoveStoredUFO(US_GetStoredUFOByIDX(idx));
+}
+
+
+#endif
+
 void UR_InitCallbacks (void)
 {
 	Cmd_AddCommand("cp_uforecovery_init", UR_DialogInit_f, "Function to trigger UFO Recovered event");
 	Cmd_AddCommand("cp_uforecovery_sell_init", UR_DialogInitSell_f, "Function to initialize sell recovered UFO to desired nation.");
 	Cmd_AddCommand("cp_uforecovery_store_init", UR_DialogInitStore_f, "Function to initialize store recovered UFO in desired base.");
 	Cmd_AddCommand("cp_uforecovery_nationlist_click", UR_DialogSelectSellNation_f, "Callback for recovery sell to nation list.");
-	Cmd_AddCommand("cp_uforecovery_baselist_click", UR_DialogSelectStorageBase_f, "Callback for recovery store in base list.");
 	Cmd_AddCommand("cp_uforecovery_store_start", UR_DialogStartStore_f, "Function to start UFO recovery processing.");
 	Cmd_AddCommand("cp_uforecovery_sell_start", UR_DialogStartSell_f, "Function to start UFO selling processing.");
-	Cmd_AddCommand("cp_uforecovery_replace", UR_DialogStartReplace_f, "Function to start replace UFO in base processing. Sell is needed for replaced UFO.");
+
+#ifdef DEBUG
+	Cmd_AddCommand("debug_liststoredufos", US_ListStoredUFOs_f, "Debug function to list UFOs in Hangars.");
+	Cmd_AddCommand("debug_storeufo", US_StoreUFO_f, "Debug function to Add UFO to Hangars.");
+	Cmd_AddCommand("debug_removestoredufo", US_RemoveStoredUFO_f, "Debug function to Remove UFO from Hangars.");
+#endif
 }
 
 void UR_ShutdownCallbacks (void)
@@ -544,8 +425,11 @@ void UR_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("cp_uforecovery_sell_init");
 	Cmd_RemoveCommand("cp_uforecovery_store_init");
 	Cmd_RemoveCommand("cp_uforecovery_nationlist_click");
-	Cmd_RemoveCommand("cp_uforecovery_baselist_click");
 	Cmd_RemoveCommand("cp_uforecovery_store_start");
 	Cmd_RemoveCommand("cp_uforecovery_sell_start");
-	Cmd_RemoveCommand("cp_uforecovery_replace");
+#ifdef DEBUG
+	Cmd_RemoveCommand("debug_liststoredufos");
+	Cmd_RemoveCommand("debug_storeufo");
+	Cmd_RemoveCommand("debug_removestoredufo");
+#endif
 }

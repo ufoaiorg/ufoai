@@ -4,7 +4,7 @@
  */
 
 /*
- Copyright (C) 1997-2008 UFO:AI Team
+ Copyright (C) 1997-2009 UFO:AI Team
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -23,10 +23,10 @@
 
  */
 
-#ifndef CLIENT_CL_PRODUCE_CALLBACKS_H
-#define CLIENT_CL_PRODUCE_CALLBACKS_H
+#ifndef CLIENT_CP_PRODUCE_CALLBACKS_H
+#define CLIENT_CP_PRODUCE_CALLBACKS_H
 
 void PR_InitCallbacks (void);
 void PR_ShutdownCallbacks (void);
 
-#endif /* CLIENT_CL_PRODUCE_CALLBACKS_H */
+#endif /* CLIENT_CP_PRODUCE_CALLBACKS_H */

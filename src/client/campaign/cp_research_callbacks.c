@@ -608,10 +608,7 @@ static void RS_ResearchStop_f (void)
 
 	switch (tech->statusResearch) {
 	case RS_RUNNING:
-		/* Remove all scis from it and set the status to paused (i.e. it's differnet from a RS_NONE since it may have a little bit of progress already). */
-		while (tech->scientists > 0)
-			RS_RemoveScientist(tech, NULL);
-		assert(tech->statusResearch == RS_PAUSED);
+		RS_StopResearch(tech);
 		break;
 	case RS_PAUSED:
 		/** @todo remove? Popup info how much is already researched? */

@@ -523,10 +523,6 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_WORKSPACE)))
 		PR_UpdateProductionCap(base);
 
-	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_SMALL)) ||
-		B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_LARGE)))
-		UR_UpdateUFOHangarCapForAll(base);
-
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ANTIMATTER)))
 		B_UpdateAntimatterCap(base);
 
@@ -2575,8 +2571,8 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	case CAP_ITEMS:			/**< Update items capacity in base. */
 	case CAP_AIRCRAFT_SMALL:	/**< Update aircraft capacity in base. */
 	case CAP_AIRCRAFT_BIG:		/**< Update aircraft capacity in base. */
-	case CAP_UFOHANGARS_SMALL:	/**< Base capacities for UFO hangars. */
-	case CAP_UFOHANGARS_LARGE:	/**< Base capacities for UFO hangars. */
+	case CAP_UFOHANGARS_SMALL:      /**< Base capacities for UFO hangars. */
+	case CAP_UFOHANGARS_LARGE:      /**< Base capacities for UFO hangars. */
 	case CAP_ANTIMATTER:		/**< Update antimatter capacity in base. */
 		/* Reset given capacity in current base. */
 		base->capacities[cap].max = 0;
@@ -2789,12 +2785,52 @@ static void B_PostLoadInitCapacity (void)
 }
 
 /**
+ * @brief Moves the UFOs stored in the base's storage structure to UFO Yards' storedUFOs structure
+ * @note this is a temporary function to keep savegame compatibility
+ * @todo remove this before release (or after a time)
+ */
+static void B_PostLoadMoveUFOsToUFOYards (void)
+{
+	int i;
+
+	/* loop throught bases */
+	for (i = 0; i < ccs.numBases; i++) {
+		int j;
+		base_t * base = B_GetFoundedBaseByIDX(i);
+
+		if (!base)
+			continue;
+
+		/* find ufos in storage */
+		for (j = 0; j < csi.numODs; j++) {
+			objDef_t *od = INVSH_GetItemByIDX(j);
+
+			if (!od)
+				continue;
+			assert(od->tech);
+			if (od->tech->type != RS_CRAFT)
+				continue;
+
+			/* add each to an ufoyard */
+			for (;0 < base->storage.num[od->idx];) {
+				installation_t *UFOYard = INS_GetFirstUFOYard(qtrue);
+
+				if (UFOYard)
+					US_StoreUFO(AIR_GetAircraft(od->id), UFOYard, ccs.date);
+				base->storage.num[od->idx]--;
+			}
+		}
+	}
+}
+
+/**
  * @brief Set the capacity stuff for all the bases after loading a savegame
  * @sa SAV_GameActionsAfterLoad
  */
 void B_PostLoadInit (void)
 {
 	B_PostLoadInitCapacity();
+	B_PostLoadMoveUFOsToUFOYards();
 }
 
 qboolean B_LoadStorageXML (mxml_node_t *parent, equipDef_t *equip)
@@ -2874,6 +2910,8 @@ qboolean B_LoadXML (mxml_node_t *parent)
 			} else
 				*building = *B_GetBuildingTemplate(buildingType);
 
+			if (!building)
+				continue;
 			building->idx = B_GetBuildingIDX(b, building);
 			if (building->idx != buildId) {
 				Com_Printf("building ID doesn't match\n");
@@ -2944,6 +2982,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		/** @todo can't we use something like INVSH_DestroyInventory here? */
 		/* clear the mess of stray loaded pointers */
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
+		/* reset capacities */
 	}
 
 	ccs.numBases = B_GetFoundedBaseCount();
@@ -2963,6 +3002,7 @@ static qboolean B_ItemsIsStoredInBaseStorage (const objDef_t *obj)
 	if (!strcmp(obj->id, ANTIMATTER_TECH_ID))
 		return qfalse;
 
+	/* @todo: remove this condition - I keep it for compatibility for now. -geever */
 	/* aircraft are stored in hangars */
 	assert(obj->tech);
 	if (obj->tech->type == RS_CRAFT)
@@ -3115,74 +3155,6 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 	}
 	Com_DPrintf(DEBUG_CLIENT, "B_RemoveItemsExceedingCapacity: Remains %i in storage for a maximum of %i\n",
 		base->capacities[CAP_ITEMS].cur, base->capacities[CAP_ITEMS].max);
-}
-
-/**
- * @brief Remove ufos until everything fits in ufo hangars.
- * @param[in] base Pointer to the base
- * @param[in] buildingType type
- */
-void B_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildingType)
-{
-	const baseCapacities_t capacityType = B_GetCapacityFromBuildingType(buildingType);
-	int i;
-	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
-	int num;
-
-	if (capacityType != CAP_UFOHANGARS_SMALL && capacityType != CAP_UFOHANGARS_LARGE)
-		return;
-
-	if (base->capacities[capacityType].cur <= base->capacities[capacityType].max)
-		return;
-
-	for (i = 0, num = 0; i < csi.numODs; i++) {
-		const objDef_t *obj = &csi.ods[i];
-		aircraft_t *ufocraft;
-
-		/* Don't count what isn't an aircraft */
-		assert(obj->tech);
-		if (obj->tech->type != RS_CRAFT)
-			continue;
-
-		/* look for corresponding aircraft in global array */
-		ufocraft = AIR_GetAircraft(obj->id);
-		if (!ufocraft) {
-			Com_DPrintf(DEBUG_CLIENT, "B_RemoveUFOsExceedingCapacity: Did not find UFO %s\n", obj->id);
-			continue;
-		}
-
-		if (ufocraft->size == AIRCRAFT_LARGE && capacityType != CAP_UFOHANGARS_LARGE)
-			continue;
-		if (ufocraft->size == AIRCRAFT_SMALL && capacityType != CAP_UFOHANGARS_SMALL)
-			continue;
-
-		/* Don't count item that we don't have in base */
-		if (!base->storage.num[i])
-			continue;
-
-		objIdx[num++] = i;
-	}
-
-	while (num && base->capacities[capacityType].cur > base->capacities[capacityType].max) {
-		/* Select the item to remove */
-		const int randNumber = rand() % num;
-		/* items are destroyed. We guess that all items of a given type are stored in the same location
-		 *	=> destroy all items of this type */
-		const int idx = objIdx[randNumber];
-
-		assert(idx >= 0);
-		assert(idx < MAX_OBJDEFS);
-		B_UpdateStorageAndCapacity(base, &csi.ods[idx], -base->storage.num[idx], qfalse, qfalse);
-
-		REMOVE_ELEM(objIdx, randNumber, num);
-		UR_UpdateUFOHangarCapForAll(base);
-
-		/* Make sure that we don't have an infinite loop */
-		if (num <= 0)
-			break;
-	}
-	Com_DPrintf(DEBUG_CLIENT, "B_RemoveUFOsExceedingCapacity: Remains %i in storage for a maximum of %i\n",
-		base->capacities[capacityType].cur, base->capacities[capacityType].max);
 }
 
 /**

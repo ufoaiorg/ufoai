@@ -5,7 +5,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_nodes.h"
 #include "../mxml/mxml_ufoai.h"
 #include "cp_campaign.h"
+#include "cp_ufo.h"
 #include "cp_produce_callbacks.h"
 
 /** @brief Used in production costs (to allow reducing prices below 1x). */
@@ -56,7 +57,7 @@ static cvar_t* mn_production_amount;	/**< Amount of the current production; if n
  * @sa PR_DisassemblyInfo
  * @return 0 if the production does not make any progress, 1 if the whole item is built in 1 hour
  */
-float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const components_t *comp, qboolean disassembly)
+float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const components_t *comp)
 {
 	signed int allworkers = 0, maxworkers = 0;
 	signed int timeDefault = 0;
@@ -72,11 +73,10 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
 		maxworkers = allworkers;
 	}
 
-	if (!disassembly) {
+	if (!comp) {
 		assert(tech);
 		timeDefault = tech->produceTime;	/* This is the default production time for 10 workers. */
 	} else {
-		assert(comp);
 		timeDefault = comp->time;		/* This is the default disassembly time for 10 workers. */
 	}
 
@@ -148,15 +148,17 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements
  */
 void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 {
-	int i;
 	const objDef_t *od;
 	production_t *prod;
+	int i;
 
 	prod = &queue->items[index];
 
 	assert(base);
 
-	if (prod->itemsCached && !prod->aircraft) {
+	if (prod->ufo) {
+		prod->ufo->disassembly = NULL;
+	} else if (prod->itemsCached && !prod->aircraft) {
 		/* Get technology of the item in the selected queue-entry. */
 		od = prod->item;
 		if (od->tech) {
@@ -168,19 +170,14 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 		prod->itemsCached = qfalse;
 	}
 
-	/* Read disassembly to base storage. */
-	if (!prod->production)
-		base->storage.num[prod->item->idx] += prod->amount;
+	REMOVE_ELEM_ADJUST_IDX(queue->items, index, queue->numItems);
 
-	queue->numItems--;
-	if (queue->numItems < 0)
-		queue->numItems = 0;
-
-	/* Copy up other items. */
+	/* Adjust ufos' disassembly pointer */
 	for (i = index; i < queue->numItems; i++) {
-		queue->items[i] = queue->items[i + 1];
-		/* Fix index in list */
-		queue->items[i].idx = i;
+		production_t *disassembly = &queue->items[i];
+
+		if (disassembly->ufo)
+			disassembly->ufo->disassembly = disassembly;
 	}
 }
 
@@ -205,28 +202,35 @@ void PR_QueueMove (production_queue_t *queue, int index, int dir)
 	for (i = index; i < newIndex; i++) {
 		queue->items[i] = queue->items[i + 1];
 		queue->items[i].idx = i;
+		if (queue->items[i].ufo)
+			queue->items[i].ufo->disassembly = &(queue->items[i]);
 	}
 
 	/* copy down */
 	for (i = index; i > newIndex; i--) {
 		queue->items[i] = queue->items[i - 1];
 		queue->items[i].idx = i;
+		if (queue->items[i].ufo)
+			queue->items[i].ufo->disassembly = &(queue->items[i]);
 	}
 
 	/* insert item */
 	queue->items[newIndex] = saved;
 	queue->items[newIndex].idx = newIndex;
+	if (queue->items[newIndex].ufo)
+		queue->items[newIndex].ufo->disassembly = &(queue->items[newIndex]);
 }
 
 /**
  * @brief Queues the next production in the queue.
  * @param[in] base Pointer to the base.
  */
-static void PR_QueueNext (base_t *base)
+void PR_QueueNext (base_t *base)
 {
 	production_queue_t *queue = &ccs.productions[base->idx];
 
 	PR_QueueDelete(base, queue, 0);
+
 	if (queue->numItems == 0) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production queue for base %s is empty"), base->name);
 		MSO_CheckAddNewMessage(NT_PRODUCTION_QUEUE_EMPTY, _("Production queue empty"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
@@ -310,6 +314,7 @@ void PR_ProductionRun (void)
 	int i;
 	const objDef_t *od;
 	const aircraft_t *aircraft;
+	storedUFO_t *ufo;
 	production_t *prod;
 
 	/* Loop through all founded bases. Then check productions
@@ -333,14 +338,20 @@ void PR_ProductionRun (void)
 		if (prod->item) {
 			od = prod->item;
 			aircraft = NULL;
-		} else {
+			ufo = NULL;
+		} else if (prod->aircraft) {
 			assert(prod->aircraft);
 			od = NULL;
 			aircraft = prod->aircraft;
+			ufo = NULL;
+		} else {
+			od = NULL;
+			aircraft = NULL;
+			ufo = prod->ufo;
 		}
 
 		if (prod->production) {	/* This is production, not disassembling. */
-			if (!prod->aircraft) {
+			if (od) {
 				/* Not enough money to produce more items in this base. */
 				if (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
 					if (!prod->creditMessage) {
@@ -384,7 +395,7 @@ void PR_ProductionRun (void)
 				}
 			}
 		} else {		/* This is disassembling. */
-			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(NULL, CL_GetComponentsByItem(prod->item), qtrue)) {
+			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(NULL, ufo->comp, qtrue)) {
 				if (!prod->spaceMessage) {
 					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in base %s. Disassembling postponed.\n"), base->name);
 					MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -395,16 +406,13 @@ void PR_ProductionRun (void)
 			}
 		}
 
-		if (!prod->aircraft && !od->tech)
-			Com_Error(ERR_FATAL, "PR_ProductionRun: No tech pointer for object %s ('%s')", prod->item->id, od->id);
-
 		if (prod->production) {	/* This is production, not disassembling. */
 			if (!prod->aircraft)
-				prod->percentDone += (PR_CalculateProductionPercentDone(base, od->tech, NULL, qfalse) / MINUTES_PER_HOUR);
+				prod->percentDone += (PR_CalculateProductionPercentDone(base, od->tech, NULL) / MINUTES_PER_HOUR);
 			else
-				prod->percentDone += (PR_CalculateProductionPercentDone(base, aircraft->tech, NULL, qfalse) / MINUTES_PER_HOUR);
+				prod->percentDone += (PR_CalculateProductionPercentDone(base, aircraft->tech, NULL) / MINUTES_PER_HOUR);
 		} else /* This is disassembling. */
-			prod->percentDone += (PR_CalculateProductionPercentDone(base, od->tech, CL_GetComponentsByItem(prod->item), qtrue) / MINUTES_PER_HOUR);
+			prod->percentDone += (PR_CalculateProductionPercentDone(base, ufo->ufoTemplate->tech, ufo->comp) / MINUTES_PER_HOUR);
 
 		if (prod->percentDone >= 1.0f) {
 			if (prod->production) {	/* This is production, not disassembling. */
@@ -435,28 +443,13 @@ void PR_ProductionRun (void)
 					}
 				}
 			} else {	/* This is disassembling. */
-				base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, CL_GetComponentsByItem(prod->item), qfalse);
-				prod->percentDone = 0.0f;
-				prod->amount--;
-				/* If this is aircraft dummy item, update UFO hangars capacity. */
-				if (od->tech->type == RS_CRAFT) {
-					const aircraft_t *ufocraft = AIR_GetAircraft(od->id);
-					assert(ufocraft);
-					if (ufocraft->size == AIRCRAFT_LARGE) {
-						/* Large UFOs can only be stored in Large UFO Hangar */
-						if (base->capacities[CAP_UFOHANGARS_LARGE].cur > 0)
-							base->capacities[CAP_UFOHANGARS_LARGE].cur--;
-					} else {
-						/* Small UFOs can only be stored in Small UFO Hangar */
-						if (base->capacities[CAP_UFOHANGARS_SMALL].cur > 0)
-							base->capacities[CAP_UFOHANGARS_SMALL].cur--;
-					}
-				}
-				if (prod->amount <= 0) {
-					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s has finished."), _(od->name));
-					MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
-					PR_QueueNext(base);
-				}
+				base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, ufo->comp, qfalse);
+
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s has finished."), _(UFO_TypeToName(ufo->ufoTemplate->ufotype)));
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, ufo->ufoTemplate->tech);
+
+				/* Removing UFO will remove the production too */
+				US_RemoveStoredUFO(ufo);
 			}
 		}
 	}
@@ -517,6 +510,23 @@ qboolean PR_ItemIsProduceable (const objDef_t const *item)
 }
 
 /**
+ * @brief Returns the base pointer the production belongs to
+ * @param[in] production pointer to the production entry
+ * @returns base_t pointer to the base
+ */
+base_t *PR_ProductionBase (production_t *production) {
+	int i;
+	for (i = 0; i < ccs.numBases; i++) {
+		base_t *base = B_GetBaseByIDX(i);
+		const ptrdiff_t diff = ((ptrdiff_t)((production) - ccs.productions[i].items));
+
+		if (diff >= 0 && diff < MAX_PRODUCTIONS)
+			return base;
+	}
+	return NULL;
+}
+
+/**
  * @brief Save callback for savegames in XML Format
  * @sa PR_LoadXML
  * @sa SAV_GameSaveXML
@@ -528,21 +538,25 @@ qboolean PR_SaveXML (mxml_node_t *p)
 	for (i = 0; i < MAX_BASES; i++) {
 		const production_queue_t *pq = &ccs.productions[i];
 		int j;
-		mxml_node_t * snode = mxml_AddNode(node, "queue");
+		mxml_node_t *snode = mxml_AddNode(node, "queue");
+
 		mxml_AddInt(snode, "numitems", pq->numItems);
+
 		for (j = 0; j < pq->numItems; j++) {
-			/** @todo This will crash */
 			const objDef_t *item = pq->items[j].item;
 			const aircraft_t *aircraft = pq->items[j].aircraft;
+			const storedUFO_t *ufo = pq->items[j].ufo;
+
 			mxml_node_t * ssnode = mxml_AddNode(snode, "item");
-			assert(item || aircraft);
+			assert(item || aircraft || ufo);
 			if (item)
 				mxml_AddString(ssnode, "itemid", item->id);
+			else if (aircraft)
+				mxml_AddString(ssnode, "aircraftid", aircraft->id);
+			else if (ufo)
+				mxml_AddInt(ssnode, "ufoidx", ufo->idx);
 			mxml_AddInt(ssnode, "amount", pq->items[j].amount);
 			mxml_AddFloat(ssnode, "percentdone", pq->items[j].percentDone);
-			mxml_AddBool(ssnode, "prod", pq->items[j].production);
-			if (aircraft)
-				mxml_AddString(ssnode, "aircraftid", aircraft->id);
 			mxml_AddBool(ssnode, "items_cached", pq->items[j].itemsCached);
 		}
 	}
@@ -566,23 +580,84 @@ qboolean PR_LoadXML (mxml_node_t *p)
 		int j;
 		mxml_node_t *ssnode;
 		production_queue_t *pq = &ccs.productions[i];
+
 		pq->numItems = mxml_GetInt(snode, "numitems", 0);
+
+		if (pq->numItems > MAX_PRODUCTIONS) {
+			Com_Printf("PR_Load: Too much productions (%i), last %i dropped (baseidx=%i).\n", pq->numItems, pq->numItems - MAX_PRODUCTIONS, i);
+			pq->numItems = MAX_PRODUCTIONS;
+		}
+
 		for (j = 0, ssnode = mxml_GetNode(snode, "item"); j < pq->numItems && ssnode;
 				j++, ssnode = mxml_GetNextNode(ssnode, snode, "item")) {
 			const char *s1 = mxml_GetString(ssnode, "itemid");
 			const char *s2;
-			if (s1 && s1[0] != '\0')
-				pq->items[j].item = INVSH_GetItemByID(s1);
+			int ufoIDX;
+
 			pq->items[j].idx = j;
 			pq->items[j].amount = mxml_GetInt(ssnode, "amount", 0);
+			pq->items[j].percentDone = mxml_GetFloat(ssnode, "percentdone", 0.0);
+
+			if (s1 && s1[0] != '\0')
+				pq->items[j].item = INVSH_GetItemByID(s1);
+
+			/* This if block is for keeping compatibility with base-stored ufos */
+			/* @todo remove this on release (or after time) */
+			if (!mxml_GetBool(ssnode, "prod", qtrue)) {
+				const int amount = pq->items[j].amount;
+				int k;
+				aircraft_t *ufoTemplate = (pq->items[j].item) ? AIR_GetAircraft(pq->items[j].item->id) : NULL;
+
+				for (k = 0; k < amount; k++) {
+					installation_t *installation = INS_GetFirstUFOYard(qtrue);
+					storedUFO_t *ufo = NULL;
+
+					if (ufoTemplate && installation)
+						ufo = US_StoreUFO(ufoTemplate, installation, ccs.date);
+
+					if (ufo) {
+						pq->items[j + k].idx = j + k;
+						pq->items[j + k].item = NULL;
+						pq->items[j + k].ufo = ufo;
+						pq->items[j + k].amount = 1;
+						pq->items[j + k].percentDone = (k) ? 0.0 : pq->items[j + k].percentDone;
+						pq->items[j + k].production = qfalse;
+						ufo->disassembly = &(pq->items[j + k]);
+					} else {
+						Com_Printf("PR_Load: Could not add ufo to the UFO Yards, disassembly dropped (baseidx=%i, production idx=%i).\n", i, j);
+						j--;
+						pq->numItems--;
+						continue;
+					}
+				}
+				j += k - 1;
+				pq->numItems += k - 1;
+				continue;
+			}
+
 			if (pq->items[j].amount <= 0) {
 				Com_Printf("PR_Load: Production with amount <= 0 dropped (baseidx=%i, production idx=%i).\n", i, j);
 				j--;
 				pq->numItems--;
 				continue;
 			}
-			pq->items[j].percentDone = mxml_GetFloat(ssnode, "percentdone", 0.0);
-			pq->items[j].production = mxml_GetBool(ssnode, "prod", qfalse);
+
+			ufoIDX = mxml_GetInt(ssnode, "ufoidx", MAX_STOREDUFOS);
+			if (ufoIDX != MAX_STOREDUFOS) {
+				storedUFO_t *ufo = US_GetStoredUFOByIDX(ufoIDX);
+
+				if (!ufo) {
+					Com_Printf("PR_Load: Could not find ufo idx: %i\n", ufoIDX);
+					return qfalse;
+				}
+
+				pq->items[j].ufo = ufo;
+				pq->items[j].production = qfalse;
+				pq->items[j].ufo->disassembly = &(pq->items[j]);
+			} else {
+				pq->items[j].production = qtrue;
+			}
+
 			s2 = mxml_GetString(ssnode, "aircraftid");
 			if (s2 && s2[0] != '\0')
 				pq->items[j].aircraft = AIR_GetAircraft(s2);

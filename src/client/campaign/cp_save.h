@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -87,6 +87,8 @@ qboolean INS_SaveXML(mxml_node_t *parent);
 qboolean INS_LoadXML(mxml_node_t *parent);
 qboolean MSO_SaveXML(mxml_node_t *parent);
 qboolean MSO_LoadXML(mxml_node_t *parent);
+qboolean US_SaveXML(mxml_node_t *parent);
+qboolean US_LoadXML(mxml_node_t *parent);
 
 void B_PostLoadInit(void);
 

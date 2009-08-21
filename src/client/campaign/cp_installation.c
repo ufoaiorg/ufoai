@@ -151,18 +151,36 @@ installation_t *INS_GetFirstUnfoundedInstallation (void)
  */
 void INS_DestroyInstallation (installation_t *installation)
 {
+	int i;
+
 	if (!installation)
 		return;
 	if (!installation->founded)
 		return;
 
+	/* Disable radar */
 	RADAR_UpdateInstallationRadarCoverage(installation, 0, 0);
+	/* Destroy stored UFOs */
+	if (installation->ufoCapacity.max) {
+		installation->ufoCapacity.max = 0;
+		US_RemoveUFOsExceedingCapacity(installation);
+	}
+
 	CP_MissionNotifyInstallationDestroyed(installation);
 
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Installation %s was destroyed."), installation->name);
 	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 
 	REMOVE_ELEM_ADJUST_IDX(ccs.installations, installation->idx, ccs.numInstallations);
+	/* Correct UFO store positions */
+	for (i = 0; i < ccs.numStoredUFOs; i++) {
+		storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
+
+		if (!ufo)
+			continue;
+		if (ufo->installation >= installation)
+			ufo->installation--;
+	}
 	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
 }
 
@@ -306,6 +324,32 @@ static void INS_ConstructionFinished_f (void)
 }
 #endif
 
+/**
+ * @brief returns the first installation with (free) ufostoring capacity
+ * @param[in] free On qtrue it gives the first UFO Yard with free space
+ * @return installation_t Pointer to the UFO Yard
+ **/
+installation_t *INS_GetFirstUFOYard (qboolean free)
+{
+	int i;
+
+	for (i = 0; i < ccs.numInstallations; i++) {
+		installation_t *installation = INS_GetFoundedInstallationByIDX(i);
+
+		if (!installation)
+			continue;
+
+		if (INS_GetType(installation) != INSTALLATION_UFOYARD)
+			continue;
+
+		if (free && installation->ufoCapacity.cur >= installation->ufoCapacity.max)
+			continue;
+
+		return installation;
+	}
+
+	return NULL;
+}
 
 /**
  * @brief Resets console commands.

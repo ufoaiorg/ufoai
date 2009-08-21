@@ -24,7 +24,7 @@ installation ufoyard
 	cost		30000
 	radar_range	0
 	max_batteries	0
-	max_ufo_stored	10
+	max_ufo_stored	6
 	max_damage		100
 	buildtime	11
 }

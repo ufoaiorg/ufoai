@@ -10,7 +10,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -85,6 +85,18 @@ void RS_ResearchFinish (technology_t* tech)
 		MSO_CheckAddNewMessage( NT_RESEARCH_COMPLETED, _("Research finished"), cp_messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
 		tech->mailSent = MAILSENT_FINISHED;
 	}
+}
+
+/**
+ * @brief Stops a research (Removes scientists from it)
+ * @param[in] tech The technology that is being researched.
+ */
+void RS_StopResearch (technology_t* tech)
+{
+	assert(tech);
+	while (tech->scientists > 0)
+		RS_RemoveScientist(tech, NULL);
+	assert(tech->statusResearch == RS_PAUSED);
 }
 
 /**
@@ -197,6 +209,11 @@ qboolean RS_RequirementsMet (const requirements_t *required_AND, const requireme
 				if (AL_CountAll() < req->amount)
 					met_AND = qfalse;
 				break;
+			case RS_LINK_UFO:
+				assert(req->link);
+				if (US_UFOsInStorage(req->link, NULL) < req->amount)
+					met_AND = qfalse;
+				break;
 			default:
 				break;
 			}
@@ -241,6 +258,11 @@ qboolean RS_RequirementsMet (const requirements_t *required_AND, const requireme
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
 				if (AL_CountAll() >= req->amount)
+					met_OR = qtrue;
+				break;
+			case RS_LINK_UFO:
+				assert(req->link);
+				if (US_UFOsInStorage(req->link, NULL) >= req->amount)
 					met_OR = qtrue;
 				break;
 			default:
@@ -409,6 +431,9 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 			req->link = Com_GetTeamDefinitionByID(req->id);
 			if (!req->link)
 				Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get alien type (alien or alien_dead) definition for '%s'", req->id);
+			break;
+		case RS_LINK_UFO:
+			req->link = AIR_GetAircraft(req->id);
 			break;
 		default:
 			break;
@@ -872,6 +897,8 @@ static const char *RS_TechReqToName (requirement_t *req)
 		return ((teamDef_t*)req->link)->id;
 	case RS_LINK_ALIEN_GLOBAL:
 		return "global alien count";
+	case RS_LINK_UFO:
+		return ((aircraft_t*)req->link)->id;
 	default:
 		return "unknown";
 	}
@@ -894,6 +921,8 @@ static const char *RS_TechLinkTypeToName (requirementType_t type)
 		return "alien_dead";
 	case RS_LINK_ALIEN_GLOBAL:
 		return "alienglobal";
+	case RS_LINK_UFO:
+		return "ufo";
 	default:
 		return "unknown";
 	}
@@ -1340,6 +1369,20 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							requiredTemp->numLinks++;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
+						}
+					} else if (!strcmp(token, "ufo")) {
+						/* Defines what ufos need to be collected for this item to be researchable. */
+						if (requiredTemp->numLinks < MAX_TECHLINKS) {
+							/* Set requirement-type. */
+							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_UFO;
+							/* Set requirement-name (id). */
+							token = Com_Parse(text);
+							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(token, cp_campaignPool, 0);
+							/* Set requirement-amount of item. */
+							token = Com_Parse(text);
+							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
+							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-ufo - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
+							requiredTemp->numLinks++;
 						}
 					} else {
 						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", name, token);

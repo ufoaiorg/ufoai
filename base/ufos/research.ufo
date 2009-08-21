@@ -627,15 +627,15 @@ tech rs_alien_ufo_theory
 
 	require_OR
 	{
-		item craft_ufo_ripper 1
-		item craft_ufo_gunboat 1
-		item craft_ufo_scout 1
-		item craft_ufo_fighter 1
-		item craft_ufo_supply 1
-		item craft_ufo_carrier 1
-		item craft_ufo_bomber 1
-		item craft_ufo_corrupter 1
-		item craft_ufo_harvester 1
+		ufo craft_ufo_ripper 1
+		ufo craft_ufo_gunboat 1
+		ufo craft_ufo_scout 1
+		ufo craft_ufo_fighter 1
+		ufo craft_ufo_supply 1
+		ufo craft_ufo_carrier 1
+		ufo craft_ufo_bomber 1
+		ufo craft_ufo_corrupter 1
+		ufo craft_ufo_harvester 1
 	}
 
 	time		3000
@@ -3503,7 +3503,7 @@ tech rs_craft_ufo_scout
 
 	require_AND
 	{
-		item craft_ufo_scout 1
+		ufo craft_ufo_scout 1
 		tech rs_alien_ufo_theory
 	}
 
@@ -3546,7 +3546,7 @@ tech rs_craft_ufo_fighter
 	// FIXME
 	require_AND
 	{
-		item craft_ufo_fighter 1
+		ufo craft_ufo_fighter 1
 		tech rs_alien_ufo_theory
 	}
 
@@ -3590,7 +3590,7 @@ tech rs_craft_ufo_supply
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		item craft_ufo_supply 1
+		ufo craft_ufo_supply 1
 	}
 
 	provides	"craft_ufo_supply"
@@ -3633,7 +3633,7 @@ tech rs_craft_ufo_carrier
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		item craft_ufo_carrier 1
+		ufo craft_ufo_carrier 1
 	}
 
 	provides	"craft_ufo_carrier"
@@ -3676,7 +3676,7 @@ tech rs_craft_ufo_bomber
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		item craft_ufo_bomber 1
+		ufo craft_ufo_bomber 1
 	}
 
 	provides	"craft_ufo_bomber"
@@ -3719,7 +3719,7 @@ tech rs_craft_ufo_corrupter
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		item craft_ufo_corrupter 1
+		ufo craft_ufo_corrupter 1
 	}
 
 	provides	"craft_ufo_corrupter"
@@ -3762,7 +3762,7 @@ tech rs_craft_ufo_gunboat
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		item craft_ufo_gunboat 1
+		ufo craft_ufo_gunboat 1
 	}
 
 	provides	"craft_ufo_gunboat"
@@ -3805,7 +3805,7 @@ tech rs_craft_ufo_ripper
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		item craft_ufo_ripper 1
+		ufo craft_ufo_ripper 1
 	}
 
 	provides	"craft_ufo_ripper"
@@ -3848,7 +3848,7 @@ tech rs_craft_ufo_harvester
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		item craft_ufo_harvester 1
+		ufo craft_ufo_harvester 1
 	}
 
 	provides	"craft_ufo_harvester"
@@ -3891,7 +3891,7 @@ tech rs_craft_ufo_mothership
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		item craft_ufo_mothership 1
+		ufo craft_ufo_mothership 1
 	}
 
 	provides	"craft_ufo_mothership"

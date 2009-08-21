@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_PROOUCE
-#define CLIENT_CL_PROOUCE
+#ifndef CLIENT_CP_PRODUCE
+#define CLIENT_CP_PRODUCE
 
 #include "../cl_inventory.h"
 
@@ -50,7 +50,8 @@ typedef struct production_s
 	 * @todo Make this a union
 	 */
 	objDef_t *item;			/**< Item to be produced. */
-	struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. @todo Is there any way to make this const without cl_produce.c to break?*/
+	struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. @todo Is there any way to make this const without cp_produce.c to break?*/
+	struct storedUFO_s *ufo;
 
 	signed int amount;	/**< How much are we producing. */
 	float percentDone;		/**< Fraction of the item which is already produced.
@@ -79,7 +80,9 @@ void PR_UpdateProductionCap(struct base_s *base);
 qboolean PR_ItemIsProduceable(const objDef_t const *item);
 void PR_QueueMove (production_queue_t *queue, int index, int dir);
 void PR_QueueDelete (base_t *base, production_queue_t *queue, int index);
+void PR_QueueNext(base_t *base);
 void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements_t *reqs);
-float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const components_t *comp, qboolean disassembly);
+float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const components_t *comp);
+base_t *PR_ProductionBase(production_t *production);
 
-#endif /* CLIENT_CL_PROOUCE */
+#endif /* CLIENT_CP_PRODUCE */

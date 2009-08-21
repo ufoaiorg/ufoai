@@ -47,5 +47,6 @@ typedef struct components_s {
 void CL_ParseCampaign(const char *name, const char **text);
 void CL_ScriptSanityCheck(void);
 components_t *CL_GetComponentsByItem(const objDef_t *item);
+components_t *CL_GetComponentsByID(const char *id);
 
 #endif

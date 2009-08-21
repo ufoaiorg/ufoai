@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -32,6 +32,7 @@ struct aircraft_s;
 struct installation_s;
 struct employee_s;
 struct menuNode_s; /**< @todo remove this once the menuNode_t usage is cleaned up */
+struct storedUFO_s;
 
 #define MAX_ASSEMBLIES	16
 #define ANTIMATTER_SIZE 10
@@ -466,6 +467,10 @@ typedef struct ccs_s {
 	/* UFO components. */
 	int numComponents;
 	components_t components[MAX_ASSEMBLIES];
+
+	/** stored UFOs */
+	storedUFO_t storedUFOs[MAX_STOREDUFOS];
+	int numStoredUFOs;
 
 	/* Alien Team Definitions. */
 	int numAliensTD;

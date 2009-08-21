@@ -528,10 +528,10 @@ window production
 	{
 		dataid		TEXT_PRODUCTION_INFO
 		pos			"610 528"
-		size		"346 100"
+		size		"346 200"
 		lineheight	20
 		tabwidth	260
-		rows		"5"
+		rows		"10"
 		onViewChange	{
 			*(abstractscrollbar)description_scroll@fullsize <fullsize>
 			*(abstractscrollbar)description_scroll@current <viewpos>
@@ -544,8 +544,8 @@ window production
 		pos			"960 528"
 		height		"100"
 		current		0
-		viewsize	5
-		fullsize	5
+		viewsize	10
+		fullsize	10
 		hidewhenunused true
 		onChange	{ *description@viewpos <current> }
 	}
@@ -553,6 +553,18 @@ window production
 	// ==================
 	// init function
 	// ==================
+
+	confunc amountsetter {
+		*cvar:tmp = <1>
+		if ( *cvar:tmp eq "disable" ) {
+			*prod_change@disabled = true
+			*prod_change_10@disabled = true
+		} else {
+			*prod_change@disabled = false
+			*prod_change_10@disabled = false
+		}
+		delete *cvar:tmp
+	}
 
 	func onInit
 	{

@@ -70,6 +70,7 @@ typedef enum requirementType_s {
 	RS_LINK_ALIEN,
 	RS_LINK_ALIEN_DEAD,
 	RS_LINK_ALIEN_GLOBAL,
+	RS_LINK_UFO,
 	MAX_RS_LINKTYPES
 } requirementType_t;
 
@@ -84,6 +85,7 @@ typedef struct requirement_s {
 				 * RS_LINK_ALIEN		-> teamDef_t*
 				 * RS_LINK_ALIEN_DEAD	-> teamDef_t*
 				 * RS_LINK_ALIEN_GLOBAL -> NULL
+				 * RS_LINK_UFO -> aircraft_t*
 				 */
 	int amount;	/**< How many items are needed for research ... if any. (fix) */
 	int collected;	/**< How many items have been collected. (varies) */
@@ -219,6 +221,7 @@ const char *RS_GetDescription(descriptions_t *desc);
 void RS_MarkCollected(technology_t *tech) __attribute__((nonnull));
 void RS_MarkResearchable(qboolean init, const struct base_s *base);
 void RS_ResearchFinish(technology_t* tech);
+void RS_StopResearch(technology_t* tech);
 void RS_MarkOneResearchable(technology_t *tech);
 
 void RS_AssignScientist(technology_t* tech, struct base_s *base);

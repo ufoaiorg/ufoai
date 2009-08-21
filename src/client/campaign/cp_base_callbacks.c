@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_base.h"
 #include "cp_map.h"
 #include "cp_popup.h"
+#include "cp_ufo.h"
 
 /** @brief Used from menu scripts as parameter for mn_select_base */
 #define CREATE_NEW_BASE_ID -1
@@ -376,10 +377,6 @@ static void B_BuildingOnDestroy_f (void)
 		case B_HANGAR: /* the Dropship Hangar */
 		case B_SMALL_HANGAR:
 			B_RemoveAircraftExceedingCapacity(base, buildingType);
-			break;
-		case B_UFO_HANGAR:
-		case B_UFO_SMALL_HANGAR:
-			B_RemoveUFOsExceedingCapacity(base, buildingType);
 			break;
 		case B_QUARTERS:
 			E_DeleteEmployeesExceedingCapacity(base);
@@ -853,8 +850,17 @@ static void BaseSummary_Init (const base_t *base)
 			const production_t *production = &queue->items[i];
 			const objDef_t *objDef = production->item;
 			const aircraft_t *aircraft = production->aircraft;
-			const char *name = objDef ? _(objDef->name) : _(aircraft->name);
-			assert(name);
+			const storedUFO_t *ufo = production->ufo;
+			const char *name;
+			
+			if (objDef)
+				name = _(objDef->name);
+			else if (aircraft)
+				name = _(aircraft->name);
+			else if (ufo)
+				name = _(UFO_TypeToName(ufo->ufoTemplate->ufotype));
+			else
+				Com_Error(ERR_DROP, "BaseSummary_Init: Invalid production type (not item, not aircraft, not disassembly)\n");
 
 			/** @todo use the same method as we do in PR_ProductionInfo */
 			Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"), name,

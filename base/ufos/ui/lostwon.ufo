@@ -166,16 +166,16 @@ window uforecovery
 		pos		"17 125"
 		size	"667 38"
 		cvar	*cvar:mn_uforecovery_tab
+		onChange {
+			cmd "uforecovery_tabselect <cvar:mn_uforecovery_tab> ;"
+		}
 		option store {
 			label	"_Store UFO"
-			value	"0"
+			value	"store"
 		}
 		option sell {
 			label	"_Sell UFO"
-			value	"1"
-		}
-		onChange {
-			cmd "uforecovery_tabchange;"
+			value	"sell"
 		}
 	}
 
@@ -214,7 +214,6 @@ window uforecovery
 			lineheight	16
 			tabwidth	100
 			rows		"8"
-			onClick		{ cmd "cp_uforecovery_baselist_click <lineselected>" }
 			onViewChange	{
 				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@fullsize <fullsize>
 				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@current <viewpos>
@@ -232,18 +231,6 @@ window uforecovery
 			onChange	{ *store_panel.cp_uforecovery_baselist@viewpos <current> }
 		}
 
-		string selected_base_str
-		{
-			string		"Selected base:"
-			pos			"30 186"
-		}
-
-		string selected_base_val
-		{
-			string		*cvar:mission_recoverybase
-			pos			"160 186"
-		}
-
 		button bt_basesel
 		{
 			string		"_Recover"
@@ -253,26 +240,15 @@ window uforecovery
 			size		"176 32"
 			font		f_menu
 			color		"0 0.5 0 1"
-			onClick		{ cmd "cp_uforecovery_store_start;mn_pop;" }
-		}
-
-		button bt_basereplace
-		{
-			string		"_Replace UFO"
-			tooltip		"_Replace stored UFO with actual recovered one"
-			image		ui/button_green_small
-			pos			"375 210"
-			size		"176 32"
-			font		f_menu
-			color		"0 0.5 0 1"
-			onClick		{ cmd "start_replace;" }
+			onClick		{ cmd "cp_uforecovery_store_start <node:root.store_panel.cp_uforecovery_baselist@lineselected>; mn_pop;" }
 		}
 	}
 
 	//
 	// sell panel
 	//
-	panel sell_panel {
+	panel sell_panel
+	{
 		{
 			pos		"20 165"
 			size	"660 255"
@@ -360,66 +336,56 @@ window uforecovery
 		}
 	}
 
-	//
-	// function to manage tab
-	//
-	confunc uforecovery_tabchange {
-		*store_panel@invis true
-		*sell_panel@invis true
-		if ( *cvar:mn_uforecovery_tab == 0 ) {
+	/*
+	 * function to manage tab
+	 */
+	confunc uforecovery_tabselect {
+		*cvar:mn_uforecovery_tab = <1>
+		if ( *cvar:mn_uforecovery_tab eq "store" ) {
 			*store_panel@invis false
+			*sell_panel@invis true
 		}
-		if ( *cvar:mn_uforecovery_tab == 1 ) {
+		if ( *cvar:mn_uforecovery_tab eq "sell" ) {
 			*sell_panel@invis false
+			*store_panel@invis true
 		}
 	}
 
-	confunc btnatsel_enable {
-		*sell_panel.bt_natsel@disabled false
+	confunc btnatsel {
+		*cvar:tmp = <1>
+		if ( *cvar:tmp eq "enable" ) {
+			*sell_panel.bt_natsel@disabled false
+		} else {
+			*sell_panel.bt_natsel@disabled true
+		}
+		delete *cvar:tmp
+	}
+	
+	confunc btbasesel {
+		*cvar:tmp = <1>
+		if ( *cvar:tmp eq "enable" ) {
+			*store_panel.bt_basesel@disabled false
+		} else {
+			*store_panel.bt_basesel@disabled true
+		}
+		delete *cvar:tmp
 	}
 
-	confunc btbasesel_enable {
-		*store_panel.bt_basesel@disabled false
-	}
 
-	confunc btbaserepl_enable {
-		*store_panel.bt_basereplace@disabled false
-	}
-
-	confunc cp_basesel_disable {
-		*store_panel.cp_uforecovery_baselist@disabled true
-	}
-
-	// @todo perhaps a shorter way to do so?
 	confunc cp_basesel_select {
-		*store_panel.cp_uforecovery_baselist@lineselected 0
-	}
-
-	confunc start_replace {
-		*cvar:mn_uforecovery_tab 1
-		call uforecovery_tabchange
-		cmd "cp_uforecovery_replace;"
-		*store_panel.cp_uforecovery_baselist@disabled true
-		*store_panel.cp_uforecovery_baselist@lineselected -1
-		*store_panel.bt_basesel@disabled true
-		*store_panel.bt_basereplace@disabled true
-		*sell_panel.cp_uforecovery_nationlist@lineselected	-1
-		*sell_panel.bt_natsel@disabled true
-		*cvar:mission_recoverynation ""
+		*store_panel.cp_uforecovery_baselist@lineselected <1>
 	}
 
 	func onInit {
-		*store_panel.cp_uforecovery_baselist@lineselected	-1
-		*store_panel.cp_uforecovery_baselist@disabled false
-		*store_panel.bt_basereplace@disabled true
-		*store_panel.bt_basesel@disabled true
-		*sell_panel.cp_uforecovery_nationlist@lineselected	-1
-		*sell_panel.bt_natsel@disabled true
-		*cvar:mn_uforecovery_tab 0
-		cmd "del mission_recoverybase;del mission_recoverynation;uforecovery_tabchange;cp_uforecovery_sell_init;cp_uforecovery_store_init;"
+		cmd "uforecovery_tabselect store"
+		*store_panel.cp_uforecovery_baselist@lineselected = -1
+		*sell_panel.cp_uforecovery_nationlist@lineselected = -1
+		*cvar:mission_recoverynation = ""
+		cmd "cp_uforecovery_sell_init;cp_uforecovery_store_init;"
 	}
 
 	func onClose {
-		cmd "del mn_uforecovery_tab;del mn_uforecovery_actualufo;"
+		delete *cvar:mn_uforecovery_tab
+		delete *cvar:mn_uforecovery_actualufo
 	}
 }

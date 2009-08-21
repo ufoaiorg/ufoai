@@ -802,20 +802,11 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 
 int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 {
-	if (aircraft->ufotype == UFO_MAX) {
-		switch (aircraft->size) {
-		case AIRCRAFT_SMALL:
-			return CAP_AIRCRAFT_SMALL;
-		case AIRCRAFT_LARGE:
-			return CAP_AIRCRAFT_BIG;
-		}
-	} else {
-		switch (aircraft->size) {
-		case AIRCRAFT_SMALL:
-			return CAP_UFOHANGARS_SMALL;
-		case AIRCRAFT_LARGE:
-			return CAP_UFOHANGARS_LARGE;
-		}
+	switch (aircraft->size) {
+	case AIRCRAFT_SMALL:
+		return CAP_AIRCRAFT_SMALL;
+	case AIRCRAFT_LARGE:
+		return CAP_AIRCRAFT_BIG;
 	}
 	Com_Error(ERR_DROP, "AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->size);
 }
@@ -2604,22 +2595,6 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 		mxml_AddBool(snode, "laser", ccs.projectiles[i].laser);
 	}
 
-	/* Save recoveries. */
-	for (i = 0; i < MAX_RECOVERIES; i++) {
-		/*check, if the transfer is active */
-		/** @todo Check if we can really ignore them if active is false */
-		if (!ccs.recoveries[i].active)
-			continue;
-		snode = mxml_AddNode(node, "recovery");
-		/* mxml_AddBool(snode, "active", ccs.recoveries[i].active); */
-		if (ccs.recoveries[i].base)
-			mxml_AddInt(snode, "targetbase", ccs.recoveries[i].base->idx);
-		/** @todo At some point we really need to save a unique string here. */
-		if (ccs.recoveries[i].ufoTemplate)
-			mxml_AddInt(snode, "ufotemplateidx", ccs.recoveries[i].ufoTemplate->idx);
-		mxml_AddInt(snode, "day", ccs.recoveries[i].event.day);
-		mxml_AddInt(snode, "sec", ccs.recoveries[i].event.sec);
-	}
 	return qtrue;
 }
 
@@ -2931,17 +2906,28 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 
 	ccs.numProjectiles = i;
 
-	for (i = 0, snode = mxml_GetNode(node, "recovery"); snode && i < MAX_RECOVERIES;
-			snode = mxml_GetNextNode(snode, node, "recovery"), i++) {
-		byte base, ufotype;
-		ccs.recoveries[i].active = qtrue;
-		base = mxml_GetInt(snode, "targetbase", BYTES_NONE);
-		ccs.recoveries[i].base = (base != BYTES_NONE) ? B_GetBaseByIDX((byte)base) : NULL;
-		assert(ccs.numAircraftTemplates);
-		ufotype = mxml_GetInt(snode, "ufotemplateidx", BYTES_NONE);
-		ccs.recoveries[i].ufoTemplate = (ufotype != BYTES_NONE) ? &ccs.aircraftTemplates[ufotype] : NULL;
-		ccs.recoveries[i].event.day = mxml_GetInt(snode, "day", 0);
-		ccs.recoveries[i].event.sec = mxml_GetInt(snode, "sec", 0);
+	/* fallback code to keep compatibility with UFO Hangars */
+	/* @todo remove this on release or after a time */
+	for (snode = mxml_GetNode(node, "recovery"); snode;
+			snode = mxml_GetNextNode(snode, node, "recovery")) {
+		installation_t *inst = INS_GetFirstUFOYard(qtrue);
+		byte ufotype = mxml_GetInt(snode, "ufotemplateidx", BYTES_NONE);
+		date_t event;
+
+		if (!inst) {
+			Com_Printf("AIR_LoadXML: No more free UFOYards for recovery\n");
+			break;
+		}
+
+		event.day = mxml_GetInt(snode, "day", 0);
+		event.sec = mxml_GetInt(snode, "sec", 0);
+
+		if (ufotype >= ccs.numAircraftTemplates) {
+			Com_Printf("AIR_LoadXML: Invalid template idx %i\n", ufotype);
+			continue;
+		}
+
+		US_StoreUFO(&(ccs.aircraftTemplates[ufotype]), inst, event);
 	}
 
 	for (i = ccs.numUFOs - 1; i >= 0; i--) {

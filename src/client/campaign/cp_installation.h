@@ -103,12 +103,14 @@ extern vec2_t newInstallationPos;
 
 /* Functions */
 installation_t *INS_GetInstallationByIDX(int instIdx);
-installation_t* INS_GetFoundedInstallationByIDX(int installationIdx);
+installation_t *INS_GetFoundedInstallationByIDX(int installationIdx);
 installation_t *INS_GetFirstUnfoundedInstallation(void);
 
-installationTemplate_t* INS_GetInstallationTemplateFromInstallationID(const char *id);
+installationTemplate_t *INS_GetInstallationTemplateFromInstallationID(const char *id);
 
 installationType_t INS_GetType(const installation_t *installation);
+
+installation_t *INS_GetFirstUFOYard(qboolean free);
 
 void INS_SetUpInstallation(installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos);
 

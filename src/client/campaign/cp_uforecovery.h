@@ -1,10 +1,10 @@
 /**
  * @file cp_uforecovery.h
- * @brief UFO recovery
+ * @brief UFO recovery and storing
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -33,15 +33,42 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa ufoRecovery_t */
 typedef struct ufoRecoveries_s {
 	qboolean active;			/**< True if the recovery is under processing. */
-	base_t *base;				/**< Base where the recovery will be processed. */
+	installation_t *installation;	/**< UFO Yard where the recovery will be processed. */
 	aircraft_t *ufoTemplate;	/**< Entry of UFO in aircraftTemplates array. */
 	date_t event;				/**< When the process will start (UFO got transported to base). */
 } ufoRecoveries_t;
 
-void UR_Prepare(base_t *base, ufoType_t ufoType);
-void UR_UpdateUFOHangarCapForAll(base_t *base);
+#define MAX_STOREDUFOS 128
+
+/* time the recovery takes in days */
+#define RECOVERY_DELAY 2.0f
+
+/** @brief Structure for stored UFOs */
+typedef struct storedUFO_s {
+	int idx;
+	char id[MAX_VAR];
+	components_t *comp;
+	aircraft_t *ufoTemplate;
+
+	/* arrival date (recovery/transfer) */
+	date_t arrive;
+
+	/* installation UFO is stored */
+	installation_t *installation;
+
+	/* link to disassembly item */
+	production_t *disassembly;
+} storedUFO_t;
+
 void UR_ProcessActive(void);
-qboolean UR_ConditionsForStoring(const base_t *base, const aircraft_t *ufocraft);
 void UR_InitStartup(void);
+
+storedUFO_t *US_StoreUFO(aircraft_t *ufoTemplate, installation_t *installation, date_t date);
+storedUFO_t *US_GetStoredUFOPlaceByIDX(const int idx);
+storedUFO_t *US_GetStoredUFOByIDX(const int idx);
+storedUFO_t *US_GetClosestStoredUFO(const aircraft_t *ufoTemplate, const base_t *base);
+void US_RemoveStoredUFO(storedUFO_t *ufo);
+int US_UFOsInStorage(const aircraft_t *ufoTemplate, const installation_t *installation);
+void US_RemoveUFOsExceedingCapacity(installation_t *installation);
 
 #endif

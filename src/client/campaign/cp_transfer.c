@@ -111,8 +111,9 @@ static transferType_t TR_GetTransferType (const char *id)
  */
 static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 {
-	int i, intransfer = 0, amtransfer = 0;
-	int smallufotransfer = 0, bigufotransfer = 0;
+	int i;
+	int intransfer = 0;
+	int amtransfer = 0;
 
 	assert(od);
 	assert(destbase);
@@ -122,14 +123,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 		if (td.trItemsTmp[i] > 0) {
 			if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
 				amtransfer = ANTIMATTER_SIZE * td.trItemsTmp[i];
-			if (od->tech->type == RS_CRAFT) {
-				aircraft_t *ufocraft = AIR_GetAircraft(od->tech->provides);
-				assert(ufocraft);
-				if (ufocraft->size == AIRCRAFT_LARGE)
-					bigufotransfer++;
-				else
-					smallufotransfer++;
-			} else
+			else
 				intransfer += csi.ods[i].size * td.trItemsTmp[i];
 		}
 	}
@@ -151,33 +145,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 			/* amount to transfer can't be bigger than what we have */
 			amount = min(amount, (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer) / ANTIMATTER_SIZE);
 		}
-	} else if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
-		aircraft_t *ufocraft = AIR_GetAircraft(od->tech->provides);
-		assert(ufocraft);
-		if (ufocraft->size == AIRCRAFT_LARGE) {
-			if (!B_GetBuildingStatus(destbase, B_UFO_HANGAR)) {
-				MN_Popup(_("Missing Large UFO Hangar"), _("Destination base does not have functional Large UFO Hangar.\n"));
-				return 0;
-			} else {
-				amount = min(amount, destbase->capacities[CAP_UFOHANGARS_LARGE].max - destbase->capacities[CAP_UFOHANGARS_LARGE].cur - bigufotransfer);
-				if (amount <= 0) {
-					MN_Popup(_("Missing Large UFO Hangar"), _("Destination base does not have enough Large UFO Hangar.\n"));
-					return 0;
-				}
-			}
-		} else if (ufocraft->size == AIRCRAFT_SMALL) {
-			if (!B_GetBuildingStatus(destbase, B_UFO_SMALL_HANGAR)) {
-				MN_Popup(_("Missing Small UFO Hangar"), _("Destination base does not have functional Small UFO Hangar.\n"));
-				return qfalse;
-			} else {
-				amount = min(amount, destbase->capacities[CAP_UFOHANGARS_SMALL].max - destbase->capacities[CAP_UFOHANGARS_SMALL].cur - smallufotransfer);
-				if (amount <= 0) {
-					MN_Popup(_("Missing Small UFO Hangar"), _("Destination base does not have enough Small UFO Hangar.\n"));
-					return 0;
-				}
-			}
-		}
-	} else {	/*This is not antimatter*/
+	} else {	/*This is not antimatter */
 		if (!B_GetBuildingStatus(destbase, B_STORAGE))	/* Return if the target base doesn't have storage or power. */
 			return 0;
 
@@ -689,16 +657,7 @@ static void TR_TransferListClear_f (void)
 		if (td.trItemsTmp[i] > 0) {
 			if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
 				B_ManageAntimatter(base, td.trItemsTmp[i], qtrue);
-			else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
-				const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
-				assert(ufocraft);
-				/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-				base->storage.num[i] += td.trItemsTmp[i];
-				if (ufocraft->size == AIRCRAFT_LARGE)
-					base->capacities[CAP_UFOHANGARS_LARGE].cur++;
-				else
-					base->capacities[CAP_UFOHANGARS_SMALL].cur++;
-			} else
+			else
 				B_UpdateStorageAndCapacity(base, &csi.ods[i], td.trItemsTmp[i], qfalse, qfalse);
 		}
 	}
@@ -744,20 +703,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				if (transfer->itemAmount[i] > 0) {
 					if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
 						B_ManageAntimatter(destination, transfer->itemAmount[i], qtrue);
-					else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
-						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
-						assert(ufocraft);
-						for (j = 0; j < transfer->itemAmount[i]; j++) {
-							if (UR_ConditionsForStoring(destination, ufocraft)) {
-								/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-								destination->storage.num[i]++;
-								if (ufocraft->size == AIRCRAFT_LARGE)
-									destination->capacities[CAP_UFOHANGARS_LARGE].cur++;
-								else
-									destination->capacities[CAP_UFOHANGARS_SMALL].cur++;
-							}
-						}
-					} else
+					else
 						B_UpdateStorageAndCapacity(destination, &csi.ods[i], transfer->itemAmount[i], qfalse, qtrue);
 				}
 			}
@@ -1202,16 +1148,7 @@ static void TR_TransferListSelect_f (void)
 						td.trItemsTmp[i] += amount;
 						if (!strcmp(od->id, ANTIMATTER_TECH_ID))
 							B_ManageAntimatter(base, amount, qfalse);
-						else if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
-							const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
-							assert(ufocraft);
-							/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-							base->storage.num[i] -= amount;
-							if (ufocraft->size == AIRCRAFT_LARGE)
-								base->capacities[CAP_UFOHANGARS_LARGE].cur -= amount;
-							else
-								base->capacities[CAP_UFOHANGARS_SMALL].cur -= amount;
-						} else
+						else
 							B_UpdateStorageAndCapacity(base, od, -amount, qfalse, qfalse);
 						break;
 					} else
@@ -1569,16 +1506,7 @@ static void TR_CargoListSelect_f (void)
 					td.trItemsTmp[i] -= amount;
 					if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
 						B_ManageAntimatter(base, amount, qfalse);
-					else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
-						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
-						assert(ufocraft);
-						/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-						base->storage.num[i] += amount;
-						if (ufocraft->size == AIRCRAFT_LARGE)
-							base->capacities[CAP_UFOHANGARS_LARGE].cur += amount;
-						else
-							base->capacities[CAP_UFOHANGARS_SMALL].cur += amount;
-					} else
+					else
 						B_UpdateStorageAndCapacity(base, &csi.ods[i], amount, qfalse, qfalse);
 					break;
 				}
