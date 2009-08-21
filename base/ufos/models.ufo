@@ -296,7 +296,13 @@ menu_model inter_dragon
 // ============== Starchaser Interceptor ======================
 menu_model inter_starchaser
 {
-	model	"aircraft/inter_starchaser/starchaser_folded"
+	model	"aircraft/inter_starchaser/starchaser"
+	menutransform {
+		ufopedia		"0.4 0.4 0.4"	"180 0 -120"	"10 0 0"
+		aircraft		"0.8 1.1 1.1"	"160 20 -120"	"60 0 0"
+		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		"-20 0 0"
+		item			"0.4 0.4 0.4"	"180 0 -120"	#
+	}
 }
 
 // ============== Stiletto Interceptor =====================
