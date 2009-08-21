@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -1354,6 +1354,14 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 		/** @todo When there will be different possible base weapon, range should change */
 		for (i = 0; i < base->numBatteries; i++) {
 			const aircraftSlot_t const *slot = &base->batteries[i].slot;
+			if (slot->item && (slot->ammoLeft > 0 || slot->ammoLeft)
+			 && slot->installationTime == 0) {
+				MAP_MapDrawEquidistantPoints(node, base->pos,
+					slot->ammo->craftitem.stats[AIR_STATS_WRANGE], red);
+			}
+		}
+		for (i = 0; i < base->numLasers; i++) {
+			const aircraftSlot_t const *slot = &base->lasers[i].slot;
 			if (slot->item && (slot->ammoLeft > 0 || slot->ammoLeft)
 			 && slot->installationTime == 0) {
 				MAP_MapDrawEquidistantPoints(node, base->pos,
