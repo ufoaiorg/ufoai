@@ -1,9 +1,8 @@
 #include "RoutingRenderable.h"
 #include "math/aabb.h"
-//#include "math/matrix.h"
+#include "math/quaternion.h"
 #include "igl.h"
 #include "entitylib.h"//for aabb_draw_solid
-
 namespace routing
 {
 	RoutingRenderable::RoutingRenderable ()
@@ -31,7 +30,7 @@ namespace routing
 		_entries.push_back(entry);
 	}
 
-	void RoutingRenderableEntry::render(RenderStateFlags state) const
+	void RoutingRenderableEntry::render (RenderStateFlags state) const
 	{
 		this->renderWireframe();
 		this->renderAccessability(state);
@@ -41,11 +40,11 @@ namespace routing
 	/**
 	 * @brief render marker wireframe for grid
 	 */
-	void RoutingRenderableEntry::renderWireframe() const
+	void RoutingRenderableEntry::renderWireframe () const
 	{
 		/** @todo constants for colors */
 		const Vector3 color_white = Vector3(1.0, 1.0, 1.0);
-		glColor3fv(vector3_to_array(color_white));
+		glColor3fv( vector3_to_array (color_white));
 
 		/** @todo use constants for grid sizes */
 		Vector3 dx = Vector3(32, 0, 0);
@@ -94,35 +93,45 @@ namespace routing
 	/**
 	 * @brief render a box for accessability of this grid part
 	 */
-	void RoutingRenderableEntry::renderAccessability(RenderStateFlags state) const
+	void RoutingRenderableEntry::renderAccessability (RenderStateFlags state) const
 	{
 		/* center of drawn box */
-		Vector3 diffCenter = Vector3(16,16,8);
+		Vector3 diffCenter = Vector3(16, 16, 8);
 		/**@todo render accessability in different colors based on state */
 		const Vector3 color_green = Vector3(0.0, 1.0, 0.0);
-		glColor3fv(vector3_to_array(color_green));
-		AABB box = AABB(vector3_added(this->_data.getOrigin(),diffCenter),Vector3(8,8,8));
+		glColor3fv( vector3_to_array (color_green));
+		AABB box = AABB(vector3_added(this->_data.getOrigin(), diffCenter), Vector3(8, 8, 8));
 		aabb_draw_solid(box, state);
 	}
 
-	void RoutingRenderableEntry::renderConnection(int direction) const
+	/**
+	 * @brief render connection arrow for given direction
+	 * @param direction direction to draw arrow for
+	 */
+	void RoutingRenderableEntry::renderConnection (int direction) const
 	{
-		/**@todo use direction to rotate that arrow around 16,16,32 in z-direction*/
+		/**@todo get color from lump connectivity data */
 		const Vector3 color_blue = Vector3(-1.0, -1.0, 1.0);
-		glColor3fv(vector3_to_array(color_blue));
+		glColor3fv( vector3_to_array (color_blue));
 
-		Vector3 dhz = Vector3(16, 0, 32);
-		Vector3 dif1 = Vector3(2, 0, 2);
-		Vector3 dif2 = Vector3(2, 0, -2);
-		Vector3 dif3 = Vector3(-2, 0, -2);
-		Vector3 dif4 = Vector3(-2, 0, 2);
+		//vector to center of direction arrows
+		Vector3 diffCenter = Vector3(16, 16, 32);
+		//vector tip
+		Vector3 difTip = Vector3(0, -16, 0);
+		//vector base corners
+		Vector3 difB1 = Vector3(2, -8, 2);
+		Vector3 difB2 = Vector3(2, -8, -2);
+		Vector3 difB3 = Vector3(-2, -8, -2);
+		Vector3 difB4 = Vector3(-2, -8, 2);
 
-		Vector3 tip = vector3_added(this->_data.getOrigin(), dhz);
-		Vector3 base = vector3_added(this->_data.getOrigin(), Vector3(16, 8, 32));
-		Vector3 b1 = vector3_added(base, dif1);
-		Vector3 b2 = vector3_added(base, dif2);
-		Vector3 b3 = vector3_added(base, dif3);
-		Vector3 b4 = vector3_added(base, dif4);
+		//rotate tip and base corners around {0,0,0} before translate to center
+		Quaternion rotation = quaternion_for_z(degrees_to_radians(direction * 45));
+
+		Vector3 tip = vector3_added(diffCenter, quaternion_transformed_point(rotation, difTip));
+		Vector3 b1 = vector3_added(diffCenter, quaternion_transformed_point(rotation, difB1));
+		Vector3 b2 = vector3_added(diffCenter, quaternion_transformed_point(rotation, difB2));
+		Vector3 b3 = vector3_added(diffCenter, quaternion_transformed_point(rotation, difB3));
+		Vector3 b4 = vector3_added(diffCenter, quaternion_transformed_point(rotation, difB4));
 
 		/* draw arrow as connected triangles */
 		glBegin(GL_TRIANGLE_FAN);
@@ -134,17 +143,22 @@ namespace routing
 		glVertex3fv(vector3_to_array(b1));
 		glEnd();
 
-		/* close the arrow */
+		/* close the arrow (counterclockwise)*/
 		glBegin(GL_QUADS);
 		glVertex3fv(vector3_to_array(b2));
 		glVertex3fv(vector3_to_array(b1));
-		glVertex3fv(vector3_to_array(b3));
 		glVertex3fv(vector3_to_array(b4));
+		glVertex3fv(vector3_to_array(b3));
 		glEnd();
 	}
 
+	/**
+	 * @brief draw all connection arrows (one for each direction)
+	 */
 	void RoutingRenderableEntry::renderConnections (void) const
 	{
-		renderConnection(0);
+		for (int i = 0; i < 8; i++) {
+			renderConnection(i);
+		}
 	}
 }
