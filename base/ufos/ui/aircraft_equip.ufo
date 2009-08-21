@@ -117,7 +117,7 @@ window aircraft_equip extends iaircraft
 		cvar		*cvar:mn_equip_itemtype
 		image		"ui/selectbox_green"
 		pos			"53 497"
-		size		"125 20"
+		size		"235 20"
 		color		"0.6 0.6 0.6 0.3"
 		option armour {
 			label	"_Armour"
@@ -151,7 +151,6 @@ window aircraft_equip extends iaircraft
 		pos			"43 529"
 		size		"215 132"
 		lineheight	"20"
-		rows		"7"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		onClick		{
