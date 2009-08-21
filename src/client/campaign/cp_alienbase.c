@@ -80,6 +80,8 @@ void AB_SetAlienBasePosition (vec2_t pos)
 
 		counter++;
 	}
+	if (counter == maxLoopPosition)
+		Vector2Copy(randomPos, pos);
 }
 
 /**
