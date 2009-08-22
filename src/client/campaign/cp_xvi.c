@@ -72,7 +72,7 @@ int CP_GetAverageXVIRate (void)
 		XVIRate += nation->stats[0].xviInfection;
 	}
 	XVIRate /= ccs.numNations;
-	return (int) XVIRate;
+	return XVIRate;
 }
 
 /**
