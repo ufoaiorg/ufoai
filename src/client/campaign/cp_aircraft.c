@@ -159,7 +159,7 @@ void AIR_ListAircraft_f (void)
 		if (!base)
 			continue;
 
-		Com_Printf("Aircraft in base %s: %i\n", base->name, base->numAircraftInBase);
+		Com_Printf("Aircraft in %s: %i\n", base->name, base->numAircraftInBase);
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			const aircraft_t *aircraft = &base->aircraft[i];
 			Com_Printf("Aircraft %s\n", aircraft->name);
@@ -777,7 +777,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 
 		AIR_ResetAircraftTeam(aircraft);
 
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new (a %s) class craft is ready in base %s"), _(aircraft->name), base->name);
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new (a %s) class craft is ready in %s"), _(aircraft->name), base->name);
 		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
@@ -787,7 +787,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
 		/* Update base capacities. */
 		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->size);
-		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->id, aircraft->idx, base->name);
+		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for %s\n", aircraft->id, aircraft->idx, base->name);
 		if (!base->aircraftCurrent)
 			base->aircraftCurrent = aircraft;
 		aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->tpl, base);
@@ -1240,7 +1240,7 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 							aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 							aircraft->status = AIR_HOME;
 							assert(aircraft->homebase);
-							MS_AddNewMessage(_("Notice"), va(_("Craft %s has refuelled at base %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
+							MS_AddNewMessage(_("Notice"), va(_("Craft %s has refuelled at %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
 						}
 					}
 
@@ -2167,7 +2167,7 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 			Com_DPrintf(DEBUG_CLIENT, "AIR_SendAircraftPursuingUFO: not enough fuel to anticipate target movement: go directly to target position\n");
 			Vector2Copy(ufo->pos, dest);
 		} else {
-			MS_AddNewMessage(_("Notice"), va(_("Craft %s has not enough fuel to intercept UFO: fly back to base %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Notice"), va(_("Craft %s has not enough fuel to intercept UFO: fly back to %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
 			AIR_AircraftReturnToBase(aircraft);
 			return qfalse;
 		}

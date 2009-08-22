@@ -1154,7 +1154,7 @@ static void E_ListHired_f (void)
 				continue;
 			}
 
-			Com_Printf("Empolyee: %s (idx: %i) %s at base %s\n", E_GetEmployeeString(employee.type), employee.idx, employee.chr.name, ((employee.baseHired) ? employee.baseHired->name : "NULL"));
+			Com_Printf("Empolyee: %s (idx: %i) %s at %s\n", E_GetEmployeeString(employee.type), employee.idx, employee.chr.name, ((employee.baseHired) ? employee.baseHired->name : "NULL"));
 			if (employee.type != emplType)
 				Com_Printf("Warning: EmployeeType mismatch: %i != %i\n", emplType, employee.type);
 		}

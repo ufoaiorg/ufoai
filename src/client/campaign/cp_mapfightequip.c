@@ -299,13 +299,13 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 			if (aircraft) {
 				AII_UpdateAircraftStats(aircraft);
 				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-						_("%s was successfully installed into aircraft %s at base %s."),
+						_("%s was successfully installed into aircraft %s at %s."),
 						_(slot->item->name), _(aircraft->name), aircraft->homebase->name);
 			} else if (installation) {
 				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("%s was successfully installed at installation %s."),
 						_(slot->item->name), installation->name);
 			} else {
-				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("%s was successfully installed at base %s."),
+				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("%s was successfully installed at %s."),
 						_(slot->item->name), base->name);
 			}
 			MSO_CheckAddNewMessage(NT_INSTALLATION_INSTALLED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -327,13 +327,13 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 				/* Only stop time and post a notice, if no new item to install is assigned */
 				if (!slot->item) {
 					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-							_("%s was successfully removed from aircraft %s at base %s."),
+							_("%s was successfully removed from aircraft %s at %s."),
 							_(olditem->name), _(aircraft->name), base->name);
 					MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED, _("Notice"), cp_messageBuffer, qfalse,
 							MSG_STANDARD, NULL);
 				} else {
 					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-							_ ("%s was successfully removed, starting installation of %s into aircraft %s at base %s"),
+							_ ("%s was successfully removed, starting installation of %s into aircraft %s at %s"),
 							_(olditem->name), _(slot->item->name), _(aircraft->name), base->name);
 					MSO_CheckAddNewMessage(NT_INSTALLATION_REPLACE, _("Notice"), cp_messageBuffer, qfalse,
 							MSG_STANDARD, NULL);
@@ -344,7 +344,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 							_("%s was successfully removed from installation %s."),
 							_(olditem->name), installation->name);
 				} else {
-					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("%s was successfully removed from base %s."),
+					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("%s was successfully removed from %s."),
 							_(olditem->name), base->name);
 				}
 				MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);

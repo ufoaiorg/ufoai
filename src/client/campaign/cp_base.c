@@ -2371,7 +2371,7 @@ void B_UpdateBaseData (void)
 			if (!b)
 				continue;
 			if (B_CheckBuildingConstruction(b, base)) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), ccs.bases[baseIdx].name);
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Construction of %s building finished in %s."), _(b->name), ccs.bases[baseIdx].name);
 				MS_AddNewMessage(_("Building finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
 		}
@@ -2479,7 +2479,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 		MS_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
 	}
 	if (forcedsold > 0) {
-		Com_sprintf(str, sizeof(str), _("Not enough storage space in base %s. %s"),
+		Com_sprintf(str, sizeof(str), _("Not enough storage space in %s. %s"),
 			base->name, va(ngettext("%i item was sold for %i credits.", "%i items were sold for %i credits.", forcedsold), forcedsold, forcedgained));
 		MS_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
 	}
@@ -3198,7 +3198,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 
 	if (add && !B_GetBuildingStatus(base, B_ANTIMATTER)) {
 		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-			_("Base %s does not have Antimatter Storage Facility. %i units of antimatter got removed."),
+			_("%s does not have Antimatter Storage Facility. %i units of antimatter got removed."),
 			base->name, amount);
 		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 		return;
