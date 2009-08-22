@@ -6,8 +6,8 @@
 
 namespace routing
 {
-
-	Routing::Routing () :_showPathfinding(false)
+	Routing::Routing () :
+		_showPathfinding(false)
 	{
 	}
 
@@ -19,11 +19,11 @@ namespace routing
 	void Routing::renderSolid (Renderer& renderer, const VolumeTest& volume) const
 	{
 		if (_showPathfinding) {
-			/**@todo move this shader init somewhere else? */
+			/** @todo move this shader init somewhere else? */
 			const Colour3 color2 = Colour3(1, 1, 1);
-			m_routingShader = colour_capture_state_fill(color2);
-			//renderer must have shader set for adding renderable
-			renderer.SetState(m_routingShader,Renderer::eFullMaterials);
+			routing::m_routingShader = colour_capture_state_fill(color2);
+			// renderer must have shader set for adding renderable
+			renderer.SetState(routing::m_routingShader, Renderer::eFullMaterials);
 			renderer.addRenderable(_renderable, g_matrix4_identity);
 		}
 	}
@@ -39,7 +39,7 @@ namespace routing
 		// this is not needed for rendering the routing data
 	}
 
-	void Routing::updateRouting(const std::string& bspFileName)
+	void Routing::updateRouting (const std::string& bspFileName)
 	{
 		_loader.loadRouting(bspFileName);
 		routing::RoutingLump& lump = _loader.getRoutingLump();

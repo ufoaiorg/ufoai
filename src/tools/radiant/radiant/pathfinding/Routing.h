@@ -8,6 +8,7 @@
 
 namespace routing
 {
+	/** @todo release this shader */
 	static Shader *m_routingShader;
 
 	class Routing: public Renderable
@@ -18,9 +19,7 @@ namespace routing
 			RoutingLumpLoader _loader;
 			bool _showPathfinding;
 
-
 		public:
-
 			Routing ();
 
 			virtual ~Routing ();
@@ -33,9 +32,9 @@ namespace routing
 
 			void renderComponents (Renderer&, const VolumeTest&);
 
-			void updateRouting(const std::string& bspFileName);
+			void updateRouting (const std::string& bspFileName);
 
-			void setShowPathfinding(bool showPathfinding)
+			void setShowPathfinding (bool showPathfinding)
 			{
 				_showPathfinding = showPathfinding;
 			}

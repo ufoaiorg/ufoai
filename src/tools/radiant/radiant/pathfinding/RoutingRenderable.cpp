@@ -3,6 +3,7 @@
 #include "math/quaternion.h"
 #include "igl.h"
 #include "entitylib.h"//for aabb_draw_solid
+
 namespace routing
 {
 	RoutingRenderable::RoutingRenderable ()
@@ -43,8 +44,8 @@ namespace routing
 	void RoutingRenderableEntry::renderWireframe () const
 	{
 		/** @todo constants for colors */
-		const Vector3 color_white = Vector3(1.0, 1.0, 1.0);
-		glColor3fv( vector3_to_array (color_white));
+		const Vector3 colorWhite = Vector3(1.0, 1.0, 1.0);
+		glColor3fv(vector3_to_array(colorWhite));
 
 		/** @todo use constants for grid sizes */
 		Vector3 dx = Vector3(32, 0, 0);
@@ -98,8 +99,8 @@ namespace routing
 		/* center of drawn box */
 		Vector3 diffCenter = Vector3(16, 16, 8);
 		/**@todo render accessability in different colors based on state */
-		const Vector3 color_green = Vector3(0.0, 1.0, 0.0);
-		glColor3fv( vector3_to_array (color_green));
+		const Vector3 colorGreen = Vector3(0.0, 1.0, 0.0);
+		glColor3fv(vector3_to_array(colorGreen));
 		AABB box = AABB(vector3_added(this->_data.getOrigin(), diffCenter), Vector3(8, 8, 8));
 		aabb_draw_solid(box, state);
 	}
@@ -111,8 +112,8 @@ namespace routing
 	void RoutingRenderableEntry::renderConnection (int direction) const
 	{
 		/**@todo get color from lump connectivity data */
-		const Vector3 color_blue = Vector3(-1.0, -1.0, 1.0);
-		glColor3fv( vector3_to_array (color_blue));
+		const Vector3 colorBlue = Vector3(-1.0, -1.0, 1.0);
+		glColor3fv(vector3_to_array(colorBlue));
 
 		//vector to center of direction arrows
 		Vector3 diffCenter = Vector3(16, 16, 32);
