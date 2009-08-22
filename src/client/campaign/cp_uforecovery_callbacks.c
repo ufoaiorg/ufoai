@@ -126,7 +126,7 @@ static void UR_DialogInitStore_f (void)
 	Cvar_Set("mn_uforecovery_actualufo", UFO_MissionResultToString());
 	if (count == 0) {
 		/* No UFO base with proper conditions, show a hint and disable list. */
-		LIST_AddString(&recoveryYardSelectPopup, _("No free ufo yard available."));
+		LIST_AddString(&recoveryYardSelectPopup, _("No free UFO yard available."));
 		MN_ExecuteConfunc("uforecovery_tabselect sell");
 		MN_ExecuteConfunc("btbasesel disable");
 	} else {
@@ -175,7 +175,8 @@ static void UR_DialogStartStore_f (void)
 	if (!UFOYard)
 		return;
 
-	Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO is being transported to %s."), _(UFO_TypeToName(ufoRecovery.ufoTemplate->ufotype)), UFOYard->name);
+	Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO is being transported to %s."),
+			UFO_TypeToName(ufoRecovery.ufoTemplate->ufotype), UFOYard->name);
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 /*	UR_Prepare(UFOYard, ufoRecovery.ufoTemplate->ufotype); */
 	date = ccs.date;
@@ -365,7 +366,7 @@ static void US_StoreUFO_f (void)
 		return;
 	}
 
-	/** Get UFO Type */
+	/* Get UFO Type */
 	for (i = 0; i < ccs.numAircraftTemplates; i++) {
 		if (strstr(ccs.aircraftTemplates[i].id, ufoId)) {
 			ufoType = &ccs.aircraftTemplates[i];
@@ -385,22 +386,19 @@ static void US_StoreUFO_f (void)
  */
 static void US_RemoveStoredUFO_f (void)
 {
-	int idx;
-
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <idx>\n", Cmd_Argv(0));
 		return;
+	} else {
+		const int idx = atoi(Cmd_Argv(1));
+		storedUFO_t *storedUFO = US_GetStoredUFOByIDX(idx);
+		if (!storedUFO) {
+			Com_Printf("US_RemoveStoredUFO_f: No such ufo index.\n");
+			return;
+		}
+		US_RemoveStoredUFO(storedUFO);
 	}
-	idx = atoi(Cmd_Argv(1));
-
-	if (idx < 0 || idx >= ccs.numStoredUFOs) {
-		Com_Printf("US_RemoveStoredUFO_f: No such ufo index.\n");
-		return;
-	}
-
-	US_RemoveStoredUFO(US_GetStoredUFOByIDX(idx));
 }
-
 
 #endif
 

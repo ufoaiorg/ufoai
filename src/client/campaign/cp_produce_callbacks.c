@@ -234,7 +234,7 @@ static void PR_UpdateProductionList (const base_t* base)
 		} else if (prod->ufo) {
 			const storedUFO_t *ufo = prod->ufo;
 
-			LIST_AddString(&productionList, va("%s (at %s)", _(UFO_TypeToName(ufo->ufoTemplate->ufotype)), ufo->installation->name));
+			LIST_AddString(&productionList, va(_("%s (at %s)"), UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->installation->name));
 			LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
 			LIST_AddString(&productionQueued, "1");
 		}
@@ -268,7 +268,7 @@ static void PR_UpdateProductionList (const base_t* base)
 			 	continue;
 
 			LIST_AddPointer(&productionItemList, ufo);
-			LIST_AddString(&productionList, va("%s (at %s)", _(UFO_TypeToName(ufo->ufoTemplate->ufotype)), ufo->installation->name));
+			LIST_AddString(&productionList, va(_("%s (at %s)"), UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->installation->name));
 			LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
 			LIST_AddString(&productionQueued, "");
 		}
@@ -381,7 +381,7 @@ static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, floa
 	assert(prodPerHour > 0);
 	time = ceil((1.0f - percentDone) / prodPerHour);
 
-	Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), _(UFO_TypeToName(ufo->ufoTemplate->ufotype)));
+	Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), UFO_TypeToName(ufo->ufoTemplate->ufotype));
 	Q_strcat(productionInfo, _("Components:\n"), sizeof(productionInfo));
 	/* Print components. */
 	for (i = 0; i < ufo->comp->numItemtypes; i++) {
@@ -824,7 +824,7 @@ static void PR_ProductionIncrease_f (void)
 		} else { /* Disassembly */
 			storedUFO_t *ufo = prod->ufo;
 
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Disassembling of %s started"), _(UFO_TypeToName(ufo->ufoTemplate->ufotype)));
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Disassembling of %s started"), UFO_TypeToName(ufo->ufoTemplate->ufotype));
 			MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, ufo->ufoTemplate->tech);
 
 			PR_ClearSelected();

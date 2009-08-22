@@ -858,7 +858,7 @@ static void BaseSummary_Init (const base_t *base)
 			else if (aircraft)
 				name = _(aircraft->name);
 			else if (ufo)
-				name = _(UFO_TypeToName(ufo->ufoTemplate->ufotype));
+				name = UFO_TypeToName(ufo->ufoTemplate->ufotype);
 			else
 				Com_Error(ERR_DROP, "BaseSummary_Init: Invalid production type (not item, not aircraft, not disassembly)\n");
 

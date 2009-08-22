@@ -445,7 +445,7 @@ void PR_ProductionRun (void)
 			} else {	/* This is disassembling. */
 				base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, ufo->comp, qfalse);
 
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s has finished."), _(UFO_TypeToName(ufo->ufoTemplate->ufotype)));
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s has finished."), UFO_TypeToName(ufo->ufoTemplate->ufotype));
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, ufo->ufoTemplate->tech);
 
 				/* Removing UFO will remove the production too */
