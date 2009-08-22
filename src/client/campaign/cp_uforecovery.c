@@ -200,11 +200,12 @@ void UR_ProcessActive (void)
 
 	for (i = 0; i < ccs.numStoredUFOs; i++) {
 		storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
-
 		if (!ufo)
 			continue;
+
 		assert(ufo->ufoTemplate);
 		assert(ufo->ufoTemplate->tech);
+
 		if (ufo->ufoTemplate->tech->statusCollected)
 			continue;
 		if (ufo->arrive.day > ccs.date.day || (ufo->arrive.day == ccs.date.day && ufo->arrive.sec > ccs.date.sec))
@@ -297,7 +298,7 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 
 /**
  * @brief Removes an UFO from the storage
- * @param[in] ufo stored UFO to remove
+ * @param[in,out] ufo stored UFO to remove
  */
 void US_RemoveStoredUFO (storedUFO_t *ufo)
 {
@@ -312,7 +313,6 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
 
 		assert(prodBase);
 
-		/**/
 		if (ufo->disassembly->idx == 0)
 			PR_QueueNext(prodBase);
 		else
@@ -337,9 +337,9 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
 		int j;
 		for (j = 0; j < ccs.productions[i].numItems; j++) {
 			production_t *prod = &(ccs.productions[i].items[j]);
-
 			if (!prod->ufo)
 				continue;
+
 			if (prod->ufo > ufo)
 				prod->ufo--;
 		}
@@ -361,9 +361,9 @@ int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *insta
 
 	for (i = 0; i < ccs.numStoredUFOs; i++) {
 		const storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
-
 		if (!ufo)
 			continue;
+
 		if (ufo->ufoTemplate != ufoTemplate)
 			continue;
 		if (installation && ufo->installation != installation)
@@ -385,7 +385,7 @@ int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *insta
 void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 {
 	int i;
-	capacities_t *ufoCap;
+	const capacities_t *ufoCap;
 
 	if (!installation)
 		Com_Error(ERR_DROP, "US_RemoveUFOsExceedingCapacity: No installation given!\n");
@@ -407,10 +407,10 @@ void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 }
 
 /**
- * @brief get the closest stored ufo (of a type) to a base
- * @param[in] ufoTemplate Pointer to the aircraft (ufo) template to look for (NULL for any type)
- * @param[in] base Pointer to the base. If it's NULL the function simply return the first stored UFO of type
- * @return storedUFO_t Pointer to the first stored UFO matches the conditions
+ * @brief get the closest stored ufo (of a type) from a base
+ * @param[in] ufoTemplate Pointer to the aircraft (ufo) template to look for (@c NULL for any type)
+ * @param[in] base Pointer to the base. If it's @c NULL the function simply return the first stored UFO of type
+ * @return Pointer to the first stored UFO matches the conditions
  */
 storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t *base)
 {
