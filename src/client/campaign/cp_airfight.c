@@ -98,13 +98,17 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 	if (attackingBase) {
 		projectile->attackingAircraft = NULL;
 		VectorSet(projectile->pos[0], attackingBase->pos[0], attackingBase->pos[1], 0);
+		VectorSet(projectile->attackerPos, attackingBase->pos[0], attackingBase->pos[1], 0);
 	} else if (attackingInstallation) {
 		projectile->attackingAircraft = NULL;
 		VectorSet(projectile->pos[0], attackingInstallation->pos[0], attackingInstallation->pos[1], 0);
+		VectorSet(projectile->attackerPos, attackingInstallation->pos[0], attackingInstallation->pos[1], 0);
 	} else {
 		assert(attacker);
 		projectile->attackingAircraft = attacker;
 		VectorSet(projectile->pos[0], attacker->pos[0], attacker->pos[1], 0);
+		/* attacker may move, use attackingAircraft->pos */
+		VectorSet(projectile->attackerPos, 0, 0, 0);
 	}
 
 	projectile->numProjectiles++;

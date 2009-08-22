@@ -150,10 +150,10 @@ tech rs_laser
 	time	1500
 	image	techs/continuous_wave_laser_operation
 }
-/*
+
 tech rs_baselaser
 {
-	name "_Base Defence Laser Turret"
+	name "_Laser Turret"
 	type	tech
 	up_chapter	tech
 
@@ -186,8 +186,19 @@ tech rs_baselaser
 	}
 	time	2000
 	image	techs/base_defence_laser_turret
+	provides baselaser
+	producetime	150
 }
-*/
+
+tech rs_baselaser_ammo
+{
+	type		tech
+	name		"_DF-Tank"
+	provides	baselaser_ammo
+	time		0
+	producetime	-1
+}
+
 tech rs_antimatter
 {
 	name		"_Antimatter"

@@ -662,6 +662,7 @@ craftitem craft_weapon_alc
 	installationTime	2
 	price				12000
 	bullets				false
+	laser				true
 	model				"aircraft/craft_weapon_alc/alc"
 }
 
@@ -672,10 +673,18 @@ craftitem craft_ammo_alc
 	craftweapon		craft_weapon_alc
 	notonmarket		true
 
-	unlimitedAmmo	true
+/*	unlimitedAmmo	true
 	wdamage			10
 	accuracy		0.7
 	wrange			1.8
+	wspeed			900
+	delay			100
+	size			10 // light*/
+
+	unlimitedAmmo	true
+	wdamage			10
+	accuracy		0.7
+	wrange			5
 	wspeed			900
 	delay			30
 	size			10 // light
@@ -920,5 +929,35 @@ craftitem base_ammo_AA51
 	wrange			7
 	wspeed			200
 	delay			500
+	size			10 // light
+}
+
+craftitem baselaser
+{
+	name				"_Laser Turret"
+	crafttype			base_laser
+	size				90 // medium
+	installationTime	12
+	price				100000
+	is_dummy			true
+
+	bullets				false
+	laser				true
+}
+
+craftitem baselaser_ammo
+{
+	name			"_DF-Tank"
+	crafttype		base_ammo_laser
+	craftweapon		baselaser
+	is_dummy		true
+	notonmarket		true
+
+	unlimitedAmmo	true
+	wdamage			10
+	accuracy		0.7
+	wrange			5
+	wspeed			900
+	delay			50
 	size			10 // light
 }

@@ -1236,15 +1236,26 @@ static void MAP_DrawBullets (const menuNode_t* node, const vec3_t pos)
 }
 
 /**
- * @brief Draws on bunch of bullets on the geoscape map
- * @param[in] node Pointer to the node in which you want to draw the laser.
- * @param[in] start Start position of the laser shot (on geoscape)
- * @param[in] end End position of the laser shot (on geoscape)
+ * @brief Draws an energy beam on the geoscape map (laser/particle)
+ * @param[in] node Pointer to the node in which you want to draw.
+ * @param[in] start Start position of the shot (on geoscape)
+ * @param[in] end End position of the shot (on geoscape)
+ * @param[in] color color of the beam
  * @sa MAP_DrawMap
  * @todo Implement rendering of laser shot
  */
-static void MAP_DrawLaser (const menuNode_t* node, const vec3_t start, const vec3_t end)
+static void MAP_DrawBeam (const menuNode_t* node, const vec3_t start, const vec3_t end, const vec4_t color)
 {
+	int points[4];
+
+	if (!MAP_AllMapToScreen(node, start, &(points[0]), &(points[1]), NULL))
+		return;
+	if (!MAP_AllMapToScreen(node, end, &(points[2]), &(points[3]), NULL))
+		return;
+
+	R_Color(color);
+	R_DrawLine (points, 2.0);
+	R_Color(NULL);
 }
 
 #define SELECT_CIRCLE_RADIUS	1.5f + 3.0f / ccs.zoom
@@ -1576,9 +1587,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		aircraftProjectile_t *projectile = &ccs.projectiles[idx];
 		vec3_t drawPos = {0, 0, 0};
 
-		if (projectile->attackingAircraft)
-			continue;
-
 		if (projectile->hasMoved) {
 			projectile->hasMoved = qfalse;
 			VectorCopy(projectile->pos[0], drawPos);
@@ -1597,12 +1605,28 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			}
 		}
 
-		if (projectile->bullets)
+		if (projectile->bullets) {
 			MAP_DrawBullets(node, drawPos);
-		else if (projectile->laser)
-			MAP_DrawLaser(node, vec3_origin, vec3_origin);
-		else
+		} else if (projectile->laser) {
+			const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
+			vec3_t start;
+			vec3_t end;
+
+			if (projectile->attackingAircraft)
+				VectorCopy(projectile->attackingAircraft->pos, start);
+			else
+				VectorCopy(projectile->attackerPos, start);
+
+			if (projectile->aimedAircraft)
+				VectorCopy(projectile->aimedAircraft->pos, end);
+			else
+				VectorCopy(projectile->idleTarget, end);
+
+			/* @todo use scripted color */
+			MAP_DrawBeam(node, start, end, yellow);
+		} else {
 			MAP_Draw3DMarkerIfVisible(node, drawPos, projectile->angle, projectile->aircraftItem->model, 0);
+		}
 	}
 
 	showXVI = CP_IsXVIResearched() ? qtrue : qfalse;
