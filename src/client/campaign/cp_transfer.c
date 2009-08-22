@@ -463,7 +463,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 						LIST_AddString(&transferListTransfered, va("%i", td.trItemsTmp[i]));
 					else
 						LIST_AddString(&transferListTransfered, "");
-					Com_sprintf(str, sizeof(str), _("%s"), _(csi.ods[i].name));
+					Com_sprintf(str, sizeof(str), "%s", _(csi.ods[i].name));
 					LIST_AddString(&transferList, str);
 					LIST_AddString(&transferListAmount, va("%i", srcbase->storage.num[i]));
 					cnt++;
