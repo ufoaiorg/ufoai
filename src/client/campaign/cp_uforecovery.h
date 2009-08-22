@@ -48,7 +48,7 @@ typedef struct storedUFO_s {
 	int idx;
 	char id[MAX_VAR];
 	components_t *comp;
-	aircraft_t *ufoTemplate;
+	const aircraft_t *ufoTemplate;
 
 	/* arrival date (recovery/transfer) */
 	date_t arrive;
@@ -63,7 +63,7 @@ typedef struct storedUFO_s {
 void UR_ProcessActive(void);
 void UR_InitStartup(void);
 
-storedUFO_t *US_StoreUFO(aircraft_t *ufoTemplate, installation_t *installation, date_t date);
+storedUFO_t *US_StoreUFO(const aircraft_t *ufoTemplate, installation_t *installation, date_t date);
 storedUFO_t *US_GetStoredUFOPlaceByIDX(const int idx);
 storedUFO_t *US_GetStoredUFOByIDX(const int idx);
 storedUFO_t *US_GetClosestStoredUFO(const aircraft_t *ufoTemplate, const base_t *base);

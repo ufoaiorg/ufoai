@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @sa ufoRecoveries_t */
 typedef struct ufoRecovery_s {
 	installation_t *installation;			/**< selected ufoyard for current selected ufo recovery */
-	aircraft_t *ufoTemplate;		/**< the ufo type of the current ufo recovery */
+	const aircraft_t *ufoTemplate;		/**< the ufo type of the current ufo recovery */
 	nation_t *nation;		/**< selected nation to sell to for current ufo recovery */
 	qboolean recoveryDone;	/**< recoveryDone? Then the buttons are disabled */
 
@@ -66,7 +66,7 @@ static void UR_DialogRecoveryDone (void)
 static void UR_DialogInit_f (void)
 {
 	char ufoID[MAX_VAR];
-	aircraft_t *ufoCraft = NULL;
+	const aircraft_t *ufoCraft;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <ufoID>\n", Cmd_Argv(0));
@@ -111,7 +111,7 @@ static void UR_DialogInitStore_f (void)
 
 	/* Check how many bases can store this UFO. */
 	for (i = 0; i < ccs.numInstallations; i++) {
-		installation_t *installation = INS_GetFoundedInstallationByIDX(i);
+		const installation_t *installation = INS_GetFoundedInstallationByIDX(i);
 
 		if (!installation)
 			continue;
@@ -280,11 +280,12 @@ static void UR_DialogStartSell_f (void)
 	if (ufoRecovery.selectedStorage) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Sold previously recovered %s from %s to nation %s, gained %i credits."), UFO_TypeToName(
 				ufoRecovery.selectedStorage->ufoTemplate->ufotype), ufoRecovery.selectedStorage->base->name, _(nation->name), ufoRecovery.UFOprices[nation->idx]);
-	} else {
+	} else
 #endif
+	{
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."), UFO_TypeToName(
 				ufoRecovery.ufoTemplate->ufotype), _(nation->name), ufoRecovery.UFOprices[nation->idx]);
-/*	}*/
+	}
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CL_UpdateCredits(ccs.credits + ufoRecovery.UFOprices[nation->idx]);
 

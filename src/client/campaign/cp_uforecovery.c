@@ -243,11 +243,11 @@ storedUFO_t* US_GetStoredUFOByIDX (const int idx)
 /**
  * @brief Adds an UFO to the storage
  * @param[in] ufoTemplate Pointer to the aircraft(ufo)Template to add
- * @param[in] installation Pointer to the installation it should be added to
+ * @param[in,out] installation Pointer to the installation it should be added to
  * @param[in] date Date when UFO is arrives to the storage (recovery || transfer)
  * @return storedUFO_t pointer to the newly stored UFO (or NULL if failed)
  */
-storedUFO_t *US_StoreUFO (aircraft_t *ufoTemplate, installation_t *installation, date_t date)
+storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *installation, date_t date)
 {
 	storedUFO_t *ufo;
 
