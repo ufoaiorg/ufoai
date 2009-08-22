@@ -192,9 +192,9 @@ typedef struct {
 	struct entity_s *traceEntity;
 
 	const char *mapZone;		/**< used to replace textures in base assembly */
-} refdef_t;
+} rendererData_t;
 
-extern refdef_t refdef;
+extern rendererData_t refdef;
 
 /* threading state */
 typedef enum {

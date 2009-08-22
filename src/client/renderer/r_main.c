@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/tracing.h"
 #include "../menu/m_menus.h"
 
-refdef_t refdef;
+rendererData_t refdef;
 
 rconfig_t r_config;
 rstate_t r_state;
