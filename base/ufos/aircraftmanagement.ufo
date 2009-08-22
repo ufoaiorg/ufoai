@@ -668,7 +668,7 @@ craftitem craft_weapon_alc
 
 craftitem craft_ammo_alc
 {
-	name			"_DF-Tank"
+	name			"_D-F Tank"
 	crafttype		ammo
 	craftweapon		craft_weapon_alc
 	notonmarket		true
@@ -939,7 +939,7 @@ craftitem baselaser
 
 craftitem baselaser_ammo
 {
-	name			"_DF-Tank"
+	name			"_D-F Tank"
 	crafttype		base_ammo_laser
 	craftweapon		baselaser
 	is_dummy		true

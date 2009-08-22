@@ -193,7 +193,7 @@ tech rs_baselaser
 tech rs_baselaser_ammo
 {
 	type		tech
-	name		"_DF-Tank"
+	name		"_D-F Tank"
 	provides	baselaser_ammo
 	time		0
 	producetime	-1
@@ -4526,7 +4526,7 @@ tech rs_craft_weapon_alc
 tech rs_craft_ammo_alc
 {
 	type		tech
-	name		"_DF-Tank"
+	name		"_D-F Tank"
 	provides	craft_ammo_alc
 	time		0
 	producetime	-1
