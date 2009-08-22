@@ -396,10 +396,10 @@ static void R_DrawOpaqueMeshEntities (entity_t *ents)
 	if (!ents)
 		return;
 
-	if (!(refdef.rdflags & RDF_NOWORLDMODEL))
+	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL))
 		R_EnableLighting(r_state.mesh_program, qtrue);
 	R_DrawMeshEntities(ents);
-	if (!(refdef.rdflags & RDF_NOWORLDMODEL))
+	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL))
 		R_EnableLighting(NULL, qfalse);
 }
 
@@ -411,12 +411,12 @@ static void R_DrawBlendMeshEntities (entity_t *ents)
 	if (!ents)
 		return;
 
-	if (!(refdef.rdflags & RDF_NOWORLDMODEL))
+	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL))
 		R_EnableLighting(r_state.mesh_program, qtrue);
 	R_EnableBlend(qtrue);
 	R_DrawMeshEntities(ents);
 	R_EnableBlend(qfalse);
-	if (!(refdef.rdflags & RDF_NOWORLDMODEL))
+	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL))
 		R_EnableLighting(NULL, qfalse);
 }
 
@@ -593,7 +593,7 @@ void R_DrawEntities (void)
 		entity_t *e = &r_entities[i];
 
 		/* frustum cull check - but not while we are in e.g. sequence mode */
-		if (!(refdef.rdflags & RDF_NOWORLDMODEL) && R_CullEntity(e))
+		if (!(refdef.rendererFlags & RDF_NOWORLDMODEL) && R_CullEntity(e))
 			continue;
 
 		R_CalcTransform(e);

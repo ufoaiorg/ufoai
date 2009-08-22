@@ -161,7 +161,7 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 	/* restore the previous matrix */
 	glPopMatrix();
 
-	refdef.alias_count += sphere->num_tris * sphere->num_tris;
+	refdef.aliasCount += sphere->num_tris * sphere->num_tris;
 
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);

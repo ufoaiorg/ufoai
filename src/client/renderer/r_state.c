@@ -373,7 +373,7 @@ void R_EnableFog (qboolean enable)
 		if ((refdef.weather & WEATHER_FOG) || r_fog->integer == 2) {
 			r_state.fog_enabled = qtrue;
 
-			glFogfv(GL_FOG_COLOR, refdef.fog_color);
+			glFogfv(GL_FOG_COLOR, refdef.fogColor);
 			glFogf(GL_FOG_DENSITY, 1.0);
 			glEnable(GL_FOG);
 		}
@@ -391,9 +391,9 @@ static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) refdef.height / refdef.width;
 
 	if (r_isometric->integer) {
-		glOrtho(-10 * refdef.fov_x, 10 * refdef.fov_x, -10 * refdef.fov_x * yaspect, 10 * refdef.fov_x * yaspect, -zFar, zFar);
+		glOrtho(-10 * refdef.fieldOfViewX, 10 * refdef.fieldOfViewX, -10 * refdef.fieldOfViewX * yaspect, 10 * refdef.fieldOfViewX * yaspect, -zFar, zFar);
 	} else {
-		xmax = zNear * tan(refdef.fov_x * M_PI / 360.0);
+		xmax = zNear * tan(refdef.fieldOfViewX * M_PI / 360.0);
 		xmin = -xmax;
 
 		ymin = xmin * yaspect;
@@ -432,10 +432,10 @@ void R_Setup3D (void)
 
 	glRotatef(-90.0, 1.0, 0.0, 0.0);	/* put Z going up */
 	glRotatef(90.0, 0.0, 0.0, 1.0);	/* put Z going up */
-	glRotatef(-refdef.viewangles[2], 1.0, 0.0, 0.0);
-	glRotatef(-refdef.viewangles[0], 0.0, 1.0, 0.0);
-	glRotatef(-refdef.viewangles[1], 0.0, 0.0, 1.0);
-	glTranslatef(-refdef.vieworg[0], -refdef.vieworg[1], -refdef.vieworg[2]);
+	glRotatef(-refdef.viewAngles[2], 1.0, 0.0, 0.0);
+	glRotatef(-refdef.viewAngles[0], 0.0, 1.0, 0.0);
+	glRotatef(-refdef.viewAngles[1], 0.0, 0.0, 1.0);
+	glTranslatef(-refdef.viewOrigin[0], -refdef.viewOrigin[1], -refdef.viewOrigin[2]);
 
 	/* retrieve the resulting matrix for other manipulations  */
 	glGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);

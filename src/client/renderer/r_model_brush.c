@@ -73,23 +73,23 @@ static void R_ModLoadLighting (const lump_t *l, qboolean day)
 		c = Com_Parse(&s);  /* parse the string itself */
 		c = Com_Parse(&s);  /* and then the value */
 
-		if (sscanf(c, "%f %f %f", &refdef.ambient_light[0],
-			&refdef.ambient_light[1], &refdef.ambient_light[2]) != 3)
+		if (sscanf(c, "%f %f %f", &refdef.ambientLightColor[0],
+			&refdef.ambientLightColor[1], &refdef.ambientLightColor[2]) != 3)
 			Com_Printf("Invalid light vector given: '%s'\n", c);
 
 		for (i = 0; i < 3; i++) {  /* clamp it */
-			if (refdef.ambient_light[i] < MIN_AMBIENT_COMPONENT)
-				refdef.ambient_light[i] = MIN_AMBIENT_COMPONENT;
+			if (refdef.ambientLightColor[i] < MIN_AMBIENT_COMPONENT)
+				refdef.ambientLightColor[i] = MIN_AMBIENT_COMPONENT;
 		}
 
 		Com_DPrintf(DEBUG_RENDERER, "Resolved %s: %1.2f %1.2f %1.2f\n",
-			ambientLightString, refdef.ambient_light[0], refdef.ambient_light[1], refdef.ambient_light[2]);
+			ambientLightString, refdef.ambientLightColor[0], refdef.ambientLightColor[1], refdef.ambientLightColor[2]);
  	} else  /* ensure sane default */
-		VectorSet(refdef.ambient_light, MIN_AMBIENT_COMPONENT, MIN_AMBIENT_COMPONENT, MIN_AMBIENT_COMPONENT);
+		VectorSet(refdef.ambientLightColor, MIN_AMBIENT_COMPONENT, MIN_AMBIENT_COMPONENT, MIN_AMBIENT_COMPONENT);
 
 	/* scale it into a reasonable range, the clamp above ensures this will work */
-	while (VectorSum(refdef.ambient_light) < MIN_AMBIENT_SUM)
-		VectorScale(refdef.ambient_light, 1.25, refdef.ambient_light);
+	while (VectorSum(refdef.ambientLightColor) < MIN_AMBIENT_SUM)
+		VectorScale(refdef.ambientLightColor, 1.25, refdef.ambientLightColor);
 
 	r_worldmodel->bsp.lightdata = Mem_PoolAlloc(l->filelen, vid_lightPool, 0);
 	r_worldmodel->bsp.lightquant = *(const byte *) (mod_base + l->fileofs);

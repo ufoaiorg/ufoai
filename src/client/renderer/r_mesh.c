@@ -262,7 +262,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	/* draw the model */
 	for (i = 0; i < mi->model->alias.num_meshes; i++) {
 		const mAliasMesh_t *mesh = &mi->model->alias.meshes[i];
-		refdef.alias_count += mesh->num_tris;
+		refdef.aliasCount += mesh->num_tris;
 		if (mesh->verts != NULL)
 			R_DrawAliasStatic(mesh);
 		else
@@ -310,7 +310,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	/* draw the model */
 	for (i = 0; i < mi->model->alias.num_meshes; i++) {
 		const mAliasMesh_t *mesh = &mi->model->alias.meshes[i];
-		refdef.alias_count += mesh->num_tris;
+		refdef.aliasCount += mesh->num_tris;
 		if (mesh->verts != NULL)
 			R_DrawAliasStatic(mesh);
 		else
@@ -426,7 +426,7 @@ void R_DrawAliasModel (entity_t *e)
 			vec3_t lightpos;
 
 			if (e->lighting->dirty) {
-				if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
+				if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 					/* tagged models are not handled, they share the static lighting
 					 * information with the parent anyway */
 					if (!e->tagent)
@@ -447,7 +447,7 @@ void R_DrawAliasModel (entity_t *e)
 
 	/* IR goggles override color
 	 * don't highlight all misc_models, only actors */
-	if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_ACTOR)
+	if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_ACTOR)
 		color[0] = 1.0;
 
 	if (e->flags & RF_PULSE) {  /* and then adding in a pulse */
@@ -475,7 +475,7 @@ void R_DrawAliasModel (entity_t *e)
 
 	for (i = 0; i < mod->num_meshes; i++) {
 		const mAliasMesh_t *mesh = &mod->meshes[i];
-		refdef.alias_count += mesh->num_tris;
+		refdef.aliasCount += mesh->num_tris;
 		if (mesh->verts != NULL)
 			R_DrawAliasStatic(mesh);
 		else

@@ -41,7 +41,7 @@ void CL_DoEndRound (const eventRegister_t *self, struct dbuffer *msg)
 	if (cls.team == cl.actTeam)
 		MN_ExecuteConfunc("endround");
 
-	refdef.rdflags &= ~RDF_IRGOGGLES;
+	refdef.rendererFlags &= ~RDF_IRGOGGLES;
 
 	/* change active player */
 	Com_Printf("Team %i ended round", cl.actTeam);

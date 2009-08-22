@@ -109,10 +109,10 @@ void R_SetupFrustum (void)
 	int i;
 
 	/* build the transformation matrix for the given view angles */
-	AngleVectors(refdef.viewangles, r_locals.forward, r_locals.right, r_locals.up);
+	AngleVectors(refdef.viewAngles, r_locals.forward, r_locals.right, r_locals.up);
 
 	/* clear out the portion of the screen that the NOWORLDMODEL defines */
-	if (refdef.rdflags & RDF_NOWORLDMODEL) {
+	if (refdef.rendererFlags & RDF_NOWORLDMODEL) {
 		glEnable(GL_SCISSOR_TEST);
 		glScissor(refdef.x, viddef.height - refdef.height - refdef.y, refdef.width, refdef.height);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -129,25 +129,25 @@ void R_SetupFrustum (void)
 
 		for (i = 0; i < 4; i++) {
 			r_locals.frustum[i].type = PLANE_ANYZ;
-			r_locals.frustum[i].dist = DotProduct(refdef.vieworg, r_locals.frustum[i].normal);
+			r_locals.frustum[i].dist = DotProduct(refdef.viewOrigin, r_locals.frustum[i].normal);
 		}
-		r_locals.frustum[0].dist -= 10 * refdef.fov_x;
-		r_locals.frustum[1].dist -= 10 * refdef.fov_x;
-		r_locals.frustum[2].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
-		r_locals.frustum[3].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
+		r_locals.frustum[0].dist -= 10 * refdef.fieldOfViewX;
+		r_locals.frustum[1].dist -= 10 * refdef.fieldOfViewX;
+		r_locals.frustum[2].dist -= 10 * refdef.fieldOfViewX * ((float) refdef.height / refdef.width);
+		r_locals.frustum[3].dist -= 10 * refdef.fieldOfViewX * ((float) refdef.height / refdef.width);
 	} else {
 		/* rotate VPN right by FOV_X/2 degrees */
-		RotatePointAroundVector(r_locals.frustum[0].normal, r_locals.up, r_locals.forward, -(90 - refdef.fov_x / 2));
+		RotatePointAroundVector(r_locals.frustum[0].normal, r_locals.up, r_locals.forward, -(90 - refdef.fieldOfViewX / 2));
 		/* rotate VPN left by FOV_X/2 degrees */
-		RotatePointAroundVector(r_locals.frustum[1].normal, r_locals.up, r_locals.forward, 90 - refdef.fov_x / 2);
+		RotatePointAroundVector(r_locals.frustum[1].normal, r_locals.up, r_locals.forward, 90 - refdef.fieldOfViewX / 2);
 		/* rotate VPN up by FOV_X/2 degrees */
-		RotatePointAroundVector(r_locals.frustum[2].normal, r_locals.right, r_locals.forward, 90 - refdef.fov_y / 2);
+		RotatePointAroundVector(r_locals.frustum[2].normal, r_locals.right, r_locals.forward, 90 - refdef.fieldOfViewY / 2);
 		/* rotate VPN down by FOV_X/2 degrees */
-		RotatePointAroundVector(r_locals.frustum[3].normal, r_locals.right, r_locals.forward, -(90 - refdef.fov_y / 2));
+		RotatePointAroundVector(r_locals.frustum[3].normal, r_locals.right, r_locals.forward, -(90 - refdef.fieldOfViewY / 2));
 
 		for (i = 0; i < 4; i++) {
 			r_locals.frustum[i].type = PLANE_ANYZ;
-			r_locals.frustum[i].dist = DotProduct(refdef.vieworg, r_locals.frustum[i].normal);
+			r_locals.frustum[i].dist = DotProduct(refdef.viewOrigin, r_locals.frustum[i].normal);
 		}
 	}
 }
@@ -269,7 +269,7 @@ void R_RenderFrame (void)
 	if (r_wire->integer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
+	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		if (r_threads->integer) {
 			while (r_threadstate.state != THREAD_RENDERER)
 				Sys_Sleep(0);

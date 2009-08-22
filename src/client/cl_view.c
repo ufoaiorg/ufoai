@@ -273,8 +273,8 @@ void V_LoadMedia (void)
 	refdef.ready = qtrue;
 	/** @todo Parse fog from configstrings */
 	refdef.weather = WEATHER_NONE;
-	refdef.fog_color[3] = 1.0;
-	VectorSet(refdef.fog_color, 0.75, 0.75, 0.75);
+	refdef.fogColor[3] = 1.0;
+	VectorSet(refdef.fogColor, 0.75, 0.75, 0.75);
 }
 
 /**
@@ -286,9 +286,9 @@ void V_CalcFovX (void)
 {
 	if (cl_isometric->integer) {
 		const float zoom =  3.6 * (cl.cam.zoom - cl_camzoommin->value) + 0.3 * cl_camzoommin->value;
-		refdef.fov_x = max(min(FOV / zoom, 140.0), 1.0);
+		refdef.fieldOfViewX = max(min(FOV / zoom, 140.0), 1.0);
 	} else {
-		refdef.fov_x = max(min(FOV / cl.cam.zoom, 95.0), 55.0);
+		refdef.fieldOfViewX = max(min(FOV / cl.cam.zoom, 95.0), 55.0);
 	}
 }
 
@@ -297,8 +297,8 @@ void V_CalcFovX (void)
  */
 static inline void V_CalcFovY (const float width, const float height)
 {
-	const float x = width / tan(refdef.fov_x / 360.0 * M_PI);
-	refdef.fov_y = atan(height / x) * 360.0 / M_PI;
+	const float x = width / tan(refdef.fieldOfViewX / 360.0 * M_PI);
+	refdef.fieldOfViewY = atan(height / x) * 360.0 / M_PI;
 }
 
 /**
@@ -306,8 +306,8 @@ static inline void V_CalcFovY (const float width, const float height)
  */
 void V_UpdateRefDef (void)
 {
-	VectorCopy(cl.cam.camorg, refdef.vieworg);
-	VectorCopy(cl.cam.angles, refdef.viewangles);
+	VectorCopy(cl.cam.camorg, refdef.viewOrigin);
+	VectorCopy(cl.cam.angles, refdef.viewAngles);
 
 	V_CalcFovY(viddef.viewWidth, viddef.viewHeight);
 
@@ -326,8 +326,8 @@ void V_UpdateRefDef (void)
  */
 void V_RenderView (void)
 {
-	refdef.brush_count = 0;
-	refdef.alias_count = 0;
+	refdef.brushCount = 0;
+	refdef.aliasCount = 0;
 
 	if (cls.state != ca_active && cls.state != ca_sequence)
 		return;
@@ -344,13 +344,13 @@ void V_RenderView (void)
 	switch (cls.state) {
 	case ca_sequence:
 		CL_SequenceRender();
-		refdef.rdflags |= RDF_NOWORLDMODEL;
+		refdef.rendererFlags |= RDF_NOWORLDMODEL;
 		break;
 	default:
 		/* tell the bsp thread to start */
 		r_threadstate.state = THREAD_BSP;
 		/* make sure we are really rendering the world */
-		refdef.rdflags &= ~RDF_NOWORLDMODEL;
+		refdef.rendererFlags &= ~RDF_NOWORLDMODEL;
 		/* add local models to the renderer chain */
 		LM_AddToScene();
 		/* add local entities to the renderer chain */

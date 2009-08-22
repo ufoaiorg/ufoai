@@ -80,7 +80,7 @@ static inline void R_DrawSurface (const mBspSurface_t *surf)
 {
 	glDrawArrays(GL_POLYGON, surf->index, surf->numedges);
 
-	refdef.brush_count++;
+	refdef.brushCount++;
 }
 
 /**

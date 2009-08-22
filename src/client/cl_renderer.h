@@ -175,21 +175,21 @@ typedef struct {
 	qboolean ready;	/**< false if on new level or vid restart - if this is true the map can be rendered */
 
 	int x, y, width, height;	/**< in virtual screen coordinates */
-	float fov_x, fov_y;
-	vec3_t vieworg;
-	vec3_t viewangles;
+	float fieldOfViewX, fieldOfViewY;
+	vec3_t viewOrigin;
+	vec3_t viewAngles;
 	float time;					/**< time is used to auto animate */
-	int rdflags;				/**< RDF_NOWORLDMODEL, etc */
+	int rendererFlags;				/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;
-	int brush_count, alias_count;
+	int brushCount, aliasCount;
 
 	int weather;				/**< weather effects */
-	vec4_t fog_color;
+	vec4_t fogColor;
 
-	vec3_t ambient_light;		/**< from static lighting */
+	vec3_t ambientLightColor;		/**< from static lighting */
 
 	trace_t trace;				/**< occlusion testing */
-	struct entity_s *trace_ent;
+	struct entity_s *traceEntity;
 
 	const char *mapZone;		/**< used to replace textures in base assembly */
 } refdef_t;

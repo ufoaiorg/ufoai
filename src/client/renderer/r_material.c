@@ -170,7 +170,7 @@ static void R_StageTexCoord (const materialStage_t *stage, const vec3_t v, const
 	vec3_t tmp;
 
 	if (stage->flags & STAGE_ENVMAP) {  /* generate texcoords */
-		VectorSubtract(v, refdef.vieworg, tmp);
+		VectorSubtract(v, refdef.viewOrigin, tmp);
 		VectorNormalize(tmp);
 		Vector2Copy(tmp, out);
 	} else {  /* or use the ones we were given */

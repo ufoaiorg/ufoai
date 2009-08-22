@@ -336,7 +336,7 @@ static void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
 
 		if (tr.fraction < frac) {
 			refdef.trace = tr;
-			refdef.trace_ent = ent;
+			refdef.traceEntity = ent;
 
 			frac = tr.fraction;
 		}
@@ -456,16 +456,17 @@ static void R_LightPointColor (static_lighting_t *lighting)
 	if (refdef.trace.leafnum) {
 		VectorSet(lighting->colors[0], 1.0, 1.0, 1.0);
 		/* resolve the lighting sample */
-		if (refdef.trace_ent) {
+		if (refdef.traceEntity) {
+			const entity_t *entity = refdef.traceEntity;
+			const model_t *model = entity->model;
+			const mBspModel_t *bspModel = &model->bsp;
 			/* clip to all surfaces of the bsp entity */
-			if (r_mapTiles[refdef.trace_ent->model->bsp.maptile]->bsp.lightdata) {
+			if (r_mapTiles[bspModel->maptile]->bsp.lightdata) {
 				VectorSubtract(refdef.trace.endpos,
-						refdef.trace_ent->origin, refdef.trace.endpos);
+						refdef.traceEntity->origin, refdef.trace.endpos);
 
-				R_LightPointColor_(refdef.trace_ent->model->bsp.maptile,
-						refdef.trace_ent->model->bsp.firstmodelsurface,
-						refdef.trace_ent->model->bsp.nummodelsurfaces,
-						refdef.trace.endpos, lighting->colors[0]);
+				R_LightPointColor_(bspModel->maptile, bspModel->firstmodelsurface,
+						bspModel->nummodelsurfaces, refdef.trace.endpos, lighting->colors[0]);
 			}
 		} else if (r_mapTiles[refdef.trace.mapTile]->bsp.lightdata) {
 			/* general case is to recurse up the nodes */

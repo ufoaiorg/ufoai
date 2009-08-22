@@ -137,7 +137,7 @@ void R_DrawBrushModel (const entity_t * e)
 	vec3_t modelorg;
 
 	/* set the relative origin, accounting for rotation if necessary */
-	VectorSubtract(refdef.vieworg, e->origin, modelorg);
+	VectorSubtract(refdef.viewOrigin, e->origin, modelorg);
 	if (VectorNotEmpty(e->angles)) {
 		vec3_t temp;
 		vec3_t forward, right, up;
@@ -273,9 +273,9 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 	if (r_isometric->integer) {
 		dot = -DotProduct(r_locals.forward, node->plane->normal);
 	} else if (!AXIAL(node->plane)) {
-		dot = DotProduct(refdef.vieworg, node->plane->normal) - node->plane->dist;
+		dot = DotProduct(refdef.viewOrigin, node->plane->normal) - node->plane->dist;
 	} else {
-		dot = refdef.vieworg[node->plane->type] - node->plane->dist;
+		dot = refdef.viewOrigin[node->plane->type] - node->plane->dist;
 	}
 
 	if (dot >= 0) {

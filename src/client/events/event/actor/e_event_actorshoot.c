@@ -145,7 +145,7 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 		S_PlaySample(muzzle, S_LoadSample(fd->fireSound), fd->fireAttenuation, SND_VOLUME_WEAPONS);
 
 	if (fd->irgoggles)
-		refdef.rdflags |= RDF_IRGOGGLES;
+		refdef.rendererFlags |= RDF_IRGOGGLES;
 
 	/* do actor related stuff */
 	if (!leShooter)
