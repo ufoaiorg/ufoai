@@ -147,7 +147,7 @@ tech rs_laser
 		icon	icons/tech
 	}
 
-	time	1500
+	time	6000
 	image	techs/continuous_wave_laser_operation
 }
 
@@ -184,7 +184,7 @@ tech rs_baselaser
 	{
 		tech rs_laser
 	}
-	time	2000
+	time	3000
 	image	techs/base_defence_laser_turret
 	provides baselaser
 	producetime	150
@@ -235,7 +235,7 @@ tech rs_antimatter
 		tech rs_alien_ufo_theory
 	}
 
-	time 2800
+	time 6000
 	image	techs/antimatter
 }
 
@@ -292,7 +292,7 @@ tech rs_craft_upgrade_am_engines
 		icon	icons/tech
 	}
 
-	time 2800
+	time 3800
 	image	techs/antimatter_engine
 }
 
@@ -330,7 +330,7 @@ tech rs_alien_live
 		tech rs_contained_organic_alien	// LOGIC tech - see there for more
 	}
 
-	time	1500
+	time	4000
 	image	techs/taman
 }
 
@@ -371,7 +371,7 @@ tech rs_alien_breathing
 		tech rs_alien_shevaar_autopsy
 	}
 
-	time		1500
+	time		2500
 	image	techs/alien_breathing
 }
 
@@ -430,7 +430,7 @@ tech rs_alien_mind
 		tech rs_alien_live
 		alienglobal 3
 	}
-	time	1500
+	time	3500
 	image		"techs/alien_mind"
 }
 
@@ -468,7 +468,7 @@ tech rs_alien_oddbehaviour
 		tech rs_alien_mind
 		alienglobal 10
 	}
-	time		1500
+	time		3500
 	image		"techs/alien_oddbehaviour"
 }
 
@@ -505,7 +505,7 @@ tech rs_alien_communication
 	{
 		tech rs_alien_oddbehaviour
 	}
-	time	1600
+	time	3600
 	image		"techs/alien_communication"
 }
 
@@ -568,7 +568,7 @@ tech rs_universal_serum
 	{
 		tech rs_alien_communication
 	}
-	time	1800
+	time	3800
 	image		"techs/universal_serum"
 }
 
@@ -603,7 +603,7 @@ tech rs_alien_origins
 		icon	icons/intelligence
 	}
 
-	time		2700
+	time		5700
 //	image		"techs/alien_origins"
 }
 
@@ -649,7 +649,7 @@ tech rs_alien_ufo_theory
 		ufo craft_ufo_harvester 1
 	}
 
-	time		3000
+	time		7000
 	image		"techs/ufo_theory"
 }
 
@@ -1063,7 +1063,7 @@ tech rs_weapon_bolterrifle
 		tech rs_skill_assault
 	}
 	provides	bolterrifle
-	time	500
+	time	1500
 	producetime	120
 }
 
@@ -1141,7 +1141,7 @@ tech rs_weapon_monoknife
 		tech rs_damage_normal
 	}
 	provides	knifemono
-	time	100
+	time	800
 	producetime	100
 }
 
@@ -1351,88 +1351,8 @@ tech rs_weapon_grenl_plasma_ammo
 		tech rs_weapon_plasmagren
 	}
 	provides	grenl_plasma_ammo
-	time	1250
+	time	3250
 	producetime	40
-}
-
-// Generic laser ammo
-// See http://ufoai.ninex.info/wiki/index.php/Equipment/Ammunition/D-F_Cartridge for more.
-// TODO fix the "provides" info. Which model should we use? I currently set it to use the laserrifle ammo.
-tech rs_weapon_laserammo
-{
-	type		weapon
-	up_chapter	equipment
-
-	description {
-		default "_laser_ammo_txt"
-	}
-	pre_description {
-		default "_laser_ammo_pre_txt"
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/tech
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/tech
-	}
-	require_AND
-	{
-		tech rs_laser
-		tech rs_damage_laser
-	}
-	time		1200
-
-	provides	laserrifle_ammo
-	producetime	20
-}
-
-tech rs_weapon_heavylaser
-{
-	type	weapon
-	up_chapter	equipment
-
-	description {
-		default "_heavylaser_txt"
-	}
-	pre_description {
-		default "_heavylaser_pre_txt"
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/tech
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/tech
-	}
-
-	require_AND
-	{
-		tech rs_laser
-	//	tech rs_skill_sniper
-		tech rs_skill_heavy
-	}
-	provides	heavylaser
-	time	1500
-	producetime	140
 }
 
 tech rs_irgoggles
@@ -1490,7 +1410,7 @@ tech rs_weapon_kerrblade
 		tech rs_damage_normal
 	}
 	provides	kerrblade
-	time	200
+	time	1000
 	producetime	-1
 }
 
@@ -1528,7 +1448,7 @@ tech rs_weapon_laserpistol
 		tech rs_skill_close
 	}
 	provides	laserpistol
-	time	1000
+	time	2500
 	producetime	90
 }
 
@@ -1567,7 +1487,46 @@ tech rs_weapon_laserrifle
 		tech rs_skill_assault
 	}
 	provides	laserrifle
-	time	1750
+	time	3000
+	producetime	140
+}
+
+tech rs_weapon_heavylaser
+{
+	type	weapon
+	up_chapter	equipment
+
+	description {
+		default "_heavylaser_txt"
+	}
+	pre_description {
+		default "_heavylaser_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	require_AND
+	{
+		tech rs_laser
+	//	tech rs_skill_sniper
+		tech rs_skill_heavy
+	}
+	provides	heavylaser
+	time	3400
 	producetime	140
 }
 
@@ -1606,8 +1565,48 @@ tech rs_weapon_electrolaser
 		tech rs_alien_live
 	}
 	provides	electrolaser
-	time	1000
+	time	2500
 	producetime	90
+}
+
+// Generic laser ammo
+// See http://ufoai.ninex.info/wiki/index.php/Equipment/Ammunition/D-F_Cartridge for more.
+// TODO fix the "provides" info. Which model should we use? I currently set it to use the laserrifle ammo.
+tech rs_weapon_laserammo
+{
+	type		weapon
+	up_chapter	equipment
+
+	description {
+		default "_laser_ammo_txt"
+	}
+	pre_description {
+		default "_laser_ammo_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+	require_AND
+	{
+		tech rs_laser
+		tech rs_damage_laser
+	}
+	provides	laserrifle_ammo
+	time		3000
+	producetime	20
 }
 
 tech rs_medikit
@@ -1666,7 +1665,7 @@ tech rs_weapon_plasatomizer
 	}
 
 	provides	plaspistol
-	time	2000
+	time	3000
 	producetime	160
 }
 
@@ -1725,7 +1724,7 @@ tech rs_weapon_plasblaster
 		item plasblaster 1
 	}
 	provides	plasblaster
-	time	5500
+	time	6500
 	producetime	240
 }
 
@@ -1783,7 +1782,7 @@ tech rs_weapon_plasblade
 		item plasblade 1
 	}
 	provides	plasblade
-	time	1000
+	time	2000
 	producetime	150
 }
 
@@ -1823,7 +1822,7 @@ tech rs_weapon_plasmagren
 	}
 
 	provides	plasmagrenade
-	time	1500
+	time	2000
 	producetime	72
 }
 
@@ -1865,7 +1864,7 @@ tech rs_weapon_plasrifle
 	}
 
 	provides	plasrifle
-	time	3250
+	time	4250
 	producetime	200
 }
 
@@ -1923,7 +1922,7 @@ tech rs_weapon_needlergun
 		item needlergun 1
 	}
 	provides	needlergun
-	time		500
+	time		5000
 	producetime	120
 }
 
@@ -1963,7 +1962,7 @@ tech rs_weapon_needlerheavy
 		item needlerheavy 1
 	}
 	provides	needlerheavy
-	time	600
+	time	6000
 	producetime	150
 }
 
@@ -2020,7 +2019,7 @@ tech rs_weapon_coilgun
 		tech rs_weapon_needlergun
 	}
 	provides	coilgun
-	time		600
+	time		6000
 	producetime	120
 }
 
@@ -2261,7 +2260,7 @@ tech rs_weapon_stungren
 	}
 
 	provides	stungrenade
-	time		2100
+	time		4100
 	producetime	24
 //	image		techs/anti_alien_gas
 }
@@ -2345,7 +2344,7 @@ tech rs_weapon_stunrod
 	}
 
 	provides	stunrod
-	time		500
+	time		1500
 	producetime	70
 }
 
@@ -2385,7 +2384,7 @@ tech rs_weapon_pbeampistol
 	}
 
 	provides	pbeampistol
-	time		3750
+	time		4750
 	producetime	160
 }
 
@@ -2445,7 +2444,7 @@ tech rs_weapon_pbeamcannon
 	}
 
 	provides	pbeamcannon
-	time		6000
+	time		8000
 	producetime	220
 }
 
@@ -2633,7 +2632,7 @@ tech rs_nano_armour
 		tech rs_alien_body_armour
 	}
 	provides	armour_medium
-	time		2000
+	time		8000
 	producetime	168
 }
 
@@ -2711,7 +2710,7 @@ tech rs_alien_body_armour
 		item armour_light_alien 1
 	}
 	provides	armour_light_alien
-	time		2500
+	time		4500
 	producetime	-1
 }
 
@@ -2748,7 +2747,7 @@ tech rs_alien_medium_armour
 		item armour_medium_alien 1
 	}
 	provides	armour_medium_alien
-	time		2500
+	time		6500
 	producetime	-1
 }
 
@@ -3378,7 +3377,7 @@ tech rs_craft_drop_herakles
 	}
 
 	provides	craft_drop_herakles
-	time	3000
+	time	13000
 	producetime	336 //Two weeks.
 
 	mdl		drop_herakles
@@ -3431,7 +3430,7 @@ tech rs_craft_inter_dragon
 	require_AND {
 		tech rs_craft_upgrade_am_engines
 	}
-	time	3000
+	time	10000
 	producetime	600
 
 	mdl		inter_dragon
@@ -3452,7 +3451,7 @@ tech rs_craft_inter_starchaser
 	require_AND {
 		tech rs_craft_inter_dragon
 	}
-	time	3000
+	time	15000
 	producetime	600
 
 	mdl		inter_starchaser
@@ -3473,7 +3472,7 @@ tech rs_craft_inter_stingray
 	require_OR {
 		tech rs_craft_inter_starchaser
 	}
-	time	3000
+	time	20000
 	producetime	800
 
 	mdl		inter_stingray
@@ -3519,7 +3518,7 @@ tech rs_craft_ufo_scout
 	}
 
 	provides	"craft_ufo_scout"
-	time	2500
+	time	4500
 	producetime -1
 
 	mdl		ufo_scout
@@ -3562,7 +3561,7 @@ tech rs_craft_ufo_fighter
 	}
 
 	provides	"craft_ufo_fighter"
-	time	2500
+	time	4500
 	producetime -1
 
 	mdl		ufo_fighter
@@ -3605,7 +3604,7 @@ tech rs_craft_ufo_supply
 	}
 
 	provides	"craft_ufo_supply"
-	time	2500
+	time	5000
 	producetime -1
 
 	mdl		ufo_supply
@@ -3648,7 +3647,7 @@ tech rs_craft_ufo_carrier
 	}
 
 	provides	"craft_ufo_carrier"
-	time	2500
+	time	6500
 	producetime -1
 
 	mdl		ufo_carrier
@@ -3691,7 +3690,7 @@ tech rs_craft_ufo_bomber
 	}
 
 	provides	"craft_ufo_bomber"
-	time	2500
+	time	8500
 	producetime -1
 
 	mdl		ufo_bomber
@@ -3734,7 +3733,7 @@ tech rs_craft_ufo_corrupter
 	}
 
 	provides	"craft_ufo_corrupter"
-	time	2500
+	time	8500
 	producetime -1
 
 	mdl		ufo_corrupter
@@ -3777,7 +3776,7 @@ tech rs_craft_ufo_gunboat
 	}
 
 	provides	"craft_ufo_gunboat"
-	time	2500
+	time	7500
 	producetime -1
 
 	mdl		ufo_gunboat
@@ -3820,7 +3819,7 @@ tech rs_craft_ufo_ripper
 	}
 
 	provides	"craft_ufo_ripper"
-	time	2500
+	time	7500
 	producetime -1
 
 	mdl		ufo_ripper
@@ -3863,7 +3862,7 @@ tech rs_craft_ufo_harvester
 	}
 
 	provides	"craft_ufo_harvester"
-	time	2500
+	time	5500
 	producetime -1
 
 	mdl		ufo_harvester
@@ -3906,7 +3905,7 @@ tech rs_craft_ufo_mothership
 	}
 
 	provides	"craft_ufo_mothership"
-	time	2500
+	time	10000
 	producetime -1
 
 	mdl		ufo_mothership
@@ -3973,7 +3972,7 @@ tech rs_alien_bloodspider_autopsy
 	{
 		alien_dead bloodspider 1
 	}
-	time	1500
+	time	4500
 
 	mdl	"aliens/bloodspider/bloodspider"
 
@@ -4033,7 +4032,7 @@ tech rs_alien_ortnok_autopsy
 	{
 		alien_dead ortnok 1
 	}
-	time	1500
+	time	3500
 
 	image	techs/ortnok_autopsy
 }
@@ -4075,7 +4074,7 @@ tech rs_alien_taman_autopsy
 	{
 		alien_dead taman 1
 	}
-	time	1500
+	time	3500
 
 	image	techs/taman_autopsy
 }
@@ -4117,7 +4116,7 @@ tech rs_alien_shevaar_autopsy
 	{
 		alien_dead shevaar 1
 	}
-	time	1500
+	time	3500
 
 	image	techs/shevaar_autopsy
 }
@@ -4366,7 +4365,7 @@ tech rs_craft_shield_plating
 	require_AND {
 		tech	rs_alien_materials
 	}
-	time		620
+	time		3000
 	producetime	240
 
 	mdl	"craft_shield_plating"
@@ -4404,7 +4403,7 @@ tech rs_craft_alien_astrogation
 		tech	rs_alien_origins
 		item	craft_alien_astrogation 1
 	}
-	time		600
+	time		3500
 	producetime	-1
 
 	mdl		craft_item_astrogation
@@ -4441,7 +4440,7 @@ tech rs_craft_alien_propulsion
 		tech	rs_alien_materials
 		item	craft_alien_propulsion 1
 	}
-	time		600
+	time		3500
 	producetime	-1
 
 	mdl		craft_item_propulsion
@@ -4478,7 +4477,7 @@ tech rs_craft_alien_detection
 		tech	rs_alien_materials
 		item	craft_alien_detection 1
 	}
-	time		600
+	time		3500
 	producetime	-1
 
 	mdl		"craft_item_detector"
@@ -4518,7 +4517,7 @@ tech rs_craft_weapon_alc
 	}
 
 	provides	craft_weapon_alc
-	time		1500
+	time		5500
 	producetime	100
 
 	mdl		"aircraft/craft_weapon_alc/alc"
@@ -4707,7 +4706,7 @@ tech rs_craft_weapon_particle
 		tech rs_harvester_AND_particle	// LOGIC tech - see there for more
 	}
 
-	time		100
+	time		8000
 	producetime	150
 
 	mdl		"aircraft/craft_weapon_particle/pbw"
@@ -4750,7 +4749,7 @@ tech rs_craft_el_fuelpod
 }
 
 //========================
-// Alien Technologies retrieved from crafts
+// Alien Technologies retrieved from craft
 //========================
 
 tech rs_alien_materials
@@ -4913,7 +4912,7 @@ tech rs_enemy_on_earth
 		tech rs_enemy_on_earth_event
 	}
 
-	time		600
+	time		6000
 	image		"techs/enemy_on_earth"
 }
 
@@ -4955,7 +4954,7 @@ tech rs_xvi_census
 		tech rs_enemy_on_earth
 	}
 
-	time		600				// Fixme
+	time		6000
 	image		"techs/xvi"
 }
 
@@ -4995,6 +4994,6 @@ tech rs_enemy_on_earth_revisited
 		//tech	rs_alien_psionics		// Fixme
 	}
 
-	time		600				// Fixme
+	time		7000
 }
 */
