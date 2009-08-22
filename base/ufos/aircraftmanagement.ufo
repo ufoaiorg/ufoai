@@ -950,6 +950,6 @@ craftitem baselaser_ammo
 	accuracy		0.7
 	wrange			5
 	wspeed			900
-	delay			50
+	delay			100
 	size			10 // light
 }

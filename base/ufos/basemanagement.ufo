@@ -99,22 +99,6 @@ building building_entrance
 	max_count	1
 }
 
-building building_missile
-{
-	name			"_Missile Battery"
-	image			base/missile
-	fixcosts		10000
-	depends			building_command // need to know where to shoot
-	type			missile
-	build_time		3
-	varcosts		5000
-	map_name		"missile"
-	pedia			rs_building_missile
-	max_count		4
-	onconstruct		"add_battery missile"
-	ondestroy		"remove_battery missile"
-}
-
 building building_storage
 {
 	name			"_Storage"
@@ -381,6 +365,7 @@ building building_amstorage
 	ondestroy	"building_amdestroy 0.1"
 }
 
+// Note: for base weapon values see aircaftmanagement.ufo
 building building_laser
 {
 	name			"_Laser Battery"
@@ -395,6 +380,23 @@ building building_laser
 	max_count		4
 	onconstruct		"add_battery laser"
 	ondestroy		"remove_battery laser"
+}
+
+// Note: for base weapon values see aircaftmanagement.ufo
+building building_missile
+{
+	name			"_Missile Battery"
+	image			base/missile
+	fixcosts		10000
+	depends			building_command // need to know where to shoot
+	type			missile
+	build_time		3
+	varcosts		5000
+	map_name		"missile"
+	pedia			rs_building_missile
+	max_count		4
+	onconstruct		"add_battery missile"
+	ondestroy		"remove_battery missile"
 }
 
 basetemplate balanced {
