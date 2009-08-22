@@ -1180,7 +1180,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 					const aircraftSlot_t *slot = &base->lasers[i].slot ;
 					char status[MAX_VAR];
 					if (!slot->installationTime)
-						Q_strcat(status, _("Working"), sizeof(status));
+						Q_strncpyz(status, _("Working"), sizeof(status));
 					else if (slot->installationTime > 0)
 						Q_strncpyz(status, _("Installing"), sizeof(status));
 					else if (slot->nextItem)
