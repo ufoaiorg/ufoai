@@ -99,11 +99,11 @@
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
-					<Add directory="\sw\include" />
-					<Add directory="\Library\Frameworks\SDL.framework\Versions\A\Headers" />
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
+					<Add directory="\sw\include" />
+					<Add directory="\Library\Frameworks\SDL.framework\Versions\A\Headers" />
 				</Compiler>
 				<Linker>
 					<Add option="-framework OpenGL" />
@@ -450,27 +450,35 @@
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_baseattack.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\missions\cp_mission_baseattack.h" />
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_buildbase.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\missions\cp_mission_buildbase.h" />
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_harvest.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\missions\cp_mission_harvest.h" />
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_intercept.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\missions\cp_mission_intercept.h" />
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_recon.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\missions\cp_mission_recon.h" />
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_supply.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\missions\cp_mission_supply.h" />
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_terror.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\missions\cp_mission_terror.h" />
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\missions\cp_mission_xvi.h" />
 		<Unit filename="..\..\src\client\cl_actor.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -945,14 +953,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_text.h" />
-		<Unit filename="..\..\src\client\menu\node\m_node_textlist.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\menu\node\m_node_textlist.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_textentry.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_textentry.h" />
+		<Unit filename="..\..\src\client\menu\node\m_node_textlist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\node\m_node_textlist.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_todo.c">
 			<Option compilerVar="CC" />
 		</Unit>
