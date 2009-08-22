@@ -388,7 +388,7 @@ void R_EnableFog (qboolean enable)
  */
 static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 {
-	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) refdef.height / refdef.width;
+	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) viddef.viewHeight / viddef.viewWidth;
 
 	if (r_isometric->integer) {
 		glOrtho(-10 * refdef.fieldOfViewX, 10 * refdef.fieldOfViewX, -10 * refdef.fieldOfViewX * yaspect, 10 * refdef.fieldOfViewX * yaspect, -zFar, zFar);
@@ -411,10 +411,10 @@ void R_Setup3D (void)
 	int x, x2, y2, y, w, h;
 
 	/* set up viewport */
-	x = floor(refdef.x * viddef.width / viddef.width);
-	x2 = ceil((refdef.x + refdef.width) * viddef.width / viddef.width);
-	y = floor(viddef.height - refdef.y * viddef.height / viddef.height);
-	y2 = ceil(viddef.height - (refdef.y + refdef.height) * viddef.height / viddef.height);
+	x = floor(viddef.x * viddef.width / viddef.width);
+	x2 = ceil((viddef.x + viddef.viewWidth) * viddef.width / viddef.width);
+	y = floor(viddef.height - viddef.y * viddef.height / viddef.height);
+	y2 = ceil(viddef.height - (viddef.y + viddef.viewHeight) * viddef.height / viddef.height);
 
 	w = x2 - x;
 	h = y - y2;

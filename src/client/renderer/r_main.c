@@ -114,7 +114,7 @@ void R_SetupFrustum (void)
 	/* clear out the portion of the screen that the NOWORLDMODEL defines */
 	if (refdef.rendererFlags & RDF_NOWORLDMODEL) {
 		glEnable(GL_SCISSOR_TEST);
-		glScissor(refdef.x, viddef.height - refdef.height - refdef.y, refdef.width, refdef.height);
+		glScissor(viddef.x, viddef.height - viddef.viewHeight - viddef.y, viddef.viewWidth, viddef.viewHeight);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		R_CheckError();
 		glDisable(GL_SCISSOR_TEST);
@@ -133,8 +133,8 @@ void R_SetupFrustum (void)
 		}
 		r_locals.frustum[0].dist -= 10 * refdef.fieldOfViewX;
 		r_locals.frustum[1].dist -= 10 * refdef.fieldOfViewX;
-		r_locals.frustum[2].dist -= 10 * refdef.fieldOfViewX * ((float) refdef.height / refdef.width);
-		r_locals.frustum[3].dist -= 10 * refdef.fieldOfViewX * ((float) refdef.height / refdef.width);
+		r_locals.frustum[2].dist -= 10 * refdef.fieldOfViewX * ((float) viddef.viewHeight / viddef.viewWidth);
+		r_locals.frustum[3].dist -= 10 * refdef.fieldOfViewX * ((float) viddef.viewHeight / viddef.viewWidth);
 	} else {
 		/* rotate VPN right by FOV_X/2 degrees */
 		RotatePointAroundVector(r_locals.frustum[0].normal, r_locals.up, r_locals.forward, -(90 - refdef.fieldOfViewX / 2));

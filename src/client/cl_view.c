@@ -312,10 +312,6 @@ void V_UpdateRefDef (void)
 	V_CalcFovY(viddef.viewWidth, viddef.viewHeight);
 
 	/* setup refdef */
-	refdef.x = viddef.x;
-	refdef.y = viddef.y;
-	refdef.width = viddef.viewWidth;
-	refdef.height = viddef.viewHeight;
 	refdef.time = cl.time * 0.001;
 	refdef.worldlevel = cl_worldlevel->integer;
 }

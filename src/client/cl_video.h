@@ -67,8 +67,8 @@ typedef struct {
 
 	int x, y, viewWidth, viewHeight;	/**< The menu system may define a rendering view port
 			* on the screen. The values defines the properties of this view port
-			* i.e. the height and width of the port, and the (x,y) offset from the
-			* bottom (?) left (?) corner. */
+			* i.e. the height and width of the port, and the (x, y) offset from the
+			* upper left corner. */
 } viddef_t;
 
 typedef struct vidmode_s {
