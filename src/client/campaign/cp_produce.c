@@ -425,7 +425,7 @@ void PR_ProductionRun (void)
 
 					/* queue the next production */
 					if (prod->amount <= 0) {
-						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s has finished."), _(od->name));
+						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s at %s has finished."), _(od->name), base->name);
 						MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 						PR_QueueNext(base);
 					}
@@ -437,7 +437,7 @@ void PR_ProductionRun (void)
 					AIR_NewAircraft(base, aircraft->id);
 					/* queue the next production */
 					if (prod->amount <= 0) {
-						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s has finished."), _(aircraft->name));
+						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s at %s has finished."), _(aircraft->name), base->name);
 						MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 						PR_QueueNext(base);
 					}
@@ -445,7 +445,7 @@ void PR_ProductionRun (void)
 			} else {	/* This is disassembling. */
 				base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, ufo->comp, qfalse);
 
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s has finished."), UFO_TypeToName(ufo->ufoTemplate->ufotype));
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."), UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, ufo->ufoTemplate->tech);
 
 				/* Removing UFO will remove the production too */

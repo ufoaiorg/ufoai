@@ -518,7 +518,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 				installation->buildTime = atoi(token);
 
 				Com_sprintf(cvarname, sizeof(cvarname), "mn_installation_%s_buildtime", installation->id);
-				Cvar_Set(cvarname, va(ngettext("%d day\n", "%d days\n", atoi(token)), atoi(token)));
+				Cvar_Set(cvarname, va(ngettext("%d day", "%d days", atoi(token)), atoi(token)));
 			}
 		}
 	} while (*text);
