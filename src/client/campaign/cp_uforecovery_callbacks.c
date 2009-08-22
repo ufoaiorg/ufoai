@@ -103,7 +103,9 @@ static void UR_DialogInitStore_f (void)
 {
 	int i;
 	int count = 0;
-	linkedList_t *recoveryYardSelectPopup = NULL;
+	linkedList_t *recoveryYardName = NULL;
+	linkedList_t *recoveryYardCapacity = NULL;
+	static char cap[MAX_VAR];
 
 	/* Do nothing if recovery process is finished. */
 	if (ufoRecovery.recoveryDone)
@@ -118,7 +120,10 @@ static void UR_DialogInitStore_f (void)
 
 		if (installation->ufoCapacity.max > 0
 		 && installation->ufoCapacity.max > installation->ufoCapacity.cur) {
-			LIST_AddString(&recoveryYardSelectPopup, installation->name);
+
+			Com_sprintf(cap, lengthof(cap), "%i/%i", (installation->ufoCapacity.max - installation->ufoCapacity.cur), installation->ufoCapacity.max);
+			LIST_AddString(&recoveryYardName, installation->name);
+			LIST_AddString(&recoveryYardCapacity, cap);
 			count++;
 		}
 	}
@@ -126,14 +131,15 @@ static void UR_DialogInitStore_f (void)
 	Cvar_Set("mn_uforecovery_actualufo", UFO_MissionResultToString());
 	if (count == 0) {
 		/* No UFO base with proper conditions, show a hint and disable list. */
-		LIST_AddString(&recoveryYardSelectPopup, _("No free UFO yard available."));
+		LIST_AddString(&recoveryYardName, _("No free UFO yard available."));
 		MN_ExecuteConfunc("uforecovery_tabselect sell");
 		MN_ExecuteConfunc("btbasesel disable");
 	} else {
 		MN_ExecuteConfunc("cp_basesel_select 0");
 		MN_ExecuteConfunc("btbasesel enable");
 	}
-	MN_RegisterLinkedListText(TEXT_UFORECOVERY_BASESTORAGE, recoveryYardSelectPopup);
+	MN_RegisterLinkedListText(TEXT_UFORECOVERY_UFOYARDS, recoveryYardName);
+	MN_RegisterLinkedListText(TEXT_UFORECOVERY_CAPACITIES, recoveryYardCapacity);
 }
 
 /**

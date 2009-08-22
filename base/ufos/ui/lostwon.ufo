@@ -204,23 +204,63 @@ window uforecovery
 			lineheight	16
 		}
 
-		textlist cp_uforecovery_baselist
+		string ur_yards_title
 		{
-			dataid		TEXT_UFORECOVERY_BASESTORAGE
-			pos			"25 50"
-			size		"590 128"
+			string		"_UFO Yard"
+			pos			"25 30"
+			size		"300 20"
+			font		"f_small_bold"
+		}
+		string ur_capacity_title
+		{
+			string		"_Capacity (free/all)"
+			pos			"325 30"
+			size		"290 20"
+			font		"f_small_bold"
+			textalign	ur
+		}
+
+		textlist ur_ufoyards
+		{
+			dataid		TEXT_UFORECOVERY_UFOYARDS
+			pos			"30 50"
+			size		"395 128"
 			color		"0.60 0.60 0.60 1"
 			selectcolor	"1 1 1 1"
 			lineheight	16
 			tabwidth	100
 			rows		"8"
+			onClick		{
+				*(textlist)store_panel.ur_capacities@lineselected <lineselected>
+			}
 			onViewChange	{
-				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@fullsize <fullsize>
-				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@current <viewpos>
-				*(abstractscrollbar)store_panel.cp_ur_baselist_scroll@viewsize <viewsize>
+				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@fullsize <fullsize>
+				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@current <viewpos>
+				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@viewsize <viewsize>
+				*(textlist)store_panel.ur_capacities@viewpos <viewpos>
 			}
 		}
-		vscrollbar cp_ur_baselist_scroll {
+		textlist ur_capacities
+		{
+			dataid		TEXT_UFORECOVERY_CAPACITIES
+			pos			"425 50"
+			size		"185 128"
+			color		"0.60 0.60 0.60 1"
+			selectcolor	"1 1 1 1"
+			lineheight	16
+			rows		"8"
+			textalign	ur
+			onClick		{
+				*(textlist)store_panel.ur_ufoyards@lineselected <lineselected>
+			}
+			onViewChange	{
+				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@fullsize <fullsize>
+				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@current <viewpos>
+				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@viewsize <viewsize>
+				*store_panel.ur_ufoyards@viewpos <viewpos>
+			}
+		}
+		vscrollbar ur_ufoyards_scroll {
 			image		ui/scrollbar_v_green
 			pos			"620 50"
 			height		"128"
@@ -228,7 +268,10 @@ window uforecovery
 			viewsize	8
 			fullsize	8
 			hidewhenunused true
-			onChange	{ *store_panel.cp_uforecovery_baselist@viewpos <current> }
+			onChange	{
+				*store_panel.ur_ufoyards@viewpos <current>
+				*store_panel.ur_capacities@viewpos <current>
+			}
 		}
 
 		button bt_basesel
@@ -240,7 +283,7 @@ window uforecovery
 			size		"176 32"
 			font		f_menu
 			color		"0 0.5 0 1"
-			onClick		{ cmd "cp_uforecovery_store_start <node:root.store_panel.cp_uforecovery_baselist@lineselected>; mn_pop;" }
+			onClick		{ cmd "cp_uforecovery_store_start <node:root.store_panel.ur_ufoyards@lineselected>; mn_pop;" }
 		}
 	}
 
@@ -373,12 +416,12 @@ window uforecovery
 
 
 	confunc cp_basesel_select {
-		*store_panel.cp_uforecovery_baselist@lineselected <1>
+		*store_panel.ur_ufoyards@lineselected <1>
 	}
 
 	func onInit {
 		cmd "uforecovery_tabselect store"
-		*store_panel.cp_uforecovery_baselist@lineselected = -1
+		*store_panel.ur_ufoyards@lineselected = -1
 		*sell_panel.cp_uforecovery_nationlist@lineselected = -1
 		*cvar:mission_recoverynation = ""
 		cmd "cp_uforecovery_sell_init;cp_uforecovery_store_init;"
