@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-22 16:07+0200\n"
+"POT-Creation-Date: 2009-08-22 22:41+0200\n"
 "PO-Revision-Date: 2008-07-21 11:28+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -109,7 +109,7 @@ msgstr "Ιταλικά"
 msgid "Japan"
 msgstr "Ιαπωνικά"
 
-#: ../base/maps/laboratory.ump:54 ../base/ufos/basemanagement.ufo:339
+#: ../base/maps/laboratory.ump:54 ../base/ufos/basemanagement.ufo:323
 #: client/campaign/cp_base_callbacks.c:308
 msgid "Laboratory"
 msgstr "Εργαστήριο"
@@ -243,7 +243,7 @@ msgid "Stingray"
 msgstr "Stingray"
 
 #: ../base/ufos/aircraftmanagement.ufo:383 ../base/ufos/otheritems.ufo:37
-#: ../base/ufos/research.ufo:3477
+#: ../base/ufos/research.ufo:3487
 msgid "UFO - Scout"
 msgstr "ΟΥΦΟ - Ανιχνευτικό"
 
@@ -252,7 +252,7 @@ msgid "Scout U"
 msgstr "Scout U"
 
 #: ../base/ufos/aircraftmanagement.ufo:404 ../base/ufos/otheritems.ufo:46
-#: ../base/ufos/research.ufo:3519
+#: ../base/ufos/research.ufo:3529
 msgid "UFO - Fighter"
 msgstr "ΟΥΦΟ - Καταδιωκτικό"
 
@@ -261,7 +261,7 @@ msgid "Fighter U"
 msgstr "Fighter U"
 
 #: ../base/ufos/aircraftmanagement.ufo:432 ../base/ufos/otheritems.ufo:55
-#: ../base/ufos/research.ufo:3820
+#: ../base/ufos/research.ufo:3830
 msgid "UFO - Harvester"
 msgstr "ΟΥΦΟ - Θεριστής"
 
@@ -270,7 +270,7 @@ msgid "Harvester U"
 msgstr "Harvester U"
 
 #: ../base/ufos/aircraftmanagement.ufo:471 ../base/ufos/otheritems.ufo:90
-#: ../base/ufos/research.ufo:3734
+#: ../base/ufos/research.ufo:3744
 #, fuzzy
 msgid "UFO - Gunboat"
 msgstr "ΟΥΦΟ - Ανιχνευτικό"
@@ -280,7 +280,7 @@ msgid "Gunboat U"
 msgstr ""
 
 #: ../base/ufos/aircraftmanagement.ufo:510 ../base/ufos/otheritems.ufo:99
-#: ../base/ufos/research.ufo:3691
+#: ../base/ufos/research.ufo:3701
 #, fuzzy
 msgid "UFO - Corrupter"
 msgstr "UFO - Carrier"
@@ -290,7 +290,7 @@ msgid "Corrupter U"
 msgstr ""
 
 #: ../base/ufos/aircraftmanagement.ufo:537 ../base/ufos/otheritems.ufo:115
-#: ../base/ufos/research.ufo:3562
+#: ../base/ufos/research.ufo:3572
 msgid "UFO - Supply Ship"
 msgstr "ΟΥΦΟ - Ανεφοδιασμού"
 
@@ -299,7 +299,7 @@ msgid "Supply U"
 msgstr "Supply U"
 
 #: ../base/ufos/aircraftmanagement.ufo:558 ../base/ufos/otheritems.ufo:72
-#: ../base/ufos/research.ufo:3777
+#: ../base/ufos/research.ufo:3787
 #, fuzzy
 msgid "UFO - Ripper"
 msgstr "UFO - Figher"
@@ -309,7 +309,7 @@ msgid "Ripper U"
 msgstr ""
 
 #: ../base/ufos/aircraftmanagement.ufo:585 ../base/ufos/otheritems.ufo:64
-#: ../base/ufos/research.ufo:3648
+#: ../base/ufos/research.ufo:3658
 #, fuzzy
 msgid "UFO - Bomber"
 msgstr "UFO - Condor"
@@ -319,7 +319,7 @@ msgid "Bomber U"
 msgstr ""
 
 #: ../base/ufos/aircraftmanagement.ufo:619 ../base/ufos/otheritems.ufo:107
-#: ../base/ufos/research.ufo:3605
+#: ../base/ufos/research.ufo:3615
 msgid "UFO - Carrier"
 msgstr "UFO - Carrier"
 
@@ -329,7 +329,7 @@ msgid "Carrier U"
 msgstr "UFO - Carrier"
 
 #: ../base/ufos/aircraftmanagement.ufo:642 ../base/ufos/otheritems.ufo:81
-#: ../base/ufos/research.ufo:3863
+#: ../base/ufos/research.ufo:3873
 #, fuzzy
 msgid "UFO - Mothership"
 msgstr "UFO - Carrier"
@@ -338,87 +338,94 @@ msgstr "UFO - Carrier"
 msgid "Mothership U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:659 ../base/ufos/research.ufo:4480
+#: ../base/ufos/aircraftmanagement.ufo:659 ../base/ufos/research.ufo:4490
 #, fuzzy
 msgid "Aerial Laser Cannon"
 msgstr "Shiva Rotary Cannon"
 
-#: ../base/ufos/aircraftmanagement.ufo:670 ../base/ufos/research.ufo:4519
+#: ../base/ufos/aircraftmanagement.ufo:671
+#: ../base/ufos/aircraftmanagement.ufo:942 ../base/ufos/research.ufo:196
+#: ../base/ufos/research.ufo:4529
 #, fuzzy
-msgid "DF-Tank"
+msgid "D-F Tank"
 msgstr "Μεταφορά"
 
-#: ../base/ufos/aircraftmanagement.ufo:686
+#: ../base/ufos/aircraftmanagement.ufo:687
 msgid "Shiva Rotary Cannon"
 msgstr "Shiva Rotary Cannon"
 
-#: ../base/ufos/aircraftmanagement.ufo:697 ../base/ufos/research.ufo:4546
+#: ../base/ufos/aircraftmanagement.ufo:698 ../base/ufos/research.ufo:4556
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API Rounds"
 
-#: ../base/ufos/aircraftmanagement.ufo:713 ../base/ufos/research.ufo:4567
+#: ../base/ufos/aircraftmanagement.ufo:714 ../base/ufos/research.ufo:4577
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm HEI Rounds"
 
-#: ../base/ufos/aircraftmanagement.ufo:729
+#: ../base/ufos/aircraftmanagement.ufo:730
 msgid "Raven ECM Unit"
 msgstr "Raven ECM Unit"
 
-#: ../base/ufos/aircraftmanagement.ufo:741
+#: ../base/ufos/aircraftmanagement.ufo:742
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Sparrowhawk AA Missile Rack"
 
-#: ../base/ufos/aircraftmanagement.ufo:751
+#: ../base/ufos/aircraftmanagement.ufo:752
 msgid "Sparrowhawk Missile"
 msgstr "Sparrowhawk Missile"
 
-#: ../base/ufos/aircraftmanagement.ufo:768 ../base/ufos/research.ufo:4626
+#: ../base/ufos/aircraftmanagement.ufo:769 ../base/ufos/research.ufo:4636
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 Rocket Pod"
 
-#: ../base/ufos/aircraftmanagement.ufo:781 ../base/ufos/research.ufo:4643
+#: ../base/ufos/aircraftmanagement.ufo:782 ../base/ufos/research.ufo:4653
 msgid "TR-20 Rocket"
 msgstr "TR-20 Rocket"
 
-#: ../base/ufos/aircraftmanagement.ufo:800 ../base/ufos/research.ufo:4662
+#: ../base/ufos/aircraftmanagement.ufo:801 ../base/ufos/research.ufo:4672
 msgid "Particle Beam Weapon"
 msgstr "Particle Beam Weapon"
 
-#: ../base/ufos/aircraftmanagement.ufo:815 ../base/ufos/research.ufo:4710
+#: ../base/ufos/aircraftmanagement.ufo:816 ../base/ufos/research.ufo:4720
 msgid "Targeting Computer"
 msgstr "Targeting Computer"
 
-#: ../base/ufos/aircraftmanagement.ufo:827 ../base/ufos/research.ufo:4727
+#: ../base/ufos/aircraftmanagement.ufo:828 ../base/ufos/research.ufo:4737
 msgid "Fuel Pod"
 msgstr "Fuel Pod"
 
-#: ../base/ufos/aircraftmanagement.ufo:841 ../base/ufos/research.ufo:4329
+#: ../base/ufos/aircraftmanagement.ufo:842 ../base/ufos/research.ufo:4339
 msgid "Polymer Aircraft Armour"
 msgstr "Polymer Aircraft Armour"
 
-#: ../base/ufos/aircraftmanagement.ufo:855 ../base/ufos/research.ufo:4346
+#: ../base/ufos/aircraftmanagement.ufo:856 ../base/ufos/research.ufo:4356
 msgid "Alien Aircraft Plating"
 msgstr "Alien Aircraft Plating"
 
-#: ../base/ufos/aircraftmanagement.ufo:869 ../base/ufos/research.ufo:4366
+#: ../base/ufos/aircraftmanagement.ufo:870 ../base/ufos/research.ufo:4376
 msgid "Alien Astrogation"
 msgstr "Εξωγήινος Αστρολάβος"
 
-#: ../base/ufos/aircraftmanagement.ufo:878 ../base/ufos/research.ufo:4404
+#: ../base/ufos/aircraftmanagement.ufo:879 ../base/ufos/research.ufo:4414
 msgid "Alien Propulsion"
 msgstr "Εξωγήινη ώθηση"
 
-#: ../base/ufos/aircraftmanagement.ufo:887 ../base/ufos/research.ufo:4441
+#: ../base/ufos/aircraftmanagement.ufo:888 ../base/ufos/research.ufo:4451
 msgid "Alien Detection"
 msgstr "Εξωγήινη ανίχνευση"
 
-#: ../base/ufos/aircraftmanagement.ufo:900 ../base/ufos/research.ufo:4272
+#: ../base/ufos/aircraftmanagement.ufo:901 ../base/ufos/research.ufo:4282
 msgid "AA51 missile launcher"
 msgstr "AA51 εκτοξευτής πυραύλων"
 
-#: ../base/ufos/aircraftmanagement.ufo:910 ../base/ufos/research.ufo:4290
+#: ../base/ufos/aircraftmanagement.ufo:911 ../base/ufos/research.ufo:4300
 msgid "AA51 Cicada SAM"
 msgstr "AA51 Cicada SAM"
+
+#: ../base/ufos/aircraftmanagement.ufo:929 ../base/ufos/research.ufo:156
+#, fuzzy
+msgid "Laser Turret"
+msgstr "Τυφέκιο Λέϊζερ"
 
 #: ../base/ufos/armour.ufo:26
 msgid "normal"
@@ -490,72 +497,72 @@ msgstr "Εξωγήινος Θόλος"
 msgid "Entrance"
 msgstr "Είσοδος"
 
-#: ../base/ufos/basemanagement.ufo:104
-msgid "Missile Battery"
-msgstr "Συστοιχία πυραύλων"
-
-#: ../base/ufos/basemanagement.ufo:120 client/campaign/cp_base_callbacks.c:298
+#: ../base/ufos/basemanagement.ufo:104 client/campaign/cp_base_callbacks.c:298
 msgid "Storage"
 msgstr "Αποθήκη"
 
-#: ../base/ufos/basemanagement.ufo:136
+#: ../base/ufos/basemanagement.ufo:120
 msgid "Power Plant"
 msgstr "Γεννήτριες Ρεύματος"
 
-#: ../base/ufos/basemanagement.ufo:152
+#: ../base/ufos/basemanagement.ufo:136
 msgid "Command Centre"
 msgstr "Κέντρο Επιχειρήσεων"
 
-#: ../base/ufos/basemanagement.ufo:168 client/campaign/cp_base_callbacks.c:318
+#: ../base/ufos/basemanagement.ufo:152 client/campaign/cp_base_callbacks.c:318
 msgid "Living Quarters"
 msgstr "Διαμερίσματα"
 
-#: ../base/ufos/basemanagement.ufo:183 ../base/ufos/basemanagement.ufo:201
+#: ../base/ufos/basemanagement.ufo:167 ../base/ufos/basemanagement.ufo:185
 #: client/campaign/cp_base_callbacks.c:292
 msgid "Large Hangar"
 msgstr "Μεγάλο Υπόστεγο"
 
-#: ../base/ufos/basemanagement.ufo:209 client/campaign/cp_base_callbacks.c:292
+#: ../base/ufos/basemanagement.ufo:193 client/campaign/cp_base_callbacks.c:292
 msgid "Small Hangar"
 msgstr "Μικρό Υπόστεγο"
 
-#: ../base/ufos/basemanagement.ufo:225
+#: ../base/ufos/basemanagement.ufo:209
 msgid "Small UFO Hangar"
 msgstr "Μικρό Υπόστεγο ΟΥΦΟ"
 
-#: ../base/ufos/basemanagement.ufo:241 ../base/ufos/basemanagement.ufo:258
+#: ../base/ufos/basemanagement.ufo:225 ../base/ufos/basemanagement.ufo:242
 msgid "Large UFO Hangar"
 msgstr "Μεγάλο Υπόστεγο ΟΥΦΟ"
 
-#: ../base/ufos/basemanagement.ufo:266
+#: ../base/ufos/basemanagement.ufo:250
 msgid "Team Room"
 msgstr "Δωμάτιο Ομάδας"
 
-#: ../base/ufos/basemanagement.ufo:280 ../base/ufos/basemanagement.ufo:298
+#: ../base/ufos/basemanagement.ufo:264 ../base/ufos/basemanagement.ufo:282
 #: client/campaign/cp_base_callbacks.c:313
 msgid "Workshop"
 msgstr "Μηχανουργείο"
 
-#: ../base/ufos/basemanagement.ufo:306 ../base/ufos/ui/ahud.ufo:83
+#: ../base/ufos/basemanagement.ufo:290 ../base/ufos/ui/ahud.ufo:83
 msgid "Radar"
 msgstr "Ραντάρ"
 
-#: ../base/ufos/basemanagement.ufo:323
+#: ../base/ufos/basemanagement.ufo:307
 msgid "Advanced Radar"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:356 ../base/ufos/ui/bases.ufo:156
+#: ../base/ufos/basemanagement.ufo:340 ../base/ufos/ui/bases.ufo:156
 #: client/campaign/cp_base_callbacks.c:328
 msgid "Hospital"
 msgstr "Νοσοκομείο"
 
-#: ../base/ufos/basemanagement.ufo:372
+#: ../base/ufos/basemanagement.ufo:356
 msgid "Antimatter Storage"
 msgstr "Αποθήκευση Αντιύλης"
 
-#: ../base/ufos/basemanagement.ufo:386
+#: ../base/ufos/basemanagement.ufo:371
 #, fuzzy
 msgid "Laser Battery"
+msgstr "Συστοιχία πυραύλων"
+
+#: ../base/ufos/basemanagement.ufo:388
+msgid "Missile Battery"
 msgstr "Συστοιχία πυραύλων"
 
 #: ../base/ufos/campaign.ufo:3
@@ -694,68 +701,68 @@ msgstr "ΓΓ. Mahouf Serra, Ηνωμένα Έθνη, Πόλη της Νέας Υ
 #: ../base/ufos/events.ufo:341 ../base/ufos/events.ufo:352
 #: ../base/ufos/research.ufo:137 ../base/ufos/research.ufo:145
 #: ../base/ufos/research.ufo:170 ../base/ufos/research.ufo:178
-#: ../base/ufos/research.ufo:209 ../base/ufos/research.ufo:217
-#: ../base/ufos/research.ufo:271 ../base/ufos/research.ufo:279
-#: ../base/ufos/research.ufo:304 ../base/ufos/research.ufo:312
-#: ../base/ufos/research.ufo:342 ../base/ufos/research.ufo:350
-#: ../base/ufos/research.ufo:404 ../base/ufos/research.ufo:412
-#: ../base/ufos/research.ufo:442 ../base/ufos/research.ufo:450
-#: ../base/ufos/research.ufo:480 ../base/ufos/research.ufo:488
-#: ../base/ufos/research.ufo:518 ../base/ufos/research.ufo:543
-#: ../base/ufos/research.ufo:551 ../base/ufos/research.ufo:580
-#: ../base/ufos/research.ufo:589 ../base/ufos/research.ufo:615
-#: ../base/ufos/research.ufo:623 ../base/ufos/research.ufo:1036
-#: ../base/ufos/research.ufo:1044 ../base/ufos/research.ufo:1112
-#: ../base/ufos/research.ufo:1120 ../base/ufos/research.ufo:1323
-#: ../base/ufos/research.ufo:1331 ../base/ufos/research.ufo:1365
-#: ../base/ufos/research.ufo:1373 ../base/ufos/research.ufo:1403
-#: ../base/ufos/research.ufo:1411 ../base/ufos/research.ufo:1462
-#: ../base/ufos/research.ufo:1470 ../base/ufos/research.ufo:1501
-#: ../base/ufos/research.ufo:1509 ../base/ufos/research.ufo:1539
-#: ../base/ufos/research.ufo:1547 ../base/ufos/research.ufo:1578
-#: ../base/ufos/research.ufo:1586 ../base/ufos/research.ufo:1636
-#: ../base/ufos/research.ufo:1644 ../base/ufos/research.ufo:1696
-#: ../base/ufos/research.ufo:1704 ../base/ufos/research.ufo:1755
-#: ../base/ufos/research.ufo:1763 ../base/ufos/research.ufo:1795
-#: ../base/ufos/research.ufo:1803 ../base/ufos/research.ufo:1835
-#: ../base/ufos/research.ufo:1843 ../base/ufos/research.ufo:1895
-#: ../base/ufos/research.ufo:1903 ../base/ufos/research.ufo:1935
-#: ../base/ufos/research.ufo:1943 ../base/ufos/research.ufo:1992
-#: ../base/ufos/research.ufo:2000 ../base/ufos/research.ufo:2227
-#: ../base/ufos/research.ufo:2235 ../base/ufos/research.ufo:2274
-#: ../base/ufos/research.ufo:2282 ../base/ufos/research.ufo:2316
-#: ../base/ufos/research.ufo:2324 ../base/ufos/research.ufo:2357
-#: ../base/ufos/research.ufo:2365 ../base/ufos/research.ufo:2416
-#: ../base/ufos/research.ufo:2424 ../base/ufos/research.ufo:2476
-#: ../base/ufos/research.ufo:2484 ../base/ufos/research.ufo:2536
-#: ../base/ufos/research.ufo:2544 ../base/ufos/research.ufo:2607
-#: ../base/ufos/research.ufo:2615 ../base/ufos/research.ufo:2685
-#: ../base/ufos/research.ufo:2693 ../base/ufos/research.ufo:2722
-#: ../base/ufos/research.ufo:2730 ../base/ufos/research.ufo:3327
-#: ../base/ufos/research.ufo:3491 ../base/ufos/research.ufo:3499
-#: ../base/ufos/research.ufo:3533 ../base/ufos/research.ufo:3541
-#: ../base/ufos/research.ufo:3576 ../base/ufos/research.ufo:3584
-#: ../base/ufos/research.ufo:3619 ../base/ufos/research.ufo:3627
-#: ../base/ufos/research.ufo:3662 ../base/ufos/research.ufo:3670
-#: ../base/ufos/research.ufo:3705 ../base/ufos/research.ufo:3713
-#: ../base/ufos/research.ufo:3748 ../base/ufos/research.ufo:3756
-#: ../base/ufos/research.ufo:3791 ../base/ufos/research.ufo:3799
-#: ../base/ufos/research.ufo:3834 ../base/ufos/research.ufo:3842
-#: ../base/ufos/research.ufo:3877 ../base/ufos/research.ufo:3885
-#: ../base/ufos/research.ufo:3948 ../base/ufos/research.ufo:3956
-#: ../base/ufos/research.ufo:4008 ../base/ufos/research.ufo:4016
-#: ../base/ufos/research.ufo:4050 ../base/ufos/research.ufo:4058
-#: ../base/ufos/research.ufo:4092 ../base/ufos/research.ufo:4100
-#: ../base/ufos/research.ufo:4379 ../base/ufos/research.ufo:4386
-#: ../base/ufos/research.ufo:4417 ../base/ufos/research.ufo:4424
-#: ../base/ufos/research.ufo:4454 ../base/ufos/research.ufo:4461
-#: ../base/ufos/research.ufo:4496 ../base/ufos/research.ufo:4504
-#: ../base/ufos/research.ufo:4678 ../base/ufos/research.ufo:4686
-#: ../base/ufos/research.ufo:4761 ../base/ufos/research.ufo:4769
-#: ../base/ufos/research.ufo:4855 ../base/ufos/research.ufo:4889
-#: ../base/ufos/research.ufo:4896 ../base/ufos/research.ufo:4927
-#: ../base/ufos/research.ufo:4936 ../base/ufos/research.ufo:4969
-#: ../base/ufos/research.ufo:4976
+#: ../base/ufos/research.ufo:220 ../base/ufos/research.ufo:228
+#: ../base/ufos/research.ufo:282 ../base/ufos/research.ufo:290
+#: ../base/ufos/research.ufo:315 ../base/ufos/research.ufo:323
+#: ../base/ufos/research.ufo:353 ../base/ufos/research.ufo:361
+#: ../base/ufos/research.ufo:415 ../base/ufos/research.ufo:423
+#: ../base/ufos/research.ufo:453 ../base/ufos/research.ufo:461
+#: ../base/ufos/research.ufo:491 ../base/ufos/research.ufo:499
+#: ../base/ufos/research.ufo:529 ../base/ufos/research.ufo:554
+#: ../base/ufos/research.ufo:562 ../base/ufos/research.ufo:591
+#: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:626
+#: ../base/ufos/research.ufo:634 ../base/ufos/research.ufo:1047
+#: ../base/ufos/research.ufo:1055 ../base/ufos/research.ufo:1123
+#: ../base/ufos/research.ufo:1131 ../base/ufos/research.ufo:1334
+#: ../base/ufos/research.ufo:1342 ../base/ufos/research.ufo:1393
+#: ../base/ufos/research.ufo:1401 ../base/ufos/research.ufo:1432
+#: ../base/ufos/research.ufo:1440 ../base/ufos/research.ufo:1470
+#: ../base/ufos/research.ufo:1478 ../base/ufos/research.ufo:1509
+#: ../base/ufos/research.ufo:1517 ../base/ufos/research.ufo:1548
+#: ../base/ufos/research.ufo:1556 ../base/ufos/research.ufo:1590
+#: ../base/ufos/research.ufo:1598 ../base/ufos/research.ufo:1646
+#: ../base/ufos/research.ufo:1654 ../base/ufos/research.ufo:1706
+#: ../base/ufos/research.ufo:1714 ../base/ufos/research.ufo:1765
+#: ../base/ufos/research.ufo:1773 ../base/ufos/research.ufo:1805
+#: ../base/ufos/research.ufo:1813 ../base/ufos/research.ufo:1845
+#: ../base/ufos/research.ufo:1853 ../base/ufos/research.ufo:1905
+#: ../base/ufos/research.ufo:1913 ../base/ufos/research.ufo:1945
+#: ../base/ufos/research.ufo:1953 ../base/ufos/research.ufo:2002
+#: ../base/ufos/research.ufo:2010 ../base/ufos/research.ufo:2237
+#: ../base/ufos/research.ufo:2245 ../base/ufos/research.ufo:2284
+#: ../base/ufos/research.ufo:2292 ../base/ufos/research.ufo:2326
+#: ../base/ufos/research.ufo:2334 ../base/ufos/research.ufo:2367
+#: ../base/ufos/research.ufo:2375 ../base/ufos/research.ufo:2426
+#: ../base/ufos/research.ufo:2434 ../base/ufos/research.ufo:2486
+#: ../base/ufos/research.ufo:2494 ../base/ufos/research.ufo:2546
+#: ../base/ufos/research.ufo:2554 ../base/ufos/research.ufo:2617
+#: ../base/ufos/research.ufo:2625 ../base/ufos/research.ufo:2695
+#: ../base/ufos/research.ufo:2703 ../base/ufos/research.ufo:2732
+#: ../base/ufos/research.ufo:2740 ../base/ufos/research.ufo:3337
+#: ../base/ufos/research.ufo:3501 ../base/ufos/research.ufo:3509
+#: ../base/ufos/research.ufo:3543 ../base/ufos/research.ufo:3551
+#: ../base/ufos/research.ufo:3586 ../base/ufos/research.ufo:3594
+#: ../base/ufos/research.ufo:3629 ../base/ufos/research.ufo:3637
+#: ../base/ufos/research.ufo:3672 ../base/ufos/research.ufo:3680
+#: ../base/ufos/research.ufo:3715 ../base/ufos/research.ufo:3723
+#: ../base/ufos/research.ufo:3758 ../base/ufos/research.ufo:3766
+#: ../base/ufos/research.ufo:3801 ../base/ufos/research.ufo:3809
+#: ../base/ufos/research.ufo:3844 ../base/ufos/research.ufo:3852
+#: ../base/ufos/research.ufo:3887 ../base/ufos/research.ufo:3895
+#: ../base/ufos/research.ufo:3958 ../base/ufos/research.ufo:3966
+#: ../base/ufos/research.ufo:4018 ../base/ufos/research.ufo:4026
+#: ../base/ufos/research.ufo:4060 ../base/ufos/research.ufo:4068
+#: ../base/ufos/research.ufo:4102 ../base/ufos/research.ufo:4110
+#: ../base/ufos/research.ufo:4389 ../base/ufos/research.ufo:4396
+#: ../base/ufos/research.ufo:4427 ../base/ufos/research.ufo:4434
+#: ../base/ufos/research.ufo:4464 ../base/ufos/research.ufo:4471
+#: ../base/ufos/research.ufo:4506 ../base/ufos/research.ufo:4514
+#: ../base/ufos/research.ufo:4688 ../base/ufos/research.ufo:4696
+#: ../base/ufos/research.ufo:4771 ../base/ufos/research.ufo:4779
+#: ../base/ufos/research.ufo:4865 ../base/ufos/research.ufo:4899
+#: ../base/ufos/research.ufo:4906 ../base/ufos/research.ufo:4937
+#: ../base/ufos/research.ufo:4946 ../base/ufos/research.ufo:4979
+#: ../base/ufos/research.ufo:4986
 msgid "mail_to_base_commander"
 msgstr "Διοικητής Βάσης, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
@@ -787,54 +794,54 @@ msgstr ""
 #: ../base/ufos/events.ufo:133 ../base/ufos/events.ufo:144
 #: ../base/ufos/events.ufo:166 ../base/ufos/research.ufo:136
 #: ../base/ufos/research.ufo:144 ../base/ufos/research.ufo:169
-#: ../base/ufos/research.ufo:177 ../base/ufos/research.ufo:208
-#: ../base/ufos/research.ufo:216 ../base/ufos/research.ufo:270
-#: ../base/ufos/research.ufo:278 ../base/ufos/research.ufo:517
-#: ../base/ufos/research.ufo:614 ../base/ufos/research.ufo:622
-#: ../base/ufos/research.ufo:1035 ../base/ufos/research.ufo:1043
-#: ../base/ufos/research.ufo:1111 ../base/ufos/research.ufo:1119
-#: ../base/ufos/research.ufo:1322 ../base/ufos/research.ufo:1330
-#: ../base/ufos/research.ufo:1364 ../base/ufos/research.ufo:1372
-#: ../base/ufos/research.ufo:1402 ../base/ufos/research.ufo:1410
-#: ../base/ufos/research.ufo:1461 ../base/ufos/research.ufo:1469
-#: ../base/ufos/research.ufo:1500 ../base/ufos/research.ufo:1508
-#: ../base/ufos/research.ufo:1538 ../base/ufos/research.ufo:1546
-#: ../base/ufos/research.ufo:1577 ../base/ufos/research.ufo:1585
-#: ../base/ufos/research.ufo:1635 ../base/ufos/research.ufo:1643
-#: ../base/ufos/research.ufo:1695 ../base/ufos/research.ufo:1703
-#: ../base/ufos/research.ufo:1754 ../base/ufos/research.ufo:1762
-#: ../base/ufos/research.ufo:1794 ../base/ufos/research.ufo:1802
-#: ../base/ufos/research.ufo:1834 ../base/ufos/research.ufo:1842
-#: ../base/ufos/research.ufo:1894 ../base/ufos/research.ufo:1902
-#: ../base/ufos/research.ufo:1934 ../base/ufos/research.ufo:1942
-#: ../base/ufos/research.ufo:1991 ../base/ufos/research.ufo:1999
-#: ../base/ufos/research.ufo:2226 ../base/ufos/research.ufo:2234
-#: ../base/ufos/research.ufo:2273 ../base/ufos/research.ufo:2281
-#: ../base/ufos/research.ufo:2315 ../base/ufos/research.ufo:2323
-#: ../base/ufos/research.ufo:2356 ../base/ufos/research.ufo:2364
-#: ../base/ufos/research.ufo:2415 ../base/ufos/research.ufo:2423
-#: ../base/ufos/research.ufo:2475 ../base/ufos/research.ufo:2483
-#: ../base/ufos/research.ufo:2535 ../base/ufos/research.ufo:2543
-#: ../base/ufos/research.ufo:2606 ../base/ufos/research.ufo:2614
-#: ../base/ufos/research.ufo:2684 ../base/ufos/research.ufo:2692
-#: ../base/ufos/research.ufo:2721 ../base/ufos/research.ufo:2729
-#: ../base/ufos/research.ufo:3326 ../base/ufos/research.ufo:3490
-#: ../base/ufos/research.ufo:3498 ../base/ufos/research.ufo:3532
-#: ../base/ufos/research.ufo:3540 ../base/ufos/research.ufo:3575
-#: ../base/ufos/research.ufo:3583 ../base/ufos/research.ufo:3618
-#: ../base/ufos/research.ufo:3626 ../base/ufos/research.ufo:3661
-#: ../base/ufos/research.ufo:3669 ../base/ufos/research.ufo:3704
-#: ../base/ufos/research.ufo:3712 ../base/ufos/research.ufo:3747
-#: ../base/ufos/research.ufo:3755 ../base/ufos/research.ufo:3790
-#: ../base/ufos/research.ufo:3798 ../base/ufos/research.ufo:3833
-#: ../base/ufos/research.ufo:3841 ../base/ufos/research.ufo:3876
-#: ../base/ufos/research.ufo:3884 ../base/ufos/research.ufo:4378
-#: ../base/ufos/research.ufo:4385 ../base/ufos/research.ufo:4416
-#: ../base/ufos/research.ufo:4423 ../base/ufos/research.ufo:4453
-#: ../base/ufos/research.ufo:4460 ../base/ufos/research.ufo:4495
-#: ../base/ufos/research.ufo:4503 ../base/ufos/research.ufo:4677
-#: ../base/ufos/research.ufo:4685 ../base/ufos/research.ufo:4760
-#: ../base/ufos/research.ufo:4768
+#: ../base/ufos/research.ufo:177 ../base/ufos/research.ufo:219
+#: ../base/ufos/research.ufo:227 ../base/ufos/research.ufo:281
+#: ../base/ufos/research.ufo:289 ../base/ufos/research.ufo:528
+#: ../base/ufos/research.ufo:625 ../base/ufos/research.ufo:633
+#: ../base/ufos/research.ufo:1046 ../base/ufos/research.ufo:1054
+#: ../base/ufos/research.ufo:1122 ../base/ufos/research.ufo:1130
+#: ../base/ufos/research.ufo:1333 ../base/ufos/research.ufo:1341
+#: ../base/ufos/research.ufo:1392 ../base/ufos/research.ufo:1400
+#: ../base/ufos/research.ufo:1431 ../base/ufos/research.ufo:1439
+#: ../base/ufos/research.ufo:1469 ../base/ufos/research.ufo:1477
+#: ../base/ufos/research.ufo:1508 ../base/ufos/research.ufo:1516
+#: ../base/ufos/research.ufo:1547 ../base/ufos/research.ufo:1555
+#: ../base/ufos/research.ufo:1589 ../base/ufos/research.ufo:1597
+#: ../base/ufos/research.ufo:1645 ../base/ufos/research.ufo:1653
+#: ../base/ufos/research.ufo:1705 ../base/ufos/research.ufo:1713
+#: ../base/ufos/research.ufo:1764 ../base/ufos/research.ufo:1772
+#: ../base/ufos/research.ufo:1804 ../base/ufos/research.ufo:1812
+#: ../base/ufos/research.ufo:1844 ../base/ufos/research.ufo:1852
+#: ../base/ufos/research.ufo:1904 ../base/ufos/research.ufo:1912
+#: ../base/ufos/research.ufo:1944 ../base/ufos/research.ufo:1952
+#: ../base/ufos/research.ufo:2001 ../base/ufos/research.ufo:2009
+#: ../base/ufos/research.ufo:2236 ../base/ufos/research.ufo:2244
+#: ../base/ufos/research.ufo:2283 ../base/ufos/research.ufo:2291
+#: ../base/ufos/research.ufo:2325 ../base/ufos/research.ufo:2333
+#: ../base/ufos/research.ufo:2366 ../base/ufos/research.ufo:2374
+#: ../base/ufos/research.ufo:2425 ../base/ufos/research.ufo:2433
+#: ../base/ufos/research.ufo:2485 ../base/ufos/research.ufo:2493
+#: ../base/ufos/research.ufo:2545 ../base/ufos/research.ufo:2553
+#: ../base/ufos/research.ufo:2616 ../base/ufos/research.ufo:2624
+#: ../base/ufos/research.ufo:2694 ../base/ufos/research.ufo:2702
+#: ../base/ufos/research.ufo:2731 ../base/ufos/research.ufo:2739
+#: ../base/ufos/research.ufo:3336 ../base/ufos/research.ufo:3500
+#: ../base/ufos/research.ufo:3508 ../base/ufos/research.ufo:3542
+#: ../base/ufos/research.ufo:3550 ../base/ufos/research.ufo:3585
+#: ../base/ufos/research.ufo:3593 ../base/ufos/research.ufo:3628
+#: ../base/ufos/research.ufo:3636 ../base/ufos/research.ufo:3671
+#: ../base/ufos/research.ufo:3679 ../base/ufos/research.ufo:3714
+#: ../base/ufos/research.ufo:3722 ../base/ufos/research.ufo:3757
+#: ../base/ufos/research.ufo:3765 ../base/ufos/research.ufo:3800
+#: ../base/ufos/research.ufo:3808 ../base/ufos/research.ufo:3843
+#: ../base/ufos/research.ufo:3851 ../base/ufos/research.ufo:3886
+#: ../base/ufos/research.ufo:3894 ../base/ufos/research.ufo:4388
+#: ../base/ufos/research.ufo:4395 ../base/ufos/research.ufo:4426
+#: ../base/ufos/research.ufo:4433 ../base/ufos/research.ufo:4463
+#: ../base/ufos/research.ufo:4470 ../base/ufos/research.ufo:4505
+#: ../base/ufos/research.ufo:4513 ../base/ufos/research.ufo:4687
+#: ../base/ufos/research.ufo:4695 ../base/ufos/research.ufo:4770
+#: ../base/ufos/research.ufo:4778
 msgid "mail_from_paul_navarre"
 msgstr "Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
@@ -1013,9 +1020,9 @@ msgid "mail_new_radar_contact"
 msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:276 ../base/ufos/events.ufo:287
-#: ../base/ufos/events.ufo:298 ../base/ufos/research.ufo:579
-#: ../base/ufos/research.ufo:588 ../base/ufos/research.ufo:4926
-#: ../base/ufos/research.ufo:4935
+#: ../base/ufos/events.ufo:298 ../base/ufos/research.ufo:590
+#: ../base/ufos/research.ufo:599 ../base/ufos/research.ufo:4936
+#: ../base/ufos/research.ufo:4945
 msgid "mail_from_col_falkland"
 msgstr "Συνταγματάρxης Ingrid Falkland, Τμήμα Πληροφοριών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
@@ -1689,18 +1696,18 @@ msgstr ""
 "Η κοινοπολιτεία\n"
 " της Ωκεανίας"
 
-#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:193
-#: ../base/ufos/research.ufo:234
+#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:204
+#: ../base/ufos/research.ufo:245
 msgid "Antimatter"
 msgstr "Antimatter"
 
-#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:328
-#: ../base/ufos/research.ufo:371
+#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:339
+#: ../base/ufos/research.ufo:382
 msgid "Alien Breathing Apparatus"
 msgstr "Συσκευή Αναπνοής Εξωγήινων"
 
-#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4747
-#: ../base/ufos/research.ufo:4786
+#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4757
+#: ../base/ufos/research.ufo:4796
 msgid "Alien Materials"
 msgstr "Εξωγήινα υλικά"
 
@@ -1787,11 +1794,6 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:156
-#, fuzzy
-msgid "Base Defence Laser Turret"
-msgstr "Τυφέκιο Λέϊζερ"
-
 #: ../base/ufos/research.ufo:161
 #, fuzzy
 msgid "baselaser_txt"
@@ -1832,7 +1834,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:198 ../base/ufos/research.ufo:236
+#: ../base/ufos/research.ufo:209 ../base/ufos/research.ufo:247
 msgid "antimatter_txt"
 msgstr ""
 "Η εξέταση της αντιύλης ολοκληρώθηκε , κύριε Διοικητά, και είμαστε έτοιμοι να παρουσιάσουμε τα ευρήματά μας. Φοβάμαι, όμως, ότι τα νέα είναι, κατά κύριο λόγο, απογοητευτικά.\n"
@@ -1851,7 +1853,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:199
+#: ../base/ufos/research.ufo:210
 msgid "antimatter_extra_txt"
 msgstr ""
 "Η εξέταση της αντιύλης ολοκληρώθηκε , κύριε Διοικητά, και είμαστε έτοιμοι να παρουσιάσουμε τα ευρήματά μας. Φοβάμαι, όμως, ότι τα νέα είναι, κατά κύριο λόγο, απογοητευτικά.\n"
@@ -1872,7 +1874,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:202
+#: ../base/ufos/research.ufo:213
 msgid "antimatter_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, στηριζόμενος στις εξαιρετικά ενδιαφέρουσες διαπιστώσεις που κάναμε κατά την εξέταση του UFO Ανιχνευτή, θα ήθελα σας ζητήσω την άδεια να αφοσιόσουμε εργαστηριακούς πόρους στην προσεκτική ανάλυση της εκτεταμένης χρήσης αντιύλης από τους εξωγήινους καθώς και τις επιπτώσεις που μπορεί να έχει στον πόλεμο.\n"
@@ -1881,7 +1883,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:203
+#: ../base/ufos/research.ufo:214
 msgid "antimatter_extra_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, στηριζόμενος στις εξαιρετικά ενδιαφέρουσες διαπιστώσεις που κάναμε κατά την εξέταση του UFO Ανιχνευτή, θα ήθελα σας ζητήσω την άδεια να αφοσιόσουμε εργαστηριακούς πόρους στην προσεκτική ανάλυση της εκτεταμένης χρήσης αντιύλης από τους εξωγήινους καθώς και τις επιπτώσεις που μπορεί να έχει στον πόλεμο.\n"
@@ -1890,12 +1892,12 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:254
+#: ../base/ufos/research.ufo:265
 #, fuzzy
 msgid "Upgrade - Antimatter engines"
 msgstr "Πρωτότυπο - Αποθήκη Αντιύλης"
 
-#: ../base/ufos/research.ufo:256
+#: ../base/ufos/research.ufo:267
 #, fuzzy
 msgid "craft_upgrade_am_engines_txt"
 msgstr ""
@@ -1915,15 +1917,15 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:259
+#: ../base/ufos/research.ufo:270
 msgid "craft_upgrade_am_engines_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:290
+#: ../base/ufos/research.ufo:301
 msgid "Live Alien"
 msgstr "Ζώντες Εξωγήινοι"
 
-#: ../base/ufos/research.ufo:295
+#: ../base/ufos/research.ufo:306
 msgid "alien_live_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -1938,7 +1940,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:298
+#: ../base/ufos/research.ufo:309
 msgid "alien_live_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -1953,23 +1955,23 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:303 ../base/ufos/research.ufo:311
-#: ../base/ufos/research.ufo:341 ../base/ufos/research.ufo:349
-#: ../base/ufos/research.ufo:403 ../base/ufos/research.ufo:411
-#: ../base/ufos/research.ufo:441 ../base/ufos/research.ufo:449
-#: ../base/ufos/research.ufo:479 ../base/ufos/research.ufo:487
-#: ../base/ufos/research.ufo:542 ../base/ufos/research.ufo:550
-#: ../base/ufos/research.ufo:3947 ../base/ufos/research.ufo:3955
-#: ../base/ufos/research.ufo:4007 ../base/ufos/research.ufo:4015
-#: ../base/ufos/research.ufo:4049 ../base/ufos/research.ufo:4057
-#: ../base/ufos/research.ufo:4091 ../base/ufos/research.ufo:4099
-#: ../base/ufos/research.ufo:4854 ../base/ufos/research.ufo:4888
-#: ../base/ufos/research.ufo:4895 ../base/ufos/research.ufo:4968
-#: ../base/ufos/research.ufo:4975
+#: ../base/ufos/research.ufo:314 ../base/ufos/research.ufo:322
+#: ../base/ufos/research.ufo:352 ../base/ufos/research.ufo:360
+#: ../base/ufos/research.ufo:414 ../base/ufos/research.ufo:422
+#: ../base/ufos/research.ufo:452 ../base/ufos/research.ufo:460
+#: ../base/ufos/research.ufo:490 ../base/ufos/research.ufo:498
+#: ../base/ufos/research.ufo:553 ../base/ufos/research.ufo:561
+#: ../base/ufos/research.ufo:3957 ../base/ufos/research.ufo:3965
+#: ../base/ufos/research.ufo:4017 ../base/ufos/research.ufo:4025
+#: ../base/ufos/research.ufo:4059 ../base/ufos/research.ufo:4067
+#: ../base/ufos/research.ufo:4101 ../base/ufos/research.ufo:4109
+#: ../base/ufos/research.ufo:4864 ../base/ufos/research.ufo:4898
+#: ../base/ufos/research.ufo:4905 ../base/ufos/research.ufo:4978
+#: ../base/ufos/research.ufo:4985
 msgid "mail_from_dr_connor"
 msgstr "Δρ. Connor, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Βιολογίας & Περιορισμού, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
-#: ../base/ufos/research.ufo:333 ../base/ufos/research.ufo:373
+#: ../base/ufos/research.ufo:344 ../base/ufos/research.ufo:384
 msgid "alien_breathing_txt"
 msgstr ""
 "Commander,\n"
@@ -1994,7 +1996,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:336
+#: ../base/ufos/research.ufo:347
 msgid "alien_breathing_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -2019,11 +2021,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:390
+#: ../base/ufos/research.ufo:401
 msgid "The Alien Mind"
 msgstr "Το Μυαλό των Εξωγήινων"
 
-#: ../base/ufos/research.ufo:395
+#: ../base/ufos/research.ufo:406
 msgid "alien_mind_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -2042,7 +2044,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:398
+#: ../base/ufos/research.ufo:409
 msgid "alien_mind_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -2057,11 +2059,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:428
+#: ../base/ufos/research.ufo:439
 msgid "Odd Behaviour"
 msgstr "Συμπεριφορά Όντων"
 
-#: ../base/ufos/research.ufo:433
+#: ../base/ufos/research.ufo:444
 msgid "alien_odd_behaviour_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -2086,7 +2088,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:436
+#: ../base/ufos/research.ufo:447
 msgid "alien_odd_behaviour_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -2101,11 +2103,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:466
+#: ../base/ufos/research.ufo:477
 msgid "Alien Communication"
 msgstr "Επικοινωνία Εξωγήινων"
 
-#: ../base/ufos/research.ufo:471
+#: ../base/ufos/research.ufo:482
 msgid "alien_communication_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -2124,7 +2126,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:474
+#: ../base/ufos/research.ufo:485
 msgid "alien_communication_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -2141,13 +2143,13 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:505 client/campaign/cp_alienbase.c:168
+#: ../base/ufos/research.ufo:516 client/campaign/cp_alienbase.c:168
 #: client/campaign/cp_missions.c:433
 #, fuzzy
 msgid "Alien base"
 msgstr "Εξωγήινοι"
 
-#: ../base/ufos/research.ufo:507
+#: ../base/ufos/research.ufo:518
 msgid "alien_base_txt"
 msgstr ""
 "Πρόταση\n"
@@ -2180,11 +2182,11 @@ msgstr ""
 "\n"
 "Συνταγματάρχης Falkland"
 
-#: ../base/ufos/research.ufo:529
+#: ../base/ufos/research.ufo:540
 msgid "The Universal Serum"
 msgstr "Ο Παγκόσμιος Ορός"
 
-#: ../base/ufos/research.ufo:534
+#: ../base/ufos/research.ufo:545
 msgid "universal_serum_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -2199,15 +2201,15 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:537
+#: ../base/ufos/research.ufo:548
 msgid "universal_serum_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:566
+#: ../base/ufos/research.ufo:577
 msgid "Alien Origins"
 msgstr "Εξωγήινες Προελέυσεις"
 
-#: ../base/ufos/research.ufo:571
+#: ../base/ufos/research.ufo:582
 msgid "alien_origins_txt"
 msgstr ""
 "Καλημέρα σας, Κύριε.\n"
@@ -2238,7 +2240,7 @@ msgstr ""
 "\n"
 "Συνταγματάρχης Falkland"
 
-#: ../base/ufos/research.ufo:574
+#: ../base/ufos/research.ufo:585
 msgid "alien_origins_pre_txt"
 msgstr ""
 "Καλημέρα σας, κύριε.\n"
@@ -2255,12 +2257,12 @@ msgstr ""
 "\n"
 "Συνταγματάρχης Falkland"
 
-#: ../base/ufos/research.ufo:601
+#: ../base/ufos/research.ufo:612
 #, fuzzy
 msgid "UFO Theory"
 msgstr "Ανάκτηση ΟΥΦΟ"
 
-#: ../base/ufos/research.ufo:606
+#: ../base/ufos/research.ufo:617
 msgid "alien_theory_txt"
 msgstr ""
 "Κύριε Διοικητά, η ομάδα μου και εγώ ολοκληρώσαμε την ανάλυση του UFO στην κατοχή μας. Πρόκειται για ένα πραγματικό θαύμα μηχανικής και είμαστε όλοι ανυπόμονοι να μελετήσουμε σε βάθος αυτή τη θαυμάσια τεχνολογία.\n"
@@ -2283,7 +2285,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:609
+#: ../base/ufos/research.ufo:620
 msgid "alien_theory_pre_txt"
 msgstr ""
 "Κύριε διοικητά, περισυλλέξαμε το πρώτο μας UFO σε αυτό τον πόλεμο. Είναι προφανές ότι αποτελεί μοναδική ευκαιρία για έρευνα. Παρόλα αυτά, πρωτου΄ξεκινήσουμε να το μελετάμε σε βάθος και να το αποσυναρμολογούμε για τα εξαρτήματά του θα χρειαστούμε μια γενικότερη επιθεώρηση του τρόπου που κατασκευάστηκε το UFO. Είναι κάποια από τα συστήματά του ακόμα ενεργά ή παγιδευμένα; Από τι είδους υλικά είναι φτιαγμένο; Τι κινδύνους μπορεί να επιφυλλάσει κατά την αποθήκευση ή την αποσυναρμολόγησή του; Αυτά και ακόμα περισσότερα ερωτήματα θα πρέπει να απαντηθούν πρωτού προχωρήσουμε παρακάτω.\n"
@@ -2292,7 +2294,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:654
+#: ../base/ufos/research.ufo:665
 msgid "pistol_txt"
 msgstr ""
 "Technical Specifications: P-12 Pistol\n"
@@ -2341,7 +2343,7 @@ msgstr ""
 "\n"
 "Despite good penetration against organics, this weapon performs very poorly against robotic targets."
 
-#: ../base/ufos/research.ufo:673
+#: ../base/ufos/research.ufo:684
 msgid "pistol_mag_txt"
 msgstr ""
 "Technical Specifications: 7.62mm Pistol Magazine\n"
@@ -2374,7 +2376,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:695
+#: ../base/ufos/research.ufo:706
 msgid "pistol2_txt"
 msgstr ""
 "Technical Specifications: MP-699 Machine Pistol\n"
@@ -2421,7 +2423,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:714
+#: ../base/ufos/research.ufo:725
 msgid "pistol2_mag_txt"
 msgstr ""
 "Technical Specifications: 4.2mm MP Magazine\n"
@@ -2454,7 +2456,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:734
+#: ../base/ufos/research.ufo:745
 #, fuzzy
 msgid "vhs_assault_txt"
 msgstr ""
@@ -2498,7 +2500,7 @@ msgstr ""
 "\n"
 "Παρόλο που το AR-80 είναι από όλες τις απόψεις ένα πολύ καλό τουφέκι, δεν σχεδιάστηκε για την αντιμετώπιση εξωγήινης εισβολής. Θα χρειαστεί να αναπτύξουμε δικά μας όπλα ειδικά για το συγκεκριμένο σκοπό μόλις αποκτήσουμε την απαραίτητη τεχνογνωσία."
 
-#: ../base/ufos/research.ufo:751
+#: ../base/ufos/research.ufo:762
 msgid "assault_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Επιθετικό τουφέκι AR-80\n"
@@ -2541,7 +2543,7 @@ msgstr ""
 "\n"
 "Παρόλο που το AR-80 είναι από όλες τις απόψεις ένα πολύ καλό τουφέκι, δεν σχεδιάστηκε για την αντιμετώπιση εξωγήινης εισβολής. Θα χρειαστεί να αναπτύξουμε δικά μας όπλα ειδικά για το συγκεκριμένο σκοπό μόλις αποκτήσουμε την απαραίτητη τεχνογνωσία."
 
-#: ../base/ufos/research.ufo:769
+#: ../base/ufos/research.ufo:780
 msgid "assault_mag_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Γεμιστήρας Επιθετικού Τουφεκίου\n"
@@ -2574,7 +2576,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:788
+#: ../base/ufos/research.ufo:799
 msgid "machinegun_txt"
 msgstr ""
 "Technical Specifications: MG12 Machine Gun\n"
@@ -2621,7 +2623,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:806
+#: ../base/ufos/research.ufo:817
 msgid "machinegun_mag_txt"
 msgstr ""
 "Technical Specifications: Assault Rifle Magazine\n"
@@ -2656,7 +2658,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:825
+#: ../base/ufos/research.ufo:836
 msgid "rpg_txt"
 msgstr ""
 "Technical Specifications: HPML Rocket Launcher\n"
@@ -2703,7 +2705,7 @@ msgstr ""
 "\n"
 "Along with sniper rifles and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:844
+#: ../base/ufos/research.ufo:855
 msgid "rpg_ammo_txt"
 msgstr ""
 "Technical Specifications: HE Rocket\n"
@@ -2738,7 +2740,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:864
+#: ../base/ufos/research.ufo:875
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 "Technical Specifications: IC Rocket\n"
@@ -2775,15 +2777,15 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:885
+#: ../base/ufos/research.ufo:896
 msgid "xaw95_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:888
+#: ../base/ufos/research.ufo:899
 msgid "xaw95_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:915
+#: ../base/ufos/research.ufo:926
 #, fuzzy
 msgid "bombkit1_txt"
 msgstr ""
@@ -2827,11 +2829,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:918
+#: ../base/ufos/research.ufo:929
 msgid "bombkit1_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:933
+#: ../base/ufos/research.ufo:944
 #, fuzzy
 msgid "bombkit2_txt"
 msgstr ""
@@ -2875,19 +2877,19 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:936
+#: ../base/ufos/research.ufo:947
 msgid "bombkit2_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:951
+#: ../base/ufos/research.ufo:962
 msgid "chaingun_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:954
+#: ../base/ufos/research.ufo:965
 msgid "chaingun_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:986
+#: ../base/ufos/research.ufo:997
 msgid "shotgun_txt"
 msgstr ""
 "Technical Specifications: CRC-212 Riot Shotgun\n"
@@ -2932,11 +2934,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1022
+#: ../base/ufos/research.ufo:1033
 msgid "Electromagnetic Rifle"
 msgstr "Ηλεκτρομαγνητικό Τυφέκιο"
 
-#: ../base/ufos/research.ufo:1027
+#: ../base/ufos/research.ufo:1038
 msgid "bolterrifle_txt"
 msgstr ""
 "Η έρευνα για το ΗΜ τουφέκι είχε θεαματική επιτυχία! Κατασκευάσαμε το πρώτο βιώσιμο και φορητό ηλεκτρομαγνητικό όπλα στα ανθρώπινα χρονικά. Ονομάσαμε το όπλα μας Μαγνητοβόλο ώστε να μην υπάρχει σύγχυση με άλλα υπάρχουσες υλοποιήσεις ΟΜΕ (Όπλο Μαγνητικής Επιτάχυνσης). Θα προσπαθήσω να περιγράψω εν συντομία τη λειτουργία του.\n"
@@ -2955,7 +2957,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1030
+#: ../base/ufos/research.ufo:1041
 msgid "bolterrifle_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, έχουμε λάβει πλήθος αρχείων έρευνας σχετικά με την ανάπτυξη φορητού ηλεκτρομαγνητικού οπλισμού από αρκετά κράτη του ΟΗΕ. Έχουν προταθεί ή ακόμα και αναπτυχθεί σε επίπεδο πρωτοτύπου διάφορα σχέδια που βασίζονται σε ράγες, πηνία και υπεραγώγιμα πηνία. Βέβαια, όλα αυτά τα πειράματα απέτυχαν καθώς τα ηλεκτρομαγνητικά όπλα απαιτούν τεράστιες ποσότητες ενέργειας -- που μεταφράζεται σε τόσο βαριές συστοιχίες πυκνωτών που κανένας άνθρωπος δε θα μπορούσε να κουβαλήσει. Ακόμα και οι πυρηνικές μπαταρίες δεν κατάφεραν να παρέχουν την απαιτούμενη ισχύ για την κατασκευή φορητού ηλεκτρομαγνητικού όπλου. Είναι αδύνατον.\n"
@@ -2968,12 +2970,12 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1061
+#: ../base/ufos/research.ufo:1072
 #, fuzzy
 msgid "Electromagnetic Rifle Magazine"
 msgstr "Ηλεκτρομαγνητικό Τυφέκιο"
 
-#: ../base/ufos/research.ufo:1082
+#: ../base/ufos/research.ufo:1093
 msgid "combatknife_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Πολεμικό Μαχαίρι\n"
@@ -3014,11 +3016,11 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:1098
+#: ../base/ufos/research.ufo:1109
 msgid "Monomolecular Blades"
 msgstr "Μονομοριακές Λεπίδες"
 
-#: ../base/ufos/research.ufo:1103
+#: ../base/ufos/research.ufo:1114
 msgid "monoknife_txt"
 msgstr ""
 "Κύριε Διοικητά, είμαι περήφανος να αναφέρω την επιτυχία μας στην δημιουργία λεπίδας από εξωγήινα υλικά. Έχουμε στείλει στα Μηχανουργεία μας τις προδιαγραφες κατασκευής ενω΄φτιάξαμε και έναν μικρό κλίβανο για τη διαμόρφωση των νέων μονομοριακών μαχαιριών.\n"
@@ -3033,7 +3035,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1106
+#: ../base/ufos/research.ufo:1117
 msgid "monoknife_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, τώρα που κάναμε μια προσεκτικότερη μελέτη στην εξωγήινη τεχνολογία των λεπίδων απο διάφορες πηγές -- τα \"δόντια' των Αιμοαραχνών και τους Ξεκοιλιαστές -- αρχίσαμε να σχηματίζουμε μια εικόνα πως μπορούμε να αναδημιουργήσουμε τα άγνωστα ή ακατανόητα υλικά που χρησιμοποιούν στις κατασκευές τους.\n"
@@ -3048,7 +3050,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1142
+#: ../base/ufos/research.ufo:1153
 msgid "flamer_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Φλογοβόλο CRC-FL\n"
@@ -3095,7 +3097,7 @@ msgstr ""
 "\n"
 "Πρέπει να αποφεύγεται η χρήση του όπλου αυτού αν βρίσκονται πολίτες κοντά ή εντός της περιοχής στόχου."
 
-#: ../base/ufos/research.ufo:1161
+#: ../base/ufos/research.ufo:1172
 msgid "flamer_mag_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Γεμιστήρα Φλογοβόλου\n"
@@ -3128,7 +3130,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:1180
+#: ../base/ufos/research.ufo:1191
 msgid "flashbang_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Χειροβομβίδα Κρότου-Λάμψης\n"
@@ -3171,7 +3173,7 @@ msgstr ""
 "\n"
 "Φυσικά, η χειροβομβίδα κρότου-λάμψης έχει αποτέλεσμα μόνο ενάντια σε οργανικούς εξωγήινους που έχουν μάτια και αυτιά."
 
-#: ../base/ufos/research.ufo:1199
+#: ../base/ufos/research.ufo:1210
 msgid "fraggren_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Εκρηκτική Χειροβομβίδα\n"
@@ -3212,7 +3214,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:1218
+#: ../base/ufos/research.ufo:1229
 msgid "incgren_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Εμπρηστική Χειροβομβίδα\n"
@@ -3255,7 +3257,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:1237
+#: ../base/ufos/research.ufo:1248
 msgid "grenl_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Εκτοξευτής Βομβίδων\n"
@@ -3306,7 +3308,7 @@ msgstr ""
 "\n"
 "Μαζί με το τουφέκι ελεύθερου σκοπευτή και τον εκτοξευτή ρουκετών, αυτό είναι από τα λίγα συμβατικά ανθρώπινα όπλα που είναι πλήρως αποτελεσματικά ενάντια στα ρομπότ των εξωγήινων."
 
-#: ../base/ufos/research.ufo:1255
+#: ../base/ufos/research.ufo:1266
 msgid "grenl_ammo_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Εκρηκτικές Βομβίδες 25χιλ\n"
@@ -3339,7 +3341,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:1274
+#: ../base/ufos/research.ufo:1285
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Βομβίδες Κατά Προσωπικού 25χιλ\n"
@@ -3372,7 +3374,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:1293
+#: ../base/ufos/research.ufo:1304
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Εμπρηστικές Βομβίδες 25χιλ\n"
@@ -3405,11 +3407,11 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:1309
+#: ../base/ufos/research.ufo:1320
 msgid "Plasma And The Grenade Launcher"
 msgstr "Plasma And The Grenade Launcher"
 
-#: ../base/ufos/research.ufo:1314
+#: ../base/ufos/research.ufo:1325
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
 "Κύριε Διοικητά, ολοκληρώσαμε το στάδιο δοκιμών και σχεδιασμού των νέων βομβίδων πλάσματος 25 χιλιοστών. Είμαστε έτοιμοι για τη μαζική παραγωγή τους και τη διάθεσή τους στις δυνάμεις μας.\n"
@@ -3422,7 +3424,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1317
+#: ../base/ufos/research.ufo:1328
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, η ομάδα μου κι εγώ έχουμε συντάξει την παρακάτω έρευνητική πρόταση για ένα νέο τακτικό όπλο βασισμένο στην έρευνα μας πάνω στην χειροβομβίδα πλάσματος.\n"
@@ -3435,65 +3437,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1356
-msgid "laser_ammo_txt"
-msgstr ""
-"Κύριε Διοικητά, τελειοποιήσαμε το σχεδιασμό του γεμιστήρα Δευτερίου-Φθορίου για τα όπλα λέιζερ και είναι πλέον διαθέσιμος για μαζική παραγωγή. Θα είναι ακριβοί στην κατασκευή και τη χρήση, όμως κάναμε τα δυνατά μας για τον περιορισμό του κόστους.\n"
-"\n"
-"Στην ουσία, ο γεμιστήρας είναι ένα σκληρό πλαστικό περίβλημα που διαχωρίζεται σε πέντε θαλάμους. Οι τέσσερις από αυτούς τους θαλάμους αποθηκεύουν υπό πίεση αιθυλένιο, τριφθοριούχο άζωτο, ήλιο και δευτέριο, ενώ στον πέμπτο βρίσκεται μια μικρή μπαταρία που τροφοδοτεί τα ηλεκτρονικά του λέιζερ.\n"
-"\n"
-"Το περίβλημα είναι φτιαγμένο από το ανθεκτικότερο πολυμερές που μπορούμε να κατασκευάσουμε, ενώ τα ευαίσθητα σημεία του έχουν ενισχυθεί με ανθρακονήματα προς αποφυγή ανάμειξης των αερίων από τυχόν κρούσεις. Δεν είναι δυνατόν να παρέχουμε πλήρη προστασία στη γεμιστήρα από απευθείας πυροβολισμούς, όμως κάναμε το καλύτερο δυνατόν. Η πιθανότητα διαρροής κατά τη διάρκεια της μάχης έχει περιοριστεί σε κλάσμα της ποσοστιαίας μονάδας.\n"
-"\n"
-"Μετά την επιστροφή των στρατιωτών μας, τα υλικά που έχουν περισσέψει στις χρησιμοποιημένες γεμιστήρες λέιζερ διοχετεύονται πίσω στις δεξαμενές της βάσης. Μια χρησιμοποιημένη γεμιστήρα δεν μπορεί να ξαναγεμίσει λόγω επιμόλυνσης από δευτέριο, ενώ την απόρριψη και καταστροφή της αναλαμβάνει ομάδα χημικού κινδύνου.\n"
-"\n"
-"--Paul Navarre, Διευθυντής"
-
-#: ../base/ufos/research.ufo:1359
-msgid "laser_ammo_pre_txt"
-msgstr ""
-"Αυτή είναι μία από αρκετές προτάσεις που υποβάλλω για την έρευνα και ανάπτυξη νέων όπλων λέιζερ. Η καθεμία από τις προτάσεις θα πρέπει να αναπτυχθεί ξεχωριστά λόγω της διαφοράς μεγέθους, απαιτούμενης ισχύος και πολυπλοκότητας των απαιτούμενων συστημάτων.\n"
-"\n"
-"Προκειμένου να τροφοδοτήσουμε τα όπλα λέιζερ Δευτερίου-Φθορίου, χρειάζεται να σχεδιάσουμε μια γεμιστήρα ικανή να αποθηκεύσει με ασφάλεια διαφορετικά επικίνδυνα υλικά. Πρέπει να αποθηκεύουμε σε διαφορετικούς θαλάμους αιθυλένιο, τριφθοριούχο άζωτο, ήλιο και δευτέριο -- τρία εκ των οποίων είναι τοξικά -- και να τα έχουμε υπό πλήρη έλεγχο ανά πάσα στιγμή. Εάν επιτρέψουμε την ανάμιξη των συγκεκριμένων υλικών, προκύπτει κάτι που εμείς οι μηχανικοί θεωρούμε 'Κακό Πράγμα'.\n"
-"\n"
-"Ήδη διαθέτουμε ένα βασικό σχεδιασμό ο οποίος ξεπερνάει αυτά τα εμπόδια, όμως χρειαζόμαστε εργαστηριακή υποδομή και χρηματοδότηση προκειμένου να τον δοκιμάσουμε, να τελειοποιήσουμε το πρωτότυπο και να το κατασκευάσουμε σύμφωνα με τις προδιαγραφές του ΟΗΕ. Πρόκειται για επίπονη δουλειά, όμως είναι απαραίτητη προκειμένου τα όπλα λέιζερ να είναι ασφαλή στη χρήση. Δεν είμαι πρόθυμος να ριψοκινδυνέψω πιθανή δηλητηρίαση των στρατιωτών μας από διαρροή δευτερίου λόγω προχειρότητας. Χρειαζόμαστε κατάλληλες γεμιστήρες αν θέλουμε να χρησιμοποιήσουμε τα νέα όπλα λέιζερ.\n"
-"\n"
-"Παρακαλώ να εγκρίνετε την πρόταση όσο πιο σύντομα μπορείτε.\n"
-"\n"
-"--Paul Navarre, Διευθυντής"
-
-#: ../base/ufos/research.ufo:1394
-msgid "heavylaser_txt"
-msgstr ""
-"Κύριε Διοικητά, το πρόγραμμά μας για βαρύ λέιζερ ήταν επιτυχές. Έχουμε ήδη το πρωτότυπο και είμαστε έτοιμοι να προχωρήσουμε στην παραγωγή με την εντολή σας.\n"
-"\n"
-"Όπως υποσχεθήκαμε, το βαρύ λέιζερ αποτελεί επανάσταση στο βαρύ οπλοστάσιό μας. Στα χέρια ενός εξειδικευμένου στρατιώτη, μπορεί να προσφέρει πυρά συνεχούς κύματος που είναι ταυτόχρονα πιο ακριβή από συμβατικά βαριά όπλα και πολύ πιο ισχυρά από τα άλλα μοντέλα λέιζερ πεζικού. Ως μέλη του Τμήματος Μηχανικών, είμαστε βέβαιοι ότι θα παίξουν ζωτικό ρόλο καθόλη τη διάρκεια του πολέμου.\n"
-"\n"
-"Αυτό δε σημαίνει ότι το βαρύ λέιζερ δεν έχει τα μειονεκτήματά του. Πρώτον, πρόκειται για αρκετά ογκώδες και βαρύ όπλο που απαιτεί δυνατό στρατιώτη για να το χρησιμοποιήσει αποτελεσματικά. Δε θυσιάζει ευστοχία, παρά το μέγεθός του, αλλά πυροβολά και αντιδρά πιο αργά από όσο θα θέλαμε, ενώ η κατανάλωση πυρομαχικών του είναι συγκλονιστική. Μπορεί να αδειάσει άνετα μία γεμάτη γεμιστήρα δευτερίου-φθορίου σε λιγότερο από 30 δευτερόλεπτα συνεχούς πυρός. Αυτό απαιτεί να υπάρχει ανά πάσα στιγμή σε ευχέρεια μεγάλος αριθμός πυρομαχικών, ενώ παράλληλα το βαρύ λέιζερ δεν είναι ιδιαίτερα γρήγορο στο γέμισμα.\n"
-"\n"
-"Μία ακόμη αδυναμία είναι το γεγονός ότι το βαρύ λέιζερ δεν μπορεί να πυροβολήσει διαμέσου καπνού, αερίων ή φωτιάς. Όλα τα όπλα λέιζερ έχουν αυτό το πρόβλημα: παραπέτασμα αερίων διαθλά την ακτίνα τους σε ακίνδυνο φως, γι' αυτό πρέπει να είμαστε προσεκτικοί με τη χρήση εμπρηστικών και καπνογόνων όπλων. Ακόμη σημαντική προσοχή χρειάζεται ώστε να μη βρεθούν πολίτες ή μέλη της PHALANX στη διαδρομή της αόρατης ακτίνας. Ακόμη και στιγμιαία έκθεση σε μία ανεμπόδιστη ακτίνα θα ρευστοποιήσει το δέρμα και θα απανθρακώσει τα οστά. Πλήγμα στα μάτια θα προκαλέσει μόνιμη, ανεπανόρθωτη τύφλωση. Έχουμε ήδη συμβουλεύσει σχετικά τους εκπαιδευτές και αξιωματικούς μας και έχουμε υπογραμμίσει τις οδηγίες ασφαλείας σε κάθε σημείο του εγχειριδίου μάχης, αλλά δε βλάπτει αν οι στρατιώτες μας τις ξανακούσουν από εσάς, κύριε Διοικητά.\n"
-"\n"
-"Ρομποτικοί ή θωρακισμένοι εξωγήινοι είναι δυνατόν να επιβιώσουν από την ακτίνα για λίγο χρόνο, ακόμη και από βαριά λέιζερ, πριν η θωράκισή τους αχρηστευθεί. Συστήνεται να εμπλέκονται τέτοιοι εχθροί με αρκετούς στρατιώτες ταυτόχρονα και να συγκεντρώνονται τα πυρά πάνω τους για να την εξουδετερώσή τους όσο το δυνατό συντομότερα.\n"
-"\n"
-"Επίσης σας συστήνουμε, κύριε Διοικητά, να μην αντικαταστήσετε όλα τα συμβατικά βαριά όπλα με βαριά λέιζερ. Χρειαζόμαστε μια καλή ισορροπία όπλων που να προσθέτει στα ατού των στρατιωτών μας και να πλήττει τις αδυναμίες των εξωγήινων. Το μεικτό οπλοστάσιο είναι και υγιές οπλοστάσιο και είναι δύσκολο να αμυνθεί κάποιος εναντίον του.\n"
-"\n"
-"Χρειάζεται να έχουμε τουλάχιστον μία Γεμιστήρα Δ-Φ σε ευχέρεια ανά πάσα στιγμή, για να μπορούμε να γεμίσουμε και να χρησιμοποιήσουμε το βαρύ λέιζερ.\n"
-"\n"
-"--Paul Navarre, Διευθυντής"
-
-#: ../base/ufos/research.ufo:1397
-msgid "heavylaser_pre_txt"
-msgstr ""
-"Αυτή είναι μία από αρκετές προτάσεις που υποβάλλω για την έρευνα και ανάπτυξη νέων όπλων λέιζερ. Η καθεμία από τις προτάσεις θα πρέπει να αναπτυχθεί ξεχωριστά λόγω της διαφοράς μεγέθους, απαιτούμενης ισχύος και πολυπλοκότητας των εμπλεκόμενων συστημάτων.\n"
-"\n"
-"Χάρη στην εμπειρία που αποκτήσαμε κατά την έρευνα του Λέιζερ Συνεχούς Κύματος, η ομάδα μου κι εγώ σκεφτήκαμε μερικούς πιθανούς τρόπους ενίσχυσης της καταστροφικής ικανότητας των λέιζερ του πεζικού μας. Αυτό όμως απαιτεί σημαντική έρευνα και τελειοποίηση του πρωτοτύπου μας, όπως επίσης και μεγέθυνση των διαφόρων εξαρτημάτων. Το αποτέλεσμα θα είναι ένα όπλο προοριζόμενο αποκλειστικά για βαρύ πεζικό, περίπου ιδίου μεγέθους με τον HPGL εκτοξευτή βομβίδων μας.\n"
-"\n"
-"Θεωρούμε ότι αυτό το όπλο θα είναι ανυπολόγιστης αξίας για το ρόλο πυρών υποστήριξης και την διάσπαση άμυνας με απευθείας πυρά, ικανό να διαλύσει την τοπική εχθρική υπεροχή με πανίσχυρες και επακριβείς βολές. Θα έχει χαρακτηριστικά και δυνατότητες που ίσως λείπουν από το υπάρχον βαρύ οπλοστάσιό μας. Η ευστοχία σε μεγάλες αποστάσεις είναι γενικά τραγική στα γήινα βαρέα όπλα και είναι συνήθως δύσκολο να χρησιμοποιηθούν σε καταστάσεις που πρέπει να αποφύγουμε παράπλευρες απώλειες. Το βαρύ λέιζερ θα αποφεύγει ταυτόχρονα και τα δύο αυτά προβλήματα.\n"
-"\n"
-"Αξίζει να εξετάσετε την πρόταση, κύριε Διοικητά.\n"
-"\n"
-"--Paul Navarre, Διευθυντής"
-
-#: ../base/ufos/research.ufo:1433
+#: ../base/ufos/research.ufo:1364
 msgid "irgoggles_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Γυαλιά Υπερύθρων\n"
@@ -3540,11 +3484,11 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:1448
+#: ../base/ufos/research.ufo:1379
 msgid "Alien Artifact - Kerrblade"
 msgstr "Alien Artifact - Kerrblade"
 
-#: ../base/ufos/research.ufo:1453
+#: ../base/ufos/research.ufo:1384
 msgid "kerrblade_txt"
 msgstr ""
 "Κύριε Διοικητά, η ανάλυση του Ξεκοιλιαστή ολοκληρώθηκε. Παραθέτω την περίληψη μου για την αξιολόγησή σας.\n"
@@ -3563,7 +3507,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1456
+#: ../base/ufos/research.ufo:1387
 msgid "kerrblade_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε ένα ενδιαφέρον εξωγήινο όπλο από το πεδίο της μάχης. Φαίνεται να είναι ένα είδος μαχαιριού ή ξίφους με κόψη πιο αιχμηρή από οτιδήποτε γήινο. Μπορεί να κόψει ατσάλι σαν φύλλο χαρτιού και να διαπεράσει τη θωράκιση των στρατιωτών μας σαν να μην υπήρχε. Οι στρατιώτες μας το ονόμασαν \"Ξεκοιλιαστή\" από την τρομακτική ικανότητα του να πετσοκόβει τους άντρες μας.\n"
@@ -3574,7 +3518,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1492
+#: ../base/ufos/research.ufo:1423
 msgid "laserpistol_txt"
 msgstr ""
 "Κύριε Διοικητά, ζητώ συγγνώμη αν η σύνταξη του παρακάτω μηνύματος δεν είναι επαρκούς επιπέδου. Περάσαμε πολλές άυπνες νύχτες στο Τμήμα Μηχανικών δουλεύοντας για την ανάπτυξη του πιστολιού λέιζερ. Ήταν εξουθενωτική εργασία, αλλά είμαι περήφανος να σας ενημερώσω ότι τα καταφέραμε. Έχουμε ένα λειτουργικό πρωτότυπο πιστολιού λέιζερ.\n"
@@ -3593,7 +3537,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1495
+#: ../base/ufos/research.ufo:1426
 msgid "laserpistol_pre_txt"
 msgstr ""
 "Αυτή είναι μία από αρκετές προτάσεις που υποβάλλω για την έρευνα και ανάπτυξη νέων λέιζερ όπλων. Η καθεμία από τις προτάσεις θα πρέπει να αναπτυχθεί ξεχωριστά λόγω της διαφοράς μεγέθους, απαιτούμενης ισχύος και πολυπλοκότητας των απαιτούμενων συστημάτων.\n"
@@ -3608,7 +3552,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1530
+#: ../base/ufos/research.ufo:1461
 msgid "laserrifle_txt"
 msgstr ""
 "Τα καταφέραμε κύριε Διοικητά. Είμαστε πλέον περήφανοι κάτοχοι ενός λειτουργικού τουφεκίου λέιζερ με ολοκληρωμένα πλάνα παραγωγής φορτωμένα στους υπολογιστές μας. Αφαιρέσαμε διάφορα κινητά μέρη και βελτιώσαμε τα ηλεκτρονικά ώστε να μειώσουμε το κόστος παραγωγής και συντήρησης στα επίπεδα του προϋπολογισμού μας. Θεωρώ ότι οι προδιαγραφές του όπλου θα σας ικανοποιήσουν.\n"
@@ -3625,7 +3569,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1533
+#: ../base/ufos/research.ufo:1464
 msgid "laserrifle_pre_txt"
 msgstr ""
 "Αυτή είναι μία από αρκετές προτάσεις που υποβάλλω για την έρευνα και ανάπτυξη νέων λέιζερ όπλων. Η καθεμία από τις προτάσεις θα πρέπει να αναπτυχθεί ξεχωριστά λόγω της διαφοράς μεγέθους, απαιτούμενης ισχύος και πολυπλοκότητας των απαιτούμενων συστημάτων.\n"
@@ -3638,7 +3582,39 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1569
+#: ../base/ufos/research.ufo:1500
+msgid "heavylaser_txt"
+msgstr ""
+"Κύριε Διοικητά, το πρόγραμμά μας για βαρύ λέιζερ ήταν επιτυχές. Έχουμε ήδη το πρωτότυπο και είμαστε έτοιμοι να προχωρήσουμε στην παραγωγή με την εντολή σας.\n"
+"\n"
+"Όπως υποσχεθήκαμε, το βαρύ λέιζερ αποτελεί επανάσταση στο βαρύ οπλοστάσιό μας. Στα χέρια ενός εξειδικευμένου στρατιώτη, μπορεί να προσφέρει πυρά συνεχούς κύματος που είναι ταυτόχρονα πιο ακριβή από συμβατικά βαριά όπλα και πολύ πιο ισχυρά από τα άλλα μοντέλα λέιζερ πεζικού. Ως μέλη του Τμήματος Μηχανικών, είμαστε βέβαιοι ότι θα παίξουν ζωτικό ρόλο καθόλη τη διάρκεια του πολέμου.\n"
+"\n"
+"Αυτό δε σημαίνει ότι το βαρύ λέιζερ δεν έχει τα μειονεκτήματά του. Πρώτον, πρόκειται για αρκετά ογκώδες και βαρύ όπλο που απαιτεί δυνατό στρατιώτη για να το χρησιμοποιήσει αποτελεσματικά. Δε θυσιάζει ευστοχία, παρά το μέγεθός του, αλλά πυροβολά και αντιδρά πιο αργά από όσο θα θέλαμε, ενώ η κατανάλωση πυρομαχικών του είναι συγκλονιστική. Μπορεί να αδειάσει άνετα μία γεμάτη γεμιστήρα δευτερίου-φθορίου σε λιγότερο από 30 δευτερόλεπτα συνεχούς πυρός. Αυτό απαιτεί να υπάρχει ανά πάσα στιγμή σε ευχέρεια μεγάλος αριθμός πυρομαχικών, ενώ παράλληλα το βαρύ λέιζερ δεν είναι ιδιαίτερα γρήγορο στο γέμισμα.\n"
+"\n"
+"Μία ακόμη αδυναμία είναι το γεγονός ότι το βαρύ λέιζερ δεν μπορεί να πυροβολήσει διαμέσου καπνού, αερίων ή φωτιάς. Όλα τα όπλα λέιζερ έχουν αυτό το πρόβλημα: παραπέτασμα αερίων διαθλά την ακτίνα τους σε ακίνδυνο φως, γι' αυτό πρέπει να είμαστε προσεκτικοί με τη χρήση εμπρηστικών και καπνογόνων όπλων. Ακόμη σημαντική προσοχή χρειάζεται ώστε να μη βρεθούν πολίτες ή μέλη της PHALANX στη διαδρομή της αόρατης ακτίνας. Ακόμη και στιγμιαία έκθεση σε μία ανεμπόδιστη ακτίνα θα ρευστοποιήσει το δέρμα και θα απανθρακώσει τα οστά. Πλήγμα στα μάτια θα προκαλέσει μόνιμη, ανεπανόρθωτη τύφλωση. Έχουμε ήδη συμβουλεύσει σχετικά τους εκπαιδευτές και αξιωματικούς μας και έχουμε υπογραμμίσει τις οδηγίες ασφαλείας σε κάθε σημείο του εγχειριδίου μάχης, αλλά δε βλάπτει αν οι στρατιώτες μας τις ξανακούσουν από εσάς, κύριε Διοικητά.\n"
+"\n"
+"Ρομποτικοί ή θωρακισμένοι εξωγήινοι είναι δυνατόν να επιβιώσουν από την ακτίνα για λίγο χρόνο, ακόμη και από βαριά λέιζερ, πριν η θωράκισή τους αχρηστευθεί. Συστήνεται να εμπλέκονται τέτοιοι εχθροί με αρκετούς στρατιώτες ταυτόχρονα και να συγκεντρώνονται τα πυρά πάνω τους για να την εξουδετερώσή τους όσο το δυνατό συντομότερα.\n"
+"\n"
+"Επίσης σας συστήνουμε, κύριε Διοικητά, να μην αντικαταστήσετε όλα τα συμβατικά βαριά όπλα με βαριά λέιζερ. Χρειαζόμαστε μια καλή ισορροπία όπλων που να προσθέτει στα ατού των στρατιωτών μας και να πλήττει τις αδυναμίες των εξωγήινων. Το μεικτό οπλοστάσιο είναι και υγιές οπλοστάσιο και είναι δύσκολο να αμυνθεί κάποιος εναντίον του.\n"
+"\n"
+"Χρειάζεται να έχουμε τουλάχιστον μία Γεμιστήρα Δ-Φ σε ευχέρεια ανά πάσα στιγμή, για να μπορούμε να γεμίσουμε και να χρησιμοποιήσουμε το βαρύ λέιζερ.\n"
+"\n"
+"--Paul Navarre, Διευθυντής"
+
+#: ../base/ufos/research.ufo:1503
+msgid "heavylaser_pre_txt"
+msgstr ""
+"Αυτή είναι μία από αρκετές προτάσεις που υποβάλλω για την έρευνα και ανάπτυξη νέων όπλων λέιζερ. Η καθεμία από τις προτάσεις θα πρέπει να αναπτυχθεί ξεχωριστά λόγω της διαφοράς μεγέθους, απαιτούμενης ισχύος και πολυπλοκότητας των εμπλεκόμενων συστημάτων.\n"
+"\n"
+"Χάρη στην εμπειρία που αποκτήσαμε κατά την έρευνα του Λέιζερ Συνεχούς Κύματος, η ομάδα μου κι εγώ σκεφτήκαμε μερικούς πιθανούς τρόπους ενίσχυσης της καταστροφικής ικανότητας των λέιζερ του πεζικού μας. Αυτό όμως απαιτεί σημαντική έρευνα και τελειοποίηση του πρωτοτύπου μας, όπως επίσης και μεγέθυνση των διαφόρων εξαρτημάτων. Το αποτέλεσμα θα είναι ένα όπλο προοριζόμενο αποκλειστικά για βαρύ πεζικό, περίπου ιδίου μεγέθους με τον HPGL εκτοξευτή βομβίδων μας.\n"
+"\n"
+"Θεωρούμε ότι αυτό το όπλο θα είναι ανυπολόγιστης αξίας για το ρόλο πυρών υποστήριξης και την διάσπαση άμυνας με απευθείας πυρά, ικανό να διαλύσει την τοπική εχθρική υπεροχή με πανίσχυρες και επακριβείς βολές. Θα έχει χαρακτηριστικά και δυνατότητες που ίσως λείπουν από το υπάρχον βαρύ οπλοστάσιό μας. Η ευστοχία σε μεγάλες αποστάσεις είναι γενικά τραγική στα γήινα βαρέα όπλα και είναι συνήθως δύσκολο να χρησιμοποιηθούν σε καταστάσεις που πρέπει να αποφύγουμε παράπλευρες απώλειες. Το βαρύ λέιζερ θα αποφεύγει ταυτόχρονα και τα δύο αυτά προβλήματα.\n"
+"\n"
+"Αξίζει να εξετάσετε την πρόταση, κύριε Διοικητά.\n"
+"\n"
+"--Paul Navarre, Διευθυντής"
+
+#: ../base/ufos/research.ufo:1539
 #, fuzzy
 msgid "electrolaser_txt"
 msgstr ""
@@ -3664,11 +3640,37 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:1572
+#: ../base/ufos/research.ufo:1542
 msgid "electrolaser_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:1607
+#: ../base/ufos/research.ufo:1581
+msgid "laser_ammo_txt"
+msgstr ""
+"Κύριε Διοικητά, τελειοποιήσαμε το σχεδιασμό του γεμιστήρα Δευτερίου-Φθορίου για τα όπλα λέιζερ και είναι πλέον διαθέσιμος για μαζική παραγωγή. Θα είναι ακριβοί στην κατασκευή και τη χρήση, όμως κάναμε τα δυνατά μας για τον περιορισμό του κόστους.\n"
+"\n"
+"Στην ουσία, ο γεμιστήρας είναι ένα σκληρό πλαστικό περίβλημα που διαχωρίζεται σε πέντε θαλάμους. Οι τέσσερις από αυτούς τους θαλάμους αποθηκεύουν υπό πίεση αιθυλένιο, τριφθοριούχο άζωτο, ήλιο και δευτέριο, ενώ στον πέμπτο βρίσκεται μια μικρή μπαταρία που τροφοδοτεί τα ηλεκτρονικά του λέιζερ.\n"
+"\n"
+"Το περίβλημα είναι φτιαγμένο από το ανθεκτικότερο πολυμερές που μπορούμε να κατασκευάσουμε, ενώ τα ευαίσθητα σημεία του έχουν ενισχυθεί με ανθρακονήματα προς αποφυγή ανάμειξης των αερίων από τυχόν κρούσεις. Δεν είναι δυνατόν να παρέχουμε πλήρη προστασία στη γεμιστήρα από απευθείας πυροβολισμούς, όμως κάναμε το καλύτερο δυνατόν. Η πιθανότητα διαρροής κατά τη διάρκεια της μάχης έχει περιοριστεί σε κλάσμα της ποσοστιαίας μονάδας.\n"
+"\n"
+"Μετά την επιστροφή των στρατιωτών μας, τα υλικά που έχουν περισσέψει στις χρησιμοποιημένες γεμιστήρες λέιζερ διοχετεύονται πίσω στις δεξαμενές της βάσης. Μια χρησιμοποιημένη γεμιστήρα δεν μπορεί να ξαναγεμίσει λόγω επιμόλυνσης από δευτέριο, ενώ την απόρριψη και καταστροφή της αναλαμβάνει ομάδα χημικού κινδύνου.\n"
+"\n"
+"--Paul Navarre, Διευθυντής"
+
+#: ../base/ufos/research.ufo:1584
+msgid "laser_ammo_pre_txt"
+msgstr ""
+"Αυτή είναι μία από αρκετές προτάσεις που υποβάλλω για την έρευνα και ανάπτυξη νέων όπλων λέιζερ. Η καθεμία από τις προτάσεις θα πρέπει να αναπτυχθεί ξεχωριστά λόγω της διαφοράς μεγέθους, απαιτούμενης ισχύος και πολυπλοκότητας των απαιτούμενων συστημάτων.\n"
+"\n"
+"Προκειμένου να τροφοδοτήσουμε τα όπλα λέιζερ Δευτερίου-Φθορίου, χρειάζεται να σχεδιάσουμε μια γεμιστήρα ικανή να αποθηκεύσει με ασφάλεια διαφορετικά επικίνδυνα υλικά. Πρέπει να αποθηκεύουμε σε διαφορετικούς θαλάμους αιθυλένιο, τριφθοριούχο άζωτο, ήλιο και δευτέριο -- τρία εκ των οποίων είναι τοξικά -- και να τα έχουμε υπό πλήρη έλεγχο ανά πάσα στιγμή. Εάν επιτρέψουμε την ανάμιξη των συγκεκριμένων υλικών, προκύπτει κάτι που εμείς οι μηχανικοί θεωρούμε 'Κακό Πράγμα'.\n"
+"\n"
+"Ήδη διαθέτουμε ένα βασικό σχεδιασμό ο οποίος ξεπερνάει αυτά τα εμπόδια, όμως χρειαζόμαστε εργαστηριακή υποδομή και χρηματοδότηση προκειμένου να τον δοκιμάσουμε, να τελειοποιήσουμε το πρωτότυπο και να το κατασκευάσουμε σύμφωνα με τις προδιαγραφές του ΟΗΕ. Πρόκειται για επίπονη δουλειά, όμως είναι απαραίτητη προκειμένου τα όπλα λέιζερ να είναι ασφαλή στη χρήση. Δεν είμαι πρόθυμος να ριψοκινδυνέψω πιθανή δηλητηρίαση των στρατιωτών μας από διαρροή δευτερίου λόγω προχειρότητας. Χρειαζόμαστε κατάλληλες γεμιστήρες αν θέλουμε να χρησιμοποιήσουμε τα νέα όπλα λέιζερ.\n"
+"\n"
+"Παρακαλώ να εγκρίνετε την πρόταση όσο πιο σύντομα μπορείτε.\n"
+"\n"
+"--Paul Navarre, Διευθυντής"
+
+#: ../base/ufos/research.ufo:1617
 msgid "medikit_txt"
 msgstr ""
 "Technical Specifications: Medikit\n"
@@ -3711,11 +3713,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1622 ../base/ufos/research.ufo:1664
+#: ../base/ufos/research.ufo:1632 ../base/ufos/research.ufo:1674
 msgid "Alien Artifact - Plasma Pistol"
 msgstr "Εξωγήινο τεχνούργημα - Πιστόλι Πλάσματος"
 
-#: ../base/ufos/research.ufo:1627
+#: ../base/ufos/research.ufo:1637
 msgid "plasatomizer_txt"
 msgstr ""
 "When the aliens need a sidearm, they don't screw around.\n"
@@ -3734,7 +3736,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1630
+#: ../base/ufos/research.ufo:1640
 msgid "plasatomizer_pre_txt"
 msgstr ""
 "Commander, we've recovered the first alien plasma weapon of the war. I don't need to tell you how important this is. The alien armaments are highly-advanced, powerful and extremely lethal; we must figure out how they work in order to arm and armour ourselves against them.\n"
@@ -3745,11 +3747,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1682 ../base/ufos/research.ufo:1723
+#: ../base/ufos/research.ufo:1692 ../base/ufos/research.ufo:1733
 msgid "Alien Artifact - Plasma Blaster"
 msgstr "Εξωγήινο τεχνούργημα - Εκρηκτικό Πλάσματος"
 
-#: ../base/ufos/research.ufo:1687
+#: ../base/ufos/research.ufo:1697
 msgid "plasblaster_txt"
 msgstr ""
 "Commander, here's my report on our alien plasma blaster research.\n"
@@ -3764,7 +3766,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1690
+#: ../base/ufos/research.ufo:1700
 msgid "plasblaster_pre_txt"
 msgstr ""
 "Commander, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research. Preliminary testing confirms that blaster shots tear right through our Combat Armour and have a far longer range than the other plasma weapons we've recovered.\n"
@@ -3773,11 +3775,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1741
+#: ../base/ufos/research.ufo:1751
 msgid "Alien Artifact - Plasma Blade"
 msgstr "Εξωγήινο τεχνούργημα - Λεπίδα Πλάσματος"
 
-#: ../base/ufos/research.ufo:1746
+#: ../base/ufos/research.ufo:1756
 msgid "plasblade_txt"
 msgstr ""
 "Commander, we've figured out the secrets of the alien weapon. I'm afraid the news is not good.\n"
@@ -3796,7 +3798,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1749
+#: ../base/ufos/research.ufo:1759
 msgid "plasblade_pre_txt"
 msgstr ""
 "Commander, our last tactical mission brought back a strange alien weapon in the form of a plasma chamber with a handle. At least, we assume it's a weapon; the shape seems to suggest some kind of plasma-based knife, though I have no idea how this would work. We can't quite figure out how to turn it on or what purpose it serves in the alien arsenal.\n"
@@ -3805,11 +3807,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1781
+#: ../base/ufos/research.ufo:1791
 msgid "Alien Artifact - Plasma Grenade"
 msgstr "Εξωγήινο τεχνούργημα - Χειροβομβίδα Πλάσματος"
 
-#: ../base/ufos/research.ufo:1786
+#: ../base/ufos/research.ufo:1796
 msgid "plasmagren_txt"
 msgstr ""
 "Commander, our assessment of the alien plasma grenade is complete. Like all the alien weapons, it's very nasty and very dangerous.\n"
@@ -3824,7 +3826,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1789
+#: ../base/ufos/research.ufo:1799
 msgid "plasmagren_pre_txt"
 msgstr ""
 "Commander, our last tac mission has brought back an alien plasma grenade. This is a highly powerful grenade-type weapon that, once thrown, explodes in a shower of superheated plasma. It's somewhat larger and appears to be a good deal more dangerous than our standard frag grenades.\n"
@@ -3835,11 +3837,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1821 ../base/ufos/research.ufo:1863
+#: ../base/ufos/research.ufo:1831 ../base/ufos/research.ufo:1873
 msgid "Alien Artifact - Plasma Rifle"
 msgstr "Εξωγήινο τεχνούργημα - Τυφέκιο Πλάσματος"
 
-#: ../base/ufos/research.ufo:1826
+#: ../base/ufos/research.ufo:1836
 msgid "plasrifle_txt"
 msgstr ""
 "Commander, here's my report on our alien plasma rifle research.\n"
@@ -3856,19 +3858,19 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1829
+#: ../base/ufos/research.ufo:1839
 msgid "plasrifle_pre_txt"
 msgstr ""
 "Commander, my department is ready to begin studying the recovered alien plasma rifle. This is a highly dangerous and versatile weapon, vastly outstripping the plasma pistol in range and power; something we should try to put into the hands of our own soldiers ASAP. Please approve lab time and funding as soon as our schedule permits.\n"
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1881 ../base/ufos/research.ufo:1961
+#: ../base/ufos/research.ufo:1891 ../base/ufos/research.ufo:1971
 #: ../base/ufos/weapons_aliens.ufo:6
 msgid "Needler Gun"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1886
+#: ../base/ufos/research.ufo:1896
 msgid "needlergun_txt"
 msgstr ""
 "Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
@@ -3885,7 +3887,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1889
+#: ../base/ufos/research.ufo:1899
 msgid "needlergun_pre_txt"
 msgstr ""
 "Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
@@ -3894,11 +3896,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1921 ../base/ufos/weapons_aliens.ufo:26
+#: ../base/ufos/research.ufo:1931 ../base/ufos/weapons_aliens.ufo:26
 msgid "Heavy Needler Gun"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1926
+#: ../base/ufos/research.ufo:1936
 #, fuzzy
 msgid "needlerheavy_txt"
 msgstr ""
@@ -3916,11 +3918,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1929
+#: ../base/ufos/research.ufo:1939
 msgid "needlerheavy_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:1983
+#: ../base/ufos/research.ufo:1993
 msgid "coilgun_txt"
 msgstr ""
 "Commander, I'd like to present you with the finished plans and prototype for our Coilgun.\n"
@@ -3939,7 +3941,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1986
+#: ../base/ufos/research.ufo:1996
 msgid "coilgun_pre_txt"
 msgstr ""
 "Commander, our brainstorms down at DivEngine have come up with an interesting idea based on the alien Needler technology. When combining the alien fast-changing magnetic generators -- and, even more importantly, their power source -- with human-engineered EM rifle technology, some amazing man-portable weaponry becomes possible. I'd hereby like to propose a new design for a coilgun in the role of a sniper rifle.\n"
@@ -3952,13 +3954,13 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1993 ../base/ufos/research.ufo:2001
+#: ../base/ufos/research.ufo:2003 ../base/ufos/research.ufo:2011
 #: ../base/ufos/weapons_human.ufo:392
 #, fuzzy
 msgid "Coilgun"
 msgstr "Νόμισμα"
 
-#: ../base/ufos/research.ufo:2039
+#: ../base/ufos/research.ufo:2049
 msgid "shotgun2_txt"
 msgstr ""
 "Technical Specifications: CRC-212 Riot Shotgun\n"
@@ -4003,7 +4005,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2058
+#: ../base/ufos/research.ufo:2068
 msgid "shotgun2_slug_ammo_txt"
 msgstr ""
 "Technical Specifications: Saboted Slugs\n"
@@ -4036,7 +4038,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2079
+#: ../base/ufos/research.ufo:2089
 msgid "shotgun_micro_txt"
 msgstr ""
 "Technical Specifications: CRC-M9 Micro Shotgun\n"
@@ -4085,7 +4087,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2098
+#: ../base/ufos/research.ufo:2108
 msgid "shotgun_micro_ammo_txt"
 msgstr ""
 "Technical Specifications: Flechette Shells\n"
@@ -4120,7 +4122,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2118
+#: ../base/ufos/research.ufo:2128
 msgid "smg_txt"
 msgstr ""
 "Technical Specifications: CRC-8 SMG\n"
@@ -4165,7 +4167,7 @@ msgstr ""
 "\n"
 "Despite good penetration against organics, this weapon performs very poorly against robotic targets."
 
-#: ../base/ufos/research.ufo:2137
+#: ../base/ufos/research.ufo:2147
 msgid "smg_mag_txt"
 msgstr ""
 "Technical Specifications: SMG Magazine\n"
@@ -4198,7 +4200,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2157
+#: ../base/ufos/research.ufo:2167
 msgid "smokegren_txt"
 msgstr ""
 "Technical Specifications: Smoke Grenade\n"
@@ -4239,7 +4241,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2176
+#: ../base/ufos/research.ufo:2186
 msgid "sniper_txt"
 msgstr ""
 "Technical Specifications: S-1 Sniper Rifle\n"
@@ -4284,7 +4286,7 @@ msgstr ""
 "\n"
 "Along with high-explosive rockets and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:2195
+#: ../base/ufos/research.ufo:2205
 msgid "sniper_mag_txt"
 msgstr ""
 "Technical Specifications: Sniper Rifle Magazine\n"
@@ -4317,11 +4319,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2213
+#: ../base/ufos/research.ufo:2223
 msgid "Anti-Alien Gas"
 msgstr "Αέριο κατά των εξωγήινων"
 
-#: ../base/ufos/research.ufo:2218
+#: ../base/ufos/research.ufo:2228
 msgid "stungren_txt"
 msgstr ""
 "Commander,\n"
@@ -4342,7 +4344,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2221
+#: ../base/ufos/research.ufo:2231
 msgid "stungren_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -4359,21 +4361,21 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2260
+#: ../base/ufos/research.ufo:2270
 #, fuzzy
 msgid "Alien Anti-Human Gas"
 msgstr "Εξωγήινο τεχνούργημα"
 
-#: ../base/ufos/research.ufo:2265
+#: ../base/ufos/research.ufo:2275
 #, fuzzy
 msgid "stungren_alien_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:2268
+#: ../base/ufos/research.ufo:2278
 msgid "stungren_alien_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:2307
+#: ../base/ufos/research.ufo:2317
 msgid "stunrod_txt"
 msgstr ""
 "Commander,\n"
@@ -4396,7 +4398,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2310
+#: ../base/ufos/research.ufo:2320
 msgid "stunrod_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -4415,11 +4417,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2343 ../base/ufos/research.ufo:2383
+#: ../base/ufos/research.ufo:2353 ../base/ufos/research.ufo:2393
 msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Εξωγήινο τεχνούργημα - Πιστόλι μοριακής ακτίνας"
 
-#: ../base/ufos/research.ufo:2348
+#: ../base/ufos/research.ufo:2358
 msgid "pbeampistol_txt"
 msgstr ""
 "Commander, I've got the specs of the new alien pistol for you, and they're not good.\n"
@@ -4438,7 +4440,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2351
+#: ../base/ufos/research.ufo:2361
 msgid "pbeampistol_pre_txt"
 msgstr ""
 "Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
@@ -4447,11 +4449,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2402 ../base/ufos/research.ufo:2443
+#: ../base/ufos/research.ufo:2412 ../base/ufos/research.ufo:2453
 msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "Εξωγήινο τεχνούργημα - Κανόνι μοριακής ακτίνας"
 
-#: ../base/ufos/research.ufo:2407
+#: ../base/ufos/research.ufo:2417
 msgid "pbeamcannon_txt"
 msgstr ""
 "Commander, we've finished work on this big damned cannon we brought back.\n"
@@ -4470,7 +4472,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2410
+#: ../base/ufos/research.ufo:2420
 msgid "pbeamcannon_pre_txt"
 msgstr ""
 "Commander, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
@@ -4479,11 +4481,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2462 ../base/ufos/research.ufo:2502
+#: ../base/ufos/research.ufo:2472 ../base/ufos/research.ufo:2512
 msgid "Alien Artifact - Particle Beam Rifle"
 msgstr "Εξωγήινο τεχνούργημα - Τυφέκιο μοριακής ακτίνας"
 
-#: ../base/ufos/research.ufo:2467
+#: ../base/ufos/research.ufo:2477
 msgid "pbeamrifle_txt"
 msgstr ""
 "Commander, we've gotten all the info we can from this new alien rifle. It's more bad news, I'm afraid.\n"
@@ -4504,7 +4506,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2470
+#: ../base/ufos/research.ufo:2480
 msgid "pbeamrifle_pre_txt"
 msgstr ""
 "Commander, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.\n"
@@ -4513,11 +4515,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2522
+#: ../base/ufos/research.ufo:2532
 msgid "Man-Portable Particle Beams"
 msgstr "Man-Portable Particle Beams"
 
-#: ../base/ufos/research.ufo:2527
+#: ../base/ufos/research.ufo:2537
 msgid "pbeamammo_txt"
 msgstr ""
 "Commander, my method worked. I think we've managed to crack the secrets of the mysterious particle beam weaponry. Here are my conclusions.\n"
@@ -4536,7 +4538,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2530
+#: ../base/ufos/research.ufo:2540
 msgid "pbeamammo_pre_txt"
 msgstr ""
 "Commander, we've decided that more research is badly needed on the particle beam weaponry, especially their mysterious power source, the magazines which we've been utterly unable to examine. No amount of finesse or ingenuity has been able to open them. That's why I'm hereby proposing extreme measures.\n"
@@ -4549,7 +4551,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2569
+#: ../base/ufos/research.ufo:2579
 msgid "combat_armour_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Θώρακας Μάχης\n"
@@ -4590,7 +4592,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:2583
+#: ../base/ufos/research.ufo:2593
 #, fuzzy
 msgid "advanced_combat_armour_txt"
 msgstr ""
@@ -4632,7 +4634,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2598
+#: ../base/ufos/research.ufo:2608
 msgid "nano_armour_txt"
 msgstr ""
 "Κύριε Διοικητά, θα ήθελα να σας αναφέρω την επιτυχία μας στην έρευνα για την παραγωγή νανοσυνθετικών!\n"
@@ -4651,7 +4653,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:2601
+#: ../base/ufos/research.ufo:2611
 msgid "nano_armour_pre_txt"
 msgstr ""
 "Η μελέτη της εξωγήινης προσωπικής θωράκισης μας οδήγησε σε αρκετές ενδιαφέρουσες διαπιστώσεις. Προφανώς, το κρίσιμο στοιχείο για την κατασκευή ενός αποτελεσματικότερου θώρακα με βάση του θώρακες των εξωγήινων είναι τα νασοσυνθετικά. Για το σκοπό αυτό θα χρειαστούν μεγάλες ποσότητες νανοσωλήνων άνθρακα.\n"
@@ -4664,7 +4666,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής."
 
-#: ../base/ufos/research.ufo:2676
+#: ../base/ufos/research.ufo:2686
 msgid "alien_body_armour_txt"
 msgstr ""
 "Κύριε Διοικητά, σας έχουμε ετοιμάσει πλήρη αναφορά για τον εξωγήινο θώρακα.\n"
@@ -4681,7 +4683,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:2679
+#: ../base/ufos/research.ufo:2689
 msgid "alien_body_armour_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε από το πεδίο της μάχης μια εξωγήινη στολή θωράκισης. Ο θώρακας αυτός έχει βασανίσει αρκετά τους στρατιώτες μας καθώς εμφανίζει πολύ μεγάλη αντίσταση σε διάφορους τύπους ζημιάς: οι εξωγήινοι που τον φορούν αντιστέκονται σε πλήγματα που μπορούν να διαλύσουν τους αθωράκιστους συναδέλφους τους. Δεν πρέπει να μας εκπλήσει το γεγονός ότι ακόμα δεν έχουμε καταφέρει να τον κόψουμε και να τον ανοίξουμε προκειμένου να μελετήσουμε τη σύνθεσή του. Θα πρέπει να αναζητήσουμε όσο πιο σύντομα γίνεται τις αδυναμίες αυτής της θωράκισης, καθώς και πιθανούς τρόπους για την προσαρμογή της στις ανάγκες μας.\n"
@@ -4690,7 +4692,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:2713
+#: ../base/ufos/research.ufo:2723
 msgid "alien_medium_armour_txt"
 msgstr ""
 "Σε ότι σχετίζεται με θέματα θωράκισης, η φιλοσοφία των εξωγήινων δείχνει να είναι \"αν κάτι δουλεύει, χρησιμοποίησε το περισσότερο\". Ο νέος θώρακας είναι παρόμοιος σε σχεδιασμό με τον Εξωγήινο Προσωπικό Θώρακα, χωρίς όμως τους συμβιβασμούς και τις ευαίσθητες ισορροπίες του ελαφρύτερου θώρακα. Αντί να προστατεύει μόνο τον κορμό και το κεφάλι, ο μέσος θώρακας προσπαθεί να καλύψει όλες τις ζωτικές περιοχές, συμπεριλαμβανομένων των αρτηριών και ευαίσθητων νευρικών κόμβων, με πολύ πυκνότερες νανοσυνθετικές πλάκες. Συγκριτικά με τον προσωπικό θώρακα των εξωγήινων, ο μέσος θώρακας περιλαμβάνει διπλάσιο αριθμό νανοσωλήνων ανά τετραγωνικό εκατοστό. Κατά συνέπεια, οι πλάκες τις θωράκισης είναι πρακτικά αδιαπέραστες από τα τυπικά ανθρώπινα πυροβόλα ενώ ακόμα και το μαλακότερο πλέγμα που χρησιμοποιείται στους συνδέσμους μπορεί να σταματήσει σφαίρες με ανησυχητική ευκολία.\n"
@@ -4707,7 +4709,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:2716
+#: ../base/ufos/research.ufo:2726
 msgid "alien_medium_armour_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε ένα νέο είδος εξωγήινου θώρακα από το πεδίο της μάχης. Είναι πολύ βαρύτερος από τον θώρακα που είχαμε αντιμετωπίσει μέχρι τώρα και φαίνεται να σταματάει τα συνηθισμένα όπλα χωρίς να παθαίνει γρατζουνιά. Οι πλάκες κρούσης του θώρακα είναι κατασκευασμένες από την πυκνότερη ύφανση ΝΣΑ (ΝανοΣωλήνων Ανθρακα) που έχουμε δει ποτέ. Είναι απαραίτητο να μελετήσουμε άμεσα τον συγκεκριμένο θώρακα προκειμένου να ανακαλύψουμε ποια από τα όπλα μας θα είναι αποτελεσματικά απεναντί στους θωρακισμένους εξωγήινους, καθώς επίσης πως θα μπορέσουμε να τον αντιγράψουμε για χρήση από τους στρατιώτες μας. Θα είμαστε σε μειονεκτική θέση μέχρι να αντισταθμίσουμε τη συγκεκριμένη τεχνολογία.\n"
@@ -4716,87 +4718,87 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:2751
+#: ../base/ufos/research.ufo:2761
 msgid "Blast Damage Type"
 msgstr "Τύπος Ζημιάς Έκρηξης"
 
-#: ../base/ufos/research.ufo:2754 ../base/ufos/research.ufo:2767
-#: ../base/ufos/research.ufo:2780 ../base/ufos/research.ufo:2798
-#: ../base/ufos/research.ufo:2811 ../base/ufos/research.ufo:2824
-#: ../base/ufos/research.ufo:2845 ../base/ufos/research.ufo:2858
-#: ../base/ufos/research.ufo:2876 ../base/ufos/research.ufo:2889
-#: ../base/ufos/research.ufo:2902 ../base/ufos/research.ufo:2915
-#: ../base/ufos/research.ufo:2928 ../base/ufos/research.ufo:2941
-#: ../base/ufos/research.ufo:2954 ../base/ufos/research.ufo:2967
-#: ../base/ufos/research.ufo:2980
+#: ../base/ufos/research.ufo:2764 ../base/ufos/research.ufo:2777
+#: ../base/ufos/research.ufo:2790 ../base/ufos/research.ufo:2808
+#: ../base/ufos/research.ufo:2821 ../base/ufos/research.ufo:2834
+#: ../base/ufos/research.ufo:2855 ../base/ufos/research.ufo:2868
+#: ../base/ufos/research.ufo:2886 ../base/ufos/research.ufo:2899
+#: ../base/ufos/research.ufo:2912 ../base/ufos/research.ufo:2925
+#: ../base/ufos/research.ufo:2938 ../base/ufos/research.ufo:2951
+#: ../base/ufos/research.ufo:2964 ../base/ufos/research.ufo:2977
+#: ../base/ufos/research.ufo:2990
 msgid "none"
 msgstr "κανένα"
 
-#: ../base/ufos/research.ufo:2764
+#: ../base/ufos/research.ufo:2774
 msgid "Fire Damage Type"
 msgstr "Τύπος Ζημιάς Πυροβολισμού"
 
-#: ../base/ufos/research.ufo:2777
+#: ../base/ufos/research.ufo:2787
 msgid "Laser Damage Type"
 msgstr "Τύπος Ζημιάς Λέϊζερ"
 
-#: ../base/ufos/research.ufo:2795
+#: ../base/ufos/research.ufo:2805
 msgid "Impact Damage Type"
 msgstr "Τύπος Ζημιάς Κρούσης"
 
-#: ../base/ufos/research.ufo:2808
+#: ../base/ufos/research.ufo:2818
 msgid "Shock Damage Type"
 msgstr "Τύπος Ζημιάς Σόκ"
 
-#: ../base/ufos/research.ufo:2821
+#: ../base/ufos/research.ufo:2831
 msgid "Plasma Damage Type"
 msgstr "Τύπος Ζημιάς Πλάσματος"
 
-#: ../base/ufos/research.ufo:2842
+#: ../base/ufos/research.ufo:2852
 msgid "Stun Damage Type"
 msgstr "Τύπος Ζημιάς Αναισθησίας"
 
-#: ../base/ufos/research.ufo:2855
+#: ../base/ufos/research.ufo:2865
 msgid "Particle Beam Damage Type"
 msgstr "Τύπος Ζημιάς Μοριακής ακτίνας"
 
-#: ../base/ufos/research.ufo:2873
+#: ../base/ufos/research.ufo:2883
 msgid "Accuracy Attribute"
 msgstr "Απόδοση Ακρίβειας"
 
-#: ../base/ufos/research.ufo:2886
+#: ../base/ufos/research.ufo:2896
 msgid "Assault Guns Proficiency"
 msgstr "Ικανότητα επιθετικών όπλων"
 
-#: ../base/ufos/research.ufo:2899
+#: ../base/ufos/research.ufo:2909
 msgid "Close Combat Proficiency"
 msgstr "Ικανότητα μάχης"
 
-#: ../base/ufos/research.ufo:2912
+#: ../base/ufos/research.ufo:2922
 msgid "High-Explosives Proficiency"
 msgstr "Ικανότητα εκρηκτικών"
 
-#: ../base/ufos/research.ufo:2925
+#: ../base/ufos/research.ufo:2935
 msgid "Heavy Weapons Proficiency"
 msgstr "Ικανότητα Βαρέων Όπλων"
 
-#: ../base/ufos/research.ufo:2938
+#: ../base/ufos/research.ufo:2948
 msgid "Mind Attribute"
 msgstr "Απόδωση Μυαλού"
 
-#: ../base/ufos/research.ufo:2951
+#: ../base/ufos/research.ufo:2961
 msgid "Power Attribute"
 msgstr "Απόδωση Δύναμης"
 
-#: ../base/ufos/research.ufo:2964
+#: ../base/ufos/research.ufo:2974
 msgid "Sniper Rifles Proficiency"
 msgstr "Ικανότητα Ελ. Σκοπευτή"
 
-#: ../base/ufos/research.ufo:2977
+#: ../base/ufos/research.ufo:2987
 msgid "Speed Attribute"
 msgstr "Απόδοση Ταχύτητας"
 
-#: ../base/ufos/research.ufo:2995
+#: ../base/ufos/research.ufo:3005
 msgid "b_aliencontainment_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Μονάδα Περιορισμού Εξωγήινων\n"
@@ -4835,7 +4837,7 @@ msgstr ""
 "\n"
 "Προς οποιονδήποτε μέλλοντα Διοικητή εξετάζει αυτό το φάκελο: Να έχετε κατά νού ότι τα μηχανήματα στη Μονάδα Περιορισμού, όπως ισχύει για μεγάλο μέρος του εξοπλισμού της PHALANX, δεν έχουν ακόμα αποδείξει την αξία τους εναντία σε κάποια εξωγήινη δύναμη. Μπορεί να απαιτούνται βελτιώσεις ή τροποποιήσεις προκειμένου να ικανοποιούν τις προδιαγραφές."
 
-#: ../base/ufos/research.ufo:3013
+#: ../base/ufos/research.ufo:3023
 msgid "b_command_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Διοικητήριο\n"
@@ -4876,7 +4878,7 @@ msgstr ""
 "\n"
 "Τα παλιά σχεδιάγραμματα του Διοικητηρίου έχουν ενημερωθεί απο τους μηχανικούς μας για την αντικατάσταση του απαρχαιωμένου υπερυπολογιστή H-9000 και των τερματικών του με σύγχρονα ολο-τερματικά και με νέα εγκατάσταση υπερυπολογιστή. Όλα τα υπόλοιπα μέρη παραμένουν εφαρμόσιμα και αποτελεσματικά."
 
-#: ../base/ufos/research.ufo:3031
+#: ../base/ufos/research.ufo:3041
 msgid "b_entrance_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Είσοδος\n"
@@ -4909,8 +4911,8 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3044 ../base/ufos/research.ufo:4275
-#: ../base/ufos/research.ufo:4293
+#: ../base/ufos/research.ufo:3054 ../base/ufos/research.ufo:4285
+#: ../base/ufos/research.ufo:4303
 msgid "b_missile_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Συστοιχία Πυραύλων\n"
@@ -4955,7 +4957,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3062
+#: ../base/ufos/research.ufo:3072
 #, fuzzy
 msgid "b_laser_txt"
 msgstr ""
@@ -4981,7 +4983,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3083
+#: ../base/ufos/research.ufo:3093
 msgid "b_large_hangar_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Μεγάλο Υπόστεγο\n"
@@ -5026,7 +5028,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3101
+#: ../base/ufos/research.ufo:3111
 msgid "b_hospital_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Νοσοκομείο\n"
@@ -5069,7 +5071,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3119
+#: ../base/ufos/research.ufo:3129
 msgid "b_small_hangar_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Μικρό Υπόστεγο\n"
@@ -5114,7 +5116,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3137
+#: ../base/ufos/research.ufo:3147
 msgid "b_lab_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Εργαστήριο\n"
@@ -5159,7 +5161,7 @@ msgstr ""
 "\n"
 "Ύστερα από λεπτομερή έλεγχο των αρχείων για τα εργαστήρια της PHALANX κατέληξα στο συμπέρασμα ότι αυτά τα σχέδια ήταν πολύ μπροστά από την εποχή τους. Ο σχεδιασμός είναι ακόμη εφαρμόσιμος και μπορεί να προσαρμοστεί στις ανάγκες μας με πολύ μικρες βελτιώσεις του εξοπλισμού."
 
-#: ../base/ufos/research.ufo:3155
+#: ../base/ufos/research.ufo:3165
 msgid "b_powerplant_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Σταθμός Ενέργειας\n"
@@ -5200,7 +5202,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3173
+#: ../base/ufos/research.ufo:3183
 msgid "b_quarters_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Διαμερίσματα Προσωπικού\n"
@@ -5241,7 +5243,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3186
+#: ../base/ufos/research.ufo:3196
 msgid "b_radar_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Ραντάρ\n"
@@ -5288,7 +5290,7 @@ msgstr ""
 "\n"
 "Δε πρέπει να θεωρούμε ότι η εγκατάσταση Ραντάρ αποτελεί πανάκεια στο πρόβλημα του εντοπισμού των UFO. Ακόμα και με τα συμπληρωματικά συστήματα, η καλυψή μας δεν είναι επαρκής, ενώ θα πρέπει να ερευνήσουμε νέους τρόπους βελτίωσης των τεχνολογιών ανίχνευσης εάν θέλουμε να έχουμε κάποια πιθανότητα να σταματήσουμε τους μπάσταρδους."
 
-#: ../base/ufos/research.ufo:3204
+#: ../base/ufos/research.ufo:3214
 #, fuzzy
 msgid "b_radar_adv_txt"
 msgstr ""
@@ -5336,7 +5338,7 @@ msgstr ""
 "\n"
 "We should not consider the Radar facility to be an end-all solution to UFO detection. Even with supplemental systems our coverage is not fully reliable, and we should research ways to improve our detection technology if we're to have any chance of stopping the bastards."
 
-#: ../base/ufos/research.ufo:3223
+#: ../base/ufos/research.ufo:3233
 msgid "b_storage_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Αποθήκη\n"
@@ -5379,7 +5381,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3241
+#: ../base/ufos/research.ufo:3251
 msgid "b_teamroom_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Κέντρο Ψυχαγωγίας Μονάδας\n"
@@ -5420,7 +5422,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3259
+#: ../base/ufos/research.ufo:3269
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Μικρό Υπόστεγο UFO\n"
@@ -5461,7 +5463,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3277
+#: ../base/ufos/research.ufo:3287
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Μεγάλο Υπόστεγο UFO\n"
@@ -5502,7 +5504,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3295
+#: ../base/ufos/research.ufo:3305
 msgid "b_workshop_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Μηχανουργείο\n"
@@ -5541,11 +5543,11 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3311
+#: ../base/ufos/research.ufo:3321
 msgid "Blueprints - Antimatter Storage"
 msgstr "Πρωτότυπο - Αποθήκη Αντιύλης"
 
-#: ../base/ufos/research.ufo:3316
+#: ../base/ufos/research.ufo:3326
 msgid "b_antimatter_txt"
 msgstr ""
 "Σύνοψη\n"
@@ -5576,7 +5578,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3343
+#: ../base/ufos/research.ufo:3353
 msgid "drop_firebird_txt"
 msgstr ""
 "Αξιολόγηση Αεροσκάφους -- Φοίνικας - Μεταγωγικό\n"
@@ -5635,7 +5637,7 @@ msgstr ""
 "\n"
 "Οπλικά συστήματα: 1 Μέσαία υποδοχή (ρύγχος), 2 υποδοχές Εξοπλισμού, 1 υποδοχή Θωράκισης"
 
-#: ../base/ufos/research.ufo:3359
+#: ../base/ufos/research.ufo:3369
 #, fuzzy
 msgid "drop_herakles_txt"
 msgstr ""
@@ -5697,7 +5699,7 @@ msgstr ""
 "\n"
 "Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
 
-#: ../base/ufos/research.ufo:3380
+#: ../base/ufos/research.ufo:3390
 msgid "inter_stiletto_txt"
 msgstr ""
 "Αξιολόγηση Αεροσκάφους -- Στιλέττο - Αναχαιτιστικό\n"
@@ -5764,7 +5766,7 @@ msgstr ""
 "\n"
 "Οπλικά συστήματα: 1 μικρή υποδοχή (ρύγχος), 2 Μεσαίες υποδοχές (φτερά), 2 υποδοχές Εξοπλισμού, 1 υποδοχή Θωράκισης"
 
-#: ../base/ufos/research.ufo:3396
+#: ../base/ufos/research.ufo:3406
 msgid "inter_saracen_txt"
 msgstr ""
 "Αξιολόγηση Αεροσκάφους -- Σαρακηνός - Αναχαιτιστικό\n"
@@ -5821,7 +5823,7 @@ msgstr ""
 "\n"
 "Οπλικά συστήματα: 2 Μεσαίες υποδοχές (κοιλιά), 2 υποδοχές Eξοπλισμού, 1 υποδοχή Θωράκισης"
 
-#: ../base/ufos/research.ufo:3412
+#: ../base/ufos/research.ufo:3422
 msgid "inter_dragon_txt"
 msgstr ""
 "Κύριε Διοικητά, είμαι εξαιρετικά περήφανος που σας παρουσιάζω τα σχέδια του νέου μας αναχαιτιστικού, του Δράκου. Όπως θα δείτε και μόνος σας, δανειστήκαμε αρκετά στοιχεία απο τους εξωγήινους και ο ριζοσπαστικός σχεδιασμός του πραγματικά αποδίδει.\n"
@@ -5848,7 +5850,7 @@ msgstr ""
 "\n"
 "Οπλικά συστήματα: 1 Μεγάλη υποδοχή (κεντρική άτρακτος), 1 Μεσαία υποδοχή (κάτω προεξοχή), 2 Μικρές υποδοχές (δύο πάνω προεξοχές), 1 υποδοχή Εξοπλισμού, 1 υποδοχή Θωράκισης"
 
-#: ../base/ufos/research.ufo:3415
+#: ../base/ufos/research.ufo:3425
 msgid "inter_dragon_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, είναι προφανές ότι οι εξωγήινοι υπερτερούν σημαντικά σε όλους τους τομείς δραστηριότητας και πιο πολύ από όλους στην εναέρια υπεροχή. Είμασταν εξ'αρχής σε δεινή θέση και, παρόλες τις προσπάθειές μας, έχει σημειωθεί ελάχιστη βελτίωση.\n"
@@ -5859,7 +5861,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3433
+#: ../base/ufos/research.ufo:3443
 #, fuzzy
 msgid "inter_starchaser_txt"
 msgstr ""
@@ -5917,19 +5919,19 @@ msgstr ""
 "\n"
 "Οπλικά συστήματα: 2 Μεσαίες υποδοχές (κοιλιά), 2 υποδοχές Eξοπλισμού, 1 υποδοχή Θωράκισης"
 
-#: ../base/ufos/research.ufo:3436
+#: ../base/ufos/research.ufo:3446
 msgid "inter_starchaser_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3454
+#: ../base/ufos/research.ufo:3464
 msgid "inter_stingray_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3457
+#: ../base/ufos/research.ufo:3467
 msgid "inter_stingray_pre_txt"
 msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
-#: ../base/ufos/research.ufo:3482
+#: ../base/ufos/research.ufo:3492
 msgid "ufo_scout_txt"
 msgstr ""
 "Αυτό το είδος μικρών UFO είναι το πρώτο που παρατηρήσαμε οπτικά και μέσω ρανταρ. Παρόλο που δεν παίρνουν μέρος σε επιδρομές, δεν παύουν να είναι απειλή: μέχρι τώρα έχουν ανοίξει το δρόμο σε κάθε περίπτωση εξωγήινης δραστηριότητας στη Γη.\n"
@@ -5962,14 +5964,14 @@ msgstr ""
 "\n"
 "Οπλικά Συστήματα: Ουδέν"
 
-#: ../base/ufos/research.ufo:3485
+#: ../base/ufos/research.ufo:3495
 msgid "ufo_scout_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε ένα νέο τύπο UFO, το οποίο βρίσκεται στο υπόστεγό μας και αναμένει αποσυναρμολόγη. Είμαστε έτοιμοι να ξεκινήσουμε μελέτη και αποσυναρμολόγηση του σκάφους όποτε μας πείτε, όμως θα χρειαστούμε ορισμένο εργαστηριακό χρόνο και κονδύλια προκειμένου να κάνουμε μια ακριβής εκτίμηση τις λειτουργίας και των δυνατοτήτων του σκάφους.\n"
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3524
+#: ../base/ufos/research.ufo:3534
 msgid "ufo_fighter_txt"
 msgstr ""
 "Κύριε Διοικητά, η ομάδα μου και εγώ ολοκληρώσαμε ακόμα μία αναφορά UFO για εσάς. Σας υποβάλλω μια περίληψη για να την ενημέρωσή σας.\n"
@@ -6000,7 +6002,7 @@ msgstr ""
 "\n"
 "Οπλικά Συστήματα: 1 υποδοχή Ακτίνας Σωματιδίων"
 
-#: ../base/ufos/research.ufo:3527
+#: ../base/ufos/research.ufo:3537
 msgid "ufo_fighter_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε ένα νέο τύπο UFO, το οποίο βρίσκεται στο υπόστεγό μας και αναμένει αποσυναρμολόγη. Η περισυλλογή ενός Μαχητικού UFO ήταν κάτι που ονειρευόμασταν όλοι εδώ στο Τμήμα Μηχανικών. Πρόκειται για το πρώτο οπλισμένο UFO που αντιμετώπισε η PHALANX. Είναι ζωτικής σημασίας να μελετήσουμε αυτό το εξωγήινο σκάφος και τον οπλισμό του ώστε να μάθουμε το αδύνατό του σημείο, αν έχει.\n"
@@ -6009,7 +6011,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3567
+#: ../base/ufos/research.ufo:3577
 msgid "ufo_supply_txt"
 msgstr ""
 "Κύριε Διοικητά, η ομάδα μου και εγώ ολοκληρώσαμε ακόμα μία αναφορά UFO για εσάς. Σας υποβάλλω μια περίληψη για να την ενημέρωσή σας.\n"
@@ -6040,7 +6042,7 @@ msgstr ""
 "\n"
 "Οπλικά συστήματα: Ουδέν"
 
-#: ../base/ufos/research.ufo:3570
+#: ../base/ufos/research.ufo:3580
 msgid "ufo_supply_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε ένα νέο τύπο UFO, το οποίο βρίσκεται στο υπόστεγό μας και αναμένει αποσυναρμολόγη. Πρόκειται το μεγαλύτερο UFO που έχουμε συναντήσει μέχρι τώρα. Δεν φέρει κανένα οπλισμό, ενώ το μεγάλο αμπάρι του υποδεικνύει ότι πιθανόν να μεταφέρει εφόδια για τις εξωγήινες επιχειρήσεις στην επιφάνεια της Γης. Τα σκάφη αυτά τα βρίσκουμε στο κέντρο πολλών εξωγήινων σχηματισμών, ενώ αν τους επιτρέψουμε να εκτελέσουν την αποστολή τους θα αυξηθεί σημαντικά η εξωγήινη παρουσία στη Γη.\n"
@@ -6049,24 +6051,24 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3610
+#: ../base/ufos/research.ufo:3620
 msgid "ufo_carrier_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3613
+#: ../base/ufos/research.ufo:3623
 msgid "ufo_carrier_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3653
+#: ../base/ufos/research.ufo:3663
 #, fuzzy
 msgid "ufo_bomber_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3656
+#: ../base/ufos/research.ufo:3666
 msgid "ufo_bomber_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3696
+#: ../base/ufos/research.ufo:3706
 msgid "ufo_corrupter_txt"
 msgstr ""
 "Κύριε Διοικητά, η ομάδα μου και εγώ ολοκληρώσαμε ακόμα μία αναφορά UFO για εσάς. Σας υποβάλλω μια περίληψη για να την ενημέρωσή σας.\n"
@@ -6097,7 +6099,7 @@ msgstr ""
 "\n"
 "Οπλικά Συστήματα: Ουδέν"
 
-#: ../base/ufos/research.ufo:3699
+#: ../base/ufos/research.ufo:3709
 msgid "ufo_corrupter_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε ένα νέο τύπο UFO, το οποίο βρίσκεται στο υπόστεγό μας και αναμένει αποσυναρμολόγη. Πρόκειται για ένα από τα μεγαλύτερα UFO που έχουμε παρατηρήσει μέχρι τώρα, όμως ο σχετικά ελαφρύς οπλισμός του υποδεικνύει ότι δεν πρόκειται για πολεμικό σκάφος. Η προκαταρκτική μας περιήγηση στο εσωτερικό μας έδωσε ενδιαφέροντα στοιχεία για τον σκοπό κατασκευής του.\n"
@@ -6108,7 +6110,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3739
+#: ../base/ufos/research.ufo:3749
 #, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr ""
@@ -6142,7 +6144,7 @@ msgstr ""
 "\n"
 "Οπλικά Συστήματα: Ουδέν"
 
-#: ../base/ufos/research.ufo:3742
+#: ../base/ufos/research.ufo:3752
 #, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr ""
@@ -6150,17 +6152,17 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3782
+#: ../base/ufos/research.ufo:3792
 #, fuzzy
 msgid "ufo_ripper_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3785
+#: ../base/ufos/research.ufo:3795
 #, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3825
+#: ../base/ufos/research.ufo:3835
 msgid "ufo_harvester_txt"
 msgstr ""
 "Κύριε Διοικητά, η ομάδα μου και εγώ ολοκληρώσαμε ακόμα μία αναφορά UFO για εσάς. Σας υποβάλλω μια περίληψη για να την ενημέρωσή σας.\n"
@@ -6195,7 +6197,7 @@ msgstr ""
 "\n"
 "Οπλικά Συστήματα 2 υποδοχές Ακτίνας Σωματιδίων, 1 υποδοχή Εξωγήινου Εκτοξευτή"
 
-#: ../base/ufos/research.ufo:3828
+#: ../base/ufos/research.ufo:3838
 msgid "ufo_harvester_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε ένα νέο τύπο UFO, το οποίο βρίσκεται στο υπόστεγό μας και αναμένει αποσυναρμολόγη. Είναι αρκετά μεγαλύτερο από τα UFO που είχαμε παρατηρήσει μέχρι τώρα και φαίνεται να αποτελεί το κέντρο πολλών εναέριων σχηματισμών των εξωγήινων, γεγονός που το καθιστά ιδιαίτερα σημαντικό στόχο έρευνας. Η αποκάλυψη του σκοπού αυτού του σκάφους και η μελέτη του ειδικού εξοπλισμού του πιθανόν να δώσει νέα στοιχεία για την αποστολή των εξωγήινων στη Γη.\n"
@@ -6204,21 +6206,21 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3868
+#: ../base/ufos/research.ufo:3878
 #, fuzzy
 msgid "ufo_mothership_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3871
+#: ../base/ufos/research.ufo:3881
 #, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3913
+#: ../base/ufos/research.ufo:3923
 msgid "Live Specimen - Bloodspider"
 msgstr "Live Specimen - Bloodspider"
 
-#: ../base/ufos/research.ufo:3915
+#: ../base/ufos/research.ufo:3925
 msgid "bloodspider_notes_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6238,15 +6240,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3918
+#: ../base/ufos/research.ufo:3928
 msgid "bloodspider_notes_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3934
+#: ../base/ufos/research.ufo:3944
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Αυτοψία Εξωγήινου - Αράχνη αίματος"
 
-#: ../base/ufos/research.ufo:3939
+#: ../base/ufos/research.ufo:3949
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6269,7 +6271,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:3942
+#: ../base/ufos/research.ufo:3952
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6280,11 +6282,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:3992
+#: ../base/ufos/research.ufo:4002
 msgid "Alien Autopsy - Ortnok"
 msgstr "Αυτοψία Εξωγήινου - Ortnok"
 
-#: ../base/ufos/research.ufo:3997
+#: ../base/ufos/research.ufo:4007
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6321,7 +6323,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:3998
+#: ../base/ufos/research.ufo:4008
 msgid "ortnok_autopsy_extra_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6356,7 +6358,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4001
+#: ../base/ufos/research.ufo:4011
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6367,7 +6369,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4002
+#: ../base/ufos/research.ufo:4012
 msgid "ortnok_autopsy_extra_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6378,11 +6380,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4034
+#: ../base/ufos/research.ufo:4044
 msgid "Alien Autopsy - Taman"
 msgstr "Αυτοψία Εξωγήινου - Taman"
 
-#: ../base/ufos/research.ufo:4039
+#: ../base/ufos/research.ufo:4049
 msgid "taman_autopsy_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6421,7 +6423,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4040
+#: ../base/ufos/research.ufo:4050
 msgid "taman_autopsy_extra_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6458,7 +6460,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4043
+#: ../base/ufos/research.ufo:4053
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6469,7 +6471,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4044
+#: ../base/ufos/research.ufo:4054
 msgid "taman_autopsy_extra_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6480,11 +6482,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4076
+#: ../base/ufos/research.ufo:4086
 msgid "Alien Autopsy - Shevaar"
 msgstr "Αυτοψία Εξωγήινου - Shevaar"
 
-#: ../base/ufos/research.ufo:4081
+#: ../base/ufos/research.ufo:4091
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6521,7 +6523,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4082
+#: ../base/ufos/research.ufo:4092
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6556,7 +6558,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4085
+#: ../base/ufos/research.ufo:4095
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6567,7 +6569,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4086
+#: ../base/ufos/research.ufo:4096
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6578,49 +6580,49 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4175 ../base/ufos/team_humans.ufo:1637
+#: ../base/ufos/research.ufo:4185 ../base/ufos/team_humans.ufo:1637
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:4177
+#: ../base/ufos/research.ufo:4187
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4180
+#: ../base/ufos/research.ufo:4190
 msgid "ugv_phoenix_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4195 ../base/ufos/team_humans.ufo:1662
+#: ../base/ufos/research.ufo:4205 ../base/ufos/team_humans.ufo:1662
 msgid "Ares W (UGV)"
 msgstr "Ares W (UGV)"
 
-#: ../base/ufos/research.ufo:4197
+#: ../base/ufos/research.ufo:4207
 msgid "ugv_ares_w_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4200
+#: ../base/ufos/research.ufo:4210
 msgid "ugv_ares_w_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4216
+#: ../base/ufos/research.ufo:4226
 #, fuzzy
 msgid "ugv_chaingun_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4219
+#: ../base/ufos/research.ufo:4229
 msgid "ugv_chaingun_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4235
+#: ../base/ufos/research.ufo:4245
 #, fuzzy
 msgid "ugv_chaingun_belt_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4238
+#: ../base/ufos/research.ufo:4248
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4253
+#: ../base/ufos/research.ufo:4263
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -6640,15 +6642,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4256
+#: ../base/ufos/research.ufo:4266
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "Από: Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
-#: ../base/ufos/research.ufo:4312
+#: ../base/ufos/research.ufo:4322
 msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM Unit"
 
-#: ../base/ufos/research.ufo:4315
+#: ../base/ufos/research.ufo:4325
 msgid "craft_electronics_raven_txt"
 msgstr ""
 "Technical Specifications: \"Raven\" ECM Unit\n"
@@ -6687,7 +6689,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4332
+#: ../base/ufos/research.ufo:4342
 msgid "craft_shield_light_txt"
 msgstr ""
 "Technical Specifications: Polymer Aircraft Armour\n"
@@ -6730,7 +6732,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4348
+#: ../base/ufos/research.ufo:4358
 msgid "craft_shield_plating_pre_txt"
 msgstr ""
 "Commander, now that we have the ability to produce and work the alien materials, a whole new range of options has opened up to us. These materials are so strong and flexible that they can be used for almost anything. Their most promising uses, however, have been in aircraft design -- specifically armour.\n"
@@ -6743,7 +6745,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4351
+#: ../base/ufos/research.ufo:4361
 msgid "craft_shield_plating_txt"
 msgstr ""
 "Commander, I've got some good news. My team and I have finished prototyping the alien aircraft plating project. Our new armour is now ready for full PHALANX production.\n"
@@ -6760,7 +6762,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4371
+#: ../base/ufos/research.ufo:4381
 msgid "craft_alien_astrogation_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, η περισυλλογή μιας άθικτης μονάδας αστροπλοήγησης των εξωγήινων αποτελεί σταθμό στις προσπάθειές μας. Παρόλο που η μονάδα δεν φαίνεται να περιέχει κάποιον αστρικό χάρτη, θα μας επιτρέψει να μεταφράσουμε τις εξωγήινες αστρονομικές παρατηρήσεις και να αναβαθμίσουμε τα δικά μας αστρονομικά συστήματα κατά αρκετές τάξεις μεγέθους. Τελικά, η προσπάθεια που θα καταβάλλουμε εδώ μπορεί να μας βοηθήσει να ακολουθήσουμε τους εξωγήινους πίσω στον μητρικό τους πλανήτη.\n"
@@ -6769,7 +6771,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:4374
+#: ../base/ufos/research.ufo:4384
 msgid "craft_alien_astrogation_txt"
 msgstr ""
 "Κύριε Διοικητά, ολοκληρώσαμε τις εργασίες μας πάνω στην εξωγήινη μονάδα αστροπλοήγησης. Ακολουθεί μια περίληψη της αναφοράς που προέκυψε.\n"
@@ -6788,7 +6790,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:4409
+#: ../base/ufos/research.ufo:4419
 msgid "craft_alien_propulsion_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, οι εξηγήινοι κινητήρες αντιύλης που περισυλλέξαμε προκαλέσαν το ενδαφέρον της ομάδας μου από τη στιγμή που βρέθηκαν στα χέρια μας. Τώρα πια που έχουμε κατανοήσει τις ιδιότητες των εξωγήινων υλικών, πιστεύω ότι μπορούμε να αποκαλύψουμε τις λεπτομέρειες της συγκεκριμένης τεχνολογίας καθώς και να την αντιγράψουμε. Μόλις κατανοήσουμε τη λειτουργία και τον τρόπο κατασκευής των διαφορετικών εξαρτηματων θα είμαστε σε θέση να αντιγράψουμε τους συγκεκριμένους κινητήρες.\n"
@@ -6797,7 +6799,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:4412
+#: ../base/ufos/research.ufo:4422
 msgid "craft_alien_propulsion_txt"
 msgstr ""
 "Κύριε Διοικητά, βρίσκομαι στην ευχάριστη θέση να σας αναφέρω την επιτυχία του προγράμματος ανάλυσης της εξωγήινης προώθησης. Αποκαλύψαμε τα μυστικά της κατασκευής του εξωγήινου κινητήρα και κατανοήσαμε επιτέλους τη διαδρομή που διανύει η αντιύλη από τη δεξαμενή καυσίμων μέχρι τον θάλαμο αντίδρασης.\n"
@@ -6820,7 +6822,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:4446
+#: ../base/ufos/research.ufo:4456
 msgid "craft_alien_detection_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, ο εξωγήινος εξοπλισμός ανίχνευσης φαίνεται να αποτελείται από ένα σύνολο ισχυρών ενεργητικών και παθητικών ανιχνευτικών συστημάτων, στα οποία συμπεριλαμβάνεται ρανταρ, εικόνα, δέκτες μαγνητισμού και υπεριωδών/υπέρυθρων. Το πιο ενδιαφέρον, όμως, εξάρτημα εκτελεί κάποιο είδος ανίχνευσης άγνωστο σε εμάς και το οποίο δείχνει να είναι πολύ πιο αποτελεσματικό στον εντοπισμό UFO από οτιδήποτε άλλο διαθέτουμε.\n"
@@ -6831,7 +6833,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:4449
+#: ../base/ufos/research.ufo:4459
 msgid "craft_alien_detection_txt"
 msgstr ""
 "Η έρευνα του εξωγήινου εξοπλισμού ανίχνευσης ολοκληρώθηκε, κύριε Διοικητά. Τώρα πια έχουμε πλήρη κατανόηση της λειτουργίας και του ελέγχου των μηχανημάτων, καθώς και των τροποποιήσεων που απαιτούνται για ανθρώπινη χρήση.\n"
@@ -6854,7 +6856,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:4482
+#: ../base/ufos/research.ufo:4492
 msgid "craft_weapon_alc_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -6869,7 +6871,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4485
+#: ../base/ufos/research.ufo:4495
 msgid "craft_weapon_alc_txt"
 msgstr ""
 "Commander, I've just finished my report on our latest laser program. We've successfully prototyped the new Aerial Laser Cannon and are ready to put it into production.\n"
@@ -6884,11 +6886,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4529
+#: ../base/ufos/research.ufo:4539
 msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA Rotary Cannon"
 
-#: ../base/ufos/research.ufo:4532
+#: ../base/ufos/research.ufo:4542
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Κανόνι Περιστρεφόμενης Κεφαλής ΣΙΒΑ\n"
@@ -6931,7 +6933,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:4549
+#: ../base/ufos/research.ufo:4559
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm API Rounds\n"
@@ -6970,7 +6972,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4570
+#: ../base/ufos/research.ufo:4580
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm HEI Rounds\n"
@@ -7009,11 +7011,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4588
+#: ../base/ufos/research.ufo:4598
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "'Sparrowhawk' AA Missile Rack"
 
-#: ../base/ufos/research.ufo:4591
+#: ../base/ufos/research.ufo:4601
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" AA Missile Rack\n"
@@ -7062,11 +7064,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4605
+#: ../base/ufos/research.ufo:4615
 msgid "'Sparrowhawk' Missile"
 msgstr "'Sparrowhawk' Missile"
 
-#: ../base/ufos/research.ufo:4608
+#: ../base/ufos/research.ufo:4618
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" Missile\n"
@@ -7109,7 +7111,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4629
+#: ../base/ufos/research.ufo:4639
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket Pod\n"
@@ -7152,7 +7154,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4646
+#: ../base/ufos/research.ufo:4656
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket\n"
@@ -7195,14 +7197,14 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4667
+#: ../base/ufos/research.ufo:4677
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
 "Commander, the UFO we recovered was equipped with a very interesting type of weapon that we'd like to research right away. It seems to fire some kind of high-velocity particle beam; if we can master this technology, or at least adapt it for use on our own aircraft, we could make air engagements with armed alien craft significantly more survivable for our craft and pilots.\n"
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4670
+#: ../base/ufos/research.ufo:4680
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 "Our report on the alien PBW (Particle Beam Weapon) is ready for your review, Commander.\n"
@@ -7221,7 +7223,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4713
+#: ../base/ufos/research.ufo:4723
 msgid "craft_electronics_targeting_txt"
 msgstr ""
 "Technical Specifications: Targeting Computer\n"
@@ -7260,7 +7262,7 @@ msgstr ""
 "\n"
 "With all the possibilities and different scenarios waiting in our future, there is no golden rule that will help decide when to deploy the Targeting Computer. It is ready for use at the Commander's discretion."
 
-#: ../base/ufos/research.ufo:4730
+#: ../base/ufos/research.ufo:4740
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
 "Technical Specifications: Fuel Pod\n"
@@ -7297,7 +7299,7 @@ msgstr ""
 "\n"
 "Having read Cdr. Navarre's report, Commander, I have to stress that our charter stipulates we must stop any and all alien activity on Earth. We can't afford to let some of it continue because it's just out of our planes' reach. If civilians were to die because the dropship couldn't quite make it, our image would be shattered and our funding may suffer the consequences. We should keep some fuel pod-equipped planes on standby to deal with distant incidents."
 
-#: ../base/ufos/research.ufo:4752 ../base/ufos/research.ufo:4788
+#: ../base/ufos/research.ufo:4762 ../base/ufos/research.ufo:4798
 msgid "alien_materials_txt"
 msgstr ""
 "Κύριε Διοικητά, πιστεύω ότι ανακαλύψαμε το μυστικό των εξωγήινων υλικών. Ύστερα από ορισμένες τροποποιήσεις του εξοπλισμού των Μηχανουργείων μας, είμαστε πλέον έτοιμοι να χρησιμοποιήσουμε τα υλικά αυτά και να τα \"προγραματίσουμε\" σε νέες και περίπλοκες μορφές.\n"
@@ -7314,7 +7316,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:4755
+#: ../base/ufos/research.ufo:4765
 msgid "alien_materials_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, όπως ανέφερα στην προηγούμενή μου αναφορά, το UFO που περισυλλέξαμε είναι εξωτερικά καλυμμένο με ένα άκρως ενδιαφέρον κράμα το οποίο συνδυάζει πλαστικό και μέταλλο σε ένα υλικό. Το υλικό αυτό φαίνεται να χρησιμοποιείται σχεδόν σε κάθε εκφρασή της εξηγήινης τεχνολογίας. Πρόκεται για άκρως εξελιγμένο υλικό που προσφέρει μεγάλη ευελιξία και θα μπορούσε να βρει χιλιάδες πιθανές εφαρμογές.\n"
@@ -7323,11 +7325,11 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:4807
+#: ../base/ufos/research.ufo:4817
 msgid "Political Situation Before The Invasion"
 msgstr "Πολιτική κατάσταση πρίν την εισβολή"
 
-#: ../base/ufos/research.ufo:4809
+#: ../base/ufos/research.ufo:4819
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "Το έτος 2084, η Γη βρίσκεται στην καλύτερη κατάσταση που έχει βρεθεί εδώ και περισσότερο από έναν αιώνα. Ίσως για πρώτη φορά στα χρονικά, η ειρήνη και η συνεργασία αποτελούν το σύνηθες αντί για την εξαίρεση. Όμως, η συγκεκριμένη κατάσταση μπορεί να εξηγηθεί μόνο από τη βάναυση ιστορία του 21ου αιώνα.\n"
@@ -7346,11 +7348,11 @@ msgstr ""
 "\n"
 "Το γεγονός αυτό σήμανε την αρχή του τέλους για την κυβέρνηση. Τις επόμενες μέρες σημειώθηκαν μαζικές αποστασίες από τον καθεστωτικό στρατό. Έξι εκατομμύρια άνθρωποι σκοτώθηκαν μέχρι το τέλος του πολέμου στις 15 Αυγούστου 2036, καθώς οι καθεστωτικές δυνάμεις πολεμήσαν με νύχια και με δόντια και εφαρμόσαν τακτικές καμμένης γης σε μεγάλη κλίμακα ενώ οι επαναστάτες σταδιακά τους στριμώξαν στον Ινδικό ωκεανό. Αυτό ήταν επίσημα το τέλος του Δεύτερου Ψυχρού Πολέμου."
 
-#: ../base/ufos/research.ufo:4819
+#: ../base/ufos/research.ufo:4829
 msgid "After The War"
 msgstr "Μετά τον πόλεμο"
 
-#: ../base/ufos/research.ufo:4821
+#: ../base/ufos/research.ufo:4831
 msgid "news_after_the_war_txt"
 msgstr ""
 "Η ασιατική Δημοκρατίαc:\n"
@@ -7463,11 +7465,11 @@ msgstr ""
 "\n"
 "Ο στρατός της Ωκεανίας αποτελείται κυρίως από ένα ισχυρό ναυτικό. Ο στρατός εδάφους είναι μικροσκοπικός έναντι σε αυτόν οποιουδήποτε έθνους εκτός από την ηνωμένη Αμερική, και εξυπηρετεί μόνο σε μια αμυντική ικανότητα, με τη μέση κατάρτιση και τον εξοπλισμό. Εντούτοις, μπορεί να αποκριθεί αρκετά γρήγορα στις καταστάσεις έκτακτης ανάγκης."
 
-#: ../base/ufos/research.ufo:4831
+#: ../base/ufos/research.ufo:4841
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX And The Mumbai Aftermath"
 
-#: ../base/ufos/research.ufo:4833
+#: ../base/ufos/research.ufo:4843
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "Την ιδέα για το \"Σχέδιο PHALANX\" πρωτοσυνέλλαβε το Υπουργείο Άμυνας των Ηνωμένων Πολιτειών Αμερικής το 1955, ύστερα από χρόνια αυξανόμενης ανησυχίας για τον μεγάλο αριθμό θεάσεων UFO ανά την υφήλιο. Η πιθανότητα εξωγήινης εισβολής επιβάρυνε τα ήδη ταραγμένα νεύρα των πολιτικών από την πυρηνική δύναμη της Σοβιετικής Ένωσης. Η ύπαρξη εχθρικής εξωγήινης ζωής στο σύμπαν έμοιαζε πολύ απόμακρη πιθανότητα, πόσο μάλλον να έχουν ανακαλύψει οι εξωγήινοι την Γη μέσα στην απεραντοσύνη του διαστήματος -- όμως μπορούσε η Αμερική να το ριψοκινδυνέψει;\n"
@@ -7498,11 +7500,11 @@ msgstr ""
 "\n"
 "Το μόνο που έλειπε είναι ένας ηγέτης."
 
-#: ../base/ufos/research.ufo:4843
+#: ../base/ufos/research.ufo:4853
 msgid "A New Twist"
 msgstr "Μια νέα καμπή"
 
-#: ../base/ufos/research.ufo:4848
+#: ../base/ufos/research.ufo:4858
 #, fuzzy
 msgid "news_new_twist_txt"
 msgstr ""
@@ -7528,7 +7530,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4849
+#: ../base/ufos/research.ufo:4859
 #, fuzzy
 msgid "news_new_twist_alt_txt"
 msgstr ""
@@ -7554,11 +7556,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4874
+#: ../base/ufos/research.ufo:4884
 msgid "The Enemy On Earth"
 msgstr "Ο εχθρός στη Γή"
 
-#: ../base/ufos/research.ufo:4879
+#: ../base/ufos/research.ufo:4889
 msgid "enemy_on_earth_alt_txt"
 msgstr ""
 "Πρόταση\n"
@@ -7591,7 +7593,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4880
+#: ../base/ufos/research.ufo:4890
 msgid "enemy_on_earth_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -7612,7 +7614,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4883
+#: ../base/ufos/research.ufo:4893
 msgid "enemy_on_earth_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -7635,11 +7637,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4913
+#: ../base/ufos/research.ufo:4923
 msgid "XVI Census"
 msgstr ""
 
-#: ../base/ufos/research.ufo:4918
+#: ../base/ufos/research.ufo:4928
 msgid "xvi_census_txt"
 msgstr ""
 "Καλημέρα σας, Κύριε.\n"
@@ -7662,7 +7664,7 @@ msgstr ""
 "\n"
 "Συνταγματάρχης Falkland"
 
-#: ../base/ufos/research.ufo:4921
+#: ../base/ufos/research.ufo:4931
 msgid "xvi_census_pre_txt"
 msgstr ""
 "Καλημέρα σας, Κύριε.\n"
@@ -7679,12 +7681,12 @@ msgstr ""
 "\n"
 "Συνταγματάρχης Falkland"
 
-#: ../base/ufos/research.ufo:4955
+#: ../base/ufos/research.ufo:4965
 #, fuzzy
 msgid "The Enemy On Earth - Revisited"
 msgstr "Ο εχθρός στη Γή"
 
-#: ../base/ufos/research.ufo:4960
+#: ../base/ufos/research.ufo:4970
 #, fuzzy
 msgid "enemy_on_earth_rev_txt"
 msgstr ""
@@ -7706,7 +7708,7 @@ msgstr ""
 "\n"
 "Sincerely,Dr. Connor"
 
-#: ../base/ufos/research.ufo:4963
+#: ../base/ufos/research.ufo:4973
 msgid "enemy_on_earth_rev_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
@@ -11560,7 +11562,7 @@ msgstr "ΟΥΦΟ"
 
 #: client/campaign/cp_aircraft.c:780
 #, c-format
-msgid "A new (a %s) class craft is ready in base %s"
+msgid "A new (a %s) class craft is ready in %s"
 msgstr ""
 
 #: client/campaign/cp_aircraft.c:781 client/campaign/cp_aircraft.c:1243
@@ -11569,7 +11571,7 @@ msgstr ""
 #: client/campaign/cp_aircraft_callbacks.c:138
 #: client/campaign/cp_aircraft_callbacks.c:146
 #: client/campaign/cp_aircraft_callbacks.c:154
-#: client/campaign/cp_airfight.c:357 client/campaign/cp_airfight.c:377
+#: client/campaign/cp_airfight.c:361 client/campaign/cp_airfight.c:381
 #: client/campaign/cp_aliencont.c:229 client/campaign/cp_aliencont.c:258
 #: client/campaign/cp_aliencont.c:275 client/campaign/cp_aliencont.c:285
 #: client/campaign/cp_base.c:760 client/campaign/cp_base.c:1326
@@ -11643,7 +11645,7 @@ msgstr ""
 
 #: client/campaign/cp_aircraft.c:1243
 #, fuzzy, c-format
-msgid "Craft %s has refuelled at base %s."
+msgid "Craft %s has refuelled at %s."
 msgstr "Το μεταγωγικό σας έχει λίγα καύσιμα και επιστρέφει στην βάση"
 
 #: client/campaign/cp_aircraft.c:1251
@@ -11661,7 +11663,7 @@ msgstr ""
 
 #: client/campaign/cp_aircraft.c:2170
 #, fuzzy, c-format
-msgid "Craft %s has not enough fuel to intercept UFO: fly back to base %s."
+msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "Το μεταγωγικό σας έχει λίγα καύσιμα και επιστρέφει στην βάση"
 
 #: client/campaign/cp_aircraft_callbacks.c:138
@@ -11691,14 +11693,14 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "Σκάφος ξεκίνησε"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1709
-#: client/campaign/cp_map.c:1718 client/campaign/cp_map.c:1731
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1732
+#: client/campaign/cp_map.c:1741 client/campaign/cp_map.c:1754
 #, fuzzy, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Ταχύτητα:\t%i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1710
-#: client/campaign/cp_map.c:1719
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1733
+#: client/campaign/cp_map.c:1742
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Καύσιμα:\t%i/%i\n"
@@ -11724,24 +11726,24 @@ msgstr "Θωράκιση:\t%i on 1\n"
 msgid "Electronics:\t%i on %i"
 msgstr "Ηλεκτρονικά:\t%i on %i"
 
-#: client/campaign/cp_airfight.c:357
+#: client/campaign/cp_airfight.c:361
 #, fuzzy, c-format
 msgid "A UFO is shooting at %s"
 msgstr "το ΟΥΦΟ πυροβολει στο %s"
 
-#: client/campaign/cp_airfight.c:377
+#: client/campaign/cp_airfight.c:381
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr "Το σκάφος μας δεν έχει άλλα πυρομαχικά - επιστρέφει στη βάση."
 
-#: client/campaign/cp_airfight.c:456 client/campaign/cp_airfight.c:479
+#: client/campaign/cp_airfight.c:460 client/campaign/cp_airfight.c:483
 msgid "Interception"
 msgstr "Αναχαίτιση"
 
-#: client/campaign/cp_airfight.c:456
+#: client/campaign/cp_airfight.c:460
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Αναχαίτιση ΟΥΦΟ επιτυχήςl -- το ΟΥΦΟ χάθηκε στη θάλασσα."
 
-#: client/campaign/cp_airfight.c:479 client/campaign/cp_campaign.c:1678
+#: client/campaign/cp_airfight.c:483 client/campaign/cp_campaign.c:1678
 msgid "You've lost the battle"
 msgstr "Έχασες την μάχη"
 
@@ -11949,8 +11951,8 @@ msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Όχι σκάφος στη βάση - Πρέπει πρώτα να αγοράσετε ένα σκάφος\n"
 
 #: client/campaign/cp_base.c:2374
-#, c-format
-msgid "Construction of %s building finished in base %s."
+#, fuzzy, c-format
+msgid "Construction of %s building finished in %s."
 msgstr "Η κατασκευή του %s ολοκληρώθηκε στη βάση %s."
 
 #: client/campaign/cp_base.c:2375
@@ -11970,8 +11972,8 @@ msgstr[0] "%i collected item"
 msgstr[1] "%i collected items"
 
 #: client/campaign/cp_base.c:2482
-#, c-format
-msgid "Not enough storage space in base %s. %s"
+#, fuzzy, c-format
+msgid "Not enough storage space in %s. %s"
 msgstr "Not enough storage space in base %s. %s"
 
 #: client/campaign/cp_base.c:2483
@@ -11983,7 +11985,7 @@ msgstr[1] "%i items were sold."
 
 #: client/campaign/cp_base.c:3201
 #, fuzzy, c-format
-msgid "Base %s does not have Antimatter Storage Facility. %i units of antimatter got removed."
+msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 
 #: client/campaign/cp_base_callbacks.c:65
@@ -12518,12 +12520,6 @@ msgid "%d c"
 msgstr "%i c"
 
 #: client/campaign/cp_installation.c:521
-#, fuzzy, c-format
-msgid "%d day\n"
-msgid_plural "%d days\n"
-msgstr[0] "1 μέρα"
-msgstr[1] "1 μέρα"
-
 #: client/campaign/cp_installation_callbacks.c:68
 #, fuzzy, c-format
 msgid "%d day"
@@ -12582,41 +12578,41 @@ msgstr "Force start"
 msgid "UFO Sighting"
 msgstr "ΟΥΦΟ - Καταδιωκτικό"
 
-#: client/campaign/cp_map.c:1265
+#: client/campaign/cp_map.c:1275
 msgid "Day"
 msgstr "Ημέρα"
 
-#: client/campaign/cp_map.c:1265
+#: client/campaign/cp_map.c:1275
 msgid "Night"
 msgstr "Νύχτα"
 
-#: client/campaign/cp_map.c:1615
+#: client/campaign/cp_map.c:1638
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1667
+#: client/campaign/cp_map.c:1690
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Επιλέξτε την επιθυμιτή τοποθεσία της νέας βάσης στο χάρτη.\n"
 
-#: client/campaign/cp_map.c:1670
+#: client/campaign/cp_map.c:1693
 #, fuzzy
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "Επιλέξτε την επιθυμιτή τοποθεσία της νέας βάσης στο χάρτη.\n"
 
-#: client/campaign/cp_map.c:1675
+#: client/campaign/cp_map.c:1698
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Οι εξωγήινοι κάνουν επίθεση στην βάση τώρα.\n"
 
-#: client/campaign/cp_map.c:1680
+#: client/campaign/cp_map.c:1703
 msgid "Select ufo or mission on map\n"
 msgstr "Επιλέξτε ΟΥΦΟ ή αποστολή στο χάρτη\n"
 
-#: client/campaign/cp_map.c:1685
+#: client/campaign/cp_map.c:1708
 msgid "UFO in radar range\n"
 msgstr "ΟΥΦΟ στην εμβέλεια του ραντάρ\n"
 
-#: client/campaign/cp_map.c:1694
+#: client/campaign/cp_map.c:1717
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -12627,30 +12623,30 @@ msgstr ""
 "Τύπος: %s\n"
 "Στόχος: %s"
 
-#: client/campaign/cp_map.c:1706 client/campaign/cp_map.c:1716
+#: client/campaign/cp_map.c:1729 client/campaign/cp_map.c:1739
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Όνομα:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1707 client/campaign/cp_map.c:1717
+#: client/campaign/cp_map.c:1730 client/campaign/cp_map.c:1740
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Κατάσταση:\t%s\n"
 
-#: client/campaign/cp_map.c:1708
+#: client/campaign/cp_map.c:1731
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Απόσταση από το στόχο:\t\t%.0f\n"
 
-#: client/campaign/cp_map.c:1712 client/campaign/cp_map.c:1724
+#: client/campaign/cp_map.c:1735 client/campaign/cp_map.c:1747
 #, fuzzy, c-format
 msgid "ETA:\t%sh\n"
 msgstr "Ενέργεια:\t%s\n"
 
 #: client/campaign/cp_mapfightequip.c:302
-#, c-format
-msgid "%s was successfully installed into aircraft %s at base %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "%s was successfully installed into aircraft %s at %s."
+msgstr "Αντικείμενο σκάφους εγκαταστάθηκε με επιτυχία."
 
 #: client/campaign/cp_mapfightequip.c:305
 #, fuzzy, c-format
@@ -12659,18 +12655,18 @@ msgstr "Αντικείμενο σκάφους εγκαταστάθηκε με ε
 
 #: client/campaign/cp_mapfightequip.c:308
 #, fuzzy, c-format
-msgid "%s was successfully installed at base %s."
+msgid "%s was successfully installed at %s."
 msgstr "Αντικείμενο σκάφους εγκαταστάθηκε με επιτυχία."
 
 #: client/campaign/cp_mapfightequip.c:330
-#, c-format
-msgid "%s was successfully removed from aircraft %s at base %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "%s was successfully removed from aircraft %s at %s."
+msgstr "Αντικείμενο σκάφους εγκαταστάθηκε με επιτυχία."
 
 #: client/campaign/cp_mapfightequip.c:336
-#, c-format
-msgid "%s was successfully removed, starting installation of %s into aircraft %s at base %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
+msgstr "Αντικείμενο σκάφους εγκαταστάθηκε με επιτυχία."
 
 #: client/campaign/cp_mapfightequip.c:344
 #, c-format
@@ -12679,7 +12675,7 @@ msgstr ""
 
 #: client/campaign/cp_mapfightequip.c:347
 #, fuzzy, c-format
-msgid "%s was successfully removed from base %s."
+msgid "%s was successfully removed from %s."
 msgstr "Αντικείμενο σκάφους εγκαταστάθηκε με επιτυχία."
 
 #: client/campaign/cp_mapfightequip.c:1154
@@ -13061,8 +13057,8 @@ msgid "Paid %i credits for aircraft"
 msgstr "Πληρώσατε %i σε σκάφη"
 
 #: client/campaign/cp_nations.c:170
-#, c-format
-msgid "Paid %i credits for upkeep of base %s"
+#, fuzzy, c-format
+msgid "Paid %i credits for upkeep of %s"
 msgstr "Πληρώσατε %i για διατήρηση της βάσης %s"
 
 #: client/campaign/cp_nations.c:175
@@ -13141,8 +13137,8 @@ msgstr ""
 "Το σκάφος δε μπορεί να ξεκινήσει.\n"
 
 #: client/campaign/cp_produce.c:235
-#, c-format
-msgid "Production queue for base %s is empty"
+#, fuzzy, c-format
+msgid "Production queue for %s is empty"
 msgstr "Σειρά αναμονής παραγωγής για την βάση %s είναι κενή"
 
 #: client/campaign/cp_produce.c:236
@@ -13150,28 +13146,28 @@ msgid "Production queue empty"
 msgstr "Σειρά αναμονής παραγωγής κενή"
 
 #: client/campaign/cp_produce.c:358 client/campaign/cp_produce.c:379
-#, c-format
-msgid "Not enough credits to finish production in base %s.\n"
+#, fuzzy, c-format
+msgid "Not enough credits to finish production in %s.\n"
 msgstr "Όχι αρκετά χρήματα για να τελειώσει την παραγωγή στη βάση %s.\n"
 
 #: client/campaign/cp_produce.c:368
 #, fuzzy, c-format
-msgid "Not enough free storage space in base %s. Production postponed.\n"
+msgid "Not enough free storage space in %s. Production postponed.\n"
 msgstr "Όχι αρκετό ελεύθερο χώρο αποθήκευσης στη βάση %s. Η παραγωγή σταμάτησε.\n"
 
 #: client/campaign/cp_produce.c:389
 #, fuzzy, c-format
-msgid "Not enough free hangar space in base %s. Production postponed.\n"
+msgid "Not enough free hangar space in %s. Production postponed.\n"
 msgstr "Όχι αρκετό ελεύθερο χώρο στο υπόστεγο στη βάση %s. Η παραγωγή σταμάτησε.\n"
 
 #: client/campaign/cp_produce.c:400
 #, fuzzy, c-format
-msgid "Not enough free storage space in base %s. Disassembling postponed.\n"
+msgid "Not enough free storage space in %s. Disassembling postponed.\n"
 msgstr "Όχι αρκετό ελεύθερο χώρο αποθήκευσης στη βάση %s.Η αποσύνθεση σταμάτησε.\n"
 
 #: client/campaign/cp_produce.c:428 client/campaign/cp_produce.c:440
-#, c-format
-msgid "The production of %s has finished."
+#, fuzzy, c-format
+msgid "The production of %s at %s has finished."
 msgstr "Η παραγωγή του %s τελείωσε."
 
 #: client/campaign/cp_produce.c:429 client/campaign/cp_produce.c:441
@@ -13180,8 +13176,8 @@ msgid "Production finished"
 msgstr "Παραγωγή τελείωσε"
 
 #: client/campaign/cp_produce.c:448
-#, c-format
-msgid "The disassembling of %s has finished."
+#, fuzzy, c-format
+msgid "The disassembling of %s at %s has finished."
 msgstr "Η διάλυση του %s ολοκληρώθηκε."
 
 #: client/campaign/cp_produce_callbacks.c:131
@@ -13799,8 +13795,8 @@ msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "Transfer is not possible - the base doesn't have any hangar."
 
 #: client/campaign/cp_transfer.c:698
-#, c-format
-msgid "Base %s does not have Storage, items are removed!"
+#, fuzzy, c-format
+msgid "%s does not have Storage, items are removed!"
 msgstr "Η βάση %s δεν έχει αποθήκη, τα αντικέιμενα απομακρύνθηκαν!"
 
 #: client/campaign/cp_transfer.c:699 client/campaign/cp_transfer.c:717
@@ -13811,23 +13807,23 @@ msgid "Transport mission"
 msgstr "Αποστολή μεταφοράς"
 
 #: client/campaign/cp_transfer.c:716
-#, c-format
-msgid "Base %s does not have Living Quarters, employees got unhired!"
+#, fuzzy, c-format
+msgid "%s does not have Living Quarters, employees got unhired!"
 msgstr "Η βάση %s δεν έχει διαμερίσματα, οι υπάληλοι απολύθηκαν!"
 
 #: client/campaign/cp_transfer.c:752
-#, c-format
-msgid "Base %s does not have Alien Containment, Aliens are removed!"
+#, fuzzy, c-format
+msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr "Η βάση %s δεν έχει Θόλο εξωγήινων, οι εξωγήινοι απομακρύνθηκαν!"
 
 #: client/campaign/cp_transfer.c:780
-#, c-format
-msgid "Base %s does not have enough free space in hangars. Aircraft is lost!"
+#, fuzzy, c-format
+msgid "%s does not have enough free space in hangars. Aircraft is lost!"
 msgstr "Η βάση %s Δέν έχει αρκετό χώρο στα υπόστεγα. Το σκάφος χάθηκε!"
 
 #: client/campaign/cp_transfer.c:868 client/campaign/cp_transfer.c:1080
-#, c-format
-msgid "Transport mission started, cargo is being transported to base %s"
+#, fuzzy, c-format
+msgid "Transport mission started, cargo is being transported to %s"
 msgstr "Αποστολή μεταφοράς ξεκίνησε, το φορτίο μεταφέρετε στη βάση %s"
 
 #: client/campaign/cp_transfer.c:935
@@ -13843,8 +13839,8 @@ msgid "The destination base no longer exists! Transfer carge was lost, personnel
 msgstr "Η απομακρυσμένη βάση πλέον δεν υπάρχει! Τα μεταφερόμενα φορτία χάθηκαν, το πρωσοπικό απολύθει."
 
 #: client/campaign/cp_transfer.c:959
-#, c-format
-msgid "Transport mission ended, unloading cargo in base %s"
+#, fuzzy, c-format
+msgid "Transport mission ended, unloading cargo in %s"
 msgstr "Αποστολή μεταφοράς τελείωσε, ξεφόρτωμα φορτίου στη βάση %s"
 
 #: client/campaign/cp_transfer.c:1113
@@ -15379,6 +15375,12 @@ msgstr "Grenchen"
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%d day\n"
+#~ msgid_plural "%d days\n"
+#~ msgstr[0] "1 μέρα"
+#~ msgstr[1] "1 μέρα"
 
 #, fuzzy
 #~ msgid "%s"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO:AI\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-22 16:07+0200\n"
+"POT-Creation-Date: 2009-08-22 22:41+0200\n"
 "PO-Revision-Date: 2009-06-09 21:30+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI team <cs@li.org>\n"
@@ -110,7 +110,7 @@ msgstr "Itálie"
 msgid "Japan"
 msgstr "Japonsko"
 
-#: ../base/maps/laboratory.ump:54 ../base/ufos/basemanagement.ufo:339
+#: ../base/maps/laboratory.ump:54 ../base/ufos/basemanagement.ufo:323
 #: client/campaign/cp_base_callbacks.c:308
 msgid "Laboratory"
 msgstr "Laboratoř"
@@ -236,7 +236,7 @@ msgid "Stingray"
 msgstr "Rejnok"
 
 #: ../base/ufos/aircraftmanagement.ufo:383 ../base/ufos/otheritems.ufo:37
-#: ../base/ufos/research.ufo:3477
+#: ../base/ufos/research.ufo:3487
 msgid "UFO - Scout"
 msgstr "UFO - Průzkumník"
 
@@ -245,7 +245,7 @@ msgid "Scout U"
 msgstr "u. Průzkumník"
 
 #: ../base/ufos/aircraftmanagement.ufo:404 ../base/ufos/otheritems.ufo:46
-#: ../base/ufos/research.ufo:3519
+#: ../base/ufos/research.ufo:3529
 msgid "UFO - Fighter"
 msgstr "UFO - Stíhačka"
 
@@ -254,7 +254,7 @@ msgid "Fighter U"
 msgstr "u. Stíhačka"
 
 #: ../base/ufos/aircraftmanagement.ufo:432 ../base/ufos/otheritems.ufo:55
-#: ../base/ufos/research.ufo:3820
+#: ../base/ufos/research.ufo:3830
 msgid "UFO - Harvester"
 msgstr "UFO - Sklízeč"
 
@@ -263,7 +263,7 @@ msgid "Harvester U"
 msgstr "u. Sklízeč"
 
 #: ../base/ufos/aircraftmanagement.ufo:471 ../base/ufos/otheritems.ufo:90
-#: ../base/ufos/research.ufo:3734
+#: ../base/ufos/research.ufo:3744
 #, fuzzy
 msgid "UFO - Gunboat"
 msgstr "UFO - Průzkumník"
@@ -273,7 +273,7 @@ msgid "Gunboat U"
 msgstr ""
 
 #: ../base/ufos/aircraftmanagement.ufo:510 ../base/ufos/otheritems.ufo:99
-#: ../base/ufos/research.ufo:3691
+#: ../base/ufos/research.ufo:3701
 msgid "UFO - Corrupter"
 msgstr "UFO - Ničitel"
 
@@ -282,7 +282,7 @@ msgid "Corrupter U"
 msgstr "u. Ničitel"
 
 #: ../base/ufos/aircraftmanagement.ufo:537 ../base/ufos/otheritems.ufo:115
-#: ../base/ufos/research.ufo:3562
+#: ../base/ufos/research.ufo:3572
 msgid "UFO - Supply Ship"
 msgstr "UFO - Zásobovací loď "
 
@@ -291,7 +291,7 @@ msgid "Supply U"
 msgstr "u. Zásobovací"
 
 #: ../base/ufos/aircraftmanagement.ufo:558 ../base/ufos/otheritems.ufo:72
-#: ../base/ufos/research.ufo:3777
+#: ../base/ufos/research.ufo:3787
 #, fuzzy
 msgid "UFO - Ripper"
 msgstr "UFO - Stíhačka"
@@ -301,7 +301,7 @@ msgid "Ripper U"
 msgstr ""
 
 #: ../base/ufos/aircraftmanagement.ufo:585 ../base/ufos/otheritems.ufo:64
-#: ../base/ufos/research.ufo:3648
+#: ../base/ufos/research.ufo:3658
 msgid "UFO - Bomber"
 msgstr "UFO - Bombardér"
 
@@ -310,7 +310,7 @@ msgid "Bomber U"
 msgstr "u. Bombardér"
 
 #: ../base/ufos/aircraftmanagement.ufo:619 ../base/ufos/otheritems.ufo:107
-#: ../base/ufos/research.ufo:3605
+#: ../base/ufos/research.ufo:3615
 msgid "UFO - Carrier"
 msgstr "UFO - Nosič"
 
@@ -319,7 +319,7 @@ msgid "Carrier U"
 msgstr "u. Nosič"
 
 #: ../base/ufos/aircraftmanagement.ufo:642 ../base/ufos/otheritems.ufo:81
-#: ../base/ufos/research.ufo:3863
+#: ../base/ufos/research.ufo:3873
 #, fuzzy
 msgid "UFO - Mothership"
 msgstr "UFO - Ničitel"
@@ -328,90 +328,98 @@ msgstr "UFO - Ničitel"
 msgid "Mothership U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:659 ../base/ufos/research.ufo:4480
+#: ../base/ufos/aircraftmanagement.ufo:659 ../base/ufos/research.ufo:4490
 msgid "Aerial Laser Cannon"
 msgstr "Letecké laserové dělo"
 
-#: ../base/ufos/aircraftmanagement.ufo:670 ../base/ufos/research.ufo:4519
-msgid "DF-Tank"
+#: ../base/ufos/aircraftmanagement.ufo:671
+#: ../base/ufos/aircraftmanagement.ufo:942 ../base/ufos/research.ufo:196
+#: ../base/ufos/research.ufo:4529
+#, fuzzy
+msgid "D-F Tank"
 msgstr "D-F nádrž"
 
-#: ../base/ufos/aircraftmanagement.ufo:686
+#: ../base/ufos/aircraftmanagement.ufo:687
 msgid "Shiva Rotary Cannon"
 msgstr "Rotační dělo Shiva"
 
 # PZ=Průbojná Zápalná, RDS=Rotační Dělo Shiva
-#: ../base/ufos/aircraftmanagement.ufo:697 ../base/ufos/research.ufo:4546
+#: ../base/ufos/aircraftmanagement.ufo:698 ../base/ufos/research.ufo:4556
 msgid "SHIVA 20mm API Rounds"
 msgstr "20mm PZ munice pro RDS"
 
 # TZ=Tříštivá Zápalná, RDS=Rotační Dělo Shiva
-#: ../base/ufos/aircraftmanagement.ufo:713 ../base/ufos/research.ufo:4567
+#: ../base/ufos/aircraftmanagement.ufo:714 ../base/ufos/research.ufo:4577
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "20mm TZ munice pro RDS"
 
 # EPO=Elektronické ProtiOpatření
-#: ../base/ufos/aircraftmanagement.ufo:729
+#: ../base/ufos/aircraftmanagement.ufo:730
 msgid "Raven ECM Unit"
 msgstr "Jednotka EPO Požírač"
 
 # VV = Vzduch-Vzduch
-#: ../base/ufos/aircraftmanagement.ufo:741
+#: ../base/ufos/aircraftmanagement.ufo:742
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Nosič střel VV Krahujec"
 
-#: ../base/ufos/aircraftmanagement.ufo:751
+#: ../base/ufos/aircraftmanagement.ufo:752
 msgid "Sparrowhawk Missile"
 msgstr "Střela Krahujec"
 
-#: ../base/ufos/aircraftmanagement.ufo:768 ../base/ufos/research.ufo:4626
+#: ../base/ufos/aircraftmanagement.ufo:769 ../base/ufos/research.ufo:4636
 msgid "TR-20 Rocket Pod"
 msgstr "Baterie raket TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:781 ../base/ufos/research.ufo:4643
+#: ../base/ufos/aircraftmanagement.ufo:782 ../base/ufos/research.ufo:4653
 msgid "TR-20 Rocket"
 msgstr "Raketa TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:800 ../base/ufos/research.ufo:4662
+#: ../base/ufos/aircraftmanagement.ufo:801 ../base/ufos/research.ufo:4672
 msgid "Particle Beam Weapon"
 msgstr "Částicová zbraň"
 
-#: ../base/ufos/aircraftmanagement.ufo:815 ../base/ufos/research.ufo:4710
+#: ../base/ufos/aircraftmanagement.ufo:816 ../base/ufos/research.ufo:4720
 msgid "Targeting Computer"
 msgstr "Zaměřovací počítač"
 
-#: ../base/ufos/aircraftmanagement.ufo:827 ../base/ufos/research.ufo:4727
+#: ../base/ufos/aircraftmanagement.ufo:828 ../base/ufos/research.ufo:4737
 msgid "Fuel Pod"
 msgstr "Palivová nádrž"
 
-#: ../base/ufos/aircraftmanagement.ufo:841 ../base/ufos/research.ufo:4329
+#: ../base/ufos/aircraftmanagement.ufo:842 ../base/ufos/research.ufo:4339
 msgid "Polymer Aircraft Armour"
 msgstr "Polymerové pancéřování letounu"
 
-#: ../base/ufos/aircraftmanagement.ufo:855 ../base/ufos/research.ufo:4346
+#: ../base/ufos/aircraftmanagement.ufo:856 ../base/ufos/research.ufo:4356
 msgid "Alien Aircraft Plating"
 msgstr "Pancéřování cizáckých plavidel"
 
-#: ../base/ufos/aircraftmanagement.ufo:869 ../base/ufos/research.ufo:4366
+#: ../base/ufos/aircraftmanagement.ufo:870 ../base/ufos/research.ufo:4376
 msgid "Alien Astrogation"
 msgstr "Cizácká kosmonavigace"
 
-#: ../base/ufos/aircraftmanagement.ufo:878 ../base/ufos/research.ufo:4404
+#: ../base/ufos/aircraftmanagement.ufo:879 ../base/ufos/research.ufo:4414
 msgid "Alien Propulsion"
 msgstr "Cizácký pohon"
 
-#: ../base/ufos/aircraftmanagement.ufo:887 ../base/ufos/research.ufo:4441
+#: ../base/ufos/aircraftmanagement.ufo:888 ../base/ufos/research.ufo:4451
 msgid "Alien Detection"
 msgstr "Cizácká detekce"
 
-#: ../base/ufos/aircraftmanagement.ufo:900 ../base/ufos/research.ufo:4272
+#: ../base/ufos/aircraftmanagement.ufo:901 ../base/ufos/research.ufo:4282
 msgid "AA51 missile launcher"
 msgstr "Odpalovač střel AA51"
 
 # ZV = Země-Vzduch
-#: ../base/ufos/aircraftmanagement.ufo:910 ../base/ufos/research.ufo:4290
+#: ../base/ufos/aircraftmanagement.ufo:911 ../base/ufos/research.ufo:4300
 msgid "AA51 Cicada SAM"
 msgstr "Střela ZV AA51 Cvrček"
+
+#: ../base/ufos/aircraftmanagement.ufo:929 ../base/ufos/research.ufo:156
+#, fuzzy
+msgid "Laser Turret"
+msgstr "Laserová puška"
 
 #: ../base/ufos/armour.ufo:26
 msgid "normal"
@@ -482,72 +490,72 @@ msgstr "Komplex cizáckých cel"
 msgid "Entrance"
 msgstr "Vstup"
 
-#: ../base/ufos/basemanagement.ufo:104
-msgid "Missile Battery"
-msgstr "Raketová baterie"
-
-#: ../base/ufos/basemanagement.ufo:120 client/campaign/cp_base_callbacks.c:298
+#: ../base/ufos/basemanagement.ufo:104 client/campaign/cp_base_callbacks.c:298
 msgid "Storage"
 msgstr "Sklady"
 
-#: ../base/ufos/basemanagement.ufo:136
+#: ../base/ufos/basemanagement.ufo:120
 msgid "Power Plant"
 msgstr "Elektrárna"
 
-#: ../base/ufos/basemanagement.ufo:152
+#: ../base/ufos/basemanagement.ufo:136
 msgid "Command Centre"
 msgstr "Řídící středisko"
 
-#: ../base/ufos/basemanagement.ufo:168 client/campaign/cp_base_callbacks.c:318
+#: ../base/ufos/basemanagement.ufo:152 client/campaign/cp_base_callbacks.c:318
 msgid "Living Quarters"
 msgstr "Ubikace"
 
-#: ../base/ufos/basemanagement.ufo:183 ../base/ufos/basemanagement.ufo:201
+#: ../base/ufos/basemanagement.ufo:167 ../base/ufos/basemanagement.ufo:185
 #: client/campaign/cp_base_callbacks.c:292
 msgid "Large Hangar"
 msgstr "Velký hangár"
 
-#: ../base/ufos/basemanagement.ufo:209 client/campaign/cp_base_callbacks.c:292
+#: ../base/ufos/basemanagement.ufo:193 client/campaign/cp_base_callbacks.c:292
 msgid "Small Hangar"
 msgstr "Malý hangár"
 
-#: ../base/ufos/basemanagement.ufo:225
+#: ../base/ufos/basemanagement.ufo:209
 msgid "Small UFO Hangar"
 msgstr "Malý hangár pro UFO"
 
-#: ../base/ufos/basemanagement.ufo:241 ../base/ufos/basemanagement.ufo:258
+#: ../base/ufos/basemanagement.ufo:225 ../base/ufos/basemanagement.ufo:242
 msgid "Large UFO Hangar"
 msgstr "Velký hangár pro UFO"
 
-#: ../base/ufos/basemanagement.ufo:266
+#: ../base/ufos/basemanagement.ufo:250
 msgid "Team Room"
 msgstr "Společenská místnost"
 
-#: ../base/ufos/basemanagement.ufo:280 ../base/ufos/basemanagement.ufo:298
+#: ../base/ufos/basemanagement.ufo:264 ../base/ufos/basemanagement.ufo:282
 #: client/campaign/cp_base_callbacks.c:313
 msgid "Workshop"
 msgstr "Dílna"
 
-#: ../base/ufos/basemanagement.ufo:306 ../base/ufos/ui/ahud.ufo:83
+#: ../base/ufos/basemanagement.ufo:290 ../base/ufos/ui/ahud.ufo:83
 msgid "Radar"
 msgstr "Radar"
 
-#: ../base/ufos/basemanagement.ufo:323
+#: ../base/ufos/basemanagement.ufo:307
 msgid "Advanced Radar"
 msgstr "Zdokonalený radar"
 
-#: ../base/ufos/basemanagement.ufo:356 ../base/ufos/ui/bases.ufo:156
+#: ../base/ufos/basemanagement.ufo:340 ../base/ufos/ui/bases.ufo:156
 #: client/campaign/cp_base_callbacks.c:328
 msgid "Hospital"
 msgstr "Nemocnice"
 
-#: ../base/ufos/basemanagement.ufo:372
+#: ../base/ufos/basemanagement.ufo:356
 msgid "Antimatter Storage"
 msgstr "Sklad antihmoty"
 
-#: ../base/ufos/basemanagement.ufo:386
+#: ../base/ufos/basemanagement.ufo:371
 #, fuzzy
 msgid "Laser Battery"
+msgstr "Raketová baterie"
+
+#: ../base/ufos/basemanagement.ufo:388
+msgid "Missile Battery"
 msgstr "Raketová baterie"
 
 #: ../base/ufos/campaign.ufo:3
@@ -670,68 +678,68 @@ msgstr "Generální tajemník Mahouf Serra, Spojené Národy, New York City"
 #: ../base/ufos/events.ufo:341 ../base/ufos/events.ufo:352
 #: ../base/ufos/research.ufo:137 ../base/ufos/research.ufo:145
 #: ../base/ufos/research.ufo:170 ../base/ufos/research.ufo:178
-#: ../base/ufos/research.ufo:209 ../base/ufos/research.ufo:217
-#: ../base/ufos/research.ufo:271 ../base/ufos/research.ufo:279
-#: ../base/ufos/research.ufo:304 ../base/ufos/research.ufo:312
-#: ../base/ufos/research.ufo:342 ../base/ufos/research.ufo:350
-#: ../base/ufos/research.ufo:404 ../base/ufos/research.ufo:412
-#: ../base/ufos/research.ufo:442 ../base/ufos/research.ufo:450
-#: ../base/ufos/research.ufo:480 ../base/ufos/research.ufo:488
-#: ../base/ufos/research.ufo:518 ../base/ufos/research.ufo:543
-#: ../base/ufos/research.ufo:551 ../base/ufos/research.ufo:580
-#: ../base/ufos/research.ufo:589 ../base/ufos/research.ufo:615
-#: ../base/ufos/research.ufo:623 ../base/ufos/research.ufo:1036
-#: ../base/ufos/research.ufo:1044 ../base/ufos/research.ufo:1112
-#: ../base/ufos/research.ufo:1120 ../base/ufos/research.ufo:1323
-#: ../base/ufos/research.ufo:1331 ../base/ufos/research.ufo:1365
-#: ../base/ufos/research.ufo:1373 ../base/ufos/research.ufo:1403
-#: ../base/ufos/research.ufo:1411 ../base/ufos/research.ufo:1462
-#: ../base/ufos/research.ufo:1470 ../base/ufos/research.ufo:1501
-#: ../base/ufos/research.ufo:1509 ../base/ufos/research.ufo:1539
-#: ../base/ufos/research.ufo:1547 ../base/ufos/research.ufo:1578
-#: ../base/ufos/research.ufo:1586 ../base/ufos/research.ufo:1636
-#: ../base/ufos/research.ufo:1644 ../base/ufos/research.ufo:1696
-#: ../base/ufos/research.ufo:1704 ../base/ufos/research.ufo:1755
-#: ../base/ufos/research.ufo:1763 ../base/ufos/research.ufo:1795
-#: ../base/ufos/research.ufo:1803 ../base/ufos/research.ufo:1835
-#: ../base/ufos/research.ufo:1843 ../base/ufos/research.ufo:1895
-#: ../base/ufos/research.ufo:1903 ../base/ufos/research.ufo:1935
-#: ../base/ufos/research.ufo:1943 ../base/ufos/research.ufo:1992
-#: ../base/ufos/research.ufo:2000 ../base/ufos/research.ufo:2227
-#: ../base/ufos/research.ufo:2235 ../base/ufos/research.ufo:2274
-#: ../base/ufos/research.ufo:2282 ../base/ufos/research.ufo:2316
-#: ../base/ufos/research.ufo:2324 ../base/ufos/research.ufo:2357
-#: ../base/ufos/research.ufo:2365 ../base/ufos/research.ufo:2416
-#: ../base/ufos/research.ufo:2424 ../base/ufos/research.ufo:2476
-#: ../base/ufos/research.ufo:2484 ../base/ufos/research.ufo:2536
-#: ../base/ufos/research.ufo:2544 ../base/ufos/research.ufo:2607
-#: ../base/ufos/research.ufo:2615 ../base/ufos/research.ufo:2685
-#: ../base/ufos/research.ufo:2693 ../base/ufos/research.ufo:2722
-#: ../base/ufos/research.ufo:2730 ../base/ufos/research.ufo:3327
-#: ../base/ufos/research.ufo:3491 ../base/ufos/research.ufo:3499
-#: ../base/ufos/research.ufo:3533 ../base/ufos/research.ufo:3541
-#: ../base/ufos/research.ufo:3576 ../base/ufos/research.ufo:3584
-#: ../base/ufos/research.ufo:3619 ../base/ufos/research.ufo:3627
-#: ../base/ufos/research.ufo:3662 ../base/ufos/research.ufo:3670
-#: ../base/ufos/research.ufo:3705 ../base/ufos/research.ufo:3713
-#: ../base/ufos/research.ufo:3748 ../base/ufos/research.ufo:3756
-#: ../base/ufos/research.ufo:3791 ../base/ufos/research.ufo:3799
-#: ../base/ufos/research.ufo:3834 ../base/ufos/research.ufo:3842
-#: ../base/ufos/research.ufo:3877 ../base/ufos/research.ufo:3885
-#: ../base/ufos/research.ufo:3948 ../base/ufos/research.ufo:3956
-#: ../base/ufos/research.ufo:4008 ../base/ufos/research.ufo:4016
-#: ../base/ufos/research.ufo:4050 ../base/ufos/research.ufo:4058
-#: ../base/ufos/research.ufo:4092 ../base/ufos/research.ufo:4100
-#: ../base/ufos/research.ufo:4379 ../base/ufos/research.ufo:4386
-#: ../base/ufos/research.ufo:4417 ../base/ufos/research.ufo:4424
-#: ../base/ufos/research.ufo:4454 ../base/ufos/research.ufo:4461
-#: ../base/ufos/research.ufo:4496 ../base/ufos/research.ufo:4504
-#: ../base/ufos/research.ufo:4678 ../base/ufos/research.ufo:4686
-#: ../base/ufos/research.ufo:4761 ../base/ufos/research.ufo:4769
-#: ../base/ufos/research.ufo:4855 ../base/ufos/research.ufo:4889
-#: ../base/ufos/research.ufo:4896 ../base/ufos/research.ufo:4927
-#: ../base/ufos/research.ufo:4936 ../base/ufos/research.ufo:4969
-#: ../base/ufos/research.ufo:4976
+#: ../base/ufos/research.ufo:220 ../base/ufos/research.ufo:228
+#: ../base/ufos/research.ufo:282 ../base/ufos/research.ufo:290
+#: ../base/ufos/research.ufo:315 ../base/ufos/research.ufo:323
+#: ../base/ufos/research.ufo:353 ../base/ufos/research.ufo:361
+#: ../base/ufos/research.ufo:415 ../base/ufos/research.ufo:423
+#: ../base/ufos/research.ufo:453 ../base/ufos/research.ufo:461
+#: ../base/ufos/research.ufo:491 ../base/ufos/research.ufo:499
+#: ../base/ufos/research.ufo:529 ../base/ufos/research.ufo:554
+#: ../base/ufos/research.ufo:562 ../base/ufos/research.ufo:591
+#: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:626
+#: ../base/ufos/research.ufo:634 ../base/ufos/research.ufo:1047
+#: ../base/ufos/research.ufo:1055 ../base/ufos/research.ufo:1123
+#: ../base/ufos/research.ufo:1131 ../base/ufos/research.ufo:1334
+#: ../base/ufos/research.ufo:1342 ../base/ufos/research.ufo:1393
+#: ../base/ufos/research.ufo:1401 ../base/ufos/research.ufo:1432
+#: ../base/ufos/research.ufo:1440 ../base/ufos/research.ufo:1470
+#: ../base/ufos/research.ufo:1478 ../base/ufos/research.ufo:1509
+#: ../base/ufos/research.ufo:1517 ../base/ufos/research.ufo:1548
+#: ../base/ufos/research.ufo:1556 ../base/ufos/research.ufo:1590
+#: ../base/ufos/research.ufo:1598 ../base/ufos/research.ufo:1646
+#: ../base/ufos/research.ufo:1654 ../base/ufos/research.ufo:1706
+#: ../base/ufos/research.ufo:1714 ../base/ufos/research.ufo:1765
+#: ../base/ufos/research.ufo:1773 ../base/ufos/research.ufo:1805
+#: ../base/ufos/research.ufo:1813 ../base/ufos/research.ufo:1845
+#: ../base/ufos/research.ufo:1853 ../base/ufos/research.ufo:1905
+#: ../base/ufos/research.ufo:1913 ../base/ufos/research.ufo:1945
+#: ../base/ufos/research.ufo:1953 ../base/ufos/research.ufo:2002
+#: ../base/ufos/research.ufo:2010 ../base/ufos/research.ufo:2237
+#: ../base/ufos/research.ufo:2245 ../base/ufos/research.ufo:2284
+#: ../base/ufos/research.ufo:2292 ../base/ufos/research.ufo:2326
+#: ../base/ufos/research.ufo:2334 ../base/ufos/research.ufo:2367
+#: ../base/ufos/research.ufo:2375 ../base/ufos/research.ufo:2426
+#: ../base/ufos/research.ufo:2434 ../base/ufos/research.ufo:2486
+#: ../base/ufos/research.ufo:2494 ../base/ufos/research.ufo:2546
+#: ../base/ufos/research.ufo:2554 ../base/ufos/research.ufo:2617
+#: ../base/ufos/research.ufo:2625 ../base/ufos/research.ufo:2695
+#: ../base/ufos/research.ufo:2703 ../base/ufos/research.ufo:2732
+#: ../base/ufos/research.ufo:2740 ../base/ufos/research.ufo:3337
+#: ../base/ufos/research.ufo:3501 ../base/ufos/research.ufo:3509
+#: ../base/ufos/research.ufo:3543 ../base/ufos/research.ufo:3551
+#: ../base/ufos/research.ufo:3586 ../base/ufos/research.ufo:3594
+#: ../base/ufos/research.ufo:3629 ../base/ufos/research.ufo:3637
+#: ../base/ufos/research.ufo:3672 ../base/ufos/research.ufo:3680
+#: ../base/ufos/research.ufo:3715 ../base/ufos/research.ufo:3723
+#: ../base/ufos/research.ufo:3758 ../base/ufos/research.ufo:3766
+#: ../base/ufos/research.ufo:3801 ../base/ufos/research.ufo:3809
+#: ../base/ufos/research.ufo:3844 ../base/ufos/research.ufo:3852
+#: ../base/ufos/research.ufo:3887 ../base/ufos/research.ufo:3895
+#: ../base/ufos/research.ufo:3958 ../base/ufos/research.ufo:3966
+#: ../base/ufos/research.ufo:4018 ../base/ufos/research.ufo:4026
+#: ../base/ufos/research.ufo:4060 ../base/ufos/research.ufo:4068
+#: ../base/ufos/research.ufo:4102 ../base/ufos/research.ufo:4110
+#: ../base/ufos/research.ufo:4389 ../base/ufos/research.ufo:4396
+#: ../base/ufos/research.ufo:4427 ../base/ufos/research.ufo:4434
+#: ../base/ufos/research.ufo:4464 ../base/ufos/research.ufo:4471
+#: ../base/ufos/research.ufo:4506 ../base/ufos/research.ufo:4514
+#: ../base/ufos/research.ufo:4688 ../base/ufos/research.ufo:4696
+#: ../base/ufos/research.ufo:4771 ../base/ufos/research.ufo:4779
+#: ../base/ufos/research.ufo:4865 ../base/ufos/research.ufo:4899
+#: ../base/ufos/research.ufo:4906 ../base/ufos/research.ufo:4937
+#: ../base/ufos/research.ufo:4946 ../base/ufos/research.ufo:4979
+#: ../base/ufos/research.ufo:4986
 msgid "mail_to_base_commander"
 msgstr "Velitel základny, PHALANX, Velení tichomořských operací"
 
@@ -763,54 +771,54 @@ msgstr ""
 #: ../base/ufos/events.ufo:133 ../base/ufos/events.ufo:144
 #: ../base/ufos/events.ufo:166 ../base/ufos/research.ufo:136
 #: ../base/ufos/research.ufo:144 ../base/ufos/research.ufo:169
-#: ../base/ufos/research.ufo:177 ../base/ufos/research.ufo:208
-#: ../base/ufos/research.ufo:216 ../base/ufos/research.ufo:270
-#: ../base/ufos/research.ufo:278 ../base/ufos/research.ufo:517
-#: ../base/ufos/research.ufo:614 ../base/ufos/research.ufo:622
-#: ../base/ufos/research.ufo:1035 ../base/ufos/research.ufo:1043
-#: ../base/ufos/research.ufo:1111 ../base/ufos/research.ufo:1119
-#: ../base/ufos/research.ufo:1322 ../base/ufos/research.ufo:1330
-#: ../base/ufos/research.ufo:1364 ../base/ufos/research.ufo:1372
-#: ../base/ufos/research.ufo:1402 ../base/ufos/research.ufo:1410
-#: ../base/ufos/research.ufo:1461 ../base/ufos/research.ufo:1469
-#: ../base/ufos/research.ufo:1500 ../base/ufos/research.ufo:1508
-#: ../base/ufos/research.ufo:1538 ../base/ufos/research.ufo:1546
-#: ../base/ufos/research.ufo:1577 ../base/ufos/research.ufo:1585
-#: ../base/ufos/research.ufo:1635 ../base/ufos/research.ufo:1643
-#: ../base/ufos/research.ufo:1695 ../base/ufos/research.ufo:1703
-#: ../base/ufos/research.ufo:1754 ../base/ufos/research.ufo:1762
-#: ../base/ufos/research.ufo:1794 ../base/ufos/research.ufo:1802
-#: ../base/ufos/research.ufo:1834 ../base/ufos/research.ufo:1842
-#: ../base/ufos/research.ufo:1894 ../base/ufos/research.ufo:1902
-#: ../base/ufos/research.ufo:1934 ../base/ufos/research.ufo:1942
-#: ../base/ufos/research.ufo:1991 ../base/ufos/research.ufo:1999
-#: ../base/ufos/research.ufo:2226 ../base/ufos/research.ufo:2234
-#: ../base/ufos/research.ufo:2273 ../base/ufos/research.ufo:2281
-#: ../base/ufos/research.ufo:2315 ../base/ufos/research.ufo:2323
-#: ../base/ufos/research.ufo:2356 ../base/ufos/research.ufo:2364
-#: ../base/ufos/research.ufo:2415 ../base/ufos/research.ufo:2423
-#: ../base/ufos/research.ufo:2475 ../base/ufos/research.ufo:2483
-#: ../base/ufos/research.ufo:2535 ../base/ufos/research.ufo:2543
-#: ../base/ufos/research.ufo:2606 ../base/ufos/research.ufo:2614
-#: ../base/ufos/research.ufo:2684 ../base/ufos/research.ufo:2692
-#: ../base/ufos/research.ufo:2721 ../base/ufos/research.ufo:2729
-#: ../base/ufos/research.ufo:3326 ../base/ufos/research.ufo:3490
-#: ../base/ufos/research.ufo:3498 ../base/ufos/research.ufo:3532
-#: ../base/ufos/research.ufo:3540 ../base/ufos/research.ufo:3575
-#: ../base/ufos/research.ufo:3583 ../base/ufos/research.ufo:3618
-#: ../base/ufos/research.ufo:3626 ../base/ufos/research.ufo:3661
-#: ../base/ufos/research.ufo:3669 ../base/ufos/research.ufo:3704
-#: ../base/ufos/research.ufo:3712 ../base/ufos/research.ufo:3747
-#: ../base/ufos/research.ufo:3755 ../base/ufos/research.ufo:3790
-#: ../base/ufos/research.ufo:3798 ../base/ufos/research.ufo:3833
-#: ../base/ufos/research.ufo:3841 ../base/ufos/research.ufo:3876
-#: ../base/ufos/research.ufo:3884 ../base/ufos/research.ufo:4378
-#: ../base/ufos/research.ufo:4385 ../base/ufos/research.ufo:4416
-#: ../base/ufos/research.ufo:4423 ../base/ufos/research.ufo:4453
-#: ../base/ufos/research.ufo:4460 ../base/ufos/research.ufo:4495
-#: ../base/ufos/research.ufo:4503 ../base/ufos/research.ufo:4677
-#: ../base/ufos/research.ufo:4685 ../base/ufos/research.ufo:4760
-#: ../base/ufos/research.ufo:4768
+#: ../base/ufos/research.ufo:177 ../base/ufos/research.ufo:219
+#: ../base/ufos/research.ufo:227 ../base/ufos/research.ufo:281
+#: ../base/ufos/research.ufo:289 ../base/ufos/research.ufo:528
+#: ../base/ufos/research.ufo:625 ../base/ufos/research.ufo:633
+#: ../base/ufos/research.ufo:1046 ../base/ufos/research.ufo:1054
+#: ../base/ufos/research.ufo:1122 ../base/ufos/research.ufo:1130
+#: ../base/ufos/research.ufo:1333 ../base/ufos/research.ufo:1341
+#: ../base/ufos/research.ufo:1392 ../base/ufos/research.ufo:1400
+#: ../base/ufos/research.ufo:1431 ../base/ufos/research.ufo:1439
+#: ../base/ufos/research.ufo:1469 ../base/ufos/research.ufo:1477
+#: ../base/ufos/research.ufo:1508 ../base/ufos/research.ufo:1516
+#: ../base/ufos/research.ufo:1547 ../base/ufos/research.ufo:1555
+#: ../base/ufos/research.ufo:1589 ../base/ufos/research.ufo:1597
+#: ../base/ufos/research.ufo:1645 ../base/ufos/research.ufo:1653
+#: ../base/ufos/research.ufo:1705 ../base/ufos/research.ufo:1713
+#: ../base/ufos/research.ufo:1764 ../base/ufos/research.ufo:1772
+#: ../base/ufos/research.ufo:1804 ../base/ufos/research.ufo:1812
+#: ../base/ufos/research.ufo:1844 ../base/ufos/research.ufo:1852
+#: ../base/ufos/research.ufo:1904 ../base/ufos/research.ufo:1912
+#: ../base/ufos/research.ufo:1944 ../base/ufos/research.ufo:1952
+#: ../base/ufos/research.ufo:2001 ../base/ufos/research.ufo:2009
+#: ../base/ufos/research.ufo:2236 ../base/ufos/research.ufo:2244
+#: ../base/ufos/research.ufo:2283 ../base/ufos/research.ufo:2291
+#: ../base/ufos/research.ufo:2325 ../base/ufos/research.ufo:2333
+#: ../base/ufos/research.ufo:2366 ../base/ufos/research.ufo:2374
+#: ../base/ufos/research.ufo:2425 ../base/ufos/research.ufo:2433
+#: ../base/ufos/research.ufo:2485 ../base/ufos/research.ufo:2493
+#: ../base/ufos/research.ufo:2545 ../base/ufos/research.ufo:2553
+#: ../base/ufos/research.ufo:2616 ../base/ufos/research.ufo:2624
+#: ../base/ufos/research.ufo:2694 ../base/ufos/research.ufo:2702
+#: ../base/ufos/research.ufo:2731 ../base/ufos/research.ufo:2739
+#: ../base/ufos/research.ufo:3336 ../base/ufos/research.ufo:3500
+#: ../base/ufos/research.ufo:3508 ../base/ufos/research.ufo:3542
+#: ../base/ufos/research.ufo:3550 ../base/ufos/research.ufo:3585
+#: ../base/ufos/research.ufo:3593 ../base/ufos/research.ufo:3628
+#: ../base/ufos/research.ufo:3636 ../base/ufos/research.ufo:3671
+#: ../base/ufos/research.ufo:3679 ../base/ufos/research.ufo:3714
+#: ../base/ufos/research.ufo:3722 ../base/ufos/research.ufo:3757
+#: ../base/ufos/research.ufo:3765 ../base/ufos/research.ufo:3800
+#: ../base/ufos/research.ufo:3808 ../base/ufos/research.ufo:3843
+#: ../base/ufos/research.ufo:3851 ../base/ufos/research.ufo:3886
+#: ../base/ufos/research.ufo:3894 ../base/ufos/research.ufo:4388
+#: ../base/ufos/research.ufo:4395 ../base/ufos/research.ufo:4426
+#: ../base/ufos/research.ufo:4433 ../base/ufos/research.ufo:4463
+#: ../base/ufos/research.ufo:4470 ../base/ufos/research.ufo:4505
+#: ../base/ufos/research.ufo:4513 ../base/ufos/research.ufo:4687
+#: ../base/ufos/research.ufo:4695 ../base/ufos/research.ufo:4770
+#: ../base/ufos/research.ufo:4778
 msgid "mail_from_paul_navarre"
 msgstr "Velitel Paul Navarre, VaV: technické oddělení, PHALANX, Velení tichomořských operací"
 
@@ -990,9 +998,9 @@ msgstr ""
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/events.ufo:276 ../base/ufos/events.ufo:287
-#: ../base/ufos/events.ufo:298 ../base/ufos/research.ufo:579
-#: ../base/ufos/research.ufo:588 ../base/ufos/research.ufo:4926
-#: ../base/ufos/research.ufo:4935
+#: ../base/ufos/events.ufo:298 ../base/ufos/research.ufo:590
+#: ../base/ufos/research.ufo:599 ../base/ufos/research.ufo:4936
+#: ../base/ufos/research.ufo:4945
 msgid "mail_from_col_falkland"
 msgstr "plk. Ingrid Falkland, zpravodajská služba, PHALANX, Velení tichomořských operací"
 
@@ -1651,18 +1659,18 @@ msgstr "Rusko"
 msgid "The Commonwealth of Oceania"
 msgstr "Oceánské Společenství"
 
-#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:193
-#: ../base/ufos/research.ufo:234
+#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:204
+#: ../base/ufos/research.ufo:245
 msgid "Antimatter"
 msgstr "Antihmota"
 
-#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:328
-#: ../base/ufos/research.ufo:371
+#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:339
+#: ../base/ufos/research.ufo:382
 msgid "Alien Breathing Apparatus"
 msgstr "Dýchací přístroj pro cizáky"
 
-#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4747
-#: ../base/ufos/research.ufo:4786
+#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4757
+#: ../base/ufos/research.ufo:4796
 msgid "Alien Materials"
 msgstr "Cizácké materiály"
 
@@ -1745,11 +1753,6 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:156
-#, fuzzy
-msgid "Base Defence Laser Turret"
-msgstr "Laserová puška"
-
 #: ../base/ufos/research.ufo:161
 #, fuzzy
 msgid "baselaser_txt"
@@ -1786,7 +1789,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:198 ../base/ufos/research.ufo:236
+#: ../base/ufos/research.ufo:209 ../base/ufos/research.ufo:247
 msgid "antimatter_txt"
 msgstr ""
 "Naše studium antihmoty je kompletní, veliteli a jsme připraveni prezentovat naše výsledky. Obávám se, že mám špatné zprávy.\n"
@@ -1805,7 +1808,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:199
+#: ../base/ufos/research.ufo:210
 msgid "antimatter_extra_txt"
 msgstr ""
 "Naše studium antihmoty je kompletní, veliteli a jsme připraveni prezentovat naše výsledky. Obávám se, že mám špatné zprávy.\n"
@@ -1824,7 +1827,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:202
+#: ../base/ufos/research.ufo:213
 msgid "antimatter_pre_txt"
 msgstr ""
 "Veliteli, na základě extrémně zajímavých informací, které jsme získali během zkoumání průzkumného UFO, bych rád získal svolení využít laboratorní čas na analýzu intenzivního využívání antihmoty cizáky a vliv využívání antihmoty na tuto válku.\n"
@@ -1833,7 +1836,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:203
+#: ../base/ufos/research.ufo:214
 msgid "antimatter_extra_pre_txt"
 msgstr ""
 "Veliteli, na základě extrémně zajímavých informací, které jsme získali během zkoumání průzkumného UFO, bych rád získal svolení využít laboratorní čas na analýzu intenzivního využívání antihmoty cizáky a vliv využívání antihmoty na tuto válku.\n"
@@ -1842,25 +1845,25 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:254
+#: ../base/ufos/research.ufo:265
 msgid "Upgrade - Antimatter engines"
 msgstr "Vylepšení - Antihmotové motory"
 
-#: ../base/ufos/research.ufo:256
+#: ../base/ufos/research.ufo:267
 msgid "craft_upgrade_am_engines_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:259
+#: ../base/ufos/research.ufo:270
 msgid "craft_upgrade_am_engines_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:290
+#: ../base/ufos/research.ufo:301
 msgid "Live Alien"
 msgstr "Živý cizák"
 
-#: ../base/ufos/research.ufo:295
+#: ../base/ufos/research.ufo:306
 msgid "alien_live_txt"
 msgstr ""
 "Veliteli,\n"
@@ -1875,7 +1878,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:298
+#: ../base/ufos/research.ufo:309
 msgid "alien_live_pre_txt"
 msgstr ""
 "Veliteli,\n"
@@ -1890,23 +1893,23 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:303 ../base/ufos/research.ufo:311
-#: ../base/ufos/research.ufo:341 ../base/ufos/research.ufo:349
-#: ../base/ufos/research.ufo:403 ../base/ufos/research.ufo:411
-#: ../base/ufos/research.ufo:441 ../base/ufos/research.ufo:449
-#: ../base/ufos/research.ufo:479 ../base/ufos/research.ufo:487
-#: ../base/ufos/research.ufo:542 ../base/ufos/research.ufo:550
-#: ../base/ufos/research.ufo:3947 ../base/ufos/research.ufo:3955
-#: ../base/ufos/research.ufo:4007 ../base/ufos/research.ufo:4015
-#: ../base/ufos/research.ufo:4049 ../base/ufos/research.ufo:4057
-#: ../base/ufos/research.ufo:4091 ../base/ufos/research.ufo:4099
-#: ../base/ufos/research.ufo:4854 ../base/ufos/research.ufo:4888
-#: ../base/ufos/research.ufo:4895 ../base/ufos/research.ufo:4968
-#: ../base/ufos/research.ufo:4975
+#: ../base/ufos/research.ufo:314 ../base/ufos/research.ufo:322
+#: ../base/ufos/research.ufo:352 ../base/ufos/research.ufo:360
+#: ../base/ufos/research.ufo:414 ../base/ufos/research.ufo:422
+#: ../base/ufos/research.ufo:452 ../base/ufos/research.ufo:460
+#: ../base/ufos/research.ufo:490 ../base/ufos/research.ufo:498
+#: ../base/ufos/research.ufo:553 ../base/ufos/research.ufo:561
+#: ../base/ufos/research.ufo:3957 ../base/ufos/research.ufo:3965
+#: ../base/ufos/research.ufo:4017 ../base/ufos/research.ufo:4025
+#: ../base/ufos/research.ufo:4059 ../base/ufos/research.ufo:4067
+#: ../base/ufos/research.ufo:4101 ../base/ufos/research.ufo:4109
+#: ../base/ufos/research.ufo:4864 ../base/ufos/research.ufo:4898
+#: ../base/ufos/research.ufo:4905 ../base/ufos/research.ufo:4978
+#: ../base/ufos/research.ufo:4985
 msgid "mail_from_dr_connor"
 msgstr "Dr. Connor, VaV: biologické oddělení, PHALANX, Velení tichomořských operací"
 
-#: ../base/ufos/research.ufo:333 ../base/ufos/research.ufo:373
+#: ../base/ufos/research.ufo:344 ../base/ufos/research.ufo:384
 msgid "alien_breathing_txt"
 msgstr ""
 "Veliteli,\n"
@@ -1931,7 +1934,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:336
+#: ../base/ufos/research.ufo:347
 msgid "alien_breathing_pre_txt"
 msgstr ""
 "Veliteli,\n"
@@ -1946,11 +1949,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:390
+#: ../base/ufos/research.ufo:401
 msgid "The Alien Mind"
 msgstr "Cizácká mysl"
 
-#: ../base/ufos/research.ufo:395
+#: ../base/ufos/research.ufo:406
 msgid "alien_mind_txt"
 msgstr ""
 "Veliteli,\n"
@@ -1969,7 +1972,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:398
+#: ../base/ufos/research.ufo:409
 msgid "alien_mind_pre_txt"
 msgstr ""
 "Veliteli,\n"
@@ -1984,11 +1987,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:428
+#: ../base/ufos/research.ufo:439
 msgid "Odd Behaviour"
 msgstr "Podivné chování"
 
-#: ../base/ufos/research.ufo:433
+#: ../base/ufos/research.ufo:444
 msgid "alien_odd_behaviour_txt"
 msgstr ""
 "Commander,\n"
@@ -2013,7 +2016,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:436
+#: ../base/ufos/research.ufo:447
 msgid "alien_odd_behaviour_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -2028,11 +2031,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:466
+#: ../base/ufos/research.ufo:477
 msgid "Alien Communication"
 msgstr "Cizácké dorozumívání"
 
-#: ../base/ufos/research.ufo:471
+#: ../base/ufos/research.ufo:482
 msgid "alien_communication_txt"
 msgstr ""
 "Veliteli,\n"
@@ -2051,7 +2054,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:474
+#: ../base/ufos/research.ufo:485
 msgid "alien_communication_pre_txt"
 msgstr ""
 "Veliteli,\n"
@@ -2071,12 +2074,12 @@ msgstr ""
 "Dr. Connor"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: ../base/ufos/research.ufo:505 client/campaign/cp_alienbase.c:168
+#: ../base/ufos/research.ufo:516 client/campaign/cp_alienbase.c:168
 #: client/campaign/cp_missions.c:433
 msgid "Alien base"
 msgstr "Cizácká základna"
 
-#: ../base/ufos/research.ufo:507
+#: ../base/ufos/research.ufo:518
 msgid "alien_base_txt"
 msgstr ""
 "Návrh\n"
@@ -2107,11 +2110,11 @@ msgstr ""
 "\n"
 "S pozdravem,Plk. Falkland"
 
-#: ../base/ufos/research.ufo:529
+#: ../base/ufos/research.ufo:540
 msgid "The Universal Serum"
 msgstr "Univerzální sérum"
 
-#: ../base/ufos/research.ufo:534
+#: ../base/ufos/research.ufo:545
 msgid "universal_serum_txt"
 msgstr ""
 "Veliteli,\n"
@@ -2130,7 +2133,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:537
+#: ../base/ufos/research.ufo:548
 msgid "universal_serum_pre_txt"
 msgstr ""
 "Veliteli,\n"
@@ -2143,11 +2146,11 @@ msgstr ""
 "\n"
 "Upřímně zdraví,Dr. Connor"
 
-#: ../base/ufos/research.ufo:566
+#: ../base/ufos/research.ufo:577
 msgid "Alien Origins"
 msgstr "Původ cizáků"
 
-#: ../base/ufos/research.ufo:571
+#: ../base/ufos/research.ufo:582
 msgid "alien_origins_txt"
 msgstr ""
 "Dobré ráno, pane.\n"
@@ -2178,7 +2181,7 @@ msgstr ""
 "\n"
 "Plk. Falkland"
 
-#: ../base/ufos/research.ufo:574
+#: ../base/ufos/research.ufo:585
 msgid "alien_origins_pre_txt"
 msgstr ""
 "Dobré ráno, pane.\n"
@@ -2195,11 +2198,11 @@ msgstr ""
 "\n"
 "Plk. Falkland"
 
-#: ../base/ufos/research.ufo:601
+#: ../base/ufos/research.ufo:612
 msgid "UFO Theory"
 msgstr "Teorie UFO "
 
-#: ../base/ufos/research.ufo:606
+#: ../base/ufos/research.ufo:617
 msgid "alien_theory_txt"
 msgstr ""
 "Veliteli, můj tým a já jsme dokončili analýzy týkající se námi ukořistěného UFO. Je to skutečný zázrak techniky, a všichni už netrpělivě čekáme na chvíli, kdy se budeme moci podívat hlouběji na zoubek celé této úžasné technologii.\n"
@@ -2222,7 +2225,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:609
+#: ../base/ufos/research.ufo:620
 msgid "alien_theory_pre_txt"
 msgstr ""
 "Veliteli, ukořistili jsme první UFO během této války. Lze jen těžko vyjádřit jaká to je unikátní příležitost k výzkumům. Nicméně dříve, než začneme přemýšlet o jeho podrobnějším zkoumání a rozebírání na součástky, budeme potřebovat širší přehled o konstrukci UFO jako takového. Jsou některé jeho systémy stále aktivní nebo chráněné nástrahami? Z jakého materálu je vyrobeno? Jaké nebezpečí by mohlo představovat během skladování a rozebírání? Všechny tyto otázky a další musí být zodpovězeny, než se pustíme dále.\n"
@@ -2231,7 +2234,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:654
+#: ../base/ufos/research.ufo:665
 msgid "pistol_txt"
 msgstr ""
 "Technická specifikace: Pistole P-12\n"
@@ -2280,7 +2283,7 @@ msgstr ""
 "\n"
 "Ačkoliv má tato pistole dobrou průbojnost proti živým cílům, její účinek proti robotickým cizákům je velmi ubohý."
 
-#: ../base/ufos/research.ufo:673
+#: ../base/ufos/research.ufo:684
 msgid "pistol_mag_txt"
 msgstr ""
 "Technická specifikace: Zásobník pistole 7,62mm\n"
@@ -2313,7 +2316,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:695
+#: ../base/ufos/research.ufo:706
 msgid "pistol2_txt"
 msgstr ""
 "Technická specifikace: Automatická pistole MP-699\n"
@@ -2360,7 +2363,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:714
+#: ../base/ufos/research.ufo:725
 msgid "pistol2_mag_txt"
 msgstr ""
 "Technická specifikace: Zásobník automatické pistole ráže 4,2mm\n"
@@ -2393,13 +2396,13 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:734
+#: ../base/ufos/research.ufo:745
 msgid "vhs_assault_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:751
+#: ../base/ufos/research.ufo:762
 msgid "assault_txt"
 msgstr ""
 "Technické specifikace: Útočná puška AR-80\n"
@@ -2442,7 +2445,7 @@ msgstr ""
 "\n"
 "I když je AR-80 ve všech směrech výborná puška, nebyla zkonstruována pro boj s cizáckými invazními jednotkami. Měli bychom vyvinout své vlastní zbraně pro tento účel hned, jak jen to bude možné."
 
-#: ../base/ufos/research.ufo:769
+#: ../base/ufos/research.ufo:780
 msgid "assault_mag_txt"
 msgstr ""
 "Technické specifikace: Zásobník útočné pušky\n"
@@ -2475,7 +2478,7 @@ msgstr ""
 "\n"
 "Žádné."
 
-#: ../base/ufos/research.ufo:788
+#: ../base/ufos/research.ufo:799
 msgid "machinegun_txt"
 msgstr ""
 "Technická specifikace: Lehký kulomet MG12\n"
@@ -2522,7 +2525,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:806
+#: ../base/ufos/research.ufo:817
 msgid "machinegun_mag_txt"
 msgstr ""
 "Technická specifikace: zásobník lehkého kulometu MG12\n"
@@ -2557,7 +2560,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:825
+#: ../base/ufos/research.ufo:836
 msgid "rpg_txt"
 msgstr ""
 "Technická specifikace: Raketomet HPML\n"
@@ -2604,7 +2607,7 @@ msgstr ""
 "\n"
 "Spolu s odstřelovačskými puškami a granáty je toto jedna z několika standardních pozemských zbraní, které jsou plně efektivní proti robotickým cizákům."
 
-#: ../base/ufos/research.ufo:844
+#: ../base/ufos/research.ufo:855
 msgid "rpg_ammo_txt"
 msgstr ""
 "Technická specifikace: Tříštivotrhavá raketa\n"
@@ -2639,7 +2642,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:864
+#: ../base/ufos/research.ufo:875
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 "Technická specifikace: Zápalná raketa\n"
@@ -2676,57 +2679,57 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:885
+#: ../base/ufos/research.ufo:896
 msgid "xaw95_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:888
+#: ../base/ufos/research.ufo:899
 msgid "xaw95_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:915
+#: ../base/ufos/research.ufo:926
 msgid "bombkit1_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:918
+#: ../base/ufos/research.ufo:929
 msgid "bombkit1_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:933
+#: ../base/ufos/research.ufo:944
 msgid "bombkit2_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:936
+#: ../base/ufos/research.ufo:947
 msgid "bombkit2_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:951
+#: ../base/ufos/research.ufo:962
 msgid "chaingun_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:954
+#: ../base/ufos/research.ufo:965
 msgid "chaingun_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:986
+#: ../base/ufos/research.ufo:997
 msgid "shotgun_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:1022
+#: ../base/ufos/research.ufo:1033
 msgid "Electromagnetic Rifle"
 msgstr "Elektromagnetická puška"
 
-#: ../base/ufos/research.ufo:1027
+#: ../base/ufos/research.ufo:1038
 msgid "bolterrifle_txt"
 msgstr ""
 "Projekt elektromagnetické pušky dosáhl ohromujícího úspěchu! Poprvé v lidské historii se nám podařilo vytvořit životaschopnou, přenosnou elektromagnetickou zbraň. Pojmenovali jsme naši zbraň \"průrazná puška\", abychom se vyhnuli dvojznačnosti a záměny s ostatními existujícími magneticky urychlovanými palnými zbraněmi. Nejlépe bude objasnit její činnost v tomto krátkém shrnutí.\n"
@@ -2745,7 +2748,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1030
+#: ../base/ufos/research.ufo:1041
 msgid "bolterrifle_pre_txt"
 msgstr ""
 "Veliteli, obdrželi jsme spoustu výzkumných souborů od několika členů SN týkajících se výzkumu a výroby osobní elektromagnetické zbraně; byly předložené rozličné návrhy a dokonce byly dokonce vyrobeny prototypy railguns, coilguns and quench guns. Samozřejmě všechyn tyto experimenty selhaly, protože elektromagnetické zbraně potřebují obrovské množství energie -- a tudíž zásobníky tak těžké, že je žádný lidský voják nemůže unést. Dokonce ani atomové baterie nám neposkytly výkon potřebný k vytvoření přenosné elektromagnetické zbraně. Je to nemožné.\n"
@@ -2756,11 +2759,11 @@ msgstr ""
 "\n"
 "Od této myšlenky si hodně slibujeme, veliteli. Rádi bychom od vás dostali povolení pro laboratorní výzkum a financování, aby se elektromagnetické zbraně konečně staly skutečností.--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1061
+#: ../base/ufos/research.ufo:1072
 msgid "Electromagnetic Rifle Magazine"
 msgstr "Zásobník elektromagnetické pušky"
 
-#: ../base/ufos/research.ufo:1082
+#: ../base/ufos/research.ufo:1093
 msgid "combatknife_txt"
 msgstr ""
 "Technické Specifikace: Bojový nůž\n"
@@ -2801,11 +2804,11 @@ msgstr ""
 "\n"
 "Žádné."
 
-#: ../base/ufos/research.ufo:1098
+#: ../base/ufos/research.ufo:1109
 msgid "Monomolecular Blades"
 msgstr "Monomolekulární čepele"
 
-#: ../base/ufos/research.ufo:1103
+#: ../base/ufos/research.ufo:1114
 msgid "monoknife_txt"
 msgstr ""
 "Veliteli, hlásím úspěšné splnění úkolu vytvořit materiál cizáckého ostří. Naplnili jsme výrobní linky potřebnými materiály a zkonstruovali malou dílnu pro vytváření našich nových monomolekulárních nožů.\n"
@@ -2820,7 +2823,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:1106
+#: ../base/ufos/research.ufo:1117
 msgid "monoknife_pre_txt"
 msgstr ""
 "Veliteli, nyní máme dobrý náhled na technologii cizáckých čepelí z několika zdrojů -- Bloodspiderovy tesáky a Rrrozparovač -- a začínáme si utvářet obrázek o tom, jak přiblížit neznámé nebo špatně pochopitelné materiály použité při jejich konstrukci.\n"
@@ -2835,7 +2838,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1142
+#: ../base/ufos/research.ufo:1153
 msgid "flamer_txt"
 msgstr ""
 "Technická specifikace: Plamenomet CRC-FL\n"
@@ -2882,7 +2885,7 @@ msgstr ""
 "\n"
 "Nedoporučuje se použití této zbraně, pokud se v prostoru cílové zóny nacházejí civilní osoby."
 
-#: ../base/ufos/research.ufo:1161
+#: ../base/ufos/research.ufo:1172
 msgid "flamer_mag_txt"
 msgstr ""
 "Technická specifikace: Hořlavina C90\n"
@@ -2915,7 +2918,7 @@ msgstr ""
 "\n"
 "Nejsou"
 
-#: ../base/ufos/research.ufo:1180
+#: ../base/ufos/research.ufo:1191
 msgid "flashbang_txt"
 msgstr ""
 "Technické Specifikace: Oslepující granát\n"
@@ -2958,7 +2961,7 @@ msgstr ""
 "\n"
 "Oslepující granát je pochopitelně účinný pouze proti organickým cizákům s očima a ušima."
 
-#: ../base/ufos/research.ufo:1199
+#: ../base/ufos/research.ufo:1210
 msgid "fraggren_txt"
 msgstr ""
 "Technické Specifikace: Tříštivý granát\n"
@@ -2999,7 +3002,7 @@ msgstr ""
 "\n"
 "Žádné."
 
-#: ../base/ufos/research.ufo:1218
+#: ../base/ufos/research.ufo:1229
 msgid "incgren_txt"
 msgstr ""
 "Technické Specifikace: Zápalný granát\n"
@@ -3042,7 +3045,7 @@ msgstr ""
 "\n"
 "Žádné."
 
-#: ../base/ufos/research.ufo:1237
+#: ../base/ufos/research.ufo:1248
 msgid "grenl_txt"
 msgstr ""
 "Technické specifikace: Granátomet HPGL\n"
@@ -3093,7 +3096,7 @@ msgstr ""
 "\n"
 "Spolu s odstřelovačskými puškami a raketomety je toto jedna z mála standardních lidských zbraní, které jsou plně účinné proti robotickým cizákům."
 
-#: ../base/ufos/research.ufo:1255
+#: ../base/ufos/research.ufo:1266
 msgid "grenl_ammo_txt"
 msgstr ""
 "Technická specifikace: 25mm výbušné granáty\n"
@@ -3126,7 +3129,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:1274
+#: ../base/ufos/research.ufo:1285
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 "Technická specifikace: 25mm flešetové granáty\n"
@@ -3159,7 +3162,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:1293
+#: ../base/ufos/research.ufo:1304
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 "Technická specifikace: 25mm zápalné granáty\n"
@@ -3192,11 +3195,11 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:1309
+#: ../base/ufos/research.ufo:1320
 msgid "Plasma And The Grenade Launcher"
 msgstr "Granátomet s plasmovou municí"
 
-#: ../base/ufos/research.ufo:1314
+#: ../base/ufos/research.ufo:1325
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
 "Veliteli, ukončili jsme testování prototypu našich nových 25mm plasmových granátů. Jsme připraveni k jejich zavedení do sériové výroby a plnému bojovému použití.\n"
@@ -3209,7 +3212,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1317
+#: ../base/ufos/research.ufo:1328
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr ""
 "Veliteli, můj tým i já máme načrtnut návrh výzkumu nové taktické zbraně založené na našem zkoumání plasmového granátu.\n"
@@ -3222,65 +3225,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1356
-msgid "laser_ammo_txt"
-msgstr ""
-"Veliteli, ukončili jsme vývoj deuterium-fluoridových náplní, které jsou nyní připraveny pro hromadnou výrobu. Budou nákladné na výrobu a použití, ale udělali jsme všechno co jsme mohli, abychom zachovali jejich cenu co nejnižší.\n"
-"\n"
-"Náplň je v podstatě plášť z tvrdého plastu obsahující pět oddělených komor. Ty tvoří čtyři tlakové zásobníky pro etylén, fluorid dusitý, hélium, deuterium a k nim přidaná malá baterie napájející elektroniku laseru.\n"
-"\n"
-"Plášť je zhotoven z nejtvrdšího polymeru, jaký dokážeme vyrobit. Je posílený na zranitelných místech karbonovými nanotrubkami k prevenci smíšení složek v případě nárazu nebo pádu náplně. Nemůžeme poskytnout dokonalou ochranu proti přímému zásahu náplně, ale vykonali jsme to nejlepší. Pravděpodobnost vylití v průběhu boje byla redukována na pouze zlomek procenta.\n"
-"\n"
-"Všechen materiál zbylý z použité náplně bude poslán zpět do skladiště základny navrátivším se transportním letounem. Nicméně pokud byly jednou použity, tyto náplně by měly být zlikvidovány protichemickým družstvem a nahrazeny novými z výroby. Nemohou být znovu použity v důsledku deuteriového zamoření.\n"
-"\n"
-"--Velitel Navarre"
-
-#: ../base/ufos/research.ufo:1359
-msgid "laser_ammo_pre_txt"
-msgstr ""
-"Toto je jeden z několika návrhů, které předkládám v záležitosti výzkumu a vývoje nové laserové výzbroje. Každý z nich by měl být vyvíjen odděleně kvůli velikostním odlišnostem, úrovním výkonu a složitosti použitých systémů\n"
-"\n"
-"Abychom mohli používat naši deuterium-fluoridovou laserovou zbraň, potřebujeme vyvinout zásobník, který by mohl bezpečně pojmout spoustu rozdílných nebezpečných látek. Etylén, fluorid dusitý, hélium a deuterium -- tři z nich jsou toxické složky -- musí být uchovány v odloučených tlakových odděleních pod úplnou kontrolou za všech okolností. Pokud bude těmto látkám umožněno jejich smíchání, stane se, jak my technici říkáme \"zlá věc\".\n"
-"\n"
-"Nyní máme základní konstrukci, která by měla překonat tyto potíže, ale je zapotřebí laboratorní zařízení a finance abychom mohli provést testování, navržení prototypu a výrobu podle bezpečnostních specifikací OSN. Je to otrocká práce, ale musí být vykonána pro zajištění bezpečného používání našich laserů na bojišti. Nejsem připraven riskovat otravu našich vojáků deuteriovým plynem při ignoraci předpisů. Potřebujeme správné zásobníky, pokud budeme používat naše nové laserové zbraně.\n"
-"\n"
-"Prosím o schválení tohoto programu hned, jakmile budete moci, veliteli.\n"
-"\n"
-"--Velitel Navarre"
-
-#: ../base/ufos/research.ufo:1394
-msgid "heavylaser_txt"
-msgstr ""
-"Veliteli, program výzkumu našeho těžkého laseru byl úspěšný. Vyrobili jsme jeho prototyp a jsme připraveni s vaším souhlasem začít sériovou výrobu.\n"
-"\n"
-"Jak sliboval, těžký laser je revolucí v našem arzenálu těžkých zbraní. V rukou zkušeného vojáka může vést souvislou vlnovou palbu na velkou vzdálenost, která je mnohem více přesná, než u konvenčních těžkých zbraní a zároveň mnohem více ničivá, než u našich ostatních typů pěchotních laserů. Nemáme žádnou pochybnost, že tato zbraň sehraje životně důležitou úlohu v průběhu války.\n"
-"\n"
-"Nemůžeme říct, že těžký laser nemá své špatné vlastnosti. Je velmi objemný a velmi těžký, je zapotřebí silného vojáka k vedení účinné palby. Není obětována přesnost kvůli velikosti, ale je méně rychlý při vedení palby nebo reakcích než bychom chtěli. Spotřeba munice je závratná. Dokáže vyčerpat plnou deuterium-fluoridovou náplň za pouhých 30 sekund souvislé palby. To vyžaduje vysoké množství rezervních náplní a těžký laser není zbraň, kterou by bylo možné obzvláště rychle nabít.\n"
-"\n"
-"Dalším nedostatkem je skutečnost, že těžký laser nedokáže střílet skrz mračna prachu, plyn nebo oheň. Všechny naše lasery mají tento problém; oblaka látky rychle lámou paprsek na neškodné světlo, takže musíme být opatrní s naším použitím kouřových nebo zápalných zbraní. Velká péče by rovněž měla být věnována tomu, aby se žádní nezúčastnění diváci nebo příslušnící PHALANXu nedostali do cesty neviditelnému paprsku. Dokonce i chvilkové vystavení vlivu nechráněného paprsku může spálit kosti a zkapalnit pokožku. Zásah oka vede k trvalé a nenapravitelné slepotě. Referovali jsme našim výcvikovým a bojovým důstojníkům o těchto věcech a stále zdůrazňujeme bezpečnost v našem polním manuálu, nicméně vojáky to nepoškodí, když to uslyší znova od vás, veliteli.\n"
-"\n"
-"Robotičtí nebo opancéřovaní cizáci mohou být schopni přežít vliv paprsku nějaký čas, dokonce i těžkého laseru, před tím, než jejich pancíř povolí. Je doporučeno napadnout je několika vojáky současně soustředěnou palbou, abychom je vyřadili tak rychle, jak je to možné.\n"
-"\n"
-"Také je doporučeno nenahrazovat všechny vaše konvenční těžké zbraně těžkými lasery, veliteli. Potřebujeme dobrou vyváženost našich zbraní k posílení našich jednotek a oslabení cizáků. Rozmanitý arzenál je zdravý arzenál.\n"
-"\n"
-"Budeme rovněž potřebovat alespoň jednu D-F náplň v rukou, abychom byli schopni nabít a použít těžký laser.\n"
-"\n"
-"--Velitel Navarre"
-
-#: ../base/ufos/research.ufo:1397
-msgid "heavylaser_pre_txt"
-msgstr ""
-"Toto je jeden z několika návrhů, které předkládám v záležitosti výzkumu a vývoje nové laserové výzbroje. Každý z nich by měl být vyvíjen odděleně kvůli velikostním odlišnostem, úrovním výkonu a složitosti použitých systémů.\n"
-"\n"
-"Díky našim zkušenostem, které jsme získali při výzkumu laseru se spojitou vlnou můj tým a já objevil jeden nebo dva pravděpodobné způsoby budoucího zesilování ničivého potenciálu našich pěchotních laserů. Nicméně to si vyžádá značné výzkumné úsilí a zdokonalování našeho prototypu, stejně jako zvětšování některých jeho součástek. Výsledkem bude těžká pěchotní zbraň podobné hmotnosti a velikosti, jako je náš raketomet HPML.\n"
-"\n"
-"Odhadujeme, že tato zbraň může být nedocenitelná v roli palebné podpory nebo jako zbraň určená k prorážení blokád přímou palbou, schopná ničit nepřátelská opevněná postavení silnou a velmi přesnou palbou. Může mít vlastnosti a schopnosti, které postrádáme v našem současném zbrojním arzenálu. Přesnost a dostřel je celkově u pozemských těžkých zbraní bezútěšná a může být obtížné je použít v situacích, kdy potřebujeme zabránit druhotnému poškození. Těžký laser se může vyhnout oběma těmto problémům.\n"
-"\n"
-"Je určitě cenné prozkoumat to, veliteli.\n"
-"\n"
-"--Velitel Navarre"
-
-#: ../base/ufos/research.ufo:1433
+#: ../base/ufos/research.ufo:1364
 msgid "irgoggles_txt"
 msgstr ""
 "Technická specifikace: Infravizor\n"
@@ -3327,11 +3272,11 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:1448
+#: ../base/ufos/research.ufo:1379
 msgid "Alien Artifact - Kerrblade"
 msgstr "Cizácký artefakt - Rrrozparovač"
 
-#: ../base/ufos/research.ufo:1453
+#: ../base/ufos/research.ufo:1384
 msgid "kerrblade_txt"
 msgstr ""
 "Naše analýza Rrrozparovače je hotová. Zde je mé shrnutí pro Vaše posouzení.\n"
@@ -3350,7 +3295,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1456
+#: ../base/ufos/research.ufo:1387
 msgid "kerrblade_pre_txt"
 msgstr ""
 "Veliteli, na bojišti jsme ukořistili zajímavou cizáckou zbraň. Vypadá jako nějaký druh nože nebo meče s čepelí ostřejší, než cokoliv na Zemi. Dokáže krájet ocel jako papír a projde skrz náš standardní tělový pancíř, jakoby tam ani nebyl. Vojáci jej pojmenovali \"Rrrozparovač\" podle charakteristického zvuku, který vydává při krájení našeho pancíře.\n"
@@ -3361,7 +3306,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1492
+#: ../base/ufos/research.ufo:1423
 msgid "laserpistol_txt"
 msgstr ""
 "Veliteli, omlouvám se předem, pokud můj pravopis není v této zprávě zrovna v rámci normy. Protrpěli jsme spoustu bezesných nocí v zde v technickém oddělení při práci na projektu laserové pistole. Byla to úmorná spousta práce, nicméně jsem velmi hrdý na to, že mohu říct, že jsme to zvládli. Vytvořili jsme prototyp fungující laserové pistole.\n"
@@ -3380,7 +3325,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1495
+#: ../base/ufos/research.ufo:1426
 msgid "laserpistol_pre_txt"
 msgstr ""
 "Toto je jeden z několika návrhů, které předkládám v záležitosti výzkumu a vývoje nové laserové výzbroje. Každý z nich by měl být vyvíjen odděleně kvůli velikostním odlišnostem, úrovním výkonu a složitosti použitých systémů.\n"
@@ -3397,7 +3342,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1530
+#: ../base/ufos/research.ufo:1461
 msgid "laserrifle_txt"
 msgstr ""
 "Je hotovo, veliteli. Právě jsme se stali hrdými vlastníky fungující laserové pušky s úplnými výrobními plány uloženými v našich počítačích. Odstranili jsme několik pohyblivé dílů a vylepšili elektroniku, abychom snížili výrobní výdaje a náklady na údržbu k úrovni našeho rozpočtu. Věřím, že v jejích charakteristikách naleznete uspokojení.\n"
@@ -3414,7 +3359,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1533
+#: ../base/ufos/research.ufo:1464
 msgid "laserrifle_pre_txt"
 msgstr ""
 "Toto je jeden z několika návrhů, které předkládám v záležitosti výzkumu a vývoje nové laserové výzbroje. Každý z nich by měl být vyvíjen odděleně kvůli velikostním odlišnostem, úrovním výkonu a složitosti použitých systémů.\n"
@@ -3427,7 +3372,39 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1569
+#: ../base/ufos/research.ufo:1500
+msgid "heavylaser_txt"
+msgstr ""
+"Veliteli, program výzkumu našeho těžkého laseru byl úspěšný. Vyrobili jsme jeho prototyp a jsme připraveni s vaším souhlasem začít sériovou výrobu.\n"
+"\n"
+"Jak sliboval, těžký laser je revolucí v našem arzenálu těžkých zbraní. V rukou zkušeného vojáka může vést souvislou vlnovou palbu na velkou vzdálenost, která je mnohem více přesná, než u konvenčních těžkých zbraní a zároveň mnohem více ničivá, než u našich ostatních typů pěchotních laserů. Nemáme žádnou pochybnost, že tato zbraň sehraje životně důležitou úlohu v průběhu války.\n"
+"\n"
+"Nemůžeme říct, že těžký laser nemá své špatné vlastnosti. Je velmi objemný a velmi těžký, je zapotřebí silného vojáka k vedení účinné palby. Není obětována přesnost kvůli velikosti, ale je méně rychlý při vedení palby nebo reakcích než bychom chtěli. Spotřeba munice je závratná. Dokáže vyčerpat plnou deuterium-fluoridovou náplň za pouhých 30 sekund souvislé palby. To vyžaduje vysoké množství rezervních náplní a těžký laser není zbraň, kterou by bylo možné obzvláště rychle nabít.\n"
+"\n"
+"Dalším nedostatkem je skutečnost, že těžký laser nedokáže střílet skrz mračna prachu, plyn nebo oheň. Všechny naše lasery mají tento problém; oblaka látky rychle lámou paprsek na neškodné světlo, takže musíme být opatrní s naším použitím kouřových nebo zápalných zbraní. Velká péče by rovněž měla být věnována tomu, aby se žádní nezúčastnění diváci nebo příslušnící PHALANXu nedostali do cesty neviditelnému paprsku. Dokonce i chvilkové vystavení vlivu nechráněného paprsku může spálit kosti a zkapalnit pokožku. Zásah oka vede k trvalé a nenapravitelné slepotě. Referovali jsme našim výcvikovým a bojovým důstojníkům o těchto věcech a stále zdůrazňujeme bezpečnost v našem polním manuálu, nicméně vojáky to nepoškodí, když to uslyší znova od vás, veliteli.\n"
+"\n"
+"Robotičtí nebo opancéřovaní cizáci mohou být schopni přežít vliv paprsku nějaký čas, dokonce i těžkého laseru, před tím, než jejich pancíř povolí. Je doporučeno napadnout je několika vojáky současně soustředěnou palbou, abychom je vyřadili tak rychle, jak je to možné.\n"
+"\n"
+"Také je doporučeno nenahrazovat všechny vaše konvenční těžké zbraně těžkými lasery, veliteli. Potřebujeme dobrou vyváženost našich zbraní k posílení našich jednotek a oslabení cizáků. Rozmanitý arzenál je zdravý arzenál.\n"
+"\n"
+"Budeme rovněž potřebovat alespoň jednu D-F náplň v rukou, abychom byli schopni nabít a použít těžký laser.\n"
+"\n"
+"--Velitel Navarre"
+
+#: ../base/ufos/research.ufo:1503
+msgid "heavylaser_pre_txt"
+msgstr ""
+"Toto je jeden z několika návrhů, které předkládám v záležitosti výzkumu a vývoje nové laserové výzbroje. Každý z nich by měl být vyvíjen odděleně kvůli velikostním odlišnostem, úrovním výkonu a složitosti použitých systémů.\n"
+"\n"
+"Díky našim zkušenostem, které jsme získali při výzkumu laseru se spojitou vlnou můj tým a já objevil jeden nebo dva pravděpodobné způsoby budoucího zesilování ničivého potenciálu našich pěchotních laserů. Nicméně to si vyžádá značné výzkumné úsilí a zdokonalování našeho prototypu, stejně jako zvětšování některých jeho součástek. Výsledkem bude těžká pěchotní zbraň podobné hmotnosti a velikosti, jako je náš raketomet HPML.\n"
+"\n"
+"Odhadujeme, že tato zbraň může být nedocenitelná v roli palebné podpory nebo jako zbraň určená k prorážení blokád přímou palbou, schopná ničit nepřátelská opevněná postavení silnou a velmi přesnou palbou. Může mít vlastnosti a schopnosti, které postrádáme v našem současném zbrojním arzenálu. Přesnost a dostřel je celkově u pozemských těžkých zbraní bezútěšná a může být obtížné je použít v situacích, kdy potřebujeme zabránit druhotnému poškození. Těžký laser se může vyhnout oběma těmto problémům.\n"
+"\n"
+"Je určitě cenné prozkoumat to, veliteli.\n"
+"\n"
+"--Velitel Navarre"
+
+#: ../base/ufos/research.ufo:1539
 #, fuzzy
 msgid "electrolaser_txt"
 msgstr ""
@@ -3449,11 +3426,37 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:1572
+#: ../base/ufos/research.ufo:1542
 msgid "electrolaser_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:1607
+#: ../base/ufos/research.ufo:1581
+msgid "laser_ammo_txt"
+msgstr ""
+"Veliteli, ukončili jsme vývoj deuterium-fluoridových náplní, které jsou nyní připraveny pro hromadnou výrobu. Budou nákladné na výrobu a použití, ale udělali jsme všechno co jsme mohli, abychom zachovali jejich cenu co nejnižší.\n"
+"\n"
+"Náplň je v podstatě plášť z tvrdého plastu obsahující pět oddělených komor. Ty tvoří čtyři tlakové zásobníky pro etylén, fluorid dusitý, hélium, deuterium a k nim přidaná malá baterie napájející elektroniku laseru.\n"
+"\n"
+"Plášť je zhotoven z nejtvrdšího polymeru, jaký dokážeme vyrobit. Je posílený na zranitelných místech karbonovými nanotrubkami k prevenci smíšení složek v případě nárazu nebo pádu náplně. Nemůžeme poskytnout dokonalou ochranu proti přímému zásahu náplně, ale vykonali jsme to nejlepší. Pravděpodobnost vylití v průběhu boje byla redukována na pouze zlomek procenta.\n"
+"\n"
+"Všechen materiál zbylý z použité náplně bude poslán zpět do skladiště základny navrátivším se transportním letounem. Nicméně pokud byly jednou použity, tyto náplně by měly být zlikvidovány protichemickým družstvem a nahrazeny novými z výroby. Nemohou být znovu použity v důsledku deuteriového zamoření.\n"
+"\n"
+"--Velitel Navarre"
+
+#: ../base/ufos/research.ufo:1584
+msgid "laser_ammo_pre_txt"
+msgstr ""
+"Toto je jeden z několika návrhů, které předkládám v záležitosti výzkumu a vývoje nové laserové výzbroje. Každý z nich by měl být vyvíjen odděleně kvůli velikostním odlišnostem, úrovním výkonu a složitosti použitých systémů\n"
+"\n"
+"Abychom mohli používat naši deuterium-fluoridovou laserovou zbraň, potřebujeme vyvinout zásobník, který by mohl bezpečně pojmout spoustu rozdílných nebezpečných látek. Etylén, fluorid dusitý, hélium a deuterium -- tři z nich jsou toxické složky -- musí být uchovány v odloučených tlakových odděleních pod úplnou kontrolou za všech okolností. Pokud bude těmto látkám umožněno jejich smíchání, stane se, jak my technici říkáme \"zlá věc\".\n"
+"\n"
+"Nyní máme základní konstrukci, která by měla překonat tyto potíže, ale je zapotřebí laboratorní zařízení a finance abychom mohli provést testování, navržení prototypu a výrobu podle bezpečnostních specifikací OSN. Je to otrocká práce, ale musí být vykonána pro zajištění bezpečného používání našich laserů na bojišti. Nejsem připraven riskovat otravu našich vojáků deuteriovým plynem při ignoraci předpisů. Potřebujeme správné zásobníky, pokud budeme používat naše nové laserové zbraně.\n"
+"\n"
+"Prosím o schválení tohoto programu hned, jakmile budete moci, veliteli.\n"
+"\n"
+"--Velitel Navarre"
+
+#: ../base/ufos/research.ufo:1617
 msgid "medikit_txt"
 msgstr ""
 "Technická specifikace: Lékárnička\n"
@@ -3496,11 +3499,11 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:1622 ../base/ufos/research.ufo:1664
+#: ../base/ufos/research.ufo:1632 ../base/ufos/research.ufo:1674
 msgid "Alien Artifact - Plasma Pistol"
 msgstr "Cizácký artefakt - Plasmová pistole"
 
-#: ../base/ufos/research.ufo:1627
+#: ../base/ufos/research.ufo:1637
 msgid "plasatomizer_txt"
 msgstr ""
 "Tato plasmová pistole je ošklivý kousek, veliteli. Její fungování je extrémně komplexní a důmyslné, její vytvoření vyžaduje velké množství technických dovedností. Jenom samotný zdroj energie je celé stovky let před naší současnou technologií. Je v něm uloženo dost energie, aby bylo jeho prostřednictvím vevnitř miniaturní fúzní komory zahřáto několik náplní vodíku do skupenství plasmy a ty pak s použitím rychlosti ionizovaných částic vytlačeny jako plasma.\n"
@@ -3517,7 +3520,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1630
+#: ../base/ufos/research.ufo:1640
 msgid "plasatomizer_pre_txt"
 msgstr ""
 "Veliteli, ukořistili jsme první cizáckou plasmovou zbraň v průběhu války. Nepotřebuji Vám říkat, jak důležité je to. Cizácké zbraně jsou vysoce pokročilé, silné a extrémně smrtící; musíme vyřešit jak pracují, abychom vyzbrojili a opancéřovali naše jednotky proti nim.\n"
@@ -3528,11 +3531,11 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1682 ../base/ufos/research.ufo:1723
+#: ../base/ufos/research.ufo:1692 ../base/ufos/research.ufo:1733
 msgid "Alien Artifact - Plasma Blaster"
 msgstr "Cizácký artefakt - Plasmový spalovač"
 
-#: ../base/ufos/research.ufo:1687
+#: ../base/ufos/research.ufo:1697
 msgid "plasblaster_txt"
 msgstr ""
 "Veliteli, zde je moje hlášení týkající se našeho výzkumu cizáckého plasmového spalovače.\n"
@@ -3547,7 +3550,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1690
+#: ../base/ufos/research.ufo:1700
 msgid "plasblaster_pre_txt"
 msgstr ""
 "Veliteli, na bojišti jsme ukořistili cizácký plasmový spalovač. Je to nová a extrémně výkonná plasmová zbraň, která nás opravňuje k neodkladnému prozkoumání. Předběžné testy potvrdily, že výstřel z této zbraně proděraví náš bojový pancíř skrz a má mnohem delší dostřel, než ostatní ukořistěné plasmové zbraně.\n"
@@ -3556,11 +3559,11 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1741
+#: ../base/ufos/research.ufo:1751
 msgid "Alien Artifact - Plasma Blade"
 msgstr "Cizácký artefakt - Plasmová dýka"
 
-#: ../base/ufos/research.ufo:1746
+#: ../base/ufos/research.ufo:1756
 msgid "plasblade_txt"
 msgstr ""
 "Veliteli, rozluštili jsme tajemství cizácké zbraně. Mám obavy, že novinky nejsou dobré.\n"
@@ -3579,7 +3582,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1749
+#: ../base/ufos/research.ufo:1759
 msgid "plasblade_pre_txt"
 msgstr ""
 "Veliteli, při naší poslední taktické misi se nám podařilo přivézt zpět neobvyklou cizáckou zbraň v podobě plasmové komory s rukojetí. Alespoň předpokládáme, že se jedná o zbraň; vzhledem se zdá připomínat nějaký druh nože na plasmovém základě, ačkoliv nemám žádnou představu, jak by to mohlo pracovat. Nemáme žádné řešení, jak to zapnout ani k jakému účelu to slouží v cizáckém arsenálu.\n"
@@ -3588,11 +3591,11 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1781
+#: ../base/ufos/research.ufo:1791
 msgid "Alien Artifact - Plasma Grenade"
 msgstr "Cizácký artefakt - Plasmový granát"
 
-#: ../base/ufos/research.ufo:1786
+#: ../base/ufos/research.ufo:1796
 msgid "plasmagren_txt"
 msgstr ""
 "Veliteli, naše vyhodnocování cizáckého plasmového granátu je hotovo. Jako všechny cizácké zbraně, i tento je velmi ošklivý a velmi nebezpečný.\n"
@@ -3607,7 +3610,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1789
+#: ../base/ufos/research.ufo:1799
 msgid "plasmagren_pre_txt"
 msgstr ""
 "Veliteli, z naší poslední taktické mise jsme přivezli cizácký plasmový granát. Je to vysoce výkonná zbraň granátového typu která, když je odhozena, exploduje ve spršku vysoce žhavé plasmy. Je poněkud větší a vypadá, že je mnohem nebezpečnější, než naše standardní tříštivé granáty.\n"
@@ -3618,11 +3621,11 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1821 ../base/ufos/research.ufo:1863
+#: ../base/ufos/research.ufo:1831 ../base/ufos/research.ufo:1873
 msgid "Alien Artifact - Plasma Rifle"
 msgstr "Cizácký artefakt - Plasmová puška"
 
-#: ../base/ufos/research.ufo:1826
+#: ../base/ufos/research.ufo:1836
 msgid "plasrifle_txt"
 msgstr ""
 "Veliteli, zde je moje hlášení o našem výzkumu cizácké plasmové pušky.\n"
@@ -3639,19 +3642,19 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1829
+#: ../base/ufos/research.ufo:1839
 msgid "plasrifle_pre_txt"
 msgstr ""
 "Veliteli, moje oddělení je připraveno začít se zkoumáním ukořistěné cizácké plasmové pušky. Je to vysoce nebezpečná a všestranná zbraň, mnohem převyšující plasmovou pistoli v dostřelu i výkonu; něco co bychom se měli pokusit dát do rukou našich vojáků. Prosím o Váš souhlas s využitím laboratoří a financí hned, jakmile to náš rozvrh umožní.\n"
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:1881 ../base/ufos/research.ufo:1961
+#: ../base/ufos/research.ufo:1891 ../base/ufos/research.ufo:1971
 #: ../base/ufos/weapons_aliens.ufo:6
 msgid "Needler Gun"
 msgstr "Jehlovka"
 
-#: ../base/ufos/research.ufo:1886
+#: ../base/ufos/research.ufo:1896
 msgid "needlergun_txt"
 msgstr ""
 "Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
@@ -3668,7 +3671,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1889
+#: ../base/ufos/research.ufo:1899
 msgid "needlergun_pre_txt"
 msgstr ""
 "Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
@@ -3677,21 +3680,21 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1921 ../base/ufos/weapons_aliens.ufo:26
+#: ../base/ufos/research.ufo:1931 ../base/ufos/weapons_aliens.ufo:26
 msgid "Heavy Needler Gun"
 msgstr "Velká jehlovka"
 
-#: ../base/ufos/research.ufo:1926
+#: ../base/ufos/research.ufo:1936
 msgid "needlerheavy_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:1929
+#: ../base/ufos/research.ufo:1939
 msgid "needlerheavy_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:1983
+#: ../base/ufos/research.ufo:1993
 msgid "coilgun_txt"
 msgstr ""
 "Commander, I'd like to present you with the finished plans and prototype for our Coilgun.\n"
@@ -3710,7 +3713,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1986
+#: ../base/ufos/research.ufo:1996
 msgid "coilgun_pre_txt"
 msgstr ""
 "Commander, our brainstorms down at DivEngine have come up with an interesting idea based on the alien Needler technology. When combining the alien fast-changing magnetic generators -- and, even more importantly, their power source -- with human-engineered EM rifle technology, some amazing man-portable weaponry becomes possible. I'd hereby like to propose a new design for a coilgun in the role of a sniper rifle.\n"
@@ -3723,12 +3726,12 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1993 ../base/ufos/research.ufo:2001
+#: ../base/ufos/research.ufo:2003 ../base/ufos/research.ufo:2011
 #: ../base/ufos/weapons_human.ufo:392
 msgid "Coilgun"
 msgstr "Cívkovka"
 
-#: ../base/ufos/research.ufo:2039
+#: ../base/ufos/research.ufo:2049
 msgid "shotgun2_txt"
 msgstr ""
 "Technická specifikace: Víceranná brokovnice CRC-212\n"
@@ -3773,7 +3776,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:2058
+#: ../base/ufos/research.ufo:2068
 msgid "shotgun2_slug_ammo_txt"
 msgstr ""
 "Technická specifikace: Podkaliberní brokové náboje\n"
@@ -3806,7 +3809,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:2079
+#: ../base/ufos/research.ufo:2089
 msgid "shotgun_micro_txt"
 msgstr ""
 "Technická specifikace: Minibrokovnice CRC-M9\n"
@@ -3855,7 +3858,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:2098
+#: ../base/ufos/research.ufo:2108
 msgid "shotgun_micro_ammo_txt"
 msgstr ""
 "Technická specifikace: Flešetové náboje\n"
@@ -3890,7 +3893,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:2118
+#: ../base/ufos/research.ufo:2128
 msgid "smg_txt"
 msgstr ""
 "Technická specifikace: Samopal CRC-8\n"
@@ -3935,7 +3938,7 @@ msgstr ""
 "\n"
 "Přestože má dobrou průbojnost proti organickým, je velmi uboze účinný vůči robotickým cílům."
 
-#: ../base/ufos/research.ufo:2137
+#: ../base/ufos/research.ufo:2147
 msgid "smg_mag_txt"
 msgstr ""
 "Technická specifikace: Zásobník samopalu\n"
@@ -3968,7 +3971,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:2157
+#: ../base/ufos/research.ufo:2167
 msgid "smokegren_txt"
 msgstr ""
 "Technické Specifikace: Dýmový granát\n"
@@ -4009,7 +4012,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:2176
+#: ../base/ufos/research.ufo:2186
 msgid "sniper_txt"
 msgstr ""
 "Technická specifikace: Odstřelovačská puška S-1\n"
@@ -4054,7 +4057,7 @@ msgstr ""
 "\n"
 "Spolu s tříštivotrhavými raketami a granáty je toto jedna z mála standardních lidských zbraní, které jsou plně efektivní proti robotickým cizákům."
 
-#: ../base/ufos/research.ufo:2195
+#: ../base/ufos/research.ufo:2205
 msgid "sniper_mag_txt"
 msgstr ""
 "Technická specifikace: Zásobník odstřelovačské pušky\n"
@@ -4087,11 +4090,11 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:2213
+#: ../base/ufos/research.ufo:2223
 msgid "Anti-Alien Gas"
 msgstr "Plyn na cizáky"
 
-#: ../base/ufos/research.ufo:2218
+#: ../base/ufos/research.ufo:2228
 msgid "stungren_txt"
 msgstr ""
 "Veliteli,\n"
@@ -4112,7 +4115,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2221
+#: ../base/ufos/research.ufo:2231
 msgid "stungren_pre_txt"
 msgstr ""
 "Veliteli,\n"
@@ -4129,21 +4132,21 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2260
+#: ../base/ufos/research.ufo:2270
 msgid "Alien Anti-Human Gas"
 msgstr "Cizácký plyn proti lidem"
 
-#: ../base/ufos/research.ufo:2265
+#: ../base/ufos/research.ufo:2275
 msgid "stungren_alien_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:2268
+#: ../base/ufos/research.ufo:2278
 msgid "stungren_alien_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:2307
+#: ../base/ufos/research.ufo:2317
 msgid "stunrod_txt"
 msgstr ""
 "Veliteli,\n"
@@ -4164,7 +4167,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2310
+#: ../base/ufos/research.ufo:2320
 msgid "stunrod_pre_txt"
 msgstr ""
 "Veliteli,\n"
@@ -4183,11 +4186,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2343 ../base/ufos/research.ufo:2383
+#: ../base/ufos/research.ufo:2353 ../base/ufos/research.ufo:2393
 msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Cizácký artefakt - Částicová pistole"
 
-#: ../base/ufos/research.ufo:2348
+#: ../base/ufos/research.ufo:2358
 msgid "pbeampistol_txt"
 msgstr ""
 "Veliteli, ukončili jsme výzkum nové cizácké pistole a obávám se, že zprávy nebudou příliš dobré.\n"
@@ -4206,7 +4209,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:2351
+#: ../base/ufos/research.ufo:2361
 msgid "pbeampistol_pre_txt"
 msgstr ""
 "Veliteli, ukořistili jsme novou nebezpečnou cizáckou pistoli, která zřejmě vystřeluje paprsky vysokoenergetických částic -- více smrtící než laser, více přesnější než plasmové zbraně, která je extrémně nebezpečnou novou hrozbou pro naše jednotky na bojišti. Předběžné testy proti našemu pancíři skončily se znepokojivými výsledky. Potřebujeme okamžitě provést více výzkumů této zbraně.\n"
@@ -4215,11 +4218,11 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:2402 ../base/ufos/research.ufo:2443
+#: ../base/ufos/research.ufo:2412 ../base/ufos/research.ufo:2453
 msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "Cizácký artefakt - Částicové dělo"
 
-#: ../base/ufos/research.ufo:2407
+#: ../base/ufos/research.ufo:2417
 msgid "pbeamcannon_txt"
 msgstr ""
 "Veliteli, naše zkoumání tohoto zatraceného velkého kanónu je u konce.\n"
@@ -4238,7 +4241,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:2410
+#: ../base/ufos/research.ufo:2420
 msgid "pbeamcannon_pre_txt"
 msgstr ""
 "Veliteli, ukořistili jsme cizácké dělo, které vystřeluje vysokoenergetické částicové paprsky. Je extrémně smrtící a má děsivé účinky na naše pancéřování v průběhu předběžných testů. Potřebujeme neprodleně provést více výzkumů této zbraně.\n"
@@ -4247,11 +4250,11 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:2462 ../base/ufos/research.ufo:2502
+#: ../base/ufos/research.ufo:2472 ../base/ufos/research.ufo:2512
 msgid "Alien Artifact - Particle Beam Rifle"
 msgstr "Cizácký artefakt - Částicová puška"
 
-#: ../base/ufos/research.ufo:2467
+#: ../base/ufos/research.ufo:2477
 msgid "pbeamrifle_txt"
 msgstr ""
 "Veliteli, máme dokončeno vyhodnocování veškerých dostupných informací o této nové cizácké pušce. Bohužel jedná se o velmi znepokojivé zprávy.\n"
@@ -4272,7 +4275,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:2470
+#: ../base/ufos/research.ufo:2480
 msgid "pbeamrifle_pre_txt"
 msgstr ""
 "Veliteli, ukořistili jsme cizáckou pušku, která vystřeluje vysokoenergetické částicové paprsky. Je více smrtící než lasery, více přesnější než plasmové zbraně a představuje extrémně nebezpečnou novou hrozbu pro naše jednotky na bojišti. Předběžné testy proti našemu pancíři potvrdily, že cizáci mají vážnou převahu v palebné síle nad našimi vojáky. Potřebujeme neprodleně provést více výzkumů této zbraně.\n"
@@ -4281,11 +4284,11 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:2522
+#: ../base/ufos/research.ufo:2532
 msgid "Man-Portable Particle Beams"
 msgstr "Ruční částicové zbraně"
 
-#: ../base/ufos/research.ufo:2527
+#: ../base/ufos/research.ufo:2537
 msgid "pbeamammo_txt"
 msgstr ""
 "Veliteli, moje metoda byla úspěšná. Myslím tím naše rozhodnutí prolomit tajemství záhadných částicových zbraní. Zde jsou mé závěry.\n"
@@ -4304,7 +4307,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:2530
+#: ../base/ufos/research.ufo:2540
 msgid "pbeamammo_pre_txt"
 msgstr ""
 "Veliteli, rozhodli jme, že potřebujeme mnohem více výzkumů týkajících se částicových zbraní. Obzvláště jejich tajemném zdroji síly - zásobnících, které jsou naprosto neschopny prozkoumání. Žádnými triky ani důvtipem se nám je nepodařilo otevřít. To je důvod, proč navrhuji extrémní prostředky.\n"
@@ -4317,7 +4320,7 @@ msgstr ""
 "\n"
 "--Velitel Navarre"
 
-#: ../base/ufos/research.ufo:2569
+#: ../base/ufos/research.ufo:2579
 msgid "combat_armour_txt"
 msgstr ""
 "Technické specifikace: Bojová zbroj\n"
@@ -4358,13 +4361,13 @@ msgstr ""
 "\n"
 "Žádné."
 
-#: ../base/ufos/research.ufo:2583
+#: ../base/ufos/research.ufo:2593
 msgid "advanced_combat_armour_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:2598
+#: ../base/ufos/research.ufo:2608
 msgid "nano_armour_txt"
 msgstr ""
 "Veliteli, rád bych vám podal zprávu o úspěchu výzkumu v oblasti výroby nanokompozitů!\n"
@@ -4383,7 +4386,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:2601
+#: ../base/ufos/research.ufo:2611
 msgid "nano_armour_pre_txt"
 msgstr ""
 "Díky výzkumu cizácké zbroje jsme si uvědomili mnoho zajímavých věcí. Jak je zřejmé, klíč k vytvoření účinné osobní zbroje, založené na cizáckých soupravách, je ukryt v technologii nanokompozitů. To bude vyžadovat velké množství uhlíkových nanotrubiček.\n"
@@ -4396,7 +4399,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:2676
+#: ../base/ufos/research.ufo:2686
 msgid "alien_body_armour_txt"
 msgstr ""
 "Veliteli, máme pro vás kompletní zprávu o Cizácké zbroji.\n"
@@ -4413,7 +4416,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:2679
+#: ../base/ufos/research.ufo:2689
 msgid "alien_body_armour_pre_txt"
 msgstr ""
 "Veliteli, v poli jsme získali soupravu cizácké zbroje. Tato zbroj trápila naše jednotky díky své značné odolnosti vůči různým typům poškození; cizáci vybavení touto zbrojí se po zásazích, které by jejich neobrněné spolubojovníky roztrhali na cucky, jen oklepali. Není tedy překvapením, že jsme stále nepřišli na to jak ji rozřezat a provést základní průzkum struktury. Co nejdříve bychom měli prozkoumat slabiny zbroje a zjistit možnost přizpůsobení k našemu vlastnímu využití.\n"
@@ -4422,7 +4425,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:2713
+#: ../base/ufos/research.ufo:2723
 msgid "alien_medium_armour_txt"
 msgstr ""
 "Co se týče zbroje, zní cizácká filosofie konstrukce asi takto: \"Pokud to funguje, použijme toho víc.\" Tato nová zbroj je v kostrukci podobná Cizácké zbroji, ale rozhodně si nezadá s ústupky a jemným vyvážením lehké zbroje. Místo pouhé ochrany těla a hlavy, se Střední zbroj snaží pokrýt všechny životně důležité části, včetně hlavních cév a citlivých nervových zauzlení, ještě mnohem hustšími nanopolymerovými pláty. Ve srovnání s Cizáckou zbrojí, má Střední zbroj dvojnásobný počet nanotrubičkových vláken na čtveteční centimetr. Výsledkem je, že jsou tyto pláty pro běžné lidské zbraně téměř neproniknutelné a dokonce i měkčí pletenina pokrývající spoje může až znepokojivě snadno zastavit kulku.\n"
@@ -4439,7 +4442,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:2716
+#: ../base/ufos/research.ufo:2726
 msgid "alien_medium_armour_pre_txt"
 msgstr ""
 "Veliteli, z bojiště jsme zachránili nový druh cizácké zbroje. Je mnohem těžší než Cizácká zbroj, na kterou jsme narazili prve, a zdá se, že dokáže zastavit projektily z běžně používaných palných zbraní maximálně se škrábnutím. Její ochrané plochy jsou vyrobey z nejhustší UNT (Uhlíkové Nanotrubičky) tkaniny jakou jsem kdy viděl. Měli bychom tuto zbroj prozkoumat v nejbližší možné době, abychom zjistili, které ze zbraní budou proti cizákům s touto zbrojí stále účinné. A také k objevení možnosti vyrábět ji sami pro naše jednotky. Dokud tuto technologii neovládneme, budeme ve vážné nevýhodě.\n"
@@ -4448,87 +4451,87 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:2751
+#: ../base/ufos/research.ufo:2761
 msgid "Blast Damage Type"
 msgstr "Druh poškození - Výbuch"
 
-#: ../base/ufos/research.ufo:2754 ../base/ufos/research.ufo:2767
-#: ../base/ufos/research.ufo:2780 ../base/ufos/research.ufo:2798
-#: ../base/ufos/research.ufo:2811 ../base/ufos/research.ufo:2824
-#: ../base/ufos/research.ufo:2845 ../base/ufos/research.ufo:2858
-#: ../base/ufos/research.ufo:2876 ../base/ufos/research.ufo:2889
-#: ../base/ufos/research.ufo:2902 ../base/ufos/research.ufo:2915
-#: ../base/ufos/research.ufo:2928 ../base/ufos/research.ufo:2941
-#: ../base/ufos/research.ufo:2954 ../base/ufos/research.ufo:2967
-#: ../base/ufos/research.ufo:2980
+#: ../base/ufos/research.ufo:2764 ../base/ufos/research.ufo:2777
+#: ../base/ufos/research.ufo:2790 ../base/ufos/research.ufo:2808
+#: ../base/ufos/research.ufo:2821 ../base/ufos/research.ufo:2834
+#: ../base/ufos/research.ufo:2855 ../base/ufos/research.ufo:2868
+#: ../base/ufos/research.ufo:2886 ../base/ufos/research.ufo:2899
+#: ../base/ufos/research.ufo:2912 ../base/ufos/research.ufo:2925
+#: ../base/ufos/research.ufo:2938 ../base/ufos/research.ufo:2951
+#: ../base/ufos/research.ufo:2964 ../base/ufos/research.ufo:2977
+#: ../base/ufos/research.ufo:2990
 msgid "none"
 msgstr "bez záznamu"
 
-#: ../base/ufos/research.ufo:2764
+#: ../base/ufos/research.ufo:2774
 msgid "Fire Damage Type"
 msgstr "Druh poškození - Oheň"
 
-#: ../base/ufos/research.ufo:2777
+#: ../base/ufos/research.ufo:2787
 msgid "Laser Damage Type"
 msgstr "Druh poškození - Laser"
 
-#: ../base/ufos/research.ufo:2795
+#: ../base/ufos/research.ufo:2805
 msgid "Impact Damage Type"
 msgstr "Druh poškození - Náraz"
 
-#: ../base/ufos/research.ufo:2808
+#: ../base/ufos/research.ufo:2818
 msgid "Shock Damage Type"
 msgstr "Druh poškození - Působí šok"
 
-#: ../base/ufos/research.ufo:2821
+#: ../base/ufos/research.ufo:2831
 msgid "Plasma Damage Type"
 msgstr "Druh poškození - Plasma"
 
-#: ../base/ufos/research.ufo:2842
+#: ../base/ufos/research.ufo:2852
 msgid "Stun Damage Type"
 msgstr "Druh poškození - Omračuje"
 
-#: ../base/ufos/research.ufo:2855
+#: ../base/ufos/research.ufo:2865
 msgid "Particle Beam Damage Type"
 msgstr "Druh poškození - Částicové zbraně"
 
-#: ../base/ufos/research.ufo:2873
+#: ../base/ufos/research.ufo:2883
 msgid "Accuracy Attribute"
 msgstr "Přesnost"
 
-#: ../base/ufos/research.ufo:2886
+#: ../base/ufos/research.ufo:2896
 msgid "Assault Guns Proficiency"
 msgstr "Znalost útočných pušek"
 
-#: ../base/ufos/research.ufo:2899
+#: ../base/ufos/research.ufo:2909
 msgid "Close Combat Proficiency"
 msgstr "Znalost boje zblízka"
 
-#: ../base/ufos/research.ufo:2912
+#: ../base/ufos/research.ufo:2922
 msgid "High-Explosives Proficiency"
 msgstr "Znalost výbušnin"
 
-#: ../base/ufos/research.ufo:2925
+#: ../base/ufos/research.ufo:2935
 msgid "Heavy Weapons Proficiency"
 msgstr "Znalost težkých zbraní"
 
-#: ../base/ufos/research.ufo:2938
+#: ../base/ufos/research.ufo:2948
 msgid "Mind Attribute"
 msgstr "Inteligence"
 
-#: ../base/ufos/research.ufo:2951
+#: ../base/ufos/research.ufo:2961
 msgid "Power Attribute"
 msgstr "Síla"
 
-#: ../base/ufos/research.ufo:2964
+#: ../base/ufos/research.ufo:2974
 msgid "Sniper Rifles Proficiency"
 msgstr "Znalost ostřelovačských pušek"
 
-#: ../base/ufos/research.ufo:2977
+#: ../base/ufos/research.ufo:2987
 msgid "Speed Attribute"
 msgstr "Rychlost"
 
-#: ../base/ufos/research.ufo:2995
+#: ../base/ufos/research.ufo:3005
 msgid "b_aliencontainment_txt"
 msgstr ""
 "Dokumentace -- Komplex cizáckých cel\n"
@@ -4567,7 +4570,7 @@ msgstr ""
 "\n"
 "Všem budoucím velitelům, kteří by mohli přezkoumávat tento soubor: Mějte na paměti, že zařízení v komplexu cizáckých cel, stejně jako většina ostatního vybavení PHALANXu, má svůj křest ohněm teprve před sebou a doposud nebylo na mimozemských organismech vyzkoušeno. Možná bude nutno jej upravit nebo zdokonalit tak aby správně plnilo svůj účel."
 
-#: ../base/ufos/research.ufo:3013
+#: ../base/ufos/research.ufo:3023
 msgid "b_command_txt"
 msgstr ""
 "Dokumentace -- Řídící středisko\n"
@@ -4608,7 +4611,7 @@ msgstr ""
 "\n"
 "Stará dokumentace řídícího střediska byla aktualizována našimi techniky. Pradávný sálový počítač H-9000 s terminály byl nahrazen současnými pracovními holo-stanicemi a instalací nejnovějšího superpočítače. Všechny ostatní součásti jsou stále životaschopné a efektivní."
 
-#: ../base/ufos/research.ufo:3031
+#: ../base/ufos/research.ufo:3041
 msgid "b_entrance_txt"
 msgstr ""
 "Dokumentace -- Vstup\n"
@@ -4641,8 +4644,8 @@ msgstr ""
 "\n"
 "Žádné."
 
-#: ../base/ufos/research.ufo:3044 ../base/ufos/research.ufo:4275
-#: ../base/ufos/research.ufo:4293
+#: ../base/ufos/research.ufo:3054 ../base/ufos/research.ufo:4285
+#: ../base/ufos/research.ufo:4303
 msgid "b_missile_txt"
 msgstr ""
 "Dokumentace -- Raketová baterie\n"
@@ -4687,7 +4690,7 @@ msgstr ""
 "\n"
 "Žádné."
 
-#: ../base/ufos/research.ufo:3062
+#: ../base/ufos/research.ufo:3072
 #, fuzzy
 msgid "b_laser_txt"
 msgstr ""
@@ -4709,7 +4712,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:3083
+#: ../base/ufos/research.ufo:3093
 msgid "b_large_hangar_txt"
 msgstr ""
 "Dokumentace -- Velký hangár\n"
@@ -4754,7 +4757,7 @@ msgstr ""
 "\n"
 "Žádné."
 
-#: ../base/ufos/research.ufo:3101
+#: ../base/ufos/research.ufo:3111
 msgid "b_hospital_txt"
 msgstr ""
 "Dokumentace -- Nemocnice\n"
@@ -4797,7 +4800,7 @@ msgstr ""
 "\n"
 "Žádné."
 
-#: ../base/ufos/research.ufo:3119
+#: ../base/ufos/research.ufo:3129
 msgid "b_small_hangar_txt"
 msgstr ""
 "Dokumentace -- Malý hangár\n"
@@ -4842,7 +4845,7 @@ msgstr ""
 "\n"
 "Žádné."
 
-#: ../base/ufos/research.ufo:3137
+#: ../base/ufos/research.ufo:3147
 msgid "b_lab_txt"
 msgstr ""
 "Dokumentace -- Laboratoř\n"
@@ -4887,7 +4890,7 @@ msgstr ""
 "\n"
 "Po přezkoumání souborů laboratorního zařízení PHALANXu jsem dospěl k závěru, že tyto plány hodně předběhly svou dobu. Návrhy jsou stále realizovatelné a mohou být přizpůsobeny pro naše účely jen zanedbatelným vylepšením vybavení."
 
-#: ../base/ufos/research.ufo:3155
+#: ../base/ufos/research.ufo:3165
 msgid "b_powerplant_txt"
 msgstr ""
 "Dokumentace -- Elektrárna\n"
@@ -4928,7 +4931,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:3173
+#: ../base/ufos/research.ufo:3183
 msgid "b_quarters_txt"
 msgstr ""
 "Dokumentace -- Ubikace\n"
@@ -4969,7 +4972,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:3186
+#: ../base/ufos/research.ufo:3196
 msgid "b_radar_txt"
 msgstr ""
 "Dokumentace -- Radar\n"
@@ -5016,13 +5019,13 @@ msgstr ""
 "\n"
 "Nesmíme spatřovat v radarovém zařízení konečné řešení otázky detekce UFO. I s doplňkovými systémy naše pokrytí není plně spolehlivé a měli bychom vyvinout způsoby jak vylepšit naši technologii detekce, pokud máme mít nějakou šanci na zastavení těchto bastardů."
 
-#: ../base/ufos/research.ufo:3204
+#: ../base/ufos/research.ufo:3214
 msgid "b_radar_adv_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3223
+#: ../base/ufos/research.ufo:3233
 msgid "b_storage_txt"
 msgstr ""
 "Dokumentace -- Sklady\n"
@@ -5065,7 +5068,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:3241
+#: ../base/ufos/research.ufo:3251
 msgid "b_teamroom_txt"
 msgstr ""
 "Dokumentace -- Společenská místnost\n"
@@ -5106,7 +5109,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:3259
+#: ../base/ufos/research.ufo:3269
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
 "Dokumentace -- Malý hangár pro UFO\n"
@@ -5147,7 +5150,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:3277
+#: ../base/ufos/research.ufo:3287
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
 "Dokumentace -- Velký hangár pro UFO\n"
@@ -5188,7 +5191,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:3295
+#: ../base/ufos/research.ufo:3305
 msgid "b_workshop_txt"
 msgstr ""
 "Dokumentace -- Dílna\n"
@@ -5227,11 +5230,11 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:3311
+#: ../base/ufos/research.ufo:3321
 msgid "Blueprints - Antimatter Storage"
 msgstr "Dokumentace - Sklad antihmoty"
 
-#: ../base/ufos/research.ufo:3316
+#: ../base/ufos/research.ufo:3326
 msgid "b_antimatter_txt"
 msgstr ""
 "Přehled\n"
@@ -5262,7 +5265,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:3343
+#: ../base/ufos/research.ufo:3353
 msgid "drop_firebird_txt"
 msgstr ""
 "Vyhodnocení letounu -- Transportér třídy Firebird\n"
@@ -5321,13 +5324,13 @@ msgstr ""
 "\n"
 "Závěsníky: jeden střední na přídi, dva nosiče vybavení, jedna pozice na pancéřování"
 
-#: ../base/ufos/research.ufo:3359
+#: ../base/ufos/research.ufo:3369
 msgid "drop_herakles_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3380
+#: ../base/ufos/research.ufo:3390
 msgid "inter_stiletto_txt"
 msgstr ""
 "Vyhodnocení letounu -- Stíhačka třídy Stiletto\n"
@@ -5392,7 +5395,7 @@ msgstr ""
 "\n"
 "Závěsníky: jeden malý na přídi, dva střední pod křidélky, dva nosiče vybavení, jedna pozice na pancéřování"
 
-#: ../base/ufos/research.ufo:3396
+#: ../base/ufos/research.ufo:3406
 msgid "inter_saracen_txt"
 msgstr ""
 "Vyhodnocení letounu -- Stíhačka třídy Saracen\n"
@@ -5449,7 +5452,7 @@ msgstr ""
 "\n"
 "Závěsníky: dva střední na břiše, dva nosiče vybavení, jedna pozice na pancéřování"
 
-#: ../base/ufos/research.ufo:3412
+#: ../base/ufos/research.ufo:3422
 msgid "inter_dragon_txt"
 msgstr ""
 "Veliteli, jsem obzvláště hrdý na to, že Vám mohu představit plány našeho nového záchytného stíhače \"Dragon\". Jak jste mohl vidět, převzali jsme mnohem víc, než jenom jednu stránku z cizácké knihy a radikální styl se opravdu vyplatil.\n"
@@ -5464,7 +5467,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3415
+#: ../base/ufos/research.ufo:3425
 msgid "inter_dragon_pre_txt"
 msgstr ""
 "Veliteli, dovolte mi na úvod poznamenat to, že je zřejmé jak nás cizáci citelně předstihují v každém ohledu, ale nikde to není více evidentní, jako ve vzduchu. Byli jsme ve špatné pozici hned na začátku války a navzdory našemu úsilí jsme dosáhli pouze malých zdokonalení.\n"
@@ -5475,27 +5478,27 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3433
+#: ../base/ufos/research.ufo:3443
 msgid "inter_starchaser_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3436
+#: ../base/ufos/research.ufo:3446
 msgid "inter_starchaser_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3454
+#: ../base/ufos/research.ufo:3464
 msgid "inter_stingray_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3457
+#: ../base/ufos/research.ufo:3467
 msgid "inter_stingray_pre_txt"
 msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
-#: ../base/ufos/research.ufo:3482
+#: ../base/ufos/research.ufo:3492
 msgid "ufo_scout_txt"
 msgstr ""
 "Toto malé UFO je první typ, který jsme sledovali vizuálně a na radaru. Ačkoliv nevypadají že by se učastnili současných nájezdů, to neznamená že nejsou hrozbou; dosud razili cestu pro každý případ cizáckých aktivit na Zemi.\n"
@@ -5528,14 +5531,14 @@ msgstr ""
 "\n"
 "Kapacita zbraní: Žádné"
 
-#: ../base/ufos/research.ufo:3485
+#: ../base/ufos/research.ufo:3495
 msgid "ufo_scout_pre_txt"
 msgstr ""
 "Veliteli, objevili jsme nový typ UFO, které nyní čeká v našem hangáru na rozebrání. Jsme připraveni studovat a rozmontovat letoun jakmile řeknete, ale budeme potřebovat nějaký laboratorní čas a finanční prostředky.\n"
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3524
+#: ../base/ufos/research.ufo:3534
 msgid "ufo_fighter_txt"
 msgstr ""
 "Veliteli, můj tým a já jsme právě dokončili další hlášení o UFO pro Vás. Zde je mé shrnutí pro Váš přehled.\n"
@@ -5554,7 +5557,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3527
+#: ../base/ufos/research.ufo:3537
 msgid "ufo_fighter_pre_txt"
 msgstr ""
 "Veliteli, zachránili jsme nový typ UFO, které nyní čeká v našem hangáru na rozmontování. Získání UFO třídy Stíhačka bylo jednou z věcí, za kterou jsme se zde v technickém oddělení modlili. Toto je první vyzbrojené bojové UFO, které bylo pozorováno jednotkami PHALANX; je životně důležité prostudovat tuto cizáckou loď, její výzbroj a zjistit její slabá místa - pokud nějaká má.\n"
@@ -5563,7 +5566,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3567
+#: ../base/ufos/research.ufo:3577
 msgid "ufo_supply_txt"
 msgstr ""
 "Veliteli, můj tým i já jsme právě dokončili další hlášení o UFO pro Vás. Zde je můj souhrn pro Váš přehled.\n"
@@ -5582,7 +5585,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3570
+#: ../base/ufos/research.ufo:3580
 msgid "ufo_supply_pre_txt"
 msgstr ""
 "Veliteli, zachránili jsme nový typ UFO, které nyní čeká v našem hangáru na rozmontování. Je větší než jakékoliv jiné UFO námi doposud zjištěné, zdá se být neozbrojené a jeho velký nákladový prostor naznačuje, že se může jednat o transportní nosič, podporující cizácké aktivity na povrchu Země. Tyto letouny mohu být nalezeny v centru mnoha cizáckých formací a budou drasticky zvyšovat cizáckou přítomnost na naší planetě, pokud jim dovolíme dokončit jejich mise.\n"
@@ -5591,27 +5594,27 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3610
+#: ../base/ufos/research.ufo:3620
 msgid "ufo_carrier_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3613
+#: ../base/ufos/research.ufo:3623
 msgid "ufo_carrier_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3653
+#: ../base/ufos/research.ufo:3663
 msgid "ufo_bomber_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3656
+#: ../base/ufos/research.ufo:3666
 msgid "ufo_bomber_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3696
+#: ../base/ufos/research.ufo:3706
 msgid "ufo_corrupter_txt"
 msgstr ""
 "Veliteli, můj tým i já jsme právě dokončili další hlášení o UFO pro Vás. Zde je můj souhrn pro Váš přehled.\n"
@@ -5630,7 +5633,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3699
+#: ../base/ufos/research.ufo:3709
 msgid "ufo_corrupter_pre_txt"
 msgstr ""
 "Veliteli, zachránili jsme nový typ UFO, který nyní čeká v našem hangáru na rozebrání. Jedná se o jedno z největších UFO, jaké jsme dosud spatřili, ale relativně lehká výzbroj nazančuje, že to nebude bojový letoun. Naše předběžná prohlídka interiéru nám podala pouze provokativní klíč k jeho zamýšlené funkci.\n"
@@ -5641,7 +5644,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3739
+#: ../base/ufos/research.ufo:3749
 #, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr ""
@@ -5675,7 +5678,7 @@ msgstr ""
 "\n"
 "Kapacita zbraní: Žádné"
 
-#: ../base/ufos/research.ufo:3742
+#: ../base/ufos/research.ufo:3752
 #, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr ""
@@ -5683,19 +5686,19 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3782
+#: ../base/ufos/research.ufo:3792
 #, fuzzy
 msgid "ufo_ripper_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3785
+#: ../base/ufos/research.ufo:3795
 #, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3825
+#: ../base/ufos/research.ufo:3835
 msgid "ufo_harvester_txt"
 msgstr ""
 "Veliteli, můj tým i já jsme právě dokončili další hlášení o UFO pro Vás. Zde je můj souhrn pro Váš přehled.\n"
@@ -5718,7 +5721,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3828
+#: ../base/ufos/research.ufo:3838
 msgid "ufo_harvester_pre_txt"
 msgstr ""
 "Veliteli, zachránili jsme nový typ UFO, které nyní čeká v našem hangáru na rozmontování. Tento kus je značně větší, než předchozí UFO, která jsme pozorovali a zdá se být středem mnoha cizáckých formací, což z něj činí obzvláště důležitý cíl pro naše výzkumy. Odkrytí způsobu použití tohoto letounu a prozkoumání jeho speciálního vybavení nám může poskytnout zcela nový vhled do cizáckých misí zde na Zemi.\n"
@@ -5727,37 +5730,37 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3868
+#: ../base/ufos/research.ufo:3878
 #, fuzzy
 msgid "ufo_mothership_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3871
+#: ../base/ufos/research.ufo:3881
 #, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3913
+#: ../base/ufos/research.ufo:3923
 msgid "Live Specimen - Bloodspider"
 msgstr "Živý jedinec - Bloodspider"
 
-#: ../base/ufos/research.ufo:3915
+#: ../base/ufos/research.ufo:3925
 msgid "bloodspider_notes_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3918
+#: ../base/ufos/research.ufo:3928
 msgid "bloodspider_notes_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3934
+#: ../base/ufos/research.ufo:3944
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Pitva cizáka - Bloodspider"
 
-#: ../base/ufos/research.ufo:3939
+#: ../base/ufos/research.ufo:3949
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -5780,7 +5783,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3942
+#: ../base/ufos/research.ufo:3952
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -5791,11 +5794,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3992
+#: ../base/ufos/research.ufo:4002
 msgid "Alien Autopsy - Ortnok"
 msgstr "Pitva cizáka - Ortnok"
 
-#: ../base/ufos/research.ufo:3997
+#: ../base/ufos/research.ufo:4007
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -5832,7 +5835,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3998
+#: ../base/ufos/research.ufo:4008
 msgid "ortnok_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -5867,7 +5870,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4001
+#: ../base/ufos/research.ufo:4011
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -5878,7 +5881,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4002
+#: ../base/ufos/research.ufo:4012
 msgid "ortnok_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -5889,11 +5892,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4034
+#: ../base/ufos/research.ufo:4044
 msgid "Alien Autopsy - Taman"
 msgstr "Pitva cizáka - Taman"
 
-#: ../base/ufos/research.ufo:4039
+#: ../base/ufos/research.ufo:4049
 msgid "taman_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -5932,7 +5935,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4040
+#: ../base/ufos/research.ufo:4050
 msgid "taman_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -5969,7 +5972,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4043
+#: ../base/ufos/research.ufo:4053
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -5980,7 +5983,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4044
+#: ../base/ufos/research.ufo:4054
 msgid "taman_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -5991,11 +5994,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4076
+#: ../base/ufos/research.ufo:4086
 msgid "Alien Autopsy - Shevaar"
 msgstr "Pitva cizáka - Shevaar"
 
-#: ../base/ufos/research.ufo:4081
+#: ../base/ufos/research.ufo:4091
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -6032,7 +6035,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4082
+#: ../base/ufos/research.ufo:4092
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -6067,7 +6070,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4085
+#: ../base/ufos/research.ufo:4095
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -6078,7 +6081,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4086
+#: ../base/ufos/research.ufo:4096
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -6090,71 +6093,71 @@ msgstr ""
 "Dr. Connor"
 
 # Bezpilotní Pozemní Vozidlo
-#: ../base/ufos/research.ufo:4175 ../base/ufos/team_humans.ufo:1637
+#: ../base/ufos/research.ufo:4185 ../base/ufos/team_humans.ufo:1637
 msgid "Phoenix UGV"
 msgstr "BPV Fénix"
 
-#: ../base/ufos/research.ufo:4177
+#: ../base/ufos/research.ufo:4187
 msgid "ugv_phoenix_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4180
+#: ../base/ufos/research.ufo:4190
 msgid "ugv_phoenix_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
 # Bezpilotní Pozemní Vozidlo
-#: ../base/ufos/research.ufo:4195 ../base/ufos/team_humans.ufo:1662
+#: ../base/ufos/research.ufo:4205 ../base/ufos/team_humans.ufo:1662
 msgid "Ares W (UGV)"
 msgstr "Arés W (BPV)"
 
-#: ../base/ufos/research.ufo:4197
+#: ../base/ufos/research.ufo:4207
 msgid "ugv_ares_w_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4200
+#: ../base/ufos/research.ufo:4210
 msgid "ugv_ares_w_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:4216
+#: ../base/ufos/research.ufo:4226
 msgid "ugv_chaingun_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4219
+#: ../base/ufos/research.ufo:4229
 msgid "ugv_chaingun_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:4235
+#: ../base/ufos/research.ufo:4245
 msgid "ugv_chaingun_belt_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4238
+#: ../base/ufos/research.ufo:4248
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:4253
+#: ../base/ufos/research.ufo:4263
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4256
+#: ../base/ufos/research.ufo:4266
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 # EPO=Elektronické ProtiOpatření
-#: ../base/ufos/research.ufo:4312
+#: ../base/ufos/research.ufo:4322
 msgid "'Raven' ECM Unit"
 msgstr "Jednotka EPO 'Požírač'"
 
-#: ../base/ufos/research.ufo:4315
+#: ../base/ufos/research.ufo:4325
 msgid "craft_electronics_raven_txt"
 msgstr ""
 "Technické specifikace: Jednotka EPO \"Havran\"\n"
@@ -6193,7 +6196,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4332
+#: ../base/ufos/research.ufo:4342
 msgid "craft_shield_light_txt"
 msgstr ""
 "Technické specifikace: Polymerové pancéřování letounu\n"
@@ -6236,7 +6239,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4348
+#: ../base/ufos/research.ufo:4358
 msgid "craft_shield_plating_pre_txt"
 msgstr ""
 "Veliteli, nyní když máme schopnosti vyrábět a zpracovávat cizácké materiály, celé nové pole možností se pro nás otevírá. Tyto materiály jsou silné a ohebné, takže mohou být využity pro téměř cokoliv. Jejich nejvíce slibné použití nicméně je v leteckém designu - specificky pancéřování.\n"
@@ -6249,7 +6252,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:4351
+#: ../base/ufos/research.ufo:4361
 msgid "craft_shield_plating_txt"
 msgstr ""
 "Veliteli, mám nějaké dobré zprávy. Můj tým a já jsme dokončili prototyp cizáckého leteckého pancíře. Náš nový pancíř je nyní připraven k výrobě pro PHALANX.\n"
@@ -6266,7 +6269,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:4371
+#: ../base/ufos/research.ufo:4381
 msgid "craft_alien_astrogation_pre_txt"
 msgstr ""
 "Veliteli, ukořistění neporušené cizácké kosmonavigační jednotky je velice důležitým milníkem. Ačkoliv se nezdá, že by tato jednotka obsahovala hvězdnou mapu, dovolí nám to dešifrovat cizácké astronomické poznatky a vylepšit tak naše kosmické navigační systémy o několik řádů. Eventuálně nám to pomůže vystopovat cizáky zpět na jejich domovskou planetu.\n"
@@ -6275,7 +6278,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4374
+#: ../base/ufos/research.ufo:4384
 msgid "craft_alien_astrogation_txt"
 msgstr ""
 "Veliteli, skončili jsme práci na ukořistěné cizácké kosmonavigační jednotce. Zde je souhrnná zpráva.\n"
@@ -6294,7 +6297,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4409
+#: ../base/ufos/research.ufo:4419
 msgid "craft_alien_propulsion_pre_txt"
 msgstr ""
 "Veliteli, cizácké antihmotové motory, které jsme nalezli, fascinují můj tým od té doby co je přivezli. Myslím si, že s naší znalostí cizáckých materiálů můžeme začít pracovat na detailech duplikace této technologie. Povzbuzující je, že se zdá, že budeme moci tyto motory replikovat, stačí vyřešit funkci a vytváření odlišných dílů.\n"
@@ -6303,7 +6306,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4412
+#: ../base/ufos/research.ufo:4422
 msgid "craft_alien_propulsion_txt"
 msgstr ""
 "Veliteli, jsem potěšen, že mohu podat zprávu o úspěchu našeho programu výzkumu cizáckého pohonu. Rozluštili jsme záhady nastavení cizáckého motoru a konečně rozumíme procesu cesty antihmoty z palivové nádrže do spalovací komory.\n"
@@ -6326,7 +6329,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4446
+#: ../base/ufos/research.ufo:4456
 msgid "craft_alien_detection_pre_txt"
 msgstr ""
 "Veliteli, zdá se, že cizácké senzory jsou velmi výkonnou sadou pasivních a aktivních vyhledávacích systémů zahrnujících radarovou, lidarovou, magnetickou, ultrafialovou a infračervenou detekci a -- což je nejvíce zajímavé -- typ detekce pro nás neznámé, která se zdá být daleko více úspěšnější v detekci UFO než jakékoliv naše prostředky.\n"
@@ -6337,7 +6340,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4449
+#: ../base/ufos/research.ufo:4459
 msgid "craft_alien_detection_txt"
 msgstr ""
 "Projekt cizácké detekce je kompletní, veliteli. Nyní úplně rozumíme tomuto zařízení, jak funguje, jak jej ovládat a jak jej přizpůsobit pro naše použití.\n"
@@ -6360,7 +6363,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4482
+#: ../base/ufos/research.ufo:4492
 msgid "craft_weapon_alc_pre_txt"
 msgstr ""
 "Toto je jeden z několika návrhů, které podávám ohledně výzkumu a vývoje nových laserových zbraní. Každý z nich by měl být vyvíjen odděleně kvůli velikostním odlišnostem, úrovním výkonu a komplexnosti zúčastněných systémů.\n"
@@ -6375,7 +6378,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:4485
+#: ../base/ufos/research.ufo:4495
 msgid "craft_weapon_alc_txt"
 msgstr ""
 "Veliteli, dokončil jsem moje hlášení ohledně našeho posledního laserového programu. Úspěšně jsme zhotovili prototyp novélo leteckého laserového kanónu a jsme připraveni k jeho zavedení do výroby.\n"
@@ -6390,11 +6393,11 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:4529
+#: ../base/ufos/research.ufo:4539
 msgid "SHIVA Rotary Cannon"
 msgstr "Rotační dělo SHIVA"
 
-#: ../base/ufos/research.ufo:4532
+#: ../base/ufos/research.ufo:4542
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 "Technické specifikace: Rotační kanón Šiva\n"
@@ -6437,7 +6440,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4549
+#: ../base/ufos/research.ufo:4559
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 "Technické specifikace: 20mm protipancéřové zápalné náboje pro kanón Šiva\n"
@@ -6476,7 +6479,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4570
+#: ../base/ufos/research.ufo:4580
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 "Technické specifikace: 20mm tříštivo-trhavé zápalné náboje pro kanón Šiva\n"
@@ -6518,11 +6521,11 @@ msgstr ""
 "Žádné"
 
 # VV = Vzduch-Vzduch
-#: ../base/ufos/research.ufo:4588
+#: ../base/ufos/research.ufo:4598
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "Nosič střel VV 'Krahujec'"
 
-#: ../base/ufos/research.ufo:4591
+#: ../base/ufos/research.ufo:4601
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 "Technické specifikace: Nosič střel vzduch-vzduch \"Krahujec\"\n"
@@ -6571,11 +6574,11 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4605
+#: ../base/ufos/research.ufo:4615
 msgid "'Sparrowhawk' Missile"
 msgstr "Střela 'Krahujec'"
 
-#: ../base/ufos/research.ufo:4608
+#: ../base/ufos/research.ufo:4618
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 "Technické specifikace: Střela \"Krahujec\"\n"
@@ -6618,7 +6621,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4629
+#: ../base/ufos/research.ufo:4639
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 "Technické specifikace: Baterie raket TR-20\n"
@@ -6661,7 +6664,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4646
+#: ../base/ufos/research.ufo:4656
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 "Technické specifikace: Raketa TR-20\n"
@@ -6704,14 +6707,14 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4667
+#: ../base/ufos/research.ufo:4677
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
 "Veliteli, UFO námi zachráněné bylo vybaveno velmi zajímavým typem zbraně, kterou bychom rádi prozkoumali. Zdá se, že vystřeluje nějaký druh vysokorychlostních částicových paprsků; pokud dokážeme zvládnout tuto technologii, nebo ji alespoň adaptovat pro použití v našich letounech, mohli bychom vzdušná střetnutí s ozbrojenými cizáckými plavidly učinit značně příznivější pro naše letouny a piloty.\n"
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:4670
+#: ../base/ufos/research.ufo:4680
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 "Moje hlášení ohledně cizácké částicové paprskové zbraně je připraveno pro Vaše posouzení.\n"
@@ -6730,7 +6733,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:4713
+#: ../base/ufos/research.ufo:4723
 msgid "craft_electronics_targeting_txt"
 msgstr ""
 "Technické specifikace: Zaměřovací počítač\n"
@@ -6769,7 +6772,7 @@ msgstr ""
 "\n"
 "Se všemi možnostmi a odlišnými scénáři čekajícími v naší budoucnosti, není žádné zlaté pravidlo, které by nám pomohlo rozhodnout se, kdy použít zaměřovací počítač. Je to pouze na uvážení Velitele."
 
-#: ../base/ufos/research.ufo:4730
+#: ../base/ufos/research.ufo:4740
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
 "Technické specifikace: Palivová nádrž\n"
@@ -6806,7 +6809,7 @@ msgstr ""
 "\n"
 "Po přečtení hlášení vel. Navarreho bych měl zdůraznit, že naše stanovy ukládají zastavit jakékoliv a všechny cizácké aktivity na Zemi. Nemůžeme si dovolit nechat některé z nich pokračovat kvůli tomu, že budou mimo dolet našich letounů. Pokud civilisté zemřou, protože se tam výsadkový letoun nebude moci dost dobře dostat, naše pověst bude pošramocena a naše financování může důsledkem toho utrpět. Měli bychom držet několik letounů s palivovými nádržemi v pohotovosti pro případ vzdálených incidentů."
 
-#: ../base/ufos/research.ufo:4752 ../base/ufos/research.ufo:4788
+#: ../base/ufos/research.ufo:4762 ../base/ufos/research.ufo:4798
 msgid "alien_materials_txt"
 msgstr ""
 "Veliteli, myslím si, že jsme odhalili tajemství cizáckých materiálů. Po nějakých úpravách našeho dílenského vybavení bychom měli být nyní schopni využít materiál a 'naprogramovat' ho na nové vylepšené tvary.\n"
@@ -6823,7 +6826,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4755
+#: ../base/ufos/research.ufo:4765
 msgid "alien_materials_pre_txt"
 msgstr ""
 "Veliteli, jak jsem zmínil v předchozím hlášení, UFO, které jsme získali, bylo pokryto velice zajímavou slitinou, kde je smíchán plast a kov dohromady v jeden materiál. Tyto materiály se zdají být univerzálně používané cizáckou technologií. Je to pokročilý a všestraný materiál s tisíci možnostmi použití.\n"
@@ -6832,11 +6835,11 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4807
+#: ../base/ufos/research.ufo:4817
 msgid "Political Situation Before The Invasion"
 msgstr "Politická situace před invazí"
 
-#: ../base/ufos/research.ufo:4809
+#: ../base/ufos/research.ufo:4819
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "V roce 2048 je Země v lepší formě než tomu bylo po více než století. Asi poprvé jsou mír a spolupráce standardem a nikoliv výjimkou. Nicméně současná situace může být vysvětlena pouze prostřednictvím krutého průběhu 21. století.\n"
@@ -6855,11 +6858,11 @@ msgstr ""
 "\n"
 "Ve dnech které následovaly vládní armáda utrpěla hromadné dezerce; tato jediná událost konečně přivodila vládě záhubu. Jednotky musely bojovat zuby nehty a operovat roztroušeny na rozlehlém území sežehnuté země zatímco je povstalci pomalu zatlačovali do Indického oceánu. Více než šest miliónů životů bylo ztraceno než vládní síly 15. srpna 2036 kapitulovaly. To byl oficiální konec Druhé studené války."
 
-#: ../base/ufos/research.ufo:4819
+#: ../base/ufos/research.ufo:4829
 msgid "After The War"
 msgstr "Po válce"
 
-#: ../base/ufos/research.ufo:4821
+#: ../base/ufos/research.ufo:4831
 msgid "news_after_the_war_txt"
 msgstr ""
 "Asijská Republika:\n"
@@ -6972,11 +6975,11 @@ msgstr ""
 "\n"
 "Oceánská armáda spočívá hlavně v silném loďstvu. Jejich pozemní armáda je nepatrná a v porovnání s jakoukoliv jinou kromě Sjednocené Ameriky a má pouze obrannou funkci, je průměrně trénovaná a vybavená. Nicméně v krizových situacích může zareagovat poměrně rychle."
 
-#: ../base/ufos/research.ufo:4831
+#: ../base/ufos/research.ufo:4841
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX a následky Bombajského masakru"
 
-#: ../base/ufos/research.ufo:4833
+#: ../base/ufos/research.ufo:4843
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "\"Projekt PHALANX\" byl poprvé založen Ministerstvem obrany Spojených států v roce 1955 po létech vzrůstajícího zájmu o celosvětově rostoucí počet pozorování UFO. Možnost cizácké invaze těžce sužovala mysli politiků vynervovaných jadernou silou Sovětského svazu. Existence nepřátelského mimozemského života ve vesmíru se zdála jako velice nepatrná možnost, dokonce ještě menší než že by tito nepřátelé mohli najít Zemi obklopenou celým širým prostorem -- ale mohla si Amerika dovolit takové riziko?\n"
@@ -7007,11 +7010,11 @@ msgstr ""
 "\n"
 "Jediné co scházelo byl vůdce."
 
-#: ../base/ufos/research.ufo:4843
+#: ../base/ufos/research.ufo:4853
 msgid "A New Twist"
 msgstr "Nečekaný obrat"
 
-#: ../base/ufos/research.ufo:4848
+#: ../base/ufos/research.ufo:4858
 msgid "news_new_twist_txt"
 msgstr ""
 "Veliteli,\n"
@@ -7036,17 +7039,17 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4849
+#: ../base/ufos/research.ufo:4859
 msgid "news_new_twist_alt_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4874
+#: ../base/ufos/research.ufo:4884
 msgid "The Enemy On Earth"
 msgstr "Nepřítel na Zemi"
 
-#: ../base/ufos/research.ufo:4879
+#: ../base/ufos/research.ufo:4889
 msgid "enemy_on_earth_alt_txt"
 msgstr ""
 "Proposal\n"
@@ -7079,7 +7082,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4880
+#: ../base/ufos/research.ufo:4890
 msgid "enemy_on_earth_txt"
 msgstr ""
 "Commander,\n"
@@ -7110,7 +7113,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4883
+#: ../base/ufos/research.ufo:4893
 msgid "enemy_on_earth_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -7133,11 +7136,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4913
+#: ../base/ufos/research.ufo:4923
 msgid "XVI Census"
 msgstr "MVI sčítání"
 
-#: ../base/ufos/research.ufo:4918
+#: ../base/ufos/research.ufo:4928
 msgid "xvi_census_txt"
 msgstr ""
 "Dobré ráno, pane.\n"
@@ -7160,7 +7163,7 @@ msgstr ""
 "\n"
 "Plk. Falkland"
 
-#: ../base/ufos/research.ufo:4921
+#: ../base/ufos/research.ufo:4931
 msgid "xvi_census_pre_txt"
 msgstr ""
 "Dobré ráno pane.\n"
@@ -7177,17 +7180,17 @@ msgstr ""
 "\n"
 "Plk. Falkland"
 
-#: ../base/ufos/research.ufo:4955
+#: ../base/ufos/research.ufo:4965
 msgid "The Enemy On Earth - Revisited"
 msgstr "Nepřítel na Zemi - Opraveno"
 
-#: ../base/ufos/research.ufo:4960
+#: ../base/ufos/research.ufo:4970
 msgid "enemy_on_earth_rev_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4963
+#: ../base/ufos/research.ufo:4973
 msgid "enemy_on_earth_rev_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
@@ -10888,8 +10891,8 @@ msgid "UFO"
 msgstr "UFO"
 
 #: client/campaign/cp_aircraft.c:780
-#, c-format
-msgid "A new (a %s) class craft is ready in base %s"
+#, fuzzy, c-format
+msgid "A new (a %s) class craft is ready in %s"
 msgstr "Nový letoun (%s) je připraven na základně %s."
 
 #: client/campaign/cp_aircraft.c:781 client/campaign/cp_aircraft.c:1243
@@ -10898,7 +10901,7 @@ msgstr "Nový letoun (%s) je připraven na základně %s."
 #: client/campaign/cp_aircraft_callbacks.c:138
 #: client/campaign/cp_aircraft_callbacks.c:146
 #: client/campaign/cp_aircraft_callbacks.c:154
-#: client/campaign/cp_airfight.c:357 client/campaign/cp_airfight.c:377
+#: client/campaign/cp_airfight.c:361 client/campaign/cp_airfight.c:381
 #: client/campaign/cp_aliencont.c:229 client/campaign/cp_aliencont.c:258
 #: client/campaign/cp_aliencont.c:275 client/campaign/cp_aliencont.c:285
 #: client/campaign/cp_base.c:760 client/campaign/cp_base.c:1326
@@ -10969,8 +10972,8 @@ msgid "That base is beyond this aircraft's range."
 msgstr "Cílová základna je mimo dolet tohoto letounu."
 
 #: client/campaign/cp_aircraft.c:1243
-#, c-format
-msgid "Craft %s has refuelled at base %s."
+#, fuzzy, c-format
+msgid "Craft %s has refuelled at %s."
 msgstr "Letoun %s doplnil palivo na základně %s."
 
 #: client/campaign/cp_aircraft.c:1251
@@ -10988,7 +10991,7 @@ msgstr "Nedostatek paliva."
 
 #: client/campaign/cp_aircraft.c:2170
 #, fuzzy, c-format
-msgid "Craft %s has not enough fuel to intercept UFO: fly back to base %s."
+msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "Letoun %s doplnil palivo na základně %s."
 
 #: client/campaign/cp_aircraft_callbacks.c:138
@@ -11015,14 +11018,14 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "Letoun odstartoval"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1709
-#: client/campaign/cp_map.c:1718 client/campaign/cp_map.c:1731
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1732
+#: client/campaign/cp_map.c:1741 client/campaign/cp_map.c:1754
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Rychlost:\t%i km/h\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1710
-#: client/campaign/cp_map.c:1719
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1733
+#: client/campaign/cp_map.c:1742
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Palivo:\t%i/%i\n"
@@ -11048,24 +11051,24 @@ msgstr "Pancéř:\t%i z 1\n"
 msgid "Electronics:\t%i on %i"
 msgstr "Elektronika:\t%i on %i"
 
-#: client/campaign/cp_airfight.c:357
+#: client/campaign/cp_airfight.c:361
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr "UFO střílí na %s"
 
-#: client/campaign/cp_airfight.c:377
+#: client/campaign/cp_airfight.c:381
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr "Našemu letounu došla munice - nyní se vrací se na základnu."
 
-#: client/campaign/cp_airfight.c:456 client/campaign/cp_airfight.c:479
+#: client/campaign/cp_airfight.c:460 client/campaign/cp_airfight.c:483
 msgid "Interception"
 msgstr "Stíhání"
 
-#: client/campaign/cp_airfight.c:456
+#: client/campaign/cp_airfight.c:460
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Stíhání UFO bylo úspěšné -- UFO bylo ztraceno v moři."
 
-#: client/campaign/cp_airfight.c:479 client/campaign/cp_campaign.c:1678
+#: client/campaign/cp_airfight.c:483 client/campaign/cp_campaign.c:1678
 msgid "You've lost the battle"
 msgstr "Prohrál jste bitvu"
 
@@ -11266,8 +11269,8 @@ msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Na této základně není letoun - Musíte nejdříve nějaký koupit\n"
 
 #: client/campaign/cp_base.c:2374
-#, c-format
-msgid "Construction of %s building finished in base %s."
+#, fuzzy, c-format
+msgid "Construction of %s building finished in %s."
 msgstr "Dokončena stavba budovy %s na základně %s."
 
 #: client/campaign/cp_base.c:2375
@@ -11288,8 +11291,8 @@ msgstr[1] "%i shromážděných předmětů"
 msgstr[2] "%i shromážděných předmětů"
 
 #: client/campaign/cp_base.c:2482
-#, c-format
-msgid "Not enough storage space in base %s. %s"
+#, fuzzy, c-format
+msgid "Not enough storage space in %s. %s"
 msgstr "Nedostatek skladovacího prostoru na základně %s. %s"
 
 #: client/campaign/cp_base.c:2483
@@ -11302,7 +11305,7 @@ msgstr[2] "%i předmětů bylo prodáno za %i kreditů."
 
 #: client/campaign/cp_base.c:3201
 #, fuzzy, c-format
-msgid "Base %s does not have Antimatter Storage Facility. %i units of antimatter got removed."
+msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "Základna %s nemá sklad antihnoty. %i jednotek antihmoty bylo odebráno."
 
 #: client/campaign/cp_base_callbacks.c:65
@@ -11835,13 +11838,6 @@ msgid "%d c"
 msgstr "%d k"
 
 #: client/campaign/cp_installation.c:521
-#, c-format
-msgid "%d day\n"
-msgid_plural "%d days\n"
-msgstr[0] "%d den\n"
-msgstr[1] "%d dny\n"
-msgstr[2] "%d dnů\n"
-
 #: client/campaign/cp_installation_callbacks.c:68
 #, c-format
 msgid "%d day"
@@ -11893,40 +11889,40 @@ msgstr "Nic takového"
 msgid "UFO Sighting"
 msgstr "Pozorování UFO"
 
-#: client/campaign/cp_map.c:1265
+#: client/campaign/cp_map.c:1275
 msgid "Day"
 msgstr "Den"
 
-#: client/campaign/cp_map.c:1265
+#: client/campaign/cp_map.c:1275
 msgid "Night"
 msgstr "Noc"
 
-#: client/campaign/cp_map.c:1615
+#: client/campaign/cp_map.c:1638
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1667
+#: client/campaign/cp_map.c:1690
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Vyberte na mapě požadovanou polohu nové základny.\n"
 
-#: client/campaign/cp_map.c:1670
+#: client/campaign/cp_map.c:1693
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "Vyberte na mapě požadovanou polohu nového zařízení.\n"
 
-#: client/campaign/cp_map.c:1675
+#: client/campaign/cp_map.c:1698
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Cizáci právě teď útočí na naši základnu.\n"
 
-#: client/campaign/cp_map.c:1680
+#: client/campaign/cp_map.c:1703
 msgid "Select ufo or mission on map\n"
 msgstr "Vyberte na mapě UFO nebo misi\n"
 
-#: client/campaign/cp_map.c:1685
+#: client/campaign/cp_map.c:1708
 msgid "UFO in radar range\n"
 msgstr "UFO v dosahu radaru\n"
 
-#: client/campaign/cp_map.c:1694
+#: client/campaign/cp_map.c:1717
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -11937,30 +11933,30 @@ msgstr ""
 "Druh: %s\n"
 "Úkol: %s"
 
-#: client/campaign/cp_map.c:1706 client/campaign/cp_map.c:1716
+#: client/campaign/cp_map.c:1729 client/campaign/cp_map.c:1739
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Jméno:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1707 client/campaign/cp_map.c:1717
+#: client/campaign/cp_map.c:1730 client/campaign/cp_map.c:1740
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Stav:\t%s\n"
 
-#: client/campaign/cp_map.c:1708
+#: client/campaign/cp_map.c:1731
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Vzdálenost k cíli:\t\t%.0f\n"
 
 # Odhadovaný Čas Příletu
-#: client/campaign/cp_map.c:1712 client/campaign/cp_map.c:1724
+#: client/campaign/cp_map.c:1735 client/campaign/cp_map.c:1747
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "OČP:\t%sh\n"
 
 #: client/campaign/cp_mapfightequip.c:302
-#, c-format
-msgid "%s was successfully installed into aircraft %s at base %s."
+#, fuzzy, c-format
+msgid "%s was successfully installed into aircraft %s at %s."
 msgstr "Vybavení %s bylo úspěšně nainstalováno do letounu %s na základně %s."
 
 #: client/campaign/cp_mapfightequip.c:305
@@ -11969,18 +11965,18 @@ msgid "%s was successfully installed at installation %s."
 msgstr "Vybavení %s bylo úspěšně nainstalováno do zařízení %s."
 
 #: client/campaign/cp_mapfightequip.c:308
-#, c-format
-msgid "%s was successfully installed at base %s."
+#, fuzzy, c-format
+msgid "%s was successfully installed at %s."
 msgstr "Vybavení %s bylo úspěšně nainstalováno na základnu %s."
 
 #: client/campaign/cp_mapfightequip.c:330
-#, c-format
-msgid "%s was successfully removed from aircraft %s at base %s."
+#, fuzzy, c-format
+msgid "%s was successfully removed from aircraft %s at %s."
 msgstr "Vybavení %s bylo úspěšně odebráno z letounu %s na základně %s."
 
 #: client/campaign/cp_mapfightequip.c:336
-#, c-format
-msgid "%s was successfully removed, starting installation of %s into aircraft %s at base %s"
+#, fuzzy, c-format
+msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 msgstr "Vybavení %s bylo úspěšně odebráno, zahajuji instalaci %s do letounu %s na základně %s."
 
 #: client/campaign/cp_mapfightequip.c:344
@@ -11989,8 +11985,8 @@ msgid "%s was successfully removed from installation %s."
 msgstr "Vybavení %s bylo úspěšně odebráno ze zařízení %s."
 
 #: client/campaign/cp_mapfightequip.c:347
-#, c-format
-msgid "%s was successfully removed from base %s."
+#, fuzzy, c-format
+msgid "%s was successfully removed from %s."
 msgstr "Vybavení %s bylo úspěšně odebráno ze základny %s."
 
 #: client/campaign/cp_mapfightequip.c:1154
@@ -12337,8 +12333,8 @@ msgid "Paid %i credits for aircraft"
 msgstr "Zaplaceno %i kreditů za letoun"
 
 #: client/campaign/cp_nations.c:170
-#, c-format
-msgid "Paid %i credits for upkeep of base %s"
+#, fuzzy, c-format
+msgid "Paid %i credits for upkeep of %s"
 msgstr "Zaplaceno %i kreditů za údržby základny %s."
 
 #: client/campaign/cp_nations.c:175
@@ -12410,8 +12406,8 @@ msgstr ""
 "Letoun nemůže odstartovat.\n"
 
 #: client/campaign/cp_produce.c:235
-#, c-format
-msgid "Production queue for base %s is empty"
+#, fuzzy, c-format
+msgid "Production queue for %s is empty"
 msgstr "Výrobní fronta pro základnu %s je prázná"
 
 #: client/campaign/cp_produce.c:236
@@ -12419,28 +12415,28 @@ msgid "Production queue empty"
 msgstr "Výrobní fronta je prázdná"
 
 #: client/campaign/cp_produce.c:358 client/campaign/cp_produce.c:379
-#, c-format
-msgid "Not enough credits to finish production in base %s.\n"
+#, fuzzy, c-format
+msgid "Not enough credits to finish production in %s.\n"
 msgstr "Nedostatek kreditů k dokončení výroby na základně %s.\n"
 
 #: client/campaign/cp_produce.c:368
-#, c-format
-msgid "Not enough free storage space in base %s. Production postponed.\n"
+#, fuzzy, c-format
+msgid "Not enough free storage space in %s. Production postponed.\n"
 msgstr "Na základně %s není volný skladovací prostor. Výroba odložena.\n"
 
 #: client/campaign/cp_produce.c:389
-#, c-format
-msgid "Not enough free hangar space in base %s. Production postponed.\n"
+#, fuzzy, c-format
+msgid "Not enough free hangar space in %s. Production postponed.\n"
 msgstr "Na základně %s není volný hangár. Výroba odložena.\n"
 
 #: client/campaign/cp_produce.c:400
-#, c-format
-msgid "Not enough free storage space in base %s. Disassembling postponed.\n"
+#, fuzzy, c-format
+msgid "Not enough free storage space in %s. Disassembling postponed.\n"
 msgstr "Na základně %s není volný skladovací prostor. Rozebírání odloženo.\n"
 
 #: client/campaign/cp_produce.c:428 client/campaign/cp_produce.c:440
-#, c-format
-msgid "The production of %s has finished."
+#, fuzzy, c-format
+msgid "The production of %s at %s has finished."
 msgstr "Dokončena výroba položky \"%s\"."
 
 #: client/campaign/cp_produce.c:429 client/campaign/cp_produce.c:441
@@ -12449,8 +12445,8 @@ msgid "Production finished"
 msgstr "Dokončena výroba"
 
 #: client/campaign/cp_produce.c:448
-#, c-format
-msgid "The disassembling of %s has finished."
+#, fuzzy, c-format
+msgid "The disassembling of %s at %s has finished."
 msgstr "Bylo dokončeno rozebírání položky \"%s\"."
 
 #: client/campaign/cp_produce_callbacks.c:131
@@ -13059,8 +13055,8 @@ msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "Přeprava není možná - základna nemá funkční hangár."
 
 #: client/campaign/cp_transfer.c:698
-#, c-format
-msgid "Base %s does not have Storage, items are removed!"
+#, fuzzy, c-format
+msgid "%s does not have Storage, items are removed!"
 msgstr "Základna %s nemá sklady, předměty byly odebrány!"
 
 #: client/campaign/cp_transfer.c:699 client/campaign/cp_transfer.c:717
@@ -13071,23 +13067,23 @@ msgid "Transport mission"
 msgstr "Přepravní mise"
 
 #: client/campaign/cp_transfer.c:716
-#, c-format
-msgid "Base %s does not have Living Quarters, employees got unhired!"
+#, fuzzy, c-format
+msgid "%s does not have Living Quarters, employees got unhired!"
 msgstr "Základna %s nemá ubikace, zaměstnanci byli propuštěni!"
 
 #: client/campaign/cp_transfer.c:752
-#, c-format
-msgid "Base %s does not have Alien Containment, Aliens are removed!"
+#, fuzzy, c-format
+msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr "Základna %s nemá komplex cizáckých cel - cizáci byli odebráni!"
 
 #: client/campaign/cp_transfer.c:780
-#, c-format
-msgid "Base %s does not have enough free space in hangars. Aircraft is lost!"
+#, fuzzy, c-format
+msgid "%s does not have enough free space in hangars. Aircraft is lost!"
 msgstr "Základna %s nemá dostatek volného místa v hangárech. Letoun je ztracen!"
 
 #: client/campaign/cp_transfer.c:868 client/campaign/cp_transfer.c:1080
-#, c-format
-msgid "Transport mission started, cargo is being transported to base %s"
+#, fuzzy, c-format
+msgid "Transport mission started, cargo is being transported to %s"
 msgstr "Zahájena přepravní mise, náklad bude přepraven do základny %s"
 
 #: client/campaign/cp_transfer.c:935
@@ -13104,8 +13100,8 @@ msgid "The destination base no longer exists! Transfer carge was lost, personnel
 msgstr "Cílová základna již neexistuje! Přepravované zboží je ztraceno, zaměstnanci propuštěni."
 
 #: client/campaign/cp_transfer.c:959
-#, c-format
-msgid "Transport mission ended, unloading cargo in base %s"
+#, fuzzy, c-format
+msgid "Transport mission ended, unloading cargo in %s"
 msgstr "Přepravní mise ukončena, náklad je vykládán na základně %s"
 
 #: client/campaign/cp_transfer.c:1113
@@ -14587,6 +14583,12 @@ msgstr "Volné"
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr "Hraje"
+
+#~ msgid "%d day\n"
+#~ msgid_plural "%d days\n"
+#~ msgstr[0] "%d den\n"
+#~ msgstr[1] "%d dny\n"
+#~ msgstr[2] "%d dnů\n"
 
 #, fuzzy
 #~ msgid "%s"
