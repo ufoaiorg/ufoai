@@ -673,18 +673,10 @@ craftitem craft_ammo_alc
 	craftweapon		craft_weapon_alc
 	notonmarket		true
 
-/*	unlimitedAmmo	true
-	wdamage			10
-	accuracy		0.7
-	wrange			1.8
-	wspeed			900
-	delay			100
-	size			10 // light*/
-
 	unlimitedAmmo	true
 	wdamage			10
 	accuracy		0.7
-	wrange			5
+	wrange			1.8
 	wspeed			900
 	delay			30
 	size			10 // light
