@@ -1242,7 +1242,6 @@ static void MAP_DrawBullets (const menuNode_t* node, const vec3_t pos)
  * @param[in] end End position of the shot (on geoscape)
  * @param[in] color color of the beam
  * @sa MAP_DrawMap
- * @todo Implement rendering of laser shot
  */
 static void MAP_DrawBeam (const menuNode_t* node, const vec3_t start, const vec3_t end, const vec4_t color)
 {
@@ -1254,7 +1253,7 @@ static void MAP_DrawBeam (const menuNode_t* node, const vec3_t start, const vec3
 		return;
 
 	R_Color(color);
-	R_DrawLine (points, 2.0);
+	R_DrawLine(points, 2.0);
 	R_Color(NULL);
 }
 
