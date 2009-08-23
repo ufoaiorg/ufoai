@@ -2521,12 +2521,15 @@ mapdef africa_common
 	ufos
 	{
 		craft_ufo_scout
+		craft_ufo_fighter
 	}
 
 	terrains
 	{
 		grass
 		tropical
+		desert
+		mountain
 	}
 
 	cultures
@@ -2576,6 +2579,8 @@ mapdef africa
 	{
 		grass
 		tropical
+		desert
+		mountain
 	}
 
 	cultures
