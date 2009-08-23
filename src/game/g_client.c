@@ -3049,10 +3049,15 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 }
 
 /**
+ * @brief Checks whether the connection is valid or invalid and set some
+ * user info keys.
+ * @param[in,out] player The player that is trying to connect to the game
+ * @param[in,out] userinfo The userinfo data that is checked and changed
  * @sa G_ClientDisconnect
  * @sa CL_ConnectionlessPacket
  * @todo Check if the teamnum preference has already reached maxsoldiers
  * and reject connection if so
+ * @return @c false if the connection is refused, @c true otherwise
  */
 qboolean G_ClientConnect (player_t * player, char *userinfo)
 {

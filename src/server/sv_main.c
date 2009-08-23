@@ -314,12 +314,12 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	newcl->player->num = playernum;
 
 	/* get the game a chance to reject this connection or modify the userinfo */
-	if (!(ge->ClientConnect(player, userinfo))) {
-		if (*Info_ValueForKey(userinfo, "rejmsg"))
+	if (!ge->ClientConnect(player, userinfo)) {
+		if (Info_ValueForKey(userinfo, "rejmsg") != '\0')
 			NET_OOB_Printf(stream, "print\n%s\nConnection refused.\n", Info_ValueForKey(userinfo, "rejmsg"));
 		else
 			NET_OOB_Printf(stream, "print\nConnection refused.\n");
-		Com_Printf("Game rejected a connection.\n");
+		Com_Printf("Game rejected a connection from %s.\n", peername);
 		return;
 	}
 
@@ -577,15 +577,17 @@ void SV_NextMapcycle (void)
 void SV_MapcycleClear (void)
 {
 	int i;
-	mapcycle_t *mapcycle, *oldMapcycle;
+	mapcycle_t *mapcycle;
+
 	mapcycle = mapcycleList;
 	for (i = 0; i < mapcycleCount; i++) {
-		oldMapcycle = mapcycle;
+		mapcycle_t *oldMapcycle = mapcycle;
 		mapcycle = mapcycle->next;
 		Mem_Free(oldMapcycle->type);
 		Mem_Free(oldMapcycle->map);
 		Mem_Free(oldMapcycle);
 	}
+
 	/* reset the mapcycle data */
 	mapcycleList = NULL;
 	mapcycleCount = 0;
@@ -601,14 +603,14 @@ void SV_MapcycleAdd (const char* mapName, qboolean day, const char* gameType)
 	mapcycle_t *mapcycle;
 
 	if (!mapcycleList) {
-		mapcycleList = Mem_PoolAlloc(sizeof(mapcycle_t), sv_genericPool, 0);
+		mapcycleList = Mem_PoolAlloc(sizeof(*mapcycle), sv_genericPool, 0);
 		mapcycle = mapcycleList; /* first one */
 	} else {
 		/* go the the last entry */
 		mapcycle = mapcycleList;
 		while (mapcycle->next)
 			mapcycle = mapcycle->next;
-		mapcycle->next = Mem_PoolAlloc(sizeof(mapcycle_t), sv_genericPool, 0);
+		mapcycle->next = Mem_PoolAlloc(sizeof(*mapcycle), sv_genericPool, 0);
 		mapcycle = mapcycle->next;
 	}
 	mapcycle->map = Mem_PoolStrDup(mapName, sv_genericPool, 0);
