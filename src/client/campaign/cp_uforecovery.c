@@ -304,10 +304,13 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 	ufo->ufoTemplate = ufoTemplate;
 	ufo->disassembly = NULL;
 
-	ufo->status = SUFO_RECOVERED;
 	ufo->arrive = date;
-	if (date.day < ccs.date.day || (date.day == ccs.date.day && date.sec <= ccs.date.sec))
+	if (date.day < ccs.date.day || (date.day == ccs.date.day && date.sec <= ccs.date.sec)) {
+		ufo->status = SUFO_STORED;
 		RS_MarkCollected(ufo->ufoTemplate->tech);
+	} else {
+		ufo->status = SUFO_RECOVERED;
+	}
 
 	ccs.numStoredUFOs++;
 
