@@ -288,6 +288,8 @@ window production
 			*(abstractscrollbar)prodlist_scroll@fullsize <fullsize>
 			*(abstractscrollbar)prodlist_scroll@current <viewpos>
 			*(abstractscrollbar)prodlist_scroll@viewsize <viewsize>
+			*(textlist)prodlist_amount@viewpos = <viewpos>
+			*(textlist)prodlist_queued@viewpos = <viewpos>
 		}
 	}
 
@@ -310,6 +312,13 @@ window production
 			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_rclick <lineselected>;"
 		}
+		onViewChange	{
+			*(abstractscrollbar)prodlist_scroll@fullsize <fullsize>
+			*(abstractscrollbar)prodlist_scroll@current <viewpos>
+			*(abstractscrollbar)prodlist_scroll@viewsize <viewsize>
+			*prodlist@viewpos = <viewpos>
+			*(textlist)prodlist_queued@viewpos = <viewpos>
+		}
 	}
 
 	textlist prodlist_queued
@@ -329,6 +338,13 @@ window production
 			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
 			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_rclick <lineselected>;"
+		}
+		onViewChange	{
+			*(abstractscrollbar)prodlist_scroll@fullsize <fullsize>
+			*(abstractscrollbar)prodlist_scroll@current <viewpos>
+			*(abstractscrollbar)prodlist_scroll@viewsize <viewsize>
+			*prodlist_amount@viewpos = <viewpos>
+			*prodlist@viewpos = <viewpos>
 		}
 	}
 
