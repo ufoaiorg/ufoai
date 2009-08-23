@@ -468,6 +468,14 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 				B_UpdateStorageAndCapacity(base, slot->ammo, 1, qfalse, qfalse);
 			slot->ammo = NULL;
 		}
+	} else if (slot->nextItem) {
+		/* Remove nextItem */
+		if (base)
+			B_UpdateStorageAndCapacity(base, slot->nextItem, 1, qfalse, qfalse);
+		slot->nextItem = NULL;
+		/* also remove ammo if any */
+		if (slot->nextAmmo)
+			AII_RemoveItemFromSlot(base, slot, qtrue);
 	} else if (slot->item) {
 		if (base)
 			B_UpdateStorageAndCapacity(base, slot->item, 1, qfalse, qfalse);
@@ -485,14 +493,6 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 		}
 		/* also remove ammo */
 		AII_RemoveItemFromSlot(base, slot, qtrue);
-	} else if (slot->nextItem) {
-		/* Remove nextItem */
-		if (base)
-			B_UpdateStorageAndCapacity(base, slot->nextItem, 1, qfalse, qfalse);
-		slot->nextItem = NULL;
-		/* also remove ammo if any */
-		if (slot->nextAmmo)
-			AII_RemoveItemFromSlot(base, slot, qtrue);
 	}
 }
 
