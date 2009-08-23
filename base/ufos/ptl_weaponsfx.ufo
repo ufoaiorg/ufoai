@@ -335,16 +335,24 @@ particle rocket_particle
 // LASER EFFECTS
 // ==================
 
+
+particle laserFrizzledImpact
+{
+	// TODO:
+	init { kill }
+}
+
 particle laserFrizzledBeam 
 {
 	init
 	{
-		image  sfx/electricslime
-		blend  add
-		style  beam
-		thinkfade  sin
-		tps    6.0
-		size	"0 2.2"
+		image	sfx/lightningscroll
+		blend	one
+		style	beam
+		scale	"10.0 10.0 10.0"
+		tps	1.5
+		size	"30.0 30.0"
+		scroll_s -4
 	}
 	think { kill }
 }

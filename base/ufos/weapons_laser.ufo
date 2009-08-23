@@ -241,8 +241,8 @@ item laserrifle_ammo
 			name		"_Stun Shot"
 			skill		assault
 			projtl		laserFrizzledBeam
-			impact		laserImpactSmall
-			hitbody		laserImpactSmall
+			impact		laserFrizzledImpact
+			hitbody		laserFrizzledImpact
 			firesnd		weapons/laser
 			speed		0
 			spread		"0.8 0.8"
