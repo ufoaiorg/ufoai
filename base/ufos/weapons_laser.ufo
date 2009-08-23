@@ -240,7 +240,7 @@ item laserrifle_ammo
 		{
 			name		"_Stun Shot"
 			skill		assault
-			projtl		laserPulseWhite
+			projtl		laserFrizzledBeam
 			impact		laserImpactSmall
 			hitbody		laserImpactSmall
 			firesnd		weapons/laser

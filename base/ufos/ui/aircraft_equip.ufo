@@ -141,7 +141,7 @@ window aircraft_equip extends iaircraft
 	}
 
 	todo disable_items {
-		pos		"40 540"
+		pos		"20 540"
 		string	"Disable items we can't apply on the current slot"
 	}
 
