@@ -32,11 +32,11 @@ window aircraft_equip extends iaircraft
 
 	func airequip_zone1
 	{
-		cmd "airequip_zone_select 1; airequip_updatemenu;"
+		cmd "airequip_zone_select 1;"
 	}
 	func airequip_zone2
 	{
-		cmd "airequip_zone_select 2; airequip_updatemenu 6;"
+		cmd "airequip_zone_select 2;"
 	}
 
 	// ==================
@@ -111,6 +111,50 @@ window aircraft_equip extends iaircraft
 		textalign	cc
 
 	}
+	
+	//
+	//	Status of selected item
+	//
+
+	string warning
+	{
+		string		*cvar:mn_aircraft_item_warning
+		image		ui/button_green_small
+		pos			"344 710"
+		size		"200 30"
+		padding		0
+		textalign	cc
+		font		f_small
+		color		"1 0 0 1"
+		onClick		{ cmd "mn_close popup;" }
+		longlines	wrap
+	}
+
+	button button_add
+	{
+		string		"_Equip this item"
+		image		ui/button_green_small
+		pos			"343 712"
+		size		"200 25"
+		texl		"128 0"
+		onClick		{ cmd "airequip_add_item 1;" }
+		color		"0 0.5 0 1"
+	}
+	
+	button button_remove
+	{
+		string		"_Remove this item"
+		image		ui/button_green_small
+		pos			"343 712"
+		size		"200 25"
+		texl		"128 0"
+		onClick		{ cmd "airequip_remove_item 1;" }
+		color		"0 0.5 0 1"
+	}
+
+	//
+	//	Item list
+	//
 
 	selectbox craftitemtypeselector
 	{
@@ -140,22 +184,17 @@ window aircraft_equip extends iaircraft
 		}
 	}
 
-	todo disable_items {
-		pos		"20 540"
-		string	"Disable items we can't apply on the current slot"
-	}
-
-	textlist airequip_list
+	optionlist airequip_list
 	{
 		dataid		TEXT_LIST
+		cvar		*cvar:mn_aircraft_item_selected
 		pos			"43 529"
 		size		"215 132"
 		lineheight	"20"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		onClick		{
-			*(textlist)airequip_list_amount@lineselected = <lineselected>
-			cmd "airequip_list_click <lineselected>"
+		onChange		{
+			cmd "airequip_list_click <cvar:mn_aircraft_item_selected>"
 		}
 		onViewChange {
 			*(abstractscrollbar)airequip_list_scroll@fullsize = <fullsize>
@@ -168,16 +207,13 @@ window aircraft_equip extends iaircraft
 	textlist airequip_list_amount
 	{
 		dataid		TEXT_LIST2
+		ghost		true
 		pos			"258 529"
 		size		"25 132"
 		textalign	cr
 		lineheight	"20"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		onClick		{
-			*(textlist)airequip_list@lineselected = <lineselected>
-			cmd "airequip_list_click <lineselected>"
-		}
 		onViewChange {
 			*(abstractscrollbar)airequip_list_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)airequip_list_scroll@viewsize = <viewsize>
@@ -198,7 +234,7 @@ window aircraft_equip extends iaircraft
 	}
 
 	confunc aircraft_equip_unselectlist {
-		*airequip_list@lineselected = -1
+		*cvar:mn_aircraft_item_selected = -1
 		*airequip_list_amount@lineselected = -1
 	}
 
@@ -206,6 +242,13 @@ window aircraft_equip extends iaircraft
 	// Zones
 	// ==================
 
+	todo add_hilightselection
+	{
+		string "Add hilight selection for zone 1 and 2. It must me a XOR between zone1, zone2 and itemList"
+		pos			"592 500"
+	}
+
+/*
 	custombutton airequip_button_add1
 	{
 		tooltip		"_Add selected item"
@@ -225,7 +268,7 @@ window aircraft_equip extends iaircraft
 		size		"37 32"
 		texl		"128 0"
 		icon		minus
-		onClick		{ cmd "airequip_del_item 1;" }
+		onClick		{ cmd "airequip_remove_item 1;" }
 	}
 
 	custombutton airequip_button_add2
@@ -247,9 +290,9 @@ window aircraft_equip extends iaircraft
 		texl		"128 0"
 		size		"37 32"
 		icon		minus
-		onClick		{ cmd "airequip_del_item 2;" }
+		onClick		{ cmd "airequip_remove_item 2;" }
 	}
-
+*/
 	pic airequip_zone_select1
 	{
 		tooltip	"_Select this zone"
@@ -270,7 +313,7 @@ window aircraft_equip extends iaircraft
 		lineheight	"16"
 		dataid		TEXT_AIREQUIP_1
 		rows		"3"
-		onClick		{ call airequip_zone1 }
+		ghost		true
 	}
 
 	pic airequip_zone_select2
@@ -293,7 +336,7 @@ window aircraft_equip extends iaircraft
 		size		"306 35"
 		lineheight	"16"
 		rows		"2"
-		onClick		{ call airequip_zone2 }
+		ghost		true
 	}
 
 	string airequip_header1
@@ -491,8 +534,8 @@ window aircraft_equip extends iaircraft
 		*airequip_header2@invis = true
 		*airequip_text_zone2@invis = true
 		*airequip_zone_select2@invis = true
-		*airequip_button_remove2@invis = true
-		*airequip_button_add2@invis = true
+//		*airequip_button_remove2@invis = true
+//		*airequip_button_add2@invis = true
 		*equipment_background@texh = "432 160"
 		*equipment_background@size = "432 160"
 	}
@@ -502,10 +545,59 @@ window aircraft_equip extends iaircraft
 		*airequip_header2@invis = false
 		*airequip_text_zone2@invis = false
 		*airequip_zone_select2@invis = false
-		*airequip_button_remove2@invis = false
-		*airequip_button_add2@invis = false
+//		*airequip_button_remove2@invis = false
+//		*airequip_button_add2@invis = false
 		*equipment_background@texh = "432 293"
 		*equipment_background@size = "432 293"
+	}
+
+	confunc airequip_installable_item
+	{
+		// display the "add" button
+		*warning@invis = true
+		*button_add@invis = false
+		*button_remove@invis = true
+	}
+
+	confunc airequip_installed_item
+	{
+		// display the "remove" button
+		*warning@invis = true
+		*button_add@invis = true
+		*button_remove@invis = false
+	}
+
+	confunc airequip_noinstallable_item
+	{
+		// display warning
+		*warning@invis = false
+		*button_add@invis = true
+		*button_remove@invis = true
+	}
+
+	confunc airequip_no_item
+	{
+		// display warning
+		*warning@invis = true
+		*button_add@invis = true
+		*button_remove@invis = true
+	}
+
+	confunc airequip_display_slot
+	{
+		*cvar:status = <2>
+		if ( *cvar:status == 2 ) {
+			*airequip_slot<1>@invis = false
+			*airequip_slot<1>@texl = "64 0"
+			*airequip_slot<1>@texh = "128 64"
+		} elif ( *cvar:status == 1 ) {
+			*airequip_slot<1>@invis = false
+			*airequip_slot<1>@texl = "0 0"
+			*airequip_slot<1>@texh = "64 64"
+		} else {
+			*airequip_slot<1>@invis = true
+		}
+		delete *cvar:status
 	}
 
 	// ==================
@@ -534,12 +626,18 @@ window aircraft_equip extends iaircraft
 		call airequip_zone1
 		*cvar:mn_itemname = ""
 		*cvar:mn_upmodel_top = ""
+		*cvar:mn_aircraft_item_selected = -1
 	}
 	func onClose
 	{
-		cmd "del mn_aircraft_item_model_slot0;del mn_aircraft_item_model_slot1;"
-		cmd "del mn_aircraft_item_model_slot2;del mn_aircraft_item_model_slot3;"
-		cmd "del mn_aircraft_item_model_slot4;del mn_aircraft_item_model_slot5;"
-		cmd "del mn_aircraft_item_model_slot6;del mn_aircraft_item_model_slot7;"
+		delete *cvar:mn_aircraft_item_model_slot0
+		delete *cvar:mn_aircraft_item_model_slot1
+		delete *cvar:mn_aircraft_item_model_slot2
+		delete *cvar:mn_aircraft_item_model_slot3
+		delete *cvar:mn_aircraft_item_model_slot4
+		delete *cvar:mn_aircraft_item_model_slot5
+		delete *cvar:mn_aircraft_item_model_slot6
+		delete *cvar:mn_aircraft_item_model_slot7
+		delete *cvar:mn_aircraft_item_selected
 	}
 }

@@ -101,6 +101,26 @@ qboolean AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t
 	if (!item)
 		return qfalse;
 
+	if (item->craftitem.type >= AC_ITEM_AMMO) {
+		const objDef_t *weapon = slot->item;
+		int k;
+		if (slot->nextItem != NULL)
+			weapon = slot->nextItem;
+
+		if (weapon == NULL)
+			return qfalse;
+
+		/* Is the ammo is usable with the slot */
+		for (k = 0; k < weapon->numAmmos; k++) {
+			const objDef_t *usable = weapon->ammos[k];
+			if (usable && item->idx == usable->idx)
+				break;
+		}
+		if (k >= weapon->numAmmos)
+			return qfalse;
+	}
+
+	/** @todo maybe that code dont work, aircraft slot type can't be an AMMO */
 	if (slot->type >= AC_ITEM_AMMO) {
 		/** @todo This only works for ammo that is useable in exactly one weapon
 		 * check the weap_idx array and not only the first value */

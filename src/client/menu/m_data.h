@@ -191,6 +191,7 @@ int MN_OptionUpdateCache (menuOption_t* option);
 menuOption_t* MN_InitOptionIteratorAtIndex(int index, menuOption_t* option, menuOptionIterator_t* iterator);
 menuOption_t* MN_OptionIteratorNextOption(menuOptionIterator_t* iterator);
 void MN_UpdateInvisOptions(menuOption_t *option, const struct linkedList_s *stringList);
+void MN_OptionLinkArray(menuOption_t* array, int count);
 
 /* line strip */
 void MN_RegisterLineStrip(int dataId, struct lineStrip_s *text);

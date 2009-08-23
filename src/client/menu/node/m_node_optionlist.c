@@ -135,7 +135,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 		/* text color */
 		if (!strcmp(option->value, ref)) {
 			textColor = node->selectedColor;
-		} else if (node->disabled) {
+		} else if (node->disabled || option->disabled) {
 			textColor = disabledColor;
 		} else {
 			textColor = node->color;

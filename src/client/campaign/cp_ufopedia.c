@@ -285,6 +285,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 		Cvar_Set("mn_item", "");
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_upmodel_top", "");
+		MN_ResetData(TEXT_UFOPEDIA_METADATA);
 		return;
 	}
 
