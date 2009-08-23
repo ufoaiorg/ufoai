@@ -193,7 +193,8 @@ tech rs_baselaser
 tech rs_baselaser_ammo
 {
 	type		tech
-	name		"_D-F Tank"
+	/* this ammo is virtual, shouldn't be shown anywhere */
+	name		"D-F Tank"
 	provides	baselaser_ammo
 	time		0
 	producetime	-1
@@ -4296,19 +4297,11 @@ tech rs_base_AA51_launcher
 tech rs_base_ammo_AA51
 {
 	type		tech
-	up_chapter	equipment
-	name		"_AA51 Cicada SAM"
-	// pre_description	"_b_missile_pre_txt"
-	description {
-		default "_b_missile_txt"
-	}
-
+	/* this ammo is virtual shouldn't be shown anywhere */
+	name		"AA51 Cicada SAM"
 	provides	base_ammo_AA51
 	time		0
 	producetime	-1
-
-	// TODO: Add a model for this
-	// image	"techs/base_ammo_AA51"
 }
 
 //========================
@@ -4526,7 +4519,8 @@ tech rs_craft_weapon_alc
 tech rs_craft_ammo_alc
 {
 	type		tech
-	name		"_D-F Tank"
+	/* this ammo is virtual, shouldn't be shown anywhere */
+	name		"D-F Tank"
 	provides	craft_ammo_alc
 	time		0
 	producetime	-1

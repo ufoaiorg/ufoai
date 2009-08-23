@@ -668,7 +668,8 @@ craftitem craft_weapon_alc
 
 craftitem craft_ammo_alc
 {
-	name			"_D-F Tank"
+	/* this ammo is virtual shouldn't be shown anywhere */
+	name			"D-F Tank"
 	crafttype		ammo
 	craftweapon		craft_weapon_alc
 	notonmarket		true
@@ -908,7 +909,8 @@ craftitem base_AA51_launcher
 
 craftitem base_ammo_AA51
 {
-	name			"_AA51 Cicada SAM"
+	/* this ammo is virtual shouldn't be shown anywhere */
+	name			"AA51 Cicada SAM"
 	crafttype		base_ammo_missile
 	craftweapon		base_AA51_launcher
 	is_dummy		true
@@ -939,7 +941,8 @@ craftitem baselaser
 
 craftitem baselaser_ammo
 {
-	name			"_D-F Tank"
+	/* this ammo is virtual shouldn't be shown anywhere */
+	name			"D-F Tank"
 	crafttype		base_ammo_laser
 	craftweapon		baselaser
 	is_dummy		true
