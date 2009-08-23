@@ -306,6 +306,7 @@ static void SV_EndEvents (void)
 
 /**
  * @sa gi.AddEvent
+ * @param[in] mask The player bitmask to send the events to. Use @c PM_ALL to send to every connected player.
  */
 static void SV_AddEvent (unsigned int mask, int eType)
 {
