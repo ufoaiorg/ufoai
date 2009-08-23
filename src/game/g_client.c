@@ -38,8 +38,7 @@ static int scoreMissionNum = 0;
  */
 qboolean G_IsLivingActor (const edict_t *ent)
 {
-	assert(ent);
-	return ((ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !G_IsDead(ent));
+	return G_IsActor(ent) && !G_IsDead(ent);
 }
 
 /**
@@ -151,7 +150,7 @@ static void G_SendPlayerStats (player_t * player)
 	int i;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == player->pers.team)
+		if (ent->inuse && G_IsActor(ent) && ent->team == player->pers.team)
 			G_SendStats(ent);
 }
 

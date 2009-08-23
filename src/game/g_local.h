@@ -284,16 +284,18 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 void G_FlushSteps(void);
 qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door);
 qboolean G_ActionCheck(player_t *player, edict_t *ent, int TU, qboolean quiet);
-void G_SendStats(edict_t *ent);
+void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(pos3_t pos);
 int G_CheckVisTeam(int team, edict_t *check, qboolean perish, edict_t *ent);
-edict_t *G_GetFloorItems(edict_t *ent);
+edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
 
 #define G_IsStunned(ent)	(((ent)->state & STATE_STUN) & ~STATE_DEAD)
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
 #define G_IsDead(ent)		(((ent)->state & STATE_DEAD))
+#define G_IsActor(ent)		((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
 
-qboolean G_IsLivingActor(const edict_t *ent);
+
+qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_ForceEndRound(void);
 void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
 int G_ClientAction(player_t * player);
