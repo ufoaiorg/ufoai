@@ -100,20 +100,26 @@ typedef struct mTile_s {
 } mTile_t;
 
 /**
- * @brief Stores the parsed data of an assembly definition.  (See *.ump files)
- * @todo Please have a look if the comments are correct.
+ * @brief Stores the parsed data of an assembly definition.
+ * See *.ump files
  */
 typedef struct mAssembly_s {
 	char id[MAX_VAR];		/**< The id (string) of the assembly as defined in the ump file (next to "assembly"). */
-	char title[MAX_VAR];		/**< The full title fo this assembly. */
+	char title[MAX_VAR];		/**< The full title for this assembly. This string should be marked as translatable (_). */
 	byte min[MAX_TILETYPES];	/**< Minimum tile number for each used tile-type. */
 	byte max[MAX_TILETYPES];	/**< Maximum tile number for each used tile-type. */
 	byte fT[MAX_FIXEDTILES];	/**< Index of used (fix) tile in mTile[] array */
 	byte fX[MAX_FIXEDTILES];	/**< x position of the used  (fix) tile in fT */
 	byte fY[MAX_FIXEDTILES];	/**< y position of the used  (fix) tile in fT */
 	int numFixed;	/**< Number of fixed tiles. Counts entries of fX, fY and fT */
-	int w, h;	/**< The width and height of the assembly. (size "<w> <h>") */
-	int dx, dy;	/**< The grid steps of the assembly. (grid "<dx> <dx>") */
+	int w, h;	/**< The width and height of the assembly. (size "<w> <h>"). This is the maximum size of
+				 * whole map that is built from all the tiles in the assembly. So if there is a single tile
+				 * that is used in the assembly and that has a greater size than the one given in the assembly
+				 * then this must fail. */
+	int dx, dy;	/**< The grid steps of the assembly. (grid "<dx> <dx>")
+				 * This can speed up the assembly of a map if you e.g. only have tiles of the size 2x2 you
+				 * can greatly improve the performance if you also set the grid parameter to "2 2" - this will
+				 * only check every 2 random map units for a suitable maptile. */
 } mAssembly_t;
 
 /**
@@ -146,20 +152,21 @@ static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< A list of parsed assembl
 
 static int numAssemblies;	 /**< The number of assemblies in mAssembly. */
 
-static mPlaced_t mPlaced[MAX_MAPTILES];	 /**< @todo Holds all tiles that have been placed on the current map. */
+static mPlaced_t mPlaced[MAX_MAPTILES];	 /**< Holds all tiles that have been placed on the current map. */
 static int numPlaced;				/**< The number of tiles in mPlaced. */
 
 static short prList[32 * 32];			/**< used to shuffle the map positions for assembly */
 
 static mAssembly_t *mAsm;	/**< the selected assembly */
 static int mapSize;		/**< the size of the current map */
-static int mapW, mapH;		/**< the width and heigth of the current map */
+static int mapW, mapH;		/**< the width and height of the current map */
 
 /**
- * @param[in] n
- * @param[out] list
+ * @brief Fills a list with random values between @c 0 and @c n
+ * @param[in] n Size of the list
+ * @param[out] list The list to fill with random values
  */
-static void RandomList (int n, short *list)
+static void RandomList (const int n, short *list)
 {
 	short i;
 
