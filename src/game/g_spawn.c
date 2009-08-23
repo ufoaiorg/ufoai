@@ -999,17 +999,17 @@ static void SP_worldspawn (edict_t *ent)
 		Q_strncpyz(level.nextmap, st.nextmap, sizeof(level.nextmap));
 	level.randomSpawn = st.randomSpawn;
 
-	gi.ConfigString(CS_MAXCLIENTS, va("%i", sv_maxclients->integer));
+	gi.ConfigString(CS_MAXCLIENTS, "%i", sv_maxclients->integer);
 
 	/* only used in multi player */
 	if (sv_maxclients->integer >= 2) {
-		gi.ConfigString(CS_MAXSOLDIERSPERTEAM, va("%i", sv_maxsoldiersperteam->integer));
-		gi.ConfigString(CS_MAXSOLDIERSPERPLAYER, va("%i", sv_maxsoldiersperplayer->integer));
-		gi.ConfigString(CS_ENABLEMORALE, va("%i", sv_enablemorale->integer));
+		gi.ConfigString(CS_MAXSOLDIERSPERTEAM, "%i", sv_maxsoldiersperteam->integer);
+		gi.ConfigString(CS_MAXSOLDIERSPERPLAYER, "%i", sv_maxsoldiersperplayer->integer);
+		gi.ConfigString(CS_ENABLEMORALE, "%i", sv_enablemorale->integer);
 		if (gi.csi->currentMD) {
-			gi.ConfigString(CS_MAXTEAMS, va("%i", gi.csi->currentMD->teams));
+			gi.ConfigString(CS_MAXTEAMS, "%i", gi.csi->currentMD->teams);
 			gi.Cvar_Set("sv_maxteams", va("%i", gi.csi->currentMD->teams));
 		} else
-			gi.ConfigString(CS_MAXTEAMS, sv_maxteams->string);
+			gi.ConfigString(CS_MAXTEAMS, "%s", sv_maxteams->string);
 	}
 }

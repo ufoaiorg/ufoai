@@ -125,7 +125,7 @@ typedef struct {
 	/** configstrings hold all the index strings.
 	 * All of the current configstrings are sent to clients when
 	 * they connect, and changes are sent to all connected clients. */
-	void (IMPORT *ConfigString) (int num, const char *string);
+	void (IMPORT *ConfigString) (int num, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
 
 	/** @note The error message should not have a newline - it's added inside of this function */
 	void (IMPORT *error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));

@@ -634,7 +634,7 @@ qboolean G_RunFrame (void)
 	if (!G_GameRunning()) {
 		if (sv_maxteams->modified) {
 			/* inform the client */
-			gi.ConfigString(CS_MAXTEAMS, va("%i", sv_maxteams->integer));
+			gi.ConfigString(CS_MAXTEAMS, "%i", sv_maxteams->integer);
 			sv_maxteams->modified = qfalse;
 		}
 	}

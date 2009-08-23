@@ -112,13 +112,17 @@ static void SV_SetModel (edict_t * ent, const char *name)
 /**
  * @sa CL_ParseConfigString
  */
-static void SV_Configstring (int index, const char *val)
+static void SV_Configstring (int index, const char *fmt, ...)
 {
+	char val[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+	va_list argptr;
+
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
 		Com_Error(ERR_DROP, "configstring: bad index %i", index);
 
-	if (!val)
-		val = "";
+	va_start(argptr, fmt);
+	Q_vsnprintf(val, sizeof(val), fmt, argptr);
+	va_end(argptr);
 
 	/* change the string in sv
 	 * there may be overflows in i==CS_TILES - but thats ok

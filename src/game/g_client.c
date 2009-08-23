@@ -2926,7 +2926,7 @@ void G_ClientBegin (player_t* player)
 	player->began = qtrue;
 
 	level.numplayers++;
-	gi.ConfigString(CS_PLAYERCOUNT, va("%i", level.numplayers));
+	gi.ConfigString(CS_PLAYERCOUNT, "%i", level.numplayers);
 
 	/* spawn camera (starts client rendering) */
 	gi.AddEvent(G_PlayerToPM(player), EV_START | EVENT_INSTANTLY);
@@ -2936,7 +2936,7 @@ void G_ClientBegin (player_t* player)
 	gi.EndEvents();
 
 	/* set the net name */
-	gi.ConfigString(CS_PLAYERNAMES + player->num, player->pers.netname);
+	gi.ConfigString(CS_PLAYERNAMES + player->num, "%s", player->pers.netname);
 
 	/* inform all clients */
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has joined team %i\n", player->pers.netname, player->pers.team);
@@ -3045,7 +3045,7 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 	player->autostand = atoi(s);
 
 	/* send the updated config string */
-	gi.ConfigString(CS_PLAYERNAMES + player->num, player->pers.netname);
+	gi.ConfigString(CS_PLAYERNAMES + player->num, "%s", player->pers.netname);
 }
 
 /**
@@ -3093,7 +3093,7 @@ void G_ClientDisconnect (player_t * player)
 	/* only if the player already sent his began */
 	if (player->began) {
 		level.numplayers--;
-		gi.ConfigString(CS_PLAYERCOUNT, va("%i", level.numplayers));
+		gi.ConfigString(CS_PLAYERCOUNT, "%i", level.numplayers);
 
 		if (level.activeTeam == player->pers.team)
 			G_ClientEndRound(player, NOISY);
