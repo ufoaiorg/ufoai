@@ -257,15 +257,15 @@ static void PR_UpdateProductionList (const base_t* base)
 
 			if (!ufo)
 				continue;
-			/* The UFO is being disassembled aready */
-			if (ufo->disassembly)
-				continue;
+			/* UFO is being transported */
+			if (ufo->status != SUFO_STORED)
+			 	continue;
 			/* UFO not researched */
 			if (!RS_IsResearched_ptr(ufo->ufoTemplate->tech))
 				continue;
-			/* UFO is being transported */
-			if (ufo->arrive.day > ccs.date.day || (ufo->arrive.day == ccs.date.day && ufo->arrive.sec > ccs.date.sec))
-			 	continue;
+			/* The UFO is being disassembled aready */
+			if (ufo->disassembly)
+				continue;
 
 			LIST_AddPointer(&productionItemList, ufo);
 			LIST_AddString(&productionList, va(_("%s (at %s)"), UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->installation->name));

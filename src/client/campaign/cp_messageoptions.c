@@ -53,6 +53,7 @@ const char *nt_strings[NT_NUM_NOTIFYTYPE] = {
 	N_("transfer_completed_success"),
 	N_("transfer_lost"),
 	N_("transfer_aliens_defered"),
+	N_("transfer_uforecovery_finished"),
 	N_("ufo_spotted"),
 	N_("ufo_signal_lost"),
 	N_("ufo_attacking"),

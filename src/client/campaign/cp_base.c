@@ -2815,8 +2815,11 @@ static void B_PostLoadMoveUFOsToUFOYards (void)
 			for (;0 < base->storage.num[od->idx];) {
 				installation_t *UFOYard = INS_GetFirstUFOYard(qtrue);
 
-				if (UFOYard)
-					US_StoreUFO(AIR_GetAircraft(od->id), UFOYard, ccs.date);
+				if (UFOYard) {
+					storedUFO_t * ufo = US_StoreUFO(AIR_GetAircraft(od->id), UFOYard, ccs.date);
+					if (ufo)
+						ufo->status = SUFO_STORED;
+				}
 				base->storage.num[od->idx]--;
 			}
 		}

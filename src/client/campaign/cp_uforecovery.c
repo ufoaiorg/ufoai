@@ -34,6 +34,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_uforecovery_callbacks.h"
 #include "cp_aircraft.h"
 
+/**
+ * @brief status names for savegames
+ * @SA storedUFOStatus_t
+ */
+const char *ufostatus_strings[MAX_SUFO_STATUS] = {
+	"recovered",
+	"stored",
+	"transfered"
+};
+CASSERT(lengthof(ufostatus_strings) == MAX_SUFO_STATUS);
+
 /*==================================
 Campaign onwin functions
 ==================================*/
@@ -206,12 +217,18 @@ void UR_ProcessActive (void)
 		assert(ufo->ufoTemplate);
 		assert(ufo->ufoTemplate->tech);
 
-		if (ufo->ufoTemplate->tech->statusCollected)
+		if (ufo->status == SUFO_STORED)
 			continue;
 		if (ufo->arrive.day > ccs.date.day || (ufo->arrive.day == ccs.date.day && ufo->arrive.sec > ccs.date.sec))
 			continue;
 
-		RS_MarkCollected(ufo->ufoTemplate->tech);
+		ufo->status = SUFO_STORED;
+
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s was transfered to %s."), UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->installation->name);
+		MSO_CheckAddNewMessage(NT_TRANSFER_UFORECOVERY_FINISHED, _("UFO Recovered"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+		
+		if (!ufo->ufoTemplate->tech->statusCollected)
+			RS_MarkCollected(ufo->ufoTemplate->tech);
 	}
 }
 
@@ -287,6 +304,7 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 	ufo->ufoTemplate = ufoTemplate;
 	ufo->disassembly = NULL;
 
+	ufo->status = SUFO_RECOVERED;
 	ufo->arrive = date;
 	if (date.day < ccs.date.day || (date.day == ccs.date.day && date.sec <= ccs.date.sec))
 		RS_MarkCollected(ufo->ufoTemplate->tech);
@@ -368,8 +386,7 @@ int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *insta
 			continue;
 		if (installation && ufo->installation != installation)
 			continue;
-		if (ufo->arrive.day > ccs.date.day
-		 || (ufo->arrive.day == ccs.date.day && ufo->arrive.sec > ccs.date.sec))
+		if (ufo->status != SUFO_STORED)
 		 	continue;
 
 	 	count++;
@@ -428,8 +445,7 @@ storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t
 		if (ufoTemplate && ufo->ufoTemplate != ufoTemplate)
 			continue;
 
-		if (ufo->arrive.day > ccs.date.day
-		 || (ufo->arrive.day == ccs.date.day && ufo->arrive.sec > ccs.date.sec))
+		if (ufo->status != SUFO_STORED)
 		 	continue;
 
 		assert(ufo->installation);
@@ -444,6 +460,21 @@ storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t
 	return closestUFO;
 }
 
+/**
+ * @brief returns ufostatus from stringid
+ * @param[in] id identifier string to look for
+ * @returns storedUFOStatus_t Stored UFO status
+ */
+storedUFOStatus_t US_UFOStatusByID (const char *id)
+{
+	int i;
+
+	for (i = 0; i < MAX_SUFO_STATUS; i++) {
+		if (!strcmp(id, ufostatus_strings[i]))
+			return i;
+	}
+	return MAX_SUFO_STATUS;
+}
 
 /**
  * @brief Save callback for savegames in XML Format
@@ -461,6 +492,7 @@ qboolean US_SaveXML (mxml_node_t *p)
 		mxml_AddString(snode, "ufoid", ufo->id);
 		mxml_AddInt(snode, "day", ufo->arrive.day);
 		mxml_AddInt(snode, "sec", ufo->arrive.sec);
+		mxml_AddString(snode, "status", ufostatus_strings[ufo->status]);
 
 		if (ufo->installation)
 			mxml_AddInt(snode, "installationidx", ufo->installation->idx);
@@ -482,10 +514,12 @@ qboolean US_LoadXML (mxml_node_t *p)
 
 	for (i = 0, snode = mxml_GetNode(node, "ufo"); i < MAX_STOREDUFOS && snode;
 			i++, snode = mxml_GetNextNode(snode, node, "ufo")) {
+
 		aircraft_t *ufoTemplate = AIR_GetAircraft(mxml_GetString(snode, "ufoid"));
-		int instIDX = mxml_GetInt(snode, "installationidx", MAX_INSTALLATIONS);
-		installation_t *inst = (instIDX == MAX_INSTALLATIONS) ? NULL : INS_GetFoundedInstallationByIDX(instIDX);
+		installation_t *inst = INS_GetFoundedInstallationByIDX(mxml_GetInt(snode, "installationidx", MAX_INSTALLATIONS));
+		storedUFOStatus_t status = US_UFOStatusByID(mxml_GetString(snode, "status"));
 		date_t arrive;
+		storedUFO_t *ufo;
 
 		arrive.day = mxml_GetInt(snode, "day", 0);
 		arrive.sec = mxml_GetInt(snode, "sec", 0);
@@ -496,8 +530,19 @@ qboolean US_LoadXML (mxml_node_t *p)
 		if (!inst)
 			return qfalse;
 
-		if (!US_StoreUFO(ufoTemplate, inst, arrive))
-			Com_Printf("Cannot store ufo %s at installation idx=%i.\n", ufoTemplate->id, instIDX);
+		ufo = US_StoreUFO(ufoTemplate, inst, arrive);
+		if (!ufo)
+			Com_Printf("Cannot store ufo %s at installation idx=%i.\n", ufoTemplate->id, inst->idx);
+		else {
+			if (status != MAX_SUFO_STATUS) {
+				ufo->status = status;
+			} else {
+				/* falback code for compatibility.
+				 * @todo remove this before release */
+				if (arrive.day < ccs.date.day || (arrive.day == ccs.date.day && arrive.sec < ccs.date.sec))
+					ufo->status = SUFO_STORED;
+			}
+		}
 	}
 	return qtrue;
 }

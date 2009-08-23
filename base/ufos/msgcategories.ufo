@@ -45,6 +45,7 @@ msgcategory "_transfer"
 	transfer_completed_success
 	transfer_lost
 	transfer_aliens_defered
+	transfer_uforecovery_finished
 }
 
 msgcategory "_ufo_activity"

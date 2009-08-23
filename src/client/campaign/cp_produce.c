@@ -623,6 +623,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 						pq->items[j + k].percentDone = (k) ? 0.0 : pq->items[j + k].percentDone;
 						pq->items[j + k].production = qfalse;
 						ufo->disassembly = &(pq->items[j + k]);
+						ufo->status = SUFO_STORED;
 					} else {
 						Com_Printf("PR_Load: Could not add ufo to the UFO Yards, disassembly dropped (baseidx=%i, production idx=%i).\n", i, j);
 						j--;

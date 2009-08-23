@@ -43,6 +43,18 @@ typedef struct ufoRecoveries_s {
 /* time the recovery takes in days */
 #define RECOVERY_DELAY 2.0f
 
+/**
+ * @brief different statuses for a stored UFO
+ * @note If you change/reorder this change ufostatus_strings (cp_uforecovery.c) as well
+ */
+typedef enum {
+	SUFO_RECOVERED,				/**< UFO just got recovered, it's being transported to the UFO Yard */
+	SUFO_STORED,				/**< UFO is in UFO Yard, nothing special */
+	SUFO_TRANSFER,				/**< UFO is being transfered to another UFO Yard */
+
+	MAX_SUFO_STATUS
+} storedUFOStatus_t;
+
 /** @brief Structure for stored UFOs */
 typedef struct storedUFO_s {
 	int idx;
@@ -50,6 +62,7 @@ typedef struct storedUFO_s {
 	components_t *comp;
 	const aircraft_t *ufoTemplate;
 
+	storedUFOStatus_t status;
 	/* arrival date (recovery/transfer) */
 	date_t arrive;
 
@@ -71,4 +84,5 @@ void US_RemoveStoredUFO(storedUFO_t *ufo);
 int US_UFOsInStorage(const aircraft_t *ufoTemplate, const installation_t *installation);
 void US_RemoveUFOsExceedingCapacity(installation_t *installation);
 
+storedUFOStatus_t US_UFOStatusByID(const char *id);
 #endif

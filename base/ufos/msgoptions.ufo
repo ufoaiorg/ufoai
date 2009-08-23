@@ -53,6 +53,8 @@ msgoptions default
 	transfer_lost pause
 	transfer_aliens_defered notify
 	transfer_aliens_defered sound
+	transfer_uforecovery_finished notify
+	transfer_uforecovery_finished sound
 	ufo_spotted notify
 	ufo_spotted sound
 	ufo_spotted pause
