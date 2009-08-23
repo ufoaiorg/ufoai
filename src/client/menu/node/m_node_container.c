@@ -192,7 +192,7 @@ static void MN_ContainerItemIteratorInit (containerItemIterator_t *iterator, con
 				iterator->groupSteps[groupID++] = CII_AMMOONLY | CII_NOTAVAILABLEONLY;
 		}
 	} else {
-		const int filter = (EXTRADATA(node).displayUnavailableItem)?0:CII_AVAILABLEONLY;
+		const int filter = (EXTRADATA(node).displayUnavailableItem) ? 0 : CII_AVAILABLEONLY;
 		if (EXTRADATA(node).displayWeapon)
 			iterator->groupSteps[groupID++] = CII_WEAPONONLY | filter;
 		if (EXTRADATA(node).displayAmmo)
@@ -265,7 +265,7 @@ void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 			continue;
 
 		while (ed->num[i]) {
-			item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
+			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
 			if (!Com_AddToInventory(inv, item, &csi.ids[csi.idEquip], NONE, NONE, 1))
 				break; /* no space left in menu */
 			ed->num[item.t->idx]--;
@@ -388,11 +388,11 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 /**
  * @brief Generate tooltip text for an item.
  * @param[in] item The item we want to generate the tooltip text for.
- * @param[in,out] tooltiptext Pointer to a string the information should be written into.
- * @param[in] string_maxlength Max. string size of tooltiptext.
+ * @param[in,out] tooltipText Pointer to a string the information should be written into.
+ * @param[in] stringMaxLength Max. string size of @c tooltipText.
  * @return Number of lines
  */
-static void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
+static void MN_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
 {
 	int i;
 	objDef_t *weapon;
@@ -400,9 +400,9 @@ static void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_max
 	assert(item.t);
 
 	if (item.amount > 1)
-		Com_sprintf(tooltiptext, string_maxlength, "%i x %s\n", item.amount, _(item.t->name));
+		Com_sprintf(tooltipText, stringMaxLength, "%i x %s\n", item.amount, _(item.t->name));
 	else
-		Com_sprintf(tooltiptext, string_maxlength, "%s\n", _(item.t->name));
+		Com_sprintf(tooltipText, stringMaxLength, "%s\n", _(item.t->name));
 
 	/* Only display further info if item.t is researched */
 	if (GAME_ItemIsUseable(item.t)) {
@@ -411,22 +411,22 @@ static void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_max
 			if (item.t == item.m) {
 				/* Item has no ammo but might have shot-count */
 				if (item.a) {
-					Q_strcat(tooltiptext, va(_("Ammo: %i\n"), item.a), string_maxlength);
+					Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.a), stringMaxLength);
 				}
 			} else if (item.m) {
 				/* Search for used ammo and display name + ammo count */
-				Q_strcat(tooltiptext, va(_("%s loaded\n"), _(item.m->name)), string_maxlength);
-				Q_strcat(tooltiptext, va(_("Ammo: %i\n"),  item.a), string_maxlength);
+				Q_strcat(tooltipText, va(_("%s loaded\n"), _(item.m->name)), stringMaxLength);
+				Q_strcat(tooltipText, va(_("Ammo: %i\n"),  item.a), stringMaxLength);
 			}
 		} else if (item.t->numWeapons) {
 			/* Check if this is a non-weapon and non-ammo item */
 			if (!(item.t->numWeapons == 1 && item.t->weapons[0] == item.t)) {
 				/* If it's ammo get the weapon names it can be used in */
-				Q_strcat(tooltiptext, _("Usable in:\n"), string_maxlength);
+				Q_strcat(tooltipText, _("Usable in:\n"), stringMaxLength);
 				for (i = 0; i < item.t->numWeapons; i++) {
 					weapon = item.t->weapons[i];
 					if (GAME_ItemIsUseable(weapon)) {
-						Q_strcat(tooltiptext, va("* %s\n", _(weapon->name)), string_maxlength);
+						Q_strcat(tooltipText, va("* %s\n", _(weapon->name)), stringMaxLength);
 					}
 				}
 			}
@@ -460,7 +460,7 @@ static void MN_DrawFree (int container, const menuNode_t *node, int posx, int po
 
 	/* if showTUs is true (only the first time in none single containers)
 	 * and we are connected to a game */
-	if (showTUs && cls.state == ca_active) {
+	if (showTUs && CL_OnBattlescape()) {
 		MN_DrawString("f_verysmall", ALIGN_UL, nodepos[0] + 3, nodepos[1] + 3,
 			nodepos[0] + 3, nodepos[1] + 3, node->size[0] - 6, 0, 0,
 			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse, 0);

@@ -473,7 +473,7 @@ static void SAV_GameContinue_f (void)
 {
 	char *error = NULL;
 
-	if (cls.state == ca_active) {
+	if (CL_OnBattlescape()) {
 		MN_PopMenu(qfalse);
 		return;
 	}
