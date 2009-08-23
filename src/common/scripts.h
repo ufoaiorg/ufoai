@@ -115,6 +115,7 @@ typedef enum {
 /** possible blend modes - see also blend_names */
 typedef enum {
 	BLEND_REPLACE,
+	BLEND_ONE,
 	BLEND_BLEND,
 	BLEND_ADD,
 	BLEND_FILTER,
@@ -124,8 +125,8 @@ typedef enum {
 } blend_t;
 
 typedef enum {
-	STYLE_FACING,
-	STYLE_ROTATED,
+	STYLE_FACING, /**< rotates a sprint into the camera direction */
+	STYLE_ROTATED, /**< use the particle angles vector */
 	STYLE_BEAM,
 	STYLE_LINE,
 	STYLE_AXIS,

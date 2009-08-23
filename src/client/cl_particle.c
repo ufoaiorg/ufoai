@@ -141,6 +141,8 @@ static const value_t pps[] = {
 	{"v", V_VECTOR, offsetof(ptl_t, v), MEMBER_SIZEOF(ptl_t, v)},
 	{"s", V_VECTOR, offsetof(ptl_t, s), MEMBER_SIZEOF(ptl_t, s)},
 	{"offset", V_VECTOR, offsetof(ptl_t, offset), MEMBER_SIZEOF(ptl_t, offset)},
+	{"scroll_s", V_FLOAT, offsetof(ptl_t, scrollS), MEMBER_SIZEOF(ptl_t, scrollS)},
+	{"scroll_t", V_FLOAT, offsetof(ptl_t, scrollT), MEMBER_SIZEOF(ptl_t, scrollT)},
 
 	/* t and dt are not specified in particle definitions */
 	/* but they can be used as references */

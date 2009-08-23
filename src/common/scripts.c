@@ -106,7 +106,7 @@ const char *const align_names[] = {
 CASSERT(lengthof(align_names) == ALIGN_LAST);
 
 const char *const blend_names[] = {
-	"replace", "blend", "add", "filter", "invfilter"
+	"replace", "one", "blend", "add", "filter", "invfilter"
 };
 CASSERT(lengthof(blend_names) == BLEND_LAST);
 

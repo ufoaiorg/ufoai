@@ -32,7 +32,7 @@ static std::list<CopiedString> g_ufoFilenames;
 ParticleDefinitionMap g_particleDefinitions;
 
 static const char *const blend_names[] = {
-	"replace", "blend", "add", "filter", "invfilter"
+	"replace", "one", "blend", "add", "filter", "invfilter"
 };
 
 static int GetBlendMode (const char *token) {

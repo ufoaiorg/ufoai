@@ -74,6 +74,28 @@ static void R_GetSpriteVectors (const ptl_t *p, vec3_t right, vec3_t up)
 }
 
 /**
+ * @brief Fills float array with texture coordinates
+ * @note Used if sprite is scrolled
+ */
+static inline void R_SpriteTexcoords (const ptl_t *p, float out[8])
+{
+	const float s = p->scrollS * refdef.time;
+	const float t = p->scrollT * refdef.time;
+
+	out[0] = 0.0 + s;
+	out[1] = 0.0 + t;
+
+	out[2] = 0.0 + s;
+	out[3] = 1.0 + t;
+
+	out[4] = 1.0 + s;
+	out[5] = 1.0 + t;
+
+	out[6] = 1.0 + s;
+	out[7] = 0.0 + t;
+}
+
+/**
  * @sa R_DrawParticles
  */
 static void R_DrawSprite (const ptl_t * p)
@@ -82,6 +104,7 @@ static void R_DrawSprite (const ptl_t * p)
 	vec3_t up, right;
 	vec3_t nup, nright;
 	vec3_t pos;
+	float texcoords[8];
 
 	/* load texture set up coordinates */
 	assert(p->pic);
@@ -115,23 +138,25 @@ static void R_DrawSprite (const ptl_t * p)
 	VectorMA(pos, -0.5, up, pos);
 	VectorMA(pos, -0.5, right, pos);
 
+	R_SpriteTexcoords(p, texcoords);
+
 	R_Color(p->color);
 	/* draw it */
 	glBegin(GL_TRIANGLE_FAN);
 
-	glTexCoord2f(0, 0);
+	glTexCoord2f(texcoords[0], texcoords[1]);
 	glVertex3fv(pos);
 
 	VectorAdd(pos, up, pos);
-	glTexCoord2f(0, 1);
+	glTexCoord2f(texcoords[2], texcoords[3]);
 	glVertex3fv(pos);
 
 	VectorAdd(pos, right, pos);
-	glTexCoord2f(1, 1);
+	glTexCoord2f(texcoords[4], texcoords[5]);
 	glVertex3fv(pos);
 
 	VectorSubtract(pos, up, pos);
-	glTexCoord2f(1, 0);
+	glTexCoord2f(texcoords[6], texcoords[7]);
 	glVertex3fv(pos);
 
 	glEnd();
@@ -238,6 +263,9 @@ static void R_SetBlendMode (int mode)
 	switch (mode) {
 	case BLEND_REPLACE:
 		R_TexEnv(GL_REPLACE);
+		break;
+	case BLEND_ONE:
+		R_BlendFunc(GL_SRC_ALPHA, GL_ONE);
 		break;
 	case BLEND_BLEND:
 		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

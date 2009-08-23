@@ -21,7 +21,7 @@
 
 /** possible blend modes - see also blend_names */
 typedef enum {
-	BLEND_REPLACE, BLEND_BLEND, BLEND_ADD, BLEND_FILTER, BLEND_INVFILTER,
+	BLEND_REPLACE, BLEND_ONE, BLEND_BLEND, BLEND_ADD, BLEND_FILTER, BLEND_INVFILTER,
 
 	BLEND_LAST
 } blend_t;

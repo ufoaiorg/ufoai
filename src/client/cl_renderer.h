@@ -159,6 +159,8 @@ typedef struct ptl_s {
 	float life;	/**< specifies how long a particle will be active (seconds) */
 	int rounds;	/**< specifies how many rounds a particle will be active */
 	int roundsCnt;
+	float scrollS;
+	float scrollT;
 	vec3_t a;	/**< acceleration vector */
 	vec3_t v;	/**< velocity vector */
 	vec3_t omega;	/**< the rotation vector for the particle (newAngles = oldAngles + frametime * omega) */

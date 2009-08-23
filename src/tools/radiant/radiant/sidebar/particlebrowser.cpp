@@ -113,6 +113,9 @@ static void Particle_SetBlendMode (ParticleDefinition *particle)
 	case BLEND_REPLACE:
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 		break;
+	case BLEND_ONE:
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+		break;
 	case BLEND_BLEND:
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		break;
