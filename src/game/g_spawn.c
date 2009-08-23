@@ -950,7 +950,7 @@ static void SP_misc_item (edict_t *ent)
 		return;
 	}
 
-	od = INVSH_GetItemByID(ent->item);
+	od = INVSH_GetItemByIDSilent(ent->item);
 	if (!od) {
 		gi.dprintf("Could not find item '%s' for misc_item\n", ent->item);
 		G_FreeEdict(ent);
