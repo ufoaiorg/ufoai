@@ -698,7 +698,7 @@ static void AIM_AircraftEquipAddItem_f (void)
 			}
 		} else {
 			/* remove weapon and ammo of next item */
-			AII_RemoveItemFromSlot(base, slot, qfalse);
+			AII_RemoveNextItemFromSlot(base, slot, qfalse);
 			/* more below */
 		}
 
@@ -767,7 +767,7 @@ static void AIM_AircraftEquipDeleteItem_f (void)
 		} else {
 			/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
 			 * of the one in the slot atm */
-			AII_RemoveItemFromSlot(base, slot, qfalse); /* we remove weapon and ammo */
+			AII_RemoveNextItemFromSlot(base, slot, qfalse); /* we remove weapon and ammo */
 			/* if you canceled next item for less than 1 hour, previous item is still functional */
 			if (slot->installationTime == -slot->item->craftitem.installationTime) {
 				slot->installationTime = 0;

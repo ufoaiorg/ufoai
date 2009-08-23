@@ -452,6 +452,7 @@ void AIM_AutoAddAmmo (aircraftSlot_t *slot)
  * @param[in] ammo qtrue if we want to remove only ammo. qfalse if the whole item should be removed.
  * @sa AII_AddItemToSlot
  * @sa AII_AddAmmoToSlot
+ * @sa AII_RemoveNextItemFromSlot
  */
 void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 {
@@ -459,24 +460,14 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 
 	if (ammo) {
 		/* only remove the ammo */
-		if (slot->nextAmmo) {
-			if (base && !slot->nextAmmo->craftitem.unlimitedAmmo)
-				B_UpdateStorageAndCapacity(base, slot->nextAmmo, 1, qfalse, qfalse);
-			slot->nextAmmo = NULL;
-		} else if (slot->ammo) {
+		if (slot->ammo) {
 			if (base && !slot->ammo->craftitem.unlimitedAmmo)
 				B_UpdateStorageAndCapacity(base, slot->ammo, 1, qfalse, qfalse);
 			slot->ammo = NULL;
 		}
-	} else if (slot->nextItem) {
-		/* Remove nextItem */
-		if (base)
-			B_UpdateStorageAndCapacity(base, slot->nextItem, 1, qfalse, qfalse);
-		slot->nextItem = NULL;
-		/* also remove ammo if any */
-		if (slot->nextAmmo)
-			AII_RemoveItemFromSlot(base, slot, qtrue);
 	} else if (slot->item) {
+		/* remove ammo */
+		AII_RemoveItemFromSlot(base, slot, qtrue);
 		if (base)
 			B_UpdateStorageAndCapacity(base, slot->item, 1, qfalse, qfalse);
 		/* the removal is over */
@@ -487,12 +478,42 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 			slot->ammo = slot->nextAmmo;
 			slot->installationTime = slot->item->craftitem.installationTime;
 			slot->nextItem = NULL;
+			slot->nextAmmo = NULL;
 		} else {
 			slot->item = NULL;
 			slot->installationTime = 0;
 		}
-		/* also remove ammo */
-		AII_RemoveItemFromSlot(base, slot, qtrue);
+	}
+}
+
+/**
+ * @brief Cancel replacing item, move nextItem (or optionally its ammo only) back to the base storage.
+ * @param[in] base The base to add the item to (may be NULL if item shouldn't be removed from any base).
+ * @param[in] slot The slot to remove the item from.
+ * @param[in] ammo qtrue if we want to remove only ammo. qfalse if the whole item should be removed.
+ * @sa AII_AddItemToSlot
+ * @sa AII_AddAmmoToSlot
+ * @sa AII_RemoveItemFromSlot
+ */
+void AII_RemoveNextItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
+{
+	assert(slot);
+
+	if (ammo) {
+		/* only remove the ammo */
+		if (slot->nextAmmo) {
+			if (base && !slot->nextAmmo->craftitem.unlimitedAmmo)
+				B_UpdateStorageAndCapacity(base, slot->nextAmmo, 1, qfalse, qfalse);
+			slot->nextAmmo = NULL;
+		}
+	} else if (slot->nextItem) {
+		/* Remove nextItem */
+		if (base)
+			B_UpdateStorageAndCapacity(base, slot->nextItem, 1, qfalse, qfalse);
+		slot->nextItem = NULL;
+		/* also remove ammo if any */
+		if (slot->nextAmmo)
+			AII_RemoveNextItemFromSlot(base, slot, qtrue);
 	}
 }
 
@@ -507,6 +528,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *slot)
 {
 	const objDef_t *ammo;
+	const objDef_t *item;
 	int k;
 
 	if (slot == NULL || slot->item == NULL)
@@ -520,13 +542,15 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 		return qfalse;
 	}
 
+	item = (slot->nextItem) ? slot->nextItem : slot->item;
+
 	/* Is the ammo is usable with the slot */
-	for (k = 0; k < slot->item->numAmmos; k++) {
-		const objDef_t *usable = slot->item->ammos[k];
+	for (k = 0; k < item->numAmmos; k++) {
+		const objDef_t *usable = item->ammos[k];
 		if (usable && ammo->idx == usable->idx)
 			break;
 	}
-	if (k >= slot->item->numAmmos)
+	if (k >= item->numAmmos)
 		return qfalse;
 
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO
@@ -541,7 +565,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 	/* remove any applied ammo in the current slot */
 	if (slot->nextItem) {
 		if (slot->nextAmmo)
-		AII_RemoveItemFromSlot(base, slot, qtrue);
+		AII_RemoveNextItemFromSlot(base, slot, qtrue);
 		slot->nextAmmo = ammo;
 	} else {
 		/* you shouldn't be able to have nextAmmo set if you don't have nextItem set */
@@ -577,7 +601,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
  * @sa AII_UpdateOneInstallationDelay
  * @sa AII_AddAmmoToSlot
  */
-qboolean AII_AddItemToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *slot, qboolean nextItem)
+qboolean AII_AddItemToSlot (base_t *base, const technology_t *tech, aircraftSlot_t *slot, qboolean nextItem)
 {
 	const objDef_t *item;
 

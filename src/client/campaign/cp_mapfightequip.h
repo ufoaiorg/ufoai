@@ -76,6 +76,7 @@ void AII_UpdateInstallationDelay(void);
 qboolean AII_AddItemToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot, qboolean nextItem);
 qboolean AII_AddAmmoToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot);
 void AII_RemoveItemFromSlot(base_t* base, aircraftSlot_t *slot, qboolean ammo);
+void AII_RemoveNextItemFromSlot(base_t* base, aircraftSlot_t *slot, qboolean ammo);
 qboolean AIM_PilotAssignedAircraft(const base_t* base, const employee_t* pilot);
 void AIM_AutoEquipAircraft(aircraft_t *aircraft);
 void AII_InitialiseSlot(aircraftSlot_t *slot, aircraft_t *aircraft, base_t *base, installation_t *installation, aircraftItemType_t type);
