@@ -4707,6 +4707,16 @@ tech rs_craft_weapon_particle
 	//image	"techs/craft_weapon_particle"
 }
 
+tech rs_craft_ammo_particle
+{
+	type		tech
+	/* this ammo is virtual, shouldn't be shown anywhere */
+	name		"Particle Beam Accelerator"
+	provides	craft_ammo_particle_beam
+	time		0
+	producetime	-1
+}
+
 tech rs_craft_el_targeting
 {
 	type		craftitem

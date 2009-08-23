@@ -476,6 +476,12 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 			slot->item = slot->nextItem;
 			/* we already removed nextItem from storage when it has been added to slot: don't use B_UpdateStorageAndCapacity */
 			slot->ammo = slot->nextAmmo;
+			if (slot->ammo) {
+				if (!slot->ammo->craftitem.unlimitedAmmo)
+					slot->ammoLeft = slot->ammo->ammo;
+				else
+					slot->ammoLeft = AMMO_STATUS_UNLIMITED;
+			}
 			slot->installationTime = slot->item->craftitem.installationTime;
 			slot->nextItem = NULL;
 			slot->nextAmmo = NULL;

@@ -806,10 +806,25 @@ craftitem craft_weapon_particle_beam
 	price				45000
 	model				"aircraft/craft_weapon_particle/pbw"
 
-	wdamage		21
-	speed		0.8
-	maxspeed	0.8
-	wrange		1.79
+	bullets				false
+	laser				true
+}
+
+craftitem craft_ammo_particle_beam
+{
+	/* this ammo is virtual shouldn't be shown anywhere */
+	name				"Particle Beam Accelerator"
+	crafttype			ammo
+	craftweapon			craft_weapon_particle_beam
+	notonmarket			true
+
+	unlimitedAmmo		true
+	wdamage				21
+	accuracy			0.7
+	wrange				3
+	wspeed				900
+	delay				30
+	size				10 // light
 }
 
 craftitem craft_el_targeting
