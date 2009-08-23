@@ -505,7 +505,7 @@ static void G_Actor2x2Spawn (edict_t *ent)
 }
 
 /**
- * @brief QUAKED light (0 1 0) (-8 -8 -8) (8 8 8)
+ * @brief light (0 1 0) (-8 -8 -8) (8 8 8)
  */
 static void SP_light (edict_t *ent)
 {
@@ -515,7 +515,7 @@ static void SP_light (edict_t *ent)
 }
 
 /**
- * @brief QUAKED info_player_start (1 0 0) (-16 -16 -24) (16 16 32)
+ * @brief info_player_start (1 0 0) (-16 -16 -24) (16 16 32)
  * Starting point for a player.
  * "team"	the number of the team for this player starting point
  * "0" is reserved for civilians and critters (use info_civilian_start instead)
@@ -539,7 +539,7 @@ static void SP_player_start (edict_t *ent)
 }
 
 /**
- * @brief QUAKED info_human_start (1 0 0) (-16 -16 -24) (16 16 32)
+ * @brief info_human_start (1 0 0) (-16 -16 -24) (16 16 32)
  * Starting point for a single player human.
  */
 static void SP_human_start (edict_t *ent)
@@ -557,7 +557,7 @@ static void SP_human_start (edict_t *ent)
 
 
 /**
- * @brief QUAKED info_2x2_start (1 1 0) (-32 -32 -24) (32 32 32)
+ * @brief info_2x2_start (1 1 0) (-32 -32 -24) (32 32 32)
  * Starting point for a 2x2 unit.
  */
 static void SP_2x2_start (edict_t *ent)
@@ -580,7 +580,7 @@ static void SP_2x2_start (edict_t *ent)
 }
 
 /**
- * @brief QUAKED info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
+ * @brief info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
  * Starting point for a single player alien.
  */
 static void SP_alien_start (edict_t *ent)
@@ -613,7 +613,7 @@ static void SP_alien_start (edict_t *ent)
 
 
 /**
- * @brief QUAKED info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
+ * @brief info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
  * Starting point for a civilian.
  */
 static void SP_civilian_start (edict_t *ent)
@@ -632,7 +632,7 @@ static void SP_civilian_start (edict_t *ent)
 }
 
 /**
- * @brief QUAKED info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
+ * @brief info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
  * Way point for a civilian.
  * @sa SP_civilian_start
  * @todo These waypoints should be placeable by the human player (e.g. spawn a special particle on the waypoint)
@@ -837,7 +837,7 @@ static void Think_Mission (edict_t *self)
 }
 
 /**
- * @brief Init the human/phalanx mission entity
+ * @brief Initializes the human/phalanx mission entity
  */
 static void SP_misc_mission (edict_t *ent)
 {
@@ -879,7 +879,7 @@ static void SP_misc_mission (edict_t *ent)
 }
 
 /**
- * @brief Init the alien mission entity
+ * @brief Initializes the alien mission entity
  */
 static void SP_misc_mission_aliens (edict_t *ent)
 {
@@ -981,7 +981,7 @@ static void SP_dummy (edict_t *ent)
 }
 
 /**
- * @brief QUAKED worldspawn (0 0 0) ?
+ * @brief Spawns the world entity
  *
  * Only used for the world.
  * "sounds"	music cd track number
