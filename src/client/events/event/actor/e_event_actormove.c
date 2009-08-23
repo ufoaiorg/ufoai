@@ -95,7 +95,7 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* activate PathMove function */
 	FLOOR(le) = NULL;
-	le->think = LET_StartPathMove;
+	LE_SetThink(le, LET_StartPathMove);
 	le->pathPos = 0;
 	le->startTime = cl.time;
 	le->endTime = cl.time;

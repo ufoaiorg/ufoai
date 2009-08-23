@@ -131,7 +131,7 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 	else
 		VectorCopy(player_maxs, le->maxs);
 
-	le->think = LET_StartIdle;
+	LE_SetThink(le, LET_StartIdle);
 
 	/* count spotted aliens */
 	if (!LE_IsDead(le) && le->team != cls.team && le->team != TEAM_CIVILIAN)

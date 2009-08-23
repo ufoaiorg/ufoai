@@ -211,6 +211,12 @@ void LM_Register (void)
 	}
 }
 
+void LE_SetThink (le_t *le, void (*think) (le_t *le))
+{
+	Com_DPrintf(DEBUG_EVENTSYS, "LE_SetThink: Set think function for le %i to %p\n",
+			le->entnum, think);
+	le->think = think;
+}
 
 /**
  * @brief Adds local (not known or handled by the server) models to the map
@@ -274,6 +280,18 @@ LE thinking
 =========================================================================== */
 
 /**
+ * @brief Call think function for the given local entity if its still in use
+ */
+void LE_ExecuteThink (le_t *le)
+{
+	if (le->inuse && le->think) {
+		Com_DPrintf(DEBUG_EVENTSYS, "LE_ExecuteThink: Execute think function %p for le %i\n",
+					le->think, le->entnum);
+		le->think(le);
+	}
+}
+
+/**
  * @brief Calls the le think function
  * @sa LET_StartIdle
  * @sa LET_PathMove
@@ -289,9 +307,7 @@ void LE_Think (void)
 		return;
 
 	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
-		if (le->inuse && le->think)
-			/* call think function */
-			le->think(le);
+		LE_ExecuteThink(le);
 	}
 }
 
@@ -384,7 +400,7 @@ void LET_StartIdle (le_t * le)
 	le->pathPos = le->pathLength = 0;
 
 	/* keep this animation until something happens */
-	le->think = NULL;
+	LE_SetThink(le, NULL);
 }
 
 /**
@@ -568,7 +584,7 @@ static void LET_PathMove (le_t * le)
 				FLOOR(le) = FLOOR(floor);
 
 			le->lighting.dirty = qtrue;
-			le->think = LET_StartIdle;
+			LE_SetThink(le, LET_StartIdle);
 			return;
 		}
 	}
@@ -599,8 +615,8 @@ void LET_StartPathMove (le_t *le)
 		Com_Printf("LET_StartPathMove: Could not change anim of le: %i, team: %i, pnum: %i\n",
 			le->entnum, le->team, le->pnum);
 
-	le->think = LET_PathMove;
-	le->think(le);
+	LE_SetThink(le, LET_PathMove);
+	LE_ExecuteThink(le);
 }
 
 /**
@@ -709,8 +725,8 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 			le->ref2 = fd->bounceSound;
 	}
 
-	le->think = LET_Projectile;
-	le->think(le);
+	LE_SetThink(le, LET_Projectile);
+	LE_ExecuteThink(le);
 }
 
 /**
@@ -839,8 +855,8 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 	le->state = 5;				/* direction (0,0,1) */
 	le->fd = fd;
 	assert(fd);
-	le->think = LET_Projectile;
-	le->think(le);
+	LE_SetThink(le, LET_Projectile);
+	LE_ExecuteThink(le);
 }
 
 /**

@@ -181,6 +181,8 @@ int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, c
 /** @brief Valid indices from 1 - MAX_DEATH */
 #define LE_GetAnimationIndexForDeath(le)	((le)->state & MAX_DEATH)
 
+void LE_SetThink(le_t *le, void (*think) (le_t *le));
+void LE_ExecuteThink(le_t *le);
 void LE_Think(void);
 /* think functions */
 void LET_StartIdle(le_t *le);

@@ -65,7 +65,7 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 	le->lighting.dirty = qtrue;
 
 	/* play animation */
-	le->think = NULL;
+	LE_SetThink(le, NULL);
 	R_AnimChange(&le->as, le->model1, va("death%i", LE_GetAnimationIndexForDeath(le)));
 	R_AnimAppend(&le->as, le->model1, va("dead%i", LE_GetAnimationIndexForDeath(le)));
 

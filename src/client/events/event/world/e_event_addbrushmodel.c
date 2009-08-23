@@ -62,7 +62,7 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 	le->modelnum1 = modelnum1;
 	le->levelflags = levelflags;
 	le->addFunc = LE_BrushModelAction;
-	le->think = LET_BrushModel;
+	LE_SetThink(le, LET_BrushModel);
 	/* The origin and angles are REQUIRED for doors to work! */
 	VectorCopy(origin, le->origin);
 	VectorCopy(angles, le->angles);

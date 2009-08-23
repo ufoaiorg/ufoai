@@ -91,7 +91,7 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 	switch (le->type) {
 	case ET_ACTOR:
 	case ET_ACTOR2x2:
-		le->think = LET_StartIdle;
+		LE_SetThink(le, LET_StartIdle);
 		break;
 	case ET_ITEM:
 		LE_PlaceItem(le);

@@ -64,13 +64,13 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 	if ((state & STATE_DEAD) && !LE_IsDead(le)) {
 		le->state = state;
 		FLOOR(le) = NULL;
-		le->think = NULL;
+		LE_SetThink(le, NULL);
 		VectorCopy(player_dead_maxs, le->maxs);
 		CL_RemoveActorFromTeamList(le);
 		return;
 	} else {
 		le->state = state;
-		le->think = LET_StartIdle;
+		LE_SetThink(le, LET_StartIdle);
 	}
 
 	/* state change may have affected move length */
