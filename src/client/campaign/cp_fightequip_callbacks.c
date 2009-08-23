@@ -586,7 +586,7 @@ static void AIM_UpdateItemDescription (qboolean fromList, qboolean fromSlot)
 		Cvar_Set("mn_aircraft_item_warning", _("Equip first a weapon."));
 		break;
 	case AIM_LOADING_NOTUSABLEWITHWEAPON:
-		Cvar_Set("mn_aircraft_item_warning", _("Anno not usable with current weapon."));
+		Cvar_Set("mn_aircraft_item_warning", _("Ammo not usable with current weapon."));
 		break;
 	case AIM_LOADING_UNKNOWNPROBLEM:
 		Cvar_Set("mn_aircraft_item_warning", _("Unknown problem."));
