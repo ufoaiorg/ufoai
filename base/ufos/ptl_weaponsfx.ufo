@@ -352,7 +352,7 @@ particle laserFrizzledBeam
 		scale	"10.0 10.0 10.0"
 		tps	1.5
 		size	"30.0 30.0"
-		scroll_s -4
+		scroll_s -2.5
 	}
 	think { kill }
 }
