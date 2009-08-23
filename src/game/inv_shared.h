@@ -187,7 +187,8 @@ typedef struct craftitem_s {
 	float weaponDelay;			/**< The minimum delay between 2 shots */
 	int installationTime;		/**< The time needed to install/remove the item on an aircraft */
 	qboolean bullets;			/**< create bullets for the projectiles */
-	qboolean laser;				/**< create laser particles for the projectiles */
+	qboolean beam;				/**< create (laser/partivle) beam particles for the projectiles */
+	vec4_t beamColor;
 	qboolean unlimitedAmmo;		/**< Does this weapon have unlimited ammo? */
 } craftitem_t;
 

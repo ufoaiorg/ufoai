@@ -125,10 +125,10 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 	else
 		projectile->bullets = qfalse;
 
-	if (weaponSlot->item->craftitem.laser)
-		projectile->laser = qtrue;
+	if (weaponSlot->item->craftitem.beam)
+		projectile->beam = qtrue;
 	else
-		projectile->laser = qfalse;
+		projectile->beam = qfalse;
 
 	if (weaponSlot->ammoLeft != AMMO_STATUS_UNLIMITED)
 		weaponSlot->ammoLeft--;

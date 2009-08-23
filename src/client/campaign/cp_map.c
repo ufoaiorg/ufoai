@@ -1606,8 +1606,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 		if (projectile->bullets) {
 			MAP_DrawBullets(node, drawPos);
-		} else if (projectile->laser) {
-			const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
+		} else if (projectile->beam) {
 			vec3_t start;
 			vec3_t end;
 
@@ -1621,8 +1620,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			else
 				VectorCopy(projectile->idleTarget, end);
 
-			/* @todo use scripted color */
-			MAP_DrawBeam(node, start, end, yellow);
+			MAP_DrawBeam(node, start, end, projectile->aircraftItem->craftitem.beamColor);
 		} else {
 			MAP_Draw3DMarkerIfVisible(node, drawPos, projectile->angle, projectile->aircraftItem->model, 0);
 		}

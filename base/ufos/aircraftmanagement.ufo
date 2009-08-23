@@ -36,7 +36,9 @@
 //		shield
 //		electronics
 //		base_missile
+//		base_laser
 //		base_ammo_missile
+//		base_ammo_laser
 //	size - Needed only for "crafttype weapon". Possible values are:
 //		< 50 => light			- For light weapons.
 //		> 50 && < 100 => medium	- For medium weapons.
@@ -661,26 +663,28 @@ craftitem craft_weapon_alc
 	size				40 // light
 	installationTime	2
 	price				12000
-	bullets				false
-	laser				true
 	model				"aircraft/craft_weapon_alc/alc"
+
+	bullets				false
+	beam				true
 }
 
 craftitem craft_ammo_alc
 {
 	/* this ammo is virtual shouldn't be shown anywhere */
-	name			"D-F Tank"
-	crafttype		ammo
-	craftweapon		craft_weapon_alc
-	notonmarket		true
+	name				"D-F Tank"
+	crafttype			ammo
+	craftweapon			craft_weapon_alc
+	notonmarket			true
 
-	unlimitedAmmo	true
-	wdamage			10
-	accuracy		0.7
-	wrange			1.8
-	wspeed			900
-	delay			30
-	size			10 // light
+	beamcolor			"1 .874 .294 1"
+	unlimitedAmmo		true
+	wdamage				10
+	accuracy			0.7
+	wrange				1.8
+	wspeed				900
+	delay				30
+	size				10 // light
 }
 
 craftitem craft_weapon_shiva
@@ -806,8 +810,7 @@ craftitem craft_weapon_particle_beam
 	price				45000
 	model				"aircraft/craft_weapon_particle/pbw"
 
-	bullets				false
-	laser				true
+	beam				true
 }
 
 craftitem craft_ammo_particle_beam
@@ -818,6 +821,7 @@ craftitem craft_ammo_particle_beam
 	craftweapon			craft_weapon_particle_beam
 	notonmarket			true
 
+	beamcolor			".590 .762 .738 1"
 	unlimitedAmmo		true
 	wdamage				21
 	accuracy			0.7
@@ -951,23 +955,24 @@ craftitem baselaser
 	is_dummy			true
 
 	bullets				false
-	laser				true
+	beam				true
 }
 
 craftitem baselaser_ammo
 {
 	/* this ammo is virtual shouldn't be shown anywhere */
-	name			"D-F Tank"
-	crafttype		base_ammo_laser
-	craftweapon		baselaser
-	is_dummy		true
-	notonmarket		true
+	name				"D-F Tank"
+	crafttype			base_ammo_laser
+	craftweapon			baselaser
+	is_dummy			true
+	notonmarket			true
 
-	unlimitedAmmo	true
-	wdamage			10
-	accuracy		0.7
-	wrange			5
-	wspeed			900
-	delay			100
-	size			10 // light
+	beamcolor			"1 .874 .294 1"
+	unlimitedAmmo		true
+	wdamage				10
+	accuracy			0.7
+	wrange				5
+	wspeed				900
+	delay				100
+	size				10 // light
 }
