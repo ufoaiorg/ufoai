@@ -942,7 +942,7 @@
 "classname" "misc_model"
 "model" "models/animals/cow/cow.md2"
 "origin" "192 144.125 36"
-"spawnflags" "31"
+"spawnflags" "287"
 "angles" "0 -90 0"
 "anim" "idle"
 }
