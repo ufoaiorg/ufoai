@@ -354,6 +354,11 @@ void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check, 
 			G_EdictAppear(player_mask, check);
 			G_SendParticle(player_mask, check);
 			break;
+
+		default:
+			if (G_IsVisibleOnBattlefield(check))
+				gi.error("Missing edict type %i in G_AppearPerishEvent", check->type);
+			break;
 		}
 	} else if (G_IsVisibleOnBattlefield(check)) {
 		/* disappear */
