@@ -499,7 +499,7 @@ void G_EndGame (int team)
 
 	/* Calculate new scores/skills for the soldiers. */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent) && !G_PLAYER_FROM_ENT(ent)->pers.ai)
+		if (ent->inuse && G_IsLivingActor(ent) && !G_IsAI(ent))
 			G_UpdateCharacterSkills(&ent->chr);
 
 	/* if aliens won, make sure every soldier dies */
@@ -523,7 +523,7 @@ void G_EndGame (int team)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 		if (ent->inuse) {
 			G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent, NULL);
-			if (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
+			if (G_IsActor(ent))
 				G_SendInventory(~G_TeamToPM(ent->team), ent);
 		}
 
@@ -549,8 +549,7 @@ void G_EndGame (int team)
 
 	/* how many actors */
 	for (j = 0, i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
-		 && !G_PLAYER_FROM_ENT(ent)->pers.ai)
+		if (ent->inuse && G_IsActor(ent) && !G_IsAI(ent))
 			j++;
 
 	/* number of soldiers */
@@ -558,8 +557,7 @@ void G_EndGame (int team)
 
 	if (j) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
-			 && !G_PLAYER_FROM_ENT(ent)->pers.ai) {
+			if (ent->inuse && G_IsActor(ent) && !G_IsAI(ent)) {
 				G_SendCharacterData(ent);
 			}
 	}

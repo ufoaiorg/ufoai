@@ -980,8 +980,8 @@ void AIL_Cleanup (void)
 	int i;
 
 	for (i = 0; i < globals.num_edicts; i++) {
-		edict_t *ent = g_edicts+i;
-		if (ent->inuse && ent->type == ET_ACTOR)
+		edict_t *ent = g_edicts + i;
+		if (ent->inuse && G_IsActor(ent))
 			AIL_CleanupActor(ent);
 	}
 }

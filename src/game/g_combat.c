@@ -152,7 +152,7 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
 			mock->civilian += 1;
 		else if (struck->team == shooter->team)
 			mock->friend += 1;
-		else if (struck->type == ET_ACTOR || struck->type == ET_ACTOR2x2)
+		else if (G_IsActor(struck))
 			mock->enemy += 1;
 		else
 			return;
@@ -307,10 +307,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	qboolean isRobot;
 
 	assert(target);
-	assert(target->type == ET_ACTOR
-			|| target->type == ET_ACTOR2x2
-			|| target->type == ET_BREAKABLE
-			|| target->type == ET_DOOR);
+	assert(G_IsActor(target) || target->type == ET_BREAKABLE || target->type == ET_DOOR);
 
 	/* Breakables */
 	if (target->type == ET_BREAKABLE || target->type == ET_DOOR) {
@@ -501,7 +498,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 		if (shock && !G_FrustumVis(check, impact))
 			continue;
 
-		if (check->type == ET_ACTOR || check->type == ET_ACTOR2x2)
+		if (G_IsActor(check))
 			VectorCopy(check->origin, center);
 		else if (check->type == ET_BREAKABLE || check->type == ET_DOOR)
 			VectorCenterFromMinsMaxs(check->absmin, check->absmax, center);
@@ -514,7 +511,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 		if (dist > fd->splrad)
 			continue;
 
-		if (fd->irgoggles && (check->type == ET_ACTOR || check->type == ET_ACTOR2x2)) {
+		if (fd->irgoggles && G_IsActor(check)) {
 			/* check whether this actor (check) is in the field of view of the 'shooter' (ent) */
 			if (G_FrustumVis(ent, check->origin)) {
 				if (!mock) {
@@ -526,7 +523,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 		}
 
 		/* check for walls */
-		if ((check->type == ET_ACTOR || check->type == ET_ACTOR2x2) && !G_ActorVis(impact, check, qfalse))
+		if (G_IsActor(check) && !G_ActorVis(impact, check, qfalse))
 			continue;
 
 		/* do damage */
@@ -651,7 +648,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 				/* enough bouncing around */
 				(VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0 || bounce > fd->bounce
 				 /* or we have sensors that tell us enemy is near */
-				 || (!fd->delay && tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2))) {
+				 || (!fd->delay && tr.ent && G_IsActor(tr.ent))) {
 
 				if (!mock) {
 					/* explode */
@@ -660,7 +657,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 					gi.WriteShort(fd->obj->idx);
 					gi.WriteByte(fd->weapFdsIdx);
 					gi.WriteByte(fd->fdIdx);
-					if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2))
+					if (tr.ent && G_IsActor(tr.ent))
 						gi.WriteByte(flags | SF_BODY);
 					else
 						gi.WriteByte(flags | SF_IMPACT);
@@ -692,8 +689,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 							floor = G_SpawnFloor(drop);
 
 							for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
-								if (actor->inuse && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
-								 && VectorCompare(drop, actor->pos))
+								if (actor->inuse && G_IsActor(actor) && VectorCompare(drop, actor->pos))
 									FLOOR(actor) = FLOOR(floor);
 						} else {
 							gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
@@ -902,7 +898,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		/* set flags when trace hit something */
 		if (tr.fraction < 1.0) {
-			if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2)
+			if (tr.ent && G_IsActor(tr.ent)
 				/* check if we differentiate between body and wall */
 				&& !fd->delay)
 				flags |= SF_BODY;
@@ -913,7 +909,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		}
 
 		/* victims see shots */
-		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2))
+		if (tr.ent && G_IsActor(tr.ent))
 			mask |= 1 << tr.ent->team;
 
 		if (!mock) {
@@ -967,7 +963,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		}
 
 		/* do damage if the trace hit an entity */
-		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2 || (tr.ent->flags & FL_DESTROYABLE))) {
+		if (tr.ent && (G_IsActor(tr.ent) || (tr.ent->flags & FL_DESTROYABLE))) {
 			G_Damage(tr.ent, fd, damage, ent, mock);
 
 			if (!mock) { /* check for firedHit is done in G_UpdateHitScore */
@@ -1014,9 +1010,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 				floor = G_SpawnFloor(drop);
 
 				for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
-					if (actor->inuse
-						 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
-						 && VectorCompare(drop, actor->pos))
+					if (actor->inuse && G_IsActor(actor) && VectorCompare(drop, actor->pos))
 						FLOOR(actor) = FLOOR(floor);
 			} else {
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);

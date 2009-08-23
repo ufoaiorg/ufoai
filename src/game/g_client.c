@@ -355,8 +355,7 @@ void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check, 
 			G_SendParticle(player_mask, check);
 			break;
 		}
-	} else if (check->type == ET_ACTOR || check->type == ET_ACTOR2x2 || check->type == ET_ITEM || check->type
-			== ET_PARTICLE) {
+	} else if (G_IsVisibleOnBattlefield(check)) {
 		/* disappear */
 		gi.AddEvent(player_mask, EV_ENT_PERISH);
 		gi.WriteShort(check->number);
@@ -505,7 +504,7 @@ float G_Vis (int team, const edict_t * from, const edict_t * check, int flags)
 	if (!(flags & VT_NOFRUSTUM) && !G_FrustumVis(from, check->origin))
 		return ACTOR_VIS_0;
 
-	if (!(check->type == ET_ACTOR || check->type ==  ET_ACTOR2x2 || check->type == ET_ITEM || check->type == ET_PARTICLE))
+	if (!G_IsVisibleOnBattlefield(check))
 		return ACTOR_VIS_0;
 
 	/* get viewers eye height */
@@ -585,7 +584,7 @@ void G_SendInvisible (player_t* player)
 		edict_t* ent;
 		/* check visibility */
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
-			if (ent->inuse && ent->team != team && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
+			if (ent->inuse && ent->team != team && G_IsActor(ent)) {
 				/* not visible for this team - so add the le only */
 				if (!(ent->visflags & (1 << team))) {
 					/* parsed in CL_ActorAdd */
@@ -2991,7 +2990,7 @@ qboolean G_ClientSpawn (player_t * player)
 	 * @sa CL_GenerateCharacter for the initial default value.
 	 * @sa G_SpawnAIPlayer */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && ent->team == player->pers.team && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
+		if (ent->inuse && ent->team == player->pers.team && G_IsActor(ent)) {
 			Com_DPrintf(DEBUG_GAME, "G_ClientSpawn: Setting default reaction-mode to %i (%s - %s).\n",
 					ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
 			G_ClientStateChange(player, i, ent->chr.reservedTus.reserveReaction, qfalse);
@@ -3007,7 +3006,7 @@ qboolean G_ClientSpawn (player_t * player)
 	G_GiveTimeUnits(player->pers.team);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && ent->team == player->pers.team && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
+		if (ent->inuse && ent->team == player->pers.team && G_IsActor(ent)) {
 			gi.AddEvent(player->pers.team, EV_ACTOR_STATECHANGE);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(ent->state);
