@@ -1605,7 +1605,7 @@ tech rs_weapon_laserammo
 		tech rs_laser
 		tech rs_damage_laser
 	}
-	provides	laserrifle_ammo
+	provides	laser_ammo
 	time		3000
 	producetime	20
 }

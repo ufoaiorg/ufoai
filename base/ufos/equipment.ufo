@@ -117,7 +117,7 @@ equipment campaign_asymptotic_market
 	laserpistol				4
 	laserrifle				4
 	heavylaser				4
-	laserrifle_ammo			50
+	laser_ammo			50
 	stunrod					4
 }
 
@@ -172,11 +172,9 @@ equipment campaign_market_aliens
 	bolterrifle			2
 	bolterrifle_ammo	20
 	laserpistol			1
-//	laserpistol_ammo	20
 	laserrifle			1
-	laserrifle_ammo		35
+	laser_ammo		35
 	heavylaser			1
-//	heavylaser_ammo		5
 	fraggrenade			40
 	kerrblade			20
 	irgoggles			2
@@ -235,13 +233,10 @@ equipment multiplayer_alien
 	bolterrifle			2
 	bolterrifle_ammo	3
 	laserpistol			2
-//	laserpistol_ammo	5
 	laserrifle			2
-	laserrifle_ammo		11
-//	electrolaser		2
-//	laserpistol_ammo	5
+	laser_ammo		11
+	electrolaser		2
 	heavylaser			2
-//	heavylaser_ammo		3
 	plaspistol			2
 	plaspistol_ammo		5
 	plasrifle			2
@@ -316,12 +311,10 @@ equipment multiplayer_phalanx
 	bolterrifle			2
 	bolterrifle_ammo	3
 	laserpistol			2
-//	laserpistol_ammo	5
 	electrolaser		2
 	laserrifle			2
-	laserrifle_ammo		11
+	laser_ammo			11
 	heavylaser			2
-//	heavylaser_ammo		3
 	plaspistol			2
 	plaspistol_ammo		5
 	plasrifle			2
@@ -384,11 +377,9 @@ equipment multiplayer_initial
 	bolterrifle			8
 	bolterrifle_ammo	13
 	laserpistol			10
-//	laserpistol_ammo	25
 	laserrifle			7
-	laserrifle_ammo		38
+	laser_ammo		38
 //	heavylaser			6
-//	heavylaser_ammo		13
 //	xaw95				2
 //	xaw95_ammo			5
 //	coilgun				2

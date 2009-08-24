@@ -91,7 +91,7 @@ item electrolaser
 	is_primary		true
 }
 
-item laserrifle_ammo
+item laser_ammo
 {
 	name			"_D-F Cartridge"
 	model			weapons/laserrifle/laserrifle_clip
@@ -105,7 +105,7 @@ item laserrifle_ammo
 	is_primary		true
 	dmgtype			laser
 
-	weapon_mod laserpistol // weap_fds_idx=0
+	weapon_mod laserpistol
 	{
 		firedef
 		{
@@ -148,7 +148,7 @@ item laserrifle_ammo
 		}
 	}
 
-	weapon_mod laserrifle // weap_fds_idx=1
+	weapon_mod laserrifle
 	{
 		firedef
 		{
@@ -191,7 +191,7 @@ item laserrifle_ammo
 		}
 	}
 
-	weapon_mod heavylaser // weap_fds_idx=2
+	weapon_mod heavylaser
 	{
 		firedef
 		{
@@ -234,7 +234,7 @@ item laserrifle_ammo
 		}
 	}
 	
-	weapon_mod electrolaser // weap_fds_idx=1
+	weapon_mod electrolaser
 	{
 		firedef
 		{
