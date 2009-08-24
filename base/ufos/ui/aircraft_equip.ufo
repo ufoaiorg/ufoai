@@ -244,7 +244,7 @@ window aircraft_equip extends iaircraft
 
 	todo add_hilightselection
 	{
-		string "Add hilight selection for zone 1 and 2. It must me a XOR between zone1, zone2 and itemList"
+		string "Add hilight selection for zone 1 and 2. It must be a XOR between zone1, zone2 and itemList"
 		pos			"592 500"
 	}
 
