@@ -623,6 +623,10 @@ void RS_InitTree (qboolean load)
 				}
 			}
 		}
+
+		if (!tech->image && !tech->mdl)
+			Com_DPrintf(DEBUG_CLIENT, "Tech %s of type %i has no image (%p) and no model (%p) assigned.\n",
+					tech->id, tech->type, tech->image, tech->mdl);
 	}
 
 	if (load) {
