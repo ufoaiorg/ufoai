@@ -976,9 +976,11 @@ void AIM_InitCallbacks (void)
 void AIM_ShutdownCallbacks (void)
 {
 	Cmd_RemoveCommand("airequip_updatemenu");
+	Cmd_RemoveCommand("airequip_selectcategory");
 	Cmd_RemoveCommand("airequip_list_click");
 	Cmd_RemoveCommand("airequip_slot_select");
 	Cmd_RemoveCommand("airequip_add_item");
+	Cmd_RemoveCommand("airequip_remove_item");
 	Cmd_RemoveCommand("airequip_zone_select");
 	if (AIM_items) {
 		Mem_Free(AIM_items);
