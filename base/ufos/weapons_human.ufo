@@ -1725,7 +1725,7 @@ item grenl_plasma_ammo
 			spldmg				"130 20"
 			splrad				5
 			dmgweight			plasma_heavy
-			reaction			true
+			reaction			false
 		}
 
 		firedef
