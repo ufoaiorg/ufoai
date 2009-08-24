@@ -14,7 +14,7 @@ namespace routing
 			void renderWireframe (void) const;
 			void renderAccessability (RenderStateFlags state) const;
 			void renderConnections (void) const;
-			void renderConnection (int direction) const;
+			void renderConnection (EDirection direction) const;
 		public:
 			RoutingRenderableEntry (const RoutingLumpEntry& data) :
 				_data(data)

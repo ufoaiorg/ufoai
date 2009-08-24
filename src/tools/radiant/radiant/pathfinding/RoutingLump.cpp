@@ -9,6 +9,10 @@ namespace routing
 		return _origin;
 	}
 
+	const EConnectionState RoutingLumpEntry::getConnectionState(const EDirection direction) const {
+		return _connectionStates[direction];
+	}
+
 
 	RoutingLump::RoutingLump ()
 	{

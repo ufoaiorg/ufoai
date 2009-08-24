@@ -3,9 +3,23 @@
 #include "math/quaternion.h"
 #include "igl.h"
 #include "entitylib.h"//for aabb_draw_solid
+#include "../../../shared/defines.h"
+
+#define UNIT_SIZE_HALF (UNIT_SIZE/2)
+#define UNIT_SIZE_QUARTER (UNIT_SIZE/4)
+#define UNIT_HEIGHT_HALF (UNIT_HEIGHT/2)
+#define UNIT_HEIGHT_EIGHTH (UNIT_HEIGHT/8)
 
 namespace routing
 {
+	const Vector3 color_connected_walk = Vector3(0.0, 1.0, 0.0);
+	const Vector3 color_connected_crouch = Vector3(1.0, 1.0, 0.0);
+	const Vector3 color_connected_not = Vector3(1.0, 0.0, 0.0);
+	const Vector3 color_accessible_stand = Vector3(0.0, 1.0, 0.0);
+	const Vector3 color_accessible_crouch = Vector3(1.0, 1.0, 0.0);
+	const Vector3 color_accessible_not = Vector3(1.0, 0.0, 0.0);
+	const Vector3 color_wireframe = Vector3(1.0, 1.0, 1.0);
+
 	RoutingRenderable::RoutingRenderable ()
 	{
 	}
@@ -31,6 +45,11 @@ namespace routing
 		_entries.push_back(entry);
 	}
 
+	/**
+	 * @brief render this renderable entry which represents one grid space by drawing
+	 * wireframe, accessibility box and connectivity arrows.
+	 * @param state render state flags
+	 */
 	void RoutingRenderableEntry::render (RenderStateFlags state) const
 	{
 		this->renderWireframe();
@@ -43,14 +62,11 @@ namespace routing
 	 */
 	void RoutingRenderableEntry::renderWireframe () const
 	{
-		/** @todo constants for colors */
-		const Vector3 colorWhite = Vector3(1.0, 1.0, 1.0);
-		glColor3fv(vector3_to_array(colorWhite));
+		glColor3fv( vector3_to_array (color_wireframe));
 
-		/** @todo use constants for grid sizes */
-		Vector3 dx = Vector3(32, 0, 0);
-		Vector3 dy = Vector3(0, 32, 0);
-		Vector3 dz = Vector3(0, 0, 64);
+		Vector3 dx = Vector3(UNIT_SIZE, 0, 0);
+		Vector3 dy = Vector3(0, UNIT_SIZE, 0);
+		Vector3 dz = Vector3(0, 0, UNIT_HEIGHT);
 		Vector3 dxy = vector3_added(dx, dy);
 
 		/* lower and upper corners */
@@ -92,38 +108,77 @@ namespace routing
 	}
 
 	/**
+	 * @brief Convert EAccessState into color representation
+	 * @param state state to display
+	 * @return color vector
+	 */
+	static Vector3 getColorForAccessState (EAccessState state)
+	{
+		switch (state) {
+		case ACC_DISABLED:
+			return color_accessible_not;
+		case ACC_CROUCH:
+			return color_accessible_crouch;
+		case ACC_STAND:
+			return color_accessible_stand;
+		default:
+			return color_accessible_not;
+		}
+
+	}
+
+	/**
 	 * @brief render a box for accessability of this grid part
 	 */
 	void RoutingRenderableEntry::renderAccessability (RenderStateFlags state) const
 	{
 		/* center of drawn box */
-		Vector3 diffCenter = Vector3(16, 16, 8);
-		/**@todo render accessability in different colors based on state */
-		const Vector3 colorGreen = Vector3(0.0, 1.0, 0.0);
-		glColor3fv(vector3_to_array(colorGreen));
-		AABB box = AABB(vector3_added(this->_data.getOrigin(), diffCenter), Vector3(8, 8, 8));
+		Vector3 diffCenter = Vector3(UNIT_SIZE_HALF, UNIT_SIZE_HALF, UNIT_HEIGHT_EIGHTH);
+		const Vector3 color = getColorForAccessState(_data.getAccessState());
+		glColor3fv( vector3_to_array (color));
+		AABB box = AABB(vector3_added(this->_data.getOrigin(), diffCenter), Vector3(UNIT_SIZE_QUARTER,
+				UNIT_SIZE_QUARTER, UNIT_HEIGHT_EIGHTH));
 		aabb_draw_solid(box, state);
+	}
+
+	/**
+	 * @brief Convert EConnectionState into color representation
+	 * @param state state to display
+	 * @return color vector
+	 */
+	static Vector3 getColorForConnectivity (EConnectionState state)
+	{
+		switch (state) {
+		case CON_DISABLE:
+			return color_connected_not;
+		case CON_CROUCHABLE:
+			return color_connected_crouch;
+		case CON_WALKABLE:
+			return color_connected_walk;
+		default:
+			return color_connected_not;
+		}
+
 	}
 
 	/**
 	 * @brief render connection arrow for given direction
 	 * @param direction direction to draw arrow for
 	 */
-	void RoutingRenderableEntry::renderConnection (int direction) const
+	void RoutingRenderableEntry::renderConnection (EDirection direction) const
 	{
-		/**@todo get color from lump connectivity data */
-		const Vector3 colorBlue = Vector3(-1.0, -1.0, 1.0);
-		glColor3fv(vector3_to_array(colorBlue));
+		const Vector3 color = getColorForConnectivity(_data.getConnectionState(direction));
+		glColor3fv( vector3_to_array (color));
 
 		//vector to center of direction arrows
-		Vector3 diffCenter = Vector3(16, 16, 32);
+		Vector3 diffCenter = Vector3(UNIT_SIZE_HALF, UNIT_SIZE_HALF, UNIT_HEIGHT_HALF);
 		//vector tip
-		Vector3 difTip = Vector3(0, -16, 0);
+		Vector3 difTip = Vector3(0, -(UNIT_SIZE_HALF), 0);
 		//vector base corners
-		Vector3 difB1 = Vector3(2, -8, 2);
-		Vector3 difB2 = Vector3(2, -8, -2);
-		Vector3 difB3 = Vector3(-2, -8, -2);
-		Vector3 difB4 = Vector3(-2, -8, 2);
+		Vector3 difB1 = Vector3(2, -(UNIT_SIZE_QUARTER), 2);
+		Vector3 difB2 = Vector3(2, -(UNIT_SIZE_QUARTER), -2);
+		Vector3 difB3 = Vector3(-2, -(UNIT_SIZE_QUARTER), -2);
+		Vector3 difB4 = Vector3(-2, -(UNIT_SIZE_QUARTER), 2);
 
 		//rotate tip and base corners around {0,0,0} before translate to center
 		Quaternion rotation = quaternion_for_z(degrees_to_radians(direction * 45));
@@ -158,8 +213,8 @@ namespace routing
 	 */
 	void RoutingRenderableEntry::renderConnections (void) const
 	{
-		for (int i = 0; i < 8; i++) {
-			renderConnection(i);
+		for (EDirection dir = routing::DIR_WEST; dir < routing::MAX_DIRECTIONS; dir++) {
+			renderConnection(dir);
 		}
 	}
 }
