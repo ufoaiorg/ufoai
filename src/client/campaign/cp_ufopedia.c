@@ -1319,6 +1319,8 @@ void UP_InitStartup (void)
 
 	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
 	mn_uppreavailable = Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");
+	Cvar_Set("mn_uprequirement", "");
+	Cvar_Set("mn_upmetadata", "");
 }
 
 /**
