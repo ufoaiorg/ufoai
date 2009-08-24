@@ -296,7 +296,10 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	 * No, but in buy and production - and they are using these functions, too, no? (mattn) */
 	Cvar_Set("mn_item", item->id);
 	Cvar_Set("mn_itemname", _(item->tech->name));
-	Cvar_Set("mn_upmodel_top", item->tech->mdl);
+	if (item->tech->mdl)
+		Cvar_Set("mn_upmodel_top", item->tech->mdl);
+	else
+		Cvar_Set("mn_upmodel_top", "");
 
 	/* set description text */
 	if (RS_IsResearched_ptr(item->tech)) {
