@@ -240,7 +240,10 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 	/* Alloc options */
 	if (AIM_items)
 		Mem_Free(AIM_items);
-	AIM_items = (menuOption_t *) Mem_PoolAlloc(sizeof(*AIM_items) * count, cp_campaignPool, 0);
+	if (count)
+		AIM_items = (menuOption_t *) Mem_PoolAlloc(sizeof(*AIM_items) * count, cp_campaignPool, 0);
+	else
+		AIM_items = NULL;
 
 	/* List only those which are researched to buffer */
 	option = AIM_items;
