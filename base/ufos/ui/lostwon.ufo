@@ -417,11 +417,13 @@ window uforecovery
 
 	confunc cp_basesel_select {
 		*store_panel.ur_ufoyards@lineselected <1>
+		*store_panel.ur_capacities@lineselected <1>
 	}
 
 	func onInit {
 		cmd "uforecovery_tabselect store"
 		*store_panel.ur_ufoyards@lineselected = -1
+		*store_panel.ur_capacities@lineselected = -1
 		*sell_panel.cp_uforecovery_nationlist@lineselected = -1
 		*cvar:mission_recoverynation = ""
 		cmd "cp_uforecovery_sell_init;cp_uforecovery_store_init;"
