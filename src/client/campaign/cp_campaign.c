@@ -824,7 +824,7 @@ static void CL_StatsUpdate_f (void)
 	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
 	int hired[MAX_EMPL];
-	int i, j, costs = 0, sum = 0;
+	int i, j, costs = 0, sum = 0, totalfunds = 0;
 
 	/* delete buffer */
 	memset(statsBuffer, 0, sizeof(statsBuffer));
@@ -855,7 +855,9 @@ static void CL_StatsUpdate_f (void)
 	MN_RegisterText(TEXT_STATS_NATIONS, pos);
 	for (i = 0; i < ccs.numNations; i++) {
 		Q_strcat(pos, va(_("%s\t%s\n"), _(ccs.nations[i].name), NAT_GetHappinessString(&ccs.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+		totalfunds += NAT_GetFunding(&ccs.nations[i], 0);
 	}
+	Q_strcat(pos, va(_("\nFunding this month:\t%d"), totalfunds), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 
 	/* costs */
 	for (i = 0; i < ccs.numEmployees[EMPL_SCIENTIST]; i++) {
