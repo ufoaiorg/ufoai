@@ -203,19 +203,19 @@ building building_large_ufo_hangar2
 }
 
 // Team room is disabled, scheduled for removal
-//building building_teamroom
-//{
-//	name		"_Team Room"
-//	image		base/teamroom
-//	fixcosts	32000
-//	depends		building_powerplant
-//	build_time	3
-//	varcosts	2600
-//	map_name	"teamroom"
-//	type		teamroom
-//	pedia		rs_building_teamroom
-//	max_count	1
-//}
+building building_teamroom
+{
+	name		"_Team Room"
+	image		base/teamroom
+	fixcosts	32000
+	depends		building_powerplant
+	build_time	3
+	varcosts	2600
+	map_name	"teamroom"
+	type		teamroom
+	pedia		rs_building_teamroom
+	max_count	0
+}
 
 building building_workshop
 {
