@@ -1867,7 +1867,7 @@ item grenl_plasma_ammo
 // =======================
 item bolterrifle
 {
-	name			"_Bolter Rifle"
+	name			"_Electromagnetic Rifle"
 	model			weapons/bolterrifle/bolterrifle
 	weapon			true
 	type			biggun
@@ -1887,7 +1887,7 @@ item bolterrifle
 
 item bolterrifle_ammo
 {
-	name			"_Bolter Rifle Magazine"
+	name			"_Electromagnetic Rifle Magazine"
 	model			weapons/bolterrifle/bolterrifle_clip
 	type			ammo
 	animationindex	0

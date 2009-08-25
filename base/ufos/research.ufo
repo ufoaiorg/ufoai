@@ -1031,7 +1031,7 @@ tech rs_weapon_shotgun_ammo
 
 tech rs_weapon_bolterrifle
 {
-	name	"_Electromagnetic Rifle"	// Called differently than the item in the equipment (Bolter).
+	name	"_Electromagnetic Rifle"
 	type	weapon
 	up_chapter	equipment
 
