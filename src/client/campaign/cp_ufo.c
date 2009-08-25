@@ -59,7 +59,7 @@ const char* UFO_TypeToName (ufoType_t type)
  * @brief Returns names of the UFO is UFO has been reseached.
  * @param[in] ufocraft Pointer to the UFO.
  */
-const char* UFO_AircraftToIDOnGeoscape (aircraft_t *ufocraft)
+const char* UFO_AircraftToIDOnGeoscape (const aircraft_t *ufocraft)
 {
 	const technology_t *tech = ufocraft->tech;
 
@@ -696,7 +696,7 @@ qboolean UFO_CampaignCheckEvents (void)
 				continue;
 
 			/* maybe the ufo is already detected, don't reset it */
-			if(RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, detected | ufo->detected)) {
+			if (RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, detected | ufo->detected)) {
 				const int distance = MAP_GetDistance(installation->pos, ufo->pos);
 				detected = qtrue;
 				if (minDistance < 0 || minDistance > distance) {
