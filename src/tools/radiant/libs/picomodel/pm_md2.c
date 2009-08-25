@@ -304,28 +304,9 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 		texCoord->t = _pico_little_short(texCoord->t);
 	}
 
-	/* set Skin Name */
-	strncpy(skinname, (char*) (bb + md2->ofsSkins), MD2_MAX_SKINNAME);
-
-	/* detox Skin name */
-	if (skinname[0] == '.') {/* special case ufoai skinpath */
-		char path[MD2_MAX_SKINNAME];
-		char skinnameRelative[MD2_MAX_SKINNAME];
-		strncpy(path, fileName, MD2_MAX_SKINNAME);
-		strncpy(skinnameRelative, skinname, MD2_MAX_SKINNAME);
-		_pico_unixify(path);
-		for (i = MD2_MAX_SKINNAME; i--;) {/* skip filename */
-			if (path[i] == '/')
-				break;
-			path[i] = '\0';
-		}
-		snprintf(skinname, MD2_MAX_SKINNAME, "%s%s", path, &skinnameRelative[1]);
-	}
-	_pico_setfext(skinname, "");
-
 	/* Print out md2 values */
-	_pico_printf(PICO_VERBOSE, "Skins: %d  Verts: %d  STs: %d  Triangles: %d  Frames: %d\nSkin Name \"%s\"\n",
-			md2->numSkins, md2->numXYZ, md2->numST, md2->numTris, md2->numFrames, &skinname);
+	_pico_printf(PICO_VERBOSE, "Skins: %d  Verts: %d  STs: %d  Triangles: %d  Frames: %d\n\n",
+			md2->numSkins, md2->numXYZ, md2->numST, md2->numTris, md2->numFrames);
 
 	/* create new pico model */
 	picoModel = PicoNewModel();
@@ -340,6 +321,37 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	PicoSetModelName(picoModel, fileName);
 	PicoSetModelFileName(picoModel, fileName);
 
+	for (i = 0; i < md2->numSkins; i++) {
+		char *offsetSkin = (char*) (bb + md2->ofsSkins) + i * MD2_MAX_SKINNAME;
+		/* set Skin Name */
+		strncpy(skinname, offsetSkin, MD2_MAX_SKINNAME);
+
+		/* detox Skin name */
+		if (skinname[0] == '.') {/* special case ufoai skinpath */
+			char path[MD2_MAX_SKINNAME];
+			char skinnameRelative[MD2_MAX_SKINNAME];
+			strncpy(path, fileName, MD2_MAX_SKINNAME);
+			strncpy(skinnameRelative, skinname, MD2_MAX_SKINNAME);
+			_pico_unixify(path);
+			for (j = MD2_MAX_SKINNAME; j--;) {/* skip filename */
+				if (path[j] == '/')
+					break;
+				path[j] = '\0';
+			}
+			snprintf(skinname, MD2_MAX_SKINNAME, "%s%s", path, &skinnameRelative[1]);
+		}
+		_pico_setfext(skinname, "");
+
+		picoShader = PicoNewShader(picoModel);
+		if (picoShader == NULL) {
+			_pico_printf(PICO_ERROR, "Unable to allocate a new model shader");
+			PicoFreeModel(picoModel);
+			return NULL;
+		}
+
+		PicoSetShaderName(picoShader, skinname);
+	}
+
 	/* allocate new pico surface */
 	picoSurface = PicoNewSurface(picoModel);
 	if (picoSurface == NULL) {
@@ -350,17 +362,9 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 
 	PicoSetSurfaceType(picoSurface, PICO_TRIANGLES);
 	PicoSetSurfaceName(picoSurface, frame->name);
-	picoShader = PicoNewShader(picoModel);
-	if (picoShader == NULL) {
-		_pico_printf(PICO_ERROR, "Unable to allocate a new model shader");
-		PicoFreeModel(picoModel);
-		return NULL;
-	}
-
-	PicoSetShaderName(picoShader, skinname);
 
 	/* associate current surface with newly created shader */
-	PicoSetSurfaceShader(picoSurface, picoShader);
+	PicoSetSurfaceShader(picoSurface, PicoGetModelShader(picoModel, 0));
 
 	/* Init LUT for Verts */
 	p_index_LUT = (index_LUT_t *) _pico_alloc(sizeof(index_LUT_t) * md2->numXYZ);
