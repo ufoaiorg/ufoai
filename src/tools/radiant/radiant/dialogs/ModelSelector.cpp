@@ -429,6 +429,7 @@ namespace ui
 	{
 		// Remember the selected model then exit from the recursive main loop
 		self->_lastModel = self->getSelectedValue(FULLNAME_COLUMN);
+		// TODO: This must not be the name, but the skin index
 		self->_lastSkin = self->getSelectedValue(SKIN_COLUMN);
 		gtk_main_quit();
 		gtk_widget_hide(self->_widget);
