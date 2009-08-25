@@ -202,7 +202,7 @@ static void B_BuildBase_f (void)
 		if (baseName[0] == '\0')
 			baseName = "Base";
 
-		/* set up the base with buildings that have the autobuild flag set */
+		/* set up the base with buildings from template */
 		B_SetUpBase(base, cp_start_employees->integer, cl_start_buildings->integer, newBasePos);
 
 		ccs.numBases++;

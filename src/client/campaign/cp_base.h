@@ -138,7 +138,7 @@ typedef struct building_s {
 	struct base_s *base;	/**< The base this building is located in. */
 
 	char *id;
-	char *name;
+	char *name;			/**< translatable name of the building */
 	char *image, *mapPart, *pedia;
 
 	char *needs;		/**< "needs" determines the second building part. */
@@ -147,7 +147,7 @@ typedef struct building_s {
 	/**
 	 * level of the building.
 	 * @note This value depends on the implementation of the affected building
-	 * might e.g. be an factor */
+	 * might e.g. be a factor */
 	float level;
 
 	int timeStart, buildTime;
@@ -166,7 +166,7 @@ typedef struct building_s {
 
 	int maxCount;		/**< How many building of the same type allowed? */
 
-	vec2_t pos;			/**< Position of autobuild. */
+	vec2_t pos;			/**< location in the base. */
 	qboolean mandatory;
 
 	/** How many employees to hire on construction in the first base */

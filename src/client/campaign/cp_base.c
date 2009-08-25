@@ -274,7 +274,6 @@ static const value_t valid_building_vars[] = {
 	{"onconstruct", V_STRING, offsetof(building_t, onConstruct), 0}, /**< Event handler. */
 	{"onattack", V_STRING, offsetof(building_t, onAttack), 0}, /**< Event handler. */
 	{"ondestroy", V_STRING, offsetof(building_t, onDestroy), 0}, /**< Event handler. */
-	{"pos", V_POS, offsetof(building_t, pos), MEMBER_SIZEOF(building_t, pos)}, /**< Place of a building. Needed for flag autobuild */
 	{"mandatory", V_BOOL, offsetof(building_t, mandatory), MEMBER_SIZEOF(building_t, mandatory)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
 	{NULL, 0, 0, 0}
 };
@@ -916,19 +915,22 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
  */
 static void B_AddBuildingToBasePos (base_t *base, const building_t const *template, qboolean hire, const vec2_t pos)
 {
-	building_t *buildingNew;		/**< new building in base (not a template) */
+	/* new building in base (not a template) */
+	building_t *buildingNew;
 
 	/* fake a click to basemap */
 	buildingNew = B_SetBuildingByClick(base, template, (int)pos[0], (int)pos[1]);
 	B_UpdateAllBaseBuildingStatus(buildingNew, base, B_STATUS_WORKING);
-	Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s at (%.0f:%.0f)\n", base->idx, buildingNew->id, buildingNew->pos[0], buildingNew->pos[1]);
+	Com_DPrintf(DEBUG_CLIENT, "Base %i new building: %s at (%.0f:%.0f)\n",
+			base->idx, buildingNew->id, buildingNew->pos[0], buildingNew->pos[1]);
 
 	if (hire)
 		E_HireForBuilding(base, buildingNew, -1);
 
 	/* now call the onconstruct trigger */
 	if (buildingNew->onConstruct[0] != '\0') {
-		Com_DPrintf(DEBUG_CLIENT, "B_AddBuildingToBasePos: %s %i;\n", buildingNew->onConstruct, base->idx);
+		Com_DPrintf(DEBUG_CLIENT, "B_AddBuildingToBasePos: %s %i;\n",
+				buildingNew->onConstruct, base->idx);
 		Cmd_ExecuteString(va("%s %i", buildingNew->onConstruct, base->idx));
 	}
 }
@@ -974,7 +976,8 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
 /**
  * @brief builds a base from template
  * @param[out] base The base to build
- * @param[in] templateName Templated used for building
+ * @param[in] templateName Templated used for building. If @c NULL no template
+ * will be used.
  * @param[in] hire If hiring employee needed
  * @note It builds an empty base on NULL (or empty) templatename
  */
@@ -1039,7 +1042,8 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 }
 
 /**
- * @brief Setup buildings and equipment for first base
+ * @brief Setup buildings and equipment for first base. Uses the campaign
+ * scriptable first base template to place the buildings in the base.
  * @param[in,out] base The base to set up
  * @param[in] hire Hire employees for the building we create from the template
  * @param[in] buildings Add buildings to the initial base
@@ -1118,7 +1122,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		}
 	} else {
 		B_BuildFromTemplate(base, NULL, hire);
-		/* if no autobuild, set up zero build time for the first base */
+		/* set up zero build time for the first base */
 		ccs.instant_build = 1;
 	}
 }
@@ -1153,7 +1157,7 @@ void B_UpdateBaseCount (void)
 }
 
 /**
- * @brief Setup new base
+ * @brief Setup new base, uses template for the first base
  * @param[in,out] base The base to set up
  * @param[in] hire Hire employees for the building we create from the template
  * @param[in] buildings Add buildings to the initial base
