@@ -644,6 +644,9 @@ qboolean UFO_CampaignCheckEvents (void)
 
 	/* For each ufo in geoscape */
 	for (ufo = ccs.ufos + ccs.numUFOs - 1; ufo >= ccs.ufos; ufo--) {
+		char detectedBy[MAX_VAR] = "";
+		float minDistance = -1;
+
 		/* don't update UFO status id UFO is landed or crashed */
 		if (ufo->landed)
 			continue;
@@ -662,14 +665,28 @@ qboolean UFO_CampaignCheckEvents (void)
 				continue;
 
 			/* maybe the ufo is already detected, don't reset it */
-			detected |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, detected | ufo->detected);
+			if (RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, detected | ufo->detected)) {
+				const int distance = MAP_GetDistance(base->pos, ufo->pos);
+				detected = qtrue;
+				if (minDistance < 0 || minDistance > distance) {
+					minDistance = distance;
+					strncpy(detectedBy, base->name, sizeof(detectedBy));
+				}
+			}
 
 			/* Check if UFO is detected by an aircraft */
 			for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--) {
 				if (!AIR_IsAircraftOnGeoscape(aircraft))
 					continue;
 				/* maybe the ufo is already detected, don't reset it */
-				detected |= RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, detected | ufo->detected);
+				if (RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, detected | ufo->detected)) {
+					const int distance = MAP_GetDistance(aircraft->pos, ufo->pos);
+					detected = qtrue;
+					if (minDistance < 0 || minDistance > distance) {
+						minDistance = distance;
+						strncpy(detectedBy, aircraft->name, sizeof(detectedBy));
+					}
+				}
 			}
 		}
 
@@ -679,7 +696,14 @@ qboolean UFO_CampaignCheckEvents (void)
 				continue;
 
 			/* maybe the ufo is already detected, don't reset it */
-			detected |= RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, detected | ufo->detected);
+			if(RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, detected | ufo->detected)) {
+				const int distance = MAP_GetDistance(installation->pos, ufo->pos);
+				detected = qtrue;
+				if (minDistance < 0 || minDistance > distance) {
+					minDistance = distance;
+					strncpy(detectedBy, installation->name, sizeof(detectedBy));
+				}
+			}
 		}
 
 		/* Check if ufo appears or disappears on radar */
@@ -692,7 +716,7 @@ qboolean UFO_CampaignCheckEvents (void)
 					/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets
 					 * @sa UFO_SearchAircraftTarget */
 				} else
-					MSO_CheckAddNewMessage(NT_UFO_SPOTTED, _("Notice"), _("Our radar detected a new UFO"), qfalse, MSG_UFOSPOTTED, NULL);
+					MSO_CheckAddNewMessage(NT_UFO_SPOTTED, _("Notice"), va(_("Our radar detected a new UFO near %s"), detectedBy), qfalse, MSG_UFOSPOTTED, NULL);
 				newDetection = qtrue;
 				UFO_DetectNewUFO(ufo);
 			} else if (!detected) {
