@@ -13,8 +13,8 @@
 // pedia:				The tech ID that has the UFOpaedia entry for this facility
 // needs:				Additional sections of this facility. Used for facilities larger than 1 tile
 // capacity:			The capacity of this facility. The meaning of the value depends on the building type.
-// onconstruct:			The name of the script to be run when this facility is built up
-// ondestroy:			The name of the script to be run when this facility is destroyed
+// onconstruct:			The name of the script to be run when this facility is built up. Don't add a ; at the end.
+// ondestroy:			The name of the script to be run when this facility is destroyed. Don't add a ; at the end.
 // visible:				Sets whether this facility is visible on the base screen
 // max_count:			No base may have more than this amount of this facility
 // starting_employees:	The amount of employees that come with this building
