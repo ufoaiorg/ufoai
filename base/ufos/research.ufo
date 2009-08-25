@@ -3245,6 +3245,7 @@ tech rs_building_storage
 	time	0
 }
 
+// @todo Team Room is disabled, scheduled for removal
 tech rs_building_teamroom
 {
 	type	building
@@ -3252,7 +3253,7 @@ tech rs_building_teamroom
 		default "_b_teamroom_txt"
 	}
 	// pre_description	"_b_teamroom_pre_txt"
-	up_chapter	buildings
+	// up_chapter	buildings
 
 	require_AND
 	{
@@ -3263,6 +3264,7 @@ tech rs_building_teamroom
 	time	0
 }
 
+// @todo Small UFO Hangar is disabled, scheduled for removal
 tech rs_building_small_ufo_hangar
 {
 	type	building
@@ -3270,7 +3272,7 @@ tech rs_building_small_ufo_hangar
 		default "_b_small_ufo_hangar_txt"
 	}
 	// pre_description	"_b_small_ufo_hangar_pre_txt"
-	up_chapter	buildings
+	// up_chapter	buildings
 
 	require_AND
 	{
@@ -3281,6 +3283,7 @@ tech rs_building_small_ufo_hangar
 	time	0
 }
 
+// @todo Large UFO Hangar is disabled, scheduled for removal
 tech rs_building_large_ufo_hangar
 {
 	type	building
@@ -3288,7 +3291,7 @@ tech rs_building_large_ufo_hangar
 		default "_b_large_ufo_hangar_txt"
 	}
 	// pre_description	"_b_large_ufo_hangar_pre_txt"
-	up_chapter	buildings
+	// up_chapter	buildings
 
 	require_AND
 	{
