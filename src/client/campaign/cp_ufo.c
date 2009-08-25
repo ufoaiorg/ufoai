@@ -651,7 +651,10 @@ qboolean UFO_CampaignCheckEvents (void)
 		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells us whether or not the UFO was detected PREVIOUSLY. */
 		detected = qfalse;
 
-		for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		/* note: We can't exit these loops as soon as we found the UFO detected
+			RADAR_CheckUFOSensored registers the UFO in every radars' detection list
+			which detect it */
+		for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
 			base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 			if (!base)
 				continue;
@@ -670,7 +673,7 @@ qboolean UFO_CampaignCheckEvents (void)
 			}
 		}
 
-		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+		for (installationIdx = 0; installationIdx < ccs.numInstallations; installationIdx++) {
 			installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
 			if (!installation)
 				continue;
