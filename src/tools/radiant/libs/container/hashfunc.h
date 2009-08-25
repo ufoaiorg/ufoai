@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_CONTAINER_HASHFUNC_H)
 #define INCLUDED_CONTAINER_HASHFUNC_H
 
+#include <string>
 #include <cctype>
 #include "string/string.h"
 #include "container/array.h"
@@ -310,21 +311,21 @@ inline hash_t string_hash_nocase(const char* string, hash_t previous = 0) {
 
 struct RawStringHash {
 	typedef hash_t hash_type;
-	hash_type operator()(const char* string) const {
-		return string_hash(string);
+	hash_type operator()(const std::string& string) const {
+		return string_hash(string.c_str());
 	}
 };
 
 struct HashString {
 	typedef hash_t hash_type;
-	hash_type operator()(const CopiedString& string) const {
+	hash_type operator()(const std::string& string) const {
 		return string_hash(string.c_str());
 	}
 };
 
 struct HashStringNoCase {
 	typedef hash_t hash_type;
-	hash_type operator()(const CopiedString& string) const {
+	hash_type operator()(const std::string& string) const {
 		return string_hash_nocase(string.c_str());
 	}
 };

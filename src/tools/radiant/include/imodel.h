@@ -23,9 +23,13 @@
 #define INCLUDED_IMODEL_H
 
 #include <string>
+#include <vector>
 #include <memory>
 #include "generic/constant.h"
 #include "irender.h"
+
+// Model skinlist typedef
+typedef std::vector<std::string> ModelSkinList;
 
 /* Forward decls */
 namespace scene
@@ -35,7 +39,6 @@ namespace scene
 
 class ArchiveFile;
 class AABB;
-class ModelSkin;
 
 namespace model
 {
@@ -52,26 +55,38 @@ namespace model
 			 * @param skin
 			 * The ModelSkin instance to apply to this model.
 			 */
-			virtual void applySkin (const ModelSkin& skin) = 0;
+			virtual void applySkin (const std::string& skin) = 0;
 
 			/** Return the number of material surfaces on this model. Each material
 			 * surface consists of a set of polygons sharing the same material.
 			 */
-			virtual int getSurfaceCount () const = 0;
+			virtual const std::string& getSurfaceCount () const = 0;
 
 			/** Return the number of vertices in this model, equal to the sum of the
 			 * vertex count from each surface.
 			 */
-			virtual int getVertexCount () const = 0;
+			virtual const std::string& getVertexCount () const = 0;
 
 			/** Return the number of triangles in this model, equal to the sum of the
 			 * triangle count from each surface.
 			 */
-			virtual int getPolyCount () const = 0;
+			virtual const std::string& getPolyCount () const = 0;
 
 			/** Return the local AABB that encloses this model.
 			 */
 			virtual const AABB& getAABB () const = 0;
+
+			/**
+			 * @brief Return the skins associated with the given model.
+			 *
+			 * @param
+			 * The full pathname of the model, as given by the "model" key in the skin definition.
+			 *
+			 * @return
+			 * A vector of strings, each identifying the name of a skin which is associated with the
+			 * given model. The vector may be empty as a model does not require any associated skins.
+			 */
+			virtual const ModelSkinList& getSkinsForModel () const = 0;
 	};
 
 	// Smart pointer typedef
@@ -98,7 +113,8 @@ class ModelLoader
 		virtual scene::Node& loadModel (ArchiveFile& file) = 0;
 
 		/** Load a model from the VFS, and return the OpenGLRenderable
-		 * subclass for it.
+		 * subclass for it. This object will be freed automatically at the
+		 * end of its scope.
 		 */
 		virtual model::IModelPtr loadModelFromPath (const std::string& path) = 0;
 };

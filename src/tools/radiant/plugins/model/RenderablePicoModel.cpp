@@ -2,6 +2,8 @@
 
 #include "texturelib.h"
 
+#include <sstream>
+
 namespace model
 {
 	// Constructor
@@ -28,6 +30,29 @@ namespace model
 			// Extend the model AABB to include the surface's AABB
 			aabb_extend_by_aabb(_localAABB, rSurf->getAABB());
 		}
+
+		const int nShaders = PicoGetModelNumShaders(mod);
+		for (int n = 0; n < nShaders; n++) {
+			const picoShader_t *shader = PicoGetModelShader(mod, n);
+			if (shader) {
+				modelSkinList.push_back(shader->name);
+			}
+		}
+
+		std::stringstream polyCountStream;
+		const int polyCount = getPolyCountInt();
+		polyCountStream << polyCount;
+		polyCountStr = polyCountStream.str();
+
+		std::stringstream surfaceCountStream;
+		const int surfaceCount = getSurfaceCountInt();
+		surfaceCountStream << surfaceCount;
+		surfaceCountStr = surfaceCountStream.str();;
+
+		std::stringstream vertexCountStream;
+		const int vertexCount = getVertexCountInt();
+		vertexCountStream << vertexCount;
+		vertexCountStr = vertexCountStream.str();
 	}
 
 	// Virtual render function
@@ -52,11 +77,26 @@ namespace model
 	}
 
 	// Apply the given skin to this model
-	void RenderablePicoModel::applySkin (const ModelSkin& skin)
+	void RenderablePicoModel::applySkin (const std::string& skin)
 	{
 		// Apply the skin to each surface
 		for (SurfaceList::iterator i = _surfVec.begin(); i != _surfVec.end(); ++i) {
 			i->applySkin(skin);
 		}
 	}
+
+	/**
+	 * @brief Return the skins associated with the given model.
+	 *
+	 * @param
+	 * The full pathname of the model, as given by the "model" key in the skin definition.
+	 *
+	 * @return
+	 * A vector of strings, each identifying the name of a skin which is associated with the
+	 * given model. The vector may be empty as a model does not require any associated skins.
+	 */
+	const ModelSkinList& RenderablePicoModel::getSkinsForModel () const {
+		return modelSkinList;
+	}
+
 }

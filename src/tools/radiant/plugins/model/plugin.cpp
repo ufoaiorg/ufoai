@@ -38,6 +38,7 @@ typedef unsigned char byte;
 #include "ifiletypes.h"
 #include "preferencesystem.h"
 #include "stringio.h"
+#include "iarchive.h"
 
 #include "modulesystem/singletonmodule.h"
 #include "stream/textstream.h"

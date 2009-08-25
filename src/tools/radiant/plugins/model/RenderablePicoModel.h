@@ -26,20 +26,16 @@ namespace model
 			// Local AABB for this model
 			AABB _localAABB;
 
-		public:
+			// The list of skins that are available for this model
+			ModelSkinList modelSkinList;
 
-			/** Constructor. Accepts a picoModel_t struct containing the raw model data
-			 * loaded from picomodel
-			 */
-			RenderablePicoModel (picoModel_t* mod);
-
-			/** Virtual render function from OpenGLRenderable.
-			 */
-			void render (RenderStateFlags flags) const;
+			std::string polyCountStr;
+			std::string surfaceCountStr;
+			std::string vertexCountStr;
 
 			/** Return the number of surfaces in this model.
 			 */
-			int getSurfaceCount () const
+			int getSurfaceCountInt () const
 			{
 				return _surfVec.size();
 			}
@@ -47,7 +43,7 @@ namespace model
 			/** Return the number of vertices in this model, by summing the vertex
 			 * counts for each surface
 			 */
-			int getVertexCount () const
+			int getVertexCountInt () const
 			{
 				int sum = 0;
 				for (SurfaceList::const_iterator i = _surfVec.begin(); i != _surfVec.end(); ++i) {
@@ -59,7 +55,7 @@ namespace model
 			/** Return the polycount (tricount) of this model by summing the surface
 			 * polycounts.
 			 */
-			int getPolyCount () const
+			int getPolyCountInt () const
 			{
 				int sum = 0;
 				for (SurfaceList::const_iterator i = _surfVec.begin(); i != _surfVec.end(); ++i) {
@@ -68,6 +64,17 @@ namespace model
 				return sum;
 			}
 
+		public:
+
+			/** Constructor. Accepts a picoModel_t struct containing the raw model data
+			 * loaded from picomodel
+			 */
+			RenderablePicoModel (picoModel_t* mod);
+
+			/** Virtual render function from OpenGLRenderable.
+			 */
+			void render (RenderStateFlags flags) const;
+
 			/** Return the enclosing AABB for this model.
 			 */
 			const AABB& getAABB () const
@@ -75,9 +82,44 @@ namespace model
 				return _localAABB;
 			}
 
+			/** Return the number of surfaces in this model.
+			 */
+			const std::string& getSurfaceCount () const
+			{
+				return surfaceCountStr;
+			}
+
+			/** Return the number of vertices in this model, by summing the vertex
+			 * counts for each surface
+			 */
+			const std::string& getVertexCount () const
+			{
+				return vertexCountStr;
+			}
+
+			/** Return the polycount (tricount) of this model by summing the surface
+			 * polycounts.
+			 */
+			const std::string& getPolyCount () const
+			{
+				return polyCountStr;
+			}
+
+			/**
+			 * @brief Return the skins associated with the given model.
+			 *
+			 * @param
+			 * The full pathname of the model, as given by the "model" key in the skin definition.
+			 *
+			 * @return
+			 * A vector of strings, each identifying the name of a skin which is associated with the
+			 * given model. The vector may be empty as a model does not require any associated skins.
+			 */
+			const ModelSkinList& getSkinsForModel () const;
+
 			/** Apply the given skin to this model.
 			 */
-			void applySkin (const ModelSkin& skin);
+			void applySkin (const std::string& skin);
 	};
 }
 

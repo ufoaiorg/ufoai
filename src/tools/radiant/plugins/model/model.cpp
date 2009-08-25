@@ -32,7 +32,6 @@
 #include "iarchive.h"
 #include "idatastream.h"
 #include "imodel.h"
-#include "modelskin.h"
 
 #include "cullable.h"
 #include "renderable.h"
@@ -389,8 +388,7 @@ class PicoModel: public Cullable, public Bounded
 class PicoModelInstance: public scene::Instance,
 		public Renderable,
 		public SelectionTestable,
-		public LightCullable,
-		public SkinnedModel
+		public LightCullable
 {
 		class TypeCasts
 		{
@@ -402,7 +400,7 @@ class PicoModelInstance: public scene::Instance,
 					InstanceContainedCast<PicoModelInstance, Cullable>::install(m_casts);
 					InstanceStaticCast<PicoModelInstance, Renderable>::install(m_casts);
 					InstanceStaticCast<PicoModelInstance, SelectionTestable>::install(m_casts);
-					InstanceStaticCast<PicoModelInstance, SkinnedModel>::install(m_casts);
+					//InstanceStaticCast<PicoModelInstance, SkinnedModel>::install(m_casts);
 				}
 				InstanceTypeCastTable& get ()
 				{
@@ -451,40 +449,6 @@ class PicoModelInstance: public scene::Instance,
 		}
 		typedef MemberCaller<PicoModelInstance, &PicoModelInstance::lightsChanged> LightsChangedCaller;
 
-		void constructRemaps ()
-		{
-			ASSERT_MESSAGE(m_skins.size() == m_picomodel.size(), "ERROR");
-			ModelSkin* skin = NodeTypeCast<ModelSkin>::cast(path().parent());
-			if (skin != 0 && skin->realised()) {
-				SurfaceRemaps::iterator j = m_skins.begin();
-				for (PicoModel::const_iterator i = m_picomodel.begin(); i != m_picomodel.end(); ++i, ++j) {
-					const char* remap = skin->getRemap((*i)->getShader());
-					if (!string_empty(remap)) {
-						(*j).first = remap;
-						(*j).second = GlobalShaderCache().capture(remap);
-					} else {
-						(*j).second = 0;
-					}
-				}
-				SceneChangeNotify();
-			}
-		}
-		void destroyRemaps ()
-		{
-			ASSERT_MESSAGE(m_skins.size() == m_picomodel.size(), "ERROR");
-			for (SurfaceRemaps::iterator i = m_skins.begin(); i != m_skins.end(); ++i) {
-				if ((*i).second != 0) {
-					GlobalShaderCache().release((*i).first.c_str());
-					(*i).second = 0;
-				}
-			}
-		}
-		void skinChanged ()
-		{
-			destroyRemaps();
-			constructRemaps();
-		}
-
 		PicoModelInstance (const scene::Path& path, scene::Instance* parent, PicoModel& picomodel) :
 			Instance(path, parent, this, StaticTypeCasts::instance().get()), m_picomodel(picomodel),
 					m_surfaceLightLists(m_picomodel.size()), m_skins(m_picomodel.size())
@@ -493,13 +457,9 @@ class PicoModelInstance: public scene::Instance,
 			m_picomodel.m_lightsChanged = LightsChangedCaller(*this);
 
 			Instance::setTransformChangedCallback(LightsChangedCaller(*this));
-
-			constructRemaps();
 		}
 		~PicoModelInstance ()
 		{
-			destroyRemaps();
-
 			Instance::setTransformChangedCallback(Callback());
 
 			m_picomodel.m_lightsChanged = Callback();

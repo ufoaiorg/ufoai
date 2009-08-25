@@ -5,6 +5,7 @@
 #include "gtkutil/glwidget.h"
 #include "gtkutil/image.h"
 #include "ifilesystem.h"
+#include "../referencecache.h"
 #include "os/path.h"
 
 #include <cmath>
@@ -173,14 +174,6 @@ namespace ui
 						std::stringstream nodeName;
 						nodeName << dirPath.substr(slashPos + 1);
 
-						// Get the list of skins for this model. The number of skins is appended
-						// to the model node name in brackets.
-						ModelSkinList skins = GlobalModelSkinCache().getSkinsForModel(MODELS_FOLDER + dirPath);
-						int numSk = skins.size();
-						if (numSk > 0) {
-							nodeName << " [" << numSk << (numSk == 1 ? " skin]" : " skins]");
-						}
-
 						// Decide which image to use, based on the file extension (or the folder
 						// image if there is no extension). Also, set a flag indicating that we
 						// have an actual model rather than a directory, so that the fullname
@@ -209,16 +202,34 @@ namespace ui
 								gtkutil::getLocalPixbuf(imgPath), -1);
 						GtkTreeIter* dynIter = gtk_tree_iter_copy(&iter); // get a heap-allocated iter
 
-						// Determine if this model has any associated skins, and add them as
-						// children. We also set the fullpath column to the model name for each skin.
+#if 0
+						if (isModel) {
+							// Load the model
+							ModelLoader* loader = ModelLoader_forType(path_get_extension(dirPath.c_str()));
+							if (loader != NULL) {
+								model::IModelPtr model = loader->loadModelFromPath(MODELS_FOLDER + dirPath);
 
-						for (ModelSkinList::iterator i = skins.begin(); i != skins.end(); ++i) {
-							GtkTreeIter skIter;
-							gtk_tree_store_append(_store, &skIter, &iter);
-							gtk_tree_store_set(_store, &skIter, NAME_COLUMN, i->c_str(), FULLNAME_COLUMN,
-									(MODELS_FOLDER + dirPath).c_str(), SKIN_COLUMN, i->c_str(), IMAGE_COLUMN,
-									gtkutil::getLocalPixbuf(SKIN_ICON), -1);
+								// Get the list of skins for this model. The number of skins is appended
+								// to the model node name in brackets.
+								ModelSkinList skins = model->getSkinsForModel();
+								int numSk = skins.size();
+								if (numSk > 0) {
+									nodeName << " [" << numSk << (numSk == 1 ? " skin]" : " skins]");
+								}
+
+								// Determine if this model has any associated skins, and add them as
+								// children. We also set the fullpath column to the model name for each skin.
+
+								for (ModelSkinList::iterator i = skins.begin(); i != skins.end(); ++i) {
+									GtkTreeIter skIter;
+									gtk_tree_store_append(_store, &skIter, &iter);
+									gtk_tree_store_set(_store, &skIter, NAME_COLUMN, i->c_str(), FULLNAME_COLUMN,
+											(MODELS_FOLDER + dirPath).c_str(), SKIN_COLUMN, i->c_str(), IMAGE_COLUMN,
+											gtkutil::getLocalPixbuf(SKIN_ICON), -1);
+								}
+							}
 						}
+#endif
 
 						// Now add a map entry that maps our directory name to the row we just
 						// added
@@ -392,14 +403,11 @@ namespace ui
 		gtk_list_store_set(_infoStore, &iter, 0, _("Skin name"), 1, skinName.c_str(), -1);
 
 		gtk_list_store_append(_infoStore, &iter);
-		// static_cast<std::string> (_modelPreview.getModel()->getSurfaceCount()).c_str();
-		gtk_list_store_set(_infoStore, &iter, 0, _("Material surfaces"), 1, "", -1);
+		gtk_list_store_set(_infoStore, &iter, 0, _("Material surfaces"), 1, _modelPreview.getModel()->getSurfaceCount().c_str(), -1);
 		gtk_list_store_append(_infoStore, &iter);
-		// static_cast<std::string> (_modelPreview.getModel()->getVertexCount()).c_str()
-		gtk_list_store_set(_infoStore, &iter, 0, _("Total vertices"), 1, "", -1);
+		gtk_list_store_set(_infoStore, &iter, 0, _("Total vertices"), 1, _modelPreview.getModel()->getVertexCount().c_str(), -1);
 		gtk_list_store_append(_infoStore, &iter);
-		// static_cast<std::string> (_modelPreview.getModel()->getPolyCount()).c_str()
-		gtk_list_store_set(_infoStore, &iter, 0, _("Total polys"), 1, "", -1);
+		gtk_list_store_set(_infoStore, &iter, 0, _("Total polys"), 1, _modelPreview.getModel()->getPolyCount().c_str(), -1);
 	}
 
 	/* GTK CALLBACKS */

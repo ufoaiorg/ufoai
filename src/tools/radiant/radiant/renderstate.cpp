@@ -39,6 +39,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <string>
 
 #include "math/matrix.h"
 #include "math/aabb.h"
@@ -256,7 +257,7 @@ class OpenGLShader: public Shader
 		~OpenGLShader ()
 		{
 		}
-		void construct (const char* name);
+		void construct (const std::string& name);
 		void destroy ()
 		{
 			if (m_shader) {
@@ -305,7 +306,7 @@ class OpenGLShader: public Shader
 			}
 			m_observers.detach(observer);
 		}
-		void realise (const CopiedString& name)
+		void realise (const std::string& name)
 		{
 			const char *shaderName = name.c_str();
 			if (shaderName && shaderName[0] != '\0')
@@ -410,7 +411,7 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 					m_cache(cache)
 				{
 				}
-				OpenGLShader* construct (const CopiedString& name)
+				OpenGLShader* construct (const std::string& name)
 				{
 					OpenGLShader* shader = new OpenGLShader;
 					if (m_cache->realised()) {
@@ -427,7 +428,7 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 				}
 		};
 
-		typedef HashedCache<CopiedString, OpenGLShader, HashString, std::equal_to<CopiedString>, CreateOpenGLShader>
+		typedef HashedCache<std::string, OpenGLShader, HashString, std::equal_to<std::string>, CreateOpenGLShader>
 				Shaders;
 		Shaders m_shaders;
 		std::size_t m_unrealised;
@@ -446,20 +447,14 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 		~OpenGLShaderCache ()
 		{
 			for (Shaders::iterator i = m_shaders.begin(); i != m_shaders.end(); ++i) {
-				globalOutputStream() << "leaked shader: " << makeQuoted((*i).key.c_str()) << "\n";
+				globalOutputStream() << "leaked shader: " << makeQuoted(i->key.c_str()) << "\n";
 			}
 		}
+
 		/* Capture the given shader.
 		 */
 		Shader* capture (const std::string& name)
 		{
-			return m_shaders.capture(name.c_str()).get();
-		}
-
-		Shader* capture (const char* name)
-		{
-			ASSERT_MESSAGE(name[0] == '$' || *name == '[' || *name == '<' || *name == '(' || strchr(name, '\\') == 0,
-					"shader name contains invalid characters: \"" << name << "\"");
 			return m_shaders.capture(name).get();
 		}
 
@@ -467,12 +462,9 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 		 */
 		void release (const std::string& name)
 		{
-			m_shaders.release(name.c_str());
-		}
-		void release (const char *name)
-		{
 			m_shaders.release(name);
 		}
+
 		void render (RenderStateFlags globalstate, const Matrix4& modelview, const Matrix4& projection,
 				const Vector3& viewer)
 		{
@@ -1091,8 +1083,9 @@ inline GLenum convertBlendFactor (BlendFactor factor)
 }
 
 /// \todo Define special-case shaders in a data file.
-void OpenGLShader::construct (const char* name)
+void OpenGLShader::construct (const std::string& shaderName)
 {
+	const char *name = shaderName.c_str();
 	OpenGLState& state = appendDefaultPass();
 	switch (name[0]) {
 	case '(':

@@ -6,7 +6,6 @@
 #include "os/path.h"
 #include "../../referencecache.h"
 #include "math/aabb.h"
-#include "modelskin.h"
 
 #include <gtk/gtk.h>
 
@@ -148,8 +147,7 @@ namespace ui
 	void ModelPreview::setSkin (const std::string& skin)
 	{
 		// Load and apply the skin
-		ModelSkin& mSkin = GlobalModelSkinCache().capture(skin);
-		_model->applySkin(mSkin);
+		_model->applySkin(skin);
 
 		// Redraw
 		gtk_widget_queue_draw(_glWidget);

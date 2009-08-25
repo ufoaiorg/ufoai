@@ -31,9 +31,9 @@
 class SkinRemap
 {
 	public:
-		const char* m_from;
-		const char* m_to;
-		SkinRemap (const char* from, const char* to) :
+		const std::string& m_from;
+		const std::string& m_to;
+		SkinRemap (const std::string& from, const std::string& to) :
 			m_from(from), m_to(to)
 		{
 		}
@@ -88,18 +88,6 @@ class ModelSkinCache
 		virtual ModelSkin& capture (const std::string& name) = 0;
 		/// \brief Decrements the reference-count of the skin uniquely identified by 'name'.
 		virtual void release (const std::string& name) = 0;
-
-		/**
-		 * @brief Return the skins associated with the given model.
-		 *
-		 * @param
-		 * The full pathname of the model, as given by the "model" key in the skin definition.
-		 *
-		 * @returns
-		 * A vector of strings, each identifying the name of a skin which is associated with the
-		 * given model. The vector may be empty as a model does not require any associated skins.
-		 */
-		virtual const ModelSkinList& getSkinsForModel (const std::string& modelName) = 0;
 };
 
 #include "modulesystem.h"

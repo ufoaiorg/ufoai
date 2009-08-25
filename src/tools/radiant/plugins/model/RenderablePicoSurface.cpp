@@ -1,5 +1,4 @@
 #include "RenderablePicoSurface.h"
-#include "modelskin.h"
 
 namespace model
 {
@@ -7,19 +6,17 @@ namespace model
 	RenderablePicoSurface::RenderablePicoSurface (picoSurface_t* surf) :
 		_originalShaderName(""), _mappedShaderName("")
 	{
-		// Get the shader from the picomodel struct. If this is a LWO model, use
-		// the material name to select the shader, while for an ASE model the
-		// bitmap path should be used.
+		// Get the shader from the picomodel struct.
 		picoShader_t* shader = PicoGetSurfaceShader(surf);
 		if (shader != 0) {
 			_originalShaderName = PicoGetShaderName(shader);
 		}
 		globalOutputStream() << "  RenderablePicoSurface: using shader " << _originalShaderName.c_str() << "\n";
 
-		_mappedShaderName = _originalShaderName; // no skin at this time
-
 		// Capture the shader
 		_shader = GlobalShaderCache().capture(_originalShaderName);
+		if (_shader)
+			_mappedShaderName = _originalShaderName; // no skin at this time
 
 		// Get the number of vertices and indices, and reserve capacity in our vectors in advance
 		// by populating them with empty structs.
@@ -57,11 +54,8 @@ namespace model
 	}
 
 	// Apply a skin to this surface
-	void RenderablePicoSurface::applySkin (const ModelSkin& skin)
+	void RenderablePicoSurface::applySkin (const std::string& remap)
 	{
-		// Look up the remap for this surface's material name. If there is a remap
-		// change the Shader* to point to the new shader.
-		std::string remap = skin.getRemap(_originalShaderName);
 		if (remap != "" && remap != _mappedShaderName) { // change to a new shader
 			// Switch shader objects
 			GlobalShaderCache().release(_mappedShaderName);

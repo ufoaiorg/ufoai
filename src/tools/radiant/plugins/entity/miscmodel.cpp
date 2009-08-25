@@ -48,7 +48,6 @@
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"
-#include "modelskinkey.h"
 
 #include "entity.h"
 
@@ -65,7 +64,6 @@ class MiscModel: public Snappable
 		/*float m_angle;*/// see generic.cpp
 		ScaleKey m_scaleKey;
 		Vector3 m_scale;
-		ModelSkinKey m_skin;
 
 		SingletonModel m_model;
 
@@ -83,7 +81,7 @@ class MiscModel: public Snappable
 			m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 			m_keyObservers.insert("model", SingletonModel::ModelChangedCaller(m_model));
-			m_keyObservers.insert("skin", ModelSkinKey::SkinChangedCaller(m_skin));
+			//m_keyObservers.insert("skin", ModelSkinKey::SkinChangedCaller(m_skin));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 			m_keyObservers.insert("angle", AnglesKey::AngleChangedCaller(m_anglesKey));
 			m_keyObservers.insert("angles", AnglesKey::AnglesChangedCaller(m_anglesKey));
@@ -118,23 +116,13 @@ class MiscModel: public Snappable
 		}
 		typedef MemberCaller<MiscModel, &MiscModel::scaleChanged> ScaleChangedCaller;
 
-		void skinChanged ()
-		{
-			scene::Node* node = m_model.getNode();
-			if (node != 0) {
-				// TODO Fix this
-				// 			Node_modelSkinChanged(*node);
-			}
-		}
-		typedef MemberCaller<MiscModel, &MiscModel::skinChanged> SkinChangedCaller;
-
 	public:
 
 		MiscModel (EntityClass* eclass, scene::Node& node, const Callback& transformChanged,
 				const Callback& evaluateTransform) :
 			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY), m_anglesKey(
 					AnglesChangedCaller(*this)), m_angles(ANGLESKEY_IDENTITY), m_scaleKey(ScaleChangedCaller(*this)),
-					m_scale(SCALEKEY_IDENTITY), m_skin(SkinChangedCaller(*this)), m_filter(m_entity, node), m_named(
+					m_scale(SCALEKEY_IDENTITY), m_filter(m_entity, node), m_named(
 							m_entity), m_nameKeys(m_entity), m_renderName(m_named, g_vector3_identity),
 					m_transformChanged(transformChanged), m_evaluateTransform(evaluateTransform)
 		{
@@ -144,7 +132,7 @@ class MiscModel: public Snappable
 				const Callback& evaluateTransform) :
 			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY),
 					m_anglesKey(AnglesChangedCaller(*this)), m_angles(ANGLESKEY_IDENTITY), m_scaleKey(
-							ScaleChangedCaller(*this)), m_scale(SCALEKEY_IDENTITY), m_skin(SkinChangedCaller(*this)),
+							ScaleChangedCaller(*this)), m_scale(SCALEKEY_IDENTITY),
 					m_filter(m_entity, node), m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named,
 							g_vector3_identity), m_transformChanged(transformChanged), m_evaluateTransform(
 							evaluateTransform)

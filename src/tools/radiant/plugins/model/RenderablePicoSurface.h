@@ -8,7 +8,6 @@
 #include "math/aabb.h"
 
 /* FORWARD DECLS */
-class ModelSkin; // modelskin.h
 
 namespace model
 {
@@ -92,9 +91,9 @@ namespace model
 			 * occur.
 			 *
 			 * @param skin
-			 * ModelSkin object to apply to this surface.
+			 * path of the skin to apply
 			 */
-			void applySkin (const ModelSkin& skin);
+			void applySkin (const std::string& skin);
 	};
 }
 

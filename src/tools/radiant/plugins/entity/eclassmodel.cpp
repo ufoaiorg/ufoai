@@ -49,7 +49,6 @@
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"
-#include "modelskinkey.h"
 
 #include "entity.h"
 
@@ -70,7 +69,6 @@ class EclassModel: public Snappable
 		NameKeys m_nameKeys;
 		RenderablePivot m_renderOrigin;
 		RenderableNamedEntity m_renderName;
-		ModelSkinKey m_skin;
 
 		Callback m_transformChanged;
 		Callback m_evaluateTransform;
@@ -79,7 +77,7 @@ class EclassModel: public Snappable
 		{
 			m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
-			m_keyObservers.insert("skin", ModelSkinKey::SkinChangedCaller(m_skin));
+			//m_keyObservers.insert("skin", ModelSkinKey::SkinChangedCaller(m_skin));
 			m_keyObservers.insert("angle", AngleKey::AngleChangedCaller(m_angleKey));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 		}
@@ -109,24 +107,14 @@ class EclassModel: public Snappable
 		}
 		typedef MemberCaller<EclassModel, &EclassModel::angleChanged> AngleChangedCaller;
 
-		void skinChanged ()
-		{
-			scene::Node* node = m_model.getNode();
-			if (node != 0) {
-				// TODO Fix this
-				// 			Node_modelSkinChanged(*node);
-			}
-		}
-		typedef MemberCaller<EclassModel, &EclassModel::skinChanged> SkinChangedCaller;
-
 	public:
 
 		EclassModel (EntityClass* eclass, scene::Node& node, const Callback& transformChanged,
 				const Callback& evaluateTransform) :
 			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY), m_angleKey(
 					AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY), m_filter(m_entity, node),
-					m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named, g_vector3_identity), m_skin(
-							SkinChangedCaller(*this)), m_transformChanged(transformChanged), m_evaluateTransform(
+					m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named, g_vector3_identity),
+					m_transformChanged(transformChanged), m_evaluateTransform(
 							evaluateTransform)
 		{
 			construct();
@@ -135,8 +123,8 @@ class EclassModel: public Snappable
 				const Callback& evaluateTransform) :
 			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY),
 					m_angleKey(AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY), m_filter(m_entity, node),
-					m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named, g_vector3_identity), m_skin(
-							SkinChangedCaller(*this)), m_transformChanged(transformChanged), m_evaluateTransform(
+					m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named, g_vector3_identity),
+					m_transformChanged(transformChanged), m_evaluateTransform(
 							evaluateTransform)
 		{
 			construct();
@@ -150,13 +138,13 @@ class EclassModel: public Snappable
 				m_entity.instanceAttach(path_find_mapfile(path.begin(), path.end()));
 				m_entity.attach(m_keyObservers);
 				m_model.modelChanged(m_entity.getEntityClass().modelpath());
-				m_skin.skinChanged(m_entity.getEntityClass().skin());
+				//m_skin.skinChanged(m_entity.getEntityClass().skin());
 			}
 		}
 		void instanceDetach (const scene::Path& path)
 		{
 			if (--m_instanceCounter.m_count == 0) {
-				m_skin.skinChanged("");
+				//m_skin.skinChanged("");
 				m_model.modelChanged("");
 				m_entity.detach(m_keyObservers);
 				m_entity.instanceDetach(path_find_mapfile(path.begin(), path.end()));
@@ -188,10 +176,6 @@ class EclassModel: public Snappable
 		TransformNode& getTransformNode ()
 		{
 			return m_transform;
-		}
-		ModelSkin& getModelSkin ()
-		{
-			return m_skin.get();
 		}
 
 		void attach (scene::Traversable::Observer* observer)
@@ -338,7 +322,7 @@ class EclassModelNode: public scene::Node::Symbiot,
 					NodeContainedCast<EclassModelNode, Entity>::install(m_casts);
 					NodeContainedCast<EclassModelNode, Nameable>::install(m_casts);
 					NodeContainedCast<EclassModelNode, Namespaced>::install(m_casts);
-					NodeContainedCast<EclassModelNode, ModelSkin>::install(m_casts);
+					//NodeContainedCast<EclassModelNode, ModelSkin>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -385,10 +369,6 @@ class EclassModelNode: public scene::Node::Symbiot,
 		Namespaced& get (NullType<Namespaced> )
 		{
 			return m_contained.getNamespaced();
-		}
-		ModelSkin& get (NullType<ModelSkin> )
-		{
-			return m_contained.getModelSkin();
 		}
 
 		EclassModelNode (EntityClass* eclass) :

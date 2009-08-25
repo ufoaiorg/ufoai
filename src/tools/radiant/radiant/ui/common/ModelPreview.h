@@ -86,9 +86,9 @@ namespace ui
 
 			/** Get the model from the widget, in order to display properties about it.
 			 */
-			model::IModelPtr getModel ()
+			model::IModel* getModel ()
 			{
-				return _model;
+				return _model.get();
 			}
 	};
 

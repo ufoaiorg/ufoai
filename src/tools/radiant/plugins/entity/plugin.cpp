@@ -32,10 +32,8 @@
 #include "preferencesystem.h"
 #include "iradiant.h"
 #include "namespace.h"
-#include "modelskin.h"
 #include "typesystem.h"
 #include "entity.h"
-#include "skincache.h"
 #include "itextures.h"
 #include "modulesystem/singletonmodule.h"
 
@@ -49,8 +47,7 @@ class EntityDependencies: public GlobalRadiantModuleRef,
 		public GlobalReferenceModuleRef,
 		public GlobalFilterModuleRef,
 		public GlobalPreferenceSystemModuleRef,
-		public GlobalNamespaceModuleRef,
-		public GlobalModelSkinCacheModuleRef
+		public GlobalNamespaceModuleRef
 {
 };
 
@@ -88,5 +85,4 @@ extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules (ModuleServer& server)
 	initialiseModule(server);
 
 	g_EntityModule.selfRegister();
-	UFOModelSkinCacheModule_selfRegister(server);
 }

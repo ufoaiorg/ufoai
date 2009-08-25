@@ -3,7 +3,6 @@
 
 #include <gtk/gtk.h>
 #include <string>
-#include "modelskin.h"
 #include "math/matrix.h"
 #include "igl.h"
 #include "imodel.h"
@@ -31,7 +30,7 @@ namespace ui
 	/** Singleton class encapsulating the Model Selector dialog and methods required to display the
 	 * dialog and retrieve the selected model.
 	 */
-	class ModelSelector: private GlobalModelSkinCacheModuleRef // instantiate the model skin cache first
+	class ModelSelector
 	{
 		private:
 
