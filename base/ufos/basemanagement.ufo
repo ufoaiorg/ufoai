@@ -13,6 +13,7 @@
 // pedia:				The tech ID that has the UFOpaedia entry for this facility
 // needs:				Additional sections of this facility. Used for facilities larger than 1 tile
 // capacity:			The capacity of this facility. The meaning of the value depends on the building type.
+// onconstruct:			The name of the script to be run when this facility is built up
 // ondestroy:			The name of the script to be run when this facility is destroyed
 // visible:				Sets whether this facility is visible on the base screen
 // max_count:			No base may have more than this amount of this facility
@@ -161,6 +162,7 @@ building building_intercept
 	type			smallhangar
 }
 
+// @todo Small UFO Hangar is disabled, scheduled for removal
 building building_small_ufo_hangar
 {
 	name			"_Small UFO Hangar"
@@ -177,6 +179,7 @@ building building_small_ufo_hangar
 	max_count	0
 }
 
+// @todo Large UFO Hangar disabled, scheduled for removal
 building building_large_ufo_hangar
 {
 	name			"_Large UFO Hangar"
@@ -202,7 +205,7 @@ building building_large_ufo_hangar2
 	visible		false // no 'needs' field here!
 }
 
-// Team room is disabled, scheduled for removal
+// @todo Team room is disabled, scheduled for removal
 building building_teamroom
 {
 	name		"_Team Room"
