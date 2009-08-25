@@ -16,7 +16,7 @@ item assault
 	scale			1.25
 	ammo			30
 	reload			12
-	price			2100
+	price			1000
 	size			20
 	is_primary		true
 }
@@ -218,7 +218,7 @@ item machinegun
 	scale			1.1
 	ammo			100
 	reload			30
-	price			2100
+	price			1200
 	size			20
 	is_primary		true
 	is_heavy		true
@@ -322,7 +322,7 @@ item sniper
 	scale			1.05
 	ammo			5
 	reload			10
-	price			2100
+	price			1300
 	size			30
 	is_primary		true
 }
@@ -402,7 +402,7 @@ item coilgun
 	scale			0.9
 	ammo			2
 	reload			10
-	price			9000
+	price			3000
 	size			30
 	is_primary		true
 }
@@ -581,7 +581,7 @@ item pistol2
 	scale			2.0
 	ammo			30
 	reload			12
-	price			900
+	price			1000
 	size			7
 	is_secondary	true
 }
@@ -1039,7 +1039,7 @@ item flamer
 	scale			1.2
 	ammo			6
 	reload			14
-	price			1050
+	price			1500
 	size			55
 	is_primary		true
 	is_heavy		true
@@ -1147,7 +1147,7 @@ item rpg
 	scale			0.87
 	ammo			1
 	reload			12
-	price			4130
+	price			4000
 	size			250
 	is_primary		true
 	is_heavy		true
@@ -1255,7 +1255,7 @@ item grenl
 	scale			1.1
 	ammo			6
 	reload			14
-	price			2450
+	price			2500
 	size			60
 	is_primary		true
 	is_heavy		true
@@ -1879,7 +1879,7 @@ item bolterrifle
 	scale			1.2
 	ammo			12
 	reload			15
-	price			13240
+	price			2000
 	size			45
 	is_primary		true
 	is_heavy		true

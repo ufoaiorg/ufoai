@@ -2,56 +2,21 @@
 // BASEMANAGEMENT
 // ==============
 
-// Alternative initial base-layout, better suited for defence
-//
-// -- _0_ _1_ _2_ _3_ _4_
-// 0: xxx xxx xxx Drp-shp
-// 1: xxx xxx xxx Int Rdr
-// 2: xxx xxx xxx xxx Ent
-// 3: xxx xxx Lab xxx Str
-// 4: Wrk-shp Cmd Qrt Pwr
-//
-//
-// Common envisioned base types:
-// (costs do not include the 100000 for base setup and employee costs)
-//
-// Storage Base:
-// entrance, storage
-// cost 85000
-//
-// Radar Outpost:
-// entrance, powerplant, radar
-// cost
-//
-// Defended Radar Outpost:
-// Radar Outpost + storage, quarters (8 soldiers)
-// cost
-//
-// Dropship Base:
-// Defended Radar Outpost + hangar
-// cost
-//
-// Dropship Base with Ammo Production:
-// Dropship Base + quarters (10 workers), workshop, teamroom
-// cost
-//
-// Interceptor Base with Interceptor Ammo Production:
-// Radar Outpost + command, intercept, storage, quarters (10 workers)
-// workshop, teamroom
-// cost
-//
-// Interceptor Base:
-// Defended Radar Outpost + command, intercept
-// cost
-//
-// Initial Base:
-// Interceptor Base + hangar, lab, workshop
-// cost
-//
-// Advanced Base:
-// Initial Base + teamroom, hospital, ufo_hangar, storage, quarters
-// cost
-
+// name:				The name of the facility
+// image:				The picture for this facility, as seen on the base screen
+// fixcosts:			The construction cost for this facility
+// depends:				Facilities need the things listed here to function.
+// type:				The type this facility belongs to. Used for upgrades.
+// build_time:			The time (in days) this facility takes to construct
+// varcosts:			The monthely maintenance cost for this facility
+// map_name:			The name of the map tile for this facility (for base defence maps)
+// pedia:				The tech ID that has the UFOpaedia entry for this facility
+// needs:				Additional sections of this facility. Used for facilities larger than 1 tile
+// capacity:			The capacity of this facility. The meaning of the value depends on the building type.
+// ondestroy:			The name of the script to be run when this facility is destroyed
+// visible:				Sets whether this facility is visible on the base screen
+// max_count:			No base may have more than this amount of this facility
+// starting_employees:	The amount of employees that come with this building
 
 // ====================
 // Buildings
@@ -69,7 +34,6 @@ building building_aliencontainment
 	map_name		"aliencont"
 	pedia			rs_building_aliencontainment
 	needs			building_aliencontainment2
-	pos				"0 1"
 	capacity		10
 	ondestroy		"building_ondestroy"
 }
@@ -92,10 +56,9 @@ building building_entrance
 	varcosts	0
 	map_name	"entrance"
 	pedia		rs_building_entrance
-	pos			"2 4"
 	mandatory	true
 	type		entrance
-	visible		false
+	visible		false //TODO: Why is this here?
 	max_count	1
 }
 
@@ -107,10 +70,9 @@ building building_storage
 	depends			building_entrance // storage base needs just entrance
 	type			storage
 	build_time		4
-	varcosts		1000
+	varcosts		3000
 	map_name		"storage"
 	pedia			rs_building_storage
-	pos				"3 4"
 	capacity		10000
 	ondestroy		"building_ondestroy"
 }
@@ -126,8 +88,7 @@ building building_powerplant
 	varcosts		5000
 	map_name		"powerplant"
 	pedia			rs_building_powerplant
-	pos				"4 4"
-	max_count		1 				// @todo: are we sure? this is boring now...
+	max_count		1
 }
 
 
@@ -139,10 +100,9 @@ building building_command
 	depends		building_powerplant
 	type		command
 	build_time	12
-	varcosts	2000
+	varcosts	3000
 	map_name	"commando"
 	pedia		rs_building_command
-	pos			"4 2"
 	max_count	1
 	ondestroy	"mn_update_max_installations"
 }
@@ -156,7 +116,6 @@ building building_quarters
 	varcosts		1000
 	map_name		"quarters"
 	pedia			rs_building_quarters
-	pos				"4 3"
 	type			quarters
 	ondestroy		"building_ondestroy"
 	capacity		20
@@ -172,7 +131,6 @@ building building_hangar
 	varcosts			5500
 	map_name			"drop"
 	pedia				rs_building_large_hangar
-	pos					"0 3"
 	type				hangar
 	needs				building_hangar2
 	ondestroy			"building_ondestroy"
@@ -193,12 +151,11 @@ building building_intercept
 	name			"_Small Hangar"
 	image			base/intercept
 	fixcosts		60000
-	depends			building_powerplant	// slow interceptions can be coordinated from another base, so no Command Center needed
+	depends			building_command
 	build_time		5
 	varcosts		5200
 	map_name		"intercept"
 	pedia			rs_building_small_hangar
-	pos				"1 3"
 	ondestroy		"building_ondestroy"
 	capacity		1
 	type			smallhangar
@@ -245,19 +202,20 @@ building building_large_ufo_hangar2
 	visible		false // no 'needs' field here!
 }
 
-building building_teamroom
-{
-	name		"_Team Room"
-	image		base/teamroom
-	fixcosts	32000
-	depends		building_powerplant
-	build_time	3
-	varcosts	2600
-	map_name	"teamroom"
-	type		teamroom
-	pedia		rs_building_teamroom
-	max_count	1
-}
+// Team room is disabled, scheduled for removal
+//building building_teamroom
+//{
+//	name		"_Team Room"
+//	image		base/teamroom
+//	fixcosts	32000
+//	depends		building_powerplant
+//	build_time	3
+//	varcosts	2600
+//	map_name	"teamroom"
+//	type		teamroom
+//	pedia		rs_building_teamroom
+//	max_count	1
+//}
 
 building building_workshop
 {
@@ -266,10 +224,9 @@ building building_workshop
 	fixcosts			100000
 	depends				building_command
 	build_time			12
-	varcosts			8200
+	varcosts			3200
 	map_name			"workshop"
 	pedia				rs_building_workshop
-	pos					"4 0"
 	type				workshop
 	starting_employees	10
 	needs				building_workshop2
@@ -295,7 +252,6 @@ building building_radar
 	varcosts		4000
 	map_name		"radar"
 	pedia			rs_building_radar
-	pos				"1 4"
 	type			radar
 	onconstruct		"update_base_radar_coverage"
 	ondestroy		"update_base_radar_coverage"
@@ -325,10 +281,9 @@ building building_lab
 	fixcosts			100000
 	depends				building_command // scientists need supervision, or...
 	build_time			12
-	varcosts			8300
+	varcosts			4300
 	map_name			"lab"
 	pedia				rs_building_lab
-	pos					"3 2"
 	type				lab
 	starting_employees	10
 	ondestroy			"building_ondestroy"
@@ -345,7 +300,6 @@ building building_hospital
 	varcosts			5200
 	map_name			"hospital"
 	pedia				rs_building_hospital
-	pos					"3 3"
 	max_count			1
 	type				hospital
 	starting_employees	10

@@ -15,7 +15,7 @@ item pbeampistol
 	scale			1.18
 	ammo			16
 	reload			14
-	price			38000
+	price			3000
 	size			20
 	is_secondary	true
 }
@@ -29,7 +29,7 @@ item pbeampistol_ammo
 	shape			"0 0 1 1"
 	center			"0 0 0"
 	scale			0.97
-	price			2500
+	price			1000
 	size			3
 	is_secondary	true
 	dmgtype			particlebeam
@@ -96,7 +96,7 @@ item pbeamrifle
 	scale			1.1
 	ammo			12
 	reload			14
-	price			59000
+	price			4000
 	size			40
 	is_primary		true
 }
@@ -110,7 +110,7 @@ item pbeamrifle_ammo
 	shape			"0 0 1 1"
 	center			"0 0 -0.3"
 	scale			1.1
-	price			3500
+	price			1300
 	size			5
 	is_primary		true
 	dmgtype			particlebeam
@@ -196,7 +196,7 @@ item pbeamcannon
 	scale			1.07
 	ammo			8
 	reload			16
-	price			44000
+	price			5000
 	size			70
 	is_primary		true
 	is_heavy		true
@@ -211,7 +211,7 @@ item pbeamcannon_ammo
 	shape			"0 0 2 1"
 	center			"0 0 -0.2"
 	scale			1.0
-	price			3000
+	price			1400
 	size			8
 	is_primary		true
 	is_heavy		true

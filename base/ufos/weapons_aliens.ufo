@@ -16,7 +16,7 @@ item needlergun
 	scale			1.2
 	ammo			12
 	reload			15
-	price			13240
+	price			5000
 	size			45
 	is_primary		true
 }
@@ -36,7 +36,7 @@ item needlerheavy
 	scale			0.8
 	ammo			16
 	reload			19
-	price			18240
+	price			5000
 	size			45
 	is_primary		true
 }
@@ -50,7 +50,7 @@ item needlergun_ammo
 	shape			"0 0 1 1"
 	center			"0 0 0"
 	scale			1.2
-	price			930
+	price			400
 	size			9
 	is_primary		true
 	dmgtype			normal

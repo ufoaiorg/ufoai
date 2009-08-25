@@ -15,7 +15,7 @@ item plaspistol
 	scale			1.5
 	ammo			8
 	reload			10
-	price			3400
+	price			2000
 	size			20
 	is_secondary	true
 }
@@ -29,7 +29,7 @@ item plaspistol_ammo
 	shape			"0 0 1 1"
 	center			"0 0 -0.2"
 	scale			1.1
-	price			1700
+	price			800
 	size			3
 	is_secondary	true
 	dmgtype			plasma
@@ -117,7 +117,7 @@ item plasrifle
 	scale			1.25
 	ammo			20
 	reload			15
-	price			4000
+	price			2500
 	size			40
 	is_primary		true
 }
@@ -131,7 +131,7 @@ item plasrifle_ammo
 	shape			"0 0 2 1"
 	center			"0 0 -0.1"
 	scale			1.25
-	price			2000
+	price			1000
 	size			4
 	is_primary		true
 	dmgtype			plasma
@@ -240,7 +240,7 @@ item plasblaster
 	scale			1.06
 	ammo			50
 	reload			20
-	price			5800
+	price			3300
 	size			80
 	is_primary		true
 	is_heavy		true
@@ -255,7 +255,7 @@ item plasblaster_ammo
 	shape			"0 0 1 1"
 	center			"0 0 -0.3"
 	scale			1.4
-	price			4000
+	price			1500
 	size			7
 	is_primary		true
 	is_heavy		true

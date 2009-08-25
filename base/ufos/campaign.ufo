@@ -3,9 +3,9 @@ campaign veryhard
 	name				"_Very Hard Campaign"
 	text				"_veryhard_campaign_txt"
 	team				phalanx
-	soldiers			6
-	scientists			2
-	workers				1
+	soldiers			8
+	scientists			6
+	workers				6
 	difficulty			4
 	minhappiness		0.42
 	maxdebts			50000
@@ -28,9 +28,9 @@ campaign hard
 	name			"_Hard Campaign"
 	text			"_hard_campaign_txt"
 	team			phalanx
-	soldiers		7
-	scientists		3
-	workers			2
+	soldiers		8
+	scientists		6
+	workers			6
 	difficulty		2
 	minhappiness	0.35
 	maxdebts		100000
@@ -57,22 +57,23 @@ campaign main
 	text			"_standard_campaign_txt"
 	team			phalanx
 	soldiers		9
-	scientists		6
-	workers			14
+	scientists		10
+	workers			10
 	difficulty		0
 	minhappiness	0.30
 	maxdebts		200000
 	xvirate			70
 	salary {
-		soldier_rankbonus 500;
-		worker_base 3000;
-		worker_rankbonus 500;
-		scientist_base 3000;
-		scientist_rankbonus 500;
-		pilot_base 3000;
-		pilot_rankbonus 500;
+	    soldier_base 2000
+		soldier_rankbonus 0;
+		worker_base 2000;
+		worker_rankbonus 0;
+		scientist_base 2000;
+		scientist_rankbonus 0;
+		pilot_base 2000;
+		pilot_rankbonus 0;
 		robot_base 7500;
-		robot_rankbonus 1500;
+		robot_rankbonus 0;
 		aircraft_factor 1;
 		aircraft_divisor 25;
 		base_upkeep 20000;
@@ -90,7 +91,7 @@ campaign main
 	equipment			campaign_player
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
-	credits				1350000
+	credits				1300000
 	map					map_earth
 	visible				true
 
@@ -118,7 +119,7 @@ campaign easy
 	equipment			campaign_player
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
-	credits				1500000
+	credits				1300000
 	map					map_earth
 	visible				true
 
@@ -139,29 +140,33 @@ campaign veryeasy
 	maxdebts		500000
 	xvirate			90
 	salary {
-		soldier_rankbonus 1500;
-		worker_base 1000;
-		worker_rankbonus 1500;
-		scientist_base 1000;
-		scientist_rankbonus 1500;
-		pilot_base 1000;
-		pilot_rankbonus 1500;
-		robot_base 3500;
-		robot_rankbonus 2500;
-		base_upkeep 15000;
-		admin_initial 800;
-		admin_soldier 50;
-		admin_worker 50;
-		admin_scientist 50;
-		admin_pilot 50;
-		admin_robot 50;
+	    soldier_base 2000
+		soldier_rankbonus 0;
+		worker_base 2000;
+		worker_rankbonus 0;
+		scientist_base 2000;
+		scientist_rankbonus 0;
+		pilot_base 2000;
+		pilot_rankbonus 0;
+		robot_base 7500;
+		robot_rankbonus 0;
+		aircraft_factor 1;
+		aircraft_divisor 25;
+		base_upkeep 20000;
+		admin_initial 1000;
+		admin_soldier 75;
+		admin_worker 75;
+		admin_scientist 75;
+		admin_pilot 75;
+		admin_robot 150;
+		debt_interest 0.005;
 	}
 	firstbase			balanced
 	researched			rslist_phalanx
 	equipment			campaign_player
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
-	credits				2000000
+	credits				1300000
 	map					map_earth
 	visible				true
 
@@ -183,7 +188,7 @@ campaign aliencampaign
 	equipment			campaign_player_aliens
 	market				campaign_market_aliens
 	asymptotic_market	campaign_market_aliens
-	credits				6000000
+	credits				1300000
 	map					map_earth
 	visible				true
 

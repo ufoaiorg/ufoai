@@ -95,7 +95,7 @@ aircraft craft_drop_firebird
 	shortname	"_Firebird D"
 	type		transporter
 	model		"geoscape/drop_firebird"
-	price		140000
+	price		20000
 	building	building_hangar
 	numteam		8
 	size		2
@@ -130,7 +130,7 @@ aircraft craft_drop_herakles
 	shortname	"_Herakles D"
 	type		transporter
 	model		"geoscape/drop_herakles"
-	price		180000
+	price		30000
 	building	building_hangar
 	numteam		8
 	size		2
@@ -171,7 +171,7 @@ aircraft craft_inter_stiletto
 	model		"geoscape/inter_stiletto"
 	numteam		0
 	size		1
-	price		40000
+	price		20000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
 	slot {
@@ -216,7 +216,7 @@ aircraft craft_inter_saracen
 	model		"geoscape/inter_saracen"
 	numteam		0
 	size		2
-	price		100000
+	price		30000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
 	slot {
@@ -256,7 +256,7 @@ aircraft craft_inter_dragon
 	model		"geoscape/inter_dragon"
 	numteam		0
 	size		1
-	price		100000
+	price		40000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
 	slot {
@@ -341,7 +341,7 @@ aircraft craft_inter_stingray
 	model		"geoscape/inter_stingray"
 	numteam		0
 	size		1
-	price		200000
+	price		55000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
 	slot {
@@ -388,7 +388,7 @@ aircraft craft_ufo_scout
 	model		"geoscape/ufo_scout"
 	size		1
 	building	building_small_ufo_hangar
-	price		150000
+	price		8000
 	image		"geoscape/air_ufo"
 }
 
@@ -410,7 +410,7 @@ aircraft craft_ufo_fighter
 	size		1
 	// FIXME: should be big hangar
 	building	building_small_ufo_hangar
-	price		180000
+	price		12000
 	image		"geoscape/air_ufo"
 	slot {
 		type		weapon
@@ -437,7 +437,7 @@ aircraft craft_ufo_harvester
 	model		"geoscape/ufo_harvester"
 	size		2
 	building	building_big_ufo_hangar
-	price		200000
+	price		18000
 	image		"geoscape/air_ufo"
 	slot {
 		type		weapon
@@ -476,7 +476,7 @@ aircraft craft_ufo_gunboat
 	model		"geoscape/ufo_gunboat"
 	size		2
 	building	building_big_ufo_hangar
-	price		230000
+	price		23000
 	image		"geoscape/air_ufo"
 	slot {
 		type		weapon
@@ -515,7 +515,7 @@ aircraft craft_ufo_corrupter
 	model		"geoscape/ufo_corrupter"
 	size		2
 	building	building_big_ufo_hangar
-	price		230000
+	price		27000
 	image		"geoscape/air_ufo"
 	slot {
 		type		weapon
@@ -542,7 +542,7 @@ aircraft craft_ufo_supply
 	model		"geoscape/ufo_supply"
 	size		2
 	building	building_big_ufo_hangar
-	price		250000
+	price		20000
 	image		"geoscape/air_ufo"
 }
 
@@ -563,7 +563,7 @@ aircraft craft_ufo_ripper
 	model		"geoscape/ufo_ripper"
 	size		2
 	building	building_big_ufo_hangar
-	price		250000
+	price		30000
 	image		"geoscape/air_ufo"
 	slot {
 		type		weapon
@@ -590,7 +590,7 @@ aircraft craft_ufo_bomber
 	model		"geoscape/ufo_bomber"
 	size		2
 	building	building_big_ufo_hangar
-	price		250000
+	price		45000
 	image		"geoscape/air_ufo"
 	slot {
 		type		weapon
@@ -624,7 +624,7 @@ aircraft craft_ufo_carrier
 	model		"geoscape/ufo_carrier"
 	size		1
 	building	building_small_ufo_hangar
-	price		1000000
+	price		0 //NOTE: This UFO must never be sellable!
 	image		"geoscape/air_ufo"
 	nogeoscape	true
 }
@@ -647,7 +647,7 @@ aircraft craft_ufo_mothership
 	model		"geoscape/ufo_mothership"
 	size		1
 	building	building_small_ufo_hangar
-	price		1000000
+	price		0 //This UFO is not recoverable in the first place. It's the final mission!
 	image		"geoscape/air_ufo"
 	nogeoscape	true
 }
