@@ -114,4 +114,7 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 
 	VectorCopy(player_dead_maxs, le->maxs);
 	CL_RemoveActorFromTeamList(le);
+
+	/* update pathing as we maybe can walk onto the dead actor now */
+	CL_ConditionalMoveCalcActor(selActor);
 }
