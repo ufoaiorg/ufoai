@@ -2733,6 +2733,9 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 	}
 
 	md = &csi.mds[csi.numMDs++];
+	if (csi.numMDs >= MAX_MAPDEFS)
+		Sys_Error("Com_ParseMapDefinition: Max mapdef hit");
+
 	memset(md, 0, sizeof(*md));
 	md->id = Mem_PoolStrDup(name, com_genericPool, 0);
 
