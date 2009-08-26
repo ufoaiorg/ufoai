@@ -171,6 +171,7 @@ RADIANT_PLUGIN_IMAGE_TARGET=radiant/modules/image.$(SHARED_EXT)
 
 #sound plugin
 RADIANT_PLUGIN_SOUND_SRCS_CPP = \
+	$(RADIANT_BASE)/libs/gtkutil/timer.cpp \
 	$(RADIANT_BASE)/plugins/sound/sound.cpp \
 	$(RADIANT_BASE)/plugins/sound/soundmanager.cpp \
 	$(RADIANT_BASE)/plugins/sound/soundplayer.cpp
@@ -287,7 +288,7 @@ $(RADIANT_PLUGIN_IMAGE_TARGET) : $(RADIANT_PLUGIN_IMAGE_CPP_OBJS)
 		$(CPP) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(RADIANT_PLUGIN_IMAGE_CPP_OBJS) $(RADIANT_LIBS) $(LNKFLAGS)
 $(RADIANT_PLUGIN_SOUND_TARGET) : $(RADIANT_PLUGIN_SOUND_CPP_OBJS)
 	@echo " * [RAD] ... linking $(LNKFLAGS)"; \
-		$(CPP) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(RADIANT_PLUGIN_SOUND_CPP_OBJS) $(RADIANT_LIBS) -lopenal $(LNKFLAGS)
+		$(CPP) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(RADIANT_PLUGIN_SOUND_CPP_OBJS) $(RADIANT_LIBS) -lopenal32 -lvorbisfile -lvorbis -logg $(LNKFLAGS)
 $(RADIANT_PLUGIN_MAP_TARGET) : $(RADIANT_PLUGIN_MAP_CPP_OBJS)
 	@echo " * [RAD] ... linking $(LNKFLAGS)"; \
 		$(CPP) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(RADIANT_PLUGIN_MAP_CPP_OBJS) $(LNKFLAGS)
