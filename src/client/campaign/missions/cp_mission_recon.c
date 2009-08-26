@@ -179,6 +179,7 @@ static void CP_ReconMissionGround (mission_t *mission)
 	const date_t missionDelay = {3, 0};
 
 	mission->stage = STAGE_RECON_GROUND;
+	mission->posAssigned = qtrue;
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
