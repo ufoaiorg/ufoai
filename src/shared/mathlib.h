@@ -128,10 +128,10 @@ extern const byte dvleft[CORE_DIRECTIONS];
 
 /** @brief Returns the distance between two 3-dimensional vectors */
 #define DotProduct(x,y)         (x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
-#define VectorSubtract(a,b,c)   (c[0]=a[0]-b[0],c[1]=a[1]-b[1],c[2]=a[2]-b[2])
-#define VectorAdd(a,b,c)        (c[0]=a[0]+b[0],c[1]=a[1]+b[1],c[2]=a[2]+b[2])
-#define VectorMul(scalar,b,c)       (c[0]=scalar*b[0],c[1]=scalar*b[1],c[2]=scalar*b[2])
-#define Vector2Mul(scalar,b,c)      (c[0]=scalar*b[0],c[1]=scalar*b[1])
+#define VectorSubtract(a,b,dest)   (dest[0]=a[0]-b[0],dest[1]=a[1]-b[1],dest[2]=a[2]-b[2])
+#define VectorAdd(a,b,dest)        (dest[0]=a[0]+b[0],dest[1]=a[1]+b[1],dest[2]=a[2]+b[2])
+#define VectorMul(scalar,b,dest)       (dest[0]=(scalar)*b[0],dest[1]=(scalar)*b[1],dest[2]=(scalar)*b[2])
+#define Vector2Mul(scalar,b,dest)      (c[0]=(scalar)*b[0],dest[1]=(scalar)*b[1])
 #define VectorDiv(in,scalar,out)    VectorScale(in,(1.0f/(scalar)),out)
 #define VectorCopy(src,dest)        (dest[0]=src[0],dest[1]=src[1],dest[2]=src[2])
 #define Vector2Copy(src,dest)       (dest[0]=src[0],dest[1]=src[1])
