@@ -2906,14 +2906,10 @@ qboolean B_LoadXML (mxml_node_t *parent)
 			building = &ccs.buildings[i][buildId];
 
 			Q_strncpyz(buildingType, mxml_GetString(snode, "buildingtype"), sizeof(buildingType));
-			if (buildingType[0] == '\0') {
-				/* Fallback for keeping compatibility, should be a return qfalse; otherwise */
-				const byte buildingTpl = mxml_GetInt(snode, "building_tpl", BYTES_NONE);
-				if (buildingTpl != BYTES_NONE)
-					*building = ccs.buildingTemplates[buildingTpl];
-			} else
-				*building = *B_GetBuildingTemplate(buildingType);
+			if (buildingType[0] == '\0')
+				return qfalse;
 
+			*building = *B_GetBuildingTemplate(buildingType);
 			if (!building)
 				continue;
 			building->idx = B_GetBuildingIDX(b, building);
