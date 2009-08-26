@@ -589,6 +589,10 @@ struct edict_s {
 	edict_t *groupChain;
 	edict_t *groupMaster;	/**< first entry in the list */
 	int flags;		/**< FL_* */
+
+	pos3_t *forbiddenListPos; /**< this is used for e.g. misc_models with the solid flag set - this will
+								* hold a list of grid positions that are blocked by the aabb of the model */
+	int forbiddenListSize;		/**< amount of entries in the forbiddenListPos */
 };
 
 #endif /* GAME_G_LOCAL_H */

@@ -905,6 +905,42 @@ static void SP_misc_mission_aliens (edict_t *ent)
 	gi.LinkEdict(ent);
 }
 
+/**
+ * @note This is only working for one z-level. But our models should be
+ * split for each level anyway.
+ * @param ent The edict to fill the forbidden list for
+ */
+static void G_BuildForbiddenListForEntity (edict_t *ent)
+{
+	pos3_t mins, maxs, origin;
+	vec3_t center, shiftedMins, shiftedMaxs;
+	int xDelta, yDelta, size, i, j;
+
+	VectorAdd(ent->absmin, ent->origin, shiftedMins);
+	VectorAdd(ent->absmax, ent->origin, shiftedMaxs);
+
+	VectorCenterFromMinsMaxs(shiftedMins, shiftedMaxs, center);
+	VecToPos(shiftedMins, mins);
+	VecToPos(shiftedMaxs, maxs);
+	VecToPos(center, origin);
+
+	xDelta = max(1, maxs[0] - mins[0]);
+	yDelta = max(1, maxs[1] - mins[1]);
+
+	size = xDelta * yDelta;
+	ent->forbiddenListPos = gi.TagMalloc(TAG_LEVEL, size * sizeof(pos3_t));
+	ent->forbiddenListSize = size;
+
+	for (i = 0; i < xDelta; i++) {
+		for (j = 0; j < yDelta; j++) {
+			const pos_t x = mins[0] + i;
+			const pos_t y = mins[1] + j;
+			const pos_t z = origin[2];
+			VectorSet(ent->forbiddenListPos[i], x, y, z);
+		}
+	}
+}
+
 #define MISC_MODEL_SOLID 256
 /**
  * @brief Spawns a misc_model if there is a solid state
@@ -919,7 +955,9 @@ static void SP_misc_model (edict_t *ent)
 				VectorCopy(modelMaxs, ent->absmax);
 				VectorCopy(modelMins, ent->absmin);
 				ent->type = ET_SOLID;
+				ent->fieldSize = ACTOR_SIZE_NORMAL;
 				ent->solid = SOLID_BBOX;
+				G_BuildForbiddenListForEntity(ent);
 				gi.LinkEdict(ent);
 			} else {
 				gi.dprintf("Could not get mins/maxs for model '%s'\n", ent->model);

@@ -669,8 +669,8 @@ static void SV_ModLoadObjModel (sv_model_t* mod, const byte *buffer, int bufferL
 /**
  * @brief Load the mins, maxs for the model on the serverside for pathfinding and clipping
  * @param[in] model The relative model path to load the mins, maxs for
- * @param[out] mins The mins vector of the model
- * @param[out] maxs The maxs vector of the model
+ * @param[out] mins The mins vector of the model - this is absolute to the worldorigin (0,0,0)
+ * @param[out] maxs The maxs vector of the model - this is absolute to the worldorigin (0,0,0)
  */
 qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t maxs)
 {
@@ -716,6 +716,8 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 		sv_numModels--;
 		return qfalse;
 	}
+
+	ClearBounds(mod->mins, mod->maxs);
 
 	/* call the appropriate loader */
 	switch (LittleLong(*(unsigned *) buf)) {

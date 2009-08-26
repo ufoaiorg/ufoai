@@ -295,10 +295,10 @@ static void G_EdictAppear (unsigned int player_mask, edict_t *ent)
  * @param[in] ent The edict that was responsible for letting the check edict appear or perish
  * @sa CL_ActorAppear
  */
-void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check, edict_t *ent)
+void G_AppearPerishEvent (unsigned int playerMask, int appear, edict_t *check, edict_t *ent)
 {
 	/* test for pointless player mask */
-	if (!player_mask)
+	if (!playerMask)
 		return;
 
 	if (appear) {
@@ -307,7 +307,7 @@ void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check, 
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
 			/* parsed in CL_ActorAppear */
-			gi.AddEvent(player_mask, EV_ACTOR_APPEAR);
+			gi.AddEvent(playerMask, EV_ACTOR_APPEAR);
 			gi.WriteShort(check->number);
 			gi.WriteShort(ent && ent->number > 0 ? ent->number : SKIP_LOCAL_ENTITY);
 			gi.WriteByte(check->team);
@@ -337,22 +337,22 @@ void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check, 
 			gi.WriteByte(min(MAX_SKILL, GET_MORALE(check->chr.score.skills[ABILITY_MIND])));
 			gi.WriteShort(check->chr.maxHP);
 
-			if (player_mask & G_TeamToPM(check->team)) {
-				gi.AddEvent(player_mask & G_TeamToPM(check->team), EV_ACTOR_STATECHANGE);
+			if (playerMask & G_TeamToPM(check->team)) {
+				gi.AddEvent(playerMask & G_TeamToPM(check->team), EV_ACTOR_STATECHANGE);
 				gi.WriteShort(check->number);
 				gi.WriteShort(check->state);
 			}
-			G_SendInventory(G_TeamToPM(check->team) & player_mask, check);
+			G_SendInventory(G_TeamToPM(check->team) & playerMask, check);
 			break;
 
 		case ET_ITEM:
-			G_EdictAppear(player_mask, check);
-			G_SendInventory(player_mask, check);
+			G_EdictAppear(playerMask, check);
+			G_SendInventory(playerMask, check);
 			break;
 
 		case ET_PARTICLE:
-			G_EdictAppear(player_mask, check);
-			G_SendParticle(player_mask, check);
+			G_EdictAppear(playerMask, check);
+			G_SendParticle(playerMask, check);
 			break;
 
 		default:
@@ -362,7 +362,7 @@ void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check, 
 		}
 	} else if (G_IsVisibleOnBattlefield(check)) {
 		/* disappear */
-		gi.AddEvent(player_mask, EV_ENT_PERISH);
+		gi.AddEvent(playerMask, EV_ENT_PERISH);
 		gi.WriteShort(check->number);
 	}
 }
@@ -1336,9 +1336,11 @@ static void G_BuildForbiddenList (int team)
 			fb_list[fb_length++] = ent->pos;
 			fb_list[fb_length++] = (byte*) &ent->fieldSize;
 		} else if (ent->type == ET_SOLID) {
-			fb_list[fb_length++] = ent->pos;
-			/** @todo get fieldsize from bounding box (ent->mins, ent->maxs) */
-			fb_list[fb_length++] = (byte*) &ent->fieldSize;
+			int j;
+			for (j = 0; j < ent->forbiddenListSize; j++) {
+				fb_list[fb_length++] = ent->forbiddenListPos[j];
+				fb_list[fb_length++] = (byte*) &ent->fieldSize;
+			}
 		}
 	}
 
@@ -3074,7 +3076,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 	}
 
 	value = Info_ValueForKey(userinfo, "password");
-	if (*password->string && strcmp(password->string, "none") && strcmp(password->string, value)) {
+	if (password->string[0] != '\0' && strcmp(password->string, "none") && strcmp(password->string, value)) {
 		Info_SetValueForKey(userinfo, "rejmsg", REJ_PASSWORD_REQUIRED_OR_INCORRECT);
 		return qfalse;
 	}
@@ -3098,6 +3100,10 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
  */
 void G_ClientDisconnect (player_t * player)
 {
+#if 0
+	edict_t *ent;
+#endif
+
 	/* only if the player already sent his began */
 	if (player->began) {
 		level.numplayers--;
@@ -3110,6 +3116,15 @@ void G_ClientDisconnect (player_t * player)
 		if (!level.numplayers)
 			level.intermissionTime = level.time + 10.0f;
 	}
+
+#if 0
+	/* now let's remove all the edicts that belongs to this player */
+	for (; ent < &g_edicts[globals.num_edicts]; ent++)
+		if (ent->pnum == player->num && ent->inuse)
+			if (G_IsLivingActor(ent))
+				G_ActorDie(ent, STATE_DEAD, NULL);
+	G_CheckEndGame();
+#endif
 
 	player->began = qfalse;
 	player->spawned = qfalse;
