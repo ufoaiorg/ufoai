@@ -12361,13 +12361,12 @@ $as_echo "$as_me: error: You must have openal installed - or deactivate the ufor
    { (exit 1); exit 1; }; }
 			fi
 			LIBS=
-			{ $as_echo "$as_me:$LINENO: checking for alEnable in -lopenal" >&5
-$as_echo_n "checking for alEnable in -lopenal... " >&6; }
-if test "${ac_cv_lib_openal_alEnable+set}" = set; then
+			{ $as_echo "$as_me:$LINENO: checking for library containing alEnable" >&5
+$as_echo_n "checking for library containing alEnable... " >&6; }
+if test "${ac_cv_search_alEnable+set}" = set; then
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lopenal  $LIBS"
+  ac_func_search_save_LIBS=$LIBS
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -12390,7 +12389,14 @@ return alEnable ();
   return 0;
 }
 _ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
+for ac_lib in '' openal32 openal; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  rm -f conftest.$ac_objext conftest$ac_exeext
 if { (ac_try="$ac_link"
 case "(($ac_try" in
   *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
@@ -12411,23 +12417,35 @@ $as_echo "$ac_try_echo") >&5
 	 test "$cross_compiling" = yes ||
 	 $as_test_x conftest$ac_exeext
        }; then
-  ac_cv_lib_openal_alEnable=yes
+  ac_cv_search_alEnable=$ac_res
 else
   $as_echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-	ac_cv_lib_openal_alEnable=no
+
 fi
 
 rm -rf conftest.dSYM
 rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
+      conftest$ac_exeext
+  if test "${ac_cv_search_alEnable+set}" = set; then
+  break
 fi
-{ $as_echo "$as_me:$LINENO: result: $ac_cv_lib_openal_alEnable" >&5
-$as_echo "$ac_cv_lib_openal_alEnable" >&6; }
-if test "x$ac_cv_lib_openal_alEnable" = x""yes; then
-  LIBS="-lopenal"
+done
+if test "${ac_cv_search_alEnable+set}" = set; then
+  :
+else
+  ac_cv_search_alEnable=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:$LINENO: result: $ac_cv_search_alEnable" >&5
+$as_echo "$ac_cv_search_alEnable" >&6; }
+ac_res=$ac_cv_search_alEnable
+if test "$ac_res" != no; then
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+
 else
   { { $as_echo "$as_me:$LINENO: error: You must have libopenal!!!" >&5
 $as_echo "$as_me: error: You must have libopenal!!!" >&2;}

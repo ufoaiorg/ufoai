@@ -775,7 +775,7 @@ then
 				AC_MSG_ERROR([You must have openal installed - or deactivate the uforadiant build])
 			fi
 			LIBS=
-			AC_CHECK_LIB(openal, alEnable, LIBS="-lopenal", AC_MSG_ERROR([You must have libopenal!!!]))
+			AC_SEARCH_LIBS([alEnable], [openal32 openal], , AC_MSG_ERROR([You must have libopenal!!!]))
 			OPENAL_LIBS="$LIBS $OPENAL_LIBS"
 		fi
 	fi	
