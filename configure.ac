@@ -524,8 +524,8 @@ then
 		else
 			LIBS=
 			AC_CHECK_LIB(theora, theora_decode_packetin, LIBS="-ltheora", AC_MSG_ERROR([You must have libtheora!!!]))
+			CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 		fi
-		CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 	else
 		AC_SUBST([HAVE_THEORA_THEORA_H],1)
 		AC_DEFINE([HAVE_THEORA_THEORA_H],[1],[Have theora library])
@@ -749,14 +749,35 @@ then
 	LIBS=
 	CPPFLAGS=
 	RADIANT_LIBS=
+
+	#---------------------------------------------------------------------------------------------
+	# Check for gtk2, gtkglext, glib2 and libxml2
+	#---------------------------------------------------------------------------------------------
+
 	AC_MSG_NOTICE([UFORadiant dependencies: gtk2, gtkglext, glib2 and libxml2])
 	PKG_CHECK_MODULES([RADIANT], [gtk+-2.0 gtkglext-1.0 glib-2.0 libxml-2.0])
 	RADIANT_CFLAGS="$RADIANT_CFLAGS $CPPFLAGS"
 
+	#---------------------------------------------------------------------------------------------
+	# Check for openal
+	#---------------------------------------------------------------------------------------------
+
 	if test $TARGET_OS == "darwin"
 	then
-		RADIANT_CFLAGS="$RADIANT_CFLAGS -F$with_openal_framework"
-		RADIANT_LIBS="$RADIANT_LIBS -framework OpenAL"
+		OPENAL_CFLAGS="$OPENAL_CFLAGS -F$with_openal_framework"
+		OPENAL_LIBS="$OPENAL_LIBS -framework OpenAL"
+	else
+		PKG_CHECK_MODULES(OPENAL, openal, HAVE_OPENAL="yes", HAVE_OPENAL="no") 
+		if test "x$HAVE_OPENAL" = "xno" ; then
+			AC_CHECK_HEADERS([AL/al.h])
+			if test "$ac_cv_header_AL_al_h" = "no"
+			then
+				AC_MSG_ERROR([You must have openal installed - or deactivate the uforadiant build])
+			fi
+			LIBS=
+			AC_CHECK_LIB(openal, alEnable, LIBS="-lopenal", AC_MSG_ERROR([You must have libopenal!!!]))
+			OPENAL_LIBS="$LIBS $OPENAL_LIBS"
+		fi
 	fi	
 else
 	AC_MSG_NOTICE([Without UFORadiant])
@@ -905,6 +926,8 @@ AC_SUBST([GAME_LIBS],"$GAME_LIBS")
 AC_SUBST([TOOLS_LIBS],"$TOOLS_LIBS")
 AC_SUBST([RADIANT_LIBS],"$RADIANT_LIBS")
 AC_SUBST([RADIANT_CFLAGS], "$RADIANT_CFLAGS")
+AC_SUBST([OPENAL_LIBS], "$OPENAL_LIBS")
+AC_SUBST([OPENAL_CFLAGS], "$OPENAL_CFLAGS")
 
 #AC_MSG_NOTICE(Compiler flags: $CFLAGS)
 #AC_MSG_NOTICE(Compiler flags: $CLIENT_CFLAGS)
@@ -913,3 +936,4 @@ AC_SUBST([RADIANT_CFLAGS], "$RADIANT_CFLAGS")
 AC_CONFIG_HEADERS([config.h:config.h.in])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
+

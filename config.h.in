@@ -12,6 +12,9 @@
 /* AI_NUMERICSERV not found in netdb.h */
 #undef HAVE_AI_NUMERICSERV
 
+/* Define to 1 if you have the <AL/al.h> header file. */
+#undef HAVE_AL_AL_H
+
 /* Have curses library */
 #undef HAVE_CURSES
 
