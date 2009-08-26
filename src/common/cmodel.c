@@ -1981,7 +1981,6 @@ void Grid_MoveCalc (const struct routing_s *map, const int actorSize, struct pat
 		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
 			Grid_MoveMark(map, actorSize, path, pos, epos[3], dir, &pqueue);
 		}
-
 	}
 	/* Com_Printf("Loop: %i", count); */
 	PQueueFree(&pqueue);

@@ -1007,9 +1007,9 @@ void CL_DisplayBlockedPaths_f (void)
  */
 void CL_ConditionalMoveCalcActor (le_t *le)
 {
+	CL_BuildForbiddenList();
 	if (le && le->selected) {
 		const byte crouchingState = (le->state & STATE_CROUCHED) ? 1 : 0;
-		CL_BuildForbiddenList();
 		Grid_MoveCalc(clMap, le->fieldSize, le->pathMap, le->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
 		CL_ResetActorMoveLength(le);
 	}

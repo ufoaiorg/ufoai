@@ -162,7 +162,7 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 				HUD_DisplayMessage(_("Civilian spotted!\n"));
 
 			/* update pathing as new actor could block path */
-			CL_ConditionalMoveCalcActor(selActor);
+			CL_ConditionalMoveCalcActor(leResponsible ? leResponsible : selActor);
 		}
 	}
 
