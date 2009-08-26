@@ -480,7 +480,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		if (shooter)
 			CP_UFOProceedMission(shooter);
 
-		MS_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_UFOSPOTTED, NULL);
 	}
 }
 

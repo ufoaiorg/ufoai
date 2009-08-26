@@ -1567,7 +1567,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				if (cl_3dmap->integer)
 					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 				else {
-					const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
+					const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
 					R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 				}
 			}
