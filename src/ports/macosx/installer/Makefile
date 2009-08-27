@@ -44,7 +44,7 @@ updateversion:
 	@sed 's/@VERSION@/$(VERSION_UC)/g' UFOAI.app/Contents/Info.plist.in > UFOAI.app/Contents/Info.plist
 
 copyradiant:
-	@cp -r $(ROOTDIR)/radiant $(PACKAGE_NAME)
+	@cp -r $(ROOTDIR)/radiant UFOAI.app
 
 copybinaries: bundle_dirs
 	@cp $(BINARIES) UFOAI.app/Contents/MacOS
