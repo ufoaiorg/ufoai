@@ -522,7 +522,7 @@ void G_EndGame (int team)
 	/* Make everything visible to anyone who can't already see it */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 		if (ent->inuse) {
-			G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent, NULL);
+			G_AppearPerishEvent(~G_VisToPM(ent->visflags), qtrue, ent, NULL);
 			if (G_IsActor(ent))
 				G_SendInventory(~G_TeamToPM(ent->team), ent);
 		}

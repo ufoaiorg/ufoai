@@ -291,11 +291,12 @@ static void G_EdictAppear (unsigned int player_mask, edict_t *ent)
  * In case of e.g. teamplay there can be more than one client affected - thus
  * this is a player mask
  * @param[in] appear Is this event about an appearing actor (or a perishing one)
- * @param[in] check The edict we are talking about
- * @param[in] ent The edict that was responsible for letting the check edict appear or perish
+ * @param[in] check The edict we are talking about (that appears or perishes)
+ * @param[in] ent The edict that was responsible for letting the check edict appear
+ * or perish. Might be @c NULL.
  * @sa CL_ActorAppear
  */
-void G_AppearPerishEvent (unsigned int playerMask, int appear, edict_t *check, edict_t *ent)
+void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *check, edict_t *ent)
 {
 	/* test for pointless player mask */
 	if (!playerMask)
@@ -647,11 +648,12 @@ static int G_CheckVisPlayer (player_t* player, qboolean perish)
  * updates the visflags each edict carries
  * @sa G_TestVis
  * @param[in] team Team to check the vis for
- * @param[in] check The edict that you wanna check (and which maybe will appear
+ * @param[in] check The edict that you want to check (and which maybe will appear
  * or perish for the given team). If this is NULL every edict will be checked.
  * If check is a NULL pointer - all edicts in g_edicts are checked
  * @param[in] perish Also check whether the edict (the actor) is going to become
  * invisible for the given team
+ * @param[in] ent The edict that is (maybe) seeing other edicts
  * @return If an actor get visible who's no civilian VIS_STOP is added to the
  * bit mask, VIS_YES means, he is visible, VIS_CHANGE means that the actor
  * flipped its visibility (invisible to visible or vice versa), VIS_PERISH means
@@ -686,10 +688,10 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish, edict_t *ent)
 				check->visflags ^= (1 << team);
 				G_AppearPerishEvent(G_TeamToPM(team), vis & VIS_YES, check, ent);
 
-				/* ... to visible - if this is no civilian, stop the movement */
+				/* ... to visible */
 				if (vis & VIS_YES) {
 					status |= VIS_APPEAR;
-					if (G_IsLivingActor(check) && check->team != TEAM_CIVILIAN)
+					if (G_IsLivingActor(check))
 						status |= VIS_STOP;
 				} else
 					status |= VIS_PERISH;
@@ -1141,11 +1143,11 @@ void G_ClientInvMove (int entNum, const invDef_t * from, invList_t *fItem, const
 	if (from->id == gi.csi->idRight || to->id == gi.csi->idRight) {
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(entNum);
-		gi.WriteShort(0); /**< hand = right */
+		gi.WriteShort(ACTOR_HAND_RIGHT);
 	} else if (from->id == gi.csi->idLeft || to->id == gi.csi->idLeft) {
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(entNum);
-		gi.WriteShort(1); /**< hand = left */
+		gi.WriteShort(ACTOR_HAND_LEFT);
 	}
 
 	/* Other players receive weapon info only. */
@@ -1336,6 +1338,7 @@ static void G_BuildForbiddenList (int team)
 			fb_list[fb_length++] = ent->pos;
 			fb_list[fb_length++] = (byte*) &ent->fieldSize;
 		} else if (ent->type == ET_SOLID) {
+			/* they should always be solid */
 			int j;
 			for (j = 0; j < ent->forbiddenListSize; j++) {
 				fb_list[fb_length++] = ent->forbiddenListPos[j];
@@ -1371,7 +1374,11 @@ void G_MoveCalc (int team, pos3_t from, int actorSize, byte crouchingState, int 
 /**
  * @brief Generates the client events that are send over the netchannel to move an actor
  * @param[in] player Player who is moving an actor
- * @param[in] visTeam
+ * @param[in] visTeam The team to check the visibility for - if this is 0 we build the forbidden list
+ * above all edicts - for the human controlled actors this would mean that clicking to a grid
+ * position that is not reachable because an invisible actor is standing there would not result in
+ * a single step - as the movement is aborted before. For AI movement this is in general @c 0 - but
+ * not if they e.g. hide.
  * @param[in] num Edict index to move
  * @param[in] to The grid position to walk to
  * @param[in] stopOnVisStop qfalse means that VIS_STOP is ignored
@@ -1384,7 +1391,6 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 	edict_t *ent;
 	int status, initTU;
 	byte dvtab[MAX_DVTAB];
-	byte olddvtab[MAX_DVTAB];
 	int dv, dir;
 	byte numdv, length;
 	pos3_t pos;
@@ -1444,31 +1450,27 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 				!= ROUTING_UNREACHABLE) {
 			const int oldZ = pos[2];
 			/* dv indicates the direction traveled to get to the new cell and the original cell height. */
-			/* dv = (dir << 3) | z */
-			if (numdv >= MAX_DVTAB) {
-				gi.GridDumpDVTable(gi.pathingMap);
-				for (numdv = 0; numdv < MAX_DVTAB; numdv++)
-					gi.dprintf(" %i", olddvtab[numdv]);
-				gi.error("G_ClientMove: numdv == %i (%i %i %i) ", numdv, to[0], to[1], to[2]);
-			}
-			olddvtab[numdv] = dv;
-			PosSubDV(pos, crouchingState, dv); /* We are going backwards to the origin. */
-			dvtab[numdv++] = NewDVZ(dv, oldZ); /* Replace the z portion of the DV value so we can get back to where we were. */
+			/* We are going backwards to the origin. */
+			PosSubDV(pos, crouchingState, dv);
+			/* Replace the z portion of the DV value so we can get back to where we were. */
+			dvtab[numdv++] = NewDVZ(dv, oldZ);
 		}
 
+		/* everything ok, found valid route? */
 		if (VectorCompare(pos, ent->pos)) {
-			/* everything ok, found valid route */
 
 			/* no floor inventory at this point */
 			FLOOR(ent) = NULL;
 
 			while (numdv > 0) {
-				int crouchFlag; /**< A flag to see if we needed to change crouch state */
+				/* A flag to see if we needed to change crouch state */
+				int crouchFlag;
 
 				/* get next dv */
 				numdv--;
 				dv = dvtab[numdv];
-				dir = getDVdir(dv); /**< This is the direction */
+				/* This is the direction to make the step into */
+				dir = getDVdir(dv);
 
 				/* turn around first */
 				status = G_DoTurn(ent, dir);
@@ -1476,7 +1478,6 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 					break;
 
 				/* decrease TUs */
-				/* moveDiagonal = !((dvtab[numdv] & (DIRECTIONS - 1)) < 4); */
 				div = gi.TUsUsed(dir);
 				truediv = div;
 				if ((ent->state & STATE_CROUCHED) && dir < CORE_DIRECTIONS)
@@ -1492,8 +1493,8 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 					ent->speed = ACTOR_SPEED_NORMAL;
 				ent->speed *= g_actorspeed->value;
 
-				/* move */
-				crouchFlag = 0; /* This is now a flag to indicate a change in crouching */
+				/* This is now a flag to indicate a change in crouching */
+				crouchFlag = 0;
 				PosAddDV(ent->pos, crouchFlag, dv);
 				if (crouchFlag == 0) { /* No change in crouch */
 					gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
@@ -1589,7 +1590,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 
 					autoCrouchRequired = qfalse;
 					/** @todo if the attacker is invisible let the target turn in the shooting direction
-					 * of the attacker (@see G_Turn) */
+					 * of the attacker (@see G_DoTurn) */
 					/*G_DoTurn(ent->reactionTarget, dir);*/
 				}
 

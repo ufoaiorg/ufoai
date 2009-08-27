@@ -334,7 +334,7 @@ int G_CheckVis(edict_t *check, qboolean perish);
 void G_SendInvisible(player_t *player);
 void G_GiveTimeUnits(int team);
 
-void G_AppearPerishEvent(unsigned int player_mask, int appear, edict_t * check, edict_t *ent);
+void G_AppearPerishEvent(unsigned int player_mask, qboolean appear, edict_t * check, edict_t *ent);
 unsigned int G_VisToPM(unsigned int vis_mask);
 void G_SendInventory(unsigned int player_mask, edict_t * ent);
 unsigned int G_TeamToPM(int team);

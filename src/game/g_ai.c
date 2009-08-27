@@ -738,8 +738,6 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 		G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
 
 	/* do the move */
-	/** @todo Why 0 - and not ent->team?
-	 * I think this has something to do with the vis check in G_BuildForbiddenList */
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
 	/* test for possible death during move. reset bestAia due to dead status */
@@ -847,7 +845,8 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		}
 		ent->hiding = qtrue;
 
-		/* now hide */
+		/* now hide - for this we use the team of the alien actor because a phalanx soldier
+		 * might become visible during the hide movement */
 		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse, QUIET);
 		/* no shots left, but possible targets left - maybe they shoot back
 		 * or maybe they are still close after hiding */

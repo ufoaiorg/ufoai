@@ -73,7 +73,7 @@ static qboolean Destroy_Breakable (edict_t *self)
 }
 
 /**
- * @brief QUAKED func_breakable (0.3 0.3 0.3) ?
+ * @brief func_breakable (0.3 0.3 0.3) ?
  * Used for breakable objects.
  * SPAWNFLAGS bit values:
  *  0x0001 Visible from layer 1
@@ -206,7 +206,7 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 }
 
 /**
- * @brief QUAKED func_door (0 .5 .8) ?
+ * @brief func_door (0 .5 .8) ?
  * "health" if set, door is destroyable
  * @sa SV_SetModel
  * @sa LM_AddModel
@@ -254,7 +254,7 @@ void SP_func_door (edict_t *ent)
 }
 
 /**
- * @brief QUAKED func_door (0 .5 .8) ?
+ * @brief func_door (0 .5 .8) ?
  * "health"	if set, door must be shot open
  * @sa SV_SetModel
  * @sa LM_AddModel
