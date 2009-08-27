@@ -13,6 +13,11 @@ namespace sound
 	{
 	}
 
+	// Destructor
+	SoundManager::~SoundManager ()
+	{
+	}
+
 	bool SoundManager::playSound (const std::string& fileName)
 	{
 		// Make a copy of the filename
