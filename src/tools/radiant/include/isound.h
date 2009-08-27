@@ -67,6 +67,8 @@ class ISoundManager
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "sound");
 
+		virtual ~ISoundManager ();
+
 		/** greebo: Plays the given sound file (defined by its VFS path).
 		 *
 		 * @returns: TRUE, if the sound file was found at the given VFS path,

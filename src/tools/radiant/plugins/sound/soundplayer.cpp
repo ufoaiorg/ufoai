@@ -85,9 +85,7 @@ namespace sound
 					g_error("Could not destroy ALC context\n");
 				}
 
-				if (alcCloseDevice(device) == ALC_FALSE) {
-					g_error("Could not close ALC device\n");
-				}
+				alcCloseDevice(device);
 			}
 		} else {
 			g_error("Could not reset ALC context\n");
