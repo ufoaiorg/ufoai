@@ -25,7 +25,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <cstddef>
 #include <string.h>
 #include "generic/constant.h"
-#include <GL/gl.h>
+
+#ifdef __APPLE__
+# include <OpenGL/gl.h>
+#else
+# include <GL/gl.h>
+#endif
 
 #if defined(WIN32)
 #define QGL_DLLEXPORT __stdcall
