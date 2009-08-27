@@ -2,7 +2,7 @@
 #define WAV_FILE_LOADER_H_
 
 #include <stdexcept>
-#include <AL/al.h>
+#include "openal.h"
 
 class InputStream;
 
