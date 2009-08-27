@@ -22,6 +22,8 @@ namespace sound
 			 */
 			SoundManager ();
 
+			virtual ~SoundManager ();
+
 			/** greebo: Plays the sound file. Tries to resolve the filename's
 			 * 			extension by appending .ogg or .wav and such.
 			 */

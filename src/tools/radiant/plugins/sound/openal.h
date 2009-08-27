@@ -1,5 +1,5 @@
 /**
- * @file isound.h
+ * @file openal.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef ISOUND_H_
-#define ISOUND_H_
+#ifndef RADIANT_OPENAL_H_
+#define RADIANT_OPENAL_H_
 
 #ifdef __APPLE__
 # include <OpenAL/al.h>
