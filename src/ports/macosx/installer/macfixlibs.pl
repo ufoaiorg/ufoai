@@ -236,6 +236,30 @@ foreach my $i (@a) {
 	#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n";
 	`install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n` && die "failed\n";
 }
+print "done\n";
 
+## and, finally, change for app itself
+print "Finalizing uforadiant...";
+$binpath = 'UFOAI.app/Contents/MacOS/uforadiant';
+@a = findlibs $binpath;
+foreach my $i (@a) {
+	my $fworlib2;
+	my $libname2;
+
+	if($i=~/\.dylib$/) {
+		$fworlib2 = "Libraries";
+	} else {
+		next;
+	}
+
+	if($i =~ /.*\/([^\/]+)$/) {
+		$libname2 = $1;
+	} else {
+		die "wtf?\n";
+	}
+
+	#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n";
+	`install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n` && die "failed\n";
+}
 print "done\n";
 

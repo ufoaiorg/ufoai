@@ -17,6 +17,8 @@ BINARIES = \
 	$(ROOTDIR)/ufo2map
 BINARIES_BASE = \
 	$(ROOTDIR)/base/game.dylib
+BINARIES_RADIANT = \
+	$(ROOTDIR)/radiant/uforadiant
 
 include $(ROOTDIR)/build/pk3_def.mk
 
@@ -26,10 +28,7 @@ BUNDLE_PK3 = $(addprefix UFOAI.app/base/, $(PAK_FILES))
 
 bundle_dirs:
 	@mkdir -p UFOAI.app/base
-# These are part of the svn repository as directories
-#	@mkdir -p UFOAI.app/Contents/MacOS
-#	@mkdir -p UFOAI.app/Contents/Frameworks
-#	@mkdir -p UFOAI.app/Contents/Libraries
+	@mkdir -p UFOAI.app/radiant
 
 $(BASE_PK3) :
 	$(MAKE) -C $(ROOTDIR) $(addprefix base/,$(notdir $@))
@@ -44,8 +43,12 @@ package_dir:
 updateversion:
 	@sed 's/@VERSION@/$(VERSION_UC)/g' UFOAI.app/Contents/Info.plist.in > UFOAI.app/Contents/Info.plist
 
+copyradiant:
+	@cp -r $(ROOTDIR)/radiant $(PACKAGE_NAME)
+
 copybinaries: bundle_dirs
 	@cp $(BINARIES) UFOAI.app/Contents/MacOS
+	@cp $(BINARIES_RADIANT) UFOAI.app/Contents/MacOS
 	@cp $(BINARIES_BASE) UFOAI.app/base
 
 copydata: bundle_dirs $(BUNDLE_PK3)
@@ -67,7 +70,7 @@ copy_package_bundle: package_dir bundle
 strip_dev_files: copy_package_bundle
 	@find -d $(PACKAGE_NAME) -name .svn -exec rm -rf {} \;
 
-bundle: copybinaries copydata copylibs copynotes
+bundle: copybinaries copydata copyradiant copylibs copynotes
 
 # for testing:
 bundle-nodata: copybinaries copylibs copynotes
@@ -77,8 +80,6 @@ create-dmg: bundle updateversion copy_package_bundle strip_dev_files
 	@hdiutil create -srcfolder $(PACKAGE_NAME) $(PACKAGE_NAME).dmg
 
 build_dmg: copybinaries copylibs $(BUNDLE_PK3)
-	@cp $(BINARIES) UFOAI.app/Contents/MacOS
-	@cp $(BINARIES_BASE) UFOAI.app/base
 #	for dir in $(ROOTDIR)/base/i18n/[^.]*; do \
 #		mkdir -p UFOAI.app/base/i18n/$$dir/LC_MESSAGES; \
 #		cp $(ROOTDIR)/base/$$dir/LC_MESSAGES/ufoai.mo UFOAI.app/base/$$dir/LC_MESSAGES/ufoai.mo; \
