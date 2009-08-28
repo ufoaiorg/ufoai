@@ -23,6 +23,7 @@
 //	range - operational range of the aircraft (in degree). 180 degrees is the range between one point and the opposite
 //			point on earth. Used to defined fuelsize. This value must be AFTER speed value.
 //	wrange - Not defined here for aircraft (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard.
+//  antimatter - amount of antimatter needed for a full refuel
 //	---------------------------------------------------------------------
 //
 // craftitem
