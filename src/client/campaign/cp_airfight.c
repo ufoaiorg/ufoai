@@ -130,7 +130,7 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 	else
 		projectile->beam = qfalse;
 
-	if (weaponSlot->ammoLeft != AMMO_STATUS_UNLIMITED)
+	if (weaponSlot->ammoLeft > AMMO_STATUS_NO_MORE_AMMO)
 		weaponSlot->ammoLeft--;
 
 	ccs.numProjectiles++;
