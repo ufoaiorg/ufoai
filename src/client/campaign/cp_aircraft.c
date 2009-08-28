@@ -1191,7 +1191,7 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			aircraft->status = AIR_REFUEL;
 			break;
 		case AIR_TRANSFER:
-			case AIR_UFO:
+		case AIR_UFO:
 			break;
 		default:
 			aircraft->status = AIR_IDLE;
@@ -1227,7 +1227,7 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
 			amLoad = amAvailable;
 
 			if (!aircraft->notifySent[AIR_CANNOT_REFUEL]) {
-				MS_AddNewMessage(_("Notice"), va(_("Craft %s couldn't be completely refuelled at %s. Not enough antimatter."),
+				MS_AddNewMessage(_("Notice"), va(_("Craft %s couldn't be completely refueled at %s. Not enough antimatter."),
 						_(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
 				aircraft->notifySent[AIR_CANNOT_REFUEL] = qtrue;
 			}
@@ -1260,7 +1260,7 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 	aircraft_t *aircraft;
 	int i, j, k;
 	/* true if at least one aircraft moved: radar overlay must be updated
-	 * This is static because aircraft can move without radar beeing
+	 * This is static because aircraft can move without radar being
 	 * updated (sa CL_CampaignRun) */
 	static qboolean radarOverlayReset = qfalse;
 
