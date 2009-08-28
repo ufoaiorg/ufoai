@@ -1851,10 +1851,10 @@ void AII_ReloadWeapon (aircraft_t *aircraft)
 		if (AIR_IsUFO(aircraft)) {
 			aircraft->weapons[i].ammoLeft = AMMO_STATUS_UNLIMITED;
 		} else if (aircraft->weapons[i].ammo && !aircraft->weapons[i].ammo->craftitem.unlimitedAmmo) {
-			objDef_t *ammo = aircraft->weapons[i].ammo;
+			const objDef_t *ammo = aircraft->weapons[i].ammo;
 			base_t *base = aircraft->homebase;
-			int amountInBase = B_ItemInBase(ammo, base);
-			int amountToReload = min(amountInBase, ammo->ammo);
+			const int amountInBase = B_ItemInBase(ammo, base);
+			const int amountToReload = min(amountInBase, ammo->ammo);
 			assert(base);
 			assert(AIR_IsAircraftInBase(aircraft));
 			B_UpdateStorageAndCapacity(base, ammo, -amountToReload, qfalse, qfalse);
