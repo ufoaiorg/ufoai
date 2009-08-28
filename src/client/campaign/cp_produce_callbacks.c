@@ -276,7 +276,7 @@ static void PR_UpdateProductionList (const base_t* base)
 		for (i = 0; i < ccs.numAircraftTemplates; i++) {
 			aircraft_t *aircraftTemplate = &ccs.aircraftTemplates[i];
 			/* don't allow producing ufos */
-			if (aircraftTemplate->ufotype != UFO_MAX)
+			if (AIR_IsUFO(aircraftTemplate))
 				continue;
 			if (!aircraftTemplate->tech) {
 				Com_Printf("PR_UpdateProductionList: no technology for craft %s!\n", aircraftTemplate->id);

@@ -203,7 +203,7 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean retu
 
 	if (returnToBase && projectile->attackingAircraft) {
 		if (projectile->attackingAircraft->homebase) {
-			assert(projectile->attackingAircraft->ufotype == UFO_MAX);
+			assert(!AIR_IsUFO(projectile->attackingAircraft));
 			AIR_AircraftReturnToBase(projectile->attackingAircraft);
 		}
 	}

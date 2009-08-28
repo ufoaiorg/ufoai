@@ -41,6 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** factor to speed up refuelling */
 #define AIRCRAFT_REFUEL_FACTOR 16
 
+#define AIR_IsUFO(aircraft) ((aircraft)->ufotype != UFO_MAX)
+
 /** @brief A path on the map described by 2D points */
 typedef struct mapline_s {
 	int numPoints;		/**< number of points that make up this path */

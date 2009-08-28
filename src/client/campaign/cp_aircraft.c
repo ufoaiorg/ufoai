@@ -1847,7 +1847,6 @@ void AIR_ListAircraftSamples_f (void)
  * @brief Reload the weapon of an aircraft
  * @param[in] aircraft Pointer to the aircraft to reload
  * @todo check if there is still ammo in storage, and remove them from it
- * @todo this should costs credits
  * @sa AIRFIGHT_AddProjectile for the basedefence reload code
  */
 void AII_ReloadWeapon (aircraft_t *aircraft)
@@ -1858,7 +1857,7 @@ void AII_ReloadWeapon (aircraft_t *aircraft)
 
 	/* Reload all ammos of aircraft */
 	for (i = 0; i < aircraft->maxWeapons; i++) {
-		if (aircraft->ufotype != UFO_MAX) {
+		if (AIR_IsUFO(aircraft)) {
 			aircraft->weapons[i].ammoLeft = AMMO_STATUS_UNLIMITED;
 		} else if (aircraft->weapons[i].ammo && !aircraft->weapons[i].ammo->craftitem.unlimitedAmmo) {
 			aircraft->weapons[i].ammoLeft = aircraft->weapons[i].ammo->ammo;
