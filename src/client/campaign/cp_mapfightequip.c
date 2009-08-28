@@ -120,9 +120,9 @@ qboolean AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t
 			return qfalse;
 	}
 
-	/** @todo maybe that code dont work, aircraft slot type can't be an AMMO */
+	/** @todo maybe this isn't working, aircraft slot type can't be an AMMO */
 	if (slot->type >= AC_ITEM_AMMO) {
-		/** @todo This only works for ammo that is useable in exactly one weapon
+		/** @todo This only works for ammo that is usable in exactly one weapon
 		 * check the weap_idx array and not only the first value */
 		if (!slot->nextItem && item->weapons[0] != slot->item)
 			return qfalse;
@@ -199,9 +199,8 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 			Com_Printf("BDEF_AddBattery: too many laser batteries in base\n");
 			return;
 		}
-		/* slots has a lot of ammo for now */
-		/** @todo it should be unlimited, no ? check that when we'll know how laser battery work */
-		base->lasers[base->numLasers].slot.ammoLeft = 9999;
+		/* slots has unlimited ammo */
+		base->lasers[base->numLasers].slot.ammoLeft = AMMO_STATUS_UNLIMITED;
 		base->lasers[base->numLasers].autofire = qtrue;
 		base->numLasers++;
 		break;

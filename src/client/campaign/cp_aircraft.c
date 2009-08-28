@@ -479,7 +479,6 @@ const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
  * @param[in] aircraft Pointer to an aircraft.
  * @return qtrue if given aircraft is in its homebase.
  * @return qfalse if given aircraft is not in its homebase.
- * @todo Add check for AIR_REARM when aircraft items will be implemented.
  */
 qboolean AIR_IsAircraftInBase (const aircraft_t * aircraft)
 {
@@ -1846,7 +1845,6 @@ void AIR_ListAircraftSamples_f (void)
 /**
  * @brief Reload the weapon of an aircraft
  * @param[in] aircraft Pointer to the aircraft to reload
- * @todo check if there is still ammo in storage, and remove them from it
  * @sa AIRFIGHT_AddProjectile for the basedefence reload code
  */
 void AII_ReloadWeapon (aircraft_t *aircraft)
@@ -1860,7 +1858,14 @@ void AII_ReloadWeapon (aircraft_t *aircraft)
 		if (AIR_IsUFO(aircraft)) {
 			aircraft->weapons[i].ammoLeft = AMMO_STATUS_UNLIMITED;
 		} else if (aircraft->weapons[i].ammo && !aircraft->weapons[i].ammo->craftitem.unlimitedAmmo) {
-			aircraft->weapons[i].ammoLeft = aircraft->weapons[i].ammo->ammo;
+			objDef_t *ammo = aircraft->weapons[i].ammo;
+			base_t *base = aircraft->homebase;
+			int amountInBase = B_ItemInBase(ammo, base);
+			int amountToReload = min(amountInBase, ammo->ammo);
+			assert(base);
+			assert(AIR_IsAircraftInBase(aircraft));
+			B_UpdateStorageAndCapacity(base, ammo, -amountToReload, qfalse, qfalse);
+			aircraft->weapons[i].ammoLeft += amountToReload;
 		}
 	}
 }
