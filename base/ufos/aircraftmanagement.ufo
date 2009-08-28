@@ -249,6 +249,7 @@ aircraft craft_inter_dragon
 		damage		120
 		accuracy	80
 		range		146
+		antimatter	120
 	}
 	name		"_Dragon Interceptor"
 	shortname	"_Dragon"
@@ -288,7 +289,8 @@ aircraft craft_inter_starchaser
 		ecm			100
 		damage		180
 		accuracy	100
-		range		80
+		range		150
+		antimatter	130
 	}
 	name		"_Starchaser-class Interceptor"
 	shortname	"_Starchaser"
@@ -334,6 +336,7 @@ aircraft craft_inter_stingray
 		damage		250
 		accuracy	100
 		range		156
+		antimatter	145
 	}
 	name		"_Stingray Interceptor"
 	shortname	"_Stingray"

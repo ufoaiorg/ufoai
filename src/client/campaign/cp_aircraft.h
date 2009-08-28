@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -98,6 +98,13 @@ typedef enum {
 
 	AIR_POSITIONS_MAX
 } itemPos_t;
+
+/** @brief notification signals for aircraft events */
+typedef enum {
+	AIR_CANNOT_REFUEL,
+
+	MAX_AIR_NOTIFICATIONS
+} aircraft_notifications_t;
 
 #define MAX_AIRCRAFTSLOT 4
 
@@ -209,6 +216,8 @@ typedef struct aircraft_s {
 								 * @note As this is an int, wrange is multiplied by 1000 */
 
 	technology_t* tech;		/**< link to the aircraft tech */
+
+	qboolean notifySent[MAX_AIR_NOTIFICATIONS];	/* stores if a notification was already sent */
 
 	qboolean detected;		/**< Is the ufo detected by a radar? (note that a detected landed ufo has @c detected set to qtrue
 							 * and @c visible set to qfalse: we can't see it on geoscape) */

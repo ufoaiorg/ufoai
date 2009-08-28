@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -169,6 +169,7 @@ typedef enum {
 	AIR_STATS_FUELSIZE,	/**< Aircraft fuel capacity. */
 	AIR_STATS_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire.
 						 * for aircraft, the value is in millidegree (because this is an int) */
+	AIR_STATS_ANTIMATTER,	/**< amount of antimatter needed for a full refill. */
 
 	AIR_STATS_MAX,
 	AIR_STATS_OP_RANGE	/**< Operational range of the aircraft (after AIR_STATS_MAX because not needed in stats[AIR_STATS_MAX], only in CL_AircraftMenuStatsValues */

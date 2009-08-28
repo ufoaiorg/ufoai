@@ -1235,12 +1235,41 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 						radarOverlayReset = qtrue;
 					} else if (aircraft->status == AIR_REFUEL) {
 						/* Aircraft is refuelling at base */
-						aircraft->fuel += dt * AIRCRAFT_REFUEL_FACTOR;
+						int fillup;
+
+						if (aircraft->fuel < 0)
+							aircraft->fuel = 0;
+						fillup = min(dt * AIRCRAFT_REFUEL_FACTOR, aircraft->stats[AIR_STATS_FUELSIZE] - aircraft->fuel); /* amount of fuel we would like to load */
+						/* This craft uses antimatter as fuel */
+						assert(aircraft->homebase);
+						if (aircraft->stats[AIR_STATS_ANTIMATTER] > 0 && fillup > 0) { 
+							const int amAvailable = B_ItemInBase(INVSH_GetItemByID(ANTIMATTER_TECH_ID), aircraft->homebase); /* the antimatter we have */
+							const int amCurrentLevel = aircraft->stats[AIR_STATS_ANTIMATTER] * (aircraft->fuel / (float) aircraft->stats[AIR_STATS_FUELSIZE]); /* current antimatter level in craft */
+							const int amNextLevel = aircraft->stats[AIR_STATS_ANTIMATTER] * ((aircraft->fuel + fillup) / (float) aircraft->stats[AIR_STATS_FUELSIZE]); /* next antimatter level in craft */
+							int amLoad = amNextLevel - amCurrentLevel; /* antimatter needed */
+
+							if (amLoad > amAvailable) {
+								fillup = aircraft->stats[AIR_STATS_FUELSIZE] * ((amCurrentLevel + amAvailable) / (float) aircraft->stats[AIR_STATS_ANTIMATTER]) - aircraft->fuel; /* amount of fuel we can load */
+								amLoad = amAvailable;
+
+								if (!aircraft->notifySent[AIR_CANNOT_REFUEL]) {
+									MS_AddNewMessage(_("Notice"), va(_("Craft %s couldn't be completely refuelled at %s. Not enough antimatter."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
+									aircraft->notifySent[AIR_CANNOT_REFUEL] = qtrue;
+								}
+							}
+
+							if(amLoad > 0)
+								B_ManageAntimatter(aircraft->homebase, amLoad, qfalse);
+						}
+
+						aircraft->fuel += fillup;
+
 						if (aircraft->fuel >= aircraft->stats[AIR_STATS_FUELSIZE]) {
 							aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 							aircraft->status = AIR_HOME;
-							assert(aircraft->homebase);
+							
 							MS_AddNewMessage(_("Notice"), va(_("Craft %s has refuelled at %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
+							aircraft->notifySent[AIR_CANNOT_REFUEL] = qfalse;
 						}
 					}
 
@@ -1429,6 +1458,7 @@ static const value_t aircraft_param_vals[] = {
 	{"ecm", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ECM]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"damage", V_INT, offsetof(aircraft_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"accuracy", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+	{"antimatter", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ANTIMATTER]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 
 	{NULL, 0, 0, 0}
 };
