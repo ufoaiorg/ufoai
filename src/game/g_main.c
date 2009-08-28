@@ -256,6 +256,7 @@ static void G_Shutdown (void)
 
 	gi.FreeTags(TAG_LEVEL);
 	gi.FreeTags(TAG_GAME);
+	INVSH_InvUnusedRevert();
 }
 
 

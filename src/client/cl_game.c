@@ -267,10 +267,8 @@ qboolean GAME_ItemIsUseable (const objDef_t *od)
 void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list) {
+	if (list)
 		list->results(msg, winner, numSpawned, numAlive, numKilled, numStunned);
-		INVSH_InvUnusedRevert(); /* inventory buffer switched back */
-	}
 }
 
 /**
