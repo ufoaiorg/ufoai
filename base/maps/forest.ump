@@ -21,6 +21,7 @@ base forest/fr_
 // e: water right-bottom curve
 // f: water right-top curve
 // g: water left-top curve
+// u* - UFO tiles
 
 
 //** drop and crashes tiles
@@ -29,10 +30,10 @@ tile +craft_drop_firebird
 {
 5 4
 
-0      abfg    abfg    abfg	  0
-acdg     +a     +a     +a	  acef
-acdg     +a     +a     +a	  acef
-0      abde    abde    abde	  0
+0      abfg    abfg    abfg   0
+acdg     +a     +a     +a   acef
+acdg     +a     +a     +a   acef
+0      abde    abde    abde   0
 }
 
 tile +craft_drop_herakles
@@ -50,9 +51,9 @@ tile +craft_crash_scout
 4 5
 
 0      abfg    abfg	  0
-acdg     +a     +a	  acef
-acdg     +a     +a	  acef
-acdg     +a     +a	  acef
+acdg     +u     +u	  acef
+acdg     +u     +u	  acef
+acdg     +u     +u	  acef
 0      abde    abde	  0
 }
 
@@ -61,9 +62,9 @@ tile +craft_ufo_scout
 4 5
 
 0      abfg    abfg	  0
-acdg     +a     +a	  acef
-acdg     +a     +a	  acef
-acdg     +a     +a	  acef
+acdg     +u     +u	  acef
+acdg     +u     +u	  acef
+acdg     +u     +u	  acef
 0      abde    abde	  0
 }
 
@@ -72,9 +73,9 @@ tile +craft_ufo_fighter
 5 5
 
 0      abfg    abfg    abfg	  0
-acdg     +a     +a     +a	  acef
-acdg     +a     +a     +a	  acef
-acdg     +a     +a     +a	  acef
+acdg     +u     +u     +u	  acef
+acdg     +u     +u     +u	  acef
+acdg     +u     +u     +u	  acef
 0      abde    abde    abde	  0
 }
 
@@ -83,9 +84,9 @@ tile +craft_crash_fighter
 5 5
 
 0      abfg    abfg    abfg	  0
-acdg     +a     +a     +a	  acef
-acdg     +a     +a     +a	  acef
-acdg     +a     +a     +a	  acef
+acdg     +u     +u     +u	  acef
+acdg     +u     +u     +u	  acef
+acdg     +u     +u     +u	  acef
 0      abde    abde    abde	  0
 }
 
@@ -95,10 +96,10 @@ tile +craft_ufo_harvester
 7 6
 
 0      abfg    abfg    abfg    abfg    abfg	  0
-acdg     +a      +a      +a     +a     +a	  acef
-acdg     +a      +a      +a     +a     +a	  acef
-acdg     +a      +a      +a     +a     +a	  acef
-0        ad      +a      +a     +a     +a	  acef
+acdg     +u      +u      +u     +u     +u	  acef
+acdg     +u      +u      +u     +u     +u	  acef
+acdg     +u      +u      +u     +u     +u	  acef
+0        ad      +u      +u     +u     +u	  acef
 0         0    abde    abde    abde    abde	  0
 }
 
@@ -107,11 +108,11 @@ tile +craft_crash_harvester
 7 7
 
 0         0       0    abfg    abfg    abfg	  0
-0         a       a      +a     +a     +a	  acef
-acdg     +a      +a      +a     +a     +a	  acef
-acdg     +a      +a      +a     +a     +a	  acef
-0         a       a      +a     +a     +a	  acef
-0         0       a      +a     +a     +a	  acef
+0         a       a      +u     +u     +u	  acef
+acdg     +u      +u      +u     +u     +u	  acef
+acdg     +u      +u      +u     +u     +u	  acef
+0         a       a      +u     +u     +u	  acef
+0         0       a      +u     +u     +u	  acef
 0         0       0    abde    abde    abde	  0
 }
 
@@ -123,38 +124,38 @@ tile +f1
 {
 3 3
 
-0      abfg         0
-acdg     +a        acef
-0      abde         0
+0      abfgu         0
+acdgu     +a        acefu
+0      abdeu         0
 }
 
 tile +f2
 {
 3 3
 
-0      abfg         0
-acdg     +a        acef
-0      abde         0
+0      abfgu         0
+acdgu     +a        acefu
+0      abdeu         0
 }
 
 tile +f3
 {
 3 4
 
-0      abfg         0
-acdg     +a        acef
-acdg     +a        acef
-0      abde         0
+0      abfgu         0
+acdgu     +a        acefu
+acdgu     +a        acefu
+0      abdeu         0
 }
 
 tile +f4
 {
 4 4
 
-0      abfg     abfg         0
-acdg     +a      +a        acef
-acdg     +a      +a        acef
-0      abde     abde         0
+0      abfgu     abfgu         0
+acdgu     +a      +a        acefu
+acdgu     +a      +a        acefu
+0      abdeu     abdeu         0
 }
 
 tile +f5
@@ -162,10 +163,10 @@ tile +f5
 
 4 4
 
-0      abfg     abfg         0
-acdg     +a      +a        acef
-acdg     +a      +a        acef
-0      abde     abde         0
+0      abfgu     abfgu         0
+acdgu     +a      +a        acefu
+acdgu     +a      +a        acefu
+0      abdeu     abdeu         0
 }
 
 tile +f6
@@ -173,10 +174,10 @@ tile +f6
 
 3 4
 
-0      abfg       0
-acdg     +a       acef
-acdg     +a       acef
-0      abde       0
+0      abfgu       0
+acdgu     +a       acefu
+acdgu     +a       acefu
+0      abdeu       0
 }
 
 tile +f7
@@ -184,9 +185,9 @@ tile +f7
 
 3 3
 
-0      abfg       0
-acdg     +a       acef
-0      abde       0
+0      abfgu       0
+acdgu     +a       acefu
+0      abdeu       0
 }
 
 tile +f8
@@ -194,9 +195,9 @@ tile +f8
 
 3 3
 
-0      abfg      0
-acdg    +a       acef
-0      abde      0
+0      abfgu      0
+acdgu    +a       acefu
+0      abdeu      0
 }
 
 tile +f9
@@ -204,19 +205,19 @@ tile +f9
 
 4 4
 
-0      abfg     gabf         0
-acdg     +a      +a        acef
-acdg     +a      +a        acef
-0      abde     abde         0
+0      abfgu     gabfu         0
+acdgu     +a      +a        acefu
+acdgu     +a      +a        acefu
+0      abdeu     abdeu         0
 }
 
 tile +f10
 {
 4 3
 
-0      abfg     abfg         0
-acdg     +a      +a        acef
-0      abde     abde         0
+0      abfgu     abfgu         0
+acdgu     +a      +a        acefu
+0      abdeu     abdeu         0
 }
 
 
@@ -227,19 +228,19 @@ tile +a1
 
 3 3
 
-0      abfg      0
-acdg    +a       acef
-0      abde      0
+0      abfgu      0
+acdgu    +a       acefu
+0      abdeu      0
 }
 
 tile +a2
 {
 4 4
 
-0      abfg      abfg      0
-acdg      a      +a     acef
-acdg      +a     +a     acef
-0      abde      abde      0
+0      abfgu      abfgu      0
+0          au     +a     acefu
+acdgu      +a     +a     acefu
+0      abdeu      abdeu      0
 }
 
 
@@ -250,11 +251,23 @@ tile +h1
 
 4 5
 
-0      abfg      abfg     0
-acdg    +a       +a     acef
-acdg    +a       +a     acef
-acdg    +a       +a     acef
-0      abde      abde    0
+0      abfgu      abfgu     0
+acdgu    +a       +a     acefu
+acdgu    +a       +a     acefu
+acdgu    +a       +a     acefu
+0      abdeu      abdeu    0
+}
+
+// *** Tent and fire
+tile +h2
+{
+
+3 4
+
+0       abfgu     0
+acdgu   +a     acefu
+acdgu   +a     acefu
+0       abdeu    0
 }
 
 //** Water tiles
@@ -267,9 +280,9 @@ tile +w1
 
 3 3
 
-0      a        0
-b     +d        a
-0      c        0
+0      au        0
+b      +d        au
+0       c        0
 }
 
 //  .  .
@@ -281,9 +294,9 @@ tile +w2
 
 3 3
 
-0      a       0
+0      au       0
 bef    +b      bdg
-0      a       0
+0      au       0
 }
 
 //  . I .
@@ -295,9 +308,9 @@ tile +w3
 
 3 3
 
-0      cde      0
-a      +c       a
-0      cfg      0
+0       cde       0
+au      +c       au
+0       cfg       0
 }
 
 //  . I .
@@ -311,7 +324,7 @@ tile +w4
 3 3
 
 0      cde      0
-a      +c       a
+au     +c      au
 0      cfg      0
 }
 
@@ -323,9 +336,9 @@ tile +w5
 {
 3 3
 
-0       a       0
-a      +e       b
-0       c       0
+0       au       0
+au      +e       b
+0        c       0
 }
 
 //  .   .
@@ -340,10 +353,10 @@ tile +w6
 {
 3 4
 
-0       a       0
-bf     +d       a
-a      +f       bdg
-0       a       0
+0       au       0
+bf      +d       au
+au      +f       bdg
+0       au       0
 }
 
 //  .  .
@@ -355,9 +368,9 @@ tile +w7
 
 3 3
 
-0      a       0
+0      au       0
 bef    +b      bdg
-0      a       0
+0      au       0
 }
 
 //  .  . I.
@@ -369,38 +382,39 @@ tile +w8
 
 4 3
 
-0      a       ce      0
-b      +d      +g      a
-0      c       a       0
+0      au       ce       0
+b      +d      +g       au
+0       c       au       0
 }
 
 
 assembly small
 {
 title "_Little forest"
-size "5 6"
+size "5 10"
 
-+f1 "0 10"
-+f2 "0 10"
-+f3 "0 10"
-+f4 "0 10"
-+f5 "0 10"
-+f6 "0 10"
-+f7 "0 10"
-+f8 "0 10"
-+f9 "0 10"
-+f10 "0 1"
-+h1 "1 1"
 +w1 "0 5"
 +w2 "0 5"
 +w3 "0 5"
 +w4 "0 5"
-+w5 "0 4"
-+w6 "0 3"
-+w7 "0 4"
-+w8 "0 1"
-+a1 "1 4"
-+a2 "1 2"
++w5 "0 5"
++w6 "1 1"
++w7 "0 5"
++w8 "1 1"
++f1 "0 5"
++f2 "0 5"
++f3 "0 5"
++f4 "0 5"
++f5 "0 5"
++f6 "0 5"
++f7 "0 5"
++f8 "0 5"
++f9 "0 5"
++f10 "0 1"
++h1 "0 1"
++h2 "1 1"
++a1 "0 4"
++a2 "0 2"
 *rm_ufo +craft_crash_scout "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
@@ -411,13 +425,13 @@ title "_Little bungalo in forest"
 size "8 9"
 
 +w1 "0 6"
-+w2 "1 6"
++w2 "0 6"
 +w3 "0 6"
 +w4 "1 6"
 +w5 "0 6"
 +w6 "0 4"
 +w7 "0 6"
-+w8 "0 1"
++w8 "1 1"
 +f1 "0 3"
 +f2 "0 3"
 +f3 "0 3"
