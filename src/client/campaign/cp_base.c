@@ -692,12 +692,39 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 }
 
 /**
+ * @brief Will ensure that aircraft on geoscape are not stored
+ * in a base that no longer has any hangar left
+ * @param base The base that is going to be destroyed
+ */
+static void B_MoveAircraftOnGeoscapeToOtherBases (base_t *base)
+{
+	int i;
+
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
+		if (AIR_IsAircraftOnGeoscape(aircraft)) {
+			int j;
+			for (j = 0; j < ccs.numBases; j++) {
+				base_t *base = B_GetBaseByIDX(j);
+				/* found a new homebase? */
+				if (AIR_MoveAircraftIntoNewHomebase(aircraft, base))
+					break;
+			}
+			if (j == ccs.numBases) {
+				/** @todo What should happen with it if no other base has enough free
+				 * storage for it? Spawn a dropship crash mission if no more fuel? */
+			}
+		}
+	}
+}
+
+/**
  * @brief Destroy a base.
  * @param[in] base Pointer to base to be destroyed.
  * @note If you want to sell items or unhire employees, you should do it before
  * calling this function - they are going to be killed / destroyed.
  */
-void CL_BaseDestroy (base_t *base)
+void B_Destroy (base_t *base)
 {
 	int buildingIdx;
 
@@ -705,6 +732,7 @@ void CL_BaseDestroy (base_t *base)
 	base->baseStatus = BASE_DESTROYED;
 
 	CP_MissionNotifyBaseDestroyed(base);
+	B_MoveAircraftOnGeoscapeToOtherBases(base);
 
 	/* do a reverse loop as buildings are going to be destroyed */
 	for (buildingIdx = ccs.numBuildings[base->idx] - 1; buildingIdx >= 0; buildingIdx--) {
@@ -740,7 +768,7 @@ static void CL_BaseDestroy_f (void)
 		return;
 	}
 
-	CL_BaseDestroy(base);
+	B_Destroy(base);
 }
 #endif
 

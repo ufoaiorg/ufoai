@@ -1268,13 +1268,6 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 	if (dt > 0) {
 		for (j = 0; j < MAX_BASES; j++) {
 			base_t *base = B_GetBaseByIDX(j);
-			if (!base->founded) {
-				if (base->numAircraftInBase) {
-					/** @todo if a base was destroyed, but there are still
-					 * aircraft on their way... */
-				}
-				continue;
-			}
 
 			/* Run each aircraft */
 			for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
@@ -2824,7 +2817,7 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 		if (teamIdx != BYTES_NONE) {
 			const int teamType = mxml_GetInt(ssnode, "type", BYTES_NONE);
 			assert(teamType != MAX_EMPL);
-			/** assert(gd.numEmployees[teamTypes[l]] > 0); @todo We currently seem to link to not yet parsed employees. */
+			/* We link to not yet parsed employee. */
 			craft->acTeam[l] = &ccs.employees[teamType][teamIdx];
 			craft->teamSize++;
 		}
@@ -2955,7 +2948,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 	ccs.numProjectiles = i;
 
 	/* fallback code to keep compatibility with UFO Hangars */
-	/* @todo remove this on release or after a time */
+	/** @todo remove this on release or after a time */
 	for (snode = mxml_GetNode(node, "recovery"); snode;
 			snode = mxml_GetNextNode(snode, node, "recovery")) {
 		installation_t *inst = INS_GetFirstUFOYard(qtrue);

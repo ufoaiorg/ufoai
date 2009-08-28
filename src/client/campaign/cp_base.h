@@ -288,7 +288,7 @@ qboolean B_CheckBuildingDependencesStatus(const base_t* const base, const buildi
 
 void B_MarkBuildingDestroy(base_t* base, building_t* building);
 qboolean B_BuildingDestroy(base_t* base, building_t* building);
-void CL_BaseDestroy(base_t *base);
+void B_Destroy(base_t *base);
 void CL_AircraftReturnedToHomeBase(aircraft_t* aircraft);
 
 void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);

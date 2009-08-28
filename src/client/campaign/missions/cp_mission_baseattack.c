@@ -125,7 +125,7 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 	/* Base attack is over, alien won */
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Your base: %s has been destroyed! All employees killed and all equipment destroyed."), base->name);
 	MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-	CL_BaseDestroy(base);
+	B_Destroy(base);
 	CL_GameTimeStop();
 
 	/* we really don't want to use the fake aircraft anywhere */
