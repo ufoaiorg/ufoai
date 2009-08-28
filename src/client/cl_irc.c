@@ -1357,6 +1357,7 @@ static qboolean Irc_Net_Connect (const char *host, const char *port)
 static qboolean Irc_Net_Disconnect (void)
 {
 	NET_StreamFree(irc_stream);
+	irc_stream = NULL;
 	return qtrue;
 }
 
