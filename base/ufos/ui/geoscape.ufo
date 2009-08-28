@@ -81,7 +81,6 @@ window geoscape
 		if ( *cvar:mn_messagesystem == 3 ) {
 			*messagesystem@width = ( ( *cvar:mn_sys_screenwidth - 256 ) - 19 )
 			*cvar:foo = ( ( *cvar:mn_sys_screenwidth - 256 ) - 19 )
-			cmd "echo <cvar:foo>"
 			*messagesystem@height = 768
 			*messagesystem_scroll@left = ( ( *cvar:mn_sys_screenwidth - 256 ) - 19 )
 			*messagesystem_scroll@invis false
