@@ -1163,6 +1163,92 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	return qfalse;
 }
 
+static void AIR_Move (aircraft_t* aircraft, int deltaTime)
+{
+	/* Aircraft is moving */
+	if (AIR_AircraftMakeMove(deltaTime, aircraft)) {
+		/* aircraft reach its destination */
+		const float *end = aircraft->route.point[aircraft->route.numPoints - 1];
+		Vector2Copy(end, aircraft->pos);
+		MAP_CheckPositionBoundaries(aircraft->pos);
+
+		switch (aircraft->status) {
+		case AIR_MISSION:
+			/* Aircraft reached its mission */
+			assert(aircraft->mission);
+			aircraft->mission->active = qtrue;
+			aircraft->status = AIR_DROP;
+			ccs.missionaircraft = aircraft;
+			MAP_SelectMission(ccs.missionaircraft->mission);
+			ccs.interceptAircraft = ccs.missionaircraft;
+			Com_DPrintf(DEBUG_CLIENT, "ccs.interceptAircraft: %i\n", ccs.interceptAircraft->idx);
+			CL_GameTimeStop();
+			MN_PushMenu("popup_intercept_ready", NULL);
+			break;
+		case AIR_RETURNING:
+			/* aircraft entered in homebase */
+			CL_AircraftReturnedToHomeBase(aircraft);
+			aircraft->status = AIR_REFUEL;
+			break;
+		case AIR_TRANSFER:
+			case AIR_UFO:
+			break;
+		default:
+			aircraft->status = AIR_IDLE;
+			break;
+		}
+	}
+}
+
+static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
+{
+	/* Aircraft is refuelling at base */
+	int fillup;
+
+	if (aircraft->fuel < 0)
+		aircraft->fuel = 0;
+	/* amount of fuel we would like to load */
+	fillup = min(deltaTime * AIRCRAFT_REFUEL_FACTOR, aircraft->stats[AIR_STATS_FUELSIZE] - aircraft->fuel);
+	/* This craft uses antimatter as fuel */
+	assert(aircraft->homebase);
+	if (aircraft->stats[AIR_STATS_ANTIMATTER] > 0 && fillup > 0) {
+		/* the antimatter we have */
+		const int amAvailable = B_ItemInBase(INVSH_GetItemByID(ANTIMATTER_TECH_ID), aircraft->homebase);
+		/* current antimatter level in craft */
+		const int amCurrentLevel = aircraft->stats[AIR_STATS_ANTIMATTER] * (aircraft->fuel / (float) aircraft->stats[AIR_STATS_FUELSIZE]);
+		/* next antimatter level in craft */
+		const int amNextLevel = aircraft->stats[AIR_STATS_ANTIMATTER] * ((aircraft->fuel + fillup) / (float) aircraft->stats[AIR_STATS_FUELSIZE]);
+		/* antimatter needed */
+		int amLoad = amNextLevel - amCurrentLevel;
+
+		if (amLoad > amAvailable) {
+			/* amount of fuel we can load */
+			fillup = aircraft->stats[AIR_STATS_FUELSIZE] * ((amCurrentLevel + amAvailable) / (float) aircraft->stats[AIR_STATS_ANTIMATTER]) - aircraft->fuel;
+			amLoad = amAvailable;
+
+			if (!aircraft->notifySent[AIR_CANNOT_REFUEL]) {
+				MS_AddNewMessage(_("Notice"), va(_("Craft %s couldn't be completely refuelled at %s. Not enough antimatter."),
+						_(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
+				aircraft->notifySent[AIR_CANNOT_REFUEL] = qtrue;
+			}
+		}
+
+		if (amLoad > 0)
+			B_ManageAntimatter(aircraft->homebase, amLoad, qfalse);
+	}
+
+	aircraft->fuel += fillup;
+
+	if (aircraft->fuel >= aircraft->stats[AIR_STATS_FUELSIZE]) {
+		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
+		aircraft->status = AIR_HOME;
+
+		MS_AddNewMessage(_("Notice"), va(_("Craft %s has refueled at %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
+		aircraft->notifySent[AIR_CANNOT_REFUEL] = qfalse;
+	}
+
+}
+
 /**
  * @brief Handles aircraft movement and actions in geoscape mode
  * @sa CL_CampaignRun
@@ -1198,79 +1284,11 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 						/* Aircraft idle out of base */
 						aircraft->fuel -= dt;
 					} else if (AIR_IsAircraftOnGeoscape(aircraft)) {
-						/* Aircraft is moving */
-						if (AIR_AircraftMakeMove(dt, aircraft)) {
-							/* aircraft reach its destination */
-							const float *end = aircraft->route.point[aircraft->route.numPoints - 1];
-							Vector2Copy(end, aircraft->pos);
-							MAP_CheckPositionBoundaries(aircraft->pos);
-
-							switch (aircraft->status) {
-							case AIR_MISSION:
-								/* Aircraft reached its mission */
-								assert(aircraft->mission);
-								aircraft->mission->active = qtrue;
-								aircraft->status = AIR_DROP;
-								ccs.missionaircraft = aircraft;
-								MAP_SelectMission(ccs.missionaircraft->mission);
-								ccs.interceptAircraft = ccs.missionaircraft;
-								Com_DPrintf(DEBUG_CLIENT, "ccs.interceptAircraft: %i\n", ccs.interceptAircraft->idx);
-								CL_GameTimeStop();
-								MN_PushMenu("popup_intercept_ready", NULL);
-								break;
-							case AIR_RETURNING:
-								/* aircraft entered in homebase */
-								CL_AircraftReturnedToHomeBase(aircraft);
-								aircraft->status = AIR_REFUEL;
-								break;
-							case AIR_TRANSFER:
-								case AIR_UFO:
-								break;
-							default:
-								aircraft->status = AIR_IDLE;
-								break;
-							}
-						}
+						AIR_Move(aircraft, dt);
 						/* radar overlay should be updated */
 						radarOverlayReset = qtrue;
 					} else if (aircraft->status == AIR_REFUEL) {
-						/* Aircraft is refuelling at base */
-						int fillup;
-
-						if (aircraft->fuel < 0)
-							aircraft->fuel = 0;
-						fillup = min(dt * AIRCRAFT_REFUEL_FACTOR, aircraft->stats[AIR_STATS_FUELSIZE] - aircraft->fuel); /* amount of fuel we would like to load */
-						/* This craft uses antimatter as fuel */
-						assert(aircraft->homebase);
-						if (aircraft->stats[AIR_STATS_ANTIMATTER] > 0 && fillup > 0) { 
-							const int amAvailable = B_ItemInBase(INVSH_GetItemByID(ANTIMATTER_TECH_ID), aircraft->homebase); /* the antimatter we have */
-							const int amCurrentLevel = aircraft->stats[AIR_STATS_ANTIMATTER] * (aircraft->fuel / (float) aircraft->stats[AIR_STATS_FUELSIZE]); /* current antimatter level in craft */
-							const int amNextLevel = aircraft->stats[AIR_STATS_ANTIMATTER] * ((aircraft->fuel + fillup) / (float) aircraft->stats[AIR_STATS_FUELSIZE]); /* next antimatter level in craft */
-							int amLoad = amNextLevel - amCurrentLevel; /* antimatter needed */
-
-							if (amLoad > amAvailable) {
-								fillup = aircraft->stats[AIR_STATS_FUELSIZE] * ((amCurrentLevel + amAvailable) / (float) aircraft->stats[AIR_STATS_ANTIMATTER]) - aircraft->fuel; /* amount of fuel we can load */
-								amLoad = amAvailable;
-
-								if (!aircraft->notifySent[AIR_CANNOT_REFUEL]) {
-									MS_AddNewMessage(_("Notice"), va(_("Craft %s couldn't be completely refuelled at %s. Not enough antimatter."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
-									aircraft->notifySent[AIR_CANNOT_REFUEL] = qtrue;
-								}
-							}
-
-							if(amLoad > 0)
-								B_ManageAntimatter(aircraft->homebase, amLoad, qfalse);
-						}
-
-						aircraft->fuel += fillup;
-
-						if (aircraft->fuel >= aircraft->stats[AIR_STATS_FUELSIZE]) {
-							aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
-							aircraft->status = AIR_HOME;
-							
-							MS_AddNewMessage(_("Notice"), va(_("Craft %s has refuelled at %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
-							aircraft->notifySent[AIR_CANNOT_REFUEL] = qfalse;
-						}
+						AIR_Refuel(aircraft, dt);
 					}
 
 					/* Check aircraft low fuel (only if aircraft is not already returning to base or in base) */
