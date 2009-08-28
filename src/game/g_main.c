@@ -221,7 +221,7 @@ static void G_Init (void)
 	game.sv_maxplayersperteam = sv_maxplayersperteam->integer;
 
 	/* initialize all entities for this game */
-	g_edicts = gi.TagMalloc(game.sv_maxentities * sizeof(g_edicts[0]), TAG_GAME);
+	g_edicts = G_TagMalloc(game.sv_maxentities * sizeof(g_edicts[0]), TAG_GAME);
 	globals.edicts = g_edicts;
 	globals.max_edicts = game.sv_maxentities;
 	globals.num_edicts = game.sv_maxplayersperteam;
@@ -229,7 +229,7 @@ static void G_Init (void)
 	/* initialize all players for this game */
 	/* game.sv_maxplayersperteam for human controlled players
 	 * + game.sv_maxplayer for ai */
-	game.players = gi.TagMalloc(game.sv_maxplayersperteam * 2 * sizeof(game.players[0]), TAG_GAME);
+	game.players = G_TagMalloc(game.sv_maxplayersperteam * 2 * sizeof(game.players[0]), TAG_GAME);
 	globals.players = game.players;
 	globals.maxplayersperteam = game.sv_maxplayersperteam;
 

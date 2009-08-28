@@ -339,12 +339,12 @@ static int SV_GetEvent (void)
 /**
  * @brief Makes sure the game DLL does not use client, or signed tags
  */
-static void *SV_TagAlloc (int size, int tagNum)
+static void *SV_TagAlloc (int size, int tagNum, const char *file, int line)
 {
 	if (tagNum < 0)
 		tagNum *= -1;
 
-	return _Mem_Alloc(size, qtrue, sv_gameSysPool, tagNum, "GAME DLL", 0);
+	return _Mem_Alloc(size, qtrue, sv_gameSysPool, tagNum, file, line);
 }
 
 static void SV_MemFree (void *ptr)
@@ -386,8 +386,9 @@ void SV_ShutdownGameProgs (void)
 	Sys_UnloadGame();
 
 	size = Mem_PoolSize(sv_gameSysPool);
-	if (size > 0)
+	if (size > 0) {
 		Com_Printf("WARNING: Game memory leak (%u bytes)\n", size);
+	}
 
 	ge = NULL;
 }
