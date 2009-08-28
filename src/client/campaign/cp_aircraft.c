@@ -56,7 +56,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base)
 {
-	int aircraftSize, freespace = 0;
+	int aircraftSize, freeSpace = 0;
 
 	assert(aircraftTemplate);
 	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
@@ -86,8 +86,8 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base
 			Com_Printf("AIR_UpdateHangarCapForOne: base does not have big hangar - error!\n");
 			return AIRCRAFT_HANGAR_ERROR;
 		}
-		freespace = base->capacities[CAP_AIRCRAFT_BIG].max - base->capacities[CAP_AIRCRAFT_BIG].cur;
-		if (freespace > 0) {
+		freeSpace = base->capacities[CAP_AIRCRAFT_BIG].max - base->capacities[CAP_AIRCRAFT_BIG].cur;
+		if (freeSpace > 0) {
 			base->capacities[CAP_AIRCRAFT_BIG].cur++;
 			return AIRCRAFT_HANGAR_BIG;
 		} else {
@@ -100,8 +100,8 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base
 			Com_Printf("AIR_UpdateHangarCapForOne: base does not have small hangar - error!\n");
 			return AIRCRAFT_HANGAR_ERROR;
 		}
-		freespace = base->capacities[CAP_AIRCRAFT_SMALL].max - base->capacities[CAP_AIRCRAFT_SMALL].cur;
-		if (freespace > 0) {
+		freeSpace = base->capacities[CAP_AIRCRAFT_SMALL].max - base->capacities[CAP_AIRCRAFT_SMALL].cur;
+		if (freeSpace > 0) {
 			base->capacities[CAP_AIRCRAFT_SMALL].cur++;
 			return AIRCRAFT_HANGAR_SMALL;
 		} else {
@@ -344,12 +344,12 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 	le_t *le;
 	invList_t *item;
 	itemsTmp_t *cargo;
-	itemsTmp_t previtemcargo[MAX_CARGO];
-	int previtemtypes;
+	itemsTmp_t prevItemCargo[MAX_CARGO];
+	int prevItemTypes;
 
 	/* Save previous cargo */
-	memcpy(previtemcargo, aircraft->itemcargo, sizeof(aircraft->itemcargo));
-	previtemtypes = aircraft->itemtypes;
+	memcpy(prevItemCargo, aircraft->itemcargo, sizeof(aircraft->itemcargo));
+	prevItemTypes = aircraft->itemtypes;
 	/* Make sure itemcargo is empty. */
 	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
 
@@ -414,15 +414,15 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 #endif
 
 	/* Put previous cargo back */
-	for (i = 0; i < previtemtypes; i++) {
+	for (i = 0; i < prevItemTypes; i++) {
 		for (j = 0; j < aircraft->itemtypes; j++) {
-			if (cargo[j].item == previtemcargo[i].item) {
-				cargo[j].amount += previtemcargo[i].amount;
+			if (cargo[j].item == prevItemCargo[i].item) {
+				cargo[j].amount += prevItemCargo[i].amount;
 				break;
 			}
 		}
 		if (j == aircraft->itemtypes) {
-			cargo[j] = previtemcargo[i];
+			cargo[j] = prevItemCargo[i];
 			aircraft->itemtypes++;
 		}
 	}
@@ -1045,11 +1045,11 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 		REMOVE_ELEM(base->aircraft, i, base->numAircraftInBase);
 		
 		for (j = i; j < base->numAircraftInBase; j++) {
-			aircraft_t *aircraft_temp = AIR_GetAircraftFromBaseByIDX(base, j);
+			aircraft_t *aircraftTemp = AIR_GetAircraftFromBaseByIDX(base, j);
 
-			if (!aircraft_temp)
+			if (!aircraftTemp)
 				continue;
-			AII_CorrectAircraftSlotPointers(aircraft_temp);
+			AII_CorrectAircraftSlotPointers(aircraftTemp);
 		}
 	}
 
