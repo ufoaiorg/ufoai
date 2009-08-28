@@ -1011,9 +1011,9 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 
 	for (i = aircraft->idx + 1; i < ccs.numAircraft; i++) {
 		/* Decrease the global index of aircraft that have a higher index than the deleted one. */
-		aircraft_t *aircraft_temp = AIR_AircraftGetFromIDX(i);
-		if (aircraft_temp) {
-			aircraft_temp->idx--;
+		aircraft_t *aircraftTemp = AIR_AircraftGetFromIDX(i);
+		if (aircraftTemp) {
+			aircraftTemp->idx--;
 		} else {
 			/* For some reason there was no aircraft found for this index. */
 			Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: No aircraft found for this global index: %i\n", i);
@@ -1292,7 +1292,7 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 					}
 
 					/* Check aircraft low fuel (only if aircraft is not already returning to base or in base) */
-					if ((aircraft->status != AIR_RETURNING) && AIR_IsAircraftOnGeoscape(aircraft) &&
+					if (aircraft->status != AIR_RETURNING && AIR_IsAircraftOnGeoscape(aircraft) &&
 						!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
 						/** @todo check if aircraft can go to a closer base with free space */
 						MS_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), _(aircraft->name)), qfalse, MSG_STANDARD, NULL);
@@ -1377,7 +1377,8 @@ aircraft_t* AIR_AircraftGetFromIDX (int idx)
 			continue;
 		for (aircraft = base->aircraft; aircraft < (base->aircraft + base->numAircraftInBase); aircraft++) {
 			if (aircraft->idx == idx) {
-				Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
+				Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: aircraft idx: %i - base idx: %i (%s)\n",
+						aircraft->idx, base->idx, base->name);
 				return aircraft;
 			}
 		}
@@ -1538,10 +1539,6 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		memset(aircraftTemplate, 0, sizeof(*aircraftTemplate));
 
 		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
-		/** @todo is this needed here? I think not, because the index of available aircraft
-		 * are set when we create these aircraft from the samples - but i might be wrong here
-		 * if i'm not wrong, the ccs.numAircraft++ from a few lines below can go into trashbin, too */
-		aircraftTemplate->idx = ccs.numAircraftTemplates;
 		aircraftTemplate->tpl = aircraftTemplate;
 		aircraftTemplate->id = Mem_PoolStrDup(name, cl_genericPool, 0);
 		aircraftTemplate->status = AIR_HOME;
@@ -2236,15 +2233,10 @@ Aircraft functions related to team handling.
 /**
  * @brief Resets team in given aircraft.
  * @param[in] aircraft Pointer to an aircraft, where the team will be reset.
- * @todo Use memset here.
  */
 void AIR_ResetAircraftTeam (aircraft_t *aircraft)
 {
-	int i;
-
-	for (i = 0; i < MAX_ACTIVETEAM; i++) {
-		aircraft->acTeam[i] = NULL;
-	}
+	memset(aircraft->acTeam, 0, sizeof(aircraft->acTeam));
 }
 
 /**
