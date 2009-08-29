@@ -1850,7 +1850,7 @@ void AII_ReloadWeapon (aircraft_t *aircraft)
 	for (i = 0; i < aircraft->maxWeapons; i++) {
 		if (AIR_IsUFO(aircraft)) {
 			aircraft->weapons[i].ammoLeft = AMMO_STATUS_UNLIMITED;
-		} else if (aircraft->weapons[i].ammo && !aircraft->weapons[i].ammo->craftitem.unlimitedAmmo) {
+		} else if (aircraft->weapons[i].ammo && aircraft->weapons[i].ammoLeft < aircraft->weapons[i].ammo->ammo && !aircraft->weapons[i].ammo->craftitem.unlimitedAmmo) {
 			const objDef_t *ammo = aircraft->weapons[i].ammo;
 			base_t *base = aircraft->homebase;
 			const int amountInBase = B_ItemInBase(ammo, base);

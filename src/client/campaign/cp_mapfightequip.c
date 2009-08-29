@@ -609,7 +609,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 	/* some weapons have unlimited ammo */
 	if (ammo->craftitem.unlimitedAmmo) {
 		slot->ammoLeft = AMMO_STATUS_UNLIMITED;
-	} else if (slot->aircraft)
+	} else if (slot->aircraft && base)
 		AII_ReloadWeapon(slot->aircraft);
 
 	return qtrue;
