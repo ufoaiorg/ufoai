@@ -1,5 +1,20 @@
 /**
  * @file m_node_string.c
+ * @brief A string can be a normal string, or a cvar string.
+ * A string prefixed with a "_" is the auto translated.
+ * @code
+ * string team_members
+ * {
+ * 	string	"_Team Members:"
+ * 	pos	"480 486"
+ * 	size "200 30"
+ * }
+ * string team_hired
+ * {
+ * 	string	"*cvar mn_hired"
+ * 	pos	"480 508"
+ * 	size "200 30"
+ * }
  */
 
 /*
@@ -91,6 +106,7 @@ static void MN_StringNodeLoading (menuNode_t *node)
 }
 
 static const value_t properties[] = {
+	/* Define how to display a long line. Chop/wrap/ellipsis */
 	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
 	{NULL, V_NULL, 0, 0}
 };

@@ -1,5 +1,10 @@
 /**
  * @file m_node_textentry.c
+ * @brief This node allow to edit a cvar text with the keyboard. When we
+ * click on the node, we active the edition, we can validate it with the ''RETURN'' key,
+ * or abort it with ''ESCAPE'' key. A validation fire a scriptable callback event.
+ * We can custom the mouse behaviour when we click outside the node in edition mode.
+ * It can validate or abort the edition.
  * @todo allow to edit text without any cvar
  * @todo add a custom max size
  */
@@ -307,9 +312,15 @@ static void MN_TextEntryNodeLoading (menuNode_t *node)
 }
 
 static const value_t properties[] = {
+	/* Custom the draw behaviour by hiding each character of the text with a star (''*''). */
 	{"ispassword", V_BOOL, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, isPassword), MEMBER_SIZEOF(textEntryExtraData_t, isPassword)},
+	/* ustom the mouse event behaviour. When we are editing the text, if we click out of the node, the edition is aborted. Changes on
+	 * the text are canceled, and no change event are fired.
+	 */
 	{"clickoutabort", V_BOOL, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, clickOutAbort), MEMBER_SIZEOF(textEntryExtraData_t, clickOutAbort)},
+	/* Call it when we abort the edition */
 	{"onabort", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, onAbort), MEMBER_SIZEOF(textEntryExtraData_t, onAbort)},
+	/* Call it to force node edition */
 	{"edit", V_UI_NODEMETHOD, ((size_t) MN_TextEntryNodeFocus), 0},
 
 	{NULL, V_NULL, 0, 0}

@@ -48,6 +48,7 @@ static void MN_CinematicNodeDraw (menuNode_t *node)
 }
 
 static const value_t properties[] = {
+	/** @todo Please document it */
 	{"video", V_CVAR_OR_STRING, offsetof(menuNode_t, cvar), 0},
 	{NULL, V_NULL, 0, 0}
 };

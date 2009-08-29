@@ -2,7 +2,7 @@
  * @file m_node_button.c
  * @todo add an icon if possible.
  * @todo implement clicked button when its possible.
- * @todo allow autosize (use the size need looking string, problem when we change langage)
+ * @todo allow auto size (use the size need looking string, problem when we change language)
  */
 
 /*

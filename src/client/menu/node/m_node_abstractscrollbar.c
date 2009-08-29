@@ -26,11 +26,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractscrollbar.h"
 
 static const value_t properties[] = {
+	/* Current position of the scroll. Image of the <code>viewpos</code> from <code>abstractscrollable</code> node. */
 	{"current", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollbarExtraData_t, pos),  MEMBER_SIZEOF(abstractScrollbarExtraData_t, pos)},
+	/* Image of the <code>viewsize</code> from <code>abstractscrollable</code> node. */
 	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollbarExtraData_t, viewsize),  MEMBER_SIZEOF(abstractScrollbarExtraData_t, viewsize)},
+	/* Image of the <code>fullsize</code> from <code>abstractscrollable</code> node. */
 	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollbarExtraData_t, fullsize),  MEMBER_SIZEOF(abstractScrollbarExtraData_t, fullsize)},
-	{"lastdiff", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollbarExtraData_t, lastdiff),  MEMBER_SIZEOF(abstractScrollbarExtraData_t, lastdiff)},
+
+	/* If true, hide the scroll when the position is 0 and can't change (when <code>viewsize</code> >= <code>fullsize</code>). */
 	{"hidewhenunused", V_BOOL, MN_EXTRADATA_OFFSETOF(abstractScrollbarExtraData_t, hideWhenUnused),  MEMBER_SIZEOF(abstractScrollbarExtraData_t, hideWhenUnused)},
+
+	/* Callback value set when before calling onChange. It is used to know the change apply by the user
+	 * @Deprecated
+	 */
+	{"lastdiff", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollbarExtraData_t, lastdiff),  MEMBER_SIZEOF(abstractScrollbarExtraData_t, lastdiff)},
+
 	{NULL, V_NULL, 0, 0}
 };
 

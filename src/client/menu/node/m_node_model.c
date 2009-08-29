@@ -1,5 +1,10 @@
 /**
  * @file m_node_model.c
+ * @brief This node allow to include a 3D-model into the GUI.
+ * It provide a way to create composite models, check
+ * [[How to script menu#How to create a composite model]]. We call it "main model"
+ * when a model is a child node of a non model node, and "submodel" when the node
+ * is a child node of a model node.
  */
 
 /*
@@ -651,17 +656,32 @@ static void MN_ModelNodeLoaded (menuNode_t *node)
 
 /** @brief valid properties for model */
 static const value_t properties[] = {
+	/* Both. Name of the animation for the model */
 	{"anim", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, animation), 0},
+	/* Main model only. Point of view. */
 	{"angles", V_VECTOR, MN_EXTRADATA_OFFSETOF(modelExtraData_t, angles), MEMBER_SIZEOF(modelExtraData_t, angles)},
+	/* Main model only. Position of the model relative to the center of the node. */
 	{"origin", V_VECTOR, MN_EXTRADATA_OFFSETOF(modelExtraData_t, origin), MEMBER_SIZEOF(modelExtraData_t, origin)},
+	/* Both. Scale the model */
 	{"scale", V_VECTOR, MN_EXTRADATA_OFFSETOF(modelExtraData_t, scale), MEMBER_SIZEOF(modelExtraData_t, scale)},
+	/* Submodel only. A tag name to link the model to the parent model. */
 	{"tag", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, tag), 0},
-	/** @todo use V_REF_OF_STRING when its possible ('viewName' is never a cvar) */
+	/* Main model only. A way to use a custom scripted POV into the model. Check <code>base/ufos/models.ufo</code> for the list of allowed string.
+	 * For example "ufopedia", "aircraft", "aircraft_equip", "item". It is also called "menumodel", but have no more link with windows name (aka menu name).
+	 * @todo use V_REF_OF_STRING when its possible ('viewName' is never a cvar)
+	 */
 	{"view", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, viewName), 0},
+	/* Main model only. Auto compute the "better" scale for the model. The function dont work
+	 * very well at the moment because it dont check the angle and no more submodel bounding box.
+	 */
 	{"autoscale", V_BOOL, MN_EXTRADATA_OFFSETOF(modelExtraData_t, autoscale), MEMBER_SIZEOF(modelExtraData_t, autoscale)},
+	/* Main model only. Allow to change the POV of the model with the mouse (only for main model) */
 	{"rotatewithmouse", V_BOOL, MN_EXTRADATA_OFFSETOF(modelExtraData_t, rotateWithMouse), MEMBER_SIZEOF(modelExtraData_t, rotateWithMouse)},
+	/* Main model only. Clip the model with the node rect */
 	{"clipoverflow", V_BOOL, MN_EXTRADATA_OFFSETOF(modelExtraData_t, clipOverflow), MEMBER_SIZEOF(modelExtraData_t, clipOverflow)},
+	/* Both. Name of the model. The path to the model, relative to <code>base/models</code> */
 	{"model", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, model), 0},
+	/* Both. Name of the skin for the model. */
 	{"skin", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, skin), 0},
 
 	{NULL, V_NULL, 0, 0}

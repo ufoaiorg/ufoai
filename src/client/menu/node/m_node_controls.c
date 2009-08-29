@@ -1,5 +1,8 @@
 /**
  * @file m_node_controls.c
+ * @brief Controls is a special <code>pic</code> entity with which
+ * the windows can be moved (drag & drop).
+ * @todo Remove it. Window node can manage itself dragging.
  */
 
 /*

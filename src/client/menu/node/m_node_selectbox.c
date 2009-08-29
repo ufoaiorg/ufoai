@@ -1,6 +1,24 @@
 /**
  * @file m_node_selectbox.c
  * @todo manage disabled option
+ * @code
+ * selectbox texres_box
+ * {
+ * 	image	"ui/selectbox_green"
+ * 	pos	"774 232"
+ * 	size	"100 20"
+ * 	color	"0.6 0.6 0.6 0.3"
+ * 	cvar	"*cvar:gl_maxtexres"
+ * 	option low_value {
+ * 		label	"_Low"
+ * 		value	"256"
+ * 	}
+ * 	option medium_value {
+ * 		label	"_Medium"
+ * 		value	"512"
+ * 	}
+ * }
+ * @endcode
  */
 
 /*

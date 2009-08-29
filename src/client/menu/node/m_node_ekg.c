@@ -108,7 +108,9 @@ static void MN_EKGNodeLoading (menuNode_t *node)
 }
 
 static const value_t properties[] = {
+	/* @todo Need documentation */
 	{"scrollspeed", V_FLOAT, MN_EXTRADATA_OFFSETOF(ekgExtraData_t, scrollSpeed), MEMBER_SIZEOF(ekgExtraData_t, scrollSpeed)},
+	/* @todo Need documentation */
 	{"scale", V_FLOAT, MN_EXTRADATA_OFFSETOF(ekgExtraData_t, scaleCvarValue), MEMBER_SIZEOF(ekgExtraData_t, scaleCvarValue)},
 
 	{NULL, V_NULL, 0, 0}

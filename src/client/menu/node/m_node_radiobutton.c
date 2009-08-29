@@ -1,8 +1,13 @@
 /**
  * @file m_node_radiobutton.c
+ * @brief The radiobutton is a clickable widget. Commonly, with use it in
+ * a group of radiobuttons; the user is allowed to choose only one button
+ * from this set. The current implementation share the value of the group
+ * with a cvar, and each button use is own value. When the cvar equals to
+ * a button value, this button is selected.
  * @code
  * radiobutton foo {
- *   cvar "*cvar mn_serverday"
+ *   cvar "*cvar:mn_serverday"
  *   value 4
  *   icon boo
  * }

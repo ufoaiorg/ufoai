@@ -334,18 +334,35 @@ static void MN_WindowNodeClone (const menuNode_t *source, menuNode_t *clone)
  * @brief Valid properties for a window node (called yet 'menu')
  */
 static const value_t windowNodeProperties[] = {
+	/* In windows where notify messages appear (like e.g. the video options window when you have to restart the game until the settings take effects) you can define the position of those messages with this option. */
 	{"noticepos", V_POS, MN_EXTRADATA_OFFSETOF(windowExtraData_t, noticePos), MEMBER_SIZEOF(windowExtraData_t, noticePos)},
+	/* Create subnode allowing to move the window when we click on the header. Updating this attribute at the runtime will change nothing. */
 	{"dragbutton", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, dragButton), MEMBER_SIZEOF(windowExtraData_t, dragButton)},
+	/* Add a button on the top right the window to close it. Updating this attribute at the runtime will change nothing. */
 	{"closebutton", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, closeButton), MEMBER_SIZEOF(windowExtraData_t, closeButton)},
+	/* If true, the user can't select something outside the modal window. He must first close the window. */
 	{"modal", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, modal), MEMBER_SIZEOF(windowExtraData_t, modal)},
+	/* If true, if the user click outside the window, it will close it. */
 	{"dropdown", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, dropdown), MEMBER_SIZEOF(windowExtraData_t, dropdown)},
+	/* If true, the user can't use ''ESC'' key to close the window. */
 	{"preventtypingescape", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, preventTypingEscape), MEMBER_SIZEOF(windowExtraData_t, preventTypingEscape)},
+	/* If true, the window is filled according to the widescreen. */
 	{"fill", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, fill), MEMBER_SIZEOF(windowExtraData_t, fill)},
+	/* If true, when the window size change, the window content position is updated according to the "star" layout. */
+	/* @todo Need more documentation. */
 	{"starlayout", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, starLayout), MEMBER_SIZEOF(windowExtraData_t, starLayout)},
+
+	/* This property control milliseconds between each calls of <code>onEvent</code>.
+	 * If value is 0 (the default value) nothing is called. We can change the
+	 * value at the runtime.
+	 */
 	{"timeout", V_INT, offsetof(menuNode_t, timeOut), MEMBER_SIZEOF(menuNode_t, timeOut)},
 
+	/* Called when the window is puched into the active window stack. */
 	{"oninit", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(windowExtraData_t, onInit), MEMBER_SIZEOF(windowExtraData_t, onInit)},
+	/* Called when the window is removed from the active window stack. */
 	{"onclose", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(windowExtraData_t, onClose), MEMBER_SIZEOF(windowExtraData_t, onClose)},
+	/* Called periodically. See <code>timeout</code>. */
 	{"onevent", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(windowExtraData_t, onTimeOut), MEMBER_SIZEOF(windowExtraData_t, onTimeOut)},
 
 	{NULL, V_NULL, 0, 0}

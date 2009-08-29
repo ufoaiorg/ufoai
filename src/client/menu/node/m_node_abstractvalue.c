@@ -1,5 +1,7 @@
 /**
  * @file m_node_abstractvalue.c
+ * @brief The abstractvalue node is an abstract node (we can't instanciate it).
+ * It provide common properties to concrete nodes, to manage a value in a range.
  */
 
 /*
@@ -70,10 +72,18 @@ static void MN_AbstractValueClone (const menuNode_t *source, menuNode_t *clone)
 }
 
 static const value_t properties[] = {
+	/* Current value of the node. It should be a cvar */
 	{"current", V_CVAR_OR_FLOAT, MN_EXTRADATA_OFFSETOF(abstractValueExtraData_t, value), 0},
+	/* Value of a positive step. Must be bigger than 1. */
 	{"delta", V_CVAR_OR_FLOAT, MN_EXTRADATA_OFFSETOF(abstractValueExtraData_t, delta), 0},
+	/* Maximum value we can set to the node. It can be a cvar. Default value is 0. */
 	{"max", V_CVAR_OR_FLOAT, MN_EXTRADATA_OFFSETOF(abstractValueExtraData_t, max), 0},
+	/* Minimum value we can set to the node. It can be a cvar. Default value is 1. */
 	{"min", V_CVAR_OR_FLOAT, MN_EXTRADATA_OFFSETOF(abstractValueExtraData_t, min), 0},
+
+	/* Callback value set when before calling onChange. It is used to know the change apply by the user
+	 * @Deprecated
+	 */
 	{"lastdiff", V_FLOAT, MN_EXTRADATA_OFFSETOF(abstractValueExtraData_t, lastdiff), MEMBER_SIZEOF(abstractValueExtraData_t, lastdiff)},
 	{NULL, V_NULL, 0, 0}
 };

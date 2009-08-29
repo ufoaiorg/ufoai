@@ -1,8 +1,15 @@
 /**
  * @file m_node_container.c
- * @todo move container list code out
- * @todo improve the code in general
- * @todo rename 'visibleRows' and 'EXTRADATA(node).scrollNum' into 'heightCache' or something like that
+ * @brief The container node refer to 3 different nodes merged into a singler one. Both
+ * can drag and drop solider items from a container to another one. The first container
+ * is a soldier slot. For example, the left arm, the bag pack... The second is the base
+ * item list. And the last it a floor container used into the battlescape. The node name
+ * itself is used to know the container role.
+ * @todo Move base container list outside
+ * @todo Move container role outside of the node name
+ * @todo Link soldier container with a soldier
+ * @todo Link base container with a base
+ * @todo Link floor container with a map/cell...
  */
 
 /*
@@ -1531,21 +1538,38 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 }
 
 static const value_t properties[] = {
+	/* Base container only. Display/hide weapons. */
 	{"displayweapon", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayWeapon)},
+	/* Base container only. Display/hide ammo. */
 	{"displayammo", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayAmmo),  MEMBER_SIZEOF(containerExtraData_t, displayAmmo)},
+	/* Base container only. Display/hide out of stock items. */
 	{"displayunavailableitem", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableItem),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableItem)},
+	/* Base container only. Sort the list to display in stock items on top of the list. */
 	{"displayavailableontop", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayAvailableOnTop),  MEMBER_SIZEOF(containerExtraData_t, displayAvailableOnTop)},
+	/* Base container only. Display/hide ammo near weapons. */
 	{"displayammoofweapon", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayAmmoOfWeapon)},
+	/* Base container only. Display/hide out of stock ammo near weapons. <code>displayammoofweapon</code> must be activated first. */
 	{"displayunavailableammoofweapon", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableAmmoOfWeapon)},
+	/* Base container only. Custom the number of column we must use to display items. */
 	{"columns", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, columns),  MEMBER_SIZEOF(containerExtraData_t, columns)},
+	/* Base container only. Filter items by a category. */
+	/** @todo Document category values */
+	/** @todo Use understandable const string */
 	{"filter", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, filterEquipType),  MEMBER_SIZEOF(containerExtraData_t, filterEquipType)},
 
+	/* Callback value set before calling onSelect. It is used to know the item selected */
 	{"lastselectedid", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, lastSelectedId),  MEMBER_SIZEOF(containerExtraData_t, lastSelectedId)},
+	/* Callback event called when the user select an item */
 	{"onselect", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(containerExtraData_t, onSelect),  MEMBER_SIZEOF(containerExtraData_t, onSelect)},
 
+	/* Base container only. Position of the vertical view (into the full number of elements the node contain) */
+	/* @todo Rename it viewpos (like scrollable node) */
 	{"scrollpos", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, scrollCur),  MEMBER_SIZEOF(containerExtraData_t, scrollCur)},
+	/* Base container only. Size of the vertical view (proportional to the number of elements the node can display without moving) */
 	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, scrollNum),  MEMBER_SIZEOF(containerExtraData_t, scrollNum)},
+	/* Base container only. Full vertical size (proportional to the number of elements the node contain) */
 	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, scrollTotalNum),  MEMBER_SIZEOF(containerExtraData_t, scrollTotalNum)},
+	/* Base container only. Called when one of the properties viewpos/viewsize/fullsize change */
 	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(containerExtraData_t, onViewChange), MEMBER_SIZEOF(containerExtraData_t, onViewChange)},
 
 	{NULL, V_NULL, 0, 0}

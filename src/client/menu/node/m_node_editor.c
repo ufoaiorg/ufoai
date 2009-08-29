@@ -1,6 +1,8 @@
 /**
  * @file m_node_editor.c
  * @note type "mn_push editor" to use it, Escape button to close it, and "mn_extract" to extract a menu
+ * @brief Editor is an invisible node used to create an edition mode. The edition mode
+ * allow user to move and resize all visible nodes.
  */
 
 /*
@@ -295,7 +297,9 @@ static void MN_EditorNodeExtract_f (void)
 }
 
 static const value_t properties[] = {
+	/* start edition mode */
 	{"start", V_UI_NODEMETHOD, ((size_t) MN_EditorNodeStart), 0},
+	/* stop edition mode */
 	{"stop", V_UI_NODEMETHOD, ((size_t) MN_EditorNodeStop), 0},
 	{NULL, V_NULL, 0, 0}
 };
