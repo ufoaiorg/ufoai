@@ -161,14 +161,6 @@ window aircraft_equip extends iaircraft
 		pos			"53 497"
 		size		"235 20"
 		color		"0.6 0.6 0.6 0.3"
-		option armour {
-			label	"_Armour"
-			value	"armour"
-		}
-		option items {
-			label	"_Items"
-			value	"item"
-		}
 		option weapons {
 			label	"_Weapons"
 			value	"weapon"
@@ -176,6 +168,14 @@ window aircraft_equip extends iaircraft
 		option ammo {
 			label	"_Ammo"
 			value	"ammo"
+		}
+		option armour {
+			label	"_Armour"
+			value	"armour"
+		}
+		option items {
+			label	"_Items"
+			value	"item"
 		}
 		onChange {
 			cmd "airequip_selectcategory <cvar:mn_equip_itemtype>"
