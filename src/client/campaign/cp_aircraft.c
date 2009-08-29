@@ -1186,8 +1186,8 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			break;
 		case AIR_RETURNING:
 			/* aircraft entered in homebase */
-			CL_AircraftReturnedToHomeBase(aircraft);
 			aircraft->status = AIR_REFUEL;
+			CL_AircraftReturnedToHomeBase(aircraft);
 			break;
 		case AIR_TRANSFER:
 		case AIR_UFO:
