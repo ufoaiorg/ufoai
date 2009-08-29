@@ -85,6 +85,18 @@ class ExtractNodeBehaviour:
 				comments.append(line)
 				continue
 
+			if line.startswith("*/"):
+				continue
+
+			if line.startswith("*"):
+				line = line.replace('*', '', 1).replace('*/', '')
+				line = line.strip()
+				if line.startswith("@"):
+					comments.append(line)
+				else:
+					comments[len(comments)-1] += ' ' + line
+				continue
+
 			i = line.find('{')
 			if i == -1:
 				continue
