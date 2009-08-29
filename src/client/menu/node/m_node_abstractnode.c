@@ -73,7 +73,9 @@ static const value_t properties[] = {
 	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor), MEMBER_SIZEOF(menuNode_t, bgcolor)},
 	/* Border color we want to display. */
 	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
-	/** @todo use V_REF_OF_STRING when its possible ('image' is never a cvar) */
+	/* Used to custom layout in windows support widescreen. */
+
+	/** @todo We should rename it and type it named const */
 	{"num", V_INT, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
 
 	/* Tooltip we want to use. */
@@ -83,8 +85,6 @@ static const value_t properties[] = {
 	/** @todo use V_REF_OF_STRING when its possible ('image' is never a cvar) */
 	{"image", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
 	/* Cvar to use, often to contain a value we want to share. */
-	/** @todo Move it into behaviour need it */
-	{"cvar", V_UI_CVAR, offsetof(menuNode_t, cvar), 0},
 	/* Text the node will display. */
 	{"string", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
 	/* Text font the node will use. */

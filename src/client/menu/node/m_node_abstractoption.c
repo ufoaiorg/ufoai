@@ -121,16 +121,27 @@ static void MN_UpdateOption_f (void)
 }
 
 static const value_t properties[] = {
+	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
 	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(optionExtraData_t, dataId), MEMBER_SIZEOF(optionExtraData_t, dataId)},
+	/** Special property only use into node description. Used for each element of the inline option list */
 	{"option", V_UI_OPTIONNODE, MN_EXTRADATA_OFFSETOF(optionExtraData_t, first), 0},
+	/** Optional. We can define the height of the block containing an option. */
 	{"lineheight", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, lineHeight),  MEMBER_SIZEOF(optionExtraData_t, lineHeight)},
 
-
+	/* position of the vertical view (into the full number of elements the node contain) */
 	{"viewpos", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, scrollY.viewPos),  MEMBER_SIZEOF(optionExtraData_t, scrollY.viewPos)},
+	/* size of the vertical view (proportional to the number of elements the node can display without moving) */
 	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, scrollY.viewSize),  MEMBER_SIZEOF(optionExtraData_t, scrollY.viewSize)},
+	/* full vertical size (proportional to the number of elements the node contain) */
 	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, scrollY.fullSize),  MEMBER_SIZEOF(optionExtraData_t, scrollY.fullSize)},
 
+	/* number of elements contain the node */
 	{"count", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, count),  MEMBER_SIZEOF(optionExtraData_t, count)},
+
+	/* Define the cvar containing the value of the current selected option */
+	{"cvar", V_UI_CVAR, offsetof(menuNode_t, cvar), 0},
+
+	/* Called when one of the properties viewpos/viewsize/fullsize change */
 	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(optionExtraData_t, onViewChange), MEMBER_SIZEOF(optionExtraData_t, onViewChange)},
 
 	{NULL, V_NULL, 0, 0}

@@ -108,7 +108,11 @@ static void MN_RadioButtonNodeClick (menuNode_t * node, int x, int y)
 }
 
 static const value_t properties[] = {
+	/* Value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */
 	{"value", V_FLOAT, offsetof(menuNode_t, extraData1), MEMBER_SIZEOF(menuNode_t, extraData1)},
+	/* Cvar name shared with the radio button group to identify when a radio button is selected. */
+	{"cvar", V_UI_CVAR, offsetof(menuNode_t, cvar), 0},
+
 	{NULL, V_NULL, 0, 0}
 };
 
