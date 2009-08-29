@@ -599,13 +599,13 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 		slot->ammo = ammo;
 	}
 
-	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
-	if (base && !ammo->craftitem.unlimitedAmmo)
-		B_UpdateStorageAndCapacity(base, ammo, -1, qfalse, qfalse);
-
 	/* proceed only if we are changing ammo of current weapon */
-	if (slot->nextItem)
+	if (slot->nextItem) {
+		/* the base pointer can be null here - e.g. in case you are equipping a UFO */
+		if (base && !ammo->craftitem.unlimitedAmmo)
+			B_UpdateStorageAndCapacity(base, ammo, -1, qfalse, qfalse);
 		return qtrue;
+	}
 	/* some weapons have unlimited ammo */
 	if (ammo->craftitem.unlimitedAmmo) {
 		slot->ammoLeft = AMMO_STATUS_UNLIMITED;

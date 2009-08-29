@@ -1853,12 +1853,14 @@ void AII_ReloadWeapon (aircraft_t *aircraft)
 		} else if (aircraft->weapons[i].ammo && aircraft->weapons[i].ammoLeft < aircraft->weapons[i].ammo->ammo && !aircraft->weapons[i].ammo->craftitem.unlimitedAmmo) {
 			const objDef_t *ammo = aircraft->weapons[i].ammo;
 			base_t *base = aircraft->homebase;
-			const int amountInBase = B_ItemInBase(ammo, base);
-			const int amountToReload = min(amountInBase, ammo->ammo);
+
 			assert(base);
+			if (B_ItemInBase(ammo, base) <= 0)
+				continue;
+
 			assert(AIR_IsAircraftInBase(aircraft));
-			B_UpdateStorageAndCapacity(base, ammo, -amountToReload, qfalse, qfalse);
-			aircraft->weapons[i].ammoLeft += amountToReload;
+			B_UpdateStorageAndCapacity(base, ammo, -1, qfalse, qfalse);
+			aircraft->weapons[i].ammoLeft = ammo->ammo;
 		}
 	}
 }
