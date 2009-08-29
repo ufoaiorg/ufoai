@@ -786,10 +786,16 @@ void Key_WriteBindings (const char* filename)
 		}
 
 	for (i = 0; i < MN_GetKeyBindingCount(); i++) {
+		const char *path;
 		menuKeyBinding_t*binding = MN_GetKeyBindingByIndex (i);
 		if (binding->node == NULL)
 			continue;
-		if (FS_Printf(&f, "bindui %s \"%s\"\n", Key_KeynumToString(binding->key), MN_GetPath(binding->node)) < 0)
+		if (binding->property == NULL)
+			path = va("%s", MN_GetPath(binding->node));
+		else
+			path = va("%s@%s", MN_GetPath(binding->node), binding->property->string);
+
+		if (FS_Printf(&f, "bindui %s \"%s\"\n", Key_KeynumToString(binding->key), path) < 0)
 			delete = qtrue;
 	}
 

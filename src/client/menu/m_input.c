@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 #include "m_internal.h"
 #include "m_nodes.h"
+#include "m_parse.h"
 #include "m_draw.h"
 #include "m_dragndrop.h"
 
@@ -247,13 +248,18 @@ void MN_SetKeyBinding (const char* path, int key)
 {
 	menuNode_t *node;
 	menuKeyBinding_t *binding;
-	node = MN_GetNodeByPath(path);
+	const value_t *property = NULL;
+	MN_ReadNodePath(path, NULL, &node, &property);
 	if (node == NULL)
 		Com_Error(ERR_FATAL, "MN_SetKeyBinding: node \"%s\" not found.", path);
+
+	if (property != NULL && property->type != V_UI_NODEMETHOD)
+		Com_Error(ERR_FATAL, "MN_SetKeyBinding: Only node and method are supported. Property @%s not found in path \"%s\".", property->string, path);
 
 	/* init and link the keybinding */
 	binding = MN_AllocStaticKeyBinding();
 	binding->node = node;
+	binding->property = property;
 	binding->key = key;
 	node->key = binding;
 	binding->next = node->root->u.window.keyList;
@@ -289,7 +295,14 @@ static qboolean MN_KeyPressedInWindow (unsigned int key, const menuNode_t *windo
 
 	/* execute event */
 	node = binding->node;
-	node->behaviour->activate(node);
+	if (binding->property == NULL)
+		node->behaviour->activate(node);
+	else if (binding->property->type == V_UI_NODEMETHOD) {
+		menuNodeMethod_t func = (menuNodeMethod_t) binding->property->ofs;
+		func(node);
+	} else
+		Com_Printf("MN_KeyPressedInWindow: @%s not supported.", binding->property->string);
+
 	return qtrue;
 }
 

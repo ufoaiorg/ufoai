@@ -31,6 +31,7 @@ struct menuNode_s;
 #define MAX_MENUKEYBINDING	128
 typedef struct menuKeyBinding_s {
 	struct menuNode_s *node;
+	const struct value_s *property;
 	int key;
 	struct menuKeyBinding_s *next;	/* next binding from the window list */
 } menuKeyBinding_t;
