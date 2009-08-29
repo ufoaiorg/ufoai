@@ -124,6 +124,37 @@ qboolean MN_AbstractScrollableNodeSetY (menuNode_t *node, int viewPos, int viewS
 }
 
 /**
+ * @note pos == -1 is a reserved value, that why we clamp the value
+ */
+static void MN_AbstractScrollableNodePageUp (menuNode_t *node) {
+	const int pos = EXTRADATA(node).scrollY.viewPos - 10;
+	MN_AbstractScrollableNodeSetY(node, (pos >= 0)?pos:0, -1, -1);
+}
+
+static void MN_AbstractScrollableNodePageDown (menuNode_t *node) {
+	MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + 10, -1, -1);
+}
+
+static void MN_AbstractScrollableNodeMoveUp (menuNode_t *node) {
+	MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos - 1, -1, -1);
+}
+
+static void MN_AbstractScrollableNodeMoveDown (menuNode_t *node) {
+	MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + 1, -1, -1);
+}
+
+static void MN_AbstractScrollableNodeMoveHome (menuNode_t *node) {
+	MN_AbstractScrollableNodeSetY(node, 0, -1, -1);
+}
+
+/**
+ * @note fullSize is bigger than the "end" position. But the function will clamp it right
+ */
+static void MN_AbstractScrollableNodeMoveEnd (menuNode_t *node) {
+	MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.fullSize, -1, -1);
+}
+
+/**
  * @brief Scroll the Y scroll with a relative position, and call event if need
  * @return True, if something have change
  */
@@ -134,11 +165,27 @@ qboolean MN_AbstractScrollableNodeScrollY (menuNode_t *node, int offset)
 }
 
 static const value_t properties[] = {
+	/* position of the vertical view (into the full number of elements the node contain) */
 	{"viewpos", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollableExtraData_t, scrollY.viewPos),  MEMBER_SIZEOF(abstractScrollableExtraData_t, scrollY.viewPos)},
+	/* size of the vertical view (proportional to the number of elements the node can display without moving) */
 	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollableExtraData_t, scrollY.viewSize),  MEMBER_SIZEOF(abstractScrollableExtraData_t, scrollY.viewSize)},
+	/* full vertical size (proportional to the number of elements the node contain) */
 	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollableExtraData_t, scrollY.fullSize),  MEMBER_SIZEOF(abstractScrollableExtraData_t, scrollY.fullSize)},
-
+	/* Called when one of the properties viewpos/viewsize/fullsize change */
 	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(abstractScrollableExtraData_t, onViewChange), MEMBER_SIZEOF(abstractScrollableExtraData_t, onViewChange)},
+
+	/* Call it to vertically scroll the document up */
+	{"pageup", V_UI_NODEMETHOD, ((size_t) MN_AbstractScrollableNodePageUp), 0},
+	/* Call it to vertically scroll the document down */
+	{"pagedown", V_UI_NODEMETHOD, ((size_t) MN_AbstractScrollableNodePageDown), 0},
+	/* Call it to vertically scroll the document up */
+	{"moveup", V_UI_NODEMETHOD, ((size_t) MN_AbstractScrollableNodeMoveUp), 0},
+	/* Call it to vertically scroll the document down */
+	{"movedown", V_UI_NODEMETHOD, ((size_t) MN_AbstractScrollableNodeMoveDown), 0},
+	/* Call it to vertically reset the scroll position to 0 */
+	{"movehome", V_UI_NODEMETHOD, ((size_t) MN_AbstractScrollableNodeMoveHome), 0},
+	/* Call it to vertically move the scroll to the end of the document */
+	{"moveend", V_UI_NODEMETHOD, ((size_t) MN_AbstractScrollableNodeMoveEnd), 0},
 
 	{NULL, V_NULL, 0, 0}
 };
