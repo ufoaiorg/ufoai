@@ -84,7 +84,6 @@ static const value_t properties[] = {
 	/** @todo Move it into behaviour need it */
 	/** @todo use V_REF_OF_STRING when its possible ('image' is never a cvar) */
 	{"image", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
-	/* Cvar to use, often to contain a value we want to share. */
 	/* Text the node will display. */
 	{"string", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
 	/* Text font the node will use. */
