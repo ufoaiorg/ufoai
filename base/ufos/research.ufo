@@ -2597,7 +2597,7 @@ tech rs_advanced_combat_armour
 
 	provides	armour_lightadv
 	time		0
-	producetime	72
+	producetime	-1
 }
 
 tech rs_nano_armour
