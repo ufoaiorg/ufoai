@@ -98,7 +98,7 @@ window team extends iaircraft
 		*check_actor<1>@disabled true
 		*check_actor<1>@invis false
 		*txt_actor<1>@invis false
-		*bt_equip<1>@invis false
+		*(pic)bt_equip<1>@invis false
 	}
 
 	/**
@@ -110,7 +110,7 @@ window team extends iaircraft
 		*(checkbox)check_actor<1>@current 0
 		*check_actor<1>@invis false
 		*txt_actor<1>@invis false
-		*bt_equip<1>@invis false
+		*(pic)bt_equip<1>@invis false
 		if ( *cvar:mn_hirable_count == 0 ) {
 			*(checkbox)check_actor<1>@disabled true
 			*(checkbox)check_actor<1>@tooltip "_No more soldiers can be assigned to this craft"
@@ -129,32 +129,32 @@ window team extends iaircraft
 		*(checkbox)check_actor<1>@tooltip "_Remove soldier from this craft"
 		*check_actor<1>@invis false
 		*txt_actor<1>@invis false
-		*bt_equip<1>@invis false
+		*(pic)bt_equip<1>@invis false
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_holdsequip {
-		*bt_equip<1>@tooltip "_Soldier carries equipment"
-		*bt_equip<1>@texl "16 0"
-		*bt_equip<1>@texh "32 16"
+		*(pic)bt_equip<1>@tooltip "_Soldier carries equipment"
+		*(pic)bt_equip<1>@texl "16 0"
+		*(pic)bt_equip<1>@texh "32 16"
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_holdsnoequip {
-		*bt_equip<1>@tooltip "_Soldier carries no equipment"
-		*bt_equip<1>@texl "0 0"
-		*bt_equip<1>@texh "16 16"
+		*(pic)bt_equip<1>@tooltip "_Soldier carries no equipment"
+		*(pic)bt_equip<1>@texl "0 0"
+		*(pic)bt_equip<1>@texh "16 16"
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_unusedslot {
-		*bt_equip<1>@invis true
+		*(pic)bt_equip<1>@invis true
 		*check_actor<1>@invis true
 		*txt_actor<1>@invis true
 	}

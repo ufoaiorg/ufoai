@@ -654,12 +654,6 @@ window althud extends ahud
 		onMouseLeave			{ cmd "remaining_tus reload_l 0;" }
 	}
 
-	// CROUCH/STAND UP BUTTON
-	confunc deselstanda  { *bt_duck@texl "27 37" *bt_duck@texh "52 70" *bt_duck@image althud/buttons_althud1 }
-	confunc deselcroucha { *bt_duck@texl "54 37" *bt_duck@texh "79 70" *bt_duck@image althud/buttons_althud1 }
-	confunc disstanda    { *bt_duck@texl "27 37" *bt_duck@texh "52 70" *bt_duck@image althud/buttons_althud1g }
-	confunc discroucha   { *bt_duck@texl "54 37" *bt_duck@texh "79 70" *bt_duck@image althud/buttons_althud1g }
-
 	pic bt_duck
 	{
 		tooltip		*cvar:mn_crouchstand_tt
@@ -672,6 +666,12 @@ window althud extends ahud
 		onMouseEnter			{ cmd "remaining_tus crouch 1;" }
 		onMouseLeave			{ cmd "remaining_tus crouch 0;" }
 	}
+
+	// CROUCH/STAND UP BUTTON
+	confunc deselstanda  { *bt_duck@texl "27 37" *bt_duck@texh "52 70" *bt_duck@image althud/buttons_althud1 }
+	confunc deselcroucha { *bt_duck@texl "54 37" *bt_duck@texh "79 70" *bt_duck@image althud/buttons_althud1 }
+	confunc disstanda    { *bt_duck@texl "27 37" *bt_duck@texh "52 70" *bt_duck@image althud/buttons_althud1g }
+	confunc discroucha   { *bt_duck@texl "54 37" *bt_duck@texh "79 70" *bt_duck@image althud/buttons_althud1g }
 
 	checkbox bt_crouch_reservation
 	{
@@ -695,6 +695,18 @@ window althud extends ahud
 		*(checkbox)bt_crouch_reservation@current 1
 	}
 
+	pic bt_shot_reservation
+	{
+		tooltip	*cvar:mn_shot_reservation_tt
+		image		hud/button_reserve_shot	// fixme
+		pos			"965 497"
+		texl		"64 32"	// Inital pic - will be overwritten once the game's completely started.
+		texh		"127 64"
+		mousefx		true
+		onClick		{ cmd "sel_shotreservation;" }
+		onRClick		{ cmd "sel_shotreservation 0;" }
+	}
+
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear_a
 	{
@@ -710,17 +722,6 @@ window althud extends ahud
 	{
 		*bt_shot_reservation@texl	"64 32"
 		*bt_shot_reservation@texh	"127 64"
-	}
-	pic bt_shot_reservation
-	{
-		tooltip	*cvar:mn_shot_reservation_tt
-		image		hud/button_reserve_shot	// fixme
-		pos			"965 497"
-		texl		"64 32"	// Inital pic - will be overwritten once the game's completely started.
-		texh		"127 64"
-		mousefx		true
-		onClick		{ cmd "sel_shotreservation;" }
-		onRClick		{ cmd "sel_shotreservation 0;" }
 	}
 
 	pic bt_floorup

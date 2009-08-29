@@ -136,7 +136,6 @@ window aircraft_equip extends iaircraft
 		image		ui/button_green_small
 		pos			"343 712"
 		size		"200 25"
-		texl		"128 0"
 		onClick		{ cmd "airequip_add_item 1;" }
 		color		"0 0.5 0 1"
 	}
@@ -147,7 +146,6 @@ window aircraft_equip extends iaircraft
 		image		ui/button_green_small
 		pos			"343 712"
 		size		"200 25"
-		texl		"128 0"
 		onClick		{ cmd "airequip_remove_item 1;" }
 		color		"0 0.5 0 1"
 	}
@@ -587,15 +585,15 @@ window aircraft_equip extends iaircraft
 	{
 		*cvar:status = <2>
 		if ( *cvar:status == 2 ) {
-			*airequip_slot<1>@invis = false
-			*airequip_slot<1>@texl = "64 0"
-			*airequip_slot<1>@texh = "128 64"
+			*(pic)airequip_slot<1>@invis = false
+			*(pic)airequip_slot<1>@texl = "64 0"
+			*(pic)airequip_slot<1>@texh = "128 64"
 		} elif ( *cvar:status == 1 ) {
-			*airequip_slot<1>@invis = false
-			*airequip_slot<1>@texl = "0 0"
-			*airequip_slot<1>@texh = "64 64"
+			*(pic)airequip_slot<1>@invis = false
+			*(pic)airequip_slot<1>@texl = "0 0"
+			*(pic)airequip_slot<1>@texh = "64 64"
 		} else {
-			*airequip_slot<1>@invis = true
+			*(pic)airequip_slot<1>@invis = true
 		}
 		delete *cvar:status
 	}

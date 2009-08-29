@@ -128,8 +128,6 @@ window lost
 		image		"ui/button_blue"
 		pos			"865 700"
 		size		"128 53"
-		texl		"0 0"
-		texh		"128 53"
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"

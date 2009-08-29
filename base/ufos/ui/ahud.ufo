@@ -376,39 +376,39 @@ window firemode_left {
 	/* Firemode console functions ===================================*/
 
 	confunc set_left_ina {
-		*bt_left_fm<1>@texl "0 64"
-		*bt_left_fm<1>@texh "214 128"
+		*(pic)bt_left_fm<1>@texl "0 64"
+		*(pic)bt_left_fm<1>@texh "214 128"
 	}
 
 	confunc set_left_a {
-		*bt_left_fm<1>@texl "0 0"
-		*bt_left_fm<1>@texh "214 63"
+		*(pic)bt_left_fm<1>@texl "0 0"
+		*(pic)bt_left_fm<1>@texh "214 63"
 	}
 
 	confunc set_left_inv {
-		*bt_left_fm<1>@invis true
+		*(pic)bt_left_fm<1>@invis true
 	}
 
 	confunc set_left_vis {
-		*bt_left_fm<1>@invis false
+		*(pic)bt_left_fm<1>@invis false
 	}
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
 
 	confunc set_left_cb_ina {
-		*bt_left_fm<1>.cb@texl "0 0"
-		*bt_left_fm<1>.cb@texh "31 31"
-		*bt_left_fm<1>.cb@invis false
+		*(pic)bt_left_fm<1>.cb@texl "0 0"
+		*(pic)bt_left_fm<1>.cb@texh "31 31"
+		*(pic)bt_left_fm<1>.cb@invis false
 	}
 
 	confunc set_left_cb_a {
-		*bt_left_fm<1>.cb@texl "0 32"
-		*bt_left_fm<1>.cb@texh "31 63"
-		*bt_left_fm<1>.cb@invis false
+		*(pic)bt_left_fm<1>.cb@texl "0 32"
+		*(pic)bt_left_fm<1>.cb@texh "31 63"
+		*(pic)bt_left_fm<1>.cb@invis false
 	}
 
 	confunc set_left_cb_invis {
-		*bt_left_fm<1>.cb@invis true
+		*(pic)bt_left_fm<1>.cb@invis true
 	}
 }
 
@@ -686,38 +686,38 @@ window firemode_right {
 	*/
 
 	confunc set_right_ina {
-		*bt_right_fm<1>@texl "0 64"
-		*bt_right_fm<1>@texh "214 128"
+		*(pic)bt_right_fm<1>@texl "0 64"
+		*(pic)bt_right_fm<1>@texh "214 128"
 	}
 
 	confunc set_right_a {
-		*bt_right_fm<1>@texl "0 0"
-		*bt_right_fm<1>@texh "214 63"
+		*(pic)bt_right_fm<1>@texl "0 0"
+		*(pic)bt_right_fm<1>@texh "214 63"
 	}
 
 	confunc set_right_inv {
-		*bt_right_fm<1>@invis true
+		*(pic)bt_right_fm<1>@invis true
 	}
 
 	confunc set_right_vis {
-		*bt_right_fm<1>@invis false
+		*(pic)bt_right_fm<1>@invis false
 	}
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
 
 	confunc set_right_cb_ina {
-		*bt_right_fm<1>.cb@texl "0 0"
-		*bt_right_fm<1>.cb@texh "31 31"
-		*bt_right_fm<1>.cb@invis false
+		*(pic)bt_right_fm<1>.cb@texl "0 0"
+		*(pic)bt_right_fm<1>.cb@texh "31 31"
+		*(pic)bt_right_fm<1>.cb@invis false
 	}
 
 	confunc set_right_cb_a {
-		*bt_right_fm<1>.cb@texl "0 32"
-		*bt_right_fm<1>.cb@texh "31 63"
-		*bt_right_fm<1>.cb@invis false
+		*(pic)bt_right_fm<1>.cb@texl "0 32"
+		*(pic)bt_right_fm<1>.cb@texh "31 63"
+		*(pic)bt_right_fm<1>.cb@invis false
 	}
 
 	confunc set_right_cb_invis {
-		*bt_right_fm<1>.cb@invis true
+		*(pic)bt_right_fm<1>.cb@invis true
 	}
 }

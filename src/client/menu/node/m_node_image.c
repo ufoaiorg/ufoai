@@ -126,6 +126,12 @@ static const value_t properties[] = {
 	{"preventratio", V_BOOL, offsetof(menuNode_t, preventRatio), MEMBER_SIZEOF(menuNode_t, preventRatio)},
 	/** @todo delete it when its possible (use more button instead of image) */
 	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
+
+	/* Texture high. Optional. Define the higher corner of the texture we want to display. Used with texl to crop the image. */
+	{"texh", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
+	/* Texture low. Optional. Define the lower corner of the texture we want to display. Used with texh to crop the image. */
+	{"texl", V_POS, offsetof(menuNode_t, texl), MEMBER_SIZEOF(menuNode_t, texl)},
+
 	{NULL, V_NULL, 0, 0}
 };
 

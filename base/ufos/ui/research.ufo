@@ -208,8 +208,8 @@ window research
 	 */
 	confunc research_normal {
 //		*txt_item<1>@color "0 .78 0 1"
-		*img_status<1>@texl	"32 16"
-		*img_status<1>@texh	"48 32"
+		*(pic)img_status<1>@texl	"32 16"
+		*(pic)img_status<1>@texh	"48 32"
 	}
 
 	/**
@@ -217,8 +217,8 @@ window research
 	 */
 	confunc research_running {
 //		*txt_item<1>@color "0 1 0 1"
-		*img_status<1>@texl	"32 0"
-		*img_status<1>@texh	"48 16"
+		*(pic)img_status<1>@texl	"32 0"
+		*(pic)img_status<1>@texh	"48 16"
 	}
 
 	/**
@@ -226,8 +226,8 @@ window research
 	 */
 	confunc research_paused {
 //		*txt_item<1>@color ".78 .78 0 1"
-		*img_status<1>@texl	"48 0"
-		*img_status<1>@texh	"64 16"
+		*(pic)img_status<1>@texl	"48 0"
+		*(pic)img_status<1>@texh	"64 16"
 	}
 
 	/**

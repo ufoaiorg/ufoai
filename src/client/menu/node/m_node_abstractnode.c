@@ -65,12 +65,6 @@ static const value_t properties[] = {
 	{"disabled", V_BOOL, offsetof(menuNode_t, disabled), MEMBER_SIZEOF(menuNode_t, disabled)},
 	/* If true, the node is not ''tangible''. We click through it, then it will not receive mouse event. */
 	{"ghost", V_BOOL, offsetof(menuNode_t, ghost), MEMBER_SIZEOF(menuNode_t, ghost)},
-	/* Texture height. Few nodes use it custom texture size or position. */
-	/** @todo Remove it from this behaviour. */
-	{"texh", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
-	/* Texture left. Few nodes use it custom texture size or position. */
-	/** @todo Remove it from this behaviour. */
-	{"texl", V_POS, offsetof(menuNode_t, texl), MEMBER_SIZEOF(menuNode_t, texl)},
 	/* Border size we want to display. */
 	{"border", V_INT, offsetof(menuNode_t, border), MEMBER_SIZEOF(menuNode_t, border)},
 	/* Padding size we want to use. Few node support it. */

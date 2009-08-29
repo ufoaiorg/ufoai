@@ -88,9 +88,16 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	}
 }
 
+static const value_t properties[] = {
+	/* Skin position. Define the top-left position of the skin we will used from the image. Y should not be bigger than 64. To compute the high corner we use the node size. */
+	{"texl", V_POS, offsetof(menuNode_t, texl), MEMBER_SIZEOF(menuNode_t, texl)},
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterCustomButtonNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "custombutton";
 	behaviour->extends = "button";
 	behaviour->draw = MN_CustomButtonNodeDraw;
+	behaviour->properties = properties;
 }

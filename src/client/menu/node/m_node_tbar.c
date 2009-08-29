@@ -69,9 +69,16 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 		shx, node->texh[1], node->texl[0], node->texl[1], ref);
 }
 
+static const value_t properties[] = {
+	{"texh", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
+	{"texl", V_POS, offsetof(menuNode_t, texl), MEMBER_SIZEOF(menuNode_t, texl)},
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterTBarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
 	behaviour->draw = MN_TBarNodeDraw;
+	behaviour->properties = properties;
 }
