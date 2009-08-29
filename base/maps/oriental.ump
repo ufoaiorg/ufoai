@@ -251,12 +251,12 @@ a      +a     +a     +a     a
 
 assembly small
 {
-size "4 4"
+size "5 5"
 title "_Oriental small"
 +house_a "0 2"
 +shed_a "0 1"
-+house_b "1 2"
-+house_c "1 2"
++house_b "0 2"
++house_c "0 2"
 +well "0 2"
 +trees_a "0 5"
 +house_d "0 3"
@@ -273,7 +273,7 @@ title "_Oriental small"
 
 assembly medium
 {
-size "6	 6"
+size "6 7"
 title "_Oriental medium"
 +house_a "0 2"
 +shed_a "0 1"
@@ -296,7 +296,7 @@ title "_Oriental medium"
 
 assembly big
 {
-size "7 7"
+size "8 8"
 title "_Oriental big"
 +house_a "1 3"
 +shed_a "1 3"
@@ -311,7 +311,7 @@ title "_Oriental big"
 +house_f "1 3"
 +house_g "0 3"
 +house_h "0 3"
-+mosque "0 1"
++mosque "1 1"
 +trees_b "0 2"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
