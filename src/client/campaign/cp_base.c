@@ -3030,12 +3030,6 @@ static qboolean B_ItemsIsStoredInBaseStorage (const objDef_t *obj)
 	if (!strcmp(obj->id, ANTIMATTER_TECH_ID))
 		return qfalse;
 
-	/* @todo: remove this condition - I keep it for compatibility for now. -geever */
-	/* aircraft are stored in hangars */
-	assert(obj->tech);
-	if (obj->tech->type == RS_CRAFT)
-		return qfalse;
-
 	return qtrue;
 }
 
