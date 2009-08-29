@@ -260,17 +260,16 @@ void MN_SetKeyBinding (const char* path, int key)
 	node->root->u.window.keyList = binding;
 }
 
-static qboolean MN_KeyPressedInActiveWindow (unsigned int key)
+/**
+ * @brief Check if a key binding exists for a window and execute it
+ */
+static qboolean MN_KeyPressedInWindow (unsigned int key, const menuNode_t *window)
 {
 	menuNode_t *node;
 	menuKeyBinding_t *binding;
 
-	node = MN_GetActiveMenu();
-	if (!node)
-		return qfalse;
-
 	/* search requested key binding */
-	binding = node->u.window.keyList;
+	binding = window->u.window.keyList;
 	while (binding) {
 		if (binding->key == key)
 			break;
@@ -302,6 +301,9 @@ static qboolean MN_KeyPressedInActiveWindow (unsigned int key)
  */
 qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 {
+	int windowId;
+	int lastWindowId;
+
 	/* translate event into the node with focus */
 	if (focusNode && focusNode->behaviour->keyPressed) {
 		if (focusNode->behaviour->keyPressed(focusNode, key, unicode))
@@ -328,8 +330,20 @@ qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 		return qtrue;
 	}
 
-	if (MN_KeyPressedInActiveWindow(key))
-		return qtrue;
+	lastWindowId = MN_GetLastFullScreenWindow();
+	if (lastWindowId < 0)
+		return qfalse;
+
+	/* check "active" window from top to down */
+	for (windowId = mn.windowStackPos - 1; windowId >= lastWindowId; windowId--) {
+		const menuNode_t *window = mn.windowStack[windowId];
+		if (!window)
+			return qfalse;
+		if (MN_KeyPressedInWindow(key, window))
+			return qtrue;
+		if (window->u.window.modal)
+			break;
+	}
 
 	return qfalse;
 }
