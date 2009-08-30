@@ -36,7 +36,7 @@
 
 #include <list>
 
-static int level_active = 0;
+static int currentActiveLlevel = 0;
 
 static inline void hide_node (scene::Node& node, bool hide)
 {
@@ -173,22 +173,22 @@ void filter_level (int flag)
 
 	level = (flag >> 8);
 
-	if (level_active) {
-		GlobalSceneGraph().traverse(BrushGetLevel(brushes, (level_active << 8), true, true, false));
-		GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, level_active, false));
-		GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level_active, false));
-		GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level_active, false));
-		GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, level_active, false));
+	if (currentActiveLlevel) {
+		GlobalSceneGraph().traverse(BrushGetLevel(brushes, (currentActiveLlevel << 8), true, true, false));
+		GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, currentActiveLlevel, false));
+		GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, currentActiveLlevel, false));
+		GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, currentActiveLlevel, false));
+		GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, currentActiveLlevel, false));
 		entities.erase(entities.begin(), entities.end());
 		brushes.erase(brushes.begin(), brushes.end());
-		if (level_active == level) {
-			level_active = 0;
+		if (currentActiveLlevel == level) {
+			currentActiveLlevel = 0;
 			// just disable level filter
 			return;
 		}
 	}
-	level_active = level;
-	globalOutputStream() << "UFO:AI: level_active: " << level_active << ", flag: " << flag << ".\n";
+	currentActiveLlevel = level;
+	globalOutputStream() << "UFO:AI: level_active: " << currentActiveLlevel << ", flag: " << flag << ".\n";
 
 	// first all brushes
 	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, true, true));
@@ -198,11 +198,13 @@ void filter_level (int flag)
 	GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, level, true));
+
+	SceneChangeNotify();
 }
 
 int filter_getCurrentLevel (void)
 {
-	return level_active;
+	return currentActiveLlevel;
 }
 
 /**@todo find a better way than these functions */
