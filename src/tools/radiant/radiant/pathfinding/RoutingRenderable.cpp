@@ -5,9 +5,12 @@
 #include "entitylib.h"//for aabb_draw_solid
 #include "../../../shared/defines.h"
 
+#include "../plugins/ufoai/ufoai_filters.h"
+
 #define UNIT_SIZE_HALF (UNIT_SIZE/2)
 #define UNIT_SIZE_QUARTER (UNIT_SIZE/4)
 #define UNIT_HEIGHT_HALF (UNIT_HEIGHT/2)
+#define UNIT_HEIGHT_QUARTER (UNIT_HEIGHT/4)
 #define UNIT_HEIGHT_EIGHTH (UNIT_HEIGHT/8)
 
 namespace routing
@@ -20,6 +23,8 @@ namespace routing
 	const Vector3 color_accessible_not = Vector3(1.0, 0.0, 0.0);
 	const Vector3 color_wireframe = Vector3(1.0, 1.0, 1.0);
 
+	const Vector3 diffCenterToZero = Vector3(-UNIT_SIZE_HALF, -UNIT_SIZE_HALF, -UNIT_HEIGHT_HALF);
+
 	RoutingRenderable::RoutingRenderable ()
 	{
 	}
@@ -29,13 +34,27 @@ namespace routing
 		for (routing::RoutingRenderableEntries::const_iterator i = _entries.begin(); i != _entries.end(); ++i) {
 			delete *i;
 		}
+		checkClearGLCache();
 	}
 
 	void RoutingRenderable::render (RenderStateFlags state) const
 	{
-		for (routing::RoutingRenderableEntries::const_iterator i = _entries.begin(); i != _entries.end(); ++i) {
-			const routing::RoutingRenderableEntry* entry = *i;
-			entry->render(state);
+		/**@todo get filter level from ufoai_filters.cpp */
+		int maxDisplayLevel = LEVEL_MAX;
+		if (_glListID != 0) {
+			for (int level = 0; level < maxDisplayLevel; level++)
+				glCallList(_glListID + level);
+		} else {
+			_glListID = glGenLists(LEVEL_MAX);
+			for (int level = 0; level < LEVEL_MAX; level++) {
+				glNewList(_glListID + level, level < maxDisplayLevel? GL_COMPILE_AND_EXECUTE: GL_COMPILE);
+				for (routing::RoutingRenderableEntries::const_iterator i = _entries.begin(); i != _entries.end(); ++i) {
+					const routing::RoutingRenderableEntry* entry = *i;
+					if (entry->isForLevel(level + 1))
+						entry->render(state);
+				}
+				glEndList();
+			}
 		}
 	}
 
@@ -43,6 +62,32 @@ namespace routing
 	{
 		routing::RoutingRenderableEntry* entry = new RoutingRenderableEntry(dataEntry);
 		_entries.push_back(entry);
+		checkClearGLCache();
+	}
+
+	/**
+	 * @brief clear associated renderable entries list and delete precached glList if any.
+	 */
+	void RoutingRenderable::clear (void)
+	{
+		_entries.clear();
+		checkClearGLCache();
+	}
+
+	/**
+	 * @brief if there is any associated glList instance, delete it so it will be recreated on next rendering.
+	 * This method should be called whenever the data changes which should be rendered.
+	 */
+	void RoutingRenderable::checkClearGLCache (void)
+	{
+		if (_glListID != 0) {
+			glDeleteLists(_glListID, LEVEL_MAX);
+			_glListID = 0;
+		}
+	}
+
+	bool RoutingRenderableEntry::isForLevel(const int level) const {
+		return (_data.getLevel() == level);
 	}
 
 	/**
@@ -68,9 +113,9 @@ namespace routing
 		Vector3 dy = Vector3(0, UNIT_SIZE, 0);
 		Vector3 dz = Vector3(0, 0, UNIT_HEIGHT);
 		Vector3 dxy = vector3_added(dx, dy);
-
+		/**@todo evaluate why aabb_draw_wire is not working here */
 		/* lower and upper corners */
-		Vector3 l1 = this->_data.getOrigin();
+		Vector3 l1 = vector3_added(this->_data.getOrigin(), diffCenterToZero);
 		Vector3 l2 = vector3_added(l1, dx);
 		Vector3 l3 = vector3_added(l1, dxy);
 		Vector3 l4 = vector3_added(l1, dy);
@@ -133,11 +178,11 @@ namespace routing
 	void RoutingRenderableEntry::renderAccessability (RenderStateFlags state) const
 	{
 		/* center of drawn box */
-		Vector3 diffCenter = Vector3(UNIT_SIZE_HALF, UNIT_SIZE_HALF, UNIT_HEIGHT_EIGHTH);
 		const Vector3 color = getColorForAccessState(_data.getAccessState());
 		glColor3fv( vector3_to_array (color));
-		AABB box = AABB(vector3_added(this->_data.getOrigin(), diffCenter), Vector3(UNIT_SIZE_QUARTER,
-				UNIT_SIZE_QUARTER, UNIT_HEIGHT_EIGHTH));
+		AABB box = AABB(
+				vector3_added(this->_data.getOrigin(), Vector3(0, 0, -UNIT_HEIGHT_QUARTER - UNIT_HEIGHT_EIGHTH)),
+				Vector3(UNIT_SIZE_QUARTER, UNIT_SIZE_QUARTER, UNIT_HEIGHT_EIGHTH));
 		aabb_draw_solid(box, state);
 	}
 
@@ -171,7 +216,7 @@ namespace routing
 		glColor3fv( vector3_to_array (color));
 
 		//vector to center of direction arrows
-		Vector3 diffCenter = Vector3(UNIT_SIZE_HALF, UNIT_SIZE_HALF, UNIT_HEIGHT_HALF);
+		Vector3 diffCenter = this->_data.getOrigin();//vector3_added(vector3_scaled(this->_data.getOrigin(), grid_scale),Vector3(UNIT_SIZE_HALF, UNIT_SIZE_HALF, UNIT_HEIGHT_HALF));
 		//vector tip
 		Vector3 difTip = Vector3(0, -(UNIT_SIZE_HALF), 0);
 		//vector base corners

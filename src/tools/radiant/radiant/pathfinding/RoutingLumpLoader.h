@@ -13,7 +13,7 @@ namespace routing
 			// the loaded routing data
 			routing::RoutingLump _routingLump;
 
-			void loadRoutingLump (const ArchiveFile& file);
+			void loadRoutingLump (ArchiveFile& file);
 
 		public:
 			RoutingLumpLoader ();

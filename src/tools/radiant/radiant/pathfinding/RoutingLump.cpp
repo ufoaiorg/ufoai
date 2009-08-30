@@ -2,11 +2,16 @@
 
 namespace routing
 {
-	RoutingLumpEntry::RoutingLumpEntry() : _origin(0., 0., 0.) {
+	RoutingLumpEntry::RoutingLumpEntry(Vector3 origin, int level) : _origin(origin), _level(level) {
 	}
 
-	const Vector3& RoutingLumpEntry::getOrigin() const {
-		return _origin;
+	RoutingLumpEntry::RoutingLumpEntry (const RoutingLumpEntry &other) :
+		_origin(other._origin), _level(other._level), _accessState(other._accessState)
+	{
+		/** @todo easier way to copy array? */
+		for (EDirection dir = DIR_WEST; dir < MAX_DIRECTIONS; dir++ ) {
+			_connectionStates[dir] = other._connectionStates[dir];
+		}
 	}
 
 	const EConnectionState RoutingLumpEntry::getConnectionState(const EDirection direction) const {

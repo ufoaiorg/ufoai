@@ -44,6 +44,7 @@ namespace routing
 		_loader.loadRouting(bspFileName);
 		routing::RoutingLump& lump = _loader.getRoutingLump();
 		routing::RoutingLumpEntries& entries = lump.getEntries();
+		_renderable.clear();
 		for (routing::RoutingLumpEntries::const_iterator i = entries.begin(); i != entries.end(); ++i) {
 			_renderable.add(*i);
 		}

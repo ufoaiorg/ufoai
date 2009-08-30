@@ -22,6 +22,8 @@ namespace routing
 			}
 
 			void render (RenderStateFlags state) const;
+
+			bool isForLevel (int level) const;
 	};
 
 	typedef std::list<RoutingRenderableEntry*> RoutingRenderableEntries;
@@ -30,6 +32,8 @@ namespace routing
 	{
 		private:
 			RoutingRenderableEntries _entries;
+			mutable int _glListID;
+			void checkClearGLCache (void);
 		public:
 			RoutingRenderable ();
 
@@ -42,6 +46,8 @@ namespace routing
 			/** Creates a new renderable object for given data lump and adds it to the list
 			 */
 			void add (const RoutingLumpEntry& data);
+			/** Clear list of renderables after updating rendering data */
+			void clear ();
 	};
 }
 

@@ -48,17 +48,37 @@ namespace routing
 	{
 		private:
 			Vector3 _origin;
+			int _level;
 			EConnectionState _connectionStates[MAX_DIRECTIONS];
 			EAccessState _accessState;
 		public:
-			RoutingLumpEntry ();
+			RoutingLumpEntry (Vector3 origin, int level);
+			RoutingLumpEntry (const RoutingLumpEntry &other);
 
-			const Vector3& getOrigin () const;
+			const Vector3& getOrigin (void) const {
+				return _origin;
+			}
 
 			const EConnectionState getConnectionState (const EDirection direction) const;
+			/**
+			 * @brief setter method for connection state
+			 * @param direction direction to change connection state for
+			 * @param connectionState connection state to set
+			 */
+			void setConnectionState (const EDirection direction, const EConnectionState connectionState)
+			{
+				_connectionStates[direction] = connectionState;
+			}
 			const EAccessState getAccessState (void) const
 			{
 				return _accessState;
+			}
+			void setAccessState (const EAccessState accessState) {
+				_accessState = accessState;
+			}
+
+			const int getLevel (void) const {
+				return _level;
 			}
 	};
 

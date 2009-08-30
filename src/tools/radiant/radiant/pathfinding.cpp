@@ -26,6 +26,10 @@
 
 #include "pathfinding.h"
 #include "pathfinding/Routing.h"
+#include "map.h"
+#include "os/path.h"
+#include "stream/stringstream.h"
+#include "ifilesystem.h"
 
 namespace routing
 {
@@ -37,17 +41,32 @@ namespace routing
 	 */
 	void ShowPathfinding (void)
 	{
-		showPathfinding ^= true;
-		routingRender.setShowPathfinding(showPathfinding);
+		if (!Map_Unnamed(g_map)) {
+			showPathfinding ^= true;
+			routingRender.setShowPathfinding(showPathfinding);
+			if (showPathfinding) {
+				//update current pathfinding data on every activation
+				const char* mapname = Map_Name(g_map);
+				StringOutputStream bspStream(256);
+				bspStream << StringRange(mapname, path_get_filename_base_end(mapname)) << ".bsp";
+				const char* bspname = path_make_relative(bspStream.c_str(), GlobalFileSystem().findRoot(
+						bspStream.c_str()));
+				routingRender.updateRouting(bspname);
+			}
+		} else {
+			if (showPathfinding) {
+				showPathfinding = false;
+				routingRender.setShowPathfinding(false);
+			}
+		}
 
-		/** @todo test code, remove */
-		routingRender.updateRouting("test");
-		/** @todo render the parsed data */
 	}
 }
 
 void Pathfinding_Construct (void)
 {
+	/**@todo listener to map changes (for disabling routing rendering if new map is loaded) */
+	/**listener also should activate/deactivate "show pathfinding" menu entry if no appropriate data is available */
 	GlobalShaderCache().attachRenderable(routing::routingRender);
 }
 
