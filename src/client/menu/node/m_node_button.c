@@ -146,6 +146,19 @@ static void MN_ButtonNodeLoaded (menuNode_t *node)
 #endif
 }
 
+static const value_t properties[] = {
+	/* @override image
+	 * Texture used by the button. It's a normalized texture of 128×128.
+	 * Normal button start at 0×0, mouse over start at 64×0, mouse click
+	 * start at 0×64 (but not yet implemented), and disabled start at 64×64.
+	 * See the image to have a usable template for this node.
+	 * @image html http://ufoai.ninex.info/wiki/images/Button_blue.png
+	 */
+
+	{NULL, V_NULL, 0, 0}
+};
+
+
 void MN_RegisterButtonNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "button";
@@ -153,4 +166,5 @@ void MN_RegisterButtonNode (nodeBehaviour_t *behaviour)
 	behaviour->loaded = MN_ButtonNodeLoaded;
 	behaviour->leftClick = MN_ButtonNodeClick;
 	behaviour->loading = MN_ButtonNodeLoading;
+	behaviour->properties = properties;
 }

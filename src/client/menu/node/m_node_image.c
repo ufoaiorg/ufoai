@@ -123,10 +123,11 @@ void MN_ImageNodeDraw (menuNode_t *node)
 }
 
 static const value_t properties[] = {
-	/* @todo Need documentation */
+	/* Do not change the image ratio. The image will be proportionally stretched. */
 	{"preventratio", V_BOOL, offsetof(menuNode_t, preventRatio), MEMBER_SIZEOF(menuNode_t, preventRatio)},
-	/* Now this property do nothing. But we use it like a tag, to remember nodes we should convert into button... */
-	/** @todo delete it when its possible (use more button instead of image) */
+	/* Now this property do nothing. But we use it like a tag, to remember nodes we should convert into button...
+	 * @todo delete it when its possible (use more button instead of image)
+	 */
 	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
 
 	/* Texture high. Optional. Define the higher corner of the texture we want to display. Used with texl to crop the image. */

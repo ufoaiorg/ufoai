@@ -73,21 +73,24 @@ static const value_t properties[] = {
 	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor), MEMBER_SIZEOF(menuNode_t, bgcolor)},
 	/* Border color we want to display. */
 	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
-	/* Used to custom layout in windows support widescreen. */
 
-	/** @todo We should rename it and type it named const */
+	/* Used to custom layout in windows support widescreen.
+	 * @todo We should rename it and type it named const
+	 */
 	{"num", V_INT, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
 
 	/* Tooltip we want to use. */
 	{"tooltip", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, tooltip), 0},	/* translated in MN_Tooltip */
-	/* Image to use. Each behaviour use it like they want. */
-	/** @todo Move it into behaviour need it */
-	/** @todo use V_REF_OF_STRING when its possible ('image' is never a cvar) */
+	/* Image to use. Each behaviour use it like they want.
+	 * @todo Move it into behaviour need it.
+	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
+	 */
 	{"image", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
 	/* Text the node will display. */
 	{"string", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
-	/* Text font the node will use. */
-	/** @todo use V_REF_OF_STRING when its possible ('font' is never a cvar) */
+	/* Text font the node will use.
+	 * @todo use V_REF_OF_STRING when its possible ('font' is never a cvar).
+	 */
 	{"font", V_CVAR_OR_STRING, offsetof(menuNode_t, font), 0},
 
 	/* Text color the node will use. */
@@ -115,12 +118,14 @@ static const value_t properties[] = {
 	{"onmouseenter", V_UI_ACTION, offsetof(menuNode_t, onMouseEnter), MEMBER_SIZEOF(menuNode_t, onMouseEnter)},
 	/* Called when the mouse go out of the node. */
 	{"onmouseleave", V_UI_ACTION, offsetof(menuNode_t, onMouseLeave), MEMBER_SIZEOF(menuNode_t, onMouseLeave)},
-	/* Called when the internal content of the nde change. Each behaviour use it how they need it. */
-	/** @todo Move it where it is need */
+	/* Called when the internal content of the nde change. Each behaviour use it how they need it.
+	 * @todo Move it where it is need.
+	 */
 	{"onchange", V_UI_ACTION, offsetof(menuNode_t, onChange), MEMBER_SIZEOF(menuNode_t, onChange)},
 
-	/* Identify an icon the node will use. */
-	/** @todo Move it where it is need */
+	/* Identify an icon the node will use.
+	 * @todo Move it where it is need.
+	 */
 	{"icon", V_UI_ICONREF, offsetof(menuNode_t, icon), MEMBER_SIZEOF(menuNode_t, icon)},
 
 	/* Special attribute only use into the node description to exclude part of the node (see also <code>ghost</code>). Rectangle position is relative to the node. */

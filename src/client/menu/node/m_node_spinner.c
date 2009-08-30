@@ -209,6 +209,20 @@ static void MN_SpinnerNodeLoaded (menuNode_t *node)
 	node->size[1] = SPINNER_HEIGHT;
 }
 
+static const value_t properties[] = {
+	/* @override size
+	 * The size of the widget is uneditable. Fixed to 15×19.
+	 */
+	/* @override image
+	 * Texture used for the widget. Its a 64×64 template image with all four
+	 * status. The top button take the first vertical 9 pixels, the bottom
+	 * button use the last 10 pixels. See the sample image.
+	 * @image html http://ufoai.ninex.info/wiki/images/Spinner_blue.png
+	 */
+
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterSpinnerNode (nodeBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
@@ -220,4 +234,5 @@ void MN_RegisterSpinnerNode (nodeBehaviour_t *behaviour)
 	behaviour->capturedMouseLost = MN_SpinnerNodeCapturedMouseLost;
 	behaviour->draw = MN_SpinnerNodeDraw;
 	behaviour->loaded = MN_SpinnerNodeLoaded;
+	behaviour->properties = properties;
 }

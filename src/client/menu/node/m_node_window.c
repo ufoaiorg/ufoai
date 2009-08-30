@@ -334,6 +334,16 @@ static void MN_WindowNodeClone (const menuNode_t *source, menuNode_t *clone)
  * @brief Valid properties for a window node (called yet 'menu')
  */
 static const value_t windowNodeProperties[] = {
+	/* @override image
+	 * Texture to use. The texture is a cut of 9 portions
+	 * (left, middle, right × top, middle, bottom). Between all this elements,
+	 * we use a margin of 3 pixels (purple mark into the sample).
+	 * Graphically we see only a 1 pixel margin, because, for a problem of
+	 * lossy compression of texture it's not nice to have a pure transparent
+	 * pixel near the last colored one, when we cut or stretch textures.
+	 * @image html http://ufoai.ninex.info/wiki/images/Popup_alpha_tile.png
+	 */
+
 	/* In windows where notify messages appear (like e.g. the video options window when you have to restart the game until the settings take effects) you can define the position of those messages with this option. */
 	{"noticepos", V_POS, MN_EXTRADATA_OFFSETOF(windowExtraData_t, noticePos), MEMBER_SIZEOF(windowExtraData_t, noticePos)},
 	/* Create subnode allowing to move the window when we click on the header. Updating this attribute at the runtime will change nothing. */
@@ -348,8 +358,9 @@ static const value_t windowNodeProperties[] = {
 	{"preventtypingescape", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, preventTypingEscape), MEMBER_SIZEOF(windowExtraData_t, preventTypingEscape)},
 	/* If true, the window is filled according to the widescreen. */
 	{"fill", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, fill), MEMBER_SIZEOF(windowExtraData_t, fill)},
-	/* If true, when the window size change, the window content position is updated according to the "star" layout. */
-	/* @todo Need more documentation. */
+	/* If true, when the window size change, the window content position is updated according to the "star" layout.
+	 * @todo Need more documentation.
+	 */
 	{"starlayout", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, starLayout), MEMBER_SIZEOF(windowExtraData_t, starLayout)},
 
 	/* This property control milliseconds between each calls of <code>onEvent</code>.

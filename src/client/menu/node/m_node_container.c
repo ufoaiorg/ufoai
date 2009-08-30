@@ -1552,9 +1552,10 @@ static const value_t properties[] = {
 	{"displayunavailableammoofweapon", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableAmmoOfWeapon)},
 	/* Base container only. Custom the number of column we must use to display items. */
 	{"columns", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, columns),  MEMBER_SIZEOF(containerExtraData_t, columns)},
-	/* Base container only. Filter items by a category. */
-	/** @todo Document category values */
-	/** @todo Use understandable const string */
+	/* Base container only. Filter items by a category.
+	 * @todo Document category values
+	 * @todo Use understandable const string
+	 */
 	{"filter", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, filterEquipType),  MEMBER_SIZEOF(containerExtraData_t, filterEquipType)},
 
 	/* Callback value set before calling onSelect. It is used to know the item selected */
@@ -1562,8 +1563,9 @@ static const value_t properties[] = {
 	/* Callback event called when the user select an item */
 	{"onselect", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(containerExtraData_t, onSelect),  MEMBER_SIZEOF(containerExtraData_t, onSelect)},
 
-	/* Base container only. Position of the vertical view (into the full number of elements the node contain) */
-	/* @todo Rename it viewpos (like scrollable node) */
+	/* Base container only. Position of the vertical view (into the full number of elements the node contain)
+	 * @todo Rename it viewpos (like scrollable node)
+	 */
 	{"scrollpos", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, scrollCur),  MEMBER_SIZEOF(containerExtraData_t, scrollCur)},
 	/* Base container only. Size of the vertical view (proportional to the number of elements the node can display without moving) */
 	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, scrollNum),  MEMBER_SIZEOF(containerExtraData_t, scrollNum)},

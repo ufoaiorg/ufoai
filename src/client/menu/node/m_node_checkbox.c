@@ -121,6 +121,15 @@ static void MN_CheckBoxNodeLoading (menuNode_t *node)
 }
 
 static const value_t properties[] = {
+	/* @override image
+	 * Texture used for the widget. Its a 128×128 template image with all
+	 * three status according to the value, and four status according to the
+	 * interaction. From left to right: unchecked, checked, and invalidate.
+	 * From top to bottom: normal, hovered by the mouse, clicked, disabled.
+	 * @image html http://ufoai.ninex.info/wiki/images/Checkbox_template.png
+	 */
+
+	/* Call it to toggle the node status. */
 	{"toggle", V_UI_NODEMETHOD, ((size_t) MN_CheckBoxNodeActivate), 0},
 	{NULL, V_NULL, 0, 0}
 };

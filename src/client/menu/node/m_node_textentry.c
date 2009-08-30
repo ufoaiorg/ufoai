@@ -312,6 +312,22 @@ static void MN_TextEntryNodeLoading (menuNode_t *node)
 }
 
 static const value_t properties[] = {
+	/* @override image
+	 * Texture used by the button. It's a normalized texture of 128×128.
+	 * Normal button start at 0×0, mouse over start at 64×0, mouse click
+	 * start at 0×64 (but not yet implemented), and disabled start at 64×64.
+	 * See the image to have a usable template for this node.
+	 * @image html http://ufoai.ninex.info/wiki/images/Button_blue.png
+	 */
+	/* @override onclick
+	 * Call back event called when we click on the node. If the click select the node,
+	 * it called before we start the cvar edition.
+	 */
+	/* @override onchange
+	 * Call back event (like click...) fired when the text is changed, after
+	 * validation. An abort of the edition dont fire this event.
+	 */
+
 	/* Custom the draw behaviour by hiding each character of the text with a star (''*''). */
 	{"ispassword", V_BOOL, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, isPassword), MEMBER_SIZEOF(textEntryExtraData_t, isPassword)},
 	/* ustom the mouse event behaviour. When we are editing the text, if we click out of the node, the edition is aborted. Changes on
