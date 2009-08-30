@@ -10,16 +10,41 @@
 import os, os.path, sys
 from ExtractNodeBehaviour import *
 
-def genPropertyDoc(element):
+def genPropertyContent(element):
 	result = ""
 
 	for d in element.doc:
 		if d.startswith("@todo"):
 			result += '<div style="border:2px solid red;padding:2px;">' + d + '</div> '
+		elif d.startswith("@image"):
+			params = d.split(" ")
+			image = params[2]
+			if image.startswith("http://ufoai.ninex.info/wiki/images/"):
+				image = image.replace("http://ufoai.ninex.info/wiki/images/", "")
+				image = "[[Image:" + image + "|thumb]]"
+				result = image + result
+			else:
+				result += "[" + image + " See image]."
 		elif d.startswith("@"):
 			result += '<div style="border:2px solid green;padding:2px;">' + d + '</div> '
 		else:
 			result += d + ' '
+	return result
+
+def genPropertyDoc(node, element):
+	type = ""
+	if element.override:
+		type = " (override)"
+
+	result = ""
+	result += '|-\n'
+	result += '| ' + element.name + type + ' || [[' + element.type + ']] || ' + genPropertyContent(element) + '\n'
+	return result
+
+def genPropertyTitle(title):
+	result = ""
+	result += '|- style="background-color:#404040;"\n'
+	result += '! colspan="3" | ' + title + '\n'
 	return result
 
 def genBehaviourDoc(node):
@@ -39,26 +64,41 @@ def genBehaviourDoc(node):
 		result += '! Name !! Type !! Description\n'
 
 		list = node.properties.keys()
-		list.sort()
-		for name in list:
-			e = node.properties[name]
-			result += '|-\n'
-			result += '| ' + e.name + ' || [[' + e.type + ']] || ' + genPropertyDoc(e) + '\n'
-			pass
+		if len(list) != 0:
+			result += genPropertyTitle("Properties")
+			list.sort()
+			for name in list:
+				e = node.properties[name]
+				result += genPropertyDoc(node, e)
+				pass
+
+		list = node.callbacks.keys()
+		if len(list) != 0:
+			result += genPropertyTitle("Callback event")
+			list.sort()
+			for name in list:
+				e = node.callbacks[name]
+				result += genPropertyDoc(node, e)
+				pass
+
 		list = node.methods.keys()
-		list.sort()
-		for name in list:
-			e = node.methods[name]
-			result += '|-\n'
-			result += '| ' + e.name + ' || [[' + e.type + ']] || ' + genPropertyDoc(e) + '\n'
-			pass
+		if len(list) != 0:
+			result += genPropertyTitle("Methods")
+			list.sort()
+			for name in list:
+				e = node.methods[name]
+				result += genPropertyDoc(node, e)
+				pass
+
 		list = node.confuncs.keys()
-		list.sort()
-		for name in list:
-			e = node.confuncs[name]
-			result += '|-\n'
-			result += '| ' + e.name + ' || [[' + e.type + ']] || ' + genPropertyDoc(e) + '\n'
-			pass
+		if len(list) != 0:
+			result += genPropertyTitle("Confunc")
+			list.sort()
+			for name in list:
+				e = node.confuncs[name]
+				result += genPropertyDoc(node, e)
+				pass
+
 		result += '|}\n'
 
 	return result

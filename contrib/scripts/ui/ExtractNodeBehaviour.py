@@ -17,6 +17,7 @@ class Element:
 		self.doc = []
 		self.name = name
 		self.type = type
+		self.override = False
 		pass
 
 	def addDoc(self, comments):
@@ -28,6 +29,7 @@ class NodeBehaviour:
 		self.name = ""
 		self.extends = "abstractnode"
 		self.properties = {}
+		self.callbacks = {}
 		self.methods = {}
 		self.confuncs = {}
 		self.doc = ""
@@ -45,6 +47,8 @@ class NodeBehaviour:
 	def addProperty(self, element):
 		if element.type == "V_UI_NODEMETHOD":
 			self.methods[element.name] = element
+		elif element.type == "V_UI_ACTION":
+			self.callbacks[element.name] = element
 		else:
 			self.properties[element.name] = element
 
@@ -76,16 +80,30 @@ class ExtractNodeBehaviour:
 
 		result = {}
 		comments = []
+		override = False
+		propertyName = ""
+		
 		for line in properties.splitlines():
 			line = line.strip()
 
 			if line.startswith("/*"):
 				line = line.replace('/**', '').replace('/*', '').replace('*/', '')
 				line = line.strip()
-				comments.append(line)
+				if line.startswith("@override"):
+					propertyName = line.replace('@override', '').strip()
+					override = True
+				else:
+					comments.append(line)
 				continue
 
 			if line.startswith("*/"):
+				if override:
+					element = Element(propertyName, "...")
+					element.override = True
+					element.addDoc(comments)
+					node.addProperty(element)
+					comments = []
+					override = False
 				continue
 
 			if line.startswith("*"):
@@ -94,7 +112,10 @@ class ExtractNodeBehaviour:
 				if line.startswith("@"):
 					comments.append(line)
 				else:
-					comments[len(comments)-1] += ' ' + line
+					if len(comments) == 0:
+						comments.append(line)
+					else:
+						comments[len(comments)-1] += ' ' + line
 				continue
 
 			i = line.find('{')
@@ -117,6 +138,7 @@ class ExtractNodeBehaviour:
 			element.addDoc(comments)
 			node.addProperty(element)
 			comments = []
+			override = False
 
 	# @brief Extract each body of registration function into a text
 	def extractRegistrationFunctions(self, filedata):
