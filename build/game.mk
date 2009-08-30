@@ -7,6 +7,7 @@ endif
 
 GAME_SRCS=\
 	game/q_shared.c \
+	game/g_actor.c \
 	game/g_ai.c \
 	game/g_ai_lua.c \
 	game/g_client.c \
@@ -20,6 +21,7 @@ GAME_SRCS=\
 	game/g_phys.c \
 	game/g_reaction.c \
 	game/g_round.c \
+	game/g_stats.c \
 	game/g_spawn.c \
 	game/g_svcmds.c \
 	game/g_trigger.c \

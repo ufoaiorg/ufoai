@@ -245,9 +245,13 @@ extern cvar_t *difficulty;
 #define FFL_SPAWNTEMP		1
 #define FFL_NOSPAWN			2
 
+/* g_stats.c */
+void G_SendPlayerStats(const player_t *player);
+
 /* g_inventory.c */
 void G_WriteItem(item_t item, const invDef_t *container, int x, int y);
 void G_ReadItem(item_t *item, invDef_t **container, int *x, int *y);
+void G_InventoryToFloor(edict_t *ent);
 
 /* g_morale */
 void G_MoraleBehaviour(int team, qboolean quiet);
@@ -325,14 +329,14 @@ qboolean G_ClientSpawn(player_t * player);
 qboolean G_ClientConnect(player_t * player, char *userinfo);
 void G_ClientDisconnect(player_t * player);
 
-void G_ClientReload(int entnum, shoot_types_t st, qboolean quiet);
+void G_ActorReload(int entnum, shoot_types_t st, qboolean quiet);
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet);
 void G_ClientMove(player_t * player, int visTeam, const int num, pos3_t to, qboolean stop, qboolean quiet);
 void G_MoveCalc(int team, pos3_t from, int actorSize, byte crouchingState, int distance);
-void G_ClientInvMove(int num, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
+void G_ActorInvMove(int num, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
 void G_ClientStateChange(player_t * player, int num, int reqState, qboolean checkaction);
-int G_DoTurn(edict_t * ent, byte dir);
+int G_ActorDoTurn(edict_t * ent, byte dir);
 
 void G_SendInvisible(player_t *player);
 void G_GiveTimeUnits(int team);

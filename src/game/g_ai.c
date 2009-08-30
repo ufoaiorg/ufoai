@@ -783,7 +783,7 @@ void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 		const byte dir = getDVdir(dv);
 		/* Only attempt to turn if the direction is not a vertical only action */
 		if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS)
-			G_DoTurn(aiActor, dir & (CORE_DIRECTIONS - 1));
+			G_ActorDoTurn(aiActor, dir & (CORE_DIRECTIONS - 1));
 	}
 }
 
@@ -804,16 +804,16 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	if (!(ent->state & STATE_PANIC)) {
 		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0) {
 			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idRight)) {
-				G_ClientReload(ent->number, ST_RIGHT_RELOAD, QUIET);
+				G_ActorReload(ent->number, ST_RIGHT_RELOAD, QUIET);
 			} else {
-				G_ClientInvMove(ent->number, INVDEF(gi.csi->idRight), RIGHT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, QUIET);
+				G_ActorInvMove(ent->number, INVDEF(gi.csi->idRight), RIGHT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, QUIET);
 			}
 		}
 		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0) {
 			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idLeft)) {
-				G_ClientReload(ent->number, ST_LEFT_RELOAD, QUIET);
+				G_ActorReload(ent->number, ST_LEFT_RELOAD, QUIET);
 			} else {
-				G_ClientInvMove(ent->number, INVDEF(gi.csi->idLeft), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, QUIET);
+				G_ActorInvMove(ent->number, INVDEF(gi.csi->idLeft), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, QUIET);
 			}
 		}
 	}

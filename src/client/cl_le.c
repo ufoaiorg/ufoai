@@ -791,7 +791,7 @@ void LE_PlaceItem (le_t *le)
 		/* If no items in floor inventory, don't draw this le - the container is
 		 * maybe empty because an actor picked up the last items here */
 		/** @todo This will prevent LE_Add to get a floor-edict when in
-		 * mid-move. @sa g_client.c:G_ClientInvMove.
+		 * mid-move. @sa g_client.c:G_ActorInvMove.
 		 * (It will cause asserts/segfaults in e.g. MN_DrawContainerNode)
 		 * mattn: But why do we want to get an empty container? If we don't set
 		 * this to qfalse we get the null model rendered, because the le->model

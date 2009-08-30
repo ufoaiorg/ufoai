@@ -107,6 +107,12 @@
 		<Unit filename="../../src/game/g_round.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/game/g_stats.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/game/g_actor.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/game/g_phys.c">
 			<Option compilerVar="CC" />
 		</Unit>

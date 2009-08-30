@@ -716,7 +716,7 @@ static qboolean Touch_Mission (edict_t *self, edict_t *activator)
 							 * actor's inventory */
 							if (!strcmp(od->id, self->owner->item)) {
 								/* drop the weapon - even if out of TUs */
-								G_ClientInvMove(activator->number,
+								G_ActorInvMove(activator->number,
 									INVDEF(j), ic, INVDEF(gi.csi->idFloor),
 									NONE, NONE, qfalse, QUIET);
 								gi.BroadcastPrintf(PRINT_HUD, _("Item was placed\n"));

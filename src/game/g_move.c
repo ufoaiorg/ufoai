@@ -200,7 +200,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 				dir = getDVdir(dv);
 
 				/* turn around first */
-				status = G_DoTurn(ent, dir);
+				status = G_ActorDoTurn(ent, dir);
 				if (stopOnVisStop && (status & VIS_STOP))
 					break;
 
@@ -317,8 +317,8 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 
 					autoCrouchRequired = qfalse;
 					/** @todo if the attacker is invisible let the target turn in the shooting direction
-					 * of the attacker (@see G_DoTurn) */
-					/*G_DoTurn(ent->reactionTarget, dir);*/
+					 * of the attacker (@see G_ActorDoTurn) */
+					/*G_ActorDoTurn(ent->reactionTarget, dir);*/
 				}
 
 				/* Restore ent->TU because the movement code relies on it not being modified! */

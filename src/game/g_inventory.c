@@ -64,6 +64,134 @@ edict_t *G_GetFloorItems (edict_t * ent)
 	return NULL;
 }
 
+
+/** @brief Move items to adjacent locations if the containers on the current
+ * floor edict are full */
+/* #define ADJACENT */
+
+/**
+ * @brief Move the whole given inventory to the floor and destroy the items that do not fit there.
+ * @param[in] ent Pointer to an edict_t being an actor.
+ * @sa G_ActorDie
+ */
+void G_InventoryToFloor (edict_t *ent)
+{
+	invList_t *ic, *next;
+	int k;
+	edict_t *floor;
+#ifdef ADJACENT
+	edict_t *floorAdjacent;
+	int i;
+#endif
+
+	/* check for items */
+	for (k = 0; k < gi.csi->numIDs; k++)
+		if (k != gi.csi->idArmour && ent->i.c[k])
+			break;
+
+	/* edict is not carrying any items */
+	if (k >= gi.csi->numIDs)
+		return;
+
+	/* find the floor */
+	floor = G_GetFloorItems(ent);
+	if (!floor) {
+		floor = G_SpawnFloor(ent->pos);
+	} else {
+		/* destroy this edict (send this event to all clients that see the edict) */
+		gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
+		gi.WriteShort(floor->number);
+		floor->visflags = 0;
+	}
+
+	/* drop items */
+	/* cycle through all containers */
+	for (k = 0; k < gi.csi->numIDs; k++) {
+		/* skip floor - we want to drop to floor */
+		if (k == gi.csi->idFloor)
+			continue;
+
+		/* skip csi->idArmour, we will collect armours using idArmour container,
+		 * not idFloor */
+		if (k == gi.csi->idArmour)
+			continue;
+
+		/* now cycle through all items for the container of the character (or the entity) */
+		for (ic = ent->i.c[k]; ic; ic = next) {
+			int x, y;
+#ifdef ADJACENT
+			vec2_t oldPos; /* if we have to place it to adjacent  */
+#endif
+			/* Save the next inv-list before it gets overwritten below.
+			 * Do not put this in the "for" statement,
+			 * unless you want an endless loop. ;) */
+			next = ic->next;
+			/* find the coordinates for the current item on floor */
+			Com_FindSpace(&floor->i, &ic->item, INVDEF(gi.csi->idFloor), &x, &y, ic);
+			if (x == NONE) {
+				assert(y == NONE);
+				/* Run out of space on the floor or the item is armour
+				 * destroy the offending item if no adjacent places are free */
+				/* store pos for later restoring the original value */
+#ifdef ADJACENT
+				Vector2Copy(ent->pos, oldPos);
+				for (i = 0; i < DIRECTIONS; i++) {
+					/** @todo Check whether movement is possible here - otherwise don't use this field */
+					/* extend pos with the direction vectors */
+					Vector2Set(ent->pos, ent->pos[0] + dvecs[i][0], ent->pos[0] + dvecs[i][1]);
+					/* now try to get a floor entity for that new location */
+					floorAdjacent = G_GetFloorItems(ent);
+					if (!floorAdjacent) {
+						floorAdjacent = G_SpawnFloor(ent->pos);
+					} else {
+						/* destroy this edict (send this event to all clients that see the edict) */
+						gi.AddEvent(G_VisToPM(floorAdjacent->visflags), EV_ENT_PERISH);
+						gi.WriteShort(floorAdjacent->number);
+						floorAdjacent->visflags = 0;
+					}
+
+					Com_FindSpace(&floorAdjacent->i, &ic->item, INVDEF(gi.csi->idFloor], &x, &y, ic);
+					if (x != NONE) {
+						ic->x = x;
+						ic->y = y;
+						ic->next = FLOOR(floorAdjacent);
+						FLOOR(floorAdjacent) = ic;
+						break;
+					}
+					/* restore original pos */
+					Vector2Copy(oldPos, ent->pos);
+				}
+				/* added to adjacent pos? */
+				if (i < DIRECTIONS) {
+					/* restore original pos - if no free space, this was done
+					 * already in the for loop */
+					Vector2Copy(oldPos, ent->pos);
+					continue;
+				}
+#endif
+				Com_RemoveFromInventory(&ent->i, INVDEF(k), ic);
+			} else {
+				ic->x = x;
+				ic->y = y;
+				ic->next = FLOOR(floor);
+				FLOOR(floor) = ic;
+			}
+		}
+
+		/* destroy link */
+		ent->i.c[k] = NULL;
+	}
+
+	FLOOR(ent) = FLOOR(floor);
+
+	/* send item info to the clients */
+	G_CheckVis(floor, qtrue);
+#ifdef ADJACENT
+	if (floorAdjacent)
+		G_CheckVis(floorAdjacent, qtrue);
+#endif
+}
+
 /**
  * @brief Read item from the network buffer
  * @sa CL_NetReceiveItem
