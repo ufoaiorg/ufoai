@@ -99,9 +99,10 @@ namespace routing
 		case MAX_DIRECTIONS:
 			break;
 		}
-		if (route >= PLAYER_STANDING_HEIGHT)
+
+		if (route >= ModelCeilingToQuant(PLAYER_STANDING_HEIGHT))
 			return CON_WALKABLE;
-		else if (route >= PLAYER_CROUCHING_HEIGHT)
+		else if (route >= ModelCeilingToQuant(PLAYER_CROUCHING_HEIGHT))
 			return CON_CROUCHABLE;
 		else
 			return CON_DISABLE;
@@ -129,8 +130,8 @@ namespace routing
 	 * @sa CM_AddMapTile
 	 * @todo TEST z-level routing
 	 */
-	static void CMod_LoadRouting (RoutingLump& routingLump, const std::string& name, const lump_t * l, byte* cModelBase,
-			int sX, int sY, int sZ)
+	static void CMod_LoadRouting (RoutingLump& routingLump, const std::string& name, const lump_t * l,
+			byte* cModelBase, int sX, int sY, int sZ)
 	{
 		static routing_t tempMap[ACTOR_MAX_SIZE];
 		static routing_t clMap[ACTOR_MAX_SIZE];
