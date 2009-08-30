@@ -204,7 +204,8 @@ static qboolean AI_NoHideNeeded (edict_t *ent)
 		int i;
 		/* test if check is visible */
 		for (i = 0, from = g_edicts; i < globals.num_edicts; i++, from++)
-			if (G_Vis(-ent->team, ent, from, VT_PERISH | VT_NOFRUSTUM)) {
+			/** @todo using the visflags of the ai should be faster here */
+			if (G_Vis(-ent->team, ent, from, VT_NOFRUSTUM)) {
 				const invList_t *invlist = LEFT(from);
 				const fireDef_t *fd = NULL;
 				if (invlist && invlist->item.t) {
