@@ -995,9 +995,8 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	MAP_NotifyAircraftRemoved(aircraft, qtrue);
 	TR_NotifyAircraftRemoved(aircraft);
 
-	/* Remove all soldiers from the aircraft (the employees are still hired after this). */
-	if (aircraft->teamSize > 0)
-		AIR_RemoveEmployees(aircraft);
+	/* Remove pilot and all soldiers from the aircraft (the employees are still hired after this). */
+	AIR_RemoveEmployees(aircraft);
 
 	/* base is NULL here because we don't want to readd this to the inventory
 	 * If you want this in the inventory you really have to call these functions
