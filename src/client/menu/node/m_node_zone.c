@@ -93,7 +93,9 @@ static void MN_ZoneNodeLoaded (menuNode_t *node)
 }
 
 static const value_t properties[] = {
+	/* If true, the <code>onclick</code> call back is called more than one time if the user do not release the button. */
 	{"repeat", V_BOOL, MN_EXTRADATA_OFFSETOF(zoneExtraData_t, repeat), MEMBER_SIZEOF(zoneExtraData_t, repeat)},
+	/* Delay it is used between 2 calls of <code>onclick</code>. */
 	{"clickdelay", V_INT, MN_EXTRADATA_OFFSETOF(zoneExtraData_t, clickDelay), MEMBER_SIZEOF(zoneExtraData_t, clickDelay)},
 	{NULL, V_NULL, 0, 0}
 };

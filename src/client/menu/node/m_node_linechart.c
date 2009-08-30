@@ -81,8 +81,11 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 }
 
 static const value_t properties[] = {
+	/* Identity the shared data the node use. It must be a LINESTRIP data. */
 	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(lineChartExtraData_t, dataId), MEMBER_SIZEOF(lineChartExtraData_t, dataId)},
+	/* If true, it display axes of the chart. */
 	{"displayaxes", V_BOOL, MN_EXTRADATA_OFFSETOF(lineChartExtraData_t, displayAxes), MEMBER_SIZEOF(lineChartExtraData_t, displayAxes)},
+	/* Axe color. */
 	{"axescolor", V_COLOR, MN_EXTRADATA_OFFSETOF(lineChartExtraData_t, axesColor), MEMBER_SIZEOF(lineChartExtraData_t, axesColor)},
 	{NULL, V_NULL, 0, 0}
 };

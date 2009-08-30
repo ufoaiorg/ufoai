@@ -221,8 +221,11 @@ static void MN_MapNodeLoading (menuNode_t *node)
 
 
 static const value_t properties[] = {
+	/* Use a right padding. */
 	{"padding-right", V_FLOAT, offsetof(menuNode_t, extraData1), MEMBER_SIZEOF(menuNode_t, extraData1)},
+	/* Call it to zoom out of the map */
 	{"zoomin", V_UI_NODEMETHOD, ((size_t) MN_MapNodeZoomIn), 0},
+	/* Call it to zoom into the map */
 	{"zoomout", V_UI_NODEMETHOD, ((size_t) MN_MapNodeZoomOut), 0},
 	{NULL, V_NULL, 0, 0}
 };

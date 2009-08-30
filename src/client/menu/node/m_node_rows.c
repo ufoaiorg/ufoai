@@ -60,9 +60,13 @@ static void MN_RowsNodeLoaded (menuNode_t *node)
 }
 
 static const value_t properties[] = {
+	/* Background color for odd elements */
 	{"color1", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
+	/* Background color for even elements */
 	{"color2", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
+	/* Element height */
 	{"lineheight", V_FLOAT, offsetof(menuNode_t, texh[1]), MEMBER_SIZEOF(menuNode_t, texh[1])},
+	/* Element number on the top of the list. It is used to scroll the node content. */
 	{"current", V_FLOAT, offsetof(menuNode_t, texh[0]), MEMBER_SIZEOF(menuNode_t, texh[0])},
 	{NULL, V_NULL, 0, 0}
 };

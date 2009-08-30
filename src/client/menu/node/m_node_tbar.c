@@ -70,7 +70,9 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 }
 
 static const value_t properties[] = {
+	/* @todo Need documentation */
 	{"texh", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
+	/* @todo Need documentation */
 	{"texl", V_POS, offsetof(menuNode_t, texl), MEMBER_SIZEOF(menuNode_t, texl)},
 	{NULL, V_NULL, 0, 0}
 };

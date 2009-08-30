@@ -430,17 +430,37 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 }
 
 static const value_t properties[] = {
+	/* Current selected line  */
 	{"lineselected", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, textLineSelected), MEMBER_SIZEOF(textExtraData_t, textLineSelected)},
+	/* One of the list TEXT_STANDARD, TEXT_LIST, TEXT_UFOPEDIA, TEXT_BUILDINGS,
+	 * TEXT_BUILDING_INFO, TEXT_RESEARCH, TEXT_RESEARCH_INFO, TEXT_POPUP,
+	 * TEXT_POPUP_INFO, TEXT_AIRCRAFT_LIST, TEXT_AIRCRAFT, TEXT_AIRCRAFT_INFO,
+	 * TEXT_MESSAGESYSTEM, TEXT_CAMPAIGN_LIST, TEXT_MULTISELECTION.
+	 * There are more IDs in use - see mn_data.h for and up-to-date list.
+	 * Display a shared content registred by the client code.
+	 */
 	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(textExtraData_t, dataID), MEMBER_SIZEOF(textExtraData_t, dataID)},
+	/* Size between two lines. Default value is 0, in this case it use a line height according to the font size. */
 	{"lineheight", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, lineHeight), MEMBER_SIZEOF(textExtraData_t, lineHeight)},
+	/* Bigger size of the width replacing a tab character. */
 	{"tabwidth", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, tabWidth), MEMBER_SIZEOF(textExtraData_t, tabWidth)},
+	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines. */
 	{"longlines", V_LONGLINES, MN_EXTRADATA_OFFSETOF(textExtraData_t, longlines), MEMBER_SIZEOF(textExtraData_t, longlines)},
 
-	/* translate text properties into the scrollable data; for a smoth scroll we should split that */
+	/* Number of visible line we can display into the node height.
+	 * Currently, it translate the scrollable property <code>viewSize</code>
+	 * @todo For a smoth scroll we should split that
+	 */
 	{"rows", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, super.scrollY.viewSize), MEMBER_SIZEOF(textExtraData_t, super.scrollY.viewSize)},
+	/* Number of lines contained into the node.
+	 * Currently, it translate the scrollable property <code>fullSize</code>
+	 * @todo For a smoth scroll we should split that
+	 */
 	{"lines", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, super.scrollY.fullSize), MEMBER_SIZEOF(textExtraData_t, super.scrollY.fullSize)},
 
-	/** @todo delete it went its possible (need to create a textlist) */
+	/** Highlight each node elements when the mouse move over the node.
+	 * @todo delete it went its possible (need to create a textlist...)
+	 */
 	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
 	{NULL, V_NULL, 0, 0}
 };

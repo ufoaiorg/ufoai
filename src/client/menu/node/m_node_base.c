@@ -395,6 +395,7 @@ static void MN_BaseLayoutNodeLoading (menuNode_t *node)
 }
 
 static const value_t properties[] = {
+	/* Identify the base, from a base ID, the node use. */
 	{"baseid", V_INT, MN_EXTRADATA_OFFSETOF(baseExtraData_t, baseid), MEMBER_SIZEOF(baseExtraData_t, baseid)},
 	{NULL, V_NULL, 0, 0}
 };
