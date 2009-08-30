@@ -679,18 +679,16 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			side->contentFlags |= CONTENTS_DETAIL;
 		if (config.fulldetail)
 			side->contentFlags &= ~CONTENTS_DETAIL;
-		if (!checkOrFix)
-			if (!(side->contentFlags & (LAST_VISIBLE_CONTENTS - 1)))
+		if (!checkOrFix) {
+			if (!(side->contentFlags & ((LAST_VISIBLE_CONTENTS - 1)
+				| CONTENTS_ACTORCLIP | CONTENTS_WEAPONCLIP)))
 				side->contentFlags |= CONTENTS_SOLID;
 
-		/* hints are never detail */
-		if (side->surfaceFlags & SURF_HINT) {
-			/**@todo defed out bit can probably be deleted
-			  * messes up levelflags. legacy q2 stuff? blondandy. */
-#if 0
-			side->contentFlags = 0;
-#endif
-			side->surfaceFlags &= ~CONTENTS_DETAIL;
+			/* hints and skips are never detail, and have no content */
+			if (side->surfaceFlags & (SURF_HINT | SURF_SKIP)) {
+				side->contentFlags = 0;
+				side->surfaceFlags &= ~CONTENTS_DETAIL;
+			}
 		}
 
 		/* check whether the flags are ok */
