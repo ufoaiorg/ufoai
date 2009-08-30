@@ -20,7 +20,6 @@
 			<Depends filename="radiant_sound.cbp" />
 			<Depends filename="radiant_vfspk3.cbp" />
 			<Depends filename="radiant_archivezip.cbp" />
-			<Depends filename="radiant_ufoai.cbp" />
 			<Depends filename="radiant_brushexport.cbp" />
 			<Depends filename="ufo2map.cbp" />
 		</Project>
