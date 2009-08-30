@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_STRING_STRING_H)
 #define INCLUDED_STRING_STRING_H
 
+#include <string>
 #include <cstring>
 #include <cctype>
 #include <algorithm>
@@ -37,13 +38,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 /// \brief Returns true if \p string length is zero.
 /// O(1)
-inline bool string_empty(const char* string) {
-	return *string == '\0';
+inline bool string_empty(const std::string& string) {
+	return string.empty();
 }
 
 /// \brief Returns true if \p string length is not zero.
 /// O(1)
-inline bool string_not_empty(const char* string) {
+inline bool string_not_empty(const std::string& string) {
 	return !string_empty(string);
 }
 
@@ -57,8 +58,8 @@ inline int string_compare(const char* string, const char* other) {
 
 /// \brief Returns true if \p string is lexicographically equal to \p other.
 /// O(n)
-inline bool string_equal(const char* string, const char* other) {
-	return string_compare(string, other) == 0;
+inline bool string_equal(const std::string& string, const std::string& other) {
+	return string == other;
 }
 
 /// \brief Returns true if [\p string, \p string + \p n) is lexicographically equal to [\p other, \p other + \p n).
@@ -126,8 +127,8 @@ inline bool string_greater_nocase(const char* string, const char* other) {
 
 /// \brief Returns the number of non-null characters in \p string.
 /// O(n)
-inline std::size_t string_length(const char* string) {
-	return std::strlen(string);
+inline std::size_t string_length(const std::string& string) {
+	return string.length();
 }
 
 /// \brief Returns true if the beginning of \p string is equal to \p prefix.
