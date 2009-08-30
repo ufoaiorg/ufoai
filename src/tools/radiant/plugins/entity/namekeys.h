@@ -35,9 +35,9 @@ inline bool string_is_integer (const char* string)
 	return *string == '\0';
 }
 
-static inline bool keyIsName (const char* key)
+static inline bool keyIsName (const std::string& key)
 {
-	return string_equal(key, "target") || string_equal(key, "targetname");
+	return key == "target" || key == "targetname";
 }
 
 typedef MemberCaller1<EntityKeyValue, const char*, &EntityKeyValue::assign> KeyValueAssignCaller;

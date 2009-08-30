@@ -34,6 +34,7 @@
 #include <unistd.h> // access()
 #endif
 
+#include <string>
 #include <stdio.h> // rename(), remove()
 #include <sys/stat.h> // stat()
 #include <sys/types.h> // this is included by stat.h on win32
@@ -49,10 +50,9 @@
 /// - The directory component of \p from identifies an existing directory which is accessible for writing.
 /// - The path \p to does not identify an existing file or directory.
 /// - The directory component of \p to identifies an existing directory which is accessible for writing.
-inline bool file_move (const char* from, const char* to)
+inline bool file_move (const std::string& from, const std::string& to)
 {
-	ASSERT_MESSAGE(from != 0 && to != 0, "file_move: invalid path");
-	return rename(from, to) == 0;
+	return rename(from.c_str(), to.c_str()) == 0;
 }
 
 /// \brief Attempts to remove the file identified by \p path and returns true if the operation was successful.
@@ -60,66 +60,60 @@ inline bool file_move (const char* from, const char* to)
 /// The operation will fail unless:
 /// - The \p path identifies an existing file.
 /// - The parent-directory component of \p path identifies an existing directory which is accessible for writing.
-inline bool file_remove (const char* path)
+inline bool file_remove (const std::string& path)
 {
-	ASSERT_MESSAGE(path != 0, "file_remove: invalid path");
-	return remove(path) == 0;
+	return remove(path.c_str()) == 0;
 }
 
-namespace FileAccess {
-	enum Mode {
-		Read = R_OK,
-		Write = W_OK,
-		ReadWrite = Read | Write,
-		Exists = F_OK
+namespace FileAccess
+{
+	enum Mode
+	{
+		Read = R_OK, Write = W_OK, ReadWrite = Read | Write, Exists = F_OK
 	};
 }
 
 /// \brief Returns true if the file or directory identified by \p path exists and/or may be accessed for reading, writing or both, depending on the value of \p mode.
-inline bool file_accessible(const char* path, FileAccess::Mode mode) {
-	ASSERT_MESSAGE(path != 0, "file_accessible: invalid path");
-	return access(path, static_cast<int>(mode)) == 0;
+inline bool file_accessible (const std::string& path, FileAccess::Mode mode)
+{
+	return access(path.c_str(), static_cast<int> (mode)) == 0;
 }
 
 /// \brief Returns true if the file or directory identified by \p path exists and may be opened for reading.
-inline bool file_readable (const char* path)
+inline bool file_readable (const std::string& path)
 {
 	return file_accessible(path, FileAccess::Read);
 }
 
 /// \brief Returns true if the file or directory identified by \p path exists and may be opened for writing.
-inline bool file_writeable (const char* path)
+inline bool file_writeable (const std::string& path)
 {
 	return file_accessible(path, FileAccess::Write);
 }
 
 /// \brief Returns true if the file or directory identified by \p path exists.
-inline bool file_exists (const char* path)
+inline bool file_exists (const std::string& path)
 {
 	return file_accessible(path, FileAccess::Exists);
 }
 
 /// \brief Returns true if the file or directory identified by \p path exists and is a directory.
-inline bool file_is_directory (const char* path)
+inline bool file_is_directory (const std::string& path)
 {
-	ASSERT_MESSAGE(path != 0, "file_is_directory: invalid path");
 	struct stat st;
-	if (stat(path, &st) == -1) {
+	if (stat(path.c_str(), &st) == -1)
 		return false;
-	}
 	return S_ISDIR (st.st_mode) != 0;
 }
 
 typedef std::size_t FileSize;
 
 /// \brief Returns the size in bytes of the file identified by \p path, or 0 if the file was not found.
-inline FileSize file_size (const char* path)
+inline FileSize file_size (const std::string& path)
 {
-	ASSERT_MESSAGE(path != 0, "file_size: invalid path");
 	struct stat st;
-	if (stat(path, &st) == -1) {
+	if (stat(path.c_str(), &st) == -1)
 		return 0;
-	}
 	return st.st_size;
 }
 
@@ -129,13 +123,11 @@ typedef std::time_t FileTime;
 const FileTime c_invalidFileTime = -1;
 
 /// \brief Returns the time that the file identified by \p path was last modified, or c_invalidFileTime if the file was not found.
-inline FileTime file_modified (const char* path)
+inline FileTime file_modified (const std::string& path)
 {
-	ASSERT_MESSAGE(path != 0, "file_modified: invalid path");
 	struct stat st;
-	if (stat(path, &st) == -1) {
+	if (stat(path.c_str(), &st) == -1)
 		return c_invalidFileTime;
-	}
 	return st.st_mtime;
 }
 
@@ -178,7 +170,7 @@ inline int file_write (const void *buffer, int len, FILE * f)
 		remaining -= written;
 		buf += written;
 	}
-/* 	fflush(f->f); */
+	/* 	fflush(f->f); */
 	return len;
 }
 

@@ -39,7 +39,7 @@
 #include "qe3.h"
 #include "preferences.h"
 
-static inline bool DoesFileExist (const char* name, std::size_t& size)
+static inline bool DoesFileExist (const std::string& name, std::size_t& size)
 {
 	if (file_exists(name)) {
 		size += file_size(name);
