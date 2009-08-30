@@ -1227,7 +1227,7 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
 
 			if (!aircraft->notifySent[AIR_CANNOT_REFUEL]) {
 				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-						_("Craft %s couldn't be completely refueled at %s. Not enough antimatter."));
+						_("Craft %s couldn't be completely refueled at %s. Not enough antimatter."), aircraft->name, aircraft->homebase->name);
 				MSO_CheckAddNewMessage(NT_AIRCRAFT_CANNOTREFUEL, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 				aircraft->notifySent[AIR_CANNOT_REFUEL] = qtrue;
 			}
