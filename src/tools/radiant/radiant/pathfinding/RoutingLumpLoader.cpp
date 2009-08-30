@@ -238,17 +238,14 @@ namespace routing
 
 	void RoutingLumpLoader::loadRoutingLump (ArchiveFile& file)
 	{
-		byte *buf;
-		dBspHeader_t header;
-
 		/* load the file */
 		InputStream &stream = file.getInputStream();
 		const std::size_t size = file.size();
-		buf = (byte*) malloc(size + 1);
+		byte *buf = (byte*) malloc(size + 1);
+		dBspHeader_t *header = (dBspHeader_t *) buf;
 		stream.read(buf, size);
-		header = *(dBspHeader_t *) buf;
 
-		CMod_LoadRouting(_routingLump, file.getName(), &header.lumps[LUMP_ROUTING], (byte *) buf, 0, 0, 0);
+		CMod_LoadRouting(_routingLump, file.getName(), &header->lumps[LUMP_ROUTING], (byte *) buf, 0, 0, 0);
 		free(buf);
 	}
 
