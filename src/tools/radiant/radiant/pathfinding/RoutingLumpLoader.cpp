@@ -4,12 +4,9 @@
 #include "ifilesystem.h"
 
 #include "../../../shared/ufotypes.h"
-#include "../../../common/filesys.h"
-#include "../../../common/qfiles.h"
-#include "../../../shared/byte.h"
 #include "../../../shared/typedefs.h"
 #include "../../../game/q_shared.h"
-#include <SDL/SDL_endian.h>
+#include "../../../common/qfiles.h"
 
 //#include "../../../common/routing.h"
 //copied from common/routing.h as these could not be included directly
@@ -28,12 +25,6 @@
 #define RT_CONN_PX_NY(map, actorSize, x, y, z)	    (RT_CONN(map, actorSize, x, y, z, 7))
 #define RT_CONN_NX_PY(map, actorSize, x, y, z)	    (RT_CONN(map, actorSize, x, y, z, 6))
 #define RT_CONN_NX_NY(map, actorSize, x, y, z)	    (RT_CONN(map, actorSize, x, y, z, 5))
-
-//copied from shared/byte.c
-inline int LittleLong (uint32_t l)
-{
-	return SDL_SwapLE32(l);
-}
 
 namespace routing
 {
@@ -80,10 +71,11 @@ namespace routing
 	 * @param pos position to evaluate
 	 * @return access state as enum value for later rendering
 	 */
-	static EAccessState evaluateAccessState(const routing_t map[ACTOR_MAX_SIZE], const pos3_t pos, const int actorSize) {
+	static EAccessState evaluateAccessState (const routing_t map[ACTOR_MAX_SIZE], const pos3_t pos, const int actorSize)
+	{
 		const int height = QuantToModel(RT_CEILING(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
 				- RT_FLOOR(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
-		if ( height >= PLAYER_STANDING_HEIGHT)
+		if (height >= PLAYER_STANDING_HEIGHT)
 			return ACC_STAND;
 		else if (height >= PLAYER_CROUCHING_HEIGHT)
 			return ACC_CROUCH;
@@ -91,7 +83,9 @@ namespace routing
 			return ACC_DISABLED;
 	}
 
-	static EConnectionState evaluateConnectionState(const routing_t map[ACTOR_MAX_SIZE], const pos3_t pos, const int actorSize, const EDirection direction) {
+	static EConnectionState evaluateConnectionState (const routing_t map[ACTOR_MAX_SIZE], const pos3_t pos,
+			const int actorSize, const EDirection direction)
+	{
 		byte route = 0;
 		switch (direction) {
 		case DIR_WEST:
@@ -135,7 +129,8 @@ namespace routing
 	 * @param map routing data
 	 * @param pos position to evaluate
 	 */
-	static void FillRoutingLumpEntry(RoutingLumpEntry &entry, routing_t map[ACTOR_MAX_SIZE], pos3_t pos) {
+	static void FillRoutingLumpEntry (RoutingLumpEntry &entry, routing_t map[ACTOR_MAX_SIZE], pos3_t pos)
+	{
 		entry.setAccessState(evaluateAccessState(map, pos, ACTOR_SIZE_NORMAL));
 		for (EDirection direction = DIR_WEST; direction < MAX_DIRECTIONS; direction++) {
 			entry.setConnectionState(direction, evaluateConnectionState(map, pos, ACTOR_SIZE_NORMAL, direction));
@@ -150,7 +145,8 @@ namespace routing
 	 * @sa CM_AddMapTile
 	 * @todo TEST z-level routing
 	 */
-	static void CMod_LoadRouting (RoutingLump& routingLump, const char *name, const lump_t * l, byte* cModelBase, int sX, int sY, int sZ)
+	static void CMod_LoadRouting (RoutingLump& routingLump, const char *name, const lump_t * l, byte* cModelBase,
+			int sX, int sY, int sZ)
 	{
 		static routing_t tempMap[ACTOR_MAX_SIZE];
 		static routing_t clMap[ACTOR_MAX_SIZE];
@@ -178,11 +174,11 @@ namespace routing
 
 		source = cModelBase + l->fileofs;
 
-		i = CMod_DeCompressRouting(&source, (byte*)curTile.wpMins);
+		i = CMod_DeCompressRouting(&source, (byte*) curTile.wpMins);
 		length = i;
-		i = CMod_DeCompressRouting(&source, (byte*)curTile.wpMaxs);
+		i = CMod_DeCompressRouting(&source, (byte*) curTile.wpMaxs);
 		length += i;
-		i = CMod_DeCompressRouting(&source, (byte*)tempMap);
+		i = CMod_DeCompressRouting(&source, (byte*) tempMap);
 		length += i;
 
 		if (length != targetLength) {
@@ -192,11 +188,12 @@ namespace routing
 
 		/* endian swap possibly necessary */
 		for (i = 0; i < 3; i++) {
-			curTile.wpMins[i] = LittleLong(curTile.wpMins[i]);
-			curTile.wpMaxs[i] = LittleLong(curTile.wpMaxs[i]);
+			curTile.wpMins[i] = GUINT32_TO_LE(curTile.wpMins[i]);
+			curTile.wpMaxs[i] = GUINT32_TO_LE(curTile.wpMaxs[i]);
 		}
 
-		g_debug("wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", curTile.wpMins[0], curTile.wpMins[1], curTile.wpMins[2], curTile.wpMaxs[0], curTile.wpMaxs[1], curTile.wpMaxs[2]);
+		g_debug("wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", curTile.wpMins[0], curTile.wpMins[1], curTile.wpMins[2],
+				curTile.wpMaxs[0], curTile.wpMaxs[1], curTile.wpMaxs[2]);
 
 		/* Things that need to be done:
 		 * The floor, ceiling, and route data can be copied over from the map.
@@ -235,19 +232,18 @@ namespace routing
 					}
 					/* Update the reroute table */
 					/*if (!reroute[size][y][x]) {
-						reroute[size][y][x] = numTiles + 1;
-					} else {
-						reroute[size][y][x] = ROUTING_NOT_REACHABLE;
-					}*/
+					 reroute[size][y][x] = numTiles + 1;
+					 } else {
+					 reroute[size][y][x] = ROUTING_NOT_REACHABLE;
+					 }*/
 				}
 
 		g_message("Done copying data.\n");
 		for (size = 0; size < 1; size++)
-			for(x = minX; x <= maxX; x++)
-				for (y=minY; y <= maxY; y++)
-					for (z=minZ;z <=maxZ; z++)
-					{
-						pos3_t pos = {x,y,z};
+			for (x = minX; x <= maxX; x++)
+				for (y = minY; y <= maxY; y++)
+					for (z = minZ; z <= maxZ; z++) {
+						pos3_t pos = { x, y, z };
 						vec3_t vect;
 						PosToVec(pos,vect);
 						/**@todo add other data to constructor: accessibility + connection states */
@@ -261,7 +257,6 @@ namespace routing
 		g_message("Loaded routing for tile %s in %5.1fs\n", name, end - start);
 	}
 
-
 	void RoutingLumpLoader::loadRoutingLump (ArchiveFile& file)
 	{
 		byte *buf;
@@ -273,50 +268,50 @@ namespace routing
 		/* load the file */
 		InputStream &stream = file.getInputStream();
 		const std::size_t size = file.size();
-		buf = (byte*)malloc(size + 1);
-		length = stream.read(buf,size);
-//		if (!buf)
-//			Com_Error(ERR_DROP, "Couldn't load %s", filename);
+		buf = (byte*) malloc(size + 1);
+		length = stream.read(buf, size);
+		//		if (!buf)
+		//			Com_Error(ERR_DROP, "Couldn't load %s", filename);
 
-//		checksum = LittleLong(Com_BlockChecksum(buf, length));
+		//		checksum = LittleLong(Com_BlockChecksum(buf, length));
 
 		header = *(dBspHeader_t *) buf;
 		for (i = 0; i < sizeof(dBspHeader_t) / 4; i++)
-			((int *) &header)[i] = LittleLong(((int *) &header)[i]);
+			((int *) &header)[i] = GUINT32_TO_LE(((int *) &header)[i]);
 
 		if (header.version != BSPVERSION) {
-			g_error("CM_AddMapTile: %s has wrong version number (%i should be %i)", file.getName(), header.version, BSPVERSION);
+			g_error("CM_AddMapTile: %s has wrong version number (%i should be %i)", file.getName(), header.version,
+					BSPVERSION);
 			free(buf);
 			return;
 		}
 
 		cModelBase = (byte *) buf;
 
-
 		//memset(curTile, 0, sizeof(*curTile));
-//		Q_strncpyz(curTile.name, name, sizeof(curTile.name));
+		//		Q_strncpyz(curTile.name, name, sizeof(curTile.name));
 
 		/* pathfinding and the like must be shifted on the worldplane when we
 		 * are assembling a map */
-//		VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_HEIGHT);
+		//		VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_HEIGHT);
 
 		/* load into heap */
 		/* CMod_LoadRouting plays with curTile and numTiles, so let set
 		 * these to the right values now */
-//		numInline += curTile.nummodels - NUM_REGULAR_MODELS;
+		//		numInline += curTile.nummodels - NUM_REGULAR_MODELS;
 
 		CMod_LoadRouting(_routingLump, file.getName(), &header.lumps[LUMP_ROUTING], cModelBase, 0, 0, 0);
 		free(buf);
 		/* now increase the amount of loaded tiles */
-//		numTiles++;
+		//		numTiles++;
 
 		/* Now find the map bounds with the updated numTiles. */
 		/* calculate new border after merge */
-//		RT_GetMapSize(mapMin, mapMax);
+		//		RT_GetMapSize(mapMin, mapMax);
 
-//		FS_FreeFile(buf);
+		//		FS_FreeFile(buf);
 
-//		return checksum;
+		//		return checksum;
 		// TODO:
 	}
 
