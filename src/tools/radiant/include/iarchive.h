@@ -26,6 +26,7 @@
 #include "generic/constant.h"
 
 #include "itextstream.h"
+#include "idatastream.h"
 
 #include <string>
 
