@@ -7,24 +7,8 @@
 #include "../../../shared/typedefs.h"
 #include "../../../game/q_shared.h"
 #include "../../../common/qfiles.h"
-
-//#include "../../../common/routing.h"
-//copied from common/routing.h as these could not be included directly
-#define RT_FLOOR(map, actorSize, x, y, z)			map[(actorSize) - 1].floor[(z)][(y)][(x)]
-#define RT_CEILING(map, actorSize, x, y, z)			map[(actorSize) - 1].ceil[(z)][(y)][(x)]
-#define QuantToModel(x)			((x) * QUANT)
-
-#define RT_CONN(map, actorSize, x, y, z, dir)			map[(actorSize) - 1].route[(z)][(y)][(x)][(dir)]
-
-#define RT_CONN_PX(map, actorSize, x, y, z)		(RT_CONN(map, actorSize, x, y, z, 0))
-#define RT_CONN_NX(map, actorSize, x, y, z)		(RT_CONN(map, actorSize, x, y, z, 1))
-#define RT_CONN_PY(map, actorSize, x, y, z)		(RT_CONN(map, actorSize, x, y, z, 2))
-#define RT_CONN_NY(map, actorSize, x, y, z)		(RT_CONN(map, actorSize, x, y, z, 3))
-
-#define RT_CONN_PX_PY(map, actorSize, x, y, z)	    (RT_CONN(map, actorSize, x, y, z, 4))
-#define RT_CONN_PX_NY(map, actorSize, x, y, z)	    (RT_CONN(map, actorSize, x, y, z, 7))
-#define RT_CONN_NX_PY(map, actorSize, x, y, z)	    (RT_CONN(map, actorSize, x, y, z, 6))
-#define RT_CONN_NX_NY(map, actorSize, x, y, z)	    (RT_CONN(map, actorSize, x, y, z, 5))
+#define COMPILE_MAP
+#include "../../../common/routing.h"
 
 namespace routing
 {
@@ -145,7 +129,7 @@ namespace routing
 	 * @sa CM_AddMapTile
 	 * @todo TEST z-level routing
 	 */
-	static void CMod_LoadRouting (RoutingLump& routingLump, const char *name, const lump_t * l, byte* cModelBase,
+	static void CMod_LoadRouting (RoutingLump& routingLump, const std::string& name, const lump_t * l, byte* cModelBase,
 			int sX, int sY, int sZ)
 	{
 		static routing_t tempMap[ACTOR_MAX_SIZE];
@@ -162,17 +146,12 @@ namespace routing
 
 		start = time(NULL);
 
-		if (!l) {
-			g_error("CMod_LoadRouting: No lump given");
-			return;
-		}
-
-		if (!l->filelen) {
+		if (!GUINT32_TO_LE(l->filelen)) {
 			g_error("CMod_LoadRouting: Map has NO routing lump");
 			return;
 		}
 
-		source = cModelBase + l->fileofs;
+		source = cModelBase + GUINT32_TO_LE(l->fileofs);
 
 		i = CMod_DeCompressRouting(&source, (byte*) curTile.wpMins);
 		length = i;
@@ -254,65 +233,23 @@ namespace routing
 						routingLump.add(toAdd);
 					}
 		end = time(NULL);
-		g_message("Loaded routing for tile %s in %5.1fs\n", name, end - start);
+		g_message("Loaded routing for tile %s in %5.1fs\n", name.c_str(), end - start);
 	}
 
 	void RoutingLumpLoader::loadRoutingLump (ArchiveFile& file)
 	{
 		byte *buf;
-		byte *cModelBase;
-		unsigned int i;
-		int length;
 		dBspHeader_t header;
 
 		/* load the file */
 		InputStream &stream = file.getInputStream();
 		const std::size_t size = file.size();
 		buf = (byte*) malloc(size + 1);
-		length = stream.read(buf, size);
-		//		if (!buf)
-		//			Com_Error(ERR_DROP, "Couldn't load %s", filename);
-
-		//		checksum = LittleLong(Com_BlockChecksum(buf, length));
-
+		stream.read(buf, size);
 		header = *(dBspHeader_t *) buf;
-		for (i = 0; i < sizeof(dBspHeader_t) / 4; i++)
-			((int *) &header)[i] = GUINT32_TO_LE(((int *) &header)[i]);
 
-		if (header.version != BSPVERSION) {
-			g_error("CM_AddMapTile: %s has wrong version number (%i should be %i)", file.getName(), header.version,
-					BSPVERSION);
-			free(buf);
-			return;
-		}
-
-		cModelBase = (byte *) buf;
-
-		//memset(curTile, 0, sizeof(*curTile));
-		//		Q_strncpyz(curTile.name, name, sizeof(curTile.name));
-
-		/* pathfinding and the like must be shifted on the worldplane when we
-		 * are assembling a map */
-		//		VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_HEIGHT);
-
-		/* load into heap */
-		/* CMod_LoadRouting plays with curTile and numTiles, so let set
-		 * these to the right values now */
-		//		numInline += curTile.nummodels - NUM_REGULAR_MODELS;
-
-		CMod_LoadRouting(_routingLump, file.getName(), &header.lumps[LUMP_ROUTING], cModelBase, 0, 0, 0);
+		CMod_LoadRouting(_routingLump, file.getName(), &header.lumps[LUMP_ROUTING], (byte *) buf, 0, 0, 0);
 		free(buf);
-		/* now increase the amount of loaded tiles */
-		//		numTiles++;
-
-		/* Now find the map bounds with the updated numTiles. */
-		/* calculate new border after merge */
-		//		RT_GetMapSize(mapMin, mapMax);
-
-		//		FS_FreeFile(buf);
-
-		//		return checksum;
-		// TODO:
 	}
 
 	void RoutingLumpLoader::loadRouting (const std::string& bspFileName)
