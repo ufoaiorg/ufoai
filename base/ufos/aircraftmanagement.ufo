@@ -666,7 +666,7 @@ craftitem craft_weapon_alc
 	crafttype			weapon
 	size				40 // light
 	installationTime	2
-	price				12000
+	price				7000
 	model				"aircraft/craft_weapon_alc/alc"
 
 	bullets				false
@@ -697,7 +697,7 @@ craftitem craft_weapon_shiva
 	crafttype			weapon
 	size				40 // light
 	installationTime	2
-	price				12000
+	price				5000
 	bullets				true
 	model				"aircraft/craft_weapon_shiva/shiva"
 }
@@ -740,7 +740,7 @@ craftitem craft_el_raven
 	crafttype			electronics
 	size				20 // light
 	installationTime	1
-	price				20000
+	price				8000
 	model				"aircraft/craft_item_raven_ecm/ecm"
 
 	ecm		1.25
@@ -752,7 +752,7 @@ craftitem craft_weapon_sparrowhawk
 	crafttype			weapon
 	size				90 // medium
 	installationTime	3
-	price				27000
+	price				7000
 	model				"aircraft/craft_weapon_sparrow/sparrowhawk_rack"
 }
 
@@ -779,7 +779,7 @@ craftitem craft_weapon_tr20
 	crafttype			weapon
 	size				90 // medium
 	installationTime	2
-	price				25000
+	price				6000
 	model				"aircraft/craft_weapon_tr20/tr20"
 
 	speed		.9
@@ -811,7 +811,7 @@ craftitem craft_weapon_particle_beam
 	crafttype			weapon
 	size				90 // medium
 	installationTime	4
-	price				45000
+	price				11000
 	model				"aircraft/craft_weapon_particle/pbw"
 
 	beam				true
@@ -840,7 +840,7 @@ craftitem craft_el_targeting
 	name				"_Targeting Computer"
 	crafttype			electronics
 	installationTime	1
-	price				25600
+	price				10000
 	size				20 // light
 	model				"aircraft/craft_item_target/craft_item_target"
 
@@ -852,7 +852,7 @@ craftitem craft_el_fuelpod
 	name				"_Fuel Pod"
 	crafttype			electronics
 	installationTime	2
-	price				4000
+	price				3000
 	size				20 // light
 	model				"aircraft/craft_item_fuel/fuel"
 
@@ -866,7 +866,7 @@ craftitem craft_shield_polymer
 	name				"_Polymer Aircraft Armour"
 	crafttype			shield
 	installationTime	24
-	price				33600
+	price				1200
 	size				40 // light
 	model				"aircraft/craft_arm_poly/polymer"
 
@@ -880,7 +880,7 @@ craftitem craft_shield_plating
 	name				"_Alien Aircraft Plating"
 	crafttype			shield
 	installationTime	36
-	price				50000
+	price				3000
 	size				50 // light
 	model				"aircraft/craft_arm_plate/plating"
 
@@ -894,7 +894,7 @@ craftitem craft_alien_astrogation
 	name				"_Alien Astrogation"
 	crafttype			electronics
 	installationTime	-1
-	price				32000
+	price				5000
 	size				20 // light
 }
 
@@ -903,7 +903,7 @@ craftitem craft_alien_propulsion
 	name				"_Alien Propulsion"
 	crafttype			electronics
 	installationTime	-1
-	price				40000
+	price				6000
 	size				50 // light
 }
 
@@ -912,7 +912,7 @@ craftitem craft_alien_detection
 	name				"_Alien Detection"
 	crafttype			electronics
 	installationTime	-1
-	price				32000
+	price				5000
 	size				20 // light
 }
 
@@ -926,7 +926,7 @@ craftitem base_AA51_launcher
 	crafttype			base_missile
 	size				90 // medium
 	installationTime	12
-	price				50000
+	price				5000
 	is_dummy			true
 }
 
@@ -955,7 +955,7 @@ craftitem baselaser
 	crafttype			base_laser
 	size				90 // medium
 	installationTime	12
-	price				100000
+	price				10000
 	is_dummy			true
 
 	bullets				false
