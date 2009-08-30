@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-08-22 22:41+0200\n"
-"PO-Revision-Date: 2009-06-13 12:38+0100\n"
+"PO-Revision-Date: 2009-08-29 12:38+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -274,13 +274,12 @@ msgstr "Høstmaskine U"
 
 #: ../base/ufos/aircraftmanagement.ufo:471 ../base/ufos/otheritems.ufo:90
 #: ../base/ufos/research.ufo:3744
-#, fuzzy
 msgid "UFO - Gunboat"
-msgstr "Ufo - rekognoscering"
+msgstr "Ufo - kanonbåd"
 
 #: ../base/ufos/aircraftmanagement.ufo:472
 msgid "Gunboat U"
-msgstr ""
+msgstr "Kanonbåd U"
 
 #: ../base/ufos/aircraftmanagement.ufo:510 ../base/ufos/otheritems.ufo:99
 #: ../base/ufos/research.ufo:3701
@@ -302,18 +301,17 @@ msgstr "Forsyning U"
 
 #: ../base/ufos/aircraftmanagement.ufo:558 ../base/ufos/otheritems.ufo:72
 #: ../base/ufos/research.ufo:3787
-#, fuzzy
 msgid "UFO - Ripper"
-msgstr "Ufo - Jager"
+msgstr "Ufo - ripper"
 
 #: ../base/ufos/aircraftmanagement.ufo:559
 msgid "Ripper U"
-msgstr ""
+msgstr "Ripper U"
 
 #: ../base/ufos/aircraftmanagement.ufo:585 ../base/ufos/otheritems.ufo:64
 #: ../base/ufos/research.ufo:3658
 msgid "UFO - Bomber"
-msgstr "Ufo - Bombefly"
+msgstr "Ufo - bombefly"
 
 #: ../base/ufos/aircraftmanagement.ufo:586
 msgid "Bomber U"
@@ -330,13 +328,12 @@ msgstr "Transport U"
 
 #: ../base/ufos/aircraftmanagement.ufo:642 ../base/ufos/otheritems.ufo:81
 #: ../base/ufos/research.ufo:3873
-#, fuzzy
 msgid "UFO - Mothership"
-msgstr "Ufo - fordærver"
+msgstr "Ufo - kommandoskib"
 
 #: ../base/ufos/aircraftmanagement.ufo:643
 msgid "Mothership U"
-msgstr ""
+msgstr "Kommandoskib U"
 
 #: ../base/ufos/aircraftmanagement.ufo:659 ../base/ufos/research.ufo:4490
 msgid "Aerial Laser Cannon"
@@ -345,9 +342,8 @@ msgstr "Luftlaserkanon"
 #: ../base/ufos/aircraftmanagement.ufo:671
 #: ../base/ufos/aircraftmanagement.ufo:942 ../base/ufos/research.ufo:196
 #: ../base/ufos/research.ufo:4529
-#, fuzzy
 msgid "D-F Tank"
-msgstr "DF-tank"
+msgstr "D-F-tank"
 
 #: ../base/ufos/aircraftmanagement.ufo:687
 msgid "Shiva Rotary Cannon"
@@ -422,9 +418,8 @@ msgid "AA51 Cicada SAM"
 msgstr "AA51 Cicada JTL-missil"
 
 #: ../base/ufos/aircraftmanagement.ufo:929 ../base/ufos/research.ufo:156
-#, fuzzy
 msgid "Laser Turret"
-msgstr "Laserforsvar"
+msgstr "Lasertårn"
 
 #: ../base/ufos/armour.ufo:26
 msgid "normal"
@@ -555,9 +550,8 @@ msgid "Antimatter Storage"
 msgstr "Lagerrum til antistof"
 
 #: ../base/ufos/basemanagement.ufo:371
-#, fuzzy
 msgid "Laser Battery"
-msgstr "Missilbatteri"
+msgstr "Laserbatteri"
 
 #: ../base/ufos/basemanagement.ufo:388
 msgid "Missile Battery"
@@ -1405,9 +1399,8 @@ msgid "A luxurious vacation resort."
 msgstr "Et luksuriøst feriested."
 
 #: ../base/ufos/maps.ufo:2511
-#, fuzzy
 msgid "An African suburb that has been visited by UFO."
-msgstr "En afrikansk forstad som har haft besøg af en ufo-høstmaskine."
+msgstr "En afrikansk forstad som har haft besøg af en ufo."
 
 #: ../base/ufos/maps.ufo:2560
 msgid "An African suburb that has received a visit from a Harvester."
@@ -1736,7 +1729,6 @@ msgstr ""
 "-- Kommandør Navarre"
 
 #: ../base/ufos/research.ufo:161
-#, fuzzy
 msgid "baselaser_txt"
 msgstr ""
 "Øverstbefalende, jeg er særdeles glad for at kunne rapportere at vores projekt har været succesfuldt. Jeg har inkluderet billeder af vores laservåben prototype, som har opnået bølgeenergi i en bærbar version.\n"
@@ -1758,7 +1750,6 @@ msgstr ""
 "-- Kommandør Navarre"
 
 #: ../base/ufos/research.ufo:164
-#, fuzzy
 msgid "baselaser_pre_txt"
 msgstr ""
 "Vores indsamlede FN-forskningsfiler har givet en masse værdifuld information vedrørende våbenudvikling på jorden siden begyndelsen af dette århundrede. Et af de mest interessante emner har været produktion af DEV (Dirigerede energivåben), våben som overfører energi til et mål ved brug af andet end et projektil. Vi er især interesseret i filerne omkring udvidet bølgelaserteknologi.\n"
@@ -4671,7 +4662,6 @@ msgstr ""
 "Ingen."
 
 #: ../base/ufos/research.ufo:3072
-#, fuzzy
 msgid "b_laser_txt"
 msgstr ""
 "Øverstbefalende, jeg er særdeles glad for at kunne rapportere at vores projekt har været succesfuldt. Jeg har inkluderet billeder af vores laservåben prototype, som har opnået bølgeenergi i en bærbar version.\n"
@@ -5556,7 +5546,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3749
-#, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr ""
 "This small UFO is the first type we've observed visually and on radar. Although they don't seem to take part in actual raids, they're no less a threat; so far they've paved the way for every instance of alien activity on Earth.\n"
@@ -5578,7 +5567,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3752
-#, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
@@ -5586,12 +5574,10 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3792
-#, fuzzy
 msgid "ufo_ripper_txt"
-msgstr "<TODO>"
+msgstr ""
 
 #: ../base/ufos/research.ufo:3795
-#, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
@@ -5628,12 +5614,10 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3878
-#, fuzzy
 msgid "ufo_mothership_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3881
-#, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
@@ -7048,9 +7032,8 @@ msgid "Be sure to hire as many scientists as you can. The earlier you know your 
 msgstr "Husk at ansætte så mange videnskabsmænd som du kan. Jo hurtigere du kender din fjende, jo nemmere er han at besejre."
 
 #: ../base/ufos/tips.ufo:17
-#, fuzzy
 msgid "Be sure to hire as many workers as you can. The faster your production lines, the sooner you can get access to better equipment and resupplies."
-msgstr "Husk at ansætte så mange ingeniører som du kan. Jo hurtigere din produktion går, jo hurtigere kan du få adgang til bedre udstyr og erstatte dine tab."
+msgstr "Husk at ansætte så mange arbejdere som du kan. Jo hurtigere din produktion går, jo hurtigere kan du få adgang til bedre udstyr og nye forsyninger."
 
 #: ../base/ufos/tips.ufo:18
 msgid "Be sure to visit our website, http://ufoai.sf.net/ and drop by our community channel, #ufoai on irc.freenode.net."
@@ -7379,23 +7362,20 @@ msgid "Call back"
 msgstr "Tilbagekald"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:122
-#, fuzzy
 msgid "Pilot is assigned to another craft"
-msgstr "Pilot på luftfartøj"
+msgstr "Pilot er tildelt et andet luftfartøj"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:140
-#, fuzzy
 msgid "A pilot is already assigned to this craft"
-msgstr "Intet ammo tildelt dette våben."
+msgstr "En pilot er allerede tildelt dette luftfartøj"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:142
 msgid "Assign pilot to this craft"
-msgstr ""
+msgstr "Tildel pilot dette luftfartøj"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:153
-#, fuzzy
 msgid "Remove pilot from this craft"
-msgstr "Fjern udstyr fra pladsen"
+msgstr "Fjern pilot fra dette luftfartøj"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:196
 #: ../base/ufos/ui/aircraft_pilots.ufo:206
@@ -7414,24 +7394,20 @@ msgid "Equip soldiers"
 msgstr "Udstyr soldater"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:97
-#, fuzzy
 msgid "Soldier is assigned to another craft"
-msgstr "Soldat på luftfartøj"
+msgstr "Soldat er tildelt et andet luftfartøj"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:116
-#, fuzzy
 msgid "No more soldiers can be assigned to this craft"
-msgstr "Intet ammo tildelt dette våben."
+msgstr "Ingen yderligere soldater kan tildeles dette luftfartøj"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:118
-#, fuzzy
 msgid "Assign soldier to this craft"
-msgstr "Tildel først en eller flere soldater til dette luftfartøj."
+msgstr "Tildel soldat til dette luftfartøj"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:129
-#, fuzzy
 msgid "Remove soldier from this craft"
-msgstr "Vælg en soldat fra listen"
+msgstr "Fjern soldat fra dette luftfartøj"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:139
 msgid "Soldier carries equipment"
@@ -7518,9 +7494,8 @@ msgid "Assign soldiers"
 msgstr "Tildel soldater"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:569
-#, fuzzy
 msgid "No soldiers assigned"
-msgstr "Intet udstyr er tildelt.\n"
+msgstr "Ingen soldater tildelt"
 
 #: ../base/ufos/ui/aliencont.ufo:50 ../base/ufos/ui/basesummary.ufo:256
 #: ../base/ufos/ui/buildings.ufo:52 ../base/ufos/ui/hire.ufo:596
@@ -7653,9 +7628,8 @@ msgid "Equip Defence Weapons"
 msgstr "Gør forsvarsvåben klar"
 
 #: ../base/ufos/ui/basedefence.ufo:55
-#, fuzzy
 msgid "Information"
-msgstr "Base information"
+msgstr "Information"
 
 #: ../base/ufos/ui/basedefence.ufo:59
 msgid "Missile Defences"
@@ -7695,20 +7669,19 @@ msgstr "Valgt udstyr"
 
 #: ../base/ufos/ui/basedefence.ufo:304
 msgid "Surface to Air defences"
-msgstr ""
+msgstr "Overflade-til-luft-forsvar"
 
 #: ../base/ufos/ui/basedefence.ufo:334
 msgid "Targetted UFO:"
-msgstr ""
+msgstr "Ufo i målsigte:"
 
 #: ../base/ufos/ui/basedefence.ufo:347 ../base/ufos/ui/geoscape.ufo:1450
 msgid "Time to build:"
 msgstr "Byggetidsforbrug:"
 
 #: ../base/ufos/ui/basedefence.ufo:360
-#, fuzzy
 msgid "Autofire"
-msgstr "ild"
+msgstr "Autoild"
 
 #: ../base/ufos/ui/basedefence.ufo:375 ../base/ufos/ui/geoscape.ufo:1488
 #: client/campaign/cp_base.c:782 client/campaign/cp_base.c:792
@@ -7986,22 +7959,20 @@ msgid "Done"
 msgstr "Færdig"
 
 #: ../base/ufos/ui/genradarhud.ufo:58
-#, fuzzy
 msgid "Reinit"
-msgstr "Førstehjælpskasse"
+msgstr "Geninit."
 
 #: ../base/ufos/ui/genradarhud.ufo:73
-#, fuzzy
 msgid "Preview"
-msgstr "Forhåndsvisning:"
+msgstr "Forhåndsvisning"
 
 #: ../base/ufos/ui/genradarhud.ufo:89
 msgid "Gen this level"
-msgstr ""
+msgstr "Gen. dette niveau"
 
 #: ../base/ufos/ui/genradarhud.ufo:104
 msgid "Gen all levels"
-msgstr ""
+msgstr "Gen. alle niveauer"
 
 #: ../base/ufos/ui/geoscape.ufo:113
 msgid "Open up messages"
@@ -8040,9 +8011,8 @@ msgid "Time lapse: 5 days"
 msgstr "Tidsinterval: 5 dage"
 
 #: ../base/ufos/ui/geoscape.ufo:399
-#, fuzzy
 msgid "Message settings"
-msgstr "Pause-/beskedindstillinger"
+msgstr "Beskedopsætning"
 
 #: ../base/ufos/ui/geoscape.ufo:400
 msgid "Change message and pause settings"
@@ -8051,7 +8021,7 @@ msgstr "Ændr besked- og pauseindstillinger"
 #: ../base/ufos/ui/geoscape.ufo:415 ../base/ufos/ui/geoscape.ufo:431
 #: ../base/ufos/ui/mailclient.ufo:122
 msgid "Mailclient"
-msgstr "E-postklient"
+msgstr "E-post-klient"
 
 #: ../base/ufos/ui/geoscape.ufo:416
 msgid "INBOX (with unread mails)"
@@ -9554,21 +9524,20 @@ msgid "Select which side you want to play with"
 msgstr "Vælg hvilken side du ønsker at spille"
 
 #: ../base/ufos/ui/skirmish.ufo:181
-#, fuzzy
 msgid "UFO:"
-msgstr "Ufo"
+msgstr "Ufo:"
 
 #: ../base/ufos/ui/skirmish.ufo:184
 msgid "Select the ufo that should be used"
-msgstr ""
+msgstr "Vælg den ufo der skal anvendes"
 
 #: ../base/ufos/ui/skirmish.ufo:211
 msgid "Dropship:"
-msgstr ""
+msgstr "Transportfartøj:"
 
 #: ../base/ufos/ui/skirmish.ufo:214
 msgid "Select the dropship that should be used"
-msgstr ""
+msgstr "Vælg det transportfartøj der skal anvendes"
 
 #: ../base/ufos/ui/stats.ufo:37
 msgid "Missions"
@@ -9663,15 +9632,13 @@ msgstr "Rumvæsener"
 #: ../base/ufos/ui/transfer.ufo:363 ../base/ufos/ui/transfer.ufo:374
 #: ../base/ufos/ui/transfer.ufo:385 ../base/ufos/ui/transfer.ufo:396
 #: ../base/ufos/ui/transfer.ufo:407 ../base/ufos/ui/transfer.ufo:418
-#, fuzzy
 msgid "Add/Remove item to transfer cargo"
-msgstr "Vælg base der skal overføres til"
+msgstr "Tilføj/fjern udstyr fra overførelseslasten"
 
 # # in game
 #: ../base/ufos/ui/transfer.ufo:541
-#, fuzzy
 msgid "Destination base"
-msgstr "returnerer til base"
+msgstr "Basedestination"
 
 #: ../base/ufos/ui/transfer.ufo:615
 msgid "Start the transfer"
@@ -9686,9 +9653,8 @@ msgid "Pre research text"
 msgstr "Før forskningstekst"
 
 #: ../base/ufos/ui/ufopedia.ufo:200
-#, fuzzy
 msgid "Requirement:"
-msgstr "Ingen krav"
+msgstr "Krav:"
 
 #: ../base/ufos/ui/ufopedia.ufo:241
 msgid "Previous weapon chambered for this ammunition"
@@ -10258,9 +10224,9 @@ msgid "UFO"
 msgstr "Ufo"
 
 #: client/campaign/cp_aircraft.c:780
-#, fuzzy, c-format
+#, c-format
 msgid "A new (a %s) class craft is ready in %s"
-msgstr "Et nyt (en/et %s) klasseluftfartøj er klar på base %s"
+msgstr "Et nyt (en/et %s) klasseluftfartøj er klar på %s"
 
 #: client/campaign/cp_aircraft.c:781 client/campaign/cp_aircraft.c:1243
 #: client/campaign/cp_aircraft.c:1251 client/campaign/cp_aircraft.c:1354
@@ -10339,9 +10305,9 @@ msgid "That base is beyond this aircraft's range."
 msgstr "Den base er udenfor dette luftfartøjs rækkevidde."
 
 #: client/campaign/cp_aircraft.c:1243
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has refuelled at %s."
-msgstr "Luffartøj %s er blevet optanket på base %s."
+msgstr "Luffartøj %s er blevet optanket på %s."
 
 #: client/campaign/cp_aircraft.c:1251
 #, c-format
@@ -10357,9 +10323,9 @@ msgid "Insufficient fuel."
 msgstr "Ikke nok brændstof."
 
 #: client/campaign/cp_aircraft.c:2170
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
-msgstr "Fartøj %s her ikke nok brændstof til angreb på ufo: Flyv tilbage til base %s."
+msgstr "Fartøj %s her ikke nok brændstof til angreb på ufo: Flyv tilbage til %s."
 
 #: client/campaign/cp_aircraft_callbacks.c:138
 msgid ""
@@ -10634,9 +10600,9 @@ msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Ingen luftfartøj på denne base - Du må først købe et luftfartøj\n"
 
 #: client/campaign/cp_base.c:2374
-#, fuzzy, c-format
+#, c-format
 msgid "Construction of %s building finished in %s."
-msgstr "Konstruktion af %s bygning er færdig på base %s."
+msgstr "Konstruktion af %s bygning er færdig på %s."
 
 #: client/campaign/cp_base.c:2375
 msgid "Building finished"
@@ -10655,9 +10621,9 @@ msgstr[0] "%i indsamlet udstyr"
 msgstr[1] "%i indsamlet udstyr"
 
 #: client/campaign/cp_base.c:2482
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough storage space in %s. %s"
-msgstr "Ikke nok lagerrum på base %s. %s"
+msgstr "Ikke nok lagerrum på %s. %s"
 
 #: client/campaign/cp_base.c:2483
 #, c-format
@@ -10667,14 +10633,14 @@ msgstr[0] "%i udstyr blev solgt for %i kr."
 msgstr[1] "%i udstyr blev solgt for %i kr."
 
 #: client/campaign/cp_base.c:3201
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
-msgstr "Base %s har ikke antistoflagerrum. %i enheder af antistof blev fjernet."
+msgstr "%s har ikke antistoflagerrum. %i enheder af antistof blev fjernet."
 
 #: client/campaign/cp_base_callbacks.c:65
 #, c-format
 msgid "%s has been destroyed by an antimatter storage breach."
-msgstr ""
+msgstr "%s er blevet ødelagt af et uheld på lageret for antistof."
 
 #: client/campaign/cp_base_callbacks.c:174
 #, c-format
@@ -10784,9 +10750,8 @@ msgid "^BEmployees\n"
 msgstr "^BAnsatte\n"
 
 #: client/campaign/cp_base_callbacks.c:800
-#, fuzzy
 msgid "^BAliens\n"
-msgstr "Rumvæsener"
+msgstr "^BRumvæsener\n"
 
 #: client/campaign/cp_base_callbacks.c:812
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
@@ -11297,9 +11262,9 @@ msgid "ETA:\t%sh\n"
 msgstr "AAT:\t%st\n"
 
 #: client/campaign/cp_mapfightequip.c:302
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
-msgstr "%s blev med succes installeret på luftfartøj %s på base %s."
+msgstr "%s blev med succes installeret på luftfartøj %s på %s."
 
 #: client/campaign/cp_mapfightequip.c:305
 #, c-format
@@ -11307,19 +11272,19 @@ msgid "%s was successfully installed at installation %s."
 msgstr "%s blev med succes installeret på installation %s."
 
 #: client/campaign/cp_mapfightequip.c:308
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully installed at %s."
-msgstr "%s blev med succes installeret på base %s."
+msgstr "%s blev med succes installeret på %s."
 
 #: client/campaign/cp_mapfightequip.c:330
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
-msgstr "%s blev med succes fjernet fra luftfartøj %s på base %s."
+msgstr "%s blev med succes fjernet fra luftfartøj %s på %s."
 
 #: client/campaign/cp_mapfightequip.c:336
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
-msgstr "%s blev med succes fjernet, påbegynder installation af %s på luftfartøj %s på base %s"
+msgstr "%s blev med succes fjernet, påbegynder installation af %s på luftfartøj %s på %s"
 
 #: client/campaign/cp_mapfightequip.c:344
 #, c-format
@@ -11327,9 +11292,9 @@ msgid "%s was successfully removed from installation %s."
 msgstr "%s blev med succes fjernet fra installation %s."
 
 #: client/campaign/cp_mapfightequip.c:347
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed from %s."
-msgstr "%s blev med succes fjernet fra base %s."
+msgstr "%s blev med succes fjernet fra %s."
 
 #: client/campaign/cp_mapfightequip.c:1154
 msgid "Light weight"
@@ -11399,96 +11364,95 @@ msgstr "Du kan ikke sælge et luftfartøj, som ikke er på en base"
 
 #: client/campaign/cp_messageoptions.c:36
 msgid "installation_installed"
-msgstr ""
+msgstr "installation installeret"
 
 #: client/campaign/cp_messageoptions.c:37
 msgid "installation_removed"
-msgstr ""
+msgstr "installation fjernet"
 
 #: client/campaign/cp_messageoptions.c:38
 msgid "installation_replaced"
-msgstr ""
+msgstr "installation erstattet"
 
 #: client/campaign/cp_messageoptions.c:39
 msgid "installation_build_started"
-msgstr ""
+msgstr "installation bygning påbegyndt"
 
 #: client/campaign/cp_messageoptions.c:40
 msgid "installation_build_finished"
-msgstr ""
+msgstr "installation bygning færdig"
 
 #: client/campaign/cp_messageoptions.c:41
 msgid "installation_destroyed"
-msgstr ""
+msgstr "installation ødelagt"
 
 #: client/campaign/cp_messageoptions.c:42
 msgid "research_new_proposed"
-msgstr ""
+msgstr "forskning nyt forslag"
 
 #: client/campaign/cp_messageoptions.c:43
-#, fuzzy
 msgid "research_halted"
-msgstr "forskning"
+msgstr "forskning stoppet"
 
 #: client/campaign/cp_messageoptions.c:44
 msgid "research_completed"
-msgstr ""
+msgstr "forskning færdig"
 
 #: client/campaign/cp_messageoptions.c:45
 msgid "production_started"
-msgstr ""
+msgstr "produktion startet"
 
 #: client/campaign/cp_messageoptions.c:46
 msgid "production_finished"
-msgstr ""
+msgstr "produktion færdig"
 
 #: client/campaign/cp_messageoptions.c:47
 msgid "production_failed"
-msgstr ""
+msgstr "produktion mislykket"
 
 #: client/campaign/cp_messageoptions.c:48
 msgid "production_queue_empty"
-msgstr ""
+msgstr "produktionskø tom"
 
 #: client/campaign/cp_messageoptions.c:49
 msgid "nation_happiness_changed"
-msgstr ""
+msgstr "tilfredsheden hos landene ændrede sig"
 
 #: client/campaign/cp_messageoptions.c:50
 msgid "nation_unhappy"
-msgstr ""
+msgstr "lande ikke tilfredse"
 
 #: client/campaign/cp_messageoptions.c:51
 msgid "nation_pleased"
-msgstr ""
+msgstr "lande tilfredse"
 
 #: client/campaign/cp_messageoptions.c:52
 msgid "transfer_started"
-msgstr ""
+msgstr "overførsel startet"
 
 #: client/campaign/cp_messageoptions.c:53
 msgid "transfer_completed_success"
-msgstr ""
+msgstr "overføresel færdig med succes"
 
 #: client/campaign/cp_messageoptions.c:54
 msgid "transfer_lost"
-msgstr ""
+msgstr "overførsel tabt"
 
 #: client/campaign/cp_messageoptions.c:55
 msgid "transfer_aliens_defered"
-msgstr ""
+msgstr "overførsel_rumvæsener_udsat"
 
 #: client/campaign/cp_messageoptions.c:56
 msgid "ufo_spotted"
-msgstr ""
+msgstr "ufo_set"
 
 #: client/campaign/cp_messageoptions.c:57
 msgid "ufo_signal_lost"
-msgstr ""
+msgstr "ufo_signal_tabt"
 
 #: client/campaign/cp_messageoptions.c:58
 msgid "ufo_attacking"
-msgstr ""
+msgstr "ufo_angriber"
 
 #: client/campaign/cp_messages.c:46
 #, c-format
@@ -11673,9 +11637,9 @@ msgid "Paid %i credits for aircraft"
 msgstr "Betalte %i kr for luftfartøjer"
 
 #: client/campaign/cp_nations.c:170
-#, fuzzy, c-format
+#, c-format
 msgid "Paid %i credits for upkeep of %s"
-msgstr "Betalte %i kr for vedligeholdelse af base %s"
+msgstr "Betalte %i kr for vedligeholdelse af %s"
 
 #: client/campaign/cp_nations.c:175
 #, c-format
@@ -11746,38 +11710,38 @@ msgstr ""
 "Luftfartøj kan ikke lette.\n"
 
 #: client/campaign/cp_produce.c:235
-#, fuzzy, c-format
+#, c-format
 msgid "Production queue for %s is empty"
-msgstr "Produktionskø for base %s er tom"
+msgstr "Produktionskø for %s er tom"
 
 #: client/campaign/cp_produce.c:236
 msgid "Production queue empty"
 msgstr "Produktionskø tom"
 
 #: client/campaign/cp_produce.c:358 client/campaign/cp_produce.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough credits to finish production in %s.\n"
-msgstr "Ikke nok penge til at afslutte produktion på base %s.\n"
+msgstr "Ikke nok penge til at afslutte produktion på %s.\n"
 
 #: client/campaign/cp_produce.c:368
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in %s. Production postponed.\n"
-msgstr "Ikke nok lagerrum på base %s. Produktion udskudt.\n"
+msgstr "Ikke nok lagerrum på %s. Produktion udskudt.\n"
 
 #: client/campaign/cp_produce.c:389
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free hangar space in %s. Production postponed.\n"
-msgstr "Ikke nok ledig hangarplads på base %s. Produktion udskudt.\n"
+msgstr "Ikke nok ledig hangarplads på %s. Produktion udskudt.\n"
 
 #: client/campaign/cp_produce.c:400
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed.\n"
-msgstr "Ikke nok lagerrum på base %s. Afmontering udskudt.\n"
+msgstr "Ikke nok lagerrum på %s. Afmontering udskudt.\n"
 
 #: client/campaign/cp_produce.c:428 client/campaign/cp_produce.c:440
-#, fuzzy, c-format
+#, c-format
 msgid "The production of %s at %s has finished."
-msgstr "Produktionen af %s er færdig."
+msgstr "Produktionen af %s på %s er færdig."
 
 #: client/campaign/cp_produce.c:429 client/campaign/cp_produce.c:441
 #: client/campaign/cp_produce.c:449
@@ -11785,9 +11749,9 @@ msgid "Production finished"
 msgstr "Produktion færdig"
 
 #: client/campaign/cp_produce.c:448
-#, fuzzy, c-format
+#, c-format
 msgid "The disassembling of %s at %s has finished."
-msgstr "Afmonteringen af %s er færdig."
+msgstr "Afmonteringen af %s på %s er færdig."
 
 #: client/campaign/cp_produce_callbacks.c:131
 msgid "Not enough workers"
@@ -11854,9 +11818,9 @@ msgstr ""
 
 #: client/campaign/cp_produce_callbacks.c:237
 #: client/campaign/cp_produce_callbacks.c:271
-#, fuzzy, c-format
+#, c-format
 msgid "%s (at %s)"
-msgstr "%s (%i) "
+msgstr "%s (på %s)"
 
 #: client/campaign/cp_produce_callbacks.c:345
 #: client/campaign/cp_produce_callbacks.c:449
@@ -11886,9 +11850,8 @@ msgstr "%s - afmontering\n"
 
 # #ufopedia
 #: client/campaign/cp_produce_callbacks.c:385
-#, fuzzy
 msgid "Components:\n"
-msgstr "Komponenter: "
+msgstr "Komponenter:\n"
 
 #: client/campaign/cp_produce_callbacks.c:394
 #, c-format
@@ -11980,12 +11943,11 @@ msgstr "Ikke nok laboratorier"
 #: client/campaign/cp_research.c:810
 #, c-format
 msgid "Research prerequisites of %s does not met at %s. Research halted!"
-msgstr ""
+msgstr "Minimumsforskningskrav på %s opfyldes ikke på %s. Forskning stoppet!"
 
 #: client/campaign/cp_research.c:811
-#, fuzzy
 msgid "Research halted"
-msgstr "Forskning afsluttet"
+msgstr "Forskning stoppet"
 
 #: client/campaign/cp_research.c:1170
 msgid "No description available."
@@ -12329,11 +12291,8 @@ msgid "Destination base does not have any hangar."
 msgstr "Modtagende base har ikke nogen hangar."
 
 #: client/campaign/cp_transfer.c:283
-#, fuzzy
 msgid "Destination base does not have enough space in hangars.\n"
-msgstr ""
-"Modtagende base har ikke nok plads i sine\n"
-"hangarer.\n"
+msgstr "Modtagende base har ikke nok plads i sine hangarer.\n"
 
 #: client/campaign/cp_transfer.c:331 client/campaign/cp_transfer.c:500
 #, c-format
@@ -12346,9 +12305,9 @@ msgid "Pilot %s"
 msgstr "Pilot %s"
 
 #: client/campaign/cp_transfer.c:366 client/campaign/cp_transfer.c:540
-#, fuzzy, c-format
+#, c-format
 msgid "Corpse of %s"
-msgstr "Lig af %s (%i tilgængelig)"
+msgstr "Lig af %s"
 
 #: client/campaign/cp_transfer.c:398 client/campaign/cp_transfer.c:584
 #, c-format
@@ -12376,9 +12335,9 @@ msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "Overførsel er ikke tilgængelig - basen har ikke nogen beboelseskvarterer."
 
 #: client/campaign/cp_transfer.c:551
-#, fuzzy, c-format
+#, c-format
 msgid "Alive %s"
-msgstr "Levende:"
+msgstr "Levende %s"
 
 #: client/campaign/cp_transfer.c:563
 msgid "Alien Containment is empty."
@@ -12397,9 +12356,9 @@ msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "Overførsel er ikke mulig - basen har ingen fungerende hangar."
 
 #: client/campaign/cp_transfer.c:698
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Storage, items are removed!"
-msgstr "Base %s har intet lager, udstyr fjernes!"
+msgstr "%s har intet lager, udstyr fjernes!"
 
 #: client/campaign/cp_transfer.c:699 client/campaign/cp_transfer.c:717
 #: client/campaign/cp_transfer.c:753 client/campaign/cp_transfer.c:781
@@ -12409,41 +12368,40 @@ msgid "Transport mission"
 msgstr "Transportmission"
 
 #: client/campaign/cp_transfer.c:716
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Living Quarters, employees got unhired!"
-msgstr "Base %s har ikke nogen beboelseskvarterer, ansatte er fritstillet!"
+msgstr "%s har ikke nogen beboelseskvarterer, ansatte er fritstillet!"
 
 #: client/campaign/cp_transfer.c:752
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
-msgstr "Base %s har ikke et rumvæsenopbevaringsrum, rumvæsener fjernes!"
+msgstr "%s har ikke et rumvæsenopbevaringsrum, rumvæsener fjernes!"
 
 #: client/campaign/cp_transfer.c:780
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have enough free space in hangars. Aircraft is lost!"
-msgstr "Base %s har ikke nok ledig plads i hangarerne. Luftfartøj er tabt!"
+msgstr "%s har ikke nok ledig plads i hangarerne. Luftfartøj er tabt!"
 
 #: client/campaign/cp_transfer.c:868 client/campaign/cp_transfer.c:1080
-#, fuzzy, c-format
+#, c-format
 msgid "Transport mission started, cargo is being transported to %s"
-msgstr "Transportmission påbegyndt, last transporteres til base %s"
+msgstr "Transportmission påbegyndt, last transporteres til %s"
 
 #: client/campaign/cp_transfer.c:935
-#, fuzzy, c-format
+#, c-format
 msgid "(can host %i live alien)"
 msgid_plural "(can host %i live aliens)"
-msgstr[0] "(kan opbevare %i levende rumvæsen)\n"
-msgstr[1] "(kan opbevare %i levende rumvæsener)\n"
+msgstr[0] "(kan opbevare %i levende rumvæsen)"
+msgstr[1] "(kan opbevare %i levende rumvæsener)"
 
 #: client/campaign/cp_transfer.c:954
-#, fuzzy
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
-msgstr "Den modtagende base eksisterer ikke længere! Overførselslast er tabt, ansatte blev fritstillet."
+msgstr "Den modtagende base eksisterer ikke længere! Overførselslast er tabt, ansatte er blevet fritstillet."
 
 #: client/campaign/cp_transfer.c:959
-#, fuzzy, c-format
+#, c-format
 msgid "Transport mission ended, unloading cargo in %s"
-msgstr "Transportmission fuldført, last placeres på base %s"
+msgstr "Transportmission fuldført, last placeres på %s"
 
 #: client/campaign/cp_transfer.c:1113
 msgid "No target base selected"
@@ -12586,9 +12544,8 @@ msgid "Size:\t%i\n"
 msgstr "Størrelse:\t%i\n"
 
 #: client/campaign/cp_ufopedia.c:233
-#, fuzzy
 msgid "^BDamage type\tProtection\n"
-msgstr "Type:\tBeskyttelse:\n"
+msgstr "^BSkadetype\tBeskyttelse\n"
 
 #: client/campaign/cp_ufopedia.c:254
 msgid "Error - could not find building"
@@ -12683,7 +12640,7 @@ msgid "Re: "
 msgstr "Ref.: "
 
 #: client/campaign/cp_ufopedia.c:562
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "FROM: %s\n"
 "TO: %s\n"
@@ -12691,14 +12648,12 @@ msgid ""
 msgstr ""
 "FRA: %s\n"
 "TIL: %s\n"
-"DATO: %s\n"
-"ANG.: %s%s\n"
+"DATO: %s"
 
 # #ufopedia
 #: client/campaign/cp_ufopedia.c:634
-#, fuzzy
 msgid "(complete)"
-msgstr "Kompetent"
+msgstr "(færdig)"
 
 #: client/campaign/cp_ufopedia.c:696
 msgid "No pre-research description available."
@@ -12750,14 +12705,13 @@ msgid "  * %s\n"
 msgstr "  * %s\n"
 
 #: client/campaign/cp_uforecovery_callbacks.c:129
-#, fuzzy
 msgid "No free UFO yard available."
-msgstr "Ingen ufohangar eller ufoopbevaring tilgængelig."
+msgstr "Ingen ledig ufohangar tilgængelig."
 
 #: client/campaign/cp_uforecovery_callbacks.c:178
-#, fuzzy, c-format
+#, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to %s."
-msgstr "Fandt %s på slagmarken. Ufo transporteres til base %s"
+msgstr "Fandt %s på slagmarken. Ufo transporteres til %s"
 
 #: client/campaign/cp_uforecovery_callbacks.c:180
 #: client/campaign/cp_uforecovery_callbacks.c:290
@@ -13305,23 +13259,23 @@ msgstr "Bekræft den nuværende aktion"
 
 #: client/cl_inventory_callbacks.c:46
 msgid "skill_close"
-msgstr ""
+msgstr "Nærkamp"
 
 #: client/cl_inventory_callbacks.c:48
 msgid "skill_heavy"
-msgstr ""
+msgstr "Tunge våben"
 
 #: client/cl_inventory_callbacks.c:50
 msgid "skill_assault"
-msgstr ""
+msgstr "Angreb"
 
 #: client/cl_inventory_callbacks.c:52
 msgid "skill_sniper"
-msgstr ""
+msgstr "Snigskytte"
 
 #: client/cl_inventory_callbacks.c:54
 msgid "skill_explosive"
-msgstr ""
+msgstr "Sprængstof"
 
 #: client/cl_inventory_callbacks.c:145
 msgid "Type:\tProtection:\n"
