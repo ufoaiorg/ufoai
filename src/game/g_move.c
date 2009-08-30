@@ -24,15 +24,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-pos_t *fb_list[MAX_FORBIDDENLIST];
-int fb_length;
+#define ACTOR_SPEED_NORMAL 100
+#define ACTOR_SPEED_CROUCHED (ACTOR_SPEED_NORMAL / 2)
+
+/**
+ * @brief The forbidden list is a list of entity positions that are occupied by an entity.
+ * This list is checked everytime an actor wants to walk there.
+ */
+pos_t *forbiddenList[MAX_FORBIDDENLIST];
+int forbiddenListLength;
 
 /**
  * @brief Build the forbidden list for the pathfinding (server side).
  * @param[in] team The team number if the list should be calculated from the eyes of that team. Use 0 to ignore team.
- * @note The forbidden list (fb_list and fb_length) is a
- * list of entity positions that are occupied by an entity.
- * This list is checked everytime an actor wants to walk there.
  * @sa G_MoveCalc
  * @sa Grid_CheckForbidden
  * @sa CL_BuildForbiddenList <- shares quite some code
@@ -42,16 +46,16 @@ int fb_length;
 static void G_BuildForbiddenList (int team)
 {
 	edict_t *ent;
-	int vis_mask;
+	int visMask;
 	int i;
 
-	fb_length = 0;
+	forbiddenListLength = 0;
 
 	/* team visibility */
 	if (team)
-		vis_mask = 1 << team;
+		visMask = 1 << team;
 	else
-		vis_mask = PM_ALL;
+		visMask = PM_ALL;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		if (!ent->inuse)
@@ -61,20 +65,20 @@ static void G_BuildForbiddenList (int team)
 		 * @todo Just a note for the future.
 		 * If we get any that does not block the map when dead this is the place to look.
 		 */
-		if (((ent->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2) && (ent->visflags & vis_mask)) {
-			fb_list[fb_length++] = ent->pos;
-			fb_list[fb_length++] = (byte*) &ent->fieldSize;
+		if (((ent->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2) && (ent->visflags & visMask)) {
+			forbiddenList[forbiddenListLength++] = ent->pos;
+			forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
 		} else if (ent->type == ET_SOLID) {
 			/* they should always be solid */
 			int j;
 			for (j = 0; j < ent->forbiddenListSize; j++) {
-				fb_list[fb_length++] = ent->forbiddenListPos[j];
-				fb_list[fb_length++] = (byte*) &ent->fieldSize;
+				forbiddenList[forbiddenListLength++] = ent->forbiddenListPos[j];
+				forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
 			}
 		}
 	}
 
-	if (fb_length > MAX_FORBIDDENLIST)
+	if (forbiddenListLength > MAX_FORBIDDENLIST)
 		gi.error("G_BuildForbiddenList: list too long\n");
 }
 
@@ -92,11 +96,9 @@ static void G_BuildForbiddenList (int team)
 void G_MoveCalc (int team, pos3_t from, int actorSize, byte crouchingState, int distance)
 {
 	G_BuildForbiddenList(team);
-	gi.MoveCalc(gi.routingMap, actorSize, gi.pathingMap, from, crouchingState, distance, fb_list, fb_length);
+	gi.MoveCalc(gi.routingMap, actorSize, gi.pathingMap, from, crouchingState, distance,
+			forbiddenList, forbiddenListLength);
 }
-
-#define ACTOR_SPEED_NORMAL 100
-#define ACTOR_SPEED_CROUCHED (ACTOR_SPEED_NORMAL / 2)
 
 /**
  * @brief Generates the client events that are send over the netchannel to move an actor
