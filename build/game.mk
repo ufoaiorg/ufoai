@@ -12,16 +12,19 @@ GAME_SRCS=\
 	game/g_client.c \
 	game/g_combat.c \
 	game/g_cmds.c \
-	game/g_phys.c \
-	game/g_reaction.c \
+	game/g_func.c \
+	game/g_inventory.c \
 	game/g_main.c \
 	game/g_morale.c \
 	game/g_move.c \
+	game/g_phys.c \
+	game/g_reaction.c \
+	game/g_round.c \
 	game/g_spawn.c \
 	game/g_svcmds.c \
-	game/g_utils.c \
-	game/g_func.c \
 	game/g_trigger.c \
+	game/g_utils.c \
+	game/g_vis.c \
 	game/inv_shared.c \
 	shared/mathlib.c \
 	shared/shared.c \

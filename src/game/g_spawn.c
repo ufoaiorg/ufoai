@@ -419,6 +419,25 @@ edict_t *G_Spawn (void)
 }
 
 /**
+ * @brief Spawns a new entity at the floor
+ * @note This is e.g. used to place dropped weapons/items at the floor
+ */
+edict_t *G_SpawnFloor (pos3_t pos)
+{
+	edict_t *floor;
+
+	floor = G_Spawn();
+	floor->classname = "item";
+	floor->type = ET_ITEM;
+	/* make sure that the item is always on a field that even the smallest actor can reach */
+	floor->fieldSize = ACTOR_SIZE_NORMAL;
+	VectorCopy(pos, floor->pos);
+	floor->pos[2] = gi.GridFall(gi.routingMap, floor->fieldSize, floor->pos);
+	gi.GridPosToVec(gi.routingMap, floor->fieldSize, floor->pos, floor->origin);
+	return floor;
+}
+
+/**
  * This is only for particles that are spawned during a match - not for map particles.
  * @return A particle edict
  */

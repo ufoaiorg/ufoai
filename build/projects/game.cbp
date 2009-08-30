@@ -98,6 +98,15 @@
 		<Unit filename="../../src/game/g_move.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/game/g_vis.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/game/g_inventory.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/game/g_round.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/game/g_phys.c">
 			<Option compilerVar="CC" />
 		</Unit>

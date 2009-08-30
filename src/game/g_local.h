@@ -153,6 +153,14 @@ extern edict_t *g_edicts;
 #define random()	((rand() & 0x7fff) / ((float)0x7fff))
 #define crandom()	(2.0 * (random() - 0.5))
 
+#define G_IsStunned(ent)	(((ent)->state & STATE_STUN) & ~STATE_DEAD)
+/** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
+#define G_IsDead(ent)		(((ent)->state & STATE_DEAD))
+#define G_IsActor(ent)		((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
+/** @note Every none solid (none-bmodel) edict that is visible for the client */
+#define G_IsVisibleOnBattlefield(ent)	(G_IsActor((ent)) || (ent)->type == ET_ITEM || (ent)->type == ET_PARTICLE)
+#define G_IsAI(ent)			(G_PLAYER_FROM_ENT((ent))->pers.ai)
+
 extern cvar_t *sv_maxentities;
 extern cvar_t *password;
 extern cvar_t *sv_needpass;
@@ -237,6 +245,10 @@ extern cvar_t *difficulty;
 #define FFL_SPAWNTEMP		1
 #define FFL_NOSPAWN			2
 
+/* g_inventory.c */
+void G_WriteItem(item_t item, const invDef_t *container, int x, int y);
+void G_ReadItem(item_t *item, invDef_t **container, int *x, int *y);
+
 /* g_morale */
 void G_MoraleBehaviour(int team, qboolean quiet);
 
@@ -295,15 +307,6 @@ int G_CheckVisTeam(int team, edict_t *check, qboolean perish, edict_t *ent);
 edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
 void G_SendState(unsigned int playerMask, const edict_t *ent);
 
-#define G_IsStunned(ent)	(((ent)->state & STATE_STUN) & ~STATE_DEAD)
-/** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
-#define G_IsDead(ent)		(((ent)->state & STATE_DEAD))
-#define G_IsActor(ent)		((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
-/** @note Every none solid (none-bmodel) edict that is visible for the client */
-#define G_IsVisibleOnBattlefield(ent)	(G_IsActor((ent)) || (ent)->type == ET_ITEM || (ent)->type == ET_PARTICLE)
-#define G_IsAI(ent)			(G_PLAYER_FROM_ENT((ent))->pers.ai)
-
-
 qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_ForceEndRound(void);
 void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
@@ -322,8 +325,6 @@ qboolean G_ClientSpawn(player_t * player);
 qboolean G_ClientConnect(player_t * player, char *userinfo);
 void G_ClientDisconnect(player_t * player);
 
-int G_TestVis(int team, edict_t * check, int flags);
-float G_Vis(int team, const edict_t * from, const edict_t * check, int flags);
 void G_ClientReload(int entnum, shoot_types_t st, qboolean quiet);
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet);
@@ -333,10 +334,6 @@ void G_ClientInvMove(int num, const invDef_t * from, invList_t *fItem, const inv
 void G_ClientStateChange(player_t * player, int num, int reqState, qboolean checkaction);
 int G_DoTurn(edict_t * ent, byte dir);
 
-qboolean G_FrustumVis(const edict_t *from, const vec3_t point);
-float G_ActorVis(const vec3_t from, const edict_t *check, qboolean full);
-void G_ClearVisFlags(int team);
-int G_CheckVis(edict_t *check, qboolean perish);
 void G_SendInvisible(player_t *player);
 void G_GiveTimeUnits(int team);
 
@@ -351,6 +348,15 @@ qboolean G_RunFrame(void);
 #ifdef DEBUG
 void G_InvList_f(const player_t *player);
 #endif
+
+/* g_vis.c */
+qboolean G_FrustumVis(const edict_t *from, const vec3_t point);
+float G_ActorVis(const vec3_t from, const edict_t *check, qboolean full);
+void G_ClearVisFlags(int team);
+int G_CheckVis(edict_t *check, qboolean perish);
+int G_CheckVisPlayer(player_t* player, qboolean perish);
+int G_TestVis(int team, edict_t * check, int flags);
+float G_Vis(int team, const edict_t * from, const edict_t * check, int flags);
 
 /* g_combat.c */
 qboolean G_ClientShoot(player_t *player, const int entnum, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
