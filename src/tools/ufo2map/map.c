@@ -681,7 +681,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			side->contentFlags &= ~CONTENTS_DETAIL;
 		if (!checkOrFix) {
 			if (!(side->contentFlags & ((LAST_VISIBLE_CONTENTS - 1)
-				| CONTENTS_ACTORCLIP | CONTENTS_WEAPONCLIP)))
+				| CONTENTS_ACTORCLIP | CONTENTS_WEAPONCLIP | CONTENTS_PASSABLE)))
 				side->contentFlags |= CONTENTS_SOLID;
 
 			/* hints and skips are never detail, and have no content */
