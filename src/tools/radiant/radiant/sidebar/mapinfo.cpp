@@ -40,23 +40,26 @@
 
 typedef std::map<CopiedString, std::size_t> EntityBreakdown;
 
-class EntityBreakdownWalker : public scene::Graph::Walker {
-	EntityBreakdown& m_entitymap;
-public:
-	EntityBreakdownWalker(EntityBreakdown& entitymap)
-			: m_entitymap(entitymap) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		Entity* entity = Node_getEntity(path.top());
-		if (entity != 0) {
-			const EntityClass& eclass = entity->getEntityClass();
-			if (m_entitymap.find(eclass.name()) == m_entitymap.end())
-				m_entitymap[eclass.name()] = 1;
-			else
-				++m_entitymap[eclass.name()];
+class EntityBreakdownWalker: public scene::Graph::Walker
+{
+		EntityBreakdown& m_entitymap;
+	public:
+		EntityBreakdownWalker (EntityBreakdown& entitymap) :
+			m_entitymap(entitymap)
+		{
 		}
-		return true;
-	}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			Entity* entity = Node_getEntity(path.top());
+			if (entity != 0) {
+				const EntityClass& eclass = entity->getEntityClass();
+				if (m_entitymap.find(eclass.name()) == m_entitymap.end())
+					m_entitymap[eclass.name()] = 1;
+				else
+					++m_entitymap[eclass.name()];
+			}
+			return true;
+		}
 };
 
 static void Scene_EntityBreakdown (EntityBreakdown& entitymap)
@@ -78,7 +81,7 @@ void MapInfo_Update (void)
 
 	for (EntityBreakdown::iterator i = entitymap.begin(); i != entitymap.end(); ++i) {
 		char tmp[16];
-		sprintf (tmp, "%u", Unsigned((*i).second));
+		sprintf(tmp, "%u", Unsigned((*i).second));
 		GtkTreeIter iter;
 		gtk_list_store_append(GTK_LIST_STORE(entityList), &iter);
 		gtk_list_store_set(GTK_LIST_STORE(entityList), &iter, 0, (*i).first.c_str(), 1, tmp, -1);
@@ -107,9 +110,8 @@ GtkWidget *MapInfo_constructNotebookTab (void)
 			{
 				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 0, 1,
-								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
+				gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 0, 1, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (0), 0, 0);
 				gtk_entry_set_editable(entry, FALSE);
 
 				brushes_entry = entry;
@@ -117,25 +119,22 @@ GtkWidget *MapInfo_constructNotebookTab (void)
 			{
 				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 1, 2,
-								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
+				gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (0), 0, 0);
 				gtk_entry_set_editable(entry, FALSE);
 
 				entities_entry = entry;
 			}
 			{
 				GtkWidget* label = gtk_label_new(_("Total Brushes"));
-				gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
+				gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1, (GtkAttachOptions) (GTK_FILL),
+						(GtkAttachOptions) (0), 0, 0);
 				gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 			}
 			{
 				GtkWidget* label = gtk_label_new(_("Total Entities"));
-				gtk_table_attach(GTK_TABLE (table), label, 0, 1, 1, 2,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
+				gtk_table_attach(GTK_TABLE (table), label, 0, 1, 1, 2, (GtkAttachOptions) (GTK_FILL),
+						(GtkAttachOptions) (0), 0, 0);
 				gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 			}
 		}
@@ -157,14 +156,16 @@ GtkWidget *MapInfo_constructNotebookTab (void)
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Entity"), renderer, "text", 0, (char const*)0);
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Entity"), renderer, "text", 0,
+						(char const*) 0);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 				gtk_tree_view_column_set_sort_column_id(column, 0);
 			}
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Count"), renderer, "text", 1, (char const*)0);
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Count"), renderer, "text", 1,
+						(char const*) 0);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 				gtk_tree_view_column_set_sort_column_id(column, 1);
 			}

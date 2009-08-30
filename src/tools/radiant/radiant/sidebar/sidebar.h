@@ -26,6 +26,6 @@
 #include "texturebrowser.h"
 #include "particlebrowser.h"
 
-GtkWidget *Sidebar_construct(void);
+GtkWidget *Sidebar_construct (void);
 
 #endif

@@ -564,7 +564,7 @@ void TextureDirectory_loadTexture (const char* directory, const char* texture)
 	}
 
 	/* don't load textures with '_nm' = normalmaps in its name */
-	if (strstr(texture,"_nm") != 0) {
+	if (strstr(texture, "_nm") != 0) {
 		g_warning("Skipping normalmap texture: [%s]\n", name.c_str());
 		return;
 	}
@@ -771,7 +771,7 @@ static void Texture_Draw (TextureBrowser& textureBrowser)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 	glOrtho(0, textureBrowser.width, originy - textureBrowser.height, originy, -100, 100);
@@ -1107,7 +1107,8 @@ static void TextureBrowser_createTreeViewTree (void)
 	g_signal_connect(g_TextureBrowser.m_treeViewTree, "row-activated", (GCallback) TreeView_onRowActivated, NULL);
 
 	renderer = gtk_cell_renderer_text_new();
-	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(g_TextureBrowser.m_treeViewTree), -1, "", renderer, "text", 0, (char const*)0);
+	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(g_TextureBrowser.m_treeViewTree), -1, "", renderer,
+			"text", 0, (char const*) 0);
 
 	TextureBrowser_constructTreeStore();
 }
@@ -1213,11 +1214,11 @@ GtkWidget* TextureBrowser_constructNotebookTab ()
 				G_CALLBACK(TextureBrowser_expose), &g_TextureBrowser);
 
 		g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "button_press_event", G_CALLBACK(
-				TextureBrowser_button_press), &g_TextureBrowser);
+						TextureBrowser_button_press), &g_TextureBrowser);
 		g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "button_release_event", G_CALLBACK(
-				TextureBrowser_button_release), &g_TextureBrowser);
+						TextureBrowser_button_release), &g_TextureBrowser);
 		g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "motion_notify_event", G_CALLBACK(
-				TextureBrowser_motion), &g_TextureBrowser);
+						TextureBrowser_motion), &g_TextureBrowser);
 		g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "scroll_event", G_CALLBACK(TextureBrowser_scroll),
 				&g_TextureBrowser);
 	}
@@ -1315,8 +1316,9 @@ static void TextureBrowser_constructPreferences (PreferencesPage& page)
 			BoolExportCaller(GlobalTextureBrowser().m_showTextureScrollbar));
 	{
 		const char* texture_scale[] = { "10%", "25%", "50%", "100%", "200%" };
-		page.appendCombo(_("Texture Thumbnail Scale"), STRING_ARRAY_RANGE(texture_scale), IntImportCallback(TextureScaleImportCaller(GlobalTextureBrowser())), IntExportCallback(
-				TextureScaleExportCaller(GlobalTextureBrowser())));
+		page.appendCombo(_("Texture Thumbnail Scale"), STRING_ARRAY_RANGE(texture_scale), IntImportCallback(
+				TextureScaleImportCaller(GlobalTextureBrowser())), IntExportCallback(TextureScaleExportCaller(
+				GlobalTextureBrowser())));
 	}
 	page.appendEntry(_("Mousewheel Increment"), GlobalTextureBrowser().m_mouseWheelScrollIncrement);
 }
@@ -1339,7 +1341,7 @@ typedef ReferenceCaller1<TextureBrowser, std::size_t, TextureBrowser_setScale> T
 
 void TextureClipboard_textureSelected (const char* shader);
 
-void TextureBrowser_Construct(void)
+void TextureBrowser_Construct (void)
 {
 	GlobalCommands_insert("RefreshShaders", FreeCaller<RefreshShaders> ());
 	GlobalToggles_insert("ShowInUse", FreeCaller<TextureBrowser_ToggleHideUnused> (), ToggleItem::AddCallbackCaller(

@@ -21,9 +21,9 @@
 
 #include <gtk/gtk.h>
 
-void JobInfo_Construct();
-void JobInfo_Destroy();
-GtkWidget *JobInfo_constructNotebookTab();
-void JobInfo_Update(void);
+void JobInfo_Construct ();
+void JobInfo_Destroy ();
+GtkWidget *JobInfo_constructNotebookTab ();
+void JobInfo_Update (void);
 
 #endif

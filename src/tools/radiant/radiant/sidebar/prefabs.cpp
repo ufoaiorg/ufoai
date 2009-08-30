@@ -41,42 +41,41 @@
 #include "../camwindow.h"
 
 static const int TABLE_COLUMS = 3;
-namespace {
+namespace
+{
 	static GtkTreeStore* store;
 	static GtkTreeModel *fileFiltered;
 	static GtkTreeView* view;
 	static GtkEntry *filterEntry;
 
-	enum selectionStrategy {
-		PREFAB_SELECT_EXTEND,
-		PREFAB_SELECT_REPLACE,
-		PREFAB_SELECT_UNSELECT
-	} ;
+	enum selectionStrategy
+	{
+		PREFAB_SELECT_EXTEND, PREFAB_SELECT_REPLACE, PREFAB_SELECT_UNSELECT
+	};
 }
 static int selectedSelectionStrategy = PREFAB_SELECT_EXTEND;
 
-namespace {
-	enum {
-		PREFAB_NAME,
-		PREFAB_DESCRIPTION,
-		PREFAB_IMAGE,
-		PREFAB_SHORTNAME, /**< filename or directory name for searching */
+namespace
+{
+	enum
+	{
+		PREFAB_NAME, PREFAB_DESCRIPTION, PREFAB_IMAGE, PREFAB_SHORTNAME, /**< filename or directory name for searching */
 		PREFAB_STORE_SIZE
 	};
 }
 
-static const char *Prefab_GetPath(StringOutputStream &fullpath, const char *file) {
+static const char *Prefab_GetPath (StringOutputStream &fullpath, const char *file)
+{
 	fullpath << AppPath_get() << "prefabs/" << PathCleaned(file);
 	return fullpath.c_str();
 }
 
-static gint PrefabList_button_press(GtkWidget *widget, GdkEventButton *event,
-		gpointer data) {
+static gint PrefabList_button_press (GtkWidget *widget, GdkEventButton *event, gpointer data)
+{
 	if (event->type == GDK_2BUTTON_PRESS) {
 		GtkTreeModel* model;
 		GtkTreeIter iter;
-		if (gtk_tree_selection_get_selected(gtk_tree_view_get_selection(view),
-				&model, &iter) == FALSE) {
+		if (gtk_tree_selection_get_selected(gtk_tree_view_get_selection(view), &model, &iter) == FALSE) {
 			return FALSE;
 		} else {
 			char* text;
@@ -111,7 +110,8 @@ static gint PrefabList_button_press(GtkWidget *widget, GdkEventButton *event,
  * @param name filename relativ to prefabs directory
  * @param parentIter parent iterator to add content to, used for tree structure of directories
  */
-void PrefabAdd(const char *name, GtkTreeIter* parentIter) {
+void PrefabAdd (const char *name, GtkTreeIter* parentIter)
+{
 	StringOutputStream fullBaseNamePath(256);
 	StringOutputStream imagePath(256);
 	StringOutputStream descriptionPath(256);
@@ -126,8 +126,7 @@ void PrefabAdd(const char *name, GtkTreeIter* parentIter) {
 	nameContent << "<b>" << fileName.c_str() << "</b>";
 	imagePath << fullBaseNamePath.c_str() << ".jpg";
 	descriptionPath << fullBaseNamePath.c_str() << ".txt";
-	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(
-			descriptionPath.c_str()));
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(descriptionPath.c_str()));
 	if (file) {
 		TextInputStream &stream = file->getInputStream();
 		const std::size_t realsize = stream.read(buffer, file->size());
@@ -173,11 +172,11 @@ static gboolean Prefab_FilterFileOrDirectory (GtkTreeModel *model, GtkTreeIter *
 	if (strstr(currentEntry, searchText) != 0)
 		return true;
 	else
-		// check whether there are children in base model (directory)
-		if (gtk_tree_model_iter_has_child(model, entry))
-			return Prefab_FilterDirectory(model, entry);
-		else
-			return false;
+	// check whether there are children in base model (directory)
+	if (gtk_tree_model_iter_has_child(model, entry))
+		return Prefab_FilterDirectory(model, entry);
+	else
+		return false;
 }
 
 /**
@@ -187,7 +186,7 @@ static gboolean Prefab_FilterFileOrDirectory (GtkTreeModel *model, GtkTreeIter *
  * @param possibleDirectory directory entry which should be checked for visibility
  * @return true if directory will have content after filtering
  */
-static gboolean Prefab_FilterDirectory(GtkTreeModel *model, GtkTreeIter *possibleDirectory)
+static gboolean Prefab_FilterDirectory (GtkTreeModel *model, GtkTreeIter *possibleDirectory)
 {
 	int children = gtk_tree_model_iter_n_children(model, possibleDirectory);
 	for (int i = 0; i < children; i++) {
@@ -213,7 +212,7 @@ static gboolean Prefab_FilterFiles (GtkTreeModel *model, GtkTreeIter *iter)
 		return true;
 #else
 	if (strlen(gtk_entry_get_text(filterEntry)) == 0)
-		return true;
+	return true;
 #endif
 	return Prefab_FilterFileOrDirectory(model, iter);
 }
@@ -274,7 +273,8 @@ class CLoadPrefabSubdir
 		 * @param subpath path relative to prefabs directory which is examined
 		 * @param parentIter parent iterator to add found prefab map files to
 		 */
-		CLoadPrefabSubdir (const char* path, const char* subpath, GtkTreeIter* parentIter): m_path(path), m_subpath(subpath), m_parentIter(parentIter)
+		CLoadPrefabSubdir (const char* path, const char* subpath, GtkTreeIter* parentIter) :
+			m_path(path), m_subpath(subpath), m_parentIter(parentIter)
 		{
 		}
 
@@ -311,19 +311,18 @@ class CLoadPrefabSubdir
 		}
 };
 
-GtkWidget* Prefabs_constructNotebookTab(void) {
+GtkWidget* Prefabs_constructNotebookTab (void)
+{
 	StringOutputStream fullpath(256);
 	fullpath << AppPath_get() << "prefabs/";
 
 	GtkWidget* vbox = gtk_vbox_new(FALSE, 2);
 	GtkWidget* scr = gtk_scrolled_window_new(0, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), scr, TRUE, TRUE, 0);
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr),
-			GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
-	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr),
-			GTK_SHADOW_IN);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
 
-		// prefab list
+	// prefab list
 	store = gtk_tree_store_new(PREFAB_STORE_SIZE, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF, G_TYPE_STRING);
 	//prepare file filter
 	fileFiltered = gtk_tree_model_filter_new(GTK_TREE_MODEL(store), NULL);
@@ -341,10 +340,8 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 		g_signal_connect(G_OBJECT(view), "button_press_event", G_CALLBACK(PrefabList_button_press), 0);
 
 		{
-			GtkTreeViewColumn* column =
-					gtk_tree_view_column_new();
-			gtk_tree_view_column_set_title(column,
-							_("Prefab"));
+			GtkTreeViewColumn* column = gtk_tree_view_column_new();
+			gtk_tree_view_column_set_title(column, _("Prefab"));
 			gtk_tree_view_column_set_expand(column, FALSE);
 			gtk_tree_view_column_set_sort_indicator(column, TRUE);
 			gtk_tree_view_column_set_sort_column_id(column, PREFAB_SHORTNAME);
@@ -363,24 +360,30 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 	}
 
 	GtkWidget* hboxFooter = gtk_hbox_new(TRUE, 0);
-	gtk_box_pack_start(GTK_BOX(vbox),hboxFooter, FALSE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), hboxFooter, FALSE, TRUE, 0);
 	{
 		// options
 		GtkWidget* vboxOptions = gtk_vbox_new(FALSE, 3);
 		gtk_box_pack_start(GTK_BOX(hboxFooter), vboxOptions, FALSE, TRUE, 0);
-		GtkRadioButton* radioExtendSelection = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label(NULL, _("Extend current selection")));
+		GtkRadioButton* radioExtendSelection =
+				GTK_RADIO_BUTTON(gtk_radio_button_new_with_label(NULL, _("Extend current selection")));
 		gtk_widget_ref(GTK_WIDGET(radioExtendSelection));
 		gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(radioExtendSelection), TRUE, TRUE, 0);
-		g_object_set_data(G_OBJECT(radioExtendSelection), "handler", gint_to_pointer(g_signal_connect(radioExtendSelection,
-				"toggled", G_CALLBACK(Prefab_SelectionOptions_toggled), gint_to_pointer(PREFAB_SELECT_EXTEND))));
+		g_object_set_data(G_OBJECT(radioExtendSelection), "handler", gint_to_pointer(
+				g_signal_connect(radioExtendSelection,
+						"toggled", G_CALLBACK(Prefab_SelectionOptions_toggled), gint_to_pointer(PREFAB_SELECT_EXTEND))));
 
-		GtkRadioButton* radioUnselect = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label_from_widget(radioExtendSelection, _("Deselect before insert")));
+		GtkRadioButton
+				* radioUnselect =
+						GTK_RADIO_BUTTON(gtk_radio_button_new_with_label_from_widget(radioExtendSelection, _("Deselect before insert")));
 		gtk_widget_ref(GTK_WIDGET(radioUnselect));
 		gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(radioUnselect), TRUE, TRUE, 0);
 		g_object_set_data(G_OBJECT(radioUnselect), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(radioUnselect),
 				"toggled", G_CALLBACK(Prefab_SelectionOptions_toggled), gint_to_pointer(PREFAB_SELECT_UNSELECT))));
 
-		GtkRadioButton* radioReplace = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label_from_widget(radioUnselect, _("Replace current selection")));
+		GtkRadioButton
+				* radioReplace =
+						GTK_RADIO_BUTTON(gtk_radio_button_new_with_label_from_widget(radioUnselect, _("Replace current selection")));
 		gtk_widget_ref(GTK_WIDGET(radioReplace));
 		gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(radioReplace), TRUE, TRUE, 0);
 		g_object_set_data(G_OBJECT(radioReplace), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(radioReplace),
@@ -394,7 +397,8 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 		gtk_box_pack_start(GTK_BOX(vboxSearch), searchEntry, FALSE, TRUE, 3);
 		gtk_widget_show(searchEntry);
 
-		gtk_tree_model_filter_set_visible_func(GTK_TREE_MODEL_FILTER(fileFiltered), (GtkTreeModelFilterVisibleFunc) Prefab_FilterFiles, NULL, NULL);
+		gtk_tree_model_filter_set_visible_func(GTK_TREE_MODEL_FILTER(fileFiltered),
+				(GtkTreeModelFilterVisibleFunc) Prefab_FilterFiles, NULL, NULL);
 		g_signal_connect(G_OBJECT(searchEntry), "changed", G_CALLBACK(Prefab_Refilter), NULL );
 		filterEntry = GTK_ENTRY(searchEntry);
 #if GTK_CHECK_VERSION(2,10,0)
@@ -403,8 +407,8 @@ GtkWidget* Prefabs_constructNotebookTab(void) {
 
 	}
 	/* fill prefab store with data */
-	Directory_forEach(fullpath.c_str(), CLoadPrefabSubdir(fullpath.c_str(),"", NULL));
-	Directory_forEach(fullpath.c_str(), MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab("",NULL)));
+	Directory_forEach(fullpath.c_str(), CLoadPrefabSubdir(fullpath.c_str(), "", NULL));
+	Directory_forEach(fullpath.c_str(), MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab("", NULL)));
 	gtk_tree_model_filter_refilter(GTK_TREE_MODEL_FILTER(fileFiltered));
 	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(fileSorted), PREFAB_SHORTNAME, GTK_SORT_ASCENDING);
 	return vbox;

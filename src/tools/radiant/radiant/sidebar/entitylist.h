@@ -24,8 +24,8 @@
 
 #include <gtk/gtk.h>
 
-void EntityList_Construct();
-void EntityList_Destroy();
-GtkWidget *EntityList_constructNotebookTab(void);
+void EntityList_Construct ();
+void EntityList_Destroy ();
+GtkWidget *EntityList_constructNotebookTab (void);
 
 #endif

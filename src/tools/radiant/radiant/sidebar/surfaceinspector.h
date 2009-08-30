@@ -24,33 +24,35 @@
 
 #include <gtk/gtk.h>
 
-void SurfaceInspector_Construct();
-void SurfaceInspector_Destroy();
-void SurfaceInspector_FitTexture(void);
+void SurfaceInspector_Construct ();
+void SurfaceInspector_Destroy ();
+void SurfaceInspector_FitTexture (void);
 
-bool SelectedFaces_empty();
-void SelectedFaces_copyTexture();
-void SelectedFaces_pasteTexture();
+bool SelectedFaces_empty ();
+void SelectedFaces_copyTexture ();
+void SelectedFaces_pasteTexture ();
 
 // the increment we are using for the surface inspector (this is saved in the prefs)
 struct si_globals_t
 {
-	float shift[2];
-	float scale[2];
-	float rotate;
+		float shift[2];
+		float scale[2];
+		float rotate;
 
-	bool m_bSnapTToGrid;
+		bool m_bSnapTToGrid;
 
-	si_globals_t() : m_bSnapTToGrid(false) {
-		shift[0] = 8.0f;
-		shift[1] = 8.0f;
-		scale[0] = 0.5f;
-		scale[1] = 0.5f;
-		rotate = 45.0f;
-	}
+		si_globals_t () :
+			m_bSnapTToGrid(false)
+		{
+			shift[0] = 8.0f;
+			shift[1] = 8.0f;
+			scale[0] = 0.5f;
+			scale[1] = 0.5f;
+			rotate = 45.0f;
+		}
 };
 extern si_globals_t g_si_globals;
 
-GtkWidget *SurfaceInspector_constructNotebookTab(void);
+GtkWidget *SurfaceInspector_constructNotebookTab (void);
 
 #endif
