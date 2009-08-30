@@ -450,6 +450,9 @@
 		<Unit filename="../../src/tools/radiant/radiant/xywindow.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/levelfilters.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/shared/parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
