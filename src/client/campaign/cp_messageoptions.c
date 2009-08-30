@@ -36,6 +36,8 @@ const char *nt_strings[NT_NUM_NOTIFYTYPE] = {
 	N_("installation_installed"),
 	N_("installation_removed"),
 	N_("installation_replaced"),
+	N_("aircraft_refueled"),
+	N_("aircraft_cannotrefuel"),
 	N_("installation_build_started"),
 	N_("installation_build_finished"),
 	N_("installation_destroyed"),

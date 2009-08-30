@@ -14,6 +14,11 @@ msgoptions default
 	installation_removed sound
 	installation_replaced notify
 	installation_replaced sound
+	aircraft_refueled notify
+	aircraft_refueled sound
+	aircraft_cannotrefuel pause
+	aircraft_cannotrefuel notify
+	aircraft_cannotrefuel sound
 	installation_build_started notify
 	installation_build_started sound
 	installation_build_finished notify

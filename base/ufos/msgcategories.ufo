@@ -9,6 +9,8 @@ msgcategory "_install_equipment"
 	installation_installed
 	installation_removed
 	installation_replaced
+	aircraft_refueled
+	aircraft_cannotrefuel
 }
 
 msgcategory "_installation_construction"
