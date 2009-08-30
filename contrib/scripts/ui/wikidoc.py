@@ -45,6 +45,10 @@ def genPropertyTitle(title):
 	result = ""
 	result += '|- style="background-color:#404040;"\n'
 	result += '! colspan="3" | ' + title + '\n'
+	result += '|-\n'
+	result += '! width="25%" | Name\n'
+	result += '! width="25%" | Type\n'
+	result += '! width="50%" | Description\n'
 	return result
 
 def genBehaviourDoc(node):
@@ -60,8 +64,7 @@ def genBehaviourDoc(node):
 
 	if len(node.properties) + len(node.methods) + len(node.confuncs) != 0:
 		result += '\n'
-		result += '{| border="1" cellpadding="5" cellspacing="0"\n'
-		result += '! Name !! Type !! Description\n'
+		result += '{| border="1" cellpadding="5" cellspacing="0" width="100%" \n'
 
 		list = node.properties.keys()
 		if len(list) != 0:
