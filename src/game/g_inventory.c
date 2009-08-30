@@ -79,6 +79,7 @@ void G_InventoryToFloor (edict_t *ent)
 	invList_t *ic, *next;
 	int k;
 	edict_t *floor;
+	item_t item;
 #ifdef ADJACENT
 	edict_t *floorAdjacent;
 	int i;
@@ -118,7 +119,6 @@ void G_InventoryToFloor (edict_t *ent)
 
 		/* now cycle through all items for the container of the character (or the entity) */
 		for (ic = ent->i.c[k]; ic; ic = next) {
-			int x, y;
 #ifdef ADJACENT
 			vec2_t oldPos; /* if we have to place it to adjacent  */
 #endif
@@ -126,13 +126,13 @@ void G_InventoryToFloor (edict_t *ent)
 			 * Do not put this in the "for" statement,
 			 * unless you want an endless loop. ;) */
 			next = ic->next;
-			/* find the coordinates for the current item on floor */
-			Com_FindSpace(&floor->i, &ic->item, INVDEF(gi.csi->idFloor), &x, &y, ic);
-			if (x == NONE) {
-				assert(y == NONE);
-				/* Run out of space on the floor or the item is armour
-				 * destroy the offending item if no adjacent places are free */
-				/* store pos for later restoring the original value */
+			item = ic->item;
+
+			/* only floor can summarize, so everything on the actor must have amount=1 */
+			assert(item.amount == 1);
+			Com_RemoveFromInventory(&ent->i, INVDEF(k), ic);
+			Com_AddToInventory(&floor->i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1);
+
 #ifdef ADJACENT
 				Vector2Copy(ent->pos, oldPos);
 				for (i = 0; i < DIRECTIONS; i++) {
@@ -169,15 +169,7 @@ void G_InventoryToFloor (edict_t *ent)
 					continue;
 				}
 #endif
-				Com_RemoveFromInventory(&ent->i, INVDEF(k), ic);
-			} else {
-				ic->x = x;
-				ic->y = y;
-				ic->next = FLOOR(floor);
-				FLOOR(floor) = ic;
-			}
 		}
-
 		/* destroy link */
 		ent->i.c[k] = NULL;
 	}
