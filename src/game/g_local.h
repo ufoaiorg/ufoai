@@ -237,6 +237,9 @@ extern cvar_t *difficulty;
 #define FFL_SPAWNTEMP		1
 #define FFL_NOSPAWN			2
 
+/* g_morale */
+void G_MoraleBehaviour(int team, qboolean quiet);
+
 /* g_phys.c */
 void G_PhysicsRun(void);
 void G_PhysicsStep(edict_t *ent);
@@ -290,6 +293,7 @@ void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(pos3_t pos);
 int G_CheckVisTeam(int team, edict_t *check, qboolean perish, edict_t *ent);
 edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
+void G_SendState(unsigned int playerMask, const edict_t *ent);
 
 #define G_IsStunned(ent)	(((ent)->state & STATE_STUN) & ~STATE_DEAD)
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */

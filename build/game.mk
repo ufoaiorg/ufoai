@@ -15,6 +15,8 @@ GAME_SRCS=\
 	game/g_phys.c \
 	game/g_reaction.c \
 	game/g_main.c \
+	game/g_morale.c \
+	game/g_move.c \
 	game/g_spawn.c \
 	game/g_svcmds.c \
 	game/g_utils.c \
