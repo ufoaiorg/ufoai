@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -248,7 +248,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
 	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
 	Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
-	Cvar_Set("mn_aircraftname", _(aircraft->name));
+	Cvar_Set("mn_aircraftname", aircraft->name);
 	if (!aircraft->tech)
 		Com_Error(ERR_DROP, "No technology assigned to aircraft '%s'", aircraft->id);
 	Cvar_Set("mn_aircraft_model", aircraft->tech->mdl);
@@ -296,7 +296,7 @@ static void AIR_AircraftUpdateList_f (void)
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
 		const aircraft_t * aircraft = &base->aircraft[i];
-		LIST_AddString(&list, _(aircraft->name));
+		LIST_AddString(&list, aircraft->name);
 	}
 
 	MN_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);

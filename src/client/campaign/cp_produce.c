@@ -437,7 +437,7 @@ void PR_ProductionRun (void)
 					AIR_NewAircraft(base, aircraft->id);
 					/* queue the next production */
 					if (prod->amount <= 0) {
-						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s at %s has finished."), _(aircraft->name), base->name);
+						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s at %s has finished."), _(aircraft->tpl->name), base->name);
 						MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 						PR_QueueNext(base);
 					}

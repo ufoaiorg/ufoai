@@ -856,7 +856,7 @@ static void BaseSummary_Init (const base_t *base)
 			if (objDef)
 				name = _(objDef->name);
 			else if (aircraft)
-				name = _(aircraft->name);
+				name = _(aircraft->tpl->name);
 			else if (ufo)
 				name = UFO_TypeToName(ufo->ufoTemplate->ufotype);
 			else

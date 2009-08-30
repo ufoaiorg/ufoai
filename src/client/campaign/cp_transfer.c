@@ -395,7 +395,7 @@ static void TR_CargoList (void)
 		if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraft_t *aircraft = AIR_AircraftGetFromIDX(td.trAircraftsTmp[i]);
 			assert(aircraft);
-			Com_sprintf(str, lengthof(str), _("Aircraft %s"), _(aircraft->name));
+			Com_sprintf(str, lengthof(str), _("Aircraft %s"), aircraft->name);
 			LIST_AddString(&cargoList, str);
 			LIST_AddString(&cargoListAmount, "1");
 			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_AIRCRAFT;
@@ -581,7 +581,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 				aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 				if (aircraft) {
 					if (aircraft->homebase == srcbase && TR_AircraftListSelect(i)) {
-						Com_sprintf(str, sizeof(str), _("Aircraft %s"), _(aircraft->name));
+						Com_sprintf(str, sizeof(str), _("Aircraft %s"), aircraft->name);
 						LIST_AddString(&transferList, str);
 						LIST_AddString(&transferListAmount, "1");
 						LIST_AddString(&transferListTransfered, "");

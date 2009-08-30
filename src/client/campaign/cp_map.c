@@ -352,7 +352,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		aircraft = ccs.bases[i].aircraft + base->numAircraftInBase - 1;
 		for (; aircraft >= base->aircraft; aircraft--)
 			if (AIR_IsAircraftOnGeoscape(aircraft) && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
-				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), _(aircraft->name));
+				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
 	}
 
 	/* Get selected installations */
@@ -372,7 +372,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 #endif
 		)
 			if (AIR_IsAircraftOnGeoscape(aircraft) && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
-				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - ccs.ufos, _("UFO Sighting"), (RS_IsResearched_ptr(aircraft->tech)) ? _(aircraft->name) : _("Unknown"));
+				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - ccs.ufos, _("UFO Sighting"), UFO_AircraftToIDOnGeoscape(aircraft));
 
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
@@ -1721,7 +1721,7 @@ void MAP_DrawMap (const menuNode_t* node)
 		case AIR_UFO:
 			assert(selectedAircraft->aircraftTarget);
 			distance = MAP_GetDistance(selectedAircraft->pos, selectedAircraft->aircraftTarget->pos);
-			Com_sprintf(text_standard, sizeof(text_standard), _("Name:\t%s (%i/%i)\n"), _(selectedAircraft->name), selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
+			Com_sprintf(text_standard, sizeof(text_standard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
 			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Distance to target:\t\t%.0f\n"), distance), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
@@ -1731,7 +1731,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			MN_RegisterText(TEXT_STANDARD, text_standard);
 			break;
 		default:
-			Com_sprintf(text_standard, sizeof(text_standard), _("Name:\t%s (%i/%i)\n"), _(selectedAircraft->name), selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
+			Com_sprintf(text_standard, sizeof(text_standard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
 			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
