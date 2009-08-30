@@ -50,16 +50,16 @@ qboolean G_IsLivingActor (const edict_t *ent)
 unsigned int G_TeamToPM (int team)
 {
 	const player_t *p;
-	unsigned int player_mask, i;
+	unsigned int playerMask, i;
 
-	player_mask = 0;
+	playerMask = 0;
 
 	/* don't handle the ai players, here */
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
 		if (p->inuse && team == p->pers.team)
-			player_mask |= (1 << i);
+			playerMask |= (1 << i);
 
-	return player_mask;
+	return playerMask;
 }
 
 /**
@@ -72,16 +72,16 @@ unsigned int G_TeamToPM (int team)
 unsigned int G_VisToPM (unsigned int vis_mask)
 {
 	const player_t *p;
-	unsigned int player_mask, i;
+	unsigned int playerMask, i;
 
-	player_mask = 0;
+	playerMask = 0;
 
 	/* don't handle the ai players, here */
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
 		if (p->inuse && (vis_mask & (1 << p->pers.team)))
-			player_mask |= (1 << i);
+			playerMask |= (1 << i);
 
-	return player_mask;
+	return playerMask;
 }
 
 /**
@@ -144,7 +144,7 @@ static void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
  * @brief Write player stats to network buffer
  * @sa G_SendStats
  */
-static void G_SendPlayerStats (player_t * player)
+static void G_SendPlayerStats (player_t *player)
 {
 	edict_t *ent;
 	int i;
@@ -158,7 +158,7 @@ static void G_SendPlayerStats (player_t * player)
  * Send messages to human players
  * @param player A player (AI players are ignored here)
  */
-void G_PlayerPrintf (const player_t * player, int printlevel, const char *fmt, ...)
+void G_PlayerPrintf (const player_t *player, int printLevel, const char *fmt, ...)
 {
 	va_list ap;
 
@@ -168,7 +168,7 @@ void G_PlayerPrintf (const player_t * player, int printlevel, const char *fmt, .
 		return;
 
 	va_start(ap, fmt);
-	gi.PlayerPrintf(player, printlevel, fmt, ap);
+	gi.PlayerPrintf(player, printLevel, fmt, ap);
 	va_end(ap);
 }
 
@@ -217,13 +217,13 @@ void G_GiveTimeUnits (int team)
 		}
 }
 
-static void G_SendState (unsigned int player_mask, edict_t * ent)
+static void G_SendState (unsigned int playerMask, edict_t *ent)
 {
-	gi.AddEvent(player_mask & G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
+	gi.AddEvent(playerMask & G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->state);
 
-	gi.AddEvent(player_mask & ~G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
+	gi.AddEvent(playerMask & ~G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->state & STATE_PUBLIC);
 }
@@ -233,9 +233,9 @@ static void G_SendState (unsigned int player_mask, edict_t * ent)
  * @param player_mask The clients that should see the particle
  * @param ent The particle to spawn
  */
-static void G_SendParticle (unsigned int player_mask, edict_t *ent)
+static void G_SendParticle (unsigned int playerMask, edict_t *ent)
 {
-	gi.AddEvent(player_mask, EV_SPAWN_PARTICLE);
+	gi.AddEvent(playerMask, EV_SPAWN_PARTICLE);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->spawnflags);
 	gi.WriteString(ent->particle);
@@ -246,14 +246,14 @@ static void G_SendParticle (unsigned int player_mask, edict_t *ent)
  * @sa G_AppearPerishEvent
  * @sa CL_InvAdd
  */
-void G_SendInventory (unsigned int player_mask, edict_t * ent)
+void G_SendInventory (unsigned int playerMask, edict_t *ent)
 {
 	invList_t *ic;
 	unsigned short nr = 0;
 	int j;
 
 	/* test for pointless player mask */
-	if (!player_mask)
+	if (!playerMask)
 		return;
 
 	for (j = 0; j < gi.csi->numIDs; j++)
@@ -264,7 +264,7 @@ void G_SendInventory (unsigned int player_mask, edict_t * ent)
 	if (nr == 0 && ent->type != ET_ITEM)
 		return;
 
-	gi.AddEvent(player_mask, EV_INV_ADD);
+	gi.AddEvent(playerMask, EV_INV_ADD);
 
 	gi.WriteShort(ent->number);
 
@@ -277,9 +277,9 @@ void G_SendInventory (unsigned int player_mask, edict_t * ent)
 		}
 }
 
-static void G_EdictAppear (unsigned int player_mask, edict_t *ent)
+static void G_EdictAppear (unsigned int playerMask, edict_t *ent)
 {
-	gi.AddEvent(player_mask, EV_ENT_APPEAR);
+	gi.AddEvent(playerMask, EV_ENT_APPEAR);
 	gi.WriteShort(ent->number);
 	gi.WriteByte(ent->type);
 	gi.WriteGPos(ent->pos);
@@ -402,6 +402,11 @@ static qboolean G_LineVis (const vec3_t from, const vec3_t to)
 
 /**
  * @brief calculate how much check is "visible" from @c from
+ * @param[in] full Perform a full check in different directions. If this is
+ * @c false the actor is fully visible if one vis check returned @c true. With
+ * @c true this function can also return a value != 0.0 and != 1.0.
+ * @param[in] from The world coordinate to check from
+ * @param[in] check The edict to check how good (or if at all) it is visible
  * @return a value between 0.0 and 1.0 which reflects the visibility from 0
  * to 100 percent
  */
@@ -472,9 +477,9 @@ float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
  * we can check whether there is any edict (that is no in our team) that can see @c check
  * @param[in] from is from team @c team and must be a living actor
  * @param[in] check The edict we want to get the visibility for
- * @param[in] flags VT_NOFRUSTUM, ...
+ * @param[in] flags @c VT_NOFRUSTUM, ...
  */
-float G_Vis (int team, const edict_t * from, const edict_t * check, int flags)
+float G_Vis (int team, const edict_t *from, const edict_t *check, int flags)
 {
 	vec3_t eye;
 
@@ -705,7 +710,7 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish, edict_t *ent)
  * @brief Check if the edict appears/perishes for the other teams
  * @sa G_CheckVisTeam
  * @param[in] perish Also check for perishing events
- * @param[in] check The edict we are talking about
+ * @param[in] check The edict that is maybe seen by others
  * @return Bitmask of VIS_* values
  * @sa G_CheckVisTeam
  */

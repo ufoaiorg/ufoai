@@ -74,7 +74,7 @@ const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, c
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
  */
-void INVSH_InitInventory (invList_t * invList, int store)
+void INVSH_InitInventory (invList_t * invList, qboolean store)
 {
 	int i;
 
