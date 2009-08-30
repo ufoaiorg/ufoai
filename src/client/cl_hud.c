@@ -159,7 +159,7 @@ static void HUD_ActorGlobalCvars (void)
 				invList = LEFT(le);
 
 			Com_sprintf(tooltip, lengthof(tooltip), "%s\nHP: %i/%i TU: %i\n%s",
-				chr->name, le->HP, le->maxHP, le->TU, (invList && !invList->item.t) ? _(invList->item.t->name) : "");
+				chr->name, le->HP, le->maxHP, le->TU, (invList && invList->item.t) ? _(invList->item.t->name) : "");
 			Cvar_Set(va("mn_soldier%i_tt", i), tooltip);
 		} else {
 			Cvar_Set(va("mn_head%i", i), "");
