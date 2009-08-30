@@ -5,7 +5,7 @@
 #include "entitylib.h"//for aabb_draw_solid
 #include "../../../shared/defines.h"
 
-#include "../plugins/ufoai/ufoai_filters.h"
+#include "../levelfilters.h"
 
 #define UNIT_SIZE_HALF (UNIT_SIZE/2)
 #define UNIT_SIZE_QUARTER (UNIT_SIZE/4)
@@ -39,15 +39,16 @@ namespace routing
 
 	void RoutingRenderable::render (RenderStateFlags state) const
 	{
-		/**@todo get filter level from ufoai_filters.cpp */
-		int maxDisplayLevel = LEVEL_MAX;
+		int maxDisplayLevel = filter_getCurrentLevel();
+		if (maxDisplayLevel == 0)
+			maxDisplayLevel = PATHFINDING_HEIGHT;
 		if (_glListID != 0) {
 			for (int level = 0; level < maxDisplayLevel; level++)
 				glCallList(_glListID + level);
 		} else {
-			_glListID = glGenLists(LEVEL_MAX);
-			for (int level = 0; level < LEVEL_MAX; level++) {
-				glNewList(_glListID + level, level < maxDisplayLevel? GL_COMPILE_AND_EXECUTE: GL_COMPILE);
+			_glListID = glGenLists(PATHFINDING_HEIGHT);
+			for (int level = 0; level < PATHFINDING_HEIGHT; level++) {
+				glNewList(_glListID + level, level < maxDisplayLevel ? GL_COMPILE_AND_EXECUTE : GL_COMPILE);
 				for (routing::RoutingRenderableEntries::const_iterator i = _entries.begin(); i != _entries.end(); ++i) {
 					const routing::RoutingRenderableEntry* entry = *i;
 					if (entry->isForLevel(level + 1))
@@ -81,12 +82,13 @@ namespace routing
 	void RoutingRenderable::checkClearGLCache (void)
 	{
 		if (_glListID != 0) {
-			glDeleteLists(_glListID, LEVEL_MAX);
+			glDeleteLists(_glListID, PATHFINDING_HEIGHT);
 			_glListID = 0;
 		}
 	}
 
-	bool RoutingRenderableEntry::isForLevel(const int level) const {
+	bool RoutingRenderableEntry::isForLevel (const int level) const
+	{
 		return (_data.getLevel() == level);
 	}
 
@@ -99,7 +101,8 @@ namespace routing
 	{
 		this->renderWireframe();
 		this->renderAccessability(state);
-		this->renderConnections();
+		if (this->_data.getAccessState() != ACC_DISABLED)
+			this->renderConnections();
 	}
 
 	/**

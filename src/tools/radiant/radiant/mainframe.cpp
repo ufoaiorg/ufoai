@@ -106,6 +106,7 @@
 #include "renderstate.h"
 #include "referencecache.h"
 #include "toolbars.h"
+#include "levelfilters.h"
 
 struct layout_globals_t
 {
@@ -449,7 +450,7 @@ class ModuleLoader
 };
 
 /** Load modules from a specified directory.
- * 
+ *
  * @param path
  * The directory path to load from.
  */
@@ -461,7 +462,7 @@ void Radiant_loadModules (const std::string& path)
 
 /** Load all of the modules in the DarkRadiant install directory. Modules
  * are loaded from modules/ and plugins/.
- * 
+ *
  * @param directory
  * The root directory to search.
  */
@@ -2455,6 +2456,7 @@ void MainFrame_Construct (void)
 	GlobalCommands_insert("BrushExportOBJ", FreeCaller<CallBrushExportOBJ> ());
 
 	XYShow_registerCommands();
+	LevelFilters_registerCommands();
 
 	typedef FreeCaller1<const Selectable&, ComponentMode_SelectionChanged> ComponentModeSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(ComponentModeSelectionChangedCaller());

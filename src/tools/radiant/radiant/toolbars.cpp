@@ -101,6 +101,18 @@ static void Manipulators_constructToolbar (GtkToolbar* toolbar)
 	Clipper_constructToolbar(toolbar);
 }
 
+static void LevelFilters_constructToolbar (GtkToolbar* toolbar)
+{
+	toolbar_append_button(toolbar, _("Level 1"), "ufoai_level1.bmp", "FilterLevel1");
+	toolbar_append_button(toolbar, _("Level 2"), "ufoai_level2.bmp", "FilterLevel2");
+	toolbar_append_button(toolbar, _("Level 3"), "ufoai_level3.bmp", "FilterLevel3");
+	toolbar_append_button(toolbar, _("Level 4"), "ufoai_level4.bmp", "FilterLevel4");
+	toolbar_append_button(toolbar, _("Level 5"), "ufoai_level5.bmp", "FilterLevel5");
+	toolbar_append_button(toolbar, _("Level 6"), "ufoai_level6.bmp", "FilterLevel6");
+	toolbar_append_button(toolbar, _("Level 7"), "ufoai_level7.bmp", "FilterLevel7");
+	toolbar_append_button(toolbar, _("Level 8"), "ufoai_level8.bmp", "FilterLevel8");
+}
+
 GtkToolbar* create_main_toolbar_horizontal (MainFrame *mainframe)
 {
 	GtkToolbar* toolbar = GTK_TOOLBAR(gtk_toolbar_new());
@@ -145,6 +157,9 @@ GtkToolbar* create_main_toolbar_horizontal (MainFrame *mainframe)
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 	toolbar_append_button(toolbar, _("Create material entries for selected faces (M)"), "material_generate.bmp",
 			"GenerateMaterialFromTexture");
+
+	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
+	LevelFilters_constructToolbar(toolbar);
 
 	return toolbar;
 }
