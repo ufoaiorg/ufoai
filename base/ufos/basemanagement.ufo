@@ -16,9 +16,10 @@
 // onconstruct:			The name of the script to be run when this facility is built up. Don't add a ; at the end.
 // ondestroy:			The name of the script to be run when this facility is destroyed. Don't add a ; at the end.
 // visible:				Sets whether this facility is visible on the base screen
+// mandatory:			Automatically construct this building when a base is set up.
 // max_count:			No base may have more than this amount of this facility
 // starting_employees:	The amount of employees that come with this building
-
+// level:				building level
 // ====================
 // Buildings
 // ====================

@@ -354,7 +354,7 @@ window uforecovery
 
 		string selected_nation_str
 		{
-			string		"Selected nation:"
+			string		"_Selected nation:"
 			pos			"30 186"
 		}
 
