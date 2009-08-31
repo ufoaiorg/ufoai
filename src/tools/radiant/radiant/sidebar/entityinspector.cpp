@@ -451,8 +451,7 @@ class DirectionAttribute: public EntityAttribute
 	public:
 		DirectionAttribute (const char* classname, const char* key) :
 			m_classname(classname), m_key(key), m_entry(0), m_nonModal(ApplyCaller(*this), UpdateCaller(*this)),
-					m_radio(RadioHBox_new(STRING_ARRAY_RANGE(directionButtons))), m_nonModalRadio(ApplyRadioCaller(
-							*this))
+					m_radio(RadioHBox_new(STRING_ARRAY_RANGE(directionButtons))), m_nonModalRadio(ApplyRadioCaller(*this))
 		{
 			GtkEntry* entry = numeric_entry_new();
 			m_entry = entry;
@@ -782,6 +781,7 @@ namespace
 	{
 		KEYVALLIST_COLUMN_KEY, KEYVALLIST_COLUMN_VALUE, KEYVALLIST_COLUMN_STYLE, /**< pango weigth value used to bold classname rows */
 		KEYVALLIST_COLUMN_KEY_EDITABLE, /**< flag indicating whether key should be editable (has no value yet) */
+		KEYVALLIST_COLUMN_TOOLTIP,
 
 		KEYVALLIST_MAX_COLUMN
 	};
@@ -1168,6 +1168,16 @@ static void EntityInspector_updateSpawnflags (void)
 		toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(g_entitySpawnflagsCheck[i]), FALSE);
 	}
 }
+#include "string/string.h"
+
+static const char* EntityInspector_getTooltipForKey (const char* key)
+{
+	EntityClassAttribute *attrib = g_current_attributes->getAttribute(key);
+	if (attrib != NULL)
+		return attrib->m_description.c_str();
+	else
+		return "";
+}
 
 /**
  * @brief This method updates key value list for current selected entities.
@@ -1185,7 +1195,7 @@ static void EntityInspector_updateKeyValueList (void)
 		gtk_tree_store_append(store, &classTreeIter, NULL);
 		gtk_tree_store_set(store, &classTreeIter, KEYVALLIST_COLUMN_KEY, "classname", KEYVALLIST_COLUMN_VALUE,
 				classname.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_BOLD, KEYVALLIST_COLUMN_KEY_EDITABLE, FALSE,
-				-1);
+				KEYVALLIST_COLUMN_TOOLTIP, g_current_attributes->comments(), -1);
 		KeyValues possibleValues = classIter->second;
 		for (KeyValues::iterator i = possibleValues.begin(); i != possibleValues.end(); ++i) {
 			GtkTreeIter iter;
@@ -1196,7 +1206,7 @@ static void EntityInspector_updateKeyValueList (void)
 			value << ConvertLocaleToUTF8(Values_getFirstValue((*i).second));
 			gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, key.c_str(), KEYVALLIST_COLUMN_VALUE,
 					value.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_EDITABLE, FALSE,
-					-1);
+					KEYVALLIST_COLUMN_TOOLTIP, EntityInspector_getTooltipForKey(key.c_str()), -1);
 		}
 	}
 	//set all elements expanded
@@ -1264,8 +1274,7 @@ static void EntityClassList_createEntity (void)
 	GtkTreeModel* model;
 	GtkTreeIter iter;
 	if (gtk_tree_selection_get_selected(gtk_tree_view_get_selection(view), &model, &iter) == FALSE) {
-		gtk_MessageBox(gtk_widget_get_toplevel(GTK_WIDGET(view)),
-				_("You must have a selected class to create an entity"), _("Info"));
+		gtk_MessageBox(gtk_widget_get_toplevel(GTK_WIDGET(view)), _("You must have a selected class to create an entity"), _("Info"));
 		return;
 	}
 
@@ -1294,7 +1303,7 @@ static void EntityInspector_addKeyValue (GtkButton *button, gpointer user_data)
 	}
 
 	gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, "", KEYVALLIST_COLUMN_VALUE, "", KEYVALLIST_COLUMN_STYLE,
-			PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_EDITABLE, TRUE, -1);
+			PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_EDITABLE, TRUE, KEYVALLIST_COLUMN_TOOLTIP, "", -1);
 	/* expand to have added line visible (for the case parent was not yet expanded because it had no children */
 	gtk_tree_view_expand_all(g_entityInspectorGui.m_viewKeyValues);
 
@@ -1735,20 +1744,18 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 
 				{
 					GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Key"), renderer, "text", 0,
-							(char const*) 0);
+					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Key"), renderer, "text", 0, (char const*) 0);
 					gtk_tree_view_append_column(view, column);
 				}
 
 				{
 					GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
-					g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(EntityClassList_selection_changed),
-							0);
+					g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(EntityClassList_selection_changed), 0);
 				}
 
 				gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
 
-				g_object_unref(G_OBJECT(store));
+				g_object_unref( G_OBJECT (store));
 				g_entityClassList = view;
 				g_entlist_store = store;
 			}
@@ -1795,49 +1802,51 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 			gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
 
 			GtkTreeStore* store = gtk_tree_store_new(KEYVALLIST_MAX_COLUMN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT,
-					G_TYPE_BOOLEAN);
+					G_TYPE_BOOLEAN, G_TYPE_STRING);
 
 			GtkTreeView * view = GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
 			gtk_tree_view_set_enable_search(view, FALSE);
 #if GTK_CHECK_VERSION(2,12,0)
 			gtk_tree_view_set_show_expanders(view, FALSE);
 			gtk_tree_view_set_level_indentation(view, 10);
+			gtk_tree_view_set_tooltip_column(view, KEYVALLIST_COLUMN_TOOLTIP);
 #endif
 			/* expand all rows after the treeview widget has been realized */
 			g_signal_connect(view, "realize", G_CALLBACK(gtk_tree_view_expand_all), NULL);
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_combo_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Key"), renderer, "text",
-						KEYVALLIST_COLUMN_KEY, (char const*) 0);
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Key"), renderer, "text", KEYVALLIST_COLUMN_KEY, (char const*) 0);
 				gtk_tree_view_column_add_attribute(column, renderer, "weight", KEYVALLIST_COLUMN_STYLE);
 				gtk_tree_view_column_add_attribute(column, renderer, "editable", KEYVALLIST_COLUMN_KEY_EDITABLE);
 				{
 					GtkListStore* rendererStore = gtk_list_store_new(1, G_TYPE_STRING);
 					g_object_set(renderer, "model", GTK_TREE_MODEL(rendererStore), "text-column", 0, (const char*) 0);
-					g_object_unref(G_OBJECT (rendererStore));
+					g_object_unref( G_OBJECT (rendererStore));
 				}
 				gtk_tree_view_append_column(view, column);
 				/** @todo there seems to be a display problem with has-entries for worldspawn attributes using windows , check that */
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, "has-entry", FALSE, (char const*) 0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityKeyEdited), (gpointer) view);
-				g_signal_connect(G_OBJECT(renderer), "editing-canceled", G_CALLBACK(entityKeyEditCanceled), (gpointer) view);
-				g_signal_connect(G_OBJECT(renderer), "editing-started", G_CALLBACK(EntityKeyValueList_keyEditingStarted), (gpointer) view);
+				g_signal_connect(G_OBJECT(renderer), "editing-canceled", G_CALLBACK(entityKeyEditCanceled),
+						(gpointer) view);
+				g_signal_connect(G_OBJECT(renderer), "editing-started",
+						G_CALLBACK(EntityKeyValueList_keyEditingStarted), (gpointer) view);
 			}
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_combo_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Value"), renderer, "text",
-						KEYVALLIST_COLUMN_VALUE, (char const*) 0);
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Value"), renderer, "text", KEYVALLIST_COLUMN_VALUE, (char const*) 0);
 				gtk_tree_view_column_add_attribute(column, renderer, "weight", KEYVALLIST_COLUMN_STYLE);
 				gtk_tree_view_append_column(view, column);
 				{
 					GtkListStore* rendererStore = gtk_list_store_new(1, G_TYPE_STRING);
 					g_object_set(renderer, "model", GTK_TREE_MODEL(rendererStore), "text-column", 0, (const char*) 0);
-					g_object_unref(G_OBJECT (rendererStore));
+					g_object_unref( G_OBJECT (rendererStore));
 				}
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityValueEdited), (gpointer) view);
-				g_signal_connect(G_OBJECT(renderer), "editing-started", G_CALLBACK(EntityKeyValueList_valueEditingStarted), (gpointer) view);
+				g_signal_connect(G_OBJECT(renderer), "editing-started", G_CALLBACK(
+						EntityKeyValueList_valueEditingStarted), (gpointer) view);
 			}
 
 			{
@@ -1848,7 +1857,7 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 
 			gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
 
-			g_object_unref(G_OBJECT(store));
+			g_object_unref( G_OBJECT (store));
 
 			g_entprops_store = store;
 
@@ -1858,16 +1867,14 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 
 			{
 				GtkButton* button = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_REMOVE));
-				g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_clearKeyValue),
-						gpointer(view));
+				g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_clearKeyValue), gpointer(view));
 				gtk_box_pack_start(hbox, GTK_WIDGET(button), TRUE, TRUE, 0);
 				g_object_set(button, "sensitive", FALSE, (const char*) 0);
 				g_entityInspectorGui.m_btnRemoveKey = button;
 			}
 			{
 				GtkButton* button = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_NEW));
-				g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_addKeyValue),
-						gpointer(view));
+				g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_addKeyValue), gpointer(view));
 				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, TRUE, 0);
 				g_object_set(button, "sensitive", FALSE, (const char*) 0);
 				g_entityInspectorGui.m_btnAddKey = button;
