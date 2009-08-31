@@ -252,6 +252,7 @@ namespace routing
 
 	void RoutingLumpLoader::loadRouting (const std::string& bspFileName)
 	{
+		/**@todo try to reduce loading, store latest file + mtime and load only if that changed */
 		// Open an ArchiveFile to load
 		AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(bspFileName.c_str()));
 		if (file) {
