@@ -1242,12 +1242,12 @@ team phalanx_pilot
 
 	models {
 		male {
-			soldiers/male body head01a 0
-			soldiers/male body head01b 0
-			soldiers/male body head02a 0
-			soldiers/male body head02b 0
-			soldiers/male body head03a 0
-			soldiers/male body head03b 0
+			pilots/male body head01 0
+			pilots/male body head01 0
+			pilots/male body head01 0
+			pilots/male body head01 0
+			pilots/male body head01 0
+			pilots/male body head01 0
 		}
 	}
 
