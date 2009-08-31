@@ -366,7 +366,8 @@ window basedefence
 			image		ui/checkbox_green
 			pos			"260 200"
 			size		"20 20"
-			current		1
+			current		0
+			disabled	true
 			onChange	{ cmd "basedef_autofire <current>;" }
 		}
 
@@ -395,8 +396,15 @@ window basedefence
 	}
 
 	confunc setautofire	{
-		*node:root.infopanel.autofire@current <1>
-	
+		*cvar:tmp = <1>
+		if ( *cvar:tmp eq "disable" ) {
+			*node:root.infopanel.autofire@current 0
+			*node:root.infopanel.autofire@disabled true
+		} else {
+			*node:root.infopanel.autofire@current <cvar:tmp>
+			*node:root.infopanel.autofire@disabled false
+		}
+		delete *cvar:tmp	
 	}
 
 	func onInit {

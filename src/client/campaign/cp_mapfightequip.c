@@ -191,7 +191,12 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 			Com_Printf("BDEF_AddBattery: too many missile batteries in base\n");
 			return;
 		}
-		base->batteries[base->numBatteries].autofire = qtrue;
+		if (base->numBatteries)
+			base->batteries[base->numBatteries].autofire = base->batteries[0].autofire;
+		else if (base->numLasers)
+			base->batteries[base->numBatteries].autofire = base->lasers[0].autofire;
+		else
+			base->batteries[base->numBatteries].autofire = qtrue;
 		base->numBatteries++;
 		break;
 	case BASEDEF_LASER:
@@ -201,7 +206,12 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 		}
 		/* slots has unlimited ammo */
 		base->lasers[base->numLasers].slot.ammoLeft = AMMO_STATUS_UNLIMITED;
-		base->lasers[base->numLasers].autofire = qtrue;
+		if (base->numBatteries)
+			base->lasers[base->numLasers].autofire = base->batteries[0].autofire;
+		else if (base->numLasers)
+			base->lasers[base->numLasers].autofire = base->lasers[0].autofire;
+		else
+			base->lasers[base->numLasers].autofire = qtrue;
 		base->numLasers++;
 		break;
 	default:
@@ -275,7 +285,9 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 	for (i = 0; i < MAX_BASE_SLOT; i++) {
 		AII_InitialiseSlot(&base->batteries[i].slot, NULL, base, NULL, AC_ITEM_BASE_MISSILE);
 		AII_InitialiseSlot(&base->lasers[i].slot, NULL, base, NULL, AC_ITEM_BASE_LASER);
+		base->batteries[i].autofire = qtrue;
 		base->batteries[i].target = NULL;
+		base->lasers[i].autofire = qtrue;
 		base->lasers[i].target = NULL;
 	}
 }
@@ -291,6 +303,7 @@ void BDEF_InitialiseInstallationSlots (installation_t *installation)
 	for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
 		AII_InitialiseSlot(&installation->batteries[i].slot, NULL, NULL, installation, AC_ITEM_BASE_MISSILE);
 		installation->batteries[i].target = NULL;
+		installation->batteries[i].autofire = qtrue;
 	}
 }
 

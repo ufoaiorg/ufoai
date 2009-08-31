@@ -187,28 +187,34 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 		return;
 	}
 
+	Cvar_ForceSet("mn_target", _("None"));
+	Cmd_ExecuteString("setautofire disable");
 	if (installation) {
 		/** Every slot aims the same target */
-		if (installation->numBatteries && installation->batteries[0].target) {
-			Cvar_ForceSet("mn_target", UFO_AircraftToIDOnGeoscape(installation->batteries[0].target));
-		} else
-			Cvar_ForceSet("mn_target", _("None"));
-		Cmd_ExecuteString(va("setautofire %i", installation->batteries[0].autofire));
-	} else if (base) {
-		/** Every slot aims the same target */
-		if (base->numBatteries && base->batteries[0].target)
-			Cvar_ForceSet("mn_target", UFO_AircraftToIDOnGeoscape(base->batteries[0].target));
-		else if (base->numLasers && base->lasers[0].target)
-			Cvar_ForceSet("mn_target", UFO_AircraftToIDOnGeoscape(base->lasers[0].target));
-		else
-			Cvar_ForceSet("mn_target", _("None"));
+		if (installation->numBatteries) {
+			Cmd_ExecuteString(va("setautofire %i", installation->batteries[0].autofire));
 
-		Cmd_ExecuteString(va("setautofire %i", base->batteries[0].autofire));
-	} else
-		Cvar_ForceSet("mn_target", _("None"));
+			if (installation->batteries[0].target)
+				Cvar_ForceSet("mn_target", UFO_AircraftToIDOnGeoscape(installation->batteries[0].target));
+		}		
+	} else if (base) {
+		qboolean autofire = qfalse;
+		/** Every slot aims the same target */
+		if (base->numBatteries) {
+			autofire |= base->batteries[0].autofire;
+			if (base->batteries[0].target)
+				Cvar_ForceSet("mn_target", UFO_AircraftToIDOnGeoscape(base->batteries[0].target));
+		}
+		if (base->numLasers) {
+			autofire |= base->lasers[0].autofire;
+			if (base->lasers[0].target && !base->batteries[0].target)
+				Cvar_ForceSet("mn_target", UFO_AircraftToIDOnGeoscape(base->lasers[0].target));
+		}
+		if (base->numBatteries || base->numLasers)
+			Cmd_ExecuteString(va("setautofire %i", autofire));
+	}
 
 	/* Check if we can change to laser or missile */
-	/** @todo make the laser depend on laser defence tech - once we have it */
 	if (base) {
 		Com_sprintf(defBuffer, lengthof(defBuffer), "set_defencetypes %s %s",
 			(!missileResearched) ? "na" : (base && base->numBatteries > 0) ? "enable" : "disable",
