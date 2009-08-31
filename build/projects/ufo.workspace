@@ -31,7 +31,6 @@
 		<Project filename="radiant_sound.cbp" />
 		<Project filename="radiant_vfspk3.cbp" />
 		<Project filename="radiant_archivezip.cbp" />
-		<Project filename="radiant_ufoai.cbp" />
 		<Project filename="radiant_brushexport.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
