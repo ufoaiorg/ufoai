@@ -1178,8 +1178,12 @@ base/models/objects/vehicles/puma/puma.md2 | GNU General Public License 2.0 or l
 base/models/objects/vehicles/tractor/tractor.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/tractor/tractor.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/tractor/tractor1.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/pilots/female/body01.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/pilots/female/body01.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/pilots/female/head01.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/pilots/female/head01.obj | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/pilots/male/body01.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/pilots/male/body01.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/pilots/male/head01.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/pilots/male/head01.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/female/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
