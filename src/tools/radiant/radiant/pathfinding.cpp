@@ -30,6 +30,8 @@
 #include "os/path.h"
 #include "stream/stringstream.h"
 #include "ifilesystem.h"
+#include "map.h"
+#include "signal/isignal.h"
 
 namespace routing
 {
@@ -54,20 +56,29 @@ namespace routing
 				routingRender.updateRouting(bspname);
 			}
 		} else {
-			if (showPathfinding) {
-				showPathfinding = false;
-				routingRender.setShowPathfinding(false);
-			}
+			showPathfinding = false;
+			routingRender.setShowPathfinding(false);
 		}
 
+	}
+
+	/**
+	 * @brief callback function for map changes to update routing data.
+	 */
+	void Pathfinding_onMapValidChanged (void)
+	{
+		if (Map_Valid(g_map) && showPathfinding) {
+			showPathfinding = false;
+			ShowPathfinding();
+		}
 	}
 }
 
 void Pathfinding_Construct (void)
 {
-	/**@todo listener to map changes (for disabling routing rendering if new map is loaded) */
-	/**listener also should activate/deactivate "show pathfinding" menu entry if no appropriate data is available */
+	/**@todo listener also should activate/deactivate "show pathfinding" menu entry if no appropriate data is available */
 	GlobalShaderCache().attachRenderable(routing::routingRender);
+	Map_addValidCallback(g_map, SignalHandler(FreeCaller<routing::Pathfinding_onMapValidChanged> ()));
 }
 
 void Pathfinding_Destroy (void)
