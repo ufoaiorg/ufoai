@@ -3080,7 +3080,7 @@ tech rs_building_laser
 		tech rs_building_command
 		tech rs_laser
 		tech rs_damage_laser
-		//tech rs_baselaser
+		tech rs_baselaser
 	}
 
 	provides	building_laser
