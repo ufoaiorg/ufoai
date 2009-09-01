@@ -13,7 +13,7 @@
 
 ===For static maps===
 
-The image dont need to have a fixed or proportional size, but must contains
+The image doesn't need to have a fixed or proportional size, but must contain
 everything into the map (mapMin, mapMax) and no more.
 
 * Run the game in 1024x1024
@@ -24,18 +24,16 @@ everything into the map (mapMin, mapMax) and no more.
 * You should use ".jpg" image, on the console type:
 	> r_screenshot_format = jpg
 * Click on the button "generate all levels" and wait
-	It generate all screenshots into your /scrnshot directory
-* you can move this screenshots into /base/pics/radars
+	It generates all screenshots into your /scrnshot directory
+* you can move these screenshots into /base/pics/radars
 
 ===For RMA===
 
 There is no easy way. Size of image of RMA tile are normalized.
 
-A tile of 8 cells, must have a size near 94 pixels.
+A tile of 8 cells must have a size near 94 pixels.
 
-For examples "forest" RMA use at the moment:
+For example, "forest" RMA uses at the moment:
 * 8 cells -> 93/94 pixels (94x1 explected)
 * 16 cells -> 187 pixels (94x2=188 explected)
 * 24 cells -> 281 pixels (94x3=282 explected)
-
-
