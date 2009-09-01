@@ -916,7 +916,7 @@ static void TR_TransferBaseListClick_f (void)
 void TR_TransferAircraftMenu (aircraft_t* aircraft)
 {
 	int i, num;
-	static linkedList_t *transfer = NULL;
+	linkedList_t *transfer = NULL;
 
 	/* store the aircraft to be able to remove alien bodies */
 	td.transferStartAircraft = aircraft;
