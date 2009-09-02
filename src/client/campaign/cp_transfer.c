@@ -1676,13 +1676,14 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 
 	for (i = 0; i < ccs.numTransfers; i++) {
 		transfer_t *transfer = &ccs.transfers[i];
+		int tmp = ccs.numAircraft;
 
 		/* skip non active transfer */
 		if (!transfer->active)
 			continue;
 		if (!transfer->hasAircraft)
 			continue;
-		REMOVE_ELEM_MEMSET(transfer->aircraftArray, aircraft->idx, ccs.numAircraft, TRANS_LIST_EMPTY_SLOT);
+		REMOVE_ELEM_MEMSET(transfer->aircraftArray, aircraft->idx, tmp, TRANS_LIST_EMPTY_SLOT);
 	}
 }
 
