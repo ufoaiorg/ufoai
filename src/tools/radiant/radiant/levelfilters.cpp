@@ -184,25 +184,33 @@ void filter_level (int flag)
 		if (currentActiveLevel == level) {
 			currentActiveLevel = 0;
 			// just disable level filter
+			SceneChangeNotify();
+			return;
 		}
-	} else {
-		currentActiveLevel = level;
-		globalOutputStream() << "UFO:AI: level_active: " << currentActiveLevel << ", flag: " << flag << ".\n";
-
-		// first all brushes
-		GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, true, true));
-
-		// now all entities
-		GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, level, true));
-		GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level, true));
-		GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level, true));
-		GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, level, true));
 	}
+	currentActiveLevel = level;
+	globalOutputStream() << "UFO:AI: level_active: " << currentActiveLevel << ", flag: " << flag << ".\n";
+
+	// first all brushes
+	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, true, true));
+
+	// now all entities
+	GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, level, true));
+	GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level, true));
+	GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level, true));
+	GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, level, true));
+
 	SceneChangeNotify();
 }
 
+/**
+ * @brief gives the current filter level (levels 1 to 8, 0 for no filtering).
+ * @return current filter level
+ */
 int filter_getCurrentLevel (void)
 {
+	if (currentActiveLevel > 2)
+		return ilogb(currentActiveLevel) + 1;
 	return currentActiveLevel;
 }
 
