@@ -36,7 +36,7 @@
 
 #include <list>
 
-static int currentActiveLlevel = 0;
+static int currentActiveLevel = 0;
 
 static inline void hide_node (scene::Node& node, bool hide)
 {
@@ -173,38 +173,37 @@ void filter_level (int flag)
 
 	level = (flag >> 8);
 
-	if (currentActiveLlevel) {
-		GlobalSceneGraph().traverse(BrushGetLevel(brushes, (currentActiveLlevel << 8), true, true, false));
-		GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, currentActiveLlevel, false));
-		GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, currentActiveLlevel, false));
-		GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, currentActiveLlevel, false));
-		GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, currentActiveLlevel, false));
+	if (currentActiveLevel) {
+		GlobalSceneGraph().traverse(BrushGetLevel(brushes, (currentActiveLevel << 8), true, true, false));
+		GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, currentActiveLevel, false));
+		GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, currentActiveLevel, false));
+		GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, currentActiveLevel, false));
+		GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, currentActiveLevel, false));
 		entities.erase(entities.begin(), entities.end());
 		brushes.erase(brushes.begin(), brushes.end());
-		if (currentActiveLlevel == level) {
-			currentActiveLlevel = 0;
+		if (currentActiveLevel == level) {
+			currentActiveLevel = 0;
 			// just disable level filter
-			return;
 		}
+	} else {
+		currentActiveLevel = level;
+		globalOutputStream() << "UFO:AI: level_active: " << currentActiveLevel << ", flag: " << flag << ".\n";
+
+		// first all brushes
+		GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, true, true));
+
+		// now all entities
+		GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, level, true));
+		GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level, true));
+		GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level, true));
+		GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, level, true));
 	}
-	currentActiveLlevel = level;
-	globalOutputStream() << "UFO:AI: level_active: " << currentActiveLlevel << ", flag: " << flag << ".\n";
-
-	// first all brushes
-	GlobalSceneGraph().traverse(BrushGetLevel(brushes, flag, true, true, true));
-
-	// now all entities
-	GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, level, true));
-	GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level, true));
-	GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level, true));
-	GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, level, true));
-
 	SceneChangeNotify();
 }
 
 int filter_getCurrentLevel (void)
 {
-	return currentActiveLlevel;
+	return currentActiveLevel;
 }
 
 /**@todo find a better way than these functions */
@@ -247,13 +246,13 @@ void filter_level8 (void)
  */
 void LevelFilters_registerCommands (void)
 {
-	GlobalCommands_insert("FilterLevel1", FreeCaller<filter_level1>());
-	GlobalCommands_insert("FilterLevel2", FreeCaller<filter_level2>());
-	GlobalCommands_insert("FilterLevel3", FreeCaller<filter_level3>());
-	GlobalCommands_insert("FilterLevel4", FreeCaller<filter_level4>());
-	GlobalCommands_insert("FilterLevel5", FreeCaller<filter_level5>());
-	GlobalCommands_insert("FilterLevel6", FreeCaller<filter_level6>());
-	GlobalCommands_insert("FilterLevel7", FreeCaller<filter_level7>());
-	GlobalCommands_insert("FilterLevel8", FreeCaller<filter_level8>());
+	GlobalCommands_insert("FilterLevel1", FreeCaller<filter_level1> ());
+	GlobalCommands_insert("FilterLevel2", FreeCaller<filter_level2> ());
+	GlobalCommands_insert("FilterLevel3", FreeCaller<filter_level3> ());
+	GlobalCommands_insert("FilterLevel4", FreeCaller<filter_level4> ());
+	GlobalCommands_insert("FilterLevel5", FreeCaller<filter_level5> ());
+	GlobalCommands_insert("FilterLevel6", FreeCaller<filter_level6> ());
+	GlobalCommands_insert("FilterLevel7", FreeCaller<filter_level7> ());
+	GlobalCommands_insert("FilterLevel8", FreeCaller<filter_level8> ());
 
 }
