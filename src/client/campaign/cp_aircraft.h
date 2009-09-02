@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_AIRCRAFT_H
 #define CLIENT_CL_AIRCRAFT_H
 
+#include "../client.h"
 #include "cp_radar.h"
 
 #define MAX_CARGO		32
@@ -107,6 +108,13 @@ typedef enum {
 
 	MAX_AIR_NOTIFICATIONS
 } aircraft_notifications_t;
+
+/** alien cargo in aircraft_t, carrying aliens and bodies from a mission to base */
+typedef struct aliensTmp_s {
+	const teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
+	int amountAlive;		/**< Amount of live captured aliens. */
+	int amountDead;		/**< Amount of alien corpses. */
+} aliensTmp_t;
 
 #define MAX_AIRCRAFTSLOT 4
 
@@ -228,6 +236,8 @@ typedef struct aircraft_s {
 	qboolean notOnGeoscape;	/**< don't let this aircraft appear ever on geoscape (e.g. ufo_carrier) */
 	int detectionIdx;		/**< detected UFO number (for descriptions "UFO #4")*/
 	date_t lastSpotted;		/**< date the UFO was detected last time */
+	aliensTmp_t alienCargo[MAX_CARGO];	/**< Cargo of aliens. */
+	int alienCargoTypes;						/**< How many types of aliens we collected. */
 } aircraft_t;
 
 /* script functions */
@@ -292,6 +302,5 @@ void AIR_AssignInitial(aircraft_t *aircraft);
 void AIR_LoadOneSlotXML(aircraftSlot_t* slot, mxml_node_t *node, qboolean weapon);
 qboolean AIR_LoadAircraftXML(aircraft_t *craft, qboolean isUfo, mxml_node_t *p);
 void AIR_SaveAircraftXML(mxml_node_t *node, aircraft_t const aircraft, qboolean const isUfo);
-
 
 #endif

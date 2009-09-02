@@ -480,9 +480,6 @@ typedef struct ccs_s {
 														 * that will be used in mission */
 	int numAlienCategories;		/** number of alien team categories defined */
 
-	aliensTmp_t aliencargo[MAX_AIRCRAFT][MAX_CARGO];	/**< Cargo of aliens. */
-	int alientypes[MAX_AIRCRAFT];						/**< How many types of aliens we collected. */
-
 	/* == ufopedia == */
 	/* A list of all UFOpaedia chapters. */
 	pediaChapter_t upChapters[MAX_PEDIACHAPTERS];

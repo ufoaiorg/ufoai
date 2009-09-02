@@ -54,13 +54,6 @@ typedef struct aliensCont_s {
 	technology_t *tech;		/**< Related technology. */
 } aliensCont_t;
 
-/** alien cargo in aircraft_t, carrying aliens and bodies from a mission to base */
-typedef struct aliensTmp_s {
-	const teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
-	int amountAlive;		/**< Amount of live captured aliens. */
-	int amountDead;		/**< Amount of alien corpses. */
-} aliensTmp_t;
-
 /**
  * Collecting aliens functions.
  */
@@ -75,10 +68,10 @@ int AL_GetAlienAmount(const teamDef_t *alienType, requirementType_t reqtype, con
 void AL_ChangeAliveAlienNumber(struct base_s *base, aliensCont_t *containment, int num);
 qboolean AL_CheckAliveFreeSpace(const struct base_s *base, const aliensCont_t *containment, const int num);
 int AL_CountInBase(const struct base_s *base);
-aliensTmp_t *AL_GetAircraftAlienCargo(const aircraft_t *aircraft);
-int AL_GetAircraftAlienCargoTypes(const aircraft_t *aircraft);
-int AL_SetAircraftAlienCargoTypes(const aircraft_t *aircraft, int alienCargoTypes);
-qboolean AL_AddAlienTypeToAircraftCargo(const aircraft_t *aircraft, const teamDef_t *teamDef, int amount, qboolean dead);
+#define AL_GetAircraftAlienCargo(a) (a)->alienCargo
+#define AL_GetAircraftAlienCargoTypes(a) ((a)->alienCargoTypes)
+#define AL_SetAircraftAlienCargoTypes(a, i) (a)->alienCargoTypes = (i)
+qboolean AL_AddAlienTypeToAircraftCargo(struct aircraft_s *aircraft, const teamDef_t *teamDef, int amount, qboolean dead);
 
 /**
  * Menu functions
