@@ -944,9 +944,8 @@ void CP_MissionNotifyInstallationDestroyed (const installation_t const *installa
 		mission_t *mission = (mission_t*) missionlist->data;
 
 		if (mission->category == INTERESTCATEGORY_INTERCEPT && mission->data) {
-			if ((installation_t*) mission->data != installation)
-				continue;
-			CP_InterceptMissionLeave(mission, qfalse);
+			if ((installation_t*) mission->data == installation)
+				CP_InterceptMissionLeave(mission, qfalse);
 		}
 		missionlist = missionlist->next;
 	}
