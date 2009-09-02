@@ -447,12 +447,14 @@ void NET_Wait (int timeout)
 			continue;
 
 		if (s->loopback) {
-			/* Note that s is potentially invalid after the callback returns - we'll close dead streams on the next pass */
-			if (s->ready && s->func)
-				s->func(s);
 			/* If the peer is gone and the buffer is empty, close the stream */
-			else if (!s->loopback_peer && NET_StreamGetLength(s) == 0)
+			if (!s->loopback_peer && NET_StreamGetLength(s) == 0) {
 				NET_StreamClose(s);
+			}
+			/* Note that s is potentially invalid after the callback returns - we'll close dead streams on the next pass */
+			else if (s->ready && s->func) {
+				s->func(s);
+			}
 
 			continue;
 		}
