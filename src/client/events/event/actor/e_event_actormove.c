@@ -60,7 +60,7 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, const 
 void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 {
 	le_t *le;
-	int number, i;
+	int number, i, newPathLength;
 
 	number = NET_ReadShort(msg);
 	/* get le */
@@ -75,11 +75,13 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 	if (LE_IsDead(le))
 		Com_Error(ERR_DROP, "Can't move, actor on team %i dead", le->team);
 
+	newPathLength = NET_ReadByte(msg);
+	Com_Printf("pathLength: %i:%i\n", le->pathLength, newPathLength);
 	if (le->pathLength > 0)
 		Com_Error(ERR_DROP, "Actor (entnum: %i) on team %i is still moving (%i steps left)",
 				le->entnum, le->team, le->pathLength);
 
-	le->pathLength = NET_ReadByte(msg);
+	le->pathLength = newPathLength;
 	if (le->pathLength >= MAX_LE_PATHLENGTH)
 		Com_Error(ERR_DROP, "Overflow in pathLength");
 
