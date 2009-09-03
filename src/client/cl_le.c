@@ -508,6 +508,69 @@ int LE_ActorGetStepTime (const le_t *le, const pos3_t pos, const pos3_t oldPos, 
 	}
 }
 
+static void LE_DoPathMove (le_t *le)
+{
+	/* next part */
+	const byte fulldv = le->path[le->pathPos];
+	const byte dir = getDVdir(fulldv);
+	const byte crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
+	/* newCrouchingState needs to be set to the current crouching state
+	 * and is possibly updated by PosAddDV. */
+	byte newCrouchingState = crouchingState;
+	PosAddDV(le->pos, newCrouchingState, fulldv);
+
+	/* walking in water will not play the normal footstep sounds */
+	if (!le->pathContents[le->pathPos]) {
+		trace_t trace;
+		vec3_t from, to;
+
+		/* prepare trace vectors */
+		PosToVec(le->pos, from);
+		VectorCopy(from, to);
+		/* we should really hit the ground with this */
+		to[2] -= UNIT_HEIGHT;
+
+		trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
+		if (trace.surface)
+			LE_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
+	} else
+		LE_PlaySoundFileForContents(le, le->pathContents[le->pathPos]);
+
+	/* only change the direction if the actor moves horizontally. */
+	if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS)
+		le->dir = dir & (CORE_DIRECTIONS - 1);
+	le->angles[YAW] = directionAngles[le->dir];
+	le->startTime = le->endTime;
+	/* check for straight movement or diagonal movement */
+	assert(le->speed[le->pathPos]);
+	le->endTime += LE_ActorGetStepTime(le, le->pos, le->oldPos, dir, le->speed[le->pathPos]);
+
+	le->positionContents = le->pathContents[le->pathPos];
+	le->pathPos++;
+}
+
+static void LE_DoEndPathMove (le_t *le)
+{
+	/* end of move */
+	le_t *floor;
+
+	/* Verify the current position */
+	if (!VectorCompare(le->pos, le->newPos))
+		Com_Error(ERR_DROP, "LET_PathMove: Actor movement is out of sync: %i:%i:%i should be %i:%i:%i (step %i of %i) (team %i)",
+				le->pos[0], le->pos[1], le->pos[2], le->newPos[0], le->newPos[1], le->newPos[2], le->pathPos, le->pathLength, le->team);
+
+	CL_ConditionalMoveCalcActor(le);
+
+	/* link any floor container into the actor temp floor container */
+	floor = LE_Find(ET_ITEM, le->pos);
+	if (floor)
+		FLOOR(le) = FLOOR(floor);
+
+	le->lighting.dirty = qtrue;
+	LE_SetThink(le, LET_StartIdle);
+	/*le->think(le);*/
+}
+
 /**
  * @brief Move the actor along the path to the given location
  * @note Think function
@@ -518,7 +581,7 @@ static void LET_PathMove (le_t * le)
 	float frac;
 	vec3_t start, dest, delta;
 
-	/* check for start */
+	/* check for start of the next step */
 	if (cl.time <= le->startTime)
 		return;
 
@@ -531,60 +594,9 @@ static void LET_PathMove (le_t * le)
 		VectorCopy(le->pos, le->oldPos);
 
 		if (le->pathPos < le->pathLength) {
-			/* next part */
-			const byte fulldv = le->path[le->pathPos];
-			const byte dir = getDVdir(fulldv);
-			const byte crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
-			/** @note newCrouchingState needs to be set to the current crouching state and is possibly updated by PosAddDV. */
-			byte newCrouchingState = crouchingState;
-			PosAddDV(le->pos, newCrouchingState, fulldv);
-
-			/* walking in water will not play the normal footstep sounds */
-			if (!le->pathContents[le->pathPos]) {
-				trace_t trace;
-				vec3_t from, to;
-
-				/* prepare trace vectors */
-				PosToVec(le->pos, from);
-				VectorCopy(from, to);
-				/* we should really hit the ground with this */
-				to[2] -= UNIT_HEIGHT;
-
-				trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
-				if (trace.surface)
-					LE_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
-			} else
-				LE_PlaySoundFileForContents(le, le->pathContents[le->pathPos]);
-
-			/* only change the direction if the actor moves horizontally. */
-			if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS)
-				le->dir = dir & (CORE_DIRECTIONS - 1);
-			le->angles[YAW] = directionAngles[le->dir];
-			le->startTime = le->endTime;
-			/* check for straight movement or diagonal movement */
-			assert(le->speed[le->pathPos]);
-			le->endTime += LE_ActorGetStepTime(le, le->pos, le->oldPos, dir, le->speed[le->pathPos]);
-
-			le->positionContents = le->pathContents[le->pathPos];
-			le->pathPos++;
+			LE_DoPathMove(le);
 		} else {
-			/* end of move */
-			le_t *floor;
-
-			/* Verify the current position */
-			if (!VectorCompare(le->pos, le->newPos))
-				Com_Error(ERR_DROP, "LET_PathMove: Actor movement is out of sync: %i:%i:%i should be %i:%i:%i (step %i of %i) (team %i)",
-						le->pos[0], le->pos[1], le->pos[2], le->newPos[0], le->newPos[1], le->newPos[2], le->pathPos, le->pathLength, le->team);
-
-			CL_ConditionalMoveCalcActor(le);
-
-			/* link any floor container into the actor temp floor container */
-			floor = LE_Find(ET_ITEM, le->pos);
-			if (floor)
-				FLOOR(le) = FLOOR(floor);
-
-			le->lighting.dirty = qtrue;
-			LE_SetThink(le, LET_StartIdle);
+			LE_DoEndPathMove(le);
 			return;
 		}
 	}
