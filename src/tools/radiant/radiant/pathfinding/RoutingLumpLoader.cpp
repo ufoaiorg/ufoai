@@ -9,6 +9,9 @@
 #include "../../../common/qfiles.h"
 #define COMPILE_MAP
 #include "../../../common/routing.h"
+#include "gtkutil/messagebox.h"
+#include "radiant_i18n.h"
+#include "../mainframe.h"
 
 namespace routing
 {
@@ -259,6 +262,9 @@ namespace routing
 			// Load the model and return the RenderablePtr
 			_routingLump = RoutingLump();
 			loadRoutingLump(*file);
+		} else {
+			gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("No compiled version of the map found"),
+				_("Error"), eMB_OK, eMB_ICONERROR);
 		}
 	}
 
