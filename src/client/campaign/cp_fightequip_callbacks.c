@@ -128,6 +128,7 @@ static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 	}
 }
 
+#if 0
 /**
  * @brief Get the technology of the item that is in current zone.
  * @note NULL if zone is empty.
@@ -152,6 +153,7 @@ static inline technology_t *AII_GetTechnologyToDisplay (const aircraftSlot_t con
 	} else
 		return NULL;
 }
+#endif
 
 /**
  * @brief Returns the userfriendly name for craftitem types (shown in aircraft equip menu)
