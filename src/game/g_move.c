@@ -146,225 +146,227 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 	length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
-	if (length && length < ROUTING_NOT_REACHABLE) {
-		/* Autostand: check if the actor is crouched and player wants autostanding...*/
-		if (crouchingState && player->autostand) {
-			/* ...and if this is a long walk... */
-			if ((float) (2 * TU_CROUCH) < (float) length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
-				/* ...make them stand first. If the player really wants them to walk a long
-				 * way crouched, he can move the actor in several stages.
-				 * Uses the threshold at which standing, moving and crouching again takes
-				 * fewer TU than just crawling while crouched. */
-				G_ClientStateChange(player, num, STATE_CROUCHED, qtrue); /* change to stand state */
-				crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
-				if (!crouchingState) {
-					G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
-					length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
-					autoCrouchRequired = qtrue;
-				}
+	if (length && length >= ROUTING_NOT_REACHABLE)
+		return;
+
+	/* Autostand: check if the actor is crouched and player wants autostanding...*/
+	if (crouchingState && player->autostand) {
+		/* ...and if this is a long walk... */
+		if ((float) (2 * TU_CROUCH) < (float) length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
+			/* ...make them stand first. If the player really wants them to walk a long
+			 * way crouched, he can move the actor in several stages.
+			 * Uses the threshold at which standing, moving and crouching again takes
+			 * fewer TU than just crawling while crouched. */
+			G_ClientStateChange(player, num, STATE_CROUCHED, qtrue); /* change to stand state */
+			crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+			if (!crouchingState) {
+				G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
+				length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
+				autoCrouchRequired = qtrue;
 			}
 		}
+	}
 
-		/* this let the footstep sounds play even over network */
-		ent->think = G_PhysicsStep;
-		ent->nextthink = level.time;
+	/* this let the footstep sounds play even over network */
+	ent->think = G_PhysicsStep;
+	ent->nextthink = level.time;
 
-		/* assemble dv-encoded move data */
-		VectorCopy(to, pos);
-		numdv = 0;
-		tu = 0;
-		initTU = ent->TU;
+	/* assemble dv-encoded move data */
+	VectorCopy(to, pos);
+	numdv = 0;
+	tu = 0;
+	initTU = ent->TU;
 
-		while ((dv = gi.MoveNext(gi.routingMap, ent->fieldSize, gi.pathingMap, pos, crouchingState))
-				!= ROUTING_UNREACHABLE) {
-			const int oldZ = pos[2];
-			/* dv indicates the direction traveled to get to the new cell and the original cell height. */
-			/* We are going backwards to the origin. */
-			PosSubDV(pos, crouchingState, dv);
-			/* Replace the z portion of the DV value so we can get back to where we were. */
-			dvtab[numdv++] = NewDVZ(dv, oldZ);
-		}
+	while ((dv = gi.MoveNext(gi.routingMap, ent->fieldSize, gi.pathingMap, pos, crouchingState))
+			!= ROUTING_UNREACHABLE) {
+		const int oldZ = pos[2];
+		/* dv indicates the direction traveled to get to the new cell and the original cell height. */
+		/* We are going backwards to the origin. */
+		PosSubDV(pos, crouchingState, dv);
+		/* Replace the z portion of the DV value so we can get back to where we were. */
+		dvtab[numdv++] = NewDVZ(dv, oldZ);
+	}
 
-		/* everything ok, found valid route? */
-		if (VectorCompare(pos, ent->pos)) {
+	/* everything ok, found valid route? */
+	if (VectorCompare(pos, ent->pos)) {
 
-			/* no floor inventory at this point */
-			FLOOR(ent) = NULL;
+		/* no floor inventory at this point */
+		FLOOR(ent) = NULL;
 
-			while (numdv > 0) {
-				/* A flag to see if we needed to change crouch state */
-				int crouchFlag;
+		while (numdv > 0) {
+			/* A flag to see if we needed to change crouch state */
+			int crouchFlag;
 
-				/* get next dv */
-				numdv--;
-				dv = dvtab[numdv];
-				/* This is the direction to make the step into */
-				dir = getDVdir(dv);
+			/* get next dv */
+			numdv--;
+			dv = dvtab[numdv];
+			/* This is the direction to make the step into */
+			dir = getDVdir(dv);
 
-				/* turn around first */
-				status = G_ActorDoTurn(ent, dir);
-				if (stopOnVisStop && (status & VIS_STOP))
-					break;
+			/* turn around first */
+			status = G_ActorDoTurn(ent, dir);
+			if (stopOnVisStop && (status & VIS_STOP))
+				break;
 
-				/* decrease TUs */
-				div = gi.TUsUsed(dir);
-				truediv = div;
-				if ((ent->state & STATE_CROUCHED) && dir < CORE_DIRECTIONS)
-					div *= TU_CROUCH_MOVING_FACTOR;
-				if ((int) (tu + div) > ent->TU)
-					break;
-				tu += div;
+			/* decrease TUs */
+			div = gi.TUsUsed(dir);
+			truediv = div;
+			if ((ent->state & STATE_CROUCHED) && dir < CORE_DIRECTIONS)
+				div *= TU_CROUCH_MOVING_FACTOR;
+			if ((int) (tu + div) > ent->TU)
+				break;
+			tu += div;
 
-				/* slower if crouched */
-				if (ent->state & STATE_CROUCHED)
-					ent->speed = ACTOR_SPEED_CROUCHED;
-				else
-					ent->speed = ACTOR_SPEED_NORMAL;
-				ent->speed *= g_actorspeed->value;
-
-				/* This is now a flag to indicate a change in crouching */
-				crouchFlag = 0;
-				PosAddDV(ent->pos, crouchFlag, dv);
-				if (crouchFlag == 0) { /* No change in crouch */
-					gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
-					VectorCopy(ent->origin, pointTrace);
-					pointTrace[2] += PLAYER_MIN;
-
-					contentFlags = gi.PointContents(pointTrace);
-
-					/* link it at new position - this must be done for every edict
-					 * movement - to let the server know about it. */
-					gi.LinkEdict(ent);
-
-					/* Only the PHALANX team has these stats right now. */
-					if (ent->chr.scoreMission) {
-						if (ent->state & STATE_CROUCHED)
-							ent->chr.scoreMission->movedCrouched += truediv;
-						else
-							ent->chr.scoreMission->movedNormal += truediv;
-					}
-
-					/* write move header if not yet done */
-					if (gi.GetEvent() != EV_ACTOR_MOVE) {
-						gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
-						gi.WriteShort(num);
-						/* stepAmount is a pointer to a location in the netchannel
-						 * the value of this pointer depends on how far the actor walks
-						 * and this might be influenced at a later stage inside this
-						 * loop. That's why we can modify the value of this byte
-						 * if e.g. a VIS_STOP occurred and no more steps should be made.
-						 * But keep in mind, that no other events might be between
-						 * this event and its successful end - otherwise the
-						 * stepAmount pointer would no longer be valid and you would
-						 * modify data in the new event. */
-						stepAmount = gi.WriteDummyByte(0);
-						/* Add three more dummy bytes.  These will be the final actor position. */
-						gi.WriteDummyByte(0); /* x */
-						gi.WriteDummyByte(0); /* y */
-						gi.WriteDummyByte(0); /* z */
-					}
-
-					/* the moveinfo stuff is used inside the G_PhysicsStep think function */
-					if (ent->moveinfo.steps >= MAX_DVTAB) {
-						ent->moveinfo.steps = 0;
-						ent->moveinfo.currentStep = 0;
-					}
-					ent->moveinfo.contentFlags[ent->moveinfo.steps] = contentFlags;
-					ent->moveinfo.visflags[ent->moveinfo.steps] = ent->visflags;
-					ent->moveinfo.steps++;
-
-					/* store steps in netchannel */
-					(*stepAmount)++;
-					/* store the position too */
-					*(stepAmount + 1) = ent->pos[0];
-					*(stepAmount + 2) = ent->pos[1];
-					*(stepAmount + 3) = ent->pos[2];
-
-					/* write move header and always one step after another - because the next step
-					 * might already be the last one due to some stop event */
-					gi.WriteByte(dv);
-					gi.WriteShort(ent->speed);
-					gi.WriteShort(contentFlags);
-
-					/* check if player appears/perishes, seen from other teams */
-					G_CheckVis(ent, qtrue);
-
-					/* check for anything appearing, seen by "the moving one" */
-					status = G_CheckVisTeam(ent->team, NULL, qfalse, ent);
-
-					/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
-					ent->TU = max(0, initTU - (int) tu);
-
-					clientAction = ent->client_action;
-					oldState = ent->state;
-					/* check triggers at new position but only if no actor appeared */
-					if (G_TouchTriggers(ent)) {
-						triggers = qtrue;
-						if (!clientAction)
-							status |= VIS_STOP;
-					}
-					/* state has changed - maybe we walked on a trigger_hurt */
-					if (oldState != ent->state)
-						status |= VIS_STOP;
-				} else if (crouchFlag == 1) { /* Actor is standing */
-					G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
-				} else if (crouchFlag == -1) { /* Actor is crouching and should stand up */
-					G_ClientStateChange(player, num, STATE_CROUCHED, qfalse);
-				}
-
-				/* check for reaction fire */
-				if (G_ReactToMove(ent, qtrue)) {
-					if (G_ReactToMove(ent, qfalse))
-						status |= VIS_STOP;
-
-					autoCrouchRequired = qfalse;
-					/** @todo if the attacker is invisible let the target turn in the shooting direction
-					 * of the attacker (@see G_ActorDoTurn) */
-					/*G_ActorDoTurn(ent->reactionTarget, dir);*/
-				}
-
-				/* Restore ent->TU because the movement code relies on it not being modified! */
-				ent->TU = initTU;
-
-				/* check for death */
-				if (oldState != ent->state && !(ent->state & STATE_DAZED)) {
-					/** @todo Handle dazed via trigger_hurt */
-					/* maybe this was due to rf - then the G_ActorDie was already called */
-					if (ent->maxs[2] != PLAYER_DEAD)
-						G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN, NULL);
-					return;
-				}
-
-				if (stopOnVisStop && (status & VIS_STOP))
-					break;
-			}
-
-			/* now we can send other events again - the EV_ACTOR_MOVE event has ended */
-
-			/* submit the TUs / round down */
-			if (g_notu != NULL && g_notu->integer)
-				ent->TU = initTU;
+			/* slower if crouched */
+			if (ent->state & STATE_CROUCHED)
+				ent->speed = ACTOR_SPEED_CROUCHED;
 			else
+				ent->speed = ACTOR_SPEED_NORMAL;
+			ent->speed *= g_actorspeed->value;
+
+			/* This is now a flag to indicate a change in crouching */
+			crouchFlag = 0;
+			PosAddDV(ent->pos, crouchFlag, dv);
+			if (crouchFlag == 0) { /* No change in crouch */
+				gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+				VectorCopy(ent->origin, pointTrace);
+				pointTrace[2] += PLAYER_MIN;
+
+				contentFlags = gi.PointContents(pointTrace);
+
+				/* link it at new position - this must be done for every edict
+				 * movement - to let the server know about it. */
+				gi.LinkEdict(ent);
+
+				/* Only the PHALANX team has these stats right now. */
+				if (ent->chr.scoreMission) {
+					if (ent->state & STATE_CROUCHED)
+						ent->chr.scoreMission->movedCrouched += truediv;
+					else
+						ent->chr.scoreMission->movedNormal += truediv;
+				}
+
+				/* write move header if not yet done */
+				if (gi.GetEvent() != EV_ACTOR_MOVE) {
+					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
+					gi.WriteShort(num);
+					/* stepAmount is a pointer to a location in the netchannel
+					 * the value of this pointer depends on how far the actor walks
+					 * and this might be influenced at a later stage inside this
+					 * loop. That's why we can modify the value of this byte
+					 * if e.g. a VIS_STOP occurred and no more steps should be made.
+					 * But keep in mind, that no other events might be between
+					 * this event and its successful end - otherwise the
+					 * stepAmount pointer would no longer be valid and you would
+					 * modify data in the new event. */
+					stepAmount = gi.WriteDummyByte(0);
+					/* Add three more dummy bytes.  These will be the final actor position. */
+					gi.WriteDummyByte(0); /* x */
+					gi.WriteDummyByte(0); /* y */
+					gi.WriteDummyByte(0); /* z */
+				}
+
+				/* the moveinfo stuff is used inside the G_PhysicsStep think function */
+				if (ent->moveinfo.steps >= MAX_DVTAB) {
+					ent->moveinfo.steps = 0;
+					ent->moveinfo.currentStep = 0;
+				}
+				ent->moveinfo.contentFlags[ent->moveinfo.steps] = contentFlags;
+				ent->moveinfo.visflags[ent->moveinfo.steps] = ent->visflags;
+				ent->moveinfo.steps++;
+
+				/* store steps in netchannel */
+				(*stepAmount)++;
+				/* store the position too */
+				*(stepAmount + 1) = ent->pos[0];
+				*(stepAmount + 2) = ent->pos[1];
+				*(stepAmount + 3) = ent->pos[2];
+
+				/* write move header and always one step after another - because the next step
+				 * might already be the last one due to some stop event */
+				gi.WriteByte(dv);
+				gi.WriteShort(ent->speed);
+				gi.WriteShort(contentFlags);
+
+				/* check if player appears/perishes, seen from other teams */
+				G_CheckVis(ent, qtrue);
+
+				/* check for anything appearing, seen by "the moving one" */
+				status = G_CheckVisTeam(ent->team, NULL, qfalse, ent);
+
+				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				ent->TU = max(0, initTU - (int) tu);
 
-			G_SendStats(ent);
-
-			/* only if triggers are touched - there was a client
-			 * action set and there were steps made */
-			if (!triggers && ent->client_action) {
-				/* no triggers, no client action */
-				ent->client_action = NULL;
-				gi.AddEvent(G_TeamToPM(ent->team), EV_RESET_CLIENT_ACTION);
-				gi.WriteShort(ent->number);
+				clientAction = ent->client_action;
+				oldState = ent->state;
+				/* check triggers at new position but only if no actor appeared */
+				if (G_TouchTriggers(ent)) {
+					triggers = qtrue;
+					if (!clientAction)
+						status |= VIS_STOP;
+				}
+				/* state has changed - maybe we walked on a trigger_hurt */
+				if (oldState != ent->state)
+					status |= VIS_STOP;
+			} else if (crouchFlag == 1) { /* Actor is standing */
+				G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
+			} else if (crouchFlag == -1) { /* Actor is crouching and should stand up */
+				G_ClientStateChange(player, num, STATE_CROUCHED, qfalse);
 			}
 
-			/* end the move */
-			G_GetFloorItems(ent);
-			gi.EndEvents();
+			/* check for reaction fire */
+			if (G_ReactToMove(ent, qtrue)) {
+				if (G_ReactToMove(ent, qfalse))
+					status |= VIS_STOP;
+
+				autoCrouchRequired = qfalse;
+				/** @todo if the attacker is invisible let the target turn in the shooting direction
+				 * of the attacker (@see G_ActorDoTurn) */
+				/*G_ActorDoTurn(ent->reactionTarget, dir);*/
+			}
+
+			/* Restore ent->TU because the movement code relies on it not being modified! */
+			ent->TU = initTU;
+
+			/* check for death */
+			if (oldState != ent->state && !(ent->state & STATE_DAZED)) {
+				/** @todo Handle dazed via trigger_hurt */
+				/* maybe this was due to rf - then the G_ActorDie was already called */
+				if (ent->maxs[2] != PLAYER_DEAD)
+					G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN, NULL);
+				return;
+			}
+
+			if (stopOnVisStop && (status & VIS_STOP))
+				break;
 		}
 
-		if (autoCrouchRequired)
-			/* toggle back to crouched state */
-			G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
+		/* now we can send other events again - the EV_ACTOR_MOVE event has ended */
+
+		/* submit the TUs / round down */
+		if (g_notu != NULL && g_notu->integer)
+			ent->TU = initTU;
+		else
+			ent->TU = max(0, initTU - (int) tu);
+
+		G_SendStats(ent);
+
+		/* only if triggers are touched - there was a client
+		 * action set and there were steps made */
+		if (!triggers && ent->client_action) {
+			/* no triggers, no client action */
+			ent->client_action = NULL;
+			gi.AddEvent(G_TeamToPM(ent->team), EV_RESET_CLIENT_ACTION);
+			gi.WriteShort(ent->number);
+		}
+
+		/* end the move */
+		G_GetFloorItems(ent);
+		gi.EndEvents();
+	}
+
+	if (autoCrouchRequired) {
+		/* toggle back to crouched state */
+		G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
 	}
 }

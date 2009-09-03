@@ -1829,7 +1829,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		if (building && building->mandatory && !buildingNums[i]) {
 			Com_Error(ERR_DROP, "Every base template needs one '%s'! '%s' has none.", building->id, template->id);
 		}
-        }
+	}
 }
 
 /**
