@@ -554,9 +554,11 @@ static void LE_DoPathMove (le_t *le)
 	le->pathPos++;
 }
 
+/**
+ * @brief Ends the move of an actor
+ */
 static void LE_DoEndPathMove (le_t *le)
 {
-	/* end of move */
 	le_t *floor;
 
 	/* Verify the current position */
@@ -573,7 +575,7 @@ static void LE_DoEndPathMove (le_t *le)
 
 	le->lighting.dirty = qtrue;
 	LE_SetThink(le, LET_StartIdle);
-	/*le->think(le);*/
+	le->think(le);
 }
 
 /**
@@ -587,11 +589,11 @@ static void LET_PathMove (le_t * le)
 	vec3_t start, dest, delta;
 
 	/* check for start of the next step */
-	if (cl.time <= le->startTime)
+	if (cl.time < le->startTime)
 		return;
 
 	/* move ahead */
-	while (cl.time > le->endTime) {
+	while (cl.time >= le->endTime) {
 		/* Ensure that we are displayed where we are supposed to be, in case the last frame came too quickly. */
 		Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
 
