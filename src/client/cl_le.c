@@ -508,17 +508,8 @@ int LE_ActorGetStepTime (const le_t *le, const pos3_t pos, const pos3_t oldPos, 
 	}
 }
 
-static void LE_DoPathMove (le_t *le)
+static void LE_PlayFootStepSound (le_t *le)
 {
-	/* next part */
-	const byte fulldv = le->path[le->pathPos];
-	const byte dir = getDVdir(fulldv);
-	const byte crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
-	/* newCrouchingState needs to be set to the current crouching state
-	 * and is possibly updated by PosAddDV. */
-	byte newCrouchingState = crouchingState;
-	PosAddDV(le->pos, newCrouchingState, fulldv);
-
 	/* walking in water will not play the normal footstep sounds */
 	if (!le->pathContents[le->pathPos]) {
 		trace_t trace;
@@ -535,6 +526,20 @@ static void LE_DoPathMove (le_t *le)
 			LE_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
 	} else
 		LE_PlaySoundFileForContents(le, le->pathContents[le->pathPos]);
+}
+
+static void LE_DoPathMove (le_t *le)
+{
+	/* next part */
+	const byte fulldv = le->path[le->pathPos];
+	const byte dir = getDVdir(fulldv);
+	const byte crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
+	/* newCrouchingState needs to be set to the current crouching state
+	 * and is possibly updated by PosAddDV. */
+	byte newCrouchingState = crouchingState;
+	PosAddDV(le->pos, newCrouchingState, fulldv);
+
+	LE_PlayFootStepSound(le);
 
 	/* only change the direction if the actor moves horizontally. */
 	if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS)
