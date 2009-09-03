@@ -2,6 +2,9 @@
 #include "RoutingLump.h"
 #include "autoptr.h"
 #include "ifilesystem.h"
+#include "gtkutil/messagebox.h"
+#include "../mainframe.h"
+#include "radiant_i18n.h"
 
 #include "../../../shared/ufotypes.h"
 #include "../../../shared/typedefs.h"
@@ -9,9 +12,6 @@
 #include "../../../common/qfiles.h"
 #define COMPILE_MAP
 #include "../../../common/routing.h"
-#include "gtkutil/messagebox.h"
-#include "radiant_i18n.h"
-#include "../mainframe.h"
 
 namespace routing
 {
