@@ -592,4 +592,14 @@ typedef Callback1<std::size_t> SizeImportCallback;
 typedef Callback1<const SizeImportCallback&> SizeExportCallback;
 
 
+template<bool(*BoolFunction) ()>
+class BoolFunctionExport
+{
+	public:
+		static void apply (const BoolImportCallback& importCallback)
+		{
+			importCallback(BoolFunction());
+		}
+};
+
 #endif

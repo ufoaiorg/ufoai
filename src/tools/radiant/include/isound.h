@@ -2,11 +2,14 @@
 #define ISOUND_H_
 
 #include "modulesystem.h"
+#include "modulesystem/moduleregistry.h"
 #include "generic/constant.h"
 #include "generic/callbackfwd.h"
 #include "autoptr.h"
 #include <vector>
 #include <string>
+#include "debugging/debugging.h"
+#include "ifilesystem.h"
 
 const float METERS_PER_UNIT = 0.0254f;
 const float UNITS_PER_METER = 1 / METERS_PER_UNIT;
@@ -58,6 +61,11 @@ class SoundRadii
 		}
 };
 
+class SoundManagerDependencies :
+		public GlobalFileSystemModuleRef
+{
+};
+
 /**
  * Sound manager interface.
  */
@@ -67,7 +75,7 @@ class ISoundManager
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "sound");
 
-		virtual ~ISoundManager () {}
+		virtual ~ISoundManager (){};
 
 		/** greebo: Plays the given sound file (defined by its VFS path).
 		 *
@@ -79,22 +87,36 @@ class ISoundManager
 		/** greebo: Stops the currently played sound.
 		 */
 		virtual void stopSound () = 0;
+
+		/** tachop: Switches Sound Playback Enabled flag.
+		 */
+		virtual void switchPlaybackEnabledFlag() = 0;
+
+		/** tachop: Returns if Sound Playback is enabled.
+		 */
+		virtual bool isPlaybackEnabled ( ) = 0;
 };
 
-#include "modulesystem.h"
-
+// This is needed to be registered as a Radiant dependency
 template<typename Type>
 class GlobalModule;
 typedef GlobalModule<ISoundManager> GlobalSoundManagerModule;
 
+// A reference to the call above.
 template<typename Type>
 class GlobalModuleRef;
 typedef GlobalModuleRef<ISoundManager> GlobalSoundManagerModuleRef;
 
 // Accessor method
-inline ISoundManager& GlobalSoundManager ()
+inline ISoundManager * GlobalSoundManager ()
 {
-	return GlobalSoundManagerModule::getTable();
-}
+	Module * soundmodule = globalModuleServer().findModule(
+			ISoundManager::Name_CONSTANT_::evaluate(),
+			ISoundManager::Version_CONSTANT_::evaluate(),
+			"*");
+	ASSERT_MESSAGE(soundmodule,
+			"Couldnt retrieve GlobalSoundManager, is not registered and/or initialized.");
+	return (ISoundManager *) soundmodule->getTable();  // findModule returns the pointer to the valid value, DO NOT DELETE!
+};
 
 #endif /*ISOUND_H_*/

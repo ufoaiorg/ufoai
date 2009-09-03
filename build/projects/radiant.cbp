@@ -8,9 +8,9 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="../../radiant/uforadiant" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../radiant" />
-				<Option object_output=".objs/radiant" />
+				<Option output="..\..\radiant\uforadiant" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\radiant" />
+				<Option object_output=".objs\radiant" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -48,12 +48,12 @@
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="../../radiant/uforadiant" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../radiant" />
-				<Option object_output=".objs/radiant" />
+				<Option output="..\..\radiant\uforadiant" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\radiant" />
+				<Option object_output=".objs\radiant" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option host_application="../../radiant/uforadiant.exe" />
+				<Option host_application="..\..\radiant\uforadiant.exe" />
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-pg" />
@@ -84,6 +84,10 @@
 					<Add library="kernel32" />
 					<Add library="libgtkglext-win32-1.0" />
 					<Add library="intl" />
+					<Add library="openal32" />
+					<Add library="vorbisfile" />
+					<Add library="vorbis" />
+					<Add library="ogg" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="..\..\contrib\scripts\compile_po.bat /uforadiant" />
@@ -91,9 +95,9 @@
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="../../radiant/uforadiant" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../radiant" />
-				<Option object_output=".objs/radiant" />
+				<Option output="..\..\radiant\uforadiant" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\radiant" />
+				<Option object_output=".objs\radiant" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -106,15 +110,15 @@
 					<Add option="`pkg-config gtk+-2.0 --libs`" />
 					<Add option="`pkg-config gtkglext-1.0 --libs`" />
 					<Add option="`pkg-config glib-2.0 --libs`" />
-					<Add library="gthread-2.0" />
 					<Add option="`xml2-config --libs`" />
+					<Add library="gthread-2.0" />
 				</Linker>
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
-				<Option output="../../radiant/uforadiant" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../radiant" />
-				<Option object_output=".objs/radiant" />
+				<Option output="..\..\radiant\uforadiant" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\radiant" />
+				<Option object_output=".objs\radiant" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -122,15 +126,15 @@
 					<Add option="`pkg-config gtkglext-1.0 --cflags`" />
 					<Add option="`pkg-config glib-2.0 --cflags`" />
 					<Add option="`xml2-config --cflags`" />
-					<Add directory="/sw/include" />
+					<Add directory="\sw\include" />
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config gtk+-2.0 --libs`" />
 					<Add option="`pkg-config gtkglext-1.0 --libs`" />
 					<Add option="`pkg-config glib-2.0 --libs`" />
-					<Add library="gthread-2.0" />
 					<Add option="`xml2-config --libs`" />
-					<Add directory="/sw/lib" />
+					<Add library="gthread-2.0" />
+					<Add directory="\sw\lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -142,321 +146,502 @@
 		<Linker>
 			<Add library="libjpeg" />
 		</Linker>
-		<Unit filename="../../src/tools/radiant/radiant/exec.cpp">
+		<Unit filename="..\..\src\shared\entitiesdef.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\include\aboutmsg.h" />
+		<Unit filename="..\..\src\tools\radiant\include\cullable.h" />
+		<Unit filename="..\..\src\tools\radiant\include\editable.h" />
+		<Unit filename="..\..\src\tools\radiant\include\iarchive.h" />
+		<Unit filename="..\..\src\tools\radiant\include\ibrush.h" />
+		<Unit filename="..\..\src\tools\radiant\include\idatastream.h" />
+		<Unit filename="..\..\src\tools\radiant\include\ieclass.h" />
+		<Unit filename="..\..\src\tools\radiant\include\ientity.h" />
+		<Unit filename="..\..\src\tools\radiant\include\ifilesystem.h" />
+		<Unit filename="..\..\src\tools\radiant\include\ifiletypes.h" />
+		<Unit filename="..\..\src\tools\radiant\include\ifilter.h" />
+		<Unit filename="..\..\src\tools\radiant\include\igl.h" />
+		<Unit filename="..\..\src\tools\radiant\include\iglrender.h" />
+		<Unit filename="..\..\src\tools\radiant\include\iimage.h" />
+		<Unit filename="..\..\src\tools\radiant\include\imap.h" />
+		<Unit filename="..\..\src\tools\radiant\include\imodel.h" />
+		<Unit filename="..\..\src\tools\radiant\include\iparticles.h" />
+		<Unit filename="..\..\src\tools\radiant\include\iplugin.h" />
+		<Unit filename="..\..\src\tools\radiant\include\iradiant.h" />
+		<Unit filename="..\..\src\tools\radiant\include\ireference.h" />
+		<Unit filename="..\..\src\tools\radiant\include\irender.h" />
+		<Unit filename="..\..\src\tools\radiant\include\iscenegraph.h" />
+		<Unit filename="..\..\src\tools\radiant\include\iscriplib.h" />
+		<Unit filename="..\..\src\tools\radiant\include\iselection.h" />
+		<Unit filename="..\..\src\tools\radiant\include\ishaders.h" />
+		<Unit filename="..\..\src\tools\radiant\include\isound.h" />
+		<Unit filename="..\..\src\tools\radiant\include\itexdef.h" />
+		<Unit filename="..\..\src\tools\radiant\include\itextstream.h" />
+		<Unit filename="..\..\src\tools\radiant\include\itextures.h" />
+		<Unit filename="..\..\src\tools\radiant\include\itoolbar.h" />
+		<Unit filename="..\..\src\tools\radiant\include\iundo.h" />
+		<Unit filename="..\..\src\tools\radiant\include\mapfile.h" />
+		<Unit filename="..\..\src\tools\radiant\include\moduleobserver.h" />
+		<Unit filename="..\..\src\tools\radiant\include\modulesystem.h" />
+		<Unit filename="..\..\src\tools\radiant\include\nameable.h" />
+		<Unit filename="..\..\src\tools\radiant\include\namespace.h" />
+		<Unit filename="..\..\src\tools\radiant\include\preferencesystem.h" />
+		<Unit filename="..\..\src\tools\radiant\include\radiant_i18n.h" />
+		<Unit filename="..\..\src\tools\radiant\include\renderable.h" />
+		<Unit filename="..\..\src\tools\radiant\include\selectable.h" />
+		<Unit filename="..\..\src\tools\radiant\include\shared.h" />
+		<Unit filename="..\..\src\tools\radiant\include\version.h" />
+		<Unit filename="..\..\src\tools\radiant\include\windowobserver.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\archivelib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\autoptr.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\bytestreamutils.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\character.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\container\array.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\container\cache.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\container\container.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\container\hashfunc.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\container\hashtable.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\container\stack.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\convert.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\debugging\debugging.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\dragplanes.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\eclasslib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\entitylib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\generic\arrayrange.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\generic\bitfield.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\generic\callback.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\generic\callbackfwd.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\generic\constant.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\generic\enumeration.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\generic\functional.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\generic\object.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\generic\reference.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\generic\referencecounted.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\generic\static.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\generic\vector.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\GLWidgetSentry.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\ModalProgressDialog.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\ModelProgressDialog.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\accelerator.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\accelerator.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\button.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\button.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\clipboard.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\clipboard.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\closure.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\container.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\cursor.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/accelerator.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\cursor.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\dialog.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/button.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\dialog.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\entry.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\filechooser.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/clipboard.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\filechooser.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\frame.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/cursor.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\frame.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\glfont.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/dialog.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\glfont.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\glwidget.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/filechooser.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\glwidget.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\idledraw.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\image.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/frame.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\image.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\menu.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/glfont.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\menu.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\messagebox.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/glwidget.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\messagebox.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\multimonitor.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\nonmodal.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\paned.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/image.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\paned.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\pointer.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\timer.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/menu.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\timer.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\toolbar.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/messagebox.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\toolbar.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\widget.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\window.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/paned.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\window.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\xorrectangle.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\imagelib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\instancelib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\maplib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\math\aabb.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\math\curve.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\math\expression.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\math\frustum.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\math\line.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\math\matrix.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\math\pi.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\math\plane.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\math\quaternion.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\math\vector.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\memory\allocator.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\moduleobservers.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\modulesystem\moduleregistry.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\modulesystem\modulesmap.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\modulesystem\singletonmodule.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\os\dir.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\os\file.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\os\path.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\particles.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\picointernal.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/timer.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\picointernal.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\picomodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/toolbar.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\picomodules.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/window.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_ase.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/gtkutil/ModelProgressDialog.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_md2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/profile/file.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_md3.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/profile/profile.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_obj.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/autosave.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\pivot.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\profile\file.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/brush.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\profile\file.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\profile\profile.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/brush_primit.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\profile\profile.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\render.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\scenelib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\script\scripttokeniser.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\script\scripttokenwriter.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\selectionlib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\shaderlib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\signal\isignal.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\signal\signal.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\signal\signalfwd.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\sound\oggfilestream.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\sound\openal.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\sound\soundmanager.cpp" />
+		<Unit filename="..\..\src\tools\radiant\libs\sound\soundmanager.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\sound\soundplayer.cpp" />
+		<Unit filename="..\..\src\tools\radiant\libs\sound\soundplayer.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\sound\wavfileloader.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\stream\filestream.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\stream\memstream.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\stream\stringstream.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\stream\textfilestream.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\stream\textstream.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\string\pooledstring.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\string\string.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\string\stringfwd.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\stringio.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\texturelib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\transformlib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\traverselib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\typesystem.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\undolib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\uniquenames.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\versionlib.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\xml\ixml.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\xml\xmlparser.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\xml\xmlwriter.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\autosave.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/brushmanip.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\brush.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/brushmodule.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\brush_primit.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/camwindow.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\brushexport\BrushExportOBJ.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/colorscheme.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\brushmanip.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/commands.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\brushmodule.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/console.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\camwindow.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/csg.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\colorscheme.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/dialog.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\commands.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/sidebar/sidebar.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\console.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/sidebar/prefabs.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\csg.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/sidebar/entitylist.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialog.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/sidebar/entityinspector.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\about.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/sidebar/surfaceinspector.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findbrush.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/sidebar/mapinfo.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findtextures.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/sidebar/jobinfo.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\light.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/sidebar/texturebrowser.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\maptools.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/sidebar/particlebrowser.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\modelselector.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/dialogs/about.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\particle.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/dialogs/findbrush.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\prism.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/dialogs/findtextures.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\texteditor.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/dialogs/modelselector.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\eclass.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/dialogs/light.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\eclass_def.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/dialogs/maptools.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\entity.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/dialogs/particle.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\environment.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/dialogs/prism.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\error.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/dialogs/texteditor.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\exec.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/ui/common/ModelPreview.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\filetypes.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/ui/common/RenderableAABB.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\filters.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/eclass.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\grid.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/eclass_def.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\gtkmisc.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/entity.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\image.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/environment.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\lastused.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/error.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\levelfilters.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/filetypes.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\main.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/filters.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\mainframe.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/grid.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\map.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/gtkmisc.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\material.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/image.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\nullmodel.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/lastused.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\parse.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/main.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\particles.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/mainframe.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/toolbars.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\Routing.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/material.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\RoutingLump.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/particles.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\RoutingLumpLoader.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/map.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\RoutingRenderable.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/nullmodel.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/parse.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\plugin\PluginManager.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/pathfinding.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\plugin\PluginSlots.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/pathfinding/RoutingLump.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\pluginmenu.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/pathfinding/RoutingLumpLoader.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\plugintoolbar.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/pathfinding/RoutingRenderable.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\preferences.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/pathfinding/Routing.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\qe3.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/plugin.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\qgl.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/pluginmenu.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/plugintoolbar.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/preferences.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/qe3.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/qgl.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/plugin/PluginManager.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/plugin/PluginSlots.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/brushexport/BrushExportOBJ.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/radiant.rc">
+		<Unit filename="..\..\src\tools\radiant\radiant\radiant.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/referencecache.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\referencecache.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/renderstate.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\renderstate.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/scenegraph.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/select.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\select.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/selection.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\selection.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/server.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\server.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/stacktrace.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entityinspector.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/texmanip.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entitylist.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/textures.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\jobinfo.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/timer.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\mapinfo.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/treemodel.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\particlebrowser.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/undo.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\prefabs.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/url.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\sidebar.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/view.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\surfaceinspector.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/winding.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\texturebrowser.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/windowobservers.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\sound.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\stacktrace.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/xywindow.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\texmanip.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/levelfilters.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\textures.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/parse.c">
+		<Unit filename="..\..\src\tools\radiant\radiant\timer.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/entitiesdef.c">
+		<Unit filename="..\..\src\tools\radiant\radiant\toolbars.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\treemodel.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\ModelPreview.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\RenderableAABB.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\undo.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\url.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\view.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\winding.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\windowobservers.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\xywindow.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

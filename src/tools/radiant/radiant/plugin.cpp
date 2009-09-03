@@ -51,6 +51,7 @@
 #include "imap.h"
 #include "namespace.h"
 #include "commands.h"
+#include "isound.h"
 
 #include "gtkutil/messagebox.h"
 #include "gtkutil/filechooser.h"
@@ -179,6 +180,7 @@ StaticRegisterModule staticRegisterRadiantCore (StaticRadiantCoreModule::instanc
 
 class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalFileSystemModuleRef,
+		public GlobalSoundManagerModuleRef,
 		public GlobalEntityModuleRef,
 		public GlobalShadersModuleRef,
 		public GlobalBrushModuleRef,
@@ -200,6 +202,7 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 
 	public:
 		RadiantDependencies () :
+			GlobalSoundManagerModuleRef("*"),
 			GlobalEntityModuleRef("ufo"), GlobalShadersModuleRef("ufo"), GlobalBrushModuleRef("ufo"),
 					GlobalEntityClassManagerModuleRef("ufo"), m_image_modules(
 							GlobalRadiant().getRequiredGameDescriptionKeyValue("texturetypes")),

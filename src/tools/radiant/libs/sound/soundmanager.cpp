@@ -11,6 +11,8 @@ namespace sound
 	// Constructor
 	SoundManager::SoundManager ()
 	{
+		playbackEnabled = false;
+		resumingFileNameToBePlayed = "";  //  "maledeath01.ogg";  for testing :)
 	}
 
 	// Destructor
@@ -20,6 +22,9 @@ namespace sound
 
 	bool SoundManager::playSound (const std::string& fileName)
 	{
+		if(!playbackEnabled)
+			return true;
+
 		// Make a copy of the filename
 		std::string name = fileName;
 
@@ -29,7 +34,9 @@ namespace sound
 		if (file) {
 			// File found, play it
 			std::cout << "Found file: " << name << std::endl;
-			_soundPlayer.play(*file);
+			resumingFileNameToBePlayed = fileName;
+			if(playbackEnabled)
+				_soundPlayer.play(*file);
 			return true;
 		}
 
@@ -45,7 +52,9 @@ namespace sound
 		AutoPtr<ArchiveFile> oggFile(GlobalFileSystem().openFile(name.c_str()));
 		if (oggFile) {
 			std::cout << "Found file: " << name << std::endl;
-			_soundPlayer.play(*oggFile);
+			resumingFileNameToBePlayed = fileName;
+			if(playbackEnabled)
+				_soundPlayer.play(*oggFile);
 			return true;
 		}
 
@@ -55,7 +64,9 @@ namespace sound
 		AutoPtr<ArchiveFile> wavFile(GlobalFileSystem().openFile(name.c_str()));
 		if (wavFile) {
 			std::cout << "Found file: " << name << std::endl;
-			_soundPlayer.play(*wavFile);
+			resumingFileNameToBePlayed = fileName;
+			if(playbackEnabled)
+				_soundPlayer.play(*wavFile);
 			return true;
 		}
 
@@ -66,6 +77,33 @@ namespace sound
 	void SoundManager::stopSound ()
 	{
 		_soundPlayer.stop();
+		resumingFileNameToBePlayed = "";
+	}
+
+	void SoundManager::switchPlaybackEnabledFlag ()
+	{
+		playbackEnabled = !playbackEnabled;
+		if(playbackEnabled && resumingFileNameToBePlayed.length())
+			playSound (resumingFileNameToBePlayed);
 	}
 
 } // namespace sound
+
+bool GlobalSoundManager_isPlaybackEnabled(void)
+{
+	sound::SoundManager * sm = dynamic_cast<sound::SoundManager *>(GlobalSoundManager());
+	return sm->isPlaybackEnabled();
+}
+
+void GlobalSoundManager_switchPlaybackEnabledFlag()
+{
+	sound::SoundManager * sm = dynamic_cast<sound::SoundManager *>(GlobalSoundManager());
+	sm->switchPlaybackEnabledFlag();
+}
+
+/*!  Toggle menu callback definitions  */
+typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<GlobalSoundManager_isPlaybackEnabled>::apply> SoundPlaybackEnabledApplyCaller;
+SoundPlaybackEnabledApplyCaller g_soundPlaybackEnabled_button_caller;
+BoolExportCallback g_soundPlaybackEnabled_button_callback(g_soundPlaybackEnabled_button_caller);
+
+ToggleItem g_soundPlaybackEnabled_button(g_soundPlaybackEnabled_button_callback);

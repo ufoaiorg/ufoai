@@ -60,7 +60,7 @@ namespace sound
 
 				// Success
 				_initialised = true;
-				g_error("SoundPlayer: OpenAL context successfully set up\n");
+				g_message("SoundPlayer: OpenAL context successfully set up\n");
 			} else {
 				alcCloseDevice(device);
 				g_error("Could not create ALC context\n");
@@ -153,7 +153,7 @@ namespace sound
 		// Retrieve the extension
 		std::string ext = path_get_extension(file.getName());
 
-		if (string_compare_nocase(ext.c_str(), "ogg")) {
+		if (string_equal_nocase(ext.c_str(), "ogg")) {
 			// Convert the file into a buffer, self-destructs at end of scope
 			ScopedArchiveBuffer buffer(file);
 

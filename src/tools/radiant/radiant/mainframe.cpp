@@ -107,6 +107,7 @@
 #include "referencecache.h"
 #include "toolbars.h"
 #include "levelfilters.h"
+#include "sound/soundmanager.h"
 
 struct layout_globals_t
 {
@@ -644,16 +645,6 @@ bool FaceMode (void)
 			== SelectionSystem::eFace;
 }
 
-template<bool(*BoolFunction) ()>
-class BoolFunctionExport
-{
-	public:
-		static void apply (const BoolImportCallback& importCallback)
-		{
-			importCallback(BoolFunction());
-		}
-};
-
 typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<EdgeMode>::apply> EdgeModeApplyCaller;
 EdgeModeApplyCaller g_edgeMode_button_caller;
 BoolExportCallback g_edgeMode_button_callback(g_edgeMode_button_caller);
@@ -668,6 +659,7 @@ typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<FaceMode>::ap
 FaceModeApplyCaller g_faceMode_button_caller;
 BoolExportCallback g_faceMode_button_callback(g_faceMode_button_caller);
 ToggleItem g_faceMode_button(g_faceMode_button_callback);
+
 
 void ComponentModeChanged (void)
 {
@@ -1693,6 +1685,7 @@ static GtkMenuItem* create_tools_menu (void)
 	create_menu_item_with_mnemonic(menu, _("Generate materials"), "ToolsGenerateMaterials");
 	create_menu_item_with_mnemonic(menu, _("Show pathfinding info"), "ShowPathfinding");
 	create_menu_item_with_mnemonic(menu, _("Find/replace texture"), "FindReplaceTextures");
+	create_check_menu_item_with_mnemonic(menu, _("Play Sounds"), "PlaySounds");
 
 	return tools_menu_item;
 }
@@ -2391,6 +2384,9 @@ void MainFrame_Construct (void)
 	GlobalCommands_insert("ToolsCompile", FreeCaller<ToolsCompile> ());
 	GlobalCommands_insert("ToolsGenerateMaterials", FreeCaller<ToolsGenerateMaterials> ());
 	GlobalCommands_insert("ShowPathfinding", FreeCaller<routing::ShowPathfinding> ());
+	GlobalToggles_insert("PlaySounds", FreeCaller<GlobalSoundManager_switchPlaybackEnabledFlag> (),
+			ToggleItem::AddCallbackCaller(g_soundPlaybackEnabled_button)
+			,accelerator_null());
 
 	GlobalToggles_insert("ToggleClipper", FreeCaller<ClipperMode> (), ToggleItem::AddCallbackCaller(g_clipper_button),
 			Accelerator('X'));

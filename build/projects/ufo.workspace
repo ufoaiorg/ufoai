@@ -3,7 +3,7 @@
 	<Workspace title="Default workspace">
 		<Project filename="game.cbp" />
 		<Project filename="ufo2map.cbp" />
-		<Project filename="ufo.cbp" active="1">
+		<Project filename="ufo.cbp">
 			<Depends filename="game.cbp" />
 			<Depends filename="ufo2map.cbp" />
 			<Depends filename="ufo_ded.cbp" />
@@ -11,13 +11,12 @@
 		<Project filename="ufo_ded.cbp">
 			<Depends filename="game.cbp" />
 		</Project>
-		<Project filename="radiant.cbp">
+		<Project filename="radiant.cbp" active="1">
 			<Depends filename="radiant_model.cbp" />
 			<Depends filename="radiant_entity.cbp" />
 			<Depends filename="radiant_image.cbp" />
 			<Depends filename="radiant_map.cbp" />
 			<Depends filename="radiant_shader.cbp" />
-			<Depends filename="radiant_sound.cbp" />
 			<Depends filename="radiant_vfspk3.cbp" />
 			<Depends filename="radiant_archivezip.cbp" />
 			<Depends filename="radiant_brushexport.cbp" />
@@ -28,7 +27,6 @@
 		<Project filename="radiant_image.cbp" />
 		<Project filename="radiant_map.cbp" />
 		<Project filename="radiant_shader.cbp" />
-		<Project filename="radiant_sound.cbp" />
 		<Project filename="radiant_vfspk3.cbp" />
 		<Project filename="radiant_archivezip.cbp" />
 		<Project filename="radiant_brushexport.cbp" />

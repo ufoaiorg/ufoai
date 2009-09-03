@@ -5,6 +5,8 @@
 
 #include "isound.h"
 #include "autoptr.h"
+#include "generic/callback.h"
+#include "gtkutil/widget.h"
 
 namespace sound
 {
@@ -15,6 +17,13 @@ namespace sound
 	{
 			// The helper class for playing the sounds
 			SoundPlayer _soundPlayer;
+
+			// Enables or Disables playback globally for the plugin.
+			bool playbackEnabled;
+
+			// In case the plugin is disabled while playing, this
+			// file will be resumed if reenabled.
+			std::string resumingFileNameToBePlayed;
 
 		public:
 			/**
@@ -32,9 +41,23 @@ namespace sound
 			/** greebo: Stops the playback immediately.
 			 */
 			virtual void stopSound ();
+
+			/** tachop: Switches Sound Playback Enabled flag.
+			 */
+			virtual void switchPlaybackEnabledFlag();
+
+			/** tachop: Returns if Sound Playback is enabled.
+			 */
+			virtual bool isPlaybackEnabled ( ){ return playbackEnabled;};
 	};
 
 	typedef AutoPtr<SoundManager> SoundManagerPtr;
 }
+
+bool GlobalSoundManager_isPlaybackEnabled(void);
+
+void GlobalSoundManager_switchPlaybackEnabledFlag(void);
+
+extern ToggleItem g_soundPlaybackEnabled_button;
 
 #endif /*SOUNDMANAGER_H_*/

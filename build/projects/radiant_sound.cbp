@@ -97,13 +97,13 @@
 					<Add option="-dynamiclib" />
 					<Add option="-single_module" />
 					<Add option="-compatibility_version 1" />
-					<Add directory="\sw\lib" />
 					<Add library="gobject-2.0" />
 					<Add library="glib-2.0" />
 					<Add library="openal" />
 					<Add library="vorbisfile" />
 					<Add library="vorbis" />
 					<Add library="ogg" />
+					<Add directory="\sw\lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -115,21 +115,6 @@
 		<Linker>
 			<Add library="libjpeg" />
 		</Linker>
-		<Unit filename="..\..\src\tools\radiant\plugins\export.def">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\plugins\sound\sound.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\plugins\sound\soundplayer.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\plugins\sound\soundmanager.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\timer.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

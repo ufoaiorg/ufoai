@@ -19,6 +19,11 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+/*!
+ *  \file modulesystem.h
+ *
+ */
+
 #if !defined(INCLUDED_MODULESYSTEM_H)
 #define INCLUDED_MODULESYSTEM_H
 
@@ -33,6 +38,10 @@
 #define RADIANT_DLLIMPORT
 #endif
 
+/*!
+ * \class Module
+ * \brief Abstract class
+ */
 class Module
 {
 	public:
@@ -44,6 +53,9 @@ class Module
 		virtual void* getTable () = 0;
 };
 
+/*! \fn Module_getTable
+ *  Shorthand to call the getTable method on module
+ */
 inline void* Module_getTable (Module& module)
 {
 	return module.getTable();
@@ -52,6 +64,10 @@ inline void* Module_getTable (Module& module)
 class TextOutputStream;
 class DebugMessageHandler;
 
+/*!
+ * \class ModuleServer
+ * \brief Abstract class for supporting multiple Module classes.
+ */
 class ModuleServer
 {
 	public:
@@ -69,7 +85,7 @@ class ModuleServer
 		}
 
 		virtual void setError (bool error) = 0;
-		virtual bool getError () const = 0;
+		virtual bool getError () const = 0;  /*! Tells if the Module has an error  */
 
 		virtual TextOutputStream& getOutputStream () = 0;
 		virtual TextOutputStream& getErrorStream () = 0;
@@ -77,10 +93,14 @@ class ModuleServer
 		virtual DebugMessageHandler& getDebugMessageHandler () = 0;
 
 		virtual void registerModule (const char* type, int version, const char* name, Module& module) = 0;
-		virtual Module* findModule (const char* type, int version, const char* name) const = 0;
+		virtual Module* findModule (const char* type, int version, const char* name) const = 0;  /*! Seeks for a Module and returns it */
 		virtual void foreachModule (const char* type, int version, const Visitor& visitor) = 0;
 };
 
+/*!
+ * \class ModuleServerHolder
+ * Wrapper of a ModuleServer
+ */
 class ModuleServerHolder
 {
 		ModuleServer* m_server;
@@ -99,13 +119,24 @@ class ModuleServerHolder
 		}
 };
 
+/*!
+ * \typedef GlobalModuleServer
+ * Static ModuleServerHolder
+ */
 typedef Static<ModuleServerHolder> GlobalModuleServer;
 
+/*!
+ * Returns the internal ModuleServer of a static instance
+ */
 inline ModuleServer& globalModuleServer ()
 {
 	return GlobalModuleServer::instance().get();
 }
 
+/*!
+ *
+ * Gets a ModuleServer and links it to the GlobalModuleServer, Global Streams and DebugHandler
+ */
 inline void initialiseModule (ModuleServer& server)
 {
 	GlobalErrorStream::instance().setOutputStream(server.getErrorStream());
@@ -115,6 +146,10 @@ inline void initialiseModule (ModuleServer& server)
 	GlobalModuleServer::instance().set(server);
 }
 
+/*!
+ * \class Modules
+ * Abstract class that declares a visitor pattern for the template Type.
+ */
 template<typename Type>
 class Modules
 {
@@ -137,6 +172,10 @@ class Modules
 
 #include "debugging/debugging.h"
 
+/*!
+ * Initializes this reference seeking on GlobalModuleServer when matching with Type::Name, Type::Version and name of constructor.
+ * If found, gets the internal pointers or sets an error.
+ */
 template<typename Type>
 class ModuleRef
 {
@@ -176,6 +215,10 @@ class ModuleRef
 		}
 };
 
+/*!
+ * Initializes this reference seeking on GlobalModuleServer when matching with Type::Name, Type::Version and name of initialise.
+ * If found, gets the internal pointers or sets an error.
+ */
 template<typename Type>
 class SingletonModuleRef
 {
@@ -193,6 +236,9 @@ class SingletonModuleRef
 			return m_module != 0;
 		}
 
+		/*!
+		 * Point of entry of Singleton Module. Gets the module from GlobalModuleServer
+		 */
 		void initialise (const char* name)
 		{
 			m_module = globalModuleServer().findModule(typename Type::Name(), typename Type::Version(), name);
@@ -211,6 +257,10 @@ class SingletonModuleRef
 #endif
 			return m_table;
 		}
+
+		/*!
+		 * Should be called after initialise, does the actual initialization.
+		 */
 		void capture ()
 		{
 			if (initialised()) {

@@ -5,7 +5,7 @@
 RADIANT_BASE = tools/radiant
 
 RADIANT_CFLAGS+=-Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include
-RADIANT_LIBS+=-lgthread-2.0
+RADIANT_LIBS+=-lgthread-2.0 $(OPENAL_LIBS) -lvorbisfile -lvorbis -logg
 
 RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/autosave.cpp \
@@ -52,6 +52,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/selection.cpp \
 	$(RADIANT_BASE)/radiant/server.cpp \
 	$(RADIANT_BASE)/radiant/stacktrace.cpp \
+	$(RADIANT_BASE)/radiant/sound.cpp \
 	$(RADIANT_BASE)/radiant/texmanip.cpp \
 	$(RADIANT_BASE)/radiant/textures.cpp \
 	$(RADIANT_BASE)/radiant/timer.cpp \
@@ -117,7 +118,9 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/libs/gtkutil/ModelProgressDialog.cpp \
 	\
 	$(RADIANT_BASE)/libs/profile/profile.cpp \
-	$(RADIANT_BASE)/libs/profile/file.cpp
+	$(RADIANT_BASE)/libs/profile/file.cpp \
+	$(RADIANT_BASE)/libs/sound/soundmanager.cpp \
+	$(RADIANT_BASE)/libs/sound/soundplayer.cpp
 
 RADIANT_SRCS_C = \
 	shared/parse.c \
@@ -170,16 +173,6 @@ RADIANT_PLUGIN_IMAGE_SRCS_CPP = \
 RADIANT_PLUGIN_IMAGE_CPP_OBJS=$(RADIANT_PLUGIN_IMAGE_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)
 RADIANT_PLUGIN_IMAGE_TARGET=radiant/modules/image.$(SHARED_EXT)
 
-#sound plugin
-RADIANT_PLUGIN_SOUND_SRCS_CPP = \
-	$(RADIANT_BASE)/libs/gtkutil/timer.cpp \
-	$(RADIANT_BASE)/plugins/sound/sound.cpp \
-	$(RADIANT_BASE)/plugins/sound/soundmanager.cpp \
-	$(RADIANT_BASE)/plugins/sound/soundplayer.cpp
-
-RADIANT_PLUGIN_SOUND_CPP_OBJS=$(RADIANT_PLUGIN_SOUND_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)
-RADIANT_PLUGIN_SOUND_TARGET=radiant/modules/sound.$(SHARED_EXT)
-
 #map plugin
 RADIANT_PLUGIN_MAP_SRCS_CPP = \
 	$(RADIANT_BASE)/plugins/map/plugin.cpp \
@@ -229,7 +222,7 @@ RADIANT_PLUGIN_BRUSHEXPORT_TARGET=radiant/plugins/brushexport.$(SHARED_EXT)
 ifeq ($(BUILD_UFORADIANT),1)
 
 ALL_RADIANT_OBJS+=$(RADIANT_CPP_OBJS) $(RADIANT_C_OBJS) $(RADIANT_PLUGIN_MODEL_C_OBJS) $(RADIANT_PLUGIN_MODEL_CPP_OBJS) \
-	$(RADIANT_PLUGIN_IMAGE_CPP_OBJS) $(RADIANT_PLUGIN_SOUND_CPP_OBJS) $(RADIANT_PLUGIN_MAP_CPP_OBJS) $(RADIANT_PLUGIN_ENTITY_CPP_OBJS) \
+	$(RADIANT_PLUGIN_IMAGE_CPP_OBJS) $(RADIANT_PLUGIN_MAP_CPP_OBJS) $(RADIANT_PLUGIN_ENTITY_CPP_OBJS) \
 	$(RADIANT_PLUGIN_SHADERS_CPP_OBJS) $(RADIANT_PLUGIN_VFSPK3_CPP_OBJS) $(RADIANT_PLUGIN_ARCHIVEZIP_CPP_OBJS) \
 	$(RADIANT_PLUGIN_BRUSHEXPORT_CPP_OBJS)
 
@@ -278,9 +271,6 @@ $(RADIANT_PLUGIN_ENTITY_TARGET) : $(RADIANT_PLUGIN_ENTITY_CPP_OBJS)
 $(RADIANT_PLUGIN_IMAGE_TARGET) : $(RADIANT_PLUGIN_IMAGE_CPP_OBJS)
 	@echo " * [IMG] ... linking $(LNKFLAGS) ($(RADIANT_LIBS))"; \
 		$(CPP) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(RADIANT_PLUGIN_IMAGE_CPP_OBJS) $(RADIANT_LIBS) $(LNKFLAGS)
-$(RADIANT_PLUGIN_SOUND_TARGET) : $(RADIANT_PLUGIN_SOUND_CPP_OBJS)
-	@echo " * [SND] ... linking $(LNKFLAGS) ($(RADIANT_LIBS) $(OPENAL_LIBS) -lvorbisfile -lvorbis -logg)"; \
-		$(CPP) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(RADIANT_PLUGIN_SOUND_CPP_OBJS) $(RADIANT_LIBS) $(OPENAL_LIBS) -lvorbisfile -lvorbis -logg $(LNKFLAGS)
 $(RADIANT_PLUGIN_MAP_TARGET) : $(RADIANT_PLUGIN_MAP_CPP_OBJS)
 	@echo " * [MAP] ... linking $(LNKFLAGS) ($(RADIANT_LIBS))"; \
 		$(CPP) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(RADIANT_PLUGIN_MAP_CPP_OBJS) $(LNKFLAGS)
