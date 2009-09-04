@@ -240,7 +240,7 @@ void RT_GetMapSize (vec3_t map_min, vec3_t map_max)
 		while (end[i] > start[i]) {
 			/* Adjust ceiling */
 			VectorCopy(start, test);
-			test[i] = end[i] - 1; /* test is now one floor lower than end */
+			test[i] = end[i]; /* the box from test to end is now one cell high */
 			/* Prep boundary box */
 			PosToVec(test, mins);
 			VectorSubtract(mins, normal, mins);
@@ -258,7 +258,7 @@ void RT_GetMapSize (vec3_t map_min, vec3_t map_max)
 		while (end[i] > start[i]) {
 			/* Adjust ceiling */
 			VectorCopy(end, test);
-			test[i] = start[i] + 1; /* test is now one floor lower than end */
+			test[i] = start[i]; /* the box from start to test is now one cell high */
 			/* Prep boundary box */
 			PosToVec(start, mins);
 			VectorSubtract(mins, normal, mins);
