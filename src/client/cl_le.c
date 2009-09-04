@@ -557,7 +557,7 @@ static void LE_DoPathMove (le_t *le)
 /**
  * @brief Ends the move of an actor
  */
-static void LE_DoEndPathMove (le_t *le)
+void LE_DoEndPathMove (le_t *le)
 {
 	le_t *floor;
 

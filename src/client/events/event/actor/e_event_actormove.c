@@ -76,9 +76,15 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 		Com_Error(ERR_DROP, "Can't move, actor on team %i dead", le->team);
 
 	newPathLength = NET_ReadByte(msg);
-	if (le->pathLength > 0)
-		Com_Error(ERR_DROP, "Actor (entnum: %i) on team %i is still moving (%i steps left)",
-				le->entnum, le->team, le->pathLength - le->pathPos);
+	if (le->pathLength > 0) {
+		if(le->pathLength == le->pathPos) {
+			LE_DoEndPathMove(le);
+			le->pathLength = le->pathPos = 0;
+		} else {
+			Com_Error(ERR_DROP, "Actor (entnum: %i) on team %i is still moving (%i steps left).  Times: %i, %i, %i",
+					le->entnum, le->team, le->pathLength - le->pathPos, le->startTime, le->endTime, cl.time);
+		}
+	}
 
 	le->pathLength = newPathLength;
 	if (le->pathLength >= MAX_LE_PATHLENGTH)
