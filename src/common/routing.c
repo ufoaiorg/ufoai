@@ -1405,8 +1405,6 @@ static int RT_UpdateConnection (routing_t * map, const int actorSize, const int 
 		az++;
 	} else if (opening.stepup & PATHFINDING_BIG_STEPDOWN) {
 		az--;
-		RT_CONN(map, actorSize, x, y, az, dir) = 0;
-		RT_STEPUP(map, actorSize, x, y, az, dir) = PATHFINDING_NO_STEPUP;
 	}
 	if (RT_IS_BIDIRECTIONAL) {
 		new_z2 = RT_FillPassageData(map, actorSize, dir ^ 1, ax, ay, az, opening.size, opening.base, opening.invstepup);
