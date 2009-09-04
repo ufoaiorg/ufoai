@@ -37,6 +37,8 @@ ifeq ($(TARGET_OS),mingw32)
 else
 	ifneq ($(TARGET_OS),darwin)
 		CLIENT_LIBS+=-lGL
+	else
+		RADIANT_LIBS+=-headerpad_max_install_names
 	endif
 endif
 

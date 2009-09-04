@@ -1,4 +1,5 @@
 VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
+RADIANT_VERSION=1.5
 
 installer: wininstaller linuxinstaller sourcearchive mappack
 
@@ -24,21 +25,24 @@ macinstaller: lang pk3
 	# Removed for trunk builds but should be added for branch builds with the
 	# correct 0maps.pk3 linked.
 	# cd base; wget -N http://mattn.ninex.info/download/0maps.pk3
-	cd src/ports/macosx/installer; $(MAKE) TARGET_CPU=$(TARGET_CPU)
+	cd src/ports/macosx/installer; $(MAKE) TARGET_CPU=universal
 
 USER=tlh2000
 upload-sf:
-	rsync -avP -e ssh ufoai-$(VERSION)-macosx-$(TARGET_CPU).dmg $(USER)@frs.sourceforge.net:uploads/
+	rsync -avP -e ssh uforadiant-$(RADIANT_VERSION)-macosx-universal.dmg $(USER)@frs.sourceforge.net:uploads/
+	rsync -avP -e ssh ufoai-$(VERSION)-macosx-universal.dmg $(USER)@frs.sourceforge.net:uploads/
 	rsync -avP -e ssh ufoai-$(VERSION)-source.tar.bz2 $(USER)@frs.sourceforge.net:uploads/
 	rsync -avP -e ssh ufoai-$(VERSION)-linux.run $(USER)@frs.sourceforge.net:uploads/
 	rsync -avP -e ssh ufoai-$(VERSION)-win32.exe $(USER)@frs.sourceforge.net:uploads/
 	rsync -avP -e ssh ufoai-$(VERSION)-data.tar $(USER)@frs.sourceforge.net:uploads/
 
 upload-mirror:
-	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx-$(TARGET_CPU).dmg ufo:~/public_html/download
+	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx-universal.dmg ufo:~/public_html/download
+	scp src/ports/macosx/installer/uforadiant-$(RADIANT_VERSION)-macosx-universal.dmg ufo:~/public_html/download
 	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run ufo:~/public_html/download
 	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 ufo:~/public_html/download
-	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx-$(TARGET_CPU).dmg mirror:~/public_html
+	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx-universal.dmg mirror:~/public_html
+	scp src/ports/macosx/installer/uforadiant-$(RADIANT_VERSION)-macosx-universal.dmg mirror:~/public_html
 	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run mirror:~/public_html
 	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 mirror:~/public_html
 

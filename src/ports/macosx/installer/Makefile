@@ -1,6 +1,6 @@
-#all: update_installer_data build_dmg
 all: create-dmg
 
+TARGET_CPU?=universal
 EXT=pk3
 ROOTDIR=../../../..
 #relative from root dir
@@ -8,8 +8,11 @@ INSTDIR=src/ports/macosx/installer/
 #get the version of ufo
 VERSION_UC=$(shell grep UFO_VERSION $(ROOTDIR)/src/common/common.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/' | sed -e 's/\"//g')
 VERSION_LC=$(shell echo $(VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
+RADIANT_VERSION_UC=1.5
+RADIANT_VERSION_LC=$(shell echo $(RADIANT_VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
 
-PACKAGE_NAME=ufoai-$(VERSION_LC)-macosx-$(TARGET_CPU)
+UFOAI_PACKAGE_NAME=ufoai-$(VERSION_LC)-macosx-$(TARGET_CPU)
+UFORADIANT_PACKAGE_NAME=uforadiant-$(RADIANT_VERSION_LC)-macosx-$(TARGET_CPU)
 
 BINARIES = \
 	$(ROOTDIR)/ufo \
@@ -26,9 +29,8 @@ BASE_PK3 = $(addprefix $(ROOTDIR)/base/, $(PAK_FILES))
 
 BUNDLE_PK3 = $(addprefix UFOAI.app/base/, $(PAK_FILES))
 
-bundle_dirs:
+bundle-dirs:
 	@mkdir -p UFOAI.app/base
-	@mkdir -p UFOAI.app/radiant
 
 $(BASE_PK3) :
 	$(MAKE) -C $(ROOTDIR) $(addprefix base/,$(notdir $@))
@@ -36,60 +38,53 @@ $(BASE_PK3) :
 $(BUNDLE_PK3) : UFOAI.app/base/%.pk3 : $(ROOTDIR)/base/%.pk3
 	cp -v $< $@
 
-package_dir:
-	@rm -rf $(PACKAGE_NAME)
-	@mkdir -p $(PACKAGE_NAME)
+package-dir:
+	@rm -rf $(UFOAI_PACKAGE_NAME)
+	@mkdir -p $(UFOAI_PACKAGE_NAME)
+	@rm -rf $(UFORADIANT_PACKAGE_NAME)
+	@mkdir -p $(UFORADIANT_PACKAGE_NAME)
 
 updateversion:
 	@sed 's/@VERSION@/$(VERSION_UC)/g' UFOAI.app/Contents/Info.plist.in > UFOAI.app/Contents/Info.plist
+	@sed 's/@RADIANT_VERSION@/$(RADIANT_VERSION_UC)/g' UFORadiant.app/Contents/Info.plist.in > UFORadiant.app/Contents/Info.plist
 
 copyradiant:
-	@cp -r $(ROOTDIR)/radiant UFOAI.app
+	@cp -r $(ROOTDIR)/radiant UFORadiant.app
 
-copybinaries: bundle_dirs
+copybinaries: bundle-dirs
 	@cp $(BINARIES) UFOAI.app/Contents/MacOS
-	@cp $(BINARIES_RADIANT) UFOAI.app/Contents/MacOS
+	@cp $(BINARIES_RADIANT) UFORadiant.app/Contents/MacOS
 	@cp $(BINARIES_BASE) UFOAI.app/base
 
-copydata: bundle_dirs $(BUNDLE_PK3)
+copydata: bundle-dirs $(BUNDLE_PK3)
 	@mkdir -p UFOAI.app/base/i18n
 	@cp -r $(ROOTDIR)/base/i18n/[^.]* UFOAI.app/base/i18n
 
-copynotes: package_dir
-	@cp $(ROOTDIR)/README $(PACKAGE_NAME)
-	@cp $(ROOTDIR)/CONTRIBUTORS $(PACKAGE_NAME)
-	@cp $(ROOTDIR)/COPYING $(PACKAGE_NAME)
+copynotes: package-dir
+	@cp $(ROOTDIR)/README $(UFOAI_PACKAGE_NAME)
+	@cp $(ROOTDIR)/CONTRIBUTORS $(UFOAI_PACKAGE_NAME)
+	@cp $(ROOTDIR)/COPYING $(UFOAI_PACKAGE_NAME)
 
 copylibs:
 	@rm -rf UFOAI.app/Contents/Frameworks/*.framework
-	@perl macfixlibs.pl
+	@perl macfixlibs.pl UFOAI.app ufo ufoded ufo2map
+	@perl macfixlibs.pl UFORadiant.app uforadiant
 
-copy_package_bundle: package_dir bundle
-	@cp -r UFOAI.app $(PACKAGE_NAME)
+copy-package-bundle: package-dir bundle
+	@cp -r UFOAI.app $(UFOAI_PACKAGE_NAME)
+	@cp -r UFORadiant.app $(UFORADIANT_PACKAGE_NAME)
 
-strip_dev_files: copy_package_bundle
-	@find -d $(PACKAGE_NAME) -name .svn -exec rm -rf {} \;
+strip-dev-files: copy-package-bundle
+	@find -d $(UFOAI_PACKAGE_NAME) -name .svn -exec rm -rf {} \;
+	@find -d $(UFORADIANT_PACKAGE_NAME) -name .svn -exec rm -rf {} \;
 
 bundle: copybinaries copydata copyradiant copylibs copynotes
 
 # for testing:
 bundle-nodata: copybinaries copylibs copynotes
 
-create-dmg: bundle updateversion copy_package_bundle strip_dev_files
-	@rm -f $(PACKAGE_NAME).dmg
-	@hdiutil create -srcfolder $(PACKAGE_NAME) $(PACKAGE_NAME).dmg
-
-build_dmg: copybinaries copylibs $(BUNDLE_PK3)
-#	for dir in $(ROOTDIR)/base/i18n/[^.]*; do \
-#		mkdir -p UFOAI.app/base/i18n/$$dir/LC_MESSAGES; \
-#		cp $(ROOTDIR)/base/$$dir/LC_MESSAGES/ufoai.mo UFOAI.app/base/$$dir/LC_MESSAGES/ufoai.mo; \
-#	done
-	@cp -r $(ROOTDIR)/base/i18n/[^.]* UFOAI.app/base/i18n
-	@rm -f $(PACKAGE_NAME).dmg
-	@cp $(ROOTDIR)/README UFOAI.app
-	@cp $(ROOTDIR)/CONTRIBUTORS UFOAI.app
-	@cp $(ROOTDIR)/COPYING UFOAI.app
-	@hdiutil create -srcfolder UFOAI.app $(PACKAGE_NAME).dmg
-
-update_installer_data:
-	@sed 's/@VERSION@/$(VERSION_UC)/g' UFOAI.app/Contents/Info.plist.in > UFOAI.app/Contents/Info.plist
+create-dmg: bundle updateversion copy-package-bundle strip-dev-files
+	@rm -f $(UFOAI_PACKAGE_NAME).dmg
+	@rm -f $(UFORADIANT_PACKAGE_NAME).dmg
+	@hdiutil create -srcfolder $(UFOAI_PACKAGE_NAME) $(UFOAI_PACKAGE_NAME).dmg
+	@hdiutil create -srcfolder $(UFORADIANT_PACKAGE_NAME) $(UFORADIANT_PACKAGE_NAME).dmg

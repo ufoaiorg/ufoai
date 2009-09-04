@@ -3,12 +3,15 @@ use strict;
 use File::stat;
 use Fcntl ':mode';
 
+my $appdir = shift;
+my @apps = @ARGV;
+
 my @explicit_libs = ('libcurl');
 
 # Replaces the relative framework path returned by otool with 
 # the path to the library in the framework top level directory.
 # We will now only copy the framework from it's original location 
-# to the application bundle UFOAI.app/Contents/Frameworks directory,
+# to the application bundle $appdir/Contents/Frameworks directory,
 # removing the need to update all of the binary dependencies on 
 # a given framework.
 sub fixframeworkpath {
@@ -57,10 +60,10 @@ sub findlibs {
 	return @libs;
 }
 
-my $libdir = 'UFOAI.app/Contents/Libraries';
-my $fwdir = 'UFOAI.app/Contents/Frameworks';
-my $binpath = 'UFOAI.app/Contents/MacOS/ufo';
-my @a = findlibs 'UFOAI.app/Contents/MacOS/ufo';
+my $libdir = "$appdir/Contents/Libraries";
+my $fwdir = "$appdir/Contents/Frameworks";
+my $binpath = "$appdir/Contents/MacOS/$apps[0]";
+my @a = findlibs "$appdir/Contents/MacOS/$apps[0]";
 my %alllibs;
 
 sub addtoall {
@@ -165,101 +168,29 @@ while ( my ($x,$y) = each %alllibs ) {
 	installlib $x,$y,"yes";
 }
 
-## and, finally, change for app itself
-print "Finalizing ufo...";
-foreach my $i (@a) {
-	my $fworlib2;
-	my $libname2;
+## and, finally, change for app(s) itself
+foreach my $app (@apps) {
+	print "Finalizing $app...";
+	$binpath = "$appdir/Contents/MacOS/$app";
+	@a = findlibs $binpath;
+	foreach my $i (@a) {
+		my $fworlib2;
+		my $libname2;
 
-	if($i=~/\.dylib$/) {
-		$fworlib2 = "Libraries";
-	} else {
-		next;
+		if($i=~/\.dylib$/) {
+			$fworlib2 = "Libraries";
+		} else {
+			next;
+		}
+
+		if($i =~ /.*\/([^\/]+)$/) {
+			$libname2 = $1;
+		} else {
+			die "wtf?\n";
+		}
+
+		#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n";
+		`install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n` && die "failed\n";
 	}
-
-	if($i =~ /.*\/([^\/]+)$/) {
-		$libname2 = $1;
-	} else {
-		die "wtf?\n";
-	}
-
-	#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n";
-	`install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n` && die "failed\n";
 }
 print "done\n";
-
-## and, finally, change for app itself
-print "Finalizing ufoded...";
-$binpath = 'UFOAI.app/Contents/MacOS/ufoded';
-@a = findlibs $binpath;
-foreach my $i (@a) {
-	my $fworlib2;
-	my $libname2;
-
-	if($i=~/\.dylib$/) {
-		$fworlib2 = "Libraries";
-	} else {
-		next;
-	}
-
-	if($i =~ /.*\/([^\/]+)$/) {
-		$libname2 = $1;
-	} else {
-		die "wtf?\n";
-	}
-
-	#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n";
-	`install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n` && die "failed\n";
-}
-print "done\n";
-
-## and, finally, change for app itself
-print "Finalizing ufo2map...";
-$binpath = 'UFOAI.app/Contents/MacOS/ufo2map';
-@a = findlibs $binpath;
-foreach my $i (@a) {
-	my $fworlib2;
-	my $libname2;
-
-	if($i=~/\.dylib$/) {
-		$fworlib2 = "Libraries";
-	} else {
-		next;
-	}
-
-	if($i =~ /.*\/([^\/]+)$/) {
-		$libname2 = $1;
-	} else {
-		die "wtf?\n";
-	}
-
-	#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n";
-	`install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n` && die "failed\n";
-}
-print "done\n";
-
-## and, finally, change for app itself
-print "Finalizing uforadiant...";
-$binpath = 'UFOAI.app/Contents/MacOS/uforadiant';
-@a = findlibs $binpath;
-foreach my $i (@a) {
-	my $fworlib2;
-	my $libname2;
-
-	if($i=~/\.dylib$/) {
-		$fworlib2 = "Libraries";
-	} else {
-		next;
-	}
-
-	if($i =~ /.*\/([^\/]+)$/) {
-		$libname2 = $1;
-	} else {
-		die "wtf?\n";
-	}
-
-	#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n";
-	`install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n` && die "failed\n";
-}
-print "done\n";
-
