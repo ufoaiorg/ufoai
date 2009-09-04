@@ -5185,7 +5185,34 @@
 }
 // brush 575
 {
-( 960 -576 32 ) ( 960 -608 32 ) ( 384 -576 32 ) tex_common/actorclip 0 0 0 1 1
+( 512 -192 64 ) ( 640 -160 64 ) ( 704 -192 64 ) tex_common/actorclip 0 0 0 1 1
+( 512 -160 64 ) ( 640 -160 0 ) ( 640 -160 64 ) tex_common/actorclip 0 0 0 1 1
+( 704 -192 0 ) ( 640 -160 64 ) ( 640 -160 0 ) tex_common/actorclip 0 0 0 1 1
+( 512 -192 0 ) ( 640 -160 0 ) ( 512 -160 0 ) tex_common/actorclip 0 0 0 1 1
+( 448 -192 0 ) ( 448 -192 32 ) ( 1024 -192 0 ) tex_common/actorclip 0 0 0 1 1
+( 512 -192 0 ) ( 512 -160 0 ) ( 512 -192 32 ) tex_common/actorclip 0 0 0 1 1
+}
+// brush 576
+{
+( 544 -480 64 ) ( 544 -512 64 ) ( 512 -480 64 ) tex_common/actorclip 0 0 0 1 1
+( 544 -480 64 ) ( 512 -480 64 ) ( 544 -480 32 ) tex_common/actorclip 0 0 0 1 1
+( 608 -480 64 ) ( 608 -480 32 ) ( 608 -512 64 ) tex_common/actorclip 0 0 0 1 1
+( 512 -512 0 ) ( 544 -512 0 ) ( 512 -480 0 ) tex_common/actorclip 0 0 0 1 1
+( 512 -512 0 ) ( 512 -512 32 ) ( 544 -512 0 ) tex_common/actorclip 0 0 0 1 1
+( 512 -512 32 ) ( 512 -480 32 ) ( 512 -512 64 ) tex_common/actorclip 0 0 0 1 1
+}
+// brush 577
+{
+( 576 -512 64 ) ( 576 -544 64 ) ( 544 -512 64 ) tex_common/actorclip 0 0 0 1 1
+( 576 -512 32 ) ( 544 -512 32 ) ( 576 -512 0 ) tex_common/actorclip 0 0 0 1 1
+( 576 -512 64 ) ( 576 -512 32 ) ( 576 -544 64 ) tex_common/actorclip 0 0 0 1 1
+( 544 -544 0 ) ( 576 -544 0 ) ( 544 -512 0 ) tex_common/actorclip 0 0 0 1 1
+( 544 -544 32 ) ( 544 -544 64 ) ( 576 -544 32 ) tex_common/actorclip 0 0 0 1 1
+( 544 -544 32 ) ( 544 -512 32 ) ( 544 -544 64 ) tex_common/actorclip 0 0 0 1 1
+}
+// brush 578
+{
+( 960 -584 64 ) ( 960 -616 64 ) ( 384 -584 64 ) tex_common/actorclip 0 0 0 1 1
 ( 960 -576 32 ) ( 384 -576 32 ) ( 960 -576 0 ) tex_common/actorclip 0 0 0 1 1
 ( 960 -576 32 ) ( 960 -576 0 ) ( 960 -608 32 ) tex_common/actorclip 0 0 0 1 1
 ( 384 -608 0 ) ( 960 -608 0 ) ( 384 -576 0 ) tex_common/actorclip 0 0 0 1 1
