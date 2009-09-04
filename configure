@@ -2426,6 +2426,7 @@ $as_echo "$as_me: error: Could not find SDL_ttf Framework at /Library/Frameworks
 	if test "$enable_universal" = "yes"
 	then
 		RADIANT_CFLAGS="$RADIANT_CFLAGS -arch i386 -arch ppc"
+		RADIANT_LIBS="$RADIANT_LIBS -arch i386 -arch ppc"
 		CFLAGS="$CFLAGS -arch i386 -arch ppc"
 		LDFLAGS="$LDFLAGS -arch i386 -arch ppc"
 	fi
