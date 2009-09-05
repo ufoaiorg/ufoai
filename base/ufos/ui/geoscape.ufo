@@ -1344,7 +1344,7 @@ window popup_newinstallation
 		image		ui/button_green_small
 		pos			"109 188"
 		size		"176 32"
-		onClick		{ cmd "mn_pop;mn_build_installation *mn_installation_type;" }
+		onClick		{ cmd "mn_pop;mn_build_installation *cvar:mn_installation_type;" }
 	}
 
 	func onInit
@@ -1480,7 +1480,7 @@ window popup_installationstatus
 		image		ui/button_green_small
 		pos			"109 189"
 		size		"176 32"
-		onClick		{ cmd "mn_pop;mn_push *mn_installation_type;" }
+		onClick		{ cmd "mn_pop;mn_push *cvar:mn_installation_type;" }
 	}
 	button bt_destroy
 	{

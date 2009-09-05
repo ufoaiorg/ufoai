@@ -852,6 +852,6 @@ window market
 
 	func onInit
 	{
-		cmd "buy_type *mn_itemtype;"
+		cmd "buy_type *cvar:mn_itemtype;"
 	}
 }

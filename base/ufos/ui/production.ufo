@@ -584,7 +584,7 @@ window production
 
 	func onInit
 	{
-		cmd "prod_init; prod_type *mn_itemtype;"
+		cmd "prod_init; prod_type *cvar:mn_itemtype;"
 		call prod_stores
 	}
 }
