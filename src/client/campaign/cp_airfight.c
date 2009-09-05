@@ -685,7 +685,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 
 		/* Check if we can still fire on this target. */
 		distance = MAP_GetDistance(base->pos, weapons[i].target->pos);
-		test = AIRFIGHT_CheckWeapon(&weapons[i].slot + i, distance);
+		test = AIRFIGHT_CheckWeapon(&(weapons[i].slot), distance);
 		/* weapon unable to shoot, reset target */
 		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
 			weapons[i].target = NULL;
@@ -699,10 +699,10 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 			continue;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(base, NULL, NULL, weapons[i].target, &weapons[i].slot + i)) {
+		if (AIRFIGHT_AddProjectile(base, NULL, NULL, weapons[i].target, &weapons[i].slot)) {
 			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
-			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot + i))
+			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot))
 				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], qfalse);
 		}
 	}
@@ -740,7 +740,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 
 		/* Check if we can still fire on this target. */
 		distance = MAP_GetDistance(installation->pos, weapons[i].target->pos);
-		test = AIRFIGHT_CheckWeapon(&weapons[i].slot + i, distance);
+		test = AIRFIGHT_CheckWeapon(&(weapons[i].slot), distance);
 		/* weapon unable to shoot, reset target */
 		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
 			weapons[i].target = NULL;
@@ -754,10 +754,10 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 			continue;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(NULL, installation, NULL, weapons[i].target, &weapons[i].slot + i)) {
+		if (AIRFIGHT_AddProjectile(NULL, installation, NULL, weapons[i].target, &weapons[i].slot)) {
 			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
-			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot + i))
+			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot))
 				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], qfalse);
 		}
 	}
