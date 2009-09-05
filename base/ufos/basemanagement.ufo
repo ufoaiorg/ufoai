@@ -319,7 +319,7 @@ building building_amstorage
 	type		amstorage
 	map_name	"antimatter"
 	pedia		rs_building_antimatter
-	capacity	10000
+	capacity	1000
 	ondestroy	"building_amdestroy 0.1"
 }
 

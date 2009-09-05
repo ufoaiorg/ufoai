@@ -35,7 +35,6 @@ struct menuNode_s; /**< @todo remove this once the menuNode_t usage is cleaned u
 struct storedUFO_s;
 
 #define MAX_ASSEMBLIES	16
-#define ANTIMATTER_SIZE 10
 
 #include "cp_rank.h"
 #include "cp_save.h"

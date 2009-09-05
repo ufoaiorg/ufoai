@@ -459,7 +459,7 @@ static void B_UpdateAntimatterCap (base_t *base)
 
 	for (i = 0; i < csi.numODs; i++) {
 		if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID)) {
-			base->capacities[CAP_ANTIMATTER].cur = (base->storage.num[i] * ANTIMATTER_SIZE);
+			base->capacities[CAP_ANTIMATTER].cur = base->storage.num[i];
 			return;
 		}
 	}
@@ -3235,14 +3235,15 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
 
 	if (add) {	/* Adding. */
-		if (base->capacities[CAP_ANTIMATTER].cur + (amount * ANTIMATTER_SIZE) <= base->capacities[CAP_ANTIMATTER].max) {
+		/** @todo: recheck callers and optimize */
+		if (base->capacities[CAP_ANTIMATTER].cur + amount <= base->capacities[CAP_ANTIMATTER].max) {
 			base->storage.num[i] += amount;
-			base->capacities[CAP_ANTIMATTER].cur += (amount * ANTIMATTER_SIZE);
+			base->capacities[CAP_ANTIMATTER].cur += amount;
 		} else {
 			for (j = 0; j < amount; j++) {
-				if (base->capacities[CAP_ANTIMATTER].cur + ANTIMATTER_SIZE <= base->capacities[CAP_ANTIMATTER].max) {
+				if (base->capacities[CAP_ANTIMATTER].cur < base->capacities[CAP_ANTIMATTER].max) {
 					base->storage.num[i]++;
-					base->capacities[CAP_ANTIMATTER].cur += ANTIMATTER_SIZE;
+					base->capacities[CAP_ANTIMATTER].cur++;
 				} else
 					break;
 			}
@@ -3252,7 +3253,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 			base->capacities[CAP_ANTIMATTER].cur = 0;
 			base->storage.num[i] = 0;
 		} else {
-			base->capacities[CAP_ANTIMATTER].cur -= amount * ANTIMATTER_SIZE;
+			base->capacities[CAP_ANTIMATTER].cur -= amount;
 			base->storage.num[i] -= amount;
 		}
 	}
@@ -3264,7 +3265,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
  */
 void B_RemoveAntimatterExceedingCapacity (base_t *base)
 {
-	const int amount = ceil(((float) (base->capacities[CAP_ANTIMATTER].cur - base->capacities[CAP_ANTIMATTER].max)) / ANTIMATTER_SIZE);
+	const int amount = base->capacities[CAP_ANTIMATTER].cur - base->capacities[CAP_ANTIMATTER].max;
 	if (amount < 0)
 		return;
 

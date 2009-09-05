@@ -122,7 +122,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 	for (i = 0; i < csi.numODs; i++) {
 		if (td.trItemsTmp[i] > 0) {
 			if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
-				amtransfer = ANTIMATTER_SIZE * td.trItemsTmp[i];
+				amtransfer = td.trItemsTmp[i];
 			else
 				intransfer += csi.ods[i].size * td.trItemsTmp[i];
 		}
@@ -137,13 +137,13 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 		} else if (!B_GetBuildingStatus(destbase, B_ANTIMATTER)) {	/* Return if the target base doesn't have antimatter storage or power. */
 			return 0;
 		}
-		amount = min(amount, destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer / ANTIMATTER_SIZE);
+		amount = min(amount, destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer);
 		if (amount <= 0) {
 			MN_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
 			return 0;
 		} else {
 			/* amount to transfer can't be bigger than what we have */
-			amount = min(amount, (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer) / ANTIMATTER_SIZE);
+			amount = min(amount, destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer);
 		}
 	} else {	/*This is not antimatter */
 		if (!B_GetBuildingStatus(destbase, B_STORAGE))	/* Return if the target base doesn't have storage or power. */
