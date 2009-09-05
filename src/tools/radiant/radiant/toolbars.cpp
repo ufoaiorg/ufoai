@@ -32,7 +32,8 @@
 static void File_constructToolbar (GtkToolbar* toolbar, MainFrame *mainframe)
 {
 	toolbar_append_button(toolbar, _("Open an existing map (CTRL + O)"), "file_open.bmp", "OpenMap");
-	mainframe->SetSaveButton(toolbar_append_button(toolbar, _("Save the active map (CTRL + S)"), "file_save.bmp", "SaveMap"));
+	mainframe->SetSaveButton(toolbar_append_button(toolbar, _("Save the active map (CTRL + S)"), "file_save.bmp",
+			"SaveMap"));
 }
 
 static void UndoRedo_constructToolbar (GtkToolbar* toolbar, MainFrame *mainframe)
@@ -55,9 +56,11 @@ static void Select_constructToolbar (GtkToolbar* toolbar)
 {
 	toolbar_append_button(toolbar, _("Select touching"), "selection_selecttouching.bmp", "SelectTouching");
 	toolbar_append_button(toolbar, _("Select inside"), "selection_selectinside.bmp", "SelectInside");
-	toolbar_append_button(toolbar, _("Select whole entity"), "selection_selectentities.bmp", "ExpandSelectionToEntities");
+	toolbar_append_button(toolbar, _("Select whole entity"), "selection_selectentities.bmp",
+			"ExpandSelectionToEntities");
 	toolbar_append_button(toolbar, _("Select all of type"), "selection_selectcompletetall.bmp", "SelectAllOfType");
-	toolbar_append_button(toolbar, _("Select all Faces of same texture"), "selection_selectallsametex.bmp", "SelectAllFacesOfTex");
+	toolbar_append_button(toolbar, _("Select all Faces of same texture"), "selection_selectallsametex.bmp",
+			"SelectAllFacesOfTex");
 }
 
 static void CSG_constructToolbar (GtkToolbar* toolbar)
@@ -157,6 +160,9 @@ GtkToolbar* create_main_toolbar_horizontal (MainFrame *mainframe)
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 	toolbar_append_button(toolbar, _("Create material entries for selected faces (M)"), "material_generate.bmp",
 			"GenerateMaterialFromTexture");
+
+	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
+	toolbar_append_button(toolbar, _("Show pathfinding info"), "pathfinding.bmp", "ShowPathfinding");
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 	LevelFilters_constructToolbar(toolbar);

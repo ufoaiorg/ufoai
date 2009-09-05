@@ -2383,7 +2383,6 @@ void MainFrame_Construct (void)
 	GlobalCommands_insert("ToolsCheckErrors", FreeCaller<ToolsCheckErrors> ());
 	GlobalCommands_insert("ToolsCompile", FreeCaller<ToolsCompile> ());
 	GlobalCommands_insert("ToolsGenerateMaterials", FreeCaller<ToolsGenerateMaterials> ());
-	GlobalCommands_insert("ShowPathfinding", FreeCaller<routing::ShowPathfinding> ());
 	GlobalToggles_insert("PlaySounds", FreeCaller<GlobalSoundManager_switchPlaybackEnabledFlag> (),
 			ToggleItem::AddCallbackCaller(g_soundPlaybackEnabled_button)
 			,accelerator_null());

@@ -35,6 +35,7 @@
 #include "stringio.h"
 #include "preferences.h"
 #include "preferencesystem.h"
+#include "commands.h"
 #include "radiant_i18n.h"
 
 namespace routing
@@ -150,6 +151,8 @@ namespace routing
 void Pathfinding_Construct (void)
 {
 	routing::pathfinding = new routing::Pathfinding();
+
+	GlobalCommands_insert("ShowPathfinding", FreeCaller<routing::ShowPathfinding> ());
 
 	/** @todo listener also should activate/deactivate "show pathfinding" menu entry if no appropriate data is available */
 	Map_addValidCallback(g_map, SignalHandler(FreeCaller<routing::Pathfinding_onMapValidChanged> ()));
