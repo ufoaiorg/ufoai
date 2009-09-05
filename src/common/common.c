@@ -435,8 +435,6 @@ const char *Com_MacroExpandString (const char *text)
 			return NULL;
 		}
 
-		Com_DPrintf(DEBUG_COMMANDS, "Expanded *cvar:%s to '%s'\n", token, cvarvalue);
-
 		j = strlen(cvarvalue);
 		if (strlen(pos) + j >= MAX_STRING_CHARS) {
 			Com_Printf("Expanded line exceeded %i chars, discarded.\n", MAX_STRING_CHARS);
