@@ -575,7 +575,8 @@ void LE_DoEndPathMove (le_t *le)
 
 	le->lighting.dirty = qtrue;
 	LE_SetThink(le, LET_StartIdle);
-	le->think(le);
+	LE_ExecuteThink(le);
+	LE_Unlock(le);
 }
 
 /**
@@ -1015,6 +1016,51 @@ le_t *LE_Get (int entnum)
 
 	/* didn't find it */
 	return NULL;
+}
+
+/**
+ * @brief Checks if a given le_t structure is locked, i.e., used by another event at this time.
+ * @param entnum, the entnum of the le_t struct involved.
+ * @return true if the le_t is locked (used by another event), false if it's not or if it doesn't exist.
+ */
+qboolean LE_IsLocked (int entnum)
+{
+	le_t *le = LE_Get(entnum);
+	return (le != NULL && le->locked);
+}
+
+/**
+ * @brief Markes a le_t struct as locked.  Should be called at the
+ *  beginning of an event handler on this le_t, and paired with a LE_Unlock at the end.
+ * @param le The struct to be locked.
+ * @note Always make sure you call LE_Unlock at the end of the event
+ *  (might be in a different function), to allow other events on this le_t.
+ */
+void LE_Lock (le_t *le)
+{
+	if (le->locked)
+		Com_Error(ERR_DROP, "LE_Lock: Trying to lock %i which is already locked\n", le->entnum);
+
+	le->locked = qtrue;
+}
+
+/**
+ * @brief Unlocks a previously locked le_t struct.
+ * @param le The le_t to unlock.
+ * @note Make sure that this is always paired with the corresponding
+ *  LE_Lock around the conceptual beginning and ending of a le_t event.
+ *  Should never be called by the handler(s) of a different event than
+ *  the one that locked le.  The owner of the lock is currently not
+ *  checked.
+ * @todo If the event loop ever becomes multithreaded, this should
+ *  be a real mutex lock.
+ */
+void LE_Unlock (le_t *le)
+{
+	if (!le->locked)
+		Com_Error(ERR_DROP, "LE_Unlock: Trying to unlock %i which is already unlocked\n", le->entnum);
+
+	le->locked = qfalse;
 }
 
 /**

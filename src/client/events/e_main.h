@@ -31,6 +31,10 @@ typedef struct eventRegister_s {
 	const char *formatString;
 	void (*eventCallback)(const struct eventRegister_s *self, struct dbuffer *msg);
 	int (*timeCallback)(const struct eventRegister_s *self, struct dbuffer *msg, const int dt);
+	
+	/** Called to determine if this event is ok to run at this point.  Should check any 
+	 * conflicts with other ongoing events (see le_t->locked).  Return true if OK to run, false if not. */
+	qboolean (*eventCheck)(const struct eventRegister_s *self, const struct dbuffer *msg);
 } eventRegister_t;
 
 const eventRegister_t *CL_GetEvent(const int eType);

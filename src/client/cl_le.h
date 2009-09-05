@@ -131,6 +131,9 @@ typedef struct le_s {
 
 	/** is called before adding a le to scene */
 	qboolean(*addFunc) (struct le_s * le, entity_t * ent);
+	
+	qboolean locked;	/**< true if there is an event going on involving
+						 * this le_t.  Used to limit to one event per le_t struct at any time. */
 } le_t;
 
 #define MAX_LOCALMODELS		512
@@ -205,6 +208,9 @@ qboolean LE_IsLivingActor(const le_t *le);
 qboolean LE_IsActor(const le_t *le);
 le_t *LE_Add(int entnum);
 le_t *LE_Get(int entnum);
+void LE_Lock(le_t *le);
+void LE_Unlock(le_t *le);
+qboolean LE_IsLocked(int entnum);
 #define LE_NotFoundError(entnum) _LE_NotFoundError(entnum, __FILE__, __LINE__)
 void _LE_NotFoundError(int entnum, const char *file, const int line) __attribute__((noreturn));
 le_t *LE_Find(int type, pos3_t pos);

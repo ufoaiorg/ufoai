@@ -329,7 +329,8 @@ void Con_Print(const char *txt);
 /* Event timing */
 
 typedef void event_func(int now, void *data);
-void Schedule_Event(int when, event_func *func, void *data);
+typedef qboolean event_check_func(int now, void *data);
+void Schedule_Event(int when, event_func *func, event_check_func *check, void *data);
 void Schedule_Timer(cvar_t *interval, event_func *func, void *data);
 
 /*

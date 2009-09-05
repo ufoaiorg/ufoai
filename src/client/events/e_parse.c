@@ -94,6 +94,24 @@ static void CL_LogEvent (const eventRegister_t *eventData)
 }
 
 /**
+ * @brief Checks if a given battlescape event is ok to run now.
+ *  Uses the check_func pointer in the event struct.
+ * @param now The current time.
+ * @param data The event to check.
+ * @return true if it's ok to run or there is no check function, false otherwise.
+ */
+static qboolean CL_CheckBattlescapeEvent (int now, void *data)
+{
+	evTimes_t *event = (evTimes_t *)data;
+	const eventRegister_t *eventData = CL_GetEvent(event->eType);
+
+	if (eventData->eventCheck == NULL)
+		return qtrue;
+
+	return eventData->eventCheck(eventData, event->msg);
+}
+
+/**
  * @sa CL_ScheduleEvent
  */
 static void CL_ExecuteBattlescapeEvent (int now, void *data)
@@ -102,7 +120,7 @@ static void CL_ExecuteBattlescapeEvent (int now, void *data)
 	const eventRegister_t *eventData = CL_GetEvent(event->eType);
 
 	if (event->eType <= EV_START_DONE || cls.state == ca_active) {
-		Com_DPrintf(DEBUG_EVENTSYS, "event(dispatching): %s %p\n", eventData->name, event);
+		Com_DPrintf(DEBUG_EVENTSYS, "event(dispatching at %d): %s %p\n", now, eventData->name, event);
 
 		CL_LogEvent(eventData);
 
@@ -163,7 +181,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 
 		/* timestamp (msec) that is used to determine when the event should be executed */
 		when = CL_GetEventTime(cur->eType, msg, delta);
-		Schedule_Event(when, &CL_ExecuteBattlescapeEvent, cur);
+		Schedule_Event(when, &CL_ExecuteBattlescapeEvent, &CL_CheckBattlescapeEvent, cur);
 
 		lastFrame = cl.time;
 

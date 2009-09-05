@@ -75,6 +75,8 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 	if (LE_IsDead(le))
 		Com_Error(ERR_DROP, "Can't move, actor on team %i dead", le->team);
 
+	/* lock this le for other events, the corresponding unlock is in LE_DoEndPathMove() */
+	LE_Lock(le);
 	newPathLength = NET_ReadByte(msg);
 	if (le->pathLength > 0) {
 		if(le->pathLength == le->pathPos) {

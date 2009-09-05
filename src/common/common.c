@@ -65,6 +65,7 @@ struct memPool_s *com_networkPool;
 struct event {
 	int when;
 	event_func *func;
+	event_check_func *check;
 	void *data;
 	struct event *next;
 };
@@ -1049,7 +1050,7 @@ static void tick_timer (int now, void *data)
 	/* We correct for the lateness of this frame. We do not correct for
 	 * the time consumed by this frame - that's billed to the lateness
 	 * of future frames (so that the automagic slowdown can work) */
-	Schedule_Event(now + lateness + timer->interval, &tick_timer, timer);
+	Schedule_Event(now + lateness + timer->interval, &tick_timer, NULL, timer);
 }
 
 void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
@@ -1068,14 +1069,15 @@ void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
 	for (i = 0; i < TIMER_LATENESS_HISTORY; i++)
 		timer->recent_lateness[i] = 0;
 
-	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, timer);
+	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, NULL, timer);
 }
 
-void Schedule_Event (int when, event_func *func, void *data)
+void Schedule_Event (int when, event_func *func, event_check_func *check, void *data)
 {
 	struct event *event = Mem_PoolAlloc(sizeof(*event), com_genericPool, 0);
 	event->when = when;
 	event->func = func;
+	event->check = check;
 	event->data = data;
 
 	if (!event_queue || event_queue->when > when) {
@@ -1097,6 +1099,31 @@ void Schedule_Event (int when, event_func *func, void *data)
 }
 
 /**
+ * @brief Finds and returns the first event in the event_queue that is due.
+ *  If the event has a check function, we check to see if the event can be run now, and skip it if not (even if it is due).
+ * @return Returns a pointer to the event, NULL if none found.
+ */
+static struct event* Dequeue_Event (int now)
+{
+	struct event *event = event_queue;
+	struct event *prev = NULL;
+
+	while(event && event->when <= now) {
+		if (event->check == NULL || event->check(now, event->data)) {
+			if (prev) {
+				prev->next = event->next;
+			} else {
+				event_queue = event->next;
+			}
+			return event;
+		}
+		prev = event;
+		event = event->next;
+	}
+	return NULL;
+}
+
+/**
  * @brief This is the function that is called directly from main()
  * @sa main
  * @sa Qcommon_Init
@@ -1107,18 +1134,15 @@ void Schedule_Event (int when, event_func *func, void *data)
 void Qcommon_Frame (void)
 {
 	int time_to_next;
+	struct event *event;
 
 	/* an ERR_DROP was thrown */
 	if (setjmp(abortframe))
 		return;
 
 	/* If the next event is due... */
-	if (event_queue && Sys_Milliseconds() >= event_queue->when) {
-		struct event *event = event_queue;
-
-		/* Remove the event from the queue */
-		event_queue = event->next;
-
+	event = Dequeue_Event(Sys_Milliseconds());
+	if (event) {
 		if (setjmp(abortframe)) {
 			Mem_Free(event);
 			return;

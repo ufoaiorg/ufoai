@@ -88,6 +88,10 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 	if (!le)
 		le = LE_Add(entnum);
 
+	/* Locking should be unnecessary if CL_CheckDefault filters this call, since this event starts and
+	 * ends in this function only.  Adding lock/unlock just to be sure. */
+	LE_Lock(le);
+
 	/* maybe added via CL_ActorAdd before */
 	le->invis = qfalse;
 	le->lighting.dirty = qtrue;
@@ -168,4 +172,5 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* add team members to the actor list */
 	CL_AddActorToTeamList(le);
+	LE_Unlock(le);
 }

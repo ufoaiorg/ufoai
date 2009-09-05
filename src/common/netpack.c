@@ -252,6 +252,20 @@ int NET_ReadShort (struct dbuffer *buf)
 	return LittleShort(v);
 }
 
+/**
+ * @brief Peeks into a buffer without changing it to get a short int.
+ * @param buf The buffer, returned unchanged, no need to be copied before.
+ * @return The short at the beginning of the buffer, -1 if it couldn't be read.
+ */
+int NET_PeekShort (const struct dbuffer *buf)
+{
+	uint16_t v;
+	if (dbuffer_get(buf, (char *)&v, 2) < 2)
+		return -1;
+
+	return LittleShort(v);
+}
+
 int NET_ReadLong (struct dbuffer *buf)
 {
 	unsigned int v;
