@@ -23,10 +23,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define INCLUDED_COMMANDS_H
 
 #include "gtkutil/accelerator.h"
+#include <string>
 
-
-const Accelerator& GlobalShortcuts_insert(const char* name, const Accelerator& accelerator);
-void GlobalShortcuts_register(const char* name, int type); // 1 = command, 2 = toggle
+const Accelerator& GlobalShortcuts_insert(const std::string& name, const Accelerator& accelerator);
+void GlobalShortcuts_register(const std::string& name, int type); // 1 = command, 2 = toggle
 void GlobalShortcuts_reportUnregistered();
 
 class CommandVisitor {

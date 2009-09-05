@@ -36,11 +36,11 @@
 #include "stringio.h"
 
 typedef std::pair<Accelerator, int> ShortcutValue; // accelerator, isRegistered
-typedef std::map<CopiedString, ShortcutValue> Shortcuts;
+typedef std::map<std::string, ShortcutValue> Shortcuts;
 
 static Shortcuts g_shortcuts;
 
-const Accelerator& GlobalShortcuts_insert (const char* name, const Accelerator& accelerator)
+const Accelerator& GlobalShortcuts_insert (const std::string& name, const Accelerator& accelerator)
 {
 	return (*g_shortcuts.insert(Shortcuts::value_type(name, ShortcutValue(accelerator, false))).first).second.first;
 }
@@ -52,7 +52,7 @@ void GlobalShortcuts_foreach (CommandVisitor& visitor)
 	}
 }
 
-void GlobalShortcuts_register (const char* name, int type)
+void GlobalShortcuts_register (const std::string& name, int type)
 {
 	Shortcuts::iterator i = g_shortcuts.find(name);
 	if (i != g_shortcuts.end()) {
