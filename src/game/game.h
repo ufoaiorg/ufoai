@@ -227,7 +227,7 @@ typedef struct {
 
 	/* managed memory allocation */
 	void *(IMPORT *TagMalloc) (int size, int tag, const char *file, int line);
-	void (IMPORT *TagFree) (void *block);
+	void (IMPORT *TagFree) (void *block, const char *file, int line);
 	void (IMPORT *FreeTags) (int tag);
 
 	/* console variable interaction */

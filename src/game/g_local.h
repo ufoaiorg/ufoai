@@ -76,6 +76,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ACTOR_VIS_0		0.0
 
 #define G_TagMalloc(size, tag) gi.TagMalloc((size), (tag), __FILE__, __LINE__)
+#define G_MemFree(ptr) gi.TagFree((ptr), __FILE__, __LINE__)
 
 #define G_PLAYER_FROM_ENT(ent) (game.players + (ent)->pnum)
 

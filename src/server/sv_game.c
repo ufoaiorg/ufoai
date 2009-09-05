@@ -347,9 +347,9 @@ static void *SV_TagAlloc (int size, int tagNum, const char *file, int line)
 	return _Mem_Alloc(size, qtrue, sv_gameSysPool, tagNum, file, line);
 }
 
-static void SV_MemFree (void *ptr)
+static void SV_MemFree (void *ptr, const char *file, int line)
 {
-	_Mem_Free(ptr, "GAME DLL", -1);
+	_Mem_Free(ptr, file, line);
 }
 
 /**
