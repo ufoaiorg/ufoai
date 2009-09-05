@@ -103,6 +103,7 @@ namespace routing
 							bspStream.c_str()));
 					_routingRender->updateRouting(bspname);
 				}
+				SceneChangeNotify();
 			}
 	};
 
