@@ -263,6 +263,7 @@ void CL_Disconnect (void)
 	S_Stop();
 
 	CL_SetClientState(ca_disconnected);
+	CL_ClearBattlescapeEvents();
 }
 
 /* it's dangerous to activate this */

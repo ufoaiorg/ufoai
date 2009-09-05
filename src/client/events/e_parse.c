@@ -136,6 +136,23 @@ static void CL_ExecuteBattlescapeEvent (int now, void *data)
 	Mem_Free(event);
 }
 
+static void CL_FreeBattlescapeEvent (void *data)
+{
+	evTimes_t *event = (evTimes_t *)data;
+	free_dbuffer(event->msg);
+	Mem_Free(event);
+}
+
+static qboolean CL_FilterBattlescapeEvents(int when, event_func *func, event_check_func *check, void *data)
+{
+	return (func != &CL_ExecuteBattlescapeEvent);
+}
+
+inline void CL_ClearBattlescapeEvents (void)
+{
+	CL_FilterEventQueue(&CL_FilterBattlescapeEvents);
+}
+
 /**
  * @brief Called in case a svc_event was send via the network buffer
  * @sa CL_ParseServerMessage
@@ -181,7 +198,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 
 		/* timestamp (msec) that is used to determine when the event should be executed */
 		when = CL_GetEventTime(cur->eType, msg, delta);
-		Schedule_Event(when, &CL_ExecuteBattlescapeEvent, &CL_CheckBattlescapeEvent, cur);
+		Schedule_Event(when, &CL_ExecuteBattlescapeEvent, &CL_CheckBattlescapeEvent, &CL_FreeBattlescapeEvent, cur);
 
 		lastFrame = cl.time;
 

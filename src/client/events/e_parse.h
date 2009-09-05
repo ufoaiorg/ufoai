@@ -29,5 +29,6 @@ extern const char *ev_format[EV_NUM_EVENTS];
 extern cvar_t *cl_log_battlescape_events;
 
 void CL_ParseEvent(struct dbuffer *msg);
+void CL_ClearBattlescapeEvents(void);
 
 #endif

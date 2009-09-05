@@ -66,6 +66,7 @@ struct event {
 	int when;
 	event_func *func;
 	event_check_func *check;
+	event_clean_func *clean;
 	void *data;
 	struct event *next;
 };
@@ -1050,7 +1051,7 @@ static void tick_timer (int now, void *data)
 	/* We correct for the lateness of this frame. We do not correct for
 	 * the time consumed by this frame - that's billed to the lateness
 	 * of future frames (so that the automagic slowdown can work) */
-	Schedule_Event(now + lateness + timer->interval, &tick_timer, NULL, timer);
+	Schedule_Event(now + lateness + timer->interval, &tick_timer, NULL, NULL, timer);
 }
 
 void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
@@ -1069,15 +1070,27 @@ void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
 	for (i = 0; i < TIMER_LATENESS_HISTORY; i++)
 		timer->recent_lateness[i] = 0;
 
-	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, NULL, timer);
+	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, NULL, NULL, timer);
 }
 
-void Schedule_Event (int when, event_func *func, event_check_func *check, void *data)
+/**
+ * @brief Schedules an event to run on or after the given time, and when its check function returns true.
+ * @param when The earliest time the event can run
+ * @param func The function to call when running the event
+ * @param check A function that should return true when the event is safe to run.
+ *  It should have no side-effects, as it might be called many times.
+ * @param clean A function that should cleanup any memory allocated
+ *  for the event in the case that it is not executed.  Either this
+ *  function or func will be called, but never both.
+ * @param data Arbitrary data to be passed to the check and event functions.
+ */
+void Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data)
 {
 	struct event *event = Mem_PoolAlloc(sizeof(*event), com_genericPool, 0);
 	event->when = when;
 	event->func = func;
 	event->check = check;
+	event->clean = clean;
 	event->data = data;
 
 	if (!event_queue || event_queue->when > when) {
@@ -1121,6 +1134,41 @@ static struct event* Dequeue_Event (int now)
 		event = event->next;
 	}
 	return NULL;
+}
+
+/**
+ * @brief Filters every event in the queue using the given function.
+ *  Keeps all events for which the function returns true.
+ * @param filter Pointer to the filter function.
+ *  When called with event info, it should return true if the event is to be kept.
+ */
+void CL_FilterEventQueue(event_filter *filter)
+{
+	struct event *event = event_queue;
+	struct event *prev = NULL;
+
+	assert(filter);
+
+	while(event) {
+		qboolean keep = filter(event->when, event->func, event->check, event->data);
+		struct event *freeme = event;
+
+		if (keep) {
+			prev = event;
+			event = event->next;
+			continue;
+		}
+
+		/* keep == qfalse */
+		if (prev) {
+			event = prev->next = event->next;
+		} else {
+			event = event_queue = event->next;
+		}
+		if (freeme->clean != NULL)
+			freeme->clean(freeme->data);
+		Mem_Free(freeme);
+	}
 }
 
 /**
