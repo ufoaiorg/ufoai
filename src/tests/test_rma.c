@@ -66,14 +66,17 @@ static int UFO_CleanSuiteRandomMapAssembly (void)
 static void testAssembly (void)
 {
 	SV_Map(qtrue, "+forest", "large");
+	CU_ASSERT(Com_GetServerState() == ss_game);
 }
 
 static void testMassAssembly (void)
 {
 	int i;
 
-	for (i = 0; i < 1000; i++)
+	for (i = 0; i < 1000; i++) {
 		SV_Map(qtrue, "+forest", "large");
+		CU_ASSERT(Com_GetServerState() == ss_game);
+	}
 }
 
 int UFO_AddRandomMapAssemblyTests (void) {
