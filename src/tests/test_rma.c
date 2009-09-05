@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "CUnit/Basic.h"
 #include "test_rma.h"
 
-#include "../common/common.h"
-#include "../server/server.h"
+#include "../server/sv_init.c"
 
 /**
  * The suite initialization function.
@@ -47,6 +46,8 @@ static int UFO_InitSuiteRandomMapAssembly (void)
 	FS_InitFilesystem(qtrue);
 	Swap_Init();
 
+	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0", 0, NULL);
+
 	return 0;
 }
 
@@ -65,17 +66,22 @@ static int UFO_CleanSuiteRandomMapAssembly (void)
 
 static void testAssembly (void)
 {
-	SV_Map(qtrue, "+forest", "large");
-	CU_ASSERT(Com_ServerState() == ss_game);
+	const char *map;
+	const char *pos;
+	SV_AssembleMap("forest", "large", &map, &pos);
+	CU_ASSERT(numPlaced == 1);
 }
 
 static void testMassAssembly (void)
 {
 	int i;
 
-	for (i = 0; i < 1000; i++) {
-		SV_Map(qtrue, "+forest", "large");
-		CU_ASSERT(Com_ServerState() == ss_game);
+	for (i = 0; i < 10; i++) {
+		const char *map;
+		const char *pos;
+
+		SV_AssembleMap("forest", "large", &map, &pos);
+		CU_ASSERT(numPlaced == 1);
 	}
 }
 

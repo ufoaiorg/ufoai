@@ -29,7 +29,6 @@ TESTS_SRCS = \
 	\
 	server/sv_ccmds.c \
 	server/sv_game.c \
-	server/sv_init.c \
 	server/sv_main.c \
 	server/sv_send.c \
 	server/sv_user.c \
