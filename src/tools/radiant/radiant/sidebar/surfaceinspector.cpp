@@ -399,21 +399,15 @@ static const char* contentflagNamesDefault[32] = { "cont1", "cont2", "cont3", "c
 		"cont19", "cont20", "cont21", "cont22", "cont23", "cont24", "cont25", "cont26", "cont27", "cont28", "cont29",
 		"cont30", "cont31", "cont32" };
 
-static const char* getSurfaceFlagName (std::size_t bit)
+static const std::string& getSurfaceFlagName (std::size_t bit)
 {
-	const char* value = g_pGameDescription->getKeyValue(surfaceflagNamesDefault[bit]);
-	if (string_empty(value)) {
-		return surfaceflagNamesDefault[bit];
-	}
+	const std::string& value = g_pGameDescription->getKeyValue(surfaceflagNamesDefault[bit]);
 	return value;
 }
 
-static const char* getContentFlagName (std::size_t bit)
+static const std::string& getContentFlagName (std::size_t bit)
 {
-	const char* value = g_pGameDescription->getKeyValue(contentflagNamesDefault[bit]);
-	if (string_empty(value)) {
-		return contentflagNamesDefault[bit];
-	}
+	const std::string& value = g_pGameDescription->getKeyValue(contentflagNamesDefault[bit]);
 	return value;
 }
 
@@ -710,7 +704,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 		}
 	}
 	{
-		const char* valueEnablingFields = g_pGameDescription->getKeyValue("surfaceinspector_enable_value");
+		const std::string& valueEnablingFields = g_pGameDescription->getKeyValue("surfaceinspector_enable_value");
 		{
 			m_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new(_("Surface Flags")));
 			gtk_widget_show(GTK_WIDGET (m_surfaceFlagsFrame));
@@ -730,17 +724,17 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 					for (int c = 0; c != 4; ++c) {
 						for (int r = 0; r != 8; ++r) {
 							const std::size_t id = c * 8 + r;
-							const char *name = getSurfaceFlagName(id);
-							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
+							const std::string& name = getSurfaceFlagName(id);
+							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name.c_str()));
 							gtk_widget_show(GTK_WIDGET (check));
 							gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
 									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (0), 0, 0);
 							*p++ = check;
 							guint handler_id = 0;
-							if (!strncmp(name, "surf", 4)) {
+							if (!strncmp(name.c_str(), "surf", 4)) {
 								gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
 								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
-							} else if (strstr(valueEnablingFields, name) > 0) {
+							} else if (valueEnablingFields.find(name) != std::string::npos) {
 								g_object_set_data(G_OBJECT(check), "valueEnabler", gint_to_pointer(true));
 								handler_id = g_signal_connect(G_OBJECT(check), "toggled", G_CALLBACK(
 												SurfaceInspector::UpdateValueStatus), this);
@@ -772,18 +766,18 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 					for (int c = 0; c != 4; ++c) {
 						for (int r = 0; r != 8; ++r) {
 							const std::size_t id = c * 8 + r;
-							const char *name = getContentFlagName(id);
-							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
+							const std::string& name = getContentFlagName(id);
+							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name.c_str()));
 							gtk_toggle_button_set_inconsistent(GTK_TOGGLE_BUTTON(check), FALSE);
 							gtk_widget_show(GTK_WIDGET (check));
 							gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
 									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (0), 0, 0);
 							*p++ = check;
 							guint handler_id = 0;
-							if (!strncmp(name, "cont", 4)) {
+							if (!strncmp(name.c_str(), "cont", 4)) {
 								gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
 								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
-							} else if (strstr(valueEnablingFields, name) > 0) {
+							} else if (valueEnablingFields.find(name) != std::string::npos) {
 								g_object_set_data(G_OBJECT(check), "valueEnabler", gint_to_pointer(true));
 								handler_id = g_signal_connect(G_OBJECT(check), "toggled", G_CALLBACK(
 												SurfaceInspector::UpdateValueStatus), this);

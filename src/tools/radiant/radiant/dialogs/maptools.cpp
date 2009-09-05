@@ -5,25 +5,25 @@
  */
 
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "radiant_i18n.h"
 #include "maptools.h"
@@ -43,11 +43,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "../gtkmisc.h"
 #endif
 
-enum {
-	CHECK_ENTITY,
-	CHECK_BRUSH,
-	CHECK_MESSAGE,
-	CHECK_SELECT,
+enum
+{
+	CHECK_ENTITY, CHECK_BRUSH, CHECK_MESSAGE, CHECK_SELECT,
 
 	CHECK_COLUMNS
 };
@@ -65,8 +63,7 @@ static gint editorHideCallback (GtkWidget *widget, gpointer data)
 
 static gint fixCallback (GtkWidget *widget, gpointer data)
 {
-	const char* fullname = Map_Name(g_map);
-	const char *compilerBinaryWithPath;
+	const std::string& fullname = Map_Name(g_map);
 
 	if (!ConfirmModified(_("Check Map")))
 		return 0;
@@ -77,34 +74,24 @@ static gint fixCallback (GtkWidget *widget, gpointer data)
 		return 0;
 	}
 
-	compilerBinaryWithPath = CompilerBinaryWithPath_get();
+	const std::string& compilerBinaryWithPath = CompilerBinaryWithPath_get();
 
 	if (file_exists(compilerBinaryWithPath)) {
-		char bufCmd[1024];
-		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_fix");
-
-		// attach parameter and map name
-		snprintf(bufCmd, sizeof(bufCmd) - 1, "%s %s %s", compilerBinaryWithPath, compiler_parameter, strstr(fullname, "maps"));
-		bufCmd[sizeof(bufCmd) - 1] = '\0';
-
+		const std::string& compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_fix");
 		char* output = NULL;
-		exec_run_cmd(bufCmd, &output, GlobalRadiant().getEnginePath());
-		if (output) {
-			// reload after fix
-			Map_Reload();
-			// refill popup
-			ToolsCheckErrors();
-			globalOutputStream() << "-------------------\n" << output << "-------------------\n";
-			free(output);
-		} else {
-			globalOutputStream() << "-------------------\nCommand: " << bufCmd << "\n-------------------\n";
+		exec_run_cmd(compilerBinaryWithPath + compiler_parameter + strstr(fullname.c_str(), "maps"), &output,
+				GlobalRadiant().getEnginePath());
+		if (!output)
 			return 0;
-		}
+		// reload after fix
+		Map_Reload();
+		// refill popup
+		ToolsCheckErrors();
+		globalOutputStream() << "-------------------\n" << output << "-------------------\n";
+		free(output);
 	} else {
-		StringOutputStream message(256);
-		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
-		gtk_MessageBox(0, message.c_str(), _("Map compiling"), eMB_OK, eMB_ICONERROR);
-		g_warning("%s\n", message.c_str());
+		gtk_MessageBox(0, _("Could not find the mapcompiler check your path settings\n"), _("Map compiling"), eMB_OK,
+				eMB_ICONERROR);
 	}
 	return 1;
 }
@@ -153,9 +140,9 @@ static void updateSelectVisibility (GtkTreeViewColumn *column, GtkCellRenderer *
 	char *entnumStr, *brushnumStr;
 	gtk_tree_model_get(model, iter, CHECK_ENTITY, &entnumStr, CHECK_BRUSH, &brushnumStr, -1);
 	if (entnumStr[0] == '\0' && brushnumStr[0] == '\0')
-		g_object_set(renderer, "visible", FALSE, (const char*)0);
+		g_object_set(renderer, "visible", FALSE, (const char*) 0);
 	else
-		g_object_set(renderer, "visible", TRUE, (const char*)0);
+		g_object_set(renderer, "visible", TRUE, (const char*) 0);
 }
 
 static void CreateCheckDialog (void)
@@ -180,21 +167,23 @@ static void CreateCheckDialog (void)
 		treeViewWidget = gtk_tree_view_new();
 
 		renderer = gtk_cell_renderer_text_new();
-		column = gtk_tree_view_column_new_with_attributes(_("Entity"), renderer, "text", CHECK_ENTITY, (const char*)0);
+		column = gtk_tree_view_column_new_with_attributes(_("Entity"), renderer, "text", CHECK_ENTITY, (const char*) 0);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewWidget), column);
 
 		renderer = gtk_cell_renderer_text_new();
-		column = gtk_tree_view_column_new_with_attributes(_("Brush"), renderer, "text", CHECK_BRUSH, (const char*)0);
+		column = gtk_tree_view_column_new_with_attributes(_("Brush"), renderer, "text", CHECK_BRUSH, (const char*) 0);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewWidget), column);
 
 		renderer = gtk_cell_renderer_text_new();
-		column = gtk_tree_view_column_new_with_attributes(_("Message"), renderer, "text", CHECK_MESSAGE, (const char*)0);
+		column = gtk_tree_view_column_new_with_attributes(_("Message"), renderer, "text", CHECK_MESSAGE,
+				(const char*) 0);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewWidget), column);
 
 		renderer = gtk_cell_renderer_toggle_new();
-		g_object_set(renderer, "activatable", TRUE, (const char*)0);
+		g_object_set(renderer, "activatable", TRUE, (const char*) 0);
 		g_signal_connect(G_OBJECT(renderer), "toggled", G_CALLBACK(selectBrushesViaTreeView), NULL);
-		column = gtk_tree_view_column_new_with_attributes(_("Select"), renderer, "active", CHECK_SELECT, (const char*)0);
+		column = gtk_tree_view_column_new_with_attributes(_("Select"), renderer, "active", CHECK_SELECT,
+				(const char*) 0);
 		gtk_tree_view_column_set_alignment(column, 0.5);
 		gtk_tree_view_column_set_cell_data_func(column, renderer, updateSelectVisibility, NULL, NULL);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewWidget), column);
@@ -226,8 +215,7 @@ static void CreateCheckDialog (void)
 
 void ToolsCheckErrors (void)
 {
-	const char* fullname = Map_Name(g_map);
-	const char *compilerBinaryWithPath;
+	const std::string& fullname = Map_Name(g_map);
 
 	if (!ConfirmModified(_("Check Map")))
 		return;
@@ -238,19 +226,14 @@ void ToolsCheckErrors (void)
 		return;
 	}
 
-	compilerBinaryWithPath = CompilerBinaryWithPath_get();
+	const std::string& compilerBinaryWithPath = CompilerBinaryWithPath_get();
 
 	if (file_exists(compilerBinaryWithPath)) {
 		int rows = 0;
-		char bufCmd[1024];
-		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_check");
-
-		// attach parameter and map name
-		snprintf(bufCmd, sizeof(bufCmd) - 1, "\"%s\" %s \"%s\"", compilerBinaryWithPath, compiler_parameter, strstr(fullname, "maps"));
-		bufCmd[sizeof(bufCmd) - 1] = '\0';
-
+		const std::string& compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_check");
 		char* output = NULL;
-		exec_run_cmd(bufCmd, &output, GlobalRadiant().getEnginePath());
+		exec_run_cmd(compilerBinaryWithPath + compiler_parameter + strstr(fullname.c_str(), "maps"), &output,
+				GlobalRadiant().getEnginePath());
 		if (output) {
 			if (!checkDialog)
 				CreateCheckDialog();
@@ -306,7 +289,8 @@ void ToolsCheckErrors (void)
 							brushnum = atoi(brushnumbuf);
 							entnum = atoi(entnumbuf);
 							gtk_list_store_append(store, &iter);
-							gtk_list_store_set(store, &iter, CHECK_ENTITY, entnum < 0 ? "" : entnumbuf, CHECK_BRUSH, brushnum < 0 ? "" : brushnumbuf, CHECK_MESSAGE, line, -1);
+							gtk_list_store_set(store, &iter, CHECK_ENTITY, entnum < 0 ? "" : entnumbuf, CHECK_BRUSH,
+									brushnum < 0 ? "" : brushnumbuf, CHECK_MESSAGE, line, -1);
 
 							rows++;
 						} else
@@ -319,9 +303,11 @@ void ToolsCheckErrors (void)
 
 			if (rows == 0) {
 				gtk_list_store_append(store, &iter);
-				gtk_list_store_set(store, &iter, CHECK_ENTITY, "", CHECK_BRUSH, "", CHECK_MESSAGE, _("No problems in your map found. Output was:"), CHECK_SELECT, NULL, -1);
+				gtk_list_store_set(store, &iter, CHECK_ENTITY, "", CHECK_BRUSH, "", CHECK_MESSAGE,
+						_("No problems in your map found. Output was:"), CHECK_SELECT, NULL, -1);
 				gtk_list_store_append(store, &iter);
-				gtk_list_store_set(store, &iter, CHECK_ENTITY, "", CHECK_BRUSH, "", CHECK_MESSAGE, output, CHECK_SELECT, NULL, -1);
+				gtk_list_store_set(store, &iter, CHECK_ENTITY, "", CHECK_BRUSH, "", CHECK_MESSAGE, output,
+						CHECK_SELECT, NULL, -1);
 				gtk_widget_set_sensitive(checkRepairButton, false);
 			} else {
 				gtk_widget_set_sensitive(checkRepairButton, true);
@@ -336,14 +322,11 @@ void ToolsCheckErrors (void)
 
 			free(output);
 		} else {
-			g_message("-------------------\nCommand: %s\n-------------------\n", bufCmd);
-			g_message("No output for checking %s\n", fullname);
+			g_message("No output for checking %s\n", fullname.c_str());
 		}
 	} else {
-		StringOutputStream message(256);
-		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
-		gtk_MessageBox(0, message.c_str(), _("Map compiling"), eMB_OK, eMB_ICONERROR);
-		g_warning("%s\n", message.c_str());
+		gtk_MessageBox(0, _("Could not find the mapcompiler check your path settings\n"), _("Map compiling"), eMB_OK,
+				eMB_ICONERROR);
 	}
 }
 
@@ -352,24 +335,18 @@ static const gdouble substeps = 10.0; /* 0..9 in the output */
 static const gdouble stepWidth = 1.0 / compilerSteps / substeps;
 static int cnt = 0;
 
-static const char *steps[] = {
-	"LEVEL:",
-	"UNITCHECK:",
-	"CONNCHECK:",
-	"FACELIGHTS:",
-	"FINALLIGHT:",
+static const char *steps[] = { "LEVEL:", "UNITCHECK:", "CONNCHECK:", "FACELIGHTS:", "FINALLIGHT:",
 
-	(const char *)0
-};
+(const char *) 0 };
 
 static void compileReadProgress (void *ex, void *buffer)
 {
 	g_return_if_fail(buffer != NULL);
 	g_return_if_fail(ex != NULL);
 	ExecCmd *job = (ExecCmd *) ex;
-	Exec *exec = (Exec *)job->exec;
+	Exec *exec = (Exec *) job->exec;
 
-	gchar *buf = (gchar*)buffer;
+	gchar *buf = (gchar*) buffer;
 
 	if (strstr(buf, "(time:")) {
 		job->parse_progress = FALSE;
@@ -379,7 +356,7 @@ static void compileReadProgress (void *ex, void *buffer)
 #if GLIB_CHECK_VERSION(2,16,0)
 			if (g_strcmp0(*step, buf)) {
 #else
-			if (buf != 0 && strcmp(*step,buf)) {
+			if (buf != 0 && strcmp(*step, buf)) {
 #endif
 				job->parse_progress = TRUE;
 				break;
@@ -404,41 +381,39 @@ static void compileReadProgress (void *ex, void *buffer)
 
 void ToolsGenerateMaterials (void)
 {
-	const char *compilerBinaryWithPath;
 
 	if (!ConfirmModified("Generate Materials"))
 		return;
 
 	/* empty map? */
 	if (!g_brushCount.get()) {
-		gtk_MessageBox(0, _("Nothing to generate materials from in this map\n"), _("Generate Materials"), eMB_OK, eMB_ICONERROR);
+		gtk_MessageBox(0, _("Nothing to generate materials from in this map\n"), _("Generate Materials"), eMB_OK,
+				eMB_ICONERROR);
 		return;
 	}
 
-	compilerBinaryWithPath = CompilerBinaryWithPath_get();
+	const std::string& compilerBinaryWithPath = CompilerBinaryWithPath_get();
 
 	if (file_exists(compilerBinaryWithPath)) {
-		const char* fullname = Map_Name(g_map);
-		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_materials");
-		const char *enginePath = GlobalRadiant().getEnginePath();
+		const std::string& fullname = Map_Name(g_map);
+		const std::string& compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_materials");
+		const std::string& enginePath = GlobalRadiant().getEnginePath();
 
 		Exec *compilerRun = exec_new("GenerateMaterialsRun", _("Generate materials from the current map"));
 		ExecCmd *cmd = exec_cmd_new(&compilerRun);
-		exec_cmd_add_arg(cmd, compilerBinaryWithPath);
-		exec_cmd_add_arg(cmd, compiler_parameter);
-		exec_cmd_add_arg(cmd, strstr(fullname, "maps"));
+		exec_cmd_add_arg(cmd, compilerBinaryWithPath.c_str());
+		exec_cmd_add_arg(cmd, compiler_parameter.c_str());
+		exec_cmd_add_arg(cmd, strstr(fullname.c_str(), "maps"));
 		cmd->read_proc = compileReadProgress;
-		cmd->working_dir = g_strdup(enginePath);
+		cmd->working_dir = g_strdup(enginePath.c_str());
 		exec_run(compilerRun);
-		g_warning("cnt: %i (%s)\n", cnt, fullname);
+		g_warning("cnt: %i (%s)\n", cnt, fullname.c_str());
 		cnt = 0;
 		if (exec_cmd_get_state(cmd) == COMPLETED)
 			DoTextEditor(Material_GetFilename(), 0, "");
 	} else {
-		StringOutputStream message(256);
-		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
-		gtk_MessageBox(0, message.c_str(), _("Generate Materials"), eMB_OK, eMB_ICONERROR);
-		g_warning("%s\n", message.c_str());
+		gtk_MessageBox(0, _("Could not find the mapcompiler check your path settings\n"), _("Generate Materials"),
+				eMB_OK, eMB_ICONERROR);
 	}
 }
 
@@ -447,8 +422,6 @@ void ToolsGenerateMaterials (void)
  */
 void ToolsCompile (void)
 {
-	const char *compilerBinaryWithPath;
-
 	if (!ConfirmModified("Compile Map"))
 		return;
 
@@ -458,27 +431,25 @@ void ToolsCompile (void)
 		return;
 	}
 
-	compilerBinaryWithPath = CompilerBinaryWithPath_get();
+	const std::string& compilerBinaryWithPath = CompilerBinaryWithPath_get();
 
 	if (file_exists(compilerBinaryWithPath)) {
-		const char* fullname = Map_Name(g_map);
-		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_compile");
-		const char *enginePath = GlobalRadiant().getEnginePath();
+		const std::string& fullname = Map_Name(g_map);
+		const std::string& compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_compile");
+		const std::string& enginePath = GlobalRadiant().getEnginePath();
 
 		Exec *compilerRun = exec_new("CompileRun", _("Compiles the current map with the mapcompiler"));
 		ExecCmd *cmd = exec_cmd_new(&compilerRun);
-		exec_cmd_add_arg(cmd, compilerBinaryWithPath);
-		exec_cmd_add_arg(cmd, compiler_parameter);
-		exec_cmd_add_arg(cmd, strstr(fullname, "maps"));
+		exec_cmd_add_arg(cmd, compilerBinaryWithPath.c_str());
+		exec_cmd_add_arg(cmd, compiler_parameter.c_str());
+		exec_cmd_add_arg(cmd, strstr(fullname.c_str(), "maps"));
 		cmd->read_proc = compileReadProgress;
-		cmd->working_dir = g_strdup(enginePath);
+		cmd->working_dir = g_strdup(enginePath.c_str());
 		exec_run(compilerRun);
-		g_warning("cnt: %i (%s)\n", cnt, fullname);
+		g_warning("cnt: %i (%s)\n", cnt, fullname.c_str());
 		cnt = 0;
 	} else {
-		StringOutputStream message(256);
-		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
-		gtk_MessageBox(0, message.c_str(), _("Map compiling"), eMB_OK, eMB_ICONERROR);
-		g_warning("%s\n", message.c_str());
+		gtk_MessageBox(0, _("Could not find the mapcompiler check your path settings\n"), _("Map compiling"), eMB_OK,
+				eMB_ICONERROR);
 	}
 }

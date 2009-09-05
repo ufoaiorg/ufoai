@@ -43,54 +43,39 @@
 
 QEGlobals_t g_qeglobals;
 
+/**
+ * VFS initialization
+ * we will call GlobalFileSystem().initDirectory, giving the directories to look in (for files in pk3's and for standalone files)
+ * we need to call in order, the mod ones first, then the base ones .. they will be searched in this order
+ * *nix systems have a dual filesystem in ~/.ufoai, which is searched first .. so we need to add that too
+ */
 void QE_InitVFS (void)
 {
-	// VFS initialization -----------------------
-	// we will call GlobalFileSystem().initDirectory, giving the directories to look in (for files in pk3's and for standalone files)
-	// we need to call in order, the mod ones first, then the base ones .. they will be searched in this order
-	// *nix systems have a dual filesystem in ~/.ufoai, which is searched first .. so we need to add that too
-
-	const char* gamename = gamename_get();
-	const char* basegame = gamename_get();
+	const std::string& gamename = gamename_get();
+	const std::string& basegame = gamename_get();
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
-	const char* userRoot = g_qeglobals.m_userEnginePath.c_str();
+	const std::string& userRoot = g_qeglobals.m_userEnginePath;
 #endif
-	const char* globalRoot = EnginePath_get();
+	const std::string& globalRoot = EnginePath_get();
 
 	// if we have a mod dir
-	if (!string_equal(gamename, basegame)) {
+	if (gamename != basegame) {
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 		// ~/.<gameprefix>/<fs_game>
-		{
-			StringOutputStream userGamePath(256);
-			userGamePath << userRoot << gamename << '/';
-			GlobalFileSystem().initDirectory(userGamePath.c_str());
-		}
+		GlobalFileSystem().initDirectory(userRoot + gamename + "/");
 #endif
 
 		// <fs_basepath>/<fs_game>
-		{
-			StringOutputStream globalGamePath(256);
-			globalGamePath << globalRoot << gamename << '/';
-			GlobalFileSystem().initDirectory(globalGamePath.c_str());
-		}
+		GlobalFileSystem().initDirectory(globalRoot + gamename + "/");
 	}
 
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 	// ~/.<gameprefix>/<fs_main>
-	{
-		StringOutputStream userBasePath(256);
-		userBasePath << userRoot << basegame << '/';
-		GlobalFileSystem().initDirectory(userBasePath.c_str());
-	}
+	GlobalFileSystem().initDirectory(userRoot + basegame + "/");
 #endif
 
 	// <fs_basepath>/<fs_main>
-	{
-		StringOutputStream globalBasePath(256);
-		globalBasePath << globalRoot << basegame << '/';
-		GlobalFileSystem().initDirectory(globalBasePath.c_str());
-	}
+	GlobalFileSystem().initDirectory(globalRoot + basegame + "/");
 }
 
 /**
@@ -121,7 +106,7 @@ void QE_entityCountChanged (void)
 	QE_UpdateStatusBar();
 }
 
-bool ConfirmModified (const char* title)
+bool ConfirmModified (const std::string& title)
 {
 	if (!Map_Modified(g_map))
 		return true;
@@ -146,11 +131,11 @@ bool ConfirmModified (const char* title)
  * @brief Sets the window title for UFORadiant
  * @sa Map_UpdateTitle
  */
-void Sys_SetTitle (const char *text, bool modified)
+void Sys_SetTitle (const std::string& text, bool modified)
 {
 	StringOutputStream title;
 	title << "UFORadiant ";
-	title << ConvertLocaleToUTF8(text);
+	title << ConvertLocaleToUTF8(text.c_str());
 
 	if (modified) {
 		title << " *";

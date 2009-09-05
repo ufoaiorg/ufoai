@@ -96,9 +96,9 @@ namespace routing
 
 				if (_showPathfinding) {
 					//update current pathfinding data on every activation
-					const char* mapname = Map_Name(g_map);
+					const std::string& mapname = Map_Name(g_map);
 					StringOutputStream bspStream(256);
-					bspStream << StringRange(mapname, path_get_filename_base_end(mapname)) << ".bsp";
+					bspStream << StringRange(mapname.c_str(), path_get_filename_base_end(mapname.c_str())) << ".bsp";
 					const char* bspname = path_make_relative(bspStream.c_str(), GlobalFileSystem().findRoot(
 							bspStream.c_str()));
 					_routingRender->updateRouting(bspname);

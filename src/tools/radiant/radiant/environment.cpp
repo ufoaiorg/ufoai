@@ -27,17 +27,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <glib.h>
 
-static CopiedString home_path;
-static CopiedString app_path;
+static std::string home_path;
+static std::string app_path;
 
-const char* environment_get_home_path (void)
+const std::string& environment_get_home_path (void)
 {
-	return home_path.c_str();
+	return home_path;
 }
 
-const char* environment_get_app_path (void)
+const std::string& environment_get_app_path (void)
 {
-	return app_path.c_str();
+	return app_path;
 }
 
 

@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "generic/constant.h"
 #include "generic/callbackfwd.h"
+#include <string>
 
 typedef Callback1<const char*> StringImportCallback;
 typedef Callback1<const StringImportCallback&> StringExportCallback;
@@ -35,7 +36,7 @@ public:
 
 	virtual ~PreferenceSystem(){}
 
-	virtual void registerPreference(const char* name, const StringImportCallback& importer, const StringExportCallback& exporter) = 0;
+	virtual void registerPreference(const std::string& name, const StringImportCallback& importer, const StringExportCallback& exporter) = 0;
 };
 
 #include "modulesystem.h"

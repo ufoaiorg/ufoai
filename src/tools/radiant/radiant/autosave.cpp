@@ -54,11 +54,11 @@ static void Map_Snapshot ()
 	// 1. make sure the snapshot directory exists (create it if it doesn't)
 	// 2. find out what the lastest save is based on number
 	// 3. inc that and save the map
-	const char* path = Map_Name(g_map);
-	const char* name = path_get_filename_start(path);
+	const std::string& path = Map_Name(g_map);
+	const char* name = path_get_filename_start(path.c_str());
 
 	StringOutputStream snapshotsDir(256);
-	snapshotsDir << StringRange(path, name) << "snapshots";
+	snapshotsDir << StringRange(path.c_str(), name) << "snapshots";
 
 	if (file_exists(snapshotsDir.c_str()) || g_mkdir(snapshotsDir.c_str(), 0775)) {
 		std::size_t lSize = 0;
@@ -136,7 +136,7 @@ void QE_CheckAutoSave (void)
 		s_changes = Node_getMapFile(Map_Node())->changes();
 
 		if (g_AutoSave_Enabled) {
-			const char* strMsg = g_SnapShots_Enabled ? "Autosaving snapshot..." : "Autosaving...";
+			const char* strMsg = g_SnapShots_Enabled ? _("Autosaving snapshot...") : _("Autosaving...");
 			g_message("%s\n", strMsg);
 			//Sys_Status(strMsg);
 
@@ -145,16 +145,15 @@ void QE_CheckAutoSave (void)
 				Map_Snapshot();
 			} else {
 				if (Map_Unnamed(g_map)) {
-					StringOutputStream autosave(256);
-					autosave << g_qeglobals.m_userGamePath.c_str() << "maps/";
+					std::string autosave = g_qeglobals.m_userGamePath + "maps/";
 					g_mkdir(autosave.c_str(), 0775);
-					autosave << "autosave.map";
-					Map_SaveFile(autosave.c_str());
+					autosave += "autosave.map";
+					Map_SaveFile(autosave);
 				} else {
-					const char* name = Map_Name(g_map);
-					const char* extension = path_get_filename_base_end(name);
+					const std::string& name = Map_Name(g_map);
+					const char* extension = path_get_filename_base_end(name.c_str());
 					StringOutputStream autosave(256);
-					autosave << StringRange(name, extension) << ".autosave" << extension;
+					autosave << StringRange(name.c_str(), extension) << ".autosave" << extension;
 					Map_SaveFile(autosave.c_str());
 				}
 			}

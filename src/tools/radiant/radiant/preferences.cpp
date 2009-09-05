@@ -46,6 +46,7 @@
 #include "mainframe.h"
 #include "qe3.h"
 #include "dialogs/texteditor.h"
+#include <string>
 
 void Interface_constructPreferences (PreferencesPage& page)
 {
@@ -55,7 +56,7 @@ void Interface_constructPreferences (PreferencesPage& page)
 
 static void Mouse_constructPreferences (PreferencesPage& page)
 {
-	const char* buttons[] = { _("2 button"), _("3 button")};
+	const char* buttons[] = { _("2 button"), _("3 button") };
 	page.appendRadio(_("Mouse Type"), g_glwindow_globals.m_nMouseType, STRING_ARRAY_RANGE(buttons));
 	page.appendCheckBox(_("Right Button"), _("Activates Context Menu"), g_xywindow_globals.m_bRightClick);
 }
@@ -89,7 +90,8 @@ inline const char* xmlAttr_getValue (xmlAttrPtr attr)
 	return reinterpret_cast<const char*> (attr->children->content);
 }
 
-CGameDescription::CGameDescription (xmlDocPtr pDoc, const CopiedString& gameFile)
+CGameDescription::CGameDescription (xmlDocPtr pDoc, const std::string& gameFile) :
+	emptyString("")
 {
 	// read the user-friendly game name
 	xmlNodePtr pNode = pDoc->children;
@@ -122,7 +124,7 @@ CGameDescription *g_pGameDescription; ///< shortcut to g_GamesDialog.m_pCurrentD
 
 static const char* const PREFERENCES_VERSION = "1.0";
 
-static bool Preferences_Load (PreferenceDictionary& preferences, const char* filename)
+static bool Preferences_Load (PreferenceDictionary& preferences, const std::string& filename)
 {
 	TextFileInputStream file(filename);
 	if (!file.failed()) {
@@ -134,7 +136,7 @@ static bool Preferences_Load (PreferenceDictionary& preferences, const char* fil
 	return false;
 }
 
-static bool Preferences_Save (PreferenceDictionary& preferences, const char* filename)
+static bool Preferences_Save (PreferenceDictionary& preferences, const std::string& filename)
 {
 	TextFileOutputStream file(filename);
 	if (!file.failed()) {
@@ -146,9 +148,9 @@ static bool Preferences_Save (PreferenceDictionary& preferences, const char* fil
 	return false;
 }
 
-static bool Preferences_Save_Safe (PreferenceDictionary& preferences, const char* filename)
+static bool Preferences_Save_Safe (PreferenceDictionary& preferences, const std::string& filename)
 {
-	Array<char> tmpName(filename, filename + strlen(filename) + 1 + 3);
+	Array<char> tmpName(filename.c_str(), filename.c_str() + filename.length() + 1 + 3);
 	*(tmpName.end() - 4) = 'T';
 	*(tmpName.end() - 3) = 'M';
 	*(tmpName.end() - 2) = 'P';
@@ -179,16 +181,14 @@ void CGameDialog::Reset ()
  */
 void CGameDialog::Init ()
 {
-	StringOutputStream strGameFilename(256);
-	strGameFilename << AppPath_get() << "games/ufoai.game";
-	const char *path = strGameFilename.c_str();
+	std::string strGameFilename = AppPath_get() + "games/ufoai.game";
 
-	xmlDocPtr pDoc = xmlParseFile(path);
+	xmlDocPtr pDoc = xmlParseFile(strGameFilename.c_str());
 	if (pDoc) {
-		g_pGameDescription = new CGameDescription(pDoc, path);
+		g_pGameDescription = new CGameDescription(pDoc, strGameFilename);
 		xmlFreeDoc(pDoc);
 	} else {
-		Error("XML parser failed on '%s'\n", path);
+		Error("XML parser failed on '%s'\n", strGameFilename.c_str());
 	}
 }
 
@@ -205,10 +205,11 @@ CGameDialog g_GamesDialog;
 static void OnButtonClean (GtkWidget *widget, gpointer data)
 {
 	// make sure this is what the user wants
-	if (gtk_MessageBox(GTK_WIDGET(g_Preferences.GetWidget()), _("This will close UFORadiant and clean the corresponding registry entries.\n"
-			"Next time you start UFORadiant it will be good as new. Do you wish to continue?"),
-	_("Reset Registry"), eMB_YESNO, eMB_ICONASTERISK) == eIDYES) {
-		PrefsDlg *dlg = (PrefsDlg*)data;
+	if (gtk_MessageBox(GTK_WIDGET(g_Preferences.GetWidget()),
+			_("This will close UFORadiant and clean the corresponding registry entries.\n"
+					"Next time you start UFORadiant it will be good as new. Do you wish to continue?"),
+			_("Reset Registry"), eMB_YESNO, eMB_ICONASTERISK) == eIDYES) {
+		PrefsDlg *dlg = (PrefsDlg*) data;
 		dlg->EndModal(eIDCANCEL);
 
 		g_preferences_globals.disable_ini = true;
@@ -217,8 +218,8 @@ static void OnButtonClean (GtkWidget *widget, gpointer data)
 	}
 }
 
-	// =============================================================================
-	// PrefsDlg class
+// =============================================================================
+// PrefsDlg class
 
 static void notebook_set_page (GtkWidget* notebook, GtkWidget* page)
 {
@@ -300,7 +301,8 @@ void PreferencesDialog_addSettingsPage (const PreferenceGroupCallback& callback)
 
 static void Widget_updateDependency (GtkWidget* self, GtkWidget* toggleButton)
 {
-	gtk_widget_set_sensitive(self, gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggleButton)) && GTK_WIDGET_IS_SENSITIVE(toggleButton));
+	gtk_widget_set_sensitive(self, gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggleButton))
+			&& GTK_WIDGET_IS_SENSITIVE(toggleButton));
 }
 
 static void ToggleButton_toggled_Widget_updateDependency (GtkWidget *toggleButton, GtkWidget* self)
@@ -422,78 +424,79 @@ GtkWindow* PrefsDlg::BuildDialog ()
 				gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(sc_win), GTK_SHADOW_IN);
 
 				// prefs pages notebook
-					m_notebook = gtk_notebook_new();
-					// hide the notebook tabs since its not supposed to look like a notebook
-					gtk_notebook_set_show_tabs(GTK_NOTEBOOK(m_notebook), FALSE);
-					gtk_box_pack_start(GTK_BOX(hbox), m_notebook, TRUE, TRUE, 0);
-					gtk_widget_show(m_notebook);
+				m_notebook = gtk_notebook_new();
+				// hide the notebook tabs since its not supposed to look like a notebook
+				gtk_notebook_set_show_tabs(GTK_NOTEBOOK(m_notebook), FALSE);
+				gtk_box_pack_start(GTK_BOX(hbox), m_notebook, TRUE, TRUE, 0);
+				gtk_widget_show(m_notebook);
+
+				{
+					GtkTreeStore* store = gtk_tree_store_new(2, G_TYPE_STRING, G_TYPE_POINTER);
+
+					GtkWidget* view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+					gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(view), FALSE);
 
 					{
-						GtkTreeStore* store = gtk_tree_store_new(2, G_TYPE_STRING, G_TYPE_POINTER);
-
-						GtkWidget* view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
-						gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(view), FALSE);
-
-						{
-							GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-							GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Preferences"), renderer, "text", 0, (char const*)0);
-							gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
-						}
-
-						{
-							GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
-							g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(treeSelection), this);
-						}
-
-						gtk_widget_show(view);
-
-						gtk_container_add(GTK_CONTAINER (sc_win), view);
-
-						{
-							/********************************************************************/
-							/* Add preference tree options                                      */
-							/********************************************************************/
-							PreferencePages_addPage(m_notebook, _("Front Page"));
-
-							{
-								GtkWidget* interfacePage = PreferencePages_addPage(m_notebook, _("Interface Preferences"));
-								{
-									PreferencesPage preferencesPage(*this, getVBox(interfacePage));
-									PreferencesPageCallbacks_constructPage(g_interfacePreferences, preferencesPage);
-								}
-
-								GtkTreeIter group = PreferenceTree_appendPage(store, 0, _("Interface"), interfacePage);
-								PreferenceTreeGroup preferenceGroup(*this, m_notebook, store, group);
-
-								PreferenceGroupCallbacks_constructGroup(g_interfaceCallbacks, preferenceGroup);
-							}
-
-							{
-								GtkWidget* settings = PreferencePages_addPage(m_notebook, _("General Settings"));
-								{
-									PreferencesPage preferencesPage(*this, getVBox(settings));
-									PreferencesPageCallbacks_constructPage(g_settingsPreferences, preferencesPage);
-								}
-
-								GtkTreeIter group = PreferenceTree_appendPage(store, 0, _("Settings"), settings);
-								PreferenceTreeGroup preferenceGroup(*this, m_notebook, store, group);
-
-								PreferenceGroupCallbacks_constructGroup(g_settingsCallbacks, preferenceGroup);
-							}
-						}
-
-						gtk_tree_view_expand_all(GTK_TREE_VIEW(view));
-
-						g_object_unref(G_OBJECT(store));
+						GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
+						GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Preferences"),
+								renderer, "text", 0, (char const*) 0);
+						gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 					}
+
+					{
+						GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
+						g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(treeSelection), this);
+					}
+
+					gtk_widget_show(view);
+
+					gtk_container_add(GTK_CONTAINER (sc_win), view);
+
+					{
+						/********************************************************************/
+						/* Add preference tree options                                      */
+						/********************************************************************/
+						PreferencePages_addPage(m_notebook, _("Front Page"));
+
+						{
+							GtkWidget* interfacePage = PreferencePages_addPage(m_notebook, _("Interface Preferences"));
+							{
+								PreferencesPage preferencesPage(*this, getVBox(interfacePage));
+								PreferencesPageCallbacks_constructPage(g_interfacePreferences, preferencesPage);
+							}
+
+							GtkTreeIter group = PreferenceTree_appendPage(store, 0, _("Interface"), interfacePage);
+							PreferenceTreeGroup preferenceGroup(*this, m_notebook, store, group);
+
+							PreferenceGroupCallbacks_constructGroup(g_interfaceCallbacks, preferenceGroup);
+						}
+
+						{
+							GtkWidget* settings = PreferencePages_addPage(m_notebook, _("General Settings"));
+							{
+								PreferencesPage preferencesPage(*this, getVBox(settings));
+								PreferencesPageCallbacks_constructPage(g_settingsPreferences, preferencesPage);
+							}
+
+							GtkTreeIter group = PreferenceTree_appendPage(store, 0, _("Settings"), settings);
+							PreferenceTreeGroup preferenceGroup(*this, m_notebook, store, group);
+
+							PreferenceGroupCallbacks_constructGroup(g_settingsCallbacks, preferenceGroup);
+						}
+					}
+
+					gtk_tree_view_expand_all(GTK_TREE_VIEW(view));
+
+					g_object_unref(G_OBJECT(store));
 				}
 			}
 		}
-
-		gtk_notebook_set_page(GTK_NOTEBOOK(m_notebook), 0);
-
-		return dialog;
 	}
+
+	gtk_notebook_set_page(GTK_NOTEBOOK(m_notebook), 0);
+
+	return dialog;
+}
 
 preferences_globals_t g_preferences_globals;
 
@@ -522,8 +525,7 @@ class PreferenceSystemAPI
 		PreferenceSystem* m_preferencesystem;
 	public:
 		typedef PreferenceSystem Type;
-		STRING_CONSTANT(Name, "*")
-		;
+		STRING_CONSTANT(Name, "*");
 
 		PreferenceSystemAPI ()
 		{
@@ -540,18 +542,17 @@ class PreferenceSystemAPI
 
 typedef SingletonModule<PreferenceSystemAPI> PreferenceSystemModule;
 typedef Static<PreferenceSystemModule> StaticPreferenceSystemModule;
-StaticRegisterModule staticRegisterPreferenceSystem (StaticPreferenceSystemModule::instance ());
+StaticRegisterModule staticRegisterPreferenceSystem(StaticPreferenceSystemModule::instance());
 
 #define PREFS_LOCAL_FILENAME "settings.xml"
 
 void Preferences_Load ()
 {
-	StringOutputStream filename(256);
-	filename << SettingsPath_get() << PREFS_LOCAL_FILENAME;
+	std::string filename = SettingsPath_get() + PREFS_LOCAL_FILENAME;
 
 	g_message("loading settings from %s\n", filename.c_str());
 
-	if (!Preferences_Load(g_preferences, filename.c_str())) {
+	if (!Preferences_Load(g_preferences, filename)) {
 		g_warning("failed to load settings from %s\n", filename.c_str());
 	}
 }
@@ -565,20 +566,18 @@ void Preferences_Save (void)
 	if (g_preferences_globals.disable_ini)
 		return;
 
-	StringOutputStream filename(256);
-	filename << SettingsPath_get() << PREFS_LOCAL_FILENAME;
+	std::string filename = SettingsPath_get() + PREFS_LOCAL_FILENAME;
 	g_message("saving settings to %s\n", filename.c_str());
 
-	if (!Preferences_Save_Safe(g_preferences, filename.c_str())) {
+	if (!Preferences_Save_Safe(g_preferences, filename)) {
 		g_warning("failed to save settings to %s\n", filename.c_str());
 	}
 }
 
 void Preferences_Reset (void)
 {
-	StringOutputStream filename(256);
-	filename << SettingsPath_get() << PREFS_LOCAL_FILENAME;
-	file_remove(filename.c_str());
+	std::string filename = SettingsPath_get() + PREFS_LOCAL_FILENAME;
+	file_remove(filename);
 }
 
 void PrefsDlg::Init (void)
@@ -593,9 +592,9 @@ void PrefsDlg::PostModal (EMessageBoxReturn code)
 	}
 }
 
-std::vector<const char*> g_restart_required;
+std::vector<std::string> g_restart_required;
 
-void PreferencesDialog_restartRequired (const char* staticName)
+void PreferencesDialog_restartRequired (const std::string& staticName)
 {
 	g_restart_required.push_back(staticName);
 }
@@ -604,12 +603,11 @@ void PreferencesDialog_showDialog ()
 {
 	if (ConfirmModified(_("Edit Preferences")) && g_Preferences.DoModal() == eIDOK) {
 		if (!g_restart_required.empty()) {
-			StringOutputStream message(256);
-			message << _("Preference changes require a restart:\n");
-			for (std::vector<const char*>::iterator i = g_restart_required.begin(); i != g_restart_required.end(); ++i) {
-				message << (*i) << '\n';
+			std::string message = _("Preference changes require a restart:\n");
+			for (std::vector<std::string>::iterator i = g_restart_required.begin(); i != g_restart_required.end(); ++i) {
+				message += (*i) + "\n";
 			}
-			gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), message.c_str());
+			gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), message);
 			g_restart_required.clear();
 		}
 	}
@@ -619,10 +617,10 @@ void GameName_importString (const char* value)
 {
 	gamename_set(value);
 }
-typedef FreeCaller1<const char*, GameName_importString> GameNameImportStringCaller;
+typedef FreeCaller1<const char *, GameName_importString> GameNameImportStringCaller;
 void GameName_exportString (const StringImportCallback& importer)
 {
-	importer(gamename_get());
+	importer(gamename_get().c_str());
 }
 typedef FreeCaller1<const StringImportCallback&, GameName_exportString> GameNameExportStringCaller;
 

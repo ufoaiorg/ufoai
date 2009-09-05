@@ -24,13 +24,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "itextstream.h"
 #include <stdio.h>
+#include <string>
 
 /// \brief A wrapper around a file input stream opened for reading in text mode. Similar to std::ifstream.
 class TextFileInputStream : public TextInputStream {
 	FILE* m_file;
 public:
-	TextFileInputStream(const char* name) {
-		m_file = name[0] == '\0' ? 0 : fopen(name, "rt");
+	TextFileInputStream(const std::string& name) {
+		m_file = name.empty() ? 0 : fopen(name.c_str(), "rt");
 	}
 	~TextFileInputStream() {
 		if (!failed())
@@ -65,8 +66,8 @@ public:
 class TextFileOutputStream : public TextOutputStream {
 	FILE* m_file;
 public:
-	TextFileOutputStream(const char* name) {
-		m_file = name[0] == '\0' ? 0 : fopen(name, "wt");
+	TextFileOutputStream(const std::string& name) {
+		m_file = name.empty() ? 0 : fopen(name.c_str(), "wt");
 	}
 	~TextFileOutputStream() {
 		if (!failed())

@@ -1566,7 +1566,7 @@ void CamWnd::draw ()
 		if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
 			Cam_Draw();
 
-			m_XORRectangle.set(rectangle_t());
+			m_XORRectangle.set(Rectangle());
 		}
 
 		glwidget_swap_buffers(m_gl_widget);

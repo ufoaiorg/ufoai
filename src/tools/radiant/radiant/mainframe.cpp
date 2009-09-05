@@ -169,25 +169,10 @@ void VFS_Destroy (void)
 
 void HomePaths_Realise (void)
 {
-#if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
-	const char* prefix = g_pGameDescription->getKeyValue("prefix");
-	if (!string_empty(prefix)) {
-		StringOutputStream path(256);
-		path << DirectoryCleaned(g_get_home_dir()) << prefix << "/";
-		g_qeglobals.m_userEnginePath = path.c_str();
-		g_mkdir_with_parents(g_qeglobals.m_userEnginePath.c_str(), 0775);
-	} else
-#endif
-	{
-		g_qeglobals.m_userEnginePath = EnginePath_get();
-	}
+	g_qeglobals.m_userEnginePath = EnginePath_get();
+	g_qeglobals.m_userGamePath = g_qeglobals.m_userEnginePath + gamename_get() + "/";
 
-	{
-		StringOutputStream path(256);
-		path << g_qeglobals.m_userEnginePath.c_str() << gamename_get() << '/';
-		g_qeglobals.m_userGamePath = path.c_str();
-	}
-	ASSERT_MESSAGE(!string_empty(g_qeglobals.m_userGamePath.c_str()), "HomePaths_Realise: user-game-path is empty");
+	ASSERT_MESSAGE(!g_qeglobals.m_userGamePath.empty(), "HomePaths_Realise: user-game-path is empty");
 	g_mkdir_with_parents(g_qeglobals.m_userGamePath.c_str(), 0775);
 }
 
@@ -239,7 +224,7 @@ void HomePaths_Destroy (void)
 
 // Engine Path
 
-static CopiedString g_strEnginePath;
+static std::string g_strEnginePath;
 ModuleObservers g_enginePathObservers;
 std::size_t g_enginepath_unrealised = 1;
 
@@ -260,10 +245,10 @@ void EnginePath_Realise (void)
 	}
 }
 
-const char* EnginePath_get (void)
+const std::string& EnginePath_get (void)
 {
 	ASSERT_MESSAGE(g_enginepath_unrealised == 0, "EnginePath_get: engine path not realised");
-	return g_strEnginePath.c_str();
+	return g_strEnginePath;
 }
 
 void EnginePath_Unrealise (void)
@@ -273,16 +258,16 @@ void EnginePath_Unrealise (void)
 	}
 }
 
-void setEnginePath (const char* path)
+void setEnginePath (const std::string& path)
 {
 	StringOutputStream buffer(256);
-	buffer << DirectoryCleaned(path);
-	if (!path_equal(buffer.c_str(), g_strEnginePath.c_str())) {
+	buffer << DirectoryCleaned(path.c_str());
+	if (!g_strEnginePath.compare(buffer.c_str())) {
 		ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Changing Engine Path"));
 
 		EnginePath_Unrealise();
 
-		g_strEnginePath = buffer.c_str();
+		g_strEnginePath = std::string(buffer.c_str());
 
 		EnginePath_Realise();
 	}
@@ -290,32 +275,32 @@ void setEnginePath (const char* path)
 
 // Compiler Path
 
-CopiedString g_strCompilerBinaryWithPath("");
+std::string g_strCompilerBinaryWithPath("");
 
-const char* CompilerBinaryWithPath_get (void)
+const std::string& CompilerBinaryWithPath_get (void)
 {
-	return g_strCompilerBinaryWithPath.c_str();
+	return g_strCompilerBinaryWithPath;
 }
 
 // App Path
 
-CopiedString g_strAppPath; ///< holds the full path of the executable
+std::string g_strAppPath; ///< holds the full path of the executable
 
-const char* AppPath_get (void)
+const std::string& AppPath_get (void)
 {
-	return g_strAppPath.c_str();
+	return g_strAppPath;
 }
 
-const char* SettingsPath_get (void)
+const std::string& SettingsPath_get (void)
 {
 	return environment_get_home_path();
 }
 
-void EnginePathImport (CopiedString& self, const char* value)
+void EnginePathImport (std::string& self, const char* value)
 {
 	setEnginePath(value);
 }
-typedef ReferenceCaller1<CopiedString, const char*, EnginePathImport> EnginePathImportCaller;
+typedef ReferenceCaller1<std::string, const char*, EnginePathImport> EnginePathImportCaller;
 
 void Paths_constructPreferences (PreferencesPage& page)
 {
@@ -357,7 +342,7 @@ PathsDialog g_PathsDialog;
 
 void EnginePath_verify (void)
 {
-	if (!file_exists(g_strEnginePath.c_str())) {
+	if (!file_exists(g_strEnginePath)) {
 		g_PathsDialog.Create();
 		g_PathsDialog.DoModal();
 		g_PathsDialog.Destroy();
@@ -366,7 +351,7 @@ void EnginePath_verify (void)
 
 namespace
 {
-	CopiedString g_gamename;
+	std::string g_gamename;
 	ModuleObservers g_gameNameObservers;
 	ModuleObservers g_gameModeObservers;
 }
@@ -381,23 +366,22 @@ void Radiant_detachGameNameObserver (ModuleObserver& observer)
 	g_gameNameObservers.detach(observer);
 }
 
-const char* basegame_get (void)
+const std::string& basegame_get (void)
 {
 	return g_pGameDescription->getRequiredKeyValue("basegame");
 }
 
-const char* gamename_get (void)
+const std::string& gamename_get (void)
 {
-	const char* gamename = g_gamename.c_str();
-	if (string_empty(gamename)) {
+	if (g_gamename.empty())
 		return basegame_get();
-	}
-	return gamename;
+
+	return g_gamename;
 }
 
-void gamename_set (const char* gamename)
+void gamename_set (const std::string& gamename)
 {
-	if (!string_equal(gamename, g_gamename.c_str())) {
+	if (gamename != g_gamename) {
 		g_gameNameObservers.unrealise();
 		g_gamename = gamename;
 		g_gameNameObservers.realise();
@@ -659,7 +643,6 @@ typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<FaceMode>::ap
 FaceModeApplyCaller g_faceMode_button_caller;
 BoolExportCallback g_faceMode_button_callback(g_faceMode_button_caller);
 ToggleItem g_faceMode_button(g_faceMode_button_callback);
-
 
 void ComponentModeChanged (void)
 {
@@ -1240,7 +1223,7 @@ class WaitDialog
 		GtkLabel* m_label;
 };
 
-static WaitDialog create_wait_dialog (const char* title, const char* text)
+static WaitDialog create_wait_dialog (const std::string& title, const std::string& text)
 {
 	WaitDialog dialog;
 
@@ -1252,7 +1235,7 @@ static WaitDialog create_wait_dialog (const char* title, const char* text)
 	g_signal_connect(G_OBJECT(dialog.m_window), "realize", G_CALLBACK(window_realize_remove_decoration), 0);
 
 	{
-		dialog.m_label = GTK_LABEL(gtk_label_new(text));
+		dialog.m_label = GTK_LABEL(gtk_label_new(text.c_str()));
 		gtk_misc_set_alignment(GTK_MISC(dialog.m_label), 0.5, 0.5);
 		gtk_label_set_justify(dialog.m_label, GTK_JUSTIFY_CENTER);
 		gtk_widget_show(GTK_WIDGET(dialog.m_label));
@@ -1290,7 +1273,7 @@ bool MainFrame_isActiveApp (void)
 	return false;
 }
 
-typedef std::list<CopiedString> StringStack;
+typedef std::list<std::string> StringStack;
 static StringStack g_wait_stack;
 static WaitDialog g_wait;
 
@@ -1306,7 +1289,7 @@ void ScreenUpdates_process (void)
 	}
 }
 
-void ScreenUpdates_Disable (const char* message, const char* title)
+void ScreenUpdates_Disable (const std::string& message, const std::string& title)
 {
 	if (g_wait_stack.empty()) {
 		EverySecondTimer_disable();
@@ -1323,7 +1306,7 @@ void ScreenUpdates_Disable (const char* message, const char* title)
 			ScreenUpdates_process();
 		}
 	} else if (GTK_WIDGET_VISIBLE(g_wait.m_window)) {
-		gtk_label_set_text(g_wait.m_label, message);
+		gtk_label_set_text(g_wait.m_label, message.c_str());
 		ScreenUpdates_process();
 	}
 	g_wait_stack.push_back(message);
@@ -2242,7 +2225,7 @@ void MainFrame::UpdateStatusText (void)
 	m_idleRedrawStatusText.queueDraw();
 }
 
-void MainFrame::SetStatusText (CopiedString& status_text, const char* pText)
+void MainFrame::SetStatusText (std::string& status_text, const std::string& pText)
 {
 	status_text = pText;
 	UpdateStatusText();
@@ -2254,7 +2237,7 @@ void MainFrame::SetStatusText (CopiedString& status_text, const char* pText)
  * @sa MainFrame::RedrawStatusText
  * @sa MainFrame::SetStatusText
  */
-void Sys_Status (const char* status)
+void Sys_Status (const std::string& status)
 {
 	if (g_pParentWnd != 0) {
 		g_pParentWnd->SetStatusText(g_pParentWnd->m_command_status, status);
@@ -2384,8 +2367,7 @@ void MainFrame_Construct (void)
 	GlobalCommands_insert("ToolsCompile", FreeCaller<ToolsCompile> ());
 	GlobalCommands_insert("ToolsGenerateMaterials", FreeCaller<ToolsGenerateMaterials> ());
 	GlobalToggles_insert("PlaySounds", FreeCaller<GlobalSoundManager_switchPlaybackEnabledFlag> (),
-			ToggleItem::AddCallbackCaller(g_soundPlaybackEnabled_button)
-			,accelerator_null());
+			ToggleItem::AddCallbackCaller(g_soundPlaybackEnabled_button), accelerator_null());
 
 	GlobalToggles_insert("ToggleClipper", FreeCaller<ClipperMode> (), ToggleItem::AddCallbackCaller(g_clipper_button),
 			Accelerator('X'));
@@ -2494,10 +2476,10 @@ void MainFrame_Construct (void)
 	g_strCompilerBinaryWithPath = ufo2mapPath.c_str();
 #endif
 
-	GlobalPreferenceSystem().registerPreference("EnginePath", CopiedStringImportStringCaller(g_strEnginePath),
-			CopiedStringExportStringCaller(g_strEnginePath));
-	GlobalPreferenceSystem().registerPreference("CompilerBinary", CopiedStringImportStringCaller(
-			g_strCompilerBinaryWithPath), CopiedStringExportStringCaller(g_strCompilerBinaryWithPath));
+	GlobalPreferenceSystem().registerPreference("EnginePath", StdStringImportStringCaller(g_strEnginePath),
+			StdStringExportStringCaller(g_strEnginePath));
+	GlobalPreferenceSystem().registerPreference("CompilerBinary", StdStringImportStringCaller(
+			g_strCompilerBinaryWithPath), StdStringExportStringCaller(g_strCompilerBinaryWithPath));
 
 	g_Layout_viewStyle.useLatched();
 	g_Layout_enableDetachableMenus.useLatched();

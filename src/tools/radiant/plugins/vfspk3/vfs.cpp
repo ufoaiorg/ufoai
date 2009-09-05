@@ -254,11 +254,11 @@ typedef std::set<CopiedString, PakLess> Archives;
 // Global functions
 
 /** @brief reads all pak files from a dir */
-void InitDirectory(const char* directory, ArchiveModules& archiveModules) {
+void InitDirectory(const std::string& directory, ArchiveModules& archiveModules) {
 	if (g_numDirs == (VFS_MAXDIRS - 1))
 		return;
 
-	strncpy(g_strDirs[g_numDirs], directory, PATH_MAX);
+	strncpy(g_strDirs[g_numDirs], directory.c_str(), PATH_MAX);
 	g_strDirs[g_numDirs][PATH_MAX] = '\0';
 	FixDOSName (g_strDirs[g_numDirs]);
 	AddSlash (g_strDirs[g_numDirs]);
@@ -430,7 +430,7 @@ const char* FindPath(const char* absolute) {
 
 class UFOFileSystem : public VirtualFileSystem {
 public:
-	void initDirectory(const char *path) {
+	void initDirectory(const std::string& path) {
 		InitDirectory(path, FileSystemAPI_getArchiveModules());
 	}
 	void initialise() {

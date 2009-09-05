@@ -756,7 +756,7 @@ static gboolean xywnd_expose (GtkWidget* widget, GdkEventExpose* event, XYWnd* x
 	if (glwidget_make_current(xywnd->GetWidget()) != FALSE) {
 		if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
 			xywnd->XY_Draw();
-			xywnd->m_XORRectangle.set(rectangle_t());
+			xywnd->m_XORRectangle.set(Rectangle());
 		}
 		glwidget_swap_buffers(xywnd->GetWidget());
 	}

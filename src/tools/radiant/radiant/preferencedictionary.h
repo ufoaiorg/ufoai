@@ -37,18 +37,18 @@ class PreferenceDictionary : public PreferenceSystem {
 		PreferenceEntry(const StringImportCallback& importer, const StringExportCallback& exporter)
 				: m_importer(importer), m_exporter(exporter) {
 		}
-		void importString(const char* string) {
-			m_importer(string);
+		void importString(const std::string& string) {
+			m_importer(string.c_str());
 		}
 		void exportString(const StringImportCallback& importer) {
 			m_exporter(importer);
 		}
 	};
 
-	typedef std::map<CopiedString, PreferenceEntry> PreferenceEntries;
+	typedef std::map<std::string, PreferenceEntry> PreferenceEntries;
 	PreferenceEntries m_preferences;
 
-	typedef std::map<CopiedString, CopiedString> PreferenceCache;
+	typedef std::map<std::string, std::string> PreferenceCache;
 	PreferenceCache m_cache;
 
 public:
@@ -60,11 +60,11 @@ public:
 	iterator end() {
 		return m_preferences.end();
 	}
-	iterator find(const char* name) {
+	iterator find(const std::string& name) {
 		return m_preferences.find(name);
 	}
 
-	void registerPreference(const char* name, const StringImportCallback& importer, const StringExportCallback& exporter) {
+	void registerPreference(const std::string& name, const StringImportCallback& importer, const StringExportCallback& exporter) {
 		m_preferences.insert(PreferenceEntries::value_type(name, PreferenceEntry(importer, exporter)));
 		PreferenceCache::iterator i = m_cache.find(name);
 		if (i != m_cache.end()) {
@@ -73,7 +73,7 @@ public:
 		}
 	}
 
-	void importPref(const char* name, const char* value) {
+	void importPref(const std::string& name, const std::string& value) {
 		PreferenceEntries::iterator i = m_preferences.find(name);
 		if (i != m_preferences.end()) {
 			(*i).second.importString(value);

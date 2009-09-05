@@ -29,6 +29,7 @@ void FlushReferences();
 /// \brief Reloads all resource references that differ from the version on disk.
 void RefreshReferences();
 
+#include <string>
 #include "iscenegraph.h"
 #include "imodel.h"
 namespace scene {
@@ -37,7 +38,7 @@ class Node;
 class MapFormat;
 typedef void(*GraphTraversalFunc)(scene::Node& root, const scene::Traversable::Walker& walker);
 
-bool MapResource_saveFile(const MapFormat& format, scene::Node& root, GraphTraversalFunc traverse, const char* filename);
+bool MapResource_saveFile(const MapFormat& format, scene::Node& root, GraphTraversalFunc traverse, const std::string& filename);
 ModelLoader* ModelLoader_forType(const char* type);
 
 // Get the ModelLoader class for the given model type

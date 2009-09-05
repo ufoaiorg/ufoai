@@ -83,17 +83,17 @@
 
 #include "generic/callback.h"
 
-const char* GameDescription_getKeyValue (const char* key)
+const std::string& GameDescription_getKeyValue (const std::string& key)
 {
 	return g_pGameDescription->getKeyValue(key);
 }
 
-const char* GameDescription_getRequiredKeyValue (const char* key)
+const std::string& GameDescription_getRequiredKeyValue (const std::string& key)
 {
 	return g_pGameDescription->getRequiredKeyValue(key);
 }
 
-const char* getMapName ()
+const std::string& getMapName ()
 {
 	return Map_Name(g_map);
 }

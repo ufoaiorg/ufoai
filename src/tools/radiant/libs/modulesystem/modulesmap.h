@@ -107,14 +107,14 @@ class ModulesRef
 {
 		ModulesMap<Type> m_modules;
 	public:
-		ModulesRef (const char* names)
+		ModulesRef (const std::string& names)
 		{
 			if (!globalModuleServer().getError()) {
-				if (string_equal(names, "*")) {
+				if (names == "*") {
 					InsertModules<Type> visitor(m_modules);
 					globalModuleServer().foreachModule(typename Type::Name(), typename Type::Version(), visitor);
 				} else {
-					StringTokeniser tokeniser(names);
+					StringTokeniser tokeniser(names.c_str());
 					for (;;) {
 						const char* name = tokeniser.getToken();
 						if (string_empty(name)) {

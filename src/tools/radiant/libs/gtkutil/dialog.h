@@ -135,8 +135,8 @@ class BrowsedPathEntry
 		BrowsedPathEntry (const BrowseCallback& browse);
 };
 
-GtkLabel* DialogLabel_new (const char* name);
-GtkTable* DialogRow_new (const char* name, GtkWidget* widget);
+GtkLabel* DialogLabel_new (const std::string& name);
+GtkTable* DialogRow_new (const std::string& name, GtkWidget* widget);
 typedef struct _GtkVBox GtkVBox;
 void DialogVBox_packRow (GtkVBox* vbox, GtkWidget* row);
 

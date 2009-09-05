@@ -58,12 +58,11 @@ static gint editor_delete(GtkWidget *widget, gpointer data) {
 static void editor_save(GtkWidget *widget, gpointer data) {
 	char *filename = (char*) g_object_get_data(G_OBJECT(data), "filename");
 
-	StringOutputStream fullpath(256);
-	const char *enginePath = GlobalRadiant().getEnginePath();
-	const char *baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
-	fullpath << enginePath << baseGame << "/" << filename;
+	const std::string& enginePath = GlobalRadiant().getEnginePath();
+	const std::string& baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
+	std::string fullpath = enginePath + baseGame + "/" + std::string(filename);
 
-	TextFileOutputStream out(fullpath.c_str());
+	TextFileOutputStream out(fullpath);
 	if (out.failed()) {
 		g_message("Error saving file to '%s'.", fullpath.c_str());
 		gtk_MessageBox(GTK_WIDGET(data), _("Error saving file"));

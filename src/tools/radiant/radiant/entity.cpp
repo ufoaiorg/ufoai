@@ -474,11 +474,9 @@ char* misc_particle_dialog (GtkWidget* parent)
 
 const char* misc_sound_dialog (GtkWidget* parent)
 {
-	StringOutputStream buffer(1024);
+	std::string buffer = g_qeglobals.m_userGamePath + "sound/";
 
-	buffer << g_qeglobals.m_userGamePath.c_str() << "sound/";
-
-	const char* filename = file_dialog(parent, TRUE, _("Open Sound File"), buffer.c_str(), "sound");
+	const char* filename = file_dialog(parent, TRUE, _("Open Sound File"), buffer, "sound");
 	if (filename != 0) {
 		const char* relative = path_make_relative(filename, GlobalFileSystem().findRoot(filename));
 		if (relative == filename) {

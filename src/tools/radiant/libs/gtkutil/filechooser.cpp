@@ -162,11 +162,11 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const std::st
 
 	GtkWidget* dialog;
 	if (open) {
-		dialog = gtk_file_chooser_dialog_new(realTitle.c_str(), GTK_WINDOW(parent), GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL,
-				GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT, (char const*) 0);
+		dialog = gtk_file_chooser_dialog_new(realTitle.c_str(), GTK_WINDOW(parent), GTK_FILE_CHOOSER_ACTION_OPEN,
+				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT, (char const*) 0);
 	} else {
-		dialog = gtk_file_chooser_dialog_new(realTitle.c_str(), GTK_WINDOW(parent), GTK_FILE_CHOOSER_ACTION_SAVE, GTK_STOCK_CANCEL,
-				GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT, (char const*) 0);
+		dialog = gtk_file_chooser_dialog_new(realTitle.c_str(), GTK_WINDOW(parent), GTK_FILE_CHOOSER_ACTION_SAVE,
+				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT, (char const*) 0);
 		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), "unnamed");
 	}
 
@@ -189,8 +189,8 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const std::st
 	/** @todo reactivate this - but only if radiant is already initialized - because otherwise the enginePath might not be valid */
 #if 0
 	// we add all important paths as shortcut folder..
-	const char *baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
-	const char *enginePath = GlobalRadiant().getEnginePath();
+	const std::string& baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
+	const std::string& enginePath = GlobalRadiant().getEnginePath();
 	const char **shortcut = shortcutFoldersInBaseDir;
 	while (*shortcut) {
 		char uri[256];

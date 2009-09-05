@@ -1,23 +1,23 @@
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
+ Copyright (C) 2001-2006, William Joseph.
+ All Rights Reserved.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "messagebox.h"
 
@@ -27,14 +27,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "dialog.h"
 #include "widget.h"
 
-static GtkWidget* create_padding(int width, int height) {
+static GtkWidget* create_padding (int width, int height)
+{
 	GtkWidget* widget = gtk_alignment_new(0.0, 0.0, 0.0, 0.0);
 	gtk_widget_show(widget);
 	gtk_widget_set_size_request(widget, width, height);
 	return widget;
 }
 
-static const char* messagebox_stock_icon(EMessageBoxIcon type) {
+static const char* messagebox_stock_icon (EMessageBoxIcon type)
+{
 	switch (type) {
 	default:
 	case eMB_ICONDEFAULT:
@@ -50,7 +52,9 @@ static const char* messagebox_stock_icon(EMessageBoxIcon type) {
 	}
 }
 
-EMessageBoxReturn gtk_MessageBox (GtkWidget *parent, const std::string& text, const std::string& title, EMessageBoxType type, EMessageBoxIcon icon) {
+EMessageBoxReturn gtk_MessageBox (GtkWidget *parent, const std::string& text, const std::string& title,
+		EMessageBoxType type, EMessageBoxIcon icon)
+{
 	ModalDialog dialog;
 	ModalDialogButton ok_button(dialog, eIDOK);
 	ModalDialogButton cancel_button(dialog, eIDCANCEL);
@@ -72,7 +76,6 @@ EMessageBoxReturn gtk_MessageBox (GtkWidget *parent, const std::string& text, co
 	GtkVBox* vbox = create_dialog_vbox(8, 8);
 	gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(vbox));
 
-
 	GtkHBox* hboxDummy = create_dialog_hbox(0, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hboxDummy), FALSE, FALSE, 0);
 
@@ -92,7 +95,6 @@ EMessageBoxReturn gtk_MessageBox (GtkWidget *parent, const std::string& text, co
 	gtk_label_set_line_wrap(label, TRUE);
 	gtk_box_pack_start(GTK_BOX(iconBox), GTK_WIDGET(label), TRUE, TRUE, 0);
 
-
 	GtkVBox* vboxDummy = create_dialog_vbox(0, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(vboxDummy), FALSE, FALSE, 0);
 
@@ -107,46 +109,50 @@ EMessageBoxReturn gtk_MessageBox (GtkWidget *parent, const std::string& text, co
 
 
 	if (type == eMB_OK) {
-		GtkButton* button = create_modal_dialog_button("OK", ok_button);
+		GtkButton* button = create_modal_dialog_button(_("OK"), ok_button);
 		gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, FALSE, 0);
-		gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape, (GdkModifierType)0, (GtkAccelFlags)0);
-		gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return, (GdkModifierType)0, (GtkAccelFlags)0);
+		gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape, (GdkModifierType) 0,
+				(GtkAccelFlags) 0);
+		gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return, (GdkModifierType) 0,
+				(GtkAccelFlags) 0);
 		widget_make_default(GTK_WIDGET(button));
 		gtk_widget_show(GTK_WIDGET(button));
 
 		dialog.ret = eIDOK;
-	} else if (type ==  eMB_OKCANCEL) {
+	} else if (type == eMB_OKCANCEL) {
 		{
-			GtkButton* button = create_modal_dialog_button("OK", ok_button);
+			GtkButton* button = create_modal_dialog_button(_("OK"), ok_button);
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, FALSE, 0);
-			gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return, (GdkModifierType)0, (GtkAccelFlags)0);
+			gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return, (GdkModifierType) 0,
+					(GtkAccelFlags) 0);
 			widget_make_default(GTK_WIDGET(button));
 			gtk_widget_show(GTK_WIDGET(button));
 		}
 
 		{
-			GtkButton* button = create_modal_dialog_button("OK", cancel_button);
+			GtkButton* button = create_modal_dialog_button(_("OK"), cancel_button);
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, FALSE, 0);
-			gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape, (GdkModifierType)0, (GtkAccelFlags)0);
+			gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape, (GdkModifierType) 0,
+					(GtkAccelFlags) 0);
 			gtk_widget_show(GTK_WIDGET(button));
 		}
 
 		dialog.ret = eIDCANCEL;
 	} else if (type == eMB_YESNOCANCEL) {
 		{
-			GtkButton* button = create_modal_dialog_button("Yes", yes_button);
+			GtkButton* button = create_modal_dialog_button(_("Yes"), yes_button);
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, FALSE, 0);
 			widget_make_default(GTK_WIDGET(button));
 			gtk_widget_show(GTK_WIDGET(button));
 		}
 
 		{
-			GtkButton* button = create_modal_dialog_button("No", no_button);
+			GtkButton* button = create_modal_dialog_button(_("No"), no_button);
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, FALSE, 0);
 			gtk_widget_show(GTK_WIDGET(button));
 		}
 		{
-			GtkButton* button = create_modal_dialog_button("Cancel", cancel_button);
+			GtkButton* button = create_modal_dialog_button(_("Cancel"), cancel_button);
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, FALSE, 0);
 			gtk_widget_show(GTK_WIDGET(button));
 		}
@@ -154,13 +160,13 @@ EMessageBoxReturn gtk_MessageBox (GtkWidget *parent, const std::string& text, co
 		dialog.ret = eIDCANCEL;
 	} else if (type == eMB_NOYES) {
 		{
-			GtkButton* button = create_modal_dialog_button("No", no_button);
+			GtkButton* button = create_modal_dialog_button(_("No"), no_button);
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, FALSE, 0);
 			widget_make_default(GTK_WIDGET(button));
 			gtk_widget_show(GTK_WIDGET(button));
 		}
 		{
-			GtkButton* button = create_modal_dialog_button("Yes", yes_button);
+			GtkButton* button = create_modal_dialog_button(_("Yes"), yes_button);
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, FALSE, 0);
 			gtk_widget_show(GTK_WIDGET(button));
 		}
@@ -168,14 +174,14 @@ EMessageBoxReturn gtk_MessageBox (GtkWidget *parent, const std::string& text, co
 		dialog.ret = eIDNO;
 	} else { /* if (type == eMB_YESNO) */
 		{
-			GtkButton* button = create_modal_dialog_button("Yes", yes_button);
+			GtkButton* button = create_modal_dialog_button(_("Yes"), yes_button);
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, FALSE, 0);
 			widget_make_default(GTK_WIDGET(button));
 			gtk_widget_show(GTK_WIDGET(button));
 		}
 
 		{
-			GtkButton* button = create_modal_dialog_button("No", no_button);
+			GtkButton* button = create_modal_dialog_button(_("No"), no_button);
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, FALSE, 0);
 			gtk_widget_show(GTK_WIDGET(button));
 		}

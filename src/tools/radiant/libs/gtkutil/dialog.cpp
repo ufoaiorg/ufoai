@@ -255,9 +255,9 @@ BrowsedPathEntry::BrowsedPathEntry (const BrowseCallback& browse) :
 	g_signal_connect(G_OBJECT(m_entry.m_button), "clicked", G_CALLBACK(BrowsedPathEntry_clicked), this);
 }
 
-GtkLabel* DialogLabel_new (const char* name)
+GtkLabel* DialogLabel_new (const std::string& name)
 {
-	GtkLabel* label = GTK_LABEL(gtk_label_new(name));
+	GtkLabel* label = GTK_LABEL(gtk_label_new(name.c_str()));
 	gtk_widget_show(GTK_WIDGET(label));
 	gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
 	gtk_label_set_justify(label, GTK_JUSTIFY_LEFT);
@@ -265,7 +265,7 @@ GtkLabel* DialogLabel_new (const char* name)
 	return label;
 }
 
-GtkTable* DialogRow_new (const char* name, GtkWidget* widget)
+GtkTable* DialogRow_new (const std::string& name, GtkWidget* widget)
 {
 	GtkTable* table = GTK_TABLE(gtk_table_new(1, 3, TRUE));
 	gtk_widget_show(GTK_WIDGET(table));

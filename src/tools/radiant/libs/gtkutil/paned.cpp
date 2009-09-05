@@ -1,23 +1,23 @@
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
+ Copyright (C) 2001-2006, William Joseph.
+ All Rights Reserved.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "paned.h"
 
@@ -26,32 +26,35 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "frame.h"
 
-
-class PanedState {
-public:
-	float position;
-	int size;
+class PanedState
+{
+	public:
+		float position;
+		int size;
 };
 
-static gboolean hpaned_allocate(GtkWidget* widget, GtkAllocation* allocation, PanedState* paned) {
+static gboolean hpaned_allocate (GtkWidget* widget, GtkAllocation* allocation, PanedState* paned)
+{
 	if (paned->size != allocation->width) {
 		paned->size = allocation->width;
-		gtk_paned_set_position (GTK_PANED (widget), static_cast<int>(paned->size * paned->position));
+		gtk_paned_set_position(GTK_PANED (widget), static_cast<int> (paned->size * paned->position));
 	}
 	return FALSE;
 }
 
-static gboolean vpaned_allocate(GtkWidget* widget, GtkAllocation* allocation, PanedState* paned) {
+static gboolean vpaned_allocate (GtkWidget* widget, GtkAllocation* allocation, PanedState* paned)
+{
 	if (paned->size != allocation->height) {
 		paned->size = allocation->height;
-		gtk_paned_set_position (GTK_PANED (widget), static_cast<int>(paned->size * paned->position));
+		gtk_paned_set_position(GTK_PANED (widget), static_cast<int> (paned->size * paned->position));
 	}
 	return FALSE;
 }
 
-static gboolean paned_position(GtkWidget* widget, gpointer dummy, PanedState* paned) {
+static gboolean paned_position (GtkWidget* widget, gpointer dummy, PanedState* paned)
+{
 	if (paned->size != -1)
-		paned->position = gtk_paned_get_position (GTK_PANED (widget)) / static_cast<float>(paned->size);
+		paned->position = gtk_paned_get_position(GTK_PANED (widget)) / static_cast<float> (paned->size);
 	return FALSE;
 }
 
@@ -59,7 +62,8 @@ static PanedState g_hpaned = { 0.5f, -1, };
 static PanedState g_vpaned1 = { 0.5f, -1, };
 static PanedState g_vpaned2 = { 0.5f, -1, };
 
-GtkHPaned* create_split_views(GtkWidget* topleft, GtkWidget* topright, GtkWidget* botleft, GtkWidget* botright) {
+GtkHPaned* create_split_views (GtkWidget* topleft, GtkWidget* topright, GtkWidget* botleft, GtkWidget* botright)
+{
 	GtkHPaned* hsplit = GTK_HPANED(gtk_hpaned_new());
 	gtk_widget_show(GTK_WIDGET(hsplit));
 

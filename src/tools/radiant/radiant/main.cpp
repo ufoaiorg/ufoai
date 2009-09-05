@@ -1,65 +1,65 @@
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 /*! \mainpage GtkRadiant Documentation Index
 
-\section intro_sec Introduction
+ \section intro_sec Introduction
 
-This documentation is generated from comments in the source code.
+ This documentation is generated from comments in the source code.
 
-\section links_sec Useful Links
+ \section links_sec Useful Links
 
-\link include/itextstream.h include/itextstream.h \endlink - Global output and error message streams, similar to std::cout and std::cerr. \n
+ \link include/itextstream.h include/itextstream.h \endlink - Global output and error message streams, similar to std::cout and std::cerr. \n
 
-FileInputStream - similar to std::ifstream (binary mode) \n
-FileOutputStream - similar to std::ofstream (binary mode) \n
-TextFileInputStream - similar to std::ifstream (text mode) \n
-TextFileOutputStream - similar to std::ofstream (text mode) \n
-StringOutputStream - similar to std::stringstream \n
+ FileInputStream - similar to std::ifstream (binary mode) \n
+ FileOutputStream - similar to std::ofstream (binary mode) \n
+ TextFileInputStream - similar to std::ifstream (text mode) \n
+ TextFileOutputStream - similar to std::ofstream (text mode) \n
+ StringOutputStream - similar to std::stringstream \n
 
-\link string/string.h string/string.h \endlink - C-style string comparison and memory management. \n
-\link os/path.h os/path.h \endlink - Path manipulation for radiant's standard path format \n
-\link os/file.h os/file.h \endlink - OS file-system access. \n
+ \link string/string.h string/string.h \endlink - C-style string comparison and memory management. \n
+ \link os/path.h os/path.h \endlink - Path manipulation for radiant's standard path format \n
+ \link os/file.h os/file.h \endlink - OS file-system access. \n
 
-::CopiedString - automatic string memory management \n
-Array - automatic array memory management \n
-HashTable - generic hashtable, similar to std::hash_map \n
+ ::CopiedString - automatic string memory management \n
+ Array - automatic array memory management \n
+ HashTable - generic hashtable, similar to std::hash_map \n
 
-\link math/vector.h math/vector.h \endlink - Vectors \n
-\link math/matrix.h math/matrix.h \endlink - Matrices \n
-\link math/quaternion.h math/quaternion.h \endlink - Quaternions \n
-\link math/plane.h math/plane.h \endlink - Planes \n
-\link math/aabb.h math/aabb.h \endlink - AABBs \n
+ \link math/vector.h math/vector.h \endlink - Vectors \n
+ \link math/matrix.h math/matrix.h \endlink - Matrices \n
+ \link math/quaternion.h math/quaternion.h \endlink - Quaternions \n
+ \link math/plane.h math/plane.h \endlink - Planes \n
+ \link math/aabb.h math/aabb.h \endlink - AABBs \n
 
-Callback MemberCaller FunctionCaller - callbacks similar to using boost::function with boost::bind \n
-SmartPointer SmartReference - smart-pointer and smart-reference similar to Loki's SmartPtr \n
+ Callback MemberCaller FunctionCaller - callbacks similar to using boost::function with boost::bind \n
+ SmartPointer SmartReference - smart-pointer and smart-reference similar to Loki's SmartPtr \n
 
-\link generic/bitfield.h generic/bitfield.h \endlink - Type-safe bitfield \n
-\link generic/enumeration.h generic/enumeration.h \endlink - Type-safe enumeration \n
+ \link generic/bitfield.h generic/bitfield.h \endlink - Type-safe bitfield \n
+ \link generic/enumeration.h generic/enumeration.h \endlink - Type-safe enumeration \n
 
-DefaultAllocator - Memory allocation using new/delete, compliant with std::allocator interface \n
+ DefaultAllocator - Memory allocation using new/delete, compliant with std::allocator interface \n
 
-\link debugging/debugging.h debugging/debugging.h \endlink - Debugging macros \n
+ \link debugging/debugging.h debugging/debugging.h \endlink - Debugging macros \n
 
-*/
+ */
 
 #include "version.h"
 #include "radiant_i18n.h"
@@ -91,7 +91,8 @@ DefaultAllocator - Memory allocation using new/delete, compliant with std::alloc
 
 #include <locale.h>
 
-static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data) {
+static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data)
+{
 	gboolean in_recursion;
 	StringOutputStream buf(256);
 
@@ -182,131 +183,146 @@ static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, c
 		ERROR_MESSAGE("GTK+ error: " << buf.c_str());
 }
 
-class Lock {
-	bool m_locked;
-public:
-	Lock() : m_locked(false) {
-	}
-	void lock(void) {
-		m_locked = true;
-	}
-	void unlock(void) {
-		m_locked = false;
-	}
-	bool locked() const {
-		return m_locked;
-	}
+class Lock
+{
+		bool m_locked;
+	public:
+		Lock () :
+			m_locked(false)
+		{
+		}
+		void lock (void)
+		{
+			m_locked = true;
+		}
+		void unlock (void)
+		{
+			m_locked = false;
+		}
+		bool locked () const
+		{
+			return m_locked;
+		}
 };
 
-class ScopedLock {
-	Lock& m_lock;
-public:
-	ScopedLock(Lock& lock) : m_lock(lock) {
-		m_lock.lock();
-	}
-	~ScopedLock(void) {
-		m_lock.unlock();
-	}
+class ScopedLock
+{
+		Lock& m_lock;
+	public:
+		ScopedLock (Lock& lock) :
+			m_lock(lock)
+		{
+			m_lock.lock();
+		}
+		~ScopedLock (void)
+		{
+			m_lock.unlock();
+		}
 };
 
-class LineLimitedTextOutputStream : public TextOutputStream {
-	TextOutputStream& outputStream;
-	std::size_t count;
-public:
-	LineLimitedTextOutputStream(TextOutputStream& outputStream, std::size_t count)
-			: outputStream(outputStream), count(count) {
-	}
-	std::size_t write(const char* buffer, std::size_t length) {
-		if (count != 0) {
-			const char* p = buffer;
-			const char* end = buffer + length;
-			for (;;) {
-				p = std::find(p, end, '\n');
-				if (p == end) {
-					break;
+class LineLimitedTextOutputStream: public TextOutputStream
+{
+		TextOutputStream& outputStream;
+		std::size_t count;
+	public:
+		LineLimitedTextOutputStream (TextOutputStream& outputStream, std::size_t count) :
+			outputStream(outputStream), count(count)
+		{
+		}
+		std::size_t write (const char* buffer, std::size_t length)
+		{
+			if (count != 0) {
+				const char* p = buffer;
+				const char* end = buffer + length;
+				for (;;) {
+					p = std::find(p, end, '\n');
+					if (p == end) {
+						break;
+					}
+					++p;
+					if (--count == 0) {
+						length = p - buffer;
+						break;
+					}
 				}
-				++p;
-				if (--count == 0) {
-					length = p - buffer;
-					break;
-				}
+				outputStream.write(buffer, length);
 			}
-			outputStream.write(buffer, length);
+			return length;
 		}
-		return length;
-	}
 };
 
-class PopupDebugMessageHandler : public DebugMessageHandler {
-	StringOutputStream m_buffer;
-	Lock m_lock;
-public:
-	TextOutputStream& getOutputStream(void) {
-		if (!m_lock.locked()) {
-			return m_buffer;
+class PopupDebugMessageHandler: public DebugMessageHandler
+{
+		StringOutputStream m_buffer;
+		Lock m_lock;
+	public:
+		TextOutputStream& getOutputStream (void)
+		{
+			if (!m_lock.locked()) {
+				return m_buffer;
+			}
+			return globalErrorStream();
 		}
-		return globalErrorStream();
-	}
-	bool handleMessage(void) {
-		getOutputStream() << "----------------\n";
-		LineLimitedTextOutputStream outputStream(getOutputStream(), 24);
-		write_stack_trace(outputStream);
-		getOutputStream() << "----------------\n";
-		globalErrorStream() << m_buffer.c_str();
-		if (!m_lock.locked()) {
-			ScopedLock lock(m_lock);
+		bool handleMessage (void)
+		{
+			getOutputStream() << "----------------\n";
+			LineLimitedTextOutputStream outputStream(getOutputStream(), 24);
+			write_stack_trace(outputStream);
+			getOutputStream() << "----------------\n";
+			globalErrorStream() << m_buffer.c_str();
+			if (!m_lock.locked()) {
+				ScopedLock lock(m_lock);
 #ifdef DEBUG
-			m_buffer << "Break into the debugger?\n";
-			bool handled = gtk_MessageBox(0, m_buffer.c_str(), _("Radiant - Runtime Error"), eMB_YESNO, eMB_ICONERROR) == eIDNO;
-			m_buffer.clear();
-			return handled;
+				m_buffer << "Break into the debugger?\n";
+				bool handled = gtk_MessageBox(0, m_buffer.c_str(), _("Radiant - Runtime Error"), eMB_YESNO, eMB_ICONERROR) == eIDNO;
+				m_buffer.clear();
+				return handled;
 #else
-			m_buffer << "Please report this error to the developers\n";
-			gtk_MessageBox(0, m_buffer.c_str(), _("Radiant - Runtime Error"), eMB_OK, eMB_ICONERROR);
-			m_buffer.clear();
+				m_buffer << "Please report this error to the developers\n";
+				gtk_MessageBox(0, m_buffer.c_str(), _("Radiant - Runtime Error"), eMB_OK, eMB_ICONERROR);
+				m_buffer.clear();
 #endif
+			}
+			return true;
 		}
-		return true;
-	}
 };
 
 typedef Static<PopupDebugMessageHandler> GlobalPopupDebugMessageHandler;
 
-static void streams_init(void) {
+static void streams_init (void)
+{
 	GlobalErrorStream::instance().setOutputStream(getSysPrintErrorStream());
 	GlobalOutputStream::instance().setOutputStream(getSysPrintOutputStream());
 	GlobalWarningStream::instance().setOutputStream(getSysPrintWarningStream());
 }
 
-static void paths_init(void) {
-	StringOutputStream path(256);
+static void paths_init (void)
+{
 	g_strAppPath = environment_get_app_path();
-	path << g_strAppPath.c_str() << "bitmaps/";
-	BitmapsPath_set(path.c_str());
+	BitmapsPath_set(g_strAppPath + "bitmaps/");
 }
 
-static void remove_global_pid(void) {
-	StringOutputStream g_pidFile(256);
-	g_pidFile << SettingsPath_get() << "radiant.pid";
+static void remove_global_pid (void)
+{
+	std::string g_pidFile = SettingsPath_get() + "radiant.pid";
 
 	// close the primary
-	if (remove(g_pidFile.c_str()) == -1) {
-		StringOutputStream msg(256);
-		msg << "WARNING: Could not delete global pid at " << g_pidFile.c_str();
-		gtk_MessageBox(0, msg.c_str(), _("UFORadiant"), eMB_OK, eMB_ICONERROR);
+	if (!file_remove(g_pidFile)) {
+		gtk_MessageBox(0, "WARNING: Could not delete global pid at " + g_pidFile, _("UFORadiant"), eMB_OK,
+				eMB_ICONERROR);
 	}
 }
 
-static void create_global_pid(void) {
+static void create_global_pid (void)
+{
 	/*!
-	the global prefs loading / game selection dialog might fail for any reason we don't know about
-	we need to catch when it happens, to cleanup the stateful prefs which might be killing it
-	and to turn on console logging for lookup of the problem
-	this is the first part of the two step .pid system
-	*/
-	StringOutputStream g_pidFile(256); ///< the global .pid file (only for global part of the startup)
-
-	g_pidFile << SettingsPath_get() << "radiant.pid";
+	 the global prefs loading / game selection dialog might fail for any reason we don't know about
+	 we need to catch when it happens, to cleanup the stateful prefs which might be killing it
+	 and to turn on console logging for lookup of the problem
+	 this is the first part of the two step .pid system
+	 */
+	//! the global .pid file (only for global part of the startup)
+	std::string g_pidFile = SettingsPath_get() + "radiant.pid";
 
 	FILE *pid;
 	pid = fopen(g_pidFile.c_str(), "r");
@@ -318,17 +334,17 @@ static void create_global_pid(void) {
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
 #if !defined(DEBUG)
 		const char *startupFailure = _("Radiant failed to start properly the last time it was run.\n"
-			"The failure may be related to current global preferences.\n"
-			"Do you want to reset global preferences to defaults?");
+				"The failure may be related to current global preferences.\n"
+				"Do you want to reset global preferences to defaults?");
 
 		if (gtk_MessageBox(0, startupFailure, _("Radiant - Startup Failure"), eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
 			g_GamesDialog.Reset();
 		}
 
-		StringOutputStream msg(256);
-		msg << "Logging console output to " << SettingsPath_get() << "radiant.log\nRefer to the log if Radiant fails to start again.";
+		std::string msg = "Logging console output to " + SettingsPath_get()
+				+ "radiant.log\nRefer to the log if Radiant fails to start again.";
 
-		gtk_MessageBox(0, msg.c_str(), _("Radiant - Console Log"), eMB_OK);
+		gtk_MessageBox(0, msg, _("Radiant - Console Log"), eMB_OK);
 #endif
 
 		// set without saving, the class is not in a coherent state yet
@@ -346,34 +362,34 @@ static void create_global_pid(void) {
 /**
  * @brief now the secondary game dependant .pid file
  */
-static void create_local_pid(void) {
-	StringOutputStream g_pidGameFile(256); ///< the game-specific .pid file
-	g_pidGameFile << SettingsPath_get() << "/radiant-game.pid";
+static void create_local_pid (void)
+{
+	//! the game-specific .pid file
+	std::string g_pidGameFile = SettingsPath_get() + "/radiant-game.pid";
 
 	FILE *pid = fopen(g_pidGameFile.c_str(), "r");
 	if (pid != 0) {
 		fclose(pid);
 
-		if (remove(g_pidGameFile.c_str()) == -1) {
-			StringOutputStream msg(256);
-			msg << _("WARNING: Could not delete game pid at ") << g_pidGameFile.c_str();
-			gtk_MessageBox(0, msg.c_str(), _("UFORadiant"), eMB_OK, eMB_ICONERROR );
+		if (!file_remove(g_pidGameFile)) {
+			std::string msg = _("WARNING: Could not delete game pid at ") + g_pidGameFile;
+			gtk_MessageBox(0, msg, _("UFORadiant"), eMB_OK, eMB_ICONERROR);
 		}
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
 #if !defined(DEBUG)
-		StringOutputStream msg;
 		const char *startupFailure = _("UFORadiant failed to start properly the last time it was run.\n"
-			"The failure may be caused by current preferences.\n"
-			"Do you want to reset all preferences to defaults?");
+				"The failure may be caused by current preferences.\n"
+				"Do you want to reset all preferences to defaults?");
 
 		if (gtk_MessageBox(0, startupFailure, _("UFORadiant - Startup Failure"), eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
 			Preferences_Reset();
 		}
 
-		msg << "Logging console output to " << SettingsPath_get() << "radiant.log\nRefer to the log if Radiant fails to start again.";
+		std::string msg = "Logging console output to " + SettingsPath_get()
+				+ "radiant.log\nRefer to the log if Radiant fails to start again.";
 
-		gtk_MessageBox (0, msg.c_str(), _("UFORadiant - Console Log"), eMB_OK);
+		gtk_MessageBox(0, msg, _("UFORadiant - Console Log"), eMB_OK);
 #endif
 
 		// force console logging on! (will go in prefs too)
@@ -387,26 +403,25 @@ static void create_local_pid(void) {
 	}
 }
 
-
 /**
  * @brief now the secondary game dependant .pid file
  */
-static void remove_local_pid(void) {
-	StringOutputStream g_pidGameFile(256);
-	g_pidGameFile << SettingsPath_get() << "/radiant-game.pid";
-	remove(g_pidGameFile.c_str());
+static void remove_local_pid (void)
+{
+	std::string g_pidGameFile = SettingsPath_get() + "/radiant-game.pid";
+	file_remove(g_pidGameFile);
 }
 
-static void user_shortcuts_init(void) {
+static void user_shortcuts_init (void)
+{
 	LoadCommandMap(SettingsPath_get());
 	SaveCommandMap(SettingsPath_get());
 }
 
-void user_shortcuts_save()
+void user_shortcuts_save ()
 {
-	StringOutputStream path(256);
-	path << SettingsPath_get() << g_pGameDescription->mGameFile.c_str() << '/';
-	SaveCommandMap(path.c_str());
+	std::string path = SettingsPath_get() + g_pGameDescription->mGameFile + '/';
+	SaveCommandMap(path);
 }
 
 int main (int argc, char* argv[])
@@ -419,7 +434,7 @@ int main (int argc, char* argv[])
 	if (lib != 0) {
 		void (WINAPI *DwmEnableComposition) (bool bEnable) = (void (WINAPI *) (bool bEnable)) GetProcAddress(lib, "DwmEnableComposition");
 		if (DwmEnableComposition)
-			DwmEnableComposition(FALSE);
+		DwmEnableComposition(FALSE);
 		FreeLibrary(lib);
 	}
 #endif
@@ -441,16 +456,21 @@ int main (int argc, char* argv[])
 	}
 
 	// redirect Gtk warnings to the console
-	g_log_set_handler("Gdk", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
-				G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION), gtk_error_redirect, 0);
-	g_log_set_handler("Gtk", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
-				G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION), gtk_error_redirect, 0);
-	g_log_set_handler("GtkGLExt", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
-				G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION), gtk_error_redirect, 0);
-	g_log_set_handler("GLib", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
-				G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION), gtk_error_redirect, 0);
-	g_log_set_handler(0, (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
-				G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION), gtk_error_redirect, 0);
+	g_log_set_handler("Gdk", (GLogLevelFlags) (G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING
+			| G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			gtk_error_redirect, 0);
+	g_log_set_handler("Gtk", (GLogLevelFlags) (G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING
+			| G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			gtk_error_redirect, 0);
+	g_log_set_handler("GtkGLExt", (GLogLevelFlags) (G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING
+			| G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			gtk_error_redirect, 0);
+	g_log_set_handler("GLib", (GLogLevelFlags) (G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING
+			| G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			gtk_error_redirect, 0);
+	g_log_set_handler(0, (GLogLevelFlags) (G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING
+			| G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			gtk_error_redirect, 0);
 
 	GlobalDebugMessageHandler::instance().setHandler(GlobalPopupDebugMessageHandler::instance());
 

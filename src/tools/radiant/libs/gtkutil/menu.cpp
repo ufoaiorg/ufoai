@@ -24,6 +24,7 @@
 #include <ctype.h>
 #include <gtk/gtk.h>
 
+#include "radiant_i18n.h"
 #include "generic/callback.h"
 
 #include "accelerator.h"
@@ -193,19 +194,19 @@ void accelerator_name (const Accelerator& accelerator, GString* gstring)
 {
 	gboolean had_mod = FALSE;
 	if (accelerator.modifiers & GDK_SHIFT_MASK) {
-		g_string_append(gstring, "Shift");
+		g_string_append(gstring, _("Shift"));
 		had_mod = TRUE;
 	}
 	if (accelerator.modifiers & GDK_CONTROL_MASK) {
 		if (had_mod)
 			g_string_append(gstring, "+");
-		g_string_append(gstring, "Ctrl");
+		g_string_append(gstring, _("Ctrl"));
 		had_mod = TRUE;
 	}
 	if (accelerator.modifiers & GDK_MOD1_MASK) {
 		if (had_mod)
 			g_string_append(gstring, "+");
-		g_string_append(gstring, "Alt");
+		g_string_append(gstring, _("Alt"));
 		had_mod = TRUE;
 	}
 
@@ -214,10 +215,10 @@ void accelerator_name (const Accelerator& accelerator, GString* gstring)
 	if (accelerator.key < 0x80 || (accelerator.key > 0x80 && accelerator.key <= 0xff)) {
 		switch (accelerator.key) {
 		case ' ':
-			g_string_append(gstring, "Space");
+			g_string_append(gstring, _("Space"));
 			break;
 		case '\\':
-			g_string_append(gstring, "Backslash");
+			g_string_append(gstring, _("Backslash"));
 			break;
 		default:
 			g_string_append_c(gstring, gchar(toupper(accelerator.key)));
@@ -281,7 +282,8 @@ void check_menu_item_set_active_callback (GtkCheckMenuItem& item, bool enabled)
 }
 typedef ReferenceCaller1<GtkCheckMenuItem, bool, check_menu_item_set_active_callback> CheckMenuItemSetActiveCaller;
 
-GtkCheckMenuItem* create_check_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic, const Toggle& toggle)
+GtkCheckMenuItem* create_check_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic,
+		const Toggle& toggle)
 {
 	GtkCheckMenuItem* item = create_check_menu_item_with_mnemonic(menu, mnemonic, toggle.m_command.m_callback);
 	menu_item_add_accelerator(GTK_MENU_ITEM(item), toggle.m_command.m_accelerator);

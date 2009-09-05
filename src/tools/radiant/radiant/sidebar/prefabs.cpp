@@ -64,10 +64,11 @@ namespace
 	};
 }
 
-static const char *Prefab_GetPath (StringOutputStream &fullpath, const char *file)
+static const std::string Prefab_GetPath (const std::string& file)
 {
-	fullpath << AppPath_get() << "prefabs/" << PathCleaned(file);
-	return fullpath.c_str();
+	StringOutputStream fullpath(256);
+	fullpath << PathCleaned(file.c_str());
+	return AppPath_get() + "prefabs/" + fullpath.c_str();
 }
 
 static gint PrefabList_button_press (GtkWidget *widget, GdkEventButton *event, gpointer data)
@@ -79,7 +80,6 @@ static gint PrefabList_button_press (GtkWidget *widget, GdkEventButton *event, g
 			return FALSE;
 		} else {
 			char* text;
-			StringOutputStream fullpath(256);
 			UndoableCommand undo("mapImport");
 
 			gtk_tree_model_get(model, &iter, PREFAB_NAME, &text, -1);
@@ -96,7 +96,7 @@ static gint PrefabList_button_press (GtkWidget *widget, GdkEventButton *event, g
 				break;
 			}
 
-			Map_ImportFile(Prefab_GetPath(fullpath, text));
+			Map_ImportFile(Prefab_GetPath(text));
 			g_free(text);
 			gtk_widget_grab_focus(CamWnd_getWidget(*g_pParentWnd->GetCamWnd()));
 			return TRUE;
@@ -107,25 +107,23 @@ static gint PrefabList_button_press (GtkWidget *widget, GdkEventButton *event, g
 
 /**
  * @brief callback function used to add prefab entries to store
- * @param name filename relativ to prefabs directory
+ * @param name filename relative to prefabs directory
  * @param parentIter parent iterator to add content to, used for tree structure of directories
  */
-void PrefabAdd (const char *name, GtkTreeIter* parentIter)
+void PrefabAdd (const std::string& name, GtkTreeIter* parentIter)
 {
-	StringOutputStream fullBaseNamePath(256);
-	StringOutputStream imagePath(256);
-	StringOutputStream descriptionPath(256);
 	GtkTreeIter iter;
 	const char *description = "";
 	char buffer[256];
 	StringOutputStream nameContent(256);
 	// remove extension from prefab filename
-	CopiedString baseName = StringRange(name, path_get_filename_base_end(name));
-	CopiedString fileName = StringRange(path_get_filename_start(name), path_get_filename_base_end(name));
-	Prefab_GetPath(fullBaseNamePath, baseName.c_str());
+	CopiedString baseName = StringRange(name.c_str(), path_get_filename_base_end(name.c_str()));
+	CopiedString fileName =
+			StringRange(path_get_filename_start(name.c_str()), path_get_filename_base_end(name.c_str()));
+	std::string fullBaseNamePath = Prefab_GetPath(baseName.c_str());
 	nameContent << "<b>" << fileName.c_str() << "</b>";
-	imagePath << fullBaseNamePath.c_str() << ".jpg";
-	descriptionPath << fullBaseNamePath.c_str() << ".txt";
+	std::string imagePath = fullBaseNamePath + ".jpg";
+	std::string descriptionPath = fullBaseNamePath + ".txt";
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(descriptionPath.c_str()));
 	if (file) {
 		TextInputStream &stream = file->getInputStream();
@@ -136,10 +134,10 @@ void PrefabAdd (const char *name, GtkTreeIter* parentIter)
 	}
 	GdkPixbuf *img = pixbuf_new_from_file_with_mask(imagePath.c_str());
 	if (!img)
-		g_warning("Could not find image (%s) for prefab %s\n", baseName.c_str(), name);
+		g_warning("Could not find image (%s) for prefab %s\n", baseName.c_str(), name.c_str());
 	gtk_tree_store_append(store, &iter, parentIter);
-	gtk_tree_store_set(store, &iter, PREFAB_NAME, name, PREFAB_DESCRIPTION, nameContent.c_str(), PREFAB_IMAGE, img,
-			PREFAB_SHORTNAME, fileName.c_str(), -1);
+	gtk_tree_store_set(store, &iter, PREFAB_NAME, name.c_str(), PREFAB_DESCRIPTION, nameContent.c_str(), PREFAB_IMAGE,
+			img, PREFAB_SHORTNAME, fileName.c_str(), -1);
 }
 
 /**
@@ -233,14 +231,14 @@ static gboolean Prefab_Refilter ()
 class CLoadPrefab
 {
 	private:
-		CopiedString m_path;
+		std::string m_path;
 		GtkTreeIter* m_parentIter;
 	public:
 		/**
 		 * @param path relative to 'prefabs/' into directory where file hits were found
 		 * @param parentIter parent iterator to add content to
 		 */
-		CLoadPrefab (const char* path, GtkTreeIter* parentIter) :
+		CLoadPrefab (const std::string& path, GtkTreeIter* parentIter) :
 			m_path(path), m_parentIter(parentIter)
 		{
 		}
@@ -249,11 +247,10 @@ class CLoadPrefab
 		 * @brief called for every file matching map prefix
 		 * @param name found filename
 		 */
-		void operator() (const char* name) const
+		void operator() (const std::string& name) const
 		{
-			StringOutputStream fullpath(256);
-			fullpath << m_path.c_str() << "/" << name;
-			PrefabAdd(fullpath.c_str(), m_parentIter);
+			std::string fullpath = m_path + "/" + name;
+			PrefabAdd(fullpath, m_parentIter);
 			g_debug("file: %s\n", fullpath.c_str());
 		}
 };
@@ -264,8 +261,8 @@ class CLoadPrefab
 class CLoadPrefabSubdir
 {
 	private:
-		CopiedString m_path;
-		CopiedString m_subpath;
+		std::string m_path;
+		std::string m_subpath;
 		GtkTreeIter* m_parentIter;
 	public:
 		/**
@@ -273,7 +270,7 @@ class CLoadPrefabSubdir
 		 * @param subpath path relative to prefabs directory which is examined
 		 * @param parentIter parent iterator to add found prefab map files to
 		 */
-		CLoadPrefabSubdir (const char* path, const char* subpath, GtkTreeIter* parentIter) :
+		CLoadPrefabSubdir (const std::string& path, const std::string& subpath, GtkTreeIter* parentIter) :
 			m_path(path), m_subpath(subpath), m_parentIter(parentIter)
 		{
 		}
@@ -283,38 +280,33 @@ class CLoadPrefabSubdir
 		 * @param name found filename
 		 * @note for every directory entry a sub iterator is created, afterwards this sub directory is examined
 		 */
-		void operator() (const char* name) const
+		void operator() (const std::string& name) const
 		{
-			if (strstr(name, ".svn") != 0)
+			if (name.find(".svn") != std::string::npos)
 				return;
-			StringOutputStream fullpath(256);
-			fullpath << m_path.c_str() << "/";
+			std::string fullpath = m_path + "/";
 			if (!m_subpath.empty())
-				fullpath << m_subpath.c_str() << "/";
-			fullpath << name;
-			if (file_is_directory(fullpath.c_str())) {
+				fullpath += m_subpath + "/";
+			fullpath += name;
+			if (file_is_directory(fullpath)) {
 				GtkTreeIter subIter;
-				StringOutputStream sectionDescription(256);
-				sectionDescription << "<b>" << name << "</b>";
+				std::string sectionDescription = "<b>" + name + "</b>";
 				gtk_tree_store_append(store, &subIter, m_parentIter);
-				gtk_tree_store_set(store, &subIter, PREFAB_NAME, name, PREFAB_DESCRIPTION, sectionDescription.c_str(),
-						PREFAB_SHORTNAME, name, -1);
-				g_debug("directory: %s\n", name);
-				StringOutputStream subPath(128);
-				subPath << m_subpath.c_str() << "/" << name;
-				Directory_forEach(fullpath.c_str(), CLoadPrefabSubdir(m_path.c_str(), subPath.c_str(), &subIter));
-				Directory_forEach(fullpath.c_str(), MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab(
-						subPath.c_str(), &subIter)));
+				gtk_tree_store_set(store, &subIter, PREFAB_NAME, name.c_str(), PREFAB_DESCRIPTION, sectionDescription.c_str(),
+						PREFAB_SHORTNAME, name.c_str(), -1);
+				g_debug("directory: %s\n", name.c_str());
+				std::string subPath = m_subpath + "/" + name;
+				Directory_forEach(fullpath, CLoadPrefabSubdir(m_path, subPath, &subIter));
+				Directory_forEach(fullpath, MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab(subPath, &subIter)));
 			} else {
-				g_debug("ignoring %s as directory\n", name);
+				g_debug("ignoring %s as directory\n", name.c_str());
 			}
 		}
 };
 
 GtkWidget* Prefabs_constructNotebookTab (void)
 {
-	StringOutputStream fullpath(256);
-	fullpath << AppPath_get() << "prefabs/";
+	std::string fullpath = AppPath_get() + "prefabs/";
 
 	GtkWidget* vbox = gtk_vbox_new(FALSE, 2);
 	GtkWidget* scr = gtk_scrolled_window_new(0, 0);
@@ -407,7 +399,7 @@ GtkWidget* Prefabs_constructNotebookTab (void)
 
 	}
 	/* fill prefab store with data */
-	Directory_forEach(fullpath.c_str(), CLoadPrefabSubdir(fullpath.c_str(), "", NULL));
+	Directory_forEach(fullpath.c_str(), CLoadPrefabSubdir(fullpath, "", NULL));
 	Directory_forEach(fullpath.c_str(), MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab("", NULL)));
 	gtk_tree_model_filter_refilter(GTK_TREE_MODEL_FILTER(fileFiltered));
 	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(fileSorted), PREFAB_SHORTNAME, GTK_SORT_ASCENDING);

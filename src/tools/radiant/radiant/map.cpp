@@ -292,7 +292,7 @@ void Map_SetWorldspawn (Map& map, scene::Node* node);
 class Map: public ModuleObserver
 {
 	public:
-		CopiedString m_name;
+		std::string m_name;
 		Resource* m_resource;
 		bool m_valid;
 
@@ -360,21 +360,22 @@ void Map_SetValid (Map& map, bool valid)
 	map.m_mapValidCallbacks();
 }
 
-const char* Map_Name (const Map& map)
+const std::string& Map_Name (const Map& map)
 {
-	return map.m_name.c_str();
+	return map.m_name;
 }
 
 bool Map_Unnamed (const Map& map)
 {
-	return string_equal(Map_Name(map), "unnamed.map");
+	return Map_Name(map) == "unnamed.map";
 }
 
-inline const MapFormat& MapFormat_forFile (const char* filename)
+inline const MapFormat& MapFormat_forFile (const std::string& filename)
 {
-	const char* moduleName = findModuleName(GetFileTypeRegistry(), MapFormat::Name(), path_get_extension(filename));
+	const char* moduleName = findModuleName(GetFileTypeRegistry(), MapFormat::Name(), path_get_extension(
+			filename.c_str()));
 	MapFormat* format = Radiant_getMapModules().findModule(moduleName);
-	ASSERT_MESSAGE(format != 0, "map format not found for file " << makeQuoted(filename));
+	ASSERT_MESSAGE(format != 0, "map format not found for file " << makeQuoted(filename.c_str()));
 	return *format;
 }
 
@@ -402,7 +403,7 @@ void Map_SetModified (Map& map, bool modified)
  */
 void Map_UpdateTitle (const Map& map)
 {
-	Sys_SetTitle(map.m_name.c_str(), Map_Modified(map));
+	Sys_SetTitle(map.m_name, Map_Modified(map));
 }
 
 scene::Node* Map_GetWorldspawn (const Map& map)
@@ -789,9 +790,9 @@ static void Map_StartPosition (void)
  * returns false.
  * @return bool indicating whether file loading was successful
  */
-bool Map_LoadFile (const char *filename)
+bool Map_LoadFile (const std::string& filename)
 {
-	g_message("Loading map from %s\n", filename);
+	g_message("Loading map from %s\n", filename.c_str());
 	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Map"));
 
 	g_map.m_name = filename;
@@ -825,7 +826,7 @@ bool Map_LoadFile (const char *filename)
 
 void Map_Reload (void)
 {
-	if (!Map_Name(g_map))
+	if (Map_Name(g_map).empty())
 		return;
 
 	/* reload the map */
@@ -1299,13 +1300,13 @@ void Map_RegionBrush (void)
 	}
 }
 
-bool Map_ImportFile (const char* filename)
+bool Map_ImportFile (const std::string& filename)
 {
 	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Map"));
 
 	bool success = false;
 	{
-		Resource* resource = GlobalReferenceCache().capture(filename);
+		Resource* resource = GlobalReferenceCache().capture(filename.c_str());
 		resource->refresh(); /* avoid loading old version if map has changed on disk since last import */
 		if (resource->load()) {
 			NodeSmartReference clone(NewMapRoot(""));
@@ -1316,7 +1317,7 @@ bool Map_ImportFile (const char* filename)
 			MergeMap(clone);
 			success = true;
 		}
-		GlobalReferenceCache().release(filename);
+		GlobalReferenceCache().release(filename.c_str());
 	}
 
 	SceneChangeNotify();
@@ -1324,7 +1325,7 @@ bool Map_ImportFile (const char* filename)
 	return success;
 }
 
-bool Map_SaveFile (const char* filename)
+bool Map_SaveFile (const std::string& filename)
 {
 	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Saving Map"));
 	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse, filename);
@@ -1828,7 +1829,7 @@ MapModuleObserver g_MapModuleObserver;
 
 #include "preferencesystem.h"
 
-CopiedString g_strLastMap;
+std::string g_strLastMap;
 bool g_bLoadLastMap = false;
 
 void Map_Construct (void)
@@ -1839,8 +1840,8 @@ void Map_Construct (void)
 	GlobalCommands_insert("RegionSetSelection", FreeCaller<RegionSelected> (), Accelerator('R',
 			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
-	GlobalPreferenceSystem().registerPreference("LastMap", CopiedStringImportStringCaller(g_strLastMap),
-			CopiedStringExportStringCaller(g_strLastMap));
+	GlobalPreferenceSystem().registerPreference("LastMap", StdStringImportStringCaller(g_strLastMap),
+			StdStringExportStringCaller(g_strLastMap));
 	GlobalPreferenceSystem().registerPreference("LoadLastMap", BoolImportStringCaller(g_bLoadLastMap),
 			BoolExportStringCaller(g_bLoadLastMap));
 

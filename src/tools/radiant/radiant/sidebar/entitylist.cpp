@@ -83,7 +83,8 @@ namespace
 template<typename value_type>
 inline void gtk_tree_model_get_pointer (GtkTreeModel* model, GtkTreeIter* iter, gint column, value_type** pointer)
 {
-	GValue value = GValue_default();
+	GValue value;
+	value.g_type = 0;
 	gtk_tree_model_get_value(model, iter, column, &value);
 	*pointer = (value_type*) g_value_get_pointer(&value);
 }

@@ -1,23 +1,23 @@
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "console.h"
 #include "radiant_i18n.h"
@@ -40,8 +40,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "mainframe.h"
 
 // handle to the console log file
-namespace {
-FILE* g_hLogFile;
+namespace
+{
+	FILE* g_hLogFile;
 }
 
 bool g_Console_enableLogging = false;
@@ -51,16 +52,16 @@ static bool g_Console_createLogFailed = false;
 /**
  * @note called whenever we need to open/close/check the console log file
  */
-void Sys_LogFile(bool enable) {
+void Sys_LogFile (bool enable)
+{
 	if (enable && !g_hLogFile) {
 		// settings say we should be logging and we don't have a log file .. so create it
-		if (!SettingsPath_get()[0])
+		if (SettingsPath_get().empty())
 			return; // cannot open a log file yet
 		// open a file to log the console (if user prefs say so)
 		// the file handle is g_hLogFile
 		// the log file is erased
-		StringOutputStream name(256);
-		name << SettingsPath_get() << "radiant.log";
+		std::string name = SettingsPath_get() + "radiant.log";
 		g_hLogFile = fopen(name.c_str(), "w");
 		if (g_hLogFile != 0) {
 			globalOutputStream() << "Started logging to " << name.c_str() << "\n";
@@ -68,13 +69,14 @@ void Sys_LogFile(bool enable) {
 			time(&localtime);
 			g_Console_createLogFailed = false;
 			globalOutputStream() << "Today is: " << ctime(&localtime) << "\n";
-			globalOutputStream() << "This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n" RADIANT_ABOUTMSG "\n";
+			globalOutputStream()
+					<< "This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n" RADIANT_ABOUTMSG "\n";
 		} else {
 			if (g_Console_createLogFailed)
 				return;
-			StringOutputStream error(512);
-			error << "Failed to create log file " << name.c_str() << ", check write permissions in Radiant directory.\n";
-			gtk_MessageBox(0, error.c_str(), _("Console logging"), eMB_OK, eMB_ICONERROR);
+			std::string error = "Failed to create log file " + name
+					+ ", check write permissions in UFORadiant directory.\n";
+			gtk_MessageBox(0, error, _("Console logging"), eMB_OK, eMB_ICONERROR);
 			g_Console_createLogFailed = true;
 		}
 	} else if (!enable && g_hLogFile != 0) {
@@ -89,12 +91,14 @@ void Sys_LogFile(bool enable) {
 
 static GtkWidget* g_console = NULL;
 
-static void console_clear() {
+static void console_clear ()
+{
 	GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(g_console));
 	gtk_text_buffer_set_text(buffer, "", -1);
 }
 
-static void console_populate_popup(GtkTextView* textview, GtkMenu* menu, gpointer user_data) {
+static void console_populate_popup (GtkTextView* textview, GtkMenu* menu, gpointer user_data)
+{
 	menu_separator(menu);
 
 	GtkWidget* item = gtk_menu_item_new_with_label("Clear");
@@ -103,12 +107,14 @@ static void console_populate_popup(GtkTextView* textview, GtkMenu* menu, gpointe
 	container_add_widget(GTK_CONTAINER(menu), item);
 }
 
-static gboolean destroy_set_null(GtkWindow* widget, GtkWidget** p) {
+static gboolean destroy_set_null (GtkWindow* widget, GtkWidget** p)
+{
 	*p = NULL;
 	return FALSE;
 }
 
-GtkWidget* Console_constructWindow(GtkWindow* toplevel) {
+GtkWidget* Console_constructWindow (GtkWindow* toplevel)
+{
 	GtkWidget* scr = gtk_scrolled_window_new(0, 0);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
@@ -133,20 +139,25 @@ GtkWidget* Console_constructWindow(GtkWindow* toplevel) {
 	return scr;
 }
 
-class GtkTextBufferOutputStream : public TextOutputStream {
-	GtkTextBuffer* textBuffer;
-	GtkTextIter* iter;
-	GtkTextTag* tag;
-public:
-	GtkTextBufferOutputStream(GtkTextBuffer* textBuffer, GtkTextIter* iter, GtkTextTag* tag) : textBuffer(textBuffer), iter(iter), tag(tag) {
-	}
-	std::size_t write(const char* buffer, std::size_t length) {
-		gtk_text_buffer_insert_with_tags(textBuffer, iter, buffer, gint(length), tag, (char const*)0);
-		return length;
-	}
+class GtkTextBufferOutputStream: public TextOutputStream
+{
+		GtkTextBuffer* textBuffer;
+		GtkTextIter* iter;
+		GtkTextTag* tag;
+	public:
+		GtkTextBufferOutputStream (GtkTextBuffer* textBuffer, GtkTextIter* iter, GtkTextTag* tag) :
+			textBuffer(textBuffer), iter(iter), tag(tag)
+		{
+		}
+		std::size_t write (const char* buffer, std::size_t length)
+		{
+			gtk_text_buffer_insert_with_tags(textBuffer, iter, buffer, gint(length), tag, (char const*) 0);
+			return length;
+		}
 };
 
-std::size_t Sys_Print(int level, const char* buf, std::size_t length) {
+std::size_t Sys_Print (int level, const char* buf, std::size_t length)
+{
 	bool contains_newline = std::find(buf, buf + length, '\n') != buf + length;
 
 	if (level == SYS_ERR || level == SYS_WRN) {
@@ -172,13 +183,16 @@ std::size_t Sys_Print(int level, const char* buf, std::size_t length) {
 
 			static GtkTextMark* end = gtk_text_buffer_create_mark(buffer, "end", &iter, FALSE);
 
-			const GdkColor yellow = {0, 0xb0ff, 0xb0ff, 0x0000};
-			const GdkColor red = {0, 0xffff, 0x0000, 0x0000};
-			const GdkColor black = {0, 0x0000, 0x0000, 0x0000};
+			const GdkColor yellow = { 0, 0xb0ff, 0xb0ff, 0x0000 };
+			const GdkColor red = { 0, 0xffff, 0x0000, 0x0000 };
+			const GdkColor black = { 0, 0x0000, 0x0000, 0x0000 };
 
-			static GtkTextTag* error_tag = gtk_text_buffer_create_tag(buffer, "red_foreground", "foreground-gdk", &red, 0);
-			static GtkTextTag* warning_tag = gtk_text_buffer_create_tag(buffer, "yellow_foreground", "foreground-gdk", &yellow, 0);
-			static GtkTextTag* standard_tag = gtk_text_buffer_create_tag(buffer, "black_foreground", "foreground-gdk", &black, 0);
+			static GtkTextTag* error_tag = gtk_text_buffer_create_tag(buffer, "red_foreground", "foreground-gdk", &red,
+					0);
+			static GtkTextTag* warning_tag = gtk_text_buffer_create_tag(buffer, "yellow_foreground", "foreground-gdk",
+					&yellow, 0);
+			static GtkTextTag* standard_tag = gtk_text_buffer_create_tag(buffer, "black_foreground", "foreground-gdk",
+					&black, 0);
 			GtkTextTag* tag;
 			switch (level) {
 			case SYS_WRN:
@@ -217,42 +231,50 @@ std::size_t Sys_Print(int level, const char* buf, std::size_t length) {
 	return length;
 }
 
-
-class SysPrintOutputStream : public TextOutputStream {
-public:
-	std::size_t write(const char* buffer, std::size_t length) {
-		return Sys_Print(SYS_STD, buffer, length);
-	}
+class SysPrintOutputStream: public TextOutputStream
+{
+	public:
+		std::size_t write (const char* buffer, std::size_t length)
+		{
+			return Sys_Print(SYS_STD, buffer, length);
+		}
 };
 
-class SysPrintErrorStream : public TextOutputStream {
-public:
-	std::size_t write(const char* buffer, std::size_t length) {
-		return Sys_Print(SYS_ERR, buffer, length);
-	}
+class SysPrintErrorStream: public TextOutputStream
+{
+	public:
+		std::size_t write (const char* buffer, std::size_t length)
+		{
+			return Sys_Print(SYS_ERR, buffer, length);
+		}
 };
 
-class SysPrintWarningStream : public TextOutputStream {
-public:
-	std::size_t write(const char* buffer, std::size_t length) {
-		return Sys_Print(SYS_WRN, buffer, length);
-	}
+class SysPrintWarningStream: public TextOutputStream
+{
+	public:
+		std::size_t write (const char* buffer, std::size_t length)
+		{
+			return Sys_Print(SYS_WRN, buffer, length);
+		}
 };
 
 static SysPrintOutputStream g_outputStream;
 
-TextOutputStream& getSysPrintOutputStream() {
+TextOutputStream& getSysPrintOutputStream ()
+{
 	return g_outputStream;
 }
 
 static SysPrintErrorStream g_errorStream;
 
-TextOutputStream& getSysPrintErrorStream() {
+TextOutputStream& getSysPrintErrorStream ()
+{
 	return g_errorStream;
 }
 
 static SysPrintWarningStream g_warningStream;
 
-TextOutputStream& getSysPrintWarningStream() {
+TextOutputStream& getSysPrintWarningStream ()
+{
 	return g_warningStream;
 }

@@ -115,19 +115,19 @@ struct IRadiant
 		/** Return the main application GtkWindow.
 		 */
 		GtkWindow* (*getMainWindow) ();
-		const char* (*getEnginePath) ();
-		const char* (*getAppPath) ();
-		const char* (*getSettingsPath) ();
+		const std::string& (*getEnginePath) ();
+		const std::string& (*getAppPath) ();
+		const std::string& (*getSettingsPath) ();
 		const std::string& (*getMapsPath) ();
 		void (*commandInsert) (const std::string& name, const Callback& callback, const Accelerator& accelerator);
 
-		const char* (*getGameName) ();
-		const char* (*getMapName) ();
+		const std::string& (*getGameName) ();
+		const std::string& (*getMapName) ();
 		scene::Node& (*getMapWorldEntity) ();
 		float (*getGridSize) ();
 
-		const char* (*getGameDescriptionKeyValue) (const char* key);
-		const char* (*getRequiredGameDescriptionKeyValue) (const char* key);
+		const std::string& (*getGameDescriptionKeyValue) (const std::string& key);
+		const std::string& (*getRequiredGameDescriptionKeyValue) (const std::string& key);
 
 		void (*attachGameToolsPathObserver) (ModuleObserver& observer);
 		void (*detachGameToolsPathObserver) (ModuleObserver& observer);

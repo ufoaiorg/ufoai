@@ -106,14 +106,14 @@ static NodeSmartReference MapResource_load (const MapFormat& format, const char*
  * @sa Map_Write
  */
 bool MapResource_saveFile (const MapFormat& format, scene::Node& root, GraphTraversalFunc traverse,
-		const char* filename)
+		const std::string& filename)
 {
 	//ASSERT_MESSAGE(g_path_is_absolute(filename), "MapResource_saveFile: path is not absolute: " << makeQuoted(filename));
-	g_message("Open file '%s' for write...\n", filename);
+	g_message("Open file '%s' for write...\n", filename.c_str());
 	TextFileOutputStream file(filename);
 	if (!file.failed()) {
 		g_message("success\n");
-		ScopeDisableScreenUpdates disableScreenUpdates(path_get_filename_start(filename), _("Saving Map"));
+		ScopeDisableScreenUpdates disableScreenUpdates(path_get_filename_start(filename.c_str()), _("Saving Map"));
 		format.writeGraph(root, traverse, file);
 		return true;
 	}

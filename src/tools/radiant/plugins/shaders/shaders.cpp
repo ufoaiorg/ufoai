@@ -734,9 +734,8 @@ void ParseShaderFile (Tokeniser& tokeniser, const char* filename)
 
 static void LoadShaderFile (const char* filename)
 {
-	const char* appPath = GlobalRadiant().getAppPath();
-	StringOutputStream shadername(256);
-	shadername << appPath << filename;
+	const std::string& appPath = GlobalRadiant().getAppPath();
+	std::string shadername = appPath + filename;
 
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(shadername.c_str()));
 	if (file) {

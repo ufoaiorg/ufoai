@@ -78,7 +78,7 @@ inline void DeferredDraw_onMapValidChanged (DeferredDraw& self)
 }
 typedef ReferenceCaller<DeferredDraw, DeferredDraw_onMapValidChanged> DeferredDrawOnMapValidChangedCaller;
 
-const char* Map_Name (const Map& map);
+const std::string& Map_Name (const Map& map);
 const MapFormat& Map_getFormat (const Map& map);
 bool Map_Unnamed (const Map& map);
 
@@ -102,8 +102,8 @@ extern float g_MaxWorldCoord;
 extern float g_MinWorldCoord;
 
 void Map_Reload (void);
-bool Map_LoadFile (const char* filename);
-bool Map_SaveFile (const char* filename);
+bool Map_LoadFile (const std::string& filename);
+bool Map_SaveFile (const std::string& filename);
 
 void Map_New ();
 void Map_Free ();
@@ -140,13 +140,13 @@ void SaveMapAs ();
 void SaveMap ();
 void ExportMap ();
 void SaveRegion ();
-bool Map_ImportFile (const char* filename);
+bool Map_ImportFile (const std::string& filename);
 
 void Map_Traverse (scene::Node& root, const scene::Traversable::Walker& walker);
 
 void SelectBrush (int entitynum, int brushnum, int select);
 
-extern CopiedString g_strLastMap;
+extern std::string g_strLastMap;
 extern bool g_bLoadLastMap;
 
 void Map_Construct ();

@@ -63,8 +63,8 @@ const char *Material_LoadFile(const char* filename) {
 
 void GenerateMaterialFromTexture (void)
 {
-	const char *mapname = Map_Name(g_map);
-	if (!mapname || Map_Unnamed(g_map)) {
+	const std::string& mapname = Map_Name(g_map);
+	if (mapname.empty() || Map_Unnamed(g_map)) {
 		// save the map first
 		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("You have to save your map before material generation can work"));
 		return;
@@ -98,8 +98,8 @@ void GenerateMaterialFromTexture (void)
 const char *Material_GetFilename (void)
 {
 	static char materialFileName[256];
-	const char *mapname = Map_Name(g_map);
-	snprintf(materialFileName, sizeof(materialFileName), "materials/%s", path_get_filename_start(mapname));
+	const std::string& mapname = Map_Name(g_map);
+	snprintf(materialFileName, sizeof(materialFileName), "materials/%s", path_get_filename_start(mapname.c_str()));
 	materialFileName[strlen(materialFileName) - 1] = 't'; /* map => mat */
 	return materialFileName;
 }

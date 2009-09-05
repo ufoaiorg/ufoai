@@ -523,28 +523,27 @@ void Select_RotateTexture (float amt)
  * @note TTimo modified to handle shader architecture:
  * expects shader names at input, comparison relies on shader names .. texture names no longer relevant
  */
-void FindReplaceTextures (const char* pFind, const char* pReplace, bool bSelected)
+void FindReplaceTextures (const std::string& pFind, const std::string& pReplace, bool bSelected)
 {
 	if (!texdef_name_valid(pFind)) {
-		globalErrorStream() << "FindReplaceTextures: invalid texture name: '" << pFind << "', aborted\n";
+		g_error("FindReplaceTextures: invalid texture name: '%s', aborted\n", pFind.c_str());
 		return;
 	}
 	if (!texdef_name_valid(pReplace)) {
-		globalErrorStream() << "FindReplaceTextures: invalid texture name: '" << pReplace << "', aborted\n";
+		g_error("FindReplaceTextures: invalid texture name: '%s', aborted\n", pReplace.c_str());
 		return;
 	}
 
-	StringOutputStream command;
-	command << "textureFindReplace -find " << pFind << " -replace " << pReplace;
+	std::string command = "textureFindReplace -find " + pFind + " -replace " + pReplace;
 	UndoableCommand undo(command.c_str());
 
 	if (bSelected) {
 		if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-			Scene_BrushFindReplaceShader_Selected(GlobalSceneGraph(), pFind, pReplace);
+			Scene_BrushFindReplaceShader_Selected(GlobalSceneGraph(), pFind.c_str(), pReplace.c_str());
 		}
-		Scene_BrushFindReplaceShader_Component_Selected(GlobalSceneGraph(), pFind, pReplace);
+		Scene_BrushFindReplaceShader_Component_Selected(GlobalSceneGraph(), pFind.c_str(), pReplace.c_str());
 	} else {
-		Scene_BrushFindReplaceShader(GlobalSceneGraph(), pFind, pReplace);
+		Scene_BrushFindReplaceShader(GlobalSceneGraph(), pFind.c_str(), pReplace.c_str());
 	}
 }
 

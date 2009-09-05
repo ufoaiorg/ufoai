@@ -64,8 +64,8 @@ public:
 	}
 
 	bool m_bSelectedOnly;
-	CopiedString m_strFind;
-	CopiedString m_strReplace;
+	std::string m_strFind;
+	std::string m_strReplace;
 };
 
 FindTextureDialog g_FindTextureDialog;
@@ -73,12 +73,9 @@ static bool g_bFindActive = true;
 
 namespace {
 void FindTextureDialog_apply() {
-	StringOutputStream find(256);
-	StringOutputStream replace(256);
-
-	find << "textures/" << g_FindTextureDialog.m_strFind.c_str();
-	replace << "textures/" << g_FindTextureDialog.m_strReplace.c_str();
-	FindReplaceTextures(find.c_str(), replace.c_str(), g_FindTextureDialog.m_bSelectedOnly);
+	std::string find =  "textures/" + g_FindTextureDialog.m_strFind;
+	std::string replace = "textures/" + g_FindTextureDialog.m_strReplace;
+	FindReplaceTextures(find, replace, g_FindTextureDialog.m_bSelectedOnly);
 }
 
 static void OnApply(GtkWidget* widget, gpointer data) {
