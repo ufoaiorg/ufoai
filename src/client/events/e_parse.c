@@ -1,5 +1,5 @@
 /**
- * @file cl_parse_events.c
+ * @file e_parse.c
  * @section eventformat Event format identifiers
  * id	| type		| length (bytes)
  *======================================

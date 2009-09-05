@@ -1,5 +1,6 @@
 /**
- * @file cl_parse_events.c
+ * @file e_time.c
+ * @brief Battlescape event timing code
  */
 
 /*
