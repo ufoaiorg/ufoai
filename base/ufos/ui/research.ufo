@@ -124,6 +124,7 @@ window research
 		*img_status<1>@invis true
 		*bt_rs_change<1>@invis true
 		*txt_assigned<1>@invis true
+		*txt_rsstatus<1>@invis true
 	}
 
 	confunc research_research {
@@ -133,6 +134,7 @@ window research
 		*img_status<1>@invis false
 		*bt_rs_change<1>@invis false
 		*txt_assigned<1>@invis false
+		*txt_rsstatus<1>@invis false
 	}
 
 	confunc research_outterresearch {
@@ -142,6 +144,7 @@ window research
 		*img_status<1>@invis false
 		*bt_rs_change<1>@invis true
 		*txt_assigned<1>@invis false
+		*txt_rsstatus<1>@invis false
 	}
 
 	confunc research_basetitle {
@@ -151,6 +154,7 @@ window research
 		*img_status<1>@invis true
 		*bt_rs_change<1>@invis true
 		*txt_assigned<1>@invis true
+		*txt_rsstatus<1>@invis true
 	}
 
 	confunc research_baseinfo {
@@ -160,6 +164,7 @@ window research
 		*img_status<1>@invis true
 		*bt_rs_change<1>@invis true
 		*txt_assigned<1>@invis false
+		*txt_rsstatus<1>@invis true
 	}
 
 	confunc research_unresearchableitemtitle {
@@ -169,6 +174,7 @@ window research
 		*img_status<1>@invis true
 		*bt_rs_change<1>@invis true
 		*txt_assigned<1>@invis true
+		*txt_rsstatus<1>@invis true
 	}
 
 	confunc research_unresearchableitem {
@@ -178,6 +184,7 @@ window research
 		*img_status<1>@invis true
 		*bt_rs_change<1>@invis true
 		*txt_assigned<1>@invis true
+		*txt_rsstatus<1>@invis true
 	}
 
 	/**
