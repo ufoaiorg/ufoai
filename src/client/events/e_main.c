@@ -70,7 +70,7 @@ static qboolean CL_CheckDefault (const eventRegister_t *self, const struct dbuff
 	const int number = NET_PeekShort(msg);
 	qboolean result = LE_IsLocked(number);
 	if (result)
-		Com_Printf("Delaying event on %i\n", number);
+		Com_DPrintf(DEBUG_EVENTSYS, "CL_CheckDefault: Delaying event on entnum %i.\n", number);
 	return (!result);
 }
 
