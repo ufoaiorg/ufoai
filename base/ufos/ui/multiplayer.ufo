@@ -225,7 +225,7 @@ window serverinfo
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		onClick		{ cmd "connect *mn_server_ip;" }
+		onClick		{ cmd "connect *cvar:mn_server_ip;" }
 	}
 
 	custombutton button_exit
@@ -421,7 +421,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			font		f_small
 			pos			"335 540"
 			size		"176 32"
-			onClick		{ cmd "server_info *mn_server_ip;" }
+			onClick		{ cmd "server_info *cvar:mn_server_ip;" }
 		}
 	}
 
