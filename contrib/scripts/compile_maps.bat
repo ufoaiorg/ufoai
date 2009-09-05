@@ -23,6 +23,7 @@ set searchpath=base/maps
 set usecores=%NUMBER_OF_PROCESSORS%
 set starttime=%TIME%
 set onlynewer=-onlynewer
+set param=
 set extrasamples=-extra
 set shutdownonfinish=false
 set quant=
@@ -51,6 +52,10 @@ if EXIST base\maps\%1 (
 	goto :EOF
 ) else if "%1"=="/clean" (
 	set onlynewer=
+) else if "%1"=="/check" (
+	set param=-check
+) else if "%1"=="/fix" (
+	set param=-fix
 ) else if "%1"=="/fast" (
 	set extrasamples=
 	set quant=-quant 6
@@ -70,7 +75,7 @@ echo found %NUMBER_OF_PROCESSORS% processors
 echo using %usecores% processors
 echo compiling maps in %curpath%
 
-set ufo2mapparameters=%extrasamples% %onlynewer% -t %usecores% %quant%
+set ufo2mapparameters=%extrasamples% %param% %onlynewer% -t %usecores% %quant%
 
 for /D %%i in (%searchpath%\*) DO (
 		call :compilemap %%i
@@ -91,8 +96,9 @@ goto :EOF
 	echo ...found dir "%1"
 
 	for %%j in (%1\*.map) DO (
+
 	if not "%~n1" == "maps" (
-		echo ufo2map.exe -v 2 %ufo2mapparameters% %curpath%\%~n1\%%~nxj
+		echo ufo2map.exe -v 4 %ufo2mapparameters% %curpath%\%~n1\%%~nxj
 		ufo2map.exe -v 4 %ufo2mapparameters% %curpath%\%~n1\%%~nxj || (
 			echo.
 			echo interrupt or ufo2map returned nonzero, deleting .bsp
@@ -100,7 +106,7 @@ goto :EOF
 			)
 		)
 	if "%~n1" == "maps" (
-		echo ufo2map.exe -v 2 %ufo2mapparameters% %curpath%\%%~nxj
+		echo ufo2map.exe -v 4 %ufo2mapparameters% %curpath%\%%~nxj
 		ufo2map.exe -v 4 %ufo2mapparameters% %curpath%\%%~nxj || (
 			echo.
 			echo interrupt or ufo2map returned nonzero, deleting .bsp
