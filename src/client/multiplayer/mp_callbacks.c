@@ -41,7 +41,7 @@ void CL_Connect_f (void)
 	const char *serverport;
 
 	if (!selectedServer && Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <server>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <server> [<port>]\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -62,6 +62,9 @@ void CL_Connect_f (void)
 	if (Cmd_Argc() == 2) {
 		server = Cmd_Argv(1);
 		serverport = DOUBLEQUOTE(PORT_SERVER);
+	} else if (Cmd_Argc() == 3) {
+		server = Cmd_Argv(1);
+		serverport = Cmd_Argv(2);
 	} else {
 		assert(selectedServer);
 		server = selectedServer->node;
