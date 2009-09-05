@@ -124,12 +124,18 @@ void S_FreeSamples (void)
 	s_sample_t* sample;
 
 	for (i = 0; i < SAMPLE_HASH_SIZE; i++)
-		for (sample = sampleHash[i]; sample; sample = sample->hashNext)
+		for (sample = sampleHash[i]; sample; sample = sample->hashNext) {
 			Mix_FreeChunk(sample->chunk);
+			Mem_Free(sample->name);
+		}
 
-	for (i = 0; i < SAMPLE_HASH_SIZE; i++)
-		for (sample = sampleHash[i]; sample; sample = sample->hashNext)
+	for (i = 0; i < SAMPLE_HASH_SIZE; i++) {
+		s_sample_t* next;
+		for (sample = sampleHash[i]; sample; sample = next) {
+			next = sample->hashNext;
 			Mem_Free(sample);
+		}
+	}
 
 	memset(sampleHash, 0, sizeof(sampleHash));
 }
