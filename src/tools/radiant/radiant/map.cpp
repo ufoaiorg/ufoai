@@ -1577,21 +1577,21 @@ void NewMap (void)
 	}
 }
 
-static CopiedString g_mapsPath;
+static std::string g_mapsPath;
 
-const char* getMapsPath (void)
+const std::string& getMapsPath (void)
 {
-	return g_mapsPath.c_str();
+	return g_mapsPath;
 }
 
-const char* map_open (const char* title)
+const char* map_open (const std::string& title)
 {
-	return file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, title, getMapsPath(), MapFormat::Name());
+	return file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, title, getMapsPath(), "map");
 }
 
-const char* map_save (const char* title)
+const char* map_save (const std::string& title)
 {
-	return file_dialog(GTK_WIDGET(MainFrame_getWindow()), FALSE, title, getMapsPath(), MapFormat::Name());
+	return file_dialog(GTK_WIDGET(MainFrame_getWindow()), FALSE, title, getMapsPath(), "map");
 }
 
 void OpenMap (void)

@@ -37,14 +37,11 @@
 #include "mainframe.h"
 #include "plugin.h"
 
-GtkImage* new_plugin_image (const char* filename)
+GtkImage* new_plugin_image (const std::string& filename)
 {
-	StringOutputStream fullpath(256);
-	fullpath << AppPath_get() << "bitmaps/" << filename;
-	GtkImage* image = image_new_from_file_with_mask(fullpath.c_str());
-	if (image != 0) {
+	GtkImage* image = image_new_from_file_with_mask(std::string(AppPath_get()) + "bitmaps/" + filename.c_str());
+	if (image != 0)
 		return image;
-	}
 
 	return image_new_missing();
 }

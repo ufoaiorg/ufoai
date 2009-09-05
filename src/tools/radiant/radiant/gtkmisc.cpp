@@ -48,63 +48,66 @@
 // =============================================================================
 // Misc stuff
 
-void command_connect_accelerator(const char* name) {
+void command_connect_accelerator (const std::string& name)
+{
 	const Command& command = GlobalCommands_find(name);
 	GlobalShortcuts_register(name, 1);
 	global_accel_group_connect(command.m_accelerator, command.m_callback);
 }
 
-void command_disconnect_accelerator(const char* name) {
+void command_disconnect_accelerator (const std::string& name)
+{
 	const Command& command = GlobalCommands_find(name);
 	global_accel_group_disconnect(command.m_accelerator, command.m_callback);
 }
 
-void toggle_add_accelerator(const char* name) {
+void toggle_add_accelerator (const std::string& name)
+{
 	const Toggle& toggle = GlobalToggles_find(name);
 	GlobalShortcuts_register(name, 2);
-	global_accel_group_connect(toggle.m_command.m_accelerator,
-			toggle.m_command.m_callback);
+	global_accel_group_connect(toggle.m_command.m_accelerator, toggle.m_command.m_callback);
 }
 
-void toggle_remove_accelerator(const char* name) {
+void toggle_remove_accelerator (const std::string& name)
+{
 	const Toggle& toggle = GlobalToggles_find(name);
-	global_accel_group_disconnect(toggle.m_command.m_accelerator,
-			toggle.m_command.m_callback);
+	global_accel_group_disconnect(toggle.m_command.m_accelerator, toggle.m_command.m_callback);
 }
 
-GtkCheckMenuItem* create_check_menu_item_with_mnemonic(GtkMenu* menu,
-		const char* mnemonic, const char* commandName) {
+GtkCheckMenuItem* create_check_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic,
+		const std::string& commandName)
+{
 	GlobalShortcuts_register(commandName, 2);
 	const Toggle& toggle = GlobalToggles_find(commandName);
-	global_accel_group_connect(toggle.m_command.m_accelerator,
-			toggle.m_command.m_callback);
+	global_accel_group_connect(toggle.m_command.m_accelerator, toggle.m_command.m_callback);
 	return create_check_menu_item_with_mnemonic(menu, mnemonic, toggle);
 }
 
-GtkMenuItem* create_menu_item_with_mnemonic(GtkMenu* menu,
-		const char *mnemonic, const char* commandName) {
+GtkMenuItem* create_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic, const std::string& commandName)
+{
 	GlobalShortcuts_register(commandName, 1);
 	const Command& command = GlobalCommands_find(commandName);
 	global_accel_group_connect(command.m_accelerator, command.m_callback);
 	return create_menu_item_with_mnemonic(menu, mnemonic, command);
 }
 
-GtkButton* toolbar_append_button(GtkToolbar* toolbar, const char* description,
-		const char* icon, const char* commandName) {
-	return toolbar_append_button(toolbar, description, icon,
-			GlobalCommands_find(commandName));
+GtkButton* toolbar_append_button (GtkToolbar* toolbar, const std::string& description, const std::string& icon,
+		const std::string& commandName)
+{
+	return toolbar_append_button(toolbar, description, icon, GlobalCommands_find(commandName));
 }
 
-GtkToggleButton* toolbar_append_toggle_button(GtkToolbar* toolbar,
-		const char* description, const char* icon, const char* commandName) {
-	return toolbar_append_toggle_button(toolbar, description, icon,
-			GlobalToggles_find(commandName));
+GtkToggleButton* toolbar_append_toggle_button (GtkToolbar* toolbar, const std::string& description,
+		const std::string& icon, const std::string& commandName)
+{
+	return toolbar_append_toggle_button(toolbar, description, icon, GlobalToggles_find(commandName));
 }
 
 // =============================================================================
 // File dialog
 
-bool color_dialog(GtkWidget *parent, Vector3& color, const char* title) {
+bool color_dialog (GtkWidget *parent, Vector3& color, const std::string& title)
+{
 	GtkWidget* dlg;
 	double clr[3];
 	ModalDialog dialog;
@@ -113,10 +116,8 @@ bool color_dialog(GtkWidget *parent, Vector3& color, const char* title) {
 	clr[1] = color[1];
 	clr[2] = color[2];
 
-	dlg = gtk_color_selection_dialog_new(title);
-	gtk_color_selection_set_color(
-			GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (dlg)->colorsel),
-			clr);
+	dlg = gtk_color_selection_dialog_new(title.c_str());
+	gtk_color_selection_set_color(GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (dlg)->colorsel), clr);
 	g_signal_connect(G_OBJECT(dlg), "delete_event", G_CALLBACK(dialog_delete_callback), &dialog);
 	g_signal_connect(G_OBJECT(GTK_COLOR_SELECTION_DIALOG(dlg)->ok_button), "clicked", G_CALLBACK(dialog_button_ok), &dialog);
 	g_signal_connect(G_OBJECT(GTK_COLOR_SELECTION_DIALOG(dlg)->cancel_button), "clicked", G_CALLBACK(dialog_button_cancel), &dialog);
@@ -127,8 +128,7 @@ bool color_dialog(GtkWidget *parent, Vector3& color, const char* title) {
 	bool ok = modal_dialog_show(GTK_WINDOW(dlg), dialog) == eIDOK;
 	if (ok) {
 		GdkColor gdkcolor;
-		gtk_color_selection_get_current_color(
-				GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (dlg)->colorsel),
+		gtk_color_selection_get_current_color(GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (dlg)->colorsel),
 				&gdkcolor);
 		clr[0] = gdkcolor.red / 65535.0;
 		clr[1] = gdkcolor.green / 65535.0;
@@ -144,7 +144,8 @@ bool color_dialog(GtkWidget *parent, Vector3& color, const char* title) {
 	return ok;
 }
 
-void button_clicked_entry_browse_file(GtkWidget* widget, GtkEntry* entry) {
+void button_clicked_entry_browse_file (GtkWidget* widget, GtkEntry* entry)
+{
 	const char *file = gtk_entry_get_text(entry);
 	char bufPath[1024];
 	if (file) {
@@ -153,8 +154,7 @@ void button_clicked_entry_browse_file(GtkWidget* widget, GtkEntry* entry) {
 		bufPath[filename - file] = '\0';
 		file = bufPath;
 	}
-	const char *filename = file_dialog(gtk_widget_get_toplevel(widget), TRUE,
-			_("Choose File"), file);
+	const char *filename = file_dialog(gtk_widget_get_toplevel(widget), TRUE, _("Choose File"), file);
 
 	if (filename != 0) {
 		gchar* converted = g_filename_to_utf8(filename, -1, 0, 0, 0);
@@ -163,10 +163,11 @@ void button_clicked_entry_browse_file(GtkWidget* widget, GtkEntry* entry) {
 	}
 }
 
-void button_clicked_entry_browse_directory(GtkWidget* widget, GtkEntry* entry) {
+void button_clicked_entry_browse_directory (GtkWidget* widget, GtkEntry* entry)
+{
 	const char* text = gtk_entry_get_text(entry);
-	char *dir = dir_dialog(gtk_widget_get_toplevel(widget),
-			_("Choose Directory"), g_path_is_absolute(text) ? text : "");
+	char *dir =
+			dir_dialog(gtk_widget_get_toplevel(widget), _("Choose Directory"), g_path_is_absolute(text) ? text : "");
 
 	if (dir != 0) {
 		gchar* converted = g_filename_to_utf8(dir, -1, 0, 0, 0);

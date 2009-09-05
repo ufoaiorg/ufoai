@@ -24,15 +24,15 @@
 
 #include <string>
 
-void BitmapsPath_set (const char* path);
+void BitmapsPath_set (const std::string& path);
 
 typedef struct _GtkImage GtkImage;
 typedef struct _GdkPixbuf GdkPixbuf;
 
-GdkPixbuf* pixbuf_new_from_file_with_mask (const char* filename);
-GtkImage* image_new_from_file_with_mask (const char* filename);
+GdkPixbuf* pixbuf_new_from_file_with_mask (const std::string& filename);
+GtkImage* image_new_from_file_with_mask (const std::string& filename);
 GtkImage* image_new_missing ();
-GtkImage* new_local_image (const char* filename); // filename is relative to local bitmaps path
+GtkImage* new_local_image (const std::string& filename); // filename is relative to local bitmaps path
 
 namespace gtkutil
 {

@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define INCLUDED_GTKUTIL_WINDOW_H
 
 #include <gtk/gtkwindow.h>
+#include <string>
 
 #include "debugging/debugging.h"
 #include "generic/callback.h"
@@ -39,10 +40,10 @@ inline guint window_connect_focus_in_clear_focus_widget(GtkWindow* window) {
 
 
 unsigned int connect_floating(GtkWindow* main_window, GtkWindow* floating);
-GtkWindow* create_floating_window(const char* title, GtkWindow* parent);
+GtkWindow* create_floating_window(const std::string& title, GtkWindow* parent);
 void destroy_floating_window(GtkWindow* window);
 
-GtkWindow* create_persistent_floating_window(const char* title, GtkWindow* main_window);
+GtkWindow* create_persistent_floating_window(const std::string& title, GtkWindow* main_window);
 gboolean persistent_floating_window_delete(GtkWindow* floating, GdkEvent *event, GtkWindow* main_window);
 
 void window_remove_minmax(GtkWindow* window);

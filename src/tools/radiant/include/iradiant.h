@@ -29,6 +29,7 @@
 
 #include "generic/constant.h"
 #include "gtkutil/accelerator.h"
+#include <string>
 
 // ========================================
 // GTK+ helper functions
@@ -55,29 +56,29 @@ enum EMessageBoxReturn
 
 // simple Message Box, see above for the 'type' flags
 
-typedef EMessageBoxReturn (* PFN_QERAPP_MESSAGEBOX) (GtkWidget *parent, const char* text, const char* caption,
-		EMessageBoxType type, EMessageBoxIcon icon);
+typedef EMessageBoxReturn (* PFN_QERAPP_MESSAGEBOX) (GtkWidget *parent, const std::string& text,
+		const std::string& caption, EMessageBoxType type, EMessageBoxIcon icon);
 
 // file and directory selection functions return null if the user hits cancel
 // - 'title' is the dialog title (can be null)
 // - 'path' is used to set the initial directory (can be null)
 // - 'pattern': the first pattern is for the win32 mode, then comes the Gtk pattern list, see Radiant source for samples
-typedef const char* (* PFN_QERAPP_FILEDIALOG) (GtkWidget *parent, bool open, const char* title, const char* path,
-		const char* pattern);
+typedef const char* (* PFN_QERAPP_FILEDIALOG) (GtkWidget *parent, bool open, const std::string& title,
+		const std::string& path, const std::string& pattern);
 
 // returns a gchar* string that must be g_free'd by the user
-typedef char* (* PFN_QERAPP_DIRDIALOG) (GtkWidget *parent, const char* title, const char* path);
+typedef char* (* PFN_QERAPP_DIRDIALOG) (GtkWidget *parent, const std::string& title, const std::string& path);
 
 // return true if the user closed the dialog with 'Ok'
 // 'color' is used to set the initial value and store the selected value
 template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;
-typedef bool (* PFN_QERAPP_COLORDIALOG) (GtkWidget *parent, Vector3& color, const char* title/* = "Choose Color"*/);
+typedef bool (* PFN_QERAPP_COLORDIALOG) (GtkWidget *parent, Vector3& color, const std::string& title);
 
 // load a .bmp file and create a GtkImage widget from it
 // NOTE: 'filename' is relative to <radiant_path>/plugins/bitmaps/
 typedef struct _GtkImage GtkImage;
-typedef GtkImage* (* PFN_QERAPP_NEWIMAGE) (const char* filename);
+typedef GtkImage* (* PFN_QERAPP_NEWIMAGE) (const std::string& filename);
 
 // ========================================
 
@@ -117,8 +118,8 @@ struct IRadiant
 		const char* (*getEnginePath) ();
 		const char* (*getAppPath) ();
 		const char* (*getSettingsPath) ();
-		const char* (*getMapsPath) ();
-		void (*commandInsert) (const char* name, const Callback& callback, const Accelerator& accelerator);
+		const std::string& (*getMapsPath) ();
+		void (*commandInsert) (const std::string& name, const Callback& callback, const Accelerator& accelerator);
 
 		const char* (*getGameName) ();
 		const char* (*getMapName) ();

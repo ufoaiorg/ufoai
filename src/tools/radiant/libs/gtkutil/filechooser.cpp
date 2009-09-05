@@ -148,32 +148,25 @@ static char g_file_dialog_file[1024];
 
 static const char *shortcutFoldersInBaseDir[] = { "maps", "models", "models/objects", "sound", "textures", NULL };
 
-static const char* file_dialog_show (GtkWidget* parent, bool open, const char* title, const char* path,
-		const char* pattern)
+static const char* file_dialog_show (GtkWidget* parent, bool open, const std::string& title, const std::string& path,
+		const std::string& pattern)
 {
 	filetype_t type;
-
-	if (pattern == 0) {
-		pattern = "*";
-	}
-
 	FileTypeList typelist;
-	GlobalFiletypes().getTypeList(pattern, &typelist);
-
+	GlobalFiletypes().getTypeList(pattern.empty() ? "*" : pattern.c_str(), &typelist);
+	std::string realTitle = title;
 	GTKMasks masks(typelist);
 
-	if (title == 0)
-		title = open ? _("Open File") : _("Save File");
+	if (realTitle.empty())
+		realTitle = open ? _("Open File") : _("Save File");
 
 	GtkWidget* dialog;
 	if (open) {
-		dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(parent),
-		GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-				(char const*) 0);
+		dialog = gtk_file_chooser_dialog_new(realTitle.c_str(), GTK_WINDOW(parent), GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL,
+				GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT, (char const*) 0);
 	} else {
-		dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(parent),
-		GTK_FILE_CHOOSER_ACTION_SAVE, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-				(char const*) 0);
+		dialog = gtk_file_chooser_dialog_new(realTitle.c_str(), GTK_WINDOW(parent), GTK_FILE_CHOOSER_ACTION_SAVE, GTK_STOCK_CANCEL,
+				GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT, (char const*) 0);
 		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), "unnamed");
 	}
 
@@ -183,13 +176,13 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const char* t
 	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER_ON_PARENT);
 
 	// we expect an actual path below, if the path is 0 we might crash
-	if (path != 0 && !string_empty(path)) {
-		ASSERT_MESSAGE(g_path_is_absolute(path), "file_dialog_show: path not absolute: " << makeQuoted(path));
+	if (!path.empty()) {
+		ASSERT_MESSAGE(g_path_is_absolute(path.c_str()), "file_dialog_show: path not absolute: " << makeQuoted(path.c_str()));
 
-		if (strstr(g_file_dialog_file, path)) {
+		if (strstr(g_file_dialog_file, path.c_str())) {
 			gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog), g_file_dialog_file);
 		} else {
-			gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), path);
+			gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), path.c_str());
 		}
 	}
 
@@ -250,23 +243,22 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const char* t
 
 	// don't return an empty filename
 	if (g_file_dialog_file[0] == '\0')
-	return NULL;
+		return NULL;
 
 	return g_file_dialog_file;
 }
 
-char* dir_dialog (GtkWidget* parent, const char* title, const char* path)
+char* dir_dialog (GtkWidget* parent, const std::string& title, const std::string& path)
 {
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(parent),
-	GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-			(char const*) 0);
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(title.c_str(), GTK_WINDOW(parent),
+			GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN,
+			GTK_RESPONSE_ACCEPT, (char const*) 0);
 
 	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER_ON_PARENT);
 
-	if (!string_empty(path)) {
-		gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), path);
-	}
+	if (!path.empty())
+		gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), path.c_str());
 
 	char* filename = 0;
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
@@ -288,14 +280,15 @@ char* dir_dialog (GtkWidget* parent, const char* title, const char* path)
  * @param pattern filename pattern, actually a name for a registered file type
  * @return a path to a file, all directory separators will be replaced by '/' (unix style) or NULL if no file was chosen.
  */
-const char* file_dialog (GtkWidget* parent, bool open, const char* title, const char* path, const char* pattern)
+const char* file_dialog (GtkWidget* parent, bool open, const std::string& title, const std::string& path,
+		const std::string& pattern)
 {
 	for (;;) {
 		const char* file = file_dialog_show(parent, open, title, path, pattern);
 
 		if (open || file == 0 || !file_exists(file) || gtk_MessageBox(parent,
-				_("The file specified already exists.\nDo you want to replace it?"), title, eMB_NOYES, eMB_ICONQUESTION)
-				== eIDYES) {
+				_("The file specified already exists.\nDo you want to replace it?"), title, eMB_NOYES,
+				eMB_ICONQUESTION) == eIDYES) {
 			if (file == 0)
 				return file;
 			StringOutputStream fileCleaned(256);

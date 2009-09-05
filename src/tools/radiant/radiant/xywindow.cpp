@@ -551,7 +551,7 @@ void WXY_Print (void)
 	unsigned char* img;
 	const char* filename;
 
-	filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), FALSE, _("Save Image"), 0, "bmp");
+	filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), FALSE, _("Save Image"), "", "bmp");
 	if (!filename)
 		return;
 

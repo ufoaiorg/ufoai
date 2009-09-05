@@ -70,21 +70,21 @@ typedef struct _GtkVBox GtkVBox;
 typedef struct _GtkHBox GtkHBox;
 typedef struct _GtkFrame GtkFrame;
 
-GtkWindow* create_fixedsize_modal_window (GtkWindow* parent, const char* title, int width, int height);
+GtkWindow* create_fixedsize_modal_window (GtkWindow* parent, const std::string& title, int width, int height);
 
-GtkWindow* create_dialog_window (GtkWindow* parent, const char* title, GCallback func, gpointer data, int default_w =
+GtkWindow* create_dialog_window (GtkWindow* parent, const std::string& title, GCallback func, gpointer data, int default_w =
 		-1, int default_h = -1);
 GtkTable* create_dialog_table (unsigned int rows, unsigned int columns, unsigned int row_spacing,
 		unsigned int col_spacing, int border = 0);
-GtkButton* create_dialog_button (const char* label, GCallback func, gpointer data);
+GtkButton* create_dialog_button (const std::string& label, GCallback func, gpointer data);
 GtkVBox* create_dialog_vbox (int spacing, int border = 0);
 GtkHBox* create_dialog_hbox (int spacing, int border = 0);
-GtkFrame* create_dialog_frame (const char* frameHeadline, GtkShadowType shadow = GTK_SHADOW_ETCHED_IN);
+GtkFrame* create_dialog_frame (const std::string& frameHeadline, GtkShadowType shadow = GTK_SHADOW_ETCHED_IN);
 
-GtkButton* create_modal_dialog_button (const char* label, ModalDialogButton& button);
-GtkWindow* create_modal_dialog_window (GtkWindow* parent, const char* title, ModalDialog& dialog, int default_w = -1,
+GtkButton* create_modal_dialog_button (const std::string& label, ModalDialogButton& button);
+GtkWindow* create_modal_dialog_window (GtkWindow* parent, const std::string& title, ModalDialog& dialog, int default_w = -1,
 		int default_h = -1);
-GtkWindow* create_fixedsize_modal_dialog_window (GtkWindow* parent, const char* title, ModalDialog& dialog, int width =
+GtkWindow* create_fixedsize_modal_dialog_window (GtkWindow* parent, const std::string& title, ModalDialog& dialog, int width =
 		-1, int height = -1);
 EMessageBoxReturn modal_dialog_show (GtkWindow* window, ModalDialog& dialog);
 

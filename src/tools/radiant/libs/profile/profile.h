@@ -31,8 +31,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #if !defined(INCLUDED_PROFILE_PROFILE_H)
 #define INCLUDED_PROFILE_PROFILE_H
 
+#include <string>
+
 // used in the command map code
-bool read_var (const char *filename, const char *section, const char *key, char *value);
-bool save_var (const char *filename, const char *section, const char *key, const char *value);
+bool read_var (const std::string& filename, const char *section, const char *key, char *value);
+bool save_var (const std::string& filename, const char *section, const char *key, const char *value);
 
 #endif

@@ -29,17 +29,17 @@
 
 namespace
 {
-	CopiedString g_bitmapsPath;
+	std::string g_bitmapsPath;
 }
 
-void BitmapsPath_set (const char* path)
+void BitmapsPath_set (const std::string& path)
 {
 	g_bitmapsPath = path;
 }
 
-GdkPixbuf* pixbuf_new_from_file_with_mask (const char* filename)
+GdkPixbuf* pixbuf_new_from_file_with_mask (const std::string& fileName)
 {
-	GdkPixbuf* rgb = gdk_pixbuf_new_from_file(filename, 0);
+	GdkPixbuf* rgb = gdk_pixbuf_new_from_file(fileName.c_str(), 0);
 	if (rgb == 0) {
 		return 0;
 	} else {
@@ -49,9 +49,9 @@ GdkPixbuf* pixbuf_new_from_file_with_mask (const char* filename)
 	}
 }
 
-GtkImage* image_new_from_file_with_mask (const char* filename)
+GtkImage* image_new_from_file_with_mask (const std::string& fileName)
 {
-	GdkPixbuf* rgba = pixbuf_new_from_file_with_mask(filename);
+	GdkPixbuf* rgba = pixbuf_new_from_file_with_mask(fileName);
 	if (rgba == 0) {
 		return 0;
 	} else {
@@ -66,35 +66,30 @@ GtkImage* image_new_missing ()
 	return GTK_IMAGE(gtk_image_new_from_stock(GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_SMALL_TOOLBAR));
 }
 
-static inline GtkImage* new_image (const char* filename)
+static inline GtkImage* new_image (const std::string& fileName)
 {
-	GtkImage* image = image_new_from_file_with_mask(filename);
+	GtkImage* image = image_new_from_file_with_mask(fileName);
 	if (image != 0)
 		return image;
 
 	return image_new_missing();
 }
 
-GtkImage* new_local_image (const char* filename)
+GtkImage* new_local_image (const std::string& fileName)
 {
-	StringOutputStream fullPath(256);
-	fullPath << g_bitmapsPath.c_str() << filename;
-	return new_image(fullPath.c_str());
+	return new_image(g_bitmapsPath + fileName);
 }
 
 namespace gtkutil
 {
-
 	// Return a GdkPixbuf from a local image
 	GdkPixbuf* getLocalPixbuf (const std::string& fileName)
 	{
-		std::string fullFileName(std::string(g_bitmapsPath.c_str()) + fileName);
-		return gdk_pixbuf_new_from_file(fullFileName.c_str(), NULL);
+		return gdk_pixbuf_new_from_file(std::string(g_bitmapsPath + fileName).c_str(), NULL);
 	}
 
 	GdkPixbuf* getLocalPixbufWithMask (const std::string& fileName)
 	{
-		std::string fullFileName(std::string(g_bitmapsPath.c_str()) + fileName);
-		return pixbuf_new_from_file_with_mask(fullFileName.c_str());
+		return pixbuf_new_from_file_with_mask(g_bitmapsPath + fileName);
 	}
 } // namespace gtkutil

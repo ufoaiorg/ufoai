@@ -93,9 +93,9 @@ guint connect_floating_window_destroy_present(GtkWindow* floating, GtkWindow* ma
 	return g_signal_connect(G_OBJECT(floating), "destroy", G_CALLBACK(floating_window_destroy_present), main_window);
 }
 
-GtkWindow* create_floating_window(const char* title, GtkWindow* parent) {
+GtkWindow* create_floating_window(const std::string& title, GtkWindow* parent) {
 	GtkWindow* window = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
-	gtk_window_set_title(window, title);
+	gtk_window_set_title(window, title.c_str());
 
 	if (parent != 0) {
 		gtk_window_set_transient_for(window, parent);
@@ -122,7 +122,7 @@ gboolean persistent_floating_window_delete(GtkWindow* floating, GdkEvent *event,
 	return TRUE;
 }
 
-GtkWindow* create_persistent_floating_window(const char* title, GtkWindow* main_window) {
+GtkWindow* create_persistent_floating_window(const std::string& title, GtkWindow* main_window) {
 	GtkWindow* window = GTK_WINDOW(create_floating_window(title, main_window));
 
 	gtk_widget_set_events(GTK_WIDGET(window), GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);

@@ -26,6 +26,7 @@
 #include "generic/callback.h"
 #include "signal/signalfwd.h"
 #include "string/stringfwd.h"
+#include <string>
 
 class Map;
 extern Map g_map;
@@ -154,7 +155,7 @@ void Map_Destroy ();
 void Map_gatherNamespaced (scene::Node& root);
 void Map_mergeClonedNames ();
 
-const char* getMapsPath ();
+const std::string& getMapsPath ();
 
 namespace map
 {

@@ -43,11 +43,11 @@ GtkHBox* create_dialog_hbox (int spacing, int border)
 	return hbox;
 }
 
-GtkFrame* create_dialog_frame (const char* frameHeadline, GtkShadowType shadow)
+GtkFrame* create_dialog_frame (const std::string& frameHeadline, GtkShadowType shadow)
 {
 	GtkFrame* frame = GTK_FRAME(gtk_frame_new(NULL));
 	GtkLabel* label = GTK_LABEL(gtk_label_new(NULL));
-	gtk_label_set_markup(label, frameHeadline);
+	gtk_label_set_markup(label, frameHeadline.c_str());
 	gtk_frame_set_label_widget(frame, GTK_WIDGET(label));
 	gtk_widget_show_all(GTK_WIDGET(frame));
 	gtk_frame_set_shadow_type(frame, shadow);
@@ -65,16 +65,16 @@ GtkTable* create_dialog_table (unsigned int rows, unsigned int columns, unsigned
 	return table;
 }
 
-GtkButton* create_dialog_button (const char* label, GCallback func, gpointer data)
+GtkButton* create_dialog_button (const std::string& label, GCallback func, gpointer data)
 {
-	GtkButton* button = GTK_BUTTON(gtk_button_new_with_label(label));
+	GtkButton* button = GTK_BUTTON(gtk_button_new_with_label(label.c_str()));
 	gtk_widget_show(GTK_WIDGET(button));
 	widget_set_size(GTK_WIDGET(button), 64, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", func, data);
 	return button;
 }
 
-GtkWindow* create_dialog_window (GtkWindow* parent, const char* title, GCallback func, gpointer data, int default_w,
+GtkWindow* create_dialog_window (GtkWindow* parent, const std::string& title, GCallback func, gpointer data, int default_w,
 		int default_h)
 {
 	GtkWindow* window = create_floating_window(title, parent);
@@ -115,18 +115,18 @@ EMessageBoxReturn modal_dialog_show (GtkWindow* window, ModalDialog& dialog)
 	return dialog.ret;
 }
 
-GtkButton* create_modal_dialog_button (const char* label, ModalDialogButton& button)
+GtkButton* create_modal_dialog_button (const std::string& label, ModalDialogButton& button)
 {
 	return create_dialog_button(label, G_CALLBACK(modal_dialog_button_clicked), &button);
 }
 
-GtkWindow* create_modal_dialog_window (GtkWindow* parent, const char* title, ModalDialog& dialog, int default_w,
+GtkWindow* create_modal_dialog_window (GtkWindow* parent, const std::string& title, ModalDialog& dialog, int default_w,
 		int default_h)
 {
 	return create_dialog_window(parent, title, G_CALLBACK(modal_dialog_delete), &dialog, default_w, default_h);
 }
 
-GtkWindow* create_fixedsize_modal_dialog_window (GtkWindow* parent, const char* title, ModalDialog& dialog, int width,
+GtkWindow* create_fixedsize_modal_dialog_window (GtkWindow* parent, const std::string& title, ModalDialog& dialog, int width,
 		int height)
 {
 	GtkWindow* window = create_modal_dialog_window(parent, title, dialog, width, height);
