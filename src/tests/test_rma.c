@@ -66,7 +66,7 @@ static int UFO_CleanSuiteRandomMapAssembly (void)
 static void testAssembly (void)
 {
 	SV_Map(qtrue, "+forest", "large");
-	CU_ASSERT(Com_GetServerState() == ss_game);
+	CU_ASSERT(Com_ServerState() == ss_game);
 }
 
 static void testMassAssembly (void)
@@ -75,11 +75,12 @@ static void testMassAssembly (void)
 
 	for (i = 0; i < 1000; i++) {
 		SV_Map(qtrue, "+forest", "large");
-		CU_ASSERT(Com_GetServerState() == ss_game);
+		CU_ASSERT(Com_ServerState() == ss_game);
 	}
 }
 
-int UFO_AddRandomMapAssemblyTests (void) {
+int UFO_AddRandomMapAssemblyTests (void)
+{
 	/* add a suite to the registry */
 	CU_pSuite RandomMapAssemblySuite = CU_add_suite("RandomMapAssemblyTests", UFO_InitSuiteRandomMapAssembly, UFO_CleanSuiteRandomMapAssembly);
 	if (RandomMapAssemblySuite == NULL)

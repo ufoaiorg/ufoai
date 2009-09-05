@@ -78,7 +78,8 @@ static void testConnection (void)
 	 */
 }
 
-int UFO_AddRoutingTests (void) {
+int UFO_AddRoutingTests (void)
+{
 	/* add a suite to the registry */
 	CU_pSuite routingSuite = CU_add_suite("RoutingTests", UFO_InitSuiteRouting, UFO_CleanSuiteRouting);
 	if (routingSuite == NULL)
