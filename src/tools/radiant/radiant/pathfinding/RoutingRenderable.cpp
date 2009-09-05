@@ -40,14 +40,15 @@ namespace routing
 	void RoutingRenderable::render (RenderStateFlags state) const
 	{
 		int maxDisplayLevel = filter_getCurrentLevel();
+		const int minDisplayLevel = _showAllLowerLevels ? 0 : std::max(0, maxDisplayLevel - 1);
 		if (maxDisplayLevel == 0)
 			maxDisplayLevel = PATHFINDING_HEIGHT;
 		if (_glListID != 0) {
-			for (int level = 0; level < maxDisplayLevel; level++)
+			for (int level = minDisplayLevel; level < maxDisplayLevel; level++)
 				glCallList(_glListID + level);
 		} else {
 			_glListID = glGenLists(PATHFINDING_HEIGHT);
-			for (int level = 0; level < PATHFINDING_HEIGHT; level++) {
+			for (int level = minDisplayLevel; level < PATHFINDING_HEIGHT; level++) {
 				glNewList(_glListID + level, level < maxDisplayLevel ? GL_COMPILE_AND_EXECUTE : GL_COMPILE);
 				for (routing::RoutingRenderableEntries::const_iterator i = _entries.begin(); i != _entries.end(); ++i) {
 					const routing::RoutingRenderableEntry* entry = *i;
@@ -57,6 +58,11 @@ namespace routing
 				glEndList();
 			}
 		}
+	}
+
+	void RoutingRenderable::setShowAllLowerLevels (bool showAllLowerLevels)
+	{
+		_showAllLowerLevels = showAllLowerLevels;
 	}
 
 	void RoutingRenderable::add (const RoutingLumpEntry& dataEntry)
@@ -110,7 +116,7 @@ namespace routing
 	 */
 	void RoutingRenderableEntry::renderWireframe () const
 	{
-		glColor3fv( vector3_to_array (color_wireframe));
+		glColor3fv(vector3_to_array(color_wireframe));
 
 		Vector3 dx = Vector3(UNIT_SIZE, 0, 0);
 		Vector3 dy = Vector3(0, UNIT_SIZE, 0);
@@ -182,7 +188,7 @@ namespace routing
 	{
 		/* center of drawn box */
 		const Vector3 color = getColorForAccessState(_data.getAccessState());
-		glColor3fv( vector3_to_array (color));
+		glColor3fv(vector3_to_array(color));
 		AABB box = AABB(
 				vector3_added(this->_data.getOrigin(), Vector3(0, 0, -UNIT_HEIGHT_QUARTER - UNIT_HEIGHT_EIGHTH)),
 				Vector3(UNIT_SIZE_QUARTER, UNIT_SIZE_QUARTER, UNIT_HEIGHT_EIGHTH));
@@ -216,7 +222,7 @@ namespace routing
 	void RoutingRenderableEntry::renderConnection (EDirection direction) const
 	{
 		const Vector3 color = getColorForConnectivity(_data.getConnectionState(direction));
-		glColor3fv( vector3_to_array (color));
+		glColor3fv(vector3_to_array(color));
 
 		//vector to center of direction arrows
 		Vector3 diffCenter = this->_data.getOrigin();//vector3_added(vector3_scaled(this->_data.getOrigin(), grid_scale),Vector3(UNIT_SIZE_HALF, UNIT_SIZE_HALF, UNIT_HEIGHT_HALF));

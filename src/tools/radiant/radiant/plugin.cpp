@@ -252,7 +252,6 @@ class Radiant: public TypeSystemRef
 			MainFrame_Construct();
 			SurfaceInspector_Construct();
 			CamWnd_Construct();
-			Pathfinding_Construct();
 			XYWindow_Construct();
 			TextureBrowser_Construct();
 			ParticleBrowser_Construct();
@@ -268,9 +267,11 @@ class Radiant: public TypeSystemRef
 			EnginePath_Realise();
 
 			Particles_Construct();
+			Pathfinding_Construct();
 		}
 		~Radiant ()
 		{
+			Pathfinding_Destroy();
 			Particles_Destroy();
 
 			EnginePath_Unrealise();
@@ -285,7 +286,6 @@ class Radiant: public TypeSystemRef
 			ParticleBrowser_Destroy();
 			TextureBrowser_Destroy();
 			XYWindow_Destroy();
-			Pathfinding_Destroy();
 			CamWnd_Destroy();
 			SurfaceInspector_Destroy();
 			MainFrame_Destroy();

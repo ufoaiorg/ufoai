@@ -8,9 +8,6 @@
 
 namespace routing
 {
-	/** @todo release this shader */
-	static Shader *m_routingShader;
-
 	class Routing: public Renderable
 	{
 		private:
@@ -33,6 +30,11 @@ namespace routing
 			void renderComponents (Renderer&, const VolumeTest&);
 
 			void updateRouting (const std::string& bspFileName);
+
+			void setShowAllLowerLevels (bool showAllLowerLevels)
+			{
+				_renderable.setShowAllLowerLevels(showAllLowerLevels);
+			}
 
 			void setShowPathfinding (bool showPathfinding)
 			{

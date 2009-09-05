@@ -32,34 +32,80 @@
 #include "ifilesystem.h"
 #include "map.h"
 #include "signal/isignal.h"
+#include "stringio.h"
+#include "preferences.h"
+#include "preferencesystem.h"
+#include "radiant_i18n.h"
 
 namespace routing
 {
-	static bool showPathfinding;
-	static Routing routingRender = Routing();
+	class Pathfinding
+	{
+		private:
+			bool showPathfinding;
+			Routing *routingRender;
+
+		public:
+
+			Pathfinding () :
+				showPathfinding(false), routingRender(0)
+			{
+				routingRender = new Routing();
+				GlobalShaderCache().attachRenderable(*routingRender);
+			}
+
+			~Pathfinding ()
+			{
+				GlobalShaderCache().detachRenderable(*routingRender);
+				delete routingRender;
+			}
+			/**
+			 * @brief callback function for map changes to update routing data.
+			 */
+			void onMapValidChanged (void)
+			{
+				if (Map_Valid(g_map) && showPathfinding) {
+					showPathfinding = false;
+					ShowPathfinding();
+				}
+			}
+
+			/**
+			 * @todo Maybe also use the ufo2map output directly
+			 * @sa ToolsCompile
+			 */
+			void show (void)
+			{
+				if (!Map_Unnamed(g_map))
+					showPathfinding ^= true;
+				else
+					showPathfinding = false;
+
+				routingRender->setShowPathfinding(showPathfinding);
+				/** @todo make this an option */
+				routingRender->setShowAllLowerLevels(true);
+
+				if (showPathfinding) {
+					//update current pathfinding data on every activation
+					const char* mapname = Map_Name(g_map);
+					StringOutputStream bspStream(256);
+					bspStream << StringRange(mapname, path_get_filename_base_end(mapname)) << ".bsp";
+					const char* bspname = path_make_relative(bspStream.c_str(), GlobalFileSystem().findRoot(
+							bspStream.c_str()));
+					routingRender->updateRouting(bspname);
+				}
+			}
+	};
+
+	Pathfinding *pathfinding;
+
 	/**
 	 * @todo Maybe also use the ufo2map output directly
 	 * @sa ToolsCompile
 	 */
 	void ShowPathfinding (void)
 	{
-		if (!Map_Unnamed(g_map)) {
-			showPathfinding ^= true;
-			routingRender.setShowPathfinding(showPathfinding);
-			if (showPathfinding) {
-				//update current pathfinding data on every activation
-				const char* mapname = Map_Name(g_map);
-				StringOutputStream bspStream(256);
-				bspStream << StringRange(mapname, path_get_filename_base_end(mapname)) << ".bsp";
-				const char* bspname = path_make_relative(bspStream.c_str(), GlobalFileSystem().findRoot(
-						bspStream.c_str()));
-				routingRender.updateRouting(bspname);
-			}
-		} else {
-			showPathfinding = false;
-			routingRender.setShowPathfinding(false);
-		}
-
+		pathfinding->show();
 	}
 
 	/**
@@ -67,21 +113,18 @@ namespace routing
 	 */
 	void Pathfinding_onMapValidChanged (void)
 	{
-		if (Map_Valid(g_map) && showPathfinding) {
-			showPathfinding = false;
-			ShowPathfinding();
-		}
+		pathfinding->onMapValidChanged();
 	}
 }
 
 void Pathfinding_Construct (void)
 {
-	/**@todo listener also should activate/deactivate "show pathfinding" menu entry if no appropriate data is available */
-	GlobalShaderCache().attachRenderable(routing::routingRender);
+	routing::pathfinding = new routing::Pathfinding();
+	/** @todo listener also should activate/deactivate "show pathfinding" menu entry if no appropriate data is available */
 	Map_addValidCallback(g_map, SignalHandler(FreeCaller<routing::Pathfinding_onMapValidChanged> ()));
 }
 
 void Pathfinding_Destroy (void)
 {
-	GlobalShaderCache().detachRenderable(routing::routingRender);
+	delete routing::pathfinding;
 }

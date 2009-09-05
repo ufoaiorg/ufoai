@@ -33,7 +33,9 @@ namespace routing
 		private:
 			RoutingRenderableEntries _entries;
 			mutable int _glListID;
+			bool _showAllLowerLevels;
 			void checkClearGLCache (void);
+
 		public:
 			RoutingRenderable ();
 
@@ -42,6 +44,8 @@ namespace routing
 			/** Render function from OpenGLRenderable
 			 */
 			void render (RenderStateFlags flags) const;
+
+			void setShowAllLowerLevels (bool showAllLowerLevels);
 
 			/** Creates a new renderable object for given data lump and adds it to the list
 			 */

@@ -6,13 +6,22 @@
 
 namespace routing
 {
+	/** @todo release this shader */
+	Shader *m_routingShader;
+
+	const Colour3 color2 = Colour3(1, 1, 1);
+
 	Routing::Routing () :
 		_showPathfinding(false)
 	{
+		m_routingShader = 0;
 	}
 
 	Routing::~Routing ()
 	{
+		if (m_routingShader)
+			colour_release_state_fill(color2);
+		m_routingShader = 0;
 	}
 
 	/** Submit renderable geometry when rendering takes place in Solid mode. */
@@ -20,10 +29,10 @@ namespace routing
 	{
 		if (_showPathfinding) {
 			/** @todo move this shader init somewhere else? */
-			const Colour3 color2 = Colour3(1, 1, 1);
-			routing::m_routingShader = colour_capture_state_fill(color2);
+			if (!m_routingShader)
+				m_routingShader = colour_capture_state_fill(color2);
 			// renderer must have shader set for adding renderable
-			renderer.SetState(routing::m_routingShader, Renderer::eFullMaterials);
+			renderer.SetState(m_routingShader, Renderer::eFullMaterials);
 			renderer.addRenderable(_renderable, g_matrix4_identity);
 		}
 	}
