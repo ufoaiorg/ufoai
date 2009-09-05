@@ -347,7 +347,7 @@ ac     +u     +u     +u     ad    0
 // crashed UFOs
 // *********************************
 
-assembly craft_crash_normal
+assembly craft_crash_scout
 {
 title "_Crashed UFO"
 size "7 5"
@@ -361,5 +361,58 @@ size "7 5"
 +d01 "0 2"
 +d03 "0 2"
 *rm_ufo +craft_crash_scout "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly craft_crash_fighter
+{
+title "_Crashed UFO"
+size "7 5"
++h01 "0 10"
++h02 "0 10"
++h03 "0 10"
++h04 "0 1"
++h05 "0 2"
++h06 "0 2"
++h07 "0 2"
++d01 "0 2"
++d03 "0 2"
+*rm_ufo +craft_crash_fighter "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly craft_crash_supply
+{
+title "_Crashed UFO"
+size "7 5"
++h01 "0 10"
++h02 "0 10"
++h03 "0 10"
++h04 "0 1"
++h05 "0 2"
++h06 "0 2"
++h07 "0 2"
++d01 "0 2"
++d03 "0 2"
+*rm_ufo +craft_crash_supply "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+
+assembly craft_crash_harvester
+{
+title "_Crashed UFO"
+size "7 7"
++h01 "0 10"
++h02 "0 10"
++h03 "0 10"
++h04 "0 1"
++h05 "0 2"
++h06 "0 2"
++h07 "0 2"
++d01 "0 2"
++d03 "0 2"
++d02_harvester "1 1"
+*rm_ufo +craft_crash_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }

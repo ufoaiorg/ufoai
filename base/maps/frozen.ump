@@ -254,6 +254,18 @@ a      +a     +a     +a     +a     a
 0      a      a      a      a      0
 }
 
+tile +craft_ufo_harvester
+{
+7 6
+
+0      a      a      a      a      a      0
+a      +a     +a     +a     +a     +a     a
+a      +a     +a     +a     +a     +a     a
+a      +a     +a     +a     +a     +a     a
+a      +a     +a     +a     +a     +a     a
+0      a      a      a      a      a      0
+}
+
 // *********************************
 
 assembly small

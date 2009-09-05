@@ -8,6 +8,9 @@
 // * urban, suburban, village, rural, nopopulation
 // See also http://ufoai.ninex.info/wiki/index.php/Mapping/Terrain_Types
 //
+// Empty block means 'any' value 
+//
+//
 // Triggers:
 // onwin onlose
 // * cp_add_researchable <tech-id>
@@ -25,7 +28,7 @@
 // * craft_ufo_harvester,   craft_crash_harvester,
 // * craft_ufo_bomber,      craft_crash_bomber
 // * craft_ufo_corrupter,   craft_crash_corrupter
-// *                        craft_crash_supply
+// * craft_ufo_supply,      craft_crash_supply
 //
 // valid aircraft values:
 // * craft_drop_firebird
@@ -60,23 +63,60 @@ mapdef oilpipes_small
 
 	terrains
 	{
-		grass
 	}
 
 	cultures
 	{
-		//any
 	}
 
 	populations
 	{
-		nopopulation
-		rural
 		village
 		suburban
+		urban
 	}
 }
 
+mapdef oilpipes_large
+{
+	map			"+industrial"
+	param		large
+	description	"_Industrial theme."
+	size		"large"
+	teams		4
+	multiplayer	false
+	maxaliens	12
+
+	aircraft 
+	{
+		craft_drop_firebird
+		craft_drop_herakles
+	}
+
+	ufos
+	{
+		craft_ufo_harvester
+		craft_ufo_supply
+	}
+
+	terrains
+	{
+	}
+
+	cultures
+	{
+	}
+
+	populations
+	{
+		village
+		suburban
+		urban
+	}
+}
+
+
+/// city map (test)
 
 ///////////////////////
 // ORIENTAL RANDOM MAPS
@@ -182,8 +222,8 @@ mapdef or_big
 
 	ufos
 	{
-		craft_ufo_scout
 		craft_crash_fighter
+		craft_ufo_harvester
 	}
 
 	terrains
@@ -347,7 +387,7 @@ mapdef frozen_alienlandingindustrial
 
 	ufos
 	{
-		craft_ufo_scout
+		craft_ufo_harvester
 		craft_ufo_fighter
 	}
 

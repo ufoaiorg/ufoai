@@ -162,6 +162,7 @@ a      +a     a
 0      a      0
 }
 
+// L-shaped, two level house
 tile +house_h
 {
 4 4
@@ -217,6 +218,19 @@ a      +a     +a     +a     a
 0      a      a      a      0
 }
 
+
+// landed UFO harvester
+tile +craft_ufo_harvester
+{
+7 6
+
+0      a      a      a      a      a      0
+a      +a     +a     +a     +a     a      0
+a      +a     +a     +a     +a     +a     a
+a      +a     +a     +a     +a     +a     a
+a      +a     +a     +a     +a     a      0
+0      a      a      a      a      a      0
+}
 
 
 // ########################################
@@ -291,7 +305,7 @@ title "_Oriental medium"
 +mosque "0 1"
 +trees_b "0 2"
 *rm_drop +craft_drop_firebird "1 1"
-*rm_ufo +craft_ufo_scout "1 1"
+*rm_ufo +craft_crash_fighter "1 1"
 }
 
 assembly big
@@ -301,11 +315,11 @@ title "_Oriental big"
 +house_a "1 3"
 +shed_a "1 3"
 +house_b "1 3"
-+house_c "1 3"
++house_c "0 3"
 +well "1 3"
 +trees_a "0 10"
 +house_d "0 5"
-+house_e "1 3"
++house_e "0 3"
 +stand_a "0 10"
 +stand_b "0 10"
 +house_f "1 3"
@@ -314,5 +328,5 @@ title "_Oriental big"
 +mosque "1 1"
 +trees_b "0 2"
 *rm_drop +craft_drop_firebird "1 1"
-*rm_ufo +craft_ufo_scout "1 1"
+*rm_ufo +craft_ufo_harvester "1 1"
 }
