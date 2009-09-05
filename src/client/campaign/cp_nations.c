@@ -163,7 +163,9 @@ void CP_NationHandleBudget (void)
 			continue;
 		cost = SALARY_BASE_UPKEEP;	/* base cost */
 		for (j = 0; j < ccs.numBuildings[i]; j++) {
-			cost += ccs.buildings[i][j].varCosts;
+			if (ccs.buildings[i][j].buildingStatus == B_STATUS_WORKING
+			 || ccs.buildings[i][j].buildingStatus == B_STATUS_CONSTRUCTION_FINISHED)
+				cost += ccs.buildings[i][j].varCosts;
 		}
 		totalExpenditure += cost;
 
