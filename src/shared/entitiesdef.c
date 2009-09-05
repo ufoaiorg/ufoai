@@ -681,7 +681,7 @@ static int ED_ParseEntities (const char **data_p)
 			const int newMode = ED_Block2Constant(parsedToken);
 			if (ED_ERROR == newMode) { /* must be a key name or value */
 				if (toggle) { /* store key name til after next token is parsed */
-					if('\0' == parsedToken[0])
+					if ('\0' == parsedToken[0])
 						ED_RETURN_ERROR("key name null string, \"\", or missing closing brace");
 					strncpy(lastTokenBuf, parsedToken, ED_MAX_TOKEN_LEN);
 				} else { /* store key-value pair in buffer until whole entity is parsed */

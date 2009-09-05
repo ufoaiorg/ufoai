@@ -143,7 +143,7 @@ static void CL_FreeBattlescapeEvent (void *data)
 	Mem_Free(event);
 }
 
-static qboolean CL_FilterBattlescapeEvents(int when, event_func *func, event_check_func *check, void *data)
+static qboolean CL_FilterBattlescapeEvents (int when, event_func *func, event_check_func *check, void *data)
 {
 	return (func != &CL_ExecuteBattlescapeEvent);
 }

@@ -79,7 +79,7 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 	LE_Lock(le);
 	newPathLength = NET_ReadByte(msg);
 	if (le->pathLength > 0) {
-		if(le->pathLength == le->pathPos) {
+		if (le->pathLength == le->pathPos) {
 			LE_DoEndPathMove(le);
 			le->pathLength = le->pathPos = 0;
 		} else {

@@ -22,7 +22,7 @@ namespace sound
 
 	bool SoundManager::playSound (const std::string& fileName)
 	{
-		if(!playbackEnabled)
+		if (!playbackEnabled)
 			return true;
 
 		// Make a copy of the filename
@@ -35,7 +35,7 @@ namespace sound
 			// File found, play it
 			std::cout << "Found file: " << name << std::endl;
 			resumingFileNameToBePlayed = fileName;
-			if(playbackEnabled)
+			if (playbackEnabled)
 				_soundPlayer.play(*file);
 			return true;
 		}
@@ -53,7 +53,7 @@ namespace sound
 		if (oggFile) {
 			std::cout << "Found file: " << name << std::endl;
 			resumingFileNameToBePlayed = fileName;
-			if(playbackEnabled)
+			if (playbackEnabled)
 				_soundPlayer.play(*oggFile);
 			return true;
 		}
@@ -65,7 +65,7 @@ namespace sound
 		if (wavFile) {
 			std::cout << "Found file: " << name << std::endl;
 			resumingFileNameToBePlayed = fileName;
-			if(playbackEnabled)
+			if (playbackEnabled)
 				_soundPlayer.play(*wavFile);
 			return true;
 		}
@@ -83,7 +83,7 @@ namespace sound
 	void SoundManager::switchPlaybackEnabledFlag ()
 	{
 		playbackEnabled = !playbackEnabled;
-		if(playbackEnabled && resumingFileNameToBePlayed.length())
+		if (playbackEnabled && resumingFileNameToBePlayed.length())
 			playSound (resumingFileNameToBePlayed);
 	}
 

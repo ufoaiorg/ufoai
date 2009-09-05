@@ -328,8 +328,8 @@ gboolean accelerator_window_key_press (GtkWidget *widget, GdkEventKey *event, gp
 		return false;
 
 #if 0
-	if(event->is_modifier)
-	return false;
+	if (event->is_modifier)
+		return false;
 #else
 	switch (event->keyval) {
 	case GDK_Shift_L:
@@ -377,7 +377,8 @@ gboolean accelerator_window_key_press (GtkWidget *widget, GdkEventKey *event, gp
 			GtkTreeModel *model;
 		public:
 			bool allow;
-			VerifyAcceleratorNotTaken (const std::string& name, const Accelerator &accelerator, GtkWidget *w, GtkTreeModel *m) :
+			VerifyAcceleratorNotTaken (const std::string& name, const Accelerator &accelerator, GtkWidget *w,
+					GtkTreeModel *m) :
 				commandName(name), newAccel(accelerator), widget(w), model(m), allow(true)
 			{
 			}
@@ -391,8 +392,8 @@ gboolean accelerator_window_key_press (GtkWidget *widget, GdkEventKey *event, gp
 					return;
 				if (accelerator == newAccel) {
 					StringOutputStream msg;
-					msg << "The command " << name.c_str() << " is already assigned to the key " << accelerator << ".\n\n"
-							<< "Do you want to unassign " << name.c_str() << " first?";
+					msg << "The command " << name.c_str() << " is already assigned to the key " << accelerator
+							<< ".\n\n" << "Do you want to unassign " << name.c_str() << " first?";
 					EMessageBoxReturn r = gtk_MessageBox(widget, msg.c_str(), "Key already used", eMB_YESNOCANCEL);
 					if (r == eIDYES) {
 						// clear the ACTUAL accelerator too!
@@ -572,7 +573,8 @@ void DoCommandListDlg (void)
 		GtkButton* editbutton = create_dialog_button(_("Edit"), (GCallback) accelerator_edit_button_clicked, &dialog);
 		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(editbutton), FALSE, FALSE, 0);
 
-		GtkButton* clearbutton = create_dialog_button(_("Clear"), (GCallback) accelerator_clear_button_clicked, &dialog);
+		GtkButton* clearbutton =
+				create_dialog_button(_("Clear"), (GCallback) accelerator_clear_button_clicked, &dialog);
 		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(clearbutton), FALSE, FALSE, 0);
 
 		GtkWidget *spacer = gtk_image_new();

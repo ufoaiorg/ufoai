@@ -1121,7 +1121,7 @@ static struct event* Dequeue_Event (int now)
 	struct event *event = event_queue;
 	struct event *prev = NULL;
 
-	while(event && event->when <= now) {
+	while (event && event->when <= now) {
 		if (event->check == NULL || event->check(now, event->data)) {
 			if (prev) {
 				prev->next = event->next;
@@ -1142,14 +1142,14 @@ static struct event* Dequeue_Event (int now)
  * @param filter Pointer to the filter function.
  *  When called with event info, it should return true if the event is to be kept.
  */
-void CL_FilterEventQueue(event_filter *filter)
+void CL_FilterEventQueue (event_filter *filter)
 {
 	struct event *event = event_queue;
 	struct event *prev = NULL;
 
 	assert(filter);
 
-	while(event) {
+	while (event) {
 		qboolean keep = filter(event->when, event->func, event->check, event->data);
 		struct event *freeme = event;
 

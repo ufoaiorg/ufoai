@@ -161,7 +161,7 @@ void R_SetArrayState (const model_t *mod)
 	/* try to save some binds */
 	if (r_array_state.model == mod) {
 		const int xor = r_array_state.arrays ^ arrays;
-		if(!xor)  /* no changes, we're done */
+		if (!xor)  /* no changes, we're done */
 			return;
 
 		/* resolve what's left to turn on */

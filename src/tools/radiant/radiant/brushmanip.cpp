@@ -285,17 +285,16 @@ const std::size_t c_brushRock_minSides = 10;
 const std::size_t c_brushRock_maxSides = 1000;
 const char* const c_brushRock_name = "brushRock";
 
-void Brush_ConstructRock(Brush& brush, const AABB& bounds, std::size_t sides,
-		const char* shader, const TextureProjection& projection) {
+void Brush_ConstructRock (Brush& brush, const AABB& bounds, std::size_t sides, const char* shader,
+		const TextureProjection& projection)
+{
 	if (sides < c_brushRock_minSides) {
-		globalErrorStream() << c_brushRock_name << ": sides "
-				<< Unsigned(sides) << ": too few sides, minimum is "
+		globalErrorStream() << c_brushRock_name << ": sides " << Unsigned(sides) << ": too few sides, minimum is "
 				<< Unsigned(c_brushRock_minSides) << "\n";
 		return;
 	}
 	if (sides > c_brushRock_maxSides) {
-		globalErrorStream() << c_brushRock_name << ": sides "
-				<< Unsigned(sides) << ": too many sides, maximum is "
+		globalErrorStream() << c_brushRock_name << ": sides " << Unsigned(sides) << ": too many sides, maximum is "
 				<< Unsigned(c_brushRock_maxSides) << "\n";
 		return;
 	}
@@ -317,28 +316,24 @@ void Brush_ConstructRock(Brush& brush, const AABB& bounds, std::size_t sides,
 		ComputeAxisBase(planepts[0], planepts[1], planepts[2]);
 
 		planepts[0] = vector3_added(mid, vector3_scaled(planepts[0], radius));
-		planepts[1] = vector3_added(planepts[0], vector3_scaled(planepts[1],
-				radius));
-		planepts[2] = vector3_added(planepts[0], vector3_scaled(planepts[2],
-				radius));
+		planepts[1] = vector3_added(planepts[0], vector3_scaled(planepts[1], radius));
+		planepts[2] = vector3_added(planepts[0], vector3_scaled(planepts[2], radius));
 
 #if 0
 		// make sure the orientation is right
-		if(vector3_dot(vector3_subtracted(planepts[0], mid), vector3_cross(vector3_subtracted(planepts[1], mid), vector3_subtracted(planepts[2], mid))) > 0) {
+		if (vector3_dot(vector3_subtracted(planepts[0], mid), vector3_cross(vector3_subtracted(planepts[1], mid), vector3_subtracted(planepts[2], mid))) > 0) {
 			Vector3 h;
 			h = planepts[1];
 			planepts[1] = planepts[2];
 			planepts[2] = h;
 			globalOutputStream() << "flip\n";
 		} else
-			globalOutputStream() << "no flip\n";
+		globalOutputStream() << "no flip\n";
 #endif
 
-		brush.addPlane(planepts[0], planepts[1], planepts[2], shader,
-				projection);
+		brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
 	}
 }
-
 
 static inline int GetViewAxis ()
 {
@@ -1102,7 +1097,7 @@ class filter_brush_no_face: public BrushFilter
 		}
 };
 
-filter_face_flags g_filter_face_clip (QER_CLIP);
+filter_face_flags g_filter_face_clip(QER_CLIP);
 filter_brush_all_faces g_filter_brush_clip(&g_filter_face_clip);
 
 filter_face_surface g_filter_face_light(SURF_LIGHT);
@@ -1135,13 +1130,13 @@ filter_brush_any_face g_filter_brush_hint(&g_filter_face_hint);
 filter_face_shader g_filter_face_nodraw("textures/tex_common/nodraw");
 filter_brush_all_faces g_filter_brush_nodraw(&g_filter_face_nodraw);
 
-filter_face_flags g_filter_face_translucent (QER_TRANS);
+filter_face_flags g_filter_face_translucent(QER_TRANS);
 filter_brush_all_faces g_filter_brush_translucent(&g_filter_face_translucent);
 
-filter_face_flags g_filter_face_water (BRUSH_WATER_MASK);
+filter_face_flags g_filter_face_water(BRUSH_WATER_MASK);
 filter_brush_all_faces g_filter_brush_water(&g_filter_face_water);
 
-filter_face_contents g_filter_face_detail (BRUSH_DETAIL_MASK);
+filter_face_contents g_filter_face_detail(BRUSH_DETAIL_MASK);
 filter_brush_all_faces g_filter_brush_detail(&g_filter_face_detail);
 
 void BrushFilters_construct ()
@@ -1230,11 +1225,10 @@ class BrushPrefab
 		typedef MemberCaller<BrushPrefab, &BrushPrefab::set> SetCaller;
 };
 
-static BrushPrefab g_brushprism (eBrushPrism);
-static BrushPrefab g_brushcone (eBrushCone);
-static BrushPrefab g_brushsphere (eBrushSphere);
-static BrushPrefab g_brushrock (eBrushRock);
-
+static BrushPrefab g_brushprism(eBrushPrism);
+static BrushPrefab g_brushcone(eBrushCone);
+static BrushPrefab g_brushsphere(eBrushSphere);
+static BrushPrefab g_brushrock(eBrushRock);
 
 void ClipSelected ()
 {
@@ -1258,8 +1252,8 @@ void FlipClipper ()
 }
 
 Callback g_texture_lock_status_changed;
-BoolExportCaller g_texdef_movelock_caller (g_brush_texturelock_enabled);
-ToggleItem g_texdef_movelock_item (g_texdef_movelock_caller);
+BoolExportCaller g_texdef_movelock_caller(g_brush_texturelock_enabled);
+ToggleItem g_texdef_movelock_item(g_texdef_movelock_caller);
 
 void Texdef_ToggleMoveLock ()
 {

@@ -233,7 +233,7 @@ void BuildPatches (void)
 			/* store the origin in case of moving bmodels (e.g. func_door) */
 			VectorCopy(origin, face_offset[facenum]);
 
-			if(!HasLight(f))  /* no light */
+			if (!HasLight(f))  /* no light */
 				continue;
 
 			w = WindingFromFace(f);

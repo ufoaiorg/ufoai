@@ -114,7 +114,7 @@ static void S_Play_f (void)
 	}
 
 	i = 1;
-	while(i < Cmd_Argc()){
+	while (i < Cmd_Argc()){
 		S_StartLocalSample(Cmd_Argv(i), SND_VOLUME_DEFAULT);
 		i++;
 	}
