@@ -39,35 +39,44 @@
 
 namespace routing
 {
+	bool showAllLowerLevels;
+
 	class Pathfinding
 	{
 		private:
-			bool showPathfinding;
-			Routing *routingRender;
+			bool _showPathfinding;
+			Routing *_routingRender;
+			bool _showAllLowerLevels;
 
 		public:
 
 			Pathfinding () :
-				showPathfinding(false), routingRender(0)
+				_showPathfinding(false), _routingRender(0)
 			{
-				routingRender = new Routing();
-				GlobalShaderCache().attachRenderable(*routingRender);
+				_routingRender = new Routing();
+				GlobalShaderCache().attachRenderable(*_routingRender);
 			}
 
 			~Pathfinding ()
 			{
-				GlobalShaderCache().detachRenderable(*routingRender);
-				delete routingRender;
+				GlobalShaderCache().detachRenderable(*_routingRender);
+				delete _routingRender;
 			}
 			/**
 			 * @brief callback function for map changes to update routing data.
 			 */
 			void onMapValidChanged (void)
 			{
-				if (Map_Valid(g_map) && showPathfinding) {
-					showPathfinding = false;
+				if (Map_Valid(g_map) && _showPathfinding) {
+					_showPathfinding = false;
 					ShowPathfinding();
 				}
+			}
+
+			void setShowAllLowerLevels (bool showAllLowerLevels)
+			{
+				_showAllLowerLevels = showAllLowerLevels;
+				_routingRender->setShowAllLowerLevels(_showAllLowerLevels);
 			}
 
 			/**
@@ -77,22 +86,21 @@ namespace routing
 			void show (void)
 			{
 				if (!Map_Unnamed(g_map))
-					showPathfinding ^= true;
+					_showPathfinding ^= true;
 				else
-					showPathfinding = false;
+					_showPathfinding = false;
 
-				routingRender->setShowPathfinding(showPathfinding);
-				/** @todo make this an option */
-				routingRender->setShowAllLowerLevels(true);
+				_routingRender->setShowPathfinding(_showPathfinding);
+				_routingRender->setShowAllLowerLevels(_showAllLowerLevels);
 
-				if (showPathfinding) {
+				if (_showPathfinding) {
 					//update current pathfinding data on every activation
 					const char* mapname = Map_Name(g_map);
 					StringOutputStream bspStream(256);
 					bspStream << StringRange(mapname, path_get_filename_base_end(mapname)) << ".bsp";
 					const char* bspname = path_make_relative(bspStream.c_str(), GlobalFileSystem().findRoot(
 							bspStream.c_str()));
-					routingRender->updateRouting(bspname);
+					_routingRender->updateRouting(bspname);
 				}
 			}
 	};
@@ -115,13 +123,38 @@ namespace routing
 	{
 		pathfinding->onMapValidChanged();
 	}
+
+	void setShowAllLowerLevels (bool value)
+	{
+		showAllLowerLevels = value;
+		pathfinding->setShowAllLowerLevels(showAllLowerLevels);
+		SceneChangeNotify();
+	}
+
+	void Pathfinding_constructPage (PreferenceGroup& group)
+	{
+		PreferencesPage page(group.createPage(_("Pathfinding"), _("Pathfinding Settings")));
+		page.appendCheckBox("", _("Show all lower levels"), FreeCaller1<bool, setShowAllLowerLevels> (),
+				BoolExportCaller(showAllLowerLevels));
+	}
+
+	void Pathfinding_registerPreferences (void)
+	{
+		GlobalPreferenceSystem().registerPreference("PathfindingShowLowerLevels", BoolImportStringCaller(
+				showAllLowerLevels), BoolExportStringCaller(showAllLowerLevels));
+
+		PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Pathfinding_constructPage> ());
+	}
 }
 
 void Pathfinding_Construct (void)
 {
 	routing::pathfinding = new routing::Pathfinding();
+
 	/** @todo listener also should activate/deactivate "show pathfinding" menu entry if no appropriate data is available */
 	Map_addValidCallback(g_map, SignalHandler(FreeCaller<routing::Pathfinding_onMapValidChanged> ()));
+
+	routing::Pathfinding_registerPreferences();
 }
 
 void Pathfinding_Destroy (void)

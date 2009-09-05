@@ -27,6 +27,7 @@ namespace routing
 
 	RoutingRenderable::RoutingRenderable ()
 	{
+		_showAllLowerLevels = true;
 	}
 
 	RoutingRenderable::~RoutingRenderable ()
@@ -212,7 +213,6 @@ namespace routing
 		default:
 			return color_connected_not;
 		}
-
 	}
 
 	/**
