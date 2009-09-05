@@ -32,10 +32,12 @@ typedef int (*testSuite_t) (void);
 /* include the tests here */
 #include "test_routing.h"
 #include "test_inventory.h"
+#include "test_rma.h"
 
 static const testSuite_t testSuites[] = {
 	UFO_AddRoutingTests,
 	UFO_AddInventoryTests,
+	UFO_AddRandomMapAssemblyTests,
 	NULL
 };
 #define NUMBER_OF_TESTS (sizeof(testSuites) / sizeof(*(testSuites)))

@@ -5,6 +5,7 @@ TESTS_SRCS = \
 	tests/test_all.c \
 	tests/test_routing.c \
 	tests/test_inventory.c \
+	tests/test_rma.c \
 	\
 	common/cmd.c \
 	common/http.c \
