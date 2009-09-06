@@ -57,16 +57,16 @@ public:
 
 	/// \brief Returns the file identified by \p filename opened in binary mode, or 0 if not found.
 	/// The caller must \c release() the file returned if it is not 0.
-	virtual ArchiveFile* openFile(const char* filename) = 0;
+	virtual ArchiveFile* openFile(const std::string& filename) = 0;
 	/// \brief Returns the file identified by \p filename opened in text mode, or 0 if not found.
 	/// The caller must \c release() the file returned if it is not 0.
-	virtual ArchiveTextFile* openTextFile(const char* filename) = 0;
+	virtual ArchiveTextFile* openTextFile(const std::string& filename) = 0;
 
 	/// \brief Opens the file identified by \p filename and reads it into \p buffer, or sets *\p buffer to 0 if not found.
 	/// Returns the size of the buffer allocated, or undefined value if *\p buffer is 0;
 	/// The caller must free the allocated buffer by calling \c freeFile
 	/// \deprecated Deprecated - use \c openFile.
-	virtual std::size_t loadFile(const char *filename, void **buffer) = 0;
+	virtual std::size_t loadFile(const std::string& filename, void **buffer) = 0;
 	/// \brief Frees the buffer returned by \c loadFile.
 	/// \deprecated Deprecated.
 	virtual void freeFile(void *p) = 0;
@@ -108,7 +108,7 @@ inline VirtualFileSystem& GlobalFileSystem() {
 
 
 /// \deprecated Use \c openFile.
-inline int vfsLoadFile(const char* filename, void** buffer, int index = 0) {
+inline int vfsLoadFile(const std::string& filename, void** buffer, int index = 0) {
 	return static_cast<int>(GlobalFileSystem().loadFile(filename, buffer));
 };
 

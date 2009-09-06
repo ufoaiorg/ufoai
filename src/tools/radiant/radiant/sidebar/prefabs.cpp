@@ -124,7 +124,7 @@ void PrefabAdd (const std::string& name, GtkTreeIter* parentIter)
 	nameContent << "<b>" << fileName.c_str() << "</b>";
 	std::string imagePath = fullBaseNamePath + ".jpg";
 	std::string descriptionPath = fullBaseNamePath + ".txt";
-	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(descriptionPath.c_str()));
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(descriptionPath));
 	if (file) {
 		TextInputStream &stream = file->getInputStream();
 		const std::size_t realsize = stream.read(buffer, file->size());

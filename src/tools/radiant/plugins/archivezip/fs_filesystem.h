@@ -25,15 +25,17 @@
 #include "string/string.h"
 #include "os/path.h"
 
+#include <string>
 #include <map>
 
-inline unsigned int path_get_depth (const char* path)
+inline unsigned int path_get_depth (const std::string& path)
 {
 	unsigned int depth = 0;
-	while (path != 0 && path[0] != '\0') {
-		path = strchr(path, '/');
-		if (path != 0) {
-			++path;
+	const char *cstr = path.c_str();
+	while (cstr != 0 && cstr[0] != '\0') {
+		cstr = strchr(cstr, '/');
+		if (cstr != 0) {
+			++cstr;
 		}
 		++depth;
 	}

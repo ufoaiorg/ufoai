@@ -33,7 +33,7 @@ namespace sound
 			SoundPlayer ();
 
 			/**
-			 * greebo: Destroys the alut context
+			 * greebo: Destroys the openal context
 			 */
 			virtual ~SoundPlayer ();
 

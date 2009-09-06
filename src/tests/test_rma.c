@@ -69,7 +69,7 @@ static void testAssembly (void)
 	const char *map;
 	const char *pos;
 	SV_AssembleMap("forest", "large", &map, &pos);
-	CU_ASSERT(numPlaced == 1);
+	CU_ASSERT(numPlaced == 35);
 }
 
 static void testMassAssembly (void)
