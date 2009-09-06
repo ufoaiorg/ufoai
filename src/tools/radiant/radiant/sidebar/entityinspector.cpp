@@ -294,6 +294,7 @@ class ModelAttribute: public EntityAttribute
 		{
 			ui::ModelAndSkin modelAndSkin = ui::ModelSelector::chooseModel();
 			if (!modelAndSkin.model.empty()) {
+				// TODO: apply skin
 				setPath(modelAndSkin.model);
 				apply();
 			}

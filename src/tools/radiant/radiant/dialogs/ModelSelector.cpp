@@ -202,6 +202,7 @@ namespace ui
 								gtkutil::getLocalPixbuf(imgPath), -1);
 						GtkTreeIter* dynIter = gtk_tree_iter_copy(&iter); // get a heap-allocated iter
 
+						// TODO: Fix skins
 #if 0
 						if (isModel) {
 							// Load the model
