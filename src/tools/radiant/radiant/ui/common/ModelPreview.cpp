@@ -51,8 +51,15 @@ namespace ui
 		gtk_container_add(GTK_CONTAINER(_widget), vbx);
 	}
 
-	// Set the size request for the widget
+	// free the loaded model
+	ModelPreview::~ModelPreview ()
+	{
+		model::IModel* model = _model.get();
+		_model.release();
+		delete model;
+	}
 
+	// Set the size request for the widget
 	void ModelPreview::setSize (int size)
 	{
 		gtk_widget_set_size_request(_glWidget, size, size);
@@ -227,14 +234,16 @@ namespace ui
 				// Save the new GL matrix for GL draw
 				glGetFloatv(GL_MODELVIEW_MATRIX, self->_rotation);
 
-				gtk_widget_queue_draw(widget); // trigger the GLDraw method to draw the actual model
+				// trigger the GLDraw method to draw the actual model
+				gtk_widget_queue_draw(widget);
 			}
 		}
 	}
 
 	void ModelPreview::callbackGLScroll (GtkWidget* widget, GdkEventScroll* ev, ModelPreview* self)
 	{
-		float inc = self->_model->getAABB().getRadius() * 0.1; // Scroll increment is a fraction of the AABB radius
+		// Scroll increment is a fraction of the AABB radius
+		const float inc = self->_model->getAABB().getRadius() * 0.1;
 		if (ev->direction == GDK_SCROLL_UP)
 			self->_camDist += inc;
 		else if (ev->direction == GDK_SCROLL_DOWN)

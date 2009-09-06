@@ -50,6 +50,10 @@ namespace ui
 			 */
 			ModelPreview ();
 
+			/** Destructor for destroying loaded models
+			 */
+			~ModelPreview ();
+
 			/** Set the pixel size of the ModelPreview widget. The widget is always square.
 			 *
 			 * @param size
