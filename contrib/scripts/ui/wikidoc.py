@@ -10,10 +10,10 @@
 import os, os.path, sys
 from ExtractNodeBehaviour import *
 
-def genPropertyContent(element):
+def genDoxygenContent(doc):
 	result = ""
 
-	for d in element.doc:
+	for d in doc:
 		if d.startswith("@todo"):
 			result += '<div style="border:2px solid red;padding:2px;">' + d + '</div> '
 		elif d.startswith("@image"):
@@ -25,6 +25,15 @@ def genPropertyContent(element):
 				result = image + result
 			else:
 				result += "[" + image + " See image]."
+		elif d.startswith("@file"):
+			pass
+		elif d.startswith("@brief"):
+			text = d.replace("@brief", "", 1).strip()
+			result += text + ' '
+		elif d.startswith("@code"):
+			code = d.replace("@code\n", "", 1)
+			code = '\n<pre><nowiki>' + code + '</nowiki></pre>\n'
+			result += code
 		elif d.startswith("@"):
 			result += '<div style="border:2px solid green;padding:2px;">' + d + '</div> '
 		else:
@@ -38,7 +47,7 @@ def genPropertyDoc(node, element):
 
 	result = ""
 	result += '|-\n'
-	result += '| ' + element.name + type + ' || [[' + element.type + ']] || ' + genPropertyContent(element) + '\n'
+	result += '| ' + element.name + type + ' || [[' + element.type + ']] || ' + genDoxygenContent(element.doc) + '\n'
 	return result
 
 def genPropertyTitle(title):
@@ -60,7 +69,7 @@ def genBehaviourDoc(node):
 		result += ':This node inherite [[#' + node.extends + ']]. Check this node for more properties.\n'
 
 	if node.doc != "":
-		result += node.doc + '\n'
+		result += genDoxygenContent(node.doc) + '\n'
 
 	if len(node.properties) + len(node.methods) + len(node.confuncs) != 0:
 		result += '\n'

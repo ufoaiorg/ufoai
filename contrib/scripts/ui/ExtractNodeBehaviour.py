@@ -32,7 +32,7 @@ class NodeBehaviour:
 		self.callbacks = {}
 		self.methods = {}
 		self.confuncs = {}
-		self.doc = ""
+		self.doc = []
 		self.package = None
 		pass
 
@@ -178,6 +178,51 @@ class ExtractNodeBehaviour:
 
 		return result
 
+	# @brief Extract doc header
+	# @todo Regex to extract the first comment
+	def extractHeaderComments(self, filedata):
+		comments = []
+		codeBlock = False
+		
+		for line in filedata.splitlines():
+			line = line.strip()
+
+			if line.startswith("/*"):
+				line = line.replace('/**', '').replace('/*', '').replace('*/', '')
+				line = line.strip()
+				if line != '':
+					comments.append(line)
+				continue
+
+			if line.startswith("*/"):
+				break
+
+			if line.startswith("*"):
+				line = line.replace('*', '', 1)
+				if codeBlock:
+					command = line.strip()
+					if command == "@endcode":
+						codeBlock = False
+					else:
+						comments[len(comments)-1] += '\n' + line
+					continue
+
+				line = line.strip()
+				if line.startswith("@"):
+					if line == "@code":
+						codeBlock = True
+						comments.append(line)
+					else:
+						comments.append(line)
+				else:
+					if len(comments) == 0:
+						comments.append(line)
+					else:
+						comments[len(comments)-1] += ' ' + line
+				continue
+
+		return comments
+
 	def extractData(self):
 		# all nodes
 		for f in os.listdir(dir):
@@ -188,7 +233,12 @@ class ExtractNodeBehaviour:
 			data = file.read()
 			file.close()
 
-			for code in self.extractRegistrationFunctions(data):
+			registrationFunctions = self.extractRegistrationFunctions(data)
+			doc = None
+			if len(registrationFunctions) == 1:
+				doc = self.extractHeaderComments(data)
+			
+			for code in registrationFunctions:
 				lines = code.split('\n')
 				dic = {}
 				for l in lines:
@@ -206,5 +256,7 @@ class ExtractNodeBehaviour:
 				node.init(dic)
 				if 'properties' in dic:
 					props = self.extractProperties(node, data, dic['properties'])
-
+				if doc != None:
+					node.doc = doc
+					
 				self.package.addBehaviour(node)
