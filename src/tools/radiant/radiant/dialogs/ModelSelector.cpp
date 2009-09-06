@@ -48,7 +48,7 @@ namespace ui
 	ModelSelector::ModelSelector () :
 		_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)), _treeStore(gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING,
 				G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF)), _infoStore(gtk_list_store_new(2, G_TYPE_STRING,
-				G_TYPE_STRING)), _lastModel(""), _lastSkin("")
+				G_TYPE_STRING)), _lastModel(""), _lastSkin("0")
 	{
 		// Window properties
 		gtk_window_set_transient_for(GTK_WINDOW(_widget), MainFrame_getWindow());
@@ -416,7 +416,7 @@ namespace ui
 	void ModelSelector::callbackHide (GtkWidget* widget, GdkEvent* ev, ModelSelector* self)
 	{
 		self->_lastModel = "";
-		self->_lastSkin = "";
+		self->_lastSkin = "0";
 		gtk_main_quit(); // exit recursive main loop
 		gtk_widget_hide(self->_widget);
 	}
