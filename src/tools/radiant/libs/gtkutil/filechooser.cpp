@@ -146,8 +146,6 @@ static void file_dialog_update_preview (GtkFileChooser *file_chooser, gpointer d
 
 static char g_file_dialog_file[1024];
 
-static const char *shortcutFoldersInBaseDir[] = { "maps", "models", "models/objects", "sound", "textures", NULL };
-
 static const char* file_dialog_show (GtkWidget* parent, bool open, const std::string& title, const std::string& path,
 		const std::string& pattern)
 {
@@ -185,20 +183,6 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const std::st
 			gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), path.c_str());
 		}
 	}
-
-	/** @todo reactivate this - but only if radiant is already initialized - because otherwise the enginePath might not be valid */
-#if 0
-	// we add all important paths as shortcut folder..
-	const std::string& baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
-	const std::string& enginePath = GlobalRadiant().getEnginePath();
-	const char **shortcut = shortcutFoldersInBaseDir;
-	while (*shortcut) {
-		char uri[256];
-		snprintf(uri, sizeof(uri), "%s%s/%s", enginePath, baseGame, *shortcut);
-		gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), uri, NULL);
-		shortcut++;
-	}
-#endif
 
 	for (std::size_t i = 0; i < masks.m_filters.size(); ++i) {
 		GtkFileFilter* filter = gtk_file_filter_new();
