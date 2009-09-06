@@ -30,7 +30,7 @@
 menu_model alien_ortnok_head
 {
 	model	"aliens/ortnok/head01"
-	tag	"tag_head"
+	tag		"tag_head"
 	parent	"alien_ortnok"
 	scale	"1.0 1.0 1.0"
 }
@@ -44,7 +44,7 @@ menu_model alien_ortnok
 menu_model alien_ortnok_medium_head
 {
 	model	"aliens/ortnokmedium/head01"
-	tag	"tag_head"
+	tag		"tag_head"
 	parent	"alien_ortnok_medium"
 	scale	"1.0 1.0 1.0"
 }
@@ -58,7 +58,7 @@ menu_model alien_ortnok_medium
 menu_model alien_ortnok_light_head
 {
 	model	"aliens/ortnoklight/head01"
-	tag	"tag_head"
+	tag		"tag_head"
 	parent	alien_ortnok_light
 	scale	"1.0 1.0 1.0"
 }
@@ -72,7 +72,7 @@ menu_model alien_ortnok_light
 menu_model alien_taman_head
 {
 	model	"aliens/taman/head01"
-	tag	"tag_head"
+	tag		"tag_head"
 	parent	"alien_taman"
 	scale	"1.0 1.0 1.0"
 }
@@ -86,7 +86,7 @@ menu_model alien_taman
 menu_model alien_taman_light_head
 {
 	model	"aliens/tamanlight/head01"
-	tag	"tag_head"
+	tag		"tag_head"
 	parent	"alien_taman_light"
 	scale	"1.0 1.0 1.0"
 }
@@ -100,7 +100,7 @@ menu_model alien_taman_light
 menu_model alien_taman_medium_head
 {
 	model	"aliens/tamanmedium/head01"
-	tag	"tag_head"
+	tag		"tag_head"
 	parent	"alien_taman_medium"
 	scale	"1.0 1.0 1.0"
 }
@@ -114,7 +114,7 @@ menu_model alien_taman_medium
 menu_model alien_shevaar_head
 {
 	model	"aliens/shevaar/head01"
-	tag	"tag_head"
+	tag		"tag_head"
 	parent	"alien_shevaar"
 	scale	"1.0 1.0 1.0"
 }
@@ -129,7 +129,7 @@ menu_model alien_shevaar
 menu_model alien_hovernet_head
 {
 	model	"aliens/hovernet/head01"
-	tag	"tag_head"
+	tag		"tag_head"
 	parent	"alien_hovernet"
 	scale	"1.0 1.0 1.0"
 }
@@ -144,7 +144,7 @@ menu_model alien_hovernet
 //menu_model alien_cyborg_ortnok_head
 //{
 //	model	"aliens/cyborg_ortnok/head01"
-//	tag	"tag_head"
+//	tag		"tag_head"
 //	parent	"alien_cyborg_ortnok"
 //	scale	"1.0 1.0 1.0"
 //}
@@ -160,7 +160,7 @@ menu_model alien_hovernet
 menu_model civ_female_head
 {
 	model	"civilians/female/head04c"
-	tag	"tag_head"
+	tag		"tag_head"
 	parent	"civ_female"
 	scale	"1.0 1.0 1.0"
 }
@@ -174,7 +174,7 @@ menu_model civ_female
 menu_model ugv_ares_w_turret
 {
 	model	"soldiers/ugv_ares/ares_w_turret"
-	tag	"tag_head"
+	tag		"tag_head"
 	parent	"ugv_ares_w"
 	scale	"1.0 1.0 1.0"
 	menutransform {
@@ -194,7 +194,7 @@ menu_model ugv_ares_w
 menu_model ugv_phoenix_turret
 {
 	model	"soldiers/ugv_phoenix/phoenix_turret"
-	tag	"tag_head"
+	tag		"tag_head"
 	parent	"ugv_phoenix"
 	scale	"1.0 1.0 1.0"
 	menutransform {
@@ -226,7 +226,7 @@ menu_model drop_firebird
 	model	"aircraft/drop_firebird/firebird"
 	need	"drop_firebird_top"
 	menutransform {
-		ufopedia 		"0.5 0.5 0.5"	"0 0 120"		"-20 0 0"
+		ufopedia		"0.5 0.5 0.5"	"0 0 120"		"-20 0 0"
 		aircraft		"0.8 0.8 0.8"	"160 20 -120"	#
 		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		#
 		item			"0.5 0.5 0.5"	"0 0 120"		#
@@ -241,7 +241,7 @@ menu_model drop_herakles_pod
 		ufopedia		"0.3 0.3 0.3"		"180 0 -120"	"-20 0 0"
 		aircraft		"0.8 0.8 0.8"		"160 20 -120"	"60 60 0"
 		aircraft_equip	"0.5 0.5 0.5"		"-90 0 180"		#
-		item	 		"0.45 0.45 0.45"	"180 0 -120"	"0 60 0"
+		item			"0.45 0.45 0.45"	"180 0 -120"	"0 60 0"
 	}
 }
 
@@ -253,7 +253,7 @@ menu_model drop_herakles
 		ufopedia		"0.3 0.3 0.3"		"180 0 -120"	"-20 0 0"
 		aircraft		"0.8 0.8 0.8"		"160 20 -120"	"60 60 0"
 		aircraft_equip	"0.5 0.5 0.5"		"-90 0 180"		#
-		item	 		"0.45 0.45 0.45"	"180 0 -120"	"0 60 0"
+		item			"0.45 0.45 0.45"	"180 0 -120"	"0 60 0"
 	}
 }
 
@@ -263,9 +263,9 @@ menu_model inter_stingray
 	model	"aircraft/inter_stingray/stingray_landed"
 	menutransform {
 		ufopedia		"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"
-		aircraft		"1.1 1.1 1.1"   "160 20 -120"   #
+		aircraft		"1.1 1.1 1.1"	"160 20 -120"	#
 		aircraft_equip	"0.9 0.9 0.9"	"-90 0 180"		#
-		item	 		"0.5 0.5 0.5"	"-45 135 45"	#
+		item			"0.5 0.5 0.5"	"-45 135 45"	#
 	}
 }
 
@@ -311,7 +311,7 @@ menu_model inter_stiletto_top
 	model	"aircraft/inter_stiletto/stiletto_engines"
 	menutransform {
 		ufopedia		"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
-		aircraft		"1.1 1.1 1.1"   "160 20 -120"   #
+		aircraft		"1.1 1.1 1.1"   "160 20 -120"	#
 		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		#
 		item			"0.8 0.8 0.8"	"180 0 -120"	#
 	}
@@ -322,7 +322,7 @@ menu_model inter_stiletto
 	need	"inter_stiletto_top"
 	menutransform {
 		ufopedia		"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
-		aircraft		"1.1 1.1 1.1"   "160 20 -120"   #
+		aircraft		"1.1 1.1 1.1"   "160 20 -120"	#
 		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		#
 		item			"0.8 0.8 0.8"	"180 0 -120"	#
 	}
@@ -422,7 +422,7 @@ menu_model ufo_fighter_engines_1
 	need	"ufo_fighter_engines_2"
 	menutransform {
 		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft 		"1.1 1.1 1.1"	"-20 -40 120"	#
+		aircraft		"1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
 		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
@@ -433,7 +433,7 @@ menu_model ufo_fighter_wings
 	need	"ufo_fighter_engines_1"
 	menutransform {
 		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft 		"1.1 1.1 1.1"	"-20 -40 120"	#
+		aircraft		"1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
 		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
@@ -444,7 +444,7 @@ menu_model ufo_fighter
 	need	"ufo_fighter_wings"
 	menutransform {
 		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft 		"1.1 1.1 1.1"	"-20 -40 120"	#
+		aircraft		"1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
 		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
@@ -456,7 +456,7 @@ menu_model ufo_scout_upper
 	model	"aircraft/ufo_scout/ufo_scout_upper"
 	menutransform {
 		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft 		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
@@ -467,7 +467,7 @@ menu_model ufo_scout_engines
 	need	"ufo_scout_upper"
 	menutransform {
 		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft 		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
@@ -478,7 +478,7 @@ menu_model ufo_scout
 	need	"ufo_scout_engines"
 	menutransform {
 		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft 		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
