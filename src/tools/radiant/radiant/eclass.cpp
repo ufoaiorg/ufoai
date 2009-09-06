@@ -133,7 +133,7 @@ void EntityClassUFO_Construct ()
 	class LoadEntityDefinitionsVisitor: public EClassModules::Visitor
 	{
 		public:
-			LoadEntityDefinitionsVisitor()
+			LoadEntityDefinitionsVisitor ()
 			{
 			}
 
@@ -176,7 +176,6 @@ class EntityClassUFO: public ModuleObserver
 		void realise ()
 		{
 			if (--m_unrealised == 0) {
-				//globalOutputStream() << "Entity Classes: realise\n";
 				EntityClassUFO_Construct();
 				m_observers.realise();
 			}
@@ -185,7 +184,6 @@ class EntityClassUFO: public ModuleObserver
 		{
 			if (++m_unrealised == 1) {
 				m_observers.unrealise();
-				//globalOutputStream() << "Entity Classes: unrealise\n";
 				Eclass_Clear();
 			}
 		}
@@ -294,7 +292,7 @@ class EclassManagerAPI
 
 typedef SingletonModule<EclassManagerAPI, EntityClassUFODependencies> EclassManagerModule;
 typedef Static<EclassManagerModule> StaticEclassManagerModule;
-StaticRegisterModule staticRegisterEclassManager (StaticEclassManagerModule::instance ());
+StaticRegisterModule staticRegisterEclassManager(StaticEclassManagerModule::instance());
 
 EClassModules& EntityClassManager_getEClassModules ()
 {

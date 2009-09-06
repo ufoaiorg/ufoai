@@ -103,7 +103,6 @@ static void entitylist_treeviewcolumn_celldatafunc (GtkTreeViewColumn* column, G
 			name = "unnamed.map";
 		g_object_set(G_OBJECT(renderer), "text", name, "visible", TRUE, (char const*) 0);
 
-		//globalOutputStream() << "rendering cell " << makeQuoted(name) << "\n";
 		GtkStyle* style = gtk_widget_get_style(GTK_WIDGET(getEntityList().m_tree_view));
 		if (instance->childSelected()) {
 			g_object_set(G_OBJECT(renderer), "cell-background-gdk", &style->base[GTK_STATE_ACTIVE], (char const*) 0);

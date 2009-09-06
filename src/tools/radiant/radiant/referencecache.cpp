@@ -175,7 +175,7 @@ class NullModelLoader: public ModelLoader
 
 		model::IModelPtr loadModelFromPath (const std::string& name)
 		{
-				return model::IModelPtr();
+			return model::IModelPtr();
 		}
 };
 
@@ -477,8 +477,6 @@ struct ModelResource: public Resource
 				m_path = rootPath(m_originalName.c_str());
 				m_name = path_make_relative(m_originalName.c_str(), m_path.c_str());
 
-				//globalOutputStream() << "ModelResource::realise: " << m_path.c_str() << m_name.c_str() << "\n";
-
 				m_observers.realise();
 			}
 		}
@@ -487,7 +485,6 @@ struct ModelResource: public Resource
 			if (++m_unrealised == 1) {
 				m_observers.unrealise();
 
-				//globalOutputStream() << "ModelResource::unrealise: " << m_path.c_str() << m_name.c_str() << "\n";
 				clearModel();
 			}
 		}

@@ -664,25 +664,21 @@ bool XYWnd::chaseMouseMotion (int pointx, int pointy)
 		}
 
 		if (m_chasemouse_delta_y != 0 || m_chasemouse_delta_x != 0) {
-			//globalOutputStream() << "chasemouse motion: x=" << pointx << " y=" << pointy << "... ";
 			m_chasemouse_current_x = pointx;
 			m_chasemouse_current_y = pointy;
 			if (m_chasemouse_handler == 0) {
-				//globalOutputStream() << "chasemouse timer start... ";
 				g_chasemouse_timer.start();
 				m_chasemouse_handler = g_idle_add(xywnd_chasemouse, this);
 			}
 			return true;
 		} else {
 			if (m_chasemouse_handler != 0) {
-				//globalOutputStream() << "chasemouse cancel\n";
 				g_source_remove(m_chasemouse_handler);
 				m_chasemouse_handler = 0;
 			}
 		}
 	} else {
 		if (m_chasemouse_handler != 0) {
-			//globalOutputStream() << "chasemouse cancel\n";
 			g_source_remove(m_chasemouse_handler);
 			m_chasemouse_handler = 0;
 		}

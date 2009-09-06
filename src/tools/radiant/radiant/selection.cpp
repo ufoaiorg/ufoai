@@ -619,11 +619,7 @@ void translation_for_pivoted_rotation (Vector3& parent_translation, const Quater
 	Vector3 translation(local_pivot + matrix4_transformed_point(matrix4_rotation_for_quaternion_quantised(
 			local_rotation), -local_pivot));
 
-	//globalOutputStream() << "translation: " << translation << "\n";
-
 	translation_local2object(parent_translation, translation, localToParent);
-
-	//globalOutputStream() << "parent_translation: " << parent_translation << "\n";
 }
 
 void translation_for_pivoted_scale (Vector3& parent_translation, const Vector3& local_scale,

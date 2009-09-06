@@ -963,7 +963,6 @@ static gboolean TextureBrowser_scroll (GtkWidget* widget, GdkEventScroll* event,
 
 static void TextureBrowser_scrollChanged (void* data, gdouble value)
 {
-	//globalOutputStream() << "vertical scroll\n";
 	TextureBrowser_setOriginY(*reinterpret_cast<TextureBrowser*> (data), -(int) value);
 }
 

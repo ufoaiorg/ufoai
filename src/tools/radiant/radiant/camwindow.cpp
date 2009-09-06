@@ -321,7 +321,6 @@ void Cam_MouseControl (camera_t& camera, int x, int y)
 
 void Camera_mouseMove (camera_t& camera, int x, int y)
 {
-	//globalOutputStream() << "mousemove... ";
 	Camera_FreeMove(camera, -x, -y);
 	camera.m_update();
 	CameraMovedNotify();
@@ -383,7 +382,6 @@ void Camera_keyMove (camera_t& camera)
 {
 	camera.m_mouseMove.flush();
 
-	//globalOutputStream() << "keymove... ";
 	float time_seconds = camera.m_keycontrol_timer.elapsed_msec() / static_cast<float> (msec_per_sec);
 	camera.m_keycontrol_timer.start();
 	if (time_seconds > 0.05f) {
@@ -685,11 +683,9 @@ class CamWnd
 		bool m_drawing;
 		void queue_draw ()
 		{
-			//ASSERT_MESSAGE(!m_drawing, "CamWnd::queue_draw(): called while draw is already in progress");
 			if (m_drawing) {
 				return;
 			}
-			//globalOutputStream() << "queue... ";
 			m_deferredDraw.draw();
 		}
 		void draw ();
@@ -854,7 +850,6 @@ gboolean selection_button_release (GtkWidget* widget, GdkEventButton* event, Win
 
 void selection_motion (gdouble x, gdouble y, guint state, void* data)
 {
-	//globalOutputStream() << "motion... ";
 	reinterpret_cast<WindowObserver*> (data)->onMouseMotion(WindowVector_forDouble(x, y), modifiers_for_state(state));
 }
 

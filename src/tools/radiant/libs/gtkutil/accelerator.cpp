@@ -177,12 +177,10 @@ void globalQueuedAccelerators_remove (Accelerator accelerator)
 void globalQueuedAccelerators_commit ()
 {
 	for (AcceleratorSet::const_iterator i = g_queuedAcceleratorsRemove.begin(); i != g_queuedAcceleratorsRemove.end(); ++i) {
-		//globalOutputStream() << "removing: " << (*i).first << "\n";
 		accel_group_remove_accelerator(global_accel, *i);
 	}
 	g_queuedAcceleratorsRemove.clear();
 	for (AcceleratorMap::const_iterator i = g_queuedAcceleratorsAdd.begin(); i != g_queuedAcceleratorsAdd.end(); ++i) {
-		//globalOutputStream() << "adding: " << (*i).first << "\n";
 		accel_group_add_accelerator(global_accel, (*i).first, (*i).second);
 	}
 	g_queuedAcceleratorsAdd.clear();
@@ -324,13 +322,11 @@ void Keys_releaseAll (PressedKeys::Keys& keys, guint state)
 
 gboolean PressedKeys_key_press (GtkWidget* widget, GdkEventKey* event, PressedKeys* pressedKeys)
 {
-	//globalOutputStream() << "pressed: " << event->keyval << "\n";
 	return event->state == 0 && Keys_press(pressedKeys->keys, event->keyval);
 }
 
 gboolean PressedKeys_key_release (GtkWidget* widget, GdkEventKey* event, PressedKeys* pressedKeys)
 {
-	//globalOutputStream() << "released: " << event->keyval << "\n";
 	return Keys_release(pressedKeys->keys, event->keyval);
 }
 
@@ -386,14 +382,12 @@ void GlobalPressedKeys_disconnect (GtkWindow* window)
 
 void special_accelerators_add (Accelerator accelerator, const Callback& callback)
 {
-	//globalOutputStream() << "special_accelerators_add: " << makeQuoted(accelerator) << "\n";
 	if (!accelerator_map_insert(g_special_accelerators, accelerator, callback)) {
 		globalErrorStream() << "special_accelerators_add: already exists: " << makeQuoted(accelerator) << "\n";
 	}
 }
 void special_accelerators_remove (Accelerator accelerator)
 {
-	//globalOutputStream() << "special_accelerators_remove: " << makeQuoted(accelerator) << "\n";
 	if (!accelerator_map_erase(g_special_accelerators, accelerator)) {
 		globalErrorStream() << "special_accelerators_remove: not found: " << makeQuoted(accelerator) << "\n";
 	}
@@ -401,14 +395,12 @@ void special_accelerators_remove (Accelerator accelerator)
 
 void keydown_accelerators_add (Accelerator accelerator, const Callback& callback)
 {
-	//globalOutputStream() << "keydown_accelerators_add: " << makeQuoted(accelerator) << "\n";
 	if (!accelerator_map_insert(g_keydown_accelerators, accelerator, callback)) {
 		globalErrorStream() << "keydown_accelerators_add: already exists: " << makeQuoted(accelerator) << "\n";
 	}
 }
 void keydown_accelerators_remove (Accelerator accelerator)
 {
-	//globalOutputStream() << "keydown_accelerators_remove: " << makeQuoted(accelerator) << "\n";
 	if (!accelerator_map_erase(g_keydown_accelerators, accelerator)) {
 		globalErrorStream() << "keydown_accelerators_remove: not found: " << makeQuoted(accelerator) << "\n";
 	}
@@ -416,14 +408,12 @@ void keydown_accelerators_remove (Accelerator accelerator)
 
 void keyup_accelerators_add (Accelerator accelerator, const Callback& callback)
 {
-	//globalOutputStream() << "keyup_accelerators_add: " << makeQuoted(accelerator) << "\n";
 	if (!accelerator_map_insert(g_keyup_accelerators, accelerator, callback)) {
 		globalErrorStream() << "keyup_accelerators_add: already exists: " << makeQuoted(accelerator) << "\n";
 	}
 }
 void keyup_accelerators_remove (Accelerator accelerator)
 {
-	//globalOutputStream() << "keyup_accelerators_remove: " << makeQuoted(accelerator) << "\n";
 	if (!accelerator_map_erase(g_keyup_accelerators, accelerator)) {
 		globalErrorStream() << "keyup_accelerators_remove: not found: " << makeQuoted(accelerator) << "\n";
 	}
@@ -439,7 +429,6 @@ gboolean accel_closure_callback (GtkAccelGroup* group, GtkWidget* widget, guint 
 GClosure* accel_group_add_accelerator (GtkAccelGroup* group, Accelerator accelerator, const Callback& callback)
 {
 	if (accelerator.key != 0 && gtk_accelerator_valid(accelerator.key, accelerator.modifiers)) {
-		//globalOutputStream() << "global_accel_connect: " << makeQuoted(accelerator) << "\n";
 		GClosure* closure = create_cclosure(G_CALLBACK(accel_closure_callback), callback);
 		gtk_accel_group_connect(group, accelerator.key, accelerator.modifiers, GTK_ACCEL_VISIBLE, closure);
 		return closure;
@@ -452,7 +441,6 @@ GClosure* accel_group_add_accelerator (GtkAccelGroup* group, Accelerator acceler
 void accel_group_remove_accelerator (GtkAccelGroup* group, Accelerator accelerator)
 {
 	if (accelerator.key != 0 && gtk_accelerator_valid(accelerator.key, accelerator.modifiers)) {
-		//globalOutputStream() << "global_accel_disconnect: " << makeQuoted(accelerator) << "\n";
 		gtk_accel_group_disconnect_key(group, accelerator.key, accelerator.modifiers);
 	} else {
 		special_accelerators_remove(accelerator);
@@ -475,7 +463,6 @@ GClosure* global_accel_group_add_accelerator (Accelerator accelerator, const Cal
 {
 	if (!global_accel_enabled()) {
 		// workaround: cannot add to GtkAccelGroup while it is disabled
-		//globalOutputStream() << "queued for add: " << accelerator << "\n";
 		globalQueuedAccelerators_add(accelerator, callback);
 		return 0;
 	}
@@ -484,7 +471,6 @@ GClosure* global_accel_group_add_accelerator (Accelerator accelerator, const Cal
 void global_accel_group_remove_accelerator (Accelerator accelerator)
 {
 	if (!global_accel_enabled()) {
-		//globalOutputStream() << "queued for remove: " << accelerator << "\n";
 		globalQueuedAccelerators_remove(accelerator);
 		return;
 	}

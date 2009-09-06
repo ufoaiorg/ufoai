@@ -60,17 +60,14 @@ static gboolean selection_modifier_key_press (GtkWidget* widget, GdkEventKey* ev
 	switch (event->keyval) {
 	case GDK_Alt_L:
 	case GDK_Alt_R:
-		//globalOutputStream() << "Alt PRESSED\n";
 		WindowObservers_OnModifierDown(observers, c_modifierAlt);
 		break;
 	case GDK_Shift_L:
 	case GDK_Shift_R:
-		//globalOutputStream() << "Shift PRESSED\n";
 		WindowObservers_OnModifierDown(observers, c_modifierShift);
 		break;
 	case GDK_Control_L:
 	case GDK_Control_R:
-		//globalOutputStream() << "Control PRESSED\n";
 		WindowObservers_OnModifierDown(observers, c_modifierControl);
 		break;
 	}
@@ -82,17 +79,14 @@ static gboolean selection_modifier_key_release (GtkWidget* widget, GdkEventKey* 
 	switch (event->keyval) {
 	case GDK_Alt_L:
 	case GDK_Alt_R:
-		//globalOutputStream() << "Alt RELEASED\n";
 		WindowObservers_OnModifierUp(observers, c_modifierAlt);
 		break;
 	case GDK_Shift_L:
 	case GDK_Shift_R:
-		//globalOutputStream() << "Shift RELEASED\n";
 		WindowObservers_OnModifierUp(observers, c_modifierShift);
 		break;
 	case GDK_Control_L:
 	case GDK_Control_R:
-		//globalOutputStream() << "Control RELEASED\n";
 		WindowObservers_OnModifierUp(observers, c_modifierControl);
 		break;
 	}

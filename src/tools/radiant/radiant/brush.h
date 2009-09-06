@@ -3355,7 +3355,6 @@ class BrushInstance: public BrushObserver,
 		void evaluateTransform ()
 		{
 			Matrix4 matrix(m_transform.calculateTransform());
-			//globalOutputStream() << "matrix: " << matrix << "\n";
 
 			if (m_transform.getType() == TRANSFORM_PRIMITIVE) {
 				m_brush.transform(matrix);
