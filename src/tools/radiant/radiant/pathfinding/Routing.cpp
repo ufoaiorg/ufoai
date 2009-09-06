@@ -40,7 +40,15 @@ namespace routing
 	/** Submit renderable geometry when rendering takes place in Wireframe mode */
 	void Routing::renderWireframe (Renderer& renderer, const VolumeTest& volume) const
 	{
-		// this is not needed for rendering the routing data
+		/**@todo check whether to create a second renderable for wire mode */
+		if (_showPathfinding) {
+			/** @todo move this shader init somewhere else? */
+			if (!m_routingShader)
+				m_routingShader = colour_capture_state_fill(color2);
+			// renderer must have shader set for adding renderable
+			renderer.SetState(m_routingShader, Renderer::eWireframeOnly);
+			renderer.addRenderable(_renderable, g_matrix4_identity);
+		}
 	}
 
 	void Routing::renderComponents (Renderer&, const VolumeTest&)
