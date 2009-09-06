@@ -12,7 +12,7 @@ namespace routing
 	const Colour3 color2 = Colour3(1, 1, 1);
 
 	Routing::Routing () :
-		_showPathfinding(false)
+		_showPathfinding(false), _showIn2D(false)
 	{
 		m_routingShader = 0;
 	}
@@ -41,7 +41,7 @@ namespace routing
 	void Routing::renderWireframe (Renderer& renderer, const VolumeTest& volume) const
 	{
 		/**@todo check whether to create a second renderable for wire mode */
-		if (_showPathfinding) {
+		if (_showPathfinding && _showIn2D) {
 			/** @todo move this shader init somewhere else? */
 			if (!m_routingShader)
 				m_routingShader = colour_capture_state_fill(color2);

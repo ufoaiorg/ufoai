@@ -15,6 +15,7 @@ namespace routing
 			RoutingRenderable _renderable;
 			RoutingLumpLoader _loader;
 			bool _showPathfinding;
+			bool _showIn2D;
 
 		public:
 			Routing ();
@@ -34,6 +35,11 @@ namespace routing
 			void setShowAllLowerLevels (bool showAllLowerLevels)
 			{
 				_renderable.setShowAllLowerLevels(showAllLowerLevels);
+			}
+
+			void setShowIn2D (bool showIn2D)
+			{
+				_showIn2D = showIn2D;
 			}
 
 			void setShowPathfinding (bool showPathfinding)

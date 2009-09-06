@@ -41,18 +41,20 @@
 namespace routing
 {
 	bool showAllLowerLevels;
+	bool showIn2D;
 
 	class Pathfinding
 	{
 		private:
 			bool _showPathfinding;
+			bool _showIn2D;
 			Routing *_routingRender;
 			bool _showAllLowerLevels;
 
 		public:
 
 			Pathfinding () :
-				_showPathfinding(false), _routingRender(0)
+				_showPathfinding(false), _showIn2D(false), _routingRender(0)
 			{
 				_routingRender = new Routing();
 				GlobalShaderCache().attachRenderable(*_routingRender);
@@ -78,6 +80,12 @@ namespace routing
 			{
 				_showAllLowerLevels = showAllLowerLevels;
 				_routingRender->setShowAllLowerLevels(_showAllLowerLevels);
+			}
+
+			void setShowIn2D (bool showIn2D)
+			{
+				_showIn2D = showIn2D;
+				_routingRender->setShowIn2D(_showIn2D);
 			}
 
 			/**
@@ -133,17 +141,27 @@ namespace routing
 		SceneChangeNotify();
 	}
 
+	void setShowIn2D (bool value)
+	{
+		showIn2D = value;
+		pathfinding->setShowIn2D(showIn2D);
+		SceneChangeNotify();
+	}
+
 	void Pathfinding_constructPage (PreferenceGroup& group)
 	{
 		PreferencesPage page(group.createPage(_("Pathfinding"), _("Pathfinding Settings")));
-		page.appendCheckBox("", _("Show all lower levels"), FreeCaller1<bool, setShowAllLowerLevels> (),
-				BoolExportCaller(showAllLowerLevels));
+		page.appendCheckBox("", _("Show all lower levels"), FreeCaller1<bool, setShowAllLowerLevels> (), BoolExportCaller(
+				showAllLowerLevels));
+		page.appendCheckBox("", _("Show pathfinding data in 2D views"), FreeCaller1<bool, setShowIn2D> (), BoolExportCaller(showIn2D));
 	}
 
 	void Pathfinding_registerPreferences (void)
 	{
 		GlobalPreferenceSystem().registerPreference("PathfindingShowLowerLevels", BoolImportStringCaller(
 				showAllLowerLevels), BoolExportStringCaller(showAllLowerLevels));
+		GlobalPreferenceSystem().registerPreference("PathfindingShowIn2D", BoolImportStringCaller(showIn2D),
+				BoolExportStringCaller(showIn2D));
 
 		PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Pathfinding_constructPage> ());
 	}
