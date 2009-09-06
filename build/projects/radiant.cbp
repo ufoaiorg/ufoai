@@ -41,6 +41,10 @@
 					<Add library="kernel32" />
 					<Add library="libgtkglext-win32-1.0" />
 					<Add library="intl" />
+					<Add library="openal32" />
+					<Add library="vorbisfile" />
+					<Add library="vorbis" />
+					<Add library="ogg" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="..\..\contrib\scripts\compile_po.bat /uforadiant" />
@@ -112,6 +116,10 @@
 					<Add option="`pkg-config glib-2.0 --libs`" />
 					<Add option="`xml2-config --libs`" />
 					<Add library="gthread-2.0" />
+					<Add library="openal" />
+					<Add library="vorbisfile" />
+					<Add library="vorbis" />
+					<Add library="ogg" />
 				</Linker>
 			</Target>
 			<Target title="macosx">
@@ -135,6 +143,10 @@
 					<Add option="`xml2-config --libs`" />
 					<Add library="gthread-2.0" />
 					<Add directory="\sw\lib" />
+					<Add option="-framework OpenAL" />
+					<Add library="vorbisfile" />
+					<Add library="vorbis" />
+					<Add library="ogg" />
 				</Linker>
 			</Target>
 		</Build>
