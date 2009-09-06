@@ -1,3 +1,7 @@
+/**
+ * @file render.h
+ * @brief High-level constructs for efficient OpenGL rendering.
+ */
 /*
  Copyright (C) 2001-2006, William Joseph.
  All Rights Reserved.
@@ -21,9 +25,6 @@
 
 #if !defined(INCLUDED_RENDER_H)
 #define INCLUDED_RENDER_H
-
-/// \file
-/// \brief High-level constructs for efficient OpenGL rendering.
 
 #include "irender.h"
 #include "igl.h"
