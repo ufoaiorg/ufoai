@@ -18,13 +18,13 @@ class Element:
 		self.name = name
 		self.type = type
 		self.override = False
+		self.node = None
 		pass
 
 	def addDoc(self, comments):
 		self.doc = comments
 
 class NodeBehaviour:
-
 	def __init__(self):
 		self.name = ""
 		self.extends = "abstractnode"
@@ -33,6 +33,7 @@ class NodeBehaviour:
 		self.methods = {}
 		self.confuncs = {}
 		self.doc = ""
+		self.package = None
 		pass
 
 	def init(self, dic):
@@ -44,6 +45,9 @@ class NodeBehaviour:
 		if self.name == "":
 			self.name = "null"
 
+	def getSuperclass(self):
+		return self.package.getBehaviour(self.extends)
+	
 	def addProperty(self, element):
 		if element.type == "V_UI_NODEMETHOD":
 			self.methods[element.name] = element
@@ -51,6 +55,7 @@ class NodeBehaviour:
 			self.callbacks[element.name] = element
 		else:
 			self.properties[element.name] = element
+		element.node = self
 
 	def initProperties(self, dic):
 		self.properties = dic
@@ -58,15 +63,34 @@ class NodeBehaviour:
 	def initMethods(self, dic):
 		self.methods = dic
 
+class NodePackage:
+	def __init__(self):
+		self.behaviours = {}
+
+	def getBehaviourNames(self):
+		return self.behaviours.keys()
+
+	def getBehaviours(self):
+		return self.behaviours
+
+	def getBehaviour(self, name):
+		if name in self.behaviours:
+			return self.behaviours[name]
+		raise "Behaviour '" + name + "' not found."
+
+	def addBehaviour(self, behaviour):
+		self.behaviours[behaviour.name] = behaviour
+		behaviour.package = self
+
 # @brief Extract node behaviour from source code
 class ExtractNodeBehaviour:
 
 	def __init__(self):
-		self.behaviours = {}
+		self.package = NodePackage()
 		self.extractData()
 
-	def getBehaviours(self):
-		return self.behaviours
+	def getPackage(self):
+		return self.package
 
 	# @brief Extract each properties into a text according to the structure name
 	def extractProperties(self, node, filedata, structName):
@@ -183,4 +207,4 @@ class ExtractNodeBehaviour:
 				if 'properties' in dic:
 					props = self.extractProperties(node, data, dic['properties'])
 
-				self.behaviours[node.name] = node
+				self.package.addBehaviour(node)

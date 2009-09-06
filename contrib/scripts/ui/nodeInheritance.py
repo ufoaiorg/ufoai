@@ -47,7 +47,7 @@ def genBehaviourDot(node):
 	return result
 
 
-def genDot(nodeList):
+def genDot(package):
 	print "// contrib/scripts/menu/nodeInheritance.py > inheritance.dot"
 	print "// dot -Tpng -oinheritance.png < inheritance.dot"
 	print "digraph G {"
@@ -56,13 +56,13 @@ def genDot(nodeList):
 	print "\tedge [arrowhead=onormal]"
 	print ""
 
-	list = nodeList.keys()
+	list = package.getBehaviourNames()
 	list.sort()
 	for name in list:
-		node = nodeList[name]
+		node = package.getBehaviour(name)
 		print genBehaviourDot(node)
 	print "}"
 
 extract = ExtractNodeBehaviour()
-behaviours = extract.getBehaviours()
-genDot(behaviours)
+package = extract.getPackage()
+genDot(package)
