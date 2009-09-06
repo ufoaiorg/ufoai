@@ -27,7 +27,8 @@
 #if !defined(INCLUDED_MATH_MATRIX_H)
 #define INCLUDED_MATH_MATRIX_H
 
-#include "math/vector.h"
+#include "math/Vector3.h"
+#include "math/Vector4.h"
 
 /// \brief A 4x4 matrix stored in single-precision floating-point.
 class Matrix4
@@ -359,8 +360,8 @@ enum Matrix4Handedness
 /// \brief Returns MATRIX4_RIGHTHANDED if \p self is right-handed, else returns MATRIX4_LEFTHANDED.
 inline Matrix4Handedness matrix4_handedness (const Matrix4& self)
 {
-	return (vector4_to_vector3(self.x()).crossProduct(vector4_to_vector3(self.y())).dot(vector4_to_vector3(self.z()))
-			< 0.0) ? MATRIX4_LEFTHANDED : MATRIX4_RIGHTHANDED;
+	return (self.x().getVector3().crossProduct(self.y().getVector3()).dot(self.z().getVector3()) < 0.0) ? MATRIX4_LEFTHANDED
+			: MATRIX4_RIGHTHANDED;
 }
 
 /// \brief Returns \p self post-multiplied by \p other.
@@ -690,7 +691,7 @@ inline void matrix4_full_invert (Matrix4& self)
 /// \brief Returns the translation part of \p self.
 inline Vector3 matrix4_get_translation_vec3 (const Matrix4& self)
 {
-	return vector4_to_vector3(self.t());
+	return self.t().getVector3();
 }
 
 /// \brief Concatenates \p self with \p translation.
@@ -1131,9 +1132,9 @@ inline Matrix4 matrix4_scale_for_vec3 (const Vector3& scale)
 /// \p self must be affine and orthogonal to produce a meaningful result.
 inline Vector3 matrix4_get_scale_vec3 (const Matrix4& self)
 {
-	return Vector3(static_cast<float> (vector4_to_vector3(self.x()).getLength()),
-			static_cast<float> (vector4_to_vector3(self.y()).getLength()), static_cast<float> (vector4_to_vector3(
-					self.z()).getLength()));
+	return Vector3(static_cast<float> (self.x().getVector3().getLength()),
+			static_cast<float> (self.y().getVector3().getLength()),
+			static_cast<float> (self.z().getVector3().getLength()));
 }
 
 /// \brief Scales \p self by \p scale.

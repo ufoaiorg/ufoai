@@ -36,7 +36,6 @@
 #include "gtkmisc.h"
 #include "radiant_i18n.h"
 
-#include "math/vector.h"
 #include "os/path.h"
 
 #include "gtkutil/dialog.h"

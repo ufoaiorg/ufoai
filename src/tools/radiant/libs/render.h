@@ -31,7 +31,8 @@
 #include "igl.h"
 
 #include "container/array.h"
-#include "math/vector.h"
+#include "math/FloatTools.h"
+#include "math/Vector2.h"
 #include "math/pi.h"
 
 #include <vector>

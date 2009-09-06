@@ -1,6 +1,6 @@
 #include "PluginSlots.h"
 
-#include "math/vector.h"
+#include "math/Vector3.h"
 #include "string/string.h" // for the StringTokeniser stuff
 #include "../select.h"
 

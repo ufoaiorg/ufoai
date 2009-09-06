@@ -74,7 +74,7 @@ class RenderableParticleID: public OpenGLRenderable
 
 		void render (RenderStateFlags state) const
 		{
-			glRasterPos3fv(vector3_to_array(m_origin));
+			glRasterPos3fv(m_origin);
 			GlobalOpenGL().drawString(m_particle.m_id);
 		}
 };

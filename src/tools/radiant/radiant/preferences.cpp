@@ -31,7 +31,6 @@
 #include "debugging/debugging.h"
 
 #include "generic/callback.h"
-#include "math/vector.h"
 #include "string/string.h"
 #include "stream/stringstream.h"
 #include "os/file.h"

@@ -117,7 +117,7 @@ class RenderableClippedPrimitive: public OpenGLRenderable
 
 			m_primitives.back().m_count = count;
 			for (std::size_t i = 0; i < count; ++i) {
-				Vector3 world_point(vector4_projected(matrix4_transformed_vector4(m_inverse, clipped[i])));
+				Vector3 world_point(matrix4_transformed_vector4(m_inverse, clipped[i]).getProjected());
 				m_primitives.back().m_points[i].vertex = vertex3f_for_vector3(world_point);
 			}
 		}
@@ -137,6 +137,34 @@ class RenderableClippedPrimitive: public OpenGLRenderable
 				m_primitives.back().m_points[i].colour = colour_clipped;
 		}
 };
+
+#if defined(_DEBUG)
+#define DEBUG_SELECTION
+#endif
+
+#if defined(DEBUG_SELECTION)
+Shader* g_state_clipped;
+RenderableClippedPrimitive g_render_clipped;
+#endif
+
+#if 0
+// dist_Point_to_Line(): get the distance of a point to a line.
+//    Input:  a Point P and a Line L (in any dimension)
+//    Return: the shortest distance from P to L
+float
+dist_Point_to_Line( Point P, Line L)
+{
+	Vector v = L.P1 - L.P0;
+	Vector w = P - L.P0;
+
+	double c1 = dot(w,v);
+	double c2 = dot(v,v);
+	double b = c1 / c2;
+
+	Point Pb = L.P0 + b * v;
+	return d(P, Pb);
+}
+#endif
 
 inline double vector3_distance_squared (const Point3D& a, const Point3D& b)
 {
@@ -368,10 +396,14 @@ class SelectionVolume: public SelectionTest
 			{
 				Matrix4 screen2world(matrix4_full_inverse(m_local2view));
 
-				m_near = vector4_projected(matrix4_transformed_vector4(screen2world, Vector4(0, 0, -1, 1)));
+				m_near = matrix4_transformed_vector4(screen2world, Vector4(0, 0, -1, 1)).getProjected();
 
-				m_far = vector4_projected(matrix4_transformed_vector4(screen2world, Vector4(0, 0, 1, 1)));
+				m_far = matrix4_transformed_vector4(screen2world, Vector4(0, 0, 1, 1)).getProjected();
 			}
+
+#if defined(DEBUG_SELECTION)
+			g_render_clipped.construct(m_view.GetViewMatrix());
+#endif
 		}
 		void TestPoint (const Vector3& point, SelectionIntersection& best)
 		{
@@ -1207,6 +1239,10 @@ class RadiantSelectionSystem: public SelectionSystem,
 		bool SelectManipulator (const View& view, const float device_point[2], const float device_epsilon[2])
 		{
 			if (!nothingSelected() || (ManipulatorMode() == eDrag && Mode() == eComponent)) {
+#if defined (DEBUG_SELECTION)
+				g_render_clipped.destroy();
+#endif
+
 				m_manipulator->setSelected(false);
 
 				if (!nothingSelected() || (ManipulatorMode() == eDrag && Mode() == eComponent)) {
@@ -1260,6 +1296,10 @@ class RadiantSelectionSystem: public SelectionSystem,
 					deselectAll();
 				}
 			}
+
+#if defined (DEBUG_SELECTION)
+			g_render_clipped.destroy();
+#endif
 
 			{
 				View scissored(view);
@@ -1326,6 +1366,10 @@ class RadiantSelectionSystem: public SelectionSystem,
 				}
 			}
 
+#if defined (DEBUG_SELECTION)
+			g_render_clipped.destroy();
+#endif
+
 			{
 				View scissored(view);
 				ConstructSelectionTest(scissored, SelectionBoxForArea(device_point, device_delta));
@@ -1376,12 +1420,11 @@ class RadiantSelectionSystem: public SelectionSystem,
 				m_rotation = rotation;
 
 				if (Mode() == eComponent) {
-					Scene_Rotate_Component_Selected(GlobalSceneGraph(), m_rotation, vector4_to_vector3(
-							m_pivot2world.t()));
+					Scene_Rotate_Component_Selected(GlobalSceneGraph(), m_rotation, m_pivot2world.t().getVector3());
 
 					matrix4_assign_rotation_for_pivot(m_pivot2world, m_component_selection.back());
 				} else {
-					Scene_Rotate_Selected(GlobalSceneGraph(), m_rotation, vector4_to_vector3(m_pivot2world.t()));
+					Scene_Rotate_Selected(GlobalSceneGraph(), m_rotation, m_pivot2world.t().getVector3());
 
 					matrix4_assign_rotation_for_pivot(m_pivot2world, m_selection.back());
 				}
@@ -1399,9 +1442,9 @@ class RadiantSelectionSystem: public SelectionSystem,
 				m_scale = scaling;
 
 				if (Mode() == eComponent) {
-					Scene_Scale_Component_Selected(GlobalSceneGraph(), m_scale, vector4_to_vector3(m_pivot2world.t()));
+					Scene_Scale_Component_Selected(GlobalSceneGraph(), m_scale, m_pivot2world.t().getVector3());
 				} else {
-					Scene_Scale_Selected(GlobalSceneGraph(), m_scale, vector4_to_vector3(m_pivot2world.t()));
+					Scene_Scale_Selected(GlobalSceneGraph(), m_scale, m_pivot2world.t().getVector3());
 				}
 
 				SceneChangeNotify();
@@ -1473,6 +1516,9 @@ class RadiantSelectionSystem: public SelectionSystem,
 		static void constructStatic ()
 		{
 			m_state = GlobalShaderCache().capture("$POINT");
+#if defined(DEBUG_SELECTION)
+			g_state_clipped = GlobalShaderCache().capture("$DEBUG_CLIPPED");
+#endif
 			TranslateManipulator::m_state_wire = GlobalShaderCache().capture("$WIRE_OVERLAY");
 			TranslateManipulator::m_state_fill = GlobalShaderCache().capture("$FLATSHADE_OVERLAY");
 			RotateManipulator::m_state_outer = GlobalShaderCache().capture("$WIRE_OVERLAY");
@@ -1480,6 +1526,9 @@ class RadiantSelectionSystem: public SelectionSystem,
 
 		static void destroyStatic ()
 		{
+#if defined(DEBUG_SELECTION)
+			GlobalShaderCache().release("$DEBUG_CLIPPED");
+#endif
 			GlobalShaderCache().release("$WIRE_OVERLAY");
 			GlobalShaderCache().release("$FLATSHADE_OVERLAY");
 			GlobalShaderCache().release("$WIRE_OVERLAY");
@@ -1708,10 +1757,11 @@ inline AABB Instance_getPivotBounds (scene::Instance& instance)
 	if (entity != 0 && (entity->getEntityClass().fixedsize || !node_is_group(instance.path().top()))) {
 		Editable* editable = Node_getEditable(instance.path().top());
 		if (editable != 0) {
-			return AABB(vector4_to_vector3(matrix4_multiplied_by_matrix4(instance.localToWorld(),
-					editable->getLocalPivot()).t()), Vector3(0, 0, 0));
+			return AABB(
+					matrix4_multiplied_by_matrix4(instance.localToWorld(), editable->getLocalPivot()).t().getVector3(),
+					Vector3(0, 0, 0));
 		} else {
-			return AABB(vector4_to_vector3(instance.localToWorld().t()), Vector3(0, 0, 0));
+			return AABB(instance.localToWorld().t().getVector3(), Vector3(0, 0, 0));
 		}
 	}
 
@@ -1770,6 +1820,30 @@ void Scene_BoundsSelectedComponent (scene::Graph& graph, AABB& bounds)
 	graph.traverse(bounds_selected_component(bounds));
 }
 
+#if 0
+inline void pivot_for_node(Matrix4& pivot, scene::Node& node, scene::Instance& instance)
+{
+	ComponentEditable* componentEditable = Instance_getComponentEditable(instance);
+	if(GlobalSelectionSystem().Mode() == SelectionSystem::eComponent
+			&& componentEditable != 0)
+	{
+		pivot = matrix4_translation_for_vec3(componentEditable->getSelectedComponentsBounds().origin);
+	}
+	else
+	{
+		Bounded* bounded = Instance_getBounded(instance);
+		if(bounded != 0)
+		{
+			pivot = matrix4_translation_for_vec3(bounded->localAABB().origin);
+		}
+		else
+		{
+			pivot = g_matrix4_identity;
+		}
+	}
+}
+#endif
+
 void RadiantSelectionSystem::ConstructPivot () const
 {
 	if (!m_pivotChanged || m_pivot_moving)
@@ -1827,6 +1901,12 @@ void RadiantSelectionSystem::renderSolid (Renderer& renderer, const VolumeTest& 
 
 		m_manipulator->render(renderer, volume, GetPivot2World());
 	}
+
+#if defined(DEBUG_SELECTION)
+	renderer.SetState(g_state_clipped, Renderer::eWireframeOnly);
+	renderer.SetState(g_state_clipped, Renderer::eFullMaterials);
+	renderer.addRenderable(g_render_clipped, g_render_clipped.m_world);
+#endif
 }
 
 void SelectionSystem_OnBoundsChanged ()
@@ -1897,11 +1977,19 @@ typedef Callback1<DeviceVector> MouseEventCallback;
 Single<MouseEventCallback> g_mouseMovedCallback;
 Single<MouseEventCallback> g_mouseUpCallback;
 
+#if 1
 const ButtonIdentifier c_button_select = c_buttonLeft;
 const ModifierFlags c_modifier_manipulator = c_modifierNone;
 const ModifierFlags c_modifier_toggle = c_modifierShift;
 const ModifierFlags c_modifier_replace = c_modifierShift | c_modifierAlt;
 const ModifierFlags c_modifier_face = c_modifierControl;
+#else
+const ButtonIdentifier c_button_select = c_buttonLeft;
+const ModifierFlags c_modifier_manipulator = c_modifierNone;
+const ModifierFlags c_modifier_toggle = c_modifierControl;
+const ModifierFlags c_modifier_replace = c_modifierNone;
+const ModifierFlags c_modifier_face = c_modifierShift;
+#endif
 const ModifierFlags c_modifier_toggle_face = c_modifier_toggle | c_modifier_face;
 const ModifierFlags c_modifier_replace_face = c_modifier_replace | c_modifier_face;
 

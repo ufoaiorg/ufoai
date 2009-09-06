@@ -2,7 +2,7 @@
 #define ROUTINGLUMP_H_
 
 #include <list>
-#include "generic/vector.h"
+#include "math/Vector3.h"
 
 namespace routing
 {

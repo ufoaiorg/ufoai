@@ -219,8 +219,8 @@ void Texdef_EmitTextureCoordinates (const TextureProjection& projection, std::si
 		matrix4_multiply_by_matrix4(local2tex, xyz2st);
 	}
 
-	Vector3 tangent(vector4_to_vector3(matrix4_transposed(local2tex).x()).getNormalised());
-	Vector3 bitangent(vector4_to_vector3(matrix4_transposed(local2tex).y()).getNormalised());
+	Vector3 tangent(matrix4_transposed(local2tex).x().getVector3().getNormalised());
+	Vector3 bitangent(matrix4_transposed(local2tex).y().getVector3().getNormalised());
 
 	matrix4_multiply_by_matrix4(local2tex, localToWorld);
 
@@ -441,9 +441,9 @@ void Texdef_transformLocked (TextureProjection& projection, std::size_t width, s
 	Matrix4 stTransformed2identity(matrix4_affine_inverse(matrix4_multiplied_by_matrix4(transformed2stTransformed,
 			identity2transformed)));
 
-	Vector3 originalProjectionAxis(vector4_to_vector3(matrix4_affine_inverse(identity2stIdentity).z()));
+	Vector3 originalProjectionAxis(matrix4_affine_inverse(identity2stIdentity).z().getVector3());
 
-	Vector3 transformedProjectionAxis(vector4_to_vector3(stTransformed2identity.z()));
+	Vector3 transformedProjectionAxis(stTransformed2identity.z().getVector3());
 
 	Matrix4 stIdentity2stOriginal;
 	Texdef_toTransform(projection, (float) width, (float) height, stIdentity2stOriginal);

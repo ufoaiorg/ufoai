@@ -27,7 +27,6 @@
 #if !defined(INCLUDED_MATH_LINE_H)
 #define INCLUDED_MATH_LINE_H
 
-#include "math/vector.h"
 #include "math/plane.h"
 
 /// \brief A line segment defined by a start point and and end point.

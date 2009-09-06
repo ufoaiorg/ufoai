@@ -24,7 +24,7 @@
 
 #include <cstddef>
 
-#include "generic/vector.h"
+#include "math/Vector3.h"
 #include "scenelib.h"
 #include "generic/callbackfwd.h"
 

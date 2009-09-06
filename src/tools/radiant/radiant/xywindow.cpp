@@ -131,9 +131,9 @@ void ClipPoint::Draw (const char *label, float scale)
 {
 	// draw point
 	glPointSize(4);
-	glColor3fv(vector3_to_array(g_xywindow_globals.color_clipper));
+	glColor3fv(g_xywindow_globals.color_clipper);
 	glBegin(GL_POINTS);
-	glVertex3fv(vector3_to_array(m_ptClip));
+	glVertex3fv(m_ptClip);
 	glEnd();
 	glPointSize(1);
 
@@ -1617,12 +1617,12 @@ void XYWnd::XY_DrawAxis (void)
 		// horizontal line: nDim1 color
 		glLineWidth(2);
 		glBegin(GL_LINES);
-		glColor3fv(vector3_to_array(colourX));
+		glColor3fv(colourX);
 		glVertex2f(m_vOrigin[nDim1] - w + 40 / m_fScale, m_vOrigin[nDim2] + h - 45 / m_fScale);
 		glVertex2f(m_vOrigin[nDim1] - w + 65 / m_fScale, m_vOrigin[nDim2] + h - 45 / m_fScale);
 		glVertex2f(0, 0);
 		glVertex2f(32 / m_fScale, 0);
-		glColor3fv(vector3_to_array(colourY));
+		glColor3fv(colourY);
 		glVertex2f(m_vOrigin[nDim1] - w + 40 / m_fScale, m_vOrigin[nDim2] + h - 45 / m_fScale);
 		glVertex2f(m_vOrigin[nDim1] - w + 40 / m_fScale, m_vOrigin[nDim2] + h - 20 / m_fScale);
 		glVertex2f(0, 0);
@@ -1630,12 +1630,12 @@ void XYWnd::XY_DrawAxis (void)
 		glEnd();
 		glLineWidth(1);
 		// now print axis symbols
-		glColor3fv(vector3_to_array(colourX));
+		glColor3fv(colourX);
 		glRasterPos2f(m_vOrigin[nDim1] - w + 55 / m_fScale, m_vOrigin[nDim2] + h - 55 / m_fScale);
 		GlobalOpenGL().drawChar(g_AxisName[nDim1]);
 		glRasterPos2f(28 / m_fScale, -10 / m_fScale);
 		GlobalOpenGL().drawChar(g_AxisName[nDim1]);
-		glColor3fv(vector3_to_array(colourY));
+		glColor3fv(colourY);
 		glRasterPos2f(m_vOrigin[nDim1] - w + 25 / m_fScale, m_vOrigin[nDim2] + h - 30 / m_fScale);
 		GlobalOpenGL().drawChar(g_AxisName[nDim2]);
 		glRasterPos2f(-10 / m_fScale, 28 / m_fScale);
@@ -1747,7 +1747,7 @@ void XYWnd::XY_DrawGrid (void)
 	// draw minor blocks
 	if (g_xywindow_globals_private.d_showgrid) {
 		if (COLORS_DIFFER(g_xywindow_globals.color_gridminor, g_xywindow_globals.color_gridback)) {
-			glColor3fv(vector3_to_array(g_xywindow_globals.color_gridminor));
+			glColor3fv(g_xywindow_globals.color_gridminor);
 
 			glBegin(GL_LINES);
 			int i = 0;
@@ -1769,7 +1769,7 @@ void XYWnd::XY_DrawGrid (void)
 
 		// draw major blocks
 		if (COLORS_DIFFER(g_xywindow_globals.color_gridmajor, g_xywindow_globals.color_gridback)) {
-			glColor3fv(vector3_to_array(g_xywindow_globals.color_gridmajor));
+			glColor3fv(g_xywindow_globals.color_gridmajor);
 
 			glBegin(GL_LINES);
 			for (x = xb; x <= xe; x += step) {
@@ -1786,7 +1786,7 @@ void XYWnd::XY_DrawGrid (void)
 
 	// draw coordinate text if needed
 	if (g_xywindow_globals_private.show_coordinates) {
-		glColor3fv(vector3_to_array(g_xywindow_globals.color_gridtext));
+		glColor3fv(g_xywindow_globals.color_gridtext);
 		const float offx = m_vOrigin[nDim2] + h - GlobalOpenGL().m_fontHeight / m_fScale;
 		const float offy = m_vOrigin[nDim1] - w + 1 / m_fScale;
 		for (x = xb - fmod(xb, stepx); x <= xe; x += stepx) {
@@ -1801,7 +1801,7 @@ void XYWnd::XY_DrawGrid (void)
 		}
 
 		if (Active())
-			glColor3fv(vector3_to_array(g_xywindow_globals.color_viewname));
+			glColor3fv(g_xywindow_globals.color_viewname);
 
 		// we do this part (the old way) only if show_axis is disabled
 		if (!g_xywindow_globals_private.show_axis) {
@@ -1886,7 +1886,7 @@ void XYWnd::XY_DrawBlockGrid (void)
 
 	// draw major blocks
 
-	glColor3fv(vector3_to_array(g_xywindow_globals.color_gridblock));
+	glColor3fv(g_xywindow_globals.color_gridblock);
 	glLineWidth(2);
 
 	glBegin(GL_LINES);
@@ -2381,17 +2381,17 @@ void XYWnd::XY_Draw ()
 
 			// four view mode doesn't colorize
 			if (g_pParentWnd->CurrentStyle() == MainFrame::eSplit)
-				glColor3fv(vector3_to_array(g_xywindow_globals.color_viewname));
+				glColor3fv(g_xywindow_globals.color_viewname);
 			else {
 				switch (m_viewType) {
 				case YZ:
-					glColor3fv(vector3_to_array(g_xywindow_globals.AxisColorX));
+					glColor3fv(g_xywindow_globals.AxisColorX);
 					break;
 				case XZ:
-					glColor3fv(vector3_to_array(g_xywindow_globals.AxisColorY));
+					glColor3fv(g_xywindow_globals.AxisColorY);
 					break;
 				case XY:
-					glColor3fv(vector3_to_array(g_xywindow_globals.AxisColorZ));
+					glColor3fv(g_xywindow_globals.AxisColorZ);
 					break;
 				}
 			}

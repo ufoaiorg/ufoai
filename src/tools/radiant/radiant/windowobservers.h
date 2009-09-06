@@ -26,7 +26,7 @@
 
 #include <gdk/gdktypes.h>
 
-#include "math/vector.h"
+#include "math/Vector3.h"
 #include "stream/textstream.h"
 #include "stream/textfilestream.h"
 

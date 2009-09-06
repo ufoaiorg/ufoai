@@ -37,7 +37,7 @@
 #include <vector>
 
 #include "signal/signal.h"
-#include "math/vector.h"
+#include "math/Vector3.h"
 #include "string/string.h"
 #include "os/file.h"
 #include "os/path.h"

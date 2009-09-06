@@ -22,9 +22,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_TEXWINDOW_H)
 #define INCLUDED_TEXWINDOW_H
 
-#include "math/vector.h"
 #include "generic/callbackfwd.h"
 #include "signal/signalfwd.h"
+#include "math/Vector3.h"
 
 typedef struct _GtkWidget GtkWidget;
 

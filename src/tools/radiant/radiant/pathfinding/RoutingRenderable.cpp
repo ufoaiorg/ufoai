@@ -118,7 +118,7 @@ namespace routing
 	 */
 	void RoutingRenderableEntry::renderWireframe () const
 	{
-		glColor3fv(vector3_to_array(color_wireframe));
+		glColor3fv(color_wireframe);
 
 		Vector3 dx = Vector3(UNIT_SIZE, 0, 0);
 		Vector3 dy = Vector3(0, UNIT_SIZE, 0);
@@ -137,28 +137,28 @@ namespace routing
 
 		glBegin(GL_LINE_STRIP);
 		/* connect continuing lines from point to point */
-		glVertex3fv(vector3_to_array(l1));
-		glVertex3fv(vector3_to_array(l2));
-		glVertex3fv(vector3_to_array(l3));
-		glVertex3fv(vector3_to_array(l4));
-		glVertex3fv(vector3_to_array(l1));
-		glVertex3fv(vector3_to_array(u1));
-		glVertex3fv(vector3_to_array(u2));
-		glVertex3fv(vector3_to_array(u3));
-		glVertex3fv(vector3_to_array(u4));
-		glVertex3fv(vector3_to_array(u1));
+		glVertex3fv(l1);
+		glVertex3fv(l2);
+		glVertex3fv(l3);
+		glVertex3fv(l4);
+		glVertex3fv(l1);
+		glVertex3fv(u1);
+		glVertex3fv(u2);
+		glVertex3fv(u3);
+		glVertex3fv(u4);
+		glVertex3fv(u1);
 		glEnd();
 
 		glBegin(GL_LINES);
 		/* draw missing lines from point to point */
-		glVertex3fv(vector3_to_array(l2));
-		glVertex3fv(vector3_to_array(u2));
+		glVertex3fv(l2);
+		glVertex3fv(u2);
 
-		glVertex3fv(vector3_to_array(l3));
-		glVertex3fv(vector3_to_array(u3));
+		glVertex3fv(l3);
+		glVertex3fv(u3);
 
-		glVertex3fv(vector3_to_array(l4));
-		glVertex3fv(vector3_to_array(u4));
+		glVertex3fv(l4);
+		glVertex3fv(u4);
 
 		glEnd();
 	}
@@ -190,7 +190,7 @@ namespace routing
 	{
 		/* center of drawn box */
 		const Vector3 color = getColorForAccessState(_data.getAccessState());
-		glColor3fv(vector3_to_array(color));
+		glColor3fv(color);
 		AABB box = AABB(this->_data.getOrigin() + Vector3(0, 0, -UNIT_HEIGHT_QUARTER - UNIT_HEIGHT_EIGHTH), Vector3(
 				UNIT_SIZE_QUARTER, UNIT_SIZE_QUARTER, UNIT_HEIGHT_EIGHTH));
 		aabb_draw_solid(box, state);
@@ -222,7 +222,7 @@ namespace routing
 	void RoutingRenderableEntry::renderConnection (EDirection direction) const
 	{
 		const Vector3 color = getColorForConnectivity(_data.getConnectionState(direction));
-		glColor3fv(vector3_to_array(color));
+		glColor3fv(color);
 
 		//vector to center of direction arrows
 		Vector3 diffCenter = this->_data.getOrigin();//vector3_added(vector3_scaled(this->_data.getOrigin(), grid_scale),Vector3(UNIT_SIZE_HALF, UNIT_SIZE_HALF, UNIT_HEIGHT_HALF));
@@ -245,20 +245,20 @@ namespace routing
 
 		/* draw arrow as connected triangles */
 		glBegin(GL_TRIANGLE_FAN);
-		glVertex3fv(vector3_to_array(tip));
-		glVertex3fv(vector3_to_array(b1));
-		glVertex3fv(vector3_to_array(b2));
-		glVertex3fv(vector3_to_array(b3));
-		glVertex3fv(vector3_to_array(b4));
-		glVertex3fv(vector3_to_array(b1));
+		glVertex3fv(tip);
+		glVertex3fv(b1);
+		glVertex3fv(b2);
+		glVertex3fv(b3);
+		glVertex3fv(b4);
+		glVertex3fv(b1);
 		glEnd();
 
 		/* close the arrow (counterclockwise)*/
 		glBegin(GL_QUADS);
-		glVertex3fv(vector3_to_array(b2));
-		glVertex3fv(vector3_to_array(b1));
-		glVertex3fv(vector3_to_array(b4));
-		glVertex3fv(vector3_to_array(b3));
+		glVertex3fv(b2);
+		glVertex3fv(b1);
+		glVertex3fv(b4);
+		glVertex3fv(b3);
 		glEnd();
 	}
 

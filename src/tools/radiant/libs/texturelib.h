@@ -22,7 +22,8 @@
 #if !defined (INCLUDED_TEXTURELIB_H)
 #define INCLUDED_TEXTURELIB_H
 
-#include "generic/vector.h"
+#include "math/Vector3.h"
+
 typedef Vector3 Colour3;
 typedef unsigned int GLuint;
 class LoadImageCallback;

@@ -43,6 +43,10 @@ inline void draw_semicircle (const std::size_t segments, const float radius, Poi
 
 		remap_policy::set(j->vertex, y, -x, 0);
 		remap_policy::set(l->vertex, -x, -y, 0);
+#if 0
+		remap_policy::set(n->vertex,-y, x, 0);
+		remap_policy::set(p->vertex, x, y, 0);
+#endif
 	}
 }
 
@@ -72,33 +76,33 @@ void RotateManipulator::UpdateColours ()
 
 void RotateManipulator::updateCircleTransforms ()
 {
-	Vector3 localViewpoint(matrix4_transformed_direction(matrix4_transposed(m_pivot.m_worldSpace), vector4_to_vector3(
-			m_pivot.m_viewpointSpace.z())));
+	Vector3 localViewpoint(matrix4_transformed_direction(matrix4_transposed(m_pivot.m_worldSpace),
+			m_pivot.m_viewpointSpace.z().getVector3()));
 
 	m_circle_x_visible = !vector3_equal_epsilon(g_vector3_axis_x, localViewpoint, 1e-6f);
 	if (m_circle_x_visible) {
 		m_local2world_x = g_matrix4_identity;
-		vector4_to_vector3(m_local2world_x.y()) = g_vector3_axis_x.crossProduct(localViewpoint).getNormalised();
-		vector4_to_vector3(m_local2world_x.z()) = vector4_to_vector3(m_local2world_x.x()).crossProduct(
-				vector4_to_vector3(m_local2world_x.y())).getNormalised();
+		m_local2world_x.y().getVector3() = g_vector3_axis_x.crossProduct(localViewpoint).getNormalised();
+		m_local2world_x.z().getVector3() = m_local2world_x.x().getVector3().crossProduct(
+				m_local2world_x.y().getVector3()).getNormalised();
 		matrix4_premultiply_by_matrix4(m_local2world_x, m_pivot.m_worldSpace);
 	}
 
 	m_circle_y_visible = !vector3_equal_epsilon(g_vector3_axis_y, localViewpoint, 1e-6f);
 	if (m_circle_y_visible) {
 		m_local2world_y = g_matrix4_identity;
-		vector4_to_vector3(m_local2world_y.z()) = g_vector3_axis_y.crossProduct(localViewpoint).getNormalised();
-		vector4_to_vector3(m_local2world_y.x()) = vector4_to_vector3(m_local2world_y.y()).crossProduct(
-				vector4_to_vector3(m_local2world_y.z())).getNormalised();
+		m_local2world_y.z().getVector3() = g_vector3_axis_y.crossProduct(localViewpoint).getNormalised();
+		m_local2world_y.x().getVector3() = m_local2world_y.y().getVector3().crossProduct(
+				m_local2world_y.z().getVector3()).getNormalised();
 		matrix4_premultiply_by_matrix4(m_local2world_y, m_pivot.m_worldSpace);
 	}
 
 	m_circle_z_visible = !vector3_equal_epsilon(g_vector3_axis_z, localViewpoint, 1e-6f);
 	if (m_circle_z_visible) {
 		m_local2world_z = g_matrix4_identity;
-		vector4_to_vector3(m_local2world_z.x()) = g_vector3_axis_z.crossProduct(localViewpoint).getNormalised();
-		vector4_to_vector3(m_local2world_z.y()) = vector4_to_vector3(m_local2world_z.z()).crossProduct(
-				vector4_to_vector3(m_local2world_z.x())).getNormalised();
+		m_local2world_z.x().getVector3() = g_vector3_axis_z.crossProduct(localViewpoint).getNormalised();
+		m_local2world_z.y().getVector3() = m_local2world_z.z().getVector3().crossProduct(
+				m_local2world_z.x().getVector3()).getNormalised();
 		matrix4_premultiply_by_matrix4(m_local2world_z, m_pivot.m_worldSpace);
 	}
 }
@@ -138,6 +142,7 @@ void RotateManipulator::testSelect (const View& view, const Matrix4& pivot2world
 	{
 		{
 			Matrix4 local2view(matrix4_multiplied_by_matrix4(view.GetViewMatrix(), m_local2world_x));
+
 			SelectionIntersection best;
 			LineStrip_BestPoint(local2view, m_circle_x.m_vertices.data(), m_circle_x.m_vertices.size(), best);
 			selector.addSelectable(best, &m_selectable_x);
@@ -145,6 +150,7 @@ void RotateManipulator::testSelect (const View& view, const Matrix4& pivot2world
 
 		{
 			Matrix4 local2view(matrix4_multiplied_by_matrix4(view.GetViewMatrix(), m_local2world_y));
+
 			SelectionIntersection best;
 			LineStrip_BestPoint(local2view, m_circle_y.m_vertices.data(), m_circle_y.m_vertices.size(), best);
 			selector.addSelectable(best, &m_selectable_y);
@@ -152,6 +158,7 @@ void RotateManipulator::testSelect (const View& view, const Matrix4& pivot2world
 
 		{
 			Matrix4 local2view(matrix4_multiplied_by_matrix4(view.GetViewMatrix(), m_local2world_z));
+
 			SelectionIntersection best;
 			LineStrip_BestPoint(local2view, m_circle_z.m_vertices.data(), m_circle_z.m_vertices.size(), best);
 			selector.addSelectable(best, &m_selectable_z);
@@ -260,13 +267,13 @@ void TranslateManipulator::render (Renderer& renderer, const VolumeTest& volume,
 	// temp hack
 	UpdateColours();
 
-	Vector3 x = vector4_to_vector3(m_pivot.m_worldSpace.x()).getNormalised();
+	Vector3 x = m_pivot.m_worldSpace.x().getVector3().getNormalised();
 	bool show_x = manipulator_show_axis(m_pivot, x);
 
-	Vector3 y = vector4_to_vector3(m_pivot.m_worldSpace.y()).getNormalised();
+	Vector3 y = m_pivot.m_worldSpace.y().getVector3().getNormalised();
 	bool show_y = manipulator_show_axis(m_pivot, y);
 
-	Vector3 z = vector4_to_vector3(m_pivot.m_worldSpace.z()).getNormalised();
+	Vector3 z = m_pivot.m_worldSpace.z().getVector3().getNormalised();
 	bool show_z = manipulator_show_axis(m_pivot, z);
 
 	renderer.SetState(m_state_wire, Renderer::eWireframeOnly);
@@ -304,13 +311,13 @@ void TranslateManipulator::testSelect (const View& view, const Matrix4& pivot2wo
 
 	SelectionPool selector;
 
-	Vector3 x = vector4_to_vector3(m_pivot.m_worldSpace.x()).getNormalised();
+	Vector3 x = m_pivot.m_worldSpace.x().getVector3().getNormalised();
 	bool show_x = manipulator_show_axis(m_pivot, x);
 
-	Vector3 y = vector4_to_vector3(m_pivot.m_worldSpace.y()).getNormalised();
+	Vector3 y = m_pivot.m_worldSpace.y().getVector3().getNormalised();
 	bool show_y = manipulator_show_axis(m_pivot, y);
 
-	Vector3 z = vector4_to_vector3(m_pivot.m_worldSpace.z()).getNormalised();
+	Vector3 z = m_pivot.m_worldSpace.z().getVector3().getNormalised();
 	bool show_z = manipulator_show_axis(m_pivot, z);
 
 	{
@@ -328,6 +335,10 @@ void TranslateManipulator::testSelect (const View& view, const Matrix4& pivot2wo
 
 	{
 		Matrix4 local2view(matrix4_multiplied_by_matrix4(view.GetViewMatrix(), m_pivot.m_worldSpace));
+
+#if defined(DEBUG_SELECTION)
+		g_render_clipped.construct(view.GetViewMatrix());
+#endif
 
 		if (show_x) {
 			SelectionIntersection best;

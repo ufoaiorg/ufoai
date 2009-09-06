@@ -23,7 +23,7 @@
 #define INCLUDED_XORRECTANGLE_H
 
 #include <gtk/gtkwidget.h>
-#include "math/vector.h"
+#include "math/FloatTools.h"
 
 class Rectangle
 {

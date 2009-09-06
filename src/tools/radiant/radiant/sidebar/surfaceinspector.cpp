@@ -37,7 +37,6 @@
 
 #include "signal/isignal.h"
 #include "generic/object.h"
-#include "math/vector.h"
 #include "texturelib.h"
 #include "shaderlib.h"
 #include "stringio.h"

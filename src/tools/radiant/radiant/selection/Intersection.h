@@ -1,7 +1,7 @@
 #ifndef INTERSECTION_H_
 #define INTERSECTION_H_
 
-#include "math/vector.h"
+#include "math/Vector3.h"
 #include "math/line.h"
 
 void point_for_device_point (Vector3& point, const Matrix4& device2object, const float x, const float y, const float z);

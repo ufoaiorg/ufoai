@@ -163,7 +163,7 @@ class View : public VolumeTest {
 		return m_fill;
 	}
 	const Vector3& getViewer() const {
-		return vector4_to_vector3(m_viewer);
+		return m_viewer.getVector3();
 	}
 };
 

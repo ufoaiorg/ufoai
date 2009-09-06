@@ -31,7 +31,6 @@
 #include "ieclass.h"
 #include "irender.h"
 
-#include "math/vector.h"
 #include "string/string.h"
 
 typedef Vector3 Colour3;

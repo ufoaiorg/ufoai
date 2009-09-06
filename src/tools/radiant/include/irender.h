@@ -149,7 +149,7 @@ class Matrix4;
 struct qtexture_t;
 class ModuleObserver;
 
-#include "generic/vector.h"
+#include "math/Vector3.h"
 
 /**
  * A Shader represents a single material which can be rendered in OpenGL, which

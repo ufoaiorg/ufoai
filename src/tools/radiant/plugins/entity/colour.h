@@ -25,7 +25,6 @@
 #include "ientity.h"
 #include "irender.h"
 
-#include "math/vector.h"
 #include "eclasslib.h"
 #include "generic/callback.h"
 #include "stringio.h"

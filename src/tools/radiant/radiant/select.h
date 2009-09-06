@@ -22,7 +22,7 @@
 #if !defined(INCLUDED_SELECT_H)
 #define INCLUDED_SELECT_H
 
-#include "math/vector.h"
+#include "math/Vector3.h"
 #include <string>
 
 void Select_GetBounds (Vector3& mins, Vector3& maxs);

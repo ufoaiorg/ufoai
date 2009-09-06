@@ -73,32 +73,32 @@ static void sphere_draw_fill (const Vector3& origin, float radius, int sides)
 
 			{
 				Vector3 v(origin + vector3_for_spherical(t, p) * radius);
-				glVertex3fv(vector3_to_array(v));
+				glVertex3fv(v);
 			}
 
 			{
 				Vector3 v(origin + vector3_for_spherical(t, p + dp) * radius);
-				glVertex3fv(vector3_to_array(v));
+				glVertex3fv(v);
 			}
 
 			{
 				Vector3 v(origin + vector3_for_spherical(t + dt, p + dp) * radius);
-				glVertex3fv(vector3_to_array(v));
+				glVertex3fv(v);
 			}
 
 			{
 				Vector3 v(origin + vector3_for_spherical(t, p) * radius);
-				glVertex3fv(vector3_to_array(v));
+				glVertex3fv(v);
 			}
 
 			{
 				Vector3 v(origin + vector3_for_spherical(t + dt, p + dp) * radius);
-				glVertex3fv(vector3_to_array(v));
+				glVertex3fv(v);
 			}
 
 			{
 				Vector3 v(origin + vector3_for_spherical(t + dt, p) * radius);
-				glVertex3fv(vector3_to_array(v));
+				glVertex3fv(v);
 			}
 		}
 	}
@@ -110,17 +110,17 @@ static void sphere_draw_fill (const Vector3& origin, float radius, int sides)
 
 			{
 				Vector3 v(origin + vector3_for_spherical(t, p) * radius);
-				glVertex3fv(vector3_to_array(v));
+				glVertex3fv(v);
 			}
 
 			{
 				Vector3 v(origin + vector3_for_spherical(t + dt, p + dp) * radius);
-				glVertex3fv(vector3_to_array(v));
+				glVertex3fv(v);
 			}
 
 			{
 				Vector3 v(origin + vector3_for_spherical(t + dt, p) * radius);
-				glVertex3fv(vector3_to_array(v));
+				glVertex3fv(v);
 			}
 		}
 	}
@@ -165,29 +165,29 @@ static void light_draw_box_lines (const Vector3& origin, const Vector3 points[8]
 	//draw lines from the center of the bbox to the corners
 	glBegin(GL_LINES);
 
-	glVertex3fv(vector3_to_array(origin));
-	glVertex3fv(vector3_to_array(points[1]));
+	glVertex3fv(origin);
+	glVertex3fv(points[1]);
 
-	glVertex3fv(vector3_to_array(origin));
-	glVertex3fv(vector3_to_array(points[5]));
+	glVertex3fv(origin);
+	glVertex3fv(points[5]);
 
-	glVertex3fv(vector3_to_array(origin));
-	glVertex3fv(vector3_to_array(points[2]));
+	glVertex3fv(origin);
+	glVertex3fv(points[2]);
 
-	glVertex3fv(vector3_to_array(origin));
-	glVertex3fv(vector3_to_array(points[6]));
+	glVertex3fv(origin);
+	glVertex3fv(points[6]);
 
-	glVertex3fv(vector3_to_array(origin));
-	glVertex3fv(vector3_to_array(points[0]));
+	glVertex3fv(origin);
+	glVertex3fv(points[0]);
 
-	glVertex3fv(vector3_to_array(origin));
-	glVertex3fv(vector3_to_array(points[4]));
+	glVertex3fv(origin);
+	glVertex3fv(points[4]);
 
-	glVertex3fv(vector3_to_array(origin));
-	glVertex3fv(vector3_to_array(points[3]));
+	glVertex3fv(origin);
+	glVertex3fv(points[3]);
 
-	glVertex3fv(vector3_to_array(origin));
-	glVertex3fv(vector3_to_array(points[7]));
+	glVertex3fv(origin);
+	glVertex3fv(points[7]);
 
 	glEnd();
 }
@@ -236,47 +236,47 @@ static void light_draw (const AABB& aabb_light, RenderStateFlags state)
 
 		glBegin(GL_TRIANGLES);
 
-		glVertex3fv(vector3_to_array(points[0]));
-		glVertex3fv(vector3_to_array(points[2]));
-		glNormal3fv(vector3_to_array(normals[0]));
-		glVertex3fv(vector3_to_array(points[3]));
+		glVertex3fv(points[0]);
+		glVertex3fv(points[2]);
+		glNormal3fv(normals[0]);
+		glVertex3fv(points[3]);
 
-		glVertex3fv(vector3_to_array(points[0]));
-		glVertex3fv(vector3_to_array(points[3]));
-		glNormal3fv(vector3_to_array(normals[1]));
-		glVertex3fv(vector3_to_array(points[4]));
+		glVertex3fv(points[0]);
+		glVertex3fv(points[3]);
+		glNormal3fv(normals[1]);
+		glVertex3fv(points[4]);
 
-		glVertex3fv(vector3_to_array(points[0]));
-		glVertex3fv(vector3_to_array(points[4]));
-		glNormal3fv(vector3_to_array(normals[2]));
-		glVertex3fv(vector3_to_array(points[5]));
-		glVertex3fv(vector3_to_array(points[0]));
-		glVertex3fv(vector3_to_array(points[5]));
+		glVertex3fv(points[0]);
+		glVertex3fv(points[4]);
+		glNormal3fv(normals[2]);
+		glVertex3fv(points[5]);
+		glVertex3fv(points[0]);
+		glVertex3fv(points[5]);
 
-		glNormal3fv(vector3_to_array(normals[3]));
-		glVertex3fv(vector3_to_array(points[2]));
+		glNormal3fv(normals[3]);
+		glVertex3fv(points[2]);
 		glEnd();
 		glBegin(GL_TRIANGLE_FAN);
 
-		glVertex3fv(vector3_to_array(points[1]));
-		glVertex3fv(vector3_to_array(points[2]));
-		glNormal3fv(vector3_to_array(normals[7]));
-		glVertex3fv(vector3_to_array(points[5]));
+		glVertex3fv(points[1]);
+		glVertex3fv(points[2]);
+		glNormal3fv(normals[7]);
+		glVertex3fv(points[5]);
 
-		glVertex3fv(vector3_to_array(points[1]));
-		glVertex3fv(vector3_to_array(points[5]));
-		glNormal3fv(vector3_to_array(normals[6]));
-		glVertex3fv(vector3_to_array(points[4]));
+		glVertex3fv(points[1]);
+		glVertex3fv(points[5]);
+		glNormal3fv(normals[6]);
+		glVertex3fv(points[4]);
 
-		glVertex3fv(vector3_to_array(points[1]));
-		glVertex3fv(vector3_to_array(points[4]));
-		glNormal3fv(vector3_to_array(normals[5]));
-		glVertex3fv(vector3_to_array(points[3]));
+		glVertex3fv(points[1]);
+		glVertex3fv(points[4]);
+		glNormal3fv(normals[5]);
+		glVertex3fv(points[3]);
 
-		glVertex3fv(vector3_to_array(points[1]));
-		glVertex3fv(vector3_to_array(points[3]));
-		glNormal3fv(vector3_to_array(normals[4]));
-		glVertex3fv(vector3_to_array(points[2]));
+		glVertex3fv(points[1]);
+		glVertex3fv(points[3]);
+		glNormal3fv(normals[4]);
+		glVertex3fv(points[2]);
 
 		glEnd();
 	} else {
@@ -732,7 +732,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		const Matrix4& getLocalPivot () const
 		{
 			m_localPivot = g_matrix4_identity;
-			vector4_to_vector3(m_localPivot.t()) = m_aabb_light.origin;
+			m_localPivot.t().getVector3() = m_aabb_light.origin;
 			return m_localPivot;
 		}
 

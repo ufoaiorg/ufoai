@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <cctype>
 
-#include "generic/vector.h"
+#include "math/Vector3.h"
 #include "iscriplib.h"
 #include "string/string.h"
 #include "generic/callback.h"

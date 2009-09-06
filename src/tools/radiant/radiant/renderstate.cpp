@@ -859,11 +859,11 @@ void OpenGLState_apply (const OpenGLState& self, OpenGLState& current, unsigned 
 		glEnableClientState(GL_COLOR_ARRAY);
 	} else if (delta & ~state & RENDER_COLOURARRAY) {
 		glDisableClientState(GL_COLOR_ARRAY);
-		glColor4fv(vector4_to_array(self.m_colour));
+		glColor4fv(self.m_colour);
 	}
 
 	if (delta & ~state & RENDER_COLOURCHANGE) {
-		glColor4fv(vector4_to_array(self.m_colour));
+		glColor4fv(self.m_colour);
 	}
 
 	setState(state, delta, RENDER_LINESTIPPLE, GL_LINE_STIPPLE);
@@ -931,7 +931,7 @@ void OpenGLState_apply (const OpenGLState& self, OpenGLState& current, unsigned 
 	if (!(state & RENDER_TEXTURE) && (self.m_colour[0] != current.m_colour[0] || self.m_colour[1]
 			!= current.m_colour[1] || self.m_colour[2] != current.m_colour[2] || self.m_colour[3]
 			!= current.m_colour[3])) {
-		glColor4fv(vector4_to_array(self.m_colour));
+		glColor4fv(self.m_colour);
 	}
 	current.m_colour = self.m_colour;
 

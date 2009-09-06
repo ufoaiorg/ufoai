@@ -30,7 +30,8 @@ template<typename Enumeration> class EnumeratedValue;
 struct ButtonEnumeration;
 typedef EnumeratedValue<ButtonEnumeration> ButtonIdentifier;
 
-
+#include <algorithm>
+#include "math/Vector2.h"
 #include "generic/bitfield.h"
 
 struct ModifierEnumeration {

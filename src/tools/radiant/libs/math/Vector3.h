@@ -1,267 +1,24 @@
-#if !defined(INCLUDED_VECTOR_H)
-#define INCLUDED_VECTOR_H
+#ifndef VECTOR3_H_
+#define VECTOR3_H_
 
-/* greebo: This file contains the templated class definitions of several vector types:
+/* greebo: This file contains the templated class definition of the three-component vector
  * 
- * BasicVector2: A vector with two components of type <Element>
  * BasicVector3: A vector with three components of type <Element>
- * BasicVector4: A vector with four components of type <Element>
  * 
  * The BasicVector3 is equipped with the most important operators like *, *= and so on.
  * 
- * Note: The most commonly used Vector3 is a BasicVector3<float>, same goes for the other two
+ * Note: The most commonly used Vector3 is a BasicVector3<float>, this is also defined in this file 
  *  
  * Note: that the multiplication of a Vector3 with another one (Vector3*Vector3) does NOT
  * result in an inner product but in a component-wise scaling. Use the .dot() method to
  * execute an inner product of two vectors. 
  */
 
-#include <cstddef>
-#include <cmath>
-#include <float.h>
+#include "lrint.h"
 #include <sstream>
 #include <string>
-
-// ======================================================================================
-
-template<typename Element>
-class BasicVector2
-{
-
-		// This is where the components of the vector are stored.
-		Element m_elements[2];
-
-	public:
-		// Constructor with no arguments
-		BasicVector2 ()
-		{
-		}
-
-		/** Construct a BasicVector2 with the 2 provided components.
-		 */
-		BasicVector2 (const Element& x_, const Element& y_)
-		{
-			x() = x_;
-			y() = y_;
-		}
-
-		// Return NON-CONSTANT references to the vector components
-		Element& x ()
-		{
-			return m_elements[0];
-		}
-		Element& y ()
-		{
-			return m_elements[1];
-		}
-
-		// Return CONSTANT references to the vector components
-		const Element& x () const
-		{
-			return m_elements[0];
-		}
-		const Element& y () const
-		{
-			return m_elements[1];
-		}
-
-		Element& operator[] (std::size_t i)
-		{
-			return m_elements[i];
-		}
-		const Element& operator[] (std::size_t i) const
-		{
-			return m_elements[i];
-		}
-
-		Element* data ()
-		{
-			return m_elements;
-		}
-		const Element* data () const
-		{
-			return m_elements;
-		}
-
-		/** Compare this BasicVector2 against another for equality.
-		 */
-		bool operator== (const BasicVector2& other) const
-		{
-			return (other.x() == x() && other.y() == y());
-		}
-
-		/** Compare this BasicVector2 against another for inequality.
-		 */
-		bool operator!= (const BasicVector2& other) const
-		{
-			return !(*this == other);
-		}
-
-		/*	Define the negation operator -
-		 *  All the vector's components are negated
-		 */
-		BasicVector2<Element> operator- () const
-		{
-			return BasicVector2<Element> (-m_elements[0], -m_elements[1]);
-		}
-
-		/*	Define the addition operators + and += with any other BasicVector2 of type OtherElement
-		 *  The vectors are added to each other element-wise
-		 */
-		template<typename OtherElement>
-		BasicVector2<Element> operator+ (const BasicVector2<OtherElement>& other) const
-		{
-			return BasicVector2<Element> (m_elements[0] + static_cast<Element> (other.x()), m_elements[1]
-					+ static_cast<Element> (other.y()));
-		}
-
-		template<typename OtherElement>
-		void operator+= (const BasicVector2<OtherElement>& other)
-		{
-			m_elements[0] += static_cast<Element> (other.x());
-			m_elements[1] += static_cast<Element> (other.y());
-		}
-
-		/*	Define the substraction operators - and -= with any other BasicVector3 of type OtherElement
-		 *  The vectors are substracted from each other element-wise
-		 */
-		template<typename OtherElement>
-		BasicVector2<Element> operator- (const BasicVector2<OtherElement>& other) const
-		{
-			return BasicVector2<Element> (m_elements[0] - static_cast<Element> (other.x()), m_elements[1]
-					- static_cast<Element> (other.y()));
-		}
-
-		template<typename OtherElement>
-		void operator-= (const BasicVector2<OtherElement>& other)
-		{
-			m_elements[0] -= static_cast<Element> (other.x());
-			m_elements[1] -= static_cast<Element> (other.y());
-		}
-
-		/*	Define the multiplication operators * and *= with another Vector2 of type OtherElement
-		 *
-		 *  The vectors are multiplied element-wise
-		 *
-		 *  greebo: This is mathematically kind of senseless, as this is a mixture of
-		 *  a dot product and scalar multiplication. It can be used to scale each
-		 *  vector component by a different factor, so maybe this comes in handy.
-		 */
-		template<typename OtherElement>
-		BasicVector2<Element> operator* (const BasicVector2<OtherElement>& other) const
-		{
-			return BasicVector2<Element> (m_elements[0] * static_cast<Element> (other.x()), m_elements[1]
-					* static_cast<Element> (other.y()));
-		}
-
-		template<typename OtherElement>
-		void operator*= (const BasicVector2<OtherElement>& other)
-		{
-			m_elements[0] *= static_cast<Element> (other.x());
-			m_elements[1] *= static_cast<Element> (other.y());
-		}
-
-		/*	Define the multiplications * and *= with a scalar
-		 */
-		template<typename OtherElement>
-		BasicVector2<Element> operator* (const OtherElement& other) const
-		{
-			Element factor = static_cast<Element> (other);
-			return BasicVector2<Element> (m_elements[0] * factor, m_elements[1] * factor);
-		}
-
-		template<typename OtherElement>
-		void operator*= (const OtherElement& other)
-		{
-			Element factor = static_cast<Element> (other);
-			m_elements[0] *= factor;
-			m_elements[1] *= factor;
-		}
-
-		/*	Define the multiplication operators / and /= with another Vector2 of type OtherElement
-		 *  The vectors are divided element-wise
-		 */
-		template<typename OtherElement>
-		BasicVector2<Element> operator/ (const BasicVector2<OtherElement>& other) const
-		{
-			return BasicVector2<Element> (m_elements[0] / static_cast<Element> (other.x()), m_elements[1]
-					/ static_cast<Element> (other.y()));
-		}
-
-		template<typename OtherElement>
-		void operator/= (const BasicVector2<OtherElement>& other)
-		{
-			m_elements[0] /= static_cast<Element> (other.x());
-			m_elements[1] /= static_cast<Element> (other.y());
-		}
-
-		/*	Define the scalar divisions / and /=
-		 */
-		template<typename OtherElement>
-		BasicVector2<Element> operator/ (const OtherElement& other) const
-		{
-			Element divisor = static_cast<Element> (other);
-			return BasicVector2<Element> (m_elements[0] / divisor, m_elements[1] / divisor);
-		}
-
-		template<typename OtherElement>
-		void operator/= (const OtherElement& other)
-		{
-			Element divisor = static_cast<Element> (other);
-			m_elements[0] /= divisor;
-			m_elements[1] /= divisor;
-		}
-
-		/** Return the length of this vector.
-		 *
-		 * @returns
-		 * The Pythagorean length of this vector.
-		 */
-		double getLength () const
-		{
-			double lenSquared = m_elements[0] * m_elements[0] + m_elements[1] * m_elements[1];
-			return sqrt(lenSquared);
-		}
-
-		/** Return the squared length of this vector.
-		 */
-		double getLengthSquared () const
-		{
-			double lenSquared = m_elements[0] * m_elements[0] + m_elements[1] * m_elements[1];
-			return lenSquared;
-		}
-
-		/* Scalar product this vector with another Vector2,
-		 * returning the projection of <self> onto <other>
-		 *
-		 * @param other
-		 * The Vector2 to dot-product with this Vector2.
-		 *
-		 * @returns
-		 * The inner product (a scalar): a[0]*b[0] + a[1]*b[1]
-		 */
-		template<typename OtherT>
-		Element dot (const BasicVector2<OtherT>& other) const
-		{
-			return Element(m_elements[0] * other.x() + m_elements[1] * other.y());
-		}
-
-		/* Cross-product this vector with another Vector2, returning the scalar result
-		 *
-		 * @param other
-		 * The Vector2 to cross-product with this Vector2.
-		 *
-		 * @returns
-		 * The cross-product of the two vectors, a scalar: a[0]*b[1] - b[0]*a[1]
-		 */
-		template<typename OtherT>
-		Element crossProduct (const BasicVector2<OtherT>& other) const
-		{
-			return Element(m_elements[0] * other.y() - m_elements[1] * other.x());
-		}
-};
-
-// ======================================================================================
+#include <cmath>
+#include <float.h>
 
 // BasicVector3: A 3-element vector of type Element
 template<typename Element>
@@ -460,7 +217,7 @@ class BasicVector3
 			m_elements[2] *= factor;
 		}
 
-		/*	Define the multiplication operators / and /= with another Vector3 of type OtherElement
+		/*	Define the division operators / and /= with another Vector3 of type OtherElement
 		 *  The vectors are divided element-wise
 		 */
 		template<typename OtherElement>
@@ -589,154 +346,10 @@ std::ostream& operator<< (std::ostream& st, BasicVector3<T> vec)
 	return st;
 }
 
-/// \brief A 4-element vector.
-template<typename Element>
-class BasicVector4
-{
-		Element m_elements[4];
-	public:
-
-		BasicVector4 ()
-		{
-		}
-		BasicVector4 (Element x_, Element y_, Element z_, Element w_)
-		{
-			x() = x_;
-			y() = y_;
-			z() = z_;
-			w() = w_;
-		}
-		BasicVector4 (const BasicVector3<Element>& self, Element w_)
-		{
-			x() = self.x();
-			y() = self.y();
-			z() = self.z();
-			w() = w_;
-		}
-
-		Element& x ()
-		{
-			return m_elements[0];
-		}
-		const Element& x () const
-		{
-			return m_elements[0];
-		}
-		Element& y ()
-		{
-			return m_elements[1];
-		}
-		const Element& y () const
-		{
-			return m_elements[1];
-		}
-		Element& z ()
-		{
-			return m_elements[2];
-		}
-		const Element& z () const
-		{
-			return m_elements[2];
-		}
-		Element& w ()
-		{
-			return m_elements[3];
-		}
-		const Element& w () const
-		{
-			return m_elements[3];
-		}
-
-		Element index (std::size_t i) const
-		{
-			return m_elements[i];
-		}
-		Element& index (std::size_t i)
-		{
-			return m_elements[i];
-		}
-		Element operator[] (std::size_t i) const
-		{
-			return m_elements[i];
-		}
-		Element& operator[] (std::size_t i)
-		{
-			return m_elements[i];
-		}
-
-		/** Project this homogeneous Vector4 into a Cartesian Vector3
-		 * by dividing by w.
-		 *
-		 * @returns
-		 * A Vector3 representing the Cartesian equivalent of this
-		 * homogeneous vector.
-		 */
-
-		BasicVector3<Element> getProjected ()
-		{
-			return BasicVector3<Element> (m_elements[0] / m_elements[3], m_elements[1] / m_elements[3], m_elements[2]
-					/ m_elements[3]);
-		}
-
-		Element* data ()
-		{
-			return m_elements;
-		}
-		const Element* data () const
-		{
-			return m_elements;
-		}
-};
-
-template<typename Element>
-inline BasicVector3<Element> vector3_from_array (const Element* array)
-{
-	return BasicVector3<Element> (array[0], array[1], array[2]);
-}
-
-template<typename Element>
-inline Element* vector3_to_array (BasicVector3<Element>& self)
-{
-	return static_cast<Element*> (self);
-}
-template<typename Element>
-inline const Element* vector3_to_array (const BasicVector3<Element>& self)
-{
-	return static_cast<const Element*> (self);
-}
-
-template<typename Element>
-inline Element* vector4_to_array (BasicVector4<Element>& self)
-{
-	return self.data();
-}
-template<typename Element>
-inline const Element* vector4_to_array (const BasicVector4<Element>& self)
-{
-	return self.data();
-}
-
-template<typename Element>
-inline BasicVector3<Element>& vector4_to_vector3 (BasicVector4<Element>& self)
-{
-	return *reinterpret_cast<BasicVector3<Element>*> (vector4_to_array(self));
-}
-template<typename Element>
-inline const BasicVector3<Element>& vector4_to_vector3 (const BasicVector4<Element>& self)
-{
-	return *reinterpret_cast<const BasicVector3<Element>*> (vector4_to_array(self));
-}
-
 // ==========================================================================================
 
-/// \brief A 2-element vector stored in single-precision floating-point.
-typedef BasicVector2<float> Vector2;
-
-/// \brief A 3-element vector stored in single-precision floating-point.
+// A 3-element vector stored in single-precision floating-point.
 typedef BasicVector3<float> Vector3;
-
-/// \brief A 4-element vector stored in single-precision floating-point.
-typedef BasicVector4<float> Vector4;
 
 // =============== Common Vector3 Methods ==================================================
 
@@ -813,6 +426,4 @@ inline Vector3 vector3_for_spherical (double theta, double phi)
 			static_cast<float> (sin(phi)));
 }
 
-// ==================================================================================
-
-#endif
+#endif /*VECTOR3_H_*/
