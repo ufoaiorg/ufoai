@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "generic/constant.h"
 #include "generic/callbackfwd.h"
+#include <string>
 
 enum {
 	QER_TRANS = 1 << 0,
@@ -128,7 +129,7 @@ public:
 	virtual void refresh() = 0;
 	// activate the shader for a given name and return it
 	// will return the default shader if name is not found
-	virtual IShader* getShaderForName(const char* name) = 0;
+	virtual IShader* getShaderForName (const std::string& name) = 0;
 
 	virtual void foreachShaderName(const ShaderNameCallback& callback) = 0;
 

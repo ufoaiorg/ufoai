@@ -780,15 +780,6 @@ CShader* Try_Shader_ForName (const char* name)
 	return pShader;
 }
 
-IShader *Shader_ForName (const char *name)
-{
-	ASSERT_NOTNULL(name);
-
-	IShader *pShader = Try_Shader_ForName(name);
-	pShader->IncRef();
-	return pShader;
-}
-
 #include "stream/filestream.h"
 
 void Shaders_Load ()
@@ -857,9 +848,11 @@ class UFOShaderSystem: public ShaderSystem, public ModuleObserver
 			Shaders_Refresh();
 		}
 
-		IShader* getShaderForName (const char* name)
+		IShader* getShaderForName (const std::string& name)
 		{
-			return Shader_ForName(name);
+			IShader *pShader = Try_Shader_ForName(name.c_str());
+			pShader->IncRef();
+			return pShader;
 		}
 
 		void foreachShaderName (const ShaderNameCallback& callback)
