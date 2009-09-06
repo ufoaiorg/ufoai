@@ -1,8 +1,23 @@
 /**
  * @file m_node_custombutton.c
- * @brief Custombutton is a button using a full skin.
+ * @brief Custombutton is a button using a skin with a fixed size.
  * We can define every pixels into the texture. It can't be bigger than
- * 256x64.
+ * 256x64, because each row of 64 pixels are used for the button status (normal,
+ * hovered, disabled, and the last is not used).
+ * @code
+ * // the button use all the size allowed
+ * custombutton button_load
+ * {
+ * 	pos	"780 130"
+ * 	size	"128 64"
+ * 	click	{ cmd "echo click;" }
+ * 	image	ui/multi_buttons2
+ * 	font	f_menubig
+ * 	color	"0 0.5 0 1"
+ * 	selectcolor "1 1 1 1"
+ * 	string	"_Load"
+ * }
+ * @endcode
  */
 
 /*
