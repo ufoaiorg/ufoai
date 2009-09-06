@@ -155,7 +155,7 @@ tech rs_baselaser
 {
 	name "_Laser Turret"
 	type	tech
-	up_chapter	tech
+	up_chapter	equipment
 
 	description {
 		default "_baselaser_txt"
@@ -3322,7 +3322,7 @@ tech rs_building_workshop
 
 tech rs_building_antimatter
 {
-	name	"_Blueprints - Antimatter Storage"
+	name	"_Antimatter Storage"
 	type		building
 	up_chapter	buildings
 
