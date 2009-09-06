@@ -304,7 +304,8 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 	const bool isModel = (name == "misc_model");
 	const bool isSound = (name == "misc_sound");
 	const bool isParticle = (name == "misc_particle");
-	const bool isStartingPositionActor = (name == "info_player_start") || (name == "info_human_start") || (name == "info_alien_start") || (name == "info_civilian_start");
+	const bool isStartingPositionActor = (name == "info_player_start") || (name == "info_human_start") || (name
+			== "info_alien_start") || (name == "info_civilian_start");
 	const bool isStartingPositionUGV = (name == "info_2x2_start");
 	const bool isStartingPosition = isStartingPositionActor || isStartingPositionUGV;
 
@@ -377,9 +378,10 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 
 	if (isModel) {
 		ui::ModelAndSkin modelAndSkin = ui::ModelSelector::chooseModel();
-		if (!modelAndSkin.model.empty())
+		if (!modelAndSkin.model.empty()) {
 			entity->setKeyValue("model", modelAndSkin.model);
-		else
+			entity->setKeyValue("skin", modelAndSkin.skin);
+		} else
 			revert = true;
 	} else if (isSound) {
 		const char* sound = misc_sound_dialog(GTK_WIDGET(MainFrame_getWindow()));
