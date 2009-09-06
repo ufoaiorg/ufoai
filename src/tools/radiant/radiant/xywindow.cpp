@@ -208,8 +208,8 @@ static void PlanePointsFromClipPoints (Vector3 planepts[3], const AABB& bounds, 
 	planepts[0] = g_Clip1.m_ptClip;
 	planepts[1] = g_Clip2.m_ptClip;
 	planepts[2] = g_Clip3.m_ptClip;
-	Vector3 maxs(vector3_added(bounds.origin, bounds.extents));
-	Vector3 mins(vector3_subtracted(bounds.origin, bounds.extents));
+	Vector3 maxs(bounds.origin + bounds.extents);
+	Vector3 mins(bounds.origin - bounds.extents);
 	if (!g_Clip3.Set()) {
 		int n = (viewtype == XY) ? 2 : (viewtype == YZ) ? 0 : 1;
 		int x = (n == 0) ? 1 : 0;
@@ -977,7 +977,7 @@ static void XYWnd_OrientCamera (XYWnd* xywnd, int x, int y, CamWnd& camwnd)
 	Vector3 point = g_vector3_identity;
 	xywnd->XY_ToPoint(x, y, point);
 	xywnd->XY_SnapToGrid(point);
-	vector3_subtract(point, Camera_getOrigin(camwnd));
+	point -= Camera_getOrigin(camwnd);
 
 	const int n1 = (xywnd->GetViewType() == XY) ? 1 : 2;
 	const int n2 = (xywnd->GetViewType() == YZ) ? 1 : 0;
@@ -1972,14 +1972,14 @@ static inline float Betwixt (const float f1, const float f2)
 /// which is not an excuse, just a fact
 void XYWnd::PaintSizeInfo (int nDim1, int nDim2, Vector3& vMinBounds, Vector3& vMaxBounds)
 {
-	if (vector3_equal(vMinBounds, vMaxBounds))
+	if (vMinBounds == vMaxBounds)
 		return;
 
 	const char* g_pDimStrings[] = { "x:", "y:", "z:" };
 	typedef const char* OrgStrings[2];
 	const OrgStrings g_pOrgStrings[] = { { "x:", "y:", }, { "x:", "z:", }, { "y:", "z:", } };
 
-	Vector3 vSize(vector3_subtracted(vMaxBounds, vMinBounds));
+	Vector3 vSize(vMaxBounds - vMinBounds);
 
 	glColor3f(g_xywindow_globals.color_selbrushes[0] * .65f, g_xywindow_globals.color_selbrushes[1] * .65f,
 			g_xywindow_globals.color_selbrushes[2] * .65f);
@@ -2129,11 +2129,11 @@ class XYRenderer: public Renderer
 		{
 			return eWireframeOnly;
 		}
-		void PushState (void)
+		void PushState ()
 		{
 			m_state_stack.push_back(m_state_stack.back());
 		}
-		void PopState (void)
+		void PopState ()
 		{
 			ASSERT_MESSAGE(!m_state_stack.empty(), "popping empty stack");
 			m_state_stack.pop_back();
@@ -2161,7 +2161,7 @@ class XYRenderer: public Renderer
 		Shader* m_state_selected;
 };
 
-void XYWnd::updateProjection (void)
+void XYWnd::updateProjection ()
 {
 	if (m_nWidth == 0 || m_nHeight == 0)
 		return;
@@ -2195,7 +2195,7 @@ void XYWnd::updateProjection (void)
  * @note modelview matrix must have a uniform scale, otherwise strange things happen when
  * rendering the rotation manipulator.
  */
-void XYWnd::updateModelview (void)
+void XYWnd::updateModelview ()
 {
 	const int nDim1 = (m_viewType == YZ) ? 1 : 0;
 	const int nDim2 = (m_viewType == XY) ? 1 : 2;
@@ -2260,7 +2260,7 @@ void XYWnd::updateModelview (void)
  ==============
  */
 
-void XYWnd::XY_Draw (void)
+void XYWnd::XY_Draw ()
 {
 	// clear
 	glViewport(0, 0, m_nWidth, m_nHeight);
@@ -2419,6 +2419,8 @@ void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
 
 void XYWnd::OnEntityCreate (const std::string& item)
 {
+	std::string command = "entityCreate -class " + item;
+	UndoableCommand undo(command);
 	Vector3 point;
 	XYWnd_MouseToPoint(this, m_entityCreate_x, m_entityCreate_y, point);
 	Entity_createFromSelection(item, point);
@@ -2443,7 +2445,7 @@ void XYWnd_Focus (XYWnd* xywnd)
 /**
  * @brief Center position for eRegular mode for currently active view
  */
-void XY_CenterViews (void)
+void XY_CenterViews ()
 {
 	if (g_pParentWnd->CurrentStyle() == MainFrame::eSplit) {
 		Vector3 position;
@@ -2460,7 +2462,7 @@ void XY_CenterViews (void)
 /**
  * @brief Top view for eRegular mode
  */
-void XY_Top (void)
+void XY_Top ()
 {
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
 	xywnd->SetViewType(XY);
@@ -2470,7 +2472,7 @@ void XY_Top (void)
 /**
  * @brief Side view for eRegular mode
  */
-void XY_Side (void)
+void XY_Side ()
 {
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
 	xywnd->SetViewType(XZ);
@@ -2480,7 +2482,7 @@ void XY_Side (void)
 /**
  * @brief Front view for eRegular mode
  */
-void XY_Front (void)
+void XY_Front ()
 {
 	if (g_pParentWnd->CurrentStyle() == MainFrame::eSplit) {
 		// cannot do this in a split window
@@ -2497,7 +2499,7 @@ void XY_Front (void)
 /**
  * @brief Next view for eRegular mode
  */
-void XY_Next (void)
+void XY_Next ()
 {
 	if (g_pParentWnd->CurrentStyle() == MainFrame::eSplit) {
 		// cannot do this in a split window
@@ -2519,7 +2521,7 @@ void XY_Next (void)
 /**
  * @brief Zooms all active views to 100%
  */
-void XY_Zoom100 (void)
+void XY_Zoom100 ()
 {
 	if (g_pParentWnd->GetXYWnd())
 		g_pParentWnd->GetXYWnd()->SetScale(1);
@@ -2532,7 +2534,7 @@ void XY_Zoom100 (void)
 /**
  * @brief Zooms the current active view in
  */
-void XY_ZoomIn (void)
+void XY_ZoomIn ()
 {
 	XYWnd_ZoomIn(g_pParentWnd->ActiveXY());
 }
@@ -2543,24 +2545,24 @@ void XY_ZoomIn (void)
  * we don't go below a zoom factor corresponding to 10% of the max world size
  * (this has to be computed against the window size)
  */
-void XY_ZoomOut (void)
+void XY_ZoomOut ()
 {
 	XYWnd_ZoomOut(g_pParentWnd->ActiveXY());
 }
 
-void ToggleShowCrosshair (void)
+void ToggleShowCrosshair ()
 {
 	g_bCrossHairs ^= 1;
 	XY_UpdateAllWindows();
 }
 
-void ToggleShowSizeInfo (void)
+void ToggleShowSizeInfo ()
 {
 	g_xywindow_globals_private.m_bSizePaint = !g_xywindow_globals_private.m_bSizePaint;
 	XY_UpdateAllWindows();
 }
 
-void ToggleShowGrid (void)
+void ToggleShowGrid ()
 {
 	g_xywindow_globals_private.d_showgrid = !g_xywindow_globals_private.d_showgrid;
 	XY_UpdateAllWindows();
@@ -2592,7 +2594,7 @@ class EntityClassMenu: public ModuleObserver
 
 EntityClassMenu g_EntityClassMenu;
 
-void ShowNamesToggle (void)
+void ShowNamesToggle ()
 {
 	GlobalEntityCreator().setShowNames(!GlobalEntityCreator().getShowNames());
 	XY_UpdateAllWindows();
@@ -2604,7 +2606,7 @@ void ShowNamesExport (const BoolImportCallback& importer)
 }
 typedef FreeCaller1<const BoolImportCallback&, ShowNamesExport> ShowNamesExportCaller;
 
-void ShowAnglesToggle (void)
+void ShowAnglesToggle ()
 {
 	GlobalEntityCreator().setShowAngles(!GlobalEntityCreator().getShowAngles());
 	XY_UpdateAllWindows();
@@ -2616,7 +2618,7 @@ void ShowAnglesExport (const BoolImportCallback& importer)
 }
 typedef FreeCaller1<const BoolImportCallback&, ShowAnglesExport> ShowAnglesExportCaller;
 
-void ShowBlocksToggle (void)
+void ShowBlocksToggle ()
 {
 	g_xywindow_globals_private.show_blocks ^= 1;
 	XY_UpdateAllWindows();
@@ -2628,7 +2630,7 @@ void ShowBlocksExport (const BoolImportCallback& importer)
 }
 typedef FreeCaller1<const BoolImportCallback&, ShowBlocksExport> ShowBlocksExportCaller;
 
-void ShowCoordinatesToggle (void)
+void ShowCoordinatesToggle ()
 {
 	g_xywindow_globals_private.show_coordinates ^= 1;
 	XY_UpdateAllWindows();
@@ -2640,7 +2642,7 @@ void ShowCoordinatesExport (const BoolImportCallback& importer)
 }
 typedef FreeCaller1<const BoolImportCallback&, ShowCoordinatesExport> ShowCoordinatesExportCaller;
 
-void ShowOutlineToggle (void)
+void ShowOutlineToggle ()
 {
 	g_xywindow_globals_private.show_outline ^= 1;
 	XY_UpdateAllWindows();
@@ -2652,7 +2654,7 @@ void ShowOutlineExport (const BoolImportCallback& importer)
 }
 typedef FreeCaller1<const BoolImportCallback&, ShowOutlineExport> ShowOutlineExportCaller;
 
-void ShowAxesToggle (void)
+void ShowAxesToggle ()
 {
 	g_xywindow_globals_private.show_axis ^= 1;
 	XY_UpdateAllWindows();
@@ -2664,7 +2666,7 @@ void ShowAxesExport (const BoolImportCallback& importer)
 }
 typedef FreeCaller1<const BoolImportCallback&, ShowAxesExport> ShowAxesExportCaller;
 
-void ShowWorkzoneToggle (void)
+void ShowWorkzoneToggle ()
 {
 	g_xywindow_globals_private.d_show_work ^= 1;
 	XY_UpdateAllWindows();
@@ -2704,7 +2706,7 @@ ShowWorkzoneExportCaller g_show_workzone_caller;
 BoolExportCallback g_show_workzone_callback(g_show_workzone_caller);
 ToggleItem g_show_workzone(g_show_workzone_callback);
 
-void XYShow_registerCommands (void)
+void XYShow_registerCommands ()
 {
 	GlobalToggles_insert("ShowAngles", ShowAnglesToggleCaller(), ToggleItem::AddCallbackCaller(g_show_angles));
 	GlobalToggles_insert("ShowNames", ShowNamesToggleCaller(), ToggleItem::AddCallbackCaller(g_show_names));
@@ -2716,7 +2718,7 @@ void XYShow_registerCommands (void)
 	GlobalToggles_insert("ShowWorkzone", ShowWorkzoneToggleCaller(), ToggleItem::AddCallbackCaller(g_show_workzone));
 }
 
-void XYWnd_registerShortcuts (void)
+void XYWnd_registerShortcuts ()
 {
 	command_connect_accelerator("ToggleCrosshairs");
 	command_connect_accelerator("ToggleSizePaint");
@@ -2734,7 +2736,7 @@ void Orthographic_constructPage (PreferenceGroup& group)
 	PreferencesPage page(group.createPage(_("Orthographic"), _("Orthographic View Preferences")));
 	Orthographic_constructPreferences(page);
 }
-void Orthographic_registerPreferencesPage (void)
+void Orthographic_registerPreferencesPage ()
 {
 	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Orthographic_constructPage> ());
 }
@@ -2748,7 +2750,7 @@ void Clipper_constructPage (PreferenceGroup& group)
 	PreferencesPage page(group.createPage(_("Clipper"), _("Clipper Tool Settings")));
 	Clipper_constructPreferences(page);
 }
-void Clipper_registerPreferencesPage (void)
+void Clipper_registerPreferencesPage ()
 {
 	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Clipper_constructPage> ());
 }
@@ -2768,7 +2770,7 @@ void ToggleShown_exportBool (const ToggleShown& self, const BoolImportCallback& 
 typedef ConstReferenceCaller1<ToggleShown, const BoolImportCallback&, ToggleShown_exportBool>
 		ToggleShownExportBoolCaller;
 
-void XYWindow_Construct (void)
+void XYWindow_Construct ()
 {
 	// eRegular
 	GlobalCommands_insert("NextView", FreeCaller<XY_Next> (), Accelerator(GDK_Tab, (GdkModifierType) GDK_CONTROL_MASK));
@@ -2852,7 +2854,7 @@ void XYWindow_Construct (void)
 	GlobalFiletypesModule::getTable().addType("bmp", "screenshot bitmap", filetype_t("bitmap", "*.bmp"));
 }
 
-void XYWindow_Destroy (void)
+void XYWindow_Destroy ()
 {
 	GlobalEntityClassManager().detach(g_EntityClassMenu);
 	XYWnd::releaseStates();

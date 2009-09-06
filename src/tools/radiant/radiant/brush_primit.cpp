@@ -48,9 +48,9 @@ void ComputeAxisBase(const Vector3& normal, Vector3& texS, Vector3& texT) {
 		texS = Vector3(0, 1, 0);
 		texT = Vector3(-1, 0, 0);
 	} else {
-		texS = vector3_normalised(vector3_cross(normal, up));
-		texT = vector3_normalised(vector3_cross(normal, texS));
-		vector3_negate(texS);
+		texS = normal.crossProduct(up).getNormalised();
+		texT = normal.crossProduct(texS).getNormalised();
+		texS = -texS;
 	}
 }
 
@@ -218,8 +218,8 @@ void Texdef_EmitTextureCoordinates (const TextureProjection& projection, std::si
 		matrix4_multiply_by_matrix4(local2tex, xyz2st);
 	}
 
-	Vector3 tangent(vector3_normalised(vector4_to_vector3(matrix4_transposed(local2tex).x())));
-	Vector3 bitangent(vector3_normalised(vector4_to_vector3(matrix4_transposed(local2tex).y())));
+	Vector3 tangent(vector4_to_vector3(matrix4_transposed(local2tex).x()).getNormalised());
+	Vector3 bitangent(vector4_to_vector3(matrix4_transposed(local2tex).y()).getNormalised());
 
 	matrix4_multiply_by_matrix4(local2tex, localToWorld);
 
@@ -401,9 +401,9 @@ inline Matrix4 matrix4_reflection_for_plane45 (const Plane3& plane, const Vector
 	Vector3 first = from;
 	Vector3 second = to;
 
-	if ((vector3_dot(from, plane.normal()) > 0) == (vector3_dot(to, plane.normal()) > 0)) {
-		first = vector3_negated(first);
-		second = vector3_negated(second);
+	if ((from.dot(plane.normal()) > 0) == (to.dot(plane.normal()) > 0)) {
+		first = -first;
+		second = -second;
 	}
 
 	Matrix4 swap = matrix4_swap_axes(first, second);
@@ -448,7 +448,7 @@ void Texdef_transformLocked (TextureProjection& projection, std::size_t width, s
 	Texdef_toTransform(projection, (float) width, (float) height, stIdentity2stOriginal);
 	Matrix4 identity2stOriginal(matrix4_multiplied_by_matrix4(stIdentity2stOriginal, identity2stIdentity));
 
-	double dot = vector3_dot(originalProjectionAxis, transformedProjectionAxis);
+	double dot = originalProjectionAxis.dot(transformedProjectionAxis);
 	if (dot == 0) {
 		// The projection axis chosen for the transformed normal is at 90 degrees
 		// to the transformed projection axis chosen for the original normal.

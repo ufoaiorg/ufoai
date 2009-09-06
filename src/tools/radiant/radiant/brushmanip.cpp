@@ -50,8 +50,8 @@ static void Brush_ConstructCuboid (Brush& brush, const AABB& bounds, const char*
 		const TextureProjection& projection)
 {
 	const unsigned char box[3][2] = { { 0, 1 }, { 2, 0 }, { 1, 2 } };
-	Vector3 mins(vector3_subtracted(bounds.origin, bounds.extents));
-	Vector3 maxs(vector3_added(bounds.origin, bounds.extents));
+	Vector3 mins(bounds.origin - bounds.extents);
+	Vector3 maxs(bounds.origin + bounds.extents);
 
 	brush.clear();
 	brush.reserve(6);
@@ -116,8 +116,8 @@ static void Brush_ConstructPrism (Brush& brush, const AABB& bounds, std::size_t 
 	brush.clear();
 	brush.reserve(sides + 2);
 
-	Vector3 mins(vector3_subtracted(bounds.origin, bounds.extents));
-	Vector3 maxs(vector3_added(bounds.origin, bounds.extents));
+	Vector3 mins(bounds.origin - bounds.extents);
+	Vector3 maxs(bounds.origin + bounds.extents);
 
 	float radius = max_extent_2d(bounds.extents, axis);
 	const Vector3& mid = bounds.origin;
@@ -188,8 +188,8 @@ static void Brush_ConstructCone (Brush& brush, const AABB& bounds, std::size_t s
 	brush.clear();
 	brush.reserve(sides + 1);
 
-	Vector3 mins(vector3_subtracted(bounds.origin, bounds.extents));
-	Vector3 maxs(vector3_added(bounds.origin, bounds.extents));
+	Vector3 mins(bounds.origin - bounds.extents);
+	Vector3 maxs(bounds.origin + bounds.extents);
 
 	float radius = max_extent(bounds.extents);
 	const Vector3& mid = bounds.origin;
@@ -259,9 +259,9 @@ static void Brush_ConstructSphere (Brush& brush, const AABB& bounds, std::size_t
 			double t = i * dt;
 			double p = float(j * dp - c_pi / 2);
 
-			planepts[0] = vector3_added(mid, vector3_scaled(vector3_for_spherical(t, p), radius));
-			planepts[1] = vector3_added(mid, vector3_scaled(vector3_for_spherical(t, p + dp), radius));
-			planepts[2] = vector3_added(mid, vector3_scaled(vector3_for_spherical(t + dt, p + dp), radius));
+			planepts[0] = mid + vector3_for_spherical(t, p) * radius;
+			planepts[1] = mid + vector3_for_spherical(t, p + dp) * radius;
+			planepts[2] = mid + vector3_for_spherical(t + dt, p + dp) * radius;
 
 			brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
 		}
@@ -272,9 +272,9 @@ static void Brush_ConstructSphere (Brush& brush, const AABB& bounds, std::size_t
 		for (std::size_t i = 0; i < sides; i++) {
 			double t = i * dt;
 
-			planepts[0] = vector3_added(mid, vector3_scaled(vector3_for_spherical(t, p), radius));
-			planepts[1] = vector3_added(mid, vector3_scaled(vector3_for_spherical(t + dt, p + dp), radius));
-			planepts[2] = vector3_added(mid, vector3_scaled(vector3_for_spherical(t + dt, p), radius));
+			planepts[0] = mid + vector3_for_spherical(t, p) * radius;
+			planepts[1] = mid + vector3_for_spherical(t + dt, p + dp) * radius;
+			planepts[2] = mid + vector3_for_spherical(t + dt, p) * radius;
 
 			brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
 		}
@@ -315,9 +315,9 @@ void Brush_ConstructRock (Brush& brush, const AABB& bounds, std::size_t sides, c
 		// find two vectors that are perpendicular to planepts[0]
 		ComputeAxisBase(planepts[0], planepts[1], planepts[2]);
 
-		planepts[0] = vector3_added(mid, vector3_scaled(planepts[0], radius));
-		planepts[1] = vector3_added(planepts[0], vector3_scaled(planepts[1], radius));
-		planepts[2] = vector3_added(planepts[0], vector3_scaled(planepts[2], radius));
+		planepts[0] = mid + (planepts[0] * radius);
+		planepts[1] = planepts[0] + (planepts[1] * radius);
+		planepts[2] = planepts[0] + (planepts[2] * radius);
 
 #if 0
 		// make sure the orientation is right

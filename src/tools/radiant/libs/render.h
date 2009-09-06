@@ -2,6 +2,7 @@
  * @file render.h
  * @brief High-level constructs for efficient OpenGL rendering.
  */
+
 /*
  Copyright (C) 2001-2006, William Joseph.
  All Rights Reserved.
@@ -351,6 +352,7 @@ inline bool operator!= (const Colour4b& self, const Colour4b& other)
 /// \brief A 3-float vertex.
 struct Vertex3f: public Vector3
 {
+
 		/** Default constructor.
 		 */
 		Vertex3f ()
@@ -364,18 +366,13 @@ struct Vertex3f: public Vector3
 		{
 		}
 
-		// Construct from a Vector3
-		Vertex3f (const Vector3& other) :
-			Vector3(other)
-		{
-		}
-
 		/** Construct a Vertex3f from a 3-element array
 		 */
 		Vertex3f (const float* array) :
 			Vector3(array)
 		{
 		}
+
 };
 
 inline bool operator< (const Vertex3f& self, const Vertex3f& other)
@@ -441,8 +438,18 @@ struct Normal3f: public Vector3
 		{
 		}
 
+		/** Construct a Normal3f from 3 float
+		 * values
+		 */
+
 		Normal3f (float _x, float _y, float _z) :
 			Vector3(_x, _y, _z)
+		{
+		}
+
+		// Static conversion from Vector3
+		Normal3f (const Vector3& vec) :
+			Vector3(vec)
 		{
 		}
 
@@ -452,6 +459,7 @@ struct Normal3f: public Vector3
 			Vector3(array)
 		{
 		}
+
 };
 
 inline bool operator< (const Normal3f& self, const Normal3f& other)
@@ -517,6 +525,7 @@ struct TexCoord2f: public Vector2
 
 		/** Construct a TexCoord2f from 2 float values.
 		 */
+
 		TexCoord2f (float _s, float _t) :
 			Vector2(_s, _t)
 		{
@@ -524,6 +533,7 @@ struct TexCoord2f: public Vector2
 
 		/** Construct a TexCoord2f from a 2-element array.
 		 */
+
 		TexCoord2f (const float* array) :
 			Vector2(array[0], array[1])
 		{
@@ -601,7 +611,7 @@ inline Vector2& texcoord2f_to_vector2 (TexCoord2f& vertex)
 /// \brief Returns \p normal rescaled to be unit-length.
 inline Normal3f normal3f_normalised (const Normal3f& normal)
 {
-	return normal3f_for_vector3(vector3_normalised(normal3f_to_vector3(normal)));
+	return normal3f_for_vector3(normal3f_to_vector3(normal).getNormalised());
 }
 
 enum UnitSphereOctant
@@ -848,19 +858,12 @@ struct PointVertex
 		PointVertex ()
 		{
 		}
-
-		PointVertex (const Vertex3f _vertex) :
+		PointVertex (Vertex3f _vertex) :
 			colour(Colour4b(255, 255, 255, 255)), vertex(_vertex)
 		{
 		}
-
-		PointVertex (const Vertex3f _vertex, const Colour4b _colour) :
+		PointVertex (Vertex3f _vertex, Colour4b _colour) :
 			colour(_colour), vertex(_vertex)
-		{
-		}
-
-		PointVertex (const Vector3& point, const Colour4b& _colour) :
-			colour(_colour), vertex(point)
 		{
 		}
 };
@@ -984,9 +987,6 @@ class RenderablePointVector: public OpenGLRenderable
 			m_mode(mode)
 		{
 		}
-		~RenderablePointVector ()
-		{
-		}
 
 		void render (RenderStateFlags state) const
 		{
@@ -1046,8 +1046,28 @@ class RenderableIndexBuffer: public OpenGLRenderable
 
 		void render (RenderStateFlags state) const
 		{
+#if 1
 			pointvertex_gl_array(m_vertices.data());
 			glDrawElements(m_mode, GLsizei(m_indices.size()), RenderIndexTypeID, m_indices.data());
+#else
+			glBegin(m_mode);
+			if(state & RENDER_COLOURARRAY != 0)
+			{
+				for(std::size_t i = 0; i < m_indices.size(); ++i)
+				{
+					glColor4ubv(&m_vertices[m_indices[i]].colour.r);
+					glVertex3fv(&m_vertices[m_indices[i]].vertex.x);
+				}
+			}
+			else
+			{
+				for(std::size_t i = 0; i < m_indices.size(); ++i)
+				{
+					glVertex3fv(&m_vertices[m_indices[i]].vertex.x);
+				}
+			}
+			glEnd();
+#endif
 		}
 };
 
@@ -1124,6 +1144,102 @@ inline void draw_circle (const std::size_t segments, const float radius, PointVe
 	}
 }
 
+#if 0
+class PointVertexArrayIterator
+{
+	PointVertex* m_point;
+	public:
+	PointVertexArrayIterator(PointVertex* point)
+	: m_point(point)
+	{
+	}
+	PointVertexArrayIterator& operator++()
+	{
+		++m_point;
+		return *this;
+	}
+	PointVertexArrayIterator operator++(int)
+	{
+		PointVertexArrayIterator tmp(*this);
+		++m_point;
+		return tmp;
+	}
+	Vertex3f& operator*()
+	{
+		return m_point.vertex;
+	}
+	Vertex3f* operator->()
+	{
+		return &(operator*());
+	}
+}
+
+template<typename remap_policy, typename iterator_type
+inline void draw_circle(const std::size_t segments, const float radius, iterator_type start, remap_policy remap)
+{
+	const float increment = c_pi / (double)(segments << 2);
+
+	std::size_t count = 0;
+	iterator_type pxpy(start);
+	iterator_type pypx(pxpy + (segments << 1));
+	iterator_type pynx(pxpy + (segments << 1));
+	iterator_type nxpy(pypx + (segments << 1));
+	iterator_type nxny(pypx + (segments << 1));
+	iterator_type nynx(nxpy + (segments << 1));
+	iterator_type nypx(nxpy + (segments << 1));
+	iterator_type pxny(start);
+	while(count < segments)
+	{
+		const float theta = increment * count;
+		const float x = radius * cos(theta);
+		const float y = radius * sin(theta);
+
+		remap_policy::set((*pxpy), x, y, 0);
+		remap_policy::set((*pxny), x,-y, 0);
+		remap_policy::set((*nxpy),-x, y, 0);
+		remap_policy::set((*nxny),-x,-y, 0);
+
+		remap_policy::set((*pypx), y, x, 0);
+		remap_policy::set((*pynx), y,-x, 0);
+		remap_policy::set((*nypx),-y, x, 0);
+		remap_policy::set((*nynx),-y,-x, 0);
+	}
+}
+
+template<typename remap_policy, typename iterator_type
+inline void draw_semicircle(const std::size_t segments, const float radius, iterator_type start, remap_policy remap)
+{
+	const float increment = c_pi / (double)(segments << 2);
+
+	std::size_t count = 0;
+	iterator_type pxpy(start);
+	iterator_type pypx(pxpy + (segments << 1));
+	iterator_type pynx(pxpy + (segments << 1));
+	iterator_type nxpy(pypx + (segments << 1));
+	iterator_type nxny(pypx + (segments << 1));
+	iterator_type nynx(nxpy + (segments << 1));
+	iterator_type nypx(nxpy + (segments << 1));
+	iterator_type pxny(start);
+	while(count < segments)
+	{
+		const float theta = increment * count;
+		const float x = radius * cos(theta);
+		const float y = radius * sin(theta);
+
+		remap_policy::set((*pxpy), x, y, 0);
+		remap_policy::set((*pxny), x,-y, 0);
+		remap_policy::set((*nxpy),-x, y, 0);
+		remap_policy::set((*nxny),-x,-y, 0);
+
+		//remap_policy::set((*pypx), y, x, 0);
+		//remap_policy::set((*pynx), y,-x, 0);
+		//remap_policy::set((*nypx),-y, x, 0);
+		//remap_policy::set((*nynx),-y,-x, 0);
+	}
+}
+
+#endif
+
 inline void draw_quad (const float radius, PointVertex* quad)
 {
 	(*quad++).vertex = Vertex3f(-radius, radius, 0);
@@ -1150,10 +1266,12 @@ inline void ArbitraryMeshTriangle_calcTangents (const ArbitraryMeshVertex& a, co
 {
 	s = Vector3(0, 0, 0);
 	t = Vector3(0, 0, 0);
+	Vector3 aVec, bVec, cVec;
 	{
-		Vector3 cross(vector3_cross(vector3_subtracted(Vector3(b.vertex.x(), b.texcoord.s(), b.texcoord.t()), Vector3(
-				a.vertex.x(), a.texcoord.s(), a.texcoord.t())), vector3_subtracted(Vector3(c.vertex.x(),
-				c.texcoord.s(), c.texcoord.t()), Vector3(a.vertex.x(), a.texcoord.s(), a.texcoord.t()))));
+		aVec = Vector3(a.vertex.x(), a.texcoord.s(), a.texcoord.t());
+		bVec = Vector3(b.vertex.x(), b.texcoord.s(), b.texcoord.t());
+		cVec = Vector3(c.vertex.x(), c.texcoord.s(), c.texcoord.t());
+		Vector3 cross((bVec - aVec).crossProduct(cVec - aVec));
 
 		if (fabs(cross.x()) > 0.000001f) {
 			s.x() = -cross.y() / cross.x();
@@ -1165,9 +1283,10 @@ inline void ArbitraryMeshTriangle_calcTangents (const ArbitraryMeshVertex& a, co
 	}
 
 	{
-		Vector3 cross(vector3_cross(vector3_subtracted(Vector3(b.vertex.y(), b.texcoord.s(), b.texcoord.t()), Vector3(
-				a.vertex.y(), a.texcoord.s(), a.texcoord.t())), vector3_subtracted(Vector3(c.vertex.y(),
-				c.texcoord.s(), c.texcoord.t()), Vector3(a.vertex.y(), a.texcoord.s(), a.texcoord.t()))));
+		aVec = Vector3(a.vertex.y(), a.texcoord.s(), a.texcoord.t());
+		bVec = Vector3(b.vertex.y(), b.texcoord.s(), b.texcoord.t());
+		cVec = Vector3(c.vertex.y(), c.texcoord.s(), c.texcoord.t());
+		Vector3 cross((bVec - aVec).crossProduct(cVec - aVec));
 
 		if (fabs(cross.x()) > 0.000001f) {
 			s.y() = -cross.y() / cross.x();
@@ -1179,9 +1298,10 @@ inline void ArbitraryMeshTriangle_calcTangents (const ArbitraryMeshVertex& a, co
 	}
 
 	{
-		Vector3 cross(vector3_cross(vector3_subtracted(Vector3(b.vertex.z(), b.texcoord.s(), b.texcoord.t()), Vector3(
-				a.vertex.z(), a.texcoord.s(), a.texcoord.t())), vector3_subtracted(Vector3(c.vertex.z(),
-				c.texcoord.s(), c.texcoord.t()), Vector3(a.vertex.z(), a.texcoord.s(), a.texcoord.t()))));
+		aVec = Vector3(a.vertex.z(), a.texcoord.s(), a.texcoord.t());
+		bVec = Vector3(b.vertex.z(), b.texcoord.s(), b.texcoord.t());
+		cVec = Vector3(c.vertex.z(), c.texcoord.s(), c.texcoord.t());
+		Vector3 cross((bVec - aVec).crossProduct(cVec - aVec));
 
 		if (fabs(cross.x()) > 0.000001f) {
 			s.z() = -cross.y() / cross.x();

@@ -1,3 +1,8 @@
+/**
+ * @file iundo.h
+ * @brief The undo-system interface. Uses the 'memento' pattern.
+ */
+
 /*
  Copyright (C) 2001-2006, William Joseph.
  All Rights Reserved.
@@ -22,10 +27,9 @@
 #if !defined(INCLUDED_IUNDO_H)
 #define INCLUDED_IUNDO_H
 
-/// \file
-/// \brief The undo-system interface. Uses the 'memento' pattern.
-
 #include <cstddef>
+#include <string>
+
 #include "generic/constant.h"
 #include "generic/callbackfwd.h"
 
@@ -125,7 +129,7 @@ class UndoSystem
 
 		virtual std::size_t size () const = 0;
 		virtual void start () = 0;
-		virtual void finish (const char* command) = 0;
+		virtual void finish (const std::string& command) = 0;
 		virtual void undo () = 0;
 		virtual void redo () = 0;
 		virtual void clear () = 0;
@@ -151,9 +155,9 @@ inline UndoSystem& GlobalUndoSystem ()
 
 class UndoableCommand
 {
-		const char* m_command;
+		const std::string& m_command;
 	public:
-		UndoableCommand (const char* command) :
+		UndoableCommand (const std::string& command) :
 			m_command(command)
 		{
 			GlobalUndoSystem().start();

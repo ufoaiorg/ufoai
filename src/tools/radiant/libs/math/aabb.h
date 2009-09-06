@@ -35,25 +35,35 @@
  * such as the vertices of a model. It is defined by an origin, located at the centre of
  * the AABB, and symmetrical extents in 3 dimension which determine its size.
  */
+
 class AABB
 {
 	public:
 		/// The origin of the AABB, which is always located at the centre.
 		Vector3 origin;
+
 		/// The symmetrical extents in 3 dimensions.
 		Vector3 extents;
 
+		/** Construct an AABB with default origin and invalid extents.
+		 */
 		AABB () :
 			origin(0, 0, 0), extents(-1, -1, -1)
 		{
 		}
+
+		/** Construct an AABB with the provided origin and extents
+		 * vectors.
+		 */
 		AABB (const Vector3& origin_, const Vector3& extents_) :
 			origin(origin_), extents(extents_)
 		{
 		}
 
-		/**
-		 * @returns A const reference to a Vector3 containing the AABB's origin.
+		/** Get the origin of this AABB.
+		 *
+		 * @returns
+		 * A const reference to a Vector3 containing the AABB's origin.
 		 */
 		const Vector3& getOrigin () const
 		{
@@ -68,7 +78,12 @@ class AABB
 			return extents.getLength(); // Pythagorean length of extents vector
 		}
 
-		// Expand this AABB to include the given point
+		/** Expand this AABB in-place to include the given point in
+		 * world space.
+		 *
+		 * @param point
+		 * Vector3 representing the point to include.
+		 */
 		void includePoint (const Vector3& point)
 		{
 			// Process each axis separately
@@ -105,7 +120,7 @@ inline AABB aabb_for_minmax (const Vector3& min, const Vector3& max)
 {
 	AABB aabb;
 	aabb.origin = vector3_mid(min, max);
-	aabb.extents = vector3_subtracted(max, aabb.origin);
+	aabb.extents = max - aabb.origin;
 	return aabb;
 }
 
@@ -170,6 +185,11 @@ inline void aabb_extend_by_aabb_safe (AABB& aabb, const AABB& other)
 	}
 }
 
+inline void aabb_extend_by_vec3 (AABB& aabb, const Vector3& extension)
+{
+	aabb.extents += extension;
+}
+
 template<typename Index>
 inline bool aabb_intersects_point_dimension (const AABB& aabb, const Vector3& point)
 {
@@ -197,7 +217,7 @@ inline bool aabb_intersects_aabb (const AABB& aabb, const AABB& other)
 
 inline unsigned int aabb_classify_plane (const AABB& aabb, const Plane3& plane)
 {
-	double distance_origin = vector3_dot(plane.normal(), aabb.origin) + plane.dist();
+	double distance_origin = plane.normal().dot(aabb.origin) + plane.dist();
 
 	if (fabs(distance_origin) < (fabs(plane.a * aabb.extents[0]) + fabs(plane.b * aabb.extents[1]) + fabs(plane.c
 			* aabb.extents[2]))) {
@@ -210,11 +230,11 @@ inline unsigned int aabb_classify_plane (const AABB& aabb, const Plane3& plane)
 
 inline unsigned int aabb_oriented_classify_plane (const AABB& aabb, const Matrix4& transform, const Plane3& plane)
 {
-	double distance_origin = vector3_dot(plane.normal(), aabb.origin) + plane.dist();
+	double distance_origin = plane.normal().dot(aabb.origin) + plane.dist();
 
-	if (fabs(distance_origin) < (fabs(aabb.extents[0] * vector3_dot(plane.normal(), vector4_to_vector3(transform.x())))
-			+ fabs(aabb.extents[1] * vector3_dot(plane.normal(), vector4_to_vector3(transform.y()))) + fabs(
-			aabb.extents[2] * vector3_dot(plane.normal(), vector4_to_vector3(transform.z()))))) {
+	if (fabs(distance_origin) < (fabs(aabb.extents[0] * plane.normal().dot(vector4_to_vector3(transform.x()))) + fabs(
+			aabb.extents[1] * plane.normal().dot(vector4_to_vector3(transform.y()))) + fabs(aabb.extents[2]
+			* plane.normal().dot(vector4_to_vector3(transform.z()))))) {
 		return 1; // partially inside
 	} else if (distance_origin < 0) {
 		return 2; // totally inside
@@ -224,8 +244,8 @@ inline unsigned int aabb_oriented_classify_plane (const AABB& aabb, const Matrix
 
 inline void aabb_corners (const AABB& aabb, Vector3 corners[8])
 {
-	Vector3 min(vector3_subtracted(aabb.origin, aabb.extents));
-	Vector3 max(vector3_added(aabb.origin, aabb.extents));
+	Vector3 min(aabb.origin - aabb.extents);
+	Vector3 max(aabb.origin + aabb.extents);
 	corners[0] = Vector3(min[0], max[1], max[2]);
 	corners[1] = Vector3(max[0], max[1], max[2]);
 	corners[2] = Vector3(max[0], min[1], max[2]);
@@ -255,18 +275,18 @@ inline void aabb_corners_oriented (const AABB& aabb, const Matrix4& rotation, Ve
 inline void aabb_planes (const AABB& aabb, Plane3 planes[6])
 {
 	planes[0] = Plane3(g_vector3_axes[0], aabb.origin[0] + aabb.extents[0]);
-	planes[1] = Plane3(vector3_negated(g_vector3_axes[0]), -(aabb.origin[0] - aabb.extents[0]));
+	planes[1] = Plane3(-g_vector3_axes[0], -(aabb.origin[0] - aabb.extents[0]));
 	planes[2] = Plane3(g_vector3_axes[1], aabb.origin[1] + aabb.extents[1]);
-	planes[3] = Plane3(vector3_negated(g_vector3_axes[1]), -(aabb.origin[1] - aabb.extents[1]));
+	planes[3] = Plane3(-g_vector3_axes[1], -(aabb.origin[1] - aabb.extents[1]));
 	planes[4] = Plane3(g_vector3_axes[2], aabb.origin[2] + aabb.extents[2]);
-	planes[5] = Plane3(vector3_negated(g_vector3_axes[2]), -(aabb.origin[2] - aabb.extents[2]));
+	planes[5] = Plane3(-g_vector3_axes[2], -(aabb.origin[2] - aabb.extents[2]));
 }
 
 inline void aabb_planes_oriented (const AABB& aabb, const Matrix4& rotation, Plane3 planes[6])
 {
-	double x = vector3_dot(vector4_to_vector3(rotation.x()), aabb.origin);
-	double y = vector3_dot(vector4_to_vector3(rotation.y()), aabb.origin);
-	double z = vector3_dot(vector4_to_vector3(rotation.z()), aabb.origin);
+	double x = vector4_to_vector3(rotation.x()).dot(aabb.origin);
+	double y = vector4_to_vector3(rotation.y()).dot(aabb.origin);
+	double z = vector4_to_vector3(rotation.z()).dot(aabb.origin);
 
 	planes[0] = Plane3(vector4_to_vector3(rotation.x()), x + aabb.extents[0]);
 	planes[1] = Plane3(-vector4_to_vector3(rotation.x()), -(x - aabb.extents[0]));

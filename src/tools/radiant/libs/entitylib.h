@@ -1,7 +1,3 @@
-/**
- * @file entitylib.h
- */
-
 /*
  Copyright (C) 2001-2006, William Joseph.
  All Rights Reserved.
@@ -52,12 +48,12 @@ inline void arrow_draw (const Vector3& origin, const Vector3& direction)
 	Vector3 up(0, 0, 1);
 	Vector3 left(-direction[1], direction[0], 0);
 
-	Vector3 endpoint(vector3_added(origin, vector3_scaled(direction, 32.0)));
+	Vector3 endpoint(origin + direction * 32.0);
 
-	Vector3 tip1(vector3_added(vector3_added(endpoint, vector3_scaled(direction, -8.0)), vector3_scaled(up, -4.0)));
-	Vector3 tip2(vector3_added(tip1, vector3_scaled(up, 8.0)));
-	Vector3 tip3(vector3_added(vector3_added(endpoint, vector3_scaled(direction, -8.0)), vector3_scaled(left, -4.0)));
-	Vector3 tip4(vector3_added(tip3, vector3_scaled(left, 8.0)));
+	Vector3 tip1(endpoint + direction * (-8.0) + up * (-4.0));
+	Vector3 tip2(tip1 + up * 8.0);
+	Vector3 tip3(endpoint + direction * (-8.0) + left * (-4.0));
+	Vector3 tip4(tip3 + left * 8.0);
 
 	glBegin(GL_LINES);
 
@@ -96,7 +92,7 @@ class SelectionIntersection;
 inline void aabb_testselect (const AABB& aabb, SelectionTest& test, SelectionIntersection& best)
 {
 	const IndexPointer::index_type indices[24] = { 2, 1, 5, 6, 1, 0, 4, 5, 0, 1, 2, 3, 3, 7, 4, 0, 3, 2, 6, 7, 7, 6, 5,
-			4 };
+			4, };
 
 	Vector3 points[8];
 	aabb_corners(aabb, points);
@@ -499,7 +495,7 @@ class EntityKeyValues: public Entity
 			else
 				return (const char*) 0;
 		}
-
+		
 	public:
 		bool m_isContainer;
 
@@ -612,11 +608,9 @@ class EntityKeyValues: public Entity
 			}
 		}
 
-		/**
-		 * @brief Sets or deletes properties for the entity
-		 * @param[in] key The property key
-		 * @param[in] value If empty, the property will be removed
+		/** Set a keyvalue on the entity.
 		 */
+
 		void setKeyValue (const std::string& key, const std::string& value)
 		{
 			if (value.empty()) {

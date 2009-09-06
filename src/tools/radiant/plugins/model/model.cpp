@@ -117,8 +117,7 @@ class PicoSurface: public OpenGLRenderable
 				glBegin(GL_LINES);
 
 				for (Array<ArbitraryMeshVertex>::const_iterator i = m_vertices.begin(); i != m_vertices.end(); ++i) {
-					Vector3 normal = vector3_added(vertex3f_to_vector3((*i).vertex), vector3_scaled(
-							normal3f_to_vector3((*i).normal), 8));
+					Vector3 normal = vertex3f_to_vector3((*i).vertex) + normal3f_to_vector3((*i).normal) * 8;
 					glVertex3fv(vertex3f_to_array((*i).vertex));
 					glVertex3fv(vector3_to_array(normal));
 				}
@@ -385,10 +384,7 @@ class PicoModel: public Cullable, public Bounded
 		}
 };
 
-class PicoModelInstance: public scene::Instance,
-		public Renderable,
-		public SelectionTestable,
-		public LightCullable
+class PicoModelInstance: public scene::Instance, public Renderable, public SelectionTestable, public LightCullable
 {
 		class TypeCasts
 		{

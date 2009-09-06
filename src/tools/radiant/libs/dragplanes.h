@@ -83,44 +83,44 @@ class DragPlanes
 			aabb_planes_oriented(aabb, rotation, planes);
 
 			for (Vector3* i = corners; i != corners + 8; ++i) {
-				*i = vector3_subtracted(line_closest_point(line, *i), *i);
+				*i = line_closest_point(line, *i) - (*i);
 			}
 
-			if (vector3_dot(planes[0].normal(), corners[1]) > 0 && vector3_dot(planes[0].normal(), corners[2]) > 0
-					&& vector3_dot(planes[0].normal(), corners[5]) > 0 && vector3_dot(planes[0].normal(), corners[6])
-					> 0) {
+			if (planes[0].normal().dot(corners[1]) > 0 && planes[0].normal().dot(corners[2]) > 0
+					&& planes[0].normal().dot(corners[5]) > 0 && planes[0].normal().dot(corners[6]) > 0) {
 				Selector_add(selector, m_selectable_right);
 				selectedPlaneCallback(planes[0]);
+				//globalOutputStream() << "right\n";
 			}
-			if (vector3_dot(planes[1].normal(), corners[0]) > 0 && vector3_dot(planes[1].normal(), corners[3]) > 0
-					&& vector3_dot(planes[1].normal(), corners[4]) > 0 && vector3_dot(planes[1].normal(), corners[7])
-					> 0) {
+			if (planes[1].normal().dot(corners[0]) > 0 && planes[1].normal().dot(corners[3]) > 0
+					&& planes[1].normal().dot(corners[4]) > 0 && planes[1].normal().dot(corners[7]) > 0) {
 				Selector_add(selector, m_selectable_left);
 				selectedPlaneCallback(planes[1]);
+				//globalOutputStream() << "left\n";
 			}
-			if (vector3_dot(planes[2].normal(), corners[0]) > 0 && vector3_dot(planes[2].normal(), corners[1]) > 0
-					&& vector3_dot(planes[2].normal(), corners[4]) > 0 && vector3_dot(planes[2].normal(), corners[5])
-					> 0) {
+			if (planes[2].normal().dot(corners[0]) > 0 && planes[2].normal().dot(corners[1]) > 0
+					&& planes[2].normal().dot(corners[4]) > 0 && planes[2].normal().dot(corners[5]) > 0) {
 				Selector_add(selector, m_selectable_front);
 				selectedPlaneCallback(planes[2]);
+				//globalOutputStream() << "front\n";
 			}
-			if (vector3_dot(planes[3].normal(), corners[2]) > 0 && vector3_dot(planes[3].normal(), corners[3]) > 0
-					&& vector3_dot(planes[3].normal(), corners[6]) > 0 && vector3_dot(planes[3].normal(), corners[7])
-					> 0) {
+			if (planes[3].normal().dot(corners[2]) > 0 && planes[3].normal().dot(corners[3]) > 0
+					&& planes[3].normal().dot(corners[6]) > 0 && planes[3].normal().dot(corners[7]) > 0) {
 				Selector_add(selector, m_selectable_back);
 				selectedPlaneCallback(planes[3]);
+				//globalOutputStream() << "back\n";
 			}
-			if (vector3_dot(planes[4].normal(), corners[0]) > 0 && vector3_dot(planes[4].normal(), corners[1]) > 0
-					&& vector3_dot(planes[4].normal(), corners[2]) > 0 && vector3_dot(planes[4].normal(), corners[3])
-					> 0) {
+			if (planes[4].normal().dot(corners[0]) > 0 && planes[4].normal().dot(corners[1]) > 0
+					&& planes[4].normal().dot(corners[2]) > 0 && planes[4].normal().dot(corners[3]) > 0) {
 				Selector_add(selector, m_selectable_top);
 				selectedPlaneCallback(planes[4]);
+				//globalOutputStream() << "top\n";
 			}
-			if (vector3_dot(planes[5].normal(), corners[4]) > 0 && vector3_dot(planes[5].normal(), corners[5]) > 0
-					&& vector3_dot(planes[5].normal(), corners[6]) > 0 && vector3_dot(planes[5].normal(), corners[7])
-					> 0) {
+			if (planes[5].normal().dot(corners[4]) > 0 && planes[5].normal().dot(corners[5]) > 0
+					&& planes[5].normal().dot(corners[6]) > 0 && planes[5].normal().dot(corners[7]) > 0) {
 				Selector_add(selector, m_selectable_bottom);
 				selectedPlaneCallback(planes[5]);
+				//globalOutputStream() << "bottom\n";
 			}
 
 			m_bounds = aabb;
@@ -157,29 +157,35 @@ class DragPlanes
 			if (m_bounds.extents[0] != 0) {
 				if (m_selectable_right.isSelected()) {
 					max[0] += translation[0];
+					//globalOutputStream() << "moving right\n";
 				}
 				if (m_selectable_left.isSelected()) {
 					min[0] += translation[0];
+					//globalOutputStream() << "moving left\n";
 				}
 			}
 			if (m_bounds.extents[1] != 0) {
 				if (m_selectable_front.isSelected()) {
 					max[1] += translation[1];
+					//globalOutputStream() << "moving front\n";
 				}
 				if (m_selectable_back.isSelected()) {
 					min[1] += translation[1];
+					//globalOutputStream() << "moving back\n";
 				}
 			}
 			if (m_bounds.extents[2] != 0) {
 				if (m_selectable_top.isSelected()) {
 					max[2] += translation[2];
+					//globalOutputStream() << "moving top\n";
 				}
 				if (m_selectable_bottom.isSelected()) {
 					min[2] += translation[2];
+					//globalOutputStream() << "moving bottom\n";
 				}
 			}
 
-			return AABB(vector3_mid(min, max), vector3_scaled(vector3_subtracted(max, min), 0.5));
+			return AABB(vector3_mid(min, max), (max - min) * 0.5);
 		}
 		AABB evaluateResize (const Vector3& translation, const Matrix4& rotation) const
 		{
@@ -194,7 +200,7 @@ class DragPlanes
 					!= 0 ? aabb.extents[1] / m_bounds.extents[1] : 1, m_bounds.extents[2] != 0 ? aabb.extents[2]
 					/ m_bounds.extents[2] : 1);
 
-			Matrix4 matrix(Matrix4::getTranslation(aabb.origin - m_bounds.origin));
+			Matrix4 matrix = Matrix4::getTranslation(aabb.origin - m_bounds.origin);
 			matrix4_pivoted_scale_by_vec3(matrix, scale, m_bounds.origin);
 
 			return matrix;

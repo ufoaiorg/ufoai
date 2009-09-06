@@ -47,8 +47,6 @@ class Targetable
 
 typedef std::set<Targetable*> targetables_t;
 
-static const double TARGET_MAX_ARROW_LENGTH = 10;
-
 extern const char* g_targetable_nameKey;
 
 targetables_t* getTargetables (const char* targetname);
@@ -62,9 +60,9 @@ class EntityConnectionLine: public OpenGLRenderable
 		void render (RenderStateFlags state) const
 		{
 			float s1[2], s2[2];
-			Vector3 dir(vector3_subtracted(end, start));
-			double len = vector3_length(dir);
-			vector3_scale(dir, 8.0 * (1.0 / len));
+			Vector3 dir(end - start);
+			double len = dir.getLength();
+			dir *= 8.0 * (1.0 / len);
 			s1[0] = dir[0] - dir[1];
 			s1[1] = dir[0] + dir[1];
 			s2[0] = dir[0] + dir[1];
@@ -79,7 +77,7 @@ class EntityConnectionLine: public OpenGLRenderable
 
 			Vector3 arrow(start);
 			for (unsigned int i = 0, count = (len < 32) ? 1 : static_cast<unsigned int> (len * 0.0625); i < count; i++) {
-				vector3_add(arrow, vector3_scaled(dir, (len < 32) ? len : 32));
+				arrow += dir * ((len < 32) ? len : 32);
 				glVertex3fv(vector3_to_array(arrow));
 				glVertex3f(arrow[0] + s1[0], arrow[1] + s1[1], arrow[2] + dir[2]);
 				glVertex3fv(vector3_to_array(arrow));
@@ -195,51 +193,11 @@ class TargetLinesPushBack
 			m_targetLines(targetLines), m_worldPosition(worldPosition), m_volume(volume)
 		{
 		}
-		void operator() (const Vector3& targetPosition) const
+		void operator() (const Vector3& worldPosition) const
 		{
-			if (m_volume.TestLine(segment_for_startend(m_worldPosition, targetPosition))) {
-				// Take the mid-point
-				Vector3 mid((m_worldPosition + targetPosition) * 0.5f);
-
-				// Get the normalised target direction
-				Vector3 targetDir = (targetPosition - m_worldPosition);
-
-				// Normalise the length manually to get the scale for the arrows
-				double length = targetDir.getLength();
-				targetDir *= 1 / length;
-
-				// Get the orthogonal direction (in the xy plane)
-				Vector3 xyDir(targetPosition.y() - m_worldPosition.y(), m_worldPosition.x() - targetPosition.x(), 0);
-				xyDir.normalise();
-
-				// Let the target arrow not be any longer than one tenth of the total distance
-				double targetArrowLength = length * 0.10f;
-
-				// Clamp the length to a few units anyway
-				if (targetArrowLength > TARGET_MAX_ARROW_LENGTH) {
-					targetArrowLength = TARGET_MAX_ARROW_LENGTH;
-				}
-
-				targetDir *= targetArrowLength;
-				xyDir *= targetArrowLength;
-
-				// Get a point slightly away from the target
-				Vector3 arrowBase(mid - targetDir);
-
-				// The arrow points for the XY plane
-				Vector3 xyPoint1 = arrowBase + xyDir;
-				Vector3 xyPoint2 = arrowBase - xyDir;
-
-				// The line from this to the other entity
-				m_targetLines.push_back(PointVertex(m_worldPosition));
-				m_targetLines.push_back(PointVertex(targetPosition));
-
-				// The "arrow indicators" in the xy plane
-				m_targetLines.push_back(PointVertex(mid));
-				m_targetLines.push_back(PointVertex(xyPoint1));
-
-				m_targetLines.push_back(PointVertex(mid));
-				m_targetLines.push_back(PointVertex(xyPoint2));
+			if (m_volume.TestLine(segment_for_startend(m_worldPosition, worldPosition))) {
+				m_targetLines.push_back(PointVertex(reinterpret_cast<const Vertex3f&> (m_worldPosition)));
+				m_targetLines.push_back(PointVertex(reinterpret_cast<const Vertex3f&> (worldPosition)));
 			}
 		}
 };

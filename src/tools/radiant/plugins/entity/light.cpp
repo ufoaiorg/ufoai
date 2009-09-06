@@ -72,32 +72,32 @@ static void sphere_draw_fill (const Vector3& origin, float radius, int sides)
 			const double p = (j * dp) - (c_pi / 2.0);
 
 			{
-				Vector3 v(vector3_added(origin, vector3_scaled(vector3_for_spherical(t, p), radius)));
+				Vector3 v(origin + vector3_for_spherical(t, p) * radius);
 				glVertex3fv(vector3_to_array(v));
 			}
 
 			{
-				Vector3 v(vector3_added(origin, vector3_scaled(vector3_for_spherical(t, p + dp), radius)));
+				Vector3 v(origin + vector3_for_spherical(t, p + dp) * radius);
 				glVertex3fv(vector3_to_array(v));
 			}
 
 			{
-				Vector3 v(vector3_added(origin, vector3_scaled(vector3_for_spherical(t + dt, p + dp), radius)));
+				Vector3 v(origin + vector3_for_spherical(t + dt, p + dp) * radius);
 				glVertex3fv(vector3_to_array(v));
 			}
 
 			{
-				Vector3 v(vector3_added(origin, vector3_scaled(vector3_for_spherical(t, p), radius)));
+				Vector3 v(origin + vector3_for_spherical(t, p) * radius);
 				glVertex3fv(vector3_to_array(v));
 			}
 
 			{
-				Vector3 v(vector3_added(origin, vector3_scaled(vector3_for_spherical(t + dt, p + dp), radius)));
+				Vector3 v(origin + vector3_for_spherical(t + dt, p + dp) * radius);
 				glVertex3fv(vector3_to_array(v));
 			}
 
 			{
-				Vector3 v(vector3_added(origin, vector3_scaled(vector3_for_spherical(t + dt, p), radius)));
+				Vector3 v(origin + vector3_for_spherical(t + dt, p) * radius);
 				glVertex3fv(vector3_to_array(v));
 			}
 		}
@@ -109,17 +109,17 @@ static void sphere_draw_fill (const Vector3& origin, float radius, int sides)
 			const double t = i * dt;
 
 			{
-				Vector3 v(vector3_added(origin, vector3_scaled(vector3_for_spherical(t, p), radius)));
+				Vector3 v(origin + vector3_for_spherical(t, p) * radius);
 				glVertex3fv(vector3_to_array(v));
 			}
 
 			{
-				Vector3 v(vector3_added(origin, vector3_scaled(vector3_for_spherical(t + dt, p + dp), radius)));
+				Vector3 v(origin + vector3_for_spherical(t + dt, p + dp) * radius);
 				glVertex3fv(vector3_to_array(v));
 			}
 
 			{
-				Vector3 v(vector3_added(origin, vector3_scaled(vector3_for_spherical(t + dt, p), radius)));
+				Vector3 v(origin + vector3_for_spherical(t + dt, p) * radius);
 				glVertex3fv(vector3_to_array(v));
 			}
 		}
@@ -210,8 +210,8 @@ static void light_draw_radius_fill (const Vector3& origin, const float envelope[
 
 static void light_vertices (const AABB& aabb_light, Vector3 points[6])
 {
-	Vector3 max(vector3_added(aabb_light.origin, aabb_light.extents));
-	Vector3 min(vector3_subtracted(aabb_light.origin, aabb_light.extents));
+	Vector3 max(aabb_light.origin + aabb_light.extents);
+	Vector3 min(aabb_light.origin - aabb_light.extents);
 	Vector3 mid(aabb_light.origin);
 
 	// top, bottom, tleft, tright, bright, bleft

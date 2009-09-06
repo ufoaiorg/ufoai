@@ -1,6 +1,6 @@
 /**
- * @file quaternion.h
- * @brief Quaternion data types and related operations.
+ * @file matrix.h
+ * @brief Matrix data types and related operations.
  */
 
 /*
@@ -51,7 +51,7 @@ inline void quaternion_multiply_by_quaternion (Quaternion& quaternion, const Qua
 /// \brief Constructs a quaternion which rotates between two points on the unit-sphere, \p from and \p to.
 inline Quaternion quaternion_for_unit_vectors (const Vector3& from, const Vector3& to)
 {
-	return Quaternion(vector3_cross(from, to), static_cast<float> (vector3_dot(from, to)));
+	return Quaternion(from.crossProduct(to), static_cast<float> (from.dot(to)));
 }
 
 inline Quaternion quaternion_for_axisangle (const Vector3& axis, double angle)
@@ -81,7 +81,7 @@ inline Quaternion quaternion_for_z (double angle)
 
 inline Quaternion quaternion_inverse (const Quaternion& quaternion)
 {
-	return Quaternion(vector3_negated(vector4_to_vector3(quaternion)), quaternion[3]);
+	return Quaternion(-vector4_to_vector3(quaternion), quaternion[3]);
 }
 
 inline void quaternion_conjugate (Quaternion& quaternion)
@@ -105,6 +105,39 @@ inline void quaternion_normalise (Quaternion& quaternion)
 /// \brief Constructs a pure-rotation matrix from \p quaternion.
 inline Matrix4 matrix4_rotation_for_quaternion (const Quaternion& quaternion)
 {
+#if 0
+	const double xx = quaternion[0] * quaternion[0];
+	const double xy = quaternion[0] * quaternion[1];
+	const double xz = quaternion[0] * quaternion[2];
+	const double xw = quaternion[0] * quaternion[3];
+
+	const double yy = quaternion[1] * quaternion[1];
+	const double yz = quaternion[1] * quaternion[2];
+	const double yw = quaternion[1] * quaternion[3];
+
+	const double zz = quaternion[2] * quaternion[2];
+	const double zw = quaternion[2] * quaternion[3];
+
+	return Matrix4(
+			static_cast<float>( 1 - 2 * ( yy + zz ) ),
+			static_cast<float>( 2 * ( xy + zw ) ),
+			static_cast<float>( 2 * ( xz - yw ) ),
+			0,
+			static_cast<float>( 2 * ( xy - zw ) ),
+			static_cast<float>( 1 - 2 * ( xx + zz ) ),
+			static_cast<float>( 2 * ( yz + xw ) ),
+			0,
+			static_cast<float>( 2 * ( xz + yw ) ),
+			static_cast<float>( 2 * ( yz - xw ) ),
+			static_cast<float>( 1 - 2 * ( xx + yy ) ),
+			0,
+			0,
+			0,
+			0,
+			1
+	);
+
+#else
 	const double x2 = quaternion[0] + quaternion[0];
 	const double y2 = quaternion[1] + quaternion[1];
 	const double z2 = quaternion[2] + quaternion[2];
@@ -122,6 +155,8 @@ inline Matrix4 matrix4_rotation_for_quaternion (const Quaternion& quaternion)
 			static_cast<float> (xy - wz), static_cast<float> (1.0 - (xx + zz)), static_cast<float> (yz + wx), 0,
 			static_cast<float> (xz + wy), static_cast<float> (yz - wx), static_cast<float> (1.0 - (xx + yy)), 0, 0, 0,
 			0, 1);
+
+#endif
 }
 
 const double c_half_sqrt2 = 0.70710678118654752440084436210485;
@@ -204,7 +239,7 @@ inline void matrix4_pivoted_rotate_by_quaternion (Matrix4& self, const Quaternio
 {
 	matrix4_translate_by_vec3(self, pivotpoint);
 	matrix4_rotate_by_quaternion(self, rotation);
-	matrix4_translate_by_vec3(self, vector3_negated(pivotpoint));
+	matrix4_translate_by_vec3(self, -pivotpoint);
 }
 
 inline Vector3 quaternion_transformed_point (const Quaternion& quaternion, const Vector3& point)
@@ -246,7 +281,7 @@ inline void matrix4_pivoted_rotate_by_axisangle (Matrix4& self, const Vector3& a
 {
 	matrix4_translate_by_vec3(self, pivotpoint);
 	matrix4_rotate_by_axisangle(self, axis, angle);
-	matrix4_translate_by_vec3(self, vector3_negated(pivotpoint));
+	matrix4_translate_by_vec3(self, -pivotpoint);
 }
 
 #endif

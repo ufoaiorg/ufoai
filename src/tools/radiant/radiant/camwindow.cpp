@@ -219,7 +219,7 @@ void Camera_Move_updateAxes (camera_t& camera)
 void Camera_Freemove_updateAxes (camera_t& camera)
 {
 	camera.right = camera.vright;
-	camera.forward = vector3_negated(camera.vpn);
+	camera.forward = -camera.vpn;
 }
 
 const Vector3& Camera_getOrigin (camera_t& camera)
@@ -313,7 +313,7 @@ void Cam_MouseControl (camera_t& camera, int x, int y)
 			xf = 0;
 	}
 
-	vector3_add(camera.origin, vector3_scaled(camera.forward, yf * 0.1f * g_camwindow_globals_private.m_nMoveSpeed));
+	camera.origin += camera.forward * (yf * 0.1f * g_camwindow_globals_private.m_nMoveSpeed);
 	camera.angles[CAMERA_YAW] += xf * -0.1f * g_camwindow_globals_private.m_nAngleSpeed;
 
 	Camera_updateModelview(camera);
@@ -364,17 +364,17 @@ void Cam_KeyControl (camera_t& camera, float dtime)
 
 	// Update position
 	if (camera.movementflags & MOVE_FORWARD)
-		vector3_add(camera.origin, vector3_scaled(camera.forward, dtime * g_camwindow_globals_private.m_nMoveSpeed));
+		camera.origin += camera.forward * (dtime * g_camwindow_globals_private.m_nMoveSpeed);
 	if (camera.movementflags & MOVE_BACK)
-		vector3_add(camera.origin, vector3_scaled(camera.forward, -dtime * g_camwindow_globals_private.m_nMoveSpeed));
+		camera.origin += camera.forward * (-dtime * g_camwindow_globals_private.m_nMoveSpeed);
 	if (camera.movementflags & MOVE_STRAFELEFT)
-		vector3_add(camera.origin, vector3_scaled(camera.right, -dtime * g_camwindow_globals_private.m_nMoveSpeed));
+		camera.origin += camera.right * (-dtime * g_camwindow_globals_private.m_nMoveSpeed);
 	if (camera.movementflags & MOVE_STRAFERIGHT)
-		vector3_add(camera.origin, vector3_scaled(camera.right, dtime * g_camwindow_globals_private.m_nMoveSpeed));
+		camera.origin += camera.right * (dtime * g_camwindow_globals_private.m_nMoveSpeed);
 	if (camera.movementflags & MOVE_UP)
-		vector3_add(camera.origin, vector3_scaled(g_vector3_axis_z, dtime * g_camwindow_globals_private.m_nMoveSpeed));
+		camera.origin += g_vector3_axis_z * (dtime * g_camwindow_globals_private.m_nMoveSpeed);
 	if (camera.movementflags & MOVE_DOWN)
-		vector3_add(camera.origin, vector3_scaled(g_vector3_axis_z, -dtime * g_camwindow_globals_private.m_nMoveSpeed));
+		camera.origin += g_vector3_axis_z * (-dtime * g_camwindow_globals_private.m_nMoveSpeed);
 
 	Camera_updateModelview(camera);
 }
@@ -524,12 +524,12 @@ typedef ReferenceCaller<camera_t, &Camera_MoveDown_KeyUp> FreeMoveCameraMoveDown
 void Camera_MoveForward_Discrete (camera_t& camera)
 {
 	Camera_Move_updateAxes(camera);
-	Camera_setOrigin(camera, vector3_added(Camera_getOrigin(camera), vector3_scaled(camera.forward, SPEED_MOVE)));
+	Camera_setOrigin(camera, Camera_getOrigin(camera) + camera.forward * SPEED_MOVE);
 }
 void Camera_MoveBack_Discrete (camera_t& camera)
 {
 	Camera_Move_updateAxes(camera);
-	Camera_setOrigin(camera, vector3_added(Camera_getOrigin(camera), vector3_scaled(camera.forward, -SPEED_MOVE)));
+	Camera_setOrigin(camera, Camera_getOrigin(camera) + camera.forward * (-SPEED_MOVE));
 }
 
 void Camera_MoveUp_Discrete (camera_t& camera)
@@ -548,12 +548,12 @@ void Camera_MoveDown_Discrete (camera_t& camera)
 void Camera_MoveLeft_Discrete (camera_t& camera)
 {
 	Camera_Move_updateAxes(camera);
-	Camera_setOrigin(camera, vector3_added(Camera_getOrigin(camera), vector3_scaled(camera.right, -SPEED_MOVE)));
+	Camera_setOrigin(camera, Camera_getOrigin(camera) + camera.right * (-SPEED_MOVE));
 }
 void Camera_MoveRight_Discrete (camera_t& camera)
 {
 	Camera_Move_updateAxes(camera);
-	Camera_setOrigin(camera, vector3_added(Camera_getOrigin(camera), vector3_scaled(camera.right, SPEED_MOVE)));
+	Camera_setOrigin(camera, Camera_getOrigin(camera) + camera.right * (SPEED_MOVE));
 }
 
 void Camera_RotateLeft_Discrete (camera_t& camera)
@@ -897,12 +897,12 @@ gboolean wheelmove_scroll (GtkWidget* widget, GdkEventScroll* event, CamWnd* cam
 	// Determine the direction we are moving.
 	if (event->direction == GDK_SCROLL_UP) {
 		Camera_Freemove_updateAxes(camwnd->getCamera());
-		Camera_setOrigin(*camwnd, vector3_added(Camera_getOrigin(*camwnd), vector3_scaled(camwnd->getCamera().forward,
-				static_cast<float> (g_camwindow_globals_private.m_nMoveSpeed))));
+		Camera_setOrigin(*camwnd, Camera_getOrigin(*camwnd) + camwnd->getCamera().forward
+				* static_cast<float> (g_camwindow_globals_private.m_nMoveSpeed));
 	} else if (event->direction == GDK_SCROLL_DOWN) {
 		Camera_Freemove_updateAxes(camwnd->getCamera());
-		Camera_setOrigin(*camwnd, vector3_added(Camera_getOrigin(*camwnd), vector3_scaled(camwnd->getCamera().forward,
-				-static_cast<float> (g_camwindow_globals_private.m_nMoveSpeed))));
+		Camera_setOrigin(*camwnd, Camera_getOrigin(*camwnd) + camwnd->getCamera().forward
+				* (-static_cast<float> (g_camwindow_globals_private.m_nMoveSpeed)));
 	}
 
 	return FALSE;
@@ -1420,10 +1420,6 @@ ToggleItem g_show_stats(g_show_stats_callback);
 void CamWnd::Cam_Draw ()
 {
 	glViewport(0, 0, m_Camera.width, m_Camera.height);
-#if 0
-	GLint viewprt[4];
-	glGetIntegerv (GL_VIEWPORT, viewprt);
-#endif
 
 	// enable depth buffer writes
 	glDepthMask(GL_TRUE);
@@ -1455,8 +1451,6 @@ void CamWnd::Cam_Draw ()
 		ambient[3] = 1.0f;
 		diffuse[0] = diffuse[1] = diffuse[2] = 0.4f;
 		diffuse[3] = 1.0f;
-		//material[0] = material[1] = material[2] = 0.8f;
-		//material[3] = 1.0f;
 
 		inverse_cam_dir[0] = m_Camera.vpn[0];
 		inverse_cam_dir[1] = m_Camera.vpn[1];

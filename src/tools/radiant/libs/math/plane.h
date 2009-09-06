@@ -1,6 +1,6 @@
 /**
- * @file plane.h
- * @brief Plane data types and related operations.
+ * @file matrix.h
+ * @brief Matrix data types and related operations.
  */
 
 /*
@@ -104,7 +104,7 @@ inline Plane3 plane3_inverse_transformed (const Plane3& plane, const Matrix4& tr
 
 inline Plane3 plane3_flipped (const Plane3& plane)
 {
-	return Plane3(vector3_negated(plane.normal()), -plane.dist());
+	return Plane3(-plane.normal(), -plane.dist());
 }
 
 const double c_PLANE_NORMAL_EPSILON = 0.0001f;
@@ -123,7 +123,7 @@ inline bool plane3_opposing (const Plane3& self, const Plane3& other)
 
 inline bool plane3_valid (const Plane3& self)
 {
-	return float_equal_epsilon(vector3_dot(self.normal(), self.normal()), 1.0, 0.01);
+	return float_equal_epsilon(self.normal().dot(self.normal()), 1.0, 0.01);
 }
 
 template<typename Element>
@@ -131,8 +131,8 @@ inline Plane3 plane3_for_points (const BasicVector3<Element>& p0, const BasicVec
 		Element>& p2)
 {
 	Plane3 self;
-	self.normal() = vector3_normalised(vector3_cross(vector3_subtracted(p1, p0), vector3_subtracted(p2, p0)));
-	self.dist() = vector3_dot(p0, self.normal());
+	self.normal() = (p1 - p0).crossProduct(p2 - p0).getNormalised();
+	self.dist() = p0.dot(self.normal());
 	return self;
 }
 

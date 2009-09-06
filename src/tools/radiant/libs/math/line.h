@@ -50,11 +50,11 @@ inline Vector3 line_closest_point (const Line& line, const Vector3& point)
 	Vector3 v = line.end - line.start;
 	Vector3 w = point - line.start;
 
-	double c1 = vector3_dot(w, v);
+	double c1 = w.dot(v);
 	if (c1 <= 0)
 		return line.start;
 
-	double c2 = vector3_dot(v, v);
+	double c2 = v.dot(v);
 	if (c2 <= c1)
 		return line.end;
 
@@ -79,15 +79,15 @@ inline Segment segment_for_startend (const Vector3& start, const Vector3& end)
 {
 	Segment segment;
 	segment.origin = vector3_mid(start, end);
-	segment.extents = vector3_subtracted(end, segment.origin);
+	segment.extents = end - segment.origin;
 	return segment;
 }
 
 inline unsigned int segment_classify_plane (const Segment& segment, const Plane3& plane)
 {
-	double distance_origin = vector3_dot(plane.normal(), segment.origin) + plane.dist();
+	double distance_origin = plane.normal().dot(segment.origin) + plane.dist();
 
-	if (fabs(distance_origin) < fabs(vector3_dot(plane.normal(), segment.extents))) {
+	if (fabs(distance_origin) < fabs(plane.normal().dot(segment.extents))) {
 		return 1; // partially inside
 	} else if (distance_origin < 0) {
 		return 2; // totally inside
@@ -111,19 +111,24 @@ class Ray
 
 inline Ray ray_for_points (const Vector3& origin, const Vector3& p2)
 {
-	return Ray(origin, vector3_normalised(vector3_subtracted(p2, origin)));
+	return Ray(origin, (p2 - origin).getNormalised());
+}
+
+inline void ray_transform (Ray& ray, const Matrix4& matrix)
+{
+	matrix4_transform_point(matrix, ray.origin);
+	matrix4_transform_direction(matrix, ray.direction);
 }
 
 // closest-point-on-line
 inline double ray_squared_distance_to_point (const Ray& ray, const Vector3& point)
 {
-	return vector3_length_squared(vector3_subtracted(point, vector3_added(ray.origin, vector3_scaled(ray.direction,
-			vector3_dot(vector3_subtracted(point, ray.origin), ray.direction)))));
+	return (point - (ray.origin + ray.direction * (point - ray.origin).dot(ray.direction))).getLengthSquared();
 }
 
 inline double ray_distance_to_plane (const Ray& ray, const Plane3& plane)
 {
-	return -(vector3_dot(plane.normal(), ray.origin) - plane.dist()) / vector3_dot(ray.direction, plane.normal());
+	return -(plane.normal().dot(ray.origin) - plane.dist()) / ray.direction.dot(plane.normal());
 }
 
 #endif

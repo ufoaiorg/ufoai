@@ -68,6 +68,11 @@ RADIANT_SRCS_CPP = \
 	\
 	$(RADIANT_BASE)/radiant/brushexport/BrushExportOBJ.cpp \
 	\
+	$(RADIANT_BASE)/radiant/selection/BestPoint.cpp \
+	$(RADIANT_BASE)/radiant/selection/Intersection.cpp \
+	$(RADIANT_BASE)/radiant/selection/Manipulatables.cpp \
+	$(RADIANT_BASE)/radiant/selection/Manipulators.cpp \
+	\
 	$(RADIANT_BASE)/radiant/plugin/PluginManager.cpp \
 	$(RADIANT_BASE)/radiant/plugin/PluginSlots.cpp \
 	\

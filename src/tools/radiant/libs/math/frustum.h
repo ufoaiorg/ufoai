@@ -458,15 +458,15 @@ inline VolumeIntersectionValue frustum_test_aabb (const Frustum& frustum, const 
 
 inline double plane_distance_to_point (const Plane3& plane, const Vector3& point)
 {
-	return vector3_dot(plane.normal(), point) + plane.d;
+	return plane.normal().dot(point) + plane.d;
 }
 
 inline double plane_distance_to_oriented_extents (const Plane3& plane, const Vector3& extents,
 		const Matrix4& orientation)
 {
-	return fabs(extents[0] * vector3_dot(plane.normal(), vector4_to_vector3(orientation.x()))) + fabs(extents[1]
-			* vector3_dot(plane.normal(), vector4_to_vector3(orientation.y()))) + fabs(extents[2] * vector3_dot(
-			plane.normal(), vector4_to_vector3(orientation.z())));
+	return fabs(extents[0] * plane.normal().dot(vector4_to_vector3(orientation.x()))) + fabs(extents[1]
+			* plane.normal().dot(vector4_to_vector3(orientation.y()))) + fabs(extents[2] * plane.normal().dot(
+			vector4_to_vector3(orientation.z())));
 }
 
 /// \brief Return false if \p aabb with \p orientation is partially or completely outside \p plane.
@@ -493,7 +493,7 @@ inline VolumeIntersectionValue frustum_intersects_transformed_aabb (const Frustu
 
 inline bool plane3_test_point (const Plane3& plane, const Vector3& point)
 {
-	return vector3_dot(point, plane.normal()) + plane.dist() <= 0;
+	return point.dot(plane.normal()) + plane.dist() <= 0;
 }
 
 inline bool plane3_test_line (const Plane3& plane, const Segment& segment)
@@ -522,7 +522,7 @@ inline bool viewer_test_plane (const Vector4& viewer, const Plane3& plane)
 
 inline Vector3 triangle_cross (const Vector3& p0, const Vector3& p1, const Vector3& p2)
 {
-	return vector3_cross(vector3_subtracted(p1, p0), vector3_subtracted(p1, p2));
+	return (p1 - p0).crossProduct(p1 - p2);
 }
 
 inline bool viewer_test_triangle (const Vector4& viewer, const Vector3& p0, const Vector3& p1, const Vector3& p2)
@@ -542,14 +542,19 @@ inline Vector4 viewer_from_transformed_viewer (const Vector4& viewer, const Matr
 
 inline bool viewer_test_transformed_plane (const Vector4& viewer, const Plane3& plane, const Matrix4& localToWorld)
 {
+#if 0
+	return viewer_test_plane(viewer_from_transformed_viewer(viewer, matrix4_affine_inverse(localToWorld)), plane);
+#else
 	return viewer_test_plane(viewer, plane3_transformed(plane, localToWorld));
+#endif
 }
 
 inline Vector4 viewer_from_viewproj (const Matrix4& viewproj)
 {
 	// get viewer pos in object coords
 	Vector4 viewer(matrix4_transformed_vector4(matrix4_full_inverse(viewproj), Vector4(0, 0, -1, 0)));
-	if (viewer[3] != 0) { // non-affine matrix
+	if (viewer[3] != 0) // non-affine matrix
+	{
 		viewer[0] /= viewer[3];
 		viewer[1] /= viewer[3];
 		viewer[2] /= viewer[3];

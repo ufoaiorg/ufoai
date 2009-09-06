@@ -38,16 +38,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 class DebugScopeTimer {
 	Timer m_timer;
-	const char* m_operation;
+	const std::string& m_operation;
 public:
-	DebugScopeTimer(const char* operation)
+	DebugScopeTimer(const std::string& operation)
 			: m_operation(operation) {
 		m_timer.start();
 	}
 	~DebugScopeTimer() {
 		unsigned int elapsed = m_timer.elapsed_msec();
 		if (elapsed > 0) {
-			globalOutputStream() << m_operation << ": " << elapsed << " msec\n";
+			globalOutputStream() << m_operation.c_str() << ": " << elapsed << " msec\n";
 		}
 	}
 };
@@ -103,9 +103,9 @@ class RadiantUndoSystem : public UndoSystem {
 
 	struct Operation {
 		Snapshot m_snapshot;
-		CopiedString m_command;
+		std::string m_command;
 
-		Operation(const char* command)
+		Operation(const std::string& command)
 				: m_command(command) {
 		}
 	};
@@ -158,13 +158,13 @@ class RadiantUndoSystem : public UndoSystem {
 				m_stack.clear();
 			}
 		}
-		void start(const char* command) {
+		void start(const std::string& command) {
 			if (m_pending != 0) {
 				delete m_pending;
 			}
 			m_pending = new Operation(command);
 		}
-		bool finish(const char* command) {
+		bool finish(const std::string& command) {
 			if (m_pending != 0) {
 				delete m_pending;
 				m_pending = 0;
@@ -257,7 +257,7 @@ public:
 		m_undo_stack.start("unnamedCommand");
 		mark_undoables(&m_undo_stack);
 	}
-	bool finishUndo(const char* command) {
+	bool finishUndo(const std::string& command) {
 		bool changed = m_undo_stack.finish(command);
 		mark_undoables(0);
 		return changed;
@@ -266,7 +266,7 @@ public:
 		m_redo_stack.start("unnamedCommand");
 		mark_undoables(&m_redo_stack);
 	}
-	bool finishRedo(const char* command) {
+	bool finishRedo(const std::string& command) {
 		bool changed = m_redo_stack.finish(command);
 		mark_undoables(0);
 		return changed;
@@ -279,7 +279,7 @@ public:
 		startUndo();
 		trackersBegin();
 	}
-	void finish(const char* command) {
+	void finish(const std::string& command) {
 		if (finishUndo(command)) {
 			globalOutputStream() << command << '\n';
 		}

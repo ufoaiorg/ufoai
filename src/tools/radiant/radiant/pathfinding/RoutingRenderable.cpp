@@ -123,17 +123,17 @@ namespace routing
 		Vector3 dx = Vector3(UNIT_SIZE, 0, 0);
 		Vector3 dy = Vector3(0, UNIT_SIZE, 0);
 		Vector3 dz = Vector3(0, 0, UNIT_HEIGHT);
-		Vector3 dxy = vector3_added(dx, dy);
+		Vector3 dxy = dx + dy;
 		/**@todo evaluate why aabb_draw_wire is not working here */
 		/* lower and upper corners */
-		Vector3 l1 = vector3_added(this->_data.getOrigin(), diffCenterToZero);
-		Vector3 l2 = vector3_added(l1, dx);
-		Vector3 l3 = vector3_added(l1, dxy);
-		Vector3 l4 = vector3_added(l1, dy);
-		Vector3 u1 = vector3_added(l1, dz);
-		Vector3 u2 = vector3_added(l2, dz);
-		Vector3 u3 = vector3_added(l3, dz);
-		Vector3 u4 = vector3_added(l4, dz);
+		Vector3 l1 = this->_data.getOrigin() + diffCenterToZero;
+		Vector3 l2 = l1 + dx;
+		Vector3 l3 = l1 + dxy;
+		Vector3 l4 = l1 + dy;
+		Vector3 u1 = l1 + dz;
+		Vector3 u2 = l2 + dz;
+		Vector3 u3 = l3 + dz;
+		Vector3 u4 = l4 + dz;
 
 		glBegin(GL_LINE_STRIP);
 		/* connect continuing lines from point to point */
@@ -191,9 +191,8 @@ namespace routing
 		/* center of drawn box */
 		const Vector3 color = getColorForAccessState(_data.getAccessState());
 		glColor3fv(vector3_to_array(color));
-		AABB box = AABB(
-				vector3_added(this->_data.getOrigin(), Vector3(0, 0, -UNIT_HEIGHT_QUARTER - UNIT_HEIGHT_EIGHTH)),
-				Vector3(UNIT_SIZE_QUARTER, UNIT_SIZE_QUARTER, UNIT_HEIGHT_EIGHTH));
+		AABB box = AABB(this->_data.getOrigin() + Vector3(0, 0, -UNIT_HEIGHT_QUARTER - UNIT_HEIGHT_EIGHTH), Vector3(
+				UNIT_SIZE_QUARTER, UNIT_SIZE_QUARTER, UNIT_HEIGHT_EIGHTH));
 		aabb_draw_solid(box, state);
 	}
 
@@ -238,11 +237,11 @@ namespace routing
 		//rotate tip and base corners around {0,0,0} before translate to center
 		Quaternion rotation = quaternion_for_z(degrees_to_radians(direction * 45));
 
-		Vector3 tip = vector3_added(diffCenter, quaternion_transformed_point(rotation, difTip));
-		Vector3 b1 = vector3_added(diffCenter, quaternion_transformed_point(rotation, difB1));
-		Vector3 b2 = vector3_added(diffCenter, quaternion_transformed_point(rotation, difB2));
-		Vector3 b3 = vector3_added(diffCenter, quaternion_transformed_point(rotation, difB3));
-		Vector3 b4 = vector3_added(diffCenter, quaternion_transformed_point(rotation, difB4));
+		Vector3 tip = diffCenter + quaternion_transformed_point(rotation, difTip);
+		Vector3 b1 = diffCenter + quaternion_transformed_point(rotation, difB1);
+		Vector3 b2 = diffCenter + quaternion_transformed_point(rotation, difB2);
+		Vector3 b3 = diffCenter + quaternion_transformed_point(rotation, difB3);
+		Vector3 b4 = diffCenter + quaternion_transformed_point(rotation, difB4);
 
 		/* draw arrow as connected triangles */
 		glBegin(GL_TRIANGLE_FAN);
