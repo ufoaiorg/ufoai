@@ -49,8 +49,9 @@ namespace routing
 				glCallList(_glListID + level);
 		} else {
 			_glListID = glGenLists(PATHFINDING_HEIGHT);
-			for (int level = minDisplayLevel; level < PATHFINDING_HEIGHT; level++) {
-				glNewList(_glListID + level, level < maxDisplayLevel ? GL_COMPILE_AND_EXECUTE : GL_COMPILE);
+			for (int level = 0; level < PATHFINDING_HEIGHT; level++) {
+				const bool visible = minDisplayLevel < level && level < maxDisplayLevel;
+				glNewList(_glListID + level, visible ? GL_COMPILE_AND_EXECUTE : GL_COMPILE);
 				for (routing::RoutingRenderableEntries::const_iterator i = _entries.begin(); i != _entries.end(); ++i) {
 					const routing::RoutingRenderableEntry* entry = *i;
 					if (entry->isForLevel(level + 1))
