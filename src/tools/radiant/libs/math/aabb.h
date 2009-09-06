@@ -1,3 +1,8 @@
+/**
+ * @file aabb.h
+ * @brief Axis-aligned bounding-box data types and related operations.
+ */
+
 /*
  Copyright (C) 2001-2006, William Joseph.
  All Rights Reserved.
@@ -21,9 +26,6 @@
 
 #if !defined(INCLUDED_MATH_AABB_H)
 #define INCLUDED_MATH_AABB_H
-
-/// \file
-/// \brief Axis-aligned bounding-box data types and related operations.
 
 #include "math/matrix.h"
 #include "math/plane.h"

@@ -1,3 +1,8 @@
+/**
+ * @file matrix.h
+ * @brief Matrix data types and related operations.
+ */
+
 /*
  Copyright (C) 2001-2006, William Joseph.
  All Rights Reserved.
@@ -21,9 +26,6 @@
 
 #if !defined(INCLUDED_MATH_MATRIX_H)
 #define INCLUDED_MATH_MATRIX_H
-
-/// \file
-/// \brief Matrix data types and related operations.
 
 #include "math/vector.h"
 
