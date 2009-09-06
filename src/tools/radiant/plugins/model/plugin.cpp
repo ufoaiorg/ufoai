@@ -115,7 +115,7 @@ class PicoModelLoader: public ModelLoader
 		model::IModelPtr loadModelFromPath (const std::string& name)
 		{
 			// Open an ArchiveFile to load
-			AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(name.c_str()));
+			AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(name));
 			if (file) {
 				// Load the model and return the RenderablePtr
 				return loadIModel(m_module, *file);
@@ -162,7 +162,7 @@ class ModelPicoAPI: public TypeSystemRef
 
 class PicoModelAPIConstructor
 {
-		CopiedString m_extension;
+		std::string m_extension;
 		const picoModule_t* m_module;
 	public:
 		PicoModelAPIConstructor (const char* extension, const picoModule_t* module) :

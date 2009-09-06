@@ -54,9 +54,6 @@ namespace ui
 	// free the loaded model
 	ModelPreview::~ModelPreview ()
 	{
-		model::IModel* model = _model.get();
-		_model.release();
-		delete model;
 	}
 
 	// Set the size request for the widget

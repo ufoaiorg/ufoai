@@ -175,11 +175,11 @@ class PicoSurface: public OpenGLRenderable
 
 		void CaptureShader ()
 		{
-			m_state = GlobalShaderCache().capture(m_shader.c_str());
+			m_state = GlobalShaderCache().capture(m_shader);
 		}
 		void ReleaseShader ()
 		{
-			GlobalShaderCache().release(m_shader.c_str());
+			GlobalShaderCache().release(m_shader);
 		}
 
 		void UpdateAABB ()
