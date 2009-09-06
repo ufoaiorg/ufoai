@@ -37,7 +37,8 @@
 #include "winding.h"
 #include "preferences.h"
 
-void ComputeAxisBase(const Vector3& normal, Vector3& texS, Vector3& texT) {
+void ComputeAxisBase (const Vector3& normal, Vector3& texS, Vector3& texT)
+{
 	const Vector3 up(0, 0, 1);
 	const Vector3 down(0, 0, -1);
 
@@ -150,8 +151,8 @@ inline double arctangent_yx (double y, double x)
 
 inline void Texdef_fromTransform (texdef_t& texdef, float width, float height, const Matrix4& transform)
 {
-	texdef.scale[0] = static_cast<float> ((1.0 / vector2_length(Vector2(transform[0], transform[4]))) / width);
-	texdef.scale[1] = static_cast<float> ((1.0 / vector2_length(Vector2(transform[1], transform[5]))) / height);
+	texdef.scale[0] = static_cast<float> ((1.0 / Vector2(transform[0], transform[4]).getLength()) / width);
+	texdef.scale[1] = static_cast<float> ((1.0 / Vector2(transform[1], transform[5]).getLength()) / height);
 
 	texdef.rotate = static_cast<float> (-radians_to_degrees(arctangent_yx(-transform[4], transform[0])));
 
@@ -163,7 +164,7 @@ inline void Texdef_fromTransform (texdef_t& texdef, float width, float height, c
 	texdef.shift[1] = transform[13] * height;
 
 	// If the 2d cross-product of the x and y axes is positive, one of the axes has a negative scale.
-	if (vector2_cross(Vector2(transform[0], transform[4]), Vector2(transform[1], transform[5])) > 0) {
+	if (Vector2(transform[0], transform[4]).crossProduct(Vector2(transform[1], transform[5])) > 0) {
 		if (texdef.rotate >= 180.0f) {
 			texdef.rotate -= 180.0f;
 			texdef.scale[0] = -texdef.scale[0];
