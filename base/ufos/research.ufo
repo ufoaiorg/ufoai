@@ -3430,6 +3430,21 @@ tech rs_craft_inter_dragon
 	}
 	up_chapter	crafts
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
 	provides	craft_inter_dragon
 	require_AND {
 		tech rs_craft_upgrade_am_engines
@@ -3451,6 +3466,21 @@ tech rs_craft_inter_starchaser
 	}
 	up_chapter	crafts
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
 	provides	craft_inter_starchaser
 	require_AND {
 		tech rs_craft_inter_dragon
@@ -3471,6 +3501,21 @@ tech rs_craft_inter_stingray
 		default "_inter_stingray_pre_txt"
 	}
 	up_chapter	crafts
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
 
 	provides	craft_inter_stingray
 	require_OR {
@@ -4355,6 +4400,20 @@ tech rs_craft_shield_plating
 	}
 	description {
 		default "_craft_shield_plating_txt"
+	}
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
 	}
 
 	provides	craft_shield_plating
