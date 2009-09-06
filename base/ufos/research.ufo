@@ -2863,7 +2863,7 @@ tech rs_damage_stun
 tech rs_damage_pbeam
 {
 	type		tech
-	name 		"_Particle Beam Damage Type"
+	name		"_Particle Beam Damage Type"
 	up_chapter	damage
 	description {
 		default "_none"
@@ -3107,7 +3107,7 @@ tech rs_building_large_hangar
 
 tech rs_building_hospital
 {
-	type	    building
+	type	building
 	description {
 		default "_b_hospital_txt"
 	}
@@ -3143,7 +3143,7 @@ tech rs_building_small_hangar
 
 tech rs_building_lab
 {
-	type	    building
+	type	building
 	description {
 		default "_b_lab_txt"
 	}
@@ -3304,7 +3304,7 @@ tech rs_building_large_ufo_hangar
 
 tech rs_building_workshop
 {
-	type	    building
+	type	building
 	description {
 		default "_b_workshop_txt"
 	}

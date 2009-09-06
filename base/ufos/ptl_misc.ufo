@@ -429,7 +429,7 @@ particle burnFlame
 	}
 	think {
 		spawn smokesmall
- 		kill
+		kill
 	}
 }
 

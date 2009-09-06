@@ -215,7 +215,7 @@ menu_model drop_firebird_top
 {
 	model	"aircraft/drop_firebird/firebird_top"
 	menutransform {
-		ufopedia 		"0.5 0.5 0.5"	"0 0 120"		"-20 0 0"
+		ufopedia		"0.5 0.5 0.5"	"0 0 120"		"-20 0 0"
 		aircraft		"0.8 0.8 0.8"	"160 20 -120"	#
 		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		#
 		item			"0.5 0.5 0.5"	"0 0 120"		#
@@ -411,7 +411,7 @@ menu_model ufo_fighter_engines_2
 	need	"ufo_fighter_upper"
 	menutransform {
 		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft 		"1.1 1.1 1.1"	"-20 -40 120"	#
+		aircraft		"1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
 		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}

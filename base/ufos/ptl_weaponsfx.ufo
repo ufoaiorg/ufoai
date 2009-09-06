@@ -577,7 +577,7 @@ particle plasmaMiniPulseBall
 		style  facing
 		offset "0 9 0"
 		color  "1 1 1 0.5"
- 		size   "6 6"
+		size   "6 6"
 		lightcolor "0.3 1.0 3.0"
 		lightintensity 0.2
 	}
@@ -1237,7 +1237,7 @@ particle flash_explosion
 {
 	init
 	{
-		spawn 	flash
+		spawn	flash
 		kill
 	}
 }
