@@ -1386,5 +1386,6 @@ void TextureBrowser_Destroy (void)
 {
 	GlobalShaderSystem().detach(g_ShadersObserver);
 
+	GlobalShaderSystem().setActiveShadersChangedNotify(Callback());
 	Textures_setModeChangedNotify(Callback());
 }

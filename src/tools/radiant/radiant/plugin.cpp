@@ -273,6 +273,7 @@ class Radiant: public TypeSystemRef
 		{
 			Pathfinding_Destroy();
 			Particles_Destroy();
+			TextureBrowser_Destroy();
 
 			EnginePath_Unrealise();
 
@@ -284,7 +285,6 @@ class Radiant: public TypeSystemRef
 			Autosave_Destroy();
 			Entity_Destroy();
 			ParticleBrowser_Destroy();
-			TextureBrowser_Destroy();
 			XYWindow_Destroy();
 			CamWnd_Destroy();
 			SurfaceInspector_Destroy();
