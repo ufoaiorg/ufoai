@@ -34,6 +34,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <string.h>
 #include <algorithm>
 #include <glib.h>
+#include <string>
 
 #include "generic/arrayrange.h"
 
@@ -181,6 +182,13 @@ inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const 
 template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const char* string) {
 	ostream.write(string, strlen(string));
+	return ostream;
+}
+
+/// \brief Writes a null-terminated \p string to \p ostream.
+template<typename TextOutputStreamType>
+inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const std::string& string) {
+	ostream.write(string.c_str(), string.length());
 	return ostream;
 }
 
