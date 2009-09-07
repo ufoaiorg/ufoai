@@ -155,16 +155,16 @@ inline UndoSystem& GlobalUndoSystem ()
 
 class UndoableCommand
 {
-		const std::string& m_command;
+		const std::string _command;
 	public:
 		UndoableCommand (const std::string& command) :
-			m_command(command)
+			_command(command)
 		{
 			GlobalUndoSystem().start();
 		}
 		~UndoableCommand ()
 		{
-			GlobalUndoSystem().finish(m_command);
+			GlobalUndoSystem().finish(_command);
 		}
 };
 
