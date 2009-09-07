@@ -33,5 +33,6 @@ void V_LoadMedia(void);
 
 extern cvar_t *cl_isometric;
 extern cvar_t* cl_map_debug;
+extern cvar_t* cl_le_debug;
 
 #endif

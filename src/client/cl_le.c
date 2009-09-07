@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 localModel_t LMs[MAX_LOCALMODELS];
 
+cvar_t *cl_le_debug;
+
 le_t LEs[MAX_EDICTS];
 
 /*===========================================================================
@@ -1165,6 +1167,9 @@ void LE_AddToScene (void)
 
 			/* add it to the scene */
 			R_AddEntity(&ent);
+
+			if (cl_le_debug->integer)
+				CL_ParticleSpawn("cross", 0, le->origin, NULL, NULL);
 		}
 	}
 }
