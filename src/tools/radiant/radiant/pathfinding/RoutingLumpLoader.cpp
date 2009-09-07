@@ -74,6 +74,8 @@ namespace routing
 			const int actorSize, const EDirection direction)
 	{
 		byte route = 0;
+		byte stepup = RT_STEPUP(map,actorSize,pos[0],pos[1],pos[2],direction);
+
 		switch (direction) {
 		case DIR_WEST:
 			route = RT_CONN_NY(map,actorSize,pos[0],pos[1],pos[2]);
@@ -103,7 +105,9 @@ namespace routing
 			break;
 		}
 
-		if (route >= ModelCeilingToQuant(PLAYER_STANDING_HEIGHT))
+		if (stepup == PATHFINDING_NO_STEPUP)
+			return CON_DISABLE;
+		else if (route >= ModelCeilingToQuant(PLAYER_STANDING_HEIGHT))
 			return CON_WALKABLE;
 		else if (route >= ModelCeilingToQuant(PLAYER_CROUCHING_HEIGHT))
 			return CON_CROUCHABLE;
