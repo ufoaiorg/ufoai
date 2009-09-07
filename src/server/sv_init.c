@@ -375,7 +375,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 				break;
 
 			for (i = 0; i < map->numTiles; i++)
-				if (!strncmp(token, map->mTile[i].id, MAX_VAR)) {
+				if (!strcmp(token, map->mTile[i].id)) {
 					if (a->numFixed >= MAX_FIXEDTILES) {
 						Com_Printf("SV_ParseAssembly: Too many fixed tiles in assembly '%s'\n", a->id);
 						break;
@@ -413,7 +413,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 		}
 
 		for (i = 0; i < map->numTiles; i++)
-			if (!strncmp(token, map->mTile[i].id, MAX_VAR)) {
+			if (!strcmp(token, map->mTile[i].id)) {
 				/* get min and max tile number */
 				token = Com_EParse(text, errhead, filename);
 				if (!text || *token == '}')
@@ -470,7 +470,7 @@ static void SV_CombineAlternatives (uLong *mapAlts, uLong tileAlts, char *mapRat
 static void SV_ClearMap (mapInfo_t *map)
 {
 	uLong *mp = &map->curMap[0][0];
-	uLong *end = &map->curMap[MAX_RANDOM_MAP_HEIGHT-1][MAX_RANDOM_MAP_WIDTH-1];
+	uLong *end = &map->curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
 
 	memset(map->curRating, 0, sizeof(map->curRating));
 
@@ -937,8 +937,8 @@ static mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *
 	byte *buf;
 	const char *text, *token;
 	int i;
-	mapInfo_t *map = NULL;
-	mAssembly_t *mAsm = NULL;
+	mapInfo_t *map;
+	mAssembly_t *mAsm;
 
 	/* load the map info */
 	Com_sprintf(filename, sizeof(filename), "maps/%s.ump", name);
@@ -946,8 +946,7 @@ static mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *
 	if (!buf)
 		Com_Error(ERR_DROP, "SV_AssembleMap: Map assembly info '%s' not found", filename);
 
-	map = Mem_Alloc(sizeof(mapInfo_t));
-	memset(map, 0, sizeof(*map));
+	map = Mem_Alloc(sizeof(*map));
 	Q_strncpyz(map->name, name, sizeof(map->name));
 
 	/* parse it */
