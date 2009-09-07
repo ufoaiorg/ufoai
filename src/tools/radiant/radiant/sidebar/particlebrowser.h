@@ -33,6 +33,7 @@ void ParticleBrowser_Construct (void);
 void ParticleBrowser_Destroy (void);
 
 #include "../ui/common/TexturePreviewCombo.h"
+#include "particles.h"
 
 #include <gtk/gtkwidget.h>
 #include <gtk/gtktreestore.h>
@@ -52,7 +53,7 @@ namespace ui
 			GtkTreeSelection* _selection;
 
 			// Texture preview combo (GL widget and info table)
-			TexturePreviewCombo _preview;
+			TexturePreviewCombo _imagePreview;
 
 		private:
 
@@ -64,7 +65,7 @@ namespace ui
 
 			/* Tree selection query functions */
 
-			std::string getSelectedName (); // return name of selection
+			ParticleDefinition* getSelectedParticle (); // return name of selection
 
 		public:
 

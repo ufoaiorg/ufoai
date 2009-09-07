@@ -25,7 +25,6 @@
 #include "particlebrowser.h"
 #include "radiant_i18n.h"
 
-#include "particles.h"
 #include "ishaders.h"
 #include "generic/callback.h"
 #include "gtkutil/image.h"
@@ -50,15 +49,15 @@ namespace ui
 		// TreeStore columns
 		enum
 		{
-			PARTICLENAME_COLUMN, N_COLUMNS
+			PARTICLENAME_COLUMN, PARTICLE_DEF_PTR, N_COLUMNS
 		};
 	}
 
 	// Constructor
 	ParticleBrowser::ParticleBrowser () :
-		_widget(gtk_vbox_new(FALSE, 0)), _treeStore(gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING)), _treeView(
-				gtk_tree_view_new_with_model(GTK_TREE_MODEL(_treeStore))), _selection(gtk_tree_view_get_selection(
-				GTK_TREE_VIEW(_treeView)))
+		_widget(gtk_vbox_new(FALSE, 0)), _treeStore(gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_POINTER)),
+				_treeView(gtk_tree_view_new_with_model(GTK_TREE_MODEL(_treeStore))), _selection(
+						gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView)))
 	{
 		// Create the treeview
 		gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(_treeView), FALSE);
@@ -93,19 +92,19 @@ namespace ui
 
 	/* Tree query functions */
 
-	std::string ParticleBrowser::getSelectedName ()
+	ParticleDefinition* ParticleBrowser::getSelectedParticle ()
 	{
 		// Get the selected value
 		GtkTreeIter iter;
 		if (gtk_tree_selection_get_selected(_selection, NULL, &iter)) {
 			GValue nameVal;
 			nameVal.g_type = 0;
-			gtk_tree_model_get_value(GTK_TREE_MODEL(_treeStore), &iter, PARTICLENAME_COLUMN, &nameVal);
-			// Return boolean value
-			return g_value_get_string(&nameVal);
+			gtk_tree_model_get_value(GTK_TREE_MODEL(_treeStore), &iter, PARTICLE_DEF_PTR, &nameVal);
+			// Return particle pointer
+			return (ParticleDefinition*) g_value_get_pointer(&nameVal);
 		} else {
 			// Error condition if there is no selection
-			return "";
+			return (ParticleDefinition*) 0;
 		}
 	}
 
@@ -117,9 +116,11 @@ namespace ui
 		static bool _isPopulated = false;
 		if (!_isPopulated) {
 			GtkTreeIter iter;
-			for (ParticleDefinitionMap::const_iterator i = g_particleDefinitions.begin(); i != g_particleDefinitions.end(); ++i) {
+			for (ParticleDefinitionMap::const_iterator i = g_particleDefinitions.begin(); i
+					!= g_particleDefinitions.end(); ++i) {
 				gtk_tree_store_append(self->_treeStore, &iter, (GtkTreeIter*) 0);
-				gtk_tree_store_set(self->_treeStore, &iter, 0, (*i).first.c_str(), -1);
+				gtk_tree_store_set(self->_treeStore, &iter, PARTICLENAME_COLUMN, (*i).first.c_str(), PARTICLE_DEF_PTR,
+						&((*i).second), -1);
 			}
 
 			_isPopulated = true;
@@ -138,7 +139,7 @@ namespace ui
 	void ParticleBrowser::_onSelectionChanged (GtkWidget* widget, ParticleBrowser* self)
 	{
 		// Update the preview if a texture is selected
-		self->_preview.setTexture(self->getSelectedName());
+		self->_preview.setTexture("pics/" + self->getSelectedParticle()->getImage());
 	}
 
 }
