@@ -32,4 +32,62 @@ GtkWidget* ParticleBrowser_constructNotebookTab ();
 void ParticleBrowser_Construct (void);
 void ParticleBrowser_Destroy (void);
 
+#include "../ui/common/TexturePreviewCombo.h"
+
+#include <gtk/gtkwidget.h>
+#include <gtk/gtktreestore.h>
+#include <gtk/gtkmenuitem.h>
+#include <gtk/gtktreeselection.h>
+
+namespace ui
+{
+	class ParticleBrowser
+	{
+			// Main widget
+			GtkWidget* _widget;
+
+			// Main tree store, view and selection
+			GtkTreeStore* _treeStore;
+			GtkWidget* _treeView;
+			GtkTreeSelection* _selection;
+
+			// Texture preview combo (GL widget and info table)
+			TexturePreviewCombo _preview;
+
+		private:
+
+			/* GTK CALLBACKS */
+
+			static gboolean _onExpose (GtkWidget*, GdkEventExpose*, ParticleBrowser*);
+			static bool _onRightClick (GtkWidget*, GdkEventButton*, ParticleBrowser*);
+			static void _onSelectionChanged (GtkWidget*, ParticleBrowser*);
+
+			/* Tree selection query functions */
+
+			std::string getSelectedName (); // return name of selection
+
+		public:
+
+			/** Return the singleton instance.
+			 */
+			static ParticleBrowser& getInstance() {
+				static ParticleBrowser _instance;
+				return _instance;
+			}
+
+			/** Return the main widget for packing into
+			 * the groupdialog or other parent container.
+			 */
+			GtkWidget* getWidget ()
+			{
+				gtk_widget_show_all(_widget);
+				return _widget;
+			}
+
+			/** Constructor creates GTK widgets.
+			 */
+			ParticleBrowser ();
+	};
+}
+
 #endif

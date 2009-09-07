@@ -177,8 +177,8 @@ class EntityClass
 			//use value if it is set to something
 			if (attrib && strlen(attrib->m_value.c_str()))
 				return attrib->m_value.c_str();
-			// TODO retrieve some default value from entity definition instead of that "value"?
-			return "value";
+			// TODO retrieve some default value from entity definition instead of that empty value
+			return "";
 		}
 };
 

@@ -75,7 +75,7 @@ class RenderableParticleID: public OpenGLRenderable
 		void render (RenderStateFlags state) const
 		{
 			glRasterPos3fv(m_origin);
-			GlobalOpenGL().drawString(m_particle.m_id);
+			GlobalOpenGL().drawString(m_particle.getID().c_str());
 		}
 };
 
@@ -231,7 +231,7 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		void renderSolid (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
 		{
 			renderer.SetState(m_entity.getEntityClass().m_state_fill, Renderer::eFullMaterials);
-			if (m_particle.m_image)
+			if (!m_particle.getImage().empty())
 				renderer.addRenderable(m_renderParticle, localToWorld);
 			else
 				renderer.addRenderable(m_renderAABBSolid, localToWorld);

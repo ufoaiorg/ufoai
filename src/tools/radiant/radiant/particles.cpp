@@ -147,8 +147,10 @@ static void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 			}
 			if (!kill && (model[0] != '\0' || image[0] != '\0')) {
 				// do we already have this particle?
-				if (!g_particleDefinitions.insert(ParticleDefinitionMap::value_type(pID, ParticleDefinition(pID, model, image, blend, width, height))).second)
+				ParticleDefinition *particleDefinition = new ParticleDefinition(pID, model, image, blend, width, height);
+				if (!g_particleDefinitions.insert(ParticleDefinitionMap::value_type(pID, *particleDefinition)).second)
 					g_warning("Particle '%s' is already in memory, definition in '%s' ignored.\n", pID, filename);
+				delete particleDefinition;
 			}
 		}
 	}

@@ -29,120 +29,73 @@ typedef enum
 
 class ParticleDefinition
 {
-
 	private:
-		bool m_copy;
-		void loadParticleTexture (void)
-		{
-			if (m_image)
-				return;
+		std::string _id;
+		std::string _modelName;
+		std::string _imageName;
+		int _blend;
+		int _width;
+		int _height;
 
-			if (m_imageName) {
-				StringOutputStream name(256);
-				name << "pics/" << m_imageName;
-				m_copy = false;
-				m_image = GlobalTexturesCache().capture(name.c_str());
-				if (!m_image)
-					g_warning("Particle image: pics/%s wasn't found\n", m_imageName);
-			}
-		}
-
-		void freeParticleTexture (void)
-		{
-			if (m_image && !m_copy) {
-				GlobalTexturesCache().release(m_image);
-				m_image = (qtexture_t *) 0;
-			}
-		}
 	public:
-		ParticleDefinition (const char *id) :
-			m_copy(false), m_modelName((char *) 0), m_imageName((char *) 0), m_image((qtexture_t *) 0), m_model(
-					(NodeSmartReference*) 0)
+		ParticleDefinition (const std::string& id) :
+			_id(id), _modelName(""), _imageName("")
 		{
-			m_id = strdup(id);
-			m_blend = BLEND_REPLACE;
-			m_width = 0;
-			m_height = 0;
+			_blend = BLEND_REPLACE;
+			_width = 0;
+			_height = 0;
 		}
 
-		ParticleDefinition (const char* id, const char *modelName, const char *imageName, int blend, int width,
-				int height) :
-			m_copy(false), m_image((qtexture_t *) 0), m_model((NodeSmartReference*) 0)
+		ParticleDefinition (const std::string& id, const std::string& modelName, const std::string& imageName,
+				int blend, int width, int height) :
+			_id(id), _modelName(modelName), _imageName(imageName)
 		{
-			m_id = strdup(id);
-			m_blend = blend;
-			m_width = width;
-			m_height = height;
-
-			if (imageName != (char *) 0)
-				m_imageName = strdup(imageName);
-			else
-				m_imageName = (char *) 0;
-
-			if (modelName != (char *) 0)
-				m_modelName = strdup(modelName);
-			else
-				m_modelName = (char *) 0;
-
-			loadParticleTexture();
+			_blend = blend;
+			_width = width;
+			_height = height;
 		}
 
 		/** @brief copy constructor */
 		ParticleDefinition (ParticleDefinition const& copy) :
-			m_copy(true), m_image(copy.m_image), m_model(copy.m_model)
+			_id(copy._id), _modelName(copy._modelName), _imageName(copy._imageName)
 		{
-			m_id = strdup(copy.m_id);
-			m_blend = copy.m_blend;
-			m_width = copy.m_width;
-			m_height = copy.m_height;
-
-			if (copy.m_imageName != (char *) 0)
-				m_imageName = strdup(copy.m_imageName);
-			else
-				m_imageName = (char *) 0;
-
-			if (copy.m_modelName != (char *) 0)
-				m_modelName = strdup(copy.m_modelName);
-			else
-				m_modelName = (char *) 0;
+			_blend = copy._blend;
+			_width = copy._width;
+			_height = copy._height;
 		}
 
 		~ParticleDefinition ()
 		{
-			freeParticleTexture();
-			if (m_model != (NodeSmartReference *) 0)
-				delete m_model;
-			if (m_id != (char *) 0)
-				free(m_id);
-			if (m_modelName != (char *) 0)
-				free(m_modelName);
-			if (m_imageName != (char *) 0)
-				free(m_imageName);
 		}
 
-		char *m_id;
-		char *m_modelName;
-		char *m_imageName;
-		qtexture_t *m_image;
-		int m_blend;
-		int m_width;
-		int m_height;
-		NodeSmartReference *m_model;
-
-		void loadModel (ModelLoader *loader, ArchiveFile &file)
+		const std::string& getID () const
 		{
-			m_model = new NodeSmartReference(loader->loadModel(file));
-			m_model->get().m_isRoot = true;
+			return _id;
 		}
 
-		void loadTextureForCopy ()
+		const std::string& getImage () const
 		{
-			if (!m_copy)
-				return;
+			return _imageName;
+		}
 
-			/* this reference was not captured */
-			m_image = (qtexture_t *) 0;
-			loadParticleTexture();
+		const std::string& getModel () const
+		{
+			return _modelName;
+		}
+
+		const int getBlendMode () const
+		{
+			return _blend;
+		}
+
+		const int getWidth () const
+		{
+			return _width;
+		}
+
+		const int getHeight () const
+		{
+			return _height;
 		}
 
 		void particleChanged (const char* id)
@@ -153,7 +106,7 @@ class ParticleDefinition
 				ParticleChangedCaller;
 };
 
-typedef std::map<CopiedString, ParticleDefinition> ParticleDefinitionMap;
+typedef std::map<std::string, ParticleDefinition> ParticleDefinitionMap;
 
 extern ParticleDefinitionMap g_particleDefinitions;
 

@@ -403,6 +403,11 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 
 void Entity_createFromSelection (const std::string& name, const Vector3& origin)
 {
+	{
+		std::string command = "entityCreate -class " + name;
+		UndoableCommand undo(command);
+	}
+
 	bool revert = Entity_create(name, origin);
 
 	if (revert) {

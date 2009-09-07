@@ -2415,8 +2415,6 @@ void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
 
 void XYWnd::OnEntityCreate (const std::string& item)
 {
-	std::string command = "entityCreate -class " + item;
-	UndoableCommand undo(command);
 	Vector3 point;
 	XYWnd_MouseToPoint(this, m_entityCreate_x, m_entityCreate_y, point);
 	Entity_createFromSelection(item, point);

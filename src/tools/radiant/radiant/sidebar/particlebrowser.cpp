@@ -25,373 +25,122 @@
 #include "particlebrowser.h"
 #include "radiant_i18n.h"
 
-#include "ifilesystem.h"
-#include "iundo.h"
-#include "igl.h"
-#include "iarchive.h"
-#include "moduleobserver.h"
-#include "texturelib.h"
-
-#include <set>
-#include <string>
-#include <vector>
-
-#include "signal/signal.h"
-#include "math/Vector3.h"
-#include "string/string.h"
-#include "os/file.h"
-#include "os/path.h"
-#include "stream/memstream.h"
-#include "stream/textfilestream.h"
-#include "stream/stringstream.h"
 #include "particles.h"
+#include "ishaders.h"
+#include "generic/callback.h"
+#include "gtkutil/image.h"
 
-#include "../mainframe.h"
-#include "../referencecache.h"
+#include <gtk/gtkvbox.h>
+#include <gtk/gtktreeview.h>
+#include <gtk/gtkframe.h>
+#include <gtk/gtkcellrenderertext.h>
+#include <gtk/gtkcellrendererpixbuf.h>
+#include <gtk/gtkscrolledwindow.h>
+#include <gtk/gtklabel.h>
+#include <gtk/gtkmenu.h>
+#include <gtk/gtktreeselection.h>
 
-#include "gtkutil/nonmodal.h"
-#include "gtkutil/widget.h"
-#include "gtkutil/glwidget.h"
-#include "gtkutil/messagebox.h"
+#include <iostream>
 
-#include "../ui/common/ModelPreview.h"
-
-static ParticleDefinition *g_currentSelectedParticle;
-
-class ParticleBrowser
+namespace ui
 {
-	public:
-		int width, height;
-
-		GtkWindow* m_parent;
-		GtkWidget* m_gl_widget;
-		GtkWidget* m_treeViewTree;
-		GtkWidget* m_scr_win_tree;
-		GtkWidget* m_scr_win_tags;
-
-		guint m_sizeHandler;
-		guint m_exposeHandler;
-
-		Vector3 color_textureback;
-		// the increment step we use against the wheel mouse
-		std::size_t m_textureScale;
-		// Return the display width of a texture in the texture browser
-		int getTextureWidth (const qtexture_t* tex)
+	/* CONSTANTS */
+	namespace
+	{
+		// TreeStore columns
+		enum
 		{
-			return 128;
-			// Don't use uniform size
-			//const int width = (int) (tex->width * ((float) m_textureScale / 100));
-			//return width;
-		}
-		// Return the display height of a texture in the texture browser
-		int getTextureHeight (const qtexture_t* tex)
-		{
-			return 128;
-			// Don't use uniform size
-			//const int height = (int) (tex->height * ((float) m_textureScale / 100));
-			//return height;
-		}
-
-		ParticleBrowser () :
-			color_textureback(0.25f, 0.25f, 0.25f), m_textureScale(50)
-		{
-		}
-};
-
-static ParticleBrowser g_ParticleBrowser;
-
-static void ParticleBrowser_queueDraw (ParticleBrowser& particleBrowser)
-{
-	if (particleBrowser.m_gl_widget != 0) {
-		gtk_widget_queue_draw(particleBrowser.m_gl_widget);
-	}
-}
-
-static void Particle_SetBlendMode (ParticleDefinition *particle)
-{
-	switch (particle->m_blend) {
-	case BLEND_REPLACE:
-		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-		break;
-	case BLEND_ONE_PARTICLE:
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-		break;
-	case BLEND_BLEND:
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		break;
-	case BLEND_ADD:
-		glBlendFunc(GL_ONE, GL_ONE);
-		break;
-	case BLEND_FILTER:
-		glBlendFunc(GL_ZERO, GL_SRC_COLOR);
-		break;
-	case BLEND_INVFILTER:
-		glBlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_COLOR);
-		break;
-	}
-}
-
-static void Particle_Draw (ParticleBrowser& particleBrowser)
-{
-	ParticleDefinition *particle = g_currentSelectedParticle;
-
-	glPushAttrib(GL_ALL_ATTRIB_BITS);
-
-	glClearColor(particleBrowser.color_textureback[0], particleBrowser.color_textureback[1],
-			particleBrowser.color_textureback[2], 0);
-	glViewport(0, 0, particleBrowser.width, particleBrowser.height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glOrtho(0, particleBrowser.width, particleBrowser.height, 0, -100, 100);
-	glEnable(GL_TEXTURE_2D);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	if (particle) {
-		const int fontGap = GlobalOpenGL().m_fontHeight;
-		int x = 10, y = 0;
-
-		// Draw the texture
-		const qtexture_t *q = g_currentSelectedParticle->m_image;
-		if (q) {
-			int nWidth = particle->m_width ? particle->m_width : particleBrowser.getTextureWidth(q);
-			int nHeight = particle->m_height ? particle->m_height : particleBrowser.getTextureHeight(q);
-
-			// should be at least visible - and some might really be very small
-			if (nWidth < 10)
-				nWidth *= 3;
-			if (nHeight < 10)
-				nHeight *= 3;
-
-			x = (particleBrowser.width) / 2 - (nWidth / 2);
-			y = (particleBrowser.height) / 2 - (nHeight / 2);
-
-			Particle_SetBlendMode(particle);
-
-			glBindTexture(GL_TEXTURE_2D, q->texture_number);
-			glColor4f(1, 1, 1, 1);
-			glBegin(GL_QUADS);
-			glTexCoord2i(0, 0);
-			glVertex2i(x, y - fontGap);
-			glTexCoord2i(1, 0);
-			glVertex2i(x + nWidth, y - fontGap);
-			glTexCoord2i(1, 1);
-			glVertex2i(x + nWidth, y - fontGap - nHeight);
-			glTexCoord2i(0, 1);
-			glVertex2i(x, y - fontGap - nHeight);
-			glEnd();
-
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		}
-
-		// Draw the model
-		if (particle->m_model) {
-			//particle->m_model;
-		}
-
-		// draw the particle name
-		glDisable(GL_TEXTURE_2D);
-		glColor4f(1, 1, 1, 1);
-		glRasterPos2i(10, particleBrowser.height - fontGap + 5);
-		GlobalOpenGL().drawString(particle->m_id);
-		glEnable(GL_TEXTURE_2D);
+			PARTICLENAME_COLUMN, N_COLUMNS
+		};
 	}
 
-	// reset the current texture
-	glBindTexture(GL_TEXTURE_2D, 0);
+	// Constructor
+	ParticleBrowser::ParticleBrowser () :
+		_widget(gtk_vbox_new(FALSE, 0)), _treeStore(gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING)), _treeView(
+				gtk_tree_view_new_with_model(GTK_TREE_MODEL(_treeStore))), _selection(gtk_tree_view_get_selection(
+				GTK_TREE_VIEW(_treeView)))
+	{
+		// Create the treeview
+		gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(_treeView), FALSE);
+		g_signal_connect(G_OBJECT(_treeView), "expose-event", G_CALLBACK(_onExpose), this);
+		g_signal_connect(G_OBJECT(_treeView), "button-release-event", G_CALLBACK(_onRightClick), this);
 
-	glPopAttrib();
-}
+		// Single text column with packed icon
+		GtkTreeViewColumn* col = gtk_tree_view_column_new();
+		gtk_tree_view_column_set_spacing(col, 3);
 
-static void ParticleBrowser_Selection_MouseDown (ParticleBrowser& particleBrowser, guint32 flags, int pointx,
-		int pointy)
-{
-}
+		GtkCellRenderer* textRenderer = gtk_cell_renderer_text_new();
+		gtk_tree_view_column_pack_start(col, textRenderer, FALSE);
+		gtk_tree_view_column_set_attributes(col, textRenderer, "text", PARTICLENAME_COLUMN, NULL);
 
-static gboolean ParticleBrowser_button_press (GtkWidget* widget, GdkEventButton* event,
-		ParticleBrowser* particleBrowser)
-{
-	if (event->type == GDK_BUTTON_PRESS) {
-		if (event->button == 1) {
-			ParticleBrowser_Selection_MouseDown(*particleBrowser, event->state, static_cast<int> (event->x),
-					static_cast<int> (event->y));
-		}
-	}
-	return FALSE;
-}
+		gtk_tree_view_append_column(GTK_TREE_VIEW(_treeView), col);
 
-static gboolean ParticleBrowser_size_allocate (GtkWidget* widget, GtkAllocation* allocation,
-		ParticleBrowser* particleBrowser)
-{
-	particleBrowser->width = allocation->width;
-	particleBrowser->height = allocation->height;
-	ParticleBrowser_queueDraw(*particleBrowser);
-	return FALSE;
-}
+		// Pack the treeview into a scrollwindow, frame and then into the vbox
+		GtkWidget* scroll = gtk_scrolled_window_new(NULL, NULL);
+		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+		gtk_container_add(GTK_CONTAINER(scroll), _treeView);
 
-static gboolean ParticleBrowser_expose (GtkWidget* widget, GdkEventExpose* event, ParticleBrowser* particleBrowser)
-{
-	if (glwidget_make_current(particleBrowser->m_gl_widget) != FALSE) {
-		Particle_Draw(*particleBrowser);
-		glwidget_swap_buffers(particleBrowser->m_gl_widget);
-	}
-	return FALSE;
-}
+		GtkWidget* frame = gtk_frame_new(NULL);
+		gtk_container_add(GTK_CONTAINER(frame), scroll);
+		gtk_box_pack_start(GTK_BOX(_widget), frame, TRUE, TRUE, 0);
 
-static void ParticleBrowser_constructTreeStore (void)
-{
-	GtkTreeStore* store = gtk_tree_store_new(1, G_TYPE_STRING);
-	GtkTreeIter iter;
+		// Connect up the selection changed callback
+		g_signal_connect(G_OBJECT(_selection), "changed", G_CALLBACK(_onSelectionChanged), this);
 
-	for (ParticleDefinitionMap::const_iterator i = g_particleDefinitions.begin(); i != g_particleDefinitions.end(); ++i) {
-		gtk_tree_store_append(store, &iter, (GtkTreeIter*) 0);
-		gtk_tree_store_set(store, &iter, 0, (*i).first.c_str(), -1);
+		// Pack in the TexturePreviewCombo widgets
+		gtk_box_pack_end(GTK_BOX(_widget), _preview, FALSE, FALSE, 0);
 	}
 
-	GtkTreeModel* model = GTK_TREE_MODEL(store);
+	/* Tree query functions */
 
-	gtk_tree_view_set_model(GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree), model);
-	gtk_tree_view_expand_all(GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree));
-
-	g_object_unref(G_OBJECT(store));
-}
-
-static const char *GetModelTypeForParticle (ParticleDefinition *particle)
-{
-	StringOutputStream buf(128);
-
-	buf << "models/" << particle->m_modelName << ".md2";
-
-	const char *model = GlobalFileSystem().findFile(buf.c_str());
-	if (model)
-		return "md2";
-	return (const char *) 0;
-}
-
-static void ParticleBrowser_loadModel (ParticleDefinition *particle)
-{
-	if (particle->m_modelName) {
-		// TODO: Use ModelPreview
-		const char *modelType = GetModelTypeForParticle(particle);
-		if (!modelType)
-			return;
-		ModelLoader *loader = ModelLoader_forType(modelType);
-		if (!loader)
-			return;
-
-		ScopeDisableScreenUpdates disableScreenUpdates(path_get_filename_start(particle->m_modelName),
-				_("Loading Model"));
-
-		StringOutputStream buf(128);
-		buf << "models/" << particle->m_modelName << "." << modelType;
-		AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(buf.c_str()));
-		if (file) {
-			particle->loadModel(loader, *file);
+	std::string ParticleBrowser::getSelectedName ()
+	{
+		// Get the selected value
+		GtkTreeIter iter;
+		if (gtk_tree_selection_get_selected(_selection, NULL, &iter)) {
+			GValue nameVal;
+			nameVal.g_type = 0;
+			gtk_tree_model_get_value(GTK_TREE_MODEL(_treeStore), &iter, PARTICLENAME_COLUMN, &nameVal);
+			// Return boolean value
+			return g_value_get_string(&nameVal);
 		} else {
-			g_warning("Model load failed: '%s'\n", buf.c_str());
+			// Error condition if there is no selection
+			return "";
 		}
 	}
-}
 
-static void TreeView_onRowActivated (GtkTreeView* treeview, GtkTreePath* path, GtkTreeViewColumn* col,
-		gpointer userdata)
-{
-	GtkTreeIter iter;
+	/* GTK CALLBACKS */
 
-	GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(treeview));
+	gboolean ParticleBrowser::_onExpose (GtkWidget* widget, GdkEventExpose* ev, ParticleBrowser* self)
+	{
+		// Populate the tree view if it is not already populated
+		static bool _isPopulated = false;
+		if (!_isPopulated) {
+			GtkTreeIter iter;
+			for (ParticleDefinitionMap::const_iterator i = g_particleDefinitions.begin(); i != g_particleDefinitions.end(); ++i) {
+				gtk_tree_store_append(self->_treeStore, &iter, (GtkTreeIter*) 0);
+				gtk_tree_store_set(self->_treeStore, &iter, 0, (*i).first.c_str(), -1);
+			}
 
-	if (gtk_tree_model_get_iter(model, &iter, path)) {
-		gchar particleName[1024];
-
-		gchar* buffer;
-		gtk_tree_model_get(model, &iter, 0, &buffer, -1);
-		strcpy(particleName, buffer);
-		g_free(buffer);
-
-		ParticleDefinitionMap::iterator i = g_particleDefinitions.find(particleName);
-		if (i != g_particleDefinitions.end()) {
-			ParticleDefinition particle = (*i).second;
-
-			if (g_currentSelectedParticle)
-				delete g_currentSelectedParticle;
-			g_currentSelectedParticle = new ParticleDefinition(particle);
-			// capture the particle texture
-			g_currentSelectedParticle->loadTextureForCopy();
-			ParticleBrowser_loadModel(g_currentSelectedParticle);
-
-			ParticleBrowser_queueDraw(g_ParticleBrowser);
+			_isPopulated = true;
 		}
-	}
-}
-
-static void ParticleBrowser_createTreeViewTree (void)
-{
-	GtkCellRenderer* renderer;
-	g_ParticleBrowser.m_treeViewTree = GTK_WIDGET(gtk_tree_view_new());
-	gtk_tree_view_set_enable_search(GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree), TRUE);
-
-	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree), FALSE);
-	g_signal_connect(g_ParticleBrowser.m_treeViewTree, "row-activated", (GCallback) TreeView_onRowActivated, NULL);
-
-	renderer = gtk_cell_renderer_text_new();
-	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(g_ParticleBrowser.m_treeViewTree), -1, "", renderer,
-			"text", 0, (char const*) 0);
-
-	ParticleBrowser_constructTreeStore();
-}
-
-GtkWidget* ParticleBrowser_constructNotebookTab ()
-{
-	GtkWidget* table = gtk_table_new(3, 3, FALSE);
-	GtkWidget* vbox = gtk_vbox_new(FALSE, 0);
-	gtk_table_attach(GTK_TABLE(table), vbox, 0, 1, 1, 3, GTK_FILL, GTK_FILL, 0, 0);
-	gtk_widget_show(vbox);
-
-	{ // Particle TreeView
-		g_ParticleBrowser.m_scr_win_tree = gtk_scrolled_window_new(NULL, NULL);
-		gtk_container_set_border_width(GTK_CONTAINER(g_ParticleBrowser.m_scr_win_tree), 0);
-
-		// vertical only scrolling for treeview
-		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(g_ParticleBrowser.m_scr_win_tree), GTK_POLICY_NEVER,
-				GTK_POLICY_ALWAYS);
-
-		gtk_widget_show(g_ParticleBrowser.m_scr_win_tree);
-
-		ParticleBrowser_createTreeViewTree();
-
-		gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(g_ParticleBrowser.m_scr_win_tree), GTK_WIDGET(
-				g_ParticleBrowser.m_treeViewTree));
-		gtk_widget_show(GTK_WIDGET(g_ParticleBrowser.m_treeViewTree));
-	}
-	{ // gl_widget
-		g_ParticleBrowser.m_gl_widget = glwidget_new(TRUE);
-		gtk_widget_ref(g_ParticleBrowser.m_gl_widget);
-
-		gtk_widget_set_events(g_ParticleBrowser.m_gl_widget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
-				| GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
-		GTK_WIDGET_SET_FLAGS(g_ParticleBrowser.m_gl_widget, GTK_CAN_FOCUS);
-
-		gtk_table_attach_defaults(GTK_TABLE(table), g_ParticleBrowser.m_gl_widget, 1, 2, 1, 2);
-		gtk_widget_show(g_ParticleBrowser.m_gl_widget);
-
-		g_ParticleBrowser.m_sizeHandler = g_signal_connect(G_OBJECT(g_ParticleBrowser.m_gl_widget), "size_allocate",
-				G_CALLBACK(ParticleBrowser_size_allocate), &g_ParticleBrowser);
-		g_ParticleBrowser.m_exposeHandler = g_signal_connect(G_OBJECT(g_ParticleBrowser.m_gl_widget), "expose_event",
-				G_CALLBACK(ParticleBrowser_expose), &g_ParticleBrowser);
-
-		g_signal_connect(G_OBJECT(g_ParticleBrowser.m_gl_widget), "button_press_event", G_CALLBACK(
-						ParticleBrowser_button_press), &g_ParticleBrowser);
+		return FALSE; // progapagate event
 	}
 
-	gtk_box_pack_start(GTK_BOX(vbox), g_ParticleBrowser.m_scr_win_tree, TRUE, TRUE, 0);
+	bool ParticleBrowser::_onRightClick (GtkWidget* widget, GdkEventButton* ev, ParticleBrowser* self)
+	{
+		// Popup on right-click events only
+		if (ev->button == 3) {
+		}
+		return FALSE;
+	}
 
-	return table;
+	void ParticleBrowser::_onSelectionChanged (GtkWidget* widget, ParticleBrowser* self)
+	{
+		// Update the preview if a texture is selected
+		self->_preview.setTexture(self->getSelectedName());
+	}
+
 }
 
 void ParticleBrowser_Construct (void)
@@ -400,9 +149,9 @@ void ParticleBrowser_Construct (void)
 
 void ParticleBrowser_Destroy (void)
 {
-	if (g_currentSelectedParticle) {
-		delete g_currentSelectedParticle;
-		g_currentSelectedParticle = (ParticleDefinition *) 0;
-	}
 }
 
+GtkWidget* ParticleBrowser_constructNotebookTab ()
+{
+	return ui::ParticleBrowser::getInstance().getWidget();
+}
