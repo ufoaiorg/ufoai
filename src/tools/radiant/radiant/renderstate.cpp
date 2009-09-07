@@ -1239,7 +1239,7 @@ void OpenGLShader::construct (const std::string& shaderName)
 		break;
 	default:
 		// construction from IShader
-		m_shader = QERApp_Shader_ForName(name);
+		m_shader = GlobalShaderSystem().getShaderForName(name);
 
 		state.m_texture = m_shader->getTexture()->texture_number;
 

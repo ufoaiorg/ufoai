@@ -274,7 +274,7 @@ const char* TextureBrowser_GetSelectedShader (TextureBrowser& textureBrowser)
  */
 void TextureBrowser_SetStatus (TextureBrowser& textureBrowser, const char* name)
 {
-	IShader* shader = QERApp_Shader_ForName(name);
+	IShader* shader = GlobalShaderSystem().getShaderForName(name);
 	qtexture_t* q = shader->getTexture();
 	StringOutputStream strTex(256);
 	strTex << name << " W: " << Unsigned(q->width) << " H: " << Unsigned(q->height);
@@ -295,7 +295,7 @@ void TextureBrowser_SetSelectedShader (TextureBrowser& textureBrowser, const cha
 	}
 
 	// disable the menu item "shader info" if no shader was selected
-	IShader* ishader = QERApp_Shader_ForName(shader);
+	IShader* ishader = GlobalShaderSystem().getShaderForName(shader);
 
 	ishader->DecRef();
 }
@@ -390,8 +390,8 @@ static void TextureBrowser_evaluateHeight (TextureBrowser& textureBrowser)
 
 		TextureLayout layout;
 		Texture_StartPos(layout);
-		for (QERApp_ActiveShaders_IteratorBegin(); !QERApp_ActiveShaders_IteratorAtEnd(); QERApp_ActiveShaders_IteratorIncrement()) {
-			IShader* shader = QERApp_ActiveShaders_IteratorCurrent();
+		for (GlobalShaderSystem().beginActiveShadersIterator(); !GlobalShaderSystem().endActiveShadersIterator(); GlobalShaderSystem().incrementActiveShadersIterator()) {
+			IShader* shader = GlobalShaderSystem().dereferenceActiveShadersIterator();
 
 			if (!Texture_IsShown(shader, textureBrowser.m_showShaders, textureBrowser.m_hideUnused))
 				continue;
@@ -515,8 +515,8 @@ class LoadShaderVisitor: public Archive::Visitor
 		{
 			gchar *shaderName = g_path_get_dirname(name);
 			// TODO: Fix this mess
-			IShader* shader = QERApp_Shader_ForName(
-					CopiedString(StringRange(name, path_get_filename_base_end(name))).c_str());
+			IShader* shader = GlobalShaderSystem().getShaderForName(CopiedString(StringRange(name,
+					path_get_filename_base_end(name))).c_str());
 			shader->DecRef();
 			g_free(shaderName);
 		}
@@ -543,7 +543,7 @@ class TextureCategoryLoadShader
 				++m_count;
 				// request the shader, this will load the texture if needed
 				// this Shader_ForName call is a kind of hack
-				IShader *pFoo = QERApp_Shader_ForName(name);
+				IShader *pFoo = GlobalShaderSystem().getShaderForName(name);
 				pFoo->DecRef();
 			}
 		}
@@ -570,7 +570,7 @@ void TextureDirectory_loadTexture (const char* directory, const char* texture)
 	}
 
 	// if a texture is already in use to represent a shader, ignore it
-	IShader* shader = QERApp_Shader_ForName(name.c_str());
+	IShader* shader = GlobalShaderSystem().getShaderForName(name.c_str());
 	shader->DecRef();
 }
 typedef ConstPointerCaller1<char, const char*, TextureDirectory_loadTexture> TextureDirectoryLoadTextureCaller;
@@ -657,8 +657,8 @@ static void TextureBrowser_Focus (TextureBrowser& textureBrowser, const char* na
 	// scroll origin so the texture is completely on screen
 	Texture_StartPos(layout);
 
-	for (QERApp_ActiveShaders_IteratorBegin(); !QERApp_ActiveShaders_IteratorAtEnd(); QERApp_ActiveShaders_IteratorIncrement()) {
-		IShader* shader = QERApp_ActiveShaders_IteratorCurrent();
+	for (GlobalShaderSystem().beginActiveShadersIterator(); !GlobalShaderSystem().endActiveShadersIterator(); GlobalShaderSystem().incrementActiveShadersIterator()) {
+		IShader* shader = GlobalShaderSystem().dereferenceActiveShadersIterator();
 
 		if (!Texture_IsShown(shader, textureBrowser.m_showShaders, textureBrowser.m_hideUnused))
 			continue;
@@ -696,8 +696,8 @@ static IShader* Texture_At (TextureBrowser& textureBrowser, int mx, int my)
 
 	TextureLayout layout;
 	Texture_StartPos(layout);
-	for (QERApp_ActiveShaders_IteratorBegin(); !QERApp_ActiveShaders_IteratorAtEnd(); QERApp_ActiveShaders_IteratorIncrement()) {
-		IShader* shader = QERApp_ActiveShaders_IteratorCurrent();
+	for (GlobalShaderSystem().beginActiveShadersIterator(); !GlobalShaderSystem().endActiveShadersIterator(); GlobalShaderSystem().incrementActiveShadersIterator()) {
+		IShader* shader = GlobalShaderSystem().dereferenceActiveShadersIterator();
 
 		if (!Texture_IsShown(shader, textureBrowser.m_showShaders, textureBrowser.m_hideUnused))
 			continue;
@@ -783,8 +783,8 @@ static void Texture_Draw (TextureBrowser& textureBrowser)
 
 	TextureLayout layout;
 	Texture_StartPos(layout);
-	for (QERApp_ActiveShaders_IteratorBegin(); !QERApp_ActiveShaders_IteratorAtEnd(); QERApp_ActiveShaders_IteratorIncrement()) {
-		IShader* shader = QERApp_ActiveShaders_IteratorCurrent();
+	for (GlobalShaderSystem().beginActiveShadersIterator(); !GlobalShaderSystem().endActiveShadersIterator(); GlobalShaderSystem().incrementActiveShadersIterator()) {
+		IShader* shader = GlobalShaderSystem().dereferenceActiveShadersIterator();
 
 		if (!Texture_IsShown(shader, textureBrowser.m_showShaders, textureBrowser.m_hideUnused))
 			continue;
