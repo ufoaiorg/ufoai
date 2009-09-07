@@ -41,12 +41,12 @@
 #include "../../../shared/parse.h"
 #include "../../../shared/entitiesdef.h"
 
-static const char* EClass_GetFilename (void)
+static const std::string EClass_GetFilename (void)
 {
 	return "ufos/entities.ufo";
 }
 
-static void Eclass_ScanFile (EntityClassCollector& collector, const char *filename);
+static void Eclass_ScanFile (EntityClassCollector& collector, const std::string& filename);
 
 #include "modulesystem/singletonmodule.h"
 
@@ -74,7 +74,7 @@ class EclassDefAPI
 
 typedef SingletonModule<EclassDefAPI, EntityClassDefDependencies> EclassDefModule;
 typedef Static<EclassDefModule> StaticEclassDefModule;
-StaticRegisterModule staticRegisterEclassDef (StaticEclassDefModule::instance ());
+StaticRegisterModule staticRegisterEclassDef(StaticEclassDefModule::instance());
 
 #include "string/string.h"
 #include <stdlib.h>
@@ -109,7 +109,7 @@ static void Eclass_ParseAttribute (EntityClass *e, entityKeyDef_t *keydef)
 		value = keydef->defaultVal;
 	if (keydef->desc)
 		desc = keydef->desc;
-	EntityClassAttribute attribute =  EntityClassAttribute(attributeName, _(attributeName), mandatory, value, desc);
+	EntityClassAttribute attribute = EntityClassAttribute(attributeName, _(attributeName), mandatory, value, desc);
 	EntityClass_insertAttribute(*e, attributeName, attribute);
 }
 
@@ -193,28 +193,27 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 
 }
 
-static void Eclass_ScanFile (EntityClassCollector& collector, const char *filename)
+static void Eclass_ScanFile (EntityClassCollector& collector, const std::string& filename)
 {
 	EntityClass *e;
 
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
 	if (!file) {
-		StringOutputStream buffer;
-		buffer << "Could not load " << filename;
-		gtk_MessageBox(0, buffer.c_str(), _("Radiant - Error"), eMB_OK, eMB_ICONERROR);
+		std::string buffer = "Could not load " + filename;
+		gtk_MessageBox(0, buffer, _("Radiant - Error"), eMB_OK, eMB_ICONERROR);
 		return;
 	}
-	g_message("ScanFile: '%s'\n", filename);
+	g_message("ScanFile: '%s'\n", filename.c_str());
 
 	const std::size_t size = file->size();
-	char *entities = (char *)malloc(size + 1);
+	char *entities = (char *) malloc(size + 1);
 	TextInputStream &stream = file->getInputStream();
 	const std::size_t realsize = stream.read(entities, size);
 	entities[realsize] = '\0';
 	if (ED_Parse(entities) == ED_ERROR) {
-		StringOutputStream buffer;
-		buffer << "Parsing of entities definition file failed, returned error was " << ED_GetLastError();
-		gtk_MessageBox(0, buffer.c_str(), _("Radiant - Error"), eMB_OK, eMB_ICONERROR);
+		std::string buffer = "Parsing of entities definition file failed, returned error was " + std::string(
+				ED_GetLastError());
+		gtk_MessageBox(0, buffer, _("Radiant - Error"), eMB_OK, eMB_ICONERROR);
 		g_warning("%s\n", buffer.c_str());
 		free(entities);
 		return;

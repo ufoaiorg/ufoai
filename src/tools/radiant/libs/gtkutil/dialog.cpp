@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 #include <string>
 
+#include "radiant_i18n.h"
 #include "button.h"
 #include "window.h"
 
@@ -46,9 +47,11 @@ GtkHBox* create_dialog_hbox (int spacing, int border)
 GtkFrame* create_dialog_frame (const std::string& frameHeadline, GtkShadowType shadow)
 {
 	GtkFrame* frame = GTK_FRAME(gtk_frame_new(NULL));
-	GtkLabel* label = GTK_LABEL(gtk_label_new(NULL));
-	gtk_label_set_markup(label, frameHeadline.c_str());
-	gtk_frame_set_label_widget(frame, GTK_WIDGET(label));
+	if (!frameHeadline.empty()) {
+		GtkLabel* label = GTK_LABEL(gtk_label_new(NULL));
+		gtk_label_set_markup(label, frameHeadline.c_str());
+		gtk_frame_set_label_widget(frame, GTK_WIDGET(label));
+	}
 	gtk_widget_show_all(GTK_WIDGET(frame));
 	gtk_frame_set_shadow_type(frame, shadow);
 	return frame;
@@ -74,8 +77,8 @@ GtkButton* create_dialog_button (const std::string& label, GCallback func, gpoin
 	return button;
 }
 
-GtkWindow* create_dialog_window (GtkWindow* parent, const std::string& title, GCallback func, gpointer data, int default_w,
-		int default_h)
+GtkWindow* create_dialog_window (GtkWindow* parent, const std::string& title, GCallback func, gpointer data,
+		int default_w, int default_h)
 {
 	GtkWindow* window = create_floating_window(title, parent);
 	gtk_window_set_default_size(window, default_w, default_h);
@@ -126,8 +129,8 @@ GtkWindow* create_modal_dialog_window (GtkWindow* parent, const std::string& tit
 	return create_dialog_window(parent, title, G_CALLBACK(modal_dialog_delete), &dialog, default_w, default_h);
 }
 
-GtkWindow* create_fixedsize_modal_dialog_window (GtkWindow* parent, const std::string& title, ModalDialog& dialog, int width,
-		int height)
+GtkWindow* create_fixedsize_modal_dialog_window (GtkWindow* parent, const std::string& title, ModalDialog& dialog,
+		int width, int height)
 {
 	GtkWindow* window = create_modal_dialog_window(parent, title, dialog, width, height);
 
@@ -188,7 +191,7 @@ GtkWindow* create_simple_modal_dialog_window (const char* title, ModalDialog& di
 	gtk_widget_show(GTK_WIDGET(alignment));
 	gtk_box_pack_start(GTK_BOX(vbox1), GTK_WIDGET(alignment), FALSE, FALSE, 0);
 
-	GtkButton* button = create_dialog_button("OK", G_CALLBACK(dialog_button_ok), &dialog);
+	GtkButton* button = create_dialog_button(_("OK"), G_CALLBACK(dialog_button_ok), &dialog);
 	gtk_container_add(GTK_CONTAINER(alignment), GTK_WIDGET(button));
 
 	return window;
@@ -294,8 +297,8 @@ namespace gtkutil
 	// Display a Gtk Error dialog
 	void errorDialog (GtkWindow* window, const std::string& errorText)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new_with_markup(window, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_CLOSE, "%s", errorText.c_str());
+		GtkWidget* dialog = gtk_message_dialog_new_with_markup(window, GTK_DIALOG_DESTROY_WITH_PARENT,
+				GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s", errorText.c_str());
 		gtk_dialog_run(GTK_DIALOG (dialog));
 		gtk_widget_destroy(dialog);
 	}

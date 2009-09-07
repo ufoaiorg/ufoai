@@ -61,8 +61,8 @@ struct EntityClassScanner
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "eclass");
 
-		void (*scanFile) (EntityClassCollector& collector, const char* filename);
-		const char* (*getFilename) ();
+		void (*scanFile) (EntityClassCollector& collector, const std::string& filename);
+		const std::string (*getFilename) ();
 };
 
 #include "modulesystem.h"

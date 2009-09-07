@@ -117,12 +117,12 @@ const ListAttributeType* EntityClass_findListType (const char* name)
 class EntityClassesLoadFile
 {
 		const EntityClassScanner& scanner;
-		const char *m_filename;
+		const std::string& m_filename;
 	public:
-		EntityClassesLoadFile (const EntityClassScanner& scanner, const char *filename) :
+		EntityClassesLoadFile (const EntityClassScanner& scanner, const std::string& filename) :
 			scanner(scanner), m_filename(filename)
 		{
-			g_message("Load entity definition file from '%s'\n", m_filename);
+			g_message("Load entity definition file from '%s'\n", m_filename.c_str());
 			scanner.scanFile(g_collector, m_filename);
 		}
 };
@@ -139,7 +139,7 @@ void EntityClassUFO_Construct ()
 
 			void visit (const char* name, const EntityClassScanner& table) const
 			{
-				g_message("Try to load '%s'\n", table.getFilename());
+				g_message("Try to load '%s'\n", table.getFilename().c_str());
 				EntityClassesLoadFile(table, table.getFilename());
 			}
 	};

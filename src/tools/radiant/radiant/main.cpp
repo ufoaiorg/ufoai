@@ -333,7 +333,7 @@ static void create_global_pid (void)
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
 #if !defined(DEBUG)
-		const char *startupFailure = _("Radiant failed to start properly the last time it was run.\n"
+		std::string startupFailure = _("Radiant failed to start properly the last time it was run.\n"
 				"The failure may be related to current global preferences.\n"
 				"Do you want to reset global preferences to defaults?");
 
@@ -378,7 +378,7 @@ static void create_local_pid (void)
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
 #if !defined(DEBUG)
-		const char *startupFailure = _("UFORadiant failed to start properly the last time it was run.\n"
+		std::string startupFailure = _("UFORadiant failed to start properly the last time it was run.\n"
 				"The failure may be caused by current preferences.\n"
 				"Do you want to reset all preferences to defaults?");
 

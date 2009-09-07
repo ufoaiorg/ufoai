@@ -74,9 +74,8 @@ void Sys_LogFile (bool enable)
 		} else {
 			if (g_Console_createLogFailed)
 				return;
-			std::string error = "Failed to create log file " + name
-					+ ", check write permissions in UFORadiant directory.\n";
-			gtk_MessageBox(0, error, _("Console logging"), eMB_OK, eMB_ICONERROR);
+			gtk_MessageBox(0, _("Failed to create log file, check write permissions in UFORadiant directory.\n"),
+					_("Console logging"), eMB_OK, eMB_ICONERROR);
 			g_Console_createLogFailed = true;
 		}
 	} else if (!enable && g_hLogFile != 0) {
