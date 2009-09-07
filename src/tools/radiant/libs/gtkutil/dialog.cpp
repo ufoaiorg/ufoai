@@ -178,7 +178,7 @@ gboolean dialog_delete_callback (GtkWidget *widget, GdkEventAny* event, ModalDia
 	return TRUE;
 }
 
-GtkWindow* create_simple_modal_dialog_window (const char* title, ModalDialog& dialog, GtkWidget* contents)
+GtkWindow* create_simple_modal_dialog_window (const std::string& title, ModalDialog& dialog, GtkWidget* contents)
 {
 	GtkWindow* window = create_fixedsize_modal_dialog_window(0, title, dialog);
 

@@ -94,7 +94,7 @@ gboolean dialog_button_yes (GtkWidget *widget, ModalDialog* data);
 gboolean dialog_button_no (GtkWidget *widget, ModalDialog* data);
 gboolean dialog_delete_callback (GtkWidget *widget, GdkEventAny* event, ModalDialog* data);
 
-GtkWindow* create_simple_modal_dialog_window (const char* title, ModalDialog& dialog, GtkWidget* contents);
+GtkWindow* create_simple_modal_dialog_window (const std::string& title, ModalDialog& dialog, GtkWidget* contents);
 
 class RadioHBox
 {
