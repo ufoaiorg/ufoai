@@ -64,24 +64,35 @@ static int UFO_CleanSuiteRandomMapAssembly (void)
 	return 0;
 }
 
+char map[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+char pos[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+
 static void testAssembly (void)
 {
-	const char *map;
-	const char *pos;
-	SV_AssembleMap("forest", "large", &map, &pos);
-	CU_ASSERT(numPlaced == 35);
+	mapInfo_t *randomMap;
+
+	srand(0);
+	randomMap = SV_AssembleMap("forest", "large", map, pos);
+	/* printf("numplaced1 %i\n", randomMap->numPlaced); fflush(stdout); */
+	CU_ASSERT(randomMap->numPlaced == 35);
+	Mem_Free(randomMap);
 }
 
 static void testMassAssembly (void)
 {
 	int i;
+	long time;
+	mapInfo_t *randomMap;
 
-	for (i = 0; i < 10; i++) {
-		const char *map;
-		const char *pos;
-
-		SV_AssembleMap("forest", "large", &map, &pos);
-		CU_ASSERT(numPlaced == 1);
+	for (i = 0; i < 100; i++) {
+		srand(i);
+		time = Sys_Milliseconds();
+		randomMap = SV_AssembleMap("forest", "large", map, pos);
+		CU_ASSERT(randomMap != NULL);
+		time = (Sys_Milliseconds() - time);
+		/* printf("%i: %s, numplaced = %i took %li msec\n", randomMap?"succeeded":"failed", i, randomMap->numPlaced, time[i]); fflush(stdout); */
+		if (randomMap)
+			Mem_Free(randomMap);
 	}
 }
 

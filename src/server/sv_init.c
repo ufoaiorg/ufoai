@@ -84,12 +84,6 @@ int SV_ModelIndex (const char *name)
 #define MAX_RANDOM_MAP_WIDTH 32
 #define MAX_RANDOM_MAP_HEIGHT 32
 
-/** @brief Stores the alternatives information for the assembled map */
-static uLong curMap[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
-
-/** @brief Stores the map rating for the assembled map */
-static char curRating[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
-
 /** @brief Stores the parsed data for a map tile. (See *.ump files) */
 typedef struct mTile_s {
 	char id[MAX_VAR];	/**< The id (string) of the tile as defined in the ump file (next to "tile"). */
@@ -112,10 +106,11 @@ typedef struct mAssembly_s {
 	byte fX[MAX_FIXEDTILES];	/**< x position of the used  (fix) tile in fT */
 	byte fY[MAX_FIXEDTILES];	/**< y position of the used  (fix) tile in fT */
 	int numFixed;	/**< Number of fixed tiles. Counts entries of fX, fY and fT */
-	int w, h;	/**< The width and height of the assembly. (size "<w> <h>"). This is the maximum size of
-				 * whole map that is built from all the tiles in the assembly. So if there is a single tile
-				 * that is used in the assembly and that has a greater size than the one given in the assembly
-				 * then this must fail. */
+	int width, height;	/**< The width and height of the assembly. (size "<w> <h>"). This is the maximum size of
+						 * whole map that is built from all the tiles in the assembly. So if there is a single tile
+						 * that is used in the assembly and that has a greater size than the one given in the assembly
+						 * then this must fail. */
+	int size;	/**< the result of (width * height), memoized */
 	int dx, dy;	/**< The grid steps of the assembly. (grid "<dx> <dx>")
 				 * This can speed up the assembly of a map if you e.g. only have tiles of the size 2x2 you
 				 * can greatly improve the performance if you also set the grid parameter to "2 2" - this will
@@ -132,11 +127,6 @@ typedef struct mToPlace_s {
 	int cnt;	/**< Current count of placements */
 } mToPlace_t;
 
-/** @brief Stores the Tiles to Place in the map */
-static mToPlace_t mToPlace[MAX_TILETYPES];
-
-static int numToPlace;	/**< the size of the to place list */
-
 /**
  * @brief Defines a placed tile
  * @sa mTile_t
@@ -147,20 +137,33 @@ typedef struct mPlaced_s {
 	int idx, pos;	/**< Stores the state of the placement algorithm */
 } mPlaced_t;
 
-static mTile_t mTile[MAX_TILETYPES];					 /**< A list of parsed map-tiles. */
-static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< A list of parsed assembly definitions. */
+typedef struct mapInfo_s {
+	char name[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+	/** @brief Stores the alternatives information for the assembled map */
+	uLong curMap[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
 
-static int numAssemblies;	 /**< The number of assemblies in mAssembly. */
+	/** @brief Stores the map rating for the assembled map */
+	char curRating[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
 
-static mPlaced_t mPlaced[MAX_MAPTILES];	 /**< Holds all tiles that have been placed on the current map. */
-static int numPlaced;				/**< The number of tiles in mPlaced. */
+	/** @brief Stores the Tiles to Place in the map */
+	mToPlace_t mToPlace[MAX_TILETYPES];
+	int numToPlace;	/**< the size of the to place list */
 
-static short prList[32 * 32];			/**< used to shuffle the map positions for assembly */
+	mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< A list of parsed assembly definitions. */
+	int numAssemblies;	 /**< The number of assemblies in mAssembly. */
 
-static mAssembly_t *mAsm;	/**< the selected assembly */
-static int mapSize;		/**< the size of the current map */
-static int mapW, mapH;		/**< the width and height of the current map */
+	mPlaced_t mPlaced[MAX_MAPTILES];	 /**< Holds all tiles that have been placed on the current map. */
+	int numPlaced;				/**< The number of tiles in mPlaced. */
 
+	mTile_t mTile[MAX_TILETYPES];			 /**< A list of parsed map-tiles. */
+	int numTiles; /**< Length of the mTile list */
+
+	int mAsm;	/**< the index of the selected assembly */
+} mapInfo_t;
+
+/*
+static mapInfo_t *map = NULL;
+*/
 /**
  * @brief Fills a list with random values between @c 0 and @c n
  * @param[in] n Size of the list
@@ -228,65 +231,60 @@ static uLong tileMask (const char chr)
  * @brief Parsed a tile definition out of the ump-files
  * @sa SV_ParseAssembly
  * @sa SV_AssembleMap
+ * @note Parsed data are stored into *target, which must already be allocated.
  */
-static void SV_ParseMapTile (const char *filename, const char **text)
+static int SV_ParseMapTile (const char *filename, const char **text, mTile_t *target)
 {
 	const char *errhead = "SV_ParseMapTile: Unexpected end of file (";
 	const char *token;
 	char *chr;
-	mTile_t *t;
 	int x, y, i;
 
 	/* get tile name */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return;
-	if (numTiles >= MAX_TILETYPES) {
-		Com_Printf("SV_ParseMapTile: Too many map tile types (%s)\n", filename);
-		return;
-	}
-	t = &mTile[numTiles];
-	memset(t, 0, sizeof(*t));
-	Q_strncpyz(t->id, token, sizeof(t->id));
+		return 0;
+	memset(target, 0, sizeof(*target));
+	Q_strncpyz(target->id, token, sizeof(target->id));
 
 	/* start parsing the block */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return;
+		return 0;
 	if (*token != '{') {
-		Com_Printf("SV_ParseMapTile: Expected '{' for tile '%s' (%s)\n", t->id, filename);
-		return;
+		Com_Printf("SV_ParseMapTile: Expected '{' for tile '%s' (%s)\n", target->id, filename);
+		return 0;
 	}
 
 	/* get width and height */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return;
-	t->w = atoi(token);
+		return 0;
+	target->w = atoi(token);
 
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return;
-	t->h = atoi(token);
+		return 0;
+	target->h = atoi(token);
 
-	if (t->w > MAX_TILESIZE || t->h > MAX_TILESIZE) {
-		Com_Printf("SV_ParseMapTile: Bad tile size [%i %i] (%s) (max. [%i %i])\n", t->w, t->h, filename, MAX_TILESIZE, MAX_TILESIZE);
+	if (target->w > MAX_TILESIZE || target->h > MAX_TILESIZE) {
+		Com_Printf("SV_ParseMapTile: Bad tile size [%i %i] (%s) (max. [%i %i])\n", target->w, target->h, filename, MAX_TILESIZE, MAX_TILESIZE);
 		*text = strchr(*text, '}');
-		return;
+		return 0;
 	}
 
 	/* get tile specs */
-	for (y = t->h - 1; y >= 0; y--)
-		for (x = 0; x < t->w; x++) {
+	for (y = target->h - 1; y >= 0; y--)
+		for (x = 0; x < target->w; x++) {
 			token = Com_EParse(text, errhead, filename);
 			if (!*text || *token == '}') {
-				Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - not enough entries for size\n", t->id);
+				Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - not enough entries for size\n", target->id);
 				*text = strchr(*text, '}') + 1;
-				return;
+				return 0;
 			}
-			t->spec[y][x] = 0L;
+			target->spec[y][x] = 0L;
 			for (i = 0; token[i]; i++, chr++) {
-				t->spec[y][x] |= tileMask(token[i]);
+				target->spec[y][x] |= tileMask(token[i]);
 			}
 		}
 
@@ -294,10 +292,10 @@ static void SV_ParseMapTile (const char *filename, const char **text)
 
 	/* get connections */
 	if (*token != '}')
-		Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - too many entries for size\n", t->id);
+		Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - too many entries for size\n", target->id);
 
 	/* successfully parsed - this tile counts */
-	numTiles++;
+	return 1;
 }
 
 
@@ -308,37 +306,33 @@ static void SV_ParseMapTile (const char *filename, const char **text)
  * @note: format of size: "size x y"
  * @note: format of fix: "fix [tilename] x y"
  * @note: format of tile: "[tilename] min max"
+ * @param a Pointer to the assembly to be initialized, must be allocated.
+ * @return 1 if it was parsed, 0 if not.
  */
-static void SV_ParseAssembly (const char *filename, const char **text)
+static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **text, mAssembly_t *a)
 {
 	const char *errhead = "SV_ParseAssembly: Unexpected end of file (";
 	const char *token, *cvarValue;
 	char cvarName[MAX_VAR];
-	mAssembly_t *a;
 	int i, x, y;
 
 	/* get assembly name */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return;
-	if (numAssemblies >= MAX_MAPASSEMBLIES) {
-		Com_Printf("SV_ParseAssembly: Too many map assemblies (%s)\n", filename);
-		return;
-	}
+		return 0;
 
 	/* init */
-	a = &mAssembly[numAssemblies++];
 	memset(a, 0, sizeof(*a));
 	Q_strncpyz(a->id, token, sizeof(a->id));
-	a->w = 8;
-	a->h = 8;
+	a->width = 8;
+	a->height = 8;
 	a->dx = 1;
 	a->dy = 1;
 
 	token = Com_EParse(text, errhead, filename);
 	if (!*text || *token != '{') {
 		Com_Error(ERR_DROP, "Invalid assembly definition '%s' - invalid token '%s'", a->id, token);
-		return;
+		return 0;
 	}
 
 	do {
@@ -362,7 +356,8 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 			if (!text)
 				break;
 
-			sscanf(token, "%i %i", &a->w, &a->h);
+			sscanf(token, "%i %i", &a->width, &a->height);
+			a->size = a->width * a->height;
 			continue;
 		} else if (!strncmp(token, "grid", 4)) {
 			/* get map size */
@@ -379,8 +374,8 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 			if (!text)
 				break;
 
-			for (i = 0; i < numTiles; i++)
-				if (!strncmp(token, mTile[i].id, MAX_VAR)) {
+			for (i = 0; i < map->numTiles; i++)
+				if (!strncmp(token, map->mTile[i].id, MAX_VAR)) {
 					if (a->numFixed >= MAX_FIXEDTILES) {
 						Com_Printf("SV_ParseAssembly: Too many fixed tiles in assembly '%s'\n", a->id);
 						break;
@@ -417,25 +412,26 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 				token = cvarValue;
 		}
 
-		for (i = 0; i < numTiles; i++)
-			if (!strncmp(token, mTile[i].id, MAX_VAR)) {
+		for (i = 0; i < map->numTiles; i++)
+			if (!strncmp(token, map->mTile[i].id, MAX_VAR)) {
 				/* get min and max tile number */
 				token = Com_EParse(text, errhead, filename);
 				if (!text || *token == '}')
 					break;
 
 				if (!strstr(token, " ")) {
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min max value of tile %s)", filename, mTile[i].id);
-					return;
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min max value of tile %s)", filename, map->mTile[i].id);
+					return 0;
 				}
 				sscanf(token, "%i %i", &x, &y);
 				a->min[i] = x;
 				a->max[i] = y;
 				break;
 			}
-		if (i == numTiles)
+		if (i == map->numTiles)
 			Com_Error(ERR_DROP, "Could not find tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
 	} while (text);
+	return 1;
 }
 
 
@@ -471,17 +467,14 @@ static void SV_CombineAlternatives (uLong *mapAlts, uLong tileAlts, char *mapRat
 /**
  * @brief Reset the map to empty state.
  */
-static void SV_ClearMap (void)
+static void SV_ClearMap (mapInfo_t *map)
 {
-	uLong *mp;
-	const uLong *me;
+	uLong *mp = &map->curMap[0][0];
+	uLong *end = &map->curMap[MAX_RANDOM_MAP_HEIGHT-1][MAX_RANDOM_MAP_WIDTH-1];
 
-	memset(curMap, 0, sizeof(curMap));
-	memset(curRating, 0, sizeof(curRating));
+	memset(map->curRating, 0, sizeof(map->curRating));
 
-	mp = &curMap[0][0];
-	me = &curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
-	while (mp <= me)
+	while (mp <= end)
 		*(mp++) = ALL_TILES;
 }
 
@@ -495,13 +488,14 @@ static void SV_ClearMap (void)
  * @sa SV_AddMandatoryParts
  * @sa SV_AddRegion
  */
-static qboolean SV_FitTile (mTile_t * tile, int x, int y)
+static qboolean SV_FitTile (const mapInfo_t *map, mTile_t * tile, int x, int y)
 {
 	int tx, ty;
 	const uLong *spec = NULL;
 	const uLong *m = NULL;
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 
-	/* check vor valid grid positions */
+	/* check for valid grid positions */
 	assert(x % mAsm->dx == 0);
 	assert(y % mAsm->dy == 0);
 	assert(tile);
@@ -510,12 +504,12 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 		return qfalse;
 
 	/* check for map border */
-	if (x + tile->w > mapW + 2 || y + tile->h > mapH + 2)
+	if (x + tile->w > mAsm->width + 2 || y + tile->h > mAsm->height + 2)
 		return qfalse;
 
 	/* test for fit */
 	spec = &tile->spec[0][0];
-	m = &curMap[y][x];
+	m = &map->curMap[y][x];
 	for (ty = 0; ty < tile->h; ty++) {
 		for (tx = 0; tx < tile->w; tx++, spec++, m++) {
 			const uLong combined = (*m) & (*spec);
@@ -539,13 +533,14 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
  * @sa SV_AddRegion
  * @sa SV_FitTile
  */
-static qboolean SV_TestFilled (void)
+static qboolean SV_TestFilled (const mapInfo_t *map)
 {
 	int x, y;
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 
-	for (y = 1; y < mapH + 1; y++)
-		for (x = 1; x < mapW + 1; x++)
-			if (!IS_SOLID(curMap[y][x]))
+	for (y = 1; y < mAsm->height + 1; y++)
+		for (x = 1; x < mAsm->width + 1; x++)
+			if (!IS_SOLID(map->curMap[y][x]))
 				return qfalse;
 
 	return qtrue;
@@ -554,30 +549,35 @@ static qboolean SV_TestFilled (void)
 /**
  * @brief Debug fuction to dump the rating of the current map.
  */
-static void SV_DumpRating (void)
+static void SV_DumpRating (const mapInfo_t *map)
 {
 	int x, y;
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 
 	Com_Printf("Rating:\n");
-	for (y = mapH; y >= 1; y--) {
-		for (x = 1; x < mapW + 1; x++)
-			Com_Printf(" %2d", (int) curRating[y][x]);
+	for (y = mAsm->height; y >= 1; y--) {
+		for (x = 1; x < mAsm->width + 1; x++)
+			Com_Printf(" %2d", (int) map->curRating[y][x]);
 		Com_Printf("\n");
 	}
 	Com_Printf("\n");
 }
 
 /**
- * @brief Debug fuction to dump the map location of a placed tile.
+ * @brief Debug function to dump the map location of a placed tile.
  */
-static void SV_DumpPlaced (mPlaced_t * placed)
+static void SV_DumpPlaced (const mapInfo_t *map, int pl)
 {
 	int x, y;
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
+	const int h = mAsm->height;
+	const int w = mAsm->width;
+	const mPlaced_t *placed = &map->mPlaced[pl];
 
 	Com_Printf("Placed tile %s at %d %d\n", placed->tile->id, placed->x, placed->y);
 
-	for (y = mapH; y >= 1; y--) {
-		for (x = 1; x < mapW + 1; x++) {
+	for (y = h; y >= 1; y--) {
+		for (x = 1; x < w + 1; x++) {
 			const int dx = x - placed->x;
 			const int dy = y - placed->y;
 
@@ -594,22 +594,23 @@ static void SV_DumpPlaced (mPlaced_t * placed)
 }
 
 /**
- * @brief Returns the rating of the current map.
+ * @brief Returns the rating of the given map.
  * @return A value which roughly describes the connection quality of the map
  * @sa SV_AssembleMap
  * @sa SV_AddRegion
  * @sa SV_FitTile
  */
-static int SV_CalcRating (void)
+static int SV_CalcRating (const mapInfo_t *map)
 {
 	int x, y, rating = 0;
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 
-	for (y = 1; y < mapH + 1; y++)
-		for (x = 1; x < mapW + 1; x++)
-			rating += curRating[y][x];
+	for (y = 1; y <= mAsm->height; y++)
+		for (x = 1; x <= mAsm->width; x++)
+			rating += map->curRating[y][x];
 
 	if (sv_dumpmapassembly->integer)
-		SV_DumpRating();
+		SV_DumpRating(map);
 
 	return rating;
 }
@@ -617,6 +618,7 @@ static int SV_CalcRating (void)
 /**
  * @brief Adds a new map-tile to an assembled map. Also adds the tile to the placed-tiles list.
  * @note The tile must fit at the given position, otherwise an assert will occure!
+ * @param[inout] map The map that will get the tile.  Modified in place.
  * @param[in] tile The tile to add to the map.
  * @param[in] x The x position in the map where the tile should be placed.
  * @param[in] y The y position in the map where the tile should be placed.
@@ -626,9 +628,10 @@ static int SV_CalcRating (void)
  * @sa SV_AddRegion
  * @sa SV_FitTile
  */
-static void SV_AddTile (const mTile_t *tile, int x, int y, int idx, int pos)
+static void SV_AddTile (mapInfo_t *map, const mTile_t *tile, int x, int y, int idx, int pos)
 {
 	int tx, ty;
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 
 	/* check vor valid grid positions */
 	assert(x % mAsm->dx == 0);
@@ -640,23 +643,23 @@ static void SV_AddTile (const mTile_t *tile, int x, int y, int idx, int pos)
 			assert(y + ty < MAX_RANDOM_MAP_HEIGHT);
 			assert(x + tx < MAX_RANDOM_MAP_WIDTH);
 
-			SV_CombineAlternatives(&curMap[y + ty][x + tx], tile->spec[ty][tx], &curRating[y + ty][x + tx]);
+			SV_CombineAlternatives(&map->curMap[y + ty][x + tx], tile->spec[ty][tx], &map->curRating[y + ty][x + tx]);
 		}
 
 	/* add the tile to the array of placed tiles*/
-	if (numPlaced >= MAX_MAPTILES)
+	if (map->numPlaced >= MAX_MAPTILES)
 		Com_Error(ERR_DROP, "SV_AddTile: Too many map tiles");
 
-	mPlaced[numPlaced].tile = tile;
-	mPlaced[numPlaced].x = x;
-	mPlaced[numPlaced].y = y;
-	mPlaced[numPlaced].idx = idx;
-	mPlaced[numPlaced].pos = pos;
+	map->mPlaced[map->numPlaced].tile = tile;
+	map->mPlaced[map->numPlaced].x = x;
+	map->mPlaced[map->numPlaced].y = y;
+	map->mPlaced[map->numPlaced].idx = idx;
+	map->mPlaced[map->numPlaced].pos = pos;
 
-	numPlaced++;
+	map->numPlaced++;
 
 	if (idx >= 0) {
-		mToPlace[idx].cnt++;
+		map->mToPlace[idx].cnt++;
 	}
 }
 
@@ -668,27 +671,27 @@ static void SV_AddTile (const mTile_t *tile, int x, int y, int idx, int pos)
  * @sa SV_AddTile
  * @sa SV_FitTile
  */
-static void SV_RemoveTile (int* idx, int* pos)
+static void SV_RemoveTile (mapInfo_t *map, int* idx, int* pos)
 {
 	int tx, ty;
 	int i, index;
 
-	SV_ClearMap();
+	SV_ClearMap(map);
 
-	if (numPlaced == 0)
+	if (map->numPlaced == 0)
 		return;
 
-	numPlaced--;
-	index = mPlaced[numPlaced].idx;
+	map->numPlaced--;
+	index = map->mPlaced[map->numPlaced].idx;
 
 	if (index >= 0) {
-		mToPlace[index].cnt--;
+		map->mToPlace[index].cnt--;
 	}
 
-	for (i = numPlaced; i--;) {
-		const mTile_t *tile = mPlaced[i].tile;
-		const int x = mPlaced[i].x;
-		const int y = mPlaced[i].y;
+	for (i = map->numPlaced; i--;) {
+		const mTile_t *tile = map->mPlaced[i].tile;
+		const int x = map->mPlaced[i].x;
+		const int y = map->mPlaced[i].y;
 		assert(i >= 0);
 		assert(tile);
 
@@ -698,7 +701,7 @@ static void SV_RemoveTile (int* idx, int* pos)
 				assert(y + ty < MAX_RANDOM_MAP_HEIGHT);
 				assert(x + tx < MAX_RANDOM_MAP_WIDTH);
 
-				SV_CombineAlternatives(&curMap[y + ty][x + tx], tile->spec[ty][tx], &curRating[y + ty][x + tx]);
+				SV_CombineAlternatives(&map->curMap[y + ty][x + tx], tile->spec[ty][tx], &map->curRating[y + ty][x + tx]);
 			}
 		}
 	}
@@ -707,7 +710,7 @@ static void SV_RemoveTile (int* idx, int* pos)
 		*idx = index;
 
 	if (pos)
-		*pos = mPlaced[numPlaced].pos;
+		*pos = map->mPlaced[map->numPlaced].pos;
 }
 
 /**
@@ -717,10 +720,15 @@ static void SV_RemoveTile (int* idx, int* pos)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static qboolean SV_AddRandomTile (int* idx, int* pos)
+static qboolean SV_AddRandomTile (mapInfo_t *map, int* idx, int* pos)
 {
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
+	const int numToPlace = map->numToPlace;
+	const int mapSize = mAsm->size;
+	const int mapW = mAsm->width;
 	const int start_idx = *idx = rand() % numToPlace;
 	const int start_pos = *pos = rand() % mapSize;
+	const mToPlace_t *mToPlace = map->mToPlace;
 
 	do {
 		if (mToPlace[*idx].cnt < mToPlace[*idx].max) {
@@ -728,9 +736,11 @@ static qboolean SV_AddRandomTile (int* idx, int* pos)
 				const int x = (*pos) % mapW;
 				const int y = (*pos) / mapW;
 
-				if ((x % mAsm->dx == 0) && (y % mAsm->dy == 0) &&
-						SV_FitTile(mToPlace[*idx].tile, x, y)) {
-					SV_AddTile(mToPlace[*idx].tile, x, y, *idx, *pos);
+				if ((x % mAsm->dx == 0)
+					&& (y % mAsm->dy == 0)
+					&& SV_FitTile(map, mToPlace[*idx].tile, x, y))
+				{
+					SV_AddTile(map, mToPlace[*idx].tile, x, y, *idx, *pos);
 					return qtrue;
 				}
 
@@ -761,47 +771,54 @@ static qboolean SV_AddRandomTile (int* idx, int* pos)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static qboolean SV_AddMissingTiles (void)
+static qboolean SV_AddMissingTiles (mapInfo_t *map)
 {
 	int i;
 	int idx[CHECK_ALTERNATIVES_COUNT];
 	int pos[CHECK_ALTERNATIVES_COUNT];
 	int rating[CHECK_ALTERNATIVES_COUNT];
-	const int startPlaced = numPlaced;
+	const int startPlaced = map->numPlaced;
+	mapInfo_t backup;
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
+	const int mapW = mAsm->width;
+	const int mapH = mAsm->height;
+	const mToPlace_t *mToPlace = map->mToPlace;
 
+	memcpy(&backup, map, sizeof(*map));
 	while (1) {
 		int max_rating = -mapW * mapH * 4;
 
 		/* check if the map is already filled */
-		if (SV_TestFilled())
+		if (SV_TestFilled(map))
 			return qtrue;
 
 		/* try some random tiles at random positions */
 		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
-			if (!SV_AddRandomTile(&idx[i], &pos[i])) {
+			if (!SV_AddRandomTile(map, &idx[i], &pos[i])) {
 				/* remove all tiles placed by this function */
-				while (numPlaced > startPlaced)
-					SV_RemoveTile(NULL, NULL);
+				while (map->numPlaced > startPlaced)
+					memcpy(map, &backup, sizeof(*map));
+					//SV_RemoveTile(map, NULL, NULL);
 
 				return qfalse;
 			}
 
-			if (SV_TestFilled())
+			if (SV_TestFilled(map))
 				return qtrue;
 
-			rating[i] = SV_CalcRating();
+			rating[i] = SV_CalcRating(map);
 
 			if (rating[i] > max_rating)
 				max_rating = rating[i];
 
-			SV_RemoveTile(NULL, NULL);
+			SV_RemoveTile(map, NULL, NULL);
 		}
 
 		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
 			if (rating[i] == max_rating) {
 				const int x = pos[i] % mapW;
 				const int y = pos[i] / mapW;
-				SV_AddTile(mToPlace[idx[i]].tile, x, y, idx[i], pos[i]);
+				SV_AddTile(map, mToPlace[idx[i]].tile, x, y, idx[i], pos[i]);
 				break;
 			}
 		}
@@ -813,10 +830,17 @@ static qboolean SV_AddMissingTiles (void)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static void SV_AddMapTiles (const char *name, const char *assembly)
+static void SV_AddMapTiles (mapInfo_t *map)
 {
 	int idx, pos;
-	const int start = numPlaced;
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
+	const int mapW = mAsm->width;
+	const int mapSize = mAsm->size;
+	const int numToPlace = map->numToPlace;
+	const mToPlace_t *mToPlace = map->mToPlace;
+	const mPlaced_t *mPlaced = map->mPlaced;
+	short prList[MAX_RANDOM_MAP_HEIGHT * MAX_RANDOM_MAP_WIDTH];
+	const int start = map->numPlaced;
 
 	/* shuffle only once, the map will be build with that seed */
 	RandomList(mapSize, prList);
@@ -832,9 +856,9 @@ static void SV_AddMapTiles (const char *name, const char *assembly)
 				if ((x % mAsm->dx != 0) || (y % mAsm->dy != 0))
 					continue;
 
-				if (SV_FitTile(mToPlace[idx].tile, x, y)) {
+				if (SV_FitTile(map, mToPlace[idx].tile, x, y)) {
 					/* add tile */
-					SV_AddTile(mToPlace[idx].tile, x, y, idx, pos);
+					SV_AddTile(map, mToPlace[idx].tile, x, y, idx, pos);
 					break;
 				}
 			}
@@ -847,9 +871,9 @@ static void SV_AddMapTiles (const char *name, const char *assembly)
 				break;
 
 			/* tile does not fit, restore last status - replace the last tile */
-			assert(numPlaced > 0);
-			assert(idx == mPlaced[numPlaced - 1].idx);
-			SV_RemoveTile(&idx, &pos);
+			assert(map->numPlaced > 0);
+			assert(idx == mPlaced[map->numPlaced - 1].idx);
+			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
 
@@ -859,16 +883,16 @@ static void SV_AddMapTiles (const char *name, const char *assembly)
 			idx++;
 		} else {
 			/* no more retries */
-			if (start == numPlaced) {
+			if (start == map->numPlaced) {
 				Com_Error(ERR_DROP, "SV_AddMapTiles: Impossible to assemble map '%s' with assembly '%s'\n",
-						name, assembly ? assembly : "");
+						map->name, mAsm->id ? mAsm->id : "");
 			}
-			SV_RemoveTile(&idx, &pos);
+			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
 
-		if ((idx == numToPlace) && !SV_AddMissingTiles()) {
-			SV_RemoveTile(&idx, &pos);
+		if ((idx == numToPlace) && !SV_AddMissingTiles(map)) {
+			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
 	}
@@ -879,19 +903,20 @@ static void SV_AddMapTiles (const char *name, const char *assembly)
  * @sa SV_AssembleMap
  * @sa SV_AddTile
  */
-static void SV_PrepareTilesToPlace (void)
+static void SV_PrepareTilesToPlace (mapInfo_t *map)
 {
 	int i;
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 
-	numToPlace = 0;
-	memset(&mToPlace[0], 0, sizeof(mToPlace));
+	map->numToPlace = 0;
+	memset(&map->mToPlace[0], 0, sizeof(map->mToPlace));
 
-	for (i = 0; i < numTiles; i++) {
+	for (i = 0; i < map->numTiles; i++) {
 		if (mAsm->max[i]) {
-			mToPlace[numToPlace].tile = &mTile[i];
-			mToPlace[numToPlace].min = mAsm->min[i];
-			mToPlace[numToPlace].max = mAsm->max[i];
-			numToPlace++;
+			map->mToPlace[map->numToPlace].tile = &map->mTile[i];
+			map->mToPlace[map->numToPlace].min = mAsm->min[i];
+			map->mToPlace[map->numToPlace].max = mAsm->max[i];
+			map->numToPlace++;
 		}
 	}
 }
@@ -905,16 +930,15 @@ static void SV_PrepareTilesToPlace (void)
  * @sa SV_ParseAssembly
  * @sa SV_ParseMapTile
  */
-static void SV_AssembleMap (const char *name, const char *assembly, const char **map, const char **pos)
+static mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos)
 {
-	mPlaced_t *pl;
-	static char asmMap[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
-	static char asmPos[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 	char filename[MAX_QPATH];
 	char basePath[MAX_QPATH];
 	byte *buf;
 	const char *text, *token;
 	int i;
+	mapInfo_t *map = NULL;
+	mAssembly_t *mAsm = NULL;
 
 	/* load the map info */
 	Com_sprintf(filename, sizeof(filename), "maps/%s.ump", name);
@@ -922,10 +946,12 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 	if (!buf)
 		Com_Error(ERR_DROP, "SV_AssembleMap: Map assembly info '%s' not found", filename);
 
+	map = Mem_Alloc(sizeof(mapInfo_t));
+	memset(map, 0, sizeof(*map));
+	Q_strncpyz(map->name, name, sizeof(map->name));
+
 	/* parse it */
 	text = (const char*)buf;
-	numTiles = 0;
-	numAssemblies = 0;
 	basePath[0] = 0;
 	do {
 		token = Com_Parse(&text);
@@ -935,10 +961,23 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 		if (!strcmp(token, "base")) {
 			token = Com_Parse(&text);
 			Q_strncpyz(basePath, token, sizeof(basePath));
-		} else if (!strcmp(token, "tile"))
-			SV_ParseMapTile(filename, &text);
-		else if (!strcmp(token, "assembly"))
-			SV_ParseAssembly(filename, &text);
+		} else if (!strcmp(token, "tile")) {
+			if (map->numTiles >= MAX_TILETYPES) {
+				Com_Printf("SV_ParseMapTile: Too many map tile types (%s)\n", filename);
+			} else {
+				if (SV_ParseMapTile(filename, &text, &map->mTile[map->numTiles]))
+					map->numTiles++;
+			}
+		}
+		else if (!strcmp(token, "assembly")) {
+			if (map->numAssemblies >= MAX_MAPASSEMBLIES) {
+				Com_Printf("SV_ParseAssembly: Too many map assemblies (%s)\n", filename);
+				Mem_Free(map);
+				return NULL;
+			}
+			if (SV_ParseAssembly(map, filename, &text, &map->mAssembly[map->numAssemblies]))
+				map->numAssemblies++;
+		}
 		else if (!strcmp(token, "{")) {
 			Com_Printf("SV_AssembleMap: Skipping unknown block\n");
 			/* ignore unknown block */
@@ -953,82 +992,85 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 	FS_FreeFile(buf);
 
 	/* check for parsed tiles and assemblies */
-	if (!numTiles)
+	if (!map->numTiles)
 		Com_Error(ERR_DROP, "No map tiles defined (%s)!", filename);
 #ifdef DEBUG
 	else
-		Com_DPrintf(DEBUG_SERVER, "numTiles: %i\n", numTiles);
+		Com_DPrintf(DEBUG_SERVER, "numTiles: %i\n", map->numTiles);
 #endif
 
-	if (!numAssemblies)
+	if (!map->numAssemblies)
 		Com_Error(ERR_DROP, "No map assemblies defined (%s)!", filename);
 #ifdef DEBUG
 	else
-		Com_DPrintf(DEBUG_SERVER, "numAssemblies: %i\n", numAssemblies);
+		Com_DPrintf(DEBUG_SERVER, "numAssemblies: %i\n", map->numAssemblies);
 #endif
 
-	/* get assembly */
-	if (assembly && assembly[0]) {
-		for (i = 0, mAsm = mAssembly; i < numAssemblies; i++, mAsm++)
-			if (!strcmp(assembly, mAsm->id))
-				break;
-		if (i >= numAssemblies) {
-			Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", assembly);
-			mAsm = NULL;
-		}
-	} else
-		mAsm = NULL;
-
 	/* use random assembly, if no valid one has been specified */
-	if (!mAsm)
-		mAsm = &mAssembly[rand() % numAssemblies];
+	map->mAsm = rand() % map->numAssemblies;
+
+	/* overwrite with specified, if any */
+	if (assembly && assembly[0]) {
+		for (i = 0; i < map->numAssemblies; i++)
+			if (!strcmp(assembly, map->mAssembly[i].id)) {
+				map->mAsm = i;
+				break;
+			}
+		if (i == map->numAssemblies) {
+			Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", assembly);
+		}
+	}
+
+	mAsm = &map->mAssembly[map->mAsm];
+	assert(mAsm);
+
 	Com_DPrintf(DEBUG_SERVER, "Use assembly: '%s'\n", mAsm->id);
 
 	/* check size */
-	assert(mAsm->w <= MAX_RANDOM_MAP_WIDTH);
-	assert(mAsm->h <= MAX_RANDOM_MAP_HEIGHT);
+	assert(mAsm->width <= MAX_RANDOM_MAP_WIDTH);
+	assert(mAsm->height <= MAX_RANDOM_MAP_HEIGHT);
 
-	SV_PrepareTilesToPlace();
+	SV_PrepareTilesToPlace(map);
 
 	/* assemble the map */
-	numPlaced = 0;
-	SV_ClearMap();
+	map->numPlaced = 0;
+	SV_ClearMap(map);
 
 	/* place fixed parts - defined in ump via fix parameter */
 	for (i = 0; i < mAsm->numFixed; i++)
-		SV_AddTile(&mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
+		SV_AddTile(map, &map->mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
 
-	/* place non fixed map parts */
-	mapW = mAsm->w;
-	mapH = mAsm->h;
-	mapSize = mapW * mapH;
-
-	SV_AddMapTiles(name, assembly);
+	SV_AddMapTiles(map);
 
 	/* prepare map and pos strings */
 	if (basePath[0]) {
 		asmMap[0] = '-';
 		Q_strncpyz(&asmMap[1], basePath, MAX_QPATH - 1);
-		*map = asmMap;
-	} else {
-		asmMap[0] = 0;
-		*map = asmMap + 1;
 	}
 	asmPos[0] = 0;
-	*pos = asmPos + 1;
 
 	/* generate the strings */
-	for (i = 0, pl = mPlaced; i < numPlaced; i++, pl++) {
-		if (sv_dumpmapassembly->integer)
-			SV_DumpPlaced(pl);
+	for (i = 0; i < map->numPlaced; i++) {
+		const mPlaced_t *pl = &map->mPlaced[i];
 
-		Q_strcat(asmMap, va(" %s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		Q_strcat(asmPos, va(" %i %i %i", (pl->x - mAsm->w / 2) * 8, (pl->y - mAsm->h / 2) * 8, 0), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		if (sv_dumpmapassembly->integer)
+			SV_DumpPlaced(map, i);
+
+		if(asmMap[0])
+			Q_strcat(asmMap, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		if(asmPos[0])
+			Q_strcat(asmPos, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+
+		Q_strcat(asmMap, va("%s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		Q_strcat(asmPos, va("%i %i %i", (pl->x - mAsm->width / 2) * 8, (pl->y - mAsm->height / 2) * 8, 0), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 	}
 
-	Com_DPrintf(DEBUG_SERVER, "tiles: %s\n", *map);
-	Com_DPrintf(DEBUG_SERVER, "pos: %s\n", *pos);
-	Com_DPrintf(DEBUG_SERVER, "tiles: %i\n", numPlaced);
+	Com_DPrintf(DEBUG_SERVER, "tiles: %s\n", asmMap);
+	Com_DPrintf(DEBUG_SERVER, "pos: %s\n", asmPos);
+	Com_DPrintf(DEBUG_SERVER, "tiles: %i\n", map->numPlaced);
+
+	assert(map);
+	return map;
 }
 
 /**
@@ -1036,11 +1078,12 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
  * @note the title string must be translated client side
  * @return Never NULL - mapname or maptitle (if defined in assembly)
  */
-static const char* SV_GetMapTitle (const char* const mapname)
+static const char* SV_GetMapTitle (const mapInfo_t *map, const char* const mapname)
 {
 	assert(mapname);
 
 	if (mapname[0] == '+') {
+		const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 		if (mAsm && mAsm->title[0]) {
 			/* return the assembly title itself - must be translated client side */
 			if (mAsm->title[0] == '_')
@@ -1064,7 +1107,10 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 {
 	int i;
 	unsigned checksum = 0;
-	const char *map, *pos, *buf;
+	const char *buf = NULL;
+	char * map = sv.configstrings[CS_TILES];
+	char * pos = sv.configstrings[CS_POSITIONS];
+	mapInfo_t *randomMap = NULL;
 
 	assert(server);
 	assert(server[0] != '\0');
@@ -1097,21 +1143,18 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 
 	/* assemble and load the map */
 	if (server[0] == '+') {
-		SV_AssembleMap(server + 1, param, &map, &pos);
-		if (!map || !pos) {
+		randomMap = SV_AssembleMap(server + 1, param, map, pos);
+		if (!randomMap) {
 			Com_Printf("Could not load assembly for map '%s'\n", server);
 			return;
 		}
 	} else {
-		map = server;
-		pos = param;
+		Q_strncpyz(sv.configstrings[CS_TILES], server, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		if (param)
+			Q_strncpyz(sv.configstrings[CS_POSITIONS], param, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		else
+			sv.configstrings[CS_POSITIONS][0] = 0;
 	}
-
-	Q_strncpyz(sv.configstrings[CS_TILES], map, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-	if (pos)
-		Q_strncpyz(sv.configstrings[CS_POSITIONS], pos, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-	else
-		sv.configstrings[CS_POSITIONS][0] = 0;
 
 	CM_LoadMap(map, day, pos, &checksum);
 
@@ -1128,11 +1171,15 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 
 	Com_sprintf(sv.configstrings[CS_VERSION], sizeof(sv.configstrings[CS_VERSION]), "%s", UFO_VERSION);
 
-	Com_sprintf(sv.configstrings[CS_MAPTITLE], sizeof(sv.configstrings[CS_MAPTITLE]), "%s", SV_GetMapTitle(server));
+	Com_sprintf(sv.configstrings[CS_MAPTITLE], sizeof(sv.configstrings[CS_MAPTITLE]), "%s", SV_GetMapTitle(randomMap, server));
 	if (!strncmp(sv.configstrings[CS_MAPTITLE], "b/", 2)) {
 		/* For base attack, cl.configstrings[CS_MAPTITLE] contains too many chars */
 		Com_sprintf(sv.configstrings[CS_MAPTITLE], sizeof(sv.configstrings[CS_MAPTITLE]), "Base attack");
 	}
+
+	/* clear random-map assembly data */
+	Mem_Free(randomMap);
+	randomMap = NULL;
 
 	/* clear physics interaction links */
 	SV_ClearWorld();
