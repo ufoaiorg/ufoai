@@ -60,7 +60,7 @@ void DoAbout (void)
 				GtkVBox* vbox2 = create_dialog_vbox(4);
 				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(vbox2), TRUE, FALSE, 0);
 				{
-					GtkFrame* frame = create_dialog_frame(0, GTK_SHADOW_IN);
+					GtkFrame* frame = create_dialog_frame("", GTK_SHADOW_IN);
 					gtk_box_pack_start(GTK_BOX (vbox2), GTK_WIDGET(frame), FALSE, FALSE, 0);
 					{
 						GtkImage* image = new_local_image("logo.bmp");
@@ -270,7 +270,7 @@ void DoAbout (void)
 				}
 			}
 			{
-				GtkFrame* frame = create_dialog_frame("<b>OpenGL Extensions</b>");
+				GtkFrame* frame = create_dialog_frame(_("<b>OpenGL Extensions</b>"));
 				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
 				{
 					GtkScrolledWindow* sc_extensions = create_scrolled_window(GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS, 4);
@@ -343,7 +343,7 @@ void DoAbout (void)
 				}
 			}
 			{
-				GtkFrame* frame = create_dialog_frame("<b>OpenAL Extensions</b>");
+				GtkFrame* frame = create_dialog_frame(_("<b>OpenAL Extensions</b>"));
 				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
 				{
 					GtkScrolledWindow* sc_extensions = create_scrolled_window(GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS, 4);
