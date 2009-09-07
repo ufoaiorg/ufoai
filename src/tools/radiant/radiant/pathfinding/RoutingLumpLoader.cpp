@@ -74,32 +74,40 @@ namespace routing
 			const int actorSize, const EDirection direction)
 	{
 		byte route = 0;
-		byte stepup = RT_STEPUP(map,actorSize,pos[0],pos[1],pos[2],direction);
+		byte stepup = 0;
 
 		switch (direction) {
 		case DIR_WEST:
 			route = RT_CONN_NY(map,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NY(map,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_NORTHWEST:
 			route = RT_CONN_PX_NY(map,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PX_NY(map,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_NORTH:
 			route = RT_CONN_PX(map,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PX(map,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_NORTHEAST:
 			route = RT_CONN_PX_PY(map,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PX_PY(map,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_EAST:
 			route = RT_CONN_PY(map,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PY(map,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_SOUTHEAST:
 			route = RT_CONN_NX_PY(map,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NX_PY(map,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_SOUTH:
 			route = RT_CONN_NX(map,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NX(map,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_SOUTHWEST:
 			route = RT_CONN_NX_NY(map,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NX_NY(map,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case MAX_DIRECTIONS:
 			break;
