@@ -202,8 +202,6 @@ namespace ui
 								gtkutil::getLocalPixbuf(imgPath), -1);
 						GtkTreeIter* dynIter = gtk_tree_iter_copy(&iter); // get a heap-allocated iter
 
-						// TODO: Fix skins
-#if 0
 						if (isModel) {
 							// Load the model
 							ModelLoader* loader = ModelLoader_forType(path_get_extension(dirPath.c_str()));
@@ -230,7 +228,6 @@ namespace ui
 								}
 							}
 						}
-#endif
 
 						// Now add a map entry that maps our directory name to the row we just
 						// added
@@ -260,6 +257,8 @@ namespace ui
 	// Helper function to create the TreeView
 	GtkWidget* ModelSelector::createTreeView ()
 	{
+		ScopeDisableScreenUpdates load(_("Loading..."), _("Please wait"));
+
 		// Populate the treestore using the VFS callback functor
 		ModelFileFunctor functor(_treeStore);
 		GlobalFileSystem().forEachFile(MODELS_FOLDER, "*", makeCallback1(functor), 0);

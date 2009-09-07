@@ -46,13 +46,14 @@ namespace model
 			 */
 			RenderablePicoSurface (picoSurface_t* surf);
 
+			/** copy constructor
+			 */
+			RenderablePicoSurface (RenderablePicoSurface const& other);
+
 			/** Destructor. Vectors will be automatically destructed, but we need to release the
 			 * shader.
 			 */
-			~RenderablePicoSurface ()
-			{
-				GlobalShaderCache().release(_mappedShaderName);
-			}
+			~RenderablePicoSurface ();
 
 			/** Render function from OpenGLRenderable
 			 */

@@ -41,6 +41,20 @@ namespace model
 			_indices[i] = ind[i];
 	}
 
+	//copy constructor, won't release shader
+	RenderablePicoSurface::RenderablePicoSurface (RenderablePicoSurface const& other) :
+		_originalShaderName(other._originalShaderName), _mappedShaderName(other._mappedShaderName), _vertices(
+				other._vertices), _indices(other._indices), _localAABB(other._localAABB)
+	{
+		_nIndices = other._nIndices;
+		_shader = GlobalShaderCache().capture(_mappedShaderName);
+	}
+
+	RenderablePicoSurface::~RenderablePicoSurface ()
+	{
+		GlobalShaderCache().release(_mappedShaderName);
+	}
+
 	// Render function
 	void RenderablePicoSurface::render (RenderStateFlags flags) const
 	{
