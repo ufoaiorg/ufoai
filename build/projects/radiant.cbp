@@ -256,18 +256,6 @@
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\cursor.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\selection\BestPoint.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\selection\Intersection.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\selection\Manipulatables.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\selection\Manipulators.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\cursor.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\dialog.cpp">
 			<Option compilerVar="CC" />
@@ -413,6 +401,18 @@
 		<Unit filename="..\..\src\tools\radiant\libs\xml\ixml.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\xml\xmlparser.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\xml\xmlwriter.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\BestPoint.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\Intersection.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\Manipulatables.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\Manipulators.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\autosave.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
