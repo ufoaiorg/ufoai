@@ -89,6 +89,17 @@ abc    +a      abc
 }
 
 // ---------------------------------
+// Two wind turbine
+tile +wind
+{
+4 3
+0      abc     abc     0
+abc    +a      +a      abc
+0      abc     abc     0
+}
+
+
+// ---------------------------------
 // Field A
 tile +field_a
 {
@@ -299,6 +310,7 @@ grid "1 1"
 +field_b "0 2"
 +field_c "0 2"
 +silo "0 2"
++wind "1 1"
 +farmhouse_a "0 1"
 +farmhouse_b "0 1"
 +barn_a "0 1"

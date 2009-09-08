@@ -607,12 +607,12 @@
 }
 // brush 70
 {
-( 224 -352 128 ) ( 224 -416 128 ) ( 224 -416 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 256 544 124 ) ( 256 580 124 ) ( 256 580 64 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( -424 -64 4 ) ( -420 -64 4 ) ( -420 -64 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( -288 -32 26 ) ( -416 -32 26 ) ( -416 -32 22 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 256 -36 -8 ) ( 224 -36 -8 ) ( 224 -68 -8 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( -154 516 40 ) ( -154 456 40 ) ( -162 456 40 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 224 -288 128 ) ( 224 -352 128 ) ( 224 -352 0 ) tex_common/actorclip -0 0 0 0.5 0.5 65536 0 0
+( 256 608 124 ) ( 256 644 124 ) ( 256 644 64 ) tex_common/actorclip -0 0 0 0.5 0.5 65536 0 0
+( -424 0 4 ) ( -420 0 4 ) ( -420 0 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( -288 32 26 ) ( -416 32 26 ) ( -416 32 22 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 256 28 -8 ) ( 224 28 -8 ) ( 224 -4 -8 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( -154 580 40 ) ( -154 520 40 ) ( -162 520 40 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 }
 // brush 71
 {
@@ -4178,7 +4178,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "240 -48 8"
+"origin" "240 16 8"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 }
 // entity 8
@@ -4186,7 +4186,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "angles" "0 170 0"
-"origin" "240 -48 8"
+"origin" "240 16 8"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
 }
