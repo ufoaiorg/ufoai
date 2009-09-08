@@ -84,7 +84,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/sidebar/mapinfo.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/jobinfo.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/texturebrowser.cpp \
-	$(RADIANT_BASE)/radiant/sidebar/particlebrowser.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/ParticleBrowser.cpp \
 	\
 	$(RADIANT_BASE)/radiant/dialogs/texteditor.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/about.cpp \

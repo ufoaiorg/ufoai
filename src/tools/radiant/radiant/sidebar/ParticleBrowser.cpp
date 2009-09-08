@@ -22,7 +22,7 @@
 
  */
 
-#include "particlebrowser.h"
+#include "ParticleBrowser.h"
 #include "radiant_i18n.h"
 
 #include "ishaders.h"
@@ -87,7 +87,11 @@ namespace ui
 		g_signal_connect(G_OBJECT(_selection), "changed", G_CALLBACK(_onSelectionChanged), this);
 
 		// Pack in the TexturePreviewCombo widgets
-		gtk_box_pack_end(GTK_BOX(_widget), _preview, FALSE, FALSE, 0);
+		gtk_box_pack_end(GTK_BOX(_widget), _imagePreview, FALSE, FALSE, 0);
+
+		// Pack in the ModelPreview widgets
+		_modelPreview.setSize(100);
+		gtk_box_pack_end(GTK_BOX(_widget), _modelPreview, FALSE, FALSE, 0);
 	}
 
 	/* Tree query functions */
@@ -139,20 +143,10 @@ namespace ui
 	void ParticleBrowser::_onSelectionChanged (GtkWidget* widget, ParticleBrowser* self)
 	{
 		// Update the preview if a texture is selected
-		self->_preview.setTexture("pics/" + self->getSelectedParticle()->getImage());
+		self->_imagePreview.setTexture("pics/" + self->getSelectedParticle()->getImage());
+		// Update the preview if a model is selected
+		self->_modelPreview.setModel("models/" + self->getSelectedParticle()->getModel() + ".md2");
+		self->_modelPreview.setModel("models/" + self->getSelectedParticle()->getModel() + ".obj");
+		self->_modelPreview.setModel("models/" + self->getSelectedParticle()->getModel() + ".md3");
 	}
-
-}
-
-void ParticleBrowser_Construct (void)
-{
-}
-
-void ParticleBrowser_Destroy (void)
-{
-}
-
-GtkWidget* ParticleBrowser_constructNotebookTab ()
-{
-	return ui::ParticleBrowser::getInstance().getWidget();
 }

@@ -148,7 +148,7 @@ static void Sidebar_constructParticleBrowser (GtkWidget *notebook)
 	// scrollable window settings
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
-	GtkWidget *pageParticleBrowser = ParticleBrowser_constructNotebookTab();
+	GtkWidget *pageParticleBrowser = ui::ParticleBrowser::getInstance().getWidget();
 	gtk_container_add(GTK_CONTAINER(vbox), pageParticleBrowser);
 
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));

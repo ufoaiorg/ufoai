@@ -1,5 +1,5 @@
 /**
- * @file particlebrowser.h
+ * @file ParticleBrowser.h
  */
 
 /*
@@ -25,14 +25,8 @@
 #ifndef PARTICLEBROWSER_H_
 #define PARTICLEBROWSER_H_
 
-typedef struct _GtkWidget GtkWidget;
-
-GtkWidget* ParticleBrowser_constructNotebookTab ();
-
-void ParticleBrowser_Construct (void);
-void ParticleBrowser_Destroy (void);
-
 #include "../ui/common/TexturePreviewCombo.h"
+#include "../ui/common/ModelPreview.h"
 #include "particles.h"
 
 #include <gtk/gtkwidget.h>
@@ -54,6 +48,8 @@ namespace ui
 
 			// Texture preview combo (GL widget and info table)
 			TexturePreviewCombo _imagePreview;
+			// Model preview
+			ModelPreview _modelPreview;
 
 		private:
 

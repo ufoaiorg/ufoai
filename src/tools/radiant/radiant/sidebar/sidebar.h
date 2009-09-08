@@ -24,7 +24,7 @@
 #include "prefabs.h"
 #include "jobinfo.h"
 #include "texturebrowser.h"
-#include "particlebrowser.h"
+#include "ParticleBrowser.h"
 
 GtkWidget *Sidebar_construct (void);
 

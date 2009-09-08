@@ -254,7 +254,6 @@ class Radiant: public TypeSystemRef
 			CamWnd_Construct();
 			XYWindow_Construct();
 			TextureBrowser_Construct();
-			ParticleBrowser_Construct();
 			Entity_Construct();
 			Autosave_Construct();
 			EntityInspector_Construct();
@@ -284,7 +283,6 @@ class Radiant: public TypeSystemRef
 			EntityInspector_Destroy();
 			Autosave_Destroy();
 			Entity_Destroy();
-			ParticleBrowser_Destroy();
 			XYWindow_Destroy();
 			CamWnd_Destroy();
 			SurfaceInspector_Destroy();
