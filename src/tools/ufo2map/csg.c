@@ -303,9 +303,9 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 		vec3_t normal = {0, 0, 0};
 		normal[i] = 1;
 		dist = clipmaxs[i];
-		maxplanenums[i] = FindFloatPlane(normal, dist);
+		maxplanenums[i] = FindOrCreateFloatPlane(normal, dist);
 		dist = clipmins[i];
-		minplanenums[i] = FindFloatPlane(normal, dist);
+		minplanenums[i] = FindOrCreateFloatPlane(normal, dist);
 	}
 
 	brushlist = NULL;

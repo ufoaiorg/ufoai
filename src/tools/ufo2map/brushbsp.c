@@ -194,11 +194,11 @@ static bspbrush_t *BrushFromBounds (vec3_t mins, vec3_t maxs)
 		VectorClear(normal);
 		normal[i] = 1;
 		dist = maxs[i];
-		b->sides[i].planenum = FindFloatPlane(normal, dist);
+		b->sides[i].planenum = FindOrCreateFloatPlane(normal, dist);
 
 		normal[i] = -1;
 		dist = -mins[i];
-		b->sides[3 + i].planenum = FindFloatPlane(normal, dist);
+		b->sides[3 + i].planenum = FindOrCreateFloatPlane(normal, dist);
 	}
 
 	CreateBrushWindings(b);

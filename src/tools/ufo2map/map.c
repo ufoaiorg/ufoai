@@ -55,6 +55,17 @@ PLANE FINDING
 */
 
 /**
+ * @brief Planes are stored by there distance (resp. the calculated
+ * hash) in the plane hash table
+ */
+static inline int GetPlaneHashValueForDistance (const vec_t distance)
+{
+	int hash = (int)fabs(dist) / 8;
+	hash &= (PLANE_HASHES - 1);
+	return hash;
+}
+
+/**
  * @brief Set the type of the plane according to it's normal vector
  */
 static inline int PlaneTypeForNormal (const vec3_t normal)
@@ -80,6 +91,13 @@ static inline int PlaneTypeForNormal (const vec3_t normal)
 	return PLANE_ANYZ;
 }
 
+/**
+ * Checks whether the given normal and distance vectors match the given plane by some epsilon value
+ * @param p The plane to compare the normal and distance with
+ * @param normal
+ * @param dist
+ * @return true if the normal and the distance vector are the same (by some epsilon) as in the given plane
+ */
 static inline qboolean PlaneEqual (const plane_t *p, const vec3_t normal, const vec_t dist)
 {
 	if (fabs(p->normal[0] - normal[0]) < NORMAL_EPSILON
@@ -92,18 +110,14 @@ static inline qboolean PlaneEqual (const plane_t *p, const vec3_t normal, const 
 
 static inline void AddPlaneToHash (plane_t *p)
 {
-	int hash;
-
-	hash = (int)fabs(p->dist) / 8;
-	hash &= (PLANE_HASHES - 1);
-
+	const int hash = GetPlaneHashValueForDistance(p->dist);
 	p->hash_chain = planehash[hash];
 	planehash[hash] = p;
 }
 
 static inline int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 {
-	plane_t *p, temp;
+	plane_t *p;
 
 	if (VectorLength(normal) < 0.5)
 		Sys_Error("FloatPlane: bad normal (%.3f:%.3f:%.3f)", normal[0], normal[1], normal[2]);
@@ -124,8 +138,8 @@ static inline int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 	/* always put axial planes facing positive first */
 	if (AXIAL(p)) {
 		if (p->normal[0] < 0 || p->normal[1] < 0 || p->normal[2] < 0) {
-			/* flip order */
-			temp = *p;
+			/* flip order by swapping the planes */
+			const plane_t temp = *p;
 			*p = *(p + 1);
 			*(p + 1) = temp;
 
@@ -142,9 +156,10 @@ static inline int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 
 /**
  * @brief Round the vector to int values
+ * @param[in,out] normal the normal vector to snap
  * @note Can be used to save net bandwidth
  */
-static inline void SnapVector (vec3_t normal)
+static inline qboolean SnapVector (vec3_t normal)
 {
 	int i;
 
@@ -152,16 +167,23 @@ static inline void SnapVector (vec3_t normal)
 		if (fabs(normal[i] - 1) < NORMAL_EPSILON) {
 			VectorClear(normal);
 			normal[i] = 1;
-			break;
+			return qtrue;
 		}
 		if (fabs(normal[i] - -1) < NORMAL_EPSILON) {
 			VectorClear(normal);
 			normal[i] = -1;
-			break;
+			return qtrue;
 		}
 	}
+	return qfalse;
 }
 
+/**
+ * Snaps normal to axis-aligned if it is within an epsilon of axial.
+ * @param[in,out] normal - Plane normal vector (assumed to be unit length)
+ * @param[in,out] dist - Plane constant - return as rounded to integer if it
+ * is within an epsilon of @c MAP_DIST_EPSILON
+ */
 static inline void SnapPlane (vec3_t normal, vec_t *dist)
 {
 	SnapVector(normal);
@@ -170,15 +192,14 @@ static inline void SnapPlane (vec3_t normal, vec_t *dist)
 		*dist = Q_rint(*dist);
 }
 
-int FindFloatPlane (vec3_t normal, vec_t dist)
+int FindOrCreateFloatPlane (vec3_t normal, vec_t dist)
 {
 	int i;
 	plane_t *p;
 	int hash;
 
 	SnapPlane(normal, &dist);
-	hash = (int)fabs(dist) / 8;
-	hash &= (PLANE_HASHES - 1);
+	hash = GetPlaneHashValueForDistance(dist);
 
 	/* search the border bins as well */
 	for (i = -1; i <= 1; i++) {
@@ -193,9 +214,13 @@ int FindFloatPlane (vec3_t normal, vec_t dist)
 }
 
 /**
- * @param[in] p0 A vector with plane coordinates
- * @param[in] p1 A vector with plane coordinates
- * @param[in] p2 A vector with plane coordinates
+ * Builds a plane normal and distance from three points on the plane.
+ * If the normal is nearly axial, it will be snapped to be axial. Looks
+ * up the plane in the unique planes.
+ * @param[in] p0 Three points on the plane. (A vector with plane coordinates)
+ * @param[in] p1 Three points on the plane. (A vector with plane coordinates)
+ * @param[in] p2 Three points on the plane. (A vector with plane coordinates)
+ * @return the index of the plane in the planes list.
  */
 static int PlaneFromPoints (const mapbrush_t *b, const vec3_t p0, const vec3_t p1, const vec3_t p2)
 {
@@ -212,17 +237,25 @@ static int PlaneFromPoints (const mapbrush_t *b, const vec3_t p0, const vec3_t p
 	if (!VectorNotEmpty(normal))
 		Sys_Error("PlaneFromPoints: Bad normal (null) for brush %i", b->brushnum);
 
-	return FindFloatPlane(normal, dist);
+	return FindOrCreateFloatPlane(normal, dist);
 }
 
 
 /*==================================================================== */
 
 
+/**
+ * Get the content flags for a given brush
+ * @param b The mapbrush to get the content flags for
+ * @return The calculated content flags
+ * @note If any of the brush sides is translucent, we add
+ * @c CONTENTS_TRANSLUCENT to content flags and change
+ * @c CONTENTS_SOLID to @c CONTENTS_WINDOW
+ */
 static int BrushContents (mapbrush_t *b)
 {
 	int contentFlags, i, trans;
-	side_t *s;
+	const side_t *s;
 
 	s = &b->original_sides[0];
 	contentFlags = s->contentFlags;
@@ -236,8 +269,6 @@ static int BrushContents (mapbrush_t *b)
 		}
 	}
 
-	/* if any side is translucent, mark the contents
-	 * and change solid to window */
 	if (trans & (SURF_BLEND33 | SURF_BLEND66 | SURF_ALPHATEST)) {
 		contentFlags |= CONTENTS_TRANSLUCENT;
 		if (contentFlags & CONTENTS_SOLID) {
@@ -249,6 +280,11 @@ static int BrushContents (mapbrush_t *b)
 	return contentFlags;
 }
 
+/**
+ * Extract the level flags (1-8) from the content flags of the given brush
+ * @param brush The brush to extract the level flags from
+ * @return The level flags (content flags) of the given brush
+ */
 byte GetLevelFlagsFromBrush (const mapbrush_t *brush)
 {
 	const byte levelflags = (brush->contentFlags >> 8) & 0xFF;
@@ -290,7 +326,7 @@ static void AddBrushBevels (mapbrush_t *b)
 					dist = b->maxs[axis];
 				else
 					dist = -b->mins[axis];
-				s->planenum = FindFloatPlane(normal, dist);
+				s->planenum = FindOrCreateFloatPlane(normal, dist);
 				s->texinfo = b->original_sides[0].texinfo;
 				s->contentFlags = b->original_sides[0].contentFlags;
 				s->bevel = qtrue;
@@ -393,7 +429,7 @@ static void AddBrushBevels (mapbrush_t *b)
 						Sys_Error("MAX_MAP_BRUSHSIDES (%i)", nummapbrushsides);
 					nummapbrushsides++;
 					s2 = &b->original_sides[b->numsides];
-					s2->planenum = FindFloatPlane(normal, dist);
+					s2->planenum = FindOrCreateFloatPlane(normal, dist);
 					s2->texinfo = b->original_sides[0].texinfo;
 					s2->contentFlags = b->original_sides[0].contentFlags;
 					s2->bevel = qtrue;
@@ -870,7 +906,7 @@ static void AdjustBrushesForOrigin (const entity_t *ent)
 			const ptrdiff_t index = s - brushsides;
 			const vec_t newdist = mapplanes[s->planenum].dist -
 				DotProduct(mapplanes[s->planenum].normal, ent->origin);
-			s->planenum = FindFloatPlane(mapplanes[s->planenum].normal, newdist);
+			s->planenum = FindOrCreateFloatPlane(mapplanes[s->planenum].normal, newdist);
 			s->texinfo = TexinfoForBrushTexture(&mapplanes[s->planenum],
 				&side_brushtextures[index], ent->origin, qfalse);
 			s->brush = b;
@@ -958,13 +994,14 @@ static qboolean ParseMapEntity (const char *filename)
 
 	GetVectorForKey(mapent, "origin", mapent->origin);
 
-	/* offset all of the planes and texinfo if needed */
-	if (VectorNotEmpty(mapent->origin))
-		AdjustBrushesForOrigin(mapent);
-
 	/* group entities are just for editor convenience
 	 * toss all brushes into the world entity */
 	entName = ValueForKey(mapent, "classname");
+
+	/* offset all of the planes and texinfo if needed */
+	if (IsInlineModelEntity(entName) && VectorNotEmpty(mapent->origin))
+		AdjustBrushesForOrigin(mapent);
+
 	if (num_entities == 1 && strcmp("worldspawn", entName))
 		Sys_Error("The first entity must be worldspawn, it is: %s", entName);
 	if (notCheckOrFix && !strcmp("func_group", entName)) {
