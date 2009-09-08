@@ -249,6 +249,7 @@ namespace os
 
 	/** Return the extension for the given path, which is equal to the characters
 	 * following the final period.
+	 * If there is no period in the given string the full string will be returned
 	 */
 	inline std::string getExtension (const std::string& path)
 	{

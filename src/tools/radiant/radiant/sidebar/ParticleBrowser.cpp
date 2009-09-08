@@ -91,7 +91,7 @@ namespace ui
 
 		// Pack in the ModelPreview widgets
 		_modelPreview.setSize(100);
-		gtk_box_pack_end(GTK_BOX(_widget), _modelPreview, FALSE, FALSE, 0);
+		gtk_box_pack_end(GTK_BOX(_widget), _modelPreview, TRUE, TRUE, 0);
 	}
 
 	/* Tree query functions */
@@ -142,9 +142,18 @@ namespace ui
 
 	void ParticleBrowser::_onSelectionChanged (GtkWidget* widget, ParticleBrowser* self)
 	{
-		// Update the preview if a texture is selected
-		self->_imagePreview.setTexture("pics/" + self->getSelectedParticle()->getImage());
-		// Update the preview if a model is selected
-		self->_modelPreview.setModel("models/" + self->getSelectedParticle()->getModel());
+		self->_modelPreview.setModel("");
+		self->_imagePreview.setTexture("");
+
+		const std::string& image = self->getSelectedParticle()->getImage();
+		const std::string& model = self->getSelectedParticle()->getModel();
+		if (!image.empty()) {
+			// Update the preview if a texture is selected
+			self->_imagePreview.setTexture("pics/" + image);
+		} else if (!model.empty()) {
+			// Update the preview if a model is selected
+			self->_modelPreview.initialisePreview();
+			self->_modelPreview.setModel("models/" + model);
+		}
 	}
 }

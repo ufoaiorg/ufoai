@@ -19,7 +19,7 @@ namespace ui
 
 	// Construct the widgets
 	ModelPreview::ModelPreview () :
-		_widget(gtk_frame_new(NULL))
+		_widget(gtk_frame_new(NULL)), _model(model::IModelPtr())
 	{
 		// Main vbox - above is the GL widget, below is the toolbar
 		GtkWidget* vbx = gtk_vbox_new(FALSE, 0);
@@ -119,17 +119,21 @@ namespace ui
 		// If the model name is empty, release the model
 		if (model == "") {
 			_model = model::IModelPtr();
+			// Redraw
+			gtk_widget_queue_draw(_glWidget);
 			return;
 		}
 
 		// Load the model
 		std::string extension = os::getExtension(model);
-		// TODO:
-		if (extension.empty())
-			extension = "md2";
+		std::string modelPath = model;
+		if (extension == model) {
+			modelPath += ".md2";
+			extension = os::getExtension(modelPath);
+		}
 		ModelLoader* loader = ModelLoader_forType(extension);
 		if (loader != NULL) {
-			_model = loader->loadModelFromPath(model);
+			_model = loader->loadModelFromPath(modelPath);
 		} else {
 			return;
 		}
@@ -137,14 +141,14 @@ namespace ui
 		// Reset camera if the model has changed
 		static std::string _lastModel;
 
-		if (model != _lastModel) {
+		if (modelPath != _lastModel) {
 			// Reset the rotation
 			_rotation = Matrix4::getIdentity();
 
 			// Calculate camera distance so model is appropriately zoomed
 			_camDist = -(_model->getAABB().getRadius() * 2.0);
 
-			_lastModel = model;
+			_lastModel = modelPath;
 		}
 
 		// Redraw
