@@ -60,7 +60,7 @@ PLANE FINDING
  */
 static inline int GetPlaneHashValueForDistance (const vec_t distance)
 {
-	int hash = (int)fabs(dist) / 8;
+	int hash = (int)fabs(distance) / 8;
 	hash &= (PLANE_HASHES - 1);
 	return hash;
 }
