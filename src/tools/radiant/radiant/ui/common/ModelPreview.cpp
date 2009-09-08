@@ -123,7 +123,11 @@ namespace ui
 		}
 
 		// Load the model
-		ModelLoader* loader = ModelLoader_forType(path_get_extension(model.c_str()));
+		std::string extension = os::getExtension(model);
+		// TODO:
+		if (extension.empty())
+			extension = "md2";
+		ModelLoader* loader = ModelLoader_forType(extension);
 		if (loader != NULL) {
 			_model = loader->loadModelFromPath(model);
 		} else {

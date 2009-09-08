@@ -39,10 +39,9 @@ class MapFormat;
 typedef void(*GraphTraversalFunc)(scene::Node& root, const scene::Traversable::Walker& walker);
 
 bool MapResource_saveFile(const MapFormat& format, scene::Node& root, GraphTraversalFunc traverse, const std::string& filename);
-ModelLoader* ModelLoader_forType(const char* type);
 
 // Get the ModelLoader class for the given model type
 class ModelLoader;
-ModelLoader* ModelLoader_forType(const char* type);
+ModelLoader* ModelLoader_forType(const std::string& type);
 
 #endif

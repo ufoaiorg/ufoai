@@ -145,8 +145,6 @@ namespace ui
 		// Update the preview if a texture is selected
 		self->_imagePreview.setTexture("pics/" + self->getSelectedParticle()->getImage());
 		// Update the preview if a model is selected
-		self->_modelPreview.setModel("models/" + self->getSelectedParticle()->getModel() + ".md2");
-		self->_modelPreview.setModel("models/" + self->getSelectedParticle()->getModel() + ".obj");
-		self->_modelPreview.setModel("models/" + self->getSelectedParticle()->getModel() + ".md3");
+		self->_modelPreview.setModel("models/" + self->getSelectedParticle()->getModel());
 	}
 }

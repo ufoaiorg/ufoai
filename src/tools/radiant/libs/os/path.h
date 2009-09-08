@@ -100,7 +100,8 @@ inline bool path_equal (const char* path, const char* other)
 /// \brief Returns true if the first \p n bytes of \p path and \p other form paths that refer to the same file or directory.
 /// If the paths are UTF-8 encoded, [\p path, \p path + \p n) must be a complete path.
 /// O(n)
-inline bool path_equal_n(const char* path, const char* other, std::size_t n) {
+inline bool path_equal_n (const char* path, const char* other, std::size_t n)
+{
 #if defined(OS_CASE_INSENSITIVE)
 	return string_equal_nocase_n(path, other, n);
 #else
@@ -118,7 +119,8 @@ inline const char* path_get_filename_base_end (const char* path)
 
 /// \brief Returns the length of the filename component (not including extension) of \p path.
 /// O(n)
-inline std::size_t path_get_filename_base_length(const char* path) {
+inline std::size_t path_get_filename_base_length (const char* path)
+{
 	return path_get_filename_base_end(path) - path;
 }
 
@@ -152,30 +154,38 @@ inline bool extension_equal (const char* extension, const char* other)
 }
 
 template<typename Functor>
-class MatchFileExtension {
-	const char* m_extension;
-	const Functor& m_functor;
+class MatchFileExtension
+{
+		const char* m_extension;
+		const Functor& m_functor;
 	public:
-	MatchFileExtension(const char* extension, const Functor& functor) : m_extension(extension), m_functor(functor) {
-	}
-	void operator()(const char* name) const {
-		const char* extension = path_get_extension(name);
-		if (extension_equal(extension, m_extension)) {
-			m_functor(name);
+		MatchFileExtension (const char* extension, const Functor& functor) :
+			m_extension(extension), m_functor(functor)
+		{
 		}
-	}
+		void operator() (const char* name) const
+		{
+			const char* extension = path_get_extension(name);
+			if (extension_equal(extension, m_extension)) {
+				m_functor(name);
+			}
+		}
 };
 
-class PathCleaned {
+class PathCleaned
+{
 	public:
-	const char* m_path;
-	PathCleaned(const char* path) : m_path(path) {
-	}
+		const char* m_path;
+		PathCleaned (const char* path) :
+			m_path(path)
+		{
+		}
 };
 
 /// \brief Writes \p path to \p ostream with dos-style separators replaced by unix-style separators.
 template<typename TextOutputStreamType>
-TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const PathCleaned& path) {
+TextOutputStreamType& ostream_write (TextOutputStreamType& ostream, const PathCleaned& path)
+{
 	const char* i = path.m_path;
 	for (; *i != '\0'; ++i) {
 		if (*i == '\\') {
@@ -187,16 +197,20 @@ TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const PathCle
 	return ostream;
 }
 
-class DirectoryCleaned {
+class DirectoryCleaned
+{
 	public:
-	const char* m_path;
-	DirectoryCleaned(const char* path) : m_path(path) {
-	}
+		const char* m_path;
+		DirectoryCleaned (const char* path) :
+			m_path(path)
+		{
+		}
 };
 
 /// \brief Writes \p path to \p ostream with dos-style separators replaced by unix-style separators, and appends a separator if necessary.
 template<typename TextOutputStreamType>
-TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const DirectoryCleaned& path) {
+TextOutputStreamType& ostream_write (TextOutputStreamType& ostream, const DirectoryCleaned& path)
+{
 	const char* i = path.m_path;
 	for (; *i != '\0'; ++i) {
 		if (*i == '\\') {
@@ -210,6 +224,36 @@ TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const Directo
 		ostream << '/';
 	}
 	return ostream;
+}
+
+/** General utility functions for OS-related tasks
+ */
+
+namespace os
+{
+	/** Convert the slashes in a path to forward-slashes
+	 */
+	inline std::string standardPath (const std::string& inPath)
+	{
+		std::string newStr = inPath;
+		std::string::size_type pos = newStr.find("\\");
+		int intLengthSearch = newStr.length();
+
+		while (std::string::npos != pos) {
+			newStr.replace(pos, intLengthSearch, "/");
+			pos = newStr.find("\\", pos + 1);
+		}
+
+		return newStr;
+	}
+
+	/** Return the extension for the given path, which is equal to the characters
+	 * following the final period.
+	 */
+	inline std::string getExtension (const std::string& path)
+	{
+		return path.substr(path.rfind(".") + 1);
+	}
 }
 
 #endif

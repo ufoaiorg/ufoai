@@ -182,13 +182,13 @@ namespace ui
 						std::string imgPath = FOLDER_ICON;
 						bool isModel = false;
 
-						if (!strcmp(path_get_extension(dirPath.c_str()), MD3_EXTENSION)) {
+						if (os::getExtension(dirPath) == MD3_EXTENSION) {
 							imgPath = MD3_ICON;
 							isModel = true;
-						} else if (!strcmp(path_get_extension(dirPath.c_str()), MD2_EXTENSION)) {
+						} else if (os::getExtension(dirPath), MD2_EXTENSION) {
 							imgPath = MD2_ICON;
 							isModel = true;
-						} else if (!strcmp(path_get_extension(dirPath.c_str()), OBJ_EXTENSION)) {
+						} else if (os::getExtension(dirPath), OBJ_EXTENSION) {
 							imgPath = OBJ_ICON;
 							isModel = true;
 						}
@@ -204,7 +204,7 @@ namespace ui
 
 						if (isModel) {
 							// Load the model
-							ModelLoader* loader = ModelLoader_forType(path_get_extension(dirPath.c_str()));
+							ModelLoader* loader = ModelLoader_forType(os::getExtension(dirPath));
 							if (loader != NULL) {
 								model::IModelPtr model = loader->loadModelFromPath(MODELS_FOLDER + dirPath);
 
@@ -244,8 +244,8 @@ namespace ui
 					std::string rawPath(file);
 
 					// Test the extension for supported model formats.
-					if (!strcmp(path_get_extension(file), MD2_EXTENSION) || !strcmp(path_get_extension(file),
-							MD3_EXTENSION) || !strcmp(path_get_extension(file), OBJ_EXTENSION)) {
+					std::string ext = os::getExtension(file);
+					if (ext == MD2_EXTENSION || ext == MD3_EXTENSION || ext ==OBJ_EXTENSION) {
 						addRecursive(rawPath);
 					} else {
 						return;

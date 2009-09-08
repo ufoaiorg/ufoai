@@ -151,7 +151,7 @@ namespace sound
 		clearBuffer();
 
 		// Retrieve the extension
-		std::string ext = path_get_extension(file.getName());
+		std::string ext = os::getExtension(file.getName());
 
 		if (string_equal_nocase(ext.c_str(), "ogg")) {
 			// Convert the file into a buffer, self-destructs at end of scope

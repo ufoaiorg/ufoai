@@ -187,9 +187,9 @@ namespace
 /**
  * @brief Returns the model loader for the model \p type or 0 if the model \p type has no loader module
  */
-ModelLoader* ModelLoader_forType (const char* type)
+ModelLoader* ModelLoader_forType (const std::string& type)
 {
-	const char* moduleName = findModuleName(&GlobalFiletypes(), ModelLoader::Name(), type);
+	const char* moduleName = findModuleName(&GlobalFiletypes(), ModelLoader::Name(), type.c_str());
 	if (string_not_empty(moduleName)) {
 		ModelLoader* table = ReferenceAPI_getModelModules().findModule(moduleName);
 		if (table != 0) {

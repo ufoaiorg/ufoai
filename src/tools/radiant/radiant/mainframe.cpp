@@ -426,7 +426,7 @@ class ModuleLoader
 		}
 		void operator() (const std::string& name) const
 		{
-			if (string_equal_nocase(path_get_extension(name.c_str()), _ext.c_str())) {
+			if (os::getExtension(name) == _ext) {
 				std::string fullname = _path + name;
 				g_message("Found '%s'\n", fullname.c_str());
 				GlobalModuleServer_loadModule(fullname);
