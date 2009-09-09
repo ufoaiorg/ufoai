@@ -150,16 +150,18 @@ void S_LoadSamples (void)
 
 	/* load weapon sounds */
 	for (i = 0; i < csi.numODs; i++) { /* i = obj */
-		for (j = 0; j < csi.ods[i].numWeapons; j++) {	/* j = weapon-entry per obj */
-			for (k = 0; k < csi.ods[i].numFiredefs[j]; j++) { /* k = firedef per wepaon */
-				if (csi.ods[i].fd[j][k].fireSound[0] != '\0')
-					S_LoadSample(csi.ods[i].fd[j][k].fireSound);
-				if (csi.ods[i].fd[j][k].impactSound[0] != '\0')
-					S_LoadSample(csi.ods[i].fd[j][k].impactSound);
-				if (csi.ods[i].fd[j][k].hitBodySound[0] != '\0')
-					S_LoadSample(csi.ods[i].fd[j][k].hitBodySound);
-				if (csi.ods[i].fd[j][k].bounceSound[0] != '\0')
-					S_LoadSample(csi.ods[i].fd[j][k].bounceSound);
+		const objDef_t *od = &csi.ods[i];
+		for (j = 0; j < od->numWeapons; j++) {	/* j = weapon-entry per obj */
+			for (k = 0; k < od->numFiredefs[j]; k++) { /* k = firedef per wepaon */
+				const fireDef_t *fd = &od->fd[j][k];
+				if (fd->fireSound[0] != '\0')
+					S_LoadSample(fd->fireSound);
+				if (fd->impactSound[0] != '\0')
+					S_LoadSample(fd->impactSound);
+				if (fd->hitBodySound[0] != '\0')
+					S_LoadSample(fd->hitBodySound);
+				if (fd->bounceSound[0] != '\0')
+					S_LoadSample(fd->bounceSound);
 			}
 		}
 	}

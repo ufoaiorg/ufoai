@@ -251,6 +251,7 @@ void S_Init (void)
 
 	s_env.initialized = qtrue;
 
+	/** @todo scripts are not yet loaded on the first run of the init function */
 	S_LoadSamples();
 
 	M_Init();

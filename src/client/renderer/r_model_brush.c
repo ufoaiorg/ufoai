@@ -714,7 +714,12 @@ static void R_LoadBspVertexArrays (model_t *mod)
 
 			/* shift it for assembled maps */
 			vecShifted = &mod->bsp.verts[vertind];
-			VectorAdd(point, shift, vecShifted);
+			/* origin (func_door, func_rotating) bmodels must not have shifted vertices,
+			 * they are translated by their entity origin value */
+			if (surf->isOriginBrushModel)
+				VectorCopy(point, vecShifted);
+			else
+				VectorAdd(point, shift, vecShifted);
 
 			/* texture directional vectors and offsets */
 			sdir = surf->texinfo->uv;
@@ -998,7 +1003,7 @@ static void R_RecursiveSetModel (mBspNode_t *node, model_t *mod)
  */
 static void R_SetupSubmodels (void)
 {
-	int i;
+	int i, j;
 
 	/* set up the submodels, the first 255 submodels are the models of the
 	 * different levels, don't care about them */
@@ -1027,6 +1032,12 @@ static void R_SetupSubmodels (void)
 
 		mod->bsp.firstmodelsurface = sub->firstface;
 		mod->bsp.nummodelsurfaces = sub->numfaces;
+
+		/* submodel vertices of the surfaces must not be shifted in case of rmas */
+		for (j = mod->bsp.firstmodelsurface; j < mod->bsp.firstmodelsurface + mod->bsp.nummodelsurfaces; j++) {
+			mod->bsp.surfaces[j].isOriginBrushModel = qtrue;
+		}
+
 		/*mod->bsp.numleafs = sub->visleafs;*/
 		r_numModelsInline++;
 	}

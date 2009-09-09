@@ -45,7 +45,7 @@ typedef struct mBspHeader_s {
 	float radius;
 	int headnode;
 	int visleafs;				/**< not including the solid leaf 0 */
-	int firstface, numfaces;
+	int firstface, numfaces;	/**< indices in the bsp surfaces list */
 } mBspHeader_t;
 
 #define	MSURF_PLANEBACK		1
@@ -112,6 +112,11 @@ typedef struct mBspSurface_s {
 
 	int lightframe;				/**< dynamic lighting frame */
 	int lights;					/**< bitmask of dynamic light sources */
+
+	qboolean isOriginBrushModel;	/**< func_door, func_rotating - if this is true the vertices for this surface
+									 * won't get shifted in case of an rma - these surfaces are translated by
+									 * their entities origin vector (which was given by the CONTENTS_ORIGIN flag
+									 * in ufo2map and removed from the bsp later) */
 } mBspSurface_t;
 
 /* surfaces are assigned to arrays based on their primary rendering type
