@@ -185,10 +185,10 @@ namespace ui
 						if (os::getExtension(dirPath) == MD3_EXTENSION) {
 							imgPath = MD3_ICON;
 							isModel = true;
-						} else if (os::getExtension(dirPath), MD2_EXTENSION) {
+						} else if (os::getExtension(dirPath) == MD2_EXTENSION) {
 							imgPath = MD2_ICON;
 							isModel = true;
-						} else if (os::getExtension(dirPath), OBJ_EXTENSION) {
+						} else if (os::getExtension(dirPath) == OBJ_EXTENSION) {
 							imgPath = OBJ_ICON;
 							isModel = true;
 						}
