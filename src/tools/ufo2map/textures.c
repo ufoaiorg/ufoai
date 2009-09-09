@@ -203,7 +203,7 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 		if (tc->value != tx.value)
 			continue;
 		if (strcmp(tc->texture, tx.texture))
-			goto skip;
+			continue;
 		for (j = 0; j < 2; j++) {
 			for (k = 0; k < 4; k++) {
 				if (tc->vecs[j][k] != tx.vecs[j][k])
@@ -213,6 +213,8 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 		return i;
 skip:;
 	}
+	if (curTile->numtexinfo >= MAX_MAP_TEXINFO)
+		Sys_Error("MAX_MAP_TEXINFO overflow");
 	*tc = tx;
 	curTile->numtexinfo++;
 

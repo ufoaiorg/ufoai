@@ -68,7 +68,7 @@ typedef struct mBspTexInfo_s {
 	float u_offset;
 	vec3_t vv;
 	float v_offset;
-	uint32_t flags;
+	uint32_t flags;	/**< surfaceflags */
 	image_t *image;
 } mBspTexInfo_t;
 

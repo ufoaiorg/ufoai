@@ -241,9 +241,10 @@ static qboolean Check_SurfProps (const int flags, const side_t *s)
 }
 
 /**
- * @return qtrue for brushes that do not move, are breakable, are seethrough, etc
+ * @return true for brushes that do not move, are breakable, are seethrough, etc
  */
-static qboolean Check_IsOptimisable (const mapbrush_t *b) {
+static qboolean Check_IsOptimisable (const mapbrush_t *b)
+{
 	const entity_t *e = &entities[b->entitynum];
 	const char *name = ValueForKey(e, "classname");
 	int i, numNodraws = 0;
@@ -1670,7 +1671,7 @@ void CheckMixedFaceContents (void)
 		side_t *side0;
 
 		/* if the origin flag is set in the mapbrush_t struct, then the brushes
-		 * work is done, and we can skip the mixed face contents check for this brush*/
+		 * work is done, and we can skip the mixed face contents check for this brush */
 		if (brush->contentFlags & CONTENTS_ORIGIN)
 			continue;
 
