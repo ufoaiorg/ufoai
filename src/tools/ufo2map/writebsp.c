@@ -101,7 +101,7 @@ static void EmitLeaf (const node_t *node)
  */
 static void EmitFace (const face_t *f)
 {
-	dBspFace_t *df;
+	dBspSurface_t *df;
 	int i;
 
 	if (f->numpoints < 3) {

@@ -316,7 +316,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 
 static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 {
-	const dBspFace_t *in;
+	const dBspSurface_t *in;
 	mBspSurface_t *out;
 	int i, count, surfnum;
 	int planenum, side;

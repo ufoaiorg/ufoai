@@ -48,7 +48,7 @@ typedef struct {
 	vec3_t	textoworld[2];	/**< world = texorg + s * textoworld[0] */
 
 	int		texmins[2], texsize[2];
-	dBspFace_t	*face;
+	dBspSurface_t	*face;
 } lightinfo_t;
 
 /** @brief face extents */
@@ -70,7 +70,7 @@ static void BuildFaceExtents (void)
 	int k;
 
 	for (k = 0; k < curTile->numfaces; k++) {
-		const dBspFace_t *s = &curTile->faces[k];
+		const dBspSurface_t *s = &curTile->faces[k];
 		const dBspTexinfo_t *tex = &curTile->texinfo[s->texinfo];
 
 		float *mins = face_extents[s - curTile->faces].mins;
@@ -124,7 +124,7 @@ static void BuildFaceExtents (void)
  */
 static void CalcLightinfoExtents (lightinfo_t *l)
 {
-	const dBspFace_t *s;
+	const dBspSurface_t *s;
 	float *mins, *maxs;
 	float *stmins, *stmaxs;
 	vec2_t lm_mins, lm_maxs;
@@ -593,7 +593,7 @@ static void FacesWithVert (int vert, int *faces, int *nfaces)
 
 	k = 0;
 	for (i = 0; i < curTile->numfaces; i++) {
-		const dBspFace_t *face = &curTile->faces[i];
+		const dBspSurface_t *face = &curTile->faces[i];
 
 		if (!(curTile->texinfo[face->texinfo].surfaceFlags & SURF_PHONG))
 			continue;
@@ -637,7 +637,7 @@ void BuildVertexNormals (void)
 			continue;
 
 		for (j = 0; j < num_vert_faces; j++) {
-			const dBspFace_t *face = &curTile->faces[vert_faces[j]];
+			const dBspSurface_t *face = &curTile->faces[vert_faces[j]];
 			const dBspPlane_t *plane = &curTile->planes[face->planenum];
 
 			/* scale the contribution of each face based on size */
@@ -700,7 +700,7 @@ static const float sampleofs[MAX_SAMPLES][2] = {
  */
 void BuildFacelights (unsigned int facenum)
 {
-	dBspFace_t *face;
+	dBspSurface_t *face;
 	dBspPlane_t *plane;
 	dBspTexinfo_t *tex;
 	float *center;
@@ -835,7 +835,7 @@ static const vec3_t luminosity = {0.2125, 0.7154, 0.0721};
  */
 void FinalLightFace (unsigned int facenum)
 {
-	dBspFace_t *f;
+	dBspSurface_t *f;
 	int j, k;
 	vec3_t dir, intensity;
 	facelight_t	*fl;

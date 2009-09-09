@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	MAX_PATCHES	65000			/* larger will cause 32 bit overflows */
 
 typedef struct patch_s {
-	dBspFace_t 		*face;
+	dBspSurface_t 		*face;
 	winding_t		*winding;
 
 	vec3_t			origin;

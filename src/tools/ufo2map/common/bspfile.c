@@ -249,7 +249,7 @@ void LoadBSPFile (const char *filename)
 	curTile->numnormals = CopyLump(LUMP_NORMALS, curTile->normals, sizeof(dBspNormal_t));
 	curTile->numnodes = CopyLump(LUMP_NODES, curTile->nodes, sizeof(dBspNode_t));
 	curTile->numtexinfo = CopyLump(LUMP_TEXINFO, curTile->texinfo, sizeof(dBspTexinfo_t));
-	curTile->numfaces = CopyLump(LUMP_FACES, curTile->faces, sizeof(dBspFace_t));
+	curTile->numfaces = CopyLump(LUMP_FACES, curTile->faces, sizeof(dBspSurface_t));
 	curTile->numleafbrushes = CopyLump(LUMP_LEAFBRUSHES, curTile->leafbrushes, sizeof(curTile->leafbrushes[0]));
 	curTile->numsurfedges = CopyLump(LUMP_SURFEDGES, curTile->surfedges, sizeof(curTile->surfedges[0]));
 	curTile->numedges = CopyLump(LUMP_EDGES, curTile->edges, sizeof(dBspEdge_t));
@@ -321,7 +321,7 @@ long WriteBSPFile (const char *filename)
 	AddLump(&bspfile, &outheader, LUMP_NORMALS, curTile->normals, curTile->numnormals * sizeof(dBspNormal_t));
 	AddLump(&bspfile, &outheader, LUMP_NODES, curTile->nodes, curTile->numnodes * sizeof(dBspNode_t));
 	AddLump(&bspfile, &outheader, LUMP_TEXINFO, curTile->texinfo, curTile->numtexinfo * sizeof(dBspTexinfo_t));
-	AddLump(&bspfile, &outheader, LUMP_FACES, curTile->faces, curTile->numfaces * sizeof(dBspFace_t));
+	AddLump(&bspfile, &outheader, LUMP_FACES, curTile->faces, curTile->numfaces * sizeof(dBspSurface_t));
 	AddLump(&bspfile, &outheader, LUMP_BRUSHES, curTile->dbrushes, curTile->numbrushes * sizeof(dBspBrush_t));
 	AddLump(&bspfile, &outheader, LUMP_BRUSHSIDES, curTile->brushsides, curTile->numbrushsides * sizeof(dBspBrushSide_t));
 	AddLump(&bspfile, &outheader, LUMP_LEAFBRUSHES, curTile->leafbrushes, curTile->numleafbrushes * sizeof(curTile->leafbrushes[0]));
@@ -365,7 +365,7 @@ void PrintBSPFileSizes (void)
 	Com_Printf("%5i normales          %7i\n", curTile->numnormals, (int)(curTile->numnormals * sizeof(dBspNormal_t)));
 	Com_Printf("%5i vertexes          %7i\n", curTile->numvertexes, (int)(curTile->numvertexes * sizeof(dBspVertex_t)));
 	Com_Printf("%5i nodes             %7i\n", curTile->numnodes, (int)(curTile->numnodes * sizeof(dBspNode_t)));
-	Com_Printf("%5i faces             %7i\n", curTile->numfaces, (int)(curTile->numfaces * sizeof(dBspFace_t)));
+	Com_Printf("%5i faces             %7i\n", curTile->numfaces, (int)(curTile->numfaces * sizeof(dBspSurface_t)));
 	Com_Printf("%5i leafs             %7i\n", curTile->numleafs, (int)(curTile->numleafs * sizeof(dBspLeaf_t)));
 	Com_Printf("%5i leafbrushes       %7i\n", curTile->numleafbrushes, (int)(curTile->numleafbrushes * sizeof(curTile->leafbrushes[0])));
 	Com_Printf("%5i surfedges         %7i\n", curTile->numsurfedges, (int)(curTile->numsurfedges * sizeof(curTile->surfedges[0])));

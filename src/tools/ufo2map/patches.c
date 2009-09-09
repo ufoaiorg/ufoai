@@ -109,7 +109,7 @@ void CalcTextureReflectivity (void)
 }
 
 
-static winding_t *WindingFromFace (const dBspFace_t *f)
+static winding_t *WindingFromFace (const dBspSurface_t *f)
 {
 	int i, v;
 	dBspVertex_t *dv;
@@ -134,7 +134,7 @@ static winding_t *WindingFromFace (const dBspFace_t *f)
 	return w;
 }
 
-static inline qboolean HasLight (const dBspFace_t *f)
+static inline qboolean HasLight (const dBspSurface_t *f)
 {
 	const dBspTexinfo_t *tex;
 
@@ -228,7 +228,7 @@ void BuildPatches (void)
 
 		for (j = 0; j < mod->numfaces; j++) {
 			const int facenum = mod->firstface + j;
-			dBspFace_t *f = &curTile->faces[facenum];
+			dBspSurface_t *f = &curTile->faces[facenum];
 
 			/* store the origin in case of moving bmodels (e.g. func_door) */
 			VectorCopy(origin, face_offset[facenum]);

@@ -260,7 +260,7 @@ typedef struct {
 
 	/** lighting info */
 	int lightofs[LIGHTMAP_MAX];				/**< start of [surfsize] samples */
-} dBspFace_t;
+} dBspSurface_t;
 
 /** @brief convex region of space in the BSP tree */
 typedef struct {
@@ -337,7 +337,7 @@ typedef struct {
 	dBspTexinfo_t	texinfo[MAX_MAP_TEXINFO];
 
 	int				numfaces;
-	dBspFace_t		faces[MAX_MAP_FACES];
+	dBspSurface_t		faces[MAX_MAP_FACES];
 
 	int				numedges;
 	dBspEdge_t		edges[MAX_MAP_EDGES];
