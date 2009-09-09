@@ -506,7 +506,7 @@ static int materialsCnt = 0;
 /**
  * @brief Generates material files in case the settings can be guessed from map file
  */
-static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, mapbrush_t *b, brush_texture_t *t, side_t *s)
+static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, mapbrush_t *b, side_t *s)
 {
 	qFILE f;
 	qboolean terrainByTexture = qfalse;
@@ -710,6 +710,11 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			td.value = 0;
 		}
 
+		/* if in check or fix mode, let them choose to do this (with command line options),
+		 * and then call is made elsewhere */
+		if (!checkOrFix)
+			SetImpliedFlags(side, &td, b);
+
 		/* translucent objects are automatically classified as detail */
 		if (side->surfaceFlags & (SURF_BLEND33 | SURF_BLEND66 | SURF_ALPHATEST))
 			side->contentFlags |= CONTENTS_DETAIL;
@@ -733,7 +738,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		/* generate a list of textures that should have footsteps when walking on them */
 		if (mt > 0 && side->surfaceFlags & SURF_FOOTSTEP)
 			GenerateFootstepList(filename, mt);
-		GenerateMaterialFile(filename, mt, b, &td, side);
+		GenerateMaterialFile(filename, mt, b, side);
 
 		/* find the plane number */
 		planenum = PlaneFromPoints(b, planepts[0], planepts[1], planepts[2]);
@@ -766,11 +771,6 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		side->texinfo = TexinfoForBrushTexture(&mapplanes[planenum],
 			&td, vec3_origin, b->isTerrain);
 		side->brush = b;
-
-		/* if in check or fix mode, let them choose to do this (with command line options),
-		 * and then call is made elsewhere */
-		if (!checkOrFix)
-			SetImpliedFlags(side, &td, b);
 
 		/* save the td off in case there is an origin brush and we
 		 * have to recalculate the texinfo */
@@ -870,6 +870,9 @@ static void MoveBrushesToWorld (entity_t *mapent)
 
 	newbrushes = mapent->numbrushes;
 	worldbrushes = entities[0].numbrushes;
+
+	if (newbrushes == 0)
+		Sys_Error("Empty func_group - clean your map");
 
 	temp = Mem_Alloc(newbrushes * sizeof(*temp));
 	memcpy(temp, mapbrushes + mapent->firstbrush, newbrushes * sizeof(*temp));
