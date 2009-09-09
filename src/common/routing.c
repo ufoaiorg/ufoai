@@ -120,6 +120,7 @@ typedef struct opening_s {
  * @brief  Dumps contents of a map to console for inspection.
  * @sa Grid_RecalcRouting
  * @param[in] map The routing map (either server or client map)
+ * @param[in] actorSize The size of the actor along the X and Y axis in cell units
  * @param[in] lx  The low end of the x range updated
  * @param[in] ly  The low end of the y range updated
  * @param[in] lz  The low end of the z range updated
@@ -299,10 +300,11 @@ NEW MAP TRACING FUNCTIONS
  *  found above the current cell will be used.  If there is no ceiling above the cell, the ceiling will
  *  be the top of the model.  This function will also adjust all floor and ceiling values for all cells
  *  between the found floor and ceiling.
+ * @param[in] map The map's routing data
+ * @param[in] actorSize The size of the actor along the X and Y axis in cell units
  * @param[in] x The x position in the routing arrays (0 - PATHFINDING_WIDTH-1)
  * @param[in] y The y position in the routing arrays (0 - PATHFINDING_WIDTH-1)
  * @param[in] z The z position in the routing arrays (0 - PATHFINDING_HEIGHT-1)
- * @param[in] size The size of the actor along the X and Y axis in cell units
  * @return The z value of the next cell to scan, usually the cell with the ceiling.
  * @sa Grid_RecalcRouting
  */
@@ -554,11 +556,8 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
  * @param[in] x Starting x coordinate
  * @param[in] y Starting y coordinate
  * @param[in] z Starting z coordinate
- * @param[in] ax Ending x coordinate
- * @param[in] ay Ending y coordinate
- * @param[in] az Ending z coordinate
- * @param[in] opening_size Absolute height in QUANT units of the opening.
- * @param[in] opening_base Absolute height in QUANT units of the bottom of the opening.
+ * @param[in] openingSize Absolute height in QUANT units of the opening.
+ * @param[in] openingBase Absolute height in QUANT units of the bottom of the opening.
  * @param[in] stepup Required stepup to travel in this direction.
  */
 static int RT_FillPassageData (routing_t * map, const int actorSize, const int dir, const int  x, const int y, const int z, const int openingSize, const int openingBase, const int stepup)
@@ -630,6 +629,7 @@ static int RT_FillPassageData (routing_t * map, const int actorSize, const int d
  * @brief Helper function to trace for walls
  * @param[in] start The starting point of the trace, at the FLOOR'S CENTER.
  * @param[in] end The end point of the trace, centered x and y at the destination but at the same height as start.
+ * @param[in] actorSize The actor's size in cell units.
  * @param[in] hi The upper height ABOVE THE FLOOR of the bounding box.
  * @param[in] lo The lower height ABOVE THE FLOOR of the bounding box.
  */
@@ -977,6 +977,7 @@ static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, 
  * @param[in] ax Ending x coordinate
  * @param[in] ay Ending y coordinate
  * @param[in] az Ending z coordinate
+ * @param[in] stairwaySituation whether we are standing in front of a stairway
  * @param[out] opening descriptor of the opening found, if any
  * @return The change in floor height in QUANT units because of the additional trace.
 */
@@ -1330,6 +1331,8 @@ static void RT_TracePassage (routing_t * map, const int actorSize, const int x, 
  * @param[in] actorSize The size of the actor, in units
  * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
+ * @param[in] ax The x of the adjacent cell
+ * @param[in] ay The y of the adjacent cell
  * @param[in] z The z position in the routing arrays (0 to PATHFINDING_HEIGHT - 1)
  * @param[in] dir The direction to test for a connection through
  */
@@ -1422,7 +1425,6 @@ static int RT_UpdateConnection (routing_t * map, const int actorSize, const int 
  * @param[in] actorSize The size of the actor, in units
  * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
- * @param[in] z The z position in the routing arrays (0 to PATHFINDING_HEIGHT - 1)
  * @param[in] dir The direction to test for a connection through
  */
 void RT_UpdateConnectionColumn (routing_t * map, const int actorSize, const int x, const int y, const int dir)
