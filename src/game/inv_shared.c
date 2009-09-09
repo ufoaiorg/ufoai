@@ -428,7 +428,7 @@ const char *INV_GetFilterType (const int id)
  * @note This is done by checking whether it's a craftitem and not
  * marked as a dummy item - the combination of both means, that it's a
  * basedefence item.
- * @param[in] item The item to check whether it's an aircraftiem item
+ * @param[in] obj pointer to item definition to check whether it's an aircraftiem item
  * @return true if the given item is an aircraftitem item
  * @sa INV_IsBaseDefenceItem
  */
@@ -442,7 +442,7 @@ qboolean INV_IsCraftItem (const objDef_t *obj)
  * @note This is done by checking whether it's a craftitem and whether it's
  * marked as a dummy item - the combination of both means, that it's a
  * basedefence item.
- * @param[in] item The item to check whether it's a basedefence item
+ * @param[in] obj pointer to item definition to check whether it's a basedefence item
  * @return true if the given item is a basedefence item
  * @sa INV_IsCraftItem
  */
@@ -2129,7 +2129,7 @@ int FIRESH_GetDefaultReactionFire (const objDef_t *ammo, int weaponFdsIdx)
  * @brief Will merge the second shape (=itemShape) into the first one (=big container shape) on the position x/y.
  * @note The function expects an already rotated shape for itemShape. Use Com_ShapeRotate if needed.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
- * @param[in] itemshape
+ * @param[in] itemShape
  * @param[in] x
  * @param[in] y
  */
