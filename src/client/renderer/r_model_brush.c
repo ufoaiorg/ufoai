@@ -1035,7 +1035,7 @@ static void R_SetupSubmodels (void)
 
 		/* submodel vertices of the surfaces must not be shifted in case of rmas */
 		for (j = mod->bsp.firstmodelsurface; j < mod->bsp.firstmodelsurface + mod->bsp.nummodelsurfaces; j++) {
-			mod->bsp.surfaces[j].isOriginBrushModel = qtrue;
+			mod->bsp.surfaces[j].isOriginBrushModel = (mod->bsp.surfaces[j].texinfo->flags & SURF_ORIGIN);
 		}
 
 		/*mod->bsp.numleafs = sub->visleafs;*/

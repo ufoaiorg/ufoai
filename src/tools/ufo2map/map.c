@@ -909,6 +909,8 @@ static void AdjustBrushesForOrigin (const entity_t *ent)
 			const ptrdiff_t index = s - brushsides;
 			const vec_t newdist = mapplanes[s->planenum].dist -
 				DotProduct(mapplanes[s->planenum].normal, ent->origin);
+			s->surfaceFlags |= SURF_ORIGIN;
+			side_brushtextures[index].surfaceFlags |= SURF_ORIGIN;
 			s->planenum = FindOrCreateFloatPlane(mapplanes[s->planenum].normal, newdist);
 			s->texinfo = TexinfoForBrushTexture(&mapplanes[s->planenum],
 				&side_brushtextures[index], ent->origin, qfalse);

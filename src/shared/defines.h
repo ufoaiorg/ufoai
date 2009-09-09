@@ -317,6 +317,7 @@ COLLISION DETECTION
 #define	SURF_PHONG		0x00000400 /**< phong interpolated lighting at compile time */
 #define	SURF_BURN		0x00000800 /**< will keep burning when flamed */
 #define	SURF_FOOTSTEP	0x00001000 /**< only for grabbing footsteps textures */
+#define	SURF_ORIGIN		0x00002000 /**< use this to identity those submodel surfaces that must not be translated in case of rma */
 #define	SURF_ALPHATEST	0x02000000 /**< alpha test for transparent textures */
 
 /* content masks */
