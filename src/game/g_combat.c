@@ -320,6 +320,12 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			 * between triggered destroy and a shoot */
 			assert(target->destroy);
 			target->destroy(target);
+
+			/* maybe the attacker is seeing something new? */
+			G_CheckVisTeam(attacker->team, NULL, qfalse, attacker);
+
+			/* check if attacker appears/perishes for any other team */
+			G_CheckVis(attacker, qtrue);
 		} else {
 			target->HP = max(target->HP - damage, 0);
 		}
