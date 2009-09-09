@@ -13774,10 +13774,6 @@
 "origin" "1136 1296 155"
 "angle" "-90"
 }
-// entity 68
-{
-"classname" "func_group"
-}
 // entity 69
 {
 "classname" "light"
@@ -13888,10 +13884,6 @@
 "origin" "1600 1216 96"
 "light" "150"
 "_color" "0.7741 1 0.750509"
-}
-// entity 86
-{
-"classname" "func_group"
 }
 // entity 87
 {
@@ -14447,10 +14439,6 @@
 "origin" "1232 1296 155"
 "angle" "-90"
 }
-// entity 121
-{
-"classname" "func_group"
-}
 // entity 122
 {
 "classname" "misc_model"
@@ -14458,10 +14446,6 @@
 "origin" "1608 1600 164"
 "model" "models/aircraft/drop_firebird/firebird_glass.md2"
 "angle" "180"
-}
-// entity 123
-{
-"classname" "func_group"
 }
 // entity 124
 {
