@@ -787,7 +787,7 @@ static void DumpAllEntities (void)
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] z_align This value may change the target z height
  * @param[in] i The ith shot
- * @param[in] type The firemode (ST_NUM_SHOOT_TYPES)
+ * @param[in] shootType The firemode (ST_NUM_SHOOT_TYPES)
  * @sa CL_TargetingStraight
  */
 static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from, pos3_t at,
@@ -1097,7 +1097,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
  * @param[in] player The player this action belongs to (i.e. either the ai or the player)
  * @param[in] entnum The index number of the edict that is doing the shot
  * @param[in] at Position to fire on.
- * @param[in] type What type of shot this is (left, right reaction-left etc...).
+ * @param[in] shootType What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon.
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] allowReaction Set to qtrue to check whether this has forced any reaction fire, otherwise qfalse.
