@@ -21,6 +21,10 @@ class SoundManagerAPI
 		{
 			m_soundmanager = new sound::SoundManager();
 		}
+		~SoundManagerAPI ()
+		{
+			delete m_soundmanager;
+		}
 
 		ISoundManager* getTable ()
 		{
