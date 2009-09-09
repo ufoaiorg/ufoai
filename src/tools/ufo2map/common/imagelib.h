@@ -1,5 +1,5 @@
 /**
- * @file imagelib.h
+ * @file src/tools/ufo2map/common/imagelib.h
  */
 
 /*

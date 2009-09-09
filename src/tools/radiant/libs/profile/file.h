@@ -1,3 +1,7 @@
+/**
+ * @file src/tools/radiant/libs/profile/file.h
+ */
+
 /*
 Copyright (c) 2001, Loki software, inc.
 All rights reserved.

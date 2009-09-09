@@ -1,5 +1,5 @@
 /**
- * @file shared.h
+ * @file src/tools/radiant/include/shared.h
  */
 
 /*

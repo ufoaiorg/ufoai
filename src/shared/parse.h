@@ -1,5 +1,5 @@
 /**
- * @file parsed.h
+ * @file src/shared/parse.h
  * @brief Shared parsing functions.
  */
 

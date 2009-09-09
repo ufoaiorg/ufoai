@@ -1,3 +1,7 @@
+/**
+ * @file src/tools/radiant/libs/imagelib.h
+ */
+
 /*
  Copyright (C) 2001-2006, William Joseph.
  All Rights Reserved.

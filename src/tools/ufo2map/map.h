@@ -1,5 +1,5 @@
 /**
- * @file map.h
+ * @file src/tools/ufo2map/map.h
  */
 
 /*
