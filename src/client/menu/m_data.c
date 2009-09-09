@@ -343,7 +343,7 @@ int MN_OptionUpdateCache (menuOption_t* option)
  * @brief find an option why index (0 is the first option)
  * @param[in] index Requested index (0 is the first option)
  * @param[in] option First element of options (it can be a tree)
- * @param[inout] iterator need an initialised iterator, and update it into the write index
+ * @param[in,out] iterator need an initialised iterator, and update it into the write index
  */
 static menuOption_t* MN_FindOptionAtIndex (int index, menuOption_t* option, menuOptionIterator_t* iterator)
 {

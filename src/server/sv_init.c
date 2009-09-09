@@ -618,7 +618,7 @@ static int SV_CalcRating (const mapInfo_t *map)
 /**
  * @brief Adds a new map-tile to an assembled map. Also adds the tile to the placed-tiles list.
  * @note The tile must fit at the given position, otherwise an assert will occure!
- * @param[inout] map The map that will get the tile.  Modified in place.
+ * @param[in,out] map The map that will get the tile.  Modified in place.
  * @param[in] tile The tile to add to the map.
  * @param[in] x The x position in the map where the tile should be placed.
  * @param[in] y The y position in the map where the tile should be placed.

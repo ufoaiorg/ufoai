@@ -198,7 +198,7 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 /**
  * @brief Update a relative point to an absolute one
  * @param[in] node The requested node
- * @param[inout] pos A point to transform
+ * @param[in,out] pos A point to transform
  */
 void MN_NodeRelativeToAbsolutePoint (const menuNode_t* node, vec2_t pos)
 {
@@ -214,8 +214,8 @@ void MN_NodeRelativeToAbsolutePoint (const menuNode_t* node, vec2_t pos)
 /**
  * @brief Update an absolute position to a relative one
  * @param[in] menunode
- * @param[inout] x an absolute x position
- * @param[inout] y an absolute y position
+ * @param[in,out] x an absolute x position
+ * @param[in,out] y an absolute y position
  */
 void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y)
 {
