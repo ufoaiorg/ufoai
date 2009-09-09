@@ -1,3 +1,7 @@
+/**
+ * @file src/tools/radiant/plugins/entity/curve.h
+ */
+
 /*
  Copyright (C) 2001-2006, William Joseph.
  All Rights Reserved.

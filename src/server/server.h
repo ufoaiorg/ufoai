@@ -1,5 +1,5 @@
 /**
- * @file server.h
+ * @file src/server/server.h
  * @brief Main server include file.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file curve.h
+ * @file src/tools/radiant/libs/math/curve.h
  * @brief Curve data types and related operations.
  */
 
