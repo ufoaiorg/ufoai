@@ -255,7 +255,7 @@ const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(const aircraft_t *aircraft);
 qboolean AIR_IsAircraftOnGeoscape(const aircraft_t *aircraft);
 
-void AIR_DeleteAircraft(struct base_s *base, aircraft_t *aircraft);
+void AIR_DeleteAircraft(aircraft_t *aircraft);
 void AIR_DestroyAircraft(aircraft_t *aircraft);
 qboolean AIR_MoveAircraftIntoNewHomebase(aircraft_t *aircraft, struct base_s *base);
 

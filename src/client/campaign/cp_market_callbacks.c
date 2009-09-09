@@ -658,7 +658,7 @@ static void BS_SellAircraft_f (void)
 
 			Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
 			/* the capacities are also updated here */
-			AIR_DeleteAircraft(base, aircraft);
+			AIR_DeleteAircraft(aircraft);
 
 			CL_UpdateCredits(ccs.credits + aircraftTemplate->price);
 			/* reinit the menu */

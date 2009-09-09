@@ -582,7 +582,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 		}
 
 		/* Remove aircraft and aircraft items, but do not fire employees */
-		AIR_DeleteAircraft(base, &base->aircraft[aircraftIdx]);
+		AIR_DeleteAircraft(&base->aircraft[aircraftIdx]);
 		awayAircraft[numAwayAircraft++] = NULL;
 		return;
 	}
@@ -594,7 +594,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 	if (!CL_DisplayHomebasePopup(awayAircraft[randomNum], qfalse)) {
 		/* No base can hold this aircraft */
 		/** @todo Better solution? */
-		AIR_DeleteAircraft(awayAircraft[randomNum]->homebase, awayAircraft[randomNum]);
+		AIR_DeleteAircraft(awayAircraft[randomNum]);
 	}
 }
 

@@ -982,9 +982,10 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
  * the aircraft can point to wrong employees now. This has to be taken into
  * account
  */
-void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
+void AIR_DeleteAircraft (aircraft_t *aircraft)
 {
 	int i;
+	base_t *base;
 	/* Check if aircraft is on geoscape while it's not destroyed yet */
 	const qboolean aircraftIsOnGeoscape = AIR_IsAircraftOnGeoscape(aircraft);
 
@@ -1104,7 +1105,7 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 		Com_DPrintf(DEBUG_CLIENT, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
 	}
 
-	AIR_DeleteAircraft(aircraft->homebase, aircraft);
+	AIR_DeleteAircraft(aircraft);
 }
 
 /**
@@ -2346,7 +2347,7 @@ qboolean AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *emp
 /**
  * @brief Adds the pilot to the first available aircraft at the specified base.
  * @param[in] base Which base has aircraft to add the pilot to.
- * @param[in] type Which pilot to search add.
+ * @param[in] pilot Which pilot to add.
  */
 void AIR_AutoAddPilotToAircraft (base_t* base, employee_t* pilot)
 {
@@ -2366,7 +2367,7 @@ void AIR_AutoAddPilotToAircraft (base_t* base, employee_t* pilot)
  * @brief Checks to see if the pilot is in any aircraft at this base.
  * If he is then he is removed from that aircraft.
  * @param[in] base Which base has the aircraft to search for the employee in.
- * @param[in] type Which employee to search for.
+ * @param[in] pilot Which pilot to search for.
  */
 void AIR_RemovePilotFromAssignedAircraft (base_t* base, const employee_t* pilot)
 {
@@ -2452,7 +2453,8 @@ static void AIR_SaveOneSlotXML (const aircraftSlot_t* slot, mxml_node_t *p, qboo
  * @brief Saves an item slot
  * @param[in] slot Pointer to the slot where item is.
  * @param[in] num Number of slots for this aircraft.
- * @param[in] node pointer where information are written.
+ * @param[out] p XML Node structure, where we write the information to
+ * @param[in] p pointer where information are written.
  * @param[in] weapon True if the slot is a weapon slot.
  * @sa B_Save
  * @sa AII_InitialiseSlot
@@ -2469,7 +2471,12 @@ static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num,
 	}
 }
 
-
+/**
+ * @brief Saves an aircraft
+ * @param[out] node XML Node structure, where we write the information to
+ * @param[in] aircraft Aircraft we save
+ * @param[in] isUfo If this aircraft is a UFO
+ */
 void AIR_SaveAircraftXML (mxml_node_t *node, aircraft_t const aircraft, qboolean const isUfo)
 {
 	mxml_node_t *subnode;
@@ -2640,8 +2647,8 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 
 /**
  * @brief Loads one slot (base, installation or aircraft)
- * @param[in] slot Pointer to the slot where item should be added.
- * @param[in] sb buffer where information are.
+ * @param[out] slot Pointer to the slot where item should be added.
+ * @param[in] node XML Node structure, where we get the information from
  * @param[in] weapon True if the slot is a weapon slot.
  * @sa B_Load
  * @sa B_SaveAircraftSlots
@@ -2697,10 +2704,10 @@ void AIR_LoadOneSlotXML (aircraftSlot_t* slot, mxml_node_t *node, qboolean weapo
 /**
  * @brief Loads the weapon slots of an aircraft.
  * @param[in] aircraft Pointer to the aircraft.
- * @param[in] slot Pointer to the slot where item should be added.
- * @param[in] num Number of slots for this aircraft that should be loaded.
- * @param[in] sb buffer where information are.
+ * @param[out] slot Pointer to the slot where item should be added.
+ * @param[in] p XML Node structure, where we get the information from
  * @param[in] weapon True if the slot is a weapon slot.
+ * @param[in] max Maximum number of slots for this aircraft that should be loaded.
  * @sa B_Load
  * @sa B_SaveAircraftSlots
  */
@@ -2717,6 +2724,11 @@ static void AIR_LoadAircraftSlotsXML (aircraft_t *aircraft, aircraftSlot_t* slot
 
 }
 
+/**
+ * @brief Loads the route of an aircraft
+ * @param[out] route Route points of the aircraft
+ * @param[in] p XML Node structure, where we get the information from
+ */
 static qboolean AIR_LoadRouteXML (mapline_t *route, mxml_node_t *p)
 {
 	mxml_node_t *actual;
@@ -2734,11 +2746,11 @@ static qboolean AIR_LoadRouteXML (mapline_t *route, mxml_node_t *p)
 }
 
 /**
- *@brief Loads an Aircraft from the savegame
- *@param[in] aircraft Pointer to the aircraft
- *@param[in] isUfo do we load a Alien craft instead of a phalanx craft?
- *@param[in] p Node structur, where we get the information from
-*/
+ * @brief Loads an Aircraft from the savegame
+ * @param[out] craft Pointer to the aircraft
+ * @param[in] isUfo do we load a Alien craft instead of a phalanx craft?
+ * @param[in] p XML Node structure, where we get the information from
+ */
 qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 {
 	mxml_node_t *snode, *ssnode;
