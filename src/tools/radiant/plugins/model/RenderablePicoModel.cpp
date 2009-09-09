@@ -24,11 +24,11 @@ namespace model
 			PicoFixSurfaceNormals(surf);
 
 			// Create the RenderablePicoSurface object and add it to the vector
-			RenderablePicoSurface *rSurf = new RenderablePicoSurface(surf);
-			_surfVec.push_back(*rSurf);
+			RenderablePicoSurface rSurf = RenderablePicoSurface(surf);
+			_surfVec.push_back(rSurf);
 
 			// Extend the model AABB to include the surface's AABB
-			aabb_extend_by_aabb(_localAABB, rSurf->getAABB());
+			aabb_extend_by_aabb(_localAABB, rSurf.getAABB());
 		}
 
 		const int nShaders = PicoGetModelNumShaders(mod);
