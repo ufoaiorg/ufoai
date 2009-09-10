@@ -193,6 +193,7 @@ void CGameDialog::Init ()
 
 CGameDialog::~CGameDialog ()
 {
+	delete g_pGameDescription;
 }
 
 CGameDialog g_GamesDialog;
