@@ -615,10 +615,9 @@ static const char* const COMMANDS_VERSION = "1.0.gtk-accelnames";//"1.0-gtk-acce
  */
 void SaveCommandMap (const std::string& path)
 {
-	StringOutputStream strINI(256);
-	strINI << path.c_str() << "shortcuts.ini";
+	std::string strINI = path + "shortcuts.ini";
 
-	TextFileOutputStream file(strINI.c_str());
+	TextFileOutputStream file(strINI);
 	if (!file.failed()) {
 		file << "[Version]\n";
 		file << "number=" << COMMANDS_VERSION << "\n";
