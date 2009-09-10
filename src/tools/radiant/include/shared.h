@@ -3,7 +3,7 @@
  */
 
 /*
- Copyright (C) 2001-2006, UFO:AI Team
+ Copyright (C) 2002-2009 UFO: Alien Invasion.
  All Rights Reserved.
 
  This file is part of UFORadiant.
