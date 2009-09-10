@@ -1,7 +1,7 @@
 #ifndef FLOATTOOLS_H_
 #define FLOATTOOLS_H_
 
-/*	greebo: this contains some handy (?) functions for manipulating float variables 
+/*	greebo: this contains some handy (?) functions for manipulating float variables
  */
 
 #include "lrint.h"

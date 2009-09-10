@@ -1,12 +1,12 @@
 #ifndef MANIPULATORS_H_
 #define MANIPULATORS_H_
 
-/* greebo: This file contains the manipulator classes like 
- * 
+/* greebo: This file contains the manipulator classes like
+ *
  * - Translate Maniplator
  * - Rotate Manipulator
  * - Scale Manipulator
- * 
+ *
  * that derive from the abstract base class Manipulator
  */
 

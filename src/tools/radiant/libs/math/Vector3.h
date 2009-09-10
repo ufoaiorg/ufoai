@@ -2,16 +2,16 @@
 #define VECTOR3_H_
 
 /* greebo: This file contains the templated class definition of the three-component vector
- * 
+ *
  * BasicVector3: A vector with three components of type <Element>
- * 
+ *
  * The BasicVector3 is equipped with the most important operators like *, *= and so on.
- * 
- * Note: The most commonly used Vector3 is a BasicVector3<float>, this is also defined in this file 
- *  
+ *
+ * Note: The most commonly used Vector3 is a BasicVector3<float>, this is also defined in this file
+ *
  * Note: that the multiplication of a Vector3 with another one (Vector3*Vector3) does NOT
  * result in an inner product but in a component-wise scaling. Use the .dot() method to
- * execute an inner product of two vectors. 
+ * execute an inner product of two vectors.
  */
 
 #include "lrint.h"

@@ -2,16 +2,16 @@
 #define VECTOR4_H_
 
 /* greebo: This file contains the templated class definition of the three-component vector
- * 
+ *
  * BasicVector4: A vector with three components of type <Element>
- * 
+ *
  * The BasicVector4 is equipped with the most important operators like *, *= and so on.
- * 
- * Note: The most commonly used Vector4 is a BasicVector4<float>, this is also defined in this file 
- *  
+ *
+ * Note: The most commonly used Vector4 is a BasicVector4<float>, this is also defined in this file
+ *
  * Note: that the multiplication of a Vector4 with another one (Vector4*Vector4) does NOT
  * result in an inner product but in a component-wise scaling. Use the .dot() method to
- * execute an inner product of two vectors. 
+ * execute an inner product of two vectors.
  */
 
 #include "FloatTools.h"
