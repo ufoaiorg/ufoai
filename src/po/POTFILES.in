@@ -6,6 +6,7 @@
 ./client/campaign/cp_aliencont_callbacks.c
 ./client/campaign/cp_base.c
 ./client/campaign/cp_base_callbacks.c
+./client/campaign/cp_basedefence_callbacks.c
 ./client/campaign/cp_campaign.c
 ./client/campaign/cp_employee.c
 ./client/campaign/cp_employee_callbacks.c
@@ -66,8 +67,11 @@
 ./client/multiplayer/mp_callbacks.c
 ./client/multiplayer/mp_serverlist.c
 ./client/multiplayer/mp_team.c
+./game/g_actor.c
 ./game/g_client.c
 ./game/g_combat.c
+./game/g_morale.c
+./game/g_round.c
 ./game/g_spawn.c
 ./game/g_svcmds.c
 ./po/OTHER_STRINGS
