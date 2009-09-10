@@ -34,6 +34,7 @@
 #include "gtkmisc.h"
 #include "preferences.h"
 #include "stringio.h"
+#include "os/file.h"
 
 typedef std::pair<Accelerator, int> ShortcutValue; // accelerator, isRegistered
 typedef std::map<std::string, ShortcutValue> Shortcuts;
@@ -685,33 +686,30 @@ class ReadCommandMap: public CommandVisitor
  */
 void LoadCommandMap (const std::string& path)
 {
-	StringOutputStream strINI(256);
-	strINI << path.c_str() << "shortcuts.ini";
+	std::string strINI = path + "shortcuts.ini";
 
-	FILE* f = fopen(strINI.c_str(), "r");
-	if (f != 0) {
-		fclose(f);
-		globalOutputStream() << "loading custom shortcuts list from " << makeQuoted(strINI.c_str()) << "\n";
+	if (file_exists(strINI)) {
+		g_message("loading custom shortcuts list from %s\n", strINI.c_str());
 
 		Version version = version_parse(COMMANDS_VERSION);
 		Version dataVersion = { 0, 0 };
 
 		{
 			char value[1024];
-			if (read_var(strINI.c_str(), "Version", "number", value)) {
+			if (read_var(strINI, "Version", "number", value)) {
 				dataVersion = version_parse(value);
 			}
 		}
 
 		if (version_compatible(version, dataVersion)) {
-			globalOutputStream() << "commands import: data version " << dataVersion
-					<< " is compatible with code version " << version << "\n";
-			ReadCommandMap visitor(strINI.c_str());
+			g_message("commands import: data version %i:%i is compatible with code version %i:%i\n",
+					version.major, version.minor, dataVersion.major, dataVersion.minor);
+			ReadCommandMap visitor(strINI);
 			GlobalShortcuts_foreach(visitor);
 			g_message("parsed %u custom shortcuts\n", Unsigned(visitor.count()));
 		} else {
-			globalWarningStream() << "commands import: data version " << dataVersion
-					<< " is not compatible with code version " << version << "\n";
+			g_message("commands import: data version %i:%i is not compatible with code version %i:%i\n",
+					version.major, version.minor, dataVersion.major, dataVersion.minor);
 		}
 	} else {
 		g_warning("failed to load custom shortcuts from '%s'\n", strINI.c_str());

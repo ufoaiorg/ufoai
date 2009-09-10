@@ -38,12 +38,6 @@ inline bool operator< (const Version& version, const Version& other)
 	return version.major < other.major || (!(other.major < version.major) && version.minor < other.minor);
 }
 
-template<typename TextOutputStreamType>
-TextOutputStreamType& ostream_write (TextOutputStreamType& outputStream, const Version& version)
-{
-	return outputStream << version.major << '.' << version.minor;
-}
-
 /// \brief Returns true if \p version (code) is compatible with \p other (data).
 inline bool version_compatible (const Version& version, const Version& other)
 {

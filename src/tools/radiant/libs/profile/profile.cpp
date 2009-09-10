@@ -80,7 +80,7 @@ bool read_var (const std::string& filename, const char *section, const char *key
 
 					if (value[strlen(value) - 1] == 10 || value[strlen(value) - 1] == 13 || value[strlen(value) - 1]
 							== 32)
-						value[strlen(value) - 1] = 0;
+						value[strlen(value) - 1] = '\0';
 
 					return true;
 				}
