@@ -94,11 +94,13 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findtextures.cpp \
-	$(RADIANT_BASE)/radiant/dialogs/ModelSelector.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/common/ModelPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/RenderableAABB.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/TexturePreviewCombo.cpp \
+	$(RADIANT_BASE)/radiant/ui/modelselector/ModelSelector.cpp \
+	$(RADIANT_BASE)/radiant/ui/ortho/EntityClassChooser.cpp \
+	$(RADIANT_BASE)/radiant/ui/ortho/OrthoContextMenu.cpp \
 	\
 	$(RADIANT_BASE)/radiant/pathfinding/Routing.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingLumpLoader.cpp \

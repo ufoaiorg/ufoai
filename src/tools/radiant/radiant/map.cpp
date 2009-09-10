@@ -1369,13 +1369,50 @@ void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& pare
 	graph.traverse(ParentSelectedBrushesToEntityWalker(parent));
 }
 
+class CountSelectedBrushes: public scene::Graph::Walker
+{
+		std::size_t& m_count;
+		mutable std::size_t m_depth;
+	public:
+		CountSelectedBrushes (std::size_t& count) :
+			m_count(count), m_depth(0)
+		{
+			m_count = 0;
+		}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (++m_depth != 1 && path.top().get().isRoot()) {
+				return false;
+			}
+			Selectable* selectable = Instance_getSelectable(instance);
+			if (selectable != 0 && selectable->isSelected() && Node_isPrimitive(path.top())) {
+				++m_count;
+			}
+			return true;
+		}
+		void post (const scene::Path& path, scene::Instance& instance) const
+		{
+			--m_depth;
+		}
+};
+
+std::size_t Scene_countSelectedBrushes (scene::Graph& graph)
+{
+	std::size_t count;
+	graph.traverse(CountSelectedBrushes(count));
+	return count;
+}
+
 namespace map
 {
+
 	namespace
 	{
+
 		/* Walker class to subtract a Vector3 origin from each selected brush
 		 * that it visits.
 		 */
+
 		class BrushOriginSubtractor: public scene::Graph::Walker
 		{
 				// The translation matrix from the vector3
@@ -1412,56 +1449,70 @@ namespace map
 							if (brush != 0) {
 								// We have a brush, apply the transformation
 								brush->transform(_transMat);
+								brush->freezeTransform();
 							}
 						}
 					}
 				} // post()
+
 		}; // BrushOriginSubtractor
+
+
+		/** Walker class to count the number of selected brushes in the current
+		 * scene.
+		 */
+
+		class CountSelectedBrushes: public scene::Graph::Walker
+		{
+				int& m_count;
+				mutable std::size_t m_depth;
+			public:
+				CountSelectedBrushes (int& count) :
+					m_count(count), m_depth(0)
+				{
+					m_count = 0;
+				}
+				bool pre (const scene::Path& path, scene::Instance& instance) const
+				{
+					if (++m_depth != 1 && path.top().get().isRoot()) {
+						return false;
+					}
+					Selectable* selectable = Instance_getSelectable(instance);
+					if (selectable != 0 && selectable->isSelected() && Node_isPrimitive(path.top())) {
+						++m_count;
+					}
+					return true;
+				}
+				void post (const scene::Path& path, scene::Instance& instance) const
+				{
+					--m_depth;
+				}
+		};
+
 	} // namespace
 
 	/* Subtract the given origin from all selected brushes in the map. Uses
 	 * a BrushOriginSubtractor walker class to subtract the origin from
 	 * each selected brush in the scene.
 	 */
+
 	void selectedBrushesSubtractOrigin (const Vector3& origin)
 	{
 		GlobalSceneGraph().traverse(BrushOriginSubtractor(origin));
 	}
-}
 
-class CountSelectedBrushes: public scene::Graph::Walker
-{
-		std::size_t& m_count;
-		mutable std::size_t m_depth;
-	public:
-		CountSelectedBrushes (std::size_t& count) :
-			m_count(count), m_depth(0)
-		{
-			m_count = 0;
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (++m_depth != 1 && path.top().get().isRoot()) {
-				return false;
-			}
-			Selectable* selectable = Instance_getSelectable(instance);
-			if (selectable != 0 && selectable->isSelected() && Node_isPrimitive(path.top())) {
-				++m_count;
-			}
-			return true;
-		}
-		void post (const scene::Path& path, scene::Instance& instance) const
-		{
-			--m_depth;
-		}
-};
+	/* Return the number of selected brushes in the map, using the
+	 * CountSelectedBrushes walker.
+	 */
 
-std::size_t Scene_countSelectedBrushes (scene::Graph& graph)
-{
-	std::size_t count;
-	graph.traverse(CountSelectedBrushes(count));
-	return count;
-}
+	int countSelectedBrushes ()
+	{
+		int count;
+		GlobalSceneGraph().traverse(CountSelectedBrushes(count));
+		return count;
+	}
+
+} // namespace map
 
 enum ENodeType
 {

@@ -1,46 +1,62 @@
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #if !defined(INCLUDED_ENTITY_H)
 #define INCLUDED_ENTITY_H
 
 #include <string>
+#include <stdexcept>
 
 template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;
-void Entity_createFromSelection(const std::string& name, const Vector3& origin);
-void Entity_connectSelected();
 
-void Scene_EntitySetKeyValue_Selected(const char* classname, const char* key, const char* value);
-void Scene_EntitySetClassname_Selected(const char* classname, const char* newClassname);
+/** Exception thrown when the incorrect number of brushes is selected when
+ * creating an entity.
+ */
 
+class EntityCreationException: public std::runtime_error
+{
+	public:
+		EntityCreationException (const std::string& what) :
+			std::runtime_error(what)
+		{
+		}
+};
+
+/** Create an instance of the given entity at the given position
+ */
+void Entity_createFromSelection (const std::string& name, const Vector3& origin);
+void Entity_connectSelected ();
+
+void Scene_EntitySetKeyValue_Selected (const char* classname, const char* key, const char* value);
+void Scene_EntitySetClassname_Selected (const char* classname, const char* newClassname);
 
 typedef struct _GtkWidget GtkWidget;
-const char* misc_sound_dialog(GtkWidget* parent);
-char* misc_particle_dialog(GtkWidget* parent);
+const char* misc_sound_dialog (GtkWidget* parent);
+char* misc_particle_dialog (GtkWidget* parent);
 
 typedef struct _GtkMenu GtkMenu;
-void Entity_constructMenu(GtkMenu* menu);
+void Entity_constructMenu (GtkMenu* menu);
 
-void Entity_Construct();
-void Entity_Destroy();
+void Entity_Construct ();
+void Entity_Destroy ();
 
 #endif

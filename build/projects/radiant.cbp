@@ -464,7 +464,13 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\maptools.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\modelselector.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\modelselector\ModelSelector.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\ortho\EntityClassChooser.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\ortho\OrthoContextMenu.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\particle.cpp">

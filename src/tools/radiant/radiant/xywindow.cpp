@@ -68,6 +68,7 @@
 #include "grid.h"
 #include "sidebar/sidebar.h"
 #include "windowobservers.h"
+#include "ui/ortho/OrthoContextMenu.h"
 
 void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHeight);
 
@@ -1165,14 +1166,14 @@ class EntityClassMenuInserter: public EntityClassVisitor
 		}
 };
 
-static void Entity_connectSelectedCallback (void *data)
+void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
 {
-	Entity_connectSelected();
-}
+	xywnd->XY_ToPoint(x, y, point);
+	xywnd->XY_SnapToGrid(point);
 
-static void Texture_FitFace (void *data)
-{
-	SurfaceInspector_FitTexture();
+	const int nDim = (xywnd->GetViewType() == XY) ? 2 : (xywnd->GetViewType() == YZ) ? 0 : 1;
+	const float fWorkMid = float_mid(Select_getWorkZone().d_work_min[nDim], Select_getWorkZone().d_work_max[nDim]);
+	point[nDim] = float_snapped(fWorkMid, GetGridSize());
 }
 
 /**
@@ -1183,66 +1184,11 @@ void XYWnd::OnContextMenu (void)
 	if (g_xywindow_globals.m_bRightClick == false)
 		return;
 
-	if (m_mnuDrop == 0) { // first time, load it up
-		GtkMenu* menu = m_mnuDrop = GTK_MENU(gtk_menu_new());
-
-		EntityClassMenuInserter inserter(menu);
-		GlobalEntityClassManager().forEach(inserter);
-	}
-
-	//create or destroy (un)needed menu items
-	int menuActionCount = 0;
-	bool connectStillAdded = false, fitfaceStillAdded = false;
-	int countSelected = GlobalSelectionSystem().countSelected();
-	if (countSelected == 2) {
-		menuActionCount++;
-		if (m_mnitem_connect == 0)
-			m_mnitem_connect = EntityClassMenu_addAction(m_mnuDrop, C_("Context Menu Action", "Connect"),
-					Entity_connectSelectedCallback);
-		else
-			connectStillAdded = true;
-	} else {
-		if (m_mnitem_connect) {
-			menu_remove_item(m_mnuDrop, m_mnitem_connect);
-			m_mnitem_connect = 0;
-		}
-	}
-
-	if (countSelected > 0) {
-		menuActionCount++;
-		if (m_mnitem_fitface == 0)
-			m_mnitem_fitface = EntityClassMenu_addAction(m_mnuDrop, C_("Context Menu Action", "Fit Face"),
-					Texture_FitFace);
-		else
-			fitfaceStillAdded = true;
-	} else {
-		if (m_mnitem_fitface) {
-			menu_remove_item(m_mnuDrop, m_mnitem_fitface);
-			m_mnitem_fitface = 0;
-		}
-	}
-
-	//add separator if needed, add other items
-	if (menuActionCount > 0) {
-		if (m_mnitem_separator == 0) {
-			m_mnitem_separator = menu_separator(m_mnuDrop);
-		}
-	} else {
-		if (m_mnitem_separator) {
-			/** @todo check whether this is a memory leak, menu_remove_item sigsegvs here if used; is separator object destroyed? */
-			gtk_container_remove(GTK_CONTAINER(m_mnuDrop), GTK_WIDGET(m_mnitem_separator));
-			m_mnitem_separator = 0;
-		}
-	}
-	if (m_mnitem_connect && !connectStillAdded)
-		menu_add_item(m_mnuDrop, m_mnitem_connect);
-	if (m_mnitem_fitface && !fitfaceStillAdded)
-		menu_add_item(m_mnuDrop, m_mnitem_fitface);
-
-	/** @todo remove connection if already connected */
-	/** @todo group and ungroup */
-
-	gtk_menu_popup(m_mnuDrop, 0, 0, 0, 0, 1, GDK_CURRENT_TIME);
+	// Get the click point in 3D space
+	Vector3 point;
+	XYWnd_MouseToPoint(this, m_entityCreate_x, m_entityCreate_y, point);
+	// Display the menu, passing the coordinates for creation
+	ui::OrthoContextMenu::displayInstance(point);
 }
 
 static FreezePointer g_xywnd_freezePointer;
@@ -2401,16 +2347,6 @@ void XYWnd::XY_Draw ()
 	}
 
 	glFinish();
-}
-
-void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
-{
-	xywnd->XY_ToPoint(x, y, point);
-	xywnd->XY_SnapToGrid(point);
-
-	const int nDim = (xywnd->GetViewType() == XY) ? 2 : (xywnd->GetViewType() == YZ) ? 0 : 1;
-	const float fWorkMid = float_mid(Select_getWorkZone().d_work_min[nDim], Select_getWorkZone().d_work_max[nDim]);
-	point[nDim] = float_snapped(fWorkMid, GetGridSize());
 }
 
 void XYWnd::OnEntityCreate (const std::string& item)

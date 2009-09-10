@@ -53,7 +53,7 @@
 #include "commands.h"
 #include "dialogs/light.h"
 #include "dialogs/particle.h"
-#include "dialogs/ModelSelector.h"
+#include "ui/modelselector/ModelSelector.h"
 
 struct entity_globals_t
 {
@@ -312,8 +312,7 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 	const bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
 
 	if (!(entityClass->fixedsize || isModel) && !brushesSelected) {
-		gtkutil::errorDialog(MainFrame_getWindow(), "Unable to create entity - no brushes selected");
-		return revert;
+		throw EntityCreationException(std::string("Unable to create entity \"") + name + "\", no brushes selected");
 	}
 
 	AABB workzone(aabb_for_minmax(Select_getWorkZone().d_work_min, Select_getWorkZone().d_work_max));
@@ -345,8 +344,6 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 				const int y = ((int) origin.y() / UNIT_SIZE) * UNIT_SIZE - sizeY;
 				const int z = ((int) origin.z() / UNIT_HEIGHT) * UNIT_HEIGHT + sizeZ;
 				const Vector3 vec(x, y, z);
-				g_warning("original %s origin: %.0f %.0f %.0f\n", name.c_str(), origin.x(), origin.y(), origin.z());
-				g_warning("     new %s origin: %i %i %i\n", name.c_str(), x, y, z);
 
 				transform->setTranslation(vec);
 			} else {

@@ -1313,7 +1313,7 @@ cBspModel_t *CM_InlineModel (const char *name)
  * @param[in] name The name of the model, must include the '*'
  * @param[in] origin The new origin for the model
  * @param[in] angles The new facing angles for the model
- * @note This is used whenever a model's orientation changes, eg doors and rotating models
+ * @note This is used whenever a model's orientation changes, e.g. for func_doors and func_rotating models
  * @sa LE_DoorAction
  * @sa G_ClientUseEdict
  */
@@ -1711,9 +1711,9 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
 	dx = dvecs[dir][0];	/**< Get the difference value for x for this direction. (can be pos or neg) */
 	dy = dvecs[dir][1];	/**< Get the difference value for y for this direction. (can be pos or neg) */
 	dz = dvecs[dir][2];	/**< Get the difference value for z for this direction. (can be pos or neg) */
-	nx = x + dx;		/**< "new" x value = starting x value + difference from choosen direction */
-	ny = y + dy;		/**< "new" y value = starting y value + difference from choosen direction */
-	nz = z + dz;		/**< "new" z value = starting z value + difference from choosen direction */
+	nx = x + dx;		/**< "new" x value = starting x value + difference from chosen direction */
+	ny = y + dy;		/**< "new" y value = starting y value + difference from chosen direction */
+	nz = z + dz;		/**< "new" z value = starting z value + difference from chosen direction */
 
 	/* Connection checks.  If we cannot move in the desired direction, then bail. */
 	/* Range check of new values (all sizes) */
@@ -1755,7 +1755,7 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
 	} else if (dir < CORE_DIRECTIONS) {
 		/**
 		 * @note Fliers use this code only when they are walking.
-		 * @brief First test for opening height availablilty.  Then test for stepup compatability.
+		 * @brief First test for opening height availablilty.  Then test for stepup compatibility.
 		 * Last test for fall.
 		 */
 

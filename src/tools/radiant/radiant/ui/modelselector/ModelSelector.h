@@ -6,7 +6,7 @@
 #include "math/matrix.h"
 #include "igl.h"
 #include "imodel.h"
-#include "../ui/common/ModelPreview.h"
+#include "../common/ModelPreview.h"
 
 namespace ui
 {

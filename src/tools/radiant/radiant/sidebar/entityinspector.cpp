@@ -47,7 +47,7 @@
 #include "moduleobserver.h"
 #include "convert.h"
 #include "stringio.h"
-#include "../dialogs/ModelSelector.h"
+#include "../ui/modelselector/ModelSelector.h"
 
 #include "gtkutil/accelerator.h"
 #include "gtkutil/dialog.h"

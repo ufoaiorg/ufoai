@@ -1,11 +1,11 @@
 #include "ModelSelector.h"
 
-#include "../mainframe.h"
+#include "../../mainframe.h"
 #include "radiant_i18n.h"
 #include "gtkutil/glwidget.h"
 #include "gtkutil/image.h"
 #include "ifilesystem.h"
-#include "../referencecache.h"
+#include "../../referencecache.h"
 #include "os/path.h"
 
 #include <cmath>
