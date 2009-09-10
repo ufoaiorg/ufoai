@@ -3,30 +3,10 @@
 
 #include <gtk/gtk.h>
 
-#include "radiant_i18n.h"
 #include "math/Vector3.h"
 
 namespace ui
 {
-	namespace
-	{
-		/* CONSTANTS */
-
-		const char* LIGHT_CLASSNAME = "light";
-		const char* MODEL_CLASSNAME = "misc_model";
-
-		const char* ADD_MODEL_TEXT = _("Create model...");
-		const char* ADD_MODEL_ICON = "cmenu_add_model.png";
-		const char* ADD_LIGHT_TEXT = _("Create light...");
-		const char* ADD_LIGHT_ICON = "cmenu_add_light.png";
-		const char* ADD_ENTITY_TEXT = _("Create entity...");
-		const char* ADD_ENTITY_ICON = "cmenu_add_entity.png";
-		const char* CONNECT_ENTITIES_TEXT = _("Connect entities...");
-		const char* CONNECT_ENTITIES_ICON = "cmenu_connect_entities.png";
-		const char* FIT_TEXTURE_TEXT = _("Fit textures...");
-		const char* FIT_TEXTURE_ICON = "cmenu_fit_texture.png";
-	}
-
 	/** Displays a menu when the mouse is right-clicked in the ortho window.
 	 * This is a singleton class which remains in existence once constructed,
 	 * and is hidden and displayed as appropriate.

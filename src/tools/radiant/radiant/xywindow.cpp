@@ -1057,23 +1057,6 @@ void XYWnd::NewBrushDrag (int x, int y)
 	Scene_BrushResize_Selected(GlobalSceneGraph(), aabb_for_minmax(mins, maxs), NewBrushDragGetTexture());
 }
 
-/**
- * @brief Callback for entity selection in the drop down menu
- * @sa EntityClassMenu_addItem
- */
-static void entitycreate_activated (GtkWidget* item)
-{
-	scene::Node* worldNode = Map_FindWorldspawn(g_map);
-	const char* entityName = gtk_label_get_text(GTK_LABEL(GTK_BIN(item)->child));
-
-	if (!(worldNode && string_equal(entityName, "worldspawn"))) {
-		g_pParentWnd->ActiveXY()->OnEntityCreate(entityName);
-	} else {
-		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("There's already a worldspawn in your map!"), _("Info"),
-				eMB_OK, eMB_ICONDEFAULT);
-	}
-}
-
 void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
 {
 	xywnd->XY_ToPoint(x, y, point);
