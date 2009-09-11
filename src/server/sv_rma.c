@@ -1062,7 +1062,10 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 			return NULL;
 		}
 	} else {
+		int now = Sys_Milliseconds();
 		SV_AddMapTiles(map);
+		now = Sys_Milliseconds() - now;
+		Com_Printf("SV_AssembleMap: Sequential map assembly in %i ms\n", now);
 	}
 
 	/* prepare map and pos strings */
