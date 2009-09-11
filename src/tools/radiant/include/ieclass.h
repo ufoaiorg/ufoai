@@ -30,13 +30,6 @@
 
 #define	MAX_FLAGS	16
 
-// eclass show flags
-
-#define     ECLASS_LIGHT      0x00000001
-#define     ECLASS_ANGLE      0x00000002
-#define     ECLASS_PATH       0x00000004
-#define     ECLASS_MISCMODEL  0x00000008
-
 class Shader;
 
 class EntityClass;
