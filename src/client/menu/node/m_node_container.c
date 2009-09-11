@@ -82,7 +82,7 @@ static const invList_t *dragInfoIC;
  * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
  * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
  * @param[in] node Context node
- * @param[in] item Item requersted
+ * @param[in] item Item requested
  * @param[in] filter Filter used.
  * @todo Remove filter it is not a generic concept, and here it mean nothing
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
