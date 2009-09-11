@@ -864,6 +864,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	mapInfo_t *maps[ASSEMBLE_THREADS];
 	int i;
 	static int timeout = 5000;  /* wait for 5 sec initially, double it every time it times out */
+	int now = Sys_Milliseconds();
 
 	threadID = 0;
 	assert(mapSem == NULL);
@@ -884,7 +885,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	while (threadID == 0) {
 		/* if nobody is done after 5 sec, restart, double the timeout. */
 		if (SDL_CondWaitTimeout(mapCond, mapLock, timeout) != 0) {
-			Com_Printf("SV_ParallelSearch: timeout at %i ms, restarting", timeout);
+			Com_Printf("SV_ParallelSearch: timeout at %i ms, restarting\n", timeout);
 			timeout += timeout;
 			/* tell them all to die */
 			if (SDL_SemTryWait(mapSem) != 0) {
@@ -921,6 +922,9 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	SDL_DestroySemaphore(mapSem);
 	mapSem = NULL;
 	threadID = 0;
+	now = Sys_Milliseconds() - now;
+
+	Com_Printf("SV_ParallelSearch: Map assembly in %i ms, retries included\n", now);
 
 	return 0;
 }

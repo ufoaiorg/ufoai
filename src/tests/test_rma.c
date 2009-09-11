@@ -78,13 +78,36 @@ static void testAssembly (void)
 	Mem_Free(randomMap);
 }
 
-static void testMassAssembly (void)
+/* parallel version */
+static void testMassAssemblyParallel (void)
 {
 	int i;
 	long time;
 	mapInfo_t *randomMap;
 
-	for (i = 0; i < 1000; i++) {
+	sv_threads->integer = 1;
+	for (i = 0; i < 50; i++) {
+		srand(i);
+		time = Sys_Milliseconds();
+		randomMap = SV_AssembleMap("forest", "large", map, pos);
+		CU_ASSERT(randomMap != NULL);
+		time = (Sys_Milliseconds() - time);
+		CU_ASSERT(time < 30000);
+		printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
+		if (randomMap)
+			Mem_Free(randomMap);
+	}
+}
+
+/* sequential version */
+static void testMassAssemblySequential (void)
+{
+	int i;
+	long time;
+	mapInfo_t *randomMap;
+
+	sv_threads->integer = 0;
+	for (i = 0; i < 50; i++) {
 		srand(i);
 		time = Sys_Milliseconds();
 		randomMap = SV_AssembleMap("forest", "large", map, pos);
@@ -99,7 +122,14 @@ static void testMassAssembly (void)
 
 int UFO_AddRandomMapAssemblyTests (void)
 {
-	/* add a suite to the registry */
+	static cvar_t svt;
+
+	if (!sv_threads) {
+		sv_threads = &svt;
+		sv_threads->integer = 0;
+	}
+
+		/* add a suite to the registry */
 	CU_pSuite RandomMapAssemblySuite = CU_add_suite("RandomMapAssemblyTests", UFO_InitSuiteRandomMapAssembly, UFO_CleanSuiteRandomMapAssembly);
 	if (RandomMapAssemblySuite == NULL)
 		return CU_get_error();
@@ -108,7 +138,10 @@ int UFO_AddRandomMapAssemblyTests (void)
 	if (CU_ADD_TEST(RandomMapAssemblySuite, testAssembly) == NULL)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssembly) == NULL)
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySequential) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblyParallel) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
