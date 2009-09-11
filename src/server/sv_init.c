@@ -85,15 +85,11 @@ int SV_ModelIndex (const char *name)
 #define MAX_RANDOM_MAP_WIDTH 32
 #define MAX_RANDOM_MAP_HEIGHT 32
 
-/* #define PARALLEL_ASSEMBLY */
-
-#ifdef PARALLEL_ASSEMBLY
 #define ASSEMBLE_THREADS 2
-SDL_sem *mapSem;
-SDL_cond *mapCond = NULL;
-SDL_mutex *mapLock = NULL;
-Uint32 threadID = 0;
-#endif
+static SDL_sem *mapSem;
+static SDL_cond *mapCond;
+static SDL_mutex *mapLock;
+static Uint32 threadID;
 
 /** @brief Stores the parsed data for a map tile. (See *.ump files) */
 typedef struct mTile_s {
@@ -863,12 +859,12 @@ static void SV_AddMapTiles (mapInfo_t *map)
 			for (; pos < mapSize; pos++) {
 				const int x = prList[pos] % mapW;
 				const int y = prList[pos] / mapW;
-#ifdef PARALLEL_ASSEMBLY
-				if (SDL_SemValue(mapSem) != 1) {
-					/* someone else beat me to it */
-					return;
+				if (sv_threads->integer) {
+					if (SDL_SemValue(mapSem) != 1) {
+						/* someone else beat me to it */
+						return;
+					}
 				}
-#endif
 
 				if ((x % mAsm->dx != 0) || (y % mAsm->dy != 0))
 					continue;
@@ -938,8 +934,6 @@ static void SV_PrepareTilesToPlace (mapInfo_t *map)
 	}
 }
 
-#ifdef PARALLEL_ASSEMBLY
-
 static int SV_AssemblyThread (void* data)
 {
 	mapInfo_t *map = (mapInfo_t*) data;
@@ -961,7 +955,8 @@ static int SV_AssemblyThread (void* data)
 	return 0;
 }
 
-/* spawn ASSEMBLE_THREADS threads to try and assemble a map.  The first map complete gets returned.
+/**
+ * @brief spawn ASSEMBLE_THREADS threads to try and assemble a map.  The first map complete gets returned.
  * if it's not done in 5 sec, fail...
  */
 static int SV_ParallelSearch (mapInfo_t *map)
@@ -1030,7 +1025,6 @@ static int SV_ParallelSearch (mapInfo_t *map)
 
 	return 0;
 }
-#endif
 
 /**
  * @brief Assembles a "random" map
@@ -1150,14 +1144,14 @@ static mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *
 	for (i = 0; i < mAsm->numFixed; i++)
 		SV_AddTile(map, &map->mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
 
-#ifdef PARALLEL_ASSEMBLY
-	if (SV_ParallelSearch(map) < 0) {
-		Mem_Free(map);
-		return NULL;
+	if (sv_threads->integer) {
+		if (SV_ParallelSearch(map) < 0) {
+			Mem_Free(map);
+			return NULL;
+		}
+	} else {
+		SV_AddMapTiles(map);
 	}
-#else
-	SV_AddMapTiles(map);
-#endif
 
 	/* prepare map and pos strings */
 	if (basePath[0]) {
