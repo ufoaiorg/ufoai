@@ -903,6 +903,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
  * @sa SV_AddMandatoryParts
  * @sa SV_ParseAssembly
  * @sa SV_ParseMapTile
+ * @note Make sure to free the returned pointer
  */
 mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos)
 {
