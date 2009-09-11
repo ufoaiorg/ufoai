@@ -46,15 +46,15 @@ equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 }
 
 /**
- * @param[in] inv list where the item is currently in
- * @param[in] toContainer target container to place the item in
- * @param[in] px target x position in the toContainer container
- * @param[in] py target y position in the toContainer container
- * @param[in] fromContainer Container the item is in
- * @param[in] fromX X position of the item to move (in container fromContainer)
- * @param[in] fromY y position of the item to move (in container fromContainer)
- * @note If you set px or py to -1/NONE the item is automatically placed on a free
- * spot in the targetContainer
+ * @brief Move item between containers.
+ * @param[in] inv Pointer to the list where the item is currently in.
+ * @param[in] toContainer Pointer to target container, to place the item in.
+ * @param[in] px target x position in the toContainer container.
+ * @param[in] py target y position in the toContainer container.
+ * @param[in] fromContainer Pointer to source container, the item is in.
+ * @param[in] fItem Pointer to item being moved.
+ * @note If you set px or py to -1/NONE the item is automatically placed on
+ * @note a free spot in the targetContainer
  * @return qtrue if the move was successful.
  */
 qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, int py,
@@ -81,11 +81,11 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
 }
 
 /**
- * @brief Load a weapon with ammo
- * @param[in] invList_t to weapon to load
- * @param[in] inventory_t in which the change happen
- * @param[in] container to search ammo in
- * @param[in] container to put the ammo to (where the weapon is)
+ * @brief Load a weapon with ammo.
+ * @param[in] weapon Pointer (invList_t) to weapon to load.
+ * @param[in] inv Pointer (inventory_t) to inventory where the change happen.
+ * @param[in] srcContainer Pointer (invDef_t) to inventorydef where to search ammo.
+ * @param[in] destContainer Pointer (invDef_t) to inventorydef where the weapon is.
  */
 void INV_LoadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
 {
@@ -106,10 +106,10 @@ void INV_LoadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *srcCon
 }
 
 /**
- * @brief Unload a weapon and put the ammo in a container
- * @param[in] invList_t to weapon to unload
- * @param[in] inventory_t in which the change happen
- * @param[in] container to put the removed ammo to
+ * @brief Unload a weapon and put the ammo in a container.
+ * @param[in] weapon Pointer (invList_t) to weapon to unload ammo.
+ * @param[in] inv Pointer (inventory_t) to inventory where the change happen.
+ * @param[in] container Pointer (invDef_t) to inventorydef where to put the removed ammo.
  */
 void INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *container)
 {
