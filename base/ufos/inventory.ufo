@@ -12,21 +12,21 @@
 // What's this "extension" exactly?
 inventory extension
 {
-	shape	"0 0 5 1"
+	shape		"0 0 5 1"
 	extension	true
-	single	true
-	in		1
-	out		0
+	single		true
+	in			1
+	out			0
 }
 
 // Headgear slot
 inventory headgear
 {
-	shape	"0 0 2 1"
-	single	true
+	shape		"0 0 2 1"
+	single		true
 	headgear	true
-	in		1
-	out		0
+	in			1
+	out			0
 }
 
 // Right hand
@@ -92,8 +92,8 @@ inventory floor
 	shape	"0 1 15 4"
 	shape	"15 0 3 3"
 	temp	true
-	in	1
-	out	2
+	in		1
+	out		2
 }
 
 // Base equipment place
@@ -102,6 +102,6 @@ inventory equip
 	shape	"0 0 24 13"
 	shape	"0 13 20 2"
 	temp	true
-	all	true
+	all		true
 	scroll	true
 }
