@@ -254,9 +254,9 @@ void MN_UpdateInvisOptions (menuOption_t *option, const linkedList_t *stringList
 }
 
 /**
- * @brief Init an option with a very little set of value.
+ * @brief Initializes an option with a very little set of values.
  * @note need you abstract menuOption_t values
- * @param[in] Context option
+ * @param[in] option Context option
  * @param[in] nameID name of the option (should be unique in the option list)
  * @param[in] label label displayed
  * @param[in] value value used when this option is selected
