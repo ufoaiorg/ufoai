@@ -232,6 +232,7 @@ CLIENT_SRCS = \
 	server/sv_game.c \
 	server/sv_init.c \
 	server/sv_main.c \
+	server/sv_rma.c \
 	server/sv_send.c \
 	server/sv_user.c \
 	server/sv_world.c \
