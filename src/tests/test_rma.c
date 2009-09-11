@@ -78,15 +78,15 @@ static void testAssembly (void)
 	Mem_Free(randomMap);
 }
 
-/* parallel version */
-static void testMassAssemblyParallel (void)
+/* timeout version */
+static void testMassAssemblyTimeout (void)
 {
 	int i;
 	long time;
 	mapInfo_t *randomMap;
 
 	sv_threads->integer = 1;
-	for (i = 0; i < 50; i++) {
+	for (i = 0; i < 10; i++) {
 		srand(i);
 		time = Sys_Milliseconds();
 		randomMap = SV_AssembleMap("forest", "large", map, pos);
@@ -99,6 +99,27 @@ static void testMassAssemblyParallel (void)
 	}
 }
 
+static void testMassAssemblyParallel (void)
+{
+	int i;
+	long time;
+	mapInfo_t *randomMap;
+
+	sv_threads->integer = 2;
+	for (i = 0; i < 10; i++) {
+		srand(i);
+		time = Sys_Milliseconds();
+		randomMap = SV_AssembleMap("forest", "large", map, pos);
+		CU_ASSERT(randomMap != NULL);
+		time = (Sys_Milliseconds() - time);
+		CU_ASSERT(time < 30000);
+		printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
+		if (randomMap)
+			Mem_Free(randomMap);
+	}
+
+}
+
 /* sequential version */
 static void testMassAssemblySequential (void)
 {
@@ -107,7 +128,7 @@ static void testMassAssemblySequential (void)
 	mapInfo_t *randomMap;
 
 	sv_threads->integer = 0;
-	for (i = 0; i < 50; i++) {
+	for (i = 0; i < 10; i++) {
 		srand(i);
 		time = Sys_Milliseconds();
 		randomMap = SV_AssembleMap("forest", "large", map, pos);
@@ -138,10 +159,13 @@ int UFO_AddRandomMapAssemblyTests (void)
 	if (CU_ADD_TEST(RandomMapAssemblySuite, testAssembly) == NULL)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySequential) == NULL)
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblyParallel) == NULL)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblyParallel) == NULL)
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblyTimeout) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySequential) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
