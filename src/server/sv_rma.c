@@ -803,6 +803,16 @@ static void SV_PrepareTilesToPlace (mapInfo_t *map)
 	}
 }
 
+/**
+ * @brief The main function for the threads that try to create random map assemblies in parallel.
+ * @param data The @c mapInfo_t structure local to this thread.  Should be initialized
+ *  by memcpy-ing the actual map into new memory.  Not thread-safe to read or write, this thread
+ *  assumes that nobody else will access the given copy of the map before the thread ends.
+ *  It is the responsibility of the caller to free the map, if needed, after the thread has died
+ *  and been collected.
+ * @return 0 on success, -1 if it was interrupted via the @c mapSem semaphore, signaling that
+ *  someone else has finished first, or timeout occured.
+ */
 static int SV_AssemblyThread (void* data)
 {
 	mapInfo_t *map = (mapInfo_t*) data;
@@ -825,8 +835,28 @@ static int SV_AssemblyThread (void* data)
 }
 
 /**
- * @brief spawn ASSEMBLE_THREADS threads to try and assemble a map.  The first map complete gets returned.
- * if it's not done in 5 sec, fail...
+ * @brief Spawn ASSEMBLE_THREADS threads to try and assemble a map.  The first map complete gets returned.
+ *  Allocates a new copy of the map for each thread, and frees it at the end.
+ *  Uses a timeout (initially 5 seconds).  If the spawned threads have not completed by the timeout, they
+ *  are restarted, with double the timeout.
+ *  @note The algorithm main points:
+ *  The synchronization of threads happens using a semaphore @c mapSem, a lock @c mapLock, and a condition @c mapCond.
+ *  The semaphore is initially 1 (and reset to 1 every time there is a restart).
+ *  The first thread that finishes, grabs the semaphore, to tell all other threads to abort.
+ *  All threads test the semaphore, if it is 0, they abort.
+ *  After the timeout, the main thread grabs the semaphore, to make everybody conclude, and then restarts them.
+ *  The lock is used to protect writes to the threadID global variable, that holds the ID of the thread which finished,
+ *  if any.  It is also used to protect the conditional @c mapCond, used by the finished thread to notify the main()
+ *  thread, so it can collect all threads and copy the final map back to the caller.
+ *  The lock is locked by main() at all times, unless it is waiting on the conditional (with timeout).
+ *  When an assembler thread finishes, it grabs the lock (which means main() is still waiting), writes its ID to
+ *  threadID, signals main() and releases the lock.  main() gets the signal after the lock is released, since the signal
+ *  is protected by the lock, so there can be no race between finishing assembly and signaling main() for the
+ *  assembler threads.
+ *  When a timeout occurs, main() exits the conditional by grabbing the lock again.  This will prevent any thread
+ *  from exiting, even if it finishes between the time that main() timed out and the time it tries to get the semaphore.
+ *  So, main() checks the semaphore to see if it is taken, and if so doesn't restart, despite the timeout.
+ *  @todo Maybe we also need to reduce the timeout value a bit every time it succeeds?
  */
 static int SV_ParallelSearch (mapInfo_t *map)
 {
