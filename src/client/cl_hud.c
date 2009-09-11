@@ -116,7 +116,6 @@ static char hudText[256];
 /**
  * @brief Displays a message on the hud.
  * @sa MN_DisplayNotice
- * @param[in] time is a ms values
  * @param[in] text text is already translated here
  */
 void HUD_DisplayMessage (const char *text)
@@ -744,12 +743,14 @@ static void HUD_SelectReactionFiremode_f (void)
 
 /**
  * @brief Calculate total reload time for selected actor.
+ * @param[in] le Pointer to local entity handling the weapon.
  * @param[in] weapon Item in (currently only right) hand.
  * @return Time needed to reload or >= 999 if no suitable ammo found.
  * @note This routine assumes the time to reload a weapon
  * @note in the right hand is the same as the left hand.
  * @sa HUD_RefreshWeaponButtons
  * @sa CL_CheckMenuAction
+ * @todo Fix it - we can have different weapons in hands.
  */
 static int CL_CalcReloadTime (const le_t *le, const objDef_t *weapon)
 {
@@ -781,7 +782,7 @@ static int CL_CalcReloadTime (const le_t *le, const objDef_t *weapon)
 
 /**
  * @brief Checks whether an action on hud menu is valid and displays proper message.
- * @param[in] time The amount of TU (of an actor) left.
+ * @param[in] le Pointer to local entity for which we handle an action on hud menu.
  * @param[in] weapon An item in hands.
  * @param[in] mode EV_INV_AMMO in case of fire button, EV_INV_RELOAD in case of reload button
  * @return qfalse when action is not possible, otherwise qtrue
@@ -969,7 +970,7 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
 
 /**
  * @brief Refreshes the weapon/reload buttons on the HUD.
- * @param[in] time The amount of TU (of an actor) left in case of action.
+ * @param[in] le Pointer to local entity for which we refresh HUD buttons.
  * @sa HUD_ActorUpdateCvars
  */
 static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
