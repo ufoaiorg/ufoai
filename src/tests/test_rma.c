@@ -73,8 +73,7 @@ static void testAssembly (void)
 
 	srand(0);
 	randomMap = SV_AssembleMap("forest", "large", map, pos);
-	/* printf("numplaced1 %i\n", randomMap->numPlaced); fflush(stdout); */
-	CU_ASSERT(randomMap->numPlaced == 35);
+	CU_ASSERT(randomMap != NULL);
 	Mem_Free(randomMap);
 }
 
@@ -84,13 +83,14 @@ static void testMassAssembly (void)
 	long time;
 	mapInfo_t *randomMap;
 
-	for (i = 0; i < 100; i++) {
+	for (i = 0; i < 1000; i++) {
 		srand(i);
 		time = Sys_Milliseconds();
 		randomMap = SV_AssembleMap("forest", "large", map, pos);
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
-		/* printf("%i: %s, numplaced = %i took %li msec\n", randomMap?"succeeded":"failed", i, randomMap->numPlaced, time[i]); fflush(stdout); */
+		CU_ASSERT(time < 30000);
+		printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
 		if (randomMap)
 			Mem_Free(randomMap);
 	}

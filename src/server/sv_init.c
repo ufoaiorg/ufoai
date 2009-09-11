@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 #include "../shared/parse.h"
+#include "SDL_thread.h"
 
 server_static_t svs;			/* persistant server info */
 server_t sv;					/* local server */
@@ -83,6 +84,16 @@ int SV_ModelIndex (const char *name)
 
 #define MAX_RANDOM_MAP_WIDTH 32
 #define MAX_RANDOM_MAP_HEIGHT 32
+
+/* #define PARALLEL_ASSEMBLY */
+
+#ifdef PARALLEL_ASSEMBLY
+#define ASSEMBLE_THREADS 2
+SDL_sem *mapSem;
+SDL_cond *mapCond = NULL;
+SDL_mutex *mapLock = NULL;
+Uint32 threadID = 0;
+#endif
 
 /** @brief Stores the parsed data for a map tile. (See *.ump files) */
 typedef struct mTile_s {
@@ -282,7 +293,7 @@ static int SV_ParseMapTile (const char *filename, const char **text, mTile_t *ta
 				*text = strchr(*text, '}') + 1;
 				return 0;
 			}
-			target->spec[y][x] = 0L;
+			target->spec[y][x] = 0UL;
 			for (i = 0; token[i]; i++, chr++) {
 				target->spec[y][x] |= tileMask(token[i]);
 			}
@@ -852,6 +863,12 @@ static void SV_AddMapTiles (mapInfo_t *map)
 			for (; pos < mapSize; pos++) {
 				const int x = prList[pos] % mapW;
 				const int y = prList[pos] / mapW;
+#ifdef PARALLEL_ASSEMBLY
+				if (SDL_SemValue(mapSem) != 1) {
+					/* someone else beat me to it */
+					return;
+				}
+#endif
 
 				if ((x % mAsm->dx != 0) || (y % mAsm->dy != 0))
 					continue;
@@ -920,6 +937,100 @@ static void SV_PrepareTilesToPlace (mapInfo_t *map)
 		}
 	}
 }
+
+#ifdef PARALLEL_ASSEMBLY
+
+static int SV_AssemblyThread (void* data)
+{
+	mapInfo_t *map = (mapInfo_t*) data;
+
+	SV_AddMapTiles(map);
+
+	/* the first thread to reach this point, gets the semaphore */
+	if (SDL_SemTryWait(mapSem) != 0)
+		return -1;
+	SDL_LockMutex(mapLock);
+
+	assert(threadID == 0);
+	threadID = SDL_ThreadID();
+
+	/* tell main we're done */
+	SDL_CondSignal(mapCond);
+	SDL_UnlockMutex(mapLock);
+
+	return 0;
+}
+
+/* spawn ASSEMBLE_THREADS threads to try and assemble a map.  The first map complete gets returned.
+ * if it's not done in 5 sec, fail...
+ */
+static int SV_ParallelSearch (mapInfo_t *map)
+{
+	SDL_Thread *threads[ASSEMBLE_THREADS];
+	mapInfo_t *maps[ASSEMBLE_THREADS];
+	int i;
+	static int timeout = 5000;  /* wait for 5 sec initially, double it every time it times out */
+
+	threadID = 0;
+	assert(mapSem == NULL);
+	mapSem = SDL_CreateSemaphore(1);
+
+	if (mapLock == NULL)
+		mapLock = SDL_CreateMutex();
+
+	if (mapCond == NULL)
+		mapCond = SDL_CreateCond();
+
+	SDL_LockMutex(mapLock);
+	for (i = 0; i < ASSEMBLE_THREADS; i++) {
+		maps[i] = Mem_Alloc(sizeof(*map));
+		memcpy(maps[i], map, sizeof(*map));
+		threads[i] = SDL_CreateThread(&SV_AssemblyThread, (void*) maps[i]);
+	}
+	while (threadID == 0) {
+		/* if nobody is done after 5 sec, restart, double the timeout. */
+		if (SDL_CondWaitTimeout(mapCond, mapLock, timeout) != 0) {
+			Com_Printf("SV_ParallelSearch: timeout at %i ms, restarting", timeout);
+			timeout += timeout;
+			/* tell them all to die */
+			if (SDL_SemTryWait(mapSem) != 0) {
+				/* couldn't tell everyone to die, someone must have finished since the last line... */
+				continue;
+			}
+			/* collect the dead */
+			for (i = 0; i < ASSEMBLE_THREADS; i++) {
+				SDL_WaitThread(threads[i], NULL);
+			}
+			/* reset semaphore */
+			SDL_SemPost(mapSem);
+			/* start'em again */
+			for (i = 0; i < ASSEMBLE_THREADS; i++) {
+				memcpy(maps[i], map, sizeof(*map));
+				threads[i] = SDL_CreateThread(&SV_AssemblyThread, (void*) maps[i]);
+			}
+		} else {
+			/* someone finished */
+			assert(threadID != 0);
+		}
+	}
+	SDL_UnlockMutex(mapLock);
+	for (i = 0; i < ASSEMBLE_THREADS; i++) {
+		if (SDL_GetThreadID(threads[i]) == threadID) {
+			memcpy(map, maps[i], sizeof(*map));
+		}
+
+		SDL_WaitThread(threads[i], NULL);
+		Mem_Free(maps[i]);
+	}
+
+	/* cleanup, for possible next time */
+	SDL_DestroySemaphore(mapSem);
+	mapSem = NULL;
+	threadID = 0;
+
+	return 0;
+}
+#endif
 
 /**
  * @brief Assembles a "random" map
@@ -1039,7 +1150,14 @@ static mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *
 	for (i = 0; i < mAsm->numFixed; i++)
 		SV_AddTile(map, &map->mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
 
+#ifdef PARALLEL_ASSEMBLY
+	if (SV_ParallelSearch(map) < 0) {
+		Mem_Free(map);
+		return NULL;
+	}
+#else
 	SV_AddMapTiles(map);
+#endif
 
 	/* prepare map and pos strings */
 	if (basePath[0]) {
