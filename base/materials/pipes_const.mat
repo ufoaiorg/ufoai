@@ -1,0 +1,47 @@
+{
+	material tex_buildings/wall005
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_nature/dirt002
+	{
+		texture tex_nature/grass001
+		terrain 104 116
+		lightmap
+	}
+}
+{
+	material tex_nature/grass001
+	{
+		texture tex_nature/dirt002
+		terrain 130 116
+		lightmap
+	}
+}
+{
+	material tex_buildings/wall007
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_material/wood002
+	specular 0.2
+}
+{
+	material tex_misc/wood_palet
+	specular 0.2
+}
+{
+	material tex_material/wood005
+	specular 0.2
+}
+{
+	material tex_material/s_wood002
+	specular 0.2
+}
+{
+	material tex_material/s_wood003
+	specular 0.2
+}
+
