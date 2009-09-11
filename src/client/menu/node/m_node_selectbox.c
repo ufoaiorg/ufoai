@@ -282,15 +282,12 @@ static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 
 	/* select the right option */
 	option = MN_SelectBoxNodeGetFirstOption(node);
-	while (option) {
-		if (option->invis) {
-			option = option->next;
+	for (; option; option = option->next) {
+		if (option->invis)
 			continue;
-		}
 		if (clickedAtOption == 0)
 			break;
 		clickedAtOption--;
-		option = option->next;
 	}
 
 	/* update the status */
