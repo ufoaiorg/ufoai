@@ -898,6 +898,13 @@ static int SV_ParallelSearch (mapInfo_t *map)
 /**
  * @brief Assembles a "random" map
  * parses the *.ump files for assembling the "random" maps
+ * @param[in] name The name of the map (ump) file to parse
+ * @param[in] assembly The random map assembly that should be used from the given rma
+ * @param[out] asmMap The output string of the random map assembly that contains all the
+ * map tiles that should be assembled. The order is the same as in the @c asmPos string.
+ * Each of the map tiles in this string has a corresponding entry in the pos string, too.
+ * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmMap
+ * string this string contains three coordinates for shifting the given tile names.
  * @sa B_AssembleMap_f
  * @sa SV_AddTile
  * @sa SV_AddMandatoryParts
