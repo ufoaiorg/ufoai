@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int UFO_InitSuiteRouting (void)
 {
-	unsigned int checksum;
+	unsigned int checksum = 0;
 
 	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
 	com_cmdSysPool = Mem_CreatePool("Common: Command system");
