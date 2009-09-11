@@ -32,13 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_ufo.h"
 #include "cp_missions.h"
 
+#if 0
 /**
  * @brief Run bullets on geoscape.
  * @param[in] projectile Pointer to the projectile corresponding to this bullet.
  * @param[in] ortogonalVector vector perpendicular to the movement of the projectile.
  * @param[in] movement how much each bullet should move toward its target.
  */
-#if 0
 static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogonalVector, float movement)
 {
 	int i;
@@ -67,7 +67,8 @@ static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 
 /**
  * @brief Add a projectile in ccs.projectiles
- * @param[in] attackingBase the attacking base in ccs.bases[]. NULL is the attacker is an aircraft.
+ * @param[in] attackingBase the attacking base in ccs.bases[]. NULL is the attacker is an aircraft or a samsite.
+ * @param[in] attackingInstallation the attacking samsite in ccs.installations[]. NULL is the attacker is an aircraft or a base.
  * @param[in] attacker Pointer to the attacking aircraft
  * @param[in] target Pointer to the target aircraft
  * @param[in] weaponSlot Pointer to the weapon slot that fires the projectile.
@@ -520,6 +521,8 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *pr
 /**
  * @brief Calculates the damage value for the airfight
  * @param[in] od The ammo object definition of the craft item
+ * @param[in] target The aircraft the ammo hits
+ * @return the damage the hit causes
  * @sa AII_UpdateAircraftStats
  * @note ECM is handled in AIRFIGHT_ProbabilityToHit
  */

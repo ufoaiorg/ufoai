@@ -4,7 +4,7 @@
  * @sa cl_airfight.c
  * @note Aircraft management functions prefix: AIR_
  * @note Aircraft menu(s) functions prefix: AIM_
- * @note Aircraft equipement handling functions prefix: AII_
+ * @note Aircraft equipment handling functions prefix: AII_
  */
 
 /*
@@ -863,7 +863,7 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
 
 /**
  * @brief Transfer items carried by a soldier from one base to another.
- * @param[in] employee Pointer to employee.
+ * @param[in] chr Pointer to the character.
  * @param[in] sourceBase Base where employee comes from.
  * @param[in] destBase Base where employee is going.
  */

@@ -1,6 +1,6 @@
 /**
  * @file cp_alienbase.c
- * @brief
+ * @brief Alien base related functions
  */
 
 /*
@@ -299,6 +299,7 @@ alienBase_t* AB_ChooseBaseToSupply (void)
 /**
  * @brief Supply a base.
  * @param[in] base Pointer to the supplied base.
+ * @param[in] decreaseStealth If the stealth level of the base should be decreased.
  */
 void AB_SupplyBase (alienBase_t *base, qboolean decreaseStealth)
 {
