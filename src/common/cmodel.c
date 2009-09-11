@@ -169,6 +169,7 @@ static void CMod_LoadSubmodels (const lump_t * l, const vec3_t shift)
 
 
 /**
+ * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -206,6 +207,7 @@ static void CMod_LoadSurfaces (const lump_t * l, const vec3_t shift)
 
 
 /**
+ * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  * @sa TR_BuildTracingNode_r
@@ -257,6 +259,7 @@ static void CMod_LoadNodes (const lump_t * l, const vec3_t shift)
 }
 
 /**
+ * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -292,6 +295,7 @@ static void CMod_LoadBrushes (const lump_t * l, const vec3_t shift)
 }
 
 /**
+ * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -343,6 +347,7 @@ static void CMod_LoadLeafs (const lump_t * l, const vec3_t shift)
 }
 
 /**
+ * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  * @sa R_ModLoadPlanes
@@ -388,6 +393,7 @@ static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
 }
 
 /**
+ * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -424,6 +430,7 @@ static void CMod_LoadLeafBrushes (const lump_t * l, const vec3_t shift)
 }
 
 /**
+ * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -918,6 +925,7 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 
 /**
  * @note Transforms coordinates and stuff for assembled maps
+ * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -2077,6 +2085,7 @@ unsigned int Grid_Ceiling (const struct routing_s *map, const int actorSize, con
 /**
  * @brief Returns the height of the floor in a cell.
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] actorSize width of the actor in cells
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's ceiling.
  */
@@ -2115,6 +2124,7 @@ int Grid_Floor (const struct routing_s *map, const int actorSize, const pos3_t p
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] actorSize width of the actor in cells
  * @param[in] pos Position in the map to check the height
+ * @param[in] dir the direction in which we are moving
  * @return The actual model height increase needed to move into an adjacent cell.
  */
 pos_t Grid_StepUp (const struct routing_s *map, const int actorSize, const pos3_t pos, const int dir)
@@ -2129,9 +2139,8 @@ pos_t Grid_StepUp (const struct routing_s *map, const int actorSize, const pos3_
 
 /**
  * @brief Returns the maximum height of an obstruction that an actor can travel over.
- * @param[in] map Pointer to client or server side routing table (clMap, svMap)
- * @param[in] pos Position in the map to check the height
- * @return The actual model height increse allowed to move into an adjacent cell.
+ * @param[in] dir the direction in which we are moving
+ * @return The TUs needed to move there.
  */
 int Grid_TUsUsed (int dir)
 {
