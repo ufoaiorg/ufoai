@@ -1487,6 +1487,7 @@ void Grid_DumpServerRoutes_f (void)
 * @brief Checks one field (square) on the grid of the given routing data (i.e. the map).
  * @param[in] map Routing data/map.
  * @param[in] actorSize width of the actor in cells
+ * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @param[in] x Field in x direction
  * @param[in] y Field in y direction
  * @param[in] z Field in z direction
@@ -1993,7 +1994,7 @@ void Grid_MoveCalc (const struct routing_s *map, const int actorSize, struct pat
 
 /**
  * @brief Caches the calculated move
- * @param[in] map Routing data
+ * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @sa AI_ActorThink
  */
 void Grid_MoveStore (struct pathing_s *path)
@@ -2004,8 +2005,9 @@ void Grid_MoveStore (struct pathing_s *path)
 
 /**
  * @brief Return the needed TUs to walk to a given position
- * @param[in] map Routing data
+ * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @param[in] to Position to walk to
+ * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] stored Use the stored mask (the cached move) of the routing data
  * @return ROUTING_NOT_REACHABLE if the move isn't possible
  * @return length of move otherwise (TUs)
@@ -2033,7 +2035,9 @@ pos_t Grid_MoveLength (const struct pathing_s *path, const pos3_t to, byte crouc
  * @brief The next stored move direction
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] actorSize width of the actor in cells
+ * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @param[in] from
+ * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @return (Guess: a direction index (see dvecs and DIRECTIONS))
  * @sa Grid_MoveCheck
  */
