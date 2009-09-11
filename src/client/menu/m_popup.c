@@ -103,7 +103,6 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
  * @param[in] menu menu where buttons are modified.
  * @param[in] button Name of the node of the button.
  * @param[in] clickAction Action to perform when button is clicked.
- * @param[in] buttonText Name of the node of the string. NULL if nothing
  * @note clickAction may be NULL if button is not needed.
  */
 static void MN_SetOneButton (menuNode_t* menu, const char *button, const char *clickAction)

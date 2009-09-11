@@ -41,7 +41,9 @@ void MN_DrawFill (int x, int y, int w, int h, const vec4_t color)
  * Pushes a new matrix, normalize to current resolution and move, rotate and scale the
  * matrix to the given values.
  * @note Will pop the matrix if @c transform is @c NULL
- * @param transform if @c NULL the matrix is removed from stack
+ * @param transform Translation (if @c NULL the matrix is removed from stack)
+ * @param rotate Rotation
+ * @param scale Scale
  * @sa R_Transform
  * @sa R_PopMatrix
  * @sa R_PushMatrix
@@ -255,7 +257,7 @@ void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
  * @param[in] height Current height of the bounded box
  * @param[in] text The string to draw
  * @param[in] method Truncation method
- * @image http://ufoai.ninex.info/wiki/images/Text_position.png
+ * @image html http://ufoai.ninex.info/wiki/images/Text_position.png
  * @note the x, y, width and height values are all normalized here - don't use the
  * viddef settings for drawstring calls - make them all relative to VID_NORM_WIDTH
  * and VID_NORM_HEIGHT

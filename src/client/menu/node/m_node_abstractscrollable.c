@@ -105,6 +105,7 @@ qboolean MN_SetScroll (menuScroll_t *scroll, int viewPos, int viewSize, int full
 
 /**
  * @brief Set the Y scroll to a position, and call event if need
+ * @param[in] node Context node
  * @param[in] viewPos New position to set, else -1 if no change
  * @param[in] viewSize New view size to set, else -1 if no change
  * @param[in] fullSize New full size to set, else -1 if no change

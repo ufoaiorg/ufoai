@@ -299,8 +299,7 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t
 
 /**
  * @brief Allocate and initialize an expression according to a string
- * @param[in] token String describing a condition
- * @param[out] condition Condition to initialize
+ * @param[in] description String describing a condition
  * @return The condition if everything is ok, NULL otherwise
  */
 menuAction_t *MN_AllocStaticStringCondition (const char *description)

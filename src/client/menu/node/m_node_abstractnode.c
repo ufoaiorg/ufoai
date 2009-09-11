@@ -175,8 +175,8 @@ void MN_NodeGetPoint (const menuNode_t* node, vec2_t pos, byte pointDirection)
 
 /**
  * @brief Returns the absolute position of a menunode
- * @param[in] menunode
- * @param[out] pos
+ * @param[in] node Context node
+ * @param[out] pos Absolute position
  */
 void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 {
@@ -213,7 +213,7 @@ void MN_NodeRelativeToAbsolutePoint (const menuNode_t* node, vec2_t pos)
 
 /**
  * @brief Update an absolute position to a relative one
- * @param[in] menunode
+ * @param[in] node Context node
  * @param[in,out] x an absolute x position
  * @param[in,out] y an absolute y position
  */
@@ -262,7 +262,7 @@ void MN_UnHideNode (menuNode_t* node)
 
 /**
  * @brief Search a child node by given name
- * @node Only search with one depth
+ * @note Only search with one depth
  */
 menuNode_t *MN_GetNode (const menuNode_t* const node, const char *name)
 {

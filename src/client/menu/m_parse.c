@@ -1001,8 +1001,8 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
  * @sa MN_ParseMenuBody
  * @sa MN_ParseNodeProperties
  * @todo we can think about merging MN_ParseNodeProperties here
- * @node first token already read
- * @node dont read more than the need token (last right token is '}' of end of node)
+ * @note first token already read
+ * @note dont read more than the need token (last right token is '}' of end of node)
  */
 static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char **token, const char *errhead)
 {

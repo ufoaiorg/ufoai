@@ -200,6 +200,7 @@ int MN_CompleteWithMenu (const char *partial, const char **match)
 /**
  * @brief Push a menu onto the menu stack
  * @param[in] name Name of the menu to push onto menu stack
+ * @param[in] parentName Window name to link as parent-child (else NULL)
  * @return pointer to menuNode_t
  */
 menuNode_t* MN_PushMenu (const char *name, const char *parentName)
@@ -350,6 +351,8 @@ static void MN_CloseAllMenu (void)
  * @brief Init the stack to start with a menu, and have an alternative menu with ESC
  * @param[in] activeMenu The first active menu of the stack, else NULL
  * @param[in] mainMenu The alternative menu, else NULL if nothing
+ * @param[in] popAll If true, clean up the stack first
+ * @param[in] pushActive If true, push the active window into the stack
  * @todo remove Cvar_Set we have direct access to the cvar
  * @todo check why activeMenu can be NULL. It should never be NULL: a stack must not be empty
  * @todo We should only call it a very few time. When we switch from/to this different par of the game: main-option-menu / geoscape-and-base / battlescape
@@ -529,7 +532,6 @@ menuNode_t* MN_GetActiveMenu (void)
 
 /**
  * @brief Determine the position and size of render
- * @param[in] menu : use its position and size properties
  */
 void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 {

@@ -131,7 +131,7 @@ static nodeBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
 
 /**
  * @brief Get a property from a behaviour or his inheritance
- * @param[in] node Requested node
+ * @param[in] behaviour Context behaviour
  * @param[in] name Property name we search
  * @return A value_t with the requested name, else NULL
  */
@@ -196,8 +196,8 @@ const char* MN_GetPath (const menuNode_t* node)
  * Reserved token 'menu' and 'parent' can be used to navigate.
  * If relativeNode is set, the path can start with reserved token
  * 'this', 'menu' and 'parent' (relative to this node).
- * The function can return a node property by using a '@',
- * the path 'foo@pos' will return the menu foo and the property 'pos'
+ * The function can return a node property by using a '\@',
+ * the path 'foo\@pos' will return the menu foo and the property 'pos'
  * from the 'window' behaviour.
  * @param[in] path Path to read. Contain a node location with dot seprator and a facultative property
  * @param[in] relativeNode relative node where the path start. It allow to use facultative command to start the path (this, parent, menu).

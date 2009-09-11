@@ -83,6 +83,11 @@ menuIcon_t* MN_AllocStaticIcon (const char* name)
 
 /**
  * @param[in] status 0:normal, 1:hover, 2:disabled, 3:clicked
+ * @param[in] icon Context icon
+ * @param[in] posX Absolute X position of the top-left corner
+ * @param[in] posY Absolute Y position of the top-left corner
+ * @param[in] sizeX Width of the bounded box
+ * @param[in] sizeY Height of the bounded box
  * @todo use named const for status
  */
 void MN_DrawIconInBox (const menuIcon_t* icon, int status, int posX, int posY, int sizeX, int sizeY)

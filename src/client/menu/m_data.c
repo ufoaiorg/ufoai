@@ -256,9 +256,10 @@ void MN_UpdateInvisOptions (menuOption_t *option, const linkedList_t *stringList
 /**
  * @brief Init an option with a very little set of value.
  * @note need you abstract menuOption_t values
+ * @param[in] Context option
  * @param[in] nameID name of the option (should be unique in the option list)
  * @param[in] label label displayed
- * @param[in] label value used when this option is selected
+ * @param[in] value value used when this option is selected
  */
 void MN_InitOption (menuOption_t* option, const char* nameID, const char* label, const char* value)
 {
@@ -385,7 +386,7 @@ static menuOption_t* MN_FindOptionAtIndex (int index, menuOption_t* option, menu
 
 /**
  * @brief Init an option iterator at an index
- * @node invis option are skipped, and child are counted
+ * @note invis option are skipped, and child are counted
  * @param[in] index Requested index (0 is the first option)
  * @param[in] option First element of options (it can be a tree)
  * @param[out] iterator Initialised iterator

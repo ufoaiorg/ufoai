@@ -51,8 +51,8 @@ void MN_OptionNodeSortOptions (menuNode_t *node)
 /**
  * @brief Adds a new selectbox option to a selectbox node
  * @return NULL if menuSelectBoxes is 'full' - otherwise pointer to the selectBoxOption
- * @param[in] node The abstractoption where you want to append the option
- * @param[in] option The option to add
+ * @param[in] node Context node
+ * @param[in] newOption The option to add
  * @note You have to add the values manually to the option pointer
  */
 menuOption_t* MN_NodeAppendOption (menuNode_t *node, menuOption_t *newOption)

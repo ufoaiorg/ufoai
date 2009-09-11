@@ -81,10 +81,10 @@ static const invList_t *dragInfoIC;
 /**
  * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
  * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
- * @param[in] i Pointer to the inventory where we will search.
- * @param[in] container Container in the inventory.
- * @param[in] x/y Position in the scrollable container that you want to check. Ignored if "item" is set.
- * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
+ * @param[in] node Context node
+ * @param[in] item Item requersted
+ * @param[in] filter Filter used.
+ * @todo Remove filter it is not a generic concept, and here it mean nothing
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa Com_SearchInInventory
  */
@@ -116,7 +116,7 @@ typedef struct {
  * @brief Compute the next itemID
  * @note If something found, item type can be find with iterator->itemID
  * @note If item is available into the container iterator->itemFound point to this element
- * @node If nothing found (no next element) then iterator->itemID >= csi.numODs
+ * @note If nothing found (no next element) then iterator->itemID >= csi.numODs
  */
 static void MN_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 {
@@ -228,6 +228,7 @@ void MN_ContainerNodeSetFilter (menuNode_t* node, int num)
  * @brief Update display of scroll buttons.
  * @note The cvars "mn_cont_scroll_prev_hover" and "mn_cont_scroll_next_hover" are
  * set by the "in" and "out" functions of the scroll buttons.
+ * @param[in] Context node
  */
 static void MN_ContainerNodeUpdateScroll (menuNode_t* node)
 {
@@ -1149,10 +1150,9 @@ static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
 /**
  * @brief Try to autoplace an item at a position
  * when right-click was used in the inventory.
- * @param[in] node The node in the menu that the mouse is over (i.e. a container node).
- * @param[in] base The base we are in.
- * @param[in] mouseX/mouseY Mouse coordinates.
- * @param[in] rightClick If we want to auto-assign items instead of dragging them this has to be qtrue.
+ * @param[in] node The context node
+ * @param[in] mouseX X mouse coordinates.
+ * @param[in] mouseY Y mouse coordinates.
  * @todo None generic function. Not sure we can do it in a generic way
  */
 static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)

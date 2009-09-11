@@ -65,10 +65,8 @@ static void MN_TextListNodeMouseMove (menuNode_t *node, int x, int y)
 
 /**
  * @brief Handles line breaks and drawing for MN_TEXT menu nodes
- * @param[in] text Text to draw
- * @param[in] node The current menu node
- * @param[in] x The fixed x position every new line starts
- * @param[in] y The fixed y position the text node starts
+ * @param[in] node The context node
+ * @param[in] list The text list to draw
  */
 static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
 {

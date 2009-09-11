@@ -68,6 +68,8 @@ static void MN_VScrollbarNodeGetElementSize (menuNode_t *node, int description[5
 
 /**
  * @brief Get an element of the scrollbar at a position
+ * @param[in] node Absolute position y
+ * @param[in] description Size of each scroll bar elements (beginarrow, mid, scroll, mid, endarrow)
  * @param[in] x Absolute position x
  * @param[in] y Absolute position y
  */

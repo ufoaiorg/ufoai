@@ -160,15 +160,7 @@ static void MN_MessageDraw(const menuNode_t *node, message_t *message, const cha
 
 /**
  * @brief Draws the messagesystem node
- * @param[in] font Font string to use
- * @param[in] node The current menu node
- * @param[in] x The fixed x position every new line starts
- * @param[in] y The fixed y position the text node starts
- * @note For efficiency, scrolling is based on the count of messages
- * rather than a count of linewrapped lines. The result is that
- * scrolling of the message window scrolls message by message,
- * which looks better anyway.
- * @todo Campaign mode only function
+ * @param[in] node The context menu node
  */
 static void MN_MessageListNodeDraw (menuNode_t *node)
 {

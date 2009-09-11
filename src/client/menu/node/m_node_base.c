@@ -279,9 +279,8 @@ static void MN_BaseMapNodeDrawTooltip (menuNode_t *node, int x, int y)
  * @brief Left click on the basemap
  * @sa MN_BaseMapRightClick
  * @param[in] node The menu node definition for the base map
- * @param[in,out] base The base we are just viewing (and clicking)
- * @param[in] x The x screen coordinate
- * @param[in] y The y screen coordinate
+ * @param[in] x Absolute X mouse position into the screen
+ * @param[in] y Absolute Y mouse position into the screen
  */
 static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
 {
@@ -324,10 +323,9 @@ static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
 /**
  * @brief Right click on the basemap
  * @sa MN_BaseMapNodeClick
- * @param[in] node The menu node definition for the base map
- * @param[in,out] base The base we are just viewing (and clicking)
- * @param[in] x The x screen coordinate
- * @param[in] y The y screen coordinate
+ * @param[in] node Context node
+ * @param[in] x Absolute x mouse coordinate (screen coordinates)
+ * @param[in] y Absolute y mouse coordinate (screen coordinates)
  */
 static void MN_BaseMapNodeRightClick (menuNode_t *node, int x, int y)
 {

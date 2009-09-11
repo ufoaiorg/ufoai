@@ -157,7 +157,9 @@ static inline const char* MN_GenCommandReadProperty (const char* input, char* ou
  * @brief Replace injection identifiers (e.g. <eventParam>) by a value
  * @note The injection identifier can be every node value - e.g. <image> or <width>.
  * It's also possible to do something like
- * @code cmd "set someCvar <min>/<max>"
+ * @code
+ * cmd "set someCvar <min>/<max>"
+ * @endcode
  */
 const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam, const char* input, qboolean addNewLine)
 {

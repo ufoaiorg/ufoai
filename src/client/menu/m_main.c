@@ -53,7 +53,9 @@ static void MN_CheckCvar (const cvar_t *cvar)
 }
 
 /**
+ * @param[in] name Name of the cvar
  * @param[in] str Might be NULL if you want to set a float value
+ * @param[in] value Float value to set
  * @todo move it into a better file
  */
 void MN_SetCvar (const char *name, const char *str, float value)
@@ -231,7 +233,7 @@ static void MN_Memory_f (void)
 /**
  * @brief Executes confunc - just to identify those confuncs in the code - in
  * this frame.
- * @param[in] confunc The confunc id that should be executed
+ * @param[in] fmt Construct string it will execute (command and param)
  */
 void MN_ExecuteConfunc (const char *fmt, ...)
 {

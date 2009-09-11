@@ -719,7 +719,10 @@ static void MN_RadarNodeMouseUp (menuNode_t *node, int x, int y, int button)
 
 /**
  * Return the rect where the radarmap should be, when we generate radar images
+ * @param[out] x X position of the rect in the frame buffer (from bottom-to-top according to the screen)
  * @param[out] y Y position of the rect in the frame buffer (from bottom-to-top according to the screen)
+ * @param[out] width Width of the rect in the frame buffer (from bottom-to-top according to the screen)
+ * @param[out] height Height of the rect in the frame buffer (from bottom-to-top according to the screen)
  * @todo fix that function, map is not well captured
  */
 static void MN_GetRadarMapInFrameBuffer(int *x, int *y, int *width, int *height)

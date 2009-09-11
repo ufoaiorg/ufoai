@@ -138,8 +138,7 @@ void MN_ParseFont (const char *name, const char **text)
 
 /**
  * @brief Return the font for a specific node or default font
- * @param[in] m The current menu pointer - if NULL we will use the current mn.menuStack
- * @param[in] n The node to get the font for - if NULL f_small is returned
+ * @param[in] node Context node
  * @return char pointer with font name (default is f_small)
  */
 const char *MN_GetFontFromNode (const menuNode_t *const node)
