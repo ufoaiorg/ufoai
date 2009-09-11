@@ -465,6 +465,7 @@ static void CMod_LoadBrushSides (const lump_t * l, const vec3_t shift)
 
 /**
  * @param[in] source Source will be set to the end of the compressed data block!
+ * @param[in] dataStart where to place the uncompressed data
  * @sa CompressRouting (ufo2map)
  * @sa CMod_LoadRouting
  */
@@ -718,7 +719,7 @@ trace_t CM_HintedTransformedBoxTrace (const int tile, const vec3_t start, const 
 /**
  * @brief Performs box traces against the world and all inline models, gives the hit position back
  * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
+ * @param[in] end The position where the trace ends.
  * @param[in] mins The minimum extents of the collision box that is projected.
  * @param[in] maxs The maximum extents of the collision box that is projected.
  * @param[in] levelmask A mask of the game levels to trace against. Mask 0x100 filters clips.
@@ -1015,6 +1016,7 @@ static void CMod_LoadLighting (const lump_t * l)
 /**
  * @brief Adds in a single map tile
  * @param[in] name The (file-)name of the tile to add.
+ * @param[in] day whether the lighting for day or night should be loaded.
  * @param[in] sX The x position on the world plane (grid position) - values from -(PATHFINDING_WIDTH / 2) up to PATHFINDING_WIDTH / 2 are allowed
  * @param[in] sY The y position on the world plane (grid position) - values from -(PATHFINDING_WIDTH / 2) up to PATHFINDING_WIDTH / 2 are allowed
  * @param[in] sZ The height level on the world plane (grid position) - values from 0 up to PATHFINDING_HEIGHT are allowed
@@ -1191,9 +1193,9 @@ static void CMod_RerouteMap (void)
  * @brief Loads in the map and all submodels
  * @note This function loads the collision data from the bsp file. For
  * rendering @c R_ModBeginLoading is used.
- * @param[in] tiles Map name(s) relative to base/maps
+ * @param[in] tiles	Map name(s) relative to base/maps
  * @param[in] day Use the day (@c true) or the night (@c false) version of the map
- * @param[in] In case you gave more than one tile (Random map assembly [rma]) you also
+ * @param[in] pos In case you gave more than one tile (Random map assembly [rma]) you also
  * have to provide the positions where those tiles should be placed at.
  * @param[out] mapchecksum The checksum of the bsp file to check for in multiplayer games
  * @sa CM_AddMapTile
@@ -1484,6 +1486,7 @@ void Grid_DumpServerRoutes_f (void)
 /**
 * @brief Checks one field (square) on the grid of the given routing data (i.e. the map).
  * @param[in] map Routing data/map.
+ * @param[in] actorSize width of the actor in cells
  * @param[in] x Field in x direction
  * @param[in] y Field in y direction
  * @param[in] z Field in z direction
@@ -2029,6 +2032,7 @@ pos_t Grid_MoveLength (const struct pathing_s *path, const pos3_t to, byte crouc
 /**
  * @brief The next stored move direction
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] actorSize width of the actor in cells
  * @param[in] from
  * @return (Guess: a direction index (see dvecs and DIRECTIONS))
  * @sa Grid_MoveCheck
@@ -2051,6 +2055,7 @@ int Grid_MoveNext (const struct routing_s *map, const int actorSize, struct path
 /**
  * @brief Returns the height of the floor in a cell.
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] actorSize width of the actor in cells
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's ceiling.
  */
@@ -2086,6 +2091,7 @@ int Grid_Height (const struct routing_s *map, const int actorSize, const pos3_t 
 /**
  * @brief Returns the height of the floor in a cell.
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] actorSize width of the actor in cells
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's floor.
  */
@@ -2103,6 +2109,7 @@ int Grid_Floor (const struct routing_s *map, const int actorSize, const pos3_t p
 /**
  * @brief Returns the maximum height of an obstruction that an actor can travel over.
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] actorSize width of the actor in cells
  * @param[in] pos Position in the map to check the height
  * @return The actual model height increase needed to move into an adjacent cell.
  */
@@ -2132,6 +2139,7 @@ int Grid_TUsUsed (int dir)
 /**
  * @brief Returns non-zero if the cell is filled (solid) and cannot be entered.
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] actorSize width of the actor in cells
  * @param[in] pos Position in the map to check for filling
  * @return 0 if the cell is vacant (of the world model), non-zero otherwise.
  */
@@ -2189,6 +2197,7 @@ pos_t Grid_Fall (const struct routing_s *map, const int actorSize, const pos3_t 
  * @brief Converts a grid position to world coordinates
  * @sa Grid_Height
  * @param[in] map The routing map
+ * @param[in] actorSize width of the actor in cells
  * @param[in] pos The grid position
  * @param[out] vec The world vector
  */
