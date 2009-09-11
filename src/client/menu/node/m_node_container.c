@@ -83,7 +83,7 @@ static const invList_t *dragInfoIC;
  * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
  * @param[in] node Context node
  * @param[in] item Item requested
- * @param[in] filter Filter used.
+ * @param[in] filterType Filter used.
  * @todo Remove filter it is not a generic concept, and here it mean nothing
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa Com_SearchInInventory
@@ -228,7 +228,7 @@ void MN_ContainerNodeSetFilter (menuNode_t* node, int num)
  * @brief Update display of scroll buttons.
  * @note The cvars "mn_cont_scroll_prev_hover" and "mn_cont_scroll_next_hover" are
  * set by the "in" and "out" functions of the scroll buttons.
- * @param[in] Context node
+ * @param[in] node Context node
  */
 static void MN_ContainerNodeUpdateScroll (menuNode_t* node)
 {
@@ -288,7 +288,7 @@ void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 
 /**
  * @brief Draws an item to the screen
- *
+ * @param[in] node Context node
  * @param[in] org Node position on the screen (pixel). Single nodes: Use the center of the node.
  * @param[in] item The item to draw.
  * @param[in] x Position in container. Set this to -1 if it's drawn in a single container.

@@ -120,6 +120,7 @@ static inline void MN_InsertMenuIntoStack (menuNode_t *menu, int position)
 /**
  * @brief Push a menu onto the menu stack
  * @param[in] name Name of the menu to push onto menu stack
+ * @param[in] parent Window name to link as parent-child (else NULL)
  * @param[in] delete Delete the menu from the menu stack before adding it again
  * @return pointer to menuNode_t
  */

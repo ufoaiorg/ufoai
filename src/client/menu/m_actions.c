@@ -154,11 +154,11 @@ static inline const char* MN_GenCommandReadProperty (const char* input, char* ou
 }
 
 /**
- * @brief Replace injection identifiers (e.g. <eventParam>) by a value
- * @note The injection identifier can be every node value - e.g. <image> or <width>.
+ * @brief Replace injection identifiers (e.g. &lt;eventParam&gt;) by a value
+ * @note The injection identifier can be every node value - e.g. &lt;image&gt; or &lt;width&gt;.
  * It's also possible to do something like
  * @code
- * cmd "set someCvar <min>/<max>"
+ * cmd "set someCvar &lt;min&gt;/&lt;max&gt;"
  * @endcode
  */
 const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam, const char* input, qboolean addNewLine)
@@ -388,7 +388,9 @@ static void MN_ExecuteInjectedActions(const menuNode_t* source, qboolean useCmdP
 
 /**
  * @brief Execute an action from a source
+ * @param[in] source Context node
  * @param[in] useCmdParam If true, inject every where its possible command line param
+ * @param[in] action Action to execute
  */
 static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* action)
 {
@@ -555,6 +557,7 @@ menuAction_t* MN_AllocStaticCommandAction (char *command)
 
 /**
  * @brief Set a new action to a @c menuAction_t pointer
+ * @param[in,out] action Allocated action
  * @param[in] type Only @c EA_CMD is supported
  * @param[in] data The data for this action - in case of @c EA_CMD this is the commandline
  * @note You first have to free existing node actions - only free those that are
