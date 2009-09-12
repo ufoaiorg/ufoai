@@ -507,11 +507,13 @@ static int SV_CalcRating (const mapInfo_t *map)
 static void SV_AddTile (mapInfo_t *map, const mTile_t *tile, int x, int y, int idx, int pos)
 {
 	int tx, ty;
+#ifdef DEBUG
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 
 	/* check vor valid grid positions */
 	assert(x % mAsm->dx == 0);
 	assert(y % mAsm->dy == 0);
+#endif
 
 	/* add the new tile */
 	for (ty = 0; ty < tile->h; ty++)
@@ -714,9 +716,11 @@ static void SV_AddMapTiles (mapInfo_t *map)
 	const int mapSize = mAsm->size;
 	const int numToPlace = map->numToPlace;
 	const mToPlace_t *mToPlace = map->mToPlace;
-	const mPlaced_t *mPlaced = map->mPlaced;
 	short prList[MAX_RANDOM_MAP_HEIGHT * MAX_RANDOM_MAP_WIDTH];
 	const int start = map->numPlaced;
+#ifdef DEBUG
+	const mPlaced_t *mPlaced = map->mPlaced;
+#endif
 
 	/* shuffle only once, the map will be build with that seed */
 	RandomList(mapSize, prList);
@@ -754,7 +758,9 @@ static void SV_AddMapTiles (mapInfo_t *map)
 
 			/* tile does not fit, restore last status - replace the last tile */
 			assert(map->numPlaced > 0);
+#ifdef DEBUG
 			assert(idx == mPlaced[map->numPlaced - 1].idx);
+#endif
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}

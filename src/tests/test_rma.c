@@ -144,14 +144,14 @@ static void testMassAssemblySequential (void)
 int UFO_AddRandomMapAssemblyTests (void)
 {
 	static cvar_t svt;
+	/* add a suite to the registry */
+	CU_pSuite RandomMapAssemblySuite = CU_add_suite("RandomMapAssemblyTests", UFO_InitSuiteRandomMapAssembly, UFO_CleanSuiteRandomMapAssembly);
 
 	if (!sv_threads) {
 		sv_threads = &svt;
 		sv_threads->integer = 0;
 	}
 
-		/* add a suite to the registry */
-	CU_pSuite RandomMapAssemblySuite = CU_add_suite("RandomMapAssemblyTests", UFO_InitSuiteRandomMapAssembly, UFO_CleanSuiteRandomMapAssembly);
 	if (RandomMapAssemblySuite == NULL)
 		return CU_get_error();
 
