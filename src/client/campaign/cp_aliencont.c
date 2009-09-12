@@ -520,15 +520,16 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
  */
 qboolean AL_CheckAliveFreeSpace (const base_t *base, const aliensCont_t *containment, const int num)
 {
-	/* you need Alien Containment and it's dependencies to handle aliens */
-	if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
-		return qfalse;
-
 	if (num > 0) {
 		/* We add aliens */
+		/* you need Alien Containment and it's dependencies to handle aliens */
+		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
+			return qfalse;
 		if (base->capacities[CAP_ALIENS].cur + num > base->capacities[CAP_ALIENS].max)
 			return qfalse;
 	} else {
+		/* @note don't check building status here.
+		 * dependencies may have been destroyed before alien container (B_Destroy) */
 		if (base->capacities[CAP_ALIENS].cur + num < 0)
 			return qfalse;
 		if (containment && (containment->amountAlive + num < 0))
