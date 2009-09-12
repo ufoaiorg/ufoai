@@ -24,6 +24,16 @@ class Element:
 	def addDoc(self, comments):
 		self.doc = comments
 
+	def getSuperproperty(self):
+		if not self.override:
+			return None
+		behaviour = self.node.getSuperclass()
+		while behaviour != None:
+			prop = behaviour.getProperty(self.name)
+			if prop != None:
+				return prop
+			behaviour = behaviour.getSuperclass()
+		
 class NodeBehaviour:
 	def __init__(self):
 		self.name = ""
@@ -48,6 +58,15 @@ class NodeBehaviour:
 	def getSuperclass(self):
 		return self.package.getBehaviour(self.extends)
 	
+	def getProperty(self, propertyName):
+		if propertyName in self.methods:
+			return self.methods[propertyName]
+		if propertyName in self.callbacks:
+			return self.callbacks[propertyName]
+		if propertyName in self.properties:
+			return self.properties[propertyName]
+		return None
+
 	def addProperty(self, element):
 		if element.type == "V_UI_NODEMETHOD":
 			self.methods[element.name] = element

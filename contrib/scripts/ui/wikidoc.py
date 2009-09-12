@@ -41,13 +41,15 @@ def genDoxygenContent(doc):
 	return result
 
 def genPropertyDoc(node, element):
-	type = ""
+	override = ""
 	if element.override:
-		type = " (override)"
+		prop = element.getSuperproperty()
+		behaviour = prop.node
+		override = " (override&nbsp;[[#" + behaviour.name + "]])"
 
 	result = ""
 	result += '|-\n'
-	result += '| ' + element.name + type + ' || [[' + element.type + ']] || ' + genDoxygenContent(element.doc) + '\n'
+	result += '| ' + element.name + override + ' || [[' + element.type + ']] || ' + genDoxygenContent(element.doc) + '\n'
 	return result
 
 def genPropertyTitle(title):
