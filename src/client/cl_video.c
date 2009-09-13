@@ -87,6 +87,8 @@ qboolean VID_GetModeInfo (void)
 	} else {
 		viddef.width  = vid_modes[viddef.mode].width;
 		viddef.height = vid_modes[viddef.mode].height;
+		Cvar_SetValue("vid_width", viddef.width);
+		Cvar_SetValue("vid_height", viddef.height);
 	}
 
 	return qtrue;

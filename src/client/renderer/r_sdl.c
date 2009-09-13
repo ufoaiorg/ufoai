@@ -174,6 +174,8 @@ qboolean R_InitGraphics (void)
 		Com_Printf("I: video mode requested: %dx%d\nI: video mode used: %dx%d\n", viddef.width, viddef.height, screen->w, screen->h);
 		viddef.width = screen->w;
 		viddef.height = screen->h;
+		Cvar_SetValue("vid_width", viddef.width);
+		Cvar_SetValue("vid_height", viddef.height);
 	}
 
 	SDL_ShowCursor(SDL_DISABLE);
