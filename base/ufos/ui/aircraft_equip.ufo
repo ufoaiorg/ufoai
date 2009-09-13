@@ -7,7 +7,7 @@ window aircraft_equip extends iaircraft
 	// background
 	// ==================
 
-	panel type_background {
+	panel list_background {
 		pos		"24 441"
 		size	"292 319"
 		image	"ui/panel_grey_green"
@@ -35,11 +35,13 @@ window aircraft_equip extends iaircraft
 			*airequip_zone_select1@image  = "ui/airequip_selected_element"
 			*airequip_zone_select2@image  = ""
 			*cvar:mn_aircraft_item_selected = -1
+			*list_background@image = "ui/panel_grey_green"
 			cmd "airequip_zone_select 1;"
 		} elif ( <1> eq "zone2" ) {
 			*airequip_zone_select1@image  = ""
 			*airequip_zone_select2@image  = "ui/airequip_selected_element"
 			*cvar:mn_aircraft_item_selected = -1
+			*list_background@image = "ui/panel_grey_green"
 			cmd "airequip_zone_select 2;"
 		} elif ( <1> eq "slot" ) {
 			*cvar:tmp = ""
@@ -55,6 +57,7 @@ window aircraft_equip extends iaircraft
 		} elif ( <1> eq "item" ) {
 			*airequip_zone_select1@image  = ""
 			*airequip_zone_select2@image  = ""
+			*list_background@image = "ui/panel_grey_white"
 			cmd "airequip_list_click <2>" 
 		}
 	}
