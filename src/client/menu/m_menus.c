@@ -729,6 +729,23 @@ static void MN_FireInit_f (void)
 	}
 }
 
+void MN_InitStack_f (void) {
+	const char *main;
+	const char *option = NULL;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <mainwindow> [<optionwindow>]\n", Cmd_Argv(0));
+		return;
+	}
+
+	main = Cmd_Argv(1);
+	if (Cmd_Argc() == 3) {
+		option = Cmd_Argv(2);
+	}
+
+	MN_InitStack(main, option, qtrue, qtrue);
+}
+
 void MN_InitMenus (void)
 {
 	mn_sys_main = Cvar_Get("mn_sys_main", "", 0, "This is the main menu id that is at the very first menu stack - also see mn_sys_active");
@@ -743,6 +760,7 @@ void MN_InitMenus (void)
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
 	Cmd_AddCommand("mn_close", MN_CloseMenu_f, "Close a menu");
 	Cmd_AddCommand("mn_move", MN_SetNewMenuPos_f, "Moves the menu to a new position.");
+	Cmd_AddCommand("mn_initstack", MN_InitStack_f, "Initialize the window stack with a main and an option window.");
 
 	/** @todo move it outside */
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));

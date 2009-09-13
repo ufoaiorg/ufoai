@@ -207,16 +207,20 @@ window lostgame
 		font		"f_verysmall"
 		textalign	ur
 		color		"0 0.8 0 0.9"
+		ghost		true
 	}
 
 	// ==================
-	// leave
+	// click
 	// ==================
 
 	zone leave
 	{
-		size		"1024 768"
-		onClick		{ cmd "mn_pop;" }
+		pos "0 0"
+		size "1024 768"
+		onClick {
+			cmd "initmainui;"
+		}
 	}
 }
 
@@ -282,6 +286,7 @@ window endgame
 		font		"f_verysmall"
 		textalign	ur
 		color		"0 0.8 0 0.9"
+		ghost		true
 	}
 
 	func onInit {
@@ -289,12 +294,15 @@ window endgame
 	}
 
 	// ==================
-	// leave
+	// click
 	// ==================
 
 	zone leave
 	{
-		size		"1024 768"
-		onClick		{ cmd "mn_pop; mn_push main; seq_start credits;" }
+		pos "0 0"
+		size "1024 768"
+		onClick {
+			cmd "initmainui; seq_start credits;"
+		}
 	}
 }
