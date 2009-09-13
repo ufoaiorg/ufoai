@@ -49,9 +49,9 @@ guint toggle_button_connect_callback (GtkToggleButton* button, const Callback& c
 
 void button_set_icon (GtkButton* button, const std::string& icon)
 {
-	GtkImage* image = new_local_image(icon);
-	gtk_widget_show(GTK_WIDGET(image));
-	gtk_container_add(GTK_CONTAINER(button), GTK_WIDGET(image));
+	GtkWidget* image = gtkutil::getImage(icon);
+	gtk_widget_show(image);
+	gtk_container_add(GTK_CONTAINER(button), image);
 }
 
 void toggle_button_set_active_no_signal (GtkToggleButton* button, gboolean active)

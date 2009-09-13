@@ -49,47 +49,19 @@ GdkPixbuf* pixbuf_new_from_file_with_mask (const std::string& fileName)
 	}
 }
 
-GtkImage* image_new_from_file_with_mask (const std::string& fileName)
-{
-	GdkPixbuf* rgba = pixbuf_new_from_file_with_mask(fileName);
-	if (rgba == 0) {
-		return 0;
-	} else {
-		GtkImage* image = GTK_IMAGE(gtk_image_new_from_pixbuf(rgba));
-		gdk_pixbuf_unref(rgba);
-		return image;
-	}
-}
-
-GtkImage* image_new_missing ()
-{
-	return GTK_IMAGE(gtk_image_new_from_stock(GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_SMALL_TOOLBAR));
-}
-
-static inline GtkImage* new_image (const std::string& fileName)
-{
-	GtkImage* image = image_new_from_file_with_mask(fileName);
-	if (image != 0)
-		return image;
-
-	return image_new_missing();
-}
-
-GtkImage* new_local_image (const std::string& fileName)
-{
-	return new_image(g_bitmapsPath + fileName);
-}
-
 namespace gtkutil
 {
+	GtkWidget* getImage (const std::string& fileName)
+	{
+		GtkWidget* image = gtk_image_new_from_pixbuf(gtkutil::getLocalPixbuf(fileName));
+		if (image)
+			return image;
+		return gtk_image_new_from_stock(GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	}
+
 	// Return a GdkPixbuf from a local image
 	GdkPixbuf* getLocalPixbuf (const std::string& fileName)
 	{
 		return gdk_pixbuf_new_from_file(std::string(g_bitmapsPath + fileName).c_str(), NULL);
-	}
-
-	GdkPixbuf* getLocalPixbufWithMask (const std::string& fileName)
-	{
-		return pixbuf_new_from_file_with_mask(g_bitmapsPath + fileName);
 	}
 } // namespace gtkutil

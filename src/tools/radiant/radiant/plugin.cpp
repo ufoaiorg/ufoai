@@ -54,10 +54,11 @@
 #include "commands.h"
 #include "isound.h"
 
+#include "gtkutil/image.h"
 #include "gtkutil/messagebox.h"
 #include "gtkutil/filechooser.h"
-#include "maplib.h"
 
+#include "maplib.h"
 #include "error.h"
 #include "map.h"
 #include "qe3.h"
@@ -167,7 +168,7 @@ class RadiantCoreAPI
 			m_radiantcore.m_pfnFileDialog = &file_dialog;
 			m_radiantcore.m_pfnColorDialog = &color_dialog;
 			m_radiantcore.m_pfnDirDialog = &dir_dialog;
-			m_radiantcore.m_pfnNewImage = &new_plugin_image;
+			m_radiantcore.m_pfnNewImage = &gtkutil::getImage;
 		}
 		IRadiant* getTable ()
 		{

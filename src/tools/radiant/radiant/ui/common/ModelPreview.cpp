@@ -6,6 +6,7 @@
 #include "os/path.h"
 #include "../../referencecache.h"
 #include "math/aabb.h"
+#include "../Icons.h"
 
 #include <gtk/gtk.h>
 
@@ -44,7 +45,7 @@ namespace ui
 		_drawBBox = gtk_toggle_tool_button_new();
 		g_signal_connect(G_OBJECT(_drawBBox), "toggled", G_CALLBACK(callbackToggleBBox), this);
 		gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(_drawBBox), gtk_image_new_from_pixbuf(gtkutil::getLocalPixbuf(
-				"iconDrawBBox.png")));
+				ui::icons::ICON_DRAW_BBOX)));
 		gtk_toolbar_insert(GTK_TOOLBAR(toolbar), _drawBBox, 0);
 
 		// Pack into a frame and return

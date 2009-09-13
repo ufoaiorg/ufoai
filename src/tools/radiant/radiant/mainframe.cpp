@@ -108,6 +108,7 @@
 #include "toolbars.h"
 #include "levelfilters.h"
 #include "sound/SoundManager.h"
+#include "ui/Icons.h"
 
 struct layout_globals_t
 {
@@ -1958,7 +1959,7 @@ void MainFrame::Create (void)
 
 #if !defined(WIN32)
 	{
-		GdkPixbuf* pixbuf = pixbuf_new_from_file_with_mask("bitmaps/icon.bmp");
+		GdkPixbuf* pixbuf = gtkutil::getLocalPixbuf(ui::icons::ICON);
 		if (pixbuf != 0) {
 			gtk_window_set_icon(window, pixbuf);
 			gdk_pixbuf_unref(pixbuf);

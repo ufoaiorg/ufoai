@@ -75,10 +75,10 @@ template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;
 typedef bool (* PFN_QERAPP_COLORDIALOG) (GtkWidget *parent, Vector3& color, const std::string& title);
 
-// load a .bmp file and create a GtkImage widget from it
-// NOTE: 'filename' is relative to <radiant_path>/plugins/bitmaps/
-typedef struct _GtkImage GtkImage;
-typedef GtkImage* (* PFN_QERAPP_NEWIMAGE) (const std::string& filename);
+// load an image file and create a GtkWidget from it
+// NOTE: 'filename' is relative to <radiant_path>/bitmaps/
+typedef struct _GtkWidget GtkWidget;
+typedef GtkWidget* (* PFN_QERAPP_NEWIMAGE) (const std::string& filename);
 
 // ========================================
 

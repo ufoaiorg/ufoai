@@ -25,14 +25,14 @@ namespace gtkutil
 	{
 		private:
 
-			GdkPixbuf* _icon;
+			GtkWidget* _icon;
 			GtkWidget* _label;
 
 		public:
 
 			// Constructor takes the icon name and the label text.
 			IconTextMenuItem (const std::string& icon, const std::string& text) :
-				_icon(gtkutil::getLocalPixbuf(icon)), _label(gtk_label_new(text.c_str()))
+				_icon(gtkutil::getImage(icon)), _label(gtk_label_new(text.c_str()))
 			{
 			}
 
@@ -41,7 +41,7 @@ namespace gtkutil
 			operator GtkWidget* ()
 			{
 				GtkWidget* hbx = gtk_hbox_new(FALSE, 4);
-				gtk_box_pack_start(GTK_BOX(hbx), gtk_image_new_from_pixbuf(_icon), FALSE, FALSE, 0);
+				gtk_box_pack_start(GTK_BOX(hbx), _icon, FALSE, FALSE, 0);
 				gtk_box_pack_start(GTK_BOX(hbx), _label, FALSE, FALSE, 0);
 
 				GtkWidget* menuItem = gtk_menu_item_new();

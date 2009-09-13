@@ -37,15 +37,6 @@
 #include "mainframe.h"
 #include "plugin.h"
 
-GtkImage* new_plugin_image (const std::string& filename)
-{
-	GtkImage* image = image_new_from_file_with_mask(std::string(AppPath_get()) + "bitmaps/" + filename.c_str());
-	if (image != 0)
-		return image;
-
-	return image_new_missing();
-}
-
 static inline GtkToolbarChildType gtktoolbarchildtype_for_toolbarbuttontype (IToolbarButton::EType type)
 {
 	switch (type) {
@@ -66,7 +57,7 @@ static void toolbar_insert (GtkToolbar *toolbar, const char* icon, const char* t
 		IToolbarButton::EType type, GtkSignalFunc handler, gpointer data)
 {
 	gtk_toolbar_append_element(toolbar, gtktoolbarchildtype_for_toolbarbuttontype(type), 0, text, tooltip, "",
-			GTK_WIDGET(new_plugin_image(icon)), handler, data);
+			gtkutil::getImage(icon), handler, data);
 }
 
 static void ActivateToolbarButton (GtkWidget *widget, gpointer data)

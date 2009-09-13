@@ -9,6 +9,7 @@
 #include "../../map.h"
 #include "imaterial.h"
 #include "radiant_i18n.h"
+#include "../Icons.h"
 
 namespace ui
 {
@@ -19,17 +20,11 @@ namespace ui
 		const char* MODEL_CLASSNAME = "misc_model";
 
 		const char* ADD_MODEL_TEXT = _("Create model...");
-		const char* ADD_MODEL_ICON = "cmenu_add_model.png";
 		const char* ADD_LIGHT_TEXT = _("Create light...");
-		const char* ADD_LIGHT_ICON = "cmenu_add_light.png";
 		const char* ADD_ENTITY_TEXT = _("Create entity...");
-		const char* ADD_ENTITY_ICON = "cmenu_add_entity.png";
 		const char* CONNECT_ENTITIES_TEXT = _("Connect entities...");
-		const char* CONNECT_ENTITIES_ICON = "cmenu_connect_entities.png";
 		const char* FIT_TEXTURE_TEXT = _("Fit textures...");
-		const char* FIT_TEXTURE_ICON = "cmenu_fit_texture.png";
 		const char* GENERATE_MATERIALS_TEXT = _("Generate materials...");
-		const char* GENERATE_MATERIALS_ICON = "cmenu_generate_materials.png";
 	}
 
 	// Static class function to display the singleton instance.
@@ -43,14 +38,14 @@ namespace ui
 	OrthoContextMenu::OrthoContextMenu () :
 		_widget(gtk_menu_new())
 	{
-		GtkWidget* addModel = gtkutil::IconTextMenuItem(ADD_MODEL_ICON, ADD_MODEL_TEXT);
-		GtkWidget* addLight = gtkutil::IconTextMenuItem(ADD_LIGHT_ICON, ADD_LIGHT_TEXT);
-		GtkWidget* addEntity = gtkutil::IconTextMenuItem(ADD_ENTITY_ICON, ADD_ENTITY_TEXT);
+		GtkWidget* addModel = gtkutil::IconTextMenuItem(ui::icons::ICON_ADD_MODEL, ADD_MODEL_TEXT);
+		GtkWidget* addLight = gtkutil::IconTextMenuItem(ui::icons::ICON_ADD_LIGHT, ADD_LIGHT_TEXT);
+		GtkWidget* addEntity = gtkutil::IconTextMenuItem(ui::icons::ICON_ADD_ENTITY, ADD_ENTITY_TEXT);
 
 		// Context sensitive menu items
-		_connectEntities = gtkutil::IconTextMenuItem(CONNECT_ENTITIES_ICON, CONNECT_ENTITIES_TEXT);
-		_fitTexture = gtkutil::IconTextMenuItem(FIT_TEXTURE_ICON, FIT_TEXTURE_TEXT);
-		_generateMaterials = gtkutil::IconTextMenuItem(GENERATE_MATERIALS_ICON, GENERATE_MATERIALS_TEXT);
+		_connectEntities = gtkutil::IconTextMenuItem(ui::icons::ICON_CONNECT_ENTITIES, CONNECT_ENTITIES_TEXT);
+		_fitTexture = gtkutil::IconTextMenuItem(ui::icons::ICON_FIT_TEXTURE, FIT_TEXTURE_TEXT);
+		_generateMaterials = gtkutil::IconTextMenuItem(ui::icons::ICON_GENERATE_MATERIALS, GENERATE_MATERIALS_TEXT);
 
 		g_signal_connect(G_OBJECT(addEntity), "activate", G_CALLBACK(callbackAddEntity), this);
 		g_signal_connect(G_OBJECT(addLight), "activate", G_CALLBACK(callbackAddLight), this);

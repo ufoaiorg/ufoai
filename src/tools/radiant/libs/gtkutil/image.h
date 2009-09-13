@@ -26,21 +26,19 @@
 
 void BitmapsPath_set (const std::string& path);
 
-typedef struct _GtkImage GtkImage;
+typedef struct _GtkWidget GtkWidget;
 typedef struct _GdkPixbuf GdkPixbuf;
 
 GdkPixbuf* pixbuf_new_from_file_with_mask (const std::string& filename);
-GtkImage* image_new_from_file_with_mask (const std::string& filename);
-GtkImage* image_new_missing ();
-GtkImage* new_local_image (const std::string& filename); // filename is relative to local bitmaps path
 
 namespace gtkutil
 {
+	// filename is relative to local bitmaps path
+	GtkWidget* getImage (const std::string& filename);
+
 	// Convenience functions to load a local image (from the bitmaps directory)
 	// and return a GdkPixBuf for use by certain GTK widgets (e.g. TreeView).
 	GdkPixbuf* getLocalPixbuf (const std::string& filename);
-
-	GdkPixbuf* getLocalPixbufWithMask (const std::string& filename);
 } // namespace gtkutil
 
 #endif

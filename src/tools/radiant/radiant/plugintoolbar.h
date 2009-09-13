@@ -28,8 +28,4 @@ typedef struct _GtkToolbar GtkToolbar;
 GtkToolbar* create_plugin_toolbar();
 void PluginToolbar_clear();
 
-typedef struct _GtkImage GtkImage;
-//! filename is relative to plugin bitmaps path
-GtkImage* new_plugin_image(const std::string& filename);
-
 #endif

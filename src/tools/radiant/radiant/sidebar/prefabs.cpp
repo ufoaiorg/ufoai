@@ -132,7 +132,7 @@ void PrefabAdd (const std::string& name, GtkTreeIter* parentIter)
 		description = buffer;
 		nameContent << "\n" << description;
 	}
-	GdkPixbuf *img = pixbuf_new_from_file_with_mask(imagePath.c_str());
+	GdkPixbuf *img = pixbuf_new_from_file_with_mask(imagePath);
 	if (!img)
 		g_warning("Could not find image (%s) for prefab %s\n", baseName.c_str(), name.c_str());
 	gtk_tree_store_append(store, &iter, parentIter);

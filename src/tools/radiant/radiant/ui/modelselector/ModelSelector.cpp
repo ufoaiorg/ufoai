@@ -7,6 +7,7 @@
 #include "ifilesystem.h"
 #include "../../referencecache.h"
 #include "os/path.h"
+#include "../Icons.h"
 
 #include <cmath>
 #include <iostream>
@@ -25,11 +26,6 @@ namespace ui
 		const char* MD2_EXTENSION = "md2";
 		const char* MD3_EXTENSION = "md3";
 		const char* OBJ_EXTENSION = "obj";
-		const char* MD2_ICON = "model16red.png";
-		const char* MD3_ICON = "model16green.png";
-		const char* OBJ_ICON = "model16blue.png";
-		const char* SKIN_ICON = "skin16.png";
-		const char* FOLDER_ICON = "folder16.png";
 
 		// Treestore enum
 		enum
@@ -179,17 +175,17 @@ namespace ui
 						// have an actual model rather than a directory, so that the fullname
 						// tree column can be populated
 
-						std::string imgPath = FOLDER_ICON;
+						std::string imgPath = ui::icons::ICON_FOLDER;
 						bool isModel = false;
 
 						if (os::getExtension(dirPath) == MD3_EXTENSION) {
-							imgPath = MD3_ICON;
+							imgPath = ui::icons::ICON_MD3;
 							isModel = true;
 						} else if (os::getExtension(dirPath) == MD2_EXTENSION) {
-							imgPath = MD2_ICON;
+							imgPath = ui::icons::ICON_MD2;
 							isModel = true;
 						} else if (os::getExtension(dirPath) == OBJ_EXTENSION) {
-							imgPath = OBJ_ICON;
+							imgPath = ui::icons::ICON_OBJ;
 							isModel = true;
 						}
 
@@ -224,7 +220,7 @@ namespace ui
 									gtk_tree_store_append(_store, &skIter, &iter);
 									gtk_tree_store_set(_store, &skIter, NAME_COLUMN, i->c_str(), FULLNAME_COLUMN,
 											(MODELS_FOLDER + dirPath).c_str(), SKIN_COLUMN, i->c_str(), IMAGE_COLUMN,
-											gtkutil::getLocalPixbuf(SKIN_ICON), -1);
+											gtkutil::getLocalPixbuf(ui::icons::ICON_SKIN), -1);
 								}
 							}
 						}
@@ -245,7 +241,7 @@ namespace ui
 
 					// Test the extension for supported model formats.
 					std::string ext = os::getExtension(file);
-					if (ext == MD2_EXTENSION || ext == MD3_EXTENSION || ext ==OBJ_EXTENSION) {
+					if (ext == MD2_EXTENSION || ext == MD3_EXTENSION || ext == OBJ_EXTENSION) {
 						addRecursive(rawPath);
 					} else {
 						return;
@@ -403,11 +399,14 @@ namespace ui
 		gtk_list_store_set(_infoStore, &iter, 0, _("Skin name"), 1, skinName.c_str(), -1);
 
 		gtk_list_store_append(_infoStore, &iter);
-		gtk_list_store_set(_infoStore, &iter, 0, _("Material surfaces"), 1, _modelPreview.getModel()->getSurfaceCount().c_str(), -1);
+		gtk_list_store_set(_infoStore, &iter, 0, _("Material surfaces"), 1,
+				_modelPreview.getModel()->getSurfaceCount().c_str(), -1);
 		gtk_list_store_append(_infoStore, &iter);
-		gtk_list_store_set(_infoStore, &iter, 0, _("Total vertices"), 1, _modelPreview.getModel()->getVertexCount().c_str(), -1);
+		gtk_list_store_set(_infoStore, &iter, 0, _("Total vertices"), 1,
+				_modelPreview.getModel()->getVertexCount().c_str(), -1);
 		gtk_list_store_append(_infoStore, &iter);
-		gtk_list_store_set(_infoStore, &iter, 0, _("Total polys"), 1, _modelPreview.getModel()->getPolyCount().c_str(), -1);
+		gtk_list_store_set(_infoStore, &iter, 0, _("Total polys"), 1, _modelPreview.getModel()->getPolyCount().c_str(),
+				-1);
 	}
 
 	/* GTK CALLBACKS */

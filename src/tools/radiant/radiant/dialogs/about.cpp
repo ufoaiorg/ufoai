@@ -63,9 +63,9 @@ void DoAbout (void)
 					GtkFrame* frame = create_dialog_frame("", GTK_SHADOW_IN);
 					gtk_box_pack_start(GTK_BOX (vbox2), GTK_WIDGET(frame), FALSE, FALSE, 0);
 					{
-						GtkImage* image = new_local_image("logo.bmp");
-						gtk_widget_show(GTK_WIDGET(image));
-						gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(image));
+						GtkWidget* image = gtkutil::getImage("logo.bmp");
+						gtk_widget_show(image);
+						gtk_container_add(GTK_CONTAINER(frame), image);
 					}
 				}
 			}
