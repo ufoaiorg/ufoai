@@ -57,6 +57,7 @@
 #include "xywindow.h"
 #include "windowobservers.h"
 #include "renderstate.h"
+#include "ui/Icons.h"
 
 #include "timer.h"
 
@@ -1643,7 +1644,7 @@ void Camera_ToggleFarClip ()
 
 void CamWnd_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_toggle_button(toolbar, _("Cubic clip the camera view (\\)"), "view_cubicclipping.bmp",
+	toolbar_append_toggle_button(toolbar, _("Cubic clip the camera view (\\)"), ui::icons::ICON_VIEW_CLIPPING,
 			"ToggleCubicClip");
 }
 

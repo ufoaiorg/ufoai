@@ -28,92 +28,94 @@
 #include "toolbars.h"
 #include "gtkmisc.h"
 #include "camwindow.h"
+#include "ui/Icons.h"
 
 static void File_constructToolbar (GtkToolbar* toolbar, MainFrame *mainframe)
 {
-	toolbar_append_button(toolbar, _("Open an existing map (CTRL + O)"), "file_open.bmp", "OpenMap");
-	mainframe->SetSaveButton(toolbar_append_button(toolbar, _("Save the active map (CTRL + S)"), "file_save.bmp",
+	toolbar_append_button(toolbar, _("Open an existing map (CTRL + O)"), ui::icons::ICON_OPEN, "OpenMap");
+	mainframe->SetSaveButton(toolbar_append_button(toolbar, _("Save the active map (CTRL + S)"), ui::icons::ICON_SAVE,
 			"SaveMap"));
 }
 
 static void UndoRedo_constructToolbar (GtkToolbar* toolbar, MainFrame *mainframe)
 {
-	mainframe->SetUndoButton(toolbar_append_button(toolbar, _("Undo (CTRL + Z)"), "undo.bmp", "Undo"));
-	mainframe->SetRedoButton(toolbar_append_button(toolbar, _("Redo (CTRL + Y)"), "redo.bmp", "Redo"));
+	mainframe->SetUndoButton(toolbar_append_button(toolbar, _("Undo (CTRL + Z)"), ui::icons::ICON_UNDO, "Undo"));
+	mainframe->SetRedoButton(toolbar_append_button(toolbar, _("Redo (CTRL + Y)"), ui::icons::ICON_REDO, "Redo"));
 }
 
 static void RotateFlip_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_button(toolbar, _("x-axis Flip"), "brush_flipx.bmp", "MirrorSelectionX");
-	toolbar_append_button(toolbar, _("x-axis Rotate"), "brush_rotatex.bmp", "RotateSelectionX");
-	toolbar_append_button(toolbar, _("y-axis Flip"), "brush_flipy.bmp", "MirrorSelectionY");
-	toolbar_append_button(toolbar, _("y-axis Rotate"), "brush_rotatey.bmp", "RotateSelectionY");
-	toolbar_append_button(toolbar, _("z-axis Flip"), "brush_flipz.bmp", "MirrorSelectionZ");
-	toolbar_append_button(toolbar, _("z-axis Rotate"), "brush_rotatez.bmp", "RotateSelectionZ");
+	toolbar_append_button(toolbar, _("x-axis Flip"), ui::icons::ICON_BRUSH_FLIPX, "MirrorSelectionX");
+	toolbar_append_button(toolbar, _("x-axis Rotate"), ui::icons::ICON_BRUSH_ROTATEX, "RotateSelectionX");
+	toolbar_append_button(toolbar, _("y-axis Flip"), ui::icons::ICON_BRUSH_FLIPY, "MirrorSelectionY");
+	toolbar_append_button(toolbar, _("y-axis Rotate"), ui::icons::ICON_BRUSH_ROTATEY, "RotateSelectionY");
+	toolbar_append_button(toolbar, _("z-axis Flip"), ui::icons::ICON_BRUSH_FLIPZ, "MirrorSelectionZ");
+	toolbar_append_button(toolbar, _("z-axis Rotate"), ui::icons::ICON_BRUSH_ROTATEZ, "RotateSelectionZ");
 }
 
 static void Select_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_button(toolbar, _("Select touching"), "selection_selecttouching.bmp", "SelectTouching");
-	toolbar_append_button(toolbar, _("Select inside"), "selection_selectinside.bmp", "SelectInside");
-	toolbar_append_button(toolbar, _("Select whole entity"), "selection_selectentities.bmp",
+	toolbar_append_button(toolbar, _("Select touching"), ui::icons::ICON_SELECT_TOUCHING, "SelectTouching");
+	toolbar_append_button(toolbar, _("Select inside"), ui::icons::ICON_SELECT_INSIDE, "SelectInside");
+	toolbar_append_button(toolbar, _("Select whole entity"), ui::icons::ICON_SELECT_ENTITIES,
 			"ExpandSelectionToEntities");
-	toolbar_append_button(toolbar, _("Select all of type"), "selection_selectcompletetall.bmp", "SelectAllOfType");
-	toolbar_append_button(toolbar, _("Select all Faces of same texture"), "selection_selectallsametex.bmp",
+	toolbar_append_button(toolbar, _("Select all of type"), ui::icons::ICON_SELECT_COMPLETE, "SelectAllOfType");
+	toolbar_append_button(toolbar, _("Select all Faces of same texture"), ui::icons::ICON_SELECT_SAME_TEXTURE,
 			"SelectAllFacesOfTex");
 }
 
 static void CSG_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_button(toolbar, _("CSG Subtract"), "selection_csgsubtract.bmp", "CSGSubtract");
-	toolbar_append_button(toolbar, _("CSG Merge"), "selection_csgmerge.bmp", "CSGMerge");
-	toolbar_append_button(toolbar, _("Make Hollow"), "selection_makehollow.bmp", "CSGHollow");
+	toolbar_append_button(toolbar, _("CSG Subtract"), ui::icons::ICON_CSG_SUBTRACT, "CSGSubtract");
+	toolbar_append_button(toolbar, _("CSG Merge"), ui::icons::ICON_CSG_MERGE, "CSGMerge");
+	toolbar_append_button(toolbar, _("Make Hollow"), ui::icons::ICON_CSG_MAKE_HOLLOW, "CSGHollow");
 }
 
 static void ComponentModes_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_toggle_button(toolbar, _("Select _Vertices"), "modify_vertices.bmp", "DragVertices");
-	toolbar_append_toggle_button(toolbar, _("Select _Edges"), "modify_edges.bmp", "DragEdges");
-	toolbar_append_toggle_button(toolbar, _("Select _Faces"), "modify_faces.bmp", "DragFaces");
+	toolbar_append_toggle_button(toolbar, _("Select _Vertices"), ui::icons::ICON_MODIFY_VERTICES, "DragVertices");
+	toolbar_append_toggle_button(toolbar, _("Select _Edges"), ui::icons::ICON_MODIFY_EDGES, "DragEdges");
+	toolbar_append_toggle_button(toolbar, _("Select _Faces"), ui::icons::ICON_MODIFY_FACES, "DragFaces");
 }
 
 static void Clipper_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_toggle_button(toolbar, _("Clipper (X)"), "view_clipper.bmp", "ToggleClipper");
+	toolbar_append_toggle_button(toolbar, _("Clipper (X)"), ui::icons::ICON_VIEW_CLIPPER, "ToggleClipper");
 }
 
 static void Filters_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_toggle_button(toolbar, _("Filter nodraw"), "filter_nodraw.bmp", "FilterNodraw");
-	toolbar_append_toggle_button(toolbar, _("Filter actorclip"), "filter_actorclip.bmp", "FilterActorClips");
-	toolbar_append_toggle_button(toolbar, _("Filter weaponclip"), "filter_weaponclip.bmp", "FilterWeaponClips");
+	toolbar_append_toggle_button(toolbar, _("Filter nodraw"), ui::icons::ICON_FILTER_NODRAW, "FilterNodraw");
+	toolbar_append_toggle_button(toolbar, _("Filter actorclip"), ui::icons::ICON_FILTER_ACTORCLIP, "FilterActorClips");
+	toolbar_append_toggle_button(toolbar, _("Filter weaponclip"), ui::icons::ICON_FILTER_WEAPONCLIP,
+			"FilterWeaponClips");
 }
 
 static void XYWnd_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_button(toolbar, _("Change views"), "view_change.bmp", "NextView");
+	toolbar_append_button(toolbar, _("Change views"), ui::icons::ICON_VIEW_CHANGE, "NextView");
 }
 
 static void Manipulators_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_toggle_button(toolbar, _("Translate (W)"), "select_mousetranslate.bmp", "MouseTranslate");
-	toolbar_append_toggle_button(toolbar, _("Rotate (R)"), "select_mouserotate.bmp", "MouseRotate");
-	toolbar_append_toggle_button(toolbar, _("Scale"), "select_mousescale.bmp", "MouseScale");
-	toolbar_append_toggle_button(toolbar, _("Resize (Q)"), "select_mouseresize.bmp", "MouseDrag");
+	toolbar_append_toggle_button(toolbar, _("Translate (W)"), ui::icons::ICON_SELECT_MOUSE_TRANSLATE, "MouseTranslate");
+	toolbar_append_toggle_button(toolbar, _("Rotate (R)"), ui::icons::ICON_SELECT_MOUSE_ROTATE, "MouseRotate");
+	toolbar_append_toggle_button(toolbar, _("Scale"), ui::icons::ICON_SELECT_MOUSE_SCALE, "MouseScale");
+	toolbar_append_toggle_button(toolbar, _("Resize (Q)"), ui::icons::ICON_SELECT_MOUSE_RESIZE, "MouseDrag");
 
 	Clipper_constructToolbar(toolbar);
 }
 
 static void LevelFilters_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_button(toolbar, _("Level 1"), "ufoai_level1.bmp", "FilterLevel1");
-	toolbar_append_button(toolbar, _("Level 2"), "ufoai_level2.bmp", "FilterLevel2");
-	toolbar_append_button(toolbar, _("Level 3"), "ufoai_level3.bmp", "FilterLevel3");
-	toolbar_append_button(toolbar, _("Level 4"), "ufoai_level4.bmp", "FilterLevel4");
-	toolbar_append_button(toolbar, _("Level 5"), "ufoai_level5.bmp", "FilterLevel5");
-	toolbar_append_button(toolbar, _("Level 6"), "ufoai_level6.bmp", "FilterLevel6");
-	toolbar_append_button(toolbar, _("Level 7"), "ufoai_level7.bmp", "FilterLevel7");
-	toolbar_append_button(toolbar, _("Level 8"), "ufoai_level8.bmp", "FilterLevel8");
+	toolbar_append_button(toolbar, _("Level 1"), ui::icons::ICON_LEVEL1, "FilterLevel1");
+	toolbar_append_button(toolbar, _("Level 2"), ui::icons::ICON_LEVEL2, "FilterLevel2");
+	toolbar_append_button(toolbar, _("Level 3"), ui::icons::ICON_LEVEL3, "FilterLevel3");
+	toolbar_append_button(toolbar, _("Level 4"), ui::icons::ICON_LEVEL4, "FilterLevel4");
+	toolbar_append_button(toolbar, _("Level 5"), ui::icons::ICON_LEVEL5, "FilterLevel5");
+	toolbar_append_button(toolbar, _("Level 6"), ui::icons::ICON_LEVEL6, "FilterLevel6");
+	toolbar_append_button(toolbar, _("Level 7"), ui::icons::ICON_LEVEL7, "FilterLevel7");
+	toolbar_append_button(toolbar, _("Level 8"), ui::icons::ICON_LEVEL8, "FilterLevel8");
 }
 
 GtkToolbar* create_main_toolbar_horizontal (MainFrame *mainframe)
@@ -154,15 +156,15 @@ GtkToolbar* create_main_toolbar_horizontal (MainFrame *mainframe)
 	Filters_constructToolbar(toolbar);
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
-	toolbar_append_button(toolbar, _("Refresh Models"), "refresh_models.bmp", "RefreshReferences");
-	toolbar_append_button(toolbar, _("Background image"), "background.bmp", "ToggleBackground");
+	toolbar_append_button(toolbar, _("Refresh Models"), ui::icons::ICON_REFRESH_MODELS, "RefreshReferences");
+	toolbar_append_button(toolbar, _("Background image"), ui::icons::ICON_BACKGROUND, "ToggleBackground");
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
-	toolbar_append_button(toolbar, _("Create material entries for selected faces (M)"), "material_generate.bmp",
-			"GenerateMaterialFromTexture");
+	toolbar_append_button(toolbar, _("Create material entries for selected faces (M)"),
+			ui::icons::ICON_MATERIALS_GENERATE, "GenerateMaterialFromTexture");
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
-	toolbar_append_toggle_button(toolbar, _("Show pathfinding info"), "pathfinding.bmp", "ShowPathfinding");
+	toolbar_append_toggle_button(toolbar, _("Show pathfinding info"), ui::icons::ICON_PATHFINDING, "ShowPathfinding");
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 	LevelFilters_constructToolbar(toolbar);
@@ -191,7 +193,7 @@ GtkToolbar* create_main_toolbar_vertical (MainFrame::EViewStyle style)
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	toolbar_append_toggle_button(toolbar, _("Texture Lock (SHIFT + T)"), "texture_lock.bmp", "TogTexLock");
+	toolbar_append_toggle_button(toolbar, _("Texture Lock (SHIFT + T)"), ui::icons::ICON_TEXTURE_LOCK, "TogTexLock");
 
 	return toolbar;
 }
