@@ -54,7 +54,10 @@ void ShowMaterialDefinition (const std::string& append)
 	view.append(append);
 
 	GtkWidget* dialog = gtk_dialog_new_with_buttons(_("Material Definition"), GlobalRadiant().getMainWindow(),
-			GTK_DIALOG_DESTROY_WITH_PARENT, GTK_STOCK_CLOSE, GTK_RESPONSE_OK, NULL);
+			GTK_DIALOG_DESTROY_WITH_PARENT, GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
+			NULL);
+
+	gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
 
 	gtk_container_set_border_width(GTK_CONTAINER(dialog), 12);
 
@@ -66,9 +69,12 @@ void ShowMaterialDefinition (const std::string& append)
 	gtk_widget_show_all(dialog);
 
 	// Show and block
-	gtk_dialog_run(GTK_DIALOG(dialog));
+	gint result = gtk_dialog_run(GTK_DIALOG(dialog));
 
 	gtk_widget_destroy(dialog);
+
+    if (result == GTK_RESPONSE_ACCEPT)
+        view.save();
 }
 
 void GenerateMaterialFromTexture (void)
