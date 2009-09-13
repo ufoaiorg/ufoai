@@ -148,7 +148,7 @@ function start_downloads()
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib_2.20.3-1_win32.zip glib.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib-dev_2.20.3-1_win32.zip glib-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.16/ gtk+-dev_2.16.2-1_win32.zip gtk+-dev.zip
-	download_archive http://ftp.acc.umu.se/pub/gnome/binaries/win32/gtksourceview/2.0/gtksourceview-dev-2.0.2.zip gtksourceview-dev.zip
+	download_archive http://ftp.acc.umu.se/pub/gnome/binaries/win32/gtksourceview/2.0/ gtksourceview-dev-2.0.2.zip gtksourceview-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.24/ pango-dev_1.24.2-1_win32.zip pango-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.26/ atk-dev_1.26.0-1_win32.zip atk-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-tools-0.17.zip gettext-tools.zip
