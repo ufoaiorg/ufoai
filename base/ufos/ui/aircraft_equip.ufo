@@ -13,12 +13,6 @@ window aircraft_equip extends iaircraft
 		image	"ui/panel_grey_green"
 	}
 
-	panel items_background {
-		pos		"317 441"
-		size	"252 319"
-		image	"ui/panel_grey_green"
-	}
-
 	pic equipment_background {
 		pos		"575 460"
 		size	"432 293"
@@ -87,93 +81,104 @@ window aircraft_equip extends iaircraft
 		textalign	cc
 	}
 
-	model mdl_top
-	{
-		model	"*cvar:mn_upmodel_top"
-		autoscale	true
-		pos		"315 517"
-		size	"240 96"
-		view	aircraft_equip
-	}
-
-	text airequip_selected_description
-	{
-		dataid		TEXT_UFOPEDIA_METADATA
-		pos			"331 623"
-		size		"204 120"
-		tabwidth	130
-		font		"f_verysmall"
-		onViewChange {
-			*(abstractscrollbar)airequip_seldesc_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)airequip_seldesc_scroll@viewsize = <viewsize>
-			*(abstractscrollbar)airequip_seldesc_scroll@current = <viewpos>
+	panel item {
+		{
+			pos		"317 441"
+			size	"252 319"
+			image	"ui/panel_grey_green"
 		}
-	}
+		
+		//
+		// Data
+		//
 
-	vscrollbar airequip_seldesc_scroll {
-		image		ui/scrollbar_v_green
-		pos			"535 623"
-		height		"120"
-		hidewhenunused	true
-		onChange 	{
-			*airequip_selected_description@viewpos = <current>
+		model mdl_top
+		{
+			model	"*cvar:mn_upmodel_top"
+			autoscale	true
+			pos		"0 76"
+			size	"240 96"
+			view	aircraft_equip
 		}
-	}
-
-	string airequip_item_name
-	{
-		string		"*cvar:mn_itemname"
-		pos			"315 497"
-		size		"240 20"
-		textalign	cc
-	}
-
-	string airequip_selected
-	{
-		string		"_Selected item:"
-		pos			"333 457"
-		size		"224 25"
-		font		f_big
-		textalign	cc
-
-	}
 	
-	//
-	//	Status of selected item
-	//
-
-	string warning
-	{
-		string		*cvar:mn_aircraft_item_warning
-		image		ui/button_green_small
-		pos			"344 710"
-		size		"200 30"
-		padding		0
-		textalign	cc
-		font		f_small
-		color		"1 0 0 1"
-		onClick		{ cmd "mn_close popup;" }
-		longlines	wrap
-	}
-
-	button button_add
-	{
-		string		"_Equip this item"
-		image		ui/button_green_small
-		pos			"343 712"
-		size		"200 25"
-		onClick		{ cmd "airequip_add_item 1;" }
-		color		"0 0.5 0 1"
-	}
+		text description
+		{
+			dataid		TEXT_UFOPEDIA_METADATA
+			pos			"14 182"
+			size		"204 120"
+			tabwidth	130
+			font		"f_verysmall"
+			onViewChange {
+				*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
+				*node:(abstractscrollbar)parent.description_scroll@viewsize = <viewsize>
+				*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
+			}
+		}
 	
-	button button_remove
-	{
-		string		"_Remove this item"
-		image		ui/button_green_small
-		pos			"343 712"
-		size		"200 25"
-		onClick		{ cmd "airequip_remove_item 1;" }
-		color		"0 0.5 0 1"
+		vscrollbar description_scroll {
+			image		ui/scrollbar_v_green
+			pos			"218 182"
+			height		"120"
+			hidewhenunused	true
+			onChange 	{
+				*node:parent.description@viewpos = <current>
+			}
+		}
+	
+		string airequip_item_name
+		{
+			string		"*cvar:mn_itemname"
+			pos			"0 56"
+			size		"240 20"
+			textalign	cc
+		}
+	
+		string airequip_selected
+		{
+			string		"_Selected item:"
+			pos			"16 16"
+			size		"224 25"
+			font		f_big
+			textalign	cc
+		}
+
+		//
+		//	Status of selected item
+		//
+
+		string warning
+		{
+			string		*cvar:mn_aircraft_item_warning
+			image		ui/button_green_small
+			pos			"27 269"
+			size		"200 30"
+			padding		0
+			textalign	cc
+			font		f_small
+			color		"1 0 0 1"
+			onClick		{ cmd "mn_close popup;" }
+			longlines	wrap
+		}
+	
+		button button_add
+		{
+			string		"_Equip this item"
+			image		ui/button_green_small
+			pos			"26 271"
+			size		"200 25"
+			onClick		{ cmd "airequip_add_item 1;" }
+			color		"0 0.5 0 1"
+		}
+		
+		button button_remove
+		{
+			string		"_Remove this item"
+			image		ui/button_green_small
+			pos			"26 271"
+			size		"200 25"
+			onClick		{ cmd "airequip_remove_item 1;" }
+			color		"0 0.5 0 1"
+		}
 	}
 
 	//
@@ -501,8 +506,6 @@ window aircraft_equip extends iaircraft
 		*airequip_header2@invis = true
 		*airequip_text_zone2@invis = true
 		*airequip_zone_select2@invis = true
-//		*airequip_button_remove2@invis = true
-//		*airequip_button_add2@invis = true
 		*equipment_background@texh = "432 160"
 		*equipment_background@size = "432 160"
 	}
@@ -512,8 +515,6 @@ window aircraft_equip extends iaircraft
 		*airequip_header2@invis = false
 		*airequip_text_zone2@invis = false
 		*airequip_zone_select2@invis = false
-//		*airequip_button_remove2@invis = false
-//		*airequip_button_add2@invis = false
 		*equipment_background@texh = "432 293"
 		*equipment_background@size = "432 293"
 	}
@@ -521,33 +522,33 @@ window aircraft_equip extends iaircraft
 	confunc airequip_installable_item
 	{
 		// display the "add" button
-		*warning@invis = true
-		*button_add@invis = false
-		*button_remove@invis = true
+		*node:parent.item.warning@invis = true
+		*node:parent.item.button_add@invis = false
+		*node:parent.item.button_remove@invis = true
 	}
 
 	confunc airequip_installed_item
 	{
 		// display the "remove" button
-		*warning@invis = true
-		*button_add@invis = true
-		*button_remove@invis = false
+		*node:parent.item.warning@invis = true
+		*node:parent.item.button_add@invis = true
+		*node:parent.item.button_remove@invis = false
 	}
 
 	confunc airequip_noinstallable_item
 	{
 		// display warning
-		*warning@invis = false
-		*button_add@invis = true
-		*button_remove@invis = true
+		*node:parent.item.warning@invis = false
+		*node:parent.item.button_add@invis = true
+		*node:parent.item.button_remove@invis = true
 	}
 
 	confunc airequip_no_item
 	{
 		// display warning
-		*warning@invis = true
-		*button_add@invis = true
-		*button_remove@invis = true
+		*node:parent.item.warning@invis = true
+		*node:parent.item.button_add@invis = true
+		*node:parent.item.button_remove@invis = true
 	}
 
 	confunc airequip_display_slot
