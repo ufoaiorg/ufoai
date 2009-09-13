@@ -40,7 +40,7 @@
 #include "stream/stringstream.h"
 #include "ifilesystem.h"
 #include "ui/common/MaterialDefinitionView.h"
-#include "gtkutil/multimonitor.h"
+#include "gtkutil/MultiMonitor.h"
 #include "AutoPtr.h"
 #include "iarchive.h"
 #include "modulesystem.h"
