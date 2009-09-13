@@ -29,7 +29,7 @@
 #include "qgl.h"
 #include "radiant_i18n.h"
 
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include "texturelib.h"
 #include "container/hashfunc.h"
 #include "container/cache.h"

@@ -27,11 +27,9 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include <string>
+#include "imaterial.h"
 
-void Material_Construct (void);
-void Material_Destroy (void);
-const std::string Material_GetFilename (void);
-void ShowMaterialDefinition (const std::string& append);
+void Material_Construct ();
+void Material_Destroy ();
 
 #endif

@@ -1,4 +1,4 @@
-#include "soundplayer.h"
+#include "SoundPlayer.h"
 
 #include <vorbis/vorbisfile.h>
 #include <iostream>
@@ -9,7 +9,7 @@
 #include "archivelib.h"
 #include "os/path.h"
 #include "imagelib.h" // for ScopedArchiveBuffer
-#include "autoptr.h"
+#include "AutoPtr.h"
 
 // We need the usleep() command. Be sure to include the windows.h
 // header after the local textfilestream.h because there are definition conflicts otherwise.
@@ -20,8 +20,8 @@
 #include <unistd.h>
 #endif
 
-#include "oggfilestream.h"
-#include "wavfileloader.h"
+#include "OggFileStream.h"
+#include "WavFileLoader.h"
 
 namespace sound
 {

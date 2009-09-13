@@ -41,12 +41,19 @@
 #include "ifilesystem.h"
 #include "ui/common/MaterialDefinitionView.h"
 #include "gtkutil/multimonitor.h"
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include "iarchive.h"
+#include "modulesystem.h"
+#include "modulesystem/moduleregistry.h"
+#include "modulesystem/singletonmodule.h"
 
-void ShowMaterialDefinition (const std::string& append)
+MaterialSystem::MaterialSystem ()
 {
-	const std::string& materialName = Material_GetFilename();
+}
+
+void MaterialSystem::showMaterialDefinition (const std::string& append)
+{
+	const std::string& materialName = getMaterialFilename();
 
 	// Construct a shader view and pass the shader name
 	ui::MaterialDefinitionView view;
@@ -73,11 +80,11 @@ void ShowMaterialDefinition (const std::string& append)
 
 	gtk_widget_destroy(dialog);
 
-    if (result == GTK_RESPONSE_ACCEPT)
-        view.save();
+	if (result == GTK_RESPONSE_ACCEPT)
+		view.save();
 }
 
-void GenerateMaterialFromTexture (void)
+void MaterialSystem::generateMaterialFromTexture ()
 {
 	const std::string& mapname = Map_Name(g_map);
 	if (mapname.empty() || Map_Unnamed(g_map)) {
@@ -87,7 +94,7 @@ void GenerateMaterialFromTexture (void)
 	}
 
 	std::string content;
-	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(Material_GetFilename()));
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(getMaterialFilename()));
 	if (file)
 		content = file->getString();
 
@@ -97,19 +104,20 @@ void GenerateMaterialFromTexture (void)
 				!= g_SelectedFaceInstances.m_faceInstances.end(); ++i) {
 			const FaceInstance& faceInstance = *(*i);
 			const Face &face = faceInstance.getFace();
-			std::string texture = face.getShader().getShader();
-			texture = texture.rfind("textures/");
-			std::string materialDefinition = "material " + texture;
+			std::string texture = std::string(face.getShader().getShader());
+			// skip 'textures/'
+			std::string skippedTextureDirectory = &texture[9];
+			std::string materialDefinition = "material " + skippedTextureDirectory;
 			/* check whether there is already an entry for the selected texture */
 			if (content.find(materialDefinition) == std::string::npos)
-				append += "{\n\tmaterial " + texture + "\n\t{\n\t}\n}\n";
+				append += "{\n\t" + materialDefinition + "\n\t{\n\t}\n}\n";
 		}
 	}
 
-	ShowMaterialDefinition(append);
+	showMaterialDefinition(append);
 }
 
-const std::string Material_GetFilename (void)
+const std::string MaterialSystem::getMaterialFilename () const
 {
 	const std::string& mapname = Map_Name(g_map);
 	std::string materialFileName = "materials/" + os::getFilenameFromPath(mapname);
@@ -117,12 +125,44 @@ const std::string Material_GetFilename (void)
 	return materialFileName;
 }
 
-void Material_Construct (void)
+class MaterialSystemAPI
+{
+		MaterialSystem * _materialSystem;
+	public:
+		typedef MaterialSystem Type;
+		STRING_CONSTANT(Name, "*");
+
+		MaterialSystemAPI () :
+			_materialSystem(0)
+		{
+			_materialSystem = new MaterialSystem();
+		}
+		~MaterialSystemAPI ()
+		{
+			delete _materialSystem;
+		}
+
+		MaterialSystem* getTable ()
+		{
+			return _materialSystem;
+		}
+};
+
+typedef SingletonModule<MaterialSystemAPI> MaterialSystemModule;
+typedef Static<MaterialSystemModule> StaticMaterialSystemModule;
+StaticRegisterModule staticRegisterMaterial(StaticMaterialSystemModule::instance());
+
+void GenerateMaterialFromTexture ()
+{
+	GlobalMaterialSystem()->generateMaterialFromTexture();
+}
+
+void Material_Construct ()
 {
 	GlobalCommands_insert("GenerateMaterialFromTexture", FreeCaller<GenerateMaterialFromTexture> (), Accelerator('M'));
 	command_connect_accelerator("GenerateMaterialFromTexture");
 }
 
-void Material_Destroy (void)
+void Material_Destroy ()
 {
 }

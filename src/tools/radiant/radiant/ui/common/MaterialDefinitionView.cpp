@@ -6,7 +6,7 @@
 #include "gtkutil/dialog.h"
 #include "ifilesystem.h"
 #include "radiant_i18n.h"
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include "stream/textfilestream.h"
 #include "iarchive.h"
 #include "../../mainframe.h"

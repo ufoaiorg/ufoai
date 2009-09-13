@@ -1,6 +1,6 @@
 #include "RoutingLumpLoader.h"
 #include "RoutingLump.h"
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include "ifilesystem.h"
 #include "gtkutil/messagebox.h"
 #include "../mainframe.h"

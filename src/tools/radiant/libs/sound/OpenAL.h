@@ -1,5 +1,5 @@
 /**
- * @file openal.h
+ * @file OpenAL.h
  */
 
 /*

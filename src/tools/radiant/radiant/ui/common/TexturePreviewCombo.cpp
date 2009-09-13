@@ -4,7 +4,7 @@
 #include "gtkutil/GLWidgetSentry.h"
 
 #include "texturelib.h"
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include "radiant_i18n.h"
 #include "igl.h"
 #include "ishaders.h"

@@ -409,7 +409,7 @@ void ToolsGenerateMaterials (void)
 		g_warning("cnt: %i (%s)\n", cnt, fullname.c_str());
 		cnt = 0;
 		if (exec_cmd_get_state(cmd) == COMPLETED) {
-			ShowMaterialDefinition("");
+			GlobalMaterialSystem()->showMaterialDefinition("");
 		}
 	} else {
 		gtk_MessageBox(0, _("Could not find the mapcompiler check your path settings\n"), _("Generate Materials"),

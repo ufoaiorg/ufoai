@@ -5,10 +5,10 @@
  *      Author: Martin
  */
 #include "modulesystem.h"
-#include <modulesystem/moduleregistry.h>
+#include "modulesystem/moduleregistry.h"
 #include "isound.h"
-#include <modulesystem/singletonmodule.h>
-#include <sound/soundmanager.h>
+#include "modulesystem/singletonmodule.h"
+#include "sound/SoundManager.h"
 
 class SoundManagerAPI
 {

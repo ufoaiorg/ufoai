@@ -49,7 +49,7 @@
 #include <glib/gdir.h>
 #include <glib/gstrfuncs.h>
 
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include "iradiant.h"
 #include "idatastream.h"
 #include "iarchive.h"

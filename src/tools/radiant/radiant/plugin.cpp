@@ -48,6 +48,7 @@
 #include "iimage.h"
 #include "itoolbar.h"
 #include "iplugin.h"
+#include "imaterial.h"
 #include "imap.h"
 #include "namespace.h"
 #include "commands.h"
@@ -176,11 +177,12 @@ class RadiantCoreAPI
 
 typedef SingletonModule<RadiantCoreAPI> RadiantCoreModule;
 typedef Static<RadiantCoreModule> StaticRadiantCoreModule;
-StaticRegisterModule staticRegisterRadiantCore (StaticRadiantCoreModule::instance ());
+StaticRegisterModule staticRegisterRadiantCore(StaticRadiantCoreModule::instance());
 
 class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalFileSystemModuleRef,
 		public GlobalSoundManagerModuleRef,
+		public GlobalMaterialSystemModuleRef,
 		public GlobalEntityModuleRef,
 		public GlobalShadersModuleRef,
 		public GlobalBrushModuleRef,
@@ -202,8 +204,8 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 
 	public:
 		RadiantDependencies () :
-			GlobalSoundManagerModuleRef("*"),
-			GlobalEntityModuleRef("ufo"), GlobalShadersModuleRef("ufo"), GlobalBrushModuleRef("ufo"),
+			GlobalSoundManagerModuleRef("*"), GlobalMaterialSystemModuleRef("*"), GlobalEntityModuleRef("ufo"),
+					GlobalShadersModuleRef("ufo"), GlobalBrushModuleRef("ufo"),
 					GlobalEntityClassManagerModuleRef("ufo"), m_image_modules(
 							GlobalRadiant().getRequiredGameDescriptionKeyValue("texturetypes")),
 					m_map_modules("mapufo"), m_toolbar_modules("*"), m_plugin_modules("*")

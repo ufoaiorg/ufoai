@@ -2,7 +2,7 @@
 #define SOUNDPLAYER_H_
 
 #include <string>
-#include "openal.h"
+#include "OpenAL.h"
 #include "gtkutil/timer.h"
 
 class ArchiveFile;

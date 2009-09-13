@@ -9,7 +9,7 @@
 #include "scenelib.h"
 #include "archivelib.h"
 #include "moduleobservers.h"
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include "stringio.h"
 #include "ifilesystem.h"
 #include "itextures.h"

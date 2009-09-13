@@ -53,7 +53,7 @@
 
 #include <glib/gslist.h>
 
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include "debugging/debugging.h"
 #include "string/pooledstring.h"
 #include "math/FloatTools.h"

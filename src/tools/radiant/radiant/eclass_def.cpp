@@ -34,7 +34,7 @@
 #include "gtkutil/messagebox.h"
 #include "modulesystem/moduleregistry.h"
 #include "os/path.h"
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include "ifilesystem.h"
 #include "archivelib.h"
 #include "script/scripttokeniser.h"

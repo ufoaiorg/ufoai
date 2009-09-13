@@ -29,7 +29,7 @@
 
 #include "debugging/debugging.h"
 
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include "iscenegraph.h"
 #include "iselection.h"
 #include "iundo.h"

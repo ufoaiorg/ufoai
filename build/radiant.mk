@@ -128,8 +128,8 @@ RADIANT_SRCS_CPP = \
 	\
 	$(RADIANT_BASE)/libs/profile/profile.cpp \
 	$(RADIANT_BASE)/libs/profile/file.cpp \
-	$(RADIANT_BASE)/libs/sound/soundmanager.cpp \
-	$(RADIANT_BASE)/libs/sound/soundplayer.cpp
+	$(RADIANT_BASE)/libs/sound/SoundManager.cpp \
+	$(RADIANT_BASE)/libs/sound/SoundPlayer.cpp
 
 RADIANT_SRCS_C = \
 	shared/parse.c \

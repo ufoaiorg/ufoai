@@ -5,7 +5,7 @@
 #include "modulesystem/moduleregistry.h"
 #include "generic/constant.h"
 #include "generic/callbackfwd.h"
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include <vector>
 #include <string>
 #include "debugging/debugging.h"
@@ -61,8 +61,7 @@ class SoundRadii
 		}
 };
 
-class SoundManagerDependencies :
-		public GlobalFileSystemModuleRef
+class SoundManagerDependencies: public GlobalFileSystemModuleRef
 {
 };
 
@@ -75,7 +74,9 @@ class ISoundManager
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "sound");
 
-		virtual ~ISoundManager (){};
+		virtual ~ISoundManager ()
+		{
+		}
 
 		/** greebo: Plays the given sound file (defined by its VFS path).
 		 *
@@ -90,11 +91,11 @@ class ISoundManager
 
 		/** tachop: Switches Sound Playback Enabled flag.
 		 */
-		virtual void switchPlaybackEnabledFlag() = 0;
+		virtual void switchPlaybackEnabledFlag () = 0;
 
 		/** tachop: Returns if Sound Playback is enabled.
 		 */
-		virtual bool isPlaybackEnabled ( ) = 0;
+		virtual bool isPlaybackEnabled () = 0;
 };
 
 // This is needed to be registered as a Radiant dependency
@@ -110,13 +111,11 @@ typedef GlobalModuleRef<ISoundManager> GlobalSoundManagerModuleRef;
 // Accessor method
 inline ISoundManager * GlobalSoundManager ()
 {
-	Module * soundmodule = globalModuleServer().findModule(
-			ISoundManager::Name_CONSTANT_::evaluate(),
-			ISoundManager::Version_CONSTANT_::evaluate(),
-			"*");
+	Module * soundmodule = globalModuleServer().findModule(ISoundManager::Name_CONSTANT_::evaluate(),
+			ISoundManager::Version_CONSTANT_::evaluate(), "*");
 	ASSERT_MESSAGE(soundmodule,
-			"Couldnt retrieve GlobalSoundManager, is not registered and/or initialized.");
-	return (ISoundManager *) soundmodule->getTable();  // findModule returns the pointer to the valid value, DO NOT DELETE!
-};
+			"Couldn't retrieve GlobalSoundManager, is not registered and/or initialized.");
+	return (ISoundManager *) soundmodule->getTable(); // findModule returns the pointer to the valid value, DO NOT DELETE!
+}
 
 #endif /*ISOUND_H_*/

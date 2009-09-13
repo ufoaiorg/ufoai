@@ -34,7 +34,7 @@
 #include "os/path.h"
 #include "os/dir.h"
 #include "os/file.h"
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include "ifilesystem.h"
 #include "archivelib.h"
 #include "script/scripttokeniser.h"

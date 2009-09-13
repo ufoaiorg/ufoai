@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/window.h"
 #include "gtkutil/image.h"
 #include "igl.h"
-#include "sound/openal.h"
+#include "sound/OpenAL.h"
 #include "../mainframe.h"
 #include <gtk/gtkgl.h>
 

@@ -1,4 +1,4 @@
-#include "soundmanager.h"
+#include "SoundManager.h"
 
 #include "ifilesystem.h"
 #include "archivelib.h"

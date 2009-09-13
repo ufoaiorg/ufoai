@@ -1,10 +1,10 @@
 #ifndef SOUNDMANAGER_H_
 #define SOUNDMANAGER_H_
 
-#include "soundplayer.h"
+#include "SoundPlayer.h"
 
 #include "isound.h"
-#include "autoptr.h"
+#include "AutoPtr.h"
 #include "generic/callback.h"
 #include "gtkutil/widget.h"
 

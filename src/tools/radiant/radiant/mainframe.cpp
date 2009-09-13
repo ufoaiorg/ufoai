@@ -107,7 +107,7 @@
 #include "referencecache.h"
 #include "toolbars.h"
 #include "levelfilters.h"
-#include "sound/soundmanager.h"
+#include "sound/SoundManager.h"
 
 struct layout_globals_t
 {
