@@ -1671,7 +1671,7 @@ static GtkMenuItem* create_map_menu (void)
 		create_menu_item_with_mnemonic(menu_in_menu, _("Compile the map"), "ToolsCompile");
 		create_menu_item_with_mnemonic(menu_in_menu, _("Generate materials"), "ToolsGenerateMaterials");
 	}
-	create_menu_item_with_mnemonic(menu, _("Show pathfinding info"), "ShowPathfinding");
+	create_check_menu_item_with_mnemonic(menu, _("Show pathfinding info"), "ShowPathfinding");
 
 	return map_menu_item;
 }

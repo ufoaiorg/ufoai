@@ -162,7 +162,7 @@ GtkToolbar* create_main_toolbar_horizontal (MainFrame *mainframe)
 			"GenerateMaterialFromTexture");
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
-	toolbar_append_button(toolbar, _("Show pathfinding info"), "pathfinding.bmp", "ShowPathfinding");
+	toolbar_append_toggle_button(toolbar, _("Show pathfinding info"), "pathfinding.bmp", "ShowPathfinding");
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 	LevelFilters_constructToolbar(toolbar);

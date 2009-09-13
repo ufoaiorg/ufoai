@@ -37,6 +37,7 @@
 #include "preferencesystem.h"
 #include "commands.h"
 #include "radiant_i18n.h"
+#include "gtkutil/widget.h"
 
 namespace routing
 {
@@ -92,7 +93,7 @@ namespace routing
 			 * @todo Maybe also use the ufo2map output directly
 			 * @sa ToolsCompile
 			 */
-			void show (void)
+			bool show (void)
 			{
 				if (!Map_Unnamed(g_map))
 					_showPathfinding ^= true;
@@ -112,24 +113,32 @@ namespace routing
 					_routingRender->updateRouting(bspname);
 				}
 				SceneChangeNotify();
+
+				return _showPathfinding;
 			}
 	};
 
 	Pathfinding *pathfinding;
+	bool showPathfinding;
 
 	/**
 	 * @todo Maybe also use the ufo2map output directly
 	 * @sa ToolsCompile
 	 */
-	void ShowPathfinding (void)
+	void ShowPathfinding ()
 	{
-		pathfinding->show();
+		showPathfinding = pathfinding->show();
+	}
+
+	bool IsPathfindingViewEnabled ()
+	{
+		return showPathfinding;
 	}
 
 	/**
 	 * @brief callback function for map changes to update routing data.
 	 */
-	void Pathfinding_onMapValidChanged (void)
+	void Pathfinding_onMapValidChanged ()
 	{
 		pathfinding->onMapValidChanged();
 	}
@@ -151,9 +160,10 @@ namespace routing
 	void Pathfinding_constructPage (PreferenceGroup& group)
 	{
 		PreferencesPage page(group.createPage(_("Pathfinding"), _("Pathfinding Settings")));
-		page.appendCheckBox("", _("Show all lower levels"), FreeCaller1<bool, setShowAllLowerLevels> (), BoolExportCaller(
-				showAllLowerLevels));
-		page.appendCheckBox("", _("Show pathfinding data in 2D views"), FreeCaller1<bool, setShowIn2D> (), BoolExportCaller(showIn2D));
+		page.appendCheckBox("", _("Show all lower levels"), FreeCaller1<bool, setShowAllLowerLevels> (),
+				BoolExportCaller(showAllLowerLevels));
+		page.appendCheckBox("", _("Show pathfinding data in 2D views"), FreeCaller1<bool, setShowIn2D> (),
+				BoolExportCaller(showIn2D));
 	}
 
 	void Pathfinding_registerPreferences (void)
@@ -167,11 +177,20 @@ namespace routing
 	}
 }
 
+/*!  Toggle menu callback definitions  */
+typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<routing::IsPathfindingViewEnabled>::apply>
+		ShowPathfindingEnabledApplyCaller;
+ShowPathfindingEnabledApplyCaller g_showPathfindingEnabled_button_caller;
+BoolExportCallback g_showPathfindingEnabled_button_callback(g_showPathfindingEnabled_button_caller);
+
+ToggleItem g_showPathfindingEnabled_button(g_showPathfindingEnabled_button_callback);
+
 void Pathfinding_Construct (void)
 {
 	routing::pathfinding = new routing::Pathfinding();
 
-	GlobalCommands_insert("ShowPathfinding", FreeCaller<routing::ShowPathfinding> ());
+	GlobalToggles_insert("ShowPathfinding", FreeCaller<routing::ShowPathfinding> (), ToggleItem::AddCallbackCaller(
+			g_showPathfindingEnabled_button), accelerator_null());
 
 	/** @todo listener also should activate/deactivate "show pathfinding" menu entry if no appropriate data is available */
 	Map_addValidCallback(g_map, SignalHandler(FreeCaller<routing::Pathfinding_onMapValidChanged> ()));

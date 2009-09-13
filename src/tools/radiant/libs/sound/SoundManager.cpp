@@ -12,7 +12,7 @@ namespace sound
 	SoundManager::SoundManager ()
 	{
 		playbackEnabled = false;
-		resumingFileNameToBePlayed = "";  //  "maledeath01.ogg";  for testing :)
+		resumingFileNameToBePlayed = ""; //  "maledeath01.ogg";  for testing :)
 	}
 
 	// Destructor
@@ -84,25 +84,26 @@ namespace sound
 	{
 		playbackEnabled = !playbackEnabled;
 		if (playbackEnabled && resumingFileNameToBePlayed.length())
-			playSound (resumingFileNameToBePlayed);
+			playSound(resumingFileNameToBePlayed);
 	}
 
 } // namespace sound
 
-bool GlobalSoundManager_isPlaybackEnabled(void)
+bool GlobalSoundManager_isPlaybackEnabled (void)
 {
-	sound::SoundManager * sm = dynamic_cast<sound::SoundManager *>(GlobalSoundManager());
+	sound::SoundManager * sm = dynamic_cast<sound::SoundManager *> (GlobalSoundManager());
 	return sm->isPlaybackEnabled();
 }
 
-void GlobalSoundManager_switchPlaybackEnabledFlag()
+void GlobalSoundManager_switchPlaybackEnabledFlag ()
 {
-	sound::SoundManager * sm = dynamic_cast<sound::SoundManager *>(GlobalSoundManager());
+	sound::SoundManager * sm = dynamic_cast<sound::SoundManager *> (GlobalSoundManager());
 	sm->switchPlaybackEnabledFlag();
 }
 
 /*!  Toggle menu callback definitions  */
-typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<GlobalSoundManager_isPlaybackEnabled>::apply> SoundPlaybackEnabledApplyCaller;
+typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<GlobalSoundManager_isPlaybackEnabled>::apply>
+		SoundPlaybackEnabledApplyCaller;
 SoundPlaybackEnabledApplyCaller g_soundPlaybackEnabled_button_caller;
 BoolExportCallback g_soundPlaybackEnabled_button_callback(g_soundPlaybackEnabled_button_caller);
 
