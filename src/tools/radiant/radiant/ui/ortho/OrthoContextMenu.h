@@ -21,18 +21,23 @@ namespace ui
 			// Last provided 3D point for action
 			Vector3 _lastPoint;
 
-			/** Enable or disables the "connect entities" option (two entities
+			/** Enables or disables the "connect entities" option (two entities
 			 * must be selected to connect them)
 			 */
 			void checkConnectEntities ();
 
-			/** Enable or disables the "fit texture" option
+			/** Enables or disables the "fit texture" option
 			 */
 			void checkFitTexture ();
+
+			/** Enables or disables the "generate material" option
+			 */
+			void checkGenerateMaterial ();
 
 			// GTK widgets that are context dependent
 			GtkWidget* _connectEntities;
 			GtkWidget* _fitTexture;
+			GtkWidget* _generateMaterials;
 
 		private:
 
@@ -45,6 +50,7 @@ namespace ui
 			static void callbackAddEntity (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackAddLight (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackAddModel (GtkMenuItem* item, OrthoContextMenu* self);
+			static void callbackGenerateMaterials (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackConnectEntities (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackFitTexture (GtkMenuItem* item, OrthoContextMenu* self);
 

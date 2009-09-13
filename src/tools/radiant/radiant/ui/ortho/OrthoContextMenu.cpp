@@ -6,6 +6,8 @@
 #include "../../sidebar/surfaceinspector.h" // SurfaceInspector_FitTexture()
 #include "../../entity.h" // Entity_createFromSelection(), Entity_connectSelected()
 #include "gtkutil/dialog.h"
+#include "../../map.h"
+#include "imaterial.h"
 #include "radiant_i18n.h"
 
 namespace ui
@@ -26,6 +28,8 @@ namespace ui
 		const char* CONNECT_ENTITIES_ICON = "cmenu_connect_entities.png";
 		const char* FIT_TEXTURE_TEXT = _("Fit textures...");
 		const char* FIT_TEXTURE_ICON = "cmenu_fit_texture.png";
+		const char* GENERATE_MATERIALS_TEXT = _("Generate materials...");
+		const char* GENERATE_MATERIALS_ICON = "cmenu_generate_materials.png";
 	}
 
 	// Static class function to display the singleton instance.
@@ -46,12 +50,14 @@ namespace ui
 		// Context sensitive menu items
 		_connectEntities = gtkutil::IconTextMenuItem(CONNECT_ENTITIES_ICON, CONNECT_ENTITIES_TEXT);
 		_fitTexture = gtkutil::IconTextMenuItem(FIT_TEXTURE_ICON, FIT_TEXTURE_TEXT);
+		_generateMaterials = gtkutil::IconTextMenuItem(GENERATE_MATERIALS_ICON, GENERATE_MATERIALS_TEXT);
 
 		g_signal_connect(G_OBJECT(addEntity), "activate", G_CALLBACK(callbackAddEntity), this);
 		g_signal_connect(G_OBJECT(addLight), "activate", G_CALLBACK(callbackAddLight), this);
 		g_signal_connect(G_OBJECT(addModel), "activate", G_CALLBACK(callbackAddModel), this);
 		g_signal_connect(G_OBJECT(_connectEntities), "activate", G_CALLBACK(callbackConnectEntities), this);
 		g_signal_connect(G_OBJECT(_fitTexture), "activate", G_CALLBACK(callbackFitTexture), this);
+		g_signal_connect(G_OBJECT(_generateMaterials), "activate", G_CALLBACK(callbackGenerateMaterials), this);
 
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), addModel);
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), addLight);
@@ -59,6 +65,7 @@ namespace ui
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), gtk_separator_menu_item_new());
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), _connectEntities);
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), _fitTexture);
+		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), _generateMaterials);
 
 		gtk_widget_show_all(_widget);
 	}
@@ -69,6 +76,7 @@ namespace ui
 		_lastPoint = point;
 		checkConnectEntities();
 		checkFitTexture();
+		checkGenerateMaterial();
 		gtk_menu_popup(GTK_MENU(_widget), NULL, NULL, NULL, NULL, 1, GDK_CURRENT_TIME);
 	}
 
@@ -79,6 +87,17 @@ namespace ui
 			gtk_widget_set_sensitive(_connectEntities, TRUE);
 		} else {
 			gtk_widget_set_sensitive(_connectEntities, FALSE);
+		}
+	}
+
+	void OrthoContextMenu::checkGenerateMaterial ()
+	{
+		const std::string& mapname = map::getName();
+		int countSelected = GlobalSelectionSystem().countSelected();
+		if (countSelected == 0 || mapname.empty() || Map_Unnamed(g_map)) {
+			gtk_widget_set_sensitive(_generateMaterials, FALSE);
+		} else {
+			gtk_widget_set_sensitive(_generateMaterials, TRUE);
 		}
 	}
 
@@ -93,6 +112,11 @@ namespace ui
 	}
 
 	/* GTK CALLBACKS */
+
+	void OrthoContextMenu::callbackGenerateMaterials (GtkMenuItem* item, OrthoContextMenu* self)
+	{
+		GlobalMaterialSystem()->generateMaterialFromTexture();
+	}
 
 	void OrthoContextMenu::callbackConnectEntities (GtkMenuItem* item, OrthoContextMenu* self)
 	{

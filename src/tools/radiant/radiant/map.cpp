@@ -1512,6 +1512,11 @@ namespace map
 		return count;
 	}
 
+	const std::string getName ()
+	{
+		return Map_Name(g_map);
+	}
+
 } // namespace map
 
 enum ENodeType

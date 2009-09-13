@@ -171,6 +171,11 @@ namespace map
 	 * Vector3 containing the new origin for the selected brushes.
 	 */
 	void selectedBrushesSubtractOrigin (const Vector3& origin);
+
+	/**
+	 * @return The name of the current loaded map
+	 */
+	const std::string getName ();
 }
 
 #endif
