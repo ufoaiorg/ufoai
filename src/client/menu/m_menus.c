@@ -363,6 +363,7 @@ void MN_InitStack (const char* activeMenu, const char* mainMenu, qboolean popAll
 		MN_PopMenu(qtrue);
 	if (activeMenu) {
 		Cvar_Set("mn_sys_active", activeMenu);
+		/* prevent calls before UI script initialization */
 		if (mn.numWindows != 0) {
 			if (pushActive)
 				MN_PushMenu(activeMenu, NULL);
