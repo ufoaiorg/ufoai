@@ -97,6 +97,8 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/ui/common/ModelPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/MaterialDefinitionView.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/RenderableAABB.cpp \
+	$(RADIANT_BASE)/radiant/ui/common/SoundChooser.cpp \
+	$(RADIANT_BASE)/radiant/ui/common/SoundPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/TexturePreviewCombo.cpp \
 	$(RADIANT_BASE)/radiant/ui/modelselector/ModelSelector.cpp \
 	$(RADIANT_BASE)/radiant/ui/ortho/EntityClassChooser.cpp \
@@ -125,6 +127,9 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/libs/gtkutil/window.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/ModelProgressDialog.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/SourceView.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/MenuItemAccelerator.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/TreeModel.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/VFSTreePopulator.cpp \
 	\
 	$(RADIANT_BASE)/libs/profile/profile.cpp \
 	$(RADIANT_BASE)/libs/profile/file.cpp \

@@ -53,6 +53,7 @@ namespace ui
 			static void callbackGenerateMaterials (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackConnectEntities (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackFitTexture (GtkMenuItem* item, OrthoContextMenu* self);
+			static void callbackAddSound (GtkMenuItem* item, OrthoContextMenu* self);
 
 		public:
 

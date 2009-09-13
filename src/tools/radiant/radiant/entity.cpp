@@ -54,6 +54,7 @@
 #include "dialogs/light.h"
 #include "dialogs/particle.h"
 #include "ui/modelselector/ModelSelector.h"
+#include "ui/common/SoundChooser.h"
 
 struct entity_globals_t
 {
@@ -381,8 +382,10 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 		} else
 			revert = true;
 	} else if (isSound) {
-		const char* sound = misc_sound_dialog(GTK_WIDGET(MainFrame_getWindow()));
-		if (sound != 0)
+		// Display the Sound Chooser to get a sound from the user
+		ui::SoundChooser sChooser;
+		std::string sound = sChooser.chooseSound();
+		if (!sound.empty())
 			entity->setKeyValue("noise", sound);
 		else
 			revert = true;

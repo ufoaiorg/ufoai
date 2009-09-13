@@ -320,6 +320,15 @@
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\window.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\MenuItemAccelerator.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\TreeModel.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\VFSTreePopulator.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\window.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\xorrectangle.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\imagelib.h" />
@@ -664,6 +673,12 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\RenderableAABB.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\SoundChooser.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\SoundPreview.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\undo.cpp">

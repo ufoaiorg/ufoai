@@ -8,6 +8,12 @@
 #include "../../entity.h" // Entity_createFromSelection()
 namespace ui
 {
+	namespace
+	{
+		/* CONSTANTS */
+		const char* ECLASS_CHOOSER_TITLE = _("Create entity");
+	}
+
 	// Obtain and display the singleton instance
 	void EntityClassChooser::displayInstance (const Vector3& point)
 	{

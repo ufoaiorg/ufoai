@@ -3,6 +3,7 @@
 #include "ifilesystem.h"
 #include "archivelib.h"
 #include "generic/callback.h"
+#include "os/path.h"
 
 #include <iostream>
 
@@ -40,11 +41,8 @@ namespace sound
 			return true;
 		}
 
-		std::string root = name;
 		// File not found, try to strip the extension
-		if (name.rfind(".") != std::string::npos) {
-			root = name.substr(0, name.rfind("."));
-		}
+		std::string root = os::getExtension(name);
 
 		// Try to open the .ogg variant
 		name = root + ".ogg";

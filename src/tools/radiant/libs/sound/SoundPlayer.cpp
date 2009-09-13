@@ -153,7 +153,7 @@ namespace sound
 		// Retrieve the extension
 		std::string ext = os::getExtension(file.getName());
 
-		if (string_equal_nocase(ext.c_str(), "ogg")) {
+		if (ext == "ogg") {
 			// Convert the file into a buffer, self-destructs at end of scope
 			ScopedArchiveBuffer buffer(file);
 
