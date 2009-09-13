@@ -1655,6 +1655,27 @@ static GtkMenuItem* create_misc_menu (void)
 	return misc_menu_item;
 }
 
+static GtkMenuItem* create_map_menu (void)
+{
+	// Map menu
+	GtkMenuItem* map_menu_item = new_sub_menu_item_with_mnemonic(_("Map"));
+	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(map_menu_item));
+	if (g_Layout_enableDetachableMenus.m_value)
+		menu_tearoff(menu);
+
+	{
+		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Compile"));
+		if (g_Layout_enableDetachableMenus.m_value)
+			menu_tearoff(menu_in_menu);
+		create_menu_item_with_mnemonic(menu_in_menu, _("Check for errors"), "ToolsCheckErrors");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Compile the map"), "ToolsCompile");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Generate materials"), "ToolsGenerateMaterials");
+	}
+	create_menu_item_with_mnemonic(menu, _("Show pathfinding info"), "ShowPathfinding");
+
+	return map_menu_item;
+}
+
 static GtkMenuItem* create_tools_menu (void)
 {
 	// Tools menu
@@ -1663,10 +1684,6 @@ static GtkMenuItem* create_tools_menu (void)
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	create_menu_item_with_mnemonic(menu, _("Check for errors"), "ToolsCheckErrors");
-	create_menu_item_with_mnemonic(menu, _("Compile the map"), "ToolsCompile");
-	create_menu_item_with_mnemonic(menu, _("Generate materials"), "ToolsGenerateMaterials");
-	create_menu_item_with_mnemonic(menu, _("Show pathfinding info"), "ShowPathfinding");
 	create_menu_item_with_mnemonic(menu, _("Find/replace texture"), "FindReplaceTextures");
 	create_check_menu_item_with_mnemonic(menu, _("Play Sounds"), "PlaySounds");
 
@@ -1727,6 +1744,7 @@ static GtkMenuBar* create_main_menu (MainFrame *mainframe)
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_selection_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_grid_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_misc_menu()));
+	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_map_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_tools_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_entity_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_brush_menu()));
