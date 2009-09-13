@@ -96,6 +96,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/dialogs/findtextures.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/common/ModelPreview.cpp \
+	$(RADIANT_BASE)/radiant/ui/common/MaterialDefinitionView.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/RenderableAABB.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/TexturePreviewCombo.cpp \
 	$(RADIANT_BASE)/radiant/ui/modelselector/ModelSelector.cpp \
@@ -124,6 +125,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/libs/gtkutil/toolbar.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/ModelProgressDialog.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/SourceView.cpp \
 	\
 	$(RADIANT_BASE)/libs/profile/profile.cpp \
 	$(RADIANT_BASE)/libs/profile/file.cpp \

@@ -755,8 +755,8 @@ then
 	# Check for gtk2, gtkglext, glib2 and libxml2
 	#---------------------------------------------------------------------------------------------
 
-	AC_MSG_NOTICE([UFORadiant dependencies: gtk2, gtkglext, glib2 and libxml2])
-	PKG_CHECK_MODULES([RADIANT], [gtk+-2.0 gtkglext-1.0 glib-2.0 libxml-2.0])
+	AC_MSG_NOTICE([UFORadiant dependencies: gtk2, gtkglext, gtksourceview-2.0, glib2 and libxml2])
+	PKG_CHECK_MODULES([RADIANT], [gtk+-2.0 gtkglext-1.0 glib-2.0 libxml-2.0 gtksourceview-2.0])
 	RADIANT_CFLAGS="$RADIANT_CFLAGS $CPPFLAGS"
 
 	#---------------------------------------------------------------------------------------------

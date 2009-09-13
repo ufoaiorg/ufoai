@@ -148,6 +148,7 @@ function start_downloads()
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib_2.20.3-1_win32.zip glib.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib-dev_2.20.3-1_win32.zip glib-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.16/ gtk+-dev_2.16.2-1_win32.zip gtk+-dev.zip
+	download_archive http://ftp.acc.umu.se/pub/gnome/binaries/win32/gtksourceview/2.0/gtksourceview-dev-2.0.2.zip gtksourceview-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.24/ pango-dev_1.24.2-1_win32.zip pango-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.26/ atk-dev_1.26.0-1_win32.zip atk-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-tools-0.17.zip gettext-tools.zip
@@ -297,6 +298,7 @@ function extract_gtk()
 	extract_archive_zip glib.zip "${MINGW_DIR}"
 	extract_archive_zip glib-dev.zip "${MINGW_DIR}"
 	extract_archive_zip gtk+-dev.zip "${MINGW_DIR}"
+	extract_archive_zip gtksourceview-dev.zip "${MINGW_DIR}"
 	extract_archive_zip pango-dev.zip "${MINGW_DIR}"
 	extract_archive_zip atk-dev.zip "${MINGW_DIR}"
 	extract_archive_zip cairo-dev.zip "${MINGW_DIR}"
@@ -313,7 +315,7 @@ function extract_gtk()
 		check_error $? "Could not remove $i lib/include files"
 	done
 
-	for i in $(echo "gail-1.0 pango-1.0 atk-1.0 cairo" ); do
+	for i in $(echo "gtksourceview-2.0 gail-1.0 pango-1.0 atk-1.0 cairo" ); do
 		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
 		check_error $? "Could not copy $i include files"
 		rm -r ${MINGW_DIR}/include/${i} >> ${LOGFILE_NAME} 2>&1

@@ -409,8 +409,9 @@ void ToolsGenerateMaterials (void)
 		exec_run(compilerRun);
 		g_warning("cnt: %i (%s)\n", cnt, fullname.c_str());
 		cnt = 0;
-		if (exec_cmd_get_state(cmd) == COMPLETED)
-			DoTextEditor(Material_GetFilename(), 0, "");
+		if (exec_cmd_get_state(cmd) == COMPLETED) {
+			ShowMaterialDefinition("");
+		}
 	} else {
 		gtk_MessageBox(0, _("Could not find the mapcompiler check your path settings\n"), _("Generate Materials"),
 				eMB_OK, eMB_ICONERROR);

@@ -33,32 +33,42 @@
 #include "brush.h"
 #include "commands.h"
 #include "map.h"
-#include "gtkutil/messagebox.h"
 #include "gtkutil/dialog.h"
-#include "dialogs/texteditor.h"
 #include "os/path.h"
 #include "os/file.h"
 #include "stream/textfilestream.h"
 #include "stream/stringstream.h"
+#include "ifilesystem.h"
+#include "ui/common/MaterialDefinitionView.h"
+#include "gtkutil/multimonitor.h"
+#include "autoptr.h"
+#include "iarchive.h"
 
-/**
- * @param[in] filename Absolut path to the material file
- * @note Make sure to free the returned buffer
- * @return The material file content as string (or NULL on failure)
- */
-const char *Material_LoadFile(const char* filename) {
-	g_message("Open material file '%s' for read...\n", filename);
-	TextFileInputStream file(filename);
-	if (!file.failed()) {
-		g_message("success\n");
-		std::size_t size = file_size(filename);
-		char *material = (char *)malloc(size);
-		file.read(material, size);
-		return material;
-	}
+void ShowMaterialDefinition (const std::string& append)
+{
+	const std::string& materialName = Material_GetFilename();
 
-	g_warning("failure\n");
-	return (const char *)0;
+	// Construct a shader view and pass the shader name
+	ui::MaterialDefinitionView view;
+	view.setMaterial(materialName);
+	view.append(append);
+
+	GtkWidget* dialog = gtk_dialog_new_with_buttons(_("Material Definition"), GlobalRadiant().getMainWindow(),
+			GTK_DIALOG_DESTROY_WITH_PARENT, GTK_STOCK_CLOSE, GTK_RESPONSE_OK, NULL);
+
+	gtk_container_set_border_width(GTK_CONTAINER(dialog), 12);
+
+	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), view.getWidget());
+
+	GdkRectangle rect = gtkutil::MultiMonitor::getMonitorForWindow(GlobalRadiant().getMainWindow());
+	gtk_window_set_default_size(GTK_WINDOW(dialog), gint(rect.width / 2), gint(2 * rect.height / 3));
+
+	gtk_widget_show_all(dialog);
+
+	// Show and block
+	gtk_dialog_run(GTK_DIALOG(dialog));
+
+	gtk_widget_destroy(dialog);
 }
 
 void GenerateMaterialFromTexture (void)
@@ -66,47 +76,44 @@ void GenerateMaterialFromTexture (void)
 	const std::string& mapname = Map_Name(g_map);
 	if (mapname.empty() || Map_Unnamed(g_map)) {
 		// save the map first
-		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("You have to save your map before material generation can work"));
+		gtkutil::errorDialog(MainFrame_getWindow(), _("You have to save your map before material generation can work"));
 		return;
 	}
 
-	const char *materialFileName = Material_GetFilename();
-	int cursorPos = 0;
-	StringOutputStream append(256);
-	const char *materialFileContent = Material_LoadFile(materialFileName);
+	std::string content;
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(Material_GetFilename()));
+	if (file)
+		content = file->getString();
 
+	std::string append;
 	if (!g_SelectedFaceInstances.empty()) {
-		for (FaceInstancesList::iterator i = g_SelectedFaceInstances.m_faceInstances.begin(); i != g_SelectedFaceInstances.m_faceInstances.end(); ++i) {
-			FaceInstance& faceInstance = *(*i);
-			Face &face = faceInstance.getFace();
-			const char *texture = face.getShader().getShader();
-			texture += strlen("textures/");
-			StringOutputStream tmp(256);
-			tmp << "material " << texture;
+		for (FaceInstancesList::iterator i = g_SelectedFaceInstances.m_faceInstances.begin(); i
+				!= g_SelectedFaceInstances.m_faceInstances.end(); ++i) {
+			const FaceInstance& faceInstance = *(*i);
+			const Face &face = faceInstance.getFace();
+			std::string texture = face.getShader().getShader();
+			texture = texture.rfind("textures/");
+			std::string materialDefinition = "material " + texture;
 			/* check whether there is already an entry for the selected texture */
-			if (!materialFileContent || !strstr(materialFileContent, tmp.c_str()))
-				append << "{\n\t" << tmp.c_str() << "\n\t{\n\t}\n}\n";
-			/* set cursor position to the first new entry */
-			if (materialFileContent && !append.empty() && !cursorPos)
-				cursorPos = strlen(materialFileContent);
+			if (content.find(materialDefinition) == std::string::npos)
+				append += "{\n\tmaterial " + texture + "\n\t{\n\t}\n}\n";
 		}
 	}
 
-	DoTextEditor(materialFileName, cursorPos, append.c_str());
+	ShowMaterialDefinition(append);
 }
 
-const char *Material_GetFilename (void)
+const std::string Material_GetFilename (void)
 {
-	static char materialFileName[256];
 	const std::string& mapname = Map_Name(g_map);
-	snprintf(materialFileName, sizeof(materialFileName), "materials/%s", path_get_filename_start(mapname.c_str()));
-	materialFileName[strlen(materialFileName) - 1] = 't'; /* map => mat */
+	std::string materialFileName = "materials/" + os::getFilenameFromPath(mapname);
+	materialFileName[materialFileName.length() - 1] = 't'; /* map => mat */
 	return materialFileName;
 }
 
 void Material_Construct (void)
 {
-	GlobalCommands_insert("GenerateMaterialFromTexture", FreeCaller<GenerateMaterialFromTexture>(), Accelerator('M'));
+	GlobalCommands_insert("GenerateMaterialFromTexture", FreeCaller<GenerateMaterialFromTexture> (), Accelerator('M'));
 	command_connect_accelerator("GenerateMaterialFromTexture");
 }
 

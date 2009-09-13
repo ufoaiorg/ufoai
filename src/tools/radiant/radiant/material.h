@@ -27,8 +27,11 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-void Material_Construct(void);
-void Material_Destroy(void);
-const char *Material_GetFilename(void);
+#include <string>
+
+void Material_Construct (void);
+void Material_Destroy (void);
+const std::string Material_GetFilename (void);
+void ShowMaterialDefinition (const std::string& append);
 
 #endif

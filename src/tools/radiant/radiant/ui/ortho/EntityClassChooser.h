@@ -11,7 +11,6 @@ namespace ui
 	namespace
 	{
 		/* CONSTANTS */
-
 		const char* ECLASS_CHOOSER_TITLE = _("Create entity");
 	}
 
@@ -19,7 +18,6 @@ namespace ui
 	 * of a class to create at the current location. This widget is displayed
 	 * by the OrthoContextMenu.
 	 */
-
 	class EntityClassChooser
 	{
 		private:
@@ -33,6 +31,9 @@ namespace ui
 			// GtkTreeSelection holding the currently-selected classname
 			GtkTreeSelection* _selection;
 
+			// Usage information textview
+			GtkWidget* _usageTextView;
+
 			// Add button. Needs to be a member since we enable/disable it in the
 			// selectionchanged callback.
 			GtkWidget* _addButton;
@@ -44,7 +45,11 @@ namespace ui
 
 			/* Widget construction helpers */
 			GtkWidget* createTreeView ();
+			GtkWidget* createUsagePanel ();
 			GtkWidget* createButtonPanel ();
+
+			// Update the usage panel with information from the provided entityclass
+			void updateUsageInfo (const std::string& eclass);
 
 			/* GTK callbacks */
 
@@ -83,3 +88,4 @@ namespace ui
 }
 
 #endif /*ENTITYCLASSCHOOSER_H_*/
+

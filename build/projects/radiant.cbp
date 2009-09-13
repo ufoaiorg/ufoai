@@ -40,6 +40,7 @@
 					<Add library="winmm" />
 					<Add library="kernel32" />
 					<Add library="libgtkglext-win32-1.0" />
+					<Add library="libgtksourceview-1.0" />
 					<Add library="intl" />
 					<Add library="openal32" />
 					<Add library="vorbisfile" />
@@ -87,6 +88,7 @@
 					<Add library="winmm" />
 					<Add library="kernel32" />
 					<Add library="libgtkglext-win32-1.0" />
+					<Add library="libgtksourceview-1.0" />
 					<Add library="intl" />
 					<Add library="openal32" />
 					<Add library="vorbisfile" />
@@ -107,12 +109,14 @@
 				<Compiler>
 					<Add option="`pkg-config gtk+-2.0 --cflags`" />
 					<Add option="`pkg-config gtkglext-1.0 --cflags`" />
+					<Add option="`pkg-config gtksourceview-1.0 --cflags`" />
 					<Add option="`pkg-config glib-2.0 --cflags`" />
 					<Add option="`xml2-config --cflags`" />
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config gtk+-2.0 --libs`" />
 					<Add option="`pkg-config gtkglext-1.0 --libs`" />
+					<Add option="`pkg-config gtksourceview-1.0 --libs`" />
 					<Add option="`pkg-config glib-2.0 --libs`" />
 					<Add option="`xml2-config --libs`" />
 					<Add library="gthread-2.0" />
@@ -132,6 +136,7 @@
 				<Compiler>
 					<Add option="`pkg-config gtk+-2.0 --cflags`" />
 					<Add option="`pkg-config gtkglext-1.0 --cflags`" />
+					<Add option="`pkg-config gtksourceview-1.0 --cflags`" />
 					<Add option="`pkg-config glib-2.0 --cflags`" />
 					<Add option="`xml2-config --cflags`" />
 					<Add directory="\sw\include" />
@@ -139,6 +144,7 @@
 				<Linker>
 					<Add option="`pkg-config gtk+-2.0 --libs`" />
 					<Add option="`pkg-config gtkglext-1.0 --libs`" />
+					<Add option="`pkg-config gtksourceview-1.0 --libs`" />
 					<Add option="`pkg-config glib-2.0 --libs`" />
 					<Add option="`xml2-config --libs`" />
 					<Add library="gthread-2.0" />
@@ -235,6 +241,9 @@
 		<Unit filename="..\..\src\tools\radiant\libs\generic\static.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\generic\vector.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\GLWidgetSentry.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\SourceView.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\ModalProgressDialog.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\ModelProgressDialog.cpp">
 			<Option compilerVar="CC" />

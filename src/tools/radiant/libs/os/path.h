@@ -255,6 +255,16 @@ namespace os
 	{
 		return path.substr(path.rfind(".") + 1);
 	}
+
+
+	/** Return the filename of the given path, which is equal to the characters
+	 * following the final slash.
+	 * If there is no slash in the given string the full string will be returned
+	 */
+	inline std::string getFilenameFromPath (const std::string& path)
+	{
+		return path.substr(path.rfind("/") + 1);
+	}
 }
 
 #endif
