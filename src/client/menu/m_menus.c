@@ -206,10 +206,6 @@ int MN_CompleteWithMenu (const char *partial, const char **match)
  */
 menuNode_t* MN_PushMenu (const char *name, const char *parentName)
 {
-	/* fix mn_active if nothing is set */
-	if (!strcmp(mn_sys_active->string, ""))
-		Cvar_Set("mn_sys_active", name);
-
 	return MN_PushMenuDelete(name, parentName, qtrue);
 }
 
@@ -361,14 +357,16 @@ static void MN_CloseAllMenu (void)
  * @todo Update the code: pushActive should be every time true
  * @todo Illustration about when/how we should use MN_InitStack http://ufoai.ninex.info/wiki/index.php/Image:MN_InitStack.jpg
  */
-void MN_InitStack (char* activeMenu, char* mainMenu, qboolean popAll, qboolean pushActive)
+void MN_InitStack (const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive)
 {
 	if (popAll)
 		MN_PopMenu(qtrue);
 	if (activeMenu) {
 		Cvar_Set("mn_sys_active", activeMenu);
-		if (pushActive)
-			MN_PushMenu(activeMenu, NULL);
+		if (mn.numWindows != 0) {
+			if (pushActive)
+				MN_PushMenu(activeMenu, NULL);
+		}
 	}
 
 	if (mainMenu)
@@ -729,21 +727,21 @@ static void MN_FireInit_f (void)
 	}
 }
 
-void MN_InitStack_f (void) {
-	const char *main;
-	const char *option = NULL;
+static void MN_InitStack_f (void) {
+	const char *mainWindow;
+	const char *optionWindow = NULL;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <mainwindow> [<optionwindow>]\n", Cmd_Argv(0));
 		return;
 	}
 
-	main = Cmd_Argv(1);
+	mainWindow = Cmd_Argv(1);
 	if (Cmd_Argc() == 3) {
-		option = Cmd_Argv(2);
+		optionWindow = Cmd_Argv(2);
 	}
 
-	MN_InitStack(main, option, qtrue, qtrue);
+	MN_InitStack(mainWindow, optionWindow, qtrue, qtrue);
 }
 
 void MN_InitMenus (void)
