@@ -832,6 +832,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 		}
 
 		UFO_RemoveFromGeoscape(mission->ufo);
+		mission->ufo = NULL;
 	}
 }
 
