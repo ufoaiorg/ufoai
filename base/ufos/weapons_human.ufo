@@ -1669,7 +1669,7 @@ item grenl_fle_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/gren_fle_3shot
+			firesnd				weapons/grenl_fle_3shot
 			sndonce				true
 			speed				0
 			spread				"5 5.5"
