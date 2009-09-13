@@ -16,10 +16,8 @@
 
 namespace ui
 {
-
 	namespace
 	{
-
 		// Treestore enum
 		enum
 		{
@@ -151,7 +149,7 @@ namespace ui
 	{
 		gtk_widget_show_all(_widget);
 		gtk_main();
-		return _selectedSound;
+		return os::stripExtension(_selectedSound);
 	}
 
 	/* GTK CALLBACKS */
@@ -168,7 +166,7 @@ namespace ui
 	void SoundChooser::_onOK (GtkWidget* w, SoundChooser* self)
 	{
 		// Get the selection if valid, otherwise ""
-		self->_selectedSound = gtkutil::TreeModel::getSelectedString(self->_treeSelection, DISPLAYNAME_COLUMN);
+		self->_selectedSound = gtkutil::TreeModel::getSelectedString(self->_treeSelection, FILENAME_COLUMN);
 
 		gtk_widget_destroy(self->_widget);
 		gtk_main_quit();

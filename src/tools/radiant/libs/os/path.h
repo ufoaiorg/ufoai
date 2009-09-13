@@ -256,7 +256,6 @@ namespace os
 		return path.substr(path.rfind(".") + 1);
 	}
 
-
 	/** Return the filename of the given path, which is equal to the characters
 	 * following the final slash.
 	 * If there is no slash in the given string the full string will be returned
@@ -264,6 +263,17 @@ namespace os
 	inline std::string getFilenameFromPath (const std::string& path)
 	{
 		return path.substr(path.rfind("/") + 1);
+	}
+
+	/**
+	 * Will cut away the characters following the final dot.
+	 * @param filename The filename to extract the basename from.
+	 * @return The filename without extension
+	 */
+	inline std::string stripExtension (const std::string& filename)
+	{
+		std::string::size_type pos = filename.rfind(".");
+		return filename.substr(0, pos);
 	}
 }
 
