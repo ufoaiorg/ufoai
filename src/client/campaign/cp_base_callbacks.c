@@ -43,6 +43,9 @@ static cvar_t *cl_start_buildings;
 static building_t *buildingConstructionList[MAX_BUILDINGS];
 static int buildingNumber = 0;
 
+/**
+ * @brief onDestroy Callback for Antimatter Storage
+ */
 static void B_Destroy_AntimaterStorage_f (void)
 {
 	base_t *base;
@@ -70,7 +73,7 @@ static void B_Destroy_AntimaterStorage_f (void)
 
 /**
  * @brief Handles the list of constructable buildings.
- * @param[in] base The base to update the building list for
+ * @param[in] buildingList list of buildings to upate
  * @param[in] building Add this building to the construction list
  * @note Called everytime a building was constructed and thus maybe other buildings
  * get available. The content is updated everytime B_BuildingInit is called

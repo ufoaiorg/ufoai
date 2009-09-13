@@ -966,7 +966,9 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *templa
 /**
  * @brief Prepares initial equipment for first base at the beginning of the campaign.
  * @param[in] base Pointer to first base.
- * @param[in] campaign The current running campaign
+ * @param[in] assignInitialAircraft aircraft on which the soldiers (to equip) are
+ * @param[in] eqname Initial equipment definition id
+ * @param[in] edTarget storage to put items to
  * @sa B_BuildBase_f
  * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
  */
@@ -1189,6 +1191,7 @@ void B_UpdateBaseCount (void)
  * @param[in,out] base The base to set up
  * @param[in] hire Hire employees for the building we create from the template
  * @param[in] buildings Add buildings to the initial base
+ * @param[in] pos Position (on Geoscape) the base built at
  * @sa B_NewBase
  * @sa B_SetUpFirstBase
  */
@@ -1720,6 +1723,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
  * @brief Gets a building of a given type in the given base
  * @param[in] base The base to search the building in
  * @param[in] buildingType What building-type to get.
+ * @param[in] onlyWorking If we're looking only for working buildings
  * @return The building or NULL if base has no building of that type
  */
 building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildingType, qboolean onlyWorking)
