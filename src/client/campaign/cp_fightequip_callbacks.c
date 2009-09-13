@@ -659,13 +659,13 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 	int i, pos;
 	aircraft_t *aircraft;
 	base_t *base = B_GetCurrentSelectedBase();
-	aircraftSlot_t *slot;
+	int updateZone = 0;
 
 	if (!base)
 		return;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <arg> <zone1|zone2|item>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -673,6 +673,14 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 	assert(aircraft);
 
 	pos = atoi(Cmd_Argv(1));
+
+	if (Cmd_Argc() == 3) {
+		if (!strcmp(Cmd_Argv(2), "zone1")) {
+			updateZone = 1;
+		} else if (!strcmp(Cmd_Argv(2), "zone2")) {
+			updateZone = 2;
+		}
+	}
 
 	airequipSelectedSlot = ZONE_NONE;
 
@@ -709,8 +717,10 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 	AIM_AircraftEquipMenuUpdate(qfalse);
 
 	/* update description with the selected slot */
-	/** @todo if slot is NULL, should we clean up description? */
-	slot = AII_GetAircraftSlotByIDX(aircraft, airequipID, airequipSelectedSlot);
+	if (updateZone > 0)
+		AIM_UpdateItemDescription(qfalse, qtrue);
+	else
+		AIM_UpdateItemDescription(qtrue, qfalse);
 }
 
 /**

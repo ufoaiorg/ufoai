@@ -30,13 +30,39 @@ window aircraft_equip extends iaircraft
 	// functions
 	// ==================
 
-	func airequip_zone1
-	{
-		cmd "airequip_zone_select 1;"
-	}
-	func airequip_zone2
-	{
-		cmd "airequip_zone_select 2;"
+	/**
+	 * @brief Call when the user select a UI zone
+	 * @param[in] <1> zone we want to select (zone1, zone2, slot, item)
+	 * slot: aircraft slot
+	 * item: An item into the item list
+	 */
+	confunc airequip_select {
+		if ( <1> eq "zone1" ) {
+			*airequip_zone_select1@image  = "ui/airequip_selected_element"
+			*airequip_zone_select2@image  = ""
+			*cvar:mn_aircraft_item_selected = -1
+			cmd "airequip_zone_select 1;"
+		} elif ( <1> eq "zone2" ) {
+			*airequip_zone_select1@image  = ""
+			*airequip_zone_select2@image  = "ui/airequip_selected_element"
+			*cvar:mn_aircraft_item_selected = -1
+			cmd "airequip_zone_select 2;"
+		} elif ( <1> eq "slot" ) {
+			*cvar:tmp = ""
+			if ( *cvar:mn_aircraft_item_selected != -1 ) {
+				*cvar:tmp = "item"
+			} elif ( *node:parent.airequip_zone_select2@image eq "" ) {
+				*cvar:tmp = "zone1"
+			} else {
+				*cvar:tmp = "zone2"
+			}
+			cmd "airequip_slot_select <2> <cvar:tmp>"
+			delete *cvar:tmp
+		} elif ( <1> eq "item" ) {
+			*airequip_zone_select1@image  = ""
+			*airequip_zone_select2@image  = ""
+			cmd "airequip_list_click <2>" 
+		}
 	}
 
 	// ==================
@@ -192,7 +218,7 @@ window aircraft_equip extends iaircraft
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		onChange		{
-			cmd "airequip_list_click <cvar:mn_aircraft_item_selected>"
+			cmd "airequip_select item <cvar:mn_aircraft_item_selected>"
 		}
 		onViewChange {
 			*(abstractscrollbar)airequip_list_scroll@fullsize = <fullsize>
@@ -240,57 +266,6 @@ window aircraft_equip extends iaircraft
 	// Zones
 	// ==================
 
-	todo add_hilightselection
-	{
-		string "Add hilight selection for zone 1 and 2. It must be a XOR between zone1, zone2 and itemList"
-		pos			"592 500"
-	}
-
-/*
-	custombutton airequip_button_add1
-	{
-		tooltip		"_Add selected item"
-		image		ui/button_background
-		pos			"592 500"
-		size		"37 32"
-		texl		"128 0"
-		icon		plus
-		onClick		{ cmd "airequip_add_item 1;" }
-	}
-
-	custombutton airequip_button_remove1
-	{
-		tooltip		"_Remove item from slot"
-		image		ui/button_background
-		pos			"592 550"
-		size		"37 32"
-		texl		"128 0"
-		icon		minus
-		onClick		{ cmd "airequip_remove_item 1;" }
-	}
-
-	custombutton airequip_button_add2
-	{
-		tooltip		"_Add selected item"
-		image		ui/button_background
-		pos			"592 660"
-		size		"37 32"
-		texl		"128 0"	
-		icon		plus
-		onClick		{ cmd "airequip_add_item 2;" }
-	}
-
-	custombutton airequip_button_remove2
-	{
-		tooltip		"_Remove item from slot"
-		image		ui/button_background
-		pos			"592 695"
-		texl		"128 0"
-		size		"37 32"
-		icon		minus
-		onClick		{ cmd "airequip_remove_item 2;" }
-	}
-*/
 	pic airequip_zone_select1
 	{
 		tooltip	"_Select this zone"
@@ -298,14 +273,11 @@ window aircraft_equip extends iaircraft
 		image		ui/airequip_selected_element
 		texl		"0 83"
 		texh		"458 190"
-		invis		false
-		mousefx		true
-		onClick		{ call airequip_zone1 }
+		onClick		{ cmd "airequip_select zone1" }
 	}
 
 	text airequip_text_zone1
 	{
-		tooltip		"_Select this zone"
 		pos			"667 530"
 		size		"304 48"
 		lineheight	"16"
@@ -316,20 +288,17 @@ window aircraft_equip extends iaircraft
 
 	pic airequip_zone_select2
 	{
-		invis		false
 		tooltip		"_Select this zone"
-		mousefx		true
 		image		ui/airequip_selected_element
 		pos			"654 648"
 		texl		"0 0"
 		texh		"458 82"
-		onClick	{ call airequip_zone2 }
+		onClick	{ cmd "airequip_select zone2" }
 	}
 
 	text airequip_text_zone2
 	{
 		dataid		TEXT_AIREQUIP_2
-		tooltip		"_Select this zone"
 		pos			"669 689"
 		size		"306 35"
 		lineheight	"16"
@@ -345,7 +314,7 @@ window aircraft_equip extends iaircraft
 		font		f_small
 		color		"0 .78 0 1"
 		textalign	cl
-		onClick		{ call airequip_zone1 }
+		ghost		true
 	}
 
 	string airequip_header2
@@ -356,7 +325,7 @@ window aircraft_equip extends iaircraft
 		font		f_small
 		color		"0 .78 0 1"
 		textalign	cl
-		onClick		{ call airequip_zone2 }
+		ghost		true
 	}
 
 	// ==================
@@ -371,7 +340,7 @@ window aircraft_equip extends iaircraft
 		pos			"909 121"
 		texl		"0 0"
 		texh		"64 64"
-		onClick		{ cmd "airequip_slot_select 0;" }
+		onClick		{ cmd "airequip_select slot 0;" }
 	}
 	model airequip_model_slot0
 	{
@@ -391,7 +360,7 @@ window aircraft_equip extends iaircraft
 		pos		"909 201"
 		texl	"0 0"
 		texh	"64 64"
-		onClick	{ cmd "airequip_slot_select 1;" }
+		onClick	{ cmd "airequip_select slot 1;" }
 	}
 	model airequip_model_slot1
 	{
@@ -411,7 +380,7 @@ window aircraft_equip extends iaircraft
 		pos		"909 281"
 		texl	"0 0"
 		texh	"64 64"
-		onClick	{ cmd "airequip_slot_select 2;" }
+		onClick	{ cmd "airequip_select slot 2;" }
 	}
 	model airequip_model_slot2
 	{
@@ -431,7 +400,7 @@ window aircraft_equip extends iaircraft
 		pos		"709 121"
 		texl	"0 0"
 		texh	"64 64"
-		onClick	{ cmd "airequip_slot_select 3;" }
+		onClick	{ cmd "airequip_select slot 3;" }
 	}
 	model airequip_model_slot3
 	{
@@ -451,7 +420,7 @@ window aircraft_equip extends iaircraft
 		pos		"709 281"
 		texl	"0 0"
 		texh	"64 64"
-		onClick	{ cmd "airequip_slot_select 4;" }
+		onClick	{ cmd "airequip_select slot 4;" }
 	}
 	model airequip_model_slot4
 	{
@@ -471,7 +440,7 @@ window aircraft_equip extends iaircraft
 		pos		"509 121"
 		texl	"0 0"
 		texh	"64 64"
-		onClick	{ cmd "airequip_slot_select 5;" }
+		onClick	{ cmd "airequip_select slot 5;" }
 	}
 	model airequip_model_slot5
 	{
@@ -491,7 +460,7 @@ window aircraft_equip extends iaircraft
 		pos		"509 201"
 		texl	"0 0"
 		texh	"64 64"
-		onClick	{ cmd "airequip_slot_select 6;" }
+		onClick	{ cmd "airequip_select slot 6;" }
 	}
 	model airequip_model_slot6
 	{
@@ -511,7 +480,7 @@ window aircraft_equip extends iaircraft
 		pos		"509 281"
 		texl	"0 0"
 		texh	"64 64"
-		onClick	{ cmd "airequip_slot_select 7;" }
+		onClick	{ cmd "airequip_select slot 7;" }
 	}
 	model airequip_model_slot7
 	{
@@ -609,7 +578,7 @@ window aircraft_equip extends iaircraft
 	{
 		*aircraft_list@lineselected = <1>
 		cmd "airequip_updatemenu;"
-		call airequip_zone1
+		cmd "airequip_select zone1"
 		// absent from base, go back to the main GUI
 		if ( *cvar:mn_equipsoldierstate == 1 ) {
 			cmd "mn_pop; mn_push aircraft;"
@@ -621,7 +590,7 @@ window aircraft_equip extends iaircraft
 		// default is weapons @sa aircraftItemType_t (inv_shared.h)
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		cmd "airequip_updatemenu 2;"
-		call airequip_zone1
+		cmd "airequip_select zone1"
 		*cvar:mn_itemname = ""
 		*cvar:mn_upmodel_top = ""
 		*cvar:mn_aircraft_item_selected = -1
