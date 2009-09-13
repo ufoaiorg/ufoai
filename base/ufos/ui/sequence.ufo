@@ -9,10 +9,14 @@ window sequence
 		size		"1024 768"
 	}
 
+	func next {
+		cmd "seq_click;"
+	}
+
 	zone onClick
 	{
 		size		"1024 768"
-		onClick		{ cmd "seq_click;" }
+		onClick		{ call next }
 	}
 
 	confunc end
