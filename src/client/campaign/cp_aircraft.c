@@ -1881,7 +1881,7 @@ void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
 	aircraft_t* aircraft;
 
 	/* Aircraft currently moving to the mission will be redirect to base */
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;

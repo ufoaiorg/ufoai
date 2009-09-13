@@ -242,27 +242,26 @@ void CP_CheckBaseAttacks_f (void)
 }
 
 /**
- * @brief Choose Base that will be attacked, and add it to mission description.
- * @note Base attack mission -- Stage 1
+ * @brief Choose Base that will be attacked
  * @return Pointer to the base, NULL if no base set
+ * @note Base attack mission -- Stage 1
  */
-static base_t* CP_BaseAttackChooseBase (const mission_t *mission)
+static base_t *CP_BaseAttackChooseBase (void)
 {
-	float randomNumber, sum = 0.0f;
+	float randomNumber;
+	float sum = 0.0f;
 	int baseIdx;
 	base_t *base = NULL;
 
-	assert(mission);
-
 	/* Choose randomly a base depending on alienInterest values for those bases */
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
 		base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 		sum += base->alienInterest;
 	}
 	randomNumber = frand() * sum;
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
 		base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
@@ -276,6 +275,9 @@ static base_t* CP_BaseAttackChooseBase (const mission_t *mission)
 
 	/* base is already under attack */
 	if (base->baseStatus == BASE_UNDER_ATTACK)
+		return NULL;
+	/* base not (yet) working */
+	if (!B_GetBuildingStatus(base, B_COMMAND))
 		return NULL;
 
 	return base;
@@ -291,7 +293,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 
 	mission->stage = STAGE_MISSION_GOTO;
 
-	base = CP_BaseAttackChooseBase(mission);
+	base = CP_BaseAttackChooseBase();
 	if (!base) {
 		Com_Printf("CP_BaseAttackGoToBase: no base found\n");
 		CP_MissionRemove(mission);

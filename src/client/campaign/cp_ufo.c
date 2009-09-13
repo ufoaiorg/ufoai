@@ -458,6 +458,9 @@ void UFO_CampaignRunUFOs (int dt)
 			if (CP_CheckNextStageDestination(ufo))
 				/* UFO has been removed from game */
 				continue;
+			/* UFO was destroyed (maybe because the mission was removed) */
+			if (ufoIdx == ccs.numUFOs)
+				continue;
 		}
 
 		/* is there a PHALANX aircraft to shoot at ? */
