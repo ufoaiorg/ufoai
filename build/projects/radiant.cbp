@@ -488,9 +488,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\prism.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\texteditor.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\eclass.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

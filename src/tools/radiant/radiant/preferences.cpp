@@ -44,7 +44,6 @@
 #include "xywindow.h"
 #include "mainframe.h"
 #include "qe3.h"
-#include "dialogs/texteditor.h"
 #include <string>
 
 void Interface_constructPreferences (PreferencesPage& page)

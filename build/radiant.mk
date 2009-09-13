@@ -86,7 +86,6 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/sidebar/texturebrowser.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/ParticleBrowser.cpp \
 	\
-	$(RADIANT_BASE)/radiant/dialogs/texteditor.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/about.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/prism.cpp \
