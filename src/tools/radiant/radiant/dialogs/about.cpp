@@ -34,6 +34,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "sound/OpenAL.h"
 #include "../mainframe.h"
 #include <gtk/gtkgl.h>
+#include "../ui/Icons.h"
 
 #ifdef DEBUG
 # define ABOUT_DEBUG "Debug build"
@@ -63,7 +64,7 @@ void DoAbout (void)
 					GtkFrame* frame = create_dialog_frame("", GTK_SHADOW_IN);
 					gtk_box_pack_start(GTK_BOX (vbox2), GTK_WIDGET(frame), FALSE, FALSE, 0);
 					{
-						GtkWidget* image = gtkutil::getImage("logo.bmp");
+						GtkWidget* image = gtkutil::getImage(ui::icons::ICON_LOGO);
 						gtk_widget_show(image);
 						gtk_container_add(GTK_CONTAINER(frame), image);
 					}

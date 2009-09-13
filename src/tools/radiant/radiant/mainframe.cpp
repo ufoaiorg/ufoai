@@ -2304,7 +2304,7 @@ void GlobalGL_sharedContextDestroyed (void)
 void Layout_constructPreferences (PreferencesPage& page)
 {
 	{
-		const char* layouts[] = { "window_regular.bmp", "window_split.bmp" };
+		const char* layouts[] = { ui::icons::ICON_WINDOW_REGULAR.c_str(), ui::icons::ICON_WINDOW_SPLIT.c_str() };
 		page.appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), LatchedIntImportCaller(
 				g_Layout_viewStyle), IntExportCaller(g_Layout_viewStyle.m_latched));
 	}

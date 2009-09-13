@@ -79,6 +79,18 @@ namespace ui
 			static const std::string ICON_CONNECT_ENTITIES = "cmenu_connect_entities.png";
 			static const std::string ICON_FIT_TEXTURE = "cmenu_fit_texture.png";
 			static const std::string ICON_GENERATE_MATERIALS = "cmenu_generate_materials.png";
+
+			static const std::string ICON_LOGO = "logo.png";
+
+			static const std::string ICON_WINDOW_REGULAR = "window_regular.png";
+			static const std::string ICON_WINDOW_SPLIT = "window_split.png";
+
+#if 0
+		// unused images
+		static const std::string ICON_ = "model_normals.png";
+		static const std::string ICON_ = "selection_selectpartialtall.png";
+		static const std::string ICON_VIEW_FORCE_LIGHT = "view_forcelight.png";
+#endif
 		}
 	}
 }
