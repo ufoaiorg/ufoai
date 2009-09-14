@@ -754,7 +754,7 @@ window hud extends ahud
 			pos		"6 247"
 			texl	"128 0"
 			texh	"164 75"
-			onClick	{ call showinventory }
+			onClick	{ call *node:root.showinventory }
 		}
 	}
 

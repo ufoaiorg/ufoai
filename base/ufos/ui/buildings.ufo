@@ -134,7 +134,7 @@ window buildings
 		tooltip		"_Open/close Building preview window"
 		pos			"800 700"
 		size		"180 20"
-		onClick		{ call building_preview@toggle }
+		onClick		{ call *node:root.building_preview@toggle }
 	}
 
 	confunc mn_buildings_reset
@@ -150,7 +150,7 @@ window buildings
 	func onInit
 	{
 		cmd "building_init;"
-		call mn_buildings_reset
+		call *node:root.mn_buildings_reset
 		if ( *node:root.building_preview@current == 1 ) {
 			cmd "mn_push_child popup_buildingpreview buildings;"
 		}

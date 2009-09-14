@@ -459,7 +459,7 @@ window ufopedia
 
 	func onInit
 	{
-		call init_summary
+		call *node:root.init_summary
 		cmd "update_ufopedia_layout"
 	}
 

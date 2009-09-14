@@ -406,16 +406,26 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		break;
 
 	case EA_CALL:
-		switch (action->subType) {
-		case EA_CALL_NORMAL:	/* call a function */
-			MN_ExecuteInjectedActions((const menuNode_t *) action->d.terminal.d1.data, qfalse, *(menuAction_t **) action->d.terminal.d2.data);
-			break;
-		case EA_CALL_NODEMETHOD:	/* call a node function */
-			{
-				menuNodeMethod_t func = (menuNodeMethod_t) action->d.terminal.d2.data;
-				func((menuNode_t *) action->d.terminal.d1.data);
+		{
+			menuNode_t* callNode = NULL;
+			const value_t* callProperty = NULL;
+			const char* path = action->d.nonTerminal.left->d.terminal.d1.constString;
+			MN_ReadNodePath(path, source, &callNode, &callProperty);
+
+			if (callProperty == NULL || callProperty->type == V_UI_ACTION) {
+				menuAction_t *actionsRef = NULL;
+				if (callProperty == NULL)
+					actionsRef = callNode->onClick;
+				else
+					actionsRef = *(menuAction_t **) ((byte *) callNode + callProperty->ofs);
+				MN_ExecuteInjectedActions(callNode, qfalse, actionsRef);
+			} else if (callProperty->type == V_UI_NODEMETHOD) {
+				menuNodeMethod_t func = (menuNodeMethod_t) callProperty->ofs;
+				func(callNode);
+			} else {
+				Com_Printf("MN_ExecuteInjectedAction: Call operand %d unsupported. (%s)\n", callProperty->type, MN_GetPath(callNode));
+				return;
 			}
-			break;
 		}
 		break;
 

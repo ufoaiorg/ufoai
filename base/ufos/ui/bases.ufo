@@ -229,7 +229,7 @@ window bases
 		texh	"16 64"
 		onClick
 		{
-			call name@edit
+			call *node:root.name@edit
 		}
 	}
 

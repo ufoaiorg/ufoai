@@ -40,7 +40,7 @@ window options
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
 		onClick		{
-			call hidepanels
+			call *node:root.hidepanels
 			*(panel)options_game@invis = false
 		}
 	}
@@ -55,7 +55,7 @@ window options
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
 		onClick		{
-			call hidepanels
+			call *node:root.hidepanels
 			*(panel)options_video@invis = false
 			cmd "copy mn_vidmode vid_mode;"
 		}
@@ -71,7 +71,7 @@ window options
 		color		"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		onClick		{
-			call hidepanels
+			call *node:root.hidepanels
 			*(panel)options_sound@invis = false
 		}
 	}
@@ -86,7 +86,7 @@ window options
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
 		onClick		{
-			call hidepanels
+			call *node:root.hidepanels
 			*(panel)options_input@invis = false
 		}
 	}
@@ -105,7 +105,7 @@ window options
 
 	func onInit
 	{
-		call hidepanels
+		call *node:root.hidepanels
 		cmd "mn_init_keylist;"
 		*(panel)options_input@invis = false
 	}

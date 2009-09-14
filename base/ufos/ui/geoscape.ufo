@@ -884,7 +884,7 @@ window popup_newbase
 		texl		"0 48"
 		texh		"16 64"
 		mousefx		false
-		onClick		{ call name@edit }
+		onClick		{ call *node:root.name@edit }
 	}
 
 	string cost_label
@@ -918,7 +918,7 @@ window popup_newbase
 		pos			"246 98"
 		image		"ui/checkbox_blue"
 		size		"20 18"
-		onChange 	{ call chk_checkboxes }
+		onChange 	{ call *node:root.chk_checkboxes }
 	}
 	string start_buildings_str
 	{
@@ -926,7 +926,7 @@ window popup_newbase
 		pos			"270 98"
 		size		"180 20"
 		textalign	ul
-		onClick		{ call start_building@toggle }
+		onClick		{ call *node:root.start_building@toggle }
 	}
 
 	// START WITH EMPLOYEES
@@ -944,7 +944,7 @@ window popup_newbase
 		pos			"270 123"
 		size		"180 20"
 		textalign	ul
-		onClick		{ call start_employees@toggle }
+		onClick		{ call *node:root.start_employees@toggle }
 	}
 
 	button bt_cancel
@@ -981,7 +981,7 @@ window popup_newbase
 			*start_employees@invis false
 			*start_buildings_str@invis false
 			*start_building@invis false
-			call chk_checkboxes
+			call *node:root.chk_checkboxes
 		} else {
 			*start_employees_str@invis true
 			*start_employees@invis true
@@ -1307,7 +1307,7 @@ window popup_newinstallation
 		texl		"0 48"
 		texh		"16 64"
 		mousefx		false
-		onClick		{ call name@edit }
+		onClick		{ call *node:root.name@edit }
 	}
 
 	string cost_label
@@ -1440,7 +1440,7 @@ window popup_installationstatus
 		texl		"0 48"
 		texh		"16 64"
 		mousefx		false
-		onClick		{ call name@edit }
+		onClick		{ call *node:root.name@edit }
 	}
 
 	string buildtime_label

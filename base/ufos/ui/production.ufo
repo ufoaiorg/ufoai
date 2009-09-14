@@ -68,7 +68,7 @@ window production
 		cvar	*cvar:mn_itemtype
 		onChange {
 			cmd "prod_type <cvar:mn_itemtype>;"
-			call prod_stores
+			call *node:root.prod_stores
 		}
 
 		option description {
@@ -585,6 +585,6 @@ window production
 	func onInit
 	{
 		cmd "prod_init; prod_type *cvar:mn_itemtype;"
-		call prod_stores
+		call *node:root.prod_stores
 	}
 }

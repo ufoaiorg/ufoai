@@ -16,7 +16,7 @@ window sequence
 	zone onClick
 	{
 		size		"1024 768"
-		onClick		{ call next }
+		onClick		{ call *node:root.next }
 	}
 
 	confunc end
@@ -26,6 +26,6 @@ window sequence
 
 	func onClose
 	{
-		call end
+		call *node:root.end
 	}
 }

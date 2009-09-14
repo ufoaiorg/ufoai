@@ -353,37 +353,19 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 
 		case EA_CALL:
 			{
-				menuNode_t* callNode = NULL;
-				const value_t* callProperty = NULL;
-				const char *path;
-				/* get the function name */
-				*token = Com_EParse(text, errhead, NULL);
-				path = va("root.%s", *token);
-				MN_ReadNodePath(path, menuNode, &callNode, &callProperty);
-				if (callNode == NULL) {
-					Com_Printf("MN_ParseActionList: function '%s' not found (%s)\n", path, MN_GetPath(menuNode));
+				menuAction_t *expression;
+				expression = MN_ParseExpression(text, errhead, menuNode);
+				if (expression == NULL)
+					return NULL;
+
+				if (expression->type != EA_VALUE_PATHNODE && expression->type != EA_VALUE_PATHPROPERTY) {
+					Com_Printf("MN_ParseActionList: \"call\" keyword only support pathnode and pathproperty (node: %s)\n", MN_GetPath(menuNode));
 					return NULL;
 				}
-				if (callProperty == NULL || callProperty->type == V_UI_ACTION) {
-					menuAction_t **actionsRef = NULL;
-					if (callProperty == NULL)
-						actionsRef = &callNode->onClick;
-					else
-						actionsRef = (menuAction_t **) ((byte *) callNode + callProperty->ofs);
-					action->subType = EA_CALL_NORMAL;
-					action->d.terminal.d1.data = (void*) callNode;
-					action->d.terminal.d2.data = (void*) actionsRef;
-				} else if (callProperty->type == V_UI_NODEMETHOD) {
-					action->subType = EA_CALL_NODEMETHOD;
-					action->d.terminal.d1.data = (void*) callNode;
-					action->d.terminal.d2.data = (void*) callProperty->ofs;
-				} else {
-					Com_Printf("MN_ParseActionList: Event property exprected. '%i' found (%s)\n", callProperty->type, *token);
-					return NULL;
-				}
-				lastAction = action;
+
+				action->d.nonTerminal.left = expression;
+				break;
 			}
-			break;
 
 		case EA_DELETE:
 			{

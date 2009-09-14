@@ -748,8 +748,8 @@ window mp_team_edit
 
 	func onInit
 	{
-		call mp_names_clear
-		call mp_actor_stats
+		call *node:root.mp_names_clear
+		call *node:root.mp_actor_stats
 		cmd "set mn_infotype 0;set mn_equiptype 0;"
 		cmd "team_initskin;mp_update_item_list;mp_team_select 0;mp_team_update;"
 	}

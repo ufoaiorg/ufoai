@@ -300,7 +300,7 @@ window popup_tipoftheday
 		size		"200 25"
 		font		f_small
 		onClick		{
-			call activate@toggle
+			call *node:root.activate@toggle
 		}
 	}
 

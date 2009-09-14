@@ -119,7 +119,7 @@ window aircraft extends iaircraft
 	 */
 	confunc aircraft_change
 	{
-		call aircraft_checkbuttons
+		call *node:root.aircraft_checkbuttons
 		*aircraft_list@lineselected <1>
 	}
 

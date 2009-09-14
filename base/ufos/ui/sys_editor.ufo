@@ -26,7 +26,7 @@ window editor {
 		font		f_verysmall
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		onClick	{ call editor@start }
+		onClick	{ call *node:root.editor@start }
 	}
 
 	button extract_window {
@@ -78,6 +78,6 @@ window editor {
 	func onClose {
 		cmd "del mn_sys_editor_node"
 		cmd "del mn_sys_editor_window"
-		call editor@stop
+		call *node:root.editor@stop
 	}
 }

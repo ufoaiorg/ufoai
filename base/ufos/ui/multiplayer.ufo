@@ -14,7 +14,7 @@ window multiplayer
 	func onInit
 	{
 		cmd "mn_pop"
-		call mn_push_multiplayer
+		call *node:root.mn_push_multiplayer
 	}
 }
 

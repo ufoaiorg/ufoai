@@ -715,8 +715,8 @@ window equipment
 
 	func onInit
 	{
-		call names_clear
-		call actor_stats
+		call *node:root.names_clear
+		call *node:root.actor_stats
 		*cvar:mn_infotype 0
 		*cvar:mn_equiptype 0		
 		*cvar:mn_linkname ""

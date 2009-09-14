@@ -156,7 +156,7 @@ window inventory
 		texl	"192 0"	size "64 37"
 		pos		"428 458"
 		icon return
-		onClick	{ call hideinventory }
+		onClick	{ call *node:root.hideinventory }
 	}
 }
 
@@ -170,14 +170,14 @@ window hudinv extends inventory
 	{
 		pos		"983 266"
 		size	"36 75"
-		onClick	{ call hideinventory }
+		onClick	{ call *node:root.hideinventory }
 	}
 
 	zone bt_inventory
 	{
 		pos		"983 376"
 		size	"36 75"
-		onClick	{ call hideinventory }
+		onClick	{ call *node:root.hideinventory }
 	}
 }
 
@@ -192,8 +192,8 @@ window ahudinv extends inventory
 		tooltip "_Inventory and physical stats"
 		pos     "878 84"
 		size    "130 265"
-		onClick   { call hideinventory }
-		onRClick  { call hideinventory }
+		onClick   { call *node:root.hideinventory }
+		onRClick  { call *node:root.hideinventory }
 	}
 }
 

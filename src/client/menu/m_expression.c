@@ -396,8 +396,13 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 
 		/* get property name */
 		propertyName = strchr(path, '@');
-		if (propertyName == NULL)
-			Com_Error(ERR_FATAL, "MN_ParseSetAction: Property setter without property ('@' not found in '%s')\n", path);
+		if (propertyName == NULL) {
+			if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
+				expression->type = EA_VALUE_PATHNODE_WITHINJECTION;
+			else
+				expression->type = EA_VALUE_PATHNODE;
+			return expression;
+		}
 		propertyName++;
 
 		property = MN_GetPropertyFromBehaviour(castedBehaviour, propertyName);

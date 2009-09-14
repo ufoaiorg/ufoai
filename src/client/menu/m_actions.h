@@ -88,9 +88,11 @@ typedef enum ea_s {
 	EA_VALUE_RAW = EA_VALUE + 4,						/**< reference to a binary value */
 	EA_VALUE_CVARNAME = EA_VALUE + 5,					/**< reference to a cvarname */
 	EA_VALUE_CVARNAME_WITHINJECTION = EA_VALUE + 6,		/**< should be into an extra action type */
-	EA_VALUE_PATHPROPERTY = EA_VALUE + 7,				/**< reference to a path, and a property (when it is possible) */
-	EA_VALUE_PATHPROPERTY_WITHINJECTION = EA_VALUE + 8,	/**< should be into an extra action type */
-	EA_VALUE_NODEPROPERTY = EA_VALUE + 9				/**< reference to a node, and a property (not a string) */
+	EA_VALUE_PATHNODE = EA_VALUE + 7,					/**< reference to a path, without property */
+	EA_VALUE_PATHNODE_WITHINJECTION = EA_VALUE + 8,		/**< should be into an extra action type */
+	EA_VALUE_PATHPROPERTY = EA_VALUE + 9,				/**< reference to a path, and a property */
+	EA_VALUE_PATHPROPERTY_WITHINJECTION = EA_VALUE + 10,/**< should be into an extra action type */
+	EA_VALUE_NODEPROPERTY = EA_VALUE + 11				/**< reference to a node, and a property (not a string) */
 } ea_t;
 
 #define EA_CALL_NORMAL			0x0

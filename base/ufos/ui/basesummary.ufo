@@ -24,7 +24,7 @@ window basesummary
 	}
 
 	confunc basesummary_change_color {
-		call reset_color
+		call *node:root.reset_color
 		*basenavigation.base<1>@bgcolor "1 1 1 0.7"
 	}
 

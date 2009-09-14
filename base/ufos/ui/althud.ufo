@@ -403,7 +403,7 @@ window althud extends ahud
 			size		"120 260"
 			scale		"4 4 4"
 	
-			onClick		{ call showinventory }
+			onClick		{ call *node:root.showinventory }
 			onRClick		{ cmd "mn_push ahudphysdat;" }
 		}
 
@@ -797,9 +797,9 @@ window althud extends ahud
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		onWheelUp	{ call show_rightweapon cmd "switch_firemode_list r;" }
-		onWheelDown	{ call show_leftweapon cmd "switch_firemode_list l;" }
-		onClick		{ call show_rightweapon cmd "switch_firemode_list r;" }
+		onWheelUp	{ call *node:root.show_rightweapon cmd "switch_firemode_list r;" }
+		onWheelDown	{ call *node:root.show_leftweapon cmd "switch_firemode_list l;" }
+		onClick		{ call *node:root.show_rightweapon cmd "switch_firemode_list r;" }
 	}
 	pic switch_to_left_hand
 	{
@@ -809,9 +809,9 @@ window althud extends ahud
 		texl		"16 0"
 		texh		"32 16"
 		mousefx		true
-		onWheelUp	{ call show_rightweapon cmd "switch_firemode_list r;" }
-		onWheelDown	{ call show_leftweapon cmd "switch_firemode_list l;" }
-		onClick		{ call show_leftweapon cmd "switch_firemode_list l;" }
+		onWheelUp	{ call *node:root.show_rightweapon cmd "switch_firemode_list r;" }
+		onWheelDown	{ call *node:root.show_leftweapon cmd "switch_firemode_list l;" }
+		onClick		{ call *node:root.show_leftweapon cmd "switch_firemode_list l;" }
 	}
 
 	// ==================
@@ -1178,7 +1178,7 @@ window althud extends ahud
 	{
 		*chatscreen@invis true
 		cmd "music_change battlescape;"
-		call show_rightweapon
+		call *node:root.show_rightweapon
 		cmd "set mn_showchatbuttons 0;"
 	}
 }

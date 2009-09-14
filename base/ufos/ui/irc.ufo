@@ -149,7 +149,7 @@ window irc
 		onChange	{
 			cmd "irc_chanmsg"
 			//cmd "set irc_send_buffer \"\""
-			call slot_irc_send_buffer@edit
+			call *node:root.slot_irc_send_buffer@edit
 		}
 	}
 

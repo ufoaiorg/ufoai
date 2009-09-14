@@ -174,7 +174,7 @@ window material_editor {
 	confunc hidestages {
 		*cvar:me_tmp <1>
 		*stage_attributes@invis <1>
-		call hidestageattributestabs
+		call *node:root.hidestageattributestabs
 		if ( *cvar:me_tmp == false ) {
 			*cvar:me_stagetype <2>
 			*stage_attributes.stage_attributes_<cvar:me_stagetype>@invis false
@@ -645,7 +645,7 @@ window material_editor {
 			font	"f_verysmall"
 
 			onChange {
-				call hidestageattributestabs
+				call *node:root.hidestageattributestabs
 				*stage_attributes.stage_attributes_<cvar:me_stagetype>@invis false
 			}
 
@@ -701,7 +701,7 @@ window material_editor {
 
 		cmd "hideshaders true 0 0 0 0;"
 		cmd "hidestages true stretch;"
-		call hidestageattributestabs
+		call *node:root.hidestageattributestabs
 		cmd "mn_materialeditor;"
 	}
 

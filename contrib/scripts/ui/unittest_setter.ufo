@@ -401,9 +401,9 @@ window unittest_setter
 	}
 
 	func onInit {
-		call testCvar
-		call testProperty
-		call testDelete
+		call *node:root.testCvar
+		call *node:root.testProperty
+		call *node:root.testDelete
 	}
 
 	func onClose {

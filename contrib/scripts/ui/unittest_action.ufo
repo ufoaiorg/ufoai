@@ -198,10 +198,10 @@ window unittest_action
 
 		// func
 
-		call set0
+		call *node:root.set0
 		if ( *cvar:test == 0 ) { *testCommon1@color "0 1 0 1" }
 		else { *testCommon1@color "1 0 0 1" }
-		call set1
+		call *node:root.set1
 		if ( *cvar:test == 1 ) { *testCommon2@color "0 1 0 1" }
 		else { *testCommon2@color "1 0 0 1" }
 
@@ -222,9 +222,9 @@ window unittest_action
 		*testCommon6@color "1 0 0 1"
 		*testCommon7@color "1 0 0 1"
 		*node:root.testFoo@onClick = { *testCommon6@color "0 1 0 1" }
-		call testFoo@onClick
+		call *node:root.testFoo@onClick
 		*node:root.testFoo@onClick = { *testCommon7@color "0 1 0 1" }
-		call testFoo@onClick
+		call *node:root.testFoo@onClick
 
 		*cvar:test = 1
 		while ( *cvar:test == 1 ) {
@@ -283,18 +283,18 @@ window unittest_action
 
 	confunc testListenerTest {
 		// one listener
-		call sender1@onClick
+		call *node:root.sender1@onClick
 
 		// no listener
 		*testListener4@color "0 1 0 1"
-		call sender2@onClick
+		call *node:root.sender2@onClick
 
 		// two listener
-		call sender3@onClick
+		call *node:root.sender3@onClick
 
 		// one listener
 		*testListener9@color "0 1 0 1"
-		call sender4@onClick
+		call *node:root.sender4@onClick
 
 		// clean up
 		cmd "testListenerTearDown"
@@ -315,7 +315,7 @@ window unittest_action
 	}
 
 	func testListener {
-		call "testListenerSetUp"
+		call *node:root.testListenerSetUp
 		cmd "testListenerTest"
 	}
 
@@ -346,9 +346,9 @@ window unittest_action
 	//
 
 	func onInit {
-		call testCommon
-		call testListener
-		call testLack
+		call *node:root.testCommon
+		call *node:root.testListener
+		call *node:root.testLack
 	}
 
 }

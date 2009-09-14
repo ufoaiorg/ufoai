@@ -128,7 +128,7 @@ window basedefence
 				tabwidth	50
 				longlines	prettychop
 				onClick		{
-					call equippanel.update_buttons
+					call *node:root.equippanel.update_buttons
 				}
 				onViewChange {
 					*node:(abstractscrollbar)parent.slotlist_scroll@fullsize = <fullsize>
@@ -204,7 +204,7 @@ window basedefence
 				selectcolor	"1 1 1 1"
 				rows		"4"
 				onClick		{
-					call equippanel.update_buttons
+					call *node:root.equippanel.update_buttons
 					cmd "basedef_list_click <lineselected>;"
 				}
 				onViewChange {
@@ -433,6 +433,6 @@ window basedefence
 			*node:root.infopanel.destroy@invis = true
 		}
 		cmd "basedef_updatemenu info;"
-		call equippanel.update_buttons
+		call *node:root.equippanel.update_buttons
 	}
 }
