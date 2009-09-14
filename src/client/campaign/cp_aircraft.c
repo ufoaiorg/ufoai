@@ -770,6 +770,8 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 		/* Set HP to maximum */
 		aircraft->damage = aircraft->stats[AIR_STATS_DAMAGE];
+		/* Set Default Name */
+		Q_strncpyz(aircraft->name, _(aircraft->defaultName), lengthof(aircraft->name));
 
 		/* set initial direction of the aircraft */
 		VectorSet(aircraft->direction, 1, 0, 0);
@@ -1478,8 +1480,8 @@ static const value_t aircraft_param_vals[] = {
 
 /** @brief Valid aircraft definition values from script files. */
 static const value_t aircraft_vals[] = {
-	{"name", V_TRANSLATION_STRING, offsetof(aircraft_t, name), 0},
-	{"shortname", V_TRANSLATION_STRING, offsetof(aircraft_t, shortname), 0},
+	{"name", V_STRING, offsetof(aircraft_t, name), 0},
+	{"defaultname", V_TRANSLATION_STRING, offsetof(aircraft_t, defaultName), 0},
 	{"numteam", V_INT, offsetof(aircraft_t, maxTeamSize), MEMBER_SIZEOF(aircraft_t, maxTeamSize)},
 	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
 	{"nogeoscape", V_BOOL, offsetof(aircraft_t, notOnGeoscape), MEMBER_SIZEOF(aircraft_t, notOnGeoscape)},
@@ -1573,6 +1575,15 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		if (*token == '}')
 			break;
 
+		if (!strcmp(token, "name")) {
+			token = Com_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			if (token[0] == '_')
+				token++;
+			Q_strncpyz(aircraftTemplate->name, _(token), sizeof(aircraftTemplate->name));
+			continue;
+		}
 		if (assignAircraftItems) {
 			assert(aircraftTemplate);
 			/* write into cp_campaignPool - this data is reparsed on every new game */
@@ -1804,7 +1815,7 @@ void AIR_ListCraftIndexes_f (void)
 	for (i = 0; i < ccs.numBases; i++) {
 		int j;
 		for (j = 0; j < ccs.bases[i].numAircraftInBase; j++) {
-			Com_Printf("%i (%s)\t%i\t%i\t(%s)\n", i, ccs.bases[i].name, j, ccs.bases[i].aircraft[j].idx, ccs.bases[i].aircraft[j].shortname);
+			Com_Printf("%i (%s)\t%i\t%i\t(%s)\n", i, ccs.bases[i].name, j, ccs.bases[i].aircraft[j].idx, ccs.bases[i].aircraft[j].name);
 		}
 	}
 }
@@ -2483,6 +2494,7 @@ void AIR_SaveAircraftXML (mxml_node_t *node, aircraft_t const aircraft, qboolean
 	int l;
 
 	mxml_AddString(node, "id", aircraft.id);
+	mxml_AddString(node, "name", aircraft.name);
 
 	mxml_AddInt(node, "status", aircraft.status);
 	mxml_AddInt(node, "fuel", aircraft.fuel);
@@ -2770,8 +2782,14 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 	if (!AIR_LoadRouteXML(&craft->route, snode))
 		return qfalse;
 
+	s = mxml_GetString(p, "name");
+	if (s[0] == '\0') {
+		Q_strncpyz(craft->name, _(craft->defaultName), sizeof(craft->name));
+	} else {
+		Q_strncpyz(craft->name, s, sizeof(craft->name));
+	}
 	s = mxml_GetString(p, "missionid");
-	if (!s || s[0] == '\0') {
+	if (s[0] == '\0') {
 		if (isUfo)
 			Com_Printf("Error: UFO '%s' is not linked to any mission\n", craft->id);
 	}
@@ -3025,9 +3043,9 @@ qboolean AIR_ScriptSanityCheck (void)
 			error++;
 			Com_Printf("...... aircraft '%s' has no name\n", a->id);
 		}
-		if (!a->shortname) {
+		if (!a->defaultName) {
 			error++;
-			Com_Printf("...... aircraft '%s' has no shortname\n", a->id);
+			Com_Printf("...... aircraft '%s' has no defaultName\n", a->id);
 		}
 
 		/* check that every weapons fits slot */

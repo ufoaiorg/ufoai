@@ -162,18 +162,24 @@ window iaircraft
 		}
 	}
 
-	string aircraft_selected
+	textentry aircraft_selected
 	{
 		string		*cvar:mn_aircraftname
 		pos			"46 114"
 		size		"317 21"
-		textalign	cc
+		font		f_normal_bold
+		onChange	{ cmd "aircraft_namechange; mn_pop; mn_push aircraft;" }
 	}
 
-	todo aircraft_name_edition
+	pic air_nameedit
 	{
-		pos			"346 114"
-		string		"It would be nice to allow to edit the aircraft name here"
+		tooltip		"_Rename aircraft"
+		image		ui/buttons_small
+		pos			"380 116"
+		size		"16 16"
+		texl		"0 48"
+		texh		"16 64"
+		onClick		{ call *node:root.aircraft_selected@edit }
 	}
 
 	// ==================

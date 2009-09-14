@@ -302,6 +302,26 @@ static void AIR_AircraftUpdateList_f (void)
 	MN_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
 }
 
+/**
+ * @brief Creates console command to change the name of an aircraft.
+ * Copies the value of the cvar mn_aircraftname over as the name of the
+ * current selected aircraft
+ */
+static void AIR_ChangeAircraftName_f (void)
+{
+	const base_t *base = B_GetCurrentSelectedBase();
+	aircraft_t *aircraft;
+
+	if (!base)
+		return;
+	aircraft = base->aircraftCurrent;
+	if (!aircraft)
+		return;
+
+	Q_strncpyz(aircraft->name, Cvar_GetString("mn_aircraftname"), sizeof(aircraft->name));
+}
+
+
 void AIR_InitCallbacks (void)
 {
 	/* menu aircraft */
@@ -314,10 +334,12 @@ void AIR_InitCallbacks (void)
 	Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase");
 	/* menu aircraft, aircraft_equip, aircraft_soldier */
 	Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f, NULL);
+	Cmd_AddCommand("aircraft_namechange", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft.");
 }
 
 void AIR_ShutdownCallbacks (void)
 {
+	Cmd_RemoveCommand("aircraft_namechange");
 	Cmd_RemoveCommand("aircraft_start");
 	Cmd_RemoveCommand("mn_next_aircraft");
 	Cmd_RemoveCommand("mn_prev_aircraft");

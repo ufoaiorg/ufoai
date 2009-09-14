@@ -377,11 +377,11 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 			if (!notEnoughFuel)
 				Q_strcat(aircraftListText, "^B", sizeof(aircraftListText));
 			if (ufo)
-				s = va("%s (%i/%i)\t%s\t%s\n", _(aircraft->shortname), aircraft->teamSize,
+				s = va("%s (%i/%i)\t%s\t%s\n", aircraft->name, aircraft->teamSize,
 					aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name);
 			else {
 				const float distance = MAP_GetDistance(aircraft->pos, mission->pos);
-				s = va("%s (%i/%i)\t%s\t%s\t%s\n", _(aircraft->shortname), aircraft->teamSize,
+				s = va("%s (%i/%i)\t%s\t%s\t%s\n", aircraft->name, aircraft->teamSize,
 					aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name,
 					CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]));
 			}

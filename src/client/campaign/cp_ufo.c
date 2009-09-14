@@ -342,7 +342,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 					distance = dist;
 					if (UFO_SendPursuingAircraft(ufo, phalanxAircraft) && UFO_IsUFOSeenOnGeoscape(ufo)) {
 						/* stop time and notify */
-						MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), _(phalanxAircraft->name)), qfalse, MSG_STANDARD, NULL);
+						MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), phalanxAircraft->name), qfalse, MSG_STANDARD, NULL);
 						/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
 					}
 				}
@@ -687,7 +687,7 @@ qboolean UFO_CampaignCheckEvents (void)
 					detected = qtrue;
 					if (minDistance < 0 || minDistance > distance) {
 						minDistance = distance;
-						strncpy(detectedBy, aircraft->name, sizeof(detectedBy));
+						Q_strncpyz(detectedBy, aircraft->name, sizeof(detectedBy));
 					}
 				}
 			}
@@ -704,7 +704,7 @@ qboolean UFO_CampaignCheckEvents (void)
 				detected = qtrue;
 				if (minDistance < 0 || minDistance > distance) {
 					minDistance = distance;
-					strncpy(detectedBy, installation->name, sizeof(detectedBy));
+					Q_strncpyz(detectedBy, installation->name, sizeof(detectedBy));
 				}
 			}
 		}
@@ -715,7 +715,7 @@ qboolean UFO_CampaignCheckEvents (void)
 				/* if UFO is aiming a PHALANX aircraft, warn player */
 				if (ufo->aircraftTarget) {
 					/* stop time and notify */
-					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), _(ufo->aircraftTarget->name)), qfalse, MSG_STANDARD, NULL);
+					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), ufo->aircraftTarget->name), qfalse, MSG_STANDARD, NULL);
 					/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets
 					 * @sa UFO_SearchAircraftTarget */
 				} else

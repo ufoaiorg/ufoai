@@ -93,7 +93,7 @@ aircraft craft_drop_firebird
 		range		240
 	}
 	name		"_Firebird-class Dropship"
-	shortname	"_Firebird D"
+	defaultname	"_Firebird D"
 	type		transporter
 	model		"geoscape/drop_firebird"
 	price		20000
@@ -128,7 +128,7 @@ aircraft craft_drop_herakles
 		range		240
 	}
 	name		"_Herakles-class Heavy Lifter"
-	shortname	"_Herakles D"
+	defaultname	"_Herakles D"
 	type		transporter
 	model		"geoscape/drop_herakles"
 	price		30000
@@ -167,7 +167,7 @@ aircraft craft_inter_stiletto
 		range		80
 	}
 	name		"_Stiletto-class Interceptor"
-	shortname	"_Stiletto I"
+	defaultname	"_Stiletto I"
 	type		interceptor
 	model		"geoscape/inter_stiletto"
 	numteam		0
@@ -212,7 +212,7 @@ aircraft craft_inter_saracen
 		range		110
 	}
 	name		"_Saracen-class Interceptor"
-	shortname	"_Saracen I"
+	defaultname	"_Saracen I"
 	type		interceptor
 	model		"geoscape/inter_saracen"
 	numteam		0
@@ -253,7 +253,7 @@ aircraft craft_inter_dragon
 		antimatter	120
 	}
 	name		"_Dragon Interceptor"
-	shortname	"_Dragon"
+	defaultname	"_Dragon"
 	type		interceptor
 	model		"geoscape/inter_dragon"
 	numteam		0
@@ -294,7 +294,7 @@ aircraft craft_inter_starchaser
 		antimatter	130
 	}
 	name		"_Starchaser-class Interceptor"
-	shortname	"_Starchaser"
+	defaultname	"_Starchaser"
 	type		interceptor
 	model		"geoscape/inter_starchaser"
 	numteam		0
@@ -340,7 +340,7 @@ aircraft craft_inter_stingray
 		antimatter	145
 	}
 	name		"_Stingray Interceptor"
-	shortname	"_Stingray"
+	defaultname	"_Stingray"
 	type		interceptor
 	model		"geoscape/inter_stingray"
 	numteam		0
@@ -387,7 +387,7 @@ aircraft craft_ufo_scout
 		range		208
 	}
 	name		"_UFO - Scout"
-	shortname	"_Scout U"
+	defaultname	"_Scout U"
 	type		ufo
 	model		"geoscape/ufo_scout"
 	size		1
@@ -408,7 +408,7 @@ aircraft craft_ufo_fighter
 		range		236
 	}
 	name		"_UFO - Fighter"
-	shortname	"_Fighter U"
+	defaultname	"_Fighter U"
 	type		ufo
 	model		"geoscape/ufo_fighter"
 	size		1
@@ -436,7 +436,7 @@ aircraft craft_ufo_harvester
 		range		278
 	}
 	name		"_UFO - Harvester"
-	shortname	"_Harvester U"
+	defaultname	"_Harvester U"
 	type		ufo
 	model		"geoscape/ufo_harvester"
 	size		2
@@ -475,7 +475,7 @@ aircraft craft_ufo_gunboat
 		range		347
 	}
 	name		"_UFO - Gunboat"
-	shortname	"_Gunboat U"
+	defaultname	"_Gunboat U"
 	type		ufo
 	model		"geoscape/ufo_gunboat"
 	size		2
@@ -514,7 +514,7 @@ aircraft craft_ufo_corrupter
 		range		347
 	}
 	name		"_UFO - Corrupter"
-	shortname	"_Corrupter U"
+	defaultname	"_Corrupter U"
 	type		ufo
 	model		"geoscape/ufo_corrupter"
 	size		2
@@ -541,7 +541,7 @@ aircraft craft_ufo_supply
 		range		208
 	}
 	name		"_UFO - Supply Ship"
-	shortname	"_Supply U"
+	defaultname	"_Supply U"
 	type		ufo
 	model		"geoscape/ufo_supply"
 	size		2
@@ -562,7 +562,7 @@ aircraft craft_ufo_ripper
 		range		500
 	}
 	name		"_UFO - Ripper"
-	shortname	"_Ripper U"
+	defaultname	"_Ripper U"
 	type		ufo
 	model		"geoscape/ufo_ripper"
 	size		2
@@ -589,7 +589,7 @@ aircraft craft_ufo_bomber
 		range		347
 	}
 	name		"_UFO - Bomber"
-	shortname	"_Bomber U"
+	defaultname	"_Bomber U"
 	type		ufo
 	model		"geoscape/ufo_bomber"
 	size		2
@@ -623,7 +623,7 @@ aircraft craft_ufo_carrier
 		range		347
 	}
 	name		"_UFO - Carrier"
-	shortname	"_Carrier U"
+	defaultname	"_Carrier U"
 	type		ufo
 	model		"geoscape/ufo_carrier"
 	size		1
@@ -646,7 +646,7 @@ aircraft craft_ufo_mothership
 		range		347
 	}
 	name		"_UFO - Mothership"
-	shortname	"_Mothership U"
+	defaultname	"_Mothership U"
 	type		ufo
 	model		"geoscape/ufo_mothership"
 	size		1

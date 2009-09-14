@@ -359,7 +359,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 				/* an undetected UFO within radar range and firing should become detected */
 				if (!shooter->detected && RADAR_CheckRadarSensored(shooter->pos)) {
 					/* stop time and notify */
-					MSO_CheckAddNewMessage(NT_UFO_ATTACKING,_("Notice"), va(_("A UFO is shooting at %s"), _(target->name)), qfalse, MSG_STANDARD, NULL);
+					MSO_CheckAddNewMessage(NT_UFO_ATTACKING,_("Notice"), va(_("A UFO is shooting at %s"), target->name), qfalse, MSG_STANDARD, NULL);
 					RADAR_AddDetectedUFOToEveryRadar(shooter);
 					UFO_DetectNewUFO(shooter);
 				}

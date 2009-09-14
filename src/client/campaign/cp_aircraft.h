@@ -171,8 +171,8 @@ typedef struct aircraft_s {
 						 * to let us find references all over the code easier @sa AIR_DeleteAircraft  */
 	struct aircraft_s *tpl;	/**< Self-link in aircraft_sample list (i.e. templates). */
 	char *id;			/**< Internal id from script file. */
-	char *name;			/**< Translatable name. */
-	char *shortname;	/**< Translatable shortname (being used in small popups). */
+	char name[MAX_VAR];			/**< Aircraft name (user can change this). */
+	char *defaultName;	/**< Translatable default name for aircraft. */
 	char *image;		/**< Image on geoscape. */
 	char *model;		/**< Model used on geoscape */
 	aircraftType_t type;/**< Type of aircraft, see aircraftType_t. */
