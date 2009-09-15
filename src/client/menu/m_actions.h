@@ -27,7 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../common/common.h"
 
-/** @brief EventActions */
+/** @brief Type for menuAction_t
+ * It also contain type about type (for example EA_BINARYOPERATOR)
+ * @sa menuAction_t
+ */
 typedef enum ea_s {
 	EA_NULL = 0,
 
@@ -98,6 +101,11 @@ typedef enum ea_s {
 #define EA_CALL_NORMAL			0x0
 #define EA_CALL_NODEMETHOD		0x1
 
+/**
+ * @brief Define a data of menuAction_t.
+ * It allow different kind of data without cast
+ * @sa menuAction_s
+ */
 typedef union {
 	int integer;
 	float number;
@@ -107,21 +115,54 @@ typedef union {
 	const void* constData;
 } menuTerminalActionData_t;
 
+/**
+ * @brief Atomic element to store UI scripts
+ * The parser use this atom to translate script action into many tree of actions.
+ * One function is one tree, and when we call this function, the tree is executed.
+ *
+ * An atom can be a command, an operator, or a value:
+ * <ul> Each commands (EA_ACTION like EA_CALL, EA_CMD...) use is own action structure. It can sometime use child actions, or can be a leaf.
+ * <ul> Operators (EA_OPERATOR_*) use binary tree structure (left and right operands), else are unary.
+ * <ul> A value (EA_VALUE_*) is a terminal action (a leaf).
+ */
 typedef struct menuAction_s {
+	/**
+	 * @brief Define the type of the element, it can be a command, an operator, or a value
+	 * @sa ea_t
+	 */
 	short type;
+
+	/**
+	 * @brief Some operators/commands/values can use it to store info about the content
+	 */
 	short subType;
 
+	/**
+	 * @brief Store data about the action
+	 */
 	union {
+		/**
+		 * @brief Store a terminal action (a command or an operator)
+		 * @note The action type must be a command or an operator
+		 */
 		struct {
 			struct menuAction_s *left;
 			struct menuAction_s *right;
 		} nonTerminal;
+
+		/**
+		 * @brief Store a terminal action (a value)
+		 * @note The action type must be value (or sometime a command)
+		 */
 		struct {
 			menuTerminalActionData_t d1;
 			menuTerminalActionData_t d2;
 		} terminal;
 	} d;
 
+	/**
+	 * @brief Next element into the action list
+	 */
 	struct menuAction_s *next;
 } menuAction_t;
 
