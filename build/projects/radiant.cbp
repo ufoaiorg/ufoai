@@ -681,6 +681,9 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\SoundPreview.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\MaterialDefinitionView.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\undo.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
