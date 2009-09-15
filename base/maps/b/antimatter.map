@@ -2109,3 +2109,17 @@
 ( 132 414 90 ) ( 132 418 90 ) ( 132 418 88 ) tex_material/metall002 34.09499 0 0 -0.469845 0.5 512 0 0
 }
 }
+// entity 30
+{
+"classname" "misc_sound"
+"origin" "256 256 48"
+"noise" "ambience/droning_long"
+"spawnflags" "255"
+}
+// entity 31
+{
+"classname" "misc_sound"
+"origin" "256 256 112"
+"noise" "ambience/droning_long"
+"spawnflags" "255"
+}
