@@ -74,18 +74,23 @@ void Select_ShowAllHidden ();
 void Selection_Construct ();
 void Selection_Destroy ();
 
-struct select_workzone_t
+/**
+ * The selection "WorkZone" defines the bounds of the most
+ * recent selection. On each selection, the workzone is
+ * recalculated, nothing happens on deselection.
+ */
+struct WorkZone
 {
 		// defines the boundaries of the current work area
 		// is used to guess brushes and drop points third coordinate when creating from 2D view
-		Vector3 d_work_min, d_work_max;
+		Vector3 min, max;
 
-		select_workzone_t () :
-			d_work_min(-64.0f, -64.0f, -64.0f), d_work_max(64.0f, 64.0f, 64.0f)
+		WorkZone () :
+			min(-64.0f, -64.0f, -64.0f), max(64.0f, 64.0f, 64.0f)
 		{
 		}
 };
 
-const select_workzone_t& Select_getWorkZone ();
+const WorkZone& Select_getWorkZone ();
 
 #endif

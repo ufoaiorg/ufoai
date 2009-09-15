@@ -47,7 +47,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "grid.h"
 #include "map.h"
 
-static select_workzone_t g_select_workzone;
+static WorkZone g_select_workzone;
 
 /**
   Loops over all selected brushes and stores their
@@ -321,7 +321,7 @@ namespace {
 void Selection_UpdateWorkzone (void)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
-		Select_GetBounds(g_select_workzone.d_work_min, g_select_workzone.d_work_max);
+		Select_GetBounds(g_select_workzone.min, g_select_workzone.max);
 	}
 }
 typedef FreeCaller<Selection_UpdateWorkzone> SelectionUpdateWorkzoneCaller;
@@ -329,7 +329,7 @@ typedef FreeCaller<Selection_UpdateWorkzone> SelectionUpdateWorkzoneCaller;
 IdleDraw g_idleWorkzone = IdleDraw(SelectionUpdateWorkzoneCaller());
 }
 
-const select_workzone_t& Select_getWorkZone (void)
+const WorkZone& Select_getWorkZone (void)
 {
 	g_idleWorkzone.flush();
 	return g_select_workzone;

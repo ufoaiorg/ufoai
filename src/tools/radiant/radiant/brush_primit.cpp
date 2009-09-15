@@ -37,6 +37,20 @@
 #include "winding.h"
 #include "preferences.h"
 
+/* greebo: This method calculates the normalised basis vectors of the texture plane as defined by <normal>
+ *
+ * If the normal vector points to the z-direction, the basis vectors are part
+ * of the xy-plane: texS = <0,1,0> and texT = <1,0,0>
+ *
+ * If normal vector points to the negative z-direction, the above case applies, but with
+ * the x-direction inversed: texS = <0,1,0> and texT = <-1,0,0> (note the minus)
+ *
+ * If none of the two above cases apply, the basis is calculated via cross products
+ * that result in vectors perpendicular to <normal>. These lie within the plane
+ * that is defined by the normal vector itself.
+ *
+ * Note: the vector <normal> MUST be normalised for this to function correctly.
+ */
 void ComputeAxisBase (const Vector3& normal, Vector3& texS, Vector3& texT)
 {
 	const Vector3 up(0, 0, 1);

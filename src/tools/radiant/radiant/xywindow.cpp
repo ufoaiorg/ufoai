@@ -1026,8 +1026,8 @@ void XYWnd::NewBrushDrag (int x, int y)
 
 	const int nDim = (m_viewType == XY) ? 2 : (m_viewType == YZ) ? 0 : 1;
 
-	mins[nDim] = float_snapped(Select_getWorkZone().d_work_min[nDim], GetGridSize());
-	maxs[nDim] = float_snapped(Select_getWorkZone().d_work_max[nDim], GetGridSize());
+	mins[nDim] = float_snapped(Select_getWorkZone().min[nDim], GetGridSize());
+	maxs[nDim] = float_snapped(Select_getWorkZone().max[nDim], GetGridSize());
 
 	if (maxs[nDim] <= mins[nDim])
 		maxs[nDim] = mins[nDim] + GetGridSize();
@@ -1063,7 +1063,7 @@ void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
 	xywnd->XY_SnapToGrid(point);
 
 	const int nDim = (xywnd->GetViewType() == XY) ? 2 : (xywnd->GetViewType() == YZ) ? 0 : 1;
-	const float fWorkMid = float_mid(Select_getWorkZone().d_work_min[nDim], Select_getWorkZone().d_work_max[nDim]);
+	const float fWorkMid = float_mid(Select_getWorkZone().min[nDim], Select_getWorkZone().max[nDim]);
 	point[nDim] = float_snapped(fWorkMid, GetGridSize());
 }
 
@@ -1651,14 +1651,14 @@ void XYWnd::XY_DrawGrid (void)
 	if (g_xywindow_globals_private.d_show_work) {
 		glColor3f(1.0f, 0.0f, 0.0f);
 		glBegin(GL_LINES);
-		glVertex2f(xb, Select_getWorkZone().d_work_min[nDim2]);
-		glVertex2f(xe, Select_getWorkZone().d_work_min[nDim2]);
-		glVertex2f(xb, Select_getWorkZone().d_work_max[nDim2]);
-		glVertex2f(xe, Select_getWorkZone().d_work_max[nDim2]);
-		glVertex2f(Select_getWorkZone().d_work_min[nDim1], yb);
-		glVertex2f(Select_getWorkZone().d_work_min[nDim1], ye);
-		glVertex2f(Select_getWorkZone().d_work_max[nDim1], yb);
-		glVertex2f(Select_getWorkZone().d_work_max[nDim1], ye);
+		glVertex2f(xb, Select_getWorkZone().min[nDim2]);
+		glVertex2f(xe, Select_getWorkZone().min[nDim2]);
+		glVertex2f(xb, Select_getWorkZone().max[nDim2]);
+		glVertex2f(xe, Select_getWorkZone().max[nDim2]);
+		glVertex2f(Select_getWorkZone().min[nDim1], yb);
+		glVertex2f(Select_getWorkZone().min[nDim1], ye);
+		glVertex2f(Select_getWorkZone().max[nDim1], yb);
+		glVertex2f(Select_getWorkZone().max[nDim1], ye);
 		glEnd();
 	}
 }

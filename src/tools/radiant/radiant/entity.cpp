@@ -316,7 +316,7 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 		throw EntityCreationException(std::string("Unable to create entity \"") + name + "\", no brushes selected");
 	}
 
-	AABB workzone(aabb_for_minmax(Select_getWorkZone().d_work_min, Select_getWorkZone().d_work_max));
+	AABB workzone(aabb_for_minmax(Select_getWorkZone().min, Select_getWorkZone().max));
 
 	NodeSmartReference node(GlobalEntityCreator().createEntity(entityClass));
 
