@@ -599,6 +599,7 @@ static void MN_AddListener_f (void)
 	menuNode_t *function;
 	const value_t *property;
 	menuAction_t *action;
+	menuAction_t *value;
 	menuAction_t *lastAction;
 
 	if (Cmd_Argc() != 3) {
@@ -622,11 +623,12 @@ static void MN_AddListener_f (void)
 		return;
 	}
 
-	/* create the action */
+	/* create the call action */
+	/** @todo merge that into a function */
 	action = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
-	action->type = EA_CALL;
-	action->d.terminal.d1.data = (void*) function;
-	action->d.terminal.d2.data = (void*) &function->onClick;
+	value = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
+	value->d.terminal.d1.constString = Mem_PoolStrDup(Cmd_Argv(2), mn_sysPool, 0);
+	value->next = NULL;
 	action->next = NULL;
 
 	/* insert the action */
@@ -692,8 +694,13 @@ static void MN_RemoveListener_f (void)
 				lastAction->next = lastAction->next->next;
 			}
 		}
-		if (tmp)
+		if (tmp) {
+			/** @todo merge that into a function */
+			menuAction_t* value = tmp->d.nonTerminal.left;
+			Mem_Free(value->d.terminal.d1.data);
+			Mem_Free(value);
 			Mem_Free(tmp);
+		}
 		else
 			Com_Printf("MN_RemoveListener_f: '%s' into '%s' not found.\n", Cmd_Argv(2), Cmd_Argv(1));
 	}
