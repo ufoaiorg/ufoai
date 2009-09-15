@@ -98,9 +98,6 @@ typedef enum ea_s {
 	EA_VALUE_NODEPROPERTY = EA_VALUE + 11				/**< reference to a node, and a property (not a string) */
 } ea_t;
 
-#define EA_CALL_NORMAL			0x0
-#define EA_CALL_NODEMETHOD		0x1
-
 /**
  * @brief Define a data of menuAction_t.
  * It allow different kind of data without cast
