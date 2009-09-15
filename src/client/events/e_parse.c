@@ -15,7 +15,6 @@
  * !	| do not read the next id | 1
  * *	| pascal string type - SIZE+DATA, SIZE can be read from va_arg
  *		| 2 + sizeof(DATA)
- * @endsection
  */
 
 /*

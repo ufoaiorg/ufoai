@@ -119,6 +119,7 @@ void CL_CleanTempInventory (base_t* base)
 /**
  * @brief Updates data about teams in aircraft.
  * @param[in] aircraft Pointer to an aircraft for a desired team.
+ * @param[in] employeeType Type of employee for which data is being updated.
  * @returns the number of employees that are in the aircraft and were added to
  * the character list
  */

@@ -66,8 +66,8 @@ static le_t *mouseActor;
 static pos3_t mouseLastPos;
 
 /**
- * @brief Writes player action with its data
- * @param[in] player_action
+ * @brief Writes player action with its data.
+ * @param[in] playerAction Type of action.
  * @param[in] entnum The server side edict number of the actor
  */
 void MSG_Write_PA (player_action_t playerAction, int entnum, ...)
@@ -131,6 +131,7 @@ const char *CL_GetSkillString (const int skill)
 
 /**
  * @brief Decide how the actor will walk, taking into account autostanding.
+ * @param[in] le Pointer to an actor for which we set the moving mode.
  * @param[in] length The distance to move: units are TU required assuming actor is standing.
  */
 int CL_MoveMode (const le_t *le, int length)
@@ -256,7 +257,6 @@ character_t *CL_GetActorChr (const le_t * le)
  * @brief Returns the weapon its ammo and the firemodes-index inside the ammo for a given hand.
  * @param[in] actor The pointer to the actor we want to get the data from.
  * @param[in] hand Which weapon(-hand) to use [l|r].
- * @param[out] weapFdsIdx weapon_mod index in the ammo for the weapon (objDef.fd[x][])
  * @return the used @c fireDef_t
  */
 const fireDef_t *CL_GetWeaponAndAmmo (const le_t * actor, const char hand)
@@ -300,9 +300,11 @@ void CL_ListReactionAndReservations_f (void)
 #endif
 
 /**
+ * @brief Sets reactionfire firemode for given actor.
+ * @param[in] chr Pointer to an actor for which RF is being set.
  * @param[in] hand Store the given hand.
  * @param[in] fireModeIndex Store the given firemode for this hand.
- * @param[in] weaponIndex Store the weapon-idx of the object in the hand (for faster access).
+ * @param[in] weapon Pointer to weapon in the hand.
  */
 void CL_CharacterSetRFMode (character_t *chr, int hand, int fireModeIndex, const objDef_t *weapon)
 {
@@ -312,9 +314,11 @@ void CL_CharacterSetRFMode (character_t *chr, int hand, int fireModeIndex, const
 }
 
 /**
+ * @brief Sets shoot firemode for given actor.
+ * @param[in] chr Pointer to an actor for which shoot is being set.
  * @param[in] hand Store the given hand.
  * @param[in] fireModeIndex Store the given firemode for this hand.
- * @param[in] weaponIndex Store the weapon-idx of the object in the hand (for faster access).
+ * @param[in] weapon Pointer to weapon in the hand.
  */
 void CL_CharacterSetShotSettings (character_t *chr, int hand, int fireModeIndex, const objDef_t *weapon)
 {
@@ -504,6 +508,7 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
  * @brief Stores the given firedef index and object index for reaction fire and sends in over the network as well.
  * @param[in] actor The actor to update the firemode for.
  * @param[in] handidx Index of hand with item, which will be used for reactionfiR_ Possible hand indices: 0=right, 1=right, -1=undef
+ * @param[in] od Pointer to objDef_t for which we set up firemode.
  * @param[in] fdIdx Index of firedefinition for an item in given hand.
  */
 void CL_SetReactionFiremode (le_t * actor, const int handidx, const objDef_t *od, const int fdIdx)
@@ -1017,6 +1022,8 @@ void CL_ConditionalMoveCalcActor (le_t *le)
 
 /**
  * @brief Checks that an action is valid.
+ * @param[in] le Pointer to actor for which we check an action.
+ * @return qtrue if action is valid.
  */
 int CL_CheckAction (const le_t *le)
 {
@@ -1038,8 +1045,9 @@ int CL_CheckAction (const le_t *le)
 /**
  * @brief Get the real move length (depends on crouch-state of the current actor).
  * @note The part of the line that is not reachable in this turn (i.e. not enough
- * TUs left) will be drawn differently.
+ * @note TUs left) will be drawn differently.
  * @param[in] to The position in the map to calculate the move-length for.
+ * @param[in] le Pointer to actor for which we calculate move lenght.
  * @return The amount of TUs that are needed to walk to the given grid position
  */
 static byte CL_MoveLength (const le_t *le, pos3_t to)
@@ -1051,6 +1059,7 @@ static byte CL_MoveLength (const le_t *le, pos3_t to)
 
 /**
  * @brief Recalculates the currently selected Actor's move length.
+ * @param[in,out] le Pointer to actor for which we reset move lenght.
  */
 void CL_ResetActorMoveLength (le_t *le)
 {
@@ -1116,8 +1125,8 @@ static qboolean CL_TraceMove (pos3_t to)
 /**
  * @brief Return the last position we can walk to with a defined amount of TUs.
  * @param[in] to The location we want to reach.
- * @param[in] tus How many timeunits we have to move.
- * @param[out] pos The location we can reach with the given amount of TUs.
+ * @param[in] le Pointer to an actor for which we check maximum move.
+ * @param[in,out] pos The location we can reach with the given amount of TUs.
  * @sa CL_TraceMove (similar algo.)
  */
 static void CL_MaximumMove (pos3_t to, const le_t *le, pos3_t pos)

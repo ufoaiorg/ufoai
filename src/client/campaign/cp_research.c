@@ -654,6 +654,7 @@ void RS_InitTree (qboolean load)
  * @brief Assigns scientist to the selected research-project.
  * @note The lab will be automatically selected (the first one that has still free space).
  * @param[in] tech What technology you want to assign the scientist to.
+ * @param[in] base Pointer to base where the research is ongoing.
  * @sa RS_AssignScientist_f
  * @sa RS_RemoveScientist
  */
@@ -783,6 +784,8 @@ void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
 /**
  * @brief Mark technologies as researched. This includes techs that depends on "tech" and have time=0
  * @param[in] tech Pointer to a technology_t struct.
+ * @param[in] base Pointer to base where we did research.
+ * @todo Base shouldn't be needed here - check RS_MarkResearchable() for that.
  * @sa RS_ResearchRun
  */
 static void RS_MarkResearched (technology_t *tech, const base_t *base)

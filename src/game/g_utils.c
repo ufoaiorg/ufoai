@@ -240,10 +240,11 @@ edict_t *G_FindTargetEntity (const char *target)
 }
 
 /**
- * @brief Returns entities that have origins within a spherical area
+ * @brief Returns entities that have origins within a spherical area.
  * @param[in] from The origin that is the center of the circle
  * @param[in] org origin
  * @param[in] rad radius to search an edict in
+ * @param[in] type Type of entity.
  */
 edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type)
 {

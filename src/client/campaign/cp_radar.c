@@ -411,8 +411,8 @@ void RADAR_UpdateBaseRadarCoverage_f (void)
 /**
  * @brief Update radar coverage when building/destroying new radar
  * @param[in,out] installation The radartower to update
- * @param[in] range New range of the radar
- * @param[in] trackingRange New tracking range of the radar
+ * @param[in] radarRange New range of the radar
+ * @param[in] trackingRadarRange New tracking range of the radar
  */
 void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const float radarRange, const float trackingRadarRange)
 {

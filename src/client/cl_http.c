@@ -427,7 +427,7 @@ qboolean CL_CheckOrDownloadFile (const char *filename)
 
 /**
  * @brief Validate a path supplied by a filelist.
- * @param[in,out] The file to download (high bits will be stripped)
+ * @param[in,out] path Pointer to file (path) to download (high bits will be stripped).
  * @sa CL_QueueHTTPDownload
  * @sa CL_ParseFileList
  */
