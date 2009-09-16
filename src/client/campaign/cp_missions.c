@@ -1668,6 +1668,20 @@ static void CP_AlienInterestList_f (void)
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
 		Com_Printf("...%i. %s -- %i\n", i, CP_MissionCategoryToName(i), ccs.interest[i]);
 }
+
+/**
+ * @brief Debug callback to set overall interest level
+ * Called: debug_setinterest <interestlevel>
+ */
+static void CP_SetAlienInterest_f (void)
+{
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <interestlevel>\n", Cmd_Argv(0));
+		return;
+	}
+
+	ccs.overallInterest = max(0, atoi(Cmd_Argv(1)));
+}
 #endif
 
 void CP_MissionsInit (void)
@@ -1677,6 +1691,7 @@ void CP_MissionsInit (void)
 	Cmd_AddCommand("debug_delmissions", CP_DeleteMissions_f, "Remove all missions from global array");
 	Cmd_AddCommand("debug_listmission", CP_MissionList_f, "Debug function to show all missions");
 	Cmd_AddCommand("debug_listinterest", CP_AlienInterestList_f, "Debug function to show alien interest values");
+	Cmd_AddCommand("debug_setinterest", CP_SetAlienInterest_f, "Set overall interest level.");
 #endif
 }
 
