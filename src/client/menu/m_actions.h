@@ -83,7 +83,7 @@ typedef enum ea_s {
 	/* unary operators */
 	EA_OPERATOR_EXISTS = 0x0700, /**< only cvar given - check for existence */
 
-	/* terminal values */
+	/* terminal values (leafs) */
 	EA_VALUE = 0x0A00,
 	EA_VALUE_STRING = EA_VALUE + 1,						/**< reference to a string */
 	EA_VALUE_STRING_WITHINJECTION = EA_VALUE + 2,		/**< reference to a injected string */
@@ -99,9 +99,9 @@ typedef enum ea_s {
 } ea_t;
 
 /**
- * @brief Define a data of menuAction_t.
- * It allow different kind of data without cast
- * @sa menuAction_s
+ * @brief Defines the data of a @c menuAction_t leaf.
+ * It allows different kind of data without cast
+ * @sa menuAction_t
  */
 typedef union {
 	int integer;
@@ -114,11 +114,11 @@ typedef union {
 
 /**
  * @brief Atomic element to store UI scripts
- * The parser use this atom to translate script action into many tree of actions.
+ * The parser use this atom to translate script action into many trees of actions.
  * One function is one tree, and when we call this function, the tree is executed.
  *
  * An atom can be a command, an operator, or a value:
- * <ul> Each commands (EA_ACTION like EA_CALL, EA_CMD...) use is own action structure. It can sometime use child actions, or can be a leaf.
+ * <ul> Each command (EA_ACTION like EA_CALL, EA_CMD...) uses its own action structure. It can sometimes use child actions, or can be a leaf.
  * <ul> Operators (EA_OPERATOR_*) use binary tree structure (left and right operands), else are unary.
  * <ul> A value (EA_VALUE_*) is a terminal action (a leaf).
  */
@@ -135,11 +135,11 @@ typedef struct menuAction_s {
 	short subType;
 
 	/**
-	 * @brief Store data about the action
+	 * @brief Stores data about the action
 	 */
 	union {
 		/**
-		 * @brief Store a terminal action (a command or an operator)
+		 * @brief Stores a none terminal action (a command or an operator)
 		 * @note The action type must be a command or an operator
 		 */
 		struct {
@@ -148,8 +148,9 @@ typedef struct menuAction_s {
 		} nonTerminal;
 
 		/**
-		 * @brief Store a terminal action (a value)
-		 * @note The action type must be value (or sometime a command)
+		 * @brief Stores a terminal action (a value, which must be a leaf in the tree)
+		 * @note The action type must be value (or sometimes a command)
+		 * @todo Define the "sometimes"
 		 */
 		struct {
 			menuTerminalActionData_t d1;
@@ -158,7 +159,7 @@ typedef struct menuAction_s {
 	} d;
 
 	/**
-	 * @brief Next element into the action list
+	 * @brief Next element in the action list
 	 */
 	struct menuAction_s *next;
 } menuAction_t;
