@@ -287,8 +287,6 @@ equipment alien_soldiers2
 	// Secondary
 	plaspistol			50
 		plaspistol_ammo		1
-	pbeampistol			50
-		pbeampistol_ammo	1
 
 	// Misc
 	kerrblade		80
@@ -312,8 +310,6 @@ equipment alien_soldiers2_melee
 	// Secondary
 	plaspistol			70
 		plaspistol_ammo		1
-	pbeampistol			30
-		pbeampistol_ammo	0
 
 	// Misc
 	kerrblade		10
