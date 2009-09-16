@@ -74,20 +74,21 @@ void toggle_remove_accelerator (const std::string& name)
 }
 
 GtkCheckMenuItem* create_check_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic,
-		const std::string& commandName)
+		const std::string& commandName, const std::string& icon)
 {
 	GlobalShortcuts_register(commandName, 2);
 	const Toggle& toggle = GlobalToggles_find(commandName);
 	global_accel_group_connect(toggle.m_command.m_accelerator, toggle.m_command.m_callback);
-	return create_check_menu_item_with_mnemonic(menu, mnemonic, toggle);
+	return create_check_menu_item_with_mnemonic(menu, mnemonic, toggle, icon);
 }
 
-GtkMenuItem* create_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic, const std::string& commandName)
+GtkMenuItem* create_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic,
+		const std::string& commandName, const std::string& icon)
 {
 	GlobalShortcuts_register(commandName, 1);
 	const Command& command = GlobalCommands_find(commandName);
 	global_accel_group_connect(command.m_accelerator, command.m_callback);
-	return create_menu_item_with_mnemonic(menu, mnemonic, command);
+	return create_menu_item_with_mnemonic(menu, mnemonic, command, icon);
 }
 
 GtkButton* toolbar_append_button (GtkToolbar* toolbar, const std::string& description, const std::string& icon,

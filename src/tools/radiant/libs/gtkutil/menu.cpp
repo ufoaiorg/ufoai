@@ -108,39 +108,28 @@ guint check_menu_item_connect_callback (GtkCheckMenuItem* item, const Callback& 
 	return handler;
 }
 
-GtkMenuItem* new_menu_item_with_mnemonic (const std::string& mnemonic, const Callback& callback)
+GtkMenuItem* create_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic, const Callback& callback,
+		const std::string& icon)
 {
 	GtkMenuItem* item = GTK_MENU_ITEM(gtk_menu_item_new_with_mnemonic(mnemonic.c_str()));
 	gtk_widget_show(GTK_WIDGET(item));
 	menu_item_connect_callback(item, callback);
-	return item;
-}
-
-GtkMenuItem* create_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic, const Callback& callback)
-{
-	GtkMenuItem* item = new_menu_item_with_mnemonic(mnemonic, callback);
 	container_add_widget(GTK_CONTAINER(menu), GTK_WIDGET(item));
-	return item;
-}
-
-GtkCheckMenuItem* new_check_menu_item_with_mnemonic (const std::string& mnemonic, const Callback& callback)
-{
-	GtkCheckMenuItem* item = GTK_CHECK_MENU_ITEM(gtk_check_menu_item_new_with_mnemonic(mnemonic.c_str()));
-	gtk_widget_show(GTK_WIDGET(item));
-	check_menu_item_connect_callback(item, callback);
 	return item;
 }
 
 GtkCheckMenuItem* create_check_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic,
-		const Callback& callback)
+		const Callback& callback, const std::string& icon)
 {
-	GtkCheckMenuItem* item = new_check_menu_item_with_mnemonic(mnemonic, callback);
+	GtkCheckMenuItem* item = GTK_CHECK_MENU_ITEM(gtk_check_menu_item_new_with_mnemonic(mnemonic.c_str()));
+	gtk_widget_show(GTK_WIDGET(item));
+	check_menu_item_connect_callback(item, callback);
 	container_add_widget(GTK_CONTAINER(menu), GTK_WIDGET(item));
 	return item;
 }
 
-GtkRadioMenuItem* new_radio_menu_item_with_mnemonic (GSList** group, const std::string& mnemonic,
-		const Callback& callback)
+GtkRadioMenuItem* create_radio_menu_item_with_mnemonic (GtkMenu* menu, GSList** group, const std::string& mnemonic,
+		const Callback& callback, const std::string& icon)
 {
 	GtkRadioMenuItem* item = GTK_RADIO_MENU_ITEM(gtk_radio_menu_item_new_with_mnemonic(*group, mnemonic.c_str()));
 	if (*group == 0) {
@@ -149,13 +138,6 @@ GtkRadioMenuItem* new_radio_menu_item_with_mnemonic (GSList** group, const std::
 	*group = gtk_radio_menu_item_group(item);
 	gtk_widget_show(GTK_WIDGET(item));
 	check_menu_item_connect_callback(GTK_CHECK_MENU_ITEM(item), callback);
-	return item;
-}
-
-GtkRadioMenuItem* create_radio_menu_item_with_mnemonic (GtkMenu* menu, GSList** group, const std::string& mnemonic,
-		const Callback& callback)
-{
-	GtkRadioMenuItem* item = new_radio_menu_item_with_mnemonic(group, mnemonic, callback);
 	container_add_widget(GTK_CONTAINER(menu), GTK_WIDGET(item));
 	return item;
 }
@@ -269,9 +251,10 @@ void menu_item_add_accelerator (GtkMenuItem* item, Accelerator accelerator)
 	}
 }
 
-GtkMenuItem* create_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic, const Command& command)
+GtkMenuItem* create_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic, const Command& command,
+		const std::string& icon)
 {
-	GtkMenuItem* item = create_menu_item_with_mnemonic(menu, mnemonic, command.m_callback);
+	GtkMenuItem* item = create_menu_item_with_mnemonic(menu, mnemonic, command.m_callback, icon);
 	menu_item_add_accelerator(item, command.m_accelerator);
 	return item;
 }
@@ -283,9 +266,9 @@ void check_menu_item_set_active_callback (GtkCheckMenuItem& item, bool enabled)
 typedef ReferenceCaller1<GtkCheckMenuItem, bool, check_menu_item_set_active_callback> CheckMenuItemSetActiveCaller;
 
 GtkCheckMenuItem* create_check_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic,
-		const Toggle& toggle)
+		const Toggle& toggle, const std::string& icon)
 {
-	GtkCheckMenuItem* item = create_check_menu_item_with_mnemonic(menu, mnemonic, toggle.m_command.m_callback);
+	GtkCheckMenuItem* item = create_check_menu_item_with_mnemonic(menu, mnemonic, toggle.m_command.m_callback, icon);
 	menu_item_add_accelerator(GTK_MENU_ITEM(item), toggle.m_command.m_accelerator);
 	toggle.m_exportCallback(CheckMenuItemSetActiveCaller(*item));
 	return item;
