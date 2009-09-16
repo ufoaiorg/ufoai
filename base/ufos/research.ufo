@@ -2557,7 +2557,7 @@ tech rs_weapon_pbeam_ammo
 		icon	icons/tech
 	}
 
-	require_AND
+	require_OR
 	{
 		tech rs_weapon_pbeampistol
 		tech rs_weapon_pbeamcannon
