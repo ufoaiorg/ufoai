@@ -134,6 +134,7 @@ SectionGroup /e "Mapping" SECGROUP02
 			File "..\..\..\contrib\dlls\OpenAL32.dll"
 			File "..\..\..\contrib\dlls\libvorbis*.dll"
 			File "..\..\..\contrib\dlls\libogg*.dll"
+			File "..\..\..\contrib\dlls\libgtk*.dll"
 			File "..\..\..\contrib\dlls\radiant_runtime.exe"
 			ExecWait '"$TEMP\radiant_runtime.exe" -o"$INSTDIR\radiant" "-y"'
 				IfErrors 0 +2
