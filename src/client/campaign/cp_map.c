@@ -44,6 +44,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 cvar_t *cl_3dmap;				/**< 3D geoscape or flat geoscape */
 cvar_t *cl_mapzoommax;
 cvar_t *cl_mapzoommin;
+#ifdef DEBUG
+static cvar_t *debug_showInterest;
+#endif
 
 enum {
 	GEOSCAPE_IMAGE_MISSION,
@@ -1749,6 +1752,13 @@ void MAP_DrawMap (const menuNode_t* node)
 		Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedUFO->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
 		MN_RegisterText(TEXT_STANDARD, text_standard);
 	} else {
+#ifdef DEBUG
+		if (debug_showInterest->integer) {
+			static char t[64];
+			Com_sprintf(t, lengthof(t), "Interest level: %i\n", ccs.overallInterest);
+			MN_RegisterText(TEXT_STANDARD, t);
+		} else
+#endif
 		MN_RegisterText(TEXT_STANDARD, "");
 	}
 }
@@ -2479,6 +2489,9 @@ void MAP_InitStartup (void)
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
 	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
+#ifdef DEBUG
+	debug_showInterest = Cvar_Get("debug_showinterest", "0", 0, "Shows the global interest value on geoscape");
+#endif
 
 	for (i = 0; i < GEOSCAPE_IMAGE_MAX; i++) {
 		geoscapeImages[i] = R_FindImage(geoscapeImageNames[i], it_pic);

@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_EVENT
 
 #define MAX_EVENTMAILS 64
+#define MAX_CAMPAIGNEVENTS 128
 
 /**
  * @brief available mails for a tech - mail and mail_pre in script files
@@ -55,5 +56,23 @@ void CL_ParseEventMails(const char *name, const char **text);
 eventMail_t* CL_GetEventMail(const char *id, qboolean createCopy);
 eventMail_t* CL_NewEventMail(const char *id, const char *newID, const char *body);
 void CL_FreeDynamicEventMail(void);
+
+/**
+ * @brief Defines campaign events when story related technologies should be researched
+ */
+typedef struct campaignEvent_s {
+	char *tech;			/**< technology id that should be researched if the overall interest is reached */
+	int interest;		/**< the interest value (see @c ccs.oberallInterest) */
+} campaignEvent_t;
+
+typedef struct campaignEvents_s {
+	campaignEvent_t campaignEvents[MAX_CAMPAIGNEVENTS];	/**< holds all campaign events (cl_event.c) */
+	int numCampaignEvents;	/**< how many events (script-id: events) parsed */
+	char *id;				/**< script id */
+} campaignEvents_t;
+
+void CP_CheckCampaignEvents(void);
+void CL_ParseCampaignEvents(const char *name, const char **text);
+const campaignEvents_t *CP_GetEventsByID(const char *name);
 
 #endif /* CLIENT_CL_EVENT */

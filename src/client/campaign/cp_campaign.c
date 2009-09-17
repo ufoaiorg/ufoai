@@ -768,6 +768,7 @@ void CL_CampaignRun (void)
 			NAT_UpdateHappinessForAllNations();
 			AB_BaseSearchedByNations();
 			CL_CampaignRunMarket();
+			CP_CheckCampaignEvents();
 		}
 
 		/* check for campaign events

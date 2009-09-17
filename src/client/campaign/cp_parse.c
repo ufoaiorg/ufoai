@@ -499,6 +499,11 @@ void CL_ParseCampaign (const char *name, const char **text)
 			}
 		if (!strcmp(token, "salary")) {
 			CL_ParseSalary(token, text, cp->idx);
+		} else if (!strcmp(token, "events")) {
+			token = Com_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			cp->events = CP_GetEventsByID(token);
 		} else if (!vp->string) {
 			Com_Printf("CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
 			Com_EParse(text, errhead, name);
@@ -637,8 +642,6 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 	/* check for client interpretable scripts */
 	if (!strcmp(type, "up_chapters"))
 		UP_ParseChapters(name, text);
-	else if (!strcmp(type, "campaign"))
-		CL_ParseCampaign(name, text);
 	else if (!strcmp(type, "building"))
 		B_ParseBuildings(name, text, qfalse);
 	else if (!strcmp(type, "installation"))
@@ -661,6 +664,8 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 		AIR_ParseAircraft(name, text, qfalse);
 	else if (!strcmp(type, "mail"))
 		CL_ParseEventMails(name, text);
+	else if (!strcmp(type, "events"))
+		CL_ParseCampaignEvents(name, text);
 	else if (!strcmp(type, "components"))
 		CL_ParseComponents(name, text);
 	else if (!strcmp(type, "alienteam"))
@@ -691,6 +696,8 @@ static void CL_ParseScriptSecond (const char *type, const char *name, const char
 		AIR_ParseAircraft(name, text, qtrue);
 	else if (!strcmp(type, "basetemplate"))
 		B_ParseBaseTemplate(name, text);
+	else if (!strcmp(type, "campaign"))
+		CL_ParseCampaign(name, text);
 }
 
 /**

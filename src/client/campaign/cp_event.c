@@ -213,6 +213,116 @@ void CL_ParseEventMails (const char *name, const char **text)
 	} while (*text);
 }
 
+void CP_CheckCampaignEvents (void)
+{
+	const campaignEvents_t *events;
+	int i;
+
+	assert(ccs.curCampaign);
+
+	/* no events for the current campaign */
+	if (!ccs.curCampaign->events)
+		return;
+
+	/* no events in that definition */
+	if (!ccs.curCampaign->events->numCampaignEvents)
+		return;
+
+	events = ccs.curCampaign->events;
+	for (i = 0; i < events->numCampaignEvents; i++) {
+		const campaignEvent_t *event = &events->campaignEvents[i];
+		if (event->interest <= ccs.overallInterest) {
+			technology_t* tech = RS_GetTechByID(event->tech);
+			RS_ResearchFinish(tech);
+		}
+	}
+}
+
+/**
+ * Will return the campaign related events
+ * @note Also performs some sanity check
+ * @param name The events id
+ */
+const campaignEvents_t *CP_GetEventsByID (const char *name)
+{
+	int i;
+
+	for (i = 0; i < ccs.numCampaignEventDefinitions; i++) {
+		const campaignEvents_t *events = &ccs.campaignEvents[i];
+		if (!strcmp(events->id, name)) {
+			int j;
+			for (j = 0; j < events->numCampaignEvents; j++) {
+				const campaignEvent_t *event = &events->campaignEvents[j];
+				if (!RS_GetTechByID(event->tech))
+					Sys_Error("Illegal tech '%s' given in events '%s'", event->tech, events->id);
+			}
+			return events;
+		}
+	}
+
+	return NULL;
+}
+
+/**
+ * @sa CL_ParseScriptFirst
+ * @note write into cp_campaignPool - free on every game restart and reparse
+ */
+void CL_ParseCampaignEvents (const char *name, const char **text)
+{
+	const char *errhead = "CL_ParseCampaignEvents: unexpected end of file (mail ";
+	const char *token;
+	campaignEvents_t* events;
+
+	if (ccs.numCampaignEventDefinitions >= MAX_CAMPAIGNS) {
+		Com_Printf("CL_ParseCampaignEvents: max event def limit hit\n");
+		return;
+	}
+
+	token = Com_EParse(text, errhead, name);
+	if (!*text)
+		return;
+
+	if (!*text || token[0] != '{') {
+		Com_Printf("CL_ParseCampaignEvents: event def '%s' without body ignored\n", name);
+		return;
+	}
+
+	events = &ccs.campaignEvents[ccs.numCampaignEventDefinitions];
+	memset(events, 0, sizeof(*events));
+	Com_DPrintf(DEBUG_CLIENT, "...found events %s\n", name);
+	events->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	ccs.numCampaignEventDefinitions++;
+
+	do {
+		campaignEvent_t *event;
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		if (events->numCampaignEvents >= MAX_CAMPAIGNEVENTS) {
+			Com_Printf("CL_ParseCampaignEvents: max events per event definition limit hit\n");
+			return;
+		}
+
+		/* initialize the eventMail */
+		event = &events->campaignEvents[events->numCampaignEvents++];
+		memset(event, 0, sizeof(*event));
+
+		Mem_PoolStrDupTo(token, (char**) ((char*)event + (int)offsetof(campaignEvent_t, tech)), cp_campaignPool, 0);
+
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			return;
+
+		Com_EParseValue(event, token, V_INT, offsetof(campaignEvent_t, interest), sizeof(int));
+
+		if (event->interest < 0)
+			Sys_Error("Illegal interest value in events definition '%s' for tech '%s'\n", events->id, event->tech);
+	} while (*text);
+}
+
 /**
  * @sa UP_OpenMail_f
  * @sa MS_AddNewMessage

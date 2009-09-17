@@ -292,6 +292,7 @@ typedef struct campaign_s {
 	int basecost;				/**< base building cost for empty base */
 	char firstBaseTemplate[MAX_VAR];	/**< template to use for setting up the first base */
 	qboolean finished;
+	const campaignEvents_t *events;
 } campaign_t;
 
 extern campaign_t campaigns[MAX_CAMPAIGNS];
@@ -488,6 +489,9 @@ typedef struct ccs_s {
 
 	eventMail_t eventMails[MAX_EVENTMAILS];	/**< holds all event mails (cl_event.c) */
 	int numEventMails;	/**< how many eventmails (script-id: mail) parsed */
+
+	campaignEvents_t campaignEvents[MAX_CAMPAIGNS];	/**< holds all campaign events (cl_event.c) */
+	int numCampaignEventDefinitions;	/**< how many event definitions (script-id: events) parsed */
 
 	/* == buildings in bases == */
 	/* A list of all possible unique buildings. */
