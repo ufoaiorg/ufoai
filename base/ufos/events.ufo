@@ -1,20 +1,12 @@
 // ==============================================
 // EVENT DEFINITIONS - for the 'news' and storyline events.
 // ==============================================
-// This is a WIP. No parser needed until the syntax is fixed.
-// ==============================================
-// Description
-//	name
-//		Translated name of the event.
-//	event
-//		This defined other events that need to have occurred so this one gets displayed.
-//	min_date
-//	max_date
-//		The time-frame in which the event pops up.
-//		syntax: "year_since_gamestart day_in_year"
-//	pedia
-//		Link to the ufopedia entry.
-// ==============================================
+
+// Maybe pushnews should be activated for techs in this list
+events main 
+{
+//	rs_alien_xvi_event	400
+}	
 
 // ==============================================
 // MAIL DEFINITIONS - for notification emails about various events.
@@ -33,45 +25,6 @@
 //	icon
 //		icon to use in mailbox
 // ==============================================
-
-news_event mumbai
-{
-	name "_Devastating alien terror attack on Mumbai"
-	min_date "0 0"
-	max_date "0 0"
-	pedia	rs_news_mumbai
-}
-
-news_event stealth_craft_sighted
-{
-	name "_Alien aircraft spotted"
-	min_date "1 100"	// one year and 100 days after start
-	max_date "1 150"
-	event	mumbai
-	pedia	rs_news_stealth_craft_sighted
-}
-
-// pedia entries for the above
-//
-//tech rs_news_mumbai
-//{
-//	type	news
-//	description	"_mumbai_txt"
-//
-//	requires	nothing
-//	time	999999
-//	researched	false
-//}
-//
-//tech rs_news_stealth_craft_sighted
-//{
-//	type	news
-//	description	"_stealth_craft_sighted_txt"
-//
-//	requires	nothing
-//	time	999999
-//	researched	false
-//}
 
 mail prolog
 {

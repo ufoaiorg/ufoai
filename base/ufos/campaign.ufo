@@ -18,6 +18,7 @@ campaign veryhard
 	credits				1300000
 	map					map_earth
 	visible				true
+	events				main
 
 	date		"2084 79 6"
 	basecost	100000
@@ -46,6 +47,7 @@ campaign hard
 	credits				1300000
 	map					map_earth
 	visible				true
+	events				main
 
 	date		"2084 79 6"
 	basecost	100000
@@ -94,6 +96,7 @@ campaign main
 	credits				1300000
 	map					map_earth
 	visible				true
+	events				main
 
 	date		"2084 79 6"
 	basecost	100000
@@ -122,6 +125,7 @@ campaign easy
 	credits				1300000
 	map					map_earth
 	visible				true
+	events				main
 
 	date		"2084 79 6"
 	basecost	100000
@@ -169,6 +173,7 @@ campaign veryeasy
 	credits				1300000
 	map					map_earth
 	visible				true
+	events				main
 
 	date		"2084 79 6"
 	basecost	100000
@@ -191,6 +196,7 @@ campaign aliencampaign
 	credits				1300000
 	map					map_earth
 	visible				true
+	events				main
 
 	date		"2084 79 6"
 	basecost	100000
