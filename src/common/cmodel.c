@@ -736,7 +736,7 @@ trace_t CM_HintedTransformedBoxTrace (const int tile, const vec3_t start, const 
  * @sa TR_CompleteBoxTrace
  * @sa CM_TransformedBoxTrace
  */
-trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject)
+trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject)
 {
 	trace_t trace, newtr;
 	cBspModel_t *model;

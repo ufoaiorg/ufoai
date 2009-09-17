@@ -233,7 +233,8 @@ void CP_CheckCampaignEvents (void)
 		const campaignEvent_t *event = &events->campaignEvents[i];
 		if (event->interest <= ccs.overallInterest) {
 			technology_t* tech = RS_GetTechByID(event->tech);
-			RS_ResearchFinish(tech);
+			if (!RS_IsResearched_ptr(tech))
+				RS_ResearchFinish(tech);
 		}
 	}
 }
