@@ -554,5 +554,4 @@ qboolean US_LoadXML (mxml_node_t *p)
 void UR_InitStartup (void)
 {
 	Cmd_AddCommand("cp_ufocrashed", CP_UFOCrashed_f, "Function to process crashed UFO after a mission.");
-	UR_InitCallbacks();
 }

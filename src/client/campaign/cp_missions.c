@@ -1103,7 +1103,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 		won, ccs.battleParameters.civilians - civiliansKilled, civiliansKilled,
 		ccs.battleParameters.aliens - aliensKilled, aliensKilled);
 	CL_HandleNationData(!won, ccs.battleParameters.civilians - civiliansKilled, civiliansKilled, ccs.battleParameters.aliens - aliensKilled, aliensKilled, mission);
-	CP_CheckLostCondition(!won, mission, civiliansKilled);
+	CP_CheckLostCondition();
 
 	/* update the character stats */
 	CP_ParseCharacterData(NULL);

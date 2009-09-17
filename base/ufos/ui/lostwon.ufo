@@ -424,7 +424,12 @@ window uforecovery
 		*store_panel.ur_capacities@lineselected = -1
 		*sell_panel.cp_uforecovery_nationlist@lineselected = -1
 		*cvar:mission_recoverynation = ""
-		cmd "cp_uforecovery_sell_init;cp_uforecovery_store_init;"
+
+		if ( *cvar:mission_uforecovered == 0 ) {
+			cmd "mn_pop;"
+		} else {
+			cmd "cp_uforecovery_sell_init; cp_uforecovery_store_init;"
+		}
 	}
 
 	func onClose {

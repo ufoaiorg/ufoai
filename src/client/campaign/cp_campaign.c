@@ -58,6 +58,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_employee_callbacks.h"
 #include "cp_market_callbacks.h"
 #include "cp_research_callbacks.h"
+#include "cp_uforecovery_callbacks.h"
 
 struct memPool_s *cp_campaignPool;		/**< reset on every game restart */
 ccs_t ccs;
@@ -308,7 +309,7 @@ void CP_EndCampaign (qboolean won)
 /**
  * @brief Checks whether the player has lost the campaign
  */
-void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civiliansKilled)
+void CP_CheckLostCondition (void)
 {
 	qboolean endCampaign = qfalse;
 	/* fraction of nation that can be below min happiness before the game is lost */
@@ -359,8 +360,10 @@ void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civilia
 		}
 	}
 
-	if (endCampaign)
+	if (endCampaign) {
+		Cvar_SetValue("mission_uforecovered", 0);
 		CP_EndCampaign(qfalse);
+	}
 }
 
 /* Initial fraction of the population in the country where a mission has been lost / won */
@@ -780,7 +783,7 @@ void CL_CampaignRun (void)
 		UFO_CampaignCheckEvents();
 		AIRFIGHT_CampaignRunBaseDefense(dt);
 		CP_CheckEvents();
-		CP_CheckLostCondition(qtrue, NULL, 0);
+		CP_CheckLostCondition();
 		AIRFIGHT_CampaignRunProjectiles(dt);
 		/* Check if there is a base attack mission */
 		CP_CheckBaseAttacks_f();
@@ -1631,12 +1634,11 @@ void CL_GameAutoGo (mission_t *mis)
 
 	/* update nation opinions */
 	if (won) {
-		int civiliansKilled = 0; /** @todo fill this for the case you won the game */
 		CL_HandleNationData(!won, ccs.battleParameters.civilians, 0, 0, ccs.battleParameters.aliens, ccs.selectedMission);
-		CP_CheckLostCondition(!won, mis, civiliansKilled);
+		CP_CheckLostCondition();
 	} else {
 		CL_HandleNationData(!won, 0, ccs.battleParameters.civilians, ccs.battleParameters.aliens, 0, ccs.selectedMission);
-		CP_CheckLostCondition(!won, mis, ccs.battleParameters.civilians);
+		CP_CheckLostCondition();
 	}
 
 	CL_AutoMissionAlienCollect(aircraft);
@@ -1979,6 +1981,7 @@ static void CP_AddCampaignCallbackCommands (void)
 	TR_InitCallbacks();
 	PR_InitCallbacks();
 	RS_InitCallbacks();
+	UR_InitCallbacks();
 }
 
 static void CP_AddCampaignCommands (void)
@@ -2012,6 +2015,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 	TR_ShutdownCallbacks();
 	PR_ShutdownCallbacks();
 	RS_ShutdownCallbacks();
+	UR_ShutdownCallbacks();
 	MSO_Shutdown();
 	UP_Shutdown();
 }
