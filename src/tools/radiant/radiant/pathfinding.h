@@ -18,9 +18,18 @@
  along with GtkRadiant; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+#if !defined(INCLUDED_PATHFINDING_H)
+#define INCLUDED_PATHFINDING_H
+
 namespace routing
 {
 	void ShowPathfinding (void);
 }
 void Pathfinding_Construct (void);
 void Pathfinding_Destroy (void);
+typedef struct _GtkMenu GtkMenu;
+void Pathfinding_ConstructMenu (GtkMenu* menu);
+typedef struct _GtkToolbar GtkToolbar;
+void Pathfinding_constructToolbar (GtkToolbar *toolbar);
+
+#endif

@@ -29,6 +29,7 @@
 #include "gtkmisc.h"
 #include "camwindow.h"
 #include "ui/Icons.h"
+#include "pathfinding.h"
 
 static void File_constructToolbar (GtkToolbar* toolbar, MainFrame *mainframe)
 {
@@ -164,7 +165,7 @@ GtkToolbar* create_main_toolbar_horizontal (MainFrame *mainframe)
 			ui::icons::ICON_MATERIALS_GENERATE, "GenerateMaterialFromTexture");
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
-	toolbar_append_toggle_button(toolbar, _("Show pathfinding info"), ui::icons::ICON_PATHFINDING, "ShowPathfinding");
+	Pathfinding_constructToolbar(toolbar);
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 	LevelFilters_constructToolbar(toolbar);

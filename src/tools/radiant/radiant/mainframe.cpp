@@ -109,6 +109,7 @@
 #include "levelfilters.h"
 #include "sound/SoundManager.h"
 #include "ui/Icons.h"
+#include "pathfinding.h"
 
 struct layout_globals_t
 {
@@ -1560,6 +1561,13 @@ static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 		create_menu_item_with_mnemonic(menu_in_menu, _("Set Se_lected Brushes"), "RegionSetSelection");
 	}
 
+	menu_separator(menu);
+	{
+		GtkMenu *menuInMenu = create_sub_menu_with_mnemonic(menu, _("_Pathfinding"));
+		Pathfinding_ConstructMenu(menuInMenu);
+	}
+
+
 	command_connect_accelerator("CenterXYViews");
 
 	return view_menu_item;
@@ -1672,7 +1680,6 @@ static GtkMenuItem* create_map_menu (void)
 		create_menu_item_with_mnemonic(menu_in_menu, _("Compile the map"), "ToolsCompile");
 		create_menu_item_with_mnemonic(menu_in_menu, _("Generate materials"), "ToolsGenerateMaterials");
 	}
-	create_check_menu_item_with_mnemonic(menu, _("Show pathfinding info"), "ShowPathfinding");
 
 	return map_menu_item;
 }
