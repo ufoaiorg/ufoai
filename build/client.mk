@@ -1,7 +1,6 @@
 CLIENT_CFLAGS+=-DCOMPILE_UFO
 
 CLIENT_SRCS = \
-	client/cl_actor.c \
 	client/cl_console.c \
 	client/cl_game.c \
 	client/cl_game_campaign.c \
@@ -30,6 +29,7 @@ CLIENT_SRCS = \
 	client/cinematic/cl_cinematic_roq.c \
 	client/cinematic/cl_cinematic_ogm.c \
 	\
+	client/battlescape/cl_actor.c \
 	client/battlescape/cl_hud.c \
 	client/battlescape/cl_localentity.c \
 	client/battlescape/cl_parse.c \

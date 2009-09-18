@@ -483,10 +483,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_xvi.h" />
-		<Unit filename="..\..\src\client\cl_actor.c">
+		<Unit filename="..\..\src\client\battlescape\cl_actor.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cl_actor.h" />
+		<Unit filename="..\..\src\client\battlescape\cl_actor.h" />
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>

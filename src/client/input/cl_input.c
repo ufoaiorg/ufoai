@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_joystick.h"
 #include "../battlescape/cl_localentity.h"
 #include "../cl_console.h"
-#include "../cl_actor.h"
+#include "../battlescape/cl_actor.h"
 #include "../battlescape/cl_view.h"
 #include "../battlescape/cl_parse.h"
 #include "../menu/m_main.h"

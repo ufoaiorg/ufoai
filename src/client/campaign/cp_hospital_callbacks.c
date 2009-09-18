@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../battlescape/cl_localentity.h"	/**< cl_actor.h needs this */
-#include "../cl_actor.h"	/**< for CL_CharacterCvars() */
+#include "../battlescape/cl_actor.h"	/**< for CL_CharacterCvars() */
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
 #include "cp_campaign.h"

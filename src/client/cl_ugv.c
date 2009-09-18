@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_ugv.h"
 #include "cl_team.h"
 #include "battlescape/cl_localentity.h"
-#include "cl_actor.h"
+#include "battlescape/cl_actor.h"
 #include "../shared/parse.h"
 
 ugv_t ugvs[MAX_UGV];
