@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_ACTOR_H
 
 #include "client.h"
-#include "cl_le.h"
+#include "battlescape/cl_localentity.h"
 
 /* vertical cursor offset */
 #define CURSOR_OFFSET UNIT_HEIGHT * 0.4

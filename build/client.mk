@@ -12,7 +12,6 @@ CLIENT_SRCS = \
 	client/cl_inventory_callbacks.c \
 	client/cl_irc.c \
 	client/cl_language.c \
-	client/cl_le.c \
 	client/cl_main.c \
 	client/cl_menu.c \
 	client/cl_screen.c \
@@ -32,6 +31,7 @@ CLIENT_SRCS = \
 	client/cinematic/cl_cinematic_ogm.c \
 	\
 	client/battlescape/cl_hud.c \
+	client/battlescape/cl_localentity.c \
 	client/battlescape/cl_parse.c \
 	client/battlescape/cl_particle.c \
 	client/battlescape/cl_view.c \

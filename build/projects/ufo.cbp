@@ -555,10 +555,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_language.h" />
-		<Unit filename="..\..\src\client\cl_le.c">
+		<Unit filename="..\..\src\client\battlescape\cl_localentity.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cl_le.h" />
+		<Unit filename="..\..\src\client\battlescape\cl_localentity.h" />
 		<Unit filename="..\..\src\client\cl_main.c">
 			<Option compilerVar="CC" />
 		</Unit>

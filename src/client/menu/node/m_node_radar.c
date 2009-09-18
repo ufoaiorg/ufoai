@@ -33,9 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 
 #include "../../client.h"
+#include "../../battlescape/cl_localentity.h"
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_misc.h"
-#include "../../cl_le.h"	/**< cl_actor.h needs this */
 #include "../../../shared/parse.h"
 
 /** @brief Each maptile must have an entry in the images array */

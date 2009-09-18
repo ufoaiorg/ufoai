@@ -74,17 +74,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	NONE_AMMO	0
 
 /* Used for saving/transfering (byte) indices */
-/* client/cl_aircraft.c, client/cl_basemanagement.c, client/cp_campaign.c, client/cl_trnasfer.c */
+/* client/campaign/cp_aircraft.c, client/campaign/cp_base.c, client/campaign/cp_campaign.c, client/campaign/cp_transfer.c */
 #define	BYTES_NONE	0xFF
 
 /* Move/Routing values */
-/* game/g_ai.c, game/g_client.c, client/cl_actor.c, client/cl_le.c, client/cl_parse.c, common/cmodel.c */
+/* game/g_ai.c, game/g_client.c, client/cl_actor.c, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c */
 #define	MAX_ROUTE		31
 /* common/cmodel.c */
 #define	MAX_MOVELENGTH	60
 
 /* Timeunits for the various actions. */
-/* game/g_client.c, client/cl_actor.c, client/cl_le.c, client/cl_parse.c, common/cmodel.c */
+/* game/g_client.c, client/cl_actor.c, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c */
 #define	TU_CROUCH			3	/**< Time units for crouching and standing up */
 #define	TU_TURN				1	/**< Time units for turning (no matter how far). */
 #define	TU_MOVE_STRAIGHT	2	/**< Time units used to move straight to the next field/square. */
@@ -100,26 +100,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	STATE_OPENED		0
 #define	STATE_CLOSED		1
 
-/* client/cl_console.c, client/cl_keys.c, client/cl_main.c, common/cmd.c, common/common.c */
+/* client/cl_console.c, client/input/cl_keys.c, client/cl_main.c, common/cmd.c, common/common.c */
 #define	MAX_STRING_CHARS    1024    /* max length of a string passed to Cmd_TokenizeString */
 /* common/cmd.c */
 #define	MAX_STRING_TOKENS   80  /* max tokens resulting from Cmd_TokenizeString */
 
 /* ALL */
-#define MAX_TEXPATH         32  /**< max length of filename relative to gamedir, any longer makes the bsp files unecessarily long */
+#define MAX_TEXPATH         32  /**< max length of filename relative to gamedir, any longer makes the bsp files unnecessarily long */
 
 /* per-level limits */
 /* 25 - bases are 5*5 - see BASE_SIZE*/
-/* game/q_shared.h, client/cl_parse.c, server/sv_ccmds.c, server/sv_init.c */
+/* game/q_shared.h, client/battlescape/cl_parse.c, server/sv_ccmds.c, server/sv_init.c */
 #define	MAX_TILESTRINGS     25
 /* {game}, [client] */
 #define	MAX_TEAMS           8
-/* game/q_shared.h, client/cl_parse.c, client/client.h */
+/* game/q_shared.h, client/battlescape/cl_parse.c, client/client.h */
 #define	MAX_CLIENTS         256 /* absolute limit */
 /* game/g_client.c, game/g_local.h, game/g_main.c, game/g_utils.c, game/game.h, game/q_shared.h,
- * client/cl_le.c, client/cl_le.h, client/cl_parse.c, server/sv+world.c */
+ * client/battlescape/cl_localentity.c, client/battlescape/cl_localentity.h, client/battlescape/cl_parse.c, server/sv_world.c */
 #define	MAX_EDICTS          1024    /* must change protocol to increase more */
-/* game/q_shared.h, client/cl_le.c, client/cl_parse.c, client/cl_view.c, client/client.h,
+/* game/q_shared.h, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, client/battlescape/cl_view.c, client/client.h,
  * common/cmodel.c, server/server.h, server/sv_init.c, server/sv_world */
 #define	MAX_MODELS          256 /* these are sent over the net as bytes */
 /* game/q_shared.h */
@@ -132,9 +132,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* game print flags */
 /* game/g_client.c, server/sv_game.c */
 #define	PRINT_NONE		-1  /* suppress printing */
-/* game/g_client.c, game/g_cmds.c, client/cl_parse.c, server/sv_ccmds.c, server/sv_main.c */
+/* game/g_client.c, game/g_cmds.c, client/battlescape/cl_parse.c, server/sv_ccmds.c, server/sv_main.c */
 #define	PRINT_CHAT		0   /* chat messages */
-/* game/g_client.c, game/g_combat.c, game/g_spawn.c, client/cl_parse.c */
+/* game/g_client.c, game/g_combat.c, game/g_spawn.c, client/battlescape/cl_parse.c */
 #define	PRINT_HUD		1   /* translated hud strings */
 /* game/g_client.c, game/g_cmds.c, game/g_combat.c, game/g_svccmds.c, server/sv_ccmds.c */
 #define	PRINT_CONSOLE	2   /* critical messages goes to the game console */
@@ -149,7 +149,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ERR_DISCONNECT      2   /* don't kill server */
 
 /* substract this from the ent->pos[z] to get the ground position */
-/* game/g_combat.c, client/cl_actor.c, client/cl_parse.c */
+/* game/g_combat.c, client/cl_actor.c, client/battlescape/cl_parse.c */
 #define	GROUND_DELTA	28
 
 /* important units */
@@ -178,7 +178,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	MAX_MAP_TEXINFO		16384
 /* {ufo2map}, common/cmodel.c shared/typedefs.h */
 #define	MAX_MAP_PLANES		65536
-/* common/tracing.c, ufo2map/writebsp.c, client/cl_le.c, common/cmodel.c, server/sv_world.c, shared/typedefs.h */
+/* common/tracing.c, ufo2map/writebsp.c, client/battlescape/cl_localentity.c, common/cmodel.c, server/sv_world.c, shared/typedefs.h */
 #define	MAX_MAP_NODES		65536
 /* ufo2map/map.c, ufo2map/writebsp.c, common/cmodel.c, shared/typedefs.h */
 #define	MAX_MAP_BRUSHSIDES	65536
@@ -272,7 +272,7 @@ COLLISION DETECTION
  */
 
 /** lower bits are stronger, and will eat weaker brushes completely */
-/* {game}, {ufo2map}, client/cl_le.c, client/cl_parse.c, common/cmodel.c, renderer/r_bsp.c */
+/* {game}, {ufo2map}, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c, renderer/r_bsp.c */
 #define	CONTENTS_SOLID	0x0001 /**< an eye is never valid in a solid */
 #define	CONTENTS_WINDOW	0x0002 /**< translucent, but not watery */
 #define	CONTENTS_LADDER	0x0004
@@ -282,7 +282,7 @@ COLLISION DETECTION
 /* ufo2map/map.c, ufo2map/portals.c */
 #define	LAST_VISIBLE_CONTENTS	0x80
 
-/* {game}, {ufo2map}, client/cl_le.c, client/cl_parse.c, common/cmodel.c, renderer/r_bsp.c */
+/* {game}, {ufo2map}, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c, renderer/r_bsp.c */
 #define	CONTENTS_LEVEL_ALL	0xFF00
 #define	CONTENTS_LEVEL_1	0x0100
 #define	CONTENTS_LEVEL_2	0x0200
@@ -294,7 +294,7 @@ COLLISION DETECTION
 #define	CONTENTS_LEVEL_8	0x8000
 
 /** remaining contents are non-visible, and don't eat brushes */
-/* {game}, {ufo2map}, client/cl_le.c, client/cl_parse.c, common/cmodel.c, renderer/r_bsp.c */
+/* {game}, {ufo2map}, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c, renderer/r_bsp.c */
 #define	CONTENTS_ACTORCLIP		0x00010000
 #define	CONTENTS_PASSABLE		0x00020000
 #define	CONTENTS_ACTOR			0x00800000 /**< should never be on a brush, only in game */
@@ -322,7 +322,7 @@ COLLISION DETECTION
 
 /* content masks */
 /* game/g_client.c, game/g_combat.c, game/g_local.h, game/g_phys.c, game/game.h, common/routing.c, common/tracing.c,
- * ufo2map/csg.c, client/cl_actor.c, client/cl_input.c, client/cl_le.c, client/cl_particle.c, common/cmodel.c,
+ * ufo2map/csg.c, client/cl_actor.c, client/input/cl_input.c, client/battlescape/cl_localentity.c, client/battlescape/cl_particle.c, common/cmodel.c,
  * server/sv_world.c */
 #define	MASK_ALL			(-1)
 #define	MASK_SOLID			(CONTENTS_SOLID | CONTENTS_WINDOW)
@@ -416,14 +416,14 @@ COLLISION DETECTION
 
 /* TestLine level masks */
 /* game/g_client.c, game/g_combat.c, common/routing.c, common/tracing.c, ufo2map/lightmap.c, ufo2map/radiosity.c,
- * client/cl_actor.c, client/cl_le.c */
+ * client/cl_actor.c, client/battlescape/cl_localentity.c */
 #define	TL_FLAG_NONE			0x0000
 #define	TL_FLAG_REGULAR_LEVELS	0x00FF
 #define	TL_FLAG_ACTORCLIP		0x0100
 #define	TL_FLAG_WEAPONCLIP		0x0200
 #define	TL_FLAG_ALL				0x0300
 
-/* ufo2map/common/bspfile.c, renderer/r_lightmap.c, renderer/r_lightmap.h, renderer/R-main.c, renderer/r_model_brush.c,
+/* ufo2map/common/bspfile.c, renderer/r_lightmap.c, renderer/r_lightmap.h, renderer/r_main.c, renderer/r_model_brush.c,
  * shared/typedefs.h */
 #define	LIGHTMAP_NIGHT	0
 #define	LIGHTMAP_DAY	1
@@ -435,7 +435,7 @@ COLLISION DETECTION
 #define	PSIDE_BOTH			(PSIDE_FRONT|PSIDE_BACK)
 #define	PSIDE_FACING		4
 
-/* shared/shared.c, ufo2map/common/scriplib.c, ufo2map/common/scriplib.h, client/cl_parse.c, client/client.h,
+/* shared/shared.c, ufo2map/common/scriplib.c, ufo2map/common/scriplib.h, client/battlescape/cl_parse.c, client/client.h,
  * common/common.c, server/server.h, server/sv_ccmds.c, server/sv_game.c, server/sv_init.c */
 #define	MAX_TOKEN_CHARS		256 /* max length of an individual token */
 

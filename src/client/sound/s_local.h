@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_SOUND_LOCAL_H
 
 #include "../client.h"
-#include "../cl_le.h"
+#include "../battlescape/cl_localentity.h"
 
 /** @brief Supported sound file extensions */
 #define SAMPLE_TYPES { "ogg", "wav", NULL }

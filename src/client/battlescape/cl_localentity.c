@@ -1,5 +1,5 @@
 /**
- * @file cl_le.c
+ * @file cl_localentity.c
  * @brief Local entity management.
  */
 
@@ -23,15 +23,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_le.h"
-#include "sound/s_main.h"
-#include "sound/s_mix.h"
-#include "battlescape/cl_particle.h"
-#include "cl_actor.h"
-#include "battlescape/cl_parse.h"
-#include "renderer/r_mesh_anim.h"
-#include "../common/tracing.h"
+#include "../client.h"
+#include "cl_localentity.h"
+#include "../sound/s_main.h"
+#include "../sound/s_mix.h"
+#include "cl_particle.h"
+#include "../cl_actor.h"
+#include "cl_parse.h"
+#include "../renderer/r_mesh_anim.h"
+#include "../../common/tracing.h"
 
 localModel_t LMs[MAX_LOCALMODELS];
 

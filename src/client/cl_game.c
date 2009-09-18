@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "cl_game.h"
-#include "cl_le.h"
+#include "battlescape/cl_localentity.h"
 #include "menu/m_main.h"
 #include "cl_team.h"
 #include "battlescape/events/e_main.h"

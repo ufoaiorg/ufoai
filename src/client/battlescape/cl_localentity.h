@@ -1,5 +1,5 @@
 /**
- * @file cl_le.h
+ * @file cl_localentity.h
  */
 
 /*
@@ -22,10 +22,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_LE_H
-#define CLIENT_CL_LE_H
+#ifndef CLIENT_CL_LOCALENTITY_H
+#define CLIENT_CL_LOCALENTITY_H
 
-#include "renderer/r_entity.h"
+#include "../renderer/r_entity.h"
 
 #define MAX_LE_PATHLENGTH 32
 
