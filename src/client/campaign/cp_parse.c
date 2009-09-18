@@ -646,12 +646,6 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 		B_ParseBuildings(name, text, qfalse);
 	else if (!strcmp(type, "installation"))
 		INS_ParseInstallations(name, text);
-	else if (!strcmp(type, "researched"))
-		CL_ParseResearchedCampaignItems(name, text);
-	else if (!strcmp(type, "researchable"))
-		CL_ParseResearchableCampaignStates(name, text, qtrue);
-	else if (!strcmp(type, "notresearchable"))
-		CL_ParseResearchableCampaignStates(name, text, qfalse);
 	else if (!strcmp(type, "tech"))
 		RS_ParseTechnologies(name, text);
 	else if (!strcmp(type, "nation"))
@@ -696,6 +690,12 @@ static void CL_ParseScriptSecond (const char *type, const char *name, const char
 		AIR_ParseAircraft(name, text, qtrue);
 	else if (!strcmp(type, "basetemplate"))
 		B_ParseBaseTemplate(name, text);
+	else if (!strcmp(type, "researched"))
+		CL_ParseResearchedCampaignItems(name, text);
+	else if (!strcmp(type, "researchable"))
+		CL_ParseResearchableCampaignStates(name, text, qtrue);
+	else if (!strcmp(type, "notresearchable"))
+		CL_ParseResearchableCampaignStates(name, text, qfalse);
 	else if (!strcmp(type, "campaign"))
 		CL_ParseCampaign(name, text);
 }

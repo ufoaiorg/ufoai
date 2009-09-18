@@ -233,8 +233,16 @@ void CP_CheckCampaignEvents (void)
 		const campaignEvent_t *event = &events->campaignEvents[i];
 		if (event->interest <= ccs.overallInterest) {
 			technology_t* tech = RS_GetTechByID(event->tech);
-			if (!RS_IsResearched_ptr(tech))
-				RS_ResearchFinish(tech);
+			if (!RS_IsResearched_ptr(tech)) {
+				int j;
+				for (j = 0; j < ccs.numBases; j++) {
+					const base_t *base = B_GetFoundedBaseByIDX(j);
+					if (base) {
+						RS_MarkResearched(tech, base);
+						break;
+					}
+				}
+			}
 		}
 	}
 }

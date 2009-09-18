@@ -48,8 +48,8 @@ static technology_t *techHashProvided[TECH_HASH_SIZE];
  */
 static inline void RS_PushNewsWhenResearchedFinished (const technology_t* tech)
 {
-	if (tech->time == 0 && tech->type == RS_NEWS)
-		UP_OpenWith(tech->id);
+	/*if (tech->time == 0 && tech->type == RS_NEWS)
+		UP_OpenWith(tech->id);*/
 }
 
 /**
@@ -58,6 +58,10 @@ static inline void RS_PushNewsWhenResearchedFinished (const technology_t* tech)
  */
 void RS_ResearchFinish (technology_t* tech)
 {
+	/* Remove all scientists from the technology. */
+	while (tech->scientists > 0)
+		RS_RemoveScientist(tech, NULL);
+
 	/** At this point we define what research-report description is used when displayed. (i.e. "usedDescription" is set here).
 	 * That's because this is the first the player will see the research result
 	 * and any later changes may make the content inconsistent for the player.
@@ -387,7 +391,7 @@ void RS_MarkResearchable (qboolean init, const base_t* base)
 					RS_ResearchFinish(tech);
 					Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
 					/* Restart the loop as this may have unlocked new possibilities. */
-					i = 0;
+					i = -1;
 				}
 			}
 		}
@@ -723,7 +727,7 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 	if (!employee)
 		employee = E_GetAssignedEmployee(tech->base, EMPL_SCIENTIST);
 	if (employee) {
-		/* Remove the sci from the tech. */
+		/* Remove the scientist from the tech. */
 		tech->scientists--;
 		/* Update capacity. */
 		tech->base->capacities[CAP_LABSPACE].cur--;
@@ -737,7 +741,7 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 	assert(tech->scientists >= 0);
 
 	if (tech->scientists == 0) {
-		/* Remove the tech from the base if no scis are left to research it. */
+		/* Remove the tech from the base if no scientists are left to research it. */
 		tech->base = NULL;
 		tech->statusResearch = RS_PAUSED;
 	}
@@ -782,7 +786,7 @@ void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
  * @todo Base shouldn't be needed here - check RS_MarkResearchable() for that.
  * @sa RS_ResearchRun
  */
-static void RS_MarkResearched (technology_t *tech, const base_t *base)
+void RS_MarkResearched (technology_t *tech, const base_t *base)
 {
 	RS_ResearchFinish(tech);
 	Com_DPrintf(DEBUG_CLIENT, "Research of \"%s\" finished.\n", tech->id);
@@ -827,9 +831,6 @@ void RS_ResearchRun (void)
 				tech->time -= tech->scientists * 0.8;
 				/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
 				if (tech->time <= 0) {
-					/* Remove all scientists from the technology. */
-					while (tech->scientists > 0)
-						RS_RemoveScientist(tech, NULL);
 					RS_MarkResearched(tech, base);
 
 					newResearch++;
@@ -993,7 +994,7 @@ static void RS_TechnologyList_f (void)
  * @sa CL_Connect_f
  * @sa MN_StartServer
  */
-static void RS_MarkResearchedAll (void)
+static void RS_DebugMarkResearchedAll (void)
 {
 	int i;
 	technology_t *tech;
@@ -1011,10 +1012,10 @@ static void RS_MarkResearchedAll (void)
  * @brief Set all items to researched
  * @note Just for debugging purposes
  */
-static void RS_DebugResearchAll (void)
+static void RS_DebugResearchAll_f (void)
 {
 	if (Cmd_Argc() != 2) {
-		RS_MarkResearchedAll();
+		RS_DebugMarkResearchedAll();
 	} else {
 		technology_t *tech = RS_GetTechByID(Cmd_Argv(1));
 		if (!tech)
@@ -1029,7 +1030,7 @@ static void RS_DebugResearchAll (void)
  * @brief Set all item to researched
  * @note Just for debugging purposes
  */
-static void RS_DebugResearchableAll (void)
+static void RS_DebugResearchableAll_f (void)
 {
 	int i;
 
@@ -1049,7 +1050,22 @@ static void RS_DebugResearchableAll (void)
 		}
 	}
 }
+
+static void RS_DebugFinishResearches_f (void)
+{
+	int i;
+
+	for (i = 0; i < ccs.numTechnologies; i++) {
+		technology_t *tech = RS_GetTechByIDX(i);
+		if (tech->statusResearch == RS_RUNNING) {
+			assert(tech->base);
+			Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
+			RS_MarkResearched(tech, tech->base);
+		}
+	}
+}
 #endif
+
 
 /**
  * @brief This is more or less the initial
@@ -1061,8 +1077,9 @@ void RS_InitStartup (void)
 	/* add commands and cvars */
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listtech", RS_TechnologyList_f, "Print the current parsed technologies to the game console");
-	Cmd_AddCommand("debug_researchall", RS_DebugResearchAll, "Mark all techs as researched");
-	Cmd_AddCommand("debug_researchableall", RS_DebugResearchableAll, "Mark all techs as researchable");
+	Cmd_AddCommand("debug_researchall", RS_DebugResearchAll_f, "Mark all techs as researched");
+	Cmd_AddCommand("debug_researchableall", RS_DebugResearchableAll_f, "Mark all techs as researchable");
+	Cmd_AddCommand("debug_finishresearches", RS_DebugFinishResearches_f, "Mark all running researches as finished");
 #endif
 }
 

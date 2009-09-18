@@ -1860,34 +1860,6 @@ static void CL_DebugNewEmployees_f (void)
 }
 
 /**
- * @brief Debug function to increase the kills and test the ranks
- */
-static void CL_DebugChangeCharacterStats_f (void)
-{
-	int i, j;
-	character_t *chr;
-	base_t *base = B_GetCurrentSelectedBase();
-
-	if (!base)
-		return;
-
-	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
-
-		if (!employee->hired && employee->baseHired != base)
-			continue;
-
-		chr = &(employee->chr);
-		assert(chr);
-
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			chr->score.kills[j]++;
-	}
-	if (base->aircraftCurrent)
-		CL_UpdateCharacterStats(base, 1, base->aircraftCurrent);
-}
-
-/**
  * @brief Scriptfunction to list all parsed nations with their current values
  * @note called with debug_listnation
  */
@@ -2140,8 +2112,35 @@ void CL_ResetSinglePlayerData (void)
 
 #ifdef DEBUG
 /**
+ * @brief Debug function to increase the kills and test the ranks
+ */
+static void CL_DebugChangeCharacterStats_f (void)
+{
+	int i, j;
+	character_t *chr;
+	base_t *base = B_GetCurrentSelectedBase();
+
+	if (!base)
+		return;
+
+	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
+		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
+
+		if (!employee->hired && employee->baseHired != base)
+			continue;
+
+		chr = &(employee->chr);
+		assert(chr);
+
+		for (j = 0; j < KILLED_NUM_TYPES; j++)
+			chr->score.kills[j]++;
+	}
+	if (base->aircraftCurrent)
+		CL_UpdateCharacterStats(base, 1, base->aircraftCurrent);
+}
+
+/**
  * @brief Show campaign stats in console
- * call this function via debug_listcampaign
  */
 static void CP_CampaignStats_f (void)
 {
@@ -2178,6 +2177,24 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("...admin_pilot: %i\n", SALARY_ADMIN_PILOT);
 	Com_Printf("...admin_robot: %i\n", SALARY_ADMIN_ROBOT);
 	Com_Printf("...debt_interest: %.5f\n", SALARY_DEBT_INTEREST);
+}
+
+/**
+ * @brief Increase the overall interest level
+ */
+static void CL_DebugIncreaseInterestLevel_f (void)
+{
+	int interestIncrease;
+
+	if (Cmd_Argc() < 2) {
+		interestIncrease = 25;
+		Com_Printf("Usage: %s <value>\n", Cmd_Argv(0));
+	} else {
+		interestIncrease = atoi(Cmd_Argv(1));
+	}
+
+	ccs.overallInterest += interestIncrease;
+	Com_Printf("New interest value is: %i", ccs.overallInterest);
 }
 #endif /* DEBUG */
 
@@ -2315,6 +2332,7 @@ void CP_InitStartup (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
 	Cmd_AddCommand("debug_listcampaign", CP_CampaignStats_f, "Print campaign stats to game console");
+	Cmd_AddCommand("debug_changeinterestlevel", CL_DebugIncreaseInterestLevel_f, "Debug function to increase the overall interest value");
 #endif
 	Cmd_AddCommand("check_baseattacks", CP_CheckBaseAttacks_f, "Check if baseattack mission available and start it.");
 
