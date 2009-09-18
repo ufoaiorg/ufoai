@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #include "../../client.h" /* gettext _() */
-#include "../../cl_input.h"
+#include "../../input/cl_input.h"
 
 #define EXTRADATA(node) (node->u.option)
 

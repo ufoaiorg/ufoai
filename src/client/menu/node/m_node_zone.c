@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_zone.h"
 #include "m_node_window.h"
 
-#include "../../cl_keys.h"
+#include "../../input/cl_keys.h"
 
 #define EXTRADATA(node) node->u.zone
 

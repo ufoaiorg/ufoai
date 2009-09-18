@@ -34,8 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractvalue.h"
 #include "m_node_abstractnode.h"
 
-#include "../../cl_input.h"
-#include "../../cl_keys.h"
+#include "../../input/cl_input.h"
+#include "../../input/cl_keys.h"
 
 #define EXTRADATA(node) (node->u.abstractvalue)
 
@@ -211,10 +211,10 @@ static void MN_SpinnerNodeLoaded (menuNode_t *node)
 
 static const value_t properties[] = {
 	/* @override size
-	 * The size of the widget is uneditable. Fixed to 15×19.
+	 * The size of the widget is uneditable. Fixed to 15ï¿½19.
 	 */
 	/* @override image
-	 * Texture used for the widget. Its a 64×64 template image with all four
+	 * Texture used for the widget. Its a 64ï¿½64 template image with all four
 	 * status. The top button take the first vertical 9 pixels, the bottom
 	 * button use the last 10 pixels. See the sample image.
 	 * @image html http://ufoai.ninex.info/wiki/images/Spinner_blue.png

@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_abstractnode.h"
 
 #include "../client.h"
-#include "../cl_cinematic.h"
+#include "../cinematic/cl_cinematic.h"
 
 /**
  * @brief Menu name use as alternative for option

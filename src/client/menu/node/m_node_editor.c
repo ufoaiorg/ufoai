@@ -34,8 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_editor.h"
 #include "m_node_abstractnode.h"
 
-#include "../../cl_keys.h"
-#include "../../cl_input.h"
+#include "../../input/cl_keys.h"
+#include "../../input/cl_input.h"
 #include "../../renderer/r_draw.h"
 
 static menuNode_t* anchoredNode = NULL;

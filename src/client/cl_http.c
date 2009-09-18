@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_http.h"
-#include "cl_parse.h"
+#include "battlescape/cl_parse.h"
 
 static cvar_t *cl_http_downloads;
 static cvar_t *cl_http_filelists;

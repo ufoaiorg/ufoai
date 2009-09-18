@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 #include "node/m_node_abstractnode.h"
 
-#include "../cl_input.h"
+#include "../input/cl_input.h"
 
 static int oldMousePosX = -1;				/**< Save position X of the mouse to know when it move */
 static int oldMousePosY = -1;				/**< Save position Y of the mouse to know when it move */

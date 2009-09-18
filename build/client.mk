@@ -2,28 +2,19 @@ CLIENT_CFLAGS+=-DCOMPILE_UFO
 
 CLIENT_SRCS = \
 	client/cl_actor.c \
-	client/cl_cinematic.c \
-	client/cl_cinematic_roq.c \
-	client/cl_cinematic_ogm.c \
 	client/cl_console.c \
 	client/cl_game.c \
 	client/cl_game_campaign.c \
 	client/cl_game_multiplayer.c \
 	client/cl_game_skirmish.c \
 	client/cl_http.c \
-	client/cl_hud.c \
 	client/cl_inventory.c \
 	client/cl_inventory_callbacks.c \
-	client/cl_input.c \
 	client/cl_irc.c \
-	client/cl_joystick.c \
-	client/cl_keys.c \
 	client/cl_language.c \
 	client/cl_le.c \
 	client/cl_main.c \
 	client/cl_menu.c \
-	client/cl_parse.c \
-	client/cl_particle.c \
 	client/cl_screen.c \
 	client/cl_sequence.c \
 	client/cl_team.c \
@@ -31,44 +22,56 @@ CLIENT_SRCS = \
 	client/cl_tutorials.c \
 	client/cl_ugv.c \
 	client/cl_video.c \
-	client/cl_view.c \
 	\
-	client/events/e_main.c \
-	client/events/e_parse.c \
-	client/events/e_time.c \
-	client/events/event/actor/e_event_actoradd.c \
-	client/events/event/actor/e_event_actorappear.c \
-	client/events/event/actor/e_event_actordie.c \
-	client/events/event/actor/e_event_actordooraction.c \
-	client/events/event/actor/e_event_actormove.c \
-	client/events/event/actor/e_event_actorresetclientaction.c \
-	client/events/event/actor/e_event_actorshoot.c \
-	client/events/event/actor/e_event_actorshoothidden.c \
-	client/events/event/actor/e_event_actorstartshoot.c \
-	client/events/event/actor/e_event_actorstatechange.c \
-	client/events/event/actor/e_event_actorstats.c \
-	client/events/event/actor/e_event_actorthrow.c \
-	client/events/event/actor/e_event_actorturn.c \
-	client/events/event/inventory/e_event_invadd.c \
-	client/events/event/inventory/e_event_invammo.c \
-	client/events/event/inventory/e_event_invcheckhands.c \
-	client/events/event/inventory/e_event_invdel.c \
-	client/events/event/inventory/e_event_invreload.c \
-	client/events/event/player/e_event_centerview.c \
-	client/events/event/player/e_event_doendround.c \
-	client/events/event/player/e_event_endroundannounce.c \
-	client/events/event/player/e_event_reset.c \
-	client/events/event/player/e_event_results.c \
-	client/events/event/player/e_event_startgame.c \
-	client/events/event/player/e_event_startgamedone.c \
-	client/events/event/world/e_event_addbrushmodel.c \
-	client/events/event/world/e_event_addedict.c \
-	client/events/event/world/e_event_doorclose.c \
-	client/events/event/world/e_event_dooropen.c \
-	client/events/event/world/e_event_entappear.c \
-	client/events/event/world/e_event_entperish.c \
-	client/events/event/world/e_event_explode.c \
-	client/events/event/world/e_event_particleappear.c \
+	client/input/cl_input.c \
+	client/input/cl_joystick.c \
+	client/input/cl_keys.c \
+	\
+	client/cinematic/cl_cinematic.c \
+	client/cinematic/cl_cinematic_roq.c \
+	client/cinematic/cl_cinematic_ogm.c \
+	\
+	client/battlescape/cl_hud.c \
+	client/battlescape/cl_parse.c \
+	client/battlescape/cl_particle.c \
+	client/battlescape/cl_view.c \
+	\
+	client/battlescape/events/e_main.c \
+	client/battlescape/events/e_parse.c \
+	client/battlescape/events/e_time.c \
+	client/battlescape/events/event/actor/e_event_actoradd.c \
+	client/battlescape/events/event/actor/e_event_actorappear.c \
+	client/battlescape/events/event/actor/e_event_actordie.c \
+	client/battlescape/events/event/actor/e_event_actordooraction.c \
+	client/battlescape/events/event/actor/e_event_actormove.c \
+	client/battlescape/events/event/actor/e_event_actorresetclientaction.c \
+	client/battlescape/events/event/actor/e_event_actorshoot.c \
+	client/battlescape/events/event/actor/e_event_actorshoothidden.c \
+	client/battlescape/events/event/actor/e_event_actorstartshoot.c \
+	client/battlescape/events/event/actor/e_event_actorstatechange.c \
+	client/battlescape/events/event/actor/e_event_actorstats.c \
+	client/battlescape/events/event/actor/e_event_actorthrow.c \
+	client/battlescape/events/event/actor/e_event_actorturn.c \
+	client/battlescape/events/event/inventory/e_event_invadd.c \
+	client/battlescape/events/event/inventory/e_event_invammo.c \
+	client/battlescape/events/event/inventory/e_event_invcheckhands.c \
+	client/battlescape/events/event/inventory/e_event_invdel.c \
+	client/battlescape/events/event/inventory/e_event_invreload.c \
+	client/battlescape/events/event/player/e_event_centerview.c \
+	client/battlescape/events/event/player/e_event_doendround.c \
+	client/battlescape/events/event/player/e_event_endroundannounce.c \
+	client/battlescape/events/event/player/e_event_reset.c \
+	client/battlescape/events/event/player/e_event_results.c \
+	client/battlescape/events/event/player/e_event_startgame.c \
+	client/battlescape/events/event/player/e_event_startgamedone.c \
+	client/battlescape/events/event/world/e_event_addbrushmodel.c \
+	client/battlescape/events/event/world/e_event_addedict.c \
+	client/battlescape/events/event/world/e_event_doorclose.c \
+	client/battlescape/events/event/world/e_event_dooropen.c \
+	client/battlescape/events/event/world/e_event_entappear.c \
+	client/battlescape/events/event/world/e_event_entperish.c \
+	client/battlescape/events/event/world/e_event_explode.c \
+	client/battlescape/events/event/world/e_event_particleappear.c \
 	\
 	client/sound/s_music.c \
 	client/sound/s_main.c \

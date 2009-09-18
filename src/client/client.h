@@ -32,8 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_renderer.h"
 #include "cl_video.h"
 #include "sound/s_main.h"
-#include "cl_input.h"
-#include "cl_keys.h"
+#include "input/cl_input.h"
+#include "input/cl_keys.h"
 
 /* Map debugging constants */
 /** @brief cvar debug_map options:

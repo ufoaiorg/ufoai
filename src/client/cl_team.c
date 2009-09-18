@@ -30,10 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_actor.h"
 #include "cl_inventory.h"
 #include "cl_ugv.h"
-#include "events/e_parse.h"
+#include "battlescape/events/e_parse.h"
 #include "menu/m_main.h"
 #include "menu/m_nodes.h"
-#include "events/e_main.h"
+#include "battlescape/events/e_main.h"
 
 /** @brief List of currently displayed or equipeable characters. */
 chrList_t chrDisplayList;
