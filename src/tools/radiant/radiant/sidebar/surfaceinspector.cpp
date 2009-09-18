@@ -640,30 +640,12 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 		gtk_widget_show(frame);
 		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(frame), FALSE, FALSE, 0);
 		{
-			GtkWidget* table = gtk_table_new(4, 4, FALSE);
+			GtkWidget* table = gtk_table_new(1, 2, FALSE);
 			gtk_widget_show(table);
 			gtk_container_add(GTK_CONTAINER(frame), table);
 			gtk_table_set_row_spacings(GTK_TABLE(table), 5);
 			gtk_table_set_col_spacings(GTK_TABLE(table), 5);
 			gtk_container_set_border_width(GTK_CONTAINER (table), 5);
-			{
-				GtkWidget* label = gtk_label_new(_("Brush"));
-				gtk_widget_show(label);
-				gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, (GtkAttachOptions) (GTK_FILL),
-						(GtkAttachOptions) (0), 0, 0);
-			}
-			{
-				GtkWidget* label = gtk_label_new(_("Width"));
-				gtk_widget_show(label);
-				gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1, (GtkAttachOptions) (GTK_FILL),
-						(GtkAttachOptions) (0), 0, 0);
-			}
-			{
-				GtkWidget* label = gtk_label_new(_("Height"));
-				gtk_widget_show(label);
-				gtk_table_attach(GTK_TABLE(table), label, 3, 4, 0, 1, (GtkAttachOptions) (GTK_FILL),
-						(GtkAttachOptions) (0), 0, 0);
-			}
 			{
 				GtkWidget* button = gtk_button_new_with_label(_("Axial"));
 				gtk_widget_show(button);
@@ -681,24 +663,6 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 				g_signal_connect(G_OBJECT(button), "clicked",
 						G_CALLBACK(OnBtnFaceFit), 0);
 				widget_set_size(button, 60, 0);
-			}
-			{
-				GtkWidget* spin = gtk_spin_button_new(GTK_ADJUSTMENT (gtk_adjustment_new (1, 0, 1 << 16, 1, 10, 0)), 0,
-						6);
-				gtk_widget_show(spin);
-				gtk_table_attach(GTK_TABLE(table), spin, 2, 3, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-						(GtkAttachOptions) (0), 0, 0);
-				widget_set_size(spin, 60, 0);
-				//				AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitHorizontal);
-			}
-			{
-				GtkWidget* spin =
-						gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(1, 0, 1 << 16, 1, 10, 0)), 0, 6);
-				gtk_widget_show(spin);
-				gtk_table_attach(GTK_TABLE(table), spin, 3, 4, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-						(GtkAttachOptions) (0), 0, 0);
-				widget_set_size(spin, 60, 0);
-				//				AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitVertical);
 			}
 		}
 	}
