@@ -436,7 +436,7 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 	if (GAME_IsSingleplayer() && newSkin >= NUM_TEAMSKINS_SINGLEPLAYER)
 		newSkin = 0;
 
-	/* Apply new skin to all (shown/dsiplayed) team-members. */
+	/* Apply new skin to all (shown/displayed) team-members. */
 	/** @todo What happens if a model of a team member does not have the selected skin? */
 	for (i = 0; i < chrDisplayList.num; i++) {
 		assert(chrDisplayList.chr[i]);
@@ -547,84 +547,6 @@ item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	return item;
 }
 
-static void CL_ActorEquipmentSelect_f (void)
-{
-	int num;
-	character_t *chr;
-
-	/* check syntax */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num >= chrDisplayList.num)
-		return;
-
-	/* update menu inventory */
-	if (menuInventory && menuInventory != &chrDisplayList.chr[num]->inv) {
-		chrDisplayList.chr[num]->inv.c[csi.idEquip] = menuInventory->c[csi.idEquip];
-		/* set 'old' idEquip to NULL */
-		menuInventory->c[csi.idEquip] = NULL;
-	}
-	menuInventory = &chrDisplayList.chr[num]->inv;
-	chr = chrDisplayList.chr[num];
-
-	/* deselect current selected soldier and select the new one */
-	MN_ExecuteConfunc("equipdeselect %i", cl_selected->integer);
-	MN_ExecuteConfunc("equipselect %i", num);
-
-	/* now set the cl_selected cvar to the new actor id */
-	Cvar_ForceSet("cl_selected", va("%i", num));
-
-	/* set info cvars */
-	if (chr->teamDef->race == RACE_ROBOT)
-		CL_UGVCvars(chr);
-	else
-		CL_CharacterCvars(chr);
-}
-
-/**
- * @brief Selects a soldier while we are on battlescape
- */
-static void CL_ActorSoldierSelect_f (void)
-{
-	/* check syntax */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	/* check whether we are connected (tactical mission) */
-	if (CL_OnBattlescape()) {
-		const int num = atoi(Cmd_Argv(1));
-		CL_ActorSelectList(num);
-	}
-}
-
-/**
- * @brief implements the "nextsoldier" command
- * @todo Move into cl_actor.c
- */
-static void CL_NextSoldier_f (void)
-{
-	if (CL_OnBattlescape()) {
-		CL_ActorSelectNext();
-	}
-}
-
-/**
- * @brief implements the reselect command
- * @todo Move into cl_actor.c
- */
-static void CL_ThisSoldier_f (void)
-{
-	if (CL_OnBattlescape()) {
-		CL_ActorSelectList(cl_selected->integer);
-	}
-}
-
 /**
  * @brief Update the GUI with the selected item
  * @todo Doesn't belong into cl_team.c
@@ -668,32 +590,10 @@ static void CL_UpdateObject_f (void)
 	}
 }
 
-/**
- * @brief Update the skin of the current soldier
- */
-static void CL_UpdateSoldier_f (void)
-{
-	const int num = cl_selected->integer;
-
-	/* We are in the base or multiplayer inventory */
-	if (num < chrDisplayList.num) {
-		assert(chrDisplayList.chr[num]);
-		if (chrDisplayList.chr[num]->teamDef->race == RACE_ROBOT)
-			CL_UGVCvars(chrDisplayList.chr[num]);
-		else
-			CL_CharacterCvars(chrDisplayList.chr[num]);
-	}
-}
-
 void TEAM_InitStartup (void)
 {
 	Cmd_AddCommand("team_initskin", CL_InitSkin_f, "Init skin according to the game mode");
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, "Change the skin of the soldier");
 	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinForWholeTeam_f, "Change the skin for the whole current team");
-	Cmd_AddCommand("equip_select", CL_ActorEquipmentSelect_f, "Select a soldier in the equipment menu");
-	Cmd_AddCommand("soldier_select", CL_ActorSoldierSelect_f, _("Select a soldier from list"));
-	Cmd_AddCommand("soldier_reselect", CL_ThisSoldier_f, _("Reselect the current soldier"));
-	Cmd_AddCommand("soldier_updatecurrent", CL_UpdateSoldier_f, _("Update a soldier"));
 	Cmd_AddCommand("object_update", CL_UpdateObject_f, _("Update the GUI with the selected item"));
-	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
 }
