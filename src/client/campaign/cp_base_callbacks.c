@@ -900,7 +900,7 @@ static void BaseSummary_SelectBase_f (void)
 	const base_t *base;
 
 	if (Cmd_Argc() >= 2) {
-		int i = atoi(Cmd_Argv(1));;
+		int i = atoi(Cmd_Argv(1));
 
 		if (i < 0 || i >= ccs.numBases) {
 			Com_Printf("Usage: %s [baseIdx]\nWithout baseIdx the current base is selected.\n", Cmd_Argv(0));

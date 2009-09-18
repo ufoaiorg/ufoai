@@ -1156,7 +1156,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		ccs.battleParameters.day = mxml_GetBool(bparam, "day", qfalse);
 		ccs.battleParameters.ugv = mxml_GetInt(bparam, "ugv", 0);
 		ccs.battleParameters.aliens = mxml_GetInt(bparam, "aliens", 0);
-		ccs.battleParameters.civilians = mxml_GetInt(bparam, "civilians", 0);;
+		ccs.battleParameters.civilians = mxml_GetInt(bparam, "civilians", 0);
 	}
 
 	missionId = mxml_GetString(n_ccs, "selectedmission");

@@ -534,7 +534,7 @@ static void UFO_ListOnGeoscape_f (void)
 aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t *mission)
 {
 	int newUFONum;
-	aircraft_t *ufo = NULL;
+	aircraft_t *ufo;
 
 	if (ufoType == UFO_MAX) {
 		Com_Printf("UFO_AddToGeoscape: ufotype does not exist\n");
