@@ -172,6 +172,9 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 	CP_MissionDisableTimeLimit(mission);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission, qfalse);
+
+	if (!RS_MarkStoryLineEventResearched(ALIENBASE_DISCOVERED_TECH))
+		Com_DPrintf(DEBUG_CLIENT, ALIENBASE_DISCOVERED_TECH" is not marked as researched\n");
 }
 
 /**
@@ -212,11 +215,8 @@ static void AB_UpdateStealthForOneBase (const aircraft_t const *aircraft, alienB
 
 	/* base discovered ? */
 	if (base->stealth < 0) {
-		technology_t *tech = RS_GetTechByID(ALIENBASE_DISCOVERED_TECH);
 		base->stealth = -10.0f;		/* just to avoid rounding errors */
 		CP_SpawnAlienBaseMission(base);
-		if (!RS_IsResearched_ptr(tech))
-			RS_ResearchFinish(tech);
 	}
 }
 

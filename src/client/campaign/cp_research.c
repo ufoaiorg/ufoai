@@ -786,12 +786,34 @@ void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
  * @todo Base shouldn't be needed here - check RS_MarkResearchable() for that.
  * @sa RS_ResearchRun
  */
-void RS_MarkResearched (technology_t *tech, const base_t *base)
+static void RS_MarkResearched (technology_t *tech, const base_t *base)
 {
 	RS_ResearchFinish(tech);
 	Com_DPrintf(DEBUG_CLIENT, "Research of \"%s\" finished.\n", tech->id);
 	RS_MarkResearchable(qfalse, base);
 }
+
+/**
+ * Pick a random base to research a story line event tech
+ * @param techID The event technology script id to research
+ * @note If there is no base available the tech is not marked as researched, too
+ */
+qboolean RS_MarkStoryLineEventResearched (const char *techID)
+{
+	technology_t* tech = RS_GetTechByID(techID);
+	if (!RS_IsResearched_ptr(tech)) {
+		int j;
+		for (j = 0; j < ccs.numBases; j++) {
+			const base_t *base = B_GetFoundedBaseByIDX(j);
+			if (base) {
+				RS_MarkResearched(tech, base);
+				return qtrue;
+			}
+		}
+	}
+	return qfalse;
+}
+
 
 /**
  * @brief Checks the research status
