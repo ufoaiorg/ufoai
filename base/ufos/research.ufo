@@ -4877,6 +4877,7 @@ tech rs_item_alienmaterials
 // News
 //========================
 
+// http://ufoai.ninex.info/wiki/index.php/Storyline/Final#.22Political_Situation_Before_The_Invasion.22
 tech news_init_political_situation
 {
 	type	news
@@ -4889,6 +4890,7 @@ tech news_init_political_situation
 	time	0
 }
 
+// http://ufoai.ninex.info/wiki/index.php/Storyline/Final#.22After_the_War.22
 tech news_after_the_war
 {
 	type	news
@@ -4901,6 +4903,7 @@ tech news_after_the_war
 	time	0
 }
 
+// http://ufoai.ninex.info/wiki/index.php/Storyline/Final#.22PHALANX_And_The_Mumbai_Aftermath.22
 tech news_phalanx_mumbai_aftermath
 {
 	type	news
@@ -4938,10 +4941,7 @@ tech news_new_twist
 		tech rs_alien_xvi_event
 	}
 
-	event "cp_start_xvi_spreading"
-
 	time		0
-	pushnews	true
 }
 
 // http://ufoai.ninex.info/wiki/index.php/Aliens/The_Enemy_On_Earth
@@ -4949,7 +4949,7 @@ tech rs_enemy_on_earth
 {
 	name		"_The Enemy On Earth"
 	type		tech
-	up_chapter	tech	// FIXME: Isn't this more likey to fit into News instead of Research Reports?
+	up_chapter	news
 
 	description {
 		default "_enemy_on_earth_alt_txt"		// A New Twist has NOT occurred
@@ -4964,14 +4964,14 @@ tech rs_enemy_on_earth
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/intelligence
 	}
 	mail_pre
 	{
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/intelligence
 	}
 	require_AND
 	{
@@ -4983,12 +4983,11 @@ tech rs_enemy_on_earth
 }
 
 // http://ufoai.ninex.info/wiki/index.php/Research/XVI_Census
-// TODO Fix all marked values below
 tech rs_xvi_census
 {
 	name		"_XVI Census"
 	type		tech
-	up_chapter	threat	// FIXME: Isn't this more likey to fit into News instead of Research Reports?
+	up_chapter	news
 
 	description {
 		default "_xvi_census_txt"
@@ -5024,13 +5023,12 @@ tech rs_xvi_census
 	image		"techs/xvi"
 }
 
-/*
-// TODO Fix all marked values below
+// http://ufoai.ninex.info/wiki/index.php/Aliens/The_Enemy_On_Earth_(late)
 tech rs_enemy_on_earth_revisited
 {
 	name		"_The Enemy On Earth - Revisited"
 	type		tech
-	up_chapter	tech	// FIXME: Isn't this more likey to fit into News instead of Research Reports?
+	up_chapter	news
 
 	description {
 		default "_enemy_on_earth_rev_txt"
@@ -5041,17 +5039,17 @@ tech rs_enemy_on_earth_revisited
 
 	mail
 	{
-		from	"_mail_from_dr_connor"		// Fixme
-		to	"_mail_to_base_commander"	// Fixme
+		from	"_mail_from_dr_connor"
+		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech			// Fixme
+		icon	icons/intelligence
 	}
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"		// Fixme
-		to	"_mail_to_base_commander"	// Fixme
+		from	"_mail_from_dr_connor"
+		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech			// Fixme
+		icon	icons/intelligence
 	}
 	require_AND
 	{
@@ -5062,4 +5060,3 @@ tech rs_enemy_on_earth_revisited
 
 	time		7000
 }
-*/

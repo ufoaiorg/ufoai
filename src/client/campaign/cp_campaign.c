@@ -437,9 +437,9 @@ void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKil
 }
 
 /**
- * @brief Check for mission start, of change of status of mission
+ * @brief Check for missions that have a timeout defined
  */
-static void CP_CheckEvents (void)
+static void CP_CheckMissionEnd (void)
 {
 	const linkedList_t *list = ccs.missions;
 
@@ -448,23 +448,6 @@ static void CP_CheckEvents (void)
 		if (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(ccs.date, mission->finalDate)) {
 			CP_MissionStageEnd(mission);
 		}
-	}
-
-	/* Humans start to attacking player. */
-	if (!ccs.humansAttackActivated && ccs.overallInterest > 450) {
-		ccs.humansAttackActivated = qtrue;
-		/* Mark prequesite of "rs_enemy_on_earth" as met. */
-		RS_ResearchFinish(RS_GetTechByID("rs_enemy_on_earth_event"));
-	}
-
-	/** XVI infection begins.
-	 * This triggers cp_start_xvi_spreading (aka CP_StartXVISpreading_f)
-	 * as well after news_new_twist is marked as researched)
-	 * @todo We could actually call CP_StartXVISpreading_f directly here as well ... dunno if it helps?
-	 *		It's at least more script-able if we keep it as-is. Not that that says much ;) */
-	if (!ccs.XVISpreadActivated && ccs.overallInterest > 400) {
-		/* Mark prequesite of "news_new_twist" as met. */
-		RS_ResearchFinish(RS_GetTechByID(XVI_EVENT_NAME));
 	}
 }
 
@@ -685,7 +668,6 @@ const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
  * @sa CP_NationHandleBudget
  * @sa B_UpdateBaseData
  * @sa CL_CampaignRunAircraft
- * @sa CP_CheckEvents
  */
 void CL_CampaignRun (void)
 {
@@ -782,7 +764,7 @@ void CL_CampaignRun (void)
 		CL_CampaignRunAircraft(dt - timeAlreadyFlied, qtrue);
 		UFO_CampaignCheckEvents();
 		AIRFIGHT_CampaignRunBaseDefense(dt);
-		CP_CheckEvents();
+		CP_CheckMissionEnd();
 		CP_CheckLostCondition();
 		AIRFIGHT_CampaignRunProjectiles(dt);
 		/* Check if there is a base attack mission */
@@ -953,7 +935,7 @@ static void CL_StatsUpdate_f (void)
 		(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 
 	/* only show the xvi spread data when it's available */
-	if (ccs.XVISpreadActivated) {
+	if (CP_IsXVIResearched()) {
 		Q_strcat(pos, va(_("Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 			"Current eXtraterrestial Viral Infection: %i%%"),
 			ccs.curCampaign->maxAllowedXVIRateUntilLost,
@@ -1032,10 +1014,8 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	ccs.civiliansKilled = mxml_GetInt(n_ccs, "civilianskilled", 0);
 	ccs.aliensKilled = mxml_GetInt(n_ccs, "alienskilled", 0);
 
- 	ccs.XVISpreadActivated = mxml_GetBool(n_ccs, "xvispreadactivated", qfalse);
  	ccs.XVIShowMap = mxml_GetBool(n_ccs, "xvishowmap", qfalse);
 
-	ccs.humansAttackActivated = mxml_GetBool(n_ccs, "humansattackactivated", qfalse);
 	CP_UpdateXVIMapButton();
 
 	/* read missions */
@@ -1258,9 +1238,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	/* store other campaign data */
 	mxml_AddInt(structure_ccs, "civilianskilled", ccs.civiliansKilled);
 	mxml_AddInt(structure_ccs, "alienskilled", ccs.aliensKilled);
-	mxml_AddBool(structure_ccs, "xvispreadactivated", ccs.XVISpreadActivated);
 	mxml_AddBool(structure_ccs, "xvishowmap", ccs.XVIShowMap);
-	mxml_AddBool(structure_ccs, "humansattackactivated", ccs.humansAttackActivated);
 
 	/* store missions */
 	mxml_AddShort(campaign, "missioncount", CP_CountMission());

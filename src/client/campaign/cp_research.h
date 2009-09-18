@@ -66,7 +66,6 @@ typedef enum requirementType_s {
 	RS_LINK_TECH,
 	RS_LINK_TECH_NOT,
 	RS_LINK_ITEM,
-	RS_LINK_EVENT,
 	RS_LINK_ALIEN,
 	RS_LINK_ALIEN_DEAD,
 	RS_LINK_ALIEN_GLOBAL,
@@ -81,7 +80,6 @@ typedef struct requirement_s {
 				 * RS_LINK_TECH -> technology_t*
 				 * RS_LINK_TECH_NOT -> (planned to be technology_t*)
 				 * RS_LINK_ITEM -> objDef_t*
-				 * RS_LINK_EVENT -> nothing yet
 				 * RS_LINK_ALIEN		-> teamDef_t*
 				 * RS_LINK_ALIEN_DEAD	-> teamDef_t*
 				 * RS_LINK_ALIEN_GLOBAL -> NULL
@@ -182,7 +180,6 @@ typedef struct technology_s {
 	int statusResearchable;		/**< Is this item researchable? */
 
 	int produceTime;			/**< How many days the production of this items runs. */
-	qboolean pushnews;			/**< Push news about this tech when researched. Note: usually you should use this only for tech with time = 0. */
 	mailSentType_t mailSent;		/**< Store if a Mail has been sent to the commander (player). */
 	requirements_t requireForProduction;	/**< A list of items that are needed (and used up) on production of _this_ item.
 						 * Only "item"-type is allowed.

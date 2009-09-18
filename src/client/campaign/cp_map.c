@@ -1626,7 +1626,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		}
 	}
 
-	showXVI = CP_IsXVIResearched() ? qtrue : qfalse;
+	showXVI = CP_IsXVIResearched();
 
 	/* Draw nation names */
 	for (i = 0; i < ccs.numNations; i++) {

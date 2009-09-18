@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cp_ufo.h"
 #include "../cp_missions.h"
 #include "../cp_time.h"
+#include "../cp_xvi.h"
 #include "../cp_alien_interest.h"
 
 /**
@@ -38,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void CP_HarvestMissionIsSuccess (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(-0.1f, INTERESTCATEGORY_HARVEST);
-	if (ccs.XVISpreadActivated)
+	if (CP_IsXVIResearched())
 		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
 
 	CP_MissionRemove(mission);

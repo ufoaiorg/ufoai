@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static technology_t *rsAlienXVI;
 
+#define XVI_EVENT_NAME "rs_alien_xvi_event"
 
 /**
  * @brief Spread XVI at a given position.
@@ -41,12 +42,8 @@ void CP_SpreadXVIAtPos (const vec2_t pos)
 {
 	nation_t *nation;
 
-#ifdef DEBUG
-	if (!ccs.XVISpreadActivated) {
-		Com_Printf("CP_SpreadXVIAtPos: Try to spread XVI but XVISpread is not activated\n");
+	if (!CP_IsXVIResearched())
 		return;
-	}
-#endif
 
 	nation = MAP_GetNation(pos);
 	if (nation)
@@ -84,7 +81,7 @@ void CP_SpreadXVI (void)
 	const linkedList_t *list = ccs.missions;
 
 	/* don't check if XVI spreading didn't start yet */
-	if (!ccs.XVISpreadActivated)
+	if (!CP_IsXVIResearched())
 		return;
 
 	for (;list; list = list->next) {
@@ -95,11 +92,11 @@ void CP_SpreadXVI (void)
 }
 
 /**
- * @brief Returns the alien XVI tech if the tech was already researched
+ * @brief Returns @c true if the tech for the xvi event is already researched
  */
-technology_t *CP_IsXVIResearched (void)
+qboolean CP_IsXVIResearched (void)
 {
-	return RS_IsResearched_ptr(rsAlienXVI) ? rsAlienXVI : NULL;
+	return RS_IsResearched_ptr(rsAlienXVI);
 }
 
 void CP_XVIInit (void)
@@ -192,17 +189,16 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 
 /**
  * @brief Start XVI spreading in campaign.
- * @note This is called when 'a new twist' technology is discovered
+ * @note This is called when 'a new twist' technology is discovered.
  */
 void CP_StartXVISpreading_f (void)
 {
 	int i, numAlienBases;
 
 	/** @todo ccs.XVIShowMap should not be enabled at the same time than
-	 * ccs.XVISpreadActivated: ccs.XVIShowMap means that PHALANX has a map of
-	 * XVI, whereas ccs.XVISpreadActivated  means that aliens started
+	 * CP_IsXVIResearched(): ccs.XVIShowMap means that PHALANX has a map of
+	 * XVI, whereas CP_IsXVIResearched() means that aliens started
 	 * spreading XVI */
-	ccs.XVISpreadActivated = qtrue;
 	ccs.XVIShowMap = qtrue;
 
 	/* Spawn a few alien bases depending on difficulty level */

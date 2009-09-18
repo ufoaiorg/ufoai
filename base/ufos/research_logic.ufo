@@ -111,7 +111,6 @@ tech rs_ortnok_extra
 //========================================================
 // Used for the "A New Twist" and "The Enemy On Earth" research.
 
-// Triggered in CP_CheckEvents
 // "XVI infection begins"
 tech rs_alien_xvi_event
 {
@@ -123,9 +122,10 @@ tech rs_alien_xvi_event
 		// We self-link here to not make this researchable at all.
 		tech rs_alien_xvi_event
 	}
+
+	event "cp_start_xvi_spreading"
 }
 
-// Triggered in CP_CheckEvents
 // "Humans start attacking player"
 tech rs_enemy_on_earth_event
 {
@@ -139,7 +139,6 @@ tech rs_enemy_on_earth_event
 	}
 }
 
-// TODO: trigger somewhere
 // "first alien base discovered"
 tech rs_alien_base_discovered_event
 {

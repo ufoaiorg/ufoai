@@ -1,11 +1,11 @@
 /**
  * @file cp_research.c
- * @brief Player research.
+ * @brief Technology research.
  *
  * Handles everything related to the research-tree.
  * Provides information if items/buildings/etc.. can be researched/used/displayed etc...
  * Implements the research-system (research new items/etc...)
- * See base/ufos/research.ufo and base/ufos/menu_research.ufo for the underlying content.
+ * See base/ufos/research.ufo and base/ufos/ui/research.ufo for the underlying content.
  * @todo comment on used global variables.
  */
 
@@ -46,10 +46,10 @@ static technology_t *techHashProvided[TECH_HASH_SIZE];
  * @param[in] tech Technology pointer.
  * @sa RS_ResearchFinish
  */
-static void RS_PushNewsWhenResearched (technology_t* tech)
+static inline void RS_PushNewsWhenResearchedFinished (const technology_t* tech)
 {
-	assert(tech->pushnews);
-	/** @todo */
+	if (tech->time == 0 && tech->type == RS_NEWS)
+		UP_OpenWith(tech->id);
 }
 
 /**
@@ -68,16 +68,17 @@ void RS_ResearchFinish (technology_t* tech)
 		RS_GetDescription(&tech->preDescription);
 	}
 
+	/* execute the trigger only if the tech is not yet researched */
 	if (tech->finishedResearchEvent && tech->statusResearch != RS_FINISH)
 		Cmd_ExecuteString(tech->finishedResearchEvent);
+
 	tech->statusResearch = RS_FINISH;
 	tech->researchedDate = ccs.date;
 	if (!tech->statusResearchable) {
 		tech->statusResearchable = qtrue;
 		tech->preResearchedDate = ccs.date;
 	}
-	if (tech->pushnews)
-		RS_PushNewsWhenResearched(tech);
+	RS_PushNewsWhenResearchedFinished(tech);
 
 	/* send a new message and add it to the mailclient */
 	if ((tech->mailSent < MAILSENT_FINISHED) && (tech->type != RS_LOGIC)) {
@@ -196,8 +197,6 @@ qboolean RS_RequirementsMet (const requirements_t *required_AND, const requireme
 				if (B_ItemInBase(req->link, base) < req->amount)
 					met_AND = qfalse;
 				break;
-			case RS_LINK_EVENT:
-				break;
 			case RS_LINK_ALIEN_DEAD:
 			case RS_LINK_ALIEN:
 				assert(req->link);
@@ -246,8 +245,6 @@ qboolean RS_RequirementsMet (const requirements_t *required_AND, const requireme
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORitem: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
 				if (B_ItemInBase(req->link, base) >= req->amount)
 					met_OR = qtrue;
-				break;
-			case RS_LINK_EVENT:
 				break;
 			case RS_LINK_ALIEN:
 			case RS_LINK_ALIEN_DEAD:
@@ -422,9 +419,6 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 			req->link = INVSH_GetItemByID(req->id);
 			if (!req->link)
 				Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get item definition for '%s'", req->id);
-			break;
-		case RS_LINK_EVENT:
-			/** @todo Get index of event in event-list. */
 			break;
 		case RS_LINK_ALIEN:
 		case RS_LINK_ALIEN_DEAD:
@@ -896,8 +890,6 @@ static const char *RS_TechReqToName (requirement_t *req)
 		return va("not %s", ((technology_t*)req->link)->id);
 	case RS_LINK_ITEM:
 		return ((objDef_t*)req->link)->id;
-	case RS_LINK_EVENT:
-		return "not implemented yet";
 	case RS_LINK_ALIEN:
 		return ((teamDef_t*)req->link)->id;
 	case RS_LINK_ALIEN_DEAD:
@@ -920,8 +912,6 @@ static const char *RS_TechLinkTypeToName (requirementType_t type)
 		return "tech (not)";
 	case RS_LINK_ITEM:
 		return "item";
-	case RS_LINK_EVENT:
-		return "event";
 	case RS_LINK_ALIEN:
 		return "alien";
 	case RS_LINK_ALIEN_DEAD:
@@ -1101,7 +1091,6 @@ static const value_t valid_tech_vars[] = {
 	{"delay", V_INT, offsetof(technology_t, delay), MEMBER_SIZEOF(technology_t, delay)},
 	{"producetime", V_INT, offsetof(technology_t, produceTime), MEMBER_SIZEOF(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},
-	{"pushnews", V_BOOL, offsetof(technology_t, pushnews), MEMBER_SIZEOF(technology_t, pushnews)},
 	{"image", V_CLIENT_HUNK_STRING, offsetof(technology_t, image), 0},
 	{"mdl", V_CLIENT_HUNK_STRING, offsetof(technology_t, mdl), 0},
 
@@ -1337,12 +1326,6 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
-					} else if (!strcmp(token, "event")) {
-						token = Com_Parse(text);
-						Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-event - %s\n", token);
-						requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_EVENT;
-						/* Get name/id & amount of required item. */
-						/** @todo Implement final event system, so this can work 100% */
 					} else if (!strcmp(token, "alienglobal")) {
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */

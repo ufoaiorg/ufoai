@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 
 #define MAPDEF_ALIENBASE "alienbase"
+#define ALIENBASE_DISCOVERED_TECH "rs_alien_base_discovered_event"
 
 /**
  * @brief Set new base position
@@ -211,8 +212,11 @@ static void AB_UpdateStealthForOneBase (const aircraft_t const *aircraft, alienB
 
 	/* base discovered ? */
 	if (base->stealth < 0) {
+		technology_t *tech = RS_GetTechByID(ALIENBASE_DISCOVERED_TECH);
 		base->stealth = -10.0f;		/* just to avoid rounding errors */
 		CP_SpawnAlienBaseMission(base);
+		if (!RS_IsResearched_ptr(tech))
+			RS_ResearchFinish(tech);
 	}
 }
 

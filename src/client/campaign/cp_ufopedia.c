@@ -724,41 +724,41 @@ void UP_OpenEventMail (const char *eventMailID)
 
 /**
  * @brief Opens the mail view from everywhere with the entry given through name
- * @param name mail entry id
+ * @param name mail entry id (technology script id)
  * @sa UP_FindEntry_f
  */
-static void UP_OpenMailWith (const char *name)
+static void UP_OpenMailWith (const char *techID)
 {
-	if (!name)
+	if (!techID)
 		return;
 
 	MN_PushMenu("mail", NULL);
-	Cbuf_AddText(va("ufopedia %s\n", name));
+	Cbuf_AddText(va("ufopedia %s\n", techID));
 }
 
 /**
  * @brief Opens the UFOpaedia from everywhere with the entry given through name
- * @param name UFOpaedia entry id
+ * @param name UFOpaedia entry id (technology script id)
  * @sa UP_FindEntry_f
  */
-void UP_OpenWith (const char *name)
+void UP_OpenWith (const char *techID)
 {
-	if (!name)
+	if (!techID)
 		return;
 
 	MN_PushMenu("ufopedia", NULL);
-	Cbuf_AddText(va("ufopedia %s\n", name));
+	Cbuf_AddText(va("ufopedia %s\n", techID));
 }
 
 /**
  * @brief Opens the UFOpaedia with the entry given through name, not deleting copies
- * @param name UFOpaedia entry id
+ * @param name UFOpaedia entry id (technology script id)
  * @sa UP_FindEntry_f
  */
-void UP_OpenCopyWith (const char *name)
+void UP_OpenCopyWith (const char *techID)
 {
 	Cmd_ExecuteString("mn_push ufopedia");
-	Cbuf_AddText(va("ufopedia %s\n", name));
+	Cbuf_AddText(va("ufopedia %s\n", techID));
 }
 
 

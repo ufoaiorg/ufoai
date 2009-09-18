@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cp_ufo.h"
 #include "../cp_missions.h"
 #include "../cp_time.h"
+#include "../cp_xvi.h"
 #include "../cp_alien_interest.h"
 
 /**
@@ -42,7 +43,7 @@ static void CP_ReconMissionIsSuccess (mission_t *mission)
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
 	if (AB_GetAlienBaseNumber())
 		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_SUPPLY);
-	if (ccs.XVISpreadActivated)
+	if (CP_IsXVIResearched())
 		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
 
 	CP_MissionRemove(mission);
