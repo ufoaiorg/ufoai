@@ -543,7 +543,7 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 
 	/* check max amount */
 	if (ccs.numUFOs >= MAX_UFOONGEOSCAPE) {
-		Com_Printf("UFO_AddToGeoscape: Too many UFOs on geoscape\n");
+		Com_DPrintf(DEBUG_CLIENT, "UFO_AddToGeoscape: Too many UFOs on geoscape\n");
 		return NULL;
 	}
 
