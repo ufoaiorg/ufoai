@@ -1642,7 +1642,7 @@ void CL_GameAutoGo (mission_t *mis)
 
 		if (won) {
 			/* fake an aircraft return to collect goods and aliens */
-			CL_AircraftReturnedToHomeBase(ccs.interceptAircraft);
+			B_AircraftReturnedToHomeBase(ccs.interceptAircraft);
 
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);

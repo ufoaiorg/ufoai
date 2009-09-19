@@ -1149,7 +1149,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	if (mission->stage == STAGE_BASE_ATTACK) {
 		if (won) {
 			/* fake an aircraft return to collect goods and aliens */
-			CL_AircraftReturnedToHomeBase(aircraft);
+			B_AircraftReturnedToHomeBase(aircraft);
 
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);

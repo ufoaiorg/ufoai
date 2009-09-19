@@ -166,7 +166,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 /**
  * @brief Puts alien cargo into Alien Containment.
  * @param[in] aircraft Aircraft transporting cargo to homebase.
- * @sa CL_AircraftReturnedToHomeBase
+ * @sa B_AircraftReturnedToHomeBase
  * @sa AL_FillInContainment
  * @note an event mail about missing breathing tech will be triggered if necessary.
  */
@@ -548,7 +548,7 @@ qboolean AL_CheckAliveFreeSpace (const base_t *base, const aliensCont_t *contain
  * @note This should be called whenever you add or remove
  * @note aliens from alien containment.
  * @return amount of all live aliens stored in containments
- * @sa CL_AircraftReturnedToHomeBase
+ * @sa B_AircraftReturnedToHomeBase
  * @sa AC_Init_f
  */
 int AL_CountAll (void)

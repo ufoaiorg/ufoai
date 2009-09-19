@@ -2456,7 +2456,7 @@ int B_GetNumOnTeam (const aircraft_t *aircraft)
 /**
  * @brief Sell items to the market or add them to base storage.
  * @param[in] aircraft Pointer to an aircraft landing in base.
- * @sa CL_AircraftReturnedToHomeBase
+ * @sa B_AircraftReturnedToHomeBase
  */
 static void B_SellOrAddItems (aircraft_t *aircraft)
 {
@@ -2532,7 +2532,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
  * @note when Drophip returns to base.
  * @sa CL_CampaignRunAircraft
  */
-void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
+void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 {
 	aliensTmp_t *cargo;
 
