@@ -846,6 +846,8 @@ base/models/objects/cars/4x4/4x4.jpg | GNU General Public License 2.0 or later |
 base/models/objects/cars/4x4/4x4.md2 | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4_t.md2 | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/cars_tires.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
+base/models/objects/cars/buggy/buggy.md2 | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
+base/models/objects/cars/buggy/buggy.png | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/cars/car2/car2a.jpg | GNU General Public License 2.0
 base/models/objects/cars/car2/car2a.md2 | GNU General Public License 2.0
 base/models/objects/cars/car2/car2b.md2 | GNU General Public License 2.0
@@ -968,8 +970,12 @@ base/models/objects/construct/excavator/excavator_b.md2 | GNU General Public Lic
 base/models/objects/construct/excavator/excavator_t.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/generator/generator.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/generator/generator.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/construct/generator_big/generator.md2 | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
+base/models/objects/construct/generator_big/generator.png | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/construct/mixer/mixer.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/mixer/mixer.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/construct/workbench/workbench.md2 | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
+base/models/objects/construct/workbench/workbench.png | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
