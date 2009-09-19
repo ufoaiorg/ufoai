@@ -1218,7 +1218,6 @@ base/models/soldiers/female/head03b.md2 | GNU General Public License 2.0 | Lukas
 base/models/soldiers/female/head04.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/head04a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/soldiers/female/headhunt.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalehybrid/body.jpg | GNU General Public License 2.0 or later | Migel
 base/models/soldiers/femalehybrid/body_arctic.jpg | GNU General Public License 2.0 or later | Migel
 base/models/soldiers/femalehybrid/body_cccp.jpg | GNU General Public License 2.0 or later | Migel
@@ -1436,7 +1435,6 @@ base/models/soldiers/male/head05b_urban.jpg | GNU General Public License 2.0 | c
 base/models/soldiers/male/head05c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/male/head06.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/male/head06a.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/soldiers/male/headhunt.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/male/humanmale_light_body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malehybrid/body.jpg | GNU General Public License 2.0 or later | Migel
 base/models/soldiers/malehybrid/body_arctic.jpg | GNU General Public License 2.0 or later | Migel
@@ -1634,8 +1632,6 @@ base/models/soldiers/malepower/head04b.md2 | Creative Commons Attribution-Share 
 base/models/soldiers/malepower/head05a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/head05b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/head05c.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/malepower.blend | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer | powersuitmale by David Dallaston (PikkaBird) - some modifications by Ryan Span (Winter)
-base/models/soldiers/malepower/malepower.xcf | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer) | malepower.tga texture by David Dallaston (PikkaBird)
 base/models/soldiers/ugv_ares/ares.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares.blend | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_h.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
