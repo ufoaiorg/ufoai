@@ -36,6 +36,7 @@ window aircraft_pilots extends iaircraft
 		pos			"478 107"
 		size		"529 260"
 		origin		"-45 25 0"
+		angles		"160 20 -120"
 		view		aircraft
 	}
 

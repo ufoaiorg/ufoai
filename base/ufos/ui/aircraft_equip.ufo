@@ -71,7 +71,7 @@ window aircraft_equip extends iaircraft
 		model	"*cvar:mn_aircraft_model"
 		pos		"482 106"
 		size	"522 259"
-		angles	"90 0 0"
+		angles	"0 0 180"
 		view	"aircraft_equip"
 	}
 
