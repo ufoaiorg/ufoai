@@ -88,8 +88,6 @@ void Con_ToggleConsole_f (void)
 		Key_SetDest(key_game);
 	} else {
 		Key_SetDest(key_console);
-		/* make sure the menu no more capture inputs */
-		MN_ReleaseInput();
 	}
 }
 

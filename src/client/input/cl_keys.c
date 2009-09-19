@@ -912,6 +912,10 @@ void Key_Init (void)
 void Key_SetDest (int key_dest)
 {
 	cls.keyDest = key_dest;
+	if (cls.keyDest == key_console) {
+		/* make sure the menu no more capture inputs */
+		MN_ReleaseInput();
+	}
 }
 
 /**
