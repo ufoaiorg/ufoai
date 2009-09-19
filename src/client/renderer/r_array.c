@@ -42,7 +42,7 @@ typedef struct r_array_state_s {
 static r_array_state_t r_array_state;
 
 
-/*
+/**
  * @brief This function is consulted to determine whether or not array
  * bindings are up to date.
  * @return Returns a bitmask representing the arrays which should be enabled according

@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define COLORED_TEXT_MASK 128
 #define CON_TEXTSIZE 32768
 #define CONSOLE_CURSOR_CHAR 11
+#define CONSOLE_HISTORY_FILENAME "history"
 
 typedef struct {
 	qboolean initialized;
@@ -124,6 +125,9 @@ void Con_Scroll (int scroll)
 		con.displayLine = 0;
 }
 
+/**
+ * @brief Clear the notify times to ensure that every message will disappear from screen.
+ */
 void Con_ClearNotify (void)
 {
 	int i;
@@ -131,7 +135,6 @@ void Con_ClearNotify (void)
 	for (i = 0; i < NUM_CON_TIMES; i++)
 		con.times[i] = 0;
 }
-
 
 static void Con_MessageModeSay_f (void)
 {
@@ -193,8 +196,6 @@ void Con_CheckResize (void)
 	con.currentLine = con.totalLines - 1;
 	con.displayLine = con.currentLine;
 }
-
-#define CONSOLE_HISTORY_FILENAME "history"
 
 /**
  * @brief Load the console history
