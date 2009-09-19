@@ -144,7 +144,7 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
 		if (parent) {
 			const int parentPos = MN_GetMenuPositionFromStackByName(parent);
 			if (parentPos == -1) {
-				Com_Printf("Didn't find parent menu \"%s\"\n", parent);
+				Com_Printf("Didn't find parent menu \"%s\" for menu push of \"%s\"\n", parent, name);
 				return NULL;
 			}
 			MN_InsertMenuIntoStack(menu, parentPos + 1);
