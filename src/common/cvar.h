@@ -151,3 +151,7 @@ cvar_t *Cvar_FindVar(const char *var_name);
 qboolean Cvar_PendingCvars(int flags);
 
 void Cvar_ClearVars(int flags);
+
+#ifdef DEBUG
+void Cvar_PrintDebugCvars(void);
+#endif

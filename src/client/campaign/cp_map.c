@@ -2490,7 +2490,7 @@ void MAP_InitStartup (void)
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
 	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
 #ifdef DEBUG
-	debug_showInterest = Cvar_Get("debug_showinterest", "0", 0, "Shows the global interest value on geoscape");
+	debug_showInterest = Cvar_Get("debug_showinterest", "0", CVAR_DEVELOPER, "Shows the global interest value on geoscape");
 #endif
 
 	for (i = 0; i < GEOSCAPE_IMAGE_MAX; i++) {

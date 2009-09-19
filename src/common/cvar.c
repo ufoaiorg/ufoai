@@ -940,6 +940,20 @@ void Cvar_FixCheatVars (void)
 	}
 }
 
+#ifdef DEBUG
+void Cvar_PrintDebugCvars (void)
+{
+	const cvar_t *var;
+
+	Com_Printf("Debug cvars:\n");
+	for (var = cvarVars; var; var = var->next) {
+		if ((var->flags & CVAR_DEVELOPER) || !strncmp(var->name, "debug_", 6))
+			Com_Printf(" * %s (%s)\n   %s\n", var->name, var->string, var->description);
+	}
+	Com_Printf("\n");
+}
+#endif
+
 /**
  * @brief Reads in all archived cvars
  * @sa Qcommon_Init

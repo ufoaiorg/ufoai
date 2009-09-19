@@ -1016,6 +1016,32 @@ static void Cmd_Test_f (void)
 }
 #endif
 
+void Cmd_PrintDebugCommands (void)
+{
+	const cmd_function_t *cmd;
+	const char* otherCommands[] = {"mem_stats", "cl_configstrings", "cl_userinfo", "devmap"};
+	int num = lengthof(otherCommands);
+
+	Com_Printf("Debug commands:\n");
+	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
+		if (!strncmp(cmd->name, "debug_", 6))
+			Com_Printf(" * %s\n   %s\n", cmd->name, cmd->description);
+	}
+
+	Com_Printf("Other useful commands:\n");
+	while (num) {
+		const char *desc = Cmd_GetCommandDesc(otherCommands[num - 1]);
+		Com_Printf(" * %s\n   %s\n", otherCommands[num - 1], desc);
+		num--;
+	}
+	Com_Printf(" * sv debug_showall\n"
+			"   make everything visible to everyone\n"
+			" * sv debug_actorinvlist\n"
+			"   Show the whole inv of all actors on the server console\n"
+			);
+	Com_Printf("\n");
+}
+
 void Cmd_Init (void)
 {
 	/* register our commands */

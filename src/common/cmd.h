@@ -71,6 +71,10 @@ void Cbuf_Execute(void);
 void Cbuf_CopyToDefer(void);
 void Cbuf_InsertFromDefer(void);
 
+#ifdef DEBUG
+void Cmd_PrintDebugCommands(void);
+#endif
+
 
 /*=========================================================================== */
 
