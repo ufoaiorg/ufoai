@@ -191,15 +191,15 @@ static qboolean Check_SurfProp (const int flag, const side_t *s)
 	const brush_texture_t *tex = &side_brushtextures[index];
 	switch (flag) {
 	case SURF_NODRAW:
-		return !strcmp(tex->name, "tex_common/nodraw") ? qtrue : qfalse;
+		return !strcmp(tex->name, "tex_common/nodraw");
 	case CONTENTS_LADDER:
-		return !strcmp(tex->name, "tex_common/ladder") ? qtrue : qfalse;
+		return !strcmp(tex->name, "tex_common/ladder");
 	case CONTENTS_WEAPONCLIP:
-		return !strcmp(tex->name, "tex_common/weaponclip") ? qtrue : qfalse;
+		return !strcmp(tex->name, "tex_common/weaponclip");
 	case CONTENTS_ACTORCLIP:
-		return !strcmp(tex->name, "tex_common/actorclip") ? qtrue : qfalse;
+		return !strcmp(tex->name, "tex_common/actorclip");
 	case CONTENTS_ORIGIN:
-		return !strcmp(tex->name, "tex_common/origin") ? qtrue : qfalse;
+		return !strcmp(tex->name, "tex_common/origin");
 	default:
 		return qfalse;
 	}
@@ -1471,60 +1471,57 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 	const char *flagsDescription = NULL;
 
 	/* see discussion at Check_SetNodraw */
-	if (config.fixMap || config.performMapCheck)
-		goto skipflagsetting;
+	if (!config.fixMap && !config.performMapCheck) {
+		if (!strcmp(texname, "tex_common/actorclip")) {
+			side->contentFlags |= CONTENTS_ACTORCLIP;
+			flagsDescription = "CONTENTS_ACTORCLIP";
+		} else if (!strcmp(texname, "tex_common/caulk")) {
+			side->surfaceFlags |= SURF_NODRAW;
+			tex->surfaceFlags |= SURF_NODRAW;
+			flagsDescription = "SURF_NODRAW";
+		} else if (!strcmp(texname, "tex_common/hint")) {
+			side->surfaceFlags |= SURF_HINT;
+			tex->surfaceFlags |= SURF_HINT;
+			flagsDescription = "SURF_HINT";
+		} else if (!strcmp(texname, "tex_common/ladder")) {
+			side->contentFlags |= CONTENTS_LADDER;
+			flagsDescription = "CONTENTS_LADDER";
+		} else if (!strcmp(texname, "tex_common/nodraw")) {
+			/*side->contentFlags |= CONTENTS_SOLID;*/
+			side->surfaceFlags |= SURF_NODRAW;
+			tex->surfaceFlags |= SURF_NODRAW;
+			flagsDescription = "SURF_NODRAW";
+		} else if (!strcmp(texname, "tex_common/trigger")) {
+			side->surfaceFlags |= SURF_NODRAW;
+			tex->surfaceFlags |= SURF_NODRAW;
+			flagsDescription = "SURF_NODRAW";
+		} else if (!strcmp(texname, "tex_common/origin")) {
+			side->contentFlags |= CONTENTS_ORIGIN;
+			flagsDescription = "CONTENTS_ORIGIN";
+		} else if (!strcmp(texname, "tex_common/slick")) {
+			side->contentFlags |= SURF_SLICK;
+			flagsDescription = "SURF_SLICK";
+		} else if (!strcmp(texname, "tex_common/weaponclip")) {
+			side->contentFlags |= CONTENTS_WEAPONCLIP;
+			flagsDescription = "CONTENTS_WEAPONCLIP";
+		}
 
-	if (!strcmp(texname, "tex_common/actorclip")) {
-		side->contentFlags |= CONTENTS_ACTORCLIP;
-		flagsDescription = "CONTENTS_ACTORCLIP";
-	} else if (!strcmp(texname, "tex_common/caulk")) {
-		side->surfaceFlags |= SURF_NODRAW;
-		tex->surfaceFlags |= SURF_NODRAW;
-		flagsDescription = "SURF_NODRAW";
-	} else if (!strcmp(texname, "tex_common/hint")) {
-		side->surfaceFlags |= SURF_HINT;
-		tex->surfaceFlags |= SURF_HINT;
-		flagsDescription = "SURF_HINT";
-	} else if (!strcmp(texname, "tex_common/ladder")) {
-		side->contentFlags |= CONTENTS_LADDER;
-		flagsDescription = "CONTENTS_LADDER";
-	} else if (!strcmp(texname, "tex_common/nodraw")) {
-		/*side->contentFlags |= CONTENTS_SOLID;*/
-		side->surfaceFlags |= SURF_NODRAW;
-		tex->surfaceFlags |= SURF_NODRAW;
-		flagsDescription = "SURF_NODRAW";
-	} else if (!strcmp(texname, "tex_common/trigger")) {
-		side->surfaceFlags |= SURF_NODRAW;
-		tex->surfaceFlags |= SURF_NODRAW;
-		flagsDescription = "SURF_NODRAW";
-	} else if (!strcmp(texname, "tex_common/origin")) {
-		side->contentFlags |= CONTENTS_ORIGIN;
-		flagsDescription = "CONTENTS_ORIGIN";
-	} else if (!strcmp(texname, "tex_common/slick")) {
-		side->contentFlags |= SURF_SLICK;
-		flagsDescription = "SURF_SLICK";
-	} else if (!strcmp(texname, "tex_common/weaponclip")) {
-		side->contentFlags |= CONTENTS_WEAPONCLIP;
-		flagsDescription = "CONTENTS_WEAPONCLIP";
-	}
-
-	if (strstr(texname, "water")) {
+		if (strstr(texname, "water")) {
 #if 0
-		side->surfaceFlags |= SURF_WARP;
-		tex->surfaceFlags |= SURF_WARP;
+			side->surfaceFlags |= SURF_WARP;
+			tex->surfaceFlags |= SURF_WARP;
 #endif
-		side->contentFlags |= CONTENTS_WATER;
-		side->contentFlags |= CONTENTS_PASSABLE;
-		flagsDescription = "CONTENTS_WATER and CONTENTS_PASSABLE";
-	}
+			side->contentFlags |= CONTENTS_WATER;
+			side->contentFlags |= CONTENTS_PASSABLE;
+			flagsDescription = "CONTENTS_WATER and CONTENTS_PASSABLE";
+		}
 
-	/* If in check/fix mode and we have made a change, give output. */
-	if ((side->contentFlags != initCont) || (tex->surfaceFlags != initSurf)) {
-		Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,
-			"%s implied by %s texture has been set\n", flagsDescription ? flagsDescription : "-", texname);
+		/* If in check/fix mode and we have made a change, give output. */
+		if ((side->contentFlags != initCont) || (tex->surfaceFlags != initSurf)) {
+			Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,
+					"%s implied by %s texture has been set\n", flagsDescription ? flagsDescription : "-", texname);
+		}
 	}
-
-	skipflagsetting:
 
 	/* additional test, which does not directly depend on tex. */
 	if (Check_SurfProp(SURF_NODRAW, side) && (tex->surfaceFlags & SURF_PHONG)) {
