@@ -406,6 +406,7 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		break;
 
 	case EA_CALL:
+	case EA_LISTENER:
 		{
 			menuNode_t* callNode = NULL;
 			const value_t* callProperty = NULL;
@@ -629,6 +630,10 @@ static void MN_AddListener_f (void)
 	value = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
 	value->d.terminal.d1.constString = Mem_PoolStrDup(Cmd_Argv(2), mn_sysPool, 0);
 	value->next = NULL;
+	action->type = EA_LISTENER;
+	action->d.nonTerminal.left = value;
+	/** @todo It is a hack, we should remove that */
+	action->d.terminal.d2.data = &function->onClick;
 	action->next = NULL;
 
 	/* insert the action */
@@ -680,12 +685,12 @@ static void MN_RemoveListener_f (void)
 	lastAction = *(menuAction_t**)((char*)node + property->ofs);
 	if (lastAction) {
 		menuAction_t *tmp = NULL;
-		if (lastAction->type == EA_CALL && lastAction->d.terminal.d2.data == data) {
+		if (lastAction->type == EA_LISTENER && lastAction->d.terminal.d2.data == data) {
 			tmp = lastAction;
 			*(menuAction_t**)((char*)node + property->ofs) = lastAction->next;
 		} else {
 			while (lastAction->next) {
-				if (lastAction->next->type == EA_CALL && lastAction->next->d.terminal.d2.data == data)
+				if (lastAction->next->type == EA_LISTENER && lastAction->next->d.terminal.d2.data == data)
 					break;
 				lastAction = lastAction->next;
 			}

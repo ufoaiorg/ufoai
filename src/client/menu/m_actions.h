@@ -50,6 +50,7 @@ typedef enum ea_s {
 	EA_ELIF = EA_ACTION + 6,
 	EA_WHILE = EA_ACTION + 7,
 	EA_DELETE = EA_ACTION + 8,
+	EA_LISTENER = EA_ACTION + 9,
 
 	/* boolean to boolean operators */
 	EA_OPERATOR_BOOLEAN2BOOLEAN = 0x0300,
