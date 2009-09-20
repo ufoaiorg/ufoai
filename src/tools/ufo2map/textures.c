@@ -181,7 +181,7 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 
 	for (i = 0; i < 2; i++) {
 		const vec_t ns = cosv * vecs[i][sv] - sinv * vecs[i][tv];
-		const vec_t nt = sinv * vecs[i][sv] +  cosv * vecs[i][tv];
+		const vec_t nt = sinv * vecs[i][sv] + cosv * vecs[i][tv];
 		vecs[i][sv] = ns;
 		vecs[i][tv] = nt;
 	}

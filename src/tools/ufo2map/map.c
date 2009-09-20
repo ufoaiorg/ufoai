@@ -794,11 +794,11 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		b->contentFlags |= b->original_sides[m].contentFlags;
 
 	/* set DETAIL, TRANSLUCENT contentflags on all faces, if they have been set on any.
-	 * called separately, if in check/fix mode*/
+	 * called separately, if in check/fix mode */
 	if (!checkOrFix)
 		CheckPropagateParserContentFlags(b);
 
-	/* allow detail brushes to be removed  */
+	/* allow detail brushes to be removed */
 	if (config.nodetail && (b->contentFlags & CONTENTS_DETAIL)) {
 		b->numsides = 0;
 		return;

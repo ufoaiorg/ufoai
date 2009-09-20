@@ -130,6 +130,8 @@ static void EmitFace (const face_t *f)
 		curTile->surfedges[curTile->numsurfedges] = e;
 		curTile->numsurfedges++;
 	}
+	for (i = 0; i < LIGHTMAP_MAX; i++)
+		df->lightofs[i] = -1;
 }
 
 /**
@@ -210,7 +212,7 @@ int WriteBSP (node_t *headnode)
 
 	Verb_Printf(VERB_EXTRA, "%5i nodes with faces\n", c_facenodes);
 	Verb_Printf(VERB_EXTRA, "%5i nodes without faces\n", c_nofaces);
-	Verb_Printf(VERB_EXTRA, "%5i faces\n", curTile->numfaces-oldfaces);
+	Verb_Printf(VERB_EXTRA, "%5i faces\n", curTile->numfaces - oldfaces);
 
 	return emittedHeadnode;
 }
