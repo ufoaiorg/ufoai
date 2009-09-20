@@ -62,22 +62,16 @@ static qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 qboolean R_CullBspModel (const entity_t *e)
 {
 	vec3_t mins, maxs;
+	int i;
 
 	/* no surfaces */
 	if (!e->model->bsp.nummodelsurfaces)
 		return qtrue;
 
-	if (VectorNotEmpty(e->angles)) {
-		int i;
-		for (i = 0; i < 3; i++) {
-			mins[i] = e->origin[i] - e->model->radius;
-			maxs[i] = e->origin[i] + e->model->radius;
-		}
-	} else {
-		VectorAdd(e->origin, e->model->mins, mins);
-		VectorAdd(e->origin, e->model->maxs, maxs);
+	for (i = 0; i < 3; i++) {
+		mins[i] = e->origin[i] - e->model->radius;
+		maxs[i] = e->origin[i] + e->model->radius;
 	}
-
 	return R_CullBox(mins, maxs);
 }
 
