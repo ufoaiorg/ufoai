@@ -1,4 +1,4 @@
-UFOAI_VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION\s*\"\(.*\)\"/\1/')
+UFOAI_VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
 RADIANT_VERSION=$(shell grep RADIANT_VERSION src/tools/radiant/include/version.h | sed -e 's/.*RADIANT_VERSION\s*\"\(.*\)\"/\1/')
 
 installer: wininstaller linuxinstaller sourcearchive mappack

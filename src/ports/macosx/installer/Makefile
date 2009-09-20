@@ -106,11 +106,11 @@ copylibs-uforadiant:
 
 copy-package-bundle-ufoai: package-dir-ufoai bundle-ufoai
 	@cp -r UFOAI.app $(UFOAI_PACKAGE_NAME)
-	@rm $(UFOAI_PACKAGE_NAME)/Contents/Info.plist.in
+	@rm $(UFOAI_PACKAGE_NAME)/UFOAI.app/Contents/Info.plist.in
 
 copy-package-bundle-uforadiant: package-dir-uforadiant bundle-uforadiant
 	@cp -r UFORadiant.app $(UFORADIANT_PACKAGE_NAME)
-	@rm $(UFORADIANT_PACKAGE_NAME)/Contents/Info.plist.in
+	@rm $(UFORADIANT_PACKAGE_NAME)/UFORadiant.app/Contents/Info.plist.in
 
 # =======================
 
