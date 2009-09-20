@@ -1,5 +1,5 @@
 UFOAI_VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
-RADIANT_VERSION=$(shell grep RADIANT_VERSION src/tools/radiant/include/version.h | sed -e 's/.*RADIANT_VERSION\s*\"\(.*\)\"/\1/')
+UFORADIANT_VERSION=$(shell grep RADIANT_VERSION src/tools/radiant/include/version.h | sed -e 's/.*RADIANT_VERSION \"\(.*\)\"/\1/')
 
 installer: wininstaller linuxinstaller sourcearchive mappack
 
@@ -30,7 +30,7 @@ macinstaller: lang pk3
 
 USER=tlh2000
 upload-sf:
-	rsync -avP -e ssh uforadiant-$(RADIANT_VERSION)-macosx-$(TARGET_CPU).dmg $(USER)@frs.sourceforge.net:uploads/
+	rsync -avP -e ssh uforadiant-$(UFORADIANT_VERSION)-macosx-$(TARGET_CPU).dmg $(USER)@frs.sourceforge.net:uploads/
 	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-macosx-$(TARGET_CPU).dmg $(USER)@frs.sourceforge.net:uploads/
 	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-source.tar.bz2 $(USER)@frs.sourceforge.net:uploads/
 	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-linux.run $(USER)@frs.sourceforge.net:uploads/
@@ -39,11 +39,11 @@ upload-sf:
 
 upload-mirror:
 	scp src/ports/macosx/installer/ufoai-$(UFOAI_VERSION)-macosx-$(TARGET_CPU).dmg ufo:~/public_html/download
-	scp src/ports/macosx/installer/uforadiant-$(RADIANT_VERSION)-macosx-$(TARGET_CPU).dmg ufo:~/public_html/download
+	scp src/ports/macosx/installer/uforadiant-$(UFORADIANT_VERSION)-macosx-$(TARGET_CPU).dmg ufo:~/public_html/download
 	scp src/ports/linux/installer/ufoai-$(UFOAI_VERSION)-linux.run ufo:~/public_html/download
 	scp src/ports/windows/ufoai-$(UFOAI_VERSION)-win32.exe src/ports/windows/ufoai-$(UFOAI_VERSION)-win32.md5 ufo:~/public_html/download
 	scp src/ports/macosx/installer/ufoai-$(UFOAI_VERSION)-macosx-$(TARGET_CPU).dmg mirror:~/public_html
-	scp src/ports/macosx/installer/uforadiant-$(RADIANT_VERSION)-macosx-$(TARGET_CPU).dmg mirror:~/public_html
+	scp src/ports/macosx/installer/uforadiant-$(UFORADIANT_VERSION)-macosx-$(TARGET_CPU).dmg mirror:~/public_html
 	scp src/ports/linux/installer/ufoai-$(UFOAI_VERSION)-linux.run mirror:~/public_html
 	scp src/ports/windows/ufoai-$(UFOAI_VERSION)-win32.exe src/ports/windows/ufoai-$(UFOAI_VERSION)-win32.md5 mirror:~/public_html
 
