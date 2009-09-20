@@ -252,6 +252,7 @@ void G_SendInventory (unsigned int playerMask, edict_t *ent)
 	for (j = 0; j < gi.csi->numIDs; j++)
 		for (ic = ent->i.c[j]; ic; ic = ic->next) {
 			/* send a single item */
+			assert(ic->item.t);
 			G_WriteItem(ic->item, INVDEF(j), ic->x, ic->y);
 		}
 }

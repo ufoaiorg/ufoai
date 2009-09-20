@@ -342,6 +342,7 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
 			gi.WriteShort(floor->number);
 			gi.WriteShort(INV_INVENTORY_BYTES);
+			assert(item.t);
 			G_WriteItem(item, to, tx, ty);
 		}
 	} else {
@@ -349,6 +350,7 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_ADD);
 		gi.WriteShort(entNum);
 		gi.WriteShort(INV_INVENTORY_BYTES);
+		assert(item.t);
 		G_WriteItem(item, to, tx, ty);
 	}
 
@@ -377,6 +379,7 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 			gi.AddEvent(mask, EV_INV_ADD);
 			gi.WriteShort(entNum);
 			gi.WriteShort(INV_INVENTORY_BYTES);
+			assert(item.t);
 			G_WriteItem(item, to, tx, ty);
 		}
 	}
