@@ -40,7 +40,7 @@ winding_t *ReverseWinding(const winding_t *w);
 winding_t *BaseWindingForPlane(const vec3_t normal, const vec_t dist);
 void RemoveColinearPoints(winding_t *w);
 void FreeWinding(winding_t *w);
-void WindingBounds(winding_t *w, vec3_t mins, vec3_t maxs);
+void WindingBounds(const winding_t *w, vec3_t mins, vec3_t maxs);
 
 /* frees the original if clipped */
 void ChopWindingInPlace(winding_t **w, const vec3_t normal, const vec_t dist, const vec_t epsilon);

@@ -103,7 +103,7 @@ vec_t WindingArea (const winding_t *w)
 	return total * 0.5f;
 }
 
-void WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs)
+void WindingBounds (const winding_t *w, vec3_t mins, vec3_t maxs)
 {
 	int i, j;
 
@@ -112,7 +112,7 @@ void WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs)
 
 	for (i = 0; i < w->numpoints; i++) {
 		for (j = 0; j < 3; j++) {
-			vec_t v = w->p[i][j];
+			const vec_t v = w->p[i][j];
 			if (v < mins[j])
 				mins[j] = v;
 			if (v > maxs[j])
@@ -336,10 +336,6 @@ void ChopWindingInPlace (winding_t **inout, const vec3_t normal, const vec_t dis
 	int maxpts;
 
 	in = *inout;
-
-	if (!in)
-		return;
-
 	VectorClear(counts);
 
 	/* determine sides for each point */
