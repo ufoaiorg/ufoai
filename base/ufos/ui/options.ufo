@@ -1,4 +1,3 @@
-// ==================
 // OPTIONS MENU
 // ==================
 
@@ -103,13 +102,6 @@ window options
 		onClick		{ cmd "mn_pop;" }
 	}
 
-	func onInit
-	{
-		call *node:root.hidepanels
-		cmd "mn_init_keylist;"
-		*(panel)options_input@invis = false
-	}
-
 	// ==================
 	// VIDEO OPTIONS MENU
 	// ==================
@@ -135,16 +127,6 @@ window options
 			string		"_Resolution:"
 			pos			"85 140"
 			size		"240 20"
-		}
-
-		pic res_test_pic
-		{
-			image		ui/buttons_small
-			pos			"335 140"
-			texl		"32 0"
-			texh		"47 16"
-			mousefx		true
-			onClick		{ cmd "mn_push popup_maintain_resolution;" }
 		}
 
 		string texres_str
@@ -514,6 +496,56 @@ window options
 			option extrem_value {
 				label	"_Extreme"
 				value	"8192"
+			}
+		}
+
+		pic res_test_pic
+		{
+			image		ui/buttons_small
+			pos			"488 144"
+			texl		"32 0"
+			texh		"47 16"
+			mousefx		true
+			onClick		{ cmd "mn_push popup_maintain_resolution;" }
+		}
+
+		selectbox select_ratio
+		{
+			cvar		*cvar:mn_vidratio
+			pos			"255 142"
+			size		"100 20"
+			image		"ui/selectbox_green"
+			color		"0.6 0.6 0.6 0.3"
+			option all {
+				label	"All ratios"
+				value	"all"
+			}
+			option 5_4 {
+				label	"5:4"
+				value	"1.25"
+			}
+			option 4_3 {
+				label	"4:3"
+				value	"1.3333333"
+			}
+			option 3_2 {
+				label	"3:2"
+				value	"1.5"
+			}
+			option 16_10 {
+				label	"16:10"
+				value	"1.6"
+			}
+			option 16_9 {
+				label	"16:9"
+				value	"1.7777777"
+			}
+			option custom {
+				label	"Others"
+				value	"custom"
+			}
+			onChange {
+				cmd "cl_setratiofilter <cvar:mn_vidratio>"
 			}
 		}
 
@@ -1196,6 +1228,15 @@ window options
 			size		"256 20"
 			color		"0.6 0.6 0.6 0.3"
 		}
+	}
+
+	func onInit
+	{
+		*cvar:mn_vidratio = "all"
+		cmd "cl_setratiofilter <cvar:mn_vidratio>"
+		call *node:root.hidepanels
+		cmd "mn_init_keylist;"
+		*(panel)options_input@invis = false
 	}
 
 }

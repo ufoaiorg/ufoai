@@ -623,6 +623,54 @@ static void CL_PrecacheModels (void)
 	}
 }
 
+static menuOption_t* vidModesOptions;
+
+static void CL_SetRatioFilter_f (void)
+{
+	menuOption_t* option = vidModesOptions;
+	float requestedRation = atof(Cmd_Argv(1));
+	qboolean all = qfalse;
+	qboolean custom = qfalse;
+	const float delta = 0.01;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <all|floatration>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (!strcmp(Cmd_Argv(1), "all"))
+		all = qtrue;
+	else if (!strcmp(Cmd_Argv(1), "custom"))
+		custom = qtrue;
+	else
+		requestedRation = atof(Cmd_Argv(1));
+
+	while (option) {
+		int width;
+		int height;
+		float ratio;
+		qboolean visible = qfalse;
+		int result = sscanf(option->label, "%i x %i", &width, &height);
+		if (result != 2)
+			Com_Error(ERR_FATAL, "CL_SetRatioFilter_f: Impossible to decode resolution label.\n");
+		ratio = (float)width / (float)height;
+
+		if (all)
+			visible = qtrue;
+		else if (custom)
+			/** @todo We should check the ratio list and remove matched resolutions, here it is a hack */
+			visible = ratio > 2 || (ratio > 1.7 && ratio < 1.76);
+		else
+			visible = ratio - delta < requestedRation && ratio + delta > requestedRation;
+
+		option->invis = !visible;
+		option = option->next;
+	}
+
+	/* the content change */
+	MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, vidModesOptions);
+}
+
 /**
  * @brief Init function for clients - called after menu was initialized and ufo-scripts were parsed
  * @sa Qcommon_Init
@@ -630,7 +678,6 @@ static void CL_PrecacheModels (void)
 void CL_InitAfter (void)
 {
 	int i;
-	menuOption_t* vidModesOptions;
 
 	/* start the music track already while precaching data */
 	S_Frame();
@@ -659,7 +706,7 @@ void CL_InitAfter (void)
 	for (i = 0; i < VID_GetModeNums(); i++) {
 		menuOption_t *option = &vidModesOptions[i];
 		MN_InitOption(option, "",
-			va("%i:%i", vid_modes[i].width, vid_modes[i].height),
+			va("%i x %i", vid_modes[i].width, vid_modes[i].height),
 			va("%i", vid_modes[i].mode));
 		if (i > 0)
 			(&vidModesOptions[i - 1])->next = option;
@@ -846,6 +893,8 @@ static void CL_InitLocal (void)
 	/* register our commands */
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
 	Cmd_AddCommand("targetalign", CL_ActorTargetAlign_f, _("Target your shot to the ground"));
+
+	Cmd_AddCommand("cl_setratiofilter", CL_SetRatioFilter_f, "Filter the resolution screen list with a ration");
 
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
 	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
