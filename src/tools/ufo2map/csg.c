@@ -315,7 +315,6 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 	for (i = startbrush; i < endbrush; i++) {
 		mapbrush_t *mb = &mapbrushes[i];
 
-
 		if (!IsInLevel(mb->contentFlags, level)){
 			Verb_Printf(VERB_DUMP, "Rejected brush %i: wrong level.\n", i);
 			continue;

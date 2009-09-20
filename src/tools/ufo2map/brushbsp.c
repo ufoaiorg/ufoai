@@ -529,7 +529,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 	int i, j, pass, numpasses, pnum;
 	int front, back, both, facing, splits;
 	int bsplits, bestsplits, epsilonbrush;
-	qboolean hintsplit = qfalse;
+	qboolean hintsplit;
 
 	bestside = NULL;
 	bestvalue = -99999;
@@ -560,6 +560,8 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 					continue;	/* already a node splitter */
 				if (side->tested)
 					continue;	/* we already have metrics for this plane */
+				if (side->surfaceFlags & SURF_SKIP)
+					continue;	/* skip surfaces are never chosen */
 				if (side->visible ^ (pass < 2))
 					continue;	/* only check visible faces on first pass */
 
@@ -577,6 +579,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				facing = 0;
 				splits = 0;
 				epsilonbrush = 0;
+				hintsplit = qfalse;
 
 				for (test = brushes; test; test = test->next) {
 					const int s = TestBrushToPlanenum(test, pnum, &bsplits, &hintsplit, &epsilonbrush);
@@ -819,16 +822,14 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 			cs->winding = midwinding;
 	}
 
-	{
-		for (i = 0; i < 2; i++) {
-			const vec_t v1 = BrushVolume(b[i]);
-			if (v1 < 1.0) {
-				FreeBrush(b[i]);
-				b[i] = NULL;
-				/** @todo Print brush and entnum either of the brush that was splitted
-				 * or the plane that was used as splitplane */
-				Verb_Printf(VERB_EXTRA, "tiny volume after clip\n");
-			}
+	for (i = 0; i < 2; i++) {
+		const vec_t v1 = BrushVolume(b[i]);
+		if (v1 < 1.0) {
+			FreeBrush(b[i]);
+			b[i] = NULL;
+			/** @todo Print brush and entnum either of the brush that was splitted
+			 * or the plane that was used as splitplane */
+			Verb_Printf(VERB_EXTRA, "tiny volume after clip\n");
 		}
 	}
 
@@ -887,7 +888,7 @@ static void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **fron
 			*back = newbrush;
 			continue;
 		}
-	Verb_Printf(VERB_DUMP, "SplitBrushList: Brush %i fell off the map.\n", newbrush->original->brushnum);
+		Verb_Printf(VERB_DUMP, "SplitBrushList: Brush %i fell off the map.\n", newbrush->original->brushnum);
 	}
 }
 

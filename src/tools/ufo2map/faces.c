@@ -685,9 +685,8 @@ static int c_nodefaces;
 static face_t *FaceFromPortal (portal_t *p, int pside)
 {
 	face_t *f;
-	side_t *side;
+	side_t *side = p->side;
 
-	side = p->side;
 	/* portal does not bridge different visible contents */
 	if (!side)
 		return NULL;
