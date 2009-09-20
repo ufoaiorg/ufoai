@@ -123,6 +123,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 	vec2_t nodepos;
 	const char* imageName;
 	const image_t *image;
+	static vec4_t invisColor = {1.0, 1.0, 1.0, 0.7};
 
 	if (!node->cvar)
 		return;
@@ -148,15 +149,22 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 	/* right border (arrow) */
 	MN_DrawNormImage(nodepos[0] + node->size[0] - SELECTBOX_RIGHT_WIDTH, nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
 		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, image);
+
 	/* draw the label for the current selected option */
 	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
-		if (option->invis)
+
+		if (strcmp(option->value, ref) != 0)
 			continue;
-		if (!strcmp(option->value, ref)) {
-			MN_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
-				selBoxX, selBoxY, node->size[0] - 4, 0,
-				0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
-		}
+
+		if (option->invis)
+			R_Color(invisColor);
+
+		MN_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
+			selBoxX, selBoxY, node->size[0] - 4, 0,
+			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+
+		R_Color(NULL);
+		break;
 	}
 
 	/* must we draw the drop-down list */
