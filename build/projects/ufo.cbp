@@ -203,7 +203,6 @@
 		<Unit filename="..\..\base\ufos\ui\basesummary.ufo" />
 		<Unit filename="..\..\base\ufos\ui\buildings.ufo" />
 		<Unit filename="..\..\base\ufos\ui\campaign.ufo" />
-		<Unit filename="..\..\base\ufos\ui\debug.ufo" />
 		<Unit filename="..\..\base\ufos\ui\equipment.ufo" />
 		<Unit filename="..\..\base\ufos\ui\geoscape.ufo" />
 		<Unit filename="..\..\base\ufos\ui\hire.ufo" />
@@ -215,7 +214,6 @@
 		<Unit filename="..\..\base\ufos\ui\main.ufo" />
 		<Unit filename="..\..\base\ufos\ui\market.ufo" />
 		<Unit filename="..\..\base\ufos\ui\material_editor.ufo" />
-		<Unit filename="..\..\base\ufos\ui\menu_irc.ufo" />
 		<Unit filename="..\..\base\ufos\ui\messageoptions.ufo" />
 		<Unit filename="..\..\base\ufos\ui\modeltest.ufo" />
 		<Unit filename="..\..\base\ufos\ui\multiplayer.ufo" />
@@ -255,6 +253,174 @@
 		<Unit filename="..\tools.mk" />
 		<Unit filename="..\various.mk" />
 		<Unit filename="..\..\configure.ac" />
+		<Unit filename="..\..\src\client\battlescape\cl_actor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\cl_actor.h" />
+		<Unit filename="..\..\src\client\battlescape\cl_hud.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\cl_hud.h" />
+		<Unit filename="..\..\src\client\battlescape\cl_localentity.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\cl_localentity.h" />
+		<Unit filename="..\..\src\client\battlescape\cl_parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\cl_parse.h" />
+		<Unit filename="..\..\src\client\battlescape\cl_particle.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\cl_particle.h" />
+		<Unit filename="..\..\src\client\battlescape\cl_view.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\cl_view.h" />
+		<Unit filename="..\..\src\client\battlescape\events\e_main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\e_main.h" />
+		<Unit filename="..\..\src\client\battlescape\events\e_parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\e_parse.h" />
+		<Unit filename="..\..\src\client\battlescape\events\e_time.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\e_time.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actoradd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actoradd.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorappear.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorappear.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordooraction.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordooraction.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actormove.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actormove.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorresetclientaction.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorresetclientaction.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorshoot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorshoot.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorshoothidden.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorshoothidden.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstartshoot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstartshoot.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstatechange.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstatechange.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstats.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstats.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorthrow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorthrow.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorturn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorturn.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invadd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invadd.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invammo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invammo.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invcheckhands.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invcheckhands.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invdel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invdel.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invreload.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invreload.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_centerview.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_centerview.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_doendround.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_doendround.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_endroundannounce.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_endroundannounce.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_reset.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_reset.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_results.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_results.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_startgame.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_startgame.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_startgamedone.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_startgamedone.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_doorclose.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_doorclose.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_dooropen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_dooropen.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_entappear.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_entappear.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_entperish.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_entperish.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_explode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_explode.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particleappear.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particleappear.h" />
 		<Unit filename="..\..\src\client\campaign\cp_aircraft.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -483,10 +649,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_xvi.h" />
-		<Unit filename="..\..\src\client\battlescape\cl_actor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\cl_actor.h" />
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -523,14 +685,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_http.h" />
-		<Unit filename="..\..\src\client\battlescape\cl_hud.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\cl_hud.h" />
-		<Unit filename="..\..\src\client\input\cl_input.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\input\cl_input.h" />
 		<Unit filename="..\..\src\client\cl_inventory.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -543,22 +697,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_irc.h" />
-		<Unit filename="..\..\src\client\input\cl_joystick.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\input\cl_joystick.h" />
-		<Unit filename="..\..\src\client\input\cl_keys.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\input\cl_keys.h" />
 		<Unit filename="..\..\src\client\cl_language.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_language.h" />
-		<Unit filename="..\..\src\client\battlescape\cl_localentity.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\cl_localentity.h" />
 		<Unit filename="..\..\src\client\cl_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -566,14 +708,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_menu.h" />
-		<Unit filename="..\..\src\client\battlescape\cl_parse.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\cl_parse.h" />
-		<Unit filename="..\..\src\client\battlescape\cl_particle.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\cl_particle.h" />
 		<Unit filename="..\..\src\client\cl_renderer.h" />
 		<Unit filename="..\..\src\client\cl_screen.c">
 			<Option compilerVar="CC" />
@@ -603,155 +737,19 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_video.h" />
-		<Unit filename="..\..\src\client\battlescape\cl_view.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\cl_view.h" />
 		<Unit filename="..\..\src\client\client.h" />
-		<Unit filename="..\..\src\client\battlescape\events\e_main.c">
+		<Unit filename="..\..\src\client\input\cl_input.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\e_main.h" />
-		<Unit filename="..\..\src\client\battlescape\events\e_parse.c">
+		<Unit filename="..\..\src\client\input\cl_input.h" />
+		<Unit filename="..\..\src\client\input\cl_joystick.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\e_parse.h" />
-		<Unit filename="..\..\src\client\battlescape\events\e_time.c">
+		<Unit filename="..\..\src\client\input\cl_joystick.h" />
+		<Unit filename="..\..\src\client\input\cl_keys.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\e_time.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actoradd.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actoradd.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorappear.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorappear.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordooraction.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordooraction.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actormove.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actormove.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorresetclientaction.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorresetclientaction.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorshoot.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorshoot.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorshoothidden.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorshoothidden.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstartshoot.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstartshoot.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstatechange.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstatechange.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstats.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstats.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorthrow.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorthrow.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorturn.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorturn.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invadd.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invadd.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invammo.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invammo.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invcheckhands.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invcheckhands.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invdel.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invdel.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invreload.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invreload.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_centerview.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_centerview.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_doendround.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_doendround.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_endroundannounce.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_endroundannounce.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_reset.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_reset.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_results.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_results.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_startgame.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_startgame.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_startgamedone.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_startgamedone.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_doorclose.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_doorclose.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_dooropen.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_dooropen.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_entappear.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_entappear.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_entperish.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_entperish.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_explode.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_explode.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particleappear.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particleappear.h" />
+		<Unit filename="..\..\src\client\input\cl_keys.h" />
 		<Unit filename="..\..\src\client\menu\m_actions.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1301,10 +1299,10 @@
 		<Unit filename="..\..\src\server\sv_init.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\server\sv_rma.c">
+		<Unit filename="..\..\src\server\sv_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\server\sv_main.c">
+		<Unit filename="..\..\src\server\sv_rma.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_send.c">
