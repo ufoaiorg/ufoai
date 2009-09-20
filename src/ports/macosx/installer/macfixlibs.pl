@@ -170,7 +170,7 @@ while ( my ($x,$y) = each %alllibs ) {
 
 ## and, finally, change for app(s) itself
 foreach my $app (@apps) {
-	print "Finalizing $app...";
+	print "Finalizing $app...\n";
 	$binpath = "$appdir/Contents/MacOS/$app";
 	@a = findlibs $binpath;
 	foreach my $i (@a) {

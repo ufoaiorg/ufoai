@@ -5,14 +5,11 @@ EXT=pk3
 ROOTDIR=../../../..
 #relative from root dir
 INSTDIR=src/ports/macosx/installer/
-#get the version of ufo
-VERSION_UC=$(shell grep UFO_VERSION $(ROOTDIR)/src/common/common.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/' | sed -e 's/\"//g')
-VERSION_LC=$(shell echo $(VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
-RADIANT_VERSION_UC=1.5
-RADIANT_VERSION_LC=$(shell echo $(RADIANT_VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
+UFOAI_VERSION ?= 0.0
+UFORADIANT_VERSION ?= 0.0
 
-UFOAI_PACKAGE_NAME=ufoai-$(VERSION_LC)-macosx-$(TARGET_CPU)
-UFORADIANT_PACKAGE_NAME=uforadiant-$(RADIANT_VERSION_LC)-macosx-$(TARGET_CPU)
+UFOAI_PACKAGE_NAME=ufoai-$(UFOAI_VERSION)-macosx-$(TARGET_CPU)
+UFORADIANT_PACKAGE_NAME=uforadiant-$(UFORADIANT_VERSION)-macosx-$(TARGET_CPU)
 
 BINARIES = \
 	$(ROOTDIR)/ufo \
@@ -42,7 +39,7 @@ $(BASE_PK3) :
 	$(MAKE) -C $(ROOTDIR) $(addprefix base/,$(notdir $@))
 
 $(BUNDLE_PK3) : UFOAI.app/base/%.pk3 : $(ROOTDIR)/base/%.pk3
-	cp -v $< $@
+	cp $< $@
 
 # =======================
 
@@ -57,10 +54,10 @@ package-dir-uforadiant:
 # =======================
 
 updateversion-ufoai:
-	@sed 's/@VERSION@/$(VERSION_UC)/g' UFOAI.app/Contents/Info.plist.in > UFOAI.app/Contents/Info.plist
+	@sed 's/@UFOAI_VERSION@/$(UFOAI_VERSION)/g' UFOAI.app/Contents/Info.plist.in > UFOAI.app/Contents/Info.plist
 
 updateversion-uforadiant:
-	@sed 's/@RADIANT_VERSION@/$(RADIANT_VERSION_UC)/g' UFORadiant.app/Contents/Info.plist.in > UFORadiant.app/Contents/Info.plist
+	@sed 's/@UFORADIANT_VERSION@/$(UFORADIANT_VERSION)/g' UFORadiant.app/Contents/Info.plist.in > UFORadiant.app/Contents/Info.plist
 
 # =======================
 
@@ -75,10 +72,13 @@ copybinaries-uforadiant: bundle-dirs-uforadiant
 
 copydata-ufoai: bundle-dirs-ufoai $(BUNDLE_PK3)
 	@mkdir -p UFOAI.app/base/i18n
+	@cp -r $(ROOTDIR)/base/i18n/[^.]* UFOAI.app/base/i18n
 
 copydata-uforadiant:
-	@cp -r $(ROOTDIR)/radiant/* UFORadiant.app
-	@cp -r $(ROOTDIR)/base/i18n/[^.]* UFOAI.app/base/i18n
+	@svn export --force $(ROOTDIR)/radiant UFORadiant.app
+	@cp -r $(ROOTDIR)/radiant/i18n/[^.]* UFORadiant.app/i18n
+	@cp -rf $(ROOTDIR)/radiant/modules/[^.]*.dylib UFORadiant.app/modules
+	@cp -rf $(ROOTDIR)/radiant/plugins/[^.]*.dylib UFORadiant.app/plugins
 
 # =======================
 
@@ -88,6 +88,9 @@ copynotes-ufoai: package-dir-ufoai
 	@cp $(ROOTDIR)/COPYING $(UFOAI_PACKAGE_NAME)
 
 copynotes-uforadiant: package-dir-uforadiant
+	@cp $(ROOTDIR)/src/tools/radiant/GPL $(UFORADIANT_PACKAGE_NAME)
+	@cp $(ROOTDIR)/src/tools/radiant/LGPL $(UFORADIANT_PACKAGE_NAME)
+	@cp $(ROOTDIR)/src/tools/radiant/LICENSE $(UFORADIANT_PACKAGE_NAME)
 
 # =======================
 
@@ -103,17 +106,19 @@ copylibs-uforadiant:
 
 copy-package-bundle-ufoai: package-dir-ufoai bundle-ufoai
 	@cp -r UFOAI.app $(UFOAI_PACKAGE_NAME)
+	@rm $(UFOAI_PACKAGE_NAME)/Contents/Info.plist.in
 
 copy-package-bundle-uforadiant: package-dir-uforadiant bundle-uforadiant
 	@cp -r UFORadiant.app $(UFORADIANT_PACKAGE_NAME)
+	@rm $(UFORADIANT_PACKAGE_NAME)/Contents/Info.plist.in
 
 # =======================
 
 strip-dev-files-ufoai: copy-package-bundle-ufoai
-	@find -d $(UFOAI_PACKAGE_NAME) -name .svn -exec rm -rf {} \;
+	@find $(UFOAI_PACKAGE_NAME) -type d -print | grep '.*svn$$' | xargs rm -rf
 
 strip-dev-files-uforadiant: copy-package-bundle-uforadiant
-	@find -d $(UFORADIANT_PACKAGE_NAME) -name .svn -exec rm -rf {} \;
+	@find $(UFORADIANT_PACKAGE_NAME) -type d -print | grep '.*svn$$' | xargs rm -rf
 
 # =======================
 
