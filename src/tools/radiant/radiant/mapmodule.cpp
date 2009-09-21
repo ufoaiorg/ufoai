@@ -33,8 +33,8 @@
 
 #include "modulesystem/singletonmodule.h"
 
-#include "parse.h"
-#include "write.h"
+#include "map/parse.h"
+#include "map/write.h"
 
 class MapDependencies: public GlobalRadiantModuleRef,
 		public GlobalBrushModuleRef,
@@ -92,11 +92,5 @@ class MapUFOAPI: public TypeSystemRef, public MapFormat, public PrimitiveParser
 
 typedef SingletonModule<MapUFOAPI, MapDependencies> MapUFOModule;
 
-MapUFOModule g_MapUFOModule;
-
-extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules (ModuleServer& server)
-{
-	initialiseModule(server);
-
-	g_MapUFOModule.selfRegister();
-}
+typedef Static<MapUFOModule> StaticMapModule;
+StaticRegisterModule staticRegisterMap(StaticMapModule::instance());
