@@ -2707,6 +2707,18 @@ void CL_DebugPath_f (void)
 	CL_DebugPathDisplay(actorSize, x, y, z);
 
 #if 0
+	pos3_t c1;
+	pos3_t c2;
+	c1[0] = 122;
+	c1[1] = 132;
+	c1[2] = 0;
+	c2[0] = 129;
+	c2[1] = 136;
+	c2[2] = 0;
+	Grid_RecalcBoxRouting(clMap, c1, c2);
+	Com_Printf("RecalcBoxRouting done.\n");
+#endif
+#if 0
 	Com_Printf("performing RT_UpdateConnection() in dir: %i\n", dir);
 	RT_UpdateConnectionColumn(clMap, actorSize, x, y, dir);
 	CL_DebugPathDisplay(actorSize, x, y, z);

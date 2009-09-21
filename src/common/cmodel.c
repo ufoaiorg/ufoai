@@ -2280,11 +2280,9 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 		for (y = minY; y < maxY; y++) {
 			for (x = minX; x < maxX; x++) {
 				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-					/** @note This update MUST go from the bottom (0) to the top (7) of the model.
-					 * RT_UpdateConnection expects it and breaks otherwise.
-					 * @note The new version of RT_UpdateConnection is bidirectional, so we can
+					/** @note The new version of RT_UpdateConnectionColumn can work bidirectional, so we can
 					 * trace every other dir, unless we are on the edge. */
-					if ((dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
+					if (RT_IS_BIDIRECTIONAL && (dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
 						continue;
 					RT_UpdateConnectionColumn(map, actorSize, x, y, dir);
 				}
