@@ -298,8 +298,6 @@ class CLoadPrefabSubdir
 				std::string subPath = m_subpath + "/" + name;
 				Directory_forEach(fullpath, CLoadPrefabSubdir(m_path, subPath, &subIter));
 				Directory_forEach(fullpath, MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab(subPath, &subIter)));
-			} else {
-				g_debug("ignoring %s as directory\n", name.c_str());
 			}
 		}
 };
