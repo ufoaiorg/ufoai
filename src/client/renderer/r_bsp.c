@@ -68,10 +68,16 @@ qboolean R_CullBspModel (const entity_t *e)
 	if (!e->model->bsp.nummodelsurfaces)
 		return qtrue;
 
-	for (i = 0; i < 3; i++) {
-		mins[i] = e->origin[i] - e->model->radius;
-		maxs[i] = e->origin[i] + e->model->radius;
+	if (e->isOriginBrushModel) {
+		for (i = 0; i < 3; i++) {
+			mins[i] = e->origin[i] - e->model->radius;
+			maxs[i] = e->origin[i] + e->model->radius;
+		}
+	} else {
+		VectorAdd(e->origin, e->model->mins, mins);
+		VectorAdd(e->origin, e->model->maxs, maxs);
 	}
+
 	return R_CullBox(mins, maxs);
 }
 

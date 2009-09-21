@@ -1088,6 +1088,18 @@ le_t *LE_Find (int type, pos3_t pos)
 #define ModelOffset(i, target) (target[0]=(i-1)*(UNIT_SIZE+BOX_DELTA_WIDTH)/2, target[1]=(i-1)*(UNIT_SIZE+BOX_DELTA_LENGTH)/2, target[2]=0)
 
 /**
+ * Origin brush entities are bmodel entities that have their mins/maxs relative to the world origin.
+ * The origin vector of the entity will be used to calculate e.g. the culling (and not the mins/maxs like
+ * for other entities).
+ * @param le The local entity to check
+ * @return @c true if the given local entity is a func_door or func_rotating
+ */
+static inline qboolean LE_IsOriginBrush (const le_t *const le)
+{
+	return (le->type == ET_DOOR || le->type == ET_ROTATING);
+}
+
+/**
  * @sa V_RenderView
  * @sa CL_AddUGV
  * @sa CL_AddActor
@@ -1135,7 +1147,8 @@ void LE_AddToScene (void)
 				break;
 			}
 
-			if (le->type == ET_DOOR || le->type == ET_ROTATING) {
+			if (LE_IsOriginBrush(le)) {
+				ent.isOriginBrushModel = qtrue;
 				VectorCopy(le->angles, ent.angles);
 				VectorCopy(le->origin, ent.origin);
 				VectorCopy(le->origin, ent.oldorigin);

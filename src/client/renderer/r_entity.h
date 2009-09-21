@@ -79,6 +79,8 @@ typedef struct entity_s {
 	int state;					/**< same state as the le->state */
 	int flags;
 
+	qboolean isOriginBrushModel;	/**< true for bmodels that have an origin set */
+
 	animState_t as;
 
 	transform_t transform;
