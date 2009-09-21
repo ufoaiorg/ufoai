@@ -438,7 +438,7 @@ static void R_InitWorldProgram (void)
 
 	R_ProgramParameter1f("BUMP", 1.0);
 	R_ProgramParameter1f("PARALLAX", 1.0);
-	R_ProgramParameter1f("HARDNESS", 1.0);
+	R_ProgramParameter1f("HARDNESS", 0.2);
 	R_ProgramParameter1f("SPECULAR", 1.0);
 }
 
