@@ -1236,7 +1236,7 @@ static trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const 
 		 * are bitmasks of game levels 1-8.  0 is a special case repeat of 255.
 		 * However a levelmask including 0x100 is usually included so the CLIP levels are
 		 * examined. */
-		if (h->level <= LEVEL_LASTVISIBLE && levelmask && !(h->level & levelmask))
+		if (h->level && h->level <= LEVEL_LASTVISIBLE && levelmask && !(h->level & levelmask))
 			continue;
 
 		assert(h->cnode < myTile->numnodes + 6); /* +6 => bbox */
