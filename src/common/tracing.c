@@ -285,11 +285,14 @@ static int TR_TestLine_r (TR_TILE_TYPE *tile, int node, const vec3_t start, cons
  */
 static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, const int levelmask)
 {
+#ifdef COMPILE_MAP
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
+#endif
 	int i;
 
 	/* loop over all theads */
 	for (i = 0; i < tile->numtheads; i++) {
+#ifdef COMPILE_MAP
 		const int level = tile->theadlevel[i];
 		if (level && corelevels && !(level & levelmask))
 			continue;
@@ -297,6 +300,7 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
 			continue;
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
+#endif
 		if (TR_TestLine_r(tile, tile->thead[i], start, stop))
 			return qtrue;
 	}
@@ -305,7 +309,7 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
 
 #ifdef COMPILE_MAP
 /**
- * @brief Checks traces against a single-tile map, optimized for ufo2map
+ * @brief Checks traces against a single-tile map, optimized for ufo2map. This trace is only for visible levels.
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @sa TR_TestLine
@@ -457,18 +461,22 @@ static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int node, const vec3_t start, 
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[out] end The position where the trace hits a object or the stop position if nothing is in the line.
+ * @param[in] levelmask The bitmask of the levels (1<<[0-7]) to trace for
  * @sa TR_TestLineDM
  * @sa CL_ActorMouseTrace
  * @return qfalse if no connection between start and stop - 1 otherwise
  */
 static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
 {
+#ifdef COMPILE_MAP
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
+#endif
 	int i;
 
 	VectorCopy(stop, end);
 
 	for (i = 0; i < tile->numtheads; i++) {
+#ifdef COMPILE_MAP
 		const int level = tile->theadlevel[i];
 		if (level && corelevels && !(level & levelmask))
 			continue;
@@ -476,6 +484,7 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
 			continue;
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
+#endif
 		if (TR_TestLineDist_r(tile, tile->thead[i], start, stop))
 			if (VectorNearer(tr_end, end, start))
 				VectorCopy(tr_end, end);
@@ -1087,7 +1096,7 @@ static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t
 
 		VectorAdd(astart, amaxs, traceData.absmaxs);
 		VectorAdd(astart, amins, traceData.absmins);
-		/* Rmoved because if creates a buffer- is this needed?
+		/* Removed because if creates a buffer- is this needed?
 		for (i = 0; i < 3; i++) {
 			/ * expand the box by 1 * /
 			traceData.absmins[i] -= 1;
@@ -1218,18 +1227,16 @@ static trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const 
 	cBspHead_t *h;
 
 	memset(&tr, 0, sizeof(tr));
+	/* ensure that the first trace is set in every case */
 	tr.fraction = 2.0f;
 
 	/* trace against all loaded map tiles */
 	for (i = 0, h = myTile->cheads; i < myTile->numcheads; i++, h++) {
-		/** @todo Is this levelmask supposed to limit by game level (1-8)
-		 *  or map level (0-LEVEL_ACTORCLIP)?
-		 * @brief This code uses levelmask to limit by maplevel.  Supposedly maplevels 1-255
-		 * are bitmasks of game levels 1-8.  0 is a special case repeat fo 255.
+		/* This code uses levelmask to limit by maplevel.  Supposedly maplevels 1-255
+		 * are bitmasks of game levels 1-8.  0 is a special case repeat of 255.
 		 * However a levelmask including 0x100 is usually included so the CLIP levels are
-		 * examined.
-		 */
-		if (h->level && levelmask && !(h->level & levelmask))
+		 * examined. */
+		if (h->level <= LEVEL_LASTVISIBLE && levelmask && !(h->level & levelmask))
 			continue;
 
 		assert(h->cnode < myTile->numnodes + 6); /* +6 => bbox */

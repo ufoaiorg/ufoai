@@ -464,8 +464,8 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
  */
 int SV_PointContents (vec3_t p)
 {
-	/* clip to world - 0x1FF = all levels */
-	trace_t trace = TR_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, 0x1FF, MASK_ALL, 0);
+	/* clip to all world levels */
+	trace_t trace = TR_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
 	if (trace.fraction == 0)
 		return trace.contentFlags;		/* blocked by the world */
 	return 0;
@@ -523,7 +523,7 @@ trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end
 	memset(&clip, 0, sizeof(clip));
 
 	/* clip to world - 0x1FF = all levels */
-	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask, 0);
+	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	/** @todo There is more than one world in case of a map assembly - use
 	 * @c clip.trace.mapTile to get the correct one */
 	clip.trace.ent = ge->edicts; /* g_edicts[0] is the world */

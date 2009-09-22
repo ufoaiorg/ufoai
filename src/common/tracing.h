@@ -60,6 +60,11 @@ GLOBAL TYPES
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
 #endif
 
+/**
+ * mask to trace against all the different visible levels (1-8) (resp. (1<<[0-7])
+ */
+#define TRACING_ALL_VISIBLE_LEVELS 0x1FF
+
 /** a trace is returned when a box is swept through the world */
 typedef struct trace_s{
 	qboolean allsolid;			/**< if true, plane is not valid */

@@ -319,7 +319,7 @@ static void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
 	VectorSet(mins, -size, -size, -size);
 	VectorSet(maxs, size, size, size);
 
-	refdef.trace = TR_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask, 0);
+	refdef.trace = TR_CompleteBoxTrace(start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	refdef.traceEntity = NULL;
 
 	frac = refdef.trace.fraction;
