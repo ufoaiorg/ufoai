@@ -87,11 +87,11 @@ namespace sidebar
 					char buffer[256];
 					StringOutputStream nameContent(256);
 					// remove extension from prefab filename
-					CopiedString baseName = StringRange(name.c_str(), path_get_filename_base_end(name.c_str()));
-					CopiedString fileName = StringRange(path_get_filename_start(name.c_str()),
-							path_get_filename_base_end(name.c_str()));
-					const std::string fullBaseNamePath = PrefabSelector::GetFullPath(baseName.c_str());
-					nameContent << "<b>" << fileName.c_str() << "</b>";
+					const std::string fileName = os::getFilenameFromPath(name);
+					const std::string fullBaseName = os::stripExtension(name);
+					const std::string shortName = os::stripExtension(fileName);
+					const std::string fullBaseNamePath = PrefabSelector::GetFullPath(fullBaseName);
+					nameContent << "<b>" << shortName << "</b>";
 					std::string imagePath = fullBaseNamePath + ".jpg";
 					std::string descriptionPath = fullBaseNamePath + ".txt";
 					AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(descriptionPath));
@@ -104,10 +104,10 @@ namespace sidebar
 					}
 					GdkPixbuf *img = pixbuf_new_from_file_with_mask(imagePath);
 					if (!img)
-						g_warning("Could not find image (%s) for prefab %s\n", baseName.c_str(), name.c_str());
+						g_warning("Could not find image (%s) for prefab %s\n", fileName.c_str(), name.c_str());
 					gtk_tree_store_append(_store, &iter, _parentIter);
 					gtk_tree_store_set(_store, &iter, PREFAB_NAME, name.c_str(), PREFAB_DESCRIPTION,
-							nameContent.c_str(), PREFAB_IMAGE, img, PREFAB_SHORTNAME, fileName.c_str(), -1);
+							nameContent.c_str(), PREFAB_IMAGE, img, PREFAB_SHORTNAME, shortName.c_str(), -1);
 				}
 
 				/**
@@ -354,11 +354,15 @@ namespace sidebar
 		return _widget;
 	}
 
-	std::string PrefabSelector::GetFullPath (const std::string& file)
+	/**
+	 * @param baseFileName Filename relative to the prefabs directory without extension
+	 * @return The full (absolute) path to the file (but still without extension of course)
+	 */
+	std::string PrefabSelector::GetFullPath (const std::string& baseFileName)
 	{
 		StringOutputStream fullpath(256);
-		fullpath << PathCleaned(file.c_str());
-		return AppPath_get() + "prefabs/" + fullpath.c_str();
+		fullpath << PathCleaned(std::string(AppPath_get() + "prefabs/" + baseFileName).c_str());
+		return fullpath.c_str();
 	}
 
 	/* GTK CALLBACKS */
