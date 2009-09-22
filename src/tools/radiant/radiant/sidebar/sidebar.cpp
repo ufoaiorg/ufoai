@@ -22,7 +22,7 @@
 static void Sidebar_constructPrefabs (GtkWidget *notebook)
 {
 	// prefabs
-	GtkWidget *pagePrefabs = Prefabs_constructNotebookTab();
+	GtkWidget *pagePrefabs = sidebar::PrefabSelector::ConstructNotebookTab();
 	if (!pagePrefabs)
 		return;
 
