@@ -138,9 +138,9 @@ static void CMod_LoadSubmodels (const lump_t * l, const vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
 
 	in = (const void *) (cModelBase + l->fileofs);
-	if (l->filelen % sizeof(dBspModel_t))
-		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T")", l->filelen, sizeof(dBspModel_t));
-	count = l->filelen / sizeof(dBspModel_t);
+	if (l->filelen % sizeof(*in))
+		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T")", l->filelen, sizeof(*in));
+	count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, "%c...submodels: %i\n", COLORED_GREEN, count);
 
 	if (count < 1)
@@ -183,9 +183,9 @@ static void CMod_LoadSurfaces (const lump_t * l, const vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: No lump given");
 
 	in = (const void *) (cModelBase + l->fileofs);
-	if (l->filelen % sizeof(dBspTexinfo_t))
+	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(dBspTexinfo_t);
+	count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, "%c...surfaces: %i\n", COLORED_GREEN, count);
 
 	if (count < 1)
@@ -223,9 +223,9 @@ static void CMod_LoadNodes (const lump_t * l, const vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadNodes: No lump given");
 
 	in = (const void *) (cModelBase + l->fileofs);
-	if (l->filelen % sizeof(dBspNode_t))
+	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(dBspNode_t);
+	count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, "%c...nodes: %i\n", COLORED_GREEN, count);
 
 	if (count < 1)
@@ -273,9 +273,9 @@ static void CMod_LoadBrushes (const lump_t * l, const vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: No lump given");
 
 	in = (const void *) (cModelBase + l->fileofs);
-	if (l->filelen % sizeof(dBspBrush_t))
+	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(dBspBrush_t);
+	count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, "%c...brushes: %i\n", COLORED_GREEN, count);
 
 	if (count > MAX_MAP_BRUSHES)
@@ -310,9 +310,9 @@ static void CMod_LoadLeafs (const lump_t * l, const vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: No lump given");
 
 	in = (const void *) (cModelBase + l->fileofs);
-	if (l->filelen % sizeof(dBspLeaf_t))
+	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(dBspLeaf_t);
+	count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, "%c...leafs: %i\n", COLORED_GREEN, count);
 
 	if (count < 1)
@@ -363,9 +363,9 @@ static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: No lump given");
 
 	in = (const void *) (cModelBase + l->fileofs);
-	if (l->filelen % sizeof(dBspPlane_t))
+	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(dBspPlane_t);
+	count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, "%c...planes: %i\n", COLORED_GREEN, count);
 
 	if (count < 1)
@@ -659,8 +659,8 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 	cBspModel_t *model;
 	const char **name;
 	int blocked;
-	vec3_t amins, amaxs, acenter, aoffset;
-	float offset, fraction = 2.0f;
+	vec3_t amins, amaxs;
+	float fraction = 2.0f;
 
 	/* trace against world first */
 	blocked = TR_TestLineDM(start, stop, end, levelmask);
@@ -669,7 +669,7 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
-		assert(**name == '*');
+		assert(*name[0] == '*');
 		model = CM_InlineModel(*name);
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
@@ -679,7 +679,8 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 		VectorAdd(model->origin, model->mins, amins);
 		VectorAdd(model->origin, model->maxs, amaxs);
 		if (VectorNotEmpty(model->angles)) {
-			offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
+			vec3_t acenter, aoffset;
+			const float offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
 			VectorCenterFromMinsMaxs(amins, amaxs, acenter);
 			VectorSet(aoffset, offset, offset, offset);
 			VectorAdd(acenter, aoffset, amaxs);
@@ -762,7 +763,7 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
-		assert(**name == '*');
+		assert(*name[0] == '*');
 		model = CM_InlineModel(*name);
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
@@ -935,7 +936,6 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 	const char *es;
 	char keyname[256];
 	vec3_t v;
-	int num;
 	cBspModel_t *model = NULL;
 
 	if (!l)
@@ -992,7 +992,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 				}
 			} else if (!strcmp(keyname, "model") && token[0] == '*') {
 				/* adapt inline model number */
-				num = atoi(token + 1);
+				int num = atoi(token + 1);
 				/* Get the model */
 				model = &curTile->models[NUM_REGULAR_MODELS + num];
 				/* Now update the model number to reflect prior tiles loaded. */
@@ -1044,7 +1044,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	int length;
 	dBspHeader_t header;
 	/* use for random map assembly for shifting origins and so on */
-	vec3_t shift = {0.0f, 0.0f, 0.0f};
+	vec3_t shift;
 
 	Com_DPrintf(DEBUG_ENGINE, "CM_AddMapTile: %s at %i,%i,%i\n", name, sX, sY, sZ);
 	assert(name);
@@ -1054,7 +1054,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	assert(sZ < PATHFINDING_HEIGHT);
 
 	/* load the file */
-	Com_sprintf(filename, MAX_QPATH, "maps/%s.bsp", name);
+	Com_sprintf(filename, sizeof(filename), "maps/%s.bsp", name);
 	length = FS_LoadFile(filename, &buf);
 	if (!buf)
 		Com_Error(ERR_DROP, "Couldn't load %s", filename);
@@ -1062,7 +1062,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	checksum = LittleLong(Com_BlockChecksum(buf, length));
 
 	header = *(dBspHeader_t *) buf;
-	for (i = 0; i < sizeof(dBspHeader_t) / 4; i++)
+	for (i = 0; i < sizeof(header) / 4; i++)
 		((int *) &header)[i] = LittleLong(((int *) &header)[i]);
 
 	if (header.version != BSPVERSION)
@@ -1294,7 +1294,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
  */
 cBspModel_t *CM_InlineModel (const char *name)
 {
-	int i, num, models;
+	int i, num;
 
 	/* we only want inline models here */
 	if (!name || name[0] != '*')
@@ -1306,7 +1306,7 @@ cBspModel_t *CM_InlineModel (const char *name)
 
 	/* search all the loaded tiles for the given inline model */
 	for (i = 0; i < numTiles; i++) {
-		models = mapTiles[i].nummodels - NUM_REGULAR_MODELS;
+		const int models = mapTiles[i].nummodels - NUM_REGULAR_MODELS;
 		assert(models >= 0);
 
 		if (num >= models)
@@ -1409,7 +1409,7 @@ static void CM_InitBoxHull (void)
 		if (i != 5)
 			c->children[side ^ 1] = curTile->box_headnode + i + 1;
 		else
-			c->children[side ^ 1] = -1 - curTile->numleafs;
+			c->children[side ^ 1] = LEAFNODE - curTile->numleafs;
 
 		/* planes */
 		p = &curTile->box_planes[i * 2];
@@ -1418,7 +1418,7 @@ static void CM_InitBoxHull (void)
 		p->normal[i >> 1] = 1;
 
 		p = &curTile->box_planes[i * 2 + 1];
-		p->type = 3 + (i >> 1);
+		p->type = PLANE_ANYX + (i >> 1);
 		VectorClear(p->normal);
 		p->normal[i >> 1] = -1;
 	}
