@@ -53,14 +53,12 @@ namespace sidebar
 		PREFAB_STORE_SIZE
 	};
 
-	const int TABLE_COLUMS = 3;
-
 	namespace
 	{
 		/**
 		 * @brief Callback class invoked for adding prefab map files
 		 */
-		class CLoadPrefab
+		class LoadPrefabFileFunctor
 		{
 			private:
 				std::string _path;
@@ -72,7 +70,7 @@ namespace sidebar
 				 * @param path relative to 'prefabs/' into directory where file hits were found
 				 * @param parentIter parent iterator to add content to
 				 */
-				CLoadPrefab (const std::string& path, GtkTreeIter* parentIter, GtkTreeStore *store) :
+				LoadPrefabFileFunctor (const std::string& path, GtkTreeIter* parentIter, GtkTreeStore *store) :
 					_path(path), _parentIter(parentIter), _store(store)
 				{
 				}
@@ -127,7 +125,7 @@ namespace sidebar
 		/**
 		 * @brief Callback class for searching for subdirectories to add prefab map files
 		 */
-		class CLoadPrefabSubdir
+		class LoadPrefabDirectoryFunctor
 		{
 			private:
 				std::string _path;
@@ -140,7 +138,7 @@ namespace sidebar
 				 * @param subpath path relative to prefabs directory which is examined
 				 * @param parentIter parent iterator to add found prefab map files to
 				 */
-				CLoadPrefabSubdir (const std::string& path, const std::string& subpath, GtkTreeIter* parentIter,
+				LoadPrefabDirectoryFunctor (const std::string& path, const std::string& subpath, GtkTreeIter* parentIter,
 						GtkTreeStore* store) :
 					_path(path), _subpath(subpath), _parentIter(parentIter), _store(store)
 				{
@@ -167,8 +165,8 @@ namespace sidebar
 								sectionDescription.c_str(), PREFAB_SHORTNAME, name.c_str(), -1);
 						g_debug("directory: %s\n", name.c_str());
 						std::string subPath = _subpath + "/" + name;
-						Directory_forEach(fullpath, CLoadPrefabSubdir(_path, subPath, &subIter, _store));
-						Directory_forEach(fullpath, MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab(subPath,
+						Directory_forEach(fullpath, LoadPrefabDirectoryFunctor(_path, subPath, &subIter, _store));
+						Directory_forEach(fullpath, MatchFileExtension<LoadPrefabFileFunctor> ("map", LoadPrefabFileFunctor(subPath,
 								&subIter, _store)));
 					}
 				}
@@ -269,8 +267,8 @@ namespace sidebar
 #endif
 		}
 		/* fill prefab store with data */
-		Directory_forEach(fullpath.c_str(), CLoadPrefabSubdir(fullpath, "", NULL, _store));
-		Directory_forEach(fullpath.c_str(), MatchFileExtension<CLoadPrefab> ("map", CLoadPrefab("", NULL, _store)));
+		Directory_forEach(fullpath.c_str(), LoadPrefabDirectoryFunctor(fullpath, "", NULL, _store));
+		Directory_forEach(fullpath.c_str(), MatchFileExtension<LoadPrefabFileFunctor> ("map", LoadPrefabFileFunctor("", NULL, _store)));
 		gtk_tree_model_filter_refilter(GTK_TREE_MODEL_FILTER(_fileFiltered));
 		gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(_fileSorted), PREFAB_SHORTNAME, GTK_SORT_ASCENDING);
 	}
