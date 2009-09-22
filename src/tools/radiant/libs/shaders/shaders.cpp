@@ -695,9 +695,8 @@ class Layer
 		}
 };
 
-void ParseShaderFile (Tokeniser& tokeniser, const char* filename)
+void ParseShaderFile (Tokeniser& tokeniser, const std::string& filename)
 {
-
 	tokeniser.nextLine();
 	for (;;) {
 		const char* token = tokeniser.getToken();
@@ -721,9 +720,9 @@ void ParseShaderFile (Tokeniser& tokeniser, const char* filename)
 		if (result) {
 			// do we already have this shader?
 			if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(shaderTemplate->getName(),
-					ShaderDefinition(shaderTemplate.get(), ShaderArguments(), filename))).second) {
+					ShaderDefinition(shaderTemplate.get(), ShaderArguments(), filename.c_str()))).second) {
 				g_debug("Shader '%s' is already in memory, definition in '%s' ignored.\n", shaderTemplate->getName(),
-						filename);
+						filename.c_str());
 			}
 		} else {
 			g_warning("Error parsing shader '%s'\n", shaderTemplate->getName());
@@ -732,17 +731,17 @@ void ParseShaderFile (Tokeniser& tokeniser, const char* filename)
 	}
 }
 
-static void LoadShaderFile (const char* filename)
+static void LoadShaderFile (const std::string& filename)
 {
 	const std::string& appPath = GlobalRadiant().getAppPath();
 	std::string shadername = appPath + filename;
 
-	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(shadername.c_str()));
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(shadername));
 	if (file) {
 		g_message("Parsing shaderfile '%s'\n", shadername.c_str());
 
 		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
-		ParseShaderFile(*tokeniser, shadername.c_str());
+		ParseShaderFile(*tokeniser, shadername);
 	} else {
 		g_warning("Unable to read shaderfile '%s'\n", shadername.c_str());
 	}
