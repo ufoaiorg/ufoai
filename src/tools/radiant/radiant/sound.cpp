@@ -17,7 +17,8 @@ class SoundManagerAPI
 		typedef ISoundManager Type;
 		STRING_CONSTANT(Name, "*");
 
-		SoundManagerAPI () : m_soundmanager(0)
+		SoundManagerAPI () :
+			m_soundmanager(0)
 		{
 			m_soundmanager = new sound::SoundManager();
 		}

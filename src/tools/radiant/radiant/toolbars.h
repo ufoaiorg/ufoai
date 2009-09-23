@@ -27,6 +27,6 @@
 #include "gtk/gtk.h"
 #include "mainframe.h"
 
-GtkToolbar* create_main_toolbar_vertical(MainFrame::EViewStyle style);
-GtkToolbar* create_main_toolbar_horizontal(MainFrame *mainframe);
+GtkToolbar* create_main_toolbar_vertical (MainFrame::EViewStyle style);
+GtkToolbar* create_main_toolbar_horizontal (MainFrame *mainframe);
 

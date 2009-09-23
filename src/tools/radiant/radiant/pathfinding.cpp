@@ -145,24 +145,24 @@ namespace routing
 	typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<routing::IsPathfindingViewEnabled>::apply>
 			ShowPathfindingEnabledApplyCaller;
 	ShowPathfindingEnabledApplyCaller g_showPathfindingEnabled_button_caller;
-	BoolExportCallback g_showPathfindingEnabled_button_callback (g_showPathfindingEnabled_button_caller);
+	BoolExportCallback g_showPathfindingEnabled_button_callback(g_showPathfindingEnabled_button_caller);
 
-	ToggleItem g_showPathfindingEnabled_button (g_showPathfindingEnabled_button_callback);
+	ToggleItem g_showPathfindingEnabled_button(g_showPathfindingEnabled_button_callback);
 
 	typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<routing::IsPathfindingIn2DViewEnabled>::apply>
 			ShowPathfindingIn2DEnabledApplyCaller;
 	ShowPathfindingIn2DEnabledApplyCaller g_showPathfindingIn2DEnabled_button_caller;
-	BoolExportCallback g_showPathfindingIn2DEnabled_button_callback (g_showPathfindingIn2DEnabled_button_caller);
+	BoolExportCallback g_showPathfindingIn2DEnabled_button_callback(g_showPathfindingIn2DEnabled_button_caller);
 
-	ToggleItem g_showPathfindingIn2DEnabled_button (g_showPathfindingIn2DEnabled_button_callback);
+	ToggleItem g_showPathfindingIn2DEnabled_button(g_showPathfindingIn2DEnabled_button_callback);
 
 	typedef FreeCaller1<const BoolImportCallback&,
 			&BoolFunctionExport<routing::IsPathfindingShowLowerLevelsEnabled>::apply>
 			ShowLowerLevelsForPathfindingEnabledApplyCaller;
 	ShowLowerLevelsForPathfindingEnabledApplyCaller g_showLowerLevelsForPathfindingEnabled_button_caller;
-	BoolExportCallback g_showLowerLevelsForPathfindingEnabled_button_callback (
+	BoolExportCallback g_showLowerLevelsForPathfindingEnabled_button_callback(
 			g_showLowerLevelsForPathfindingEnabled_button_caller);
-	ToggleItem g_showLowerLevelsForPathfindingEnabled_button (g_showLowerLevelsForPathfindingEnabled_button_callback);
+	ToggleItem g_showLowerLevelsForPathfindingEnabled_button(g_showLowerLevelsForPathfindingEnabled_button_callback);
 
 	/**
 	 * @todo Maybe also use the ufo2map output directly
@@ -223,9 +223,10 @@ namespace routing
 	void Pathfinding_constructPage (PreferenceGroup& group)
 	{
 		PreferencesPage page(group.createPage(_("Pathfinding"), _("Pathfinding Settings")));
-		page.appendCheckBox("", _("Show all lower levels"), FreeCaller1<bool, setShowAllLowerLevels> (), BoolExportCaller(
-				showAllLowerLevels));
-		page.appendCheckBox("", _("Show pathfinding data in 2D views"), FreeCaller1<bool, setShowIn2D> (), BoolExportCaller(showIn2D));
+		page.appendCheckBox("", _("Show all lower levels"), FreeCaller1<bool, setShowAllLowerLevels> (),
+				BoolExportCaller(showAllLowerLevels));
+		page.appendCheckBox("", _("Show pathfinding data in 2D views"), FreeCaller1<bool, setShowIn2D> (),
+				BoolExportCaller(showIn2D));
 	}
 
 	void Pathfinding_registerPreferences (void)
@@ -271,7 +272,8 @@ void Pathfinding_ConstructMenu (GtkMenu* menu)
 {
 	create_check_menu_item_with_mnemonic(menu, _("Show pathfinding info"), "ShowPathfinding");
 	menuItemShowIn2D = create_check_menu_item_with_mnemonic(menu, _("Show in 2D views"), "ShowPathfindingIn2D");
-	menuItemShowLowerLevels = create_check_menu_item_with_mnemonic(menu, _("Show all lower levels"), "ShowPathfindingLowerLevels");
+	menuItemShowLowerLevels = create_check_menu_item_with_mnemonic(menu, _("Show all lower levels"),
+			"ShowPathfindingLowerLevels");
 	//disabled items by default, enabled via show pathfinding
 	gtk_widget_set_sensitive(GTK_WIDGET(menuItemShowIn2D), false);
 	gtk_widget_set_sensitive(GTK_WIDGET(menuItemShowLowerLevels), false);

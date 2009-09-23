@@ -3,24 +3,24 @@
  */
 
 /*
-Copyright (C) 2002-2009 UFO: Alien Invasion.
+ Copyright (C) 2002-2009 UFO: Alien Invasion.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-See the GNU General Public License for more details.
+ See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-*/
+ */
 
 #include "particles.h"
 #include <stdlib.h>
@@ -31,11 +31,10 @@ static std::list<CopiedString> g_ufoFilenames;
 
 ParticleDefinitionMap g_particleDefinitions;
 
-static const char *const blend_names[] = {
-	"replace", "one", "blend", "add", "filter", "invfilter"
-};
+static const char * const blend_names[] = { "replace", "one", "blend", "add", "filter", "invfilter" };
 
-static int GetBlendMode (const char *token) {
+static int GetBlendMode (const char *token)
+{
 	int i;
 
 	for (i = 0; i < BLEND_LAST; i++) {
@@ -46,7 +45,8 @@ static int GetBlendMode (const char *token) {
 	return BLEND_REPLACE;
 }
 
-static void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
+static void ParseUFOFile (Tokeniser& tokeniser, const char* filename)
+{
 	g_ufoFilenames.push_back(filename);
 	filename = g_ufoFilenames.back().c_str();
 	tokeniser.nextLine();
@@ -147,7 +147,8 @@ static void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 			}
 			if (!kill && (model[0] != '\0' || image[0] != '\0')) {
 				// do we already have this particle?
-				ParticleDefinition *particleDefinition = new ParticleDefinition(pID, model, image, blend, width, height);
+				ParticleDefinition *particleDefinition =
+						new ParticleDefinition(pID, model, image, blend, width, height);
 				if (!g_particleDefinitions.insert(ParticleDefinitionMap::value_type(pID, *particleDefinition)).second)
 					g_warning("Particle '%s' is already in memory, definition in '%s' ignored.\n", pID, filename);
 				delete particleDefinition;
@@ -156,7 +157,8 @@ static void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 	}
 }
 
-void LoadUFOFile(const char* filename) {
+void LoadUFOFile (const char* filename)
+{
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
 	if (file) {
 		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
@@ -166,11 +168,12 @@ void LoadUFOFile(const char* filename) {
 	}
 }
 
-void addUFOFile(const char* dirstring) {
+void addUFOFile (const char* dirstring)
+{
 	bool found = false;
 
 	for (GSList* tmp = l_ufofiles; tmp != 0; tmp = tmp->next) {
-		if (string_equal_nocase(dirstring, (char*)tmp->data)) {
+		if (string_equal_nocase(dirstring, (char*) tmp->data)) {
 			found = true;
 			break;
 		}

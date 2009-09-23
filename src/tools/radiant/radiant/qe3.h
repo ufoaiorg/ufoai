@@ -29,8 +29,6 @@
 //
 void Sys_SetTitle (const std::string& text, bool modified);
 
-void RunBSP (const char* name);
-
 void QE_InitVFS ();
 
 void QE_brushCountChanged ();

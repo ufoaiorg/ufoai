@@ -23,8 +23,6 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "scenegraph.h"
-
 #include "debugging/debugging.h"
 
 #include <map>
@@ -275,8 +273,7 @@ class SceneGraphAPI
 		scene::Graph* m_scenegraph;
 	public:
 		typedef scene::Graph Type;
-		STRING_CONSTANT(Name, "*")
-		;
+		STRING_CONSTANT(Name, "*");
 
 		SceneGraphAPI (void)
 		{
@@ -296,4 +293,4 @@ class SceneGraphAPI
 
 typedef SingletonModule<SceneGraphAPI> SceneGraphModule;
 typedef Static<SceneGraphModule> StaticSceneGraphModule;
-StaticRegisterModule staticRegisterSceneGraph (StaticSceneGraphModule::instance ());
+StaticRegisterModule staticRegisterSceneGraph(StaticSceneGraphModule::instance());

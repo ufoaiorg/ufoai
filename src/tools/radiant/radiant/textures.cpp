@@ -227,8 +227,8 @@ void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHe
 	}
 
 	int mip = 0;
-	glTexImage2D(GL_TEXTURE_2D, mip++, g_texture_globals.texture_components, gl_width, gl_height, 0,
-			GL_RGBA, GL_UNSIGNED_BYTE, outpixels);
+	glTexImage2D(GL_TEXTURE_2D, mip++, g_texture_globals.texture_components, gl_width, gl_height, 0, GL_RGBA,
+			GL_UNSIGNED_BYTE, outpixels);
 	while (gl_width > 1 || gl_height > 1) {
 		GL_MipReduce(outpixels, outpixels, gl_width, gl_height, 1, 1);
 
@@ -237,8 +237,8 @@ void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHe
 		if (gl_height > 1)
 			gl_height >>= 1;
 
-		glTexImage2D(GL_TEXTURE_2D, mip++, g_texture_globals.texture_components, gl_width, gl_height, 0,
-				GL_RGBA, GL_UNSIGNED_BYTE, outpixels);
+		glTexImage2D(GL_TEXTURE_2D, mip++, g_texture_globals.texture_components, gl_width, gl_height, 0, GL_RGBA,
+				GL_UNSIGNED_BYTE, outpixels);
 	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -494,7 +494,8 @@ void Textures_UpdateTextureCompressionFormat ()
 			if (g_texture_globals.m_nTextureCompressionFormat != TEXTURECOMPRESSION_NONE
 					&& g_texture_globals.m_nTextureCompressionFormat != TEXTURECOMPRESSION_RGBA
 					&& !g_texture_globals.m_bS3CompressionSupported) {
-				g_message("OpenGL extension GL_EXT_texture_compression_s3tc not supported by current graphics drivers\n");
+				g_message(
+						"OpenGL extension GL_EXT_texture_compression_s3tc not supported by current graphics drivers\n");
 				g_texture_globals.m_nTextureCompressionFormat = TEXTURECOMPRESSION_RGBA; // if this is not supported either, see below
 			}
 			if (g_texture_globals.m_nTextureCompressionFormat == TEXTURECOMPRESSION_RGBA
@@ -630,52 +631,34 @@ typedef ReferenceCaller1<ETexturesMode, const IntImportCallback&, TextureModeExp
 void Textures_constructPreferences (PreferencesPage& page)
 {
 	{
-		const char* percentages[] = { N_("12.5%"), N_("25%"), N_("50%"), N_("100%")};
-	page.appendRadio(
-			_("Texture Quality"),
-			STRING_ARRAY_RANGE(percentages),
-			LatchedIntImportCaller(g_Textures_textureQuality),
-			IntExportCaller(g_Textures_textureQuality.m_latched)
-	);
-}
-page.appendSpinner(
-		_("Texture Gamma"),
-		1.0,
-		0.0,
-		1.0,
-		FloatImportCallback(TextureGammaImportCaller(g_texture_globals.fGamma)),
-		FloatExportCallback(FloatExportCaller(g_texture_globals.fGamma))
-);
-{
-	const char* texture_mode[] = {N_("Nearest"), N_("Nearest Mipmap"), N_("Linear"), N_("Bilinear"), N_("Bilinear Mipmap"), N_("Trilinear"), N_("Anisotropy")};
-	page.appendCombo(
-			_("Texture Render Mode"),
-			STRING_ARRAY_RANGE(texture_mode),
-			IntImportCallback(TextureModeImportCaller(g_texture_mode)),
-			IntExportCallback(TextureModeExportCaller(g_texture_mode))
-	);
-}
-{
-	const char* compression_none[] = {N_("None")};
-	const char* compression_opengl[] = {N_("None"), N_("OpenGL ARB")};
-	const char* compression_s3tc[] = {N_("None"), N_("S3TC DXT1"), N_("S3TC DXT3"), N_("S3TC DXT5")};
-	const char* compression_opengl_s3tc[] = {N_("None"), N_("OpenGL ARB"), N_("S3TC DXT1"), N_("S3TC DXT3"), N_("S3TC DXT5")};
-	StringArrayRange compression(
-			(g_texture_globals.m_bOpenGLCompressionSupported)
-			? (g_texture_globals.m_bS3CompressionSupported)
-			? STRING_ARRAY_RANGE(compression_opengl_s3tc)
-			: STRING_ARRAY_RANGE(compression_opengl)
-			: (g_texture_globals.m_bS3CompressionSupported)
-			? STRING_ARRAY_RANGE(compression_s3tc)
-			: STRING_ARRAY_RANGE(compression_none)
-	);
-	page.appendCombo(
-			_("Hardware Texture Compression"),
-			compression,
-			TextureCompressionImportCaller(g_texture_globals.m_nTextureCompressionFormat),
-			IntExportCaller(reinterpret_cast<int&>(g_texture_globals.m_nTextureCompressionFormat))
-	);
-}
+		const char* percentages[] = { N_("12.5%"), N_("25%"), N_("50%"), N_("100%") };
+		page.appendRadio(_("Texture Quality"), STRING_ARRAY_RANGE(percentages), LatchedIntImportCaller(
+				g_Textures_textureQuality), IntExportCaller(g_Textures_textureQuality.m_latched));
+	}
+	page.appendSpinner(_("Texture Gamma"), 1.0, 0.0, 1.0, FloatImportCallback(TextureGammaImportCaller(
+			g_texture_globals.fGamma)), FloatExportCallback(FloatExportCaller(g_texture_globals.fGamma)));
+	{
+		const char* texture_mode[] = { N_("Nearest"), N_("Nearest Mipmap"), N_("Linear"), N_("Bilinear"),
+				N_("Bilinear Mipmap"), N_("Trilinear"), N_("Anisotropy") };
+		page.appendCombo(_("Texture Render Mode"), STRING_ARRAY_RANGE(texture_mode), IntImportCallback(
+				TextureModeImportCaller(g_texture_mode)), IntExportCallback(TextureModeExportCaller(g_texture_mode)));
+	}
+	{
+		const char* compression_none[] = { N_("None") };
+		const char* compression_opengl[] = { N_("None"), N_("OpenGL ARB") };
+		const char* compression_s3tc[] = { N_("None"), N_("S3TC DXT1"), N_("S3TC DXT3"), N_("S3TC DXT5") };
+		const char* compression_opengl_s3tc[] = { N_("None"), N_("OpenGL ARB"), N_("S3TC DXT1"), N_("S3TC DXT3"),
+				N_("S3TC DXT5") };
+		StringArrayRange
+				compression(
+						(g_texture_globals.m_bOpenGLCompressionSupported) ? (g_texture_globals.m_bS3CompressionSupported) ? STRING_ARRAY_RANGE(compression_opengl_s3tc)
+								: STRING_ARRAY_RANGE(compression_opengl)
+								: (g_texture_globals.m_bS3CompressionSupported) ? STRING_ARRAY_RANGE(compression_s3tc)
+										: STRING_ARRAY_RANGE(compression_none));
+		page.appendCombo(_("Hardware Texture Compression"), compression, TextureCompressionImportCaller(
+				g_texture_globals.m_nTextureCompressionFormat), IntExportCaller(
+				reinterpret_cast<int&> (g_texture_globals.m_nTextureCompressionFormat)));
+	}
 }
 void Textures_constructPage (PreferenceGroup& group)
 {
@@ -743,8 +726,7 @@ class TexturesAPI
 		TexturesCache* m_textures;
 	public:
 		typedef TexturesCache Type;
-		STRING_CONSTANT(Name, "*")
-		;
+		STRING_CONSTANT(Name, "*");
 
 		TexturesAPI ()
 		{
@@ -764,7 +746,7 @@ class TexturesAPI
 
 typedef SingletonModule<TexturesAPI, TexturesDependencies> TexturesModule;
 typedef Static<TexturesModule> StaticTexturesModule;
-StaticRegisterModule staticRegisterTextures (StaticTexturesModule::instance ());
+StaticRegisterModule staticRegisterTextures(StaticTexturesModule::instance());
 
 ImageModules& Textures_getImageModules ()
 {

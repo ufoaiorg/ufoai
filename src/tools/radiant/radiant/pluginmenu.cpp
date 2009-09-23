@@ -98,7 +98,8 @@ static void PlugInMenu_Add (GtkMenu* plugin_menu, IPlugin* pPlugIn)
 					continue;
 				} else {
 					item = gtk_menu_item_new_with_label(menuText);
-					g_object_set_data(G_OBJECT(item), "command", const_cast<gpointer> (static_cast<const void*> (menuCommand)));
+					g_object_set_data(G_OBJECT(item), "command",
+							const_cast<gpointer> (static_cast<const void*> (menuCommand)));
 					g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(plugin_activated), gint_to_pointer(m_nNextPlugInID));
 				}
 				gtk_widget_show(item);

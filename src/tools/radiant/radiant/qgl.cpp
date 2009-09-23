@@ -1,23 +1,23 @@
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "qgl.h"
 
@@ -32,15 +32,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if defined(_WIN32)
 
 # include <wtypes.h>
-PROC  ( WINAPI * qwglGetProcAddress)(LPCSTR);
+PROC ( WINAPI * qwglGetProcAddress)(LPCSTR);
 
 #elif defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 
 # include <GL/glx.h>
 # include <dlfcn.h>
 # include <gdk/gdkx.h>
-Bool         (*qglXQueryExtension)( Display *dpy, int *errorb, int *event );
-void*        (*qglXGetProcAddressARB) (const GLubyte *procName);
+Bool (*qglXQueryExtension) (Display *dpy, int *errorb, int *event);
+void* (*qglXGetProcAddressARB) (const GLubyte *procName);
 typedef void* (*glXGetProcAddressARBProc) (const GLubyte *procName);
 
 #else
@@ -49,15 +49,15 @@ typedef void* (*glXGetProcAddressARBProc) (const GLubyte *procName);
 
 #endif
 
-
-void QGL_Shutdown(OpenGLBinding& table) {
+void QGL_Shutdown (OpenGLBinding& table)
+{
 	g_message("Shutting down OpenGL module...");
 
 #if defined(WIN32)
-	qwglGetProcAddress           = 0;
+	qwglGetProcAddress = 0;
 #elif defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
-	qglXQueryExtension           = 0;
-	qglXGetProcAddressARB        = 0;
+	qglXQueryExtension = 0;
+	qglXGetProcAddressARB = 0;
 #else
 #error "unsupported platform"
 #endif
@@ -65,48 +65,47 @@ void QGL_Shutdown(OpenGLBinding& table) {
 	g_message("Done.\n");
 }
 
-
-typedef struct glu_error_struct {
-	GLenum     errnum;
-	const char *errstr;
+typedef struct glu_error_struct
+{
+		GLenum errnum;
+		const char *errstr;
 } GLU_ERROR_STRUCT;
 
-GLU_ERROR_STRUCT glu_errlist[] = {
-	{GL_NO_ERROR, "GL_NO_ERROR - no error"},
-	{GL_INVALID_ENUM, "GL_INVALID_ENUM - An unacceptable value is specified for an enumerated argument."},
-	{GL_INVALID_VALUE, "GL_INVALID_VALUE - A numeric argument is out of range."},
-	{GL_INVALID_OPERATION, "GL_INVALID_OPERATION - The specified operation is not allowed in the current state."},
-	{GL_STACK_OVERFLOW, "GL_STACK_OVERFLOW - Function would cause a stack overflow."},
-	{GL_STACK_UNDERFLOW, "GL_STACK_UNDERFLOW - Function would cause a stack underflow."},
-	{GL_OUT_OF_MEMORY, "GL_OUT_OF_MEMORY - There is not enough memory left to execute the function."},
-	{0, 0}
-};
+GLU_ERROR_STRUCT glu_errlist[] = { { GL_NO_ERROR, "GL_NO_ERROR - no error" }, { GL_INVALID_ENUM,
+		"GL_INVALID_ENUM - An unacceptable value is specified for an enumerated argument." }, { GL_INVALID_VALUE,
+		"GL_INVALID_VALUE - A numeric argument is out of range." }, { GL_INVALID_OPERATION,
+		"GL_INVALID_OPERATION - The specified operation is not allowed in the current state." }, { GL_STACK_OVERFLOW,
+		"GL_STACK_OVERFLOW - Function would cause a stack overflow." }, { GL_STACK_UNDERFLOW,
+		"GL_STACK_UNDERFLOW - Function would cause a stack underflow." }, { GL_OUT_OF_MEMORY,
+		"GL_OUT_OF_MEMORY - There is not enough memory left to execute the function." }, { 0, 0 } };
 
-const GLubyte* qgluErrorString(GLenum errCode ) {
+const GLubyte* qgluErrorString (GLenum errCode)
+{
 	int search = 0;
 	for (search = 0; glu_errlist[search].errstr; search++) {
 		if (errCode == glu_errlist[search].errnum)
-			return (const GLubyte *)glu_errlist[search].errstr;
+			return (const GLubyte *) glu_errlist[search].errstr;
 	} //end for
-	return (const GLubyte *)"Unknown error";
+	return (const GLubyte *) "Unknown error";
 }
 
-
-void glInvalidFunction() {
+void glInvalidFunction ()
+{
 	ERROR_MESSAGE("calling an invalid OpenGL function");
 }
 
-bool QGL_ExtensionSupported(const char* extension) {
+bool QGL_ExtensionSupported (const char* extension)
+{
 	const GLubyte *extensions = 0;
 	const GLubyte *start;
 	GLubyte *where, *terminator;
 
 	// Extension names should not have spaces.
-	where = (GLubyte *) strchr (extension, ' ');
+	where = (GLubyte *) strchr(extension, ' ');
 	if (where || *extension == '\0')
 		return false;
 
-	extensions = glGetString (GL_EXTENSIONS);
+	extensions = glGetString(GL_EXTENSIONS);
 #ifndef __APPLE__
 	if (!extensions)
 		return false;
@@ -114,12 +113,12 @@ bool QGL_ExtensionSupported(const char* extension) {
 
 	// It takes a bit of care to be fool-proof about parsing the
 	// OpenGL extensions string. Don't be fooled by sub-strings, etc.
-	for (start = extensions; ;) {
-		where = (GLubyte *) strstr ((const char *) start, extension);
+	for (start = extensions;;) {
+		where = (GLubyte *) strstr((const char *) start, extension);
 		if (!where)
 			break;
 
-		terminator = where + strlen (extension);
+		terminator = where + strlen(extension);
 		if (where == start || *(where - 1) == ' ')
 			if (*terminator == ' ' || *terminator == '\0')
 				return true;
@@ -130,14 +129,15 @@ bool QGL_ExtensionSupported(const char* extension) {
 	return false;
 }
 
-typedef int (QGL_DLLEXPORT *QGLFunctionPointer)();
+typedef int (QGL_DLLEXPORT *QGLFunctionPointer) ();
 
-QGLFunctionPointer QGL_getExtensionFunc(const char* symbol) {
+QGLFunctionPointer QGL_getExtensionFunc (const char* symbol)
+{
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 	if (qglXGetProcAddressARB == 0) {
-		return reinterpret_cast<QGLFunctionPointer>(glInvalidFunction);
+		return reinterpret_cast<QGLFunctionPointer> (glInvalidFunction);
 	} else {
-		return (QGLFunctionPointer)qglXGetProcAddressARB(reinterpret_cast<const GLubyte*>(symbol));
+		return (QGLFunctionPointer) qglXGetProcAddressARB(reinterpret_cast<const GLubyte*> (symbol));
 	}
 #elif defined(WIN32)
 	ASSERT_NOTNULL(qwglGetProcAddress);
@@ -147,29 +147,32 @@ QGLFunctionPointer QGL_getExtensionFunc(const char* symbol) {
 #endif
 }
 
-
 template<typename Func>
-bool QGL_constructExtensionFunc(Func& func, const char* symbol) {
-	func = reinterpret_cast<Func>(QGL_getExtensionFunc(symbol));
+bool QGL_constructExtensionFunc (Func& func, const char* symbol)
+{
+	func = reinterpret_cast<Func> (QGL_getExtensionFunc(symbol));
 	return func != 0;
 }
 
 template<typename Func>
-void QGL_invalidateExtensionFunc(Func& func) {
-	func = reinterpret_cast<Func>(glInvalidFunction);
+void QGL_invalidateExtensionFunc (Func& func)
+{
+	func = reinterpret_cast<Func> (glInvalidFunction);
 }
 
-void QGL_clear(OpenGLBinding& table) {
+void QGL_clear (OpenGLBinding& table)
+{
 }
 
-int QGL_Init(OpenGLBinding& table) {
+int QGL_Init (OpenGLBinding& table)
+{
 	QGL_clear(table);
 
 #if defined(WIN32)
-	qwglGetProcAddress           = wglGetProcAddress;
+	qwglGetProcAddress = wglGetProcAddress;
 #elif defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
-	qglXQueryExtension           = glXQueryExtension;
-	qglXGetProcAddressARB = (glXGetProcAddressARBProc)dlsym(RTLD_DEFAULT, "glXGetProcAddressARB");
+	qglXQueryExtension = glXQueryExtension;
+	qglXGetProcAddressARB = (glXGetProcAddressARBProc) dlsym(RTLD_DEFAULT, "glXGetProcAddressARB");
 	if ((qglXQueryExtension == 0) || (qglXQueryExtension(GDK_DISPLAY(), 0, 0) != True))
 		return 0;
 #else
@@ -183,10 +186,11 @@ int g_qglMajorVersion = 0;
 int g_qglMinorVersion = 0;
 
 // requires a valid gl context
-void QGL_InitVersion() {
+void QGL_InitVersion ()
+{
 	const std::size_t versionSize = 256;
 	char version[versionSize];
-	strncpy(version, reinterpret_cast<const char*>(glGetString(GL_VERSION)), versionSize - 1);
+	strncpy(version, reinterpret_cast<const char*> (glGetString(GL_VERSION)), versionSize - 1);
 	version[versionSize - 1] = '\0';
 	char* firstDot = strchr(version, '.');
 	ASSERT_NOTNULL(firstDot);
@@ -199,27 +203,28 @@ void QGL_InitVersion() {
 	g_qglMinorVersion = atoi(firstDot + 1);
 }
 
-
-inline void extension_not_implemented(const char* extension) {
+inline void extension_not_implemented (const char* extension)
+{
 	g_warning("OpenGL driver reports support for %s but does not implement it\n", extension);
 }
 
 static int g_maxTextureAnisotropy;
 
-int QGL_maxTextureAnisotropy() {
+int QGL_maxTextureAnisotropy ()
+{
 	return g_maxTextureAnisotropy;
 }
 
-void QGL_sharedContextCreated(OpenGLBinding& table) {
+void QGL_sharedContextCreated (OpenGLBinding& table)
+{
 	QGL_InitVersion();
 
 	table.major_version = g_qglMajorVersion;
 	table.minor_version = g_qglMinorVersion;
 
 	if (QGL_ExtensionSupported("GL_ARB_multitexture")) {
-		table.support_ARB_multitexture =
-			QGL_constructExtensionFunc(table.m_glActiveTexture, "glActiveTextureARB")
-			&& QGL_constructExtensionFunc(table.m_glClientActiveTexture, "glClientActiveTextureARB");
+		table.support_ARB_multitexture = QGL_constructExtensionFunc(table.m_glActiveTexture, "glActiveTextureARB")
+				&& QGL_constructExtensionFunc(table.m_glClientActiveTexture, "glClientActiveTextureARB");
 
 		if (!table.support_ARB_multitexture) {
 			extension_not_implemented("GL_ARB_multitexture");
@@ -245,9 +250,8 @@ void QGL_sharedContextCreated(OpenGLBinding& table) {
 
 	// GL 1.3
 	if (table.major_version > 1 || table.minor_version >= 3) {
-		table.support_GL_1_3 =
-			QGL_constructExtensionFunc(table.m_glActiveTexture, "glActiveTexture")
-			&& QGL_constructExtensionFunc(table.m_glClientActiveTexture, "glClientActiveTexture");
+		table.support_GL_1_3 = QGL_constructExtensionFunc(table.m_glActiveTexture, "glActiveTexture")
+				&& QGL_constructExtensionFunc(table.m_glClientActiveTexture, "glClientActiveTexture");
 
 		if (!table.support_GL_1_3) {
 			extension_not_implemented("GL_VERSION_1_3");
@@ -270,13 +274,11 @@ void QGL_sharedContextCreated(OpenGLBinding& table) {
 		table.support_GL_1_5 = false;
 	}
 
-
 	if (QGL_ExtensionSupported("GL_ARB_vertex_program")) {
 		table.support_ARB_vertex_program = true;
 	} else {
 		table.support_ARB_vertex_program = false;
 	}
-
 
 	table.support_ARB_fragment_program = QGL_ExtensionSupported("GL_ARB_fragment_program");
 
@@ -304,15 +306,16 @@ void QGL_sharedContextCreated(OpenGLBinding& table) {
 	}
 }
 
-void QGL_sharedContextDestroyed(OpenGLBinding& table) {
+void QGL_sharedContextDestroyed (OpenGLBinding& table)
+{
 	QGL_clear(table);
 }
 
-
-void QGL_assertNoErrors() {
+void QGL_assertNoErrors ()
+{
 	GLenum error = glGetError();
 	while (error != GL_NO_ERROR) {
-		const char* errorString = reinterpret_cast<const char*>(qgluErrorString(error));
+		const char* errorString = reinterpret_cast<const char*> (qgluErrorString(error));
 		if (error == GL_OUT_OF_MEMORY) {
 			ERROR_MESSAGE("OpenGL out of memory error: " << errorString);
 		} else {
@@ -322,24 +325,27 @@ void QGL_assertNoErrors() {
 	}
 }
 
+class QglAPI
+{
+		OpenGLBinding m_qgl;
+	public:
+		typedef OpenGLBinding Type;
+		STRING_CONSTANT(Name, "*");
 
-class QglAPI {
-	OpenGLBinding m_qgl;
-public:
-	typedef OpenGLBinding Type;
-	STRING_CONSTANT(Name, "*");
+		QglAPI ()
+		{
+			QGL_Init(m_qgl);
 
-	QglAPI() {
-		QGL_Init(m_qgl);
-
-		m_qgl.assertNoErrors = &QGL_assertNoErrors;
-	}
-	~QglAPI() {
-		QGL_Shutdown(m_qgl);
-	}
-	OpenGLBinding* getTable() {
-		return &m_qgl;
-	}
+			m_qgl.assertNoErrors = &QGL_assertNoErrors;
+		}
+		~QglAPI ()
+		{
+			QGL_Shutdown(m_qgl);
+		}
+		OpenGLBinding* getTable ()
+		{
+			return &m_qgl;
+		}
 };
 
 #include "modulesystem/singletonmodule.h"

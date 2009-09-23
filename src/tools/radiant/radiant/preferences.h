@@ -19,13 +19,6 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-/*
- The following source code is licensed by Id Software and subject to the terms of
- its LIMITED USE SOFTWARE LICENSE AGREEMENT, a copy of which is included with
- GtkRadiant. If you did not receive a LIMITED USE SOFTWARE LICENSE AGREEMENT,
- please contact Id Software immediately at info@idsoftware.com.
- */
-
 #if !defined(INCLUDED_PREFERENCES_H)
 #define INCLUDED_PREFERENCES_H
 
