@@ -489,6 +489,7 @@ void Sys_Backtrace (void)
 #endif
 }
 
+#if USE_SIGNALS
 /**
  * @brief Catch kernel interrupts and dispatch the appropriate exit routine.
  */
@@ -513,9 +514,11 @@ static void Sys_Signal (int s)
 		break;
 	}
 }
+#endif
 
 void Sys_InitSignals (void)
 {
+#if USE_SIGNALS
 #ifdef HAVE_CURSES
 	signal(SIGWINCH, Sys_Signal);
 #endif
@@ -527,4 +530,5 @@ void Sys_InitSignals (void)
 	signal(SIGFPE, Sys_Signal);
 	signal(SIGSEGV, Sys_Signal);
 	signal(SIGTERM, Sys_Signal);
+#endif
 }

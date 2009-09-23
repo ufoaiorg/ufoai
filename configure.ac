@@ -83,6 +83,10 @@ AC_ARG_ENABLE(release,
 	[AS_HELP_STRING([--enable-release], [build release, if disabled then build debug @<:@default=disabled@:>@])],
 	[], [enable_release=no])
 
+AC_ARG_ENABLE(signals,
+	[AS_HELP_STRING([--disable-signals], [build with signal handling @<:@default=enabled@:>@])],
+	[], [enable_signals=yes])
+
 AC_ARG_ENABLE(paranoid,
 	[AS_HELP_STRING([--enable-paranoid], [enable PARANOID checks @<:@default=disabled@:>@])],
 	[], [enable_paranoid=no])
@@ -865,6 +869,19 @@ then
 else
 	AC_MSG_NOTICE([Enabling release build])
 	AC_SUBST([BUILD_DEBUG],0)
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for signal handling
+#---------------------------------------------------------------------------------------------
+
+if test "$enable_signals" = "no"
+then
+	AC_MSG_NOTICE([Disable signal handling])
+	AC_SUBST([USE_SIGNALS],0)
+else
+	AC_MSG_NOTICE([Enabling signal handling])
+	AC_SUBST([USE_SIGNALS],1)
 fi
 
 #---------------------------------------------------------------------------------------------

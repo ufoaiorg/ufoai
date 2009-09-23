@@ -25,7 +25,7 @@ else
   case `(set -o) 2>/dev/null` in
   *posix*) set -o posix ;;
 esac
- 
+
 fi
 
 
@@ -649,6 +649,7 @@ BINDIR
 PKGDATADIR
 PROFILING
 PARANOID
+USE_SIGNALS
 BUILD_DEBUG
 BUILD_UFORADIANT
 BUILD_UFO2MAP
@@ -756,6 +757,7 @@ enable_client
 enable_ufo2map
 enable_uforadiant
 enable_release
+enable_signals
 enable_paranoid
 enable_profiling
 enable_tests
@@ -1414,6 +1416,7 @@ Optional Features:
   --enable-uforadiant     build uforadiant [default=enabled]
   --enable-release        build release, if disabled then build debug
                           [default=disabled]
+  --disable-signals       build with signal handling [default=enabled]
   --enable-paranoid       enable PARANOID checks [default=disabled]
   --enable-profiling      build with profiling for gprof [default=disabled]
   --enable-tests          build with tests [default=disabled]
@@ -2205,6 +2208,14 @@ if test "${enable_release+set}" = set; then
   enableval=$enable_release;
 else
   enable_release=no
+fi
+
+
+# Check whether --enable-signals was given.
+if test "${enable_signals+set}" = set; then
+  enableval=$enable_signals;
+else
+  enable_signals=yes
 fi
 
 
@@ -12652,6 +12663,23 @@ else
 	{ $as_echo "$as_me:$LINENO: Enabling release build" >&5
 $as_echo "$as_me: Enabling release build" >&6;}
 	BUILD_DEBUG=0
+
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for signal handling
+#---------------------------------------------------------------------------------------------
+
+if test "$enable_signals" = "no"
+then
+	{ $as_echo "$as_me:$LINENO: Disable signal handling" >&5
+$as_echo "$as_me: Disable signal handling" >&6;}
+	USE_SIGNALS=0
+
+else
+	{ $as_echo "$as_me:$LINENO: Enabling signal handling" >&5
+$as_echo "$as_me: Enabling signal handling" >&6;}
+	USE_SIGNALS=1
 
 fi
 
