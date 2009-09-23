@@ -1859,6 +1859,23 @@ window popup_aircraft
 		rows		5
 		mousefx		true
 		onClick		{ cmd "popup_aircraft_action_click <lineselected>" }
+		onViewChange	{
+			*(abstractscrollbar)popup_aircraft_action_scroll@fullsize <fullsize>
+			*(abstractscrollbar)popup_aircraft_action_scroll@current <viewpos>
+			*(abstractscrollbar)popup_aircraft_action_scroll@viewsize <viewsize>
+		}
+	}
+	vscrollbar popup_aircraft_action_scroll {
+		image		ui/scrollbar_v_green
+		pos			"446 78"
+		height		"100"
+		current		0
+		viewsize	8
+		fullsize	8
+		hidewhenunused true
+		onChange	{
+			*popup_aircraft_action@viewpos <current>
+		}
 	}
 
 	button bt_cancel
