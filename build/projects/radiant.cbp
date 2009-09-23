@@ -46,6 +46,7 @@
 					<Add library="vorbisfile" />
 					<Add library="vorbis" />
 					<Add library="ogg" />
+					<Add library="z" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="..\..\contrib\scripts\compile_po.bat /uforadiant" />
@@ -94,6 +95,7 @@
 					<Add library="vorbisfile" />
 					<Add library="vorbis" />
 					<Add library="ogg" />
+					<Add library="z" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="..\..\contrib\scripts\compile_po.bat /uforadiant" />
@@ -337,7 +339,7 @@
 		<Unit filename="..\..\src\tools\radiant\libs\imagelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\instancelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\maplib.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\map\plugin.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\map\write.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\map\parse.cpp">
