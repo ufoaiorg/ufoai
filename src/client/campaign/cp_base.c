@@ -3270,8 +3270,9 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 void B_RemoveAntimatterExceedingCapacity (base_t *base)
 {
 	const int amount = base->capacities[CAP_ANTIMATTER].cur - base->capacities[CAP_ANTIMATTER].max;
-	if (amount < 0)
+	if (amount <= 0)
 		return;
 
 	B_ManageAntimatter(base, amount, qfalse);
 }
+

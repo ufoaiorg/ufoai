@@ -59,9 +59,12 @@ static void B_Destroy_AntimaterStorage_f (void)
 	base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(2)));
 	if (!base)
 		return;
-	if (base->baseStatus != BASE_WORKING)
-		return;
 	if (base->capacities[CAP_ANTIMATTER].cur <= 0)
+		return;
+
+	B_RemoveAntimatterExceedingCapacity(base);
+
+	if (base->baseStatus != BASE_WORKING)
 		return;
 
 	if (prob < atof(Cmd_Argv(1))) {
