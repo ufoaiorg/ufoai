@@ -135,11 +135,9 @@ class Dialog
 		virtual void PreModal ()
 		{
 		}
-		;
 		virtual void PostModal (EMessageBoxReturn code)
 		{
 		}
-		;
 		virtual void ShowDlg ();
 		virtual void HideDlg ();
 		void Create ();

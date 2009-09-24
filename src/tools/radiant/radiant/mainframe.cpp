@@ -111,7 +111,7 @@
 #include "ui/Icons.h"
 #include "pathfinding.h"
 
-struct layout_globals_t
+struct LayoutGlobals
 {
 		WindowPosition m_position;
 
@@ -121,7 +121,7 @@ struct layout_globals_t
 		int nCamHeight;
 		int nState;
 
-		layout_globals_t () :
+		LayoutGlobals () :
 			m_position(-1, -1, 640, 480),
 
 			nXYHeight(650), nXYWidth(300), nCamWidth(200), nCamHeight(200), nState(GDK_WINDOW_STATE_MAXIMIZED)
@@ -129,8 +129,8 @@ struct layout_globals_t
 		}
 };
 
-layout_globals_t g_layout_globals;
-glwindow_globals_t g_glwindow_globals;
+LayoutGlobals g_layout_globals;
+GLWindowGlobals g_glwindow_globals;
 
 // Virtual file system
 class VFSModuleObserver: public ModuleObserver
@@ -455,6 +455,9 @@ void Radiant_loadModules (const std::string& path)
  */
 void Radiant_loadModulesFromRoot (const std::string& directory)
 {
+	const std::string g_pluginsDir = "plugins/";
+	const std::string g_modulesDir = "modules/";
+
 	Radiant_loadModules(directory + g_modulesDir);
 	Radiant_loadModules(directory + g_pluginsDir);
 }

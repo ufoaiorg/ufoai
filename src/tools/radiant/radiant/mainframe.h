@@ -153,7 +153,6 @@ class MainFrame
 		{
 			return m_nCurrentStyle;
 		}
-		;
 
 		void SetSaveButton (GtkButton *saveBtn)
 		{
@@ -181,7 +180,6 @@ class MainFrame
 		{
 			return m_toolBtnRedo;
 		}
-		;
 
 		void SetSaveMenuItem (GtkMenuItem *saveMenuItem)
 		{
@@ -222,11 +220,11 @@ enum EMouseButtonMode
 	ETwoButton = 0, EThreeButton = 1,
 };
 
-struct glwindow_globals_t
+struct GLWindowGlobals
 {
 		int m_nMouseType;
 
-		glwindow_globals_t () :
+		GLWindowGlobals () :
 			m_nMouseType(EThreeButton)
 		{
 		}
@@ -235,7 +233,7 @@ struct glwindow_globals_t
 void GLWindow_Construct ();
 void GLWindow_Destroy ();
 
-extern glwindow_globals_t g_glwindow_globals;
+extern GLWindowGlobals g_glwindow_globals;
 template<typename Value>
 class LatchedValue;
 typedef LatchedValue<bool> LatchedBool;
@@ -285,9 +283,6 @@ extern std::string g_strAppPath;
 const std::string& AppPath_get ();
 
 const std::string& SettingsPath_get ();
-
-const char* const g_pluginsDir = "plugins/"; ///< name of plugins directory, always sub-directory of toolspath
-const char* const g_modulesDir = "modules/"; ///< name of modules directory, always sub-directory of toolspath
 
 void Radiant_Initialise ();
 void Radiant_Shutdown ();
