@@ -658,6 +658,9 @@ static missionDetectionStatus_t CP_CheckMissionVisibleOnGeoscape (const mission_
 	if (mission->crashed)
 		return MISDET_ALWAYS_DETECTED;
 
+	if (mission->ufo && mission->ufo->detected && mission->ufo->landed)
+		return MISDET_ALWAYS_DETECTED;
+
 	switch (mission->stage) {
 	case STAGE_TERROR_MISSION:
 	case STAGE_BASE_DISCOVERED:
