@@ -24,7 +24,7 @@
 #include "debugging/debugging.h"
 #include "modulesystem/singletonmodule.h"
 
-#include "archivezip/archive.h"
+#include "archive.h"
 
 class ArchiveZipAPI
 {
@@ -45,5 +45,11 @@ class ArchiveZipAPI
 
 typedef SingletonModule<ArchiveZipAPI> ArchiveZipModule;
 
-typedef Static<ArchiveZipModule> StaticArchiveZipModule;
-StaticRegisterModule staticRegisterArchivezip(StaticArchiveZipModule::instance());
+ArchiveZipModule g_ArchiveZipModule;
+
+extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules (ModuleServer& server)
+{
+	initialiseModule(server);
+
+	g_ArchiveZipModule.selfRegister();
+}

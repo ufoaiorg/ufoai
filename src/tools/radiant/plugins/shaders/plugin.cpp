@@ -27,9 +27,8 @@
 
 #include "string/string.h"
 #include "modulesystem/singletonmodule.h"
-#include "modulesystem/moduleregistry.h"
 
-#include "shaders/shaders.h"
+#include "shaders.h"
 
 class ShadersDependencies: public GlobalFileSystemModuleRef,
 		public GlobalTexturesModuleRef,
@@ -63,5 +62,11 @@ class ShadersAPI
 typedef SingletonModule<ShadersAPI, ShadersDependencies, DependenciesAPIConstructor<ShadersAPI, ShadersDependencies> >
 		ShadersModule;
 
-typedef Static<ShadersModule> StaticShadersModule;
-StaticRegisterModule staticRegisterShaders(StaticShadersModule::instance());
+ShadersModule g_ShadersModule;
+
+extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules (ModuleServer& server)
+{
+	initialiseModule(server);
+
+	g_ShadersModule.selfRegister();
+}

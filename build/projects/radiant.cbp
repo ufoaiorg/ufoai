@@ -216,9 +216,6 @@
 		<Unit filename="..\..\src\tools\radiant\include\shared.h" />
 		<Unit filename="..\..\src\tools\radiant\include\version.h" />
 		<Unit filename="..\..\src\tools\radiant\include\windowobserver.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\archivezip\archive.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\archivelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\AutoPtr.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\bytestreamutils.h" />
@@ -339,12 +336,6 @@
 		<Unit filename="..\..\src\tools\radiant\libs\imagelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\instancelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\maplib.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\map\write.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\map\parse.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\math\aabb.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\math\curve.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\math\expression.h" />
@@ -405,8 +396,6 @@
 		<Unit filename="..\..\src\tools\radiant\libs\signal\isignal.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\signal\signal.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\signal\signalfwd.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\shaders\shaders.cpp" />
-		<Unit filename="..\..\src\tools\radiant\libs\shaders\shaders.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\sound\OggFileStream.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\sound\OpenAL.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\sound\SoundManager.cpp" />
@@ -446,9 +435,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\autosave.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\archivezip.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\brush.cpp">
@@ -562,9 +548,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\map.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\mapmodule.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\material.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -667,7 +650,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\sound.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\shaders.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\stacktrace.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
