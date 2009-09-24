@@ -16,8 +16,8 @@ ShowInstDetails "nevershow"
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "..\..\..\build\projects\radiant.ico"
-!define MUI_WELCOMEFINISHPAGE_BITMAP "..\..\..\build\installerradiant.bmp"
+!define MUI_ICON "..\..\build\projects\radiant.ico"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "uforadiant.bmp"
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_INSTFILES
@@ -41,13 +41,13 @@ FunctionEnd
 Section "UFORadiant"
 	SetOverwrite ifnewer
 	SetOutPath "$INSTDIR"
-		File /r /x *.svn /x CVS "..\..\..\radiant\*"
-		File "..\..\..\contrib\dlls\OpenAL32.dll"
-		File "..\..\..\contrib\dlls\libvorbis*.dll"
-		File "..\..\..\contrib\dlls\libogg*.dll"
-		File "..\..\..\contrib\dlls\libgtk*.dll"
+		File /r /x *.svn /x CVS "..\..\radiant\*"
+		File "..\dlls\OpenAL32.dll"
+		File "..\dlls\libvorbis*.dll"
+		File "..\dlls\libogg*.dll"
+		File "..\dlls\libgtk*.dll"
 	SetOutPath $TEMP
-		File "..\..\..\contrib\dlls\radiant_runtime.exe"
+		File "..\dlls\radiant_runtime.exe"
 		ExecWait '"$TEMP\radiant_runtime.exe" -o"$INSTDIR" "-y"'
 			IfErrors 0 +2
 			Abort "Error during radiant_runtime extraction"

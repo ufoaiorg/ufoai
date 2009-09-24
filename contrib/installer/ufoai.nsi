@@ -20,15 +20,15 @@ ShowUninstDetails "nevershow"
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "..\..\..\build\projects\ufo.ico"
-!define MUI_UNICON "..\..\..\build\projects\ufo.ico"
+!define MUI_ICON "..\..\build\projects\ufo.ico"
+!define MUI_UNICON "..\..\build\projects\ufo.ico"
 
 ; Language Selection Dialog Settings
 !define MUI_LANGDLL_REGISTRY_ROOT "${PRODUCT_UNINST_ROOT_KEY}"
 !define MUI_LANGDLL_REGISTRY_KEY "${PRODUCT_UNINST_KEY}"
 !define MUI_LANGDLL_REGISTRY_VALUENAME "NSIS:Language"
 
-!define MUI_WELCOMEFINISHPAGE_BITMAP "..\..\..\build\installer.bmp"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "ufoai.bmp"
 
 Var GAMEFLAGS
 Var MAPFLAGS
@@ -41,7 +41,7 @@ Var MAPICONFLAGS
 !insertmacro MUI_PAGE_WELCOME
 ; License page
 !define MUI_LICENSEPAGE_CHECKBOX
-!insertmacro MUI_PAGE_LICENSE "..\..\..\COPYING"
+!insertmacro MUI_PAGE_LICENSE "..\..\COPYING"
 !define MUI_COMPONENTSPAGE_SMALLDESC
 !insertmacro MUI_PAGE_COMPONENTS
 ; Directory page
@@ -59,7 +59,6 @@ Var MAPICONFLAGS
 
 ; Language files
 !insertmacro MUI_LANGUAGE "English"
-!insertmacro MUI_LANGUAGE "German"
 
 ; Reserve files
 !insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
@@ -86,18 +85,18 @@ SectionGroup /e "Game" SECGROUP01
 		SetOverwrite ifnewer
 		
 		SetOutPath "$INSTDIR"
-			File "..\..\..\COPYING"
-			File "..\..\..\README"
-			File "..\..\..\CONTRIBUTORS"
-			File /nonfatal "..\..\..\src\docs\tex\*.pdf"
-			File "..\..\..\contrib\dlls\*.dll"
-			File "..\..\..\ufo.exe"
-			File "..\..\..\ufo_ded.exe"
+			File "..\..\COPYING"
+			File "..\..\README"
+			File "..\..\CONTRIBUTORS"
+			File /nonfatal "..\..\src\docs\tex\*.pdf"
+			File "..\dlls\*.dll"
+			File "..\..\ufo.exe"
+			File "..\..\ufo_ded.exe"
 		SetOutPath "$INSTDIR\base"
-			File "..\..\..\base\*.dll"
-			File "..\..\..\base\*.pk3"
+			File "..\..\base\*.dll"
+			File "..\..\base\*.pk3"
 		SetOutPath "$INSTDIR\base\i18n"
-			File /r "..\..\..\base\i18n\*.mo"
+			File /r "..\..\base\i18n\*.mo"
 		
 	SectionEnd
 
@@ -118,24 +117,24 @@ SectionGroupEnd
 SectionGroup /e "Mapping" SECGROUP02
 	Section "Mapping Tools" SEC02
 		SetOutPath "$INSTDIR\base\maps"
-			File "..\..\..\base\maps\compile.p*"
-			File /r /x *.svn /x CVS "..\..\..\base\maps\*.map"
+			File "..\..\base\maps\compile.p*"
+			File /r /x *.svn /x CVS "..\..\base\maps\*.map"
 		SetOutPath "$INSTDIR\tools"
-			File "..\..\tools\*.ms"
-			File "..\..\tools\*.pl"
+			File "..\..\src\tools\*.ms"
+			File "..\..\src\tools\*.pl"
 			; EULA
-			File "..\..\..\contrib\q3radiant\*.doc"
-			File "..\..\..\contrib\q3radiant\*.exe"
-			File "..\..\..\ufo2map.exe"
+			File "..\q3radiant\*.doc"
+			File "..\q3radiant\*.exe"
+			File "..\..\ufo2map.exe"
 		; RADIANT
 		SetOutPath "$INSTDIR\radiant"
-			File /r /x *.svn /x CVS "..\..\..\radiant\*"
-			File "..\..\..\contrib\dlls\OpenAL32.dll"
-			File "..\..\..\contrib\dlls\libvorbis*.dll"
-			File "..\..\..\contrib\dlls\libogg*.dll"
-			File "..\..\..\contrib\dlls\libgtk*.dll"
+			File /r /x *.svn /x CVS "..\..\radiant\*"
+			File "..\dlls\OpenAL32.dll"
+			File "..\dlls\libvorbis*.dll"
+			File "..\dlls\libogg*.dll"
+			File "..\dlls\libgtk*.dll"
 		SetOutPath $TEMP
-			File "..\..\..\contrib\dlls\radiant_runtime.exe"
+			File "..\dlls\radiant_runtime.exe"
 			ExecWait '"$TEMP\radiant_runtime.exe" -o"$INSTDIR\radiant" "-y"'
 				IfErrors 0 +2
 				Abort "Error during radiant_runtime extraction"
@@ -153,37 +152,36 @@ SectionGroupEnd
 Section "Source Code" SEC03
 	SetOverwrite ifnewer
 	SetOutPath "$INSTDIR"
-		File "..\..\..\Makefile.in"
-		File "..\..\..\configure"
-		File "..\..\..\configure.ac"
-		File "..\..\..\config.h.in"
-		File "..\..\..\config.sub"
-		File "..\..\..\config.guess"
-		File "..\..\..\install-sh"
-		File "..\..\..\INSTALL"
+		File "..\..\Makefile.in"
+		File "..\..\configure"
+		File "..\..\configure.ac"
+		File "..\..\config.h.in"
+		File "..\..\config.sub"
+		File "..\..\config.guess"
+		File "..\..\install-sh"
+		File "..\..\INSTALL"
 	SetOutPath "$INSTDIR\build"
-		File "..\..\..\build\*.bmp"
-		File "..\..\..\build\*.mk"
+		File "..\..\build\*.mk"
 	SetOutPath "$INSTDIR\build\projects"
-		File "..\..\..\build\projects\*.cbp"
-		File "..\..\..\build\projects\*.ico"
-		File "..\..\..\build\projects\*.workspace"
-		File "..\..\..\build\projects\*.manifest"
+		File "..\..\build\projects\*.cbp"
+		File "..\..\build\projects\*.ico"
+		File "..\..\build\projects\*.workspace"
+		File "..\..\build\projects\*.manifest"
 	SetOutPath "$INSTDIR\src"
-		File /r /x *.svn /x CVS "..\..\*.h"
-		File /r /x *.svn /x CVS "..\..\*.c"
-		File /r /x *.svn /x CVS "..\..\*.def"
-		File /r /x *.svn /x CVS "..\..\*.rc"
+		File /r /x *.svn /x CVS "..\..\src\*.h"
+		File /r /x *.svn /x CVS "..\..\src\*.c"
+		File /r /x *.svn /x CVS "..\..\src\*.def"
+		File /r /x *.svn /x CVS "..\..\src\*.rc"
 	SetOutPath "$INSTDIR\src\docs"
-		File /r /x *.svn /x CVS "..\..\docs\*.*"
+		File /r /x *.svn /x CVS "..\..\src\docs\*.*"
 	SetOutPath "$INSTDIR\src\ports"
-		File /r /x *.svn /x CVS "..\..\ports\*.m"
-		File /r /x *.svn /x CVS "..\..\ports\*.xbm"
-		File /r /x *.svn /x CVS "..\..\ports\*.png"
+		File /r /x *.svn /x CVS "..\..\src\ports\*.m"
+		File /r /x *.svn /x CVS "..\..\src\ports\*.xbm"
+		File /r /x *.svn /x CVS "..\..\src\ports\*.png"
 	SetOutPath "$INSTDIR\src\po"
-		File /r /x *.svn /x CVS "..\..\po\*.*"
+		File /r /x *.svn /x CVS "..\..\src\po\*.*"
 	SetOutPath "$INSTDIR\src\tools"
-		File /r /x *.svn /x CVS "..\..\tools\*.*"
+		File /r /x *.svn /x CVS "..\..\src\tools\*.*"
 SectionEnd
 
 Section -AdditionalIcons

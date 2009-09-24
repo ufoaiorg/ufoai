@@ -8,8 +8,10 @@ mappack: maps
 	scp ufoai-$(UFOAI_VERSION)-mappack.tar.bz2 ufo:~/public_html/download
 
 wininstaller: lang maps pk3
-	makensis src/ports/windows/installer.nsi
-	md5sum src/ports/windows/ufoai-$(UFOAI_VERSION)-win32.exe > src/ports/windows/ufoai-$(UFOAI_VERSION)-win32.md5
+	makensis contrib/installer/ufoai.nsi
+	makensis contrib/installer/uforadiant.nsi
+	md5sum contrib/installer/ufoai-$(UFOAI_VERSION)-win32.exe > contrib/installer/ufoai-$(UFOAI_VERSION)-win32.md5
+	md5sum contrib/installer/uforadiant-$(UFORADIANT_VERSION)-win32.exe > contrib/installer/uforadiant-$(UFORADIANT_VERSION)-win32.md5
 
 dataarchive: pk3
 	tar -cvp -f ufoai-$(UFOAI_VERSION)-data.tar base/*.pk3
