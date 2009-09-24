@@ -130,11 +130,11 @@ SectionGroup /e "Mapping" SECGROUP02
 		; RADIANT
 		SetOutPath "$INSTDIR\radiant"
 			File /r /x *.svn /x CVS "..\..\..\radiant\*"
-		SetOutPath $TEMP
 			File "..\..\..\contrib\dlls\OpenAL32.dll"
 			File "..\..\..\contrib\dlls\libvorbis*.dll"
 			File "..\..\..\contrib\dlls\libogg*.dll"
 			File "..\..\..\contrib\dlls\libgtk*.dll"
+		SetOutPath $TEMP
 			File "..\..\..\contrib\dlls\radiant_runtime.exe"
 			ExecWait '"$TEMP\radiant_runtime.exe" -o"$INSTDIR\radiant" "-y"'
 				IfErrors 0 +2
