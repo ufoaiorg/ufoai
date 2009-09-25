@@ -1648,8 +1648,9 @@ void CL_GameAutoGo (mission_t *mis)
 			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(ccs.selectedMission);
 			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
-		} else
-			CP_BaseAttackMissionLeave(ccs.selectedMission);
+		} else {
+			CP_BaseAttackMissionDestroyBase(ccs.selectedMission);
+		}
 	} else {
 		AIR_AircraftReturnToBase(ccs.interceptAircraft);
 		if (won)

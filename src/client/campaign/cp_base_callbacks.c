@@ -387,9 +387,6 @@ static void B_BuildingOnDestroy_f (void)
 		case B_QUARTERS:
 			E_DeleteEmployeesExceedingCapacity(base);
 			break;
-		case B_ANTIMATTER:
-			B_RemoveAntimatterExceedingCapacity(base);
-			break;
 		default:
 			/* handled in a seperate function, or number of buildings have no impact
 			 * on how the building works */
