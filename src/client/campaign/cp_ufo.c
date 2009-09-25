@@ -639,7 +639,7 @@ void UFO_DetectNewUFO (aircraft_t *ufocraft)
  */
 qboolean UFO_CampaignCheckEvents (void)
 {
-	qboolean detected, newDetection;
+	qboolean newDetection;
 	int baseIdx, installationIdx;
 	aircraft_t *ufo, *aircraft;
 
@@ -649,17 +649,17 @@ qboolean UFO_CampaignCheckEvents (void)
 	for (ufo = ccs.ufos + ccs.numUFOs - 1; ufo >= ccs.ufos; ufo--) {
 		char detectedBy[MAX_VAR] = "";
 		float minDistance = -1;
+		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells
+		 * us whether or not the UFO was detected PREVIOUSLY. */
+		qboolean detected = qfalse;
 
 		/* don't update UFO status id UFO is landed or crashed */
 		if (ufo->landed)
 			continue;
 
-		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells us whether or not the UFO was detected PREVIOUSLY. */
-		detected = qfalse;
-
 		/* note: We can't exit these loops as soon as we found the UFO detected
-			RADAR_CheckUFOSensored registers the UFO in every radars' detection list
-			which detect it */
+		 * RADAR_CheckUFOSensored registers the UFO in every radars' detection list
+		 * which detect it */
 		for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
 			base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 			if (!base)
