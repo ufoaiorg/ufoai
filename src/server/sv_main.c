@@ -908,12 +908,10 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	SV_ShutdownGameProgs();
 
 	NET_DatagramSocketClose(svs.netDatagramSocket);
-	svs.netDatagramSocket = NULL;
 	SV_Stop();
 
 	/* free current level */
 	memset(&sv, 0, sizeof(sv));
-	Com_SetServerState(ss_dead);
 
 	/* free server static data */
 	if (svs.clients)

@@ -89,12 +89,6 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 
 	Com_DPrintf(DEBUG_SERVER, "SpawnServer: %s\n", server);
 
-	svs.spawncount++;
-
-	/* wipe the entire per-level structure */
-	memset(&sv, 0, sizeof(sv));
-	svs.realtime = 0;
-
 	/* save name for levels that don't set message */
 	Q_strncpyz(sv.configstrings[CS_NAME], server, MAX_TOKEN_CHARS);
 	Com_sprintf(sv.configstrings[CS_LIGHTMAP], MAX_TOKEN_CHARS, "%i", day);
