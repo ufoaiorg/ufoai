@@ -159,7 +159,7 @@ class LatchedValue
 	public:
 		Value m_value;
 		Value m_latched;
-		const std::string& m_description;
+		const std::string m_description;
 
 		LatchedValue (Value value, const std::string& description) :
 			m_latched(value), m_description(description)

@@ -186,15 +186,6 @@ void globalQueuedAccelerators_commit ()
 	g_queuedAcceleratorsAdd.clear();
 }
 
-void accel_group_test (GtkWindow* toplevel, GtkAccelGroup* accel)
-{
-	guint n_entries;
-	gtk_accel_group_query(accel, '4', (GdkModifierType) 0, &n_entries);
-	globalOutputStream() << "grid4: " << n_entries << "\n";
-	globalOutputStream() << "toplevel accelgroups: "
-			<< g_slist_length(gtk_accel_groups_from_object(G_OBJECT(toplevel))) << "\n";
-}
-
 typedef std::set<GtkWindow*> WindowSet;
 WindowSet g_accel_windows;
 
