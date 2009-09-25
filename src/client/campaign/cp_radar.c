@@ -545,27 +545,31 @@ qboolean RADAR_CheckUFOSensored (radar_t *radar, vec2_t posRadar,
 
 	int dist;
 	int num;
-	int numAircraftSensored;
+	int ufoRadarIDX;
 
 	/* Get num of ufo in ccs.ufos */
 	/** @todo why not ufo->idx? Is this only valid for aircraft in base? */
 	num = ufo - ccs.ufos;
 	if (num < 0 || num >= ccs.numUFOs)
-		return qfalse;
+		Com_Error(ERR_DROP, "Invalid ufo pointer given");
 
-	numAircraftSensored = RADAR_IsUFOSensored(radar, num);	/* indice of ufo in radar list */
-	dist = MAP_GetDistance(posRadar, ufo->pos);	/* Distance from radar to ufo */
+	/* indice of ufo in radar list */
+	ufoRadarIDX = RADAR_IsUFOSensored(radar, num);
+	/* Distance from radar to ufo */
+	dist = MAP_GetDistance(posRadar, ufo->pos);
 
 	if ((detected ? radar->trackingRange : radar->range) > dist) {
 		if (detected) {
-			if (numAircraftSensored == UFO_NOT_SENSORED) {
-				/* UFO was not sensored by this radar, but by another one (it just entered this radar zone) */
+			if (ufoRadarIDX == UFO_NOT_SENSORED) {
+				/* UFO was not sensored by this radar, but by another one
+				 * (it just entered this radar zone) */
 				RADAR_AddUFO(radar, num);
 			}
 			return qtrue;
 		} else {
-			/* UFO is sensored by no radar, so it shouldn't be sensored by this radar */
-			assert(numAircraftSensored == UFO_NOT_SENSORED);
+			/* UFO is sensored by no radar, so it shouldn't be sensored
+			 * by this radar */
+			assert(ufoRadarIDX == UFO_NOT_SENSORED);
 			/* Check if UFO is detected */
 			if (frand() <= ufoDetectionProbability) {
 				RADAR_AddDetectedUFOToEveryRadar(ufo);
@@ -575,8 +579,9 @@ qboolean RADAR_CheckUFOSensored (radar_t *radar, vec2_t posRadar,
 		}
 	}
 
-	/* UFO is not in this sensor range any more (but maybe in the range of another radar) */
-	if (numAircraftSensored != UFO_NOT_SENSORED) {
+	/* UFO is not in this sensor range any more (but maybe
+	 * in the range of another radar) */
+	if (ufoRadarIDX != UFO_NOT_SENSORED) {
 		RADAR_RemoveUFO(radar, ufo);
 	}
 	return qfalse;

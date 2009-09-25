@@ -168,7 +168,6 @@ static void B_PrevBase_f (void)
  */
 static void B_SetBaseTitle_f (void)
 {
-	Com_DPrintf(DEBUG_CLIENT, "INS_SetBaseTitle_f: #bases: %i\n", ccs.numBases);
 	if (ccs.numBases < MAX_BASES) {
 		char baseName[MAX_VAR];
 		int i = 2;
