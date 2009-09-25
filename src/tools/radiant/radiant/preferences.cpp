@@ -604,7 +604,7 @@ void PreferencesDialog_showDialog ()
 		if (!g_restart_required.empty()) {
 			std::string message = _("Preference changes require a restart:\n");
 			for (std::vector<std::string>::iterator i = g_restart_required.begin(); i != g_restart_required.end(); ++i) {
-				message += (*i) + "\n";
+				message += "<b>" + (*i) + "</b>\n";
 			}
 			gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), message);
 			g_restart_required.clear();

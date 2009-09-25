@@ -154,7 +154,7 @@ static inline const int& min_int (const int& left, const int& right)
 
 static int max_tex_size = 0;
 static const int max_texture_quality = 3;
-static LatchedInt g_Textures_textureQuality(3, "Texture Quality");
+static LatchedInt g_Textures_textureQuality(3, _("Texture Quality"));
 
 /**
  * @brief This function does the actual processing of raw RGBA data into a GL texture.
