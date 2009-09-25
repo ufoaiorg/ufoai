@@ -1897,7 +1897,7 @@ base_t *B_GetCurrentSelectedBase (void)
 /**
  * @param[in] base If this is @c NULL we want to build a new base
  */
-void B_SelectBase (base_t *base)
+void B_SelectBase (const base_t *base)
 {
 	/* set up a new base */
 	if (!base) {

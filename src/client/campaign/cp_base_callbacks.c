@@ -110,7 +110,7 @@ static void B_SelectBase_f (void)
 	 * if we would check against ccs.numBases here, a click on the base summary
 	 * base nodes would try to select unfounded bases */
 	if (baseID >= 0 && baseID < MAX_BASES) {
-		base_t *base = B_GetFoundedBaseByIDX(baseID);
+		const base_t *base = B_GetFoundedBaseByIDX(baseID);
 		/* don't create a new base if the index was valid */
 		if (base)
 			B_SelectBase(base);
@@ -128,7 +128,7 @@ static void B_SelectBase_f (void)
 static void B_NextBase_f (void)
 {
 	int baseID;
-	base_t *base = B_GetCurrentSelectedBase();
+	const base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -147,7 +147,7 @@ static void B_NextBase_f (void)
 static void B_PrevBase_f (void)
 {
 	int baseID;
-	base_t *base = B_GetCurrentSelectedBase();
+	const base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;

@@ -272,7 +272,7 @@ building_t* B_SetBuildingByClick(base_t *base, const building_t const *template,
 void B_InitStartup(void);
 void B_NewBases(void);
 void B_BuildingStatus(const base_t* base, const building_t* building);
-void B_SelectBase(base_t *base);
+void B_SelectBase(const base_t *base);
 void B_UpdateBaseCount(void);
 
 building_t *B_GetFreeBuildingType(buildingType_t type);
