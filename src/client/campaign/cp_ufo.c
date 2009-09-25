@@ -40,9 +40,13 @@ typedef struct ufoTypeList_s {
 	int ufoType;		/**< ufoType_t values */
 } ufoTypeList_t;
 
+/**
+ * @brief returns the UFO on the geoscape with a certain index
+ * @param[in] idx Index of the UFO
+ */
 aircraft_t* UFO_GetByIDX (const int idx)
 {
-	assert(idx < 0 || idx > MAX_UFOONGEOSCAPE);
+	assert(idx >= 0 && idx < MAX_UFOONGEOSCAPE);
 	return &ccs.ufos[idx];
 }
 
