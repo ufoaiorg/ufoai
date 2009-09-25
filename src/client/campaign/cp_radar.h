@@ -58,7 +58,7 @@ void RADAR_UpdateBaseRadarCoverage_f(void);
 void RADAR_UpdateInstallationRadarCoverage(struct installation_s *installation, const float radarRange, const float trackingRadarRange);
 void RADAR_AddDetectedUFOToEveryRadar(const struct aircraft_s const *ufo);
 qboolean RADAR_CheckRadarSensored(const vec2_t pos);
-qboolean RADAR_CheckUFOSensored(radar_t* radar, vec2_t posRadar, const struct aircraft_s* ufo, qboolean detected);
+qboolean RADAR_CheckUFOSensored(radar_t* radar, const vec2_t posRadar, const struct aircraft_s* ufo, qboolean detected);
 void RADAR_SetRadarAfterLoading(void);
 
 #endif

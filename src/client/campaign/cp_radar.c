@@ -524,15 +524,15 @@ qboolean RADAR_CheckRadarSensored (const vec2_t pos)
 
 /**
  * @brief Check if the specified UFO is inside the sensor range of the given radar
- * @param[in] radar radar that may detect the UFO.
+ * @param[in,out] radar radar that may detect the UFO.
  * @param[in] posRadar Position of @c radar
- * @param[in] ufo aircraft that should be checked.
+ * @param[in,out] ufo aircraft that should be checked.
  * @param[in] detected Is the UFO already detected by another radar? (Beware: this is not the same as ufo->detected)
  * @return true if the aircraft is inside sensor and was sensored
  * @sa UFO_CampaignCheckEvents
  * @sa CP_CheckNewMissionDetectedOnGeoscape
  */
-qboolean RADAR_CheckUFOSensored (radar_t *radar, vec2_t posRadar,
+qboolean RADAR_CheckUFOSensored (radar_t *radar, const vec2_t posRadar,
 	const aircraft_t *ufo, qboolean detected)
 {
 	/** @brief Probability to detect UFO each @c DETECTION_INTERVAL
