@@ -177,7 +177,7 @@ typedef struct aircraft_s {
 	char *model;		/**< Model used on geoscape */
 	aircraftType_t type;/**< Type of aircraft, see aircraftType_t. */
 	ufoType_t ufotype;	/**< Type of UFO, see ufoType_t (UFO_MAX if craft is not a UFO). */
-	int status;			/**< Status of this aircraft, see aircraftStatus_t. */
+	aircraftStatus_t status;			/**< Status of this aircraft, see aircraftStatus_t. */
 
 	int price;			/**< Price of this aircraft type. */
 	int fuel;			/**< Current fuel amount. */
@@ -212,8 +212,6 @@ typedef struct aircraft_s {
 	int itemtypes;						/**< How many types of items we collected. */
 
 	char *building;		/**< id of the building needed as hangar */
-
-	int numUpgrades;	/**< @todo Implement or remove */
 
 	struct mission_s* mission;	/**< The mission the aircraft is moving to if this is a PHALANX aircraft
 								 * The mission the UFO is involved if this is a UFO */

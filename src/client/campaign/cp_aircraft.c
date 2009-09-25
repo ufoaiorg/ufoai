@@ -2579,9 +2579,6 @@ void AIR_SaveAircraftXML (mxml_node_t *node, aircraft_t const aircraft, qboolean
 		mxml_AddInt(ssnode, "amount", aircraft.itemcargo[l].amount);
 	}
 
-	/*int numUpgrades;*/
-	mxml_AddInt(node, "numupgrades", aircraft.numUpgrades);
-	/*radar_t	radar;*/
 	mxml_AddInt(node, "radar.range", aircraft.radar.range);
 	mxml_AddInt(node, "radar.trackingrange", aircraft.radar.trackingRange);
 
@@ -2864,8 +2861,6 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 		craft->pilot = &ccs.employees[EMPL_PILOT][tmp_int];
 	else
 		craft->pilot = NULL;
-
-	craft->numUpgrades = mxml_GetInt(p, "numupgrades", 0);
 
 	RADAR_InitialiseUFOs(&craft->radar);
 
