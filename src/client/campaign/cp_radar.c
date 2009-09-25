@@ -171,8 +171,8 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, const vec2_t
 	for (i = 0; i < radar->numUFOs; i++) {
 		/* we really want to avoid buffer overflow: numUFO is supposed to be UFO idx */
 		assert(radar->ufos[i] < MAX_UFOONGEOSCAPE && radar->ufos[i] >= 0);
-		if (UFO_IsUFOSeenOnGeoscape(&ccs.ufos[radar->ufos[i]])						/* Is UFO landed? */
-			&& MAP_AllMapToScreen(node, ccs.ufos[radar->ufos[i]].pos, &x, &y, NULL)	/* UFO is on the screen */
+		if (UFO_IsUFOSeenOnGeoscape(UFO_GetByIDX(radar->ufos[i]))						/* Is UFO landed? */
+			&& MAP_AllMapToScreen(node, UFO_GetByIDX(radar->ufos[i])->pos, &x, &y, NULL)	/* UFO is on the screen */
 			&& display) {															/* radar is on the screen */
 			pts[1].x = x;
 			pts[1].y = y;
@@ -597,7 +597,7 @@ void RADAR_SetRadarAfterLoading (void)
 	int ufoIdx;
 
 	for (ufoIdx = 0; ufoIdx < ccs.numUFOs; ufoIdx++) {
-		const aircraft_t const *ufo = &ccs.ufos[ufoIdx];
+		const aircraft_t const *ufo = UFO_GetByIDX(ufoIdx);
 
 		if (!ufo->detected)
 			continue;

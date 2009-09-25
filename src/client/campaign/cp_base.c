@@ -2756,11 +2756,11 @@ qboolean B_SaveXML (mxml_node_t *parent)
 		mxml_AddInt(act_base, "currentaircraftidx", AIR_GetAircraftIDXInBase(b->aircraftCurrent));
 		node = mxml_AddNode(act_base, "aircrafts");
 		for (k = 0; k < b->numAircraftInBase; k++) {
-			const aircraft_t *aircraft = &b->aircraft[k];
+			const aircraft_t* const aircraft = &b->aircraft[k];
 			mxml_node_t * snode;
 			/*const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);*/
 			snode = mxml_AddNode(node, "aircraft");
-			AIR_SaveAircraftXML(snode, *aircraft, qfalse);
+			AIR_SaveAircraftXML(snode, aircraft, qfalse);
 		}
 		/* store equipment */
 		node = mxml_AddNode(act_base, "storage");
@@ -2798,7 +2798,7 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, mxml_node_t *p)
 		const int target = mxml_GetInt(s, "target", -1);
 		AIR_LoadOneSlotXML(&weapons[i].slot, s, qtrue);
 		weapons[i].autofire = mxml_GetBool(s, "autofire", qtrue);
-		weapons[i].target = (target >= 0) ? &ccs.ufos[target] : NULL;
+		weapons[i].target = (target >= 0) ? UFO_GetByIDX(target) : NULL;
 	}
 	return i;
 }

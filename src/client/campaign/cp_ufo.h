@@ -49,5 +49,6 @@ void UFO_SendToDestination(aircraft_t* ufo, vec2_t dest);
 qboolean UFO_SendPursuingAircraft(aircraft_t* ufo, aircraft_t* aircraft);
 void UFO_NotifyPhalanxAircraftRemoved(const aircraft_t *const aircraft);
 qboolean UFO_IsUFOSeenOnGeoscape(const aircraft_t const *ufo);
+aircraft_t* UFO_GetByIDX(const int idx);
 
 #endif

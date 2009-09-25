@@ -40,6 +40,12 @@ typedef struct ufoTypeList_s {
 	int ufoType;		/**< ufoType_t values */
 } ufoTypeList_t;
 
+aircraft_t* UFO_GetByIDX (const int idx)
+{
+	assert(idx < 0 || idx > MAX_UFOONGEOSCAPE);
+	return &ccs.ufos[idx];
+}
+
 /**
  * @brief Translate UFO type to name.
  * @param[in] type UFO type in ufoType_t.
@@ -272,7 +278,7 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 	int ufoIdx;
 
 	for (ufoIdx = 0; ufoIdx < ccs.numUFOs; ufoIdx++) {
-		const aircraft_t const *ufo = &ccs.ufos[ufoIdx];
+		const aircraft_t const *ufo = UFO_GetByIDX(ufoIdx);
 		int idx;
 
 		/* landed UFO can't detect any phalanx base or installation */
@@ -436,7 +442,7 @@ void UFO_CampaignRunUFOs (int dt)
 
 	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
 	for (ufoIdx = ccs.numUFOs - 1; ufoIdx >= 0; ufoIdx--) {
-		aircraft_t *ufo = &ccs.ufos[ufoIdx];
+		aircraft_t *ufo = UFO_GetByIDX(ufoIdx);
 		/* don't run a landed ufo */
 		if (ufo->landed)
 			continue;
@@ -559,7 +565,7 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 	}
 
 	/* Create ufo */
-	ufo = &ccs.ufos[ccs.numUFOs];
+	ufo = UFO_GetByIDX(ccs.numUFOs);
 	*ufo = ccs.aircraftTemplates[newUFONum];
 	Com_DPrintf(DEBUG_CLIENT, "New UFO on geoscape: '%s' (ccs.numUFOs: %i, newUFONum: %i)\n", ufo->id, ccs.numUFOs, newUFONum);
 	ufo->idx = ccs.numUFOs++;
@@ -621,6 +627,9 @@ static void UFO_RemoveFromGeoscape_f (void)
  */
 void UFO_DetectNewUFO (aircraft_t *ufocraft)
 {
+	if (ufocraft->detected)
+		return;
+
 	/* Make this UFO detected */
 	ufocraft->detected = qtrue;
 	if (!ufocraft->detectionIdx) {
@@ -749,7 +758,7 @@ void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t *const aircraft)
 	assert(aircraft);
 
 	for (ufoIdx = 0; ufoIdx < ccs.numUFOs; ufoIdx++) {
-		aircraft_t *ufo = &ccs.ufos[ufoIdx];
+		aircraft_t *ufo = UFO_GetByIDX(ufoIdx);
 
 		if (ufo->aircraftTarget == aircraft)
 			ufo->aircraftTarget = NULL;
