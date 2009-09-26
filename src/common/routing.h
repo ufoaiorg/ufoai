@@ -30,11 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 GLOBAL TYPES
 ==============================================================*/
 #if defined(COMPILE_MAP)
-  #define RT_TESTLINE			TR_TestLine
   #define RT_COMPLETEBOXTRACE	TR_SingleTileBoxTrace
 
 #elif defined(COMPILE_UFO)
-  #define RT_TESTLINE			CM_EntTestLine
   #define RT_COMPLETEBOXTRACE	CM_EntCompleteBoxTrace
 
 #else
