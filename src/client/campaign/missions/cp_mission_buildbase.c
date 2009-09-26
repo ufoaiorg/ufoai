@@ -107,6 +107,8 @@ void CP_BuildBaseMissionBaseDestroyed (mission_t *mission)
 static void CP_BuildBaseMissionLeave (mission_t *mission)
 {
 	assert(mission->ufo);
+	/* there must be an alien base set */
+	assert(mission->data);
 
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 

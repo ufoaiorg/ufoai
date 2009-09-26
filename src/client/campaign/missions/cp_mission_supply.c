@@ -69,6 +69,8 @@ void CP_SupplyMissionIsFailure (mission_t *mission)
 static void CP_SupplyMissionLeave (mission_t *mission)
 {
 	assert(mission->ufo);
+	/* there must be an alien base set */
+	assert(mission->data);
 
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
@@ -89,6 +91,8 @@ static void CP_SupplySetStayAtBase (mission_t *mission)
 	const date_t supplyTime = {10, 0};	/**< Max time needed to supply base */
 
 	assert(mission->ufo);
+	/* there must be an alien base set */
+	assert(mission->data);
 
 	mission->stage = STAGE_SUPPLY;
 
@@ -128,6 +132,7 @@ static void CP_SupplyGoToBase (mission_t *mission)
 	}
 
 	alienBase = AB_ChooseBaseToSupply();
+	assert(alienBase);
 	mission->data = (void *) alienBase;
 	Vector2Copy(alienBase->pos, mission->pos);
 
