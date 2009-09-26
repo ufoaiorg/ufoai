@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 #include "cp_time.h"
 #include "cp_base_callbacks.h"
+#include "cp_ufo.h"
 
 vec2_t newBasePos;
 static cvar_t *cp_initial_equipment;

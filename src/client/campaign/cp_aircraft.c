@@ -2488,7 +2488,7 @@ static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num,
  * @param[in] aircraft Aircraft we save
  * @param[in] isUfo If this aircraft is a UFO
  */
-void AIR_SaveAircraftXML (mxml_node_t *node, aircraft_t* const aircraft, qboolean const isUfo)
+void AIR_SaveAircraftXML (mxml_node_t *node, const aircraft_t* const aircraft, qboolean const isUfo)
 {
 	mxml_node_t *subnode;
 	int l;
