@@ -1044,6 +1044,9 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		mission.category = mxml_GetInt(act_node, "category", 0);
 		mission.stage = mxml_GetShort(act_node, "stage", 0);
 
+		mission.initialOverallInterest = mxml_GetInt(act_node, "initialoverallinterest", 0);
+		mission.initialIndividualInterest = mxml_GetInt(act_node, "initialindividualinterest", 0);
+
 		switch (mission.category) {
 		case INTERESTCATEGORY_BASE_ATTACK:
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_BASE_ATTACK) {
@@ -1076,14 +1079,16 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
 			if (mission.stage >= STAGE_MISSION_GOTO) {
-				int baseidx = mxml_GetInt(act_node, "baseindex", BYTES_NONE);
-				if (baseidx != BYTES_NONE) {
-					/* don't check baseidx value here: alien bases are not loaded yet */
-					alienBase_t *alienBase = AB_GetBase(baseidx, qfalse);
-					if (alienBase)
-						mission.data = (void *) alienBase;
-					else
-						Com_Printf("Error while loading Alien Base mission (mission %i)\n", i);
+				int baseIDX = mxml_GetInt(act_node, "alienbaseindex", BYTES_NONE);
+				/* don't check baseidx value here: alien bases are not loaded yet */
+				if (baseIDX != BYTES_NONE) {
+					alienBase_t *alienBase = AB_GetBase(baseIDX, qfalse);
+					mission.data = (void *) alienBase;
+				}
+				if (!mission.data && !CP_BasemissionIsSubvertingGovernmentMission(&mission)) {
+					Com_Printf("Error while loading Alien Base mission (mission %i, baseidx: %i, category: %i, stage: %i)\n",
+							i, baseIDX, mission.category, mission.stage);
+					return qfalse;
 				}
 			}
 			break;
@@ -1092,9 +1097,6 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		}
 
 		Q_strncpyz(mission.location, mxml_GetString(act_node, "location"), sizeof(mission.location));
-
-		mission.initialOverallInterest = mxml_GetInt(act_node, "initialoverallinterest", 0);
-		mission.initialIndividualInterest = mxml_GetInt(act_node, "initialindividualinterest", 0);
 
 		mission.startDate.day = mxml_GetInt(act_node, "startdate.day", 0);
 		mission.startDate.sec = mxml_GetInt(act_node, "startdate.sec", 0);
@@ -1277,15 +1279,11 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
 			if (mission->stage >= STAGE_MISSION_GOTO) {
-				const alienBase_t *base;
-				/* save IDX of base under attack if required */
-				base = (alienBase_t*)mission->data;
+				/* save IDX of alien base if required */
+				const alienBase_t *base = (alienBase_t*)mission->data;
+				/* there may be no base is the mission is a subverting government */
 				if (base)
 					mxml_AddShort(missions, "alienbaseindex", base->idx);
-				else
-					/* there may be no base is the mission is a subverting government */
-					mxml_AddShort(missions, "baseindex", BYTES_NONE);
-					/*MSG_WriteByte(sb, BYTES_NONE);*/
 			}
 			break;
 		default:

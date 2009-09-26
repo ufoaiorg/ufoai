@@ -37,12 +37,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 const int STARTING_BASEBUILD_INTEREST = 300;
 
 /**
+ * This mission type has no alienbase set
+ * @param mission The mission to check
+ * @return
+ */
+qboolean CP_BasemissionIsSubvertingGovernmentMission (const mission_t *mission)
+{
+	return mission->initialOverallInterest < STARTING_BASEBUILD_INTEREST;
+}
+
+/**
  * @brief Build Base mission is over and is a success (from an alien point of view): change interest values.
  * @note Build Base mission
  */
 void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 {
-	if (mission->initialOverallInterest < STARTING_BASEBUILD_INTEREST) {
+	if (CP_BasemissionIsSubvertingGovernmentMission(mission)) {
 		/* This is a subverting government mission */
 		CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_TERROR_ATTACK);
 	} else {
@@ -215,7 +225,7 @@ static void CP_BuildBaseSubvertGovernment (mission_t *mission)
  */
 static void CP_BuildBaseChooseMission (mission_t *mission)
 {
-	if (mission->initialOverallInterest < STARTING_BASEBUILD_INTEREST)
+	if (CP_BasemissionIsSubvertingGovernmentMission(mission))
 		CP_ReconMissionGroundGo(mission);
 	else
 		CP_BuildBaseGoToBase(mission);
@@ -232,7 +242,7 @@ int CP_BuildBaseMissionAvailableUFOs (const mission_t const *mission, int *ufoTy
 {
 	int num = 0;
 
-	if (mission->initialOverallInterest < STARTING_BASEBUILD_INTEREST) {
+	if (CP_BasemissionIsSubvertingGovernmentMission(mission)) {
 		/* This is a subverting government mission */
 		ufoTypes[num++] = UFO_SCOUT;
 	} else {
@@ -259,7 +269,7 @@ void CP_BuildBaseMissionNextStage (mission_t *mission)
 		CP_BuildBaseChooseMission(mission);
 		break;
 	case STAGE_MISSION_GOTO:
-		if (mission->initialOverallInterest < STARTING_BASEBUILD_INTEREST)
+		if (CP_BasemissionIsSubvertingGovernmentMission(mission))
 			/* subverting mission */
 			CP_BuildBaseSubvertGovernment(mission);
 		else
