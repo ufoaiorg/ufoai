@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void CP_XVIInit(void);
 void CP_SpreadXVIAtPos(const vec2_t pos);
+void CP_ReduceXVIAtPos(const vec2_t pos);
 qboolean CP_IsXVIResearched(void);
 void CP_SpreadXVI(void);
 int CP_GetAverageXVIRate(void);

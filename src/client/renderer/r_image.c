@@ -1466,6 +1466,14 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	return image;
 }
 
+void R_FreeImage (image_t *image)
+{
+	/* free it */
+	glDeleteTextures(1, (GLuint *) &image->texnum);
+	R_CheckError();
+	memset(image, 0, sizeof(*image));
+}
+
 /**
  * @brief Any image that is a mesh or world texture will be removed here
  * @sa R_ShutdownImages
@@ -1483,9 +1491,7 @@ void R_FreeWorldImages (void)
 			continue;			/* keep them */
 
 		/* free it */
-		glDeleteTextures(1, (GLuint *) &image->texnum);
-		R_CheckError();
-		memset(image, 0, sizeof(*image));
+		R_FreeImage(image);
 	}
 }
 

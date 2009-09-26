@@ -1,6 +1,6 @@
 /**
  * @file cp_mission_buildbase.c
- * @brief Campaign mission code
+ * @brief Campaign mission code for alien bases
  */
 
 /*
@@ -87,10 +87,15 @@ void CP_BuildBaseMissionStart (mission_t *mission)
  */
 void CP_BuildBaseMissionBaseDestroyed (mission_t *mission)
 {
+	/* An alien base has been built */
+	alienBase_t *base = (alienBase_t *) mission->data;
+	assert(base);
+
 	CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_BUILDING);
 	CL_ChangeIndividualInterest(+0.3f, INTERESTCATEGORY_INTERCEPT);
 
-	AB_DestroyBase((alienBase_t *) mission->data);
+	CP_ReduceXVIAtPos(base->pos);
+	AB_DestroyBase(base);
 	CP_MissionRemove(mission);
 }
 

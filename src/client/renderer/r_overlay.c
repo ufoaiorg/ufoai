@@ -36,6 +36,7 @@ float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 /**
  * @brief Applies spreading on xvi transparency channel centered on a given pos
  * @param[in] pos Position of the center of XVI spreading
+ * @sa R_DecreaseXVILevel
  * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
  * XVI spreads in circle, and the alpha value of one pixel indicates the XVI level of infection.
  * This is necessary to take into account a new event that would spread in the zone where XVI is already spread.
@@ -103,8 +104,17 @@ void R_IncreaseXVILevel (const vec2_t pos)
 }
 
 /**
+ * @sa R_IncreaseXVILevel
+ * @param pos
+ */
+void R_DecreaseXVILevel (const vec2_t pos)
+{
+}
+
+/**
  * @brief Initialize XVI overlay on geoscape.
  * @param[in] data Pointer to the data containing values to store in XVI map. Can be NULL for new games.
+ * This is only the alpha channel of the xvi map
  * @param[in] width Width of data (used only if data is not NULL)
  * @param[in] height Height of data (used only if data is not NULL)
  * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
@@ -116,9 +126,13 @@ void R_InitializeXVIOverlay (const char *mapname, byte *data, int width, int hei
 	byte *start;
 	qboolean setToZero = qtrue;
 
-	/* Initialize only once per game */
+	/* reload for every new game */
 	if (r_xviTexture)
-		return;
+		R_FreeImage(r_xviTexture);
+	if (r_xviPic) {
+		Mem_Free(r_xviPic);
+		r_xviPic = NULL;
+	}
 
 	/* we should always have a campaign loaded here */
 	assert(mapname);
@@ -143,14 +157,17 @@ void R_InitializeXVIOverlay (const char *mapname, byte *data, int width, int hei
 }
 
 /**
- * @brief Copy XVI transparency map for saving purpose
+ * @brief Copy XVI transparency map for saving purpose (only the alpha value of the map)
  * @sa CP_XVIMapSave
+ * @note Make sure to free the returned buffer
  */
 byte* R_XVIMapCopy (int *width, int *height)
 {
 	int x, y;
 	const int bpp = 4;
 	byte *buf = Mem_PoolAllocExt(r_xviTexture->height * r_xviTexture->width * bpp, qfalse, vid_imagePool, 0);
+	if (!buf)
+		return NULL;
 
 	*width = r_xviTexture->width;
 	*height = r_xviTexture->height;

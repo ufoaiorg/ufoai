@@ -86,6 +86,7 @@ void R_SoftenTexture(byte *in, int width, int height, int bpp);
 void R_ImageList_f(void);
 void R_InitImages(void);
 void R_ShutdownImages(void);
+void R_FreeImage(image_t *image);
 void R_FreeWorldImages(void);
 void R_ImageClearMaterials(void);
 void R_CalcAndUploadDayAndNightTexture(float q);

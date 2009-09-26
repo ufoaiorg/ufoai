@@ -53,6 +53,24 @@ void CP_SpreadXVIAtPos (const vec2_t pos)
 }
 
 /**
+ * @brief Reduce XVI at a given position.
+ * @param[in] pos Position where XVI should be reduced.
+ */
+void CP_ReduceXVIAtPos (const vec2_t pos)
+{
+	nation_t *nation;
+
+	if (!CP_IsXVIResearched())
+		return;
+
+	nation = MAP_GetNation(pos);
+	if (nation)
+		nation->stats[0].xviInfection--;
+
+	R_DecreaseXVILevel(pos);
+}
+
+/**
  * @brief Return the average XVI rate
  * @note XVI = eXtraterrestial Viral Infection
  */
@@ -115,15 +133,15 @@ void CP_XVIInit (void)
  */
 qboolean XVI_SaveXML (mxml_node_t *p)
 {
-	byte *out;
 	int y;
 	int width;
 	int height;
 	mxml_node_t *n;
 	int defaultval = 0; /* that value should be the value, which is the most used one in the array */
-	out = R_XVIMapCopy(&width, &height);
+	byte *out = R_XVIMapCopy(&width, &height);
 	if (!out)
 		return qtrue;
+
 	/* ok, do the saving... */
 	n = mxml_AddNode(p, "xvi");
 	mxml_AddInt(n, "width", width);
