@@ -948,7 +948,7 @@ void Cvar_PrintDebugCvars (void)
 	Com_Printf("Debug cvars:\n");
 	for (var = cvarVars; var; var = var->next) {
 		if ((var->flags & CVAR_DEVELOPER) || !strncmp(var->name, "debug_", 6))
-			Com_Printf(" * %s (%s)\n   %s\n", var->name, var->string, var->description);
+			Com_Printf(" * %s (%s)\n   %s\n", var->name, var->string, var->description ? var->description : "");
 	}
 	Com_Printf("\n");
 }
