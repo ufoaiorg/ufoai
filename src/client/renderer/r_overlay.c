@@ -427,5 +427,5 @@ void R_ShutdownOverlay (void)
 
 	r_xviTexture = NULL;
 	Mem_Free(r_xviPic);
-	r_xviPic = NULL
+	r_xviPic = NULL;
 }
