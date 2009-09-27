@@ -43,6 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void GAME_InitStartup(void);
 void GAME_SetMode(int gametype);
+void GAME_ReloadMode(void);
 void GAME_RestartMode(int gametype);
 void GAME_Init(qboolean load);
 qboolean GAME_ItemIsUseable(const objDef_t *od);
