@@ -416,3 +416,16 @@ void R_UploadRadarCoverage (qboolean smooth)
 	R_BindTexture(r_radarTexture->texnum);
 	R_UploadTexture((unsigned *) r_radarPic, r_radarTexture->upload_width, r_radarTexture->upload_height, r_radarTexture);
 }
+
+void R_ShutdownOverlay (void)
+{
+	r_radarTexture = NULL;
+	Mem_Free(r_radarPic);
+	Mem_Free(r_radarSourcePic);
+	r_radarPic = NULL;
+	r_radarSourcePic = NULL;
+
+	r_xviTexture = NULL;
+	Mem_Free(r_xviPic);
+	r_xviPic = NULL
+}
