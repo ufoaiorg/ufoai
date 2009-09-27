@@ -39,18 +39,8 @@ upload-sf:
 	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-win32.exe $(USER)@frs.sourceforge.net:uploads/
 	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-data.tar $(USER)@frs.sourceforge.net:uploads/
 
-upload-mirror:
-	scp src/ports/macosx/installer/ufoai-$(UFOAI_VERSION)-macosx-$(TARGET_CPU).dmg ufo:~/public_html/download
-	scp src/ports/macosx/installer/uforadiant-$(UFORADIANT_VERSION)-macosx-$(TARGET_CPU).dmg ufo:~/public_html/download
-	scp src/ports/linux/installer/ufoai-$(UFOAI_VERSION)-linux.run ufo:~/public_html/download
-	scp src/ports/windows/ufoai-$(UFOAI_VERSION)-win32.exe src/ports/windows/ufoai-$(UFOAI_VERSION)-win32.md5 ufo:~/public_html/download
-	scp src/ports/macosx/installer/ufoai-$(UFOAI_VERSION)-macosx-$(TARGET_CPU).dmg mirror:~/public_html
-	scp src/ports/macosx/installer/uforadiant-$(UFORADIANT_VERSION)-macosx-$(TARGET_CPU).dmg mirror:~/public_html
-	scp src/ports/linux/installer/ufoai-$(UFOAI_VERSION)-linux.run mirror:~/public_html
-	scp src/ports/windows/ufoai-$(UFOAI_VERSION)-win32.exe src/ports/windows/ufoai-$(UFOAI_VERSION)-win32.md5 mirror:~/public_html
-
 create-release: dataarchive wininstaller linuxinstaller macinstaller sourcearchive upload-sf
-create-dev: dataarchive wininstaller linuxinstaller macinstaller sourcearchive upload-mirror
+create-dev: dataarchive wininstaller linuxinstaller macinstaller sourcearchive
 
 #
 # Generate a tar archive of the sources.
