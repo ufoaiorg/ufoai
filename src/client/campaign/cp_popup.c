@@ -315,10 +315,10 @@ POPUP_INTERCEPT
  */
 void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 {
-	static char aircraftListText[1024];
-	static char baseListText[1024];
-	const char *s;
-	int i, baseIdx, installationIdx;
+	linkedList_t *aircraftList = NULL;
+	linkedList_t *baseList = NULL;
+	char aircraftListText[1024];
+	int baseIdx;
 
 	/* One parameter must be specified, mission or ufo */
 	if (!mission && !ufo)
@@ -328,12 +328,20 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 
 	/* Create the list of aircraft, and write the text to display in popup */
 	popupIntercept.numAircraft = 0;
-	memset(aircraftListText, 0, sizeof(aircraftListText));
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		int i;
+
 		if (!base)
 			continue;
 
+		/* Check if the base should be displayed in base list
+		 * don't check range because maybe UFO will get closer */
+		if (ufo && AII_BaseCanShoot(base)) {
+			LIST_AddString(&baseList, va("^B%s", base->name));
+		}
+
+		/* Check aircraft in base */
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft_t *aircraft = &base->aircraft[i];
 			qboolean notEnoughFuel = qfalse;
@@ -374,18 +382,19 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 				}
 			}
 
+			aircraftListText[0] = '\0';
 			if (!notEnoughFuel)
 				Q_strcat(aircraftListText, "^B", sizeof(aircraftListText));
 			if (ufo)
-				s = va("%s (%i/%i)\t%s\t%s\n", aircraft->name, aircraft->teamSize,
-					aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name);
+				Q_strcat(aircraftListText, va("%s (%i/%i)\t%s\t%s", aircraft->name, aircraft->teamSize,
+					aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name), sizeof(aircraftListText));
 			else {
 				const float distance = MAP_GetDistance(aircraft->pos, mission->pos);
-				s = va("%s (%i/%i)\t%s\t%s\t%s\n", aircraft->name, aircraft->teamSize,
+				Q_strcat(aircraftListText, va("%s (%i/%i)\t%s\t%s\t%s", aircraft->name, aircraft->teamSize,
 					aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name,
-					CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]));
+					CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), sizeof(aircraftListText));;
 			}
-			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
+			LIST_AddString(&aircraftList, aircraftListText);
 			assert(aircraft->homebase == base);
 			popupIntercept.aircraft[popupIntercept.numAircraft] = aircraft;
 			popupIntercept.numAircraft++;
@@ -398,30 +407,16 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 	}	/* bases */
 
 	if (popupIntercept.numAircraft)
-		MN_RegisterText(TEXT_AIRCRAFT_LIST, aircraftListText);
+		MN_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, aircraftList);
 	else if (mission)
 		MN_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no tactical teams assigned to available craft."));
 	else if (ufo)
 		MN_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no weapon or ammo equipped."));
 
 	if (ufo) {
-		qboolean somethingWritten = qfalse;
-		memset(baseListText, 0, sizeof(baseListText));
-		/* Create the list of base, and write the text to display in popup
-		 * don't use the same loop than above, to avoid leaving the loop if popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT */
-		for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-			const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
-			if (!base)
-				continue;
+		int installationIdx;
 
-			/* Check if the base should be displayed in base list
-			 * don't check range because maybe UFO will get closer */
-			if (AII_BaseCanShoot(base)) {
-				Q_strcat(baseListText, va("^B%s\n", base->name), sizeof(baseListText));
-				somethingWritten = qtrue;
-			}
-		}
-		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+		for (installationIdx = 0; installationIdx < ccs.numInstallations; installationIdx++) {
 			const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
 			if (!installation)
 				continue;
@@ -429,12 +424,11 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 			/* Check if the installation should be displayed in base list
 			 * don't check range because maybe UFO will get closer */
 			if (AII_InstallationCanShoot(installation)) {
-				Q_strcat(baseListText, va("^B%s\n", installation->name), sizeof(baseListText));
-				somethingWritten = qtrue;
+				LIST_AddString(&baseList, va("^B%s", installation->name));
 			}
 		}
-		if (somethingWritten)
-			MN_RegisterText(TEXT_BASE_LIST, baseListText);
+		if (baseList)
+			MN_RegisterLinkedListText(TEXT_BASE_LIST, baseList);
 		else
 			MN_RegisterText(TEXT_BASE_LIST, _("No defence system operational or no weapon or ammo equipped."));
 	}
