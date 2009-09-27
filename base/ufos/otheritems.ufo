@@ -32,6 +32,7 @@ item alienmaterials
 // UFO Crafts
 // ==========
 
+// @todo UFO item definitions not needed anymore, scheduled for removal
 item craft_ufo_scout
 {
 	name		"_UFO - Scout"
@@ -41,6 +42,7 @@ item craft_ufo_scout
 	notonmarket	true
 }
 
+// @todo UFO item definitions not needed anymore, scheduled for removal
 item craft_ufo_fighter
 {
 	name		"_UFO - Fighter"
@@ -50,6 +52,7 @@ item craft_ufo_fighter
 	notonmarket	true
 }
 
+// @todo UFO item definitions not needed anymore, scheduled for removal
 item craft_ufo_harvester
 {
 	name		"_UFO - Harvester"
@@ -59,6 +62,7 @@ item craft_ufo_harvester
 	notonmarket	true
 }
 
+// @todo UFO item definitions not needed anymore, scheduled for removal
 item craft_ufo_bomber
 {
 	name		"_UFO - Bomber"
@@ -67,6 +71,7 @@ item craft_ufo_bomber
 	notonmarket	true
 }
 
+// @todo UFO item definitions not needed anymore, scheduled for removal
 item craft_ufo_ripper
 {
 	name		"_UFO - Ripper"
@@ -76,6 +81,7 @@ item craft_ufo_ripper
 	notonmarket	true
 }
 
+// @todo UFO item definitions not needed anymore, scheduled for removal
 item craft_ufo_mothership
 {
 	name		"_UFO - Mothership"
@@ -85,6 +91,7 @@ item craft_ufo_mothership
 	notonmarket	true
 }
 
+// @todo UFO item definitions not needed anymore, scheduled for removal
 item craft_ufo_gunboat
 {
 	name		"_UFO - Gunboat"
@@ -94,6 +101,7 @@ item craft_ufo_gunboat
 	notonmarket	true
 }
 
+// @todo UFO item definitions not needed anymore, scheduled for removal
 item craft_ufo_corrupter
 {
 	name		"_UFO - Corrupter"
@@ -102,6 +110,7 @@ item craft_ufo_corrupter
 	notonmarket	true
 }
 
+// @todo UFO item definitions not needed anymore, scheduled for removal
 item craft_ufo_carrier
 {
 	name		"_UFO - Carrier"
@@ -110,6 +119,7 @@ item craft_ufo_carrier
 	notonmarket	true
 }
 
+// @todo UFO item definitions not needed anymore, scheduled for removal
 item craft_ufo_supply
 {
 	name		"_UFO - Supply Ship"
