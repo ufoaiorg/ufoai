@@ -310,7 +310,9 @@ void Com_SetServerState (int state)
 {
 	Com_DPrintf(DEBUG_ENGINE, "Set server state to %i\n", state);
 	if (state == ss_dead)
-		SV_Shutdown("Server shutdown", qtrue);
+		SV_Shutdown("Server shutdown", qfalse);
+	else if (state == ss_restart)
+		SV_Shutdown("Server map change", qtrue);
 	sv.state = state;
 }
 

@@ -896,7 +896,7 @@ void SV_Clear (void)
  */
 void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 {
-	if (Com_ServerState() == ss_dead)
+	if (!svs.initialized)
 		return;
 
 	if (svs.clients)

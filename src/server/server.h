@@ -39,6 +39,7 @@ extern struct memPool_s *sv_genericPool;
 
 typedef enum {
 	ss_dead,					/**< no map loaded */
+	ss_restart,					/**< clients should reconnect, the server switched the map */
 	ss_loading,					/**< spawning level edicts */
 	ss_game						/**< actively running */
 } server_state_t;

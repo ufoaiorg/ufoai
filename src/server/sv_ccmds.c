@@ -185,7 +185,6 @@ static void SV_Map_f (void)
 		return;
 
 	/* start up the next map */
-	Com_SetServerState(ss_dead);
 	SV_Map(day, bufMap, assembly);
 }
 

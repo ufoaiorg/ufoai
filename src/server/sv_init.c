@@ -84,9 +84,6 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	char * pos = sv.configstrings[CS_POSITIONS];
 	mapInfo_t *randomMap = NULL;
 
-	assert(server);
-	assert(server[0] != '\0');
-
 	Com_DPrintf(DEBUG_SERVER, "SpawnServer: %s\n", server);
 
 	/* save name for levels that don't set message */
@@ -186,10 +183,6 @@ static void SV_DiscoveryCallback (struct datagram_socket *s, const char *buf, in
  */
 static void SV_InitGame (void)
 {
-	if (svs.initialized)
-		/* cause any connected clients to reconnect */
-		SV_Shutdown("Server restarted.", qtrue);
-
 	/* allow next change after map change or restart */
 	sv_maxclients->flags |= CVAR_LATCH;
 
@@ -226,10 +219,8 @@ static void SV_InitGame (void)
  */
 void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 {
-	assert(levelstring[0] != '\0');
-
 	/* any partially connected client will be restarted */
-	Com_SetServerState(ss_dead);
+	Com_SetServerState(ss_restart);
 
 	/* the game is just starting */
 	SV_InitGame();
@@ -240,6 +231,7 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 	}
 
 	SCR_BeginLoadingPlaque();
+	assert(levelstring[0] != '\0');
 	SV_SpawnServer(day, levelstring, assembly);
 	Cbuf_CopyToDefer();
 }
