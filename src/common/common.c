@@ -1235,7 +1235,7 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
 }
 
 /**
- * @brief Adds an string to a new or to an already existing linked list
+ * @brief Adds an string to a new or to an already existing linked list. The string is copied here.
  * @sa LIST_Add
  * @sa LIST_Remove
  * @todo Optimize this to not allocate memory for every entry - but use a hunk

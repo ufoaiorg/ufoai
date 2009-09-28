@@ -317,7 +317,6 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 {
 	linkedList_t *aircraftList = NULL;
 	linkedList_t *baseList = NULL;
-	char aircraftListText[1024];
 	int baseIdx;
 
 	/* One parameter must be specified, mission or ufo */
@@ -344,7 +343,6 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 		/* Check aircraft in base */
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft_t *aircraft = &base->aircraft[i];
-			qboolean notEnoughFuel = qfalse;
 
 			/* if dependencies of hangar are missing, you can't send aircraft */
 			switch (aircraft->size) {
@@ -365,41 +363,42 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 				continue;
 
 			/* if aircraft is empty we can't send it on a ground mission */
-			if (mission && (aircraft->teamSize <= 0))
+			if (mission && aircraft->teamSize <= 0) {
 				continue;
-			/* don't show aircraft with no weapons or no ammo, or crafts that
-			 * can't even reach the target */
-			if (ufo) {
-				/* Does the aircraft has weapons and ammo ? */
-				if (AIRFIGHT_ChooseWeapon(aircraft->weapons, aircraft->maxWeapons, aircraft->pos, aircraft->pos) == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
-					Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: No useable weapon found in craft '%s' (%i)\n", aircraft->id, aircraft->maxWeapons);
-					continue;
-				}
-				/* now check the aircraft range */
-				if (!AIR_AircraftHasEnoughFuel(aircraft, ufo->pos)) {
-					Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: Target out of reach for craft '%s'\n", aircraft->id);
-					notEnoughFuel = qtrue;
-				}
-			}
+			} else {
+				char aircraftListText[256] = "";
 
-			aircraftListText[0] = '\0';
-			if (!notEnoughFuel)
-				Q_strcat(aircraftListText, "^B", sizeof(aircraftListText));
-			if (ufo)
-				Q_strcat(aircraftListText, va("%s (%i/%i)\t%s\t%s", aircraft->name, aircraft->teamSize,
-					aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name), sizeof(aircraftListText));
-			else {
-				const float distance = MAP_GetDistance(aircraft->pos, mission->pos);
-				Q_strcat(aircraftListText, va("%s (%i/%i)\t%s\t%s\t%s", aircraft->name, aircraft->teamSize,
-					aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name,
-					CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), sizeof(aircraftListText));;
+				/* don't show aircraft with no weapons or no ammo, or crafts that
+				 * can't even reach the target */
+				if (ufo) {
+					const char *enoughFuelMarker = "^B";
+					/* Does the aircraft has weapons and ammo ? */
+					if (AIRFIGHT_ChooseWeapon(aircraft->weapons, aircraft->maxWeapons, aircraft->pos, aircraft->pos) == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
+						Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: No useable weapon found in craft '%s' (%i)\n", aircraft->id, aircraft->maxWeapons);
+						continue;
+					}
+					/* now check the aircraft range */
+					if (!AIR_AircraftHasEnoughFuel(aircraft, ufo->pos)) {
+						Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: Target out of reach for craft '%s'\n", aircraft->id);
+						enoughFuelMarker = "";
+					}
+
+					Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s%s (%i/%i)\t%s\t%s"), enoughFuelMarker, aircraft->name,
+						aircraft->teamSize,	aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name);
+				} else {
+					const float distance = MAP_GetDistance(aircraft->pos, mission->pos);
+					const char *statusName = AIR_AircraftStatusToName(aircraft);
+					const char *time = CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]);
+					Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s (%i/%i)\t%s\t%s\t%s"), aircraft->name,
+						aircraft->teamSize, aircraft->maxTeamSize, statusName, base->name, time);
+				}
+				LIST_AddString(&aircraftList, aircraftListText);
+				assert(aircraft->homebase == base);
+				popupIntercept.aircraft[popupIntercept.numAircraft] = aircraft;
+				popupIntercept.numAircraft++;
+				if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)
+					break;
 			}
-			LIST_AddString(&aircraftList, aircraftListText);
-			assert(aircraft->homebase == base);
-			popupIntercept.aircraft[popupIntercept.numAircraft] = aircraft;
-			popupIntercept.numAircraft++;
-			if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)
-				break;
 		}
 		/* also leave the outer loop */
 		if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)
