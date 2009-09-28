@@ -1204,11 +1204,11 @@ void CP_UFOProceedMission (aircraft_t *ufo)
 	assert(ufo->mission);
 
 	if (ufo->mission->category == INTERESTCATEGORY_INTERCEPT && !ufo->mission->data) {
+		const int slotIndex = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, ufo->pos);
 		/* This is an Intercept mission where UFO attacks aircraft (not installations) */
 		/* Keep on looking targets until mission is over, unless no more ammo */
 		ufo->status = AIR_TRANSIT;
-		if (AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, ufo->pos) !=
-			AIRFIGHT_WEAPON_CAN_NEVER_SHOOT)
+		if (slotIndex != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT)
 			UFO_SetRandomDest(ufo);
 		else
 			CP_MissionStageEnd(ufo->mission);
