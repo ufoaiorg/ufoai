@@ -3017,11 +3017,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
  */
 qboolean AIR_AircraftAllowed (const base_t* base)
 {
-	if ((B_GetBuildingStatus(base, B_HANGAR) || B_GetBuildingStatus(base, B_SMALL_HANGAR))) {
-		return qtrue;
-	} else {
-		return qfalse;
-	}
+	return B_GetBuildingStatus(base, B_HANGAR) || B_GetBuildingStatus(base, B_SMALL_HANGAR);
 }
 
 /**

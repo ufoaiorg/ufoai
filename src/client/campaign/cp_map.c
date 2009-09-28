@@ -212,7 +212,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		break;
 	case MULTISELECT_TYPE_MISSION: /* Select a mission */
 		if (ccs.mapAction == MA_INTERCEPT && ccs.selectedMission && ccs.selectedMission == MAP_GetMissionByIDX(id)) {
-			CL_DisplayPopupIntercept(ccs.selectedMission, NULL);
+			CL_DisplayPopupInterceptMission(ccs.selectedMission);
 			return;
 		}
 
@@ -223,7 +223,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		ccs.mapAction = MA_INTERCEPT;
 		if (multiSelection) {
 			/* if we come from a multiSelection menu, no need to open twice this popup to go to mission */
-			CL_DisplayPopupIntercept(ccs.selectedMission, NULL);
+			CL_DisplayPopupInterceptMission(ccs.selectedMission);
 			return;
 		}
 		break;
@@ -256,14 +256,14 @@ static void MAP_MultiSelectExecuteAction_f (void)
 
 		if (aircraft == selectedUFO) {
 			/* Selection of an already selected ufo */
-			CL_DisplayPopupIntercept(NULL, selectedUFO);
+			CL_DisplayPopupInterceptUFO(selectedUFO);
 		} else {
 			/* Selection of an unselected ufo */
 			MAP_ResetAction();
 			selectedUFO = aircraft;
 			if (multiSelection)
 				/* if we come from a multiSelection menu, no need to open twice this popup to choose an action */
-				CL_DisplayPopupIntercept(NULL, selectedUFO);
+				CL_DisplayPopupInterceptUFO(selectedUFO);
 		}
 		break;
 
