@@ -296,6 +296,7 @@ const aircraft_t *AIR_IsEmployeeInAircraft(const struct employee_s *employee, co
 void AIR_MoveEmployeeInventoryIntoStorage(const aircraft_t *aircraft, equipDef_t *equip);
 void AIM_AddEmployeeFromMenu(aircraft_t *aircraft, const int num);
 void AIR_AssignInitial(aircraft_t *aircraft);
+qboolean AIR_CanIntercept(const aircraft_t *aircraft);
 
 void AIR_LoadOneSlotXML(aircraftSlot_t* slot, mxml_node_t *node, qboolean weapon);
 qboolean AIR_LoadAircraftXML(aircraft_t *craft, qboolean isUfo, mxml_node_t *p);

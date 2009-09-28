@@ -336,27 +336,8 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 		/* Check aircraft in base */
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft_t *aircraft = &base->aircraft[i];
-
-			/* if dependencies of hangar are missing, you can't send aircraft */
-			switch (aircraft->size) {
-			case AIRCRAFT_SMALL:
-				if (!B_GetBuildingStatus(base, B_SMALL_HANGAR))
-					continue;
-				break;
-			case AIRCRAFT_LARGE:
-				if (!B_GetBuildingStatus(base, B_HANGAR))
-					continue;
-				break;
-			default:
-				Com_Printf("CL_DisplayPopupIntercept: Unknown weight of aircraft '%s': %i\n", aircraft->id, aircraft->size);
-			}
-
-			/* don't show aircraft that have no pilot */
-			if (!aircraft->pilot)
-				continue;
-
 			/* if aircraft is empty we can't send it on a ground mission */
-			if (aircraft->teamSize > 0) {
+			if (aircraft->teamSize > 0 && AIR_CanIntercept(aircraft)) {
 				char aircraftListText[256] = "";
 				const float distance = MAP_GetDistance(aircraft->pos, mission->pos);
 				const char *statusName = AIR_AircraftStatusToName(aircraft);
@@ -423,23 +404,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 		/* Check aircraft in base */
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft_t *aircraft = &base->aircraft[i];
-
-			/* if dependencies of hangar are missing, you can't send aircraft */
-			switch (aircraft->size) {
-			case AIRCRAFT_SMALL:
-				if (!B_GetBuildingStatus(base, B_SMALL_HANGAR))
-					continue;
-				break;
-			case AIRCRAFT_LARGE:
-				if (!B_GetBuildingStatus(base, B_HANGAR))
-					continue;
-				break;
-			default:
-				Com_Printf("CL_DisplayPopupIntercept: Unknown weight of aircraft '%s': %i\n", aircraft->id, aircraft->size);
-			}
-
-			/* don't show aircraft that have no pilot */
-			if (aircraft->pilot) {
+			if (AIR_CanIntercept(aircraft)) {
 				char aircraftListText[256] = "";
 				/* don't show aircraft with no weapons or no ammo, or crafts that
 				 * can't even reach the target */

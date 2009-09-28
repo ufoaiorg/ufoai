@@ -3021,6 +3021,25 @@ qboolean AIR_AircraftAllowed (const base_t* base)
 }
 
 /**
+ * @param aircraft The aircraft to check
+ * @return @c true if the given aircraft can go on interceptions
+ */
+qboolean AIR_CanIntercept (const aircraft_t *aircraft)
+{
+	/* if dependencies of hangar are missing, you can't send aircraft */
+	if (aircraft->size == AIRCRAFT_SMALL && !B_GetBuildingStatus(aircraft->homebase, B_SMALL_HANGAR))
+		return qfalse;
+	if (aircraft->size == AIRCRAFT_LARGE && !B_GetBuildingStatus(aircraft->homebase, B_HANGAR))
+		return qfalse;
+
+	/* we need a pilot to intercept */
+	if (!aircraft->pilot)
+		return qfalse;
+
+	return qtrue;
+}
+
+/**
  * @brief Checks the parsed aircraft for errors
  * @return false if there are errors - true otherwise
  */
