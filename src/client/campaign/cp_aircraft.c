@@ -1521,7 +1521,6 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		return;
 	}
 
-	aircraftTemplate = NULL;
 	if (!assignAircraftItems) {
 		for (i = 0; i < ccs.numAircraftTemplates; i++) {
 			if (!strcmp(ccs.aircraftTemplates[i].id, name)) {
