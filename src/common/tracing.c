@@ -647,6 +647,7 @@ static void TR_BoxLeafnums_r (boxtrace_t *traceData, int nodenum)
 }
 
 /**
+ * @param[in] traceData both parameters and results of the trace
  * @param[in] headnode if < 0 we are in a leaf node
  */
 static int TR_BoxLeafnums_headnode (boxtrace_t *traceData, int *list, int listsize, int headnode, int *topnode)
@@ -668,10 +669,7 @@ static int TR_BoxLeafnums_headnode (boxtrace_t *traceData, int *list, int listsi
 
 
 /**
- * @param[in] mins min vector of bounding box around the line from p1 to p2
- * @param[in] maxs max vector of bounding box around the line from p1 to p2
- * @param[in] p1 start vector
- * @param[in] p2 end vector
+ * @param[in] traceData both parameters and results of the trace
  * @param[in,out] trace the location of the last hit on the line, adjusted if this hit is closer.
  * @param[in] brush the brush that is being examined
  * @brief This function checks to see if any sides of a brush intersect the line from p1 to p2 or are located within
@@ -834,6 +832,7 @@ static void TR_TestBoxInBrush (boxtrace_t *traceData, cBspBrush_t * brush)
 
 
 /**
+ * @param[in] traceData both parameters and results of the trace
  * @param[in] leafnum the leaf index that we are looking in for a hit against
  * @sa CM_ClipBoxToBrush
  * @sa CM_TestBoxInBrush
@@ -911,6 +910,7 @@ static void TR_TestInLeaf (boxtrace_t *traceData, int leafnum)
 
 
 /**
+ * @param[in] traceData both parameters and results of the trace
  * @param[in] num the node index that we are looking in for a hit
  * @param[in] p1f based on the original line, the fraction traveled to reach the start vector
  * @param[in] p2f based on the original line, the fraction traveled to reach the end vector
