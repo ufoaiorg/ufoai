@@ -3100,10 +3100,11 @@ qboolean AIR_ScriptSanityCheck (void)
  */
 int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t *base, int used)
 {
+	assert(base);
 	assert(aircraftTemplate);
 	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
-	if (!base || !base->founded)
+	if (!base->founded)
 		return -1;
 	else {
 		const int aircraftCapacity = AIR_GetCapacityByAircraftWeight(aircraftTemplate);

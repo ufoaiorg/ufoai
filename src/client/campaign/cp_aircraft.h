@@ -279,7 +279,7 @@ void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo, qboolean destroy
 void AIR_AircraftsUFODisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(struct base_s *base);
 qboolean AIR_ScriptSanityCheck(void);
-int AIR_CalculateHangarStorage(const aircraft_t *aircraft, const struct base_s *base, int used);
+int AIR_CalculateHangarStorage(const aircraft_t *aircraft, const struct base_s *base, int used) __attribute__((nonnull (1, 2)));
 int CL_AircraftMenuStatsValues(const int value, const int stat);
 int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
 const char *AIR_GetAircraftString(aircraftType_t aircraftType);
