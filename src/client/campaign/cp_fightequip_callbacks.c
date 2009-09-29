@@ -974,7 +974,7 @@ static void AIM_AircraftItemtypeByName_f (void)
 	}
 
 	airequipID = i;
-	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
+	Cmd_ExecuteString(va("airequip_updatemenu %d", airequipID));
 }
 
 void AIM_InitCallbacks (void)

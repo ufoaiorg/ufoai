@@ -86,7 +86,7 @@ static void E_EmployeeListClick_f (void)
 		return;
 
 	/* the + indicates, that values bigger than maxEmployeesPerPage could be possible */
-	Cmd_ExecuteString(va("employee_select +%i\n", num));
+	Cmd_ExecuteString(va("employee_select +%i", num));
 }
 
 /**
@@ -209,7 +209,7 @@ static void E_EmployeeList_f (void)
 	if (hiredEmployeeIdx < 0 || selectedEmployee == NULL)
 		Cmd_ExecuteString("employee_select 0\n");
 	else
-		Cmd_ExecuteString(va("employee_select %i\n", selectedEmployee->idx));
+		Cmd_ExecuteString(va("employee_select %i", selectedEmployee->idx));
 
 	/* update scroll */
 	MN_ExecuteConfunc("hire_update_number %i", employeesInCurrentList);
