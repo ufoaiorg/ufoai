@@ -421,7 +421,7 @@ static const value_t installation_vals[] = {
  * @note Parses one "installation" entry in the installation.ufo file and writes
  * it into the next free entry in installationTemplates.
  * @param[in] name Unique test-id of a installationTemplate_t.
- * @param[in] text @todo document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
+ * @param[in] text the rest of the script file that is tokenized here
  */
 void INS_ParseInstallations (const char *name, const char **text)
 {

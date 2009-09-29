@@ -50,8 +50,7 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 		/* if the character has less that 100 hitpoints, he will be disadvantaged by using the percentage
 		 * method of allocating hitpoints.  So just give the character "healing" as Hitpoints, otherwise
 		 * allocate "healing" as a percentage of the characters total hitpoints. */
-		/** @todo replace magic number 100 */
-		if (chr->maxHP < 100)
+		if (chr->maxHP < MAX_HP)
 			chr->HP = min(chr->HP + healing, chr->maxHP);
 		else
 			chr->HP = min(chr->HP + ((healing / 100.0f) * chr->maxHP), chr->maxHP);

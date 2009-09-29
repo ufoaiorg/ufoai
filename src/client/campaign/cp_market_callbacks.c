@@ -129,8 +129,8 @@ static inline qboolean BS_GetMinMaxValueByItemID (const base_t *base, int itemNu
 		const aircraft_t *aircraft = buyList.l[itemNum + buyList.scroll].aircraft;
 		if (!aircraft)
 			return qfalse;
-		*value = AIR_GetStorageSupply(base, aircraft->id, qtrue);
-		*max = AIR_GetStorageSupply(base, aircraft->id, qtrue) + AIR_GetStorageSupply(base, aircraft->id, qfalse);
+		*value = BS_GetStorageSupply(base, aircraft->id);
+		*max = BS_GetStorageSupply(base, aircraft->id) + BS_GetStorageSupply(NULL, aircraft->id);
 		*min = 0;
 	} else {
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[itemNum + buyList.scroll]);
@@ -308,8 +308,8 @@ static void BS_BuyType (const base_t *base)
 					MN_ExecuteConfunc("buy_autoselli %i", j - buyList.scroll);
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 				}
-				BS_AddToList(aircraftTemplate->name, AIR_GetStorageSupply(base, aircraftTemplate->id, qtrue),
-						AIR_GetStorageSupply(base, aircraftTemplate->id, qfalse), aircraftTemplate->price);
+				BS_AddToList(aircraftTemplate->name, BS_GetStorageSupply(base, aircraftTemplate->id),
+						BS_GetStorageSupply(NULL, aircraftTemplate->id), aircraftTemplate->price);
 				if (j >= MAX_BUYLIST)
 					Com_Error(ERR_DROP, "Increase the MAX_BUYLIST value to handle that much items\n");
 				buyList.l[j].item = NULL;
@@ -703,7 +703,7 @@ static void BS_BuyItem_f (void)
 	if (num < 0 || num >= buyList.length)
 		return;
 
-	Cmd_ExecuteString(va("buy_selectitem %i", num + buyList.scroll));
+	MN_ExecuteConfunc("buy_selectitem %i", num + buyList.scroll);
 
 	if (buyCat == FILTER_UGVITEM && buyList.l[num + buyList.scroll].ugv) {
 		/* The list entry is an actual ugv/robot */
@@ -783,7 +783,7 @@ static void BS_SellItem_f (void)
 	if (num < 0 || num >= buyList.length)
 		return;
 
-	Cmd_ExecuteString(va("buy_selectitem %i\n", num + buyList.scroll));
+	MN_ExecuteConfunc("buy_selectitem %i", num + buyList.scroll);
 	if (buyCat == FILTER_UGVITEM && buyList.l[num + buyList.scroll].ugv) {
 		employee_t *employee;
 		/* The list entry is an actual ugv/robot */

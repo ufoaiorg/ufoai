@@ -104,7 +104,6 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 	Q_strncpyz(alienCategory->id, name, sizeof(alienCategory->id));
 
 	do {
-		linkedList_t **list;
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
@@ -112,7 +111,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 			break;
 
 		if (!strcmp(token, "equipment")) {
-			list = &alienCategory->equipment;
+			linkedList_t **list = &alienCategory->equipment;
 			token = Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
 				Com_Printf("CL_ParseAlienTeam: alien team category \"%s\" has equipment with no opening brace\n", name);

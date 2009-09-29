@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_MARKET_H
 #define CLIENT_CL_MARKET_H
 
-int AIR_GetStorageSupply(const base_t *base, const char *airCharId, qboolean inbase);
+int BS_GetStorageSupply(const base_t *base, const char *aircraftID);
 qboolean BS_CheckAndDoBuyItem(base_t* base, const objDef_t *item, int number);
 void BS_ProcessCraftItemSale(const base_t *base, const objDef_t *craftitem, const int numItems);
 

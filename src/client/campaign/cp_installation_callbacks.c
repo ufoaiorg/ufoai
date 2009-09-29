@@ -232,7 +232,7 @@ static void INS_DestroyInstallation_f (void)
 }
 
 /**
- * @brief upadtes the installation limit cvar for menus
+ * @brief updates the installation limit cvar for menus
  */
 static void INS_UpdateInsatallationLimit_f (void)
 {

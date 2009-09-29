@@ -35,44 +35,51 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief Max amount of aircraft type calculated for the market. */
 static const int MAX_AIRCRAFT_SUPPLY = 8;
 
-
 /**
- * @brief Calculates amount of aircraft in base and on the market.
- * @param[in] base The base to get the storage amount from
- * @param[in] airCharId Aircraft id (type).
- * @param[in] inbase True if function has to return storage, false - when supply (market).
- * @return Amount of aircraft in base or amount of aircraft on the market.
+ * Returns the storage amount of a
+ * @param[in] base The base to count the aircraft type in
+ * @param[in] aircraftID Aircraft script id
+ * @return The storage amount for the given aircraft type in the given base
  */
-int AIR_GetStorageSupply (const base_t *base, const char *airCharId, qboolean inbase)
+static inline int BS_GetStorageAmountInBase (const base_t* base, const char *aircraftID)
 {
 	const aircraft_t *aircraft;
-	int i, j;
-	int amount = 0, storage = 0, supply;
+	int storage = 0;
+	int j;
+
+	assert(base);
 
 	/* Get storage amount in the base. */
 	for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
-		if (!strcmp(aircraft->id, airCharId))
+		if (!strcmp(aircraft->id, aircraftID))
 			storage++;
 	}
-	/* Get supply amount (global). */
-	for (j = 0; j < MAX_BASES; j++) {
-		base = B_GetFoundedBaseByIDX(j);
-		if (!base)
-			continue;
-		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
-			if (!strcmp(aircraft->id, airCharId))
-				amount++;
-		}
-	}
-	if (amount < MAX_AIRCRAFT_SUPPLY)
-		supply = MAX_AIRCRAFT_SUPPLY - amount;
-	else
-		supply = 0;
+	return storage;
+}
 
-	if (inbase)
-		return storage;
-	else
-		return supply;
+/**
+ * @brief Calculates amount of aircraft in base and on the market.
+ * @param[in] base The base to get the storage amount from. If @c NULL when supply (market) is returned.
+ * @param[in] aircraftID Aircraft id (type).
+ * @return Amount of aircraft in base or amount of aircraft on the market.
+ */
+int BS_GetStorageSupply (const base_t *base, const char *aircraftID)
+{
+	if (base) {
+		/* get storage amount */
+		return BS_GetStorageAmountInBase(base, aircraftID);
+	} else {
+		int amount = 0;
+		int j;
+		/* get supply amount (global) */
+		for (j = 0; j < MAX_BASES; j++) {
+			base = B_GetFoundedBaseByIDX(j);
+			if (!base)
+				continue;
+			amount += BS_GetStorageAmountInBase(base, aircraftID);
+		}
+		return max(0, MAX_AIRCRAFT_SUPPLY - amount);
+	}
 }
 
 /**
