@@ -809,7 +809,7 @@ int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 	case AIRCRAFT_LARGE:
 		return CAP_AIRCRAFT_BIG;
 	}
-	Com_Error(ERR_DROP, "AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->size);
+	Com_Error(ERR_DROP, "AIR_GetCapacityByAircraftWeight: Unknown weight of aircraft '%i'\n", aircraft->size);
 }
 
 /**
@@ -2779,19 +2779,20 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 		return qfalse;
 
 	s = mxml_GetString(p, "name");
-	if (s[0] == '\0') {
-		Q_strncpyz(craft->name, _(craft->defaultName), sizeof(craft->name));
-	} else {
-		Q_strncpyz(craft->name, s, sizeof(craft->name));
-	}
+	if (s[0] == '\0')
+		s = _(craft->defaultName);
+
+	Q_strncpyz(craft->name, s, sizeof(craft->name));
+
 	s = mxml_GetString(p, "missionid");
-	if (s[0] == '\0') {
-		if (isUfo)
-			Com_Printf("Error: UFO '%s' is not linked to any mission\n", craft->id);
+	if (s[0] == '\0' && isUfo) {
+		Com_Printf("Error: UFO '%s' is not linked to any mission\n", craft->id);
+		return qfalse;
 	}
+
 	if (isUfo) {
 		craft->mission = CP_GetMissionByID(s);
-		/** detection id and time */
+		/* detection id and time */
 		craft->detectionIdx = mxml_GetInt(p, "detectionidx", 0);
 		craft->lastSpotted.day = mxml_GetInt(p, "lastspotted_day", 0);
 		craft->lastSpotted.sec = mxml_GetInt(p, "lastspotted_sec", 0);
@@ -2962,7 +2963,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 			ccs.projectiles[i].angle = mxml_GetFloat(snode, "angle", 0.0);
 			ccs.projectiles[i].bullets = mxml_GetBool(snode, "bullet", qfalse);
 			ccs.projectiles[i].beam = mxml_GetBool(snode, "beam", qfalse);
-			/* Fallback: compatibility code for old saves
+			/** Fallback: compatibility code for old saves
 			 * @todo remove this on release (or after time) */
 			if (!ccs.projectiles[i].beam)
 				ccs.projectiles[i].beam = mxml_GetBool(snode, "laser", qfalse);
@@ -3099,54 +3100,17 @@ qboolean AIR_ScriptSanityCheck (void)
  */
 int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t *base, int used)
 {
-	int aircraftSize = 0, freespace = 0;
-
 	assert(aircraftTemplate);
 	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
-	aircraftSize = aircraftTemplate->size;
-
-	if (aircraftSize < AIRCRAFT_SMALL) {
-#ifdef DEBUG
-		Com_Printf("AIR_CalculateHangarStorage: aircraft weight is wrong!\n");
-#endif
+	if (!base || !base->founded)
 		return -1;
-	}
-	if (!base) {
-#ifdef DEBUG
-		Com_Printf("AIR_CalculateHangarStorage: base does not exist!\n");
-#endif
-		return -1;
-	} else if (!base->founded) {
-#ifdef DEBUG
-		Com_Printf("AIR_CalculateHangarStorage: base is not founded!\n");
-#endif
-		return -1;
-	}
-	assert(base);
-
-	/* If this is a small aircraft, we will check space in small hangar. */
-	if (aircraftSize == AIRCRAFT_SMALL) {
-		freespace = base->capacities[CAP_AIRCRAFT_SMALL].max - base->capacities[CAP_AIRCRAFT_SMALL].cur - used;
-		Com_DPrintf(DEBUG_CLIENT, "AIR_CalculateHangarStorage: freespace (small): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
-			base->capacities[CAP_AIRCRAFT_SMALL].max, base->capacities[CAP_AIRCRAFT_SMALL].cur);
-		if (freespace > 0) {
-			return freespace;
-		} else {
-			/* No free space for this aircraft. */
-			return 0;
-		}
-	} else {
-		/* If this is a large aircraft, we will check space in big hangar. */
-		freespace = base->capacities[CAP_AIRCRAFT_BIG].max - base->capacities[CAP_AIRCRAFT_BIG].cur - used;
-		Com_DPrintf(DEBUG_CLIENT, "AIR_CalculateHangarStorage: freespace (big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
-			base->capacities[CAP_AIRCRAFT_BIG].max, base->capacities[CAP_AIRCRAFT_BIG].cur);
-		if (freespace > 0) {
-			return freespace;
-		} else {
-			/* No free space for this aircraft. */
-			return 0;
-		}
+	else {
+		const int aircraftCapacity = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
+		/* If this is a small aircraft, we will check space in small hangar.
+		 * If this is a large aircraft, we will check space in big hangar. */
+		const int freespace = base->capacities[aircraftCapacity].max - base->capacities[aircraftCapacity].cur - used;
+		return max(freespace, 0);
 	}
 }
 
