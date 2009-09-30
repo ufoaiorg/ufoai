@@ -84,6 +84,8 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	char * pos = sv.configstrings[CS_POSITIONS];
 	mapInfo_t *randomMap = NULL;
 
+	assert(server[0] != '\0');
+
 	Com_DPrintf(DEBUG_SERVER, "SpawnServer: %s\n", server);
 
 	/* save name for levels that don't set message */
@@ -92,6 +94,13 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	sv.day = day;
 
 	Q_strncpyz(sv.name, server, sizeof(sv.name));
+
+	/* set serverinfo variable */
+	sv_mapname = Cvar_FullSet("sv_mapname", sv.name, CVAR_SERVERINFO | CVAR_NOSET);
+
+	/* notify the client in case of a listening server */
+	SCR_BeginLoadingPlaque();
+
 	if (param)
 		Q_strncpyz(sv.assembly, param, sizeof(sv.assembly));
 	else
@@ -160,9 +169,6 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	/* all precaches are complete */
 	Com_SetServerState(ss_game);
 
-	/* set serverinfo variable */
-	sv_mapname = Cvar_FullSet("sv_mapname", sv.name, CVAR_SERVERINFO | CVAR_NOSET);
-
 	Com_Printf("-------------------------------------\n");
 }
 
@@ -230,8 +236,6 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 		return;
 	}
 
-	SCR_BeginLoadingPlaque();
-	assert(levelstring[0] != '\0');
 	SV_SpawnServer(day, levelstring, assembly);
 	Cbuf_CopyToDefer();
 }
