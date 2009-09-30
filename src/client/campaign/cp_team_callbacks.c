@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_team.h"
 #include "cp_team_callbacks.h"
 
-linkedList_t *employeeList;	/* @sa E_GetEmployeeByMenuIndex */
+linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
 int employeesInCurrentList;
 
 /***********************************************************
@@ -42,8 +42,8 @@ int employeesInCurrentList;
  ***********************************************************/
 
 /* cache soldier list */
-static int soldier_list_size = 0;
-static int soldier_list_pos = 0;
+static int soldierListSize = 0;
+static int soldierListPos = 0;
 
 static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTag, int beginIndex, int drawableListSize)
 {
@@ -66,8 +66,8 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
-	soldier_list_size = drawableListSize;
-	soldier_list_pos = beginIndex;
+	soldierListSize = drawableListSize;
+	soldierListPos = beginIndex;
 
 	/* Populate employeeList */
 	employeesInCurrentList = E_GetHiredEmployees(aircraft->homebase, employeeType, &employeeList);
@@ -131,7 +131,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 
 	MN_ExecuteConfunc("aircraft_%s_list_size %i", nodeTag, id);
 
-	for (;id - beginIndex < drawableListSize; id++) {
+	for (; id - beginIndex < drawableListSize; id++) {
 		const int guiId = id - beginIndex;
 		MN_ExecuteConfunc("aircraft_%s_unusedslot %i", nodeTag, guiId);
 		Cvar_ForceSet(va("mn_name%i", guiId), "");
@@ -291,7 +291,7 @@ static void CL_AssignPilot_f (void)
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
 	MN_ExecuteConfunc("aircraft_status_change");
-	MN_ExecuteConfunc("pilot_select %i %i", num - relativeId, relativeId);
+	Cmd_ExecuteString(va("pilot_select %i %i", num - relativeId, relativeId));
 
 }
 
@@ -339,7 +339,7 @@ static void CL_AssignSoldier_f (void)
 }
 
 /**
- * @brief Resert the character cvars for a character.
+ * @brief Reset the cvars for a character.
  * @todo Move into script?
  */
 static void CL_ResertCharacterCvars (void)
@@ -368,7 +368,7 @@ static void CL_ResertCharacterCvars (void)
 	Cvar_Set("mn_vsnp", "");
 	Cvar_Set("mn_vexp", "");
 	Cvar_Set("mn_vhp", "");
-	Cvar_Set("mn_vhpmax", "100");	/*< must be greater than mn_vhp */
+	Cvar_Set("mn_vhpmax", va("%i", MAX_HP));	/**< must be greater than mn_vhp */
 
 	Cvar_Set("mn_tpwr", "");
 	Cvar_Set("mn_tspd", "");
@@ -422,7 +422,7 @@ static void CL_ActorPilotSelect_f (void)
 
 	/* set info cvars */
 	CL_CharacterCvars(chr);
-	MN_ExecuteConfunc("update_pilot_list %i %i", soldier_list_size, soldier_list_pos);
+	MN_ExecuteConfunc("update_pilot_list %i %i", soldierListSize, soldierListPos);
 }
 
 static void CL_ActorTeamSelect_f (void)
@@ -469,7 +469,7 @@ static void CL_ActorTeamSelect_f (void)
 		CL_UGVCvars(chr);
 	else
 		CL_CharacterCvars(chr);
-	MN_ExecuteConfunc("update_soldier_list %i %i", soldier_list_size, soldier_list_pos);
+	MN_ExecuteConfunc("update_soldier_list %i %i", soldierListSize, soldierListPos);
 }
 
 #ifdef DEBUG
@@ -515,6 +515,9 @@ void CP_TEAM_InitCallbacks (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_teamlist", CL_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
 #endif
+
+	soldierListPos = 0;
+	soldierListSize = 0;
 }
 
 void CP_TEAM_ShutdownCallbacks (void)
