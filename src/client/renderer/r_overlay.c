@@ -1,6 +1,7 @@
 /**
  * @file r_overlay.c
  * @brief Functions to generate and render overlay for geoscape
+ * @todo update the alpha values like in R_CalcAndUploadDayAndNightTexture - it's much faster like that
  */
 
 /*
