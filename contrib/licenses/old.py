@@ -115,7 +115,8 @@ FFILTERS = (re.compile('.txt$'),
             re.compile('.py$'),
             re.compile('^Makefile'),
             re.compile('.html$'),
-            re.compile('.cfg$'))
+            re.compile('.cfg$'),
+            re.compile('.lua$'))
 
 def ffilter(fname):
     for i in FFILTERS:
@@ -180,7 +181,7 @@ def generate(d, data, texture_map, map_texture):
                 index+= u' - <a href="%s/index.html">%s</a><br/>' % (i,i)
 
         content = index + u'<ul>%s</ul>' %  content
-        content+= '<hr/>You can <a href="licenses.py">download</a> the source code. USE AT OWN RISK. NOT USERFRIENDLY.'
+        content+= '<hr/>You grab the source code from ufo:ai\'s svn. USE AT OWN RISK.'
 
     html = HTML % (d, rev, content)
     open('licenses/html/%s/index.html' % d, 'w').write(html)
