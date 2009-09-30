@@ -69,24 +69,20 @@ static void E_UpdateGUICount_f (void)
 	Cvar_Set("mn_hirepeople", va("%d/%d", E_CountAllHired(base), max));
 }
 
-/**
- * @brief Click function for employee_list node
- * @sa E_EmployeeList_f
- */
-static void E_EmployeeListClick_f (void)
+static void E_EmployeeSelect (employee_t *employee)
 {
-	int num; /* clicked at which position? determined by node format string */
-
-	if (Cmd_Argc() < 2)
+	const base_t *base = B_GetCurrentSelectedBase();
+	if (!base)
 		return;
 
-	num = atoi(Cmd_Argv(1));
+	selectedEmployee = employee;
+	if (selectedEmployee) {
+		/* mn_employee_hired is needed to allow renaming */
+		Cvar_SetValue("mn_employee_hired", selectedEmployee->hired ? 1 : 0);
 
-	if (num < 0 || num >= employeesInCurrentList)
-		return;
-
-	/* the + indicates, that values bigger than maxEmployeesPerPage could be possible */
-	Cmd_ExecuteString(va("employee_select +%i", num));
+		/* set info cvars */
+		CL_CharacterCvars(&(selectedEmployee->chr));
+	}
 }
 
 /**
@@ -207,9 +203,11 @@ static void E_EmployeeList_f (void)
 	/* Select the current employee if name was changed or first one. Use the direct string
 	 * execution here - otherwise the employeeCategory might be out of sync */
 	if (hiredEmployeeIdx < 0 || selectedEmployee == NULL)
-		Cmd_ExecuteString("employee_select 0\n");
+		employee = E_GetEmployeeByMenuIndex(0);
 	else
-		Cmd_ExecuteString(va("employee_select %i", selectedEmployee->idx));
+		employee = selectedEmployee;
+
+	E_EmployeeSelect(employee);
 
 	/* update scroll */
 	MN_ExecuteConfunc("hire_update_number %i", employeesInCurrentList);
@@ -255,22 +253,7 @@ int E_GenerateHiredEmployeesList (const base_t *base)
  */
 employee_t* E_GetEmployeeByMenuIndex (int num)
 {
-	int i;
-	linkedList_t *emplList = employeeList;
-
-	if (num >= employeesInCurrentList || num < 0)
-		return NULL;
-
-	i = 0;
-	while (emplList) {
-		employee_t* employee = (employee_t*)emplList->data;
-		if (i == num)
-			return employee;
-		i++;
-		emplList = emplList->next;
-	}
-
-	return NULL;
+	return (employee_t*)LIST_GetByIdx(employeeList, num);
 }
 
 
@@ -355,7 +338,7 @@ static void E_EmployeeHire_f (void)
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			MN_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 		} else
-			Cbuf_AddText(va("employeedel %i\n", button));
+			MN_ExecuteConfunc("employeedel %i", button);
 	} else {
 		if (!E_HireEmployee(base, employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
@@ -364,7 +347,8 @@ static void E_EmployeeHire_f (void)
 		} else
 			MN_ExecuteConfunc("employeeadd %i", button);
 	}
-	Cbuf_AddText(va("employee_select %i\n", num));
+	E_EmployeeSelect(employee);
+
 	E_UpdateGUICount_f();
 }
 
@@ -374,10 +358,6 @@ static void E_EmployeeHire_f (void)
 static void E_EmployeeSelect_f (void)
 {
 	int num;
-	base_t *base = B_GetCurrentSelectedBase();
-
-	if (!base)
-		return;
 
 	/* Check syntax. */
 	if (Cmd_Argc() < 2) {
@@ -389,20 +369,12 @@ static void E_EmployeeSelect_f (void)
 	if (num < 0 || num >= employeesInCurrentList)
 		return;
 
-	selectedEmployee = E_GetEmployeeByMenuIndex(num);
-	if (selectedEmployee) {
-		/* mn_employee_hired is needed to allow renaming */
-		Cvar_SetValue("mn_employee_hired", selectedEmployee->hired ? 1 : 0);
-
-		/* set info cvars */
-		CL_CharacterCvars(&(selectedEmployee->chr));
-	}
+	E_EmployeeSelect(E_GetEmployeeByMenuIndex(num));
 }
 
 void E_InitCallbacks (void)
 {
 	Cmd_AddCommand("employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI");
-	Cmd_AddCommand("employee_list_click", E_EmployeeListClick_f, "Callback for employee_list click function");
 
 	/* add commands */
 	Cmd_AddCommand("employee_init", E_EmployeeList_f, "Init function for employee hire menu");
@@ -416,7 +388,6 @@ void E_InitCallbacks (void)
 void E_ShutdownCallbacks (void)
 {
 	Cmd_RemoveCommand("employee_update_count");
-	Cmd_RemoveCommand("employee_list_click");
 	Cmd_RemoveCommand("employee_init");
 	Cmd_RemoveCommand("employee_delete");
 	Cmd_RemoveCommand("employee_hire");

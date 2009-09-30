@@ -235,7 +235,7 @@ window employees
 		rows		"15"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		onClick			{ cmd "employee_list_click <lineselected>" }
+		onClick			{ cmd "employee_select <lineselected>" }
 		onViewChange	{
 			*(abstractscrollbar)scroll@fullsize <fullsize>
 			*(abstractscrollbar)scroll@current <viewpos>
