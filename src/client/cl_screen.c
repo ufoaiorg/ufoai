@@ -129,7 +129,7 @@ void SCR_DrawPrecacheScreen (qboolean string)
  * @note If @c mapString is NULL the @c sv_mapname cvar is used
  * @return The loading/background pic path
  */
-const char* SCR_SetLoadingBackground (const char *mapString)
+static const char* SCR_SetLoadingBackground (const char *mapString)
 {
 	const char *mapname;
 
