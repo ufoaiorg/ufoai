@@ -11868,10 +11868,6 @@
 "light" "200"
 "spawnflags" "1"
 }
-// entity 83
-{
-"classname" "func_group"
-}
 // entity 84
 {
 "classname" "misc_particle"
