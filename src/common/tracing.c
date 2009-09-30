@@ -216,7 +216,10 @@ LINE TRACING - TEST FOR BRUSH PRESENCE
 
 
 /**
+ * @param[in] tile The map tile containing the structures to be traced.
  * @param[in] node Node index
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
  * @sa TR_TestLineDist_r
  * @sa CM_TestLine
  */
@@ -382,7 +385,10 @@ LINE TRACING - TEST FOR BRUSH LOCATION
 
 
 /**
+ * @param[in] tile The map tile containing the structures to be traced.
  * @param[in] node Node index
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
  * @sa TR_TestLine_r
  * @sa TR_TestLineDM
  */
@@ -502,6 +508,7 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[out] end The position where the trace hits a object or the stop position if nothing is in the line.
+ * @param[in] levelmask Indicates which special levels, if any, to include in the trace.
  * @sa TR_TestLineDM
  * @sa CL_ActorMouseTrace
  * @return qfalse if no connection between start and stop - 1 otherwise
@@ -669,9 +676,9 @@ static int TR_BoxLeafnums_headnode (boxtrace_t *traceData, int *list, int listsi
 
 
 /**
- * @param[in] traceData both parameters and results of the trace
- * @param[in,out] trace the location of the last hit on the line, adjusted if this hit is closer.
+ * @param[in,out] traceData both parameters and results of the trace
  * @param[in] brush the brush that is being examined
+ * @param[in] leaf the leafnode the brush that is being examined belongs to
  * @brief This function checks to see if any sides of a brush intersect the line from p1 to p2 or are located within
  *  the perpendicular bounding box from mins to maxs originating from the line. It also check to see if the line
  *  originates from inside the brush, terminates inside the brush, or is completely contained within the brush.
