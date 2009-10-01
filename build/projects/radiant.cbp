@@ -436,6 +436,36 @@
 		<Unit filename="..\..\src\tools\radiant\libs\xml\ixml.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\xml\xmlparser.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\xml\xmlwriter.h" />
+		<Unit filename="../../src/tools/radiant/libs/entity/eclassmodel.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/entity/entity.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/entity/filters.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/entity/generic.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/entity/group.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/entity/light.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/entity/miscmodel.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/entity/miscsound.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/entity/miscparticle.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/entity/targetable.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\BestPoint.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -524,6 +554,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\entity.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/entitymodule.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\environment.cpp">
