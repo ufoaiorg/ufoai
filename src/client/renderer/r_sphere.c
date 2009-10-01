@@ -142,6 +142,13 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 	else
 		R_BindTexture(sphere->texture->texnum);
 
+	if (sphere->overlayAlphaMask) {
+		R_EnableTexture(&texunit_lightmap, qtrue);
+		R_SelectTexture(&texunit_lightmap);
+		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
+		R_BindLightmapTexture(sphere->overlayAlphaMask->texnum);
+	}
+
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, sphere->verts);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
 	R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
@@ -160,6 +167,9 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 
 	/* restore the previous matrix */
 	glPopMatrix();
+
+	if (sphere->overlayAlphaMask)
+		R_EnableTexture(&texunit_lightmap, qfalse);
 
 	refdef.aliasCount += sphere->num_tris * sphere->num_tris;
 

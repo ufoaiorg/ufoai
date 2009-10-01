@@ -29,6 +29,7 @@ typedef struct sphere_s {
 	float *normals;		/**< vertex normal array */
 	image_t* texture;	/**< the texture for this globe - @note scaled texture matrix */
 	image_t* overlay;	/**< the overlay for the world (e.g. nation borders) */
+	image_t* overlayAlphaMask;	/**< in case of multitexture this is the alpha mask */
 	image_t* bumpMap;	/**< @todo implement bump mapping for globes */
 	int num_tris;		/**< number of tris */
 } sphere_t;

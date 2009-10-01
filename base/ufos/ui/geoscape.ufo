@@ -1895,6 +1895,8 @@ window popup_aircraft
 // MENU FOR GEOSCAPE OPTIONS
 // ==================
 
+// TODO: Use this menu or remove it
+
 window geoscape_options {
 	{
 		pos			"256 256"

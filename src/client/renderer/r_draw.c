@@ -441,12 +441,12 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		}
 
 		R_SelectTexture(&texunit_diffuse);
-
 		glDrawArrays(GL_QUADS, 0, 4);
 
-		R_EnableTexture(&texunit_lightmap, qfalse);
-
+		R_SelectTexture(&texunit_lightmap);
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, geoscape_texcoords);
+
+		R_EnableTexture(&texunit_lightmap, qfalse);
 	}
 
 	/* draw nation overlay */
@@ -462,8 +462,18 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 
 	/* draw XVI image */
 	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
-		R_BindTexture(r_xviTexture->texnum);
+		gl = R_FindImage(va("pics/geoscape/%s_xvi_overlay", map), it_wrappic);
+		if (gl == r_noTexture)
+			Com_Error(ERR_FATAL, "Could not load xvi overlay image");
+
+		R_BindTexture(gl->texnum);
+
+		R_EnableTexture(&texunit_lightmap, qtrue);
+		R_BindLightmapTexture(r_xviTexture->texnum);
+
 		glDrawArrays(GL_QUADS, 0, 4);
+
+		R_EnableTexture(&texunit_lightmap, qfalse);
 	}
 
 	/* draw radar image */
@@ -800,13 +810,13 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
  * @sa R_DrawFlatGeoscape
  * @sa R_SphereGenerate
  */
-void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender)
+void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient)
 {
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
 	vec4_t lightPos;
 	const vec4_t diffuseLightColor = {2.0f, 2.0f, 2.0f, 2.0f};
-	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
+	const vec4_t ambientLightColor = {ambient + 0.2f, ambient + 0.2f, ambient + 0.2f, ambient + 0.2f};
 	float p;
 	/* set distance of the moon to make it static on starfield when time is stoped.
 	 * this distance should be used for any celestial body considered at infinite location (sun, moon) */
@@ -921,8 +931,10 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	}
 	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
 		assert(r_xviTexture);
-		r_globeEarth.overlay = r_xviTexture;
+		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_xvi_overlay", map), it_wrappic);
+		r_globeEarth.overlayAlphaMask = r_xviTexture;
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
+		r_globeEarth.overlayAlphaMask = NULL;
 		r_globeEarth.overlay = NULL;
 	}
 	if (r_geoscape_overlay->integer & OVERLAY_RADAR) {

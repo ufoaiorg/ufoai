@@ -26,6 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_overlay.h"
 
+#define MAX_IMAGEHASH 256
+static image_t *imageHash[MAX_IMAGEHASH];
+
 /* Workaround for a warning about redeclaring the macro. jpeglib sets this macro
  * and SDL, too. */
 #undef HAVE_STDLIB_H
@@ -1312,19 +1315,20 @@ static inline void R_DeleteImage (image_t *image)
 	/* free it */
 	glDeleteTextures(1, (GLuint *) &image->texnum);
 	R_CheckError();
+
+	if (image->hashPrev)
+		image->hashPrev->hashNext = image->hashNext;
+
 	memset(image, 0, sizeof(*image));
 }
 
-/**
- * @todo Hash support
- */
 static inline image_t *R_GetImage (const char *name)
 {
-	int i;
 	image_t *image;
+	const unsigned hash = Com_HashKey(name, MAX_IMAGEHASH);
 
 	/* look for it */
-	for (i = 0, image = r_images; i < r_numImages; i++, image++)
+	for (image = imageHash[hash]; image; image = image->hashNext)
 		if (!strcmp(name, image->name))
 			return image;
 
@@ -1346,6 +1350,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	image_t *image;
 	int i;
 	size_t len;
+	unsigned hash;
 
 	/* look for it */
 	image = R_GetImage(name);
@@ -1378,6 +1383,12 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	/* drop extension */
 	if (len >= 4 && image->name[len - 4] == '.')
 		image->name[len - 4] = '\0';
+
+	hash = Com_HashKey(image->name, MAX_IMAGEHASH);
+	image->hashNext = imageHash[hash];
+	if (imageHash[hash])
+		imageHash[hash]->hashPrev = image;
+	imageHash[hash] = image;
 
 	if (pic) {
 		R_BindTexture(image->texnum);
@@ -1445,6 +1456,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 			int width, height;
 			loader->load(lname, &pic, &width, &height);
 			if (pic) {
+				*ename = 0;
 				image = R_LoadImageData(lname, pic, width, height, type);
 				Mem_Free(pic);
 				if (image->type == it_world) {
@@ -1466,14 +1478,6 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	return image;
 }
 
-void R_FreeImage (image_t *image)
-{
-	/* free it */
-	glDeleteTextures(1, (GLuint *) &image->texnum);
-	R_CheckError();
-	memset(image, 0, sizeof(*image));
-}
-
 /**
  * @brief Any image that is a mesh or world texture will be removed here
  * @sa R_ShutdownImages
@@ -1491,7 +1495,7 @@ void R_FreeWorldImages (void)
 			continue;			/* keep them */
 
 		/* free it */
-		R_FreeImage(image);
+		R_DeleteImage(image);
 	}
 }
 
@@ -1501,11 +1505,11 @@ void R_InitImages (void)
 
 	r_numImages = 0;
 	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
-	if (!r_dayandnightTexture)
+	if (r_dayandnightTexture == r_noTexture)
 		Com_Error(ERR_FATAL, "Could not create daynight image for the geoscape");
 
 	for (i = 0; i < MAX_ENVMAPTEXTURES; i++) {
-		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i.tga", i), it_effect);
+		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i", i), it_effect);
 		if (r_envmaptextures[i] == r_noTexture)
 			Com_Error(ERR_FATAL, "Could not load environment map %i", i);
 	}
@@ -1527,6 +1531,7 @@ void R_ShutdownImages (void)
 			continue;			/* free image_t slot */
 		R_DeleteImage(image);
 	}
+	memset(imageHash, 0, sizeof(imageHash));
 }
 
 

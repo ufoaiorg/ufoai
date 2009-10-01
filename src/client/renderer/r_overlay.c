@@ -1,7 +1,7 @@
 /**
  * @file r_overlay.c
  * @brief Functions to generate and render overlay for geoscape
- * @todo update the alpha values like in R_CalcAndUploadDayAndNightTexture - it's much faster like that
+ * @todo update the alpha values for radar like the ones for the xvi map - it's much faster like this
  */
 
 /*
@@ -29,10 +29,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_overlay.h"
 
 static const int maxAlpha = 256;		/**< Number of alpha level */
-image_t *r_xviTexture;					/**< XVI texture */
-static byte *r_xviPic;					/**< XVI picture */
+image_t *r_xviTexture;					/**< XVI alpha mask texture */
 
 float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
+
+#define XVI_WIDTH	512
+#define XVI_HEIGHT	256
+
+/** this is the data that is used with r_xviPic */
+static byte r_xviAlpha[XVI_WIDTH * XVI_HEIGHT];
+
+byte* R_GetXVIMap (int *width, int *height)
+{
+	*width = XVI_WIDTH;
+	*height = XVI_HEIGHT;
+	return r_xviAlpha;
+}
+
+static void R_UploadXVIAlpha (void)
+{
+	R_BindTexture(r_xviTexture->texnum);
+
+	/* upload alpha map into the r_dayandnighttexture */
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, XVI_WIDTH, XVI_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, r_xviAlpha);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+}
 
 /**
  * @brief Applies spreading on xvi transparency channel centered on a given pos
@@ -44,64 +67,61 @@ float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
  */
 void R_IncreaseXVILevel (const vec2_t pos)
 {
-	const int bpp = 4;							/**< byte per pixel */
 	const int minAlpha = 100;					/**< minimum value of alpha when spreading XVI
 													255 - minAlpha is the maximum XVI level */
 	int xviLevel;								/**< XVI level rate at position pos */
 	vec2_t currentPos;							/**< current position (in latitude / longitude) */
 	int x, y;									/**< current position (in pixel) */
-	const int xviWidth = r_xviTexture->width;
-	const int xviHeight = r_xviTexture->height;
-	const int xCenter = bpp * round((180 - pos[0]) * r_xviTexture->width / 360.0f);
-	const int yCenter = bpp * round((90 - pos[1]) * r_xviTexture->height / 180.0f);
+	const int xCenter = round((180 - pos[0]) * XVI_WIDTH / 360.0f);
+	const int yCenter = round((90 - pos[1]) * XVI_HEIGHT / 180.0f);
 	float radius;								/**< radius of the new XVI circle */
+	byte *xvi;
 
 	assert(xCenter >= 0);
-	assert(xCenter < bpp * xviWidth);
+	assert(xCenter < XVI_WIDTH);
 	assert(yCenter >= 0);
-	assert(yCenter < bpp * xviHeight);
+	assert(yCenter < XVI_HEIGHT);
 
-	if (r_xviPic[3 + yCenter * xviWidth + xCenter] < minAlpha) {
+	if (r_xviAlpha[yCenter * XVI_WIDTH + xCenter] < minAlpha) {
 		/* This zone wasn't infected */
-		r_xviPic[3 + yCenter * xviWidth + xCenter] = minAlpha;
+		r_xviAlpha[yCenter * XVI_WIDTH + xCenter] = minAlpha;
 		return;
 	}
 
 	/* Get xvi Level infection at pos */
-	xviLevel = r_xviPic[3 + yCenter * xviWidth + xCenter] - minAlpha;
+	xviLevel = r_xviAlpha[yCenter * XVI_WIDTH + xCenter] - minAlpha;
 	/* Calculate radius of new spreading */
 	xviLevel++;
 	radius = sqrt(15.0f * xviLevel);
 
-	for (y = 0; y < bpp * xviHeight; y += bpp) {
-		for (x = 0; x < bpp * xviWidth; x += bpp) {
+	xvi = r_xviAlpha;
+	for (y = 0; y < XVI_HEIGHT; y++) {
+		for (x = 0; x < XVI_WIDTH; x++) {
 			float distance;
 			Vector2Set(currentPos,
-				180.0f - 360.0f * x / ((float) xviWidth * bpp),
-				90.0f - 180.0f * y / ((float) xviHeight * bpp));
+				180.0f - 360.0f * x / ((float) XVI_WIDTH),
+				90.0f - 180.0f * y / ((float) XVI_HEIGHT));
+
 			distance = MAP_GetDistance(pos, currentPos);
 			if (distance <= 1.1 * radius) {
 				int newValue;
-				if ((xCenter == x) && (yCenter == y))
+				if (xCenter == x && yCenter == y)
 					/* Make sure that XVI level increases, even if rounding problems makes radius constant */
 					newValue = minAlpha + xviLevel;
 				else if (distance > radius)
 					newValue = round(minAlpha * (1.1 * radius - distance) / (0.1 * radius));
 				else
 					newValue = round(minAlpha + (xviLevel * (radius - distance)) / radius);
-				if (newValue > 255) {
-					Com_DPrintf(DEBUG_CLIENT, "Maximum alpha value reached\n");
-					newValue = 255;
-				}
-				if (r_xviPic[3 + y * xviWidth + x] < newValue) {
-					r_xviPic[3 + y * xviWidth + x] = newValue;
-				}
+
+				if (*xvi < newValue)
+					*xvi = min(255, newValue);
 			}
+
+			xvi++;
 		}
 	}
 
-	R_BindTexture(r_xviTexture->texnum);
-	R_UploadTexture((unsigned *) r_xviPic, r_xviTexture->upload_width, r_xviTexture->upload_height, r_xviTexture);
+	R_UploadXVIAlpha();
 }
 
 /**
@@ -116,67 +136,23 @@ void R_DecreaseXVILevel (const vec2_t pos)
  * @brief Initialize XVI overlay on geoscape.
  * @param[in] data Pointer to the data containing values to store in XVI map. Can be NULL for new games.
  * This is only the alpha channel of the xvi map
- * @param[in] width Width of data (used only if data is not NULL)
- * @param[in] height Height of data (used only if data is not NULL)
  * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
  */
-void R_InitializeXVIOverlay (const char *mapname, byte *data, int width, int height)
+void R_InitializeXVIOverlay (const char *mapname, const byte *data)
 {
-	int xviWidth, xviHeight;
-	int x, y;
-	byte *start;
-	qboolean setToZero = qtrue;
-
-	/* reload for every new game */
-	if (r_xviTexture)
-		R_FreeImage(r_xviTexture);
-	if (r_xviPic) {
-		Mem_Free(r_xviPic);
-		r_xviPic = NULL;
-	}
-
 	/* we should always have a campaign loaded here */
 	assert(mapname);
 
-	/* Load the XVI texture */
-	R_LoadImage(va("pics/geoscape/%s_xvi_overlay", mapname), &r_xviPic, &xviWidth, &xviHeight);
-	if (!r_xviPic || !xviWidth || !xviHeight)
+	r_xviTexture = R_LoadImageData("***r_xvitexture***", NULL, XVI_WIDTH, XVI_HEIGHT, it_effect);
+	if (r_xviTexture == r_noTexture)
 		Com_Error(ERR_FATAL, "Couldn't load map mask %s_xvi_overlay in pics/geoscape", mapname);
 
-	if (data && (width == xviWidth) && (height == xviHeight))
-		setToZero = qfalse;
+	if (!data)
+		memset(r_xviAlpha, 0, sizeof(r_xviAlpha));
+	else
+		memcpy(r_xviAlpha, data, sizeof(r_xviAlpha));
 
-	/* Initialize XVI rate */
-	start = r_xviPic + 3;	/* to get the first alpha value */
-	for (y = 0; y < xviHeight; y++)
-		for (x = 0; x < xviWidth; x++, start += 4) {
-			start[0] = setToZero ? 0 : data[y * xviWidth + x];
-		}
-
-	/* Set an image */
-	r_xviTexture = R_LoadImageData(va("pics/geoscape/%s_xvi_overlay", mapname), r_xviPic, xviWidth, xviHeight, it_wrappic);
-}
-
-/**
- * @brief Copy XVI transparency map for saving purpose (only the alpha value of the map)
- * @sa CP_XVIMapSave
- * @note Make sure to free the returned buffer
- */
-byte* R_XVIMapCopy (int *width, int *height)
-{
-	int x, y;
-	const int bpp = 4;
-	byte *buf = Mem_PoolAllocExt(r_xviTexture->height * r_xviTexture->width * bpp, qfalse, vid_imagePool, 0);
-	if (!buf)
-		return NULL;
-
-	*width = r_xviTexture->width;
-	*height = r_xviTexture->height;
-	for (y = 0; y < r_xviTexture->height; y++) {
-		for (x = 0; x < r_xviTexture->width; x++)
-			buf[y * r_xviTexture->width + x] = r_xviPic[3 + (y * r_xviTexture->width + x) * bpp];
-	}
-	return buf;
+	R_UploadXVIAlpha();
 }
 
 /**
@@ -427,6 +403,4 @@ void R_ShutdownOverlay (void)
 	r_radarSourcePic = NULL;
 
 	r_xviTexture = NULL;
-	Mem_Free(r_xviPic);
-	r_xviPic = NULL;
 }

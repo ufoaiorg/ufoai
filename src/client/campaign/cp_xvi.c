@@ -138,7 +138,7 @@ qboolean XVI_SaveXML (mxml_node_t *p)
 	int height;
 	mxml_node_t *n;
 	int defaultval = 0; /* that value should be the value, which is the most used one in the array */
-	byte *out = R_XVIMapCopy(&width, &height);
+	byte *out = R_GetXVIMap(&width, &height);
 	if (!out)
 		return qtrue;
 
@@ -160,7 +160,6 @@ qboolean XVI_SaveXML (mxml_node_t *p)
 			}
 		}
 	}
-	Mem_Free(out);
 	return qtrue;
 }
 
@@ -177,9 +176,9 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 	mxml_node_t *s;
 	int defaultval;
 	mxml_node_t *n = mxml_GetNode(p, "xvi");
-	/* If there is no XVI, it will not be saved */
+	/* If there is no XVI, it will not be loaded */
 	if (!n) {
-		R_InitializeXVIOverlay(ccs.curCampaign->map, NULL, 0, 0);
+		R_InitializeXVIOverlay(ccs.curCampaign->map, NULL);
 		return qtrue;
 	}
 
@@ -200,7 +199,7 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 			out[y * width + x] = mxml_GetInt(s, "xv", 0);
 	}
 
-	R_InitializeXVIOverlay(ccs.curCampaign->map, out, width, height);
+	R_InitializeXVIOverlay(ccs.curCampaign->map, out);
 	Mem_Free(out);
 	return qtrue;
 }

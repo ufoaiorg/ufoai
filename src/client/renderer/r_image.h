@@ -63,6 +63,8 @@ typedef struct image_s {
 	qboolean has_alpha;
 	material_t material;
 	struct image_s *normalmap;			/**< normalmap texture  */
+	struct image_s *hashNext;			/**< hash map next pointer in case of collision */
+	struct image_s *hashPrev;			/**< hash map prev pointer for easier removing */
 } image_t;
 
 #define MAX_GL_TEXTURES		1024
@@ -86,7 +88,6 @@ void R_SoftenTexture(byte *in, int width, int height, int bpp);
 void R_ImageList_f(void);
 void R_InitImages(void);
 void R_ShutdownImages(void);
-void R_FreeImage(image_t *image);
 void R_FreeWorldImages(void);
 void R_ImageClearMaterials(void);
 void R_CalcAndUploadDayAndNightTexture(float q);
