@@ -14,21 +14,11 @@
 		<Project filename="radiant.cbp" active="1">
 			<Depends filename="radiant_model.cbp" />
 			<Depends filename="radiant_entity.cbp" />
-			<Depends filename="radiant_image.cbp" />
-			<Depends filename="radiant_map.cbp" />
-			<Depends filename="radiant_shader.cbp" />
-			<Depends filename="radiant_vfspk3.cbp" />
-			<Depends filename="radiant_archivezip.cbp" />
 			<Depends filename="radiant_brushexport.cbp" />
 			<Depends filename="ufo2map.cbp" />
 		</Project>
 		<Project filename="radiant_model.cbp" />
 		<Project filename="radiant_entity.cbp" />
-		<Project filename="radiant_image.cbp" />
-		<Project filename="radiant_map.cbp" />
-		<Project filename="radiant_shader.cbp" />
-		<Project filename="radiant_vfspk3.cbp" />
-		<Project filename="radiant_archivezip.cbp" />
 		<Project filename="radiant_brushexport.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
