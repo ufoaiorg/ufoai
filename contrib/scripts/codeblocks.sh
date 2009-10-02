@@ -374,22 +374,22 @@ TAR=$(which tar)
 
 if [ ! -x "${UN7ZIP}" ]; then
 	echo "you need 7zip installed to run this script"
-	exit 1;
+	exit 1
 fi
 
 if [ ! -x "${WGET}" ]; then
 	echo "you need wget installed to run this script"
-	exit 1;
+	exit 1
 fi
 
 if [ ! -x "${UNZIP}" ]; then
 	echo "you need unzip installed to run this script"
-	exit 1;
+	exit 1
 fi
 
 if [ ! -x "${TAR}" ]; then
 	echo "you need tar installed to run this script"
-	exit 1;
+	exit 1
 fi
 
 #######################################################
@@ -440,7 +440,7 @@ create()
 
 	if [ ! -e "${ARCHIVE_NAME}" ]; then
 		echo "Failed to create ${ARCHIVE_NAME}"
-		exit 1;
+		exit 1
 	fi
 	echo $(date) >> ${LOGFILE_NAME} 2>&1
 	echo "finished creating $(du -h ${ARCHIVE_NAME})"
@@ -485,5 +485,6 @@ elif [ "$ACTION" == "clean" ]; then
 	echo "clean finished"
 else
 	echo "unknown action given"
+	exit 1
 fi
 

@@ -105,7 +105,7 @@ class ImageTGAAPI
 
 typedef SingletonModule<ImageTGAAPI> ImageTGAModule;
 
-ImageTGAModule g_ImageTGAModule;
+typedef Static<ImageTGAModule> StaticImageTGAModule;
 
 class ImageJPGAPI
 {
@@ -126,7 +126,7 @@ class ImageJPGAPI
 
 typedef SingletonModule<ImageJPGAPI, ImageDependencies> ImageJPGModule;
 
-ImageJPGModule g_ImageJPGModule;
+typedef Static<ImageJPGModule> StaticImageJPGModule;
 
 class ImagePNGAPI
 {
@@ -147,13 +147,8 @@ class ImagePNGAPI
 
 typedef SingletonModule<ImagePNGAPI> ImagePNGModule;
 
-ImagePNGModule g_ImagePNGModule;
+typedef Static<ImagePNGModule> StaticImagePNGModule;
 
-extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules (ModuleServer& server)
-{
-	initialiseModule(server);
-
-	g_ImageTGAModule.selfRegister();
-	g_ImageJPGModule.selfRegister();
-	g_ImagePNGModule.selfRegister();
-}
+StaticRegisterModule staticRegisterImageJPG(StaticImageJPGModule::instance());
+StaticRegisterModule staticRegisterImageTGA(StaticImageTGAModule::instance());
+StaticRegisterModule staticRegisterImagePNG(StaticImagePNGModule::instance());

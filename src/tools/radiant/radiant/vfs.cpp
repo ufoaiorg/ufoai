@@ -67,7 +67,7 @@ ArchiveModules& FileSystemAPI_getArchiveModules ();
 // =============================================================================
 // Global variables
 
-Archive* OpenArchive (const char* name);
+Archive* OpenDirArchive (const char* name);
 
 struct archive_entry_t
 {
@@ -287,7 +287,7 @@ void InitDirectory (const std::string& directory, ArchiveModules& archiveModules
 	{
 		archive_entry_t entry;
 		entry.name = path;
-		entry.archive = OpenArchive(path);
+		entry.archive = OpenDirArchive(path);
 		entry.is_pakfile = false;
 		g_archives.push_back(entry);
 	}
@@ -569,4 +569,53 @@ void FileSystem_Shutdown ()
 VirtualFileSystem& GetFileSystem ()
 {
 	return g_UFOFileSystem;
+}
+
+#include "modulesystem/singletonmodule.h"
+#include "modulesystem/modulesmap.h"
+
+class FileSystemDependencies: public GlobalRadiantModuleRef
+{
+		ArchiveModulesRef m_archive_modules;
+	public:
+		FileSystemDependencies () :
+			m_archive_modules(GlobalRadiant().getRequiredGameDescriptionKeyValue("archivetypes"))
+		{
+		}
+		ArchiveModules& getArchiveModules ()
+		{
+			return m_archive_modules.get();
+		}
+};
+
+class FileSystemAPI
+{
+		VirtualFileSystem* m_filesystem;
+	public:
+		typedef VirtualFileSystem Type;
+		STRING_CONSTANT(Name, "*");
+
+		FileSystemAPI ()
+		{
+			FileSystem_Init();
+			m_filesystem = &GetFileSystem();
+		}
+		~FileSystemAPI ()
+		{
+			FileSystem_Shutdown();
+		}
+		VirtualFileSystem* getTable ()
+		{
+			return m_filesystem;
+		}
+};
+
+typedef SingletonModule<FileSystemAPI, FileSystemDependencies> FileSystemModule;
+
+typedef Static<FileSystemModule> StaticFileSystemModule;
+StaticRegisterModule staticRegisterFileSystem(StaticFileSystemModule::instance());
+
+ArchiveModules& FileSystemAPI_getArchiveModules ()
+{
+	return StaticFileSystemModule::instance().getDependencies().getArchiveModules();
 }

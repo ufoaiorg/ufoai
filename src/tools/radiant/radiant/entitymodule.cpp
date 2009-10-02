@@ -33,7 +33,7 @@
 #include "iradiant.h"
 #include "namespace.h"
 #include "typesystem.h"
-#include "entity.h"
+#include "../libs/entity/entity.h"
 #include "itextures.h"
 #include "modulesystem/singletonmodule.h"
 
@@ -78,11 +78,5 @@ class EntityAPI: public TypeSystemRef
 
 typedef SingletonModule<EntityAPI, EntityDependencies> EntityModule;
 
-EntityModule g_EntityModule;
-
-extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules (ModuleServer& server)
-{
-	initialiseModule(server);
-
-	g_EntityModule.selfRegister();
-}
+typedef Static<EntityModule> StaticEntityModule;
+StaticRegisterModule staticRegisterEntity(StaticEntityModule::instance());

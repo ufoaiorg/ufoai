@@ -38,8 +38,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "archivelib.h"
 #include "fs_path.h"
 
-#include "vfspk3.h"
-
 
 class DirectoryArchive : public Archive {
 	CopiedString m_root;
@@ -113,6 +111,6 @@ public:
 	}
 };
 
-Archive* OpenArchive(const char* name) {
+Archive* OpenDirArchive(const char* name) {
 	return new DirectoryArchive(name);
 }
