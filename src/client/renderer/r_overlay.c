@@ -28,16 +28,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_image.h"
 #include "r_overlay.h"
 
-static const int maxAlpha = 256;		/**< Number of alpha level */
+image_t *r_radarTexture;				/**< radar texture */
 image_t *r_xviTexture;					/**< XVI alpha mask texture */
+
+static const int maxAlpha = 255;		/**< Number of alpha level */
+static const int INITIAL_RADAR_ALPHA_VALUE = 100;
 
 float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 
-#define XVI_WIDTH	512
-#define XVI_HEIGHT	256
+#define XVI_WIDTH		512
+#define XVI_HEIGHT		256
+#define RADAR_WIDTH		512
+#define RADAR_HEIGHT	256
 
-/** this is the data that is used with r_xviPic */
+/** this is the data that is used with r_xviTexture */
 static byte r_xviAlpha[XVI_WIDTH * XVI_HEIGHT];
+
+/** this is the data that is used with r_radarTexture */
+static byte r_radarPic[RADAR_WIDTH * RADAR_HEIGHT];
+
+/** this is the data that is used with r_radarTexture */
+static byte r_radarSourcePic[RADAR_WIDTH * RADAR_HEIGHT];
 
 byte* R_GetXVIMap (int *width, int *height)
 {
@@ -46,14 +57,14 @@ byte* R_GetXVIMap (int *width, int *height)
 	return r_xviAlpha;
 }
 
-static void R_UploadXVIAlpha (void)
+static void R_UploadAlpha (const image_t *image, const byte *alphaData)
 {
-	R_BindTexture(r_xviTexture->texnum);
+	R_BindTexture(image->texnum);
 
 	/* upload alpha map into the r_dayandnighttexture */
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, XVI_WIDTH, XVI_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, r_xviAlpha);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, image->width, image->height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, alphaData);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 }
 
@@ -114,14 +125,14 @@ void R_IncreaseXVILevel (const vec2_t pos)
 					newValue = round(minAlpha + (xviLevel * (radius - distance)) / radius);
 
 				if (*xvi < newValue)
-					*xvi = min(255, newValue);
+					*xvi = min(maxAlpha, newValue);
 			}
 
 			xvi++;
 		}
 	}
 
-	R_UploadXVIAlpha();
+	R_UploadAlpha(r_xviTexture, r_xviAlpha);
 }
 
 /**
@@ -138,21 +149,16 @@ void R_DecreaseXVILevel (const vec2_t pos)
  * This is only the alpha channel of the xvi map
  * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
  */
-void R_InitializeXVIOverlay (const char *mapname, const byte *data)
+void R_InitializeXVIOverlay (const byte *data)
 {
-	/* we should always have a campaign loaded here */
-	assert(mapname);
-
-	r_xviTexture = R_LoadImageData("***r_xvitexture***", NULL, XVI_WIDTH, XVI_HEIGHT, it_effect);
-	if (r_xviTexture == r_noTexture)
-		Com_Error(ERR_FATAL, "Couldn't load map mask %s_xvi_overlay in pics/geoscape", mapname);
+	assert(r_xviTexture);
 
 	if (!data)
 		memset(r_xviAlpha, 0, sizeof(r_xviAlpha));
 	else
 		memcpy(r_xviAlpha, data, sizeof(r_xviAlpha));
 
-	R_UploadXVIAlpha();
+	R_UploadAlpha(r_xviTexture, r_xviAlpha);
 }
 
 /**
@@ -165,38 +171,6 @@ void R_InitializeXVIOverlay (const char *mapname, const byte *data)
  * @sa RADAR_UpdateWholeRadarOverlay
  */
 
-image_t *r_radarTexture;					/**< radar texture */
-static byte *r_radarPic;					/**< radar picture (base and aircraft radar) */
-static byte *r_radarSourcePic;				/**< radar picture (only base radar) */
-
-/**
- * @brief Create radar overlay on geoscape.
- * @note This function allocate memory for radar images and texture.
- * It should be called only once per game.
- */
-void R_CreateRadarOverlay (void)
-{
-	const int radarWidth = 512;
-	const int radarHeight = 256;
-	const int bpp = 4;
-	const int size = bpp * radarHeight * radarWidth;
-
-	/* create new texture only once per life time, but reset it for every
-	 * new game (campaign start or game load) */
-	if (r_radarTexture && r_radarTexture->texnum > 0) {
-		memset(r_radarSourcePic, 0, size);
-		memset(r_radarPic, 0, size);
-		R_UploadRadarCoverage(qfalse);
-		return;
-	}
-
-	r_radarPic = Mem_PoolAlloc(size, vid_imagePool, 0);
-	r_radarSourcePic = Mem_PoolAlloc(size, vid_imagePool, 0);
-
-	/* Set an image */
-	r_radarTexture = R_LoadImageData("pics/geoscape/map_earth_radar_overlay", r_radarPic, radarWidth, radarHeight, it_wrappic);
-}
-
 /**
  * @brief Initialize radar overlay on geoscape.
  * @param[in] source Initialize the source texture if qtrue: if you are updating base radar overlay.
@@ -205,17 +179,10 @@ void R_CreateRadarOverlay (void)
 void R_InitializeRadarOverlay (qboolean source)
 {
 	/* Initialize Radar */
-	if (source) {
-		int x, y;
-		const byte unexploredColor[4] = {180, 180, 180, 100};	/**< Color of the overlay outside radar range */
-
-		for (y = 0; y < r_radarTexture->height; y++) {
-			for (x = 0; x < r_radarTexture->width; x++) {
-				memcpy(&r_radarSourcePic[4 * (y * r_radarTexture->width + x)], unexploredColor, 4);
-			}
-		}
-	} else
-		memcpy(r_radarPic, r_radarSourcePic, 4 * r_radarTexture->height * r_radarTexture->width);
+	if (source)
+		memset(r_radarSourcePic, INITIAL_RADAR_ALPHA_VALUE, sizeof(r_radarSourcePic));
+	else
+		memcpy(r_radarPic, r_radarSourcePic, sizeof(r_radarPic));
 }
 
 /**
@@ -228,48 +195,46 @@ void R_InitializeRadarOverlay (qboolean source)
  */
 static void R_DrawRadarOverlayRow (int latMin, int latMax, int y, byte alpha, qboolean source)
 {
-	const int bpp = 4;							/**< byte per pixel */
-	const int radarWidth = r_radarTexture->width;
-	const float radarWidthPerDegree = radarWidth / 360.0f;
+	const float radarWidthPerDegree = RADAR_WIDTH / 360.0f;
 	int xMin, xMax, x;
 
 	assert(latMax - latMin <= 360);
 
 	if (latMin < -180.0f) {
 		xMin = 0;
-		xMax = bpp * ceil((latMax + 180.0f) * radarWidthPerDegree);
-		for (x = xMin; x < xMax; x += bpp) {
-			byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
+		xMax = ceil((latMax + 180.0f) * radarWidthPerDegree);
+		for (x = xMin; x < xMax; x++) {
+			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
-		xMin = bpp * floor((latMin + 540.0f) * radarWidthPerDegree);
-		xMax = bpp * radarWidth;
-		for (x = xMin; x < xMax; x += bpp) {
-			byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
+		xMin = floor((latMin + 540.0f) * radarWidthPerDegree);
+		xMax = RADAR_WIDTH;
+		for (x = xMin; x < xMax; x++) {
+			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
 	} else if (latMax > 180.0f) {
 		xMin = 0;
-		xMax = bpp * ceil((latMax - 180.0f) * radarWidthPerDegree);
-		for (x = xMin; x < xMax; x += bpp) {
-			byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
+		xMax = ceil((latMax - 180.0f) * radarWidthPerDegree);
+		for (x = xMin; x < xMax; x++) {
+			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
-		xMin = bpp * floor((latMin + 180.0f) * radarWidthPerDegree);
-		xMax = bpp * radarWidth;
-		for (x = xMin; x < xMax; x += bpp) {
-			byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
+		xMin = floor((latMin + 180.0f) * radarWidthPerDegree);
+		xMax = RADAR_WIDTH;
+		for (x = xMin; x < xMax; x++) {
+			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
 	} else {
-		xMin = bpp * floor((latMin + 180.0f) * radarWidthPerDegree);
-		xMax = bpp * ceil((latMax + 180.0f) * radarWidthPerDegree);
-		for (x = xMin; x < xMax; x += bpp) {
-			byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
+		xMin = floor((latMin + 180.0f) * radarWidthPerDegree);
+		xMax = ceil((latMax + 180.0f) * radarWidthPerDegree);
+		for (x = xMin; x < xMax; x++) {
+			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
@@ -296,30 +261,28 @@ static inline float R_GetRadarDeltaLongitude (const vec2_t radarPos, float radiu
  * @brief Set lower and upper value of the radar's overlay row that can be modified by current radar.
  * @param[in] pos Position of the center of radar.
  * @param[in] radius Radius of the radar coverage.
- * @param[in] radarHeight Number of pixels of the texture in y direction.
  * @param[out] yMin Pointer to the lower row of radar overlay that should be changed.
  * @param[out] yMax Pointer to the higher row of radar overlay that should be changed.
  */
-static void R_SetMinMaxRadarRows (const vec2_t pos, float radius, const float radarHeight, int *yMin, int *yMax)
+static void R_SetMinMaxRadarRows (const vec2_t pos, float radius, int *yMin, int *yMax)
 {
-	const int bpp = 4;							/**< byte per pixel */
-	const float radarHeightPerDegree = radarHeight / 180.0f;
+	const float radarHeightPerDegree = RADAR_HEIGHT / 180.0f;
 
 	if (pos[1] + radius > 90) {
 		*yMin = 0;
-		*yMax = bpp * round((90 - pos[1] + radius) * radarHeightPerDegree);
+		*yMax = round((90 - pos[1] + radius) * radarHeightPerDegree);
 	} else if (pos[1] - radius < -90) {
-		*yMin = bpp * ceil((90 - pos[1] - radius) * radarHeightPerDegree);
-		*yMax = bpp * radarHeight;
+		*yMin = ceil((90 - pos[1] - radius) * radarHeightPerDegree);
+		*yMax = RADAR_HEIGHT;
 	} else {
-		*yMin = bpp * ceil((90 - pos[1] - radius) * radarHeightPerDegree);
-		*yMax = bpp * round((90 - pos[1] + radius) * radarHeightPerDegree);
+		*yMin = ceil((90 - pos[1] - radius) * radarHeightPerDegree);
+		*yMax = round((90 - pos[1] + radius) * radarHeightPerDegree);
 	}
 
 	/* a few assert to avoid buffer overflow */
 	assert(*yMin >= 0);
 	assert(*yMin <= *yMax);
-	assert(*yMax <= bpp * radarHeight);			/* the loop will stop just BEFORE yMax, so use <= rather than < */
+	assert(*yMax <= RADAR_HEIGHT);			/* the loop will stop just BEFORE yMax, so use <= rather than < */
 }
 
 /**
@@ -332,11 +295,9 @@ static void R_SetMinMaxRadarRows (const vec2_t pos, float radius, const float ra
  */
 void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius, qboolean source)
 {
-	const int bpp = 4;							/**< byte per pixel */
 	const byte innerAlpha = 0;					/**< Alpha of the inner radar range */
 	const byte outerAlpha = 60;					/**< Alpha of the outer radar range */
-	const int radarHeight = r_radarTexture->height;
-	const float radarHeightPerDegree = radarHeight / 180.0f;
+	const float radarHeightPerDegree = RADAR_HEIGHT / 180.0f;
 	int y;										/**< current position (in pixel) */
 	int yMax, yMin;								/**< Bounding box of the inner radar zone */
 	int outeryMax, outeryMin;					/**< Bounding box of the outer radar zone */
@@ -345,12 +306,13 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 	assert(outerRadius > innerRadius);
 
 	/* Set minimum and maximum rows value we'll have to change */
-	R_SetMinMaxRadarRows(pos, innerRadius, radarHeight, &yMin, &yMax);
-	R_SetMinMaxRadarRows(pos, outerRadius, radarHeight, &outeryMin, &outeryMax);
+	R_SetMinMaxRadarRows(pos, innerRadius, &yMin, &yMax);
+	R_SetMinMaxRadarRows(pos, outerRadius, &outeryMin, &outeryMax);
 
 	/* Draw upper part of the radar coverage */
-	for (y = outeryMin; y < yMin; y += bpp) {
-		const float yLat = torad * (90.0f - y / (radarHeightPerDegree * bpp));	/**< latitude of current point, in radian */
+	for (y = outeryMin; y < yMin; y++) {
+		/* latitude of current point, in radian */
+		const float yLat = torad * (90.0f - y / radarHeightPerDegree);
 		float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
 
 		/* Only the outer radar coverage is drawn at this latitude */
@@ -358,8 +320,9 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 	}
 
 	/* Draw middle part of the radar coverage */
-	for (y = yMin; y < yMax; y += bpp) {
-		const float yLat = torad * (90.0f - y / (radarHeightPerDegree * bpp));	/**< latitude of current point, in radian */
+	for (y = yMin; y < yMax; y++) {
+		/* latitude of current point, in radian */
+		const float yLat = torad * (90.0f - y / radarHeightPerDegree);
 		const float deltaLong = R_GetRadarDeltaLongitude(pos, innerRadius, yLat);
 		const float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
 
@@ -370,8 +333,9 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 	}
 
 	/* Draw lower part of the radar coverage */
-	for (y = yMax; y < outeryMax; y += bpp) {
-		const float yLat = torad * (90.0f - y / (radarHeightPerDegree * bpp));	/**< latitude of current point, in radian */
+	for (y = yMax; y < outeryMax; y++) {
+		/* latitude of current point, in radian */
+		const float yLat = torad * (90.0f - y / radarHeightPerDegree);
 		const float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
 
 		/* Only the outer radar coverage is drawn at this latitude */
@@ -381,26 +345,23 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 
 /**
  * @brief Smooth radar coverage
- * @param[in] smooth Smoothes the picture if set to True (should be used only when all radars have been added)
  * @note allows to make texture pixels less visible.
  */
-void R_UploadRadarCoverage (qboolean smooth)
+void R_UploadRadarCoverage (void)
 {
-	/** @todo This is no realtime function */
-	if (smooth)
-		R_SoftenTexture(r_radarPic, r_radarTexture->width, r_radarTexture->height, 4);
+	R_SoftenTexture(r_radarPic, RADAR_WIDTH, RADAR_HEIGHT, 1);
 
-	R_BindTexture(r_radarTexture->texnum);
-	R_UploadTexture((unsigned *) r_radarPic, r_radarTexture->upload_width, r_radarTexture->upload_height, r_radarTexture);
+	R_UploadAlpha(r_radarTexture, r_radarPic);
 }
 
 void R_ShutdownOverlay (void)
 {
 	r_radarTexture = NULL;
-	Mem_Free(r_radarPic);
-	Mem_Free(r_radarSourcePic);
-	r_radarPic = NULL;
-	r_radarSourcePic = NULL;
-
 	r_xviTexture = NULL;
+}
+
+void R_InitOverlay (void)
+{
+	r_radarTexture = R_LoadImageData("***r_radarTexture***", NULL, RADAR_WIDTH, RADAR_HEIGHT, it_wrappic);
+	r_xviTexture = R_LoadImageData("***r_xvitexture***", NULL, XVI_WIDTH, XVI_HEIGHT, it_effect);
 }

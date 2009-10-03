@@ -70,9 +70,6 @@ CASSERT(lengthof(geoscapeImageNames) == GEOSCAPE_IMAGE_MAX);
 
 static image_t *geoscapeImages[GEOSCAPE_IMAGE_MAX];
 
-void R_UploadRadarCoverage(qboolean smooth);
-void R_InitializeRadarOverlay(qboolean source);
-
 /*
 ==============================================================
 MULTI SELECTION DEFINITION

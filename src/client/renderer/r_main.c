@@ -815,7 +815,6 @@ void R_Shutdown (void)
 
 	R_ShutdownModels(qtrue);
 	R_ShutdownImages();
-	R_ShutdownOverlay();
 
 	R_ShutdownPrograms();
 	R_FontShutdown();

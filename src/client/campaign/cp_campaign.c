@@ -2032,7 +2032,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	/* Initialize XVI overlay */
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
-	R_InitializeXVIOverlay(campaign->map, NULL);
+	R_InitializeXVIOverlay(NULL);
 
 	/* create a base as first step */
 	B_SelectBase(NULL);

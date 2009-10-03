@@ -178,7 +178,7 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 	mxml_node_t *n = mxml_GetNode(p, "xvi");
 	/* If there is no XVI, it will not be loaded */
 	if (!n) {
-		R_InitializeXVIOverlay(ccs.curCampaign->map, NULL);
+		R_InitializeXVIOverlay(NULL);
 		return qtrue;
 	}
 
@@ -199,7 +199,7 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 			out[y * width + x] = mxml_GetInt(s, "xv", 0);
 	}
 
-	R_InitializeXVIOverlay(ccs.curCampaign->map, out);
+	R_InitializeXVIOverlay(out);
 	Mem_Free(out);
 	return qtrue;
 }

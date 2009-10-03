@@ -1507,6 +1507,7 @@ void R_InitImages (void)
 	int i;
 
 	r_numImages = 0;
+
 	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
 	if (r_dayandnightTexture == r_noTexture)
 		Com_Error(ERR_FATAL, "Could not create daynight image for the geoscape");
@@ -1517,7 +1518,7 @@ void R_InitImages (void)
 			Com_Error(ERR_FATAL, "Could not load environment map %i", i);
 	}
 
-	R_CreateRadarOverlay();
+	R_InitOverlay();
 }
 
 /**
@@ -1535,6 +1536,8 @@ void R_ShutdownImages (void)
 		R_DeleteImage(image);
 	}
 	memset(imageHash, 0, sizeof(imageHash));
+
+	R_ShutdownOverlay();
 }
 
 

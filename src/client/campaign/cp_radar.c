@@ -26,14 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_screen.h"
 #include "../renderer/r_draw.h"
+#include "../renderer/r_overlay.h"
 #include "../menu/m_nodes.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_ufo.h"
-
-void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
-void R_InitializeRadarOverlay(qboolean source);
-void R_UploadRadarCoverage(qboolean smooth);
 
 /**
  * used to store the previous configuration of overlay before radar
@@ -81,7 +78,7 @@ void RADAR_UpdateStaticRadarCoverage (void)
 	/* Smooth and bind radar overlay without aircraft (in case no aircraft is on geoscape:
 	 * RADAR_UpdateWholeRadarOverlay won't be called) */
 	R_InitializeRadarOverlay(qfalse);
-	R_UploadRadarCoverage(qtrue);
+	R_UploadRadarCoverage();
 }
 
 /**
@@ -116,8 +113,7 @@ void RADAR_UpdateWholeRadarOverlay (void)
 		}
 	}
 
-	/* Smooth Radar Coverage and bind it */
-	R_UploadRadarCoverage(qtrue);
+	R_UploadRadarCoverage();
 }
 
 /**

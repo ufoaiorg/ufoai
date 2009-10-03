@@ -25,12 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void R_IncreaseXVILevel(const vec2_t pos);
 void R_DecreaseXVILevel(const vec2_t pos);
-void R_InitializeXVIOverlay(const char *mapname, const byte *data);
-void R_CreateRadarOverlay(void);
+void R_InitializeXVIOverlay(const byte *data);
+void R_InitOverlay(void);
 byte* R_GetXVIMap(int *width, int *height);
 void R_InitializeRadarOverlay(qboolean source);
 void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
-void R_UploadRadarCoverage(qboolean smooth);
+void R_UploadRadarCoverage(void);
 void R_ShutdownOverlay(void);
 
 extern image_t *r_xviTexture;
