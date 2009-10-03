@@ -818,6 +818,12 @@ base/models/objects/alien/ufo_crashed/ufo_scout_engines.jpg | GNU General Public
 base/models/objects/alien/ufo_crashed/ufo_scout_engines.md2 | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/ufo_scout_hull.jpg | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/ufo_scout_hull.md2 | GNU General Public License 2.0
+base/models/objects/alien/wormhole/cabel.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
+base/models/objects/alien/wormhole/cabel.png | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
+base/models/objects/alien/wormhole/wormhole.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
+base/models/objects/alien/wormhole/wormhole.png | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
+base/models/objects/alien/wormhole/wormhole_bump.png | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
+base/models/objects/alien/wormhole/wormhole_nm.png | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
 base/models/objects/barrel/barrel2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/barrel/barrel2_1.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/barrel/barrel2_2.png | GNU General Public License 2.0 or later | Willem "Sitters"
