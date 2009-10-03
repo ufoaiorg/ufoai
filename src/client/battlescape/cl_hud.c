@@ -69,7 +69,7 @@ typedef enum {
 	BT_HEADGEAR,
 
 	BT_NUM_TYPES
-} button_types_t;
+} buttonTypes_t;
 
 /** @brief a cbuf string for each button_types_t */
 static const char *shootTypeStrings[] = {
@@ -106,8 +106,14 @@ static const char *moveModeDescriptions[] = {
 };
 CASSERT(lengthof(moveModeDescriptions) == WALKTYPE_MAX);
 
+typedef struct reserveShot_s {
+	int hand;
+	int fireModeIndex;
+	int weaponIndex;
+	int TUs;
+} reserveShot_t;
+
 /** Reservation-popup info */
-static int popupNum;	/**< Number of entries in the popup list */
 static qboolean popupReload = qfalse;
 
 static int hudTime;
@@ -323,25 +329,22 @@ static qboolean CL_CheckFiremodeReservation (void)
 	return qfalse;
 }
 
-static linkedList_t* popupListData = NULL;
-static menuNode_t* popupListNode = NULL;
+static linkedList_t* popupListData;
+static menuNode_t* popupListNode;
 
 /**
  * @brief Creates a (text) list of all firemodes of the currently selected actor.
- * @todo Fix the usage of LIST_Add with constant values like 0,1 and -1. See also the "tempxxx" variables.
  * @sa HUD_PopupFiremodeReservation_f
  * @sa CL_CheckFiremodeReservation
  */
 static void HUD_PopupFiremodeReservation (qboolean reset)
 {
-	int tempInvalid = -1;
-	int tempZero = 0;
-	int tempOne = 1;
 	char hand = ACTOR_HAND_CHAR_RIGHT;
 	int i;
 	static char text[MAX_VAR];
 	int selectedEntry;
 	linkedList_t* popupListText = NULL;
+	reserveShot_t reserveShotData;
 
 	if (!selActor)
 		return;
@@ -361,21 +364,18 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 
 	LIST_Delete(&popupListData);
 
-	/* Reset the length of the TU-list. */
-	popupNum = 0;
-
 	/* Add list-entry for deactivation of the reservation. */
 	LIST_AddPointer(&popupListText, _("[0 TU] No reservation"));
-	LIST_Add(&popupListData, (byte *)&tempInvalid, sizeof(int));	/* hand */
-	LIST_Add(&popupListData, (byte *)&tempInvalid, sizeof(int));	/* fmIdx */
-	LIST_Add(&popupListData, (byte *)&tempInvalid, sizeof(int));	/* wpIdx */
-	LIST_Add(&popupListData, (byte *)&tempZero, sizeof(int));	/* TUs */
-	popupNum++;
+	reserveShotData.hand = -1;
+	reserveShotData.fireModeIndex = -1;
+	reserveShotData.weaponIndex = NONE;
+	reserveShotData.TUs = -1;
+	LIST_Add(&popupListData, (byte *)&reserveShotData, sizeof(reserveShotData));
 	selectedEntry = 0;
 
 	Com_DPrintf(DEBUG_CLIENT, "HUD_PopupFiremodeReservation\n");
 
-	do {	/* Loop for the 2 hands (l/r) to avoid unneccesary code-duplication and abstraction. */
+	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
 		const fireDef_t *fd = CL_GetWeaponAndAmmo(selActor, hand);
 
 		if (fd) {
@@ -389,21 +389,22 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 
 					/* Store text for popup */
 					LIST_AddString(&popupListText, text);
+
 					/* Store Data for popup-callback. */
 					if (hand == ACTOR_HAND_CHAR_RIGHT)
-						LIST_Add(&popupListData, (byte *)&tempZero, sizeof(int));
+						reserveShotData.hand = ACTOR_HAND_RIGHT;
 					else
-						LIST_Add(&popupListData, (byte *)&tempOne, sizeof(int));
-					LIST_Add(&popupListData, (byte *)&i, sizeof(int));								/* fmIdx */
-					LIST_Add(&popupListData, (byte *)&ammo->weapons[fd->weapFdsIdx]->idx, sizeof(int));					/* wpIdx pointer*/
-					LIST_Add(&popupListData, (const byte *)&ammo->fd[fd->weapFdsIdx][i].time, sizeof(int));	/* TUs */
+						reserveShotData.hand = ACTOR_HAND_LEFT;
+					reserveShotData.fireModeIndex = i;
+					reserveShotData.weaponIndex = ammo->weapons[fd->weapFdsIdx]->idx;
+					reserveShotData.TUs = ammo->fd[fd->weapFdsIdx][i].time;
+					LIST_Add(&popupListData, (byte *)&reserveShotData, sizeof(reserveShotData));
 
 					/* Remember the line that is currently selected (if any). */
 					if (selChr->reservedTus.shotSettings.hand == ACTOR_GET_HAND_INDEX(hand)
 					 && selChr->reservedTus.shotSettings.fmIdx == i
 					 && selChr->reservedTus.shotSettings.weapon == ammo->weapons[fd->weapFdsIdx])
-						selectedEntry = popupNum;
-					popupNum++;
+						selectedEntry = LIST_Count(popupListData) - 1;
 				}
 			}
 		}
@@ -416,7 +417,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 			break;
 	} while (qtrue);
 
-	if (popupNum > 1 || popupReload) {
+	if (LIST_Count(popupListData) > 1 || popupReload) {
 		/* We have more entries than the "0 TUs" one
 		 * or we want to simply refresh/display the popup content (no matter how many TUs are left). */
 		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot <lineselected>");
@@ -429,7 +430,6 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 
 /**
  * @brief Creates a (text) list of all firemodes of the currently selected actor.
- * @todo Fix the usage of LIST_Add with constant values like 0,1 and -1. See also the "tempxxx" variables.
  * @sa HUD_PopupFiremodeReservation
  */
 static void HUD_PopupFiremodeReservation_f (void)
@@ -449,10 +449,8 @@ static void HUD_PopupFiremodeReservation_f (void)
  */
 static void HUD_ReserveShot_f (void)
 {
-	linkedList_t* popup = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
 	int selectedPopupIndex;
-	int hand, fmIdx, wpIdx, TUs;
-	int i;
+	const reserveShot_t* reserveShotData;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <popupindex>\n", Cmd_Argv(0));
@@ -467,43 +465,17 @@ static void HUD_ReserveShot_f (void)
 
 	/* read and range check */
 	selectedPopupIndex = atoi(Cmd_Argv(1));
-	Com_DPrintf(DEBUG_CLIENT, "HUD_ReserveShot_f (popupNum %i, selectedPopupIndex %i)\n", popupNum, selectedPopupIndex);
-	if (selectedPopupIndex < 0 || selectedPopupIndex >= popupNum)
+	if (selectedPopupIndex < 0 || selectedPopupIndex >= LIST_Count(popupListData))
 		return;
 
-	if (!popup || !popup->next)
+	reserveShotData = LIST_GetByIdx(popupListData, selectedPopupIndex);
+	if (!reserveShotData)
 		return;
-
-	/* Get data from popup-list index */
-	i = 0;
-	while (popup) {
-		hand = *(int*)popup->data;
-		popup = popup->next;
-
-		assert(popup);
-		fmIdx = *(int*)popup->data;
-		popup = popup->next;
-
-		assert(popup);
-		wpIdx = *(int*)popup->data;
-		popup = popup->next;
-
-		assert(popup);
-		TUs	= *(int*)popup->data;
-		popup = popup->next;
-
-		if (i == selectedPopupIndex)
-			break;
-
-		i++;
-	}
 
 	/* Check if we have enough TUs (again) */
-	Com_DPrintf(DEBUG_CLIENT, "HUD_ReserveShot_f: popup-index: %i TUs:%i (%i + %i)\n", selectedPopupIndex, TUs, CL_UsableTUs(selActor), CL_ReservedTUs(selActor, RES_SHOT));
-	Com_DPrintf(DEBUG_CLIENT, "HUD_ReserveShot_f: hand %i, fmIdx %i, weapIdx %i\n", hand, fmIdx, wpIdx);
-	if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT) >= TUs) {
-		CL_ReserveTUs(selActor, RES_SHOT, TUs);
-		CL_CharacterSetShotSettings(selChr, hand, fmIdx, INVSH_GetItemByIDX(wpIdx));
+	if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT) >= reserveShotData->TUs) {
+		CL_ReserveTUs(selActor, RES_SHOT, reserveShotData->TUs);
+		CL_CharacterSetShotSettings(selChr, reserveShotData->hand, reserveShotData->fireModeIndex, INVSH_GetItemByIDX(reserveShotData->weaponIndex));
 		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
 		if (popupListNode)
 			MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
