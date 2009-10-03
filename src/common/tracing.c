@@ -78,6 +78,7 @@ static int leaf_count, leaf_maxcount;
 static int *leaf_list;
 static int leaf_topnode;
 
+/** @note This is used to create the thead trees in MakeTracingNodes. */
 tnode_t *tnode_p;
 
 
@@ -115,7 +116,7 @@ static void TR_MakeTracingNode (int nodenum)
 			const int index = -(node->children[i]) - 1;
 			const TR_LEAF_TYPE *leaf = &curTile->leafs[index];
 			const int contentFlags = leaf->contentFlags & ~(1 << 31);
-			if ((contentFlags & MASK_IMPASSABLE) && !(contentFlags & CONTENTS_PASSABLE))
+			if ((contentFlags & (MASK_IMPASSABLE | CONTENTS_WEAPONCLIP)) && !(contentFlags & CONTENTS_PASSABLE))
 				t->children[i] = -node->children[i] | (1 << 31);
 			else
 				t->children[i] = (1 << 31);
@@ -279,12 +280,19 @@ static int TR_TestLine_r (TR_TILE_TYPE *tile, int node, const vec3_t start, cons
  * @param[in] stop The position where the trace ends.
  * @param[in] levelmask
  * @sa CL_TargetingToHit
- * @note levels:
+ * @note This function uses levels and levelmasks.  The levels are as following:
  * 0-255: brushes are assigned to a level based on their assigned viewing levels.  A brush with
  *    no levels assigned will be stuck in 0, a brush viewable from all 8 levels will be in 255, and
  *    so on.  Each brush will only appear in one level.
  * 256: weaponclip-level
  * 257: actorclip-level
+ *
+ * The levelmask is used to determine which levels AND which, if either, clip to trace through.
+ * The mask bits are as follows:
+ * 0x0FF: Level bits.  If any bits are set then a brush's level ANDed with the levelmask, then
+ *     that level is traced.  It could possibly be used to speed up traces.
+ * 0x100: Actorclip bit.  If this bit is set, the actorclip level will be traced.
+ * 0x200: Weaponclip bit.  If this bit is set, the weaponclip level will be traced.
  */
 static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, const int levelmask)
 {
@@ -297,7 +305,7 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
 	for (i = 0; i < tile->numtheads; i++) {
 #ifdef COMPILE_MAP
 		const int level = tile->theadlevel[i];
-		if (level && corelevels && !(level & levelmask))
+		if (level && corelevels && !(level & corelevels))
 			continue;
 		if (level == LEVEL_ACTORCLIP && !(levelmask & TL_FLAG_ACTORCLIP))
 			continue;
@@ -1077,10 +1085,9 @@ static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t
 
 	/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
 	/* Calculate the offset needed to center the trace about the line */
-	VectorAdd(mins, maxs, offset);
-	VectorDiv(offset, 2.0, offset);
+	VectorCenterFromMinsMaxs(mins, maxs, offset);
 
-	/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin)
+	/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin of the line)
 	 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
 	VectorSubtract(mins, offset, amins);
 	VectorSubtract(maxs, offset, amaxs);
@@ -1131,6 +1138,7 @@ static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t
 	}
 
 	/* general sweeping through world */
+	/** @todo Would Interpolating aend to traceData.fraction and passing traceData.fraction instead of 1.0 make this faster? */
 	TR_RecursiveHullCheck(&traceData, headnode, 0.0, 1.0, astart, aend);
 
 	if (traceData.trace.fraction >= 1.0) {
