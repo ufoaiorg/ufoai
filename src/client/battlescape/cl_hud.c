@@ -373,8 +373,6 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 	LIST_Add(&popupListData, (byte *)&reserveShotData, sizeof(reserveShotData));
 	selectedEntry = 0;
 
-	Com_DPrintf(DEBUG_CLIENT, "HUD_PopupFiremodeReservation\n");
-
 	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
 		const fireDef_t *fd = CL_GetWeaponAndAmmo(selActor, hand);
 

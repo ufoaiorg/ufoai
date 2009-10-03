@@ -486,6 +486,7 @@ typedef struct csi_s {
 #define GET_TU( ab )        (min((27 + (ab) * 20/MAX_SKILL), 255))
 #define GET_MORALE( ab )        (min((100 + (ab) * 150/MAX_SKILL), 255))
 
+#define ACTOR_HAND_NOT_SET -1
 #define ACTOR_HAND_RIGHT 0
 #define ACTOR_HAND_LEFT 1
 
