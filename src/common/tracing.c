@@ -296,14 +296,14 @@ static int TR_TestLine_r (TR_TILE_TYPE *tile, int node, const vec3_t start, cons
  */
 static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, const int levelmask)
 {
-#ifdef COMPILE_MAP
+//#ifdef COMPILE_MAP
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
-#endif
+//#endif
 	int i;
 
 	/* loop over all theads */
 	for (i = 0; i < tile->numtheads; i++) {
-#ifdef COMPILE_MAP
+//#ifdef COMPILE_MAP
 		const int level = tile->theadlevel[i];
 		if (level && corelevels && !(level & corelevels))
 			continue;
@@ -311,7 +311,7 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
 			continue;
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
-#endif
+//#endif
 		if (TR_TestLine_r(tile, tile->thead[i], start, stop))
 			return qtrue;
 	}

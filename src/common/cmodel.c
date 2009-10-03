@@ -534,6 +534,7 @@ static void CM_MakeTracingNodes (void)
 			continue;
 
 		curTile->thead[curTile->numtheads] = tnode_p - curTile->tnodes;
+		curTile->theadlevel[curTile->numtheads] = i;
 		curTile->numtheads++;
 		assert(curTile->numtheads < LEVEL_MAX);
 
