@@ -23,16 +23,22 @@ $conn->{channel} = shift || '#ufoai';
 sub handleCommand($$) {
 	my ($receiver, $text) = @_;
 
-	if ($text =~ /^\!bug #?(\d+)/) {
+	if ($text =~ /^\!bug\s*#?(\d+)/i) {
 		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805242");
-	} elsif ($text =~ /^\!fr #?(\d+)/) {
+	} elsif ($text =~ /^\!fr\s*#?(\d+)/i) {
 		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805244");
-	} elsif ($text =~ /^\!patch #?(\d+)/) {
+	} elsif ($text =~ /^\!patch\s*#?(\d+)/i) {
 		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805245");
-	} elsif ($text =~ /^\!rev #?(\d+)/) {
+	} elsif ($text =~ /^\!r(?:ev)?\s*#?(\d+)/i) {
 		$conn->privmsg($receiver, "http://ufoai.svn.sourceforge.net/viewvc/ufoai?view=rev&revision=$1");
 	} elsif ($text =~ /\s+\* r(\d+)\s*/) {
 		$conn->privmsg($receiver, "http://ufoai.svn.sourceforge.net/viewvc/ufoai?view=rev&revision=$1");
+	} elsif ($text =~ /^!ticket\s*#?(\d+)/i) {
+		$conn->privmsg($receiver, "https://sourceforge.net/apps/trac/ufoai/ticket/$1");
+	} elsif ($text =~ /^!faq\s*#?(\w*)?/i) {
+		$conn->privmsg($receiver, "http://ufoai.ninex.info/wiki/index.php/FAQ#$1");
+	} elsif ($text =~ /^!todo/i) {
+		$conn->privmsg($receiver, "http://ufoai.ninex.info/wiki/index.php/TODO");
 	} else {
 		# unknown command
 		return 0;
@@ -75,6 +81,9 @@ sub on_msg {
 		$conn->privmsg($nick, "!patch #tracker-id");
 		$conn->privmsg($nick, "!fr #tracker-id");
 		$conn->privmsg($nick, "!rev #svn-revision");
+		$conn->privmsg($nick, "!ticket #trac-ticket-id");
+		$conn->privmsg($nick, "!faq #section_name");
+		$conn->privmsg($nick, "!todo");
 	} else {
 		if (!handleCommand($nick, $text)) {
 			$conn->privmsg($nick, "I'm just a bot - ask me for 'help' to get more information");
