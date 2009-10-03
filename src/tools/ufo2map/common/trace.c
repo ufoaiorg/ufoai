@@ -53,7 +53,7 @@ void MakeTracingNodes (int levels)
 	curTile->numtheads = 0;
 
 	for (i = 0; i < levels; i++) {
-		if (!curTile->models[i].numfaces)
+		if (!curTile->models[i].numfaces && i != LEVEL_ACTORCLIP)
 			continue;
 
 		curTile->thead[curTile->numtheads] = tnode_p - curTile->tnodes;
