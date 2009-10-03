@@ -2707,6 +2707,16 @@ void CL_DebugPath_f (void)
 	CL_DebugPathDisplay(actorSize, x, y, z);
 
 #if 0
+	vec3_t from,to;
+	PosToVec(selActor->pos,from);
+	PosToVec(mousePos,to);
+	Com_Printf("TestLine from actor to cursor.\n");
+	if (!TR_TestLine(from, to, TL_FLAG_REGULAR_LEVELS))
+		Com_Printf("succeeded.\n");
+	else
+		Com_Printf("failed.\n");
+#endif
+#if 0
 	pos3_t c1;
 	pos3_t c2;
 	c1[0] = 122;
