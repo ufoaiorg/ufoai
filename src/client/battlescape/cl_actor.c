@@ -521,7 +521,7 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const objDef_t *od
 
 	usableTusForRF = CL_UsableReactionTUs(actor);
 
-	if (handidx != ACTOR_HAND_RIGHT && handidx != ACTOR_HAND_LEFT)
+	if (handidx != ACTOR_HAND_NOT_SET && handidx != ACTOR_HAND_RIGHT && handidx != ACTOR_HAND_LEFT)
 		return;
 
 	chr = CL_GetActorChr(actor);

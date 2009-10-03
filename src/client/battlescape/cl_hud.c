@@ -366,7 +366,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 
 	/* Add list-entry for deactivation of the reservation. */
 	LIST_AddPointer(&popupListText, _("[0 TU] No reservation"));
-	reserveShotData.hand = -1;
+	reserveShotData.hand = ACTOR_HAND_NOT_SET;
 	reserveShotData.fireModeIndex = -1;
 	reserveShotData.weaponIndex = NONE;
 	reserveShotData.TUs = -1;
@@ -391,10 +391,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 					LIST_AddString(&popupListText, text);
 
 					/* Store Data for popup-callback. */
-					if (hand == ACTOR_HAND_CHAR_RIGHT)
-						reserveShotData.hand = ACTOR_HAND_RIGHT;
-					else
-						reserveShotData.hand = ACTOR_HAND_LEFT;
+					reserveShotData.hand = ACTOR_GET_HAND_INDEX(hand);
 					reserveShotData.fireModeIndex = i;
 					reserveShotData.weaponIndex = ammo->weapons[fd->weapFdsIdx]->idx;
 					reserveShotData.TUs = ammo->fd[fd->weapFdsIdx][i].time;
