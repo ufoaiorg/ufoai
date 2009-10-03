@@ -506,7 +506,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 	for (l = lights[config.compile_for_day], headhint = headhints; l; l = l->next, headhint++) {
 		float light = 0.0;
 
-		//Com_Printf("Looking with next hint.\n");
+		/* Com_Printf("Looking with next hint.\n"); */
 
 		VectorSubtract(l->origin, pos, delta);
 		dist = VectorNormalize(delta);
@@ -555,7 +555,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 		VectorMA(direction, light * scale, delta, direction);
 	}
 
-	//Com_Printf("Looking with last hint.\n");
+	/* Com_Printf("Looking with last hint.\n"); */
 	GatherSampleSunlight(pos, normal, sample, direction, scale, headhint);
 }
 

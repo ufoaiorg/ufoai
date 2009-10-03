@@ -676,7 +676,7 @@ static qboolean SV_AddMissingTiles (mapInfo_t *map)
 				/* remove all tiles placed by this function */
 				while (map->numPlaced > startPlaced)
 					memcpy(map, &backup, sizeof(*map));
-					//SV_RemoveTile(map, NULL, NULL);
+					/* SV_RemoveTile(map, NULL, NULL); */
 
 				return qfalse;
 			}

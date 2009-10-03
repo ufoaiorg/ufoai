@@ -2676,20 +2676,20 @@ static void CL_DebugPathDisplay (int actorSize, int x, int y, int z)
 		RT_FLOOR(clMap, actorSize, x, y, z),
 		RT_CEILING(clMap, actorSize, x, y, z) );
 	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
-		RT_CONN_PX(clMap, actorSize, x, y, z),		// dir = 0
-		RT_CONN_NX(clMap, actorSize, x, y, z),		// 1
-		RT_CONN_PY(clMap, actorSize, x, y, z),		// 2
-		RT_CONN_NY(clMap, actorSize, x, y, z) );	// 3
+		RT_CONN_PX(clMap, actorSize, x, y, z),		/* dir = 0 */
+		RT_CONN_NX(clMap, actorSize, x, y, z),		/* 1 */
+		RT_CONN_PY(clMap, actorSize, x, y, z),		/* 2 */
+		RT_CONN_NY(clMap, actorSize, x, y, z) );	/* 3 */
 	Com_Printf("connections diago: (PX_PY=%i, NX_NY=%i, NX_PY=%i, PX_NY=%i))\n",
-		RT_CONN_PX_PY(clMap, actorSize, x, y, z),	// dir = 4
-		RT_CONN_NX_NY(clMap, actorSize, x, y, z),	// 5
-		RT_CONN_NX_PY(clMap, actorSize, x, y, z),	// 6
-		RT_CONN_PX_NY(clMap, actorSize, x, y, z) );// 7
+		RT_CONN_PX_PY(clMap, actorSize, x, y, z),	/* dir = 4 */
+		RT_CONN_NX_NY(clMap, actorSize, x, y, z),	/* 5 */
+		RT_CONN_NX_PY(clMap, actorSize, x, y, z),	/* 6 */
+		RT_CONN_PX_NY(clMap, actorSize, x, y, z) );	/* 7 */
 	Com_Printf("stepup ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
-		RT_STEPUP_PX(clMap, actorSize, x, y, z),		// dir = 0
-		RT_STEPUP_NX(clMap, actorSize, x, y, z),		// 1
-		RT_STEPUP_PY(clMap, actorSize, x, y, z),		// 2
-		RT_STEPUP_NY(clMap, actorSize, x, y, z) );		// 3
+		RT_STEPUP_PX(clMap, actorSize, x, y, z),		/* dir = 0 */
+		RT_STEPUP_NX(clMap, actorSize, x, y, z),		/* 1 */
+		RT_STEPUP_PY(clMap, actorSize, x, y, z),		/* 2 */
+		RT_STEPUP_NY(clMap, actorSize, x, y, z) );		/* 3 */
 }
 
 void CL_DebugPath_f (void)
@@ -2734,7 +2734,7 @@ void CL_DebugPath_f (void)
 	CL_DebugPathDisplay(actorSize, x, y, z);
 #endif
 #if 0
-//	int new_z = RT_CheckCell(clMap, actorSize, x, y, z);
+/*	int new_z = RT_CheckCell(clMap, actorSize, x, y, z); */
 	int new_z = RT_CheckCell(clMap, actorSize, 138, 146, 5);
 	Com_Printf("check returns: Z=%i\n", new_z);
 #endif

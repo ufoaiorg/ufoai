@@ -728,7 +728,6 @@ static void MN_RadarNodeMouseUp (menuNode_t *node, int x, int y, int button)
 static void MN_GetRadarMapInFrameBuffer(int *x, int *y, int *width, int *height)
 {
 	/* Coefficient come from metric (Bunker map, and game with resolution 1024x1024) == 0.350792947 */
-	//static const float magicCoef =  ((608.0f / 1728.0f) + (526.0f / 1504.0f)) * 0.5f;
 	static const float magicCoef =  0.351f;
 	const float mapWidth = mapMax[0] - mapMin[0];
 	const float mapHeight = mapMax[1] - mapMin[1];
@@ -745,10 +744,10 @@ static void MN_GetRadarMapInFrameBuffer(int *x, int *y, int *width, int *height)
 static void MN_GenPreviewRadarMap_f (void)
 {
 	int x, y, width, height;
-	// map into screen
+	/* map to screen */
 	MN_GetRadarMapInFrameBuffer(&x, &y, &width, &height);
 
-	// from screen to virtual screen
+	/* from screen to virtual screen */
 	x /= viddef.rx;
 	width /= viddef.rx;
 	y /= viddef.ry;
