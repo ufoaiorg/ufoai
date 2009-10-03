@@ -165,8 +165,8 @@ typedef struct {
 	int gl_compressed_solid_format;
 	int gl_compressed_alpha_format;
 
-	int gl_filter_min;
-	int gl_filter_max;
+	int gl_filter_min;	/**< filter to use if the image is smaller than the original texture or stretched on the screen */
+	int gl_filter_max;	/**< filter to use if the image is larger than the original texture or stretched on the screen */
 
 	qboolean lod_bias;
 

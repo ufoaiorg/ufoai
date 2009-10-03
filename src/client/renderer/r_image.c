@@ -1319,6 +1319,9 @@ static inline void R_DeleteImage (image_t *image)
 	if (image->hashPrev)
 		image->hashPrev->hashNext = image->hashNext;
 
+	if (image->hashNext)
+		image->hashNext->hashPrev = image->hashPrev;
+
 	memset(image, 0, sizeof(*image));
 }
 
