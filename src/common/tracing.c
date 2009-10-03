@@ -123,7 +123,8 @@ static void TR_MakeTracingNode (int nodenum)
 		} else {
 			t->children[i] = tnode_p - curTile->tnodes;
 			if (t->children[i] > curTile->numnodes) {
-				Com_Printf("Exceeded alloted memory for tracing structure.\n");
+				Com_Printf("Exceeded allocated memory for tracing structure (%i > %i)\n",
+						t->children[i], curTile->numnodes);
 			}
 			TR_MakeTracingNode(node->children[i]);
 		}
