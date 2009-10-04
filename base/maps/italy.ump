@@ -43,6 +43,15 @@ tile +craft_drop_herakles
 0      0      0      0      0
 }
 
+tile +craft_drop_raptor
+{
+5 4
+
+0      a      a      a      a
+0     +b     +b     +b      a
+0     +b     +b     +b      a
+0      0      0      0      0
+}
 // ########################################
 // ########### Maps for the game ##########
 
