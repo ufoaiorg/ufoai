@@ -90,6 +90,6 @@ qboolean NAT_ScriptSanityCheck(void);
 void NAT_InitStartup(void);
 
 #define MAX_NATIONS 8
-#define MAX_CITIES 16
+#define MAX_CITIES 32
 
 #endif

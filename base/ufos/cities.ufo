@@ -10,13 +10,11 @@
 //		East and South have negative values.
 // ==============================================
 
-
 city stockholm
 {
 	name		"_Stockholm"
 	pos			"-18 59.3"
 }
-
 
 city amsterdam
 {
@@ -84,10 +82,28 @@ city mexico
 	pos			"99.1 19.4"
 }
 
+city novosibirsk
+{
+	name		"_Novosibirsk"
+	pos			"-82.93 55.01"
+}
+
 city paris
 {
 	name		"_Paris"
 	pos			"-2.3 48.8"
+}
+
+city sacramento
+{
+	name		"_Sacramento"
+	pos			"121.47 38.56"
+}
+
+city santiago
+{
+	name		"_Santiago"
+	pos			"70.67 -33.45"
 }
 
 city sydney
@@ -108,9 +124,21 @@ city tokyo
 	pos			"-139.3 35.7"
 }
 
+city washington
+{
+	name		"_Washington D.C."
+	pos			"77 38.9"
+}
+
 city wellington
 {
 	name		"_Wellington"
 	pos			"-174 -42.4"
+}
+
+city whichita
+{
+	name		"_Wichita"
+	pos			"97.33 37.68"
 }
 
