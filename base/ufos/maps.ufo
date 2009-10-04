@@ -625,6 +625,7 @@ mapdef cemetery_main
 	terrains
 	{
 		grass
+		mountain
 	}
 
 	cultures
@@ -634,6 +635,7 @@ mapdef cemetery_main
 
 	populations
 	{
+		village
 		suburban
 		urban
 	}
@@ -963,7 +965,7 @@ mapdef forest_small
 
 	cultures
 	{
-		western
+		//any
 	}
 
 	populations
@@ -1006,7 +1008,7 @@ mapdef forest_large
 
 	cultures
 	{
-		western
+		//any
 	}
 
 	populations
@@ -2796,9 +2798,10 @@ mapdef harvester_crash
 		craft_drop_raptor
 	}
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_crash_harvester
+	}
 
 	terrains
 	{
