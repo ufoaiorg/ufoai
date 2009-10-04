@@ -99,8 +99,6 @@ typedef struct mapbrush_s {
 	qboolean skipWriteBack; /**< in fix mode do not write back to the source .map file */
 
 	qboolean finished;
-	qboolean isTerrain;
-	qboolean isGenSurf;
 } mapbrush_t;
 
 /** @sa mapplanes */

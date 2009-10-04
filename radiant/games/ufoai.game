@@ -36,6 +36,7 @@
   cont16="level8"
   cont17="actorclip"
   cont18="passable"
+  cont19="terrain"
   cont25="origin"
   cont26="weaponclip"
   cont28="detail"

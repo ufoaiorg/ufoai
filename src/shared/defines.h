@@ -297,6 +297,7 @@ COLLISION DETECTION
 /* {game}, {ufo2map}, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c, renderer/r_bsp.c */
 #define	CONTENTS_ACTORCLIP		0x00010000
 #define	CONTENTS_PASSABLE		0x00020000
+#define CONTENTS_TERRAIN		0x00040000 /**<  */
 #define	CONTENTS_ACTOR			0x00800000 /**< should never be on a brush, only in game */
 #define	CONTENTS_ORIGIN			0x01000000 /**< removed before bsping an entity */
 #define	CONTENTS_WEAPONCLIP		0x02000000 /**< stop bullets */

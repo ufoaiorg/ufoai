@@ -537,7 +537,7 @@ static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, 
 		terrainByTexture = qtrue;
 	}
 
-	if (b->isTerrain || b->isGenSurf || terrainByTexture) {
+	if (s->contentFlags & CONTENTS_TERRAIN || terrainByTexture) {
 		FS_Printf(&f, "{\n\tmaterial %s\n\t{\n\t\ttexture <fillme>\n\t\tterrain 0 64\n\t\tlightmap\n\t}\n}\n", textureref[mipTexIndex].name);
 		textureref[mipTexIndex].materialMarked = qtrue;
 		materialsCnt++;
@@ -632,11 +632,6 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	b->original_sides = &brushsides[nummapbrushsides];
 	b->entitynum = num_entities - 1;
 	b->brushnum = nummapbrushes - mapent->firstbrush;
-
-	b->isTerrain = (!strcmp("func_group", ValueForKey(&entities[b->entitynum], "classname"))
-				&& strlen(ValueForKey(&entities[b->entitynum], "terrain")) > 0);
-	b->isGenSurf = (!strcmp("func_group", ValueForKey(&entities[b->entitynum], "classname"))
-				&& strlen(ValueForKey(&entities[b->entitynum], "gensurf")) > 0);
 
 	do {
 		if (!GetToken(qtrue))
@@ -761,7 +756,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		side = b->original_sides + b->numsides;
 		side->planenum = planenum;
 		side->texinfo = TexinfoForBrushTexture(&mapplanes[planenum],
-			&td, vec3_origin, b->isTerrain);
+			&td, vec3_origin, side->contentFlags & CONTENTS_TERRAIN);
 		side->brush = b;
 
 		/* save the td off in case there is an origin brush and we
@@ -905,7 +900,7 @@ static void AdjustBrushesForOrigin (const entity_t *ent)
 			side_brushtextures[index].surfaceFlags |= SURF_ORIGIN;
 			s->planenum = FindOrCreateFloatPlane(mapplanes[s->planenum].normal, newdist);
 			s->texinfo = TexinfoForBrushTexture(&mapplanes[s->planenum],
-				&side_brushtextures[index], ent->origin, qfalse);
+				&side_brushtextures[index], ent->origin, s->contentFlags & CONTENTS_TERRAIN);
 			s->brush = b;
 		}
 		/* create windings for sides and bounds for brush */
