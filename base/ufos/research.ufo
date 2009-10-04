@@ -3372,8 +3372,24 @@ tech rs_craft_drop_herakles
 	description {
 		default "_drop_herakles_txt"
 	}
-	// pre_description	"_drop_herakles_pre_txt"
+	pre_description	{
+		default "_drop_herakles_pre_txt"
+	}
 	up_chapter	crafts
+
+	mail_pre	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
 
 	// FIXME
 	require_AND {
@@ -3385,6 +3401,43 @@ tech rs_craft_drop_herakles
 	producetime	336 //Two weeks.
 
 	mdl		drop_herakles
+}
+
+tech rs_craft_drop_raptor
+{
+	type	craft
+	description {
+		default "_drop_raptor_txt"
+	}
+	pre_description	{
+		default "_drop_raptor_pre_txt"
+	}
+	up_chapter	crafts
+
+	mail_pre	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	require_AND {
+		tech rs_craft_drop_herakles
+		tech rs_craft_inter_stingray
+	}
+
+	provides	craft_drop_raptor
+	time	13000
+	producetime	336
+
+	mdl		drop_raptor
 }
 
 tech rs_craft_inter_stiletto

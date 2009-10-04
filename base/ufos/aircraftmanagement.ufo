@@ -151,6 +151,52 @@ aircraft craft_drop_herakles
 	}
 }
 
+aircraft craft_drop_raptor
+{
+	param {
+		speed		13
+		maxspeed	16
+		shield		6
+		ecm			80
+		damage		250
+		accuracy	70
+		range		220
+		antimatter	186
+	}
+	name		"_Raptor-class Combat Transport"
+	defaultname	"_Raptor"
+	type		transporter
+	model		"geoscape/drop_raptor"
+	price		30000
+	building	building_hangar
+	numteam		8
+	size		2
+	image		"geoscape/air_dropship"
+	slot {
+		type		weapon
+		position	nose_center
+		size		small
+	}
+	slot {
+		type		weapon
+		position	wing_left
+		size		medium
+	}
+	slot {
+		type		weapon
+		position	wing_right
+		size		medium
+	}
+	slot {
+		type		electronics
+		position	wing_left
+	}
+	slot {
+		type		electronics
+		position	wing_right
+	}
+}
+
 // *********************************
 // Interceptors
 // *********************************
@@ -348,6 +394,11 @@ aircraft craft_inter_stingray
 	price		55000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
+	slot {
+		type		weapon
+		position	nose_center
+		size		medium
+	}
 	slot {
 		type		weapon
 		position	wing_left

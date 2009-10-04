@@ -352,8 +352,7 @@ void CP_CreateBattleParameters (mission_t *mission)
 	/** @todo change dropship to any possible aircraft when random assembly tiles will be created */
 	/* Set random map aircraft if this is a random map */
 	if (mission->mapDef->map[0] == '+') {
-		const char *craftID = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
-		Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(craftID));
+		Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(ccs.missionaircraft->id));
 	}
 }
 

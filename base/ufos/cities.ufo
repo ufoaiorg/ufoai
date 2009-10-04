@@ -10,17 +10,19 @@
 //		East and South have negative values.
 // ==============================================
 
-//city stockholm
-//{
-//	name		"_Stockholm"
-//	pos			"-18 59.3"
-//}
 
-//city amsterdam
-//{
-//	name		"_Amsterdam"
-//	pos			"-5.5 52"
-//}
+city stockholm
+{
+	name		"_Stockholm"
+	pos			"-18 59.3"
+}
+
+
+city amsterdam
+{
+	name		"_Amsterdam"
+	pos			"-5.5 52"
+}
 
 city athens
 {
@@ -34,11 +36,11 @@ city bangkok
 	pos			"-100.5 13.8"
 }
 
-//city beijing
-//{
-//	name		"_Beijing"
-//	pos			"-116.9 39.9"
-//}
+city beijing
+{
+	name		"_Beijing"
+	pos			"-116.9 39.9"
+}
 
 city berlin
 {
@@ -46,11 +48,11 @@ city berlin
 	pos			"-13.4 52.5"
 }
 
-//city mumbai
-//{
-//	name		"_Mumbai"
-//	pos			"-73.2 18.5"
-//}
+city mumbai
+{
+	name		"_Mumbai"
+	pos			"-73.2 18.5"
+}
 
 city capetown
 {
@@ -58,11 +60,11 @@ city capetown
 	pos			"-18.5 -33.7"
 }
 
-//city cairo
-//{
-//	name		"_Cayenne"
-//	pos			"-31.4 30"
-//}
+city cairo
+{
+	name		"_Cairo"
+	pos			"-31.4 30"
+}
 
 city cayenne
 {
@@ -70,23 +72,23 @@ city cayenne
 	pos			"52.6 4.5"
 }
 
-//city dakar
-//{
-//	name		"_Dakar"
-//	pos			"16.8 14.7"
-//}
+city dakar
+{
+	name		"_Dakar"
+	pos			"16.8 14.7"
+}
 
-//city mexico
-//{
-//	name		"_Mexico City"
-//	pos			"99.1 19.4"
-//}
+city mexico
+{
+	name		"_Mexico City"
+	pos			"99.1 19.4"
+}
 
-//city paris
-//{
-//	name		"_Paris"
-//	pos			"-2.3 48.8"
-//}
+city paris
+{
+	name		"_Paris"
+	pos			"-2.3 48.8"
+}
 
 city sydney
 {
@@ -94,20 +96,21 @@ city sydney
 	pos			"-151 -34"
 }
 
-//city teheran
-//{
-//	name		"_Teheran"
-//	pos			"-51.4 35.4"
-//}
+city teheran
+{
+	name		"_Teheran"
+	pos			"-51.4 35.4"
+}
 
-//city tokyo
-//{
-//	name		"_Tokyo"
-//	pos			"-139.3 35.7"
-//}
+city tokyo
+{
+	name		"_Tokyo"
+	pos			"-139.3 35.7"
+}
 
 city wellington
 {
 	name		"_Wellington"
 	pos			"-174 -42.4"
 }
+

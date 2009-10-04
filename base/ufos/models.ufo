@@ -257,6 +257,18 @@ menu_model drop_herakles
 	}
 }
 
+// ============== Dropship Raptor =========================
+menu_model drop_raptor
+{
+	model	"aircraft/drop_raptor/drop_raptor_low"
+	menutransform {
+		ufopedia		"0.5 0.5 0.5"	"0 0 120"		"-20 0 0"
+		aircraft		"0.8 0.8 0.8"	"0 0 0"	"80 -20 0"
+		aircraft_equip	"0.7 0.7 0.7"	"0 0 0"		"-60 0 0"
+		item			"0.5 0.5 0.5"	"0 0 120"		#
+	}
+}
+
 // ============== Stingray Interceptor ======================
 menu_model inter_stingray
 {
