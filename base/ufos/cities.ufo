@@ -64,6 +64,7 @@ city capetown
 //	pos			"-31.4 30"
 //}
 
+// FIXME: this is in French Guiana, not in Africa (4degree north, 53degree west)
 city cayenne
 {
 	name		"_Cayenne"
