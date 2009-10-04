@@ -2595,7 +2595,7 @@ mapdef africa_common
 		coop3
 		coop4
 	}
-	description		"_An African suburb that has been visited by UFO."
+	description		"_A suburb that has been visited by UFO."
 	maxaliens		24
 
 	aircraft 
@@ -2647,7 +2647,7 @@ mapdef africa
 		coop3
 		coop4
 	}
-	description		"_An African suburb that has received a visit from a Harvester."
+	description		"_A suburb that has received a visit from a Harvester."
 	maxaliens		24
 
 	aircraft 
