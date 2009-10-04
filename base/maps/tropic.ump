@@ -234,13 +234,24 @@ abc     +a     +a     +a     abc
 // drop_herakles
 tile +craft_drop_herakles
 {
-4 5
+5 4
 
-0      0      0      0
-0      +b     +b     a 
-0      +b     +b     a 
-0      +b     +b     a 
-0      a      a      a
+0      abc     abc     abc     0
+abc     +a     +a     +a     abc
+abc     +a     +a     +a     abc
+0      abc     abc     abc     0
+}
+
+// drop_raptor
+tile +craft_drop_raptor
+{
+5 5
+
+0      abc     abc     abc     0
+abc     +a     +a     +a     abc
+abc     +a     +a     +a     abc
+abc     +a     +a     +a     abc
+0      abc     abc     abc     0
 }
 
 // craft_ufo_scout
