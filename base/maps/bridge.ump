@@ -12,12 +12,11 @@ base bridge/br_
 
 tile +main
 {
-16 13
+16 12
 
 0      0      0      0      0      0      0      0      0      0      0      0      0      0      0      0
 0      +a     +a     b      b      b      +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
 0      +a     +a     b      b      b      +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
 0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
 0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
 0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
