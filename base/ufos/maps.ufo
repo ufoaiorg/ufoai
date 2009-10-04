@@ -1262,6 +1262,7 @@ mapdef italy
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
 	}
 
 //	ufos
