@@ -1672,6 +1672,8 @@ mapdef druglord
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	}
 
 //	ufos
@@ -1716,6 +1718,8 @@ mapdef eaglenest
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	}
 
 //	ufos

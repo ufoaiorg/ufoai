@@ -48,6 +48,16 @@ a      +b     +b     +b     a
 0      0      0      0      0
 }
 
+tile +craft_drop_raptor
+{
+5 4
+
+a      a      a      a      a
+a      +b     +b     +b     a
+a      +b     +b     +b     a
+0      0      0      0      0
+}
+
 // ########################################
 // ########### Maps for the game ###########
 
