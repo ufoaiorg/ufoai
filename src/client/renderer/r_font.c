@@ -544,8 +544,7 @@ void R_FontTextSize (const char *fontId, const char *text, int maxWidth, longlin
 }
 
 /**
- * @brief Renders the text surface and coverts to 32bit SDL_Surface that is stored in font_t structure
- * @todo maybe 32bit is overkill if the game is only using 16bit?
+ * @brief Renders the text surface and converts to 32bit SDL_Surface that is stored in font_t structure
  * @sa R_FontCacheGLSurface
  * @sa TTF_RenderUTF8_Blended
  * @sa SDL_CreateRGBSurface
