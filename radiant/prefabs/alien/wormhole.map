@@ -594,21 +594,107 @@
 // entity 1
 {
 "classname" "misc_model"
-"spawnflags" "255"
+"spawnflags" "252"
 "origin" "158 97 -4"
-"model" "models/objects/alien/wormhole/wormhole.md2"
+"model" "models/objects/alien/wormhole/wormhole_hi.md2"
 }
 // entity 2
 {
 "classname" "misc_model"
-"spawnflags" "255"
-"origin" "158 97 -4"
-"model" "models/objects/alien/wormhole/cabel.md2"
+"spawnflags" "254"
+"origin" "158 97 -6"
+"model" "models/objects/alien/wormhole/cable_low.md2"
+"angles" "0 -180 0"
 }
 // entity 3
 {
 "classname" "light"
 "_color" "0 0.8 0"
 "light" "400"
+"origin" "102 41 130"
+}
+// entity 4
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "158 97 -4"
+"model" "models/objects/alien/wormhole/wormhole_low.md2"
+}
+// entity 5
+{
+"classname" "misc_model"
+"origin" "158 97 -4"
+"model" "models/objects/alien/wormhole/wormhole_mid.md2"
+"spawnflags" "254"
+}
+// entity 6
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "158 97 -6"
+"model" "models/objects/alien/wormhole/cable_hi.md2"
+"angles" "0 -180 0"
+}
+// entity 7
+{
+"classname" "light"
+"_color" "1 0.605447 0"
+"light" "100"
+"origin" "42 66 42"
+}
+// entity 8
+{
+"classname" "light"
+"_color" "1 0.605447 0"
+"light" "100"
+"origin" "42 128 42"
+}
+// entity 9
+{
+"classname" "light"
+"_color" "0 0.8 0"
+"light" "400"
 "origin" "160 97 48"
+}
+// entity 10
+{
+"classname" "light"
+"_color" "0 0.8 0"
+"light" "400"
+"origin" "236 97 130"
+}
+// entity 11
+{
+"classname" "light"
+"_color" "0 0.8 0"
+"light" "400"
+"origin" "214 151 130"
+}
+// entity 12
+{
+"classname" "light"
+"_color" "0 0.8 0"
+"light" "400"
+"origin" "158 175 130"
+}
+// entity 13
+{
+"classname" "light"
+"_color" "0 0.8 0"
+"light" "400"
+"origin" "158 19 130"
+}
+// entity 14
+{
+"classname" "light"
+"_color" "0 0.8 0"
+"light" "400"
+"origin" "212 41 130"
+}
+// entity 15
+{
+"classname" "light"
+"_color" "0 0.8 0"
+"light" "400"
+"origin" "104 153 130"
 }
