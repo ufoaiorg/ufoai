@@ -1,0 +1,57 @@
+// *********************************
+// DESERT THEME
+// *********************************
+
+base desert/
+
+//---------------------------------
+//Dropships
+tile +craft_drop_firebird
+{
+5 4
+0    0    0    0    0
+0    +d   +d   +d   0
+0    +d   +d   +d   0
+0    0    0    0    0
+}
+
+tile +craft_drop_herakles
+{
+5 4
+0    0    0    0    0
+0    +d   +d   +d   0
+0    +d   +d   +d   0
+0    0    0    0    0
+}
+
+tile +craft_drop_raptor
+{
+5 4
+0    0    0    0    0
+0    +d   +d   +d   0
+0    +d   +d   +d   0
+0    0    0    0    0
+}
+
+tile +main_harvester
+{
+8 9
+
+0      0      0      0      0      0      0      0
+0     +a     +a     +a     +a     +a     +a      0
+0     +a     +a     +a     +a     +a     +a      0
+0     +a     +a     +a     +a     +a     +a      0
+0     +a     +a     +a     +a     +a     +a      0
+0     +a     +a     +a     +a     +a     +a      0
+0      d      d      d     +a     +a     +a      0
+0      d      d      d     +a     +a     +a      0
+0      0      0      0      0      0      0      0
+}
+
+assembly harvester_crash
+{
+title "_UFO Landed"
+size "6 7"
++main_harvester "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}

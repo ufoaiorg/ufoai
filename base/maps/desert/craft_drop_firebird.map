@@ -360,7 +360,7 @@
 {
 "classname" "info_human_start"
 "angle" "90"
-"origin" "272 304 32"
+"origin" "272 368 32"
 }
 // entity 4
 {
