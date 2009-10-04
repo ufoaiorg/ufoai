@@ -1935,7 +1935,8 @@ mapdef rivertown
 
 mapdef city_disco
 {
-	map				"+city_disco"
+	map				"+city"
+	param			disco
 	description		"_A small neighbourhood in a warm urban region."
 	multiplayer		true
 	teams			2
@@ -1980,9 +1981,59 @@ mapdef city_disco
 	}
 }
 
+mapdef city_big
+{
+	map				"+city"
+	param			big
+	description		"_A small neighbourhood in a warm urban region."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		6
+
+	aircraft 
+	{
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	}
+
+	ufos
+	{
+		craft_ufo_fighter
+	}
+
+	terrains
+	{
+		grass
+		tropical
+		desert
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		suburban
+		urban
+	}
+}
+
 mapdef city_train
 {
-	map				"city_train"
+	map				"+city"
+	param			train
 	description		"_A small neighbourhood in a warm urban region."
 	multiplayer		true
 	teams			2
@@ -2510,6 +2561,7 @@ mapdef construction
 	{
 		craft_drop_firebird
 		craft_drop_herakles
+		craft_drop_raptor
 	}
 
 //	ufos
@@ -3009,6 +3061,7 @@ mapdef community_centre
 	{
 		craft_drop_firebird
 		craft_drop_herakles
+		craft_drop_raptor
 	}
 
 //	ufos
