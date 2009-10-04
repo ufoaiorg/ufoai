@@ -764,7 +764,7 @@
 "classname" "misc_model"
 "model" "models/aircraft/drop_raptor/drop_raptor_landed.md2"
 "origin" "255 256 68"
-"spawnflags" "255"
+"spawnflags" "254"
 }
 // entity 2
 {
