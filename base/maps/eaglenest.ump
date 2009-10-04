@@ -12,9 +12,10 @@ base eaglenest/en_
 
 tile +main
 {
-7 7
+7 8
 
 0      0      0      0      0      0      0
+0     +a     +a      b      b      b      0
 0     +a     +a      b      b      b      0
 0     +a     +a      b      b      b      0
 0     +a     +a     +a     +a     +a      0
@@ -61,7 +62,7 @@ a      a      a      a      0
 
 assembly default
 {
-size "5 5"
+size "5 6"
 title "_Eaglenest"
 +main "1 1"
 *rm_drop +craft_drop_firebird "1 1"
