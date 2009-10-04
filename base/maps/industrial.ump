@@ -38,6 +38,17 @@ g    +d   +d   +d   g
 0    g    g    g    0
 }
 
+
+tile +craft_drop_raptor
+{
+5 5
+0    g    g    g    0
+g    +d   +d   +d   g
+g    +d   +d   +d   g
+g    +d   +d   +d   g
+0    g    g    g    0
+}
+
 //---------------------------------
 //Interceptors
 
