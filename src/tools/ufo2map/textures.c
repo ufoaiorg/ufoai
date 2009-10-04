@@ -53,9 +53,6 @@ int FindMiptex (const char *name)
 	/* load the miptex to get the flags and values */
 	Com_sprintf(path, sizeof(path), "textures/%s.tga", name);
 	if (TryLoadTGA(path, &mt) != -1) {
-		textureref[i].value = LittleLong(mt->value);
-		textureref[i].surfaceFlags = 0;
-		textureref[i].contentFlags = 0;
 		Mem_Free(mt);
 		loaded = qtrue;
 	}
@@ -63,9 +60,6 @@ int FindMiptex (const char *name)
 	if (!loaded) {	/* fall back to jpg */
 		Com_sprintf(path, sizeof(path), "textures/%s.jpg", name);
 		if (TryLoadJPG(path, &mt) != -1) {
-			textureref[i].value = LittleLong(mt->value);
-			textureref[i].surfaceFlags = 0;
-			textureref[i].contentFlags = 0;
 			Mem_Free(mt);
 			loaded = qtrue;
 		}

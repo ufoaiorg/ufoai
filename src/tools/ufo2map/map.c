@@ -689,13 +689,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 		/* find default flags and values */
 		mt = FindMiptex(td.name);
-		if (mt >= 0) {
-			td.value = textureref[mt].value;
-			side->contentFlags = textureref[mt].contentFlags;
-			side->surfaceFlags = td.surfaceFlags = textureref[mt].surfaceFlags;
-		} else {
-			side->surfaceFlags = td.surfaceFlags = side->contentFlags = td.value = 0;
-		}
+		side->surfaceFlags = td.surfaceFlags = side->contentFlags = td.value = 0;
 
 		if (TokenAvailable()) {
 			GetToken(qfalse);
@@ -704,10 +698,8 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			side->surfaceFlags = td.surfaceFlags = atoi(parsedToken);
 			GetToken(qfalse);
 			td.value = atoi(parsedToken);
-		} else {
-			side->contentFlags = checkOrFix ? 0 : CONTENTS_SOLID;
-			side->surfaceFlags = 0;
-			td.value = 0;
+		} else if (!checkOrFix) {
+			side->contentFlags = CONTENTS_SOLID;
 		}
 
 		/* if in check or fix mode, let them choose to do this (with command line options),

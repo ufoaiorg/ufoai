@@ -98,9 +98,6 @@ int FindOrCreateFloatPlane(vec3_t normal, vec_t dist);
 
 typedef struct {
 	char	name[MAX_TEXPATH];
-	int		surfaceFlags;
-	int		value;
-	int		contentFlags;
 	qboolean	footstepMarked; /**< only print it once to the footsteps file */
 	qboolean	materialMarked; /**< only print it once to the material file */
 } textureref_t;
