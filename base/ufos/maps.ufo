@@ -52,6 +52,7 @@ mapdef oilpipes_small
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
 		craft_drop_herakles
 	}
 
@@ -90,6 +91,7 @@ mapdef oilpipes_large
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
 		craft_drop_herakles
 	}
 
@@ -261,6 +263,8 @@ mapdef farm_small
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -383,6 +387,8 @@ mapdef frozen_alienlandingindustrial
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -423,6 +429,8 @@ mapdef frozen_small
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 //	ufos
@@ -460,6 +468,8 @@ mapdef frozen_alienlandingnature
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -499,6 +509,8 @@ mapdef frozen_industrial
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 //	ufos
@@ -547,6 +559,8 @@ mapdef alienlandingindustrial_fix
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -574,6 +588,57 @@ mapdef alienlandingindustrial_fix
 	}
 }
 
+
+///////////////////////
+// CEMETERY RANDOM MAPS
+///////////////////////
+
+mapdef cemetery_main
+{
+	map				"+cemetery"
+	param			main
+	description		"_Cemetery terror mission."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		6
+
+	aircraft 
+	{
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	}
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		suburban
+		urban
+	}
+}
+
 /////////////////////
 // TROPIC RANDOM MAPS
 /////////////////////
@@ -589,6 +654,8 @@ mapdef tropic_river
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -629,6 +696,8 @@ mapdef tropic_drug
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -670,6 +739,8 @@ mapdef tropic_bigufo
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -712,6 +783,8 @@ mapdef vil_lille
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -749,6 +822,8 @@ mapdef vil_commercial
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -788,6 +863,8 @@ mapdef vil_residential
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -826,6 +903,8 @@ mapdef vil_big
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 //	ufos
@@ -864,6 +943,8 @@ mapdef forest_small
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -905,6 +986,8 @@ mapdef forest_large
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -946,6 +1029,8 @@ mapdef country_large
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -987,6 +1072,8 @@ mapdef country_street
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
@@ -1864,6 +1951,7 @@ mapdef city_disco
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_raptor
 		craft_drop_herakles
 	}
 
@@ -2704,6 +2792,8 @@ mapdef harvester_crash
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	}
 
 //	ufos
