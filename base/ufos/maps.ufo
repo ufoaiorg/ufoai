@@ -30,7 +30,7 @@
 // * craft_ufo_corrupter,   craft_crash_corrupter
 // * craft_ufo_supply,      craft_crash_supply
 //
-// valid aircraft values:
+// valid aircraft values (skirmish only):
 // * craft_drop_firebird
 // * craft_drop_herakles
 // * craft_drop_raptor
@@ -2635,7 +2635,7 @@ mapdef africa_common
 mapdef africa
 {
 	map				"+africa"
-	param     harvester
+	param			harvester
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -2685,7 +2685,8 @@ mapdef africa
 
 mapdef harvester_crash
 {
-	map				harvester_crash
+	map				"+desert"
+	param			harvester_crash
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -2705,10 +2706,9 @@ mapdef harvester_crash
 		craft_drop_firebird
 	}
 
-	ufos
-	{
-		craft_crash_harvester
-	}
+//	ufos
+//	{
+//	}
 
 	terrains
 	{

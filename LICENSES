@@ -128,6 +128,7 @@ base/maps/country/c_s07.map | GNU General Public License 2.0 or later | Martin G
 base/maps/country/c_v01.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/c_v01_2.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/dam.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/desert/main_harvester.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/druglord.ump | GNU General Public License 2.0 or later
 base/maps/druglord/dl_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/druglord/dl_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -219,7 +220,6 @@ base/maps/gasstation.ump | GNU General Public License 2.0 or later
 base/maps/gasstation/gas_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/gasstation/gas_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/harbour.map | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/maps/harvester_crash.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/ice.ump | GNU General Public License 2.0 or later
 base/maps/ice/ice_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/ice/ice_r01.map | GNU General Public License 2.0 or later
@@ -2013,6 +2013,7 @@ base/pics/maps/loading/construction.jpg | GNU General Public License 2.0 or late
 base/pics/maps/loading/corrupter_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/dam.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/default.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/desert.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/druglord.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/eaglenest.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/england.jpg | GNU General Public License 2.0 or later
@@ -2024,7 +2025,6 @@ base/pics/maps/loading/frozen.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/fueldump.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/gasstation.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/harbour.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/loading/harvester_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/industrial.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/italy.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/japan.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2081,6 +2081,9 @@ base/pics/maps/shots/dam.jpg | GNU General Public License 2.0 or later | Martin 
 base/pics/maps/shots/dam_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/dam_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/default.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/desert.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/desert_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/desert_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/druglord.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/druglord_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/druglord_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2120,9 +2123,6 @@ base/pics/maps/shots/gasstation_3.jpg | GNU General Public License 2.0 or later 
 base/pics/maps/shots/harbour.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/harbour_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/harbour_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/harvester_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/harvester_crash_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/harvester_crash_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/industrial.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/industrial_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/industrial_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
