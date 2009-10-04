@@ -118,8 +118,8 @@ static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 /* static variables */
 aircraft_t *selectedAircraft;		/**< Currently selected aircraft */
 aircraft_t *selectedUFO;			/**< Currently selected UFO */
-static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
-static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */
+static char textStandard[2048];		/**< Buffer to display standard text in geoscape */
+static int centerOnEventIdx;		/**< Current Event centered on 3D geoscape */
 static const vec2_t northPole = {0.0f, 90.0f};	/**< Position of the north pole (used to know where is the 'up' side */
 
 /* Colors */
@@ -135,20 +135,20 @@ static float smoothFinalZoom = 0.0f;		/**< value of finale ccs.zoom for a smooth
 static float smoothDeltaZoom = 0.0f;		/**< zoom difference that we need to change when smoothing */
 static const float smoothAcceleration = 0.06f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
 
-static byte *terrainPic = NULL;			/**< this is the terrain mask for separating the clima
-											zone and water by different color values */
+static byte *terrainPic;				/**< this is the terrain mask for separating the clima
+										 * zone and water by different color values */
 static int terrainWidth, terrainHeight;		/**< the width and height for the terrain pic. */
 
-static byte *culturePic = NULL;			/**< this is the mask for separating the culture
-											zone and water by different color values */
+static byte *culturePic;				/**< this is the mask for separating the culture
+										 * zone and water by different color values */
 static int cultureWidth, cultureHeight;		/**< the width and height for the culture pic. */
 
-static byte *populationPic = NULL;			/**< this is the mask for separating the population rate
-											zone and water by different color values */
+static byte *populationPic;				/**< this is the mask for separating the population rate
+										 * zone and water by different color values */
 static int populationWidth, populationHeight;		/**< the width and height for the population pic. */
 
-static byte *nationsPic = NULL;			/**< this is the nation mask - separated
-											by colors given in nations.ufo. */
+static byte *nationsPic;				/**< this is the nation mask - separated
+										 * by colors given in nations.ufo. */
 static int nationsWidth, nationsHeight;	/**< the width and height for the nation pic. */
 
 
@@ -217,7 +217,8 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		MAP_ResetAction();
 		ccs.selectedMission = MAP_GetMissionByIDX(id);
 
-		Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", ccs.selectedMission->id, ccs.selectedMission->pos[0], ccs.selectedMission->pos[1]);
+		Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", ccs.selectedMission->id,
+				ccs.selectedMission->pos[0], ccs.selectedMission->pos[1]);
 		ccs.mapAction = MA_INTERCEPT;
 		if (multiSelection) {
 			/* if we come from a multiSelection menu, no need to open twice this popup to go to mission */
@@ -225,11 +226,10 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			return;
 		}
 		break;
-
 	case MULTISELECT_TYPE_AIRCRAFT: /* Selection of an aircraft */
 		aircraft = AIR_AircraftGetFromIDX(id);
 		if (aircraft == NULL) {
-			Com_DPrintf(DEBUG_CLIENT, "MAP_MultiSelectExecuteAction: selection of an unknow aircraft idx %i\n", id);
+			Com_DPrintf(DEBUG_CLIENT, "MAP_MultiSelectExecuteAction: selection of an unknown aircraft idx %i\n", id);
 			return;
 		}
 
@@ -245,7 +245,6 @@ static void MAP_MultiSelectExecuteAction_f (void)
 				CL_DisplayPopupAircraft(aircraft);
 		}
 		break;
-
 	case MULTISELECT_TYPE_UFO : /* Selection of a UFO */
 		/* Get the ufo selected */
 		if (id < 0 || id >= ccs.numUFOs)
@@ -264,11 +263,11 @@ static void MAP_MultiSelectExecuteAction_f (void)
 				CL_DisplayPopupInterceptUFO(selectedUFO);
 		}
 		break;
-
 	case MULTISELECT_TYPE_NONE :	/* Selection of an element that has been removed */
 		break;
 	default:
-		Com_DPrintf(DEBUG_CLIENT, "MAP_MultiSelectExecuteAction: selection of an unknow element type %i\n", multiSelect.selectType[selected]);
+		Com_DPrintf(DEBUG_CLIENT, "MAP_MultiSelectExecuteAction: selection of an unknown element type %i\n",
+				multiSelect.selectType[selected]);
 	}
 }
 
@@ -1722,33 +1721,33 @@ void MAP_DrawMap (const menuNode_t* node)
 		case AIR_UFO:
 			assert(selectedAircraft->aircraftTarget);
 			distance = MAP_GetDistance(selectedAircraft->pos, selectedAircraft->aircraftTarget->pos);
-			Com_sprintf(text_standard, sizeof(text_standard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
-			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Distance to target:\t\t%.0f\n"), distance), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
-				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
-			MN_RegisterText(TEXT_STANDARD, text_standard);
+			Com_sprintf(textStandard, sizeof(textStandard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
+			Q_strcat(textStandard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(textStandard));
+			Q_strcat(textStandard, va(_("Distance to target:\t\t%.0f\n"), distance), sizeof(textStandard));
+			Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
+			Q_strcat(textStandard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
+				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(textStandard));
+			Q_strcat(textStandard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(textStandard));
+			MN_RegisterText(TEXT_STANDARD, textStandard);
 			break;
 		default:
-			Com_sprintf(text_standard, sizeof(text_standard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
-			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
-				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(text_standard));
+			Com_sprintf(textStandard, sizeof(textStandard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
+			Q_strcat(textStandard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(textStandard));
+			Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
+			Q_strcat(textStandard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
+				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(textStandard));
 			if (selectedAircraft->status != AIR_IDLE) {
 				distance = MAP_GetDistance(selectedAircraft->pos,
 					selectedAircraft->route.point[selectedAircraft->route.numPoints - 1]);
-				Q_strcat(text_standard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
+				Q_strcat(textStandard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(textStandard));
 			}
-			MN_RegisterText(TEXT_STANDARD, text_standard);
+			MN_RegisterText(TEXT_STANDARD, textStandard);
 			break;
 		}
 	} else if (selectedUFO) {
-		Com_sprintf(text_standard, sizeof(text_standard), "%s\n", UFO_AircraftToIDOnGeoscape(selectedUFO));
-		Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedUFO->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
-		MN_RegisterText(TEXT_STANDARD, text_standard);
+		Com_sprintf(textStandard, sizeof(textStandard), "%s\n", UFO_AircraftToIDOnGeoscape(selectedUFO));
+		Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedUFO->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
+		MN_RegisterText(TEXT_STANDARD, textStandard);
 	} else {
 #ifdef DEBUG
 		if (debug_showInterest->integer) {

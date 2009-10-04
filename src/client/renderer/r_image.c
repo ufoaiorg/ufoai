@@ -1312,15 +1312,25 @@ void R_CalcAndUploadDayAndNightTexture (float q)
 
 static inline void R_DeleteImage (image_t *image)
 {
+	image_t *next = image->hashNext;
+	image_t *prev = image->hashPrev;
+
 	/* free it */
 	glDeleteTextures(1, (GLuint *) &image->texnum);
 	R_CheckError();
 
-	if (image->hashPrev)
-		image->hashPrev->hashNext = image->hashNext;
-
-	if (image->hashNext)
-		image->hashNext->hashPrev = image->hashPrev;
+	if (next) {
+		assert(next->hashPrev == image);
+		next->hashPrev = prev;
+	}
+	if (prev) {
+		assert(prev->hashNext == image);
+		prev->hashNext = next;
+	} else {
+		const unsigned int hash = Com_HashKey(image->name, MAX_IMAGEHASH);
+		assert(imageHash[hash] == image);
+		imageHash[hash] = next;
+	}
 
 	memset(image, 0, sizeof(*image));
 }
@@ -1355,6 +1365,10 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	size_t len;
 	unsigned hash;
 
+	len = strlen(name);
+	if (len >= sizeof(image->name))
+		Com_Error(ERR_DROP, "R_LoadImageData: \"%s\" is too long", name);
+
 	/* look for it */
 	image = R_GetImage(name);
 	if (image) {
@@ -1379,13 +1393,12 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	image->height = height;
 	image->texnum = i + 1;
 
-	len = strlen(name);
-	if (len >= sizeof(image->name))
-		Com_Error(ERR_DROP, "R_LoadImageData: \"%s\" is too long", name);
 	Q_strncpyz(image->name, name, sizeof(image->name));
 	/* drop extension */
-	if (len >= 4 && image->name[len - 4] == '.')
+	if (len >= 4 && image->name[len - 4] == '.') {
 		image->name[len - 4] = '\0';
+		Com_Printf("Image with extension: '%s'\n", name);
+	}
 
 	hash = Com_HashKey(image->name, MAX_IMAGEHASH);
 	image->hashNext = imageHash[hash];
