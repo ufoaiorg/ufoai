@@ -26,13 +26,22 @@ a      +b      +b      +b      a
 // Herakles dropship
 tile +craft_drop_herakles
 {
-4 5
+5 4
+0      a       a       a       0
+a      +b      +b      +b      a
+a      +b      +b      +b      a
+0      a       a       a       0
+}
 
-0      0      0      0
-0      +b     +b     a 
-0      +b     +b     a 
-0      +b     +b     a 
-0      a      a      a
+// ---------------------------------
+// Raptor dropship
+tile +craft_drop_raptor
+{
+5 4
+0      a       a       a       0
+a      +b      +b      +b      a
+a      +b      +b      +b      a
+0      a       a       a       0
 }
 
 // ---------------------------------
