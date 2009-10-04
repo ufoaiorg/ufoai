@@ -216,7 +216,7 @@ ac +a  ac
 // ########################################
 // *** Maps for playing the game ***
 
-assembly test
+assembly main
 {
 size "5 5"
 title "_Small cemetery"
