@@ -46,6 +46,17 @@ acdg   +a      +a      +a     acef
 0     abde    abde    abde	  0
 }
 
+tile +craft_drop_raptor
+{
+5 5
+
+0     abfg    abfg    abfg    0
+acdg   +a      +a      +a     acef
+acdg   +a      +a      +a     acef
+acdg   +a      +a      +a     acef 
+0     abde    abde    abde	  0
+}
+
 tile +craft_crash_scout
 {
 4 5
