@@ -50,7 +50,7 @@ tile +main_harvester
 
 assembly harvester_crash
 {
-title "_UFO Landed"
+title "_Crashed Harvester"
 size "6 7"
 +main_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
