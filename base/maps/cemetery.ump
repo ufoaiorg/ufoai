@@ -18,6 +18,29 @@ ac    +a    +a    +a     ac
 0     ab    ab    ab      0
 }
 
+// Herakles pod on grass with 3 trees
+tile +craft_drop_herakles
+{
+5 4
+
+0     ab    ab    ab      0
+ac    +a    +a    +a     ac
+ac    +a    +a    +a     ac
+0     ab    ab    ab      0
+}
+
+// Raptor on grass with 3 trees
+tile +craft_drop_raptor
+{
+6 5
+
+0     ab    ab    ab    ab      0
+ac    +a    +a    +a    +a     ac
+ac    +a    +a    +a    +a     ac
+ac    +a    +a    +a    +a     ac
+0     ab    ab    ab    ab      0
+}
+
 // ########################
 // ##### Path tiles #####
 
