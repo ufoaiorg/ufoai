@@ -71,6 +71,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/xywindow.cpp \
 	$(RADIANT_BASE)/radiant/levelfilters.cpp \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
+	$(RADIANT_BASE)/radiant/model.cpp \
 	\
 	$(RADIANT_BASE)/radiant/brushexport/BrushExportOBJ.cpp \
 	\
@@ -155,23 +156,14 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/libs/entity/miscsound.cpp \
 	$(RADIANT_BASE)/libs/entity/filters.cpp \
 	$(RADIANT_BASE)/libs/entity/light.cpp \
-	$(RADIANT_BASE)/libs/entity/targetable.cpp
+	$(RADIANT_BASE)/libs/entity/targetable.cpp \
+	$(RADIANT_BASE)/libs/picomodel/model.cpp \
+	$(RADIANT_BASE)/libs/picomodel/RenderablePicoSurface.cpp \
+	$(RADIANT_BASE)/libs/picomodel/RenderablePicoModel.cpp
 
 RADIANT_SRCS_C = \
 	shared/parse.c \
-	shared/entitiesdef.c
-
-RADIANT_CPP_OBJS=$(RADIANT_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/%.o)
-RADIANT_C_OBJS=$(RADIANT_SRCS_C:%.c=$(BUILDDIR)/tools/radiant_c/%.o)
-RADIANT_TARGET=radiant/uforadiant$(EXE_EXT)
-
-# model plugin
-RADIANT_PLUGIN_MODEL_SRCS_CPP = \
-	$(RADIANT_BASE)/plugins/model/plugin.cpp \
-	$(RADIANT_BASE)/plugins/model/model.cpp \
-	$(RADIANT_BASE)/plugins/model/RenderablePicoSurface.cpp \
-	$(RADIANT_BASE)/plugins/model/RenderablePicoModel.cpp
-RADIANT_PLUGIN_MODEL_SRCS_C = \
+	shared/entitiesdef.c \
 	$(RADIANT_BASE)/libs/picomodel/picointernal.c \
 	$(RADIANT_BASE)/libs/picomodel/picomodel.c \
 	$(RADIANT_BASE)/libs/picomodel/picomodules.c \
@@ -180,9 +172,9 @@ RADIANT_PLUGIN_MODEL_SRCS_C = \
 	$(RADIANT_BASE)/libs/picomodel/pm_obj.c \
 	$(RADIANT_BASE)/libs/picomodel/pm_md2.c
 
-RADIANT_PLUGIN_MODEL_C_OBJS=$(RADIANT_PLUGIN_MODEL_SRCS_C:%.c=$(BUILDDIR)/tools/radiant/plugins_c/%.o)
-RADIANT_PLUGIN_MODEL_CPP_OBJS=$(RADIANT_PLUGIN_MODEL_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)
-RADIANT_PLUGIN_MODEL_TARGET=radiant/modules/model.$(SHARED_EXT)
+RADIANT_CPP_OBJS=$(RADIANT_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/%.o)
+RADIANT_C_OBJS=$(RADIANT_SRCS_C:%.c=$(BUILDDIR)/tools/radiant_c/%.o)
+RADIANT_TARGET=radiant/uforadiant$(EXE_EXT)
 
 # PLUGINS
 
@@ -198,12 +190,11 @@ RADIANT_PLUGIN_BRUSHEXPORT_TARGET=radiant/plugins/brushexport.$(SHARED_EXT)
 
 ifeq ($(BUILD_UFORADIANT),1)
 
-ALL_RADIANT_OBJS+=$(RADIANT_CPP_OBJS) $(RADIANT_C_OBJS) $(RADIANT_PLUGIN_MODEL_C_OBJS) $(RADIANT_PLUGIN_MODEL_CPP_OBJS) \
+ALL_RADIANT_OBJS+=$(RADIANT_CPP_OBJS) $(RADIANT_C_OBJS) \
 	$(RADIANT_PLUGIN_BRUSHEXPORT_CPP_OBJS)
 RADIANT_DEPS = $(patsubst %.o, %.d, $(ALL_RADIANT_OBJS))
 
-uforadiant: $(BUILDDIR)/.dirs $(RADIANT_PLUGIN_MODEL_TARGET) \
-	$(RADIANT_PLUGIN_BRUSHEXPORT_TARGET) \
+uforadiant: $(BUILDDIR)/.dirs $(RADIANT_PLUGIN_BRUSHEXPORT_TARGET) \
 	$(RADIANT_TARGET)
 else
 
@@ -232,11 +223,6 @@ $(BUILDDIR)/tools/radiant/plugins_c/%.o: $(SRCDIR)/%.c
 $(BUILDDIR)/tools/radiant/plugins_cpp/%.o: $(SRCDIR)/%.cpp
 	@echo " * [RAD] $< $(CFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS)"; \
 		$(CPP) $(CPPFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
-
-# Say how about to build the modules
-$(RADIANT_PLUGIN_MODEL_TARGET) : $(RADIANT_PLUGIN_MODEL_CPP_OBJS) $(RADIANT_PLUGIN_MODEL_C_OBJS)
-	@echo " * [MDL] ... linking $(LNKFLAGS) ($(RADIANT_LIBS))"; \
-		$(CPP) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(RADIANT_PLUGIN_MODEL_C_OBJS) $(RADIANT_PLUGIN_MODEL_CPP_OBJS) $(RADIANT_LIBS) $(LNKFLAGS)
 
 # and now link the plugins
 $(RADIANT_PLUGIN_BRUSHEXPORT_TARGET) : $(RADIANT_PLUGIN_BRUSHEXPORT_CPP_OBJS)

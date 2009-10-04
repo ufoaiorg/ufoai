@@ -390,6 +390,15 @@
 		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_obj.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/picomodel/model.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/picomodel/RenderablePicoSurface.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/libs/picomodel/RenderablePicoModel.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\pivot.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\profile\file.cpp">
 			<Option compilerVar="CC" />
@@ -605,6 +614,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\material.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/model.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\nullmodel.cpp">
