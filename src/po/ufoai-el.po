@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-10 08:18+0200\n"
+"POT-Creation-Date: 2009-10-04 14:41+0200\n"
 "PO-Revision-Date: 2008-07-21 11:28+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -26,15 +26,15 @@ msgstr "Εξωγήινοι"
 msgid "Bomber_city"
 msgstr ""
 
-#: ../base/maps/bridge.ump:68
+#: ../base/maps/bridge.ump:67
 msgid "Bridge"
 msgstr ""
 
-#: ../base/maps/cemetery.ump:199
+#: ../base/maps/cemetery.ump:222
 msgid "Small cemetery"
 msgstr ""
 
-#: ../base/maps/city_disco.ump:54
+#: ../base/maps/city_disco.ump:65
 msgid "City_disco"
 msgstr ""
 
@@ -47,6 +47,11 @@ msgstr "Κέντρο Επιχειρήσεων"
 msgid "Construction"
 msgstr "Κατασκευή"
 
+#: ../base/maps/desert.ump:53
+#, fuzzy
+msgid "Crashed Harvester"
+msgstr "Harvester"
+
 #: ../base/maps/druglord.ump:57
 msgid "Druglord"
 msgstr ""
@@ -55,37 +60,37 @@ msgstr ""
 msgid "Eaglenest"
 msgstr ""
 
-#: ../base/maps/forest.ump:393
+#: ../base/maps/forest.ump:404
 #, fuzzy
 msgid "Little forest"
 msgstr "Sitters"
 
-#: ../base/maps/forest.ump:424
+#: ../base/maps/forest.ump:435
 #, fuzzy
 msgid "Little bungalo in forest"
 msgstr "Sitters"
 
-#: ../base/maps/frozen.ump:274
+#: ../base/maps/frozen.ump:284
 msgid "Snow"
 msgstr "Χιόνι"
 
-#: ../base/maps/frozen.ump:290
+#: ../base/maps/frozen.ump:300
 msgid "Alien landing - Snow"
 msgstr "Εξωγήινοι προσεδαφίστηκαν - Χιόνι"
 
-#: ../base/maps/frozen.ump:307
+#: ../base/maps/frozen.ump:317
 msgid "Industrial"
 msgstr "Βιομηχανική"
 
-#: ../base/maps/frozen.ump:327
+#: ../base/maps/frozen.ump:337
 msgid "Alien landing - Industrial"
 msgstr "Εξωγήινοι προσεδαφίστηκαν - Βιομηχανική"
 
-#: ../base/maps/frozen.ump:348
+#: ../base/maps/frozen.ump:358
 msgid "Multiplayer Coop"
 msgstr "Multiplayer Coop"
 
-#: ../base/maps/frozen.ump:368
+#: ../base/maps/frozen.ump:378
 msgid "Multiplayer Deathmatch"
 msgstr "Multiplayer Deathmatch"
 
@@ -94,7 +99,7 @@ msgstr "Multiplayer Deathmatch"
 msgid "Gasstation"
 msgstr "Έθνος"
 
-#: ../base/maps/industrial.ump:248 ../base/maps/industrial.ump:272
+#: ../base/maps/industrial.ump:257 ../base/maps/industrial.ump:281
 #, fuzzy
 msgid "UFO Landed"
 msgstr "UFO - Carrie"
@@ -110,7 +115,7 @@ msgid "Japan"
 msgstr "Ιαπωνικά"
 
 #: ../base/maps/laboratory.ump:54 ../base/ufos/basemanagement.ufo:283
-#: client/campaign/cp_base_callbacks.c:308
+#: client/campaign/cp_base_callbacks.c:313
 msgid "Laboratory"
 msgstr "Εργαστήριο"
 
@@ -150,39 +155,39 @@ msgstr "Μέση"
 msgid "Transport"
 msgstr "Μεταγωγικά:"
 
-#: ../base/maps/tropic.ump:348
+#: ../base/maps/tropic.ump:359
 msgid "Tropical river"
 msgstr "Τροπικός Ποταμός"
 
-#: ../base/maps/tropic.ump:380
+#: ../base/maps/tropic.ump:391
 msgid "Tropical drug"
 msgstr "Τροπική βλάστηση"
 
-#: ../base/maps/tropic.ump:405
+#: ../base/maps/tropic.ump:416
 #, fuzzy
 msgid "Tropical UFO"
 msgstr "Τροπική βλάστηση"
 
 #: ../base/maps/ufocrash.ump:352 ../base/maps/ufocrash.ump:369
 #: ../base/maps/ufocrash.ump:386 ../base/maps/ufocrash.ump:404
-#: client/campaign/cp_missions.c:437
+#: client/campaign/cp_missions.c:436
 #, fuzzy
 msgid "Crashed UFO"
 msgstr "Αποθηκέυστε ΟΥΦΟ"
 
-#: ../base/maps/village.ump:359 ../base/maps/village.ump:392
+#: ../base/maps/village.ump:370 ../base/maps/village.ump:403
 msgid "Village residential"
 msgstr "Αστικοποιημένο Χωριό"
 
-#: ../base/maps/village.ump:424
+#: ../base/maps/village.ump:435
 msgid "Village commercial"
 msgstr "Εμπορικό Χωριό"
 
-#: ../base/maps/village.ump:457
+#: ../base/maps/village.ump:468
 msgid "Village recreational"
 msgstr "Ψυχαγωγικό Χωριό"
 
-#: ../base/maps/village.ump:488
+#: ../base/maps/village.ump:499
 msgid "Village big"
 msgstr "Μεγάλο Χωριό"
 
@@ -202,218 +207,227 @@ msgstr ""
 msgid "Herakles D"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:169
+#: ../base/ufos/aircraftmanagement.ufo:166
+msgid "Raptor-class Combat Transport"
+msgstr ""
+
+#: ../base/ufos/aircraftmanagement.ufo:167
+#, fuzzy
+msgid "Raptor"
+msgstr "ΛΓΟΣ"
+
+#: ../base/ufos/aircraftmanagement.ufo:215
 msgid "Stiletto-class Interceptor"
 msgstr "Stiletto-αναχαιτιστικό"
 
-#: ../base/ufos/aircraftmanagement.ufo:170
+#: ../base/ufos/aircraftmanagement.ufo:216
 msgid "Stiletto I"
 msgstr "Stiletto I"
 
-#: ../base/ufos/aircraftmanagement.ufo:214
+#: ../base/ufos/aircraftmanagement.ufo:260
 msgid "Saracen-class Interceptor"
 msgstr "Saracen-αναχαιτιστικό"
 
-#: ../base/ufos/aircraftmanagement.ufo:215
+#: ../base/ufos/aircraftmanagement.ufo:261
 msgid "Saracen I"
 msgstr "Saracen I"
 
-#: ../base/ufos/aircraftmanagement.ufo:255
+#: ../base/ufos/aircraftmanagement.ufo:301
 msgid "Dragon Interceptor"
 msgstr "Dragon-αναχαιτιστικό"
 
-#: ../base/ufos/aircraftmanagement.ufo:256
+#: ../base/ufos/aircraftmanagement.ufo:302
 msgid "Dragon"
 msgstr "Dragon"
 
-#: ../base/ufos/aircraftmanagement.ufo:296
+#: ../base/ufos/aircraftmanagement.ufo:342
 #, fuzzy
 msgid "Starchaser-class Interceptor"
 msgstr "Saracen-αναχαιτιστικό"
 
-#: ../base/ufos/aircraftmanagement.ufo:297
+#: ../base/ufos/aircraftmanagement.ufo:343
 #, fuzzy
 msgid "Starchaser"
 msgstr "Μεταφορά"
 
-#: ../base/ufos/aircraftmanagement.ufo:342
+#: ../base/ufos/aircraftmanagement.ufo:388
 msgid "Stingray Interceptor"
 msgstr "Stingray αναχαιτιστικό"
 
-#: ../base/ufos/aircraftmanagement.ufo:343
+#: ../base/ufos/aircraftmanagement.ufo:389
 msgid "Stingray"
 msgstr "Stingray"
 
-#: ../base/ufos/aircraftmanagement.ufo:389 ../base/ufos/otheritems.ufo:37
-#: ../base/ufos/research.ufo:3536
+#: ../base/ufos/aircraftmanagement.ufo:440 ../base/ufos/otheritems.ufo:38
+#: ../base/ufos/research.ufo:3589
 msgid "UFO - Scout"
 msgstr "ΟΥΦΟ - Ανιχνευτικό"
 
-#: ../base/ufos/aircraftmanagement.ufo:390
+#: ../base/ufos/aircraftmanagement.ufo:441
 msgid "Scout U"
 msgstr "Scout U"
 
-#: ../base/ufos/aircraftmanagement.ufo:410 ../base/ufos/otheritems.ufo:46
-#: ../base/ufos/research.ufo:3578
+#: ../base/ufos/aircraftmanagement.ufo:461 ../base/ufos/otheritems.ufo:48
+#: ../base/ufos/research.ufo:3631
 msgid "UFO - Fighter"
 msgstr "ΟΥΦΟ - Καταδιωκτικό"
 
-#: ../base/ufos/aircraftmanagement.ufo:411
+#: ../base/ufos/aircraftmanagement.ufo:462
 msgid "Fighter U"
 msgstr "Fighter U"
 
-#: ../base/ufos/aircraftmanagement.ufo:438 ../base/ufos/otheritems.ufo:55
-#: ../base/ufos/research.ufo:3879
+#: ../base/ufos/aircraftmanagement.ufo:489 ../base/ufos/otheritems.ufo:58
+#: ../base/ufos/research.ufo:3932
 msgid "UFO - Harvester"
 msgstr "ΟΥΦΟ - Θεριστής"
 
-#: ../base/ufos/aircraftmanagement.ufo:439
+#: ../base/ufos/aircraftmanagement.ufo:490
 msgid "Harvester U"
 msgstr "Harvester U"
 
-#: ../base/ufos/aircraftmanagement.ufo:477 ../base/ufos/otheritems.ufo:90
-#: ../base/ufos/research.ufo:3793
+#: ../base/ufos/aircraftmanagement.ufo:528 ../base/ufos/otheritems.ufo:97
+#: ../base/ufos/research.ufo:3846
 #, fuzzy
 msgid "UFO - Gunboat"
 msgstr "ΟΥΦΟ - Ανιχνευτικό"
 
-#: ../base/ufos/aircraftmanagement.ufo:478
+#: ../base/ufos/aircraftmanagement.ufo:529
 msgid "Gunboat U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:516 ../base/ufos/otheritems.ufo:99
-#: ../base/ufos/research.ufo:3750
+#: ../base/ufos/aircraftmanagement.ufo:567 ../base/ufos/otheritems.ufo:107
+#: ../base/ufos/research.ufo:3803
 #, fuzzy
 msgid "UFO - Corrupter"
 msgstr "UFO - Carrier"
 
-#: ../base/ufos/aircraftmanagement.ufo:517
+#: ../base/ufos/aircraftmanagement.ufo:568
 msgid "Corrupter U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:543 ../base/ufos/otheritems.ufo:115
-#: ../base/ufos/research.ufo:3621
+#: ../base/ufos/aircraftmanagement.ufo:594 ../base/ufos/otheritems.ufo:125
+#: ../base/ufos/research.ufo:3674
 msgid "UFO - Supply Ship"
 msgstr "ΟΥΦΟ - Ανεφοδιασμού"
 
-#: ../base/ufos/aircraftmanagement.ufo:544
+#: ../base/ufos/aircraftmanagement.ufo:595
 msgid "Supply U"
 msgstr "Supply U"
 
-#: ../base/ufos/aircraftmanagement.ufo:564 ../base/ufos/otheritems.ufo:72
-#: ../base/ufos/research.ufo:3836
+#: ../base/ufos/aircraftmanagement.ufo:615 ../base/ufos/otheritems.ufo:77
+#: ../base/ufos/research.ufo:3889
 #, fuzzy
 msgid "UFO - Ripper"
 msgstr "UFO - Figher"
 
-#: ../base/ufos/aircraftmanagement.ufo:565
+#: ../base/ufos/aircraftmanagement.ufo:616
 msgid "Ripper U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:591 ../base/ufos/otheritems.ufo:64
-#: ../base/ufos/research.ufo:3707
+#: ../base/ufos/aircraftmanagement.ufo:642 ../base/ufos/otheritems.ufo:68
+#: ../base/ufos/research.ufo:3760
 #, fuzzy
 msgid "UFO - Bomber"
 msgstr "UFO - Condor"
 
-#: ../base/ufos/aircraftmanagement.ufo:592
+#: ../base/ufos/aircraftmanagement.ufo:643
 msgid "Bomber U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:625 ../base/ufos/otheritems.ufo:107
-#: ../base/ufos/research.ufo:3664
+#: ../base/ufos/aircraftmanagement.ufo:676 ../base/ufos/otheritems.ufo:116
+#: ../base/ufos/research.ufo:3717
 msgid "UFO - Carrier"
 msgstr "UFO - Carrier"
 
-#: ../base/ufos/aircraftmanagement.ufo:626
+#: ../base/ufos/aircraftmanagement.ufo:677
 #, fuzzy
 msgid "Carrier U"
 msgstr "UFO - Carrier"
 
-#: ../base/ufos/aircraftmanagement.ufo:648 ../base/ufos/otheritems.ufo:81
-#: ../base/ufos/research.ufo:3922
+#: ../base/ufos/aircraftmanagement.ufo:699 ../base/ufos/otheritems.ufo:87
+#: ../base/ufos/research.ufo:3975
 #, fuzzy
 msgid "UFO - Mothership"
 msgstr "UFO - Carrier"
 
-#: ../base/ufos/aircraftmanagement.ufo:649
+#: ../base/ufos/aircraftmanagement.ufo:700
 msgid "Mothership U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:665 ../base/ufos/research.ufo:4545
+#: ../base/ufos/aircraftmanagement.ufo:716 ../base/ufos/research.ufo:4598
 #, fuzzy
 msgid "Aerial Laser Cannon"
 msgstr "Shiva Rotary Cannon"
 
-#: ../base/ufos/aircraftmanagement.ufo:696
+#: ../base/ufos/aircraftmanagement.ufo:747
 msgid "Shiva Rotary Cannon"
 msgstr "Shiva Rotary Cannon"
 
-#: ../base/ufos/aircraftmanagement.ufo:707 ../base/ufos/research.ufo:4612
+#: ../base/ufos/aircraftmanagement.ufo:758 ../base/ufos/research.ufo:4665
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API Rounds"
 
-#: ../base/ufos/aircraftmanagement.ufo:723 ../base/ufos/research.ufo:4633
+#: ../base/ufos/aircraftmanagement.ufo:774 ../base/ufos/research.ufo:4686
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm HEI Rounds"
 
-#: ../base/ufos/aircraftmanagement.ufo:739
+#: ../base/ufos/aircraftmanagement.ufo:790
 msgid "Raven ECM Unit"
 msgstr "Raven ECM Unit"
 
-#: ../base/ufos/aircraftmanagement.ufo:751
+#: ../base/ufos/aircraftmanagement.ufo:802
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Sparrowhawk AA Missile Rack"
 
-#: ../base/ufos/aircraftmanagement.ufo:761
+#: ../base/ufos/aircraftmanagement.ufo:812
 msgid "Sparrowhawk Missile"
 msgstr "Sparrowhawk Missile"
 
-#: ../base/ufos/aircraftmanagement.ufo:778 ../base/ufos/research.ufo:4692
+#: ../base/ufos/aircraftmanagement.ufo:829 ../base/ufos/research.ufo:4745
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 Rocket Pod"
 
-#: ../base/ufos/aircraftmanagement.ufo:791 ../base/ufos/research.ufo:4709
+#: ../base/ufos/aircraftmanagement.ufo:842 ../base/ufos/research.ufo:4762
 msgid "TR-20 Rocket"
 msgstr "TR-20 Rocket"
 
-#: ../base/ufos/aircraftmanagement.ufo:810 ../base/ufos/research.ufo:4728
+#: ../base/ufos/aircraftmanagement.ufo:861 ../base/ufos/research.ufo:4781
 msgid "Particle Beam Weapon"
 msgstr "Particle Beam Weapon"
 
-#: ../base/ufos/aircraftmanagement.ufo:840 ../base/ufos/research.ufo:4786
+#: ../base/ufos/aircraftmanagement.ufo:891 ../base/ufos/research.ufo:4839
 msgid "Targeting Computer"
 msgstr "Targeting Computer"
 
-#: ../base/ufos/aircraftmanagement.ufo:852 ../base/ufos/research.ufo:4803
+#: ../base/ufos/aircraftmanagement.ufo:903 ../base/ufos/research.ufo:4856
 msgid "Fuel Pod"
 msgstr "Fuel Pod"
 
-#: ../base/ufos/aircraftmanagement.ufo:866 ../base/ufos/research.ufo:4380
+#: ../base/ufos/aircraftmanagement.ufo:917 ../base/ufos/research.ufo:4433
 msgid "Polymer Aircraft Armour"
 msgstr "Polymer Aircraft Armour"
 
-#: ../base/ufos/aircraftmanagement.ufo:880 ../base/ufos/research.ufo:4397
+#: ../base/ufos/aircraftmanagement.ufo:931 ../base/ufos/research.ufo:4450
 msgid "Alien Aircraft Plating"
 msgstr "Alien Aircraft Plating"
 
-#: ../base/ufos/aircraftmanagement.ufo:894 ../base/ufos/research.ufo:4431
+#: ../base/ufos/aircraftmanagement.ufo:945 ../base/ufos/research.ufo:4484
 msgid "Alien Astrogation"
 msgstr "Εξωγήινος Αστρολάβος"
 
-#: ../base/ufos/aircraftmanagement.ufo:903 ../base/ufos/research.ufo:4469
+#: ../base/ufos/aircraftmanagement.ufo:954 ../base/ufos/research.ufo:4522
 msgid "Alien Propulsion"
 msgstr "Εξωγήινη ώθηση"
 
-#: ../base/ufos/aircraftmanagement.ufo:912 ../base/ufos/research.ufo:4506
+#: ../base/ufos/aircraftmanagement.ufo:963 ../base/ufos/research.ufo:4559
 msgid "Alien Detection"
 msgstr "Εξωγήινη ανίχνευση"
 
-#: ../base/ufos/aircraftmanagement.ufo:925 ../base/ufos/research.ufo:4331
+#: ../base/ufos/aircraftmanagement.ufo:976 ../base/ufos/research.ufo:4384
 msgid "AA51 missile launcher"
 msgstr "AA51 εκτοξευτής πυραύλων"
 
-#: ../base/ufos/aircraftmanagement.ufo:954 ../base/ufos/research.ufo:156
+#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:156
 #, fuzzy
 msgid "Laser Turret"
 msgstr "Τυφέκιο Λέϊζερ"
@@ -488,7 +502,7 @@ msgstr "Εξωγήινος Θόλος"
 msgid "Entrance"
 msgstr "Είσοδος"
 
-#: ../base/ufos/basemanagement.ufo:69 client/campaign/cp_base_callbacks.c:298
+#: ../base/ufos/basemanagement.ufo:69 client/campaign/cp_base_callbacks.c:303
 msgid "Storage"
 msgstr "Αποθήκη"
 
@@ -500,16 +514,16 @@ msgstr "Γεννήτριες Ρεύματος"
 msgid "Command Centre"
 msgstr "Κέντρο Επιχειρήσεων"
 
-#: ../base/ufos/basemanagement.ufo:114 client/campaign/cp_base_callbacks.c:318
+#: ../base/ufos/basemanagement.ufo:114 client/campaign/cp_base_callbacks.c:323
 msgid "Living Quarters"
 msgstr "Διαμερίσματα"
 
 #: ../base/ufos/basemanagement.ufo:128 ../base/ufos/basemanagement.ufo:145
-#: client/campaign/cp_base_callbacks.c:292
+#: client/campaign/cp_base_callbacks.c:297
 msgid "Large Hangar"
 msgstr "Μεγάλο Υπόστεγο"
 
-#: ../base/ufos/basemanagement.ufo:153 client/campaign/cp_base_callbacks.c:292
+#: ../base/ufos/basemanagement.ufo:153 client/campaign/cp_base_callbacks.c:297
 msgid "Small Hangar"
 msgstr "Μικρό Υπόστεγο"
 
@@ -526,7 +540,7 @@ msgid "Team Room"
 msgstr "Δωμάτιο Ομάδας"
 
 #: ../base/ufos/basemanagement.ufo:226 ../base/ufos/basemanagement.ufo:243
-#: client/campaign/cp_base_callbacks.c:313
+#: client/campaign/cp_base_callbacks.c:318
 msgid "Workshop"
 msgstr "Μηχανουργείο"
 
@@ -539,7 +553,7 @@ msgid "Advanced Radar"
 msgstr ""
 
 #: ../base/ufos/basemanagement.ufo:299 ../base/ufos/ui/bases.ufo:156
-#: client/campaign/cp_base_callbacks.c:328
+#: client/campaign/cp_base_callbacks.c:333
 msgid "Hospital"
 msgstr "Νοσοκομείο"
 
@@ -567,55 +581,55 @@ msgstr ""
 "\n"
 "This option represents the Very Hard difficulty level, and is recommended for those who have managed to beat the Hard campaign and still feel the need to further punish themselves."
 
-#: ../base/ufos/campaign.ufo:28
+#: ../base/ufos/campaign.ufo:29
 msgid "Hard Campaign"
 msgstr "Δύσκολη Εκστρατεία"
 
-#: ../base/ufos/campaign.ufo:29
+#: ../base/ufos/campaign.ufo:30
 msgid "hard_campaign_txt"
 msgstr ""
 "Αυτή είναι μια δύσκολη έκδοση της Κανονικής Εκστρατείας. Θα παραλάβετε λιγότερους στρατιώτες, τεχνικούς και επιστήμονες, τα έθνη θα είναι πιο δύσκολο ν αμείνουν ικανοποιημένα, η έρευνα θα είναι πιο αργή και πιο απαιτητική, και οι εξωγήινοι πιο σκληροί.\n"
 "\n"
 "This option represents the Hard difficulty level, and is recommended for expert players."
 
-#: ../base/ufos/campaign.ufo:56
+#: ../base/ufos/campaign.ufo:58
 msgid "Standard Campaign"
 msgstr "Τυπική Εκστρατεία"
 
-#: ../base/ufos/campaign.ufo:57
+#: ../base/ufos/campaign.ufo:59
 msgid "standard_campaign_txt"
 msgstr ""
 "Αυτό είναι ένα στρατιωτικού θέματος σενάριο εισβολής για έναν παίχτη. Ο παίχτης αναλαμβάνει το Έργο Φάλαγγα, οι Γήινοι αντιδρούν στην εξωγήινη απειλή, και μπορεί να παιχτεί δυναμικά .\n"
 "\n"
 "This campaign is available at several difficulty levels. This option represents the Standard difficulty level, and is recommended for first-time players who like a challenge."
 
-#: ../base/ufos/campaign.ufo:104
+#: ../base/ufos/campaign.ufo:107
 msgid "Easy Campaign"
 msgstr "Εύκολη Εκστρατεία"
 
-#: ../base/ufos/campaign.ufo:105
+#: ../base/ufos/campaign.ufo:108
 msgid "easy_campaign_txt"
 msgstr ""
 "Αυτή είναι μια εύκολη έκδοση της Κανονικής Εκστρατείας. Οι εξωγήινοι θα είναι λιγότερο σκληροί, οι επιθέσεις των ΟΥΦΟ θα είναι λιγότερο συχνές, και θα παραλάβεις περισσότερους νεοσύλλεκτους για να ανταποκρίνεσαι στις απώλειες μάχης.\n"
 "\n"
 "This campaign represents the Easy difficulty level, and is an option for first-time players who prefer smoother sailing than the Standard Campaign might offer."
 
-#: ../base/ufos/campaign.ufo:132
+#: ../base/ufos/campaign.ufo:136
 msgid "Very Easy Campaign"
 msgstr "Πολύ Εύκολη Εκστρατεία"
 
-#: ../base/ufos/campaign.ufo:133
+#: ../base/ufos/campaign.ufo:137
 msgid "veryeasy_campaign_txt"
 msgstr ""
 "Αυτή είναι μία πολύ εύκολη έκδοση της κανονικής Εκστρατείας. Οι δυνάμεις σας θα είναι πολύ πιο ισχυρές, οι εξωγήινοι λιγότερο επικίνδυνοι, και θα βιώσεις μερικές απώλειες κατά την διάρκεια της εκστρατείας.\n"
 "\n"
 "This campaign represents the Very Easy difficulty level, and is an option for first-time players who are only just testing the waters of UFO: AI."
 
-#: ../base/ufos/campaign.ufo:180
+#: ../base/ufos/campaign.ufo:185
 msgid "Play the aliens"
 msgstr "Παίξτε τους Εξωγήινους"
 
-#: ../base/ufos/campaign.ufo:181
+#: ../base/ufos/campaign.ufo:186
 #, fuzzy
 msgid "alien_campaign_txt"
 msgstr ""
@@ -635,61 +649,98 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/cities.ufo:27
+#: ../base/ufos/cities.ufo:16
+msgid "Stockholm"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:23
+msgid "Amsterdam"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:29
 #, fuzzy
 msgid "Athens"
 msgstr "Εξωγήινοι"
 
-#: ../base/ufos/cities.ufo:33
+#: ../base/ufos/cities.ufo:35
 msgid "Bangkok"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:45
+#: ../base/ufos/cities.ufo:41
+#, fuzzy
+msgid "Beijing"
+msgstr "Κτήρια"
+
+#: ../base/ufos/cities.ufo:47
 msgid "Berlin"
 msgstr "Βερολίνο"
 
-#: ../base/ufos/cities.ufo:57
+#: ../base/ufos/cities.ufo:53
+msgid "Mumbai"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:59
 msgid "Cape Town"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:69
+#: ../base/ufos/cities.ufo:65
+#, fuzzy
+msgid "Cairo"
+msgstr "Σταυρός"
+
+#: ../base/ufos/cities.ufo:71
 #, fuzzy
 msgid "Cayenne"
 msgstr "Κανονιοβολισμός"
 
-#: ../base/ufos/cities.ufo:93
+#: ../base/ufos/cities.ufo:77
+#, fuzzy
+msgid "Dakar"
+msgstr "Ραντάρ"
+
+#: ../base/ufos/cities.ufo:83
+msgid "Mexico City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:89
+#, fuzzy
+msgid "Paris"
+msgstr "Βάση"
+
+#: ../base/ufos/cities.ufo:95
 msgid "Sydney"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:111
+#: ../base/ufos/cities.ufo:101
+#, fuzzy
+msgid "Teheran"
+msgstr "Ανεκτικός"
+
+#: ../base/ufos/cities.ufo:107
+msgid "Tokyo"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:113
 msgid "Wellington"
 msgstr "Γουέλικτον"
 
-#: ../base/ufos/events.ufo:39
-msgid "Devastating alien terror attack on Mumbai"
-msgstr "Ολέθρια τρομοκρατική επίθεση των εξωγήινων στο Mumbai"
-
-#: ../base/ufos/events.ufo:47
-msgid "Alien aircraft spotted"
-msgstr "Εξωγήινο σκάφος Εντοπίστηκε"
-
-#: ../base/ufos/events.ufo:78
+#: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
 msgstr "ΓΓ. Mahouf Serra, Ηνωμένα Έθνη, Πόλη της Νέας Υόρκης"
 
-#: ../base/ufos/events.ufo:79 ../base/ufos/events.ufo:89
-#: ../base/ufos/events.ufo:99 ../base/ufos/events.ufo:110
-#: ../base/ufos/events.ufo:121 ../base/ufos/events.ufo:132
-#: ../base/ufos/events.ufo:143 ../base/ufos/events.ufo:154
-#: ../base/ufos/events.ufo:165 ../base/ufos/events.ufo:176
-#: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
-#: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
-#: ../base/ufos/events.ufo:231 ../base/ufos/events.ufo:242
-#: ../base/ufos/events.ufo:253 ../base/ufos/events.ufo:264
-#: ../base/ufos/events.ufo:275 ../base/ufos/events.ufo:286
-#: ../base/ufos/events.ufo:297 ../base/ufos/events.ufo:308
-#: ../base/ufos/events.ufo:319 ../base/ufos/events.ufo:330
-#: ../base/ufos/events.ufo:341 ../base/ufos/events.ufo:352
+#: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
+#: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
+#: ../base/ufos/events.ufo:76 ../base/ufos/events.ufo:87
+#: ../base/ufos/events.ufo:98 ../base/ufos/events.ufo:109
+#: ../base/ufos/events.ufo:120 ../base/ufos/events.ufo:131
+#: ../base/ufos/events.ufo:142 ../base/ufos/events.ufo:153
+#: ../base/ufos/events.ufo:164 ../base/ufos/events.ufo:175
+#: ../base/ufos/events.ufo:186 ../base/ufos/events.ufo:197
+#: ../base/ufos/events.ufo:208 ../base/ufos/events.ufo:219
+#: ../base/ufos/events.ufo:230 ../base/ufos/events.ufo:241
+#: ../base/ufos/events.ufo:252 ../base/ufos/events.ufo:263
+#: ../base/ufos/events.ufo:274 ../base/ufos/events.ufo:285
+#: ../base/ufos/events.ufo:296 ../base/ufos/events.ufo:307
 #: ../base/ufos/research.ufo:137 ../base/ufos/research.ufo:145
 #: ../base/ufos/research.ufo:170 ../base/ufos/research.ufo:178
 #: ../base/ufos/research.ufo:221 ../base/ufos/research.ufo:229
@@ -730,46 +781,48 @@ msgstr "ΓΓ. Mahouf Serra, Ηνωμένα Έθνη, Πόλη της Νέας Υ
 #: ../base/ufos/research.ufo:2626 ../base/ufos/research.ufo:2696
 #: ../base/ufos/research.ufo:2704 ../base/ufos/research.ufo:2733
 #: ../base/ufos/research.ufo:2741 ../base/ufos/research.ufo:3341
-#: ../base/ufos/research.ufo:3436 ../base/ufos/research.ufo:3443
-#: ../base/ufos/research.ufo:3472 ../base/ufos/research.ufo:3479
-#: ../base/ufos/research.ufo:3508 ../base/ufos/research.ufo:3515
-#: ../base/ufos/research.ufo:3550 ../base/ufos/research.ufo:3558
-#: ../base/ufos/research.ufo:3592 ../base/ufos/research.ufo:3600
-#: ../base/ufos/research.ufo:3635 ../base/ufos/research.ufo:3643
-#: ../base/ufos/research.ufo:3678 ../base/ufos/research.ufo:3686
-#: ../base/ufos/research.ufo:3721 ../base/ufos/research.ufo:3729
-#: ../base/ufos/research.ufo:3764 ../base/ufos/research.ufo:3772
-#: ../base/ufos/research.ufo:3807 ../base/ufos/research.ufo:3815
-#: ../base/ufos/research.ufo:3850 ../base/ufos/research.ufo:3858
-#: ../base/ufos/research.ufo:3893 ../base/ufos/research.ufo:3901
-#: ../base/ufos/research.ufo:3936 ../base/ufos/research.ufo:3944
-#: ../base/ufos/research.ufo:4007 ../base/ufos/research.ufo:4015
-#: ../base/ufos/research.ufo:4067 ../base/ufos/research.ufo:4075
-#: ../base/ufos/research.ufo:4109 ../base/ufos/research.ufo:4117
-#: ../base/ufos/research.ufo:4151 ../base/ufos/research.ufo:4159
-#: ../base/ufos/research.ufo:4407 ../base/ufos/research.ufo:4414
-#: ../base/ufos/research.ufo:4444 ../base/ufos/research.ufo:4451
-#: ../base/ufos/research.ufo:4482 ../base/ufos/research.ufo:4489
-#: ../base/ufos/research.ufo:4519 ../base/ufos/research.ufo:4526
-#: ../base/ufos/research.ufo:4561 ../base/ufos/research.ufo:4569
-#: ../base/ufos/research.ufo:4744 ../base/ufos/research.ufo:4752
-#: ../base/ufos/research.ufo:4837 ../base/ufos/research.ufo:4845
-#: ../base/ufos/research.ufo:4931 ../base/ufos/research.ufo:4965
-#: ../base/ufos/research.ufo:4972 ../base/ufos/research.ufo:5003
-#: ../base/ufos/research.ufo:5012 ../base/ufos/research.ufo:5045
-#: ../base/ufos/research.ufo:5052
+#: ../base/ufos/research.ufo:3382 ../base/ufos/research.ufo:3389
+#: ../base/ufos/research.ufo:3419 ../base/ufos/research.ufo:3426
+#: ../base/ufos/research.ufo:3489 ../base/ufos/research.ufo:3496
+#: ../base/ufos/research.ufo:3525 ../base/ufos/research.ufo:3532
+#: ../base/ufos/research.ufo:3561 ../base/ufos/research.ufo:3568
+#: ../base/ufos/research.ufo:3603 ../base/ufos/research.ufo:3611
+#: ../base/ufos/research.ufo:3645 ../base/ufos/research.ufo:3653
+#: ../base/ufos/research.ufo:3688 ../base/ufos/research.ufo:3696
+#: ../base/ufos/research.ufo:3731 ../base/ufos/research.ufo:3739
+#: ../base/ufos/research.ufo:3774 ../base/ufos/research.ufo:3782
+#: ../base/ufos/research.ufo:3817 ../base/ufos/research.ufo:3825
+#: ../base/ufos/research.ufo:3860 ../base/ufos/research.ufo:3868
+#: ../base/ufos/research.ufo:3903 ../base/ufos/research.ufo:3911
+#: ../base/ufos/research.ufo:3946 ../base/ufos/research.ufo:3954
+#: ../base/ufos/research.ufo:3989 ../base/ufos/research.ufo:3997
+#: ../base/ufos/research.ufo:4060 ../base/ufos/research.ufo:4068
+#: ../base/ufos/research.ufo:4120 ../base/ufos/research.ufo:4128
+#: ../base/ufos/research.ufo:4162 ../base/ufos/research.ufo:4170
+#: ../base/ufos/research.ufo:4204 ../base/ufos/research.ufo:4212
+#: ../base/ufos/research.ufo:4460 ../base/ufos/research.ufo:4467
+#: ../base/ufos/research.ufo:4497 ../base/ufos/research.ufo:4504
+#: ../base/ufos/research.ufo:4535 ../base/ufos/research.ufo:4542
+#: ../base/ufos/research.ufo:4572 ../base/ufos/research.ufo:4579
+#: ../base/ufos/research.ufo:4614 ../base/ufos/research.ufo:4622
+#: ../base/ufos/research.ufo:4797 ../base/ufos/research.ufo:4805
+#: ../base/ufos/research.ufo:4890 ../base/ufos/research.ufo:4898
+#: ../base/ufos/research.ufo:4987 ../base/ufos/research.ufo:5018
+#: ../base/ufos/research.ufo:5025 ../base/ufos/research.ufo:5055
+#: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
+#: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
 msgstr "Διοικητής Βάσης, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
-#: ../base/ufos/events.ufo:80
+#: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
 msgstr "21 Μαρ 2084"
 
-#: ../base/ufos/events.ufo:81
+#: ../base/ufos/events.ufo:36
 msgid "Good Luck"
 msgstr "Καλή Τύχη"
 
-#: ../base/ufos/events.ufo:82
+#: ../base/ufos/events.ufo:37
 msgid "mail_prolog"
 msgstr ""
 "Καλως ήρθατε στο νέο σας πόστο, Διοικητά. Τώρα έχετε πλήρη έλεγχο πάνω στη ΦΑΛΑΓΓΑ. Η αποστολή σου είναι να προτατεύεις τους πολίτες της Γής και να σταματήσεις την εξωγήινοι απειλή με κάθε κόστος. Το πώς θα το καταφέρεις αυτό εξαρτάται απο εσένα!  η μόνη μας απαίτηση είναι να πετύχεις.\n"
@@ -784,10 +837,10 @@ msgstr ""
 "\n"
 "Αυτά είναι όλα. Καλή τύχη και καλό κυνήγι."
 
-#: ../base/ufos/events.ufo:88 ../base/ufos/events.ufo:100
-#: ../base/ufos/events.ufo:111 ../base/ufos/events.ufo:122
-#: ../base/ufos/events.ufo:133 ../base/ufos/events.ufo:144
-#: ../base/ufos/events.ufo:166 ../base/ufos/research.ufo:136
+#: ../base/ufos/events.ufo:43 ../base/ufos/events.ufo:55
+#: ../base/ufos/events.ufo:66 ../base/ufos/events.ufo:77
+#: ../base/ufos/events.ufo:88 ../base/ufos/events.ufo:99
+#: ../base/ufos/events.ufo:121 ../base/ufos/research.ufo:136
 #: ../base/ufos/research.ufo:144 ../base/ufos/research.ufo:169
 #: ../base/ufos/research.ufo:177 ../base/ufos/research.ufo:220
 #: ../base/ufos/research.ufo:228 ../base/ufos/research.ufo:282
@@ -820,36 +873,38 @@ msgstr ""
 #: ../base/ufos/research.ufo:2617 ../base/ufos/research.ufo:2625
 #: ../base/ufos/research.ufo:2695 ../base/ufos/research.ufo:2703
 #: ../base/ufos/research.ufo:2732 ../base/ufos/research.ufo:2740
-#: ../base/ufos/research.ufo:3340 ../base/ufos/research.ufo:3435
-#: ../base/ufos/research.ufo:3442 ../base/ufos/research.ufo:3471
-#: ../base/ufos/research.ufo:3478 ../base/ufos/research.ufo:3507
-#: ../base/ufos/research.ufo:3514 ../base/ufos/research.ufo:3549
-#: ../base/ufos/research.ufo:3557 ../base/ufos/research.ufo:3591
-#: ../base/ufos/research.ufo:3599 ../base/ufos/research.ufo:3634
-#: ../base/ufos/research.ufo:3642 ../base/ufos/research.ufo:3677
-#: ../base/ufos/research.ufo:3685 ../base/ufos/research.ufo:3720
-#: ../base/ufos/research.ufo:3728 ../base/ufos/research.ufo:3763
-#: ../base/ufos/research.ufo:3771 ../base/ufos/research.ufo:3806
-#: ../base/ufos/research.ufo:3814 ../base/ufos/research.ufo:3849
-#: ../base/ufos/research.ufo:3857 ../base/ufos/research.ufo:3892
-#: ../base/ufos/research.ufo:3900 ../base/ufos/research.ufo:3935
-#: ../base/ufos/research.ufo:3943 ../base/ufos/research.ufo:4406
-#: ../base/ufos/research.ufo:4413 ../base/ufos/research.ufo:4443
-#: ../base/ufos/research.ufo:4450 ../base/ufos/research.ufo:4481
-#: ../base/ufos/research.ufo:4488 ../base/ufos/research.ufo:4518
-#: ../base/ufos/research.ufo:4525 ../base/ufos/research.ufo:4560
-#: ../base/ufos/research.ufo:4568 ../base/ufos/research.ufo:4743
-#: ../base/ufos/research.ufo:4751 ../base/ufos/research.ufo:4836
-#: ../base/ufos/research.ufo:4844
+#: ../base/ufos/research.ufo:3340 ../base/ufos/research.ufo:3381
+#: ../base/ufos/research.ufo:3388 ../base/ufos/research.ufo:3418
+#: ../base/ufos/research.ufo:3425 ../base/ufos/research.ufo:3488
+#: ../base/ufos/research.ufo:3495 ../base/ufos/research.ufo:3524
+#: ../base/ufos/research.ufo:3531 ../base/ufos/research.ufo:3560
+#: ../base/ufos/research.ufo:3567 ../base/ufos/research.ufo:3602
+#: ../base/ufos/research.ufo:3610 ../base/ufos/research.ufo:3644
+#: ../base/ufos/research.ufo:3652 ../base/ufos/research.ufo:3687
+#: ../base/ufos/research.ufo:3695 ../base/ufos/research.ufo:3730
+#: ../base/ufos/research.ufo:3738 ../base/ufos/research.ufo:3773
+#: ../base/ufos/research.ufo:3781 ../base/ufos/research.ufo:3816
+#: ../base/ufos/research.ufo:3824 ../base/ufos/research.ufo:3859
+#: ../base/ufos/research.ufo:3867 ../base/ufos/research.ufo:3902
+#: ../base/ufos/research.ufo:3910 ../base/ufos/research.ufo:3945
+#: ../base/ufos/research.ufo:3953 ../base/ufos/research.ufo:3988
+#: ../base/ufos/research.ufo:3996 ../base/ufos/research.ufo:4459
+#: ../base/ufos/research.ufo:4466 ../base/ufos/research.ufo:4496
+#: ../base/ufos/research.ufo:4503 ../base/ufos/research.ufo:4534
+#: ../base/ufos/research.ufo:4541 ../base/ufos/research.ufo:4571
+#: ../base/ufos/research.ufo:4578 ../base/ufos/research.ufo:4613
+#: ../base/ufos/research.ufo:4621 ../base/ufos/research.ufo:4796
+#: ../base/ufos/research.ufo:4804 ../base/ufos/research.ufo:4889
+#: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
 msgstr "Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
-#: ../base/ufos/events.ufo:90
+#: ../base/ufos/events.ufo:45
 #, fuzzy
 msgid "Alien died"
 msgstr "Εξωγήινοι"
 
-#: ../base/ufos/events.ufo:91
+#: ../base/ufos/events.ufo:46
 #, fuzzy
 msgid "mail_alienbreathing"
 msgstr ""
@@ -875,18 +930,18 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/events.ufo:102 ../base/ufos/events.ufo:113
+#: ../base/ufos/events.ufo:57 ../base/ufos/events.ufo:68
 msgid "Recovery Report -- %s"
 msgstr "Αναφορά Ανάκτησης -- %s"
 
-#: ../base/ufos/events.ufo:103
+#: ../base/ufos/events.ufo:58
 msgid "mail_alien_ufo_crashed"
 msgstr ""
 "Κύριε, %s είναι πολύ κατεστραμένο για να ανακτηθεί. Παρόλαυτα μπορούμε να διασώσουμε μερικά χρήσιμα εξαρτήματα απο τα συντρίμμια. Τα παρακάτω αντικέιμενα θα φθάσουν σε %s με το μεταγωγικό μας:\n"
 "\n"
 "%s"
 
-#: ../base/ufos/events.ufo:114
+#: ../base/ufos/events.ufo:69
 msgid "mail_alien_ufo_recovered"
 msgstr ""
 "Κύριε, η ομάδα μας εξασφάλισε ένα %s σε αυτό το πεδίο. Κανόνισα να συνοδευτεί στο %s, ETA μέσα σε δύο ημέρες.\n"
@@ -895,157 +950,157 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../base/ufos/events.ufo:124
+#: ../base/ufos/events.ufo:79
 msgid "Not Enough Money -- %s"
 msgstr "Όχι Αρκετά Χρήματα -- %s"
 
-#: ../base/ufos/events.ufo:125
+#: ../base/ufos/events.ufo:80
 msgid "mail_not_enough_money"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:135
+#: ../base/ufos/events.ufo:90
 msgid "Not Enough Resources -- %s"
 msgstr "Όχι Αρκετοί Πόροι -- %s"
 
-#: ../base/ufos/events.ufo:136
+#: ../base/ufos/events.ufo:91
 msgid "mail_not_enough_ressources"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:146
+#: ../base/ufos/events.ufo:101
 msgid "Production Finished -- %s"
 msgstr "Παραγωγή Ολοκληρώθηκε -- %s"
 
-#: ../base/ufos/events.ufo:147
+#: ../base/ufos/events.ufo:102
 msgid "mail_production_finished"
 msgstr ""
 "Οι ομάδα των τεχνικών μας ολοκλήρωσε την παραγωγή {item} στο/η {location}. Όλος ο εξοπλισμός έχει δοκιμαστεί και είναι έτοιμος για χρήση.\n"
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/events.ufo:155 ../base/ufos/events.ufo:177
-#: ../base/ufos/events.ufo:188 ../base/ufos/events.ufo:199
-#: ../base/ufos/events.ufo:210 ../base/ufos/events.ufo:221
-#: ../base/ufos/events.ufo:232 ../base/ufos/events.ufo:243
-#: ../base/ufos/events.ufo:254 ../base/ufos/events.ufo:265
+#: ../base/ufos/events.ufo:110 ../base/ufos/events.ufo:132
+#: ../base/ufos/events.ufo:143 ../base/ufos/events.ufo:154
+#: ../base/ufos/events.ufo:165 ../base/ufos/events.ufo:176
+#: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
+#: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
 msgstr "Αξιωματικός Διοίκησης Abel S. Howard, Έλεγχος και Διοίκηση, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
-#: ../base/ufos/events.ufo:157
+#: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
 msgstr "Μηνιαία Αναφορά -- %s"
 
-#: ../base/ufos/events.ufo:158
+#: ../base/ufos/events.ufo:113
 msgid "mail_monthly_report"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:168
+#: ../base/ufos/events.ufo:123
 msgid "UFO Stored In Hangar -- %s"
 msgstr "Το ΟΥΦΟ αποθηκεύτηκε στο υπόστεγο -- %s"
 
-#: ../base/ufos/events.ufo:169
+#: ../base/ufos/events.ufo:124
 msgid "mail_ufo_in_hangar"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:179
+#: ../base/ufos/events.ufo:134
 msgid "Transfer Received -- %s"
 msgstr "Μεταφορά Ελήφθη -- %s"
 
-#: ../base/ufos/events.ufo:180
+#: ../base/ufos/events.ufo:135
 msgid "mail_transfer_received"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:190
+#: ../base/ufos/events.ufo:145
 msgid "Equipment Order Received -- %s"
 msgstr "Παραγγελθέν Εξοπλισμός Ελήφθη -- %s"
 
-#: ../base/ufos/events.ufo:191
+#: ../base/ufos/events.ufo:146
 msgid "mail_equipment_order_received"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:201
+#: ../base/ufos/events.ufo:156
 msgid "Construction Finished -- %s"
 msgstr "Κατασκευή Ολοκληρώθηκε -- %s"
 
-#: ../base/ufos/events.ufo:202
+#: ../base/ufos/events.ufo:157
 msgid "mail_construction_finished"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:212
+#: ../base/ufos/events.ufo:167
 msgid "New Base Ready -- %s"
 msgstr "Νέα Βάση Έτοιμη -- %s"
 
-#: ../base/ufos/events.ufo:213
+#: ../base/ufos/events.ufo:168
 msgid "mail_new_base_ready"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:223
+#: ../base/ufos/events.ufo:178
 msgid "Base Attack Report -- %s"
 msgstr "Base Attack Report -- %s"
 
-#: ../base/ufos/events.ufo:224
+#: ../base/ufos/events.ufo:179
 msgid "mail_base_attack_report"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:234
+#: ../base/ufos/events.ufo:189
 msgid "Mission Summary -- %s"
 msgstr "Περίληψη Αποστολής -- %s"
 
-#: ../base/ufos/events.ufo:235
+#: ../base/ufos/events.ufo:190
 msgid "mail_mission_summary"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:245
+#: ../base/ufos/events.ufo:200
 msgid "Alien Base Discovered -- %s"
 msgstr "Εξωγήινη Βάση Ανακαλύφθηκε -- %s"
 
-#: ../base/ufos/events.ufo:246
+#: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
 msgstr "Κύριε , οι χειριστές μας ανακάλυψαν την τοποθεσία μίας μεγάλης εξωγήινης εγκατάστασης στη Γή σε περιοχή που ανήκει %s. Αυτή η εγκατάσταση αντιπροσωπέυει μια σοβαρή απειλή για την ΦΑΛΑΓΓΑ και την ανθρωπότητα , πρέπει να την καταλάβουμε το συντομότερο δυνατό."
 
-#: ../base/ufos/events.ufo:256
+#: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
 msgstr "Απώλεια Ανίχνευσης Ραντάρ -- %s"
 
-#: ../base/ufos/events.ufo:257
+#: ../base/ufos/events.ufo:212
 msgid "mail_lost_radar_tracking"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:267
+#: ../base/ufos/events.ufo:222
 msgid "New Radar Contact -- %s"
 msgstr "Νέα επαφή Ραντάρ -- %s"
 
-#: ../base/ufos/events.ufo:268
+#: ../base/ufos/events.ufo:223
 msgid "mail_new_radar_contact"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:276 ../base/ufos/events.ufo:287
-#: ../base/ufos/events.ufo:298 ../base/ufos/research.ufo:591
-#: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5002
-#: ../base/ufos/research.ufo:5011
+#: ../base/ufos/events.ufo:231 ../base/ufos/events.ufo:242
+#: ../base/ufos/events.ufo:253 ../base/ufos/research.ufo:591
+#: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5054
+#: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
 msgstr "Συνταγματάρxης Ingrid Falkland, Τμήμα Πληροφοριών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
-#: ../base/ufos/events.ufo:278
+#: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
 msgstr "Απόκριση Πολύ Αργή -- %s"
 
-#: ../base/ufos/events.ufo:279
+#: ../base/ufos/events.ufo:234
 msgid "mail_response_too_late"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:289
+#: ../base/ufos/events.ufo:244
 msgid "UFO Shot Down -- %s"
 msgstr "ΟΥΦΟ Καταρίφθηκε -- %s"
 
-#: ../base/ufos/events.ufo:290
+#: ../base/ufos/events.ufo:245
 msgid "mail_ufo_shot_down"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:300
+#: ../base/ufos/events.ufo:255
 msgid "Alien Activity Reported -- %s"
 msgstr "Αναφορά Εξωγήινης Δραστηριότητας -- %s"
 
-#: ../base/ufos/events.ufo:301
+#: ../base/ufos/events.ufo:256
 msgid "mail_alien_activity_reported"
 msgstr ""
 "Καλημέρα, Κύριε.\n"
@@ -1056,58 +1111,58 @@ msgstr ""
 "\n"
 "Col. Falkland"
 
-#: ../base/ufos/events.ufo:309 ../base/ufos/events.ufo:320
-#: ../base/ufos/events.ufo:331 ../base/ufos/events.ufo:342
-#: ../base/ufos/events.ufo:353
+#: ../base/ufos/events.ufo:264 ../base/ufos/events.ufo:275
+#: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
+#: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
 msgstr "Σμήναρχος Subakh al-Kuhar, Πτέρυγα Αεροπορίας, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
-#: ../base/ufos/events.ufo:311
+#: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
 msgstr "Άφιξη Νέου Αεροσκάφους  -- %s"
 
-#: ../base/ufos/events.ufo:312
+#: ../base/ufos/events.ufo:267
 msgid "mail_new_aircraft_arrived"
 msgstr "<TODO>"
 
-#: ../base/ufos/events.ufo:322
+#: ../base/ufos/events.ufo:277
 msgid "Aircraft Lost Target -- %s"
 msgstr "Σκάφος Έχασε Στόχο -- %s"
 
-#: ../base/ufos/events.ufo:323
+#: ../base/ufos/events.ufo:278
 msgid "mail_aircraft_lost_target"
 msgstr ""
 "Διοικητά, %s χάσαμε επαφή ραντάρ  με %s και είναι αδύνατη η επανάκτηση. Παρακαλώ παρέχετε νέες εντολές.\n"
 "\n"
 "-- COMAIR"
 
-#: ../base/ufos/events.ufo:333
+#: ../base/ufos/events.ufo:288
 msgid "Aircraft Ready -- %s"
 msgstr "Σκάφος Έτοιμο -- %s"
 
-#: ../base/ufos/events.ufo:334
+#: ../base/ufos/events.ufo:289
 msgid "mail_aircraft_ready"
 msgstr ""
 "Διοικητά, %s είναι %s και είναι έτοιμο πρός δράση.\n"
 "\n"
 "-- COMAIR"
 
-#: ../base/ufos/events.ufo:344
+#: ../base/ufos/events.ufo:299
 msgid "Aircraft Bingo Fuel -- %s"
 msgstr "Aircraft Bingo Fuel -- %s"
 
-#: ../base/ufos/events.ufo:345
+#: ../base/ufos/events.ufo:300
 msgid "mail_aircraft_bingo_fuel"
 msgstr ""
 "Διοικητά, %s ξέμεινε απο χρόνο πτήσης. Έχει μόνο αρκετά καύσιμα για επιστροφή στη βάση %s. Η αποστολή ματαιώθηκε.\n"
 "\n"
 "-- COMAIR"
 
-#: ../base/ufos/events.ufo:355
+#: ../base/ufos/events.ufo:310
 msgid "Aircraft Landed -- %s"
 msgstr "Προσεδάφιση Σκάφους -- %s"
 
-#: ../base/ufos/events.ufo:356
+#: ../base/ufos/events.ufo:311
 msgid "mail_aircraft_landed"
 msgstr ""
 "Διοικητά, %s προσγειώθηκε στο/η %s. Τώρα είναι %s. Εκτιμώμενος χρόνος εργασιών για το σκάφος πρωτού να μπορέσει να απογειωθεί ξανά είναι %s ώρες.\n"
@@ -1279,232 +1334,237 @@ msgstr ""
 msgid "No language"
 msgstr "Καμία Γλώσσα"
 
-#: ../base/ufos/maps.ufo:46 ../base/ufos/maps.ufo:84
+#: ../base/ufos/maps.ufo:46 ../base/ufos/maps.ufo:85
 #, fuzzy
 msgid "Industrial theme."
 msgstr "Βιομηχανική"
 
-#: ../base/ufos/maps.ufo:130 ../base/ufos/maps.ufo:170
-#: ../base/ufos/maps.ufo:211
+#: ../base/ufos/maps.ufo:132 ../base/ufos/maps.ufo:172
+#: ../base/ufos/maps.ufo:213
 msgid "A suburban district of an oriental area."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:255 ../base/ufos/maps.ufo:295
-#: ../base/ufos/maps.ufo:334
+#: ../base/ufos/maps.ufo:257 ../base/ufos/maps.ufo:299
+#: ../base/ufos/maps.ufo:338
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:380 ../base/ufos/maps.ufo:457
-#: ../base/ufos/maps.ufo:496
+#: ../base/ufos/maps.ufo:384 ../base/ufos/maps.ufo:465
+#: ../base/ufos/maps.ufo:506
 msgid "An industrial area in a cold region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:420
+#: ../base/ufos/maps.ufo:426
 msgid "An underpopulated area in a cold region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:533
+#: ../base/ufos/maps.ufo:545
 msgid "An industrial compound."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:584
+#: ../base/ufos/maps.ufo:600
+#, fuzzy
+msgid "Cemetery terror mission."
+msgstr "Αποστολή μεταφοράς"
+
+#: ../base/ufos/maps.ufo:651
 msgid "A river runs through this piece of jungle."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:624 ../base/ufos/maps.ufo:665
+#: ../base/ufos/maps.ufo:693 ../base/ufos/maps.ufo:736
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:709 ../base/ufos/maps.ufo:746
-#: ../base/ufos/maps.ufo:785 ../base/ufos/maps.ufo:823
+#: ../base/ufos/maps.ufo:782 ../base/ufos/maps.ufo:821
+#: ../base/ufos/maps.ufo:862 ../base/ufos/maps.ufo:902
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:860 ../base/ufos/maps.ufo:900
+#: ../base/ufos/maps.ufo:941 ../base/ufos/maps.ufo:983
 msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:941 ../base/ufos/maps.ufo:982
+#: ../base/ufos/maps.ufo:1026 ../base/ufos/maps.ufo:1069
 msgid "Some houses in desert"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1022
+#: ../base/ufos/maps.ufo:1111
 msgid "An excavation site that has fallen under alien attack."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1069
+#: ../base/ufos/maps.ufo:1158
 msgid "An estate owned by rich and influential people."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1113
+#: ../base/ufos/maps.ufo:1202
 msgid "A small village in England."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1158
+#: ../base/ufos/maps.ufo:1247
 msgid "A small office in a mountainous region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1204
+#: ../base/ufos/maps.ufo:1293
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1252
+#: ../base/ufos/maps.ufo:1341
 msgid "An old mine."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1300
+#: ../base/ufos/maps.ufo:1389
 msgid "An industrial area, used for loading and unloading goods."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1344
+#: ../base/ufos/maps.ufo:1433
 msgid "A bunker used in a previous conflict."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1390
+#: ../base/ufos/maps.ufo:1479
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1434
+#: ../base/ufos/maps.ufo:1523
 msgid "A classic eastern suburban area."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1478
+#: ../base/ufos/maps.ufo:1567
 msgid "A small industrial area."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1522
+#: ../base/ufos/maps.ufo:1611
 msgid "A stadium used for various recreational events."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1569
+#: ../base/ufos/maps.ufo:1658
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1625
+#: ../base/ufos/maps.ufo:1714
 msgid "A small estate in the mountains"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1672
+#: ../base/ufos/maps.ufo:1761
 #, fuzzy
 msgid "A crashed Scout UFO"
 msgstr "Αποθηκέυστε ΟΥΦΟ"
 
-#: ../base/ufos/maps.ufo:1707
+#: ../base/ufos/maps.ufo:1796
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "Μία φάρμα με χωράφια και στάβλους έχει περικυκλωθεί. Ένα ΟΥΦΟ έχει προσγειωθεί σε ένα απο τα χωράφια."
 
-#: ../base/ufos/maps.ufo:1753
+#: ../base/ufos/maps.ufo:1842
 msgid "A ferry."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1801
+#: ../base/ufos/maps.ufo:1890
 msgid "A rather old-fashioned suburban district."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1850 ../base/ufos/maps.ufo:1896
+#: ../base/ufos/maps.ufo:1939 ../base/ufos/maps.ufo:1986
 msgid "A small neighbourhood in a warm urban region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1944
+#: ../base/ufos/maps.ufo:2034
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1991 ../base/ufos/maps.ufo:2035
+#: ../base/ufos/maps.ufo:2081 ../base/ufos/maps.ufo:2125
 msgid "An urban district in an oriental region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2079
+#: ../base/ufos/maps.ufo:2169
 msgid "Underground pipe construction site."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2126
+#: ../base/ufos/maps.ufo:2216
 msgid "A subway station in a suburban part of town."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2172
+#: ../base/ufos/maps.ufo:2262
 msgid "An office complex in the centre of town."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2220
+#: ../base/ufos/maps.ufo:2310
 msgid "A suburban district."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2265
+#: ../base/ufos/maps.ufo:2355
 msgid "A military convoy has caught the eye of the aliens."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2310 ../base/ufos/maps.ufo:2356
+#: ../base/ufos/maps.ufo:2400 ../base/ufos/maps.ufo:2446
 msgid "A small UFO has crashed in this mining region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2405
+#: ../base/ufos/maps.ufo:2495
 msgid "An office complex under construction."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2451
+#: ../base/ufos/maps.ufo:2541
 msgid "A local harbour."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2496
+#: ../base/ufos/maps.ufo:2586
 msgid "An office complex on the outskirts of town."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2541
+#: ../base/ufos/maps.ufo:2631
 msgid "A luxurious vacation resort."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2598
-msgid "An African suburb that has been visited by UFO."
+#: ../base/ufos/maps.ufo:2688
+msgid "A suburb that has been visited by UFO."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2650
-msgid "An African suburb that has received a visit from a Harvester."
+#: ../base/ufos/maps.ufo:2740
+msgid "A suburb that has received a visit from a Harvester."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2700
+#: ../base/ufos/maps.ufo:2791
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2744 ../base/ufos/maps.ufo:2778
+#: ../base/ufos/maps.ufo:2837 ../base/ufos/maps.ufo:2871
 msgid "A small settlement in winter."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2800
+#: ../base/ufos/maps.ufo:2893
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "Ένα καταφύγιο το οποίο είχε χτιστεί απο τους κατοίκους για περιόδους σημαντικών καταστροφών. Μερικές εσωτερικές πόρτες μπορεί να είναι κλειστές."
 
-#: ../base/ufos/maps.ufo:2848
+#: ../base/ufos/maps.ufo:2941
 msgid "A Bomber has landed in the middle of a city."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2901
+#: ../base/ufos/maps.ufo:2994
 msgid "A place where people come to relax and mingle."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2948
+#: ../base/ufos/maps.ufo:3041
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2994
+#: ../base/ufos/maps.ufo:3087
 msgid "A fuel depot the aliens try to destroy."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3033
+#: ../base/ufos/maps.ufo:3126
 #, fuzzy
 msgid "Wilderness terror mission."
 msgstr "Αποστολή μεταφοράς"
 
-#: ../base/ufos/maps.ufo:3079
+#: ../base/ufos/maps.ufo:3172
 #, fuzzy
 msgid "UFO Crashsite."
 msgstr "Περιοχή κρούσης ΟΥΦΟ"
 
-#: ../base/ufos/maps.ufo:3107
+#: ../base/ufos/maps.ufo:3200
 #, fuzzy
 msgid "An alien base."
 msgstr "Εξωγήινοι"
 
-#: ../base/ufos/maps.ufo:3122
+#: ../base/ufos/maps.ufo:3215
 msgid "Base is under attack."
 msgstr "Η βάση δέχετε επίθεση."
 
@@ -1710,12 +1770,12 @@ msgstr "Antimatter"
 msgid "Alien Breathing Apparatus"
 msgstr "Συσκευή Αναπνοής Εξωγήινων"
 
-#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4823
-#: ../base/ufos/research.ufo:4862
+#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4876
+#: ../base/ufos/research.ufo:4915
 msgid "Alien Materials"
 msgstr "Εξωγήινα υλικά"
 
-#: ../base/ufos/otheritems.ufo:143 ../base/ufos/weapons_melee.ufo:24
+#: ../base/ufos/otheritems.ufo:153 ../base/ufos/weapons_melee.ufo:24
 #: ../base/ufos/weapons_melee.ufo:83 ../base/ufos/weapons_melee.ufo:223
 msgid "Stab"
 msgstr "Μαχαίρωμα"
@@ -1965,13 +2025,13 @@ msgstr ""
 #: ../base/ufos/research.ufo:453 ../base/ufos/research.ufo:461
 #: ../base/ufos/research.ufo:491 ../base/ufos/research.ufo:499
 #: ../base/ufos/research.ufo:554 ../base/ufos/research.ufo:562
-#: ../base/ufos/research.ufo:4006 ../base/ufos/research.ufo:4014
-#: ../base/ufos/research.ufo:4066 ../base/ufos/research.ufo:4074
-#: ../base/ufos/research.ufo:4108 ../base/ufos/research.ufo:4116
-#: ../base/ufos/research.ufo:4150 ../base/ufos/research.ufo:4158
-#: ../base/ufos/research.ufo:4930 ../base/ufos/research.ufo:4964
-#: ../base/ufos/research.ufo:4971 ../base/ufos/research.ufo:5044
-#: ../base/ufos/research.ufo:5051
+#: ../base/ufos/research.ufo:4059 ../base/ufos/research.ufo:4067
+#: ../base/ufos/research.ufo:4119 ../base/ufos/research.ufo:4127
+#: ../base/ufos/research.ufo:4161 ../base/ufos/research.ufo:4169
+#: ../base/ufos/research.ufo:4203 ../base/ufos/research.ufo:4211
+#: ../base/ufos/research.ufo:4986 ../base/ufos/research.ufo:5017
+#: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
+#: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
 msgstr "Δρ. Connor, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Βιολογίας & Περιορισμού, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
@@ -2147,8 +2207,8 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:517 client/campaign/cp_alienbase.c:168
-#: client/campaign/cp_missions.c:433
+#: ../base/ufos/research.ufo:517 client/campaign/cp_alienbase.c:169
+#: client/campaign/cp_missions.c:432
 #, fuzzy
 msgid "Alien base"
 msgstr "Εξωγήινοι"
@@ -4915,7 +4975,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:3055 ../base/ufos/research.ufo:4334
+#: ../base/ufos/research.ufo:3055 ../base/ufos/research.ufo:4387
 msgid "b_missile_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Συστοιχία Πυραύλων\n"
@@ -5698,7 +5758,134 @@ msgstr ""
 "\n"
 "Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
 
-#: ../base/ufos/research.ufo:3394
+#: ../base/ufos/research.ufo:3376
+#, fuzzy
+msgid "drop_herakles_pre_txt"
+msgstr ""
+"Aircraft Evaluation -- Firebird-class Dropship\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 17 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"Commander, I've been over these old files before you, and I have decided to replace them with my own assessment and conclusions about our choice of dropship. Apologies if I'm overstepping my bounds, but the old PHALANX dropships in storage are simply not up to modern spec. None of them even got out of the prototype stage when they were new. There are only two surviving examples, and both of those ships have been left mothballed in government warehouses for the past 60 years, not worth the trouble to dig out of storage. We've inherited a real mess with regards to equipment, I can't even find half the stuff that's supposed to be waiting for us. I'm doing my best to find superior alternatives for gear that just isn't up to the task.\n"
+"\n"
+"The one bit of good luck in this dropship mess is that I managed to persuade our UN rep to earmark some budget for a new ship, and I think you'll like it.\n"
+"\n"
+"The Galeoth Firebird VTOL (Vertical Take-Off and Landing) is the best aircraft we can hope to employ in our dropship role. It was designed as a cargo hauler, but has quickly been picked up and adapted into a troop transport by military contractors. It has since become a popular alternative to helicopters in both the military and civilian worlds due to its four HM-5600 pulse detonation engines, which provide the Firebird with VTOL capability and achieve good fuel-efficiency with far fewer moving parts than any helicopter engine. This increases reliability across the board and makes for a vastly faster aircraft partly due to the lack of rotor blades. The HM-5600s are still very thirsty engines, however, and the high-powered aviation fuel can be too expensive for civilian applications.\n"
+"\n"
+"The Firebird's cruising speed is Mach 0.74. At a maximum velocity of Mach 1.03 it can just barely squeak through the sound barrier, but this causes a lot of stress on the airframe and should be avoided outside of emergencies. It has one variable weapons hardpoint located on its nose, which will mount anti-air weapons such as aircraft cannons or missile racks. It can also carry additional equipment to improve its flight characteristics and combat performance. There are acceleration harnesses for up to 8 soldiers and a cargo bay which can contain and deploy small battlefield vehicles.\n"
+"\n"
+"There is nothing else in the sky as well-suited to our dropship role as the Firebird. It is faster than any helicopter, more manoeuvrable than any fixed-wing aeroplane, and it can respond quickly and efficiently to threats all over the world.\n"
+"\n"
+"The Firebird requires 1 Large Hangar for storage, maintenance and deployment. It has 1 medium weapon hardpoint located in the nose.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"The dropship is what will carry our troops around the world, in order to respond to alien attacks on the ground or to clear UFO crash sites for recovery. It should be deployed immediately to sites of alien activity and to recover downed alien craft.\n"
+"\n"
+"Once a site has been cleared of live aliens, heavily-wounded soldiers will immediately be dispatched for medical treatment. The remaining troops will secure the area until a PHALANX recovery team can take over and ensure delivery of any and all alien artifacts to our facilities. This is important because attempted looting of items left on the battlefield may become a problem in densely-populated regions. We can't afford to lose valuable alien technology because some idiot feels the need to take a souvenir.\n"
+"\n"
+"While armed, a Firebird-class dropship is not able to stand up to dedicated fighters, and it should never be sent as the sole interceptor to any UFO sighting.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None.\n"
+"\n"
+"\n"
+"Aircraft statistics:\n"
+"\n"
+"\n"
+"Size: 8m x 30m x 5m\n"
+"\n"
+"Cruising speed: 785 km/h\n"
+"\n"
+"Top speed: 1,083km/h\n"
+"\n"
+"Operational range: 18,000km\n"
+"\n"
+"Crew capacity: 3 crew, 8 soldiers max.\n"
+"\n"
+"Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
+
+#: ../base/ufos/research.ufo:3410
+#, fuzzy
+msgid "drop_raptor_txt"
+msgstr ""
+"Αξιολόγηση Αεροσκάφους -- Φοίνικας - Μεταγωγικό\n"
+"\n"
+"ΕΠΙΠΕΔΟ ΑΠΟΡΡΗΤΟΥ ΜΑΥΡΟ\n"
+"\n"
+"Μονάδα Αντιμετώπισης Εξωγήινων PHALANX\n"
+"\n"
+"Τεχνικό έγγραφο, Εξουσιοδότηση Σ' -- Μόνο για τα μάτια του Διοικητή\n"
+"\n"
+"Αρχειοθέτηση: 17 Μαρτίου 2084\n"
+"\n"
+"Από: Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού\n"
+"\n"
+"\n"
+"\n"
+"Περίληψη\n"
+"\n"
+"Κύριε Διοικητά, πήρα την πρωτοβουλία και εξέτασα πριν από εσας αυτά τα παλιά αρχεία, ενώ αποφάσισα να τα αντικαταστήσω με τις δικές μου εκτιμήσεις και συμπεράσματα για την επιλογή μεταγωγικού. Συγχωρέστε με αν ξεπέρασα τα όρια, όμως τα παλιά μεταγωγικά της PHALANX που έχουμε στις αποθήκες απλούστατα είναι ανεπαρκή. Κανένα τους δεν συνέχισε ούτε καν πέρα από το στάδιο του πρωτοτύπου όταν ήταν καινούργια. Πρόκειται τα τελευταία δύο δείγματα τα οποία μαζεύαν σκόνη για 60 χρόνια μέσα στις κυβερνήτικές αποθήκες, χωρίς κανείς να ενδιαφερθεί να τα αξιοποιήσει. Από πλευράς εξοπλισμού έχουμε κληρονομήσει ένα αχούρι, δεν μπορώ να εντοπίσω ούτε τα μισά από τα πράγματα που υποτίθεται μας περιμέναν. Βάζω τα δυνατά μου να βρώ καλύτερες εναλλακτικές για τους εξοπλισμούς που δεν επαρκούν.\n"
+"\n"
+"Το μόνο καλό νέο στο θέμα του μεταγωγικού είναι ότι κατάφερα να πείσω τον αντιπρόσωπο του ΟΗΕ να μας χορηγήσει κονδύλια για ένα νέο σκάφος, το οποίο νομίζω ότι θα σας αρέσει.\n"
+"\n"
+"Ο Φοίνικας της Galeoth είναι ένα αεροσκάφος κάθετης προσγείωσης και απογείωσης (VTOL) και είναι η καλύτερη επιλογή ποτ έχουμε για το ρόλο του μεταγωγικού. Αρχικά σχεδιάστηκε για τη μεταφορά εμπορευμάτων, όμως σύντομα προσαρμόστηκε σε μεταγωγικό στρατιωτών από διάφορους στρατιωτικούς οργανισμούς. Από τότε έχει γίνει δημοφιλείς εναλλακτικό των ελικοπτέρων σε στρατιωτικές και πολιτικές αποστολές λόγω των τεσσάρων μηχανών παλμικής πυροδότησης HM-5600 που διαθέτει, οι οποίες του επιτρέπουν την κάθετη προσγείωση και απογείωση, ενώ παράλληλα παρέχουν μεγαλύτερη απόδοση καυσίμων και έχουν σαφώς λιγότερα κινούμενα μέρη από έναν κινητήρα ελικοπτέρου. Όλα αυτά βελτιώνουν την αξιοποιστία των κινητήρων σε όλα τα επίπεδα, ενώ επιτρέπουν πολύ ταχύτερη κίνηση λόγω της απουσίας περιστρεφόμενων ελίκων. Οι ΗΜ-5600 δεν παύουν, όμως, να είναι αχόρταγοι κινητήρες και τα απαιτούμενα καύσιμα υψηλής απόδοσης συχνά είναι πολύ ακριβά για πολιτικές χρήσεις.\n"
+"\n"
+"Η μέση ταχύτητα του Φοίνικα είναι 0,74 Μαχ. Έχοντας μέγιστη ταχύτητα τα 1,03 Μαχ, μετα δυσκολίας ξεπερνάει το φράγμα του ήχου, ενώ τέτοιες ταχύτητες θα πρέπει να χρησιμοποιούνται μόνο σε περίπτωση ανάγκης καθώς καταπονούν σημαντικά το σκελετό του. Διαθέτει μία υποδοχή οπλισμών γενικής χρήσης στο ρύγχος, στην οποία μπορούμε να εξοπλίσουμε αντιαεροπορικό εξοπλισμό όπως κανόνια ή εκτοξευτές πυραύλων. Μπορεί επίσης να κουβαλάει πρόσθετο εξοπλισμό για τη βελτίωση των πτητικών και μαχητικών δυνατωτήτων του. Διαθέτει εξαρτήσεις πρόσδεσης για μέγιστο αριθμό 8 στρατιωτών και ένα χώρο φόρτωσης που μπορεί να μεταφέρει μικρά οχήματα μάχης.\n"
+"\n"
+"Δεν υπάρχει κανένα άλλο αεροσκάφος που να είναι τόσο κατάλληλο για το ρόλο του μεταγωγικού όσο ο Φοίνικας. Είναι ταχύτερος από κάθε ελικόπτερο, πιο ευέλικτος από οποιδήποτε αεροπλάνο με στατικά φτερά και μπορεί να ανταποκρίνεται ταχύτατα και αποτελεσματικά σε απειλές σε όλη την υφήλιο.\n"
+"\n"
+"Ο Φοίνικας απαιτεί 1 Μεγάλο Υπόστεγο για αποθήκευση και συντήρηση. Διαθέτει 1 μεσαία υποδοχή οπλισμού στο ρύγχος.\n"
+"\n"
+"\n"
+"Προτεινόμενο Δόγμα Χρήσης\n"
+"\n"
+"Το μεταγωγικό είναι το όχημα που θα μεταφέρει τους στρατιώτες μας ανά την υφήλιο, με σκοπό την αντιμετώπιση των επίγειων επιθέσεων των εξωγήινων ή την εκκαθάριση των UFO που έχουν συντριβεί ώστε να περισυλλεχτούν. Θα πρέπει να αποστέλλεται άμεσα σε περιοχές εξωγήινης δραστηριότητας και στα συντρίμια εξωγήινων σκαφών.\n"
+"\n"
+"Μόλις μια τοποθεσία έχει εκκαθαριστεί από κάθε εξωγήινη παρουσία, οι βαριά τραυματισμένοι στρατιώτες θα μεταφέρονται άμεσα για ιατρική περίθαλψη. Οι εναπομείναντες στρατιώτες ασφαλίζουν την περιοχή μέχρι την άφιξη της ομάδας περισυλλογής της PHALANX, η οποία αναλαμβάνει τον έλεγχο και είναι υπεύθυνη για τη μεταφορά όλων των εξωγήινων ευρημάτων στις εγκαταστάσεις μας. Αυτό είναι ιδιαίτερης σημασίας, καθώς η λεηλασία των αντικειμένων που μένουν στο πεδίο της μάχης μπορεί να γίνει σημαντικό πρόβλημα στις πυκνοκατοικημένες περιοχές. Δεν έχουμε τα περιθώρια να χάνουμε πολύτιμη εξωγήινη τεχνολογία επειδή κάποιος ελαφρόμυαλος θέλει να κρατήσει κάποιο σουβενίρ.\n"
+"\n"
+"Μπορεί ο Φοίνικας να είναι οπλισμένος, όμως δεν παύει να είναι μεταγωγικό και δεν είναι ικανό να αντέξει ενάντια σε μαχητικά. Δεν θα πρέπει να τον στέλνουμε ποτέ μόνο του για την αναχαίτηση ενός UFO.\n"
+"\n"
+"\n"
+"Προσθετα\n"
+"\n"
+"Ουδέν.\n"
+"\n"
+"Χαρακτηριστικά Αεροσκάφους:\n"
+"\n"
+"Μέγεθος: 8μ x 30μ x 5μ\n"
+"\n"
+"Μέση ταχύτητα: 785 χλμ/ώρα\n"
+"\n"
+"Μέγιστη tαχύτητα: 1.083 χλμ/ώρα\n"
+"\n"
+"Επιχειρησιακή εμβέλεια: 18.000 χλμ\n"
+"\n"
+"Μέγιστο πλήρωμα: 3 άτομα πλήρωμα, 8 στρατιώτες.\n"
+"\n"
+"Οπλικά συστήματα: 1 Μέσαία υποδοχή (ρύγχος), 2 υποδοχές Εξοπλισμού, 1 υποδοχή Θωράκισης"
+
+#: ../base/ufos/research.ufo:3413
+#, fuzzy
+msgid "drop_raptor_pre_txt"
+msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
+
+#: ../base/ufos/research.ufo:3447
 msgid "inter_stiletto_txt"
 msgstr ""
 "Αξιολόγηση Αεροσκάφους -- Στιλέττο - Αναχαιτιστικό\n"
@@ -5765,7 +5952,7 @@ msgstr ""
 "\n"
 "Οπλικά συστήματα: 1 μικρή υποδοχή (ρύγχος), 2 Μεσαίες υποδοχές (φτερά), 2 υποδοχές Εξοπλισμού, 1 υποδοχή Θωράκισης"
 
-#: ../base/ufos/research.ufo:3410
+#: ../base/ufos/research.ufo:3463
 msgid "inter_saracen_txt"
 msgstr ""
 "Αξιολόγηση Αεροσκάφους -- Σαρακηνός - Αναχαιτιστικό\n"
@@ -5822,7 +6009,7 @@ msgstr ""
 "\n"
 "Οπλικά συστήματα: 2 Μεσαίες υποδοχές (κοιλιά), 2 υποδοχές Eξοπλισμού, 1 υποδοχή Θωράκισης"
 
-#: ../base/ufos/research.ufo:3426
+#: ../base/ufos/research.ufo:3479
 msgid "inter_dragon_txt"
 msgstr ""
 "Κύριε Διοικητά, είμαι εξαιρετικά περήφανος που σας παρουσιάζω τα σχέδια του νέου μας αναχαιτιστικού, του Δράκου. Όπως θα δείτε και μόνος σας, δανειστήκαμε αρκετά στοιχεία απο τους εξωγήινους και ο ριζοσπαστικός σχεδιασμός του πραγματικά αποδίδει.\n"
@@ -5849,7 +6036,7 @@ msgstr ""
 "\n"
 "Οπλικά συστήματα: 1 Μεγάλη υποδοχή (κεντρική άτρακτος), 1 Μεσαία υποδοχή (κάτω προεξοχή), 2 Μικρές υποδοχές (δύο πάνω προεξοχές), 1 υποδοχή Εξοπλισμού, 1 υποδοχή Θωράκισης"
 
-#: ../base/ufos/research.ufo:3429
+#: ../base/ufos/research.ufo:3482
 msgid "inter_dragon_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, είναι προφανές ότι οι εξωγήινοι υπερτερούν σημαντικά σε όλους τους τομείς δραστηριότητας και πιο πολύ από όλους στην εναέρια υπεροχή. Είμασταν εξ'αρχής σε δεινή θέση και, παρόλες τις προσπάθειές μας, έχει σημειωθεί ελάχιστη βελτίωση.\n"
@@ -5860,7 +6047,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3462
+#: ../base/ufos/research.ufo:3515
 #, fuzzy
 msgid "inter_starchaser_txt"
 msgstr ""
@@ -5918,19 +6105,19 @@ msgstr ""
 "\n"
 "Οπλικά συστήματα: 2 Μεσαίες υποδοχές (κοιλιά), 2 υποδοχές Eξοπλισμού, 1 υποδοχή Θωράκισης"
 
-#: ../base/ufos/research.ufo:3465
+#: ../base/ufos/research.ufo:3518
 msgid "inter_starchaser_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3498
+#: ../base/ufos/research.ufo:3551
 msgid "inter_stingray_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3501
+#: ../base/ufos/research.ufo:3554
 msgid "inter_stingray_pre_txt"
 msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
-#: ../base/ufos/research.ufo:3541
+#: ../base/ufos/research.ufo:3594
 msgid "ufo_scout_txt"
 msgstr ""
 "Αυτό το είδος μικρών UFO είναι το πρώτο που παρατηρήσαμε οπτικά και μέσω ρανταρ. Παρόλο που δεν παίρνουν μέρος σε επιδρομές, δεν παύουν να είναι απειλή: μέχρι τώρα έχουν ανοίξει το δρόμο σε κάθε περίπτωση εξωγήινης δραστηριότητας στη Γη.\n"
@@ -5963,14 +6150,14 @@ msgstr ""
 "\n"
 "Οπλικά Συστήματα: Ουδέν"
 
-#: ../base/ufos/research.ufo:3544
+#: ../base/ufos/research.ufo:3597
 msgid "ufo_scout_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε ένα νέο τύπο UFO, το οποίο βρίσκεται στο υπόστεγό μας και αναμένει αποσυναρμολόγη. Είμαστε έτοιμοι να ξεκινήσουμε μελέτη και αποσυναρμολόγηση του σκάφους όποτε μας πείτε, όμως θα χρειαστούμε ορισμένο εργαστηριακό χρόνο και κονδύλια προκειμένου να κάνουμε μια ακριβής εκτίμηση τις λειτουργίας και των δυνατοτήτων του σκάφους.\n"
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3583
+#: ../base/ufos/research.ufo:3636
 msgid "ufo_fighter_txt"
 msgstr ""
 "Κύριε Διοικητά, η ομάδα μου και εγώ ολοκληρώσαμε ακόμα μία αναφορά UFO για εσάς. Σας υποβάλλω μια περίληψη για να την ενημέρωσή σας.\n"
@@ -6001,7 +6188,7 @@ msgstr ""
 "\n"
 "Οπλικά Συστήματα: 1 υποδοχή Ακτίνας Σωματιδίων"
 
-#: ../base/ufos/research.ufo:3586
+#: ../base/ufos/research.ufo:3639
 msgid "ufo_fighter_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε ένα νέο τύπο UFO, το οποίο βρίσκεται στο υπόστεγό μας και αναμένει αποσυναρμολόγη. Η περισυλλογή ενός Μαχητικού UFO ήταν κάτι που ονειρευόμασταν όλοι εδώ στο Τμήμα Μηχανικών. Πρόκειται για το πρώτο οπλισμένο UFO που αντιμετώπισε η PHALANX. Είναι ζωτικής σημασίας να μελετήσουμε αυτό το εξωγήινο σκάφος και τον οπλισμό του ώστε να μάθουμε το αδύνατό του σημείο, αν έχει.\n"
@@ -6010,7 +6197,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3626
+#: ../base/ufos/research.ufo:3679
 msgid "ufo_supply_txt"
 msgstr ""
 "Κύριε Διοικητά, η ομάδα μου και εγώ ολοκληρώσαμε ακόμα μία αναφορά UFO για εσάς. Σας υποβάλλω μια περίληψη για να την ενημέρωσή σας.\n"
@@ -6041,7 +6228,7 @@ msgstr ""
 "\n"
 "Οπλικά συστήματα: Ουδέν"
 
-#: ../base/ufos/research.ufo:3629
+#: ../base/ufos/research.ufo:3682
 msgid "ufo_supply_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε ένα νέο τύπο UFO, το οποίο βρίσκεται στο υπόστεγό μας και αναμένει αποσυναρμολόγη. Πρόκειται το μεγαλύτερο UFO που έχουμε συναντήσει μέχρι τώρα. Δεν φέρει κανένα οπλισμό, ενώ το μεγάλο αμπάρι του υποδεικνύει ότι πιθανόν να μεταφέρει εφόδια για τις εξωγήινες επιχειρήσεις στην επιφάνεια της Γης. Τα σκάφη αυτά τα βρίσκουμε στο κέντρο πολλών εξωγήινων σχηματισμών, ενώ αν τους επιτρέψουμε να εκτελέσουν την αποστολή τους θα αυξηθεί σημαντικά η εξωγήινη παρουσία στη Γη.\n"
@@ -6050,24 +6237,24 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3669
+#: ../base/ufos/research.ufo:3722
 msgid "ufo_carrier_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3672
+#: ../base/ufos/research.ufo:3725
 msgid "ufo_carrier_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3712
+#: ../base/ufos/research.ufo:3765
 #, fuzzy
 msgid "ufo_bomber_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3715
+#: ../base/ufos/research.ufo:3768
 msgid "ufo_bomber_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3755
+#: ../base/ufos/research.ufo:3808
 msgid "ufo_corrupter_txt"
 msgstr ""
 "Κύριε Διοικητά, η ομάδα μου και εγώ ολοκληρώσαμε ακόμα μία αναφορά UFO για εσάς. Σας υποβάλλω μια περίληψη για να την ενημέρωσή σας.\n"
@@ -6098,7 +6285,7 @@ msgstr ""
 "\n"
 "Οπλικά Συστήματα: Ουδέν"
 
-#: ../base/ufos/research.ufo:3758
+#: ../base/ufos/research.ufo:3811
 msgid "ufo_corrupter_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε ένα νέο τύπο UFO, το οποίο βρίσκεται στο υπόστεγό μας και αναμένει αποσυναρμολόγη. Πρόκειται για ένα από τα μεγαλύτερα UFO που έχουμε παρατηρήσει μέχρι τώρα, όμως ο σχετικά ελαφρύς οπλισμός του υποδεικνύει ότι δεν πρόκειται για πολεμικό σκάφος. Η προκαταρκτική μας περιήγηση στο εσωτερικό μας έδωσε ενδιαφέροντα στοιχεία για τον σκοπό κατασκευής του.\n"
@@ -6109,7 +6296,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3798
+#: ../base/ufos/research.ufo:3851
 #, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr ""
@@ -6143,7 +6330,7 @@ msgstr ""
 "\n"
 "Οπλικά Συστήματα: Ουδέν"
 
-#: ../base/ufos/research.ufo:3801
+#: ../base/ufos/research.ufo:3854
 #, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr ""
@@ -6151,17 +6338,17 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3841
+#: ../base/ufos/research.ufo:3894
 #, fuzzy
 msgid "ufo_ripper_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3844
+#: ../base/ufos/research.ufo:3897
 #, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3884
+#: ../base/ufos/research.ufo:3937
 msgid "ufo_harvester_txt"
 msgstr ""
 "Κύριε Διοικητά, η ομάδα μου και εγώ ολοκληρώσαμε ακόμα μία αναφορά UFO για εσάς. Σας υποβάλλω μια περίληψη για να την ενημέρωσή σας.\n"
@@ -6196,7 +6383,7 @@ msgstr ""
 "\n"
 "Οπλικά Συστήματα 2 υποδοχές Ακτίνας Σωματιδίων, 1 υποδοχή Εξωγήινου Εκτοξευτή"
 
-#: ../base/ufos/research.ufo:3887
+#: ../base/ufos/research.ufo:3940
 msgid "ufo_harvester_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, περισυλλέξαμε ένα νέο τύπο UFO, το οποίο βρίσκεται στο υπόστεγό μας και αναμένει αποσυναρμολόγη. Είναι αρκετά μεγαλύτερο από τα UFO που είχαμε παρατηρήσει μέχρι τώρα και φαίνεται να αποτελεί το κέντρο πολλών εναέριων σχηματισμών των εξωγήινων, γεγονός που το καθιστά ιδιαίτερα σημαντικό στόχο έρευνας. Η αποκάλυψη του σκοπού αυτού του σκάφους και η μελέτη του ειδικού εξοπλισμού του πιθανόν να δώσει νέα στοιχεία για την αποστολή των εξωγήινων στη Γη.\n"
@@ -6205,21 +6392,21 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:3927
+#: ../base/ufos/research.ufo:3980
 #, fuzzy
 msgid "ufo_mothership_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3930
+#: ../base/ufos/research.ufo:3983
 #, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3972
+#: ../base/ufos/research.ufo:4025
 msgid "Live Specimen - Bloodspider"
 msgstr "Live Specimen - Bloodspider"
 
-#: ../base/ufos/research.ufo:3974
+#: ../base/ufos/research.ufo:4027
 msgid "bloodspider_notes_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6239,15 +6426,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3977
+#: ../base/ufos/research.ufo:4030
 msgid "bloodspider_notes_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3993
+#: ../base/ufos/research.ufo:4046
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Αυτοψία Εξωγήινου - Αράχνη αίματος"
 
-#: ../base/ufos/research.ufo:3998
+#: ../base/ufos/research.ufo:4051
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6270,7 +6457,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4001
+#: ../base/ufos/research.ufo:4054
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6281,11 +6468,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4051
+#: ../base/ufos/research.ufo:4104
 msgid "Alien Autopsy - Ortnok"
 msgstr "Αυτοψία Εξωγήινου - Ortnok"
 
-#: ../base/ufos/research.ufo:4056
+#: ../base/ufos/research.ufo:4109
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6322,7 +6509,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4057
+#: ../base/ufos/research.ufo:4110
 msgid "ortnok_autopsy_extra_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6357,7 +6544,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4060
+#: ../base/ufos/research.ufo:4113
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6368,7 +6555,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4061
+#: ../base/ufos/research.ufo:4114
 msgid "ortnok_autopsy_extra_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6379,11 +6566,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4093
+#: ../base/ufos/research.ufo:4146
 msgid "Alien Autopsy - Taman"
 msgstr "Αυτοψία Εξωγήινου - Taman"
 
-#: ../base/ufos/research.ufo:4098
+#: ../base/ufos/research.ufo:4151
 msgid "taman_autopsy_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6422,7 +6609,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4099
+#: ../base/ufos/research.ufo:4152
 msgid "taman_autopsy_extra_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6459,7 +6646,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4102
+#: ../base/ufos/research.ufo:4155
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6470,7 +6657,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4103
+#: ../base/ufos/research.ufo:4156
 msgid "taman_autopsy_extra_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6481,11 +6668,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4135
+#: ../base/ufos/research.ufo:4188
 msgid "Alien Autopsy - Shevaar"
 msgstr "Αυτοψία Εξωγήινου - Shevaar"
 
-#: ../base/ufos/research.ufo:4140
+#: ../base/ufos/research.ufo:4193
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6522,7 +6709,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4141
+#: ../base/ufos/research.ufo:4194
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6557,7 +6744,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4144
+#: ../base/ufos/research.ufo:4197
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6568,7 +6755,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4145
+#: ../base/ufos/research.ufo:4198
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -6579,49 +6766,49 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4234 ../base/ufos/team_humans.ufo:1637
+#: ../base/ufos/research.ufo:4287 ../base/ufos/team_humans.ufo:1637
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:4236
+#: ../base/ufos/research.ufo:4289
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4239
+#: ../base/ufos/research.ufo:4292
 msgid "ugv_phoenix_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4254 ../base/ufos/team_humans.ufo:1662
+#: ../base/ufos/research.ufo:4307 ../base/ufos/team_humans.ufo:1662
 msgid "Ares W (UGV)"
 msgstr "Ares W (UGV)"
 
-#: ../base/ufos/research.ufo:4256
+#: ../base/ufos/research.ufo:4309
 msgid "ugv_ares_w_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4259
+#: ../base/ufos/research.ufo:4312
 msgid "ugv_ares_w_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4275
+#: ../base/ufos/research.ufo:4328
 #, fuzzy
 msgid "ugv_chaingun_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4278
+#: ../base/ufos/research.ufo:4331
 msgid "ugv_chaingun_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4294
+#: ../base/ufos/research.ufo:4347
 #, fuzzy
 msgid "ugv_chaingun_belt_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4297
+#: ../base/ufos/research.ufo:4350
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4312
+#: ../base/ufos/research.ufo:4365
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -6641,15 +6828,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4315
+#: ../base/ufos/research.ufo:4368
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "Από: Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
-#: ../base/ufos/research.ufo:4363
+#: ../base/ufos/research.ufo:4416
 msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM Unit"
 
-#: ../base/ufos/research.ufo:4366
+#: ../base/ufos/research.ufo:4419
 msgid "craft_electronics_raven_txt"
 msgstr ""
 "Technical Specifications: \"Raven\" ECM Unit\n"
@@ -6688,7 +6875,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4383
+#: ../base/ufos/research.ufo:4436
 msgid "craft_shield_light_txt"
 msgstr ""
 "Technical Specifications: Polymer Aircraft Armour\n"
@@ -6731,7 +6918,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4399
+#: ../base/ufos/research.ufo:4452
 msgid "craft_shield_plating_pre_txt"
 msgstr ""
 "Commander, now that we have the ability to produce and work the alien materials, a whole new range of options has opened up to us. These materials are so strong and flexible that they can be used for almost anything. Their most promising uses, however, have been in aircraft design -- specifically armour.\n"
@@ -6744,7 +6931,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4402
+#: ../base/ufos/research.ufo:4455
 msgid "craft_shield_plating_txt"
 msgstr ""
 "Commander, I've got some good news. My team and I have finished prototyping the alien aircraft plating project. Our new armour is now ready for full PHALANX production.\n"
@@ -6761,7 +6948,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4436
+#: ../base/ufos/research.ufo:4489
 msgid "craft_alien_astrogation_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, η περισυλλογή μιας άθικτης μονάδας αστροπλοήγησης των εξωγήινων αποτελεί σταθμό στις προσπάθειές μας. Παρόλο που η μονάδα δεν φαίνεται να περιέχει κάποιον αστρικό χάρτη, θα μας επιτρέψει να μεταφράσουμε τις εξωγήινες αστρονομικές παρατηρήσεις και να αναβαθμίσουμε τα δικά μας αστρονομικά συστήματα κατά αρκετές τάξεις μεγέθους. Τελικά, η προσπάθεια που θα καταβάλλουμε εδώ μπορεί να μας βοηθήσει να ακολουθήσουμε τους εξωγήινους πίσω στον μητρικό τους πλανήτη.\n"
@@ -6770,7 +6957,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:4439
+#: ../base/ufos/research.ufo:4492
 msgid "craft_alien_astrogation_txt"
 msgstr ""
 "Κύριε Διοικητά, ολοκληρώσαμε τις εργασίες μας πάνω στην εξωγήινη μονάδα αστροπλοήγησης. Ακολουθεί μια περίληψη της αναφοράς που προέκυψε.\n"
@@ -6789,7 +6976,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:4474
+#: ../base/ufos/research.ufo:4527
 msgid "craft_alien_propulsion_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, οι εξηγήινοι κινητήρες αντιύλης που περισυλλέξαμε προκαλέσαν το ενδαφέρον της ομάδας μου από τη στιγμή που βρέθηκαν στα χέρια μας. Τώρα πια που έχουμε κατανοήσει τις ιδιότητες των εξωγήινων υλικών, πιστεύω ότι μπορούμε να αποκαλύψουμε τις λεπτομέρειες της συγκεκριμένης τεχνολογίας καθώς και να την αντιγράψουμε. Μόλις κατανοήσουμε τη λειτουργία και τον τρόπο κατασκευής των διαφορετικών εξαρτηματων θα είμαστε σε θέση να αντιγράψουμε τους συγκεκριμένους κινητήρες.\n"
@@ -6798,7 +6985,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:4477
+#: ../base/ufos/research.ufo:4530
 msgid "craft_alien_propulsion_txt"
 msgstr ""
 "Κύριε Διοικητά, βρίσκομαι στην ευχάριστη θέση να σας αναφέρω την επιτυχία του προγράμματος ανάλυσης της εξωγήινης προώθησης. Αποκαλύψαμε τα μυστικά της κατασκευής του εξωγήινου κινητήρα και κατανοήσαμε επιτέλους τη διαδρομή που διανύει η αντιύλη από τη δεξαμενή καυσίμων μέχρι τον θάλαμο αντίδρασης.\n"
@@ -6821,7 +7008,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:4511
+#: ../base/ufos/research.ufo:4564
 msgid "craft_alien_detection_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, ο εξωγήινος εξοπλισμός ανίχνευσης φαίνεται να αποτελείται από ένα σύνολο ισχυρών ενεργητικών και παθητικών ανιχνευτικών συστημάτων, στα οποία συμπεριλαμβάνεται ρανταρ, εικόνα, δέκτες μαγνητισμού και υπεριωδών/υπέρυθρων. Το πιο ενδιαφέρον, όμως, εξάρτημα εκτελεί κάποιο είδος ανίχνευσης άγνωστο σε εμάς και το οποίο δείχνει να είναι πολύ πιο αποτελεσματικό στον εντοπισμό UFO από οτιδήποτε άλλο διαθέτουμε.\n"
@@ -6832,7 +7019,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:4514
+#: ../base/ufos/research.ufo:4567
 msgid "craft_alien_detection_txt"
 msgstr ""
 "Η έρευνα του εξωγήινου εξοπλισμού ανίχνευσης ολοκληρώθηκε, κύριε Διοικητά. Τώρα πια έχουμε πλήρη κατανόηση της λειτουργίας και του ελέγχου των μηχανημάτων, καθώς και των τροποποιήσεων που απαιτούνται για ανθρώπινη χρήση.\n"
@@ -6855,7 +7042,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:4547
+#: ../base/ufos/research.ufo:4600
 msgid "craft_weapon_alc_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -6870,7 +7057,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4550
+#: ../base/ufos/research.ufo:4603
 msgid "craft_weapon_alc_txt"
 msgstr ""
 "Commander, I've just finished my report on our latest laser program. We've successfully prototyped the new Aerial Laser Cannon and are ready to put it into production.\n"
@@ -6885,11 +7072,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4595
+#: ../base/ufos/research.ufo:4648
 msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA Rotary Cannon"
 
-#: ../base/ufos/research.ufo:4598
+#: ../base/ufos/research.ufo:4651
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 "Τεχνικές Προδιαγραφές: Κανόνι Περιστρεφόμενης Κεφαλής ΣΙΒΑ\n"
@@ -6932,7 +7119,7 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:4615
+#: ../base/ufos/research.ufo:4668
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm API Rounds\n"
@@ -6971,7 +7158,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4636
+#: ../base/ufos/research.ufo:4689
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm HEI Rounds\n"
@@ -7010,11 +7197,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4654
+#: ../base/ufos/research.ufo:4707
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "'Sparrowhawk' AA Missile Rack"
 
-#: ../base/ufos/research.ufo:4657
+#: ../base/ufos/research.ufo:4710
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" AA Missile Rack\n"
@@ -7063,11 +7250,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4671
+#: ../base/ufos/research.ufo:4724
 msgid "'Sparrowhawk' Missile"
 msgstr "'Sparrowhawk' Missile"
 
-#: ../base/ufos/research.ufo:4674
+#: ../base/ufos/research.ufo:4727
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" Missile\n"
@@ -7110,7 +7297,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4695
+#: ../base/ufos/research.ufo:4748
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket Pod\n"
@@ -7153,7 +7340,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4712
+#: ../base/ufos/research.ufo:4765
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket\n"
@@ -7196,14 +7383,14 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4733
+#: ../base/ufos/research.ufo:4786
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
 "Commander, the UFO we recovered was equipped with a very interesting type of weapon that we'd like to research right away. It seems to fire some kind of high-velocity particle beam; if we can master this technology, or at least adapt it for use on our own aircraft, we could make air engagements with armed alien craft significantly more survivable for our craft and pilots.\n"
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4736
+#: ../base/ufos/research.ufo:4789
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 "Our report on the alien PBW (Particle Beam Weapon) is ready for your review, Commander.\n"
@@ -7222,7 +7409,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4789
+#: ../base/ufos/research.ufo:4842
 msgid "craft_electronics_targeting_txt"
 msgstr ""
 "Technical Specifications: Targeting Computer\n"
@@ -7261,7 +7448,7 @@ msgstr ""
 "\n"
 "With all the possibilities and different scenarios waiting in our future, there is no golden rule that will help decide when to deploy the Targeting Computer. It is ready for use at the Commander's discretion."
 
-#: ../base/ufos/research.ufo:4806
+#: ../base/ufos/research.ufo:4859
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
 "Technical Specifications: Fuel Pod\n"
@@ -7298,7 +7485,7 @@ msgstr ""
 "\n"
 "Having read Cdr. Navarre's report, Commander, I have to stress that our charter stipulates we must stop any and all alien activity on Earth. We can't afford to let some of it continue because it's just out of our planes' reach. If civilians were to die because the dropship couldn't quite make it, our image would be shattered and our funding may suffer the consequences. We should keep some fuel pod-equipped planes on standby to deal with distant incidents."
 
-#: ../base/ufos/research.ufo:4828 ../base/ufos/research.ufo:4864
+#: ../base/ufos/research.ufo:4881 ../base/ufos/research.ufo:4917
 msgid "alien_materials_txt"
 msgstr ""
 "Κύριε Διοικητά, πιστεύω ότι ανακαλύψαμε το μυστικό των εξωγήινων υλικών. Ύστερα από ορισμένες τροποποιήσεις του εξοπλισμού των Μηχανουργείων μας, είμαστε πλέον έτοιμοι να χρησιμοποιήσουμε τα υλικά αυτά και να τα \"προγραματίσουμε\" σε νέες και περίπλοκες μορφές.\n"
@@ -7315,7 +7502,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:4831
+#: ../base/ufos/research.ufo:4884
 msgid "alien_materials_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, όπως ανέφερα στην προηγούμενή μου αναφορά, το UFO που περισυλλέξαμε είναι εξωτερικά καλυμμένο με ένα άκρως ενδιαφέρον κράμα το οποίο συνδυάζει πλαστικό και μέταλλο σε ένα υλικό. Το υλικό αυτό φαίνεται να χρησιμοποιείται σχεδόν σε κάθε εκφρασή της εξηγήινης τεχνολογίας. Πρόκεται για άκρως εξελιγμένο υλικό που προσφέρει μεγάλη ευελιξία και θα μπορούσε να βρει χιλιάδες πιθανές εφαρμογές.\n"
@@ -7324,11 +7511,11 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:4883
+#: ../base/ufos/research.ufo:4937
 msgid "Political Situation Before The Invasion"
 msgstr "Πολιτική κατάσταση πρίν την εισβολή"
 
-#: ../base/ufos/research.ufo:4885
+#: ../base/ufos/research.ufo:4939
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "Το έτος 2084, η Γη βρίσκεται στην καλύτερη κατάσταση που έχει βρεθεί εδώ και περισσότερο από έναν αιώνα. Ίσως για πρώτη φορά στα χρονικά, η ειρήνη και η συνεργασία αποτελούν το σύνηθες αντί για την εξαίρεση. Όμως, η συγκεκριμένη κατάσταση μπορεί να εξηγηθεί μόνο από τη βάναυση ιστορία του 21ου αιώνα.\n"
@@ -7347,11 +7534,11 @@ msgstr ""
 "\n"
 "Το γεγονός αυτό σήμανε την αρχή του τέλους για την κυβέρνηση. Τις επόμενες μέρες σημειώθηκαν μαζικές αποστασίες από τον καθεστωτικό στρατό. Έξι εκατομμύρια άνθρωποι σκοτώθηκαν μέχρι το τέλος του πολέμου στις 15 Αυγούστου 2036, καθώς οι καθεστωτικές δυνάμεις πολεμήσαν με νύχια και με δόντια και εφαρμόσαν τακτικές καμμένης γης σε μεγάλη κλίμακα ενώ οι επαναστάτες σταδιακά τους στριμώξαν στον Ινδικό ωκεανό. Αυτό ήταν επίσημα το τέλος του Δεύτερου Ψυχρού Πολέμου."
 
-#: ../base/ufos/research.ufo:4895
+#: ../base/ufos/research.ufo:4950
 msgid "After The War"
 msgstr "Μετά τον πόλεμο"
 
-#: ../base/ufos/research.ufo:4897
+#: ../base/ufos/research.ufo:4952
 msgid "news_after_the_war_txt"
 msgstr ""
 "Η ασιατική Δημοκρατίαc:\n"
@@ -7464,11 +7651,11 @@ msgstr ""
 "\n"
 "Ο στρατός της Ωκεανίας αποτελείται κυρίως από ένα ισχυρό ναυτικό. Ο στρατός εδάφους είναι μικροσκοπικός έναντι σε αυτόν οποιουδήποτε έθνους εκτός από την ηνωμένη Αμερική, και εξυπηρετεί μόνο σε μια αμυντική ικανότητα, με τη μέση κατάρτιση και τον εξοπλισμό. Εντούτοις, μπορεί να αποκριθεί αρκετά γρήγορα στις καταστάσεις έκτακτης ανάγκης."
 
-#: ../base/ufos/research.ufo:4907
+#: ../base/ufos/research.ufo:4963
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX And The Mumbai Aftermath"
 
-#: ../base/ufos/research.ufo:4909
+#: ../base/ufos/research.ufo:4965
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "Την ιδέα για το \"Σχέδιο PHALANX\" πρωτοσυνέλλαβε το Υπουργείο Άμυνας των Ηνωμένων Πολιτειών Αμερικής το 1955, ύστερα από χρόνια αυξανόμενης ανησυχίας για τον μεγάλο αριθμό θεάσεων UFO ανά την υφήλιο. Η πιθανότητα εξωγήινης εισβολής επιβάρυνε τα ήδη ταραγμένα νεύρα των πολιτικών από την πυρηνική δύναμη της Σοβιετικής Ένωσης. Η ύπαρξη εχθρικής εξωγήινης ζωής στο σύμπαν έμοιαζε πολύ απόμακρη πιθανότητα, πόσο μάλλον να έχουν ανακαλύψει οι εξωγήινοι την Γη μέσα στην απεραντοσύνη του διαστήματος -- όμως μπορούσε η Αμερική να το ριψοκινδυνέψει;\n"
@@ -7499,11 +7686,11 @@ msgstr ""
 "\n"
 "Το μόνο που έλειπε είναι ένας ηγέτης."
 
-#: ../base/ufos/research.ufo:4919
+#: ../base/ufos/research.ufo:4975
 msgid "A New Twist"
 msgstr "Μια νέα καμπή"
 
-#: ../base/ufos/research.ufo:4924
+#: ../base/ufos/research.ufo:4980
 #, fuzzy
 msgid "news_new_twist_txt"
 msgstr ""
@@ -7529,7 +7716,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4925
+#: ../base/ufos/research.ufo:4981
 #, fuzzy
 msgid "news_new_twist_alt_txt"
 msgstr ""
@@ -7555,11 +7742,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4950
+#: ../base/ufos/research.ufo:5003
 msgid "The Enemy On Earth"
 msgstr "Ο εχθρός στη Γή"
 
-#: ../base/ufos/research.ufo:4955
+#: ../base/ufos/research.ufo:5008
 msgid "enemy_on_earth_alt_txt"
 msgstr ""
 "Πρόταση\n"
@@ -7592,7 +7779,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4956
+#: ../base/ufos/research.ufo:5009
 msgid "enemy_on_earth_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -7613,7 +7800,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4959
+#: ../base/ufos/research.ufo:5012
 msgid "enemy_on_earth_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -7636,11 +7823,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4989
+#: ../base/ufos/research.ufo:5041
 msgid "XVI Census"
 msgstr ""
 
-#: ../base/ufos/research.ufo:4994
+#: ../base/ufos/research.ufo:5046
 msgid "xvi_census_txt"
 msgstr ""
 "Καλημέρα σας, Κύριε.\n"
@@ -7663,7 +7850,7 @@ msgstr ""
 "\n"
 "Συνταγματάρχης Falkland"
 
-#: ../base/ufos/research.ufo:4997
+#: ../base/ufos/research.ufo:5049
 msgid "xvi_census_pre_txt"
 msgstr ""
 "Καλημέρα σας, Κύριε.\n"
@@ -7680,12 +7867,12 @@ msgstr ""
 "\n"
 "Συνταγματάρχης Falkland"
 
-#: ../base/ufos/research.ufo:5031
+#: ../base/ufos/research.ufo:5082
 #, fuzzy
 msgid "The Enemy On Earth - Revisited"
 msgstr "Ο εχθρός στη Γή"
 
-#: ../base/ufos/research.ufo:5036
+#: ../base/ufos/research.ufo:5087
 #, fuzzy
 msgid "enemy_on_earth_rev_txt"
 msgstr ""
@@ -7707,7 +7894,7 @@ msgstr ""
 "\n"
 "Sincerely,Dr. Connor"
 
-#: ../base/ufos/research.ufo:5039
+#: ../base/ufos/research.ufo:5090
 msgid "enemy_on_earth_rev_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
@@ -7908,7 +8095,7 @@ msgstr "Copyright 2004-2007 by UFO: AI Team"
 
 #: ../base/ufos/seq_ingame.ufo:13 ../base/ufos/seq_ingame.ufo:42
 #: ../base/ufos/seq_ingame.ufo:80 ../base/ufos/ui/singleplayer.ufo:204
-#: ../base/ufos/ui/singleplayer.ufo:279
+#: ../base/ufos/ui/singleplayer.ufo:283
 msgid "Click to continue"
 msgstr "Πιέστε για συνέχεια"
 
@@ -8422,7 +8609,7 @@ msgstr "Πρωτεύουσα Οργανισμού"
 #: ../base/ufos/ui/aircraft.ufo:77 ../base/ufos/ui/campaign.ufo:80
 #: ../base/ufos/ui/campaign.ufo:415 ../base/ufos/ui/campaign.ufo:602
 #: ../base/ufos/ui/hospital.ufo:517 ../base/ufos/ui/multiplayer.ufo:85
-#: ../base/ufos/ui/options.ufo:96 ../base/ufos/ui/research.ufo:33
+#: ../base/ufos/ui/options.ufo:95 ../base/ufos/ui/research.ufo:33
 #: ../base/ufos/ui/singleplayer.ufo:53 ../base/ufos/ui/skirmish.ufo:18
 #: ../base/ufos/ui/tutorials.ufo:32
 msgid "Back"
@@ -8451,36 +8638,41 @@ msgstr "Στρατιώτες"
 msgid "Soldier equipment"
 msgstr "Στρατιώτης κρατά εξοπλισμό"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:57
+#: ../base/ufos/ui/aircraft.ufo:176
+#, fuzzy
+msgid "Rename aircraft"
+msgstr "Επιλογή σκάφους"
+
+#: ../base/ufos/ui/aircraft_equip.ufo:80
 msgid "Available equipment:"
 msgstr "Διαθέσιμος Εξοπλισμός:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:107
+#: ../base/ufos/ui/aircraft_equip.ufo:141
 msgid "Selected item:"
 msgstr "Επιλεγμένο Αντικέιμενο:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:135
+#: ../base/ufos/ui/aircraft_equip.ufo:168
 #, fuzzy
 msgid "Equip this item"
 msgstr "Εξοπλίστε τον στρατιώτη"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:145
+#: ../base/ufos/ui/aircraft_equip.ufo:178
 #, fuzzy
 msgid "Remove this item"
 msgstr "Αφαίρεση επιλεγμένου συστήματος άμυνας"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:165
+#: ../base/ufos/ui/aircraft_equip.ufo:199
 #: client/campaign/cp_fightequip_callbacks.c:165
 msgid "Weapons"
 msgstr "Όπλα"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:169
+#: ../base/ufos/ui/aircraft_equip.ufo:203
 #: client/campaign/cp_fightequip_callbacks.c:172
 #, fuzzy
 msgid "Ammo"
 msgstr "Πυρομαχικά:\t%i\n"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:173 ../base/ufos/ui/equipment.ufo:310
+#: ../base/ufos/ui/aircraft_equip.ufo:207 ../base/ufos/ui/equipment.ufo:310
 #: ../base/ufos/ui/market.ufo:77 ../base/ufos/ui/multiplayer_team.ufo:307
 #: ../base/ufos/ui/production.ufo:91
 #: client/campaign/cp_fightequip_callbacks.c:167
@@ -8488,202 +8680,190 @@ msgstr "Πυρομαχικά:\t%i\n"
 msgid "Armour"
 msgstr "Θωράκιση"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:177
+#: ../base/ufos/ui/aircraft_equip.ufo:211
 #: client/campaign/cp_fightequip_callbacks.c:169
 msgid "Items"
 msgstr "Αντικέιμενα"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:252
-#: ../base/ufos/ui/aircraft_equip.ufo:274
-msgid "Add selected item"
-msgstr "Προσθήκη αντικειμένου"
-
-#: ../base/ufos/ui/aircraft_equip.ufo:263
-#: ../base/ufos/ui/aircraft_equip.ufo:285
-msgid "Remove item from slot"
-msgstr "Αφαίρεση αντικειμένου"
-
-#: ../base/ufos/ui/aircraft_equip.ufo:296
-#: ../base/ufos/ui/aircraft_equip.ufo:308
-#: ../base/ufos/ui/aircraft_equip.ufo:320
-#: ../base/ufos/ui/aircraft_equip.ufo:332
+#: ../base/ufos/ui/aircraft_equip.ufo:279
+#: ../base/ufos/ui/aircraft_equip.ufo:299
 msgid "Select this zone"
 msgstr "Επιλογή ζώνης"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:342
+#: ../base/ufos/ui/aircraft_equip.ufo:319
 msgid "Current item in slot"
 msgstr "Παρών αντικέιμενο σε θέση"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:353
+#: ../base/ufos/ui/aircraft_equip.ufo:330
 msgid "Ammo fitting this weapon"
 msgstr "Πυρομαχικά συμβατά με αυτό το όπλο"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:368
-#: ../base/ufos/ui/aircraft_equip.ufo:388
-#: ../base/ufos/ui/aircraft_equip.ufo:408
-#: ../base/ufos/ui/aircraft_equip.ufo:428
-#: ../base/ufos/ui/aircraft_equip.ufo:448
-#: ../base/ufos/ui/aircraft_equip.ufo:468
-#: ../base/ufos/ui/aircraft_equip.ufo:488
-#: ../base/ufos/ui/aircraft_equip.ufo:508
+#: ../base/ufos/ui/aircraft_equip.ufo:345
+#: ../base/ufos/ui/aircraft_equip.ufo:365
+#: ../base/ufos/ui/aircraft_equip.ufo:385
+#: ../base/ufos/ui/aircraft_equip.ufo:405
+#: ../base/ufos/ui/aircraft_equip.ufo:425
+#: ../base/ufos/ui/aircraft_equip.ufo:445
+#: ../base/ufos/ui/aircraft_equip.ufo:465
+#: ../base/ufos/ui/aircraft_equip.ufo:485
 msgid "Select this slot"
 msgstr "Επιλογή αυτής της θέσης"
 
-#: ../base/ufos/ui/aircraft_info.ufo:61
-#: ../base/ufos/ui/aircraft_soldiers.ufo:47
+#: ../base/ufos/ui/aircraft_info.ufo:62
+#: ../base/ufos/ui/aircraft_soldiers.ufo:48
 msgid "Team Members:"
 msgstr "Μέλη Ομάδας:"
 
-#: ../base/ufos/ui/aircraft_info.ufo:92
+#: ../base/ufos/ui/aircraft_info.ufo:93
 msgid "Start Aircraft"
 msgstr "Εκκίνηση Σκάφους"
 
-#: ../base/ufos/ui/aircraft_info.ufo:98
+#: ../base/ufos/ui/aircraft_info.ufo:99
 msgid "Call back"
 msgstr "Καλέστε πίσω"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:122
+#: ../base/ufos/ui/aircraft_pilots.ufo:123
 #, fuzzy
 msgid "Pilot is assigned to another craft"
 msgstr "Στρατιώτης στο σκάφος"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:140
+#: ../base/ufos/ui/aircraft_pilots.ufo:141
 #, fuzzy
 msgid "A pilot is already assigned to this craft"
 msgstr "Δεν ανατέθηκαν πυρομαχικά στο όπλο."
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:142
+#: ../base/ufos/ui/aircraft_pilots.ufo:143
 #, fuzzy
 msgid "Assign pilot to this craft"
 msgstr "Ανάθεση ομάδας στο σκάφος"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:153
+#: ../base/ufos/ui/aircraft_pilots.ufo:154
 #, fuzzy
 msgid "Remove pilot from this craft"
 msgstr "Αφαίρεση αντικειμένου"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:196
-#: ../base/ufos/ui/aircraft_pilots.ufo:206
-#: ../base/ufos/ui/aircraft_pilots.ufo:216
-#: ../base/ufos/ui/aircraft_pilots.ufo:226
-#: ../base/ufos/ui/aircraft_pilots.ufo:236
-#: ../base/ufos/ui/aircraft_pilots.ufo:246
-#: ../base/ufos/ui/aircraft_pilots.ufo:256
-#: ../base/ufos/ui/aircraft_pilots.ufo:266
+#: ../base/ufos/ui/aircraft_pilots.ufo:197
+#: ../base/ufos/ui/aircraft_pilots.ufo:207
+#: ../base/ufos/ui/aircraft_pilots.ufo:217
+#: ../base/ufos/ui/aircraft_pilots.ufo:227
+#: ../base/ufos/ui/aircraft_pilots.ufo:237
+#: ../base/ufos/ui/aircraft_pilots.ufo:247
+#: ../base/ufos/ui/aircraft_pilots.ufo:257
+#: ../base/ufos/ui/aircraft_pilots.ufo:267
 msgid "Add/remove this soldier"
 msgstr "Προσθήκη/Αφαίρεση του στρατιώτη"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:69
-#: ../base/ufos/ui/aircraft_soldiers.ufo:566 ../base/ufos/ui/geoscape.ufo:677
+#: ../base/ufos/ui/aircraft_soldiers.ufo:70
+#: ../base/ufos/ui/aircraft_soldiers.ufo:567 ../base/ufos/ui/geoscape.ufo:677
 #, fuzzy
 msgid "Equip soldiers"
 msgstr "Εξοπλίστε τον στρατιώτη"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:97
+#: ../base/ufos/ui/aircraft_soldiers.ufo:98
 #, fuzzy
 msgid "Soldier is assigned to another craft"
 msgstr "Στρατιώτης στο σκάφος"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:116
+#: ../base/ufos/ui/aircraft_soldiers.ufo:117
 #, fuzzy
 msgid "No more soldiers can be assigned to this craft"
 msgstr "Δεν ανατέθηκαν πυρομαχικά στο όπλο."
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:118
+#: ../base/ufos/ui/aircraft_soldiers.ufo:119
 #, fuzzy
 msgid "Assign soldier to this craft"
 msgstr "Ανάθεση στρατιωτών"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:129
+#: ../base/ufos/ui/aircraft_soldiers.ufo:130
 #, fuzzy
 msgid "Remove soldier from this craft"
 msgstr "Επιλέξτε στρατιώτη απο την λίστα"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:139
+#: ../base/ufos/ui/aircraft_soldiers.ufo:140
 msgid "Soldier carries equipment"
 msgstr "Στρατιώτης κρατά εξοπλισμό"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:148
+#: ../base/ufos/ui/aircraft_soldiers.ufo:149
 msgid "Soldier carries no equipment"
 msgstr "Στρατιώτης δε κρατά εξοπλισμό"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:482 ../base/ufos/ui/equipment.ufo:460
+#: ../base/ufos/ui/aircraft_soldiers.ufo:483 ../base/ufos/ui/equipment.ufo:460
 #: ../base/ufos/ui/hire.ufo:348 ../base/ufos/ui/hospital.ufo:567
 #: ../base/ufos/ui/multiplayer_team.ufo:498 ../base/ufos/ui/physdat.ufo:62
 msgid "Strength:"
 msgstr "Δύναμη:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:487 ../base/ufos/ui/equipment.ufo:465
+#: ../base/ufos/ui/aircraft_soldiers.ufo:488 ../base/ufos/ui/equipment.ufo:465
 #: ../base/ufos/ui/hire.ufo:357 ../base/ufos/ui/hospital.ufo:572
-#: ../base/ufos/ui/multiplayer_team.ufo:503 ../base/ufos/ui/options.ufo:1085
+#: ../base/ufos/ui/multiplayer_team.ufo:503 ../base/ufos/ui/options.ufo:1142
 #: ../base/ufos/ui/physdat.ufo:67
 msgid "Speed:"
 msgstr "Ταχύτητα:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:492 ../base/ufos/ui/equipment.ufo:470
+#: ../base/ufos/ui/aircraft_soldiers.ufo:493 ../base/ufos/ui/equipment.ufo:470
 #: ../base/ufos/ui/hire.ufo:366 ../base/ufos/ui/hospital.ufo:577
 #: ../base/ufos/ui/multiplayer_team.ufo:508 ../base/ufos/ui/physdat.ufo:72
 msgid "Accuracy:"
 msgstr "Ακρίβεια:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:497 ../base/ufos/ui/equipment.ufo:475
+#: ../base/ufos/ui/aircraft_soldiers.ufo:498 ../base/ufos/ui/equipment.ufo:475
 #: ../base/ufos/ui/hire.ufo:375 ../base/ufos/ui/hospital.ufo:582
 #: ../base/ufos/ui/multiplayer_team.ufo:513 ../base/ufos/ui/physdat.ufo:77
 msgid "Mind:"
 msgstr "Νούς:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:502 ../base/ufos/ui/equipment.ufo:480
+#: ../base/ufos/ui/aircraft_soldiers.ufo:503 ../base/ufos/ui/equipment.ufo:480
 #: ../base/ufos/ui/hire.ufo:384 ../base/ufos/ui/hospital.ufo:587
 #: ../base/ufos/ui/multiplayer_team.ufo:518 ../base/ufos/ui/physdat.ufo:82
 msgid "Close Combat:"
 msgstr "Μάχη με επαφή:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:507 ../base/ufos/ui/equipment.ufo:485
+#: ../base/ufos/ui/aircraft_soldiers.ufo:508 ../base/ufos/ui/equipment.ufo:485
 #: ../base/ufos/ui/hire.ufo:393 ../base/ufos/ui/hospital.ufo:592
 #: ../base/ufos/ui/multiplayer_team.ufo:523 ../base/ufos/ui/physdat.ufo:87
 msgid "Heavy Weapons:"
 msgstr "Βαρέα Όπλα:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:512 ../base/ufos/ui/equipment.ufo:490
+#: ../base/ufos/ui/aircraft_soldiers.ufo:513 ../base/ufos/ui/equipment.ufo:490
 #: ../base/ufos/ui/hire.ufo:402 ../base/ufos/ui/hospital.ufo:597
 #: ../base/ufos/ui/multiplayer_team.ufo:528 ../base/ufos/ui/physdat.ufo:92
 msgid "Assault Weapons:"
 msgstr "Επιθετικά Όπλα:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:517 ../base/ufos/ui/equipment.ufo:495
+#: ../base/ufos/ui/aircraft_soldiers.ufo:518 ../base/ufos/ui/equipment.ufo:495
 #: ../base/ufos/ui/hire.ufo:411 ../base/ufos/ui/hospital.ufo:602
 #: ../base/ufos/ui/multiplayer_team.ufo:533 ../base/ufos/ui/physdat.ufo:97
 msgid "Sniper Rifles:"
 msgstr "Ελευθ. Σκοπευτή:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:522 ../base/ufos/ui/equipment.ufo:500
+#: ../base/ufos/ui/aircraft_soldiers.ufo:523 ../base/ufos/ui/equipment.ufo:500
 #: ../base/ufos/ui/hire.ufo:420 ../base/ufos/ui/hospital.ufo:607
 #: ../base/ufos/ui/multiplayer_team.ufo:538 ../base/ufos/ui/physdat.ufo:102
 msgid "High-Explosives:"
 msgstr "Εκρηκτικά:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:534 ../base/ufos/ui/hire.ufo:429
+#: ../base/ufos/ui/aircraft_soldiers.ufo:535 ../base/ufos/ui/hire.ufo:429
 #: ../base/ufos/ui/hospital.ufo:612
 msgid "Health:"
 msgstr "Υγεία:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:537 ../base/ufos/ui/hire.ufo:438
+#: ../base/ufos/ui/aircraft_soldiers.ufo:538 ../base/ufos/ui/hire.ufo:438
 msgid "Missions Performed:"
 msgstr "Αποστολές Εκτελεσμένες:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:540 ../base/ufos/ui/hire.ufo:441
+#: ../base/ufos/ui/aircraft_soldiers.ufo:541 ../base/ufos/ui/hire.ufo:441
 msgid "Enemies Killed:"
 msgstr "Εχθροί Νεκροί:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:551
+#: ../base/ufos/ui/aircraft_soldiers.ufo:552
 msgid "Assign tanks"
 msgstr ""
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:555
+#: ../base/ufos/ui/aircraft_soldiers.ufo:556
 msgid "Assign soldiers"
 msgstr "Ανάθεση στρατιωτών"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:569
+#: ../base/ufos/ui/aircraft_soldiers.ufo:570
 #, fuzzy
 msgid "No soldiers assigned"
 msgstr "No shield assigned"
@@ -8889,8 +9069,8 @@ msgid "Autofire"
 msgstr "Πύρ"
 
 #: ../base/ufos/ui/basedefence.ufo:376 ../base/ufos/ui/geoscape.ufo:1487
-#: client/campaign/cp_base.c:809 client/campaign/cp_base.c:819
-#: client/campaign/cp_base.c:829 client/campaign/cp_base.c:842
+#: client/campaign/cp_base.c:810 client/campaign/cp_base.c:820
+#: client/campaign/cp_base.c:830 client/campaign/cp_base.c:843
 #: client/campaign/cp_installation_callbacks.c:226
 msgid "Destroy"
 msgstr "Καταστρέψτε"
@@ -8919,7 +9099,7 @@ msgstr "Κτήρια"
 msgid "Build base facilities"
 msgstr "Χτίσιμο δραστηριοτήτων βάσης"
 
-#: ../base/ufos/ui/bases.ufo:66 client/campaign/cp_base_callbacks.c:287
+#: ../base/ufos/ui/bases.ufo:66 client/campaign/cp_base_callbacks.c:292
 msgid "Manage your aircraft"
 msgstr "Διευθύνεται το σκάφος σας"
 
@@ -8927,17 +9107,17 @@ msgstr "Διευθύνεται το σκάφος σας"
 msgid "Buy/Sell Equipment"
 msgstr "Αγορά/Πώληση"
 
-#: ../base/ufos/ui/bases.ufo:79 client/campaign/cp_base_callbacks.c:296
+#: ../base/ufos/ui/bases.ufo:79 client/campaign/cp_base_callbacks.c:301
 msgid "Buy/Sell equipment"
 msgstr "Αγορά/Πώληση"
 
 #: ../base/ufos/ui/bases.ufo:91 ../base/ufos/ui/transfer.ufo:614
-#: client/campaign/cp_base.c:810 client/campaign/cp_base.c:820
-#: client/campaign/cp_base.c:830
+#: client/campaign/cp_base.c:811 client/campaign/cp_base.c:821
+#: client/campaign/cp_base.c:831
 msgid "Transfer"
 msgstr "Μεταφορά"
 
-#: ../base/ufos/ui/bases.ufo:92 client/campaign/cp_base_callbacks.c:301
+#: ../base/ufos/ui/bases.ufo:92 client/campaign/cp_base_callbacks.c:306
 msgid "Transfer equipment or personnel"
 msgstr "Μεταφορά εξοπλισμού ή προσωπικού"
 
@@ -8945,7 +9125,7 @@ msgstr "Μεταφορά εξοπλισμού ή προσωπικού"
 msgid "Research"
 msgstr "Έρευνα"
 
-#: ../base/ufos/ui/bases.ufo:105 client/campaign/cp_base_callbacks.c:306
+#: ../base/ufos/ui/bases.ufo:105 client/campaign/cp_base_callbacks.c:311
 msgid "Research new technology"
 msgstr "Έρευνα νέας τεχνολογίας"
 
@@ -8953,24 +9133,24 @@ msgstr "Έρευνα νέας τεχνολογίας"
 msgid "Production"
 msgstr "Παραγωγή"
 
-#: ../base/ufos/ui/bases.ufo:118 client/campaign/cp_base_callbacks.c:311
+#: ../base/ufos/ui/bases.ufo:118 client/campaign/cp_base_callbacks.c:316
 msgid "Produce new equipment"
 msgstr "Παραγωγή νέου εξοπλισμού"
 
 #: ../base/ufos/ui/bases.ufo:130 ../base/ufos/ui/bases.ufo:131
-#: client/campaign/cp_base_callbacks.c:316
+#: client/campaign/cp_base_callbacks.c:321
 msgid "Hire employees"
 msgstr "Μίσθωση Ατόμων"
 
-#: ../base/ufos/ui/bases.ufo:143 client/campaign/cp_base_callbacks.c:323
+#: ../base/ufos/ui/bases.ufo:143 client/campaign/cp_base_callbacks.c:328
 msgid "Containment"
 msgstr "Θόλος Εξωγήινων"
 
-#: ../base/ufos/ui/bases.ufo:144 client/campaign/cp_base_callbacks.c:321
+#: ../base/ufos/ui/bases.ufo:144 client/campaign/cp_base_callbacks.c:326
 msgid "Deal with Aliens in Alien Containment"
 msgstr "Εξετάστε τους αλλοδαπούς στόν Θόλο εξωγήινων"
 
-#: ../base/ufos/ui/bases.ufo:157 client/campaign/cp_base_callbacks.c:326
+#: ../base/ufos/ui/bases.ufo:157 client/campaign/cp_base_callbacks.c:331
 msgid "Medical and Surgery operations"
 msgstr "Νοσοκομειακή και χειρουργική επιχείρηση"
 
@@ -9262,16 +9442,16 @@ msgstr "UFOπαίδεια"
 msgid "Create installation"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:490 ../base/ufos/ui/geoscape.ufo:1935
+#: ../base/ufos/ui/geoscape.ufo:490 ../base/ufos/ui/geoscape.ufo:1954
 msgid "Highlight nation borders"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:503 ../base/ufos/ui/geoscape.ufo:1960
+#: ../base/ufos/ui/geoscape.ufo:503 ../base/ufos/ui/geoscape.ufo:1979
 #, fuzzy
 msgid "Show radar range"
 msgstr "ΟΥΦΟ στην εμβέλεια του ραντάρ\n"
 
-#: ../base/ufos/ui/geoscape.ufo:517 ../base/ufos/ui/geoscape.ufo:1981
+#: ../base/ufos/ui/geoscape.ufo:517 ../base/ufos/ui/geoscape.ufo:2000
 msgid "Show XVI map"
 msgstr ""
 
@@ -9294,9 +9474,9 @@ msgstr "Το σκάφος έφτασε στην επιθυμητή περιοχ�
 #: ../base/ufos/ui/geoscape.ufo:591 ../base/ufos/ui/geoscape.ufo:840
 #: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/geoscape.ufo:1329
 #: ../base/ufos/ui/geoscape.ufo:1647 ../base/ufos/ui/geoscape.ufo:1737
-#: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/geoscape.ufo:1866
+#: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/geoscape.ufo:1883
 #: ../base/ufos/ui/irc.ufo:209 ../base/ufos/ui/messageoptions.ufo:32
-#: ../base/ufos/ui/options.ufo:1238 ../base/ufos/ui/transfer.ufo:627
+#: ../base/ufos/ui/options.ufo:1304 ../base/ufos/ui/transfer.ufo:627
 #: client/campaign/cp_installation_callbacks.c:227
 msgid "Cancel"
 msgstr "Ακύρωση"
@@ -9306,8 +9486,8 @@ msgstr "Ακύρωση"
 #: ../base/ufos/ui/geoscape.ufo:1330 ../base/ufos/ui/geoscape.ufo:1400
 #: ../base/ufos/ui/geoscape.ufo:1465 ../base/ufos/ui/geoscape.ufo:1648
 #: ../base/ufos/ui/geoscape.ufo:1738 ../base/ufos/ui/geoscape.ufo:1811
-#: ../base/ufos/ui/geoscape.ufo:1867 ../base/ufos/ui/irc.ufo:210
-#: ../base/ufos/ui/options.ufo:1239 ../base/ufos/ui/sys_popup.ufo:50
+#: ../base/ufos/ui/geoscape.ufo:1884 ../base/ufos/ui/irc.ufo:210
+#: ../base/ufos/ui/options.ufo:1305 ../base/ufos/ui/sys_popup.ufo:50
 #: ../base/ufos/ui/sys_popup.ufo:112
 msgid "Close this dialogue"
 msgstr "Κλείστε τον διάλογο"
@@ -9374,7 +9554,7 @@ msgstr "Νέα βάση"
 #: ../base/ufos/ui/geoscape.ufo:867 ../base/ufos/ui/geoscape.ufo:1290
 #: ../base/ufos/ui/geoscape.ufo:1422 ../base/ufos/ui/geoscape.ufo:1695
 #: ../base/ufos/ui/geoscape.ufo:1773 ../base/ufos/ui/main.ufo:133
-#: ../base/ufos/ui/multiplayer.ufo:371 ../base/ufos/ui/options.ufo:729
+#: ../base/ufos/ui/multiplayer.ufo:371 ../base/ufos/ui/options.ufo:761
 msgid "Name:"
 msgstr "Όνομα:"
 
@@ -9548,20 +9728,20 @@ msgstr "Action:"
 msgid "Description:"
 msgstr "Περιγραφή:"
 
-#: ../base/ufos/ui/geoscape.ufo:1888
+#: ../base/ufos/ui/geoscape.ufo:1907
 #, fuzzy
 msgid "Geoscape options"
 msgstr "Πήγαινε στις επιλογές"
 
-#: ../base/ufos/ui/geoscape.ufo:1900
+#: ../base/ufos/ui/geoscape.ufo:1919
 msgid "Geoscape projection mode:"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:1910
+#: ../base/ufos/ui/geoscape.ufo:1929
 msgid "2D"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:1914
+#: ../base/ufos/ui/geoscape.ufo:1933
 msgid "3D"
 msgstr ""
 
@@ -9839,15 +10019,15 @@ msgstr "Αρχικές Ρυθμίσεις"
 msgid "User Information"
 msgstr "Πληροφορίες Βάσης"
 
-#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:553
+#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:585
 msgid "Volume Control"
 msgstr "Κονσόλα Ήχου"
 
-#: ../base/ufos/ui/main.ufo:163 ../base/ufos/ui/options.ufo:559
+#: ../base/ufos/ui/main.ufo:163 ../base/ufos/ui/options.ufo:591
 msgid "Effects:"
 msgstr "Εφέ:"
 
-#: ../base/ufos/ui/main.ufo:182 ../base/ufos/ui/options.ufo:580
+#: ../base/ufos/ui/main.ufo:182 ../base/ufos/ui/options.ufo:612
 msgid "Music:"
 msgstr "Μουσική:"
 
@@ -9855,7 +10035,7 @@ msgstr "Μουσική:"
 msgid "Language"
 msgstr "Γλώσσα"
 
-#: ../base/ufos/ui/main.ufo:212 ../base/ufos/ui/options.ufo:777
+#: ../base/ufos/ui/main.ufo:212 ../base/ufos/ui/options.ufo:809
 msgid "Language:"
 msgstr "Γλώσσα:"
 
@@ -10406,295 +10586,299 @@ msgstr "Μισθώστε την ομάδα σας πρώτα"
 msgid "Abort Game"
 msgstr "Ματαίωση Παιχνιδιού"
 
-#: ../base/ufos/ui/options.ufo:35
+#: ../base/ufos/ui/options.ufo:34
 msgid "Game"
 msgstr "Παιχνίδι"
 
-#: ../base/ufos/ui/options.ufo:50
+#: ../base/ufos/ui/options.ufo:49
 msgid "Video"
 msgstr "Βίντεο"
 
-#: ../base/ufos/ui/options.ufo:66
+#: ../base/ufos/ui/options.ufo:65
 msgid "Sound"
 msgstr "Ήχος"
 
-#: ../base/ufos/ui/options.ufo:81
+#: ../base/ufos/ui/options.ufo:80
 msgid "Input"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:126
+#: ../base/ufos/ui/options.ufo:118
 msgid "Video settings"
 msgstr "Ρυθμίσεις Βίντεο"
 
-#: ../base/ufos/ui/options.ufo:135
+#: ../base/ufos/ui/options.ufo:127
 msgid "Resolution:"
 msgstr "Ανάλυση:"
 
-#: ../base/ufos/ui/options.ufo:152
+#: ../base/ufos/ui/options.ufo:134
 msgid "Texture resolution cap:"
 msgstr "Θήκη ανάλυσης υφής:"
 
-#: ../base/ufos/ui/options.ufo:160
+#: ../base/ufos/ui/options.ufo:142
 msgid "Lightmap block size:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:167
+#: ../base/ufos/ui/options.ufo:149
 msgid "Texture anisotropy level:"
 msgstr "Επίπεδο ανισοτροπικής υφής:"
 
-#: ../base/ufos/ui/options.ufo:193
+#: ../base/ufos/ui/options.ufo:175
 msgid "Fullscreen:"
 msgstr "Πλήρες οθόνη:"
 
-#: ../base/ufos/ui/options.ufo:207
+#: ../base/ufos/ui/options.ufo:189
 msgid "Texture compression:"
 msgstr "Υφή συμπιεσμένη:"
 
-#: ../base/ufos/ui/options.ufo:221
+#: ../base/ufos/ui/options.ufo:203
 msgid "Show FPS:"
 msgstr "Εμφάνιση FPS:"
 
-#: ../base/ufos/ui/options.ufo:235
+#: ../base/ufos/ui/options.ufo:217
 msgid "Texture Lod:"
 msgstr "Οδηγός υφής:"
 
-#: ../base/ufos/ui/options.ufo:249
+#: ../base/ufos/ui/options.ufo:231
 msgid "Isometric Mode:"
 msgstr "Ισομετρική κλίμακα:"
 
-#: ../base/ufos/ui/options.ufo:263
+#: ../base/ufos/ui/options.ufo:245
 msgid "GLSL shaders:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:277
+#: ../base/ufos/ui/options.ufo:259
 msgid "Realtime lighting:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:291
+#: ../base/ufos/ui/options.ufo:273
 msgid "Weather effects:"
 msgstr "Εφέ καιρού:"
 
-#: ../base/ufos/ui/options.ufo:305
+#: ../base/ufos/ui/options.ufo:287
 msgid "Vertex buffers:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:319
+#: ../base/ufos/ui/options.ufo:301
 msgid "Multisample buffers:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:342
+#: ../base/ufos/ui/options.ufo:324
 msgid "Swap interval:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:366
+#: ../base/ufos/ui/options.ufo:348
 msgid "Gamma:"
 msgstr "Γάμμα:"
 
-#: ../base/ufos/ui/options.ufo:387
+#: ../base/ufos/ui/options.ufo:369
 #, fuzzy
 msgid "Contrast:"
 msgstr "Κόστος:"
 
-#: ../base/ufos/ui/options.ufo:408
+#: ../base/ufos/ui/options.ufo:390
 msgid "Brightness:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:429
+#: ../base/ufos/ui/options.ufo:411
 msgid "Lightmap scale:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:450
+#: ../base/ufos/ui/options.ufo:432
 msgid "Strech the screen with a 4:3 ratio:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:470 ../base/ufos/ui/options.ufo:495
+#: ../base/ufos/ui/options.ufo:452 ../base/ufos/ui/options.ufo:477
 msgid "Low"
 msgstr "Χαμηλή"
 
-#: ../base/ufos/ui/options.ufo:474 ../base/ufos/ui/options.ufo:499
+#: ../base/ufos/ui/options.ufo:456 ../base/ufos/ui/options.ufo:481
 msgid "Medium"
 msgstr "Μέση"
 
-#: ../base/ufos/ui/options.ufo:478 ../base/ufos/ui/options.ufo:503
+#: ../base/ufos/ui/options.ufo:460 ../base/ufos/ui/options.ufo:485
 #: client/cl_game_campaign.c:129
 msgid "Normal"
 msgstr "Κανονική"
 
-#: ../base/ufos/ui/options.ufo:482 ../base/ufos/ui/options.ufo:507
+#: ../base/ufos/ui/options.ufo:464 ../base/ufos/ui/options.ufo:489
 msgid "High"
 msgstr "Υψηλή"
 
-#: ../base/ufos/ui/options.ufo:511 client/cl_actor.c:120
+#: ../base/ufos/ui/options.ufo:493 client/battlescape/cl_actor.c:120
 msgid "Excellent"
 msgstr "Άριστη"
 
-#: ../base/ufos/ui/options.ufo:515
+#: ../base/ufos/ui/options.ufo:497
 msgid "Extreme"
 msgstr "Ακραία"
 
-#: ../base/ufos/ui/options.ufo:544
+#: ../base/ufos/ui/options.ufo:576
 msgid "Sound settings"
 msgstr "Ρυθμίσεις ήχου"
 
-#: ../base/ufos/ui/options.ufo:601
+#: ../base/ufos/ui/options.ufo:633
 msgid "Sound rate:"
 msgstr "Αναλογία ήχου:"
 
-#: ../base/ufos/ui/options.ufo:607
+#: ../base/ufos/ui/options.ufo:639
 msgid "Restart sound to change the settings"
 msgstr "Επανακίνηση ήχου για αλλαγή των ρυθμίσεων"
 
-#: ../base/ufos/ui/options.ufo:643
+#: ../base/ufos/ui/options.ufo:675
 #, fuzzy
 msgid "Enable sound:"
 msgstr "Τέλος γύρου"
 
-#: ../base/ufos/ui/options.ufo:669
+#: ../base/ufos/ui/options.ufo:701
 msgid "Show key bindings"
 msgstr "Εμφάνιση δεσμευμένων πλήκτρων"
 
-#: ../base/ufos/ui/options.ufo:717
+#: ../base/ufos/ui/options.ufo:749
 msgid "Game settings"
 msgstr "Ρυθμίσεις Παιχνιδιού"
 
-#: ../base/ufos/ui/options.ufo:751
+#: ../base/ufos/ui/options.ufo:783
 msgid "HUD Design:"
 msgstr "Σχεδιασμός HUD:"
 
-#: ../base/ufos/ui/options.ufo:763
+#: ../base/ufos/ui/options.ufo:795
 msgid "Original HUD"
 msgstr "Αυθεντικό HUD"
 
-#: ../base/ufos/ui/options.ufo:767
+#: ../base/ufos/ui/options.ufo:799
 msgid "Alternative HUD"
 msgstr "Ενναλακτικό HUD"
 
-#: ../base/ufos/ui/options.ufo:815
+#: ../base/ufos/ui/options.ufo:847
 msgid "Tooltips:"
 msgstr "Tooltips:"
 
-#: ../base/ufos/ui/options.ufo:822
+#: ../base/ufos/ui/options.ufo:854
 msgid "Activates tooltips"
 msgstr "Activates tooltips"
 
-#: ../base/ufos/ui/options.ufo:833
+#: ../base/ufos/ui/options.ufo:865
 msgid "Centre view:"
 msgstr "Κεντρική θέα:"
 
-#: ../base/ufos/ui/options.ufo:840
+#: ../base/ufos/ui/options.ufo:872
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr "Κεντράρισμα στον στρατιώτη που επιλέγετε και  πυροβολεί"
 
-#: ../base/ufos/ui/options.ufo:851
+#: ../base/ufos/ui/options.ufo:883
 msgid "Cursor tooltips:"
 msgstr "Cursor tooltips:"
 
-#: ../base/ufos/ui/options.ufo:858
+#: ../base/ufos/ui/options.ufo:890
 msgid "Activates cursor tooltips"
 msgstr "Activates cursor tooltips"
 
-#: ../base/ufos/ui/options.ufo:869
+#: ../base/ufos/ui/options.ufo:901
 msgid "3D Geoscape:"
 msgstr "3D Geoscape:"
 
-#: ../base/ufos/ui/options.ufo:876
+#: ../base/ufos/ui/options.ufo:908
 msgid "Use 3D geoscape"
 msgstr "Use 3D geoscape"
 
-#: ../base/ufos/ui/options.ufo:887
+#: ../base/ufos/ui/options.ufo:919
+msgid "3D Geoscape ambient lighting:"
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:944
 #, fuzzy
 msgid "Show tip of the day:"
 msgstr "Εμφάνιση συμβουλής ημέρας"
 
-#: ../base/ufos/ui/options.ufo:905
+#: ../base/ufos/ui/options.ufo:962
 msgid "Precache models:"
 msgstr "Precache models:"
 
-#: ../base/ufos/ui/options.ufo:912
+#: ../base/ufos/ui/options.ufo:969
 msgid "Precache models (faster menus)"
 msgstr "Precache models (faster menus)"
 
-#: ../base/ufos/ui/options.ufo:923
+#: ../base/ufos/ui/options.ufo:980
 #, fuzzy
 msgid "Actor speed:"
 msgstr "Κύλιση Επάνω"
 
-#: ../base/ufos/ui/options.ufo:957
+#: ../base/ufos/ui/options.ufo:1014
 #, fuzzy
 msgid "Input settings"
 msgstr "Αρχικές Ρυθμίσεις"
 
-#: ../base/ufos/ui/options.ufo:969
+#: ../base/ufos/ui/options.ufo:1026
 #, fuzzy
 msgid "Camera"
 msgstr "Όνομα"
 
-#: ../base/ufos/ui/options.ufo:975
+#: ../base/ufos/ui/options.ufo:1032
 #, fuzzy
 msgid "Scroll Speed:"
 msgstr "Κύλιση Επάνω"
 
-#: ../base/ufos/ui/options.ufo:1000
+#: ../base/ufos/ui/options.ufo:1057
 msgid "Rotation Speed:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1025
+#: ../base/ufos/ui/options.ufo:1082
 msgid "Move Acceleration:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1050
+#: ../base/ufos/ui/options.ufo:1107
 #, fuzzy
 msgid "Joystick settings:"
 msgstr "Αρχικές Ρυθμίσεις"
 
-#: ../base/ufos/ui/options.ufo:1060
+#: ../base/ufos/ui/options.ufo:1117
 msgid "Threshold:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1110
+#: ../base/ufos/ui/options.ufo:1167
 msgid "Keys"
 msgstr "Πλήκτρα"
 
-#: ../base/ufos/ui/options.ufo:1130 client/cl_hud.c:103
+#: ../base/ufos/ui/options.ufo:1187 client/battlescape/cl_hud.c:103
 #, fuzzy
 msgid "Autostand"
 msgstr "Εξαιρετικό"
 
-#: ../base/ufos/ui/options.ufo:1142 ../base/ufos/ui/options.ufo:1168
+#: ../base/ufos/ui/options.ufo:1199 ../base/ufos/ui/options.ufo:1225
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Ναι"
 
-#: ../base/ufos/ui/options.ufo:1146 ../base/ufos/ui/options.ufo:1172
+#: ../base/ufos/ui/options.ufo:1203 ../base/ufos/ui/options.ufo:1229
 #: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "Όχι"
 
-#: ../base/ufos/ui/options.ufo:1156
+#: ../base/ufos/ui/options.ufo:1213
 msgid "Confirm Actions:"
 msgstr "Επιβεβαίωση ενεργειών:"
 
-#: ../base/ufos/ui/options.ufo:1176
+#: ../base/ufos/ui/options.ufo:1233
 msgid "Only for moving"
 msgstr "Μόνο στη κίνηση"
 
-#: ../base/ufos/ui/options.ufo:1186
+#: ../base/ufos/ui/options.ufo:1243
 msgid "Joystick:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1210
+#: ../base/ufos/ui/options.ufo:1276
 msgid "Maintain resolution"
 msgstr "Διατήρηση ανάλυσης"
 
-#: ../base/ufos/ui/options.ufo:1220
+#: ../base/ufos/ui/options.ufo:1286
 msgid "Want To Maintain resolution"
 msgstr "Επιθυμία διατήρησης ανάλυσης"
 
-#: ../base/ufos/ui/options.ufo:1227
+#: ../base/ufos/ui/options.ufo:1293
 msgid "Accept"
 msgstr "Αποδοχή"
 
-#: ../base/ufos/ui/options.ufo:1228
+#: ../base/ufos/ui/options.ufo:1294
 msgid "Change the resolution"
 msgstr "Αλλαγή ανάλυσης"
 
@@ -10798,7 +10982,7 @@ msgstr "Προσπαθείστε πάλι"
 msgid "You've lost the game"
 msgstr "Χάσατε το παιχνίδι"
 
-#: ../base/ufos/ui/singleplayer.ufo:240
+#: ../base/ufos/ui/singleplayer.ufo:244
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Ευχαριστούμε που παίξατε το  UFO:Alien Invasion"
 
@@ -11517,6 +11701,402 @@ msgstr "Ζώνη Αμυδράλιου"
 msgid "Autocannon Module"
 msgstr ""
 
+#: client/battlescape/cl_actor.c:106
+msgid "Poor"
+msgstr "Φτωχό"
+
+#: client/battlescape/cl_actor.c:108
+msgid "Mediocre"
+msgstr "Κάτω του μετρίου"
+
+#: client/battlescape/cl_actor.c:110
+msgid "Average"
+msgstr "Μέτριο"
+
+#: client/battlescape/cl_actor.c:112
+msgid "Competent"
+msgstr "Άξιο"
+
+#: client/battlescape/cl_actor.c:114
+msgid "Proficient"
+msgstr "Ικανό"
+
+#: client/battlescape/cl_actor.c:116
+msgid "Very Good"
+msgstr "Πολύ Καλό"
+
+#: client/battlescape/cl_actor.c:118
+msgid "Highly Proficient"
+msgstr "Πολύ Προχωρημένο"
+
+#: client/battlescape/cl_actor.c:122
+msgid "Outstanding"
+msgstr "Εξαιρετικό"
+
+#: client/battlescape/cl_actor.c:125
+msgid "Superhuman"
+msgstr "Υπεράνθρωπο"
+
+#: client/battlescape/cl_actor.c:1038
+msgid "This isn't your round\n"
+msgstr "Δέν είναι ο γύρος σας\n"
+
+#: client/battlescape/cl_actor.c:1278
+#, fuzzy
+msgid "You cannot reload this unknown item.\n"
+msgstr ""
+"Δε μπορείτε ν αχρησιμοποιήσετε αυτό το άγνωστο αντικέιμενο.\n"
+"Πρέπει να γίνει πρώτα έρευνα.\n"
+
+#: client/battlescape/cl_actor.c:2305
+msgid "Unknown alien race"
+msgstr "Άγνωστη ράτσα εξωγήινου"
+
+#: client/battlescape/cl_actor.c:2850
+#, fuzzy
+msgid "Reselect the current soldier"
+msgstr "Ο επιλεγμένος στρατιώτης"
+
+#: client/battlescape/cl_actor.c:2851
+msgid "Toggle to next soldier"
+msgstr "Toggle to next soldier"
+
+#: client/battlescape/cl_actor.c:2852
+msgid "Select a soldier from list"
+msgstr "Επιλέξτε στρατιώτη απο την λίστα"
+
+#: client/battlescape/cl_actor.c:2853
+#, fuzzy
+msgid "Update a soldier"
+msgstr "Μεταονομάστε τον στρατιώτη"
+
+#: client/battlescape/cl_hud.c:102 client/battlescape/cl_hud.c:105
+msgid "Crouch walk"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:104
+msgid "Walk"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:281
+#, c-format
+msgid "Remaining TUs: %i"
+msgstr "Υπολειπόμενα TUs: %i"
+
+#: client/battlescape/cl_hud.c:283
+msgid "No remaining TUs left after shot."
+msgstr "Δεν έμειναν TUs μετά την βολή."
+
+#: client/battlescape/cl_hud.c:288
+#, c-format
+msgid "TU: %i"
+msgstr "TU: %i"
+
+#: client/battlescape/cl_hud.c:290
+#, fuzzy, c-format
+msgid "Shots: %i"
+msgstr "Βολές:%i"
+
+#: client/battlescape/cl_hud.c:368
+msgid "[0 TU] No reservation"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:385
+#, c-format
+msgid "[%i TU] %s"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:418
+msgid "Reserve TUs for firing/using."
+msgstr ""
+
+#: client/battlescape/cl_hud.c:418
+msgid "Shot Reservation"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:766
+msgid "No item in hand.\n"
+msgstr "Όχι αντικέιμενο στο χέρι.\n"
+
+#: client/battlescape/cl_hud.c:779
+msgid ""
+"Can't perform action:\n"
+"out of ammo.\n"
+msgstr ""
+"Αδυναμία εκτέλεσης εντολής:\n"
+"τέλος πυρομαχικών.\n"
+
+#: client/battlescape/cl_hud.c:784
+msgid ""
+"This weapon cannot be fired\n"
+"one handed.\n"
+msgstr ""
+"Δε μπορεί να κάνει πύρ\n"
+"ενός χεριού.\n"
+
+#: client/battlescape/cl_hud.c:793
+msgid ""
+"Can't perform action:\n"
+"this item is not reloadable.\n"
+msgstr ""
+"Αδυναμία εκτέλεσης εντολής:\n"
+"αυτό το αντικέιμενο δεν επαναγεμίζει.\n"
+
+#: client/battlescape/cl_hud.c:798
+msgid ""
+"Can't perform action:\n"
+"ammo not available.\n"
+msgstr ""
+"Αδυναμία εκτέλεσης εντολής:\n"
+"μη διαθέσιμα πυρομαχικά.\n"
+
+#: client/battlescape/cl_hud.c:803 client/battlescape/cl_hud.c:874
+msgid ""
+"Can't perform action:\n"
+"not enough TUs.\n"
+msgstr ""
+"Αδυναμία εκτέλεσης εντολής:\n"
+"όχι αρκετά TUs.\n"
+
+#: client/battlescape/cl_hud.c:967
+#, fuzzy
+msgid "Not enough TUs for standing up."
+msgstr "Όχι αρκετός αποθηκευτικός χώρος"
+
+#: client/battlescape/cl_hud.c:970
+#, fuzzy, c-format
+msgid "Stand up (%i TU)"
+msgstr "Επαναγέμιση όπλου"
+
+#: client/battlescape/cl_hud.c:976
+#, fuzzy
+msgid "Not enough TUs for crouching."
+msgstr "Διακόπτης απάντησης πυρών"
+
+#: client/battlescape/cl_hud.c:979
+#, c-format
+msgid "Crouch (%i TU)"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:987
+#, c-format
+msgid ""
+"%i TUs reserved for crouching/standing up.\n"
+"Click to clear."
+msgstr ""
+
+#: client/battlescape/cl_hud.c:991
+#, fuzzy, c-format
+msgid "Reserve %i TUs for crouching/standing up."
+msgstr "Όχι αρκετός αποθηκευτικός χώρος"
+
+#: client/battlescape/cl_hud.c:994
+#, fuzzy
+msgid "Not enough TUs left to reserve for crouching/standing up."
+msgstr "Όχι αρκετός αποθηκευτικός χώρος"
+
+#: client/battlescape/cl_hud.c:1000
+#, c-format
+msgid ""
+"%i TUs reserved for shooting.\n"
+"Click to change.\n"
+"Right-Click to clear."
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1004
+msgid "Reserve TUs for shooting."
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1007
+msgid "Reserving TUs for shooting not possible."
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1033
+#, fuzzy
+msgid "No reload possible for right hand, already fully loaded."
+msgstr "Reload the weapon in the soldiers right hand"
+
+#: client/battlescape/cl_hud.c:1035
+#, fuzzy
+msgid "No reload possible for right hand."
+msgstr "Reload the weapon in the soldiers right hand"
+
+#: client/battlescape/cl_hud.c:1038 client/battlescape/cl_hud.c:1054
+#, fuzzy, c-format
+msgid "Reload weapon (%i TU)."
+msgstr "Επαναγέμιση όπλου"
+
+#: client/battlescape/cl_hud.c:1049
+#, fuzzy
+msgid "No reload possible for left hand, already fully loaded."
+msgstr "Reload the weapon in the soldiers left hand"
+
+#: client/battlescape/cl_hud.c:1051
+#, fuzzy
+msgid "No reload possible for left hand."
+msgstr "Reload the weapon in the soldiers left hand"
+
+#: client/battlescape/cl_hud.c:1157
+#, c-format
+msgid ""
+"Time Units\n"
+"- Available: %i (of %i)\n"
+"- Reserved:  %i\n"
+"- Remaining: %i\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1265
+#, fuzzy, c-format
+msgid "Morale  %i | Reserved TUs: %i\n"
+msgstr ""
+"Ηθικό  %i\n"
+"Κίνηση %i (%i TU απέμειναν)\n"
+
+#: client/battlescape/cl_hud.c:1267
+#, fuzzy, c-format
+msgid "Morale  %i"
+msgstr "Ηθικό %i\n"
+
+#: client/battlescape/cl_hud.c:1272
+#, fuzzy, c-format
+msgid ""
+"Morale  %i | Reserved TUs: %i\n"
+"%s %i (%i|%i TU left)\n"
+msgstr ""
+"Ηθικό  %i\n"
+"Κίνηση %i (%i TU απέμειναν)\n"
+
+#: client/battlescape/cl_hud.c:1276
+#, fuzzy, c-format
+msgid ""
+"Morale  %i\n"
+"%s %i (%i TU left)\n"
+msgstr ""
+"Ηθικό  %i\n"
+"Κίνηση %i (%i TU απέμειναν)\n"
+
+#: client/battlescape/cl_hud.c:1289
+#, fuzzy
+msgid ""
+"You cannot use this unknown item.\n"
+"You need to research it first.\n"
+msgstr ""
+"Δε μπορείτε να επαναγεμίσετε αυτό το άγνωστο αντικέιμενο.\n"
+"Πρέπει πρώτα να ερευνήστε το όπλο και τα πυρομαχικά του.\n"
+
+#: client/battlescape/cl_hud.c:1304
+#, c-format
+msgid ""
+"%s\n"
+"(empty)\n"
+msgstr ""
+"%s\n"
+"(κενό)\n"
+
+#: client/battlescape/cl_hud.c:1312
+msgid "Currently panics!\n"
+msgstr "Currently panics!\n"
+
+#: client/battlescape/cl_hud.c:1550
+msgid "Reload the weapon in the soldiers left hand"
+msgstr "Reload the weapon in the soldiers left hand"
+
+#: client/battlescape/cl_hud.c:1551
+msgid "Reload the weapon in the soldiers right hand"
+msgstr "Reload the weapon in the soldiers right hand"
+
+#: client/battlescape/cl_hud.c:1553
+#, fuzzy
+msgid "Toggle reservation for crouching."
+msgstr "Διακόπτης απάντησης πυρών"
+
+#: client/battlescape/cl_hud.c:1559
+msgid "Toggle reaction fire"
+msgstr "Διακόπτης απάντησης πυρών"
+
+#: client/battlescape/cl_view.c:211 client/battlescape/cl_view.c:236
+#, c-format
+msgid "loading %s"
+msgstr "φόρτωση %s"
+
+#: client/battlescape/cl_view.c:219
+msgid "loading models..."
+msgstr "φόρτωση μοντέλων..."
+
+#: client/battlescape/cl_view.c:271 client/cl_main.c:1022
+msgid "Awaiting game start"
+msgstr "Αναμονή για την έναρξη του παιχνιδιού"
+
+#: client/battlescape/events/event/actor/e_event_actorappear.c:161
+#, fuzzy, c-format
+msgid "Enemy spotted: %s!"
+msgstr "Εντοπίστηκε εχθρός!\n"
+
+#: client/battlescape/events/event/actor/e_event_actorappear.c:164
+msgid "Enemy spotted!\n"
+msgstr "Εντοπίστηκε εχθρός!\n"
+
+#: client/battlescape/events/event/actor/e_event_actorappear.c:166
+msgid "Civilian spotted!\n"
+msgstr "Εντοπίστηκε πολίτης!\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:78
+#, fuzzy, c-format
+msgid "%s was stunned\n"
+msgstr "%s %s ήταν σαστισμένος\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:80
+#, fuzzy, c-format
+msgid "%s was killed\n"
+msgstr "%s %s ήταν σκοτωμένος\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:88
+msgid "A civilian was stunned.\n"
+msgstr "'Ενας πολίτης σάστισε.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:90
+msgid "A civilian was killed.\n"
+msgstr "Ένας πολίτης σκοτώθηκε.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:94
+msgid "An alien was stunned.\n"
+msgstr "Ένας εξωγήινος σάστισε.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:96
+msgid "An alien was killed.\n"
+msgstr "Ένας εξωγήινος πέθανε.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:100
+msgid "A soldier was stunned.\n"
+msgstr "Ένας στρατιώτης σάστισε.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:102
+msgid "A soldier was killed.\n"
+msgstr "Ένας στρατιώτης πέθανε.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:106
+#, c-format
+msgid "A member of team %i was stunned.\n"
+msgstr "Ένα μέλος της ομάδας %i έιχε σαστίσει.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:108
+#, c-format
+msgid "A member of team %i was killed.\n"
+msgstr "Ένα μέλος της ομάδας %i είχε σκοτωθεί.\n"
+
+#: client/battlescape/events/event/player/e_event_doendround.c:57
+msgid "Your round started!\n"
+msgstr "Άρχισε ο γύρος σας!\n"
+
+#: client/battlescape/events/event/player/e_event_endroundannounce.c:53
+msgid "You've ended your round\n"
+msgstr "Τερματίσατε τον γύρο σας\n"
+
+#: client/battlescape/events/event/player/e_event_endroundannounce.c:56
+#, c-format
+msgid "%s ended his round (team %i)\n"
+msgstr "%s τερματίστε τον γύρο του (ομάδα %i)\n"
+
 #: client/campaign/cp_aircraft.c:446
 msgid "ON RED ALERT"
 msgstr "ΣΕ ΣΥΝΑΓΕΡΜΟ"
@@ -11585,42 +12165,42 @@ msgstr "Αναχαιτιστικά:"
 msgid "Transporter"
 msgstr "Μεταγωγικά:"
 
-#: client/campaign/cp_aircraft.c:548 client/campaign/cp_ufo.c:69
-#: client/campaign/cp_ufo.c:70
+#: client/campaign/cp_aircraft.c:548 client/campaign/cp_ufo.c:79
+#: client/campaign/cp_ufo.c:80
 msgid "UFO"
 msgstr "ΟΥΦΟ"
 
-#: client/campaign/cp_aircraft.c:779
+#: client/campaign/cp_aircraft.c:781
 #, fuzzy, c-format
 msgid "A new %s is ready in %s"
 msgstr "Η ομάδα χρησιμοποιήτε ήδη"
 
-#: client/campaign/cp_aircraft.c:780 client/campaign/cp_aircraft.c:1231
-#: client/campaign/cp_aircraft.c:1247 client/campaign/cp_aircraft.c:1292
-#: client/campaign/cp_aircraft.c:1396 client/campaign/cp_aircraft.c:1420
-#: client/campaign/cp_aircraft.c:2216
+#: client/campaign/cp_aircraft.c:782 client/campaign/cp_aircraft.c:1233
+#: client/campaign/cp_aircraft.c:1249 client/campaign/cp_aircraft.c:1294
+#: client/campaign/cp_aircraft.c:1398 client/campaign/cp_aircraft.c:1422
+#: client/campaign/cp_aircraft.c:2226
 #: client/campaign/cp_aircraft_callbacks.c:138
 #: client/campaign/cp_aircraft_callbacks.c:146
 #: client/campaign/cp_aircraft_callbacks.c:154
-#: client/campaign/cp_airfight.c:361 client/campaign/cp_airfight.c:381
+#: client/campaign/cp_airfight.c:362 client/campaign/cp_airfight.c:382
 #: client/campaign/cp_aliencont.c:188 client/campaign/cp_aliencont.c:217
 #: client/campaign/cp_aliencont.c:234 client/campaign/cp_aliencont.c:244
-#: client/campaign/cp_base.c:787 client/campaign/cp_base.c:1358
-#: client/campaign/cp_base.c:2511 client/campaign/cp_base.c:2516
-#: client/campaign/cp_base.c:3225 client/campaign/cp_base_callbacks.c:65
-#: client/campaign/cp_base_callbacks.c:182
-#: client/campaign/cp_base_callbacks.c:232
-#: client/campaign/cp_base_callbacks.c:682
-#: client/campaign/cp_base_callbacks.c:691
-#: client/campaign/cp_base_callbacks.c:711
-#: client/campaign/cp_base_callbacks.c:721
-#: client/campaign/cp_base_callbacks.c:732
-#: client/campaign/cp_base_callbacks.c:739
-#: client/campaign/cp_base_callbacks.c:747
-#: client/campaign/cp_base_callbacks.c:752
-#: client/campaign/cp_base_callbacks.c:757 client/campaign/cp_campaign.c:1568
-#: client/campaign/cp_campaign.c:1613 client/campaign/cp_campaign.c:1667
-#: client/campaign/cp_campaign.c:1679 client/campaign/cp_campaign.c:1681
+#: client/campaign/cp_base.c:788 client/campaign/cp_base.c:1362
+#: client/campaign/cp_base.c:2516 client/campaign/cp_base.c:2521
+#: client/campaign/cp_base.c:3230 client/campaign/cp_base_callbacks.c:71
+#: client/campaign/cp_base_callbacks.c:187
+#: client/campaign/cp_base_callbacks.c:237
+#: client/campaign/cp_base_callbacks.c:684
+#: client/campaign/cp_base_callbacks.c:693
+#: client/campaign/cp_base_callbacks.c:713
+#: client/campaign/cp_base_callbacks.c:723
+#: client/campaign/cp_base_callbacks.c:734
+#: client/campaign/cp_base_callbacks.c:741
+#: client/campaign/cp_base_callbacks.c:749
+#: client/campaign/cp_base_callbacks.c:754
+#: client/campaign/cp_base_callbacks.c:759 client/campaign/cp_campaign.c:1548
+#: client/campaign/cp_campaign.c:1593 client/campaign/cp_campaign.c:1646
+#: client/campaign/cp_campaign.c:1659 client/campaign/cp_campaign.c:1661
 #: client/campaign/cp_installation_callbacks.c:134
 #: client/campaign/cp_installation_callbacks.c:181
 #: client/campaign/cp_mapfightequip.c:343
@@ -11628,13 +12208,13 @@ msgstr "Η ομάδα χρησιμοποιήτε ήδη"
 #: client/campaign/cp_mapfightequip.c:370
 #: client/campaign/cp_mapfightequip.c:382
 #: client/campaign/cp_market_callbacks.c:578
-#: client/campaign/cp_market_callbacks.c:583 client/campaign/cp_missions.c:725
-#: client/campaign/cp_missions.c:1154 client/campaign/cp_nations.c:88
+#: client/campaign/cp_market_callbacks.c:583 client/campaign/cp_missions.c:727
+#: client/campaign/cp_missions.c:1157 client/campaign/cp_nations.c:88
 #: client/campaign/cp_nations.c:100 client/campaign/cp_nations.c:110
 #: client/campaign/cp_nations.c:120 client/campaign/cp_nations.c:130
 #: client/campaign/cp_nations.c:141 client/campaign/cp_nations.c:157
 #: client/campaign/cp_nations.c:173 client/campaign/cp_nations.c:179
-#: client/campaign/cp_nations.c:187 client/campaign/cp_popup.c:492
+#: client/campaign/cp_nations.c:187 client/campaign/cp_popup.c:507
 #: client/campaign/cp_produce.c:359 client/campaign/cp_produce.c:369
 #: client/campaign/cp_produce.c:380 client/campaign/cp_produce.c:390
 #: client/campaign/cp_produce.c:401
@@ -11644,60 +12224,60 @@ msgstr "Η ομάδα χρησιμοποιήτε ήδη"
 #: client/campaign/cp_research_callbacks.c:618
 #: client/campaign/cp_research_callbacks.c:644
 #: client/campaign/cp_research_callbacks.c:811
-#: client/campaign/cp_research_callbacks.c:814 client/campaign/cp_ufo.c:345
-#: client/campaign/cp_ufo.c:715 client/campaign/cp_ufo.c:719
-#: client/campaign/cp_ufo.c:723
+#: client/campaign/cp_research_callbacks.c:814 client/campaign/cp_ufo.c:355
+#: client/campaign/cp_ufo.c:731 client/campaign/cp_ufo.c:735
+#: client/campaign/cp_ufo.c:739
 #: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:394
 #: client/multiplayer/mp_serverlist.c:461
 msgid "Notice"
 msgstr "Παρατήρηση"
 
-#: client/campaign/cp_aircraft.c:845
+#: client/campaign/cp_aircraft.c:847
 #, fuzzy
 msgid "No operational hangars at that base."
 msgstr "Όχι υπόστεγα σε αυτή την βάση."
 
-#: client/campaign/cp_aircraft.c:849
+#: client/campaign/cp_aircraft.c:851
 #, fuzzy
 msgid "No free hangars at that base."
 msgstr "Όχι υπόστεγα σε αυτή την βάση."
 
-#: client/campaign/cp_aircraft.c:852
+#: client/campaign/cp_aircraft.c:854
 msgid "Insufficient free crew quarter space at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:855
+#: client/campaign/cp_aircraft.c:857
 msgid "Insufficient storage space at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:859
+#: client/campaign/cp_aircraft.c:861
 msgid "That base is beyond this aircraft's range."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1230
+#: client/campaign/cp_aircraft.c:1232
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1246
+#: client/campaign/cp_aircraft.c:1248
 #, fuzzy, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Το μεταγωγικό σας έχει λίγα καύσιμα και επιστρέφει στην βάση"
 
-#: client/campaign/cp_aircraft.c:1292
+#: client/campaign/cp_aircraft.c:1294
 #, fuzzy, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "Το μεταγωγικό σας έχει λίγα καύσιμα και επιστρέφει στην βάση"
 
-#: client/campaign/cp_aircraft.c:1396
+#: client/campaign/cp_aircraft.c:1398
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1420
+#: client/campaign/cp_aircraft.c:1422
 msgid "Insufficient fuel."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:2216
+#: client/campaign/cp_aircraft.c:2226
 #, fuzzy, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "Το μεταγωγικό σας έχει λίγα καύσιμα και επιστρέφει στην βάση"
@@ -11762,24 +12342,24 @@ msgstr "Θωράκιση:\t%i on 1\n"
 msgid "Electronics:\t%i on %i"
 msgstr "Ηλεκτρονικά:\t%i on %i"
 
-#: client/campaign/cp_airfight.c:361
+#: client/campaign/cp_airfight.c:362
 #, fuzzy, c-format
 msgid "A UFO is shooting at %s"
 msgstr "το ΟΥΦΟ πυροβολει στο %s"
 
-#: client/campaign/cp_airfight.c:381
+#: client/campaign/cp_airfight.c:382
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr "Το σκάφος μας δεν έχει άλλα πυρομαχικά - επιστρέφει στη βάση."
 
-#: client/campaign/cp_airfight.c:460 client/campaign/cp_airfight.c:483
+#: client/campaign/cp_airfight.c:461 client/campaign/cp_airfight.c:484
 msgid "Interception"
 msgstr "Αναχαίτιση"
 
-#: client/campaign/cp_airfight.c:460
+#: client/campaign/cp_airfight.c:461
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Αναχαίτιση ΟΥΦΟ επιτυχήςl -- το ΟΥΦΟ χάθηκε στη θάλασσα."
 
-#: client/campaign/cp_airfight.c:483 client/campaign/cp_campaign.c:1681
+#: client/campaign/cp_airfight.c:484 client/campaign/cp_campaign.c:1661
 msgid "You've lost the battle"
 msgstr "Έχασες την μάχη"
 
@@ -11820,283 +12400,283 @@ msgstr "Force start"
 msgid "None"
 msgstr "Κανένα"
 
-#: client/campaign/cp_base.c:786
+#: client/campaign/cp_base.c:787
 #, fuzzy
 msgid "Base is under attack, you can't destroy buildings !"
 msgstr "Η βάση δέχετε επίθεση, δε μπορείτε να προσπαλάσετε αυτό το κτήριο !"
 
-#: client/campaign/cp_base.c:798
+#: client/campaign/cp_base.c:799
 #, fuzzy
 msgid "Destroy Entrance"
 msgstr "Αποθήκη"
 
-#: client/campaign/cp_base.c:798
+#: client/campaign/cp_base.c:799
 #, fuzzy
 msgid "You can't destroy the entrance of the base!"
 msgstr "Δε μπορείτε να βάλετε σε λίστα άλλα αντικείμενα!"
 
-#: client/campaign/cp_base.c:807
+#: client/campaign/cp_base.c:808
 #, fuzzy
 msgid "Destroy Hangar"
 msgstr "Καταστροφή κτηρίου"
 
-#: client/campaign/cp_base.c:807
+#: client/campaign/cp_base.c:808
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
 
-#: client/campaign/cp_base.c:808
+#: client/campaign/cp_base.c:809
 #, fuzzy
 msgid "Go to hangar"
 msgstr "Επιστροφή στο υπόστεγο"
 
-#: client/campaign/cp_base.c:808
+#: client/campaign/cp_base.c:809
 #, fuzzy
 msgid "Go to hangar without destroying building"
 msgstr "Είστε σίγουρος ότι θέλετε να καταστρέψετε αυτό το κτήριο;"
 
-#: client/campaign/cp_base.c:809 client/campaign/cp_base.c:819
-#: client/campaign/cp_base.c:829 client/campaign/cp_base.c:842
+#: client/campaign/cp_base.c:810 client/campaign/cp_base.c:820
+#: client/campaign/cp_base.c:830 client/campaign/cp_base.c:843
 msgid "Destroy the building"
 msgstr "Καταστρέψτε το κτήρο"
 
-#: client/campaign/cp_base.c:811 client/campaign/cp_base.c:821
-#: client/campaign/cp_base.c:831
+#: client/campaign/cp_base.c:812 client/campaign/cp_base.c:822
+#: client/campaign/cp_base.c:832
 #, fuzzy
 msgid "Go to transfer menu without destroying the building"
 msgstr "Είστε σίγουρος ότι θέλετε να καταστρέψετε αυτό το κτήριο;"
 
-#: client/campaign/cp_base.c:817
+#: client/campaign/cp_base.c:818
 #, fuzzy
 msgid "Destroy Quarter"
 msgstr "Καταστρέψτε"
 
-#: client/campaign/cp_base.c:817
+#: client/campaign/cp_base.c:818
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
 
-#: client/campaign/cp_base.c:818
+#: client/campaign/cp_base.c:819
 msgid "Dismiss"
 msgstr ""
 
-#: client/campaign/cp_base.c:818
+#: client/campaign/cp_base.c:819
 #, fuzzy
 msgid "Go to hiring menu without destroying building"
 msgstr "Είστε σίγουρος ότι θέλετε να καταστρέψετε αυτό το κτήριο;"
 
-#: client/campaign/cp_base.c:827
+#: client/campaign/cp_base.c:828
 #, fuzzy
 msgid "Destroy Storage"
 msgstr "Αποθήκη"
 
-#: client/campaign/cp_base.c:827
+#: client/campaign/cp_base.c:828
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
 
-#: client/campaign/cp_base.c:828
+#: client/campaign/cp_base.c:829
 #, fuzzy
 msgid "Go to buy/sell menu without destroying building"
 msgstr "Είστε σίγουρος ότι θέλετε να καταστρέψετε αυτό το κτήριο;"
 
-#: client/campaign/cp_base.c:828
+#: client/campaign/cp_base.c:829
 #, fuzzy
 msgid "Go to storage"
 msgstr "Πήγαινε στις επιλογές"
 
-#: client/campaign/cp_base.c:840
+#: client/campaign/cp_base.c:841
 msgid "Are you sure you want to destroy this building?"
 msgstr "Είστε σίγουρος ότι θέλετε να καταστρέψετε αυτό το κτήριο;"
 
-#: client/campaign/cp_base.c:840
+#: client/campaign/cp_base.c:841
 msgid "Destroy building"
 msgstr "Καταστροφή κτηρίου"
 
-#: client/campaign/cp_base.c:859
+#: client/campaign/cp_base.c:860
 msgid "Not set"
 msgstr "Όχι ρυθμισμένο"
 
-#: client/campaign/cp_base.c:865
+#: client/campaign/cp_base.c:866
 #, c-format
 msgid "Already %i in base"
 msgstr "Ήδη  %i στη βάση"
 
-#: client/campaign/cp_base.c:871
+#: client/campaign/cp_base.c:872
 msgid "Construction finished"
 msgstr "Κατασκευή ολοκληρώθηκε"
 
-#: client/campaign/cp_base.c:875
+#: client/campaign/cp_base.c:876
 msgid "Working 100%"
 msgstr "Εργασία 100%"
 
-#: client/campaign/cp_base.c:879
+#: client/campaign/cp_base.c:880
 msgid "Not operational, depends on"
 msgstr ""
 
-#: client/campaign/cp_base.c:883
+#: client/campaign/cp_base.c:884
 msgid "Down"
 msgstr "Κάτω"
 
-#: client/campaign/cp_base.c:1358
+#: client/campaign/cp_base.c:1362
 msgid "Not enough credits to build this\n"
 msgstr "Όχι αρκετά χρήματα για να χτίσετε αυτό\n"
 
-#: client/campaign/cp_base.c:1440
+#: client/campaign/cp_base.c:1444
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Κόστη:\t%i c\n"
 
-#: client/campaign/cp_base.c:1443
+#: client/campaign/cp_base.c:1447
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i ημέρα για χτίσιμο\n"
 msgstr[1] "%i ημέρες για χτίσιμο\n"
 
-#: client/campaign/cp_base.c:1446 client/campaign/cp_ufopedia.c:259
+#: client/campaign/cp_base.c:1450 client/campaign/cp_ufopedia.c:259
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Τρέχοντα έξοδα:\t%i c\n"
 
-#: client/campaign/cp_base.c:1449 client/campaign/cp_ufopedia.c:256
+#: client/campaign/cp_base.c:1453 client/campaign/cp_ufopedia.c:256
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Ανάγκες:\t%s\n"
 
-#: client/campaign/cp_base.c:2258
+#: client/campaign/cp_base.c:2263
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "Όχι σκάφος σε αυτήν την βάση - Πρέπει πρώτα να αγοράσεις ή να μεταφέρεις ενα σκάφος\n"
 
-#: client/campaign/cp_base.c:2258 client/campaign/cp_base.c:2260
+#: client/campaign/cp_base.c:2263 client/campaign/cp_base.c:2265
 #: client/campaign/cp_market_callbacks.c:560
 #: client/campaign/cp_market_callbacks.c:565
 #: client/campaign/cp_market_callbacks.c:668
 #: client/campaign/cp_market_callbacks.c:670 client/campaign/cp_save.c:374
-#: client/multiplayer/mp_team.c:172 client/multiplayer/mp_team.c:193
+#: client/multiplayer/mp_team.c:178 client/multiplayer/mp_team.c:199
 msgid "Note"
 msgstr "Σημείωση"
 
-#: client/campaign/cp_base.c:2260
+#: client/campaign/cp_base.c:2265
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Όχι σκάφος στη βάση - Πρέπει πρώτα να αγοράσετε ένα σκάφος\n"
 
-#: client/campaign/cp_base.c:2406
+#: client/campaign/cp_base.c:2411
 #, fuzzy, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Η κατασκευή του %s ολοκληρώθηκε στη βάση %s."
 
-#: client/campaign/cp_base.c:2407
+#: client/campaign/cp_base.c:2412
 msgid "Building finished"
 msgstr "Κτήριο ολοκληρώθηκε"
 
-#: client/campaign/cp_base.c:2509
+#: client/campaign/cp_base.c:2514
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "By selling %s you gathered %i credits."
 
-#: client/campaign/cp_base.c:2510
+#: client/campaign/cp_base.c:2515
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i collected item"
 msgstr[1] "%i collected items"
 
-#: client/campaign/cp_base.c:2514
+#: client/campaign/cp_base.c:2519
 #, fuzzy, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "Not enough storage space in base %s. %s"
 
-#: client/campaign/cp_base.c:2515
+#: client/campaign/cp_base.c:2520
 #, fuzzy, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "%i item was sold."
 msgstr[1] "%i items were sold."
 
-#: client/campaign/cp_base.c:3223
+#: client/campaign/cp_base.c:3228
 #, fuzzy, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 
-#: client/campaign/cp_base_callbacks.c:65
+#: client/campaign/cp_base_callbacks.c:71
 #, c-format
 msgid "%s has been destroyed by an antimatter storage breach."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:174
+#: client/campaign/cp_base_callbacks.c:179
 #, fuzzy, c-format
 msgid "Base #%i"
 msgstr "Βάση #2"
 
-#: client/campaign/cp_base_callbacks.c:178
+#: client/campaign/cp_base_callbacks.c:183
 msgid "Home"
 msgstr "Αρχηγείο Φάλαγγας"
 
-#: client/campaign/cp_base_callbacks.c:182
+#: client/campaign/cp_base_callbacks.c:187
 msgid "You've reached the base limit."
 msgstr "Φτάσατε το όριο βάσεων."
 
-#: client/campaign/cp_base_callbacks.c:215
+#: client/campaign/cp_base_callbacks.c:220
 #, c-format
 msgid "A new base has been built: %s (nation: %s)"
 msgstr "Μία νέα βάση χτίστηκε: %s (έθνος: %s)"
 
-#: client/campaign/cp_base_callbacks.c:217
+#: client/campaign/cp_base_callbacks.c:222
 #, c-format
 msgid "A new base has been built: %s"
 msgstr "Μία νέα βάση χτίστηκε: %s"
 
-#: client/campaign/cp_base_callbacks.c:218
+#: client/campaign/cp_base_callbacks.c:223
 msgid "Base built"
 msgstr "Βάση χτίστηκε"
 
-#: client/campaign/cp_base_callbacks.c:231
+#: client/campaign/cp_base_callbacks.c:236
 msgid "Not enough credits to set up a new base."
 msgstr "Όχι αρκετά χρήματα για χτίσημο νέας βάσης."
 
-#: client/campaign/cp_base_callbacks.c:290
+#: client/campaign/cp_base_callbacks.c:295
 #, fuzzy
 msgid "Buy or produce at least one aircraft first."
 msgstr "Αγορά ή παραγωγή νέου σκάφους"
 
-#: client/campaign/cp_base_callbacks.c:292
+#: client/campaign/cp_base_callbacks.c:297
 #, fuzzy, c-format
 msgid "Build a %s or %s first."
 msgstr "Χτίστε ένα  %s πρώτα."
 
-#: client/campaign/cp_base_callbacks.c:298
-#: client/campaign/cp_base_callbacks.c:308
+#: client/campaign/cp_base_callbacks.c:303
 #: client/campaign/cp_base_callbacks.c:313
-#: client/campaign/cp_base_callbacks.c:323
+#: client/campaign/cp_base_callbacks.c:318
 #: client/campaign/cp_base_callbacks.c:328
-#: client/campaign/cp_base_callbacks.c:756
+#: client/campaign/cp_base_callbacks.c:333
+#: client/campaign/cp_base_callbacks.c:758
 #, c-format
 msgid "Build a %s first."
 msgstr "Χτίστε ένα  %s πρώτα."
 
-#: client/campaign/cp_base_callbacks.c:303
+#: client/campaign/cp_base_callbacks.c:308
 #, fuzzy
 msgid "Build at least a second base to transfer equipment or personnel"
 msgstr "Μεταφορά εξοπλισμού ή προσωπικού"
 
-#: client/campaign/cp_base_callbacks.c:318
+#: client/campaign/cp_base_callbacks.c:323
 #, fuzzy, c-format
 msgid "Build %s first."
 msgstr "Χτίστε ένα  %s πρώτα."
 
-#: client/campaign/cp_base_callbacks.c:681
+#: client/campaign/cp_base_callbacks.c:683
 msgid "Base is under attack, you can't access this building !"
 msgstr "Η βάση δέχετε επίθεση, δε μπορείτε να προσπαλάσετε αυτό το κτήριο !"
 
-#: client/campaign/cp_base_callbacks.c:690
+#: client/campaign/cp_base_callbacks.c:692
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Χρειάζεστε τουλάχιστον ένα υπόστεγο (και τα παρελκόμενά) για να χρησιμοποιήσετε ένα σκάφος."
 
-#: client/campaign/cp_base_callbacks.c:709
+#: client/campaign/cp_base_callbacks.c:711
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -12111,77 +12691,77 @@ msgstr[1] ""
 "Η κατασκευή θα ολοκληρωθεί σε %i ημέρες.\n"
 "Παρακαλώ περιμένετε να εισέλθετε."
 
-#: client/campaign/cp_base_callbacks.c:720
+#: client/campaign/cp_base_callbacks.c:722
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Χρειάζεστε ένα %s για να κάνετε λειτουργικό το %s."
 
-#: client/campaign/cp_base_callbacks.c:730
+#: client/campaign/cp_base_callbacks.c:732
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Το %s δεν ολοκληρώθηκε ακόμα, και χρειάζεται να χρησιμοποιήσει το %s."
 
-#: client/campaign/cp_base_callbacks.c:737
+#: client/campaign/cp_base_callbacks.c:739
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr "Σιγουρευτήτε ότι τα παρελκόμενα του κτηρίου %s (%s) είναι λειτουργικά, έτσι ώστε το κτήριο %s να μπορεί να χρησιμοποιηθεί."
 
-#: client/campaign/cp_base_callbacks.c:745
-#: client/campaign/cp_base_callbacks.c:750
+#: client/campaign/cp_base_callbacks.c:747
+#: client/campaign/cp_base_callbacks.c:752
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "You need to recruit %s to use building %s."
 
-#: client/campaign/cp_base_callbacks.c:784
+#: client/campaign/cp_base_callbacks.c:786
 #, fuzzy
 msgid "^BAircraft\n"
 msgstr "Σκάφος"
 
-#: client/campaign/cp_base_callbacks.c:791
+#: client/campaign/cp_base_callbacks.c:793
 #, fuzzy
 msgid "^BEmployees\n"
 msgstr "Υπάλληλοι"
 
-#: client/campaign/cp_base_callbacks.c:800
+#: client/campaign/cp_base_callbacks.c:802
 #, fuzzy
 msgid "^BAliens\n"
 msgstr "Εξωγήινοι"
 
-#: client/campaign/cp_base_callbacks.c:812
+#: client/campaign/cp_base_callbacks.c:814
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:836
+#: client/campaign/cp_base_callbacks.c:838
 msgid "day"
 msgid_plural "days"
 msgstr[0] "μέρα"
 msgstr[1] "μέρες"
 
-#: client/campaign/cp_base_callbacks.c:846
+#: client/campaign/cp_base_callbacks.c:848
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:866
+#: client/campaign/cp_base_callbacks.c:868
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:870
-#: client/campaign/cp_base_callbacks.c:886
+#: client/campaign/cp_base_callbacks.c:872
+#: client/campaign/cp_base_callbacks.c:888
 #, fuzzy
 msgid "Nothing\n"
 msgstr "None\n"
 
-#: client/campaign/cp_base_callbacks.c:875
+#: client/campaign/cp_base_callbacks.c:877
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:880
+#: client/campaign/cp_base_callbacks.c:882
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:924 client/campaign/cp_campaign.c:815
+#: client/campaign/cp_base_callbacks.c:926 client/campaign/cp_campaign.c:801
 #: client/campaign/cp_market_callbacks.c:271
 #, c-format
 msgid "%i c"
@@ -12240,24 +12820,24 @@ msgstr "Θέση %i:\t%s\n"
 msgid "No defence of this type in this base"
 msgstr "Όχι τέτοιο είδους άμυνα στη βάση\n"
 
-#: client/campaign/cp_campaign.c:318
+#: client/campaign/cp_campaign.c:319
 msgid "You've gone too far into debt."
 msgstr "Πέσατε πολύ μέσα στο χρέος."
 
-#: client/campaign/cp_campaign.c:326
+#: client/campaign/cp_campaign.c:327
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr ""
 
-#: client/campaign/cp_campaign.c:332
+#: client/campaign/cp_campaign.c:333
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr "Αποτύχατε να προστατέψετε την Γή. Τα σπίτια μας και οι άνθρωποί μας μολύνθηκαν απο τους εξωγήινους. Μόνο μία χούφτα ανθρώπων παρέμειναν αμόλυντοι, και δεν είναι ικανοί να το σταματήσουν. Η ΦΑΛΑΓΓΑ δεν είναι πλεόν ικανή να λειτουργήσει σαν μία αξιόπιστη  μονάδα.Τίποτα δε στέκεται μεταξύ των εξωγήινων και την απόλυτη νίκη."
 
-#: client/campaign/cp_campaign.c:350
+#: client/campaign/cp_campaign.c:351
 #, fuzzy
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "Υπό τις διαταγές σου, η ΦΑΛΑΓΓΑ απέτυχε παταγωδώς να υπερασπίσει τους αθώους πολίτες. Δεκάδες έχασαν την ζωή τους στην ανικανότητά σου να χειριστείς με επιτυχία την εξωγήινοι απειλή. Τα Ηνωμένα Έθνη, είναι δυσαρεστημένα με την απόδοσή σου, και γι αυτό αποφάσισαν να σου αφαιρέσουν την διοίκηση και να διαλύσουν την ΦΑΛΑΓΓΑ. Καμία άλλη προσπάθεια σε παγκόσμιο επίπεδο δεν έγινε ποτέ ξανά. Τα έθνη της Γής προσπαθούν μόνα τους να σταθούν απέναντι στους εξωγήινους, και τελικά πέφτουν το ένα πίσω απο το άλλο."
 
-#: client/campaign/cp_campaign.c:837
+#: client/campaign/cp_campaign.c:823
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -12268,7 +12848,7 @@ msgstr ""
 "Ήτες:\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:842
+#: client/campaign/cp_campaign.c:828
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -12279,50 +12859,50 @@ msgstr ""
 "Ενεργά:\t%i\n"
 "Επιτιθέμενα:\t%i\n"
 
-#: client/campaign/cp_campaign.c:857 client/campaign/cp_ufopedia.c:1254
+#: client/campaign/cp_campaign.c:843 client/campaign/cp_ufopedia.c:1254
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_campaign.c:860
+#: client/campaign/cp_campaign.c:846
 #, c-format
 msgid ""
 "\n"
 "Funding this month:\t%d"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:898 client/campaign/cp_ufopedia.c:237
+#: client/campaign/cp_campaign.c:884 client/campaign/cp_ufopedia.c:237
 #: client/cl_inventory_callbacks.c:149
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_campaign.c:904
+#: client/campaign/cp_campaign.c:890
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Υπάληλοι:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:917
+#: client/campaign/cp_campaign.c:903
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Σκάφος:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:928
+#: client/campaign/cp_campaign.c:914
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Βάση (%s):\t%i c\n"
 
-#: client/campaign/cp_campaign.c:933
+#: client/campaign/cp_campaign.c:919
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Διαχειριστικά έξοδα:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:940
+#: client/campaign/cp_campaign.c:926
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Χρέος:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:943
+#: client/campaign/cp_campaign.c:929
 #, c-format
 msgid ""
 "\n"
@@ -12333,12 +12913,12 @@ msgstr ""
 "\t-------\n"
 "Σύνολα:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:948
+#: client/campaign/cp_campaign.c:934
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Μεγ. επιτρπόμενα χρέη: %ic\n"
 
-#: client/campaign/cp_campaign.c:953
+#: client/campaign/cp_campaign.c:939
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -12347,35 +12927,35 @@ msgstr ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 
-#: client/campaign/cp_campaign.c:1568
+#: client/campaign/cp_campaign.c:1548
 #, fuzzy
 msgid "Collected dead alien bodies"
 msgstr "Μαζέυτηκαν %i πτώματα εξωγήινων"
 
-#: client/campaign/cp_campaign.c:1613
+#: client/campaign/cp_campaign.c:1593
 msgid "Your dropship is not near the landing zone"
 msgstr "Το μεταγωγικό σας σκάφος δεν έιναι κοντά στη ζώνη ρίψης"
 
-#: client/campaign/cp_campaign.c:1666 client/campaign/cp_missions.c:1153
+#: client/campaign/cp_campaign.c:1645 client/campaign/cp_missions.c:1156
 #, fuzzy, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Άμυνα της βάσης: %s επιτυχής!"
 
-#: client/campaign/cp_campaign.c:1679
+#: client/campaign/cp_campaign.c:1659
 msgid "You've won the battle"
 msgstr "Νίκησες την μάχη"
 
-#: client/campaign/cp_campaign.c:1697
+#: client/campaign/cp_campaign.c:1677
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Νεκροί εξωγήινοι\t%i\n"
 
-#: client/campaign/cp_campaign.c:1698
+#: client/campaign/cp_campaign.c:1678
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Εξωγήινοι που αιχμαλωτίστηκαν\t%i\n"
 
-#: client/campaign/cp_campaign.c:1699
+#: client/campaign/cp_campaign.c:1679
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -12384,22 +12964,22 @@ msgstr ""
 "Επιζώντες εξωγήινοι\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1701
+#: client/campaign/cp_campaign.c:1681
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Στρατιώτες που σκοτώθηκαν απο εξωγήινους\t%i\n"
 
-#: client/campaign/cp_campaign.c:1702
+#: client/campaign/cp_campaign.c:1682
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Στρατιώτες που χάθηκαν εν δράση\t%i\n"
 
-#: client/campaign/cp_campaign.c:1703
+#: client/campaign/cp_campaign.c:1683
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Απώλειες απο φίλια πυρά της ΦΑΛΑΓΓΑΣ\t%i\n"
 
-#: client/campaign/cp_campaign.c:1704
+#: client/campaign/cp_campaign.c:1684
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -12408,17 +12988,17 @@ msgstr ""
 "Επιζώντες ΦΑΛΑΓΓΑΣ\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1706
+#: client/campaign/cp_campaign.c:1686
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Πολίτες που σκοτώθηκαν απο εξωγήινους\t%i\n"
 
-#: client/campaign/cp_campaign.c:1707
+#: client/campaign/cp_campaign.c:1687
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Πολίτες που σκοτώθηκαν απο φίλια πυρά\t%i\n"
 
-#: client/campaign/cp_campaign.c:1708
+#: client/campaign/cp_campaign.c:1688
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -12427,24 +13007,24 @@ msgstr ""
 "Πολίτες που σώθηκαν\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1709
+#: client/campaign/cp_campaign.c:1689
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Συγκεντρωμένα αντικέιμενα (τύπος/όλα)\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1762
+#: client/campaign/cp_campaign.c:1742
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s προάχθηκε σε %s.\n"
 
-#: client/campaign/cp_campaign.c:1764
+#: client/campaign/cp_campaign.c:1744
 #, fuzzy, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s παρασημοφορήθηκε και προτάθηκε για το βαθμό του %s\\για γενναίες πράξεις πέραν του καθήκοντος.\n"
 
-#: client/campaign/cp_campaign.c:1765
+#: client/campaign/cp_campaign.c:1745
 msgid "Soldier promoted"
 msgstr "Προαγωγή στρατιώτη"
 
@@ -12464,25 +13044,25 @@ msgstr ""
 "Δεν έχετε αρκετά διαμερίσματα για τους υπαλλήλους σας.\n"
 "Χτίστε περισσότερα διαμερίσματα."
 
-#: client/campaign/cp_employee_callbacks.c:302
-#: client/campaign/cp_employee_callbacks.c:356
+#: client/campaign/cp_employee_callbacks.c:285
+#: client/campaign/cp_employee_callbacks.c:339
 #, fuzzy
 msgid "Could not fire employee"
 msgstr "Μίσθωση Ατόμων"
 
-#: client/campaign/cp_employee_callbacks.c:362
+#: client/campaign/cp_employee_callbacks.c:345
 #, fuzzy
 msgid "Could not hire employee"
 msgstr "Μίσθωση Ατόμων"
 
-#: client/campaign/cp_event.c:250 client/campaign/cp_save.c:275
+#: client/campaign/cp_event.c:359 client/campaign/cp_save.c:275
 #: client/campaign/cp_save.c:295 client/campaign/cp_time.c:74
 #: client/campaign/cp_ufopedia.c:530 client/campaign/cp_ufopedia.c:535
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/campaign/cp_event.c:256
+#: client/campaign/cp_event.c:365
 #, c-format
 msgid "You've got a new mail: %s"
 msgstr "Έχετε νέο email: %s"
@@ -12775,11 +13355,11 @@ msgstr "Βαρύ"
 msgid "Unknown weight"
 msgstr "Άγνωστο βάρος"
 
-#: client/campaign/cp_market.c:108 client/campaign/cp_market_callbacks.c:727
+#: client/campaign/cp_market.c:115 client/campaign/cp_market_callbacks.c:727
 msgid "Not enough storage space"
 msgstr "Όχι αρκετός αποθηκευτικός χώρος"
 
-#: client/campaign/cp_market.c:108 client/campaign/cp_market_callbacks.c:727
+#: client/campaign/cp_market.c:115 client/campaign/cp_market_callbacks.c:727
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -13007,32 +13587,32 @@ msgid ""
 "   - The UFO:AI development team"
 msgstr ""
 
-#: client/campaign/cp_missions.c:427
+#: client/campaign/cp_missions.c:426
 msgid "Landed UFO"
 msgstr ""
 
-#: client/campaign/cp_missions.c:429
+#: client/campaign/cp_missions.c:428
 #, fuzzy
 msgid "Terror mission"
 msgstr "Αποστολή μεταφοράς"
 
-#: client/campaign/cp_missions.c:431
+#: client/campaign/cp_missions.c:430
 msgid "Base attack"
 msgstr "Επίθεση βάσης"
 
-#: client/campaign/cp_missions.c:435
+#: client/campaign/cp_missions.c:434
 #, fuzzy
 msgid "Harvesting mission"
 msgstr "Μετακίνηση σε αποστολή"
 
-#: client/campaign/cp_missions.c:724
+#: client/campaign/cp_missions.c:726
 #, fuzzy, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "Αναφορά εξωγήινης δραστηριότητας: '%s'"
 
-#: client/campaign/cp_missions.c:1250
-#: client/campaign/missions/cp_mission_harvest.c:163
-#: client/campaign/missions/cp_mission_recon.c:160
+#: client/campaign/cp_missions.c:1253
+#: client/campaign/missions/cp_mission_harvest.c:164
+#: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
 msgstr "Όχι έθνος"
 
@@ -13211,22 +13791,32 @@ msgstr "Στη βάση"
 msgid "Mission\t%s (%s)\n"
 msgstr "Αποστολή\t%s (%s)\n"
 
-#: client/campaign/cp_popup.c:403
+#: client/campaign/cp_popup.c:345
+#, c-format
+msgid "%s (%i/%i)\t%s\t%s\t%s"
+msgstr ""
+
+#: client/campaign/cp_popup.c:363
 #, fuzzy
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
 msgstr "No craft available, or no tactical teams assigned to available craft."
 
-#: client/campaign/cp_popup.c:405
+#: client/campaign/cp_popup.c:424
+#, fuzzy, c-format
+msgid "%s%s (%i/%i)\t%s\t%s"
+msgstr "%s\t%s\t(%i/%i)\n"
+
+#: client/campaign/cp_popup.c:442
 #, fuzzy
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
 msgstr "No craft available, no weapon or ammo equipped or target out of reach."
 
-#: client/campaign/cp_popup.c:439
+#: client/campaign/cp_popup.c:458
 #, fuzzy
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr "Κανένα αμυντικό σύστημα λειτουργικό ή κανένα όπλο ή πυρομαχικά εξοπλισμένα."
 
-#: client/campaign/cp_popup.c:492
+#: client/campaign/cp_popup.c:507
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -13434,29 +14024,29 @@ msgstr "Δέν έχετε αρκετά απο τα υλικά που χρειά�
 msgid "Disassembling of %s started"
 msgstr "Διάλυση του %s ξεκίνησε"
 
-#: client/campaign/cp_research.c:84
+#: client/campaign/cp_research.c:89
 #, c-format
 msgid "A research project has been completed: %s\n"
 msgstr "Ένα ερευνητικό πρόγραμα ολοκληρώθηκε: %s\n"
 
-#: client/campaign/cp_research.c:85
+#: client/campaign/cp_research.c:90
 msgid "Research finished"
 msgstr "Έρευνα τελείωσε"
 
-#: client/campaign/cp_research.c:131 client/campaign/cp_research.c:329
+#: client/campaign/cp_research.c:136 client/campaign/cp_research.c:330
 #, c-format
 msgid "New research proposal: %s\n"
 msgstr "Πρόταση νέας τεχνολογίας: %s\n"
 
-#: client/campaign/cp_research.c:132
+#: client/campaign/cp_research.c:137
 msgid "Unknown Technology researchable"
 msgstr "Έρευνα άγνωστης τεχνολογίας"
 
-#: client/campaign/cp_research.c:330
+#: client/campaign/cp_research.c:331
 msgid "Unknown Technology found"
 msgstr "Άγνωστη τεχνολογία βρέθηκε"
 
-#: client/campaign/cp_research.c:693 client/campaign/cp_research.c:697
+#: client/campaign/cp_research.c:692 client/campaign/cp_research.c:696
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -13464,25 +14054,25 @@ msgstr ""
 "Όχι ελεύθερος χώρος στα εργαστήρια.\n"
 "Χτίστε περισοτερα εργαστήρια.\n"
 
-#: client/campaign/cp_research.c:693 client/campaign/cp_research.c:697
+#: client/campaign/cp_research.c:692 client/campaign/cp_research.c:696
 msgid "Not enough laboratories"
 msgstr "Όχι αρκετά εργαστήρια"
 
-#: client/campaign/cp_research.c:814
+#: client/campaign/cp_research.c:837
 #, c-format
 msgid "Research prerequisites of %s does not met at %s. Research halted!"
 msgstr ""
 
-#: client/campaign/cp_research.c:815
+#: client/campaign/cp_research.c:838
 #, fuzzy
 msgid "Research halted"
 msgstr "Έρευνα τελείωσε"
 
-#: client/campaign/cp_research.c:1174
+#: client/campaign/cp_research.c:1205
 msgid "No description available."
 msgstr "Περιγραφή μη διαθέσιμη."
 
-#: client/campaign/cp_research.c:1175
+#: client/campaign/cp_research.c:1206
 msgid "No research proposal available."
 msgstr "Πρόταση έρευνας μη διαθέσιμη."
 
@@ -13605,40 +14195,40 @@ msgstr "Λάθος Μνήμης - ορίστε save_compressed cvar σε 0"
 msgid "Error saving game."
 msgstr "Λάθος στην αποθήκευση του παιχνιδιού."
 
-#: client/campaign/cp_save.c:462 client/campaign/cp_save.c:485
-#: client/campaign/cp_save.c:621
+#: client/campaign/cp_save.c:462 client/campaign/cp_save.c:486
+#: client/campaign/cp_save.c:623
 msgid "Error loading game."
 msgstr "Λάθος στη φόρτωση του παιχνιδιού."
 
-#: client/campaign/cp_save.c:463 client/campaign/cp_save.c:486
-#: client/campaign/cp_save.c:622 client/cl_irc.c:992 client/cl_irc.c:1220
+#: client/campaign/cp_save.c:463 client/campaign/cp_save.c:487
+#: client/campaign/cp_save.c:624 client/cl_irc.c:992 client/cl_irc.c:1220
 #: client/cl_main.c:486 client/cl_main.c:491 client/cl_main.c:497
 #: client/cl_main.c:505 client/multiplayer/mp_callbacks.c:49
 #: client/multiplayer/mp_callbacks.c:170
 msgid "Error"
 msgstr "Λάθος"
 
-#: client/campaign/cp_save.c:600
+#: client/campaign/cp_save.c:602
 msgid "Campaign was successfully saved."
 msgstr "Η εκστρατεία ααποθηκεύτηκε με επιτυχία."
 
-#: client/campaign/cp_save.c:600
+#: client/campaign/cp_save.c:602
 msgid "Quicksave"
 msgstr "Γρήγορο σώσιμο"
 
-#: client/campaign/cp_save.c:624
+#: client/campaign/cp_save.c:626
 msgid "Campaign loaded"
 msgstr "Εκστρατεία φορτώθηκε"
 
-#: client/campaign/cp_save.c:624
+#: client/campaign/cp_save.c:626
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Εκστρατεία γρήγορης αποθήκευσης φορτώθηκε με επιτυχία."
 
-#: client/campaign/cp_save.c:681
+#: client/campaign/cp_save.c:683
 msgid "Saves to the quick save slot"
 msgstr "Γρήγορη αποθήκευση"
 
-#: client/campaign/cp_team.c:131
+#: client/campaign/cp_team.c:132
 #, c-format
 msgid "%i of %i"
 msgstr "%i από %i"
@@ -14001,7 +14591,7 @@ msgstr "Όχι υπόστεγο σε αυτή την Βάση.\n"
 msgid "No power supplies in this base.\n"
 msgstr "Όχι ηλεκτρικές γεννήτριες στη βάση.\n"
 
-#: client/campaign/cp_ufo.c:80
+#: client/campaign/cp_ufo.c:90
 #, c-format
 msgid ""
 "\n"
@@ -14010,7 +14600,7 @@ msgstr ""
 "\n"
 "Secured crashed %s\n"
 
-#: client/campaign/cp_ufo.c:82
+#: client/campaign/cp_ufo.c:92
 #, c-format
 msgid ""
 "\n"
@@ -14019,17 +14609,17 @@ msgstr ""
 "\n"
 "Secured landed %s\n"
 
-#: client/campaign/cp_ufo.c:345 client/campaign/cp_ufo.c:715
+#: client/campaign/cp_ufo.c:355 client/campaign/cp_ufo.c:731
 #, fuzzy, c-format
 msgid "A UFO is flying toward %s"
 msgstr "το ΟΥΦΟ πυροβολει στο %s"
 
-#: client/campaign/cp_ufo.c:719
+#: client/campaign/cp_ufo.c:735
 #, fuzzy, c-format
 msgid "Our radar detected a new UFO near %s"
 msgstr "Το ραντάρ μας ανίχνευσε νέο ΟΥΦΟ"
 
-#: client/campaign/cp_ufo.c:723
+#: client/campaign/cp_ufo.c:739
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "Το ραντάρ μας έχασε την ανίχνευση του ΟΥΦΟ"
 
@@ -14297,66 +14887,15 @@ msgstr "Η βάση: %s λεηλατήθηκε! Όλοι οι υπάληλοι �
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "Η βάση βρίσκεται σε επίθεση - τι να κάνω?"
 
-#: client/cl_actor.c:106
-msgid "Poor"
-msgstr "Φτωχό"
-
-#: client/cl_actor.c:108
-msgid "Mediocre"
-msgstr "Κάτω του μετρίου"
-
-#: client/cl_actor.c:110
-msgid "Average"
-msgstr "Μέτριο"
-
-#: client/cl_actor.c:112
-msgid "Competent"
-msgstr "Άξιο"
-
-#: client/cl_actor.c:114
-msgid "Proficient"
-msgstr "Ικανό"
-
-#: client/cl_actor.c:116
-msgid "Very Good"
-msgstr "Πολύ Καλό"
-
-#: client/cl_actor.c:118
-msgid "Highly Proficient"
-msgstr "Πολύ Προχωρημένο"
-
-#: client/cl_actor.c:122
-msgid "Outstanding"
-msgstr "Εξαιρετικό"
-
-#: client/cl_actor.c:125
-msgid "Superhuman"
-msgstr "Υπεράνθρωπο"
-
-#: client/cl_actor.c:1031
-msgid "This isn't your round\n"
-msgstr "Δέν είναι ο γύρος σας\n"
-
-#: client/cl_actor.c:1269
-#, fuzzy
-msgid "You cannot reload this unknown item.\n"
-msgstr ""
-"Δε μπορείτε ν αχρησιμοποιήσετε αυτό το άγνωστο αντικέιμενο.\n"
-"Πρέπει να γίνει πρώτα έρευνα.\n"
-
-#: client/cl_actor.c:2296
-msgid "Unknown alien race"
-msgstr "Άγνωστη ράτσα εξωγήινου"
-
-#: client/cl_console.c:276
+#: client/cl_console.c:274
 msgid "Bring up the in-game console"
 msgstr "Bring up the in-game console"
 
-#: client/cl_console.c:278
+#: client/cl_console.c:276
 msgid "Send a message to all players"
 msgstr "Αποστολή μηνύματος σε όλους του παίχτες"
 
-#: client/cl_console.c:279
+#: client/cl_console.c:277
 msgid "Send a message to allied team members"
 msgstr "Αποστολή μηνύματος σε όλους του σύμμαχους παίχτες"
 
@@ -14471,357 +15010,6 @@ msgstr "Invalid or full team"
 #: client/cl_game_multiplayer.c:270
 msgid "all"
 msgstr "all"
-
-#: client/cl_hud.c:102 client/cl_hud.c:105
-msgid "Crouch walk"
-msgstr ""
-
-#: client/cl_hud.c:104
-msgid "Walk"
-msgstr ""
-
-#: client/cl_hud.c:276
-#, c-format
-msgid "Remaining TUs: %i"
-msgstr "Υπολειπόμενα TUs: %i"
-
-#: client/cl_hud.c:278
-msgid "No remaining TUs left after shot."
-msgstr "Δεν έμειναν TUs μετά την βολή."
-
-#: client/cl_hud.c:283
-#, c-format
-msgid "TU: %i"
-msgstr "TU: %i"
-
-#: client/cl_hud.c:285
-#, fuzzy, c-format
-msgid "Shots: %i"
-msgstr "Βολές:%i"
-
-#: client/cl_hud.c:369
-msgid "[0 TU] No reservation"
-msgstr ""
-
-#: client/cl_hud.c:388
-#, c-format
-msgid "[%i TU] %s"
-msgstr ""
-
-#: client/cl_hud.c:423
-msgid "Reserve TUs for firing/using."
-msgstr ""
-
-#: client/cl_hud.c:423
-msgid "Shot Reservation"
-msgstr ""
-
-#: client/cl_hud.c:798
-msgid "No item in hand.\n"
-msgstr "Όχι αντικέιμενο στο χέρι.\n"
-
-#: client/cl_hud.c:811
-msgid ""
-"Can't perform action:\n"
-"out of ammo.\n"
-msgstr ""
-"Αδυναμία εκτέλεσης εντολής:\n"
-"τέλος πυρομαχικών.\n"
-
-#: client/cl_hud.c:816
-msgid ""
-"This weapon cannot be fired\n"
-"one handed.\n"
-msgstr ""
-"Δε μπορεί να κάνει πύρ\n"
-"ενός χεριού.\n"
-
-#: client/cl_hud.c:825
-msgid ""
-"Can't perform action:\n"
-"this item is not reloadable.\n"
-msgstr ""
-"Αδυναμία εκτέλεσης εντολής:\n"
-"αυτό το αντικέιμενο δεν επαναγεμίζει.\n"
-
-#: client/cl_hud.c:830
-msgid ""
-"Can't perform action:\n"
-"ammo not available.\n"
-msgstr ""
-"Αδυναμία εκτέλεσης εντολής:\n"
-"μη διαθέσιμα πυρομαχικά.\n"
-
-#: client/cl_hud.c:835 client/cl_hud.c:906
-msgid ""
-"Can't perform action:\n"
-"not enough TUs.\n"
-msgstr ""
-"Αδυναμία εκτέλεσης εντολής:\n"
-"όχι αρκετά TUs.\n"
-
-#: client/cl_hud.c:999
-#, fuzzy
-msgid "Not enough TUs for standing up."
-msgstr "Όχι αρκετός αποθηκευτικός χώρος"
-
-#: client/cl_hud.c:1002
-#, fuzzy, c-format
-msgid "Stand up (%i TU)"
-msgstr "Επαναγέμιση όπλου"
-
-#: client/cl_hud.c:1008
-#, fuzzy
-msgid "Not enough TUs for crouching."
-msgstr "Διακόπτης απάντησης πυρών"
-
-#: client/cl_hud.c:1011
-#, c-format
-msgid "Crouch (%i TU)"
-msgstr ""
-
-#: client/cl_hud.c:1019
-#, c-format
-msgid ""
-"%i TUs reserved for crouching/standing up.\n"
-"Click to clear."
-msgstr ""
-
-#: client/cl_hud.c:1023
-#, fuzzy, c-format
-msgid "Reserve %i TUs for crouching/standing up."
-msgstr "Όχι αρκετός αποθηκευτικός χώρος"
-
-#: client/cl_hud.c:1026
-#, fuzzy
-msgid "Not enough TUs left to reserve for crouching/standing up."
-msgstr "Όχι αρκετός αποθηκευτικός χώρος"
-
-#: client/cl_hud.c:1032
-#, c-format
-msgid ""
-"%i TUs reserved for shooting.\n"
-"Click to change.\n"
-"Right-Click to clear."
-msgstr ""
-
-#: client/cl_hud.c:1036
-msgid "Reserve TUs for shooting."
-msgstr ""
-
-#: client/cl_hud.c:1039
-msgid "Reserving TUs for shooting not possible."
-msgstr ""
-
-#: client/cl_hud.c:1065
-#, fuzzy
-msgid "No reload possible for right hand, already fully loaded."
-msgstr "Reload the weapon in the soldiers right hand"
-
-#: client/cl_hud.c:1067
-#, fuzzy
-msgid "No reload possible for right hand."
-msgstr "Reload the weapon in the soldiers right hand"
-
-#: client/cl_hud.c:1070 client/cl_hud.c:1086
-#, fuzzy, c-format
-msgid "Reload weapon (%i TU)."
-msgstr "Επαναγέμιση όπλου"
-
-#: client/cl_hud.c:1081
-#, fuzzy
-msgid "No reload possible for left hand, already fully loaded."
-msgstr "Reload the weapon in the soldiers left hand"
-
-#: client/cl_hud.c:1083
-#, fuzzy
-msgid "No reload possible for left hand."
-msgstr "Reload the weapon in the soldiers left hand"
-
-#: client/cl_hud.c:1189
-#, c-format
-msgid ""
-"Time Units\n"
-"- Available: %i (of %i)\n"
-"- Reserved:  %i\n"
-"- Remaining: %i\n"
-msgstr ""
-
-#: client/cl_hud.c:1297
-#, fuzzy, c-format
-msgid "Morale  %i | Reserved TUs: %i\n"
-msgstr ""
-"Ηθικό  %i\n"
-"Κίνηση %i (%i TU απέμειναν)\n"
-
-#: client/cl_hud.c:1299
-#, fuzzy, c-format
-msgid "Morale  %i"
-msgstr "Ηθικό %i\n"
-
-#: client/cl_hud.c:1304
-#, fuzzy, c-format
-msgid ""
-"Morale  %i | Reserved TUs: %i\n"
-"%s %i (%i|%i TU left)\n"
-msgstr ""
-"Ηθικό  %i\n"
-"Κίνηση %i (%i TU απέμειναν)\n"
-
-#: client/cl_hud.c:1308
-#, fuzzy, c-format
-msgid ""
-"Morale  %i\n"
-"%s %i (%i TU left)\n"
-msgstr ""
-"Ηθικό  %i\n"
-"Κίνηση %i (%i TU απέμειναν)\n"
-
-#: client/cl_hud.c:1321
-#, fuzzy
-msgid ""
-"You cannot use this unknown item.\n"
-"You need to research it first.\n"
-msgstr ""
-"Δε μπορείτε να επαναγεμίσετε αυτό το άγνωστο αντικέιμενο.\n"
-"Πρέπει πρώτα να ερευνήστε το όπλο και τα πυρομαχικά του.\n"
-
-#: client/cl_hud.c:1336
-#, c-format
-msgid ""
-"%s\n"
-"(empty)\n"
-msgstr ""
-"%s\n"
-"(κενό)\n"
-
-#: client/cl_hud.c:1344
-msgid "Currently panics!\n"
-msgstr "Currently panics!\n"
-
-#: client/cl_hud.c:1582
-msgid "Reload the weapon in the soldiers left hand"
-msgstr "Reload the weapon in the soldiers left hand"
-
-#: client/cl_hud.c:1583
-msgid "Reload the weapon in the soldiers right hand"
-msgstr "Reload the weapon in the soldiers right hand"
-
-#: client/cl_hud.c:1585
-#, fuzzy
-msgid "Toggle reservation for crouching."
-msgstr "Διακόπτης απάντησης πυρών"
-
-#: client/cl_hud.c:1591
-msgid "Toggle reaction fire"
-msgstr "Διακόπτης απάντησης πυρών"
-
-#: client/cl_input.c:1350
-msgid "Rotate battlescape camera anti-clockwise"
-msgstr "Περιστρέψτε την κάμερα μάχης αντίθετα απο τους δείκτες του ρολογιού"
-
-#: client/cl_input.c:1352
-msgid "Rotate battlescape camera clockwise"
-msgstr "Περιστρέψτε την κάμερα μάχης με την φορά του ρολογιού"
-
-#: client/cl_input.c:1354
-msgid "Tilt battlescape camera up"
-msgstr "Γύρετε την κάμερα μάχης πάνω"
-
-#: client/cl_input.c:1356
-msgid "Tilt battlescape camera down"
-msgstr "Γύρετε την κάμερα μάχης κάτω"
-
-#: client/cl_input.c:1358
-msgid "Move battlescape camera left"
-msgstr "Γύρετε την κάμερα μάχης αριστερά"
-
-#: client/cl_input.c:1360
-msgid "Move battlescape camera right"
-msgstr "Γύρετε την κάμερα μάχης δεξία"
-
-#: client/cl_input.c:1362
-msgid "Move battlescape camera forward"
-msgstr "Μετακινήστε την κάμερα μάχης εμπρός"
-
-#: client/cl_input.c:1364
-msgid "Move battlescape camera backward"
-msgstr "Μετακινήστε την κάμερα μάχης πίσω"
-
-#: client/cl_input.c:1366 client/cl_input.c:1395
-msgid "Zoom in"
-msgstr "Εστίαση μέσα"
-
-#: client/cl_input.c:1368 client/cl_input.c:1396
-msgid "Zoom out"
-msgstr "Εστίαση έξω"
-
-#: client/cl_input.c:1371
-msgid "Left mouse button click (menu)"
-msgstr "Αριστερό πλήκτρο (μενού)"
-
-#: client/cl_input.c:1373
-msgid "Middle mouse button click (menu)"
-msgstr "Μεσαίο πλήκτρο (μενού)"
-
-#: client/cl_input.c:1375
-msgid "Right mouse button click (menu)"
-msgstr "Δεξί πλήκτρο (μενού)"
-
-#: client/cl_input.c:1377
-msgid "Select objects/Walk to a square/In fire mode, fire etc"
-msgstr "Επιλέξτε αντικέιμενα/Περπατήστε στο τετράγωνο κτλ"
-
-#: client/cl_input.c:1379
-msgid "Walk to a square/In fire mode, cancel action"
-msgstr "Περπατήστε σε τετράγωνο/Σε κατάσταση πύρ, ακύρωση ενέργειας"
-
-#: client/cl_input.c:1381
-msgid "Turn soldier toward mouse pointer"
-msgstr "Turn soldier toward mouse pointer"
-
-#: client/cl_input.c:1383
-#, fuzzy
-msgid "Toggles the hud radar mode"
-msgstr "Διακόπτης the headgear"
-
-#: client/cl_input.c:1386
-msgid "Toggle stand/crounch"
-msgstr "Διακόπτης όρθιος/οκλαδόν"
-
-#: client/cl_input.c:1387
-msgid "Toggle the headgear"
-msgstr "Διακόπτης the headgear"
-
-#: client/cl_input.c:1388
-#, fuzzy
-msgid "Toggle to next alien"
-msgstr "Διακόπτης στον επόμενο εξωγήινο"
-
-#: client/cl_input.c:1389
-#, fuzzy
-msgid "Toggle to next alien visible from selected actor."
-msgstr "Toogle to next alien visible from selected actor."
-
-#: client/cl_input.c:1391
-msgid "Ends current round"
-msgstr "Τερματισμός γύρου"
-
-#: client/cl_input.c:1392
-msgid "Opens or closes a door"
-msgstr ""
-
-#: client/cl_input.c:1393
-msgid "Slice through terrain at a higher level"
-msgstr "Slice through terrain at a higher level"
-
-#: client/cl_input.c:1394
-msgid "Slice through terrain at a lower level"
-msgstr "Slice through terrain at a lower level"
-
-#: client/cl_input.c:1397
-msgid "Confirm the current action"
-msgstr "Επιβαιβεώστε την ενέργεια σας"
 
 #: client/cl_inventory_callbacks.c:46
 msgid "skill_close"
@@ -14979,15 +15167,11 @@ msgstr "Script files are not the same"
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Local game version (%s) differs from the servers (%s)"
 
-#: client/cl_main.c:848
+#: client/cl_main.c:895
 msgid "Target your shot to the ground"
 msgstr "Πυροβολήστε στο έδαφος"
 
-#: client/cl_main.c:973 client/cl_view.c:271
-msgid "Awaiting game start"
-msgstr "Αναμονή για την έναρξη του παιχνιδιού"
-
-#: client/cl_main.c:1019
+#: client/cl_main.c:1068
 msgid "Custom"
 msgstr "Παραμετροποιημένο"
 
@@ -15025,106 +15209,116 @@ msgstr "Κίτρινη"
 msgid "CCCP"
 msgstr "CCCP"
 
-#: client/cl_team.c:694
-msgid "Select a soldier from list"
-msgstr "Επιλέξτε στρατιώτη απο την λίστα"
-
-#: client/cl_team.c:695
-#, fuzzy
-msgid "Reselect the current soldier"
-msgstr "Ο επιλεγμένος στρατιώτης"
-
-#: client/cl_team.c:696
-#, fuzzy
-msgid "Update a soldier"
-msgstr "Μεταονομάστε τον στρατιώτη"
-
-#: client/cl_team.c:697
+#: client/cl_team.c:598
 msgid "Update the GUI with the selected item"
 msgstr ""
 
-#: client/cl_team.c:698
-msgid "Toggle to next soldier"
-msgstr "Toggle to next soldier"
+#: client/input/cl_input.c:1350
+msgid "Rotate battlescape camera anti-clockwise"
+msgstr "Περιστρέψτε την κάμερα μάχης αντίθετα απο τους δείκτες του ρολογιού"
 
-#: client/cl_view.c:211 client/cl_view.c:236
-#, c-format
-msgid "loading %s"
-msgstr "φόρτωση %s"
+#: client/input/cl_input.c:1352
+msgid "Rotate battlescape camera clockwise"
+msgstr "Περιστρέψτε την κάμερα μάχης με την φορά του ρολογιού"
 
-#: client/cl_view.c:219
-msgid "loading models..."
-msgstr "φόρτωση μοντέλων..."
+#: client/input/cl_input.c:1354
+msgid "Tilt battlescape camera up"
+msgstr "Γύρετε την κάμερα μάχης πάνω"
 
-#: client/events/event/actor/e_event_actorappear.c:161
-#, fuzzy, c-format
-msgid "Enemy spotted: %s!"
-msgstr "Εντοπίστηκε εχθρός!\n"
+#: client/input/cl_input.c:1356
+msgid "Tilt battlescape camera down"
+msgstr "Γύρετε την κάμερα μάχης κάτω"
 
-#: client/events/event/actor/e_event_actorappear.c:164
-msgid "Enemy spotted!\n"
-msgstr "Εντοπίστηκε εχθρός!\n"
+#: client/input/cl_input.c:1358
+msgid "Move battlescape camera left"
+msgstr "Γύρετε την κάμερα μάχης αριστερά"
 
-#: client/events/event/actor/e_event_actorappear.c:166
-msgid "Civilian spotted!\n"
-msgstr "Εντοπίστηκε πολίτης!\n"
+#: client/input/cl_input.c:1360
+msgid "Move battlescape camera right"
+msgstr "Γύρετε την κάμερα μάχης δεξία"
 
-#: client/events/event/actor/e_event_actordie.c:79
-#, fuzzy, c-format
-msgid "%s was stunned\n"
-msgstr "%s %s ήταν σαστισμένος\n"
+#: client/input/cl_input.c:1362
+msgid "Move battlescape camera forward"
+msgstr "Μετακινήστε την κάμερα μάχης εμπρός"
 
-#: client/events/event/actor/e_event_actordie.c:81
-#, fuzzy, c-format
-msgid "%s was killed\n"
-msgstr "%s %s ήταν σκοτωμένος\n"
+#: client/input/cl_input.c:1364
+msgid "Move battlescape camera backward"
+msgstr "Μετακινήστε την κάμερα μάχης πίσω"
 
-#: client/events/event/actor/e_event_actordie.c:89
-msgid "A civilian was stunned.\n"
-msgstr "'Ενας πολίτης σάστισε.\n"
+#: client/input/cl_input.c:1366 client/input/cl_input.c:1395
+msgid "Zoom in"
+msgstr "Εστίαση μέσα"
 
-#: client/events/event/actor/e_event_actordie.c:91
-msgid "A civilian was killed.\n"
-msgstr "Ένας πολίτης σκοτώθηκε.\n"
+#: client/input/cl_input.c:1368 client/input/cl_input.c:1396
+msgid "Zoom out"
+msgstr "Εστίαση έξω"
 
-#: client/events/event/actor/e_event_actordie.c:95
-msgid "An alien was stunned.\n"
-msgstr "Ένας εξωγήινος σάστισε.\n"
+#: client/input/cl_input.c:1371
+msgid "Left mouse button click (menu)"
+msgstr "Αριστερό πλήκτρο (μενού)"
 
-#: client/events/event/actor/e_event_actordie.c:97
-msgid "An alien was killed.\n"
-msgstr "Ένας εξωγήινος πέθανε.\n"
+#: client/input/cl_input.c:1373
+msgid "Middle mouse button click (menu)"
+msgstr "Μεσαίο πλήκτρο (μενού)"
 
-#: client/events/event/actor/e_event_actordie.c:101
-msgid "A soldier was stunned.\n"
-msgstr "Ένας στρατιώτης σάστισε.\n"
+#: client/input/cl_input.c:1375
+msgid "Right mouse button click (menu)"
+msgstr "Δεξί πλήκτρο (μενού)"
 
-#: client/events/event/actor/e_event_actordie.c:103
-msgid "A soldier was killed.\n"
-msgstr "Ένας στρατιώτης πέθανε.\n"
+#: client/input/cl_input.c:1377
+msgid "Select objects/Walk to a square/In fire mode, fire etc"
+msgstr "Επιλέξτε αντικέιμενα/Περπατήστε στο τετράγωνο κτλ"
 
-#: client/events/event/actor/e_event_actordie.c:107
-#, c-format
-msgid "A member of team %i was stunned.\n"
-msgstr "Ένα μέλος της ομάδας %i έιχε σαστίσει.\n"
+#: client/input/cl_input.c:1379
+msgid "Walk to a square/In fire mode, cancel action"
+msgstr "Περπατήστε σε τετράγωνο/Σε κατάσταση πύρ, ακύρωση ενέργειας"
 
-#: client/events/event/actor/e_event_actordie.c:109
-#, c-format
-msgid "A member of team %i was killed.\n"
-msgstr "Ένα μέλος της ομάδας %i είχε σκοτωθεί.\n"
+#: client/input/cl_input.c:1381
+msgid "Turn soldier toward mouse pointer"
+msgstr "Turn soldier toward mouse pointer"
 
-#: client/events/event/player/e_event_doendround.c:57
-msgid "Your round started!\n"
-msgstr "Άρχισε ο γύρος σας!\n"
+#: client/input/cl_input.c:1383
+#, fuzzy
+msgid "Toggles the hud radar mode"
+msgstr "Διακόπτης the headgear"
 
-#: client/events/event/player/e_event_endroundannounce.c:53
-msgid "You've ended your round\n"
-msgstr "Τερματίσατε τον γύρο σας\n"
+#: client/input/cl_input.c:1386
+msgid "Toggle stand/crounch"
+msgstr "Διακόπτης όρθιος/οκλαδόν"
 
-#: client/events/event/player/e_event_endroundannounce.c:56
-#, c-format
-msgid "%s ended his round (team %i)\n"
-msgstr "%s τερματίστε τον γύρο του (ομάδα %i)\n"
+#: client/input/cl_input.c:1387
+msgid "Toggle the headgear"
+msgstr "Διακόπτης the headgear"
+
+#: client/input/cl_input.c:1388
+#, fuzzy
+msgid "Toggle to next alien"
+msgstr "Διακόπτης στον επόμενο εξωγήινο"
+
+#: client/input/cl_input.c:1389
+#, fuzzy
+msgid "Toggle to next alien visible from selected actor."
+msgstr "Toogle to next alien visible from selected actor."
+
+#: client/input/cl_input.c:1391
+msgid "Ends current round"
+msgstr "Τερματισμός γύρου"
+
+#: client/input/cl_input.c:1392
+msgid "Opens or closes a door"
+msgstr ""
+
+#: client/input/cl_input.c:1393
+msgid "Slice through terrain at a higher level"
+msgstr "Slice through terrain at a higher level"
+
+#: client/input/cl_input.c:1394
+msgid "Slice through terrain at a lower level"
+msgstr "Slice through terrain at a lower level"
+
+#: client/input/cl_input.c:1397
+msgid "Confirm the current action"
+msgstr "Επιβαιβεώστε την ενέργεια σας"
 
 #: client/menu/m_main.c:48
 msgid "This change requires a restart"
@@ -15134,7 +15328,7 @@ msgstr ""
 msgid "This change might require a restart"
 msgstr ""
 
-#: client/menu/m_menus.c:745
+#: client/menu/m_menus.c:765
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Hide the HUD (press ESC to reactivate HUD)"
 
@@ -15301,16 +15495,16 @@ msgstr "Προστασία με κωδικό:\t%s\n"
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "All bookmark slots are used - please removed unused entries and repeat this step"
 
-#: client/multiplayer/mp_team.c:172
+#: client/multiplayer/mp_team.c:178
 #, fuzzy
 msgid "Error saving team. Nothing to save yet."
 msgstr "Τίποτα για σώσιμο ακόμα."
 
-#: client/multiplayer/mp_team.c:188
+#: client/multiplayer/mp_team.c:194
 msgid "NewTeam"
 msgstr "Νέα ομάδα"
 
-#: client/multiplayer/mp_team.c:193
+#: client/multiplayer/mp_team.c:199
 msgid "Error saving team. Check free disk space!"
 msgstr "Λάθος στο σώσιμο της ομάδας. Ελέξτε ελεύθερο χώρο στο δίσκο!"
 
@@ -15488,6 +15682,18 @@ msgstr "Grenchen"
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr ""
+
+#~ msgid "Devastating alien terror attack on Mumbai"
+#~ msgstr "Ολέθρια τρομοκρατική επίθεση των εξωγήινων στο Mumbai"
+
+#~ msgid "Alien aircraft spotted"
+#~ msgstr "Εξωγήινο σκάφος Εντοπίστηκε"
+
+#~ msgid "Add selected item"
+#~ msgstr "Προσθήκη αντικειμένου"
+
+#~ msgid "Remove item from slot"
+#~ msgstr "Αφαίρεση αντικειμένου"
 
 #, fuzzy
 #~ msgid "D-F Tank"
@@ -17558,9 +17764,6 @@ msgstr ""
 #~ msgid "Fighter"
 #~ msgstr "Fighter"
 
-#~ msgid "Harvester"
-#~ msgstr "Harvester"
-
 #~ msgid "Waiting for other players to join the game"
 #~ msgstr "Waiting for other players to join the game"
 
@@ -17584,9 +17787,6 @@ msgstr ""
 
 #~ msgid "Scroll down (right click to scroll multiple lines)"
 #~ msgstr "Scroll down (right click to scroll multiple lines)"
-
-#~ msgid "%s\t%s\t(%i/%i)\n"
-#~ msgstr "%s\t%s\t(%i/%i)\n"
 
 #~ msgid "Available scientists in this base: %i"
 #~ msgstr "Available scientists in this base: %i"

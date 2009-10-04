@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO:AI\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-10 08:18+0200\n"
+"POT-Creation-Date: 2009-10-04 14:41+0200\n"
 "PO-Revision-Date: 2009-06-09 21:30+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI team <cs@li.org>\n"
@@ -34,15 +34,15 @@ msgstr "Cizácká základna"
 msgid "Bomber_city"
 msgstr "Bombardér a město"
 
-#: ../base/maps/bridge.ump:68
+#: ../base/maps/bridge.ump:67
 msgid "Bridge"
 msgstr "Most"
 
-#: ../base/maps/cemetery.ump:199
+#: ../base/maps/cemetery.ump:222
 msgid "Small cemetery"
 msgstr "Malý hřbitov"
 
-#: ../base/maps/city_disco.ump:54
+#: ../base/maps/city_disco.ump:65
 msgid "City_disco"
 msgstr "Městská diskotéka"
 
@@ -54,6 +54,11 @@ msgstr "Společenské centrum"
 msgid "Construction"
 msgstr "Staveniště"
 
+#: ../base/maps/desert.ump:53
+#, fuzzy
+msgid "Crashed Harvester"
+msgstr "Místo havárie"
+
 #: ../base/maps/druglord.ump:57
 msgid "Druglord"
 msgstr "Drogový magnát"
@@ -62,35 +67,35 @@ msgstr "Drogový magnát"
 msgid "Eaglenest"
 msgstr "Orlí hnízdo"
 
-#: ../base/maps/forest.ump:393
+#: ../base/maps/forest.ump:404
 msgid "Little forest"
 msgstr "Malý les"
 
-#: ../base/maps/forest.ump:424
+#: ../base/maps/forest.ump:435
 msgid "Little bungalo in forest"
 msgstr "Malá chatka v lese"
 
-#: ../base/maps/frozen.ump:274
+#: ../base/maps/frozen.ump:284
 msgid "Snow"
 msgstr "Sníh"
 
-#: ../base/maps/frozen.ump:290
+#: ../base/maps/frozen.ump:300
 msgid "Alien landing - Snow"
 msgstr "Místo přistání - Sníh"
 
-#: ../base/maps/frozen.ump:307
+#: ../base/maps/frozen.ump:317
 msgid "Industrial"
 msgstr "Průmysl"
 
-#: ../base/maps/frozen.ump:327
+#: ../base/maps/frozen.ump:337
 msgid "Alien landing - Industrial"
 msgstr "Místo přistání - Průmysl"
 
-#: ../base/maps/frozen.ump:348
+#: ../base/maps/frozen.ump:358
 msgid "Multiplayer Coop"
 msgstr "Spolupráce více hráčů"
 
-#: ../base/maps/frozen.ump:368
+#: ../base/maps/frozen.ump:378
 msgid "Multiplayer Deathmatch"
 msgstr "Souboj více hráčů"
 
@@ -98,7 +103,7 @@ msgstr "Souboj více hráčů"
 msgid "Gasstation"
 msgstr "Čerpací stanice"
 
-#: ../base/maps/industrial.ump:248 ../base/maps/industrial.ump:272
+#: ../base/maps/industrial.ump:257 ../base/maps/industrial.ump:281
 msgid "UFO Landed"
 msgstr "Místo přistání UFO"
 
@@ -111,7 +116,7 @@ msgid "Japan"
 msgstr "Japonsko"
 
 #: ../base/maps/laboratory.ump:54 ../base/ufos/basemanagement.ufo:283
-#: client/campaign/cp_base_callbacks.c:308
+#: client/campaign/cp_base_callbacks.c:313
 msgid "Laboratory"
 msgstr "Laboratoř"
 
@@ -147,37 +152,37 @@ msgstr "Stadion"
 msgid "Transport"
 msgstr "Doprava"
 
-#: ../base/maps/tropic.ump:348
+#: ../base/maps/tropic.ump:359
 msgid "Tropical river"
 msgstr "Tropická řeka"
 
-#: ../base/maps/tropic.ump:380
+#: ../base/maps/tropic.ump:391
 msgid "Tropical drug"
 msgstr "Tropické drogy"
 
-#: ../base/maps/tropic.ump:405
+#: ../base/maps/tropic.ump:416
 msgid "Tropical UFO"
 msgstr "Tropické UFO"
 
 #: ../base/maps/ufocrash.ump:352 ../base/maps/ufocrash.ump:369
 #: ../base/maps/ufocrash.ump:386 ../base/maps/ufocrash.ump:404
-#: client/campaign/cp_missions.c:437
+#: client/campaign/cp_missions.c:436
 msgid "Crashed UFO"
 msgstr "Havarované UFO"
 
-#: ../base/maps/village.ump:359 ../base/maps/village.ump:392
+#: ../base/maps/village.ump:370 ../base/maps/village.ump:403
 msgid "Village residential"
 msgstr "Obydlená vesnice"
 
-#: ../base/maps/village.ump:424
+#: ../base/maps/village.ump:435
 msgid "Village commercial"
 msgstr "Obchodní vesnice"
 
-#: ../base/maps/village.ump:457
+#: ../base/maps/village.ump:468
 msgid "Village recreational"
 msgstr "Rekreační vesnice"
 
-#: ../base/maps/village.ump:488
+#: ../base/maps/village.ump:499
 msgid "Village big"
 msgstr "Velká vesnice"
 
@@ -197,216 +202,225 @@ msgstr "Težký transportér třídy Hercules"
 msgid "Herakles D"
 msgstr "t. Hercules"
 
-#: ../base/ufos/aircraftmanagement.ufo:169
+#: ../base/ufos/aircraftmanagement.ufo:166
+msgid "Raptor-class Combat Transport"
+msgstr ""
+
+#: ../base/ufos/aircraftmanagement.ufo:167
+#, fuzzy
+msgid "Raptor"
+msgstr "kpt."
+
+#: ../base/ufos/aircraftmanagement.ufo:215
 msgid "Stiletto-class Interceptor"
 msgstr "Stíhačka třídy Stiletto"
 
-#: ../base/ufos/aircraftmanagement.ufo:170
+#: ../base/ufos/aircraftmanagement.ufo:216
 msgid "Stiletto I"
 msgstr "s. Stiletto"
 
-#: ../base/ufos/aircraftmanagement.ufo:214
+#: ../base/ufos/aircraftmanagement.ufo:260
 msgid "Saracen-class Interceptor"
 msgstr "Stíhačka třídy Saracén"
 
-#: ../base/ufos/aircraftmanagement.ufo:215
+#: ../base/ufos/aircraftmanagement.ufo:261
 msgid "Saracen I"
 msgstr "s. Saracén"
 
-#: ../base/ufos/aircraftmanagement.ufo:255
+#: ../base/ufos/aircraftmanagement.ufo:301
 msgid "Dragon Interceptor"
 msgstr "Stíhačka Ještěr"
 
-#: ../base/ufos/aircraftmanagement.ufo:256
+#: ../base/ufos/aircraftmanagement.ufo:302
 msgid "Dragon"
 msgstr "Ještěr"
 
-#: ../base/ufos/aircraftmanagement.ufo:296
+#: ../base/ufos/aircraftmanagement.ufo:342
 msgid "Starchaser-class Interceptor"
 msgstr "Stíhačka třídy Hvězdohonec"
 
-#: ../base/ufos/aircraftmanagement.ufo:297
+#: ../base/ufos/aircraftmanagement.ufo:343
 msgid "Starchaser"
 msgstr "Hvězdohonec"
 
-#: ../base/ufos/aircraftmanagement.ufo:342
+#: ../base/ufos/aircraftmanagement.ufo:388
 msgid "Stingray Interceptor"
 msgstr "Stíhačka Rejnok"
 
-#: ../base/ufos/aircraftmanagement.ufo:343
+#: ../base/ufos/aircraftmanagement.ufo:389
 msgid "Stingray"
 msgstr "Rejnok"
 
-#: ../base/ufos/aircraftmanagement.ufo:389 ../base/ufos/otheritems.ufo:37
-#: ../base/ufos/research.ufo:3536
+#: ../base/ufos/aircraftmanagement.ufo:440 ../base/ufos/otheritems.ufo:38
+#: ../base/ufos/research.ufo:3589
 msgid "UFO - Scout"
 msgstr "UFO - Průzkumník"
 
-#: ../base/ufos/aircraftmanagement.ufo:390
+#: ../base/ufos/aircraftmanagement.ufo:441
 msgid "Scout U"
 msgstr "u. Průzkumník"
 
-#: ../base/ufos/aircraftmanagement.ufo:410 ../base/ufos/otheritems.ufo:46
-#: ../base/ufos/research.ufo:3578
+#: ../base/ufos/aircraftmanagement.ufo:461 ../base/ufos/otheritems.ufo:48
+#: ../base/ufos/research.ufo:3631
 msgid "UFO - Fighter"
 msgstr "UFO - Stíhačka"
 
-#: ../base/ufos/aircraftmanagement.ufo:411
+#: ../base/ufos/aircraftmanagement.ufo:462
 msgid "Fighter U"
 msgstr "u. Stíhačka"
 
-#: ../base/ufos/aircraftmanagement.ufo:438 ../base/ufos/otheritems.ufo:55
-#: ../base/ufos/research.ufo:3879
+#: ../base/ufos/aircraftmanagement.ufo:489 ../base/ufos/otheritems.ufo:58
+#: ../base/ufos/research.ufo:3932
 msgid "UFO - Harvester"
 msgstr "UFO - Sklízeč"
 
-#: ../base/ufos/aircraftmanagement.ufo:439
+#: ../base/ufos/aircraftmanagement.ufo:490
 msgid "Harvester U"
 msgstr "u. Sklízeč"
 
-#: ../base/ufos/aircraftmanagement.ufo:477 ../base/ufos/otheritems.ufo:90
-#: ../base/ufos/research.ufo:3793
+#: ../base/ufos/aircraftmanagement.ufo:528 ../base/ufos/otheritems.ufo:97
+#: ../base/ufos/research.ufo:3846
 #, fuzzy
 msgid "UFO - Gunboat"
 msgstr "UFO - Průzkumník"
 
-#: ../base/ufos/aircraftmanagement.ufo:478
+#: ../base/ufos/aircraftmanagement.ufo:529
 msgid "Gunboat U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:516 ../base/ufos/otheritems.ufo:99
-#: ../base/ufos/research.ufo:3750
+#: ../base/ufos/aircraftmanagement.ufo:567 ../base/ufos/otheritems.ufo:107
+#: ../base/ufos/research.ufo:3803
 msgid "UFO - Corrupter"
 msgstr "UFO - Ničitel"
 
-#: ../base/ufos/aircraftmanagement.ufo:517
+#: ../base/ufos/aircraftmanagement.ufo:568
 msgid "Corrupter U"
 msgstr "u. Ničitel"
 
-#: ../base/ufos/aircraftmanagement.ufo:543 ../base/ufos/otheritems.ufo:115
-#: ../base/ufos/research.ufo:3621
+#: ../base/ufos/aircraftmanagement.ufo:594 ../base/ufos/otheritems.ufo:125
+#: ../base/ufos/research.ufo:3674
 msgid "UFO - Supply Ship"
 msgstr "UFO - Zásobovací loď "
 
-#: ../base/ufos/aircraftmanagement.ufo:544
+#: ../base/ufos/aircraftmanagement.ufo:595
 msgid "Supply U"
 msgstr "u. Zásobovací"
 
-#: ../base/ufos/aircraftmanagement.ufo:564 ../base/ufos/otheritems.ufo:72
-#: ../base/ufos/research.ufo:3836
+#: ../base/ufos/aircraftmanagement.ufo:615 ../base/ufos/otheritems.ufo:77
+#: ../base/ufos/research.ufo:3889
 #, fuzzy
 msgid "UFO - Ripper"
 msgstr "UFO - Stíhačka"
 
-#: ../base/ufos/aircraftmanagement.ufo:565
+#: ../base/ufos/aircraftmanagement.ufo:616
 msgid "Ripper U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:591 ../base/ufos/otheritems.ufo:64
-#: ../base/ufos/research.ufo:3707
+#: ../base/ufos/aircraftmanagement.ufo:642 ../base/ufos/otheritems.ufo:68
+#: ../base/ufos/research.ufo:3760
 msgid "UFO - Bomber"
 msgstr "UFO - Bombardér"
 
-#: ../base/ufos/aircraftmanagement.ufo:592
+#: ../base/ufos/aircraftmanagement.ufo:643
 msgid "Bomber U"
 msgstr "u. Bombardér"
 
-#: ../base/ufos/aircraftmanagement.ufo:625 ../base/ufos/otheritems.ufo:107
-#: ../base/ufos/research.ufo:3664
+#: ../base/ufos/aircraftmanagement.ufo:676 ../base/ufos/otheritems.ufo:116
+#: ../base/ufos/research.ufo:3717
 msgid "UFO - Carrier"
 msgstr "UFO - Nosič"
 
-#: ../base/ufos/aircraftmanagement.ufo:626
+#: ../base/ufos/aircraftmanagement.ufo:677
 msgid "Carrier U"
 msgstr "u. Nosič"
 
-#: ../base/ufos/aircraftmanagement.ufo:648 ../base/ufos/otheritems.ufo:81
-#: ../base/ufos/research.ufo:3922
+#: ../base/ufos/aircraftmanagement.ufo:699 ../base/ufos/otheritems.ufo:87
+#: ../base/ufos/research.ufo:3975
 #, fuzzy
 msgid "UFO - Mothership"
 msgstr "UFO - Ničitel"
 
-#: ../base/ufos/aircraftmanagement.ufo:649
+#: ../base/ufos/aircraftmanagement.ufo:700
 msgid "Mothership U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:665 ../base/ufos/research.ufo:4545
+#: ../base/ufos/aircraftmanagement.ufo:716 ../base/ufos/research.ufo:4598
 msgid "Aerial Laser Cannon"
 msgstr "Letecké laserové dělo"
 
-#: ../base/ufos/aircraftmanagement.ufo:696
+#: ../base/ufos/aircraftmanagement.ufo:747
 msgid "Shiva Rotary Cannon"
 msgstr "Rotační dělo Shiva"
 
 # PZ=Průbojná Zápalná, RDS=Rotační Dělo Shiva
-#: ../base/ufos/aircraftmanagement.ufo:707 ../base/ufos/research.ufo:4612
+#: ../base/ufos/aircraftmanagement.ufo:758 ../base/ufos/research.ufo:4665
 msgid "SHIVA 20mm API Rounds"
 msgstr "20mm PZ munice pro RDS"
 
 # TZ=Tříštivá Zápalná, RDS=Rotační Dělo Shiva
-#: ../base/ufos/aircraftmanagement.ufo:723 ../base/ufos/research.ufo:4633
+#: ../base/ufos/aircraftmanagement.ufo:774 ../base/ufos/research.ufo:4686
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "20mm TZ munice pro RDS"
 
 # EPO=Elektronické ProtiOpatření
-#: ../base/ufos/aircraftmanagement.ufo:739
+#: ../base/ufos/aircraftmanagement.ufo:790
 msgid "Raven ECM Unit"
 msgstr "Jednotka EPO Požírač"
 
 # VV = Vzduch-Vzduch
-#: ../base/ufos/aircraftmanagement.ufo:751
+#: ../base/ufos/aircraftmanagement.ufo:802
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Nosič střel VV Krahujec"
 
-#: ../base/ufos/aircraftmanagement.ufo:761
+#: ../base/ufos/aircraftmanagement.ufo:812
 msgid "Sparrowhawk Missile"
 msgstr "Střela Krahujec"
 
-#: ../base/ufos/aircraftmanagement.ufo:778 ../base/ufos/research.ufo:4692
+#: ../base/ufos/aircraftmanagement.ufo:829 ../base/ufos/research.ufo:4745
 msgid "TR-20 Rocket Pod"
 msgstr "Baterie raket TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:791 ../base/ufos/research.ufo:4709
+#: ../base/ufos/aircraftmanagement.ufo:842 ../base/ufos/research.ufo:4762
 msgid "TR-20 Rocket"
 msgstr "Raketa TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:810 ../base/ufos/research.ufo:4728
+#: ../base/ufos/aircraftmanagement.ufo:861 ../base/ufos/research.ufo:4781
 msgid "Particle Beam Weapon"
 msgstr "Částicová zbraň"
 
-#: ../base/ufos/aircraftmanagement.ufo:840 ../base/ufos/research.ufo:4786
+#: ../base/ufos/aircraftmanagement.ufo:891 ../base/ufos/research.ufo:4839
 msgid "Targeting Computer"
 msgstr "Zaměřovací počítač"
 
-#: ../base/ufos/aircraftmanagement.ufo:852 ../base/ufos/research.ufo:4803
+#: ../base/ufos/aircraftmanagement.ufo:903 ../base/ufos/research.ufo:4856
 msgid "Fuel Pod"
 msgstr "Palivová nádrž"
 
-#: ../base/ufos/aircraftmanagement.ufo:866 ../base/ufos/research.ufo:4380
+#: ../base/ufos/aircraftmanagement.ufo:917 ../base/ufos/research.ufo:4433
 msgid "Polymer Aircraft Armour"
 msgstr "Polymerové pancéřování letounu"
 
-#: ../base/ufos/aircraftmanagement.ufo:880 ../base/ufos/research.ufo:4397
+#: ../base/ufos/aircraftmanagement.ufo:931 ../base/ufos/research.ufo:4450
 msgid "Alien Aircraft Plating"
 msgstr "Pancéřování cizáckých plavidel"
 
-#: ../base/ufos/aircraftmanagement.ufo:894 ../base/ufos/research.ufo:4431
+#: ../base/ufos/aircraftmanagement.ufo:945 ../base/ufos/research.ufo:4484
 msgid "Alien Astrogation"
 msgstr "Cizácká kosmonavigace"
 
-#: ../base/ufos/aircraftmanagement.ufo:903 ../base/ufos/research.ufo:4469
+#: ../base/ufos/aircraftmanagement.ufo:954 ../base/ufos/research.ufo:4522
 msgid "Alien Propulsion"
 msgstr "Cizácký pohon"
 
-#: ../base/ufos/aircraftmanagement.ufo:912 ../base/ufos/research.ufo:4506
+#: ../base/ufos/aircraftmanagement.ufo:963 ../base/ufos/research.ufo:4559
 msgid "Alien Detection"
 msgstr "Cizácká detekce"
 
-#: ../base/ufos/aircraftmanagement.ufo:925 ../base/ufos/research.ufo:4331
+#: ../base/ufos/aircraftmanagement.ufo:976 ../base/ufos/research.ufo:4384
 msgid "AA51 missile launcher"
 msgstr "Odpalovač střel AA51"
 
-#: ../base/ufos/aircraftmanagement.ufo:954 ../base/ufos/research.ufo:156
+#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:156
 #, fuzzy
 msgid "Laser Turret"
 msgstr "Laserová puška"
@@ -480,7 +494,7 @@ msgstr "Komplex cizáckých cel"
 msgid "Entrance"
 msgstr "Vstup"
 
-#: ../base/ufos/basemanagement.ufo:69 client/campaign/cp_base_callbacks.c:298
+#: ../base/ufos/basemanagement.ufo:69 client/campaign/cp_base_callbacks.c:303
 msgid "Storage"
 msgstr "Sklady"
 
@@ -492,16 +506,16 @@ msgstr "Elektrárna"
 msgid "Command Centre"
 msgstr "Řídící středisko"
 
-#: ../base/ufos/basemanagement.ufo:114 client/campaign/cp_base_callbacks.c:318
+#: ../base/ufos/basemanagement.ufo:114 client/campaign/cp_base_callbacks.c:323
 msgid "Living Quarters"
 msgstr "Ubikace"
 
 #: ../base/ufos/basemanagement.ufo:128 ../base/ufos/basemanagement.ufo:145
-#: client/campaign/cp_base_callbacks.c:292
+#: client/campaign/cp_base_callbacks.c:297
 msgid "Large Hangar"
 msgstr "Velký hangár"
 
-#: ../base/ufos/basemanagement.ufo:153 client/campaign/cp_base_callbacks.c:292
+#: ../base/ufos/basemanagement.ufo:153 client/campaign/cp_base_callbacks.c:297
 msgid "Small Hangar"
 msgstr "Malý hangár"
 
@@ -518,7 +532,7 @@ msgid "Team Room"
 msgstr "Společenská místnost"
 
 #: ../base/ufos/basemanagement.ufo:226 ../base/ufos/basemanagement.ufo:243
-#: client/campaign/cp_base_callbacks.c:313
+#: client/campaign/cp_base_callbacks.c:318
 msgid "Workshop"
 msgstr "Dílna"
 
@@ -531,7 +545,7 @@ msgid "Advanced Radar"
 msgstr "Zdokonalený radar"
 
 #: ../base/ufos/basemanagement.ufo:299 ../base/ufos/ui/bases.ufo:156
-#: client/campaign/cp_base_callbacks.c:328
+#: client/campaign/cp_base_callbacks.c:333
 msgid "Hospital"
 msgstr "Nemocnice"
 
@@ -559,113 +573,150 @@ msgstr ""
 "\n"
 "Tato volba představuje neskutečnou obtížnost a je doporučena masochistům, kteří vyhráli Náročnou kampaň a stále nemají dost."
 
-#: ../base/ufos/campaign.ufo:28
+#: ../base/ufos/campaign.ufo:29
 msgid "Hard Campaign"
 msgstr "Náročná kampaň"
 
-#: ../base/ufos/campaign.ufo:29
+#: ../base/ufos/campaign.ufo:30
 msgid "hard_campaign_txt"
 msgstr ""
 "Složitější varianta Standardní kampaně. Dostanete méně vojáků, dělníků a vědců, potěšit národy bude mnohem těžší, výzkum se stane pomalejším a náročnějším a cizáci budou klást větší odpor.\n"
 "\n"
 "Tato volba představuje velkou obtížnost a je doporučena zkušeným hráčům."
 
-#: ../base/ufos/campaign.ufo:56
+#: ../base/ufos/campaign.ufo:58
 msgid "Standard Campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:57
+#: ../base/ufos/campaign.ufo:59
 msgid "standard_campaign_txt"
 msgstr ""
 "Válečně založený scénář o invazi pro jednoho hráče. Ten převezme velení nad projektem PHALANX, který je odpovědí Země na cizáckou hrozbu, a může tak hrát dynamickou hru s významným podílem náhodných prvků a zajímavým příběhem.\n"
 "\n"
 "Kampaň je dostupná v několika úrovních obtížnosti. Tato volba představuje standardní obtížnost a je doporučena pro nováčky kteří mají rádi výzvu."
 
-#: ../base/ufos/campaign.ufo:104
+#: ../base/ufos/campaign.ufo:107
 msgid "Easy Campaign"
 msgstr "Snadná kampaň"
 
-#: ../base/ufos/campaign.ufo:105
+#: ../base/ufos/campaign.ufo:108
 msgid "easy_campaign_txt"
 msgstr ""
 "Shovívavější varianta Standardní kampaně. Cizáci budou méně houževnatí, nájezdy UFO méně časté a dostanete více rekrutů k pokrytí bojových ztrát.\n"
 "\n"
 "Tato volba představuje snadnou obtížnost a je určena pro hráče kteří dávají přednost méně trnité cestě než jim může nabídnout Standardní kampaň."
 
-#: ../base/ufos/campaign.ufo:132
+#: ../base/ufos/campaign.ufo:136
 msgid "Very Easy Campaign"
 msgstr "Velice snadná kampaň"
 
-#: ../base/ufos/campaign.ufo:133
+#: ../base/ufos/campaign.ufo:137
 msgid "veryeasy_campaign_txt"
 msgstr ""
 "Toto je velice shovívavá varianta Standardní kampaně. Vaše jednotky budou silnější, cizáci méně nebezpeční a během kampaně zažijete málo porážek.\n"
 "\n"
 "Tato volba představuje velice snadnou obtížnost a je určena pro nováčky kteří pronikají do tajů UFO: AI."
 
-#: ../base/ufos/campaign.ufo:180
+#: ../base/ufos/campaign.ufo:185
 msgid "Play the aliens"
 msgstr "Hrát za cizáky"
 
-#: ../base/ufos/campaign.ufo:181
+#: ../base/ufos/campaign.ufo:186
 msgid "alien_campaign_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/cities.ufo:27
+#: ../base/ufos/cities.ufo:16
+msgid "Stockholm"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:23
+msgid "Amsterdam"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:29
 msgid "Athens"
 msgstr "Athény"
 
-#: ../base/ufos/cities.ufo:33
+#: ../base/ufos/cities.ufo:35
 msgid "Bangkok"
 msgstr "Bangkok"
 
-#: ../base/ufos/cities.ufo:45
+#: ../base/ufos/cities.ufo:41
+#, fuzzy
+msgid "Beijing"
+msgstr "Budovy"
+
+#: ../base/ufos/cities.ufo:47
 msgid "Berlin"
 msgstr "Berlin"
 
-#: ../base/ufos/cities.ufo:57
+#: ../base/ufos/cities.ufo:53
+msgid "Mumbai"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:59
 msgid "Cape Town"
 msgstr "Kapské Město"
 
-#: ../base/ufos/cities.ufo:69
+#: ../base/ufos/cities.ufo:65
+#, fuzzy
+msgid "Cairo"
+msgstr "Kříž"
+
+#: ../base/ufos/cities.ufo:71
 msgid "Cayenne"
 msgstr "Cayenne"
 
-#: ../base/ufos/cities.ufo:93
+#: ../base/ufos/cities.ufo:77
+#, fuzzy
+msgid "Dakar"
+msgstr "Radar"
+
+#: ../base/ufos/cities.ufo:83
+msgid "Mexico City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:89
+#, fuzzy
+msgid "Paris"
+msgstr "Pauza"
+
+#: ../base/ufos/cities.ufo:95
 msgid "Sydney"
 msgstr "Sydney"
 
-#: ../base/ufos/cities.ufo:111
+#: ../base/ufos/cities.ufo:101
+#, fuzzy
+msgid "Teheran"
+msgstr "Shovívavý"
+
+#: ../base/ufos/cities.ufo:107
+msgid "Tokyo"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:113
 msgid "Wellington"
 msgstr "Wellington"
 
-#: ../base/ufos/events.ufo:39
-msgid "Devastating alien terror attack on Mumbai"
-msgstr "Zničující cizácké tažení v Bombaji"
-
-#: ../base/ufos/events.ufo:47
-msgid "Alien aircraft spotted"
-msgstr "Spozorován cizácký letoun"
-
-#: ../base/ufos/events.ufo:78
+#: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
 msgstr "Generální tajemník Mahouf Serra, Spojené Národy, New York City"
 
-#: ../base/ufos/events.ufo:79 ../base/ufos/events.ufo:89
-#: ../base/ufos/events.ufo:99 ../base/ufos/events.ufo:110
-#: ../base/ufos/events.ufo:121 ../base/ufos/events.ufo:132
-#: ../base/ufos/events.ufo:143 ../base/ufos/events.ufo:154
-#: ../base/ufos/events.ufo:165 ../base/ufos/events.ufo:176
-#: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
-#: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
-#: ../base/ufos/events.ufo:231 ../base/ufos/events.ufo:242
-#: ../base/ufos/events.ufo:253 ../base/ufos/events.ufo:264
-#: ../base/ufos/events.ufo:275 ../base/ufos/events.ufo:286
-#: ../base/ufos/events.ufo:297 ../base/ufos/events.ufo:308
-#: ../base/ufos/events.ufo:319 ../base/ufos/events.ufo:330
-#: ../base/ufos/events.ufo:341 ../base/ufos/events.ufo:352
+#: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
+#: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
+#: ../base/ufos/events.ufo:76 ../base/ufos/events.ufo:87
+#: ../base/ufos/events.ufo:98 ../base/ufos/events.ufo:109
+#: ../base/ufos/events.ufo:120 ../base/ufos/events.ufo:131
+#: ../base/ufos/events.ufo:142 ../base/ufos/events.ufo:153
+#: ../base/ufos/events.ufo:164 ../base/ufos/events.ufo:175
+#: ../base/ufos/events.ufo:186 ../base/ufos/events.ufo:197
+#: ../base/ufos/events.ufo:208 ../base/ufos/events.ufo:219
+#: ../base/ufos/events.ufo:230 ../base/ufos/events.ufo:241
+#: ../base/ufos/events.ufo:252 ../base/ufos/events.ufo:263
+#: ../base/ufos/events.ufo:274 ../base/ufos/events.ufo:285
+#: ../base/ufos/events.ufo:296 ../base/ufos/events.ufo:307
 #: ../base/ufos/research.ufo:137 ../base/ufos/research.ufo:145
 #: ../base/ufos/research.ufo:170 ../base/ufos/research.ufo:178
 #: ../base/ufos/research.ufo:221 ../base/ufos/research.ufo:229
@@ -706,46 +757,48 @@ msgstr "Generální tajemník Mahouf Serra, Spojené Národy, New York City"
 #: ../base/ufos/research.ufo:2626 ../base/ufos/research.ufo:2696
 #: ../base/ufos/research.ufo:2704 ../base/ufos/research.ufo:2733
 #: ../base/ufos/research.ufo:2741 ../base/ufos/research.ufo:3341
-#: ../base/ufos/research.ufo:3436 ../base/ufos/research.ufo:3443
-#: ../base/ufos/research.ufo:3472 ../base/ufos/research.ufo:3479
-#: ../base/ufos/research.ufo:3508 ../base/ufos/research.ufo:3515
-#: ../base/ufos/research.ufo:3550 ../base/ufos/research.ufo:3558
-#: ../base/ufos/research.ufo:3592 ../base/ufos/research.ufo:3600
-#: ../base/ufos/research.ufo:3635 ../base/ufos/research.ufo:3643
-#: ../base/ufos/research.ufo:3678 ../base/ufos/research.ufo:3686
-#: ../base/ufos/research.ufo:3721 ../base/ufos/research.ufo:3729
-#: ../base/ufos/research.ufo:3764 ../base/ufos/research.ufo:3772
-#: ../base/ufos/research.ufo:3807 ../base/ufos/research.ufo:3815
-#: ../base/ufos/research.ufo:3850 ../base/ufos/research.ufo:3858
-#: ../base/ufos/research.ufo:3893 ../base/ufos/research.ufo:3901
-#: ../base/ufos/research.ufo:3936 ../base/ufos/research.ufo:3944
-#: ../base/ufos/research.ufo:4007 ../base/ufos/research.ufo:4015
-#: ../base/ufos/research.ufo:4067 ../base/ufos/research.ufo:4075
-#: ../base/ufos/research.ufo:4109 ../base/ufos/research.ufo:4117
-#: ../base/ufos/research.ufo:4151 ../base/ufos/research.ufo:4159
-#: ../base/ufos/research.ufo:4407 ../base/ufos/research.ufo:4414
-#: ../base/ufos/research.ufo:4444 ../base/ufos/research.ufo:4451
-#: ../base/ufos/research.ufo:4482 ../base/ufos/research.ufo:4489
-#: ../base/ufos/research.ufo:4519 ../base/ufos/research.ufo:4526
-#: ../base/ufos/research.ufo:4561 ../base/ufos/research.ufo:4569
-#: ../base/ufos/research.ufo:4744 ../base/ufos/research.ufo:4752
-#: ../base/ufos/research.ufo:4837 ../base/ufos/research.ufo:4845
-#: ../base/ufos/research.ufo:4931 ../base/ufos/research.ufo:4965
-#: ../base/ufos/research.ufo:4972 ../base/ufos/research.ufo:5003
-#: ../base/ufos/research.ufo:5012 ../base/ufos/research.ufo:5045
-#: ../base/ufos/research.ufo:5052
+#: ../base/ufos/research.ufo:3382 ../base/ufos/research.ufo:3389
+#: ../base/ufos/research.ufo:3419 ../base/ufos/research.ufo:3426
+#: ../base/ufos/research.ufo:3489 ../base/ufos/research.ufo:3496
+#: ../base/ufos/research.ufo:3525 ../base/ufos/research.ufo:3532
+#: ../base/ufos/research.ufo:3561 ../base/ufos/research.ufo:3568
+#: ../base/ufos/research.ufo:3603 ../base/ufos/research.ufo:3611
+#: ../base/ufos/research.ufo:3645 ../base/ufos/research.ufo:3653
+#: ../base/ufos/research.ufo:3688 ../base/ufos/research.ufo:3696
+#: ../base/ufos/research.ufo:3731 ../base/ufos/research.ufo:3739
+#: ../base/ufos/research.ufo:3774 ../base/ufos/research.ufo:3782
+#: ../base/ufos/research.ufo:3817 ../base/ufos/research.ufo:3825
+#: ../base/ufos/research.ufo:3860 ../base/ufos/research.ufo:3868
+#: ../base/ufos/research.ufo:3903 ../base/ufos/research.ufo:3911
+#: ../base/ufos/research.ufo:3946 ../base/ufos/research.ufo:3954
+#: ../base/ufos/research.ufo:3989 ../base/ufos/research.ufo:3997
+#: ../base/ufos/research.ufo:4060 ../base/ufos/research.ufo:4068
+#: ../base/ufos/research.ufo:4120 ../base/ufos/research.ufo:4128
+#: ../base/ufos/research.ufo:4162 ../base/ufos/research.ufo:4170
+#: ../base/ufos/research.ufo:4204 ../base/ufos/research.ufo:4212
+#: ../base/ufos/research.ufo:4460 ../base/ufos/research.ufo:4467
+#: ../base/ufos/research.ufo:4497 ../base/ufos/research.ufo:4504
+#: ../base/ufos/research.ufo:4535 ../base/ufos/research.ufo:4542
+#: ../base/ufos/research.ufo:4572 ../base/ufos/research.ufo:4579
+#: ../base/ufos/research.ufo:4614 ../base/ufos/research.ufo:4622
+#: ../base/ufos/research.ufo:4797 ../base/ufos/research.ufo:4805
+#: ../base/ufos/research.ufo:4890 ../base/ufos/research.ufo:4898
+#: ../base/ufos/research.ufo:4987 ../base/ufos/research.ufo:5018
+#: ../base/ufos/research.ufo:5025 ../base/ufos/research.ufo:5055
+#: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
+#: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
 msgstr "Velitel základny, PHALANX, Velení tichomořských operací"
 
-#: ../base/ufos/events.ufo:80
+#: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
 msgstr "2084 Bře 21"
 
-#: ../base/ufos/events.ufo:81
+#: ../base/ufos/events.ufo:36
 msgid "Good Luck"
 msgstr "Hodně štěstí"
 
-#: ../base/ufos/events.ufo:82
+#: ../base/ufos/events.ufo:37
 msgid "mail_prolog"
 msgstr ""
 "Vítejte na svém novém stanovišti, veliteli. Nyní máte na povel celou jednotku pro boj s mimozemšťany -- PHALANX. Vaším úkolem je za každou cenu ochránit obyvatele Země a potlačit cizáckou hrozbu. Jak toho dosáhnete je na Vás. Jediným požadavkem je abyste uspěl.\n"
@@ -760,10 +813,10 @@ msgstr ""
 "\n"
 "Toť vše. Hodně štěstí a dobrý lov."
 
-#: ../base/ufos/events.ufo:88 ../base/ufos/events.ufo:100
-#: ../base/ufos/events.ufo:111 ../base/ufos/events.ufo:122
-#: ../base/ufos/events.ufo:133 ../base/ufos/events.ufo:144
-#: ../base/ufos/events.ufo:166 ../base/ufos/research.ufo:136
+#: ../base/ufos/events.ufo:43 ../base/ufos/events.ufo:55
+#: ../base/ufos/events.ufo:66 ../base/ufos/events.ufo:77
+#: ../base/ufos/events.ufo:88 ../base/ufos/events.ufo:99
+#: ../base/ufos/events.ufo:121 ../base/ufos/research.ufo:136
 #: ../base/ufos/research.ufo:144 ../base/ufos/research.ufo:169
 #: ../base/ufos/research.ufo:177 ../base/ufos/research.ufo:220
 #: ../base/ufos/research.ufo:228 ../base/ufos/research.ufo:282
@@ -796,294 +849,296 @@ msgstr ""
 #: ../base/ufos/research.ufo:2617 ../base/ufos/research.ufo:2625
 #: ../base/ufos/research.ufo:2695 ../base/ufos/research.ufo:2703
 #: ../base/ufos/research.ufo:2732 ../base/ufos/research.ufo:2740
-#: ../base/ufos/research.ufo:3340 ../base/ufos/research.ufo:3435
-#: ../base/ufos/research.ufo:3442 ../base/ufos/research.ufo:3471
-#: ../base/ufos/research.ufo:3478 ../base/ufos/research.ufo:3507
-#: ../base/ufos/research.ufo:3514 ../base/ufos/research.ufo:3549
-#: ../base/ufos/research.ufo:3557 ../base/ufos/research.ufo:3591
-#: ../base/ufos/research.ufo:3599 ../base/ufos/research.ufo:3634
-#: ../base/ufos/research.ufo:3642 ../base/ufos/research.ufo:3677
-#: ../base/ufos/research.ufo:3685 ../base/ufos/research.ufo:3720
-#: ../base/ufos/research.ufo:3728 ../base/ufos/research.ufo:3763
-#: ../base/ufos/research.ufo:3771 ../base/ufos/research.ufo:3806
-#: ../base/ufos/research.ufo:3814 ../base/ufos/research.ufo:3849
-#: ../base/ufos/research.ufo:3857 ../base/ufos/research.ufo:3892
-#: ../base/ufos/research.ufo:3900 ../base/ufos/research.ufo:3935
-#: ../base/ufos/research.ufo:3943 ../base/ufos/research.ufo:4406
-#: ../base/ufos/research.ufo:4413 ../base/ufos/research.ufo:4443
-#: ../base/ufos/research.ufo:4450 ../base/ufos/research.ufo:4481
-#: ../base/ufos/research.ufo:4488 ../base/ufos/research.ufo:4518
-#: ../base/ufos/research.ufo:4525 ../base/ufos/research.ufo:4560
-#: ../base/ufos/research.ufo:4568 ../base/ufos/research.ufo:4743
-#: ../base/ufos/research.ufo:4751 ../base/ufos/research.ufo:4836
-#: ../base/ufos/research.ufo:4844
+#: ../base/ufos/research.ufo:3340 ../base/ufos/research.ufo:3381
+#: ../base/ufos/research.ufo:3388 ../base/ufos/research.ufo:3418
+#: ../base/ufos/research.ufo:3425 ../base/ufos/research.ufo:3488
+#: ../base/ufos/research.ufo:3495 ../base/ufos/research.ufo:3524
+#: ../base/ufos/research.ufo:3531 ../base/ufos/research.ufo:3560
+#: ../base/ufos/research.ufo:3567 ../base/ufos/research.ufo:3602
+#: ../base/ufos/research.ufo:3610 ../base/ufos/research.ufo:3644
+#: ../base/ufos/research.ufo:3652 ../base/ufos/research.ufo:3687
+#: ../base/ufos/research.ufo:3695 ../base/ufos/research.ufo:3730
+#: ../base/ufos/research.ufo:3738 ../base/ufos/research.ufo:3773
+#: ../base/ufos/research.ufo:3781 ../base/ufos/research.ufo:3816
+#: ../base/ufos/research.ufo:3824 ../base/ufos/research.ufo:3859
+#: ../base/ufos/research.ufo:3867 ../base/ufos/research.ufo:3902
+#: ../base/ufos/research.ufo:3910 ../base/ufos/research.ufo:3945
+#: ../base/ufos/research.ufo:3953 ../base/ufos/research.ufo:3988
+#: ../base/ufos/research.ufo:3996 ../base/ufos/research.ufo:4459
+#: ../base/ufos/research.ufo:4466 ../base/ufos/research.ufo:4496
+#: ../base/ufos/research.ufo:4503 ../base/ufos/research.ufo:4534
+#: ../base/ufos/research.ufo:4541 ../base/ufos/research.ufo:4571
+#: ../base/ufos/research.ufo:4578 ../base/ufos/research.ufo:4613
+#: ../base/ufos/research.ufo:4621 ../base/ufos/research.ufo:4796
+#: ../base/ufos/research.ufo:4804 ../base/ufos/research.ufo:4889
+#: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
 msgstr "Velitel Paul Navarre, VaV: technické oddělení, PHALANX, Velení tichomořských operací"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: ../base/ufos/events.ufo:90
+#: ../base/ufos/events.ufo:45
 msgid "Alien died"
 msgstr "Zemřel cizák"
 
-#: ../base/ufos/events.ufo:91
+#: ../base/ufos/events.ufo:46
 msgid "mail_alienbreathing"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:102 ../base/ufos/events.ufo:113
+#: ../base/ufos/events.ufo:57 ../base/ufos/events.ufo:68
 msgid "Recovery Report -- %s"
 msgstr "Zpráva o zpracování-- %s"
 
-#: ../base/ufos/events.ufo:103
+#: ../base/ufos/events.ufo:58
 msgid "mail_alien_ufo_crashed"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:114
+#: ../base/ufos/events.ufo:69
 msgid "mail_alien_ufo_recovered"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:124
+#: ../base/ufos/events.ufo:79
 msgid "Not Enough Money -- %s"
 msgstr "Nedostatek peněz -- %s"
 
-#: ../base/ufos/events.ufo:125
+#: ../base/ufos/events.ufo:80
 msgid "mail_not_enough_money"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:135
+#: ../base/ufos/events.ufo:90
 msgid "Not Enough Resources -- %s"
 msgstr "Nedostatek zdrojů -- %s"
 
-#: ../base/ufos/events.ufo:136
+#: ../base/ufos/events.ufo:91
 msgid "mail_not_enough_ressources"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:146
+#: ../base/ufos/events.ufo:101
 msgid "Production Finished -- %s"
 msgstr "Výroba dokončena -- %s"
 
-#: ../base/ufos/events.ufo:147
+#: ../base/ufos/events.ufo:102
 msgid "mail_production_finished"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:155 ../base/ufos/events.ufo:177
-#: ../base/ufos/events.ufo:188 ../base/ufos/events.ufo:199
-#: ../base/ufos/events.ufo:210 ../base/ufos/events.ufo:221
-#: ../base/ufos/events.ufo:232 ../base/ufos/events.ufo:243
-#: ../base/ufos/events.ufo:254 ../base/ufos/events.ufo:265
+#: ../base/ufos/events.ufo:110 ../base/ufos/events.ufo:132
+#: ../base/ufos/events.ufo:143 ../base/ufos/events.ufo:154
+#: ../base/ufos/events.ufo:165 ../base/ufos/events.ufo:176
+#: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
+#: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
 msgstr "Náčelník štábu Abel S. Howard, příkazy a řízení, PHALANX, Velení tichomořských operací"
 
-#: ../base/ufos/events.ufo:157
+#: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
 msgstr "Měsíční zpráva -- %s"
 
-#: ../base/ufos/events.ufo:158
+#: ../base/ufos/events.ufo:113
 msgid "mail_monthly_report"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:168
+#: ../base/ufos/events.ufo:123
 msgid "UFO Stored In Hangar -- %s"
 msgstr "UFO uloženo v hangáru -- %s"
 
-#: ../base/ufos/events.ufo:169
+#: ../base/ufos/events.ufo:124
 msgid "mail_ufo_in_hangar"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:179
+#: ../base/ufos/events.ufo:134
 msgid "Transfer Received -- %s"
 msgstr "Obdržena přeprava -- %s"
 
-#: ../base/ufos/events.ufo:180
+#: ../base/ufos/events.ufo:135
 msgid "mail_transfer_received"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:190
+#: ../base/ufos/events.ufo:145
 msgid "Equipment Order Received -- %s"
 msgstr "Obdržena objednávka vybavení -- %s"
 
-#: ../base/ufos/events.ufo:191
+#: ../base/ufos/events.ufo:146
 msgid "mail_equipment_order_received"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:201
+#: ../base/ufos/events.ufo:156
 msgid "Construction Finished -- %s"
 msgstr "Výstavba dokončena -- %s"
 
-#: ../base/ufos/events.ufo:202
+#: ../base/ufos/events.ufo:157
 msgid "mail_construction_finished"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:212
+#: ../base/ufos/events.ufo:167
 msgid "New Base Ready -- %s"
 msgstr "Nová základna připravena -- %s"
 
-#: ../base/ufos/events.ufo:213
+#: ../base/ufos/events.ufo:168
 msgid "mail_new_base_ready"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:223
+#: ../base/ufos/events.ufo:178
 msgid "Base Attack Report -- %s"
 msgstr "Zpráva o útoku na základnu -- %s"
 
-#: ../base/ufos/events.ufo:224
+#: ../base/ufos/events.ufo:179
 msgid "mail_base_attack_report"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:234
+#: ../base/ufos/events.ufo:189
 msgid "Mission Summary -- %s"
 msgstr "Shrnutí mise -- %s"
 
-#: ../base/ufos/events.ufo:235
+#: ../base/ufos/events.ufo:190
 msgid "mail_mission_summary"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:245
+#: ../base/ufos/events.ufo:200
 msgid "Alien Base Discovered -- %s"
 msgstr "Objevena cizácká základna -- %s"
 
-#: ../base/ufos/events.ufo:246
+#: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:256
+#: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
 msgstr "Ztráta radarového sledování -- %s"
 
-#: ../base/ufos/events.ufo:257
+#: ../base/ufos/events.ufo:212
 msgid "mail_lost_radar_tracking"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:267
+#: ../base/ufos/events.ufo:222
 msgid "New Radar Contact -- %s"
 msgstr "Nový radarový kontakt -- %s"
 
-#: ../base/ufos/events.ufo:268
+#: ../base/ufos/events.ufo:223
 msgid "mail_new_radar_contact"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:276 ../base/ufos/events.ufo:287
-#: ../base/ufos/events.ufo:298 ../base/ufos/research.ufo:591
-#: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5002
-#: ../base/ufos/research.ufo:5011
+#: ../base/ufos/events.ufo:231 ../base/ufos/events.ufo:242
+#: ../base/ufos/events.ufo:253 ../base/ufos/research.ufo:591
+#: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5054
+#: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
 msgstr "plk. Ingrid Falkland, zpravodajská služba, PHALANX, Velení tichomořských operací"
 
-#: ../base/ufos/events.ufo:278
+#: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
 msgstr "Přiliš pozdní reakce -- %s"
 
-#: ../base/ufos/events.ufo:279
+#: ../base/ufos/events.ufo:234
 msgid "mail_response_too_late"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:289
+#: ../base/ufos/events.ufo:244
 msgid "UFO Shot Down -- %s"
 msgstr "UFO sestřeleno -- %s"
 
-#: ../base/ufos/events.ufo:290
+#: ../base/ufos/events.ufo:245
 msgid "mail_ufo_shot_down"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:300
+#: ../base/ufos/events.ufo:255
 msgid "Alien Activity Reported -- %s"
 msgstr "Ohlášena cizácká aktivita -- %s"
 
-#: ../base/ufos/events.ufo:301
+#: ../base/ufos/events.ufo:256
 msgid "mail_alien_activity_reported"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:309 ../base/ufos/events.ufo:320
-#: ../base/ufos/events.ufo:331 ../base/ufos/events.ufo:342
-#: ../base/ufos/events.ufo:353
+#: ../base/ufos/events.ufo:264 ../base/ufos/events.ufo:275
+#: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
+#: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
 msgstr "Velitel letectva Subakh al-Kuhar, letecká peruť, PHALANX, Velení tichomořských operací"
 
-#: ../base/ufos/events.ufo:311
+#: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
 msgstr "Dorazil nový letoun -- %s"
 
-#: ../base/ufos/events.ufo:312
+#: ../base/ufos/events.ufo:267
 msgid "mail_new_aircraft_arrived"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:322
+#: ../base/ufos/events.ufo:277
 msgid "Aircraft Lost Target -- %s"
 msgstr "Letoun ztratil cíl -- %s"
 
-#: ../base/ufos/events.ufo:323
+#: ../base/ufos/events.ufo:278
 msgid "mail_aircraft_lost_target"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:333
+#: ../base/ufos/events.ufo:288
 msgid "Aircraft Ready -- %s"
 msgstr "Letoun připraven -- %s"
 
-#: ../base/ufos/events.ufo:334
+#: ../base/ufos/events.ufo:289
 msgid "mail_aircraft_ready"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 # FIXME
-#: ../base/ufos/events.ufo:344
+#: ../base/ufos/events.ufo:299
 msgid "Aircraft Bingo Fuel -- %s"
 msgstr "Letoun natankován -- %s"
 
-#: ../base/ufos/events.ufo:345
+#: ../base/ufos/events.ufo:300
 msgid "mail_aircraft_bingo_fuel"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/events.ufo:355
+#: ../base/ufos/events.ufo:310
 msgid "Aircraft Landed -- %s"
 msgstr "Letoun přistál -- %s"
 
-#: ../base/ufos/events.ufo:356
+#: ../base/ufos/events.ufo:311
 msgid "mail_aircraft_landed"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
@@ -1251,229 +1306,235 @@ msgstr "Bulharština"
 msgid "No language"
 msgstr "Bez jazyka"
 
-#: ../base/ufos/maps.ufo:46 ../base/ufos/maps.ufo:84
+#: ../base/ufos/maps.ufo:46 ../base/ufos/maps.ufo:85
 msgid "Industrial theme."
 msgstr "Průmyslový motiv."
 
-#: ../base/ufos/maps.ufo:130 ../base/ufos/maps.ufo:170
-#: ../base/ufos/maps.ufo:211
+#: ../base/ufos/maps.ufo:132 ../base/ufos/maps.ufo:172
+#: ../base/ufos/maps.ufo:213
 msgid "A suburban district of an oriental area."
 msgstr "Předměstská čtvrť orientální oblasti."
 
-#: ../base/ufos/maps.ufo:255 ../base/ufos/maps.ufo:295
-#: ../base/ufos/maps.ufo:334
+#: ../base/ufos/maps.ufo:257 ../base/ufos/maps.ufo:299
+#: ../base/ufos/maps.ufo:338
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 msgstr "Farma v zemědělské oblasti. Velká plocha k ochraně, ale rozhled zhoršuje jen několik překážek."
 
-#: ../base/ufos/maps.ufo:380 ../base/ufos/maps.ufo:457
-#: ../base/ufos/maps.ufo:496
+#: ../base/ufos/maps.ufo:384 ../base/ufos/maps.ufo:465
+#: ../base/ufos/maps.ufo:506
 msgid "An industrial area in a cold region."
 msgstr "Průmyslová oblast v chladném regionu."
 
-#: ../base/ufos/maps.ufo:420
+#: ../base/ufos/maps.ufo:426
 msgid "An underpopulated area in a cold region."
 msgstr "Neobydlená oblast v chladném regionu."
 
-#: ../base/ufos/maps.ufo:533
+#: ../base/ufos/maps.ufo:545
 msgid "An industrial compound."
 msgstr "Průmyslové opevnění."
 
-#: ../base/ufos/maps.ufo:584
+#: ../base/ufos/maps.ufo:600
+#, fuzzy
+msgid "Cemetery terror mission."
+msgstr "Zastrašovací mise na samotě (u lesa :-)."
+
+#: ../base/ufos/maps.ufo:651
 msgid "A river runs through this piece of jungle."
 msgstr "Skrz tento kousek džungle pádí řeka."
 
-#: ../base/ufos/maps.ufo:624 ../base/ufos/maps.ufo:665
+#: ../base/ufos/maps.ufo:693 ../base/ufos/maps.ufo:736
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr "Přehledný úsek země uprostřed džungle."
 
-#: ../base/ufos/maps.ufo:709 ../base/ufos/maps.ufo:746
-#: ../base/ufos/maps.ufo:785 ../base/ufos/maps.ufo:823
+#: ../base/ufos/maps.ufo:782 ../base/ufos/maps.ufo:821
+#: ../base/ufos/maps.ufo:862 ../base/ufos/maps.ufo:902
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "Poklidná obec na okraji středu populace."
 
-#: ../base/ufos/maps.ufo:860 ../base/ufos/maps.ufo:900
+#: ../base/ufos/maps.ufo:941 ../base/ufos/maps.ufo:983
 msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "Cizáci nejsou až tak dobří v této řídce osídlené lesní oblasti."
 
-#: ../base/ufos/maps.ufo:941 ../base/ufos/maps.ufo:982
+#: ../base/ufos/maps.ufo:1026 ../base/ufos/maps.ufo:1069
 msgid "Some houses in desert"
 msgstr "Několik obydlí v poušti"
 
-#: ../base/ufos/maps.ufo:1022
+#: ../base/ufos/maps.ufo:1111
 msgid "An excavation site that has fallen under alien attack."
 msgstr "Vykopávky podlehnuvší cizáckému útoku."
 
-#: ../base/ufos/maps.ufo:1069
+#: ../base/ufos/maps.ufo:1158
 msgid "An estate owned by rich and influential people."
 msgstr "Usedlost vlastněná bohatými a vlivnými lidmi."
 
-#: ../base/ufos/maps.ufo:1113
+#: ../base/ufos/maps.ufo:1202
 msgid "A small village in England."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1158
+#: ../base/ufos/maps.ufo:1247
 msgid "A small office in a mountainous region."
 msgstr "Malý podnik v hornaté oblasti."
 
-#: ../base/ufos/maps.ufo:1204
+#: ../base/ufos/maps.ufo:1293
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "Druh společenského shromažďovacího střediska nabízejícího možnost pastvy, známého jako supermarket."
 
-#: ../base/ufos/maps.ufo:1252
+#: ../base/ufos/maps.ufo:1341
 msgid "An old mine."
 msgstr "Starý důl."
 
-#: ../base/ufos/maps.ufo:1300
+#: ../base/ufos/maps.ufo:1389
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "Průmyslová oblast užívaná pro nakládání a vykládání zboží."
 
-#: ../base/ufos/maps.ufo:1344
+#: ../base/ufos/maps.ufo:1433
 msgid "A bunker used in a previous conflict."
 msgstr "Bunkr užitý v předešlém konfliktu."
 
-#: ../base/ufos/maps.ufo:1390
+#: ../base/ufos/maps.ufo:1479
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "Přehrada s vodní elektrárnou , která je ohrožována cizáckými útočníky."
 
-#: ../base/ufos/maps.ufo:1434
+#: ../base/ufos/maps.ufo:1523
 msgid "A classic eastern suburban area."
 msgstr "Klasická východní předměstská oblast."
 
-#: ../base/ufos/maps.ufo:1478
+#: ../base/ufos/maps.ufo:1567
 msgid "A small industrial area."
 msgstr "Malá průmyslová oblast."
 
-#: ../base/ufos/maps.ufo:1522
+#: ../base/ufos/maps.ufo:1611
 msgid "A stadium used for various recreational events."
 msgstr "Stadión používaný k různým rekreačním událostem."
 
-#: ../base/ufos/maps.ufo:1569
+#: ../base/ufos/maps.ufo:1658
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "Tropická oblast, kde si několik podezřelých kriminálníků udělalo svoje domovy."
 
-#: ../base/ufos/maps.ufo:1625
+#: ../base/ufos/maps.ufo:1714
 msgid "A small estate in the mountains"
 msgstr "Malý statek v hornaté oblasti."
 
-#: ../base/ufos/maps.ufo:1672
+#: ../base/ufos/maps.ufo:1761
 msgid "A crashed Scout UFO"
 msgstr "Havarované UFO - Průzkumník"
 
-#: ../base/ufos/maps.ufo:1707
+#: ../base/ufos/maps.ufo:1796
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "Statek je obklopen poli a hospodářskými budovami. UFO přistálo na jednom z polí."
 
-#: ../base/ufos/maps.ufo:1753
+#: ../base/ufos/maps.ufo:1842
 msgid "A ferry."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1801
+#: ../base/ufos/maps.ufo:1890
 msgid "A rather old-fashioned suburban district."
 msgstr "Poněkud staromódní předměstská čtvrť."
 
-#: ../base/ufos/maps.ufo:1850 ../base/ufos/maps.ufo:1896
+#: ../base/ufos/maps.ufo:1939 ../base/ufos/maps.ufo:1986
 msgid "A small neighbourhood in a warm urban region."
 msgstr "Malá obec v teplé městské oblasti."
 
-#: ../base/ufos/maps.ufo:1944
+#: ../base/ufos/maps.ufo:2034
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "Místo kam občané přicházejí doplnit zásoby paliva svých vozů."
 
-#: ../base/ufos/maps.ufo:1991 ../base/ufos/maps.ufo:2035
+#: ../base/ufos/maps.ufo:2081 ../base/ufos/maps.ufo:2125
 msgid "An urban district in an oriental region."
 msgstr "Městská čtvrť v orientální oblasti."
 
-#: ../base/ufos/maps.ufo:2079
+#: ../base/ufos/maps.ufo:2169
 msgid "Underground pipe construction site."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2126
+#: ../base/ufos/maps.ufo:2216
 msgid "A subway station in a suburban part of town."
 msgstr "Stanice metra v okrajové části velkoměsta."
 
-#: ../base/ufos/maps.ufo:2172
+#: ../base/ufos/maps.ufo:2262
 msgid "An office complex in the centre of town."
 msgstr "Kancelářský komplex v centru velkoměsta."
 
-#: ../base/ufos/maps.ufo:2220
+#: ../base/ufos/maps.ufo:2310
 msgid "A suburban district."
 msgstr "Předměstská oblast."
 
-#: ../base/ufos/maps.ufo:2265
+#: ../base/ufos/maps.ufo:2355
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "Vojenský konvoj zpozorovaný cizáky."
 
-#: ../base/ufos/maps.ufo:2310 ../base/ufos/maps.ufo:2356
+#: ../base/ufos/maps.ufo:2400 ../base/ufos/maps.ufo:2446
 msgid "A small UFO has crashed in this mining region."
 msgstr "Místo havárie malého UFO v této hornické oblasti."
 
-#: ../base/ufos/maps.ufo:2405
+#: ../base/ufos/maps.ufo:2495
 msgid "An office complex under construction."
 msgstr "Kancelářský komplex ve výstavbě."
 
-#: ../base/ufos/maps.ufo:2451
+#: ../base/ufos/maps.ufo:2541
 msgid "A local harbour."
 msgstr "Místní přístav."
 
-#: ../base/ufos/maps.ufo:2496
+#: ../base/ufos/maps.ufo:2586
 msgid "An office complex on the outskirts of town."
 msgstr "Kancelářský komplex na okraji velkoměsta."
 
-#: ../base/ufos/maps.ufo:2541
+#: ../base/ufos/maps.ufo:2631
 msgid "A luxurious vacation resort."
 msgstr "Přepychové prázdninové letovisko."
 
-#: ../base/ufos/maps.ufo:2598
+#: ../base/ufos/maps.ufo:2688
 #, fuzzy
-msgid "An African suburb that has been visited by UFO."
+msgid "A suburb that has been visited by UFO."
 msgstr "Africké předměstí navštívené Sklízečem."
 
-#: ../base/ufos/maps.ufo:2650
-msgid "An African suburb that has received a visit from a Harvester."
+#: ../base/ufos/maps.ufo:2740
+#, fuzzy
+msgid "A suburb that has received a visit from a Harvester."
 msgstr "Africké předměstí navštívené Sklízečem."
 
-#: ../base/ufos/maps.ufo:2700
+#: ../base/ufos/maps.ufo:2791
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr "Havárie cizáckého Sklízeče v pustině."
 
-#: ../base/ufos/maps.ufo:2744 ../base/ufos/maps.ufo:2778
+#: ../base/ufos/maps.ufo:2837 ../base/ufos/maps.ufo:2871
 msgid "A small settlement in winter."
 msgstr "Malá osada v zimě."
 
-#: ../base/ufos/maps.ufo:2800
+#: ../base/ufos/maps.ufo:2893
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "Bunkr který byl vybudován k ubytování lidí během vážných katastrof. Některé vnitřní přetlakové dveře mohou být zavřené."
 
-#: ../base/ufos/maps.ufo:2848
+#: ../base/ufos/maps.ufo:2941
 msgid "A Bomber has landed in the middle of a city."
 msgstr "Bombardér přistál uprostřed města."
 
-#: ../base/ufos/maps.ufo:2901
+#: ../base/ufos/maps.ufo:2994
 msgid "A place where people come to relax and mingle."
 msgstr "Místo kam lidé chodí odpočívat a družit se."
 
-#: ../base/ufos/maps.ufo:2948
+#: ../base/ufos/maps.ufo:3041
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "Laboratoř ve které potajmu zkoumali nalezené vraky UFO."
 
-#: ../base/ufos/maps.ufo:2994
+#: ../base/ufos/maps.ufo:3087
 msgid "A fuel depot the aliens try to destroy."
 msgstr "Skladiště paliva které se snaží cizáci zničit."
 
-#: ../base/ufos/maps.ufo:3033
+#: ../base/ufos/maps.ufo:3126
 msgid "Wilderness terror mission."
 msgstr "Zastrašovací mise na samotě (u lesa :-)."
 
-#: ../base/ufos/maps.ufo:3079
+#: ../base/ufos/maps.ufo:3172
 msgid "UFO Crashsite."
 msgstr "Místo havárie UFO."
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: ../base/ufos/maps.ufo:3107
+#: ../base/ufos/maps.ufo:3200
 msgid "An alien base."
 msgstr "Cizácká základna."
 
-#: ../base/ufos/maps.ufo:3122
+#: ../base/ufos/maps.ufo:3215
 msgid "Base is under attack."
 msgstr "Základna je napadena."
 
@@ -1672,12 +1733,12 @@ msgstr "Antihmota"
 msgid "Alien Breathing Apparatus"
 msgstr "Dýchací přístroj pro cizáky"
 
-#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4823
-#: ../base/ufos/research.ufo:4862
+#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4876
+#: ../base/ufos/research.ufo:4915
 msgid "Alien Materials"
 msgstr "Cizácké materiály"
 
-#: ../base/ufos/otheritems.ufo:143 ../base/ufos/weapons_melee.ufo:24
+#: ../base/ufos/otheritems.ufo:153 ../base/ufos/weapons_melee.ufo:24
 #: ../base/ufos/weapons_melee.ufo:83 ../base/ufos/weapons_melee.ufo:223
 msgid "Stab"
 msgstr "Bodnutí"
@@ -1902,13 +1963,13 @@ msgstr ""
 #: ../base/ufos/research.ufo:453 ../base/ufos/research.ufo:461
 #: ../base/ufos/research.ufo:491 ../base/ufos/research.ufo:499
 #: ../base/ufos/research.ufo:554 ../base/ufos/research.ufo:562
-#: ../base/ufos/research.ufo:4006 ../base/ufos/research.ufo:4014
-#: ../base/ufos/research.ufo:4066 ../base/ufos/research.ufo:4074
-#: ../base/ufos/research.ufo:4108 ../base/ufos/research.ufo:4116
-#: ../base/ufos/research.ufo:4150 ../base/ufos/research.ufo:4158
-#: ../base/ufos/research.ufo:4930 ../base/ufos/research.ufo:4964
-#: ../base/ufos/research.ufo:4971 ../base/ufos/research.ufo:5044
-#: ../base/ufos/research.ufo:5051
+#: ../base/ufos/research.ufo:4059 ../base/ufos/research.ufo:4067
+#: ../base/ufos/research.ufo:4119 ../base/ufos/research.ufo:4127
+#: ../base/ufos/research.ufo:4161 ../base/ufos/research.ufo:4169
+#: ../base/ufos/research.ufo:4203 ../base/ufos/research.ufo:4211
+#: ../base/ufos/research.ufo:4986 ../base/ufos/research.ufo:5017
+#: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
+#: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
 msgstr "Dr. Connor, VaV: biologické oddělení, PHALANX, Velení tichomořských operací"
 
@@ -2077,8 +2138,8 @@ msgstr ""
 "Dr. Connor"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: ../base/ufos/research.ufo:517 client/campaign/cp_alienbase.c:168
-#: client/campaign/cp_missions.c:433
+#: ../base/ufos/research.ufo:517 client/campaign/cp_alienbase.c:169
+#: client/campaign/cp_missions.c:432
 msgid "Alien base"
 msgstr "Cizácká základna"
 
@@ -4647,7 +4708,7 @@ msgstr ""
 "\n"
 "Žádné."
 
-#: ../base/ufos/research.ufo:3055 ../base/ufos/research.ufo:4334
+#: ../base/ufos/research.ufo:3055 ../base/ufos/research.ufo:4387
 msgid "b_missile_txt"
 msgstr ""
 "Dokumentace -- Raketová baterie\n"
@@ -5328,7 +5389,79 @@ msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3394
+#: ../base/ufos/research.ufo:3376
+#, fuzzy
+msgid "drop_herakles_pre_txt"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+
+#: ../base/ufos/research.ufo:3410
+#, fuzzy
+msgid "drop_raptor_txt"
+msgstr ""
+"Vyhodnocení letounu -- Transportér třídy Firebird\n"
+"\n"
+"STUPEŇ UTAJENÍ: ČERNÁ\n"
+"\n"
+"PHALANX -- Jednotka pro boj s mimozemšťany\n"
+"\n"
+"Technická dokumentace, prověření Sigma -- pouze pro velitele\n"
+"\n"
+"Zaznamenáno: 17. března 2084\n"
+"\n"
+"Kým: Velitel Paul Navarre, VaV: technické oddělení, PHALANX, Velení tichomořských operací\n"
+"\n"
+"\n"
+"\n"
+"Souhrn\n"
+"\n"
+"Veliteli, dostal jsem se k těmto starým záznamům dříve než vy a rozhodl jsem se nahradit je mým vlastním výběrem a závěry ohledně naší volby transportéru. Omlouvám se pokud jsem překročil své pravomoci, ale uskladněné staré transportéry PHALANXu zkrátka neodpovídají moderním technologiím. Navíc i v době svého vzniku to byly pouze prototypy. Uplynulých 60 let ve vládních skladech přežily pouze dva exempláře a opravdu nestojí za tu námahu je z nich dolovat. Ve vybavení jsme podědili neskutečný nepořádek. Nemohu najít ani polovinu věcí o kterých se myslelo, že na nás čekají. Dělám co mohu abych nalezl kvalitní náhrady za vybavení, které prostě není schopno plnit své poslání.\n"
+"\n"
+"Na zmatku ohledně transportéru je pozitivní, že se mi podařilo přesvědčit naše zástupce ve SN k vyčlenění dalších financí na novou loď a myslím, že se vám bude líbit.\n"
+"\n"
+"Galeoth Firebird SVP (Svislý Vzlet a Přistání) je vynikající letoun, který přesně splňuje naše požadavky na transportér. Původně byl navržen pro nákladní přepravu, ale byl brzy objeven vojenskými dodavateli a přizpůsoben k přepravě jednotek. Stal se oblíbenou alternativou k helikoptérám a to jak ve vojenském tak i civilním sektoru. Největší podíl na tom mají čtyři pulsně-explozivní motory HM-5600, které mu umožňují svislý vzlet a přistání a dosahují dobrého využití paliva s mnohem menším počtem pohybujících se částí než má jakýkoliv helikoptérový motor. To zvyšuje celkovou spolehlivost a společně s absencí lopatek rotoru vede k nesmírně rychlému letounu. Nicméně HM-5600 jsou stále velice žíznivé motory a vysokooktanový letecký benzín může být příliš drahý pro civilní využití.\n"
+"\n"
+"Cestovní rychlost Firebirdu je 0,74 Machu. Maximální rychlostí 1,03 Machu je schopen jen tak tak překonat rychlost zvuku, ale taková rychlost způsobuje velké namáhání trupu a mělo by se jí užívat pouze v případě nouze. Na přídi má letoun jeden víceúčelový závěsník, který ho umožňuje vyzbrojit protivzdušnými zbraněmi jakými jsou třeba palubní děla nebo nosiče raket. Letoun je také možno vybavit přídavným zařízením a vylepšit tak jeho letové parametry a bojové vlastnosti. Součástí vybavení jsou akcelerační postroje pro osm vojáků a nákladní prostor, který může přepravovat a vypouštět malá bojová vozidla.\n"
+"\n"
+"V současnosti nelétá nic lépe vybaveného než Firebird co by se nám hodilo jako transportér. Je rychlejší než jakýkoliv vrtulník, má lepší manévrovatelnost než jakékoliv letadlo s pevnými křídly a je schopen rychle a efektivně odpovědět na hrozby po celém světě.\n"
+"\n"
+"Firebird vyžaduje jeden velký hangár na uložení, údržbu a vyzbrojení. Má jeden střední závěsník zbraní umístěný na přídi.\n"
+"\n"
+"\n"
+"Taktická doporučení\n"
+"\n"
+"Transportér je to co dopraví naše vojáky kolem světa, aby reagovali na cizácké pozemní útoky nebo zajišťovali havarovaná cizácká plavidla pro další využití. Měl by být okamžitě vysílán na místa cizácké aktivity a k zajištění sestřelených cizáckých plavidel.\n"
+"\n"
+"Jakmile jednotky vyčistí místo od živých cizáků, těžce ranění vojáci budou okamžitě odesláni k ošetření. Ti co zůstanou zabezpečí oblast dokud místo nepřevezme sběrný tým PHALANXu. Ten se postará o převoz všech cizáckých artefaktů do našich zařízení. To je důležité, protože v hustě zalidněných oblastech se mohou stát problémem pokusy o ukořistění věcí zanechaných na bojišti. Nemůžeme si dovolit ztratit cennou cizáckou technologii jenom proto, že si nějaký pitomec usmyslí, že by si měl odnést suvenýr.\n"
+"\n"
+"I ozbrojený transportér třídy Firebird není schopen čelit specializovaným stíhačkám a nikdy by neměl být posílán v roli stíhacího letounu na jakékoliv zpozorované UFO.\n"
+"\n"
+"\n"
+"Dodatky\n"
+"\n"
+"Žádné.\n"
+"\n"
+"Statistiky letounu:\n"
+"\n"
+"Rozměry: 8m x 30m x 5m\n"
+"\n"
+"Cestovní rychlost: 785 km/h\n"
+"\n"
+"Maximální rychlost: 1 083 km/h\n"
+"\n"
+"Akční rádius: 18 000 km\n"
+"\n"
+"Posádka: tři členové, max. 8 vojáků\n"
+"\n"
+"Závěsníky: jeden střední na přídi, dva nosiče vybavení, jedna pozice na pancéřování"
+
+#: ../base/ufos/research.ufo:3413
+#, fuzzy
+msgid "drop_raptor_pre_txt"
+msgstr "Před výzkumem nejsou dostupné žádné informace."
+
+#: ../base/ufos/research.ufo:3447
 msgid "inter_stiletto_txt"
 msgstr ""
 "Vyhodnocení letounu -- Stíhačka třídy Stiletto\n"
@@ -5393,7 +5526,7 @@ msgstr ""
 "\n"
 "Závěsníky: jeden malý na přídi, dva střední pod křidélky, dva nosiče vybavení, jedna pozice na pancéřování"
 
-#: ../base/ufos/research.ufo:3410
+#: ../base/ufos/research.ufo:3463
 msgid "inter_saracen_txt"
 msgstr ""
 "Vyhodnocení letounu -- Stíhačka třídy Saracen\n"
@@ -5450,7 +5583,7 @@ msgstr ""
 "\n"
 "Závěsníky: dva střední na břiše, dva nosiče vybavení, jedna pozice na pancéřování"
 
-#: ../base/ufos/research.ufo:3426
+#: ../base/ufos/research.ufo:3479
 msgid "inter_dragon_txt"
 msgstr ""
 "Veliteli, jsem obzvláště hrdý na to, že Vám mohu představit plány našeho nového záchytného stíhače \"Dragon\". Jak jste mohl vidět, převzali jsme mnohem víc, než jenom jednu stránku z cizácké knihy a radikální styl se opravdu vyplatil.\n"
@@ -5465,7 +5598,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3429
+#: ../base/ufos/research.ufo:3482
 msgid "inter_dragon_pre_txt"
 msgstr ""
 "Veliteli, dovolte mi na úvod poznamenat to, že je zřejmé jak nás cizáci citelně předstihují v každém ohledu, ale nikde to není více evidentní, jako ve vzduchu. Byli jsme ve špatné pozici hned na začátku války a navzdory našemu úsilí jsme dosáhli pouze malých zdokonalení.\n"
@@ -5476,27 +5609,27 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3462
+#: ../base/ufos/research.ufo:3515
 msgid "inter_starchaser_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3465
+#: ../base/ufos/research.ufo:3518
 msgid "inter_starchaser_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3498
+#: ../base/ufos/research.ufo:3551
 msgid "inter_stingray_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3501
+#: ../base/ufos/research.ufo:3554
 msgid "inter_stingray_pre_txt"
 msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
-#: ../base/ufos/research.ufo:3541
+#: ../base/ufos/research.ufo:3594
 msgid "ufo_scout_txt"
 msgstr ""
 "Toto malé UFO je první typ, který jsme sledovali vizuálně a na radaru. Ačkoliv nevypadají že by se učastnili současných nájezdů, to neznamená že nejsou hrozbou; dosud razili cestu pro každý případ cizáckých aktivit na Zemi.\n"
@@ -5529,14 +5662,14 @@ msgstr ""
 "\n"
 "Kapacita zbraní: Žádné"
 
-#: ../base/ufos/research.ufo:3544
+#: ../base/ufos/research.ufo:3597
 msgid "ufo_scout_pre_txt"
 msgstr ""
 "Veliteli, objevili jsme nový typ UFO, které nyní čeká v našem hangáru na rozebrání. Jsme připraveni studovat a rozmontovat letoun jakmile řeknete, ale budeme potřebovat nějaký laboratorní čas a finanční prostředky.\n"
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3583
+#: ../base/ufos/research.ufo:3636
 msgid "ufo_fighter_txt"
 msgstr ""
 "Veliteli, můj tým a já jsme právě dokončili další hlášení o UFO pro Vás. Zde je mé shrnutí pro Váš přehled.\n"
@@ -5555,7 +5688,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3586
+#: ../base/ufos/research.ufo:3639
 msgid "ufo_fighter_pre_txt"
 msgstr ""
 "Veliteli, zachránili jsme nový typ UFO, které nyní čeká v našem hangáru na rozmontování. Získání UFO třídy Stíhačka bylo jednou z věcí, za kterou jsme se zde v technickém oddělení modlili. Toto je první vyzbrojené bojové UFO, které bylo pozorováno jednotkami PHALANX; je životně důležité prostudovat tuto cizáckou loď, její výzbroj a zjistit její slabá místa - pokud nějaká má.\n"
@@ -5564,7 +5697,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3626
+#: ../base/ufos/research.ufo:3679
 msgid "ufo_supply_txt"
 msgstr ""
 "Veliteli, můj tým i já jsme právě dokončili další hlášení o UFO pro Vás. Zde je můj souhrn pro Váš přehled.\n"
@@ -5583,7 +5716,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3629
+#: ../base/ufos/research.ufo:3682
 msgid "ufo_supply_pre_txt"
 msgstr ""
 "Veliteli, zachránili jsme nový typ UFO, které nyní čeká v našem hangáru na rozmontování. Je větší než jakékoliv jiné UFO námi doposud zjištěné, zdá se být neozbrojené a jeho velký nákladový prostor naznačuje, že se může jednat o transportní nosič, podporující cizácké aktivity na povrchu Země. Tyto letouny mohu být nalezeny v centru mnoha cizáckých formací a budou drasticky zvyšovat cizáckou přítomnost na naší planetě, pokud jim dovolíme dokončit jejich mise.\n"
@@ -5592,27 +5725,27 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3669
+#: ../base/ufos/research.ufo:3722
 msgid "ufo_carrier_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3672
+#: ../base/ufos/research.ufo:3725
 msgid "ufo_carrier_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3712
+#: ../base/ufos/research.ufo:3765
 msgid "ufo_bomber_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3715
+#: ../base/ufos/research.ufo:3768
 msgid "ufo_bomber_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3755
+#: ../base/ufos/research.ufo:3808
 msgid "ufo_corrupter_txt"
 msgstr ""
 "Veliteli, můj tým i já jsme právě dokončili další hlášení o UFO pro Vás. Zde je můj souhrn pro Váš přehled.\n"
@@ -5631,7 +5764,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3758
+#: ../base/ufos/research.ufo:3811
 msgid "ufo_corrupter_pre_txt"
 msgstr ""
 "Veliteli, zachránili jsme nový typ UFO, který nyní čeká v našem hangáru na rozebrání. Jedná se o jedno z největších UFO, jaké jsme dosud spatřili, ale relativně lehká výzbroj nazančuje, že to nebude bojový letoun. Naše předběžná prohlídka interiéru nám podala pouze provokativní klíč k jeho zamýšlené funkci.\n"
@@ -5642,7 +5775,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3798
+#: ../base/ufos/research.ufo:3851
 #, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr ""
@@ -5676,7 +5809,7 @@ msgstr ""
 "\n"
 "Kapacita zbraní: Žádné"
 
-#: ../base/ufos/research.ufo:3801
+#: ../base/ufos/research.ufo:3854
 #, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr ""
@@ -5684,19 +5817,19 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3841
+#: ../base/ufos/research.ufo:3894
 #, fuzzy
 msgid "ufo_ripper_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3844
+#: ../base/ufos/research.ufo:3897
 #, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3884
+#: ../base/ufos/research.ufo:3937
 msgid "ufo_harvester_txt"
 msgstr ""
 "Veliteli, můj tým i já jsme právě dokončili další hlášení o UFO pro Vás. Zde je můj souhrn pro Váš přehled.\n"
@@ -5719,7 +5852,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3887
+#: ../base/ufos/research.ufo:3940
 msgid "ufo_harvester_pre_txt"
 msgstr ""
 "Veliteli, zachránili jsme nový typ UFO, které nyní čeká v našem hangáru na rozmontování. Tento kus je značně větší, než předchozí UFO, která jsme pozorovali a zdá se být středem mnoha cizáckých formací, což z něj činí obzvláště důležitý cíl pro naše výzkumy. Odkrytí způsobu použití tohoto letounu a prozkoumání jeho speciálního vybavení nám může poskytnout zcela nový vhled do cizáckých misí zde na Zemi.\n"
@@ -5728,37 +5861,37 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:3927
+#: ../base/ufos/research.ufo:3980
 #, fuzzy
 msgid "ufo_mothership_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3930
+#: ../base/ufos/research.ufo:3983
 #, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3972
+#: ../base/ufos/research.ufo:4025
 msgid "Live Specimen - Bloodspider"
 msgstr "Živý jedinec - Bloodspider"
 
-#: ../base/ufos/research.ufo:3974
+#: ../base/ufos/research.ufo:4027
 msgid "bloodspider_notes_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3977
+#: ../base/ufos/research.ufo:4030
 msgid "bloodspider_notes_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3993
+#: ../base/ufos/research.ufo:4046
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Pitva cizáka - Bloodspider"
 
-#: ../base/ufos/research.ufo:3998
+#: ../base/ufos/research.ufo:4051
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -5781,7 +5914,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4001
+#: ../base/ufos/research.ufo:4054
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -5792,11 +5925,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4051
+#: ../base/ufos/research.ufo:4104
 msgid "Alien Autopsy - Ortnok"
 msgstr "Pitva cizáka - Ortnok"
 
-#: ../base/ufos/research.ufo:4056
+#: ../base/ufos/research.ufo:4109
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -5833,7 +5966,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4057
+#: ../base/ufos/research.ufo:4110
 msgid "ortnok_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -5868,7 +6001,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4060
+#: ../base/ufos/research.ufo:4113
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -5879,7 +6012,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4061
+#: ../base/ufos/research.ufo:4114
 msgid "ortnok_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -5890,11 +6023,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4093
+#: ../base/ufos/research.ufo:4146
 msgid "Alien Autopsy - Taman"
 msgstr "Pitva cizáka - Taman"
 
-#: ../base/ufos/research.ufo:4098
+#: ../base/ufos/research.ufo:4151
 msgid "taman_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -5933,7 +6066,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4099
+#: ../base/ufos/research.ufo:4152
 msgid "taman_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -5970,7 +6103,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4102
+#: ../base/ufos/research.ufo:4155
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -5981,7 +6114,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4103
+#: ../base/ufos/research.ufo:4156
 msgid "taman_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -5992,11 +6125,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4135
+#: ../base/ufos/research.ufo:4188
 msgid "Alien Autopsy - Shevaar"
 msgstr "Pitva cizáka - Shevaar"
 
-#: ../base/ufos/research.ufo:4140
+#: ../base/ufos/research.ufo:4193
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -6033,7 +6166,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4141
+#: ../base/ufos/research.ufo:4194
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -6068,7 +6201,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4144
+#: ../base/ufos/research.ufo:4197
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -6079,7 +6212,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4145
+#: ../base/ufos/research.ufo:4198
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -6091,71 +6224,71 @@ msgstr ""
 "Dr. Connor"
 
 # Bezpilotní Pozemní Vozidlo
-#: ../base/ufos/research.ufo:4234 ../base/ufos/team_humans.ufo:1637
+#: ../base/ufos/research.ufo:4287 ../base/ufos/team_humans.ufo:1637
 msgid "Phoenix UGV"
 msgstr "BPV Fénix"
 
-#: ../base/ufos/research.ufo:4236
+#: ../base/ufos/research.ufo:4289
 msgid "ugv_phoenix_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4239
+#: ../base/ufos/research.ufo:4292
 msgid "ugv_phoenix_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
 # Bezpilotní Pozemní Vozidlo
-#: ../base/ufos/research.ufo:4254 ../base/ufos/team_humans.ufo:1662
+#: ../base/ufos/research.ufo:4307 ../base/ufos/team_humans.ufo:1662
 msgid "Ares W (UGV)"
 msgstr "Arés W (BPV)"
 
-#: ../base/ufos/research.ufo:4256
+#: ../base/ufos/research.ufo:4309
 msgid "ugv_ares_w_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4259
+#: ../base/ufos/research.ufo:4312
 msgid "ugv_ares_w_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:4275
+#: ../base/ufos/research.ufo:4328
 msgid "ugv_chaingun_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4278
+#: ../base/ufos/research.ufo:4331
 msgid "ugv_chaingun_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:4294
+#: ../base/ufos/research.ufo:4347
 msgid "ugv_chaingun_belt_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4297
+#: ../base/ufos/research.ufo:4350
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:4312
+#: ../base/ufos/research.ufo:4365
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4315
+#: ../base/ufos/research.ufo:4368
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 # EPO=Elektronické ProtiOpatření
-#: ../base/ufos/research.ufo:4363
+#: ../base/ufos/research.ufo:4416
 msgid "'Raven' ECM Unit"
 msgstr "Jednotka EPO 'Požírač'"
 
-#: ../base/ufos/research.ufo:4366
+#: ../base/ufos/research.ufo:4419
 msgid "craft_electronics_raven_txt"
 msgstr ""
 "Technické specifikace: Jednotka EPO \"Havran\"\n"
@@ -6194,7 +6327,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4383
+#: ../base/ufos/research.ufo:4436
 msgid "craft_shield_light_txt"
 msgstr ""
 "Technické specifikace: Polymerové pancéřování letounu\n"
@@ -6237,7 +6370,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4399
+#: ../base/ufos/research.ufo:4452
 msgid "craft_shield_plating_pre_txt"
 msgstr ""
 "Veliteli, nyní když máme schopnosti vyrábět a zpracovávat cizácké materiály, celé nové pole možností se pro nás otevírá. Tyto materiály jsou silné a ohebné, takže mohou být využity pro téměř cokoliv. Jejich nejvíce slibné použití nicméně je v leteckém designu - specificky pancéřování.\n"
@@ -6250,7 +6383,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:4402
+#: ../base/ufos/research.ufo:4455
 msgid "craft_shield_plating_txt"
 msgstr ""
 "Veliteli, mám nějaké dobré zprávy. Můj tým a já jsme dokončili prototyp cizáckého leteckého pancíře. Náš nový pancíř je nyní připraven k výrobě pro PHALANX.\n"
@@ -6267,7 +6400,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:4436
+#: ../base/ufos/research.ufo:4489
 msgid "craft_alien_astrogation_pre_txt"
 msgstr ""
 "Veliteli, ukořistění neporušené cizácké kosmonavigační jednotky je velice důležitým milníkem. Ačkoliv se nezdá, že by tato jednotka obsahovala hvězdnou mapu, dovolí nám to dešifrovat cizácké astronomické poznatky a vylepšit tak naše kosmické navigační systémy o několik řádů. Eventuálně nám to pomůže vystopovat cizáky zpět na jejich domovskou planetu.\n"
@@ -6276,7 +6409,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4439
+#: ../base/ufos/research.ufo:4492
 msgid "craft_alien_astrogation_txt"
 msgstr ""
 "Veliteli, skončili jsme práci na ukořistěné cizácké kosmonavigační jednotce. Zde je souhrnná zpráva.\n"
@@ -6295,7 +6428,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4474
+#: ../base/ufos/research.ufo:4527
 msgid "craft_alien_propulsion_pre_txt"
 msgstr ""
 "Veliteli, cizácké antihmotové motory, které jsme nalezli, fascinují můj tým od té doby co je přivezli. Myslím si, že s naší znalostí cizáckých materiálů můžeme začít pracovat na detailech duplikace této technologie. Povzbuzující je, že se zdá, že budeme moci tyto motory replikovat, stačí vyřešit funkci a vytváření odlišných dílů.\n"
@@ -6304,7 +6437,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4477
+#: ../base/ufos/research.ufo:4530
 msgid "craft_alien_propulsion_txt"
 msgstr ""
 "Veliteli, jsem potěšen, že mohu podat zprávu o úspěchu našeho programu výzkumu cizáckého pohonu. Rozluštili jsme záhady nastavení cizáckého motoru a konečně rozumíme procesu cesty antihmoty z palivové nádrže do spalovací komory.\n"
@@ -6327,7 +6460,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4511
+#: ../base/ufos/research.ufo:4564
 msgid "craft_alien_detection_pre_txt"
 msgstr ""
 "Veliteli, zdá se, že cizácké senzory jsou velmi výkonnou sadou pasivních a aktivních vyhledávacích systémů zahrnujících radarovou, lidarovou, magnetickou, ultrafialovou a infračervenou detekci a -- což je nejvíce zajímavé -- typ detekce pro nás neznámé, která se zdá být daleko více úspěšnější v detekci UFO než jakékoliv naše prostředky.\n"
@@ -6338,7 +6471,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4514
+#: ../base/ufos/research.ufo:4567
 msgid "craft_alien_detection_txt"
 msgstr ""
 "Projekt cizácké detekce je kompletní, veliteli. Nyní úplně rozumíme tomuto zařízení, jak funguje, jak jej ovládat a jak jej přizpůsobit pro naše použití.\n"
@@ -6361,7 +6494,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4547
+#: ../base/ufos/research.ufo:4600
 msgid "craft_weapon_alc_pre_txt"
 msgstr ""
 "Toto je jeden z několika návrhů, které podávám ohledně výzkumu a vývoje nových laserových zbraní. Každý z nich by měl být vyvíjen odděleně kvůli velikostním odlišnostem, úrovním výkonu a komplexnosti zúčastněných systémů.\n"
@@ -6376,7 +6509,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:4550
+#: ../base/ufos/research.ufo:4603
 msgid "craft_weapon_alc_txt"
 msgstr ""
 "Veliteli, dokončil jsem moje hlášení ohledně našeho posledního laserového programu. Úspěšně jsme zhotovili prototyp novélo leteckého laserového kanónu a jsme připraveni k jeho zavedení do výroby.\n"
@@ -6391,11 +6524,11 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:4595
+#: ../base/ufos/research.ufo:4648
 msgid "SHIVA Rotary Cannon"
 msgstr "Rotační dělo SHIVA"
 
-#: ../base/ufos/research.ufo:4598
+#: ../base/ufos/research.ufo:4651
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 "Technické specifikace: Rotační kanón Šiva\n"
@@ -6438,7 +6571,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4615
+#: ../base/ufos/research.ufo:4668
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 "Technické specifikace: 20mm protipancéřové zápalné náboje pro kanón Šiva\n"
@@ -6477,7 +6610,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4636
+#: ../base/ufos/research.ufo:4689
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 "Technické specifikace: 20mm tříštivo-trhavé zápalné náboje pro kanón Šiva\n"
@@ -6519,11 +6652,11 @@ msgstr ""
 "Žádné"
 
 # VV = Vzduch-Vzduch
-#: ../base/ufos/research.ufo:4654
+#: ../base/ufos/research.ufo:4707
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "Nosič střel VV 'Krahujec'"
 
-#: ../base/ufos/research.ufo:4657
+#: ../base/ufos/research.ufo:4710
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 "Technické specifikace: Nosič střel vzduch-vzduch \"Krahujec\"\n"
@@ -6572,11 +6705,11 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4671
+#: ../base/ufos/research.ufo:4724
 msgid "'Sparrowhawk' Missile"
 msgstr "Střela 'Krahujec'"
 
-#: ../base/ufos/research.ufo:4674
+#: ../base/ufos/research.ufo:4727
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 "Technické specifikace: Střela \"Krahujec\"\n"
@@ -6619,7 +6752,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4695
+#: ../base/ufos/research.ufo:4748
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 "Technické specifikace: Baterie raket TR-20\n"
@@ -6662,7 +6795,7 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4712
+#: ../base/ufos/research.ufo:4765
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 "Technické specifikace: Raketa TR-20\n"
@@ -6705,14 +6838,14 @@ msgstr ""
 "\n"
 "Žádné"
 
-#: ../base/ufos/research.ufo:4733
+#: ../base/ufos/research.ufo:4786
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
 "Veliteli, UFO námi zachráněné bylo vybaveno velmi zajímavým typem zbraně, kterou bychom rádi prozkoumali. Zdá se, že vystřeluje nějaký druh vysokorychlostních částicových paprsků; pokud dokážeme zvládnout tuto technologii, nebo ji alespoň adaptovat pro použití v našich letounech, mohli bychom vzdušná střetnutí s ozbrojenými cizáckými plavidly učinit značně příznivější pro naše letouny a piloty.\n"
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:4736
+#: ../base/ufos/research.ufo:4789
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 "Moje hlášení ohledně cizácké částicové paprskové zbraně je připraveno pro Vaše posouzení.\n"
@@ -6731,7 +6864,7 @@ msgstr ""
 "\n"
 "--Vel. Navarre"
 
-#: ../base/ufos/research.ufo:4789
+#: ../base/ufos/research.ufo:4842
 msgid "craft_electronics_targeting_txt"
 msgstr ""
 "Technické specifikace: Zaměřovací počítač\n"
@@ -6770,7 +6903,7 @@ msgstr ""
 "\n"
 "Se všemi možnostmi a odlišnými scénáři čekajícími v naší budoucnosti, není žádné zlaté pravidlo, které by nám pomohlo rozhodnout se, kdy použít zaměřovací počítač. Je to pouze na uvážení Velitele."
 
-#: ../base/ufos/research.ufo:4806
+#: ../base/ufos/research.ufo:4859
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
 "Technické specifikace: Palivová nádrž\n"
@@ -6807,7 +6940,7 @@ msgstr ""
 "\n"
 "Po přečtení hlášení vel. Navarreho bych měl zdůraznit, že naše stanovy ukládají zastavit jakékoliv a všechny cizácké aktivity na Zemi. Nemůžeme si dovolit nechat některé z nich pokračovat kvůli tomu, že budou mimo dolet našich letounů. Pokud civilisté zemřou, protože se tam výsadkový letoun nebude moci dost dobře dostat, naše pověst bude pošramocena a naše financování může důsledkem toho utrpět. Měli bychom držet několik letounů s palivovými nádržemi v pohotovosti pro případ vzdálených incidentů."
 
-#: ../base/ufos/research.ufo:4828 ../base/ufos/research.ufo:4864
+#: ../base/ufos/research.ufo:4881 ../base/ufos/research.ufo:4917
 msgid "alien_materials_txt"
 msgstr ""
 "Veliteli, myslím si, že jsme odhalili tajemství cizáckých materiálů. Po nějakých úpravách našeho dílenského vybavení bychom měli být nyní schopni využít materiál a 'naprogramovat' ho na nové vylepšené tvary.\n"
@@ -6824,7 +6957,7 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4831
+#: ../base/ufos/research.ufo:4884
 msgid "alien_materials_pre_txt"
 msgstr ""
 "Veliteli, jak jsem zmínil v předchozím hlášení, UFO, které jsme získali, bylo pokryto velice zajímavou slitinou, kde je smíchán plast a kov dohromady v jeden materiál. Tyto materiály se zdají být univerzálně používané cizáckou technologií. Je to pokročilý a všestraný materiál s tisíci možnostmi použití.\n"
@@ -6833,11 +6966,11 @@ msgstr ""
 "\n"
 "--vel. Navarre"
 
-#: ../base/ufos/research.ufo:4883
+#: ../base/ufos/research.ufo:4937
 msgid "Political Situation Before The Invasion"
 msgstr "Politická situace před invazí"
 
-#: ../base/ufos/research.ufo:4885
+#: ../base/ufos/research.ufo:4939
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "V roce 2048 je Země v lepší formě než tomu bylo po více než století. Asi poprvé jsou mír a spolupráce standardem a nikoliv výjimkou. Nicméně současná situace může být vysvětlena pouze prostřednictvím krutého průběhu 21. století.\n"
@@ -6856,11 +6989,11 @@ msgstr ""
 "\n"
 "Ve dnech které následovaly vládní armáda utrpěla hromadné dezerce; tato jediná událost konečně přivodila vládě záhubu. Jednotky musely bojovat zuby nehty a operovat roztroušeny na rozlehlém území sežehnuté země zatímco je povstalci pomalu zatlačovali do Indického oceánu. Více než šest miliónů životů bylo ztraceno než vládní síly 15. srpna 2036 kapitulovaly. To byl oficiální konec Druhé studené války."
 
-#: ../base/ufos/research.ufo:4895
+#: ../base/ufos/research.ufo:4950
 msgid "After The War"
 msgstr "Po válce"
 
-#: ../base/ufos/research.ufo:4897
+#: ../base/ufos/research.ufo:4952
 msgid "news_after_the_war_txt"
 msgstr ""
 "Asijská Republika:\n"
@@ -6973,11 +7106,11 @@ msgstr ""
 "\n"
 "Oceánská armáda spočívá hlavně v silném loďstvu. Jejich pozemní armáda je nepatrná a v porovnání s jakoukoliv jinou kromě Sjednocené Ameriky a má pouze obrannou funkci, je průměrně trénovaná a vybavená. Nicméně v krizových situacích může zareagovat poměrně rychle."
 
-#: ../base/ufos/research.ufo:4907
+#: ../base/ufos/research.ufo:4963
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX a následky Bombajského masakru"
 
-#: ../base/ufos/research.ufo:4909
+#: ../base/ufos/research.ufo:4965
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "\"Projekt PHALANX\" byl poprvé založen Ministerstvem obrany Spojených států v roce 1955 po létech vzrůstajícího zájmu o celosvětově rostoucí počet pozorování UFO. Možnost cizácké invaze těžce sužovala mysli politiků vynervovaných jadernou silou Sovětského svazu. Existence nepřátelského mimozemského života ve vesmíru se zdála jako velice nepatrná možnost, dokonce ještě menší než že by tito nepřátelé mohli najít Zemi obklopenou celým širým prostorem -- ale mohla si Amerika dovolit takové riziko?\n"
@@ -7008,11 +7141,11 @@ msgstr ""
 "\n"
 "Jediné co scházelo byl vůdce."
 
-#: ../base/ufos/research.ufo:4919
+#: ../base/ufos/research.ufo:4975
 msgid "A New Twist"
 msgstr "Nečekaný obrat"
 
-#: ../base/ufos/research.ufo:4924
+#: ../base/ufos/research.ufo:4980
 msgid "news_new_twist_txt"
 msgstr ""
 "Veliteli,\n"
@@ -7037,17 +7170,17 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4925
+#: ../base/ufos/research.ufo:4981
 msgid "news_new_twist_alt_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:4950
+#: ../base/ufos/research.ufo:5003
 msgid "The Enemy On Earth"
 msgstr "Nepřítel na Zemi"
 
-#: ../base/ufos/research.ufo:4955
+#: ../base/ufos/research.ufo:5008
 msgid "enemy_on_earth_alt_txt"
 msgstr ""
 "Proposal\n"
@@ -7080,7 +7213,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4956
+#: ../base/ufos/research.ufo:5009
 msgid "enemy_on_earth_txt"
 msgstr ""
 "Commander,\n"
@@ -7111,7 +7244,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4959
+#: ../base/ufos/research.ufo:5012
 msgid "enemy_on_earth_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -7134,11 +7267,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4989
+#: ../base/ufos/research.ufo:5041
 msgid "XVI Census"
 msgstr "MVI sčítání"
 
-#: ../base/ufos/research.ufo:4994
+#: ../base/ufos/research.ufo:5046
 msgid "xvi_census_txt"
 msgstr ""
 "Dobré ráno, pane.\n"
@@ -7161,7 +7294,7 @@ msgstr ""
 "\n"
 "Plk. Falkland"
 
-#: ../base/ufos/research.ufo:4997
+#: ../base/ufos/research.ufo:5049
 msgid "xvi_census_pre_txt"
 msgstr ""
 "Dobré ráno pane.\n"
@@ -7178,17 +7311,17 @@ msgstr ""
 "\n"
 "Plk. Falkland"
 
-#: ../base/ufos/research.ufo:5031
+#: ../base/ufos/research.ufo:5082
 msgid "The Enemy On Earth - Revisited"
 msgstr "Nepřítel na Zemi - Opraveno"
 
-#: ../base/ufos/research.ufo:5036
+#: ../base/ufos/research.ufo:5087
 msgid "enemy_on_earth_rev_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:5039
+#: ../base/ufos/research.ufo:5090
 msgid "enemy_on_earth_rev_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
@@ -7382,7 +7515,7 @@ msgstr "Copyright 2004-2009 by UFO: AI Team"
 
 #: ../base/ufos/seq_ingame.ufo:13 ../base/ufos/seq_ingame.ufo:42
 #: ../base/ufos/seq_ingame.ufo:80 ../base/ufos/ui/singleplayer.ufo:204
-#: ../base/ufos/ui/singleplayer.ufo:279
+#: ../base/ufos/ui/singleplayer.ufo:283
 msgid "Click to continue"
 msgstr "Klik pro pokračování"
 
@@ -7906,7 +8039,7 @@ msgstr "Finance k dispozici"
 #: ../base/ufos/ui/aircraft.ufo:77 ../base/ufos/ui/campaign.ufo:80
 #: ../base/ufos/ui/campaign.ufo:415 ../base/ufos/ui/campaign.ufo:602
 #: ../base/ufos/ui/hospital.ufo:517 ../base/ufos/ui/multiplayer.ufo:85
-#: ../base/ufos/ui/options.ufo:96 ../base/ufos/ui/research.ufo:33
+#: ../base/ufos/ui/options.ufo:95 ../base/ufos/ui/research.ufo:33
 #: ../base/ufos/ui/singleplayer.ufo:53 ../base/ufos/ui/skirmish.ufo:18
 #: ../base/ufos/ui/tutorials.ufo:32
 msgid "Back"
@@ -7932,35 +8065,40 @@ msgstr "Vojáci"
 msgid "Soldier equipment"
 msgstr "Vybavení vojáků"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:57
+#: ../base/ufos/ui/aircraft.ufo:176
+#, fuzzy
+msgid "Rename aircraft"
+msgstr "Zvolte letoun"
+
+#: ../base/ufos/ui/aircraft_equip.ufo:80
 msgid "Available equipment:"
 msgstr "Dostupné vybavení"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:107
+#: ../base/ufos/ui/aircraft_equip.ufo:141
 msgid "Selected item:"
 msgstr "Vybrané vybavení:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:135
+#: ../base/ufos/ui/aircraft_equip.ufo:168
 #, fuzzy
 msgid "Equip this item"
 msgstr "Vybavit vojáka"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:145
+#: ../base/ufos/ui/aircraft_equip.ufo:178
 #, fuzzy
 msgid "Remove this item"
 msgstr "Demontovat tuto obrannou soustavu"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:165
+#: ../base/ufos/ui/aircraft_equip.ufo:199
 #: client/campaign/cp_fightequip_callbacks.c:165
 msgid "Weapons"
 msgstr "Zbraně"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:169
+#: ../base/ufos/ui/aircraft_equip.ufo:203
 #: client/campaign/cp_fightequip_callbacks.c:172
 msgid "Ammo"
 msgstr "Munice"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:173 ../base/ufos/ui/equipment.ufo:310
+#: ../base/ufos/ui/aircraft_equip.ufo:207 ../base/ufos/ui/equipment.ufo:310
 #: ../base/ufos/ui/market.ufo:77 ../base/ufos/ui/multiplayer_team.ufo:307
 #: ../base/ufos/ui/production.ufo:91
 #: client/campaign/cp_fightequip_callbacks.c:167
@@ -7968,201 +8106,189 @@ msgstr "Munice"
 msgid "Armour"
 msgstr "Zbroj"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:177
+#: ../base/ufos/ui/aircraft_equip.ufo:211
 #: client/campaign/cp_fightequip_callbacks.c:169
 msgid "Items"
 msgstr "Vybavení"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:252
-#: ../base/ufos/ui/aircraft_equip.ufo:274
-msgid "Add selected item"
-msgstr "Přidat zvolené vybavení"
-
-#: ../base/ufos/ui/aircraft_equip.ufo:263
-#: ../base/ufos/ui/aircraft_equip.ufo:285
-msgid "Remove item from slot"
-msgstr "Odebrat vybavení z pozice"
-
-#: ../base/ufos/ui/aircraft_equip.ufo:296
-#: ../base/ufos/ui/aircraft_equip.ufo:308
-#: ../base/ufos/ui/aircraft_equip.ufo:320
-#: ../base/ufos/ui/aircraft_equip.ufo:332
+#: ../base/ufos/ui/aircraft_equip.ufo:279
+#: ../base/ufos/ui/aircraft_equip.ufo:299
 msgid "Select this zone"
 msgstr "Vybrat tuto oblast"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:342
+#: ../base/ufos/ui/aircraft_equip.ufo:319
 msgid "Current item in slot"
 msgstr "Nynější vybavení v pozici"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:353
+#: ../base/ufos/ui/aircraft_equip.ufo:330
 msgid "Ammo fitting this weapon"
 msgstr "Munice nabitá v této zbrani"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:368
-#: ../base/ufos/ui/aircraft_equip.ufo:388
-#: ../base/ufos/ui/aircraft_equip.ufo:408
-#: ../base/ufos/ui/aircraft_equip.ufo:428
-#: ../base/ufos/ui/aircraft_equip.ufo:448
-#: ../base/ufos/ui/aircraft_equip.ufo:468
-#: ../base/ufos/ui/aircraft_equip.ufo:488
-#: ../base/ufos/ui/aircraft_equip.ufo:508
+#: ../base/ufos/ui/aircraft_equip.ufo:345
+#: ../base/ufos/ui/aircraft_equip.ufo:365
+#: ../base/ufos/ui/aircraft_equip.ufo:385
+#: ../base/ufos/ui/aircraft_equip.ufo:405
+#: ../base/ufos/ui/aircraft_equip.ufo:425
+#: ../base/ufos/ui/aircraft_equip.ufo:445
+#: ../base/ufos/ui/aircraft_equip.ufo:465
+#: ../base/ufos/ui/aircraft_equip.ufo:485
 msgid "Select this slot"
 msgstr "Vybrat tuto pozici"
 
-#: ../base/ufos/ui/aircraft_info.ufo:61
-#: ../base/ufos/ui/aircraft_soldiers.ufo:47
+#: ../base/ufos/ui/aircraft_info.ufo:62
+#: ../base/ufos/ui/aircraft_soldiers.ufo:48
 msgid "Team Members:"
 msgstr "Členové týmu:"
 
-#: ../base/ufos/ui/aircraft_info.ufo:92
+#: ../base/ufos/ui/aircraft_info.ufo:93
 msgid "Start Aircraft"
 msgstr "Odstartovat"
 
-#: ../base/ufos/ui/aircraft_info.ufo:98
+#: ../base/ufos/ui/aircraft_info.ufo:99
 msgid "Call back"
 msgstr "Návrat na základnu"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:122
+#: ../base/ufos/ui/aircraft_pilots.ufo:123
 #, fuzzy
 msgid "Pilot is assigned to another craft"
 msgstr "Pilot v letounu"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:140
+#: ../base/ufos/ui/aircraft_pilots.ufo:141
 #, fuzzy
 msgid "A pilot is already assigned to this craft"
 msgstr "K této zbrani není přiřazena žádná munice."
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:142
+#: ../base/ufos/ui/aircraft_pilots.ufo:143
 #, fuzzy
 msgid "Assign pilot to this craft"
 msgstr "Přidělit tým k letounu"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:153
+#: ../base/ufos/ui/aircraft_pilots.ufo:154
 #, fuzzy
 msgid "Remove pilot from this craft"
 msgstr "Odebrat vybavení z pozice"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:196
-#: ../base/ufos/ui/aircraft_pilots.ufo:206
-#: ../base/ufos/ui/aircraft_pilots.ufo:216
-#: ../base/ufos/ui/aircraft_pilots.ufo:226
-#: ../base/ufos/ui/aircraft_pilots.ufo:236
-#: ../base/ufos/ui/aircraft_pilots.ufo:246
-#: ../base/ufos/ui/aircraft_pilots.ufo:256
-#: ../base/ufos/ui/aircraft_pilots.ufo:266
+#: ../base/ufos/ui/aircraft_pilots.ufo:197
+#: ../base/ufos/ui/aircraft_pilots.ufo:207
+#: ../base/ufos/ui/aircraft_pilots.ufo:217
+#: ../base/ufos/ui/aircraft_pilots.ufo:227
+#: ../base/ufos/ui/aircraft_pilots.ufo:237
+#: ../base/ufos/ui/aircraft_pilots.ufo:247
+#: ../base/ufos/ui/aircraft_pilots.ufo:257
+#: ../base/ufos/ui/aircraft_pilots.ufo:267
 msgid "Add/remove this soldier"
 msgstr "Přidat/odebrat vojáka"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:69
-#: ../base/ufos/ui/aircraft_soldiers.ufo:566 ../base/ufos/ui/geoscape.ufo:677
+#: ../base/ufos/ui/aircraft_soldiers.ufo:70
+#: ../base/ufos/ui/aircraft_soldiers.ufo:567 ../base/ufos/ui/geoscape.ufo:677
 msgid "Equip soldiers"
 msgstr "Vybavit vojáky"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:97
+#: ../base/ufos/ui/aircraft_soldiers.ufo:98
 #, fuzzy
 msgid "Soldier is assigned to another craft"
 msgstr "Voják v letounu"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:116
+#: ../base/ufos/ui/aircraft_soldiers.ufo:117
 #, fuzzy
 msgid "No more soldiers can be assigned to this craft"
 msgstr "K této zbrani není přiřazena žádná munice."
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:118
+#: ../base/ufos/ui/aircraft_soldiers.ufo:119
 #, fuzzy
 msgid "Assign soldier to this craft"
 msgstr "Nejprve tomuto letounu přiřaďte alespoň jednoho vojáka."
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:129
+#: ../base/ufos/ui/aircraft_soldiers.ufo:130
 #, fuzzy
 msgid "Remove soldier from this craft"
 msgstr "Vybrat vojáka ze seznamu"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:139
+#: ../base/ufos/ui/aircraft_soldiers.ufo:140
 msgid "Soldier carries equipment"
 msgstr "Voják nese vybavení"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:148
+#: ../base/ufos/ui/aircraft_soldiers.ufo:149
 msgid "Soldier carries no equipment"
 msgstr "Voják nenese vybavení"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:482 ../base/ufos/ui/equipment.ufo:460
+#: ../base/ufos/ui/aircraft_soldiers.ufo:483 ../base/ufos/ui/equipment.ufo:460
 #: ../base/ufos/ui/hire.ufo:348 ../base/ufos/ui/hospital.ufo:567
 #: ../base/ufos/ui/multiplayer_team.ufo:498 ../base/ufos/ui/physdat.ufo:62
 msgid "Strength:"
 msgstr "Síla:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:487 ../base/ufos/ui/equipment.ufo:465
+#: ../base/ufos/ui/aircraft_soldiers.ufo:488 ../base/ufos/ui/equipment.ufo:465
 #: ../base/ufos/ui/hire.ufo:357 ../base/ufos/ui/hospital.ufo:572
-#: ../base/ufos/ui/multiplayer_team.ufo:503 ../base/ufos/ui/options.ufo:1085
+#: ../base/ufos/ui/multiplayer_team.ufo:503 ../base/ufos/ui/options.ufo:1142
 #: ../base/ufos/ui/physdat.ufo:67
 msgid "Speed:"
 msgstr "Rychlost:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:492 ../base/ufos/ui/equipment.ufo:470
+#: ../base/ufos/ui/aircraft_soldiers.ufo:493 ../base/ufos/ui/equipment.ufo:470
 #: ../base/ufos/ui/hire.ufo:366 ../base/ufos/ui/hospital.ufo:577
 #: ../base/ufos/ui/multiplayer_team.ufo:508 ../base/ufos/ui/physdat.ufo:72
 msgid "Accuracy:"
 msgstr "Přesnost:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:497 ../base/ufos/ui/equipment.ufo:475
+#: ../base/ufos/ui/aircraft_soldiers.ufo:498 ../base/ufos/ui/equipment.ufo:475
 #: ../base/ufos/ui/hire.ufo:375 ../base/ufos/ui/hospital.ufo:582
 #: ../base/ufos/ui/multiplayer_team.ufo:513 ../base/ufos/ui/physdat.ufo:77
 msgid "Mind:"
 msgstr "Intelekt:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:502 ../base/ufos/ui/equipment.ufo:480
+#: ../base/ufos/ui/aircraft_soldiers.ufo:503 ../base/ufos/ui/equipment.ufo:480
 #: ../base/ufos/ui/hire.ufo:384 ../base/ufos/ui/hospital.ufo:587
 #: ../base/ufos/ui/multiplayer_team.ufo:518 ../base/ufos/ui/physdat.ufo:82
 msgid "Close Combat:"
 msgstr "Boj zblízka:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:507 ../base/ufos/ui/equipment.ufo:485
+#: ../base/ufos/ui/aircraft_soldiers.ufo:508 ../base/ufos/ui/equipment.ufo:485
 #: ../base/ufos/ui/hire.ufo:393 ../base/ufos/ui/hospital.ufo:592
 #: ../base/ufos/ui/multiplayer_team.ufo:523 ../base/ufos/ui/physdat.ufo:87
 msgid "Heavy Weapons:"
 msgstr "Těžké zbraně:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:512 ../base/ufos/ui/equipment.ufo:490
+#: ../base/ufos/ui/aircraft_soldiers.ufo:513 ../base/ufos/ui/equipment.ufo:490
 #: ../base/ufos/ui/hire.ufo:402 ../base/ufos/ui/hospital.ufo:597
 #: ../base/ufos/ui/multiplayer_team.ufo:528 ../base/ufos/ui/physdat.ufo:92
 msgid "Assault Weapons:"
 msgstr "Útočné zbraně:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:517 ../base/ufos/ui/equipment.ufo:495
+#: ../base/ufos/ui/aircraft_soldiers.ufo:518 ../base/ufos/ui/equipment.ufo:495
 #: ../base/ufos/ui/hire.ufo:411 ../base/ufos/ui/hospital.ufo:602
 #: ../base/ufos/ui/multiplayer_team.ufo:533 ../base/ufos/ui/physdat.ufo:97
 msgid "Sniper Rifles:"
 msgstr "Ostřelovačské pušky:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:522 ../base/ufos/ui/equipment.ufo:500
+#: ../base/ufos/ui/aircraft_soldiers.ufo:523 ../base/ufos/ui/equipment.ufo:500
 #: ../base/ufos/ui/hire.ufo:420 ../base/ufos/ui/hospital.ufo:607
 #: ../base/ufos/ui/multiplayer_team.ufo:538 ../base/ufos/ui/physdat.ufo:102
 msgid "High-Explosives:"
 msgstr "Výbušniny:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:534 ../base/ufos/ui/hire.ufo:429
+#: ../base/ufos/ui/aircraft_soldiers.ufo:535 ../base/ufos/ui/hire.ufo:429
 #: ../base/ufos/ui/hospital.ufo:612
 msgid "Health:"
 msgstr "Zdraví"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:537 ../base/ufos/ui/hire.ufo:438
+#: ../base/ufos/ui/aircraft_soldiers.ufo:538 ../base/ufos/ui/hire.ufo:438
 msgid "Missions Performed:"
 msgstr "Odsloužených misí:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:540 ../base/ufos/ui/hire.ufo:441
+#: ../base/ufos/ui/aircraft_soldiers.ufo:541 ../base/ufos/ui/hire.ufo:441
 msgid "Enemies Killed:"
 msgstr "Zabitých nepřátel:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:551
+#: ../base/ufos/ui/aircraft_soldiers.ufo:552
 msgid "Assign tanks"
 msgstr "Přiřadit tanky"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:555
+#: ../base/ufos/ui/aircraft_soldiers.ufo:556
 msgid "Assign soldiers"
 msgstr "Přiřadit vojáky"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:569
+#: ../base/ufos/ui/aircraft_soldiers.ufo:570
 #, fuzzy
 msgid "No soldiers assigned"
 msgstr "Není přiřazeno žádné vybavení."
@@ -8363,8 +8489,8 @@ msgid "Autofire"
 msgstr "oheň"
 
 #: ../base/ufos/ui/basedefence.ufo:376 ../base/ufos/ui/geoscape.ufo:1487
-#: client/campaign/cp_base.c:809 client/campaign/cp_base.c:819
-#: client/campaign/cp_base.c:829 client/campaign/cp_base.c:842
+#: client/campaign/cp_base.c:810 client/campaign/cp_base.c:820
+#: client/campaign/cp_base.c:830 client/campaign/cp_base.c:843
 #: client/campaign/cp_installation_callbacks.c:226
 msgid "Destroy"
 msgstr "Zbourat"
@@ -8392,7 +8518,7 @@ msgstr "Budovy"
 msgid "Build base facilities"
 msgstr "Vybudovat zařízení základny"
 
-#: ../base/ufos/ui/bases.ufo:66 client/campaign/cp_base_callbacks.c:287
+#: ../base/ufos/ui/bases.ufo:66 client/campaign/cp_base_callbacks.c:292
 msgid "Manage your aircraft"
 msgstr "Spravovat letouny"
 
@@ -8400,17 +8526,17 @@ msgstr "Spravovat letouny"
 msgid "Buy/Sell Equipment"
 msgstr "Nákup / Prodej"
 
-#: ../base/ufos/ui/bases.ufo:79 client/campaign/cp_base_callbacks.c:296
+#: ../base/ufos/ui/bases.ufo:79 client/campaign/cp_base_callbacks.c:301
 msgid "Buy/Sell equipment"
 msgstr "Koupit/prodat vybavení"
 
 #: ../base/ufos/ui/bases.ufo:91 ../base/ufos/ui/transfer.ufo:614
-#: client/campaign/cp_base.c:810 client/campaign/cp_base.c:820
-#: client/campaign/cp_base.c:830
+#: client/campaign/cp_base.c:811 client/campaign/cp_base.c:821
+#: client/campaign/cp_base.c:831
 msgid "Transfer"
 msgstr "Přeprava"
 
-#: ../base/ufos/ui/bases.ufo:92 client/campaign/cp_base_callbacks.c:301
+#: ../base/ufos/ui/bases.ufo:92 client/campaign/cp_base_callbacks.c:306
 msgid "Transfer equipment or personnel"
 msgstr "Přeprava vybavení nebo osob"
 
@@ -8418,7 +8544,7 @@ msgstr "Přeprava vybavení nebo osob"
 msgid "Research"
 msgstr "Výzkum"
 
-#: ../base/ufos/ui/bases.ufo:105 client/campaign/cp_base_callbacks.c:306
+#: ../base/ufos/ui/bases.ufo:105 client/campaign/cp_base_callbacks.c:311
 msgid "Research new technology"
 msgstr "Zkoumat novou technologii"
 
@@ -8426,25 +8552,25 @@ msgstr "Zkoumat novou technologii"
 msgid "Production"
 msgstr "Výroba"
 
-#: ../base/ufos/ui/bases.ufo:118 client/campaign/cp_base_callbacks.c:311
+#: ../base/ufos/ui/bases.ufo:118 client/campaign/cp_base_callbacks.c:316
 msgid "Produce new equipment"
 msgstr "Vyrobit nové vybavení"
 
 # Je to moc dlouhe do tlacitka
 #: ../base/ufos/ui/bases.ufo:130 ../base/ufos/ui/bases.ufo:131
-#: client/campaign/cp_base_callbacks.c:316
+#: client/campaign/cp_base_callbacks.c:321
 msgid "Hire employees"
 msgstr "Najmout zaměst."
 
-#: ../base/ufos/ui/bases.ufo:143 client/campaign/cp_base_callbacks.c:323
+#: ../base/ufos/ui/bases.ufo:143 client/campaign/cp_base_callbacks.c:328
 msgid "Containment"
 msgstr "Cizácké cely"
 
-#: ../base/ufos/ui/bases.ufo:144 client/campaign/cp_base_callbacks.c:321
+#: ../base/ufos/ui/bases.ufo:144 client/campaign/cp_base_callbacks.c:326
 msgid "Deal with Aliens in Alien Containment"
 msgstr "Vypořádat se s cizáky v komplexu cizáckých cel"
 
-#: ../base/ufos/ui/bases.ufo:157 client/campaign/cp_base_callbacks.c:326
+#: ../base/ufos/ui/bases.ufo:157 client/campaign/cp_base_callbacks.c:331
 msgid "Medical and Surgery operations"
 msgstr "Lékařské a chirurgické zákroky"
 
@@ -8729,15 +8855,15 @@ msgstr "Otevřít UFOpedii"
 msgid "Create installation"
 msgstr "Vybudovat zařízení"
 
-#: ../base/ufos/ui/geoscape.ufo:490 ../base/ufos/ui/geoscape.ufo:1935
+#: ../base/ufos/ui/geoscape.ufo:490 ../base/ufos/ui/geoscape.ufo:1954
 msgid "Highlight nation borders"
 msgstr "Zvýraznit hranice států"
 
-#: ../base/ufos/ui/geoscape.ufo:503 ../base/ufos/ui/geoscape.ufo:1960
+#: ../base/ufos/ui/geoscape.ufo:503 ../base/ufos/ui/geoscape.ufo:1979
 msgid "Show radar range"
 msgstr "Zobrazit dosah radaru"
 
-#: ../base/ufos/ui/geoscape.ufo:517 ../base/ufos/ui/geoscape.ufo:1981
+#: ../base/ufos/ui/geoscape.ufo:517 ../base/ufos/ui/geoscape.ufo:2000
 msgid "Show XVI map"
 msgstr "Zobraz MVI mapu"
 
@@ -8760,9 +8886,9 @@ msgstr "Letoun dosáhl požadované polohy - co dělat?"
 #: ../base/ufos/ui/geoscape.ufo:591 ../base/ufos/ui/geoscape.ufo:840
 #: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/geoscape.ufo:1329
 #: ../base/ufos/ui/geoscape.ufo:1647 ../base/ufos/ui/geoscape.ufo:1737
-#: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/geoscape.ufo:1866
+#: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/geoscape.ufo:1883
 #: ../base/ufos/ui/irc.ufo:209 ../base/ufos/ui/messageoptions.ufo:32
-#: ../base/ufos/ui/options.ufo:1238 ../base/ufos/ui/transfer.ufo:627
+#: ../base/ufos/ui/options.ufo:1304 ../base/ufos/ui/transfer.ufo:627
 #: client/campaign/cp_installation_callbacks.c:227
 msgid "Cancel"
 msgstr "Pryč odsud"
@@ -8772,8 +8898,8 @@ msgstr "Pryč odsud"
 #: ../base/ufos/ui/geoscape.ufo:1330 ../base/ufos/ui/geoscape.ufo:1400
 #: ../base/ufos/ui/geoscape.ufo:1465 ../base/ufos/ui/geoscape.ufo:1648
 #: ../base/ufos/ui/geoscape.ufo:1738 ../base/ufos/ui/geoscape.ufo:1811
-#: ../base/ufos/ui/geoscape.ufo:1867 ../base/ufos/ui/irc.ufo:210
-#: ../base/ufos/ui/options.ufo:1239 ../base/ufos/ui/sys_popup.ufo:50
+#: ../base/ufos/ui/geoscape.ufo:1884 ../base/ufos/ui/irc.ufo:210
+#: ../base/ufos/ui/options.ufo:1305 ../base/ufos/ui/sys_popup.ufo:50
 #: ../base/ufos/ui/sys_popup.ufo:112
 msgid "Close this dialogue"
 msgstr "Zavřít tuto nabídku"
@@ -8835,7 +8961,7 @@ msgstr "Nová základna"
 #: ../base/ufos/ui/geoscape.ufo:867 ../base/ufos/ui/geoscape.ufo:1290
 #: ../base/ufos/ui/geoscape.ufo:1422 ../base/ufos/ui/geoscape.ufo:1695
 #: ../base/ufos/ui/geoscape.ufo:1773 ../base/ufos/ui/main.ufo:133
-#: ../base/ufos/ui/multiplayer.ufo:371 ../base/ufos/ui/options.ufo:729
+#: ../base/ufos/ui/multiplayer.ufo:371 ../base/ufos/ui/options.ufo:761
 msgid "Name:"
 msgstr "Jméno:"
 
@@ -8992,19 +9118,19 @@ msgstr "Činnost:"
 msgid "Description:"
 msgstr "Popis:"
 
-#: ../base/ufos/ui/geoscape.ufo:1888
+#: ../base/ufos/ui/geoscape.ufo:1907
 msgid "Geoscape options"
 msgstr "Volby mapy světa"
 
-#: ../base/ufos/ui/geoscape.ufo:1900
+#: ../base/ufos/ui/geoscape.ufo:1919
 msgid "Geoscape projection mode:"
 msgstr "Režim zobrazení mapy světa:"
 
-#: ../base/ufos/ui/geoscape.ufo:1910
+#: ../base/ufos/ui/geoscape.ufo:1929
 msgid "2D"
 msgstr "2D"
 
-#: ../base/ufos/ui/geoscape.ufo:1914
+#: ../base/ufos/ui/geoscape.ufo:1933
 msgid "3D"
 msgstr "3D"
 
@@ -9276,15 +9402,15 @@ msgstr "Počáteční nastavení"
 msgid "User Information"
 msgstr "Informace o uživateli"
 
-#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:553
+#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:585
 msgid "Volume Control"
 msgstr "Ovládání hlasitosti"
 
-#: ../base/ufos/ui/main.ufo:163 ../base/ufos/ui/options.ufo:559
+#: ../base/ufos/ui/main.ufo:163 ../base/ufos/ui/options.ufo:591
 msgid "Effects:"
 msgstr "Efekty:"
 
-#: ../base/ufos/ui/main.ufo:182 ../base/ufos/ui/options.ufo:580
+#: ../base/ufos/ui/main.ufo:182 ../base/ufos/ui/options.ufo:612
 msgid "Music:"
 msgstr "Hudba:"
 
@@ -9292,7 +9418,7 @@ msgstr "Hudba:"
 msgid "Language"
 msgstr "Jazyk"
 
-#: ../base/ufos/ui/main.ufo:212 ../base/ufos/ui/options.ufo:777
+#: ../base/ufos/ui/main.ufo:212 ../base/ufos/ui/options.ufo:809
 msgid "Language:"
 msgstr "Jazyk:"
 
@@ -9825,288 +9951,292 @@ msgstr "Uložit váš tým"
 msgid "Abort Game"
 msgstr "Přerušit hru"
 
-#: ../base/ufos/ui/options.ufo:35
+#: ../base/ufos/ui/options.ufo:34
 msgid "Game"
 msgstr "Hra"
 
-#: ../base/ufos/ui/options.ufo:50
+#: ../base/ufos/ui/options.ufo:49
 msgid "Video"
 msgstr "Obraz"
 
-#: ../base/ufos/ui/options.ufo:66
+#: ../base/ufos/ui/options.ufo:65
 msgid "Sound"
 msgstr "Zvuk"
 
-#: ../base/ufos/ui/options.ufo:81
+#: ../base/ufos/ui/options.ufo:80
 msgid "Input"
 msgstr "Ovládání"
 
-#: ../base/ufos/ui/options.ufo:126
+#: ../base/ufos/ui/options.ufo:118
 msgid "Video settings"
 msgstr "Nastavení zobrazování"
 
-#: ../base/ufos/ui/options.ufo:135
+#: ../base/ufos/ui/options.ufo:127
 msgid "Resolution:"
 msgstr "Rozlišení:"
 
-#: ../base/ufos/ui/options.ufo:152
+#: ../base/ufos/ui/options.ufo:134
 msgid "Texture resolution cap:"
 msgstr "Rozlišení textur:"
 
-#: ../base/ufos/ui/options.ufo:160
+#: ../base/ufos/ui/options.ufo:142
 msgid "Lightmap block size:"
 msgstr "Velikost bloku pro Lightmap:"
 
-#: ../base/ufos/ui/options.ufo:167
+#: ../base/ufos/ui/options.ufo:149
 msgid "Texture anisotropy level:"
 msgstr "Úroveň anisotropie textur:"
 
-#: ../base/ufos/ui/options.ufo:193
+#: ../base/ufos/ui/options.ufo:175
 msgid "Fullscreen:"
 msgstr "Celá obrazovka:"
 
-#: ../base/ufos/ui/options.ufo:207
+#: ../base/ufos/ui/options.ufo:189
 msgid "Texture compression:"
 msgstr "Komprese textur:"
 
-#: ../base/ufos/ui/options.ufo:221
+#: ../base/ufos/ui/options.ufo:203
 msgid "Show FPS:"
 msgstr "Zobrazovat FPS:"
 
-#: ../base/ufos/ui/options.ufo:235
+#: ../base/ufos/ui/options.ufo:217
 msgid "Texture Lod:"
 msgstr "Počítat úroveň detailu (LoD) textur:"
 
-#: ../base/ufos/ui/options.ufo:249
+#: ../base/ufos/ui/options.ufo:231
 msgid "Isometric Mode:"
 msgstr "Izometrický režim:"
 
-#: ../base/ufos/ui/options.ufo:263
+#: ../base/ufos/ui/options.ufo:245
 msgid "GLSL shaders:"
 msgstr "GLSL stínování:"
 
-#: ../base/ufos/ui/options.ufo:277
+#: ../base/ufos/ui/options.ufo:259
 msgid "Realtime lighting:"
 msgstr "Osvětlení v reálném čase (r_lighting):"
 
-#: ../base/ufos/ui/options.ufo:291
+#: ../base/ufos/ui/options.ufo:273
 msgid "Weather effects:"
 msgstr "Efekty počasí:"
 
-#: ../base/ufos/ui/options.ufo:305
+#: ../base/ufos/ui/options.ufo:287
 msgid "Vertex buffers:"
 msgstr "Vertex buffery:"
 
-#: ../base/ufos/ui/options.ufo:319
+#: ../base/ufos/ui/options.ufo:301
 msgid "Multisample buffers:"
 msgstr "Multisample buffery:"
 
-#: ../base/ufos/ui/options.ufo:342
+#: ../base/ufos/ui/options.ufo:324
 msgid "Swap interval:"
 msgstr "Interval výměny (r_swapinterval):"
 
-#: ../base/ufos/ui/options.ufo:366
+#: ../base/ufos/ui/options.ufo:348
 msgid "Gamma:"
 msgstr "Gama:"
 
-#: ../base/ufos/ui/options.ufo:387
+#: ../base/ufos/ui/options.ufo:369
 msgid "Contrast:"
 msgstr "Kontrast:"
 
-#: ../base/ufos/ui/options.ufo:408
+#: ../base/ufos/ui/options.ufo:390
 msgid "Brightness:"
 msgstr "Jas:"
 
-#: ../base/ufos/ui/options.ufo:429
+#: ../base/ufos/ui/options.ufo:411
 msgid "Lightmap scale:"
 msgstr "Stupeň Lightmap:"
 
-#: ../base/ufos/ui/options.ufo:450
+#: ../base/ufos/ui/options.ufo:432
 msgid "Strech the screen with a 4:3 ratio:"
 msgstr "Nezachovávat poměr obrazu 4:3:"
 
-#: ../base/ufos/ui/options.ufo:470 ../base/ufos/ui/options.ufo:495
+#: ../base/ufos/ui/options.ufo:452 ../base/ufos/ui/options.ufo:477
 msgid "Low"
 msgstr "Nízké"
 
-#: ../base/ufos/ui/options.ufo:474 ../base/ufos/ui/options.ufo:499
+#: ../base/ufos/ui/options.ufo:456 ../base/ufos/ui/options.ufo:481
 msgid "Medium"
 msgstr "Střední"
 
-#: ../base/ufos/ui/options.ufo:478 ../base/ufos/ui/options.ufo:503
+#: ../base/ufos/ui/options.ufo:460 ../base/ufos/ui/options.ufo:485
 #: client/cl_game_campaign.c:129
 msgid "Normal"
 msgstr "Normální"
 
-#: ../base/ufos/ui/options.ufo:482 ../base/ufos/ui/options.ufo:507
+#: ../base/ufos/ui/options.ufo:464 ../base/ufos/ui/options.ufo:489
 msgid "High"
 msgstr "Vysoké"
 
-#: ../base/ufos/ui/options.ufo:511 client/cl_actor.c:120
+#: ../base/ufos/ui/options.ufo:493 client/battlescape/cl_actor.c:120
 msgid "Excellent"
 msgstr "Vynikající"
 
-#: ../base/ufos/ui/options.ufo:515
+#: ../base/ufos/ui/options.ufo:497
 msgid "Extreme"
 msgstr "Nejvyšší"
 
-#: ../base/ufos/ui/options.ufo:544
+#: ../base/ufos/ui/options.ufo:576
 msgid "Sound settings"
 msgstr "Nastavení ozvučení"
 
-#: ../base/ufos/ui/options.ufo:601
+#: ../base/ufos/ui/options.ufo:633
 msgid "Sound rate:"
 msgstr "Vzorkovací frekvence:"
 
-#: ../base/ufos/ui/options.ufo:607
+#: ../base/ufos/ui/options.ufo:639
 msgid "Restart sound to change the settings"
 msgstr "Restartovat zvuk pro změnu nastavení"
 
-#: ../base/ufos/ui/options.ufo:643
+#: ../base/ufos/ui/options.ufo:675
 #, fuzzy
 msgid "Enable sound:"
 msgstr "Ukončí tah"
 
-#: ../base/ufos/ui/options.ufo:669
+#: ../base/ufos/ui/options.ufo:701
 msgid "Show key bindings"
 msgstr "Aktuální přiřazení kláves"
 
-#: ../base/ufos/ui/options.ufo:717
+#: ../base/ufos/ui/options.ufo:749
 msgid "Game settings"
 msgstr "Nastavení hry"
 
-#: ../base/ufos/ui/options.ufo:751
+#: ../base/ufos/ui/options.ufo:783
 msgid "HUD Design:"
 msgstr "Design HUDu:"
 
-#: ../base/ufos/ui/options.ufo:763
+#: ../base/ufos/ui/options.ufo:795
 msgid "Original HUD"
 msgstr "Původní HUD"
 
-#: ../base/ufos/ui/options.ufo:767
+#: ../base/ufos/ui/options.ufo:799
 msgid "Alternative HUD"
 msgstr "Alternativní HUD"
 
-#: ../base/ufos/ui/options.ufo:815
+#: ../base/ufos/ui/options.ufo:847
 msgid "Tooltips:"
 msgstr "Nástrojové tipy:"
 
-#: ../base/ufos/ui/options.ufo:822
+#: ../base/ufos/ui/options.ufo:854
 msgid "Activates tooltips"
 msgstr "Aktivovat nápovědu"
 
-#: ../base/ufos/ui/options.ufo:833
+#: ../base/ufos/ui/options.ufo:865
 msgid "Centre view:"
 msgstr "Vystředit pohled:"
 
 # Tohle chce doladit
-#: ../base/ufos/ui/options.ufo:840
+#: ../base/ufos/ui/options.ufo:872
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr "Vystředit při výběru vojáků, střelbě a objevování"
 
-#: ../base/ufos/ui/options.ufo:851
+#: ../base/ufos/ui/options.ufo:883
 msgid "Cursor tooltips:"
 msgstr "Vyskakovací nápověda (tooltips):"
 
-#: ../base/ufos/ui/options.ufo:858
+#: ../base/ufos/ui/options.ufo:890
 msgid "Activates cursor tooltips"
 msgstr "Zapne vyskakovací nápovědu"
 
-#: ../base/ufos/ui/options.ufo:869
+#: ../base/ufos/ui/options.ufo:901
 msgid "3D Geoscape:"
 msgstr "Mapa světa ve 3D:"
 
-#: ../base/ufos/ui/options.ufo:876
+#: ../base/ufos/ui/options.ufo:908
 msgid "Use 3D geoscape"
 msgstr "Používat trojrozměrnou mapu světa"
 
-#: ../base/ufos/ui/options.ufo:887
+#: ../base/ufos/ui/options.ufo:919
+msgid "3D Geoscape ambient lighting:"
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:944
 msgid "Show tip of the day:"
 msgstr "Zobrazovat tip dne:"
 
-#: ../base/ufos/ui/options.ufo:905
+#: ../base/ufos/ui/options.ufo:962
 msgid "Precache models:"
 msgstr "Přednačíst modely:"
 
-#: ../base/ufos/ui/options.ufo:912
+#: ../base/ufos/ui/options.ufo:969
 msgid "Precache models (faster menus)"
 msgstr "Přednačíst modely (rychlejší nabídky)"
 
-#: ../base/ufos/ui/options.ufo:923
+#: ../base/ufos/ui/options.ufo:980
 msgid "Actor speed:"
 msgstr "Rychlost postav:"
 
-#: ../base/ufos/ui/options.ufo:957
+#: ../base/ufos/ui/options.ufo:1014
 msgid "Input settings"
 msgstr "Nastavení ovládání"
 
-#: ../base/ufos/ui/options.ufo:969
+#: ../base/ufos/ui/options.ufo:1026
 msgid "Camera"
 msgstr "Kamera"
 
-#: ../base/ufos/ui/options.ufo:975
+#: ../base/ufos/ui/options.ufo:1032
 msgid "Scroll Speed:"
 msgstr "Rychlost posunu:"
 
-#: ../base/ufos/ui/options.ufo:1000
+#: ../base/ufos/ui/options.ufo:1057
 msgid "Rotation Speed:"
 msgstr "Rychlost otáčení:"
 
-#: ../base/ufos/ui/options.ufo:1025
+#: ../base/ufos/ui/options.ufo:1082
 msgid "Move Acceleration:"
 msgstr "Zrychlení pohybu:"
 
-#: ../base/ufos/ui/options.ufo:1050
+#: ../base/ufos/ui/options.ufo:1107
 msgid "Joystick settings:"
 msgstr "Nastavení joysticku:"
 
-#: ../base/ufos/ui/options.ufo:1060
+#: ../base/ufos/ui/options.ufo:1117
 msgid "Threshold:"
 msgstr "Práh:"
 
-#: ../base/ufos/ui/options.ufo:1110
+#: ../base/ufos/ui/options.ufo:1167
 msgid "Keys"
 msgstr "Klávesy"
 
-#: ../base/ufos/ui/options.ufo:1130 client/cl_hud.c:103
+#: ../base/ufos/ui/options.ufo:1187 client/battlescape/cl_hud.c:103
 msgid "Autostand"
 msgstr "Automatické postavení"
 
-#: ../base/ufos/ui/options.ufo:1142 ../base/ufos/ui/options.ufo:1168
+#: ../base/ufos/ui/options.ufo:1199 ../base/ufos/ui/options.ufo:1225
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Ano"
 
-#: ../base/ufos/ui/options.ufo:1146 ../base/ufos/ui/options.ufo:1172
+#: ../base/ufos/ui/options.ufo:1203 ../base/ufos/ui/options.ufo:1229
 #: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "Ne"
 
-#: ../base/ufos/ui/options.ufo:1156
+#: ../base/ufos/ui/options.ufo:1213
 msgid "Confirm Actions:"
 msgstr "Potvrzovat akce:"
 
-#: ../base/ufos/ui/options.ufo:1176
+#: ../base/ufos/ui/options.ufo:1233
 msgid "Only for moving"
 msgstr "Pouze pro pohyb"
 
-#: ../base/ufos/ui/options.ufo:1186
+#: ../base/ufos/ui/options.ufo:1243
 msgid "Joystick:"
 msgstr "Joystick:"
 
-#: ../base/ufos/ui/options.ufo:1210
+#: ../base/ufos/ui/options.ufo:1276
 msgid "Maintain resolution"
 msgstr "Zachovat rozlišení"
 
-#: ../base/ufos/ui/options.ufo:1220
+#: ../base/ufos/ui/options.ufo:1286
 msgid "Want To Maintain resolution"
 msgstr "Chchi zachovat rozlišení"
 
-#: ../base/ufos/ui/options.ufo:1227
+#: ../base/ufos/ui/options.ufo:1293
 msgid "Accept"
 msgstr "Přijmout"
 
-#: ../base/ufos/ui/options.ufo:1228
+#: ../base/ufos/ui/options.ufo:1294
 msgid "Change the resolution"
 msgstr "Změnit rozlišení"
 
@@ -10204,7 +10334,7 @@ msgstr "Opakovat"
 msgid "You've lost the game"
 msgstr "Prohrál jste hru"
 
-#: ../base/ufos/ui/singleplayer.ufo:240
+#: ../base/ufos/ui/singleplayer.ufo:244
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Díky za hraní UFO:Cizácká Invaze"
 
@@ -10859,6 +10989,396 @@ msgstr "Kulometný pás"
 msgid "Autocannon Module"
 msgstr "Automatické dělo"
 
+#: client/battlescape/cl_actor.c:106
+msgid "Poor"
+msgstr "Špatný"
+
+#: client/battlescape/cl_actor.c:108
+msgid "Mediocre"
+msgstr "Obyčejný"
+
+#: client/battlescape/cl_actor.c:110
+msgid "Average"
+msgstr "Průměrný"
+
+#: client/battlescape/cl_actor.c:112
+msgid "Competent"
+msgstr "Schopný"
+
+#: client/battlescape/cl_actor.c:114
+msgid "Proficient"
+msgstr "Zdatný"
+
+#: client/battlescape/cl_actor.c:116
+msgid "Very Good"
+msgstr "Celkem dobrý"
+
+#: client/battlescape/cl_actor.c:118
+msgid "Highly Proficient"
+msgstr "Velice zdatný"
+
+#: client/battlescape/cl_actor.c:122
+msgid "Outstanding"
+msgstr "Vyjímečný"
+
+#: client/battlescape/cl_actor.c:125
+msgid "Superhuman"
+msgstr "Nadčlověk"
+
+#: client/battlescape/cl_actor.c:1038
+msgid "This isn't your round\n"
+msgstr "Nejste na tahu\n"
+
+#: client/battlescape/cl_actor.c:1278
+msgid "You cannot reload this unknown item.\n"
+msgstr "Tento neznámý předmět nemůžete nabít.\n"
+
+#: client/battlescape/cl_actor.c:2305
+msgid "Unknown alien race"
+msgstr "Neznámá cizácká rasa"
+
+#: client/battlescape/cl_actor.c:2850
+msgid "Reselect the current soldier"
+msgstr "Znovu vybrat tohoto vojáka"
+
+#: client/battlescape/cl_actor.c:2851
+msgid "Toggle to next soldier"
+msgstr "Přepnout na dalšího vojáka"
+
+#: client/battlescape/cl_actor.c:2852
+msgid "Select a soldier from list"
+msgstr "Vybrat vojáka ze seznamu"
+
+# ???
+#: client/battlescape/cl_actor.c:2853
+msgid "Update a soldier"
+msgstr "Obnovit vojáka"
+
+#: client/battlescape/cl_hud.c:102 client/battlescape/cl_hud.c:105
+msgid "Crouch walk"
+msgstr "Chůze v přikrčení"
+
+#: client/battlescape/cl_hud.c:104
+msgid "Walk"
+msgstr "Chůze"
+
+#: client/battlescape/cl_hud.c:281
+#, c-format
+msgid "Remaining TUs: %i"
+msgstr "Zbývající ČJ: %i"
+
+#: client/battlescape/cl_hud.c:283
+msgid "No remaining TUs left after shot."
+msgstr "Po výstřelu nezbývají žádné ČJ."
+
+#: client/battlescape/cl_hud.c:288
+#, c-format
+msgid "TU: %i"
+msgstr "ČJ: %i"
+
+#: client/battlescape/cl_hud.c:290
+#, c-format
+msgid "Shots: %i"
+msgstr "Ran: %i"
+
+#: client/battlescape/cl_hud.c:368
+msgid "[0 TU] No reservation"
+msgstr "[0 ČJ] Žádné ponechané"
+
+#: client/battlescape/cl_hud.c:385
+#, c-format
+msgid "[%i TU] %s"
+msgstr "[%i ČJ] %s"
+
+#: client/battlescape/cl_hud.c:418
+msgid "Reserve TUs for firing/using."
+msgstr "Ponechat ČJ pro střelbu/použití."
+
+#: client/battlescape/cl_hud.c:418
+msgid "Shot Reservation"
+msgstr "Ponechání ČJ pro výstřel"
+
+#: client/battlescape/cl_hud.c:766
+msgid "No item in hand.\n"
+msgstr "V ruce není žádný předmět.\n"
+
+#: client/battlescape/cl_hud.c:779
+msgid ""
+"Can't perform action:\n"
+"out of ammo.\n"
+msgstr ""
+"Nelze provést:\n"
+"došla munice.\n"
+
+#: client/battlescape/cl_hud.c:784
+msgid ""
+"This weapon cannot be fired\n"
+"one handed.\n"
+msgstr ""
+"Z této zbraně nelze střílet\n"
+"jednou rukou.\n"
+
+#: client/battlescape/cl_hud.c:793
+msgid ""
+"Can't perform action:\n"
+"this item is not reloadable.\n"
+msgstr ""
+"Nelze provést:\n"
+"tento předmět není nabíjecí.\n"
+
+#: client/battlescape/cl_hud.c:798
+msgid ""
+"Can't perform action:\n"
+"ammo not available.\n"
+msgstr ""
+"Nelze provést:\n"
+"munice není k dispozici.\n"
+
+#: client/battlescape/cl_hud.c:803 client/battlescape/cl_hud.c:874
+msgid ""
+"Can't perform action:\n"
+"not enough TUs.\n"
+msgstr ""
+"Nelze provést:\n"
+"nedostatek ČJ.\n"
+
+#: client/battlescape/cl_hud.c:967
+msgid "Not enough TUs for standing up."
+msgstr "Nedostatek ČJ pro postavení se."
+
+#: client/battlescape/cl_hud.c:970
+#, c-format
+msgid "Stand up (%i TU)"
+msgstr "Postavit se (%i ČJ)"
+
+#: client/battlescape/cl_hud.c:976
+msgid "Not enough TUs for crouching."
+msgstr "Nedostatek ČJ pro přikrčení."
+
+#: client/battlescape/cl_hud.c:979
+#, c-format
+msgid "Crouch (%i TU)"
+msgstr "Přikrčit (%i ČJ)"
+
+#: client/battlescape/cl_hud.c:987
+#, c-format
+msgid ""
+"%i TUs reserved for crouching/standing up.\n"
+"Click to clear."
+msgstr ""
+"%i ČJ je ponecháno pro přikrčení/postavení se.\n"
+"Kliněte pro zrušení."
+
+#: client/battlescape/cl_hud.c:991
+#, c-format
+msgid "Reserve %i TUs for crouching/standing up."
+msgstr "Ponecháno %i ČJ na přikrčení/postavení se."
+
+#: client/battlescape/cl_hud.c:994
+msgid "Not enough TUs left to reserve for crouching/standing up."
+msgstr "Není dostatek ČJ k ponechání na přikrčení/postavení se."
+
+#: client/battlescape/cl_hud.c:1000
+#, c-format
+msgid ""
+"%i TUs reserved for shooting.\n"
+"Click to change.\n"
+"Right-Click to clear."
+msgstr ""
+"%i ČJ ponecháno pro střelbu.\n"
+"Klikněte pro změnu.\n"
+"Pravým tlačítkem pro zrušní."
+
+#: client/battlescape/cl_hud.c:1004
+msgid "Reserve TUs for shooting."
+msgstr "Ponechat ČJ pro střelbu."
+
+#: client/battlescape/cl_hud.c:1007
+msgid "Reserving TUs for shooting not possible."
+msgstr "Ponechání ČJ pro střelbu není možné."
+
+#: client/battlescape/cl_hud.c:1033
+msgid "No reload possible for right hand, already fully loaded."
+msgstr "V pravé ruce není možné nabít, již plně nabito."
+
+#: client/battlescape/cl_hud.c:1035
+msgid "No reload possible for right hand."
+msgstr "V pravé ruce není možné nabít."
+
+#: client/battlescape/cl_hud.c:1038 client/battlescape/cl_hud.c:1054
+#, c-format
+msgid "Reload weapon (%i TU)."
+msgstr "Nabít zbraň (%i ČJ)."
+
+#: client/battlescape/cl_hud.c:1049
+msgid "No reload possible for left hand, already fully loaded."
+msgstr "V levé ruce není možné nabít, již plně nabito."
+
+#: client/battlescape/cl_hud.c:1051
+msgid "No reload possible for left hand."
+msgstr "V levé ruce není možné nabít."
+
+#: client/battlescape/cl_hud.c:1157
+#, c-format
+msgid ""
+"Time Units\n"
+"- Available: %i (of %i)\n"
+"- Reserved:  %i\n"
+"- Remaining: %i\n"
+msgstr ""
+"Časové jednotky\n"
+"- K dispozici: %i (z %i)\n"
+"- Ponecháno:  %i\n"
+"- Zbývá: %i\n"
+
+#: client/battlescape/cl_hud.c:1265
+#, c-format
+msgid "Morale  %i | Reserved TUs: %i\n"
+msgstr "Morálka  %i | Ponechané ČJ: %i\n"
+
+#: client/battlescape/cl_hud.c:1267
+#, c-format
+msgid "Morale  %i"
+msgstr "Morálka  %i"
+
+#: client/battlescape/cl_hud.c:1272
+#, c-format
+msgid ""
+"Morale  %i | Reserved TUs: %i\n"
+"%s %i (%i|%i TU left)\n"
+msgstr ""
+"Morálka  %i | Vyhrazeno: %i ČJ\n"
+"%s %i (%i| Zbývá: %i ČJ)\n"
+
+#: client/battlescape/cl_hud.c:1276
+#, c-format
+msgid ""
+"Morale  %i\n"
+"%s %i (%i TU left)\n"
+msgstr ""
+"Morálka  %i\n"
+"%s %i (zbývá %i ČJ)\n"
+
+#: client/battlescape/cl_hud.c:1289
+msgid ""
+"You cannot use this unknown item.\n"
+"You need to research it first.\n"
+msgstr ""
+"Tento neznámý předmět nelze použít.\n"
+"Nejprve je třeba zkoumat jej.\n"
+
+#: client/battlescape/cl_hud.c:1304
+#, c-format
+msgid ""
+"%s\n"
+"(empty)\n"
+msgstr ""
+"%s\n"
+"(prázdný)\n"
+
+#: client/battlescape/cl_hud.c:1312
+msgid "Currently panics!\n"
+msgstr "Panikaří!\n"
+
+#: client/battlescape/cl_hud.c:1550
+msgid "Reload the weapon in the soldiers left hand"
+msgstr "Nabít zbraň v levé ruce vojáka"
+
+#: client/battlescape/cl_hud.c:1551
+msgid "Reload the weapon in the soldiers right hand"
+msgstr "Nabít zbraň v pravé ruce vojáka"
+
+#: client/battlescape/cl_hud.c:1553
+msgid "Toggle reservation for crouching."
+msgstr "Přepnout ponechání ČJ na přikrčení."
+
+#: client/battlescape/cl_hud.c:1559
+msgid "Toggle reaction fire"
+msgstr "Přepnout ponechání ČJ na zpětnou palbu"
+
+#: client/battlescape/cl_view.c:211 client/battlescape/cl_view.c:236
+#, c-format
+msgid "loading %s"
+msgstr "načítám %s"
+
+#: client/battlescape/cl_view.c:219
+msgid "loading models..."
+msgstr "načítám modely..."
+
+#: client/battlescape/cl_view.c:271 client/cl_main.c:1022
+msgid "Awaiting game start"
+msgstr "Očekávám start hry"
+
+#: client/battlescape/events/event/actor/e_event_actorappear.c:161
+#, c-format
+msgid "Enemy spotted: %s!"
+msgstr "Spatřen nepřítel: %s!"
+
+#: client/battlescape/events/event/actor/e_event_actorappear.c:164
+msgid "Enemy spotted!\n"
+msgstr "Spatřen nepřítel!\n"
+
+#: client/battlescape/events/event/actor/e_event_actorappear.c:166
+msgid "Civilian spotted!\n"
+msgstr "Spatřen civilista!\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:78
+#, c-format
+msgid "%s was stunned\n"
+msgstr "%s byl omráčen\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:80
+#, c-format
+msgid "%s was killed\n"
+msgstr "%s byl zabit\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:88
+msgid "A civilian was stunned.\n"
+msgstr "Byl omráčen civilista.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:90
+msgid "A civilian was killed.\n"
+msgstr "Byl zabit civilista.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:94
+msgid "An alien was stunned.\n"
+msgstr "Byl omráčen cizák.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:96
+msgid "An alien was killed.\n"
+msgstr "Byl zabit cizák.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:100
+msgid "A soldier was stunned.\n"
+msgstr "Byl omráčen voják.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:102
+msgid "A soldier was killed.\n"
+msgstr "Byl zabit voják.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:106
+#, c-format
+msgid "A member of team %i was stunned.\n"
+msgstr "Byl omráčen člen týmu %i.\n"
+
+#: client/battlescape/events/event/actor/e_event_actordie.c:108
+#, c-format
+msgid "A member of team %i was killed.\n"
+msgstr "Byl zabit člen týmu %i.\n"
+
+#: client/battlescape/events/event/player/e_event_doendround.c:57
+msgid "Your round started!\n"
+msgstr "Začal váš tah!\n"
+
+#: client/battlescape/events/event/player/e_event_endroundannounce.c:53
+msgid "You've ended your round\n"
+msgstr "Dokončil jste svůj tah\n"
+
+#: client/battlescape/events/event/player/e_event_endroundannounce.c:56
+#, c-format
+msgid "%s ended his round (team %i)\n"
+msgstr "%s ukončil svůj tah (tým %i)\n"
+
 #: client/campaign/cp_aircraft.c:446
 msgid "ON RED ALERT"
 msgstr "ČERVENÝ POPLACH"
@@ -10915,42 +11435,42 @@ msgstr "Stíhačka"
 msgid "Transporter"
 msgstr "Transportér"
 
-#: client/campaign/cp_aircraft.c:548 client/campaign/cp_ufo.c:69
-#: client/campaign/cp_ufo.c:70
+#: client/campaign/cp_aircraft.c:548 client/campaign/cp_ufo.c:79
+#: client/campaign/cp_ufo.c:80
 msgid "UFO"
 msgstr "UFO"
 
-#: client/campaign/cp_aircraft.c:779
+#: client/campaign/cp_aircraft.c:781
 #, fuzzy, c-format
 msgid "A new %s is ready in %s"
 msgstr "Nový letoun (%s) je připraven na základně %s."
 
-#: client/campaign/cp_aircraft.c:780 client/campaign/cp_aircraft.c:1231
-#: client/campaign/cp_aircraft.c:1247 client/campaign/cp_aircraft.c:1292
-#: client/campaign/cp_aircraft.c:1396 client/campaign/cp_aircraft.c:1420
-#: client/campaign/cp_aircraft.c:2216
+#: client/campaign/cp_aircraft.c:782 client/campaign/cp_aircraft.c:1233
+#: client/campaign/cp_aircraft.c:1249 client/campaign/cp_aircraft.c:1294
+#: client/campaign/cp_aircraft.c:1398 client/campaign/cp_aircraft.c:1422
+#: client/campaign/cp_aircraft.c:2226
 #: client/campaign/cp_aircraft_callbacks.c:138
 #: client/campaign/cp_aircraft_callbacks.c:146
 #: client/campaign/cp_aircraft_callbacks.c:154
-#: client/campaign/cp_airfight.c:361 client/campaign/cp_airfight.c:381
+#: client/campaign/cp_airfight.c:362 client/campaign/cp_airfight.c:382
 #: client/campaign/cp_aliencont.c:188 client/campaign/cp_aliencont.c:217
 #: client/campaign/cp_aliencont.c:234 client/campaign/cp_aliencont.c:244
-#: client/campaign/cp_base.c:787 client/campaign/cp_base.c:1358
-#: client/campaign/cp_base.c:2511 client/campaign/cp_base.c:2516
-#: client/campaign/cp_base.c:3225 client/campaign/cp_base_callbacks.c:65
-#: client/campaign/cp_base_callbacks.c:182
-#: client/campaign/cp_base_callbacks.c:232
-#: client/campaign/cp_base_callbacks.c:682
-#: client/campaign/cp_base_callbacks.c:691
-#: client/campaign/cp_base_callbacks.c:711
-#: client/campaign/cp_base_callbacks.c:721
-#: client/campaign/cp_base_callbacks.c:732
-#: client/campaign/cp_base_callbacks.c:739
-#: client/campaign/cp_base_callbacks.c:747
-#: client/campaign/cp_base_callbacks.c:752
-#: client/campaign/cp_base_callbacks.c:757 client/campaign/cp_campaign.c:1568
-#: client/campaign/cp_campaign.c:1613 client/campaign/cp_campaign.c:1667
-#: client/campaign/cp_campaign.c:1679 client/campaign/cp_campaign.c:1681
+#: client/campaign/cp_base.c:788 client/campaign/cp_base.c:1362
+#: client/campaign/cp_base.c:2516 client/campaign/cp_base.c:2521
+#: client/campaign/cp_base.c:3230 client/campaign/cp_base_callbacks.c:71
+#: client/campaign/cp_base_callbacks.c:187
+#: client/campaign/cp_base_callbacks.c:237
+#: client/campaign/cp_base_callbacks.c:684
+#: client/campaign/cp_base_callbacks.c:693
+#: client/campaign/cp_base_callbacks.c:713
+#: client/campaign/cp_base_callbacks.c:723
+#: client/campaign/cp_base_callbacks.c:734
+#: client/campaign/cp_base_callbacks.c:741
+#: client/campaign/cp_base_callbacks.c:749
+#: client/campaign/cp_base_callbacks.c:754
+#: client/campaign/cp_base_callbacks.c:759 client/campaign/cp_campaign.c:1548
+#: client/campaign/cp_campaign.c:1593 client/campaign/cp_campaign.c:1646
+#: client/campaign/cp_campaign.c:1659 client/campaign/cp_campaign.c:1661
 #: client/campaign/cp_installation_callbacks.c:134
 #: client/campaign/cp_installation_callbacks.c:181
 #: client/campaign/cp_mapfightequip.c:343
@@ -10958,13 +11478,13 @@ msgstr "Nový letoun (%s) je připraven na základně %s."
 #: client/campaign/cp_mapfightequip.c:370
 #: client/campaign/cp_mapfightequip.c:382
 #: client/campaign/cp_market_callbacks.c:578
-#: client/campaign/cp_market_callbacks.c:583 client/campaign/cp_missions.c:725
-#: client/campaign/cp_missions.c:1154 client/campaign/cp_nations.c:88
+#: client/campaign/cp_market_callbacks.c:583 client/campaign/cp_missions.c:727
+#: client/campaign/cp_missions.c:1157 client/campaign/cp_nations.c:88
 #: client/campaign/cp_nations.c:100 client/campaign/cp_nations.c:110
 #: client/campaign/cp_nations.c:120 client/campaign/cp_nations.c:130
 #: client/campaign/cp_nations.c:141 client/campaign/cp_nations.c:157
 #: client/campaign/cp_nations.c:173 client/campaign/cp_nations.c:179
-#: client/campaign/cp_nations.c:187 client/campaign/cp_popup.c:492
+#: client/campaign/cp_nations.c:187 client/campaign/cp_popup.c:507
 #: client/campaign/cp_produce.c:359 client/campaign/cp_produce.c:369
 #: client/campaign/cp_produce.c:380 client/campaign/cp_produce.c:390
 #: client/campaign/cp_produce.c:401
@@ -10974,58 +11494,58 @@ msgstr "Nový letoun (%s) je připraven na základně %s."
 #: client/campaign/cp_research_callbacks.c:618
 #: client/campaign/cp_research_callbacks.c:644
 #: client/campaign/cp_research_callbacks.c:811
-#: client/campaign/cp_research_callbacks.c:814 client/campaign/cp_ufo.c:345
-#: client/campaign/cp_ufo.c:715 client/campaign/cp_ufo.c:719
-#: client/campaign/cp_ufo.c:723
+#: client/campaign/cp_research_callbacks.c:814 client/campaign/cp_ufo.c:355
+#: client/campaign/cp_ufo.c:731 client/campaign/cp_ufo.c:735
+#: client/campaign/cp_ufo.c:739
 #: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:394
 #: client/multiplayer/mp_serverlist.c:461
 msgid "Notice"
 msgstr "Poznámka"
 
-#: client/campaign/cp_aircraft.c:845
+#: client/campaign/cp_aircraft.c:847
 msgid "No operational hangars at that base."
 msgstr "Hangáry na této základně nejsou v provozu."
 
-#: client/campaign/cp_aircraft.c:849
+#: client/campaign/cp_aircraft.c:851
 msgid "No free hangars at that base."
 msgstr "Na této základně nejsou volné hangáry"
 
-#: client/campaign/cp_aircraft.c:852
+#: client/campaign/cp_aircraft.c:854
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Na cílové základně není dostatek volných ubikací pro posádku."
 
-#: client/campaign/cp_aircraft.c:855
+#: client/campaign/cp_aircraft.c:857
 msgid "Insufficient storage space at that base."
 msgstr "Na cílové základně není dostatek skladovacího prostoru."
 
-#: client/campaign/cp_aircraft.c:859
+#: client/campaign/cp_aircraft.c:861
 msgid "That base is beyond this aircraft's range."
 msgstr "Cílová základna je mimo dolet tohoto letounu."
 
-#: client/campaign/cp_aircraft.c:1230
+#: client/campaign/cp_aircraft.c:1232
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1246
+#: client/campaign/cp_aircraft.c:1248
 #, fuzzy, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Letoun %s doplnil palivo na základně %s."
 
-#: client/campaign/cp_aircraft.c:1292
+#: client/campaign/cp_aircraft.c:1294
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "Letoun %s má málo paliva a musí se vrátit na základnu."
 
-#: client/campaign/cp_aircraft.c:1396
+#: client/campaign/cp_aircraft.c:1398
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Nejprve tomuto letounu přiřaďte alespoň jednoho vojáka."
 
-#: client/campaign/cp_aircraft.c:1420
+#: client/campaign/cp_aircraft.c:1422
 msgid "Insufficient fuel."
 msgstr "Nedostatek paliva."
 
-#: client/campaign/cp_aircraft.c:2216
+#: client/campaign/cp_aircraft.c:2226
 #, fuzzy, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "Letoun %s doplnil palivo na základně %s."
@@ -11087,24 +11607,24 @@ msgstr "Pancéř:\t%i z 1\n"
 msgid "Electronics:\t%i on %i"
 msgstr "Elektronika:\t%i on %i"
 
-#: client/campaign/cp_airfight.c:361
+#: client/campaign/cp_airfight.c:362
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr "UFO střílí na %s"
 
-#: client/campaign/cp_airfight.c:381
+#: client/campaign/cp_airfight.c:382
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr "Našemu letounu došla munice - nyní se vrací se na základnu."
 
-#: client/campaign/cp_airfight.c:460 client/campaign/cp_airfight.c:483
+#: client/campaign/cp_airfight.c:461 client/campaign/cp_airfight.c:484
 msgid "Interception"
 msgstr "Stíhání"
 
-#: client/campaign/cp_airfight.c:460
+#: client/campaign/cp_airfight.c:461
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Stíhání UFO bylo úspěšné -- UFO bylo ztraceno v moři."
 
-#: client/campaign/cp_airfight.c:483 client/campaign/cp_campaign.c:1681
+#: client/campaign/cp_airfight.c:484 client/campaign/cp_campaign.c:1661
 msgid "You've lost the battle"
 msgstr "Prohrál jste bitvu"
 
@@ -11142,24 +11662,24 @@ msgstr "Volná pozice"
 msgid "None"
 msgstr "Žádné"
 
-#: client/campaign/cp_base.c:786
+#: client/campaign/cp_base.c:787
 msgid "Base is under attack, you can't destroy buildings !"
 msgstr "Základna je napadena, nemůžete bourat budovy!"
 
-#: client/campaign/cp_base.c:798
+#: client/campaign/cp_base.c:799
 msgid "Destroy Entrance"
 msgstr "Zbourat vstup"
 
-#: client/campaign/cp_base.c:798
+#: client/campaign/cp_base.c:799
 #, fuzzy
 msgid "You can't destroy the entrance of the base!"
 msgstr "Nemůžete zbourat vstup na základnu!"
 
-#: client/campaign/cp_base.c:807
+#: client/campaign/cp_base.c:808
 msgid "Destroy Hangar"
 msgstr "Zbourat hangár"
 
-#: client/campaign/cp_base.c:807
+#: client/campaign/cp_base.c:808
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
@@ -11167,29 +11687,29 @@ msgstr ""
 "Pokud zbouráte tento hangár, zároveň tím zničíte i letoun uvnitř.\n"
 "Jste si jisti, že chcete zbourat tuto budovu?"
 
-#: client/campaign/cp_base.c:808
+#: client/campaign/cp_base.c:809
 msgid "Go to hangar"
 msgstr "Přejít do hangáru"
 
-#: client/campaign/cp_base.c:808
+#: client/campaign/cp_base.c:809
 msgid "Go to hangar without destroying building"
 msgstr "Přejít do hangáru bez zbourání budovy"
 
-#: client/campaign/cp_base.c:809 client/campaign/cp_base.c:819
-#: client/campaign/cp_base.c:829 client/campaign/cp_base.c:842
+#: client/campaign/cp_base.c:810 client/campaign/cp_base.c:820
+#: client/campaign/cp_base.c:830 client/campaign/cp_base.c:843
 msgid "Destroy the building"
 msgstr "Zbourat budovu"
 
-#: client/campaign/cp_base.c:811 client/campaign/cp_base.c:821
-#: client/campaign/cp_base.c:831
+#: client/campaign/cp_base.c:812 client/campaign/cp_base.c:822
+#: client/campaign/cp_base.c:832
 msgid "Go to transfer menu without destroying the building"
 msgstr "Přejít do nabídky přepravy bez zbourání budovy"
 
-#: client/campaign/cp_base.c:817
+#: client/campaign/cp_base.c:818
 msgid "Destroy Quarter"
 msgstr "Zbourat ubikace"
 
-#: client/campaign/cp_base.c:817
+#: client/campaign/cp_base.c:818
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
@@ -11197,19 +11717,19 @@ msgstr ""
 "Pokud zbouráte tyto ubikace, všichni zaměstnanci unitř budou zabiti.\n"
 "Jste si jisti, že chcete zbourat tuto budovu?"
 
-#: client/campaign/cp_base.c:818
+#: client/campaign/cp_base.c:819
 msgid "Dismiss"
 msgstr "Odchod"
 
-#: client/campaign/cp_base.c:818
+#: client/campaign/cp_base.c:819
 msgid "Go to hiring menu without destroying building"
 msgstr "Přejít do najímání zaměstnanců bez zbourání budovy"
 
-#: client/campaign/cp_base.c:827
+#: client/campaign/cp_base.c:828
 msgid "Destroy Storage"
 msgstr "Zbourat sklady"
 
-#: client/campaign/cp_base.c:827
+#: client/campaign/cp_base.c:828
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
@@ -11217,57 +11737,57 @@ msgstr ""
 "Pokud zbouráte tyto sklady, veškeré vybavení uvnitř bude zničeno.\n"
 "Jste si jisti, že chcete zbourat tuto budovu?"
 
-#: client/campaign/cp_base.c:828
+#: client/campaign/cp_base.c:829
 msgid "Go to buy/sell menu without destroying building"
 msgstr "Přejít do nabídky nákup/prodej bez zbourání budovy"
 
-#: client/campaign/cp_base.c:828
+#: client/campaign/cp_base.c:829
 msgid "Go to storage"
 msgstr "Přejít do skladu"
 
-#: client/campaign/cp_base.c:840
+#: client/campaign/cp_base.c:841
 msgid "Are you sure you want to destroy this building?"
 msgstr "Jste si jistý že chcete zbourat tuto budovu?"
 
-#: client/campaign/cp_base.c:840
+#: client/campaign/cp_base.c:841
 msgid "Destroy building"
 msgstr "Zbourat budovu"
 
-#: client/campaign/cp_base.c:859
+#: client/campaign/cp_base.c:860
 msgid "Not set"
 msgstr "Nevybudováno"
 
-#: client/campaign/cp_base.c:865
+#: client/campaign/cp_base.c:866
 #, c-format
 msgid "Already %i in base"
 msgstr "Na základně již %i"
 
-#: client/campaign/cp_base.c:871
+#: client/campaign/cp_base.c:872
 msgid "Construction finished"
 msgstr "Dostavěno"
 
-#: client/campaign/cp_base.c:875
+#: client/campaign/cp_base.c:876
 msgid "Working 100%"
 msgstr "Pracuje na 100 %"
 
-#: client/campaign/cp_base.c:879
+#: client/campaign/cp_base.c:880
 msgid "Not operational, depends on"
 msgstr ""
 
-#: client/campaign/cp_base.c:883
+#: client/campaign/cp_base.c:884
 msgid "Down"
 msgstr "Mimo provoz"
 
-#: client/campaign/cp_base.c:1358
+#: client/campaign/cp_base.c:1362
 msgid "Not enough credits to build this\n"
 msgstr "Na tuto stavbu není dostatek kreditů\n"
 
-#: client/campaign/cp_base.c:1440
+#: client/campaign/cp_base.c:1444
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Stojí:\t%i k\n"
 
-#: client/campaign/cp_base.c:1443
+#: client/campaign/cp_base.c:1447
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
@@ -11275,48 +11795,48 @@ msgstr[0] "Postaveno za %i den\n"
 msgstr[1] "Postaveno za %i dny\n"
 msgstr[2] "Postaveno za %i dnů\n"
 
-#: client/campaign/cp_base.c:1446 client/campaign/cp_ufopedia.c:259
+#: client/campaign/cp_base.c:1450 client/campaign/cp_ufopedia.c:259
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Provozní náklady:\t%i k\n"
 
-#: client/campaign/cp_base.c:1449 client/campaign/cp_ufopedia.c:256
+#: client/campaign/cp_base.c:1453 client/campaign/cp_ufopedia.c:256
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Potřebuje:\t%s\n"
 
-#: client/campaign/cp_base.c:2258
+#: client/campaign/cp_base.c:2263
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "Na této základně není letoun - Musíte nejdříve nějaký koupit nebo přepravit\n"
 
-#: client/campaign/cp_base.c:2258 client/campaign/cp_base.c:2260
+#: client/campaign/cp_base.c:2263 client/campaign/cp_base.c:2265
 #: client/campaign/cp_market_callbacks.c:560
 #: client/campaign/cp_market_callbacks.c:565
 #: client/campaign/cp_market_callbacks.c:668
 #: client/campaign/cp_market_callbacks.c:670 client/campaign/cp_save.c:374
-#: client/multiplayer/mp_team.c:172 client/multiplayer/mp_team.c:193
+#: client/multiplayer/mp_team.c:178 client/multiplayer/mp_team.c:199
 msgid "Note"
 msgstr "Poznámka"
 
-#: client/campaign/cp_base.c:2260
+#: client/campaign/cp_base.c:2265
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Na této základně není letoun - Musíte nejdříve nějaký koupit\n"
 
-#: client/campaign/cp_base.c:2406
+#: client/campaign/cp_base.c:2411
 #, fuzzy, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Dokončena stavba budovy %s na základně %s."
 
-#: client/campaign/cp_base.c:2407
+#: client/campaign/cp_base.c:2412
 msgid "Building finished"
 msgstr "Stavba dokončena"
 
-#: client/campaign/cp_base.c:2509
+#: client/campaign/cp_base.c:2514
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "Prodáním položky '%s' jste získal %i kreditů."
 
-#: client/campaign/cp_base.c:2510
+#: client/campaign/cp_base.c:2515
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -11324,12 +11844,12 @@ msgstr[0] "%i shromážděného předmětu"
 msgstr[1] "%i shromážděných předmětů"
 msgstr[2] "%i shromážděných předmětů"
 
-#: client/campaign/cp_base.c:2514
+#: client/campaign/cp_base.c:2519
 #, fuzzy, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "Nedostatek skladovacího prostoru na základně %s. %s"
 
-#: client/campaign/cp_base.c:2515
+#: client/campaign/cp_base.c:2520
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
@@ -11337,86 +11857,86 @@ msgstr[0] "%i předmět byl prodán za %i kreditů."
 msgstr[1] "%i předměty byly prodány za %i kreditů."
 msgstr[2] "%i předmětů bylo prodáno za %i kreditů."
 
-#: client/campaign/cp_base.c:3223
+#: client/campaign/cp_base.c:3228
 #, fuzzy, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "Základna %s nemá sklad antihnoty. %i jednotek antihmoty bylo odebráno."
 
-#: client/campaign/cp_base_callbacks.c:65
+#: client/campaign/cp_base_callbacks.c:71
 #, c-format
 msgid "%s has been destroyed by an antimatter storage breach."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:174
+#: client/campaign/cp_base_callbacks.c:179
 #, fuzzy, c-format
 msgid "Base #%i"
 msgstr "Základna 2"
 
-#: client/campaign/cp_base_callbacks.c:178
+#: client/campaign/cp_base_callbacks.c:183
 msgid "Home"
 msgstr "Základna 1"
 
-#: client/campaign/cp_base_callbacks.c:182
+#: client/campaign/cp_base_callbacks.c:187
 msgid "You've reached the base limit."
 msgstr "Dosáhl jste maximálního počtu základen."
 
-#: client/campaign/cp_base_callbacks.c:215
+#: client/campaign/cp_base_callbacks.c:220
 #, c-format
 msgid "A new base has been built: %s (nation: %s)"
 msgstr "Byla vybudována nová základna: %s (stát: %s)"
 
-#: client/campaign/cp_base_callbacks.c:217
+#: client/campaign/cp_base_callbacks.c:222
 #, c-format
 msgid "A new base has been built: %s"
 msgstr "Byla vybudována nová základna: %s"
 
-#: client/campaign/cp_base_callbacks.c:218
+#: client/campaign/cp_base_callbacks.c:223
 msgid "Base built"
 msgstr "Základna vybudována"
 
-#: client/campaign/cp_base_callbacks.c:231
+#: client/campaign/cp_base_callbacks.c:236
 msgid "Not enough credits to set up a new base."
 msgstr "Nedostatek kreditů na založení nové základny."
 
-#: client/campaign/cp_base_callbacks.c:290
+#: client/campaign/cp_base_callbacks.c:295
 #, fuzzy
 msgid "Buy or produce at least one aircraft first."
 msgstr "Koupit nebo vyrobit nový letoun"
 
-#: client/campaign/cp_base_callbacks.c:292
+#: client/campaign/cp_base_callbacks.c:297
 #, fuzzy, c-format
 msgid "Build a %s or %s first."
 msgstr "Nejprve postavte budovu %s."
 
-#: client/campaign/cp_base_callbacks.c:298
-#: client/campaign/cp_base_callbacks.c:308
+#: client/campaign/cp_base_callbacks.c:303
 #: client/campaign/cp_base_callbacks.c:313
-#: client/campaign/cp_base_callbacks.c:323
+#: client/campaign/cp_base_callbacks.c:318
 #: client/campaign/cp_base_callbacks.c:328
-#: client/campaign/cp_base_callbacks.c:756
+#: client/campaign/cp_base_callbacks.c:333
+#: client/campaign/cp_base_callbacks.c:758
 #, c-format
 msgid "Build a %s first."
 msgstr "Nejprve postavte budovu %s."
 
-#: client/campaign/cp_base_callbacks.c:303
+#: client/campaign/cp_base_callbacks.c:308
 #, fuzzy
 msgid "Build at least a second base to transfer equipment or personnel"
 msgstr "Přeprava vybavení nebo osob"
 
-#: client/campaign/cp_base_callbacks.c:318
+#: client/campaign/cp_base_callbacks.c:323
 #, fuzzy, c-format
 msgid "Build %s first."
 msgstr "Nejprve postavte budovu %s."
 
-#: client/campaign/cp_base_callbacks.c:681
+#: client/campaign/cp_base_callbacks.c:683
 msgid "Base is under attack, you can't access this building !"
 msgstr "Základna je napadena, tato budova není přístupná!"
 
-#: client/campaign/cp_base_callbacks.c:690
+#: client/campaign/cp_base_callbacks.c:692
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Pro použití letounu potřebujete alespoň jeden hangár (a jeho závislosti)."
 
-#: client/campaign/cp_base_callbacks.c:709
+#: client/campaign/cp_base_callbacks.c:711
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -11435,78 +11955,78 @@ msgstr[2] ""
 "Se vstupem prosím počkejte."
 
 # Nezní to česky, ale bohužel nejdou prohodit jednotlivé parametry :(
-#: client/campaign/cp_base_callbacks.c:720
+#: client/campaign/cp_base_callbacks.c:722
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Potřebujete budovu %s ke zprovoznění budovy %s."
 
 # FIXME?
-#: client/campaign/cp_base_callbacks.c:730
+#: client/campaign/cp_base_callbacks.c:732
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Ještě není dokončena budova %s, která je potřeba pro budovu %s."
 
-#: client/campaign/cp_base_callbacks.c:737
+#: client/campaign/cp_base_callbacks.c:739
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr "Ujistěte se, že závislosti budovy %s (%s) jsou v provozu, takže budova %s může být používána."
 
 # Nezní to česky, ale bohužel nejdou prohodit jednotlivé parametry :(
-#: client/campaign/cp_base_callbacks.c:745
-#: client/campaign/cp_base_callbacks.c:750
+#: client/campaign/cp_base_callbacks.c:747
+#: client/campaign/cp_base_callbacks.c:752
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "Potřebujete najmout %s k využití budovy %s."
 
-#: client/campaign/cp_base_callbacks.c:784
+#: client/campaign/cp_base_callbacks.c:786
 msgid "^BAircraft\n"
 msgstr "^BLetoun\n"
 
-#: client/campaign/cp_base_callbacks.c:791
+#: client/campaign/cp_base_callbacks.c:793
 msgid "^BEmployees\n"
 msgstr "^BZaměstnanci\n"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: client/campaign/cp_base_callbacks.c:800
+#: client/campaign/cp_base_callbacks.c:802
 #, fuzzy
 msgid "^BAliens\n"
 msgstr "Cizáci"
 
-#: client/campaign/cp_base_callbacks.c:812
+#: client/campaign/cp_base_callbacks.c:814
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^BBudovy\t\t\t\t\t\tKapacita\t\t\t\tPočet\n"
 
-#: client/campaign/cp_base_callbacks.c:836
+#: client/campaign/cp_base_callbacks.c:838
 msgid "day"
 msgid_plural "days"
 msgstr[0] "den"
 msgstr[1] "dny"
 msgstr[2] "dní"
 
-#: client/campaign/cp_base_callbacks.c:846
+#: client/campaign/cp_base_callbacks.c:848
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr "^BVýroba\t\t\t\t\t\tMnožství\t\t\t\tProcent\n"
 
-#: client/campaign/cp_base_callbacks.c:866
+#: client/campaign/cp_base_callbacks.c:868
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:870
-#: client/campaign/cp_base_callbacks.c:886
+#: client/campaign/cp_base_callbacks.c:872
+#: client/campaign/cp_base_callbacks.c:888
 msgid "Nothing\n"
 msgstr "Nic\n"
 
-#: client/campaign/cp_base_callbacks.c:875
+#: client/campaign/cp_base_callbacks.c:877
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr "^BVýzkum\t\t\t\t\t\tVědců\t\t\t\tProcent\n"
 
-#: client/campaign/cp_base_callbacks.c:880
+#: client/campaign/cp_base_callbacks.c:882
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:924 client/campaign/cp_campaign.c:815
+#: client/campaign/cp_base_callbacks.c:926 client/campaign/cp_campaign.c:801
 #: client/campaign/cp_market_callbacks.c:271
 #, c-format
 msgid "%i c"
@@ -11564,23 +12084,23 @@ msgstr "Pozice %i:\t%s\n"
 msgid "No defence of this type in this base"
 msgstr "Na této základně není obrana tohoto typu.\n"
 
-#: client/campaign/cp_campaign.c:318
+#: client/campaign/cp_campaign.c:319
 msgid "You've gone too far into debt."
 msgstr "Příliš jste se zadlužil."
 
-#: client/campaign/cp_campaign.c:326
+#: client/campaign/cp_campaign.c:327
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr "Přišel jste o své základny a nemáte dostatek peněz k vybudování nových."
 
-#: client/campaign/cp_campaign.c:332
+#: client/campaign/cp_campaign.c:333
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr "Neuspěl jste ve svém závazku ochránit Zemi. Náš domov a naši lidé podlehli cizácké nákaze. Pouze hrstka obyvatel Země zůstala lidmi a těchto pár zbývajících již nemá žádnou šanci cokoliv změnit. Vaše velení skončilo. PHALANX není schopen nadále fungovat jako činná jednotka. Cizákům již nic nestojí v cestě k naprostému vítězství."
 
-#: client/campaign/cp_campaign.c:350
+#: client/campaign/cp_campaign.c:351
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "Operace PHALANXu byly pod vaším velením opakovaně neúspěšné při ochraně států. Spojené národy, velice nespokojené s vaším výkonem, se rozhodly odvolat vás z velení a následně rozpustily projekt PHALANX jako aktivní taktické seskupení. Nejsou uskutečněny žádné další pokusy celosvětové spolupráce. Každý pozemský stát se pokusí sám čelit cizákům a nakonec padnou jeden po druhém."
 
-#: client/campaign/cp_campaign.c:837
+#: client/campaign/cp_campaign.c:823
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -11591,7 +12111,7 @@ msgstr ""
 "Prohráno:\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:842
+#: client/campaign/cp_campaign.c:828
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -11602,50 +12122,50 @@ msgstr ""
 "V provozu:\t%i\n"
 "Napadeno:\t%i\n"
 
-#: client/campaign/cp_campaign.c:857 client/campaign/cp_ufopedia.c:1254
+#: client/campaign/cp_campaign.c:843 client/campaign/cp_ufopedia.c:1254
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_campaign.c:860
+#: client/campaign/cp_campaign.c:846
 #, c-format
 msgid ""
 "\n"
 "Funding this month:\t%d"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:898 client/campaign/cp_ufopedia.c:237
+#: client/campaign/cp_campaign.c:884 client/campaign/cp_ufopedia.c:237
 #: client/cl_inventory_callbacks.c:149
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_campaign.c:904
+#: client/campaign/cp_campaign.c:890
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Zaměstnanci:\t%i k\n"
 
-#: client/campaign/cp_campaign.c:917
+#: client/campaign/cp_campaign.c:903
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Letoun:\t%i k\n"
 
-#: client/campaign/cp_campaign.c:928
+#: client/campaign/cp_campaign.c:914
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Základna (%s):\t%i k\n"
 
-#: client/campaign/cp_campaign.c:933
+#: client/campaign/cp_campaign.c:919
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Správní poplatky:\t%i k\n"
 
-#: client/campaign/cp_campaign.c:940
+#: client/campaign/cp_campaign.c:926
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Dluh:\t%i k\n"
 
-#: client/campaign/cp_campaign.c:943
+#: client/campaign/cp_campaign.c:929
 #, c-format
 msgid ""
 "\n"
@@ -11656,12 +12176,12 @@ msgstr ""
 "\t-------\n"
 "Celkem:\t%i k\n"
 
-#: client/campaign/cp_campaign.c:948
+#: client/campaign/cp_campaign.c:934
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Max. tolerované dluhy: %i k\n"
 
-#: client/campaign/cp_campaign.c:953
+#: client/campaign/cp_campaign.c:939
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -11670,34 +12190,34 @@ msgstr ""
 "Max. tolerovaná úroveň Mimozemské Virové Infekce: %i%%\n"
 "Nynější úroveň Mimozemské Virové Infekce: %i%%"
 
-#: client/campaign/cp_campaign.c:1568
+#: client/campaign/cp_campaign.c:1548
 msgid "Collected dead alien bodies"
 msgstr "Shromážděných mrtvých cizáků"
 
-#: client/campaign/cp_campaign.c:1613
+#: client/campaign/cp_campaign.c:1593
 msgid "Your dropship is not near the landing zone"
 msgstr "Transportér není v blízkosti přistávacího prostoru"
 
-#: client/campaign/cp_campaign.c:1666 client/campaign/cp_missions.c:1153
+#: client/campaign/cp_campaign.c:1645 client/campaign/cp_missions.c:1156
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Obrana základny %s byla úspěšná!"
 
-#: client/campaign/cp_campaign.c:1679
+#: client/campaign/cp_campaign.c:1659
 msgid "You've won the battle"
 msgstr "Vyhrál jste bitvu"
 
-#: client/campaign/cp_campaign.c:1697
+#: client/campaign/cp_campaign.c:1677
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Zabitých cizáků\t%i\n"
 
-#: client/campaign/cp_campaign.c:1698
+#: client/campaign/cp_campaign.c:1678
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Zajatých cizáků\t%i\n"
 
-#: client/campaign/cp_campaign.c:1699
+#: client/campaign/cp_campaign.c:1679
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -11706,22 +12226,22 @@ msgstr ""
 "Přeživší cizáci\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1701
+#: client/campaign/cp_campaign.c:1681
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Členů PHALANXu zabitých cizáky\t%i\n"
 
-#: client/campaign/cp_campaign.c:1702
+#: client/campaign/cp_campaign.c:1682
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Členů PHALANXu pohřešovaných v boji\t%i\n"
 
-#: client/campaign/cp_campaign.c:1703
+#: client/campaign/cp_campaign.c:1683
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Členů PHALANXu zabitých spojeneckou palbou\t%i\n"
 
-#: client/campaign/cp_campaign.c:1704
+#: client/campaign/cp_campaign.c:1684
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -11730,17 +12250,17 @@ msgstr ""
 "Členů PHALANXu přeživších\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1706
+#: client/campaign/cp_campaign.c:1686
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/campaign/cp_campaign.c:1707
+#: client/campaign/cp_campaign.c:1687
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civilistů zabitých spojeneckou palbou\t%i\n"
 
-#: client/campaign/cp_campaign.c:1708
+#: client/campaign/cp_campaign.c:1688
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -11749,17 +12269,17 @@ msgstr ""
 "Zachráněných civilistů\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1709
+#: client/campaign/cp_campaign.c:1689
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Získaných předmětů (typů/všech)\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1762
+#: client/campaign/cp_campaign.c:1742
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s byl(a) povýšen(a) do hodnosti %s.\n"
 
-#: client/campaign/cp_campaign.c:1764
+#: client/campaign/cp_campaign.c:1744
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
@@ -11768,7 +12288,7 @@ msgstr ""
 "%s byl(a) posmrtně povýšen(a) do hodnosti %s\n"
 "za příkladnou statečnost tváří v tvář drtivé převaze.\n"
 
-#: client/campaign/cp_campaign.c:1765
+#: client/campaign/cp_campaign.c:1745
 msgid "Soldier promoted"
 msgstr "Voják povýšen"
 
@@ -11788,23 +12308,23 @@ msgstr ""
 "Nemáte dostatek ubytovacích prostor pro zaměstnance.\n"
 "Postavte více ubikací."
 
-#: client/campaign/cp_employee_callbacks.c:302
-#: client/campaign/cp_employee_callbacks.c:356
+#: client/campaign/cp_employee_callbacks.c:285
+#: client/campaign/cp_employee_callbacks.c:339
 msgid "Could not fire employee"
 msgstr "Nelze propustit zaměstnance"
 
-#: client/campaign/cp_employee_callbacks.c:362
+#: client/campaign/cp_employee_callbacks.c:345
 msgid "Could not hire employee"
 msgstr "Nelze najmout zaměstnance"
 
-#: client/campaign/cp_event.c:250 client/campaign/cp_save.c:275
+#: client/campaign/cp_event.c:359 client/campaign/cp_save.c:275
 #: client/campaign/cp_save.c:295 client/campaign/cp_time.c:74
 #: client/campaign/cp_ufopedia.c:530 client/campaign/cp_ufopedia.c:535
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/campaign/cp_event.c:256
+#: client/campaign/cp_event.c:365
 #, c-format
 msgid "You've got a new mail: %s"
 msgstr "Máte novou poštu: %s"
@@ -12086,11 +12606,11 @@ msgstr "těžké"
 msgid "Unknown weight"
 msgstr "Neznámá hmotnost"
 
-#: client/campaign/cp_market.c:108 client/campaign/cp_market_callbacks.c:727
+#: client/campaign/cp_market.c:115 client/campaign/cp_market_callbacks.c:727
 msgid "Not enough storage space"
 msgstr "Nedostatek skladovacího prostoru"
 
-#: client/campaign/cp_market.c:108 client/campaign/cp_market_callbacks.c:727
+#: client/campaign/cp_market.c:115 client/campaign/cp_market_callbacks.c:727
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -12281,30 +12801,30 @@ msgstr ""
 "\n"
 "   - Vývojový tým UFO:CI"
 
-#: client/campaign/cp_missions.c:427
+#: client/campaign/cp_missions.c:426
 msgid "Landed UFO"
 msgstr "Místo přistání UFO"
 
-#: client/campaign/cp_missions.c:429
+#: client/campaign/cp_missions.c:428
 msgid "Terror mission"
 msgstr "Zastrašovací mise"
 
-#: client/campaign/cp_missions.c:431
+#: client/campaign/cp_missions.c:430
 msgid "Base attack"
 msgstr "Útok na základnu"
 
-#: client/campaign/cp_missions.c:435
+#: client/campaign/cp_missions.c:434
 msgid "Harvesting mission"
 msgstr "Sklízecí mise"
 
-#: client/campaign/cp_missions.c:724
+#: client/campaign/cp_missions.c:726
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "Byla hlášena cizácká aktivita v %s."
 
-#: client/campaign/cp_missions.c:1250
-#: client/campaign/missions/cp_mission_harvest.c:163
-#: client/campaign/missions/cp_mission_recon.c:160
+#: client/campaign/cp_missions.c:1253
+#: client/campaign/missions/cp_mission_harvest.c:164
+#: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
 msgstr "Území nikoho"
 
@@ -12483,19 +13003,29 @@ msgstr "Změnit domovskou základnu\n"
 msgid "Mission\t%s (%s)\n"
 msgstr "Mise\t%s (%s)\n"
 
-#: client/campaign/cp_popup.c:403
+#: client/campaign/cp_popup.c:345
+#, c-format
+msgid "%s (%i/%i)\t%s\t%s\t%s"
+msgstr ""
+
+#: client/campaign/cp_popup.c:363
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
 msgstr "Letoun není k dispozici, nemá pilota nebo není k dostupnému letounu přiřazen bojový tým."
 
-#: client/campaign/cp_popup.c:405
+#: client/campaign/cp_popup.c:424
+#, c-format
+msgid "%s%s (%i/%i)\t%s\t%s"
+msgstr ""
+
+#: client/campaign/cp_popup.c:442
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
 msgstr "Letoun není k dispozici, nemá pilota nebo není vybaven zbraněmi či municí."
 
-#: client/campaign/cp_popup.c:439
+#: client/campaign/cp_popup.c:458
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr "Obranná soustava není funkční nebo nejsou nainstalované zbraně či munice."
 
-#: client/campaign/cp_popup.c:492
+#: client/campaign/cp_popup.c:507
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -12703,29 +13233,29 @@ msgstr "Nemáte dostatek potřebného materiálu k výrobě tohoto předmětu."
 msgid "Disassembling of %s started"
 msgstr "Bylo zahájeno rozebírání položky \"%s\"."
 
-#: client/campaign/cp_research.c:84
+#: client/campaign/cp_research.c:89
 #, c-format
 msgid "A research project has been completed: %s\n"
 msgstr "Byl dokončen výzkumný projekt: %s\n"
 
-#: client/campaign/cp_research.c:85
+#: client/campaign/cp_research.c:90
 msgid "Research finished"
 msgstr "Výzkum dokončen"
 
-#: client/campaign/cp_research.c:131 client/campaign/cp_research.c:329
+#: client/campaign/cp_research.c:136 client/campaign/cp_research.c:330
 #, c-format
 msgid "New research proposal: %s\n"
 msgstr "Návrh nového výzkumu: %s\n"
 
-#: client/campaign/cp_research.c:132
+#: client/campaign/cp_research.c:137
 msgid "Unknown Technology researchable"
 msgstr "Zkoumatelná neznámá technologie"
 
-#: client/campaign/cp_research.c:330
+#: client/campaign/cp_research.c:331
 msgid "Unknown Technology found"
 msgstr "Nalezena neznámá technologie"
 
-#: client/campaign/cp_research.c:693 client/campaign/cp_research.c:697
+#: client/campaign/cp_research.c:692 client/campaign/cp_research.c:696
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -12733,25 +13263,25 @@ msgstr ""
 "V laboratořích již není volné místo.\n"
 "Postavte více laboratoří.\n"
 
-#: client/campaign/cp_research.c:693 client/campaign/cp_research.c:697
+#: client/campaign/cp_research.c:692 client/campaign/cp_research.c:696
 msgid "Not enough laboratories"
 msgstr "Nedostatek laboratoří"
 
-#: client/campaign/cp_research.c:814
+#: client/campaign/cp_research.c:837
 #, c-format
 msgid "Research prerequisites of %s does not met at %s. Research halted!"
 msgstr ""
 
-#: client/campaign/cp_research.c:815
+#: client/campaign/cp_research.c:838
 #, fuzzy
 msgid "Research halted"
 msgstr "Výzkum dokončen"
 
-#: client/campaign/cp_research.c:1174
+#: client/campaign/cp_research.c:1205
 msgid "No description available."
 msgstr "Popis není k dispozici."
 
-#: client/campaign/cp_research.c:1175
+#: client/campaign/cp_research.c:1206
 msgid "No research proposal available."
 msgstr "Návrh výzkumu není k dispozici."
 
@@ -12873,40 +13403,40 @@ msgstr "Neúspěšná komprese herních dat - nastavte proměnnou konfigurace sa
 msgid "Error saving game."
 msgstr "Chyba při ukládání hry."
 
-#: client/campaign/cp_save.c:462 client/campaign/cp_save.c:485
-#: client/campaign/cp_save.c:621
+#: client/campaign/cp_save.c:462 client/campaign/cp_save.c:486
+#: client/campaign/cp_save.c:623
 msgid "Error loading game."
 msgstr "Chyba při načítání hry."
 
-#: client/campaign/cp_save.c:463 client/campaign/cp_save.c:486
-#: client/campaign/cp_save.c:622 client/cl_irc.c:992 client/cl_irc.c:1220
+#: client/campaign/cp_save.c:463 client/campaign/cp_save.c:487
+#: client/campaign/cp_save.c:624 client/cl_irc.c:992 client/cl_irc.c:1220
 #: client/cl_main.c:486 client/cl_main.c:491 client/cl_main.c:497
 #: client/cl_main.c:505 client/multiplayer/mp_callbacks.c:49
 #: client/multiplayer/mp_callbacks.c:170
 msgid "Error"
 msgstr "Chyba"
 
-#: client/campaign/cp_save.c:600
+#: client/campaign/cp_save.c:602
 msgid "Campaign was successfully saved."
 msgstr "Kampaň byla úspěšně uložena."
 
-#: client/campaign/cp_save.c:600
+#: client/campaign/cp_save.c:602
 msgid "Quicksave"
 msgstr "Rychlé uložení"
 
-#: client/campaign/cp_save.c:624
+#: client/campaign/cp_save.c:626
 msgid "Campaign loaded"
 msgstr "Kampaň načtena"
 
-#: client/campaign/cp_save.c:624
+#: client/campaign/cp_save.c:626
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Rychle uložená kampaň byla úspěšně načtena."
 
-#: client/campaign/cp_save.c:681
+#: client/campaign/cp_save.c:683
 msgid "Saves to the quick save slot"
 msgstr "Uložit do pozice rychlého uložení"
 
-#: client/campaign/cp_team.c:131
+#: client/campaign/cp_team.c:132
 #, c-format
 msgid "%i of %i"
 msgstr "%i z %i"
@@ -13262,7 +13792,7 @@ msgstr "Na této základně není hangár.\n"
 msgid "No power supplies in this base.\n"
 msgstr "Na této základně nejsou zdroje energie.\n"
 
-#: client/campaign/cp_ufo.c:80
+#: client/campaign/cp_ufo.c:90
 #, c-format
 msgid ""
 "\n"
@@ -13271,7 +13801,7 @@ msgstr ""
 "\n"
 "Zabezpečeno místo havárie %s\n"
 
-#: client/campaign/cp_ufo.c:82
+#: client/campaign/cp_ufo.c:92
 #, c-format
 msgid ""
 "\n"
@@ -13280,17 +13810,17 @@ msgstr ""
 "\n"
 "Zabezpečeno místo přistání %s\n"
 
-#: client/campaign/cp_ufo.c:345 client/campaign/cp_ufo.c:715
+#: client/campaign/cp_ufo.c:355 client/campaign/cp_ufo.c:731
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr "UFO letí směrem na %s"
 
-#: client/campaign/cp_ufo.c:719
+#: client/campaign/cp_ufo.c:735
 #, fuzzy, c-format
 msgid "Our radar detected a new UFO near %s"
 msgstr "Náš radar zjistil nové UFO"
 
-#: client/campaign/cp_ufo.c:723
+#: client/campaign/cp_ufo.c:739
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "Náš radar ztratil zaměřené UFO"
 
@@ -13557,63 +14087,15 @@ msgstr "Vaše základna %s byla zničena! Všichni zaměstnanci byli zabiti a ve
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "Základna '%s' je napadena! Co dělat?"
 
-#: client/cl_actor.c:106
-msgid "Poor"
-msgstr "Špatný"
-
-#: client/cl_actor.c:108
-msgid "Mediocre"
-msgstr "Obyčejný"
-
-#: client/cl_actor.c:110
-msgid "Average"
-msgstr "Průměrný"
-
-#: client/cl_actor.c:112
-msgid "Competent"
-msgstr "Schopný"
-
-#: client/cl_actor.c:114
-msgid "Proficient"
-msgstr "Zdatný"
-
-#: client/cl_actor.c:116
-msgid "Very Good"
-msgstr "Celkem dobrý"
-
-#: client/cl_actor.c:118
-msgid "Highly Proficient"
-msgstr "Velice zdatný"
-
-#: client/cl_actor.c:122
-msgid "Outstanding"
-msgstr "Vyjímečný"
-
-#: client/cl_actor.c:125
-msgid "Superhuman"
-msgstr "Nadčlověk"
-
-#: client/cl_actor.c:1031
-msgid "This isn't your round\n"
-msgstr "Nejste na tahu\n"
-
-#: client/cl_actor.c:1269
-msgid "You cannot reload this unknown item.\n"
-msgstr "Tento neznámý předmět nemůžete nabít.\n"
-
-#: client/cl_actor.c:2296
-msgid "Unknown alien race"
-msgstr "Neznámá cizácká rasa"
-
-#: client/cl_console.c:276
+#: client/cl_console.c:274
 msgid "Bring up the in-game console"
 msgstr "Vyvolat herní konzolu"
 
-#: client/cl_console.c:278
+#: client/cl_console.c:276
 msgid "Send a message to all players"
 msgstr "Poslat zprávu všem hráčům"
 
-#: client/cl_console.c:279
+#: client/cl_console.c:277
 msgid "Send a message to allied team members"
 msgstr "Poslat zprávu členům spojeneckého týmu"
 
@@ -13727,352 +14209,6 @@ msgstr "Neplatný nebo plný tým"
 #: client/cl_game_multiplayer.c:270
 msgid "all"
 msgstr "všechny"
-
-#: client/cl_hud.c:102 client/cl_hud.c:105
-msgid "Crouch walk"
-msgstr "Chůze v přikrčení"
-
-#: client/cl_hud.c:104
-msgid "Walk"
-msgstr "Chůze"
-
-#: client/cl_hud.c:276
-#, c-format
-msgid "Remaining TUs: %i"
-msgstr "Zbývající ČJ: %i"
-
-#: client/cl_hud.c:278
-msgid "No remaining TUs left after shot."
-msgstr "Po výstřelu nezbývají žádné ČJ."
-
-#: client/cl_hud.c:283
-#, c-format
-msgid "TU: %i"
-msgstr "ČJ: %i"
-
-#: client/cl_hud.c:285
-#, c-format
-msgid "Shots: %i"
-msgstr "Ran: %i"
-
-#: client/cl_hud.c:369
-msgid "[0 TU] No reservation"
-msgstr "[0 ČJ] Žádné ponechané"
-
-#: client/cl_hud.c:388
-#, c-format
-msgid "[%i TU] %s"
-msgstr "[%i ČJ] %s"
-
-#: client/cl_hud.c:423
-msgid "Reserve TUs for firing/using."
-msgstr "Ponechat ČJ pro střelbu/použití."
-
-#: client/cl_hud.c:423
-msgid "Shot Reservation"
-msgstr "Ponechání ČJ pro výstřel"
-
-#: client/cl_hud.c:798
-msgid "No item in hand.\n"
-msgstr "V ruce není žádný předmět.\n"
-
-#: client/cl_hud.c:811
-msgid ""
-"Can't perform action:\n"
-"out of ammo.\n"
-msgstr ""
-"Nelze provést:\n"
-"došla munice.\n"
-
-#: client/cl_hud.c:816
-msgid ""
-"This weapon cannot be fired\n"
-"one handed.\n"
-msgstr ""
-"Z této zbraně nelze střílet\n"
-"jednou rukou.\n"
-
-#: client/cl_hud.c:825
-msgid ""
-"Can't perform action:\n"
-"this item is not reloadable.\n"
-msgstr ""
-"Nelze provést:\n"
-"tento předmět není nabíjecí.\n"
-
-#: client/cl_hud.c:830
-msgid ""
-"Can't perform action:\n"
-"ammo not available.\n"
-msgstr ""
-"Nelze provést:\n"
-"munice není k dispozici.\n"
-
-#: client/cl_hud.c:835 client/cl_hud.c:906
-msgid ""
-"Can't perform action:\n"
-"not enough TUs.\n"
-msgstr ""
-"Nelze provést:\n"
-"nedostatek ČJ.\n"
-
-#: client/cl_hud.c:999
-msgid "Not enough TUs for standing up."
-msgstr "Nedostatek ČJ pro postavení se."
-
-#: client/cl_hud.c:1002
-#, c-format
-msgid "Stand up (%i TU)"
-msgstr "Postavit se (%i ČJ)"
-
-#: client/cl_hud.c:1008
-msgid "Not enough TUs for crouching."
-msgstr "Nedostatek ČJ pro přikrčení."
-
-#: client/cl_hud.c:1011
-#, c-format
-msgid "Crouch (%i TU)"
-msgstr "Přikrčit (%i ČJ)"
-
-#: client/cl_hud.c:1019
-#, c-format
-msgid ""
-"%i TUs reserved for crouching/standing up.\n"
-"Click to clear."
-msgstr ""
-"%i ČJ je ponecháno pro přikrčení/postavení se.\n"
-"Kliněte pro zrušení."
-
-#: client/cl_hud.c:1023
-#, c-format
-msgid "Reserve %i TUs for crouching/standing up."
-msgstr "Ponecháno %i ČJ na přikrčení/postavení se."
-
-#: client/cl_hud.c:1026
-msgid "Not enough TUs left to reserve for crouching/standing up."
-msgstr "Není dostatek ČJ k ponechání na přikrčení/postavení se."
-
-#: client/cl_hud.c:1032
-#, c-format
-msgid ""
-"%i TUs reserved for shooting.\n"
-"Click to change.\n"
-"Right-Click to clear."
-msgstr ""
-"%i ČJ ponecháno pro střelbu.\n"
-"Klikněte pro změnu.\n"
-"Pravým tlačítkem pro zrušní."
-
-#: client/cl_hud.c:1036
-msgid "Reserve TUs for shooting."
-msgstr "Ponechat ČJ pro střelbu."
-
-#: client/cl_hud.c:1039
-msgid "Reserving TUs for shooting not possible."
-msgstr "Ponechání ČJ pro střelbu není možné."
-
-#: client/cl_hud.c:1065
-msgid "No reload possible for right hand, already fully loaded."
-msgstr "V pravé ruce není možné nabít, již plně nabito."
-
-#: client/cl_hud.c:1067
-msgid "No reload possible for right hand."
-msgstr "V pravé ruce není možné nabít."
-
-#: client/cl_hud.c:1070 client/cl_hud.c:1086
-#, c-format
-msgid "Reload weapon (%i TU)."
-msgstr "Nabít zbraň (%i ČJ)."
-
-#: client/cl_hud.c:1081
-msgid "No reload possible for left hand, already fully loaded."
-msgstr "V levé ruce není možné nabít, již plně nabito."
-
-#: client/cl_hud.c:1083
-msgid "No reload possible for left hand."
-msgstr "V levé ruce není možné nabít."
-
-#: client/cl_hud.c:1189
-#, c-format
-msgid ""
-"Time Units\n"
-"- Available: %i (of %i)\n"
-"- Reserved:  %i\n"
-"- Remaining: %i\n"
-msgstr ""
-"Časové jednotky\n"
-"- K dispozici: %i (z %i)\n"
-"- Ponecháno:  %i\n"
-"- Zbývá: %i\n"
-
-#: client/cl_hud.c:1297
-#, c-format
-msgid "Morale  %i | Reserved TUs: %i\n"
-msgstr "Morálka  %i | Ponechané ČJ: %i\n"
-
-#: client/cl_hud.c:1299
-#, c-format
-msgid "Morale  %i"
-msgstr "Morálka  %i"
-
-#: client/cl_hud.c:1304
-#, c-format
-msgid ""
-"Morale  %i | Reserved TUs: %i\n"
-"%s %i (%i|%i TU left)\n"
-msgstr ""
-"Morálka  %i | Vyhrazeno: %i ČJ\n"
-"%s %i (%i| Zbývá: %i ČJ)\n"
-
-#: client/cl_hud.c:1308
-#, c-format
-msgid ""
-"Morale  %i\n"
-"%s %i (%i TU left)\n"
-msgstr ""
-"Morálka  %i\n"
-"%s %i (zbývá %i ČJ)\n"
-
-#: client/cl_hud.c:1321
-msgid ""
-"You cannot use this unknown item.\n"
-"You need to research it first.\n"
-msgstr ""
-"Tento neznámý předmět nelze použít.\n"
-"Nejprve je třeba zkoumat jej.\n"
-
-#: client/cl_hud.c:1336
-#, c-format
-msgid ""
-"%s\n"
-"(empty)\n"
-msgstr ""
-"%s\n"
-"(prázdný)\n"
-
-#: client/cl_hud.c:1344
-msgid "Currently panics!\n"
-msgstr "Panikaří!\n"
-
-#: client/cl_hud.c:1582
-msgid "Reload the weapon in the soldiers left hand"
-msgstr "Nabít zbraň v levé ruce vojáka"
-
-#: client/cl_hud.c:1583
-msgid "Reload the weapon in the soldiers right hand"
-msgstr "Nabít zbraň v pravé ruce vojáka"
-
-#: client/cl_hud.c:1585
-msgid "Toggle reservation for crouching."
-msgstr "Přepnout ponechání ČJ na přikrčení."
-
-#: client/cl_hud.c:1591
-msgid "Toggle reaction fire"
-msgstr "Přepnout ponechání ČJ na zpětnou palbu"
-
-#: client/cl_input.c:1350
-msgid "Rotate battlescape camera anti-clockwise"
-msgstr "Otočit kamerou nad bojištěm v protisměru hodinových ručiček"
-
-#: client/cl_input.c:1352
-msgid "Rotate battlescape camera clockwise"
-msgstr "Otočit kamerou nad bojištěm po směru hodinových ručiček"
-
-#: client/cl_input.c:1354
-msgid "Tilt battlescape camera up"
-msgstr "Naklonit kameru nad bojištěm vzhůru"
-
-#: client/cl_input.c:1356
-msgid "Tilt battlescape camera down"
-msgstr "Naklonit kameru nad bojištěm dolů"
-
-#: client/cl_input.c:1358
-msgid "Move battlescape camera left"
-msgstr "Posunout kameru nad bojištěm doleva"
-
-#: client/cl_input.c:1360
-msgid "Move battlescape camera right"
-msgstr "Posunout kameru nad bojištěm doprava"
-
-#: client/cl_input.c:1362
-msgid "Move battlescape camera forward"
-msgstr "Posunout kameru nad bojištěm dopředu"
-
-#: client/cl_input.c:1364
-msgid "Move battlescape camera backward"
-msgstr "Posunout kameru nad bojištěm dozadu"
-
-#: client/cl_input.c:1366 client/cl_input.c:1395
-msgid "Zoom in"
-msgstr "Přiblížit"
-
-#: client/cl_input.c:1368 client/cl_input.c:1396
-msgid "Zoom out"
-msgstr "Oddálit"
-
-#: client/cl_input.c:1371
-msgid "Left mouse button click (menu)"
-msgstr "Klik levým tlačítkem myši (nabídka)"
-
-#: client/cl_input.c:1373
-msgid "Middle mouse button click (menu)"
-msgstr "Klik prostředním tlačítkem myši (nabídka)"
-
-#: client/cl_input.c:1375
-msgid "Right mouse button click (menu)"
-msgstr "Klik pravým tlačítkem myši (nabídka)"
-
-#: client/cl_input.c:1377
-msgid "Select objects/Walk to a square/In fire mode, fire etc"
-msgstr "Zvolit objekt/Jít na čtverec/V režimu střelby střílet atd."
-
-#: client/cl_input.c:1379
-msgid "Walk to a square/In fire mode, cancel action"
-msgstr "Jít na čtverec/V režimu střelby zrušit střelbu"
-
-#: client/cl_input.c:1381
-msgid "Turn soldier toward mouse pointer"
-msgstr "Natočit vojáka směrem ke kurzoru myši"
-
-#: client/cl_input.c:1383
-msgid "Toggles the hud radar mode"
-msgstr "Přepnout HUD režim redaru"
-
-#: client/cl_input.c:1386
-msgid "Toggle stand/crounch"
-msgstr "Přepnout přikrčit/postavit se"
-
-#: client/cl_input.c:1387
-msgid "Toggle the headgear"
-msgstr "Přepnout přilbu"
-
-#: client/cl_input.c:1388
-msgid "Toggle to next alien"
-msgstr "Přepnout na dalšího cizáka"
-
-#: client/cl_input.c:1389
-msgid "Toggle to next alien visible from selected actor."
-msgstr "Přepnout na dalšího zvolenou postavou viděného cizáka."
-
-#: client/cl_input.c:1391
-msgid "Ends current round"
-msgstr "Ukončit aktuální tah"
-
-#: client/cl_input.c:1392
-msgid "Opens or closes a door"
-msgstr "Otevřít nebo zavřít dveře"
-
-#: client/cl_input.c:1393
-msgid "Slice through terrain at a higher level"
-msgstr "Nastavit řez terénem na vyšší úroveň"
-
-#: client/cl_input.c:1394
-msgid "Slice through terrain at a lower level"
-msgstr "Nastavit řez terénem na nižší úroveň"
-
-#: client/cl_input.c:1397
-msgid "Confirm the current action"
-msgstr "Potvrdit aktuální akci"
 
 #: client/cl_inventory_callbacks.c:46
 msgid "skill_close"
@@ -14193,15 +14329,11 @@ msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Vaše verze hry (%s) se liší od té na serveru (%s)"
 
 # doladit
-#: client/cl_main.c:848
+#: client/cl_main.c:895
 msgid "Target your shot to the ground"
 msgstr "Zamířit výstřel k zemi"
 
-#: client/cl_main.c:973 client/cl_view.c:271
-msgid "Awaiting game start"
-msgstr "Očekávám start hry"
-
-#: client/cl_main.c:1019
+#: client/cl_main.c:1068
 msgid "Custom"
 msgstr "Uživatelský"
 
@@ -14239,106 +14371,114 @@ msgstr "Žluťásci"
 msgid "CCCP"
 msgstr "SSSR"
 
-#: client/cl_team.c:694
-msgid "Select a soldier from list"
-msgstr "Vybrat vojáka ze seznamu"
-
-#: client/cl_team.c:695
-msgid "Reselect the current soldier"
-msgstr "Znovu vybrat tohoto vojáka"
-
 # ???
-#: client/cl_team.c:696
-msgid "Update a soldier"
-msgstr "Obnovit vojáka"
-
-# ???
-#: client/cl_team.c:697
+#: client/cl_team.c:598
 msgid "Update the GUI with the selected item"
 msgstr "Obnovit GUP zvoleným objektem"
 
-#: client/cl_team.c:698
-msgid "Toggle to next soldier"
-msgstr "Přepnout na dalšího vojáka"
+#: client/input/cl_input.c:1350
+msgid "Rotate battlescape camera anti-clockwise"
+msgstr "Otočit kamerou nad bojištěm v protisměru hodinových ručiček"
 
-#: client/cl_view.c:211 client/cl_view.c:236
-#, c-format
-msgid "loading %s"
-msgstr "načítám %s"
+#: client/input/cl_input.c:1352
+msgid "Rotate battlescape camera clockwise"
+msgstr "Otočit kamerou nad bojištěm po směru hodinových ručiček"
 
-#: client/cl_view.c:219
-msgid "loading models..."
-msgstr "načítám modely..."
+#: client/input/cl_input.c:1354
+msgid "Tilt battlescape camera up"
+msgstr "Naklonit kameru nad bojištěm vzhůru"
 
-#: client/events/event/actor/e_event_actorappear.c:161
-#, c-format
-msgid "Enemy spotted: %s!"
-msgstr "Spatřen nepřítel: %s!"
+#: client/input/cl_input.c:1356
+msgid "Tilt battlescape camera down"
+msgstr "Naklonit kameru nad bojištěm dolů"
 
-#: client/events/event/actor/e_event_actorappear.c:164
-msgid "Enemy spotted!\n"
-msgstr "Spatřen nepřítel!\n"
+#: client/input/cl_input.c:1358
+msgid "Move battlescape camera left"
+msgstr "Posunout kameru nad bojištěm doleva"
 
-#: client/events/event/actor/e_event_actorappear.c:166
-msgid "Civilian spotted!\n"
-msgstr "Spatřen civilista!\n"
+#: client/input/cl_input.c:1360
+msgid "Move battlescape camera right"
+msgstr "Posunout kameru nad bojištěm doprava"
 
-#: client/events/event/actor/e_event_actordie.c:79
-#, c-format
-msgid "%s was stunned\n"
-msgstr "%s byl omráčen\n"
+#: client/input/cl_input.c:1362
+msgid "Move battlescape camera forward"
+msgstr "Posunout kameru nad bojištěm dopředu"
 
-#: client/events/event/actor/e_event_actordie.c:81
-#, c-format
-msgid "%s was killed\n"
-msgstr "%s byl zabit\n"
+#: client/input/cl_input.c:1364
+msgid "Move battlescape camera backward"
+msgstr "Posunout kameru nad bojištěm dozadu"
 
-#: client/events/event/actor/e_event_actordie.c:89
-msgid "A civilian was stunned.\n"
-msgstr "Byl omráčen civilista.\n"
+#: client/input/cl_input.c:1366 client/input/cl_input.c:1395
+msgid "Zoom in"
+msgstr "Přiblížit"
 
-#: client/events/event/actor/e_event_actordie.c:91
-msgid "A civilian was killed.\n"
-msgstr "Byl zabit civilista.\n"
+#: client/input/cl_input.c:1368 client/input/cl_input.c:1396
+msgid "Zoom out"
+msgstr "Oddálit"
 
-#: client/events/event/actor/e_event_actordie.c:95
-msgid "An alien was stunned.\n"
-msgstr "Byl omráčen cizák.\n"
+#: client/input/cl_input.c:1371
+msgid "Left mouse button click (menu)"
+msgstr "Klik levým tlačítkem myši (nabídka)"
 
-#: client/events/event/actor/e_event_actordie.c:97
-msgid "An alien was killed.\n"
-msgstr "Byl zabit cizák.\n"
+#: client/input/cl_input.c:1373
+msgid "Middle mouse button click (menu)"
+msgstr "Klik prostředním tlačítkem myši (nabídka)"
 
-#: client/events/event/actor/e_event_actordie.c:101
-msgid "A soldier was stunned.\n"
-msgstr "Byl omráčen voják.\n"
+#: client/input/cl_input.c:1375
+msgid "Right mouse button click (menu)"
+msgstr "Klik pravým tlačítkem myši (nabídka)"
 
-#: client/events/event/actor/e_event_actordie.c:103
-msgid "A soldier was killed.\n"
-msgstr "Byl zabit voják.\n"
+#: client/input/cl_input.c:1377
+msgid "Select objects/Walk to a square/In fire mode, fire etc"
+msgstr "Zvolit objekt/Jít na čtverec/V režimu střelby střílet atd."
 
-#: client/events/event/actor/e_event_actordie.c:107
-#, c-format
-msgid "A member of team %i was stunned.\n"
-msgstr "Byl omráčen člen týmu %i.\n"
+#: client/input/cl_input.c:1379
+msgid "Walk to a square/In fire mode, cancel action"
+msgstr "Jít na čtverec/V režimu střelby zrušit střelbu"
 
-#: client/events/event/actor/e_event_actordie.c:109
-#, c-format
-msgid "A member of team %i was killed.\n"
-msgstr "Byl zabit člen týmu %i.\n"
+#: client/input/cl_input.c:1381
+msgid "Turn soldier toward mouse pointer"
+msgstr "Natočit vojáka směrem ke kurzoru myši"
 
-#: client/events/event/player/e_event_doendround.c:57
-msgid "Your round started!\n"
-msgstr "Začal váš tah!\n"
+#: client/input/cl_input.c:1383
+msgid "Toggles the hud radar mode"
+msgstr "Přepnout HUD režim redaru"
 
-#: client/events/event/player/e_event_endroundannounce.c:53
-msgid "You've ended your round\n"
-msgstr "Dokončil jste svůj tah\n"
+#: client/input/cl_input.c:1386
+msgid "Toggle stand/crounch"
+msgstr "Přepnout přikrčit/postavit se"
 
-#: client/events/event/player/e_event_endroundannounce.c:56
-#, c-format
-msgid "%s ended his round (team %i)\n"
-msgstr "%s ukončil svůj tah (tým %i)\n"
+#: client/input/cl_input.c:1387
+msgid "Toggle the headgear"
+msgstr "Přepnout přilbu"
+
+#: client/input/cl_input.c:1388
+msgid "Toggle to next alien"
+msgstr "Přepnout na dalšího cizáka"
+
+#: client/input/cl_input.c:1389
+msgid "Toggle to next alien visible from selected actor."
+msgstr "Přepnout na dalšího zvolenou postavou viděného cizáka."
+
+#: client/input/cl_input.c:1391
+msgid "Ends current round"
+msgstr "Ukončit aktuální tah"
+
+#: client/input/cl_input.c:1392
+msgid "Opens or closes a door"
+msgstr "Otevřít nebo zavřít dveře"
+
+#: client/input/cl_input.c:1393
+msgid "Slice through terrain at a higher level"
+msgstr "Nastavit řez terénem na vyšší úroveň"
+
+#: client/input/cl_input.c:1394
+msgid "Slice through terrain at a lower level"
+msgstr "Nastavit řez terénem na nižší úroveň"
+
+#: client/input/cl_input.c:1397
+msgid "Confirm the current action"
+msgstr "Potvrdit aktuální akci"
 
 #: client/menu/m_main.c:48
 msgid "This change requires a restart"
@@ -14348,7 +14488,7 @@ msgstr "Tato změna vyžaduje restart"
 msgid "This change might require a restart"
 msgstr "Tato změna by mohla vyžadovat restart"
 
-#: client/menu/m_menus.c:745
+#: client/menu/m_menus.c:765
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Skrýt HUD (stisk ESC znovu zobrazí HUD)"
 
@@ -14516,15 +14656,15 @@ msgstr "Chráněno heslem:\t%s\n"
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "Není místo pro další oblíbené - smažte prosím nepoužívané záznamy a zkuste to znovu"
 
-#: client/multiplayer/mp_team.c:172
+#: client/multiplayer/mp_team.c:178
 msgid "Error saving team. Nothing to save yet."
 msgstr "Chyba při ukládání týmu. Zatím není co uložit."
 
-#: client/multiplayer/mp_team.c:188
+#: client/multiplayer/mp_team.c:194
 msgid "NewTeam"
 msgstr "Nový tým"
 
-#: client/multiplayer/mp_team.c:193
+#: client/multiplayer/mp_team.c:199
 msgid "Error saving team. Check free disk space!"
 msgstr "Chyba při ukládání týmu. Zkontrolujte zda je na disku dostatek volného místa!"
 
@@ -14696,6 +14836,18 @@ msgstr "Volné"
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr "Hraje"
+
+#~ msgid "Devastating alien terror attack on Mumbai"
+#~ msgstr "Zničující cizácké tažení v Bombaji"
+
+#~ msgid "Alien aircraft spotted"
+#~ msgstr "Spozorován cizácký letoun"
+
+#~ msgid "Add selected item"
+#~ msgstr "Přidat zvolené vybavení"
+
+#~ msgid "Remove item from slot"
+#~ msgstr "Odebrat vybavení z pozice"
 
 #, fuzzy
 #~ msgid "D-F Tank"
@@ -16115,9 +16267,6 @@ msgstr "Hraje"
 
 #~ msgid "Wajir"
 #~ msgstr "Wajir"
-
-#~ msgid "Crash site"
-#~ msgstr "Místo havárie"
 
 #~ msgid "Secure area."
 #~ msgstr "Zabezpečit oblast."
