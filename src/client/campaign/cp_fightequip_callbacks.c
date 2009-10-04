@@ -588,7 +588,7 @@ static void AIM_UpdateItemDescription (qboolean fromList, qboolean fromSlot)
 		Cvar_Set("mn_aircraft_item_warning", _("This item is too heavy for the selected slot."));
 		break;
 	case AIM_LOADING_NOWEAPON:
-		Cvar_Set("mn_aircraft_item_warning", _("Equip first a weapon."));
+		Cvar_Set("mn_aircraft_item_warning", _("Equip a weapon first."));
 		break;
 	case AIM_LOADING_NOTUSABLEWITHWEAPON:
 		Cvar_Set("mn_aircraft_item_warning", _("Ammo not usable with current weapon."));
