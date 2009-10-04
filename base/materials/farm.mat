@@ -14,7 +14,7 @@
 {
 	material tex_nature/dirt001
 	{
-		texture tex_terrain\grass
+		texture tex_terrain/grass
 		dirtmap 0.2
 		lightmap
 	}
