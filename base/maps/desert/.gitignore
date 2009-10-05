@@ -1,1 +1,7 @@
 /*.bsp
+/*.bak
+/*autosave*
+/*.tmp
+/*.footsteps
+/*.map.original*
+/gmon.out
