@@ -447,8 +447,8 @@ void Radiant_loadModules (const std::string& path)
 	Directory_forEach(path, loader);
 }
 
-/** Load all of the modules in the DarkRadiant install directory. Modules
- * are loaded from modules/ and plugins/.
+/** Load all of the modules in the DarkRadiant install directory.
+ * Plugins are loaded from plugins/.
  *
  * @param directory
  * The root directory to search.
@@ -456,9 +456,6 @@ void Radiant_loadModules (const std::string& path)
 void Radiant_loadModulesFromRoot (const std::string& directory)
 {
 	const std::string g_pluginsDir = "plugins/";
-	const std::string g_modulesDir = "modules/";
-
-	Radiant_loadModules(directory + g_modulesDir);
 	Radiant_loadModules(directory + g_pluginsDir);
 }
 
@@ -479,7 +476,7 @@ void Radiant_Initialise (void)
 {
 	GlobalModuleServer_Initialise();
 
-	// Load the Radiant modules from the modules/ dir.
+	// Load the Radiant plugins
 	Radiant_loadModulesFromRoot(AppPath_get());
 
 	Preferences_Load();
@@ -1569,7 +1566,6 @@ static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 		GtkMenu *menuInMenu = create_sub_menu_with_mnemonic(menu, _("_Pathfinding"));
 		Pathfinding_ConstructMenu(menuInMenu);
 	}
-
 
 	command_connect_accelerator("CenterXYViews");
 
