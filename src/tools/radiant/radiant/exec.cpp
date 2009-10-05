@@ -24,7 +24,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "sidebar/jobinfo.h"
+#include "sidebar/JobInfo.h"
 
 #if defined (__FreeBSD__) || defined(__OpenBSD__) || defined(__linux__)
 # if defined (__FreeBSD__) || defined(__OpenBSD__)
@@ -100,7 +100,8 @@ static gboolean exec_channel_callback (GIOChannel *channel, GIOCondition conditi
 			const gchar* to_codeset = "UTF-8";
 			const gchar* from_codeset = "ISO-8859-1";
 			gchar* fallback = NULL;
-			gchar *converted = g_convert_with_fallback(buffer, bytes, to_codeset, from_codeset, fallback, NULL, NULL, &error);
+			gchar *converted = g_convert_with_fallback(buffer, bytes, to_codeset, from_codeset, fallback, NULL, NULL,
+					&error);
 			if (converted != NULL) {
 				cmd->read_proc(cmd, converted);
 				g_free(converted);
@@ -134,8 +135,10 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 	exec_print_cmd(e);
 	gint std_out = 0, std_err = 0;
 	GError *err = NULL;
-	const GSpawnFlags flags = (GSpawnFlags)(G_SPAWN_SEARCH_PATH | G_SPAWN_LEAVE_DESCRIPTORS_OPEN | G_SPAWN_DO_NOT_REAP_CHILD);
-	if (g_spawn_async_with_pipes(NULL, (gchar**) e->args->pdata, NULL, flags, child_setup, e, &e->pid, NULL, &std_out, &std_err, &err)) {
+	const GSpawnFlags flags = (GSpawnFlags) (G_SPAWN_SEARCH_PATH | G_SPAWN_LEAVE_DESCRIPTORS_OPEN
+			| G_SPAWN_DO_NOT_REAP_CHILD);
+	if (g_spawn_async_with_pipes(NULL, (gchar**) e->args->pdata, NULL, flags, child_setup, e, &e->pid, NULL, &std_out,
+			&std_err, &err)) {
 #ifdef _WIN32
 		g_debug("exec_spawn_process - spawed process with pid [%p]\n", e->pid);
 #else
@@ -149,15 +152,17 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 			g_io_channel_set_encoding(char_out, NULL, NULL);
 			g_io_channel_set_buffered(char_out, FALSE);
 			g_io_channel_set_flags(char_out, G_IO_FLAG_NONBLOCK, NULL);
-			chan_out_id = g_io_add_watch(char_out, (GIOCondition)(G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_PRI | G_IO_NVAL),
-					exec_channel_callback, (gpointer) e);
+			chan_out_id = g_io_add_watch(char_out,
+					(GIOCondition)(G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_PRI | G_IO_NVAL), exec_channel_callback,
+					(gpointer) e);
 
 			chan_err = g_io_channel_unix_new(std_err);
 			g_io_channel_set_encoding(chan_err, NULL, NULL);
 			g_io_channel_set_buffered(chan_err, FALSE);
 			g_io_channel_set_flags(chan_err, G_IO_FLAG_NONBLOCK, NULL);
-			chan_err_id = g_io_add_watch(chan_err, (GIOCondition)(G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_PRI | G_IO_NVAL),
-					exec_channel_callback, (gpointer) e);
+			chan_err_id = g_io_add_watch(chan_err,
+					(GIOCondition)(G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_PRI | G_IO_NVAL), exec_channel_callback,
+					(gpointer) e);
 
 			while (exec_cmd_get_state(e) == RUNNING)
 				gtk_main_iteration();
@@ -296,7 +301,6 @@ Exec* exec_new (const gchar *process_title, const gchar *process_description)
 	exec->process_description = g_strdup(process_description);
 	exec->outcome = FAILED;
 	exec->fraction = 0.0;
-	exec->update = JobInfo_Update;
 	return exec;
 }
 
@@ -319,7 +323,7 @@ void exec_cmd_update_arg (ExecCmd *e, const gchar *arg_start, const gchar *forma
 
 	guint i = 0;
 	for (; i < e->args->len; ++i) {
-		gchar *arg = (gchar *)g_ptr_array_index(e->args, i);
+		gchar *arg = (gchar *) g_ptr_array_index(e->args, i);
 		if (strstr(arg, arg_start) != NULL) {
 			g_free(arg);
 			va_list va;
@@ -424,7 +428,7 @@ void exec_run (Exec *ex)
 	exec_cmd_list = g_list_remove(exec_cmd_list, ex);
 	g_list_free(piped);
 	exec_set_outcome(ex);
-	ex->update();
+	sidebar::JobInfo::getInstance().update();
 }
 
 void exec_stop (Exec *e)

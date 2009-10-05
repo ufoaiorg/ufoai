@@ -22,7 +22,7 @@
 #include "mapinfo.h"
 #include "surfaceinspector.h"
 #include "PrefabSelector.h"
-#include "jobinfo.h"
+#include "JobInfo.h"
 #include "texturebrowser.h"
 #include "ParticleBrowser.h"
 

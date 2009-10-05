@@ -251,7 +251,6 @@ class Radiant: public TypeSystemRef
 			Map_Construct();
 			EntityList_Construct();
 			MapInfo_Construct();
-			JobInfo_Construct();
 			MainFrame_Construct();
 			SurfaceInspector_Construct();
 			CamWnd_Construct();
@@ -292,7 +291,6 @@ class Radiant: public TypeSystemRef
 			MainFrame_Destroy();
 			EntityList_Destroy();
 			MapInfo_Destroy();
-			JobInfo_Destroy();
 			Map_Destroy();
 			GLWindow_Destroy();
 			MRU_Destroy();

@@ -27,6 +27,7 @@
 
 #include "radiant_i18n.h"
 #include "maptools.h"
+#include "../sidebar/JobInfo.h"
 #include "../material.h"
 #include "../exec.h"
 #include "os/file.h"  // file_exists
@@ -371,7 +372,7 @@ static void compileReadProgress (void *ex, void *buffer)
 			if (progress >= '0' && progress <= '9') {
 				cnt++;
 				exec->fraction += stepWidth;
-				exec->update();
+				sidebar::JobInfo::getInstance().update();
 			}
 		}
 	}

@@ -112,7 +112,7 @@ static void Sidebar_constructJobInfo (GtkWidget *notebook)
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
 	// job info frame
-	GtkWidget *pageJobInfo = JobInfo_constructNotebookTab();
+	GtkWidget *pageJobInfo = sidebar::JobInfo::getInstance().getWidget();
 	gtk_container_add(GTK_CONTAINER(vbox), pageJobInfo);
 
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));

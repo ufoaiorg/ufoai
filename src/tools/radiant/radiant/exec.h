@@ -35,43 +35,42 @@ typedef enum
 
 typedef struct
 {
-	GPtrArray *args;
-	GPid pid;
-	gint exit_code;
-	ExecState state;
-	GMutex *state_mutex;
-	ExecFunc lib_proc;
-	ExecFunc pre_proc;
-	ExecFunc read_proc;	/**< read the output of the process from stdout */
-	ExecFunc post_proc;
-	gchar *working_dir;
-	gboolean piped;
-	gpointer exec;
-	gboolean parse_progress;
+		GPtrArray *args;
+		GPid pid;
+		gint exit_code;
+		ExecState state;
+		GMutex *state_mutex;
+		ExecFunc lib_proc;
+		ExecFunc pre_proc;
+		ExecFunc read_proc; /**< read the output of the process from stdout */
+		ExecFunc post_proc;
+		gchar *working_dir;
+		gboolean piped;
+		gpointer exec;
+		gboolean parse_progress;
 } ExecCmd;
 
 typedef struct
 {
-	gchar *process_title;
-	gchar *process_description;
-	GList *cmds;
-	GError *err;
-	gdouble fraction;
-	ExecState outcome;
-	void(*update)(void);
+		gchar *process_title;
+		gchar *process_description;
+		GList *cmds;
+		GError *err;
+		gdouble fraction;
+		ExecState outcome;
 } Exec;
 
-Exec *exec_new(const gchar *process_title, const gchar *process_description);
-ExecCmd *exec_cmd_new(Exec **e);
-void exec_delete(Exec *self);
-void exec_run(Exec *e);
-void exec_stop(Exec *e);
-void exec_cmd_add_arg(ExecCmd *e, const gchar *format, ...);
-void exec_cmd_update_arg(ExecCmd *e, const gchar *arg_start, const gchar *format, ...);
-gint exec_run_cmd(const std::string& cmd, gchar **output, const std::string& working_dir);
-ExecState exec_cmd_get_state(ExecCmd *e);
-ExecState exec_cmd_set_state(ExecCmd *e, ExecState state);
-gint exec_count_operations(const Exec *e);
-GList* exec_get_cmd_list(void);
+Exec *exec_new (const gchar *process_title, const gchar *process_description);
+ExecCmd *exec_cmd_new (Exec **e);
+void exec_delete (Exec *self);
+void exec_run (Exec *e);
+void exec_stop (Exec *e);
+void exec_cmd_add_arg (ExecCmd *e, const gchar *format, ...);
+void exec_cmd_update_arg (ExecCmd *e, const gchar *arg_start, const gchar *format, ...);
+gint exec_run_cmd (const std::string& cmd, gchar **output, const std::string& working_dir);
+ExecState exec_cmd_get_state (ExecCmd *e);
+ExecState exec_cmd_set_state (ExecCmd *e, ExecState state);
+gint exec_count_operations (const Exec *e);
+GList* exec_get_cmd_list (void);
 
 #endif	/*_EXEC_H_*/
