@@ -136,8 +136,8 @@ typedef struct {
 
 /** @brief used in shot probability calculations (pseudo shots) */
 typedef struct {
-	int enemy;				/**< shot would hit that much enemies */
-	int friend;				/**< shot would hit that much friends */
+	int enemyCount;			/**< shot would hit that much enemies */
+	int friendCount;		/**< shot would hit that much friends */
 	int civilian;			/**< shot would hit that much civilians */
 	int self;				/**< @todo incorrect actor facing or shotOrg, or bug in trace code? */
 	int damage;

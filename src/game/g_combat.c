@@ -151,9 +151,9 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
 		else if (struck->team == TEAM_CIVILIAN)
 			mock->civilian += 1;
 		else if (struck->team == shooter->team)
-			mock->friend += 1;
+			mock->friendCount += 1;
 		else if (G_IsActor(struck))
-			mock->enemy += 1;
+			mock->enemyCount += 1;
 		else
 			return;
 
