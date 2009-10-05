@@ -79,8 +79,8 @@ static gint fixCallback (GtkWidget *widget, gpointer data)
 	if (file_exists(compilerBinaryWithPath)) {
 		const std::string& compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_fix");
 		char* output = NULL;
-		exec_run_cmd(compilerBinaryWithPath + compiler_parameter + strstr(fullname.c_str(), "maps"), &output,
-				GlobalRadiant().getEnginePath());
+		exec_run_cmd(compilerBinaryWithPath + " " + compiler_parameter + " " + strstr(fullname.c_str(), "maps"),
+				&output, GlobalRadiant().getEnginePath());
 		if (!output)
 			return 0;
 		// reload after fix
@@ -232,8 +232,8 @@ void ToolsCheckErrors (void)
 		int rows = 0;
 		const std::string& compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_check");
 		char* output = NULL;
-		exec_run_cmd(compilerBinaryWithPath + compiler_parameter + strstr(fullname.c_str(), "maps"), &output,
-				GlobalRadiant().getEnginePath());
+		exec_run_cmd(compilerBinaryWithPath + " " + compiler_parameter + " " + strstr(fullname.c_str(), "maps"),
+				&output, GlobalRadiant().getEnginePath());
 		if (output) {
 			if (!checkDialog)
 				CreateCheckDialog();
