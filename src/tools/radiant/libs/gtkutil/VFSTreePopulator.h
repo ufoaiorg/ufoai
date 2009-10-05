@@ -14,7 +14,7 @@ namespace gtkutil
 	 * in the form "models/first/second/object.lwo" or similar. The class accepts
 	 * the Tree Store and then string paths, one by one, adding each one to the
 	 * tree in the appropriate place.
-	 * 
+	 *
 	 * Since the VFSTreePopulator has no knowledge of the column data to be inserted
 	 * into the tree, it does not set any of the values but merely calls
 	 * gtk_tree_store_append to get a GtkTreeIter* pointing to the newly-added
@@ -22,7 +22,7 @@ namespace gtkutil
 	 * visitor function which will provide the visitor with two objects - the
 	 * created GtkTreeIter*, and the full input string which the visitor can then
 	 * use to populate the data appropriately.
-	 * 
+	 *
 	 * When the VFSTreePopulator is destroyed it will free any temporary structures
 	 * used during tree creation, such as the hashtable of GtkTreeIter* objects
 	 * used to locate parent nodes. The GtkTreeModel will not be destroyed since it

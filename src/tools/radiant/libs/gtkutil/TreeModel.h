@@ -9,7 +9,7 @@
 namespace gtkutil
 {
 
-	/** 
+	/**
 	 * Utility class for operation on GtkTreeModels. This class provides
 	 * methods to retrieve strings and other values from a tree model without
 	 * having to manually use GValues etc.
