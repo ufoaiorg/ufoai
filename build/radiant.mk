@@ -137,6 +137,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/libs/gtkutil/MenuItemAccelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/TreeModel.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/VFSTreePopulator.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/menu/PopupMenu.cpp \
 	\
 	$(RADIANT_BASE)/libs/profile/profile.cpp \
 	$(RADIANT_BASE)/libs/profile/file.cpp \

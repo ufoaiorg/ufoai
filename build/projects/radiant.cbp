@@ -257,6 +257,9 @@
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\ModelProgressDialog.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\menu\PopupMenu.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\accelerator.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

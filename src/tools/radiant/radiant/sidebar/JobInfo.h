@@ -20,6 +20,7 @@
 #define INCLUDED_JOBINFO_H
 
 #include <gtk/gtk.h>
+#include "gtkutil/menu/PopupMenu.h"
 
 namespace sidebar
 {
@@ -32,11 +33,14 @@ namespace sidebar
 			GtkListStore* _jobList;
 			GtkWidget* _view;
 
+			// Context menu
+			gtkutil::PopupMenu _popupMenu;
+
 		private:
 
 			/* GTK CALLBACKS */
 
-			static void stopJobCallback (GtkCellRendererToggle *widget, gchar *path, GtkWidget *ignore);
+			static void stopJobCallback (gpointer data, gpointer userData);
 			static void updateJobs (gpointer data, gpointer userData);
 
 		public:
