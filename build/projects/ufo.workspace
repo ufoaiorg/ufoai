@@ -12,11 +12,9 @@
 			<Depends filename="game.cbp" />
 		</Project>
 		<Project filename="radiant.cbp" active="1">
-			<Depends filename="radiant_model.cbp" />
 			<Depends filename="radiant_brushexport.cbp" />
 			<Depends filename="ufo2map.cbp" />
 		</Project>
-		<Project filename="radiant_model.cbp" />
 		<Project filename="radiant_brushexport.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

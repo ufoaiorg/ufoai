@@ -46,7 +46,7 @@ typedef unsigned char byte;
 #include "stream/stringstream.h"
 #include "typesystem.h"
 
-#include "model.h"
+#include "picomodel/model.h"
 
 bool g_showModelNormals = false;
 bool g_showModelBoundingBoxes = false;
@@ -184,22 +184,18 @@ class PicoModelAPIConstructor
 };
 
 typedef SingletonModule<ModelPicoAPI, ModelPicoDependencies, PicoModelAPIConstructor> PicoModelModule;
-typedef std::list<PicoModelModule> PicoModelModules;
-PicoModelModules g_PicoModelModules;
 
-extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules (ModuleServer& server)
+void ModelModules_Init (void)
 {
-	initialiseModule(server);
-
 	pico_initialise();
-
 	const picoModule_t** modules = PicoModuleList(0);
 	while (*modules != 0) {
 		const picoModule_t* module = *modules++;
 		if (module->canload && module->load) {
 			for (const char* const * ext = module->defaultExts; *ext != 0; ++ext) {
-				g_PicoModelModules.push_back(PicoModelModule(PicoModelAPIConstructor(*ext, module)));
-				g_PicoModelModules.back().selfRegister();
+				PicoModelModule *picomodule = new PicoModelModule(PicoModelAPIConstructor(*ext, module));
+				StaticModuleRegistryList().instance().addModule(*picomodule);
+				/** @todo do we have to delete these PicoModelModules anywhere? */
 			}
 		}
 	}

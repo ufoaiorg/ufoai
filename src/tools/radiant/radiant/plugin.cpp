@@ -79,6 +79,7 @@
 #include "material.h"
 #include "particles.h"
 #include "pathfinding.h"
+#include "model.h"
 
 #include "modulesystem/modulesmap.h"
 #include "modulesystem/singletonmodule.h"
@@ -311,6 +312,8 @@ namespace
 bool Radiant_Construct (ModuleServer& server)
 {
 	GlobalModuleServer::instance().set(server);
+	/** @todo find a way to do this with in a static way */
+	ModelModules_Init();
 	StaticModuleRegistryList().instance().registerModules();
 
 	g_RadiantDependencies = new RadiantDependencies();
