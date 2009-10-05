@@ -135,6 +135,19 @@ ah  +a   +a   +a   +a  +a   +a  ah
 0   av   av   av   av   av   av  0
 }
 
+tile +wormhole
+{
+6 6
+
+0   av  av  av  av  0
+v   +a  +a  +a  +a ah
+v   +a  +a  +a  +a ah
+v   +a  +a  +a  +a ah
+v   +a  +a  +a  +a ah
+0   av  av  av  av  0
+}
+
+
 // ########################################
 // ########### Maps for the game ###########
 
@@ -154,4 +167,5 @@ grid          "2 2"
 +tunnel_ml    "0 3"
 +tunnel_x     "1 12"
 +lab          "1 2"
++wormhole     "1 1"
 }
