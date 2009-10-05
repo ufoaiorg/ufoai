@@ -65,25 +65,25 @@ namespace sidebar
 		gtk_container_add(GTK_CONTAINER(scr), _view);
 
 		_popupMenu.addItem(gtkutil::IconTextMenuItem(ui::icons::ICON_FOLDER, _("Abort job")), JobInfo::stopJobCallback,
-				_view);
+				this);
 	}
 
 	void JobInfo::stopJobCallback (gpointer data, gpointer userData)
 	{
-#if 0
 		GtkTreeIter iter;
-		GtkWidget* view = (GtkWidget*) userData;
-		GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
-		Exec* job;
+		JobInfo* jobInfo = (JobInfo*) userData;
+		GtkTreeView *view = GTK_TREE_VIEW(jobInfo->_view);
+		GtkTreeSelection *selection = gtk_tree_view_get_selection(view);
+		GtkTreeModel *model;
 
-		if (!gtk_tree_model_get_iter_from_string(model, &iter, path))
-			return;
+		if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
+			Exec* job;
 
-		// get the values from the tree view model list
-		gtk_tree_model_get(model, &iter, JOB_POINTER, &job, -1);
+			// get the values from the tree view model list
+			gtk_tree_model_get(model, &iter, JOB_POINTER, &job, -1);
 
-		exec_stop(job);
-#endif
+			exec_stop(job);
+		}
 	}
 
 	void JobInfo::updateJobs (gpointer data, gpointer userData)
@@ -94,7 +94,7 @@ namespace sidebar
 
 		gtk_list_store_append(GTK_LIST_STORE(jobList), &iter);
 		gtk_list_store_set(GTK_LIST_STORE(jobList), &iter, JOB_TITLE, job->process_title, JOB_PROGRESS, job->fraction
-				* 100.0, JOB_POINTER, job, JOB_TOOLTIP, job->process_description, -1);
+				* 100.0, JOB_POINTER, data, JOB_TOOLTIP, job->process_description, -1);
 	}
 
 	void JobInfo::update (void)
