@@ -89,7 +89,7 @@ static transferData_t td;
 static const int MAX_TR_FACTORS = 500;
 
 
-static const int MAX_TRANSLIST_MENU_ENTRIES = 22;
+static const int MAX_TRANSLIST_MENU_ENTRIES = 21;
 
 
 static transferType_t TR_GetTransferType (const char *id)

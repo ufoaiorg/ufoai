@@ -76,8 +76,16 @@ window transfer
 		cvar	*cvar:mn_itemtype
 		onChange	{
 			cmd "trans_type <cvar:mn_itemtype>;"
+			if ( *cvar:mn_itemtype eq "item" ) {
+				*cvar:mn_itemtype_name = "_Equipment"
+			} elif ( *cvar:mn_itemtype eq "employee" ) {
+				*cvar:mn_itemtype_name = "_Employees"
+			} elif ( *cvar:mn_itemtype eq "alien" ) {
+				*cvar:mn_itemtype_name = "_Aliens"
+			} elif ( *cvar:mn_itemtype eq "aircraft" ) {
+				*cvar:mn_itemtype_name = "_Aircraft"
+			}
 		}
-		
 		option description {
 			label	"_Equipment"
 			value	"item"
@@ -115,13 +123,33 @@ window transfer
 			lineheight	25
 		}
 
+		string title_item
+		{
+			string		*cvar:mn_itemtype_name
+			pos			"25 18"
+			size		"250 25"
+			font		f_small_bold
+		}
+		string title_amount
+		{
+			string		"_Amount/Transfer"
+			pos			"300 18"
+			size		"200 25"
+			textalign	uc
+			font		f_small_bold
+		}
+
 		textlist trans_list
 		{
 			dataid		TEXT_TRANSFER_LIST
-			pos			"25 16"
-			size		"325 550"
+			pos			"25 41"
+			size		"325 525"
 			lineheight	"25"
-			onClick		{ cmd "trans_list_click <lineselected>" }
+			onClick		{
+				if ( *cvar:mn_itemtype ne "item" ) {
+					cmd "trans_list_click <lineselected>"
+				}
+			}
 			onViewChange	{
 				*(textlist)itemlist.trans_list_amount@viewpos = <viewpos>
 				*(textlist)itemlist.trans_list_transfered@viewpos = <viewpos>
@@ -135,8 +163,8 @@ window transfer
 		textlist trans_list_amount
 		{
 			dataid		TEXT_TRANSFER_LIST_AMOUNT
-			pos			"350 16"
-			size		"50 550"
+			pos			"350 41"
+			size		"50 525"
 			lineheight	"25"
 			textalign	"cr"
 			onViewChange	{
@@ -152,8 +180,8 @@ window transfer
 		textlist trans_list_transfered
 		{
 			dataid		TEXT_TRANSFER_LIST_TRANSFERED
-			pos			"425 16"
-			size		"50 550"
+			pos			"425 41"
+			size		"50 525"
 			lineheight	"25"
 			textalign	"cr"
 			onViewChange	{
@@ -168,8 +196,8 @@ window transfer
 
 		vscrollbar trans_list_scroll {
 			image		ui/scrollbar_v_green
-			pos			"510 18"
-			height		"546"
+			pos			"510 43"
+			height		"521"
 			hidewhenunused	true
 			onChange	{
 				*itemlist.trans_list_scroll@current = <current>
@@ -184,7 +212,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 18"
+			pos			"485 43"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 0 )
@@ -195,7 +223,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 43"
+			pos			"485 68"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 1 )
@@ -206,7 +234,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 68"
+			pos			"485 93"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 2 )
@@ -217,7 +245,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 93"
+			pos			"485 118"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 3 )
@@ -229,7 +257,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 118"
+			pos			"485 143"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 4 )
@@ -240,7 +268,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 143"
+			pos			"485 168"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 5 )
@@ -251,7 +279,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 168"
+			pos			"485 193"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 6 )
@@ -262,7 +290,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 193"
+			pos			"485 218"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 7 )
@@ -273,7 +301,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 218"
+			pos			"485 243"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 8 )
@@ -284,7 +312,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 243"
+			pos			"485 268"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 9 )
@@ -295,7 +323,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 268"
+			pos			"485 293"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 10 )
@@ -306,7 +334,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 293"
+			pos			"485 318"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 11 )
@@ -318,7 +346,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 318"
+			pos			"485 343"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 12 )
@@ -329,7 +357,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 343"
+			pos			"485 368"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 13 )
@@ -340,7 +368,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 368"
+			pos			"485 393"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 14 )
@@ -351,7 +379,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 393"
+			pos			"485 418"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 15 )
@@ -362,7 +390,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 418"
+			pos			"485 443"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 16 )
@@ -373,7 +401,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 443"
+			pos			"485 468"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 17 )
@@ -384,7 +412,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 468"
+			pos			"485 493"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 18 )
@@ -395,7 +423,7 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 493"
+			pos			"485 518"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
 				*cvar:tline = ( *cvar:tline + 19 )
@@ -406,22 +434,10 @@ window transfer
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
 			image		ui/spinner_blue
-			pos			"485 518"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 20 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
-		}
-		spinner t_spinner21
-		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
 			pos			"485 543"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
-				cmd "echo <cvar:tline>"
-				*cvar:tline = ( *cvar:tline + 21 )
+				*cvar:tline = ( *cvar:tline + 20 )
 				cmd "trans_list_click <cvar:tline> <lastdiff>;"
 			}
 		}
@@ -435,14 +451,14 @@ window transfer
 		*cvar:loop_max = <1>
 		*cvar:i = 0
 
-		if ( *cvar:loop_max > 22 ) {
-			*cvar:loop_max = 22
+		if ( *cvar:loop_max > 21 ) {
+			*cvar:loop_max = 21
 		}
 		while ( *cvar:i < *cvar:loop_max ) {
 			*itemlist.t_spinner<cvar:i>@invis false
 			*cvar:i = ( *cvar:i + 1 )
 		}
-		while ( *cvar:i < 22 ) {
+		while ( *cvar:i < 21 ) {
 			*itemlist.t_spinner<cvar:i>@invis true
 			*cvar:i = ( *cvar:i + 1 )
 		}
@@ -484,7 +500,11 @@ window transfer
 			pos			"25 16"
 			size		"290 225"
 			lineheight	"25"
-			onClick		{ cmd "trans_cargolist_click <lineselected>" }
+			onClick		{
+				if ( *cvar:mn_itemtype ne "item" ) {
+					cmd "trans_cargolist_click <lineselected>"
+				}
+			}
 			onViewChange	{
 				*(textlist)transfer_cargolist.trans_cargolist_amount@viewpos = <viewpos>
 				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
@@ -555,7 +575,8 @@ window transfer
 			color		"0.6 0.6 0.6 0.3"
 			dataid		OPTION_BASELIST
 			onChange {
-				cmd "trans_selectbase <cvar:mn_trans_base_id>"
+				cmd "trans_selectbase <cvar:mn_trans_base_id>;"
+				cmd "trans_type <cvar:mn_itemtype>;"
 			}
 		}
 
@@ -583,19 +604,9 @@ window transfer
 		}
 	}
 
-	todo addheaders {
-		pos			"50 150"
-		string		"add string node for table header"
-	}
-
 	todo splitwarns {
 		pos			"70 150"
 		string		"split warning message outside of the textlist"
-	}
-
-	todo addspinners {
-		pos			"90 150"
-		string		"add spinners (harder)"
 	}
 
 	confunc trans_resetscroll {
@@ -642,6 +653,7 @@ window transfer
 	func onInit
 	{
 		cmd "trans_init;"
+		if ( *cvar:mn_itemtype_name eq "" ) { *cvar:mn_itemtype_name = "_Equipment" }
 	}
 
 	func onClose
