@@ -101,8 +101,8 @@ namespace sidebar
 	{
 		GList *jobs = exec_get_cmd_list();
 
+		/** @todo Don't clear and refill but update */
 		gtk_list_store_clear(GTK_LIST_STORE(_jobList));
-
 		g_list_foreach(jobs, updateJobs, _jobList);
 	}
 }
