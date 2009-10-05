@@ -1310,6 +1310,8 @@ mapdef mart
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	}
 
 //	ufos
@@ -1540,6 +1542,8 @@ mapdef japan
 	aircraft 
 	{
 		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	}
 
 //	ufos
