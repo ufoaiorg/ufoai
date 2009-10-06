@@ -40,6 +40,7 @@
 #include "gtkutil/window.h"
 #include "gtkutil/idledraw.h"
 #include "gtkutil/accelerator.h"
+#include "gtkutil/TreeModel.h"
 #include "gtkutil/closure.h"
 
 #include "../treemodel.h"
@@ -80,22 +81,12 @@ namespace
 	}
 }
 
-template<typename value_type>
-inline void gtk_tree_model_get_pointer (GtkTreeModel* model, GtkTreeIter* iter, gint column, value_type** pointer)
-{
-	GValue value;
-	value.g_type = 0;
-	gtk_tree_model_get_value(model, iter, column, &value);
-	*pointer = (value_type*) g_value_get_pointer(&value);
-}
-
 static void entitylist_treeviewcolumn_celldatafunc (GtkTreeViewColumn* column, GtkCellRenderer* renderer,
 		GtkTreeModel* model, GtkTreeIter* iter, gpointer data)
 {
-	scene::Node* node;
-	gtk_tree_model_get_pointer(model, iter, 0, &node);
-	scene::Instance* instance;
-	gtk_tree_model_get_pointer(model, iter, 1, &instance);
+	scene::Node* node = (scene::Node*) gtkutil::TreeModel::getPointer(model, iter, 0);
+	scene::Instance* instance = (scene::Instance*) gtkutil::TreeModel::getPointer(model, iter, 1);
+
 	if (node != 0) {
 		gtk_cell_renderer_set_fixed_size(renderer, -1, -1);
 		const char* name = const_cast<char*> (node_get_name(*node));
@@ -120,10 +111,10 @@ static gboolean entitylist_tree_select (GtkTreeSelection *selection, GtkTreeMode
 {
 	GtkTreeIter iter;
 	gtk_tree_model_get_iter(model, &iter, path);
-	scene::Node* node;
-	gtk_tree_model_get_pointer(model, &iter, 0, &node);
-	scene::Instance* instance;
-	gtk_tree_model_get_pointer(model, &iter, 1, &instance);
+
+	scene::Node* node = (scene::Node*) gtkutil::TreeModel::getPointer(model, &iter, 0);
+	scene::Instance* instance = (scene::Instance*) gtkutil::TreeModel::getPointer(model, &iter, 1);
+
 	Selectable* selectable = Instance_getSelectable(*instance);
 
 	if (node == 0) {
@@ -164,10 +155,8 @@ static gboolean treemodel_update_selection (GtkTreeModel* model, GtkTreePath* pa
 {
 	GtkTreeView* view = reinterpret_cast<GtkTreeView*> (data);
 
-	scene::Instance* instance;
-	gtk_tree_model_get_pointer(model, iter, 1, &instance);
+	scene::Instance* instance = (scene::Instance*) gtkutil::TreeModel::getPointer(model, iter, 1);
 	Selectable* selectable = Instance_getSelectable(*instance);
-
 	if (selectable != 0) {
 		GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
 		if (selectable->isSelected()) {
@@ -225,17 +214,16 @@ void entitylist_treeview_row_expanded (GtkTreeView* view, GtkTreeIter* iter, Gtk
 
 gint graph_tree_model_compare_name (GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer user_data)
 {
-	scene::Node* first;
-	gtk_tree_model_get(model, a, 0, (gpointer*) &first, -1);
-	scene::Node* second;
-	gtk_tree_model_get(model, b, 0, (gpointer*) &second, -1);
+	scene::Node* first = (scene::Node*) gtkutil::TreeModel::getPointer(model, a, 0);
+	scene::Node* second = (scene::Node*) gtkutil::TreeModel::getPointer(model, b, 0);
+
 	int result = 0;
-	if (first != 0 && second != 0) {
+	if (first != 0 && second != 0)
 		result = string_compare(node_get_name(*first), node_get_name(*second));
-	}
-	if (result == 0) {
+
+	if (result == 0)
 		return (first < second) ? -1 : (second < first) ? 1 : 0;
-	}
+
 	return result;
 }
 
