@@ -19,7 +19,7 @@
 
 #include "entitylist.h"
 #include "entityinspector.h"
-#include "mapinfo.h"
+#include "MapInfo.h"
 #include "surfaceinspector.h"
 #include "PrefabSelector.h"
 #include "JobInfo.h"

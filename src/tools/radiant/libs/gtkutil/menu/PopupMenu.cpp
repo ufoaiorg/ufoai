@@ -19,10 +19,10 @@ namespace gtkutil
 	}
 
 	// Add a named menu item
-	void PopupMenu::addItem (GtkWidget* widget, GFunc callback, gpointer userData)
+	void PopupMenu::addItem (GtkWidget* widget, GFunc callback, gpointer userData, SensitivityTest t)
 	{
 		// Create a MenuItem and add it to the list
-		MenuItem item(widget, callback, userData);
+		MenuItem item(widget, callback, userData, t);
 		_menuItems.push_back(item);
 
 		// Connect up the activation callback to GTK.
@@ -42,10 +42,11 @@ namespace gtkutil
 	{
 		// Iterate through the list of MenuItems, enabling or disabling each widget
 		for (MenuItemList::iterator i = _menuItems.begin(); i != _menuItems.end(); ++i) {
-			/*if (i->test())*/
-			gtk_widget_set_sensitive(i->widget, TRUE);
-			/*else
-			 gtk_widget_set_sensitive(i->widget, FALSE);*/
+			GtkWidget *widget = i->widget;
+			if (i->test())
+				gtk_widget_set_sensitive(widget, TRUE);
+			else
+				gtk_widget_set_sensitive(widget, FALSE);
 		}
 
 		// Show all elements and display the menu

@@ -702,7 +702,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\JobInfo.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\mapinfo.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\MapInfo.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\ParticleBrowser.cpp">

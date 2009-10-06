@@ -66,7 +66,7 @@
 #include "select.h"
 #include "plugin.h"
 #include "filetypes.h"
-#include "sidebar/mapinfo.h"
+#include "sidebar/MapInfo.h"
 #include "qe3.h"
 #include "camwindow.h"
 #include "xywindow.h"
@@ -814,7 +814,7 @@ bool Map_LoadFile (const std::string& filename)
 
 	g_currentMap = &g_map;
 
-	MapInfo_Update();
+	sidebar::MapInfo::getInstance().update();
 	return true;
 }
 

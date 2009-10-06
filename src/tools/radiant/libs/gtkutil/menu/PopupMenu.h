@@ -14,6 +14,10 @@ namespace gtkutil
 	 */
 	class PopupMenu
 	{
+		public:
+
+			typedef bool (*SensitivityTest)(void);
+
 		private:
 
 			// Main menu widget
@@ -25,9 +29,10 @@ namespace gtkutil
 					GtkWidget* widget;
 					GFunc callback;
 					gpointer userData;
+					SensitivityTest test;
 
-					MenuItem (GtkWidget* w, GFunc c, gpointer ud) :
-						widget(w), callback(c), userData(ud)
+					MenuItem (GtkWidget* w, GFunc c, gpointer ud, SensitivityTest t) :
+						widget(w), callback(c), userData(ud), test(t)
 					{
 					}
 			};
@@ -90,7 +95,7 @@ namespace gtkutil
 			 * @param callback
 			 * A callback function to be invoked when this menu item is activated.
 			 */
-			void addItem (GtkWidget* widget, GFunc callback, gpointer userData);
+			void addItem (GtkWidget* widget, GFunc callback, gpointer userData, SensitivityTest t = _alwaysVisible);
 
 			/**
 			 * Show this menu. Each menu item's SensitivityTest will be invoked to

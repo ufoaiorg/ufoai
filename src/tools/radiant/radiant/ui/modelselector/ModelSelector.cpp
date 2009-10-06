@@ -4,6 +4,7 @@
 #include "radiant_i18n.h"
 #include "gtkutil/glwidget.h"
 #include "gtkutil/image.h"
+#include "gtkutil/ScrolledFrame.h"
 #include "ifilesystem.h"
 #include "../../referencecache.h"
 #include "os/path.h"
@@ -67,7 +68,6 @@ namespace ui
 		g_signal_connect(G_OBJECT(_widget), "delete_event", G_CALLBACK(callbackHide), this);
 
 		// Main window contains a VBox
-
 		GtkWidget* vbx = gtk_vbox_new(FALSE, 3);
 		gtk_box_pack_start(GTK_BOX(vbx), createTreeView(), TRUE, TRUE, 0);
 		gtk_box_pack_start(GTK_BOX(vbx), createPreviewAndInfoPanel(), FALSE, FALSE, 0);
@@ -313,7 +313,7 @@ namespace ui
 	// Create the preview widget and info panel
 	GtkWidget* ModelSelector::createPreviewAndInfoPanel ()
 	{
-		// This is an HBox with the preview GL widget on the left, and an info TreeView on the
+		// This is a HBox with the preview GL widget on the left, and an info TreeView on the
 		// right
 		GtkWidget* hbx = gtk_hbox_new(FALSE, 3);
 
@@ -338,9 +338,7 @@ namespace ui
 
 		// Pack into scroll window and frame
 
-		GtkWidget* scroll = gtk_scrolled_window_new(NULL, NULL);
-		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-		gtk_container_add(GTK_CONTAINER(scroll), infTreeView);
+		GtkWidget* scroll = gtkutil::ScrolledFrame(infTreeView);
 
 		GtkWidget* frame = gtk_frame_new(NULL);
 		gtk_container_add(GTK_CONTAINER(frame), scroll);
