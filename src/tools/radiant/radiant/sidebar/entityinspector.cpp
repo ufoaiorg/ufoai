@@ -91,10 +91,10 @@ namespace
  * @param values value list to get first data element from
  * @return content of first list element
  */
-const char* Values_getFirstValue (const Values &values)
+const std::string& Values_getFirstValue (const Values &values)
 {
 	ASSERT_MESSAGE(!values.empty(), "Values don't exist");
-	return (*values.begin()).c_str();
+	return *values.begin();
 }
 
 /**
@@ -1192,10 +1192,8 @@ static void EntityInspector_updateKeyValueList (void)
 		for (KeyValues::iterator i = possibleValues.begin(); i != possibleValues.end(); ++i) {
 			GtkTreeIter iter;
 			gtk_tree_store_append(store, &iter, &classTreeIter);
-			StringOutputStream key(64);
-			key << ConvertLocaleToUTF8((*i).first.c_str());
-			StringOutputStream value(64);
-			value << ConvertLocaleToUTF8(Values_getFirstValue((*i).second));
+			std::string key = i->first;
+			std::string value = Values_getFirstValue(i->second);
 			gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, key.c_str(), KEYVALLIST_COLUMN_VALUE,
 					value.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_EDITABLE, FALSE,
 					KEYVALLIST_COLUMN_TOOLTIP, EntityInspector_getTooltipForKey(key.c_str()), -1);
@@ -1212,12 +1210,13 @@ void EntityInspector_updateGuiElements (void)
 	Entity_GetKeyValues_Selected(g_selectedKeyValues);
 
 	{
-		const char* classname = "";
+		std::string classname;
 		ClassKeyValues::iterator classFirstIter = g_selectedKeyValues.begin();
-		if (classFirstIter != g_selectedKeyValues.end()) {
-			classname = const_cast<char *> ((*classFirstIter).first.c_str());
-		}
-		EntityInspector_setEntityClass(GlobalEntityClassManager().findOrInsert(classname, false));
+		if (classFirstIter != g_selectedKeyValues.end())
+			classname = classFirstIter->first;
+		else
+			classname = "";
+		EntityInspector_setEntityClass(GlobalEntityClassManager().findOrInsert(classname.c_str(), false));
 	}
 	EntityInspector_updateSpawnflags();
 
@@ -1311,33 +1310,20 @@ static void EntityInspector_addKeyValue (GtkButton *button, gpointer user_data)
 
 static void EntityInspector_clearKeyValue (GtkButton * button, gpointer user_data)
 {
-	GtkTreeModel* model;
 	GtkTreeView *view = GTK_TREE_VIEW(user_data);
-	GtkTreeIter iter, parent;
 	GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
-	if (gtk_tree_selection_get_selected(selection, &model, &iter) == FALSE) {
+	std::string key = gtkutil::TreeModel::getSelectedString(selection, KEYVALLIST_COLUMN_KEY);
+	if (key.length() == 0)
 		return;
-	}
 
-	char* key, *classname;
-	gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_KEY, &key, -1);
-	if (gtk_tree_model_iter_parent(model, &parent, &iter) == FALSE) {
-		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_VALUE, &classname, -1);
-	} else {
-		gtk_tree_model_get(model, &parent, KEYVALLIST_COLUMN_VALUE, &classname, -1);
-	}
+	std::string classname = gtkutil::TreeModel::getSelectedParentString(selection, KEYVALLIST_COLUMN_VALUE);
+	if (classname.length() == 0)
+		classname = gtkutil::TreeModel::getSelectedString(selection, KEYVALLIST_COLUMN_VALUE);
 
-	// Get current selection text
-	StringOutputStream keyConverted(64);
-	keyConverted << ConvertUTF8ToLocale(key);
-	StringOutputStream classnameConverted(64);
-	classnameConverted << ConvertUTF8ToLocale(classname);
-
-	if (strcmp(keyConverted.c_str(), "classname") != 0) {
-		StringOutputStream command;
-		command << "entityDeleteKey -classname " << classnameConverted.c_str() << " -key " << keyConverted.c_str();
-		UndoableCommand undo(command.c_str());
-		Scene_EntitySetKeyValue_Selected(classnameConverted.c_str(), keyConverted.c_str(), "");
+	if (key != "classname") {
+		std::string command = "entityDeleteKey -classname \"" + classname + "\" -key \"" + key + "\"";
+		UndoableCommand undo(command);
+		Scene_EntitySetKeyValue_Selected(classname.c_str(), key.c_str(), "");
 	}
 }
 
