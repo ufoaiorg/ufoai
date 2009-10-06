@@ -41,9 +41,16 @@
 
 namespace sidebar
 {
+	enum
+	{
+		ENTITY_NAME, ENTITY_COUNT,
+
+		MAPINFO_COLUMNS
+	};
+
 	namespace
 	{
-		typedef std::map<std::string, std::size_t> EntityBreakdown;
+		typedef std::map<std::string, int> EntityBreakdown;
 
 		class EntityBreakdownWalker: public scene::Graph::Walker
 		{
@@ -70,9 +77,10 @@ namespace sidebar
 
 	/** @todo Click action should be to select all the ents of the given type */
 	MapInfo::MapInfo () :
-		_widget(gtk_vbox_new(FALSE, 3)), _store(gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING)), _infoStore(
-				gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT)), _vboxEntityBreakdown(gtk_vbox_new(FALSE, 0)),
-				_popupMenu(gtkutil::PopupMenu(_vboxEntityBreakdown))
+		_widget(gtk_vbox_new(FALSE, 3)), _store(gtk_list_store_new(MAPINFO_COLUMNS, G_TYPE_STRING, G_TYPE_INT)), _view(
+				gtk_tree_view_new_with_model(GTK_TREE_MODEL(_store))), _infoStore(gtk_list_store_new(2, G_TYPE_STRING,
+				G_TYPE_INT)), _vboxEntityBreakdown(gtk_vbox_new(FALSE, 0)), _popupMenu(gtkutil::PopupMenu(
+				_vboxEntityBreakdown))
 	{
 		gtk_box_pack_start(GTK_BOX(_widget), createEntityBreakdownTreeView(), TRUE, TRUE, 0);
 		gtk_box_pack_start(GTK_BOX(_widget), createInfoPanel(), FALSE, FALSE, 0);
@@ -113,22 +121,21 @@ namespace sidebar
 		gtk_box_pack_start(GTK_BOX(_vboxEntityBreakdown), GTK_WIDGET(label), FALSE, TRUE, 0);
 		gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 
-		GtkWidget *view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(_store));
-		gtk_tree_view_set_headers_clickable(GTK_TREE_VIEW(view), TRUE);
+		gtk_tree_view_set_headers_clickable(GTK_TREE_VIEW(_view), TRUE);
 
 		GtkCellRenderer* rendererEntityName = gtk_cell_renderer_text_new();
 		GtkTreeViewColumn* columnEntityName = gtk_tree_view_column_new_with_attributes(_("Entity"), rendererEntityName,
 				"text", 0, (char const*) 0);
-		gtk_tree_view_append_column(GTK_TREE_VIEW(view), columnEntityName);
+		gtk_tree_view_append_column(GTK_TREE_VIEW(_view), columnEntityName);
 		gtk_tree_view_column_set_sort_column_id(columnEntityName, 0);
 
 		GtkCellRenderer* rendererEntityCount = gtk_cell_renderer_text_new();
 		GtkTreeViewColumn* columnEntityCount = gtk_tree_view_column_new_with_attributes(_("Count"),
 				rendererEntityCount, "text", 1, (char const*) 0);
-		gtk_tree_view_append_column(GTK_TREE_VIEW(view), columnEntityCount);
+		gtk_tree_view_append_column(GTK_TREE_VIEW(_view), columnEntityCount);
 		gtk_tree_view_column_set_sort_column_id(columnEntityCount, 1);
 
-		gtk_container_add(GTK_CONTAINER(_vboxEntityBreakdown), gtkutil::ScrolledFrame(view));
+		gtk_container_add(GTK_CONTAINER(_vboxEntityBreakdown), gtkutil::ScrolledFrame(_view));
 
 		_popupMenu.addItem(gtkutil::IconTextMenuItem(ui::icons::ICON_FOLDER, _("Remove selected entities")),
 				MapInfo::removeEntity, this);
@@ -140,6 +147,11 @@ namespace sidebar
 	void MapInfo::removeEntity (gpointer data, gpointer userData)
 	{
 		MapInfo* mapInfo = (MapInfo*) userData;
+		GtkTreeView *view = GTK_TREE_VIEW(mapInfo->_view);
+		GtkTreeSelection *selection = gtk_tree_view_get_selection(view);
+
+		std::string entityName = gtkutil::TreeModel::getSelectedString(selection, ENTITY_NAME);
+		/** @todo select all of these entities and delete them */
 	}
 
 	void MapInfo::update (void)
@@ -151,11 +163,9 @@ namespace sidebar
 		gtk_list_store_clear(GTK_LIST_STORE(_store));
 
 		for (EntityBreakdown::iterator i = entitymap.begin(); i != entitymap.end(); ++i) {
-			char tmp[16];
-			sprintf(tmp, "%u", Unsigned((*i).second));
 			GtkTreeIter iter;
 			gtk_list_store_append(GTK_LIST_STORE(_store), &iter);
-			gtk_list_store_set(GTK_LIST_STORE(_store), &iter, 0, (*i).first.c_str(), 1, tmp, -1);
+			gtk_list_store_set(GTK_LIST_STORE(_store), &iter, ENTITY_NAME, i->first.c_str(), ENTITY_COUNT, i->second, -1);
 		}
 
 		// Prepare to populate the info table

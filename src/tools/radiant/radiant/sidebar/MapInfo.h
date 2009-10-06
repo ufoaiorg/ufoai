@@ -39,6 +39,7 @@ namespace sidebar
 
 			// List store to contain the entity list with name and count
 			GtkListStore* _store;
+			GtkWidget *_view;
 
 			// List store to contain attributes and values for the map
 			GtkListStore* _infoStore;
