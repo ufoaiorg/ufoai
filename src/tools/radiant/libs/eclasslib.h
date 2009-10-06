@@ -295,12 +295,12 @@ inline void Eclass_Free (EntityClass* e)
 	delete e;
 }
 
-inline bool classname_equal (const char* classname, const char* other)
+inline bool classname_equal (const std::string& classname, const std::string& other)
 {
 	return string_equal(classname, other);
 }
 
-inline EntityClass* EClass_Create (const char* name, const Vector3& colour, const char* comments)
+inline EntityClass* EClass_Create (const std::string& name, const Vector3& colour, const std::string& comments)
 {
 	EntityClass *e = Eclass_Alloc();
 	e->free = &Eclass_Free;
@@ -310,14 +310,13 @@ inline EntityClass* EClass_Create (const char* name, const Vector3& colour, cons
 	e->color = colour;
 	eclass_capture_state(e);
 
-	if (comments)
-		e->m_comments = comments;
+	e->m_comments = comments;
 
 	return e;
 }
 
-inline EntityClass* EClass_Create_FixedSize (const char* name, const Vector3& colour, const Vector3& mins,
-		const Vector3& maxs, const char* comments)
+inline EntityClass* EClass_Create_FixedSize (const std::string& name, const Vector3& colour, const Vector3& mins,
+		const Vector3& maxs, const std::string& comments)
 {
 	EntityClass *e = Eclass_Alloc();
 	e->free = &Eclass_Free;
@@ -332,15 +331,14 @@ inline EntityClass* EClass_Create_FixedSize (const char* name, const Vector3& co
 	e->mins = mins;
 	e->maxs = maxs;
 
-	if (comments)
-		e->m_comments = comments;
+	e->m_comments = comments;
 
 	return e;
 }
 
 const Vector3 smallbox[2] = { Vector3(-8, -8, -8), Vector3(8, 8, 8), };
 
-inline EntityClass *EntityClass_Create_Default (const char *name, bool has_brushes)
+inline EntityClass *EntityClass_Create_Default (const std::string& name, bool has_brushes)
 {
 	// create a new class for it
 	if (has_brushes) {

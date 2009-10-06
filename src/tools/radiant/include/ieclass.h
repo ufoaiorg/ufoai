@@ -92,8 +92,8 @@ struct EntityClassManager
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "eclassmanager");
 
-		EntityClass* (*findOrInsert) (const char* name, bool has_brushes);
-		const ListAttributeType* (*findListType) (const char* name);
+		EntityClass* (*findOrInsert) (const std::string& name, bool has_brushes);
+		const ListAttributeType* (*findListType) (const std::string& name);
 		void (*forEach) (EntityClassVisitor& visitor);
 		void (*attach) (ModuleObserver& observer);
 		void (*detach) (ModuleObserver& observer);

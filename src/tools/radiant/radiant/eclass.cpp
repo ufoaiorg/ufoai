@@ -44,7 +44,7 @@ namespace
 	typedef std::map<const char*, EntityClass*, RawStringLessNoCase> EntityClasses;
 	EntityClasses g_entityClasses;
 	EntityClass *eclass_bad = 0;
-	typedef std::map<CopiedString, ListAttributeType> ListAttributeTypes;
+	typedef std::map<std::string, ListAttributeType> ListAttributeTypes;
 	ListAttributeTypes g_listTypes;
 }
 
@@ -105,7 +105,7 @@ class RadiantEclassCollector: public EntityClassCollector
 
 RadiantEclassCollector g_collector;
 
-const ListAttributeType* EntityClass_findListType (const char* name)
+const ListAttributeType* EntityClass_findListType (const std::string& name)
 {
 	ListAttributeTypes::iterator i = g_listTypes.find(name);
 	if (i != g_listTypes.end()) {
@@ -147,18 +147,14 @@ void EntityClassUFO_Construct ()
 	EntityClassManager_getEClassModules().foreachModule(LoadEntityDefinitionsVisitor());
 }
 
-EntityClass *Eclass_ForName (const char *name, bool has_brushes)
+EntityClass *Eclass_ForName (const std::string& name, bool has_brushes)
 {
-	ASSERT_NOTNULL(name);
-
-	if (string_empty(name)) {
+	if (name.length() == 0)
 		return eclass_bad;
-	}
 
-	EntityClasses::iterator i = g_entityClasses.find(name);
-	if (i != g_entityClasses.end() && string_equal((*i).first, name)) {
-		return (*i).second;
-	}
+	EntityClasses::iterator i = g_entityClasses.find(name.c_str());
+	if (i != g_entityClasses.end() && i->first == name)
+		return i->second;
 
 	EntityClass* e = EntityClass_Create_Default(name, has_brushes);
 	return Eclass_InsertAlphabetized(e);

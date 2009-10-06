@@ -260,7 +260,7 @@ class ModelAttribute: public EntityAttribute
 		{
 			StringOutputStream value(64);
 			value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), value.c_str());
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, value.c_str());
 		}
 		typedef MemberCaller<ModelAttribute, &ModelAttribute::apply> ApplyCaller;
 		void update (void)
@@ -398,7 +398,7 @@ class AngleAttribute: public EntityAttribute
 		{
 			StringOutputStream angle(32);
 			angle << angle_normalised(entry_get_float(m_entry));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), angle.c_str());
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, angle.c_str());
 		}
 		typedef MemberCaller<AngleAttribute, &AngleAttribute::apply> ApplyCaller;
 
@@ -454,13 +454,13 @@ class DirectionAttribute: public EntityAttribute
 		{
 			StringOutputStream angle(32);
 			angle << angle_normalised(entry_get_float(m_entry));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname.c_str(), m_key.c_str(), angle.c_str());
+			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, angle.c_str());
 		}
 		typedef MemberCaller<DirectionAttribute, &DirectionAttribute::apply> ApplyCaller;
 
 		void update (void)
 		{
-			const std::string& value = SelectedEntity_getValueForKey(m_key.c_str());
+			const std::string& value = SelectedEntity_getValueForKey(m_key);
 			if (value.length() > 0) {
 				const float f = atof(value.c_str());
 				if (f == -1) {
@@ -718,7 +718,7 @@ class ListAttribute: public EntityAttribute
 			GtkComboBox* combo = GTK_COMBO_BOX(gtk_combo_box_new_text());
 
 			for (ListAttributeType::const_iterator i = type.begin(); i != type.end(); ++i) {
-				gtk_combo_box_append_text(GTK_COMBO_BOX(combo), (*i).first.c_str());
+				gtk_combo_box_append_text(GTK_COMBO_BOX(combo), i->first.c_str());
 			}
 
 			gtk_widget_show(GTK_WIDGET(combo));
@@ -734,7 +734,7 @@ class ListAttribute: public EntityAttribute
 		void apply (void)
 		{
 			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key,
-					m_type[gtk_combo_box_get_active(m_combo)].second.c_str());
+					m_type[gtk_combo_box_get_active(m_combo)].second);
 		}
 		typedef MemberCaller<ListAttribute, &ListAttribute::apply> ApplyCaller;
 
@@ -1004,9 +1004,9 @@ static void EntityClassList_selectEntityClass (EntityClass* eclass)
 	}
 }
 
-static void EntityInspector_appendAttribute (const char* name, EntityAttribute& attribute)
+static void EntityInspector_appendAttribute (const std::string& name, EntityAttribute& attribute)
 {
-	GtkTable* row = DialogRow_new(name, attribute.getWidget());
+	GtkTable* row = DialogRow_new(name.c_str(), attribute.getWidget());
 	DialogVBox_packRow(g_attributeBox, GTK_WIDGET(row));
 }
 
@@ -1023,7 +1023,7 @@ class StatelessAttributeCreator
 {
 	public:
 		// Create an Entity Attribute of the given type.
-		static EntityAttribute* create (const char* classname, const char* name)
+		static EntityAttribute* create (const std::string& classname, const std::string& name)
 		{
 			return new Attribute(classname, name);
 		}
@@ -1035,8 +1035,8 @@ class StatelessAttributeCreator
  */
 class EntityAttributeFactory
 {
-		typedef EntityAttribute* (*CreateFunc) (const char* classname, const char* name);
-		typedef std::map<const char*, CreateFunc, RawStringLess> Creators;
+		typedef EntityAttribute* (*CreateFunc) (const std::string& classname, const std::string& name);
+		typedef std::map<std::string, CreateFunc, RawStringLess> Creators;
 		Creators m_creators;
 	public:
 		// Constructor. Populate the Creators map with the string types of all
@@ -1057,20 +1057,21 @@ class EntityAttributeFactory
 			m_creators.insert(Creators::value_type("noise", &StatelessAttributeCreator<SoundAttribute>::create));
 			m_creators.insert(Creators::value_type("vector3", &StatelessAttributeCreator<Vector3Attribute>::create));
 		}
+
 		// Create an EntityAttribute from the given string classtype, with the given name
-		EntityAttribute* create (const char* type, const char* name)
+		EntityAttribute* create (const std::string& type, const std::string& name)
 		{
 			const char* classname = g_current_attributes->name();
 			Creators::iterator i = m_creators.find(type);
 			// If the StatelessAttributeCreator::create function is found for the
 			// type, invoke it to create a new EntityAttribute with the given name
-			if (i != m_creators.end()) {
-				return (*i).second(classname, name);
-			}
+			if (i != m_creators.end())
+				return i->second(classname, name);
+
 			const ListAttributeType* listType = GlobalEntityClassManager().findListType(type);
-			if (listType != 0) {
+			if (listType != 0)
 				return new ListAttribute(classname, name, *listType);
-			}
+
 			return 0;
 		}
 };
@@ -1082,17 +1083,16 @@ static void EntityInspector_checkAddNewKeys (void)
 	int count = 0;
 	const EntityClassAttributes validAttrib = g_current_attributes->m_attributes;
 	for (EntityClassAttributes::const_iterator i = validAttrib.begin(); i != validAttrib.end(); ++i) {
-		EntityClassAttribute *attrib = const_cast<EntityClassAttribute*> (&(*i).second);
+		EntityClassAttribute *attrib = const_cast<EntityClassAttribute*> (&(i->second));
 		ClassKeyValues::iterator it = g_selectedKeyValues.find(g_current_attributes->m_name);
-		if (it == g_selectedKeyValues.end()) {
+		if (it == g_selectedKeyValues.end())
 			return;
-		}
-		KeyValues possibleValues = (*it).second;
-		KeyValues::const_iterator keyIter = possibleValues.find(attrib->m_type.c_str());
+
+		KeyValues possibleValues = it->second;
+		KeyValues::const_iterator keyIter = possibleValues.find(attrib->m_type);
 		/* end means we don't have it actually in this map, so this is a valid new key*/
-		if (keyIter == possibleValues.end()) {
+		if (keyIter == possibleValues.end())
 			count++;
-		}
 	}
 	g_numNewKeys = count;
 }
@@ -1109,8 +1109,8 @@ static void EntityInspector_setEntityClass (EntityClass *eclass)
 		GlobalEntityAttributes_clear();
 
 		for (EntityClassAttributes::const_iterator i = eclass->m_attributes.begin(); i != eclass->m_attributes.end(); ++i) {
-			EntityAttribute* attribute = GlobalEntityAttributeFactory::instance().create((*i).second.m_type.c_str(),
-					(*i).first.c_str());
+			EntityAttribute* attribute = GlobalEntityAttributeFactory::instance().create(i->second.m_type.c_str(),
+					i->first.c_str());
 			if (attribute != 0) {
 				g_entityAttributes.push_back(attribute);
 				EntityInspector_appendAttribute(EntityClassAttributePair_getName(*i), *g_entityAttributes.back());
