@@ -78,6 +78,22 @@ namespace gtkutil
 		}
 	}
 
+	// Extract a parent string
+	std::string TreeModel::getSelectedParentString (GtkTreeSelection* sel, gint colNo)
+	{
+		GtkTreeIter iter;
+		GtkTreeIter parent;
+		GtkTreeModel* model;
+
+		// Get the selected value by querying the selection object
+		if (gtk_tree_selection_get_selected(sel, &model, &iter))
+			if (gtk_tree_model_iter_parent(model, &parent, &iter) != FALSE)
+				return getString(model, &parent, colNo);
+
+		// Nothing selected, return empty string
+		return "";
+	}
+
 	bool TreeModel::getSelectedBoolean (GtkTreeSelection* selection, gint colNo)
 	{
 		GtkTreeIter iter;

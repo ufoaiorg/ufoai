@@ -37,7 +37,7 @@ typedef Vector3 Colour3;
 
 class ListAttributeType
 {
-		typedef std::pair<CopiedString, CopiedString> ListItem;
+		typedef std::pair<std::string, std::string> ListItem;
 		typedef std::vector<ListItem> ListItems;
 		ListItems m_items;
 	public:
@@ -75,10 +75,10 @@ class ListAttributeType
 class EntityClassAttribute
 {
 	public:
-		CopiedString m_type; /**< type used as entity key and to decide how gui representation will look like @sa EntityAttributeFactory */
-		CopiedString m_name; /**< name used for display in entityinspector */
-		CopiedString m_value; /**< current attribute value */
-		CopiedString m_description; /**< actually not used, could be used as a tooltip @todo use this as tooltip in entityinspector?*/
+		std::string m_type; /**< type used as entity key and to decide how gui representation will look like @sa EntityAttributeFactory */
+		std::string m_name; /**< name used for display in entityinspector */
+		std::string m_value; /**< current attribute value */
+		std::string m_description; /**< actually not used, could be used as a tooltip @todo use this as tooltip in entityinspector?*/
 		bool m_mandatory; /**< if this is true, the value is needed for the entity to work */
 		EntityClassAttribute ()
 		{
@@ -90,9 +90,9 @@ class EntityClassAttribute
 		}
 };
 
-typedef std::pair<CopiedString, EntityClassAttribute> EntityClassAttributePair;
+typedef std::pair<std::string, EntityClassAttribute> EntityClassAttributePair;
 typedef std::list<EntityClassAttributePair> EntityClassAttributes;
-typedef std::list<CopiedString> StringList;
+typedef std::list<std::string> StringList;
 
 inline const char* EntityClassAttributePair_getName (const EntityClassAttributePair& attributePair)
 {
@@ -113,7 +113,7 @@ inline const char* EntityClassAttributePair_getDescription (const EntityClassAtt
 class EntityClass
 {
 	public:
-		CopiedString m_name;
+		std::string m_name;
 		StringList m_parent;
 		bool fixedsize;
 		Vector3 mins;
@@ -124,11 +124,11 @@ class EntityClass
 		Shader* m_state_wire;
 		Shader* m_state_blend;
 
-		CopiedString m_comments;
+		std::string m_comments;
 		char flagnames[MAX_FLAGS][32];
 
-		CopiedString m_modelpath; /** model path - only for displaying in radiant */
-		CopiedString m_skin;
+		std::string m_modelpath; /** model path - only for displaying in radiant */
+		std::string m_skin;
 
 		void (*free) (EntityClass*);
 
@@ -156,10 +156,10 @@ class EntityClass
 		 * @param attributeName the attribute to retrieve
 		 * @return attribute or @c NULL
 		 */
-		EntityClassAttribute *getAttribute (const char* attributeName) const
+		EntityClassAttribute *getAttribute (const std::string& attributeName) const
 		{
 			for (EntityClassAttributes::const_iterator i = m_attributes.begin(); i != m_attributes.end(); ++i) {
-				if (string_equal(attributeName, (*i).first.c_str())) {
+				if (attributeName == i->first) {
 					return const_cast<EntityClassAttribute*> (&(*i).second);
 				}
 			}
@@ -171,11 +171,11 @@ class EntityClass
 		 * @param attributeName The attribute name to get the default value for
 		 * @return the default value
 		 */
-		const char* getDefaultForAttribute (const char* attributeName) const
+		const char* getDefaultForAttribute (const std::string& attributeName) const
 		{
 			EntityClassAttribute *attrib = getAttribute(attributeName);
 			//use value if it is set to something
-			if (attrib && strlen(attrib->m_value.c_str()))
+			if (attrib && attrib->m_value.length() > 0)
 				return attrib->m_value.c_str();
 			// TODO retrieve some default value from entity definition instead of that empty value
 			return "";
