@@ -71,7 +71,8 @@ namespace sidebar
 	/** @todo Click action should be to select all the ents of the given type */
 	MapInfo::MapInfo () :
 		_widget(gtk_vbox_new(FALSE, 3)), _store(gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING)), _infoStore(
-				gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT))
+				gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT)), _vboxEntityBreakdown(gtk_vbox_new(FALSE, 0)),
+				_popupMenu(gtkutil::PopupMenu(_vboxEntityBreakdown))
 	{
 		gtk_box_pack_start(GTK_BOX(_widget), createEntityBreakdownTreeView(), TRUE, TRUE, 0);
 		gtk_box_pack_start(GTK_BOX(_widget), createInfoPanel(), FALSE, FALSE, 0);
@@ -108,10 +109,8 @@ namespace sidebar
 
 	GtkWidget* MapInfo::createEntityBreakdownTreeView ()
 	{
-		GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
-
 		GtkWidget* label = gtk_label_new(_("Entity breakdown"));
-		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(label), FALSE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(_vboxEntityBreakdown), GTK_WIDGET(label), FALSE, TRUE, 0);
 		gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 
 		GtkWidget *view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(_store));
@@ -129,14 +128,13 @@ namespace sidebar
 		gtk_tree_view_append_column(GTK_TREE_VIEW(view), columnEntityCount);
 		gtk_tree_view_column_set_sort_column_id(columnEntityCount, 1);
 
-		gtk_container_add(GTK_CONTAINER(vbox), gtkutil::ScrolledFrame(view));
+		gtk_container_add(GTK_CONTAINER(_vboxEntityBreakdown), gtkutil::ScrolledFrame(view));
 
-		_popupMenu = gtkutil::PopupMenu(view);
-		_popupMenu.addItem(gtkutil::IconTextMenuItem(ui::icons::ICON_FOLDER, _("Remove entity")),
+		_popupMenu.addItem(gtkutil::IconTextMenuItem(ui::icons::ICON_FOLDER, _("Remove selected entities")),
 				MapInfo::removeEntity, this);
 
 		// Return the vertical box with the treeview included
-		return vbox;
+		return _vboxEntityBreakdown;
 	}
 
 	void MapInfo::removeEntity (gpointer data, gpointer userData)

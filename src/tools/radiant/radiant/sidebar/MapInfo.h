@@ -43,6 +43,7 @@ namespace sidebar
 			// List store to contain attributes and values for the map
 			GtkListStore* _infoStore;
 
+			GtkWidget *_vboxEntityBreakdown;
 			// Context menu
 			gtkutil::PopupMenu _popupMenu;
 
