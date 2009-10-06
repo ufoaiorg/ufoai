@@ -408,7 +408,13 @@ void Entity_createFromSelection (const std::string& name, const Vector3& origin)
 		UndoableCommand undo(command);
 	}
 
-	bool revert = Entity_create(name, origin);
+	bool revert = false;
+	try {
+		revert = Entity_create(name, origin);
+	} catch (EntityCreationException e) {
+		revert = true;
+		gtkutil::errorDialog(MainFrame_getWindow(), e.what());
+	}
 
 	if (revert) {
 		GlobalUndoSystem().undo();
