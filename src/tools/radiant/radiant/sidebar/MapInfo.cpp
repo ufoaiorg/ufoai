@@ -35,6 +35,7 @@
 #include "iscenegraph.h"
 #include "gtkutil/dialog.h"
 #include "gtkutil/window.h"
+#include "gtkutil/TreeModel.h"
 #include "gtkutil/ScrolledFrame.h"
 #include "gtkutil/IconTextMenuItem.h"
 #include "../ui/Icons.h"
