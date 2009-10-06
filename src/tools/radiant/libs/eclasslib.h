@@ -56,17 +56,16 @@ class ListAttributeType
 		{
 			return m_items[i];
 		}
-		const_iterator findValue (const char* value) const
+		const_iterator findValue (const std::string& value) const
 		{
 			for (ListItems::const_iterator i = m_items.begin(); i != m_items.end(); ++i) {
-				if (string_equal(value, (*i).second.c_str())) {
+				if (value == i->second)
 					return i;
-				}
 			}
 			return m_items.end();
 		}
 
-		void push_back (const char* name, const char* value)
+		void push_back (const std::string& name, const std::string& value)
 		{
 			m_items.push_back(ListItems::value_type(name, value));
 		}

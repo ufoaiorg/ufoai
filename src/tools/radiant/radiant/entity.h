@@ -50,7 +50,6 @@ void Scene_EntitySetKeyValue_Selected (const char* classname, const char* key, c
 void Scene_EntitySetClassname_Selected (const char* classname, const char* newClassname);
 
 typedef struct _GtkWidget GtkWidget;
-const char* misc_sound_dialog (GtkWidget* parent);
 char* misc_particle_dialog (GtkWidget* parent);
 
 typedef struct _GtkMenu GtkMenu;

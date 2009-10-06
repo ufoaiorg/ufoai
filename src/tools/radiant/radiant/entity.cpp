@@ -485,24 +485,6 @@ char* misc_particle_dialog (GtkWidget* parent)
 	return particle;
 }
 
-const char* misc_sound_dialog (GtkWidget* parent)
-{
-	std::string buffer = g_qeglobals.m_userGamePath + "sound/";
-
-	const char* filename = file_dialog(parent, TRUE, _("Open Sound File"), buffer, "sound");
-	if (filename != 0) {
-		const char* relative = path_make_relative(filename, GlobalFileSystem().findRoot(filename));
-		if (relative == filename) {
-			g_warning("Could not extract the relative path, using full path instead\n");
-		}
-		// @todo strip extension
-		// const std::size_t length = path_get_filename_base_length(relative);
-		// relative[length] = '\0';
-		return relative;
-	}
-	return filename;
-}
-
 void LightRadiiImport (EntityCreator& self, bool value)
 {
 	self.setLightRadii(value);
