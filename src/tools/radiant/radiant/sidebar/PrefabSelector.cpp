@@ -402,7 +402,7 @@ namespace sidebar
 
 	gint PrefabSelector::callbackButtonPress (GtkWidget *widget, GdkEventButton *event, PrefabSelector *self)
 	{
-		if (event->type == GDK_2BUTTON_PRESS) {
+		if (event->type == GDK_2BUTTON_PRESS && event->button == 1) {
 			GtkTreeModel* model;
 			GtkTreeIter iter;
 			if (gtk_tree_selection_get_selected(gtk_tree_view_get_selection(self->_view), &model, &iter) == FALSE) {
