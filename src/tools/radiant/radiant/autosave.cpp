@@ -130,9 +130,8 @@ void QE_CheckAutoSave (void)
 		s_changes = Node_getMapFile(Map_Node())->changes();
 
 		if (g_AutoSave_Enabled) {
-			const char* strMsg = g_SnapShots_Enabled ? _("Autosaving snapshot...") : _("Autosaving...");
-			g_message("%s\n", strMsg);
-			//Sys_Status(strMsg);
+			const std::string& strMsg = g_SnapShots_Enabled ? _("Autosaving snapshot...") : _("Autosaving...");
+			Sys_Status(strMsg);
 
 			// only snapshot if not working on a default map
 			if (g_SnapShots_Enabled && !Map_Unnamed(g_map)) {
@@ -145,10 +144,10 @@ void QE_CheckAutoSave (void)
 					Map_SaveFile(autosave);
 				} else {
 					const std::string& name = Map_Name(g_map);
-					const char* extension = path_get_filename_base_end(name.c_str());
-					StringOutputStream autosave(256);
-					autosave << StringRange(name.c_str(), extension) << ".autosave" << extension;
-					Map_SaveFile(autosave.c_str());
+					const std::string extension = os::getExtension(name);
+					const std::string baseName = os::stripExtension(name);
+					const std::string autosave = name + ".autosave" + extension;
+					Map_SaveFile(autosave);
 				}
 			}
 		} else {

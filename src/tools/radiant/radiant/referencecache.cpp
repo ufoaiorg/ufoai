@@ -122,17 +122,16 @@ bool MapResource_saveFile (const MapFormat& format, scene::Node& root, GraphTrav
 	return false;
 }
 
-static bool file_saveBackup (const char* path)
+static bool file_saveBackup (const std::string& path)
 {
 	if (file_writeable(path)) {
-		StringOutputStream backup(256);
-		backup << StringRange(path, path_get_extension(path)) << "bak";
+		std::string backup = os::stripExtension(path) + ".bak";
 
-		return (!file_exists(backup.c_str()) || file_remove(backup.c_str())) // remove backup
-				&& file_move(path, backup.c_str()); // rename current to backup
+		return (!file_exists(backup) || file_remove(backup)) // remove backup
+				&& file_move(path, backup); // rename current to backup
 	}
 
-	g_warning("map path is not writeable: '%s'\n", path);
+	g_warning("map path is not writeable: '%s'\n", path.c_str());
 	return false;
 }
 

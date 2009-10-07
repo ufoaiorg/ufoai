@@ -901,11 +901,10 @@ void SurfaceInspector::UpdateFlagButtons ()
  */
 void SurfaceInspector::ApplyShader (void)
 {
-	StringOutputStream name(256);
-	name << GlobalTexturePrefix_get() << gtk_entry_get_text(m_texture);
+	std::string name = GlobalTexturePrefix_get() + gtk_entry_get_text(m_texture);
 
 	// TTimo: detect and refuse invalid texture names (at least the ones with spaces)
-	if (!texdef_name_valid(name.c_str())) {
+	if (!texdef_name_valid(name)) {
 		globalErrorStream() << "invalid texture name '" << name.c_str() << "'\n";
 		SurfaceInspector_queueDraw();
 		return;

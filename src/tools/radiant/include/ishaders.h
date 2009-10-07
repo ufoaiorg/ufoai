@@ -152,7 +152,7 @@ class ShaderSystem
 
 		virtual void setLightingEnabled (bool enabled) = 0;
 
-		virtual const char* getTexturePrefix () const = 0;
+		virtual const std::string& getTexturePrefix () const = 0;
 };
 
 #include "modulesystem.h"

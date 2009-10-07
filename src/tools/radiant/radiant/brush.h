@@ -289,7 +289,7 @@ class FaceShader: public ModuleObserver
 		class SavedState
 		{
 			public:
-				CopiedString m_shader;
+				std::string m_shader;
 				ContentsFlagsValue m_flags;
 
 				SavedState (const FaceShader& faceShader)
@@ -305,14 +305,14 @@ class FaceShader: public ModuleObserver
 				}
 		};
 
-		CopiedString m_shader;
+		std::string m_shader;
 		Shader* m_state;
 		ContentsFlagsValue m_flags;
 		FaceShaderObserverPair m_observers;
 		bool m_instanced;
 		bool m_realised;
 
-		FaceShader (const char* shader, const ContentsFlagsValue& flags = ContentsFlagsValue(0, 0, 0, false)) :
+		FaceShader (const std::string& shader, const ContentsFlagsValue& flags = ContentsFlagsValue(0, 0, 0, false)) :
 			m_shader(shader), m_state(0), m_flags(flags), m_instanced(false), m_realised(false)
 		{
 			captureShader();
@@ -339,14 +339,14 @@ class FaceShader: public ModuleObserver
 		{
 			ASSERT_MESSAGE(m_state == 0, "shader cannot be captured");
 			brush_check_shader(m_shader.c_str());
-			m_state = GlobalShaderCache().capture(m_shader.c_str());
+			m_state = GlobalShaderCache().capture(m_shader);
 			m_state->attach(*this);
 		}
 		void releaseShader ()
 		{
 			ASSERT_MESSAGE(m_state != 0, "shader cannot be released");
 			m_state->detach(*this);
-			GlobalShaderCache().release(m_shader.c_str());
+			GlobalShaderCache().release(m_shader);
 			m_state = 0;
 		}
 
@@ -383,7 +383,7 @@ class FaceShader: public ModuleObserver
 		{
 			return m_shader.c_str();
 		}
-		void setShader (const char* name)
+		void setShader (const std::string& name)
 		{
 			if (m_instanced) {
 				m_state->decrementUsed();
@@ -802,7 +802,7 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 	public:
 
 		Face (FaceObserver* observer) :
-			m_refcount(0), m_shader(texdef_name_default()), m_texdef(m_shader, TextureProjection(), false), m_filtered(
+			m_refcount(0), m_shader(GlobalTexturePrefix_get()), m_texdef(m_shader, TextureProjection(), false), m_filtered(
 					false), m_observer(observer), m_undoable_observer(0), m_map(0)
 		{
 			m_shader.attach(*this);
@@ -810,7 +810,7 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 			m_texdef.setBasis(m_plane.plane3().normal());
 			planeChanged();
 		}
-		Face (const Vector3& p0, const Vector3& p1, const Vector3& p2, const char* shader,
+		Face (const Vector3& p0, const Vector3& p1, const Vector3& p2, const std::string& shader,
 				const TextureProjection& projection, FaceObserver* observer) :
 			m_refcount(0), m_shader(shader), m_texdef(m_shader, projection), m_observer(observer), m_undoable_observer(
 					0), m_map(0)
@@ -1776,7 +1776,7 @@ class Brush: public TransformNode,
 		}
 
 		/// \brief Appends a new face constructed from the parameters to the end of the face list.
-		Face* addPlane (const Vector3& p0, const Vector3& p1, const Vector3& p2, const char* shader,
+		Face* addPlane (const Vector3& p0, const Vector3& p1, const Vector3& p2, const std::string& shader,
 				const TextureProjection& projection)
 		{
 			if (m_faces.size() == c_brush_maxFaces) {

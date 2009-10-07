@@ -66,11 +66,9 @@ inline bool FaceShader_importTokens(FaceShader& faceShader, Tokeniser& tokeniser
 		return false;
 	}
 	if (string_equal(texture, "NULL")) {
-		faceShader.setShader(texdef_name_default());
+		faceShader.setShader(GlobalTexturePrefix_get());
 	} else {
-		StringOutputStream shader(string_length(GlobalTexturePrefix_get()) + string_length(texture));
-		shader << GlobalTexturePrefix_get() << texture;
-		faceShader.setShader(shader.c_str());
+		faceShader.setShader(GlobalTexturePrefix_get() + texture);
 	}
 	return true;
 }

@@ -26,24 +26,24 @@
 #include "character.h"
 #include "ishaders.h"
 
-inline bool shader_equal (const char* shader, const char* other)
+inline bool shader_equal (const std::string& shader, const std::string& other)
 {
-	return string_equal_nocase(shader, other);
+	return string_equal_nocase(shader.c_str(), other.c_str());
 }
 
-inline bool shader_equal_n (const char* shader, const char* other, std::size_t n)
+inline bool shader_equal_n (const std::string& shader, const std::string& other, std::size_t n)
 {
-	return string_equal_nocase_n(shader, other, n);
+	return string_equal_nocase_n(shader.c_str(), other.c_str(), n);
 }
 
-inline bool shader_less (const char* shader, const char* other)
+inline bool shader_less (const std::string& shader, const std::string& other)
 {
-	return string_less_nocase(shader, other);
+	return string_less_nocase(shader.c_str(), other.c_str());
 }
 
-inline bool shader_equal_prefix (const char* string, const char* prefix)
+inline bool shader_equal_prefix (const std::string& string, const std::string& prefix)
 {
-	return shader_equal_n(string, prefix, string_length(prefix));
+	return shader_equal_n(string, prefix, prefix.length());
 }
 
 class shader_less_t
@@ -61,29 +61,24 @@ inline bool shader_valid (const char* shader)
 			== 0 && strchr(shader, '\t') == 0 && strchr(shader, '\v') == 0 && strchr(shader, '\\') == 0;
 }
 
-inline const char* GlobalTexturePrefix_get ()
+inline const std::string& GlobalTexturePrefix_get ()
 {
 	return GlobalShaderSystem().getTexturePrefix();
 }
 
-inline bool shader_is_texture (const char* name)
+inline bool shader_is_texture (const std::string& name)
 {
 	return shader_equal_prefix(name, GlobalTexturePrefix_get());
 }
 
 inline const char* shader_get_textureName (const char* name)
 {
-	return name + string_length(GlobalTexturePrefix_get());
+	return name + GlobalTexturePrefix_get().length();
 }
 
 inline bool texdef_name_valid (const std::string& name)
 {
 	return shader_valid(name.c_str()) && shader_is_texture(name.c_str());
-}
-
-inline const char* texdef_name_default ()
-{
-	return GlobalTexturePrefix_get();
 }
 
 #endif

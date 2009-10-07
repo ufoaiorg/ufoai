@@ -72,7 +72,7 @@
 #include "archivelib.h"
 #include "imagelib.h"
 
-static const char* g_texturePrefix = "textures/";
+static const std::string g_texturePrefix = "textures/";
 
 static Callback g_ActiveShadersChangedNotify;
 
@@ -83,7 +83,6 @@ typedef Static<StringPool, ShaderPoolContext> ShaderPool;
 typedef PooledString<ShaderPool> ShaderString;
 typedef ShaderString ShaderVariable;
 typedef ShaderString ShaderValue;
-typedef std::string TextureExpression;
 
 // clean a texture name to the qtexture_t name format we use internally
 // NOTE: case sensitivity: the engine is case sensitive. we store the shader name with case information and save with case
@@ -96,7 +95,7 @@ void parseTextureName (std::string& name, const std::string& token)
 	name = os::stripExtension(cleaned);
 }
 
-bool Tokeniser_parseTextureName (Tokeniser& tokeniser, TextureExpression& name)
+bool Tokeniser_parseTextureName (Tokeniser& tokeniser, std::string& name)
 {
 	const char* token = tokeniser.getToken();
 	if (token == 0) {
@@ -142,10 +141,10 @@ class ShaderTemplate
 
 		ShaderParameters m_params;
 
-		TextureExpression m_textureName;
-		TextureExpression m_diffuse;
-		TextureExpression m_bump;
-		TextureExpression m_specular;
+		std::string m_textureName;
+		std::string m_diffuse;
+		std::string m_bump;
+		std::string m_specular;
 
 		int m_nFlags;
 		float m_fTrans;
@@ -202,17 +201,17 @@ class ShaderTemplate
 
 		class MapLayerTemplate
 		{
-				TextureExpression m_texture;
+				std::string m_texture;
 				BlendFuncExpression m_blendFunc;
 				bool m_clampToBorder;
 				ShaderValue m_alphaTest;
 			public:
-				MapLayerTemplate (const TextureExpression& texture, const BlendFuncExpression& blendFunc,
-						bool clampToBorder, const ShaderValue& alphaTest) :
+				MapLayerTemplate (const std::string& texture, const BlendFuncExpression& blendFunc, bool clampToBorder,
+						const ShaderValue& alphaTest) :
 					m_texture(texture), m_blendFunc(blendFunc), m_clampToBorder(false), m_alphaTest(alphaTest)
 				{
 				}
-				const TextureExpression& texture () const
+				const std::string& texture () const
 				{
 					return m_texture;
 				}
@@ -242,7 +241,7 @@ class LayerTemplate
 {
 	public:
 		LayerTypeId m_type;
-		TextureExpression m_texture;
+		std::string m_texture;
 		BlendFuncExpression m_blendFunc;
 		bool m_clampToBorder;
 		ShaderValue m_alphaTest;
@@ -333,8 +332,8 @@ BlendFunc evaluateBlendFunc (const BlendFuncExpression& blendFunc, const ShaderP
 	return BlendFunc(BLEND_ONE, BLEND_ZERO);
 }
 
-qtexture_t* evaluateTexture (const TextureExpression& texture, const ShaderParameters& params,
-		const ShaderArguments& args, const LoadImageCallback& loader = GlobalTexturesCache().defaultLoader())
+qtexture_t* evaluateTexture (const std::string& texture, const ShaderParameters& params, const ShaderArguments& args,
+		const LoadImageCallback& loader = GlobalTexturesCache().defaultLoader())
 {
 	StringOutputStream result(64);
 	const char* expression = texture.c_str();
@@ -682,7 +681,7 @@ class Layer
 {
 	public:
 		LayerTypeId m_type;
-		TextureExpression m_texture;
+		std::string m_texture;
 		BlendFunc m_blendFunc;
 		bool m_clampToBorder;
 		float m_alphaTest;
@@ -903,7 +902,7 @@ class UFOShaderSystem: public ShaderSystem, public ModuleObserver
 			}
 		}
 
-		const char* getTexturePrefix () const
+		const std::string& getTexturePrefix () const
 		{
 			return g_texturePrefix;
 		}

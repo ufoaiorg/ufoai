@@ -1348,7 +1348,7 @@ void TextureBrowser_Construct (void)
 			GlobalTextureBrowser().color_textureback), Vector3ExportStringCaller(
 			GlobalTextureBrowser().color_textureback));
 
-	GlobalTextureBrowser().shader = texdef_name_default();
+	GlobalTextureBrowser().shader = GlobalTexturePrefix_get();
 
 	Textures_setModeChangedNotify(ReferenceCaller<TextureBrowser, TextureBrowser_queueDraw> (GlobalTextureBrowser()));
 
