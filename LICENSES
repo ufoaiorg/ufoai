@@ -996,6 +996,8 @@ base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2
 base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/automat/automat_nm.tga | GNU General Public License 2.0 or later
 base/models/objects/furniture/bed/bed.jpg | GNU General Public License 2.0 or later | Nate Wright
+base/models/objects/furniture/bookshelf/bookshelf.png | GNU General Public License 2.0 or later | Nate Wright
+base/models/objects/furniture/bookshelf/bookshelf_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/campbed/campbed.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/chair/chair.jpg | GNU General Public License 2.0 or later | Nate Wright
