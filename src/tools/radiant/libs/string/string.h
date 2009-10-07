@@ -480,7 +480,7 @@ struct RawStringEqual
 {
 		bool operator() (const std::string& x, const std::string& y) const
 		{
-			return x == y;
+			return x.compare(y) == 0;
 		}
 };
 
@@ -488,7 +488,7 @@ struct RawStringLess
 {
 		bool operator() (const std::string& x, const std::string& y) const
 		{
-			return x.compare(y);
+			return x.compare(y) < 0;
 		}
 };
 
