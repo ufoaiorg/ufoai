@@ -479,6 +479,7 @@ base/models/aircraft/inter_starchaser/starchaser_folded.md2 | GNU General Public
 base/models/aircraft/inter_starchaser/starchaser_nm.tga | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_stiletto/stiletto.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/inter_stiletto/stiletto.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/inter_stiletto/stiletto_engines.jpg | GNU General Public License 2.0 or later | Lukas "Rastaman" Beyeler
 base/models/aircraft/inter_stiletto/stiletto_engines.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/inter_stingray/stingray.jpg | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
@@ -918,6 +919,7 @@ base/models/objects/city/fountain/fountain2.md2 | GNU General Public License 2.0
 base/models/objects/city/fountain/fountain2.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/garbagecan/garbagecan.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/garbagecan/garbagecan.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/city/garbagecan/garbagecan_nm.png | GNU General Public License 2.0 or later
 base/models/objects/city/lantern/lantern.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/lantern/lantern.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/mailbox/mailbox.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -992,6 +994,7 @@ base/models/objects/construct/workbench/workbench.md2 | GNU General Public Licen
 base/models/objects/construct/workbench/workbench.png | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/furniture/automat/automat_nm.tga | GNU General Public License 2.0 or later
 base/models/objects/furniture/bed/bed.jpg | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/campbed/campbed.tga | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1941,7 +1944,7 @@ base/pics/geoscape/air_dropship.tga | Creative Commons Attribution-Share Alike 3
 base/pics/geoscape/air_interceptor.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/geoscape/air_ufo.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/geoscape/base.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/geoscape/baseattack.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/geoscape/baseattack.tga | GNU General Public License 2.0 or later | Werner "hoehrer" Höhrer
 base/pics/geoscape/circle.tga | GNU General Public License 2.0
 base/pics/geoscape/circleactive.tga | GNU General Public License 2.0
 base/pics/geoscape/defence.tga | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
