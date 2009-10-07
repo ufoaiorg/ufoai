@@ -189,7 +189,7 @@ void SurfaceInspector_queueDraw (void)
 
 namespace
 {
-	CopiedString g_selectedShader;
+	std::string g_selectedShader;
 	TextureProjection g_selectedTexdef;
 	ContentsFlagsValue g_selectedFlags;
 	size_t g_selectedShaderSize[2];
@@ -198,7 +198,7 @@ namespace
 /**
  * @sa SurfaceInspector_GetSelectedShader
  */
-void SurfaceInspector_SetSelectedShader (const char* shader)
+void SurfaceInspector_SetSelectedShader (const std::string& shader)
 {
 	g_selectedShader = shader;
 	SurfaceInspector_queueDraw();
@@ -289,10 +289,10 @@ static void SurfaceInspector_SetCurrent_FromSelected (void)
  * @sa SurfaceInspector::Update
  * @sa SurfaceInspector_SetCurrent_FromSelected
  */
-static const char* SurfaceInspector_GetSelectedShader (void)
+static const std::string& SurfaceInspector_GetSelectedShader (void)
 {
 	SurfaceInspector_SetCurrent_FromSelected();
-	return g_selectedShader.c_str();
+	return g_selectedShader;
 }
 
 /**
@@ -798,10 +798,10 @@ static void spin_button_set_step_increment (GtkSpinButton* spin, gdouble value)
  */
 void SurfaceInspector::Update (void)
 {
-	const char * name = SurfaceInspector_GetSelectedShader();
+	const std::string& name = SurfaceInspector_GetSelectedShader();
 
-	if (shader_is_texture(name)) {
-		gtk_entry_set_text(m_texture, shader_get_textureName(name));
+	if (shader_is_texture(name.c_str())) {
+		gtk_entry_set_text(m_texture, shader_get_textureName(name.c_str()));
 	} else {
 		gtk_entry_set_text(m_texture, "");
 	}
