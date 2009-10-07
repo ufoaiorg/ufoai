@@ -300,13 +300,13 @@ ShaderTemplate* findTemplate (const char* name)
 class ShaderDefinition
 {
 	public:
-		ShaderDefinition (ShaderTemplate* shaderTemplate, const ShaderArguments& args, const char* filename) :
+		ShaderDefinition (ShaderTemplate* shaderTemplate, const ShaderArguments& args, const std::string& filename) :
 			shaderTemplate(shaderTemplate), args(args), filename(filename)
 		{
 		}
 		ShaderTemplate* shaderTemplate;
 		ShaderArguments args;
-		const char* filename;
+		const std::string filename;
 };
 
 typedef std::map<std::string, ShaderDefinition> ShaderDefinitionMap;
@@ -338,7 +338,7 @@ qtexture_t* evaluateTexture (const std::string& texture, const ShaderParameters&
 	StringOutputStream result(64);
 	const char* expression = texture.c_str();
 	const char* end = expression + string_length(expression);
-	if (!string_empty(expression)) {
+	if (!texture.empty()) {
 		for (;;) {
 			const char* best = end;
 			const char* bestParam = 0;
@@ -424,7 +424,7 @@ class CShader: public IShader
 
 		const ShaderTemplate& m_template;
 		const ShaderArguments& m_args;
-		const char* m_filename;
+		const std::string m_filename;
 		// name is shader-name, otherwise texture-name (if not a real shader)
 		std::string m_Name;
 
@@ -512,7 +512,6 @@ class CShader: public IShader
 			*func = m_template.m_AlphaFunc;
 			*ref = m_template.m_AlphaRef;
 		}
-		;
 		BlendFunc getBlendFunc () const
 		{
 			return m_blendFunc;
@@ -522,13 +521,6 @@ class CShader: public IShader
 		{
 			return m_template.m_Cull;
 		}
-		;
-		// get shader file name (ie the file where this one is defined)
-		const char* getShaderFileName () const
-		{
-			return m_filename;
-		}
-		// -----------------------------------------
 
 		void realise ()
 		{
@@ -692,9 +684,8 @@ class Layer
 		}
 };
 
-void ParseShaderFile (Tokeniser& tokeniser, const char* filename)
+void ParseShaderFile (Tokeniser& tokeniser, const std::string& filename)
 {
-
 	tokeniser.nextLine();
 	for (;;) {
 		const char* token = tokeniser.getToken();
@@ -720,7 +711,7 @@ void ParseShaderFile (Tokeniser& tokeniser, const char* filename)
 			if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(shaderTemplate->getName(),
 					ShaderDefinition(shaderTemplate.get(), ShaderArguments(), filename))).second) {
 				g_debug("Shader '%s' is already in memory, definition in '%s' ignored.\n", shaderTemplate->getName(),
-						filename);
+						filename.c_str());
 			}
 		} else {
 			g_warning("Error parsing shader '%s'\n", shaderTemplate->getName());
@@ -729,7 +720,7 @@ void ParseShaderFile (Tokeniser& tokeniser, const char* filename)
 	}
 }
 
-static void LoadShaderFile (const char* filename)
+static void LoadShaderFile (const std::string& filename)
 {
 	const std::string& appPath = GlobalRadiant().getAppPath();
 	std::string shadername = appPath + filename;

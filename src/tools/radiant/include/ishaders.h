@@ -110,8 +110,6 @@ class IShader
 		virtual BlendFunc getBlendFunc () const = 0;
 		// get the cull type
 		virtual ECull getCull () = 0;
-		// get shader file name (ie the file where this one is defined)
-		virtual const char* getShaderFileName () const = 0;
 };
 
 typedef struct _GSList GSList;
