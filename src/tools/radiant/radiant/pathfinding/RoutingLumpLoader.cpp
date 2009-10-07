@@ -2,7 +2,7 @@
 #include "RoutingLump.h"
 #include "AutoPtr.h"
 #include "ifilesystem.h"
-#include "gtkutil/messagebox.h"
+#include "gtkutil/dialog.h"
 #include "../mainframe.h"
 #include "radiant_i18n.h"
 
@@ -275,8 +275,7 @@ namespace routing
 			_routingLump = RoutingLump();
 			loadRoutingLump(*file);
 		} else {
-			gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("No compiled version of the map found"),
-				_("Error"), eMB_OK, eMB_ICONERROR);
+			gtkutil::errorDialog(MainFrame_getWindow(), _("No compiled version of the map found"));
 		}
 	}
 

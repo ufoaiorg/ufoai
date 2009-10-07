@@ -144,6 +144,8 @@ namespace gtkutil
 {
 	// Display a modal error dialog
 	void errorDialog (GtkWindow*, const std::string&);
+	// Display a modal info dialog
+	void infoDialog (GtkWindow*, const std::string&);
 	// Display a modal error dialog and quit immediately
 	void fatalErrorDialog (GtkWindow* window, const std::string& errorText);
 }

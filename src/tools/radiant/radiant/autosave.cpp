@@ -55,42 +55,36 @@ static void Map_Snapshot ()
 	// 2. find out what the lastest save is based on number
 	// 3. inc that and save the map
 	const std::string& path = Map_Name(g_map);
-	const char* name = path_get_filename_start(path.c_str());
+	std::string name = os::getFilenameFromPath(path);
+	std::string extension = os::getExtension(path);
+	std::string snapshotsDir = os::stripFilename(path) + "snapshots";
 
-	StringOutputStream snapshotsDir(256);
-	snapshotsDir << StringRange(path.c_str(), name) << "snapshots";
-
-	if (file_exists(snapshotsDir.c_str()) || g_mkdir(snapshotsDir.c_str(), 0775)) {
+	if (file_exists(snapshotsDir) || g_mkdir(snapshotsDir.c_str(), 0775)) {
 		std::size_t lSize = 0;
-		StringOutputStream strNewPath(256);
-		strNewPath << snapshotsDir.c_str() << '/' << name;
-
-		StringOutputStream snapshotFilename(256);
+		std::string strNewPath = snapshotsDir + '/' + name;
 
 		for (int nCount = 0;; ++nCount) {
 			// The original map's filename is "<path>/<name>.<ext>"
 			// The snapshot's filename will be "<path>/snapshots/<name>.<count>.<ext>"
-			const char* end = path_get_filename_base_end(strNewPath.c_str());
-			snapshotFilename << StringRange(strNewPath.c_str(), end) << '.' << nCount << end;
+			std::string snapshotFilename = strNewPath + '.' + string::toString(nCount) + "." + extension;
 
-			if (!DoesFileExist(snapshotFilename.c_str(), lSize)) {
+			if (!DoesFileExist(snapshotFilename, lSize)) {
+				// save in the next available slot
+				Map_SaveFile(snapshotFilename);
+
+				if (lSize > 50 * 1024 * 1024) { // total size of saves > 50 mb
+					gtkutil::infoDialog(
+							MainFrame_getWindow(),
+							std::string(
+									_("The snapshot files in %s total more than 50 megabytes. You might consider cleaning up.\n"))
+									+ snapshotsDir);
+				}
 				break;
 			}
-
-			snapshotFilename.clear();
-		}
-
-		// save in the next available slot
-		Map_SaveFile(snapshotFilename.c_str());
-
-		if (lSize > 50 * 1024 * 1024) { // total size of saves > 50 mb
-			g_warning("The snapshot files in %s total more than 50 megabytes. You might consider cleaning up.\n",
-				snapshotsDir.c_str());
 		}
 	} else {
-		StringOutputStream strMsg(256);
-		strMsg << "Snapshot save failed.. unabled to create directory\n" << snapshotsDir.c_str();
-		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), strMsg.c_str());
+		gtkutil::errorDialog(MainFrame_getWindow(), std::string(
+				_("Snapshot save failed.. unable to create directory\n")) + snapshotsDir);
 	}
 }
 
@@ -166,7 +160,8 @@ void QE_CheckAutoSave (void)
 static void Autosave_constructPreferences (PreferencesPage& page)
 {
 	GtkWidget* autosave_enabled = page.appendCheckBox(_("Autosave"), _("Enable Autosave"), g_AutoSave_Enabled);
-	GtkWidget* autosave_frequency = page.appendSpinner(_("Autosave Frequency (minutes)"), m_AutoSave_Frequency, 1, 1, 60);
+	GtkWidget* autosave_frequency = page.appendSpinner(_("Autosave Frequency (minutes)"), m_AutoSave_Frequency, 1, 1,
+			60);
 	Widget_connectToggleDependency(autosave_frequency, autosave_enabled);
 	page.appendCheckBox("", _("Save Snapshots"), g_SnapShots_Enabled);
 }

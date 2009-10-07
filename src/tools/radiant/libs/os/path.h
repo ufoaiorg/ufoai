@@ -265,6 +265,14 @@ namespace os
 		return path.substr(path.rfind("/") + 1);
 	}
 
+	/** Return the path up to the last / of the given filename.
+	 * If there is no slash in the given string the full string will be returned
+	 */
+	inline std::string stripFilename (const std::string& filename)
+	{
+		return filename.substr(0, filename.rfind("/") + 1);
+	}
+
 	/**
 	 * Will cut away the characters following the final dot.
 	 * @param filename The filename to extract the basename from.

@@ -299,7 +299,16 @@ namespace gtkutil
 	{
 		GtkWidget* dialog = gtk_message_dialog_new_with_markup(window, GTK_DIALOG_DESTROY_WITH_PARENT,
 				GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s", errorText.c_str());
-		gtk_dialog_run(GTK_DIALOG (dialog));
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+	}
+
+	// Display a Gtk Info dialog
+	void infoDialog (GtkWindow* window, const std::string& infoText)
+	{
+		GtkWidget* dialog = gtk_message_dialog_new_with_markup(window, GTK_DIALOG_DESTROY_WITH_PARENT,
+				GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, "%s", infoText.c_str());
+		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
 
