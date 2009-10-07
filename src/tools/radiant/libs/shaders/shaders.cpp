@@ -83,19 +83,17 @@ typedef Static<StringPool, ShaderPoolContext> ShaderPool;
 typedef PooledString<ShaderPool> ShaderString;
 typedef ShaderString ShaderVariable;
 typedef ShaderString ShaderValue;
-typedef CopiedString TextureExpression;
+typedef std::string TextureExpression;
 
 // clean a texture name to the qtexture_t name format we use internally
 // NOTE: case sensitivity: the engine is case sensitive. we store the shader name with case information and save with case
 // information as well. but we assume there won't be any case conflict and so when doing lookups based on shader name,
 // we compare as case insensitive. That is Radiant is case insensitive, but knows that the engine is case sensitive.
 //++timo FIXME: we need to put code somewhere to detect when two shaders that are case insensitive equal are present
-template<typename StringType>
-void parseTextureName (StringType& name, const char* token)
+void parseTextureName (std::string& name, const std::string& token)
 {
-	StringOutputStream cleaned(256);
-	cleaned << PathCleaned(token);
-	name = CopiedString(StringRange(cleaned.c_str(), path_get_filename_base_end(cleaned.c_str()))).c_str(); // remove extension
+	std::string cleaned = os::standardPath(token);
+	name = os::stripExtension(cleaned);
 }
 
 bool Tokeniser_parseTextureName (Tokeniser& tokeniser, TextureExpression& name)
@@ -109,7 +107,7 @@ bool Tokeniser_parseTextureName (Tokeniser& tokeniser, TextureExpression& name)
 	return true;
 }
 
-bool Tokeniser_parseShaderName (Tokeniser& tokeniser, CopiedString& name)
+bool Tokeniser_parseShaderName (Tokeniser& tokeniser, std::string& name)
 {
 	const char* token = tokeniser.getToken();
 	if (token == 0) {
@@ -139,7 +137,7 @@ typedef std::pair<ShaderVariable, ShaderVariable> BlendFuncExpression;
 class ShaderTemplate
 {
 		std::size_t m_refcount;
-		CopiedString m_Name;
+		std::string m_Name;
 	public:
 
 		ShaderParameters m_params;
@@ -186,7 +184,7 @@ class ShaderTemplate
 		{
 			return m_Name.c_str();
 		}
-		void setName (const char* name)
+		void setName (const std::string& name)
 		{
 			m_Name = name;
 		}
@@ -286,7 +284,7 @@ bool ShaderTemplate::parseTemplate (Tokeniser& tokeniser)
 }
 
 typedef SmartPointer<ShaderTemplate> ShaderTemplatePointer;
-typedef std::map<CopiedString, ShaderTemplatePointer> ShaderTemplateMap;
+typedef std::map<std::string, ShaderTemplatePointer> ShaderTemplateMap;
 
 ShaderTemplateMap g_shaders;
 ShaderTemplateMap g_shaderTemplates;
@@ -312,7 +310,7 @@ class ShaderDefinition
 		const char* filename;
 };
 
-typedef std::map<CopiedString, ShaderDefinition> ShaderDefinitionMap;
+typedef std::map<std::string, ShaderDefinition> ShaderDefinitionMap;
 
 ShaderDefinitionMap g_shaderDefinitions;
 
@@ -429,7 +427,7 @@ class CShader: public IShader
 		const ShaderArguments& m_args;
 		const char* m_filename;
 		// name is shader-name, otherwise texture-name (if not a real shader)
-		CopiedString m_Name;
+		std::string m_Name;
 
 		qtexture_t* m_pTexture;
 		qtexture_t* m_notfound;
@@ -569,7 +567,7 @@ class CShader: public IShader
 bool CShader::m_lightingEnabled = false;
 
 typedef SmartPointer<CShader> ShaderPointer;
-typedef std::map<CopiedString, ShaderPointer, shader_less_t> shaders_t;
+typedef std::map<std::string, ShaderPointer, shader_less_t> shaders_t;
 
 shaders_t g_ActiveShaders;
 
@@ -710,10 +708,10 @@ void ParseShaderFile (Tokeniser& tokeniser, const char* filename)
 			tokeniser.ungetToken();
 		}
 		// first token should be the path + name.. (from base)
-		CopiedString name;
+		std::string name;
 		Tokeniser_parseShaderName(tokeniser, name);
 		ShaderTemplatePointer shaderTemplate(new ShaderTemplate());
-		shaderTemplate->setName(name.c_str());
+		shaderTemplate->setName(name);
 
 		g_shaders.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(), shaderTemplate));
 
