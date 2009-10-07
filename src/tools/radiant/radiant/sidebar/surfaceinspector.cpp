@@ -258,7 +258,7 @@ static void SurfaceInspector_SetCurrent_FromSelected (void)
 			g_selectedTexdef.m_brushprimit_texdef.coords[1][2] = float_mod(
 					g_selectedTexdef.m_brushprimit_texdef.coords[1][2], (float) g_selectedShaderSize[1]);
 
-			CopiedString name;
+			std::string name;
 			Scene_BrushGetShader_Component_Selected(GlobalSceneGraph(), name);
 			if (string_not_empty(name.c_str())) {
 				SurfaceInspector_SetSelectedShader(name.c_str());
@@ -272,7 +272,7 @@ static void SurfaceInspector_SetCurrent_FromSelected (void)
 			Scene_BrushGetTexdef_Selected(GlobalSceneGraph(), projection);
 			SurfaceInspector_SetSelectedTexdef(projection);
 
-			CopiedString name;
+			std::string name;
 			Scene_BrushGetShader_Selected(GlobalSceneGraph(), name);
 			if (string_not_empty(name.c_str())) {
 				SurfaceInspector_SetSelectedShader(name.c_str());
@@ -1003,13 +1003,13 @@ void SurfaceInspector::ApplyFlagsWithIndicator (GtkWidget *activatedWidget, Surf
 			inspector->m_valueInconsistent));
 }
 
-void Face_getTexture (Face& face, CopiedString& shader, TextureProjection& projection, ContentsFlagsValue& flags)
+void Face_getTexture (Face& face, std::string& shader, TextureProjection& projection, ContentsFlagsValue& flags)
 {
 	shader = face.GetShader();
 	face.GetTexdef(projection);
 	flags = face.getShader().m_flags;
 }
-typedef Function4<Face&, CopiedString&, TextureProjection&, ContentsFlagsValue&, void, Face_getTexture> FaceGetTexture;
+typedef Function4<Face&, std::string&, TextureProjection&, ContentsFlagsValue&, void, Face_getTexture> FaceGetTexture;
 
 void Face_setTexture (Face& face, const char* shader, const TextureProjection& projection,
 		const ContentsFlagsValue& flags)
@@ -1021,7 +1021,7 @@ void Face_setTexture (Face& face, const char* shader, const TextureProjection& p
 typedef Function4<Face&, const char*, const TextureProjection&, const ContentsFlagsValue&, void, Face_setTexture>
 		FaceSetTexture;
 
-typedef Callback3<CopiedString&, TextureProjection&, ContentsFlagsValue&> GetTextureCallback;
+typedef Callback3<std::string&, TextureProjection&, ContentsFlagsValue&> GetTextureCallback;
 typedef Callback3<const char*, const TextureProjection&, const ContentsFlagsValue&> SetTextureCallback;
 
 struct Texturable
@@ -1109,7 +1109,7 @@ Texturable Scene_getClosestTexturable (scene::Graph& graph, SelectionTest& test)
 	return texturable;
 }
 
-static bool Scene_getClosestTexture (scene::Graph& graph, SelectionTest& test, CopiedString& shader,
+static bool Scene_getClosestTexture (scene::Graph& graph, SelectionTest& test, std::string& shader,
 		TextureProjection& projection, ContentsFlagsValue& flags)
 {
 	Texturable texturable = Scene_getClosestTexturable(graph, test);
@@ -1155,7 +1155,7 @@ const char* TextureBrowser_GetSelectedShader (TextureBrowser& textureBrowser);
 
 void Scene_copyClosestTexture (SelectionTest& test)
 {
-	CopiedString shader;
+	std::string shader;
 	if (Scene_getClosestTexture(GlobalSceneGraph(), test, shader, g_faceTextureClipboard.m_projection,
 			g_faceTextureClipboard.m_flags)) {
 		TextureBrowser_SetSelectedShader(GlobalTextureBrowser(), shader.c_str());

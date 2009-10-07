@@ -630,9 +630,9 @@ void Scene_EntityGetClassnames (scene::Graph& graph, Classnames& classnames)
  */
 void Select_AllFacesWithTexture (void)
 {
-	CopiedString name;
+	std::string name;
 	Scene_BrushGetShader_Component_Selected(GlobalSceneGraph(), name);
-	if (string_not_empty(name.c_str())) {
+	if (!name.empty()) {
 		g_message("Searching all faces with texture '%s'\n", name.c_str());
 		GlobalSelectionSystem().setSelectedAllComponents(false);
 		Scene_BrushFacesSelectByShader_Component(GlobalSceneGraph(), name.c_str());

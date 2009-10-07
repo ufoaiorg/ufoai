@@ -769,22 +769,22 @@ void Scene_BrushSelectByShader (scene::Graph& graph, const char* name)
 
 class FaceSelectByShader
 {
-		const char* m_name;
+		const std::string m_name;
 	public:
-		FaceSelectByShader (const char* name) :
+		FaceSelectByShader (const std::string& name) :
 			m_name(name)
 		{
 		}
 		void operator() (FaceInstance& face) const
 		{
-			g_debug("checking %s = %s\n", face.getFace().GetShader(), m_name);
-			if (shader_equal(face.getFace().GetShader(), m_name)) {
+			g_debug("checking %s = %s\n", face.getFace().GetShader(), m_name.c_str());
+			if (shader_equal(face.getFace().GetShader(), m_name.c_str())) {
 				face.setSelected(SelectionSystem::eFace, true);
 			}
 		}
 };
 
-void Scene_BrushSelectByShader_Component (scene::Graph& graph, const char* name)
+void Scene_BrushSelectByShader_Component (scene::Graph& graph, const std::string& name)
 {
 	Scene_ForEachSelectedBrush_ForEachFaceInstance(graph, FaceSelectByShader(name));
 }
@@ -875,10 +875,10 @@ void Scene_BrushGetFlags_Component_Selected (scene::Graph& graph, ContentsFlagsV
 
 class FaceGetShader
 {
-		CopiedString& m_shader;
+		std::string& m_shader;
 		mutable bool m_done;
 	public:
-		FaceGetShader (CopiedString& shader) :
+		FaceGetShader (std::string& shader) :
 			m_shader(shader), m_done(false)
 		{
 		}
@@ -891,7 +891,7 @@ class FaceGetShader
 		}
 };
 
-void Scene_BrushGetShader_Selected (scene::Graph& graph, CopiedString& shader)
+void Scene_BrushGetShader_Selected (scene::Graph& graph, std::string& shader)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		BrushInstance* brush = Instance_getBrush(GlobalSelectionSystem().ultimateSelected());
@@ -901,7 +901,7 @@ void Scene_BrushGetShader_Selected (scene::Graph& graph, CopiedString& shader)
 	}
 }
 
-void Scene_BrushGetShader_Component_Selected (scene::Graph& graph, CopiedString& shader)
+void Scene_BrushGetShader_Component_Selected (scene::Graph& graph, std::string& shader)
 {
 	if (!g_SelectedFaceInstances.empty()) {
 		FaceInstance& faceInstance = g_SelectedFaceInstances.last();
