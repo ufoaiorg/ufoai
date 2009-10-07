@@ -787,7 +787,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 					if (aircraft->acTeam[l] >= employee)
 						aircraft->acTeam[l]--;
 				}
-				if (aircraft->pilot >= employee)
+				if (employee->type == EMPL_PILOT && aircraft->pilot >= employee)
 					aircraft->pilot--;			
 			}
 		}
@@ -1295,3 +1295,40 @@ qboolean E_HireAllowed (const base_t* base)
 	else
 		return qfalse;
 }
+
+/**
+ * @brief Removes the items of an employee (soldier) from the base storage (s)he is hired at
+ * @param[in] employee Pointer to the soldier whose items should be removed
+ */
+void E_RemoveInventoryFromStorage (employee_t *employee)
+{
+	const inventory_t *inv;
+	int i;
+
+	assert(employee);
+	assert(employee->baseHired);
+
+	inv = &(employee->chr.inv);
+
+	if (!inv)
+		return;
+
+	for (i = 0; i < csi.numIDs; i++) {
+		const invList_t *invList = inv->c[csi.ids[i].id];
+
+		if (csi.ids[i].temp)
+			continue;
+
+		while (invList) {
+			/* Remove ammo */
+			if (invList->item.m && invList->item.m != invList->item.t)
+				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.m, -1, qfalse, qfalse);
+			/* Remove Item */
+			if (invList->item.t)
+				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.t, -1, qfalse, qfalse);
+
+			invList = invList->next;
+		}
+	}
+}
+

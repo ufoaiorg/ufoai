@@ -120,4 +120,6 @@ void E_HireForBuilding(base_t* base, building_t * building, int num);
 void E_InitialEmployees(void);
 void E_Init(void);
 
+void E_RemoveInventoryFromStorage(employee_t *employee);
+
 #endif /* CLIENT_CL_EMPLOYEE */

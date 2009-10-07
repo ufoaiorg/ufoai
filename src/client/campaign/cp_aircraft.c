@@ -1093,6 +1093,7 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 	for (i = aircraft->maxTeamSize - 1; i >= 0; i--) {
 		if (aircraft->acTeam[i]) {
 			employee_t *employee = aircraft->acTeam[i];
+			E_RemoveInventoryFromStorage(employee);
 			E_DeleteEmployee(employee, employee->type);
 			assert(aircraft->acTeam[i] == NULL);
 		}
