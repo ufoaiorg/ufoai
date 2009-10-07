@@ -536,6 +536,9 @@ static void RS_ResearchStart_f (void)
 	/* get the currently selected research-item */
 	tech = researchList2[researchListPos].tech;
 
+	if (!tech)
+		return;
+
 	/** @todo If there are enough items add them to the tech (i.e. block them from selling or for other research),
 	 * otherwise pop an errormessage telling the player what is missing */
 	if (!tech->statusResearchable) {
@@ -606,6 +609,9 @@ static void RS_ResearchStop_f (void)
 	/* get the currently selected research-item */
 	tech = researchList2[researchListPos].tech;
 
+	if (!tech)
+		return;
+
 	switch (tech->statusResearch) {
 	case RS_RUNNING:
 		RS_StopResearch(tech);
@@ -638,6 +644,10 @@ static void RS_ShowPedia_f (void)
 
 	/* get the currently selected research-item */
 	tech = researchList2[researchListPos].tech;
+
+	if (!tech)
+		return;
+
 	if (tech->preDescription.numDescriptions > 0) {
 		UP_OpenCopyWith(tech->id);
 	} else {
