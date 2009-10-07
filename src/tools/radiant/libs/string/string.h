@@ -511,6 +511,16 @@ namespace string
 		ss << t;
 		return ss.str();
 	}
+
+	inline int toInt (const std::string& str)
+	{
+		return atoi(str.c_str());
+	}
+
+	inline float toFloat (const std::string& str)
+	{
+		return atof(str.c_str());
+	}
 }
 
 #endif
