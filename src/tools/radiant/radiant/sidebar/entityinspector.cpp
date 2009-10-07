@@ -1441,8 +1441,19 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 		return;
 	}
 
-	if (columnIndex == 0 && !keyConverted.empty() && valueConverted.empty())
-		valueConverted << g_current_attributes->getDefaultForAttribute(keyConverted.c_str());
+	//instead of updating key/values right now, try to get default value and edit it before setting final values
+	if (columnIndex == 0 && !keyConverted.empty()) {
+		if (valueConverted.empty())
+			valueConverted << g_current_attributes->getDefaultForAttribute(keyConverted.c_str());
+		gtk_tree_store_set(GTK_TREE_STORE(model), &iter, KEYVALLIST_COLUMN_KEY, keyConverted.c_str(), KEYVALLIST_COLUMN_VALUE,
+				valueConverted.c_str(), -1);
+		g_currentSelectedKey = std::string(keyConverted.c_str());
+		GtkTreePath* currentPath = gtk_tree_model_get_path(model, &iter);
+		GtkTreeViewColumn *column = gtk_tree_view_get_column(view, KEYVALLIST_COLUMN_VALUE);
+		gtk_tree_view_set_cursor(view, currentPath, column, true);
+		gtk_tree_path_free(currentPath);
+		return;
+	}
 
 	g_message("change value for %s to %s\n", keyConverted.c_str(), valueConverted.c_str());
 	if (isClassname) {
