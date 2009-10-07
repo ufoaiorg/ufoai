@@ -299,7 +299,7 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 	std::string command = "entityCreate -class " + name;
 	UndoableCommand undo(command.c_str());
 
-	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name.c_str(), true);
+	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name, true);
 
 	bool revert = false;
 	const bool isModel = (name == "misc_model");

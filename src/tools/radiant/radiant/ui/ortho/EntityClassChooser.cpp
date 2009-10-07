@@ -152,7 +152,7 @@ namespace ui
 	void EntityClassChooser::updateUsageInfo (const std::string& eclass)
 	{
 		// Lookup the IEntityClass instance
-		EntityClass* e = GlobalEntityClassManager().findOrInsert(eclass.c_str(), true);
+		EntityClass* e = GlobalEntityClassManager().findOrInsert(eclass, true);
 		// Set the usage panel to the IEntityClass' usage information string
 		GtkTextBuffer* buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(_usageTextView));
 		gtk_text_buffer_set_text(buf, e->m_comments.c_str(), -1);

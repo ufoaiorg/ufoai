@@ -1195,7 +1195,7 @@ void EntityInspector_updateGuiElements (void)
 			classname = classFirstIter->first;
 		else
 			classname = "";
-		EntityInspector_setEntityClass(GlobalEntityClassManager().findOrInsert(classname.c_str(), false));
+		EntityInspector_setEntityClass(GlobalEntityClassManager().findOrInsert(classname, false));
 	}
 	EntityInspector_updateSpawnflags();
 
@@ -1244,8 +1244,7 @@ static void EntityClassList_createEntity (void)
 	GtkTreeModel* model;
 	GtkTreeIter iter;
 	if (gtk_tree_selection_get_selected(gtk_tree_view_get_selection(view), &model, &iter) == FALSE) {
-		gtk_MessageBox(gtk_widget_get_toplevel(GTK_WIDGET(view)),
-				_("You must have a selected class to create an entity"), _("Info"));
+		gtkutil::errorDialog(MainFrame_getWindow(), _("You must have a selected class to create an entity"));
 		return;
 	}
 
@@ -1311,20 +1310,15 @@ static void EntityInspector_clearKeyValue (GtkButton * button, gpointer user_dat
 
 static void EntityClassList_selection_changed (GtkTreeSelection* selection, gpointer data)
 {
-	GtkTreeModel* model;
-	GtkTreeIter selected;
-	if (gtk_tree_selection_get_selected(selection, &model, &selected)) {
-		EntityClass* eclass;
-		gtk_tree_model_get(model, &selected, 1, &eclass, -1);
-		if (eclass != 0) {
-			SetComment(eclass);
-		}
-	}
+	EntityClass* eclass = (EntityClass*)gtkutil::TreeModel::getSelectedPointer(selection, 1);
+	if (eclass != 0)
+		SetComment(eclass);
 }
 
 static gint EntityClassList_button_press (GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
-	if (event->type == GDK_2BUTTON_PRESS) {
+	// double clicked with the left mount button
+	if (event->type == GDK_2BUTTON_PRESS && event->button == 1) {
 		EntityClassList_createEntity();
 		return TRUE;
 	}
@@ -1524,7 +1518,7 @@ static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
 		/* check whether attributes reflect current keyvalue list selected class */
 		if (classname != g_current_attributes->name()) {
 			/* entity class does not fit the selection from keyvaluelist, update as needed */
-			EntityClass *eclass = GlobalEntityClassManager().findOrInsert(classname.c_str(), false);
+			EntityClass *eclass = GlobalEntityClassManager().findOrInsert(classname, false);
 			EntityInspector_setEntityClass(eclass);
 		}
 

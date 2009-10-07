@@ -486,9 +486,9 @@ class EntityKeyValues: public Entity
 		 * @param key the property key to get the value for
 		 * @return the value for the given property or 0
 		 */
-		const char* getKeyValueOrNull (const char* key) const
+		const char* getKeyValueOrNull (const std::string& key) const
 		{
-			KeyValues::const_iterator i = m_keyValues.find(key);
+			KeyValues::const_iterator i = m_keyValues.find(key.c_str());
 			if (i != m_keyValues.end())
 				return (*i).second->c_str();
 			else
@@ -641,9 +641,9 @@ class EntityKeyValues: public Entity
 		{
 			for (EntityClassAttributes::const_iterator i = m_eclass->m_attributes.begin(); i
 					!= m_eclass->m_attributes.end(); ++i) {
-				if ((*i).second.m_mandatory && getKeyValueOrNull((*i).first.c_str()) == 0) {
-					this->setKeyValue((*i).first.c_str(), m_eclass->getDefaultForAttribute((*i).first.c_str()));
-					g_debug("addMandatoryKeyValues: adding %s\n", (*i).first.c_str());
+				if (i->second.m_mandatory && getKeyValueOrNull(i->first) == 0) {
+					this->setKeyValue(i->first, m_eclass->getDefaultForAttribute(i->first));
+					g_debug("addMandatoryKeyValues: adding %s\n", i->first.c_str());
 				}
 			}
 		}

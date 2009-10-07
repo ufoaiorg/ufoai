@@ -114,6 +114,19 @@ namespace gtkutil
 			static bool getSelectedBoolean (GtkTreeSelection* selection, gint colNo);
 
 			/**
+			 * Extract the selected pointer from the given column in the TreeModel. The
+			 * selection object will be queried for a selection, and the pointer
+			 * returned if present, otherwise @c NULL will be returned.
+			 *
+			 * @param selection
+			 * GtkTreeSelection object to be tested for a selection.
+			 *
+			 * @param colNo
+			 * The column number to extract data from if the selection is valid.
+			 */
+			static gpointer getSelectedPointer (GtkTreeSelection* selection, gint colNo);
+
+			/**
 			 * greebo: Utility callback for use in gtk_tree_view_set_search_equal_func, which
 			 * enables some sort of "full string" search in treeviews.
 			 *

@@ -170,12 +170,12 @@ class EntityClass
 		 * @param attributeName The attribute name to get the default value for
 		 * @return the default value
 		 */
-		const char* getDefaultForAttribute (const std::string& attributeName) const
+		const std::string getDefaultForAttribute (const std::string& attributeName) const
 		{
 			EntityClassAttribute *attrib = getAttribute(attributeName);
 			//use value if it is set to something
 			if (attrib && attrib->m_value.length() > 0)
-				return attrib->m_value.c_str();
+				return attrib->m_value;
 			// TODO retrieve some default value from entity definition instead of that empty value
 			return "";
 		}

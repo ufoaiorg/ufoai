@@ -108,6 +108,21 @@ namespace gtkutil
 		}
 	}
 
+	// Extract a pointer from a TreeModel
+	gpointer TreeModel::getSelectedPointer (GtkTreeSelection* selection, gint colNo)
+	{
+		GtkTreeIter iter;
+		GtkTreeModel* model;
+
+		// Get the selected value by querying the selection object
+		if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
+			return getPointer(model, &iter, colNo);
+		} else {
+			// Nothing selected, return false
+			return NULL;
+		}
+	}
+
 	gboolean TreeModel::equalFuncStringContains (GtkTreeModel* model, gint column, const gchar* key, GtkTreeIter* iter,
 			gpointer search_data)
 	{
