@@ -26,5 +26,6 @@
 #define MODEL_H_
 
 void ModelModules_Init (void);
+void Model_RegisterToggles (void);
 
 #endif /* MODEL_H_ */

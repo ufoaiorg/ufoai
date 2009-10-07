@@ -130,45 +130,49 @@ GtkToolbar* create_main_toolbar_horizontal (MainFrame *mainframe)
 
 	File_constructToolbar(toolbar, mainframe);
 
-	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
+	gtk_toolbar_append_space(toolbar);
 
 	UndoRedo_constructToolbar(toolbar, mainframe);
 
-	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
+	gtk_toolbar_append_space(toolbar);
 
 	RotateFlip_constructToolbar(toolbar);
 
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+	gtk_toolbar_append_space(toolbar);
 
 	Select_constructToolbar(toolbar);
 
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+	gtk_toolbar_append_space(toolbar);
 
 	ComponentModes_constructToolbar(toolbar);
 
 	if (mainframe->CurrentStyle() == MainFrame::eRegular) {
-		gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+		gtk_toolbar_append_space(toolbar);
 
 		XYWnd_constructToolbar(toolbar);
 	}
 
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+	gtk_toolbar_append_space(toolbar);
 
 	Filters_constructToolbar(toolbar);
 
-	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
+	gtk_toolbar_append_space(toolbar);
 	toolbar_append_button(toolbar, _("Refresh Models"), ui::icons::ICON_REFRESH_MODELS, "RefreshReferences");
 	toolbar_append_button(toolbar, _("Background image"), ui::icons::ICON_BACKGROUND, "ToggleBackground");
 
-	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
+	gtk_toolbar_append_space(toolbar);
 	toolbar_append_button(toolbar, _("Create material entries for selected faces (M)"),
 			ui::icons::ICON_MATERIALS_GENERATE, "GenerateMaterialFromTexture");
 
-	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
+	gtk_toolbar_append_space(toolbar);
 	Pathfinding_constructToolbar(toolbar);
 
-	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
+	gtk_toolbar_append_space(toolbar);
 	LevelFilters_constructToolbar(toolbar);
+
+	gtk_toolbar_append_space(toolbar);
+	toolbar_append_toggle_button(toolbar, _("Show model bounding box"), ui::icons::ICON_MODEL_SHOWBOUNDINGBOX, "ToggleShowModelBoundingBox");
+	toolbar_append_toggle_button(toolbar, _("Show model normals"), ui::icons::ICON_MODEL_SHOWNORMALS, "ToggleShowModelNormals");
 
 	return toolbar;
 }
@@ -184,15 +188,15 @@ GtkToolbar* create_main_toolbar_vertical (MainFrame::EViewStyle style)
 
 	CamWnd_constructToolbar(toolbar);
 
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+	gtk_toolbar_append_space(toolbar);
 
 	Manipulators_constructToolbar(toolbar);
 
-	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
+	gtk_toolbar_append_space(toolbar);
 
 	CSG_constructToolbar(toolbar);
 
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+	gtk_toolbar_append_space(toolbar);
 
 	toolbar_append_toggle_button(toolbar, _("Texture Lock (SHIFT + T)"), ui::icons::ICON_TEXTURE_LOCK, "TogTexLock");
 

@@ -46,10 +46,61 @@ typedef unsigned char byte;
 #include "stream/stringstream.h"
 #include "typesystem.h"
 
+#include "commands.h"
+#include "gtkutil/widget.h"
 #include "picomodel/model.h"
 
 bool g_showModelNormals = false;
 bool g_showModelBoundingBoxes = false;
+
+void pico_toggleShowModelNormals (void)
+{
+	g_showModelNormals ^= true;
+	SceneChangeNotify();
+}
+
+void pico_toggleShowModelBoundingBoxes (void)
+{
+	g_showModelBoundingBoxes ^= true;
+	SceneChangeNotify();
+}
+
+bool ShowModelNormals (void)
+{
+	return g_showModelNormals;
+}
+
+bool ShowModelBoundingBoxes (void)
+{
+	return g_showModelBoundingBoxes;
+}
+
+void ShowModelNormalsExport (const BoolImportCallback& importCallback)
+{
+	importCallback(g_showModelNormals);
+}
+void ShowModelBoundingBoxesExport (const BoolImportCallback& importCallback)
+{
+	importCallback(g_showModelBoundingBoxes);
+}
+
+typedef FreeCaller1<const BoolImportCallback&, ShowModelNormalsExport> ShowModelNormalsApplyCaller;
+ShowModelNormalsApplyCaller g_showModelNormals_button_caller;
+BoolExportCallback g_showModelNormals_button_callback (g_showModelNormals_button_caller);
+ToggleItem g_showModelNormals_button (g_showModelNormals_button_callback);
+
+typedef FreeCaller1<const BoolImportCallback&, ShowModelBoundingBoxesExport> ShowModelBoundingBoxApplyCaller;
+ShowModelBoundingBoxApplyCaller g_showModelBB_button_caller;
+BoolExportCallback g_showModelBB_button_callback (g_showModelBB_button_caller);
+ToggleItem g_showModelBB_button (g_showModelBB_button_callback);
+
+void Model_RegisterToggles (void)
+{
+	GlobalToggles_insert("ToggleShowModelBoundingBox", FreeCaller<pico_toggleShowModelBoundingBoxes> (),
+			ToggleItem::AddCallbackCaller(g_showModelBB_button), Accelerator('B'));
+	GlobalToggles_insert("ToggleShowModelNormals", FreeCaller<pico_toggleShowModelNormals> (),
+			ToggleItem::AddCallbackCaller(g_showModelNormals_button), Accelerator('N'));
+}
 
 static void PicoPrintFunc (int level, const char *str)
 {

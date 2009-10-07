@@ -110,6 +110,7 @@
 #include "sound/SoundManager.h"
 #include "ui/Icons.h"
 #include "pathfinding.h"
+#include "model.h"
 
 struct LayoutGlobals
 {
@@ -2459,6 +2460,7 @@ void MainFrame_Construct (void)
 
 	XYShow_registerCommands();
 	LevelFilters_registerCommands();
+	Model_RegisterToggles();
 
 	typedef FreeCaller1<const Selectable&, ComponentMode_SelectionChanged> ComponentModeSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(ComponentModeSelectionChangedCaller());
