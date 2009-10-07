@@ -88,7 +88,6 @@ namespace ui
 			static const std::string ICON_WINDOW_SPLIT = "window_split.png";
 
 			static const std::string ICON_MODEL_SHOWNORMALS = "model_normals.png";
-			static const std::string ICON_MODEL_SHOWBOUNDINGBOX = "model_boundingbox.png";
 
 #if 0
 		// unused images
