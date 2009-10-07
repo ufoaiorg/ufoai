@@ -694,7 +694,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (0), 0, 0);
 							*p++ = check;
 							guint handler_id = 0;
-							if (!strncmp(name.c_str(), "surf", 4)) {
+							if (name.empty()) {
 								gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
 								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
 							} else if (valueEnablingFields.find(name) != std::string::npos) {
@@ -737,7 +737,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (0), 0, 0);
 							*p++ = check;
 							guint handler_id = 0;
-							if (!strncmp(name.c_str(), "cont", 4)) {
+							if (name.empty()) {
 								gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
 								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
 							} else if (valueEnablingFields.find(name) != std::string::npos) {
