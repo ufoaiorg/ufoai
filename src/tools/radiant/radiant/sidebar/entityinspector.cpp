@@ -176,7 +176,6 @@ class BooleanAttribute: public EntityAttribute
 			// Set 1 for checkbox ticked, 0 otherwise
 			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, value);
 		}
-		//typedef MemberCaller<BooleanAttribute, &BooleanAttribute::apply> ApplyCaller;
 
 		// Retrieve keyval and update GtkWidget accordingly
 		void update (void)
@@ -184,13 +183,12 @@ class BooleanAttribute: public EntityAttribute
 			const std::string value = SelectedEntity_getValueForKey(m_key);
 			// Set checkbox to enabled for a keyval other than 0
 			if (value.length() > 0) {
-				toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(m_check), atoi(value.c_str()) != 0);
+				toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(m_check), string::toInt(value) != 0);
 			} else {
 				// No keyval found, set self to inactive
 				toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(m_check), false);
 			}
 		}
-		//typedef MemberCaller<BooleanAttribute, &BooleanAttribute::update> UpdateCaller;
 };
 
 // The StringAttribute is used for editing simple strink keyvals
@@ -407,7 +405,7 @@ class AngleAttribute: public EntityAttribute
 			const std::string value = SelectedEntity_getValueForKey(m_key);
 			if (value.length() > 0) {
 				StringOutputStream angle(32);
-				angle << angle_normalised(atof(value.c_str()));
+				angle << angle_normalised(string::toFloat(value));
 				gtk_entry_set_text(m_entry, angle.c_str());
 			} else {
 				gtk_entry_set_text(m_entry, "0");
@@ -462,7 +460,7 @@ class DirectionAttribute: public EntityAttribute
 		{
 			const std::string& value = SelectedEntity_getValueForKey(m_key);
 			if (value.length() > 0) {
-				const float f = atof(value.c_str());
+				const float f = string::toFloat(value);
 				if (f == -1) {
 					gtk_widget_set_sensitive(GTK_WIDGET(m_entry), FALSE);
 					radio_button_set_active_no_signal(m_radio.m_radio, 0);
@@ -748,7 +746,7 @@ class ListAttribute: public EntityAttribute
 				m_nonModal.setActive(m_combo, 0);
 			}
 		}
-		typedef MemberCaller<ListAttribute, &ListAttribute::update> UpdateCaller;
+		//typedef MemberCaller<ListAttribute, &ListAttribute::update> UpdateCaller;
 };
 
 /*

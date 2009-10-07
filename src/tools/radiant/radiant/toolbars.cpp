@@ -171,7 +171,7 @@ GtkToolbar* create_main_toolbar_horizontal (MainFrame *mainframe)
 	LevelFilters_constructToolbar(toolbar);
 
 	gtk_toolbar_append_space(toolbar);
-	toolbar_append_toggle_button(toolbar, _("Show model bounding box"), ui::icons::ICON_MODEL_SHOWBOUNDINGBOX, "ToggleShowModelBoundingBox");
+	toolbar_append_toggle_button(toolbar, _("Show model bounding box"), ui::icons::ICON_DRAW_BBOX, "ToggleShowModelBoundingBox");
 	toolbar_append_toggle_button(toolbar, _("Show model normals"), ui::icons::ICON_MODEL_SHOWNORMALS, "ToggleShowModelNormals");
 
 	return toolbar;
