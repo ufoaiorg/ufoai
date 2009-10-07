@@ -79,15 +79,16 @@
 
 void TextureBrowser_queueDraw (TextureBrowser& textureBrowser);
 
-typedef std::set<CopiedString> TextureGroups;
+typedef std::set<std::string> TextureGroups;
 
 void TextureGroups_addTexture (TextureGroups& groups, const char* textureName)
 {
 	const char* texture = path_make_relative(textureName, "textures/");
-	if (texture != textureName) {
-		const char* last = path_get_filename_start(texture);
-		if (!string_empty(last)) {
-			groups.insert(CopiedString(StringRange(texture, --last)));
+	if (std::strcmp(texture, textureName)) {
+		std::string filename = os::getFilenameFromPath(texture);
+		if (!filename.empty()) {
+			std::string path = os::stripFilename(texture);
+			groups.insert(path);
 		}
 	}
 }
@@ -172,7 +173,7 @@ class TextureBrowser
 		int originy;
 		int m_nTotalHeight;
 
-		CopiedString shader;
+		std::string shader;
 
 		GtkWindow* m_parent;
 		GtkWidget* m_gl_widget;
@@ -300,7 +301,7 @@ void TextureBrowser_SetSelectedShader (TextureBrowser& textureBrowser, const cha
 	ishader->DecRef();
 }
 
-CopiedString g_TextureBrowser_currentDirectory;
+std::string g_TextureBrowser_currentDirectory;
 
 /*
  ============================================================================
@@ -499,28 +500,13 @@ typedef ReferenceCaller1<TextureBrowser, bool, TextureBrowser_importShowScrollba
  * previously loaded and displayed stuff is hidden, only in-use and newly loaded is shown
  * ( the GL textures are not flushed though)
  */
-static bool texture_name_ignore (const char* name)
+static bool texture_name_ignore (const std::string& name)
 {
-	StringOutputStream strTemp(string_length(name));
-	strTemp << LowerCase(name);
+	if (string::contains(name, "_nm"))
+		return true;
 
-	/* only show the dummy texture - the others should not be used directly */
-	return strstr(strTemp.c_str(), "tex_terrain") != 0 && strstr(strTemp.c_str(), "dummy") == 0;
+	return string::contains(name, "tex_terrain") && !string::contains(name, "dummy");
 }
-
-class LoadShaderVisitor: public Archive::Visitor
-{
-	public:
-		void visit (const char* name)
-		{
-			gchar *shaderName = g_path_get_dirname(name);
-			// TODO: Fix this mess
-			IShader* shader = GlobalShaderSystem().getShaderForName(CopiedString(StringRange(name,
-					path_get_filename_base_end(name))).c_str());
-			shader->DecRef();
-			g_free(shaderName);
-		}
-};
 
 static void TextureBrowser_SetHideUnused (TextureBrowser& textureBrowser, bool hideUnused);
 
@@ -551,26 +537,18 @@ class TextureCategoryLoadShader
 
 void TextureDirectory_loadTexture (const char* directory, const char* texture)
 {
-	StringOutputStream name(256);
-	name << directory << StringRange(texture, path_get_filename_base_end(texture));
+	std::string name = std::string(directory) + os::stripExtension(texture);
 
-	if (texture_name_ignore(name.c_str())) {
+	if (texture_name_ignore(name))
 		return;
-	}
 
 	if (!shader_valid(name.c_str())) {
 		g_warning("Skipping invalid texture name: [%s]\n", name.c_str());
 		return;
 	}
 
-	/* don't load textures with '_nm' = normalmaps in its name */
-	if (strstr(texture, "_nm") != 0) {
-		g_warning("Skipping normalmap texture: [%s]\n", name.c_str());
-		return;
-	}
-
 	// if a texture is already in use to represent a shader, ignore it
-	IShader* shader = GlobalShaderSystem().getShaderForName(name.c_str());
+	IShader* shader = GlobalShaderSystem().getShaderForName(name);
 	shader->DecRef();
 }
 typedef ConstPointerCaller1<char, const char*, TextureDirectory_loadTexture> TextureDirectoryLoadTextureCaller;

@@ -57,7 +57,7 @@ static void Map_Snapshot ()
 	const std::string& path = Map_Name(g_map);
 	std::string name = os::getFilenameFromPath(path);
 	std::string extension = os::getExtension(path);
-	std::string snapshotsDir = os::stripFilename(path) + "snapshots";
+	std::string snapshotsDir = os::stripFilename(path) + "/snapshots";
 
 	if (file_exists(snapshotsDir) || g_mkdir(snapshotsDir.c_str(), 0775)) {
 		std::size_t lSize = 0;

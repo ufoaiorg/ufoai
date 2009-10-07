@@ -512,6 +512,11 @@ namespace string
 		return ss.str();
 	}
 
+	inline bool contains(const std::string& source, const std::string& contains)
+	{
+		return source.rfind(contains) != std::string::npos;
+	}
+
 	inline int toInt (const std::string& str)
 	{
 		return atoi(str.c_str());
