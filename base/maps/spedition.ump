@@ -36,13 +36,22 @@ a      a      a      a      0
 
 tile +craft_drop_herakles
 {
-4 5
+5 4
 
-0      0      0      0
-0      +b     +b     a 
-0      +b     +b     a 
-0      +b     +b     a 
-0      a      a      a
+0      0      0      0      0
+a     +b     +b     +b      0
+a     +b     +b     +b      0
+a      a      a      a      0
+}
+
+tile +craft_drop_raptor
+{
+5 4
+
+0      0      0      0      0
+a     +b     +b     +b      0
+a     +b     +b     +b      0
+a      a      a      a      0
 }
 
 // ########################################
