@@ -63,7 +63,7 @@ a      a      a      a      a
 
 assembly default
 {
-size "14 11"
+size "14 10"
 title "_Bridge"
 +main "1 1"
 *rm_drop +craft_drop_firebird "1 1"
