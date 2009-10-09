@@ -146,7 +146,7 @@ void QE_CheckAutoSave (void)
 					const std::string& name = Map_Name(g_map);
 					const std::string extension = os::getExtension(name);
 					const std::string baseName = os::stripExtension(name);
-					const std::string autosave = name + ".autosave" + extension;
+					const std::string autosave = baseName + ".autosave." + extension;
 					Map_SaveFile(autosave);
 				}
 			}
