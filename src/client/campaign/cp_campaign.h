@@ -385,7 +385,7 @@ typedef struct ccs_s {
 	int civiliansKilled;	/**< how many civilians were killed already */
 	int aliensKilled;		/**< how many aliens were killed already */
 	date_t date;			/**< current date */
-	qboolean XVIShowMap;			/**< spread was activated and the map is activated now */
+	qboolean XVIShowMap;			/**< means that PHALANX has a map of XVI - @see CP_IsXVIResearched */
 	qboolean breathingMailSent;		/**< status flag indicating that mail about died aliens due to missing breathing tech was sent */
 	float timer;
 

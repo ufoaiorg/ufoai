@@ -34,5 +34,8 @@ void CP_SpreadXVI(void);
 int CP_GetAverageXVIRate(void);
 void CP_UpdateXVIMapButton(void);
 void CP_StartXVISpreading_f(void);
+#ifdef DEBUG
+void CP_DebugChangeXVI_f(void);
+#endif
 
 #endif

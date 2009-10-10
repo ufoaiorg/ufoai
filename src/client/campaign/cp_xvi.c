@@ -110,7 +110,11 @@ void CP_SpreadXVI (void)
 }
 
 /**
- * @brief Returns @c true if the tech for the xvi event is already researched
+ * @brief Returns @c true if the tech for the xvi event is already researched.
+ * If this tech is already researched the aliens will spread their XVI - but it
+ * does not mean that the Phalanx can also do anything against it or is even
+ * able to the map of XVI
+ * @see css.XVIShowMap
  */
 qboolean CP_IsXVIResearched (void)
 {
@@ -237,3 +241,33 @@ void CP_UpdateXVIMapButton (void)
 {
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
 }
+
+#ifdef DEBUG
+void CP_DebugChangeXVI_f (void)
+{
+	int latitude, longitude;
+	vec2_t pos;
+	qboolean increase;
+
+	if (Cmd_Argc() < 4) {
+		Com_Printf("Usage: %s <latitude> <longitude> <true|false>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (!CP_IsXVIResearched()) {
+		Com_Printf("XVI is not yet researched\n");
+		return;
+	}
+
+	latitude = atoi(Cmd_Argv(1));
+	longitude = atoi(Cmd_Argv(2));
+	increase = atoi(Cmd_Argv(3));
+
+	pos[0] = latitude;
+	pos[1] = longitude;
+	if (increase)
+		CP_SpreadXVIAtPos(pos);
+	else
+		CP_ReduceXVIAtPos(pos);
+}
+#endif
