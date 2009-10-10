@@ -1136,7 +1136,7 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 
 		if (!UFO_IsUFOSeenOnGeoscape(ufo))
 			continue;
-		distance = MAP_GetDistance((inst) ? inst->pos : base->pos, ufo->pos);
+		distance = GetDistanceOnGlobe(inst ? inst->pos : base->pos, ufo->pos);
 		if (minCraftDistance < 0 || minCraftDistance > distance) {
 			minCraftDistance = distance;
 			closestCraft = ufo;

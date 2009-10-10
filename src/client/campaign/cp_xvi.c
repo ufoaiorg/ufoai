@@ -32,6 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static technology_t *rsAlienXVI;
 
+/**
+ * The factor that is used for the graphical display of the XVI map. This has
+ * nothing to do with the nation XVI infection level. Only with the spread on
+ * the XVI map
+ */
+static const float XVI_FACTOR = 15.0f;
+
 #define XVI_EVENT_NAME "rs_alien_xvi_event"
 
 /**
@@ -41,15 +48,32 @@ static technology_t *rsAlienXVI;
 void CP_SpreadXVIAtPos (const vec2_t pos)
 {
 	nation_t *nation;
+	float radius;
+	static qboolean xviNations[MAX_NATIONS];
+	int i;
 
 	if (!CP_IsXVIResearched())
 		return;
 
 	nation = MAP_GetNation(pos);
-	if (nation)
+	if (nation) {
 		nation->stats[0].xviInfection++;
+		xviNations[nation->idx] = qtrue;
+	}
 
-	R_IncreaseXVILevel(pos);
+	radius = R_ChangeXVILevel(pos, nation->stats[0].xviInfection, XVI_FACTOR);
+	for (i = 0; i < ccs.numNations; i++) {
+		nation_t *neighbourNation = NAT_GetNationByIDX(i);
+		if (xviNations[neighbourNation->idx])
+			continue;
+		/* if xvi infection on the nearby nations is getting to high, we infect the neighbours, too */
+		if (GetDistanceOnGlobe(pos, neighbourNation->pos) < radius - XVI_FACTOR) {
+			CP_SpreadXVIAtPos(neighbourNation->pos);
+		}
+	}
+
+	if (nation)
+		xviNations[nation->idx] = qfalse;
 }
 
 /**
@@ -59,15 +83,33 @@ void CP_SpreadXVIAtPos (const vec2_t pos)
 void CP_ReduceXVIAtPos (const vec2_t pos)
 {
 	nation_t *nation;
+	static qboolean xviNations[MAX_NATIONS];
+	float radius;
+	int i;
 
 	if (!CP_IsXVIResearched())
 		return;
 
 	nation = MAP_GetNation(pos);
-	if (nation)
-		nation->stats[0].xviInfection--;
+	if (nation) {
+		if (nation->stats[0].xviInfection > 0)
+			nation->stats[0].xviInfection--;
+		xviNations[nation->idx] = qtrue;
+	}
 
-	R_DecreaseXVILevel(pos);
+	radius = R_ChangeXVILevel(pos, nation->stats[0].xviInfection, XVI_FACTOR);
+	for (i = 0; i < ccs.numNations; i++) {
+		nation_t *neighbourNation = NAT_GetNationByIDX(i);
+		if (xviNations[neighbourNation->idx])
+			continue;
+		/* if xvi infection on the nearby nations is getting to high, we infect the neighbours, too */
+		if (GetDistanceOnGlobe(pos, neighbourNation->pos) < radius - XVI_FACTOR) {
+			CP_ReduceXVIAtPos(neighbourNation->pos);
+		}
+	}
+
+	if (nation)
+		xviNations[nation->idx] = qfalse;
 }
 
 /**

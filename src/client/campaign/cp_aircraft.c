@@ -589,10 +589,10 @@ qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t des
 	assert(base);
 
 	/* Calculate the line that the aircraft should follow to go to destination */
-	distance = MAP_GetDistance(aircraft->pos, destination);
+	distance = GetDistanceOnGlobe(aircraft->pos, destination);
 
 	/* Calculate the line that the aircraft should then follow to go back home */
-	distance += MAP_GetDistance(destination, base->pos);
+	distance += GetDistanceOnGlobe(destination, base->pos);
 
 	/* Check if the aircraft has enough fuel to go to destination and then go back home */
 	if (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / (float)SECONDS_PER_HOUR)
@@ -615,7 +615,7 @@ qboolean AIR_AircraftHasEnoughFuelOneWay (const aircraft_t const *aircraft, cons
 	assert(aircraft);
 
 	/* Calculate the line that the aircraft should follow to go to destination */
-	distance = MAP_GetDistance(aircraft->pos, destination);
+	distance = GetDistanceOnGlobe(aircraft->pos, destination);
 
 	/* Check if the aircraft has enough fuel to go to destination and then go back home */
 	if (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / 3600.0f)
@@ -2126,7 +2126,7 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
 
 	const float speedRatio = (float)(shooter->stats[AIR_STATS_SPEED]) / target->stats[AIR_STATS_SPEED];
 
-	c = MAP_GetDistance(shooter->pos, target->pos) * torad;
+	c = GetDistanceOnGlobe(shooter->pos, target->pos) * torad;
 
 	/* Convert aircraft position into cartesian frame */
 	PolarToVec(shooter->pos, shooterPos);
@@ -2179,7 +2179,7 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
 		RotatePointAroundVector(shooterDestPos, rotationAxis, targetPos, a * todeg);
 		VecToPolar(shooterDestPos, *dest);
 
-		b = MAP_GetDistance(shooter->pos, *dest) * torad;
+		b = GetDistanceOnGlobe(shooter->pos, *dest) * torad;
 
 		if (fabs(b - speedRatio * a) < .1)
 			break;

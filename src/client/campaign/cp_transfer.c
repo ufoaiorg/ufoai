@@ -818,7 +818,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 
 	/* Initialize transfer.
 	 * calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
-	time = MAP_GetDistance(base->pos, td.transferStartAircraft->pos) / 90.0f;
+	time = GetDistanceOnGlobe(base->pos, td.transferStartAircraft->pos) / 90.0f;
 	transfer->event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
 	transfer->event.sec = ccs.date.sec + round(time);
@@ -1002,7 +1002,7 @@ static void TR_TransferStart_f (void)
 
 	/* Initialize transfer. */
 	/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
-	time = MAP_GetDistance(td.transferBase->pos, base->pos) / 90.0f;
+	time = GetDistanceOnGlobe(td.transferBase->pos, base->pos) / 90.0f;
 	transfer->event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
 	transfer->event.sec = ccs.date.sec + round(time);

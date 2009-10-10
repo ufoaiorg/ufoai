@@ -136,6 +136,30 @@ vec_t Q_rint (const vec_t in)
 	return floor(in + 0.5);
 }
 
+
+/**
+ * @brief Calculate distance on the geoscape.
+ * @param[in] pos1 Position at the start.
+ * @param[in] pos2 Position at the end.
+ * @return Distance from pos1 to pos2.
+ * @note distance is an angle! This is the angle (in degrees) between the 2 vectors
+ * starting at earth's center and ending at pos1 or pos2. (if you prefer distance,
+ * this is also the distance on a globe of radius 180 / pi = 57)
+ */
+float GetDistanceOnGlobe (const vec2_t pos1, const vec2_t pos2)
+{
+	/* convert into rad */
+	const float latitude1 = pos1[1] * torad;
+	const float latitude2 = pos2[1] * torad;
+	const float deltaLongitude = (pos1[0] - pos2[0]) * torad;
+	float distance;
+
+	distance = cos(latitude1) * cos(latitude2) * cos(deltaLongitude) + sin(latitude1) * sin(latitude2);
+	distance = acos(distance) * todeg;
+
+	return distance;
+}
+
 /**
  * @brief
  */

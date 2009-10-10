@@ -453,7 +453,7 @@ storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t
 
 		assert(ufo->installation);
 		if (base)
-			distance = MAP_GetDistance(ufo->installation->pos, base->pos);
+			distance = GetDistanceOnGlobe(ufo->installation->pos, base->pos);
 
 		if (minDistance < 0 || minDistance > distance) {
 			minDistance = distance;

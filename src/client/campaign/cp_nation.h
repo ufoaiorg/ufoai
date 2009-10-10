@@ -77,6 +77,7 @@ typedef struct city_s {
 	vec2_t pos;				/**< City position on geoscape. */
 } city_t;
 
+nation_t *NAT_GetNationByIDX(const int index);
 nation_t *NAT_GetNationByID(const char *nationID);
 void NAT_UpdateHappinessForAllNations(void);
 void NAT_SetHappiness(nation_t *nation, const float happiness);

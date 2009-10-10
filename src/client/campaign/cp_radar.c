@@ -447,7 +447,7 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 			continue;
 
 		if (RADAR_IsUFOSensored(&base->radar, ufo - ccs.ufos) == UFO_NOT_SENSORED) {
-			const float dist = MAP_GetDistance(ufo->pos, base->pos);	/* Distance from radar to UFO */
+			const float dist = GetDistanceOnGlobe(ufo->pos, base->pos);	/* Distance from radar to UFO */
 			if (dist <= base->radar.trackingRange)
 				RADAR_AddUFO(&base->radar, ufo - ccs.ufos);
 		}
@@ -459,7 +459,7 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 				continue;
 
 			if (RADAR_IsUFOSensored(&aircraft->radar, ufo - ccs.ufos) == UFO_NOT_SENSORED) {
-				const float dist = MAP_GetDistance(ufo->pos, aircraft->pos);	/* Distance from radar to UFO */
+				const float dist = GetDistanceOnGlobe(ufo->pos, aircraft->pos);	/* Distance from radar to UFO */
 				if (dist <= aircraft->radar.trackingRange)
 					RADAR_AddUFO(&aircraft->radar, ufo - ccs.ufos);
 			}
@@ -477,7 +477,7 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 			continue;
 
 		if (RADAR_IsUFOSensored(&installation->radar, ufo - ccs.ufos) == UFO_NOT_SENSORED) {
-			const float dist = MAP_GetDistance(ufo->pos, installation->pos);	/* Distance from radar to UFO */
+			const float dist = GetDistanceOnGlobe(ufo->pos, installation->pos);	/* Distance from radar to UFO */
 			if (dist <= ufo->radar.trackingRange)
 				RADAR_AddUFO(&installation->radar, ufo - ccs.ufos);
 		}
@@ -499,7 +499,7 @@ qboolean RADAR_CheckRadarSensored (const vec2_t pos)
 		if (!base)
 			continue;
 
-		dist = MAP_GetDistance(pos, base->pos);		/* Distance from base to position */
+		dist = GetDistanceOnGlobe(pos, base->pos);		/* Distance from base to position */
 		if (dist <= base->radar.range)
 			return qtrue;
 	}
@@ -510,7 +510,7 @@ qboolean RADAR_CheckRadarSensored (const vec2_t pos)
 		if (!installation)
 			continue;
 
-		dist = MAP_GetDistance(pos, installation->pos);		/* Distance from base to position */
+		dist = GetDistanceOnGlobe(pos, installation->pos);		/* Distance from base to position */
 		if (dist <= installation->radar.range)
 			return qtrue;
 	}
@@ -552,7 +552,7 @@ qboolean RADAR_CheckUFOSensored (radar_t *radar, const vec2_t posRadar,
 	/* indice of ufo in radar list */
 	ufoRadarIDX = RADAR_IsUFOSensored(radar, num);
 	/* Distance from radar to ufo */
-	dist = MAP_GetDistance(posRadar, ufo->pos);
+	dist = GetDistanceOnGlobe(posRadar, ufo->pos);
 
 	if ((detected ? radar->trackingRange : radar->range) > dist) {
 		if (detected) {

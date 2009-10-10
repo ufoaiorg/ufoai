@@ -31,10 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 image_t *r_radarTexture;				/**< radar texture */
 image_t *r_xviTexture;					/**< XVI alpha mask texture */
 
-static const int maxAlpha = 255;		/**< Number of alpha level */
-static const int INITIAL_RADAR_ALPHA_VALUE = 100;
-
-float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
+/** Max alpha level - don't set this to 255 or nothing else will be visible below the mask */
+static const int MAX_ALPHA_VALUE = 200;
+static const int INITIAL_ALPHA_VALUE = 60;
 
 #define XVI_WIDTH		512
 #define XVI_HEIGHT		256
@@ -68,44 +67,49 @@ static void R_UploadAlpha (const image_t *image, const byte *alphaData)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 }
 
+static inline void R_SetXVILevel (int x, int y, int value)
+{
+	assert(x >= 0);
+	assert(x < XVI_WIDTH);
+	assert(y >= 0);
+	assert(y < XVI_HEIGHT);
+
+	r_xviAlpha[y * XVI_WIDTH + x] = min(MAX_ALPHA_VALUE, value + INITIAL_ALPHA_VALUE);
+}
+
+static inline int R_GetXVILevel (int x, int y)
+{
+	assert(x >= 0);
+	assert(x < XVI_WIDTH);
+	assert(y >= 0);
+	assert(y < XVI_HEIGHT);
+
+	return max(0, r_xviAlpha[y * XVI_WIDTH + x] - INITIAL_ALPHA_VALUE);
+}
+
 /**
  * @brief Applies spreading on xvi transparency channel centered on a given pos
- * @param[in] pos Position of the center of XVI spreading
+ * @param[in] xCenter X Position of the center of XVI spreading
+ * @param[in] yCenter Y Position of the center of XVI spreading
  * @sa R_DecreaseXVILevel
  * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
  * XVI spreads in circle, and the alpha value of one pixel indicates the XVI level of infection.
  * This is necessary to take into account a new event that would spread in the zone where XVI is already spread.
+ * @return the radius of the new XVI level
  */
-void R_IncreaseXVILevel (const vec2_t pos)
+static float R_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, float factor)
 {
-	const int minAlpha = 100;					/**< minimum value of alpha when spreading XVI
-													255 - minAlpha is the maximum XVI level */
 	int xviLevel;								/**< XVI level rate at position pos */
 	vec2_t currentPos;							/**< current position (in latitude / longitude) */
 	int x, y;									/**< current position (in pixel) */
-	const int xCenter = round((180 - pos[0]) * XVI_WIDTH / 360.0f);
-	const int yCenter = round((90 - pos[1]) * XVI_HEIGHT / 180.0f);
 	float radius;								/**< radius of the new XVI circle */
-	byte *xvi;
-
-	assert(xCenter >= 0);
-	assert(xCenter < XVI_WIDTH);
-	assert(yCenter >= 0);
-	assert(yCenter < XVI_HEIGHT);
-
-	if (r_xviAlpha[yCenter * XVI_WIDTH + xCenter] < minAlpha) {
-		/* This zone wasn't infected */
-		r_xviAlpha[yCenter * XVI_WIDTH + xCenter] = minAlpha;
-		return;
-	}
 
 	/* Get xvi Level infection at pos */
-	xviLevel = r_xviAlpha[yCenter * XVI_WIDTH + xCenter] - minAlpha;
+	xviLevel = R_GetXVILevel(xCenter, yCenter);
 	/* Calculate radius of new spreading */
 	xviLevel++;
-	radius = sqrt(15.0f * xviLevel);
+	radius = sqrt(factor * xviLevel);
 
-	xvi = r_xviAlpha;
 	for (y = 0; y < XVI_HEIGHT; y++) {
 		for (x = 0; x < XVI_WIDTH; x++) {
 			float distance;
@@ -113,34 +117,51 @@ void R_IncreaseXVILevel (const vec2_t pos)
 				180.0f - 360.0f * x / ((float) XVI_WIDTH),
 				90.0f - 180.0f * y / ((float) XVI_HEIGHT));
 
-			distance = MAP_GetDistance(pos, currentPos);
+			distance = GetDistanceOnGlobe(pos, currentPos);
 			if (distance <= 1.1 * radius) {
 				int newValue;
 				if (xCenter == x && yCenter == y)
-					/* Make sure that XVI level increases, even if rounding problems makes radius constant */
-					newValue = minAlpha + xviLevel;
+					/* Make sure that XVI level increases, even if
+					 * rounding problems makes radius constant */
+					newValue = xviLevel;
 				else if (distance > radius)
-					newValue = round(minAlpha * (1.1 * radius - distance) / (0.1 * radius));
+					newValue = round(INITIAL_ALPHA_VALUE * (1.1 * radius - distance) / (0.1 * radius)) - INITIAL_ALPHA_VALUE;
 				else
-					newValue = round(minAlpha + (xviLevel * (radius - distance)) / radius);
+					newValue = round((xviLevel * (radius - distance)) / radius);
 
-				if (*xvi < newValue)
-					*xvi = min(maxAlpha, newValue);
+				R_SetXVILevel(x, y, max(xviLevel, newValue));
 			}
-
-			xvi++;
 		}
 	}
 
 	R_UploadAlpha(r_xviTexture, r_xviAlpha);
+
+	return radius;
 }
 
 /**
  * @sa R_IncreaseXVILevel
- * @param pos
+ * @param[in] xCenter X Position of the center of XVI spreading
+ * @param[in] yCenter Y Position of the center of XVI spreading
  */
-void R_DecreaseXVILevel (const vec2_t pos)
+static float R_DecreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, float factor)
 {
+	return 0.0f;
+}
+
+float R_ChangeXVILevel (const vec2_t pos, const int xviLevel, float factor)
+{
+	const int xCenter = round((180 - pos[0]) * XVI_WIDTH / 360.0f);
+	const int yCenter = round((90 - pos[1]) * XVI_HEIGHT / 180.0f);
+
+	const int currentXVILevel = R_GetXVILevel(xCenter, yCenter);
+
+	if (currentXVILevel < xviLevel)
+		return R_IncreaseXVILevel(pos, xCenter, yCenter, factor);
+	else if (currentXVILevel > xviLevel)
+		return R_DecreaseXVILevel(pos, xCenter, yCenter, factor);
+
+	return 0.0f;
 }
 
 /**
@@ -180,7 +201,7 @@ void R_InitializeRadarOverlay (qboolean source)
 {
 	/* Initialize Radar */
 	if (source)
-		memset(r_radarSourcePic, INITIAL_RADAR_ALPHA_VALUE, sizeof(r_radarSourcePic));
+		memset(r_radarSourcePic, INITIAL_ALPHA_VALUE, sizeof(r_radarSourcePic));
 	else
 		memcpy(r_radarPic, r_radarSourcePic, sizeof(r_radarPic));
 }

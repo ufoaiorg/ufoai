@@ -1720,7 +1720,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			break;
 		case AIR_UFO:
 			assert(selectedAircraft->aircraftTarget);
-			distance = MAP_GetDistance(selectedAircraft->pos, selectedAircraft->aircraftTarget->pos);
+			distance = GetDistanceOnGlobe(selectedAircraft->pos, selectedAircraft->aircraftTarget->pos);
 			Com_sprintf(textStandard, sizeof(textStandard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
 			Q_strcat(textStandard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(textStandard));
 			Q_strcat(textStandard, va(_("Distance to target:\t\t%.0f\n"), distance), sizeof(textStandard));
@@ -1737,7 +1737,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			Q_strcat(textStandard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
 				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(textStandard));
 			if (selectedAircraft->status != AIR_IDLE) {
-				distance = MAP_GetDistance(selectedAircraft->pos,
+				distance = GetDistanceOnGlobe(selectedAircraft->pos,
 					selectedAircraft->route.point[selectedAircraft->route.numPoints - 1]);
 				Q_strcat(textStandard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(textStandard));
 			}
@@ -2018,27 +2018,6 @@ void MAP_PrintParameterStringByPos (const vec2_t pos)
 }
 
 /**
- * @brief Calculate distance on the geoscape.
- * @param[in] pos1 Position at the start.
- * @param[in] pos2 Position at the end.
- * @return Distance from pos1 to pos2.
- * @note distance is an angle! This is the angle (in degrees) between the 2 vectors starting at earth's center and ending at pos1 or pos2. (if you prefer distance, this is also the distance on a globe of radius 180 / pi = 57)
- */
-float MAP_GetDistance (const vec2_t pos1, const vec2_t pos2)
-{
-	/* convert into rad */
-	const float latitude1 = pos1[1] * torad;
-	const float latitude2 = pos2[1] * torad;
-	const float deltaLongitude = (pos1[0] - pos2[0]) * torad;
-	float distance;
-
-	distance = cos(latitude1) * cos(latitude2) * cos(deltaLongitude) + sin(latitude1) * sin(latitude2);
-	distance = acos(distance) * todeg;
-
-	return distance;
-}
-
-/**
  * @brief Check that a position (in latitude / longitude) is within boundaries.
  * @param[in,out] pos Pointer to the 2 elements vector giving the position.
  */
@@ -2158,7 +2137,7 @@ base_t* MAP_PositionCloseToBase (const vec2_t pos)
 		if (!base)
 			continue;
 
-		if (MAP_GetDistance(pos, base->pos) < MIN_DIST_BASE) {
+		if (GetDistanceOnGlobe(pos, base->pos) < MIN_DIST_BASE) {
 			return base;
 		}
 	}

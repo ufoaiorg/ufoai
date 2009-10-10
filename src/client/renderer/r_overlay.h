@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-void R_IncreaseXVILevel(const vec2_t pos);
-void R_DecreaseXVILevel(const vec2_t pos);
+float R_ChangeXVILevel(const vec2_t pos, const int xviLevel, float factor);
 void R_InitializeXVIOverlay(const byte *data);
 void R_InitOverlay(void);
 byte* R_GetXVIMap(int *width, int *height);

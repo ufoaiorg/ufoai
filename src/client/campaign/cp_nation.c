@@ -34,6 +34,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_map.h"
 #include "cp_ufo.h"
 
+nation_t *NAT_GetNationByIDX (const int index)
+{
+	assert(index >= 0);
+	assert(index < ccs.numNations);
+
+	return &ccs.nations[index];
+}
+
 /**
  * @brief Return a nation-pointer by the nations id (nation_t->id) text.
  * @param[in] nationID nation id as defined in (nation_t->id)

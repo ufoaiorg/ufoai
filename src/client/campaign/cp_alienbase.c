@@ -67,7 +67,7 @@ void AB_SetAlienBasePosition (vec2_t pos)
 
 		/* Calculate minimim distance between THIS position (pos) and all alien bases */
 		for (base = ccs.alienBases; base < ccs.alienBases + ccs.numAlienBases; base++) {
-			const float currentDistance = MAP_GetDistance(base->pos, randomPos);
+			const float currentDistance = GetDistanceOnGlobe(base->pos, randomPos);
 			if (distance < currentDistance) {
 				distance = currentDistance;
 			}
@@ -197,7 +197,7 @@ static void AB_UpdateStealthForOneBase (const aircraft_t const *aircraft, alienB
 		return;
 
 	/* aircraft can't find base if it's too far */
-	distance = MAP_GetDistance(aircraft->pos, base->pos);
+	distance = GetDistanceOnGlobe(aircraft->pos, base->pos);
 	if (distance > aircraft->radar.range)
 		return;
 

@@ -202,7 +202,7 @@ static void UFO_UpdateAlienInterestForOneBase (const aircraft_t const *ufo, base
 	const float decreasingFactor = 5.0f;
 
 	/* ufo can't find base if it's too far */
-	distance = MAP_GetDistance(ufo->pos, base->pos);
+	distance = GetDistanceOnGlobe(ufo->pos, base->pos);
 	if (distance > MAX_DETECTING_RANGE)
 		return;
 
@@ -244,7 +244,7 @@ static void UFO_UpdateAlienInterestForOneInstallation (const aircraft_t const *u
 	const float decreasingFactor = 5.0f;
 
 	/* ufo can't find base if it's too far */
-	distance = MAP_GetDistance(ufo->pos, installation->pos);
+	distance = GetDistanceOnGlobe(ufo->pos, installation->pos);
 	if (distance > MAX_DETECTING_RANGE)
 		return;
 
@@ -343,7 +343,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 			/* check that aircraft is flying */
 			if (AIR_IsAircraftOnGeoscape(phalanxAircraft)) {
 				/* get the distance from ufo to aircraft */
-				const float dist = MAP_GetDistance(ufo->pos, phalanxAircraft->pos);
+				const float dist = GetDistanceOnGlobe(ufo->pos, phalanxAircraft->pos);
 				/* check out of reach */
 				if (dist > MAX_DETECTING_RANGE)
 					continue;
@@ -682,7 +682,7 @@ qboolean UFO_CampaignCheckEvents (void)
 
 			/* maybe the ufo is already detected, don't reset it */
 			if (RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, detected | ufo->detected)) {
-				const int distance = MAP_GetDistance(base->pos, ufo->pos);
+				const int distance = GetDistanceOnGlobe(base->pos, ufo->pos);
 				detected = qtrue;
 				if (minDistance < 0 || minDistance > distance) {
 					minDistance = distance;
@@ -696,7 +696,7 @@ qboolean UFO_CampaignCheckEvents (void)
 					continue;
 				/* maybe the ufo is already detected, don't reset it */
 				if (RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, detected | ufo->detected)) {
-					const int distance = MAP_GetDistance(aircraft->pos, ufo->pos);
+					const int distance = GetDistanceOnGlobe(aircraft->pos, ufo->pos);
 					detected = qtrue;
 					if (minDistance < 0 || minDistance > distance) {
 						minDistance = distance;
@@ -713,7 +713,7 @@ qboolean UFO_CampaignCheckEvents (void)
 
 			/* maybe the ufo is already detected, don't reset it */
 			if (RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, detected | ufo->detected)) {
-				const int distance = MAP_GetDistance(installation->pos, ufo->pos);
+				const int distance = GetDistanceOnGlobe(installation->pos, ufo->pos);
 				detected = qtrue;
 				if (minDistance < 0 || minDistance > distance) {
 					minDistance = distance;

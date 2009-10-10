@@ -65,7 +65,6 @@ void MAP_InitStartup(void);
 const char* MAP_GetTerrainType(const byte* color);
 int MAP_GetCivilianNumberByPosition(const vec2_t pos);
 void MAP_PrintParameterStringByPos(const vec2_t pos);
-float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 void MAP_CheckPositionBoundaries(float *pos);
 qboolean MAP_IsNight(const vec2_t pos);
 byte *MAP_GetColor(const vec2_t pos, mapType_t type);

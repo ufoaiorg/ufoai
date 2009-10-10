@@ -339,7 +339,7 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 			/* if aircraft is empty we can't send it on a ground mission */
 			if (aircraft->teamSize > 0 && AIR_CanIntercept(aircraft)) {
 				char aircraftListText[256] = "";
-				const float distance = MAP_GetDistance(aircraft->pos, mission->pos);
+				const float distance = GetDistanceOnGlobe(aircraft->pos, mission->pos);
 				const char *statusName = AIR_AircraftStatusToName(aircraft);
 				const char *time = CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]);
 				Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s (%i/%i)\t%s\t%s\t%s"), aircraft->name,

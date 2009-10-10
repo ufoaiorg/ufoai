@@ -185,7 +185,7 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean retu
 	}
 
 	/* get the distance between the projectile and target */
-	distance = MAP_GetDistance(projectile->pos[0], newTarget);
+	distance = GetDistanceOnGlobe(projectile->pos[0], newTarget);
 
 	/* Work out how much the projectile should miss the target by.  We dont want it too close
 	 * or too far from the original target.
@@ -257,7 +257,7 @@ int AIRFIGHT_ChooseWeapon (const aircraftSlot_t const *slot, int maxSlot, const 
 	int slotIdx = AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 	int i, weaponStatus;
 	float distance0 = 99999.9f;
-	const float distance = MAP_GetDistance(pos, targetPos);
+	const float distance = GetDistanceOnGlobe(pos, targetPos);
 
 	/* We choose the usable weapon with the smallest range */
 	for (i = 0; i < maxSlot; i++) {
@@ -498,10 +498,10 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *pr
 
 	if (!projectile->aimedAircraft)
 		/* the target is idle, its position is in idleTarget*/
-		distance = MAP_GetDistance(projectile->idleTarget, projectile->pos[0]);
+		distance = GetDistanceOnGlobe(projectile->idleTarget, projectile->pos[0]);
 	else {
 		/* the target is moving, pointer to the other aircraft is aimedAircraft */
-		distance = MAP_GetDistance(projectile->aimedAircraft->pos, projectile->pos[0]);
+		distance = GetDistanceOnGlobe(projectile->aimedAircraft->pos, projectile->pos[0]);
 	}
 
 	/* projectile reaches its target */
@@ -687,7 +687,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 		}
 
 		/* Check if we can still fire on this target. */
-		distance = MAP_GetDistance(base->pos, weapons[i].target->pos);
+		distance = GetDistanceOnGlobe(base->pos, weapons[i].target->pos);
 		test = AIRFIGHT_CheckWeapon(&(weapons[i].slot), distance);
 		/* weapon unable to shoot, reset target */
 		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
@@ -742,7 +742,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 		}
 
 		/* Check if we can still fire on this target. */
-		distance = MAP_GetDistance(installation->pos, weapons[i].target->pos);
+		distance = GetDistanceOnGlobe(installation->pos, weapons[i].target->pos);
 		test = AIRFIGHT_CheckWeapon(&(weapons[i].slot), distance);
 		/* weapon unable to shoot, reset target */
 		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
