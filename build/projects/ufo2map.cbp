@@ -82,7 +82,8 @@
 		<Linker>
 			<Add library="SDL" />
 			<Add library="z" />
-			<Add library="libjpeg" />
+			<Add library="jpeg" />
+			<Add library="png" />
 		</Linker>
 		<Unit filename="..\..\src\common\files.c">
 			<Option compilerVar="CC" />

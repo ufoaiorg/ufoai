@@ -460,7 +460,7 @@ LIBS=
 AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, LIBS="-ljpeg", AC_MSG_ERROR([You must have libjpeg!!!]))
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-RADIANT_LIBS="$RADIANT_LIBS $LIBS"
+#RADIANT_LIBS="$RADIANT_LIBS $LIBS"
 
 if test "$enable_client" = "yes"
 then
@@ -626,16 +626,6 @@ then
 	LDFLAGS=$OLD_LDFLAGS
 
 	#---------------------------------------------------------------------------------------------
-	# Check PNG
-	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([png.h])
-	if test "$ac_cv_header_png_h" = "no"
-	then
-		AC_MSG_ERROR([You must have the PNG development headers])
-	fi
-	AC_CHECK_LIB(png, png_create_info_struct, [], AC_MSG_ERROR([You must have libpng!!!]))
-
-	#---------------------------------------------------------------------------------------------
 	# Check for opengl headers
 	#---------------------------------------------------------------------------------------------
 	AC_CHECK_HEADERS([GL/gl.h GL/glu.h])
@@ -695,6 +685,20 @@ else
 		AC_MSG_ERROR([You must have the SDL development headers])
 	fi
 fi
+
+#---------------------------------------------------------------------------------------------
+# Check PNG
+#---------------------------------------------------------------------------------------------
+
+LIBS=
+AC_CHECK_HEADERS([png.h])
+if test "$ac_cv_header_png_h" = "no"
+then
+	AC_MSG_ERROR([You must have the PNG development headers])
+fi
+AC_CHECK_LIB(png, png_create_info_struct, [], AC_MSG_ERROR([You must have libpng!!!]))
+TOOLS_LIBS="$TOOLS_LIBS $LIBS"
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for curses

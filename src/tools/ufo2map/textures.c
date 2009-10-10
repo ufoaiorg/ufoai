@@ -65,6 +65,14 @@ int FindMiptex (const char *name)
 		}
 	}
 
+	if (!loaded) {	/* fall back to png */
+		Com_sprintf(path, sizeof(path), "textures/%s.png", name);
+		if (TryLoadPNG(path, &mt) != -1) {
+			Mem_Free(mt);
+			loaded = qtrue;
+		}
+	}
+
 	if (!loaded) {
 		if (!(config.performMapCheck || config.fixMap)) {
 			Com_Printf("Could not find texture '%s'\n", name);

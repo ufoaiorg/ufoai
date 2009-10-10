@@ -79,7 +79,7 @@ void CalcTextureReflectivity (void)
 			/* try jpeg */
 			Com_sprintf(path, sizeof(path), "%stextures/%s.jpg", gamedir, curTile->texinfo[i].texture);
 			if (TryLoadJPG(path, &mt) != -1) {
-				/* load rgba from the tga */
+				/* load rgba from the jpg */
 				texels = mt->width * mt->height;  /* these are already endian-correct */
 				color[0] = color[1] = color[2] = 0;
 
@@ -92,6 +92,26 @@ void CalcTextureReflectivity (void)
 				Mem_Free(mt);
 				loaded = qtrue;
 				Verb_Printf(VERB_EXTRA, "...path: %s (%i) - use jpeg colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
+			}
+		}
+
+		if (!loaded) {
+			/* try png */
+			Com_sprintf(path, sizeof(path), "%stextures/%s.png", gamedir, curTile->texinfo[i].texture);
+			if (TryLoadPNG(path, &mt) != -1) {
+				/* load rgba from the png */
+				texels = mt->width * mt->height;  /* these are already endian-correct */
+				color[0] = color[1] = color[2] = 0;
+
+				for (j = 0; j < texels; j++) {
+					const byte *pos = ((byte *)mt + mt->offsets[0]) + j * 4;
+					color[0] += *pos++; /* r */
+					color[1] += *pos++; /* g */
+					color[2] += *pos++; /* b */
+				}
+				Mem_Free(mt);
+				loaded = qtrue;
+				Verb_Printf(VERB_EXTRA, "...path: %s (%i) - use png colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
 			}
 		}
 

@@ -52,4 +52,6 @@ typedef struct targa_header_s {
 
 int TryLoadTGA(const char *path, miptex_t **mt);
 
+int TryLoadPNG(const char *path, miptex_t **mt);
+
 #endif /* _IMAGELIB_HEADER_H */

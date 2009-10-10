@@ -257,6 +257,174 @@ int TryLoadTGA (const char *path, miptex_t **mt)
 	return 0;
 }
 
+/*
+==============================================================================
+PNG LOADING
+==============================================================================
+*/
+
+#include <png.h>
+
+typedef struct pngBuf_s {
+	byte	*buffer;
+	size_t	pos;
+} pngBuf_t;
+
+static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
+{
+	pngBuf_t *PngFileBuffer = (pngBuf_t*)png_get_io_ptr(Png);
+	memcpy(buf,PngFileBuffer->buffer + PngFileBuffer->pos, size);
+	PngFileBuffer->pos += size;
+}
+
+/**
+ * @sa LoadTGA
+ * @sa LoadJPG
+ */
+static void LoadPNG (const char *name, byte **pic, int *width, int *height)
+{
+	int rowptr;
+	int samples, color_type, bit_depth;
+	png_structp png_ptr;
+	png_infop info_ptr;
+	png_infop end_info;
+	byte **row_pointers;
+	byte *img;
+	uint32_t i;
+	pngBuf_t PngFileBuffer = {NULL, 0};
+
+	if (*pic != NULL)
+		Sys_Error("possible mem leak in LoadPNG");
+
+	/* Load the file */
+	FS_LoadFile(name, (byte **)&PngFileBuffer.buffer);
+	if (!PngFileBuffer.buffer)
+		return;
+
+	/* Parse the PNG file */
+	if ((png_check_sig(PngFileBuffer.buffer, 8)) == 0) {
+		Com_Printf("LoadPNG: Not a PNG file: %s\n", name);
+		FS_FreeFile(PngFileBuffer.buffer);
+		return;
+	}
+
+	PngFileBuffer.pos = 0;
+
+	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	if (!png_ptr) {
+		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
+		FS_FreeFile(PngFileBuffer.buffer);
+		return;
+	}
+
+	info_ptr = png_create_info_struct(png_ptr);
+	if (!info_ptr) {
+		png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
+		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
+		FS_FreeFile(PngFileBuffer.buffer);
+		return;
+	}
+
+	end_info = png_create_info_struct(png_ptr);
+	if (!end_info) {
+		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
+		FS_FreeFile(PngFileBuffer.buffer);
+		return;
+	}
+
+	/* get some usefull information from header */
+	bit_depth = png_get_bit_depth(png_ptr, info_ptr);
+	color_type = png_get_color_type(png_ptr, info_ptr);
+
+	/**
+	 * we want to treat all images the same way
+	 * The following code transforms grayscale images of less than 8 to 8 bits,
+	 * changes paletted images to RGB, and adds a full alpha channel if there is
+	 * transparency information in a tRNS chunk.
+	 */
+
+	/* convert index color images to RGB images */
+	if (color_type == PNG_COLOR_TYPE_PALETTE)
+		png_set_palette_to_rgb(png_ptr);
+	/* convert 1-2-4 bits grayscale images to 8 bits grayscale */
+	if (color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8)
+		png_set_gray_1_2_4_to_8(png_ptr);
+	if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
+		png_set_tRNS_to_alpha(png_ptr);
+
+	if (bit_depth == 16)
+		png_set_strip_16(png_ptr);
+	else if (bit_depth < 8)
+		png_set_packing(png_ptr);
+
+	png_set_read_fn(png_ptr, (png_voidp)&PngFileBuffer, (png_rw_ptr)PngReadFunc);
+	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_IDENTITY, NULL);
+	row_pointers = png_get_rows(png_ptr, info_ptr);
+	rowptr = 0;
+
+	img = Mem_Alloc(info_ptr->width * info_ptr->height * 4);
+	if (pic)
+		*pic = img;
+
+	if (info_ptr->channels == 4) {
+		for (i = 0; i < info_ptr->height; i++) {
+			memcpy(img + rowptr, row_pointers[i], info_ptr->rowbytes);
+			rowptr += info_ptr->rowbytes;
+		}
+	} else {
+		uint32_t j;
+
+		memset(img, 255, info_ptr->width * info_ptr->height * 4);
+		for (rowptr = 0, i = 0; i < info_ptr->height; i++) {
+			for (j = 0; j < info_ptr->rowbytes; j += info_ptr->channels) {
+				memcpy(img + rowptr, row_pointers[i] + j, info_ptr->channels);
+				rowptr += 4;
+			}
+		}
+	}
+
+	if (width)
+		*width = info_ptr->width;
+	if (height)
+		*height = info_ptr->height;
+	samples = info_ptr->channels;
+
+	png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+
+	FS_FreeFile(PngFileBuffer.buffer);
+}
+
+/**
+ * @brief This is robbed from the engine source code, and refactored for
+ * use during map compilation.
+ */
+int TryLoadPNG (const char *path, miptex_t **mt)
+{
+	byte *pic = NULL;
+	int width, height;
+	size_t size;
+	byte *dest;
+
+	LoadPNG(path, &pic, &width, &height);
+	if (pic == NULL)
+		return -1;
+
+	size = sizeof(*mt) + width * height * 4;
+	*mt = (miptex_t *)Mem_Alloc(size);
+
+	dest = (byte*)(*mt) + sizeof(*mt);
+	memcpy(dest, pic, width * height * 4);  /* stuff RGBA into this opaque space */
+	Mem_Free(pic);
+
+	/* copy relevant header fields to miptex_t */
+	(*mt)->width = width;
+	(*mt)->height = height;
+	(*mt)->offsets[0] = sizeof(*mt);
+
+	return 0;
+}
+
 
 /*
 =================================================================
