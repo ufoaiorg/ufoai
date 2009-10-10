@@ -114,7 +114,7 @@ void CP_StartMissionMap (mission_t* mission)
 			/* assemble a random base and set the base status to BASE_UNDER_ATTACK */
 			Cbuf_AddText("base_assemble_rand 1;");
 		else if (bAttack->baseStatus == BASE_UNDER_ATTACK && B_GetFoundedBaseCount() > 0)
-			Cbuf_AddText(va("base_assemble %i 1;", bAttack->idx));
+			Cbuf_AddText(va("base_assemble %i;", bAttack->idx));
 		/* quick save is called when base is really assembled
 		 * @sa B_AssembleMap_f */
 		return;

@@ -482,7 +482,7 @@ static void B_BuildingClick_f (void)
 		return;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <building list index>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -554,15 +554,12 @@ static void B_AssembleMap_f (void)
 	building_t *entry;
 	char maps[2024];
 	char coords[2048];
-	int setUnderAttack = 0, baseID = 0;
+	int baseID = 0;
 	base_t* base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2)
-		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID> <setUnderAttack>\n", Cmd_Argv(0));
+		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID>\n", Cmd_Argv(0));
 	else {
-		if (Cmd_Argc() == 3)
-			setUnderAttack = atoi(Cmd_Argv(2));
-		baseID = atoi(Cmd_Argv(1));
 		if (baseID < 0 || baseID >= ccs.numBases) {
 			Com_DPrintf(DEBUG_CLIENT, "Invalid baseID: %i\n", baseID);
 			return;
@@ -604,7 +601,8 @@ static void B_AssembleMap_f (void)
 				if (!entry->used && entry->needs) {
 					entry->used = 1;
 				} else if (entry->needs) {
-					Com_DPrintf(DEBUG_CLIENT, "B_AssembleMap_f: '%s' needs '%s' (used: %i)\n", entry->id, entry->needs, entry->used);
+					Com_DPrintf(DEBUG_CLIENT, "B_AssembleMap_f: '%s' needs '%s' (used: %i)\n",
+							entry->id, entry->needs, entry->used);
 					entry->used = 0;
 					continue;
 				}
@@ -641,19 +639,14 @@ static void B_AssembleMap_f (void)
  */
 static void B_AssembleRandomBase_f (void)
 {
-	int setUnderAttack = 0;
 	int randomBase = rand() % ccs.numBases;
-	if (Cmd_Argc() < 2)
-		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <setUnderAttack>\n", Cmd_Argv(0));
-	else
-		setUnderAttack = atoi(Cmd_Argv(1));
 
 	if (!ccs.bases[randomBase].founded) {
 		Com_Printf("Base with id %i was not founded or already destroyed\n", randomBase);
 		return;
 	}
 
-	Cbuf_AddText(va("base_assemble %i %i\n", randomBase, setUnderAttack));
+	Cbuf_AddText(va("base_assemble %i\n", randomBase));
 }
 
 /**

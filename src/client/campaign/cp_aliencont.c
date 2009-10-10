@@ -616,7 +616,7 @@ static void AC_AddOne_f (void)
 
 	/* arg parsing */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <alientype> [1](dead)\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <alientype> [dead:true|false]\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -642,11 +642,8 @@ static void AC_AddOne_f (void)
 		return;
 	}
 
-	if ((Cmd_Argc() == 3) && (atoi(Cmd_Argv(2)) == 1)) {
-		updateAlive = qfalse;
-	} else {
-		updateAlive = qtrue;
-	}
+	if (Cmd_Argc() == 3)
+		updateAlive = Com_ParseBoolean(Com_Argv(2));
 
 	/* update alien counter*/
 	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {

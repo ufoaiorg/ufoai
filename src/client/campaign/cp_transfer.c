@@ -880,7 +880,7 @@ static void TR_TransferBaseListClick_f (void)
 	int num, baseIdx;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <base list index>\n", Cmd_Argv(0));
 		return;
 	}
 

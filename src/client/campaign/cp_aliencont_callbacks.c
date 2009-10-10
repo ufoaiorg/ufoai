@@ -158,7 +158,7 @@ static void AC_AlienClick_f (void)
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2 || !base) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <alien list index>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -289,7 +289,7 @@ static void AC_KillOne_f (void)
 		return;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <alien list index>\n", Cmd_Argv(0));
 		return;
 	}
 

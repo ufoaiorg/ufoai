@@ -104,11 +104,11 @@ static void GAME_CP_Results_f (void)
 	}
 	/* check for win */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <won>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <won:true|false>\n", Cmd_Argv(0));
 		return;
 	}
 
-	CP_MissionEnd(ccs.selectedMission, atoi(Cmd_Argv(1)));
+	CP_MissionEnd(ccs.selectedMission, Com_ParseBoolean(Cmd_Argv(1)));
 }
 
 /**
@@ -177,7 +177,7 @@ static void GAME_CP_CampaignListClick_f (void)
 	menuNode_t *campaignlist;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <campaign list index>\n", Cmd_Argv(0));
 		return;
 	}
 
