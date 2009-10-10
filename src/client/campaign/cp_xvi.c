@@ -250,7 +250,7 @@ void CP_DebugChangeXVI_f (void)
 	qboolean increase;
 
 	if (Cmd_Argc() < 4) {
-		Com_Printf("Usage: %s <latitude> <longitude> <true|false>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <latitude> <longitude> <increase:true|false>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -261,7 +261,7 @@ void CP_DebugChangeXVI_f (void)
 
 	latitude = atoi(Cmd_Argv(1));
 	longitude = atoi(Cmd_Argv(2));
-	increase = atoi(Cmd_Argv(3));
+	increase = Com_ParseBoolean(Cmd_Argv(3));
 
 	pos[0] = latitude;
 	pos[1] = longitude;

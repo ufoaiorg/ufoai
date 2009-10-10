@@ -641,6 +641,15 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 	return writtenBytes;
 }
 
+qboolean Com_ParseBoolean (const char *token)
+{
+	qboolean b;
+	size_t writtenBytes;
+	Com_ParseValue(&b, token, V_BOOL, 0, sizeof(b), &writtenBytes);
+	assert(writtenBytes == sizeof(b));
+	return b;
+}
+
 /**
  * @param[in] base The start pointer to a given data type (typedef, struct)
  * @param[in] set The data which should be parsed
