@@ -501,6 +501,9 @@ struct RawStringLessNoCase
 };
 
 #include <sstream>
+#include <string>
+#include <algorithm>
+#include <cctype>
 
 namespace string
 {
@@ -525,6 +528,20 @@ namespace string
 	inline float toFloat (const std::string& str)
 	{
 		return atof(str.c_str());
+	}
+
+	inline std::string toLower (const std::string& str)
+	{
+		std::string convert = str;
+		std::transform(convert.begin(), convert.end(), convert.begin(), (int(*)(int))std::tolower);
+		return convert;
+	}
+
+	inline std::string toUpper (const std::string& str)
+	{
+		std::string convert = str;
+		std::transform(convert.begin(), convert.end(), convert.begin(), (int(*)(int))std::toupper);
+		return convert;
 	}
 }
 
