@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-04 14:41+0200\n"
-"PO-Revision-Date: 2009-10-04 14:49+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2009-10-09 22:35+0100\n"
+"Last-Translator: Borsti67 <i-c-q@hiereinwerfen.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -659,7 +659,7 @@ msgstr "Stockholm"
 
 #: ../base/ufos/cities.ufo:23
 msgid "Amsterdam"
-msgstr ""
+msgstr "Amsterdam"
 
 #: ../base/ufos/cities.ufo:29
 msgid "Athens"
@@ -680,7 +680,7 @@ msgstr "Berlin"
 
 #: ../base/ufos/cities.ufo:53
 msgid "Mumbai"
-msgstr ""
+msgstr "Mumbai"
 
 #: ../base/ufos/cities.ufo:59
 msgid "Cape Town"
@@ -701,7 +701,7 @@ msgstr "Radar"
 
 #: ../base/ufos/cities.ufo:83
 msgid "Mexico City"
-msgstr ""
+msgstr "Mexico City"
 
 #: ../base/ufos/cities.ufo:89
 msgid "Paris"
@@ -717,7 +717,7 @@ msgstr "Teheran"
 
 #: ../base/ufos/cities.ufo:107
 msgid "Tokyo"
-msgstr ""
+msgstr "Tokio"
 
 #: ../base/ufos/cities.ufo:113
 msgid "Wellington"
@@ -8394,7 +8394,6 @@ msgid "When using Reaction Fire, remember that you can set which fire mode to us
 msgstr "Wenn Sie Reaktionsfeuer verwenden, denken Sie daran dass sie den Feuermodus durch Klicken auf das passende Kästchen wählen können."
 
 #: ../base/ufos/tips.ufo:10
-#, fuzzy
 msgid "Remember to give your soldiers a varying array of weapons; you never know when a certain weapon may come in handy."
 msgstr "Denken Sie daran, Ihren Soldaten verschiedene Waffen mitzugeben, Sie wissen niemals wann Sie sie brauchen werden."
 
@@ -8407,7 +8406,6 @@ msgid "Don't forget to equip your soldiers with armour."
 msgstr "Vergessen Sie nicht, Ihren Soldaten eine Rüstung anzulegen bevor sie zu einem Einsatz geschickt werden."
 
 #: ../base/ufos/tips.ufo:13
-#, fuzzy
 msgid "You can use a flashbang to deactivate your opponents' Reaction Fire mode or to take all of his remaining Time Units (TUs) from his next round."
 msgstr "Sie können Blendgranaten verwenden, um das Reaktionsfeuer Ihres Gegners auszuschalten oder ihm alle verbleibenden Zeiteinheiten seiner nächsten Runde zu wegzunehmen."
 
@@ -8416,26 +8414,22 @@ msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members 
 msgstr "In Multiplayerpartien können sie durch Drücken von [k] ('an alle'), [l] ('nur Teammitglieder') oder mit Hilfe der HUD-Knöpfe chatten."
 
 #: ../base/ufos/tips.ufo:15
-#, fuzzy
 msgid "To make a soldier face a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
 msgstr "Um einen Soldaten in eine bestimmte Richtung schauen zu lassen (also um ihn/sie zu drehen), muss der Cursor in der Richtung platziert werden und die rechte Maustaste oder die [Strg]-Taste gedrückt werden. Das kostet Zeiteinheiten."
 
 #: ../base/ufos/tips.ufo:16
 msgid "Use [Backspace] key to open doors."
-msgstr ""
+msgstr "[Backspace] drücken um Türen zu öffnen."
 
 #: ../base/ufos/tips.ufo:17
-#, fuzzy
 msgid "Be sure to hire as many scientists as you can. The better you know your enemy, the easier he is to defeat."
-msgstr "Stelle so viele Wissenschaftler wie möglich ein. Je schneller man den Feind besser kennt, desto schneller kann man ihn auch effektiver bekämpfen."
+msgstr "Stellen Sie so viele Wissenschaftler wie möglich ein. Je besser man den Feind kennt, desto schneller kann man ihn auch effektiver bekämpfen."
 
 #: ../base/ufos/tips.ufo:18
-#, fuzzy
 msgid "Be sure to hire as many workers as you can. The faster your production lines, the sooner you can access better equipment and resupplies."
-msgstr "Stelle so viele Arbeiter wie möglich ein. Je schneller Ihre Produktion arbeitet, um so schneller haben Sie bessere Ausrüstung und Nachschub. "
+msgstr "Stellen Sie so viele Arbeiter wie möglich ein. Je schneller Ihre Produktion arbeitet, um so schneller haben Sie bessere Ausrüstung und Nachschub. "
 
 #: ../base/ufos/tips.ufo:19
-#, fuzzy
 msgid "Be sure to visit our website, http://ufoai.sourceforge.net/, and drop by our community channel, #ufoai on irc.freenode.net."
 msgstr "Besuchen Sie auch bitte unsere Webseite http://ufoai.sf.net/ und unseren Chat #ufoai auf irc.freenode.net."
 
@@ -8444,7 +8438,6 @@ msgid "Remember that you need an active Command Centre in order to launch interc
 msgstr "Denken Sie daran, dass Sie eine aktive Kommandozentrale benötigen, bevor Sie Abfangjäger starten können."
 
 #: ../base/ufos/tips.ufo:21
-#, fuzzy
 msgid "Never pass up an opportunity to capture a live alien, even one of a species you have already researched."
 msgstr "Verschenken Sie niemals die Gelegenheit einen lebendigen Außerirdischen zu fangen, selbst wenn Sie ihn schon untersucht haben."
 
@@ -8453,7 +8446,6 @@ msgid "Watch your back! Your soldiers can only see enemies in an arc in front of
 msgstr "Passen Sie auf, was hinter Ihnen ist! Ihre Soldaten können nur Feinde in einem Bereich vor ihnen sehen."
 
 #: ../base/ufos/tips.ufo:23
-#, fuzzy
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
 msgstr "Bauen Sie eine Werkstatt und UFO-Hangars um UFOs zu demontieren."
 
@@ -8478,17 +8470,14 @@ msgid "Use the first-person view (toggle with [v]) to check if moving one square
 msgstr "In der Ego-Perspektive (Umschalten mit [v]) können Sie überprüfen, ob ein Schritt nach links einen Schuss durch das Gebäude ermöglicht."
 
 #: ../base/ufos/tips.ufo:29
-#, fuzzy
 msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits as a medic."
-msgstr "Setzen Sie einen schnellen Soldaten mit Pistolen, einhändigen Nahkampfwaffen, (Blend-)Granaten und Medikits ein. "
+msgstr "Setzen Sie einen schnellen Soldaten mit Pistolen, einhändigen Nahkampfwaffen, (Blend-)Granaten und Medikits als Mediziner ein. "
 
 #: ../base/ufos/tips.ufo:30
-#, fuzzy
 msgid "Building a hospital allows you to heal your soldiers faster for their next mission."
 msgstr "Bauen Sie eine Krankenstation, um Ihre Soldaten schneller für die nächste Mission zu heilen."
 
 #: ../base/ufos/tips.ufo:31
-#, fuzzy
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "Plasmagranaten machen den größten Schaden, aber auch Splittergranaten können nützlich sein, da sie etwas weiter geworfen werden können.  "
 
@@ -8497,7 +8486,6 @@ msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, mult
 msgstr "Mit [x] kann zwischen den Einstellungen für Reaktionsfeuer umgeschaltet werden: Kein, Einzelschuss, Mehrfachschuss."
 
 #: ../base/ufos/tips.ufo:33
-#, fuzzy
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr "Halten Sie ihre Soldaten nah beisammen, so dass diese sich unterstützen können (heilen, schießen wenn der Andere keine ZE mehr hat). Positionieren Sie sie auf unterschiedlichen Seiten einer Mauer, damit nicht alle durch eine Granate getötet werden können."
 
@@ -8538,7 +8526,6 @@ msgid "You can use [space] to cycle between all geoscape items."
 msgstr "Mit der Leertaste kann zwischen den verschiedenen Geoscape-Einträgen gewechselt werden."
 
 #: ../base/ufos/tips.ufo:43
-#, fuzzy
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel, the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
 msgstr "Man kann die Zeit im Geoscape beschleunigen/verlangsamen, indem man das Mausrad über die Zeit-Knöpfe bewegt oder durch die Tasten [-] und [+/=] steuert. Alternativ kann man auch [n] und [m] benutzen. [Rückschritt] hält die Zeit an."
 
@@ -8555,17 +8542,14 @@ msgid "Your attacked aircraft may flee to one of your bases to avoid being destr
 msgstr "Ein angegriffenes Flugzeug kann zu einer der Basen fliehen um der Zerstörung durch UFOs zu entgehen."
 
 #: ../base/ufos/tips.ufo:47
-#, fuzzy
 msgid "Build an alien containment to be able to imprison live aliens."
 msgstr "Bauen Sie eine Quarantänestation um lebendige Aliens gefangen zu halten."
 
 #: ../base/ufos/tips.ufo:48
-#, fuzzy
 msgid "Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] will draw a line to each enemy the selected soldier can see."
 msgstr "Gesichtete Gegner: Während man sich in einem Bodeneinsatz befindet, kann man durch das Drücken der [Leertaste] zwischen den sichtbaren Gegnern wechseln. Das Drücken von [t] zeichnet die Sichtlinien erneut für den ausgewählten Soldaten."
 
 #: ../base/ufos/tips.ufo:49
-#, fuzzy
 msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base, not in the tactical missions where such an action would cost TUs."
 msgstr "Die rechte Maustaste kann in der Ausrüstungsübersicht benutzt werden, um Waffen, Munition und Rüstung mit einem Klick zuzuweisen. Das funktioniert allerdings nur im Basis Menü und nicht im Einsatz, wo die Zuweisung ZE kosten würde."
 
@@ -8575,7 +8559,7 @@ msgstr "Es sollte sichergestellt werden, dass nicht zu viele Zivilisten ihr Lebe
 
 #: ../base/ufos/tips.ufo:51
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
-msgstr ""
+msgstr "Nutzen Sie Scharfschützen als Rückendeckung. Bringen Sie sie geduckt und mit Reaktionsfeuer-Modus \"Mehrfach-Schuss\" an Punkte mit guter Übersicht (z.B. Erhöhungen und Dachränder), um Aliens zu erledigen."
 
 #: ../base/ufos/tips.ufo:52
 msgid "Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
@@ -8583,15 +8567,15 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:53
 msgid "Consider stunning the civilians during Terror Site missions to keep them from running around. Aliens also seem to prefer killing conscious civilians rather than unconscious ones."
-msgstr ""
+msgstr "Ziehen Sie in Erwägung, in Terror-Missionen Zivilisten zu betäuben, damit sie nicht umherlaufen. Aliens scheinen sich lieber auf sich bewegende Ziele zu stürzen."
 
 #: ../base/ufos/tips.ufo:54
 msgid "Don't forget to install missiles launchers and missiles in your missile batteries."
-msgstr ""
+msgstr "Vergessen Sie nicht, Raketenwerfer und Raketen in Ihre Raketenbatterien zu installieren."
 
 #: ../base/ufos/tips.ufo:55
 msgid "Can't remember who has the medikit in their backpack? Press [i] for inventory and then [1] to [8] to cycle through your troops."
-msgstr ""
+msgstr "Sie wissen nicht mehr, wer das Medikit im Rucksack hat? Drücken Sie [i] für das Inventar, dann [1] bis [8], um durch Ihre Leute zu schalten."
 
 #: ../base/ufos/tips.ufo:56
 msgid "To catch fast UFOs send interceptors in from several directions."
@@ -8599,7 +8583,7 @@ msgstr "Um schnelle UFOs abfangen zu können muss man Abfangjäger aus verschied
 
 #: ../base/ufos/tips.ufo:57
 msgid "To quickly buy or sell items, hover over the arrows and roll your mousewheel."
-msgstr ""
+msgstr "Um schnell Gegenstände zu kaufen oder verkaufen, halten Sie den Mauszeiger über die Pfeile und rollen das Mausrad."
 
 #: ../base/ufos/tips.ufo:58
 msgid "Beware of friendly fire! While lobbing a grenade at an enemy who snuck up on your troops might be an easy kill, chances are you'll do the aliens' work for them. The same can be said about bullets, make sure once the enemy is dead you wont be shooting your own troops behind him."
@@ -8607,7 +8591,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:59
 msgid "Remember to check your research and production queues often! A good arsenal is an active arsenal!"
-msgstr ""
+msgstr "Denken Sie daran, häufig Ihre Forschungs- und Produktions-Aufträge zu prüfen! Nur ein aktives Arsenal ist ein gutes Arsenal!"
 
 #: ../base/ufos/tips.ufo:60
 msgid "The presence of live civilians probably means that there are no live aliens nearby. This can save time clearing a map."
@@ -8725,9 +8709,8 @@ msgid "Soldier equipment"
 msgstr "Soldaten Ausrüstung"
 
 #: ../base/ufos/ui/aircraft.ufo:176
-#, fuzzy
 msgid "Rename aircraft"
-msgstr "Flugzeug auswählen"
+msgstr "Flugzeug umbenennen"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:80
 msgid "Available equipment:"
@@ -8813,9 +8796,8 @@ msgid "Pilot is assigned to another craft"
 msgstr "Pilot ist bereits einem anderen Flugzeug zugewiesen"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:141
-#, fuzzy
 msgid "A pilot is already assigned to this craft"
-msgstr "Dieser Waffe ist keine Munition zugewiesen."
+msgstr "Diesem Gefährt ist bereits ein Pilot zugewiesen"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:143
 msgid "Assign pilot to this craft"
@@ -8847,9 +8829,8 @@ msgid "Soldier is assigned to another craft"
 msgstr "Soldat ist bereits einem anderen Flugzeug zugewiesen"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:117
-#, fuzzy
 msgid "No more soldiers can be assigned to this craft"
-msgstr "Dieser Waffe ist keine Munition zugewiesen."
+msgstr "Diesem Gefährt können keine weiteren Soldaten zugewiesen werden"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:119
 msgid "Assign soldier to this craft"
@@ -9188,9 +9169,8 @@ msgid "Time to build:"
 msgstr "Bauzeit:"
 
 #: ../base/ufos/ui/basedefence.ufo:360
-#, fuzzy
 msgid "Autofire"
-msgstr "Feuer"
+msgstr "Auto-Feuer"
 
 #: ../base/ufos/ui/basedefence.ufo:376
 #: ../base/ufos/ui/geoscape.ufo:1487
@@ -12486,7 +12466,7 @@ msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
 #: client/campaign/cp_aircraft.c:1248
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "%s wurde in %s aufgetankt."
 
@@ -13335,33 +13315,28 @@ msgid " (unlimited ammos)"
 msgstr " (unendliche Munition)"
 
 #: client/campaign/cp_fightequip_callbacks.c:576
-#, fuzzy
 msgid "No slot selected."
-msgstr "Kein Gegenstand ausgewählt"
+msgstr "Kein Slot gewählt."
 
 #: client/campaign/cp_fightequip_callbacks.c:579
-#, fuzzy
 msgid "No item selected."
-msgstr "Kein Gegenstand ausgewählt"
+msgstr "Kein Gegenstand ausgewählt."
 
 #: client/campaign/cp_fightequip_callbacks.c:582
-#, fuzzy
 msgid "You can't equip an alien technology."
-msgstr "Gesammelte Alientechnologie\t%i c\n"
+msgstr "Sie können sich nicht mit Alien-Technologie ausrüsten."
 
 #: client/campaign/cp_fightequip_callbacks.c:585
 msgid "Technology requested is not yet completed."
 msgstr ""
 
 #: client/campaign/cp_fightequip_callbacks.c:588
-#, fuzzy
 msgid "This item is too heavy for the selected slot."
-msgstr "Waffe aus dem gewählten Slot entfernen"
+msgstr "Gegenstand ist zu schwer für den gewählten Slot."
 
 #: client/campaign/cp_fightequip_callbacks.c:591
-#, fuzzy
 msgid "Equip first a weapon."
-msgstr "Rüste Verteidigungsgeschütze aus"
+msgstr "Zuerst eine Waffe einsetzen."
 
 #: client/campaign/cp_fightequip_callbacks.c:594
 msgid "Ammo not usable with current weapon."
@@ -13373,7 +13348,7 @@ msgstr "Unbekanntes Problem."
 
 #: client/campaign/cp_fightequip_callbacks.c:600
 msgid "Ok"
-msgstr ""
+msgstr "OK"
 
 #: client/campaign/cp_installation.c:171
 #, c-format
