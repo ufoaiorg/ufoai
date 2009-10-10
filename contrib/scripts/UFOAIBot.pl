@@ -26,9 +26,9 @@ sub handleCommand($$) {
 	if ($text =~ /^\!bug\s*#?(\d+)/i) {
 		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805242");
 	} elsif ($text =~ /^\!fr\s*#?(\d+)/i) {
-		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805244");
-	} elsif ($text =~ /^\!patch\s*#?(\d+)/i) {
 		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805245");
+	} elsif ($text =~ /^\!patch\s*#?(\d+)/i) {
+		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805244");
 	} elsif ($text =~ /^\!r(?:ev)?\s*#?(\d+)/i) {
 		$conn->privmsg($receiver, "http://ufoai.svn.sourceforge.net/viewvc/ufoai?view=rev&revision=$1");
 		$conn->privmsg($receiver, "http://sourceforge.net/apps/trac/ufoai/changeset/$1");
