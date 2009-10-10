@@ -541,8 +541,6 @@ VIEWTYPE GlobalXYWnd_getCurrentViewType (void)
 
 static bool g_bCrossHairs = false;
 
-GtkMenu* XYWnd::m_mnuDrop = 0;
-
 // this is maybe broken
 void WXY_Print (void)
 {
@@ -559,6 +557,7 @@ void WXY_Print (void)
 	img = (unsigned char*) malloc((width + 1) * (height + 1) * 3);
 	glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, img);
 
+	/** use gtk to save the image */
 	FILE *fp;
 	fp = fopen(filename, "wb");
 	if (fp) {
@@ -801,7 +800,6 @@ XYWnd::XYWnd () :
 
 	m_entityCreate = false;
 
-	m_mnuDrop = 0;
 	m_mnitem_connect = 0;
 	m_mnitem_fitface = 0;
 	m_mnitem_separator = 0;
@@ -844,11 +842,6 @@ XYWnd::XYWnd () :
 XYWnd::~XYWnd (void)
 {
 	onDestroyed();
-
-	if (m_mnuDrop != 0) {
-		gtk_widget_destroy(GTK_WIDGET(m_mnuDrop));
-		m_mnuDrop = 0;
-	}
 
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_sizeHandler);
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_exposeHandler);
@@ -1413,7 +1406,7 @@ void WXY_BackgroundSelect (void)
 		return;
 	}
 
-	const char* filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Background Image"), 0, 0);
+	const char* filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Background Image"));
 	g_pParentWnd->ActiveXY()->XY_DisableBackground();
 	if (filename)
 		g_pParentWnd->ActiveXY()->XY_LoadBackgroundImage(filename);
@@ -2385,32 +2378,6 @@ void ToggleShowGrid ()
 	XY_UpdateAllWindows();
 }
 
-class EntityClassMenu: public ModuleObserver
-{
-		std::size_t m_unrealised;
-	public:
-		EntityClassMenu () :
-			m_unrealised(1)
-		{
-		}
-		void realise (void)
-		{
-			if (--m_unrealised == 0) {
-			}
-		}
-		void unrealise (void)
-		{
-			if (++m_unrealised == 1) {
-				if (XYWnd::m_mnuDrop != 0) {
-					gtk_widget_destroy(GTK_WIDGET(XYWnd::m_mnuDrop));
-					XYWnd::m_mnuDrop = 0;
-				}
-			}
-		}
-};
-
-EntityClassMenu g_EntityClassMenu;
-
 void ShowNamesToggle ()
 {
 	GlobalEntityCreator().setShowNames(!GlobalEntityCreator().getShowNames());
@@ -2665,7 +2632,6 @@ void XYWindow_Construct ()
 	Clipper_registerPreferencesPage();
 
 	XYWnd::captureStates();
-	GlobalEntityClassManager().attach(g_EntityClassMenu);
 
 	/* add screenshot filetype */
 	GlobalFiletypesModule::getTable().addType("bmp", "screenshot bitmap", filetype_t("bitmap", "*.bmp"));
@@ -2673,6 +2639,5 @@ void XYWindow_Construct ()
 
 void XYWindow_Destroy ()
 {
-	GlobalEntityClassManager().detach(g_EntityClassMenu);
 	XYWnd::releaseStates();
 }

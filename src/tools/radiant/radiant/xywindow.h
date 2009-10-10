@@ -143,8 +143,6 @@ public:
 	void SetViewType(VIEWTYPE n);
 	bool m_bActive;
 
-	static GtkMenu* m_mnuDrop;
-
 	int m_chasemouse_current_x, m_chasemouse_current_y;
 	int m_chasemouse_delta_x, m_chasemouse_delta_y;
 
