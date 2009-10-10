@@ -360,9 +360,7 @@ namespace sidebar
 	 */
 	std::string PrefabSelector::GetFullPath (const std::string& baseFileName)
 	{
-		StringOutputStream fullpath(256);
-		fullpath << PathCleaned(std::string(AppPath_get() + "prefabs/" + baseFileName).c_str());
-		return fullpath.c_str();
+		return os::standardPath(AppPath_get() + "prefabs/" + baseFileName);
 	}
 
 	/* GTK CALLBACKS */

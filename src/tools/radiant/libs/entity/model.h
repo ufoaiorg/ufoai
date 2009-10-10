@@ -64,8 +64,7 @@ class EModel: public ModuleObserver
 
 		void modelChanged (const char* value)
 		{
-			StringOutputStream cleaned(string_length(value));
-			cleaned << PathCleaned(value);
+			std::string cleaned = os::standardPath(value);
 			m_resource.detach(*this);
 			m_resource.setName(cleaned.c_str());
 			m_resource.attach(*this);

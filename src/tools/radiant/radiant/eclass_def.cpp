@@ -162,9 +162,7 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 			continue;
 		} else if (!strcmp(keyName, "model")) {
 			/** @todo what does that modelpath stuff do? it does not read anything from keydef */
-			StringOutputStream buffer(string_length(keydef.desc));
-			buffer << PathCleaned(e->m_modelpath.c_str());
-			e->m_modelpath = buffer.c_str();
+			e->m_modelpath = os::standardPath(e->m_modelpath);
 			const bool mandatory = (keydef.flags & ED_MANDATORY);
 			EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model", mandatory));
 		} else {

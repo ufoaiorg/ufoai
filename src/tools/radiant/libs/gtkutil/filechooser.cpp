@@ -275,9 +275,8 @@ const char* file_dialog (GtkWidget* parent, bool open, const std::string& title,
 				eMB_ICONQUESTION) == eIDYES) {
 			if (file == 0)
 				return file;
-			StringOutputStream fileCleaned(256);
-			fileCleaned << PathCleaned(file);
-			strcpy(g_file_dialog_file, fileCleaned.c_str());
+			std::string cleaned = os::standardPath(file);
+			strcpy(g_file_dialog_file, cleaned.c_str());
 			return g_file_dialog_file;
 		}
 	}

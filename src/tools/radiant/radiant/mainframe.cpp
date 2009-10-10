@@ -103,7 +103,6 @@
 #include "url.h"
 #include "xywindow.h"
 #include "windowobservers.h"
-#include "renderstate.h"
 #include "referencecache.h"
 #include "toolbars.h"
 #include "levelfilters.h"
@@ -2284,8 +2283,6 @@ void GlobalGL_sharedContextCreated (void)
 	globalOutputStream() << "GL_EXTENSIONS: " << reinterpret_cast<const char*> (glGetString(GL_EXTENSIONS)) << "\n";
 
 	QGL_sharedContextCreated(GlobalOpenGL());
-
-	ShaderCache_extensionsInitialised();
 
 	GlobalShaderCache().realise();
 	Textures_Realise();

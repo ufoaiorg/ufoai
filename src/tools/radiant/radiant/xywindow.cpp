@@ -1353,20 +1353,16 @@ void XYWnd::XY_SnapToGrid (Vector3& point)
 /**
  * @todo Use @code m_image = GlobalTexturesCache().capture(name) @endcode
  */
-void XYWnd::XY_LoadBackgroundImage (const char *name)
+void XYWnd::XY_LoadBackgroundImage (const std::string& name)
 {
-	const char* relative = path_make_relative(name, GlobalFileSystem().findRoot(name));
+	const char* relative = path_make_relative(name.c_str(), GlobalFileSystem().findRoot(name.c_str()));
 	if (relative == name)
 		g_warning("Could not extract the relative path, using full path instead\n");
 
-	char fileNameWithoutExt[512];
-	strncpy(fileNameWithoutExt, relative, sizeof(fileNameWithoutExt) - 1);
-	fileNameWithoutExt[512 - 1] = '\0';
-	fileNameWithoutExt[strlen(fileNameWithoutExt) - 4] = '\0';
-
-	Image *image = QERApp_LoadImage(0, fileNameWithoutExt);
+	std::string fileNameWithoutExt = os::stripExtension(relative);
+	Image *image = QERApp_LoadImage(0, fileNameWithoutExt.c_str());
 	if (!image) {
-		g_warning("Could not load texture %s\n", fileNameWithoutExt);
+		g_warning("Could not load texture %s\n", fileNameWithoutExt.c_str());
 		return;
 	}
 	g_pParentWnd->ActiveXY()->m_tex = (qtexture_t*) malloc(sizeof(qtexture_t));
@@ -1417,7 +1413,7 @@ void WXY_BackgroundSelect (void)
 		return;
 	}
 
-	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Background Image"), 0, 0);
+	const char* filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Background Image"), 0, 0);
 	g_pParentWnd->ActiveXY()->XY_DisableBackground();
 	if (filename)
 		g_pParentWnd->ActiveXY()->XY_LoadBackgroundImage(filename);

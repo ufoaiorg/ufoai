@@ -71,7 +71,7 @@ Archive* OpenDirArchive (const char* name);
 
 struct archive_entry_t
 {
-		CopiedString name;
+		std::string name;
 		Archive* archive;
 		bool is_pakfile;
 };
@@ -90,6 +90,7 @@ static ModuleObservers g_observers;
 // =============================================================================
 // Static functions
 
+/** @todo Use DirCleaned */
 static void AddSlash (char *str)
 {
 	std::size_t n = strlen(str);
@@ -101,7 +102,7 @@ static void AddSlash (char *str)
 	}
 }
 
-/** @todo Use PathCleaned */
+/** @todo Use os::standardPath */
 static void FixDOSName (char *src)
 {
 	if (src == 0 || strchr(src, '\\') == 0)
@@ -116,25 +117,23 @@ static void FixDOSName (char *src)
 	}
 }
 
-const _QERArchiveTable* GetArchiveTable (ArchiveModules& archiveModules, const char* ext)
+const _QERArchiveTable* GetArchiveTable (ArchiveModules& archiveModules, const std::string& ext)
 {
-	StringOutputStream tmp(16);
-	tmp << LowerCase(ext);
-	return archiveModules.findModule(tmp.c_str());
+	return archiveModules.findModule(string::toLower(ext).c_str());
 }
 
-static void InitPK3File (ArchiveModules& archiveModules, const char *filename)
+static void InitPK3File (ArchiveModules& archiveModules, const std::string& filename)
 {
-	const _QERArchiveTable* table = GetArchiveTable(archiveModules, path_get_extension(filename));
+	const _QERArchiveTable* table = GetArchiveTable(archiveModules, os::getExtension(filename));
 
 	if (table != 0) {
 		archive_entry_t entry;
 		entry.name = filename;
 
 		entry.is_pakfile = true;
-		entry.archive = table->m_pfnOpenArchive(filename);
+		entry.archive = table->m_pfnOpenArchive(filename.c_str());
 		g_archives.push_back(entry);
-		g_message("  pk3 file: %s\n", filename);
+		g_message("  pk3 file: %s\n", filename.c_str());
 	}
 }
 

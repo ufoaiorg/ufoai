@@ -23,8 +23,6 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "renderstate.h"
-
 #include "debugging/debugging.h"
 
 #include "ishaders.h"
@@ -433,14 +431,12 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 		Shaders m_shaders;
 		std::size_t m_unrealised;
 
-		bool m_lightingEnabled;
-		bool m_lightingSupported;
 
 	public:
 		OpenGLShaderCache () :
 			m_shaders(CreateOpenGLShader(this)),
 					m_unrealised(3), // wait until shaders, gl-context and textures are realised before creating any render-states
-					m_lightingEnabled(true), m_lightingSupported(false), m_lightsChanged(true),
+					m_lightsChanged(true),
 					m_traverseRenderablesMutex(false)
 		{
 		}
@@ -566,67 +562,6 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 			return m_unrealised == 0;
 		}
 
-		bool lightingEnabled () const
-		{
-			return m_lightingEnabled;
-		}
-		bool lightingSupported () const
-		{
-			return m_lightingSupported;
-		}
-		void setLighting (bool supported, bool enabled)
-		{
-			bool refresh = (m_lightingSupported && m_lightingEnabled) != (supported && enabled);
-
-			if (refresh) {
-				unrealise();
-				GlobalShaderSystem().setLightingEnabled(supported && enabled);
-			}
-
-			m_lightingSupported = supported;
-			m_lightingEnabled = enabled;
-
-			if (refresh) {
-				realise();
-			}
-		}
-		void extensionsInitialised ()
-		{
-			setLighting(GlobalOpenGL().GL_1_3() && GlobalOpenGL().ARB_vertex_program()
-					&& GlobalOpenGL().ARB_fragment_program() && GlobalOpenGL().ARB_shader_objects()
-					&& GlobalOpenGL().ARB_vertex_shader() && GlobalOpenGL().ARB_fragment_shader()
-					&& GlobalOpenGL().ARB_shading_language_100(), m_lightingEnabled);
-
-			if (!lightingSupported()) {
-				g_warning("Lighting mode requires OpenGL features not supported by your graphics drivers:\n");
-				if (!GlobalOpenGL().GL_1_3()) {
-					g_message("  GL version 1.3 or better\n");
-				}
-				if (!GlobalOpenGL().ARB_vertex_program()) {
-					g_message("  GL_ARB_vertex_program\n");
-				}
-				if (!GlobalOpenGL().ARB_fragment_program()) {
-					g_message("  GL_ARB_fragment_program\n");
-				}
-				if (!GlobalOpenGL().ARB_shader_objects()) {
-					g_message("  GL_ARB_shader_objects\n");
-				}
-				if (!GlobalOpenGL().ARB_vertex_shader()) {
-					g_message("  GL_ARB_vertex_shader\n");
-				}
-				if (!GlobalOpenGL().ARB_fragment_shader()) {
-					g_message("  GL_ARB_fragment_shader\n");
-				}
-				if (!GlobalOpenGL().ARB_shading_language_100()) {
-					g_message("  GL_ARB_shading_language_100\n");
-				}
-			}
-		}
-		void setLightingEnabled (bool enabled)
-		{
-			setLighting(m_lightingSupported, enabled);
-		}
-
 		// light culling
 
 		RendererLights m_lights;
@@ -705,16 +640,6 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 };
 
 static OpenGLShaderCache* g_ShaderCache;
-
-void ShaderCache_extensionsInitialised ()
-{
-	g_ShaderCache->extensionsInitialised();
-}
-
-void ShaderCache_setBumpEnabled (bool enabled)
-{
-	g_ShaderCache->setLightingEnabled(enabled);
-}
 
 void ShaderCache_Construct ()
 {

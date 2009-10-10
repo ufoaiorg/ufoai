@@ -172,31 +172,6 @@ class MatchFileExtension
 		}
 };
 
-class PathCleaned
-{
-	public:
-		const char* m_path;
-		PathCleaned (const char* path) :
-			m_path(path)
-		{
-		}
-};
-
-/// \brief Writes \p path to \p ostream with dos-style separators replaced by unix-style separators.
-template<typename TextOutputStreamType>
-TextOutputStreamType& ostream_write (TextOutputStreamType& ostream, const PathCleaned& path)
-{
-	const char* i = path.m_path;
-	for (; *i != '\0'; ++i) {
-		if (*i == '\\') {
-			ostream << '/';
-		} else {
-			ostream << *i;
-		}
-	}
-	return ostream;
-}
-
 class DirectoryCleaned
 {
 	public:

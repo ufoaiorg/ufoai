@@ -56,7 +56,6 @@
 #include "commands.h"
 #include "xywindow.h"
 #include "windowobservers.h"
-#include "renderstate.h"
 #include "ui/Icons.h"
 
 #include "timer.h"
@@ -1674,7 +1673,6 @@ camera_draw_mode CamWnd_GetMode ()
 }
 void CamWnd_SetMode (camera_draw_mode mode)
 {
-	ShaderCache_setBumpEnabled(mode == cd_lighting);
 	camera_t::draw_mode = mode;
 	if (g_camwnd != 0) {
 		CamWnd_Update(*g_camwnd);

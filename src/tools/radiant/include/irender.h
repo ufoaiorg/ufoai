@@ -215,8 +215,6 @@ class ShaderCache
 		virtual void realise () = 0;
 		virtual void unrealise () = 0;
 
-		virtual bool lightingSupported () const = 0;
-
 		virtual const LightList& attach (LightCullable& cullable) = 0;
 		virtual void detach (LightCullable& cullable) = 0;
 		virtual void changed (LightCullable& cullable) = 0;

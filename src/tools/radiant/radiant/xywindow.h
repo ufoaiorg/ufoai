@@ -103,7 +103,7 @@ public:
 	void XY_DrawAxis();
 	void XY_DrawGrid();
 	void XY_DrawBackground();
-	void XY_LoadBackgroundImage(const char *name);
+	void XY_LoadBackgroundImage(const std::string& name);
 	void XY_DisableBackground();
 
 	void XY_MouseUp(int x, int y, unsigned int buttons);
