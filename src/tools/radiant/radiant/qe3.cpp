@@ -36,7 +36,7 @@
 #include "stream/stringstream.h"
 #include "scenelib.h"
 #include "gtkutil/messagebox.h"
-#include "map.h"
+#include "map/map.h"
 #include "mainframe.h"
 #include "convert.h"
 #include "radiant_i18n.h"

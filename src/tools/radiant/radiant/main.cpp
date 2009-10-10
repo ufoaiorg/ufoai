@@ -77,7 +77,7 @@
 #include "gtkutil/image.h"
 #include "console.h"
 #include "sidebar/sidebar.h"
-#include "map.h"
+#include "map/map.h"
 #include "mainframe.h"
 #include "commands.h"
 #include "preferences.h"

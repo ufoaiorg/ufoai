@@ -26,11 +26,11 @@
 
 #include "pathfinding.h"
 #include "pathfinding/Routing.h"
-#include "map.h"
+#include "map/map.h"
 #include "os/path.h"
 #include "stream/stringstream.h"
 #include "ifilesystem.h"
-#include "map.h"
+#include "map/map.h"
 #include "signal/isignal.h"
 #include "stringio.h"
 #include "preferences.h"

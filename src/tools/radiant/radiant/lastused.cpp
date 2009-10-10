@@ -38,7 +38,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "convert.h"
 
 #include "gtkutil/menu.h"
-#include "map.h"
+#include "map/map.h"
 #include "qe3.h"
 
 #define MRU_MAX 4

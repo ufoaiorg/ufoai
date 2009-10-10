@@ -29,7 +29,7 @@
 #include "gtkutil/image.h"
 #include "gtkutil/pointer.h"
 #include "../mainframe.h"
-#include "../map.h"
+#include "../map/map.h"
 #include "../select.h"
 #include "os/path.h"
 #include "os/dir.h"

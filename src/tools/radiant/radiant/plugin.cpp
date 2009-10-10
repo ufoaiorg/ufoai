@@ -60,7 +60,7 @@
 
 #include "maplib.h"
 #include "error.h"
-#include "map.h"
+#include "map/map.h"
 #include "qe3.h"
 #include "sidebar/sidebar.h"
 #include "gtkmisc.h"
@@ -71,7 +71,7 @@
 #include "entity.h"
 #include "select.h"
 #include "preferences.h"
-#include "autosave.h"
+#include "map/autosave.h"
 #include "plugintoolbar.h"
 #include "dialogs/findtextures.h"
 #include "nullmodel.h"

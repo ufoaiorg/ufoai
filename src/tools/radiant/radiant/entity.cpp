@@ -46,7 +46,7 @@
 #include "gtkutil/filechooser.h"
 #include "gtkmisc.h"
 #include "select.h"
-#include "map.h"
+#include "map/map.h"
 #include "preferences.h"
 #include "mainframe.h"
 #include "qe3.h"

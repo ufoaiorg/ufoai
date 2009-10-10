@@ -45,7 +45,7 @@
 #include "gtkmisc.h"
 #include "mainframe.h"
 #include "grid.h"
-#include "map.h"
+#include "map/map.h"
 
 static WorkZone g_select_workzone;
 

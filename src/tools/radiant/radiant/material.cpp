@@ -32,7 +32,7 @@
 #include "iselection.h"
 #include "brush.h"
 #include "commands.h"
-#include "map.h"
+#include "map/map.h"
 #include "gtkutil/dialog.h"
 #include "os/path.h"
 #include "os/file.h"

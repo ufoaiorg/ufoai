@@ -58,7 +58,7 @@ ModelModules& ReferenceAPI_getModelModules ();
 #include "moduleobservers.h"
 
 #include "mainframe.h"
-#include "map.h"
+#include "map/map.h"
 #include "filetypes.h"
 
 static bool References_Saved ();

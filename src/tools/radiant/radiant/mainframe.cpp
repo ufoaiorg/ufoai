@@ -70,7 +70,7 @@
 #include "gtkutil/widget.h"
 #include "gtkutil/messagebox.h"
 
-#include "autosave.h"
+#include "map/autosave.h"
 #include "brushmanip.h"
 #include "brushmodule.h"
 #include "colorscheme.h"
@@ -89,7 +89,7 @@
 #include "dialogs/maptools.h"
 #include "pathfinding.h"
 #include "gtkmisc.h"
-#include "map.h"
+#include "map/map.h"
 #include "lastused.h"
 #include "plugin.h"
 #include "plugin/PluginManager.h"

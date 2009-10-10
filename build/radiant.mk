@@ -9,7 +9,7 @@ RADIANT_LIBS+=-lgthread-2.0 $(OPENAL_LIBS) -lvorbisfile -lvorbis -logg
 
 RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/archivezip.cpp \
-	$(RADIANT_BASE)/radiant/autosave.cpp \
+	$(RADIANT_BASE)/radiant/map/autosave.cpp \
 	$(RADIANT_BASE)/radiant/brush.cpp \
 	$(RADIANT_BASE)/radiant/brushmanip.cpp \
 	$(RADIANT_BASE)/radiant/brushmodule.cpp \
@@ -38,7 +38,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/particles.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
-	$(RADIANT_BASE)/radiant/map.cpp \
+	$(RADIANT_BASE)/radiant/map/map.cpp \
 	$(RADIANT_BASE)/radiant/mapmodule.cpp \
 	$(RADIANT_BASE)/radiant/nullmodel.cpp \
 	$(RADIANT_BASE)/radiant/parse.cpp \

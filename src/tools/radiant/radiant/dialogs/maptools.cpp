@@ -36,7 +36,7 @@
 #include "gtkutil/messagebox.h"  // gtk_MessageBox
 #include "stream/stringstream.h"
 #include "../qe3.h" // g_brushCount
-#include "../map.h"
+#include "../map/map.h"
 #include "../preferences.h"
 #include "../mainframe.h"
 #ifdef WIN32

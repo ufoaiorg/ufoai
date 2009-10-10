@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/dialog.h"
 #include <gdk/gdkkeysyms.h>
 #include "../mainframe.h"
-#include "../map.h"
+#include "../map/map.h"
 
 class BrushFindIndexWalker : public scene::Graph::Walker {
 	mutable const scene::Node* m_node;

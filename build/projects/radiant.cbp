@@ -490,7 +490,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\Manipulators.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\autosave.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\map\autosave.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\archivezip.cpp">
@@ -610,7 +610,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\mainframe.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\map.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\map\map.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\mapmodule.cpp">

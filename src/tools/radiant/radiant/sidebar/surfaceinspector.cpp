@@ -46,7 +46,7 @@
 #include "gtkutil/nonmodal.h"
 #include "gtkutil/pointer.h"
 #include "gtkutil/button.h"
-#include "../map.h"
+#include "../map/map.h"
 #include "../select.h"
 #include "../brushmanip.h"
 #include "../preferences.h"

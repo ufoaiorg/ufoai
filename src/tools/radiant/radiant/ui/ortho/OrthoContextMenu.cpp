@@ -6,7 +6,7 @@
 #include "../../sidebar/surfaceinspector.h" // SurfaceInspector_FitTexture()
 #include "../../entity.h" // Entity_createFromSelection(), Entity_connectSelected()
 #include "gtkutil/dialog.h"
-#include "../../map.h"
+#include "../../map/map.h"
 #include "imaterial.h"
 #include "radiant_i18n.h"
 #include "../Icons.h"

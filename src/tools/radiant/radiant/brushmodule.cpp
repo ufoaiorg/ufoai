@@ -30,7 +30,7 @@
 #include "preferencesystem.h"
 #include "stringio.h"
 
-#include "map.h"
+#include "map/map.h"
 #include "qe3.h"
 #include "mainframe.h"
 #include "preferences.h"

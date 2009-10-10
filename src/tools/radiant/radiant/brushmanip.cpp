@@ -28,7 +28,7 @@
 #include "gtkutil/menu.h"
 #include "gtkmisc.h"
 #include "brushnode.h"
-#include "map.h"
+#include "map/map.h"
 #include "sidebar/sidebar.h"
 #include "dialogs/prism.h"
 #include "commands.h"

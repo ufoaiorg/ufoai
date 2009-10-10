@@ -35,9 +35,9 @@
 #include "mapfile.h"
 
 #include "map.h"
-#include "mainframe.h"
-#include "qe3.h"
-#include "preferences.h"
+#include "../mainframe.h"
+#include "../qe3.h"
+#include "../preferences.h"
 
 static inline bool DoesFileExist (const std::string& name, std::size_t& size)
 {
