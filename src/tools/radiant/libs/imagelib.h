@@ -67,21 +67,25 @@ class RGBAImage: public Image
 		}
 };
 
-inline InputStream::byte_type* ArchiveFile_loadBuffer (ArchiveFile& file, std::size_t& length)
-{
-	InputStream::byte_type* buffer = (InputStream::byte_type*) malloc(file.size() + 1);
-	length = file.getInputStream().read(buffer, file.size());
-	buffer[file.size()] = 0;
-	return buffer;
-}
-
-inline void ArchiveFile_freeBuffer (InputStream::byte_type* buffer)
-{
-	free(buffer);
-}
-
+/**
+ * Self-destructing archive buffer at the end of its scope
+ * @todo move somewhere else
+ */
 class ScopedArchiveBuffer
 {
+	private:
+		inline InputStream::byte_type* ArchiveFile_loadBuffer (ArchiveFile& file, std::size_t& length)
+		{
+			InputStream::byte_type* buffer = (InputStream::byte_type*) malloc(file.size() + 1);
+			length = file.getInputStream().read(buffer, file.size());
+			buffer[file.size()] = 0;
+			return buffer;
+		}
+
+		inline void ArchiveFile_freeBuffer (InputStream::byte_type* buffer)
+		{
+			free(buffer);
+		}
 	public:
 		std::size_t length;
 		InputStream::byte_type* buffer;
@@ -93,32 +97,6 @@ class ScopedArchiveBuffer
 		~ScopedArchiveBuffer ()
 		{
 			ArchiveFile_freeBuffer(buffer);
-		}
-};
-
-class PointerInputStream: public InputStream
-{
-		const byte* m_read;
-	public:
-		PointerInputStream (const byte* pointer) :
-			m_read(pointer)
-		{
-		}
-		std::size_t read (byte* buffer, std::size_t length)
-		{
-			const byte* end = m_read + length;
-			while (m_read != end) {
-				*buffer++ = *m_read++;
-			}
-			return length;
-		}
-		void seek (std::size_t offset)
-		{
-			m_read += offset;
-		}
-		const byte* get ()
-		{
-			return m_read;
 		}
 };
 
