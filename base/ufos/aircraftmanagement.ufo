@@ -175,7 +175,7 @@ aircraft craft_drop_raptor
 	slot {
 		type		weapon
 		position	nose_center
-		size		small
+		size		light
 	}
 	slot {
 		type		weapon
