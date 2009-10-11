@@ -34,7 +34,7 @@
 #include "../commands.h"
 #include "../mainframe.h"
 #include "../dialog.h"
-#include "../xywindow.h"
+#include "../xyview/xywindow.h"
 #include "../settings/preferences.h"
 
 #include <list>

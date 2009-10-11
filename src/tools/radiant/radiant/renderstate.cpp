@@ -53,7 +53,7 @@
 #include "os/file.h"
 #include "settings/preferences.h"
 
-#include "xywindow.h"
+#include "xyview/xywindow.h"
 
 #include "timer.h"
 

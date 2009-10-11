@@ -54,7 +54,7 @@
 #include "stringio.h"
 #include "container/container.h"
 
-#include "grid.h"
+#include "xyview/grid.h"
 
 #include "selection/Manipulators.h"
 #include "selection/Selector.h"

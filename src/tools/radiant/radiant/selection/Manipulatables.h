@@ -5,7 +5,7 @@
 #include "render.h"
 #include "math/matrix.h"
 #include "math/quaternion.h"
-#include "../grid.h"
+#include "../xyview/grid.h"
 
 struct FlatShadedVertex
 {
@@ -25,7 +25,7 @@ class Manipulatable
 	public:
 		virtual void Construct (const Matrix4& device2manip, const float x, const float y) = 0;
 		virtual void
-				Transform (const Matrix4& manip2object, const Matrix4& device2manip, const float x, const float y) = 0;
+		Transform (const Matrix4& manip2object, const Matrix4& device2manip, const float x, const float y) = 0;
 };
 
 class Rotatable

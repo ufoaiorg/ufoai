@@ -38,7 +38,7 @@
 #include "ifiletypes.h"
 #include "os/path.h"
 #include "os/file.h"
-#include "image.h"
+#include "../image.h"
 #include "gtkutil/messagebox.h"
 
 #include "generic/callback.h"
@@ -47,7 +47,7 @@
 
 #include "scenelib.h"
 #include "eclasslib.h"
-#include "renderer.h"
+#include "../renderer.h"
 #include "moduleobserver.h"
 
 #include "gtkutil/menu.h"
@@ -55,20 +55,20 @@
 #include "gtkutil/widget.h"
 #include "gtkutil/glwidget.h"
 #include "gtkutil/filechooser.h"
-#include "gtkmisc.h"
-#include "select.h"
-#include "brush/csg/csg.h"
-#include "brush/brushmanip.h"
-#include "selection.h"
-#include "entity.h"
-#include "camera/camwindow.h"
-#include "mainframe.h"
-#include "settings/preferences.h"
-#include "commands.h"
+#include "../gtkmisc.h"
+#include "../select.h"
+#include "../brush/csg/csg.h"
+#include "../brush/brushmanip.h"
+#include "../selection.h"
+#include "../entity.h"
+#include "../camera/camwindow.h"
+#include "../mainframe.h"
+#include "../settings/preferences.h"
+#include "../commands.h"
 #include "grid.h"
-#include "sidebar/sidebar.h"
-#include "windowobservers.h"
-#include "ui/ortho/OrthoContextMenu.h"
+#include "../sidebar/sidebar.h"
+#include "../windowobservers.h"
+#include "../ui/ortho/OrthoContextMenu.h"
 
 void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHeight);
 
@@ -619,7 +619,7 @@ void WXY_Print (void)
 	free(img);
 }
 
-#include "timer.h"
+#include "../timer.h"
 
 static Timer g_chasemouse_timer;
 

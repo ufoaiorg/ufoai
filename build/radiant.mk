@@ -22,7 +22,6 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/exec.cpp \
 	$(RADIANT_BASE)/radiant/filetypes.cpp \
 	$(RADIANT_BASE)/radiant/filters.cpp \
-	$(RADIANT_BASE)/radiant/grid.cpp \
 	$(RADIANT_BASE)/radiant/gtkmisc.cpp \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/imagemodules.cpp \
@@ -59,10 +58,12 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/undo.cpp \
 	$(RADIANT_BASE)/radiant/url.cpp \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
-	$(RADIANT_BASE)/radiant/xywindow.cpp \
 	$(RADIANT_BASE)/radiant/levelfilters.cpp \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
+	\
+	$(RADIANT_BASE)/radiant/xyview/grid.cpp \
+	$(RADIANT_BASE)/radiant/xyview/xywindow.cpp \
 	\
 	$(RADIANT_BASE)/radiant/camera/camwindow.cpp \
 	$(RADIANT_BASE)/radiant/camera/view.cpp \

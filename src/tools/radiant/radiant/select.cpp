@@ -44,7 +44,7 @@
 #include "sidebar/sidebar.h"
 #include "gtkmisc.h"
 #include "mainframe.h"
-#include "grid.h"
+#include "xyview/grid.h"
 #include "map/map.h"
 
 static WorkZone g_select_workzone;

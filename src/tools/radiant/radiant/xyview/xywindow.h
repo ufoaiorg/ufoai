@@ -28,8 +28,8 @@
 #include "gtkutil/cursor.h"
 #include "gtkutil/window.h"
 #include "gtkutil/xorrectangle.h"
-#include "camera/view.h"
-#include "map/map.h"
+#include "../camera/view.h"
+#include "../map/map.h"
 #include "texturelib.h"
 #include <gtk/gtkmenuitem.h>
 

@@ -74,7 +74,7 @@
 #include "sidebar.h"
 #include "../settings/preferences.h"
 #include "../commands.h"
-#include "../xywindow.h"
+#include "../xyview/xywindow.h"
 
 void TextureBrowser_queueDraw (TextureBrowser& textureBrowser);
 

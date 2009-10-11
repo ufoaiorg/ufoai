@@ -583,7 +583,7 @@ e<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 		<Unit filename="..\..\src\tools\radiant\radiant\filters.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\grid.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\xyview\grid.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\gtkmisc.cpp">
@@ -770,7 +770,7 @@ e<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 		<Unit filename="..\..\src\tools\radiant\radiant\windowobservers.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\xywindow.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\xyview\xywindow.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\vfs.cpp">

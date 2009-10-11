@@ -51,13 +51,13 @@
 #include "../brush/brushmanip.h"
 #include "../settings/preferences.h"
 #include "../brush/brush_primit.h"
-#include "../xywindow.h"
+#include "../xyview/xywindow.h"
 #include "../mainframe.h"
 #include "../dialog.h"
 #include "../brush/brush.h"
 #include "../commands.h"
 #include "stream/stringstream.h"
-#include "../grid.h"
+#include "../xyview/grid.h"
 #include "../textureentry.h"
 
 inline void spin_button_set_step (GtkSpinButton* spin, gfloat step)

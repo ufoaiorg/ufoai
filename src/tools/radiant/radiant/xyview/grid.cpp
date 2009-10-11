@@ -32,9 +32,9 @@
 #include "signal/signal.h"
 #include "stringio.h"
 
-#include "gtkmisc.h"
-#include "commands.h"
-#include "settings/preferences.h"
+#include "../gtkmisc.h"
+#include "../commands.h"
+#include "../settings/preferences.h"
 
 static Signal0 g_gridChange_callbacks;
 
