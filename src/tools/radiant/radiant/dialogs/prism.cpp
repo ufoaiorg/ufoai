@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/dialog.h"
 #include "scenelib.h"
 #include "../mainframe.h"
-#include "../brushmanip.h"
+#include "../brush/brushmanip.h"
 #include "../sidebar/sidebar.h"
 
 void DoSides (int type, int axis)

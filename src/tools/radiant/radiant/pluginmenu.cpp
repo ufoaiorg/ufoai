@@ -34,7 +34,7 @@
 
 #include "plugin/PluginManager.h"
 #include "mainframe.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 
 static int m_nNextPlugInID = 0;
 

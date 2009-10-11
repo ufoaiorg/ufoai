@@ -51,7 +51,7 @@
 #include "stream/filestream.h"
 #include "stream/stringstream.h"
 #include "os/file.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 
 #include "xywindow.h"
 

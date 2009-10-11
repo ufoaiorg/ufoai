@@ -29,8 +29,8 @@
 #include "iscenegraph.h"
 
 // believe me, i'm sorry
-#include "brush.h"
-#include "brushnode.h"
+#include "brush/brush.h"
+#include "brush/brushnode.h"
 
 #include "generic/callback.h"
 

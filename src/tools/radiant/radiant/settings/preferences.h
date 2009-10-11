@@ -23,7 +23,7 @@
 #define INCLUDED_PREFERENCES_H
 
 #include <libxml/parser.h>
-#include "dialog.h"
+#include "../dialog.h"
 #include <list>
 #include <map>
 

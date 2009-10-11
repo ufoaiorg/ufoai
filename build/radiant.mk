@@ -10,22 +10,16 @@ RADIANT_LIBS+=-lgthread-2.0 $(OPENAL_LIBS) -lvorbisfile -lvorbis -logg
 RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/archivezip.cpp \
 	$(RADIANT_BASE)/radiant/map/autosave.cpp \
-	$(RADIANT_BASE)/radiant/brush.cpp \
-	$(RADIANT_BASE)/radiant/brushmanip.cpp \
-	$(RADIANT_BASE)/radiant/brushmodule.cpp \
-	$(RADIANT_BASE)/radiant/brush_primit.cpp \
 	$(RADIANT_BASE)/radiant/camwindow.cpp \
 	$(RADIANT_BASE)/radiant/colorscheme.cpp \
 	$(RADIANT_BASE)/radiant/commands.cpp \
 	$(RADIANT_BASE)/radiant/console.cpp \
-	$(RADIANT_BASE)/radiant/csg.cpp \
 	$(RADIANT_BASE)/radiant/dialog.cpp \
 	$(RADIANT_BASE)/radiant/eclass.cpp \
 	$(RADIANT_BASE)/radiant/eclass_def.cpp \
 	$(RADIANT_BASE)/radiant/entity.cpp \
 	$(RADIANT_BASE)/radiant/entitymodule.cpp \
 	$(RADIANT_BASE)/radiant/environment.cpp \
-	$(RADIANT_BASE)/radiant/error.cpp \
 	$(RADIANT_BASE)/radiant/exec.cpp \
 	$(RADIANT_BASE)/radiant/filetypes.cpp \
 	$(RADIANT_BASE)/radiant/filters.cpp \
@@ -46,7 +40,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
 	$(RADIANT_BASE)/radiant/pluginmenu.cpp \
 	$(RADIANT_BASE)/radiant/plugintoolbar.cpp \
-	$(RADIANT_BASE)/radiant/preferences.cpp \
+	$(RADIANT_BASE)/radiant/settings/preferences.cpp \
 	$(RADIANT_BASE)/radiant/qe3.cpp \
 	$(RADIANT_BASE)/radiant/qgl.cpp \
 	$(RADIANT_BASE)/radiant/referencecache.cpp \
@@ -66,12 +60,18 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/undo.cpp \
 	$(RADIANT_BASE)/radiant/url.cpp \
 	$(RADIANT_BASE)/radiant/view.cpp \
-	$(RADIANT_BASE)/radiant/winding.cpp \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/xywindow.cpp \
 	$(RADIANT_BASE)/radiant/levelfilters.cpp \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
+	\
+	$(RADIANT_BASE)/radiant/brush/brush.cpp \
+	$(RADIANT_BASE)/radiant/brush/brushmanip.cpp \
+	$(RADIANT_BASE)/radiant/brush/brushmodule.cpp \
+	$(RADIANT_BASE)/radiant/brush/brush_primit.cpp \
+	$(RADIANT_BASE)/radiant/brush/winding.cpp \
+	$(RADIANT_BASE)/radiant/brush/csg/csg.cpp \
 	\
 	$(RADIANT_BASE)/radiant/brushexport/BrushExportOBJ.cpp \
 	\

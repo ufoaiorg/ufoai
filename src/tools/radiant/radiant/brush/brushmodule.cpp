@@ -30,10 +30,11 @@
 #include "preferencesystem.h"
 #include "stringio.h"
 
-#include "map/map.h"
-#include "qe3.h"
-#include "mainframe.h"
-#include "preferences.h"
+#include "../map/map.h"
+#include "../qe3.h"
+#include "../dialog.h"
+#include "../mainframe.h"
+#include "../settings/preferences.h"
 
 LatchedBool g_useAlternativeTextureProjection(false, "Use alternative texture-projection");
 bool g_showAlternativeTextureProjectionOption = false;

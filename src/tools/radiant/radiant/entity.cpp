@@ -47,7 +47,7 @@
 #include "gtkmisc.h"
 #include "select.h"
 #include "map/map.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 #include "mainframe.h"
 #include "qe3.h"
 #include "commands.h"

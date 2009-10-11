@@ -34,7 +34,7 @@
 
 #include "gtkmisc.h"
 #include "commands.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 
 static Signal0 g_gridChange_callbacks;
 

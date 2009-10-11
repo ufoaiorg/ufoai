@@ -26,16 +26,16 @@
 
 #include "gtkutil/widget.h"
 #include "gtkutil/menu.h"
-#include "gtkmisc.h"
+#include "../gtkmisc.h"
 #include "brushnode.h"
-#include "map/map.h"
-#include "sidebar/sidebar.h"
-#include "dialogs/prism.h"
-#include "commands.h"
-#include "mainframe.h"
-#include "dialog.h"
-#include "xywindow.h"
-#include "preferences.h"
+#include "../map/map.h"
+#include "../sidebar/sidebar.h"
+#include "../dialogs/prism.h"
+#include "../commands.h"
+#include "../mainframe.h"
+#include "../dialog.h"
+#include "../xywindow.h"
+#include "../settings/preferences.h"
 
 #include <list>
 

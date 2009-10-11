@@ -38,7 +38,7 @@
 
 #include "image.h"
 #include "texmanip.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 
 enum ETexturesMode
 {

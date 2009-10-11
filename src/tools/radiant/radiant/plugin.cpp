@@ -59,7 +59,6 @@
 #include "gtkutil/filechooser.h"
 
 #include "maplib.h"
-#include "error.h"
 #include "map/map.h"
 #include "qe3.h"
 #include "sidebar/sidebar.h"
@@ -70,7 +69,7 @@
 #include "xywindow.h"
 #include "entity.h"
 #include "select.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 #include "map/autosave.h"
 #include "plugintoolbar.h"
 #include "dialogs/findtextures.h"

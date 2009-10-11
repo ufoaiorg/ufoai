@@ -32,7 +32,7 @@
 #include <gtk/gtktreeselection.h>
 #include <gtk/gtkbutton.h>
 #include "gtkmisc.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 #include "stringio.h"
 #include "os/file.h"
 

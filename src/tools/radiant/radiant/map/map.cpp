@@ -71,13 +71,13 @@
 #include "../camwindow.h"
 #include "../xywindow.h"
 #include "../mainframe.h"
-#include "../preferences.h"
+#include "../settings/preferences.h"
 #include "../referencecache.h"
 #include "../lastused.h"
 #include "../commands.h"
 #include "autosave.h"
-#include "../brush.h"
-#include "../brushnode.h"
+#include "../brush/brush.h"
+#include "../brush/brushnode.h"
 
 class NameObserver
 {
@@ -746,6 +746,9 @@ scene::Node& Node_Clone (scene::Node& node)
 	return clone;
 }
 
+/**
+ * Class to measure time until the scope of the object is left.
+ */
 class ScopeTimer
 {
 		Timer m_timer;
@@ -1857,11 +1860,8 @@ class MapModuleObserver: public ModuleObserver
 		void realise (void)
 		{
 			if (--m_unrealised == 0) {
-				ASSERT_MESSAGE(!string_empty(g_qeglobals.m_userGamePath.c_str()), "maps_directory: user-game-path is empty");
-				StringOutputStream buffer(256);
-				buffer << g_qeglobals.m_userGamePath.c_str() << "maps/";
-				g_mkdir(buffer.c_str(), 0775);
-				g_mapsPath = buffer.c_str();
+				g_mapsPath = g_qeglobals.m_userGamePath + "maps/";
+				g_mkdir(g_mapsPath.c_str(), 0775);
 			}
 		}
 		void unrealise (void)

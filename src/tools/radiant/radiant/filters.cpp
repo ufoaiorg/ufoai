@@ -34,7 +34,7 @@
 #include "gtkmisc.h"
 #include "mainframe.h"
 #include "commands.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 
 struct filters_globals_t
 {

@@ -34,7 +34,6 @@
 
 #include "debugging/debugging.h"
 #include "version.h"
-#include "error.h"
 #include "environment.h"
 
 #include "ifilesystem.h"
@@ -71,11 +70,11 @@
 #include "gtkutil/messagebox.h"
 
 #include "map/autosave.h"
-#include "brushmanip.h"
-#include "brushmodule.h"
+#include "brush/brushmanip.h"
+#include "brush/brushmodule.h"
 #include "colorscheme.h"
 #include "camwindow.h"
-#include "csg.h"
+#include "brush/csg/csg.h"
 #include "commands.h"
 #include "console.h"
 #include "entity.h"
@@ -95,7 +94,7 @@
 #include "plugin/PluginManager.h"
 #include "pluginmenu.h"
 #include "plugintoolbar.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 #include "qe3.h"
 #include "qgl.h"
 #include "select.h"
@@ -2171,7 +2170,8 @@ void MainFrame::Create (void)
 		break;
 	}
 	default:
-		Error("Invalid layout type set - remove your radiant config files and retry");
+		gtkutil::errorDialog(MainFrame_getWindow(),
+				_("Invalid layout type set - remove your radiant config files and retry"));
 	}
 
 	gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(notebook), FALSE, FALSE, 0);

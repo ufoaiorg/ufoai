@@ -52,7 +52,7 @@
 #include "gtkmisc.h"
 #include "selection.h"
 #include "mainframe.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 #include "commands.h"
 #include "xywindow.h"
 #include "windowobservers.h"

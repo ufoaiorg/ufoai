@@ -31,7 +31,6 @@
 #include "debugging/debugging.h"
 
 #include "generic/callback.h"
-#include "string/string.h"
 #include "stream/stringstream.h"
 #include "os/file.h"
 #include "os/path.h"
@@ -39,11 +38,10 @@
 #include "gtkutil/filechooser.h"
 #include "gtkutil/messagebox.h"
 
-#include "error.h"
-#include "console.h"
-#include "xywindow.h"
-#include "mainframe.h"
-#include "qe3.h"
+#include "../console.h"
+#include "../xywindow.h"
+#include "../mainframe.h"
+#include "../qe3.h"
 #include <string>
 
 void Interface_constructPreferences (PreferencesPage& page)
@@ -94,12 +92,11 @@ CGameDescription::CGameDescription (xmlDocPtr pDoc, const std::string& gameFile)
 	// read the user-friendly game name
 	xmlNodePtr pNode = pDoc->children;
 
-	while (strcmp((const char*) pNode->name, "game") && pNode != 0) {
+	while (strcmp((const char*) pNode->name, "game") && pNode != 0)
 		pNode = pNode->next;
-	}
-	if (!pNode) {
-		Error(_("Didn't find 'game' node in the game description file '%s'\n"), pDoc->URL);
-	}
+
+	if (!pNode)
+		gtkutil::errorDialog(MainFrame_getWindow(), _("Didn't find 'game' node in ufoai.game file\n"));
 
 	for (xmlAttrPtr attr = pNode->properties; attr != 0; attr = attr->next) {
 		m_gameDescription.insert(GameDescription::value_type(xmlAttr_getName(attr), xmlAttr_getValue(attr)));
@@ -186,7 +183,7 @@ void CGameDialog::Init ()
 		g_pGameDescription = new CGameDescription(pDoc, strGameFilename);
 		xmlFreeDoc(pDoc);
 	} else {
-		Error("XML parser failed on '%s'\n", strGameFilename.c_str());
+		gtkutil::errorDialog(MainFrame_getWindow(), _("XML parser failed ufoai.game"));
 	}
 }
 

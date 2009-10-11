@@ -11,10 +11,10 @@
 #include "xywindow.h"
 #include "eclasslib.h"
 #include "commands.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 #include "gtkmisc.h"
 #include "gtkutil/menu.h"
-#include "brushmodule.h"
+#include "brush/brushmodule.h"
 #include "moduleobservers.h"
 
 /**

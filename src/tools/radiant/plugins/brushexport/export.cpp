@@ -9,7 +9,7 @@
 #include <map>
 
 // this is very evil, but right now there is no better way
-#include "../../radiant/brush.h"
+#include "../../radiant/brush/brush.h"
 
 /*
  * Abstract baseclass for modelexporters

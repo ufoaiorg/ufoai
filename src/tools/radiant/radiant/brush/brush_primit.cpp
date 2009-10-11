@@ -35,7 +35,7 @@
 #include "math/aabb.h"
 
 #include "winding.h"
-#include "preferences.h"
+#include "../settings/preferences.h"
 
 /* greebo: This method calculates the normalised basis vectors of the texture plane as defined by <normal>
  *

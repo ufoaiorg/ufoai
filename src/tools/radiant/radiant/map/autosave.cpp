@@ -30,14 +30,14 @@
 #include "os/file.h"
 #include "os/path.h"
 #include "stream/stringstream.h"
-#include "gtkutil/messagebox.h"
+#include "gtkutil/dialog.h"
 #include "scenelib.h"
 #include "mapfile.h"
 
 #include "map.h"
 #include "../mainframe.h"
 #include "../qe3.h"
-#include "../preferences.h"
+#include "../settings/preferences.h"
 
 static inline bool DoesFileExist (const std::string& name, std::size_t& size)
 {

@@ -80,7 +80,7 @@
 #include "map/map.h"
 #include "mainframe.h"
 #include "commands.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 #include "environment.h"
 #include "referencecache.h"
 #include "stacktrace.h"

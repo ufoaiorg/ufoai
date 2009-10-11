@@ -5,7 +5,7 @@
  *
  * Inherits from BrushVisitor class in radiant/brush.h
  */
-#include "../brush.h"	// for BrushVisitor declaration
+#include "../brush/brush.h"	// for BrushVisitor declaration
 #include "stream/stringstream.h"
 #include "stream/textfilestream.h"
 

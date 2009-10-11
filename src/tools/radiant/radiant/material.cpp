@@ -30,7 +30,7 @@
 #include "mainframe.h"
 #include "gtkmisc.h"
 #include "iselection.h"
-#include "brush.h"
+#include "brush/brush.h"
 #include "commands.h"
 #include "map/map.h"
 #include "gtkutil/dialog.h"

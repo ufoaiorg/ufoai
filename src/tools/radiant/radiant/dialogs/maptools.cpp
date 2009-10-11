@@ -37,7 +37,7 @@
 #include "stream/stringstream.h"
 #include "../qe3.h" // g_brushCount
 #include "../map/map.h"
-#include "../preferences.h"
+#include "../settings/preferences.h"
 #include "../mainframe.h"
 #ifdef WIN32
 #include "../gtkmisc.h"

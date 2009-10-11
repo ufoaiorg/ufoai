@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+e<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
@@ -496,19 +496,19 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\archivezip.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\brush.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\brush.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\brush_primit.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\brush_primit.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\brushexport\BrushExportOBJ.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\brushmanip.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\brushmanip.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\brushmodule.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\brushmodule.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\camwindow.cpp">
@@ -523,7 +523,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\console.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\csg.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\csg\csg.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\dialog.cpp">
@@ -572,9 +572,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\environment.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\error.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\exec.cpp">
@@ -661,7 +658,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\plugintoolbar.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\preferences.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\settings\preferences.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\qe3.cpp">
@@ -767,7 +764,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\view.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\winding.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\winding.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\windowobservers.cpp">

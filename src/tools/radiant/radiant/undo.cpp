@@ -26,7 +26,7 @@
 #include "preferencesystem.h"
 #include "string/string.h"
 #include "generic/callback.h"
-#include "preferences.h"
+#include "settings/preferences.h"
 #include "stringio.h"
 
 #include <list>

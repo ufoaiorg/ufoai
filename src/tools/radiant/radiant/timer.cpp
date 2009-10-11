@@ -69,17 +69,17 @@ MillisecondTime MillisecondTime::current ()
 {
 	static class Cached
 	{
-		time_t m_base;
+			time_t m_base;
 		public:
-		Cached ()
-		{
-			time(&m_base);
-		}
-		time_t base ()
-		{
-			return m_base;
-		}
-	}cached;
+			Cached ()
+			{
+				time(&m_base);
+			}
+			time_t base ()
+			{
+				return m_base;
+			}
+	} cached;
 
 	timeval time;
 	gettimeofday(&time, 0);
