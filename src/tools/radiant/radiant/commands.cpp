@@ -277,7 +277,6 @@ void accelerator_clear_button_clicked (GtkButton *btn, gpointer dialogptr)
 	memset(&val, 0, sizeof(val));
 	gtk_tree_model_get_value(GTK_TREE_MODEL(model), &iter, CMDLIST_COMMAND, &val);
 	const char *commandName = g_value_get_string(&val);
-	;
 
 	// clear the ACTUAL accelerator too!
 	disconnect_accelerator(commandName);
