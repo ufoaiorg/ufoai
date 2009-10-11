@@ -12,7 +12,7 @@
 
 #include "renderable.h"
 #include "pivot.h"
-#include "../view.h"
+#include "../camera/view.h"
 #include "math/matrix.h"
 #include "selectionlib.h"
 #include "Manipulatables.h"

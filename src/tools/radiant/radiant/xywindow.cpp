@@ -61,7 +61,7 @@
 #include "brush/brushmanip.h"
 #include "selection.h"
 #include "entity.h"
-#include "camwindow.h"
+#include "camera/camwindow.h"
 #include "mainframe.h"
 #include "settings/preferences.h"
 #include "commands.h"

@@ -6,7 +6,7 @@
 #include "radiant_i18n.h"
 #include "colorscheme.h"
 #include "mainframe.h"
-#include "camwindow.h"
+#include "camera/camwindow.h"
 #include "sidebar/sidebar.h"
 #include "xywindow.h"
 #include "eclasslib.h"

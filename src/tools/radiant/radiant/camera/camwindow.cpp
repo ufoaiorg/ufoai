@@ -49,16 +49,16 @@
 #include "gtkutil/toolbar.h"
 #include "gtkutil/glwidget.h"
 #include "gtkutil/xorrectangle.h"
-#include "gtkmisc.h"
-#include "selection.h"
-#include "mainframe.h"
-#include "settings/preferences.h"
-#include "commands.h"
-#include "xywindow.h"
-#include "windowobservers.h"
-#include "ui/Icons.h"
+#include "../gtkmisc.h"
+#include "../selection.h"
+#include "../mainframe.h"
+#include "../settings/preferences.h"
+#include "../commands.h"
+#include "../xywindow.h"
+#include "../windowobservers.h"
+#include "../ui/Icons.h"
 
-#include "timer.h"
+#include "../timer.h"
 
 Signal0 g_cameraMoved_callbacks;
 
@@ -1314,7 +1314,7 @@ void CamWnd::DisableFreeMove ()
 	CamWnd_Update(*this);
 }
 
-#include "renderer.h"
+#include "../renderer.h"
 
 class CamRenderer: public Renderer
 {
@@ -1809,7 +1809,7 @@ void Camera_registerPreferencesPage ()
 
 #include "preferencesystem.h"
 #include "stringio.h"
-#include "dialog.h"
+#include "../dialog.h"
 
 typedef FreeCaller1<bool, CamWnd_Move_Discrete_Import> CamWndMoveDiscreteImportCaller;
 

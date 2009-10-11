@@ -73,7 +73,7 @@
 #include "brush/brushmanip.h"
 #include "brush/brushmodule.h"
 #include "colorscheme.h"
-#include "camwindow.h"
+#include "camera/camwindow.h"
 #include "brush/csg/csg.h"
 #include "commands.h"
 #include "console.h"

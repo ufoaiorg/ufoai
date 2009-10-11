@@ -65,7 +65,7 @@
 #include "gtkmisc.h"
 #include "mainframe.h"
 #include "lastused.h"
-#include "camwindow.h"
+#include "camera/camwindow.h"
 #include "xywindow.h"
 #include "entity.h"
 #include "select.h"

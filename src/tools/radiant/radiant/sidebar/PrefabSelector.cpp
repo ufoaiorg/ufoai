@@ -38,7 +38,7 @@
 #include "ifilesystem.h"
 #include "archivelib.h"
 #include "script/scripttokeniser.h"
-#include "../camwindow.h"
+#include "../camera/camwindow.h"
 
 namespace sidebar
 {

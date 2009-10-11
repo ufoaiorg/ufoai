@@ -511,7 +511,7 @@ e<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\brushmodule.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\camwindow.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\camera\camwindow.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\colorscheme.cpp">
@@ -761,7 +761,7 @@ e<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 		<Unit filename="..\..\src\tools\radiant\radiant\url.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\view.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\camera\view.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\winding.cpp">

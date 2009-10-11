@@ -44,7 +44,7 @@
 #include "generic/object.h"
 #include "selectionlib.h"
 #include "render.h"
-#include "view.h"
+#include "camera/view.h"
 #include "renderer.h"
 #include "stream/stringstream.h"
 #include "eclasslib.h"

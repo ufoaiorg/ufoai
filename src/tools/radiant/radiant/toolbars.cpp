@@ -27,7 +27,7 @@
 #include "radiant_i18n.h"
 #include "toolbars.h"
 #include "gtkmisc.h"
-#include "camwindow.h"
+#include "camera/camwindow.h"
 #include "ui/Icons.h"
 #include "pathfinding.h"
 

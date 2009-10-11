@@ -68,7 +68,7 @@
 #include "../filetypes.h"
 #include "../sidebar/MapInfo.h"
 #include "../qe3.h"
-#include "../camwindow.h"
+#include "../camera/camwindow.h"
 #include "../xywindow.h"
 #include "../mainframe.h"
 #include "../settings/preferences.h"

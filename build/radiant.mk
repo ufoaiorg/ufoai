@@ -10,7 +10,6 @@ RADIANT_LIBS+=-lgthread-2.0 $(OPENAL_LIBS) -lvorbisfile -lvorbis -logg
 RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/archivezip.cpp \
 	$(RADIANT_BASE)/radiant/map/autosave.cpp \
-	$(RADIANT_BASE)/radiant/camwindow.cpp \
 	$(RADIANT_BASE)/radiant/colorscheme.cpp \
 	$(RADIANT_BASE)/radiant/commands.cpp \
 	$(RADIANT_BASE)/radiant/console.cpp \
@@ -59,12 +58,14 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/treemodel.cpp \
 	$(RADIANT_BASE)/radiant/undo.cpp \
 	$(RADIANT_BASE)/radiant/url.cpp \
-	$(RADIANT_BASE)/radiant/view.cpp \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/xywindow.cpp \
 	$(RADIANT_BASE)/radiant/levelfilters.cpp \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
+	\
+	$(RADIANT_BASE)/radiant/camera/camwindow.cpp \
+	$(RADIANT_BASE)/radiant/camera/view.cpp \
 	\
 	$(RADIANT_BASE)/radiant/brush/brush.cpp \
 	$(RADIANT_BASE)/radiant/brush/brushmanip.cpp \
