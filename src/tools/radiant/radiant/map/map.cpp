@@ -415,9 +415,6 @@ void Map_SetWorldspawn (Map& map, scene::Node* node)
 float g_MaxWorldCoord = 64 * 1024;
 float g_MinWorldCoord = -64 * 1024;
 
-static void AddRegionBrushes (void);
-static void RemoveRegionBrushes (void);
-
 /*
  ================
  Map_Free
@@ -1021,12 +1018,8 @@ void Map_Traverse_Region (scene::Node& root, const scene::Traversable::Walker& w
 
 bool Map_SaveRegion (const char *filename)
 {
-	AddRegionBrushes();
-
 	const bool success = MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(),
 			Map_Traverse_Region, filename);
-
-	RemoveRegionBrushes();
 
 	return success;
 }
@@ -1098,8 +1091,6 @@ void Map_New (void)
 	g_currentMap = &g_map;
 }
 
-extern void ConstructRegionBrushes (scene::Node* brushes[6], const Vector3& region_mins, const Vector3& region_maxs);
-
 /*
  ===========================================================
  REGION
@@ -1108,41 +1099,6 @@ extern void ConstructRegionBrushes (scene::Node* brushes[6], const Vector3& regi
 static bool region_active;
 Vector3 region_mins(g_MinWorldCoord, g_MinWorldCoord, g_MinWorldCoord);
 Vector3 region_maxs(g_MaxWorldCoord, g_MaxWorldCoord, g_MaxWorldCoord);
-
-static scene::Node* region_sides[6];
-static scene::Node* region_startpoint = 0;
-
-/**
- * @brief a regioned map will have temp walls put up at the region boundary
- * @todo old implementation of region brushes
- * we still add them straight in the worldspawn and take them out after the map is saved
- * with the new implementation we should be able to append them in a temporary manner
- * to the data we pass to the map module
- */
-static void AddRegionBrushes (void)
-{
-	int i;
-
-	for (i = 0; i < 6; i++) {
-		region_sides[i] = &GlobalBrushCreator().createBrush();
-		Node_getTraversable(Map_FindOrInsertWorldspawn(g_map))->insert(NodeSmartReference(*region_sides[i]));
-	}
-
-	region_startpoint = &GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert(
-			"info_player_start", false));
-
-	ConstructRegionBrushes(region_sides, region_mins, region_maxs);
-
-	Node_getTraversable(GlobalSceneGraph().root())->insert(NodeSmartReference(*region_startpoint));
-}
-
-static void RemoveRegionBrushes (void)
-{
-	for (std::size_t i = 0; i < 6; i++) {
-		Node_getTraversable(*Map_GetWorldspawn(g_map))->erase(*region_sides[i]);
-	}
-	Node_getTraversable(GlobalSceneGraph().root())->erase(*region_startpoint);
-}
 
 static inline void exclude_node (scene::Node& node, bool exclude)
 {

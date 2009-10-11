@@ -62,7 +62,7 @@
 #include "gtkutil/messagebox.h"
 
 #include "../map/map.h"
-#include "../qgl.h"
+#include "../render/qgl.h"
 #include "../select.h"
 #include "../brush/brush_primit.h"
 #include "../brush/brushmanip.h"

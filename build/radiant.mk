@@ -37,7 +37,6 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/plugintoolbar.cpp \
 	$(RADIANT_BASE)/radiant/settings/preferences.cpp \
 	$(RADIANT_BASE)/radiant/qe3.cpp \
-	$(RADIANT_BASE)/radiant/qgl.cpp \
 	$(RADIANT_BASE)/radiant/referencecache.cpp \
 	$(RADIANT_BASE)/radiant/scenegraph.cpp \
 	$(RADIANT_BASE)/radiant/select.cpp \
@@ -58,6 +57,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
 	\
+	$(RADIANT_BASE)/radiant/render/qgl.cpp \
 	$(RADIANT_BASE)/radiant/render/renderstate.cpp \
 	\
 	$(RADIANT_BASE)/radiant/referencecache/nullmodel.cpp \
@@ -79,6 +79,12 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/brush/brush_primit.cpp \
 	$(RADIANT_BASE)/radiant/brush/winding.cpp \
 	$(RADIANT_BASE)/radiant/brush/csg/csg.cpp \
+	\
+	$(RADIANT_BASE)/radiant/brush/construct/Cone.cpp \
+	$(RADIANT_BASE)/radiant/brush/construct/Cuboid.cpp \
+	$(RADIANT_BASE)/radiant/brush/construct/Prism.cpp \
+	$(RADIANT_BASE)/radiant/brush/construct/Rock.cpp \
+	$(RADIANT_BASE)/radiant/brush/construct/Sphere.cpp \
 	\
 	$(RADIANT_BASE)/radiant/brushexport/BrushExportOBJ.cpp \
 	\

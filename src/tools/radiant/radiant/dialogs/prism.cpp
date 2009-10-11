@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "../brush/brushmanip.h"
 #include "../sidebar/sidebar.h"
 
-void DoSides (int type, int axis)
+void DoSides (int type)
 {
 	ModalDialog dialog;
 	GtkEntry* sides_entry;

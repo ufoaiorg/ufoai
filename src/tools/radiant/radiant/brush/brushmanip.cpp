@@ -37,388 +37,39 @@
 #include "../xyview/xywindow.h"
 #include "../settings/preferences.h"
 
+#include "construct/Prism.h"
+#include "construct/Cone.h"
+#include "construct/Cuboid.h"
+#include "construct/Rock.h"
+#include "construct/Sphere.h"
+
 #include <list>
 
-/**
- * @brief Creates a cube out of the given mins and maxs of the axis aligned bounding box
- * @param[out] The brush to creates the planes for
- * @param[in] bounds The mins and maxs of the cube
- * @param[in] shader The path of the texture relative to the base dir
- * @param[in] projection The texture projection that is used (shift, scale and rotate values)
- */
-static void Brush_ConstructCuboid (Brush& brush, const AABB& bounds, const std::string& shader,
-		const TextureProjection& projection)
-{
-	const unsigned char box[3][2] = { { 0, 1 }, { 2, 0 }, { 1, 2 } };
-	Vector3 mins(bounds.origin - bounds.extents);
-	Vector3 maxs(bounds.origin + bounds.extents);
-
-	brush.clear();
-	brush.reserve(6);
-
-	{
-		for (int i = 0; i < 3; ++i) {
-			Vector3 planepts1(maxs);
-			Vector3 planepts2(maxs);
-			planepts2[box[i][0]] = mins[box[i][0]];
-			planepts1[box[i][1]] = mins[box[i][1]];
-
-			brush.addPlane(maxs, planepts1, planepts2, shader, projection);
-		}
-	}
-	{
-		for (int i = 0; i < 3; ++i) {
-			Vector3 planepts1(mins);
-			Vector3 planepts2(mins);
-			planepts1[box[i][0]] = maxs[box[i][0]];
-			planepts2[box[i][1]] = maxs[box[i][1]];
-
-			brush.addPlane(mins, planepts1, planepts2, shader, projection);
-		}
-	}
-}
-
-static inline float max_extent (const Vector3& extents)
-{
-	return std::max(std::max(extents[0], extents[1]), extents[2]);
-}
-
-static inline float max_extent_2d (const Vector3& extents, int axis)
-{
-	switch (axis) {
-	case 0:
-		return std::max(extents[1], extents[2]);
-	case 1:
-		return std::max(extents[0], extents[2]);
-	default:
-		return std::max(extents[0], extents[1]);
-	}
-}
-
-static const std::size_t c_brushPrism_minSides = 3;
-static const std::size_t c_brushPrism_maxSides = c_brush_maxFaces - 2;
-static const char* const c_brushPrism_name = "brushPrism";
-
-static void Brush_ConstructPrism (Brush& brush, const AABB& bounds, std::size_t sides, int axis, const char* shader,
-		const TextureProjection& projection)
-{
-	if (sides < c_brushPrism_minSides) {
-		globalErrorStream() << c_brushPrism_name << ": sides " << Unsigned(sides) << ": too few sides, minimum is "
-				<< Unsigned(c_brushPrism_minSides) << "\n";
-		return;
-	}
-	if (sides > c_brushPrism_maxSides) {
-		globalErrorStream() << c_brushPrism_name << ": sides " << Unsigned(sides) << ": too many sides, maximum is "
-				<< Unsigned(c_brushPrism_maxSides) << "\n";
-		return;
-	}
-
-	brush.clear();
-	brush.reserve(sides + 2);
-
-	Vector3 mins(bounds.origin - bounds.extents);
-	Vector3 maxs(bounds.origin + bounds.extents);
-
-	float radius = max_extent_2d(bounds.extents, axis);
-	const Vector3& mid = bounds.origin;
-	Vector3 planepts[3];
-
-	planepts[2][(axis + 1) % 3] = mins[(axis + 1) % 3];
-	planepts[2][(axis + 2) % 3] = mins[(axis + 2) % 3];
-	planepts[2][axis] = maxs[axis];
-	planepts[1][(axis + 1) % 3] = maxs[(axis + 1) % 3];
-	planepts[1][(axis + 2) % 3] = mins[(axis + 2) % 3];
-	planepts[1][axis] = maxs[axis];
-	planepts[0][(axis + 1) % 3] = maxs[(axis + 1) % 3];
-	planepts[0][(axis + 2) % 3] = maxs[(axis + 2) % 3];
-	planepts[0][axis] = maxs[axis];
-
-	brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
-
-	planepts[0][(axis + 1) % 3] = mins[(axis + 1) % 3];
-	planepts[0][(axis + 2) % 3] = mins[(axis + 2) % 3];
-	planepts[0][axis] = mins[axis];
-	planepts[1][(axis + 1) % 3] = maxs[(axis + 1) % 3];
-	planepts[1][(axis + 2) % 3] = mins[(axis + 2) % 3];
-	planepts[1][axis] = mins[axis];
-	planepts[2][(axis + 1) % 3] = maxs[(axis + 1) % 3];
-	planepts[2][(axis + 2) % 3] = maxs[(axis + 2) % 3];
-	planepts[2][axis] = mins[axis];
-
-	brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
-
-	for (std::size_t i = 0; i < sides; ++i) {
-		const double sv = sin(i * M_PI * 2 / sides);
-		const double cv = cos(i * M_PI * 2 / sides);
-
-		planepts[0][(axis + 1) % 3] = static_cast<float> (floor(mid[(axis + 1) % 3] + radius * cv + 0.5));
-		planepts[0][(axis + 2) % 3] = static_cast<float> (floor(mid[(axis + 2) % 3] + radius * sv + 0.5));
-		planepts[0][axis] = mins[axis];
-
-		planepts[1][(axis + 1) % 3] = planepts[0][(axis + 1) % 3];
-		planepts[1][(axis + 2) % 3] = planepts[0][(axis + 2) % 3];
-		planepts[1][axis] = maxs[axis];
-
-		planepts[2][(axis + 1) % 3] = static_cast<float> (floor(planepts[0][(axis + 1) % 3] - radius * sv + 0.5));
-		planepts[2][(axis + 2) % 3] = static_cast<float> (floor(planepts[0][(axis + 2) % 3] + radius * cv + 0.5));
-		planepts[2][axis] = maxs[axis];
-
-		brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
-	}
-}
-
-static const std::size_t c_brushCone_minSides = 3;
-static const std::size_t c_brushCone_maxSides = 32;
-static const char* const c_brushCone_name = "brushCone";
-
-static void Brush_ConstructCone (Brush& brush, const AABB& bounds, std::size_t sides, const char* shader,
-		const TextureProjection& projection)
-{
-	if (sides < c_brushCone_minSides) {
-		globalErrorStream() << c_brushCone_name << ": sides " << Unsigned(sides) << ": too few sides, minimum is "
-				<< Unsigned(c_brushCone_minSides) << "\n";
-		return;
-	}
-	if (sides > c_brushCone_maxSides) {
-		globalErrorStream() << c_brushCone_name << ": sides " << Unsigned(sides) << ": too many sides, maximum is "
-				<< Unsigned(c_brushCone_maxSides) << "\n";
-		return;
-	}
-
-	brush.clear();
-	brush.reserve(sides + 1);
-
-	Vector3 mins(bounds.origin - bounds.extents);
-	Vector3 maxs(bounds.origin + bounds.extents);
-
-	float radius = max_extent(bounds.extents);
-	const Vector3& mid = bounds.origin;
-	Vector3 planepts[3];
-
-	planepts[0][0] = mins[0];
-	planepts[0][1] = mins[1];
-	planepts[0][2] = mins[2];
-	planepts[1][0] = maxs[0];
-	planepts[1][1] = mins[1];
-	planepts[1][2] = mins[2];
-	planepts[2][0] = maxs[0];
-	planepts[2][1] = maxs[1];
-	planepts[2][2] = mins[2];
-
-	brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
-
-	for (std::size_t i = 0; i < sides; ++i) {
-		double sv = sin(i * 3.14159265 * 2 / sides);
-		double cv = cos(i * 3.14159265 * 2 / sides);
-
-		planepts[0][0] = static_cast<float> (floor(mid[0] + radius * cv + 0.5));
-		planepts[0][1] = static_cast<float> (floor(mid[1] + radius * sv + 0.5));
-		planepts[0][2] = mins[2];
-
-		planepts[1][0] = mid[0];
-		planepts[1][1] = mid[1];
-		planepts[1][2] = maxs[2];
-
-		planepts[2][0] = static_cast<float> (floor(planepts[0][0] - radius * sv + 0.5));
-		planepts[2][1] = static_cast<float> (floor(planepts[0][1] + radius * cv + 0.5));
-		planepts[2][2] = maxs[2];
-
-		brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
-	}
-}
-
-static const std::size_t c_brushSphere_minSides = 3;
-static const std::size_t c_brushSphere_maxSides = 31;
-static const char* const c_brushSphere_name = "brushSphere";
-
-static void Brush_ConstructSphere (Brush& brush, const AABB& bounds, std::size_t sides, const char* shader,
-		const TextureProjection& projection)
-{
-	if (sides < c_brushSphere_minSides) {
-		globalErrorStream() << c_brushSphere_name << ": sides " << Unsigned(sides) << ": too few sides, minimum is "
-				<< Unsigned(c_brushSphere_minSides) << "\n";
-		return;
-	}
-	if (sides > c_brushSphere_maxSides) {
-		globalErrorStream() << c_brushSphere_name << ": sides " << Unsigned(sides) << ": too many sides, maximum is "
-				<< Unsigned(c_brushSphere_maxSides) << "\n";
-		return;
-	}
-
-	brush.clear();
-	brush.reserve(sides * sides);
-
-	float radius = max_extent(bounds.extents);
-	const Vector3& mid = bounds.origin;
-	Vector3 planepts[3];
-
-	double dt = 2 * c_pi / sides;
-	double dp = c_pi / sides;
-	for (std::size_t i = 0; i < sides; i++) {
-		for (std::size_t j = 0; j < sides - 1; j++) {
-			double t = i * dt;
-			double p = float(j * dp - c_pi / 2);
-
-			planepts[0] = mid + vector3_for_spherical(t, p) * radius;
-			planepts[1] = mid + vector3_for_spherical(t, p + dp) * radius;
-			planepts[2] = mid + vector3_for_spherical(t + dt, p + dp) * radius;
-
-			brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
-		}
-	}
-
-	{
-		double p = (sides - 1) * dp - c_pi / 2;
-		for (std::size_t i = 0; i < sides; i++) {
-			double t = i * dt;
-
-			planepts[0] = mid + vector3_for_spherical(t, p) * radius;
-			planepts[1] = mid + vector3_for_spherical(t + dt, p + dp) * radius;
-			planepts[2] = mid + vector3_for_spherical(t + dt, p) * radius;
-
-			brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
-		}
-	}
-}
-
-const std::size_t c_brushRock_minSides = 10;
-const std::size_t c_brushRock_maxSides = 1000;
-const char* const c_brushRock_name = "brushRock";
-
-void Brush_ConstructRock (Brush& brush, const AABB& bounds, std::size_t sides, const char* shader,
-		const TextureProjection& projection)
-{
-	if (sides < c_brushRock_minSides) {
-		globalErrorStream() << c_brushRock_name << ": sides " << Unsigned(sides) << ": too few sides, minimum is "
-				<< Unsigned(c_brushRock_minSides) << "\n";
-		return;
-	}
-	if (sides > c_brushRock_maxSides) {
-		globalErrorStream() << c_brushRock_name << ": sides " << Unsigned(sides) << ": too many sides, maximum is "
-				<< Unsigned(c_brushRock_maxSides) << "\n";
-		return;
-	}
-
-	brush.clear();
-	brush.reserve(sides * sides);
-
-	float radius = max_extent(bounds.extents);
-	const Vector3& mid = bounds.origin;
-	Vector3 planepts[3];
-
-	for (std::size_t j = 0; j < sides; j++) {
-		planepts[0][0] = rand() - (RAND_MAX / 2);
-		planepts[0][1] = rand() - (RAND_MAX / 2);
-		planepts[0][2] = rand() - (RAND_MAX / 2);
-		vector3_normalise(planepts[0]);
-
-		// find two vectors that are perpendicular to planepts[0]
-		ComputeAxisBase(planepts[0], planepts[1], planepts[2]);
-
-		planepts[0] = mid + (planepts[0] * radius);
-		planepts[1] = planepts[0] + (planepts[1] * radius);
-		planepts[2] = planepts[0] + (planepts[2] * radius);
-
-#if 0
-		// make sure the orientation is right
-		if (vector3_dot(vector3_subtracted(planepts[0], mid), vector3_cross(vector3_subtracted(planepts[1], mid), vector3_subtracted(planepts[2], mid))) > 0) {
-			Vector3 h;
-			h = planepts[1];
-			planepts[1] = planepts[2];
-			planepts[2] = h;
-			globalOutputStream() << "flip\n";
-		} else
-		globalOutputStream() << "no flip\n";
-#endif
-
-		brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
-	}
-}
-
-static inline int GetViewAxis ()
-{
-	switch (GlobalXYWnd_getCurrentViewType()) {
-	case XY:
-		return 2;
-	case XZ:
-		return 1;
-	case YZ:
-		return 0;
-	}
-	return 2;
-}
-
 static void Brush_ConstructPrefab (Brush& brush, EBrushPrefab type, const AABB& bounds, std::size_t sides,
-		const char* shader, const TextureProjection& projection)
+		const TextureProjection& projection, const std::string& shader = "textures/tex_common/nodraw")
 {
-
-	if (!shader || !*shader)
-		shader = "textures/tex_common/nodraw";
-
+	brushconstruct::BrushConstructor *bc;
 	switch (type) {
-	case eBrushPrism: {
-		const int axis = GetViewAxis();
-		StringOutputStream command;
-		command << c_brushPrism_name << " -sides " << Unsigned(sides) << " -axis " << axis;
-		UndoableCommand undo(command.c_str());
-
-		Brush_ConstructPrism(brush, bounds, sides, axis, shader, projection);
-	}
+	case eBrushPrism:
+		bc = &brushconstruct::Prism::getInstance();
 		break;
-	case eBrushCone: {
-		StringOutputStream command;
-		command << c_brushCone_name << " -sides " << Unsigned(sides);
-		UndoableCommand undo(command.c_str());
-
-		Brush_ConstructCone(brush, bounds, sides, shader, projection);
-	}
+	case eBrushCone:
+		bc = &brushconstruct::Cone::getInstance();
 		break;
-	case eBrushSphere: {
-		StringOutputStream command;
-		command << c_brushSphere_name << " -sides " << Unsigned(sides);
-		UndoableCommand undo(command.c_str());
-
-		Brush_ConstructSphere(brush, bounds, sides, shader, projection);
-	}
+	case eBrushSphere:
+		bc = &brushconstruct::Sphere::getInstance();
 		break;
-	case eBrushRock: {
-		StringOutputStream command;
-		command << c_brushRock_name << " -sides " << Unsigned(sides);
-		UndoableCommand undo(command.c_str());
-
-		Brush_ConstructRock(brush, bounds, sides, shader, projection);
-	}
+	case eBrushRock:
+		bc = &brushconstruct::Rock::getInstance();
 		break;
-	}
-}
-
-void ConstructRegionBrushes (scene::Node* brushes[6], const Vector3& region_mins, const Vector3& region_maxs)
-{
-	{
-		// set mins
-		Vector3 mins(region_mins[0] - 32, region_mins[1] - 32, region_mins[2] - 32);
-
-		// vary maxs
-		for (std::size_t i = 0; i < 3; i++) {
-			Vector3 maxs(region_maxs[0] + 32, region_maxs[1] + 32, region_maxs[2] + 32);
-			maxs[i] = region_mins[i];
-			Brush_ConstructCuboid(*Node_getBrush(*brushes[i]), aabb_for_minmax(mins, maxs), GlobalTexturePrefix_get(),
-					TextureProjection());
-		}
+	default:
+		return;
 	}
 
-	{
-		// set maxs
-		Vector3 maxs(region_maxs[0] + 32, region_maxs[1] + 32, region_maxs[2] + 32);
+	std::string command = bc->getName() + " -sides " + string::toString(sides);
+	UndoableCommand undo(command);
 
-		// vary mins
-		for (std::size_t i = 0; i < 3; i++) {
-			Vector3 mins(region_mins[0] - 32, region_mins[1] - 32, region_mins[2] - 32);
-			mins[i] = region_maxs[i];
-			Brush_ConstructCuboid(*Node_getBrush(*brushes[i + 3]), aabb_for_minmax(mins, maxs),
-					GlobalTexturePrefix_get(), TextureProjection());
-		}
-	}
+	bc->generate(brush, bounds, sides, projection, shader);
 }
 
 class FaceSetTexdef
@@ -713,7 +364,7 @@ void Scene_BrushConstructPrefab (scene::Graph& graph, EBrushPrefab type, std::si
 		Brush* brush = Node_getBrush(path.top());
 		if (brush != 0) {
 			AABB bounds = brush->localAABB(); // copy bounds because the brush will be modified
-			Brush_ConstructPrefab(*brush, type, bounds, sides, shader, TextureTransform_getDefault());
+			Brush_ConstructPrefab(*brush, type, bounds, sides, TextureTransform_getDefault(), shader);
 			SceneChangeNotify();
 		}
 	}
@@ -726,7 +377,7 @@ void Scene_BrushResize_Selected (scene::Graph& graph, const AABB& bounds, const 
 
 		Brush* brush = Node_getBrush(path.top());
 		if (brush != 0) {
-			Brush_ConstructCuboid(*brush, bounds, shader, TextureTransform_getDefault());
+			brushconstruct::Cuboid::getInstance().generate(*brush, bounds, 0, TextureTransform_getDefault(), shader);
 			SceneChangeNotify();
 		}
 	}
@@ -1197,22 +848,11 @@ BrushMakeSided g_brushmakesided7(7);
 BrushMakeSided g_brushmakesided8(8);
 BrushMakeSided g_brushmakesided9(9);
 
-inline int axis_for_viewtype (int viewtype)
-{
-	switch (viewtype) {
-	case XY:
-		return 2;
-	case XZ:
-		return 1;
-	case YZ:
-		return 0;
-	}
-	return 2;
-}
-
 class BrushPrefab
 {
+	private:
 		EBrushPrefab m_type;
+
 	public:
 		BrushPrefab (EBrushPrefab type) :
 			m_type(type)
@@ -1220,7 +860,7 @@ class BrushPrefab
 		}
 		void set ()
 		{
-			DoSides(m_type, axis_for_viewtype(GetViewAxis()));
+			DoSides(m_type);
 		}
 		typedef MemberCaller<BrushPrefab, &BrushPrefab::set> SetCaller;
 };

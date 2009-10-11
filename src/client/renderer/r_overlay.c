@@ -271,10 +271,9 @@ static void R_DrawRadarOverlayRow (int latMin, int latMax, int y, byte alpha, qb
  * - the distance (on a sphere) between radarPos and current position is equal to radius
  * - the border of the radar coverage on a row has the same latitude than current latitude.
  */
-static inline float R_GetRadarDeltaLongitude (const vec2_t radarPos, float radius, const float  yLat)
+static inline float R_GetRadarDeltaLongitude (const vec2_t radarPos, float radius, const float yLat)
 {
 	const float angle = (cos(radius * torad) - sin(radarPos[1] * torad) * sin(yLat)) / (cos(radarPos[1] * torad) * cos(yLat));
-
 	return fabs(angle) > 1.0f ? 180.0f : todeg * acos(angle);
 }
 
