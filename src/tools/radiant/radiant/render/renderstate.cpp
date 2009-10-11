@@ -43,7 +43,6 @@
 #include "math/aabb.h"
 #include "generic/callback.h"
 #include "texturelib.h"
-#include "string/string.h"
 #include "container/hashfunc.h"
 #include "container/cache.h"
 #include "generic/reference.h"
@@ -51,11 +50,11 @@
 #include "stream/filestream.h"
 #include "stream/stringstream.h"
 #include "os/file.h"
-#include "settings/preferences.h"
+#include "../settings/preferences.h"
 
-#include "xyview/xywindow.h"
+#include "../xyview/xywindow.h"
 
-#include "timer.h"
+#include "../timer.h"
 
 StringOutputStream g_renderer_stats;
 std::size_t g_count_prims;

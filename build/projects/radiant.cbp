@@ -619,7 +619,7 @@ e<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 		<Unit filename="../../src/tools/radiant/radiant/model.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\nullmodel.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\referencecache\nullmodel.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\parse.cpp">

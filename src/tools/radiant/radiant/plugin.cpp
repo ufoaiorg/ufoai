@@ -73,7 +73,7 @@
 #include "map/autosave.h"
 #include "plugintoolbar.h"
 #include "dialogs/findtextures.h"
-#include "nullmodel.h"
+#include "referencecache/nullmodel.h"
 #include "xyview/grid.h"
 #include "material.h"
 #include "particles.h"

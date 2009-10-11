@@ -30,7 +30,6 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
 	$(RADIANT_BASE)/radiant/mapmodule.cpp \
-	$(RADIANT_BASE)/radiant/nullmodel.cpp \
 	$(RADIANT_BASE)/radiant/parse.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
@@ -40,7 +39,6 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/qe3.cpp \
 	$(RADIANT_BASE)/radiant/qgl.cpp \
 	$(RADIANT_BASE)/radiant/referencecache.cpp \
-	$(RADIANT_BASE)/radiant/renderstate.cpp \
 	$(RADIANT_BASE)/radiant/scenegraph.cpp \
 	$(RADIANT_BASE)/radiant/select.cpp \
 	$(RADIANT_BASE)/radiant/selection.cpp \
@@ -59,6 +57,10 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/levelfilters.cpp \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
+	\
+	$(RADIANT_BASE)/radiant/render/renderstate.cpp \
+	\
+	$(RADIANT_BASE)/radiant/referencecache/nullmodel.cpp \
 	\
 	$(RADIANT_BASE)/radiant/map/parse.cpp \
 	$(RADIANT_BASE)/radiant/map/write.cpp \
