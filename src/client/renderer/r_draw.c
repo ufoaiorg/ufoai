@@ -362,8 +362,8 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
  * @param[in] iz The zoomlevel of the geoscape - see ccs.zoom
  * @param[in] cx The x texture coordinate
  * @param[in] cy The y texture coordinate
- * @param[in] p
- * @param[in] q
+ * @param[in] p The horizontal shift of the night map
+ * @param[in] q The angle the sun is standing against the equator on earth
  * @param[in] x The x position of the geoscape node
  * @param[in] y The y position of the geoscape node
  * @param[in] w The width of the geoscape node

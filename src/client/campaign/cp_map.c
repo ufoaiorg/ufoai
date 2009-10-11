@@ -1670,6 +1670,7 @@ void MAP_DrawMap (const menuNode_t* node)
 		R_Draw3DGlobe(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1],
 			ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, ccs.curCampaign->map, disableSolarRender, cl_3dmapAmbient->value);
 	} else {
+		/* the sun is not always in the plane of the equator on earth - calculate the angle the sun is at */
 		const float q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
 		if (smoothRotation)
 			MAP_SmoothTranslate();

@@ -1267,7 +1267,7 @@ image_t *r_dayandnightTexture;
 
 /**
  * @brief Applies alpha values to the night overlay image for 2d geoscape
- * @param[in] q
+ * @param[in] q The angle the sun is standing against the equator on earth
  */
 void R_CalcAndUploadDayAndNightTexture (float q)
 {
@@ -1306,7 +1306,7 @@ void R_CalcAndUploadDayAndNightTexture (float q)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, r_dayandnightAlpha);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	R_CheckError();
 }
 
