@@ -327,7 +327,7 @@ void CP_CheckLostCondition (void)
 		MN_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
 		endCampaign = qtrue;
 	}
-#if 0
+
 	if (!endCampaign) {
 		if (CP_GetAverageXVIRate() > ccs.curCampaign->maxAllowedXVIRateUntilLost) {
 			MN_RegisterText(TEXT_STANDARD, _("You have failed in your charter to protect Earth."
@@ -359,7 +359,7 @@ void CP_CheckLostCondition (void)
 			}
 		}
 	}
-#endif
+
 	if (endCampaign) {
 		Cvar_SetValue("mission_uforecovered", 0);
 		CP_EndCampaign(qfalse);
