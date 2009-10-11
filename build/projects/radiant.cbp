@@ -345,12 +345,6 @@ e<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 		<Unit filename="..\..\src\tools\radiant\libs\imagelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\instancelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\maplib.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\map\write.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\map\parse.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\math\aabb.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\math\curve.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\math\expression.h" />
@@ -488,6 +482,12 @@ e<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\Manipulators.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\map\write.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\map\parse.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\map\autosave.cpp">

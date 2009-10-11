@@ -9,7 +9,6 @@ RADIANT_LIBS+=-lgthread-2.0 $(OPENAL_LIBS) -lvorbisfile -lvorbis -logg
 
 RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/archivezip.cpp \
-	$(RADIANT_BASE)/radiant/map/autosave.cpp \
 	$(RADIANT_BASE)/radiant/colorscheme.cpp \
 	$(RADIANT_BASE)/radiant/commands.cpp \
 	$(RADIANT_BASE)/radiant/console.cpp \
@@ -30,7 +29,6 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/particles.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
-	$(RADIANT_BASE)/radiant/map/map.cpp \
 	$(RADIANT_BASE)/radiant/mapmodule.cpp \
 	$(RADIANT_BASE)/radiant/nullmodel.cpp \
 	$(RADIANT_BASE)/radiant/parse.cpp \
@@ -61,6 +59,11 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/levelfilters.cpp \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
+	\
+	$(RADIANT_BASE)/radiant/map/parse.cpp \
+	$(RADIANT_BASE)/radiant/map/write.cpp \
+	$(RADIANT_BASE)/radiant/map/autosave.cpp \
+	$(RADIANT_BASE)/radiant/map/map.cpp \
 	\
 	$(RADIANT_BASE)/radiant/xyview/grid.cpp \
 	$(RADIANT_BASE)/radiant/xyview/xywindow.cpp \
@@ -146,8 +149,6 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/libs/sound/SoundManager.cpp \
 	$(RADIANT_BASE)/libs/sound/SoundPlayer.cpp \
 	$(RADIANT_BASE)/libs/shaders/shaders.cpp \
-	$(RADIANT_BASE)/libs/map/parse.cpp \
-	$(RADIANT_BASE)/libs/map/write.cpp \
 	$(RADIANT_BASE)/libs/archivezip/archive.cpp \
 	$(RADIANT_BASE)/libs/archivedir/archive.cpp \
 	$(RADIANT_BASE)/libs/entity/entity.cpp \
