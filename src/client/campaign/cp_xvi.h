@@ -31,6 +31,8 @@ void CP_SpreadXVIAtPos(const vec2_t pos);
 void CP_ReduceXVIAtPos(const vec2_t pos);
 qboolean CP_IsXVIResearched(void);
 void CP_SpreadXVI(void);
+void CP_ReduceXVIEverywhere(void);
+void CP_UpdateNationXVIInfection(void);
 int CP_GetAverageXVIRate(void);
 void CP_UpdateXVIMapButton(void);
 void CP_StartXVISpreading_f(void);

@@ -32,8 +32,8 @@ image_t *r_radarTexture;				/**< radar texture */
 image_t *r_xviTexture;					/**< XVI alpha mask texture */
 
 /** Max alpha level - don't set this to 255 or nothing else will be visible below the mask */
-static const int MAX_ALPHA_VALUE = 200;
-static const int INITIAL_ALPHA_VALUE = 60;
+const int MAX_ALPHA_VALUE = 200;
+const int INITIAL_ALPHA_VALUE = 60;
 
 #define XVI_WIDTH		512
 #define XVI_HEIGHT		256
@@ -75,7 +75,10 @@ static inline void R_SetXVILevel (int x, int y, int value)
 	assert(y >= 0);
 	assert(y < XVI_HEIGHT);
 
-	r_xviAlpha[y * XVI_WIDTH + x] = min(MAX_ALPHA_VALUE, value + INITIAL_ALPHA_VALUE);
+	if (!value)
+		r_xviAlpha[y * XVI_WIDTH + x] = 0;
+	else
+		r_xviAlpha[y * XVI_WIDTH + x] = min(MAX_ALPHA_VALUE, value + INITIAL_ALPHA_VALUE);
 }
 
 static inline int R_GetXVILevel (int x, int y)
@@ -108,7 +111,8 @@ static float R_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, flo
 	/* Get xvi Level infection at pos */
 	xviLevel = R_GetXVILevel(xCenter, yCenter);
 	/* Calculate radius of new spreading */
-	xviLevel++;
+	if (xviLevel < MAX_ALPHA_VALUE - INITIAL_ALPHA_VALUE)
+		xviLevel++;
 	radius = sqrt(factor * xviLevel);
 
 	for (y = 0; y < XVI_HEIGHT; y++) {
@@ -119,14 +123,12 @@ static float R_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, flo
 				90.0f - 180.0f * y / ((float) XVI_HEIGHT));
 
 			distance = GetDistanceOnGlobe(pos, currentPos);
-			if (distance <= 1.1 * radius) {
+			if (distance <= 1. * radius) {
 				int newValue;
 				if (xCenter == x && yCenter == y)
 					/* Make sure that XVI level increases, even if
 					 * rounding problems makes radius constant */
 					newValue = xviLevel;
-				else if (distance > radius)
-					newValue = round(INITIAL_ALPHA_VALUE * (1.1 * radius - distance) / (0.1 * radius)) - INITIAL_ALPHA_VALUE;
 				else
 					newValue = round((xviLevel * (radius - distance)) / radius);
 
@@ -148,6 +150,24 @@ static float R_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, flo
 static float R_DecreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, float factor)
 {
 	return 0.0f;
+}
+
+/**
+ * @sa R_IncreaseXVILevel
+ */
+void R_DecreaseXVILevelEverywhere (void)
+{
+	int x, y;									/**< current position (in pixel) */
+
+	for (y = 0; y < XVI_HEIGHT; y++) {
+		for (x = 0; x < XVI_WIDTH; x++) {
+			int xviLevel = R_GetXVILevel(x, y);
+			if (xviLevel > 0)
+				R_SetXVILevel(x, y, xviLevel - 1);
+		}
+	}
+
+	R_UploadAlpha(r_xviTexture, r_xviAlpha);
 }
 
 float R_ChangeXVILevel (const vec2_t pos, const int xviLevel, float factor)

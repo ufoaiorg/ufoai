@@ -33,11 +33,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static technology_t *rsAlienXVI;
 
 /**
- * The factor that is used for the graphical display of the XVI map. This has
- * nothing to do with the nation XVI infection level. Only with the spread on
- * the XVI map
+ * The factor that is used to determine XVI radius spreading.
+ * The higher this factor, the faster XVI will spread.
  */
 static const float XVI_FACTOR = 15.0f;
+
+/**
+ * Number of days between 2 XVI decrease (everywhere around the world).
+ */
+static const int DECREASE_TIME = 7;
 
 #define XVI_EVENT_NAME "rs_alien_xvi_event"
 
@@ -47,33 +51,12 @@ static const float XVI_FACTOR = 15.0f;
  */
 void CP_SpreadXVIAtPos (const vec2_t pos)
 {
-	nation_t *nation;
-	float radius;
-	static qboolean xviNations[MAX_NATIONS];
-	int i;
-
 	if (!CP_IsXVIResearched())
 		return;
 
-	nation = MAP_GetNation(pos);
-	if (nation) {
-		nation->stats[0].xviInfection++;
-		xviNations[nation->idx] = qtrue;
-	}
+	R_ChangeXVILevel(pos, MAX_ALPHA_VALUE - INITIAL_ALPHA_VALUE, XVI_FACTOR);
 
-	radius = R_ChangeXVILevel(pos, nation->stats[0].xviInfection, XVI_FACTOR);
-	for (i = 0; i < ccs.numNations; i++) {
-		nation_t *neighbourNation = NAT_GetNationByIDX(i);
-		if (xviNations[neighbourNation->idx])
-			continue;
-		/* if xvi infection on the nearby nations is getting to high, we infect the neighbours, too */
-		if (GetDistanceOnGlobe(pos, neighbourNation->pos) < radius - XVI_FACTOR) {
-			CP_SpreadXVIAtPos(neighbourNation->pos);
-		}
-	}
-
-	if (nation)
-		xviNations[nation->idx] = qfalse;
+	CP_UpdateNationXVIInfection();
 }
 
 /**
@@ -82,34 +65,98 @@ void CP_SpreadXVIAtPos (const vec2_t pos)
  */
 void CP_ReduceXVIAtPos (const vec2_t pos)
 {
-	nation_t *nation;
-	static qboolean xviNations[MAX_NATIONS];
-	float radius;
-	int i;
-
 	if (!CP_IsXVIResearched())
 		return;
 
-	nation = MAP_GetNation(pos);
-	if (nation) {
-		if (nation->stats[0].xviInfection > 0)
-			nation->stats[0].xviInfection--;
-		xviNations[nation->idx] = qtrue;
-	}
+	R_ChangeXVILevel(pos, 0, XVI_FACTOR);
 
-	radius = R_ChangeXVILevel(pos, nation->stats[0].xviInfection, XVI_FACTOR);
-	for (i = 0; i < ccs.numNations; i++) {
-		nation_t *neighbourNation = NAT_GetNationByIDX(i);
-		if (xviNations[neighbourNation->idx])
-			continue;
-		/* if xvi infection on the nearby nations is getting to high, we infect the neighbours, too */
-		if (GetDistanceOnGlobe(pos, neighbourNation->pos) < radius - XVI_FACTOR) {
-			CP_ReduceXVIAtPos(neighbourNation->pos);
+	CP_UpdateNationXVIInfection();
+}
+
+/**
+ * @brief Reduce XVI everywhere.
+ * @note This is called daily.
+ */
+void CP_ReduceXVIEverywhere (void)
+{
+	if (!CP_IsXVIResearched())
+		return;
+
+	/* Only decrease XVI level every DECREASE_TIME */
+	if (ccs.date.day % DECREASE_TIME)
+		return;
+
+	R_DecreaseXVILevelEverywhere();
+	CP_UpdateNationXVIInfection();
+}
+
+/**
+ * @brief Update xviInfection value for each nation, using the XVI overlay.
+ */
+void CP_UpdateNationXVIInfection (void)
+{
+	float xviInfection[MAX_NATIONS];	/**< temporary array to store the XVI levels */
+	int y;
+	int nationIdx;
+	int width;							/**< width in pixel of the XVI overlay */
+	int height;							/**< height in pixel of the XVI overlay */
+	byte *out = R_GetXVIMap(&width, &height);	/**< pointer to XVI overlay */
+	const float heightPerDegree = height / 180.0f;
+	const float widthPerDegree = width / 360.0f;
+	vec2_t currentPos;							/**< current position (in latitude / longitude) */
+	const float NB_PIXEL = 200.0f;		/**< roughly average pixel number per nation */
+
+	/* Initialize array */
+	for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
+		xviInfection[nationIdx] = 0;
+
+	if (!out)
+		return;
+
+	for (y = 0; y < height; y++) {
+		int x;
+		int sum[MAX_NATIONS];
+		byte* nationColor;
+		byte* previousNationColor;
+		const nation_t* nation;
+		/* Initialize array */
+		for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
+			sum[nationIdx] = 0;
+		Vector2Set(currentPos,
+			180.0f,
+			90.0f - y / heightPerDegree);
+		nationColor = MAP_GetColor(currentPos, MAPTYPE_NATIONS);
+		previousNationColor = nationColor;
+		nation = MAP_GetNation(currentPos);
+		if (nation)
+			nationIdx = nation->idx;
+
+		for (x = 0; x < width; x++) {
+			currentPos[0] = 180.0f - x / widthPerDegree;
+			nationColor = MAP_GetColor(currentPos, MAPTYPE_NATIONS);
+			if (nationColor != previousNationColor) {
+				previousNationColor = nationColor;
+				nation = MAP_GetNation(currentPos);
+				if (nation)
+					nationIdx = nation->idx;
+			}
+			if (!nation)
+				continue;
+
+			if (out[y * width + x] > INITIAL_ALPHA_VALUE)
+				sum[nationIdx] += out[y * width + x] - INITIAL_ALPHA_VALUE;
 		}
+			/* divide the total XVI infection by the area of a pixel
+				because pixel are smaller as you go closer from the pole */
+			for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
+				xviInfection[nationIdx] += ((float) sum[nationIdx]) / (cos(torad * currentPos[1]) * NB_PIXEL);
 	}
 
-	if (nation)
-		xviNations[nation->idx] = qfalse;
+	/* copy the new values of XVI infection level into nation array */
+	for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++) {
+		nation_t* nation = &ccs.nations[nationIdx];
+		nation->stats[0].xviInfection = ceil(xviInfection[nation->idx]);
+	}
 }
 
 /**

@@ -104,7 +104,6 @@ void CP_BuildBaseMissionBaseDestroyed (mission_t *mission)
 	CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_BUILDING);
 	CL_ChangeIndividualInterest(+0.3f, INTERESTCATEGORY_INTERCEPT);
 
-	CP_ReduceXVIAtPos(base->pos);
 	AB_DestroyBase(base);
 	mission->data = NULL;
 	CP_MissionRemove(mission);
