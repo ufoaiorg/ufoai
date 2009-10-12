@@ -100,8 +100,8 @@ function start_downloads()
 	download_archive http://downloads.sourceforge.net/mingw/ libtool1.5-1.5.25a-20070701-MSYS-1.0.11-1.tar.bz2 msys-libtool.tar.bz2
 #	download_archive http://downloads.sourceforge.net/mingw/ gettext-0.17-1-mingw32-dev.tar.lzma gettext.lzma
 
-	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.0-tdm-1-core-2.tar.gz gcc.tar.gz
-	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.0-tdm-1-g++-2.tar.gz g++.tar.gz
+	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.1-tdm-2-core.tar.gz gcc.tar.gz
+	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.1-tdm-2-g++.tar.gz g++.tar.gz
 
 	download_archive http://downloads.sourceforge.net/gnuwin32/ freetype-2.3.5-1-lib.zip freetype.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ jpeg-6b-4-lib.zip libjpeg.zip
@@ -143,7 +143,7 @@ function start_downloads()
 
 	download_archive http://download.berlios.de/codeblocks/ wxmsw28u_gcc_cb_wx2810.7z codeblocks_gcc.7z
 	download_archive http://download.berlios.de/codeblocks/ mingwm10_gcc421.7z codeblocks_mingw.7z
-	download_archive http://download.berlios.de/codeblocks/ CB_20090817_rev5731_win32.7z codeblocks.7z
+	download_archive http://download.berlios.de/codeblocks/ CB_20091010_rev5859_win32.7z codeblocks.7z
 
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib_2.20.3-1_win32.zip glib.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib-dev_2.20.3-1_win32.zip glib-dev.zip
