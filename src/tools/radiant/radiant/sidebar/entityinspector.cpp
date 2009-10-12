@@ -1392,7 +1392,7 @@ static void SpawnflagCheck_toggled (GtkWidget *widget, gpointer data)
 
 static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newValue)
 {
-	char *key, *value, *classname;
+	char *key, *value, *classname, *oldvalue;
 	bool isClassname = false;
 	GtkTreeModel* model;
 	GtkTreeIter iter, parent;
@@ -1407,11 +1407,16 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 	}
 
 	if (columnIndex == 1) {
-		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_KEY, &key, -1);
+		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_KEY, &key, KEYVALLIST_COLUMN_VALUE, &oldvalue, -1);
 		value = newValue;
 	} else {
-		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_VALUE, &value, -1);
+		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_KEY, &oldvalue, KEYVALLIST_COLUMN_VALUE, &value, -1);
 		key = newValue;
+	}
+	if (std::string(oldvalue) == std::string(newValue))
+	{
+		g_debug("Old and new value are the same, aborting edit.");
+		return;
 	}
 	if (gtk_tree_model_iter_parent(model, &parent, &iter) == FALSE) {
 		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_VALUE, &classname, -1);
