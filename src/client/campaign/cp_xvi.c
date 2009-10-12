@@ -30,14 +30,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_map.h"
 #include "cp_xvi.h"
 
-/**
- * @brief Name of the technology for XVI event
- */
+/** @brief technology for XVI event */
 static technology_t *rsAlienXVI;
-/**
- * @brief boolean used to know if each nation XVI level should be updated this day.
- */
-static qboolean XviNationInfectionNeedsUpdate = qfalse;
+
+/** @brief boolean used to know if each nation XVI level should be updated this day. */
+static qboolean xviNationInfectionNeedsUpdate = qfalse;
 
 /**
  * @brief The factor that is used to determine XVI radius spreading.
@@ -45,11 +42,10 @@ static qboolean XviNationInfectionNeedsUpdate = qfalse;
  */
 static const float XVI_FACTOR = 15.0f;
 
-/**
- * @brief Number of days between 2 XVI decrease (everywhere around the world).
- */
-static const int DECREASE_TIME = 7;
+/** @brief Number of days between 2 XVI decrease (everywhere around the world). */
+static const int XVI_DECREASE_DAYS = 7;
 
+/** @brief Name of the technology for the XVI event */
 #define XVI_EVENT_NAME "rs_alien_xvi_event"
 
 /**
@@ -63,7 +59,7 @@ void CP_SpreadXVIAtPos (const vec2_t pos)
 
 	R_ChangeXVILevel(pos, MAX_ALPHA_VALUE - INITIAL_ALPHA_VALUE, XVI_FACTOR);
 
-	XviNationInfectionNeedsUpdate = qtrue;
+	xviNationInfectionNeedsUpdate = qtrue;
 }
 
 /**
@@ -77,7 +73,7 @@ void CP_ReduceXVIAtPos (const vec2_t pos)
 
 	R_ChangeXVILevel(pos, 0, XVI_FACTOR);
 
-	XviNationInfectionNeedsUpdate = qtrue;
+	xviNationInfectionNeedsUpdate = qtrue;
 }
 
 /**
@@ -89,36 +85,45 @@ void CP_ReduceXVIEverywhere (void)
 	if (!CP_IsXVIResearched())
 		return;
 
-	/* Only decrease XVI level every DECREASE_TIME */
-	if (ccs.date.day % DECREASE_TIME)
+	/* Only decrease XVI if given days has passed */
+	if (ccs.date.day % XVI_DECREASE_DAYS)
 		return;
 
 	R_DecreaseXVILevelEverywhere();
-	XviNationInfectionNeedsUpdate = qtrue;
+
+	xviNationInfectionNeedsUpdate = qtrue;
 }
 
 /**
  * @brief Update xviInfection value for each nation, using the XVI overlay.
+ * @note should be executed after all daily event that could change XVI overlay
  */
 void CP_UpdateNationXVIInfection (void)
 {
-	float xviInfection[MAX_NATIONS];	/**< temporary array to store the XVI levels */
+	/* temporary array to store the XVI levels */
+	float xviInfection[MAX_NATIONS];
 	int y;
 	int nationIdx;
-	int width;							/**< width in pixel of the XVI overlay */
-	int height;							/**< height in pixel of the XVI overlay */
-	byte *out = R_GetXVIMap(&width, &height);	/**< pointer to XVI overlay */
+	/* width in pixel of the XVI overlay */
+	int width;
+	/* height in pixel of the XVI overlay */
+	int height;
+	/* pointer to XVI overlay */
+	const byte *out = R_GetXVIMap(&width, &height);
 	const float heightPerDegree = height / 180.0f;
 	const float widthPerDegree = width / 360.0f;
-	vec2_t currentPos;							/**< current position (in latitude / longitude) */
-	const float AREA_FACTOR = 650.0f;			/**< parameter used to normalize nation XVI level.
-													decrease this factor to increase XVI level per nation */
-	const float normalizingArea = width * height / AREA_FACTOR;		/**< area used to normalized XVI infection level for each nation.
-																		depend on overlay size so that if we change resolution of 
-																		overlay it doesn't impact nation XIInfection */
+	/* current position (in latitude / longitude) */
+	vec2_t currentPos;
+	/* parameter used to normalize nation XVI level.
+	 * decrease this factor to increase XVI level per nation */
+	const float AREA_FACTOR = 650.0f;
+	/* area used to normalized XVI infection level for each nation.
+	 * depend on overlay size so that if we change resolution of
+	 * overlay it doesn't impact nation XIInfection */
+	const float normalizingArea = width * height / AREA_FACTOR;
 
 	/* No need to update XVI levels if the overlay didn't change */
-	if (!XviNationInfectionNeedsUpdate)
+	if (!xviNationInfectionNeedsUpdate)
 		return;
 
 	/* Initialize array */
@@ -134,9 +139,9 @@ void CP_UpdateNationXVIInfection (void)
 		byte* nationColor;
 		byte* previousNationColor;
 		const nation_t* nation;
-		/* Initialize array */
-		for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
-			sum[nationIdx] = 0;
+
+		memset(sum, 0, sizeof(sum));
+
 		Vector2Set(currentPos,
 			180.0f,
 			90.0f - y / heightPerDegree);
@@ -161,10 +166,10 @@ void CP_UpdateNationXVIInfection (void)
 			if (out[y * width + x] > INITIAL_ALPHA_VALUE)
 				sum[nationIdx] += out[y * width + x] - INITIAL_ALPHA_VALUE;
 		}
-			/* divide the total XVI infection by the area of a pixel
-				because pixel are smaller as you go closer from the pole */
-			for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
-				xviInfection[nationIdx] += ((float) sum[nationIdx]) / (cos(torad * currentPos[1]) * normalizingArea);
+		/* divide the total XVI infection by the area of a pixel
+		 * because pixel are smaller as you go closer from the pole */
+		for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
+			xviInfection[nationIdx] += ((float) sum[nationIdx]) / (cos(torad * currentPos[1]) * normalizingArea);
 	}
 
 	/* copy the new values of XVI infection level into nation array */
@@ -173,7 +178,7 @@ void CP_UpdateNationXVIInfection (void)
 		nation->stats[0].xviInfection = ceil(xviInfection[nation->idx]);
 	}
 
-	XviNationInfectionNeedsUpdate = qfalse;
+	xviNationInfectionNeedsUpdate = qfalse;
 }
 
 /**
