@@ -1,23 +1,23 @@
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "csg.h"
 
@@ -30,7 +30,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "../brushnode.h"
 #include "../../xyview/grid.h"
 
-static void Face_makeBrush(Face& face, const Brush& brush, brush_vector_t& out, float offset) {
+static void Face_makeBrush (Face& face, const Brush& brush, brush_vector_t& out, float offset)
+{
 	if (face.contributes()) {
 		out.push_back(new Brush(brush));
 		Face* newFace = out.back()->addFace(face);
@@ -42,83 +43,97 @@ static void Face_makeBrush(Face& face, const Brush& brush, brush_vector_t& out, 
 	}
 }
 
-class FaceMakeBrush {
-	const Brush& brush;
-	brush_vector_t& out;
-	float offset;
-public:
-	FaceMakeBrush(const Brush& brush, brush_vector_t& out, float offset)
-			: brush(brush), out(out), offset(offset) {
-	}
-	void operator()(Face& face) const {
-		Face_makeBrush(face, brush, out, offset);
-	}
+class FaceMakeBrush
+{
+		const Brush& brush;
+		brush_vector_t& out;
+		float offset;
+	public:
+		FaceMakeBrush (const Brush& brush, brush_vector_t& out, float offset) :
+			brush(brush), out(out), offset(offset)
+		{
+		}
+		void operator() (Face& face) const
+		{
+			Face_makeBrush(face, brush, out, offset);
+		}
 };
 
-static void Brush_makeHollow(const Brush& brush, brush_vector_t& out, float offset) {
+static void Brush_makeHollow (const Brush& brush, brush_vector_t& out, float offset)
+{
 	Brush_forEachFace(brush, FaceMakeBrush(brush, out, offset));
 }
 
-class BrushHollowSelectedWalker : public scene::Graph::Walker {
-	float m_offset;
-public:
-	BrushHollowSelectedWalker(float offset)
-			: m_offset(offset) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		if (path.top().get().visible()) {
-			Brush* brush = Node_getBrush(path.top());
-			if (brush != 0 && Instance_getSelectable(instance)->isSelected() && path.size() > 1) {
-				brush_vector_t out;
-				Brush_makeHollow(*brush, out, m_offset);
-				for (brush_vector_t::const_iterator i = out.begin(); i != out.end(); ++i) {
-					(*i)->removeEmptyFaces();
-					NodeSmartReference node((new BrushNode())->node());
-					Node_getBrush(node)->copy(*(*i));
-					delete (*i);
-					Node_getTraversable(path.parent())->insert(node);
+class BrushHollowSelectedWalker: public scene::Graph::Walker
+{
+		float m_offset;
+	public:
+		BrushHollowSelectedWalker (float offset) :
+			m_offset(offset)
+		{
+		}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.top().get().visible()) {
+				Brush* brush = Node_getBrush(path.top());
+				if (brush != 0 && Instance_getSelectable(instance)->isSelected() && path.size() > 1) {
+					brush_vector_t out;
+					Brush_makeHollow(*brush, out, m_offset);
+					for (brush_vector_t::const_iterator i = out.begin(); i != out.end(); ++i) {
+						(*i)->removeEmptyFaces();
+						NodeSmartReference node((new BrushNode())->node());
+						Node_getBrush(node)->copy(*(*i));
+						delete (*i);
+						Node_getTraversable(path.parent())->insert(node);
+					}
 				}
 			}
+			return true;
 		}
-		return true;
-	}
 };
 
 typedef std::list<Brush*> brushlist_t;
 
-class BrushGatherSelected : public scene::Graph::Walker {
-	brush_vector_t& m_brushlist;
-public:
-	BrushGatherSelected(brush_vector_t& brushlist)
-			: m_brushlist(brushlist) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		if (path.top().get().visible()) {
-			Brush* brush = Node_getBrush(path.top());
-			if (brush != 0 && Instance_getSelectable(instance)->isSelected()) {
-				m_brushlist.push_back(brush);
-			}
+class BrushGatherSelected: public scene::Graph::Walker
+{
+		brush_vector_t& m_brushlist;
+	public:
+		BrushGatherSelected (brush_vector_t& brushlist) :
+			m_brushlist(brushlist)
+		{
 		}
-		return true;
-	}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.top().get().visible()) {
+				Brush* brush = Node_getBrush(path.top());
+				if (brush != 0 && Instance_getSelectable(instance)->isSelected()) {
+					m_brushlist.push_back(brush);
+				}
+			}
+			return true;
+		}
 };
 
-class BrushDeleteSelected : public scene::Graph::Walker {
-public:
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		return true;
-	}
-	void post(const scene::Path& path, scene::Instance& instance) const {
-		if (path.top().get().visible()) {
-			Brush* brush = Node_getBrush(path.top());
-			if (brush != 0 && Instance_getSelectable(instance)->isSelected() && path.size() > 1) {
-				Path_deleteTop(path);
+class BrushDeleteSelected: public scene::Graph::Walker
+{
+	public:
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			return true;
+		}
+		void post (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.top().get().visible()) {
+				Brush* brush = Node_getBrush(path.top());
+				if (brush != 0 && Instance_getSelectable(instance)->isSelected() && path.size() > 1) {
+					Path_deleteTop(path);
+				}
 			}
 		}
-	}
 };
 
-static void Scene_BrushMakeHollow_Selected(scene::Graph& graph) {
+static void Scene_BrushMakeHollow_Selected (scene::Graph& graph)
+{
 	GlobalSceneGraph().traverse(BrushHollowSelectedWalker(GetGridSize()));
 	GlobalSceneGraph().traverse(BrushDeleteSelected());
 }
@@ -133,87 +148,104 @@ void CSG_MakeHollow (void)
 }
 
 template<typename Type>
-class RemoveReference {
-public:
-	typedef Type type;
+class RemoveReference
+{
+	public:
+		typedef Type type;
 };
 
 template<typename Type>
-class RemoveReference<Type&> {
-public:
-	typedef Type type;
+class RemoveReference<Type&>
+{
+	public:
+		typedef Type type;
 };
 
 template<typename Functor>
-class Dereference {
-	const Functor& functor;
-public:
-	typedef typename RemoveReference<typename Functor::first_argument_type>::type* first_argument_type;
-	typedef typename Functor::result_type result_type;
-	Dereference(const Functor& functor) : functor(functor) {
-	}
-	result_type operator()(first_argument_type firstArgument) const {
-		return functor(*firstArgument);
-	}
+class Dereference
+{
+		const Functor& functor;
+	public:
+		typedef typename RemoveReference<typename Functor::first_argument_type>::type* first_argument_type;
+		typedef typename Functor::result_type result_type;
+		Dereference (const Functor& functor) :
+			functor(functor)
+		{
+		}
+		result_type operator() (first_argument_type firstArgument) const
+		{
+			return functor(*firstArgument);
+		}
 };
 
 template<typename Functor>
-inline Dereference<Functor> makeDereference(const Functor& functor) {
-	return Dereference<Functor>(functor);
+inline Dereference<Functor> makeDereference (const Functor& functor)
+{
+	return Dereference<Functor> (functor);
 }
 
 typedef Face* FacePointer;
 const FacePointer c_nullFacePointer = 0;
 
 template<typename Predicate>
-Face* Brush_findIf(const Brush& brush, const Predicate& predicate) {
+Face* Brush_findIf (const Brush& brush, const Predicate& predicate)
+{
 	Brush::const_iterator i = std::find_if(brush.begin(), brush.end(), makeDereference(predicate));
 	return i == brush.end() ? c_nullFacePointer : *i; // uses c_nullFacePointer instead of 0 because otherwise gcc 4.1 attempts conversion to int
 }
 
 template<typename Caller>
-class BindArguments1 {
-	typedef typename Caller::second_argument_type FirstBound;
-	FirstBound firstBound;
-public:
-	typedef typename Caller::result_type result_type;
-	typedef typename Caller::first_argument_type first_argument_type;
-	BindArguments1(FirstBound firstBound)
-			: firstBound(firstBound) {
-	}
-	result_type operator()(first_argument_type firstArgument) const {
-		return Caller::call(firstArgument, firstBound);
-	}
+class BindArguments1
+{
+		typedef typename Caller::second_argument_type FirstBound;
+		FirstBound firstBound;
+	public:
+		typedef typename Caller::result_type result_type;
+		typedef typename Caller::first_argument_type first_argument_type;
+		BindArguments1 (FirstBound firstBound) :
+			firstBound(firstBound)
+		{
+		}
+		result_type operator() (first_argument_type firstArgument) const
+		{
+			return Caller::call(firstArgument, firstBound);
+		}
 };
 
 template<typename Caller>
-class BindArguments2 {
-	typedef typename Caller::second_argument_type FirstBound;
-	typedef typename Caller::third_argument_type SecondBound;
-	FirstBound firstBound;
-	SecondBound secondBound;
-public:
-	typedef typename Caller::result_type result_type;
-	typedef typename Caller::first_argument_type first_argument_type;
-	BindArguments2(FirstBound firstBound, SecondBound secondBound)
-			: firstBound(firstBound), secondBound(secondBound) {
-	}
-	result_type operator()(first_argument_type firstArgument) const {
-		return Caller::call(firstArgument, firstBound, secondBound);
-	}
+class BindArguments2
+{
+		typedef typename Caller::second_argument_type FirstBound;
+		typedef typename Caller::third_argument_type SecondBound;
+		FirstBound firstBound;
+		SecondBound secondBound;
+	public:
+		typedef typename Caller::result_type result_type;
+		typedef typename Caller::first_argument_type first_argument_type;
+		BindArguments2 (FirstBound firstBound, SecondBound secondBound) :
+			firstBound(firstBound), secondBound(secondBound)
+		{
+		}
+		result_type operator() (first_argument_type firstArgument) const
+		{
+			return Caller::call(firstArgument, firstBound, secondBound);
+		}
 };
 
 template<typename Caller, typename FirstBound, typename SecondBound>
-BindArguments2<Caller> bindArguments(const Caller& caller, FirstBound firstBound, SecondBound secondBound) {
-	return BindArguments2<Caller>(firstBound, secondBound);
+BindArguments2<Caller> bindArguments (const Caller& caller, FirstBound firstBound, SecondBound secondBound)
+{
+	return BindArguments2<Caller> (firstBound, secondBound);
 }
 
-inline bool Face_testPlane(const Face& face, const Plane3& plane, bool flipped) {
+inline bool Face_testPlane (const Face& face, const Plane3& plane, bool flipped)
+{
 	return face.contributes() && !Winding_TestPlane(face.getWinding(), plane, flipped);
 }
 typedef Function3<const Face&, const Plane3&, bool, bool, Face_testPlane> FaceTestPlane;
 
-static brushsplit_t Brush_classifyPlane(const Brush& brush, const Plane3& plane) {
+static brushsplit_t Brush_classifyPlane (const Brush& brush, const Plane3& plane)
+{
 	brush.evaluateBRep();
 	brushsplit_t split;
 	for (Brush::const_iterator i(brush.begin()); i != brush.end(); ++i) {
@@ -224,7 +256,8 @@ static brushsplit_t Brush_classifyPlane(const Brush& brush, const Plane3& plane)
 	return split;
 }
 
-static bool Brush_subtract(const Brush& brush, const Brush& other, brush_vector_t& ret_fragments) {
+static bool Brush_subtract (const Brush& brush, const Brush& other, brush_vector_t& ret_fragments)
+{
 	if (aabb_intersects_aabb(brush.localAABB(), other.localAABB())) {
 		brush_vector_t fragments;
 		fragments.reserve(other.size());
@@ -233,8 +266,7 @@ static bool Brush_subtract(const Brush& brush, const Brush& other, brush_vector_
 		for (Brush::const_iterator i(other.begin()); i != other.end(); ++i) {
 			if ((*i)->contributes()) {
 				brushsplit_t split = Brush_classifyPlane(back, (*i)->plane3());
-				if (split.counts[ePlaneFront] != 0
-				        && split.counts[ePlaneBack] != 0) {
+				if (split.counts[ePlaneFront] != 0 && split.counts[ePlaneBack] != 0) {
 					fragments.push_back(new Brush(back));
 					Face* newFace = fragments.back()->addFace(*(*i));
 					if (newFace != 0) {
@@ -243,7 +275,7 @@ static bool Brush_subtract(const Brush& brush, const Brush& other, brush_vector_
 					back.addFace(*(*i));
 				} else if (split.counts[ePlaneBack] == 0) {
 					for (brush_vector_t::iterator i = fragments.begin(); i != fragments.end(); ++i) {
-						delete(*i);
+						delete (*i);
 					}
 					return false;
 				}
@@ -255,64 +287,69 @@ static bool Brush_subtract(const Brush& brush, const Brush& other, brush_vector_
 	return false;
 }
 
-class SubtractBrushesFromUnselected : public scene::Graph::Walker {
-	const brush_vector_t& m_brushlist;
-	std::size_t& m_before;
-	std::size_t& m_after;
-public:
-	SubtractBrushesFromUnselected(const brush_vector_t& brushlist, std::size_t& before, std::size_t& after)
-			: m_brushlist(brushlist), m_before(before), m_after(after) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		return true;
-	}
-	void post(const scene::Path& path, scene::Instance& instance) const {
-		if (path.top().get().visible()) {
-			Brush* brush = Node_getBrush(path.top());
-			if (brush != 0
-			        && !Instance_getSelectable(instance)->isSelected()) {
-				brush_vector_t buffer[2];
-				bool swap = false;
-				Brush* original = new Brush(*brush);
-				buffer[static_cast<std::size_t>(swap)].push_back(original);
+class SubtractBrushesFromUnselected: public scene::Graph::Walker
+{
+		const brush_vector_t& m_brushlist;
+		std::size_t& m_before;
+		std::size_t& m_after;
+	public:
+		SubtractBrushesFromUnselected (const brush_vector_t& brushlist, std::size_t& before, std::size_t& after) :
+			m_brushlist(brushlist), m_before(before), m_after(after)
+		{
+		}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			return true;
+		}
+		void post (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.top().get().visible()) {
+				Brush* brush = Node_getBrush(path.top());
+				if (brush != 0 && !Instance_getSelectable(instance)->isSelected()) {
+					brush_vector_t buffer[2];
+					bool swap = false;
+					Brush* original = new Brush(*brush);
+					buffer[static_cast<std::size_t> (swap)].push_back(original);
 
-				{
-					for (brush_vector_t::const_iterator i(m_brushlist.begin()); i != m_brushlist.end(); ++i) {
-						for (brush_vector_t::iterator j(buffer[static_cast<std::size_t>(swap)].begin()); j != buffer[static_cast<std::size_t>(swap)].end(); ++j) {
-							if (Brush_subtract(*(*j), *(*i), buffer[static_cast<std::size_t>(!swap)])) {
-								delete(*j);
-							} else {
-								buffer[static_cast<std::size_t>(!swap)].push_back((*j));
+					{
+						for (brush_vector_t::const_iterator i(m_brushlist.begin()); i != m_brushlist.end(); ++i) {
+							for (brush_vector_t::iterator j(buffer[static_cast<std::size_t> (swap)].begin()); j
+									!= buffer[static_cast<std::size_t> (swap)].end(); ++j) {
+								if (Brush_subtract(*(*j), *(*i), buffer[static_cast<std::size_t> (!swap)])) {
+									delete (*j);
+								} else {
+									buffer[static_cast<std::size_t> (!swap)].push_back((*j));
+								}
 							}
+							buffer[static_cast<std::size_t> (swap)].clear();
+							swap = !swap;
 						}
-						buffer[static_cast<std::size_t>(swap)].clear();
-						swap = !swap;
 					}
-				}
 
-				brush_vector_t& out = buffer[static_cast<std::size_t>(swap)];
+					brush_vector_t& out = buffer[static_cast<std::size_t> (swap)];
 
-				if (out.size() == 1 && out.back() == original) {
-					delete original;
-				} else {
-					++m_before;
-					for (brush_vector_t::const_iterator i = out.begin(); i != out.end(); ++i) {
-						++m_after;
-						NodeSmartReference node((new BrushNode())->node());
-						(*i)->removeEmptyFaces();
-						ASSERT_MESSAGE(!(*i)->empty(), "brush left with no faces after subtract");
-						Node_getBrush(node)->copy(*(*i));
-						delete (*i);
-						Node_getTraversable(path.parent())->insert(node);
+					if (out.size() == 1 && out.back() == original) {
+						delete original;
+					} else {
+						++m_before;
+						for (brush_vector_t::const_iterator i = out.begin(); i != out.end(); ++i) {
+							++m_after;
+							NodeSmartReference node((new BrushNode())->node());
+							(*i)->removeEmptyFaces();
+							ASSERT_MESSAGE(!(*i)->empty(), "brush left with no faces after subtract");
+							Node_getBrush(node)->copy(*(*i));
+							delete (*i);
+							Node_getTraversable(path.parent())->insert(node);
+						}
+						Path_deleteTop(path);
 					}
-					Path_deleteTop(path);
 				}
 			}
 		}
-	}
 };
 
-void CSG_Subtract() {
+void CSG_Subtract ()
+{
 	brush_vector_t selected_brushes;
 	GlobalSceneGraph().traverse(BrushGatherSelected(selected_brushes));
 
@@ -327,108 +364,119 @@ void CSG_Subtract() {
 		std::size_t before = 0;
 		std::size_t after = 0;
 		GlobalSceneGraph().traverse(SubtractBrushesFromUnselected(selected_brushes, before, after));
-		globalOutputStream() << "CSG Subtract: Result: "
-			<< Unsigned(after) << " fragment" << (after == 1 ? "" : "s")
-			<< " from " << Unsigned(before) << " brush" << (before == 1 ? "" : "es") << ".\n";
+		globalOutputStream() << "CSG Subtract: Result: " << Unsigned(after) << " fragment" << (after == 1 ? "" : "s")
+				<< " from " << Unsigned(before) << " brush" << (before == 1 ? "" : "es") << ".\n";
 
 		SceneChangeNotify();
 	}
 }
 
-class BrushSplitByPlaneSelected : public scene::Graph::Walker {
-	const Vector3& m_p0;
-	const Vector3& m_p1;
-	const Vector3& m_p2;
-	const char* m_shader;
-	const TextureProjection& m_projection;
-	EBrushSplit m_split;
-public:
-	BrushSplitByPlaneSelected(const Vector3& p0, const Vector3& p1, const Vector3& p2, const char* shader, const TextureProjection& projection, EBrushSplit split)
-			: m_p0(p0), m_p1(p1), m_p2(p2), m_shader(shader), m_projection(projection), m_split(split) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		return true;
-	}
-	void post(const scene::Path& path, scene::Instance& instance) const {
-		if (path.top().get().visible()) {
-			Brush* brush = Node_getBrush(path.top());
-			if (brush != 0 && Instance_getSelectable(instance)->isSelected()) {
-				Plane3 plane(plane3_for_points(m_p0, m_p1, m_p2));
-				if (plane3_valid(plane)) {
-					brushsplit_t split = Brush_classifyPlane(*brush, m_split == eFront ? plane3_flipped(plane) : plane);
-					if (split.counts[ePlaneBack] && split.counts[ePlaneFront]) {
-						// the plane intersects this brush
-						if (m_split == eFrontAndBack) {
-							NodeSmartReference node((new BrushNode())->node());
-							Brush* fragment = Node_getBrush(node);
-							fragment->copy(*brush);
-							Face* newFace = fragment->addPlane(m_p0, m_p1, m_p2, m_shader, m_projection);
-							if (newFace != 0 && m_split != eFront) {
+class BrushSplitByPlaneSelected: public scene::Graph::Walker
+{
+		const Vector3& m_p0;
+		const Vector3& m_p1;
+		const Vector3& m_p2;
+		const char* m_shader;
+		const TextureProjection& m_projection;
+		EBrushSplit m_split;
+	public:
+		BrushSplitByPlaneSelected (const Vector3& p0, const Vector3& p1, const Vector3& p2, const char* shader,
+				const TextureProjection& projection, EBrushSplit split) :
+			m_p0(p0), m_p1(p1), m_p2(p2), m_shader(shader), m_projection(projection), m_split(split)
+		{
+		}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			return true;
+		}
+		void post (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.top().get().visible()) {
+				Brush* brush = Node_getBrush(path.top());
+				if (brush != 0 && Instance_getSelectable(instance)->isSelected()) {
+					Plane3 plane(plane3_for_points(m_p0, m_p1, m_p2));
+					if (plane3_valid(plane)) {
+						brushsplit_t split = Brush_classifyPlane(*brush, m_split == eFront ? plane3_flipped(plane)
+								: plane);
+						if (split.counts[ePlaneBack] && split.counts[ePlaneFront]) {
+							// the plane intersects this brush
+							if (m_split == eFrontAndBack) {
+								NodeSmartReference node((new BrushNode())->node());
+								Brush* fragment = Node_getBrush(node);
+								fragment->copy(*brush);
+								Face* newFace = fragment->addPlane(m_p0, m_p1, m_p2, m_shader, m_projection);
+								if (newFace != 0 && m_split != eFront) {
+									newFace->flipWinding();
+								}
+								fragment->removeEmptyFaces();
+								ASSERT_MESSAGE(!fragment->empty(), "brush left with no faces after split");
+
+								Node_getTraversable(path.parent())->insert(node);
+								{
+									scene::Path fragmentPath = path;
+									fragmentPath.top() = makeReference(node.get());
+									selectPath(fragmentPath, true);
+								}
+							}
+
+							Face* newFace = brush->addPlane(m_p0, m_p1, m_p2, m_shader, m_projection);
+							if (newFace != 0 && m_split == eFront) {
 								newFace->flipWinding();
 							}
-							fragment->removeEmptyFaces();
-							ASSERT_MESSAGE(!fragment->empty(), "brush left with no faces after split");
-
-							Node_getTraversable(path.parent())->insert(node);
-							{
-								scene::Path fragmentPath = path;
-								fragmentPath.top() = makeReference(node.get());
-								selectPath(fragmentPath, true);
-							}
-						}
-
-						Face* newFace = brush->addPlane(m_p0, m_p1, m_p2, m_shader, m_projection);
-						if (newFace != 0 && m_split == eFront) {
-							newFace->flipWinding();
-						}
-						brush->removeEmptyFaces();
-						ASSERT_MESSAGE(!brush->empty(), "brush left with no faces after split");
-					} else
+							brush->removeEmptyFaces();
+							ASSERT_MESSAGE(!brush->empty(), "brush left with no faces after split");
+						} else
 						// the plane does not intersect this brush
 						if (m_split != eFrontAndBack && split.counts[ePlaneBack] != 0) {
 							// the brush is "behind" the plane
 							Path_deleteTop(path);
 						}
+					}
 				}
 			}
 		}
-	}
 };
 
-void Scene_BrushSplitByPlane(scene::Graph& graph, const Vector3& p0, const Vector3& p1, const Vector3& p2, const char* shader, EBrushSplit split) {
+void Scene_BrushSplitByPlane (scene::Graph& graph, const Vector3& p0, const Vector3& p1, const Vector3& p2,
+		const char* shader, EBrushSplit split)
+{
 	TextureProjection projection;
 	TexDef_Construct_Default(projection);
 	graph.traverse(BrushSplitByPlaneSelected(p0, p1, p2, shader, projection, split));
 	SceneChangeNotify();
 }
 
-
-class BrushInstanceSetClipPlane : public scene::Graph::Walker {
-	Plane3 m_plane;
-public:
-	BrushInstanceSetClipPlane(const Plane3& plane)
-			: m_plane(plane) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		BrushInstance* brush = Instance_getBrush(instance);
-		if (brush != 0 && path.top().get().visible() && brush->isSelected()) {
-			BrushInstance& brushInstance = *brush;
-			brushInstance.setClipPlane(m_plane);
+class BrushInstanceSetClipPlane: public scene::Graph::Walker
+{
+		Plane3 m_plane;
+	public:
+		BrushInstanceSetClipPlane (const Plane3& plane) :
+			m_plane(plane)
+		{
 		}
-		return true;
-	}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			BrushInstance* brush = Instance_getBrush(instance);
+			if (brush != 0 && path.top().get().visible() && brush->isSelected()) {
+				BrushInstance& brushInstance = *brush;
+				brushInstance.setClipPlane(m_plane);
+			}
+			return true;
+		}
 };
 
-void Scene_BrushSetClipPlane(scene::Graph& graph, const Plane3& plane) {
+void Scene_BrushSetClipPlane (scene::Graph& graph, const Plane3& plane)
+{
 	graph.traverse(BrushInstanceSetClipPlane(plane));
 }
 
 /*
-=============
-CSG_Merge
-=============
-*/
-static bool Brush_merge(Brush& brush, const brush_vector_t& in, bool onlyshape) {
+ =============
+ CSG_Merge
+ =============
+ */
+static bool Brush_merge (Brush& brush, const brush_vector_t& in, bool onlyshape)
+{
 	// gather potential outer faces
 
 	{
@@ -501,7 +549,8 @@ static bool Brush_merge(Brush& brush, const brush_vector_t& in, bool onlyshape) 
 	return true;
 }
 
-void CSG_Merge(void) {
+void CSG_Merge (void)
+{
 	brush_vector_t selected_brushes;
 
 	// remove selected

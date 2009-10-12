@@ -802,8 +802,8 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 	public:
 
 		Face (FaceObserver* observer) :
-			m_refcount(0), m_shader(GlobalTexturePrefix_get()), m_texdef(m_shader, TextureProjection(), false), m_filtered(
-					false), m_observer(observer), m_undoable_observer(0), m_map(0)
+			m_refcount(0), m_shader(GlobalTexturePrefix_get()), m_texdef(m_shader, TextureProjection(), false),
+					m_filtered(false), m_observer(observer), m_undoable_observer(0), m_map(0)
 		{
 			m_shader.attach(*this);
 			m_plane.copy(Vector3(0, 0, 0), Vector3(64, 0, 0), Vector3(0, 64, 0));
