@@ -54,7 +54,7 @@ namespace ui
 	{
 		// Find the material
 		AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(_material));
-		if (file == NULL) {
+		if (!file) {
 			// Null-ify the contents
 			gtk_label_set_markup(GTK_LABEL(_materialName), "");
 			gtk_label_set_markup(GTK_LABEL(_filename), "");
