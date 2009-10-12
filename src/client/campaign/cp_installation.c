@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Get the type of an installation
  * @param[in] installation Pointer to the isntallation
  * @return type of the installation
- * @SA installationType_t
+ * @sa installationType_t
  */
 installationType_t INS_GetType (const installation_t *installation)
 {
@@ -147,7 +147,7 @@ installation_t *INS_GetFirstUnfoundedInstallation (void)
 
 /**
  * @brief Destroys an installation
- * @param[in] pointer to the installation to be destroyed
+ * @param[in] installation Pointer to the installation to be destroyed
  */
 void INS_DestroyInstallation (installation_t *installation)
 {
@@ -199,7 +199,7 @@ installation_t *INS_GetCurrentSelectedInstallation (void)
 
 /**
  * @sa INS_SelectInstallation
- * @param installation
+ * @param installation Pointer to the installation ot select
  */
 void INS_SetCurrentSelectedInstallation (const installation_t *installation)
 {
@@ -228,8 +228,8 @@ void INS_SetCurrentSelectedInstallation (const installation_t *installation)
 /**
  * @brief Finishes an installation
  * @param[in, out] installation Pointer to the installation to be finished
- * @SA INS_UpdateInstallationData
- * @SA INS_ConstructionFinished_f
+ * @sa INS_UpdateInstallationData
+ * @sa INS_ConstructionFinished_f
  */
 static void INS_FinishInstallation (installation_t *installation)
 {

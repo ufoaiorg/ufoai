@@ -230,7 +230,6 @@ void Con_LoadConsoleHistory (void)
 
 /**
  * @brief Stores the console history
- * @param[in] path path to store the history
  * @sa Con_LoadConsoleHistory
  */
 void Con_SaveConsoleHistory (void)
