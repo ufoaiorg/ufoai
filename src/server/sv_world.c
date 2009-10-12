@@ -361,6 +361,8 @@ typedef struct {
  * object of mins/maxs size.
  * Offset is filled in to contain the adjustment that must be added to the
  * testing object's origin to get a point to use with the returned hull.
+ * @param[in] ent The edict to get the bmodel from (at least in case of SOLID_BSP)
+ * @param[out] tile The maptile the bmodel belongs, too (at least in case of SOLID_BSP)
  */
 static int SV_HullForEntity (const edict_t *ent, int *tile)
 {
