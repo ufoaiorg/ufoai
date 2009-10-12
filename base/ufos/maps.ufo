@@ -581,7 +581,7 @@ mapdef alienlandingindustrial_fix
 
 	populations
 	{
-		nonpopulation
+		nopopulation
 		rural
 		village
 		suburban
@@ -1148,7 +1148,7 @@ mapdef excavation
 	{
 		village
 		rural
-		nonpopulation
+		nopopulation
 	}
 }
 
@@ -1285,7 +1285,7 @@ mapdef italy
 	{
 		village
 		rural
-		nonpopulation
+		nopopulation
 	}
 }
 
@@ -1383,7 +1383,7 @@ mapdef mine
 		village
 		suburban
 		rural
-		nonpopulation
+		nopopulation
 	}
 }
 
@@ -1475,7 +1475,7 @@ mapdef bunker
 	{
 		village
 		rural
-		nonpopulation
+		nopopulation
 	}
 }
 
@@ -1519,7 +1519,7 @@ mapdef dam
 	{
 		village
 		rural
-		nonpopulation
+		nopopulation
 	}
 }
 
@@ -2408,7 +2408,7 @@ mapdef military_convoy
 
 	populations
 	{
-		nonpopulation
+		nopopulation
 		rural
 		village
 	}
@@ -2455,7 +2455,7 @@ mapdef fighter_crash
 	populations
 	{
 		village
-		nonpopulation
+		nopopulation
 		rural
 	}
 }
@@ -2504,7 +2504,7 @@ mapdef bridge
 
 	populations
 	{
-		nonpopulation
+		nopopulation
 		rural
 	}
 }
@@ -2837,7 +2837,7 @@ mapdef harvester_crash
 	populations
 	{
 		rural
-		nonpopulation
+		nopopulation
 	}
 }
 
