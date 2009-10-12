@@ -490,7 +490,7 @@ static qboolean MakeBrushWindings (mapbrush_t *brush)
 }
 
 /**
- * @brief Checks whether the surface flags are correct
+ * @brief Checks whether the surface and content flags are correct
  * @sa ParseBrush
  * @sa SetImpliedFlags
  */
@@ -498,6 +498,8 @@ static inline void CheckFlags (side_t *side, const mapbrush_t *b)
 {
 	if ((side->contentFlags & CONTENTS_ACTORCLIP) && (side->contentFlags & CONTENTS_PASSABLE))
 		Sys_Error("Brush %i (entity %i) has invalid mix of passable and actorclip", b->brushnum, b->entitynum);
+	if ((side->contentFlags & (CONTENTS_ACTORCLIP | CONTENTS_WEAPONCLIP)) && (side->contentFlags & CONTENTS_SOLID))
+		Sys_Error("Brush %i (entity %i) has invalid mix of clips and solid flags", b->brushnum, b->entitynum);
 }
 
 /** @brief How many materials were created for this map */
@@ -693,14 +695,16 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			side->surfaceFlags = td.surfaceFlags = atoi(parsedToken);
 			GetToken(qfalse);
 			td.value = atoi(parsedToken);
-		} else if (!checkOrFix) {
-			side->contentFlags = CONTENTS_SOLID;
 		}
 
 		/* if in check or fix mode, let them choose to do this (with command line options),
 		 * and then call is made elsewhere */
-		if (!checkOrFix)
+		if (!checkOrFix) {
 			SetImpliedFlags(side, &td, b);
+			/* if no other content flags are set - make this solid */
+			if (!checkOrFix && side->contentFlags == 0)
+				side->contentFlags = CONTENTS_SOLID;
+		}
 
 		/* translucent objects are automatically classified as detail */
 		if (side->surfaceFlags & (SURF_BLEND33 | SURF_BLEND66 | SURF_ALPHATEST))
