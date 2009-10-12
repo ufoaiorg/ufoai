@@ -30,7 +30,6 @@
 #include "brushnode.h"
 #include "../map/map.h"
 #include "../sidebar/sidebar.h"
-#include "../dialogs/prism.h"
 #include "../commands.h"
 #include "../mainframe.h"
 #include "../dialog.h"
@@ -42,6 +41,7 @@
 #include "construct/Cuboid.h"
 #include "construct/Rock.h"
 #include "construct/Sphere.h"
+#include "construct/Terrain.h"
 
 #include <list>
 
@@ -61,6 +61,9 @@ static void Brush_ConstructPrefab (Brush& brush, EBrushPrefab type, const AABB& 
 		break;
 	case eBrushRock:
 		bc = &brushconstruct::Rock::getInstance();
+		break;
+	case eBrushTerrain:
+		bc = &brushconstruct::Terrain::getInstance();
 		break;
 	default:
 		return;
@@ -848,10 +851,73 @@ BrushMakeSided g_brushmakesided7(7);
 BrushMakeSided g_brushmakesided8(8);
 BrushMakeSided g_brushmakesided9(9);
 
+#include "radiant_i18n.h"
+#include <gdk/gdkkeysyms.h>
+#include "gtkutil/dialog.h"
+#include "scenelib.h"
+#include "../mainframe.h"
+#include "../brush/brushmanip.h"
+#include "../sidebar/sidebar.h"
 class BrushPrefab
 {
 	private:
 		EBrushPrefab m_type;
+
+		static void DoSides (EBrushPrefab type)
+		{
+			ModalDialog dialog;
+			GtkEntry* sides_entry;
+
+			GtkWindow* window = create_dialog_window(MainFrame_getWindow(), _("Arbitrary sides"),
+					G_CALLBACK(dialog_delete_callback), &dialog);
+
+			GtkAccelGroup* accel = gtk_accel_group_new();
+			gtk_window_add_accel_group(window, accel);
+
+			{
+				GtkHBox* hbox = create_dialog_hbox(4, 4);
+				gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(hbox));
+				{
+					GtkLabel* label = GTK_LABEL(gtk_label_new(_("Sides:")));
+					gtk_widget_show(GTK_WIDGET(label));
+					gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(label), FALSE, FALSE, 0);
+				}
+				{
+					GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
+					gtk_widget_show(GTK_WIDGET(entry));
+					gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(entry), FALSE, FALSE, 0);
+					sides_entry = entry;
+					gtk_widget_grab_focus(GTK_WIDGET(entry));
+				}
+				{
+					GtkVBox* vbox = create_dialog_vbox(4);
+					gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(vbox), TRUE, TRUE, 0);
+					{
+						GtkButton* button = create_dialog_button(_("OK"), G_CALLBACK(dialog_button_ok), &dialog);
+						gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
+						widget_make_default(GTK_WIDGET(button));
+						gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return,
+								(GdkModifierType) 0, (GtkAccelFlags) 0);
+					}
+					{
+						GtkButton* button =
+								create_dialog_button(_("Cancel"), G_CALLBACK(dialog_button_cancel), &dialog);
+						gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
+						gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape,
+								(GdkModifierType) 0, (GtkAccelFlags) 0);
+					}
+				}
+			}
+
+			if (modal_dialog_show(window, dialog) == eIDOK) {
+				const char *str = gtk_entry_get_text(sides_entry);
+
+				Scene_BrushConstructPrefab(GlobalSceneGraph(), type, atoi(str),
+						TextureBrowser_GetSelectedShader(GlobalTextureBrowser()));
+			}
+
+			gtk_widget_destroy(GTK_WIDGET(window));
+		}
 
 	public:
 		BrushPrefab (EBrushPrefab type) :
@@ -860,7 +926,11 @@ class BrushPrefab
 		}
 		void set ()
 		{
-			DoSides(m_type);
+			if (m_type == eBrushTerrain)
+				Scene_BrushConstructPrefab(GlobalSceneGraph(), m_type, 0, TextureBrowser_GetSelectedShader(
+						GlobalTextureBrowser()));
+			else
+				DoSides(m_type);
 		}
 		typedef MemberCaller<BrushPrefab, &BrushPrefab::set> SetCaller;
 };
@@ -869,6 +939,7 @@ static BrushPrefab g_brushprism(eBrushPrism);
 static BrushPrefab g_brushcone(eBrushCone);
 static BrushPrefab g_brushsphere(eBrushSphere);
 static BrushPrefab g_brushrock(eBrushRock);
+static BrushPrefab g_brushterrain(eBrushTerrain);
 
 void ClipSelected ()
 {
@@ -911,6 +982,7 @@ void Brush_registerCommands ()
 	GlobalCommands_insert("BrushCone", BrushPrefab::SetCaller(g_brushcone));
 	GlobalCommands_insert("BrushSphere", BrushPrefab::SetCaller(g_brushsphere));
 	GlobalCommands_insert("BrushRock", BrushPrefab::SetCaller(g_brushrock));
+	GlobalCommands_insert("BrushTerrain", BrushPrefab::SetCaller(g_brushterrain));
 
 	GlobalCommands_insert("Brush3Sided", BrushMakeSided::SetCaller(g_brushmakesided3), Accelerator('3',
 			(GdkModifierType) GDK_CONTROL_MASK));
@@ -945,6 +1017,7 @@ void Brush_constructMenu (GtkMenu* menu)
 	create_menu_item_with_mnemonic(menu, _("Prism..."), "BrushPrism");
 	create_menu_item_with_mnemonic(menu, _("Sphere..."), "BrushSphere");
 	create_menu_item_with_mnemonic(menu, _("Rock..."), "BrushRock");
+	create_menu_item_with_mnemonic(menu, _("Terrain..."), "BrushTerrain");
 	menu_separator(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, C_("Constructive Solid Geometry", "CSG"));

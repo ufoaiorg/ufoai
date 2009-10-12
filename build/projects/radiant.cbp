@@ -523,6 +523,9 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\construct\Sphere.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\construct\Terrain.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\brushmodule.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -569,9 +572,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\particle.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\prism.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\eclass.cpp">

@@ -1824,6 +1824,10 @@ class Brush: public TransformNode,
 		{
 			return m_faces.back();
 		}
+		/**
+		 * Reserve space in the planes vector
+		 * @param count The amount of planes to reserve
+		 */
 		void reserve (std::size_t count)
 		{
 			m_faces.reserve(count);
@@ -1871,6 +1875,9 @@ class Brush: public TransformNode,
 			}
 		}
 
+		/**
+		 * Clears the planes vector
+		 */
 		void clear ()
 		{
 			undoSave();

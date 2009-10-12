@@ -11,11 +11,11 @@ namespace brushconstruct
 			const std::string& shader)
 	{
 		if (sides < _minSides) {
-			gtkutil::errorDialog(MainFrame_getWindow(), _("Too few sides for constructing the prism, minimum is 10"));
+			gtkutil::errorDialog(MainFrame_getWindow(), _("Too few sides for constructing the rock, minimum is 10"));
 			return;
 		}
 		if (sides > _maxSides) {
-			gtkutil::errorDialog(MainFrame_getWindow(), _("Too many sides for constructing the prism, maximum is 1000"));
+			gtkutil::errorDialog(MainFrame_getWindow(), _("Too many sides for constructing the rock, maximum is 1000"));
 			return;
 		}
 
@@ -47,8 +47,9 @@ namespace brushconstruct
 				planepts[1] = planepts[2];
 				planepts[2] = h;
 				globalOutputStream() << "flip\n";
-			} else
-			globalOutputStream() << "no flip\n";
+			} else {
+				globalOutputStream() << "no flip\n";
+			}
 #endif
 
 			brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);

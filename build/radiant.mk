@@ -85,6 +85,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/brush/construct/Prism.cpp \
 	$(RADIANT_BASE)/radiant/brush/construct/Rock.cpp \
 	$(RADIANT_BASE)/radiant/brush/construct/Sphere.cpp \
+	$(RADIANT_BASE)/radiant/brush/construct/Terrain.cpp \
 	\
 	$(RADIANT_BASE)/radiant/brushexport/BrushExportOBJ.cpp \
 	\
@@ -108,7 +109,6 @@ RADIANT_SRCS_CPP = \
 	\
 	$(RADIANT_BASE)/radiant/dialogs/about.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
-	$(RADIANT_BASE)/radiant/dialogs/prism.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/light.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
