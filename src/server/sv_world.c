@@ -324,6 +324,11 @@ static void SV_AreaEdicts_r (areanode_t * node, int areaType)
 
 /**
  * @sa SV_AreaEdicts_r
+ * @param[in] mins The mins of the bounding box
+ * @param[in] maxs The maxs of the bounding box
+ * @param[out] list The edict list that this trace is hitting
+ * @param[in] maxCount The size of the given @c list
+ * @param[in] areaType @c AREA_TRIGGERS or @ AREA_SOLID
  * @return the number of pointers filled in
  */
 int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t **list, int maxCount, int areaType)
