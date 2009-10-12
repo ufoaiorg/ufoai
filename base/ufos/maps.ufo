@@ -1126,7 +1126,7 @@ mapdef excavation
 
 	aircraft 
 	{
-		craft_drop_firebird
+	// any
 	}
 
 //	ufos
@@ -1236,6 +1236,7 @@ mapdef england
 
 	populations
 	{
+		suburban
 		village
 		rural
 	}
@@ -1829,9 +1830,10 @@ mapdef farm
 		craft_drop_firebird
 	}
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_ufo_fighter
+	}
 
 	terrains
 	{
