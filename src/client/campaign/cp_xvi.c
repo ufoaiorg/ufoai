@@ -30,16 +30,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_map.h"
 #include "cp_xvi.h"
 
+/**
+ * @brief Name of the technology for XVI event
+ */
 static technology_t *rsAlienXVI;
+/**
+ * @brief boolean used to know if each nation XVI level should be updated this day.
+ */
+static qboolean XviNationInfectionNeedsUpdate = qfalse;
 
 /**
- * The factor that is used to determine XVI radius spreading.
+ * @brief The factor that is used to determine XVI radius spreading.
  * The higher this factor, the faster XVI will spread.
  */
 static const float XVI_FACTOR = 15.0f;
 
 /**
- * Number of days between 2 XVI decrease (everywhere around the world).
+ * @brief Number of days between 2 XVI decrease (everywhere around the world).
  */
 static const int DECREASE_TIME = 7;
 
@@ -56,7 +63,7 @@ void CP_SpreadXVIAtPos (const vec2_t pos)
 
 	R_ChangeXVILevel(pos, MAX_ALPHA_VALUE - INITIAL_ALPHA_VALUE, XVI_FACTOR);
 
-	CP_UpdateNationXVIInfection();
+	XviNationInfectionNeedsUpdate = qtrue;
 }
 
 /**
@@ -70,7 +77,7 @@ void CP_ReduceXVIAtPos (const vec2_t pos)
 
 	R_ChangeXVILevel(pos, 0, XVI_FACTOR);
 
-	CP_UpdateNationXVIInfection();
+	XviNationInfectionNeedsUpdate = qtrue;
 }
 
 /**
@@ -87,7 +94,7 @@ void CP_ReduceXVIEverywhere (void)
 		return;
 
 	R_DecreaseXVILevelEverywhere();
-	CP_UpdateNationXVIInfection();
+	XviNationInfectionNeedsUpdate = qtrue;
 }
 
 /**
@@ -109,6 +116,10 @@ void CP_UpdateNationXVIInfection (void)
 	const float normalizingArea = width * height / AREA_FACTOR;		/**< area used to normalized XVI infection level for each nation.
 																		depend on overlay size so that if we change resolution of 
 																		overlay it doesn't impact nation XIInfection */
+
+	/* No need to update XVI levels if the overlay didn't change */
+	if (!XviNationInfectionNeedsUpdate)
+		return;
 
 	/* Initialize array */
 	for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
@@ -161,6 +172,8 @@ void CP_UpdateNationXVIInfection (void)
 		nation_t* nation = &ccs.nations[nationIdx];
 		nation->stats[0].xviInfection = ceil(xviInfection[nation->idx]);
 	}
+
+	XviNationInfectionNeedsUpdate = qfalse;
 }
 
 /**

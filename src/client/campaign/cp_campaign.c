@@ -755,6 +755,8 @@ void CL_CampaignRun (void)
 			CL_CampaignRunMarket();
 			CP_CheckCampaignEvents();
 			CP_ReduceXVIEverywhere();
+			CP_UpdateNationXVIInfection();	/* should be executed after all daily event that could
+										 	 * change XVI overlay */
 		}
 
 		/* check for campaign events
