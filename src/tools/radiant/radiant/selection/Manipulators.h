@@ -48,6 +48,7 @@ class Manipulator
 		}
 		virtual void setSelected (bool select) = 0;
 		virtual bool isSelected () const = 0;
+		virtual ~Manipulator ();
 };
 
 // =======================================================================================

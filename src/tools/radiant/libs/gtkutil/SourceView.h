@@ -31,7 +31,7 @@ namespace gtkutil
 			 */
 			SourceView (const std::string& language, bool readOnly);
 
-			~SourceView ();
+			virtual ~SourceView ();
 
 			void setContents (const std::string& newContents);
 

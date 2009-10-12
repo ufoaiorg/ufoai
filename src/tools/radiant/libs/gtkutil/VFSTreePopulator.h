@@ -69,7 +69,7 @@ namespace gtkutil
 
 			/** Destroy the VFSTreePopulator and all temporary data.
 			 */
-			~VFSTreePopulator ();
+			virtual ~VFSTreePopulator ();
 
 			/** Add a single VFS string to the tree, which will be split automatically
 			 * and inserted at the correct place in the tree.

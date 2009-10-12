@@ -50,6 +50,10 @@ inline void draw_semicircle (const std::size_t segments, const float radius, Poi
 	}
 }
 
+Manipulator::~Manipulator()
+{
+}
+
 // ------------ RotateManipulator methods ------------------
 
 // Constructor
