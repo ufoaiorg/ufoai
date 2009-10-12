@@ -104,7 +104,11 @@ void CP_UpdateNationXVIInfection (void)
 	const float heightPerDegree = height / 180.0f;
 	const float widthPerDegree = width / 360.0f;
 	vec2_t currentPos;							/**< current position (in latitude / longitude) */
-	const float NB_PIXEL = 200.0f;		/**< roughly average pixel number per nation */
+	const float AREA_FACTOR = 650.0f;			/**< parameter used to normalize nation XVI level.
+													decrease this factor to increase XVI level per nation */
+	const float normalizingArea = width * height / AREA_FACTOR;		/**< area used to normalized XVI infection level for each nation.
+																		depend on overlay size so that if we change resolution of 
+																		overlay it doesn't impact nation XIInfection */
 
 	/* Initialize array */
 	for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
@@ -149,7 +153,7 @@ void CP_UpdateNationXVIInfection (void)
 			/* divide the total XVI infection by the area of a pixel
 				because pixel are smaller as you go closer from the pole */
 			for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
-				xviInfection[nationIdx] += ((float) sum[nationIdx]) / (cos(torad * currentPos[1]) * NB_PIXEL);
+				xviInfection[nationIdx] += ((float) sum[nationIdx]) / (cos(torad * currentPos[1]) * normalizingArea);
 	}
 
 	/* copy the new values of XVI infection level into nation array */
