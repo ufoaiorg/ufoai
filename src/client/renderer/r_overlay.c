@@ -68,6 +68,29 @@ static void R_UploadAlpha (const image_t *image, const byte *alphaData)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
+static inline void R_SetXVILevel (int x, int y, int value)
+{
+	assert(x >= 0);
+	assert(x < XVI_WIDTH);
+	assert(y >= 0);
+	assert(y < XVI_HEIGHT);
+
+	if (!value)
+		r_xviAlpha[y * XVI_WIDTH + x] = 0;
+	else
+		r_xviAlpha[y * XVI_WIDTH + x] = min(MAX_ALPHA_VALUE, value + INITIAL_ALPHA_VALUE);
+}
+
+static inline int R_GetXVILevel (int x, int y)
+{
+	assert(x >= 0);
+	assert(x < XVI_WIDTH);
+	assert(y >= 0);
+	assert(y < XVI_HEIGHT);
+
+	return max(0, r_xviAlpha[y * XVI_WIDTH + x] - INITIAL_ALPHA_VALUE);
+}
+
 /**
  * @brief Set lower and upper value of an overlay (radar, xvi) row that can be modified when tracing a circle.
  * @param[in] pos Position of the center of circle.
@@ -99,27 +122,91 @@ static void R_SetMinMaxOverlayRows (const vec2_t pos, float radius, const int he
 	assert(*yMax <= height);			/* the loop will stop just BEFORE yMax, so use <= rather than < */
 }
 
-static inline void R_SetXVILevel (int x, int y, int value)
+/**
+ * @brief Return the half longitude affected when tracing a circle at a given latitude.
+ * @param[in] centerPos center of the circle (radar coverage, XVI infection zone).
+ * @param[in] radius radius of the circle.
+ * @param[in] y latitude of current point (in radians).
+ * @note This is an implementation of the following facts:
+ * - the distance (on a sphere) between the center of the circle and the border of the circle
+ *    at current lattitude is equal to radius
+ * - the border of the circle on a row has the same latitude than current latitude.
+ */
+static inline float R_GetCircleDeltaLongitude (const vec2_t centerPos, float radius, const float yLat)
 {
-	assert(x >= 0);
-	assert(x < XVI_WIDTH);
-	assert(y >= 0);
-	assert(y < XVI_HEIGHT);
-
-	if (!value)
-		r_xviAlpha[y * XVI_WIDTH + x] = 0;
-	else
-		r_xviAlpha[y * XVI_WIDTH + x] = min(MAX_ALPHA_VALUE, value + INITIAL_ALPHA_VALUE);
+	const float angle = (cos(radius * torad) - sin(centerPos[1] * torad) * sin(yLat)) / (cos(centerPos[1] * torad) * cos(yLat));
+	return fabs(angle) > 1.0f ? 180.0f : todeg * acos(angle);
 }
 
-static inline int R_GetXVILevel (int x, int y)
+/**
+ * @brief Change the value of 1 pixel in XVI overlay, the new value is higher than old one.
+ * @param[in] xMin Minimum column (this volumn will be reached).
+ * @param[in] xMax Maximum column (this volumn won't be reached).
+ * @param[in] centerPos Position of the center of the circle.
+ * @param[in] y current row in XVI overlay.
+ * @param[in] yLat Latitude (in degree) of the current Row.
+ * @param[in] xviLevel Level of XVI at the center of the circle (ie at @c center ).
+ * @param[in] radius Radius of the circle.
+ */
+static void R_DrawXVIOverlayPixel (int xMin, int xMax, const vec2_t centerPos, int y, const float yLat, int xviLevel, float radius)
 {
-	assert(x >= 0);
-	assert(x < XVI_WIDTH);
-	assert(y >= 0);
-	assert(y < XVI_HEIGHT);
+	int x;
+	vec2_t currentPos;
 
-	return max(0, r_xviAlpha[y * XVI_WIDTH + x] - INITIAL_ALPHA_VALUE);
+	currentPos[1] = yLat;
+
+	for (x = xMin; x < xMax; x++) {
+		const int previousLevel = R_GetXVILevel(x, y);
+		float distance;
+		int newLevel;
+
+		currentPos[0] = 180.0f - 360.0f * x / ((float) XVI_WIDTH);
+		distance = GetDistanceOnGlobe(centerPos, currentPos);
+		newLevel = ceil((xviLevel * (radius - distance)) / radius);
+		if (newLevel > previousLevel)
+			R_SetXVILevel(x, y, xviLevel);
+	}
+}
+
+/**
+ * @brief Draw XVI overlay for a given latitude between 2 longitudes.
+ * @param[in] latMin Minimum latitude (in degree).
+ * @param[in] latMax Maximum latitude (in degree).
+ * @param[in] center Position of the center of the circle.
+ * @param[in] y current row in XVI overlay.
+ * @param[in] yLat Latitude (in degree) of the current Row.
+ * @param[in] xviLevel Level of XVI at the center of the circle (ie at @c center ).
+ * @param[in] radius Radius of the circle.
+ * @pre We assume latMax - latMin <= 360 degrees.
+ */
+static void R_DrawXVIOverlayRow (float latMin, float latMax, const vec2_t center, int y, float yLat, int xviLevel, float radius)
+{
+	const float xviWidthPerDegree = XVI_WIDTH / 360.0f;
+	int xMin, xMax;
+
+	assert(latMax - latMin <= 360);
+
+	/* if the disc we draw cross the left or right edge of the picture, we need to
+	 * draw 2 part of circle on each side of the overlay */
+	if (latMin < -180.0f) {
+		xMin = 0;
+		xMax = ceil((latMax + 180.0f) * xviWidthPerDegree);
+		R_DrawXVIOverlayPixel(xMin, xMax, center, y, yLat, xviLevel, radius);
+		xMin = floor((latMin + 540.0f) * xviWidthPerDegree);
+		xMax = RADAR_WIDTH;
+		R_DrawXVIOverlayPixel(xMin, xMax, center, y, yLat, xviLevel, radius);
+	} else if (latMax > 180.0f) {
+		xMin = 0;
+		xMax = ceil((latMax - 180.0f) * xviWidthPerDegree);
+		R_DrawXVIOverlayPixel(xMin, xMax, center, y, yLat, xviLevel, radius);
+		xMin = floor((latMin + 180.0f) * xviWidthPerDegree);
+		xMax = RADAR_WIDTH;
+		R_DrawXVIOverlayPixel(xMin, xMax, center, y, yLat, xviLevel, radius);
+	} else {
+		xMin = floor((latMin + 180.0f) * xviWidthPerDegree);
+		xMax = ceil((latMax + 180.0f) * xviWidthPerDegree);
+		R_DrawXVIOverlayPixel(xMin, xMax, center, y, yLat, xviLevel, radius);
+	}
 }
 
 /**
@@ -135,8 +222,7 @@ static inline int R_GetXVILevel (int x, int y)
 static float R_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, float factor)
 {
 	int xviLevel;								/**< XVI level rate at position pos */
-	vec2_t currentPos;							/**< current position (in latitude / longitude) */
-	int x, y;									/**< current position (in pixel) */
+	int y;										/**< current position (in pixel) */
 	int yMax, yMin;								/**< Bounding box of the XVI zone to be drawn (circle) */
 	float radius;								/**< radius of the new XVI circle (in degree) */
 
@@ -151,25 +237,10 @@ static float R_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, flo
 	R_SetMinMaxOverlayRows(pos, radius, XVI_HEIGHT, &yMin, &yMax);
 
 	for (y = yMin; y < yMax; y++) {
-		for (x = 0; x < XVI_WIDTH; x++) {
-			float distance;
-			Vector2Set(currentPos,
-				180.0f - 360.0f * x / ((float) XVI_WIDTH),
-				90.0f - 180.0f * y / ((float) XVI_HEIGHT));
+		const float yLat = 90.0f - 180.0f * y / ((float) XVI_HEIGHT);
+		const float deltaLong = R_GetCircleDeltaLongitude(pos, radius, torad * yLat);
 
-			distance = GetDistanceOnGlobe(pos, currentPos);
-			if (distance <= 1. * radius) {
-				int newValue;
-				if (xCenter == x && yCenter == y)
-					/* Make sure that XVI level increases, even if
-					 * rounding problems makes radius constant */
-					newValue = xviLevel;
-				else
-					newValue = round((xviLevel * (radius - distance)) / radius);
-
-				R_SetXVILevel(x, y, max(xviLevel, newValue));
-			}
-		}
+		R_DrawXVIOverlayRow(-pos[0] - deltaLong, -pos[0] + deltaLong, pos, y, yLat, xviLevel, radius);
 	}
 
 	R_UploadAlpha(r_xviTexture, r_xviAlpha);
@@ -270,13 +341,15 @@ void R_InitializeRadarOverlay (qboolean source)
  * @param[in] source True if we must update the source of the radar coverage, false if the copy must be updated.
  * @pre We assume latMax - latMin <= 360 degrees.
  */
-static void R_DrawRadarOverlayRow (int latMin, int latMax, int y, byte alpha, qboolean source)
+static void R_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alpha, qboolean source)
 {
 	const float radarWidthPerDegree = RADAR_WIDTH / 360.0f;
 	int xMin, xMax, x;
 
 	assert(latMax - latMin <= 360);
 
+	/* if the disc we draw cross the left or right edge of the picture, we need to
+	 * draw 2 part of circle on each side of the overlay */
 	if (latMin < -180.0f) {
 		xMin = 0;
 		xMax = ceil((latMax + 180.0f) * radarWidthPerDegree);
@@ -319,21 +392,6 @@ static void R_DrawRadarOverlayRow (int latMin, int latMax, int y, byte alpha, qb
 }
 
 /**
- * @brief Return the half longitude affected by radar at a given latitude.
- * @param[in] radarPos center of the radar.
- * @param[in] radius radius of the radar.
- * @param[in] y latitude of current point (in radians).
- * @note This is an implementation of the following facts:
- * - the distance (on a sphere) between radarPos and current position is equal to radius
- * - the border of the radar coverage on a row has the same latitude than current latitude.
- */
-static inline float R_GetRadarDeltaLongitude (const vec2_t radarPos, float radius, const float yLat)
-{
-	const float angle = (cos(radius * torad) - sin(radarPos[1] * torad) * sin(yLat)) / (cos(radarPos[1] * torad) * cos(yLat));
-	return fabs(angle) > 1.0f ? 180.0f : todeg * acos(angle);
-}
-
-/**
  * @brief Add a radar coverage (base or aircraft) to radar overlay
  * @param[in] pos Position of the center of radar
  * @param[in] innerRadius Radius of the radar coverage
@@ -361,7 +419,7 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 	for (y = outeryMin; y < yMin; y++) {
 		/* latitude of current point, in radian */
 		const float yLat = torad * (90.0f - y / radarHeightPerDegree);
-		float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
+		float outerDeltaLong = R_GetCircleDeltaLongitude(pos, outerRadius, yLat);
 
 		/* Only the outer radar coverage is drawn at this latitude */
 		R_DrawRadarOverlayRow(-pos[0] - outerDeltaLong, -pos[0] + outerDeltaLong, y, outerAlpha, source);
@@ -371,8 +429,8 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 	for (y = yMin; y < yMax; y++) {
 		/* latitude of current point, in radian */
 		const float yLat = torad * (90.0f - y / radarHeightPerDegree);
-		const float deltaLong = R_GetRadarDeltaLongitude(pos, innerRadius, yLat);
-		const float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
+		const float deltaLong = R_GetCircleDeltaLongitude(pos, innerRadius, yLat);
+		const float outerDeltaLong = R_GetCircleDeltaLongitude(pos, outerRadius, yLat);
 
 		/* At this latitude, there are 3 parts to draw: left outer radar, inner radar, and right outer radar */
 		R_DrawRadarOverlayRow(-pos[0] - outerDeltaLong, -pos[0] - deltaLong, y, outerAlpha, source);
@@ -384,7 +442,7 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 	for (y = yMax; y < outeryMax; y++) {
 		/* latitude of current point, in radian */
 		const float yLat = torad * (90.0f - y / radarHeightPerDegree);
-		const float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
+		const float outerDeltaLong = R_GetCircleDeltaLongitude(pos, outerRadius, yLat);
 
 		/* Only the outer radar coverage is drawn at this latitude */
 		R_DrawRadarOverlayRow(-pos[0] - outerDeltaLong, -pos[0] + outerDeltaLong, y, outerAlpha, source);
