@@ -68,6 +68,37 @@ static void R_UploadAlpha (const image_t *image, const byte *alphaData)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
+/**
+ * @brief Set lower and upper value of an overlay (radar, xvi) row that can be modified when tracing a circle.
+ * @param[in] pos Position of the center of circle.
+ * @param[in] radius Radius of the circle to be drawn.
+ * @param[in] height Height of the overlay (in pixel).
+ * @param[out] yMin Pointer to the lower row of the overlay that should be changed.
+ * @param[out] yMax Pointer to the higher row of the overlay that should be changed.
+ * @note circle will be drawn between yMin (included) and yMin (excluded). So yMin and yMax are rounded
+ * respectively by lower and upper value.
+ */
+static void R_SetMinMaxOverlayRows (const vec2_t pos, float radius, const int height, int *yMin, int *yMax)
+{
+	const float radarHeightPerDegree = height / 180.0f;
+
+	if (pos[1] + radius > 90) {
+		*yMin = 0;
+		*yMax = round((90 - pos[1] + radius) * radarHeightPerDegree);
+	} else if (pos[1] - radius < -90) {
+		*yMin = ceil((90 - pos[1] - radius) * radarHeightPerDegree);
+		*yMax = height;
+	} else {
+		*yMin = ceil((90 - pos[1] - radius) * radarHeightPerDegree);
+		*yMax = round((90 - pos[1] + radius) * radarHeightPerDegree);
+	}
+
+	/* a few assert to avoid buffer overflow */
+	assert(*yMin >= 0);
+	assert(*yMin <= *yMax);
+	assert(*yMax <= height);			/* the loop will stop just BEFORE yMax, so use <= rather than < */
+}
+
 static inline void R_SetXVILevel (int x, int y, int value)
 {
 	assert(x >= 0);
@@ -106,7 +137,8 @@ static float R_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, flo
 	int xviLevel;								/**< XVI level rate at position pos */
 	vec2_t currentPos;							/**< current position (in latitude / longitude) */
 	int x, y;									/**< current position (in pixel) */
-	float radius;								/**< radius of the new XVI circle */
+	int yMax, yMin;								/**< Bounding box of the XVI zone to be drawn (circle) */
+	float radius;								/**< radius of the new XVI circle (in degree) */
 
 	/* Get xvi Level infection at pos */
 	xviLevel = R_GetXVILevel(xCenter, yCenter);
@@ -115,7 +147,10 @@ static float R_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, flo
 		xviLevel++;
 	radius = sqrt(factor * xviLevel);
 
-	for (y = 0; y < XVI_HEIGHT; y++) {
+	/* Set minimum and maximum rows value we'll have to change */
+	R_SetMinMaxOverlayRows(pos, radius, XVI_HEIGHT, &yMin, &yMax);
+
+	for (y = yMin; y < yMax; y++) {
 		for (x = 0; x < XVI_WIDTH; x++) {
 			float distance;
 			Vector2Set(currentPos,
@@ -299,34 +334,6 @@ static inline float R_GetRadarDeltaLongitude (const vec2_t radarPos, float radiu
 }
 
 /**
- * @brief Set lower and upper value of the radar's overlay row that can be modified by current radar.
- * @param[in] pos Position of the center of radar.
- * @param[in] radius Radius of the radar coverage.
- * @param[out] yMin Pointer to the lower row of radar overlay that should be changed.
- * @param[out] yMax Pointer to the higher row of radar overlay that should be changed.
- */
-static void R_SetMinMaxRadarRows (const vec2_t pos, float radius, int *yMin, int *yMax)
-{
-	const float radarHeightPerDegree = RADAR_HEIGHT / 180.0f;
-
-	if (pos[1] + radius > 90) {
-		*yMin = 0;
-		*yMax = round((90 - pos[1] + radius) * radarHeightPerDegree);
-	} else if (pos[1] - radius < -90) {
-		*yMin = ceil((90 - pos[1] - radius) * radarHeightPerDegree);
-		*yMax = RADAR_HEIGHT;
-	} else {
-		*yMin = ceil((90 - pos[1] - radius) * radarHeightPerDegree);
-		*yMax = round((90 - pos[1] + radius) * radarHeightPerDegree);
-	}
-
-	/* a few assert to avoid buffer overflow */
-	assert(*yMin >= 0);
-	assert(*yMin <= *yMax);
-	assert(*yMax <= RADAR_HEIGHT);			/* the loop will stop just BEFORE yMax, so use <= rather than < */
-}
-
-/**
  * @brief Add a radar coverage (base or aircraft) to radar overlay
  * @param[in] pos Position of the center of radar
  * @param[in] innerRadius Radius of the radar coverage
@@ -347,8 +354,8 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 	assert(outerRadius > innerRadius);
 
 	/* Set minimum and maximum rows value we'll have to change */
-	R_SetMinMaxRadarRows(pos, innerRadius, &yMin, &yMax);
-	R_SetMinMaxRadarRows(pos, outerRadius, &outeryMin, &outeryMax);
+	R_SetMinMaxOverlayRows(pos, innerRadius, RADAR_HEIGHT, &yMin, &yMax);
+	R_SetMinMaxOverlayRows(pos, outerRadius, RADAR_HEIGHT, &outeryMin, &outeryMax);
 
 	/* Draw upper part of the radar coverage */
 	for (y = outeryMin; y < yMin; y++) {
