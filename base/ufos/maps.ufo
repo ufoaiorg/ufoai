@@ -1859,7 +1859,7 @@ mapdef ferry
 	map				ferry
 	description		"_A ferry."
 	size			"medium"
-	teams			2
+	teams			4
 	multiplayer		true
 	gametypes {
 		1on1
