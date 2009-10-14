@@ -40,12 +40,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 class DirectoryArchive : public Archive {
-	CopiedString m_root;
+	std::string m_root;
 public:
-	DirectoryArchive(const char* root) : m_root(root) {
+	DirectoryArchive(const std::string& root) : m_root(root) {
 	}
 
-	virtual ArchiveFile* openFile(const char* name) {
+	virtual ArchiveFile* openFile(const std::string& name) {
 		UnixPath path(m_root.c_str());
 		path.push_filename(name);
 		AutoPtr<DirectoryArchiveFile> file(new DirectoryArchiveFile(name, path.c_str()));
@@ -54,7 +54,7 @@ public:
 		}
 		return 0;
 	}
-	virtual ArchiveTextFile* openTextFile(const char* name) {
+	virtual ArchiveTextFile* openTextFile(const std::string& name) {
 		UnixPath path(m_root.c_str());
 		path.push_filename(name);
 		AutoPtr<DirectoryArchiveTextFile> file(new DirectoryArchiveTextFile(name, path.c_str()));
@@ -70,12 +70,12 @@ public:
 		}
 		return 0;
 	}
-	virtual bool containsFile(const char* name) {
+	virtual bool containsFile(const std::string& name) {
 		UnixPath path(m_root.c_str());
 		path.push_filename(name);
 		return file_readable(path.c_str());
 	}
-	virtual void forEachFile(VisitorFunc visitor, const char* root) {
+	virtual void forEachFile(VisitorFunc visitor, const std::string& root) {
 		std::vector<Directory*> dirs;
 		UnixPath path(m_root.c_str());
 		path.push(root);
@@ -111,6 +111,6 @@ public:
 	}
 };
 
-Archive* OpenDirArchive(const char* name) {
+Archive* OpenDirArchive(const std::string& name) {
 	return new DirectoryArchive(name);
 }

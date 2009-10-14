@@ -33,7 +33,7 @@
 
 class DeflatedArchiveFile: public ArchiveFile
 {
-		CopiedString m_name;
+		std::string m_name;
 		FileInputStream m_istream;
 		SubFileInputStream m_substream;
 		DeflatedInputStream m_zipstream;
@@ -42,7 +42,7 @@ class DeflatedArchiveFile: public ArchiveFile
 		typedef FileInputStream::size_type size_type;
 		typedef FileInputStream::position_type position_type;
 
-		DeflatedArchiveFile (const char* name, const char* archiveName, position_type position, size_type stream_size,
+		DeflatedArchiveFile (const std::string& name, const std::string& archiveName, position_type position, size_type stream_size,
 				size_type file_size) :
 			m_name(name), m_istream(archiveName), m_substream(m_istream, position, stream_size), m_zipstream(
 					m_substream), m_size(file_size)
@@ -65,7 +65,7 @@ class DeflatedArchiveFile: public ArchiveFile
 
 class DeflatedArchiveTextFile: public ArchiveTextFile
 {
-		CopiedString m_name;
+		std::string m_name;
 		std::size_t m_size;
 		std::size_t m_filesize;
 		FileInputStream m_istream;
@@ -76,7 +76,7 @@ class DeflatedArchiveTextFile: public ArchiveTextFile
 		typedef FileInputStream::size_type size_type;
 		typedef FileInputStream::position_type position_type;
 
-		DeflatedArchiveTextFile (const char* name, const char* archiveName, position_type position,
+		DeflatedArchiveTextFile (const std::string& name, const std::string& archiveName, position_type position,
 				size_type stream_size, size_type filesize) :
 			m_name(name), m_size(stream_size), m_filesize(filesize), m_istream(archiveName), m_substream(m_istream,
 					position, stream_size), m_zipstream(m_substream), m_textStream(m_zipstream)
@@ -123,7 +123,7 @@ class ZipArchive: public Archive
 
 		typedef GenericFileSystem<ZipRecord> ZipFileSystem;
 		ZipFileSystem m_filesystem;
-		CopiedString m_name;
+		std::string m_name;
 		FileInputStream m_istream;
 
 		bool read_record ()
@@ -205,7 +205,7 @@ class ZipArchive: public Archive
 			return false;
 		}
 	public:
-		ZipArchive (const char* name) :
+		ZipArchive (const std::string& name) :
 			m_name(name), m_istream(name)
 		{
 			if (!m_istream.failed()) {
@@ -226,9 +226,9 @@ class ZipArchive: public Archive
 			return m_istream.failed();
 		}
 
-		ArchiveFile* openFile (const char* name)
+		ArchiveFile* openFile (const std::string& name)
 		{
-			ZipFileSystem::iterator i = m_filesystem.find(name);
+			ZipFileSystem::iterator i = m_filesystem.find(name.c_str());
 			if (i != m_filesystem.end() && !i->second.is_directory()) {
 				ZipRecord* file = i->second.file();
 
@@ -242,7 +242,7 @@ class ZipArchive: public Archive
 
 				switch (file->m_mode) {
 				case ZipRecord::eStored:
-					return StoredArchiveFile::create(name, m_name.c_str(), m_istream.tell(), file->m_stream_size,
+					return StoredArchiveFile::create(name.c_str(), m_name.c_str(), m_istream.tell(), file->m_stream_size,
 							file->m_file_size);
 				case ZipRecord::eDeflated:
 					return new DeflatedArchiveFile(name, m_name.c_str(), m_istream.tell(), file->m_stream_size,
@@ -251,10 +251,10 @@ class ZipArchive: public Archive
 			}
 			return 0;
 		}
-		ArchiveTextFile* openTextFile (const char* name)
+		ArchiveTextFile* openTextFile (const std::string& name)
 		{
-			g_message("Searching %s for %s\n", m_name.c_str(), name);
-			ZipFileSystem::iterator i = m_filesystem.find(name);
+			g_message("Searching %s for %s\n", m_name.c_str(), name.c_str());
+			ZipFileSystem::iterator i = m_filesystem.find(name.c_str());
 			if (i != m_filesystem.end() && !i->second.is_directory()) {
 				ZipRecord* file = i->second.file();
 
@@ -268,7 +268,7 @@ class ZipArchive: public Archive
 
 				switch (file->m_mode) {
 				case ZipRecord::eStored:
-					return StoredArchiveTextFile::create(name, m_name.c_str(), m_istream.tell(), file->m_stream_size);
+					return StoredArchiveTextFile::create(name.c_str(), m_name.c_str(), m_istream.tell(), file->m_stream_size);
 				case ZipRecord::eDeflated:
 					return new DeflatedArchiveTextFile(name, m_name.c_str(), m_istream.tell(), file->m_stream_size,
 							file->m_file_size);
@@ -276,18 +276,18 @@ class ZipArchive: public Archive
 			}
 			return 0;
 		}
-		bool containsFile (const char* name)
+		bool containsFile (const std::string& name)
 		{
-			ZipFileSystem::iterator i = m_filesystem.find(name);
+			ZipFileSystem::iterator i = m_filesystem.find(name.c_str());
 			return i != m_filesystem.end() && !i->second.is_directory();
 		}
-		void forEachFile (VisitorFunc visitor, const char* root)
+		void forEachFile (VisitorFunc visitor, const std::string& root)
 		{
-			m_filesystem.traverse(visitor, root);
+			m_filesystem.traverse(visitor, root.c_str());
 		}
 };
 
-Archive* OpenArchive (const char* name)
+Archive* OpenArchive (const std::string& name)
 {
 	return new ZipArchive(name);
 }

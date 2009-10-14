@@ -100,7 +100,7 @@ class BinaryToTextInputStream: public TextInputStream
 /// \brief An ArchiveFile which is stored uncompressed as part of a larger archive file.
 class StoredArchiveFile: public ArchiveFile
 {
-		CopiedString m_name;
+		std::string m_name;
 		FileInputStream m_filestream;
 		SubFileInputStream m_substream;
 		FileInputStream::size_type m_size;
@@ -108,7 +108,7 @@ class StoredArchiveFile: public ArchiveFile
 		typedef FileInputStream::size_type size_type;
 		typedef FileInputStream::position_type position_type;
 
-		StoredArchiveFile (const char* name, const char* archiveName, position_type position, size_type stream_size,
+		StoredArchiveFile (const std::string& name, const std::string& archiveName, position_type position, size_type stream_size,
 				size_type file_size) :
 			m_name(name), m_filestream(archiveName), m_substream(m_filestream, position, stream_size),
 					m_size(file_size)
@@ -138,7 +138,7 @@ class StoredArchiveFile: public ArchiveFile
 /// \brief An ArchiveTextFile which is stored uncompressed as part of a larger archive file.
 class StoredArchiveTextFile: public ArchiveTextFile
 {
-		CopiedString m_name;
+		std::string m_name;
 		FileInputStream m_filestream;
 		SubFileInputStream m_substream;
 		BinaryToTextInputStream<SubFileInputStream> m_textStream;
@@ -146,7 +146,7 @@ class StoredArchiveTextFile: public ArchiveTextFile
 		typedef FileInputStream::size_type size_type;
 		typedef FileInputStream::position_type position_type;
 
-		StoredArchiveTextFile (const char* name, const char* archiveName, position_type position, size_type stream_size) :
+		StoredArchiveTextFile (const std::string name, const std::string archiveName, position_type position, size_type stream_size) :
 			m_name(name), m_filestream(archiveName), m_substream(m_filestream, position, stream_size), m_textStream(
 					m_substream)
 		{
@@ -176,13 +176,13 @@ class StoredArchiveTextFile: public ArchiveTextFile
 /// \brief An ArchiveFile which is stored as a single file on disk.
 class DirectoryArchiveFile: public ArchiveFile
 {
-		CopiedString m_name;
+		std::string m_name;
 		FileInputStream m_istream;
 		FileInputStream::size_type m_size;
 	public:
 		typedef FileInputStream::size_type size_type;
 
-		DirectoryArchiveFile (const char* name, const char* filename) :
+		DirectoryArchiveFile (const std::string& name, const std::string& filename) :
 			m_name(name), m_istream(filename)
 		{
 			if (!failed()) {
@@ -215,11 +215,11 @@ class DirectoryArchiveFile: public ArchiveFile
 /// \brief An ArchiveTextFile which is stored as a single file on disk.
 class DirectoryArchiveTextFile: public ArchiveTextFile
 {
-		CopiedString m_name;
+		std::string m_name;
 		TextFileInputStream m_inputStream;
 	public:
 
-		DirectoryArchiveTextFile (const char* name, const char* filename) :
+		DirectoryArchiveTextFile (const std::string& name, const std::string& filename) :
 			m_name(name), m_inputStream(filename)
 		{
 		}

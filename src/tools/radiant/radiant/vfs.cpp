@@ -67,7 +67,7 @@ ArchiveModules& FileSystemAPI_getArchiveModules ();
 // =============================================================================
 // Global variables
 
-Archive* OpenDirArchive (const char* name);
+Archive* OpenDirArchive (const std::string& name);
 
 struct archive_entry_t
 {

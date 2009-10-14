@@ -89,7 +89,7 @@ template<typename Type>
 class NamedAllocator : public DefaultAllocator<Type> {
 	typedef DefaultAllocator<Type> allocator_type;
 
-	const char* m_name;
+	const std::string& m_name;
 public:
 
 	typedef Type value_type;
@@ -105,7 +105,7 @@ public:
 		typedef NamedAllocator<Other> other;
 	};
 
-	explicit NamedAllocator(const char* name) : m_name(name) {
+	explicit NamedAllocator(const std::string& name) : m_name(name) {
 	}
 	NamedAllocator(const NamedAllocator<Type>& other) : m_name(other.m_name) {
 	}

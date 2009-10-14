@@ -113,13 +113,13 @@ class Archive
 		}
 		/// \brief Returns a new object associated with the file identified by \p name, or 0 if the file cannot be opened.
 		/// Name comparisons are case-insensitive.
-		virtual ArchiveFile* openFile (const char* name) = 0;
+		virtual ArchiveFile* openFile (const std::string& name) = 0;
 		/// \brief Returns a new object associated with the file identified by \p name, or 0 if the file cannot be opened.
 		/// Name comparisons are case-insensitive.
-		virtual ArchiveTextFile* openTextFile (const char* name) = 0;
+		virtual ArchiveTextFile* openTextFile (const std::string& name) = 0;
 		/// Returns true if the file identified by \p name can be opened.
 		/// Name comparisons are case-insensitive.
-		virtual bool containsFile (const char* name) = 0;
+		virtual bool containsFile (const std::string& name) = 0;
 		/// \brief Performs a depth-first traversal of the archive tree starting at \p root.
 		/// Traverses the entire tree if \p root is "".
 		/// When a file is encountered, calls \c visitor.file passing the file name.
@@ -127,7 +127,7 @@ class Archive
 		/// Skips the directory if \c visitor.directory returned true.
 		/// Root comparisons are case-insensitive.
 		/// Names are mixed-case.
-		virtual void forEachFile (VisitorFunc visitor, const char* root) = 0;
+		virtual void forEachFile (VisitorFunc visitor, const std::string& root) = 0;
 };
 
 class CustomArchiveVisitor
@@ -155,7 +155,7 @@ class CustomArchiveVisitor
 		}
 };
 
-typedef Archive* (*PFN_OPENARCHIVE) (const char* name);
+typedef Archive* (*PFN_OPENARCHIVE) (const std::string& name);
 
 class _QERArchiveTable
 {
