@@ -508,15 +508,15 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
  * @note Passedict and edicts owned by passedict are explicitly not checked.
  * @sa SV_TraceBounds
  * @sa CL_Trace
- * @param[in] start
- * @param[in] end
+ * @param[in] start The starting position in the world for this trace
+ * @param[in] end The position in the world where this trace should stop
  * @param[in] passedict is explicitly excluded from clipping checks (normally NULL)
  * if the entire move stays in a solid volume, trace.allsolid will be set,
  * trace.startsolid will be set, and trace.fraction will be 0
  * if the starting point is in a solid, it will be allowed to move out to an open area
  * @param[in] contentmask brushes the trace should stop at (see MASK_*)
- * @param[in] mins
- * @param[in] maxs
+ * @param[in] mins The mins of the bounding box that is moved through the world
+ * @param[in] maxs The maxs of the bounding box that is moved through the world
  */
 trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask)
 {
