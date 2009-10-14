@@ -2938,7 +2938,9 @@ base/textures/tex_buildings/japwall001_nm.jpg | GNU General Public License 2.0 o
 base/textures/tex_buildings/marble02b_floor.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/metal_cover.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/metal_duct.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/metal_duct_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/metal_duct_rust.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/metal_duct_rust_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/metalbridge6.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/metalbridge6broke.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/metceil1d.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -3066,6 +3068,7 @@ base/textures/tex_ctp1/concrete_b_2.jpg | GNU General Public License 2.0 |  | ht
 base/textures/tex_ctp1/concrete_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/concrete_g_10.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/concrete_g_11.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_g_11_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ctp1/concrete_g_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/concrete_g_5.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/concrete_g_6.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
