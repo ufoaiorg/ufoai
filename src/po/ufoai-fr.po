@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-04 14:41+0200\n"
-"PO-Revision-Date: 2009-10-12 13:44+0100\n"
+"PO-Revision-Date: 2009-10-14 19:54+0100\n"
 "Last-Translator: kracken\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -344,9 +344,8 @@ msgstr "Corrupteur O"
 #: ../base/ufos/aircraftmanagement.ufo:699
 #: ../base/ufos/otheritems.ufo:87
 #: ../base/ufos/research.ufo:3975
-#, fuzzy
 msgid "UFO - Mothership"
-msgstr "OVNI - Corrupteur"
+msgstr "OVNI - Vaisseau mère"
 
 #: ../base/ufos/aircraftmanagement.ufo:700
 msgid "Mothership U"
@@ -1597,7 +1596,7 @@ msgstr "Un quartier urbain dans une région orientale."
 
 #: ../base/ufos/maps.ufo:2169
 msgid "Underground pipe construction site."
-msgstr ""
+msgstr "Site de construction de canalisations souterraines."
 
 #: ../base/ufos/maps.ufo:2216
 msgid "A subway station in a suburban part of town."
@@ -8059,9 +8058,8 @@ msgid "When using Reaction Fire, remember that you can set which fire mode to us
 msgstr "En utilisant le tir de réaction, souvenez-vous que vous pouvez choisir le mode de tir en cochant la case correspondante dans la fenêtre des tirs de réaction."
 
 #: ../base/ufos/tips.ufo:10
-#, fuzzy
 msgid "Remember to give your soldiers a varying array of weapons; you never know when a certain weapon may come in handy."
-msgstr "Pensez à donner à vos soldats un panel complet d'armes : on ne sait jamais quand une arme peut s'avérer indispensable."
+msgstr "Pensez à donner à vos soldats un panel complet d'armes : on ne sait jamais quand une arme donnée s'avérera indispensable."
 
 #: ../base/ufos/tips.ufo:11
 msgid "Don't forget to equip your soldiers with enough ammo."
@@ -8072,44 +8070,38 @@ msgid "Don't forget to equip your soldiers with armour."
 msgstr "Pensez à équiper vos soldats d'une armure."
 
 #: ../base/ufos/tips.ufo:13
-#, fuzzy
 msgid "You can use a flashbang to deactivate your opponents' Reaction Fire mode or to take all of his remaining Time Units (TUs) from his next round."
-msgstr "Vous pouvez utiliser une grenade étourdissante pour empêcher vos adversaires d'utiliser le tir de réaction ou leur supprimer leurs Unités de Temps (UT) restantes pour le tour suivant."
+msgstr "Vous pouvez utiliser une grenade étourdissante pour désactiver le mode \"tir de réaction\" de votre adversaire ou pour lui supprimer ses Unités de Temps (UT) restantes pour le tour suivant."
 
 #: ../base/ufos/tips.ufo:14
 msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
 msgstr "En mode multi-joueur, vous pouvez parler en utilisant la touche [k] (à tous les joueurs) ou [l] (aux membres de votre équipe uniquement), ou en utilisant les boutons de tchat du HUD."
 
 #: ../base/ufos/tips.ufo:15
-#, fuzzy
 msgid "To make a soldier face a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
-msgstr "Pour qu'un soldat regarde dans une direction donnée (c.à.d. pour le tourner), placez le curseur dans cette direction et cliquez sur le bouton du milieu ou la touche [Ctrl]. Cela vous coûtera des Unités de Temps (UT)."
+msgstr "Pour qu'un soldat regarde dans une direction donnée (c.à.d. pour le tourner), placez le curseur dans cette direction et cliquez sur le bouton droit ou la touche [Ctrl]. Cela vous coûtera des Unités de Temps (UT)."
 
 #: ../base/ufos/tips.ufo:16
 msgid "Use [Backspace] key to open doors."
 msgstr "Utiliser la touche [Retour Arrière] pour ouvrir les portes."
 
 #: ../base/ufos/tips.ufo:17
-#, fuzzy
 msgid "Be sure to hire as many scientists as you can. The better you know your enemy, the easier he is to defeat."
-msgstr "Pensez à engager autant de scientifiques que possible. Plus vite vous comprendrez votre ennemi, plus la victoire sera facile."
+msgstr "Pensez à engager autant de scientifiques que possible. Mieux vous comprendrez votre ennemi, plus la victoire sera facile."
 
 #: ../base/ufos/tips.ufo:18
-#, fuzzy
 msgid "Be sure to hire as many workers as you can. The faster your production lines, the sooner you can access better equipment and resupplies."
-msgstr "Pensez à engager autant de techniciens que possible. Plus vos lignes de production seront rapides, plus votre équipement sera adapté. "
+msgstr "Pensez à engager autant de techniciens que possible. Plus vos lignes de production seront rapides, plus vite vous aurez accès à un meilleur équipement et ravitaillement. "
 
 #: ../base/ufos/tips.ufo:19
-#, fuzzy
 msgid "Be sure to visit our website, http://ufoai.sourceforge.net/, and drop by our community channel, #ufoai on irc.freenode.net."
-msgstr "Visitez notre site,  http://ufoai.sf.net/ et joignez le canal de notre communauté #ufoai sur  irc.freenode.net. "
+msgstr "Visitez notre site,  http://ufoai.sourceforge.net/ et joignez le canal de notre communauté #ufoai sur irc.freenode.net. "
 
 #: ../base/ufos/tips.ufo:20
 msgid "Remember that you need an active Command Centre in order to launch interceptors."
 msgstr "Vous devez disposer d'un Centre de commandement actif pour lancer des intercepteurs."
 
 #: ../base/ufos/tips.ufo:21
-#, fuzzy
 msgid "Never pass up an opportunity to capture a live alien, even one of a species you have already researched."
 msgstr "Ne manquez jamais une opportunité de capturer un alien vivant, même si vous avez déjà étudié cette espèce."
 
@@ -8118,9 +8110,8 @@ msgid "Watch your back! Your soldiers can only see enemies in an arc in front of
 msgstr "Surveillez vos arrières ! Un soldat ne peut voir que les ennemis qui se trouvent devant lui."
 
 #: ../base/ufos/tips.ufo:23
-#, fuzzy
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
-msgstr "Construisez un atelier et des hangars à OVNI pour pouvoir désassembler des OVNI."
+msgstr "Construisez un atelier et des hangars à OVNI à l'extérieur de vos bases pour pouvoir désassembler des OVNI."
 
 #: ../base/ufos/tips.ufo:24
 msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
@@ -8148,23 +8139,20 @@ msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flas
 msgstr "Donnez à vos soldats les plus rapides des pistolets, armes de mêlée à une main, grenades ou encore médikit."
 
 #: ../base/ufos/tips.ufo:30
-#, fuzzy
 msgid "Building a hospital allows you to heal your soldiers faster for their next mission."
-msgstr "Construisez un hôpital pour pouvoir soigner plus rapidement vos soldats avant la prochaine mission."
+msgstr "Construire un hôpital vous permettra de soigner plus rapidement vos soldats avant la prochaine mission."
 
 #: ../base/ufos/tips.ufo:31
-#, fuzzy
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
-msgstr "Les grenades à plasma sont les plus destructrices, mais une grenade à fragmentation peut également être utile, car elle peut être lancée plus loin."
+msgstr "Les grenades à plasma sont les plus destructrices, mais les grenades à fragmentation peuvent être lancée légèrement plus loin."
 
 #: ../base/ufos/tips.ufo:32
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr "Utilisez [x] pour changer de mode de tir de réaction : aucun, coup par coup, tir multiple."
 
 #: ../base/ufos/tips.ufo:33
-#, fuzzy
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
-msgstr "Gardez vos soldats en formation serrée, afin qu'ils puissent se couvrir mutuellement (se soigner, tirer lorsque l'un d'entre eux est à court d'Unités de Temps (UT)). Tâchez de les séparer par un mur à la fin de votre tour, pour qu'ils ne puissent être tué par une grenade judicieusement placée."
+msgstr "Gardez vos soldats en formation serrée, afin qu'ils puissent se couvrir mutuellement (se soigner, tirer lorsque l'un d'entre eux est à court d'Unités de Temps (UT)). Tâchez de les séparer par un mur à la fin de votre tour, pour qu'ils ne puissent être tués par une grenade."
 
 #: ../base/ufos/tips.ufo:34
 msgid "Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
@@ -8203,9 +8191,8 @@ msgid "You can use [space] to cycle between all geoscape items."
 msgstr "Vous pouvez utiliser [espace] pour passer d'un élément du géoscape à un autre."
 
 #: ../base/ufos/tips.ufo:43
-#, fuzzy
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel, the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
-msgstr "Vous pouvez également accélérer ou décélérer le temps du géoscape en utilisant la roulette de la souris sur les boutons contrôlant le temps (ou utiliser les touches [m] et [n])."
+msgstr "Vous pouvez accélérer ou décélérer le temps du géoscape en utilisant la molette de la souris, les boutons contrôlant le temps, ou les touches [-], [+/=]. Vous pouvez également utiliser les touches [n] et [m]. [Retour arrière] arrêtera le temps."
 
 #: ../base/ufos/tips.ufo:44
 msgid "Be sure to equip your interceptor with weapons before launching it."
@@ -8220,17 +8207,14 @@ msgid "Your attacked aircraft may flee to one of your bases to avoid being destr
 msgstr "Un appareil attaqué peut se réfugier dans une base pour ne pas être détruit par des OVNI."
 
 #: ../base/ufos/tips.ufo:47
-#, fuzzy
 msgid "Build an alien containment to be able to imprison live aliens."
 msgstr "Construisez une unité de détention pour pouvoir capturer des aliens vivants."
 
 #: ../base/ufos/tips.ufo:48
-#, fuzzy
 msgid "Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] will draw a line to each enemy the selected soldier can see."
-msgstr "Ennemis en vue : Lors d'une mission terrestre, vous pouvez utiliser [Espace] pour défiler parmi les ennemis en vue. La touche [t] tracera une ligne jusqu'à chaque ennemi en vue."
+msgstr "Ennemis en vue : Lors d'une mission terrestre, vous pouvez utiliser [Espace] pour défiler parmi les ennemis en vue. La touche [t] tracera une ligne jusqu'à chaque ennemi que le soldat sélectionné peut voir."
 
 #: ../base/ufos/tips.ufo:49
-#, fuzzy
 msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base, not in the tactical missions where such an action would cost TUs."
 msgstr "Vous pouvez utiliser le bouton droit de la souris du menu d'équipement des soldats pour équiper ou enlever des armes, munitions, ou armures. Ceci ne fonctionne que dans la base, et pas lors des missions tactiques où de telles actions prendraient des UT."
 
@@ -8240,15 +8224,15 @@ msgstr "Vous devriez vous assurer que le nombre de civils décédés reste faibl
 
 #: ../base/ufos/tips.ufo:51
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
-msgstr ""
+msgstr "Couvrez vos hommes par des tirs de précision. Placez vos tireurs d'élite en des lieux de bonne visibilité (hauteur ou extrémité d'un toit par exemple). Laissez-les accroupis avec le mode de tir de réaction activé tirs multiples pour abattre les aliens."
 
 #: ../base/ufos/tips.ufo:52
 msgid "Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
-msgstr ""
+msgstr "Pour intercepter les OVNI les plus rapides, vous pouvez lancer vos intercepteurs lorsqu'ils sont très proches de votre vase, de sorte à ce que votre cible soit à portée de tir dès le décollage."
 
 #: ../base/ufos/tips.ufo:53
 msgid "Consider stunning the civilians during Terror Site missions to keep them from running around. Aliens also seem to prefer killing conscious civilians rather than unconscious ones."
-msgstr ""
+msgstr "Vous pouvez assommer des civils lors des missions sur des sites de terreur pour les empêcher de courir en tout sens. Les aliens semblent préférer tuer les civils conscients plutôt que les inconscients."
 
 #: ../base/ufos/tips.ufo:54
 msgid "Don't forget to install missiles launchers and missiles in your missile batteries."
@@ -8260,31 +8244,31 @@ msgstr "Impossible de se souvenir qui a un Médikit dans son sac ? Appuyer sur [
 
 #: ../base/ufos/tips.ufo:56
 msgid "To catch fast UFOs send interceptors in from several directions."
-msgstr ""
+msgstr "Pour rapptraper les OVNI les plus rapides, envoyez des intercepteurs dans plusieurs directions."
 
 #: ../base/ufos/tips.ufo:57
 msgid "To quickly buy or sell items, hover over the arrows and roll your mousewheel."
-msgstr ""
+msgstr "Pour acheter ou vendre des objets rapidement, survolez les flèches et utilisez la molette de votre souris."
 
 #: ../base/ufos/tips.ufo:58
 msgid "Beware of friendly fire! While lobbing a grenade at an enemy who snuck up on your troops might be an easy kill, chances are you'll do the aliens' work for them. The same can be said about bullets, make sure once the enemy is dead you wont be shooting your own troops behind him."
-msgstr ""
+msgstr "Évitez les tirs amis ! Lancer une grenade sur un ennemi surgissant sur vos troupes peut permettre de le tuer facilement, mais vous risquez par la même occasion de faire le travail de vos ennemis ! Ceci reste vrai pour les balles : soyez surs de ne pas tirer sur vos troupes qui se trouvent derrière un ennemi une fois celui-ci abattu."
 
 #: ../base/ufos/tips.ufo:59
 msgid "Remember to check your research and production queues often! A good arsenal is an active arsenal!"
-msgstr ""
+msgstr "Pensez à vérifier votre liste de recherche et de production régulièrement ! Un bon arsenal est un arsenal actif !"
 
 #: ../base/ufos/tips.ufo:60
 msgid "The presence of live civilians probably means that there are no live aliens nearby. This can save time clearing a map."
-msgstr ""
+msgstr "La présence de civils encore en vie signifie probablement qu'il n'y a pas d'aliens vivant à proximité. Cette remarque peut vous permettre de nettoyer la carte plus rapidement."
 
 #: ../base/ufos/tips.ufo:61
 msgid "Watch the health of your soldiers; do not let them die. Experienced soldiers are more efficient in missions than new recruits."
-msgstr ""
+msgstr "Surveillez la santée de vos soldats : ne les laissez pas mourir. Les vétérans sont plus efficaces au combat que les nouvelles recrues."
 
 #: ../base/ufos/tips.ufo:62
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
-msgstr ""
+msgstr "Vous pouvez préparer les actions du prochain tour pendant l'attente de début de tour. Appuyez sur la touche [Entrée] deux fois de suite vous permettra de déclencher ces actions dès que votre nouveau tour commence."
 
 #: ../base/ufos/ui/ahud.ufo:147
 #: ../base/ufos/ui/ahud.ufo:178
@@ -8461,7 +8445,7 @@ msgstr "Sélectionner cet emplacement"
 #: ../base/ufos/ui/aircraft_info.ufo:62
 #: ../base/ufos/ui/aircraft_soldiers.ufo:48
 msgid "Team Members:"
-msgstr "Membres de l'équipe :"
+msgstr "Équipage :"
 
 #: ../base/ufos/ui/aircraft_info.ufo:93
 msgid "Start Aircraft"
@@ -8800,14 +8784,12 @@ msgid "Information"
 msgstr "Information"
 
 #: ../base/ufos/ui/basedefence.ufo:59
-#, fuzzy
 msgid "Missile Defences"
-msgstr "Missile"
+msgstr "Défense missile"
 
 #: ../base/ufos/ui/basedefence.ufo:63
-#, fuzzy
 msgid "Laser Defences"
-msgstr "Fusil Laser"
+msgstr "Défense laser"
 
 #: ../base/ufos/ui/basedefence.ufo:104
 msgid "Weapon slots"
@@ -9799,9 +9781,8 @@ msgid "Retry this mission"
 msgstr "Réessayer cette mission"
 
 #: ../base/ufos/ui/lostwon.ufo:160
-#, fuzzy
 msgid "UFO recovery"
-msgstr "Rapatriement des OVNI"
+msgstr "Rapatriement d'OVNI"
 
 #: ../base/ufos/ui/lostwon.ufo:171
 msgid "Store UFO"
@@ -10077,24 +10058,20 @@ msgid "Stretch"
 msgstr "Force :"
 
 #: ../base/ufos/ui/material_editor.ufo:657
-#, fuzzy
 msgid "Pulse"
-msgstr "Pause"
+msgstr "Impulsion"
 
 #: ../base/ufos/ui/material_editor.ufo:661
-#, fuzzy
 msgid "Scroll"
-msgstr "Monter"
+msgstr "Dérouler"
 
 #: ../base/ufos/ui/material_editor.ufo:665
-#, fuzzy
 msgid "Rotate"
-msgstr "Note"
+msgstr "Tourner"
 
 #: ../base/ufos/ui/material_editor.ufo:669
-#, fuzzy
 msgid "Scale"
-msgstr "Sauver"
+msgstr "Échelle"
 
 #: ../base/ufos/ui/messageoptions.ufo:14
 msgid "Pause/message settings"
@@ -10113,9 +10090,8 @@ msgid "Revert changes"
 msgstr "Annuler les modifications"
 
 #: ../base/ufos/ui/messageoptions.ufo:45
-#, fuzzy
 msgid "Notify types:"
-msgstr "Type de notification :"
+msgstr "Types de notification :"
 
 #: ../base/ufos/ui/messageoptions.ufo:53
 msgid ""
@@ -11447,9 +11423,8 @@ msgid "Pulsed Fire"
 msgstr "Tir Pulsé"
 
 #: ../base/ufos/weapons_laser.ufo:241
-#, fuzzy
 msgid "Stun Shot"
-msgstr "Tir rapide"
+msgstr "Tir étourdissant"
 
 #: ../base/ufos/weapons_melee.ufo:6
 msgid "Combat Knife"
@@ -11663,9 +11638,8 @@ msgid "Select a soldier from list"
 msgstr "Sélectionner un soldat de la liste"
 
 #: client/battlescape/cl_actor.c:2853
-#, fuzzy
 msgid "Update a soldier"
-msgstr "Renommer votre soldat"
+msgstr "Mettre à jour un soldat"
 
 #: client/battlescape/cl_hud.c:102
 #: client/battlescape/cl_hud.c:105
@@ -12835,9 +12809,8 @@ msgstr ""
 "Infection Virale eXtraterrestre actuelle : %i%%"
 
 #: client/campaign/cp_campaign.c:1548
-#, fuzzy
 msgid "Collected dead alien bodies"
-msgstr "%i corps aliens ont été récoltés"
+msgstr "Corps aliens décédés collectés"
 
 #: client/campaign/cp_campaign.c:1593
 msgid "Your dropship is not near the landing zone"
@@ -13131,9 +13104,8 @@ msgid "Forget it"
 msgstr "Oubliez cela"
 
 #: client/campaign/cp_map.c:375
-#, fuzzy
 msgid "UFO Sighting"
-msgstr "OVNI - Chasseur"
+msgstr "OVNI en vue"
 
 #: client/campaign/cp_map.c:1275
 msgid "Day"
@@ -13203,9 +13175,9 @@ msgid "ETA:\t%sh\n"
 msgstr "HPA :\t%sh\n"
 
 #: client/campaign/cp_mapfightequip.c:334
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
-msgstr "%s a été correctement installé sur l'appareil %s de la base %s."
+msgstr "%s a été correctement installé sur l'appareil %s à %s."
 
 #: client/campaign/cp_mapfightequip.c:337
 #, c-format
@@ -13213,19 +13185,19 @@ msgid "%s was successfully installed at installation %s."
 msgstr "%s a été installé avec succès dans l'installation %s."
 
 #: client/campaign/cp_mapfightequip.c:340
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully installed at %s."
-msgstr "%s a été installé avec succès dans la base %s."
+msgstr "%s a été installé avec succès à %s."
 
 #: client/campaign/cp_mapfightequip.c:362
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
-msgstr "%s a été correctement retiré de l'appareil %s de la base %s."
+msgstr "%s a été correctement retiré de l'appareil %s à %s."
 
 #: client/campaign/cp_mapfightequip.c:368
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
-msgstr "%s a été correctement retiré, l'installation de %s commence sur l'appareil %s de la base %s."
+msgstr "%s a été correctement retiré, l'installation de %s commence sur l'appareil %s à %s."
 
 #: client/campaign/cp_mapfightequip.c:376
 #, c-format
@@ -13233,9 +13205,9 @@ msgid "%s was successfully removed from installation %s."
 msgstr "%s a été correctement retiré de l'installation %s."
 
 #: client/campaign/cp_mapfightequip.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed from %s."
-msgstr "%s a été supprimé avec succès de la base %s."
+msgstr "%s a été supprimé avec succès à %s."
 
 #: client/campaign/cp_mapfightequip.c:1216
 msgid "Light weight"
@@ -13597,9 +13569,9 @@ msgid "Paid %i credits for aircraft"
 msgstr "Vous avez dépensé %i crédits pour vos appareils"
 
 #: client/campaign/cp_nations.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "Paid %i credits for upkeep of %s"
-msgstr "Vous avez dépensé %i crédits pour l'entretien de la base %s"
+msgstr "Vous avez dépensé %i crédits pour l'entretien de %s"
 
 #: client/campaign/cp_nations.c:177
 #, c-format
@@ -13655,9 +13627,9 @@ msgid "No craft available, no pilot assigned, or no tactical teams assigned to a
 msgstr "Pas de vaisseau disponible, pas de pilote, ou pas d'équipe tactique assignée à un vaisseau disponible"
 
 #: client/campaign/cp_popup.c:424
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
-msgstr "%s\t%s\t(%i/%i)\n"
+msgstr "%s%s (%i/%i)\t%s\t%s"
 
 #: client/campaign/cp_popup.c:442
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
@@ -13680,9 +13652,9 @@ msgstr ""
 "Il ne peut pas décoller.\n"
 
 #: client/campaign/cp_produce.c:235
-#, fuzzy, c-format
+#, c-format
 msgid "Production queue for %s is empty"
-msgstr "La liste de production de la base %s est vide"
+msgstr "La liste de production de %s est vide"
 
 #: client/campaign/cp_produce.c:236
 msgid "Production queue empty"
@@ -13690,30 +13662,30 @@ msgstr "Liste de production vide"
 
 #: client/campaign/cp_produce.c:358
 #: client/campaign/cp_produce.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough credits to finish production in %s.\n"
-msgstr "Pas assez de crédits pour terminer la production dans la base %s.\n"
+msgstr "Pas assez de crédits pour terminer la production à %s.\n"
 
 #: client/campaign/cp_produce.c:368
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in %s. Production postponed.\n"
-msgstr "Plus assez de place dans les entrepôts de la base %s. La production est stoppée.\n"
+msgstr "Plus assez de place dans les entrepôts de %s. La production est repoussée.\n"
 
 #: client/campaign/cp_produce.c:389
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free hangar space in %s. Production postponed.\n"
-msgstr "Plus assez de place dans les hangars de la base %s. La production est stoppée.\n"
+msgstr "Plus assez de place dans les hangars de %s. La production est repoussée.\n"
 
 #: client/campaign/cp_produce.c:400
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed.\n"
-msgstr "Plus assez de place dans les entrepôts de la base %s. Le désassemblage est stoppé.\n"
+msgstr "Plus assez de place dans les entrepôts de %s. Le démontage est repoussé.\n"
 
 #: client/campaign/cp_produce.c:428
 #: client/campaign/cp_produce.c:440
-#, fuzzy, c-format
+#, c-format
 msgid "The production of %s at %s has finished."
-msgstr "La production de %s est terminée"
+msgstr "La production de %s à %s est terminée."
 
 #: client/campaign/cp_produce.c:429
 #: client/campaign/cp_produce.c:441
@@ -13722,9 +13694,9 @@ msgid "Production finished"
 msgstr "Production terminée"
 
 #: client/campaign/cp_produce.c:448
-#, fuzzy, c-format
+#, c-format
 msgid "The disassembling of %s at %s has finished."
-msgstr "Le démontage de %s est terminé."
+msgstr "Le démontage de %s à %s est terminé."
 
 #: client/campaign/cp_produce_callbacks.c:131
 msgid "Not enough workers"
@@ -13791,9 +13763,9 @@ msgstr ""
 
 #: client/campaign/cp_produce_callbacks.c:237
 #: client/campaign/cp_produce_callbacks.c:271
-#, fuzzy, c-format
+#, c-format
 msgid "%s (at %s)"
-msgstr "%s (%s)\n"
+msgstr "%s (à %s)"
 
 #: client/campaign/cp_produce_callbacks.c:345
 #: client/campaign/cp_produce_callbacks.c:449
@@ -13822,9 +13794,8 @@ msgid "%s - disassembly\n"
 msgstr "%s - démontage\n"
 
 #: client/campaign/cp_produce_callbacks.c:385
-#, fuzzy
 msgid "Components:\n"
-msgstr "Composants :"
+msgstr "Composants :\n"
 
 #: client/campaign/cp_produce_callbacks.c:394
 #, c-format
@@ -13919,12 +13890,11 @@ msgstr "Pas assez de laboratoires"
 #: client/campaign/cp_research.c:837
 #, c-format
 msgid "Research prerequisites of %s does not met at %s. Research halted!"
-msgstr ""
+msgstr "Les prérequis de la recherche %s ne sont pas tous réunis à %s. La recherche est stoppée !"
 
 #: client/campaign/cp_research.c:838
-#, fuzzy
 msgid "Research halted"
-msgstr "Recherche terminée"
+msgstr "Recherche interrompue"
 
 #: client/campaign/cp_research.c:1205
 msgid "No description available."
@@ -14277,11 +14247,8 @@ msgid "Destination base does not have any hangar."
 msgstr "La base de destination ne dispose d'aucun hangar."
 
 #: client/campaign/cp_transfer.c:283
-#, fuzzy
 msgid "Destination base does not have enough space in hangars.\n"
-msgstr ""
-"La base de destination de dispose pas d'un\n"
-"espace suffisant dans ses hangars.\n"
+msgstr "La base de destination n'a plus assez d'espace dans ses hangars.\n"
 
 #: client/campaign/cp_transfer.c:331
 #: client/campaign/cp_transfer.c:500
@@ -14291,15 +14258,15 @@ msgstr "Soldat %s %s"
 
 #: client/campaign/cp_transfer.c:333
 #: client/campaign/cp_transfer.c:502
-#, fuzzy, c-format
+#, c-format
 msgid "Pilot %s"
-msgstr "Pilotes"
+msgstr "Pilote %s"
 
 #: client/campaign/cp_transfer.c:366
 #: client/campaign/cp_transfer.c:540
-#, fuzzy, c-format
+#, c-format
 msgid "Corpse of %s"
-msgstr "Cadavre de %s (%i disponible)"
+msgstr "Cadavre de %s"
 
 #: client/campaign/cp_transfer.c:398
 #: client/campaign/cp_transfer.c:584
@@ -14329,9 +14296,9 @@ msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "Transfert impossible - la base ne dispose pas de Quartiers d'Habitation."
 
 #: client/campaign/cp_transfer.c:551
-#, fuzzy, c-format
+#, c-format
 msgid "Alive %s"
-msgstr "Vivants:"
+msgstr "%s en vie"
 
 #: client/campaign/cp_transfer.c:563
 msgid "Alien Containment is empty."
@@ -14350,9 +14317,9 @@ msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "Transfert impossible - la base ne dispose pas d'un hangar fonctionnel."
 
 #: client/campaign/cp_transfer.c:698
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Storage, items are removed!"
-msgstr "La base %s ne dispose pas d'entrepôt, l'équipement a été perdu."
+msgstr "%s ne dispose pas d'entrepôt, les objets sont retirés !"
 
 #: client/campaign/cp_transfer.c:699
 #: client/campaign/cp_transfer.c:717
@@ -14366,42 +14333,41 @@ msgid "Transport mission"
 msgstr "Mission de transport"
 
 #: client/campaign/cp_transfer.c:716
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Living Quarters, employees got unhired!"
-msgstr "La base %s ne dispose pas de Quartiers d'Habitation, aucun employé n'a été recruté !"
+msgstr "%s ne dispose pas de Quartiers d'Habitation, les employés sont licenciés !"
 
 #: client/campaign/cp_transfer.c:752
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
-msgstr "La base %s ne dispose pas d'Unité de Détention - les aliens sont perdus !"
+msgstr "%s ne dispose pas d'Unité de Détention : les aliens sont supprimés !"
 
 #: client/campaign/cp_transfer.c:780
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have enough free space in hangars. Aircraft is lost!"
-msgstr "La base %s ne dispose pas de suffisamment de place dans ses hangars. L'appareil est perdu !"
+msgstr "%s ne dispose pas de la place suffisante dans ses hangars. L'appareil est perdu !"
 
 #: client/campaign/cp_transfer.c:868
 #: client/campaign/cp_transfer.c:1080
-#, fuzzy, c-format
+#, c-format
 msgid "Transport mission started, cargo is being transported to %s"
-msgstr "Mission de transport commencée, le cargo est transporté vers la base %s"
+msgstr "Mission de transport commencée, le cargo est transporté vers %s"
 
 #: client/campaign/cp_transfer.c:935
-#, fuzzy, c-format
+#, c-format
 msgid "(can host %i live alien)"
 msgid_plural "(can host %i live aliens)"
-msgstr[0] "(peut accueillir %i alien vivant)\n"
-msgstr[1] "(peut accueillir %i aliens vivants)\n"
+msgstr[0] "(peut accueillir %i alien vivant)"
+msgstr[1] "(peut accueillir %i aliens vivants)"
 
 #: client/campaign/cp_transfer.c:954
-#, fuzzy
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
-msgstr "La base de destination n'existe plus ! Le cargo et le personnel ont été perdus."
+msgstr "La base de destination n'existe plus ! Le cargo est perdu et le personnel remercié."
 
 #: client/campaign/cp_transfer.c:959
-#, fuzzy, c-format
+#, c-format
 msgid "Transport mission ended, unloading cargo in %s"
-msgstr "Mission de transport terminée, le cargo est déchargé dans la base %s"
+msgstr "Mission de transport terminée, le cargo est déchargé à %s"
 
 #: client/campaign/cp_transfer.c:1113
 msgid "No target base selected"
@@ -14484,9 +14450,9 @@ msgid "A UFO is flying toward %s"
 msgstr "Un OVNI vole vers %s"
 
 #: client/campaign/cp_ufo.c:735
-#, fuzzy, c-format
+#, c-format
 msgid "Our radar detected a new UFO near %s"
-msgstr "Nos radars ont détecté un nouvel OVNI"
+msgstr "Nos radars ont détecté un nouvel OVNI près de %s"
 
 #: client/campaign/cp_ufo.c:739
 msgid "Our radar has lost the tracking on a UFO"
@@ -14547,9 +14513,8 @@ msgid "Size:\t%i\n"
 msgstr "Taille :\t%i\n"
 
 #: client/campaign/cp_ufopedia.c:233
-#, fuzzy
 msgid "^BDamage type\tProtection\n"
-msgstr "Type :\tProtection:\n"
+msgstr "^BType de damage\tProtection\n"
 
 #: client/campaign/cp_ufopedia.c:254
 msgid "Error - could not find building"
@@ -14648,7 +14613,7 @@ msgid "Re: "
 msgstr "Re :"
 
 #: client/campaign/cp_ufopedia.c:566
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "FROM: %s\n"
 "TO: %s\n"
@@ -14656,13 +14621,11 @@ msgid ""
 msgstr ""
 "DE : %s\n"
 "POUR : %s\n"
-"DATE : %s\n"
-"SUJET : %s%s\n"
+"DATE : %s"
 
 #: client/campaign/cp_ufopedia.c:638
-#, fuzzy
 msgid "(complete)"
-msgstr "Compétent"
+msgstr "(terminé)"
 
 #: client/campaign/cp_ufopedia.c:700
 msgid "No pre-research description available."
@@ -14716,24 +14679,22 @@ msgid "  * %s\n"
 msgstr "  * %s\n"
 
 #: client/campaign/cp_uforecovery.c:227
-#, fuzzy, c-format
+#, c-format
 msgid "%s was transfered to %s."
-msgstr "%s a été promu(e) au grade de %s.\n"
+msgstr "%s a été transféré à %s."
 
 #: client/campaign/cp_uforecovery.c:228
-#, fuzzy
 msgid "UFO Recovered"
-msgstr "Rapatriement des OVNI"
+msgstr "Rapatriement de l'OVNI"
 
 #: client/campaign/cp_uforecovery_callbacks.c:134
-#, fuzzy
 msgid "No free UFO yard available."
-msgstr "Pas de propositions de recherche disponible sur ce projet."
+msgstr "Aucun hangar à OVNI libre."
 
 #: client/campaign/cp_uforecovery_callbacks.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to %s."
-msgstr "%s a été rapatrié du champ de bataille. L'OVNI est transporté à la base %s."
+msgstr "%s a été rapatrié du champ de bataille. L'OVNI est transporté à %s."
 
 #: client/campaign/cp_uforecovery_callbacks.c:186
 #: client/campaign/cp_uforecovery_callbacks.c:296
@@ -14741,9 +14702,9 @@ msgid "UFO Recovery"
 msgstr "Rapatriement des OVNI"
 
 #: client/campaign/cp_uforecovery_callbacks.c:288
-#, fuzzy, c-format
+#, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
-msgstr "%s a été rapatrié du champ de bataille. L'OVNI a été vendu à la nation %s pour %i crédits."
+msgstr "L'OVNI %s, précedemment rapatrié de %s, a été vendu à la nation %s pour %i crédits."
 
 #: client/campaign/cp_uforecovery_callbacks.c:293
 #, c-format
@@ -14756,9 +14717,9 @@ msgid "Your base: %s has been destroyed! All employees killed and all equipment 
 msgstr "Votre base : %s a été détruite ! Tous les employés ont été tués et l'équipement a été détruit."
 
 #: client/campaign/missions/cp_mission_baseattack.c:211
-#, fuzzy, c-format
+#, c-format
 msgid "Base '%s' is under attack! What to do ?"
-msgstr "La base est attaquée. Que faire ?"
+msgstr "La base '%s' est attaquée ! Que faire ?"
 
 #: client/cl_console.c:274
 msgid "Bring up the in-game console"
@@ -14874,9 +14835,8 @@ msgstr "Félicitations"
 
 #: client/cl_game_multiplayer.c:205
 #: client/cl_game_skirmish.c:128
-#, fuzzy
 msgid "You've lost the game!"
-msgstr "Vous avez perdu la partie"
+msgstr "Vous avez perdu la partie !"
 
 #: client/cl_game_multiplayer.c:206
 #: client/cl_game_skirmish.c:129
@@ -15021,9 +14981,8 @@ msgid "Action:\t%s\n"
 msgstr "Action :\t%s\n"
 
 #: client/cl_inventory_callbacks.c:199
-#, fuzzy
 msgid "Unknown - not useable"
-msgstr "Technologie inconnue à étudier"
+msgstr "Inconnu - non utilisable"
 
 #: client/cl_irc.c:1220
 msgid "Server closed connection"
@@ -15105,7 +15064,7 @@ msgstr "CCCP"
 
 #: client/cl_team.c:598
 msgid "Update the GUI with the selected item"
-msgstr ""
+msgstr "Mettre à jour l'interface avec l'objet sélectionné"
 
 #: client/input/cl_input.c:1350
 msgid "Rotate battlescape camera anti-clockwise"
@@ -15240,7 +15199,7 @@ msgstr[1] "%i jours restant"
 
 #: client/menu/node/m_node_base.c:274
 msgid "not operational, depends on"
-msgstr ""
+msgstr "non fonctionnel, dépend de"
 
 #: client/menu/node/m_node_container.c:421
 #: client/menu/node/m_node_container.c:426
