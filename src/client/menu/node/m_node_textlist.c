@@ -158,6 +158,10 @@ static void MN_TextListNodeDraw (menuNode_t *node)
 {
 	const menuSharedData_t *shared;
 	shared = &mn.sharedData[EXTRADATA(node).dataID];
+
+	/* nothing set yet? */
+	if (shared->type == MN_SHARED_NONE)
+		return;
 	if (shared->type != MN_SHARED_LINKEDLISTTEXT) {
 		Com_Printf("MN_TextListNodeDraw: Only linkedlist text supported (dataid %d).\n", EXTRADATA(node).dataID);
 		MN_ResetData(EXTRADATA(node).dataID);
