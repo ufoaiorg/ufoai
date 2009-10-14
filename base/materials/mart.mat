@@ -20,9 +20,26 @@
 }
 {
 	material tex_nature/grass001
+	hardness 0.2
+	specular 0.2
 	{
 		texture tex_nature/grass
 		dirtmap 1.0
 		lightmap
 	}
 }
+{
+	material tex_ctp1/concrete_g_11
+	hardness 0.1
+	specular 0.1
+	bump 0.1
+	parallax 0.1
+}
+{
+	material tex_buildings/metal_duct_rust
+	hardness 0.1
+	specular 0.1
+	bump 0.1
+	parallax 0.1
+}
+
