@@ -679,7 +679,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\qe3.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\qgl.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\render\qgl.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\radiant.rc">
@@ -690,7 +690,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\referencecache.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\renderstate.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\render\renderstate.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph.cpp">
