@@ -17,6 +17,7 @@
 #include "lrint.h"
 #include <cmath>
 #include <float.h>
+#include <sstream>
 
 template<typename Element>
 class BasicVector2
@@ -251,6 +252,16 @@ class BasicVector2
 		Element crossProduct (const BasicVector2<OtherT>& other) const
 		{
 			return Element(m_elements[0] * other.y() - m_elements[1] * other.x());
+		}
+
+		/**
+		 * @return String representation of the vector - values are separated by space
+		 */
+		std::string toString () const
+		{
+			std::stringstream ss;
+			ss << m_elements[0] << " " << m_elements[1];
+			return ss.str();
 		}
 };
 

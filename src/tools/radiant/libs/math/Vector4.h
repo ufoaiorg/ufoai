@@ -264,6 +264,16 @@ class BasicVector4
 					/ m_elements[3]);
 		}
 
+		/**
+		 * @return String representation of the vector - values are separated by space
+		 */
+		std::string toString () const
+		{
+			std::stringstream ss;
+			ss << m_elements[0] << " " << m_elements[1] << " " << m_elements[2] << " " << m_elements[3];
+			return ss.str();
+		}
+
 		/** Implicit cast to C-style array. This allows a Vector4 to be
 		 * passed directly to GL functions that expect an array (e.g.
 		 * glFloat4fv()). These functions implicitly provide operator[]
