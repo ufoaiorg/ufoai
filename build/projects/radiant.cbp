@@ -253,6 +253,9 @@
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\SourceView.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\TextPanel.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\ModalProgressDialog.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\ModelProgressDialog.cpp">
 			<Option compilerVar="CC" />
@@ -556,7 +559,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findtextures.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\light.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\maptools.cpp">

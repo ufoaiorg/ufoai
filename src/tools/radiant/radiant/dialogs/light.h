@@ -1,2 +1,0 @@
-
-EMessageBoxReturn DoLightIntensityDlg(int *intensity);

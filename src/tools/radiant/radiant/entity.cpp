@@ -51,7 +51,7 @@
 #include "mainframe.h"
 #include "qe3.h"
 #include "commands.h"
-#include "dialogs/light.h"
+#include "ui/lightdialog/LightDialog.h"
 #include "dialogs/particle.h"
 #include "ui/modelselector/ModelSelector.h"
 #include "ui/common/SoundChooser.h"
@@ -292,8 +292,6 @@ void Entity_connectSelected ()
 	}
 }
 
-static int g_iLastLightIntensity = 100;
-
 static bool Entity_create (const std::string& name, const Vector3& origin)
 {
 	std::string command = "entityCreate -class " + name;
@@ -363,15 +361,16 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 	}
 
 	// TODO tweaking: when right click dropping a light entity, ask for light value in a custom dialog box
-	if (name == "light") {
-		int intensity = g_iLastLightIntensity;
-
-		if (DoLightIntensityDlg(&intensity) == eIDOK) {
-			g_iLastLightIntensity = intensity;
-			char buf[10];
-			sprintf(buf, "%d", intensity);
-			entity->setKeyValue("light", buf);
-		}
+	if (name == "light" || name == "light_spot") {
+		ui::LightDialog dialog;
+		dialog.show();
+		std::string intensity = dialog.getIntensity();
+		if (!intensity.empty()) {
+			Vector3 color = dialog.getColor();
+			entity->setKeyValue("light", intensity);
+			entity->setKeyValue("_color", color.toString());
+		} else
+			revert = true;
 	}
 
 	if (isModel) {
@@ -616,8 +615,6 @@ void Entity_Construct ()
 
 	GlobalPreferenceSystem().registerPreference("SI_Colors5", Vector3ImportStringCaller(g_entity_globals.color_entity),
 			Vector3ExportStringCaller(g_entity_globals.color_entity));
-	GlobalPreferenceSystem().registerPreference("LastLightIntensity", IntImportStringCaller(g_iLastLightIntensity),
-			IntExportStringCaller(g_iLastLightIntensity));
 
 	typedef FreeCaller1<const Selectable&, Entity_ColorPickerSelectionChanged> EntityColorPickerSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(EntityColorPickerSelectionChangedCaller());

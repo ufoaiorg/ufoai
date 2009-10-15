@@ -109,7 +109,6 @@ RADIANT_SRCS_CPP = \
 	\
 	$(RADIANT_BASE)/radiant/dialogs/about.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
-	$(RADIANT_BASE)/radiant/dialogs/light.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findtextures.cpp \
@@ -123,6 +122,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/ui/modelselector/ModelSelector.cpp \
 	$(RADIANT_BASE)/radiant/ui/ortho/EntityClassChooser.cpp \
 	$(RADIANT_BASE)/radiant/ui/ortho/OrthoContextMenu.cpp \
+	$(RADIANT_BASE)/radiant/ui/lightdialog/LightDialog.cpp \
 	\
 	$(RADIANT_BASE)/radiant/pathfinding/Routing.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingLumpLoader.cpp \
@@ -149,6 +149,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/libs/gtkutil/SourceView.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/MenuItemAccelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/TreeModel.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/TextPanel.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/VFSTreePopulator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/menu/PopupMenu.cpp \
 	\
