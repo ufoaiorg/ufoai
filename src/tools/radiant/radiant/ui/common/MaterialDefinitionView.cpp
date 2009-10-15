@@ -9,7 +9,6 @@
 #include "AutoPtr.h"
 #include "stream/textfilestream.h"
 #include "iarchive.h"
-#include "../../mainframe.h"
 
 namespace ui
 {
@@ -90,7 +89,7 @@ namespace ui
 		TextFileOutputStream out(fullpath);
 		if (out.failed()) {
 			g_message("Error saving file to '%s'.", fullpath.c_str());
-			gtkutil::errorDialog(MainFrame_getWindow(), _("Error saving material file"));
+			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Error saving material file"));
 			return;
 		}
 		out << content.c_str();

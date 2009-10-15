@@ -1,7 +1,7 @@
 #include "EntityClassChooser.h"
 
-#include "../../mainframe.h"
 #include "ieclass.h"
+#include "iradiant.h"
 #include "eclasslib.h"
 #include "gtkutil/dialog.h"
 
@@ -32,7 +32,7 @@ namespace ui
 	EntityClassChooser::EntityClassChooser () :
 		_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)), _treeStore(NULL), _selection(NULL), _addButton(NULL)
 	{
-		gtk_window_set_transient_for(GTK_WINDOW(_widget), MainFrame_getWindow());
+		gtk_window_set_transient_for(GTK_WINDOW(_widget), GlobalRadiant().getMainWindow());
 		gtk_window_set_modal(GTK_WINDOW(_widget), TRUE);
 		gtk_window_set_position(GTK_WINDOW(_widget), GTK_WIN_POS_CENTER_ON_PARENT);
 		gtk_window_set_title(GTK_WINDOW(_widget), ECLASS_CHOOSER_TITLE);
@@ -187,7 +187,7 @@ namespace ui
 			Entity_createFromSelection(g_value_get_string(&val), self->_lastPoint);
 			gtk_widget_hide(self->_widget);
 		} catch (EntityCreationException e) {
-			gtkutil::errorDialog(MainFrame_getWindow(), e.what());
+			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), e.what());
 		}
 	}
 

@@ -1,14 +1,15 @@
 #include "ModelSelector.h"
 
-#include "../../mainframe.h"
 #include "radiant_i18n.h"
 #include "gtkutil/glwidget.h"
 #include "gtkutil/image.h"
 #include "gtkutil/ScrolledFrame.h"
 #include "ifilesystem.h"
+#include "iradiant.h"
 #include "../../referencecache.h"
 #include "os/path.h"
 #include "../Icons.h"
+#include "../../mainframe.h" // ScopeDisableScreenUpdates
 
 #include <cmath>
 #include <iostream>
@@ -48,7 +49,7 @@ namespace ui
 				G_TYPE_STRING)), _lastModel(""), _lastSkin("0")
 	{
 		// Window properties
-		gtk_window_set_transient_for(GTK_WINDOW(_widget), MainFrame_getWindow());
+		gtk_window_set_transient_for(GTK_WINDOW(_widget), GlobalRadiant().getMainWindow());
 		gtk_window_set_modal(GTK_WINDOW(_widget), TRUE);
 		gtk_window_set_title(GTK_WINDOW(_widget), MODELSELECTOR_TITLE);
 		gtk_window_set_position(GTK_WINDOW(_widget), GTK_WIN_POS_CENTER_ON_PARENT);

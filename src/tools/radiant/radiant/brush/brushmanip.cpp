@@ -855,7 +855,6 @@ BrushMakeSided g_brushmakesided9(9);
 #include <gdk/gdkkeysyms.h>
 #include "gtkutil/dialog.h"
 #include "scenelib.h"
-#include "../mainframe.h"
 #include "../brush/brushmanip.h"
 #include "../sidebar/sidebar.h"
 class BrushPrefab
