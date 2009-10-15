@@ -21,15 +21,15 @@
 
 #include "targetable.h"
 
-typedef std::map<CopiedString, targetables_t> targetnames_t;
+typedef std::map<std::string, targetables_t> targetnames_t;
 
 const char* g_targetable_nameKey = "targetname";
 
 targetnames_t g_targetnames;
 
-targetables_t* getTargetables (const char* targetname)
+targetables_t* getTargetables (const std::string& targetname)
 {
-	if (targetname[0] == '\0')
+	if (targetname.empty())
 		return 0;
 	return &g_targetnames[targetname];
 }

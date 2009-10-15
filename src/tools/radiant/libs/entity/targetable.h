@@ -49,7 +49,7 @@ typedef std::set<Targetable*> targetables_t;
 
 extern const char* g_targetable_nameKey;
 
-targetables_t* getTargetables (const char* targetname);
+targetables_t* getTargetables (const std::string& targetname);
 
 class EntityConnectionLine: public OpenGLRenderable
 {

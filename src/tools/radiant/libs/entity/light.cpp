@@ -390,7 +390,7 @@ inline void default_extents (Vector3& extents)
 
 class ShaderRef
 {
-		CopiedString m_name;
+		std::string m_name;
 		Shader* m_shader;
 		void capture ()
 		{
@@ -409,7 +409,7 @@ class ShaderRef
 		{
 			release();
 		}
-		void setName (const char* name)
+		void setName (const std::string& name)
 		{
 			release();
 			m_name = name;
@@ -435,16 +435,16 @@ class LightShader
 		{
 			setDefault();
 		}
-		void valueChanged (const char* value)
+		void valueChanged (const std::string& value)
 		{
-			if (string_empty(value)) {
+			if (value.empty()) {
 				setDefault();
 			} else {
 				m_shader.setName(value);
 			}
 			SceneChangeNotify();
 		}
-		typedef MemberCaller1<LightShader, const char*, &LightShader::valueChanged> ValueChangedCaller;
+		typedef MemberCaller1<LightShader, const std::string&, &LightShader::valueChanged> ValueChangedCaller;
 
 		Shader* get () const
 		{
