@@ -31,7 +31,7 @@
 template<typename Type>
 class ModulesMap: public Modules<Type>
 {
-		typedef std::map<CopiedString, Module*> modules_t;
+		typedef std::map<std::string, Module*> modules_t;
 		modules_t m_modules;
 	public:
 		~ModulesMap ()
@@ -52,7 +52,7 @@ class ModulesMap: public Modules<Type>
 			return m_modules.end();
 		}
 
-		void insert (const char* name, Module& module)
+		void insert (const std::string& name, Module& module)
 		{
 			module.capture();
 			if (globalModuleServer().getError()) {
@@ -63,7 +63,7 @@ class ModulesMap: public Modules<Type>
 			}
 		}
 
-		Type* find (const char* name)
+		Type* find (const std::string& name)
 		{
 			modules_t::iterator i = m_modules.find(name);
 			if (i != m_modules.end()) {
@@ -72,7 +72,7 @@ class ModulesMap: public Modules<Type>
 			return 0;
 		}
 
-		Type* findModule (const char* name)
+		Type* findModule (const std::string& name)
 		{
 			return find(name);
 		}
@@ -94,7 +94,7 @@ class InsertModules: public ModuleServer::Visitor
 		{
 		}
 
-		void visit (const char* name, Module& module) const
+		void visit (const std::string& name, Module& module) const
 		{
 			m_modules.insert(name, module);
 		}

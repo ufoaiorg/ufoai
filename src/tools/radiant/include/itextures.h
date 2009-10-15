@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 struct qtexture_t;
 
 class LoadImageCallback {
-	typedef Image* (*LoadFunc)(void* environment, const char* name);
+	typedef Image* (*LoadFunc)(void* environment, const std::string& name);
 public:
 	void* m_environment;
 	LoadFunc m_func;

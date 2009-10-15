@@ -38,7 +38,7 @@ void CPluginManager::fillPluginSlots (GtkWidget* main_window)
 			{
 			}
 
-			void visit (const char* name, const _QERPluginTable& table) const
+			void visit (const std::string& name, const _QERPluginTable& table) const
 			{
 				m_slots.AddPluginSlot(m_main_window, name, table);
 			}

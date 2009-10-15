@@ -83,7 +83,7 @@ static void PluginToolbar_populate ()
 				m_toolbar(toolbar)
 			{
 			}
-			void visit (const char* name, const _QERPlugToolbarTable& table) const
+			void visit (const std::string& name, const _QERPlugToolbarTable& table) const
 			{
 				const std::size_t count = table.m_pfnToolbarButtonCount();
 				for (std::size_t i = 0; i < count; ++i) {

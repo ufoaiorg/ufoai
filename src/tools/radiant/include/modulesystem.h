@@ -77,7 +77,7 @@ class ModuleServer
 				virtual ~Visitor ()
 				{
 				}
-				virtual void visit (const char* name, Module& module) const = 0;
+				virtual void visit (const std::string& name, Module& module) const = 0;
 		};
 
 		virtual ~ModuleServer ()
@@ -163,10 +163,10 @@ class Modules
 				virtual ~Visitor ()
 				{
 				}
-				virtual void visit (const char* name, const Type& table) const = 0;
+				virtual void visit (const std::string& name, const Type& table) const = 0;
 		};
 
-		virtual Type* findModule (const char* name) = 0;
+		virtual Type* findModule (const std::string& name) = 0;
 		virtual void foreachModule (const Visitor& visitor) = 0;
 };
 

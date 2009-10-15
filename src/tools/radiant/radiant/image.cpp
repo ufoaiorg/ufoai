@@ -36,16 +36,16 @@ typedef Modules<_QERPlugImageTable> ImageModules;
 ImageModules& Textures_getImageModules();
 
 /// \brief Returns a new image for the first file matching \p name in one of the available texture formats, or 0 if no file is found.
-Image* QERApp_LoadImage(void* environment, const char* name) {
+Image* QERApp_LoadImage(void* environment, const std::string& name) {
 	Image* image = 0;
 	class LoadImageVisitor : public ImageModules::Visitor {
-		const char* m_name;
+		const std::string m_name;
 		Image*& m_image;
 	public:
-		LoadImageVisitor(const char* name, Image*& image)
+		LoadImageVisitor(const std::string& name, Image*& image)
 				: m_name(name), m_image(image) {
 		}
-		void visit(const char* name, const _QERPlugImageTable& table) const {
+		void visit(const std::string& name, const _QERPlugImageTable& table) const {
 			if (m_image == 0) {
 				StringOutputStream fullname(256);
 				fullname << m_name << '.' << name;

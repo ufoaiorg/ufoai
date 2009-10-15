@@ -554,15 +554,15 @@ typedef ConstPointerCaller1<char, const char*, TextureDirectory_loadTexture> Tex
 
 class LoadTexturesByTypeVisitor: public ImageModules::Visitor
 {
-		const char* m_dirstring;
+		const std::string m_dirstring;
 	public:
-		LoadTexturesByTypeVisitor (const char* dirstring) :
+		LoadTexturesByTypeVisitor (const std::string& dirstring) :
 			m_dirstring(dirstring)
 		{
 		}
-		void visit (const char* minor, const _QERPlugImageTable& table) const
+		void visit (const std::string& minor, const _QERPlugImageTable& table) const
 		{
-			GlobalFileSystem().forEachFile(m_dirstring, minor, TextureDirectoryLoadTextureCaller(m_dirstring));
+			GlobalFileSystem().forEachFile(m_dirstring.c_str(), minor.c_str(), TextureDirectoryLoadTextureCaller(m_dirstring.c_str()));
 		}
 };
 

@@ -137,7 +137,7 @@ void EntityClassUFO_Construct ()
 			{
 			}
 
-			void visit (const char* name, const EntityClassScanner& table) const
+			void visit (const std::string& name, const EntityClassScanner& table) const
 			{
 				g_message("Try to load '%s'\n", table.getFilename().c_str());
 				EntityClassesLoadFile(table, table.getFilename());
