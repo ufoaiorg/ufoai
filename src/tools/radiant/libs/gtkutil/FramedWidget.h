@@ -42,6 +42,10 @@ namespace gtkutil
 			{
 			}
 
+			virtual ~FramedWidget ()
+			{
+			}
+
 			// Operator cast to GtkWindow* (use this to create and retrieve the GtkWidget* pointer)
 			virtual operator GtkWidget* ()
 			{

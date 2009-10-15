@@ -27,6 +27,10 @@ namespace gtkutil
 	{
 		public:
 
+			virtual ~EditorWidget ()
+			{
+			}
+
 			/**
 			 * Set the value of the string which should be edited by this widget. The
 			 * child editing widgets will be immediately updated to reflect the new

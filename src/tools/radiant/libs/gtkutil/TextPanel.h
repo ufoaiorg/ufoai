@@ -14,7 +14,7 @@ namespace gtkutil
 		protected:
 
 			/* gtkutil::Widget implementation */
-			virtual GtkWidget* _getWidget () const;
+			GtkWidget* _getWidget () const;
 
 		public:
 
