@@ -24,7 +24,6 @@ namespace ui
 
 			// Intensity widget
 			gtkutil::TextPanel _intensityEntry;
-			gtkutil::LeftAlignedLabel _intensityLabel;
 
 			Vector3 _color;
 

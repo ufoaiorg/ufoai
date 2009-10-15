@@ -1,8 +1,11 @@
 #ifndef FRAMEDWIDGET_H_
 #define FRAMEDWIDGET_H_
 
-#include "gtk/gtkframe.h"
-#include "gtk/gtkwidget.h"
+#include <gtk/gtkframe.h>
+#include <gtk/gtkwidget.h>
+#include <string>
+
+#include "LeftAlignedLabel.h"
 
 namespace gtkutil
 {
@@ -17,11 +20,25 @@ namespace gtkutil
 			// The contained widget
 			GtkWidget* _containedWidget;
 
+			std::string _title;
+
 		public:
 
 			// Constructor
 			FramedWidget (GtkWidget* containedWidget) :
-				_containedWidget(containedWidget)
+				_containedWidget(containedWidget), _title("")
+			{
+			}
+
+			// Constructor with frame label
+			FramedWidget (GtkWidget* containedWidget, std::string& title) :
+				_containedWidget(containedWidget), _title(title)
+			{
+			}
+
+			// Constructor with frame label
+			FramedWidget (GtkWidget* containedWidget, const char* title) :
+				_containedWidget(containedWidget), _title(title)
 			{
 			}
 
@@ -29,7 +46,12 @@ namespace gtkutil
 			virtual operator GtkWidget* ()
 			{
 				// Create a new frame and set its properties
-				GtkFrame* frame = GTK_FRAME(gtk_frame_new(0));
+				GtkFrame* frame;
+
+				if (!_title.empty())
+					frame = GTK_FRAME(gtk_frame_new(_title.c_str()));
+				else
+					frame = GTK_FRAME(gtk_frame_new(0));
 				gtk_widget_show(GTK_WIDGET(frame));
 				gtk_frame_set_shadow_type(frame, GTK_SHADOW_IN);
 

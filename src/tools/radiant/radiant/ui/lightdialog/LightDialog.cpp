@@ -27,16 +27,21 @@
 #include "LightDialog.h"
 #include "iradiant.h"
 #include "gtkutil/RightAlignment.h"
+#include "gtkutil/FramedWidget.h"
+#include "string/string.h"
 
 namespace ui
 {
 	namespace
 	{
 		static const std::string _defaultIntensity = "100";
+		static const int _maxIntensity = 400;
+		static const int _minIntensity = 1;
+		static const int _maxIntensityLength = 3;
 	}
 
 	LightDialog::LightDialog () :
-		_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)), _intensityLabel("Intensity")
+		_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL))
 	{
 		// Set up the window
 		gtk_window_set_transient_for(GTK_WINDOW(_widget), GlobalRadiant().getMainWindow());
@@ -55,8 +60,8 @@ namespace ui
 
 		// Main vbox
 		GtkWidget* vbx = gtk_vbox_new(FALSE, 12);
-		gtk_box_pack_start(GTK_BOX(vbx), createColorSelector(), TRUE, TRUE, 0);
-		gtk_box_pack_start(GTK_BOX(vbx), createIntensity(), FALSE, FALSE, 0);
+		gtk_box_pack_start(GTK_BOX(vbx), gtkutil::FramedWidget(createColorSelector(), _("Light Color")), TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(vbx), gtkutil::FramedWidget(createIntensity(), _("Light Intensity")), FALSE, FALSE, 0);
 		gtk_box_pack_start(GTK_BOX(vbx), createButtons(), FALSE, FALSE, 0);
 
 		gtk_container_set_border_width(GTK_CONTAINER(_widget), 12);
@@ -80,10 +85,7 @@ namespace ui
 	// Create intensity panel
 	GtkWidget* LightDialog::createIntensity ()
 	{
-		GtkWidget* vbox = gtk_vbox_new(FALSE, 4);
-		gtk_box_pack_start(GTK_BOX(vbox), _intensityLabel, FALSE, FALSE, 0);
-		gtk_box_pack_start(GTK_BOX(vbox), _intensityEntry.getWidget(), FALSE, FALSE, 0);
-		return vbox;
+		return _intensityEntry.getWidget();
 	}
 
 	// Create buttons panel
@@ -107,7 +109,14 @@ namespace ui
 
 	std::string LightDialog::getIntensity ()
 	{
-		return _intensity;
+		int intensity = string::toInt(_intensity);
+		// boundary check
+		if (intensity < _minIntensity)
+			intensity = _minIntensity;
+		else if (intensity > _maxIntensity)
+			intensity = _maxIntensity;
+
+		return string::toString(intensity);
 	}
 
 	Vector3 LightDialog::getColor ()
