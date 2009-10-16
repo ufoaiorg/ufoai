@@ -37,7 +37,7 @@ inline MapImporter* Node_getMapImporter (scene::Node& node)
 	return NodeTypeCast<MapImporter>::cast(node);
 }
 
-typedef std::list<std::pair<CopiedString, CopiedString> > KeyValues;
+typedef std::list<std::pair<std::string, std::string> > KeyValues;
 
 NodeSmartReference g_nullNode(NewNullNode());
 
@@ -45,7 +45,7 @@ NodeSmartReference Entity_create (EntityCreator& entityTable, EntityClass* entit
 {
 	scene::Node& entity(entityTable.createEntity(entityClass));
 	for (KeyValues::const_iterator i = keyValues.begin(); i != keyValues.end(); ++i) {
-		Node_getEntity(entity)->setKeyValue((*i).first.c_str(), (*i).second.c_str());
+		Node_getEntity(entity)->setKeyValue((*i).first, (*i).second);
 	}
 	return NodeSmartReference(entity);
 }
@@ -97,7 +97,7 @@ NodeSmartReference Entity_parseTokens (Tokeniser& tokeniser, EntityCreator& enti
 			}
 			++count_primitives;
 		} else { // epair
-			CopiedString key(token);
+			std::string key(token);
 			token = tokeniser.getToken();
 			if (token == 0) {
 				Tokeniser_unexpectedError(tokeniser, token, "#epair-value");
