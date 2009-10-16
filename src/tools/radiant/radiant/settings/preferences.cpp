@@ -96,7 +96,7 @@ CGameDescription::CGameDescription (xmlDocPtr pDoc, const std::string& gameFile)
 		pNode = pNode->next;
 
 	if (!pNode)
-		gtkutil::errorDialog(MainFrame_getWindow(), _("Didn't find 'game' node in ufoai.game file\n"));
+		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Didn't find 'game' node in ufoai.game file\n"));
 
 	for (xmlAttrPtr attr = pNode->properties; attr != 0; attr = attr->next) {
 		m_gameDescription.insert(GameDescription::value_type(xmlAttr_getName(attr), xmlAttr_getValue(attr)));
@@ -183,7 +183,7 @@ void CGameDialog::Init ()
 		g_pGameDescription = new CGameDescription(pDoc, strGameFilename);
 		xmlFreeDoc(pDoc);
 	} else {
-		gtkutil::errorDialog(MainFrame_getWindow(), _("XML parser failed ufoai.game"));
+		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("XML parser failed ufoai.game"));
 	}
 }
 
@@ -603,7 +603,7 @@ void PreferencesDialog_showDialog ()
 			for (std::vector<std::string>::iterator i = g_restart_required.begin(); i != g_restart_required.end(); ++i) {
 				message += "<b>" + (*i) + "</b>\n";
 			}
-			gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), message);
+			gtkutil::infoDialog(GlobalRadiant().getMainWindow(), message);
 			g_restart_required.clear();
 		}
 	}
