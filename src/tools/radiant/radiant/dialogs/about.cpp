@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/image.h"
 #include "igl.h"
 #include "sound/OpenAL.h"
-#include "../mainframe.h"
+#include "iradiant.h"
 #include <gtk/gtkgl.h>
 #include "../ui/Icons.h"
 
@@ -47,7 +47,7 @@ void DoAbout (void)
 	ModalDialog dialog;
 	ModalDialogButton ok_button(dialog, eIDOK);
 
-	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), _("About UFORadiant"), dialog);
+	GtkWindow* window = create_modal_dialog_window(GlobalRadiant().getMainWindow(), _("About UFORadiant"), dialog);
 
 	{
 		GtkVBox* vbox = create_dialog_vbox(4, 4);

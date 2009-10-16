@@ -11,11 +11,11 @@ namespace brushconstruct
 			const std::string& shader)
 	{
 		if (sides < _minSides) {
-			gtkutil::errorDialog(MainFrame_getWindow(), _("Too few sides for constructing the sphere, minimum is 3"));
+			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Too few sides for constructing the sphere, minimum is 3"));
 			return;
 		}
 		if (sides > _maxSides) {
-			gtkutil::errorDialog(MainFrame_getWindow(), _("Too many sides for constructing the sphere, maximum is 31"));
+			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Too many sides for constructing the sphere, maximum is 31"));
 			return;
 		}
 

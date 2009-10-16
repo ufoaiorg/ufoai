@@ -26,10 +26,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "radiant_i18n.h"
 #include "iscenegraph.h"
+#include "iradiant.h"
 #include "scenelib.h"
 #include "gtkutil/dialog.h"
+#include "gtkutil/widget.h"
 #include <gdk/gdkkeysyms.h>
-#include "../mainframe.h"
 #include "../map/map.h"
 
 class BrushFindIndexWalker : public scene::Graph::Walker {
@@ -96,7 +97,7 @@ void FindBrushOrEntity (void)
 	GtkEntry* entity;
 	GtkEntry* brush;
 
-	GtkWindow* window = create_dialog_window(MainFrame_getWindow(), _("Find Brush"), G_CALLBACK(dialog_delete_callback), &dialog);
+	GtkWindow* window = create_dialog_window(GlobalRadiant().getMainWindow(), _("Find Brush"), G_CALLBACK(dialog_delete_callback), &dialog);
 
 	GtkAccelGroup* accel = gtk_accel_group_new();
 	gtk_window_add_accel_group(window, accel);

@@ -17,7 +17,7 @@ namespace brushconstruct
 	void Terrain::generate (Brush& brush, const AABB& bounds, std::size_t sides, const TextureProjection& projection,
 			const std::string& shader)
 	{
-		gtkutil::infoDialog(MainFrame_getWindow(), _("Not yet implemented"));
+		gtkutil::infoDialog(GlobalRadiant().getMainWindow(), _("Not yet implemented"));
 		/** @todo implement me */
 	}
 }

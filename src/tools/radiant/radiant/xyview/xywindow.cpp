@@ -550,7 +550,7 @@ void WXY_Print (void)
 	unsigned char* img;
 	const char* filename;
 
-	filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), FALSE, _("Save Image"), "", "bmp");
+	filename = file_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()), FALSE, _("Save Image"), "", "bmp");
 	if (!filename)
 		return;
 
@@ -1100,14 +1100,15 @@ void XYWnd::Move_Begin (void)
 		Move_End();
 	}
 	m_move_started = true;
-	g_xywnd_freezePointer.freeze_pointer(m_parent != 0 ? m_parent : MainFrame_getWindow(), XYWnd_moveDelta, this);
+	g_xywnd_freezePointer.freeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow(), XYWnd_moveDelta,
+			this);
 	m_move_focusOut = g_signal_connect(G_OBJECT(m_gl_widget), "focus_out_event", G_CALLBACK(XYWnd_Move_focusOut), this);
 }
 
 void XYWnd::Move_End (void)
 {
 	m_move_started = false;
-	g_xywnd_freezePointer.unfreeze_pointer(m_parent != 0 ? m_parent : MainFrame_getWindow());
+	g_xywnd_freezePointer.unfreeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow());
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_move_focusOut);
 }
 
@@ -1148,14 +1149,15 @@ void XYWnd::Zoom_Begin (void)
 	}
 	m_zoom_started = true;
 	g_dragZoom = 0;
-	g_xywnd_freezePointer.freeze_pointer(m_parent != 0 ? m_parent : MainFrame_getWindow(), XYWnd_zoomDelta, this);
+	g_xywnd_freezePointer.freeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow(), XYWnd_zoomDelta,
+			this);
 	m_zoom_focusOut = g_signal_connect(G_OBJECT(m_gl_widget), "focus_out_event", G_CALLBACK(XYWnd_Zoom_focusOut), this);
 }
 
 void XYWnd::Zoom_End (void)
 {
 	m_zoom_started = false;
-	g_xywnd_freezePointer.unfreeze_pointer(m_parent != 0 ? m_parent : MainFrame_getWindow());
+	g_xywnd_freezePointer.unfreeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow());
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_zoom_focusOut);
 }
 
@@ -1406,7 +1408,7 @@ void WXY_BackgroundSelect (void)
 		return;
 	}
 
-	const char* filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Background Image"));
+	const char* filename = file_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()), TRUE, _("Background Image"));
 	g_pParentWnd->ActiveXY()->XY_DisableBackground();
 	if (filename)
 		g_pParentWnd->ActiveXY()->XY_LoadBackgroundImage(filename);

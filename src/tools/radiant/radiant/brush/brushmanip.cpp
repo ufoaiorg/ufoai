@@ -31,10 +31,10 @@
 #include "../map/map.h"
 #include "../sidebar/sidebar.h"
 #include "../commands.h"
-#include "../mainframe.h"
 #include "../dialog.h"
 #include "../xyview/xywindow.h"
 #include "../settings/preferences.h"
+#include "../mainframe.h"
 
 #include "construct/Prism.h"
 #include "construct/Cone.h"
@@ -867,7 +867,7 @@ class BrushPrefab
 			ModalDialog dialog;
 			GtkEntry* sides_entry;
 
-			GtkWindow* window = create_dialog_window(MainFrame_getWindow(), _("Arbitrary sides"),
+			GtkWindow* window = create_dialog_window(GlobalRadiant().getMainWindow(), _("Arbitrary sides"),
 					G_CALLBACK(dialog_delete_callback), &dialog);
 
 			GtkAccelGroup* accel = gtk_accel_group_new();

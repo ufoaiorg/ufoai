@@ -3,9 +3,9 @@
 
 #include <string>
 #include "../brush.h"
-#include "../../mainframe.h"
 #include "gtkutil/dialog.h"
 #include "radiant_i18n.h"
+#include "iradiant.h"
 
 namespace brushconstruct
 {

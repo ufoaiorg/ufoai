@@ -28,7 +28,8 @@
 #include <gdk/gdkkeysyms.h>
 #include "iradiant.h"
 #include "gtkutil/dialog.h"
-#include "../mainframe.h"
+#include "gtkutil/widget.h"
+#include "gtkutil/window.h"
 #include "particles.h"
 
 /**
@@ -44,7 +45,7 @@ EMessageBoxReturn DoParticleDlg (char **particle)
 	GtkListStore *store;
 	GtkWidget *treeViewWidget;
 
-	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), _("Particle"), dialog, -1, -1);
+	GtkWindow* window = create_modal_dialog_window(GlobalRadiant().getMainWindow(), _("Particle"), dialog, -1, -1);
 
 	gtk_widget_set_size_request(GTK_WIDGET(window), 250, 175);
 

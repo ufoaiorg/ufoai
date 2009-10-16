@@ -275,7 +275,7 @@ namespace routing
 			_routingLump = RoutingLump();
 			loadRoutingLump(*file);
 		} else {
-			gtkutil::errorDialog(MainFrame_getWindow(), _("No compiled version of the map found"));
+			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("No compiled version of the map found"));
 		}
 	}
 

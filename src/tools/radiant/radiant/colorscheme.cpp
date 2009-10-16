@@ -67,7 +67,7 @@ class ChooseColour
 		{
 			Vector3 colour;
 			m_get(colour);
-			color_dialog(GTK_WIDGET(MainFrame_getWindow()), colour);
+			color_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()), colour);
 			m_set(colour);
 		}
 };
