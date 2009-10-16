@@ -282,8 +282,6 @@ class PicoSurface: public OpenGLRenderable
 		}
 };
 
-typedef std::pair<CopiedString, int> PicoModelKey;
-
 class PicoModel: public Cullable, public Bounded
 {
 		typedef std::vector<PicoSurface*> surfaces_t;
@@ -413,7 +411,7 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 		class Remap
 		{
 			public:
-				CopiedString first;
+				std::string first;
 				Shader* second;
 				Remap () :
 					second(0)
