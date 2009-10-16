@@ -35,9 +35,9 @@
 
 class NameableString: public Nameable
 {
-		CopiedString m_name;
+		std::string m_name;
 	public:
-		NameableString (const char* name) :
+		NameableString (const std::string& name) :
 			m_name(name)
 		{
 		}
