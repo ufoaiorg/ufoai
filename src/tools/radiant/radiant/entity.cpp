@@ -44,11 +44,12 @@
 #include "sidebar/entitylist.h"
 
 #include "gtkutil/filechooser.h"
+#include "gtkutil/idledraw.h"
 #include "gtkmisc.h"
 #include "select.h"
 #include "map/map.h"
 #include "settings/preferences.h"
-#include "mainframe.h"
+#include "iradiant.h"
 #include "qe3.h"
 #include "commands.h"
 #include "ui/lightdialog/LightDialog.h"
@@ -389,7 +390,7 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 		else
 			revert = true;
 	} else if (isParticle) {
-		char* particle = misc_particle_dialog(GTK_WIDGET(MainFrame_getWindow()));
+		char* particle = misc_particle_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()));
 		if (particle != 0) {
 			entity->setKeyValue("particle", particle);
 			free(particle);
@@ -412,7 +413,7 @@ void Entity_createFromSelection (const std::string& name, const Vector3& origin)
 		revert = Entity_create(name, origin);
 	} catch (EntityCreationException e) {
 		revert = true;
-		gtkutil::errorDialog(MainFrame_getWindow(), e.what());
+		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), e.what());
 	}
 
 	if (revert) {
@@ -423,7 +424,7 @@ void Entity_createFromSelection (const std::string& name, const Vector3& origin)
 
 bool DoNormalisedColor (Vector3& color)
 {
-	if (!color_dialog(GTK_WIDGET(MainFrame_getWindow()), color))
+	if (!color_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()), color))
 		return false;
 	/* scale colors so that at least one component is at 1.0F */
 

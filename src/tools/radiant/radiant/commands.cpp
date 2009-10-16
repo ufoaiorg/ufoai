@@ -32,6 +32,7 @@
 #include <gtk/gtktreeselection.h>
 #include <gtk/gtkbutton.h>
 #include "gtkmisc.h"
+#include "iradiant.h"
 #include "settings/preferences.h"
 #include "stringio.h"
 #include "os/file.h"
@@ -494,7 +495,7 @@ void DoCommandListDlg (void)
 {
 	command_list_dialog_t dialog;
 
-	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), _("Mapped Commands"), dialog, -1, 400);
+	GtkWindow* window = create_modal_dialog_window(GlobalRadiant().getMainWindow(), _("Mapped Commands"), dialog, -1, 400);
 	g_signal_connect(G_OBJECT(window), "key-press-event", (GCallback) accelerator_window_key_press, &dialog);
 
 	GtkAccelGroup* accel = gtk_accel_group_new();
@@ -594,7 +595,6 @@ void DoCommandListDlg (void)
 		GtkButton* button = create_modal_dialog_button(_("Close"), dialog.m_close_button);
 		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
 		widget_make_default(GTK_WIDGET(button));
-		gtk_widget_grab_default(GTK_WIDGET(button));
 		gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return, (GdkModifierType) 0,
 				(GtkAccelFlags) 0);
 		gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape, (GdkModifierType) 0,

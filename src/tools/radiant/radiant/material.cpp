@@ -27,7 +27,7 @@
 #include "material.h"
 #include "radiant_i18n.h"
 
-#include "mainframe.h"
+#include "iradiant.h"
 #include "gtkmisc.h"
 #include "iselection.h"
 #include "brush/brush.h"
@@ -89,7 +89,8 @@ void MaterialSystem::generateMaterialFromTexture ()
 	const std::string& mapname = Map_Name(g_map);
 	if (mapname.empty() || Map_Unnamed(g_map)) {
 		// save the map first
-		gtkutil::errorDialog(MainFrame_getWindow(), _("You have to save your map before material generation can work"));
+		gtkutil::errorDialog(GlobalRadiant().getMainWindow(),
+				_("You have to save your map before material generation can work"));
 		return;
 	}
 
