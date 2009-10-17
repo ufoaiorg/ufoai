@@ -81,6 +81,23 @@ typedef enum {
 } serverListStatus_t;
 
 /**
+ * @brief Perform the server filtering
+ * @param server
+ * @return
+ */
+static inline qboolean CL_ShowServer (const serverList_t *server)
+{
+	if (cl_serverlist->integer == SERVERLIST_SHOWALL)
+		return qtrue;
+	if (cl_serverlist->integer == SERVERLIST_HIDEFULL && server->clients < server->sv_maxclients)
+		return qtrue;
+	if (cl_serverlist->integer == SERVERLIST_HIDEEMPTY && server->clients > 0)
+		return qtrue;
+
+	return qfalse;
+}
+
+/**
  * @brief CL_PingServer
  */
 static void CL_PingServerCallback (struct net_stream *s)
@@ -92,26 +109,20 @@ static void CL_PingServerCallback (struct net_stream *s)
 
 	if (cmd == clc_oob && strncmp(str, "info", 4) == 0) {
 		str = NET_ReadString(buf);
-		if (!str)
-			return;
-		if (!CL_ProcessPingReply(server, str))
-			return;
-	} else
-		return;
-
-	if (cl_serverlist->integer == SERVERLIST_SHOWALL
-	|| (cl_serverlist->integer == SERVERLIST_HIDEFULL && server->clients < server->sv_maxclients)
-	|| (cl_serverlist->integer == SERVERLIST_HIDEEMPTY && server->clients)) {
-		char string[MAX_INFO_STRING];
-		Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
-			server->sv_hostname,
-			server->mapname,
-			server->gametype,
-			server->clients,
-			server->sv_maxclients);
-		server->serverListPos = serverListPos;
-		serverListPos++;
-		Q_strcat(serverText, string, sizeof(serverText));
+		if (str && CL_ProcessPingReply(server, str)) {
+			if (CL_ShowServer(server)) {
+				char string[MAX_INFO_STRING];
+				Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
+					server->sv_hostname,
+					server->mapname,
+					server->gametype,
+					server->clients,
+					server->sv_maxclients);
+				server->serverListPos = serverListPos;
+				serverListPos++;
+				Q_strcat(serverText, string, sizeof(serverText));
+			}
+		}
 	}
 	NET_StreamFree(s);
 }
@@ -341,10 +352,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 static void CL_ServerInfoCallback (struct net_stream *s)
 {
 	struct dbuffer *buf = NET_ReadMsg(s);
-	if (!buf)
-		return;
-
-	{
+	if (buf) {
 		const int cmd = NET_ReadByte(buf);
 		const char *str = NET_ReadStringLine(buf);
 
