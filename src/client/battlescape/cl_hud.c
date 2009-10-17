@@ -1268,13 +1268,14 @@ void HUD_ActorUpdateCvars (void)
 				MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			}
 			if (selActor->actorMoveLength != ROUTING_NOT_REACHABLE) {
+				const int moveMode = CL_MoveMode(selActor, selActor->actorMoveLength);
 				if (reservedTUs > 0)
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
-						selActor->morale, reservedTUs, moveModeDescriptions[CL_MoveMode(selActor, selActor->actorMoveLength)], selActor->actorMoveLength,
+						selActor->morale, reservedTUs, _(moveModeDescriptions[moveMode]), selActor->actorMoveLength,
 						selActor->TU - selActor->actorMoveLength, selActor->TU - reservedTUs - selActor->actorMoveLength);
 				else
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
-						moveModeDescriptions[CL_MoveMode(selActor, selActor->actorMoveLength)] , selActor->actorMoveLength, selActor->TU - selActor->actorMoveLength);
+						moveModeDescriptions[moveMode] , selActor->actorMoveLength, selActor->TU - selActor->actorMoveLength);
 
 				if (selActor->actorMoveLength <= CL_UsableTUs(selActor))
 					Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", selActor->actorMoveLength, CL_UsableTUs(selActor));
