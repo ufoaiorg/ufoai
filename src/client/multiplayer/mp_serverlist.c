@@ -43,11 +43,19 @@ static int serverListPos;
 static cvar_t *cl_serverlist;
 
 /**
+ * @brief Parsed the server ping response.
+ * @param[out] server The server data to store the parsed information in
+ * @param[in] msg The ping response with the server information to parse
  * @sa CL_PingServerCallback
  * @sa SVC_Info
+ * @return @c true if the server is compatible, @c msg is not @c null and the server
+ * wasn't pinged already, @c false otherwise
  */
 static qboolean CL_ProcessPingReply (serverList_t *server, const char *msg)
 {
+	if (!msg)
+		return qfalse;
+
 	if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "sv_protocol"))) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Protocol mismatch\n");
 		return qfalse;
@@ -82,8 +90,8 @@ typedef enum {
 
 /**
  * @brief Perform the server filtering
- * @param server
- * @return
+ * @param[in] server The server data
+ * @return @c true if the server should be visible for the current filter settings, @c false otherwise
  */
 static inline qboolean CL_ShowServer (const serverList_t *server)
 {
@@ -109,7 +117,7 @@ static void CL_PingServerCallback (struct net_stream *s)
 
 	if (cmd == clc_oob && strncmp(str, "info", 4) == 0) {
 		str = NET_ReadString(buf);
-		if (str && CL_ProcessPingReply(server, str)) {
+		if (CL_ProcessPingReply(server, str)) {
 			if (CL_ShowServer(server)) {
 				char string[MAX_INFO_STRING];
 				Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
