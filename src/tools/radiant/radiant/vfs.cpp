@@ -186,7 +186,7 @@ class FileListVisitor: public Archive::Visitor
 			if (subname != name) {
 				if (subname[0] == '/')
 					++subname;
-				if (m_extension[0] == '*' || extension_equal(path_get_extension(subname), m_extension))
+				if (m_extension[0] == '*' || extension_equal(os::getExtension(subname).c_str(), m_extension))
 					pathlist_prepend_unique(m_matches, g_strdup(subname));
 			}
 		}
@@ -508,7 +508,7 @@ class UFOFileSystem: public VirtualFileSystem
 
 			for (GSList* i = list; i != 0; i = g_slist_next(i)) {
 				const char* name = reinterpret_cast<const char*> ((*i).data);
-				if (extension_equal(path_get_extension(name), extension) || extension_equal(extension, "*")) {
+				if (extension_equal(os::getExtension(name).c_str(), extension) || extension_equal(extension, "*")) {
 					callback(name);
 				}
 			}

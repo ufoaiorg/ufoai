@@ -32,6 +32,67 @@
 #if !defined (INCLUDED_OS_PATH_H)
 #define INCLUDED_OS_PATH_H
 
+#include <string>
+
+/** General utility functions for OS-related tasks
+ */
+
+namespace os
+{
+	/** Convert the slashes in a path to forward-slashes
+	 */
+	inline std::string standardPath (const std::string& inPath)
+	{
+		std::string newStr = inPath;
+		std::string::size_type pos = newStr.find("\\");
+		int intLengthSearch = newStr.length();
+
+		while (std::string::npos != pos) {
+			newStr.replace(pos, intLengthSearch, "/");
+			pos = newStr.find("\\", pos + 1);
+		}
+
+		return newStr;
+	}
+
+	/** Return the extension for the given path, which is equal to the characters
+	 * following the final period.
+	 * If there is no period in the given string the full string will be returned
+	 */
+	inline std::string getExtension (const std::string& path)
+	{
+		return path.substr(path.rfind(".") + 1);
+	}
+
+	/** Return the filename of the given path, which is equal to the characters
+	 * following the final slash.
+	 * If there is no slash in the given string the full string will be returned
+	 */
+	inline std::string getFilenameFromPath (const std::string& path)
+	{
+		return path.substr(path.rfind("/") + 1);
+	}
+
+	/** Return the path up to the character before the last / of the given filename.
+	 * If there is no slash in the given string the full string will be returned
+	 */
+	inline std::string stripFilename (const std::string& filename)
+	{
+		return filename.substr(0, filename.rfind("/"));
+	}
+
+	/**
+	 * Will cut away the characters following the final dot.
+	 * @param filename The filename to extract the basename from.
+	 * @return The filename without extension
+	 */
+	inline std::string stripExtension (const std::string& filename)
+	{
+		std::string::size_type pos = filename.rfind(".");
+		return filename.substr(0, pos);
+	}
+}
+
 #include "string/string.h"
 
 #include <glib.h>
@@ -135,17 +196,6 @@ inline const char* path_make_relative (const char* path, const char* base)
 	return path;
 }
 
-/// \brief Returns a pointer to the first character of the file extension of \p path, or "" if not found.
-/// O(n)
-inline const char* path_get_extension (const char* path)
-{
-	const char* last_period = strrchr(path_get_filename_start(path), '.');
-	if (last_period != 0) {
-		return ++last_period;
-	}
-	return "";
-}
-
 /// \brief Returns true if \p extension is of the same type as \p other.
 /// O(n)
 inline bool extension_equal (const char* extension, const char* other)
@@ -165,8 +215,8 @@ class MatchFileExtension
 		}
 		void operator() (const char* name) const
 		{
-			const char* extension = path_get_extension(name);
-			if (extension_equal(extension, m_extension)) {
+			const std::string extension = os::getExtension(name);
+			if (extension_equal(extension.c_str(), m_extension)) {
 				m_functor(name);
 			}
 		}
@@ -199,65 +249,6 @@ TextOutputStreamType& ostream_write (TextOutputStreamType& ostream, const Direct
 		ostream << '/';
 	}
 	return ostream;
-}
-
-/** General utility functions for OS-related tasks
- */
-
-namespace os
-{
-	/** Convert the slashes in a path to forward-slashes
-	 */
-	inline std::string standardPath (const std::string& inPath)
-	{
-		std::string newStr = inPath;
-		std::string::size_type pos = newStr.find("\\");
-		int intLengthSearch = newStr.length();
-
-		while (std::string::npos != pos) {
-			newStr.replace(pos, intLengthSearch, "/");
-			pos = newStr.find("\\", pos + 1);
-		}
-
-		return newStr;
-	}
-
-	/** Return the extension for the given path, which is equal to the characters
-	 * following the final period.
-	 * If there is no period in the given string the full string will be returned
-	 */
-	inline std::string getExtension (const std::string& path)
-	{
-		return path.substr(path.rfind(".") + 1);
-	}
-
-	/** Return the filename of the given path, which is equal to the characters
-	 * following the final slash.
-	 * If there is no slash in the given string the full string will be returned
-	 */
-	inline std::string getFilenameFromPath (const std::string& path)
-	{
-		return path.substr(path.rfind("/") + 1);
-	}
-
-	/** Return the path up to the character before the last / of the given filename.
-	 * If there is no slash in the given string the full string will be returned
-	 */
-	inline std::string stripFilename (const std::string& filename)
-	{
-		return filename.substr(0, filename.rfind("/"));
-	}
-
-	/**
-	 * Will cut away the characters following the final dot.
-	 * @param filename The filename to extract the basename from.
-	 * @return The filename without extension
-	 */
-	inline std::string stripExtension (const std::string& filename)
-	{
-		std::string::size_type pos = filename.rfind(".");
-		return filename.substr(0, pos);
-	}
 }
 
 #endif

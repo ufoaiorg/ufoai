@@ -366,10 +366,9 @@ bool Map_Unnamed (const Map& map)
 
 inline const MapFormat& MapFormat_forFile (const std::string& filename)
 {
-	const char* moduleName = findModuleName(GetFileTypeRegistry(), MapFormat::Name(), path_get_extension(
-			filename.c_str()));
+	const char* moduleName = findModuleName(GetFileTypeRegistry(), MapFormat::Name(),
+			os::getExtension(filename).c_str());
 	MapFormat* format = Radiant_getMapModules().findModule(moduleName);
-	ASSERT_MESSAGE(format != 0, "map format not found for file " << makeQuoted(filename.c_str()));
 	return *format;
 }
 

@@ -210,12 +210,12 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const std::st
 			if (filter != 0) { // no filter set? some file-chooser implementations may allow the user to set no filter, which we treat as 'all files'
 				type = masks.GetTypeForGTKMask(gtk_file_filter_get_name(filter)).m_type;
 				// last ext separator
-				const char* extension = path_get_extension(g_file_dialog_file);
+				const std::string extension = os::getExtension(g_file_dialog_file);
 				// no extension
-				if (string_empty(extension)) {
+				if (extension.empty()) {
 					strcat(g_file_dialog_file, type.pattern + 1);
 				} else {
-					strcpy(g_file_dialog_file + (extension - g_file_dialog_file), type.pattern + 2);
+					strcpy(g_file_dialog_file + (extension.c_str() - g_file_dialog_file), type.pattern + 2);
 				}
 			}
 		}

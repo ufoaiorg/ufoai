@@ -233,7 +233,7 @@ static inline hash_t path_hash (const char* path, hash_t previous = 0)
 
 struct PathEqual
 {
-		bool operator() (const CopiedString& path, const CopiedString& other) const
+		bool operator() (const std::string& path, const std::string& other) const
 		{
 			return path_equal(path.c_str(), other.c_str());
 		}
@@ -242,13 +242,13 @@ struct PathEqual
 struct PathHash
 {
 		typedef hash_t hash_type;
-		hash_type operator() (const CopiedString& path) const
+		hash_type operator() (const std::string& path) const
 		{
 			return path_hash(path.c_str());
 		}
 };
 
-typedef std::pair<CopiedString, CopiedString> ModelKey;
+typedef std::pair<std::string, std::string> ModelKey;
 
 struct ModelKeyEqual
 {
@@ -341,17 +341,17 @@ namespace
 struct ModelResource: public Resource
 {
 		NodeSmartReference m_model;
-		const CopiedString m_originalName;
-		CopiedString m_path;
-		CopiedString m_name;
-		CopiedString m_type;
+		const std::string m_originalName;
+		std::string m_path;
+		std::string m_name;
+		std::string m_type;
 		ModelLoader* m_loader;
 		ModuleObservers m_observers;
 		std::time_t m_modified;
 		std::size_t m_unrealised;
 
-		ModelResource (const CopiedString& name) :
-			m_model(g_nullModel), m_originalName(name), m_type(path_get_extension(name.c_str())), m_loader(0),
+		ModelResource (const std::string& name) :
+			m_model(g_nullModel), m_originalName(name), m_type(os::getExtension(name.c_str())), m_loader(0),
 					m_modified(0), m_unrealised(1)
 		{
 			m_loader = ModelLoader_forType(m_type.c_str());
@@ -538,7 +538,7 @@ struct ModelResource: public Resource
 
 class HashtableReferenceCache: public ReferenceCache, public ModuleObserver
 {
-		typedef HashedCache<CopiedString, ModelResource, PathHash, PathEqual> ModelReferences;
+		typedef HashedCache<std::string, ModelResource, PathHash, PathEqual> ModelReferences;
 		ModelReferences m_references;
 		std::size_t m_unrealised;
 
@@ -599,11 +599,11 @@ class HashtableReferenceCache: public ReferenceCache, public ModuleObserver
 		Resource* capture (const char* path)
 		{
 			g_debug("capture: \"%s\"\n", path);
-			return m_references.capture(CopiedString(path)).get();
+			return m_references.capture(std::string(path)).get();
 		}
 		void release (const char* path)
 		{
-			m_references.release(CopiedString(path));
+			m_references.release(std::string(path));
 			g_debug("release: \"%s\"\n", path);
 		}
 
