@@ -232,7 +232,7 @@ int NET_ReadChar (struct dbuffer *buf)
 /**
  * @brief Reads a byte from the netchannel
  * @note Beware that you don't put this into a byte or short - this will overflow
- * use an int value to store the return value!!!
+ * use an int value to store the return value when you read this via the net format strings!!!
  */
 int NET_ReadByte (struct dbuffer *buf)
 {
