@@ -585,7 +585,7 @@ void Com_SetGameType (void)
 
 	for (i = 0; i < numGTs; i++) {
 		const gametype_t *gt = &gts[i];
-		if (!strncmp(gt->id, sv_gametype->string, MAX_VAR)) {
+		if (!strcmp(gt->id, sv_gametype->string)) {
 			int j;
 			const cvarlist_t *list;
 			if (sv_dedicated->integer)

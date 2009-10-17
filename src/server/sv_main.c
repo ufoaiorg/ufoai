@@ -559,15 +559,17 @@ void SV_NextMapcycle (void)
 	}
 
 	/* check whether we want to change the gametype, too */
-	if (gameType && gameType[0] != '\0')
+	if (gameType && gameType[0] != '\0') {
 		Cvar_Set("sv_gametype", gameType);
+		Com_SetGameType();
+		sv_gametype->modified = qfalse;
+	}
 
 	if (day)
 		Com_sprintf(cmd, sizeof(cmd), "map day %s", map);
 	else
 		Com_sprintf(cmd, sizeof(cmd), "map night %s", map);
 	Cbuf_AddText(cmd);
-	Cbuf_Execute();
 }
 
 /**

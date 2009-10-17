@@ -6,7 +6,7 @@
  */
 
 //"+frozend multiplayercoop" coop2
-"+industrial" day 1on1
+"+industrial small" day 1on1
 "+italy default" day 1on1
 farm day 1on1
 "+africa default" day 1on1
