@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-04 14:41+0200\n"
+"POT-Creation-Date: 2009-10-17 11:53+0200\n"
 "PO-Revision-Date: 2009-03-27 18:25+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Africa"
 msgstr "非洲"
 
-#: ../base/maps/alienbase.ump:144
+#: ../base/maps/alienbase.ump:157
 msgid "Alienbase"
 msgstr "外星人基地"
 
@@ -39,11 +39,11 @@ msgstr "小墓地"
 msgid "City_disco"
 msgstr "市区（迪斯科）"
 
-#: ../base/maps/community_centre.ump:51
+#: ../base/maps/community_centre.ump:61
 msgid "Community_centre"
 msgstr "社区中心"
 
-#: ../base/maps/construction.ump:53
+#: ../base/maps/construction.ump:64
 msgid "Construction"
 msgstr "建设"
 
@@ -52,11 +52,11 @@ msgstr "建设"
 msgid "Crashed Harvester"
 msgstr "Harvester"
 
-#: ../base/maps/druglord.ump:57
+#: ../base/maps/druglord.ump:67
 msgid "Druglord"
 msgstr "毒贩"
 
-#: ../base/maps/eaglenest.ump:53
+#: ../base/maps/eaglenest.ump:66
 msgid "Eaglenest"
 msgstr "鹰巢"
 
@@ -92,7 +92,7 @@ msgstr "联机协作模式"
 msgid "Multiplayer Deathmatch"
 msgstr "联机死亡竞赛模式"
 
-#: ../base/maps/gasstation.ump:54
+#: ../base/maps/gasstation.ump:63
 msgid "Gasstation"
 msgstr "燃气站"
 
@@ -100,24 +100,24 @@ msgstr "燃气站"
 msgid "UFO Landed"
 msgstr "UFO 着陆"
 
-#: ../base/maps/italy.ump:53
+#: ../base/maps/italy.ump:61
 msgid "Italy"
 msgstr "意大利"
 
-#: ../base/maps/japan.ump:53
+#: ../base/maps/japan.ump:64
 msgid "Japan"
 msgstr "日本"
 
-#: ../base/maps/laboratory.ump:54 ../base/ufos/basemanagement.ufo:283
+#: ../base/maps/laboratory.ump:63 ../base/ufos/basemanagement.ufo:283
 #: client/campaign/cp_base_callbacks.c:313
 msgid "Laboratory"
 msgstr "实验室"
 
-#: ../base/maps/mart.ump:55
+#: ../base/maps/mart.ump:64
 msgid "Mart"
 msgstr "市场"
 
-#: ../base/maps/military_convoy.ump:58
+#: ../base/maps/military_convoy.ump:69
 msgid "Military convoy"
 msgstr "军队护航"
 
@@ -133,15 +133,15 @@ msgstr "东方风格中型"
 msgid "Oriental big"
 msgstr "东方风格大型"
 
-#: ../base/maps/spedition.ump:54
+#: ../base/maps/spedition.ump:63
 msgid "Spedition"
 msgstr ""
 
-#: ../base/maps/stadium.ump:54
+#: ../base/maps/stadium.ump:65
 msgid "Stadium"
 msgstr "体育馆"
 
-#: ../base/maps/transport.ump:53
+#: ../base/maps/transport.ump:66
 msgid "Transport"
 msgstr "运输"
 
@@ -629,78 +629,99 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/cities.ufo:16
+#: ../base/ufos/cities.ufo:15
 msgid "Stockholm"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:23
+#: ../base/ufos/cities.ufo:21
 msgid "Amsterdam"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:29
+#: ../base/ufos/cities.ufo:27
 msgid "Athens"
 msgstr "雅典"
 
-#: ../base/ufos/cities.ufo:35
+#: ../base/ufos/cities.ufo:33
 msgid "Bangkok"
 msgstr "曼谷"
 
-#: ../base/ufos/cities.ufo:41
+#: ../base/ufos/cities.ufo:39
 #, fuzzy
 msgid "Beijing"
 msgstr "建设"
 
-#: ../base/ufos/cities.ufo:47
+#: ../base/ufos/cities.ufo:45
 msgid "Berlin"
 msgstr "柏林"
 
-#: ../base/ufos/cities.ufo:53
+#: ../base/ufos/cities.ufo:51
 msgid "Mumbai"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:59
+#: ../base/ufos/cities.ufo:57
 msgid "Cape Town"
 msgstr "开普敦"
 
-#: ../base/ufos/cities.ufo:65
+#: ../base/ufos/cities.ufo:63
 #, fuzzy
 msgid "Cairo"
 msgstr "交叉路口"
 
-#: ../base/ufos/cities.ufo:71
+#: ../base/ufos/cities.ufo:69
 msgid "Cayenne"
 msgstr "卡宴"
 
-#: ../base/ufos/cities.ufo:77
+#: ../base/ufos/cities.ufo:75
 #, fuzzy
 msgid "Dakar"
 msgstr "雷达室"
 
-#: ../base/ufos/cities.ufo:83
+#: ../base/ufos/cities.ufo:81
 msgid "Mexico City"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:89
+#: ../base/ufos/cities.ufo:87
+msgid "Novosibirsk"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:93
 #, fuzzy
 msgid "Paris"
 msgstr "暂停"
 
-#: ../base/ufos/cities.ufo:95
+#: ../base/ufos/cities.ufo:99
+#, fuzzy
+msgid "Sacramento"
+msgstr "伊斯兰级"
+
+#: ../base/ufos/cities.ufo:105
+msgid "Santiago"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:111
 msgid "Sydney"
 msgstr "悉尼"
 
-#: ../base/ufos/cities.ufo:101
+#: ../base/ufos/cities.ufo:117
 #, fuzzy
 msgid "Teheran"
 msgstr "不耐烦"
 
-#: ../base/ufos/cities.ufo:107
+#: ../base/ufos/cities.ufo:123
 msgid "Tokyo"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:113
+#: ../base/ufos/cities.ufo:129
+msgid "Washington D.C."
+msgstr ""
+
+#: ../base/ufos/cities.ufo:135
 msgid "Wellington"
 msgstr "威灵顿"
+
+#: ../base/ufos/cities.ufo:141
+msgid "Wichita"
+msgstr ""
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
@@ -1484,169 +1505,169 @@ msgstr "贵族庄园。"
 msgid "A small village in England."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1247
+#: ../base/ufos/maps.ufo:1248
 msgid "A small office in a mountainous region."
 msgstr "山里的一处工作室。"
 
-#: ../base/ufos/maps.ufo:1293
+#: ../base/ufos/maps.ufo:1296
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "社区超市。"
 
-#: ../base/ufos/maps.ufo:1341
+#: ../base/ufos/maps.ufo:1346
 msgid "An old mine."
 msgstr "一个废弃矿井。"
 
-#: ../base/ufos/maps.ufo:1389
+#: ../base/ufos/maps.ufo:1394
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "工业货运站。"
 
-#: ../base/ufos/maps.ufo:1433
+#: ../base/ufos/maps.ufo:1440
 msgid "A bunker used in a previous conflict."
 msgstr "采石场。"
 
-#: ../base/ufos/maps.ufo:1479
+#: ../base/ufos/maps.ufo:1486
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "水利大坝。"
 
-#: ../base/ufos/maps.ufo:1523
+#: ../base/ufos/maps.ufo:1530
 msgid "A classic eastern suburban area."
 msgstr "典型的东部郊区。"
 
-#: ../base/ufos/maps.ufo:1567
+#: ../base/ufos/maps.ufo:1576
 msgid "A small industrial area."
 msgstr "小型工业区。"
 
-#: ../base/ufos/maps.ufo:1611
+#: ../base/ufos/maps.ufo:1622
 msgid "A stadium used for various recreational events."
 msgstr "体育场。"
 
-#: ../base/ufos/maps.ufo:1658
+#: ../base/ufos/maps.ufo:1671
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "热带雨林的几间小屋。"
 
-#: ../base/ufos/maps.ufo:1714
+#: ../base/ufos/maps.ufo:1729
 msgid "A small estate in the mountains"
 msgstr "山间一地产"
 
-#: ../base/ufos/maps.ufo:1761
+#: ../base/ufos/maps.ufo:1778
 msgid "A crashed Scout UFO"
 msgstr "一架坠毁的侦察UFO"
 
-#: ../base/ufos/maps.ufo:1796
+#: ../base/ufos/maps.ufo:1813
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "有架UFO降落这里"
 
-#: ../base/ufos/maps.ufo:1842
+#: ../base/ufos/maps.ufo:1860
 msgid "A ferry."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1890
+#: ../base/ufos/maps.ufo:1908
 msgid "A rather old-fashioned suburban district."
 msgstr "比较老式的近郊区。"
 
-#: ../base/ufos/maps.ufo:1939 ../base/ufos/maps.ufo:1986
+#: ../base/ufos/maps.ufo:1957 ../base/ufos/maps.ufo:2004
 msgid "A small neighbourhood in a warm urban region."
 msgstr "大城市的一处小型居民区。"
 
-#: ../base/ufos/maps.ufo:2034
+#: ../base/ufos/maps.ufo:2052
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "加油站。"
 
-#: ../base/ufos/maps.ufo:2081 ../base/ufos/maps.ufo:2125
+#: ../base/ufos/maps.ufo:2101 ../base/ufos/maps.ufo:2145
 msgid "An urban district in an oriental region."
 msgstr "老城区。"
 
-#: ../base/ufos/maps.ufo:2169
+#: ../base/ufos/maps.ufo:2189
 msgid "Underground pipe construction site."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2216
+#: ../base/ufos/maps.ufo:2236
 msgid "A subway station in a suburban part of town."
 msgstr "地铁车站。"
 
-#: ../base/ufos/maps.ufo:2262
+#: ../base/ufos/maps.ufo:2282
 msgid "An office complex in the centre of town."
 msgstr "市中心办公楼。"
 
-#: ../base/ufos/maps.ufo:2310
+#: ../base/ufos/maps.ufo:2330
 msgid "A suburban district."
 msgstr "郊区县。"
 
-#: ../base/ufos/maps.ufo:2355
+#: ../base/ufos/maps.ufo:2375
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "行进中的运兵车队。"
 
-#: ../base/ufos/maps.ufo:2400 ../base/ufos/maps.ufo:2446
+#: ../base/ufos/maps.ufo:2422 ../base/ufos/maps.ufo:2468
 msgid "A small UFO has crashed in this mining region."
 msgstr "小型UFO坠落点。"
 
-#: ../base/ufos/maps.ufo:2495
+#: ../base/ufos/maps.ufo:2517
 msgid "An office complex under construction."
 msgstr "建造中的办公楼。"
 
-#: ../base/ufos/maps.ufo:2541
+#: ../base/ufos/maps.ufo:2564
 msgid "A local harbour."
 msgstr "港口。"
 
-#: ../base/ufos/maps.ufo:2586
+#: ../base/ufos/maps.ufo:2609
 msgid "An office complex on the outskirts of town."
 msgstr "小镇的办公楼。"
 
-#: ../base/ufos/maps.ufo:2631
+#: ../base/ufos/maps.ufo:2654
 msgid "A luxurious vacation resort."
 msgstr "豪华度假区。"
 
-#: ../base/ufos/maps.ufo:2688
+#: ../base/ufos/maps.ufo:2711
 #, fuzzy
 msgid "A suburb that has been visited by UFO."
 msgstr "土著据点。"
 
-#: ../base/ufos/maps.ufo:2740
+#: ../base/ufos/maps.ufo:2763
 #, fuzzy
 msgid "A suburb that has received a visit from a Harvester."
 msgstr "土著据点。"
 
-#: ../base/ufos/maps.ufo:2791
+#: ../base/ufos/maps.ufo:2814
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr "大型UFO坠落荒地。"
 
-#: ../base/ufos/maps.ufo:2837 ../base/ufos/maps.ufo:2871
+#: ../base/ufos/maps.ufo:2860 ../base/ufos/maps.ufo:2894
 msgid "A small settlement in winter."
 msgstr "冬季小屋。"
 
-#: ../base/ufos/maps.ufo:2893
+#: ../base/ufos/maps.ufo:2916
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "受到外星人攻击的建筑物。"
 
-#: ../base/ufos/maps.ufo:2941
+#: ../base/ufos/maps.ufo:2964
 msgid "A Bomber has landed in the middle of a city."
 msgstr "城市里的UFO降落点。"
 
-#: ../base/ufos/maps.ufo:2994
+#: ../base/ufos/maps.ufo:3017
 msgid "A place where people come to relax and mingle."
 msgstr "公园。"
 
-#: ../base/ufos/maps.ufo:3041
+#: ../base/ufos/maps.ufo:3065
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "UFO坠落残骸。"
 
-#: ../base/ufos/maps.ufo:3087
+#: ../base/ufos/maps.ufo:3113
 msgid "A fuel depot the aliens try to destroy."
 msgstr "油库。"
 
-#: ../base/ufos/maps.ufo:3126
+#: ../base/ufos/maps.ufo:3152
 msgid "Wilderness terror mission."
 msgstr "荒野。"
 
-#: ../base/ufos/maps.ufo:3172
+#: ../base/ufos/maps.ufo:3198
 msgid "UFO Crashsite."
 msgstr "UFO坠落现场。"
 
-#: ../base/ufos/maps.ufo:3200
+#: ../base/ufos/maps.ufo:3226
 msgid "An alien base."
 msgstr "一个外星人基地。"
 
-#: ../base/ufos/maps.ufo:3215
+#: ../base/ufos/maps.ufo:3241
 msgid "Base is under attack."
 msgstr "基地受到攻击。"
 
@@ -1860,8 +1881,8 @@ msgstr "背景"
 
 #: ../base/ufos/research.ufo:108 ../base/ufos/ui/bases.ufo:65
 #: ../base/ufos/ui/geoscape.ufo:1833 ../base/ufos/ui/market.ufo:85
-#: ../base/ufos/ui/production.ufo:99 ../base/ufos/ui/transfer.ufo:94
-#: client/campaign/cp_map.c:355
+#: ../base/ufos/ui/production.ufo:99 ../base/ufos/ui/transfer.ufo:86
+#: ../base/ufos/ui/transfer.ufo:102 client/campaign/cp_map.c:355
 msgid "Aircraft"
 msgstr "航空机"
 
@@ -1874,7 +1895,8 @@ msgid "Research Reports"
 msgstr "研究报告"
 
 #: ../base/ufos/research.ufo:111 ../base/ufos/ui/aircraft.ufo:107
-#: ../base/ufos/ui/skirmish.ufo:56 ../base/ufos/ui/transfer.ufo:82
+#: ../base/ufos/ui/skirmish.ufo:56 ../base/ufos/ui/transfer.ufo:80
+#: ../base/ufos/ui/transfer.ufo:90 ../base/ufos/ui/transfer.ufo:656
 msgid "Equipment"
 msgstr "装备"
 
@@ -9048,7 +9070,7 @@ msgstr "装备交易"
 msgid "Buy/Sell equipment"
 msgstr "装备武器物资交易"
 
-#: ../base/ufos/ui/bases.ufo:91 ../base/ufos/ui/transfer.ufo:614
+#: ../base/ufos/ui/bases.ufo:91 ../base/ufos/ui/transfer.ufo:625
 #: client/campaign/cp_base.c:811 client/campaign/cp_base.c:821
 #: client/campaign/cp_base.c:831
 msgid "Transfer"
@@ -9405,7 +9427,7 @@ msgstr "航空机抵达预定地点，有何指示？"
 #: ../base/ufos/ui/geoscape.ufo:1647 ../base/ufos/ui/geoscape.ufo:1737
 #: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/geoscape.ufo:1883
 #: ../base/ufos/ui/irc.ufo:209 ../base/ufos/ui/messageoptions.ufo:32
-#: ../base/ufos/ui/options.ufo:1304 ../base/ufos/ui/transfer.ufo:627
+#: ../base/ufos/ui/options.ufo:1304 ../base/ufos/ui/transfer.ufo:638
 #: client/campaign/cp_installation_callbacks.c:227
 msgid "Cancel"
 msgstr "取消"
@@ -10962,7 +10984,8 @@ msgstr "基地"
 msgid "Installations"
 msgstr "基站"
 
-#: ../base/ufos/ui/stats.ufo:94 ../base/ufos/ui/transfer.ufo:86
+#: ../base/ufos/ui/stats.ufo:94 ../base/ufos/ui/transfer.ufo:82
+#: ../base/ufos/ui/transfer.ufo:94
 msgid "Employees"
 msgstr "员工"
 
@@ -11029,35 +11052,41 @@ msgstr "关闭窗口"
 msgid "Current node:"
 msgstr "当前装载："
 
-#: ../base/ufos/ui/transfer.ufo:90 client/cl_game_campaign.c:200
+#: ../base/ufos/ui/transfer.ufo:84 ../base/ufos/ui/transfer.ufo:98
+#: client/cl_game_campaign.c:200
 msgid "Aliens"
 msgstr "外星人"
 
-#: ../base/ufos/ui/transfer.ufo:185 ../base/ufos/ui/transfer.ufo:196
-#: ../base/ufos/ui/transfer.ufo:207 ../base/ufos/ui/transfer.ufo:218
-#: ../base/ufos/ui/transfer.ufo:230 ../base/ufos/ui/transfer.ufo:241
-#: ../base/ufos/ui/transfer.ufo:252 ../base/ufos/ui/transfer.ufo:263
-#: ../base/ufos/ui/transfer.ufo:274 ../base/ufos/ui/transfer.ufo:285
-#: ../base/ufos/ui/transfer.ufo:296 ../base/ufos/ui/transfer.ufo:307
-#: ../base/ufos/ui/transfer.ufo:319 ../base/ufos/ui/transfer.ufo:330
-#: ../base/ufos/ui/transfer.ufo:341 ../base/ufos/ui/transfer.ufo:352
-#: ../base/ufos/ui/transfer.ufo:363 ../base/ufos/ui/transfer.ufo:374
-#: ../base/ufos/ui/transfer.ufo:385 ../base/ufos/ui/transfer.ufo:396
-#: ../base/ufos/ui/transfer.ufo:407 ../base/ufos/ui/transfer.ufo:418
+#: ../base/ufos/ui/transfer.ufo:135
+#, fuzzy
+msgid "Amount/Transfer"
+msgstr "运输"
+
+#: ../base/ufos/ui/transfer.ufo:213 ../base/ufos/ui/transfer.ufo:224
+#: ../base/ufos/ui/transfer.ufo:235 ../base/ufos/ui/transfer.ufo:246
+#: ../base/ufos/ui/transfer.ufo:258 ../base/ufos/ui/transfer.ufo:269
+#: ../base/ufos/ui/transfer.ufo:280 ../base/ufos/ui/transfer.ufo:291
+#: ../base/ufos/ui/transfer.ufo:302 ../base/ufos/ui/transfer.ufo:313
+#: ../base/ufos/ui/transfer.ufo:324 ../base/ufos/ui/transfer.ufo:335
+#: ../base/ufos/ui/transfer.ufo:347 ../base/ufos/ui/transfer.ufo:358
+#: ../base/ufos/ui/transfer.ufo:369 ../base/ufos/ui/transfer.ufo:380
+#: ../base/ufos/ui/transfer.ufo:391 ../base/ufos/ui/transfer.ufo:402
+#: ../base/ufos/ui/transfer.ufo:413 ../base/ufos/ui/transfer.ufo:424
+#: ../base/ufos/ui/transfer.ufo:435
 #, fuzzy
 msgid "Add/Remove item to transfer cargo"
 msgstr "选择一个基地运输"
 
-#: ../base/ufos/ui/transfer.ufo:541
+#: ../base/ufos/ui/transfer.ufo:561
 #, fuzzy
 msgid "Destination base"
 msgstr "正在返回基地"
 
-#: ../base/ufos/ui/transfer.ufo:615
+#: ../base/ufos/ui/transfer.ufo:626
 msgid "Start the transfer"
 msgstr "开始运输"
 
-#: ../base/ufos/ui/transfer.ufo:628
+#: ../base/ufos/ui/transfer.ufo:639
 msgid "Empty the aircraft storage"
 msgstr "清空航空机货仓"
 
@@ -12018,10 +12047,10 @@ msgstr "UFO"
 msgid "A new %s is ready in %s"
 msgstr "一个新的%s在%s待命"
 
-#: client/campaign/cp_aircraft.c:782 client/campaign/cp_aircraft.c:1233
-#: client/campaign/cp_aircraft.c:1249 client/campaign/cp_aircraft.c:1294
-#: client/campaign/cp_aircraft.c:1398 client/campaign/cp_aircraft.c:1422
-#: client/campaign/cp_aircraft.c:2226
+#: client/campaign/cp_aircraft.c:782 client/campaign/cp_aircraft.c:1234
+#: client/campaign/cp_aircraft.c:1250 client/campaign/cp_aircraft.c:1295
+#: client/campaign/cp_aircraft.c:1399 client/campaign/cp_aircraft.c:1423
+#: client/campaign/cp_aircraft.c:2227
 #: client/campaign/cp_aircraft_callbacks.c:138
 #: client/campaign/cp_aircraft_callbacks.c:146
 #: client/campaign/cp_aircraft_callbacks.c:154
@@ -12033,17 +12062,17 @@ msgstr "一个新的%s在%s待命"
 #: client/campaign/cp_base.c:3230 client/campaign/cp_base_callbacks.c:71
 #: client/campaign/cp_base_callbacks.c:187
 #: client/campaign/cp_base_callbacks.c:237
-#: client/campaign/cp_base_callbacks.c:684
-#: client/campaign/cp_base_callbacks.c:693
-#: client/campaign/cp_base_callbacks.c:713
-#: client/campaign/cp_base_callbacks.c:723
+#: client/campaign/cp_base_callbacks.c:677
+#: client/campaign/cp_base_callbacks.c:686
+#: client/campaign/cp_base_callbacks.c:706
+#: client/campaign/cp_base_callbacks.c:716
+#: client/campaign/cp_base_callbacks.c:727
 #: client/campaign/cp_base_callbacks.c:734
-#: client/campaign/cp_base_callbacks.c:741
-#: client/campaign/cp_base_callbacks.c:749
-#: client/campaign/cp_base_callbacks.c:754
-#: client/campaign/cp_base_callbacks.c:759 client/campaign/cp_campaign.c:1548
-#: client/campaign/cp_campaign.c:1593 client/campaign/cp_campaign.c:1646
-#: client/campaign/cp_campaign.c:1659 client/campaign/cp_campaign.c:1661
+#: client/campaign/cp_base_callbacks.c:742
+#: client/campaign/cp_base_callbacks.c:747
+#: client/campaign/cp_base_callbacks.c:752 client/campaign/cp_campaign.c:1552
+#: client/campaign/cp_campaign.c:1597 client/campaign/cp_campaign.c:1650
+#: client/campaign/cp_campaign.c:1663 client/campaign/cp_campaign.c:1665
 #: client/campaign/cp_installation_callbacks.c:134
 #: client/campaign/cp_installation_callbacks.c:181
 #: client/campaign/cp_mapfightequip.c:343
@@ -12061,13 +12090,13 @@ msgstr "一个新的%s在%s待命"
 #: client/campaign/cp_produce.c:359 client/campaign/cp_produce.c:369
 #: client/campaign/cp_produce.c:380 client/campaign/cp_produce.c:390
 #: client/campaign/cp_produce.c:401
-#: client/campaign/cp_research_callbacks.c:558
-#: client/campaign/cp_research_callbacks.c:576
-#: client/campaign/cp_research_callbacks.c:582
-#: client/campaign/cp_research_callbacks.c:618
-#: client/campaign/cp_research_callbacks.c:644
-#: client/campaign/cp_research_callbacks.c:811
-#: client/campaign/cp_research_callbacks.c:814 client/campaign/cp_ufo.c:355
+#: client/campaign/cp_research_callbacks.c:561
+#: client/campaign/cp_research_callbacks.c:579
+#: client/campaign/cp_research_callbacks.c:585
+#: client/campaign/cp_research_callbacks.c:624
+#: client/campaign/cp_research_callbacks.c:654
+#: client/campaign/cp_research_callbacks.c:821
+#: client/campaign/cp_research_callbacks.c:824 client/campaign/cp_ufo.c:355
 #: client/campaign/cp_ufo.c:731 client/campaign/cp_ufo.c:735
 #: client/campaign/cp_ufo.c:739
 #: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:394
@@ -12095,30 +12124,30 @@ msgstr "那个基地仓库空间不够。"
 msgid "That base is beyond this aircraft's range."
 msgstr "那个基地不在航空机范围。"
 
-#: client/campaign/cp_aircraft.c:1232
+#: client/campaign/cp_aircraft.c:1233
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1248
+#: client/campaign/cp_aircraft.c:1249
 #, fuzzy, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "%s 在基地%s补充燃料。"
 
-#: client/campaign/cp_aircraft.c:1294
+#: client/campaign/cp_aircraft.c:1295
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "%s燃料不足只好返回基地"
 
-#: client/campaign/cp_aircraft.c:1398
+#: client/campaign/cp_aircraft.c:1399
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "先给这个航空机分配士兵。"
 
-#: client/campaign/cp_aircraft.c:1422
+#: client/campaign/cp_aircraft.c:1423
 msgid "Insufficient fuel."
 msgstr "燃料不足。"
 
-#: client/campaign/cp_aircraft.c:2226
+#: client/campaign/cp_aircraft.c:2227
 #, fuzzy, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "%s 在基地%s补充燃料。"
@@ -12147,14 +12176,14 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "航空机起飞"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1727
-#: client/campaign/cp_map.c:1736 client/campaign/cp_map.c:1749
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1728
+#: client/campaign/cp_map.c:1737 client/campaign/cp_map.c:1750
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "速度：\t%i 公里/小时\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1728
-#: client/campaign/cp_map.c:1737
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1729
+#: client/campaign/cp_map.c:1738
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "燃料：\t%i/%i\n"
@@ -12197,7 +12226,7 @@ msgstr "拦截"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO拦截成功l -- UFO坠落海中。"
 
-#: client/campaign/cp_airfight.c:484 client/campaign/cp_campaign.c:1661
+#: client/campaign/cp_airfight.c:484 client/campaign/cp_campaign.c:1665
 msgid "You've lost the battle"
 msgstr "战斗失败"
 
@@ -12486,7 +12515,7 @@ msgstr "先造一个 %s 。"
 #: client/campaign/cp_base_callbacks.c:318
 #: client/campaign/cp_base_callbacks.c:328
 #: client/campaign/cp_base_callbacks.c:333
-#: client/campaign/cp_base_callbacks.c:758
+#: client/campaign/cp_base_callbacks.c:751
 #, c-format
 msgid "Build a %s first."
 msgstr "先造一个 %s 。"
@@ -12501,15 +12530,15 @@ msgstr "传送物资或员工"
 msgid "Build %s first."
 msgstr "先造一个 %s 。"
 
-#: client/campaign/cp_base_callbacks.c:683
+#: client/campaign/cp_base_callbacks.c:676
 msgid "Base is under attack, you can't access this building !"
 msgstr "基地正在被攻击，你无法操作这个设施！"
 
-#: client/campaign/cp_base_callbacks.c:692
+#: client/campaign/cp_base_callbacks.c:685
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "你需要至少一个机用平台 (及其辅助设施) 来使用航空机。"
 
-#: client/campaign/cp_base_callbacks.c:711
+#: client/campaign/cp_base_callbacks.c:704
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -12524,74 +12553,74 @@ msgstr[1] ""
 "还有 %i 天才能完工。\n"
 "请等待。"
 
-#: client/campaign/cp_base_callbacks.c:722
+#: client/campaign/cp_base_callbacks.c:715
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "你需要有 %s 才能建设 %s 。"
 
-#: client/campaign/cp_base_callbacks.c:732
+#: client/campaign/cp_base_callbacks.c:725
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "设施%s还没有建造好，还需要建造%s。"
 
-#: client/campaign/cp_base_callbacks.c:739
+#: client/campaign/cp_base_callbacks.c:732
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr "请先确定需要的基础设施%s（%s）是否可用，设施%s才可以使用。"
 
-#: client/campaign/cp_base_callbacks.c:747
-#: client/campaign/cp_base_callbacks.c:752
+#: client/campaign/cp_base_callbacks.c:740
+#: client/campaign/cp_base_callbacks.c:745
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "你需要雇用%s才能使用%s。"
 
-#: client/campaign/cp_base_callbacks.c:786
+#: client/campaign/cp_base_callbacks.c:779
 msgid "^BAircraft\n"
 msgstr "^B航空机\n"
 
-#: client/campaign/cp_base_callbacks.c:793
+#: client/campaign/cp_base_callbacks.c:786
 msgid "^BEmployees\n"
 msgstr "^B员工\n"
 
-#: client/campaign/cp_base_callbacks.c:802
+#: client/campaign/cp_base_callbacks.c:795
 #, fuzzy
 msgid "^BAliens\n"
 msgstr "外星人"
 
-#: client/campaign/cp_base_callbacks.c:814
+#: client/campaign/cp_base_callbacks.c:807
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^B设施\t\t\t\t\t\t容量\t\t\t\t合计\n"
 
-#: client/campaign/cp_base_callbacks.c:838
+#: client/campaign/cp_base_callbacks.c:831
 msgid "day"
 msgid_plural "days"
 msgstr[0] "天"
 msgstr[1] "天"
 
-#: client/campaign/cp_base_callbacks.c:848
+#: client/campaign/cp_base_callbacks.c:841
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr "^B生产\t\t\t\t\t\t数量\t\t\t\t完成度\n"
 
-#: client/campaign/cp_base_callbacks.c:868
+#: client/campaign/cp_base_callbacks.c:861
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:872
-#: client/campaign/cp_base_callbacks.c:888
+#: client/campaign/cp_base_callbacks.c:865
+#: client/campaign/cp_base_callbacks.c:881
 msgid "Nothing\n"
 msgstr "无\n"
 
-#: client/campaign/cp_base_callbacks.c:877
+#: client/campaign/cp_base_callbacks.c:870
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr "^B研发\t\t\t\t\t\t研究员\t\t\t\t完成度\n"
 
-#: client/campaign/cp_base_callbacks.c:882
+#: client/campaign/cp_base_callbacks.c:875
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:926 client/campaign/cp_campaign.c:801
+#: client/campaign/cp_base_callbacks.c:919 client/campaign/cp_campaign.c:805
 #: client/campaign/cp_market_callbacks.c:271
 #, c-format
 msgid "%i c"
@@ -12666,7 +12695,7 @@ msgstr "你没有保护地球。我们的一切都沦落了。PHALANX现在没�
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "在你的指挥下，PHALANX没有很好的保护各个国家。联合国对你相当不满意，你被开除了。解散后的PHALANX分散到各地继续战斗。但是没有了全球联合行动，各个国家各自在为自己奋战，被强大的外星力量一一打败。"
 
-#: client/campaign/cp_campaign.c:823
+#: client/campaign/cp_campaign.c:827
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -12677,7 +12706,7 @@ msgstr ""
 "失败：\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:828
+#: client/campaign/cp_campaign.c:832
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -12688,50 +12717,50 @@ msgstr ""
 "健在：\t%i\n"
 "攻击：\t%i\n"
 
-#: client/campaign/cp_campaign.c:843 client/campaign/cp_ufopedia.c:1254
+#: client/campaign/cp_campaign.c:847 client/campaign/cp_ufopedia.c:1254
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_campaign.c:846
+#: client/campaign/cp_campaign.c:850
 #, c-format
 msgid ""
 "\n"
 "Funding this month:\t%d"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:884 client/campaign/cp_ufopedia.c:237
+#: client/campaign/cp_campaign.c:888 client/campaign/cp_ufopedia.c:237
 #: client/cl_inventory_callbacks.c:149
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_campaign.c:890
+#: client/campaign/cp_campaign.c:894
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "薪资：\t%i c\n"
 
-#: client/campaign/cp_campaign.c:903
+#: client/campaign/cp_campaign.c:907
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "航空机维护费：\t%i c\n"
 
-#: client/campaign/cp_campaign.c:914
+#: client/campaign/cp_campaign.c:918
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "基地维护 （%s）费：\t%i c\n"
 
-#: client/campaign/cp_campaign.c:919
+#: client/campaign/cp_campaign.c:923
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "管理费：\t%i c\n"
 
-#: client/campaign/cp_campaign.c:926
+#: client/campaign/cp_campaign.c:930
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "债务：\t%i c\n"
 
-#: client/campaign/cp_campaign.c:929
+#: client/campaign/cp_campaign.c:933
 #, c-format
 msgid ""
 "\n"
@@ -12742,46 +12771,46 @@ msgstr ""
 "\t-------\n"
 "合计：\t%i c\n"
 
-#: client/campaign/cp_campaign.c:934
+#: client/campaign/cp_campaign.c:938
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "最大借款额： %ic\n"
 
-#: client/campaign/cp_campaign.c:939
+#: client/campaign/cp_campaign.c:943
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1548
+#: client/campaign/cp_campaign.c:1552
 msgid "Collected dead alien bodies"
 msgstr "收集了外星人尸体"
 
-#: client/campaign/cp_campaign.c:1593
+#: client/campaign/cp_campaign.c:1597
 msgid "Your dropship is not near the landing zone"
 msgstr "你的登陆机没有靠近登陆点"
 
-#: client/campaign/cp_campaign.c:1645 client/campaign/cp_missions.c:1156
+#: client/campaign/cp_campaign.c:1649 client/campaign/cp_missions.c:1156
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "基地防御： %s 成功！"
 
-#: client/campaign/cp_campaign.c:1659
+#: client/campaign/cp_campaign.c:1663
 msgid "You've won the battle"
 msgstr "战斗胜利"
 
-#: client/campaign/cp_campaign.c:1677
+#: client/campaign/cp_campaign.c:1681
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "杀死外星人\t%i\n"
 
-#: client/campaign/cp_campaign.c:1678
+#: client/campaign/cp_campaign.c:1682
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "俘虏外星人\t%i\n"
 
-#: client/campaign/cp_campaign.c:1679
+#: client/campaign/cp_campaign.c:1683
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -12790,22 +12819,22 @@ msgstr ""
 "幸存外星人\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1681
+#: client/campaign/cp_campaign.c:1685
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "被外星人杀死的士兵\t%i\n"
 
-#: client/campaign/cp_campaign.c:1682
+#: client/campaign/cp_campaign.c:1686
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "丢失的士兵\t%i\n"
 
-#: client/campaign/cp_campaign.c:1683
+#: client/campaign/cp_campaign.c:1687
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "误伤死亡的士兵\t%i\n"
 
-#: client/campaign/cp_campaign.c:1684
+#: client/campaign/cp_campaign.c:1688
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -12814,17 +12843,17 @@ msgstr ""
 "幸存的士兵\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1686
+#: client/campaign/cp_campaign.c:1690
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "被外星人杀死的平民\t%i\n"
 
-#: client/campaign/cp_campaign.c:1687
+#: client/campaign/cp_campaign.c:1691
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "误伤死亡的平民\t%i\n"
 
-#: client/campaign/cp_campaign.c:1688
+#: client/campaign/cp_campaign.c:1692
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -12833,17 +12862,17 @@ msgstr ""
 "获救平民\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1689
+#: client/campaign/cp_campaign.c:1693
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "收集的物资 （种类/数量）\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1742
+#: client/campaign/cp_campaign.c:1746
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s 已经升级到 %s。\n"
 
-#: client/campaign/cp_campaign.c:1744
+#: client/campaign/cp_campaign.c:1748
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
@@ -12852,7 +12881,7 @@ msgstr ""
 "%s 在战斗中光荣牺牲，被追封%s。\n"
 "以表彰其精神。\n"
 
-#: client/campaign/cp_campaign.c:1745
+#: client/campaign/cp_campaign.c:1749
 msgid "Soldier promoted"
 msgstr "士兵晋升"
 
@@ -12963,8 +12992,9 @@ msgid "This item is too heavy for the selected slot."
 msgstr "取档"
 
 #: client/campaign/cp_fightequip_callbacks.c:591
-msgid "Equip first a weapon."
-msgstr ""
+#, fuzzy
+msgid "Equip a weapon first."
+msgstr "先建造一个机用平台。"
 
 #: client/campaign/cp_fightequip_callbacks.c:594
 msgid "Ammo not usable with current weapon."
@@ -13066,27 +13096,27 @@ msgstr "夜晚"
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1685
+#: client/campaign/cp_map.c:1686
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "在地图上选择新基地位置。\n"
 
-#: client/campaign/cp_map.c:1688
+#: client/campaign/cp_map.c:1689
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "在地图上选择新基站的建造位置。\n"
 
-#: client/campaign/cp_map.c:1693
+#: client/campaign/cp_map.c:1694
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "外星人马上要攻击我们的基地。\n"
 
-#: client/campaign/cp_map.c:1698
+#: client/campaign/cp_map.c:1699
 msgid "Select ufo or mission on map\n"
 msgstr "在地图上选择UFO或任务\n"
 
-#: client/campaign/cp_map.c:1703
+#: client/campaign/cp_map.c:1704
 msgid "UFO in radar range\n"
 msgstr "UFO在雷达范围\n"
 
-#: client/campaign/cp_map.c:1712
+#: client/campaign/cp_map.c:1713
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -13097,22 +13127,22 @@ msgstr ""
 "类型： %s\n"
 "环境： %s"
 
-#: client/campaign/cp_map.c:1724 client/campaign/cp_map.c:1734
+#: client/campaign/cp_map.c:1725 client/campaign/cp_map.c:1735
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "名称：\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1725 client/campaign/cp_map.c:1735
+#: client/campaign/cp_map.c:1726 client/campaign/cp_map.c:1736
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "状态：\t%s\n"
 
-#: client/campaign/cp_map.c:1726
+#: client/campaign/cp_map.c:1727
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "与目标距离：\t\t%.0f\n"
 
-#: client/campaign/cp_map.c:1730 client/campaign/cp_map.c:1742
+#: client/campaign/cp_map.c:1731 client/campaign/cp_map.c:1743
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "估计用时：\t%s小时\n"
@@ -13390,66 +13420,66 @@ msgstr "在%s发现有外星人活动。"
 msgid "No nation"
 msgstr "无国界区域"
 
-#: client/campaign/cp_nation.c:117
+#: client/campaign/cp_nation.c:125
 msgid "Giving up"
 msgstr "放弃"
 
-#: client/campaign/cp_nation.c:119
+#: client/campaign/cp_nation.c:127
 msgid "Furious"
 msgstr "暴怒"
 
-#: client/campaign/cp_nation.c:121
+#: client/campaign/cp_nation.c:129
 msgid "Angry"
 msgstr "狂怒"
 
-#: client/campaign/cp_nation.c:123
+#: client/campaign/cp_nation.c:131
 msgid "Mad"
 msgstr "生气"
 
-#: client/campaign/cp_nation.c:125
+#: client/campaign/cp_nation.c:133
 msgid "Upset"
 msgstr "不高兴"
 
-#: client/campaign/cp_nation.c:127
+#: client/campaign/cp_nation.c:135
 msgid "Tolerant"
 msgstr "不耐烦"
 
-#: client/campaign/cp_nation.c:129
+#: client/campaign/cp_nation.c:137
 msgid "Neutral"
 msgstr "中立"
 
-#: client/campaign/cp_nation.c:131
+#: client/campaign/cp_nation.c:139
 msgid "Content"
 msgstr "基本满意"
 
-#: client/campaign/cp_nation.c:133
+#: client/campaign/cp_nation.c:141
 msgid "Pleased"
 msgstr "满意"
 
-#: client/campaign/cp_nation.c:135
+#: client/campaign/cp_nation.c:143
 msgid "Happy"
 msgstr "高兴"
 
-#: client/campaign/cp_nation.c:137
+#: client/campaign/cp_nation.c:145
 msgid "Exuberant"
 msgstr "幸福"
 
-#: client/campaign/cp_nation.c:163
+#: client/campaign/cp_nation.c:171
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
 msgstr "%s的满意度从%s转变为%s"
 
-#: client/campaign/cp_nation.c:167
+#: client/campaign/cp_nation.c:175
 #, c-format
 msgid "Nation %s changed happiness to %s"
 msgstr "%s的满意度变为%s"
 
-#: client/campaign/cp_nation.c:171
+#: client/campaign/cp_nation.c:179
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
 msgstr "%s的满意度是%s低于战役所允许的最低满意度。"
 
-#: client/campaign/cp_nation.c:177
+#: client/campaign/cp_nation.c:185
 msgid "Nation changed happiness"
 msgstr "国际组织的满意度有了变化"
 
@@ -13906,16 +13936,16 @@ msgstr "丢失了一件"
 msgid "Unresearchable collected items"
 msgstr "无法研究的物体"
 
-#: client/campaign/cp_research_callbacks.c:558
+#: client/campaign/cp_research_callbacks.c:561
 msgid "This item is currently under research in another base."
 msgstr "这个项目目前正在另一个基地研究。"
 
-#: client/campaign/cp_research_callbacks.c:576
-#: client/campaign/cp_research_callbacks.c:618
+#: client/campaign/cp_research_callbacks.c:579
+#: client/campaign/cp_research_callbacks.c:624
 msgid "The research on this item is complete."
 msgstr "这个项目的研发完成。"
 
-#: client/campaign/cp_research_callbacks.c:582
+#: client/campaign/cp_research_callbacks.c:585
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -13923,15 +13953,15 @@ msgstr ""
 "这个项目还不能研发。\n"
 "需要先研究基础科技。"
 
-#: client/campaign/cp_research_callbacks.c:644
+#: client/campaign/cp_research_callbacks.c:654
 msgid "No research proposal available for this project."
 msgstr "没有这个项目的研究草案。"
 
-#: client/campaign/cp_research_callbacks.c:811
+#: client/campaign/cp_research_callbacks.c:821
 msgid "Nothing to research"
 msgstr "没有东西可以研究"
 
-#: client/campaign/cp_research_callbacks.c:814
+#: client/campaign/cp_research_callbacks.c:824
 msgid "Build a laboratory first"
 msgstr "先建造一个研究所"
 
@@ -14638,15 +14668,15 @@ msgstr "您的基地： %s被摧毁！所有雇员死亡，所有设备被毁。
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "基地'%s'正在被攻击，怎么办？"
 
-#: client/cl_console.c:274
+#: client/cl_console.c:273
 msgid "Bring up the in-game console"
 msgstr "使用游戏控制面板"
 
-#: client/cl_console.c:276
+#: client/cl_console.c:275
 msgid "Send a message to all players"
 msgstr "发送消息给所有玩家"
 
-#: client/cl_console.c:277
+#: client/cl_console.c:276
 msgid "Send a message to allied team members"
 msgstr "发送消息给同盟队员"
 

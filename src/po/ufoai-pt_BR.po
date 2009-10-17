@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO-AI\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-04 14:41+0200\n"
+"POT-Creation-Date: 2009-10-17 11:53+0200\n"
 "PO-Revision-Date: 2008-07-21 11:34+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team:  <at yahoo.com.br, daniel_a_miranda>\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "Africa"
 msgstr "África"
 
-#: ../base/maps/alienbase.ump:144
+#: ../base/maps/alienbase.ump:157
 msgid "Alienbase"
 msgstr "Base Alienígena"
 
@@ -39,11 +39,11 @@ msgstr ""
 msgid "City_disco"
 msgstr ""
 
-#: ../base/maps/community_centre.ump:51
+#: ../base/maps/community_centre.ump:61
 msgid "Community_centre"
 msgstr "Centro Comunitário"
 
-#: ../base/maps/construction.ump:53
+#: ../base/maps/construction.ump:64
 msgid "Construction"
 msgstr "Construção"
 
@@ -52,11 +52,11 @@ msgstr "Construção"
 msgid "Crashed Harvester"
 msgstr "Coletor U"
 
-#: ../base/maps/druglord.ump:57
+#: ../base/maps/druglord.ump:67
 msgid "Druglord"
 msgstr ""
 
-#: ../base/maps/eaglenest.ump:53
+#: ../base/maps/eaglenest.ump:66
 msgid "Eaglenest"
 msgstr ""
 
@@ -94,7 +94,7 @@ msgstr "Multijogador Coop."
 msgid "Multiplayer Deathmatch"
 msgstr "Multijogador Deathmatch"
 
-#: ../base/maps/gasstation.ump:54
+#: ../base/maps/gasstation.ump:63
 #, fuzzy
 msgid "Gasstation"
 msgstr "Nação"
@@ -104,27 +104,27 @@ msgstr "Nação"
 msgid "UFO Landed"
 msgstr "OVNI - Harvester"
 
-#: ../base/maps/italy.ump:53
+#: ../base/maps/italy.ump:61
 #, fuzzy
 msgid "Italy"
 msgstr "Italiano"
 
-#: ../base/maps/japan.ump:53
+#: ../base/maps/japan.ump:64
 #, fuzzy
 msgid "Japan"
 msgstr "Japonês"
 
-#: ../base/maps/laboratory.ump:54 ../base/ufos/basemanagement.ufo:283
+#: ../base/maps/laboratory.ump:63 ../base/ufos/basemanagement.ufo:283
 #: client/campaign/cp_base_callbacks.c:313
 msgid "Laboratory"
 msgstr "Laboratório"
 
-#: ../base/maps/mart.ump:55
+#: ../base/maps/mart.ump:64
 #, fuzzy
 msgid "Mart"
 msgstr "Mar"
 
-#: ../base/maps/military_convoy.ump:58
+#: ../base/maps/military_convoy.ump:69
 msgid "Military convoy"
 msgstr ""
 
@@ -140,17 +140,17 @@ msgstr "Oriental médio"
 msgid "Oriental big"
 msgstr "Oriental grande"
 
-#: ../base/maps/spedition.ump:54
+#: ../base/maps/spedition.ump:63
 #, fuzzy
 msgid "Spedition"
 msgstr "Opções"
 
-#: ../base/maps/stadium.ump:54
+#: ../base/maps/stadium.ump:65
 #, fuzzy
 msgid "Stadium"
 msgstr "Médio"
 
-#: ../base/maps/transport.ump:53
+#: ../base/maps/transport.ump:66
 #, fuzzy
 msgid "Transport"
 msgstr "Transporte"
@@ -620,82 +620,103 @@ msgstr "Jogar contra os alienígenas"
 msgid "alien_campaign_txt"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:16
+#: ../base/ufos/cities.ufo:15
 msgid "Stockholm"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:23
+#: ../base/ufos/cities.ufo:21
 msgid "Amsterdam"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:29
+#: ../base/ufos/cities.ufo:27
 #, fuzzy
 msgid "Athens"
 msgstr "Alienígenas"
 
-#: ../base/ufos/cities.ufo:35
+#: ../base/ufos/cities.ufo:33
 msgid "Bangkok"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:41
+#: ../base/ufos/cities.ufo:39
 #, fuzzy
 msgid "Beijing"
 msgstr "Instalações"
 
-#: ../base/ufos/cities.ufo:47
+#: ../base/ufos/cities.ufo:45
 #, fuzzy
 msgid "Berlin"
 msgstr "Cinto"
 
-#: ../base/ufos/cities.ufo:53
+#: ../base/ufos/cities.ufo:51
 msgid "Mumbai"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:59
+#: ../base/ufos/cities.ufo:57
 msgid "Cape Town"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:65
+#: ../base/ufos/cities.ufo:63
 #, fuzzy
 msgid "Cairo"
 msgstr "Cruz"
 
-#: ../base/ufos/cities.ufo:71
+#: ../base/ufos/cities.ufo:69
 #, fuzzy
 msgid "Cayenne"
 msgstr "Canhão"
 
-#: ../base/ufos/cities.ufo:77
+#: ../base/ufos/cities.ufo:75
 #, fuzzy
 msgid "Dakar"
 msgstr "Radar"
 
-#: ../base/ufos/cities.ufo:83
+#: ../base/ufos/cities.ufo:81
 msgid "Mexico City"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:89
+#: ../base/ufos/cities.ufo:87
+msgid "Novosibirsk"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:93
 #, fuzzy
 msgid "Paris"
 msgstr "Base"
 
-#: ../base/ufos/cities.ufo:95
+#: ../base/ufos/cities.ufo:99
+#, fuzzy
+msgid "Sacramento"
+msgstr "Sarraceno I"
+
+#: ../base/ufos/cities.ufo:105
+msgid "Santiago"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:111
 msgid "Sydney"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:101
+#: ../base/ufos/cities.ufo:117
 #, fuzzy
 msgid "Teheran"
 msgstr "Usina de Energia"
 
-#: ../base/ufos/cities.ufo:107
+#: ../base/ufos/cities.ufo:123
 msgid "Tokyo"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:113
+#: ../base/ufos/cities.ufo:129
+msgid "Washington D.C."
+msgstr ""
+
+#: ../base/ufos/cities.ufo:135
 #, fuzzy
 msgid "Wellington"
 msgstr "Reabastecer"
+
+#: ../base/ufos/cities.ufo:141
+msgid "Wichita"
+msgstr ""
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
@@ -1334,172 +1355,172 @@ msgstr "Uma propriedade pertencente a pessoas ricas e influentes."
 msgid "A small village in England."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1247
+#: ../base/ufos/maps.ufo:1248
 msgid "A small office in a mountainous region."
 msgstr "Um pequeno escritório em uma região montanhosa."
 
-#: ../base/ufos/maps.ufo:1293
+#: ../base/ufos/maps.ufo:1296
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "Um tipo de centro de reuniões comunitário para coleta de alimentos conhecido como supermercado."
 
-#: ../base/ufos/maps.ufo:1341
+#: ../base/ufos/maps.ufo:1346
 msgid "An old mine."
 msgstr "Uma mina antiga."
 
-#: ../base/ufos/maps.ufo:1389
+#: ../base/ufos/maps.ufo:1394
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "Uma área industrial utilizada para carregar e descarregar bens."
 
-#: ../base/ufos/maps.ufo:1433
+#: ../base/ufos/maps.ufo:1440
 msgid "A bunker used in a previous conflict."
 msgstr "Um abrigo usada em um conflito anterior."
 
-#: ../base/ufos/maps.ufo:1479
+#: ../base/ufos/maps.ufo:1486
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "A represa de uma usina hidrelétrica que está sendo ameaçada por invasores alienígenas."
 
-#: ../base/ufos/maps.ufo:1523
+#: ../base/ufos/maps.ufo:1530
 msgid "A classic eastern suburban area."
 msgstr "Uma clássica área suburbana do leste."
 
-#: ../base/ufos/maps.ufo:1567
+#: ../base/ufos/maps.ufo:1576
 msgid "A small industrial area."
 msgstr "Uma pequena área industrial."
 
-#: ../base/ufos/maps.ufo:1611
+#: ../base/ufos/maps.ufo:1622
 msgid "A stadium used for various recreational events."
 msgstr "Um estádio utilizado para diversos eventos recreativos."
 
-#: ../base/ufos/maps.ufo:1658
+#: ../base/ufos/maps.ufo:1671
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "Uma área tropical onde vários suspeitos de cometerem crimes estabeleceram seus lares."
 
-#: ../base/ufos/maps.ufo:1714
+#: ../base/ufos/maps.ufo:1729
 #, fuzzy
 msgid "A small estate in the mountains"
 msgstr "Um pequeno escritório em uma região montanhosa."
 
-#: ../base/ufos/maps.ufo:1761
+#: ../base/ufos/maps.ufo:1778
 #, fuzzy
 msgid "A crashed Scout UFO"
 msgstr "OVNI abatido"
 
-#: ../base/ufos/maps.ufo:1796
+#: ../base/ufos/maps.ufo:1813
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "Uma casa de fazenda cercada por campos e edículas. Um OVNI pousou em um dos campos."
 
-#: ../base/ufos/maps.ufo:1842
+#: ../base/ufos/maps.ufo:1860
 msgid "A ferry."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1890
+#: ../base/ufos/maps.ufo:1908
 msgid "A rather old-fashioned suburban district."
 msgstr "Um distrito suburbano bem antiquado."
 
-#: ../base/ufos/maps.ufo:1939 ../base/ufos/maps.ufo:1986
+#: ../base/ufos/maps.ufo:1957 ../base/ufos/maps.ufo:2004
 msgid "A small neighbourhood in a warm urban region."
 msgstr "Uma pequena vizinhança em uma região urbana quente."
 
-#: ../base/ufos/maps.ufo:2034
+#: ../base/ufos/maps.ufo:2052
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "Um lugar onde os cidadãos vêm para renovar o suprimento de combustível de seus veículos."
 
-#: ../base/ufos/maps.ufo:2081 ../base/ufos/maps.ufo:2125
+#: ../base/ufos/maps.ufo:2101 ../base/ufos/maps.ufo:2145
 msgid "An urban district in an oriental region."
 msgstr "Um distrito urbano de uma região oriental."
 
-#: ../base/ufos/maps.ufo:2169
+#: ../base/ufos/maps.ufo:2189
 msgid "Underground pipe construction site."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2216
+#: ../base/ufos/maps.ufo:2236
 msgid "A subway station in a suburban part of town."
 msgstr "Uma estação de metrô em uma parte suburbana da cidade."
 
-#: ../base/ufos/maps.ufo:2262
+#: ../base/ufos/maps.ufo:2282
 msgid "An office complex in the centre of town."
 msgstr "Um complexo de escritórios no centro da cidade."
 
-#: ../base/ufos/maps.ufo:2310
+#: ../base/ufos/maps.ufo:2330
 msgid "A suburban district."
 msgstr "Um distrito suburbano."
 
-#: ../base/ufos/maps.ufo:2355
+#: ../base/ufos/maps.ufo:2375
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "Um comboio militar chamou a atenção dos alienígenas."
 
-#: ../base/ufos/maps.ufo:2400 ../base/ufos/maps.ufo:2446
+#: ../base/ufos/maps.ufo:2422 ../base/ufos/maps.ufo:2468
 msgid "A small UFO has crashed in this mining region."
 msgstr "Um pequeno OVNI caiu nesta região de mineração."
 
-#: ../base/ufos/maps.ufo:2495
+#: ../base/ufos/maps.ufo:2517
 msgid "An office complex under construction."
 msgstr "Um complexo de escritórios em construção."
 
-#: ../base/ufos/maps.ufo:2541
+#: ../base/ufos/maps.ufo:2564
 msgid "A local harbour."
 msgstr "Um porto local."
 
-#: ../base/ufos/maps.ufo:2586
+#: ../base/ufos/maps.ufo:2609
 msgid "An office complex on the outskirts of town."
 msgstr "Um complexo de escritórios nos arredores da cidade."
 
-#: ../base/ufos/maps.ufo:2631
+#: ../base/ufos/maps.ufo:2654
 msgid "A luxurious vacation resort."
 msgstr "Um luxuoso resort de férias."
 
-#: ../base/ufos/maps.ufo:2688
+#: ../base/ufos/maps.ufo:2711
 #, fuzzy
 msgid "A suburb that has been visited by UFO."
 msgstr "Um subúrbio africano que recebeu a visita de um Harvester."
 
-#: ../base/ufos/maps.ufo:2740
+#: ../base/ufos/maps.ufo:2763
 #, fuzzy
 msgid "A suburb that has received a visit from a Harvester."
 msgstr "Um subúrbio africano que recebeu a visita de um Harvester."
 
-#: ../base/ufos/maps.ufo:2791
+#: ../base/ufos/maps.ufo:2814
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr "Um Harvester alienígena caiu em uma região erma."
 
-#: ../base/ufos/maps.ufo:2837 ../base/ufos/maps.ufo:2871
+#: ../base/ufos/maps.ufo:2860 ../base/ufos/maps.ufo:2894
 msgid "A small settlement in winter."
 msgstr "Um pequeno povoado passando pelo inverno."
 
-#: ../base/ufos/maps.ufo:2893
+#: ../base/ufos/maps.ufo:2916
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "Um abrigo foi construído para proteger pessoas em tempos de grandes desastres. Algumas portas corta-fogo foram fechadas."
 
-#: ../base/ufos/maps.ufo:2941
+#: ../base/ufos/maps.ufo:2964
 msgid "A Bomber has landed in the middle of a city."
 msgstr "Um Bombardeiro pousou no meio de uma cidade."
 
-#: ../base/ufos/maps.ufo:2994
+#: ../base/ufos/maps.ufo:3017
 msgid "A place where people come to relax and mingle."
 msgstr "Um lugar onde as pessoas vêm relaxar e ficar sem fazer nada."
 
-#: ../base/ufos/maps.ufo:3041
+#: ../base/ufos/maps.ufo:3065
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3087
+#: ../base/ufos/maps.ufo:3113
 msgid "A fuel depot the aliens try to destroy."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3126
+#: ../base/ufos/maps.ufo:3152
 #, fuzzy
 msgid "Wilderness terror mission."
 msgstr "Missão de ataque terrorista"
 
-#: ../base/ufos/maps.ufo:3172
+#: ../base/ufos/maps.ufo:3198
 msgid "UFO Crashsite."
 msgstr "Local da queda de OVNI."
 
-#: ../base/ufos/maps.ufo:3200
+#: ../base/ufos/maps.ufo:3226
 msgid "An alien base."
 msgstr "Uma base alienígena."
 
-#: ../base/ufos/maps.ufo:3215
+#: ../base/ufos/maps.ufo:3241
 msgid "Base is under attack."
 msgstr "A base está sendo atacada."
 
@@ -1719,8 +1740,8 @@ msgstr "Contexto"
 
 #: ../base/ufos/research.ufo:108 ../base/ufos/ui/bases.ufo:65
 #: ../base/ufos/ui/geoscape.ufo:1833 ../base/ufos/ui/market.ufo:85
-#: ../base/ufos/ui/production.ufo:99 ../base/ufos/ui/transfer.ufo:94
-#: client/campaign/cp_map.c:355
+#: ../base/ufos/ui/production.ufo:99 ../base/ufos/ui/transfer.ufo:86
+#: ../base/ufos/ui/transfer.ufo:102 client/campaign/cp_map.c:355
 msgid "Aircraft"
 msgstr "Aeronave"
 
@@ -1733,7 +1754,8 @@ msgid "Research Reports"
 msgstr "Relatórios de Pesquisas"
 
 #: ../base/ufos/research.ufo:111 ../base/ufos/ui/aircraft.ufo:107
-#: ../base/ufos/ui/skirmish.ufo:56 ../base/ufos/ui/transfer.ufo:82
+#: ../base/ufos/ui/skirmish.ufo:56 ../base/ufos/ui/transfer.ufo:80
+#: ../base/ufos/ui/transfer.ufo:90 ../base/ufos/ui/transfer.ufo:656
 msgid "Equipment"
 msgstr "Equipamento"
 
@@ -8629,7 +8651,7 @@ msgstr "Comprar e Vender equipamento"
 msgid "Buy/Sell equipment"
 msgstr "Comprar e Vender equipamento"
 
-#: ../base/ufos/ui/bases.ufo:91 ../base/ufos/ui/transfer.ufo:614
+#: ../base/ufos/ui/bases.ufo:91 ../base/ufos/ui/transfer.ufo:625
 #: client/campaign/cp_base.c:811 client/campaign/cp_base.c:821
 #: client/campaign/cp_base.c:831
 msgid "Transfer"
@@ -8992,7 +9014,7 @@ msgstr "Aeronave alcançou o destino - o que fazer?"
 #: ../base/ufos/ui/geoscape.ufo:1647 ../base/ufos/ui/geoscape.ufo:1737
 #: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/geoscape.ufo:1883
 #: ../base/ufos/ui/irc.ufo:209 ../base/ufos/ui/messageoptions.ufo:32
-#: ../base/ufos/ui/options.ufo:1304 ../base/ufos/ui/transfer.ufo:627
+#: ../base/ufos/ui/options.ufo:1304 ../base/ufos/ui/transfer.ufo:638
 #: client/campaign/cp_installation_callbacks.c:227
 msgid "Cancel"
 msgstr "Cancelar"
@@ -10544,7 +10566,8 @@ msgstr "Bases"
 msgid "Installations"
 msgstr "Nação"
 
-#: ../base/ufos/ui/stats.ufo:94 ../base/ufos/ui/transfer.ufo:86
+#: ../base/ufos/ui/stats.ufo:94 ../base/ufos/ui/transfer.ufo:82
+#: ../base/ufos/ui/transfer.ufo:94
 msgid "Employees"
 msgstr "Empregados"
 
@@ -10610,35 +10633,41 @@ msgstr "Fechar"
 msgid "Current node:"
 msgstr "Carregado no momento:"
 
-#: ../base/ufos/ui/transfer.ufo:90 client/cl_game_campaign.c:200
+#: ../base/ufos/ui/transfer.ufo:84 ../base/ufos/ui/transfer.ufo:98
+#: client/cl_game_campaign.c:200
 msgid "Aliens"
 msgstr "Alienígenas"
 
-#: ../base/ufos/ui/transfer.ufo:185 ../base/ufos/ui/transfer.ufo:196
-#: ../base/ufos/ui/transfer.ufo:207 ../base/ufos/ui/transfer.ufo:218
-#: ../base/ufos/ui/transfer.ufo:230 ../base/ufos/ui/transfer.ufo:241
-#: ../base/ufos/ui/transfer.ufo:252 ../base/ufos/ui/transfer.ufo:263
-#: ../base/ufos/ui/transfer.ufo:274 ../base/ufos/ui/transfer.ufo:285
-#: ../base/ufos/ui/transfer.ufo:296 ../base/ufos/ui/transfer.ufo:307
-#: ../base/ufos/ui/transfer.ufo:319 ../base/ufos/ui/transfer.ufo:330
-#: ../base/ufos/ui/transfer.ufo:341 ../base/ufos/ui/transfer.ufo:352
-#: ../base/ufos/ui/transfer.ufo:363 ../base/ufos/ui/transfer.ufo:374
-#: ../base/ufos/ui/transfer.ufo:385 ../base/ufos/ui/transfer.ufo:396
-#: ../base/ufos/ui/transfer.ufo:407 ../base/ufos/ui/transfer.ufo:418
+#: ../base/ufos/ui/transfer.ufo:135
+#, fuzzy
+msgid "Amount/Transfer"
+msgstr "Transferir"
+
+#: ../base/ufos/ui/transfer.ufo:213 ../base/ufos/ui/transfer.ufo:224
+#: ../base/ufos/ui/transfer.ufo:235 ../base/ufos/ui/transfer.ufo:246
+#: ../base/ufos/ui/transfer.ufo:258 ../base/ufos/ui/transfer.ufo:269
+#: ../base/ufos/ui/transfer.ufo:280 ../base/ufos/ui/transfer.ufo:291
+#: ../base/ufos/ui/transfer.ufo:302 ../base/ufos/ui/transfer.ufo:313
+#: ../base/ufos/ui/transfer.ufo:324 ../base/ufos/ui/transfer.ufo:335
+#: ../base/ufos/ui/transfer.ufo:347 ../base/ufos/ui/transfer.ufo:358
+#: ../base/ufos/ui/transfer.ufo:369 ../base/ufos/ui/transfer.ufo:380
+#: ../base/ufos/ui/transfer.ufo:391 ../base/ufos/ui/transfer.ufo:402
+#: ../base/ufos/ui/transfer.ufo:413 ../base/ufos/ui/transfer.ufo:424
+#: ../base/ufos/ui/transfer.ufo:435
 #, fuzzy
 msgid "Add/Remove item to transfer cargo"
 msgstr "Escolher base para receber a transferência"
 
-#: ../base/ufos/ui/transfer.ufo:541
+#: ../base/ufos/ui/transfer.ufo:561
 #, fuzzy
 msgid "Destination base"
 msgstr "Base atual:"
 
-#: ../base/ufos/ui/transfer.ufo:615
+#: ../base/ufos/ui/transfer.ufo:626
 msgid "Start the transfer"
 msgstr "Começar a transferência"
 
-#: ../base/ufos/ui/transfer.ufo:628
+#: ../base/ufos/ui/transfer.ufo:639
 msgid "Empty the aircraft storage"
 msgstr "Esvaziar compartimento de carga da aeronave"
 
@@ -11631,10 +11660,10 @@ msgstr "OVNI"
 msgid "A new %s is ready in %s"
 msgstr "Essa equipe já está sendo usada"
 
-#: client/campaign/cp_aircraft.c:782 client/campaign/cp_aircraft.c:1233
-#: client/campaign/cp_aircraft.c:1249 client/campaign/cp_aircraft.c:1294
-#: client/campaign/cp_aircraft.c:1398 client/campaign/cp_aircraft.c:1422
-#: client/campaign/cp_aircraft.c:2226
+#: client/campaign/cp_aircraft.c:782 client/campaign/cp_aircraft.c:1234
+#: client/campaign/cp_aircraft.c:1250 client/campaign/cp_aircraft.c:1295
+#: client/campaign/cp_aircraft.c:1399 client/campaign/cp_aircraft.c:1423
+#: client/campaign/cp_aircraft.c:2227
 #: client/campaign/cp_aircraft_callbacks.c:138
 #: client/campaign/cp_aircraft_callbacks.c:146
 #: client/campaign/cp_aircraft_callbacks.c:154
@@ -11646,17 +11675,17 @@ msgstr "Essa equipe já está sendo usada"
 #: client/campaign/cp_base.c:3230 client/campaign/cp_base_callbacks.c:71
 #: client/campaign/cp_base_callbacks.c:187
 #: client/campaign/cp_base_callbacks.c:237
-#: client/campaign/cp_base_callbacks.c:684
-#: client/campaign/cp_base_callbacks.c:693
-#: client/campaign/cp_base_callbacks.c:713
-#: client/campaign/cp_base_callbacks.c:723
+#: client/campaign/cp_base_callbacks.c:677
+#: client/campaign/cp_base_callbacks.c:686
+#: client/campaign/cp_base_callbacks.c:706
+#: client/campaign/cp_base_callbacks.c:716
+#: client/campaign/cp_base_callbacks.c:727
 #: client/campaign/cp_base_callbacks.c:734
-#: client/campaign/cp_base_callbacks.c:741
-#: client/campaign/cp_base_callbacks.c:749
-#: client/campaign/cp_base_callbacks.c:754
-#: client/campaign/cp_base_callbacks.c:759 client/campaign/cp_campaign.c:1548
-#: client/campaign/cp_campaign.c:1593 client/campaign/cp_campaign.c:1646
-#: client/campaign/cp_campaign.c:1659 client/campaign/cp_campaign.c:1661
+#: client/campaign/cp_base_callbacks.c:742
+#: client/campaign/cp_base_callbacks.c:747
+#: client/campaign/cp_base_callbacks.c:752 client/campaign/cp_campaign.c:1552
+#: client/campaign/cp_campaign.c:1597 client/campaign/cp_campaign.c:1650
+#: client/campaign/cp_campaign.c:1663 client/campaign/cp_campaign.c:1665
 #: client/campaign/cp_installation_callbacks.c:134
 #: client/campaign/cp_installation_callbacks.c:181
 #: client/campaign/cp_mapfightequip.c:343
@@ -11674,13 +11703,13 @@ msgstr "Essa equipe já está sendo usada"
 #: client/campaign/cp_produce.c:359 client/campaign/cp_produce.c:369
 #: client/campaign/cp_produce.c:380 client/campaign/cp_produce.c:390
 #: client/campaign/cp_produce.c:401
-#: client/campaign/cp_research_callbacks.c:558
-#: client/campaign/cp_research_callbacks.c:576
-#: client/campaign/cp_research_callbacks.c:582
-#: client/campaign/cp_research_callbacks.c:618
-#: client/campaign/cp_research_callbacks.c:644
-#: client/campaign/cp_research_callbacks.c:811
-#: client/campaign/cp_research_callbacks.c:814 client/campaign/cp_ufo.c:355
+#: client/campaign/cp_research_callbacks.c:561
+#: client/campaign/cp_research_callbacks.c:579
+#: client/campaign/cp_research_callbacks.c:585
+#: client/campaign/cp_research_callbacks.c:624
+#: client/campaign/cp_research_callbacks.c:654
+#: client/campaign/cp_research_callbacks.c:821
+#: client/campaign/cp_research_callbacks.c:824 client/campaign/cp_ufo.c:355
 #: client/campaign/cp_ufo.c:731 client/campaign/cp_ufo.c:735
 #: client/campaign/cp_ufo.c:739
 #: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:394
@@ -11710,30 +11739,30 @@ msgstr ""
 msgid "That base is beyond this aircraft's range."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1232
+#: client/campaign/cp_aircraft.c:1233
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1248
+#: client/campaign/cp_aircraft.c:1249
 #, fuzzy, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "O seu %s tem pouco combustível e retorna à base"
 
-#: client/campaign/cp_aircraft.c:1294
+#: client/campaign/cp_aircraft.c:1295
 #, fuzzy, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "O seu %s tem pouco combustível e retorna à base"
 
-#: client/campaign/cp_aircraft.c:1398
+#: client/campaign/cp_aircraft.c:1399
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1422
+#: client/campaign/cp_aircraft.c:1423
 msgid "Insufficient fuel."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:2226
+#: client/campaign/cp_aircraft.c:2227
 #, fuzzy, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "O seu %s tem pouco combustível e retorna à base"
@@ -11766,14 +11795,14 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "Aeronave iniciada"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1727
-#: client/campaign/cp_map.c:1736 client/campaign/cp_map.c:1749
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1728
+#: client/campaign/cp_map.c:1737 client/campaign/cp_map.c:1750
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Velocidade:\t%i km/h\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1728
-#: client/campaign/cp_map.c:1737
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1729
+#: client/campaign/cp_map.c:1738
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Combustível:\t%i/%i\n"
@@ -11816,7 +11845,7 @@ msgstr "Interceptação"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Interceptação de OVNI bem-sucedida - OVNI perdido no mar."
 
-#: client/campaign/cp_airfight.c:484 client/campaign/cp_campaign.c:1661
+#: client/campaign/cp_airfight.c:484 client/campaign/cp_campaign.c:1665
 msgid "You've lost the battle"
 msgstr "Você perdeu a batalha"
 
@@ -12108,7 +12137,7 @@ msgstr "Construa um %s antes"
 #: client/campaign/cp_base_callbacks.c:318
 #: client/campaign/cp_base_callbacks.c:328
 #: client/campaign/cp_base_callbacks.c:333
-#: client/campaign/cp_base_callbacks.c:758
+#: client/campaign/cp_base_callbacks.c:751
 #, c-format
 msgid "Build a %s first."
 msgstr "Construa um %s antes"
@@ -12123,15 +12152,15 @@ msgstr "Transferir equipamento ou pessoal"
 msgid "Build %s first."
 msgstr "Construa um %s antes"
 
-#: client/campaign/cp_base_callbacks.c:683
+#: client/campaign/cp_base_callbacks.c:676
 msgid "Base is under attack, you can't access this building !"
 msgstr "A base está sendo atacada, você não pode acessar esta construção!"
 
-#: client/campaign/cp_base_callbacks.c:692
+#: client/campaign/cp_base_callbacks.c:685
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Você precisa de ao menos um Hangar (e suas dependências) para usar uma aeronave."
 
-#: client/campaign/cp_base_callbacks.c:711
+#: client/campaign/cp_base_callbacks.c:704
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -12146,75 +12175,75 @@ msgstr[1] ""
 "A construção irá terminar em %i dias.\n"
 "Por favor espere para entrar."
 
-#: client/campaign/cp_base_callbacks.c:722
+#: client/campaign/cp_base_callbacks.c:715
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Você precisa de uma construção %s para tornar a construção %s funcional."
 
-#: client/campaign/cp_base_callbacks.c:732
+#: client/campaign/cp_base_callbacks.c:725
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Construção %s não foi finalizada ainda, e é necessária para usar a construção %s."
 
-#: client/campaign/cp_base_callbacks.c:739
+#: client/campaign/cp_base_callbacks.c:732
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr "Se assegure de que as dependências do edifício %s (%s) estão operacionais, assim o edifício %s pode ser usado."
 
-#: client/campaign/cp_base_callbacks.c:747
-#: client/campaign/cp_base_callbacks.c:752
+#: client/campaign/cp_base_callbacks.c:740
+#: client/campaign/cp_base_callbacks.c:745
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "Você precisa recrutar %s para usar a construção %s."
 
-#: client/campaign/cp_base_callbacks.c:786
+#: client/campaign/cp_base_callbacks.c:779
 msgid "^BAircraft\n"
 msgstr "^BAeronave\n"
 
-#: client/campaign/cp_base_callbacks.c:793
+#: client/campaign/cp_base_callbacks.c:786
 msgid "^BEmployees\n"
 msgstr "^BEmpregados\n"
 
-#: client/campaign/cp_base_callbacks.c:802
+#: client/campaign/cp_base_callbacks.c:795
 #, fuzzy
 msgid "^BAliens\n"
 msgstr "Alienígenas"
 
-#: client/campaign/cp_base_callbacks.c:814
+#: client/campaign/cp_base_callbacks.c:807
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^BConstruções\t\t\t\t\t\tCapacidade\t\t\t\tQuantidade\n"
 
-#: client/campaign/cp_base_callbacks.c:838
+#: client/campaign/cp_base_callbacks.c:831
 msgid "day"
 msgid_plural "days"
 msgstr[0] "Dia"
 msgstr[1] "Dias"
 
-#: client/campaign/cp_base_callbacks.c:848
+#: client/campaign/cp_base_callbacks.c:841
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr "^BProdução\t\t\t\t\t\tQuantidade\t\t\t\tProgresso\n"
 
-#: client/campaign/cp_base_callbacks.c:868
+#: client/campaign/cp_base_callbacks.c:861
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:872
-#: client/campaign/cp_base_callbacks.c:888
+#: client/campaign/cp_base_callbacks.c:865
+#: client/campaign/cp_base_callbacks.c:881
 msgid "Nothing\n"
 msgstr "Nada\n"
 
 # progresso? checar isso.
-#: client/campaign/cp_base_callbacks.c:877
+#: client/campaign/cp_base_callbacks.c:870
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr "^BPesquisa\t\t\t\t\t\tCientistas\t\t\t\tProgresso\n"
 
-#: client/campaign/cp_base_callbacks.c:882
+#: client/campaign/cp_base_callbacks.c:875
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:926 client/campaign/cp_campaign.c:801
+#: client/campaign/cp_base_callbacks.c:919 client/campaign/cp_campaign.c:805
 #: client/campaign/cp_market_callbacks.c:271
 #, c-format
 msgid "%i c"
@@ -12290,7 +12319,7 @@ msgstr "Você falhou na sua tarefa de proteger a Terra. Nossas casas e nosso pov
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "Sob o seu comando, as operações da FALANGE continuamente falharam em proteger os civis inocentes. Dúzias perderam suas vidas pela sua inabilidade em lidar com a ameaça alienígena. As Nações Unidas, altamente insatisfeitas com o seu desempenho, decidiram removê-lo do comando e subsequentemente desativar a FALANGE como uma força tarefa efetiva. Nenhuma outra tentativa de cooperação global foi tentada. As nações da Terra tentam sobreviver por si sós dos alienígenas, e eventualmente caem uma a uma."
 
-#: client/campaign/cp_campaign.c:823
+#: client/campaign/cp_campaign.c:827
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -12301,7 +12330,7 @@ msgstr ""
 "Perdas:\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:828
+#: client/campaign/cp_campaign.c:832
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -12312,50 +12341,50 @@ msgstr ""
 "Ativos:\t%i\n"
 "Atacados:\t%i\n"
 
-#: client/campaign/cp_campaign.c:843 client/campaign/cp_ufopedia.c:1254
+#: client/campaign/cp_campaign.c:847 client/campaign/cp_ufopedia.c:1254
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_campaign.c:846
+#: client/campaign/cp_campaign.c:850
 #, c-format
 msgid ""
 "\n"
 "Funding this month:\t%d"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:884 client/campaign/cp_ufopedia.c:237
+#: client/campaign/cp_campaign.c:888 client/campaign/cp_ufopedia.c:237
 #: client/cl_inventory_callbacks.c:149
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_campaign.c:890
+#: client/campaign/cp_campaign.c:894
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Empregados:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:903
+#: client/campaign/cp_campaign.c:907
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Aeronave:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:914
+#: client/campaign/cp_campaign.c:918
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Base (%s):\t%i c\n"
 
-#: client/campaign/cp_campaign.c:919
+#: client/campaign/cp_campaign.c:923
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Custos administrativos:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:926
+#: client/campaign/cp_campaign.c:930
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Dívidas:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:929
+#: client/campaign/cp_campaign.c:933
 #, c-format
 msgid ""
 "\n"
@@ -12366,12 +12395,12 @@ msgstr ""
 "\t-------\n"
 "Soma:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:934
+#: client/campaign/cp_campaign.c:938
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Máx. dívida permitida: %ic\n"
 
-#: client/campaign/cp_campaign.c:939
+#: client/campaign/cp_campaign.c:943
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -12380,35 +12409,35 @@ msgstr ""
 "Máx. Infecção Viral eXtraterrestre permitida: %i%%\n"
 "Infecção Viral Extraterrestre atual: %i%%"
 
-#: client/campaign/cp_campaign.c:1548
+#: client/campaign/cp_campaign.c:1552
 #, fuzzy
 msgid "Collected dead alien bodies"
 msgstr "Coletados %i corpos de alienígenas mortos"
 
-#: client/campaign/cp_campaign.c:1593
+#: client/campaign/cp_campaign.c:1597
 msgid "Your dropship is not near the landing zone"
 msgstr "O seu transporte de tropas não está próximo da zona de pouso"
 
-#: client/campaign/cp_campaign.c:1645 client/campaign/cp_missions.c:1156
+#: client/campaign/cp_campaign.c:1649 client/campaign/cp_missions.c:1156
 #, fuzzy, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Defesa de base: %s bem-sucedida!"
 
-#: client/campaign/cp_campaign.c:1659
+#: client/campaign/cp_campaign.c:1663
 msgid "You've won the battle"
 msgstr "Você ganhou a batalha"
 
-#: client/campaign/cp_campaign.c:1677
+#: client/campaign/cp_campaign.c:1681
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Alienígenas mortos\t%i\n"
 
-#: client/campaign/cp_campaign.c:1678
+#: client/campaign/cp_campaign.c:1682
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Alienígenas capturados\t%i\n"
 
-#: client/campaign/cp_campaign.c:1679
+#: client/campaign/cp_campaign.c:1683
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -12417,22 +12446,22 @@ msgstr ""
 "Alienígenas sobreviventes\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1681
+#: client/campaign/cp_campaign.c:1685
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Soldados da FALANGE mortos pelos alienígenas\t%i\n"
 
-#: client/campaign/cp_campaign.c:1682
+#: client/campaign/cp_campaign.c:1686
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Soldados da FALANGE perdidos em ação\t%i\n"
 
-#: client/campaign/cp_campaign.c:1683
+#: client/campaign/cp_campaign.c:1687
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Baixas da FALANGE por fogo amigo\t%i\n"
 
-#: client/campaign/cp_campaign.c:1684
+#: client/campaign/cp_campaign.c:1688
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -12441,17 +12470,17 @@ msgstr ""
 "Sobreviventes da FALANGE\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1686
+#: client/campaign/cp_campaign.c:1690
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civis mortos pelos alienígenas\t%i\n"
 
-#: client/campaign/cp_campaign.c:1687
+#: client/campaign/cp_campaign.c:1691
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civis mortos por fogo amigo\t%i\n"
 
-#: client/campaign/cp_campaign.c:1688
+#: client/campaign/cp_campaign.c:1692
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -12460,24 +12489,24 @@ msgstr ""
 "Civis salvos\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1689
+#: client/campaign/cp_campaign.c:1693
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Itens coletados (tipos/total)\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1742
+#: client/campaign/cp_campaign.c:1746
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s foi promovido a %s.\n"
 
-#: client/campaign/cp_campaign.c:1744
+#: client/campaign/cp_campaign.c:1748
 #, fuzzy, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s foi premiado postumamente com o posto de %s\\por cavalheirismo inspirador em face das desavenças.\n"
 
-#: client/campaign/cp_campaign.c:1745
+#: client/campaign/cp_campaign.c:1749
 msgid "Soldier promoted"
 msgstr "Soldado promovido"
 
@@ -12593,8 +12622,9 @@ msgid "This item is too heavy for the selected slot."
 msgstr "Carregar a equipe da vaga selecionada"
 
 #: client/campaign/cp_fightequip_callbacks.c:591
-msgid "Equip first a weapon."
-msgstr ""
+#, fuzzy
+msgid "Equip a weapon first."
+msgstr "Construa um hangar antes"
 
 #: client/campaign/cp_fightequip_callbacks.c:594
 msgid "Ammo not usable with current weapon."
@@ -12706,28 +12736,28 @@ msgstr "Noite"
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1685
+#: client/campaign/cp_map.c:1686
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Selecione o local desejado para a nova base no mapa.\n"
 
-#: client/campaign/cp_map.c:1688
+#: client/campaign/cp_map.c:1689
 #, fuzzy
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "Selecione o local desejado para a nova base no mapa.\n"
 
-#: client/campaign/cp_map.c:1693
+#: client/campaign/cp_map.c:1694
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Alienígenas estão atacando a nossa base neste exato momento.\n"
 
-#: client/campaign/cp_map.c:1698
+#: client/campaign/cp_map.c:1699
 msgid "Select ufo or mission on map\n"
 msgstr "Selecione um OVNI ou uma missão do mapa\n"
 
-#: client/campaign/cp_map.c:1703
+#: client/campaign/cp_map.c:1704
 msgid "UFO in radar range\n"
 msgstr "OVNI no alcance do radar\n"
 
-#: client/campaign/cp_map.c:1712
+#: client/campaign/cp_map.c:1713
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -12738,22 +12768,22 @@ msgstr ""
 "Tipo: %s\n"
 "Objetivo: %s"
 
-#: client/campaign/cp_map.c:1724 client/campaign/cp_map.c:1734
+#: client/campaign/cp_map.c:1725 client/campaign/cp_map.c:1735
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Nome:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1725 client/campaign/cp_map.c:1735
+#: client/campaign/cp_map.c:1726 client/campaign/cp_map.c:1736
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Estado:\t%s\n"
 
-#: client/campaign/cp_map.c:1726
+#: client/campaign/cp_map.c:1727
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Distância ao alvo:\t\t%.0f\n"
 
-#: client/campaign/cp_map.c:1730 client/campaign/cp_map.c:1742
+#: client/campaign/cp_map.c:1731 client/campaign/cp_map.c:1743
 #, fuzzy, c-format
 msgid "ETA:\t%sh\n"
 msgstr "Chegada prevista:\t%s\n"
@@ -13059,74 +13089,74 @@ msgstr "Atividade alienígena foi detectada em %s."
 msgid "No nation"
 msgstr "Sem nação"
 
-#: client/campaign/cp_nation.c:117
+#: client/campaign/cp_nation.c:125
 msgid "Giving up"
 msgstr ""
 
-#: client/campaign/cp_nation.c:119
+#: client/campaign/cp_nation.c:127
 msgid "Furious"
 msgstr ""
 
-#: client/campaign/cp_nation.c:121
+#: client/campaign/cp_nation.c:129
 #, fuzzy
 msgid "Angry"
 msgstr "Stingray"
 
-#: client/campaign/cp_nation.c:123
+#: client/campaign/cp_nation.c:131
 #, fuzzy
 msgid "Mad"
 msgstr "Maj"
 
-#: client/campaign/cp_nation.c:125
+#: client/campaign/cp_nation.c:133
 #, fuzzy
 msgid "Upset"
 msgstr "Usar Item"
 
-#: client/campaign/cp_nation.c:127
+#: client/campaign/cp_nation.c:135
 #, fuzzy
 msgid "Tolerant"
 msgstr "Usina de Energia"
 
-#: client/campaign/cp_nation.c:129
+#: client/campaign/cp_nation.c:137
 #, fuzzy
 msgid "Neutral"
 msgstr "Tutoriais"
 
-#: client/campaign/cp_nation.c:131
+#: client/campaign/cp_nation.c:139
 #, fuzzy
 msgid "Content"
 msgstr "Contenção"
 
-#: client/campaign/cp_nation.c:133
+#: client/campaign/cp_nation.c:141
 #, fuzzy
 msgid "Pleased"
 msgstr "laser"
 
-#: client/campaign/cp_nation.c:135
+#: client/campaign/cp_nation.c:143
 #, fuzzy
 msgid "Happy"
 msgstr "Pesada"
 
-#: client/campaign/cp_nation.c:137
+#: client/campaign/cp_nation.c:145
 msgid "Exuberant"
-msgstr ""
-
-#: client/campaign/cp_nation.c:163
-#, c-format
-msgid "Nation %s changed happiness from %s to %s"
-msgstr ""
-
-#: client/campaign/cp_nation.c:167
-#, c-format
-msgid "Nation %s changed happiness to %s"
 msgstr ""
 
 #: client/campaign/cp_nation.c:171
 #, c-format
+msgid "Nation %s changed happiness from %s to %s"
+msgstr ""
+
+#: client/campaign/cp_nation.c:175
+#, c-format
+msgid "Nation %s changed happiness to %s"
+msgstr ""
+
+#: client/campaign/cp_nation.c:179
+#, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
 msgstr ""
 
-#: client/campaign/cp_nation.c:177
+#: client/campaign/cp_nation.c:185
 msgid "Nation changed happiness"
 msgstr ""
 
@@ -13593,16 +13623,16 @@ msgstr ""
 msgid "Unresearchable collected items"
 msgstr "%i item coletado"
 
-#: client/campaign/cp_research_callbacks.c:558
+#: client/campaign/cp_research_callbacks.c:561
 msgid "This item is currently under research in another base."
 msgstr "Este item já está sendo pesquisado em outra base."
 
-#: client/campaign/cp_research_callbacks.c:576
-#: client/campaign/cp_research_callbacks.c:618
+#: client/campaign/cp_research_callbacks.c:579
+#: client/campaign/cp_research_callbacks.c:624
 msgid "The research on this item is complete."
 msgstr "A pesquisa desse item está completa."
 
-#: client/campaign/cp_research_callbacks.c:582
+#: client/campaign/cp_research_callbacks.c:585
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -13610,15 +13640,15 @@ msgstr ""
 "A pesquisa desse item ainda não é possível.\n"
 "Você primeiro precisa pesquisar as tecnologias nas quais ela se baseia."
 
-#: client/campaign/cp_research_callbacks.c:644
+#: client/campaign/cp_research_callbacks.c:654
 msgid "No research proposal available for this project."
 msgstr "Nenhuma proposta de pesquipa disponível para este projeto."
 
-#: client/campaign/cp_research_callbacks.c:811
+#: client/campaign/cp_research_callbacks.c:821
 msgid "Nothing to research"
 msgstr "Nada a pesquisar"
 
-#: client/campaign/cp_research_callbacks.c:814
+#: client/campaign/cp_research_callbacks.c:824
 msgid "Build a laboratory first"
 msgstr "Construa um laboratório antes"
 
@@ -14341,15 +14371,15 @@ msgstr "A sua base: %s foi saqueada! Todos os funcionários foram mortos e todo 
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "Base está sendo atacada - o quê fazer?"
 
-#: client/cl_console.c:274
+#: client/cl_console.c:273
 msgid "Bring up the in-game console"
 msgstr "Mostrar o console do jogo"
 
-#: client/cl_console.c:276
+#: client/cl_console.c:275
 msgid "Send a message to all players"
 msgstr "Enviar uma mensagem para todos os jogadores"
 
-#: client/cl_console.c:277
+#: client/cl_console.c:276
 msgid "Send a message to allied team members"
 msgstr "Enviar uma mensagem para todos os times aliados"
 

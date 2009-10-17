@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-04 14:41+0200\n"
+"POT-Creation-Date: 2009-10-17 11:53+0200\n"
 "PO-Revision-Date: 2009-03-13 19:04+0100\n"
 "Last-Translator: Sebastian Franzén <longskonk@hotmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Africa"
 msgstr "Nya Afrika"
 
-#: ../base/maps/alienbase.ump:144
+#: ../base/maps/alienbase.ump:157
 #, fuzzy
 msgid "Alienbase"
 msgstr "Utomjordingar"
@@ -43,12 +43,12 @@ msgstr "Liten kyrkogård"
 msgid "City_disco"
 msgstr "Stadsdisco"
 
-#: ../base/maps/community_centre.ump:51
+#: ../base/maps/community_centre.ump:61
 #, fuzzy
 msgid "Community_centre"
 msgstr "Kommandocentral"
 
-#: ../base/maps/construction.ump:53
+#: ../base/maps/construction.ump:64
 msgid "Construction"
 msgstr "Konstruktion"
 
@@ -57,11 +57,11 @@ msgstr "Konstruktion"
 msgid "Crashed Harvester"
 msgstr "Insamlare"
 
-#: ../base/maps/druglord.ump:57
+#: ../base/maps/druglord.ump:67
 msgid "Druglord"
 msgstr "Knarkkung"
 
-#: ../base/maps/eaglenest.ump:53
+#: ../base/maps/eaglenest.ump:66
 msgid "Eaglenest"
 msgstr "Örnnäste"
 
@@ -99,7 +99,7 @@ msgstr "Multiplayer Samarbete"
 msgid "Multiplayer Deathmatch"
 msgstr "Multiplayer Deathmatch"
 
-#: ../base/maps/gasstation.ump:54
+#: ../base/maps/gasstation.ump:63
 #, fuzzy
 msgid "Gasstation"
 msgstr "Nation"
@@ -109,27 +109,27 @@ msgstr "Nation"
 msgid "UFO Landed"
 msgstr "UFOpedia"
 
-#: ../base/maps/italy.ump:53
+#: ../base/maps/italy.ump:61
 #, fuzzy
 msgid "Italy"
 msgstr "Italienska"
 
-#: ../base/maps/japan.ump:53
+#: ../base/maps/japan.ump:64
 #, fuzzy
 msgid "Japan"
 msgstr "Japanska"
 
-#: ../base/maps/laboratory.ump:54 ../base/ufos/basemanagement.ufo:283
+#: ../base/maps/laboratory.ump:63 ../base/ufos/basemanagement.ufo:283
 #: client/campaign/cp_base_callbacks.c:313
 msgid "Laboratory"
 msgstr "Laboratorium"
 
-#: ../base/maps/mart.ump:55
+#: ../base/maps/mart.ump:64
 #, fuzzy
 msgid "Mart"
 msgstr "Mar"
 
-#: ../base/maps/military_convoy.ump:58
+#: ../base/maps/military_convoy.ump:69
 msgid "Military convoy"
 msgstr "Militärkonvoj"
 
@@ -145,17 +145,17 @@ msgstr "Orientalisk mellan"
 msgid "Oriental big"
 msgstr "Orientalisk stor"
 
-#: ../base/maps/spedition.ump:54
+#: ../base/maps/spedition.ump:63
 #, fuzzy
 msgid "Spedition"
 msgstr "Alternativ"
 
-#: ../base/maps/stadium.ump:54
+#: ../base/maps/stadium.ump:65
 #, fuzzy
 msgid "Stadium"
 msgstr "Medel"
 
-#: ../base/maps/transport.ump:53
+#: ../base/maps/transport.ump:66
 #, fuzzy
 msgid "Transport"
 msgstr "Transportörer:"
@@ -646,80 +646,102 @@ msgstr ""
 "\n"
 "Den här kampanjen är för närvarande endast tillgänglig för testning. Byggnader och saker är alla gjorda för människor. Du kommer endast att ha utomjordiska soldater för dina uppdrag."
 
-#: ../base/ufos/cities.ufo:16
+#: ../base/ufos/cities.ufo:15
 msgid "Stockholm"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:23
+#: ../base/ufos/cities.ufo:21
 msgid "Amsterdam"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:29
+#: ../base/ufos/cities.ufo:27
 #, fuzzy
 msgid "Athens"
 msgstr "Utomjordingar"
 
-#: ../base/ufos/cities.ufo:35
+#: ../base/ufos/cities.ufo:33
 msgid "Bangkok"
 msgstr "Bangkok"
 
-#: ../base/ufos/cities.ufo:41
+#: ../base/ufos/cities.ufo:39
 #, fuzzy
 msgid "Beijing"
 msgstr "Byggnader"
 
-#: ../base/ufos/cities.ufo:47
+#: ../base/ufos/cities.ufo:45
 msgid "Berlin"
 msgstr "Berlin"
 
-#: ../base/ufos/cities.ufo:53
+#: ../base/ufos/cities.ufo:51
 msgid "Mumbai"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:59
+#: ../base/ufos/cities.ufo:57
 msgid "Cape Town"
 msgstr "Kapstaden"
 
-#: ../base/ufos/cities.ufo:65
+#: ../base/ufos/cities.ufo:63
 #, fuzzy
 msgid "Cairo"
 msgstr "Kors"
 
-#: ../base/ufos/cities.ufo:71
+#: ../base/ufos/cities.ufo:69
 #, fuzzy
 msgid "Cayenne"
 msgstr "Avbryt"
 
-#: ../base/ufos/cities.ufo:77
+#: ../base/ufos/cities.ufo:75
 #, fuzzy
 msgid "Dakar"
 msgstr "Radar"
 
-#: ../base/ufos/cities.ufo:83
+#: ../base/ufos/cities.ufo:81
 msgid "Mexico City"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:89
+#: ../base/ufos/cities.ufo:87
+msgid "Novosibirsk"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:93
 #, fuzzy
 msgid "Paris"
 msgstr "Bas"
 
-#: ../base/ufos/cities.ufo:95
+#: ../base/ufos/cities.ufo:99
+#, fuzzy
+msgid "Sacramento"
+msgstr "Saracen I"
+
+#: ../base/ufos/cities.ufo:105
+msgid "Santiago"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:111
 msgid "Sydney"
 msgstr "Sydney"
 
-#: ../base/ufos/cities.ufo:101
+#: ../base/ufos/cities.ufo:117
 #, fuzzy
 msgid "Teheran"
 msgstr "Tolerant"
 
-#: ../base/ufos/cities.ufo:107
+#: ../base/ufos/cities.ufo:123
 msgid "Tokyo"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:113
+#: ../base/ufos/cities.ufo:129
+msgid "Washington D.C."
+msgstr ""
+
+#: ../base/ufos/cities.ufo:135
 msgid "Wellington"
 msgstr "Wellington"
+
+#: ../base/ufos/cities.ufo:141
+#, fuzzy
+msgid "Wichita"
+msgstr "Wachau"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
@@ -1359,172 +1381,172 @@ msgstr "En egendom ägd av rika personer med stort inflytande."
 msgid "A small village in England."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1247
+#: ../base/ufos/maps.ufo:1248
 msgid "A small office in a mountainous region."
 msgstr "Ett mindre kontor i ett bergigt område."
 
-#: ../base/ufos/maps.ufo:1293
+#: ../base/ufos/maps.ufo:1296
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "En form av kollektiv samlingscenter förenat med sökning efter föda, även kallat stormarknad."
 
-#: ../base/ufos/maps.ufo:1341
+#: ../base/ufos/maps.ufo:1346
 msgid "An old mine."
 msgstr "En gammal gruva."
 
-#: ../base/ufos/maps.ufo:1389
+#: ../base/ufos/maps.ufo:1394
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "En industritomt som använts för att lasta och lasta av varor."
 
-#: ../base/ufos/maps.ufo:1433
+#: ../base/ufos/maps.ufo:1440
 msgid "A bunker used in a previous conflict."
 msgstr "En bunker som använts i en tidigare konflikt."
 
-#: ../base/ufos/maps.ufo:1479
+#: ../base/ufos/maps.ufo:1486
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "En hydroelektrisk damm som är hotad av utomjordiska inkräktare."
 
-#: ../base/ufos/maps.ufo:1523
+#: ../base/ufos/maps.ufo:1530
 msgid "A classic eastern suburban area."
 msgstr "Ett klassiskt förortsområde i öst."
 
-#: ../base/ufos/maps.ufo:1567
+#: ../base/ufos/maps.ufo:1576
 msgid "A small industrial area."
 msgstr "Ett litet industriområde."
 
-#: ../base/ufos/maps.ufo:1611
+#: ../base/ufos/maps.ufo:1622
 msgid "A stadium used for various recreational events."
 msgstr "Ett stadium använt för olika sorters frtidssyften."
 
-#: ../base/ufos/maps.ufo:1658
+#: ../base/ufos/maps.ufo:1671
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "Ett tropiskt område som flera misstänkta kriminella har gjort till sitt hem."
 
-#: ../base/ufos/maps.ufo:1714
+#: ../base/ufos/maps.ufo:1729
 #, fuzzy
 msgid "A small estate in the mountains"
 msgstr "Ett mindre kontor i ett bergigt område."
 
-#: ../base/ufos/maps.ufo:1761
+#: ../base/ufos/maps.ufo:1778
 #, fuzzy
 msgid "A crashed Scout UFO"
 msgstr "Lagra UFO"
 
-#: ../base/ufos/maps.ufo:1796
+#: ../base/ufos/maps.ufo:1813
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "En bondgård med omkringliggande fält och skjul. Ett UFO har landat på ett av fälten."
 
-#: ../base/ufos/maps.ufo:1842
+#: ../base/ufos/maps.ufo:1860
 msgid "A ferry."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1890
+#: ../base/ufos/maps.ufo:1908
 msgid "A rather old-fashioned suburban district."
 msgstr "Ett skäligen gammaldags kvarter förorten."
 
-#: ../base/ufos/maps.ufo:1939 ../base/ufos/maps.ufo:1986
+#: ../base/ufos/maps.ufo:1957 ../base/ufos/maps.ufo:2004
 msgid "A small neighbourhood in a warm urban region."
 msgstr "Ett litet kvarter i ett varmare tätortsområde."
 
-#: ../base/ufos/maps.ufo:2034
+#: ../base/ufos/maps.ufo:2052
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "En plats där medborgare kommer för att fylla på deras farkosters bränsle."
 
-#: ../base/ufos/maps.ufo:2081 ../base/ufos/maps.ufo:2125
+#: ../base/ufos/maps.ufo:2101 ../base/ufos/maps.ufo:2145
 msgid "An urban district in an oriental region."
 msgstr "En stadsdel i ett orientalisk område."
 
-#: ../base/ufos/maps.ufo:2169
+#: ../base/ufos/maps.ufo:2189
 msgid "Underground pipe construction site."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2216
+#: ../base/ufos/maps.ufo:2236
 msgid "A subway station in a suburban part of town."
 msgstr "En tunnelbanestation i en förort till staden."
 
-#: ../base/ufos/maps.ufo:2262
+#: ../base/ufos/maps.ufo:2282
 msgid "An office complex in the centre of town."
 msgstr "Ett kontorsområde i stadens centrum."
 
-#: ../base/ufos/maps.ufo:2310
+#: ../base/ufos/maps.ufo:2330
 msgid "A suburban district."
 msgstr "Ett förortsområde."
 
-#: ../base/ufos/maps.ufo:2355
+#: ../base/ufos/maps.ufo:2375
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "En militärkonvoj har dragit till sig intresse från utomjordingarna."
 
-#: ../base/ufos/maps.ufo:2400 ../base/ufos/maps.ufo:2446
+#: ../base/ufos/maps.ufo:2422 ../base/ufos/maps.ufo:2468
 msgid "A small UFO has crashed in this mining region."
 msgstr "Ett mindre UFO har kraschat i det här gruvområdet."
 
-#: ../base/ufos/maps.ufo:2495
+#: ../base/ufos/maps.ufo:2517
 msgid "An office complex under construction."
 msgstr "Ett kontorsområde under konstruktion."
 
-#: ../base/ufos/maps.ufo:2541
+#: ../base/ufos/maps.ufo:2564
 msgid "A local harbour."
 msgstr "En småbåtshamn."
 
-#: ../base/ufos/maps.ufo:2586
+#: ../base/ufos/maps.ufo:2609
 msgid "An office complex on the outskirts of town."
 msgstr "Ett kontorsområde i utkanten av staden."
 
-#: ../base/ufos/maps.ufo:2631
+#: ../base/ufos/maps.ufo:2654
 msgid "A luxurious vacation resort."
 msgstr "En lyxig semesterort."
 
-#: ../base/ufos/maps.ufo:2688
+#: ../base/ufos/maps.ufo:2711
 msgid "A suburb that has been visited by UFO."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2740
+#: ../base/ufos/maps.ufo:2763
 msgid "A suburb that has received a visit from a Harvester."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2791
+#: ../base/ufos/maps.ufo:2814
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2837 ../base/ufos/maps.ufo:2871
+#: ../base/ufos/maps.ufo:2860 ../base/ufos/maps.ufo:2894
 msgid "A small settlement in winter."
 msgstr "En liten bostättning under vintern."
 
-#: ../base/ufos/maps.ufo:2893
+#: ../base/ufos/maps.ufo:2916
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "Ett skyddsrum som byggdes för att skydda folk vid stora katastrofer. Några interna stötvågsdörrar kan vara stängda."
 
-#: ../base/ufos/maps.ufo:2941
+#: ../base/ufos/maps.ufo:2964
 msgid "A Bomber has landed in the middle of a city."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2994
+#: ../base/ufos/maps.ufo:3017
 msgid "A place where people come to relax and mingle."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3041
+#: ../base/ufos/maps.ufo:3065
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "Ett laboratorium där man undersöker funna vrakdelar från UFOn."
 
-#: ../base/ufos/maps.ufo:3087
+#: ../base/ufos/maps.ufo:3113
 msgid "A fuel depot the aliens try to destroy."
 msgstr "En bränsledepot som utomjordingarna försöker förstöra."
 
-#: ../base/ufos/maps.ufo:3126
+#: ../base/ufos/maps.ufo:3152
 #, fuzzy
 msgid "Wilderness terror mission."
 msgstr "Transportuppdrag"
 
-#: ../base/ufos/maps.ufo:3172
+#: ../base/ufos/maps.ufo:3198
 #, fuzzy
 msgid "UFO Crashsite."
 msgstr "Nedslagsplats för UFO"
 
-#: ../base/ufos/maps.ufo:3200
+#: ../base/ufos/maps.ufo:3226
 #, fuzzy
 msgid "An alien base."
 msgstr "Utomjordingar"
 
-#: ../base/ufos/maps.ufo:3215
+#: ../base/ufos/maps.ufo:3241
 msgid "Base is under attack."
 msgstr "Basen är under attack."
 
@@ -1744,8 +1766,8 @@ msgstr "Bakgrund"
 
 #: ../base/ufos/research.ufo:108 ../base/ufos/ui/bases.ufo:65
 #: ../base/ufos/ui/geoscape.ufo:1833 ../base/ufos/ui/market.ufo:85
-#: ../base/ufos/ui/production.ufo:99 ../base/ufos/ui/transfer.ufo:94
-#: client/campaign/cp_map.c:355
+#: ../base/ufos/ui/production.ufo:99 ../base/ufos/ui/transfer.ufo:86
+#: ../base/ufos/ui/transfer.ufo:102 client/campaign/cp_map.c:355
 msgid "Aircraft"
 msgstr "Farkost"
 
@@ -1758,7 +1780,8 @@ msgid "Research Reports"
 msgstr "Forskningsrapporter"
 
 #: ../base/ufos/research.ufo:111 ../base/ufos/ui/aircraft.ufo:107
-#: ../base/ufos/ui/skirmish.ufo:56 ../base/ufos/ui/transfer.ufo:82
+#: ../base/ufos/ui/skirmish.ufo:56 ../base/ufos/ui/transfer.ufo:80
+#: ../base/ufos/ui/transfer.ufo:90 ../base/ufos/ui/transfer.ufo:656
 msgid "Equipment"
 msgstr "Utrustning"
 
@@ -9169,7 +9192,7 @@ msgstr "Köp/sälj utrustning"
 msgid "Buy/Sell equipment"
 msgstr "Köp/sälj utrustning"
 
-#: ../base/ufos/ui/bases.ufo:91 ../base/ufos/ui/transfer.ufo:614
+#: ../base/ufos/ui/bases.ufo:91 ../base/ufos/ui/transfer.ufo:625
 #: client/campaign/cp_base.c:811 client/campaign/cp_base.c:821
 #: client/campaign/cp_base.c:831
 msgid "Transfer"
@@ -9535,7 +9558,7 @@ msgstr "Farkosten har nått önskad plats. Vad vill du göra?"
 #: ../base/ufos/ui/geoscape.ufo:1647 ../base/ufos/ui/geoscape.ufo:1737
 #: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/geoscape.ufo:1883
 #: ../base/ufos/ui/irc.ufo:209 ../base/ufos/ui/messageoptions.ufo:32
-#: ../base/ufos/ui/options.ufo:1304 ../base/ufos/ui/transfer.ufo:627
+#: ../base/ufos/ui/options.ufo:1304 ../base/ufos/ui/transfer.ufo:638
 #: client/campaign/cp_installation_callbacks.c:227
 msgid "Cancel"
 msgstr "Avbryt"
@@ -11158,7 +11181,8 @@ msgstr "Baser"
 msgid "Installations"
 msgstr "Nation"
 
-#: ../base/ufos/ui/stats.ufo:94 ../base/ufos/ui/transfer.ufo:86
+#: ../base/ufos/ui/stats.ufo:94 ../base/ufos/ui/transfer.ufo:82
+#: ../base/ufos/ui/transfer.ufo:94
 msgid "Employees"
 msgstr "Anställda"
 
@@ -11226,35 +11250,41 @@ msgstr "Stäng den här dialogen"
 msgid "Current node:"
 msgstr "Aktuell laddning:"
 
-#: ../base/ufos/ui/transfer.ufo:90 client/cl_game_campaign.c:200
+#: ../base/ufos/ui/transfer.ufo:84 ../base/ufos/ui/transfer.ufo:98
+#: client/cl_game_campaign.c:200
 msgid "Aliens"
 msgstr "Utomjordingar"
 
-#: ../base/ufos/ui/transfer.ufo:185 ../base/ufos/ui/transfer.ufo:196
-#: ../base/ufos/ui/transfer.ufo:207 ../base/ufos/ui/transfer.ufo:218
-#: ../base/ufos/ui/transfer.ufo:230 ../base/ufos/ui/transfer.ufo:241
-#: ../base/ufos/ui/transfer.ufo:252 ../base/ufos/ui/transfer.ufo:263
-#: ../base/ufos/ui/transfer.ufo:274 ../base/ufos/ui/transfer.ufo:285
-#: ../base/ufos/ui/transfer.ufo:296 ../base/ufos/ui/transfer.ufo:307
-#: ../base/ufos/ui/transfer.ufo:319 ../base/ufos/ui/transfer.ufo:330
-#: ../base/ufos/ui/transfer.ufo:341 ../base/ufos/ui/transfer.ufo:352
-#: ../base/ufos/ui/transfer.ufo:363 ../base/ufos/ui/transfer.ufo:374
-#: ../base/ufos/ui/transfer.ufo:385 ../base/ufos/ui/transfer.ufo:396
-#: ../base/ufos/ui/transfer.ufo:407 ../base/ufos/ui/transfer.ufo:418
+#: ../base/ufos/ui/transfer.ufo:135
+#, fuzzy
+msgid "Amount/Transfer"
+msgstr "Överföring"
+
+#: ../base/ufos/ui/transfer.ufo:213 ../base/ufos/ui/transfer.ufo:224
+#: ../base/ufos/ui/transfer.ufo:235 ../base/ufos/ui/transfer.ufo:246
+#: ../base/ufos/ui/transfer.ufo:258 ../base/ufos/ui/transfer.ufo:269
+#: ../base/ufos/ui/transfer.ufo:280 ../base/ufos/ui/transfer.ufo:291
+#: ../base/ufos/ui/transfer.ufo:302 ../base/ufos/ui/transfer.ufo:313
+#: ../base/ufos/ui/transfer.ufo:324 ../base/ufos/ui/transfer.ufo:335
+#: ../base/ufos/ui/transfer.ufo:347 ../base/ufos/ui/transfer.ufo:358
+#: ../base/ufos/ui/transfer.ufo:369 ../base/ufos/ui/transfer.ufo:380
+#: ../base/ufos/ui/transfer.ufo:391 ../base/ufos/ui/transfer.ufo:402
+#: ../base/ufos/ui/transfer.ufo:413 ../base/ufos/ui/transfer.ufo:424
+#: ../base/ufos/ui/transfer.ufo:435
 #, fuzzy
 msgid "Add/Remove item to transfer cargo"
 msgstr "Välj bas att överföra till"
 
-#: ../base/ufos/ui/transfer.ufo:541
+#: ../base/ufos/ui/transfer.ufo:561
 #, fuzzy
 msgid "Destination base"
 msgstr "Aktuell bas:"
 
-#: ../base/ufos/ui/transfer.ufo:615
+#: ../base/ufos/ui/transfer.ufo:626
 msgid "Start the transfer"
 msgstr "Starta överföringen"
 
-#: ../base/ufos/ui/transfer.ufo:628
+#: ../base/ufos/ui/transfer.ufo:639
 msgid "Empty the aircraft storage"
 msgstr "Töm lasten i farkosten"
 
@@ -12248,10 +12278,10 @@ msgstr "UFO"
 msgid "A new %s is ready in %s"
 msgstr "Laget används redan"
 
-#: client/campaign/cp_aircraft.c:782 client/campaign/cp_aircraft.c:1233
-#: client/campaign/cp_aircraft.c:1249 client/campaign/cp_aircraft.c:1294
-#: client/campaign/cp_aircraft.c:1398 client/campaign/cp_aircraft.c:1422
-#: client/campaign/cp_aircraft.c:2226
+#: client/campaign/cp_aircraft.c:782 client/campaign/cp_aircraft.c:1234
+#: client/campaign/cp_aircraft.c:1250 client/campaign/cp_aircraft.c:1295
+#: client/campaign/cp_aircraft.c:1399 client/campaign/cp_aircraft.c:1423
+#: client/campaign/cp_aircraft.c:2227
 #: client/campaign/cp_aircraft_callbacks.c:138
 #: client/campaign/cp_aircraft_callbacks.c:146
 #: client/campaign/cp_aircraft_callbacks.c:154
@@ -12263,17 +12293,17 @@ msgstr "Laget används redan"
 #: client/campaign/cp_base.c:3230 client/campaign/cp_base_callbacks.c:71
 #: client/campaign/cp_base_callbacks.c:187
 #: client/campaign/cp_base_callbacks.c:237
-#: client/campaign/cp_base_callbacks.c:684
-#: client/campaign/cp_base_callbacks.c:693
-#: client/campaign/cp_base_callbacks.c:713
-#: client/campaign/cp_base_callbacks.c:723
+#: client/campaign/cp_base_callbacks.c:677
+#: client/campaign/cp_base_callbacks.c:686
+#: client/campaign/cp_base_callbacks.c:706
+#: client/campaign/cp_base_callbacks.c:716
+#: client/campaign/cp_base_callbacks.c:727
 #: client/campaign/cp_base_callbacks.c:734
-#: client/campaign/cp_base_callbacks.c:741
-#: client/campaign/cp_base_callbacks.c:749
-#: client/campaign/cp_base_callbacks.c:754
-#: client/campaign/cp_base_callbacks.c:759 client/campaign/cp_campaign.c:1548
-#: client/campaign/cp_campaign.c:1593 client/campaign/cp_campaign.c:1646
-#: client/campaign/cp_campaign.c:1659 client/campaign/cp_campaign.c:1661
+#: client/campaign/cp_base_callbacks.c:742
+#: client/campaign/cp_base_callbacks.c:747
+#: client/campaign/cp_base_callbacks.c:752 client/campaign/cp_campaign.c:1552
+#: client/campaign/cp_campaign.c:1597 client/campaign/cp_campaign.c:1650
+#: client/campaign/cp_campaign.c:1663 client/campaign/cp_campaign.c:1665
 #: client/campaign/cp_installation_callbacks.c:134
 #: client/campaign/cp_installation_callbacks.c:181
 #: client/campaign/cp_mapfightequip.c:343
@@ -12291,13 +12321,13 @@ msgstr "Laget används redan"
 #: client/campaign/cp_produce.c:359 client/campaign/cp_produce.c:369
 #: client/campaign/cp_produce.c:380 client/campaign/cp_produce.c:390
 #: client/campaign/cp_produce.c:401
-#: client/campaign/cp_research_callbacks.c:558
-#: client/campaign/cp_research_callbacks.c:576
-#: client/campaign/cp_research_callbacks.c:582
-#: client/campaign/cp_research_callbacks.c:618
-#: client/campaign/cp_research_callbacks.c:644
-#: client/campaign/cp_research_callbacks.c:811
-#: client/campaign/cp_research_callbacks.c:814 client/campaign/cp_ufo.c:355
+#: client/campaign/cp_research_callbacks.c:561
+#: client/campaign/cp_research_callbacks.c:579
+#: client/campaign/cp_research_callbacks.c:585
+#: client/campaign/cp_research_callbacks.c:624
+#: client/campaign/cp_research_callbacks.c:654
+#: client/campaign/cp_research_callbacks.c:821
+#: client/campaign/cp_research_callbacks.c:824 client/campaign/cp_ufo.c:355
 #: client/campaign/cp_ufo.c:731 client/campaign/cp_ufo.c:735
 #: client/campaign/cp_ufo.c:739
 #: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:394
@@ -12327,30 +12357,30 @@ msgstr "Inte tillräckligt med lagringsutrymme på basen."
 msgid "That base is beyond this aircraft's range."
 msgstr "Basen är utanför flygplanets räckvidd."
 
-#: client/campaign/cp_aircraft.c:1232
+#: client/campaign/cp_aircraft.c:1233
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1248
+#: client/campaign/cp_aircraft.c:1249
 #, fuzzy, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Din landare har dåligt med bränsle och återvänder till basen"
 
-#: client/campaign/cp_aircraft.c:1294
+#: client/campaign/cp_aircraft.c:1295
 #, fuzzy, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "Din landare har dåligt med bränsle och återvänder till basen"
 
-#: client/campaign/cp_aircraft.c:1398
+#: client/campaign/cp_aircraft.c:1399
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Lägg till en eller mera soldater till detta flygplan först."
 
-#: client/campaign/cp_aircraft.c:1422
+#: client/campaign/cp_aircraft.c:1423
 msgid "Insufficient fuel."
 msgstr "Otillräckligt med bränsle."
 
-#: client/campaign/cp_aircraft.c:2226
+#: client/campaign/cp_aircraft.c:2227
 #, fuzzy, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "Din landare har dåligt med bränsle och återvänder till basen"
@@ -12382,14 +12412,14 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "Farkosten har startat"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1727
-#: client/campaign/cp_map.c:1736 client/campaign/cp_map.c:1749
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1728
+#: client/campaign/cp_map.c:1737 client/campaign/cp_map.c:1750
 #, fuzzy, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Hastighet:\t%i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1728
-#: client/campaign/cp_map.c:1737
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1729
+#: client/campaign/cp_map.c:1738
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Bränsle:\t%i/%i\n"
@@ -12434,7 +12464,7 @@ msgstr "Jagar"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO-jakt lyckades -- UFO:t förlorat till havs."
 
-#: client/campaign/cp_airfight.c:484 client/campaign/cp_campaign.c:1661
+#: client/campaign/cp_airfight.c:484 client/campaign/cp_campaign.c:1665
 msgid "You've lost the battle"
 msgstr "Du har förlorat slaget"
 
@@ -12728,7 +12758,7 @@ msgstr "Bygg en %s först."
 #: client/campaign/cp_base_callbacks.c:318
 #: client/campaign/cp_base_callbacks.c:328
 #: client/campaign/cp_base_callbacks.c:333
-#: client/campaign/cp_base_callbacks.c:758
+#: client/campaign/cp_base_callbacks.c:751
 #, c-format
 msgid "Build a %s first."
 msgstr "Bygg en %s först."
@@ -12743,15 +12773,15 @@ msgstr "Överför utrustning eller personal"
 msgid "Build %s first."
 msgstr "Bygg en %s först."
 
-#: client/campaign/cp_base_callbacks.c:683
+#: client/campaign/cp_base_callbacks.c:676
 msgid "Base is under attack, you can't access this building !"
 msgstr "Basen är under attack. Du kan inte komma åt denna byggnad!"
 
-#: client/campaign/cp_base_callbacks.c:692
+#: client/campaign/cp_base_callbacks.c:685
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:711
+#: client/campaign/cp_base_callbacks.c:704
 #, fuzzy, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -12762,77 +12792,77 @@ msgid_plural ""
 msgstr[0] "Konstruktion av %s är färdig i basen %s."
 msgstr[1] "Konstruktion av %s är färdig i basen %s."
 
-#: client/campaign/cp_base_callbacks.c:722
+#: client/campaign/cp_base_callbacks.c:715
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:732
+#: client/campaign/cp_base_callbacks.c:725
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:739
+#: client/campaign/cp_base_callbacks.c:732
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:747
-#: client/campaign/cp_base_callbacks.c:752
+#: client/campaign/cp_base_callbacks.c:740
+#: client/campaign/cp_base_callbacks.c:745
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:786
+#: client/campaign/cp_base_callbacks.c:779
 #, fuzzy
 msgid "^BAircraft\n"
 msgstr "Farkost"
 
-#: client/campaign/cp_base_callbacks.c:793
+#: client/campaign/cp_base_callbacks.c:786
 #, fuzzy
 msgid "^BEmployees\n"
 msgstr "Anställda"
 
-#: client/campaign/cp_base_callbacks.c:802
+#: client/campaign/cp_base_callbacks.c:795
 #, fuzzy
 msgid "^BAliens\n"
 msgstr "Utomjordingar"
 
-#: client/campaign/cp_base_callbacks.c:814
+#: client/campaign/cp_base_callbacks.c:807
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:838
+#: client/campaign/cp_base_callbacks.c:831
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dygn"
 msgstr[1] "dygn"
 
-#: client/campaign/cp_base_callbacks.c:848
+#: client/campaign/cp_base_callbacks.c:841
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:868
+#: client/campaign/cp_base_callbacks.c:861
 #, fuzzy, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t%0.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:872
-#: client/campaign/cp_base_callbacks.c:888
+#: client/campaign/cp_base_callbacks.c:865
+#: client/campaign/cp_base_callbacks.c:881
 #, fuzzy
 msgid "Nothing\n"
 msgstr "Ingen\n"
 
-#: client/campaign/cp_base_callbacks.c:877
+#: client/campaign/cp_base_callbacks.c:870
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:882
+#: client/campaign/cp_base_callbacks.c:875
 #, fuzzy, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t%0.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:926 client/campaign/cp_campaign.c:801
+#: client/campaign/cp_base_callbacks.c:919 client/campaign/cp_campaign.c:805
 #: client/campaign/cp_market_callbacks.c:271
 #, c-format
 msgid "%i c"
@@ -12908,7 +12938,7 @@ msgstr "Du har misslyckats i ditt uppdrag att skydda Jorden. Vårt hem och vårt
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "Under ditt kommando har PHALANX-operationerna konsekvent misslyckats med att skydda oskyldiga civilpersoner. Dussintals har förlorat livet på grund av din oförmåga att hantera det utomjordiska hotet. FN, som är missnöjda med din insats, har beslutat att frånta dig kommandot och därigenom upplösa PHALANX-projektet som insatsstyrka. Inga ytterligare försök för ett globalt samarbete kommer att göras. Jordens nationer kommer att stå själva mot utomjordingarna och kommer till slut att misslyckas, en efter en."
 
-#: client/campaign/cp_campaign.c:823
+#: client/campaign/cp_campaign.c:827
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -12919,7 +12949,7 @@ msgstr ""
 "Förlorade:\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:828
+#: client/campaign/cp_campaign.c:832
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -12930,50 +12960,50 @@ msgstr ""
 "Aktiva:\t%i\n"
 "Attackerade:\t%i\n"
 
-#: client/campaign/cp_campaign.c:843 client/campaign/cp_ufopedia.c:1254
+#: client/campaign/cp_campaign.c:847 client/campaign/cp_ufopedia.c:1254
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_campaign.c:846
+#: client/campaign/cp_campaign.c:850
 #, c-format
 msgid ""
 "\n"
 "Funding this month:\t%d"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:884 client/campaign/cp_ufopedia.c:237
+#: client/campaign/cp_campaign.c:888 client/campaign/cp_ufopedia.c:237
 #: client/cl_inventory_callbacks.c:149
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_campaign.c:890
+#: client/campaign/cp_campaign.c:894
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Anställda:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:903
+#: client/campaign/cp_campaign.c:907
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Farkost:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:914
+#: client/campaign/cp_campaign.c:918
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Bas (%s):\t%i c\n"
 
-#: client/campaign/cp_campaign.c:919
+#: client/campaign/cp_campaign.c:923
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Administrativa kostnader:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:926
+#: client/campaign/cp_campaign.c:930
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Skuld:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:929
+#: client/campaign/cp_campaign.c:933
 #, c-format
 msgid ""
 "\n"
@@ -12984,12 +13014,12 @@ msgstr ""
 "\t-------\n"
 "Summa:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:934
+#: client/campaign/cp_campaign.c:938
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Max tillåten skuld: %ic\n"
 
-#: client/campaign/cp_campaign.c:939
+#: client/campaign/cp_campaign.c:943
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -12998,35 +13028,35 @@ msgstr ""
 "Max tillåten nivå av utomjordisk virusinfektion (UVI): %i%%\n"
 "Aktuell nivå av utomjordisk virusinfektion (UVI): %i%%"
 
-#: client/campaign/cp_campaign.c:1548
+#: client/campaign/cp_campaign.c:1552
 #, fuzzy
 msgid "Collected dead alien bodies"
 msgstr "Samlade in %i döda utomjordiska kroppar"
 
-#: client/campaign/cp_campaign.c:1593
+#: client/campaign/cp_campaign.c:1597
 msgid "Your dropship is not near the landing zone"
 msgstr "Ditt landsättningsskepp är inte nära landningszonen"
 
-#: client/campaign/cp_campaign.c:1645 client/campaign/cp_missions.c:1156
+#: client/campaign/cp_campaign.c:1649 client/campaign/cp_missions.c:1156
 #, fuzzy, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Försvar av basen %s lyckades!"
 
-#: client/campaign/cp_campaign.c:1659
+#: client/campaign/cp_campaign.c:1663
 msgid "You've won the battle"
 msgstr "Du har vunnit slaget"
 
-#: client/campaign/cp_campaign.c:1677
+#: client/campaign/cp_campaign.c:1681
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Utomjordingar dödade\t%i\n"
 
-#: client/campaign/cp_campaign.c:1678
+#: client/campaign/cp_campaign.c:1682
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Utomjordingar tillfångatagna\t%i\n"
 
-#: client/campaign/cp_campaign.c:1679
+#: client/campaign/cp_campaign.c:1683
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -13035,22 +13065,22 @@ msgstr ""
 "Överlevande utomjordingar\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1681
+#: client/campaign/cp_campaign.c:1685
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "PHALANX-soldater dödade av utomjordingarna\t%i\n"
 
-#: client/campaign/cp_campaign.c:1682
+#: client/campaign/cp_campaign.c:1686
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "PHALANX-soldater saknade i strid\t%i\n"
 
-#: client/campaign/cp_campaign.c:1683
+#: client/campaign/cp_campaign.c:1687
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "PHALANX-soldater dödade av egna\t%i\n"
 
-#: client/campaign/cp_campaign.c:1684
+#: client/campaign/cp_campaign.c:1688
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -13059,17 +13089,17 @@ msgstr ""
 "Överlevande PHALANX-soldater\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1686
+#: client/campaign/cp_campaign.c:1690
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civilpersoner dödade av utomjordingarna\t%i\n"
 
-#: client/campaign/cp_campaign.c:1687
+#: client/campaign/cp_campaign.c:1691
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civilipersoner dödade av egen eldgivning\t%i\n"
 
-#: client/campaign/cp_campaign.c:1688
+#: client/campaign/cp_campaign.c:1692
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -13078,24 +13108,24 @@ msgstr ""
 "Civilpersoner räddade\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1689
+#: client/campaign/cp_campaign.c:1693
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Insamlade objekt (typer/alla)\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1742
+#: client/campaign/cp_campaign.c:1746
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s har blivit befordrad till %s.\n"
 
-#: client/campaign/cp_campaign.c:1744
+#: client/campaign/cp_campaign.c:1748
 #, fuzzy, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s har tilldelats den postuma graden %s\\för inspirationsgivande tapperhet i strid.\n"
 
-#: client/campaign/cp_campaign.c:1745
+#: client/campaign/cp_campaign.c:1749
 msgid "Soldier promoted"
 msgstr "Soldat befordrad"
 
@@ -13210,8 +13240,9 @@ msgid "This item is too heavy for the selected slot."
 msgstr "Läs in lag från aktuell plats"
 
 #: client/campaign/cp_fightequip_callbacks.c:591
-msgid "Equip first a weapon."
-msgstr ""
+#, fuzzy
+msgid "Equip a weapon first."
+msgstr "Bygg en hangar först."
 
 #: client/campaign/cp_fightequip_callbacks.c:594
 msgid "Ammo not usable with current weapon."
@@ -13323,28 +13354,28 @@ msgstr "Natt"
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1685
+#: client/campaign/cp_map.c:1686
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Välj önskad plats för den nya basen på kartan.\n"
 
-#: client/campaign/cp_map.c:1688
+#: client/campaign/cp_map.c:1689
 #, fuzzy
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "Välj önskad plats för den nya basen på kartan.\n"
 
-#: client/campaign/cp_map.c:1693
+#: client/campaign/cp_map.c:1694
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Utomjordingarna attackerar vår bas.\n"
 
-#: client/campaign/cp_map.c:1698
+#: client/campaign/cp_map.c:1699
 msgid "Select ufo or mission on map\n"
 msgstr "Välj ett ufo eller uppdrag på kartan\n"
 
-#: client/campaign/cp_map.c:1703
+#: client/campaign/cp_map.c:1704
 msgid "UFO in radar range\n"
 msgstr "UFO inom radarns räckvidd\n"
 
-#: client/campaign/cp_map.c:1712
+#: client/campaign/cp_map.c:1713
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -13355,22 +13386,22 @@ msgstr ""
 "Typ: %s\n"
 "Mål: %s"
 
-#: client/campaign/cp_map.c:1724 client/campaign/cp_map.c:1734
+#: client/campaign/cp_map.c:1725 client/campaign/cp_map.c:1735
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Namn:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1725 client/campaign/cp_map.c:1735
+#: client/campaign/cp_map.c:1726 client/campaign/cp_map.c:1736
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Status:\t%s\n"
 
-#: client/campaign/cp_map.c:1726
+#: client/campaign/cp_map.c:1727
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Avstånd till mål:\t\t%.0f\n"
 
-#: client/campaign/cp_map.c:1730 client/campaign/cp_map.c:1742
+#: client/campaign/cp_map.c:1731 client/campaign/cp_map.c:1743
 #, fuzzy, c-format
 msgid "ETA:\t%sh\n"
 msgstr "Åtgärd:\t%s\n"
@@ -13682,66 +13713,66 @@ msgstr "Utomjordisk aktivitet har rapporterats: \"%s\""
 msgid "No nation"
 msgstr "Ingen nation"
 
-#: client/campaign/cp_nation.c:117
+#: client/campaign/cp_nation.c:125
 msgid "Giving up"
 msgstr "Ger upp"
 
-#: client/campaign/cp_nation.c:119
+#: client/campaign/cp_nation.c:127
 msgid "Furious"
 msgstr "Rasande"
 
-#: client/campaign/cp_nation.c:121
+#: client/campaign/cp_nation.c:129
 msgid "Angry"
 msgstr "Arg"
 
-#: client/campaign/cp_nation.c:123
+#: client/campaign/cp_nation.c:131
 msgid "Mad"
 msgstr "Galen"
 
-#: client/campaign/cp_nation.c:125
+#: client/campaign/cp_nation.c:133
 msgid "Upset"
 msgstr "Irriterad"
 
-#: client/campaign/cp_nation.c:127
+#: client/campaign/cp_nation.c:135
 msgid "Tolerant"
 msgstr "Tolerant"
 
-#: client/campaign/cp_nation.c:129
+#: client/campaign/cp_nation.c:137
 msgid "Neutral"
 msgstr "Neutral"
 
-#: client/campaign/cp_nation.c:131
+#: client/campaign/cp_nation.c:139
 msgid "Content"
 msgstr "Belåten"
 
-#: client/campaign/cp_nation.c:133
+#: client/campaign/cp_nation.c:141
 msgid "Pleased"
 msgstr "Nöjd"
 
-#: client/campaign/cp_nation.c:135
+#: client/campaign/cp_nation.c:143
 msgid "Happy"
 msgstr "Glad"
 
-#: client/campaign/cp_nation.c:137
+#: client/campaign/cp_nation.c:145
 msgid "Exuberant"
 msgstr "Mycket glad"
 
-#: client/campaign/cp_nation.c:163
+#: client/campaign/cp_nation.c:171
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
 msgstr ""
 
-#: client/campaign/cp_nation.c:167
+#: client/campaign/cp_nation.c:175
 #, c-format
 msgid "Nation %s changed happiness to %s"
 msgstr ""
 
-#: client/campaign/cp_nation.c:171
+#: client/campaign/cp_nation.c:179
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
 msgstr ""
 
-#: client/campaign/cp_nation.c:177
+#: client/campaign/cp_nation.c:185
 msgid "Nation changed happiness"
 msgstr ""
 
@@ -14213,16 +14244,16 @@ msgstr "Saknar en artefakt"
 msgid "Unresearchable collected items"
 msgstr "%i insamlade objekt"
 
-#: client/campaign/cp_research_callbacks.c:558
+#: client/campaign/cp_research_callbacks.c:561
 msgid "This item is currently under research in another base."
 msgstr "Det forskas redan på det här objektet i en annan bas."
 
-#: client/campaign/cp_research_callbacks.c:576
-#: client/campaign/cp_research_callbacks.c:618
+#: client/campaign/cp_research_callbacks.c:579
+#: client/campaign/cp_research_callbacks.c:624
 msgid "The research on this item is complete."
 msgstr "Forskningen på det här objektet är färdig."
 
-#: client/campaign/cp_research_callbacks.c:582
+#: client/campaign/cp_research_callbacks.c:585
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -14230,15 +14261,15 @@ msgstr ""
 "Forskningen på det här objektet är ännu inte möjlig.\n"
 "Du behöver forska på teknologier som det är baserat på först."
 
-#: client/campaign/cp_research_callbacks.c:644
+#: client/campaign/cp_research_callbacks.c:654
 msgid "No research proposal available for this project."
 msgstr "Inget forskningsförslag finns tillgängligt för det här projektet."
 
-#: client/campaign/cp_research_callbacks.c:811
+#: client/campaign/cp_research_callbacks.c:821
 msgid "Nothing to research"
 msgstr "Ingenting att forska på"
 
-#: client/campaign/cp_research_callbacks.c:814
+#: client/campaign/cp_research_callbacks.c:824
 msgid "Build a laboratory first"
 msgstr "Bygg ett laboratorium först"
 
@@ -14955,15 +14986,15 @@ msgstr "Basen %s har blivit attackerad! Alla anställda har dödats och all utru
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "Basen är under attack. Vad vill du göra?"
 
-#: client/cl_console.c:274
+#: client/cl_console.c:273
 msgid "Bring up the in-game console"
 msgstr "Ta fram spelets konsoll"
 
-#: client/cl_console.c:276
+#: client/cl_console.c:275
 msgid "Send a message to all players"
 msgstr "Skicka ett meddelande till alla spelare"
 
-#: client/cl_console.c:277
+#: client/cl_console.c:276
 msgid "Send a message to allied team members"
 msgstr "Skicka ett meddelande till allierade lagmedlemmar"
 
@@ -17089,9 +17120,6 @@ msgstr "Spelar"
 
 #~ msgid "Protect the excavation site at all cost."
 #~ msgstr "Skydda utgrävningsplatsen med alla medel."
-
-#~ msgid "Wachau"
-#~ msgstr "Wachau"
 
 #~ msgid "Marina Serra"
 #~ msgstr "Marina Serra"
