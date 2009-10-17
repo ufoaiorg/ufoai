@@ -47,7 +47,7 @@ class NameCallbackSet
 		{
 			m_callbacks.erase(callback);
 		}
-		void changed (const char* name) const
+		void changed (const std::string& name) const
 		{
 			for (NameCallbacks::const_iterator i = m_callbacks.begin(); i != m_callbacks.end(); ++i) {
 				(*i)(name);
@@ -59,7 +59,7 @@ class NamedEntity: public Nameable
 {
 		EntityKeyValues& m_entity;
 		NameCallbackSet m_changed;
-		CopiedString m_name;
+		std::string m_name;
 	public:
 		NamedEntity (EntityKeyValues& entity) :
 			m_entity(entity)
@@ -67,7 +67,7 @@ class NamedEntity: public Nameable
 		}
 		const char* name () const
 		{
-			if (string_empty(m_name.c_str())) {
+			if (m_name.empty()) {
 				return m_entity.getEntityClass().name();
 			}
 			return m_name.c_str();
@@ -81,16 +81,16 @@ class NamedEntity: public Nameable
 			m_changed.erase(callback);
 		}
 
-		void identifierChanged (const char* value)
+		void identifierChanged (const std::string& value)
 		{
-			if (string_empty(value)) {
+			if (value.empty()) {
 				m_changed.changed(m_entity.getEntityClass().name());
 			} else {
 				m_changed.changed(value);
 			}
 			m_name = value;
 		}
-		typedef MemberCaller1<NamedEntity, const char*, &NamedEntity::identifierChanged> IdentifierChangedCaller;
+		typedef MemberCaller1<NamedEntity, const std::string&, &NamedEntity::identifierChanged> IdentifierChangedCaller;
 };
 
 class RenderableNamedEntity: public OpenGLRenderable

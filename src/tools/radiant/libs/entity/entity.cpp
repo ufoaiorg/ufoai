@@ -105,12 +105,12 @@ class ConnectEntities
 			m_e1(e1), m_e2(e2)
 		{
 		}
-		void connect (const char* name)
+		void connect (const std::string& name)
 		{
 			m_e1->setKeyValue("target", name);
 			m_e2->setKeyValue("targetname", name);
 		}
-		typedef MemberCaller1<ConnectEntities, const char*, &ConnectEntities::connect> ConnectCaller;
+		typedef MemberCaller1<ConnectEntities, const std::string&, &ConnectEntities::connect> ConnectCaller;
 };
 
 inline Entity* ScenePath_getEntity (const scene::Path& path)

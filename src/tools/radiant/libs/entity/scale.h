@@ -77,12 +77,12 @@ class ScaleKey
 		{
 		}
 
-		void scaleChanged (const char* value)
+		void scaleChanged (const std::string& value)
 		{
-			read_scalevec(m_scale, value);
+			read_scalevec(m_scale, value.c_str());
 			m_scaleChanged();
 		}
-		typedef MemberCaller1<ScaleKey, const char*, &ScaleKey::scaleChanged> ScaleChangedCaller;
+		typedef MemberCaller1<ScaleKey, const std::string&, &ScaleKey::scaleChanged> ScaleChangedCaller;
 
 		void write (Entity* entity) const
 		{

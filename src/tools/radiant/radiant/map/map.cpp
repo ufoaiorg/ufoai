@@ -82,7 +82,7 @@
 class NameObserver
 {
 		UniqueNames& m_names;
-		CopiedString m_name;
+		std::string m_name;
 
 		void construct (void)
 		{
@@ -115,19 +115,19 @@ class NameObserver
 		}
 		bool empty () const
 		{
-			return string_empty(c_str());
+			return m_name.empty();
 		}
 		const char* c_str () const
 		{
 			return m_name.c_str();
 		}
-		void nameChanged (const char* name)
+		void nameChanged (const std::string& name)
 		{
 			destroy();
 			m_name = name;
 			construct();
 		}
-		typedef MemberCaller1<NameObserver, const char*, &NameObserver::nameChanged> NameChangedCaller;
+		typedef MemberCaller1<NameObserver, const std::string&, &NameObserver::nameChanged> NameChangedCaller;
 };
 
 class BasicNamespace: public Namespace
@@ -164,7 +164,7 @@ class BasicNamespace: public Namespace
 		void mergeNames (const BasicNamespace& other) const
 		{
 			typedef std::list<NameCallback> SetNameCallbacks;
-			typedef std::map<CopiedString, SetNameCallbacks> NameGroups;
+			typedef std::map<std::string, SetNameCallbacks> NameGroups;
 			NameGroups groups;
 
 			UniqueNames uniqueNames(other.m_uniqueNames);

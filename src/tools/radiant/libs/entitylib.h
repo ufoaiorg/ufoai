@@ -289,9 +289,9 @@ class KeyValue: public EntityKeyValue
 
 		std::size_t m_refcount;
 		KeyObservers m_observers;
-		CopiedString m_string;
+		std::string m_string;
 		const char* m_empty;
-		ObservedUndoableObject<CopiedString> m_undo;
+		ObservedUndoableObject<std::string> m_undo;
 		static EntityCreator::KeyValueChangedFunc m_entityKeyValueChanged;
 	public:
 
@@ -346,9 +346,9 @@ class KeyValue: public EntityKeyValue
 			}
 			return m_string.c_str();
 		}
-		void assign (const char* other)
+		void assign (const std::string& other)
 		{
-			if (!string_equal(m_string.c_str(), other)) {
+			if (!string_equal(m_string.c_str(), other.c_str())) {
 				m_undo.save();
 				m_string = other;
 				notify();
@@ -364,13 +364,13 @@ class KeyValue: public EntityKeyValue
 			}
 		}
 
-		void importState (const CopiedString& string)
+		void importState (const std::string& string)
 		{
 			m_string = string;
 
 			notify();
 		}
-		typedef MemberCaller1<KeyValue, const CopiedString&, &KeyValue::importState> UndoImportCaller;
+		typedef MemberCaller1<KeyValue, const std::string&, &KeyValue::importState> UndoImportCaller;
 };
 
 /// \brief An unsorted list of key/value pairs.
@@ -494,7 +494,7 @@ class EntityKeyValues: public Entity
 			else
 				return (const char*) 0;
 		}
-		
+
 	public:
 		bool m_isContainer;
 

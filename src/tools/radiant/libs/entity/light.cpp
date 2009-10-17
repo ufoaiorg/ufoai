@@ -308,18 +308,18 @@ class LightRadii
 		{
 		}
 
-		void primaryIntensityChanged (const char* value)
+		void primaryIntensityChanged (const std::string& value)
 		{
-			m_intensity = string_read_int(value);
+			m_intensity = string_read_int(value.c_str());
 			calculateRadii();
 		}
-		typedef MemberCaller1<LightRadii, const char*, &LightRadii::primaryIntensityChanged> IntensityChangedCaller;
-		void flagsChanged (const char* value)
+		typedef MemberCaller1<LightRadii, const std::string&, &LightRadii::primaryIntensityChanged> IntensityChangedCaller;
+		void flagsChanged (const std::string& value)
 		{
-			m_flags = string_read_int(value);
+			m_flags = string_read_int(value.c_str());
 			calculateRadii();
 		}
-		typedef MemberCaller1<LightRadii, const char*, &LightRadii::flagsChanged> FlagsChangedCaller;
+		typedef MemberCaller1<LightRadii, const std::string&, &LightRadii::flagsChanged> FlagsChangedCaller;
 };
 
 class RenderLightRadiiWire: public OpenGLRenderable

@@ -34,9 +34,9 @@ inline void default_origin (Vector3& origin)
 {
 	origin = ORIGINKEY_IDENTITY;
 }
-inline void read_origin (Vector3& origin, const char* value)
+inline void read_origin (Vector3& origin, const std::string& value)
 {
-	if (!string_parse_vector3(value, origin)) {
+	if (!string_parse_vector3(value.c_str(), origin)) {
 		default_origin(origin);
 	}
 }
@@ -69,12 +69,12 @@ class OriginKey
 		{
 		}
 
-		void originChanged (const char* value)
+		void originChanged (const std::string& value)
 		{
 			read_origin(m_origin, value);
 			m_originChanged();
 		}
-		typedef MemberCaller1<OriginKey, const char*, &OriginKey::originChanged> OriginChangedCaller;
+		typedef MemberCaller1<OriginKey, const std::string&, &OriginKey::originChanged> OriginChangedCaller;
 
 		void write (Entity* entity) const
 		{

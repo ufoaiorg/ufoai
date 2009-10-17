@@ -73,11 +73,11 @@ class ClassnameFilter: public Filterable
 			}
 		}
 
-		void classnameChanged (const char* value)
+		void classnameChanged (const std::string& value)
 		{
 			updateFiltered();
 		}
-		typedef MemberCaller1<ClassnameFilter, const char*, &ClassnameFilter::classnameChanged> ClassnameChangedCaller;
+		typedef MemberCaller1<ClassnameFilter, const std::string&, &ClassnameFilter::classnameChanged> ClassnameChangedCaller;
 };
 
 #endif

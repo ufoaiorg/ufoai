@@ -113,13 +113,13 @@ class TargetedEntity
 		{
 			destroy();
 		}
-		void targetnameChanged (const char* name)
+		void targetnameChanged (const std::string& name)
 		{
 			destroy();
-			m_targets = getTargetables(name);
+			m_targets = getTargetables(name.c_str());
 			construct();
 		}
-		typedef MemberCaller1<TargetedEntity, const char*, &TargetedEntity::targetnameChanged> TargetnameChangedCaller;
+		typedef MemberCaller1<TargetedEntity, const std::string&, &TargetedEntity::targetnameChanged> TargetnameChangedCaller;
 };
 
 class TargetingEntity
@@ -130,11 +130,11 @@ class TargetingEntity
 			m_targets(getTargetables(""))
 		{
 		}
-		void targetChanged (const char* target)
+		void targetChanged (const std::string& target)
 		{
-			m_targets = getTargetables(target);
+			m_targets = getTargetables(target.c_str());
 		}
-		typedef MemberCaller1<TargetingEntity, const char*, &TargetingEntity::targetChanged> TargetChangedCaller;
+		typedef MemberCaller1<TargetingEntity, const std::string&, &TargetingEntity::targetChanged> TargetChangedCaller;
 
 		typedef targetables_t::iterator iterator;
 

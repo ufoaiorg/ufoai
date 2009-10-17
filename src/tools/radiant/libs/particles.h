@@ -98,11 +98,11 @@ class ParticleDefinition
 			return _height;
 		}
 
-		void particleChanged (const char* id)
+		void particleChanged (const std::string& id)
 		{
 			g_warning("TODO: Implement particle changing\n");
 		}
-		typedef MemberCaller1<ParticleDefinition, const char*, &ParticleDefinition::particleChanged>
+		typedef MemberCaller1<ParticleDefinition, const std::string&, &ParticleDefinition::particleChanged>
 				ParticleChangedCaller;
 };
 

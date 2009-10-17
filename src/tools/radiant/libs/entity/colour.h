@@ -75,15 +75,15 @@ class Colour
 			release_state();
 		}
 
-		void colourChanged (const char* value)
+		void colourChanged (const std::string& value)
 		{
 			release_state();
-			read_colour(m_colour, value);
+			read_colour(m_colour, value.c_str());
 			capture_state();
 
 			m_colourChanged();
 		}
-		typedef MemberCaller1<Colour, const char*, &Colour::colourChanged> ColourChangedCaller;
+		typedef MemberCaller1<Colour, const std::string&, &Colour::colourChanged> ColourChangedCaller;
 
 		void write (Entity* entity) const
 		{

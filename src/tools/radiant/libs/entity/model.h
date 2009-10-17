@@ -106,11 +106,11 @@ class SingletonModel
 			return m_traverse;
 		}
 
-		void modelChanged (const char* value)
+		void modelChanged (const std::string& value)
 		{
-			m_model.modelChanged(value);
+			m_model.modelChanged(value.c_str());
 		}
-		typedef MemberCaller1<SingletonModel, const char*, &SingletonModel::modelChanged> ModelChangedCaller;
+		typedef MemberCaller1<SingletonModel, const std::string&, &SingletonModel::modelChanged> ModelChangedCaller;
 
 		scene::Node* getNode () const
 		{

@@ -94,19 +94,19 @@ class AnglesKey
 		{
 		}
 
-		void angleChanged (const char* value)
+		void angleChanged (const std::string& value)
 		{
-			read_angle(m_angles, value);
+			read_angle(m_angles, value.c_str());
 			m_anglesChanged();
 		}
-		typedef MemberCaller1<AnglesKey, const char*, &AnglesKey::angleChanged> AngleChangedCaller;
+		typedef MemberCaller1<AnglesKey, const std::string&, &AnglesKey::angleChanged> AngleChangedCaller;
 
-		void anglesChanged (const char* value)
+		void anglesChanged (const std::string& value)
 		{
-			read_angles(m_angles, value);
+			read_angles(m_angles, value.c_str());
 			m_anglesChanged();
 		}
-		typedef MemberCaller1<AnglesKey, const char*, &AnglesKey::anglesChanged> AnglesChangedCaller;
+		typedef MemberCaller1<AnglesKey, const std::string&, &AnglesKey::anglesChanged> AnglesChangedCaller;
 
 		void write (Entity* entity) const
 		{
