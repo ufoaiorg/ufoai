@@ -45,11 +45,10 @@ namespace os
 	{
 		std::string newStr = inPath;
 		std::string::size_type pos = newStr.find("\\");
-		int intLengthSearch = newStr.length();
 
 		while (std::string::npos != pos) {
-			newStr.replace(pos, intLengthSearch, "/");
-			pos = newStr.find("\\", pos + 1);
+			newStr.replace(pos, 1, "/");
+			pos = newStr.find("\\");
 		}
 
 		return newStr;
