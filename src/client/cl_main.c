@@ -445,8 +445,8 @@ static void CL_SpawnSoldiers_f (void)
  */
 void CL_RequestNextDownload (void)
 {
-	unsigned map_checksum = 0;
-	unsigned ufoScript_checksum = 0;
+	unsigned mapChecksum = 0;
+	unsigned scriptChecksum = 0;
 	const char *buf;
 
 	if (cls.state != ca_connected) {
@@ -476,10 +476,10 @@ void CL_RequestNextDownload (void)
 			return;
 
 		while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
-			ufoScript_checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
+			scriptChecksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
 		FS_GetFileData(NULL);
 
-		CM_LoadMap(cl.configstrings[CS_TILES], day, cl.configstrings[CS_POSITIONS], &map_checksum);
+		CM_LoadMap(cl.configstrings[CS_TILES], day, cl.configstrings[CS_POSITIONS], &mapChecksum);
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM]
 		 || !*cl.configstrings[CS_UFOCHECKSUM] || !*cl.configstrings[CS_OBJECTAMOUNT]) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);
@@ -487,10 +487,10 @@ void CL_RequestNextDownload (void)
 			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers", UFO_VERSION);
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
-		} else if (map_checksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
+		} else if (mapChecksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
 			MN_Popup(_("Error"), _("Local map version differs from server"));
 			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%s'",
-				map_checksum, cl.configstrings[CS_MAPCHECKSUM]);
+				mapChecksum, cl.configstrings[CS_MAPCHECKSUM]);
 			return;
 		/* amount of objects from script files doensn't match */
 		} else if (csi.numODs != atoi(cl.configstrings[CS_OBJECTAMOUNT])) {
@@ -498,7 +498,7 @@ void CL_RequestNextDownload (void)
 			Com_Error(ERR_DISCONNECT, "Script files are not the same");
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
-		} else if (atoi(cl.configstrings[CS_UFOCHECKSUM]) && ufoScript_checksum != atoi(cl.configstrings[CS_UFOCHECKSUM])) {
+		} else if (atoi(cl.configstrings[CS_UFOCHECKSUM]) && scriptChecksum != atoi(cl.configstrings[CS_UFOCHECKSUM])) {
 			Com_Printf("You are using modified ufo script files - might produce problems\n");
 		} else if (strncmp(UFO_VERSION, cl.configstrings[CS_VERSION], sizeof(UFO_VERSION))) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, cl.configstrings[CS_VERSION]);
