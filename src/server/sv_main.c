@@ -719,10 +719,8 @@ static void Master_Heartbeat (void)
 
 	svs.lastHeartbeat = svs.realtime;
 
-	if (masterServerHeartBeatThread != NULL) {
-		Com_Printf("heartbeat already in progress\n");
-		return;
-	}
+	if (masterServerHeartBeatThread != NULL)
+		SDL_WaitThread(masterServerHeartBeatThread, NULL);
 
 	masterServerHeartBeatThread = SDL_CreateThread(Master_HeartbeatThread, NULL);
 }
