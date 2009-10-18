@@ -262,5 +262,4 @@ void LevelFilters_registerCommands (void)
 	GlobalCommands_insert("FilterLevel6", FreeCaller<filter_level6> ());
 	GlobalCommands_insert("FilterLevel7", FreeCaller<filter_level7> ());
 	GlobalCommands_insert("FilterLevel8", FreeCaller<filter_level8> ());
-
 }

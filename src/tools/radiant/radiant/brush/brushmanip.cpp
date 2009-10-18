@@ -983,30 +983,30 @@ void Brush_registerCommands ()
 	GlobalCommands_insert("BrushRock", BrushPrefab::SetCaller(g_brushrock));
 	GlobalCommands_insert("BrushTerrain", BrushPrefab::SetCaller(g_brushterrain));
 
-	GlobalCommands_insert("Brush3Sided", BrushMakeSided::SetCaller(g_brushmakesided3), Accelerator('3',
+	GlobalRadiant().commandInsert("Brush3Sided", BrushMakeSided::SetCaller(g_brushmakesided3), Accelerator('3',
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("Brush4Sided", BrushMakeSided::SetCaller(g_brushmakesided4), Accelerator('4',
+	GlobalRadiant().commandInsert("Brush4Sided", BrushMakeSided::SetCaller(g_brushmakesided4), Accelerator('4',
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("Brush5Sided", BrushMakeSided::SetCaller(g_brushmakesided5), Accelerator('5',
+	GlobalRadiant().commandInsert("Brush5Sided", BrushMakeSided::SetCaller(g_brushmakesided5), Accelerator('5',
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("Brush6Sided", BrushMakeSided::SetCaller(g_brushmakesided6), Accelerator('6',
+	GlobalRadiant().commandInsert("Brush6Sided", BrushMakeSided::SetCaller(g_brushmakesided6), Accelerator('6',
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("Brush7Sided", BrushMakeSided::SetCaller(g_brushmakesided7), Accelerator('7',
+	GlobalRadiant().commandInsert("Brush7Sided", BrushMakeSided::SetCaller(g_brushmakesided7), Accelerator('7',
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("Brush8Sided", BrushMakeSided::SetCaller(g_brushmakesided8), Accelerator('8',
+	GlobalRadiant().commandInsert("Brush8Sided", BrushMakeSided::SetCaller(g_brushmakesided8), Accelerator('8',
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("Brush9Sided", BrushMakeSided::SetCaller(g_brushmakesided9), Accelerator('9',
+	GlobalRadiant().commandInsert("Brush9Sided", BrushMakeSided::SetCaller(g_brushmakesided9), Accelerator('9',
 			(GdkModifierType) GDK_CONTROL_MASK));
 
-	GlobalCommands_insert("ClipSelected", FreeCaller<ClipSelected> (), Accelerator(GDK_Return));
-	GlobalCommands_insert("SplitSelected", FreeCaller<SplitSelected> (), Accelerator(GDK_Return,
+	GlobalRadiant().commandInsert("ClipSelected", FreeCaller<ClipSelected> (), Accelerator(GDK_Return));
+	GlobalRadiant().commandInsert("SplitSelected", FreeCaller<SplitSelected> (), Accelerator(GDK_Return,
 			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalCommands_insert("FlipClip", FreeCaller<FlipClipper> (), Accelerator(GDK_Return,
+	GlobalRadiant().commandInsert("FlipClip", FreeCaller<FlipClipper> (), Accelerator(GDK_Return,
 			(GdkModifierType) GDK_CONTROL_MASK));
 
-	GlobalCommands_insert("MakeDetail", FreeCaller<Select_MakeDetail> (), Accelerator('M',
+	GlobalRadiant().commandInsert("MakeDetail", FreeCaller<Select_MakeDetail> (), Accelerator('M',
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("MakeStructural", FreeCaller<Select_MakeStructural> (), Accelerator('S',
+	GlobalRadiant().commandInsert("MakeStructural", FreeCaller<Select_MakeStructural> (), Accelerator('S',
 			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 }
 

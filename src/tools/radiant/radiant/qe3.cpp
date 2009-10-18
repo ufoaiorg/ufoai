@@ -37,6 +37,7 @@
 #include "scenelib.h"
 #include "gtkutil/messagebox.h"
 #include "map/map.h"
+#include "iradiant.h"
 #include "mainframe.h"
 #include "convert.h"
 #include "radiant_i18n.h"
@@ -112,7 +113,7 @@ bool ConfirmModified (const std::string& title)
 		return true;
 
 	EMessageBoxReturn result = gtk_MessageBox(
-		GTK_WIDGET(MainFrame_getWindow()),
+		GTK_WIDGET(GlobalRadiant().getMainWindow()),
 		_("The current map has changed since it was last saved.\nDo you want to save the current map before continuing?"),
 		title, eMB_YESNOCANCEL, eMB_ICONQUESTION);
 	if (result == eIDCANCEL)
@@ -141,5 +142,5 @@ void Sys_SetTitle (const std::string& text, bool modified)
 		title << " *";
 	}
 
-	gtk_window_set_title(MainFrame_getWindow(), title.c_str());
+	gtk_window_set_title(GlobalRadiant().getMainWindow(), title.c_str());
 }

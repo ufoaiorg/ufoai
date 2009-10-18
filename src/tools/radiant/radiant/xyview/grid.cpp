@@ -177,8 +177,8 @@ void GridNext ()
 
 void Grid_registerCommands ()
 {
-	GlobalCommands_insert("GridDown", FreeCaller<GridPrev> (), Accelerator('['));
-	GlobalCommands_insert("GridUp", FreeCaller<GridNext> (), Accelerator(']'));
+	GlobalRadiant().commandInsert("GridDown", FreeCaller<GridPrev> (), Accelerator('['));
+	GlobalRadiant().commandInsert("GridUp", FreeCaller<GridNext> (), Accelerator(']'));
 
 	GlobalToggles_insert("SetGrid0.125", GridMenuItem::SetCaller(g_gridMenu0125), ToggleItem::AddCallbackCaller(
 			g_gridMenu0125.m_item));

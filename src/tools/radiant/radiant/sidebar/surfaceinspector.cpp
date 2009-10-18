@@ -1222,7 +1222,7 @@ static void SurfaceInspector_registerPreferencesPage (void)
 
 static void SurfaceInspector_registerCommands (void)
 {
-	GlobalCommands_insert("FitTexture", FreeCaller<SurfaceInspector_FitTexture> (), Accelerator('B',
+	GlobalRadiant().commandInsert("FitTexture", FreeCaller<SurfaceInspector_FitTexture> (), Accelerator('B',
 			(GdkModifierType) GDK_SHIFT_MASK));
 
 	GlobalCommands_insert("FaceCopyTexture", FreeCaller<SelectedFaces_copyTexture> ());

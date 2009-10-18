@@ -37,6 +37,7 @@
 #include "ifiletypes.h"
 #include "ieclass.h"
 #include "irender.h"
+#include "iradiant.h"
 #include "ientity.h"
 #include "editable.h"
 #include "ifilesystem.h"
@@ -60,8 +61,8 @@
 #include "stream/stringstream.h"
 #include "signal/signal.h"
 
+#include "gtkutil/dialog.h"
 #include "gtkutil/filechooser.h"
-#include "gtkutil/messagebox.h"
 #include "../timer.h"
 #include "../select.h"
 #include "../plugin.h"
@@ -799,7 +800,7 @@ bool Map_LoadFile (const std::string& filename)
 		if (traversible)
 			traversible->traverse(entity_updateworldspawn());
 		else {
-			gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("Error during load of map."));
+			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Error during load of map."));
 			Map_Free();
 			Map_New();
 			return false;
@@ -1592,12 +1593,12 @@ const std::string& getMapsPath (void)
 
 const char* map_open (const std::string& title)
 {
-	return file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, title, getMapsPath(), "map");
+	return file_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()), TRUE, title, getMapsPath(), "map");
 }
 
 const char* map_save (const std::string& title)
 {
-	return file_dialog(GTK_WIDGET(MainFrame_getWindow()), FALSE, title, getMapsPath(), "map");
+	return file_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()), FALSE, title, getMapsPath(), "map");
 }
 
 void OpenMap (void)
@@ -1839,7 +1840,7 @@ void Map_Construct (void)
 	GlobalCommands_insert("RegionOff", FreeCaller<RegionOff> ());
 	GlobalCommands_insert("RegionSetXY", FreeCaller<RegionXY> ());
 	GlobalCommands_insert("RegionSetBrush", FreeCaller<RegionBrush> ());
-	GlobalCommands_insert("RegionSetSelection", FreeCaller<RegionSelected> (), Accelerator('R',
+	GlobalRadiant().commandInsert("RegionSetSelection", FreeCaller<RegionSelected> (), Accelerator('R',
 			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
 	GlobalPreferenceSystem().registerPreference("LastMap", StdStringImportStringCaller(g_strLastMap),

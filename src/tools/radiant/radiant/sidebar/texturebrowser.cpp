@@ -1322,7 +1322,7 @@ void TextureBrowser_Construct (void)
 	GlobalCommands_insert("RefreshShaders", FreeCaller<RefreshShaders> ());
 	GlobalToggles_insert("ShowInUse", FreeCaller<TextureBrowser_ToggleHideUnused> (), ToggleItem::AddCallbackCaller(
 			GlobalTextureBrowser().m_hideunused_item), Accelerator('U'));
-	GlobalCommands_insert("ShowAllTextures", FreeCaller<TextureBrowser_showAll> (), Accelerator('A',
+	GlobalRadiant().commandInsert("ShowAllTextures", FreeCaller<TextureBrowser_showAll> (), Accelerator('A',
 			(GdkModifierType) GDK_CONTROL_MASK));
 	GlobalCommands_insert("ToggleBackground", FreeCaller<WXY_BackgroundSelect> ());
 	GlobalToggles_insert("ToggleShowShaders", FreeCaller<TextureBrowser_ToggleShowShaders> (),

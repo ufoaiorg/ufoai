@@ -35,6 +35,7 @@
 #include "mapfile.h"
 
 #include "map.h"
+#include "iradiant.h"
 #include "../mainframe.h"
 #include "../qe3.h"
 #include "../settings/preferences.h"
@@ -74,7 +75,7 @@ static void Map_Snapshot ()
 
 				if (lSize > 50 * 1024 * 1024) { // total size of saves > 50 mb
 					gtkutil::infoDialog(
-							MainFrame_getWindow(),
+							GlobalRadiant().getMainWindow(),
 							std::string(
 									_("The snapshot files in %s total more than 50 megabytes. You might consider cleaning up.\n"))
 									+ snapshotsDir);
@@ -83,7 +84,7 @@ static void Map_Snapshot ()
 			}
 		}
 	} else {
-		gtkutil::errorDialog(MainFrame_getWindow(), std::string(
+		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), std::string(
 				_("Snapshot save failed.. unable to create directory\n")) + snapshotsDir);
 	}
 }

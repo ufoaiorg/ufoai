@@ -160,7 +160,7 @@ void GenerateMaterialFromTexture ()
 
 void Material_Construct ()
 {
-	GlobalCommands_insert("GenerateMaterialFromTexture", FreeCaller<GenerateMaterialFromTexture> (), Accelerator('M'));
+	GlobalRadiant().commandInsert("GenerateMaterialFromTexture", FreeCaller<GenerateMaterialFromTexture> (), Accelerator('M'));
 	command_connect_accelerator("GenerateMaterialFromTexture");
 }
 

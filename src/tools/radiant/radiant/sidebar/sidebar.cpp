@@ -218,15 +218,15 @@ GtkWidget *Sidebar_construct (void)
 
 	gtk_widget_show_all(vbox);
 
-	GlobalCommands_insert("ToggleSidebar", FreeCaller<ToggleSidebar> (), Accelerator('B'));
-	GlobalCommands_insert("ToggleSurfaceInspector", FreeCaller<ToggleSurfaceInspector> (), Accelerator('S',
+	GlobalRadiant().commandInsert("ToggleSidebar", FreeCaller<ToggleSidebar> (), Accelerator('B'));
+	GlobalRadiant().commandInsert("ToggleSurfaceInspector", FreeCaller<ToggleSurfaceInspector> (), Accelerator('S',
 			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalCommands_insert("ToggleEntityInspector", FreeCaller<ToggleEntityInspector> (), Accelerator('E',
+	GlobalRadiant().commandInsert("ToggleEntityInspector", FreeCaller<ToggleEntityInspector> (), Accelerator('E',
 			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalCommands_insert("TogglePrefabs", FreeCaller<TogglePrefabs> (), Accelerator('P',
+	GlobalRadiant().commandInsert("TogglePrefabs", FreeCaller<TogglePrefabs> (), Accelerator('P',
 			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalCommands_insert("ToggleTextureBrowser", FreeCaller<ToggleTextureBrowser> (), Accelerator('T'));
-	GlobalCommands_insert("ToggleParticleBrowser", FreeCaller<ToggleTextureBrowser> (), Accelerator('P'));
+	GlobalRadiant().commandInsert("ToggleTextureBrowser", FreeCaller<ToggleTextureBrowser> (), Accelerator('T'));
+	GlobalRadiant().commandInsert("ToggleParticleBrowser", FreeCaller<ToggleTextureBrowser> (), Accelerator('P'));
 
 	return vbox;
 }

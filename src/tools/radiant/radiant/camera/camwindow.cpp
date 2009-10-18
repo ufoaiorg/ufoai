@@ -973,26 +973,26 @@ void CamWnd_registerCommands (CamWnd& camwnd)
 	GlobalKeyEvents_insert("CameraFreeMoveDown", Accelerator('C'), FreeMoveCameraMoveDownKeyDownCaller(
 			camwnd.getCamera()), FreeMoveCameraMoveDownKeyUpCaller(camwnd.getCamera()));
 
-	GlobalCommands_insert("CameraForward", ReferenceCaller<camera_t, Camera_MoveForward_Discrete> (camwnd.getCamera()),
+	GlobalRadiant().commandInsert("CameraForward", ReferenceCaller<camera_t, Camera_MoveForward_Discrete> (camwnd.getCamera()),
 			Accelerator(GDK_Up));
-	GlobalCommands_insert("CameraBack", ReferenceCaller<camera_t, Camera_MoveBack_Discrete> (camwnd.getCamera()),
+	GlobalRadiant().commandInsert("CameraBack", ReferenceCaller<camera_t, Camera_MoveBack_Discrete> (camwnd.getCamera()),
 			Accelerator(GDK_Down));
-	GlobalCommands_insert("CameraLeft", ReferenceCaller<camera_t, Camera_RotateLeft_Discrete> (camwnd.getCamera()),
+	GlobalRadiant().commandInsert("CameraLeft", ReferenceCaller<camera_t, Camera_RotateLeft_Discrete> (camwnd.getCamera()),
 			Accelerator(GDK_Left));
-	GlobalCommands_insert("CameraRight", ReferenceCaller<camera_t, Camera_RotateRight_Discrete> (camwnd.getCamera()),
+	GlobalRadiant().commandInsert("CameraRight", ReferenceCaller<camera_t, Camera_RotateRight_Discrete> (camwnd.getCamera()),
 			Accelerator(GDK_Right));
-	GlobalCommands_insert("CameraStrafeRight",
+	GlobalRadiant().commandInsert("CameraStrafeRight",
 			ReferenceCaller<camera_t, Camera_MoveRight_Discrete> (camwnd.getCamera()), Accelerator(GDK_period));
-	GlobalCommands_insert("CameraStrafeLeft", ReferenceCaller<camera_t, Camera_MoveLeft_Discrete> (camwnd.getCamera()),
+	GlobalRadiant().commandInsert("CameraStrafeLeft", ReferenceCaller<camera_t, Camera_MoveLeft_Discrete> (camwnd.getCamera()),
 			Accelerator(GDK_comma));
 
-	GlobalCommands_insert("CameraUp", ReferenceCaller<camera_t, Camera_MoveUp_Discrete> (camwnd.getCamera()),
+	GlobalRadiant().commandInsert("CameraUp", ReferenceCaller<camera_t, Camera_MoveUp_Discrete> (camwnd.getCamera()),
 			Accelerator('D'));
-	GlobalCommands_insert("CameraDown", ReferenceCaller<camera_t, Camera_MoveDown_Discrete> (camwnd.getCamera()),
+	GlobalRadiant().commandInsert("CameraDown", ReferenceCaller<camera_t, Camera_MoveDown_Discrete> (camwnd.getCamera()),
 			Accelerator('C'));
-	GlobalCommands_insert("CameraAngleUp", ReferenceCaller<camera_t, Camera_PitchUp_Discrete> (camwnd.getCamera()),
+	GlobalRadiant().commandInsert("CameraAngleUp", ReferenceCaller<camera_t, Camera_PitchUp_Discrete> (camwnd.getCamera()),
 			Accelerator('A'));
-	GlobalCommands_insert("CameraAngleDown", ReferenceCaller<camera_t, Camera_PitchDown_Discrete> (camwnd.getCamera()),
+	GlobalRadiant().commandInsert("CameraAngleDown", ReferenceCaller<camera_t, Camera_PitchDown_Discrete> (camwnd.getCamera()),
 			Accelerator('Z'));
 }
 
@@ -1834,26 +1834,26 @@ void CameraSpeed_decrease ()
 /// \brief Initialisation for things that have the same lifespan as this module.
 void CamWnd_Construct ()
 {
-	GlobalCommands_insert("CenterView", FreeCaller<GlobalCamera_ResetAngles> (), Accelerator(GDK_End));
+	GlobalRadiant().commandInsert("CenterView", FreeCaller<GlobalCamera_ResetAngles> (), Accelerator(GDK_End));
 
 	GlobalToggles_insert("ToggleCubicClip", FreeCaller<Camera_ToggleFarClip> (), ToggleItem::AddCallbackCaller(
 			g_getfarclip_item), Accelerator('\\', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("CubicClipZoomIn", FreeCaller<Camera_CubeIn> (), Accelerator('[',
+	GlobalRadiant().commandInsert("CubicClipZoomIn", FreeCaller<Camera_CubeIn> (), Accelerator('[',
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("CubicClipZoomOut", FreeCaller<Camera_CubeOut> (), Accelerator(']',
+	GlobalRadiant().commandInsert("CubicClipZoomOut", FreeCaller<Camera_CubeOut> (), Accelerator(']',
 			(GdkModifierType) GDK_CONTROL_MASK));
 
-	GlobalCommands_insert("UpFloor", FreeCaller<Camera_ChangeFloorUp> (), Accelerator(GDK_Prior));
-	GlobalCommands_insert("DownFloor", FreeCaller<Camera_ChangeFloorDown> (), Accelerator(GDK_Next));
+	GlobalRadiant().commandInsert("UpFloor", FreeCaller<Camera_ChangeFloorUp> (), Accelerator(GDK_Prior));
+	GlobalRadiant().commandInsert("DownFloor", FreeCaller<Camera_ChangeFloorDown> (), Accelerator(GDK_Next));
 
 	GlobalToggles_insert("ToggleCamera", ToggleShown::ToggleCaller(g_camera_shown), ToggleItem::AddCallbackCaller(
 			g_camera_shown.m_item), Accelerator('C', (GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 	GlobalCommands_insert("LookThroughSelected", FreeCaller<GlobalCamera_LookThroughSelected> ());
 	GlobalCommands_insert("LookThroughCamera", FreeCaller<GlobalCamera_LookThroughCamera> ());
 
-	GlobalCommands_insert("CameraSpeedInc", FreeCaller<CameraSpeed_increase> (), Accelerator(GDK_KP_Add,
+	GlobalRadiant().commandInsert("CameraSpeedInc", FreeCaller<CameraSpeed_increase> (), Accelerator(GDK_KP_Add,
 			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalCommands_insert("CameraSpeedDec", FreeCaller<CameraSpeed_decrease> (), Accelerator(GDK_KP_Subtract,
+	GlobalRadiant().commandInsert("CameraSpeedDec", FreeCaller<CameraSpeed_decrease> (), Accelerator(GDK_KP_Subtract,
 			(GdkModifierType) GDK_SHIFT_MASK));
 
 	GlobalShortcuts_insert("CameraForward", Accelerator(GDK_Up));

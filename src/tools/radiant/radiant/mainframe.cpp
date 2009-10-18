@@ -39,6 +39,7 @@
 #include "ifilesystem.h"
 #include "iundo.h"
 #include "ifilter.h"
+#include "iradiant.h"
 #include "itoolbar.h"
 #include "editable.h"
 #include "ientity.h"
@@ -67,7 +68,7 @@
 #include "gtkutil/menu.h"
 #include "gtkutil/paned.h"
 #include "gtkutil/widget.h"
-#include "gtkutil/messagebox.h"
+#include "gtkutil/dialog.h"
 
 #include "map/autosave.h"
 #include "brush/brushmanip.h"
@@ -1228,7 +1229,7 @@ static WaitDialog create_wait_dialog (const std::string& title, const std::strin
 {
 	WaitDialog dialog;
 
-	dialog.m_window = create_floating_window(title, MainFrame_getWindow());
+	dialog.m_window = create_floating_window(title, GlobalRadiant().getMainWindow());
 	gtk_window_set_resizable(dialog.m_window, FALSE);
 	gtk_container_set_border_width(GTK_CONTAINER(dialog.m_window), 0);
 	gtk_window_set_position(dialog.m_window, GTK_WIN_POS_CENTER_ON_PARENT);
@@ -1638,9 +1639,9 @@ static GtkMenuItem* create_grid_menu (void)
 void CallBrushExportOBJ ()
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
-		export_selected(MainFrame_getWindow());
+		export_selected(GlobalRadiant().getMainWindow());
 	} else {
-		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("No Brushes Selected!"), _("Error"), eMB_OK, eMB_ICONERROR);
+		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("No Brushes Selected!"));
 	}
 }
 
@@ -2170,7 +2171,7 @@ void MainFrame::Create (void)
 		break;
 	}
 	default:
-		gtkutil::errorDialog(MainFrame_getWindow(),
+		gtkutil::errorDialog(GlobalRadiant().getMainWindow(),
 				_("Invalid layout type set - remove your radiant config files and retry"));
 	}
 
@@ -2334,38 +2335,38 @@ void Layout_registerPreferencesPage (void)
 
 void MainFrame_Construct (void)
 {
-	GlobalCommands_insert("OpenManual", FreeCaller<OpenHelpURL> (), Accelerator(GDK_F1));
+	GlobalRadiant().commandInsert("OpenManual", FreeCaller<OpenHelpURL> (), Accelerator(GDK_F1));
 
 	GlobalCommands_insert("NewMap", FreeCaller<NewMap> ());
-	GlobalCommands_insert("OpenMap", FreeCaller<OpenMap> (), Accelerator('O', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalRadiant().commandInsert("OpenMap", FreeCaller<OpenMap> (), Accelerator('O', (GdkModifierType) GDK_CONTROL_MASK));
 	GlobalCommands_insert("ImportMap", FreeCaller<ImportMap> ());
-	GlobalCommands_insert("SaveMap", FreeCaller<SaveMap> (), Accelerator('S', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalRadiant().commandInsert("SaveMap", FreeCaller<SaveMap> (), Accelerator('S', (GdkModifierType) GDK_CONTROL_MASK));
 	GlobalCommands_insert("SaveMapAs", FreeCaller<SaveMapAs> ());
 	GlobalCommands_insert("SaveSelected", FreeCaller<ExportMap> ());
 	GlobalCommands_insert("SaveRegion", FreeCaller<SaveRegion> ());
 	GlobalCommands_insert("RefreshReferences", FreeCaller<RefreshReferences> ());
 	GlobalCommands_insert("Exit", FreeCaller<Exit> ());
 
-	GlobalCommands_insert("Undo", FreeCaller<Undo> (), Accelerator('Z', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("Redo", FreeCaller<Redo> (), Accelerator('Y', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("Copy", FreeCaller<Copy> (), Accelerator('C', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("Paste", FreeCaller<Paste> (), Accelerator('V', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("PasteToCamera", FreeCaller<PasteToCamera> (), Accelerator('V',
+	GlobalRadiant().commandInsert("Undo", FreeCaller<Undo> (), Accelerator('Z', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalRadiant().commandInsert("Redo", FreeCaller<Redo> (), Accelerator('Y', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalRadiant().commandInsert("Copy", FreeCaller<Copy> (), Accelerator('C', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalRadiant().commandInsert("Paste", FreeCaller<Paste> (), Accelerator('V', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalRadiant().commandInsert("PasteToCamera", FreeCaller<PasteToCamera> (), Accelerator('V',
 			(GdkModifierType) GDK_MOD1_MASK));
-	GlobalCommands_insert("CloneSelection", FreeCaller<Selection_Clone> (), Accelerator(GDK_space));
-	GlobalCommands_insert("DeleteSelection", FreeCaller<deleteSelection> (), Accelerator(GDK_BackSpace));
+	GlobalRadiant().commandInsert("CloneSelection", FreeCaller<Selection_Clone> (), Accelerator(GDK_space));
+	GlobalRadiant().commandInsert("DeleteSelection", FreeCaller<deleteSelection> (), Accelerator(GDK_BackSpace));
 	GlobalCommands_insert("ParentSelection", FreeCaller<Scene_parentSelected> ());
-	GlobalCommands_insert("UnSelectSelection", FreeCaller<Selection_Deselect> (), Accelerator(GDK_Escape));
-	GlobalCommands_insert("InvertSelection", FreeCaller<Select_Invert> (), Accelerator('I'));
+	GlobalRadiant().commandInsert("UnSelectSelection", FreeCaller<Selection_Deselect> (), Accelerator(GDK_Escape));
+	GlobalRadiant().commandInsert("InvertSelection", FreeCaller<Select_Invert> (), Accelerator('I'));
 	GlobalCommands_insert("SelectInside", FreeCaller<Select_Inside> ());
 	GlobalCommands_insert("SelectTouching", FreeCaller<Select_Touching> ());
-	GlobalCommands_insert("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities> (), Accelerator('E',
+	GlobalRadiant().commandInsert("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities> (), Accelerator('E',
 			(GdkModifierType) (GDK_MOD1_MASK | GDK_CONTROL_MASK)));
 	GlobalCommands_insert("Preferences", FreeCaller<PreferencesDialog_showDialog> ());
 
-	GlobalCommands_insert("ShowHidden", FreeCaller<Select_ShowAllHidden> (), Accelerator('H',
+	GlobalRadiant().commandInsert("ShowHidden", FreeCaller<Select_ShowAllHidden> (), Accelerator('H',
 			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalCommands_insert("HideSelected", FreeCaller<HideSelected> (), Accelerator('H'));
+	GlobalRadiant().commandInsert("HideSelected", FreeCaller<HideSelected> (), Accelerator('H'));
 
 	GlobalToggles_insert("DragVertices", FreeCaller<SelectVertexMode> (), ToggleItem::AddCallbackCaller(
 			g_vertexMode_button), Accelerator('V'));
@@ -2405,52 +2406,52 @@ void MainFrame_Construct (void)
 
 	ColorScheme_registerCommands();
 
-	GlobalCommands_insert("CSGSubtract", FreeCaller<CSG_Subtract> (),
+	GlobalRadiant().commandInsert("CSGSubtract", FreeCaller<CSG_Subtract> (),
 			Accelerator('U', (GdkModifierType) GDK_SHIFT_MASK));
-	GlobalCommands_insert("CSGMerge", FreeCaller<CSG_Merge> (), Accelerator('U', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalRadiant().commandInsert("CSGMerge", FreeCaller<CSG_Merge> (), Accelerator('U', (GdkModifierType) GDK_CONTROL_MASK));
 	GlobalCommands_insert("CSGHollow", FreeCaller<CSG_MakeHollow> ());
 
 	Grid_registerCommands();
 
-	GlobalCommands_insert("SnapToGrid", FreeCaller<Selection_SnapToGrid> (), Accelerator('G',
+	GlobalRadiant().commandInsert("SnapToGrid", FreeCaller<Selection_SnapToGrid> (), Accelerator('G',
 			(GdkModifierType) GDK_CONTROL_MASK));
 
-	GlobalCommands_insert("SelectAllOfType", FreeCaller<Select_AllOfType> (), Accelerator('A',
+	GlobalRadiant().commandInsert("SelectAllOfType", FreeCaller<Select_AllOfType> (), Accelerator('A',
 			(GdkModifierType) GDK_SHIFT_MASK));
 
 	GlobalCommands_insert("SelectAllFacesOfTex", FreeCaller<Select_AllFacesWithTexture> ());
 
-	GlobalCommands_insert("TexRotateClock", FreeCaller<Texdef_RotateClockwise> (), Accelerator(GDK_Next,
+	GlobalRadiant().commandInsert("TexRotateClock", FreeCaller<Texdef_RotateClockwise> (), Accelerator(GDK_Next,
 			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalCommands_insert("TexRotateCounter", FreeCaller<Texdef_RotateAntiClockwise> (), Accelerator(GDK_Prior,
+	GlobalRadiant().commandInsert("TexRotateCounter", FreeCaller<Texdef_RotateAntiClockwise> (), Accelerator(GDK_Prior,
 			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalCommands_insert("TexScaleUp", FreeCaller<Texdef_ScaleUp> (), Accelerator(GDK_Up,
+	GlobalRadiant().commandInsert("TexScaleUp", FreeCaller<Texdef_ScaleUp> (), Accelerator(GDK_Up,
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("TexScaleDown", FreeCaller<Texdef_ScaleDown> (), Accelerator(GDK_Down,
+	GlobalRadiant().commandInsert("TexScaleDown", FreeCaller<Texdef_ScaleDown> (), Accelerator(GDK_Down,
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("TexScaleLeft", FreeCaller<Texdef_ScaleLeft> (), Accelerator(GDK_Left,
+	GlobalRadiant().commandInsert("TexScaleLeft", FreeCaller<Texdef_ScaleLeft> (), Accelerator(GDK_Left,
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("TexScaleRight", FreeCaller<Texdef_ScaleRight> (), Accelerator(GDK_Right,
+	GlobalRadiant().commandInsert("TexScaleRight", FreeCaller<Texdef_ScaleRight> (), Accelerator(GDK_Right,
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("TexShiftUp", FreeCaller<Texdef_ShiftUp> (), Accelerator(GDK_Up,
+	GlobalRadiant().commandInsert("TexShiftUp", FreeCaller<Texdef_ShiftUp> (), Accelerator(GDK_Up,
 			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalCommands_insert("TexShiftDown", FreeCaller<Texdef_ShiftDown> (), Accelerator(GDK_Down,
+	GlobalRadiant().commandInsert("TexShiftDown", FreeCaller<Texdef_ShiftDown> (), Accelerator(GDK_Down,
 			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalCommands_insert("TexShiftLeft", FreeCaller<Texdef_ShiftLeft> (), Accelerator(GDK_Left,
+	GlobalRadiant().commandInsert("TexShiftLeft", FreeCaller<Texdef_ShiftLeft> (), Accelerator(GDK_Left,
 			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalCommands_insert("TexShiftRight", FreeCaller<Texdef_ShiftRight> (), Accelerator(GDK_Right,
+	GlobalRadiant().commandInsert("TexShiftRight", FreeCaller<Texdef_ShiftRight> (), Accelerator(GDK_Right,
 			(GdkModifierType) GDK_SHIFT_MASK));
 
-	GlobalCommands_insert("MoveSelectionDOWN", FreeCaller<Selection_MoveDown> (), Accelerator(GDK_KP_Subtract));
-	GlobalCommands_insert("MoveSelectionUP", FreeCaller<Selection_MoveUp> (), Accelerator(GDK_KP_Add));
+	GlobalRadiant().commandInsert("MoveSelectionDOWN", FreeCaller<Selection_MoveDown> (), Accelerator(GDK_KP_Subtract));
+	GlobalRadiant().commandInsert("MoveSelectionUP", FreeCaller<Selection_MoveUp> (), Accelerator(GDK_KP_Add));
 
-	GlobalCommands_insert("SelectNudgeLeft", FreeCaller<Selection_NudgeLeft> (), Accelerator(GDK_Left,
+	GlobalRadiant().commandInsert("SelectNudgeLeft", FreeCaller<Selection_NudgeLeft> (), Accelerator(GDK_Left,
 			(GdkModifierType) GDK_MOD1_MASK));
-	GlobalCommands_insert("SelectNudgeRight", FreeCaller<Selection_NudgeRight> (), Accelerator(GDK_Right,
+	GlobalRadiant().commandInsert("SelectNudgeRight", FreeCaller<Selection_NudgeRight> (), Accelerator(GDK_Right,
 			(GdkModifierType) GDK_MOD1_MASK));
-	GlobalCommands_insert("SelectNudgeUp", FreeCaller<Selection_NudgeUp> (), Accelerator(GDK_Up,
+	GlobalRadiant().commandInsert("SelectNudgeUp", FreeCaller<Selection_NudgeUp> (), Accelerator(GDK_Up,
 			(GdkModifierType) GDK_MOD1_MASK));
-	GlobalCommands_insert("SelectNudgeDown", FreeCaller<Selection_NudgeDown> (), Accelerator(GDK_Down,
+	GlobalRadiant().commandInsert("SelectNudgeDown", FreeCaller<Selection_NudgeDown> (), Accelerator(GDK_Down,
 			(GdkModifierType) GDK_MOD1_MASK));
 
 	GlobalCommands_insert("BrushExportOBJ", FreeCaller<CallBrushExportOBJ> ());
