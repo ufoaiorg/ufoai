@@ -346,7 +346,7 @@ static void R_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alpha
 	const float radarWidthPerDegree = RADAR_WIDTH / 360.0f;
 	int xMin, xMax, x;
 
-	assert(latMax - latMin <= 360);
+	assert(latMax - latMin <= 360 + EQUAL_EPSILON);
 
 	/* if the disc we draw cross the left or right edge of the picture, we need to
 	 * draw 2 part of circle on each side of the overlay */
