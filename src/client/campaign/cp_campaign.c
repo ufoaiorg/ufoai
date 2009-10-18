@@ -2298,6 +2298,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
 		pos[0], pos[1], num, hits);
 
+	/** @todo add EQUAL_EPSILON here? */
 	/* Make sure that position is within bounds */
 	assert(pos[0] >= -180);
 	assert(pos[0] <= 180);

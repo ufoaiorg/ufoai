@@ -184,7 +184,7 @@ static void R_DrawXVIOverlayRow (float latMin, float latMax, const vec2_t center
 	const float xviWidthPerDegree = XVI_WIDTH / 360.0f;
 	int xMin, xMax;
 
-	assert(latMax - latMin <= 360);
+	assert(latMax - latMin <= 360 + EQUAL_EPSILON);
 
 	/* if the disc we draw cross the left or right edge of the picture, we need to
 	 * draw 2 part of circle on each side of the overlay */
@@ -408,6 +408,7 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 	int yMax, yMin;								/**< Bounding box of the inner radar zone */
 	int outeryMax, outeryMin;					/**< Bounding box of the outer radar zone */
 
+	/** @todo add EQUAL_EPSILON here? */
 	assert(outerRadius < 180.0f);
 	assert(outerRadius > innerRadius);
 

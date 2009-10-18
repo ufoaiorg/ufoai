@@ -2193,6 +2193,7 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
 		return;
 	}
 
+	/** @todo add EQUAL_EPSILON here? */
 	/* make sure we don't get a NAN value */
 	assert((*dest)[0] <= 180.0f && (*dest)[0] >= -180.0f && (*dest)[1] <= 90.0f && (*dest)[1] >= -90.0f);
 }
