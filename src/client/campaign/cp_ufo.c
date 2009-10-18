@@ -383,7 +383,7 @@ qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 		return qfalse;
 	}
 
-	AIR_GetDestinationWhilePursuing(ufo, aircraft, &dest);
+	AIR_GetDestinationWhilePursuing(ufo, aircraft, &dest);	
 	MAP_MapCalcLine(ufo->pos, dest, &ufo->route);
 	ufo->status = AIR_UFO;
 	ufo->time = 0;

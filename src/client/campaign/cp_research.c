@@ -1513,7 +1513,8 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							break;
 						switch (vp->type) {
 						case V_TRANSLATION_STRING:
-							token++;
+							if (*token == '_')
+								token++;
 						case V_CLIENT_HUNK_STRING:
 							Mem_PoolStrDupTo(token, (char**) ((char*)tech + (int)vp->ofs), cp_campaignPool, 0);
 							break;
