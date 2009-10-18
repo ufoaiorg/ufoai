@@ -445,8 +445,8 @@ window mp_bookmarks extends abstract_multiplayer_join
 {
 	panel content {
 		{
-			pos			"415 100"
-			size		"608 768"
+			pos			"470 120"
+			size		"470 580"
 		}
 
 		// ====================
@@ -458,58 +458,83 @@ window mp_bookmarks extends abstract_multiplayer_join
 			string		"_Bookmarks"
 			font		f_menubig
 			color		"0 0.5 0 1"
-			pos			"85 170"
-			size		"400 35"
+			pos			"15 30"
+			size		"440 35"
 			textalign	uc
 		}
 
-		string adr0 { pos "95 230" string *cvar:adr0 size "300 12" }
-		custombutton resetadr0 { visiblewhen "exists *cvar:adr0" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr0;" } tooltip "_Delete this bookmark" }
+		rows lines {
+			pos			"90 95"
+			size		"310 490"
+			color1		"0 0.08 0 1"
+			color2		"0 0.16 0 1"
+			lineheight	30
+		}
 
-		string adr1 { pos "95 260" string *cvar:adr1 size "300 12" }
-		custombutton resetadr1 { visiblewhen "exists *cvar:adr1" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr1;" } tooltip "_Delete this bookmark" }
+		string adr0 { pos "95 100" string *cvar:adr0 size "300 20" }
+		custombutton resetadr0 { pos "65 99" size "22 22" icon garbage	onClick { cmd "del adr0; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr2 { pos "95 290" string *cvar:adr2 size "300 12" }
-		custombutton resetadr2 { visiblewhen "exists *cvar:adr2" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr2;" } tooltip "_Delete this bookmark" }
+		string adr1 { pos "95 130" string *cvar:adr1 size "300 20" }
+		custombutton resetadr1 { pos "65 129" size "22 22" icon garbage	onClick { cmd "del adr1; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr3 { pos "95 320" string *cvar:adr3 size "300 12" }
-		custombutton resetadr3 { visiblewhen "exists *cvar:adr3" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr3;" } tooltip "_Delete this bookmark" }
+		string adr2 { pos "95 160" string *cvar:adr2 size "300 20" }
+		custombutton resetadr2 { pos "65 159" size "22 22" icon garbage	onClick { cmd "del adr2; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr4 { pos "95 350" string *cvar:adr4 size "300 12" }
-		custombutton resetadr4 { visiblewhen "exists *cvar:adr4" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr4;" } tooltip "_Delete this bookmark" }
+		string adr3 { pos "95 190" string *cvar:adr3 size "300 20" }
+		custombutton resetadr3 { pos "65 189" size "22 22" icon garbage	onClick { cmd "del adr3; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr5 { pos "95 380" string *cvar:adr5 size "300 12" }
-		custombutton resetadr5 { visiblewhen "exists *cvar:adr5" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr5;" } tooltip "_Delete this bookmark" }
+		string adr4 { pos "95 220" string *cvar:adr4 size "300 20" }
+		custombutton resetadr4 { pos "65 219" size "22 22" icon garbage	onClick { cmd "del adr4; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr6 { pos "95 410" string *cvar:adr6 size "300 12" }
-		custombutton resetadr6 { visiblewhen "exists *cvar:adr6" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr6;" } tooltip "_Delete this bookmark" }
+		string adr5 { pos "95 250" string *cvar:adr5 size "300 20" }
+		custombutton resetadr5 { pos "65 249" size "22 22" icon garbage	onClick { cmd "del adr5; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr7 { pos "95 440" string *cvar:adr7 size "300 12" }
-		custombutton resetadr7 { visiblewhen "exists *cvar:adr7" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr7;" } tooltip "_Delete this bookmark" }
+		string adr6 { pos "95 280" string *cvar:adr6 size "300 20" }
+		custombutton resetadr6 { pos "65 279" size "22 22" icon garbage	onClick { cmd "del adr6; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr8 { pos "95 470" string *cvar:adr8 size "300 12" }
-		custombutton resetadr8 { visiblewhen "exists *cvar:adr8" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr8;" } tooltip "_Delete this bookmark" }
+		string adr7 { pos "95 310" string *cvar:adr7 size "300 20" }
+		custombutton resetadr7 { pos "65 309" size "22 22" icon garbage	onClick { cmd "del adr7; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr9 { pos "95 500" string *cvar:adr9 size "300 12" }
-		custombutton resetadr9 { visiblewhen "exists *cvar:adr9" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr9;" } tooltip "_Delete this bookmark" }
+		string adr8 { pos "95 340" string *cvar:adr8 size "300 20" }
+		custombutton resetadr8 { pos "65 339" size "22 22" icon garbage	onClick { cmd "del adr8; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr10 { pos "95 530" string *cvar:adr10 size "300 12" }
-		custombutton resetadr10 { visiblewhen "exists *cvar:adr10" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr10;" } tooltip "_Delete this bookmark" }
+		string adr9 { pos "95 370" string *cvar:adr9 size "300 20" }
+		custombutton resetadr9 { pos "65 369" size "22 22" icon garbage	onClick { cmd "del adr9; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr11 { pos "95 560" string *cvar:adr11 size "300 12" }
-		custombutton resetadr11 { visiblewhen "exists *cvar:adr11" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr11;" } tooltip "_Delete this bookmark" }
+		string adr10 { pos "95 400" string *cvar:adr10 size "300 20" }
+		custombutton resetadr10 { pos "65 399" size "22 22" icon garbage	onClick { cmd "del adr10; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr12 { pos "95 590" string *cvar:adr12 size "300 12" }
-		custombutton resetadr12 { visiblewhen "exists *cvar:adr12" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr12;" } tooltip "_Delete this bookmark" }
+		string adr11 { pos "95 430" string *cvar:adr11 size "300 20" }
+		custombutton resetadr11 { pos "65 429" size "22 22" icon garbage	onClick { cmd "del adr11; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr13 { pos "95 620" string *cvar:adr13 size "300 12" }
-		custombutton resetadr13 { visiblewhen "exists *cvar:adr13" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr13;" } tooltip "_Delete this bookmark" }
+		string adr12 { pos "95 460" string *cvar:adr12 size "300 20" }
+		custombutton resetadr12 { pos "65 459" size "22 22" icon garbage	onClick { cmd "del adr12; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr14 { pos "95 650" string *cvar:adr14 size "300 12" }
-		custombutton resetadr14 { visiblewhen "exists *cvar:adr14" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr14;" } tooltip "_Delete this bookmark" }
+		string adr13 { pos "95 490" string *cvar:adr13 size "300 20" }
+		custombutton resetadr13 { pos "65 489" size "22 22" icon garbage	onClick { cmd "del adr13; chk_buttons;" } tooltip "_Delete this bookmark" }
 
-		string adr15 { pos "95 680" string *cvar:adr15 size "300 12" }
-		custombutton resetadr15 { visiblewhen "exists *cvar:adr15" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr15;" } tooltip "_Delete this bookmark" }
+		string adr14 { pos "95 520" string *cvar:adr14 size "300 20" }
+		custombutton resetadr14 { pos "65 519" size "22 22" icon garbage	onClick { cmd "del adr14; chk_buttons;" } tooltip "_Delete this bookmark" }
+
+		string adr15 { pos "95 550" string *cvar:adr15 size "300 20" }
+		custombutton resetadr15 { pos "65 549" size "22 22" icon garbage	onClick { cmd "del adr15; chk_buttons;" } tooltip "_Delete this bookmark" }
+	}
+
+	confunc chk_buttons {
+		*cvar:i = 0
+		while ( *cvar:i <= 15 ) {
+			if ( *cvar:adr<cvar:i> ne "" ) {
+				*content.resetadr<cvar:i>@invis = false
+			} else {
+				*content.resetadr<cvar:i>@invis = true
+			}
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
+	}
+
+	func onInit {
+		cmd "chk_buttons;"
 	}
 }
 
