@@ -319,76 +319,76 @@ base_t* B_GetRandomBase (void)
 	return &ccs.bases[randomBase];
 }
 
+/** basetiles are 16 units in each direction
+ * 512 / UNIT_SIZE = 16
+ * 512 is the size in the mapeditor and the worldplane for a
+ * single base map tile */
+#define BASE_TILE_SIZE 512
+#define BASE_TILE_UNITS (BASE_TILE_SIZE / UNIT_SIZE)
+#define BASE_MAX_WORLDLEVEL 6
+
 /**
  * @brief Perform the base assembling in case of an alien attack
  * @param[in,out] base The base to assemble
  * @return @c true if the assembly was successful, @c false if it failed
  * @todo Search a empty field and add a alien craft there
+ * @todo If a building is still under construction, it will be assembled as a finished part.
+ * Otherwise we need mapparts for all the maps under construction.
  */
 qboolean B_AssembleMap (base_t *base)
 {
 	int row, col;
-	char baseMapPart[1024];
-	building_t *entry;
-	char maps[2024];
+	char maps[2048];
 	char coords[2048];
 
 	if (!base) {
-		Com_Printf("B_AssembleMap_f: No base to assemble\n");
+		Com_Printf("B_AssembleMap: No base to assemble\n");
 		return qfalse;
 	}
 
-	*maps = '\0';
-	*coords = '\0';
+	maps[0] = '\0';
+	coords[0] = '\0';
 
 	/* reset the used flag */
-	for (row = 0; row < BASE_SIZE; row++)
+	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
 			if (base->map[row][col].building) {
-				entry = base->map[row][col].building;
-				entry->used = 0;
+				building_t *entry = base->map[row][col].building;
+				entry->used = qfalse;
 			}
 		}
+	}
 
-	/** @todo If a building is still under construction, it will be assembled as a finished part.
-	 * Otherwise we need mapparts for all the maps under construction. */
-	for (row = 0; row < BASE_SIZE; row++)
+	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
-			baseMapPart[0] = '\0';
-
 			if (base->map[row][col].building) {
-				entry = base->map[row][col].building;
+				building_t *entry = base->map[row][col].building;
 
-				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one */
-				/* this is why we check the used flag and continue if it was set already */
+				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one
+				 * this is why we check the used flag and continue if it was set already */
 				if (!entry->used && entry->needs) {
-					entry->used = 1;
+					entry->used = qtrue;
 				} else if (entry->needs) {
-					Com_DPrintf(DEBUG_CLIENT, "B_AssembleMap_f: '%s' needs '%s' (used: %i)\n",
+					Com_DPrintf(DEBUG_CLIENT, "B_AssembleMap: '%s' needs '%s' (used: %i)\n",
 							entry->id, entry->needs, entry->used);
-					entry->used = 0;
+					entry->used = qfalse;
 					continue;
 				}
 
-				if (entry->mapPart)
-					Com_sprintf(baseMapPart, sizeof(baseMapPart), "b/%s", entry->mapPart);
-				else
-					Com_Printf("B_AssembleMap_f: Error - map has no mapPart set. Building '%s'\n'", entry->id);
-			} else
-				Q_strncpyz(baseMapPart, "b/empty", sizeof(baseMapPart));
+				if (!entry->mapPart)
+					Com_Error(ERR_DROP, "MapPart for building '%s' is missing'", entry->id);
 
-			if (*baseMapPart) {
-				Q_strcat(maps, baseMapPart, sizeof(maps));
-				Q_strcat(maps, " ", sizeof(maps));
-				/* basetiles are 16 units in each direction
-				 * 512 / UNIT_SIZE = 16
-				 * 512 is the size in the mapeditor and the worldplane for a
-				 * single base map tile */
-				Q_strcat(coords, va("%i %i %i ", col * 16, (BASE_SIZE - row - 1) * 16, 0), sizeof(coords));
+				Q_strcat(maps, va("b/%s ", entry->mapPart), sizeof(maps));
+			} else {
+				Q_strcat(maps, "b/empty ", sizeof(maps));
 			}
+
+			Q_strcat(coords, va("%i %i %i ", col * BASE_TILE_UNITS, (BASE_SIZE - row - 1) * BASE_TILE_UNITS, 0), sizeof(coords));
 		}
+	}
+
 	/* set maxlevel for base attacks */
-	cl.mapMaxLevelBase = 6;
+	cl.mapMaxLevelBase = BASE_MAX_WORLDLEVEL;
 
 	SAV_QuickSave();
 
