@@ -319,14 +319,6 @@ base_t* B_GetRandomBase (void)
 	return &ccs.bases[randomBase];
 }
 
-/** basetiles are 16 units in each direction
- * 512 / UNIT_SIZE = 16
- * 512 is the size in the mapeditor and the worldplane for a
- * single base map tile */
-#define BASE_TILE_SIZE 512
-#define BASE_TILE_UNITS (BASE_TILE_SIZE / UNIT_SIZE)
-#define BASE_MAX_WORLDLEVEL 6
-
 /**
  * @brief Perform the base assembling in case of an alien attack
  * @param[in,out] base The base to assemble
@@ -340,6 +332,7 @@ qboolean B_AssembleMap (base_t *base)
 	int row, col;
 	char maps[2048];
 	char coords[2048];
+	qboolean used[MAX_BUILDINGS];
 
 	if (!base) {
 		Com_Printf("B_AssembleMap: No base to assemble\n");
@@ -350,14 +343,7 @@ qboolean B_AssembleMap (base_t *base)
 	coords[0] = '\0';
 
 	/* reset the used flag */
-	for (row = 0; row < BASE_SIZE; row++) {
-		for (col = 0; col < BASE_SIZE; col++) {
-			if (base->map[row][col].building) {
-				building_t *entry = base->map[row][col].building;
-				entry->used = qfalse;
-			}
-		}
-	}
+	memset(used, 0, sizeof(used));
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
@@ -366,13 +352,10 @@ qboolean B_AssembleMap (base_t *base)
 
 				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one
 				 * this is why we check the used flag and continue if it was set already */
-				if (!entry->used && entry->needs) {
-					entry->used = qtrue;
-				} else if (entry->needs) {
-					Com_DPrintf(DEBUG_CLIENT, "B_AssembleMap: '%s' needs '%s' (used: %i)\n",
-							entry->id, entry->needs, entry->used);
-					entry->used = qfalse;
-					continue;
+				if (entry->needs) {
+					if (B_BuildingGetUsed(used, entry->idx))
+						continue;
+					B_BuildingSetUsed(used, entry->idx);
 				}
 
 				if (!entry->mapPart)

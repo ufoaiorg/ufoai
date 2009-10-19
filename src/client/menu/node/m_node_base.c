@@ -133,14 +133,18 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 {
 	int width, height, row, col;
 	char image[MAX_QPATH];		/**< this buffer should not be need */
-	building_t *building;
+	const building_t *building;
 	const building_t *secondBuilding = NULL;
-	base_t *base = B_GetCurrentSelectedBase();
+	const base_t *base = B_GetCurrentSelectedBase();
+	qboolean used[MAX_BUILDINGS];
 
 	if (!base) {
 		MN_PopMenu(qfalse);
 		return;
 	}
+
+	/* reset the used flag */
+	memset(used, 0, sizeof(used));
 
 	width = node->size[0] / BASE_SIZE;
 	height = node->size[1] / BASE_SIZE + BASE_IMAGE_OVERLAY;
@@ -165,23 +169,19 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 				secondBuilding = NULL;
 				assert(building);
 
-				if (!building->used) {
+				/* some buildings are drawn with two tiles - e.g. the hangar is no square map tile.
+				 * These buildings have the needs parameter set to the second building part which has
+				 * its own image set, too. We are searching for this second building part here. */
+				if (!B_BuildingGetUsed(used, building->idx)) {
 					if (building->needs)
-						/** @todo the view should not edit the model */
-						building->used = 1;
+						B_BuildingSetUsed(used, building->idx);
 					if (building->image)
 						Q_strncpyz(image, building->image, sizeof(image));
-				} else if (building->needs) {
-					/** @todo Understand this code */
-					/* some buildings are drawn with two tiles - e.g. the hangar is no square map tile.
-					 * These buildings have the needs parameter set to the second building part which has
-					 * its own image set, too. We are searching for this second building part here. */
+				} else {
 					secondBuilding = B_GetBuildingTemplate(building->needs);
 					if (!secondBuilding)
 						Com_Error(ERR_DROP, "Error in ufo-scriptfile - could not find the needed building");
 					Q_strncpyz(image, secondBuilding->image, sizeof(image));
-					/** @todo the view should not edit the model */
-					building->used = 0;
 				}
 			}
 

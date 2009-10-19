@@ -50,8 +50,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BLOCKEDFIELDS	4
 #define MIN_BLOCKEDFIELDS	1
 
+/** basetiles are 16 units in each direction
+ * 512 / UNIT_SIZE = 16
+ * 512 is the size in the mapeditor and the worldplane for a
+ * single base map tile */
+#define BASE_TILE_SIZE 512
+#define BASE_TILE_UNITS (BASE_TILE_SIZE / UNIT_SIZE)
+#define BASE_MAX_WORLDLEVEL 6
+
 #define B_GetBaseIDX(base) ((ptrdiff_t)((base) - ccs.bases))
 #define B_GetBuildingIDX(base, building) ((ptrdiff_t)((building) - ccs.buildings[base->idx]))
+
+/**
+ * @param[in] usedArray must be an array of the size MAX_BUILDINGS
+ */
+#define B_BuildingSetUsed(usedArray, buildingIDX) { (usedArray)[buildingIDX] = qtrue; }
+/**
+ * @param[in] usedArray must be an array of the size MAX_BUILDINGS
+ */
+#define B_BuildingGetUsed(usedArray, buildingIDX) ((usedArray)[buildingIDX])
+
 
 /**
  * @brief Possible base states
@@ -155,9 +173,6 @@ typedef struct building_s {
 	buildingStatus_t buildingStatus;	/**< [BASE_SIZE*BASE_SIZE]; */
 
 	qboolean visible;	/**< Is this building visible in the building list. */
-	/** needed for baseassemble
-	 * when there are two tiles (like hangar) - we only load the first tile */
-	int used;
 
 	/** Event handler functions */
 	char onConstruct[MAX_VAR];
