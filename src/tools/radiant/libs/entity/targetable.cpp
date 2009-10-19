@@ -23,7 +23,7 @@
 
 typedef std::map<std::string, targetables_t> targetnames_t;
 
-const char* g_targetable_nameKey = "targetname";
+const std::string g_targetable_nameKey = "targetname";
 
 targetnames_t g_targetnames;
 

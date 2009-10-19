@@ -55,8 +55,8 @@ class Entity
 				virtual ~Observer ()
 				{
 				}
-				virtual void insert (const char* key, EntityKeyValue& value) = 0;
-				virtual void erase (const char* key, EntityKeyValue& value) = 0;
+				virtual void insert (const std::string& key, EntityKeyValue& value) = 0;
+				virtual void erase (const std::string& key, EntityKeyValue& value) = 0;
 				virtual void clear ()
 				{
 				}

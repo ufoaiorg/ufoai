@@ -47,7 +47,7 @@ class Targetable
 
 typedef std::set<Targetable*> targetables_t;
 
-extern const char* g_targetable_nameKey;
+extern const std::string g_targetable_nameKey;
 
 targetables_t* getTargetables (const std::string& targetname);
 
@@ -207,11 +207,12 @@ class TargetKeys: public Entity::Observer
 		TargetingEntities m_targetingEntities;
 		Callback m_targetsChanged;
 
-		bool readTargetKey (const char* key, std::size_t& index)
+		bool readTargetKey (const std::string& key, std::size_t& index)
 		{
-			if (string_equal_n(key, "target", 6)) {
+			/** @todo optimize string operation */
+			if (string_equal_n(key.c_str(), "target", 6)) {
 				index = 0;
-				if (string_empty(key + 6) || string_parse_size(key + 6, index)) {
+				if (string_empty(key.c_str() + 6) || string_parse_size(key.c_str() + 6, index)) {
 					return true;
 				}
 			}
@@ -227,7 +228,7 @@ class TargetKeys: public Entity::Observer
 			m_targetsChanged();
 		}
 
-		void insert (const char* key, EntityKeyValue& value)
+		void insert (const std::string& key, EntityKeyValue& value)
 		{
 			std::size_t index;
 			if (readTargetKey(key, index)) {
@@ -237,7 +238,7 @@ class TargetKeys: public Entity::Observer
 				targetsChanged();
 			}
 		}
-		void erase (const char* key, EntityKeyValue& value)
+		void erase (const std::string& key, EntityKeyValue& value)
 		{
 			std::size_t index;
 			if (readTargetKey(key, index)) {
@@ -340,15 +341,15 @@ class TargetableInstance: public SelectableInstance, public Targetable, public E
 			m_targeting.targetsChanged();
 		}
 
-		void insert (const char* key, EntityKeyValue& value)
+		void insert (const std::string& key, EntityKeyValue& value)
 		{
-			if (string_equal(key, g_targetable_nameKey)) {
+			if (key == g_targetable_nameKey) {
 				value.attach(TargetedEntity::TargetnameChangedCaller(m_targeted));
 			}
 		}
-		void erase (const char* key, EntityKeyValue& value)
+		void erase (const std::string& key, EntityKeyValue& value)
 		{
-			if (string_equal(key, g_targetable_nameKey)) {
+			if (key == g_targetable_nameKey) {
 				value.detach(TargetedEntity::TargetnameChangedCaller(m_targeted));
 			}
 		}

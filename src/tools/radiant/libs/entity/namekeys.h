@@ -28,13 +28,6 @@
 #include "entitylib.h"
 #include "namespace.h"
 
-inline bool string_is_integer (const char* string)
-{
-	if (strtol(string, const_cast<char**> (&string), 10) == LONG_MAX)
-		return false;
-	return *string == '\0';
-}
-
 static inline bool keyIsName (const std::string& key)
 {
 	return key == "target" || key == "targetname";
@@ -51,16 +44,16 @@ class NameKeys: public Entity::Observer, public Namespaced
 		NameKeys (const NameKeys& other);
 		NameKeys& operator= (const NameKeys& other);
 
-		typedef std::map<CopiedString, EntityKeyValue*> KeyValues;
+		typedef std::map<std::string, EntityKeyValue*> KeyValues;
 		KeyValues m_keyValues;
 
-		void insertName (const char* key, EntityKeyValue& value)
+		void insertName (const std::string& key, EntityKeyValue& value)
 		{
 			if (m_namespace != 0 && keyIsName(key)) {
 				m_namespace->attach(KeyValueAssignCaller(value), KeyValueAttachCaller(value));
 			}
 		}
-		void eraseName (const char* key, EntityKeyValue& value)
+		void eraseName (const std::string& key, EntityKeyValue& value)
 		{
 			if (m_namespace != 0 && keyIsName(key)) {
 				m_namespace->detach(KeyValueAssignCaller(value), KeyValueDetachCaller(value));
@@ -69,13 +62,13 @@ class NameKeys: public Entity::Observer, public Namespaced
 		void insertAll ()
 		{
 			for (KeyValues::iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-				insertName((*i).first.c_str(), *(*i).second);
+				insertName((*i).first, *(*i).second);
 			}
 		}
 		void eraseAll ()
 		{
 			for (KeyValues::iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-				eraseName((*i).first.c_str(), *(*i).second);
+				eraseName((*i).first, *(*i).second);
 			}
 		}
 	public:
@@ -94,12 +87,12 @@ class NameKeys: public Entity::Observer, public Namespaced
 			m_namespace = &space;
 			insertAll();
 		}
-		void insert (const char* key, EntityKeyValue& value)
+		void insert (const std::string& key, EntityKeyValue& value)
 		{
 			m_keyValues.insert(KeyValues::value_type(key, &value));
 			insertName(key, value);
 		}
-		void erase (const char* key, EntityKeyValue& value)
+		void erase (const std::string& key, EntityKeyValue& value)
 		{
 			eraseName(key, value);
 			m_keyValues.erase(key);
