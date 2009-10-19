@@ -304,6 +304,100 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
 }
 
 /**
+ * @todo Improve this function!
+ * @return A random founded base
+ */
+base_t* B_GetRandomBase (void)
+{
+	int randomBase = rand() % ccs.numBases;
+
+	if (!ccs.bases[randomBase].founded) {
+		Com_Printf("Base with id %i was not founded or already destroyed\n", randomBase);
+		return NULL;
+	}
+
+	return &ccs.bases[randomBase];
+}
+
+/**
+ * @brief Perform the base assembling in case of an alien attack
+ * @param[in,out] base The base to assemble
+ * @return @c true if the assembly was successful, @c false if it failed
+ * @todo Search a empty field and add a alien craft there
+ */
+qboolean B_AssembleMap (base_t *base)
+{
+	int row, col;
+	char baseMapPart[1024];
+	building_t *entry;
+	char maps[2024];
+	char coords[2048];
+
+	if (!base) {
+		Com_Printf("B_AssembleMap_f: No base to assemble\n");
+		return qfalse;
+	}
+
+	*maps = '\0';
+	*coords = '\0';
+
+	/* reset the used flag */
+	for (row = 0; row < BASE_SIZE; row++)
+		for (col = 0; col < BASE_SIZE; col++) {
+			if (base->map[row][col].building) {
+				entry = base->map[row][col].building;
+				entry->used = 0;
+			}
+		}
+
+	/** @todo If a building is still under construction, it will be assembled as a finished part.
+	 * Otherwise we need mapparts for all the maps under construction. */
+	for (row = 0; row < BASE_SIZE; row++)
+		for (col = 0; col < BASE_SIZE; col++) {
+			baseMapPart[0] = '\0';
+
+			if (base->map[row][col].building) {
+				entry = base->map[row][col].building;
+
+				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one */
+				/* this is why we check the used flag and continue if it was set already */
+				if (!entry->used && entry->needs) {
+					entry->used = 1;
+				} else if (entry->needs) {
+					Com_DPrintf(DEBUG_CLIENT, "B_AssembleMap_f: '%s' needs '%s' (used: %i)\n",
+							entry->id, entry->needs, entry->used);
+					entry->used = 0;
+					continue;
+				}
+
+				if (entry->mapPart)
+					Com_sprintf(baseMapPart, sizeof(baseMapPart), "b/%s", entry->mapPart);
+				else
+					Com_Printf("B_AssembleMap_f: Error - map has no mapPart set. Building '%s'\n'", entry->id);
+			} else
+				Q_strncpyz(baseMapPart, "b/empty", sizeof(baseMapPart));
+
+			if (*baseMapPart) {
+				Q_strcat(maps, baseMapPart, sizeof(maps));
+				Q_strcat(maps, " ", sizeof(maps));
+				/* basetiles are 16 units in each direction
+				 * 512 / UNIT_SIZE = 16
+				 * 512 is the size in the mapeditor and the worldplane for a
+				 * single base map tile */
+				Q_strcat(coords, va("%i %i %i ", col * 16, (BASE_SIZE - row - 1) * 16, 0), sizeof(coords));
+			}
+		}
+	/* set maxlevel for base attacks */
+	cl.mapMaxLevelBase = 6;
+
+	SAV_QuickSave();
+
+	Cbuf_AddText(va("map %s \"%s\" \"%s\"\n", (MAP_IsNight(base->pos) ? "night" : "day"), maps, coords));
+
+	return qtrue;
+}
+
+/**
  * @brief Check base status for particular buildings as well as capacities.
  * @param[in] building Pointer to building.
  * @param[in] base Pointer to base with given building.

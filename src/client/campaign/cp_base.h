@@ -300,6 +300,9 @@ base_t *B_GetFirstUnfoundedBase(void);
 base_t *B_GetCurrentSelectedBase(void);
 void B_SetCurrentSelectedBase(const base_t *base);
 
+base_t* B_GetRandomBase(void);
+qboolean B_AssembleMap(base_t *base);
+
 void B_ResetBuildingCurrent(base_t* base);
 void B_BaseMenuInit(const base_t *base);
 void B_RemoveAircraftExceedingCapacity(base_t* base, buildingType_t buildingType);

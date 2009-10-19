@@ -541,19 +541,9 @@ static void B_BuildingStatus_f (void)
  * @brief Builds a base map for tactical combat.
  * @sa SV_AssembleMap
  * @sa CP_BaseAttackChooseBase
- * @note Do we need day and night maps here, too? Sure!
- * @todo Search a empty field and add a alien craft there, also add alien
- * spawn points around the craft, also some trees, etc. for their cover
- * @todo Add soldier spawn points, the best place is quarters.
- * @todo We need to get rid of the tunnels to nirvana.
  */
 static void B_AssembleMap_f (void)
 {
-	int row, col;
-	char baseMapPart[1024];
-	building_t *entry;
-	char maps[2024];
-	char coords[2048];
 	int baseID = 0;
 	base_t* base = B_GetCurrentSelectedBase();
 
@@ -567,86 +557,11 @@ static void B_AssembleMap_f (void)
 		base = B_GetBaseByIDX(baseID);
 	}
 
-	if (!base) {
-		Com_Printf("B_AssembleMap_f: No base to assemble\n");
-		return;
-	}
-
 	/* reset menu text */
+	/** @todo which one? */
 	MN_ResetData(TEXT_STANDARD);
 
-	*maps = '\0';
-	*coords = '\0';
-
-	/* reset the used flag */
-	for (row = 0; row < BASE_SIZE; row++)
-		for (col = 0; col < BASE_SIZE; col++) {
-			if (base->map[row][col].building) {
-				entry = base->map[row][col].building;
-				entry->used = 0;
-			}
-		}
-
-	/** @todo If a building is still under construction, it will be assembled as a finished part.
-	 * Otherwise we need mapparts for all the maps under construction. */
-	for (row = 0; row < BASE_SIZE; row++)
-		for (col = 0; col < BASE_SIZE; col++) {
-			baseMapPart[0] = '\0';
-
-			if (base->map[row][col].building) {
-				entry = base->map[row][col].building;
-
-				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one */
-				/* this is why we check the used flag and continue if it was set already */
-				if (!entry->used && entry->needs) {
-					entry->used = 1;
-				} else if (entry->needs) {
-					Com_DPrintf(DEBUG_CLIENT, "B_AssembleMap_f: '%s' needs '%s' (used: %i)\n",
-							entry->id, entry->needs, entry->used);
-					entry->used = 0;
-					continue;
-				}
-
-				if (entry->mapPart)
-					Com_sprintf(baseMapPart, sizeof(baseMapPart), "b/%s", entry->mapPart);
-				else
-					Com_Printf("B_AssembleMap_f: Error - map has no mapPart set. Building '%s'\n'", entry->id);
-			} else
-				Q_strncpyz(baseMapPart, "b/empty", sizeof(baseMapPart));
-
-			if (*baseMapPart) {
-				Q_strcat(maps, baseMapPart, sizeof(maps));
-				Q_strcat(maps, " ", sizeof(maps));
-				/* basetiles are 16 units in each direction
-				 * 512 / UNIT_SIZE = 16
-				 * 512 is the size in the mapeditor and the worldplane for a
-				 * single base map tile */
-				Q_strcat(coords, va("%i %i %i ", col * 16, (BASE_SIZE - row - 1) * 16, 0), sizeof(coords));
-			}
-		}
-	/* set maxlevel for base attacks */
-	cl.mapMaxLevelBase = 6;
-
-	SAV_QuickSave();
-
-	Cbuf_AddText(va("map day \"%s\" \"%s\"\n", maps, coords));
-}
-
-/**
- * @brief Builds a random base
- *
- * call B_AssembleMap with a random base over script command 'base_assemble_rand'
- */
-static void B_AssembleRandomBase_f (void)
-{
-	int randomBase = rand() % ccs.numBases;
-
-	if (!ccs.bases[randomBase].founded) {
-		Com_Printf("Base with id %i was not founded or already destroyed\n", randomBase);
-		return;
-	}
-
-	Cbuf_AddText(va("base_assemble %i\n", randomBase));
+	B_AssembleMap(base);
 }
 
 /**
@@ -928,7 +843,6 @@ void B_InitCallbacks (void)
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
-	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase_f, NULL);
 	Cmd_AddCommand("building_init", B_BuildingInit_f, NULL);
 	Cmd_AddCommand("building_status", B_BuildingStatus_f, NULL);
 	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
@@ -953,7 +867,6 @@ void B_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("mn_set_base_title");
 	Cmd_RemoveCommand("base_init");
 	Cmd_RemoveCommand("base_assemble");
-	Cmd_RemoveCommand("base_assemble_rand");
 	Cmd_RemoveCommand("building_init");
 	Cmd_RemoveCommand("building_status");
 	Cmd_RemoveCommand("building_destroy");

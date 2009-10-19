@@ -110,13 +110,18 @@ void CP_StartMissionMap (mission_t* mission)
 	/* base attack maps starts with a dot */
 	case '.':
 		bAttack = (base_t*)mission->data;
-		if (!bAttack)
-			/* assemble a random base and set the base status to BASE_UNDER_ATTACK */
-			Cbuf_AddText("base_assemble_rand 1;");
+		/* assemble a random base and set the base status to BASE_UNDER_ATTACK */
+		if (!bAttack) {
+			bAttack = B_GetRandomBase();
+			bAttack->baseStatus = BASE_UNDER_ATTACK;
+			B_AssembleMap(bAttack);
+		}
+		/* base must be under attack and might not have been destroyed in the meantime. */
 		else if (bAttack->baseStatus == BASE_UNDER_ATTACK && B_GetFoundedBaseCount() > 0)
-			Cbuf_AddText(va("base_assemble %i;", bAttack->idx));
-		/* quick save is called when base is really assembled
-		 * @sa B_AssembleMap_f */
+			B_AssembleMap(bAttack);
+		else
+			Com_DPrintf(DEBUG_CLIENT, "Base is not under attack or no founded bases are left\n");
+
 		return;
 	default:
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", mission->mapDef->map);
