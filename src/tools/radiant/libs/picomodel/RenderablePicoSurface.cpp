@@ -20,7 +20,7 @@ namespace model
 
 		// Get the number of vertices and indices, and reserve capacity in our vectors in advance
 		// by populating them with empty structs.
-		int nVerts = PicoGetSurfaceNumVertexes(surf);
+		const int nVerts = PicoGetSurfaceNumVertexes(surf);
 		_nIndices = PicoGetSurfaceNumIndexes(surf);
 		_vertices.resize(nVerts);
 		_indices.resize(_nIndices);

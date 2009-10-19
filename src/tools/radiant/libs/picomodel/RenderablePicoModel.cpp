@@ -47,7 +47,7 @@ namespace model
 		std::stringstream surfaceCountStream;
 		const int surfaceCount = getSurfaceCountInt();
 		surfaceCountStream << surfaceCount;
-		surfaceCountStr = surfaceCountStream.str();;
+		surfaceCountStr = surfaceCountStream.str();
 
 		std::stringstream vertexCountStream;
 		const int vertexCount = getVertexCountInt();
@@ -95,8 +95,8 @@ namespace model
 	 * A vector of strings, each identifying the name of a skin which is associated with the
 	 * given model. The vector may be empty as a model does not require any associated skins.
 	 */
-	const ModelSkinList& RenderablePicoModel::getSkinsForModel () const {
+	const ModelSkinList& RenderablePicoModel::getSkinsForModel () const
+	{
 		return modelSkinList;
 	}
-
 }
