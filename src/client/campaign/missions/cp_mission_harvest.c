@@ -94,8 +94,9 @@ static qboolean CP_ChooseNation (const mission_t *mission, linkedList_t **nation
 {
 	nation_t *nation;
 	int randomNumber, max = 0;
-	const int OFFSET = 1;	/**< Increase this factor to make probability to select non-infected nation higher
-							 * Used to make sure that non-infected nation can still be attacked */
+	/* Increase this factor to make probability to select non-infected nation higher
+	 * Used to make sure that non-infected nation can still be attacked */
+	const int OFFSET = 1;
 
 	if (mission->ufo)
 		return qfalse;

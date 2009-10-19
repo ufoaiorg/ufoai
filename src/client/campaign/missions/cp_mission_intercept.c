@@ -216,9 +216,10 @@ static void CP_InterceptMissionSet (mission_t *mission)
 int CP_InterceptMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
 {
 	int num = 0;
-	const float HARVESTER_PROBABILITY = 0.25;	/**< Probability to get a harvester. Note that the probability
-													to get a corrupter among all possible UFO is this number
-													divided by the number of possible UFO */
+	/* Probability to get a harvester. Note that the probability
+	 * to get a corrupter among all possible UFO is this number
+	 * divided by the number of possible UFO */
+	const float HARVESTER_PROBABILITY = 0.25;
 
 	ufoTypes[num++] = UFO_FIGHTER;
 

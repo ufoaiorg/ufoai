@@ -168,7 +168,8 @@ int CP_TerrorMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes
 	int num = 0;
 
 	ufoTypes[num++] = UFO_HARVESTER;
-	/**< @todo Add Corrupter, Bomber and Battleship when maps will be available */
+	ufoTypes[num++] = UFO_CORRUPTER;
+	/**< @todo Add Bomber and Battleship when maps will be available */
 
 	return num;
 }
