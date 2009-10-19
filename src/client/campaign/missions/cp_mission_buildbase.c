@@ -188,7 +188,7 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 	/* Mission is a success: government is subverted => lower happiness */
 	nation = MAP_GetNation(mission->pos);
 	/** @todo when the mission is created, we should select a position where nation exists,
-	 * otherwise suverting a government is meaningless */
+	 * otherwise subverting a government is meaningless */
 	if (nation)
 		NAT_SetHappiness(nation, nation->stats[0].happiness + HAPPINESS_SUBVERSION_LOSS);
 

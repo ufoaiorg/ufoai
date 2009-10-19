@@ -7,7 +7,7 @@
 void export_selected (GtkWindow* mainWindow)
 {
 	// Obtain the path from a File Dialog Window
-	const char* path = GlobalRadiant().m_pfnFileDialog(GTK_WIDGET(mainWindow), false, _("Save as Obj"), 0, 0);
+	const char* path = GlobalRadiant().m_pfnFileDialog(GTK_WIDGET(mainWindow), false, _("Save as Obj"), "", "");
 
 	// Open the file
 	TextFileOutputStream file(path);

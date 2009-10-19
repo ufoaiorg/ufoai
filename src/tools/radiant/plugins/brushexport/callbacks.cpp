@@ -21,7 +21,7 @@ namespace callbacks
 	{
 		GtkWidget* window = lookup_widget(GTK_WIDGET(button), "w_plugplug2");
 		ASSERT_NOTNULL(window);
-		const char* cpath = GlobalRadiant().m_pfnFileDialog(window, false, _("Save as Obj"), 0, 0);
+		const char* cpath = GlobalRadiant().m_pfnFileDialog(window, false, _("Save as Obj"), "", "");
 		if (!cpath)
 			return;
 
