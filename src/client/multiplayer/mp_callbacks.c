@@ -40,7 +40,7 @@ void CL_Connect_f (void)
 	const char *server;
 	const char *serverport;
 
-	if (!selectedServer && Cmd_Argc() != 2) {
+	if (!selectedServer && Cmd_Argc() != 2 && Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <server> [<port>]\n", Cmd_Argv(0));
 		return;
 	}
