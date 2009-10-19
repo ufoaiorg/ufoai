@@ -219,7 +219,7 @@ static void R_DrawXVIOverlayRow (float latMin, float latMax, const vec2_t center
  * This is necessary to take into account a new event that would spread in the zone where XVI is already spread.
  * @return the radius of the new XVI level
  */
-static float R_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, float factor)
+static void R_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, float factor)
 {
 	int xviLevel;								/**< XVI level rate at position pos */
 	int y;										/**< current position (in pixel) */
@@ -244,18 +244,6 @@ static float R_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, flo
 	}
 
 	R_UploadAlpha(r_xviTexture, r_xviAlpha);
-
-	return radius;
-}
-
-/**
- * @sa R_IncreaseXVILevel
- * @param[in] xCenter X Position of the center of XVI spreading
- * @param[in] yCenter Y Position of the center of XVI spreading
- */
-static float R_DecreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, float factor)
-{
-	return 0.0f;
 }
 
 /**
@@ -276,19 +264,12 @@ void R_DecreaseXVILevelEverywhere (void)
 	R_UploadAlpha(r_xviTexture, r_xviAlpha);
 }
 
-float R_ChangeXVILevel (const vec2_t pos, const int xviLevel, float factor)
+void R_ChangeXVILevel (const vec2_t pos, const int xviLevel, float factor)
 {
 	const int xCenter = round((180 - pos[0]) * XVI_WIDTH / 360.0f);
 	const int yCenter = round((90 - pos[1]) * XVI_HEIGHT / 180.0f);
 
-	const int currentXVILevel = R_GetXVILevel(xCenter, yCenter);
-
-	if (currentXVILevel < xviLevel)
-		return R_IncreaseXVILevel(pos, xCenter, yCenter, factor);
-	else if (currentXVILevel > xviLevel)
-		return R_DecreaseXVILevel(pos, xCenter, yCenter, factor);
-
-	return 0.0f;
+	R_IncreaseXVILevel(pos, xCenter, yCenter, factor);
 }
 
 /**

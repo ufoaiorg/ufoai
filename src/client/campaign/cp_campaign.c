@@ -1909,7 +1909,6 @@ static const cmdList_t game_commands[] = {
 	{"debug_addemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type"},
 	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
 	{"debug_listitem", CL_DebugShowItems_f, "Debug function to show all items in base storage"},
-	{"debug_changexvi", CP_DebugChangeXVI_f, "Debug function to spread or reduce xvi at a given location"},
 #endif
 	{NULL, NULL, NULL}
 };

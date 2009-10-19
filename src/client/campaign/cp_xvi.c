@@ -63,20 +63,6 @@ void CP_SpreadXVIAtPos (const vec2_t pos)
 }
 
 /**
- * @brief Reduce XVI at a given position.
- * @param[in] pos Position where XVI should be reduced.
- */
-void CP_ReduceXVIAtPos (const vec2_t pos)
-{
-	if (!CP_IsXVIResearched())
-		return;
-
-	R_ChangeXVILevel(pos, 0, XVI_FACTOR);
-
-	xviNationInfectionNeedsUpdate = qtrue;
-}
-
-/**
  * @brief Reduce XVI everywhere.
  * @note This is called daily.
  */
@@ -352,33 +338,3 @@ void CP_UpdateXVIMapButton (void)
 {
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
 }
-
-#ifdef DEBUG
-void CP_DebugChangeXVI_f (void)
-{
-	int latitude, longitude;
-	vec2_t pos;
-	qboolean increase;
-
-	if (Cmd_Argc() < 4) {
-		Com_Printf("Usage: %s <latitude> <longitude> <increase:true|false>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (!CP_IsXVIResearched()) {
-		Com_Printf("XVI is not yet researched\n");
-		return;
-	}
-
-	latitude = atoi(Cmd_Argv(1));
-	longitude = atoi(Cmd_Argv(2));
-	increase = Com_ParseBoolean(Cmd_Argv(3));
-
-	pos[0] = latitude;
-	pos[1] = longitude;
-	if (increase)
-		CP_SpreadXVIAtPos(pos);
-	else
-		CP_ReduceXVIAtPos(pos);
-}
-#endif
