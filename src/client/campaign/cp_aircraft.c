@@ -63,19 +63,11 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base
 
 	aircraftSize = aircraftTemplate->size;
 
-	if (aircraftSize < AIRCRAFT_SMALL) {
-#ifdef DEBUG
-		Com_Printf("AIR_UpdateHangarCapForOne: aircraft weight is wrong!\n");
-#endif
+	/** @todo what means aircraftSize < 1? Is this a value that must be given in the scripts? if yes, this should be
+	 * a sys_error in the aircraft parsing */
+	if (aircraftSize < AIRCRAFT_SMALL || !base)
 		return AIRCRAFT_HANGAR_ERROR;
-	}
-	if (!base) {
-#ifdef DEBUG
-		Com_Printf("AIR_UpdateHangarCapForOne: base does not exist!\n");
-#endif
-		return AIRCRAFT_HANGAR_ERROR;
-	}
-	assert(base);
+
 	if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 		Com_Printf("AIR_UpdateHangarCapForOne: base does not have any hangar - error!\n");
 		return AIRCRAFT_HANGAR_ERROR;
@@ -122,12 +114,8 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 {
 	int i;
 
-	if (!base) {
-#ifdef DEBUG
-		Com_Printf("AIR_UpdateHangarCapForAll: base does not exist!\n");
-#endif
+	if (!base)
 		return;
-	}
 
 	/* Reset current capacities for hangar. */
 	base->capacities[CAP_AIRCRAFT_BIG].cur = 0;
