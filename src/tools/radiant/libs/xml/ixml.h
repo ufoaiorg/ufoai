@@ -28,14 +28,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class XMLAttrVisitor {
 public:
 	virtual ~XMLAttrVisitor(){}
-	virtual void visit(const char* name, const char* value) = 0;
+	virtual void visit(const std::string& name, const std::string& value) = 0;
 };
 
 class XMLElement {
 public:
 	virtual ~XMLElement(){}
-	virtual const char* name() const = 0;
-	virtual const char* attribute(const char* name) const = 0;
+	virtual const std::string name() const = 0;
+	virtual const std::string attribute(const std::string& name) const = 0;
 	virtual void forEachAttribute(XMLAttrVisitor& visitor) const = 0;
 };
 
@@ -44,7 +44,7 @@ public:
 	STRING_CONSTANT(Name, "XMLImporter");
 
 	virtual void pushElement(const XMLElement& element) = 0;
-	virtual void popElement(const char* name) = 0;
+	virtual void popElement(const std::string& name) = 0;
 };
 
 class XMLExporter {

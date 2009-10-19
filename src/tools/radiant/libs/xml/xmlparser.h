@@ -32,16 +32,16 @@ class TextInputStream;
 
 class SAXElement : public XMLElement {
 public:
-	SAXElement(const char* name, const char** atts)
+	SAXElement(const std::string& name, const char** atts)
 			: m_name(name), m_atts(atts) {
 	}
-	const char* name() const {
+	const std::string name() const {
 		return m_name;
 	}
-	const char* attribute(const char* name) const {
+	const std::string attribute(const std::string& name) const {
 		if (m_atts != 0) {
 			for (const char** att = m_atts; *att != 0; att += 2) {
-				if (strcmp(*att, name) == 0) {
+				if (strcmp(*att, name.c_str()) == 0) {
 					return *(++att);
 				}
 			}
@@ -56,7 +56,7 @@ public:
 		}
 	}
 private:
-	const char* m_name;
+	const std::string m_name;
 	const char** m_atts;
 };
 

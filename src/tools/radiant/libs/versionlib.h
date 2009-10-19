@@ -55,12 +55,12 @@ inline int string_range_parse_unsigned_decimal_integer (const char* first, const
 	return result;
 }
 
-inline Version version_parse (const char* versionString)
+inline Version version_parse (const std::string& versionString)
 {
 	Version version;
-	const char* endVersion = versionString + strlen(versionString);
+	const char* endVersion = versionString.c_str() + versionString.length();
 
-	const char* endMajor = strchr(versionString, '.');
+	const char* endMajor = strchr(versionString.c_str(), '.');
 	if (endMajor == 0) {
 		endMajor = endVersion;
 
@@ -72,7 +72,7 @@ inline Version version_parse (const char* versionString)
 		}
 		version.minor = string_range_parse_unsigned_decimal_integer(endMajor + 1, endMinor);
 	}
-	version.major = string_range_parse_unsigned_decimal_integer(versionString, endMajor);
+	version.major = string_range_parse_unsigned_decimal_integer(versionString.c_str(), endMajor);
 
 	return version;
 }

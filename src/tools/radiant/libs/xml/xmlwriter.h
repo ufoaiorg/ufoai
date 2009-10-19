@@ -102,10 +102,10 @@ class XMLStreamWriter : public XMLImporter, public XMLAttrVisitor {
 	void write_cdata(const char* buffer, std::size_t length) {
 		m_ostream << ConvertLocaleToUTF8(StringRange(buffer, buffer + length));
 	}
-	void write_string(const char* string) {
+	void write_string(const std::string& string) {
 		m_ostream << string;
 	}
-	void write_quoted_string(const char* string) {
+	void write_quoted_string(const std::string& string) {
 		m_ostream.write('"');
 		m_ostream << string;
 		m_ostream.write('"');
@@ -135,7 +135,7 @@ public:
 		write_string(element.name());
 		element.forEachAttribute(*this);
 	}
-	void popElement(const char* name) {
+	void popElement(const std::string& name) {
 		if (m_elements.back().m_state == state_t::eStartElement) {
 			m_ostream.write('/');
 			m_ostream.write('>');
@@ -157,7 +157,7 @@ public:
 		return length;
 	}
 
-	void visit(const char* name, const char* value) {
+	void visit(const std::string& name, const std::string& value) {
 		m_ostream.write(' ');
 		write_string(name);
 		m_ostream.write('=');

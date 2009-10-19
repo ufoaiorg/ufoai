@@ -104,19 +104,19 @@ class XMLPreferenceDictionaryExporter: public XMLExporter
 {
 		class XMLQPrefElement: public XMLElement
 		{
-				const char* m_version;
+				const std::string m_version;
 			public:
-				XMLQPrefElement (const char* version) :
+				XMLQPrefElement (const std::string& version) :
 					m_version(version)
 				{
 				}
-				const char* name () const
+				const std::string name () const
 				{
 					return "qpref";
 				}
-				const char* attribute (const char* name) const
+				const std::string attribute (const std::string& name) const
 				{
-					if (string_equal(name, "version")) {
+					if (name == "version") {
 						return m_version;
 					}
 					return "";
@@ -129,19 +129,19 @@ class XMLPreferenceDictionaryExporter: public XMLExporter
 
 		class XMLPreferenceElement: public XMLElement
 		{
-				const char* m_name;
+				const std::string m_name;
 			public:
-				XMLPreferenceElement (const char* name) :
+				XMLPreferenceElement (const std::string& name) :
 					m_name(name)
 				{
 				}
-				const char* name () const
+				const std::string name () const
 				{
 					return "epair";
 				}
-				const char* attribute (const char* name) const
+				const std::string attribute (const std::string& name) const
 				{
-					if (string_equal(name, "name"))
+					if (name == "name")
 						return m_name;
 					return "";
 				}
@@ -153,9 +153,9 @@ class XMLPreferenceDictionaryExporter: public XMLExporter
 
 		typedef PreferenceDictionary PreferenceEntries;
 		PreferenceEntries& m_preferences;
-		const char* m_version;
+		const std::string m_version;
 	public:
-		XMLPreferenceDictionaryExporter (PreferenceDictionary& preferences, const char* version) :
+		XMLPreferenceDictionaryExporter (PreferenceDictionary& preferences, const std::string& version) :
 			m_preferences(preferences), m_version(version)
 		{
 		}
@@ -199,7 +199,7 @@ class XMLPreferenceDictionaryImporter: public XMLImporter
 				}
 
 				ETag m_tag;
-				CopiedString m_name;
+				std::string m_name;
 				StringOutputStream m_ostream;
 		};
 
@@ -210,7 +210,7 @@ class XMLPreferenceDictionaryImporter: public XMLImporter
 		PreferenceEntries& m_preferences;
 		Version m_version;
 	public:
-		XMLPreferenceDictionaryImporter (PreferenceDictionary& preferences, const char* version) :
+		XMLPreferenceDictionaryImporter (PreferenceDictionary& preferences, const std::string& version) :
 			m_preferences(preferences), m_version(version_parse(version))
 		{
 		}
@@ -255,7 +255,7 @@ class XMLPreferenceDictionaryImporter: public XMLImporter
 			}
 
 		}
-		void popElement (const char* name)
+		void popElement (const std::string& name)
 		{
 			if (m_xml_stack.back().m_tag == xml_state_t::tag_epair) {
 				m_preferences.importPref(m_xml_stack.back().m_name.c_str(), m_xml_stack.back().m_ostream.c_str());
