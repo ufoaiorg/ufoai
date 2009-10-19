@@ -552,8 +552,6 @@ static int lastServerQuery = 0;
 void CL_PingServers_f (void)
 {
 	int i;
-	char name[6];
-	const char *adrstring;
 
 	selectedServer = NULL;
 
@@ -582,23 +580,6 @@ void CL_PingServers_f (void)
 		const char buf[] = "discover";
 		NET_DatagramBroadcast(cls.netDatagramSocket, buf, sizeof(buf), PORT_SERVER);
 	}
-
-	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		const char *service;
-		const char *p;
-		Com_sprintf(name, sizeof(name), "adr%i", i);
-		adrstring = Cvar_GetString(name);
-		if (!adrstring || !adrstring[0])
-			continue;
-
-		p = strrchr(adrstring, ':');
-		if (p)
-			service = p + 1;
-		else
-			service = DOUBLEQUOTE(PORT_SERVER);
-		CL_AddServerToList(adrstring, service);
-	}
-
 	MN_RegisterText(TEXT_LIST, serverText);
 
 	/* don't query the masterservers with every call */
