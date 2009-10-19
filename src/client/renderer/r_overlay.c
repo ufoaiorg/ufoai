@@ -182,29 +182,28 @@ static void R_DrawXVIOverlayPixel (int xMin, int xMax, const vec2_t centerPos, i
 static void R_DrawXVIOverlayRow (float latMin, float latMax, const vec2_t center, int y, float yLat, int xviLevel, float radius)
 {
 	const float xviWidthPerDegree = XVI_WIDTH / 360.0f;
-	int xMin, xMax;
 
 	assert(latMax - latMin <= 360 + EQUAL_EPSILON);
 
 	/* if the disc we draw cross the left or right edge of the picture, we need to
 	 * draw 2 part of circle on each side of the overlay */
 	if (latMin < -180.0f) {
-		xMin = 0;
-		xMax = ceil((latMax + 180.0f) * xviWidthPerDegree);
+		int xMin = 0;
+		int xMax = ceil((latMax + 180.0f) * xviWidthPerDegree);
 		R_DrawXVIOverlayPixel(xMin, xMax, center, y, yLat, xviLevel, radius);
 		xMin = floor((latMin + 540.0f) * xviWidthPerDegree);
 		xMax = RADAR_WIDTH;
 		R_DrawXVIOverlayPixel(xMin, xMax, center, y, yLat, xviLevel, radius);
 	} else if (latMax > 180.0f) {
-		xMin = 0;
-		xMax = ceil((latMax - 180.0f) * xviWidthPerDegree);
+		int xMin = 0;
+		int xMax = ceil((latMax - 180.0f) * xviWidthPerDegree);
 		R_DrawXVIOverlayPixel(xMin, xMax, center, y, yLat, xviLevel, radius);
 		xMin = floor((latMin + 180.0f) * xviWidthPerDegree);
 		xMax = RADAR_WIDTH;
 		R_DrawXVIOverlayPixel(xMin, xMax, center, y, yLat, xviLevel, radius);
 	} else {
-		xMin = floor((latMin + 180.0f) * xviWidthPerDegree);
-		xMax = ceil((latMax + 180.0f) * xviWidthPerDegree);
+		const int xMin = floor((latMin + 180.0f) * xviWidthPerDegree);
+		const int xMax = ceil((latMax + 180.0f) * xviWidthPerDegree);
 		R_DrawXVIOverlayPixel(xMin, xMax, center, y, yLat, xviLevel, radius);
 	}
 }
@@ -255,7 +254,7 @@ void R_DecreaseXVILevelEverywhere (void)
 
 	for (y = 0; y < XVI_HEIGHT; y++) {
 		for (x = 0; x < XVI_WIDTH; x++) {
-			int xviLevel = R_GetXVILevel(x, y);
+			const int xviLevel = R_GetXVILevel(x, y);
 			if (xviLevel > 0)
 				R_SetXVILevel(x, y, xviLevel - 1);
 		}
@@ -325,15 +324,15 @@ void R_InitializeRadarOverlay (qboolean source)
 static void R_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alpha, qboolean source)
 {
 	const float radarWidthPerDegree = RADAR_WIDTH / 360.0f;
-	int xMin, xMax, x;
+	int x;
 
 	assert(latMax - latMin <= 360 + EQUAL_EPSILON);
 
 	/* if the disc we draw cross the left or right edge of the picture, we need to
 	 * draw 2 part of circle on each side of the overlay */
 	if (latMin < -180.0f) {
-		xMin = 0;
-		xMax = ceil((latMax + 180.0f) * radarWidthPerDegree);
+		int xMin = 0;
+		int xMax = ceil((latMax + 180.0f) * radarWidthPerDegree);
 		for (x = xMin; x < xMax; x++) {
 			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
 			if (alpha < dest[3])
@@ -347,8 +346,8 @@ static void R_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alpha
 				dest[3] = alpha;
 		}
 	} else if (latMax > 180.0f) {
-		xMin = 0;
-		xMax = ceil((latMax - 180.0f) * radarWidthPerDegree);
+		int xMin = 0;
+		int xMax = ceil((latMax - 180.0f) * radarWidthPerDegree);
 		for (x = xMin; x < xMax; x++) {
 			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
 			if (alpha < dest[3])
@@ -362,8 +361,8 @@ static void R_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alpha
 				dest[3] = alpha;
 		}
 	} else {
-		xMin = floor((latMin + 180.0f) * radarWidthPerDegree);
-		xMax = ceil((latMax + 180.0f) * radarWidthPerDegree);
+		const int xMin = floor((latMin + 180.0f) * radarWidthPerDegree);
+		const int xMax = ceil((latMax + 180.0f) * radarWidthPerDegree);
 		for (x = xMin; x < xMax; x++) {
 			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
 			if (alpha < dest[3])
