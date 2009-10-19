@@ -1312,7 +1312,7 @@
 "classname" "light"
 "light" "140"
 "_color" "0.9 0.9 1"
-"origin" "332 348 120"
+"origin" "348 116 120"
 "spawnflags" "1"
 }
 // entity 2
@@ -1376,7 +1376,7 @@
 // entity 3
 {
 "classname" "light"
-"origin" "128 344 120"
+"origin" "64 280 120"
 "_color" "0.9 0.9 1"
 "light" "140"
 "spawnflags" "1"
@@ -1590,4 +1590,68 @@
 {
 "classname" "info_alien_start"
 "origin" "176 144 160"
+}
+// entity 27
+{
+"classname" "light"
+"light" "140"
+"_color" "0.9 0.9 1"
+"origin" "332 348 120"
+"spawnflags" "1"
+}
+// entity 28
+{
+"classname" "light"
+"light" "140"
+"_color" "0.9 0.9 1"
+"origin" "412 116 120"
+"spawnflags" "1"
+}
+// entity 29
+{
+"classname" "light"
+"light" "140"
+"_color" "0.9 0.9 1"
+"origin" "268 220 120"
+"spawnflags" "1"
+}
+// entity 30
+{
+"classname" "light"
+"light" "140"
+"_color" "0.9 0.9 1"
+"origin" "268 284 120"
+"spawnflags" "1"
+}
+// entity 31
+{
+"classname" "light"
+"light" "140"
+"_color" "0.9 0.9 1"
+"origin" "396 220 120"
+"spawnflags" "1"
+}
+// entity 32
+{
+"classname" "light"
+"light" "140"
+"_color" "0.9 0.9 1"
+"origin" "396 284 120"
+"spawnflags" "1"
+}
+// entity 33
+{
+"classname" "light"
+"origin" "128 344 120"
+"_color" "0.9 0.9 1"
+"light" "140"
+"spawnflags" "1"
+}
+// entity 34
+{
+"classname" "light"
+"origin" "256 344 120"
+"_color" "0.9 0.9 1"
+"light" "140"
+"spawnflags" "1"
 }

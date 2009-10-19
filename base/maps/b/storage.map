@@ -664,7 +664,7 @@
 ( 128 446 104 ) ( 104 446 104 ) ( 104 422 104 ) tex_common/nodraw 25 8 0 -0.75 0.75 512 128 0
 ( 104 422 120 ) ( 104 446 120 ) ( 128 446 120 ) tex_misc/box010 8 22 -90 0.75 -0.75 512 0 0
 ( 284 294 132 ) ( 286 294 132 ) ( 286 294 92 ) tex_misc/box009 25 16 0 -0.75 0.5 512 0 0
-( 284 294 116 ) ( 284 318 116 ) ( 284 318 100 ) tex_common/nodraw 8 16 0 -0.75 0.5 512 0 0
+( 284 294 116 ) ( 284 318 116 ) ( 284 318 100 ) tex_misc/box009 25 16 0 -0.75 0.5 512 0 0
 ( 286 318 132 ) ( 284 318 132 ) ( 284 318 92 ) tex_misc/box009 25 16 0 -0.75 0.5 512 0 0
 ( 260 318 116 ) ( 260 294 116 ) ( 260 294 100 ) tex_misc/box009 8 16 0 -0.75 0.5 512 0 0
 }
@@ -736,7 +736,7 @@
 ( 102 446 134 ) ( 78 446 134 ) ( 78 422 134 ) tex_common/nodraw 2 17 0 -0.75 0.75 512 128 0
 ( 78 422 150 ) ( 78 446 150 ) ( 102 446 150 ) tex_misc/box011 17 13 -90 0.75 -0.75 512 0 0
 ( 218 422 132 ) ( 220 422 132 ) ( 220 422 92 ) tex_misc/box009 2 12 0 -0.75 0.5 512 0 0
-( 218 422 146 ) ( 218 446 146 ) ( 218 446 130 ) tex_common/nodraw 17 12 0 -0.75 0.5 512 0 0
+( 218 422 146 ) ( 218 446 146 ) ( 218 446 130 ) tex_misc/box009 2 12 0 -0.75 0.5 512 0 0
 ( 220 446 132 ) ( 218 446 132 ) ( 218 446 92 ) tex_misc/box009 2 12 0 -0.75 0.5 512 0 0
 ( 194 160 96 ) ( 194 160 68 ) ( 194 192 96 ) tex_misc/box009 17 12 0 -0.75 0.5 512 0 0
 }
@@ -1232,7 +1232,7 @@
 "classname" "light"
 "_color" "1 1 1"
 "light" "140"
-"origin" "136 248 176"
+"origin" "152 344 144"
 "spawnflags" "1"
 }
 // entity 2
@@ -2891,7 +2891,7 @@
 // entity 16
 {
 "classname" "light"
-"origin" "248 376 176"
+"origin" "248 376 144"
 "light" "140"
 "_color" "1 1 1"
 "spawnflags" "1"
@@ -2899,7 +2899,7 @@
 // entity 17
 {
 "classname" "light"
-"origin" "248 120 176"
+"origin" "280 200 144"
 "light" "140"
 "_color" "1 1 1"
 "spawnflags" "1"
@@ -2909,7 +2909,7 @@
 "classname" "light"
 "_color" "1 1 1"
 "light" "200"
-"origin" "128 112 176"
+"origin" "128 112 144"
 "spawnflags" "1"
 }
 // entity 19
@@ -2917,7 +2917,7 @@
 "classname" "light"
 "_color" "1 1 1"
 "light" "200"
-"origin" "96 400 176"
+"origin" "96 400 144"
 "spawnflags" "1"
 }
 // entity 20
@@ -2950,4 +2950,52 @@
 ( 455 80 100 ) ( 391 80 100 ) ( 391 80 92 ) tex_furniture/chest004 -12 32 0 0.25 0.25 512 0 0
 ( 399 80 100 ) ( 399 56 100 ) ( 399 56 92 ) tex_furniture/chest004_2 -4 8 0 0.5 0.5 512 0 0
 }
+}
+// entity 21
+{
+"classname" "light"
+"_color" "1 1 1"
+"light" "140"
+"origin" "136 248 144"
+"spawnflags" "1"
+}
+// entity 22
+{
+"classname" "light"
+"_color" "1 1 1"
+"light" "140"
+"origin" "232 248 144"
+"spawnflags" "1"
+}
+// entity 23
+{
+"classname" "light"
+"_color" "1 1 1"
+"light" "140"
+"origin" "360 248 120"
+"spawnflags" "1"
+}
+// entity 24
+{
+"classname" "light"
+"_color" "1 1 1"
+"light" "140"
+"origin" "408 168 120"
+"spawnflags" "1"
+}
+// entity 25
+{
+"classname" "light"
+"origin" "248 120 144"
+"light" "140"
+"_color" "1 1 1"
+"spawnflags" "1"
+}
+// entity 26
+{
+"classname" "light"
+"_color" "1 1 1"
+"light" "140"
+"origin" "408 104 120"
+"spawnflags" "1"
 }
