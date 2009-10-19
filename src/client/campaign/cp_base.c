@@ -671,7 +671,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 	randomNum = rand() % numAwayAircraft;
 	if (!CL_DisplayHomebasePopup(awayAircraft[randomNum], qfalse)) {
 		/* No base can hold this aircraft */
-		/** @todo Better solution? */
+		/** @todo Better solution? let it crash due to technical difficulties and spawn a rescue mission? */
 		AIR_DeleteAircraft(awayAircraft[randomNum]);
 	}
 }

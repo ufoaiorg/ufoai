@@ -403,6 +403,7 @@ typedef struct ccs_s {
 	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
 	mapAction_t mapAction;
 
+	/** @todo move into the base node extra data */
 	/* BA_NEWBUILDING ... */
 	baseAction_t baseAction;
 
