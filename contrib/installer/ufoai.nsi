@@ -125,6 +125,7 @@ SectionGroup /e "Mapping" SECGROUP02
 			; EULA
 			File "..\q3radiant\*.doc"
 			File "..\q3radiant\*.exe"
+		SetOutPath "$INSTDIR"
 			File "..\..\ufo2map.exe"
 		; RADIANT
 		SetOutPath "$INSTDIR\radiant"
