@@ -471,52 +471,52 @@ window mp_bookmarks extends abstract_multiplayer_join
 			lineheight	30
 		}
 
-		string adr0 { pos "95 100" string *cvar:adr0 size "300 20" onClick { cmd "server_info *cvar:adr0" } tooltip "_Connect to this server" }
+		string adr0 { pos "95 100" string *cvar:adr0 size "300 20" onClick { cmd "server_info *cvar:adr0;" } tooltip "_Connect to this server" }
 		custombutton resetadr0 { pos "65 99" size "22 22" icon garbage	onClick { cmd "del adr0; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr1 { pos "95 130" string *cvar:adr1 size "300 20" onClick { cmd "server_info *cvar:adr1" } tooltip "_Connect to this server" }
+		string adr1 { pos "95 130" string *cvar:adr1 size "300 20" onClick { cmd "server_info *cvar:adr1;" } tooltip "_Connect to this server" }
 		custombutton resetadr1 { pos "65 129" size "22 22" icon garbage	onClick { cmd "del adr1; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr2 { pos "95 160" string *cvar:adr2 size "300 20" onClick { cmd "server_info *cvar:adr2" } tooltip "_Connect to this server" }
+		string adr2 { pos "95 160" string *cvar:adr2 size "300 20" onClick { cmd "server_info *cvar:adr2;" } tooltip "_Connect to this server" }
 		custombutton resetadr2 { pos "65 159" size "22 22" icon garbage	onClick { cmd "del adr2; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr3 { pos "95 190" string *cvar:adr3 size "300 20" onClick { cmd "server_info *cvar:adr3" } tooltip "_Connect to this server" }
+		string adr3 { pos "95 190" string *cvar:adr3 size "300 20" onClick { cmd "server_info *cvar:adr3;" } tooltip "_Connect to this server" }
 		custombutton resetadr3 { pos "65 189" size "22 22" icon garbage	onClick { cmd "del adr3; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr4 { pos "95 220" string *cvar:adr4 size "300 20" onClick { cmd "server_info *cvar:adr4" } tooltip "_Connect to this server" }
+		string adr4 { pos "95 220" string *cvar:adr4 size "300 20" onClick { cmd "server_info *cvar:adr4;" } tooltip "_Connect to this server" }
 		custombutton resetadr4 { pos "65 219" size "22 22" icon garbage	onClick { cmd "del adr4; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr5 { pos "95 250" string *cvar:adr5 size "300 20" onClick { cmd "server_info *cvar:adr5" } tooltip "_Connect to this server" }
+		string adr5 { pos "95 250" string *cvar:adr5 size "300 20" onClick { cmd "server_info *cvar:adr5;" } tooltip "_Connect to this server" }
 		custombutton resetadr5 { pos "65 249" size "22 22" icon garbage	onClick { cmd "del adr5; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr6 { pos "95 280" string *cvar:adr6 size "300 20" onClick { cmd "server_info *cvar:adr6" } tooltip "_Connect to this server" }
+		string adr6 { pos "95 280" string *cvar:adr6 size "300 20" onClick { cmd "server_info *cvar:adr6;" } tooltip "_Connect to this server" }
 		custombutton resetadr6 { pos "65 279" size "22 22" icon garbage	onClick { cmd "del adr6; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr7 { pos "95 310" string *cvar:adr7 size "300 20" onClick { cmd "server_info *cvar:adr7" } tooltip "_Connect to this server" }
+		string adr7 { pos "95 310" string *cvar:adr7 size "300 20" onClick { cmd "server_info *cvar:adr7;" } tooltip "_Connect to this server" }
 		custombutton resetadr7 { pos "65 309" size "22 22" icon garbage	onClick { cmd "del adr7; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr8 { pos "95 340" string *cvar:adr8 size "300 20" onClick { cmd "server_info *cvar:adr8" } tooltip "_Connect to this server" }
+		string adr8 { pos "95 340" string *cvar:adr8 size "300 20" onClick { cmd "server_info *cvar:adr8;" } tooltip "_Connect to this server" }
 		custombutton resetadr8 { pos "65 339" size "22 22" icon garbage	onClick { cmd "del adr8; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr9 { pos "95 370" string *cvar:adr9 size "300 20" onClick { cmd "server_info *cvar:adr9" } tooltip "_Connect to this server" }
+		string adr9 { pos "95 370" string *cvar:adr9 size "300 20" onClick { cmd "server_info *cvar:adr9;" } tooltip "_Connect to this server" }
 		custombutton resetadr9 { pos "65 369" size "22 22" icon garbage	onClick { cmd "del adr9; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr10 { pos "95 400" string *cvar:adr10 size "300 20" onClick { cmd "server_info *cvar:adr10" } tooltip "_Connect to this server" }
+		string adr10 { pos "95 400" string *cvar:adr10 size "300 20" onClick { cmd "server_info *cvar:adr10;" } tooltip "_Connect to this server" }
 		custombutton resetadr10 { pos "65 399" size "22 22" icon garbage	onClick { cmd "del adr10; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr11 { pos "95 430" string *cvar:adr11 size "300 20" onClick { cmd "server_info *cvar:adr11" } tooltip "_Connect to this server" }
+		string adr11 { pos "95 430" string *cvar:adr11 size "300 20" onClick { cmd "server_info *cvar:adr11;" } tooltip "_Connect to this server" }
 		custombutton resetadr11 { pos "65 429" size "22 22" icon garbage	onClick { cmd "del adr11; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr12 { pos "95 460" string *cvar:adr12 size "300 20" onClick { cmd "server_info *cvar:adr12" } tooltip "_Connect to this server" }
+		string adr12 { pos "95 460" string *cvar:adr12 size "300 20" onClick { cmd "server_info *cvar:adr12;" } tooltip "_Connect to this server" }
 		custombutton resetadr12 { pos "65 459" size "22 22" icon garbage	onClick { cmd "del adr12; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr13 { pos "95 490" string *cvar:adr13 size "300 20" onClick { cmd "server_info *cvar:adr13" } tooltip "_Connect to this server" }
+		string adr13 { pos "95 490" string *cvar:adr13 size "300 20" onClick { cmd "server_info *cvar:adr13;" } tooltip "_Connect to this server" }
 		custombutton resetadr13 { pos "65 489" size "22 22" icon garbage	onClick { cmd "del adr13; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr14 { pos "95 520" string *cvar:adr14 size "300 20" onClick { cmd "server_info *cvar:adr14" } tooltip "_Connect to this server" }
+		string adr14 { pos "95 520" string *cvar:adr14 size "300 20" onClick { cmd "server_info *cvar:adr14;" } tooltip "_Connect to this server" }
 		custombutton resetadr14 { pos "65 519" size "22 22" icon garbage	onClick { cmd "del adr14; check_bookmarks;" } tooltip "_Delete this bookmark" }
 
-		string adr15 { pos "95 550" string *cvar:adr15 size "300 20" onClick { cmd "server_info *cvar:adr15" } tooltip "_Connect to this server" }
+		string adr15 { pos "95 550" string *cvar:adr15 size "300 20" onClick { cmd "server_info *cvar:adr15;" } tooltip "_Connect to this server" }
 		custombutton resetadr15 { pos "65 549" size "22 22" icon garbage	onClick { cmd "del adr15; check_bookmarks;" } tooltip "_Delete this bookmark" }
 	}
 
