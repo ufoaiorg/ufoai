@@ -797,15 +797,15 @@ static int RT_FindOpeningCeiling (const vec3_t start, const vec3_t end, const in
 }
 
 
-static int RT_CalcNewZ (routing_t * map, const int actor_size, const int ax, const int ay, const int top, const int hi)
+static int RT_CalcNewZ (routing_t * map, const int actorSize, const int ax, const int ay, const int top, const int hi)
 {
 	int temp_z, adj_lo;
 
 	temp_z = min(floor((hi - 1) / CELL_HEIGHT), PATHFINDING_HEIGHT - 1);
-	adj_lo = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+	adj_lo = RT_FLOOR(map, actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
 	if (adj_lo > hi) {
 		temp_z--;
-		adj_lo = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+		adj_lo = RT_FLOOR(map, actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
 	}
 	/**
 	 * @note Return a value only if there is a floor for the adjacent cell.
@@ -922,6 +922,9 @@ static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, 
 		int tempBottom;
 		const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 
+		if (debugTrace)
+			Com_Printf("Using sky trace.\n");
+
 		VectorInterpolation(start, end, 0.5, sky);	/* center it halfway between the cells */
 		VectorCopy(sky, earth);
 		sky[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT;  /* Set to top of model. */
@@ -932,10 +935,14 @@ static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, 
 		tempBottom = ModelFloorToQuant(tr.endpos[2]);
 		if (tempBottom <= bottom + PATHFINDING_MIN_STEPUP) {
 			const int hi = bottom + PATHFINDING_MIN_OPENING;
+			if (debugTrace)
+				Com_Printf("Found opening with sky trace.\n");
 			*lo_val = tempBottom;
 			*hi_val = CELL_HEIGHT * PATHFINDING_HEIGHT;
 			return RT_CalcNewZ (map, actorSize, ax, ay, top, hi);
 		}
+		if (debugTrace)
+			Com_Printf("Failed sky trace.\n");
 	}
 	/* Warning: never try to make this an 'else if', or 'arched entry' situations will fail !! */
 
@@ -1036,6 +1043,17 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, c
 			bases[i] = -1;
 		} else {
 			bases[i] = ModelFloorToQuant(tr.endpos[2] - DIST_EPSILON);
+			/* Walking through glass fix:
+			 * It is possible to have an obstruction that can be skirted around diagonally
+			 * because the microtraces are so tiny.  But, we have a full size trace in opening->base
+			 * that apporoximates where legroom ends.  If the found floor of the middle microtrace is
+			 * too low, then set it to the worst case scenario floor based on base->opening.
+			 */
+			if (i == floor(steps / 2.0) && bases[i] < opening->base - PATHFINDING_MIN_STEPUP) {
+				if (debugTrace)
+					Com_Printf("Adjusting middle trace- the known base is too high. \n");
+				bases[i] = opening->base - PATHFINDING_MIN_STEPUP;
+			}
 		}
 
 		if (debugTrace)
@@ -1047,6 +1065,7 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, c
 
 	if (debugTrace)
 		Com_Printf("z:%i az:%i bottom:%i new_bottom:%i top:%i bases[0]:%i bases[%i]:%i\n", from->cell[2], az, opening->base, newBottom, top, bases[0], steps, bases[steps]);
+
 
 	/** @note This for loop is bi-directional: i may be decremented to retrace prior steps. */
 	/* Now find the maximum stepup moving from (x, y) to (ax, ay). */
@@ -1143,12 +1162,16 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, c
 			if (bases[1] <= middle &&		/* if nothing in the 1st part of the passage is higher than what's at the border */
 				bases[2] <= middle &&
 				bases[3] <= middle ) {
+				if (debugTrace)
+					Com_Printf("Addition granted by ugly stair hack-stepping up.\n");
 				return opening->base - middle;
 			}
 		} else if (stairwaySituation == 2) {/* stepping down */
 			if (bases[5] <= middle &&		/* same for the 2nd part of the passage */
 				bases[6] <= middle &&
 				bases[7] <= middle )
+				if (debugTrace)
+					Com_Printf("Addition granted by ugly stair hack-stepping down.\n");
 				return opening->base - middle;
 		}
 	}
