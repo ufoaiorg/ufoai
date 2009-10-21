@@ -1319,8 +1319,11 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 {
 	const char *value;
 
-	/* check to see if they are on the banned IP list */
 	value = Info_ValueForKey(userinfo, "ip");
+
+	Com_Printf("%s is trying to connect... (%s)\n", player->pers.netname, value);
+
+	/* check to see if they are on the banned IP list */
 	if (SV_FilterPacket(value)) {
 		Info_SetValueForKey(userinfo, "rejmsg", REJ_BANNED);
 		return qfalse;
