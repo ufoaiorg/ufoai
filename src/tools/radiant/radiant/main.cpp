@@ -497,9 +497,9 @@ int main (int argc, char* argv[])
 		g_GamesDialog.m_bForceLogConsole = false;
 	}
 
-	Radiant_Initialise();
-
 	global_accel_init();
+
+	Radiant_Initialise();
 
 	g_pParentWnd = 0;
 	g_pParentWnd = new MainFrame();
