@@ -1016,7 +1016,8 @@ static void CL_SendCommand (void)
 	case ca_connected:
 		if (cls.waitingForStart) {
 			if (cls.realtime - cls.waitingForStart > cl_connecttimeout->integer) {
-				Com_Error(ERR_DROP, "Server aborted connection");
+				Com_Error(ERR_DROP, "Server aborted connection - the server didn't response in %is. You can try to increase the cvar cl_connecttimeout",
+						cl_connecttimeout->integer / 1000);
 			} else {
 				Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
 					"%s (%i)", _("Awaiting game start"), (cls.realtime - cls.waitingForStart) / 1000);
