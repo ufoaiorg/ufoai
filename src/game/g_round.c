@@ -212,7 +212,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		G_MoraleBehaviour(level.activeTeam, quiet);
 
 	/* start ai */
-	p->pers.last = NULL;
+	player->pers.last = NULL;
 
 	/* finish off events */
 	gi.EndEvents();
