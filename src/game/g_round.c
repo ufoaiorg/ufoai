@@ -211,8 +211,10 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	if (mor_panic->integer)
 		G_MoraleBehaviour(level.activeTeam, quiet);
 
-	/* start ai */
-	player->pers.last = NULL;
+	/* start ai - there is only one player for ai teams, and the last pointer must only
+	 * be updated for ai players */
+	p = G_GetPlayerForTeam(level.activeTeam);
+	p->pers.last = NULL;
 
 	/* finish off events */
 	gi.EndEvents();
