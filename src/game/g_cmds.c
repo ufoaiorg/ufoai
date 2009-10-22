@@ -157,7 +157,7 @@ static void G_KillTeam_f (void)
 		}
 
 	/* check for win conditions */
-	G_CheckEndGame();
+	G_MatchEndCheck();
 }
 
 /**
@@ -188,7 +188,7 @@ static void G_StunTeam_f (void)
 		}
 
 	/* check for win conditions */
-	G_CheckEndGame();
+	G_MatchEndCheck();
 }
 
 /**

@@ -188,8 +188,8 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	G_GetNextActiveTeam();
 
 	/** @todo is this needed and reasonable to do here? */
-	if (!G_GameRunning())
-		G_EndGame(level.winningTeam, 0);
+	if (!G_MatchIsRunning())
+		G_MatchEndTrigger(level.winningTeam, 0);
 
 	level.actualRound++;
 

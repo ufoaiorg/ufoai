@@ -16,6 +16,7 @@ GAME_SRCS=\
 	game/g_func.c \
 	game/g_inventory.c \
 	game/g_main.c \
+	game/g_match.c \
 	game/g_morale.c \
 	game/g_move.c \
 	game/g_phys.c \

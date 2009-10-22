@@ -1332,7 +1332,7 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 		gi.EndEvents();
 
 		/* check for win/draw conditions */
-		G_CheckEndGame();
+		G_MatchEndCheck();
 
 		/* check for Reaction fire against the shooter */
 		if (allowReaction)

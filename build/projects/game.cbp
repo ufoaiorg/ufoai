@@ -92,6 +92,9 @@
 		<Unit filename="../../src/game/g_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/game/g_match.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/game/g_morale.c">
 			<Option compilerVar="CC" />
 		</Unit>

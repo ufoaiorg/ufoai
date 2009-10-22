@@ -109,7 +109,7 @@ void G_PhysicsRun (void)
 	edict_t *ent;
 
 	/* not all teams are spawned or game has already ended */
-	if (!G_GameRunning())
+	if (!G_MatchIsRunning())
 		return;
 
 #if 0 /* taken out - otherwise footstep sounds are too slow */

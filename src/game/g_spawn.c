@@ -851,7 +851,7 @@ static void Think_Mission (edict_t *self)
 	/* mission succeeds */
 	gi.BroadcastPrintf(PRINT_HUD, _("Mission won for team %i\n"), team);
 
-	G_EndGame(self->team, 10);
+	G_MatchEndTrigger(self->team, 10);
 }
 
 /**

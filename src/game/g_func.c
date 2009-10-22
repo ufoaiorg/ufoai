@@ -136,7 +136,7 @@ static qboolean Door_Use (edict_t *door)
 		gi.LinkEdict(door);
 
 		/* maybe the server called this because the door starts opened */
-		if (G_GameRunning()) {
+		if (G_MatchIsRunning()) {
 			/* let everybody know, that the door opens */
 			gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
 			gi.WriteShort(door->number);
@@ -152,7 +152,7 @@ static qboolean Door_Use (edict_t *door)
 
 		/* closed is the standard, opened is handled above - we need an active
 		 * team here already, otherwise this is a bug */
-		assert(G_GameRunning());
+		assert(G_MatchIsRunning());
 		/* let everybody know, that the door closes */
 		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
 		gi.WriteShort(door->number);

@@ -833,7 +833,7 @@ static void G_ClientTeamAssign (const player_t * player)
 	knownTeams[0] = player->pers.team;
 
 	/* return with no action if activeTeam already assigned or if in single-player mode */
-	if (G_GameRunning() || sv_maxclients->integer == 1)
+	if (G_MatchIsRunning() || sv_maxclients->integer == 1)
 		return;
 
 	/* count number of currently connected unique teams and players (human controlled players only) */
@@ -974,7 +974,7 @@ void G_ClientTeamInfo (player_t * player)
 		 * + the game is already running (activeTeam != -1)
 		 * + the sv_maxsoldiersperplayer limit is hit (e.g. the assembled team is bigger than the allowed number of soldiers)
 		 * + the team already hit the max allowed amount of soldiers */
-		if (player->pers.team != TEAM_NO_ACTIVE && (sv_maxclients->integer == 1 || (!G_GameRunning() && i
+		if (player->pers.team != TEAM_NO_ACTIVE && (sv_maxclients->integer == 1 || (!G_MatchIsRunning() && i
 				< sv_maxsoldiersperplayer->integer && level.num_spawned[player->pers.team]
 				< sv_maxsoldiersperteam->integer))) {
 			/* Here the client tells the server the information for the spawned actor(s). */
@@ -1221,7 +1221,7 @@ qboolean G_ClientSpawn (player_t * player)
 	}
 
 	/** @todo Check player->pers.team here */
-	if (!G_GameRunning()) {
+	if (!G_MatchIsRunning()) {
 		/* activate round if in single-player */
 		if (sv_maxclients->integer == 1) {
 			level.activeTeam = player->pers.team;
@@ -1369,7 +1369,7 @@ void G_ClientDisconnect (player_t * player)
 			G_ClientEndRound(player, NOISY);
 
 		/* if no more players are connected - stop the server */
-		G_CheckEndGame();
+		G_MatchEndCheck();
 	}
 
 #if 0
@@ -1378,7 +1378,7 @@ void G_ClientDisconnect (player_t * player)
 		if (ent->pnum == player->num && ent->inuse)
 			if (G_IsLivingActor(ent))
 				G_ActorDie(ent, STATE_DEAD, NULL);
-	G_CheckEndGame();
+	G_MatchEndCheck();
 #endif
 
 	player->began = qfalse;

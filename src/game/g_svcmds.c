@@ -263,7 +263,7 @@ static void SVCmd_Win_f (void)
 	}
 	team = atoi(gi.Cmd_Argv(2));
 	if (team > TEAM_CIVILIAN && team < MAX_TEAMS)
-		G_EndGame(team, 0);
+		G_MatchEndTrigger(team, 0);
 	else
 		gi.dprintf("Bad team number.\n");
 }
@@ -313,7 +313,7 @@ static void SVCmd_StartGame_f (void)
 	char buffer[MAX_VAR] = "";
 
 	/* return with no action if activeTeam already assigned or if in single-player mode */
-	if (G_GameRunning() || sv_maxclients->integer == 1)
+	if (G_MatchIsRunning() || sv_maxclients->integer == 1)
 		return;
 
 	/* count number of currently connected unique teams and players (only human controlled players) */

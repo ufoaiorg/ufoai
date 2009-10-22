@@ -104,7 +104,8 @@ typedef struct {
 
 	/* intermission state */
 	float intermissionTime;		/**< the seconds to wait until the game will be closed.
-								 * This value is relative to @c level.time */
+								 * This value is relative to @c level.time
+								 * @sa G_MatchDoEnd */
 	int winningTeam;			/**< the team that won this match */
 	float roundstartTime;		/**< the time the team started the round */
 
@@ -385,10 +386,11 @@ qboolean AI_CheckUsingDoor(const edict_t *ent, const edict_t *door);
 void ServerCommand(void);
 qboolean SV_FilterPacket(const char *from);
 
-/* g_main.c */
-qboolean G_GameRunning(void);
-void G_EndGame(int team, int timeGap);
-void G_CheckEndGame(void);
+/* g_match.c */
+qboolean G_MatchIsRunning(void);
+void G_MatchEndTrigger(int team, int timeGap);
+void G_MatchEndCheck(void);
+qboolean G_MatchDoEnd(void);
 
 /* g_trigger.c */
 edict_t* G_TriggerSpawn(edict_t *owner);
