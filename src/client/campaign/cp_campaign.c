@@ -75,13 +75,12 @@ typedef struct {
 } updateCharacter_t;
 
 /**
- * @brief Parses the character data which was send by G_SendEndGame using G_SendCharacterData
+ * @brief Parses the character data which was send by G_MatchSendResults using G_SendCharacterData
  * @param[in] msg The network buffer message. If this is NULL the character is updated, if this
  * is not NULL the data is stored in a temp buffer because the player can choose to retry
  * the mission and we have to catch this situation to not update the character data in this case.
  * @sa G_SendCharacterData
  * @sa GAME_SendCurrentTeamSpawningInfo
- * @sa G_SendEndGame
  * @sa E_Save
  */
 void CP_ParseCharacterData (struct dbuffer *msg)

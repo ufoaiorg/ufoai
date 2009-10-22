@@ -221,7 +221,6 @@ void G_WriteItem (item_t item, const invDef_t *container, int x, int y)
 }
 
 /**
- * @sa G_SendEndGame
  * @sa G_AppearPerishEvent
  * @sa CL_InvAdd
  */

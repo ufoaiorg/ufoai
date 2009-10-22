@@ -135,9 +135,8 @@ void G_MatchEndTrigger (int team, int timeGap)
  * @brief Sends character stats like assigned missions and kills back to client
  * @note first short is the ucn to allow the client to identify the character
  * @note parsed in GAME_CP_Results
- * @sa G_SendEndGame
  * @sa GAME_SendCurrentTeamSpawningInfo
- * @note you also have to update the pascal string size in G_SendEndGame if you change the buffer here
+ * @note you also have to update the pascal string size in G_MatchSendResults if you change the buffer here
  */
 static void G_SendCharacterData (const edict_t* ent)
 {
@@ -310,7 +309,7 @@ void G_MatchEndCheck (void)
  * @brief Checks whether the game is running (active team and no intermission time)
  * @returns true if there is an active team for the current round and the end of the game
  * was not yet triggered
- * @sa G_EndGame
+ * @sa G_MatchEndTrigger
  */
 qboolean G_MatchIsRunning (void)
 {

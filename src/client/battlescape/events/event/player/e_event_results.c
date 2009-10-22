@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Reads mission result data from server
  * @sa EV_RESULTS
- * @sa G_SendEndGame
+ * @sa G_MatchSendResults
  * @sa GAME_CP_Results_f
  */
 void CL_ParseResults (const eventRegister_t *self, struct dbuffer *msg)

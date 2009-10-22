@@ -360,7 +360,7 @@ static void CheckNeedPass (void)
 
 /**
  * @sa SV_RunGameFrame
- * @sa G_EndGame
+ * @sa G_MatchEndTrigger
  * @sa AI_Run
  * @return true if game reaches its end - false otherwise
  */

@@ -251,7 +251,7 @@ static void SVCmd_AI_Add_f (void)
 /**
  * @brief Call the end game function with the given team
  * used to e.g. abort singleplayer games and let the aliens win
- * @sa G_EndGame
+ * @sa G_MatchEndTrigger
  */
 static void SVCmd_Win_f (void)
 {

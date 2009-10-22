@@ -954,7 +954,6 @@ static void G_ClientSkipActorInfo (void)
  * @param[in] player The player to spawn the actors for.
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa clc_teaminfo
- * @sa G_SendEndGame
  */
 void G_ClientTeamInfo (player_t * player)
 {
