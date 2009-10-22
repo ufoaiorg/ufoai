@@ -256,7 +256,7 @@ typedef struct {
 	void (EXPORT *Shutdown) (void);
 
 	/* each new level entered will cause a call to G_SpawnEntities */
-	void (EXPORT *SpawnEntities) (const char *mapname, const char *entstring);
+	void (EXPORT *SpawnEntities) (const char *mapname, qboolean day, const char *entstring);
 
 	qboolean(EXPORT *ClientConnect) (player_t * client, char *userinfo);
 	void (EXPORT *ClientBegin) (player_t * client);

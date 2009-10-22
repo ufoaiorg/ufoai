@@ -100,10 +100,12 @@ typedef struct {
 	char nextmap[MAX_QPATH];	/**< @todo Spawn the new map after the current one was ended */
 	qboolean routed;
 	int maxteams; /**< the max team amount for multiplayer games for the current map */
+	qboolean day;
 
 	/* intermission state */
-	float intermissionTime;
-	int winningTeam;
+	float intermissionTime;		/**< the seconds to wait until the game will be closed.
+								 * This value is relative to @c level.time */
+	int winningTeam;			/**< the team that won this match */
 	float roundstartTime;		/**< the time the team started the round */
 
 	/* round statistics */
@@ -160,7 +162,8 @@ extern edict_t *g_edicts;
 #define G_IsActor(ent)		((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
 /** @note Every none solid (none-bmodel) edict that is visible for the client */
 #define G_IsVisibleOnBattlefield(ent)	(G_IsActor((ent)) || (ent)->type == ET_ITEM || (ent)->type == ET_PARTICLE)
-#define G_IsAI(ent)			(G_PLAYER_FROM_ENT((ent))->pers.ai)
+#define G_IsAI(ent)				(G_PLAYER_FROM_ENT((ent))->pers.ai)
+#define G_IsAIPlayer(player)	((player)->pers.ai)
 
 extern cvar_t *sv_maxentities;
 extern cvar_t *password;
@@ -266,6 +269,7 @@ edict_t *G_Find(edict_t *from, int fieldofs, char *match);
 edict_t *G_FindRadius(edict_t *from, vec3_t org, float rad, entity_type_t type);
 edict_t *G_FindTargetEntity(const char *target);
 const char* G_GetPlayerName(int pnum);
+player_t* G_GetPlayerForTeam(int team);
 int G_GetActiveTeam(void);
 const char* G_GetWeaponNameForFiredef(const fireDef_t *fd);
 void G_PrintActorStats(const edict_t *victim, const edict_t *attacker, const fireDef_t *fd);
@@ -313,7 +317,7 @@ edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
 void G_SendState(unsigned int playerMask, const edict_t *ent);
 
 qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
-void G_ForceEndRound(void);
+void G_CheckForceEndRound(void);
 void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player, qboolean quiet);
@@ -347,7 +351,7 @@ unsigned int G_VisToPM(unsigned int vis_mask);
 void G_SendInventory(unsigned int player_mask, edict_t * ent);
 unsigned int G_TeamToPM(int team);
 
-void G_SpawnEntities(const char *mapname, const char *entities);
+void G_SpawnEntities(const char *mapname, qboolean day, const char *entities);
 qboolean G_RunFrame(void);
 
 #ifdef DEBUG
@@ -383,7 +387,7 @@ qboolean SV_FilterPacket(const char *from);
 
 /* g_main.c */
 qboolean G_GameRunning(void);
-void G_EndGame(int team);
+void G_EndGame(int team, int timeGap);
 void G_CheckEndGame(void);
 
 /* g_trigger.c */
@@ -429,7 +433,7 @@ typedef struct {
 	qboolean ai;				/**< client controlled by ai */
 
 	/** ai specific data */
-	edict_t *last;
+	edict_t *last; /**< set to the last actor edict that was handled for the ai in their think function */
 
 	float		flood_locktill;		/**< locked from talking */
 	float		flood_when[10];		/**< when messages were said */

@@ -108,7 +108,7 @@ void G_PhysicsRun (void)
 	int i;
 	edict_t *ent;
 
-	/* not all teams are spawned */
+	/* not all teams are spawned or game has already ended */
 	if (!G_GameRunning())
 		return;
 

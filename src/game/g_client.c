@@ -263,6 +263,8 @@ void G_SendInvisible (player_t* player)
 
 /**
  * @brief Returns the current active team to the server
+ * @par If this has the value @c TEAM_NO_ACTIVE there is either no
+ * living actor for any player left, or the round wasn't started yet.
  */
 int G_GetActiveTeam (void)
 {
@@ -952,7 +954,7 @@ static void G_ClientSkipActorInfo (void)
  * @param[in] player The player to spawn the actors for.
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa clc_teaminfo
- * @sa G_EndGame
+ * @sa G_SendEndGame
  */
 void G_ClientTeamInfo (player_t * player)
 {
@@ -1367,8 +1369,7 @@ void G_ClientDisconnect (player_t * player)
 			G_ClientEndRound(player, NOISY);
 
 		/* if no more players are connected - stop the server */
-		if (!level.numplayers)
-			level.intermissionTime = level.time + 10.0f;
+		G_CheckEndGame();
 	}
 
 #if 0

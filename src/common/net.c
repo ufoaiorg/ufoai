@@ -391,6 +391,7 @@ static void do_accept (int sock)
 	FD_SET(sock, &read_fds);
 
 	server_func(s);
+	/** @todo close stream? */
 }
 
 /**

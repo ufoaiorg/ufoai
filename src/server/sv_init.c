@@ -164,7 +164,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	Com_SetServerState(ss_loading);
 
 	/* load and spawn all other entities */
-	ge->SpawnEntities(sv.name, CM_EntityString());
+	ge->SpawnEntities(sv.name, sv.day, CM_EntityString());
 
 	/* all precaches are complete */
 	Com_SetServerState(ss_game);

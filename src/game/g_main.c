@@ -362,9 +362,9 @@ static void CheckNeedPass (void)
  * @brief Sends character stats like assigned missions and kills back to client
  * @note first short is the ucn to allow the client to identify the character
  * @note parsed in GAME_CP_Results
- * @sa G_EndGame
+ * @sa G_SendEndGame
  * @sa GAME_SendCurrentTeamSpawningInfo
- * @note you also have to update the pascal string size in G_EndGame if you change the buffer here
+ * @note you also have to update the pascal string size in G_SendEndGame if you change the buffer here
  */
 static void G_SendCharacterData (const edict_t* ent)
 {
@@ -485,13 +485,25 @@ static void G_UpdateCharacterSkills (character_t *chr)
 }
 
 /**
+ * Triggers the end of the game.
+ * @param team The winning team
+ * @param timeGap Second to wait before really ending the game. Useful if you want to allow a last view on the scene
+ */
+void G_EndGame (int team, int timeGap)
+{
+	const int realTimeGap = timeGap > 0 ? level.time + timeGap : 1;
+	level.winningTeam = team;
+	level.intermissionTime = realTimeGap;
+}
+
+/**
  * @brief Handles the end of a game
  * @note Called by game_abort command (or sv win [team])
  * @sa G_RunFrame
  * @sa CL_ParseResults
  * @sa G_SendInventory
  */
-void G_EndGame (int team)
+static void G_SendEndGame (int team)
 {
 	edict_t *ent;
 	int i, j = 0;
@@ -573,13 +585,15 @@ void G_EndGame (int team)
 		/** @todo We have to make sure, that the teaminfo is not completely resent
 		 * otherwise we would have the same team again and died actors are not taken
 		 * into account */
-		Com_sprintf(command, sizeof(command), "map %s\n", level.nextmap);
+		Com_sprintf(command, sizeof(command), "map %s %s\n",
+				level.day ? "day" : "night", level.nextmap);
 		gi.AddCommandString(command);
 	}
 }
 
 /**
  * @brief Checks whether there are still actors to fight with left
+ * @sa G_SendEndGame
  * @sa G_EndGame
  */
 void G_CheckEndGame (void)
@@ -589,6 +603,11 @@ void G_CheckEndGame (void)
 
 	if (level.intermissionTime) /* already decided */
 		return;
+
+	if (!level.numplayers) {
+		G_EndGame(0, 0);
+		return;
+	}
 
 	/** @todo count from 0 to get the civilians for objectives */
 	for (i = 1, activeTeams = 0, last = 0; i < MAX_TEAMS; i++)
@@ -600,20 +619,21 @@ void G_CheckEndGame (void)
 	/** @todo < 2 does not work when we count civilians */
 	/* prepare for sending results */
 	if (activeTeams < 2) {
-		if (activeTeams == 0)
-			level.winningTeam = 0;
-		else if (activeTeams == 1)
-			level.winningTeam = last;
-		level.intermissionTime = level.time + (last == TEAM_ALIEN ? 10.0 : 3.0);
+		const int timeGap = (level.activeTeam == TEAM_ALIEN ? 10.0 : 3.0);
+		G_EndGame(activeTeams == 1 ? last : 0, timeGap);
 	}
 }
 
 /**
- * @brief Checks whether the game is running (active team)
- * @returns true if there is an active team for the current round
+ * @brief Checks whether the game is running (active team and no intermission time)
+ * @returns true if there is an active team for the current round and the end of the game
+ * was not yet triggered
+ * @sa G_EndGame
  */
 qboolean G_GameRunning (void)
 {
+	if (level.intermissionTime)
+		return qfalse;
 	return (level.activeTeam != TEAM_NO_ACTIVE);
 }
 
@@ -649,14 +669,15 @@ qboolean G_RunFrame (void)
 			}
 			sv_roundtimelimit->modified = qfalse;
 		}
-		G_ForceEndRound();
+		G_CheckForceEndRound();
 	}
 
 	/* check for intermission */
 	if (level.intermissionTime && level.time > level.intermissionTime) {
 		G_PrintStats(va("End of game - Team %i is the winner", level.winningTeam));
-		G_EndGame(level.winningTeam);
+		G_SendEndGame(level.winningTeam);
 		level.intermissionTime = 0.0;
+		level.winningTeam = 0;
 		/* end this game */
 		return qtrue;
 	}

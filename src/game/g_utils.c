@@ -110,6 +110,24 @@ const char* G_GetWeaponNameForFiredef (const fireDef_t *fd)
 }
 
 /**
+ * @param team The team the player data should be searched for
+ * @return The inuse player for the given team
+ */
+player_t* G_GetPlayerForTeam (int team)
+{
+	int i;
+	player_t *p;
+
+	/* search corresponding player (even ai players) */
+	for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
+		if (p->inuse && p->pers.team == team)
+			/* found player */
+			return p;
+
+	return NULL;
+}
+
+/**
  * @brief Returns the player name for a give player number
  */
 const char* G_GetPlayerName (int pnum)

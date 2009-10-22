@@ -314,11 +314,10 @@ static void G_FindEdictGroups (void)
  * @sa CM_EntityString
  * @sa SV_SpawnServer
  */
-void G_SpawnEntities (const char *mapname, const char *entities)
+void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 {
 	edict_t *ent;
 	int entnum;
-	const char *com_token;
 
 	gi.FreeTags(TAG_LEVEL);
 
@@ -326,6 +325,7 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 	memset(g_edicts, 0, game.sv_maxentities * sizeof(edict_t));
 
 	Q_strncpyz(level.mapname, mapname, sizeof(level.mapname));
+	level.day = day;
 
 	G_ResetClientData();
 
@@ -338,11 +338,11 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 	entnum = 0;
 	while (1) {
 		/* parse the opening brace */
-		com_token = Com_Parse(&entities);
+		const char *token = Com_Parse(&entities);
 		if (!entities)
 			break;
-		if (com_token[0] != '{')
-			gi.error("ED_LoadFromFile: found %s when expecting {", com_token);
+		if (token[0] != '{')
+			gi.error("ED_LoadFromFile: found %s when expecting {", token);
 
 		if (!ent)
 			ent = g_edicts;
@@ -851,8 +851,7 @@ static void Think_Mission (edict_t *self)
 	/* mission succeeds */
 	gi.BroadcastPrintf(PRINT_HUD, _("Mission won for team %i\n"), team);
 
-	level.winningTeam = self->team;
-	level.intermissionTime = level.time + 10;
+	G_EndGame(self->team, 10);
 }
 
 /**

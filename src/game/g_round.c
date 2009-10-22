@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Check whether a forced round end should be executed
  */
-void G_ForceEndRound (void)
+void G_CheckForceEndRound (void)
 {
 	player_t *p;
 	int i, diff;
@@ -120,36 +120,57 @@ static void G_UpdateStunState (int team)
 }
 
 /**
+ * @brief Get the next active team
+ */
+static void G_GetNextActiveTeam (void)
+{
+	int i;
+	const int lastTeam = G_GetActiveTeam();
+
+	level.activeTeam = TEAM_NO_ACTIVE;
+
+	/* search next team */
+	for (i = 1; i < MAX_TEAMS; i++) {
+		const int team = (lastTeam + i) % MAX_TEAMS;
+		if (level.num_alive[team]) {
+			/* found next player */
+			level.activeTeam = team;
+			break;
+		}
+	}
+}
+
+/**
  * @sa G_PlayerSoldiersCount
  */
 void G_ClientEndRound (player_t * player, qboolean quiet)
 {
 	player_t *p;
-	int i, lastTeam;
+	int i;
 
-	/* inactive players can't end their inactive round :) */
-	if (level.activeTeam != player->pers.team)
-		return;
+	if (!G_IsAIPlayer(player)) {
+		/* inactive players can't end their inactive round :) */
+		if (level.activeTeam != player->pers.team)
+			return;
 
-	/* check for "team oszillation" */
-	if (level.framenum < level.nextEndRound)
-		return;
-	level.nextEndRound = level.framenum + 20;
+		/* check for "team oszillation" */
+		if (level.framenum < level.nextEndRound)
+			return;
+
+		level.nextEndRound = level.framenum + 20;
+	}
 
 	/* only use this for teamplay matches like coopX or 2on2 and above
 	 * also skip this for ai players, this is only called when all ai actors
 	 * have finished their 'thinking' */
-	if (!player->pers.ai && sv_teamplay->integer) {
+	if (!G_IsAIPlayer(player) && sv_teamplay->integer) {
 		/* check if all team members are ready */
 		if (!player->ready) {
 			player->ready = qtrue;
-			/* don't send this for ai controlled teams */
-			if (!player->pers.ai) {
-				gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY);
-				gi.WriteByte(player->num);
-				gi.WriteByte(player->pers.team);
-				gi.EndEvents();
-			}
+			gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY);
+			gi.WriteByte(player->num);
+			gi.WriteByte(player->pers.team);
+			gi.EndEvents();
 		}
 		for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
 			if (p->inuse && p->pers.team == level.activeTeam && !p->ready && G_PlayerSoldiersCount(p) > 0)
@@ -164,37 +185,12 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	/* let all the invisible players perish now */
 	G_CheckVisTeam(level.activeTeam, NULL, qtrue, NULL);
 
-	lastTeam = player->pers.team;
-	level.activeTeam = TEAM_NO_ACTIVE;
+	G_GetNextActiveTeam();
 
-	/* Get the next active team. */
-	p = NULL;
-	while (level.activeTeam == TEAM_NO_ACTIVE) {
-		/* search next team */
-		int nextTeam = TEAM_NO_ACTIVE;
+	/** @todo is this needed and reasonable to do here? */
+	if (!G_GameRunning())
+		G_EndGame(level.winningTeam, 0);
 
-		for (i = 1; i < MAX_TEAMS; i++) {
-			const int team = (lastTeam + i) % MAX_TEAMS;
-			if (level.num_alive[team]) {
-				nextTeam = team;
-				break;
-			}
-		}
-
-		/* search corresponding player (even ai players) */
-		for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
-			if (p->inuse && p->pers.team == nextTeam) {
-				/* found next player */
-				level.activeTeam = nextTeam;
-				break;
-			}
-
-		if (level.activeTeam == TEAM_NO_ACTIVE)
-			gi.error("Could not find any living player on team %i", nextTeam);
-
-		lastTeam = nextTeam;
-	}
-	assert(level.activeTeam != TEAM_NO_ACTIVE);
 	level.actualRound++;
 
 	/* communicate next player in row to clients */
