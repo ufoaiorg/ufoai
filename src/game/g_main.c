@@ -359,39 +359,6 @@ static void CheckNeedPass (void)
 }
 
 /**
- * @brief Sends character stats like assigned missions and kills back to client
- * @note first short is the ucn to allow the client to identify the character
- * @note parsed in GAME_CP_Results
- * @sa G_SendEndGame
- * @sa GAME_SendCurrentTeamSpawningInfo
- * @note you also have to update the pascal string size in G_SendEndGame if you change the buffer here
- */
-static void G_SendCharacterData (const edict_t* ent)
-{
-	int k;
-
-	assert(ent);
-
-	/* write character number */
-	gi.WriteShort(ent->chr.ucn);
-
-	gi.WriteShort(ent->HP);
-	gi.WriteByte(ent->STUN);
-	gi.WriteByte(ent->morale);
-
-	/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
-		gi.WriteLong(ent->chr.score.experience[k]);
-	for (k = 0; k < SKILL_NUM_TYPES; k++)
-		gi.WriteByte(ent->chr.score.skills[k]);
-	for (k = 0; k < KILLED_NUM_TYPES; k++)
-		gi.WriteShort(ent->chr.score.kills[k]);
-	for (k = 0; k < KILLED_NUM_TYPES; k++)
-		gi.WriteShort(ent->chr.score.stuns[k]);
-	gi.WriteShort(ent->chr.score.assignedMissions);
-}
-
-/**
  * @sa SV_RunGameFrame
  * @sa G_EndGame
  * @sa AI_Run
