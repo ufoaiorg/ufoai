@@ -352,7 +352,7 @@ trap exitscript SIGINT
 
 # Some packages are using the version information at several places
 # because we have to copy some files around
-SDL_VERSION=1.2.13
+SDL_VERSION=1.2.14
 SDL_MIXER_VERSION=1.2.8
 SDL_TTF_VERSION=2.0.9
 SDL_IMAGE_VERSION=1.2.6
