@@ -363,7 +363,13 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 							aia->fd = fd;
 						}
 					}
-
+#if 0
+				/*
+				 * This feature causes the 'aliens shoot at walls'-bug.
+				 * I considered adding a visibility check, but that wouldn't prevent aliens
+				 * from shooting at the breakable parts of their own ship.
+				 * So I disabled it for now. Duke, 23.10.09
+				 */
 				if (!aia->target) {
 					/* search best none human target */
 					for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
@@ -384,6 +390,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 							break;
 						}
 				}
+#endif
 			}
 		} /* firedefs */
 	}
