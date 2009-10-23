@@ -147,10 +147,12 @@ window irc
 		bgcolor		"0.5 0.5 0.5 0.2"
 		clickoutabort	true
 		onChange	{
-			cmd "irc_chanmsg"
-			//cmd "set irc_send_buffer \"\""
-			call *node:root.slot_irc_send_buffer@edit
+			cmd "irc_chanmsg; activate_irc_textentry;"
 		}
+	}
+
+	confunc activate_irc_textentry {
+		call *node:root.slot_irc_send_buffer@edit
 	}
 
 	// ==================
@@ -158,7 +160,7 @@ window irc
 	// ==================
 	func onInit
 	{
-		cmd "irc_activate;"
+		cmd "irc_activate; activate_irc_textentry;"
 	}
 
 	// ==================
