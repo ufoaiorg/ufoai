@@ -81,7 +81,8 @@ static const gameTypeList_t *GAME_GetCurrentType (void)
 void GAME_ReloadMode (void)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-	GAME_RestartMode(list->gametype);
+	if (list != NULL)
+		GAME_RestartMode(list->gametype);
 }
 
 void GAME_RestartMode (int gametype)
