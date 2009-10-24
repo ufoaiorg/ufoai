@@ -332,18 +332,12 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 int CP_BaseAttackMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
 {
 	int num = 0;
-#if 0
-	/** @todo use me when we have a geoscape model for bomber, as well as at least one map using it */
 	const int BOMBER_INTEREST_MIN = 500;	/**< Minimum value interest to have a mission spawned by bomber */
-#endif
 
 	ufoTypes[num++] = UFO_FIGHTER;
 
-#if 0
-	/** @todo use me when we have a geoscape model for bomber, as well as at least one map using it */
 	if (mission->initialOverallInterest > BOMBER_INTEREST_MIN)
 		ufoTypes[num++] = UFO_BOMBER;
-#endif
 
 	return num;
 }
