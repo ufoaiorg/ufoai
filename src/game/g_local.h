@@ -592,7 +592,7 @@ struct edict_s {
 	qboolean hiding;		/**< for ai actors - when they try to hide after the performed their action */
 
 	/** function to call when triggered - this function should only return true when there is
-	 * a client action assosiated with it */
+	 * a client action associated with it */
 	qboolean (*touch)(edict_t * self, edict_t * activator);
 	float nextthink;
 	void (*think)(edict_t *self);

@@ -58,7 +58,7 @@ const char *Sys_ConsoleInput (void)
 #ifdef HAVE_CURSES
 	return Curses_Input();
 #else
-	static qboolean stdin_active = qtrue;
+	static qboolean stdinActive = qtrue;
 	static char text[256];
 	int len;
 	fd_set fdset;
@@ -67,19 +67,19 @@ const char *Sys_ConsoleInput (void)
 	if (!sv_dedicated || !sv_dedicated->integer)
 		return NULL;
 
-	if (!stdin_active)
+	if (!stdinActive)
 		return NULL;
 
 	FD_ZERO(&fdset);
 	FD_SET(0, &fdset); /* stdin */
 	timeout.tv_sec = 0;
 	timeout.tv_usec = 0;
-	if (select(1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &fdset))
+	if (select(1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(STDIN_FILENO, &fdset))
 		return NULL;
 
-	len = read(0, text, sizeof(text));
+	len = read(STDIN_FILENO, text, sizeof(text));
 	if (len == 0) { /* eof! */
-		stdin_active = qfalse;
+		stdinActive = qfalse;
 		return NULL;
 	}
 
