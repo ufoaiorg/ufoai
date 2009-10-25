@@ -37,7 +37,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define EXTRADATA(node) (node->u.text)
 
-static void MN_TextNodeDraw(menuNode_t *node);
+static void MN_TextUpdateCache(menuNode_t *node);
+
+static void MN_TextValidateCache (menuNode_t *node) {
+	int v;
+	if (EXTRADATA(node).dataID == TEXT_NULL || node->text != NULL)
+		return;
+
+	v = MN_GetDataVersion(EXTRADATA(node).dataID);
+	if (v != EXTRADATA(node).versionId) {
+		MN_TextUpdateCache(node);
+	}
+}
 
 /**
  * @brief Change the selected line
@@ -55,7 +66,7 @@ void MN_TextNodeSelectLine (menuNode_t *node, int num)
  * @brief Scroll to the bottom
  * @param[in] nodePath absolute path
  */
-void MN_TextScrollBottom (const char* nodePath)
+void MN_TextScrollEnd (const char* nodePath)
 {
 	menuNode_t *node = MN_GetNodeByPath(nodePath);
 	if (!node) {
@@ -68,9 +79,11 @@ void MN_TextScrollBottom (const char* nodePath)
 		return;
 	}
 
+	MN_TextValidateCache(node);
+
 	if (EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {
-		Com_DPrintf(DEBUG_CLIENT, "\nMN_TextScrollBottom: Scrolling to line %i\n", EXTRADATA(node).super.scrollY.fullSize - EXTRADATA(node).super.scrollY.viewSize + 1);
-		EXTRADATA(node).super.scrollY.viewPos = EXTRADATA(node).super.scrollY.fullSize - EXTRADATA(node).super.scrollY.viewSize + 1;
+		EXTRADATA(node).super.scrollY.viewPos = EXTRADATA(node).super.scrollY.fullSize - EXTRADATA(node).super.scrollY.viewSize;
+		MN_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 	}
 }
 
@@ -110,7 +123,7 @@ static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y)
  * @param[in] list The test to draw else NULL
  * @note text or list but be used, not both
  */
-static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linkedList_t* list)
+static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linkedList_t* list, qboolean noDraw)
 {
 	char textCopy[MAX_MENUTEXTLEN];
 	char newFont[MAX_VAR];
@@ -275,7 +288,12 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			if (!cur) {
 				fullSizeY++;
 			} else {
-				MN_DrawString(font, node->textalign, x1, y, x, y, width, height, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).longlines);
+				if (noDraw) {
+					int lines = 0;
+					R_FontTextSize (font, cur, width, EXTRADATA(node).longlines, NULL, NULL, &lines, NULL);
+					fullSizeY += lines;
+				} else
+					MN_DrawString(font, node->textalign, x1, y, x, y, width, height, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).longlines);
 			}
 		}
 
@@ -299,6 +317,34 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 	R_Color(NULL);
 }
 
+static void MN_TextUpdateCache(menuNode_t *node)
+{
+	const menuSharedData_t *shared;
+
+	if (EXTRADATA(node).dataID == TEXT_NULL && node->text != NULL)
+		return;
+
+	shared = &mn.sharedData[EXTRADATA(node).dataID];
+
+	switch (shared->type) {
+	case MN_SHARED_TEXT:
+		{
+			const char* t = shared->data.text;
+			if (t[0] == '_')
+				t = _(++t);
+			MN_TextNodeDrawText(node, t, NULL, qtrue);
+		}
+		break;
+	case MN_SHARED_LINKEDLISTTEXT:
+		MN_TextNodeDrawText(node, NULL, shared->data.linkedListText, qtrue);
+		break;
+	default:
+		break;
+	}
+
+	EXTRADATA(node).versionId = shared->versionId;
+}
+
 /**
  * @brief Draw a text node
  */
@@ -310,7 +356,7 @@ static void MN_TextNodeDraw (menuNode_t *node)
 		const char* t = MN_GetReferenceString(node, node->text);
 		if (t[0] == '_')
 			t = _(++t);
-		MN_TextNodeDrawText(node, t, NULL);
+		MN_TextNodeDrawText(node, t, NULL, qfalse);
 		return;
 	}
 
@@ -322,15 +368,17 @@ static void MN_TextNodeDraw (menuNode_t *node)
 			const char* t = shared->data.text;
 			if (t[0] == '_')
 				t = _(++t);
-			MN_TextNodeDrawText(node, t, NULL);
+			MN_TextNodeDrawText(node, t, NULL, qfalse);
 		}
 		break;
 	case MN_SHARED_LINKEDLISTTEXT:
-		MN_TextNodeDrawText(node, NULL, shared->data.linkedListText);
+		MN_TextNodeDrawText(node, NULL, shared->data.linkedListText, qfalse);
 		break;
 	default:
 		break;
 	}
+
+	EXTRADATA(node).versionId = shared->versionId;
 }
 
 /**

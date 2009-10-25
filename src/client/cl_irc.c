@@ -447,7 +447,9 @@ static qboolean Irc_AppendToBuffer (const char* const msg, ...)
 	if (irc_logConsole->integer)
 		Com_Printf("IRC: %s\n", appendString);
 
-	MN_TextScrollBottom("irc.irc_data");
+	MN_RegisterText(TEXT_STANDARD, irc_buffer);
+	MN_TextScrollEnd("irc.irc_data");
+
 	if (irc_showIfNotInMenu->integer && strcmp(MN_GetActiveMenuName(), "irc")) {
 		S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
 		MP_AddChatMessage(appendString);

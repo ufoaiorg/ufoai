@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct nodeBehaviour_s;
 struct menuAction_s;
 
-void MN_TextScrollBottom(const char* nodePath);
+void MN_TextScrollEnd(const char* nodePath);
 void MN_TextNodeSelectLine(struct menuNode_s *node, int num);
 
 void MN_RegisterTextNode(struct nodeBehaviour_s *behaviour);
@@ -42,6 +42,7 @@ typedef struct {
 	abstractScrollableExtraData_t super;
 
 	int dataID;					/**< ID of a shared data @sa src/client/menu/m_data.h */
+	int versionId;				/**< Cached version of the shared data, to check update */
 
 	int textLineSelected;		/**< Which line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
 	int lineUnderMouse;			/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
