@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*==============================================================================
 JPEG
 ==============================================================================*/
-#include <jpeglib.h>
 
 int TryLoadJPG(const char *path, miptex_t **mt);
 

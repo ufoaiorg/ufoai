@@ -30,6 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	LIGHTING_DAY_ONLY		2
 #define	LIGHTING_NIGHT_ONLY	3
 
+#if defined _WIN32
+#	include	<windows.h>
+#endif
+
 #include "lighting.h"
 #include "bsp.h"
 #include "check/check.h"
