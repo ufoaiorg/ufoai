@@ -1249,6 +1249,7 @@ static void Irc_Logic_Disconnect (const char *reason)
 		chan = NULL;
 		Cvar_ForceSet("irc_defaultChannel", "");
 		Cvar_ForceSet("irc_topic", "Connecting (please wait)...");
+		MN_ResetData(TEXT_IRCUSERS);
 		Irc_Input_Deactivate();
 	} else
 		Com_Printf("Irc_Disconnect: not connected\n");
@@ -1748,5 +1749,4 @@ void Irc_Input_Deactivate (void)
 	irc_send_buffer->modified = qfalse;
 
 	MN_ResetData(TEXT_STANDARD);
-	MN_ResetData(TEXT_IRCUSERS);
 }
