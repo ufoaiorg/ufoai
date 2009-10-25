@@ -39,7 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void MN_TextUpdateCache(menuNode_t *node);
 
-static void MN_TextValidateCache (menuNode_t *node) {
+static void MN_TextValidateCache (menuNode_t *node)
+{
 	int v;
 	if (EXTRADATA(node).dataID == TEXT_NULL || node->text != NULL)
 		return;
@@ -364,13 +365,13 @@ static void MN_TextNodeDraw (menuNode_t *node)
 
 	switch (shared->type) {
 	case MN_SHARED_TEXT:
-		{
-			const char* t = shared->data.text;
-			if (t[0] == '_')
-				t = _(++t);
-			MN_TextNodeDrawText(node, t, NULL, qfalse);
-		}
+	{
+		const char* t = shared->data.text;
+		if (t[0] == '_')
+			t = _(++t);
+		MN_TextNodeDrawText(node, t, NULL, qfalse);
 		break;
+	}
 	case MN_SHARED_LINKEDLISTTEXT:
 		MN_TextNodeDrawText(node, NULL, shared->data.linkedListText, qfalse);
 		break;
