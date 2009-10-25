@@ -135,6 +135,8 @@ ah  +a   +a   +a   +a  +a   +a  ah
 0   av   av   av   av   av   av  0
 }
 
+// workhole device
+// the left side of the map has no entraces
 tile +wormhole
 {
 6 6
@@ -145,6 +147,17 @@ v   +a  +a  +a  +a ah
 v   +a  +a  +a  +a ah
 v   +a  +a  +a  +a ah
 0   av  av  av  av  0
+}
+
+// incubation chamber
+tile +incubation_small
+{
+4 4
+
+0      av    av    0
+ah     +a    +a   ah
+ah     +a    +a   ah
+0      av    av    0
 }
 
 
