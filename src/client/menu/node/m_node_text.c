@@ -257,13 +257,13 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 					while (*tab == '\t')
 						*tab++ = '\0';
 				} else {
-					/* maximise width for the last element */
+					/* maximize width for the last element */
 					tabwidth = width - (x1 - x);
 					if (tabwidth < 0)
 						tabwidth = 0;
 				}
 
-				/* minimise width for element outside node */
+				/* minimize width for element outside node */
 				if ((x1 - x) + tabwidth > width)
 					tabwidth = width - (x1 - x);
 
@@ -318,7 +318,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 	R_Color(NULL);
 }
 
-static void MN_TextUpdateCache(menuNode_t *node)
+static void MN_TextUpdateCache (menuNode_t *node)
 {
 	const menuSharedData_t *shared;
 
@@ -485,7 +485,7 @@ static const value_t properties[] = {
 	 * TEXT_POPUP_INFO, TEXT_AIRCRAFT_LIST, TEXT_AIRCRAFT, TEXT_AIRCRAFT_INFO,
 	 * TEXT_MESSAGESYSTEM, TEXT_CAMPAIGN_LIST, TEXT_MULTISELECTION.
 	 * There are more IDs in use - see mn_data.h for and up-to-date list.
-	 * Display a shared content registred by the client code.
+	 * Display a shared content registered by the client code.
 	 */
 	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(textExtraData_t, dataID), MEMBER_SIZEOF(textExtraData_t, dataID)},
 	/* Size between two lines. Default value is 0, in this case it use a line height according to the font size. */
@@ -497,12 +497,12 @@ static const value_t properties[] = {
 
 	/* Number of visible line we can display into the node height.
 	 * Currently, it translate the scrollable property <code>viewSize</code>
-	 * @todo For a smoth scroll we should split that
+	 * @todo For a smooth scroll we should split that
 	 */
 	{"rows", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, super.scrollY.viewSize), MEMBER_SIZEOF(textExtraData_t, super.scrollY.viewSize)},
 	/* Number of lines contained into the node.
 	 * Currently, it translate the scrollable property <code>fullSize</code>
-	 * @todo For a smoth scroll we should split that
+	 * @todo For a smooth scroll we should split that
 	 */
 	{"lines", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, super.scrollY.fullSize), MEMBER_SIZEOF(textExtraData_t, super.scrollY.fullSize)},
 
