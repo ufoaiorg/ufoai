@@ -1485,6 +1485,8 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 			flagsDescription = "SURF_HINT";
 		} else if (!strcmp(texname, "tex_common/ladder")) {
 			side->contentFlags |= CONTENTS_LADDER;
+			side->surfaceFlags |= SURF_NODRAW;
+			tex->surfaceFlags |= SURF_NODRAW;
 			flagsDescription = "CONTENTS_LADDER";
 		} else if (!strcmp(texname, "tex_common/nodraw")) {
 			/*side->contentFlags |= CONTENTS_SOLID;*/
