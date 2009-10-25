@@ -53,9 +53,9 @@ static void G_BuildForbiddenList (int team)
 
 	/* team visibility */
 	if (team)
-		visMask = 1 << team;
+		visMask = G_TeamToVisMask(team);
 	else
-		visMask = PM_ALL;
+		visMask = TEAM_ALL;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		if (!ent->inuse)

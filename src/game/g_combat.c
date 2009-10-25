@@ -146,7 +146,7 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
 	if (damage > 0) {
 		if (!struck || !struck->inuse || G_IsDead(struck))
 			return;
-		else if (!(struck->visflags & (1 << shooter->team)))
+		else if (!G_IsVisibleForTeam(struck, shooter->team))
 			return;
 		else if (struck->team == TEAM_CIVILIAN)
 			mock->civilian += 1;

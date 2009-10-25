@@ -216,7 +216,7 @@ int G_TestVis (int team, edict_t * check, int flags)
 	int i;
 	edict_t *from;
 	/* store old flag */
-	const int old = (check->visflags & (1 << team)) ? 1 : 0;
+	const int old = G_IsVisibleForTeam(check, team) ? 1 : 0;
 
 	if (g_aidebug->integer)
 		return VIS_YES | !old;
@@ -310,7 +310,7 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish, edict_t *ent)
 			/* visiblity has changed ... */
 			if (vis & VIS_CHANGE) {
 				/* swap the vis mask for the given team */
-				check->visflags ^= (1 << team);
+				check->visflags ^= G_TeamToVisMask(team);
 				G_AppearPerishEvent(G_TeamToPM(team), vis & VIS_YES, check, ent);
 
 				/* ... to visible */
@@ -356,7 +356,7 @@ void G_ClearVisFlags (int team)
 	edict_t *ent;
 	int i, mask;
 
-	mask = ~(1 << team);
+	mask = ~G_TeamToVisMask(team);
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse)
 			ent->visflags &= mask;

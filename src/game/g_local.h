@@ -48,7 +48,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_SPOT_DIST	4096 /* 768 */
 
+/**
+ * Bitmask for all players
+ */
 #define PM_ALL			0xFFFFFFFF
+/**
+ * Bitmask for all teams
+ */
+#define TEAM_ALL		0xFFFFFFFF
 
 #define G_PlayerToPM(player) ((player)->num < game.sv_maxplayersperteam ? 1 << ((player)->num) : 0)
 
@@ -165,6 +172,8 @@ extern edict_t *g_edicts;
 #define G_IsVisibleOnBattlefield(ent)	(G_IsActor((ent)) || (ent)->type == ET_ITEM || (ent)->type == ET_PARTICLE)
 #define G_IsAI(ent)				(G_PLAYER_FROM_ENT((ent))->pers.ai)
 #define G_IsAIPlayer(player)	((player)->pers.ai)
+#define G_TeamToVisMask(team)	(1 << (team))
+#define G_IsVisibleForTeam(ent, team) ((ent)->visflags & G_TeamToVisMask(team))
 
 extern cvar_t *sv_maxentities;
 extern cvar_t *password;

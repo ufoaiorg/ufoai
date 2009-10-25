@@ -4,6 +4,12 @@
  *
  * @par
  * You can find the reference lua manual at http://www.lua.org/manual/5.1/
+ *
+ * @par -1 and -2 are pseudo indexes, they count backwards:
+ * @li -1 is top
+ * @li 1 is bottom
+ * @li -2 is under the top
+ * @li etc...
  */
 
 /*
@@ -71,7 +77,9 @@ static int actorL_pos(lua_State *L);
 static int actorL_shoot(lua_State *L);
 static int actorL_face(lua_State *L);
 static int actorL_team(lua_State *L);
-/** Lua Actor metatable methods. */
+/** Lua Actor metatable methods.
+ * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
+ */
 static const luaL_reg actorL_methods[] = {
 	{"__tostring", actorL_tostring},
 	{"pos", actorL_pos},
@@ -94,7 +102,9 @@ static pos3_t* lua_pushpos3(lua_State *L, pos3_t *pos);
 static int pos3L_tostring(lua_State *L);
 static int pos3L_goto(lua_State *L);
 static int pos3L_face(lua_State *L);
-/** Lua Pos3 metatable methods. */
+/** Lua Pos3 metatable methods.
+ * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
+ */
 static const luaL_reg pos3L_methods[] = {
 	{"__tostring", pos3L_tostring},
 	{"goto", pos3L_goto},
@@ -116,7 +126,9 @@ static int AIL_canreload(lua_State *L);
 static int AIL_reload(lua_State *L);
 static int AIL_positionshoot(lua_State *L);
 static int AIL_positionhide(lua_State *L);
-/** Lua AI module methods. */
+/** Lua AI module methods.
+ * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
+ */
 static const luaL_reg AIL_methods[] = {
 	{"print", AIL_print},
 	{"see", AIL_see},
@@ -547,7 +559,7 @@ static int AIL_see (lua_State *L)
 	float distLookup[MAX_EDICTS];
 
 	/* Defaults. */
-	team = TEAM_NO_ACTIVE;
+	team = TEAM_ALL;
 	vision = 0;
 
 	/* Handle parameters. */
@@ -575,7 +587,7 @@ static int AIL_see (lua_State *L)
 			if (lua_isstring(L, 2)) {
 				const char *s = lua_tostring(L, 2);
 				if (strcmp(s, "all") == 0)
-					team = TEAM_NO_ACTIVE;
+					team = TEAM_ALL;
 				else if (strcmp(s, "alien") == 0)
 					team = TEAM_ALIEN;
 				else if (strcmp(s, "civilian") == 0)
@@ -591,11 +603,11 @@ static int AIL_see (lua_State *L)
 
 	n = 0;
 	/* Get visible things. */
-	/** @todo check for what they can see instead of seeing all. */
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 		if (check->inuse && G_IsLivingActor(check) && AIL_ent != check
 		 && vision == 0 /* Vision checks. */
-		 && (team == TEAM_NO_ACTIVE || check->team == team)) {/* Check for team match if needed. */
+		 && G_IsVisibleForTeam(check, team)
+		 && (team == TEAM_ALL || check->team == team)) {/* Check for team match if needed. */
 			distLookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
 			unsorted[n++] = check;
 		}

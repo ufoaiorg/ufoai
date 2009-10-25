@@ -244,7 +244,7 @@ void G_SendInvisible (player_t* player)
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 			if (ent->inuse && ent->team != team && G_IsActor(ent)) {
 				/* not visible for this team - so add the le only */
-				if (!(ent->visflags & (1 << team))) {
+				if (!G_IsVisibleForTeam(ent, team)) {
 					/* parsed in CL_ActorAdd */
 					gi.AddEvent(G_PlayerToPM(player), EV_ACTOR_ADD);
 					gi.WriteShort(ent->number);
