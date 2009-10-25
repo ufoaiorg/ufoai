@@ -342,45 +342,15 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 
 	/* decode RAW value */
 	if (right->type == EA_VALUE_RAW) {
-		void *mem = ((byte *) node + property->ofs);
+		const void *rawValue = right->d.terminal.d1.constData;
 		const value_t *rawType = right->d.terminal.d2.constData;
-
-		/** @todo should we only check the type, not the property? IMO yes */
-		if (property != rawType) {
-			Com_Error(ERR_FATAL, "MN_ExecuteSetAction: @%s type %i exprected, but @%s type %i found. Property setter to '%s@%s' skiped", rawType->string, rawType->type, property->string, property->type, MN_GetPath(node), property->string);
-			return;
-		}
-
-		if ((property->type & V_UI_MASK) == V_NOT_UI)
-			Com_SetValue(node, right->d.terminal.d1.data, property->type, property->ofs, property->size);
-		else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
-			MN_FreeStringProperty(*(void**)mem);
-			switch (property->type & V_BASETYPEMASK) {
-			case V_FLOAT:
-				**(float **) mem = *(float*) right->d.terminal.d1.data;
-				break;
-			case V_INT:
-				**(int **) mem = *(int*) right->d.terminal.d1.data;
-				break;
-			default:
-				*(byte **) mem = right->d.terminal.d1.data;
-			}
-		} else if (property->type == V_UI_ACTION) {
-			*(menuAction_t**) mem = (menuAction_t*) right->d.terminal.d1.data;
-		} else if (property->type == V_UI_ICONREF) {
-			*(menuIcon_t**) mem = (menuIcon_t*) right->d.terminal.d1.data;
-		} else {
-			Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Property type '%d' unsupported", property->type);
-		}
-		return;
+		MN_NodeSetPropertyFromRAW(node, property, rawValue, rawType);
 	}
-
 	/* else it is an expression */
-	/** @todo we should improve if when the prop is a boolean/int/float */
 	else {
+		/** @todo we should improve if when the prop is a boolean/int/float */
 		const char* value = MN_GetStringFromExpression(right, source);
 		MN_NodeSetProperty(node, property, value);
-		return;
 	}
 }
 

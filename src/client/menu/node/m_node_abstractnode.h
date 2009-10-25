@@ -33,6 +33,7 @@ struct menuNode_s;
 
 qboolean MN_NodeInstanceOf(const menuNode_t *node, const char* behaviourName);
 qboolean MN_NodeSetProperty(menuNode_t* node, const value_t *property, const char* value);
+qboolean MN_NodeSetPropertyFromRAW(menuNode_t* node, const value_t *property, const void* rawValue, const value_t *rawType);
 float MN_GetFloatFromNodeProperty(const struct menuNode_s* node, const value_t* property);
 const char* MN_GetStringFromNodeProperty(const menuNode_t* node, const value_t* property);
 

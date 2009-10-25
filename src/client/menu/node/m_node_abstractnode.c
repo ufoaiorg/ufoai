@@ -317,6 +317,40 @@ void MN_AppendNode (menuNode_t* const node, menuNode_t *newNode)
 	MN_InsertNode(node, node->lastChild, newNode);
 }
 
+qboolean MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, const void* rawValue, const value_t *rawType)
+{
+	void *mem = ((byte *) node + property->ofs);
+
+	/** @todo should we only check the type, not the property? IMO yes */
+	if (property != rawType) {
+		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: @%s type %i expected, but @%s type %i found. Property setter to '%s@%s' skipped", rawType->string, rawType->type, property->string, property->type, MN_GetPath(node), property->string);
+		return;
+	}
+
+	if ((property->type & V_UI_MASK) == V_NOT_UI)
+		Com_SetValue(node, rawValue, property->type, property->ofs, property->size);
+	else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
+		MN_FreeStringProperty(*(void**)mem);
+		switch (property->type & V_BASETYPEMASK) {
+		case V_FLOAT:
+			**(float **) mem = *(float*) rawValue;
+			break;
+		case V_INT:
+			**(int **) mem = *(int*) rawValue;
+			break;
+		default:
+			*(byte **) mem = rawValue;
+		}
+	} else if (property->type == V_UI_ACTION) {
+		*(menuAction_t**) mem = (menuAction_t*) rawValue;
+	} else if (property->type == V_UI_ICONREF) {
+		*(menuIcon_t**) mem = (menuIcon_t*) rawValue;
+	} else {
+		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Property type '%d' unsupported", property->type);
+	}
+	return;
+}
+
 /**
  * @brief Set node property
  */
