@@ -936,7 +936,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		if (down && cls.playingCinematic == CIN_STATUS_FULLSCREEN)
 			CIN_StopCinematic();
 
-	if (cls.keyDest != key_console && down) {
+	if (cls.keyDest == key_game && down) {
 		if (MN_KeyPressed(key, unicode))
 			return;
 	}
