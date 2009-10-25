@@ -2247,7 +2247,8 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 	/* Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]); */
 
 	/* check unit heights */
-	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
+	/*for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {*/
+	for (actorSize = 1; actorSize <= 1; actorSize++) {
 		const int maxY = max[1] + actorSize;
 		const int maxX = max[0] + actorSize;
 		/* Offset the initial X and Y to compensate for larger actors when needed. */
