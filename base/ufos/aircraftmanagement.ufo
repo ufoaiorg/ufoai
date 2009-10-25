@@ -653,7 +653,6 @@ aircraft craft_ufo_bomber
 		contains	rs_craft_weapon_sparrowhawk
 		ammo		rs_craft_ammo_sparrowhawk
 	}
-	nogeoscape	true
 }
 
 // TODO: Battleship goes here
