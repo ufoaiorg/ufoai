@@ -58,7 +58,7 @@ components craft_ufo_fighter {
 components craft_ufo_harvester {
 	time	3400
 	item	alienmaterials				800	500
-	item	antimatter					600	0
+	item	antimatter					450	0
 	item	craft_alien_propulsion		4	2
 	item	craft_alien_astrogation		2	1
 	item	craft_alien_detection		1	0
@@ -76,6 +76,28 @@ components craft_ufo_supply {
 	item	craft_alien_astrogation		2	1
 	item	craft_alien_detection		1	0
 	item	craft_weapon_particle_beam	2	1
+}
+
+// UFO -- Corrupter
+components craft_ufo_corrupter {
+	time	4150
+	item	alienmaterials				800	450
+	item	antimatter					670	0
+	item	craft_alien_propulsion		3	1
+	item	craft_alien_astrogation		3	1
+	item	craft_alien_detection		1	0
+	item	craft_weapon_particle_beam	3	1
+}
+
+// UFO -- Bomber
+components craft_ufo_bomber {
+	time	4500
+	item	alienmaterials				1100	600
+	item	antimatter					810	0
+	item	craft_alien_propulsion		4	1
+	item	craft_alien_astrogation		3	1
+	item	craft_alien_detection		2	0
+	item	craft_weapon_particle_beam	3	1
 }
 
 // UFO -- Lander
