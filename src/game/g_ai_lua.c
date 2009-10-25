@@ -1,6 +1,9 @@
 /**
  * @file g_ai.c
  * @brief Artificial Intelligence.
+ *
+ * @par
+ * You can find the reference lua manual at http://www.lua.org/manual/5.1/
  */
 
 /*
@@ -29,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define POS3_METATABLE	"pos3" /**< Pos3 Lua Metatable name. */
 #define ACTOR_METATABLE	"actor" /**< Actor Lua Metable name. */
+#define AI_METATABLE	"ai" /**< AI Lua Metable name. */
 
 /**
  * Provides an api like luaL_dostring for buffers.
@@ -182,7 +186,7 @@ static int lua_isactor (lua_State *L, int index)
  */
 static aiActor_t* lua_toactor (lua_State *L, int index)
 {
-	if (lua_isactor(L,index)) {
+	if (lua_isactor(L, index)) {
 		return (aiActor_t*) lua_touserdata(L, index);
 	}
 	luaL_typerror(L, index, ACTOR_METATABLE);
@@ -936,7 +940,7 @@ int AIL_InitActor (edict_t * ent, char *type, char *subtype)
 	pos3L_register(AI->L);
 
 	/* Register libraries. */
-	luaL_register(AI->L, "ai", AIL_methods);
+	luaL_register(AI->L, AI_METATABLE, AIL_methods);
 
 	/* Load the AI */
 	Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
