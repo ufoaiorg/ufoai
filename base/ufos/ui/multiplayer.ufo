@@ -465,7 +465,7 @@ window mp_bookmarks extends abstract_multiplayer_join
 
 		rows lines {
 			pos			"90 95"
-			size		"310 490"
+			size		"310 480"
 			color1		"0 0.08 0 1"
 			color2		"0 0.16 0 1"
 			lineheight	30

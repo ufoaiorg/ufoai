@@ -349,6 +349,9 @@ mapdef farm_large
 	ufos
 	{
 		craft_ufo_bomber
+		craft_ufo_fighter
+		craft_ufo_harvester
+		craft_ufo_scout
 	}
 
 	terrains
@@ -3205,6 +3208,7 @@ mapdef ufocrash
 		craft_crash_corrupter
 		craft_crash_harvester
 		craft_crash_supply
+		craft_crash_bomber
 	}
 	
 	aircraft 
@@ -3212,6 +3216,7 @@ mapdef ufocrash
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_dragon
+		craft_drop_raptor
 	}
 }
 
