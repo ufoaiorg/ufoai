@@ -317,15 +317,13 @@ void MN_AppendNode (menuNode_t* const node, menuNode_t *newNode)
 	MN_InsertNode(node, node->lastChild, newNode);
 }
 
-qboolean MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, const void* rawValue, const value_t *rawType)
+void MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, void* rawValue, const value_t *rawType)
 {
 	void *mem = ((byte *) node + property->ofs);
 
 	/** @todo should we only check the type, not the property? IMO yes */
-	if (property != rawType) {
+	if (property != rawType)
 		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: @%s type %i expected, but @%s type %i found. Property setter to '%s@%s' skipped", rawType->string, rawType->type, property->string, property->type, MN_GetPath(node), property->string);
-		return;
-	}
 
 	if ((property->type & V_UI_MASK) == V_NOT_UI)
 		Com_SetValue(node, rawValue, property->type, property->ofs, property->size);
@@ -348,7 +346,6 @@ qboolean MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, c
 	} else {
 		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Property type '%d' unsupported", property->type);
 	}
-	return;
 }
 
 /**

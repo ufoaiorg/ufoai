@@ -342,7 +342,7 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 
 	/* decode RAW value */
 	if (right->type == EA_VALUE_RAW) {
-		const void *rawValue = right->d.terminal.d1.constData;
+		void *rawValue = right->d.terminal.d1.data;
 		const value_t *rawType = right->d.terminal.d2.constData;
 		MN_NodeSetPropertyFromRAW(node, property, rawValue, rawType);
 	}
