@@ -97,17 +97,17 @@ void MN_TextScrollEnd (const char* nodePath)
  */
 static int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 {
+	int lineHeight;
 	assert(MN_NodeInstanceOf(node, "text"));
 
-	/* if no texh, its not a text list, result is not important */
-	if (!EXTRADATA(node).lineHeight)
-		return 0;
+	lineHeight = EXTRADATA(node).lineHeight;
+	if (lineHeight == 0) {
+		const char *font = MN_GetFontFromNode(node);
+		lineHeight = MN_FontGetHeight(font);
+	}
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
-	if (EXTRADATA(node).super.scrollY.viewPos)
-		return (int) (y / EXTRADATA(node).lineHeight) + EXTRADATA(node).super.scrollY.viewPos;
-	else
-		return (int) (y / EXTRADATA(node).lineHeight);
+	return (int) (y / lineHeight) + EXTRADATA(node).super.scrollY.viewPos;
 }
 
 static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y)
