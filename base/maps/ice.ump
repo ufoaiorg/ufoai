@@ -39,10 +39,10 @@ a      +b     +b     a
 tile +r01
 {
 4 4
-0      adu     adu	0
-adu     +a     +a	adu
-adu     +a     +a	adu
-0      adu     adu	0
+0      adu     adu      0
+adu     +a     +a       adu
+adu     +a     +a       adu
+0      adu     adu      0
 }
 
 // ---------------------------------
@@ -50,10 +50,10 @@ adu     +a     +a	adu
 tile +r02
 {
 4 4
-0      adu     adu	0
-adu     +a     +a	adu
-adu     +a     +a	adu
-0      adu     adu	0
+0      adu     adu      0
+adu     +a     +a       adu
+adu     +a     +a       adu
+0      adu     adu      0
 }
 
 // ---------------------------------
@@ -61,10 +61,10 @@ adu     +a     +a	adu
 tile +r03
 {
 4 4
-0      adu     adu	0
-adu     +a     +a	adu
-adu     +a     +a	adu
-0      adu     adu	0
+0      adu     adu      0
+adu     +a     +a       adu
+adu     +a     +a       adu
+0      adu     adu      0
 }
 
 // ---------------------------------
@@ -73,10 +73,21 @@ adu     +a     +a	adu
 tile +r04
 {
 4 4
-0      adu     adu	0
-adu     +a     +a	adu
-adu     +a     +a	adu
-0      adu     adu	0
+0      adu     adu      0
+adu     +a     +a       adu
+adu     +a     +a       adu
+0      adu     adu      0
+}
+
+// ---------------------------------
+// Iceblock with niche
+tile +r05
+{
+4 4
+0      adu     adu      0
+adu     +a     +a       adu
+adu     +a     +a       adu
+0      adu     adu      0
 }
 
 // *********************************
@@ -88,6 +99,7 @@ size "6 6"
 +r02 "1 8"
 +r03 "0 8"
 //+r04 "1 6"
+//+r05 "1 6"
 +craft_drop_firebird "1 1"
 }
 
