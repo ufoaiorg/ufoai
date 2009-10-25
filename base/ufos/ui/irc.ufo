@@ -201,7 +201,7 @@ window irc_popup
 		font		f_menu
 		color		"0 0.5 0 1"
 		image		ui/button_green_small
-		pos			"296 192"
+		pos			"110 192"
 		size		"176 32"
 		onClick		{ cmd "irc_connect; mn_pop; mn_push irc;" }
 	}
@@ -213,7 +213,7 @@ window irc_popup
 		font		f_menu
 		color		"0 0.5 0 1"
 		image		ui/button_green_small
-		pos			"36 192"
+		pos			"296 192"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;" }
 	}
