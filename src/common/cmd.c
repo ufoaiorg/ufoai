@@ -1014,7 +1014,6 @@ static void Cmd_Test_f (void)
 			Cmd_ExecuteString(cmd->name);
 	}
 }
-#endif
 
 void Cmd_PrintDebugCommands (void)
 {
@@ -1041,6 +1040,7 @@ void Cmd_PrintDebugCommands (void)
 			);
 	Com_Printf("\n");
 }
+#endif
 
 void Cmd_Init (void)
 {
