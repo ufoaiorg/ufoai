@@ -223,18 +223,18 @@ endif
 
 # Say how to build .o files from .cpp files for this module
 $(BUILDDIR)/tools/radiant_c/%.o: $(SRCDIR)/%.c
-	@echo " * [RAD] $< $(CPPFLAGS) $(RADIANT_CFLAGS)"; \
+	@echo " * [RAD] $<"; \
 		$(CC) $(CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 $(BUILDDIR)/tools/radiant/%.o: $(SRCDIR)/%.cpp
-	@echo " * [RAD] $< $(CPPFLAGS) $(RADIANT_CFLAGS)"; \
+	@echo " * [RAD] $<"; \
 		$(CPP) $(CPPFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 # Say how to build .o files from .cpp/.c files for this module
 $(BUILDDIR)/tools/radiant/plugins_c/%.o: $(SRCDIR)/%.c
-	@echo " * [RAD] $< $(CFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS)"; \
+	@echo " * [RAD] $<"; \
 		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 $(BUILDDIR)/tools/radiant/plugins_cpp/%.o: $(SRCDIR)/%.cpp
-	@echo " * [RAD] $< $(CFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS)"; \
+	@echo " * [RAD] $<"; \
 		$(CPP) $(CPPFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 # and now link the plugins
