@@ -114,7 +114,7 @@ void IN_JoystickMove (void)
 		if (total > lengthof(stick_state.buttons))
 			total = lengthof(stick_state.buttons);
 		for (i = 0; i < total; i++) {
-			qboolean pressed = (SDL_JoystickGetButton(stick, i) != 0);
+			const qboolean pressed = (SDL_JoystickGetButton(stick, i) != 0);
 			if (pressed != stick_state.buttons[i]) {
 				IN_EventEnqueue(K_JOY1 + i, 0, pressed);
 				stick_state.buttons[i] = pressed;
@@ -213,8 +213,8 @@ void IN_JoystickMove (void)
 	if (total >= 2) {
 		/* the first two axes are used for the cursor movement */
 		for (i = 0; i < 2; i++) {
-			Sint16 axis = SDL_JoystickGetAxis(stick, i);
-			float velocity = ((float) axis) / 32767.0f;
+			const Sint16 axis = SDL_JoystickGetAxis(stick, i);
+			const float velocity = ((float) axis) / 32767.0f;
 			if (velocity > -in_joystickThreshold->value && velocity < in_joystickThreshold->value)
 				continue;
 
@@ -240,8 +240,8 @@ void IN_JoystickMove (void)
 			total = 16;
 		/* every axis except the first two can be normally bound to an action */
 		for (i = 2; i < total; i++) {
-			Sint16 axis = SDL_JoystickGetAxis(stick, i);
-			float f = ((float) axis) / 32767.0f;
+			const Sint16 axis = SDL_JoystickGetAxis(stick, i);
+			const float f = ((float) axis) / 32767.0f;
 			if (f < -in_joystickThreshold->value) {
 				axes |= (1 << (i * 2));
 			} else if (f > in_joystickThreshold->value) {
