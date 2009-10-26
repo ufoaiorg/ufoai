@@ -332,11 +332,8 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 int CP_BaseAttackMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
 {
 	int num = 0;
-	const int BOMBER_INTEREST_MIN = 500;	/**< Minimum value interest to have a mission spawned by bomber */
-
 	ufoTypes[num++] = UFO_FIGHTER;
-
-	if (mission->initialOverallInterest > BOMBER_INTEREST_MIN)
+	if (UFO_ShouldAppearOnGeoscape(UFO_BOMBER))
 		ufoTypes[num++] = UFO_BOMBER;
 
 	return num;
