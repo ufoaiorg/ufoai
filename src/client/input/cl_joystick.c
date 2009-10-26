@@ -277,7 +277,7 @@ void IN_JoystickInitMenu (void)
 	if (total == 0) {
 		menuOption_t *option = MN_AllocStaticOption(1);
 		if (option) {
-			MN_InitOption(option, "", "None", "0");
+			MN_InitOption(option, "", _("None"), "0");
 			joystickOptions = option;
 		}
 	} else {
@@ -314,7 +314,7 @@ void IN_StartupJoystick (void)
 	in_joystickSpeed = Cvar_Get("in_joystickSpeed", "20", CVAR_ARCHIVE, "The joystick speed for the cursor");
 
 	if (stick != NULL) {
-		Com_Printf("... closing already inited joystick\n");
+		Com_Printf("... closing already initialized joystick\n");
 		SDL_JoystickClose(stick);
 	}
 
