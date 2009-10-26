@@ -1591,14 +1591,20 @@ const std::string& getMapsPath (void)
 	return g_mapsPath;
 }
 
-const char* map_open (const std::string& title)
+const std::string  map_open (const std::string& title)
 {
-	return file_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()), TRUE, title, getMapsPath(), "map");
+	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, true, "map", ".map");
+	fileChooser.setCurrentPath(getMapsPath());
+	fileChooser.display();
+	return fileChooser.getSelectedFileName();
 }
 
-const char* map_save (const std::string& title)
+const std::string map_save (const std::string& title)
 {
-	return file_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()), FALSE, title, getMapsPath(), "map");
+	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, false, "map", ".map");
+	fileChooser.setCurrentPath(getMapsPath());
+	fileChooser.display();
+	return fileChooser.getSelectedFileName();
 }
 
 void OpenMap (void)
@@ -1606,21 +1612,19 @@ void OpenMap (void)
 	if (!ConfirmModified(_("Open Map")))
 		return;
 
-	const char* filename = map_open(_("Open Map"));
-
-	if (filename != 0) {
+	const std::string filename = map_open(_("Open Map"));
+	if (!filename.empty()) {
 		Map_RegionOff();
 		Map_Free();
 		if (Map_LoadFile(filename))
-			MRU_AddFile(filename);
+			MRU_AddFile(filename.c_str());
 	}
 }
 
 void ImportMap (void)
 {
-	const char* filename = map_open(_("Import Map"));
-
-	if (filename != 0) {
+	const std::string filename = map_open(_("Import Map"));
+	if (!filename.empty()) {
 		UndoableCommand undo("mapImport");
 		Map_ImportFile(filename);
 	}
@@ -1628,11 +1632,10 @@ void ImportMap (void)
 
 bool Map_SaveAs (void)
 {
-	const char* filename = map_save(_("Save Map"));
-
-	if (filename != 0) {
-		MRU_AddFile(filename);
-		Map_Rename(filename);
+	const std::string filename = map_save(_("Save Map"));
+	if (!filename.empty()) {
+		MRU_AddFile(filename.c_str());
+		Map_Rename(filename.c_str());
 		return Map_Save();
 	}
 	return false;
@@ -1654,19 +1657,17 @@ void SaveMap (void)
 
 void ExportMap (void)
 {
-	const char* filename = map_save(_("Export Selection"));
-
-	if (filename != 0) {
-		Map_SaveSelected(filename);
+	const std::string filename = map_save(_("Export Selection"));
+	if (!filename.empty()) {
+		Map_SaveSelected(filename.c_str());
 	}
 }
 
 void SaveRegion (void)
 {
-	const char* filename = map_save(_("Export Region"));
-
-	if (filename != 0) {
-		Map_SaveRegion(filename);
+	const std::string filename = map_save(_("Export Region"));
+	if (!filename.empty()) {
+		Map_SaveRegion(filename.c_str());
 	}
 }
 

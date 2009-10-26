@@ -547,10 +547,11 @@ void WXY_Print (void)
 	width = g_pParentWnd->ActiveXY()->Width();
 	height = g_pParentWnd->ActiveXY()->Height();
 	unsigned char* img;
-	const char* filename;
 
-	filename = file_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()), FALSE, _("Save Image"), "", "bmp");
-	if (!filename)
+	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), _("Save Image"), false, "bmp", ".bmp");
+	fileChooser.display();
+	std::string filename = fileChooser.getSelectedFileName();
+	if (filename.empty())
 		return;
 
 	img = (unsigned char*) malloc((width + 1) * (height + 1) * 3);
@@ -558,7 +559,7 @@ void WXY_Print (void)
 
 	/** use gtk to save the image */
 	FILE *fp;
-	fp = fopen(filename, "wb");
+	fp = fopen(filename.c_str(), "wb");
 	if (fp) {
 		unsigned short bits;
 		unsigned long cmap, bfSize;

@@ -146,21 +146,18 @@ bool color_dialog (GtkWidget *parent, Vector3& color, const std::string& title)
 
 void button_clicked_entry_browse_file (GtkWidget* widget, GtkEntry* entry)
 {
-	const char *file = gtk_entry_get_text(entry);
-	char bufPath[1024];
-	if (file) {
-		const char *filename = path_get_filename_start(file);
-		strncpy(bufPath, file, filename - file);
-		bufPath[filename - file] = '\0';
-		file = bufPath;
-	}
-	const char *filename = file_dialog(gtk_widget_get_toplevel(widget), TRUE, _("Choose File"), file);
+	std::string filename = gtk_entry_get_text(entry);
 
-	if (filename != 0) {
-		gchar* converted = g_filename_to_utf8(filename, -1, 0, 0, 0);
-		gtk_entry_set_text(entry, converted);
-		g_free(converted);
+	gtkutil::FileChooser fileChooser(gtk_widget_get_toplevel(widget), _("Choose File"), true);
+	if (!filename.empty()) {
+		fileChooser.setCurrentPath(os::stripFilename(filename));
+		fileChooser.setCurrentFile(filename);
 	}
+
+	fileChooser.display();
+	std::string file = fileChooser.getSelectedFileName();
+	if (!file.empty())
+		gtk_entry_set_text(entry, file.c_str());
 }
 
 void button_clicked_entry_browse_directory (GtkWidget* widget, GtkEntry* entry)
