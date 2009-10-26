@@ -51,6 +51,48 @@ aircraft_t* UFO_GetByIDX (const int idx)
 }
 
 /**
+ * @brief Get the technology for a given UFO type
+ * @param type UFO type to get the technology for
+ * @return The technology for the given UFO. If no technology was found for the UFO
+ * id this might return @c NULL.
+ */
+const technology_t* UFO_GetTechnologyFromType (const ufoType_t type)
+{
+	const char *id = Com_UFOTypeToShortName(type);
+	const technology_t *tech = RS_GetTechByProvided(id);
+	return tech;
+}
+
+/**
+ * @brief Get the aircraft template for a given UFO type
+ * @param type The UFO type to get the template for
+ * @return The aircraft template of the UFO - always returns a value
+ */
+aircraft_t* UFO_GetByType (const ufoType_t type)
+{
+	int i;
+
+	for (i = 0; i < ccs.numAircraftTemplates; i++) {
+		if (ccs.aircraftTemplates[i].ufotype == type)
+			return &ccs.aircraftTemplates[i];
+	}
+
+	Com_Error(ERR_DROP, "No ufo with type %i found", type);
+}
+
+/**
+ * @brief Some UFOs may only appear if after some interest level in the current running campaign is reached
+ * @param type The UFO type to check the interest level for
+ * @return @c true if the UFO may appear on geoscape, @c false otherwise
+ */
+qboolean UFO_ShouldAppearOnGeoscape (const ufoType_t type)
+{
+	const aircraft_t *ufo = UFO_GetByType(type);
+
+	return ufo->ufoInterestOnGeoscape <= ccs.overallInterest;
+}
+
+/**
  * @brief Translate UFO type to name.
  * @param[in] type UFO type in ufoType_t.
  * @return Translated UFO name.
@@ -59,14 +101,13 @@ aircraft_t* UFO_GetByIDX (const int idx)
  */
 const char* UFO_TypeToName (ufoType_t type)
 {
-	const char *id = Com_UFOTypeToShortName(type);
-	const technology_t *tech = RS_GetTechByProvided(id);
+	const technology_t *tech = UFO_GetTechnologyFromType(type);
 	if (tech)
 		return _(tech->name);
-	Com_Error(ERR_DROP, "UFO_TypeToName(): Unknown UFO type %i - no tech for '%s'\n", type, id);
+	Com_Error(ERR_DROP, "UFO_TypeToName(): Unknown UFO type %i\n", type);
 }
 /**
- * @brief Returns names of the UFO is UFO has been reseached.
+ * @brief Returns names of the UFO is UFO has been researched.
  * @param[in] ufocraft Pointer to the UFO.
  */
 const char* UFO_AircraftToIDOnGeoscape (const aircraft_t *ufocraft)

@@ -159,6 +159,7 @@ typedef struct technology_s {
 					 * @see RS_CheckCollected. */
 
 	char *provides;		/**< The item that this technology enables. */
+
 	float overallTime, time;	/**< The time that is needed to research this tech. (in days).
 					 * "overallTime" stays always the same,
 					 * "time" will be modified when it is under research.*/

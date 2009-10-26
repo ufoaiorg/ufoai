@@ -232,6 +232,7 @@ typedef struct aircraft_s {
 	qboolean landed;		/**< Is ufo landed for a mission? This is used when a UFO lands (a UFO must have both
 							 * @c detected and @c visible set to true to be actually seen on geoscape) */
 	qboolean notOnGeoscape;	/**< don't let this aircraft appear ever on geoscape (e.g. ufo_carrier) */
+	int ufoInterestOnGeoscape;	/**< interest level at which this ufo should be available on geoscape first */
 	int detectionIdx;		/**< detected UFO number (for descriptions "UFO #4")*/
 	date_t lastSpotted;		/**< date the UFO was detected last time */
 	aliensTmp_t alienCargo[MAX_CARGO];	/**< Cargo of aliens. */

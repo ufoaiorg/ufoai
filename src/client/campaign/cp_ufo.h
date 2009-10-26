@@ -32,6 +32,9 @@ enum {
 };
 
 const char* UFO_TypeToName(ufoType_t type);
+const technology_t* UFO_GetTechnologyFromType(const ufoType_t type);
+aircraft_t* UFO_GetByType(const ufoType_t type);
+qboolean UFO_ShouldAppearOnGeoscape(const ufoType_t type);
 const char* UFO_AircraftToIDOnGeoscape(const aircraft_t *ufocraft);
 const char* UFO_MissionResultToString(void);
 void UFO_SetRandomDest(aircraft_t* ufo);

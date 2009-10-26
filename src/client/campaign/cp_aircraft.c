@@ -1474,6 +1474,7 @@ static const value_t aircraft_vals[] = {
 	{"numteam", V_INT, offsetof(aircraft_t, maxTeamSize), MEMBER_SIZEOF(aircraft_t, maxTeamSize)},
 	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
 	{"nogeoscape", V_BOOL, offsetof(aircraft_t, notOnGeoscape), MEMBER_SIZEOF(aircraft_t, notOnGeoscape)},
+	{"interestlevel", V_INT, offsetof(aircraft_t, ufoInterestOnGeoscape), MEMBER_SIZEOF(aircraft_t, ufoInterestOnGeoscape)},
 
 	{"image", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, image), 0},
 	{"model", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, model), 0},

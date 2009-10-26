@@ -578,6 +578,7 @@ aircraft craft_ufo_corrupter
 		contains	rs_craft_weapon_sparrowhawk
 		ammo		rs_craft_ammo_sparrowhawk
 	}
+	interestlevel	400
 }
 
 aircraft craft_ufo_supply
@@ -653,6 +654,7 @@ aircraft craft_ufo_bomber
 		contains	rs_craft_weapon_sparrowhawk
 		ammo		rs_craft_ammo_sparrowhawk
 	}
+	interestlevel	500
 }
 
 // TODO: Battleship goes here
