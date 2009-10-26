@@ -24,6 +24,7 @@
 //			point on earth. Used to defined fuelsize. This value must be AFTER speed value.
 //	wrange - Not defined here for aircraft (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard.
 //  antimatter - amount of antimatter needed for a full refuel
+//  interestlevel - the campaign interest level ufos appear on the geoscape. This is used to controll the 'time' on which ufos appear during a campaign.
 //	---------------------------------------------------------------------
 //
 // craftitem
