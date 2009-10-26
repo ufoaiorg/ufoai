@@ -1105,8 +1105,24 @@ window options
 		string joystick_settings_str
 		{
 			string		"_Joystick settings:"
+			pos			"85 480"
+			size		"240 20"
+		}
+
+		string joystick_enable_str
+		{
+			string		"_Enable:"
 			pos			"85 505"
 			size		"240 20"
+		}
+
+		checkbox joystick_enable
+		{
+			current		*cvar:in_joystick
+			tooltip		"_Enables/Disables Joysticks"
+			pos			"253 505"
+			size		"20 18"
+			image		"ui/checkbox_blue"
 		}
 
 		// ===================

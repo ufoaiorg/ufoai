@@ -81,6 +81,9 @@ void IN_JoystickMove (void)
 	/* check whether a user has changed the joystick number */
 	if (in_joystickNo->modified)
 		IN_StartupJoystick();
+	/* check whether joysticks are disabled */
+	if (!in_joystick->integer)
+		return;
 
 	if (!stick)
 		return;
@@ -307,7 +310,7 @@ void IN_StartupJoystick (void)
 	int i = 0;
 	int total = 0;
 
-	in_joystick = Cvar_Get("in_joystick", "1", CVAR_ARCHIVE, "Activate or deactivate the use of a joystick");
+	in_joystick = Cvar_Get("in_joystick", "0", CVAR_ARCHIVE, "Activate or deactivate the use of a joystick");
 	in_joystickNo = Cvar_Get("in_joystickNo", "0", CVAR_ARCHIVE, "Joystick to use - 0 is the first - 1 is the second ...");
 	in_joystickThreshold = Cvar_Get("in_joystickThreshold", "0.05", CVAR_ARCHIVE, "The threshold for the joystick axes");
 	in_joystickSpeed = Cvar_Get("in_joystickSpeed", "20", CVAR_ARCHIVE, "The joystick speed for the cursor");
@@ -319,9 +322,6 @@ void IN_StartupJoystick (void)
 
 	stick = NULL;
 	memset(&stick_state, '\0', sizeof(stick_state));
-
-	if (!in_joystick->integer)
-		return;
 
 	if (!SDL_WasInit(SDL_INIT_JOYSTICK)) {
 		Com_DPrintf(DEBUG_CLIENT, "Calling SDL_Init(SDL_INIT_JOYSTICK)...\n");
@@ -357,3 +357,4 @@ void IN_StartupJoystick (void)
 
 	SDL_JoystickEventState(SDL_QUERY);
 }
+
