@@ -47,6 +47,8 @@ namespace ui
 
 			/* GTK callbacks */
 
+			static void addEntity (EntityClassChooser*);
+
 			// Called when close button is clicked, ensure that window is hidden
 			// not destroyed.
 			static void callbackHide (GtkWidget*, GdkEvent*, EntityClassChooser*);
@@ -58,6 +60,10 @@ namespace ui
 			// Check when the selection changes, disable the add button if there
 			// is nothing selected.
 			static void callbackSelectionChanged (GtkWidget*, EntityClassChooser*);
+
+			// Callbacks for double clicks or button presses
+			static gint callbackKeyPress (GtkWidget* widget, GdkEventKey* event, EntityClassChooser*);
+			static gint callbackMouseButtonPress (GtkWidget *widget, GdkEventButton *event, EntityClassChooser*);
 
 		public:
 

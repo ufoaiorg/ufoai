@@ -95,6 +95,8 @@ namespace ui
 		_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeView));
 		gtk_tree_selection_set_mode(_selection, GTK_SELECTION_BROWSE);
 		g_signal_connect(G_OBJECT(_selection), "changed", G_CALLBACK(callbackSelectionChanged), this);
+		g_signal_connect(G_OBJECT(treeView), "button_press_event", G_CALLBACK(callbackMouseButtonPress), this);
+		g_signal_connect(G_OBJECT(treeView), "key_press_event", G_CALLBACK(callbackKeyPress), this);
 
 		GtkCellRenderer* rend = gtk_cell_renderer_text_new();
 		GtkTreeViewColumn* col = gtk_tree_view_column_new_with_attributes(_("Entity name"), rend, "text", 0, NULL);
@@ -170,7 +172,7 @@ namespace ui
 		gtk_widget_hide(self->_widget);
 	}
 
-	void EntityClassChooser::callbackAdd (GtkWidget* widget, EntityClassChooser* self)
+	void EntityClassChooser::addEntity (EntityClassChooser* self)
 	{
 		// Get the selection
 		GtkTreeIter iter;
@@ -189,6 +191,11 @@ namespace ui
 		} catch (EntityCreationException e) {
 			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), e.what());
 		}
+	}
+
+	void EntityClassChooser::callbackAdd (GtkWidget* widget, EntityClassChooser* self)
+	{
+		addEntity(self);
 	}
 
 	void EntityClassChooser::callbackSelectionChanged (GtkWidget* widget, EntityClassChooser* self)
@@ -211,6 +218,26 @@ namespace ui
 		} else {
 			gtk_widget_set_sensitive(self->_addButton, FALSE);
 		}
+	}
+
+	gint EntityClassChooser::callbackMouseButtonPress (GtkWidget *widget, GdkEventButton *event, EntityClassChooser* self)
+	{
+		// double clicked with the left mount button
+		if (event->type == GDK_2BUTTON_PRESS && event->button == 1) {
+			addEntity(self);
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	gint EntityClassChooser::callbackKeyPress (GtkWidget* widget, GdkEventKey* event, EntityClassChooser* self)
+	{
+		if (event->keyval == GDK_Return) {
+			addEntity(self);
+			return TRUE;
+		}
+
+		return FALSE;
 	}
 
 } // namespace ui
