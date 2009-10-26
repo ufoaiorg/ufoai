@@ -42,8 +42,6 @@ static struct {
 	unsigned int oldhats;
 } stick_state;
 
-#define ARRAYLEN(x) (sizeof(x) / sizeof(x[0]))
-
 /* We translate axes movement into keypresses */
 static const int joy_keys[16] = {
 	K_LEFTARROW, K_RIGHTARROW,
@@ -72,7 +70,7 @@ static const int hat_keys[16] = {
 
 void IN_JoystickMove (void)
 {
-	qboolean joy_pressed[ARRAYLEN(joy_keys)];
+	qboolean joy_pressed[lengthof(joy_keys)];
 	unsigned int axes = 0;
 	unsigned int hats = 0;
 	int total = 0;
@@ -113,8 +111,8 @@ void IN_JoystickMove (void)
 	/* now query the stick buttons... */
 	total = SDL_JoystickNumButtons(stick);
 	if (total > 0) {
-		if (total > ARRAYLEN(stick_state.buttons))
-			total = ARRAYLEN(stick_state.buttons);
+		if (total > lengthof(stick_state.buttons))
+			total = lengthof(stick_state.buttons);
 		for (i = 0; i < total; i++) {
 			qboolean pressed = (SDL_JoystickGetButton(stick, i) != 0);
 			if (pressed != stick_state.buttons[i]) {
