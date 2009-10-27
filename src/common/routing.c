@@ -292,6 +292,28 @@ NEW MAP TRACING FUNCTIONS
 ===============================================================================
 */
 
+/**
+ * @brief Check if pos is on solid ground
+ * @param[in] map The map's routing data
+ * @param[in] actorSize The size of the actor along the X and Y axis in cell units
+ * @param[in] pos The position to check below
+ * @return true if solid
+ * @sa CL_AddTargetingBox
+ */
+qboolean RT_AllCellsBelowAreFilled(routing_t * map, const int actorSize, pos3_t pos)
+{
+	int i;
+
+	/* the -1 level is considered solid ground */
+	if (pos[2] == 0)
+		return qtrue;
+
+	for (i = 0; i < pos[2]; i++) {
+		if (RT_CEILING(map, actorSize, pos[0], pos[1], i) != 0)
+			return qfalse;
+	}
+	return qtrue;
+}
 
 /**
  * @brief This function looks to see if an actor of a given size can occupy a cell(s) and if so

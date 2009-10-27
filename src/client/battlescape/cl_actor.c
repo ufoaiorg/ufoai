@@ -2271,6 +2271,13 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	if (!cl_showactors->integer)
 		return;
 
+	/* Don't display the cursor if it's above the currently selected level.
+	 * The 2nd part of the if is an attempt to display it anyway when we eg. climb a hill.
+	 * But there are too many situations inside buildings that match the criteria (eg. actorclip around chair).
+	 * So disabled for now.*/
+	if (pos[2] > cl_worldlevel->integer/* && !RT_AllCellsBelowAreFilled(clMap, fieldSize, pos)*/)
+		return;
+
 	memset(&ent, 0, sizeof(ent));
 	ent.flags = RF_BOX;
 
@@ -2719,12 +2726,12 @@ void CL_DebugPath_f (void)
 #if 0
 	pos3_t c1;
 	pos3_t c2;
-	c1[0] = 122;
-	c1[1] = 132;
-	c1[2] = 0;
-	c2[0] = 129;
-	c2[1] = 136;
-	c2[2] = 0;
+	c1[0] = 132;
+	c1[1] = 122;
+	c1[2] = 1;
+	c2[0] = 137;
+	c2[1] = 128;
+	c2[2] = 3;
 	Grid_RecalcBoxRouting(clMap, c1, c2);
 	Com_Printf("RecalcBoxRouting done.\n");
 #endif
