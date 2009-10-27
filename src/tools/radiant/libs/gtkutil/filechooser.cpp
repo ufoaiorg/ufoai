@@ -193,7 +193,7 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const std::st
 
 	// Add a final mask for All Files (*.*)
 	GtkFileFilter* allFilter = gtk_file_filter_new();
-	gtk_file_filter_add_pattern(allFilter, "*.*");
+	gtk_file_filter_add_pattern(allFilter, _("*.*"));
 	gtk_file_filter_set_name(allFilter, _("All Files (*.*)"));
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), allFilter);
 
@@ -334,8 +334,8 @@ namespace gtkutil
 
 		// Add a final mask for All Files (*.*)
 		GtkFileFilter* allFilter = gtk_file_filter_new();
-		gtk_file_filter_add_pattern(allFilter, "*.*");
-		gtk_file_filter_set_name(allFilter, "All Files (*.*)");
+		gtk_file_filter_add_pattern(allFilter, _("*.*"));
+		gtk_file_filter_set_name(allFilter, _("All Files (*.*)"));
 		gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(_dialog), allFilter);
 	}
 
@@ -422,8 +422,8 @@ namespace gtkutil
 			askTitle += (!fileName.empty()) ? ": " + os::getFilenameFromPath(fileName) : "";
 
 			if (!file_exists(fileName) || gtk_MessageBox(_parent,
-					"The specified file already exists.\nDo you want to replace it?", askTitle.c_str(), eMB_NOYES,
-					eMB_ICONQUESTION) == eIDYES) {
+					_("The specified file already exists.\nDo you want to replace it?"), askTitle.c_str(),
+					eMB_NOYES, eMB_ICONQUESTION) == eIDYES) {
 				return fileName;
 			}
 		}
