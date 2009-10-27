@@ -2706,3 +2706,19 @@
 "light" "100"
 "origin" "256 254 64"
 }
+// entity 49
+{
+"classname" "misc_model"
+"spawnflags" "248"
+"origin" "70 444 224"
+"model" "models/civilians/female/body01.md2"
+"skin" "models/civilians/female/body01d"
+}
+// entity 50
+{
+"classname" "misc_model"
+"spawnflags" "248"
+"origin" "54 443 240"
+"model" "models/civilians/female/head01a.md2"
+"angles" "-10.5049 0 0"
+}
