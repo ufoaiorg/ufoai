@@ -1604,16 +1604,14 @@ const std::string map_open (const std::string& title)
 	// attach the preview object
 	//fileChooser.attachPreview(&preview);
 
-	fileChooser.display();
-	return fileChooser.getSelectedFileName();
+	return fileChooser.display();
 }
 
 const std::string map_save (const std::string& title)
 {
 	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, false, "map", ".map");
 	fileChooser.setCurrentPath(getMapsPath());
-	fileChooser.display();
-	return fileChooser.getSelectedFileName();
+	return fileChooser.display();
 }
 
 void OpenMap (void)
