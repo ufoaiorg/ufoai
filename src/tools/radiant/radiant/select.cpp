@@ -794,9 +794,9 @@ void Nudge (int nDim, float fNudge)
 
 void Selection_NudgeZ (float amount)
 {
-	StringOutputStream command;
+	std::stringstream command;
 	command << "nudgeSelected -axis z -amount " << amount;
-	UndoableCommand undo(command.c_str());
+	UndoableCommand undo(command.str());
 
 	Nudge(2, amount);
 }
@@ -868,9 +868,9 @@ static gboolean rotatedlg_apply (GtkWidget *widget, RotateDialog* rotateDialog)
 	eulerXYZ[1] = static_cast<float> (gtk_spin_button_get_value(rotateDialog->y));
 	eulerXYZ[2] = static_cast<float> (gtk_spin_button_get_value(rotateDialog->z));
 
-	StringOutputStream command;
+	std::stringstream command;
 	command << "rotateSelectedEulerXYZ -x " << eulerXYZ[0] << " -y " << eulerXYZ[1] << " -z " << eulerXYZ[2];
-	UndoableCommand undo(command.c_str());
+	UndoableCommand undo(command.str());
 
 	GlobalSelectionSystem().rotateSelected(quaternion_for_euler_xyz_degrees(eulerXYZ));
 	return TRUE;
@@ -1009,9 +1009,9 @@ static gboolean scaledlg_apply (GtkWidget *widget, ScaleDialog* scaleDialog)
 	sy = static_cast<float> (atof(gtk_entry_get_text(GTK_ENTRY (scaleDialog->y))));
 	sz = static_cast<float> (atof(gtk_entry_get_text(GTK_ENTRY (scaleDialog->z))));
 
-	StringOutputStream command;
+	std::stringstream command;
 	command << "scaleSelected -x " << sx << " -y " << sy << " -z " << sz;
-	UndoableCommand undo(command.c_str());
+	UndoableCommand undo(command.str());
 
 	Select_Scale(sx, sy, sz);
 

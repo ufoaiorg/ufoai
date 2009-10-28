@@ -30,6 +30,7 @@
 #include <map>
 #include <list>
 #include <set>
+#include <string>
 
 #include "windowobserver.h"
 #include "iundo.h"
@@ -1404,7 +1405,7 @@ class RadiantSelectionSystem: public SelectionSystem,
 				SceneChangeNotify();
 			}
 		}
-		void outputTranslation (TextOutputStream& ostream)
+		void outputTranslation (std::stringstream& ostream)
 		{
 			ostream << " -xyz " << m_translation.x() << " " << m_translation.y() << " " << m_translation.z();
 		}
@@ -1428,7 +1429,7 @@ class RadiantSelectionSystem: public SelectionSystem,
 				SceneChangeNotify();
 			}
 		}
-		void outputRotation (TextOutputStream& ostream)
+		void outputRotation (std::stringstream& ostream)
 		{
 			ostream << " -eulerXYZ " << m_rotation.x() << " " << m_rotation.y() << " " << m_rotation.z();
 		}
@@ -1446,7 +1447,7 @@ class RadiantSelectionSystem: public SelectionSystem,
 				SceneChangeNotify();
 			}
 		}
-		void outputScale (TextOutputStream& ostream)
+		void outputScale (std::stringstream& ostream)
 		{
 			ostream << " -scale " << m_scale.x() << " " << m_scale.y() << " " << m_scale.z();
 		}
@@ -1727,7 +1728,7 @@ void RadiantSelectionSystem::endMove ()
 	SceneChangeNotify();
 
 	if (m_undo_begun) {
-		StringOutputStream command;
+		std::stringstream command;
 
 		if (ManipulatorMode() == eTranslate) {
 			command << "translateTool";
@@ -1742,7 +1743,7 @@ void RadiantSelectionSystem::endMove ()
 			command << "dragTool";
 		}
 
-		GlobalUndoSystem().finish(command.c_str());
+		GlobalUndoSystem().finish(command.str());
 	}
 
 }

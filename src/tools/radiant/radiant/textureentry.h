@@ -74,7 +74,8 @@ class EntryCompletion
 
 		void clear ()
 		{
-			gtk_list_store_clear(m_store);
+			if (m_store != 0)
+				gtk_list_store_clear(m_store);
 		}
 
 		void update ()
