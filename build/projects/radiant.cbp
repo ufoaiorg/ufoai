@@ -746,6 +746,12 @@
 		<Unit filename="../../src/tools/radiant/radiant/treemodel.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ui/common/MapPreview.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/map/MapFileChooserPreview.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/ui/common/MaterialDefinitionView.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -66,6 +66,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/map/write.cpp \
 	$(RADIANT_BASE)/radiant/map/autosave.cpp \
 	$(RADIANT_BASE)/radiant/map/map.cpp \
+	$(RADIANT_BASE)/radiant/map/MapFileChooserPreview.cpp \
 	\
 	$(RADIANT_BASE)/radiant/xyview/grid.cpp \
 	$(RADIANT_BASE)/radiant/xyview/xywindow.cpp \
@@ -113,6 +114,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findtextures.cpp \
 	\
+	$(RADIANT_BASE)/radiant/ui/common/MapPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/ModelPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/MaterialDefinitionView.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/RenderableAABB.cpp \

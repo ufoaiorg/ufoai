@@ -80,6 +80,8 @@
 #include "../brush/brush.h"
 #include "../brush/brushnode.h"
 
+#include "MapFileChooserPreview.h"
+
 class NameObserver
 {
 		UniqueNames& m_names;
@@ -1591,10 +1593,17 @@ const std::string& getMapsPath (void)
 	return g_mapsPath;
 }
 
-const std::string  map_open (const std::string& title)
+const std::string map_open (const std::string& title)
 {
 	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, true, "map", ".map");
 	fileChooser.setCurrentPath(getMapsPath());
+
+	// Instantiate a new preview object
+	//map::MapFileChooserPreview preview;
+
+	// attach the preview object
+	//fileChooser.attachPreview(&preview);
+
 	fileChooser.display();
 	return fileChooser.getSelectedFileName();
 }

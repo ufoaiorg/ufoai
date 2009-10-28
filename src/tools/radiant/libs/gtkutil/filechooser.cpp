@@ -289,7 +289,7 @@ namespace gtkutil
 
 	FileChooser::FileChooser (GtkWidget* parent, const std::string& title, bool open, const std::string& pattern,
 			const std::string& defaultExt) :
-		_parent(parent), _dialog(NULL), _title(title), _pattern(pattern), _defaultExt(defaultExt), _open(open)
+		_parent(parent), _dialog(NULL), _title(title), _pattern(pattern), _defaultExt(defaultExt), _open(open), _preview(NULL)
 	{
 		if (_pattern.empty()) {
 			_pattern = "*";
