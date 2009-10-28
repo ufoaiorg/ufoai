@@ -82,11 +82,11 @@ namespace ui
 		glClearColor(0.0, 0.0, 0.0, 0);
 		glClearDepth(100.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		GlobalOpenGL().perspective(PREVIEW_FOV, 1, 0.1, 10000);
 
 		// Set up the camera
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
+		GlobalOpenGL().perspective(PREVIEW_FOV, 1, 0.1, 10000);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
