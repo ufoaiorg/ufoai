@@ -528,9 +528,10 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	assert(bottom <= top);
 
 	/* top and bottom are absolute model heights.  Find the actual cell z coordinates for these heights.
-	 * ...but before rounding, give back the DIST_EPSILON that was added by the trace */
-	bottom -= DIST_EPSILON;
-	top += DIST_EPSILON;
+	 * ...but before rounding, give back the DIST_EPSILON that was added by the trace.
+	 * Actually, we have to give back two DIST_EPSILON to prevent rounding issues */
+	bottom -= 2 * DIST_EPSILON;
+	top += 2 * DIST_EPSILON;
 	bottomQ = ModelFloorToQuant(bottom); /* Convert to QUANT units to ensure the floor is rounded up to the correct value. */
 	topQ = ModelCeilingToQuant(top); /* Convert to QUANT units to ensure the floor is rounded down to the correct value. */
 	fz = floor(bottomQ / CELL_HEIGHT); /* Ensure we round down to get the bottom-most affected cell */
