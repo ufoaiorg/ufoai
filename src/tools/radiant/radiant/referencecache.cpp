@@ -70,31 +70,26 @@ void MapChanged ()
 
 static EntityCreator* g_entityCreator = 0;
 
-static bool MapResource_loadFile (const MapFormat& format, scene::Node& root, const char* filename)
+static bool MapResource_loadFile (const MapFormat& format, scene::Node& root, const std::string& filename)
 {
-	g_message("Open file '%s' for read...\n", filename);
 	TextFileInputStream file(filename);
 	if (!file.failed()) {
-		g_message("success\n");
-		ScopeDisableScreenUpdates disableScreenUpdates(path_get_filename_start(filename), _("Loading Map"));
-		ASSERT_NOTNULL(g_entityCreator);
+		ScopeDisableScreenUpdates disableScreenUpdates(os::getFilenameFromPath(filename), _("Loading Map"));
 		format.readGraph(root, file, *g_entityCreator);
 		return true;
 	} else {
-		g_warning("failure\n");
+		g_warning("Open file '%s' failed\n", filename.c_str());
 		return false;
 	}
 }
 
-static NodeSmartReference MapResource_load (const MapFormat& format, const char* path, const char* name)
+static NodeSmartReference MapResource_load (const MapFormat& format, const std::string& path, const std::string& name)
 {
 	NodeSmartReference root(NewMapRoot(name));
-
-	StringOutputStream fullpath(256);
-	fullpath << path << name;
+	std::string fullpath = path + name;
 
 	if (g_path_is_absolute(fullpath.c_str())) {
-		MapResource_loadFile(format, root, fullpath.c_str());
+		MapResource_loadFile(format, root, fullpath);
 	} else {
 		g_warning("map path is not fully qualified: '%s'\n", fullpath.c_str());
 	}
@@ -108,17 +103,14 @@ static NodeSmartReference MapResource_load (const MapFormat& format, const char*
 bool MapResource_saveFile (const MapFormat& format, scene::Node& root, GraphTraversalFunc traverse,
 		const std::string& filename)
 {
-	//ASSERT_MESSAGE(g_path_is_absolute(filename), "MapResource_saveFile: path is not absolute: " << makeQuoted(filename));
-	g_message("Open file '%s' for write...\n", filename.c_str());
 	TextFileOutputStream file(filename);
 	if (!file.failed()) {
-		g_message("success\n");
-		ScopeDisableScreenUpdates disableScreenUpdates(path_get_filename_start(filename.c_str()), _("Saving Map"));
+		ScopeDisableScreenUpdates disableScreenUpdates(os::getFilenameFromPath(filename), _("Saving Map"));
 		format.writeGraph(root, traverse, file);
 		return true;
 	}
 
-	g_warning("failure\n");
+	g_message("Open file '%s' for write failed...\n", filename.c_str());
 	return false;
 }
 
@@ -140,14 +132,13 @@ static bool file_saveBackup (const std::string& path)
  * file before calling MapResource_saveFile() to do the actual saving of
  * data.
  */
-bool MapResource_save (const MapFormat& format, scene::Node& root, const char* path, const char* name)
+bool MapResource_save (const MapFormat& format, scene::Node& root, const std::string& path, const std::string& name)
 {
-	StringOutputStream fullpath(256);
-	fullpath << path << name;
+	std::string fullpath = path + name;
 
 	if (g_path_is_absolute(fullpath.c_str())) {
-		if (!file_exists(fullpath.c_str()) || file_saveBackup(fullpath.c_str())) {
-			return MapResource_saveFile(format, root, Map_Traverse, fullpath.c_str());
+		if (!file_exists(fullpath) || file_saveBackup(fullpath)) {
+			return MapResource_saveFile(format, root, Map_Traverse, fullpath);
 		}
 
 		g_warning("failed to save a backup map file: '%s'\n", fullpath.c_str());
@@ -500,9 +491,8 @@ struct ModelResource: public Resource
 		}
 		std::time_t modified () const
 		{
-			StringOutputStream fullpath(256);
-			fullpath << m_path.c_str() << m_name.c_str();
-			return file_modified(fullpath.c_str());
+			const std::string fullpath = m_path + m_name;
+			return file_modified(fullpath);
 		}
 		void mapSave ()
 		{

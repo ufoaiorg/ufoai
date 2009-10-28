@@ -86,13 +86,13 @@ void ShowModelBoundingBoxesExport (const BoolImportCallback& importCallback)
 
 typedef FreeCaller1<const BoolImportCallback&, ShowModelNormalsExport> ShowModelNormalsApplyCaller;
 ShowModelNormalsApplyCaller g_showModelNormals_button_caller;
-BoolExportCallback g_showModelNormals_button_callback (g_showModelNormals_button_caller);
-ToggleItem g_showModelNormals_button (g_showModelNormals_button_callback);
+BoolExportCallback g_showModelNormals_button_callback(g_showModelNormals_button_caller);
+ToggleItem g_showModelNormals_button(g_showModelNormals_button_callback);
 
 typedef FreeCaller1<const BoolImportCallback&, ShowModelBoundingBoxesExport> ShowModelBoundingBoxApplyCaller;
 ShowModelBoundingBoxApplyCaller g_showModelBB_button_caller;
-BoolExportCallback g_showModelBB_button_callback (g_showModelBB_button_caller);
-ToggleItem g_showModelBB_button (g_showModelBB_button_callback);
+BoolExportCallback g_showModelBB_button_callback(g_showModelBB_button_caller);
+ToggleItem g_showModelBB_button(g_showModelBB_button_callback);
 
 void Model_RegisterToggles (void)
 {
@@ -192,12 +192,11 @@ class ModelPicoAPI: public TypeSystemRef
 	public:
 		typedef ModelLoader Type;
 
-		ModelPicoAPI (const char* extension, const picoModule_t* module) :
+		ModelPicoAPI (const std::string& extension, const picoModule_t* module) :
 			m_modelLoader(module)
 		{
-			StringOutputStream filter(128);
-			filter << "*." << extension;
-			GlobalFiletypesModule::getTable().addType(Type::Name(), extension, filetype_t(module->displayName,
+			std::string filter = "*." + extension;
+			GlobalFiletypesModule::getTable().addType(Type::Name(), extension.c_str(), filetype_t(module->displayName,
 					filter.c_str()));
 
 			GlobalPreferenceSystem().registerPreference("ShowModelNormals", BoolImportStringCaller(g_showModelNormals),
@@ -226,7 +225,7 @@ class PicoModelAPIConstructor
 		}
 		ModelPicoAPI* constructAPI (ModelPicoDependencies& dependencies)
 		{
-			return new ModelPicoAPI(m_extension.c_str(), m_module);
+			return new ModelPicoAPI(m_extension, m_module);
 		}
 		void destroyAPI (ModelPicoAPI* api)
 		{

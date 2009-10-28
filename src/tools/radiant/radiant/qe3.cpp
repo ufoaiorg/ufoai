@@ -134,13 +134,9 @@ bool ConfirmModified (const std::string& title)
  */
 void Sys_SetTitle (const std::string& text, bool modified)
 {
-	StringOutputStream title;
-	title << "UFORadiant ";
-	title << ConvertLocaleToUTF8(text.c_str());
-
-	if (modified) {
-		title << " *";
-	}
+	std::string title = "UFORadiant " + text;
+	if (modified)
+		title += " *";
 
 	gtk_window_set_title(GlobalRadiant().getMainWindow(), title.c_str());
 }

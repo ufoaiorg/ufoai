@@ -548,7 +548,8 @@ void WXY_Print (void)
 	height = g_pParentWnd->ActiveXY()->Height();
 	unsigned char* img;
 
-	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), _("Save Image"), false, "bmp", ".bmp");
+	gtkutil::FileChooser
+			fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), _("Save Image"), false, "bmp", ".bmp");
 	fileChooser.display();
 	std::string filename = fileChooser.getSelectedFileName();
 	if (filename.empty())

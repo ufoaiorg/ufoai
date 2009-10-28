@@ -79,7 +79,6 @@ struct camwindow_globals_private_t
 		int m_nAngleSpeed;
 		bool m_bCamInverseMouse;
 		bool m_bLightRadius;
-		bool m_bForceLightRadius;
 		bool m_bCamDiscrete;
 		bool m_bCubicClipping;
 		bool m_showStats;
@@ -87,8 +86,8 @@ struct camwindow_globals_private_t
 
 		camwindow_globals_private_t () :
 			m_nMoveSpeed(100), m_bCamLinkSpeed(true), m_nAngleSpeed(3), m_bCamInverseMouse(false),
-					m_bLightRadius(false), m_bForceLightRadius(false), m_bCamDiscrete(true), m_bCubicClipping(true),
-					m_showStats(true), m_nStrafeMode(0)
+					m_bLightRadius(false), m_bCamDiscrete(true), m_bCubicClipping(true), m_showStats(true),
+					m_nStrafeMode(0)
 		{
 		}
 };
@@ -973,27 +972,27 @@ void CamWnd_registerCommands (CamWnd& camwnd)
 	GlobalKeyEvents_insert("CameraFreeMoveDown", Accelerator('C'), FreeMoveCameraMoveDownKeyDownCaller(
 			camwnd.getCamera()), FreeMoveCameraMoveDownKeyUpCaller(camwnd.getCamera()));
 
-	GlobalRadiant().commandInsert("CameraForward", ReferenceCaller<camera_t, Camera_MoveForward_Discrete> (camwnd.getCamera()),
-			Accelerator(GDK_Up));
-	GlobalRadiant().commandInsert("CameraBack", ReferenceCaller<camera_t, Camera_MoveBack_Discrete> (camwnd.getCamera()),
-			Accelerator(GDK_Down));
-	GlobalRadiant().commandInsert("CameraLeft", ReferenceCaller<camera_t, Camera_RotateLeft_Discrete> (camwnd.getCamera()),
-			Accelerator(GDK_Left));
-	GlobalRadiant().commandInsert("CameraRight", ReferenceCaller<camera_t, Camera_RotateRight_Discrete> (camwnd.getCamera()),
-			Accelerator(GDK_Right));
-	GlobalRadiant().commandInsert("CameraStrafeRight",
-			ReferenceCaller<camera_t, Camera_MoveRight_Discrete> (camwnd.getCamera()), Accelerator(GDK_period));
-	GlobalRadiant().commandInsert("CameraStrafeLeft", ReferenceCaller<camera_t, Camera_MoveLeft_Discrete> (camwnd.getCamera()),
-			Accelerator(GDK_comma));
+	GlobalRadiant().commandInsert("CameraForward", ReferenceCaller<camera_t, Camera_MoveForward_Discrete> (
+			camwnd.getCamera()), Accelerator(GDK_Up));
+	GlobalRadiant().commandInsert("CameraBack",
+			ReferenceCaller<camera_t, Camera_MoveBack_Discrete> (camwnd.getCamera()), Accelerator(GDK_Down));
+	GlobalRadiant().commandInsert("CameraLeft", ReferenceCaller<camera_t, Camera_RotateLeft_Discrete> (
+			camwnd.getCamera()), Accelerator(GDK_Left));
+	GlobalRadiant().commandInsert("CameraRight", ReferenceCaller<camera_t, Camera_RotateRight_Discrete> (
+			camwnd.getCamera()), Accelerator(GDK_Right));
+	GlobalRadiant().commandInsert("CameraStrafeRight", ReferenceCaller<camera_t, Camera_MoveRight_Discrete> (
+			camwnd.getCamera()), Accelerator(GDK_period));
+	GlobalRadiant().commandInsert("CameraStrafeLeft", ReferenceCaller<camera_t, Camera_MoveLeft_Discrete> (
+			camwnd.getCamera()), Accelerator(GDK_comma));
 
 	GlobalRadiant().commandInsert("CameraUp", ReferenceCaller<camera_t, Camera_MoveUp_Discrete> (camwnd.getCamera()),
 			Accelerator('D'));
-	GlobalRadiant().commandInsert("CameraDown", ReferenceCaller<camera_t, Camera_MoveDown_Discrete> (camwnd.getCamera()),
-			Accelerator('C'));
-	GlobalRadiant().commandInsert("CameraAngleUp", ReferenceCaller<camera_t, Camera_PitchUp_Discrete> (camwnd.getCamera()),
-			Accelerator('A'));
-	GlobalRadiant().commandInsert("CameraAngleDown", ReferenceCaller<camera_t, Camera_PitchDown_Discrete> (camwnd.getCamera()),
-			Accelerator('Z'));
+	GlobalRadiant().commandInsert("CameraDown",
+			ReferenceCaller<camera_t, Camera_MoveDown_Discrete> (camwnd.getCamera()), Accelerator('C'));
+	GlobalRadiant().commandInsert("CameraAngleUp", ReferenceCaller<camera_t, Camera_PitchUp_Discrete> (
+			camwnd.getCamera()), Accelerator('A'));
+	GlobalRadiant().commandInsert("CameraAngleDown", ReferenceCaller<camera_t, Camera_PitchDown_Discrete> (
+			camwnd.getCamera()), Accelerator('Z'));
 }
 
 void CamWnd_Move_Enable (CamWnd& camwnd)
@@ -1396,6 +1395,10 @@ class CamRenderer: public Renderer
  ==============
  */
 
+void Camera_SetStats (bool value)
+{
+	g_camwindow_globals_private.m_showStats = value;
+}
 void ShowStatsToggle ()
 {
 	g_camwindow_globals_private.m_showStats ^= 1;
@@ -1787,6 +1790,8 @@ void Camera_constructPreferences (PreferencesPage& page)
 			BoolExportCaller(g_camwindow_globals_private.m_bCamDiscrete));
 	page.appendCheckBox("", _("Enable far-clip plane"), FreeCaller1<bool, Camera_SetFarClip> (), BoolExportCaller(
 			g_camwindow_globals_private.m_bCubicClipping));
+	page.appendCheckBox("", _("Enable statistics"), FreeCaller1<bool, Camera_SetStats> (), BoolExportCaller(
+			g_camwindow_globals_private.m_showStats));
 
 	const char* render_mode[] = { C_("Render Mode", "Wireframe"), C_("Render Mode", "Flatshade"),
 			C_("Render Mode", "Textured") };

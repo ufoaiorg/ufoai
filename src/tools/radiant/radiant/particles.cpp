@@ -181,10 +181,8 @@ void addUFOFile (const char* dirstring)
 
 	if (!found) {
 		l_ufofiles = g_slist_append(l_ufofiles, strdup(dirstring));
-		StringOutputStream ufoname(256);
-		ufoname << "ufos/" << dirstring;
+		const std::string ufoname = "ufos/" + std::string(dirstring);
 		LoadUFOFile(ufoname.c_str());
-		ufoname.clear();
 	}
 }
 

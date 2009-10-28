@@ -47,9 +47,8 @@ Image* QERApp_LoadImage(void* environment, const std::string& name) {
 		}
 		void visit(const std::string& name, const _QERPlugImageTable& table) const {
 			if (m_image == 0) {
-				StringOutputStream fullname(256);
-				fullname << m_name << '.' << name;
-				AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(fullname.c_str()));
+				std::string fullname = m_name + "." + name;
+				AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(fullname));
 				if (file) {
 					m_image = table.loadImage(*file);
 				}

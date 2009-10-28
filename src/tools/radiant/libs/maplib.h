@@ -190,7 +190,7 @@ class MapRoot: public scene::Node::Symbiot, public scene::Instantiable, public s
 			return m_changeTracker;
 		}
 
-		MapRoot (const char* name) :
+		MapRoot (const std::string& name) :
 			m_node(this, this, StaticTypeCasts::instance().get()), m_name(name)
 		{
 			m_node.m_isRoot = true;
@@ -265,7 +265,7 @@ inline void MapRoot_Destroy ()
 {
 }
 
-inline NodeSmartReference NewMapRoot (const char* name)
+inline NodeSmartReference NewMapRoot (const std::string& name)
 {
 	return NodeSmartReference((new MapRoot(name))->node());
 }
