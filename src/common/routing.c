@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "common.h"
 #include "routing.h"
 
 /*
@@ -79,7 +78,7 @@ static inline qboolean RT_PlaceIsUsable (place_t* p)
 	return p->usable;
 }
 
-static inline qboolean RT_PlaceDoesIntersectEnough(place_t* p, place_t* other)
+static inline qboolean RT_PlaceDoesIntersectEnough (place_t* p, place_t* other)
 {
 	return (min(p->ceiling, other->ceiling) - max(p->floor, other->floor) >= PATHFINDING_MIN_OPENING);
 }
@@ -88,7 +87,7 @@ static inline qboolean RT_PlaceDoesIntersectEnough(place_t* p, place_t* other)
  * in front of a stairway and has a floor at eg.1 and a ceiling at eg.16.
  * The other place has the beginning of the stairway, so the floor is at eg. 6
  * and the ceiling is that of the higher level, eg.32.*/
-static inline int RT_PlaceIsShifted(place_t* p, place_t* other)
+static inline int RT_PlaceIsShifted (place_t* p, place_t* other)
 {
 	if (!RT_PlaceIsUsable(p) || !RT_PlaceIsUsable(other))
 		return 0;
@@ -128,7 +127,7 @@ typedef struct opening_s {
  * @param[in] hy  The high end of the y range updated
  * @param[in] hz  The high end of the z range updated
  */
-void RT_DumpMap (struct routing_s *map, int actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
+void RT_DumpMap (const routing_t *map, int actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
 {
 	int x, y, z;
 
@@ -159,7 +158,7 @@ void RT_DumpMap (struct routing_s *map, int actorSize, int lx, int ly, int lz, i
  * @brief  Dumps contents of the entire client map to console for inspection.
  * @param[in] map A pointer to the map being dumped
  */
-void RT_DumpWholeMap (routing_t *map)
+void RT_DumpWholeMap (const routing_t *map)
 {
 	vec3_t mins, maxs, normal, origin;
 	pos3_t start, end, test;
@@ -1513,7 +1512,7 @@ void RT_UpdateConnectionColumn (routing_t * map, const int actorSize, const int 
 }
 
 
-void RT_WriteCSVFiles (struct routing_s *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
+void RT_WriteCSVFiles (const routing_t *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
 {
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
 	qFILE f;
