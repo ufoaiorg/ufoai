@@ -9,8 +9,7 @@ void export_selected (GtkWindow* mainWindow)
 {
 	// Obtain the path from a File Dialog Window
 	gtkutil::FileChooser fileChooser(GTK_WIDGET(mainWindow), _("Save as Obj"), false, "obj", ".obj");
-	fileChooser.display();
-	const std::string path = fileChooser.getSelectedFileName();
+	const std::string path = fileChooser.display();
 	if (path.empty())
 		return;
 

@@ -550,8 +550,7 @@ void WXY_Print (void)
 
 	gtkutil::FileChooser
 			fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), _("Save Image"), false, "bmp", ".bmp");
-	fileChooser.display();
-	std::string filename = fileChooser.getSelectedFileName();
+	std::string filename = fileChooser.display();
 	if (filename.empty())
 		return;
 

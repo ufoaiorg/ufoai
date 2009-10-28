@@ -154,8 +154,7 @@ void button_clicked_entry_browse_file (GtkWidget* widget, GtkEntry* entry)
 		fileChooser.setCurrentFile(filename);
 	}
 
-	fileChooser.display();
-	std::string file = fileChooser.getSelectedFileName();
+	std::string file = fileChooser.display();
 	if (!file.empty())
 		gtk_entry_set_text(entry, file.c_str());
 }
