@@ -43,6 +43,17 @@ namespace ui
 		GlobalShaderCache().release("$CAM_OVERLAY");
 	}
 
+	float MapPreview::getRadius(scene::Node* root) {
+		if (root != NULL) {
+			scene::Path path;
+			path.push(makeReference(*root));
+			scene::Instance* instance = GlobalSceneGraph().find(path);
+			if (instance)
+				return instance->worldAABB().getRadius();
+		}
+		return 0.0f;
+	}
+
 	// Set the size request for the widget
 
 	void MapPreview::setSize (int size)
@@ -53,12 +64,8 @@ namespace ui
 	void MapPreview::setRootNode (scene::Node* root)
 	{
 		_root = root;
-
-		if (_root != NULL) {
-			// Calculate camera distance so map is appropriately zoomed
-			// TODO:
-			//_camDist = -(_root->worldAABB().getRadius() * 2.0);
-		}
+		// Calculate camera distance so map is appropriately zoomed
+		_camDist = -(getRadius(_root) * 2.0);
 	}
 
 	scene::Node* MapPreview::getRootNode ()
@@ -211,8 +218,7 @@ namespace ui
 		if (self->_root == NULL)
 			return;
 
-		// TODO:
-		float inc = 0.1;// static_cast<float> (self->_root->worldAABB().getRadius() * 0.1);
+		const float inc = getRadius(self->_root) * 0.1;
 
 		if (ev->direction == GDK_SCROLL_UP)
 			self->_camDist += inc;

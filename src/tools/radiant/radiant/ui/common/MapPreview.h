@@ -40,6 +40,10 @@ namespace ui
 			Shader* _stateSelect1;
 			Shader* _stateSelect2;
 
+		private:
+
+			static float getRadius(scene::Node* root);
+
 		public:
 			MapPreview ();
 
