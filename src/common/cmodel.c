@@ -1450,8 +1450,8 @@ int CM_HeadnodeForBox (int tile, const vec3_t mins, const vec3_t maxs)
  */
 void Grid_DumpWholeClientMap_f (void)
 {
-	Grid_DumpWholeMap(&clMap[0]);
-	Grid_DumpWholeMap(&clMap[1]);
+	RT_DumpWholeMap(&clMap[0]);
+	RT_DumpWholeMap(&clMap[1]);
 }
 
 
@@ -1461,8 +1461,8 @@ void Grid_DumpWholeClientMap_f (void)
  */
 void Grid_DumpWholeServerMap_f (void)
 {
-	Grid_DumpWholeMap(&svMap[0]);
-	Grid_DumpWholeMap(&svMap[1]);
+	RT_DumpWholeMap(&svMap[0]);
+	RT_DumpWholeMap(&svMap[1]);
 }
 
 

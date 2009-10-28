@@ -128,11 +128,11 @@ typedef struct opening_s {
  * @param[in] hy  The high end of the y range updated
  * @param[in] hz  The high end of the z range updated
  */
-void Grid_DumpMap (struct routing_s *map, int actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
+void RT_DumpMap (struct routing_s *map, int actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
 {
 	int x, y, z;
 
-	Com_Printf("\nGrid_DumpMap (%i %i %i) (%i %i %i)\n", lx, ly, lz, hx, hy, hz);
+	Com_Printf("\nRT_DumpMap (%i %i %i) (%i %i %i)\n", lx, ly, lz, hx, hy, hz);
 	for (z = hz; z >= lz; --z) {
 		Com_Printf("\nLayer %i:\n   ", z);
 		for (x = lx; x <= hx; ++x) {
@@ -159,7 +159,7 @@ void Grid_DumpMap (struct routing_s *map, int actorSize, int lx, int ly, int lz,
  * @brief  Dumps contents of the entire client map to console for inspection.
  * @param[in] map A pointer to the map being dumped
  */
-void Grid_DumpWholeMap (routing_t *map)
+void RT_DumpWholeMap (routing_t *map)
 {
 	vec3_t mins, maxs, normal, origin;
 	pos3_t start, end, test;
@@ -211,7 +211,7 @@ void Grid_DumpWholeMap (routing_t *map)
 	}
 
 	/* Dump the client map */
-	Grid_DumpMap(map, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
+	RT_DumpMap(map, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
 }
 
 
