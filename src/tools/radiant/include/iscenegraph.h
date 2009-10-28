@@ -116,6 +116,8 @@ namespace scene
 			virtual void traverse_subgraph (const Walker& walker, const Path& start) = 0;
 			/** @brief Returns the instance at the location identified by 'path', or 0 if it does not exist. */
 			virtual scene::Instance* find (const Path& path) = 0;
+			/** @brief Returns the instance at the location identified by 'node', or 0 if it does not exist. */
+			virtual scene::Instance* find (Node& node) = 0;
 
 			/** @brief Invokes all scene-changed callbacks. Called when any part of the scene changes the way it will appear when the scene is rendered.
 			 * @todo Move to a separate class. */

@@ -155,6 +155,13 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 			return (*i).second;
 		}
 
+		scene::Instance* find (scene::Node& node)
+		{
+			scene::Path path;
+			path.push(makeReference(node));
+			return find(path);
+		}
+
 		void insert (scene::Instance* instance)
 		{
 			m_instances.insert(InstanceMap::value_type(PathConstReference(instance->path()), instance));

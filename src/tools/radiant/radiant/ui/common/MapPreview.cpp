@@ -45,9 +45,7 @@ namespace ui
 
 	float MapPreview::getRadius(scene::Node* root) {
 		if (root != NULL) {
-			scene::Path path;
-			path.push(makeReference(*root));
-			scene::Instance* instance = GlobalSceneGraph().find(path);
+			scene::Instance* instance = GlobalSceneGraph().find(*root);
 			if (instance)
 				return instance->worldAABB().getRadius();
 		}
