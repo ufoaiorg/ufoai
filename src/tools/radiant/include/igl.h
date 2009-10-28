@@ -75,6 +75,19 @@ struct OpenGLBinding {
 		glCallLists(1, GL_UNSIGNED_BYTE, reinterpret_cast<const GLubyte*>(&character));
 	}
 
+	void perspective (GLdouble fovy, GLdouble yaspect, GLdouble zNear, GLdouble zFar)
+	{
+		GLdouble xmin, xmax, ymin, ymax;
+
+		xmax = zNear * tan(fovy * 3.14159265 / 360.0);
+		xmin = -xmax;
+
+		ymin = xmin * yaspect;
+		ymax = xmax * yaspect;
+
+		glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
+	}
+
 	// GL_ARB_multitexture
 	void (QGL_DLLEXPORT *m_glActiveTexture)(GLenum texture);
 	void (QGL_DLLEXPORT *m_glClientActiveTexture)(GLenum texture);

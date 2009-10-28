@@ -63,19 +63,6 @@ namespace ui
 		gtk_widget_set_size_request(_glWidget, size, size);
 	}
 
-	void MYgluPerspective (GLdouble fovy, GLdouble yaspect, GLdouble zNear, GLdouble zFar)
-	{
-		GLdouble xmin, xmax, ymin, ymax;
-
-		xmax = zNear * tan(fovy * 3.14159265 / 360.0);
-		xmin = -xmax;
-
-		ymin = xmin * yaspect;
-		ymax = xmax * yaspect;
-
-		glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
-	}
-
 	// Initialise the preview GL stuff
 	void ModelPreview::initialisePreview ()
 	{
@@ -90,7 +77,7 @@ namespace ui
 		// Set up the camera
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		MYgluPerspective(PREVIEW_FOV, 1, 0.1, 10000);
+		GlobalOpenGL().perspective(PREVIEW_FOV, 1, 0.1, 10000);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
