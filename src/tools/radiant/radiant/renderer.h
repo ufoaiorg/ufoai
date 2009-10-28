@@ -82,9 +82,6 @@ class ForEachVisible: public scene::Graph::Walker
 		const VolumeTest& m_volume;
 		const Walker_& m_walker;
 		mutable std::vector<VolumeIntersectionValue> m_state;
-		// Stack of parent visibility values
-		std::vector<VolumeIntersectionValue> _visStack;
-
 	public:
 		ForEachVisible (const VolumeTest& volume, const Walker_& walker) :
 			m_volume(volume), m_walker(walker)
