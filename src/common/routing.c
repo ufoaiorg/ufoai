@@ -300,7 +300,7 @@ NEW MAP TRACING FUNCTIONS
  * @return true if solid
  * @sa CL_AddTargetingBox
  */
-qboolean RT_AllCellsBelowAreFilled(routing_t * map, const int actorSize, pos3_t pos)
+qboolean RT_AllCellsBelowAreFilled (const routing_t * map, const int actorSize, const pos3_t pos)
 {
 	int i;
 
