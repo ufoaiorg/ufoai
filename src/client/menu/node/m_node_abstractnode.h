@@ -41,6 +41,7 @@ const char* MN_GetStringFromNodeProperty(const menuNode_t* node, const value_t* 
 void MN_UnHideNode(struct menuNode_s* node);
 void MN_HideNode(struct menuNode_s* node);
 void MN_Invalidate(struct menuNode_s* node);
+void MN_NodeSetSize(menuNode_t* node, vec2_t size);
 
 /* position */
 void MN_GetNodeAbsPos(const struct menuNode_s* node, vec2_t pos);

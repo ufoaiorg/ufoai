@@ -168,9 +168,8 @@ static void MN_WindowNodeDoStarLayout (menuNode_t *node)
 		if (child->num == 10) {
 			child->pos[0] = 0;
 			child->pos[1] = 0;
-			child->size[0] = node->size[0];
-			child->size[1] = node->size[1];
-			MN_Invalidate(child);
+			MN_NodeSetSize(child, node->size);
+			child->behaviour->doLayout(child);
 			continue;
 		}
 

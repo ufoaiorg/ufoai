@@ -525,6 +525,8 @@ static const int virtualFunctions[] = {
 	offsetof(nodeBehaviour_t, focusGained),
 	offsetof(nodeBehaviour_t, focusLost),
 	offsetof(nodeBehaviour_t, extraDataSize),
+	offsetof(nodeBehaviour_t, sizeChanged),
+	offsetof(nodeBehaviour_t, propertyChanged),
 	-1
 };
 

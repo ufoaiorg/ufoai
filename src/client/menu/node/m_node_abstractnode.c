@@ -261,6 +261,18 @@ void MN_UnHideNode (menuNode_t* node)
 }
 
 /**
+ * @brief Update the node size and fire the size callback
+ */
+void MN_NodeSetSize (menuNode_t* node, vec2_t size)
+{
+	if (node->size[0] == size[0] && node->size[1] == size[1])
+		return;
+	node->size[0] = size[0];
+	node->size[1] = size[1];
+	node->behaviour->sizeChanged(node);
+}
+
+/**
  * @brief Search a child node by given name
  * @note Only search with one depth
  */
@@ -346,6 +358,7 @@ void MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, void*
 	} else {
 		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Property type '%d' unsupported", property->type);
 	}
+	node->behaviour->propertyChanged(node, property);
 }
 
 /**
@@ -368,6 +381,7 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 			Com_Printf("MN_NodeSetProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 			return qfalse;
 		}
+		node->behaviour->propertyChanged(node, property);
 		return qtrue;
 
 	case V_UI_CVAR:	/* cvar */
@@ -387,6 +401,7 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 					MN_SetCvar(&((char*)b)[6], NULL, f);
 				else
 					*(float*) b = f;
+				node->behaviour->propertyChanged(node, property);
 				return qtrue;
 			}
 		case V_CVAR_OR_LONGSTRING:
@@ -394,6 +409,7 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 			{
 				MN_FreeStringProperty(*(void**)b);
 				*(char**) b = Mem_PoolStrDup(value, mn_dynStringPool, 0);
+				node->behaviour->propertyChanged(node, property);
 				return qtrue;
 			}
 		}
@@ -620,13 +636,37 @@ static void MN_AbstractNodeDoLayout (menuNode_t *node)
 	node->invalidated = qfalse;
 }
 
+/**
+ * @brief Callback stub
+ */
+static void MN_AbstractNodeSizeChanged (menuNode_t *node)
+{
+	if (node->firstChild != NULL)
+		MN_Invalidate(node);
+}
+
+static const value_t *propertyWidth;
+static const value_t *propertyHeight;
+static const value_t *propertySize;
+
+static void MN_AbstractNodePropertyChanged (menuNode_t *node, const value_t *property)
+{
+	if (property == propertyWidth || property == propertyHeight || property == propertySize) {
+		node->behaviour->sizeChanged(node);
+	}
+}
+
 void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractnode";
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
 
-	/* drag and drop callback */
+	propertyWidth = MN_GetPropertyFromBehaviour(behaviour, "width");
+	propertyHeight = MN_GetPropertyFromBehaviour(behaviour, "height");
+	propertySize = MN_GetPropertyFromBehaviour(behaviour, "size");
+
+	/* callbacks */
 	behaviour->dndEnter = MN_AbstractNodeDNDEnter;
 	behaviour->dndMove = MN_AbstractNodeDNDMove;
 	behaviour->dndLeave = MN_AbstractNodeDNDLeave;
@@ -635,6 +675,8 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	behaviour->doLayout = MN_AbstractNodeDoLayout;
 	behaviour->clone = MN_AbstractNodeClone;
 	behaviour->activate = MN_AbstractNodeActivate;
+	behaviour->propertyChanged = MN_AbstractNodePropertyChanged;
+	behaviour->sizeChanged = MN_AbstractNodeSizeChanged;
 
 	/* some commands */
 #ifdef DEBUG

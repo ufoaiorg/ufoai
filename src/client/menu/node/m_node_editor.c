@@ -115,6 +115,12 @@ static void MN_EditorNodeDraw (menuNode_t *node)
 
 static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 {
+	vec2_t size;
+	const int diffX = x - startX;
+	const int diffY = y - startY;
+	startX = x;
+	startY = y;
+
 	if (anchoredNode == NULL)
 		return;
 
@@ -122,47 +128,41 @@ static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	case -1:
 		return;
 	case 0:
-		anchoredNode->pos[0] += x - startX;
-		anchoredNode->size[0] -= x - startX;
-		anchoredNode->pos[1] += y - startY;
-		anchoredNode->size[1] -= y - startY;
-		startX = x;
-		startY = y;
+		anchoredNode->pos[0] += diffX;
+		anchoredNode->pos[1] += diffY;
+		size[0] = anchoredNode->size[0] - diffX;
+		size[1] = anchoredNode->size[1] - diffY;
 		break;
 	case 1:
-		anchoredNode->size[0] += x - startX;
 		anchoredNode->pos[1] += y - startY;
-		anchoredNode->size[1] -= y - startY;
-		startX = x;
-		startY = y;
+		size[0] = anchoredNode->size[0] + diffX;
+		size[1] = anchoredNode->size[1] - diffY;
 		break;
 	case 2:
 		anchoredNode->pos[0] += x - startX;
-		anchoredNode->size[0] -= x - startX;
-		anchoredNode->size[1] += y - startY;
-		startX = x;
-		startY = y;
+		size[0] = anchoredNode->size[0] - diffX;
+		size[1] = anchoredNode->size[1] + diffY;
 		break;
 	case 3:
-		anchoredNode->size[0] += x - startX;
-		anchoredNode->size[1] += y - startY;
-		startX = x;
-		startY = y;
+		size[0] = anchoredNode->size[0] + diffX;
+		size[1] = anchoredNode->size[1] + diffY;
 		break;
 	case 4:
-		anchoredNode->pos[0] += x - startX;
-		anchoredNode->pos[1] += y - startY;
-		startX = x;
-		startY = y;
+		anchoredNode->pos[0] += diffX;
+		anchoredNode->pos[1] += diffY;
+		size[0] = anchoredNode->size[0];
+		size[1] = anchoredNode->size[1];
 		break;
 	default:
 		assert(qfalse);
 	}
 
-	if (anchoredNode->size[0] < 5)
-		anchoredNode->size[0] = 5;
-	if (anchoredNode->size[1] < 5)
-		anchoredNode->size[1] = 5;
+	if (size[0] < 5)
+		size[0] = 5;
+	if (size[1] < 5)
+		size[1] = 5;
+
+	MN_NodeSetSize(anchoredNode, size);
 }
 
 /**
