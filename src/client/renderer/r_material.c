@@ -178,8 +178,8 @@ static void R_StageTexCoord (const materialStage_t *stage, const vec3_t v, const
 	}
 }
 
-#define NUM_DIRTMAP_ENTRIES 16
-static const float dirtmap[NUM_DIRTMAP_ENTRIES] = {
+/** @brief Array with 'random' alpha values for the dirtmap */
+static const float dirtmap[] = {
 		0.6, 0.5, 0.3, 0.4, 0.7, 0.3, 0.0, 0.4,
 		0.5, 0.2, 0.8, 0.5, 0.3, 0.2, 0.5, 0.3
 };
@@ -208,7 +208,7 @@ static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t c
 		color[3] = a;
 	} else if (stage->flags & STAGE_DIRTMAP) {
 		/* resolve dirtmap based on vertex position */
-		const int index = (int)VectorLength(v) % NUM_DIRTMAP_ENTRIES;
+		const int index = (int)VectorLength(v) % lengthof(dirtmap);
 
 		if (stage->flags & STAGE_COLOR)  /* honor stage color */
 			VectorCopy(stage->color, color);

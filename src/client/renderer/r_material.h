@@ -94,7 +94,8 @@ typedef struct scale_s {
 } scale_t;
 
 typedef struct terrain_s {
-	float floor, ceil;
+	float floor;	/**< if the vertex z position is lower than this, the alpha value for the blended texture will be 0 */
+	float ceil;		/**< if the vertex z position is greater than this, the alpha value will be 1 */
 	float height;
 } terrain_t;
 
