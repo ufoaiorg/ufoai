@@ -160,9 +160,9 @@ pk3 clean-pk3:
 # Target to install only the game data.
 #
 install_data: pk3
-	$(INSTALL) -d $(DATADIR)/base
+	$(INSTALL) -d $(DESTDIR)$(DATADIR)/base
 # Copy them to datadir
-	$(INSTALL) -m 644 base/*.pk3 $(DATADIR)/base
+	$(INSTALL) -m 644 base/*.pk3 $(DESTDIR)$(DATADIR)/base
 
 #
 # Target to install the game executables and language files. It also creates a
@@ -171,22 +171,22 @@ install_data: pk3
 #
 install_exec: $(TARGETS)
 	@$(MAKE) lang
-	$(INSTALL) -d $(DATADIR)/base
+	$(INSTALL) -d $(DESTDIR)$(DATADIR)/base
 # Copy each compiled file to datadir (with path)
 	for file in $(TARGETS); do $(INSTALL) -m 755 $$file $(DATADIR)/$$file; done
 # Copy all language files
 	for dir in base/i18n/*; do \
-		$(INSTALL) -d $(DATADIR)/$$dir/LC_MESSAGES && \
-		$(INSTALL) -m 644 $$dir/LC_MESSAGES/ufoai.mo $(DATADIR)/$$dir/LC_MESSAGES/ufoai.mo; \ 
+		$(INSTALL) -d $(DESTDIR)$(DATADIR)/$$dir/LC_MESSAGES && \
+		$(INSTALL) -m 644 $$dir/LC_MESSAGES/ufoai.mo $(DESTDIR)$(DATADIR)/$$dir/LC_MESSAGES/ufoai.mo; \ 
 	done
 # Create and install run scripts
 	@echo "#!/bin/sh" > ufo.sh
 	@echo "cd $(DATADIR); ./ufo \$$*; exit \$$?" >> ufo.sh
-	$(INSTALL) -d $(BINDIR)
-	$(INSTALL) -m 755 ufo.sh $(BINDIR)/ufo
+	$(INSTALL) -d $(DESTDIR)$(BINDIR)
+	$(INSTALL) -m 755 ufo.sh $(DESTDIR)$(BINDIR)/ufo
 	@echo "#!/bin/sh" > ufoded.sh
 	@echo "cd $(DATADIR); ./ufoded \$$*; exit \$$?" >> ufoded.sh
-	$(INSTALL) -m 755 ufoded.sh $(BINDIR)/ufoded
+	$(INSTALL) -m 755 ufoded.sh $(DESTDIR)$(BINDIR)/ufoded
 
 #######################################################################
 
