@@ -175,10 +175,14 @@ install_exec: $(TARGETS)
 # Copy each compiled file to datadir (with path)
 	for file in $(TARGETS); do $(INSTALL) -m 755 $$file $(DATADIR)/$$file; done
 # Copy all language files
-	for dir in base/i18n/*; do $(INSTALL) -m 644 $$dir/LC_MESSAGES/ufoai.mo $(DATADIR)/$$dir/LC_MESSAGES/ufoai.mo; done
+	for dir in base/i18n/*; do \
+		$(INSTALL) -d $(DATADIR)/$$dir/LC_MESSAGES && \
+		$(INSTALL) -m 644 $$dir/LC_MESSAGES/ufoai.mo $(DATADIR)/$$dir/LC_MESSAGES/ufoai.mo; \ 
+	done
 # Create and install run scripts
 	@echo "#!/bin/sh" > ufo.sh
 	@echo "cd $(DATADIR); ./ufo \$$*; exit \$$?" >> ufo.sh
+	$(INSTALL) -d $(BINDIR)
 	$(INSTALL) -m 755 ufo.sh $(BINDIR)/ufo
 	@echo "#!/bin/sh" > ufoded.sh
 	@echo "cd $(DATADIR); ./ufoded \$$*; exit \$$?" >> ufoded.sh
