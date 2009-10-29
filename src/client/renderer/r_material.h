@@ -30,21 +30,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* flags will persist on the stage structures but may also bubble
  * up to the material flags to determine render eligibility */
-#define STAGE_TEXTURE		(1 << 0)
-#define STAGE_ENVMAP		(1 << 1)
-#define STAGE_BLEND			(1 << 2)
-#define STAGE_COLOR			(1 << 3)
-#define STAGE_PULSE			(1 << 4)
-#define STAGE_STRETCH		(1 << 5)
-#define STAGE_ROTATE		(1 << 6)
-#define STAGE_SCROLL_S		(1 << 7)
-#define STAGE_SCROLL_T		(1 << 8)
-#define STAGE_SCALE_S		(1 << 9)
-#define STAGE_SCALE_T		(1 << 10)
-#define STAGE_TERRAIN		(1 << 11)
-#define STAGE_LIGHTMAP		(1 << 12)
-#define STAGE_ANIM			(1 << 13)
-#define STAGE_DIRTMAP		(1 << 14)
+#define STAGE_TEXTURE			(1 << 0)
+#define STAGE_ENVMAP			(1 << 1)
+#define STAGE_BLEND				(1 << 2)
+#define STAGE_COLOR				(1 << 3)
+#define STAGE_PULSE				(1 << 4)
+#define STAGE_STRETCH			(1 << 5)
+#define STAGE_ROTATE			(1 << 6)
+#define STAGE_SCROLL_S			(1 << 7)
+#define STAGE_SCROLL_T			(1 << 8)
+#define STAGE_SCALE_S			(1 << 9)
+#define STAGE_SCALE_T			(1 << 10)
+#define STAGE_TERRAIN			(1 << 11)
+#define STAGE_TAPE	(1 << 12)
+#define STAGE_LIGHTMAP			(1 << 13)
+#define STAGE_ANIM				(1 << 14)
+#define STAGE_DIRTMAP			(1 << 15)
 
 /* set on stages eligible for static, dynamic, and per-pixel lighting */
 #define STAGE_LIGHTING		(1 << 30)
@@ -96,8 +97,17 @@ typedef struct scale_s {
 typedef struct terrain_s {
 	float floor;	/**< if the vertex z position is lower than this, the alpha value for the blended texture will be 0 */
 	float ceil;		/**< if the vertex z position is greater than this, the alpha value will be 1 */
-	float height;
+	float height;	/**< the z distance between floor and ceiling */
 } terrain_t;
+
+typedef struct tape_s {
+	float floor;	/**< if the vertex z position is lower than this, the alpha value for the blended texture will be 0 */
+	float ceil;		/**< if the vertex z position is greater than this, the alpha value will be 0 */
+	float height;	/**< the z distance between floor and ceiling */
+	float min;		/**< center - floor */
+	float max;		/**< center + ceil */
+	float center;	/**< the center where the maximum alpha value should be */
+} tape_t;
 
 typedef struct anim_s {
 	int num_frames;
@@ -118,6 +128,7 @@ typedef struct materialStage_s {
 	scroll_t scroll;
 	scale_t scale;
 	terrain_t terrain;
+	tape_t tape;
 	dirt_t dirt;
 	anim_t anim;
 	struct materialStage_s *next;

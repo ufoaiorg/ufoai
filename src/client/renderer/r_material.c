@@ -189,7 +189,7 @@ static const float dirtmap[] = {
  */
 static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t color)
 {
-	if (stage->flags & STAGE_TERRAIN) {
+	if (stage->flags & (STAGE_TERRAIN | STAGE_TAPE)) {
 		float a;
 
 		if (stage->flags & STAGE_COLOR)  /* honor stage color */
@@ -198,12 +198,26 @@ static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t c
 			VectorSet(color, 1.0, 1.0, 1.0);
 
 		/* resolve alpha for vert based on z axis height */
-		if (v[2] < stage->terrain.floor)
-			a = 0.0;
-		else if (v[2] > stage->terrain.ceil)
-			a = 1.0;
-		else
-			a = (v[2] - stage->terrain.floor) / stage->terrain.height;
+		if (stage->flags & STAGE_TERRAIN) {
+			if (v[2] < stage->terrain.floor)
+				a = 0.0;
+			else if (v[2] > stage->terrain.ceil)
+				a = 1.0;
+			else
+				a = (v[2] - stage->terrain.floor) / stage->terrain.height;
+		} else {
+			if (v[2] < stage->tape.max && v[2] > stage->tape.min) {
+				if (v[2] > stage->tape.center) {
+					const float delta = v[2] - stage->tape.center;
+					a = 1 - (delta / stage->tape.max);
+				} else {
+					const float delta = stage->tape.center - v[2];
+					a = 1 - (delta / stage->tape.min);
+				}
+			} else {
+				a = 0.0;
+			}
+		}
 
 		color[3] = a;
 	} else if (stage->flags & STAGE_DIRTMAP) {
@@ -244,7 +258,7 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	/* for terrain, enable the color array */
-	if (stage->flags & (STAGE_TERRAIN | STAGE_DIRTMAP))
+	if (stage->flags & (STAGE_TAPE | STAGE_TERRAIN | STAGE_DIRTMAP))
 		R_EnableColorArray(qtrue);
 	else
 		R_EnableColorArray(qfalse);
@@ -646,6 +660,32 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			}
 
 			s->flags |= STAGE_TERRAIN;
+			continue;
+		}
+
+		if (!strcmp(c, "tape")) {
+			c = Com_Parse(buffer);
+			s->tape.center = atof(c);
+
+			/* how much downwards? */
+			c = Com_Parse(buffer);
+			s->tape.floor = atof(c);
+
+			/* how much upwards? */
+			c = Com_Parse(buffer);
+			s->tape.ceil = atof(c);
+
+			s->tape.min = s->tape.center - s->tape.floor;
+			s->tape.max = s->tape.center + s->tape.ceil;
+			s->tape.height = s->tape.floor + s->tape.ceil;
+
+			if (s->tape.height == 0.0) {
+				Com_Printf("R_ParseStage: Zero height tape specified for %s\n",
+					(s->image ? s->image->name : "NULL"));
+				return -1;
+			}
+
+			s->flags |= STAGE_TAPE;
 			continue;
 		}
 

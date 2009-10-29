@@ -63,6 +63,7 @@ static const materialDescription_t materialDescriptions[] = {
 	{"scale.s", STAGE_SCALE_S},
 	{"scale.t", STAGE_SCALE_T},
 	{"terrain", STAGE_TERRAIN},
+	{"tape", STAGE_TAPE},
 	{"lightmap", STAGE_LIGHTMAP},
 	{"anim", STAGE_ANIM},
 	{"dirtmap", STAGE_DIRTMAP},
@@ -403,7 +404,9 @@ static const value_t materialStageValues[] = {
 	{"scale.t", V_FLOAT, offsetof(materialStage_t, scale.t), 0},
 	{"terrain.floor", V_FLOAT, offsetof(materialStage_t, terrain.floor), 0},
 	{"terrain.ceil", V_FLOAT, offsetof(materialStage_t, terrain.ceil), 0},
-	{"terrain.height", V_FLOAT, offsetof(materialStage_t, terrain.height), 0},
+	{"tape.floor", V_FLOAT, offsetof(materialStage_t, tape.floor), 0},
+	{"tape.ceil", V_FLOAT, offsetof(materialStage_t, tape.ceil), 0},
+	{"tape.center", V_FLOAT, offsetof(materialStage_t, tape.center), 0},
 	{"anim.frames", V_INT, offsetof(materialStage_t, anim.num_frames), 0},
 	{"anim.dframe", V_INT, offsetof(materialStage_t, anim.dframe), 0},
 	{"anim.dtime", V_FLOAT, offsetof(materialStage_t, anim.dtime), 0},
@@ -473,7 +476,7 @@ static void MN_MaterialEditorChangeValue_f (void)
 		if (stage->flags & (STAGE_TEXTURE | STAGE_ENVMAP))
 			stage->flags |= STAGE_RENDER;
 
-		if (stage->flags & (STAGE_TERRAIN | STAGE_DIRTMAP))
+		if (stage->flags & (STAGE_TAPE | STAGE_TERRAIN | STAGE_DIRTMAP))
 			stage->flags |= STAGE_LIGHTING;
 	}
 
