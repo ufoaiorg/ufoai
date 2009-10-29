@@ -3808,6 +3808,42 @@ base/textures/tex_shop/rack-pharma2.jpg | GNU General Public License 2.0 | Xaver
 base/textures/tex_shop/rack-pharma3.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_shop/rack-pharma4.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_shop/rack_pharma1.jpg | GNU General Public License 2.0 | XaverXN
+base/textures/tex_streets/2ln.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_blend.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crn_ne.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crn_ne_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crn_nw.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crn_nw_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crn_se.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crn_se_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crn_sw.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crn_sw_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_cw.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_cw_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_cwbtm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_cwbtm_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_cwtop.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_cwtop_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_endbtm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_endbtm_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_endtop.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_endtop_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_blend.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_cw.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_cw_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_cwlft.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_cwlft_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_cwrgt.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_cwrgt_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_endlft.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_endlft_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_endrgt.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_endrgt_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/base.jpg | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/base_blend.jpg | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/pavement001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_streets/street001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_streets/street002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
