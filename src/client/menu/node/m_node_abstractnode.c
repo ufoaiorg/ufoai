@@ -645,14 +645,23 @@ static void MN_AbstractNodeSizeChanged (menuNode_t *node)
 		MN_Invalidate(node);
 }
 
+static void MN_AbstractNodeVisibilityChange (menuNode_t *node)
+{
+	if (node->parent != NULL)
+		MN_Invalidate(node->parent);
+}
+
 static const value_t *propertyWidth;
 static const value_t *propertyHeight;
 static const value_t *propertySize;
+static const value_t *propertyInvis;
 
 static void MN_AbstractNodePropertyChanged (menuNode_t *node, const value_t *property)
 {
 	if (property == propertyWidth || property == propertyHeight || property == propertySize) {
 		node->behaviour->sizeChanged(node);
+	} else if (property == propertyInvis) {
+		MN_AbstractNodeVisibilityChange(node);
 	}
 }
 
@@ -665,6 +674,7 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	propertyWidth = MN_GetPropertyFromBehaviour(behaviour, "width");
 	propertyHeight = MN_GetPropertyFromBehaviour(behaviour, "height");
 	propertySize = MN_GetPropertyFromBehaviour(behaviour, "size");
+	propertyInvis = MN_GetPropertyFromBehaviour(behaviour, "invis");
 
 	/* callbacks */
 	behaviour->dndEnter = MN_AbstractNodeDNDEnter;
