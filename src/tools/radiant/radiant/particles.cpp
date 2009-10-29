@@ -27,7 +27,7 @@
 
 // the list of ufos/*.ufo files we need to work with
 static GSList *l_ufofiles = 0;
-static std::list<CopiedString> g_ufoFilenames;
+static std::list<std::string> g_ufoFilenames;
 
 ParticleDefinitionMap g_particleDefinitions;
 
@@ -45,10 +45,8 @@ static int GetBlendMode (const char *token)
 	return BLEND_REPLACE;
 }
 
-static void ParseUFOFile (Tokeniser& tokeniser, const char* filename)
+static void ParseParticleScriptFile (Tokeniser& tokeniser, const std::string& filename)
 {
-	g_ufoFilenames.push_back(filename);
-	filename = g_ufoFilenames.back().c_str();
 	tokeniser.nextLine();
 	for (;;) {
 		const char* token = tokeniser.getToken();
@@ -70,7 +68,7 @@ static void ParseUFOFile (Tokeniser& tokeniser, const char* filename)
 			pID[sizeof(pID) - 1] = '\0';
 
 			if (!Tokeniser_parseToken(tokeniser, "{")) {
-				globalErrorStream() << "ERROR: expected {. parsing file " << filename << "\n";
+				globalErrorStream() << "ERROR: expected {. parsing file " << filename << " particle: " << pID << "\n";
 				return;
 			}
 
@@ -150,21 +148,23 @@ static void ParseUFOFile (Tokeniser& tokeniser, const char* filename)
 				ParticleDefinition *particleDefinition =
 						new ParticleDefinition(pID, model, image, blend, width, height);
 				if (!g_particleDefinitions.insert(ParticleDefinitionMap::value_type(pID, *particleDefinition)).second)
-					g_warning("Particle '%s' is already in memory, definition in '%s' ignored.\n", pID, filename);
+					g_warning("Particle '%s' is already in memory, definition in '%s' ignored.\n", pID, filename.c_str());
 				delete particleDefinition;
 			}
 		}
+		tokeniser.nextLine();
 	}
 }
 
-void LoadUFOFile (const char* filename)
+void LoadUFOFile (const std::string& filename)
 {
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
 	if (file) {
 		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
-		ParseUFOFile(*tokeniser, filename);
+		g_ufoFilenames.push_back(filename);
+		ParseParticleScriptFile(*tokeniser, filename);
 	} else {
-		g_warning("Unable to read ufo script file '%s'\n", filename);
+		g_warning("Unable to read ufo script file '%s'\n", filename.c_str());
 	}
 }
 
@@ -182,7 +182,7 @@ void addUFOFile (const char* dirstring)
 	if (!found) {
 		l_ufofiles = g_slist_append(l_ufofiles, strdup(dirstring));
 		const std::string ufoname = "ufos/" + std::string(dirstring);
-		LoadUFOFile(ufoname.c_str());
+		LoadUFOFile(ufoname);
 	}
 }
 
