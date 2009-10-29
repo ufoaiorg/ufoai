@@ -43,6 +43,7 @@ struct nodeKeyBinding_s;
 #include "node/m_node_ekg.h"
 #include "node/m_node_linechart.h"
 #include "node/m_node_model.h"
+#include "node/m_node_panel.h"
 #include "node/m_node_text.h"
 #include "node/m_node_textentry.h"
 #include "node/m_node_window.h"
@@ -149,6 +150,7 @@ typedef struct menuNode_s {
 		lineChartExtraData_t linechart;
 		modelExtraData_t model;
 		optionExtraData_t option;
+		panelExtraData_t panel;
 		textEntryExtraData_t textentry;
 		textExtraData_t text;
 		windowExtraData_t window;

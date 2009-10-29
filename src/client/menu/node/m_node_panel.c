@@ -28,9 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 #include "m_node_panel.h"
 
+#define EXTRADATA(node) node->u.panel
+
 #define CORNER_SIZE 25
 #define MID_SIZE 1
 #define MARGE 3
+
+static const nodeBehaviour_t const *localBehaviour;
 
 /**
  * @brief Handles Button draw
@@ -53,6 +57,44 @@ static void MN_PanelNodeDraw (menuNode_t *node)
 }
 
 /**
+ * @brief Create a top-down flow layout with child of the node.
+ * Child position is automatically set, child height dont change
+ * and child width is set according to node width and padding
+ * @Note test only
+ */
+static void MN_TopDownFlowLayout (menuNode_t *node, int marge)
+{
+	const int width = node->size[0] - node->padding - node->padding;
+	int positionY = node->padding;
+	menuNode_t *child = node->firstChild;
+	vec2_t newSize = {width, 0};
+
+	while (child) {
+		newSize[1] = child->size[1];
+		MN_NodeSetSize(child, newSize);
+		child->pos[0] = node->padding;
+		child->pos[1] = positionY;
+		positionY += child->size[1] + marge;
+		child = child->next;
+	}
+}
+
+static void MN_PanelNodeDoLayout (menuNode_t *node)
+{
+	switch (EXTRADATA(node).layout) {
+	case 0:
+		break;
+	case 1: /* flow top-down */
+		MN_TopDownFlowLayout(node, EXTRADATA(node).margeLayout);
+		break;
+	default:
+		Com_Printf("MN_PanelNodeDoLayout: layout '%d' unsupported.", EXTRADATA(node).layout);
+	}
+
+	localBehaviour->super->doLayout(node);
+}
+
+/**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
 static void MN_PanelNodeLoaded (menuNode_t *node)
@@ -63,9 +105,32 @@ static void MN_PanelNodeLoaded (menuNode_t *node)
 #endif
 }
 
+/**
+ * @brief Valid properties for a window node (called yet 'menu')
+ */
+static const value_t properties[] = {
+	/**
+	 * Select a layout manager to set position and size of child.
+	 * <ul>0: no layout manager,
+	 * <ul>1: top-down flow layout manager
+	 * @Todo use const string to set it
+	 */
+	{"layout", V_INT, MN_EXTRADATA_OFFSETOF(panelExtraData_t, layout), MEMBER_SIZEOF(panelExtraData_t, layout)},
+	/**
+	 * Marge use to layout child
+	 */
+	{"margeLayout", V_INT, MN_EXTRADATA_OFFSETOF(panelExtraData_t, margeLayout), MEMBER_SIZEOF(panelExtraData_t, margeLayout)},
+
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterPanelNode (nodeBehaviour_t *behaviour)
 {
+	localBehaviour = behaviour;
 	behaviour->name = "panel";
+	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(panelExtraData_t);
 	behaviour->draw = MN_PanelNodeDraw;
 	behaviour->loaded = MN_PanelNodeLoaded;
+	behaviour->doLayout = MN_PanelNodeDoLayout;
 }

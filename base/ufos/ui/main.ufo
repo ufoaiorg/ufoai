@@ -23,64 +23,68 @@ window main
 	// buttons
 	// ==================
 
-	button button_singleplayer
-	{
-		pos	"640 170"
-		size "256 64"
-		onClick	{ cmd "mn_push singleplayer;" }
-		image	ui/button_green_big
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Single-player"
-	}
-
-	button button_multiplayer
-	{
-		pos	"640 240"
-		size "256 64"
-		onClick	{ cmd "mn_push_multiplayer;" }
-		image	ui/button_green_big
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Multiplayer"
-	}
-
-	button button_options
-	{
-		pos	"640 310"
-		size "256 64"
-		onClick	{ cmd "mn_push options;" }
-		image	ui/button_green_big
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Options"
-	}
-
-	button button_tut
-	{
-		pos	"640 380"
-		size "256 64"
-		onClick	{ cmd "mn_push tutorials;" }
-		image	ui/button_green_big
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Tutorials"
-	}
-
-	button button_credits
-	{
-		pos	"640 450"
-		size "256 64"
-		onClick	{ cmd "seq_start credits;" }
-		image	ui/button_green_big
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Credits"
+	panel buttons {
+		{
+			pos			"640 170"
+			size		"256 500"
+			layout		1	/* top-down flow */
+			margeLayout	6
+		}
+		
+		button button_singleplayer
+		{
+			height	64
+			onClick	{ cmd "mn_push singleplayer;" }
+			image	ui/button_green_big
+			font	f_menubig
+			color	"0 0.5 0 1"
+			selectcolor "1 1 1 1"
+			string	"_Single-player"
+		}
+	
+		button button_multiplayer
+		{
+			height	64
+			onClick	{ cmd "mn_push_multiplayer;" }
+			image	ui/button_green_big
+			font	f_menubig
+			color	"0 0.5 0 1"
+			selectcolor "1 1 1 1"
+			string	"_Multiplayer"
+		}
+	
+		button button_options
+		{
+			height	64
+			onClick	{ cmd "mn_push options;" }
+			image	ui/button_green_big
+			font	f_menubig
+			color	"0 0.5 0 1"
+			selectcolor "1 1 1 1"
+			string	"_Options"
+		}
+	
+		button button_tut
+		{
+			height	64
+			onClick	{ cmd "mn_push tutorials;" }
+			image	ui/button_green_big
+			font	f_menubig
+			color	"0 0.5 0 1"
+			selectcolor "1 1 1 1"
+			string	"_Tutorials"
+		}
+	
+		button button_credits
+		{
+			height	64
+			onClick	{ cmd "seq_start credits;" }
+			image	ui/button_green_big
+			font	f_menubig
+			color	"0 0.5 0 1"
+			selectcolor "1 1 1 1"
+			string	"_Credits"
+		}
 	}
 
 	button button_exit

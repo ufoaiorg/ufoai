@@ -25,8 +25,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_PANEL_H
 #define CLIENT_MENU_M_NODE_PANEL_H
 
-#include "../m_nodes.h"
+struct menuNode_s;
+struct nodeBehaviour_s;
 
-void MN_RegisterPanelNode(nodeBehaviour_t *behaviour);
+/**
+ * @brief extradata for the window node
+ */
+typedef struct {
+	int layout;
+	int margeLayout;
+
+} panelExtraData_t;
+
+void MN_RegisterPanelNode(struct nodeBehaviour_s *behaviour);
 
 #endif
