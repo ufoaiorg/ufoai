@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_render.h"
 #include "m_node_abstractnode.h"
 #include "m_node_panel.h"
+#include "../../../common/scripts.h"
 
 #define EXTRADATA(node) node->u.panel
 
@@ -86,7 +87,7 @@ static void MN_PanelNodeDoLayout (menuNode_t *node)
 	switch (EXTRADATA(node).layout) {
 	case LAYOUT_NONE:
 		break;
-	case LAYOUT_TOP_DOWN:
+	case LAYOUT_TOP_DOWN_FLOW:
 		MN_TopDownFlowLayout(node, EXTRADATA(node).margeLayout);
 		break;
 	default:
@@ -135,4 +136,6 @@ void MN_RegisterPanelNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_PanelNodeDraw;
 	behaviour->loaded = MN_PanelNodeLoaded;
 	behaviour->doLayout = MN_PanelNodeDoLayout;
+
+	Com_RegisterConstInt("LAYOUT_TOP_DOWN_FLOW", LAYOUT_TOP_DOWN_FLOW);
 }

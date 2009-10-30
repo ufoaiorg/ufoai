@@ -17,7 +17,7 @@ window geoscape
 		pos				"0 0"
 		size			"1024 768"
 		onRClick		{ cmd "mn_mapaction_reset;" }
-		num				10
+		num				STARLAYOUT_ALIGN_FILL
 		padding-right	256
 	}
 
@@ -97,7 +97,7 @@ window geoscape
 		{
 			pos		"768 0"
 			size	"256 768"
-			num		6	/* float middle-right */
+			num		STARLAYOUT_ALIGN_RIGHT
 		}
 
 		pic back

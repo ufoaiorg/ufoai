@@ -27,10 +27,10 @@ window main
 		{
 			pos			"640 170"
 			size		"256 344"
-			layout		1	/* top-down flow */
+			layout		LAYOUT_TOP_DOWN_FLOW
 			margeLayout	6
 		}
-		
+
 		button button_singleplayer
 		{
 			height	64

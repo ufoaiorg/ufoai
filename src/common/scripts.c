@@ -26,6 +26,69 @@
 #include "../shared/parse.h"
 #include "../game/inv_shared.h"
 
+#define CONSTNAMEINT_HASH_SIZE	32
+
+#define	MAX_CONSTNAMEINT_NAME	32
+
+typedef struct com_constNameInt_s {
+	char name[MAX_CONSTNAMEINT_NAME];
+	int value;
+	struct com_constNameInt_s *hash_next;
+	struct com_constNameInt_s *next;
+} com_constNameInt_t;
+
+static com_constNameInt_t *com_constNameInt;
+static com_constNameInt_t *com_constNameInt_hash[CONSTNAMEINT_HASH_SIZE];
+
+
+/**
+ * @return True if the value is found.
+ */
+qboolean Com_GetConstInt (const char *name, int *value)
+{
+	com_constNameInt_t *a;
+	unsigned int hash;
+
+	/* if the alias already exists */
+	hash = Com_HashKey(name, CONSTNAMEINT_HASH_SIZE);
+	for (a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
+		if (!strncmp(name, a->name, MAX_CONSTNAMEINT_NAME)) {
+			*value = a->value;
+			return qtrue;
+		}
+	}
+
+	return qfalse;
+}
+
+void Com_RegisterConstInt (const char *name, int value)
+{
+	com_constNameInt_t *a;
+	unsigned int hash;
+
+	/* if the alias already exists, reuse it */
+	hash = Com_HashKey(name, CONSTNAMEINT_HASH_SIZE);
+	for (a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
+		if (!strncmp(name, a->name, MAX_CONSTNAMEINT_NAME)) {
+			break;
+		}
+	}
+
+	if (a) {
+		Com_Printf("Com_RegisterConstInt: Const string already defined. '%s = %d' is not set.", name, value);
+		return;
+	}
+
+	a = Mem_PoolAlloc(sizeof(*a), com_aliasSysPool, 0);
+	Q_strncpyz(a->name, name, sizeof(a->name));
+	a->next = com_constNameInt;
+	/* com_constNameInt_hash should be null on the first run */
+	a->hash_next = com_constNameInt_hash[hash];
+	com_constNameInt_hash[hash] = a;
+	com_constNameInt = a;
+	a->value = value;
+}
+
 /**
  * @brief Parsing function that prints an error message when there is no text in the buffer
  * @sa Com_Parse
@@ -379,8 +442,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_INT:
 		if (sscanf(token, "%i", &((int *) b)[0]) != 1) {
-			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal int statement '%s'", token);
-			return RESULT_ERROR;
+			if (!Com_GetConstInt(token, &((int *) b)[0])) {
+				snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal int statement '%s'", token);
+				return RESULT_ERROR;
+			}
 		}
 		*writtenBytes = sizeof(int);
 		break;

@@ -146,6 +146,8 @@ static const align_t starlayoutmap[] = {
 	ALIGN_LR,
 };
 
+#define ALIGN_FILL	10
+
 /**
  * @brief Do a star layout with child according to there num
  * @note 1=top-left 2=top-middle 3=top-right
@@ -165,7 +167,7 @@ static void MN_WindowNodeDoStarLayout (menuNode_t *node)
 		if (child->num <= 0 || child->num > 10)
 			continue;
 
-		if (child->num == 10) {
+		if (child->num == ALIGN_FILL) {
 			child->pos[0] = 0;
 			child->pos[1] = 0;
 			MN_NodeSetSize(child, node->size);
@@ -390,4 +392,16 @@ void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 	behaviour->clone = MN_WindowNodeClone;
 	behaviour->properties = windowNodeProperties;
 	behaviour->extraDataSize = sizeof(windowExtraData_t);
+
+	/** @todo remove the "+1" */
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_TOPLEFT", ALIGN_UL+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_TOP", ALIGN_UC+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_TOPRIGHT", ALIGN_UR+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_LEFT", ALIGN_CL+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_MIDDLE", ALIGN_CC+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_RIGHT", ALIGN_CR+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_BOTTOMLEFT", ALIGN_LL+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_BOTTOM", ALIGN_LC+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_BOTTOMRIGHT", ALIGN_LR+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_FILL", ALIGN_FILL);
 }

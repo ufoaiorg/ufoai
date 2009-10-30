@@ -23,7 +23,7 @@ window hud extends ahud
 	{
 		pos			"0 0"
 		size		"1024 768"
-		num			10	/* fill layout */
+		num			STARLAYOUT_ALIGN_FILL
 	}
 
 	// ==================
@@ -34,7 +34,7 @@ window hud extends ahud
 		{
 			pos		"0 128"
 			size	"40 369"
-			num		4	/* float middle-left */
+			num		STARLAYOUT_ALIGN_LEFT
 			excluderect	{
 				pos		"33 336"
 				size	"7 34"
@@ -140,7 +140,7 @@ window hud extends ahud
 			/** @note excluderect should be for the background, but like that we can move all the panel with the editor */
 			excluderect { pos	"407 39"	size	"97 9" }
 			excluderect { pos	"112 48"	size	"400 56" }
-			num		1	/* float top-left */
+			num		STARLAYOUT_ALIGN_TOPLEFT
 		}
 
 		pic background
@@ -175,7 +175,7 @@ window hud extends ahud
 		{
 			pos		"415 0"
 			size	"264 56"
-			num		2	/* float top-middle */
+			num		STARLAYOUT_ALIGN_TOP
 			/** @note excluderect should be for the background, but like that we can move all the panel with the editor */
 			excluderect { pos	"264 17"	size	"44 40" }
 			excluderect { pos	"308 28"	size	"193 28" }
@@ -268,7 +268,7 @@ window hud extends ahud
 		{
 			pos		"808 0"
 			size	"216 56"
-			num		3	/* float top-right */
+			num		STARLAYOUT_ALIGN_TOPRIGHT
 		}
 
 		pic bar_nextround
@@ -330,7 +330,7 @@ window hud extends ahud
 			pos		"0 616"
 			size	"256 152"
 			excluderect { pos	"176 0"	size	"80 24" }
-			num		7	/* float bottom-left */
+			num		STARLAYOUT_ALIGN_BOTTOMLEFT
 		}
 
 		pic background
@@ -395,7 +395,7 @@ window hud extends ahud
 		{
 			pos		"768 616"
 			size	"256 152"
-			num		9	/* float bottom-right */
+			num		STARLAYOUT_ALIGN_BOTTOMRIGHT
 			excluderect { pos	"0 0"	size	"80 24" }
 		}
 
@@ -492,7 +492,7 @@ window hud extends ahud
 		{
 			pos		"292 649"
 			size	"457 119"
-			num		8	/* float bottom-middle */
+			num		STARLAYOUT_ALIGN_BOTTOM
 			excluderect { pos	"0 0"	size	"73 9" }
 		}
 
@@ -710,7 +710,7 @@ window hud extends ahud
 		{
 			pos		"977 129"
 			size	"47 335"
-			num		6	/* float bottom-right */
+			num		STARLAYOUT_ALIGN_BOTTOMRIGHT
 			excluderect { pos	"0 95"	size	"8 33" }
 			excluderect { pos	"0 223"	size	"16 16" }
 		}
@@ -783,7 +783,7 @@ window hud extends ahud
 			pos		"768 64"
 			size	"256 463"	/* popup height 335+64*2*/
 			ghost	true
-			num		6	/* middle-right float */
+			num		STARLAYOUT_ALIGN_RIGHT
 		}
 
 		pic bar_chat_bg
