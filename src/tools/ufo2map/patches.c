@@ -46,6 +46,8 @@ void CalcTextureReflectivity (void)
 	/* always set index 0 even if no textures */
 	VectorSet(texture_reflectivity[0], 0.5, 0.5, 0.5);
 
+	VectorSet(color, 0, 0, 0);
+
 	for (i = 0; i < curTile->numtexinfo; i++) {
 		/* see if an earlier texinfo already got the value */
 		for (j = 0; j < i; j++) {
@@ -62,7 +64,6 @@ void CalcTextureReflectivity (void)
 		if (TryLoadTGA(path, &mt) != -1) {
 			/* load rgba from the tga */
 			texels = mt->width * mt->height;  /* these are already endian-correct */
-			color[0] = color[1] = color[2] = 0;
 
 			for (j = 0; j < texels; j++) {
 				const byte *pos = ((byte *)mt + mt->offsets[0]) + j * 4;
@@ -81,7 +82,6 @@ void CalcTextureReflectivity (void)
 			if (TryLoadJPG(path, &mt) != -1) {
 				/* load rgba from the jpg */
 				texels = mt->width * mt->height;  /* these are already endian-correct */
-				color[0] = color[1] = color[2] = 0;
 
 				for (j = 0; j < texels; j++) {
 					const byte *pos = ((byte *)mt + mt->offsets[0]) + j * 4;
@@ -101,7 +101,6 @@ void CalcTextureReflectivity (void)
 			if (TryLoadPNG(path, &mt) != -1) {
 				/* load rgba from the png */
 				texels = mt->width * mt->height;  /* these are already endian-correct */
-				color[0] = color[1] = color[2] = 0;
 
 				for (j = 0; j < texels; j++) {
 					const byte *pos = ((byte *)mt + mt->offsets[0]) + j * 4;

@@ -154,7 +154,7 @@ static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 		size[1] = anchoredNode->size[1];
 		break;
 	default:
-		assert(qfalse);
+		Sys_Error("MN_EditorNodeCapturedMouseMove: Invalid status of %i", status);
 	}
 
 	if (size[0] < 5)
