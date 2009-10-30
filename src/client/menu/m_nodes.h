@@ -240,17 +240,17 @@ void MN_InitNodes(void);
 
 /* nodes */
 menuNode_t* MN_AllocStaticNode(const char* type) __attribute__ ((warn_unused_result));
-menuNode_t* MN_GetNodeByPath(const char* path);
+menuNode_t* MN_GetNodeByPath(const char* path) __attribute__ ((warn_unused_result));
 void MN_ReadNodePath(const char* path, const menuNode_t *relativeNode, menuNode_t** resultNode, const value_t **resultProperty);
-struct menuNode_s *MN_GetNodeAtPosition(int x, int y);
-const char* MN_GetPath(const menuNode_t* node);
-struct menuNode_s *MN_CloneNode(const struct menuNode_s * node, struct menuNode_s *newMenu, qboolean recursive, const char *newName);
+struct menuNode_s *MN_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
+const char* MN_GetPath(const menuNode_t* node) __attribute__ ((warn_unused_result));
+struct menuNode_s *MN_CloneNode(const struct menuNode_s * node, struct menuNode_s *newMenu, qboolean recursive, const char *newName) __attribute__ ((warn_unused_result));
 qboolean MN_CheckVisibility(menuNode_t *node);
 
 /* behaviours */
-nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
-nodeBehaviour_t* MN_GetNodeBehaviourByIndex(int index);
-int MN_GetNodeBehaviourCount(void);
-const struct value_s *MN_GetPropertyFromBehaviour(const nodeBehaviour_t *behaviour, const char* name);
+nodeBehaviour_t* MN_GetNodeBehaviour(const char* name) __attribute__ ((warn_unused_result));
+nodeBehaviour_t* MN_GetNodeBehaviourByIndex(int index) __attribute__ ((warn_unused_result));
+int MN_GetNodeBehaviourCount(void) __attribute__ ((warn_unused_result));
+const struct value_s *MN_GetPropertyFromBehaviour(const nodeBehaviour_t *behaviour, const char* name) __attribute__ ((warn_unused_result));
 
 #endif
