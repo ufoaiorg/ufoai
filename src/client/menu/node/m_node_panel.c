@@ -62,10 +62,10 @@ static void MN_PanelNodeDraw (menuNode_t *node)
  * Child position is automatically set, child height don't change
  * and child width is set according to node width and padding
  * @param[in,out] node The panel node to render the children for
- * @param[in] marge The margin between all children nodes in their y-position of the panel
+ * @param[in] margin The margin between all children nodes in their y-position of the panel
  * @note test only
  */
-static void MN_TopDownFlowLayout (menuNode_t *node, int marge)
+static void MN_TopDownFlowLayout (menuNode_t *node, int margin)
 {
 	const int width = node->size[0] - node->padding - node->padding;
 	int positionY = node->padding;
@@ -77,8 +77,104 @@ static void MN_TopDownFlowLayout (menuNode_t *node, int marge)
 		MN_NodeSetSize(child, newSize);
 		child->pos[0] = node->padding;
 		child->pos[1] = positionY;
-		positionY += child->size[1] + marge;
+		positionY += child->size[1] + margin;
 		child = child->next;
+	}
+}
+
+#define BORDERLAYOUT_MIDDLE	1
+#define BORDERLAYOUT_TOP	2
+#define BORDERLAYOUT_BOTTOM	3
+#define BORDERLAYOUT_LEFT	4
+#define BORDERLAYOUT_RIGHT	5
+
+/**
+ * @brief Create a border layout with child of the node.
+ * Child with BORDERLAYOUT_TOP and BORDERLAYOUT_BOTTOM num
+ * are first positioned, there height do not change but the width fill
+ * the parent node. Then child with BORDERLAYOUT_LEFT and BORDERLAYOUT_RIGHT
+ * are positioned between positioned nodes. Finally BORDERLAYOUT_MIDDLE is filled
+ * into available free space.
+ * @param[in,out] node The panel node to render the children for
+ * @param[in] margin The margin between all children nodes in their y-position of the panel
+ * @note test only
+ */
+static void MN_BorderLayout (menuNode_t *node, int margin)
+{
+	menuNode_t *child;
+	vec2_t newSize;
+	int minX = node->padding;
+	int maxX = node->size[0] - node->padding;
+	int minY = node->padding;
+	int maxY = node->size[1] - node->padding;
+
+	// top
+	for (child = node->firstChild; child; child = child->next) {
+		if (child->num != BORDERLAYOUT_TOP)
+			continue;
+		if (child->invis)
+			continue;
+		newSize[0] = maxX - minX;
+		newSize[1] = child->size[1];
+		MN_NodeSetSize(child, newSize);
+		child->pos[0] = minX;
+		child->pos[1] = minY;
+		minY += child->size[1] + margin;
+	}
+
+	// bottom
+	for (child = node->firstChild; child; child = child->next) {
+		if (child->num != BORDERLAYOUT_BOTTOM)
+			continue;
+		if (child->invis)
+			continue;
+		newSize[0] = maxX - minX;
+		newSize[1] = child->size[1];
+		MN_NodeSetSize(child, newSize);
+		child->pos[0] = minX;
+		child->pos[1] = maxY - child->size[1];
+		maxY -= child->size[1] + margin;
+	}
+
+	// left
+	for (child = node->firstChild; child; child = child->next) {
+		if (child->num != BORDERLAYOUT_LEFT)
+			continue;
+		if (child->invis)
+			continue;
+		newSize[0] = child->size[0];
+		newSize[1] = maxY - minY;
+		MN_NodeSetSize(child, newSize);
+		child->pos[0] = minX;
+		child->pos[1] = minY;
+		minX += child->size[0] + margin;
+	}
+
+	// right
+	for (child = node->firstChild; child; child = child->next) {
+		if (child->num != BORDERLAYOUT_RIGHT)
+			continue;
+		if (child->invis)
+			continue;
+		newSize[0] = child->size[0];
+		newSize[1] = maxY - minY;
+		MN_NodeSetSize(child, newSize);
+		child->pos[0] = maxX - child->size[0];
+		child->pos[1] = minY;
+		maxX -= child->size[0] + margin;
+	}
+
+	// middle
+	for (child = node->firstChild; child; child = child->next) {
+		if (child->num != BORDERLAYOUT_MIDDLE)
+			continue;
+		if (child->invis)
+			continue;
+		newSize[0] = maxX - minX;
+		newSize[1] = maxY - minY;
+		MN_NodeSetSize(child, newSize);
+		child->pos[0] = minX;
+		child->pos[1] = minY;
 	}
 }
 
@@ -89,6 +185,9 @@ static void MN_PanelNodeDoLayout (menuNode_t *node)
 		break;
 	case LAYOUT_TOP_DOWN_FLOW:
 		MN_TopDownFlowLayout(node, EXTRADATA(node).margeLayout);
+		break;
+	case LAYOUT_BORDER:
+		MN_BorderLayout(node, EXTRADATA(node).margeLayout);
 		break;
 	default:
 		Com_Printf("MN_PanelNodeDoLayout: layout '%d' unsupported.", EXTRADATA(node).layout);
@@ -137,5 +236,12 @@ void MN_RegisterPanelNode (nodeBehaviour_t *behaviour)
 	behaviour->loaded = MN_PanelNodeLoaded;
 	behaviour->doLayout = MN_PanelNodeDoLayout;
 
+	Com_RegisterConstInt("BORDERLAYOUT_TOP", BORDERLAYOUT_TOP);
+	Com_RegisterConstInt("BORDERLAYOUT_BOTTOM", BORDERLAYOUT_BOTTOM);
+	Com_RegisterConstInt("BORDERLAYOUT_LEFT", BORDERLAYOUT_LEFT);
+	Com_RegisterConstInt("BORDERLAYOUT_RIGHT", BORDERLAYOUT_RIGHT);
+	Com_RegisterConstInt("BORDERLAYOUT_MIDDLE", BORDERLAYOUT_MIDDLE);
+
 	Com_RegisterConstInt("LAYOUT_TOP_DOWN_FLOW", LAYOUT_TOP_DOWN_FLOW);
+	Com_RegisterConstInt("LAYOUT_BORDER", LAYOUT_BORDER);
 }

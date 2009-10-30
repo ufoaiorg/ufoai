@@ -31,6 +31,7 @@ struct nodeBehaviour_s;
 typedef enum {
 	LAYOUT_NONE,
 	LAYOUT_TOP_DOWN_FLOW,
+	LAYOUT_BORDER,
 
 	LAYOUT_MAX,
 	LAYOUT_ENSURE_32BIT = 0x7FFFFFFF

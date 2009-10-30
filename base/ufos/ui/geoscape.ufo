@@ -21,40 +21,52 @@ window geoscape
 		padding-right	256
 	}
 
-	messagelist messagesystem
-	{
-		pos			"0 0"
-		size		"768 20"
-		bgcolor		"0 0 0 .5"
-		onMouseEnter {
-			if ( *cvar:mn_messagesystem < 2 ) {
-				*node:root.messagesystem@height 240
+	panel messagesystem {
+		{
+			pos		"0 0"
+			size	"768 20"
+			layout	LAYOUT_BORDER
+		}
+
+		messagelist message
+		{
+			pos			"0 0"
+			size		"768 20"
+			bgcolor		"0 0 0 .5"
+			num			BORDERLAYOUT_MIDDLE
+			onMouseEnter {
+				if ( *cvar:mn_messagesystem < 2 ) {
+					*node:parent@height 240
+				}
+			}
+			onMouseLeave {
+				if ( *cvar:mn_messagesystem < 2 ) {
+					cmd "messagesystem_changemode"
+				}
+			}
+			onViewChange {
+				*node:(abstractscrollbar)parent.scroll@fullsize <fullsize>
+				*node:(abstractscrollbar)parent.scroll@current <viewpos>
+				*node:(abstractscrollbar)parent.scroll@viewsize <viewsize>
 			}
 		}
-		onMouseLeave {
-			if ( *cvar:mn_messagesystem < 2 ) {
-				cmd "messagesystem_changemode"
+		vscrollbar scroll {
+			num			BORDERLAYOUT_RIGHT
+			invis		true
+			image		ui/scrollbar_v_green
+			bgcolor		"0 0 0 .5"
+			pos			"749 0"
+			height		"768"
+			current		0
+			viewsize	38
+			fullsize	50
+			hidewhenunused true
+			onChange	{
+				*node:parent.message@viewpos = <current>
 			}
 		}
-		onViewChange {
-			*node:(abstractscrollbar)root.messagesystem_scroll@fullsize <fullsize>
-			*node:(abstractscrollbar)root.messagesystem_scroll@current <viewpos>
-			*node:(abstractscrollbar)root.messagesystem_scroll@viewsize <viewsize>
-		}
-	}
-	vscrollbar messagesystem_scroll {
-		invis		true
-		image		ui/scrollbar_v_green
-		bgcolor		"0 0 0 .5"
-		pos			"749 0"
-		height		"768"
-		current		0
-		viewsize	38
-		fullsize	50
-		hidewhenunused true
-		onChange	{
-			*node:parent.messagesystem@viewpos = <current>
-		}
+	
+	
 	}
 
 	confunc messagesystem_changemode
@@ -63,27 +75,26 @@ window geoscape
 		if ( *cvar:mn_messagesystem == 0 ) {
 			*messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
 			*messagesystem@height	= 20
-			*messagesystem_scroll@invis true
+			*messagesystem.scroll@invis = true
 		}
 		/* 6 lines */
 		if ( *cvar:mn_messagesystem == 1 ) {
 			*messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
 			*messagesystem@height	= 120
-			*messagesystem_scroll@invis true
+			*messagesystem.scroll@invis = true
 		}
 		/* 12 lines */
 		if ( *cvar:mn_messagesystem == 2 ) {
 			*messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
 			*messagesystem@height	= 240
-			*messagesystem_scroll@invis true
+			*messagesystem.scroll@invis = true
 		}
 		/* full screen */
 		if ( *cvar:mn_messagesystem == 3 ) {
-			*messagesystem@width = ( ( *cvar:mn_sys_screenwidth - 256 ) - 19 )
-			*cvar:foo = ( ( *cvar:mn_sys_screenwidth - 256 ) - 19 )
+			*messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
+			*cvar:foo = ( *cvar:mn_sys_screenwidth - 256 )
 			*messagesystem@height = 768
-			*messagesystem_scroll@left = ( ( *cvar:mn_sys_screenwidth - 256 ) - 19 )
-			*messagesystem_scroll@invis false
+			*messagesystem.scroll@invis = false
 			cmd "game_timestop;"
 		}
 
