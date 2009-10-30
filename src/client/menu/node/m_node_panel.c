@@ -84,9 +84,9 @@ static void MN_TopDownFlowLayout (menuNode_t *node, int marge)
 static void MN_PanelNodeDoLayout (menuNode_t *node)
 {
 	switch (EXTRADATA(node).layout) {
-	case 0:
+	case LAYOUT_NONE:
 		break;
-	case 1: /* flow top-down */
+	case LAYOUT_TOP_DOWN:
 		MN_TopDownFlowLayout(node, EXTRADATA(node).margeLayout);
 		break;
 	default:
