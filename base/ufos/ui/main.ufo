@@ -26,7 +26,7 @@ window main
 	panel buttons {
 		{
 			pos			"640 170"
-			size		"256 500"
+			size		"256 344"
 			layout		1	/* top-down flow */
 			margeLayout	6
 		}
