@@ -29,7 +29,7 @@ window ufopedia
 			size	"307 501"
 			image	"ui/panel_green"
 		}
-		
+
 		optiontree list
 		{
 			cvar		*cvar:up_summary_selection
@@ -51,7 +51,7 @@ window ufopedia
 				*node:(abstractscrollbar)parent.list_scroll@viewsize <viewsize>
 			}
 		}
-	
+
 		vscrollbar list_scroll {
 			image		ui/scrollbar_v_green
 			pos			"277 10"
@@ -69,13 +69,13 @@ window ufopedia
 			pos		"350 55"
 			size	"638 545"
 		}
-		
+
 		panel navigation_panel {
 			pos		"0 32"
 			size	"630 510"
 			image	"ui/panel_green_tab"
 		}
-	
+
 		tab navigation {
 			cvar	*cvar:ufopedia_content
 			pos		"1 0"
@@ -101,7 +101,7 @@ window ufopedia
 		// ==================
 		// deco
 		// ==================
-		
+
 		pic image_top
 		{
 			image		*cvar:mn_upimage_top
@@ -109,7 +109,7 @@ window ufopedia
 			size		"163 298"
 			preventratio	true
 		}
-	
+
 		model mdl_top
 		{
 			model		*cvar:mn_upmodel_top
@@ -119,7 +119,7 @@ window ufopedia
 			autoscale	true
 			rotatewithmouse	true
 		}
-	
+
 		model mdl_bottom
 		{
 			model		*cvar:mn_upmodel_bottom
@@ -133,7 +133,7 @@ window ufopedia
 		// ==================
 		// text and info
 		// ==================
-	
+
 		text ufopedia
 		{
 			dataid		TEXT_UFOPEDIA
@@ -149,7 +149,7 @@ window ufopedia
 				*node:(abstractscrollbar)parent.ufopedia_scroll@viewsize <viewsize>
 			}
 		}
-	
+
 		vscrollbar ufopedia_scroll {
 			image		ui/scrollbar_v_green
 			pos			"603 50"
@@ -159,7 +159,7 @@ window ufopedia
 			fullsize	50
 			onChange	{ *node:parent.ufopedia@viewpos <current> }
 		}
-	
+
 		text description
 		{
 			dataid		TEXT_UFOPEDIA_METADATA
@@ -174,7 +174,7 @@ window ufopedia
 				*node:(abstractscrollbar)parent.description_scroll@viewsize <viewsize>
 			}
 		}
-	
+
 		vscrollbar description_scroll {
 			image		ui/scrollbar_v_green
 			pos			"425 61"
@@ -185,21 +185,21 @@ window ufopedia
 			hidewhenunused true
 			onChange	{ *node:parent.description@viewpos <current> }
 		}
-	
+
 		panel requirement {
 			{
 				pos		"430 373"
 				size	"166 128"
 				image	"ui/panel_green_slim"
 			}
-			
+
 			string label {
 				pos "5 5"
 				size "120 20"
 				font	f_small
 				string "_Requirement:"
 			}
-			
+
 			textlist techtree
 			{
 				dataid		TEXT_UFOPEDIA_REQUIREMENT
@@ -215,7 +215,7 @@ window ufopedia
 					*node:(abstractscrollbar)parent.techtree_scroll@viewsize <viewsize>
 				}
 			}
-		
+
 			vscrollbar techtree_scroll {
 				image		ui/scrollbar_v_green
 				invis		true
@@ -225,9 +225,7 @@ window ufopedia
 				hidewhenunused true
 				onChange	{ *node:parent.techtree@viewpos <current> }
 			}
-
 		}
-	
 	}
 
 	// ==================
@@ -368,7 +366,7 @@ window ufopedia
 	}
 
 	confunc update_ufopedia_layout {
-		
+
 		// is right column is not empty?
 		*cvar:mn_rightpanel = 0
 		if ( *cvar:mn_upimage_top ne "" ) { *cvar:mn_rightpanel = 1 } 
@@ -431,7 +429,7 @@ window ufopedia
 			*content.requirement@invis = true
 		}
 
-		// anyway we do not display requirement if it is not need
+		// we only show requirements if there are needed
 		if ( *cvar:mn_uprequirement eq "" ) {
 			*content.requirement@invis = true
 		}
