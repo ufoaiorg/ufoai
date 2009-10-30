@@ -185,7 +185,7 @@ typedef struct nodeBehaviour_s {
 	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
 	intptr_t extraDataSize;			/**< Size of the extra data used (it come from "u" attribute) @note use intptr_t because we use the virtual inheritance function (see virtualFunctions) */
 	struct nodeBehaviour_s *super;	/**< link to the extended node */
-#if DEBUG
+#ifdef DEBUG
 	int count;						/**< number of node allocated */
 #endif
 

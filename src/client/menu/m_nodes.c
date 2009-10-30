@@ -323,7 +323,7 @@ menuNode_t* MN_AllocStaticNode (const char* type)
 	node->behaviour = MN_GetNodeBehaviour(type);
 	if (node->behaviour == NULL)
 		Com_Error(ERR_FATAL, "MN_AllocStaticNode: Node behaviour '%s' doesn't exist", type);
-#if DEBUG
+#ifdef DEBUG
 	node->behaviour->count++;
 #endif
 	if (node->behaviour->isAbstract)
