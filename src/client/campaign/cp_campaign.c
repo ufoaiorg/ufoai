@@ -2336,7 +2336,6 @@ void CP_InitStartup (void)
 	TR_InitStartup();
 	AB_InitStartup();
 	AIRFIGHT_InitStartup();
-	UR_InitStartup();
 	NAT_InitStartup();
 }
 

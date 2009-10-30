@@ -460,9 +460,6 @@ typedef struct ccs_s {
 	transfer_t transfers[MAX_TRANSFERS];
 	int numTransfers;
 
-	/* UFO recoveries. */
-	ufoRecoveries_t recoveries[MAX_RECOVERIES];
-
 	/* UFO components. */
 	int numComponents;
 	components_t components[MAX_ASSEMBLIES];

@@ -2966,30 +2966,6 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 
 	ccs.numProjectiles = i;
 
-	/* fallback code to keep compatibility with UFO Hangars */
-	/** @todo remove this on release or after a time */
-	for (snode = mxml_GetNode(node, "recovery"); snode;
-			snode = mxml_GetNextNode(snode, node, "recovery")) {
-		installation_t *inst = INS_GetFirstUFOYard(qtrue);
-		byte ufotype = mxml_GetInt(snode, "ufotemplateidx", BYTES_NONE);
-		date_t event;
-
-		if (!inst) {
-			Com_Printf("AIR_LoadXML: No more free UFOYards for recovery\n");
-			break;
-		}
-
-		event.day = mxml_GetInt(snode, "day", 0);
-		event.sec = mxml_GetInt(snode, "sec", 0);
-
-		if (ufotype >= ccs.numAircraftTemplates) {
-			Com_Printf("AIR_LoadXML: Invalid template idx %i\n", ufotype);
-			continue;
-		}
-
-		US_StoreUFO(&(ccs.aircraftTemplates[ufotype]), inst, event);
-	}
-
 	for (i = ccs.numUFOs - 1; i >= 0; i--) {
 		aircraft_t *ufo = UFO_GetByIDX(i);
 		if (ufo->time < 0 || ufo->stats[AIR_STATS_SPEED] <= 0) {

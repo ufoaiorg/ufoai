@@ -26,18 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_UFORECOVERY_H
 #define CLIENT_CL_UFORECOVERY_H
 
-/* UFO Recoveries stuff. */
-#define MAX_RECOVERIES 32
-
-/** @brief Structure of UFO recoveries (all of them).
- * @sa ufoRecovery_t */
-typedef struct ufoRecoveries_s {
-	qboolean active;			/**< True if the recovery is under processing. */
-	installation_t *installation;	/**< UFO Yard where the recovery will be processed. */
-	aircraft_t *ufoTemplate;	/**< Entry of UFO in aircraftTemplates array. */
-	date_t event;				/**< When the process will start (UFO got transported to base). */
-} ufoRecoveries_t;
-
 #define MAX_STOREDUFOS 128
 
 /* time the recovery takes in days */
@@ -74,7 +62,6 @@ typedef struct storedUFO_s {
 } storedUFO_t;
 
 void UR_ProcessActive(void);
-void UR_InitStartup(void);
 
 storedUFO_t *US_StoreUFO(const aircraft_t *ufoTemplate, installation_t *installation, date_t date);
 storedUFO_t *US_GetStoredUFOPlaceByIDX(const int idx);
