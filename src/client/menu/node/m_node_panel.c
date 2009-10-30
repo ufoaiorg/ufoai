@@ -58,9 +58,11 @@ static void MN_PanelNodeDraw (menuNode_t *node)
 
 /**
  * @brief Create a top-down flow layout with child of the node.
- * Child position is automatically set, child height dont change
+ * Child position is automatically set, child height don't change
  * and child width is set according to node width and padding
- * @Note test only
+ * @param[in,out] node The panel node to render the children for
+ * @param[in] marge The margin between all children nodes in their y-position of the panel
+ * @note test only
  */
 static void MN_TopDownFlowLayout (menuNode_t *node, int marge)
 {

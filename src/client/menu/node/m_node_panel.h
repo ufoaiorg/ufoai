@@ -28,13 +28,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct menuNode_s;
 struct nodeBehaviour_s;
 
+typedef enum {
+	LAYOUT_NONE,
+	LAYOUT_TOP_DOWN,
+
+	LAYOUT_MAX,
+	LAYOUT_ENSURE_32BIT = 0x7FFFFFFF
+} panelLayout_t;
+
 /**
- * @brief extradata for the window node
+ * @brief extradata for the panel node
  */
 typedef struct {
-	int layout;
-	int margeLayout;
-
+	panelLayout_t layout;	/**< The layout the panel is using to render all its children */
+	int margeLayout;		/**< The margin between all children nodes in their y-position of the panel */
 } panelExtraData_t;
 
 void MN_RegisterPanelNode(struct nodeBehaviour_s *behaviour);
