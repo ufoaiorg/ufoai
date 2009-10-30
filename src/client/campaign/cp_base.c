@@ -2899,52 +2899,12 @@ static void B_PostLoadInitCapacity (void)
 }
 
 /**
- * @brief Moves the UFOs stored in the base's storage structure to UFO Yards' storedUFOs structure
- * @note this is a temporary function to keep savegame compatibility
- * @todo remove this before release (or after a time)
- */
-static void B_PostLoadMoveUFOsToUFOYards (void)
-{
-	int i;
-
-	/* loop throught bases */
-	for (i = 0; i < ccs.numBases; i++) {
-		int j;
-		base_t * base = B_GetFoundedBaseByIDX(i);
-
-		if (!base)
-			continue;
-
-		/* find ufos in storage */
-		for (j = 0; j < csi.numODs; j++) {
-			objDef_t *od = INVSH_GetItemByIDX(j);
-
-			if (!od)
-				continue;
-			assert(od->tech);
-			if (od->tech->type != RS_CRAFT)
-				continue;
-
-			/* add each to an ufoyard */
-			for (;0 < base->storage.num[od->idx];) {
-				installation_t *UFOYard = INS_GetFirstUFOYard(qtrue);
-
-				if (UFOYard)
-					US_StoreUFO(AIR_GetAircraft(od->id), UFOYard, ccs.date);
-				base->storage.num[od->idx]--;
-			}
-		}
-	}
-}
-
-/**
  * @brief Set the capacity stuff for all the bases after loading a savegame
  * @sa SAV_GameActionsAfterLoad
  */
 void B_PostLoadInit (void)
 {
 	B_PostLoadInitCapacity();
-	B_PostLoadMoveUFOsToUFOYards();
 }
 
 qboolean B_LoadStorageXML (mxml_node_t *parent, equipDef_t *equip)

@@ -601,40 +601,6 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			if (s1 && s1[0] != '\0')
 				pq->items[j].item = INVSH_GetItemByID(s1);
 
-			/* This if block is for keeping compatibility with base-stored ufos */
-			/* @todo remove this on release (or after time) */
-			if (!mxml_GetBool(ssnode, "prod", qtrue)) {
-				const int amount = pq->items[j].amount;
-				int k;
-				aircraft_t *ufoTemplate = (pq->items[j].item) ? AIR_GetAircraft(pq->items[j].item->id) : NULL;
-
-				for (k = 0; k < amount; k++) {
-					installation_t *installation = INS_GetFirstUFOYard(qtrue);
-					storedUFO_t *ufo = NULL;
-
-					if (ufoTemplate && installation)
-						ufo = US_StoreUFO(ufoTemplate, installation, ccs.date);
-
-					if (ufo) {
-						pq->items[j + k].idx = j + k;
-						pq->items[j + k].item = NULL;
-						pq->items[j + k].ufo = ufo;
-						pq->items[j + k].amount = 1;
-						pq->items[j + k].percentDone = (k) ? 0.0 : pq->items[j + k].percentDone;
-						pq->items[j + k].production = qfalse;
-						ufo->disassembly = &(pq->items[j + k]);
-					} else {
-						Com_Printf("PR_Load: Could not add ufo to the UFO Yards, disassembly dropped (baseidx=%i, production idx=%i).\n", i, j);
-						j--;
-						pq->numItems--;
-						continue;
-					}
-				}
-				j += k - 1;
-				pq->numItems += k - 1;
-				continue;
-			}
-
 			if (pq->items[j].amount <= 0) {
 				Com_Printf("PR_Load: Production with amount <= 0 dropped (baseidx=%i, production idx=%i).\n", i, j);
 				j--;
