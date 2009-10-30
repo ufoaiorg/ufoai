@@ -767,9 +767,7 @@ void BuildFacelights (unsigned int facenum)
 	fl->origins = Mem_Alloc(fl->numsamples * sizeof(vec3_t));
 	memcpy(fl->origins, l[0].surfpt, fl->numsamples * sizeof(vec3_t));
 	fl->samples = Mem_Alloc(fl->numsamples * sizeof(vec3_t));
-	memset(fl->samples, 0, fl->numsamples * sizeof(vec3_t));
 	fl->directions = Mem_Alloc(fl->numsamples * sizeof(vec3_t));
-	memset(fl->directions, 0, fl->numsamples * sizeof(vec3_t));
 
 	center = face_extents[facenum].center;  /* center of the face */
 
