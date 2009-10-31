@@ -35,7 +35,7 @@ tile +craft_drop_firebird
 0      0      0      0      0
 a      +b     +b     +b     a 
 a      +b     +b     +b     a 
-a      a      a      a      a
+0      a      a      a      0
 }
 
 tile +craft_drop_herakles
@@ -45,7 +45,7 @@ tile +craft_drop_herakles
 0      0      0      0      0
 a      +b     +b     +b     a 
 a      +b     +b     +b     a 
-a      a      a      a      a
+0      a      a      a      0
 }
 
 tile +craft_drop_raptor
@@ -55,7 +55,7 @@ tile +craft_drop_raptor
 0      0      0      0      0
 a      +b     +b     +b     a 
 a      +b     +b     +b     a 
-a      a      a      a      a
+0      a      a      a      0
 }
 
 // ########################################

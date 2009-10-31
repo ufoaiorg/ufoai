@@ -8,6 +8,9 @@
 // a: normal tile.
 // b: dropship tile.
 // c: UFO tile.
+// h: Horysontal road
+// v: vertical road
+
 
 base farm/f_
 
@@ -16,10 +19,10 @@ base farm/f_
 tile +craft_drop_firebird
 {
 5 4
-0      a       a       a       0
-a      +b      +b      +b      a
-a      +b      +b      +b      a
-0      a       a       a       0
+0      ah      ah      ah       0
+av     +b      +b      +b      av
+av     +b      +b      +b      av
+0      ah      ah      ah       0
 }
 
 // ---------------------------------
@@ -27,10 +30,10 @@ a      +b      +b      +b      a
 tile +craft_drop_herakles
 {
 5 4
-0      a       a       a       0
-a      +b      +b      +b      a
-a      +b      +b      +b      a
-0      a       a       a       0
+0      ah      ah      ah      0
+av     +b      +b      +b      av
+av     +b      +b      +b      av
+0      av      av      av      0
 }
 
 // ---------------------------------
@@ -38,10 +41,10 @@ a      +b      +b      +b      a
 tile +craft_drop_raptor
 {
 5 4
-0      a       a       a       0
-a      +b      +b      +b      a
-a      +b      +b      +b      a
-0      a       a       a       0
+0      ah       ah      ah       0
+av     +b       +b      +b      av
+av     +b       +b      +b      av
+0      ah       ah      ah       0
 }
 
 // ---------------------------------
@@ -49,9 +52,9 @@ a      +b      +b      +b      a
 tile +filler_s
 {
 3 3
-0      abc     0
-abc    +a      abc
-0      abc     0
+0      abch     0
+abcv    +a      abcv
+0      abch     0
 }
 
 // ---------------------------------
@@ -59,9 +62,9 @@ abc    +a      abc
 tile +filler_m_a
 {
 4 3
-0      abc     abc     0
-abc    +a      +a      abc
-0      abc     abc     0
+0      abch     abch     0
+abcv    +a      +a      abcv
+0      abch     abch     0
 }
 
 // ---------------------------------
@@ -69,9 +72,9 @@ abc    +a      +a      abc
 tile +filler_l_a
 {
 5 3
-0      abc     abc     abc     0
-abc    +a      +a      +a      abc
-0      abc     abc     abc     0
+0      abch    abch    abch    0
+abcv   +a      +a      +a      abc
+0      abch    abch    abch    0
 }
 
 // ---------------------------------
@@ -79,10 +82,10 @@ abc    +a      +a      +a      abc
 tile +filler_m_b
 {
 3 4
-0      abc     0
-abc    +a      abc
-abc    +a      abc
-0      abc     0
+0      abch    0
+abcv   +a      abc
+abcv   +a      abc
+0      abch    0
 }
 
 // ---------------------------------
@@ -90,11 +93,11 @@ abc    +a      abc
 tile +filler_l_b
 {
 3 5
-0      abc     0
-abc    +a      abc
-abc    +a      abc
-abc    +a      abc
-0      a       0
+0      abch    0
+abcv   +a      abc
+abcv   +a      abc
+abcv   +a      abc
+0      abch    0
 }
 
 // ---------------------------------
@@ -102,10 +105,11 @@ abc    +a      abc
 tile +wind
 {
 4 3
-0      abc     abc     0
-abc    +a      +a      abc
-0      abc     abc     0
+0      abch    abch    0
+abcv   +a      +a      abc
+0      abch    abch    0
 }
+
 
 
 // ---------------------------------
@@ -113,12 +117,12 @@ abc    +a      +a      abc
 tile +field_a
 {
 6 6
-0      abc     abc     abc     abc     0
-abc    +a      +a      +a      +a      abc
-abc    +a      +a      +a      +a      abc
-abc    +a      +a      +a      +a      abc
-abc    +a      +a      +a      +a      abc
-0      abc     abc     abc     abc     0
+0      abch    abch    abch    abch    0
+abcv   +a      +a      +a      +a      abc
+abcv   +a      +a      +a      +a      abc
+abcv   +a      +a      +a      +a      abc
+abcv   +a      +a      +a      +a      abc
+0      abch    abch    abch    abch    0
 }
 
 // ---------------------------------
@@ -126,12 +130,12 @@ abc    +a      +a      +a      +a      abc
 tile +field_b
 {
 6 6
-0      abc     abc     abc     abc     0
-abc    +a      +a      +a      +a      abc
-abc    +a      +a      +a      +a      abc
-abc    +a      +a      +a      +a      abc
-abc    +a      +a      +a      +a      abc
-0      abc     abc     abc     abc     0
+0      abch    abch    abch    abch    0
+abcv   +a      +a      +a      +a      abc
+abcv   +a      +a      +a      +a      abc
+abcv   +a      +a      +a      +a      abc
+abcv   +a      +a      +a      +a      abc
+0      abch    abch    abch    abch    0
 }
 
 // ---------------------------------
@@ -139,12 +143,12 @@ abc    +a      +a      +a      +a      abc
 tile +field_c
 {
 6 6
-0      abc     abc     abc     abc     0
-abc    +a      +a      +a      +a      abc
-abc    +a      +a      +a      +a      abc
-abc    +a      +a      +a      +a      abc
-abc    +a      +a      +a      +a      abc
-0      abc     abc     abc     abc     0
+0      abch    abch    abch    abch    0
+abcv   +a      +a      +a      +a      abc
+abcv   +a      +a      +a      +a      abc
+abcv   +a      +a      +a      +a      abc
+abcv   +a      +a      +a      +a      abc
+0      abch    abch    abch    abch    0
 }
 
 // ---------------------------------
@@ -152,12 +156,12 @@ abc    +a      +a      +a      +a      abc
 tile +craft_ufo_scout
 {
 6 6
-0      a       a       a       a       0
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-0      a       a       a       a       0
+0      ah      ah      ah      ah      0
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+0      ah      ah      ah      ah      0
 }
 
 // ---------------------------------
@@ -165,12 +169,12 @@ a      +c      +c      +c      +c      a
 tile +craft_ufo_fighter
 {
 6 6
-0      a       a       a       a       0
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-0      a       a       a       a       0
+0      ah      ah      ah      ah      0
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+0      ah      ah      ah      ah      0
 }
 
 // ---------------------------------
@@ -178,12 +182,12 @@ a      +c      +c      +c      +c      a
 tile +craft_ufo_harvester
 {
 7 6
-0      a       a       a       a       a       0
-a      +c      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      +c      a
-0      a       a       a       a       a       0
+0      ah      ah      ah      ah      ah      0
+av     +c      +c      +c      +c      +c     av
+av     +c      +c      +c      +c      +c     av
+av     +c      +c      +c      +c      +c     av
+av     +c      +c      +c      +c      +c     av
+0      ah      ah      ah      ah      ah      0
 }
 
 // ---------------------------------
@@ -191,16 +195,16 @@ a      +c      +c      +c      +c      +c      a
 tile +craft_ufo_bomber
 {
 6 10
-0      a       a       a       a       0
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-a      +c      +c      +c      +c      a
-0      a       a       a       a       0
+0      ah      ah      ah      ah      0
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+av     +c      +c      +c      +c     av
+0      ah      ah      ah      ah      0
 }
 
 // ---------------------------------
@@ -208,10 +212,10 @@ a      +c      +c      +c      +c      a
 tile +farmhouse_a
 {
 5 4
-0      abc     abc     abc     0
-abc    +a      +a      +a      abc
-abc    +a      +a      +a      abc
-0      abc     abc     abc     0
+0      abch    abch    abch    0
+abcv   +a      +a      +a      abc
+abcv   +a      +a      +a      abc
+0      abch    abch    abch    0
 }
 
 // ---------------------------------
@@ -219,11 +223,11 @@ abc    +a      +a      +a      abc
 tile +farmhouse_b
 {
 4 5
-0      abc     abc     0
-abc    +a      +a      abc
-abc    +a      +a      abc
-abc    +a      +a      abc
-0      abc     abc     0
+0      abch    abch    0
+abcv   +a      +a      abc
+abcv   +a      +a      abc
+abcv   +a      +a      abc
+0      abch    abch    0
 }
 
 // ---------------------------------
@@ -231,10 +235,10 @@ abc    +a      +a      abc
 tile +barn_a
 {
 4 4
-0      abc     abc     0
-abc    +a      +a      abc
-abc    +a      +a      abc
-0      abc     abc     0
+0      abch    abch    0
+abcv   +a      +a      abc
+abcv   +a      +a      abc
+0      abch    abch    0
 }
 
 // ---------------------------------
@@ -242,10 +246,10 @@ abc    +a      +a      abc
 tile +barn_b
 {
 4 4
-0      abc     abc     0
-abc    +a      +a      abc
-abc    +a      +a      abc
-0      abc     abc     0
+0      abch    abch    0
+abcv   +a      +a      abc
+abcv   +a      +a      abc
+0      abch    abch    0
 }
 
 // ---------------------------------
@@ -253,10 +257,10 @@ abc    +a      +a      abc
 tile +stables_a
 {
 5 4
-0      abc     abc     abc     0
-abc    +a      +a      +a      abc
-abc    +a      +a      +a      abc
-0      abc     abc     abc     0
+0      abch    abch    abch    0
+abcv   +a      +a      +a      abc
+abcv   +a      +a      +a      abc
+0      abch    abch    abch    0
 }
 
 // ---------------------------------
@@ -264,11 +268,11 @@ abc    +a      +a      +a      abc
 tile +stables_b
 {
 4 5
-0      abc     abc     0
-abc    +a      +a      abc
-abc    +a      +a      abc
-abc    +a      +a      abc
-0      abc     abc     0
+0      abch    abch    0
+abcv   +a      +a      abc
+abcv   +a      +a      abc
+abcv   +a      +a      abc
+0      abch    abch    0
 }
 
 // ---------------------------------
@@ -276,10 +280,59 @@ abc    +a      +a      abc
 tile +silo
 {
 3 3
-0      abc     0
-abc    +a      abc
-0      abc     0
+0      abch     0
+abcv   +a      abcv
+0      abch     0
 }
+
+// ---------------------------------
+// roads:
+
+tile +road_h
+{
+3 3
+0 abc 0
+h +h  h
+0 abc 0
+}
+
+// with tracktor and trailer
+tile +road_h1
+{
+3 3
+0 abc 0
+h +h  h
+0 abc 0
+}
+
+// parking with car
+tile +road_hs
+{
+3 3
+0 abc 0
+h +h  h
+0 abc 0
+}
+
+// vertical road
+tile +road_v
+{
+3 3
+0     v    0
+abc  +v  abc
+0     v    0
+}
+
+// right-top turn
+tile +road_rt
+{
+3 3
+0     v    0
+abc  +hv    h
+0   abc    0
+}
+
+
 
 assembly small
 {
@@ -319,9 +372,14 @@ grid "1 1"
 +field_b "0 2"
 +field_c "0 2"
 +silo "0 2"
-+wind "1 1"
++wind "0 1"
 +farmhouse_a "0 1"
 +farmhouse_b "0 1"
++road_hs "1 1"
++road_h1 "1 1"
++road_h "0 10"
++road_rt "0 1"
++road_v "0 10"
 +barn_a "0 1"
 +barn_b "0 1"
 +stables_a "0 1"
@@ -345,6 +403,11 @@ grid "1 1"
 +field_c "0 3"
 +silo "0 2"
 +wind "1 1"
++road_hs "1 1"
++road_h1 "1 1"
++road_h "0 10"
++road_rt "0 1"
++road_v "0 10"
 +farmhouse_a "0 1"
 +farmhouse_b "0 1"
 +barn_a "0 1"
