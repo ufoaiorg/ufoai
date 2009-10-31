@@ -881,7 +881,10 @@ static void UP_Content_f (void)
  */
 static void UP_Click_f (void)
 {
-	/* article index start with a @ */
+	if (Cmd_Argc() < 2)
+		return;
+
+	/* article index starts with a @ */
 	if (Cmd_Argv(1)[0] == '@') {
 		const int techId = atoi(Cmd_Argv(1) + 1);
 		technology_t* tech;
