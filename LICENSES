@@ -787,6 +787,9 @@ base/models/objects/aircraft/hheli/hheli.md2 | GNU General Public License 2.0 or
 base/models/objects/aircraft/hheli/hheli.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/alien/battery/battery.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/battery/battery.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/box/box.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/box/box.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/box/box_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/disassembled/ufo_fighter.jpg | GNU General Public License 2.0
 base/models/objects/alien/disassembled/ufo_fighter.md2 | GNU General Public License 2.0
 base/models/objects/alien/disassembled/ufo_harvester.jpg | GNU General Public License 2.0
