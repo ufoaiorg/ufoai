@@ -26,6 +26,7 @@
 #include <vector>
 #include <memory>
 #include "generic/constant.h"
+#include "Bounded.h"
 #include "irender.h"
 
 // Model skinlist typedef
@@ -47,7 +48,7 @@ namespace model
 	 * The interface also inherits from OpenGLRenderable to allow model instances
 	 * to be used for rendering.
 	 */
-	class IModel: public OpenGLRenderable
+	class IModel: public OpenGLRenderable, public Bounded
 	{
 		public:
 			/** Apply the given skin to this model.
@@ -71,10 +72,6 @@ namespace model
 			 * triangle count from each surface.
 			 */
 			virtual const std::string& getPolyCount () const = 0;
-
-			/** Return the local AABB that encloses this model.
-			 */
-			virtual const AABB& getAABB () const = 0;
 
 			/**
 			 * @brief Return the skins associated with the given model.

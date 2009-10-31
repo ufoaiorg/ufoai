@@ -54,9 +54,9 @@ inline bool string_not_empty (const std::string& string)
 /// Returns >0 if \p string is lexicographically greater than \p other.
 /// Returns 0 if \p string is lexicographically equal to \p other.
 /// O(n)
-inline int string_compare (const char* string, const char* other)
+inline int string_compare (const std::string& string, const std::string& other)
 {
-	return std::strcmp(string, other);
+	return std::strcmp(string.c_str(), other.c_str());
 }
 
 /// \brief Returns true if \p string is lexicographically equal to \p other.

@@ -26,12 +26,14 @@
 #if !defined (INCLUDED_SCENELIB_H)
 #define INCLUDED_SCENELIB_H
 
+#include "Bounded.h"
 #include "iscenegraph.h"
 #include "iselection.h"
 
 #include <cstddef>
 #include <string.h>
 
+#include "inode.h"
 #include "math/aabb.h"
 #include "transformlib.h"
 #include "generic/callback.h"
@@ -87,17 +89,6 @@ class ComponentSnappable
 		virtual void snapComponents (float snap) = 0;
 };
 
-class Bounded
-{
-	public:
-		STRING_CONSTANT(Name, "Bounded");
-
-		virtual ~Bounded ()
-		{
-		}
-		virtual const AABB& localAABB () const = 0;
-};
-
 typedef TypeCastTable<NODETYPEID_MAX> NodeTypeCastTable;
 
 template<typename Type>
@@ -139,11 +130,6 @@ class StaticNodeType
 		}
 };
 
-template<typename Type, typename Base>
-class NodeStaticCast: public CastInstaller<StaticNodeType<Base> , StaticCast<Type, Base> >
-{
-};
-
 template<typename Type, typename Contained>
 class NodeContainedCast: public CastInstaller<StaticNodeType<Contained> , ContainedCast<Type, Contained> >
 {
@@ -176,18 +162,9 @@ namespace scene
 				eExcluded = 1 << 2
 			};
 
-			class Symbiot
-			{
-				public:
-					virtual ~Symbiot ()
-					{
-					}
-			};
-
 		private:
 			unsigned int m_state;
 			std::size_t m_refcount;
-			Symbiot* m_symbiot;
 			void* m_node;
 			NodeTypeCastTable& m_casts;
 
@@ -199,12 +176,19 @@ namespace scene
 				return m_isRoot;
 			}
 
-			Node (Symbiot* symbiot, void* node, NodeTypeCastTable& casts) :
-				m_state(eVisible), m_refcount(0), m_symbiot(symbiot), m_node(node), m_casts(casts), m_isRoot(false)
+			Node (void* node, NodeTypeCastTable& casts) :
+				m_state(eVisible), m_refcount(0), m_node(node), m_casts(casts), m_isRoot(false)
 			{
 			}
-			~Node ()
+
+			virtual ~Node ()
 			{
+			}
+
+			virtual void release ()
+			{
+				// Default implementation: remove this node
+				delete this;
 			}
 
 			void IncRef ()
@@ -216,7 +200,7 @@ namespace scene
 			{
 				ASSERT_MESSAGE(m_refcount < (1 << 24), "Node::decref: uninitialised refcount");
 				if (--m_refcount == 0) {
-					delete m_symbiot;
+					release();
 				}
 			}
 			std::size_t getReferenceCount () const
@@ -247,19 +231,18 @@ namespace scene
 			}
 	};
 
-	class NullNode: public Node::Symbiot
+	class NullNode: public Node
 	{
 			NodeTypeCastTable m_casts;
-			Node m_node;
 		public:
 			NullNode () :
-				m_node(this, 0, m_casts)
+				scene::Node(NULL, m_casts)
 			{
 			}
 
 			scene::Node& node ()
 			{
-				return m_node;
+				return *this;
 			}
 	};
 }
@@ -280,7 +263,7 @@ class NodeTypeCast
 
 inline scene::Instantiable* Node_getInstantiable (scene::Node& node)
 {
-	return NodeTypeCast<scene::Instantiable>::cast(node);
+	return dynamic_cast<scene::Instantiable*>(&node);
 }
 
 inline scene::Traversable* Node_getTraversable (scene::Node& node)
@@ -535,7 +518,7 @@ namespace scene
 					bool pre (const scene::Path& path, scene::Instance& instance) const
 					{
 						if (m_depth == 1) {
-							aabb_extend_by_aabb_safe(m_aabb, instance.worldAABB());
+							m_aabb.includeAABB(instance.worldAABB());
 						}
 						return ++m_depth != 2;
 					}
@@ -651,8 +634,7 @@ namespace scene
 
 					const Bounded* bounded = Instance_getBounded(*this);
 					if (bounded != 0) {
-						aabb_extend_by_aabb_safe(m_bounds, aabb_for_oriented_aabb_safe(bounded->localAABB(),
-								localToWorld()));
+						m_bounds.includeAABB(aabb_for_oriented_aabb_safe(bounded->localAABB(), localToWorld()));
 					}
 
 					m_boundsMutex = false;

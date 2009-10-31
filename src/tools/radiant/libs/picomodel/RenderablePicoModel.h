@@ -77,7 +77,7 @@ namespace model
 
 			/** Return the enclosing AABB for this model.
 			 */
-			const AABB& getAABB () const
+			const AABB& localAABB () const
 			{
 				return _localAABB;
 			}

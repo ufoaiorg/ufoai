@@ -33,8 +33,7 @@ struct GraphTreeModel;
 
 GraphTreeModel* graph_tree_model_new ();
 void graph_tree_model_delete (GraphTreeModel* model);
-inline Nameable* Node_getNameable (scene::Node& node);
-const char* node_get_name (scene::Node& node);
+const std::string node_get_name (scene::Node& node);
 
 namespace scene
 {

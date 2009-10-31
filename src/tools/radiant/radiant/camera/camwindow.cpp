@@ -1633,7 +1633,7 @@ void CamWnd_LookThroughCamera (CamWnd& camwnd)
 
 inline CameraModel* Instance_getCameraModel (scene::Instance& instance)
 {
-	return InstanceTypeCast<CameraModel>::cast(instance);
+	return dynamic_cast<CameraModel*>(&instance);
 }
 
 void CamWnd_LookThroughSelected (CamWnd& camwnd)

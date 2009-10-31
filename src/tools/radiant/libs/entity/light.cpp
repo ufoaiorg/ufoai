@@ -313,7 +313,8 @@ class LightRadii
 			m_intensity = string_read_int(value.c_str());
 			calculateRadii();
 		}
-		typedef MemberCaller1<LightRadii, const std::string&, &LightRadii::primaryIntensityChanged> IntensityChangedCaller;
+		typedef MemberCaller1<LightRadii, const std::string&, &LightRadii::primaryIntensityChanged>
+				IntensityChangedCaller;
 		void flagsChanged (const std::string& value)
 		{
 			m_flags = string_read_int(value.c_str());
@@ -617,7 +618,11 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		{
 			return m_nameKeys;
 		}
-		Nameable& getNameable ()
+		const NamedEntity& getNameable () const
+		{
+			return m_named;
+		}
+		NamedEntity& getNameable ()
 		{
 			return m_named;
 		}
@@ -854,10 +859,11 @@ class LightInstance: public TargetableInstance,
 		}
 };
 
-class LightNode: public scene::Node::Symbiot,
+class LightNode: public scene::Node,
 		public scene::Instantiable,
 		public scene::Cloneable,
-		public scene::Traversable::Observer
+		public scene::Traversable::Observer,
+		public Nameable
 {
 		class TypeCasts
 		{
@@ -865,13 +871,10 @@ class LightNode: public scene::Node::Symbiot,
 			public:
 				TypeCasts ()
 				{
-					NodeStaticCast<LightNode, scene::Instantiable>::install(m_casts);
-					NodeStaticCast<LightNode, scene::Cloneable>::install(m_casts);
 					NodeContainedCast<LightNode, Editable>::install(m_casts);
 					NodeContainedCast<LightNode, Snappable>::install(m_casts);
 					NodeContainedCast<LightNode, TransformNode>::install(m_casts);
 					NodeContainedCast<LightNode, Entity>::install(m_casts);
-					NodeContainedCast<LightNode, Nameable>::install(m_casts);
 					NodeContainedCast<LightNode, Namespaced>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
@@ -880,7 +883,6 @@ class LightNode: public scene::Node::Symbiot,
 				}
 		};
 
-		scene::Node m_node;
 		InstanceSet m_instances;
 		Light m_contained;
 
@@ -913,28 +915,23 @@ class LightNode: public scene::Node::Symbiot,
 		{
 			return m_contained.getEntity();
 		}
-		Nameable& get (NullType<Nameable> )
-		{
-			return m_contained.getNameable();
-		}
 		Namespaced& get (NullType<Namespaced> )
 		{
 			return m_contained.getNamespaced();
 		}
 
 		LightNode (EntityClass* eclass) :
-			m_node(this, this, StaticTypeCasts::instance().get()), m_contained(eclass, m_node,
+			scene::Node(this, StaticTypeCasts::instance().get()), m_contained(eclass, *this,
 					InstanceSet::TransformChangedCaller(m_instances), InstanceSet::BoundsChangedCaller(m_instances),
 					InstanceSetEvaluateTransform<LightInstance>::Caller(m_instances))
 		{
 			construct();
 		}
 		LightNode (const LightNode& other) :
-			scene::Node::Symbiot(other), scene::Instantiable(other), scene::Cloneable(other),
-					scene::Traversable::Observer(other), m_node(this, this, StaticTypeCasts::instance().get()),
-					m_contained(other.m_contained, m_node, InstanceSet::TransformChangedCaller(m_instances),
-							InstanceSet::BoundsChangedCaller(m_instances),
-							InstanceSetEvaluateTransform<LightInstance>::Caller(m_instances))
+			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
+					scene::Traversable::Observer(other), Nameable(other), m_contained(other.m_contained, *this,
+							InstanceSet::TransformChangedCaller(m_instances), InstanceSet::BoundsChangedCaller(
+									m_instances), InstanceSetEvaluateTransform<LightInstance>::Caller(m_instances))
 		{
 			construct();
 		}
@@ -945,7 +942,7 @@ class LightNode: public scene::Node::Symbiot,
 
 		scene::Node& node ()
 		{
-			return m_node;
+			return *this;
 		}
 
 		scene::Node& clone () const
@@ -977,6 +974,21 @@ class LightNode: public scene::Node::Symbiot,
 		scene::Instance* erase (scene::Instantiable::Observer* observer, const scene::Path& path)
 		{
 			return m_instances.erase(observer, path);
+		}
+		// Nameable implementation
+		std::string name () const
+		{
+			return m_contained.getNameable().name();
+		}
+
+		void attach (const NameCallback& callback)
+		{
+			m_contained.getNameable().attach(callback);
+		}
+
+		void detach (const NameCallback& callback)
+		{
+			m_contained.getNameable().detach(callback);
 		}
 };
 

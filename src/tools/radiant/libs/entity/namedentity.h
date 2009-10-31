@@ -55,7 +55,7 @@ class NameCallbackSet
 		}
 };
 
-class NamedEntity: public Nameable
+class NamedEntity
 {
 		EntityKeyValues& m_entity;
 		NameCallbackSet m_changed;
@@ -65,12 +65,11 @@ class NamedEntity: public Nameable
 			m_entity(entity)
 		{
 		}
-		const char* name () const
+		std::string name () const
 		{
-			if (m_name.empty()) {
+			if (m_name.empty())
 				return m_entity.getEntityClass().name();
-			}
-			return m_name.c_str();
+			return m_name;
 		}
 		void attach (const NameCallback& callback)
 		{

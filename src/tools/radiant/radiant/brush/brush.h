@@ -1578,7 +1578,7 @@ class Brush: public TransformNode,
 		}
 
 		// nameable
-		const char* name () const
+		std::string name () const
 		{
 			return "brush";
 		}

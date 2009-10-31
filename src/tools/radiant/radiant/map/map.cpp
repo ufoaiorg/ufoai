@@ -636,7 +636,7 @@ class MapMergeEntities: public scene::Traversable::Walker
 		}
 };
 
-class BasicContainer: public scene::Node::Symbiot
+class BasicContainer: public scene::Node
 {
 		class TypeCasts
 		{
@@ -652,7 +652,6 @@ class BasicContainer: public scene::Node::Symbiot
 				}
 		};
 
-		scene::Node m_node;
 		TraversableNodeSet m_traverse;
 	public:
 
@@ -664,13 +663,13 @@ class BasicContainer: public scene::Node::Symbiot
 		}
 
 		BasicContainer () :
-			m_node(this, this, StaticTypeCasts::instance().get())
+				scene::Node(this, StaticTypeCasts::instance().get())
 		{
 		}
 
 		scene::Node& node (void)
 		{
-			return m_node;
+			return *this;
 		}
 };
 
@@ -690,7 +689,7 @@ void Map_ImportSelected (TextInputStream& in, const MapFormat& format)
 
 inline scene::Cloneable* Node_getCloneable (scene::Node& node)
 {
-	return NodeTypeCast<scene::Cloneable>::cast(node);
+	return dynamic_cast<scene::Cloneable*>(&node);
 }
 
 inline scene::Node& node_clone (scene::Node& node)
@@ -1599,10 +1598,10 @@ const std::string map_open (const std::string& title)
 	fileChooser.setCurrentPath(getMapsPath());
 
 	// Instantiate a new preview object
-	//map::MapFileChooserPreview preview;
+	// map::MapFileChooserPreview preview;
 
 	// attach the preview object
-	//fileChooser.attachPreview(&preview);
+	// fileChooser.attachPreview(&preview);
 
 	return fileChooser.display();
 }

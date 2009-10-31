@@ -1778,7 +1778,7 @@ class bounds_selected: public scene::Graph::Walker
 		{
 			Selectable* selectable = Instance_getSelectable(instance);
 			if (selectable != 0 && selectable->isSelected()) {
-				aabb_extend_by_aabb_safe(m_bounds, Instance_getPivotBounds(instance));
+				m_bounds.includeAABB(Instance_getPivotBounds(instance));
 			}
 			return true;
 		}
@@ -1799,8 +1799,8 @@ class bounds_selected_component: public scene::Graph::Walker
 			if (selectable != 0 && selectable->isSelected()) {
 				ComponentEditable* componentEditable = Instance_getComponentEditable(instance);
 				if (componentEditable) {
-					aabb_extend_by_aabb_safe(m_bounds, aabb_for_oriented_aabb_safe(
-							componentEditable->getSelectedComponentsBounds(), instance.localToWorld()));
+					m_bounds.includeAABB(aabb_for_oriented_aabb_safe(componentEditable->getSelectedComponentsBounds(),
+							instance.localToWorld()));
 				}
 			}
 			return true;

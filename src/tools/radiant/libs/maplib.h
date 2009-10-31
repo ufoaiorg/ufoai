@@ -42,9 +42,9 @@ class NameableString: public Nameable
 		{
 		}
 
-		const char* name () const
+		std::string name () const
 		{
-			return m_name.c_str();
+			return m_name;
 		}
 		void attach (const NameCallback& callback)
 		{
@@ -143,7 +143,7 @@ class UndoFileChangeTracker: public UndoTracker, public MapFile
 		}
 };
 
-class MapRoot: public scene::Node::Symbiot, public scene::Instantiable, public scene::Traversable::Observer
+class MapRoot: public scene::Node, public scene::Instantiable, public scene::Traversable::Observer
 {
 		class TypeCasts
 		{
@@ -151,10 +151,8 @@ class MapRoot: public scene::Node::Symbiot, public scene::Instantiable, public s
 			public:
 				TypeCasts ()
 				{
-					NodeStaticCast<MapRoot, scene::Instantiable>::install(m_casts);
 					NodeContainedCast<MapRoot, scene::Traversable>::install(m_casts);
 					NodeContainedCast<MapRoot, TransformNode>::install(m_casts);
-					NodeContainedCast<MapRoot, Nameable>::install(m_casts);
 					NodeContainedCast<MapRoot, MapFile>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
@@ -163,7 +161,6 @@ class MapRoot: public scene::Node::Symbiot, public scene::Instantiable, public s
 				}
 		};
 
-		scene::Node m_node;
 		IdentityTransform m_transform;
 		TraversableNodeSet m_traverse;
 		InstanceSet m_instances;
@@ -191,9 +188,9 @@ class MapRoot: public scene::Node::Symbiot, public scene::Instantiable, public s
 		}
 
 		MapRoot (const std::string& name) :
-			m_node(this, this, StaticTypeCasts::instance().get()), m_name(name)
+			scene::Node(this, StaticTypeCasts::instance().get()), m_name(name)
 		{
-			m_node.m_isRoot = true;
+			m_isRoot = true;
 
 			m_traverse.attach(this);
 
@@ -206,7 +203,7 @@ class MapRoot: public scene::Node::Symbiot, public scene::Instantiable, public s
 		}
 		scene::Node& node ()
 		{
-			return m_node;
+			return *this;
 		}
 
 		InstanceCounter m_instanceCounter;

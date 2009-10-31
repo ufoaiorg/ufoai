@@ -45,6 +45,7 @@
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"
+#include "nameable.h"
 
 #include "entity.h"
 
@@ -126,7 +127,12 @@ class Group
 			return m_nameKeys;
 		}
 
-		Nameable& getNameable ()
+		NamedEntity& getNameable ()
+		{
+			return m_named;
+		}
+
+		const NamedEntity& getNameable () const
 		{
 			return m_named;
 		}
@@ -216,10 +222,11 @@ class GroupInstance: public TargetableInstance, public Renderable
 		}
 };
 
-class GroupNode: public scene::Node::Symbiot,
+class GroupNode: public scene::Node,
 		public scene::Instantiable,
 		public scene::Cloneable,
-		public scene::Traversable::Observer
+		public scene::Traversable::Observer,
+		public Nameable
 {
 		class TypeCasts
 		{
@@ -227,12 +234,9 @@ class GroupNode: public scene::Node::Symbiot,
 			public:
 				TypeCasts ()
 				{
-					NodeStaticCast<GroupNode, scene::Instantiable>::install(m_casts);
-					NodeStaticCast<GroupNode, scene::Cloneable>::install(m_casts);
 					NodeContainedCast<GroupNode, scene::Traversable>::install(m_casts);
 					NodeContainedCast<GroupNode, TransformNode>::install(m_casts);
 					NodeContainedCast<GroupNode, Entity>::install(m_casts);
-					NodeContainedCast<GroupNode, Nameable>::install(m_casts);
 					NodeContainedCast<GroupNode, Namespaced>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
@@ -241,7 +245,6 @@ class GroupNode: public scene::Node::Symbiot,
 				}
 		};
 
-		scene::Node m_node;
 		InstanceSet m_instances;
 		Group m_contained;
 
@@ -270,25 +273,21 @@ class GroupNode: public scene::Node::Symbiot,
 		{
 			return m_contained.getEntity();
 		}
-		Nameable& get (NullType<Nameable> )
-		{
-			return m_contained.getNameable();
-		}
 		Namespaced& get (NullType<Namespaced> )
 		{
 			return m_contained.getNamespaced();
 		}
 
 		GroupNode (EntityClass* eclass) :
-			m_node(this, this, StaticTypeCasts::instance().get()), m_contained(eclass, m_node,
+			scene::Node(this, StaticTypeCasts::instance().get()), m_contained(eclass, *this,
 					InstanceSet::TransformChangedCaller(m_instances))
 		{
 			construct();
 		}
 		GroupNode (const GroupNode& other) :
-			scene::Node::Symbiot(other), scene::Instantiable(other), scene::Cloneable(other),
-					scene::Traversable::Observer(other), m_node(this, this, StaticTypeCasts::instance().get()),
-					m_contained(other.m_contained, m_node, InstanceSet::TransformChangedCaller(m_instances))
+			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
+					scene::Traversable::Observer(other), Nameable(other), m_contained(other.m_contained, *this,
+							InstanceSet::TransformChangedCaller(m_instances))
 		{
 			construct();
 		}
@@ -299,7 +298,7 @@ class GroupNode: public scene::Node::Symbiot,
 
 		scene::Node& node ()
 		{
-			return m_node;
+			return *this;
 		}
 
 		scene::Node& clone () const
@@ -331,6 +330,20 @@ class GroupNode: public scene::Node::Symbiot,
 		scene::Instance* erase (scene::Instantiable::Observer* observer, const scene::Path& path)
 		{
 			return m_instances.erase(observer, path);
+		}
+		std::string name () const
+		{
+			return m_contained.getNameable().name();
+		}
+
+		void attach (const NameCallback& callback)
+		{
+			m_contained.getNameable().attach(callback);
+		}
+
+		void detach (const NameCallback& callback)
+		{
+			m_contained.getNameable().detach(callback);
 		}
 };
 

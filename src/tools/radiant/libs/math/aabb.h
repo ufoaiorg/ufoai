@@ -96,6 +96,55 @@ class AABB
 				}
 			}
 		}
+
+		// Expand this AABB to include another AABB
+		void includeAABB (const AABB& other)
+		{
+			// Validity check. If both this and other are valid, use the extension
+			// algorithm. If only the other AABB is valid, set this AABB equal to it.
+			// If neither are valid we do nothing.
+
+			if (isValid() && other.isValid()) {
+				// Extend each axis separately
+				for (int i = 0; i < 3; ++i) {
+					float displacement = other.origin[i] - origin[i];
+					float difference = other.extents[i] - extents[i];
+					if (fabs(displacement) > fabs(difference)) {
+						float half_difference = static_cast<float> (0.5 * (fabs(displacement) + difference));
+						if (half_difference > 0.0f) {
+							origin[i] += (displacement >= 0.0f) ? half_difference : -half_difference;
+							extents[i] += half_difference;
+						}
+					} else if (difference > 0.0f) {
+						origin[i] = other.origin[i];
+						extents[i] = other.extents[i];
+					}
+				}
+			} else if (other.isValid()) {
+				origin = other.origin;
+				extents = other.extents;
+			}
+		}
+
+		// Check whether the AABB is valid, or if the extents are still uninitialised
+		bool isValid() const {
+
+			bool valid = true;
+
+			// Check each origin and extents value. The origins must be between
+			// +/- FLT_MAX, and the extents between 0 and FLT_MAX.
+			for (int i = 0; i < 3; ++i) {
+				if (origin[i] < -FLT_MAX
+					|| origin[i] > FLT_MAX
+					|| extents[i] < 0
+					|| extents[i] > FLT_MAX)
+				{
+					valid = false;
+				}
+			}
+
+			return valid;
+		}
 };
 
 const float c_aabb_max = FLT_MAX;
@@ -174,15 +223,6 @@ inline void aabb_extend_by_aabb (AABB& aabb, const AABB& other)
 	AABBExtend<IntegralConstant<0> >::apply(aabb, other);
 	AABBExtend<IntegralConstant<1> >::apply(aabb, other);
 	AABBExtend<IntegralConstant<2> >::apply(aabb, other);
-}
-
-inline void aabb_extend_by_aabb_safe (AABB& aabb, const AABB& other)
-{
-	if (aabb_valid(aabb) && aabb_valid(other)) {
-		aabb_extend_by_aabb(aabb, other);
-	} else if (aabb_valid(other)) {
-		aabb = other;
-	}
 }
 
 inline void aabb_extend_by_vec3 (AABB& aabb, const Vector3& extension)

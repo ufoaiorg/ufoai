@@ -162,7 +162,11 @@ class MiscSound: public Cullable, public Bounded, public Snappable
 		{
 			return m_nameKeys;
 		}
-		Nameable& getNameable ()
+		NamedEntity& getNameable ()
+		{
+			return m_named;
+		}
+		const NamedEntity& getNameable () const
 		{
 			return m_named;
 		}
@@ -336,7 +340,7 @@ class MiscSoundInstance: public TargetableInstance,
 		typedef MemberCaller<MiscSoundInstance, &MiscSoundInstance::applyTransform> ApplyTransformCaller;
 };
 
-class MiscSoundNode: public scene::Node::Symbiot, public scene::Instantiable, public scene::Cloneable
+class MiscSoundNode: public scene::Node, public scene::Instantiable, public scene::Cloneable, public Nameable
 {
 		class TypeCasts
 		{
@@ -344,12 +348,9 @@ class MiscSoundNode: public scene::Node::Symbiot, public scene::Instantiable, pu
 			public:
 				TypeCasts ()
 				{
-					NodeStaticCast<MiscSoundNode, scene::Instantiable>::install(m_casts);
-					NodeStaticCast<MiscSoundNode, scene::Cloneable>::install(m_casts);
 					NodeContainedCast<MiscSoundNode, Snappable>::install(m_casts);
 					NodeContainedCast<MiscSoundNode, TransformNode>::install(m_casts);
 					NodeContainedCast<MiscSoundNode, Entity>::install(m_casts);
-					NodeContainedCast<MiscSoundNode, Nameable>::install(m_casts);
 					NodeContainedCast<MiscSoundNode, Namespaced>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
@@ -359,8 +360,6 @@ class MiscSoundNode: public scene::Node::Symbiot, public scene::Instantiable, pu
 		};
 
 		InstanceSet m_instances;
-
-		scene::Node m_node;
 		MiscSound m_contained;
 
 	public:
@@ -378,32 +377,27 @@ class MiscSoundNode: public scene::Node::Symbiot, public scene::Instantiable, pu
 		{
 			return m_contained.getEntity();
 		}
-		Nameable& get (NullType<Nameable> )
-		{
-			return m_contained.getNameable();
-		}
 		Namespaced& get (NullType<Namespaced> )
 		{
 			return m_contained.getNamespaced();
 		}
 
 		MiscSoundNode (EntityClass* eclass) :
-			m_node(this, this, StaticTypeCasts::instance().get()), m_contained(eclass, m_node,
+			scene::Node(this, StaticTypeCasts::instance().get()), m_contained(eclass, *this,
 					InstanceSet::TransformChangedCaller(m_instances),
 					InstanceSetEvaluateTransform<MiscSoundInstance>::Caller(m_instances))
 		{
 		}
 		MiscSoundNode (const MiscSoundNode& other) :
-			scene::Node::Symbiot(other), scene::Instantiable(other), scene::Cloneable(other), m_node(this, this,
-					StaticTypeCasts::instance().get()), m_contained(other.m_contained, m_node,
-					InstanceSet::TransformChangedCaller(m_instances),
+				scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other), Nameable(other), m_contained(
+					other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
 					InstanceSetEvaluateTransform<MiscSoundInstance>::Caller(m_instances))
 		{
 		}
 
 		scene::Node& node ()
 		{
-			return m_node;
+			return *this;
 		}
 
 		scene::Node& clone () const
@@ -426,6 +420,21 @@ class MiscSoundNode: public scene::Node::Symbiot, public scene::Instantiable, pu
 		scene::Instance* erase (scene::Instantiable::Observer* observer, const scene::Path& path)
 		{
 			return m_instances.erase(observer, path);
+		}
+		// Nameable implementation
+		std::string name () const
+		{
+			return m_contained.getNameable().name();
+		}
+
+		void attach (const NameCallback& callback)
+		{
+			m_contained.getNameable().attach(callback);
+		}
+
+		void detach (const NameCallback& callback)
+		{
+			m_contained.getNameable().detach(callback);
 		}
 };
 

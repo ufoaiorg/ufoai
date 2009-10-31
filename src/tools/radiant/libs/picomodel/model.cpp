@@ -28,6 +28,7 @@
 #include "model.h"
 
 #include "picomodel.h"
+#include "RenderablePicoModel.h"
 
 #include "iarchive.h"
 #include "idatastream.h"
@@ -370,7 +371,7 @@ class PicoModel: public Cullable, public Bounded
 				PicoFixSurfaceNormals(surface);
 
 				PicoSurface* picosurface = new PicoSurface(surface);
-				aabb_extend_by_aabb_safe(m_aabb_local, picosurface->localAABB());
+				m_aabb_local.includeAABB(picosurface->localAABB());
 				m_surfaces.push_back(picosurface);
 			}
 		}
@@ -496,7 +497,7 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 		}
 };
 
-class PicoModelNode: public scene::Node::Symbiot, public scene::Instantiable
+class PicoModelNode: public scene::Node, public scene::Instantiable
 {
 		class TypeCasts
 		{
@@ -504,7 +505,6 @@ class PicoModelNode: public scene::Node::Symbiot, public scene::Instantiable
 			public:
 				TypeCasts ()
 				{
-					NodeStaticCast<PicoModelNode, scene::Instantiable>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -512,25 +512,20 @@ class PicoModelNode: public scene::Node::Symbiot, public scene::Instantiable
 				}
 		};
 
-		scene::Node m_node;
 		InstanceSet m_instances;
 		PicoModel m_picomodel;
 
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		PicoModelNode () :
-			m_node(this, this, StaticTypeCasts::instance().get())
-		{
-		}
 		PicoModelNode (picoModel_t* model) :
-			m_node(this, this, StaticTypeCasts::instance().get()), m_picomodel(model)
+			scene::Node(this, StaticTypeCasts::instance().get()), m_picomodel(model)
 		{
 		}
 
 		scene::Node& node ()
 		{
-			return m_node;
+			return *this;
 		}
 
 		scene::Instance* create (const scene::Path& path, scene::Instance* parent)

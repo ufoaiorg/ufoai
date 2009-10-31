@@ -61,7 +61,6 @@ class MiscModel: public Snappable
 		Vector3 m_origin;
 		AnglesKey m_anglesKey;
 		Vector3 m_angles;
-		/*float m_angle;*/// see generic.cpp
 		ScaleKey m_scaleKey;
 		Vector3 m_scale;
 
@@ -122,9 +121,9 @@ class MiscModel: public Snappable
 				const Callback& evaluateTransform) :
 			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY), m_anglesKey(
 					AnglesChangedCaller(*this)), m_angles(ANGLESKEY_IDENTITY), m_scaleKey(ScaleChangedCaller(*this)),
-					m_scale(SCALEKEY_IDENTITY), m_filter(m_entity, node), m_named(
-							m_entity), m_nameKeys(m_entity), m_renderName(m_named, g_vector3_identity),
-					m_transformChanged(transformChanged), m_evaluateTransform(evaluateTransform)
+					m_scale(SCALEKEY_IDENTITY), m_filter(m_entity, node), m_named(m_entity), m_nameKeys(m_entity),
+					m_renderName(m_named, g_vector3_identity), m_transformChanged(transformChanged),
+					m_evaluateTransform(evaluateTransform)
 		{
 			construct();
 		}
@@ -132,10 +131,9 @@ class MiscModel: public Snappable
 				const Callback& evaluateTransform) :
 			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY),
 					m_anglesKey(AnglesChangedCaller(*this)), m_angles(ANGLESKEY_IDENTITY), m_scaleKey(
-							ScaleChangedCaller(*this)), m_scale(SCALEKEY_IDENTITY),
-					m_filter(m_entity, node), m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named,
-							g_vector3_identity), m_transformChanged(transformChanged), m_evaluateTransform(
-							evaluateTransform)
+							ScaleChangedCaller(*this)), m_scale(SCALEKEY_IDENTITY), m_filter(m_entity, node), m_named(
+							m_entity), m_nameKeys(m_entity), m_renderName(m_named, g_vector3_identity),
+					m_transformChanged(transformChanged), m_evaluateTransform(evaluateTransform)
 		{
 			construct();
 		}
@@ -175,7 +173,11 @@ class MiscModel: public Snappable
 		{
 			return m_nameKeys;
 		}
-		Nameable& getNameable ()
+		NamedEntity& getNameable ()
+		{
+			return m_named;
+		}
+		const NamedEntity& getNameable () const
 		{
 			return m_named;
 		}
@@ -314,10 +316,11 @@ class MiscModelInstance: public TargetableInstance, public TransformModifier, pu
 		typedef MemberCaller<MiscModelInstance, &MiscModelInstance::applyTransform> ApplyTransformCaller;
 };
 
-class MiscModelNode: public scene::Node::Symbiot,
+class MiscModelNode: public scene::Node,
 		public scene::Instantiable,
 		public scene::Cloneable,
-		public scene::Traversable::Observer
+		public scene::Traversable::Observer,
+		public Nameable
 {
 		class TypeCasts
 		{
@@ -325,13 +328,10 @@ class MiscModelNode: public scene::Node::Symbiot,
 			public:
 				TypeCasts ()
 				{
-					NodeStaticCast<MiscModelNode, scene::Instantiable>::install(m_casts);
-					NodeStaticCast<MiscModelNode, scene::Cloneable>::install(m_casts);
 					NodeContainedCast<MiscModelNode, scene::Traversable>::install(m_casts);
 					NodeContainedCast<MiscModelNode, Snappable>::install(m_casts);
 					NodeContainedCast<MiscModelNode, TransformNode>::install(m_casts);
 					NodeContainedCast<MiscModelNode, Entity>::install(m_casts);
-					NodeContainedCast<MiscModelNode, Nameable>::install(m_casts);
 					NodeContainedCast<MiscModelNode, Namespaced>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
@@ -340,7 +340,6 @@ class MiscModelNode: public scene::Node::Symbiot,
 				}
 		};
 
-		scene::Node m_node;
 		InstanceSet m_instances;
 		MiscModel m_contained;
 
@@ -372,27 +371,23 @@ class MiscModelNode: public scene::Node::Symbiot,
 		{
 			return m_contained.getEntity();
 		}
-		Nameable& get (NullType<Nameable> )
-		{
-			return m_contained.getNameable();
-		}
 		Namespaced& get (NullType<Namespaced> )
 		{
 			return m_contained.getNamespaced();
 		}
 
 		MiscModelNode (EntityClass* eclass) :
-			m_node(this, this, StaticTypeCasts::instance().get()), m_contained(eclass, m_node,
+			scene::Node(this, StaticTypeCasts::instance().get()), m_contained(eclass, *this,
 					InstanceSet::TransformChangedCaller(m_instances),
 					InstanceSetEvaluateTransform<MiscModelInstance>::Caller(m_instances))
 		{
 			construct();
 		}
 		MiscModelNode (const MiscModelNode& other) :
-			scene::Node::Symbiot(other), scene::Instantiable(other), scene::Cloneable(other),
-					scene::Traversable::Observer(other), m_node(this, this, StaticTypeCasts::instance().get()),
-					m_contained(other.m_contained, m_node, InstanceSet::TransformChangedCaller(m_instances),
-							InstanceSetEvaluateTransform<MiscModelInstance>::Caller(m_instances))
+			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
+					scene::Traversable::Observer(other), Nameable(other), m_contained(other.m_contained, *this,
+							InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
+									MiscModelInstance>::Caller(m_instances))
 		{
 			construct();
 		}
@@ -403,7 +398,7 @@ class MiscModelNode: public scene::Node::Symbiot,
 
 		scene::Node& node ()
 		{
-			return m_node;
+			return *this;
 		}
 
 		scene::Node& clone () const
@@ -435,6 +430,21 @@ class MiscModelNode: public scene::Node::Symbiot,
 		scene::Instance* erase (scene::Instantiable::Observer* observer, const scene::Path& path)
 		{
 			return m_instances.erase(observer, path);
+		}
+		// Nameable implementation
+		std::string name () const
+		{
+			return m_contained.getNameable().name();
+		}
+
+		void attach (const NameCallback& callback)
+		{
+			m_contained.getNameable().attach(callback);
+		}
+
+		void detach (const NameCallback& callback)
+		{
+			m_contained.getNameable().detach(callback);
 		}
 };
 

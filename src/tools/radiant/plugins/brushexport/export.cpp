@@ -321,7 +321,7 @@ class ForEachSelected: public SelectionSystem::Visitor
 
 		void visit (scene::Instance& instance) const
 		{
-			BrushInstance* bptr = InstanceTypeCast<BrushInstance>::cast(instance);
+			BrushInstance* bptr = dynamic_cast<BrushInstance*>(&instance);
 			if (bptr) {
 				Brush& brush(bptr->getBrush());
 

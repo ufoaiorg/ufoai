@@ -114,8 +114,7 @@ class EclassModel: public Snappable
 			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY), m_angleKey(
 					AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY), m_filter(m_entity, node),
 					m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named, g_vector3_identity),
-					m_transformChanged(transformChanged), m_evaluateTransform(
-							evaluateTransform)
+					m_transformChanged(transformChanged), m_evaluateTransform(evaluateTransform)
 		{
 			construct();
 		}
@@ -124,8 +123,7 @@ class EclassModel: public Snappable
 			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY),
 					m_angleKey(AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY), m_filter(m_entity, node),
 					m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named, g_vector3_identity),
-					m_transformChanged(transformChanged), m_evaluateTransform(
-							evaluateTransform)
+					m_transformChanged(transformChanged), m_evaluateTransform(evaluateTransform)
 		{
 			construct();
 		}
@@ -169,7 +167,11 @@ class EclassModel: public Snappable
 		{
 			return m_nameKeys;
 		}
-		Nameable& getNameable ()
+		NamedEntity& getNameable ()
+		{
+			return m_named;
+		}
+		const NamedEntity& getNameable () const
 		{
 			return m_named;
 		}
@@ -303,10 +305,11 @@ class EclassModelInstance: public TargetableInstance, public TransformModifier, 
 		typedef MemberCaller<EclassModelInstance, &EclassModelInstance::applyTransform> ApplyTransformCaller;
 };
 
-class EclassModelNode: public scene::Node::Symbiot,
+class EclassModelNode: public scene::Node,
 		public scene::Instantiable,
 		public scene::Cloneable,
-		public scene::Traversable::Observer
+		public scene::Traversable::Observer,
+		public Nameable
 {
 		class TypeCasts
 		{
@@ -314,13 +317,10 @@ class EclassModelNode: public scene::Node::Symbiot,
 			public:
 				TypeCasts ()
 				{
-					NodeStaticCast<EclassModelNode, scene::Instantiable>::install(m_casts);
-					NodeStaticCast<EclassModelNode, scene::Cloneable>::install(m_casts);
 					NodeContainedCast<EclassModelNode, scene::Traversable>::install(m_casts);
 					NodeContainedCast<EclassModelNode, Snappable>::install(m_casts);
 					NodeContainedCast<EclassModelNode, TransformNode>::install(m_casts);
 					NodeContainedCast<EclassModelNode, Entity>::install(m_casts);
-					NodeContainedCast<EclassModelNode, Nameable>::install(m_casts);
 					NodeContainedCast<EclassModelNode, Namespaced>::install(m_casts);
 					//NodeContainedCast<EclassModelNode, ModelSkin>::install(m_casts);
 				}
@@ -330,7 +330,6 @@ class EclassModelNode: public scene::Node::Symbiot,
 				}
 		};
 
-		scene::Node m_node;
 		InstanceSet m_instances;
 		EclassModel m_contained;
 
@@ -362,27 +361,23 @@ class EclassModelNode: public scene::Node::Symbiot,
 		{
 			return m_contained.getEntity();
 		}
-		Nameable& get (NullType<Nameable> )
-		{
-			return m_contained.getNameable();
-		}
 		Namespaced& get (NullType<Namespaced> )
 		{
 			return m_contained.getNamespaced();
 		}
 
 		EclassModelNode (EntityClass* eclass) :
-			m_node(this, this, StaticTypeCasts::instance().get()), m_contained(eclass, m_node,
+			scene::Node(this, StaticTypeCasts::instance().get()), m_contained(eclass, *this,
 					InstanceSet::TransformChangedCaller(m_instances),
 					InstanceSetEvaluateTransform<EclassModelInstance>::Caller(m_instances))
 		{
 			construct();
 		}
 		EclassModelNode (const EclassModelNode& other) :
-			scene::Node::Symbiot(other), scene::Instantiable(other), scene::Cloneable(other),
-					scene::Traversable::Observer(other), m_node(this, this, StaticTypeCasts::instance().get()),
-					m_contained(other.m_contained, m_node, InstanceSet::TransformChangedCaller(m_instances),
-							InstanceSetEvaluateTransform<EclassModelInstance>::Caller(m_instances))
+			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
+					scene::Traversable::Observer(other), Nameable(other), m_contained(other.m_contained, *this,
+							InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
+									EclassModelInstance>::Caller(m_instances))
 		{
 			construct();
 		}
@@ -393,7 +388,7 @@ class EclassModelNode: public scene::Node::Symbiot,
 
 		scene::Node& node ()
 		{
-			return m_node;
+			return *this;
 		}
 
 		void insert (scene::Node& child)
@@ -425,6 +420,20 @@ class EclassModelNode: public scene::Node::Symbiot,
 		scene::Instance* erase (scene::Instantiable::Observer* observer, const scene::Path& path)
 		{
 			return m_instances.erase(observer, path);
+		}
+
+		// Nameable implementation
+		virtual std::string name () const
+		{
+			return m_contained.getNameable().name();
+		}
+		virtual void attach (const NameCallback& callback)
+		{
+			m_contained.getNameable().attach(callback);
+		}
+		virtual void detach (const NameCallback& callback)
+		{
+			m_contained.getNameable().detach(callback);
 		}
 };
 

@@ -142,7 +142,7 @@ class NullModelInstance: public scene::Instance, public Renderable, public Selec
 		}
 };
 
-class NullModelNode: public scene::Node::Symbiot, public scene::Instantiable
+class NullModelNode: public scene::Node, public scene::Instantiable
 {
 		class TypeCasts
 		{
@@ -150,7 +150,6 @@ class NullModelNode: public scene::Node::Symbiot, public scene::Instantiable
 			public:
 				TypeCasts ()
 				{
-					NodeStaticCast<NullModelNode, scene::Instantiable>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -158,7 +157,6 @@ class NullModelNode: public scene::Node::Symbiot, public scene::Instantiable
 				}
 		};
 
-		scene::Node m_node;
 		InstanceSet m_instances;
 		NullModel m_nullmodel;
 	public:
@@ -166,14 +164,14 @@ class NullModelNode: public scene::Node::Symbiot, public scene::Instantiable
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		NullModelNode () :
-			m_node(this, this, StaticTypeCasts::instance().get())
+			scene::Node(this, StaticTypeCasts::instance().get())
 		{
-			m_node.m_isRoot = true;
+			m_isRoot = true;
 		}
 
 		scene::Node& node ()
 		{
-			return m_node;
+			return *this;
 		}
 
 		scene::Instance* create (const scene::Path& path, scene::Instance* parent)

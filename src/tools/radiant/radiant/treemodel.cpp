@@ -37,10 +37,10 @@
 
 inline Nameable* Node_getNameable (scene::Node& node)
 {
-	return NodeTypeCast<Nameable>::cast(node);
+	return dynamic_cast<Nameable*>(&node);
 }
 
-const char* node_get_name (scene::Node& node)
+const std::string node_get_name (scene::Node& node)
 {
 	Nameable* nameable = Node_getNameable(node);
 	return (nameable != 0) ? nameable->name() : "node";
@@ -51,7 +51,7 @@ void graph_tree_model_row_changed (GraphTreeNode& node);
 
 class GraphTreeNode
 {
-		typedef std::map<std::pair<CopiedString, scene::Node*>, GraphTreeNode*> ChildNodes;
+		typedef std::map<std::pair<std::string, scene::Node*>, GraphTreeNode*> ChildNodes;
 		ChildNodes m_childnodes;
 	public:
 		Reference<scene::Instance> m_instance;

@@ -82,7 +82,7 @@ namespace model
 
 			/** Get the containing AABB for this surface.
 			 */
-			const AABB& getAABB () const
+			const AABB& localAABB () const
 			{
 				return _localAABB;
 			}

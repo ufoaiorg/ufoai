@@ -1,23 +1,23 @@
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
+ Copyright (C) 2001-2006, William Joseph.
+ All Rights Reserved.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #if !defined(INCLUDED_IGL_H)
 #define INCLUDED_IGL_H
@@ -44,130 +44,148 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 /// \brief A module which wraps a runtime-binding of the standard OpenGL functions.
 /// Provides convenience functions for querying availabiliy of extensions, rendering text and error-checking.
-struct OpenGLBinding {
-	INTEGER_CONSTANT(Version, 2);
-	STRING_CONSTANT(Name, "qgl");
+struct OpenGLBinding
+{
+		INTEGER_CONSTANT(Version, 2);
+		STRING_CONSTANT(Name, "qgl");
 
-	/// \brief OpenGL version, extracted from the GL_VERSION string.
-	int major_version, minor_version;
+		/// \brief OpenGL version, extracted from the GL_VERSION string.
+		int major_version, minor_version;
 
-	/// \brief Is true if the global shared OpenGL context is valid.
-	bool contextValid;
+		/// \brief Is true if the global shared OpenGL context is valid.
+		bool contextValid;
 
-	OpenGLBinding() : contextValid(false) {
-	}
+		OpenGLBinding () :
+			contextValid(false)
+		{
+		}
 
-	/// \brief Asserts that there no OpenGL errors have occurred since the last call to glGetError.
-	void (*assertNoErrors)();
+		/// \brief Asserts that there no OpenGL errors have occurred since the last call to glGetError.
+		void (*assertNoErrors) ();
 
-	GLuint m_font;
-	int m_fontHeight;
+		GLuint m_font;
+		int m_fontHeight;
 
-	/// \brief Renders \p string at the current raster-position of the current context.
-	void drawString(const char* string) const {
-		glListBase(m_font);
-		glCallLists(GLsizei(strlen(string)), GL_UNSIGNED_BYTE, reinterpret_cast<const GLubyte*>(string));
-	}
+		/// \brief Renders \p string at the current raster-position of the current context.
+		void drawString (const std::string string) const
+		{
+			glListBase(m_font);
+			glCallLists(GLsizei(string.length()), GL_UNSIGNED_BYTE, reinterpret_cast<const GLubyte*> (string.c_str()));
+		}
 
-	/// \brief Renders \p character at the current raster-position of the current context.
-	void drawChar(char character) const {
-		glListBase(m_font);
-		glCallLists(1, GL_UNSIGNED_BYTE, reinterpret_cast<const GLubyte*>(&character));
-	}
+		/// \brief Renders \p character at the current raster-position of the current context.
+		void drawChar (char character) const
+		{
+			glListBase(m_font);
+			glCallLists(1, GL_UNSIGNED_BYTE, reinterpret_cast<const GLubyte*> (&character));
+		}
 
-	void perspective (GLdouble fovy, GLdouble yaspect, GLdouble zNear, GLdouble zFar)
-	{
-		GLdouble xmin, xmax, ymin, ymax;
+		void perspective (GLdouble fovy, GLdouble yaspect, GLdouble zNear, GLdouble zFar)
+		{
+			GLdouble xmin, xmax, ymin, ymax;
 
-		xmax = zNear * tan(fovy * 3.14159265 / 360.0);
-		xmin = -xmax;
+			xmax = zNear * tan(fovy * 3.14159265 / 360.0);
+			xmin = -xmax;
 
-		ymin = xmin * yaspect;
-		ymax = xmax * yaspect;
+			ymin = xmin * yaspect;
+			ymax = xmax * yaspect;
 
-		glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
-	}
+			glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
+		}
 
-	// GL_ARB_multitexture
-	void (QGL_DLLEXPORT *m_glActiveTexture)(GLenum texture);
-	void (QGL_DLLEXPORT *m_glClientActiveTexture)(GLenum texture);
+		// GL_ARB_multitexture
+		void (QGL_DLLEXPORT *m_glActiveTexture) (GLenum texture);
+		void (QGL_DLLEXPORT *m_glClientActiveTexture) (GLenum texture);
 
-	bool support_ARB_multitexture;
-	bool ARB_multitexture() {
-		return support_ARB_multitexture;
-	}
+		bool support_ARB_multitexture;
+		bool ARB_multitexture ()
+		{
+			return support_ARB_multitexture;
+		}
 
-	// ARB_texture_compression
-	bool support_ARB_texture_compression;
-	bool ARB_texture_compression() {
-		return support_ARB_texture_compression;
-	}
+		// ARB_texture_compression
+		bool support_ARB_texture_compression;
+		bool ARB_texture_compression ()
+		{
+			return support_ARB_texture_compression;
+		}
 
-	// EXT_texture_compression_s3tc
-	bool support_EXT_texture_compression_s3tc;
-	bool EXT_texture_compression_s3tc() {
-		return support_EXT_texture_compression_s3tc;
-	}
+		// EXT_texture_compression_s3tc
+		bool support_EXT_texture_compression_s3tc;
+		bool EXT_texture_compression_s3tc ()
+		{
+			return support_EXT_texture_compression_s3tc;
+		}
 
-	// GL 1.2
-	bool support_GL_1_2;
-	bool GL_1_2() {
-		return support_GL_1_2;
-	}
+		// GL 1.2
+		bool support_GL_1_2;
+		bool GL_1_2 ()
+		{
+			return support_GL_1_2;
+		}
 
-	// GL 1.3
-	bool support_GL_1_3;
-	bool GL_1_3() {
-		return support_GL_1_3;
-	}
+		// GL 1.3
+		bool support_GL_1_3;
+		bool GL_1_3 ()
+		{
+			return support_GL_1_3;
+		}
 
-	// GL 1.4
-	bool support_GL_1_4;
-	bool GL_1_4() {
-		return support_GL_1_4;
-	}
+		// GL 1.4
+		bool support_GL_1_4;
+		bool GL_1_4 ()
+		{
+			return support_GL_1_4;
+		}
 
-	// GL 1.5
-	bool support_GL_1_5;
-	bool GL_1_5() {
-		return support_GL_1_5;
-	}
+		// GL 1.5
+		bool support_GL_1_5;
+		bool GL_1_5 ()
+		{
+			return support_GL_1_5;
+		}
 
-	// GL_ARB_vertex_program
-	bool support_ARB_vertex_program;
-	bool ARB_vertex_program() {
-		return support_ARB_vertex_program;
-	}
+		// GL_ARB_vertex_program
+		bool support_ARB_vertex_program;
+		bool ARB_vertex_program ()
+		{
+			return support_ARB_vertex_program;
+		}
 
-	// GL_ARB_fragment_program
-	bool support_ARB_fragment_program;
-	bool ARB_fragment_program() {
-		return support_ARB_fragment_program;
-	}
+		// GL_ARB_fragment_program
+		bool support_ARB_fragment_program;
+		bool ARB_fragment_program ()
+		{
+			return support_ARB_fragment_program;
+		}
 
-	// GL_ARB_shader_objects
-	bool support_ARB_shader_objects;
-	bool ARB_shader_objects() {
-		return support_ARB_shader_objects;
-	}
+		// GL_ARB_shader_objects
+		bool support_ARB_shader_objects;
+		bool ARB_shader_objects ()
+		{
+			return support_ARB_shader_objects;
+		}
 
-	// GL_ARB_vertex_shader
-	bool support_ARB_vertex_shader;
-	bool ARB_vertex_shader() {
-		return support_ARB_vertex_shader;
-	}
+		// GL_ARB_vertex_shader
+		bool support_ARB_vertex_shader;
+		bool ARB_vertex_shader ()
+		{
+			return support_ARB_vertex_shader;
+		}
 
-	// ARB_fragment_shader
-	bool support_ARB_fragment_shader;
-	bool ARB_fragment_shader() {
-		return support_ARB_fragment_shader;
-	}
+		// ARB_fragment_shader
+		bool support_ARB_fragment_shader;
+		bool ARB_fragment_shader ()
+		{
+			return support_ARB_fragment_shader;
+		}
 
-	// ARB_shading_language_100
-	bool support_ARB_shading_language_100;
-	bool ARB_shading_language_100() {
-		return support_ARB_shading_language_100;
-	}
+		// ARB_shading_language_100
+		bool support_ARB_shading_language_100;
+		bool ARB_shading_language_100 ()
+		{
+			return support_ARB_shading_language_100;
+		}
 };
 
 #include "modulesystem.h"
@@ -180,7 +198,8 @@ template<typename Type>
 class GlobalModuleRef;
 typedef GlobalModuleRef<OpenGLBinding> GlobalOpenGLModuleRef;
 
-inline OpenGLBinding& GlobalOpenGL() {
+inline OpenGLBinding& GlobalOpenGL ()
+{
 	return GlobalOpenGLModule::getTable();
 }
 
