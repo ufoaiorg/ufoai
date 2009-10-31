@@ -1441,6 +1441,13 @@ MOUSE INPUT
  */
 static void CL_ActorMoveMouse (void)
 {
+	/* Don't display the cursor if it's above the currently selected level.
+	 * The 2nd part of the if is an attempt to display it anyway when we eg. climb a hill.
+	 * But there are too many situations inside buildings that match the criteria (eg. actorclip around chair).
+	 * So disabled for now.*/
+	if (mousePos[2] > cl_worldlevel->integer/* && !RT_AllCellsBelowAreFilled(clMap, fieldSize, pos)*/)
+		return;
+
 	if (selActor->actorMode == M_PEND_MOVE) {
 		if (VectorCompare(mousePos, selActor->mousePendPos)) {
 			/* Pending move and clicked the same spot (i.e. 2 clicks on the same place) */
@@ -2271,13 +2278,6 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	if (!cl_showactors->integer)
 		return;
 
-	/* Don't display the cursor if it's above the currently selected level.
-	 * The 2nd part of the if is an attempt to display it anyway when we eg. climb a hill.
-	 * But there are too many situations inside buildings that match the criteria (eg. actorclip around chair).
-	 * So disabled for now.*/
-	if (pos[2] > cl_worldlevel->integer/* && !RT_AllCellsBelowAreFilled(clMap, fieldSize, pos)*/)
-		return;
-
 	memset(&ent, 0, sizeof(ent));
 	ent.flags = RF_BOX;
 
@@ -2435,6 +2435,13 @@ void CL_AddTargeting (void)
 	switch (selActor->actorMode) {
 	case M_MOVE:
 	case M_PEND_MOVE:
+		/* Don't display the cursor if it's above the currently selected level.
+		 * The 2nd part of the if is an attempt to display it anyway when we eg. climb a hill.
+		 * But there are too many situations inside buildings that match the criteria (eg. actorclip around chair).
+		 * So disabled for now.*/
+		if (mousePos[2] > cl_worldlevel->integer/* && !RT_AllCellsBelowAreFilled(clMap, fieldSize, pos)*/)
+			return;
+
 		/* Display Move-cursor. */
 		CL_AddTargetingBox(mousePos, qfalse);
 
