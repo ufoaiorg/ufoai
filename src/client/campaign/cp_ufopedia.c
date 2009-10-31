@@ -796,41 +796,6 @@ static void UP_FindEntry_f (void)
 	UP_Article(tech, NULL);
 }
 
-static menuOption_t *upChapters;
-
-/**
- * @brief Alloc an array of option for all chapters and articles we can have
- * @note only alloc one time the memory, else return the last allocated memory
- * @return An array of options
- * @sa upChapters
- */
-static menuOption_t * UP_AllocOptions()
-{
-	int count = 0;
-	int i;
-
-	if (upChapters)
-		return upChapters;
-
-	/* one option per chapters */
-	count += ccs.numChapters;
-
-	/* one option per used tech */
-	for (i = 0; i < ccs.numChapters; i++) {
-		technology_t *tech = ccs.upChapters[i].first;
-		while (tech) {
-			count++;
-			/* @todo is it really need? */
-			if (tech == tech->upNext)
-				break;
-			tech = tech->upNext;
-		}
-	}
-
-	upChapters = (menuOption_t *) Mem_PoolAlloc(sizeof(*upChapters) * count, cp_campaignPool, 0);
-	return upChapters;
-}
-
 /**
  * @brief Generate a list of options for all allowed articles of a chapter
  * @param[in] parentChapter requested chapter
@@ -838,33 +803,22 @@ static menuOption_t * UP_AllocOptions()
  * @param[out] count number of generated options/articles
  * @return The first option of the list, else NULL if no articles
  */
-static menuOption_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter, menuOption_t* array, int *count)
+static menuOption_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
 {
 	technology_t *tech = parentChapter->first;
-	int articleCount = 0;
-	menuOption_t* option = array;
-	menuOption_t *last = NULL;
+	menuOption_t* first = NULL;
 
 	while (tech) {
 		if (UP_TechGetsDisplayed(tech)) {
 			const char* id = va("@%i", tech->idx);
-			MN_InitOption(option, id, tech->name, id);
-			articleCount++;
-			if (last)
-				last->next = option;
-			last = option;
-			option++;
+			MN_AddOption(&first, id, tech->name, id);
 		}
 		tech = tech->upNext;
 	}
 
-	*count = articleCount;
-	if (articleCount == 0)
-		return NULL;
+	MN_SortOptions(&first);
 
-	MN_SortOptions(&array);
-
-	return array;
+	return first;
 }
 
 /**
@@ -874,18 +828,11 @@ static menuOption_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter, 
 static void UP_GenerateSummary (void)
 {
 	int i;
-	menuOption_t *chapters;
+	menuOption_t *chapters = NULL;
 	menuOption_t *chapter;
-	menuOption_t *articleOptions;
-	menuOption_t *last = NULL;
 	int num = 0;
 
-	/* alloc options only one time */
-	chapters = UP_AllocOptions();
-	chapter = chapters;
 	numChaptersDisplayList = 0;
-
-	articleOptions = chapters + ccs.numChapters;
 
 	for (i = 0; i < ccs.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
@@ -901,24 +848,15 @@ static void UP_GenerateSummary (void)
 
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researchedEntries) {
-			int articleCount = 0;
 			if (numChaptersDisplayList >= MAX_PEDIACHAPTERS)
 				Com_Error(ERR_DROP, "MAX_PEDIACHAPTERS hit");
 			upChaptersDisplayList[numChaptersDisplayList++] = &ccs.upChapters[i];
 
 			/* chapter section*/
-			MN_InitOption(chapter, ccs.upChapters[i].id, ccs.upChapters[i].name, va("%i", num));
+			chapter = MN_AddOption(&chapters, ccs.upChapters[i].id, ccs.upChapters[i].name, va("%i", num));
 			chapter->icon = MN_GetIconByName(va("ufopedia_%s", ccs.upChapters[i].id));
+			chapter->firstChild = UP_GenerateArticlesSummary(&ccs.upChapters[i]);
 
-			/* articles */
-			chapter->firstChild = UP_GenerateArticlesSummary(&ccs.upChapters[i], articleOptions, &articleCount);
-			articleOptions += articleCount;
-
-			/* link chapters together */
-			if (last)
-				last->next = chapter;
-			last = chapter;
-			chapter++;
 			num++;
 		}
 	}
@@ -1347,12 +1285,6 @@ void UP_Shutdown (void)
 	Cvar_Delete("mn_uppreavailable");
 	Cvar_Delete("mn_uprequirement");
 	Cvar_Delete("mn_upmetadata");
-
-	if (upChapters) {
-		Mem_Free(upChapters);
-		upChapters = NULL;
-	}
-
 }
 
 /**

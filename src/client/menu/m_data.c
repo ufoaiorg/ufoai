@@ -157,6 +157,48 @@ int MN_GetDataVersion (int textId)
 }
 
 /**
+ * @brief Append an option to an option list.
+ * @param[in] name name of the option (should be unique in the option list)
+ * @param[in] label label displayed
+ * @param[in] value value used when this option is selected
+ * @return The new option
+ */
+menuOption_t* MN_AddOption (menuOption_t**tree, const char* name, const char* label, const char* value)
+{
+	menuOption_t *last;
+	menuOption_t *option;
+	assert(tree != NULL);
+
+	option = (menuOption_t*)Mem_PoolAlloc(sizeof(*option), com_genericPool, 0);
+	MN_InitOption(option, name, label, value);
+
+	/* append the option */
+	last = *tree;
+	if (last != NULL) {
+		while (last->next)
+			last = last->next;
+	}
+
+	if (last)
+		last->next = option;
+	else
+		*tree = option;
+
+	return option;
+}
+
+void MN_DeleteOption (menuOption_t* tree)
+{
+	while (tree) {
+		menuOption_t* del = tree;
+		tree = tree->next;
+		if (del->firstChild)
+			MN_DeleteOption(del->firstChild);
+		Mem_Free(del);
+	}
+}
+
+/**
  * @brief Reset a shared data. Type became NONE and value became NULL
  */
 void MN_ResetData (int dataId)
@@ -164,8 +206,18 @@ void MN_ResetData (int dataId)
 	assert(dataId < MAX_MENUTEXTS);
 	assert(dataId >= 0);
 
-	if (mn.sharedData[dataId].type == MN_SHARED_LINKEDLISTTEXT)
+	switch (mn.sharedData[dataId].type) {
+	case MN_SHARED_LINKEDLISTTEXT:
 		LIST_Delete(&mn.sharedData[dataId].data.linkedListText);
+		break;
+	case MN_SHARED_OPTION:
+		if (_Mem_AllocatedInPool(com_genericPool, mn.sharedData[dataId].data.option)) {
+			MN_DeleteOption(mn.sharedData[dataId].data.option);
+		}
+		break;
+	default:
+		break;
+	}
 
 	mn.sharedData[dataId].type = MN_SHARED_NONE;
 	mn.sharedData[dataId].data.text = NULL;

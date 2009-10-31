@@ -193,6 +193,10 @@ menuOption_t* MN_OptionIteratorNextOption(menuOptionIterator_t* iterator);
 void MN_UpdateInvisOptions(menuOption_t *option, const struct linkedList_s *stringList);
 void MN_OptionLinkArray(menuOption_t* array, int count);
 
+/* option tree */
+struct menuOption_s* MN_AddOption(struct menuOption_s**tree, const char* name, const char* label, const char* value);
+void MN_DeleteOption(struct menuOption_s* tree);
+
 /* line strip */
 void MN_RegisterLineStrip(int dataId, struct lineStrip_s *text);
 
