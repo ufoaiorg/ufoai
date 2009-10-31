@@ -33,7 +33,6 @@
 #include <cstddef>
 #include <string.h>
 
-#include "inode.h"
 #include "math/aabb.h"
 #include "transformlib.h"
 #include "generic/callback.h"
