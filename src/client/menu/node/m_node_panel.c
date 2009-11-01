@@ -117,7 +117,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 
 	// top
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->num != BORDERLAYOUT_TOP)
+		if (child->align != BORDERLAYOUT_TOP)
 			continue;
 		if (child->invis)
 			continue;
@@ -131,7 +131,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 
 	// bottom
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->num != BORDERLAYOUT_BOTTOM)
+		if (child->align != BORDERLAYOUT_BOTTOM)
 			continue;
 		if (child->invis)
 			continue;
@@ -145,7 +145,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 
 	// left
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->num != BORDERLAYOUT_LEFT)
+		if (child->align != BORDERLAYOUT_LEFT)
 			continue;
 		if (child->invis)
 			continue;
@@ -159,7 +159,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 
 	// right
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->num != BORDERLAYOUT_RIGHT)
+		if (child->align != BORDERLAYOUT_RIGHT)
 			continue;
 		if (child->invis)
 			continue;
@@ -173,7 +173,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 
 	// middle
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->num != BORDERLAYOUT_MIDDLE)
+		if (child->align != BORDERLAYOUT_MIDDLE)
 			continue;
 		if (child->invis)
 			continue;
@@ -208,7 +208,7 @@ static void MN_PackLayout (menuNode_t *node, int margin)
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->invis)
 			continue;
-		switch (child->num) {
+		switch (child->align) {
 		case PACKLAYOUT_TOP:
 			newSize[0] = maxX - minX;
 			newSize[1] = child->size[1];
@@ -287,10 +287,10 @@ void MN_StarLayout (menuNode_t *node)
 		vec2_t destination;
 		align_t align;
 
-		if (child->num <= 0 || child->num > 10)
+		if (child->align <= 0 || child->align > 10)
 			continue;
 
-		if (child->num == ALIGN_FILL) {
+		if (child->align == ALIGN_FILL) {
 			child->pos[0] = 0;
 			child->pos[1] = 0;
 			MN_NodeSetSize(child, node->size);
@@ -298,7 +298,7 @@ void MN_StarLayout (menuNode_t *node)
 			continue;
 		}
 
-		align = starlayoutmap[child->num - 1];
+		align = starlayoutmap[child->align - 1];
 		MN_NodeGetPoint(node, destination, align);
 		MN_NodeRelativeToAbsolutePoint(node, destination);
 		MN_NodeGetPoint(child, source, align);

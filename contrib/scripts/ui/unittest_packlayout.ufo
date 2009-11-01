@@ -19,27 +19,27 @@ window unittest_packlayout
 		}
 	
 		panel red {
-			num PACKLAYOUT_TOP
+			align PACKLAYOUT_TOP
 			height 100
 			bgcolor	"1 0 0 0.5"
 		}
 		panel green {
-			num PACKLAYOUT_RIGHT
+			align PACKLAYOUT_RIGHT
 			width 50
 			bgcolor	"0 1 0 0.5"
 		}
 		panel blue {
-			num PACKLAYOUT_BOTTOM
+			align PACKLAYOUT_BOTTOM
 			height 80
 			bgcolor	"0 0 1 0.5"
 		}
 		panel cyan {
-			num PACKLAYOUT_LEFT
+			align PACKLAYOUT_LEFT
 			width 120
 			bgcolor	"0 1 1 0.5"
 		}
 		panel yellow {
-			num PACKLAYOUT_FILL
+			align PACKLAYOUT_FILL
 			bgcolor	"1 1 0 0.5"
 		}
 	}

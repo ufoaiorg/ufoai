@@ -74,8 +74,15 @@ static const value_t properties[] = {
 	/* Border color we want to display. */
 	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
 
-	/* Used to custom layout in windows support widescreen.
+	/* Used to set the position of the node when the parent use a layout manager.
+	 * Else it do nothing.
+	 * Allowed value depend the layout manager used. Check m_node_panel.c for more values.
 	 * @todo We should rename it and type it named const
+	 */
+	{"align", V_INT, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
+
+	/* Used share an int, only used by 1 behavour
+	 * @todo move it to the right behaviour, delete it
 	 */
 	{"num", V_INT, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
 
