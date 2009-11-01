@@ -741,7 +741,6 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			Com_Printf("Irc_Client_CmdPrivmsg: Unknown ctcp command: '%s'\n", trailing);
 		}
 	} else {
-
 		if (!Irc_AppendToBuffer("<%s> %s", nick, trailing)) {
 			/* check whether this is no message to the channel - but to the user */
 			if (params && strcmp(params, irc_defaultChannel->string)) {
@@ -768,23 +767,21 @@ static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
 	char *parseBuf, *pos;
 	char *space;
 	char nick[MAX_VAR];
-	size_t len = strlen(trailing);
+	size_t len = strlen(trailing) + 1;
 	irc_nick_prefix_t p;
 
 	if (!chan)
 		return;
 
-	parseBuf = Mem_PoolAlloc((len + 1) * sizeof(char), cl_ircSysPool, 0);
+	parseBuf = Mem_PoolAlloc(len * sizeof(char), cl_ircSysPool, 0);
 	if (!parseBuf)
 		return;
 
-	strncpy(parseBuf, trailing, len);
-	parseBuf[len] = '\0';
-
+	Q_strncpyz(parseBuf, trailing, len);
 	pos = parseBuf;
 
 	do {
-		/* name are space seperated */
+		/* names are space separated */
 		space = strstr(pos, " ");
 		if (space)
 			*space = '\0';
@@ -1003,17 +1000,19 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 {
 	const char *c = txt;
 	const char *end = txt + txt_len;
-	*(msg->prefix) = '\0';
-	*(msg->params) = '\0';
-	*(msg->trailing) = '\0';
+	msg->prefix[0] = '\0';
+	msg->params[0] = '\0';
+	msg->trailing[0] = '\0';
 	if (c < end && *c == ':') {
 		/* parse prefix */
 		char *prefix = msg->prefix;
+		int i = 1;
+		const size_t size = sizeof(msg->prefix);
 		++c;
 		while (c < end && *c != '\r' && *c != ' ') {
-			*prefix = *c;
-			++prefix;
-			++c;
+			if (i++ >= size)
+				return qtrue;
+			*prefix++ = *c++;
 		}
 		*prefix = '\0';
 		++c;
@@ -1025,10 +1024,9 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 			char command[4];
 			int i;
 			for (i = 0; i < 3; ++i) {
-				if (c < end && *c >= '0' && *c <= '9') {
-					command[i] = *c;
-					++c;
-				} else
+				if (c < end && *c >= '0' && *c <= '9')
+					command[i] = *c++;
+				else
 					return qtrue;
 			}
 			command[3] = '\0';
@@ -1036,11 +1034,13 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 			msg->id.numeric = atoi(command);
 		} else if (c < end && *c != '\r') {
 			/* string command */
+			int i = 1;
+			const size_t size = sizeof(msg->id.string);
 			char *command = msg->id.string;
 			while (c < end && *c != '\r' && *c != ' ') {
-				*command = *c;
-				++command;
-				++c;
+				if (i++ >= size)
+					return qtrue;
+				*command++ = *c++;
 			}
 			*command = '\0';
 			msg->type = IRC_COMMAND_STRING;
@@ -1049,32 +1049,38 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 		if (c < end && *c == ' ') {
 			/* parse params and trailing */
 			char *params = msg->params;
+			int i = 1;
+			const size_t size = sizeof(msg->params);
 			++c;
+
+			/* parse params */
 			while (c < end && *c != '\r' && *c != ':') {
-				/* parse params */
+				/* parse single param */
 				while (c < end && *c != '\r' && *c != ' ') {
-					/* parse single param */
-					*params = *c;
-					++params;
-					++c;
+					if (i++ >= size)
+						return qtrue;
+					*params++ = *c++;
 				}
+				/* more params */
 				if (c + 1 < end && *c == ' ' && *(c + 1) != ':') {
-					/* more params */
-					*params = ' ';
-					++params;
+					if (i++ >= size)
+						return qtrue;
+					*params++ = ' ';
 				}
 				if (*c == ' ')
 					++c;
 			}
 			*params = '\0';
+			/* parse trailing */
 			if (c < end && *c == ':') {
-				/* parse trailing */
 				char *trailing = msg->trailing;
+				int i = 1;
+				const size_t size = sizeof(msg->trailing);
 				++c;
 				while (c < end && *c != '\r') {
-					*trailing = *c;
-					++trailing;
-					++c;
+					if (i++ >= size)
+						return qtrue;
+					*trailing++ = *c++;
 				}
 				*trailing = '\0';
 			}
