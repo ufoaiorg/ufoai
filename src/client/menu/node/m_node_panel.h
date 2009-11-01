@@ -33,6 +33,7 @@ typedef enum {
 	LAYOUT_TOP_DOWN_FLOW,
 	LAYOUT_BORDER,
 	LAYOUT_PACK,
+	LAYOUT_STAR,
 
 	LAYOUT_MAX,
 	LAYOUT_ENSURE_32BIT = 0x7FFFFFFF
@@ -47,5 +48,7 @@ typedef struct {
 } panelExtraData_t;
 
 void MN_RegisterPanelNode(struct nodeBehaviour_s *behaviour);
+
+void MN_StarLayout(struct menuNode_s *node);
 
 #endif

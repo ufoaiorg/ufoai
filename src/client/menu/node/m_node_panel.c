@@ -254,6 +254,60 @@ static void MN_PackLayout (menuNode_t *node, int margin)
 	}
 }
 
+/**
+ * @brief map for star layout from num to align
+ */
+static const align_t starlayoutmap[] = {
+	ALIGN_UL,
+	ALIGN_UC,
+	ALIGN_UR,
+	ALIGN_CL,
+	ALIGN_CC,
+	ALIGN_CR,
+	ALIGN_LL,
+	ALIGN_LC,
+	ALIGN_LR,
+};
+
+#define ALIGN_FILL	10
+
+/**
+ * @brief Do a star layout with child according to there num
+ * @note 1=top-left 2=top-middle 3=top-right
+ * 4=middle-left 5=middle-middle 6=middle-right
+ * 7=bottom-left 8=bottom-middle 9=bottom-right
+ * 10=fill
+ * @todo Tag it static when it is possible
+ */
+void MN_StarLayout (menuNode_t *node)
+{
+	menuNode_t *child;
+	for (child = node->firstChild; child; child = child->next) {
+		vec2_t source;
+		vec2_t destination;
+		align_t align;
+
+		if (child->num <= 0 || child->num > 10)
+			continue;
+
+		if (child->num == ALIGN_FILL) {
+			child->pos[0] = 0;
+			child->pos[1] = 0;
+			MN_NodeSetSize(child, node->size);
+			child->behaviour->doLayout(child);
+			continue;
+		}
+
+		align = starlayoutmap[child->num - 1];
+		MN_NodeGetPoint(node, destination, align);
+		MN_NodeRelativeToAbsolutePoint(node, destination);
+		MN_NodeGetPoint(child, source, align);
+		MN_NodeRelativeToAbsolutePoint(child, source);
+		child->pos[0] += destination[0] - source[0];
+		child->pos[1] += destination[1] - source[1];
+	}
+}
+
 static void MN_PanelNodeDoLayout (menuNode_t *node)
 {
 	switch (EXTRADATA(node).layout) {
@@ -267,6 +321,9 @@ static void MN_PanelNodeDoLayout (menuNode_t *node)
 		break;
 	case LAYOUT_PACK:
 		MN_PackLayout(node, EXTRADATA(node).layoutMargin);
+		break;
+	case LAYOUT_STAR:
+		MN_StarLayout(node);
 		break;
 	default:
 		Com_Printf("MN_PanelNodeDoLayout: layout '%d' unsupported.", EXTRADATA(node).layout);
@@ -327,7 +384,20 @@ void MN_RegisterPanelNode (nodeBehaviour_t *behaviour)
 	Com_RegisterConstInt("PACKLAYOUT_RIGHT", PACKLAYOUT_RIGHT);
 	Com_RegisterConstInt("PACKLAYOUT_FILL", PACKLAYOUT_FILL);
 
+	/** @todo remove the "+1" */
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_TOPLEFT", ALIGN_UL+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_TOP", ALIGN_UC+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_TOPRIGHT", ALIGN_UR+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_LEFT", ALIGN_CL+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_MIDDLE", ALIGN_CC+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_RIGHT", ALIGN_CR+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_BOTTOMLEFT", ALIGN_LL+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_BOTTOM", ALIGN_LC+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_BOTTOMRIGHT", ALIGN_LR+1);
+	Com_RegisterConstInt("STARLAYOUT_ALIGN_FILL", ALIGN_FILL);
+
 	Com_RegisterConstInt("LAYOUT_TOP_DOWN_FLOW", LAYOUT_TOP_DOWN_FLOW);
 	Com_RegisterConstInt("LAYOUT_BORDER", LAYOUT_BORDER);
 	Com_RegisterConstInt("LAYOUT_PACK", LAYOUT_PACK);
+	Com_RegisterConstInt("LAYOUT_STAR", LAYOUT_STAR);
 }
