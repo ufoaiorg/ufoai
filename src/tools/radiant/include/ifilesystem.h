@@ -118,7 +118,6 @@ inline int vfsLoadFile (const std::string& filename, void** buffer, int index = 
 {
 	return static_cast<int> (GlobalFileSystem().loadFile(filename, buffer));
 }
-;
 
 /// \deprecated Deprecated.
 inline void vfsFreeFile (void* p)

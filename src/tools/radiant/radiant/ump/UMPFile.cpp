@@ -158,8 +158,9 @@ namespace map
 			const std::string relativeMapPath = GlobalFileSystem().getRelative(map);
 			const std::string baseMapName = os::stripExtension(relativeMapPath);
 			const std::string relativeToRMASubdir = baseMapName.substr(MAPS_DIR.length());
-			if (getBase().length() > 0)
-				return std::string("+") + relativeToRMASubdir.substr(getBase().length());
+			const size_t size = getBase().length();
+			if (size > 0 && relativeToRMASubdir.length() > size)
+				return std::string("+") + relativeToRMASubdir.substr(size);
 			return relativeToRMASubdir;
 		}
 	}

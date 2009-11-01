@@ -76,7 +76,7 @@ namespace ui
 	void UMPDefinitionView::save ()
 	{
 		const std::string& content = _view.getContents();
-		TextFileOutputStream out(_umpFile);
+		TextFileOutputStream out("maps/" + _umpFile);
 		if (out.failed()) {
 			g_message("Error saving file to '%s'.", _umpFile.c_str());
 			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Error saving ump file"));
