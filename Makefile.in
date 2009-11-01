@@ -177,7 +177,7 @@ install_exec: $(TARGETS)
 # Copy all language files
 	for dir in base/i18n/*; do \
 		$(INSTALL) -d $(DESTDIR)$(DATADIR)/$$dir/LC_MESSAGES && \
-		$(INSTALL) -m 644 $$dir/LC_MESSAGES/ufoai.mo $(DESTDIR)$(DATADIR)/$$dir/LC_MESSAGES/ufoai.mo; \ 
+		$(INSTALL) -m 644 $$dir/LC_MESSAGES/ufoai.mo $(DESTDIR)$(DATADIR)/$$dir/LC_MESSAGES/ufoai.mo; \
 	done
 # Create and install run scripts
 	@echo "#!/bin/sh" > ufo.sh
