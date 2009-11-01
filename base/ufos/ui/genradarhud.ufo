@@ -24,7 +24,7 @@ window genradarhud extends ahud
 	{
 		pos		"0 0"
 		size	"1024 768"
-		align	STARLAYOUT_ALIGN_FILL
+		align	LAYOUTALIGN_FILL
 	}
 
 	// ==================
@@ -44,7 +44,7 @@ window genradarhud extends ahud
 		{
 			pos		"0 0"
 			size	"255 200"
-			align	STARLAYOUT_ALIGN_TOPLEFT
+			align	LAYOUTALIGN_TOPLEFT
 		}
 
 		button reinit

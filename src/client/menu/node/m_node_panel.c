@@ -57,6 +57,29 @@ static void MN_PanelNodeDraw (menuNode_t *node)
 		MN_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
 }
 
+typedef enum {
+	LAYOUTALIGN_NONE = 0,
+
+	/* common alignment */
+	/** @note there is +1 because STAR layout do some fast computation */
+	/** @note remove this +1 if possible, and use the struct auto numeration */
+	LAYOUTALIGN_TOPLEFT = ALIGN_UL + 1,
+	LAYOUTALIGN_TOP = ALIGN_UC + 1,
+	LAYOUTALIGN_TOPRIGHT = ALIGN_UR + 1,
+	LAYOUTALIGN_LEFT = ALIGN_CL + 1,
+	LAYOUTALIGN_MIDDLE = ALIGN_CC + 1,
+	LAYOUTALIGN_RIGHT = ALIGN_CR + 1,
+	LAYOUTALIGN_BOTTOMLEFT = ALIGN_LL + 1,
+	LAYOUTALIGN_BOTTOM = ALIGN_LC + 1,
+	LAYOUTALIGN_BOTTOMRIGHT = ALIGN_LR + 1,
+
+	/* pack and star layout manager only */
+	LAYOUTALIGN_FILL,
+
+	LAYOUTALIGN_MAX,
+	LAYOUTALIGN_ENSURE_32BIT = 0x7FFFFFFF
+} layoutAlign_t;
+
 /**
  * @brief Create a top-down flow layout with child of the node.
  * Child position is automatically set, child height don't change
@@ -82,19 +105,6 @@ static void MN_TopDownFlowLayout (menuNode_t *node, int margin)
 	}
 }
 
-/** @todo rework all this thing. Take a look at STARLAYOUT too */
-#define BORDERLAYOUT_MIDDLE	1
-#define BORDERLAYOUT_TOP	2
-#define BORDERLAYOUT_BOTTOM	3
-#define BORDERLAYOUT_LEFT	4
-#define BORDERLAYOUT_RIGHT	5
-
-#define PACKLAYOUT_FILL	1
-#define PACKLAYOUT_TOP	2
-#define PACKLAYOUT_BOTTOM	3
-#define PACKLAYOUT_LEFT	4
-#define PACKLAYOUT_RIGHT	5
-
 /**
  * @brief Create a border layout with child of the node.
  * Child with BORDERLAYOUT_TOP and BORDERLAYOUT_BOTTOM num
@@ -117,7 +127,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 
 	// top
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->align != BORDERLAYOUT_TOP)
+		if (child->align != LAYOUTALIGN_TOP)
 			continue;
 		if (child->invis)
 			continue;
@@ -131,7 +141,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 
 	// bottom
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->align != BORDERLAYOUT_BOTTOM)
+		if (child->align != LAYOUTALIGN_BOTTOM)
 			continue;
 		if (child->invis)
 			continue;
@@ -145,7 +155,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 
 	// left
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->align != BORDERLAYOUT_LEFT)
+		if (child->align != LAYOUTALIGN_LEFT)
 			continue;
 		if (child->invis)
 			continue;
@@ -159,7 +169,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 
 	// right
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->align != BORDERLAYOUT_RIGHT)
+		if (child->align != LAYOUTALIGN_RIGHT)
 			continue;
 		if (child->invis)
 			continue;
@@ -173,7 +183,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 
 	// middle
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->align != BORDERLAYOUT_MIDDLE)
+		if (child->align != LAYOUTALIGN_MIDDLE)
 			continue;
 		if (child->invis)
 			continue;
@@ -209,7 +219,7 @@ static void MN_PackLayout (menuNode_t *node, int margin)
 		if (child->invis)
 			continue;
 		switch (child->align) {
-		case PACKLAYOUT_TOP:
+		case LAYOUTALIGN_TOP:
 			newSize[0] = maxX - minX;
 			newSize[1] = child->size[1];
 			MN_NodeSetSize(child, newSize);
@@ -217,7 +227,7 @@ static void MN_PackLayout (menuNode_t *node, int margin)
 			child->pos[1] = minY;
 			minY += child->size[1] + margin;
 			break;
-		case PACKLAYOUT_BOTTOM:
+		case LAYOUTALIGN_BOTTOM:
 			newSize[0] = maxX - minX;
 			newSize[1] = child->size[1];
 			MN_NodeSetSize(child, newSize);
@@ -225,7 +235,7 @@ static void MN_PackLayout (menuNode_t *node, int margin)
 			child->pos[1] = maxY - child->size[1];
 			maxY -= child->size[1] + margin;
 			break;
-		case PACKLAYOUT_LEFT:
+		case LAYOUTALIGN_LEFT:
 			newSize[0] = child->size[0];
 			newSize[1] = maxY - minY;
 			MN_NodeSetSize(child, newSize);
@@ -233,7 +243,7 @@ static void MN_PackLayout (menuNode_t *node, int margin)
 			child->pos[1] = minY;
 			minX += child->size[0] + margin;
 			break;
-		case PACKLAYOUT_RIGHT:
+		case LAYOUTALIGN_RIGHT:
 			newSize[0] = child->size[0];
 			newSize[1] = maxY - minY;
 			MN_NodeSetSize(child, newSize);
@@ -241,7 +251,7 @@ static void MN_PackLayout (menuNode_t *node, int margin)
 			child->pos[1] = minY;
 			maxX -= child->size[0] + margin;
 			break;
-		case PACKLAYOUT_FILL:
+		case LAYOUTALIGN_FILL:
 			newSize[0] = maxX - minX;
 			newSize[1] = maxY - minY;
 			MN_NodeSetSize(child, newSize);
@@ -290,7 +300,7 @@ void MN_StarLayout (menuNode_t *node)
 		if (child->align <= 0 || child->align > 10)
 			continue;
 
-		if (child->align == ALIGN_FILL) {
+		if (child->align == LAYOUTALIGN_FILL) {
 			child->pos[0] = 0;
 			child->pos[1] = 0;
 			MN_NodeSetSize(child, node->size);
@@ -372,29 +382,16 @@ void MN_RegisterPanelNode (nodeBehaviour_t *behaviour)
 	behaviour->loaded = MN_PanelNodeLoaded;
 	behaviour->doLayout = MN_PanelNodeDoLayout;
 
-	Com_RegisterConstInt("BORDERLAYOUT_TOP", BORDERLAYOUT_TOP);
-	Com_RegisterConstInt("BORDERLAYOUT_BOTTOM", BORDERLAYOUT_BOTTOM);
-	Com_RegisterConstInt("BORDERLAYOUT_LEFT", BORDERLAYOUT_LEFT);
-	Com_RegisterConstInt("BORDERLAYOUT_RIGHT", BORDERLAYOUT_RIGHT);
-	Com_RegisterConstInt("BORDERLAYOUT_MIDDLE", BORDERLAYOUT_MIDDLE);
-
-	Com_RegisterConstInt("PACKLAYOUT_TOP", PACKLAYOUT_TOP);
-	Com_RegisterConstInt("PACKLAYOUT_BOTTOM", PACKLAYOUT_BOTTOM);
-	Com_RegisterConstInt("PACKLAYOUT_LEFT", PACKLAYOUT_LEFT);
-	Com_RegisterConstInt("PACKLAYOUT_RIGHT", PACKLAYOUT_RIGHT);
-	Com_RegisterConstInt("PACKLAYOUT_FILL", PACKLAYOUT_FILL);
-
-	/** @todo remove the "+1" */
-	Com_RegisterConstInt("STARLAYOUT_ALIGN_TOPLEFT", ALIGN_UL+1);
-	Com_RegisterConstInt("STARLAYOUT_ALIGN_TOP", ALIGN_UC+1);
-	Com_RegisterConstInt("STARLAYOUT_ALIGN_TOPRIGHT", ALIGN_UR+1);
-	Com_RegisterConstInt("STARLAYOUT_ALIGN_LEFT", ALIGN_CL+1);
-	Com_RegisterConstInt("STARLAYOUT_ALIGN_MIDDLE", ALIGN_CC+1);
-	Com_RegisterConstInt("STARLAYOUT_ALIGN_RIGHT", ALIGN_CR+1);
-	Com_RegisterConstInt("STARLAYOUT_ALIGN_BOTTOMLEFT", ALIGN_LL+1);
-	Com_RegisterConstInt("STARLAYOUT_ALIGN_BOTTOM", ALIGN_LC+1);
-	Com_RegisterConstInt("STARLAYOUT_ALIGN_BOTTOMRIGHT", ALIGN_LR+1);
-	Com_RegisterConstInt("STARLAYOUT_ALIGN_FILL", ALIGN_FILL);
+	Com_RegisterConstInt("LAYOUTALIGN_TOPLEFT", LAYOUTALIGN_TOPLEFT);
+	Com_RegisterConstInt("LAYOUTALIGN_TOP", LAYOUTALIGN_TOP);
+	Com_RegisterConstInt("LAYOUTALIGN_TOPRIGHT", LAYOUTALIGN_TOPRIGHT);
+	Com_RegisterConstInt("LAYOUTALIGN_LEFT", LAYOUTALIGN_LEFT);
+	Com_RegisterConstInt("LAYOUTALIGN_MIDDLE", LAYOUTALIGN_MIDDLE);
+	Com_RegisterConstInt("LAYOUTALIGN_RIGHT", LAYOUTALIGN_RIGHT);
+	Com_RegisterConstInt("LAYOUTALIGN_BOTTOMLEFT", LAYOUTALIGN_BOTTOMLEFT);
+	Com_RegisterConstInt("LAYOUTALIGN_BOTTOM", LAYOUTALIGN_BOTTOM);
+	Com_RegisterConstInt("LAYOUTALIGN_BOTTOMRIGHT", LAYOUTALIGN_BOTTOMRIGHT);
+	Com_RegisterConstInt("LAYOUTALIGN_FILL", LAYOUTALIGN_FILL);
 
 	Com_RegisterConstInt("LAYOUT_TOP_DOWN_FLOW", LAYOUT_TOP_DOWN_FLOW);
 	Com_RegisterConstInt("LAYOUT_BORDER", LAYOUT_BORDER);

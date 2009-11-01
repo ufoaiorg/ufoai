@@ -17,7 +17,7 @@ window geoscape
 		pos				"0 0"
 		size			"1024 768"
 		onRClick		{ cmd "mn_mapaction_reset;" }
-		align			STARLAYOUT_ALIGN_FILL
+		align			LAYOUTALIGN_FILL
 		padding-right	256
 	}
 
@@ -33,7 +33,7 @@ window geoscape
 			pos			"0 0"
 			size		"768 20"
 			bgcolor		"0 0 0 .5"
-			align		BORDERLAYOUT_MIDDLE
+			align		LAYOUTALIGN_MIDDLE
 			onMouseEnter {
 				if ( *cvar:mn_messagesystem < 2 ) {
 					*node:parent@height 240
@@ -51,7 +51,7 @@ window geoscape
 			}
 		}
 		vscrollbar scroll {
-			align		BORDERLAYOUT_RIGHT
+			align		LAYOUTALIGN_RIGHT
 			invis		true
 			image		ui/scrollbar_v_green
 			bgcolor		"0 0 0 .5"
@@ -108,7 +108,7 @@ window geoscape
 		{
 			pos		"768 0"
 			size	"256 768"
-			align	STARLAYOUT_ALIGN_RIGHT
+			align	LAYOUTALIGN_RIGHT
 		}
 
 		pic back

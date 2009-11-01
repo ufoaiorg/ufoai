@@ -22,7 +22,7 @@ window nohud extends ahud
 	{
 		pos		"0 0"
 		size	"1024 768"
-		num		STARLAYOUT_ALIGN_FILL
+		num		LAYOUTALIGN_FILL
 	}
 
 }
