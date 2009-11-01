@@ -18,15 +18,61 @@ window editor {
 		size "1 1"
 	}
 
-	button start_capture_mode {
-		string		"_Capture mode"
-		pos			"25 55"
-		size		"150 35"
-		image		ui/button_green_small
-		font		f_verysmall
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		onClick	{ call *node:root.editor@start }
+	panel toolbar {
+		{
+			pos				"25 55"
+			size			"150 35"
+			layout			LAYOUT_PACK
+			layoutMargin	3
+		}
+	
+		button start_capture_mode {
+			tooltip		"_Capture a node"
+			icon		"system_capture"
+			align		LAYOUTALIGN_LEFT
+			size		"35 35"
+			image		ui/button_green_small
+			font		f_verysmall
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick	{ call *node:root.editor@start }
+		}
+	
+		button select_parent {
+			tooltip		"_Select parent node"
+			icon		"system_parent"
+			align		LAYOUTALIGN_LEFT
+			size		"35 35"
+			image		ui/button_green_small
+			font		f_verysmall
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick	{ call *node:root.editor@selectparent }
+		}
+	
+		button select_firstchild {
+			tooltip		"_Select first child node"
+			icon		"system_child"
+			align		LAYOUTALIGN_LEFT
+			size		"35 35"
+			image		ui/button_green_small
+			font		f_verysmall
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick	{ call *node:root.editor@selectfirstchild }
+		}
+
+		button select_next {
+			tooltip		"_Select next node"
+			icon		"system_next"
+			align		LAYOUTALIGN_LEFT
+			size		"35 35"
+			image		ui/button_green_small
+			font		f_verysmall
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick	{ call *node:root.editor@selectnext }
+		}
 	}
 
 	button extract_window {

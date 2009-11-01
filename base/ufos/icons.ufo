@@ -18,6 +18,35 @@ icon system_collapse {
 	single	true
 }
 
+icon system_child {
+	image "ui/icon_child"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+icon system_parent {
+	image "ui/icon_parent"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+icon system_next {
+	image "ui/icon_next"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+icon system_capture {
+	image "ui/icon_capture"
+	texl	"0 0"
+	size	"16 16"
+	single	true
+}
+
+
 //
 // icons scripted into ui scrips
 //

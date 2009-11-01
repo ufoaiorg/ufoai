@@ -38,11 +38,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_input.h"
 #include "../../renderer/r_draw.h"
 
+typedef enum {
+	ZONE_NONE = -1,
+	ZONE_TOPRIGHT_CORNER,
+	ZONE_TOPLEFT_CORNER,
+	ZONE_BOTTOMRIGHT_CORNER,
+	ZONE_BOTTOMLEFT_CORNER,
+	ZONE_BODY
+} zoneNode_t;
+
+
 static menuNode_t* anchoredNode = NULL;
 static const vec4_t red = {1.0, 0.0, 0.0, 1.0};
 static const vec4_t grey = {0.8, 0.8, 0.8, 1.0};
 static const int anchorSize = 10;
-static int status = -1;
+static zoneNode_t dragStatus = ZONE_NONE;
 static int startX;
 static int startY;
 
@@ -61,28 +71,28 @@ static void MN_EditorNodeHighlightNode (menuNode_t *node, const vec4_t color, qb
 	}
 }
 
-static int MN_EditorNodeGetElementAtPosition (menuNode_t *node, int x, int y)
+static zoneNode_t MN_EditorNodeGetElementAtPosition (menuNode_t *node, int x, int y)
 {
 	MN_NodeAbsoluteToRelativePos(anchoredNode, &x, &y);
 
 	if (x > 0 && x < node->size[0] && y > 0 && y < node->size[1]) {
-		return 4;
+		return ZONE_BODY;
 	}
 
 	if (y > -anchorSize && y < 0) {
 		if (x > -anchorSize && x < 0) {
-			return 0;
+			return ZONE_TOPLEFT_CORNER;
 		} else if (x > node->size[0] && x < node->size[0] + anchorSize) {
-			return 1;
+			return ZONE_TOPRIGHT_CORNER;
 		}
 	} else if (y > node->size[1] && y < node->size[1] + anchorSize) {
 		if (x > -anchorSize && x < 0) {
-			return 2;
+			return ZONE_BOTTOMLEFT_CORNER;
 		} else if (x > node->size[0] && x < node->size[0] + anchorSize) {
-			return 3;
+			return ZONE_BOTTOMRIGHT_CORNER;
 		}
 	}
-	return -1;
+	return ZONE_NONE;
 }
 
 static void MN_EditorNodeDraw (menuNode_t *node)
@@ -95,7 +105,7 @@ static void MN_EditorNodeDraw (menuNode_t *node)
 		return;
 	}
 
-	if (status == -1) {
+	if (dragStatus == ZONE_NONE) {
 #if 0	/* it does nothing, remember why we need that... */
 		if (anchoredNode)
 			MN_EditorNodeGetElementAtPosition(anchoredNode, mousePosX, mousePosY);
@@ -124,37 +134,37 @@ static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	if (anchoredNode == NULL)
 		return;
 
-	switch (status) {
-	case -1:
+	switch (dragStatus) {
+	case ZONE_NONE:
 		return;
-	case 0:
+	case ZONE_TOPLEFT_CORNER:
 		anchoredNode->pos[0] += diffX;
 		anchoredNode->pos[1] += diffY;
 		size[0] = anchoredNode->size[0] - diffX;
 		size[1] = anchoredNode->size[1] - diffY;
 		break;
-	case 1:
+	case ZONE_TOPRIGHT_CORNER:
 		anchoredNode->pos[1] += diffY;
 		size[0] = anchoredNode->size[0] + diffX;
 		size[1] = anchoredNode->size[1] - diffY;
 		break;
-	case 2:
+	case ZONE_BOTTOMLEFT_CORNER:
 		anchoredNode->pos[0] += diffX;
 		size[0] = anchoredNode->size[0] - diffX;
 		size[1] = anchoredNode->size[1] + diffY;
 		break;
-	case 3:
+	case ZONE_BOTTOMRIGHT_CORNER:
 		size[0] = anchoredNode->size[0] + diffX;
 		size[1] = anchoredNode->size[1] + diffY;
 		break;
-	case 4:
+	case ZONE_BODY:
 		anchoredNode->pos[0] += diffX;
 		anchoredNode->pos[1] += diffY;
 		size[0] = anchoredNode->size[0];
 		size[1] = anchoredNode->size[1];
 		break;
 	default:
-		Sys_Error("MN_EditorNodeCapturedMouseMove: Invalid status of %i", status);
+		Sys_Error("MN_EditorNodeCapturedMouseMove: Invalid status of %i", dragStatus);
 	}
 
 	if (size[0] < 5)
@@ -170,7 +180,7 @@ static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
  */
 static void MN_EditorNodeCapturedMouseLost (menuNode_t *node)
 {
-	status = -1;
+	dragStatus = ZONE_NONE;
 }
 
 static void MN_EditorNodeMouseUp (menuNode_t *node, int x, int y, int button)
@@ -179,7 +189,19 @@ static void MN_EditorNodeMouseUp (menuNode_t *node, int x, int y, int button)
 		return;
 	if (button != K_MOUSE1)
 		return;
-	status = -1;
+	dragStatus = ZONE_NONE;
+}
+
+static void MN_EditorNodeSelectNode (menuNode_t *node, menuNode_t *selected)
+{
+	if (selected == NULL)
+		return;
+	/* do not select a node from the editor window */
+	if (selected->root == node->root)
+		return;
+	anchoredNode = selected;
+	Cvar_Set("mn_sys_editor_node", anchoredNode->name);
+	Cvar_Set("mn_sys_editor_window", anchoredNode->root->name);
 }
 
 static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
@@ -203,14 +225,14 @@ static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
 		hovered = NULL;
 
 	if (anchoredNode) {
-		status = MN_EditorNodeGetElementAtPosition(anchoredNode, x, y);
-		if (status == 4) {
+		dragStatus = MN_EditorNodeGetElementAtPosition(anchoredNode, x, y);
+		if (dragStatus == ZONE_BODY) {
 			if (hovered == NULL) {
 				startX = x;
 				startY = y;
 				return;
 			}
-		} else if (status != -1) {
+		} else if (dragStatus != ZONE_NONE) {
 			startX = x;
 			startY = y;
 			return;
@@ -218,11 +240,7 @@ static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
 	}
 
 	/* select the node */
-	if (hovered && hovered->root != node->root) {
-		anchoredNode = hovered;
-		Cvar_Set("mn_sys_editor_node", anchoredNode->name);
-		Cvar_Set("mn_sys_editor_window", anchoredNode->root->name);
-	}
+	MN_EditorNodeSelectNode(node, hovered);
 }
 
 static void MN_EditorNodeStart (menuNode_t *node)
@@ -233,6 +251,33 @@ static void MN_EditorNodeStart (menuNode_t *node)
 static void MN_EditorNodeStop (menuNode_t *node)
 {
 	MN_MouseRelease();
+}
+
+static void MN_EditorNodeSelectNext (menuNode_t *node)
+{
+	if (dragStatus != ZONE_NONE)
+		return;
+	if (anchoredNode == NULL)
+		return;
+	MN_EditorNodeSelectNode(node, anchoredNode->next);
+}
+
+static void MN_EditorNodeSelectParent (menuNode_t *node)
+{
+	if (dragStatus != ZONE_NONE)
+		return;
+	if (anchoredNode == NULL)
+		return;
+	MN_EditorNodeSelectNode(node, anchoredNode->parent);
+}
+
+static void MN_EditorNodeSelectFirstChild (menuNode_t *node)
+{
+	if (dragStatus != ZONE_NONE)
+		return;
+	if (anchoredNode == NULL)
+		return;
+	MN_EditorNodeSelectNode(node, anchoredNode->firstChild);
 }
 
 static void MN_EditorNodeExtractNode (qFILE *file, menuNode_t *node, int depth)
@@ -301,6 +346,12 @@ static const value_t properties[] = {
 	{"start", V_UI_NODEMETHOD, ((size_t) MN_EditorNodeStart), 0},
 	/* stop edition mode */
 	{"stop", V_UI_NODEMETHOD, ((size_t) MN_EditorNodeStop), 0},
+	/* select the next node (according to the current one) */
+	{"selectnext", V_UI_NODEMETHOD, ((size_t) MN_EditorNodeSelectNext), 0},
+	/* select the parent node (according to the current one) */
+	{"selectparent", V_UI_NODEMETHOD, ((size_t) MN_EditorNodeSelectParent), 0},
+	/* select first child node (according to the current one) */
+	{"selectfirstchild", V_UI_NODEMETHOD, ((size_t) MN_EditorNodeSelectFirstChild), 0},
 	{NULL, V_NULL, 0, 0}
 };
 
