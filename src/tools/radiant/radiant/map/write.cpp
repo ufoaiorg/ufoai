@@ -27,7 +27,7 @@
 
 inline MapExporter* Node_getMapExporter (scene::Node& node)
 {
-	return NodeTypeCast<MapExporter>::cast(node);
+	return dynamic_cast<MapExporter*>(&node);
 }
 
 static std::size_t g_count_entities;
