@@ -134,12 +134,12 @@ static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 		size[1] = anchoredNode->size[1] - diffY;
 		break;
 	case 1:
-		anchoredNode->pos[1] += y - startY;
+		anchoredNode->pos[1] += diffY;
 		size[0] = anchoredNode->size[0] + diffX;
 		size[1] = anchoredNode->size[1] - diffY;
 		break;
 	case 2:
-		anchoredNode->pos[0] += x - startX;
+		anchoredNode->pos[0] += diffX;
 		size[0] = anchoredNode->size[0] - diffX;
 		size[1] = anchoredNode->size[1] + diffY;
 		break;
