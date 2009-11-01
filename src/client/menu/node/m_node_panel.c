@@ -82,11 +82,18 @@ static void MN_TopDownFlowLayout (menuNode_t *node, int margin)
 	}
 }
 
+/** @todo rework all this thing. Take a look at STARLAYOUT too */
 #define BORDERLAYOUT_MIDDLE	1
 #define BORDERLAYOUT_TOP	2
 #define BORDERLAYOUT_BOTTOM	3
 #define BORDERLAYOUT_LEFT	4
 #define BORDERLAYOUT_RIGHT	5
+
+#define PACKLAYOUT_FILL	1
+#define PACKLAYOUT_TOP	2
+#define PACKLAYOUT_BOTTOM	3
+#define PACKLAYOUT_LEFT	4
+#define PACKLAYOUT_RIGHT	5
 
 /**
  * @brief Create a border layout with child of the node.
@@ -178,6 +185,75 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 	}
 }
 
+/**
+ * @brief Create a pack layout with child of the node.
+ * Set position and size of nodes one by one.
+ * It is a usefull layout manager because it can create nice
+ * layout without sub panel
+ *
+ * @param[in,out] node The panel node to render the children for
+ * @param[in] margin The margin between all children nodes
+ * @note test only
+ */
+static void MN_PackLayout (menuNode_t *node, int margin)
+{
+	menuNode_t *child;
+	vec2_t newSize;
+	int minX = node->padding;
+	int maxX = node->size[0] - node->padding;
+	int minY = node->padding;
+	int maxY = node->size[1] - node->padding;
+
+	// top
+	for (child = node->firstChild; child; child = child->next) {
+		if (child->invis)
+			continue;
+		switch (child->num) {
+		case PACKLAYOUT_TOP:
+			newSize[0] = maxX - minX;
+			newSize[1] = child->size[1];
+			MN_NodeSetSize(child, newSize);
+			child->pos[0] = minX;
+			child->pos[1] = minY;
+			minY += child->size[1] + margin;
+			break;
+		case PACKLAYOUT_BOTTOM:
+			newSize[0] = maxX - minX;
+			newSize[1] = child->size[1];
+			MN_NodeSetSize(child, newSize);
+			child->pos[0] = minX;
+			child->pos[1] = maxY - child->size[1];
+			maxY -= child->size[1] + margin;
+			break;
+		case PACKLAYOUT_LEFT:
+			newSize[0] = child->size[0];
+			newSize[1] = maxY - minY;
+			MN_NodeSetSize(child, newSize);
+			child->pos[0] = minX;
+			child->pos[1] = minY;
+			minX += child->size[0] + margin;
+			break;
+		case PACKLAYOUT_RIGHT:
+			newSize[0] = child->size[0];
+			newSize[1] = maxY - minY;
+			MN_NodeSetSize(child, newSize);
+			child->pos[0] = maxX - child->size[0];
+			child->pos[1] = minY;
+			maxX -= child->size[0] + margin;
+			break;
+		case PACKLAYOUT_FILL:
+			newSize[0] = maxX - minX;
+			newSize[1] = maxY - minY;
+			MN_NodeSetSize(child, newSize);
+			child->pos[0] = minX;
+			child->pos[1] = minY;
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 static void MN_PanelNodeDoLayout (menuNode_t *node)
 {
 	switch (EXTRADATA(node).layout) {
@@ -188,6 +264,9 @@ static void MN_PanelNodeDoLayout (menuNode_t *node)
 		break;
 	case LAYOUT_BORDER:
 		MN_BorderLayout(node, EXTRADATA(node).margeLayout);
+		break;
+	case LAYOUT_PACK:
+		MN_PackLayout(node, EXTRADATA(node).margeLayout);
 		break;
 	default:
 		Com_Printf("MN_PanelNodeDoLayout: layout '%d' unsupported.", EXTRADATA(node).layout);
@@ -242,6 +321,13 @@ void MN_RegisterPanelNode (nodeBehaviour_t *behaviour)
 	Com_RegisterConstInt("BORDERLAYOUT_RIGHT", BORDERLAYOUT_RIGHT);
 	Com_RegisterConstInt("BORDERLAYOUT_MIDDLE", BORDERLAYOUT_MIDDLE);
 
+	Com_RegisterConstInt("PACKLAYOUT_TOP", PACKLAYOUT_TOP);
+	Com_RegisterConstInt("PACKLAYOUT_BOTTOM", PACKLAYOUT_BOTTOM);
+	Com_RegisterConstInt("PACKLAYOUT_LEFT", PACKLAYOUT_LEFT);
+	Com_RegisterConstInt("PACKLAYOUT_RIGHT", PACKLAYOUT_RIGHT);
+	Com_RegisterConstInt("PACKLAYOUT_FILL", PACKLAYOUT_FILL);
+
 	Com_RegisterConstInt("LAYOUT_TOP_DOWN_FLOW", LAYOUT_TOP_DOWN_FLOW);
 	Com_RegisterConstInt("LAYOUT_BORDER", LAYOUT_BORDER);
+	Com_RegisterConstInt("LAYOUT_PACK", LAYOUT_PACK);
 }

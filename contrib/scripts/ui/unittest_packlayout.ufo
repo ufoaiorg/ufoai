@@ -1,0 +1,46 @@
+window unittest_packlayout
+{
+	{
+		pos "100 100"
+		size "340 500"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest packlayout"
+		bgcolor		"0 0 0 1"
+		timeout		1000
+	}
+
+	panel foo {
+		{
+			pos "10 60"
+			size "320 430"
+			layout LAYOUT_PACK
+			margeLayout	5
+		}
+	
+		panel red {
+			num PACKLAYOUT_TOP
+			height 100
+			bgcolor	"1 0 0 0.5"
+		}
+		panel green {
+			num PACKLAYOUT_RIGHT
+			width 50
+			bgcolor	"0 1 0 0.5"
+		}
+		panel blue {
+			num PACKLAYOUT_BOTTOM
+			height 80
+			bgcolor	"0 0 1 0.5"
+		}
+		panel cyan {
+			num PACKLAYOUT_LEFT
+			width 120
+			bgcolor	"0 1 1 0.5"
+		}
+		panel yellow {
+			num PACKLAYOUT_FILL
+			bgcolor	"1 1 0 0.5"
+		}
+	}
+}
