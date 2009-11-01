@@ -34,7 +34,7 @@
 
 inline MapImporter* Node_getMapImporter (scene::Node& node)
 {
-	return dynamic_cast<MapImporter*>(&node);
+	return NodeTypeCast<MapImporter>::cast(node);
 }
 
 typedef std::list<std::pair<std::string, std::string> > KeyValues;
