@@ -38,6 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** Maximum number of loops to choose a mission position (to avoid infinite loops) */
 const int MAX_POS_LOOP = 10;
 
+/** Condition limits for crashed UFOs - used for disassemlies */
+static const float MIN_CRASHEDUFO_CONDITION = 0.2f;
+static const float MAX_CRASHEDUFO_CONDITION = 0.81f;
 
 /*====================================
 *
@@ -335,6 +338,8 @@ void CP_CreateBattleParameters (mission_t *mission)
 	/* Is there a UFO to recover ? */
 	if (ccs.selectedMission->ufo) {
 		const char *shortUFOType;
+		float UFOCondition;
+
 		if (mission->crashed) {
 			shortUFOType = Com_UFOCrashedTypeToShortName(ccs.selectedMission->ufo->ufotype);
 			/* Set random map UFO if this is a random map */
@@ -343,11 +348,13 @@ void CP_CreateBattleParameters (mission_t *mission)
 				if (!strcmp(mission->mapDef->id, "ufocrash"))
 					ccs.battleParameters.param = Mem_PoolStrDup(shortUFOType, cp_campaignPool, 0);
 			}
+			UFOCondition = frand() * (MAX_CRASHEDUFO_CONDITION - MIN_CRASHEDUFO_CONDITION) + MIN_CRASHEDUFO_CONDITION;
 		} else {
 			shortUFOType = Com_UFOTypeToShortName(ccs.selectedMission->ufo->ufotype);
+			UFOCondition = 1.0f;
 		}
 
-		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery_init %s", mission->ufo->id);
+		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery_init %s %f", mission->ufo->id, UFOCondition);
 		/* Set random map UFO if this is a random map */
 		if (mission->mapDef->map[0] == '+') {
 			/* set rm_ufo to the ufo type used */

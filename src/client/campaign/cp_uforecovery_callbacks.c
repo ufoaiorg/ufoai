@@ -44,6 +44,7 @@ typedef struct ufoRecovery_s {
 	const aircraft_t *ufoTemplate;		/**< the ufo type of the current ufo recovery */
 	nation_t *nation;		/**< selected nation to sell to for current ufo recovery */
 	qboolean recoveryDone;	/**< recoveryDone? Then the buttons are disabled */
+	float condition;		/**< How much the UFO is damaged - used for disassembies */
 
 	int UFOprices[MAX_NATIONS];		/**< Array of prices proposed by nation. */
 } ufoRecovery_t;
@@ -67,13 +68,19 @@ static void UR_DialogInit_f (void)
 {
 	char ufoID[MAX_VAR];
 	const aircraft_t *ufoCraft;
+	float cond = 1.0f;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <ufoID>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <ufoID> [UFO-Condition]\n", Cmd_Argv(0));
 		return;
 	}
 
 	Q_strncpyz(ufoID, Cmd_Argv(1), sizeof(ufoID));
+
+	if (Cmd_Argc() >= 3) {
+		cond = atof(Cmd_Argv(2));
+	}
+
 	ufoCraft = AIR_GetAircraft(ufoID);
 	/* Do nothing without UFO of this type. */
 	if (!ufoCraft) {
@@ -83,13 +90,15 @@ static void UR_DialogInit_f (void)
 
 	/* Put relevant info into missionResults array. */
 	ccs.missionResults.recovery = qtrue;
-	ccs.missionResults.crashsite = qfalse;
+	ccs.missionResults.ufoCondition = cond;
+	ccs.missionResults.crashsite = (cond < 1);
 	ccs.missionResults.ufotype = ufoCraft->ufotype;
 
 	/* Prepare related cvars. */
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
 	memset(&ufoRecovery, 0, sizeof(ufoRecovery));
 	ufoRecovery.ufoTemplate = ufoCraft;
+	ufoRecovery.condition = cond;
 
 	Cvar_Set("mn_uforecovery_actualufo", UFO_MissionResultToString());
 }
@@ -184,13 +193,10 @@ static void UR_DialogStartStore_f (void)
 	Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO is being transported to %s."),
 			UFO_TypeToName(ufoRecovery.ufoTemplate->ufotype), UFOYard->name);
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-/*	UR_Prepare(UFOYard, ufoRecovery.ufoTemplate->ufotype); */
 	date = ccs.date;
 	date.day += (int) RECOVERY_DELAY;
-/*	date.sec += (RECOVERY_DELAY - (int) RECOVERY_DELAY) % SECONDS_PER_DAY;*/
 
-	US_StoreUFO(ufoRecovery.ufoTemplate, UFOYard, date);
-
+	US_StoreUFO(ufoRecovery.ufoTemplate, UFOYard, date, ufoRecovery.condition);
 	UR_DialogRecoveryDone();
 }
 
@@ -384,7 +390,7 @@ static void US_StoreUFO_f (void)
 		return;
 	}
 
-	US_StoreUFO(ufoType, installation, ccs.date);
+	US_StoreUFO(ufoType, installation, ccs.date, 1.0f);
 }
 
 /**

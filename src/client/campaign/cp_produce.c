@@ -278,12 +278,14 @@ static void PR_ProductionRollBottom_f (void)
  * @brief Disassembles item, adds components to base storage and calculates all components size.
  * @param[in] base Pointer to base where the disassembling is being made.
  * @param[in] comp Pointer to components definition.
+ * @param[in] condition condition of the item/UFO being disassembled, objects gathered from disassembly decreased to that factor
  * @param[in] calculate True if this is only calculation of item size, false if this is real disassembling.
  * @return Size of all components in this disassembling.
  */
-static int PR_DisassembleItem (base_t *base, components_t *comp, qboolean calculate)
+static int PR_DisassembleItem (base_t *base, components_t *comp, float condition, qboolean calculate)
 {
-	int i, size = 0;
+	int i;
+	int size = 0;
 
 	assert(comp);
 	if (!calculate && !base)	/* We need base only if this is real disassembling. */
@@ -291,15 +293,17 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, qboolean calcul
 
 	for (i = 0; i < comp->numItemtypes; i++) {
 		const objDef_t *compOd = comp->items[i];
+		const int amount = (condition < 1 && comp->itemAmount2[i] != COMP_ITEMCOUNT_SCALED) ? comp->itemAmount2[i] : round(comp->itemAmount[i] * condition);
+
 		assert(compOd);
-		size += compOd->size * comp->itemAmount[i];
+		size += compOd->size * amount;
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
 		if (!calculate) {
 			if (!strcmp(compOd->id, ANTIMATTER_TECH_ID))
-				B_ManageAntimatter(base, comp->itemAmount[i], qtrue);
+				B_ManageAntimatter(base, amount, qtrue);
 			else
-				B_UpdateStorageAndCapacity(base, compOd, comp->itemAmount[i], qfalse, qfalse);
-			Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", comp->itemAmount[i], compOd->id);
+				B_UpdateStorageAndCapacity(base, compOd, amount, qfalse, qfalse);
+			Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", amount, compOd->id);
 		}
 	}
 	return size;
@@ -395,7 +399,7 @@ void PR_ProductionRun (void)
 				}
 			}
 		} else {		/* This is disassembling. */
-			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(NULL, ufo->comp, qtrue)) {
+			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(NULL, ufo->comp, ufo->condition, qtrue)) {
 				if (!prod->spaceMessage) {
 					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Disassembling postponed.\n"), base->name);
 					MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -443,7 +447,7 @@ void PR_ProductionRun (void)
 					}
 				}
 			} else {	/* This is disassembling. */
-				base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, ufo->comp, qfalse);
+				base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, ufo->comp, ufo->condition, qfalse);
 
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."), UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, ufo->ufoTemplate->tech);

@@ -234,7 +234,7 @@ static void PR_UpdateProductionList (const base_t* base)
 		} else if (prod->ufo) {
 			const storedUFO_t *ufo = prod->ufo;
 
-			LIST_AddString(&productionList, va(_("%s (at %s)"), UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->installation->name));
+			LIST_AddString(&productionList, va("%s (%.0f%%)", UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->condition * 100));
 			LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
 			LIST_AddString(&productionQueued, "1");
 		}
@@ -268,7 +268,7 @@ static void PR_UpdateProductionList (const base_t* base)
 				continue;
 
 			LIST_AddPointer(&productionItemList, ufo);
-			LIST_AddString(&productionList, va(_("%s (at %s)"), UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->installation->name));
+			LIST_AddString(&productionList, va("%s (%.0f%%)", UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->condition * 100));
 			LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
 			LIST_AddString(&productionQueued, "");
 		}
@@ -381,17 +381,21 @@ static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, floa
 	assert(prodPerHour > 0);
 	time = ceil((1.0f - percentDone) / prodPerHour);
 
-	Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), UFO_TypeToName(ufo->ufoTemplate->ufotype));
+	Com_sprintf(productionInfo, sizeof(productionInfo), "%s (%.0f%%) - %s\n", _(UFO_TypeToName(ufo->ufoTemplate->ufotype)), ufo->condition * 100, _("Disassembly"));
+	Q_strcat(productionInfo, va(_("Stored at: %s\n"), ufo->installation->name), sizeof(productionInfo));
+	Q_strcat(productionInfo, va(_("Disassembly time: %ih\n"), time), sizeof(productionInfo));
 	Q_strcat(productionInfo, _("Components:\n"), sizeof(productionInfo));
 	/* Print components. */
 	for (i = 0; i < ufo->comp->numItemtypes; i++) {
 		const objDef_t *compOd = ufo->comp->items[i];
+		const int amount = (ufo->condition < 1 && ufo->comp->itemAmount2[i] != COMP_ITEMCOUNT_SCALED) ? ufo->comp->itemAmount2[i] : round(ufo->comp->itemAmount[i] * ufo->condition);
+
 		assert(compOd);
-		Q_strcat(productionInfo, va("  %s (%i)\n", _(compOd->name), ufo->comp->itemAmount[i]),
-			sizeof(productionInfo));
+		if (amount == 0)
+			continue;
+
+		Q_strcat(productionInfo, va("  %s (%i)\n", _(compOd->name), amount), sizeof(productionInfo));
 	}
-	Q_strcat(productionInfo, "\n", sizeof(productionInfo));
-	Q_strcat(productionInfo, va(_("Disassembly time\t%ih\n"), time), sizeof(productionInfo));
 	MN_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", ufo->id);
 }

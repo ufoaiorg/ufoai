@@ -53,6 +53,8 @@ typedef struct storedUFO_s {
 	storedUFOStatus_t status;
 	/* arrival date (recovery/transfer) */
 	date_t arrive;
+	
+	float condition;
 
 	/* installation UFO is stored */
 	installation_t *installation;
@@ -63,7 +65,7 @@ typedef struct storedUFO_s {
 
 void UR_ProcessActive(void);
 
-storedUFO_t *US_StoreUFO(const aircraft_t *ufoTemplate, installation_t *installation, date_t date);
+storedUFO_t *US_StoreUFO(const aircraft_t *ufoTemplate, installation_t *installation, date_t date, float condition);
 storedUFO_t *US_GetStoredUFOPlaceByIDX(const int idx);
 storedUFO_t *US_GetStoredUFOByIDX(const int idx);
 storedUFO_t *US_GetClosestStoredUFO(const aircraft_t *ufoTemplate, const base_t *base);

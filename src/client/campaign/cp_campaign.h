@@ -238,6 +238,7 @@ typedef struct missionResults_s {
 	qboolean recovery;	/**< Qtrue if player secured a UFO (landed or crashed). */
 	ufoType_t ufotype;	/**< Type of UFO secured during the mission. */
 	qboolean crashsite;	/**< Qtrue if secured UFO was crashed one. */
+	float ufoCondition;	/**< How much the UFO is damaged */
 } missionResults_t;
 
 extern missionResults_t missionresults;	/**< Mission results pointer used for Menu Won. */

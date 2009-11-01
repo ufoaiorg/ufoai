@@ -111,9 +111,10 @@ storedUFO_t* US_GetStoredUFOByIDX (const int idx)
  * @param[in] ufoTemplate Pointer to the aircraft(ufo)Template to add
  * @param[in,out] installation Pointer to the installation it should be added to
  * @param[in] date Date when UFO is arrives to the storage (recovery || transfer)
+ * @param[in] condition Condition of the UFO to store (How much the UFO is damaged)
  * @return storedUFO_t pointer to the newly stored UFO (or NULL if failed)
  */
-storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *installation, date_t date)
+storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *installation, date_t date, float condition)
 {
 	storedUFO_t *ufo;
 
@@ -159,6 +160,7 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 	} else {
 		ufo->status = SUFO_RECOVERED;
 	}
+	ufo->condition = min(max(0, condition), 1);
 
 	ccs.numStoredUFOs++;
 
@@ -344,6 +346,7 @@ qboolean US_SaveXML (mxml_node_t *p)
 		mxml_AddInt(snode, "day", ufo->arrive.day);
 		mxml_AddInt(snode, "sec", ufo->arrive.sec);
 		mxml_AddString(snode, "status", ufostatus_strings[ufo->status]);
+		mxml_AddFloat(snode, "condition", ufo->condition);
 
 		if (ufo->installation)
 			mxml_AddInt(snode, "installationidx", ufo->installation->idx);
@@ -371,6 +374,7 @@ qboolean US_LoadXML (mxml_node_t *p)
 		storedUFOStatus_t status = US_UFOStatusByID(mxml_GetString(snode, "status"));
 		date_t arrive;
 		storedUFO_t *ufo;
+		float condition = mxml_GetFloat(snode, "condition", 1.0f);
 
 		arrive.day = mxml_GetInt(snode, "day", 0);
 		arrive.sec = mxml_GetInt(snode, "sec", 0);
@@ -381,7 +385,7 @@ qboolean US_LoadXML (mxml_node_t *p)
 		if (!inst)
 			return qfalse;
 
-		ufo = US_StoreUFO(ufoTemplate, inst, arrive);
+		ufo = US_StoreUFO(ufoTemplate, inst, arrive, condition);
 		if (!ufo)
 			Com_Printf("Cannot store ufo %s at installation idx=%i.\n", ufoTemplate->id, inst->idx);
 		else {

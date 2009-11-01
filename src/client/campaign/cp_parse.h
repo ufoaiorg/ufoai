@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CP_PARSE_H
 
 #define MAX_COMP	32
+/** Component item count scaled to the disassembled item/UFO's codition */
+#define COMP_ITEMCOUNT_SCALED -32768
 
 /**
  * @brief The definition of a "components" entry (i.e. an assembly of several items) parsed from a ufo-file.

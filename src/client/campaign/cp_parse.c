@@ -570,7 +570,11 @@ static void CL_ParseComponents (const char *name, const char **text)
 				token = Com_Parse(text);
 				comp->itemAmount[comp->numItemtypes] = atoi(token);
 				token = Com_Parse(text);
-				comp->itemAmount2[comp->numItemtypes] = atoi(token);
+				/* If itemcount needs to be scaled */
+				if (token[0] == '%')
+					comp->itemAmount2[comp->numItemtypes] = COMP_ITEMCOUNT_SCALED;
+				else
+					comp->itemAmount2[comp->numItemtypes] = atoi(token);
 
 				/** @todo Set item links to NONE if needed */
 				/* comp->item_idx[comp->numItemtypes] = xxx */
