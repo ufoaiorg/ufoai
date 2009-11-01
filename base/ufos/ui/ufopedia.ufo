@@ -28,12 +28,15 @@ window ufopedia
 			pos		"27 95"
 			size	"307 501"
 			image	"ui/panel_green"
+			layout	LAYOUT_BORDER
+			padding	10
 		}
 
 		optiontree list
 		{
 			cvar		*cvar:up_summary_selection
 			dataid		OPTION_UFOPEDIA
+			align		LAYOUTALIGN_MIDDLE
 			pos			"10 10"
 			size		"257 484"
 			font		f_small
@@ -54,6 +57,7 @@ window ufopedia
 
 		vscrollbar list_scroll {
 			image		ui/scrollbar_v_green
+			align		LAYOUTALIGN_RIGHT
 			pos			"277 10"
 			height		"484"
 			current		0
