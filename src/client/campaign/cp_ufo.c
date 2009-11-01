@@ -128,9 +128,9 @@ const char* UFO_AircraftToIDOnGeoscape (const aircraft_t *ufocraft)
 const char* UFO_MissionResultToString (void)
 {
 	if (ccs.missionResults.crashsite)
-		return va(_("\nSecured crashed %s\n"), UFO_TypeToName(ccs.missionResults.ufotype));
+		return va(_("\nSecured crashed %s\n"), UFO_AircraftToIDOnGeoscape(AIR_GetAircraft(Com_UFOTypeToShortName(ccs.missionResults.ufotype))));
 	else
-		return va(_("\nSecured landed %s\n"), UFO_TypeToName(ccs.missionResults.ufotype));
+		return va(_("\nSecured landed %s\n"), UFO_AircraftToIDOnGeoscape(AIR_GetAircraft(Com_UFOTypeToShortName(ccs.missionResults.ufotype))));
 }
 
 /**
