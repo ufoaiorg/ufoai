@@ -1,4 +1,21 @@
 {
+	material tex_nature/grass004
+	{
+		texture tex_nature/grass001
+		dirtmap 1.0
+		lightmap
+	}
+	{
+		texture tex_nature/grass
+		dirtmap 0.5
+	}
+	{
+		texture tex_streets/street006
+		dirtmap 1.0
+	}
+
+}
+{
 	material tex_nature/grass001
 	{
 		texture tex_nature/grass

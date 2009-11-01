@@ -327,11 +327,18 @@ abc  +v  abc
 tile +road_rt
 {
 3 3
-0     v    0
-abc  +hv    h
-0   abc    0
+0       v    0
+abc   +hv    h
+0     abc    0
 }
 
+tile +road_r
+{
+3 3
+0    abc  0
+abc  +ah  h
+0    abc  0
+}
 
 
 assembly small
@@ -348,6 +355,12 @@ grid "1 1"
 +field_b "0 1"
 +field_c "0 1"
 +silo "0 2"
++road_rt "0 1"
++road_v "1 10"
++road_h "1 10"
++road_hs "0 1"
++road_h1 "0 1"
++road_r "0 1"
 +farmhouse_a "0 1"
 +farmhouse_b "0 1"
 +barn_a "0 1"
@@ -363,7 +376,7 @@ assembly medium
 size "10 10"
 grid "1 1"
 
-+filler_s "0 3"
++filler_s "0 10"
 +filler_m_a "0 4"
 +filler_l_a "0 4"
 +filler_m_b "0 4"
@@ -375,8 +388,8 @@ grid "1 1"
 +wind "0 1"
 +farmhouse_a "0 1"
 +farmhouse_b "0 1"
-+road_hs "1 1"
-+road_h1 "1 1"
++road_hs "0 1"
++road_h1 "0 1"
 +road_h "0 10"
 +road_rt "0 1"
 +road_v "0 10"
