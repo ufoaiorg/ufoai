@@ -1039,7 +1039,7 @@ void XYWnd::NewBrushDrag (int x, int y)
 
 	if (m_NewBrushDrag == 0) {
 		NodeSmartReference node(GlobalBrushCreator().createBrush());
-		Node_getTraversable(Map_FindOrInsertWorldspawn(g_map))->insert(node);
+		Node_getTraversable(GlobalRadiant().getMapWorldEntity())->insert(node);
 
 		scene::Path brushpath(makeReference(GlobalSceneGraph().root()));
 		brushpath.push(makeReference(*Map_GetWorldspawn(g_map)));
@@ -1352,7 +1352,7 @@ void XYWnd::XY_SnapToGrid (Vector3& point)
  */
 void XYWnd::XY_LoadBackgroundImage (const std::string& name)
 {
-	const char* relative = path_make_relative(name.c_str(), GlobalFileSystem().findRoot(name.c_str()));
+	std::string relative = GlobalFileSystem().getRelative(name);
 	if (relative == name)
 		g_warning("Could not extract the relative path, using full path instead\n");
 
@@ -1365,7 +1365,7 @@ void XYWnd::XY_LoadBackgroundImage (const std::string& name)
 	g_pParentWnd->ActiveXY()->m_tex = (qtexture_t*) malloc(sizeof(qtexture_t));
 	LoadTextureRGBA(g_pParentWnd->ActiveXY()->XYWnd::m_tex, image->getRGBAPixels(), image->getWidth(),
 			image->getHeight());
-	g_message("Loaded background texture %s\n", relative);
+	g_message("Loaded background texture %s\n", relative.c_str());
 	g_pParentWnd->ActiveXY()->m_backgroundActivated = true;
 
 	int m_ix, m_iy;

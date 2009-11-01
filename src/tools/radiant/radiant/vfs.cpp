@@ -428,22 +428,22 @@ void ClearFileDirList (GSList **lst)
 	}
 }
 
-const char* FindFile (const char* relative)
+const std::string FindFile (const std::string& relative)
 {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
 		if ((*i).archive->containsFile(relative)) {
-			return (*i).name.c_str();
+			return (*i).name;
 		}
 	}
 
 	return "";
 }
 
-const char* FindPath (const char* absolute)
+const std::string FindPath (const std::string& absolute)
 {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		if (path_equal_n(absolute, (*i).name.c_str(), string_length((*i).name.c_str()))) {
-			return (*i).name.c_str();
+		if (path_equal_n(absolute.c_str(), (*i).name.c_str(), string_length((*i).name.c_str()))) {
+			return (*i).name;
 		}
 	}
 
@@ -516,13 +516,18 @@ class UFOFileSystem: public VirtualFileSystem
 			ClearFileDirList(&list);
 		}
 
-		const char* findFile (const char *name)
+		std::string findFile (const std::string& name)
 		{
 			return FindFile(name);
 		}
-		const char* findRoot (const char *name)
+		std::string findRoot (const std::string& name)
 		{
 			return FindPath(name);
+		}
+		std::string getRelative (const std::string& name)
+		{
+			const std::string abolsoluteBasePath = FindPath(name);
+			return path_make_relative(name.c_str(), abolsoluteBasePath.c_str());
 		}
 
 		void attach (ModuleObserver& observer)

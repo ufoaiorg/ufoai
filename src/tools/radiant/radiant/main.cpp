@@ -528,7 +528,7 @@ int main (int argc, char* argv[])
 	Map_Free();
 
 	if (!Map_Unnamed(g_map)) {
-		g_strLastMap = Map_Name(g_map);
+		g_strLastMap = GlobalRadiant().getMapName();
 	}
 
 	delete g_pParentWnd;

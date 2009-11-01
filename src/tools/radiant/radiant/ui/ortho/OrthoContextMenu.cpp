@@ -92,7 +92,7 @@ namespace ui
 
 	void OrthoContextMenu::checkGenerateMaterial ()
 	{
-		const std::string& mapname = map::getName();
+		const std::string& mapname = GlobalRadiant().getMapName();
 		GlobalSelectionSystem().countSelectedComponents();
 		const int countSelectedPrimitives = GlobalSelectionSystem().countSelected();
 		const int countSelectedComponents = GlobalSelectionSystem().countSelectedComponents();

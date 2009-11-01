@@ -114,7 +114,7 @@ namespace ui
 		g_signal_connect(G_OBJECT(_treeSelection), "changed",
 				G_CALLBACK(_onSelectionChange), this);
 
-		// Visit all sound shaders and collect them for later insertion
+		// Visit all sound sound files and collect them for later insertion
 		SoundPopulator functor(_treeStore);
 		GlobalFileSystem().forEachFile(SOUNDS_FOLDER.c_str(), "*", makeCallback1(functor), 0);
 

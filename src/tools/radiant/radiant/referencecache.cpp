@@ -323,9 +323,9 @@ namespace
 	bool g_realised = false;
 
 	// name may be absolute or relative
-	const char* rootPath (const char* name)
+	const std::string rootPath (const std::string& name)
 	{
-		return GlobalFileSystem().findRoot(g_path_is_absolute(name) ? name : GlobalFileSystem().findFile(name));
+		return GlobalFileSystem().findRoot(g_path_is_absolute(name.c_str()) ? name : GlobalFileSystem().findFile(name));
 	}
 }
 
@@ -464,7 +464,7 @@ struct ModelResource: public Resource
 		{
 			ASSERT_MESSAGE(m_unrealised != 0, "ModelResource::realise: already realised");
 			if (--m_unrealised == 0) {
-				m_path = rootPath(m_originalName.c_str());
+				m_path = rootPath(m_originalName);
 				m_name = path_make_relative(m_originalName.c_str(), m_path.c_str());
 
 				m_observers.realise();
@@ -512,9 +512,9 @@ struct ModelResource: public Resource
 		}
 		bool isModified () const
 		{
-			return ((!string_empty(m_path.c_str()) // had or has an absolute path
+			return ((!m_path.empty() // had or has an absolute path
 					&& m_modified != modified()) // AND disk timestamp changed
-					|| !path_equal(rootPath(m_originalName.c_str()), m_path.c_str())); // OR absolute vfs-root changed
+					|| !path_equal(rootPath(m_originalName).c_str(), m_path.c_str())); // OR absolute vfs-root changed
 		}
 		void refresh ()
 		{

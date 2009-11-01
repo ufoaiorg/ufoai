@@ -97,8 +97,8 @@ void parseTextureName (std::string& name, const std::string& token)
 
 bool Tokeniser_parseTextureName (Tokeniser& tokeniser, std::string& name)
 {
-	const char* token = tokeniser.getToken();
-	if (token == 0) {
+	const std::string token = tokeniser.getToken();
+	if (token.length() == 0) {
 		Tokeniser_unexpectedError(tokeniser, token, "#texture-name");
 		return false;
 	}
@@ -108,8 +108,8 @@ bool Tokeniser_parseTextureName (Tokeniser& tokeniser, std::string& name)
 
 bool Tokeniser_parseShaderName (Tokeniser& tokeniser, std::string& name)
 {
-	const char* token = tokeniser.getToken();
-	if (token == 0) {
+	std::string token = tokeniser.getToken();
+	if (token.length() == 0) {
 		Tokeniser_unexpectedError(tokeniser, token, "#shader-name");
 		return false;
 	}
@@ -119,12 +119,12 @@ bool Tokeniser_parseShaderName (Tokeniser& tokeniser, std::string& name)
 
 bool Tokeniser_parseString (Tokeniser& tokeniser, ShaderString& string)
 {
-	const char* token = tokeniser.getToken();
-	if (token == 0) {
+	std::string token = tokeniser.getToken();
+	if (token.length() == 0) {
 		Tokeniser_unexpectedError(tokeniser, token, "#string");
 		return false;
 	}
-	string = token;
+	string = token.c_str();
 	return true;
 }
 
@@ -256,16 +256,16 @@ bool parseShaderParameters (Tokeniser& tokeniser, ShaderParameters& params)
 {
 	Tokeniser_parseToken(tokeniser, "(");
 	for (;;) {
-		const char* param = tokeniser.getToken();
-		if (string_equal(param, ")")) {
+		const std::string param = tokeniser.getToken();
+		if (param == ")") {
 			break;
 		}
-		params.push_back(param);
-		const char* comma = tokeniser.getToken();
-		if (string_equal(comma, ")")) {
+		params.push_back(param.c_str());
+		const std::string comma = tokeniser.getToken();
+		if (comma == ")") {
 			break;
 		}
-		if (!string_equal(comma, ",")) {
+		if (comma != ",") {
 			Tokeniser_unexpectedError(tokeniser, comma, ",");
 			return false;
 		}
@@ -480,21 +480,18 @@ bool ShaderTemplate::parseUFO (Tokeniser& tokeniser)
 	// name of the qtexture_t we'll use to represent this shader (this one has the "textures/" before)
 	m_textureName = m_Name.c_str();
 
-	tokeniser.nextLine();
-
 	// we need to read until we hit a balanced }
 	int depth = 0;
 	for (;;) {
-		tokeniser.nextLine();
-		const char* token = tokeniser.getToken();
+		std::string token = tokeniser.getToken();
 
-		if (token == 0)
+		if (token.length() == 0)
 			return false;
 
-		if (string_equal(token, "{")) {
+		if (token == "{") {
 			++depth;
 			continue;
-		} else if (string_equal(token, "}")) {
+		} else if (token == "}") {
 			--depth;
 			if (depth < 0) { // underflow
 				return false;
@@ -507,26 +504,26 @@ bool ShaderTemplate::parseUFO (Tokeniser& tokeniser)
 		}
 
 		if (depth == 1) {
-			if (string_equal_nocase(token, "trans")) {
+			if (token == "trans") {
 				RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, m_fTrans))
 ;				m_nFlags |= QER_TRANS;
-			} else if (string_equal_nocase(token, "alphafunc")) {
-				const char* alphafunc = tokeniser.getToken();
+			} else if (token == "alphafunc") {
+				const std::string alphafunc = tokeniser.getToken();
 
-				if (alphafunc == 0) {
+				if (alphafunc.length() == 0) {
 					Tokeniser_unexpectedError(tokeniser, alphafunc, "#alphafunc");
 					return false;
 				}
 
-				if (string_equal_nocase(alphafunc, "equal")) {
+				if (alphafunc == "equal") {
 					m_AlphaFunc = IShader::eEqual;
-				} else if (string_equal_nocase(alphafunc, "greater")) {
+				} else if (alphafunc == "greater") {
 					m_AlphaFunc = IShader::eGreater;
-				} else if (string_equal_nocase(alphafunc, "less")) {
+				} else if (alphafunc == "less") {
 					m_AlphaFunc = IShader::eLess;
-				} else if (string_equal_nocase(alphafunc, "gequal")) {
+				} else if (alphafunc == "gequal") {
 					m_AlphaFunc = IShader::eGEqual;
-				} else if (string_equal_nocase(alphafunc, "lequal")) {
+				} else if (alphafunc == "lequal") {
 					m_AlphaFunc = IShader::eLEqual;
 				} else {
 					m_AlphaFunc = IShader::eAlways;
@@ -535,15 +532,15 @@ bool ShaderTemplate::parseUFO (Tokeniser& tokeniser)
 				m_nFlags |= QER_ALPHATEST;
 
 				RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, m_AlphaRef));
-			} else if (string_equal_nocase(token, "param")) {
-				const char* surfaceparm = tokeniser.getToken();
+			} else if (token == "param") {
+				const std::string surfaceparm = tokeniser.getToken();
 
-				if (surfaceparm == 0) {
+				if (surfaceparm.length() == 0) {
 					Tokeniser_unexpectedError(tokeniser, surfaceparm, "param");
 					return false;
 				}
 
-				if (string_equal_nocase(surfaceparm, "clip")) {
+				if (surfaceparm == "clip") {
 					m_nFlags |= QER_CLIP;
 				}
 			}
@@ -570,13 +567,10 @@ class Layer
 
 void ParseShaderFile (Tokeniser& tokeniser, const std::string& filename)
 {
-	tokeniser.nextLine();
 	for (;;) {
-		const char* token = tokeniser.getToken();
-
-		if (token == 0) {
+		std::string token = tokeniser.getToken();
+		if (token.length() == 0)
 			break;
-		}
 
 		if (!string_equal(token, "material") && !string_equal(token, "particle") && !string_equal(token, "skin")) {
 			tokeniser.ungetToken();

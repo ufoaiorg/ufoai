@@ -63,7 +63,7 @@ static gint editorHideCallback (GtkWidget *widget, gpointer data)
 
 static gint fixCallback (GtkWidget *widget, gpointer data)
 {
-	const std::string& fullname = Map_Name(g_map);
+	const std::string& fullname = GlobalRadiant().getMapName();
 
 	if (!ConfirmModified(_("Check Map")))
 		return 0;
@@ -215,7 +215,7 @@ static void CreateCheckDialog (void)
 
 void ToolsCheckErrors (void)
 {
-	const std::string& fullname = Map_Name(g_map);
+	const std::string& fullname = GlobalRadiant().getMapName();
 
 	if (!ConfirmModified(_("Check Map")))
 		return;
@@ -395,7 +395,7 @@ void ToolsGenerateMaterials (void)
 	const std::string& compilerBinaryWithPath = CompilerBinaryWithPath_get();
 
 	if (file_exists(compilerBinaryWithPath)) {
-		const std::string& fullname = Map_Name(g_map);
+		const std::string& fullname = GlobalRadiant().getMapName();
 		const std::string& compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_materials");
 		const std::string& enginePath = GlobalRadiant().getEnginePath();
 
@@ -410,7 +410,7 @@ void ToolsGenerateMaterials (void)
 		g_warning("cnt: %i (%s)\n", cnt, fullname.c_str());
 		cnt = 0;
 		if (exec_cmd_get_state(cmd) == COMPLETED) {
-			GlobalMaterialSystem()->showMaterialDefinition("");
+			GlobalMaterialSystem()->showMaterialDefinition();
 		}
 	} else {
 		gtk_MessageBox(0, _("Could not find the mapcompiler check your path settings\n"), _("Generate Materials"),
@@ -435,7 +435,7 @@ void ToolsCompile (void)
 	const std::string& compilerBinaryWithPath = CompilerBinaryWithPath_get();
 
 	if (file_exists(compilerBinaryWithPath)) {
-		const std::string& fullname = Map_Name(g_map);
+		const std::string& fullname = GlobalRadiant().getMapName();
 		const std::string& compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_compile");
 		const std::string& enginePath = GlobalRadiant().getEnginePath();
 

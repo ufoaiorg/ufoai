@@ -44,7 +44,6 @@ class ScriptTokeniser: public Tokeniser
 
 		char m_current;
 		bool m_eof;
-		bool m_crossline;
 		bool m_unget;
 		bool m_emit;
 
@@ -108,11 +107,6 @@ class ScriptTokeniser: public Tokeniser
 		{
 			switch (charType(c)) {
 			case eNewline:
-				if (!m_crossline) {
-					globalErrorStream() << Unsigned(getLine()) << ":" << Unsigned(getColumn())
-							<< ": unexpected end-of-line before token\n";
-					return false;
-				}
 				break;
 			case eCharToken:
 			case eCharStar:
@@ -158,11 +152,6 @@ class ScriptTokeniser: public Tokeniser
 		{
 			switch (charType(c)) {
 			case eNewline:
-				if (m_crossline) {
-					globalErrorStream() << Unsigned(getLine()) << ":" << Unsigned(getColumn())
-							<< ": unexpected end-of-line in quoted token\n";
-					return false;
-				}
 				break;
 			case eWhitespace:
 			case eCharToken:
@@ -199,11 +188,11 @@ class ScriptTokeniser: public Tokeniser
 			case eCharSolidus:
 				pop();
 				push(Tokenise(&ScriptTokeniser::tokeniseComment));
-				break; // dont emit single slash
+				break; // don't emit single slash
 			case eCharStar:
 				pop();
 				push(Tokenise(&ScriptTokeniser::tokeniseBlockComment));
-				break; // dont emit single slash
+				break; // don't emit single slash
 			default:
 				break;
 			}
@@ -215,7 +204,7 @@ class ScriptTokeniser: public Tokeniser
 				pop();
 				if (state() == Tokenise(&ScriptTokeniser::tokeniseToken)) {
 					pop();
-					m_emit = true; // emit token immediatly preceding comment
+					m_emit = true; // emit token immediately preceding comment
 				}
 			}
 			return true;
@@ -235,9 +224,9 @@ class ScriptTokeniser: public Tokeniser
 				pop();
 				if (state() == Tokenise(&ScriptTokeniser::tokeniseToken)) {
 					pop();
-					m_emit = true; // emit token immediatly preceding comment
+					m_emit = true; // emit token immediately preceding comment
 				}
-				break; // dont emit comment
+				break; // don't emit comment
 			case '*':
 				break; // no state change
 			default:
@@ -306,27 +295,28 @@ class ScriptTokeniser: public Tokeniser
 
 	public:
 		ScriptTokeniser (TextInputStream& istream, bool special) :
-			m_state(m_stack), m_istream(istream), m_scriptline(1), m_scriptcolumn(1), m_crossline(false),
-					m_unget(false), m_emit(false), m_special(special)
+			m_state(m_stack), m_istream(istream), m_scriptline(1), m_scriptcolumn(1), m_unget(false), m_emit(false),
+					m_special(special)
 		{
 			m_stack[0] = Tokenise(&ScriptTokeniser::tokeniseDefault);
 			m_eof = !m_istream.readChar(m_current);
 			m_token[MAXTOKEN - 1] = '\0';
 		}
 
-		void nextLine ()
-		{
-			m_crossline = true;
-		}
-		const char* getToken ()
+		const std::string getToken ()
 		{
 			if (m_unget) {
 				m_unget = false;
 				return m_token;
 			}
 
-			return fillToken();
+			const char *token = fillToken();
+			if (token)
+				return std::string(token);
+
+			return "";
 		}
+
 		void ungetToken ()
 		{
 			ASSERT_MESSAGE(!m_unget, "can't unget more than one token");

@@ -26,6 +26,7 @@
 /// \brief Token input/output stream module.
 
 #include <cstddef>
+#include <string>
 #include "generic/constant.h"
 
 #define	MAXTOKEN	1024
@@ -36,8 +37,7 @@ class Tokeniser
 		virtual ~Tokeniser ()
 		{
 		}
-		virtual void nextLine () = 0;
-		virtual const char* getToken () = 0;
+		virtual const std::string getToken () = 0;
 		virtual void ungetToken () = 0;
 		virtual std::size_t getLine () const = 0;
 		virtual std::size_t getColumn () const = 0;

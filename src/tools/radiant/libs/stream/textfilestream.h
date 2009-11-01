@@ -31,6 +31,9 @@ class TextFileInputStream: public TextInputStream
 {
 		FILE* m_file;
 	public:
+		/**
+		 * @param name The full path of the file to read from
+		 */
 		TextFileInputStream (const std::string& name)
 		{
 			m_file = name.empty() ? 0 : fopen(name.c_str(), "rt");
@@ -73,6 +76,9 @@ class TextFileOutputStream: public TextOutputStream
 {
 		FILE* m_file;
 	public:
+		/**
+		 * @param name The full path to the file to write into
+		 */
 		TextFileOutputStream (const std::string& name)
 		{
 			m_file = name.empty() ? 0 : fopen(name.c_str(), "wt");

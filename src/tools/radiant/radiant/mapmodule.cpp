@@ -67,9 +67,9 @@ class MapUFOAPI: public TypeSystemRef, public MapFormat, public PrimitiveParser
 		}
 		scene::Node& parsePrimitive (Tokeniser& tokeniser) const
 		{
-			const char* primitive = tokeniser.getToken();
-			if (primitive != 0) {
-				if (string_equal(primitive, "(")) {
+			const std::string primitive = tokeniser.getToken();
+			if (primitive.length()) {
+				if (primitive == "(") {
 					tokeniser.ungetToken(); // (
 					return GlobalBrushModule::getTable().createBrush();
 				}

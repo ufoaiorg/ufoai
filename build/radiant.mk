@@ -26,6 +26,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/imagemodules.cpp \
 	$(RADIANT_BASE)/radiant/lastused.cpp \
 	$(RADIANT_BASE)/radiant/material.cpp \
+	$(RADIANT_BASE)/radiant/ump.cpp \
 	$(RADIANT_BASE)/radiant/particles.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
@@ -61,6 +62,10 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/render/renderstate.cpp \
 	\
 	$(RADIANT_BASE)/radiant/referencecache/nullmodel.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ump/UMPFile.cpp \
+	$(RADIANT_BASE)/radiant/ump/UMPTile.cpp \
+	$(RADIANT_BASE)/radiant/ump/UMPAssembly.cpp \
 	\
 	$(RADIANT_BASE)/radiant/map/parse.cpp \
 	$(RADIANT_BASE)/radiant/map/write.cpp \
@@ -117,13 +122,21 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/ui/common/MapPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/ModelPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/MaterialDefinitionView.cpp \
+	$(RADIANT_BASE)/radiant/ui/common/UMPDefinitionView.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/RenderableAABB.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/SoundChooser.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/SoundPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/TexturePreviewCombo.cpp \
+	\
 	$(RADIANT_BASE)/radiant/ui/modelselector/ModelSelector.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ui/materialeditor/MaterialEditor.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ui/umpeditor/UMPEditor.cpp \
+	\
 	$(RADIANT_BASE)/radiant/ui/ortho/EntityClassChooser.cpp \
 	$(RADIANT_BASE)/radiant/ui/ortho/OrthoContextMenu.cpp \
+	\
 	$(RADIANT_BASE)/radiant/ui/lightdialog/LightDialog.cpp \
 	\
 	$(RADIANT_BASE)/radiant/pathfinding/Routing.cpp \

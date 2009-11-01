@@ -56,6 +56,9 @@ namespace routing
 		// this is not needed for rendering the routing data
 	}
 
+	/**
+	 * @param bspFileName Relative bsp file name
+	 */
 	void Routing::updateRouting (const std::string& bspFileName)
 	{
 		_loader.loadRouting(bspFileName);

@@ -1,6 +1,6 @@
 /**
- * @file material.h
- * @brief Material generation headers
+ * @file iump.h
+ * @brief Global UMP interface
  */
 
 /*
@@ -24,69 +24,77 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef IMATERIAL_H
-#define IMATERIAL_H
+#ifndef IUMP_H
+#define IUMP_H
 
 #include "modulesystem.h"
 #include "modulesystem/moduleregistry.h"
 #include "generic/constant.h"
 #include <string>
+#include <set>
 #include "ifilesystem.h"
 
-class MaterialSystem
+class UMPSystem
 {
+	private:
+
+		std::set<std::string> _umpFiles;
+		typedef std::set<std::string>::iterator UMPFilesIterator;
+
 	public:
 		INTEGER_CONSTANT(Version, 1);
-		STRING_CONSTANT(Name, "material");
+		STRING_CONSTANT(Name, "ump");
 
-		virtual ~MaterialSystem ()
+		virtual ~UMPSystem ()
 		{
 		}
 
 		/**
 		 * Constructor
 		 */
-		MaterialSystem ();
+		UMPSystem ();
+
+		void editUMPDefinition ();
 
 		/**
-		 * Shows the existing material definition and append new content to it.
-		 * @param append The material definition string to append to the existing one
+		 * @return The ump filename for the given map
 		 */
-		void showMaterialDefinition (const std::string& append = "");
+		const std::string getUMPFilename (const std::string& map);
+
+		void init ();
 
 		/**
-		 * @return The current material filename for the current loaded map
+		 * @return A vector with ump filesnames
 		 */
-		const std::string getMaterialFilename () const;
+		const std::set<std::string> getFiles () const
+		{
+			return _umpFiles;
+		}
 
-		/**
-		 * Generates material for the current selected textures
-		 */
-		void generateMaterialFromTexture ();
 };
 
-class MaterialSystemDependencies: public GlobalFileSystemModuleRef
+class UMPSystemDependencies: public GlobalFileSystemModuleRef
 {
 };
 
 // This is needed to be registered as a Radiant dependency
 template<typename Type>
 class GlobalModule;
-typedef GlobalModule<MaterialSystem> GlobalMaterialSystemModule;
+typedef GlobalModule<UMPSystem> GlobalUMPSystemModule;
 
 // A reference to the call above.
 template<typename Type>
 class GlobalModuleRef;
-typedef GlobalModuleRef<MaterialSystem> GlobalMaterialSystemModuleRef;
+typedef GlobalModuleRef<UMPSystem> GlobalUMPSystemModuleRef;
 
 // Accessor method
-inline MaterialSystem * GlobalMaterialSystem ()
+inline UMPSystem * GlobalUMPSystem ()
 {
-	Module * materialSystem = globalModuleServer().findModule(MaterialSystem::Name_CONSTANT_::evaluate(),
-			MaterialSystem::Version_CONSTANT_::evaluate(), "*");
-	ASSERT_MESSAGE(materialSystem,
-			"Couldn't retrieve GlobalMaterialSystem, is not registered and/or initialized.");
-	return (MaterialSystem *) materialSystem->getTable(); // findModule returns the pointer to the valid value, DO NOT DELETE!
+	Module * umpSystem = globalModuleServer().findModule(UMPSystem::Name_CONSTANT_::evaluate(),
+			UMPSystem::Version_CONSTANT_::evaluate(), "*");
+	ASSERT_MESSAGE(umpSystem,
+			"Couldn't retrieve GlobalUMPSystem, is not registered and/or initialized.");
+	return (UMPSystem *) umpSystem->getTable(); // findModule returns the pointer to the valid value, DO NOT DELETE!
 }
 
-#endif  /* IMATERIAL_H */
+#endif  /* IUMP_H */

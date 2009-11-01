@@ -122,7 +122,7 @@ struct IRadiant
 		void (*commandInsert) (const std::string& name, const Callback& callback, const Accelerator& accelerator);
 
 		const std::string& (*getGameName) ();
-		const std::string& (*getMapName) ();
+		const std::string (*getMapName) ();
 		scene::Node& (*getMapWorldEntity) ();
 		float (*getGridSize) ();
 

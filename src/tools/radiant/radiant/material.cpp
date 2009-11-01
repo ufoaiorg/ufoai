@@ -39,13 +39,12 @@
 #include "stream/textfilestream.h"
 #include "stream/stringstream.h"
 #include "ifilesystem.h"
-#include "ui/common/MaterialDefinitionView.h"
-#include "gtkutil/MultiMonitor.h"
 #include "AutoPtr.h"
 #include "iarchive.h"
 #include "modulesystem.h"
 #include "modulesystem/moduleregistry.h"
 #include "modulesystem/singletonmodule.h"
+#include "ui/materialeditor/MaterialEditor.h"
 
 MaterialSystem::MaterialSystem ()
 {
@@ -53,40 +52,13 @@ MaterialSystem::MaterialSystem ()
 
 void MaterialSystem::showMaterialDefinition (const std::string& append)
 {
-	const std::string& materialName = getMaterialFilename();
-
-	// Construct a shader view and pass the shader name
-	ui::MaterialDefinitionView view;
-	view.setMaterial(materialName);
-	view.append(append);
-
-	GtkWidget* dialog = gtk_dialog_new_with_buttons(_("Material Definition"), GlobalRadiant().getMainWindow(),
-			GTK_DIALOG_DESTROY_WITH_PARENT, GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
-			NULL);
-
-	gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
-
-	gtk_container_set_border_width(GTK_CONTAINER(dialog), 12);
-
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), view.getWidget());
-
-	GdkRectangle rect = gtkutil::MultiMonitor::getMonitorForWindow(GlobalRadiant().getMainWindow());
-	gtk_window_set_default_size(GTK_WINDOW(dialog), gint(rect.width / 2), gint(2 * rect.height / 3));
-
-	gtk_widget_show_all(dialog);
-
-	// Show and block
-	gint result = gtk_dialog_run(GTK_DIALOG(dialog));
-
-	gtk_widget_destroy(dialog);
-
-	if (result == GTK_RESPONSE_ACCEPT)
-		view.save();
+	ui::MaterialEditor editor(append);
+	editor.show();
 }
 
 void MaterialSystem::generateMaterialFromTexture ()
 {
-	const std::string& mapname = Map_Name(g_map);
+	const std::string& mapname = GlobalRadiant().getMapName();
 	if (mapname.empty() || Map_Unnamed(g_map)) {
 		// save the map first
 		gtkutil::errorDialog(GlobalRadiant().getMainWindow(),
@@ -99,7 +71,7 @@ void MaterialSystem::generateMaterialFromTexture ()
 	if (file)
 		content = file->getString();
 
-	std::string append;
+	std::string append = "";
 	if (!g_SelectedFaceInstances.empty()) {
 		for (FaceInstancesList::iterator i = g_SelectedFaceInstances.m_faceInstances.begin(); i
 				!= g_SelectedFaceInstances.m_faceInstances.end(); ++i) {
@@ -120,7 +92,7 @@ void MaterialSystem::generateMaterialFromTexture ()
 
 const std::string MaterialSystem::getMaterialFilename () const
 {
-	const std::string& mapname = Map_Name(g_map);
+	const std::string& mapname = GlobalRadiant().getMapName();
 	std::string materialFileName = "materials/" + os::getFilenameFromPath(mapname);
 	materialFileName[materialFileName.length() - 1] = 't'; /* map => mat */
 	return materialFileName;
@@ -158,10 +130,18 @@ void GenerateMaterialFromTexture ()
 	GlobalMaterialSystem()->generateMaterialFromTexture();
 }
 
+void ShowMaterialDefinition ()
+{
+	GlobalMaterialSystem()->showMaterialDefinition();
+}
+
 void Material_Construct ()
 {
-	GlobalRadiant().commandInsert("GenerateMaterialFromTexture", FreeCaller<GenerateMaterialFromTexture> (), Accelerator('M'));
+	GlobalRadiant().commandInsert("GenerateMaterialFromTexture", FreeCaller<GenerateMaterialFromTexture> (),
+			Accelerator('M'));
 	command_connect_accelerator("GenerateMaterialFromTexture");
+
+	GlobalRadiant().commandInsert("ShowMaterialDefinition", FreeCaller<ShowMaterialDefinition> (), accelerator_null());
 }
 
 void Material_Destroy ()

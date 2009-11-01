@@ -1,5 +1,6 @@
 #include "SourceView.h"
 
+#include "radiant_i18n.h"
 #include "itextstream.h"
 #include "iradiant.h"
 
@@ -8,6 +9,7 @@
 #include <gtksourceview/gtksourcestyleschememanager.h>
 #include <gtksourceview/gtksourceview.h>
 
+#include "dialog.h"
 #include "nonmodal.h"
 
 namespace gtkutil
@@ -33,7 +35,9 @@ namespace gtkutil
 		GtkSourceLanguage* lang = gtk_source_language_manager_get_language(_langManager, language.c_str());
 
 		if (lang == NULL) {
+			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Cannot find language for source viewer"));
 			g_error("SourceView: Cannot find language %s\n", language.c_str());
+			throw std::runtime_error("SourceView: Cannot find language");
 		}
 
 		// Remember the pointers to the textbuffers

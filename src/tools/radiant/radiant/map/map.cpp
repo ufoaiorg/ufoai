@@ -663,7 +663,7 @@ class BasicContainer: public scene::Node
 		}
 
 		BasicContainer () :
-				scene::Node(this, StaticTypeCasts::instance().get())
+			scene::Node(this, StaticTypeCasts::instance().get())
 		{
 		}
 
@@ -689,7 +689,7 @@ void Map_ImportSelected (TextInputStream& in, const MapFormat& format)
 
 inline scene::Cloneable* Node_getCloneable (scene::Node& node)
 {
-	return dynamic_cast<scene::Cloneable*>(&node);
+	return dynamic_cast<scene::Cloneable*> (&node);
 }
 
 inline scene::Node& node_clone (scene::Node& node)
@@ -821,13 +821,13 @@ bool Map_LoadFile (const std::string& filename)
 
 void Map_Reload (void)
 {
-	if (Map_Name(g_map).empty())
+	if (GlobalRadiant().getMapName().empty())
 		return;
 
 	/* reload the map */
 	Map_RegionOff();
 	Map_Free();
-	Map_LoadFile(Map_Name(g_map));
+	Map_LoadFile(GlobalRadiant().getMapName());
 }
 
 class Excluder
@@ -1028,7 +1028,7 @@ bool Map_SaveRegion (const char *filename)
 void Map_RenameAbsolute (const char* absolute)
 {
 	Resource* resource = GlobalReferenceCache().capture(absolute);
-	NodeSmartReference clone(NewMapRoot(path_make_relative(absolute, GlobalFileSystem().findRoot(absolute))));
+	NodeSmartReference clone(NewMapRoot(GlobalFileSystem().getRelative(absolute)));
 	resource->setNode(clone.get_pointer());
 
 	{
@@ -1471,12 +1471,6 @@ namespace map
 		GlobalSceneGraph().traverse(CountSelectedBrushes(count));
 		return count;
 	}
-
-	const std::string getName ()
-	{
-		return Map_Name(g_map);
-	}
-
 } // namespace map
 
 enum ENodeType

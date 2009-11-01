@@ -110,12 +110,10 @@ namespace routing
 
 				if (_showPathfinding) {
 					//update current pathfinding data on every activation
-					const std::string& mapName = Map_Name(g_map);
+					const std::string& mapName = GlobalRadiant().getMapName();
 					const std::string baseName = os::stripExtension(mapName);
 					const std::string bspName = baseName + ".bsp";
-					const char* bspname = path_make_relative(bspName.c_str(), GlobalFileSystem().findRoot(
-							bspName.c_str()));
-					_routingRender->updateRouting(bspname);
+					_routingRender->updateRouting(GlobalFileSystem().getRelative(bspName));
 				}
 				SceneChangeNotify();
 

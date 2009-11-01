@@ -3,6 +3,7 @@
 
 #include <string>
 #include "gtkutil/ifc/Widget.h"
+#include <stdexcept>
 
 typedef struct _GtkSourceBuffer GtkSourceBuffer;
 typedef struct _GtkSourceView GtkSourceView;
@@ -28,6 +29,8 @@ namespace gtkutil
 			 * in the .lang files (e.g. "python").
 			 *
 			 * @readOnly: Set this to TRUE to disallow editing of the text buffer.
+			 *
+			 * @throw runtime_error if the given language file wasn't found in the sourceviewer/ subdirectory
 			 */
 			SourceView (const std::string& language, bool readOnly);
 

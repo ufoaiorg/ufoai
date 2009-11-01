@@ -49,6 +49,7 @@
 #include "itoolbar.h"
 #include "iplugin.h"
 #include "imaterial.h"
+#include "iump.h"
 #include "imap.h"
 #include "namespace.h"
 #include "commands.h"
@@ -76,6 +77,7 @@
 #include "referencecache/nullmodel.h"
 #include "xyview/grid.h"
 #include "material.h"
+#include "ump.h"
 #include "particles.h"
 #include "pathfinding.h"
 #include "model.h"
@@ -95,7 +97,7 @@ const std::string& GameDescription_getRequiredKeyValue (const std::string& key)
 	return g_pGameDescription->getRequiredKeyValue(key);
 }
 
-const std::string& getMapName ()
+const std::string getMapName ()
 {
 	return Map_Name(g_map);
 }
@@ -183,6 +185,7 @@ StaticRegisterModule staticRegisterRadiantCore(StaticRadiantCoreModule::instance
 class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalFileSystemModuleRef,
 		public GlobalSoundManagerModuleRef,
+		public GlobalUMPSystemModuleRef,
 		public GlobalMaterialSystemModuleRef,
 		public GlobalEntityModuleRef,
 		public GlobalShadersModuleRef,
@@ -205,8 +208,8 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 
 	public:
 		RadiantDependencies () :
-			GlobalSoundManagerModuleRef("*"), GlobalMaterialSystemModuleRef("*"), GlobalEntityModuleRef("ufo"),
-					GlobalShadersModuleRef("ufo"), GlobalBrushModuleRef("ufo"),
+			GlobalSoundManagerModuleRef("*"), GlobalUMPSystemModuleRef("*"), GlobalMaterialSystemModuleRef("*"),
+					GlobalEntityModuleRef("ufo"), GlobalShadersModuleRef("ufo"), GlobalBrushModuleRef("ufo"),
 					GlobalEntityClassManagerModuleRef("ufo"), m_image_modules(
 							GlobalRadiant().getRequiredGameDescriptionKeyValue("texturetypes")),
 					m_map_modules("mapufo"), m_toolbar_modules("*"), m_plugin_modules("*")
@@ -269,9 +272,11 @@ class Radiant: public TypeSystemRef
 
 			Particles_Construct();
 			Pathfinding_Construct();
+			UMP_Construct();
 		}
 		~Radiant ()
 		{
+			UMP_Destroy();
 			Pathfinding_Destroy();
 			Particles_Destroy();
 			TextureBrowser_Destroy();

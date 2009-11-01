@@ -55,32 +55,29 @@ NodeSmartReference Entity_parseTokens (Tokeniser& tokeniser, EntityCreator& enti
 {
 	NodeSmartReference entity(g_nullNode);
 	KeyValues keyValues;
-	const char* classname = "";
+	std::string classname = "";
 
 	int count_primitives = 0;
 	while (1) {
-		tokeniser.nextLine();
-		const char* token = tokeniser.getToken();
-		if (token == 0) {
+		std::string token = tokeniser.getToken();
+		if (token.length() == 0) {
 			Tokeniser_unexpectedError(tokeniser, token, "#entity-token");
 			return g_nullNode;
 		}
-		if (!strcmp(token, "}")) { // end entity
+		if (token == "}") { // end entity
 			if (entity == g_nullNode) {
 				// entity does not have brushes
 				entity = Entity_create(entityTable, GlobalEntityClassManager().findOrInsert(classname, false),
 						keyValues);
 			}
 			return entity;
-		} else if (!strcmp(token, "{")) { // begin primitive
+		} else if (token == "{") { // begin primitive
 			if (entity == g_nullNode) {
 				// entity has brushes
 				entity
 						= Entity_create(entityTable, GlobalEntityClassManager().findOrInsert(classname, true),
 								keyValues);
 			}
-
-			tokeniser.nextLine();
 
 			NodeSmartReference primitive(parser.parsePrimitive(tokeniser));
 			if (primitive == g_nullNode || !Node_getMapImporter(primitive)->importTokens(tokeniser)) {
@@ -97,16 +94,15 @@ NodeSmartReference Entity_parseTokens (Tokeniser& tokeniser, EntityCreator& enti
 			}
 			++count_primitives;
 		} else { // epair
-			std::string key(token);
+			const std::string key = token;
 			token = tokeniser.getToken();
-			if (token == 0) {
+			if (token.length() == 0) {
 				Tokeniser_unexpectedError(tokeniser, token, "#epair-value");
 				return g_nullNode;
 			}
 			keyValues.push_back(KeyValues::value_type(key, token));
-			if (string_equal(key.c_str(), "classname")) {
-				classname = keyValues.back().second.c_str();
-			}
+			if (key == "classname")
+				classname = keyValues.back().second;
 		}
 	}
 	// unreachable code
@@ -117,8 +113,7 @@ void Map_Read (scene::Node& root, Tokeniser& tokeniser, EntityCreator& entityTab
 {
 	int count_entities = 0;
 	for (;;) {
-		tokeniser.nextLine();
-		if (!tokeniser.getToken()) // { or 0
+		if (tokeniser.getToken().length() == 0)
 			break;
 
 		NodeSmartReference entity(Entity_parseTokens(tokeniser, entityTable, parser, count_entities));

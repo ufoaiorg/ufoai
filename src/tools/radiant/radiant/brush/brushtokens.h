@@ -85,12 +85,12 @@ class UFOFaceTokenImporter
 
 		bool importTextureName (FaceShader& faceShader, Tokeniser& tokeniser)
 		{
-			const char* texture = tokeniser.getToken();
-			if (texture == 0) {
+			const std::string texture = tokeniser.getToken();
+			if (texture.length() == 0) {
 				Tokeniser_unexpectedError(tokeniser, texture, "#texture-name");
 				return false;
 			}
-			if (string_equal(texture, "NULL")) {
+			if (texture == "NULL") {
 				faceShader.setShader(GlobalTexturePrefix_get());
 			} else {
 				faceShader.setShader(GlobalTexturePrefix_get() + texture);
@@ -222,17 +222,13 @@ class BrushTokenImporter: public MapImporter
 		{
 			while (1) {
 				// check for end of brush
-				tokeniser.nextLine();
-				const char* token = tokeniser.getToken();
-				if (string_equal(token, "}")) {
+				const std::string token = tokeniser.getToken();
+				if (token == "}")
 					break;
-				}
 
 				tokeniser.ungetToken();
 
 				m_brush.push_back(FaceSmartPointer(new Face(&m_brush)));
-
-				tokeniser.nextLine();
 
 				Face& face = *m_brush.back();
 

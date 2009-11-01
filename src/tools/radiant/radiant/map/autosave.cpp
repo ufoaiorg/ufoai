@@ -55,7 +55,7 @@ static void Map_Snapshot ()
 	// 1. make sure the snapshot directory exists (create it if it doesn't)
 	// 2. find out what the lastest save is based on number
 	// 3. inc that and save the map
-	const std::string& path = Map_Name(g_map);
+	const std::string& path = GlobalRadiant().getMapName();
 	std::string name = os::getFilenameFromPath(path);
 	std::string extension = os::getExtension(path);
 	std::string snapshotsDir = os::stripFilename(path) + "/snapshots";
@@ -144,7 +144,7 @@ void QE_CheckAutoSave (void)
 					autosave += "autosave.map";
 					Map_SaveFile(autosave);
 				} else {
-					const std::string& name = Map_Name(g_map);
+					const std::string& name = GlobalRadiant().getMapName();
 					const std::string extension = os::getExtension(name);
 					const std::string baseName = os::stripExtension(name);
 					const std::string autosave = baseName + ".autosave." + extension;

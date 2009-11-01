@@ -33,12 +33,12 @@ ParticleDefinitionMap g_particleDefinitions;
 
 static const char * const blend_names[] = { "replace", "one", "blend", "add", "filter", "invfilter" };
 
-static int GetBlendMode (const char *token)
+static int GetBlendMode (const std::string& token)
 {
 	int i;
 
 	for (i = 0; i < BLEND_LAST; i++) {
-		if (string_equal(token, blend_names[i])) {
+		if (token == blend_names[i]) {
 			return i;
 		}
 	}
@@ -47,33 +47,28 @@ static int GetBlendMode (const char *token)
 
 static void ParseParticleScriptFile (Tokeniser& tokeniser, const std::string& filename)
 {
-	tokeniser.nextLine();
 	for (;;) {
-		const char* token = tokeniser.getToken();
+		std::string token = tokeniser.getToken();
 
-		if (token == 0) {
+		if (token.length() == 0)
 			break;
-		}
 
 		if (string_equal(token, "particle")) {
-			char pID[64];
 			int kill = 0;
-			token = tokeniser.getToken();
-			if (token == 0) {
+			const std::string particleID = tokeniser.getToken();
+			if (particleID.length() == 0) {
 				Tokeniser_unexpectedError(tokeniser, 0, "#id-name");
 				return;
 			}
 
-			strncpy(pID, token, sizeof(pID) - 1);
-			pID[sizeof(pID) - 1] = '\0';
-
 			if (!Tokeniser_parseToken(tokeniser, "{")) {
-				globalErrorStream() << "ERROR: expected {. parsing file " << filename << " particle: " << pID << "\n";
+				globalErrorStream() << "ERROR: expected {. parsing file " << filename << " particle: "
+						<< particleID.c_str() << "\n";
 				return;
 			}
 
-			char model[128] = "";
-			char image[128] = "";
+			std::string model = "";
+			std::string image = "";
 			int blend = BLEND_REPLACE;
 			int width = 0;
 			int height = 0;
@@ -85,20 +80,20 @@ static void ParseParticleScriptFile (Tokeniser& tokeniser, const std::string& fi
 						return;
 					}
 					for (;;) {
-						const char* option = tokeniser.getToken();
-						if (string_equal(option, "}")) {
+						const std::string option = tokeniser.getToken();
+						if (option == "}") {
 							break;
-						} else if (string_equal(option, "image")) {
-							strncpy(image, tokeniser.getToken(), sizeof(image));
-						} else if (string_equal(option, "model")) {
-							strncpy(model, tokeniser.getToken(), sizeof(model));
-						} else if (string_equal(option, "blend")) {
+						} else if (option == "image") {
+							image = tokeniser.getToken();
+						} else if (option == "model") {
+							model = tokeniser.getToken();
+						} else if (option == "blend") {
 							blend = GetBlendMode(tokeniser.getToken());
-						} else if (string_equal(option, "size")) {
-							const char *sizeVector2 = tokeniser.getToken();
+						} else if (option == "size") {
+							const std::string sizeVector2 = tokeniser.getToken();
 							char size[64];
 							char *seperator;
-							strncpy(size, sizeVector2, sizeof(size));
+							strncpy(size, sizeVector2.c_str(), sizeof(size));
 							seperator = size;
 							while (seperator != '\0') {
 								seperator++;
@@ -111,48 +106,48 @@ static void ParseParticleScriptFile (Tokeniser& tokeniser, const std::string& fi
 							}
 						}
 					}
-				} else if (string_equal(token, "think")) {
+				} else if (token == "think") {
 					if (!Tokeniser_parseToken(tokeniser, "{")) {
 						globalErrorStream() << "ERROR: expected { in think.\n";
 						return;
 					}
 					for (;;) {
-						const char* option = tokeniser.getToken();
-						if (string_equal(option, "}")) {
+						const std::string option = tokeniser.getToken();
+						if (option == "}") {
 							break;
-						} else if (string_equal(option, "kill")) {
+						} else if (option == "kill") {
 							kill = 1;
 							break;
 						}
 					}
-				} else if (string_equal(token, "run")) {
+				} else if (token == "run") {
 					if (!Tokeniser_parseToken(tokeniser, "{")) {
 						globalErrorStream() << "ERROR: expected { in run.\n";
 						return;
 					}
 					for (;;) {
-						const char* option = tokeniser.getToken();
-						if (string_equal(option, "}")) {
+						const std::string option = tokeniser.getToken();
+						if (option == "}") {
 							break;
-						} else if (string_equal(option, "kill")) {
+						} else if (option == "kill") {
 							kill = 1;
 							break;
 						}
 					}
 				}
-				if (string_equal(token, "}"))
+				if (token == "}")
 					break;
 			}
-			if (!kill && (model[0] != '\0' || image[0] != '\0')) {
+			if (!kill && (model.length() || image.length())) {
 				// do we already have this particle?
-				ParticleDefinition *particleDefinition =
-						new ParticleDefinition(pID, model, image, blend, width, height);
-				if (!g_particleDefinitions.insert(ParticleDefinitionMap::value_type(pID, *particleDefinition)).second)
-					g_warning("Particle '%s' is already in memory, definition in '%s' ignored.\n", pID, filename.c_str());
+				ParticleDefinition *particleDefinition = new ParticleDefinition(particleID, model, image, blend, width,
+						height);
+				if (!g_particleDefinitions.insert(ParticleDefinitionMap::value_type(particleID, *particleDefinition)).second)
+					g_warning("Particle '%s' is already in memory, definition in '%s' ignored.\n", particleID.c_str(),
+							filename.c_str());
 				delete particleDefinition;
 			}
 		}
-		tokeniser.nextLine();
 	}
 }
 

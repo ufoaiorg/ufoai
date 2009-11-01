@@ -167,7 +167,7 @@ void Entity_ungroupSelected ()
 	UndoableCommand undo("ungroupSelectedEntities");
 
 	scene::Path world_path(makeReference(GlobalSceneGraph().root()));
-	world_path.push(makeReference(Map_FindOrInsertWorldspawn(g_map)));
+	world_path.push(makeReference(GlobalRadiant().getMapWorldEntity()));
 
 	scene::Instance &instance = GlobalSelectionSystem().ultimateSelected();
 	scene::Path path = instance.path();
@@ -232,7 +232,7 @@ class EntityGroupSelected: public scene::Graph::Walker
 					NodeSmartReference child(path.top().get());
 					NodeSmartReference parent(path.parent().get());
 
-					if (path.size() >= 3 && parent != Map_FindOrInsertWorldspawn(g_map)) {
+					if (path.size() >= 3 && parent != GlobalRadiant().getMapWorldEntity()) {
 						NodeSmartReference parentparent(path[path.size() - 3].get());
 						Node_getTraversable(parent)->erase(child);
 						Node_getTraversable(group)->insert(child);
@@ -272,7 +272,7 @@ void Entity_groupSelected ()
 	UndoableCommand undo("groupSelectedEntities");
 
 	scene::Path world_path(makeReference(GlobalSceneGraph().root()));
-	world_path.push(makeReference(Map_FindOrInsertWorldspawn(g_map)));
+	world_path.push(makeReference(GlobalRadiant().getMapWorldEntity()));
 
 	EntityFindSelected fse;
 	GlobalSceneGraph().traverse(fse);

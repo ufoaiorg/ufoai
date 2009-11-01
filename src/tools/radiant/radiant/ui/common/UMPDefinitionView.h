@@ -7,27 +7,26 @@ typedef struct _GtkWidget GtkWidget;
 
 namespace ui
 {
-	class MaterialDefinitionView
+	class UMPDefinitionView
 	{
-			// The material which should be previewed
-			std::string _material;
+			// The ump file that should be shown
+			std::string _umpFile;
 
 			// The top-level widget
 			GtkWidget* _vbox;
 
-			GtkWidget* _materialName;
-			GtkWidget* _filename;
+			GtkWidget* _umpFileName;
 
 			// The actual code view
 			gtkutil::SourceView _view;
 
 		public:
-			MaterialDefinitionView ();
+			UMPDefinitionView ();
 
 			// Returns the topmost widget for packing this view into a parent container
 			GtkWidget* getWidget ();
 
-			void setMaterial (const std::string& material);
+			void setUMPFile (const std::string& umpFile);
 
 			void update ();
 

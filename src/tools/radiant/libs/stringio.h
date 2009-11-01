@@ -234,16 +234,17 @@ inline bool string_parse_size (const char* string, std::size_t& i)
 
 #define RETURN_FALSE_IF_FAIL(expression) if(!expression) return false; else
 
-inline void Tokeniser_unexpectedError (Tokeniser& tokeniser, const char* token, const char* expected)
+inline void Tokeniser_unexpectedError (Tokeniser& tokeniser, const std::string& token, const std::string& expected)
 {
 	globalErrorStream() << Unsigned(tokeniser.getLine()) << ":" << Unsigned(tokeniser.getColumn())
-			<< ": parse error at '" << (token != 0 ? token : "#EOF") << "': expected '" << expected << "'\n";
+			<< ": parse error at '" << (token.length() ? token : "#EOF") << "': expected '" << expected.c_str()
+			<< "'\n";
 }
 
 inline bool Tokeniser_getFloat (Tokeniser& tokeniser, float& f)
 {
-	const char* token = tokeniser.getToken();
-	if (token != 0 && string_parse_float(token, f)) {
+	const std::string token = tokeniser.getToken();
+	if (token.length() && string_parse_float(token.c_str(), f)) {
 		return true;
 	}
 	Tokeniser_unexpectedError(tokeniser, token, "#number");
@@ -252,8 +253,8 @@ inline bool Tokeniser_getFloat (Tokeniser& tokeniser, float& f)
 
 inline bool Tokeniser_getDouble (Tokeniser& tokeniser, double& f)
 {
-	const char* token = tokeniser.getToken();
-	if (token != 0 && string_parse_double(token, f)) {
+	const std::string token = tokeniser.getToken();
+	if (token.length() && string_parse_double(token.c_str(), f)) {
 		return true;
 	}
 	Tokeniser_unexpectedError(tokeniser, token, "#number");
@@ -262,8 +263,8 @@ inline bool Tokeniser_getDouble (Tokeniser& tokeniser, double& f)
 
 inline bool Tokeniser_getInteger (Tokeniser& tokeniser, int& i)
 {
-	const char* token = tokeniser.getToken();
-	if (token != 0 && string_parse_int(token, i)) {
+	const std::string token = tokeniser.getToken();
+	if (token.length() && string_parse_int(token.c_str(), i)) {
 		return true;
 	}
 	Tokeniser_unexpectedError(tokeniser, token, "#integer");
@@ -272,8 +273,8 @@ inline bool Tokeniser_getInteger (Tokeniser& tokeniser, int& i)
 
 inline bool Tokeniser_getSize (Tokeniser& tokeniser, std::size_t& i)
 {
-	const char* token = tokeniser.getToken();
-	if (token != 0 && string_parse_size(token, i)) {
+	const std::string token = tokeniser.getToken();
+	if (token.length() && string_parse_size(token.c_str(), i)) {
 		return true;
 	}
 	Tokeniser_unexpectedError(tokeniser, token, "#unsigned-integer");
@@ -282,8 +283,8 @@ inline bool Tokeniser_getSize (Tokeniser& tokeniser, std::size_t& i)
 
 inline bool Tokeniser_parseToken (Tokeniser& tokeniser, const char* expected)
 {
-	const char* token = tokeniser.getToken();
-	if (token != 0 && string_equal(token, expected)) {
+	const std::string token = tokeniser.getToken();
+	if (token.length() && string_equal(token.c_str(), expected)) {
 		return true;
 	}
 	Tokeniser_unexpectedError(tokeniser, token, expected);
@@ -292,11 +293,11 @@ inline bool Tokeniser_parseToken (Tokeniser& tokeniser, const char* expected)
 
 inline bool Tokeniser_nextTokenIsDigit (Tokeniser& tokeniser)
 {
-	const char* token = tokeniser.getToken();
-	if (token == 0) {
+	const std::string token = tokeniser.getToken();
+	if (token.length() == 0) {
 		return false;
 	}
-	char c = *token;
+	char c = *token.c_str();
 	tokeniser.ungetToken();
 	return std::isdigit(c) != 0;
 }
