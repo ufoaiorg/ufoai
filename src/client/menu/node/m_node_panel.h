@@ -42,8 +42,8 @@ typedef enum {
  * @brief extradata for the panel node
  */
 typedef struct {
-	panelLayout_t layout;	/**< The layout the panel is using to render all its children */
-	int margeLayout;		/**< The margin between all children nodes in their y-position of the panel */
+	panelLayout_t layout;	/**< The layout manager the panel is using to render all its children */
+	int layoutMargin;		/**< The margin between all children nodes of the panel */
 } panelExtraData_t;
 
 void MN_RegisterPanelNode(struct nodeBehaviour_s *behaviour);

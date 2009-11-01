@@ -28,7 +28,7 @@ window main
 			pos			"640 170"
 			size		"256 344"
 			layout		LAYOUT_TOP_DOWN_FLOW
-			margeLayout	6
+			layoutMargin	6
 		}
 
 		button button_singleplayer

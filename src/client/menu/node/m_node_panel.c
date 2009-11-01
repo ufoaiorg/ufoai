@@ -260,13 +260,13 @@ static void MN_PanelNodeDoLayout (menuNode_t *node)
 	case LAYOUT_NONE:
 		break;
 	case LAYOUT_TOP_DOWN_FLOW:
-		MN_TopDownFlowLayout(node, EXTRADATA(node).margeLayout);
+		MN_TopDownFlowLayout(node, EXTRADATA(node).layoutMargin);
 		break;
 	case LAYOUT_BORDER:
-		MN_BorderLayout(node, EXTRADATA(node).margeLayout);
+		MN_BorderLayout(node, EXTRADATA(node).layoutMargin);
 		break;
 	case LAYOUT_PACK:
-		MN_PackLayout(node, EXTRADATA(node).margeLayout);
+		MN_PackLayout(node, EXTRADATA(node).layoutMargin);
 		break;
 	default:
 		Com_Printf("MN_PanelNodeDoLayout: layout '%d' unsupported.", EXTRADATA(node).layout);
@@ -298,9 +298,9 @@ static const value_t properties[] = {
 	 */
 	{"layout", V_INT, MN_EXTRADATA_OFFSETOF(panelExtraData_t, layout), MEMBER_SIZEOF(panelExtraData_t, layout)},
 	/**
-	 * Marge use to layout child
+	 * Margin use to layout children (margin between children)
 	 */
-	{"margeLayout", V_INT, MN_EXTRADATA_OFFSETOF(panelExtraData_t, margeLayout), MEMBER_SIZEOF(panelExtraData_t, margeLayout)},
+	{"layoutMargin", V_INT, MN_EXTRADATA_OFFSETOF(panelExtraData_t, layoutMargin), MEMBER_SIZEOF(panelExtraData_t, layoutMargin)},
 
 	{NULL, V_NULL, 0, 0}
 };
