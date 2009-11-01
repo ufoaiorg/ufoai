@@ -80,12 +80,12 @@ class MapUFOAPI: public TypeSystemRef, public MapFormat, public PrimitiveParser
 		}
 		void readGraph (scene::Node& root, TextInputStream& inputStream, EntityCreator& entityTable) const
 		{
-			AutoPtr<Tokeniser> tokeniser(GlobalScripLibModule::getTable().m_pfnNewSimpleTokeniser(inputStream));
+			AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewSimpleTokeniser(inputStream));
 			Map_Read(root, *tokeniser, entityTable, *this);
 		}
 		void writeGraph (scene::Node& root, GraphTraversalFunc traverse, TextOutputStream& outputStream) const
 		{
-			AutoPtr<TokenWriter> writer(GlobalScripLibModule::getTable().m_pfnNewSimpleTokenWriter(outputStream));
+			AutoPtr<TokenWriter> writer(GlobalScriptLibrary().m_pfnNewSimpleTokenWriter(outputStream));
 			Map_Write(root, traverse, *writer);
 		}
 };
