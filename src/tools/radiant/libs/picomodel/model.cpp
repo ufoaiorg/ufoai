@@ -556,7 +556,7 @@ size_t picoInputStreamReam (void* inputStream, unsigned char* buffer, size_t len
  */
 scene::Node& loadPicoModel (const picoModule_t* module, ArchiveFile& file)
 {
-	picoModel_t* model = PicoModuleLoadModelStream(module, file.getName(), &file.getInputStream(), picoInputStreamReam,
+	picoModel_t* model = PicoModuleLoadModelStream(module, file.getName().c_str(), &file.getInputStream(), picoInputStreamReam,
 			file.size(), 0);
 	PicoModelNode* modelNode = new PicoModelNode(model);
 	PicoFreeModel(model);
@@ -570,7 +570,7 @@ scene::Node& loadPicoModel (const picoModule_t* module, ArchiveFile& file)
  */
 model::IModelPtr loadIModel (const picoModule_t* module, ArchiveFile& file)
 {
-	picoModel_t* model = PicoModuleLoadModelStream(module, file.getName(), &file.getInputStream(), picoInputStreamReam,
+	picoModel_t* model = PicoModuleLoadModelStream(module, file.getName().c_str(), &file.getInputStream(), picoInputStreamReam,
 			file.size(), 0);
 	model::IModelPtr modelObj(new model::RenderablePicoModel(model));
 	PicoFreeModel(model);

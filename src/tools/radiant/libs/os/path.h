@@ -104,6 +104,16 @@ namespace os
 # endif
 #endif
 
+/// \brief Returns true if \p path is a directory.
+/// O(n)
+inline bool path_is_directory (const std::string& path)
+{
+	std::size_t length = path.length();
+	if (length > 0)
+		return path[length - 1] == '/';
+	return false;
+}
+
 /// \brief Returns a pointer to the first character of the filename component of \p path.
 /// O(n)
 inline const char* path_get_filename_start (const char* path)

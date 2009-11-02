@@ -131,7 +131,7 @@ static void InitPK3File (ArchiveModules& archiveModules, const std::string& file
 		entry.name = filename;
 
 		entry.is_pakfile = true;
-		entry.archive = table->m_pfnOpenArchive(filename.c_str());
+		entry.archive = table->m_pfnOpenArchive(filename);
 		g_archives.push_back(entry);
 		g_message("  pk3 file: %s\n", filename.c_str());
 	}
@@ -371,7 +371,7 @@ int GetFileCount (const char *filename, int flag)
 ArchiveFile* OpenFile (const std::string& filename)
 {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		ArchiveFile* file = (*i).archive->openFile(filename.c_str());
+		ArchiveFile* file = (*i).archive->openFile(filename);
 		if (file != 0) {
 			return file;
 		}

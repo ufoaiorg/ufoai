@@ -221,7 +221,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/libs/archivelib.h" />
-		<Unit filename="../../src/tools/radiant/libs/archivezip/archive.cpp">
+		<Unit filename="../../src/tools/radiant/libs/archivezip/ZipArchive.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/libs/bytestreamutils.h" />

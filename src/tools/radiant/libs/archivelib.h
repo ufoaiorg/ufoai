@@ -108,8 +108,8 @@ class StoredArchiveFile: public ArchiveFile
 		typedef FileInputStream::size_type size_type;
 		typedef FileInputStream::position_type position_type;
 
-		StoredArchiveFile (const std::string& name, const std::string& archiveName, position_type position, size_type stream_size,
-				size_type file_size) :
+		StoredArchiveFile (const std::string& name, const std::string& archiveName, position_type position,
+				size_type stream_size, size_type file_size) :
 			m_name(name), m_filestream(archiveName), m_substream(m_filestream, position, stream_size),
 					m_size(file_size)
 		{
@@ -125,9 +125,9 @@ class StoredArchiveFile: public ArchiveFile
 		{
 			return m_size;
 		}
-		const char* getName () const
+		const std::string getName () const
 		{
-			return m_name.c_str();
+			return m_name;
 		}
 		InputStream& getInputStream ()
 		{
@@ -142,30 +142,28 @@ class StoredArchiveTextFile: public ArchiveTextFile
 		FileInputStream m_filestream;
 		SubFileInputStream m_substream;
 		BinaryToTextInputStream<SubFileInputStream> m_textStream;
+
 	public:
 		typedef FileInputStream::size_type size_type;
 		typedef FileInputStream::position_type position_type;
 
-		StoredArchiveTextFile (const std::string name, const std::string archiveName, position_type position, size_type stream_size) :
+		/**
+		 * Constructor.
+		 */
+		StoredArchiveTextFile (const std::string& name, const std::string& archiveName, position_type position,
+				size_type stream_size) :
 			m_name(name), m_filestream(archiveName), m_substream(m_filestream, position, stream_size), m_textStream(
 					m_substream)
 		{
 		}
 
-		static StoredArchiveTextFile* create (const char* name, const char* archiveName, position_type position,
-				size_type stream_size)
+		const std::string getName () const
 		{
-			return New<StoredArchiveTextFile> ().scalar(name, archiveName, position, stream_size);
+			return m_name;
 		}
-
 		std::size_t size ()
 		{
 			return m_filestream.size();
-		}
-
-		const char* getName () const
-		{
-			return m_name.c_str();
 		}
 		TextInputStream& getInputStream ()
 		{
@@ -202,9 +200,9 @@ class DirectoryArchiveFile: public ArchiveFile
 		{
 			return m_size;
 		}
-		const char* getName () const
+		const std::string getName () const
 		{
-			return m_name.c_str();
+			return m_name;
 		}
 		InputStream& getInputStream ()
 		{
@@ -232,10 +230,9 @@ class DirectoryArchiveTextFile: public ArchiveTextFile
 		{
 			return m_inputStream.size();
 		}
-
-		const char* getName () const
+		const std::string getName () const
 		{
-			return m_name.c_str();
+			return m_name;
 		}
 		TextInputStream& getInputStream ()
 		{

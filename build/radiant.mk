@@ -173,7 +173,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/libs/sound/SoundManager.cpp \
 	$(RADIANT_BASE)/libs/sound/SoundPlayer.cpp \
 	$(RADIANT_BASE)/libs/shaders/shaders.cpp \
-	$(RADIANT_BASE)/libs/archivezip/archive.cpp \
+	$(RADIANT_BASE)/libs/archivezip/ZipArchive.cpp \
 	$(RADIANT_BASE)/libs/archivedir/archive.cpp \
 	$(RADIANT_BASE)/libs/entity/entity.cpp \
 	$(RADIANT_BASE)/libs/entity/eclassmodel.cpp \

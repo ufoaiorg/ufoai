@@ -20,11 +20,16 @@
  */
 
 #include "iarchive.h"
+#include <string>
 
+#include "archivezip/ZipArchive.h"
 #include "debugging/debugging.h"
 #include "modulesystem/singletonmodule.h"
 
-#include "archivezip/archive.h"
+Archive* OpenArchive (const std::string& name)
+{
+	return new ZipArchive(name);
+}
 
 class ArchiveZipAPI
 {
