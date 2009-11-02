@@ -91,6 +91,7 @@
 #include "gtkmisc.h"
 #include "map/map.h"
 #include "lastused.h"
+#include "ump.h"
 #include "plugin.h"
 #include "plugin/PluginManager.h"
 #include "pluginmenu.h"
@@ -1680,7 +1681,12 @@ static GtkMenuItem* create_map_menu (void)
 		create_menu_item_with_mnemonic(menu_in_menu, _("Generate materials"), "ToolsGenerateMaterials");
 	}
 	create_menu_item_with_mnemonic(menu, _("Edit UMP"), "EditUMPDefinition");
-
+	{
+		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("RMA tiles"));
+		if (g_Layout_enableDetachableMenus.m_value)
+			menu_tearoff(menu_in_menu);
+		UMP_constructMenu(menu_in_menu);
+	}
 	return map_menu_item;
 }
 
@@ -2502,10 +2508,10 @@ void MainFrame_Construct (void)
 	g_strCompilerBinaryWithPath = ufo2mapPath.c_str();
 #endif
 
-	GlobalPreferenceSystem().registerPreference("EnginePath", StdStringImportStringCaller(g_strEnginePath),
-			StdStringExportStringCaller(g_strEnginePath));
-	GlobalPreferenceSystem().registerPreference("CompilerBinary", StdStringImportStringCaller(
-			g_strCompilerBinaryWithPath), StdStringExportStringCaller(g_strCompilerBinaryWithPath));
+	GlobalPreferenceSystem().registerPreference("EnginePath", StringImportStringCaller(g_strEnginePath),
+			StringExportStringCaller(g_strEnginePath));
+	GlobalPreferenceSystem().registerPreference("CompilerBinary", StringImportStringCaller(
+			g_strCompilerBinaryWithPath), StringExportStringCaller(g_strCompilerBinaryWithPath));
 
 	g_Layout_viewStyle.useLatched();
 	g_Layout_enableDetachableMenus.useLatched();

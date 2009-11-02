@@ -20,6 +20,7 @@
  */
 
 #include "AutoPtr.h"
+#include "radiant_i18n.h"
 #include "iscriplib.h"
 #include "ibrush.h"
 #include "ifiletypes.h"
@@ -58,8 +59,8 @@ class MapUFOAPI: public TypeSystemRef, public MapFormat, public PrimitiveParser
 
 		MapUFOAPI ()
 		{
-			GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t("ufo maps", "*.map"));
-			GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t("ufo region", "*.reg"));
+			GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t(_("Maps"), "*.map"));
+			GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t(_("Region"), "*.reg"));
 		}
 		MapFormat* getTable ()
 		{
@@ -71,7 +72,7 @@ class MapUFOAPI: public TypeSystemRef, public MapFormat, public PrimitiveParser
 			if (primitive.length()) {
 				if (primitive == "(") {
 					tokeniser.ungetToken(); // (
-					return GlobalBrushModule::getTable().createBrush();
+					return GlobalBrushCreator().createBrush();
 				}
 			}
 

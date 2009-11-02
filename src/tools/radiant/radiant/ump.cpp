@@ -157,3 +157,9 @@ void UMP_Construct ()
 void UMP_Destroy ()
 {
 }
+
+void UMP_constructMenu (GtkMenu* menu)
+{
+	// TODO:
+}
+

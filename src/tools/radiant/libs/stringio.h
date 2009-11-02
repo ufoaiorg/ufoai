@@ -308,29 +308,17 @@ inline TextOutputStreamType& ostream_write (TextOutputStreamType& outputStream, 
 	return outputStream << '(' << v.x() << ' ' << v.y() << ' ' << v.z() << ')';
 }
 
-inline void CopiedString_importString (CopiedString& self, const char* string)
-{
-	self = string;
-}
-typedef ReferenceCaller1<CopiedString, const char*, CopiedString_importString> CopiedStringImportStringCaller;
-inline void CopiedString_exportString (const CopiedString& self, const StringImportCallback& importer)
-{
-	importer(self.c_str());
-}
-typedef ConstReferenceCaller1<CopiedString, const StringImportCallback&, CopiedString_exportString>
-		CopiedStringExportStringCaller;
-
 inline void StdString_importString (std::string& self, const char* string)
 {
 	self = string;
 }
-typedef ReferenceCaller1<std::string, const char*, StdString_importString> StdStringImportStringCaller;
+typedef ReferenceCaller1<std::string, const char*, StdString_importString> StringImportStringCaller;
 inline void StdString_exportString (const std::string& self, const StringImportCallback& importer)
 {
 	importer(self.c_str());
 }
 typedef ConstReferenceCaller1<std::string, const StringImportCallback&, StdString_exportString>
-		StdStringExportStringCaller;
+		StringExportStringCaller;
 
 inline void Bool_importString (bool& self, const char* string)
 {

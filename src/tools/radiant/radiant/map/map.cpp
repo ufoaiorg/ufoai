@@ -1624,7 +1624,7 @@ void OpenMap (void)
 		Map_RegionOff();
 		Map_Free();
 		if (Map_LoadFile(filename))
-			MRU_AddFile(filename.c_str());
+			MRU_AddFile(filename);
 	}
 }
 
@@ -1641,7 +1641,7 @@ bool Map_SaveAs (void)
 {
 	const std::string filename = map_save(_("Save Map"));
 	if (!filename.empty()) {
-		MRU_AddFile(filename.c_str());
+		MRU_AddFile(filename);
 		Map_Rename(filename.c_str());
 		return Map_Save();
 	}
@@ -1851,8 +1851,8 @@ void Map_Construct (void)
 	GlobalRadiant().commandInsert("RegionSetSelection", FreeCaller<RegionSelected> (), Accelerator('R',
 			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
-	GlobalPreferenceSystem().registerPreference("LastMap", StdStringImportStringCaller(g_strLastMap),
-			StdStringExportStringCaller(g_strLastMap));
+	GlobalPreferenceSystem().registerPreference("LastMap", StringImportStringCaller(g_strLastMap),
+			StringExportStringCaller(g_strLastMap));
 	GlobalPreferenceSystem().registerPreference("LoadLastMap", BoolImportStringCaller(g_bLoadLastMap),
 			BoolExportStringCaller(g_bLoadLastMap));
 
