@@ -160,16 +160,18 @@ class ZipArchive: public Archive
 			istream_read_int32_le(m_istream);
 			unsigned int position = istream_read_int32_le(m_istream);
 
-			Array<char> filename(namelength + 1);
-			m_istream.read(reinterpret_cast<FileInputStream::byte_type*> (filename.data()), namelength);
-			filename[namelength] = '\0';
+			std::string filename(namelength, '\0');
+
+			m_istream.read(
+				reinterpret_cast<FileInputStream::byte_type*>(const_cast<char*>(filename.data())),
+				namelength);
 
 			m_istream.seek(extras + comment, FileInputStream::cur);
 
-			if (g_file_test(filename.data(), (GFileTest) G_FILE_TEST_IS_DIR)) {
-				m_filesystem[filename.data()] = 0;
+			if (g_file_test(filename.c_str(), (GFileTest) G_FILE_TEST_IS_DIR)) {
+				m_filesystem[filename] = 0;
 			} else {
-				ZipFileSystem::entry_type& file = m_filesystem[filename.data()];
+				ZipFileSystem::entry_type& file = m_filesystem[filename];
 				if (!file.is_directory()) {
 					globalOutputStream() << "Warning: zip archive " << makeQuoted(m_name.c_str())
 							<< " contains duplicated file: " << makeQuoted(filename.data()) << "\n";
@@ -228,7 +230,7 @@ class ZipArchive: public Archive
 
 		ArchiveFile* openFile (const std::string& name)
 		{
-			ZipFileSystem::iterator i = m_filesystem.find(name.c_str());
+			ZipFileSystem::iterator i = m_filesystem.find(name);
 			if (i != m_filesystem.end() && !i->second.is_directory()) {
 				ZipRecord* file = i->second.file();
 
@@ -254,7 +256,7 @@ class ZipArchive: public Archive
 		ArchiveTextFile* openTextFile (const std::string& name)
 		{
 			g_message("Searching %s for %s\n", m_name.c_str(), name.c_str());
-			ZipFileSystem::iterator i = m_filesystem.find(name.c_str());
+			ZipFileSystem::iterator i = m_filesystem.find(name);
 			if (i != m_filesystem.end() && !i->second.is_directory()) {
 				ZipRecord* file = i->second.file();
 
@@ -278,7 +280,7 @@ class ZipArchive: public Archive
 		}
 		bool containsFile (const std::string& name)
 		{
-			ZipFileSystem::iterator i = m_filesystem.find(name.c_str());
+			ZipFileSystem::iterator i = m_filesystem.find(name);
 			return i != m_filesystem.end() && !i->second.is_directory();
 		}
 		void forEachFile (VisitorFunc visitor, const std::string& root)

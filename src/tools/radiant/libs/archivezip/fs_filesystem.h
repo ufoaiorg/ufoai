@@ -61,15 +61,15 @@ class GenericFileSystem
 {
 		class Path
 		{
-				CopiedString m_path;
+				std::string m_path;
 				unsigned int m_depth;
 			public:
-				Path (const char* path) :
+				Path (const std::string& path) :
 					m_path(path), m_depth(path_get_depth(c_str()))
 				{
 				}
-				Path (StringRange range) :
-					m_path(range), m_depth(path_get_depth(c_str()))
+				Path (const char* start, std::size_t length) :
+					m_path(start, length), m_depth(path_get_depth(m_path))
 				{
 				}
 				bool operator< (const Path& other) const
@@ -83,6 +83,10 @@ class GenericFileSystem
 				const char* c_str () const
 				{
 					return m_path.c_str();
+				}
+				const std::string& string () const
+				{
+					return m_path;
 				}
 		};
 
@@ -130,13 +134,17 @@ class GenericFileSystem
 		/// O(log n) on average.
 		entry_type& operator[] (const Path& path)
 		{
-			{
-				const char* end = path_remove_directory(path.c_str());
-				while (end[0] != '\0') {
-					Path dir(StringRange(path.c_str(), end));
-					m_entries.insert(value_type(dir, Entry(0)));
-					end = path_remove_directory(end);
-				}
+			const char* start = path.c_str();
+			const char* end = path_remove_directory(path.c_str());
+
+			while (end[0] != '\0') {
+				// greebo: Take the substring from start to end
+				Path dir(start, end - start);
+
+				// And insert it as directory (NULL)
+				m_entries.insert(value_type(dir, Entry(NULL)));
+
+				end = path_remove_directory(end);
 			}
 
 			return m_entries[path];
@@ -148,7 +156,7 @@ class GenericFileSystem
 			return m_entries.find(path);
 		}
 
-		iterator begin (const char* root)
+		iterator begin (const std::string& root)
 		{
 			if (root[0] == '\0') {
 				return m_entries.begin();
@@ -165,7 +173,7 @@ class GenericFileSystem
 		/// Calls \p visitor.file() with the path to each file relative to the filesystem root.
 		/// Calls \p visitor.directory() with the path to each directory relative to the filesystem root.
 		template<typename visitor_type>
-		void traverse (visitor_type visitor, const char* root)
+		void traverse (visitor_type visitor, const std::string& root)
 		{
 			unsigned int start_depth = path_get_depth(root);
 			unsigned int skip_depth = 0;
