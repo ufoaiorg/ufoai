@@ -60,6 +60,7 @@ static struct net_stream *irc_stream;
 
 static const qboolean IRC_INVISIBLE = qtrue;
 static const char IRC_QUIT_MSG[] = "ufoai.sf.net";
+static const char IRC_INVITE_FOR_A_GAME[] = "UFOAIINVITE:";
 
 static irc_channel_t ircChan;
 static irc_channel_t *chan;
@@ -88,10 +89,7 @@ static inline qboolean Irc_IsChannel (const char *target)
 	return (target[0] == '#' || target[0] == '&');
 }
 
-/**
- * @todo This buffer is not safe - missing size check
- */
-static void Irc_ParseName (const char *mask, char *nick, irc_nick_prefix_t *prefix)
+static void Irc_ParseName (const char *mask, char *nick, size_t size, irc_nick_prefix_t *prefix)
 {
 	const char *emph;
 	if (mask[0] == IRC_NICK_PREFIX_OP || mask[0] == IRC_NICK_PREFIX_VOICE) {
@@ -101,12 +99,15 @@ static void Irc_ParseName (const char *mask, char *nick, irc_nick_prefix_t *pref
 		*prefix = IRC_NICK_PREFIX_NONE;
 	emph = strchr(mask, '!');
 	if (emph) {
+		size_t length = emph - mask;
+		if (length >= size - 1)
+			length = size - 1;
 		/* complete hostmask, crop anything after ! */
-		memcpy(nick, mask, emph - mask);
-		nick[emph - mask] = '\0';
+		memcpy(nick, mask, length);
+		nick[length] = '\0';
 	} else
 		/* just the nickname, use as is */
-		strcpy(nick, mask);
+		Q_strncpyz(nick, mask, size);
 }
 
 /*
@@ -290,6 +291,7 @@ static qboolean Irc_Proto_Topic (const char *channel, const char *topic)
 /**
  * @sa Irc_Proto_Enqueue
  * @return qtrue on failure
+ * @sa Irc_Client_CmdPrivmsg
  */
 static qboolean Irc_Proto_Msg (const char *target, const char *text)
 {
@@ -626,7 +628,7 @@ static void Irc_Client_CmdMode (const char *prefix, const char *params, const ch
 {
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
-	Irc_ParseName(prefix, nick, &p);
+	Irc_ParseName(prefix, nick, sizeof(nick), &p);
 	Irc_AppendToBuffer("^B%s sets mode %s", nick, params);
 }
 
@@ -634,7 +636,7 @@ static void Irc_Client_CmdJoin (const char *prefix, const char *params, const ch
 {
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
-	Irc_ParseName(prefix, nick, &p);
+	Irc_ParseName(prefix, nick, sizeof(nick), &p);
 	Irc_AppendToBuffer("^BJoined: %s", nick);
 	Irc_Logic_AddChannelName(chan, p, nick);
 }
@@ -643,7 +645,7 @@ static void Irc_Client_CmdPart (const char *prefix, const char *trailing)
 {
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
-	Irc_ParseName(prefix, nick, &p);
+	Irc_ParseName(prefix, nick, sizeof(nick), &p);
 	Irc_AppendToBuffer("^BLeft: %s (%s)", nick, prefix);
 	Irc_Logic_RemoveChannelName(chan, nick);
 }
@@ -652,7 +654,7 @@ static void Irc_Client_CmdQuit (const char *prefix, const char *params, const ch
 {
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
-	Irc_ParseName(prefix, nick, &p);
+	Irc_ParseName(prefix, nick, sizeof(nick), &p);
 	Irc_AppendToBuffer("^BQuits: %s (%s)", nick, trailing);
 	Irc_Logic_RemoveChannelName(chan, nick);
 }
@@ -661,7 +663,7 @@ static void Irc_Client_CmdKill (const char *prefix, const char *params, const ch
 {
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
-	Irc_ParseName(prefix, nick, &p);
+	Irc_ParseName(prefix, nick, sizeof(nick), &p);
 	Irc_AppendToBuffer("^BKilled: %s (%s)", nick, trailing);
 	Irc_Logic_RemoveChannelName(chan, nick);
 }
@@ -672,7 +674,7 @@ static void Irc_Client_CmdKick (const char *prefix, const char *params, const ch
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
 	const char *channel, *victim;
-	Irc_ParseName(prefix, nick, &p);
+	Irc_ParseName(prefix, nick, sizeof(nick), &p);
 	strcpy(buf, params);
 	channel = strtok(buf, " ");
 	victim = strtok(NULL, " ");
@@ -698,7 +700,7 @@ static void Irc_Client_CmdNick (const char *prefix, const char *params, const ch
 	if (!chan)
 		return;
 
-	Irc_ParseName(prefix, nick, &p);
+	Irc_ParseName(prefix, nick, sizeof(nick), &p);
 	if (!strcmp(irc_nick->string, nick))
 		Cvar_ForceSet("cl_name", trailing);
 	Irc_AppendToBuffer("%s is now known as %s", nick, trailing);
@@ -731,6 +733,8 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			strcpy(response, trailing);
 			response[2] = 'O'; /* PING => PONG */
 			Irc_Proto_Notice(nick, response);
+		} else if (!strncmp(trailing + 1, IRC_INVITE_FOR_A_GAME, strlen(IRC_INVITE_FOR_A_GAME))) {
+			MN_Popup(_("Info"), _("You received a game invitation"));
 		} else if (!strcmp(trailing + 1, "TIME" IRC_CTCP_MARKER_STR)) {
 			const time_t t = time(NULL);
 			char response[IRC_SEND_BUF_SIZE];
@@ -785,7 +789,7 @@ static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
 		space = strstr(pos, " ");
 		if (space)
 			*space = '\0';
-		Irc_ParseName(pos, nick, &p);
+		Irc_ParseName(pos, nick, sizeof(nick), &p);
 		Irc_Logic_AddChannelName(chan, p, nick);
 		if (space)
 			pos = space + 1;
@@ -1600,6 +1604,22 @@ static void Irc_Client_Kick_f (void)
 		Com_Printf("Usage: %s <channel> <nick> [<reason>]\n", Cmd_Argv(0));
 }
 
+static void Irc_Client_Invite_f (void)
+{
+	const irc_user_t *user;
+
+	if (!chan) {
+		MN_PushMenu("irc_popup", NULL);
+		return;
+	}
+
+	user = chan->user;
+	while (user) {
+		Irc_Proto_Msg(user->key, IRC_INVITE_FOR_A_GAME);
+		user = user->next;
+	}
+}
+
 static void Irc_Client_Who_f (void)
 {
 	if (Cmd_Argc() == 2) {
@@ -1704,6 +1724,7 @@ void Irc_Init (void)
 	Cmd_AddCommand("irc_topic", Irc_Client_Topic_f, NULL);
 	Cmd_AddCommand("irc_names", Irc_Client_Names_f, NULL);
 	Cmd_AddCommand("irc_kick", Irc_Client_Kick_f, NULL);
+	Cmd_AddCommand("irc_invite", Irc_Client_Invite_f, "Invite other players for a game");
 
 	Cmd_AddCommand("irc_userlist_click", Irc_UserClick_f, "Menu function for clicking a user from the list");
 	Cmd_AddCommand("irc_userlist_rclick", Irc_UserRightClick_f, "Menu function for clicking a user from the list");

@@ -82,7 +82,7 @@ namespace sidebar
 
 			/** Updates the map info data
 			 */
-			void update (void);
+			void update ();
 	};
 
 	void MapInfo_Construct ();

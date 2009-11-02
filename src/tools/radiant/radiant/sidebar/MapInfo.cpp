@@ -155,7 +155,7 @@ namespace sidebar
 		/** @todo select all of these entities and delete them */
 	}
 
-	void MapInfo::update (void)
+	void MapInfo::update ()
 	{
 		// Initialize fields
 		EntityBreakdown entitymap;
