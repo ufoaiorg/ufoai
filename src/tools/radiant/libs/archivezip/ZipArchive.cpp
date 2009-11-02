@@ -43,19 +43,17 @@ ArchiveFile* ZipArchive::openFile (const std::string& name)
 
 		if (file_header.z_magic != zip_file_header_magic) {
 			globalErrorStream() << "error reading zip file " << m_name.c_str();
-			return ArchiveFilePtr();
+			return (ArchiveFile*) 0;
 		}
 
 		switch (file->m_mode) {
 		case ZipRecord::eStored:
-			return ArchiveFilePtr(new StoredArchiveFile(name, m_name, m_istream.tell(), file->m_stream_size,
-					file->m_file_size));
+			return new StoredArchiveFile(name, m_name, m_istream.tell(), file->m_stream_size, file->m_file_size);
 		case ZipRecord::eDeflated:
-			return ArchiveFilePtr(new DeflatedArchiveFile(name, m_name, m_istream.tell(), file->m_stream_size,
-					file->m_file_size));
+			return new DeflatedArchiveFile(name, m_name, m_istream.tell(), file->m_stream_size, file->m_file_size);
 		}
 	}
-	return ArchiveFilePtr();
+	return (ArchiveFile*) 0;
 }
 
 ArchiveTextFile* ZipArchive::openTextFile (const std::string& name)
@@ -70,7 +68,7 @@ ArchiveTextFile* ZipArchive::openTextFile (const std::string& name)
 
 		if (file_header.z_magic != zip_file_header_magic) {
 			globalErrorStream() << "error reading zip file " << m_name.c_str();
-			return (ArchiveTextFile*)0;
+			return (ArchiveTextFile*) 0;
 		}
 
 		switch (file->m_mode) {
@@ -80,7 +78,7 @@ ArchiveTextFile* ZipArchive::openTextFile (const std::string& name)
 			return new DeflatedArchiveTextFile(name, m_name, m_istream.tell(), file->m_stream_size, file->m_file_size);
 		}
 	}
-	return (ArchiveTextFile*)0;
+	return (ArchiveTextFile*) 0;
 }
 
 bool ZipArchive::containsFile (const std::string& name)

@@ -28,7 +28,6 @@
 #include "itextstream.h"
 #include "idatastream.h"
 
-#include "AutoPtr.h"
 #include <string>
 
 class InputStream;
@@ -50,7 +49,6 @@ class ArchiveFile
 		/// The stream remains valid for the lifetime of the file.
 		virtual InputStream& getInputStream () = 0;
 };
-typedef AutoPtr<ArchiveFile> ArchiveFilePtr;
 
 /// \brief A file opened in text mode.
 class ArchiveTextFile
@@ -87,7 +85,6 @@ class ArchiveTextFile
 		}
 
 };
-typedef AutoPtr<ArchiveTextFile> ArchiveTextFilePtr;
 
 class CustomArchiveVisitor;
 
