@@ -264,6 +264,9 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 					gi.WriteDummyByte(0); /* x */
 					gi.WriteDummyByte(0); /* y */
 					gi.WriteDummyByte(0); /* z */
+				} else if (!stepAmount) {
+					gi.dprintf("Event %i activate and no stepAmount pointer set\n", gi.GetEvent());
+					break;
 				}
 
 				/* the moveinfo stuff is used inside the G_PhysicsStep think function */
