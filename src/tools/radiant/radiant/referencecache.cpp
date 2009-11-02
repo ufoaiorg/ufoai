@@ -426,11 +426,7 @@ struct ModelResource: public Resource
 		}
 		scene::Node* getNode ()
 		{
-			//if(m_model != g_nullModel)
-			{
-				return m_model.get_pointer();
-			}
-			//return 0;
+			return m_model.get_pointer();
 		}
 		void setNode (scene::Node* node)
 		{
