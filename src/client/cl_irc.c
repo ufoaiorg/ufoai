@@ -733,8 +733,6 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			strcpy(response, trailing);
 			response[2] = 'O'; /* PING => PONG */
 			Irc_Proto_Notice(nick, response);
-		} else if (!strncmp(trailing + 1, IRC_INVITE_FOR_A_GAME, strlen(IRC_INVITE_FOR_A_GAME))) {
-			MN_Popup(_("Info"), _("You received a game invitation"));
 		} else if (!strcmp(trailing + 1, "TIME" IRC_CTCP_MARKER_STR)) {
 			const time_t t = time(NULL);
 			char response[IRC_SEND_BUF_SIZE];
@@ -745,7 +743,9 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			Com_Printf("Irc_Client_CmdPrivmsg: Unknown ctcp command: '%s'\n", trailing);
 		}
 	} else {
-		if (!Irc_AppendToBuffer("<%s> %s", nick, trailing)) {
+		if (!strncmp(trailing, IRC_INVITE_FOR_A_GAME, strlen(IRC_INVITE_FOR_A_GAME))) {
+			MN_Popup(_("Info"), _("You received a game invitation"));
+		} else if (!Irc_AppendToBuffer("<%s> %s", nick, trailing)) {
 			/* check whether this is no message to the channel - but to the user */
 			if (params && strcmp(params, irc_defaultChannel->string)) {
 				S_StartLocalSample("misc/lobbyprivmsg", SND_VOLUME_DEFAULT);
