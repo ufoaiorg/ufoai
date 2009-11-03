@@ -1663,34 +1663,34 @@ static void Com_ParseInventory (const char *name, const char **text)
 	}
 
 	/* Special IDs for container. These are also used elsewhere, so be careful. */
-	if (!strncmp(name, "right", 5)) {
+	if (!strcmp(name, "right")) {
 		csi.idRight = id - csi.ids;
 		id->id = csi.idRight;
-	} else if (!strncmp(name, "left", 4)) {
+	} else if (!strcmp(name, "left")) {
 		csi.idLeft = id - csi.ids;
 		id->id = csi.idLeft;
-	} else if (!strncmp(name, "extension", 4)) {
+	} else if (!strcmp(name, "extension")) {
 		csi.idExtension = id - csi.ids;
 		id->id = csi.idExtension;
-	} else if (!strncmp(name, "belt", 4)) {
+	} else if (!strcmp(name, "belt")) {
 		csi.idBelt = id - csi.ids;
 		id->id = csi.idBelt;
-	} else if (!strncmp(name, "holster", 7)) {
+	} else if (!strcmp(name, "holster")) {
 		csi.idHolster = id - csi.ids;
 		id->id = csi.idHolster;
-	} else if (!strncmp(name, "backpack", 8)) {
+	} else if (!strcmp(name, "backpack")) {
 		csi.idBackpack = id - csi.ids;
 		id->id = csi.idBackpack;
-	} else if (!strncmp(name, "armour", 5)) {
+	} else if (!strcmp(name, "armour")) {
 		csi.idArmour = id - csi.ids;
 		id->id = csi.idArmour;
-	} else if (!strncmp(name, "floor", 5)) {
+	} else if (!strcmp(name, "floor")) {
 		csi.idFloor = id - csi.ids;
 		id->id = csi.idFloor;
-	} else if (!strncmp(name, "equip", 5)) {
+	} else if (!strcmp(name, "equip")) {
 		csi.idEquip = id - csi.ids;
 		id->id = csi.idEquip;
-	} else if (!strncmp(name, "headgear", 8)) {
+	} else if (!strcmp(name, "headgear")) {
 		csi.idHeadgear = id - csi.ids;
 		id->id = csi.idHeadgear;
 	}

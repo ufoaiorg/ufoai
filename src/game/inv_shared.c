@@ -601,7 +601,8 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
 		return i->c[container->id];
 
 	if (container->scroll)
-		Sys_Error("Com_SearchInInventory: Scrollable container are not supported by this function.\nUse INV_SearchInScrollableContainer instead!");
+		Sys_Error("Com_SearchInInventory: Scrollable containers (%i:%s) are not supported by this function.\nUse INV_SearchInScrollableContainer instead!",
+				container->id, container->name);
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	for (ic = i->c[container->id]; ic; ic = ic->next)
