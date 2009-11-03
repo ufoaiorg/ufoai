@@ -1469,8 +1469,8 @@ window multiplayer_invite
 	}
 
 	/* store popup data */
-	string ip { invis false }
-	string port { invis false }
+	string ip { invis true }
+	string port { invis true }
 
 	confunc	multiplayer_invite_server_info {
 		*node:root.ip@string = <1>
