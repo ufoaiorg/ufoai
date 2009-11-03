@@ -60,7 +60,7 @@ static struct net_stream *irc_stream;
 
 static const qboolean IRC_INVISIBLE = qtrue;
 static const char IRC_QUIT_MSG[] = "ufoai.sf.net";
-static const char IRC_INVITE_FOR_A_GAME[] = "UFOAIINVITE:";
+static const char IRC_INVITE_FOR_A_GAME[] = "UFOAIINVITE;";
 
 static irc_channel_t ircChan;
 static irc_channel_t *chan;
@@ -711,6 +711,9 @@ static void Irc_Client_CmdNick (const char *prefix, const char *params, const ch
 #define IRC_CTCP_MARKER_CHR '\001'
 #define IRC_CTCP_MARKER_STR "\001"
 
+/**
+ * @sa Irc_Client_Invite_f
+ */
 static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const char *trailing)
 {
 	char nick[MAX_VAR];
@@ -744,6 +747,22 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		}
 	} else {
 		if (!strncmp(trailing, IRC_INVITE_FOR_A_GAME, strlen(IRC_INVITE_FOR_A_GAME))) {
+			char serverIPAndPort[128];
+			char *port;
+			Q_strncpyz(serverIPAndPort, trailing + strlen(IRC_INVITE_FOR_A_GAME), sizeof(serverIPAndPort));
+			/* values are splitted by ; */
+			port = strstr(serverIPAndPort, ";");
+			if (port == NULL) {
+				Com_DPrintf(DEBUG_CLIENT, "Invalid irc invite message received\n");
+				return;
+			}
+
+			/* split ip and port */
+			*port++ = '\0';
+
+			/** @todo get the ip and port into the menu */
+			Com_Printf("Server invitation for %s:%s\n", serverIPAndPort, port);
+
 			MN_PushMenu("multiplayer_invite", NULL);
 		} else if (!Irc_AppendToBuffer("<%s> %s", nick, trailing)) {
 			/* check whether this is no message to the channel - but to the user */
@@ -1604,9 +1623,14 @@ static void Irc_Client_Kick_f (void)
 		Com_Printf("Usage: %s <channel> <nick> [<reason>]\n", Cmd_Argv(0));
 }
 
+/**
+ * @sa Irc_Client_CmdPrivmsg
+ */
 static void Irc_Client_Invite_f (void)
 {
 	const irc_user_t *user;
+	char buf[128];
+	const char *node;
 
 	if (!Com_ServerState()) {
 		Com_Printf("You must have a server running to invite others\n");
@@ -1618,11 +1642,14 @@ static void Irc_Client_Invite_f (void)
 		return;
 	}
 
+	/** @todo get own external ip and the the 127.0.0.1 nonsense (maybe ask the masterserver for this info?) */
+	node = "127.0.0.1";
+	Com_sprintf(buf, sizeof(buf), "%s%s;%s", IRC_INVITE_FOR_A_GAME, node, port->string);
 	user = chan->user;
 	while (user) {
 		/** @todo Maybe somehow check the version of the client with ctcp VERSION and only send
 		 * to those, that are connected with ufoai and have a correct version */
-		Irc_Proto_Msg(user->key, IRC_INVITE_FOR_A_GAME);
+		Irc_Proto_Msg(user->key, buf);
 		user = user->next;
 	}
 }
