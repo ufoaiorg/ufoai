@@ -169,9 +169,15 @@ const char *Sys_GetLocale (void)
 }
 #endif
 
+/**
+ * @brief set/unset environment variables (empty value removes it)
+ */
 int Sys_Setenv (const char *name, const char *value)
 {
-	return setenv(name, value, 1);
+	if (value && value[0] != '\0')
+		return setenv(name, value, 1);
+	else
+		return unsetenv(name);
 }
 
 /**

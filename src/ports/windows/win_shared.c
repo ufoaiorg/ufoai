@@ -277,6 +277,9 @@ void Sys_Sleep (int milliseconds)
 	Sleep(milliseconds);
 }
 
+/**
+ * @brief set/unset environment variables (empty value removes it)
+ */
 int Sys_Setenv (const char *name, const char *value)
 {
 	/* Windows does not have setenv, but its putenv is safe to use.

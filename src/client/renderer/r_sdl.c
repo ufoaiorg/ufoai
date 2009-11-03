@@ -74,6 +74,8 @@ qboolean Rimp_Init (void)
 		SDL_GL_LoadLibrary(r_driver->string);
 	}
 
+	Sys_Setenv("SDL_VIDEO_CENTERED", "1");
+
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
 			Com_Error(ERR_FATAL, "Video SDL_Init failed: %s", SDL_GetError());
@@ -163,6 +165,7 @@ qboolean R_InitGraphics (void)
 	flags = SDL_OPENGL;
 	if (viddef.fullscreen)
 		flags |= SDL_FULLSCREEN;
+	/*flags |= SDL_NOFRAME;*/
 
 	screen = SDL_SetVideoMode(viddef.width, viddef.height, 0, flags);
 	if (!screen) {
