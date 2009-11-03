@@ -1439,3 +1439,58 @@ window chat_popup
 		onClick		{ cmd "mn_pop;mn_push irc;" }
 	}
 }
+
+// ==========================
+// GAME INVITATION
+// ==========================
+window multiplayer_invite
+{
+	{
+		string		"_Game invitation"
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
+		closebutton	true
+		image		ui/popup_alpha_tile
+	}
+
+	button server_info
+	{
+		string		"_Server info"
+		tooltip		"_Show server information"
+		image		ui/button_green_small
+		pos			"30 170"
+		width		"200"
+		font		f_menu
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		onClick		{ cmd "server_info ip port;" }
+	}
+
+	button enter_lobby
+	{
+		string		"_Lobby"
+		tooltip		"_Go into the lobby"
+		image		ui/button_green_small
+		pos			"260 170"
+		width		"200"
+		font		f_menu
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		onClick		{ cmd "mn_pop;mn_push irc;" }
+	}
+
+	string invite_msg
+	{
+		string		"_You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
+		pos			"30 50"
+		longlines	wrap
+		size		"440 60"
+	}
+
+	todo todo1 
+	{
+		string	"Create the menu script, make ip and prot of the server_info call variable"
+		pos		"500 40"
+	}
+}

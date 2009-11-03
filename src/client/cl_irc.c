@@ -744,7 +744,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		}
 	} else {
 		if (!strncmp(trailing, IRC_INVITE_FOR_A_GAME, strlen(IRC_INVITE_FOR_A_GAME))) {
-			MN_Popup(_("Info"), _("You received a game invitation"));
+			MN_PushMenu("multiplayer_invite", NULL);
 		} else if (!Irc_AppendToBuffer("<%s> %s", nick, trailing)) {
 			/* check whether this is no message to the channel - but to the user */
 			if (params && strcmp(params, irc_defaultChannel->string)) {
