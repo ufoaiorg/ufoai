@@ -47,7 +47,7 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 	ic = Com_SearchInInventory(&le->i, &csi.ids[container], x, y);
 
 	if (!ic) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_InvDel: No item found at loction x/y=%i/%i.\n", x, y);
+		Com_DPrintf(DEBUG_CLIENT, "CL_InvDel: No item found at location x/y=%i/%i.\n", x, y);
 		return;
 	}
 

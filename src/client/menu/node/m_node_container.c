@@ -142,8 +142,8 @@ static void MN_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 
 			/* type filter */
 			/** @todo not sure its the right check */
-			isArmour = !strcmp(obj->type, "armour");
-			isAmmo = obj->numWeapons != 0 && !strcmp(obj->type, "ammo");
+			isArmour = INV_IsArmour(obj);
+			isAmmo = obj->numWeapons != 0 && INV_IsAmmo(obj);
 			isWeapon = obj->weapon || obj->isMisc || isArmour;
 
 			if ((filter & CII_WEAPONONLY) && !isWeapon)
@@ -698,7 +698,7 @@ static int MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *h
 		pos[2] = 0;
 
 		if (highlightType) {
-			if (!strcmp(obj->type, "ammo"))
+			if (INV_IsAmmo(obj))
 				isHighlight = INVSH_LoadableInWeapon(obj, highlightType);
 			else
 				isHighlight = INVSH_LoadableInWeapon(highlightType, obj);
@@ -888,7 +888,7 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 		return;
 
 	/* Hack, no preview for armour, we don't want it out of the armour container (and armour container is not visible) */
-	if (!strcmp(previewItem.t->type, "armour"))
+	if (INV_IsArmour(previewItem.t))
 		return;
 
 	MN_GetNodeAbsPos(target, origine);
@@ -1198,10 +1198,10 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 		int px, py;
 		assert(ic->item.t);
 		/* armour can only have one target */
-		if (!strcmp(ic->item.t->type, "armour")) {
+		if (INV_IsArmour(ic->item.t)) {
 			packed = INV_MoveItem(menuInventory, &csi.ids[csi.idArmour], 0, 0, EXTRADATA(node).container, ic);
 		/* ammo or item */
-		} else if (!strcmp(ic->item.t->type, "ammo")) {
+		} else if (INV_IsAmmo(ic->item.t)) {
 			Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
 			packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, EXTRADATA(node).container, ic);
 			if (!packed) {
@@ -1278,7 +1278,7 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 	 * update the actor skin.
 	 * The right way is to compute the source and the target container
 	 * and fire the change event for both */
-	if (!strcmp(ic->item.t->type, "armour")) {
+	if (INV_IsArmour(ic->item.t)) {
 		const menuNode_t *armour = MN_GetNode(node->root, "armour");
 		if (armour && armour->onChange)
 			MN_ExecuteEventActions(armour, armour->onChange);

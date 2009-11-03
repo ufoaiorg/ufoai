@@ -226,7 +226,7 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
 	assert(od);
 
 	/* armour vs item */
-	if (!strcmp(od->type, "armour")) {
+	if (INV_IsArmour(od)) {
 		if (!container->armour && !container->all) {
 			return INV_DOES_NOT_FIT;
 		}
@@ -464,7 +464,7 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
 		return FILTER_S_SECONDARY;
 	if (obj->isMisc)
 		return FILTER_S_MISC;
-	if (!strcmp(obj->type, "armour"))
+	if (INV_IsArmour(obj))
 		return FILTER_S_ARMOUR;
 
 	/** @todo need to implement everything */
@@ -519,7 +519,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 		break;
 
 	case FILTER_S_ARMOUR:
-		return !strcmp(obj->type, "armour");
+		return INV_IsArmour(obj);
 
 	case FILTER_S_MISC:
 		return obj->isMisc;
@@ -870,7 +870,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 
 	/* If non-armour moved to an armour slot then abort.
 	 * Same for non extension items when moved to an extension slot. */
-	if ((to->armour && strcmp(fItem->item.t->type, "armour"))
+	if ((to->armour && !INV_IsArmour(fItem->item.t))
 	 || (to->extension && !fItem->item.t->extension)
 	 || (to->headgear && !fItem->item.t->headgear)) {
 		return IA_NONE;
@@ -1018,7 +1018,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 	}
 
 	if (to->id == CSI->idArmour) {
-		assert(!strcmp(cacheItem.t->type, "armour"));
+		assert(INV_IsArmour(cacheItem.t));
 		return IA_ARMOUR;
 	} else
 		return IA_MOVE;
@@ -1026,7 +1026,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 
 qboolean INVSH_UseableForTeam (const objDef_t *od, const int team)
 {
-	const qboolean isArmour = !strcmp(od->type, "armour");
+	const qboolean isArmour = INV_IsArmour(od);
 	if (isArmour && od->useable != team)
 		return qfalse;
 
@@ -1186,7 +1186,9 @@ void INVSH_PrintContainerToConsole (inventory_t* const i)
 		const invList_t *ic = i->c[container];
 		Com_Printf("Container: %i\n", container);
 		while (ic) {
-			Com_Printf(".. item.t: %i, item.m: %i, item.a: %i, x: %i, y: %i\n", (ic->item.t ? ic->item.t->idx : NONE), (ic->item.m ? ic->item.m->idx : NONE), ic->item.a, ic->x, ic->y);
+			Com_Printf(".. item.t: %i, item.m: %i, item.a: %i, x: %i, y: %i\n",
+					(ic->item.t ? ic->item.t->idx : NONE), (ic->item.m ? ic->item.m->idx : NONE),
+					ic->item.a, ic->x, ic->y);
 			if (ic->item.t)
 				Com_Printf(".... weapon: %s\n", ic->item.t->id);
 			if (ic->item.m)
@@ -1223,7 +1225,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, in
 	}
 #endif
 
-	assert(strcmp(weapon->type, "armour"));
+	assert(!INV_IsArmour(weapon));
 	item.t = weapon;
 
 	/* are we going to allow trying the left hand */
@@ -1897,7 +1899,7 @@ const char *CHRSH_CharGetBody (const character_t * const chr)
 	if (chr->inv.c[CSI->idArmour] && chr->teamDef->race != RACE_ROBOT) {
 		const objDef_t *od = chr->inv.c[CSI->idArmour]->item.t;
 		const char *id = od->armourPath;
-		if (strcmp(od->type, "armour"))
+		if (!INV_IsArmour(od))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
 
 		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s%s/%s", chr->path, id, chr->body);
@@ -1917,7 +1919,7 @@ const char *CHRSH_CharGetHead (const character_t * const chr)
 	if (chr->inv.c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
 		const objDef_t *od = chr->inv.c[CSI->idArmour]->item.t;
 		const char *id = od->armourPath;
-		if (strcmp(od->type, "armour"))
+		if (!INV_IsArmour(od))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
 
 		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s%s/%s", chr->path, id, chr->head);

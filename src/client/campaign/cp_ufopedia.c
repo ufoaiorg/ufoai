@@ -1021,7 +1021,7 @@ static void UP_ResearchedLinkClick_f (void)
 	od = INVSH_GetItemByID(upCurrentTech->provides);
 	assert(od);
 
-	if (!strcmp(od->type, "ammo")) {
+	if (INV_IsAmmo(od)) {
 		const technology_t *t = od->weapons[0]->tech;
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);

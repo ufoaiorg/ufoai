@@ -87,7 +87,7 @@ void INV_ItemDescription (const objDef_t *od)
 	Cvar_Set("mn_item", od->id);
 
 	count = 0;
-	if (!strcmp(od->type, "ammo")) {
+	if (INV_IsAmmo(od)) {
 		/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons
 		 * we are counting the number of weapons that are usable with this ammo */
 		for (i = 0; i < od->numWeapons; i++)
@@ -141,14 +141,14 @@ void INV_ItemDescription (const objDef_t *od)
 	/* set description text if item as been researched or one of its ammo/weapon has been researched */
 	if (count > 0 || GAME_ItemIsUseable(od)) {
 		*itemText = '\0';
-		if (!strcmp(od->type, "armour")) {
+		if (INV_IsArmour(od)) {
 			Q_strcat(itemText, _("Type:\tProtection:\n"), sizeof(itemText));
 			for (i = 0; i < csi.numDTs; i++) {
 				if (!csi.dts[i].showInMenu)
 					continue;
 				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(itemText));
 			}
-		} else if (!strcmp(od->type, "ammo")) {
+		} else if (INV_IsAmmo(od)) {
 			/** @todo is there ammo with no firedefs? */
 			if (od->numFiredefs[itemIndex] > 0) {
 				const fireDef_t *fd;
