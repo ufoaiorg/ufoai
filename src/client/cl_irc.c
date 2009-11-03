@@ -1608,6 +1608,11 @@ static void Irc_Client_Invite_f (void)
 {
 	const irc_user_t *user;
 
+	if (!Com_ServerState()) {
+		Com_Printf("You must have a server running to invite others\n");
+		return;
+	}
+
 	if (!chan) {
 		MN_PushMenu("irc_popup", NULL);
 		return;
@@ -1615,6 +1620,8 @@ static void Irc_Client_Invite_f (void)
 
 	user = chan->user;
 	while (user) {
+		/** @todo Maybe somehow check the version of the client with ctcp VERSION and only send
+		 * to those, that are connected with ufoai and have a correct version */
 		Irc_Proto_Msg(user->key, IRC_INVITE_FOR_A_GAME);
 		user = user->next;
 	}

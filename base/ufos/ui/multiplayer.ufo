@@ -1312,7 +1312,7 @@ window multiplayer_wait
 	}
 	pic mappic
 	{
-		pos			"93 121"
+		pos			"93 75"
 		size		"331 237"
 		image		*cvar:mn_mappicbig
 	}
@@ -1330,6 +1330,20 @@ window multiplayer_wait
 		onClick		{ cmd "mn_push irc;" }
 	}
 	
+	button bt_invite
+	{
+		// @todo only in inet mode - not in lan mode
+		string		"_Invite others"
+		tooltip		"_Invite players that are online in the lobby"
+		image		ui/button_green_small
+		width		"200"
+		pos 		"297 373"
+		font		f_menu
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		onClick		{ cmd "irc_invite;" }
+	}
+
 	button bt_force
 	{
 		visiblewhen "*cvar:mp_wait_init_show_force == 1"
@@ -1337,13 +1351,13 @@ window multiplayer_wait
 		tooltip		"_Start the game even if not all teams have joined"
 		image		ui/button_green_small
 		width		"200"
-		pos 		"297 373"
+		pos 		"297 330"
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
 		onClick		{ cmd "sv startgame;" }
 	}
-
+	
 	func onEvent
 	{
 		cmd		"mp_wait_init;"
