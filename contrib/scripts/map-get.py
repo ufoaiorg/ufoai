@@ -13,6 +13,9 @@ import logging # TODO: use me
 from logging import debug, error, info
 import optparse
 
+# path where exists ufo binary
+UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../..')
+
 UFO2MAP = 'ufo2map'
 if os.name == 'nt':
     UFO2MAP+= '.exe'
@@ -134,28 +137,32 @@ def upgrade(arg):
             sys.exit(3)
     del maps['ufo2map']
 
+	print 'INFO write files into ' + UFOAI_ROOT
+
     updated = missmatch = 0
-	mapnames = maps.keys()
-	mapnames.sort()
+    mapnames = maps.keys()
+    mapnames.sort()
     for i in mapnames:
         map_name = i[:-4] + ".map"
-        if not os.path.exists(map_name):
+        mappath = UFOAI_ROOT + '/' + map_name
+
+        if not os.path.exists(mappath):
             print '%s not found' % map_name
             continue
 
 
-        if md5sum(map_name) != maps[i][1]:
+        if md5sum(mappath) != maps[i][1]:
             print '%s version mismatch' % i
             missmatch+= 1
             continue
 
-        if not os.path.exists(i) or md5sum(i) != maps[i][0]:
+        if not os.path.exists(mappath) or md5sum(mappath) != maps[i][0]:
             fd, name = mkstemp()
             os.write(fd, download('%s/%s.gz' %(URI, i)))
             os.close(fd)
             data = GzipFile(name, 'r').read()
             os.unlink(name)
-            open(i, 'w').write(data)
+            open(mappath, 'w').write(data)
             print '%s - updated' % i
             updated+= 1
         else:
