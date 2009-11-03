@@ -760,8 +760,8 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			/* split ip and port */
 			*port++ = '\0';
 
-			/** @todo get the ip and port into the menu */
-			Com_Printf("Server invitation for %s:%s\n", serverIPAndPort, port);
+			/** get the ip and port into the menu */
+			MN_ExecuteConfunc("multiplayer_invite_server_info %s %s", serverIPAndPort, port);
 
 			MN_PushMenu("multiplayer_invite", NULL);
 		} else if (!Irc_AppendToBuffer("<%s> %s", nick, trailing)) {

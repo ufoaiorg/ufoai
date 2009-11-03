@@ -1468,6 +1468,16 @@ window multiplayer_invite
 		image		ui/popup_alpha_tile
 	}
 
+	/* store popup data */
+	string ip { invis false }
+	string port { invis false }
+
+	confunc	multiplayer_invite_server_info {
+		*node:root.ip@string = <1>
+		*node:root.port@string = <2>
+		cmd "echo \"What u want to do with <node:root.ip@string> and <node:root.port@string>\""
+	}
+
 	button server_info
 	{
 		string		"_Server info"
@@ -1478,7 +1488,7 @@ window multiplayer_invite
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		onClick		{ cmd "server_info ip port;" }
+		onClick		{ cmd "server_info <node:root.ip@string>  <node:root.port@string>;" }
 	}
 
 	button enter_lobby
