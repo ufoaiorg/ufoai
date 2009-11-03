@@ -5,10 +5,16 @@
 # aircraft -> luftfartøj
 # alien -> rumvæsen (aliens -> rumvæsener)
 # autopsy -> obduktion
-# flashbang -> blitzgranat
+# flashbang -> blitzgranat (også overvejet bedøvelsesgranat)
+# flechette -> flechette (er der et dansk navn?)
 # hire -> ansæt
 # homebase -> hovedbase
+# medic -> sygehjælper
 # pod -> holder (til våben/ammunition)
+# railgun -> railgun (er der et dansk navn?)
+# recover -> bjærge
+# recovery -> bjærgning
+# slot -> holder
 # UFO -> ufo
 # workshop -> værksted
 # ETA -> AAT  (estimated time of arrival, anslået ankomsttidspunkt)
@@ -18,7 +24,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-17 11:53+0200\n"
-"PO-Revision-Date: 2009-08-29 12:38+0100\n"
+"PO-Revision-Date: 2009-10-21 12:38+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -59,9 +65,8 @@ msgid "Construction"
 msgstr "Bygning"
 
 #: ../base/maps/desert.ump:53
-#, fuzzy
 msgid "Crashed Harvester"
-msgstr "Høstmaskine U"
+msgstr "Nedstyrtet høstmaskine"
 
 #: ../base/maps/druglord.ump:67
 msgid "Druglord"
@@ -212,12 +217,11 @@ msgstr "Herakles D"
 
 #: ../base/ufos/aircraftmanagement.ufo:166
 msgid "Raptor-class Combat Transport"
-msgstr ""
+msgstr "Personeltransport af Raptorklasse"
 
 #: ../base/ufos/aircraftmanagement.ufo:167
-#, fuzzy
 msgid "Raptor"
-msgstr "Kapt"
+msgstr "Raptor"
 
 #: ../base/ufos/aircraftmanagement.ufo:215
 msgid "Stiletto-class Interceptor"
@@ -229,7 +233,7 @@ msgstr "Stilet I"
 
 #: ../base/ufos/aircraftmanagement.ufo:260
 msgid "Saracen-class Interceptor"
-msgstr "Kortrækkende jagerfly af Saracenklasse"
+msgstr "Langtrækkende jagerfly af Saracenklasse"
 
 #: ../base/ufos/aircraftmanagement.ufo:261
 msgid "Saracen I"
@@ -628,11 +632,11 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:15
 msgid "Stockholm"
-msgstr ""
+msgstr "Stockholm"
 
 #: ../base/ufos/cities.ufo:21
 msgid "Amsterdam"
-msgstr ""
+msgstr "Amsterdam"
 
 #: ../base/ufos/cities.ufo:27
 msgid "Athens"
@@ -643,9 +647,8 @@ msgid "Bangkok"
 msgstr "Bangkok"
 
 #: ../base/ufos/cities.ufo:39
-#, fuzzy
 msgid "Beijing"
-msgstr "Bygninger"
+msgstr "Beijing"
 
 #: ../base/ufos/cities.ufo:45
 msgid "Berlin"
@@ -653,64 +656,59 @@ msgstr "Berlin"
 
 #: ../base/ufos/cities.ufo:51
 msgid "Mumbai"
-msgstr ""
+msgstr "Mumbai"
 
 #: ../base/ufos/cities.ufo:57
 msgid "Cape Town"
 msgstr "Kapstaden"
 
 #: ../base/ufos/cities.ufo:63
-#, fuzzy
 msgid "Cairo"
-msgstr "Kors"
+msgstr "Kairo"
 
 #: ../base/ufos/cities.ufo:69
 msgid "Cayenne"
 msgstr "Cayenne"
 
 #: ../base/ufos/cities.ufo:75
-#, fuzzy
 msgid "Dakar"
-msgstr "Radar"
+msgstr "Dakar"
 
 #: ../base/ufos/cities.ufo:81
 msgid "Mexico City"
-msgstr ""
+msgstr "Mexico City"
 
 #: ../base/ufos/cities.ufo:87
 msgid "Novosibirsk"
-msgstr ""
+msgstr "Novosibirsk"
 
 #: ../base/ufos/cities.ufo:93
-#, fuzzy
 msgid "Paris"
-msgstr "Pause"
+msgstr "Paris"
 
 #: ../base/ufos/cities.ufo:99
-#, fuzzy
 msgid "Sacramento"
-msgstr "Saracen I"
+msgstr "Sacramento"
 
 #: ../base/ufos/cities.ufo:105
 msgid "Santiago"
-msgstr ""
+msgstr "Santiago"
 
 #: ../base/ufos/cities.ufo:111
 msgid "Sydney"
 msgstr "Sydney"
 
 #: ../base/ufos/cities.ufo:117
-#, fuzzy
 msgid "Teheran"
-msgstr "Tolerant"
+msgstr "Teheran"
 
 #: ../base/ufos/cities.ufo:123
 msgid "Tokyo"
-msgstr ""
+msgstr "Tokyo"
 
 #: ../base/ufos/cities.ufo:129
 msgid "Washington D.C."
-msgstr ""
+msgstr "Washington D.C."
 
 #: ../base/ufos/cities.ufo:135
 msgid "Wellington"
@@ -718,7 +716,7 @@ msgstr "Wellington"
 
 #: ../base/ufos/cities.ufo:141
 msgid "Wichita"
-msgstr ""
+msgstr "Wichita"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
@@ -909,7 +907,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:57 ../base/ufos/events.ufo:68
 msgid "Recovery Report -- %s"
-msgstr "Indbringningsrapport -- %s"
+msgstr "Bjærgningsrapport -- %s"
 
 #: ../base/ufos/events.ufo:58
 msgid "mail_alien_ufo_crashed"
@@ -1335,9 +1333,8 @@ msgid "An industrial compound."
 msgstr "Et industrikompleks."
 
 #: ../base/ufos/maps.ufo:600
-#, fuzzy
 msgid "Cemetery terror mission."
-msgstr "Ødemarksterrormission."
+msgstr "Kirkegårdsterrormission."
 
 #: ../base/ufos/maps.ufo:651
 msgid "A river runs through this piece of jungle."
@@ -1446,7 +1443,7 @@ msgstr "Et bydistrikt i en orientalsk region."
 
 #: ../base/ufos/maps.ufo:2189
 msgid "Underground pipe construction site."
-msgstr ""
+msgstr "Underjordisk rørkonstruktionsplads."
 
 #: ../base/ufos/maps.ufo:2236
 msgid "A subway station in a suburban part of town."
@@ -1485,14 +1482,12 @@ msgid "A luxurious vacation resort."
 msgstr "Et luksuriøst feriested."
 
 #: ../base/ufos/maps.ufo:2711
-#, fuzzy
 msgid "A suburb that has been visited by UFO."
-msgstr "En afrikansk forstad som har haft besøg af en ufo."
+msgstr "En forstad som har haft besøg af en ufo."
 
 #: ../base/ufos/maps.ufo:2763
-#, fuzzy
 msgid "A suburb that has received a visit from a Harvester."
-msgstr "En afrikansk forstad som har haft besøg af en ufo-høstmaskine."
+msgstr "En forstad som har haft besøg af en ufo-høstmaskine."
 
 #: ../base/ufos/maps.ufo:2814
 msgid "An alien Harvester has crashed in the wastelands."
@@ -5369,73 +5364,16 @@ msgid "drop_herakles_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:3376
-#, fuzzy
 msgid "drop_herakles_pre_txt"
 msgstr ""
-"Kommandør, vores svære laserprogram har været en succes. Vi har fået udviklet en prototype og er klar til at gå i produktion på din ordre.\n"
-"\n"
-"Som lovet er den svære laser en revolution i vores svære våbenarsenal. I hænderne på en kvalificeret soldat, kan den yde langtrækkende bølgeild som er både langt mere præcis end konventionelle svære våben og langt mere kraftfulde end andre af vores laserdesign til infanteri. Vi i ingeniørdivisionen har ingen tvivl om at den vil have en vital rolle igennem krigen.\n"
-"\n"
-"Den svære laser har dog også sine ulemper. For det første er den meget stor og meget tung og kræver derfor en stærk soldat for at den kan affyres effektivt. Den ofrer ikke sin præcision på trods af sin størrelse, men den er mindre kvik i sin affyring og reagerer langsommere end vi havde håbet, og dens ammunitionsforbrug er rystende. Den kan tykke sig igennem et helt deuterium-fluoride patronhylster på mindre end 30 sekunder fortsat skydning. Dette kræver et stort antal magasiner i reserve og den svære laser er ikke specielt hurtigt til at genlade.\n"
-"\n"
-"En anden svaghed er at den svære laser ikke kan skyde igennem røg, gas eller ild. Alle vores lasere har denne ulempe; røg vil hurtigt gøre strålen til harmløs lys, så vi må være forsigtige med vores brug af røg- og brandvåben. Der skal også tages hensyn til at ingen forbipasserende eller FALANKS-tropper går i vejen for den usynlige stråle. Selv korte perioder i en sådan stråle vil skære igennem hud og knogler. Ramt i øjet vil det føre til permant blindhed. Vi har talt med vores træningslærere og befalingsmænd om dette og har indskærpet de sikkerhedsprocedurer der er i vores feltmanual, men det vil ikke skade tropperne at høre det igen fra dig, kommandør.\n"
-"\n"
-"Robotter eller armeret rumvæsener kan måske overleve en stråle i kort tid, selv fra en svær laser, før deres skudsikre veste brækker sammen. Det anbefaldes at møde disse med flere soldater på en gang og koncentrere ilden for så hurtigt som muligt at få dem dræbt.\n"
-"\n"
-"Det anbefales også at du erstatter alle vores konventionelle svære våben med svære lasere. Vi har brug for en god balance i våbenarsenalet for at spille på vores styrker og svaghederne hos rumvæsenerne. Et varieret arsenal er et sundt arsenal, og man kan ikke forsvare sig nemt mod et sådant.Vi har brug for at have mindst en D-F-patron til rådighed på alle tidspunkter for at kunne lade og bruge den svære laser.\n"
-"\n"
-"--Kommandør Navarre"
 
 #: ../base/ufos/research.ufo:3410
-#, fuzzy
 msgid "drop_raptor_txt"
 msgstr ""
-"Vurdering af luftfartøj - Transportfly af Ildfugleklasse\n"
-"\n"
-"KLASSIFIKATIONSNIVEAU SORT\n"
-"\n"
-"FALANKS-rumvæsenudrykningsenhed\n"
-"\n"
-"Teknisk dokument: Sikkerhedsniveau Sigma - kun for kommandørens øjne\n"
-"\n"
-"Arkiveret: 17. marts 2084\n"
-"\n"
-"Af: Kommandør Paul Navarre, F&U: Ingeniørdivisionen, FALANKS, Atlanterhavskommandoen\n"
-"\n"
-"\n"
-"\n"
-"Oversigt\n"
-"\n"
-"Kommandør, jeg har været igennem disse gamle filer før dig, og jeg har besluttet at erstatte dem med min egen vurdering og konklusion vedrørende vores brug af transportfly. Beklager hvis jeg er gået over mit mandat, men de gamle transportfly anvendt af FALANKS lever bare ikke op til standarden i dag. Ingen af dem kom ud over prototypen, da de var nye. Der er kun to overlevende eksemplarer, og begge er blevet efterladt uden service i regeringslagre i de sidste 60 år og er ikke værd at hente ud fra disse lagre. Vi har arvet et stort rod vedrørende udstyr, jeg kan end ikke finde halvdelen af det udstyr, som skulle være klar til os. Jeg gør mit bedste for at finde bedre alternativer for det udstyr, som bare ikke er godt nok til opgaven.\n"
-"\n"
-"Det eneste heldige i den her sag om transportluftfartøjerne er, at jeg kunne overtale vores FN-repræsentant til at øremærke nogle midler til et nyt luftfartøj, og jeg tror du vil kunne lide det.\n"
-"\n"
-"Galeothildfuglen med VSOL (Vertikal start og landing) er det bedste luftfartøj vi kan håbe på at få i drift som transportluftfartøj. Det blev designet som et lastfly, men er hurtigt blevet ændret af militære producenter til et fartøj der kan medtage tropper. Det er siden blevet et populært alternativ til helikoptere både militært og civilt på grund af sine fire HM-5600 pulsdetonationsmotorer, som giver ildfuglen sin VSOL og god brændstofeffektivitet med langt færre bevægende dele end nogen helikoptermotor. Dette øger driftsikkerheden og muliggør et langt hurtigere luftfartøj, hovedsagelig på grund af manglen på rotorblade. Motorerne i HM-5600 er stadig meget tørstige og det højt specialiserede flybrændstof kan være for dyrt til civile formål.\n"
-"\n"
-"Ildfuglens normale hastighed ligger på machtal 0,74. Med en maksimal fart på 1,03 kan den lige komme op på lydens hastighed, men det medfører stor belastning på stellet og bør undgås med undtagelse af nødstilfælde. Fartøjet har et våbenmodul i spidsen, som kan bruges af anti-luft-våben som flykanoner eller missiler. Den kan også medtage ekstra udstyr som kan forbedre dens flyveegenskaber og kampevner. Der er plads til op til 8 soldater og et lastrum som kan medtage små køretøjer til brug på slagmarken.\n"
-"\n"
-"Der er intet andet i luften som er så velegnet til vores formål som Ildfuglen. Den er hurtigere end nogen helikopter, bedre til at manøvrere end noget andet fastvingefly, og den kan svare hurtigt og effektivt imod trusler over hele verden.\n"
-"\n"
-"Ildfuglen kræver 1 stor hangar til opbevaring, vedligeholdelse og udgangspunkt for operationer. Det har 1 modul til våben af mellemstyrke placeret i næsen.\n"
-"\n"
-"\n"
-"Anbefalet doktrin\n"
-"\n"
-"Transportflyet vil stå for transporten af vores tropper til forskellige steder i verden, dette for at kunne svare igen på angreb fra rumvæsener på jorden eller for at rydde områder hvor ufoer er styrtet ned. Den bør sendes af sted umiddelbart efter at der er registrert rumvæsenaktivitet i et område og for at indsamle nedstyrtede ufoer.\n"
-"\n"
-"Så snart et område er blevet ryddet for levende rumvæsener, vil de stærkt sårede soldater øjeblikkelig blive sendt til medicinsk behandling. De resterende tropper vil sikre området indtil et opsamlingshold fra FALANKS tager over og sikrer indsamling af alt rumvæsenudstyr og overfører det til vores baser. Dette er vigtigt da forsøg på indsamling af udstyr efterladt på slagmarken kan være et problem i tæt befolket regioner. Vi kan ikke tillade, at vi mister viden om værdifuld rumvæsenteknologi fordi nogle idioter har behov for en souvenir.\n"
-"\n"
-"Selvom armeret, bør et transportfly af Ildfugleklassen aldrig kæmpe mod deciderede kampfly, og det bør aldrig udsendes som det eneste mod en ufoobservation.\n"
-"\n"
-"\n"
-"Tilføjelse\n"
-"\n"
-"Ingen."
 
 #: ../base/ufos/research.ufo:3413
-#, fuzzy
 msgid "drop_raptor_pre_txt"
-msgstr "Ingen information om tidligere forskning tilgængelig"
+msgstr ""
 
 #: ../base/ufos/research.ufo:3447
 msgid "inter_stiletto_txt"
@@ -7157,7 +7095,6 @@ msgid "When using Reaction Fire, remember that you can set which fire mode to us
 msgstr "Når du anvender reaktionsild, så husk at du kan vælge mellem forskellige ildinstillinger i ildindstillingspanelet."
 
 #: ../base/ufos/tips.ufo:10
-#, fuzzy
 msgid "Remember to give your soldiers a varying array of weapons; you never know when a certain weapon may come in handy."
 msgstr "Husk at give dine soldater forskellige våben. Du ved aldrig hvornår et bestemt våben er brugbart."
 
@@ -7170,7 +7107,6 @@ msgid "Don't forget to equip your soldiers with armour."
 msgstr "Glem ikke at udstyre dine soldater med veste."
 
 #: ../base/ufos/tips.ufo:13
-#, fuzzy
 msgid "You can use a flashbang to deactivate your opponents' Reaction Fire mode or to take all of his remaining Time Units (TUs) from his next round."
 msgstr "Du kan anvende en bedøvelsesgranat til at deaktivere din modstanders reaktionsild eller fjerne alle hans tilbageværende tidsenheder (TE) for dennes næste runde."
 
@@ -7179,35 +7115,30 @@ msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members 
 msgstr "I flerspiller kan du snakke ved at trykke [k] (til alle), [l] (kun holdmedlemmer), eller ved at trykke på snakknapperne på HUD."
 
 #: ../base/ufos/tips.ufo:15
-#, fuzzy
 msgid "To make a soldier face a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
-msgstr "For at få en soldat til at kigge i en bestemt retning (=vende ham/hende) så placer markøren og tryk på den højre museknap eller [Ctrl] tasten. Dette koster tidsenheder (TE)."
+msgstr "For at få en soldat til at kigge i en bestemt retning (=vende ham/hende) så placer markøren og tryk på den højre museknap eller tasten [Ctrl]. Dette koster tidsenheder (TE)."
 
 #: ../base/ufos/tips.ufo:16
 msgid "Use [Backspace] key to open doors."
-msgstr ""
+msgstr "Brug tasten [Slet tilbage] for at åbne døre."
 
 #: ../base/ufos/tips.ufo:17
-#, fuzzy
 msgid "Be sure to hire as many scientists as you can. The better you know your enemy, the easier he is to defeat."
 msgstr "Husk at ansætte så mange videnskabsmænd som du kan. Jo hurtigere du kender din fjende, jo nemmere er han at besejre."
 
 #: ../base/ufos/tips.ufo:18
-#, fuzzy
 msgid "Be sure to hire as many workers as you can. The faster your production lines, the sooner you can access better equipment and resupplies."
 msgstr "Husk at ansætte så mange arbejdere som du kan. Jo hurtigere din produktion går, jo hurtigere kan du få adgang til bedre udstyr og nye forsyninger."
 
 #: ../base/ufos/tips.ufo:19
-#, fuzzy
 msgid "Be sure to visit our website, http://ufoai.sourceforge.net/, and drop by our community channel, #ufoai on irc.freenode.net."
-msgstr "Husk at besøge vores internetside http://ufoai.sf.net/ og kig ind i vores fællesskabskanal, #ufoai on irc.freenode.net."
+msgstr "Husk at besøge vores internetside http://ufoai.sourceforge.net/, og kig ind i vores fællesskabskanal, #ufoai on irc.freenode.net."
 
 #: ../base/ufos/tips.ufo:20
 msgid "Remember that you need an active Command Centre in order to launch interceptors."
 msgstr "Husk at du skal bruge en aktiv kommandocentral for at sende kortrækkende jagerfly afsted."
 
 #: ../base/ufos/tips.ufo:21
-#, fuzzy
 msgid "Never pass up an opportunity to capture a live alien, even one of a species you have already researched."
 msgstr "Lad aldrig chancen for at fange et levende rumvæsen gå din næse forbi, selv en som du allerede har forsket på."
 
@@ -7216,9 +7147,8 @@ msgid "Watch your back! Your soldiers can only see enemies in an arc in front of
 msgstr "Hold øje med ryggen! Dine soldater kan kun se fjender i en bue foran dem."
 
 #: ../base/ufos/tips.ufo:23
-#, fuzzy
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
-msgstr "Byg et værksted og ufo-hangarer for at kunne skille ufoer ad."
+msgstr "Byg et værksted og væk fra basen ufo-hangarer for at kunne skille ufoer ad."
 
 #: ../base/ufos/tips.ufo:24
 msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
@@ -7234,35 +7164,31 @@ msgstr "Anvend [c] til at knæle. Knælende soldater gør nogle våben meget mer
 
 #: ../base/ufos/tips.ufo:27
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
-msgstr "Hvis du har få tidenheder (TE) tilbage og har farlige fjender tæt på, kan en bedøvelsesgranat være den bedste mulighed på kort sigt. 2 TE (ud af oppakning) + 12 TE (kast) = 14 TE."
+msgstr "Hvis du har få tidenheder (TE) tilbage og har farlige fjender tæt på, kan en blitzgranat være den bedste mulighed på kort sigt. 2 TE (ud af oppakning) + 12 TE (kast) = 14 TE."
 
 #: ../base/ufos/tips.ufo:28
 msgid "Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
 msgstr "Brug personsynsfeltet (skift med [v]) for at undersøge om den et felt flytning mod venstre vil gøre det skud-igennem-bygningen muligt."
 
 #: ../base/ufos/tips.ufo:29
-#, fuzzy
 msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits as a medic."
-msgstr "Anvend en hurtig soldat med pistoler, nærkampsvåben til en hånd, granater, bedøvelsesgranater og førstehjælpskasser."
+msgstr "Brug en hurtig soldat med pistoler, nærkampsvåben til en hånd, granater, blitzgranater og førstehjælpskasser som sygehjælper."
 
 #: ../base/ufos/tips.ufo:30
-#, fuzzy
 msgid "Building a hospital allows you to heal your soldiers faster for their next mission."
-msgstr "Byg et hospital for hurtigere at kunne behandle dine soldater før deres næste mission."
+msgstr "Ved at bygge et hospital kan du behandle dine soldater hurtigere, så de er klar til deres næste mission."
 
 #: ../base/ufos/tips.ufo:31
-#, fuzzy
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
-msgstr "Plasmagranater gør mest skade, men fragmentationsgranater kan være brugbare, da de kan kastes hurtigere."
+msgstr "Plasmagranater gør mest skade, mens fragmentationsgranater har en lidt længere rækkevidde."
 
 #: ../base/ufos/tips.ufo:32
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr "Brug [x] til at skifte mellem reaktionsindstillingerne: ingen, et skud, flere skud."
 
 #: ../base/ufos/tips.ufo:33
-#, fuzzy
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
-msgstr "Hold dine soldater tæt, så de kan støtte hinanden (helbred hinanden, skyd når en løber tør for tidsenheder (TE)). Hold en væg imellem dem når du afslutter din runde, så de ikke kan dræbes med én granat."
+msgstr "Hold dine soldater tæt, så de kan støtte hinanden (helbred hinanden, skyd når en løber tør for tidsenheder (TE)). Hold en væg imellem dem når du afslutter din runde, så de ikke kan dræbes med en enkelt granat."
 
 #: ../base/ufos/tips.ufo:34
 msgid "Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
@@ -7301,7 +7227,6 @@ msgid "You can use [space] to cycle between all geoscape items."
 msgstr "Du kan anvende [mellemrum] for at skifte mellem geoscape udstyr."
 
 #: ../base/ufos/tips.ufo:43
-#, fuzzy
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel, the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
 msgstr "Du kan også øge/formindske tiden på overbliksbilledet ved at anvende musehjulet på tidsknapperne, eller ved at trykke [-], [+/=]. Alternativt kan du trykke [n] og [m]. [Slet tilbage] vil stoppe tiden."
 
@@ -7318,17 +7243,14 @@ msgid "Your attacked aircraft may flee to one of your bases to avoid being destr
 msgstr "Dit angrebet luftfartøj kan flygte til en af dine baser for at undgå nedskydning."
 
 #: ../base/ufos/tips.ufo:47
-#, fuzzy
 msgid "Build an alien containment to be able to imprison live aliens."
 msgstr "Byg et rumvæsenopbevaringsrum som fængsel for levende rumvæsener."
 
 #: ../base/ufos/tips.ufo:48
-#, fuzzy
 msgid "Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] will draw a line to each enemy the selected soldier can see."
 msgstr "Sete fjender: På en landmission kan du taste [mellemrum] for at veksle imellem alle sete fjender. Tasten [t] vil tegne en linje til hver enkelt fjende den valgte soldat kan se."
 
 #: ../base/ufos/tips.ufo:49
-#, fuzzy
 msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base, not in the tactical missions where such an action would cost TUs."
 msgstr "Du kan bruge den højre museknap i soldatens udstyrsvindue til at vælge eller fravælge våben, ammo og veste. Dette virker kun i baseudstyringen, ikke under en taktisk mission hvor sådanne handlinger ville koste tidsenheder."
 
@@ -7353,7 +7275,6 @@ msgid "Don't forget to install missiles launchers and missiles in your missile b
 msgstr "Glem ikke at installere missilaffyringsramper og missiler i dine missilbatterier."
 
 #: ../base/ufos/tips.ufo:55
-#, fuzzy
 msgid "Can't remember who has the medikit in their backpack? Press [i] for inventory and then [1] to [8] to cycle through your troops."
 msgstr "Kan du ikke huske hvem der har din førstehjælpskasse i rygsækken? Tast [i] for rygsækken og så [1] til [8] for at løbe igennem dine styrker."
 
@@ -7362,14 +7283,12 @@ msgid "To catch fast UFOs send interceptors in from several directions."
 msgstr "For at fange hurtige ufoer kan du sende kortrækkende jagerfly af sted fra flere retninger."
 
 #: ../base/ufos/tips.ufo:57
-#, fuzzy
 msgid "To quickly buy or sell items, hover over the arrows and roll your mousewheel."
 msgstr "For at købe/sælge udstyr hurtigt, så hold markøren over pilene og rul på musehjulet."
 
 #: ../base/ufos/tips.ufo:58
-#, fuzzy
 msgid "Beware of friendly fire! While lobbing a grenade at an enemy who snuck up on your troops might be an easy kill, chances are you'll do the aliens' work for them. The same can be said about bullets, make sure once the enemy is dead you wont be shooting your own troops behind him."
-msgstr "Pas på egen ild! Det er måske det nemmeste at kaste en granat mod fjenden som dukker op blandt dine tropper, men hvis du ikke er forsigtig så gør du rumvæsenernes arbejde for dem. Det samme kan siges om kugler, vær sikker på at når fjenden er død at du ikke skyder på dine egne på den anden side."
+msgstr "Pas på egen ild! Det er måske det nemmeste at kaste en granat mod fjenden som dukker op blandt dine tropper, men hvis du ikke er forsigtig, så gør du rumvæsenernes arbejde for dem. Det samme kan siges om kugler, vær sikker på at når fjenden er død, at du ikke skyder på dine egne på den anden side."
 
 #: ../base/ufos/tips.ufo:59
 msgid "Remember to check your research and production queues often! A good arsenal is an active arsenal!"
@@ -7380,9 +7299,8 @@ msgid "The presence of live civilians probably means that there are no live alie
 msgstr "Tilstedeværelsen af levende civile betyder sikkert at der ikke er nogen levende rumvæsener i nærheden. Det kan spare tid når du rydder et kort."
 
 #: ../base/ufos/tips.ufo:61
-#, fuzzy
 msgid "Watch the health of your soldiers; do not let them die. Experienced soldiers are more efficient in missions than new recruits."
-msgstr "Hold øje med helbredet på dine soldater, lad dem ikke dø for nemt. Erfarne soldater er mere effektive under missioner en nye rekrutter."
+msgstr "Hold øje med helbredet på dine soldater, lad dem ikke dø for nemt. Erfarne soldater er mere effektive under missioner end nye rekrutter."
 
 #: ../base/ufos/tips.ufo:62
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
@@ -7458,9 +7376,8 @@ msgid "Soldier equipment"
 msgstr "Soldaterudstyr"
 
 #: ../base/ufos/ui/aircraft.ufo:176
-#, fuzzy
 msgid "Rename aircraft"
-msgstr "Vælg luftfartøj"
+msgstr "Omdøb luftfartøj"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:80
 msgid "Available equipment:"
@@ -7471,14 +7388,12 @@ msgid "Selected item:"
 msgstr "Valgt udstyr:"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:168
-#, fuzzy
 msgid "Equip this item"
-msgstr "Udstyr denne soldat"
+msgstr "Påfør dette udstyr"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:178
-#, fuzzy
 msgid "Remove this item"
-msgstr "Tilføj/fjern denne soldat"
+msgstr "Fjern dette udstyr"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:199
 #: client/campaign/cp_fightequip_callbacks.c:165
@@ -8685,7 +8600,7 @@ msgstr "Spil missionen igen"
 
 #: ../base/ufos/ui/lostwon.ufo:160
 msgid "UFO recovery"
-msgstr "Ufoindsamling"
+msgstr "Ufobjærgning"
 
 #: ../base/ufos/ui/lostwon.ufo:171
 msgid "Store UFO"
@@ -8697,15 +8612,15 @@ msgstr "Sælg ufo"
 
 #: ../base/ufos/ui/lostwon.ufo:214
 msgid "Capacity (free/all)"
-msgstr ""
+msgstr "Kapacitet (ledig/alle)"
 
 #: ../base/ufos/ui/lostwon.ufo:277
 msgid "Recover"
-msgstr "Hent"
+msgstr "Bjærg"
 
 #: ../base/ufos/ui/lostwon.ufo:278
 msgid "Begin UFO recovery process"
-msgstr "Begynd ufoindsamling"
+msgstr "Begynd ufobjærgning"
 
 #: ../base/ufos/ui/lostwon.ufo:300
 msgid "Nation:"
@@ -8720,9 +8635,8 @@ msgid "Relations:"
 msgstr "Forbindelser:"
 
 #: ../base/ufos/ui/lostwon.ufo:357
-#, fuzzy
 msgid "Selected nation:"
-msgstr "Valgt udstyr:"
+msgstr "Valgt nation:"
 
 #: ../base/ufos/ui/lostwon.ufo:369
 msgid "Sell"
@@ -9509,7 +9423,7 @@ msgstr "Anvend 3D geoscape"
 
 #: ../base/ufos/ui/options.ufo:919
 msgid "3D Geoscape ambient lighting:"
-msgstr ""
+msgstr "3D Geoscape omgivende lys:"
 
 #: ../base/ufos/ui/options.ufo:944
 msgid "Show tip of the day:"
@@ -9817,9 +9731,8 @@ msgid "Aliens"
 msgstr "Rumvæsener"
 
 #: ../base/ufos/ui/transfer.ufo:135
-#, fuzzy
 msgid "Amount/Transfer"
-msgstr "overfør"
+msgstr "Beløb/overfør"
 
 #: ../base/ufos/ui/transfer.ufo:213 ../base/ufos/ui/transfer.ufo:224
 #: ../base/ufos/ui/transfer.ufo:235 ../base/ufos/ui/transfer.ufo:246
@@ -9922,7 +9835,7 @@ msgstr "Rul"
 
 #: ../base/ufos/weapons.ufo:190
 msgid "Flashbang"
-msgstr "Bedøvelsesgranat"
+msgstr "Blitzgranat"
 
 #: ../base/ufos/weapons.ufo:265
 msgid "Smoke Grenade"
@@ -10808,9 +10721,9 @@ msgid "UFO"
 msgstr "Ufo"
 
 #: client/campaign/cp_aircraft.c:781
-#, fuzzy, c-format
+#, c-format
 msgid "A new %s is ready in %s"
-msgstr "Et nyt (en/et %s) klasseluftfartøj er klar på %s"
+msgstr "Et nyt (en/et %s) er klar på %s"
 
 #: client/campaign/cp_aircraft.c:782 client/campaign/cp_aircraft.c:1234
 #: client/campaign/cp_aircraft.c:1250 client/campaign/cp_aircraft.c:1295
@@ -10892,10 +10805,10 @@ msgstr "Den base er udenfor dette luftfartøjs rækkevidde."
 #: client/campaign/cp_aircraft.c:1233
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
-msgstr ""
+msgstr "Luftfartøj %s kunne ikke optankes på %s. Ikke nok antistof."
 
 #: client/campaign/cp_aircraft.c:1249
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Luffartøj %s er blevet optanket på %s."
 
@@ -11476,6 +11389,8 @@ msgid ""
 "\n"
 "Funding this month:\t%d"
 msgstr ""
+"\n"
+"Midler denne måned:\t%d"
 
 #: client/campaign/cp_campaign.c:888 client/campaign/cp_ufopedia.c:237
 #: client/cl_inventory_callbacks.c:149
@@ -11719,45 +11634,40 @@ msgid " (unlimited ammos)"
 msgstr " (ubegrænset ammo)"
 
 #: client/campaign/cp_fightequip_callbacks.c:576
-#, fuzzy
 msgid "No slot selected."
-msgstr "Intet udstyr valgt"
+msgstr "Ingen holder valgt"
 
 #: client/campaign/cp_fightequip_callbacks.c:579
-#, fuzzy
 msgid "No item selected."
-msgstr "Intet udstyr valgt"
+msgstr "Intet udstyr valgt."
 
 #: client/campaign/cp_fightequip_callbacks.c:582
 msgid "You can't equip an alien technology."
-msgstr ""
+msgstr "Du kan ikke udstyre med rumvæsenteknologi."
 
 #: client/campaign/cp_fightequip_callbacks.c:585
 msgid "Technology requested is not yet completed."
-msgstr ""
+msgstr "Den ønskede teknologi er ikke klar endnu."
 
 #: client/campaign/cp_fightequip_callbacks.c:588
-#, fuzzy
 msgid "This item is too heavy for the selected slot."
-msgstr "Fjern våben fra den valgte plads"
+msgstr "Dette udstyr er for tungt til den valgte holder."
 
 #: client/campaign/cp_fightequip_callbacks.c:591
-#, fuzzy
 msgid "Equip a weapon first."
-msgstr "Gør forsvarsvåben klar"
+msgstr "gør et våben klar først."
 
 #: client/campaign/cp_fightequip_callbacks.c:594
 msgid "Ammo not usable with current weapon."
-msgstr ""
+msgstr "Ammo er ikke brugbar med aktuelt våben."
 
 #: client/campaign/cp_fightequip_callbacks.c:597
-#, fuzzy
 msgid "Unknown problem."
-msgstr "Ukendt - kan ikke bruges"
+msgstr "Ukendt problem."
 
 #: client/campaign/cp_fightequip_callbacks.c:600
 msgid "Ok"
-msgstr ""
+msgstr "O.k."
 
 #: client/campaign/cp_installation.c:171
 #, c-format
@@ -12011,20 +11921,12 @@ msgid "installation_replaced"
 msgstr "installation erstattet"
 
 #: client/campaign/cp_messageoptions.c:39
-#, fuzzy
 msgid "aircraft_refueled"
 msgstr ""
-"Commander, %s has been %s and is ready for action.\n"
-"\n"
-"-- COMAIR"
 
 #: client/campaign/cp_messageoptions.c:40
-#, fuzzy
 msgid "aircraft_cannotrefuel"
 msgstr ""
-"Commander, %s has run out of flight time. It has only enough fuel left to return to %s. Mission has been aborted.\n"
-"\n"
-"-- COMAIR"
 
 #: client/campaign/cp_messageoptions.c:41
 msgid "installation_build_started"
@@ -12095,9 +11997,8 @@ msgid "transfer_aliens_defered"
 msgstr "overførsel_rumvæsener_udsat"
 
 #: client/campaign/cp_messageoptions.c:58
-#, fuzzy
 msgid "transfer_uforecovery_finished"
-msgstr "e-post_overførsel_modtaget"
+msgstr "overførsel_ufobjærgning_afsluttet"
 
 #: client/campaign/cp_messageoptions.c:59
 msgid "ufo_spotted"
@@ -12345,7 +12246,7 @@ msgstr "Mission\t%s (%s)\n"
 #: client/campaign/cp_popup.c:345
 #, c-format
 msgid "%s (%i/%i)\t%s\t%s\t%s"
-msgstr ""
+msgstr "%s (%i/%i)\t%s\t%s\t%s"
 
 #: client/campaign/cp_popup.c:363
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
@@ -12354,7 +12255,7 @@ msgstr "Intet fly tilgængelig, ingen pilot, eller intet taktisk hold tildelt ti
 #: client/campaign/cp_popup.c:424
 #, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
-msgstr ""
+msgstr "%s%s (%i/%i)\t%s\t%s"
 
 #: client/campaign/cp_popup.c:442
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
@@ -13150,9 +13051,9 @@ msgid "A UFO is flying toward %s"
 msgstr "En ufo flyver mod %s"
 
 #: client/campaign/cp_ufo.c:735
-#, fuzzy, c-format
+#, c-format
 msgid "Our radar detected a new UFO near %s"
-msgstr "Vores radar opdagede en ny ufo"
+msgstr "Vores radar opdagede en ny ufo nær %s"
 
 #: client/campaign/cp_ufo.c:739
 msgid "Our radar has lost the tracking on a UFO"
@@ -13373,14 +13274,13 @@ msgid "  * %s\n"
 msgstr "  * %s\n"
 
 #: client/campaign/cp_uforecovery.c:227
-#, fuzzy, c-format
+#, c-format
 msgid "%s was transfered to %s."
-msgstr "%s er blevet forfremmet til %s.\n"
+msgstr "%s er blevet overført til %s."
 
 #: client/campaign/cp_uforecovery.c:228
-#, fuzzy
 msgid "UFO Recovered"
-msgstr "Ufo indsamling"
+msgstr "Ufo bjærget"
 
 #: client/campaign/cp_uforecovery_callbacks.c:134
 msgid "No free UFO yard available."
@@ -13389,12 +13289,12 @@ msgstr "Ingen ledig ufohangar tilgængelig."
 #: client/campaign/cp_uforecovery_callbacks.c:184
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to %s."
-msgstr "Fandt %s på slagmarken. Ufo transporteres til %s"
+msgstr "Bjærgede %s på slagmarken. Ufo transporteres til %s"
 
 #: client/campaign/cp_uforecovery_callbacks.c:186
 #: client/campaign/cp_uforecovery_callbacks.c:296
 msgid "UFO Recovery"
-msgstr "Ufo indsamling"
+msgstr "Ufo bjærgning"
 
 #: client/campaign/cp_uforecovery_callbacks.c:288
 #, c-format
@@ -13404,7 +13304,7 @@ msgstr "Solget tidligere opsamlede %s fra %s til land %s, tjente %i kr."
 #: client/campaign/cp_uforecovery_callbacks.c:293
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
-msgstr "Fandt %s på slagmarken. Ufo solgt til nation %s, opnåede %i kr."
+msgstr "Bjærgede %s på slagmarken. Ufo solgt til nation %s, opnåede %i kr."
 
 #: client/campaign/missions/cp_mission_baseattack.c:126
 #, c-format
