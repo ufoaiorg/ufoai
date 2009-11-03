@@ -59,8 +59,10 @@ def run(cmd, mandatory=True):
         sys.stderr.write('Faild to run: %s' % cmd)
         sys.exit(2)
 
-def md5sum(path):
+def md5sum(path, binary = False):
     # to be used carefully with big files
+    if binary:
+    	return md5(open(path, "rb").read()).hexdigest()
     return md5(open(path).read()).hexdigest()
 
 
@@ -157,13 +159,13 @@ def upgrade(arg):
             missmatch+= 1
             continue
 
-        if not os.path.exists(bsppath) or md5sum(bsppath) != maps[i][0]:
+        if not os.path.exists(bsppath) or md5sum(bsppath, True) != maps[i][0]:
             fd, name = mkstemp()
             os.write(fd, download('%s/%s.gz' %(URI, i)))
             os.close(fd)
-            data = GzipFile(name, 'r').read()
+            data = GzipFile(name, 'rb').read()
             os.unlink(name)
-            open(bsppath, 'w').write(data)
+            open(bsppath, 'wb').write(data)
             print '%s - updated' % i
             updated+= 1
         else:
@@ -246,7 +248,7 @@ def gen(args):
                 continue
 
             mmd5 = md5sum(mfile)
-            bmd5 = md5sum(bfile)
+            bmd5 = md5sum(bfile, True)
 
             if not bfile in old or bmd5 != old[bfile]:
                 print '%s - updating' % bfile
