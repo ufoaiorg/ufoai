@@ -1475,7 +1475,6 @@ window multiplayer_invite
 	confunc	multiplayer_invite_server_info {
 		*node:root.ip@string = <1>
 		*node:root.port@string = <2>
-		cmd "echo \"What u want to do with <node:root.ip@string> and <node:root.port@string>\""
 	}
 
 	button server_info
@@ -1510,11 +1509,5 @@ window multiplayer_invite
 		pos			"30 50"
 		longlines	wrap
 		size		"440 60"
-	}
-
-	todo todo1 
-	{
-		string	"Create the menu script, make ip and prot of the server_info call variable"
-		pos		"500 40"
 	}
 }
