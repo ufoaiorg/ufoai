@@ -135,7 +135,9 @@ def upgrade(arg):
     del maps['ufo2map']
 
     updated = missmatch = 0
-    for i in maps:
+	mapnames = maps.keys()
+	mapnames.sort()
+    for i in mapnames:
         map_name = i[:-4] + ".map"
         if not os.path.exists(map_name):
             print '%s not found' % map_name
