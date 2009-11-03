@@ -98,6 +98,7 @@ void MN_TextScrollEnd (const char* nodePath)
 static int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 {
 	int lineHeight;
+	int line;
 	assert(MN_NodeInstanceOf(node, "text"));
 
 	lineHeight = EXTRADATA(node).lineHeight;
@@ -107,7 +108,18 @@ static int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 	}
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
-	return (int) (y / lineHeight) + EXTRADATA(node).super.scrollY.viewPos;
+	y -= node->padding;
+
+	/* skip position over the first line */
+	if (y < 0)
+		 return -1;
+	line = (int) (y / lineHeight) + EXTRADATA(node).super.scrollY.viewPos;
+
+	/* skip position under the last line */
+	if (line >= EXTRADATA(node).super.scrollY.fullSize)
+		return -1;
+
+	return line;
 }
 
 static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y)
