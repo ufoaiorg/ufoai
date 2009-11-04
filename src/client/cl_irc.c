@@ -449,7 +449,7 @@ static qboolean Irc_AppendToBuffer (const char* const msg, ...)
 	if (irc_logConsole->integer)
 		Com_Printf("IRC: %s\n", appendString);
 
-	MN_RegisterText(TEXT_STANDARD, irc_buffer);
+	MN_RegisterText(TEXT_IRCCONTENT, irc_buffer);
 	MN_TextScrollEnd("irc.irc_data");
 
 	if (irc_showIfNotInMenu->integer && strcmp(MN_GetActiveMenuName(), "irc")) {
@@ -1794,7 +1794,7 @@ void Irc_Input_Activate (void)
 {
 	/* in case of a failure we need this in MN_PopMenu */
 	if (irc_connected && irc_defaultChannel->string[0] != '\0') {
-		MN_RegisterText(TEXT_STANDARD, irc_buffer);
+		MN_RegisterText(TEXT_IRCCONTENT, irc_buffer);
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
 		MN_PopMenu(qfalse);
@@ -1811,5 +1811,5 @@ void Irc_Input_Deactivate (void)
 {
 	irc_send_buffer->modified = qfalse;
 
-	MN_ResetData(TEXT_STANDARD);
+	MN_ResetData(TEXT_IRCCONTENT);
 }
