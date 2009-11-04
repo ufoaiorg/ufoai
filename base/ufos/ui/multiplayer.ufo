@@ -1487,7 +1487,10 @@ window multiplayer_invite
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		onClick		{ cmd "server_info <node:root.ip@string>  <node:root.port@string>;" }
+		onClick		{
+			cmd "mn_pop;"
+			cmd "server_info <node:root.ip@string> <node:root.port@string>;"
+		}
 	}
 
 	button enter_lobby
