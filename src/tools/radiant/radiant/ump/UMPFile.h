@@ -36,7 +36,7 @@ namespace map
 				/**
 				 * @throw UMPException if tile could not get parsed
 				 */
-				void parseTile (Tokeniser &tokeniser);
+				void parseTile (Tokeniser &tokeniser) throw(UMPException);
 				void parse (Tokeniser &tokenizer);
 
 			public:

@@ -82,7 +82,7 @@ namespace map
 			return false;
 		}
 
-		void UMPFile::parseTile (Tokeniser &tokeniser)
+		void UMPFile::parseTile (Tokeniser &tokeniser) throw(UMPException)
 		{
 			std::string name = tokeniser.getToken();
 			if (name.length() == 0)
