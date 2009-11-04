@@ -128,7 +128,6 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 	vec3_t pointTrace;
 	byte* stepAmount = NULL;
 	qboolean triggers = qfalse;
-	edict_t* clientAction;
 	int oldState;
 	qboolean autoCrouchRequired = qfalse;
 	byte crouchingState;
@@ -185,6 +184,8 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 		PosSubDV(pos, crouchingState, dv);
 		/* Replace the z portion of the DV value so we can get back to where we were. */
 		dvtab[numdv++] = NewDVZ(dv, oldZ);
+		if (numdv >= lengthof(dvtab))
+			break;
 	}
 
 	/* everything ok, found valid route? */
@@ -228,6 +229,8 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 			crouchFlag = 0;
 			PosAddDV(ent->pos, crouchFlag, dv);
 			if (crouchFlag == 0) { /* No change in crouch */
+				edict_t* clientAction;
+
 				gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
 				VectorCopy(ent->origin, pointTrace);
 				pointTrace[2] += PLAYER_MIN;
@@ -300,7 +303,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				ent->TU = max(0, initTU - (int) tu);
 
-				clientAction = ent->client_action;
+				clientAction = ent->clientAction;
 				oldState = ent->state;
 				/* check triggers at new position but only if no actor appeared */
 				if (G_TouchTriggers(ent)) {
@@ -356,9 +359,9 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 
 		/* only if triggers are touched - there was a client
 		 * action set and there were steps made */
-		if (!triggers && ent->client_action) {
+		if (!triggers && ent->clientAction) {
 			/* no triggers, no client action */
-			ent->client_action = NULL;
+			ent->clientAction = NULL;
 			gi.AddEvent(G_TeamToPM(ent->team), EV_RESET_CLIENT_ACTION);
 			gi.WriteShort(ent->number);
 		}

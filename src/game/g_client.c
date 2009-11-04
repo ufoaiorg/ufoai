@@ -656,14 +656,14 @@ int G_ClientAction (player_t * player)
 		/* get the door edict */
 		door = g_edicts + i;
 
-		if (actor->client_action == door) {
+		if (actor->clientAction == door) {
 			/* check whether it's part of an edict group but not the master */
 			if (door->flags & FL_GROUPSLAVE)
 				door = door->groupMaster;
 
 			G_ClientUseEdict(player, actor, door);
 		} else
-			Com_DPrintf(DEBUG_GAME, "client_action and ent differ: %i - %i\n", actor->client_action->number,
+			Com_DPrintf(DEBUG_GAME, "client_action and ent differ: %i - %i\n", actor->clientAction->number,
 					door->number);
 	}
 		break;

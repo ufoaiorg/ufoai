@@ -192,13 +192,13 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 		/* we don't want the client action stuff to be send for ai actors */
 		return qfalse;
 	} else {
-		if (activator->client_action != self->owner) {
+		if (activator->clientAction != self->owner) {
 			/* prepare for client action */
-			activator->client_action = self->owner;
+			activator->clientAction = self->owner;
 			/* tell the hud to show the door buttons */
 			gi.AddEvent(G_TeamToPM(activator->team), EV_DOOR_ACTION);
 			gi.WriteShort(activator->number);
-			gi.WriteShort(activator->client_action->number);
+			gi.WriteShort(activator->clientAction->number);
 			gi.EndEvents();
 		}
 		return qtrue;

@@ -567,7 +567,7 @@ struct edict_s {
 	qboolean reactionNoDraw;
 
 	/** client actions - interact with the world */
-	edict_t *client_action;
+	edict_t *clientAction;
 
 	/** only set this for the attacked edict - to know who's shooting */
 	edict_t *reactionAttacker;
