@@ -28,6 +28,7 @@
 #include "radiant_i18n.h"
 
 #include "iradiant.h"
+#include "iump.h"
 #include "gtkmisc.h"
 #include "iselection.h"
 #include "brush/brush.h"
@@ -93,9 +94,14 @@ void MaterialSystem::generateMaterialFromTexture ()
 const std::string MaterialSystem::getMaterialFilename () const
 {
 	const std::string& mapname = GlobalRadiant().getMapName();
-	std::string materialFileName = "materials/" + os::getFilenameFromPath(mapname);
-	materialFileName[materialFileName.length() - 1] = 't'; /* map => mat */
-	return materialFileName;
+	const std::string umpname = GlobalUMPSystem()->getUMPFilename(mapname);
+	std::string materialFilename;
+	if (umpname.length() == 0)
+		materialFilename = os::getFilenameFromPath(mapname);
+	else
+		materialFilename = os::getFilenameFromPath(umpname);
+	std::string relativePath = "materials/" + os::stripExtension(materialFilename) + ".mat";
+	return relativePath;
 }
 
 class MaterialSystemAPI
