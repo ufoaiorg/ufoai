@@ -57,8 +57,51 @@ void MaterialSystem::showMaterialDefinition (const std::string& append)
 	editor.show();
 }
 
+void MaterialSystem::generateMaterialForFace (int contentFlags, int surfaceFlags, std::string& textureName,
+		std::stringstream& os)
+{
+	if (textureName.find("dirt") != std::string::npos || textureName.find("rock") != std::string::npos
+			|| textureName.find("grass") != std::string::npos) {
+		os << "\t{" << std::endl;
+		os << "\t\ttexture <fillme>" << std::endl;
+		os << "\t\tterrain 0 64" << std::endl;
+		os << "\t\tlightmap" << std::endl;
+		os << "\t}" << std::endl;
+	}
+
+	if (contentFlags & CONTENTS_WATER || textureName.find("glass") != std::string::npos || textureName.find("window")
+			!= std::string::npos) {
+		os << "\t{" << std::endl;
+		os << "\t\tspecular 2.0" << std::endl;
+		os << "\t\tenvmap 0" << std::endl;
+		os << "\t}" << std::endl;
+	}
+
+	if (textureName.find("wood") != std::string::npos) {
+		os << "\t{" << std::endl;
+		os << "\t\tspecular 0.2" << std::endl;
+		os << "\t\thardness 0.0" << std::endl;
+		os << "\t}" << std::endl;
+	}
+
+	if (textureName.find("metal") != std::string::npos) {
+		os << "\t{" << std::endl;
+		os << "\t\tspecular 0.8" << std::endl;
+		os << "\t\thardness 0.5" << std::endl;
+		os << "\t}" << std::endl;
+	}
+
+	if (textureName.find("wall") != std::string::npos) {
+		os << "\t{" << std::endl;
+		os << "\t\tspecular 0.6" << std::endl;
+		os << "\t\tbump 2.0" << std::endl;
+		os << "\t}" << std::endl;
+	}
+}
+
 void MaterialSystem::generateMaterialFromTexture ()
 {
+	const std::string textureDir = "textures/";
 	const std::string& mapname = GlobalRadiant().getMapName();
 	if (mapname.empty() || Map_Unnamed(g_map)) {
 		// save the map first
@@ -79,12 +122,27 @@ void MaterialSystem::generateMaterialFromTexture ()
 			const FaceInstance& faceInstance = *(*i);
 			const Face &face = faceInstance.getFace();
 			std::string texture = std::string(face.getShader().getShader());
-			// skip 'textures/'
-			std::string skippedTextureDirectory = &texture[9];
+			// don't generate materials for common textures
+			if (texture.find("tex_common") != std::string::npos)
+				continue;
+			std::string skippedTextureDirectory = texture.substr(textureDir.length());
 			std::string materialDefinition = "material " + skippedTextureDirectory;
 			/* check whether there is already an entry for the selected texture */
-			if (content.find(materialDefinition) == std::string::npos)
-				append += "{\n\t" + materialDefinition + "\n\t{\n\t}\n}\n";
+			if (content.find(materialDefinition) == std::string::npos) {
+				std::stringstream os;
+				ContentsFlagsValue flags;
+
+				face.GetFlags(flags);
+
+				os << "{" << std::endl;
+				os << "\t" << materialDefinition << std::endl;
+				os << "\t{" << std::endl;
+				generateMaterialForFace(flags.m_contentFlags, flags.m_surfaceFlags, skippedTextureDirectory, os);
+				os << "\t}" << std::endl;
+				os << "}" << std::endl;
+
+				append += os.str();
+			}
 		}
 	}
 

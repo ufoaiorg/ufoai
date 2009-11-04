@@ -35,6 +35,10 @@
 
 class MaterialSystem
 {
+	private:
+
+		void generateMaterialForFace(int contentFlags, int surfaceFlags, std::string& textureName, std::stringstream& stream);
+
 	public:
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "material");
