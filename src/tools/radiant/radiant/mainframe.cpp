@@ -1687,6 +1687,7 @@ static GtkMenuItem* create_map_menu (void)
 			menu_tearoff(menu_in_menu);
 		UMP_constructMenu(menu_in_menu);
 	}
+	create_menu_item_with_mnemonic(menu, _("Edit material"), "ShowMaterialDefinition");
 	return map_menu_item;
 }
 

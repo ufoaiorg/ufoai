@@ -381,7 +381,6 @@ static void compileReadProgress (void *ex, void *buffer)
 
 void ToolsGenerateMaterials (void)
 {
-
 	if (!ConfirmModified("Generate Materials"))
 		return;
 
