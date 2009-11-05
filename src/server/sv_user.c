@@ -305,8 +305,6 @@ static void SV_ExecuteUserCommand (const char *s)
  */
 void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 {
-	const char *s;
-
 	sv_client = cl;
 	sv_player = sv_client->player;
 
@@ -329,7 +327,8 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		break;
 
 	case clc_stringcmd:
-		s = NET_ReadString(msg);
+	{
+		const char *s = NET_ReadString(msg);
 
 		Com_DPrintf(DEBUG_SERVER, "stringcmd from client: %s\n", s);
 		SV_ExecuteUserCommand(s);
@@ -337,6 +336,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		if (cl->state == cs_free)
 			return;			/* disconnect command */
 		break;
+	}
 
 	case clc_action:
 		/* client actions are handled by the game module */
