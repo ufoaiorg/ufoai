@@ -2323,7 +2323,7 @@ tech rs_weapon_stunrod
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
+		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
 		icon	icons/tech
@@ -2331,7 +2331,7 @@ tech rs_weapon_stunrod
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
+		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		icon	icons/tech
