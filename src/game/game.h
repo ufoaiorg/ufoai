@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/typedefs.h"
 #include "../common/tracing.h"
 
-#define	GAME_API_VERSION	4
+#define	GAME_API_VERSION	5
 
 /** @brief edict->solid values */
 typedef enum {
