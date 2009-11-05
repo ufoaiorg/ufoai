@@ -710,7 +710,7 @@ window hud extends ahud
 		{
 			pos		"977 129"
 			size	"47 335"
-			align	LAYOUTALIGN_BOTTOMRIGHT
+			align	LAYOUTALIGN_RIGHT
 			excluderect { pos	"0 95"	size	"8 33" }
 			excluderect { pos	"0 223"	size	"16 16" }
 		}
