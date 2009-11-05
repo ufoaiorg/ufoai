@@ -62,7 +62,7 @@
       </include>
     </context>
 
-    <context id="ump">
+    <context id="ufo">
       <include>
 	<context ref="def:shebang"/>
 	<context ref="def:shell-like-comment"/>
@@ -95,6 +95,11 @@
 	  <match>(?&lt;![\w\.])\%{float}(?![\w\.])</match>
 	</context>
 
+	<context id="types" style-ref="builtin-object">
+	  <keyword>true</keyword>
+	  <keyword>false</keyword>
+	</context>
+
 	<context id="keyword" style-ref="keyword">
 
 	  <!-- mapdef -->
@@ -111,6 +116,8 @@
 	  <keyword>teams</keyword>
 	  <keyword>multiplayer</keyword>
 	  <keyword>description</keyword>
+	  <keyword>terrains</keyword>
+	  <keyword>size</keyword>
 
 	  <!-- terrain -->
 	  <keyword>terrain</keyword>
