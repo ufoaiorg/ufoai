@@ -41,6 +41,9 @@ namespace gtkutil
 			// Returns the contents of the source buffer
 			std::string getContents ();
 
+			// place the cursor at the given linenumber
+			void goToLine (int lineNumber);
+
 			// Clears the contents of the buffer
 			void clear ();
 

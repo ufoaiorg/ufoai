@@ -78,6 +78,11 @@ namespace gtkutil
 		gtk_text_buffer_set_text(GTK_TEXT_BUFFER(_buffer), newContents.c_str(), -1);
 	}
 
+	void SourceView::goToLine (int lineNumber)
+	{
+		// TODO: Implement me
+	}
+
 	std::string SourceView::getContents ()
 	{
 		GtkTextIter start;

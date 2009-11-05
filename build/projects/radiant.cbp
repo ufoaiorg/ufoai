@@ -758,6 +758,12 @@
 		<Unit filename="../../src/tools/radiant/radiant/ufoscript/UFOScript.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ufoscript/common/Parser.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ufoscript/common/DataBlock.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/ufoscript/terrain/Terrain.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -776,7 +782,13 @@
 		<Unit filename="../../src/tools/radiant/radiant/ui/common/UMPDefinitionView.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ui/common/UFOScriptDefinitionView.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/ui/materialeditor/MaterialEditor.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ui/scripteditor/UFOScriptEditor.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/ui/umpeditor/UMPEditor.cpp">

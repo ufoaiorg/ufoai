@@ -54,6 +54,9 @@ namespace
 			UMPCollector (std::set<std::string> &list) :
 				_list(list)
 			{
+				GlobalFileSystem().forEachFile("maps/", "*", makeCallback1(*this), 0);
+				std::size_t size = _list.size();
+				globalOutputStream() << "Found " << size << " ump files\n";
 			}
 
 			// Functor operator needed for the forEachFile() call
@@ -75,9 +78,6 @@ UMPSystem::UMPSystem ()
 void UMPSystem::init ()
 {
 	UMPCollector collector(_umpFiles);
-	GlobalFileSystem().forEachFile("maps/", "*", makeCallback1(collector), 0);
-	std::size_t size = _umpFiles.size();
-	globalOutputStream() << "Found " << size << " ump files\n";
 	// TODO: Register observer for base directory
 }
 

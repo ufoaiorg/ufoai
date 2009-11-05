@@ -244,8 +244,6 @@ namespace ui
 					std::string ext = os::getExtension(file);
 					if (ext == MD2_EXTENSION || ext == MD3_EXTENSION || ext == OBJ_EXTENSION) {
 						addRecursive(rawPath);
-					} else {
-						return;
 					}
 				}
 		};

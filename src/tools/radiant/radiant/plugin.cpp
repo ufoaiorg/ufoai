@@ -50,6 +50,7 @@
 #include "iplugin.h"
 #include "imaterial.h"
 #include "iump.h"
+#include "iufoscript.h"
 #include "imap.h"
 #include "namespace.h"
 #include "commands.h"
@@ -187,6 +188,7 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalFileSystemModuleRef,
 		public GlobalSoundManagerModuleRef,
 		public GlobalUMPSystemModuleRef,
+		public GlobalUFOScriptSystemModuleRef,
 		public GlobalMaterialSystemModuleRef,
 		public GlobalEntityModuleRef,
 		public GlobalShadersModuleRef,
@@ -209,9 +211,9 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 
 	public:
 		RadiantDependencies () :
-			GlobalSoundManagerModuleRef("*"), GlobalUMPSystemModuleRef("*"), GlobalMaterialSystemModuleRef("*"),
-					GlobalEntityModuleRef("ufo"), GlobalShadersModuleRef("ufo"), GlobalBrushModuleRef("ufo"),
-					GlobalEntityClassManagerModuleRef("ufo"), m_image_modules(
+			GlobalSoundManagerModuleRef("*"), GlobalUMPSystemModuleRef("*"), GlobalUFOScriptSystemModuleRef("*"),
+					GlobalMaterialSystemModuleRef("*"), GlobalEntityModuleRef("ufo"), GlobalShadersModuleRef("ufo"),
+					GlobalBrushModuleRef("ufo"), GlobalEntityClassManagerModuleRef("ufo"), m_image_modules(
 							GlobalRadiant().getRequiredGameDescriptionKeyValue("texturetypes")),
 					m_map_modules("mapufo"), m_toolbar_modules("*"), m_plugin_modules("*")
 		{

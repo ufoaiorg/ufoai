@@ -1,10 +1,20 @@
 #ifndef MAPDEF_H_
 #define MAPDEF_H_
 
+#include "../common/Parser.h"
+
 namespace scripts
 {
 	class MapDef
 	{
+		private:
+
+			// the parser object that holds all the block data
+			Parser parser;
+
+			// the blocks with the data - destroyed with the parser
+			std::vector<DataBlock*> _blocks;
+
 		public:
 			virtual ~MapDef ();
 
@@ -17,6 +27,8 @@ namespace scripts
 			 * map is already included in the script
 			 */
 			bool add ();
+
+			void showMapDefinition ();
 	};
 }
 

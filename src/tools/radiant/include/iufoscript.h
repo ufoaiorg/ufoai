@@ -39,11 +39,11 @@ class UFOScriptSystem
 	private:
 
 		std::set<std::string> _ufoFiles;
-		typedef std::set<std::string>::iterator UFOScriptFilesIterator;
 
 	public:
 		INTEGER_CONSTANT(Version, 1);
-		STRING_CONSTANT(Name, "ufoscript");
+		STRING_CONSTANT(Name, "ufos");
+		typedef std::set<std::string>::iterator UFOScriptFilesIterator;
 
 		virtual ~UFOScriptSystem ()
 		{
@@ -60,10 +60,12 @@ class UFOScriptSystem
 
 		void editMapDefinition ();
 
+		const std::string getUFOScriptDir () const;
+
 		/**
 		 * @return A vector with ufo filesnames
 		 */
-		const std::set<std::string> getFiles () const
+		virtual const std::set<std::string>& getFiles () const
 		{
 			return _ufoFiles;
 		}

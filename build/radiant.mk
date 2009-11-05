@@ -64,6 +64,8 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/referencecache/nullmodel.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ufoscript/UFOScript.cpp \
+	$(RADIANT_BASE)/radiant/ufoscript/common/Parser.cpp \
+	$(RADIANT_BASE)/radiant/ufoscript/common/DataBlock.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/terrain/Terrain.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/mapdef/MapDef.cpp \
 	\
@@ -127,6 +129,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/ui/common/ModelPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/MaterialDefinitionView.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/UMPDefinitionView.cpp \
+	$(RADIANT_BASE)/radiant/ui/common/UFOScriptDefinitionView.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/RenderableAABB.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/SoundChooser.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/SoundPreview.cpp \
@@ -135,6 +138,8 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/ui/modelselector/ModelSelector.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/materialeditor/MaterialEditor.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ui/scripteditor/UFOScriptEditor.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/umpeditor/UMPEditor.cpp \
 	\
