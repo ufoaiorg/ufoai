@@ -77,7 +77,7 @@ void MaterialSystem::generateMaterialForFace (int contentFlags, int surfaceFlags
 		os << "\t}" << std::endl;
 	}
 
-	if (textureName.find("wood") != std::string::npos) {
+	if (textureName.find("wood") != std::string::npos || textureName.find("desert") != std::string::npos) {
 		os << "\t{" << std::endl;
 		os << "\t\tspecular 0.2" << std::endl;
 		os << "\t\thardness 0.0" << std::endl;

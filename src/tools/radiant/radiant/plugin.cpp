@@ -78,6 +78,7 @@
 #include "xyview/grid.h"
 #include "material.h"
 #include "ump.h"
+#include "ufoscript/UFOScript.h"
 #include "particles.h"
 #include "pathfinding.h"
 #include "model.h"
@@ -273,9 +274,11 @@ class Radiant: public TypeSystemRef
 			Particles_Construct();
 			Pathfinding_Construct();
 			UMP_Construct();
+			UFOScript_Construct();
 		}
 		~Radiant ()
 		{
+			UFOScript_Destroy();
 			UMP_Destroy();
 			Pathfinding_Destroy();
 			Particles_Destroy();

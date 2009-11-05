@@ -755,6 +755,15 @@
 		<Unit filename="../../src/tools/radiant/radiant/ump.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ufoscript/UFOScript.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ufoscript/terrain/Terrain.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ufoscript/mapdef/MapDef.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/ump/UMPFile.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -63,6 +63,10 @@ RADIANT_SRCS_CPP = \
 	\
 	$(RADIANT_BASE)/radiant/referencecache/nullmodel.cpp \
 	\
+	$(RADIANT_BASE)/radiant/ufoscript/UFOScript.cpp \
+	$(RADIANT_BASE)/radiant/ufoscript/terrain/Terrain.cpp \
+	$(RADIANT_BASE)/radiant/ufoscript/mapdef/MapDef.cpp \
+	\
 	$(RADIANT_BASE)/radiant/ump/UMPFile.cpp \
 	$(RADIANT_BASE)/radiant/ump/UMPTile.cpp \
 	$(RADIANT_BASE)/radiant/ump/UMPAssembly.cpp \

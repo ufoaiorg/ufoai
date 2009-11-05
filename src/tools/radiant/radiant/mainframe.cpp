@@ -1688,6 +1688,8 @@ static GtkMenuItem* create_map_menu (void)
 		UMP_constructMenu(menu_in_menu);
 	}
 	create_menu_item_with_mnemonic(menu, _("Edit material"), "ShowMaterialDefinition");
+	create_menu_item_with_mnemonic(menu, _("Edit terrain definition"), "EditTerrainDefinition");
+	create_menu_item_with_mnemonic(menu, _("Edit map definition"), "EditMapDefinition");
 	return map_menu_item;
 }
 
@@ -2346,9 +2348,11 @@ void MainFrame_Construct (void)
 	GlobalRadiant().commandInsert("OpenManual", FreeCaller<OpenHelpURL> (), Accelerator(GDK_F1));
 
 	GlobalCommands_insert("NewMap", FreeCaller<NewMap> ());
-	GlobalRadiant().commandInsert("OpenMap", FreeCaller<OpenMap> (), Accelerator('O', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalRadiant().commandInsert("OpenMap", FreeCaller<OpenMap> (), Accelerator('O',
+			(GdkModifierType) GDK_CONTROL_MASK));
 	GlobalCommands_insert("ImportMap", FreeCaller<ImportMap> ());
-	GlobalRadiant().commandInsert("SaveMap", FreeCaller<SaveMap> (), Accelerator('S', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalRadiant().commandInsert("SaveMap", FreeCaller<SaveMap> (), Accelerator('S',
+			(GdkModifierType) GDK_CONTROL_MASK));
 	GlobalCommands_insert("SaveMapAs", FreeCaller<SaveMapAs> ());
 	GlobalCommands_insert("SaveSelected", FreeCaller<ExportMap> ());
 	GlobalCommands_insert("SaveRegion", FreeCaller<SaveRegion> ());
@@ -2368,8 +2372,8 @@ void MainFrame_Construct (void)
 	GlobalRadiant().commandInsert("InvertSelection", FreeCaller<Select_Invert> (), Accelerator('I'));
 	GlobalCommands_insert("SelectInside", FreeCaller<Select_Inside> ());
 	GlobalCommands_insert("SelectTouching", FreeCaller<Select_Touching> ());
-	GlobalRadiant().commandInsert("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities> (), Accelerator('E',
-			(GdkModifierType) (GDK_MOD1_MASK | GDK_CONTROL_MASK)));
+	GlobalRadiant().commandInsert("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities> (),
+			Accelerator('E', (GdkModifierType) (GDK_MOD1_MASK | GDK_CONTROL_MASK)));
 	GlobalCommands_insert("Preferences", FreeCaller<PreferencesDialog_showDialog> ());
 
 	GlobalRadiant().commandInsert("ShowHidden", FreeCaller<Select_ShowAllHidden> (), Accelerator('H',
@@ -2414,9 +2418,10 @@ void MainFrame_Construct (void)
 
 	ColorScheme_registerCommands();
 
-	GlobalRadiant().commandInsert("CSGSubtract", FreeCaller<CSG_Subtract> (),
-			Accelerator('U', (GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("CSGMerge", FreeCaller<CSG_Merge> (), Accelerator('U', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalRadiant().commandInsert("CSGSubtract", FreeCaller<CSG_Subtract> (), Accelerator('U',
+			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalRadiant().commandInsert("CSGMerge", FreeCaller<CSG_Merge> (), Accelerator('U',
+			(GdkModifierType) GDK_CONTROL_MASK));
 	GlobalCommands_insert("CSGHollow", FreeCaller<CSG_MakeHollow> ());
 
 	Grid_registerCommands();
@@ -2511,8 +2516,9 @@ void MainFrame_Construct (void)
 
 	GlobalPreferenceSystem().registerPreference("EnginePath", StringImportStringCaller(g_strEnginePath),
 			StringExportStringCaller(g_strEnginePath));
-	GlobalPreferenceSystem().registerPreference("CompilerBinary", StringImportStringCaller(
-			g_strCompilerBinaryWithPath), StringExportStringCaller(g_strCompilerBinaryWithPath));
+	GlobalPreferenceSystem().registerPreference("CompilerBinary",
+			StringImportStringCaller(g_strCompilerBinaryWithPath),
+			StringExportStringCaller(g_strCompilerBinaryWithPath));
 
 	g_Layout_viewStyle.useLatched();
 	g_Layout_enableDetachableMenus.useLatched();
