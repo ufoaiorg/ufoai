@@ -1561,7 +1561,9 @@ tech rs_weapon_electrolaser
 
 	require_AND
 	{
+		tech rs_weapon_stunrod
 		tech rs_laser
+		tech rs_weapon_laserammo
 		tech rs_skill_assault
 		tech rs_alien_live
 	}
