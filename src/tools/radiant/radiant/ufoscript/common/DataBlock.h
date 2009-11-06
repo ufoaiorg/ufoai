@@ -16,8 +16,8 @@ namespace scripts
 
 			std::string _data;
 			std::string _filename;
-			std::string _id;
 			std::size_t _lineNumber;
+			std::string _id;
 
 		public:
 			/**
