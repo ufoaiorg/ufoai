@@ -2911,6 +2911,23 @@ mapdef lake_ice_big
 	{
 		craft_drop_firebird
 	}
+	terrains
+	{
+		cold
+		arctic
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		suburban
+		village
+		rural
+	}
 }
 
 mapdef shelter
