@@ -1249,19 +1249,81 @@ window multiplayer_selectteam
 		texh		"64 64"
 		onClick		{ cmd "messagesay;" }
 	}
+	
+	panel chatscreen {
+		{
+			pos				"167 580"
+			size			"690 160"
+			layout			LAYOUT_BORDER
+			layoutMargin	5
+			padding			5
+			bordercolor		"0.5 0.5 0.5 1"
+			border			2
+			bgcolor			"0 0.1 0 0.7"
+		}
+	
+		text chat
+		{
+			dataid		TEXT_CHAT_WINDOW
+			align		LAYOUTALIGN_MIDDLE
+			font		"f_verysmall"
+			rows		"10"
+			lineheight	"16"
+			padding		5
+			onViewChange {
+				*node:(abstractscrollbar)parent.chat_scroll@fullsize = <fullsize>
+				*node:(abstractscrollbar)parent.chat_scroll@viewsize = <viewsize>
+				*node:(abstractscrollbar)parent.chat_scroll@current = <viewpos>
+			}
+		}
 
-	text chatscreen
-	{
-		dataid		TEXT_CHAT_WINDOW
-		pos			"167 580"
-		size		"690 160"
-		font		"f_verysmall"
-		rows		"10"
-		lineheight	"16"
-		padding		5
-		bordercolor	"0.5 0.5 0.5 1"
-		border		2
-		bgcolor		"0 0.1 0 0.7"
+		vscrollbar chat_scroll {
+			image		ui/scrollbar_v_green
+			align		LAYOUTALIGN_RIGHT
+			onChange 	{
+				*node:parent.chat@viewpos = <current>
+			}
+		}
+
+		panel input {
+			{
+				layout			LAYOUT_PACK
+				layoutMargin	5
+				align			LAYOUTALIGN_BOTTOM
+				height			25
+			}
+			
+			string say_label {
+				align		LAYOUTALIGN_LEFT
+				width		"50"
+				textalign	cl
+				string		"_Say:"
+			}
+			
+			textentry say {
+				align		LAYOUTALIGN_FILL
+				image		ui/button_green_verysmall
+				string		*cvar:mn_entry
+				color 		"0 .78 0 1"
+				selectcolor	"1 1 1 1"
+				textalign	cl
+				padding		8
+				font		"f_verysmall"
+				onChange	{
+					cmd "say <cvar:mn_entry>"
+					*cvar:mn_entry = ""
+					cmd "multiplayer_selectteam_edit"
+				}
+			}
+			
+			/** @todo move it into say@onChange
+			 * But at the moment this call into that callback dont work
+			 * without an intermediat command
+			 */
+			confunc multiplayer_selectteam_edit {
+				call *node:parent.say@edit
+			}
+		}
 	}
 
 	// ===================
@@ -1270,6 +1332,12 @@ window multiplayer_selectteam
 	func onInit
 	{
 		cmd "mp_selectteam_init;"
+		*cvar:mn_entry = ""
+	}
+	
+	func onClose
+	{
+		delete *cvar:mn_entry	
 	}
 }
 
