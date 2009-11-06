@@ -15,10 +15,15 @@ namespace scripts
 			// the blocks with the data - destroyed with the parser
 			std::vector<DataBlock*> _blocks;
 
+			std::string getMapDefID ();
+
 		public:
 			virtual ~MapDef ();
 
 			MapDef ();
+
+			// may return null if there is no mapdef yet
+			DataBlock* getMapDefForCurrentMap ();
 
 			/**
 			 * Will try to add the current loaded map to the ufo script file with its own mapdef entry.

@@ -17,7 +17,7 @@ namespace ui
 
 		public:
 
-			UFOScriptEditor (const std::string& ufoScriptName);
+			UFOScriptEditor (const std::string& ufoScriptName, const std::string& append = "");
 
 			virtual ~UFOScriptEditor ();
 

@@ -65,6 +65,20 @@ class TextFileInputStream: public TextInputStream
 			return m_file == 0;
 		}
 
+		std::string getString ()
+		{
+			const std::size_t buffer_size = 1024;
+			char buffer[buffer_size];
+
+			for (;;) {
+				std::size_t size = read(buffer, buffer_size);
+				if (size == 0)
+					break;
+			}
+
+			return buffer;
+		}
+
 		std::size_t read (char* buffer, std::size_t length)
 		{
 			return fread(buffer, 1, length, m_file);

@@ -6,9 +6,11 @@
 
 namespace ui
 {
-	UFOScriptEditor::UFOScriptEditor (const std::string& ufoScriptName)
+	UFOScriptEditor::UFOScriptEditor (const std::string& ufoScriptName, const std::string& append)
 	{
 		_view.setUFOScriptFile(ufoScriptName);
+		if (append.length() > 0)
+			_view.append(append);
 		_dialog = gtk_dialog_new_with_buttons(_("UFOScript Definition"), GlobalRadiant().getMainWindow(),
 				GTK_DIALOG_DESTROY_WITH_PARENT, GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, GTK_STOCK_OK,
 				GTK_RESPONSE_ACCEPT, NULL);

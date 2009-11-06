@@ -844,7 +844,6 @@ void R_LoadMaterials (const char *map)
 			}
 		}
 
-
 		if (!strcmp(c, "bump")) {
 			m->bump = atof(Com_Parse(&buffer));
 			if (m->bump < 0.0) {

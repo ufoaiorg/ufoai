@@ -35,7 +35,6 @@ namespace map
 			const std::string tileName = getTileName(map);
 			for (UMPTileIterator i = _umpTiles.begin(); i != _umpTiles.end(); i++) {
 				UMPTile& tile = *i;
-				g_warning("%s => %s\n", tile.getTileName(getBase()).c_str(), tileName.c_str());
 				if (tile.getTileName(getBase()) == tileName)
 					return &tile;
 			}
@@ -152,8 +151,14 @@ namespace map
 		{
 			const std::string relativeMapPath = GlobalFileSystem().getRelative(map);
 			const std::string baseMapName = os::stripExtension(relativeMapPath);
-			// remove the maps/ part
-			const std::string relativeToRMASubdir = baseMapName.substr(5);
+			// remove the maps/ part but keep any other subdir (below maps/) because it
+			// can be part of a rma theme
+			std::string relativeToRMASubdir;
+			if (baseMapName.find("maps/") != std::string::npos)
+				relativeToRMASubdir = baseMapName.substr(5);
+			else
+				relativeToRMASubdir = baseMapName;
+
 			const size_t size = getBase().length();
 			if (size > 0 && relativeToRMASubdir.length() > size)
 				return std::string("+") + relativeToRMASubdir.substr(size);

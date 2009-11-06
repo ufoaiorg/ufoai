@@ -56,7 +56,10 @@ void UFOScriptSystem::editTerrainDefinition ()
 void UFOScriptSystem::editMapDefinition ()
 {
 	scripts::MapDef mapDef;
-	mapDef.showMapDefinition();
+	if (mapDef.getMapDefForCurrentMap())
+		mapDef.showMapDefinition();
+	else
+		mapDef.add();
 }
 
 const std::string UFOScriptSystem::getUFOScriptDir () const
