@@ -88,7 +88,7 @@ void UMPSystem::editUMPDefinition ()
 		gtkutil::infoDialog(GlobalRadiant().getMainWindow(), _("Could not find the map in any ump file"));
 		return;
 	}
-	ui::UMPEditor editor("maps/" + umpFileName);
+	ui::UMPEditor editor(GlobalRadiant().getMapsPath() + umpFileName);
 	editor.show();
 }
 

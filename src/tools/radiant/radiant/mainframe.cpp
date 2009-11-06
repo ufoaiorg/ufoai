@@ -382,6 +382,11 @@ const std::string& gamename_get (void)
 	return g_gamename;
 }
 
+const std::string gamepath_get (void)
+{
+	return g_strEnginePath + g_gamename + "/";
+}
+
 void gamename_set (const std::string& gamename)
 {
 	if (gamename != g_gamename) {

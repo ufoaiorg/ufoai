@@ -121,6 +121,7 @@ struct IRadiant
 		const std::string& (*getMapsPath) ();
 		void (*commandInsert) (const std::string& name, const Callback& callback, const Accelerator& accelerator);
 
+		const std::string (*getGamePath) ();
 		const std::string& (*getGameName) ();
 		/**
 		 * @return The full path to the current loaded map

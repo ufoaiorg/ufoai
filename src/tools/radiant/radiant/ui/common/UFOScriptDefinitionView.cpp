@@ -81,7 +81,7 @@ namespace ui
 	void UFOScriptDefinitionView::save ()
 	{
 		const std::string& content = _view.getContents();
-		TextFileOutputStream out(GlobalRadiant().getEnginePath() + GlobalRadiant().getGameName() + "/" + _ufoFile);
+		TextFileOutputStream out(GlobalRadiant().getGamePath() + _ufoFile);
 		if (out.failed()) {
 			g_message("Error saving file to '%s'.", _ufoFile.c_str());
 			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Error saving ufo script file"));

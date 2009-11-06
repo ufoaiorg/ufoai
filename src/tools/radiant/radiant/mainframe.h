@@ -298,6 +298,7 @@ void DefaultMode ();
 
 const std::string& basegame_get ();
 const std::string& gamename_get ();
+const std::string gamepath_get ();
 void gamename_set (const std::string& gamename);
 void Radiant_attachGameNameObserver (ModuleObserver& observer);
 void Radiant_detachGameNameObserver (ModuleObserver& observer);

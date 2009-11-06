@@ -14,11 +14,6 @@ namespace map
 {
 	namespace ump
 	{
-		namespace
-		{
-			const std::string MAPS_DIR = "maps/";
-		}
-
 		UMPFile::UMPFile (const std::string& fileName, const std::string& base) :
 			_fileName(fileName), _base(base)
 		{
@@ -59,7 +54,7 @@ namespace map
 
 		bool UMPFile::save ()
 		{
-			TextFileOutputStream file(GlobalRadiant().getEnginePath() + MAPS_DIR + _fileName);
+			TextFileOutputStream file(GlobalRadiant().getMapsPath() + _fileName);
 			if (!file.failed()) {
 				std::stringstream os;
 
@@ -82,7 +77,7 @@ namespace map
 			return false;
 		}
 
-		void UMPFile::parseTile (Tokeniser &tokeniser) throw(UMPException)
+		void UMPFile::parseTile (Tokeniser &tokeniser) throw (UMPException)
 		{
 			std::string name = tokeniser.getToken();
 			if (name.length() == 0)
@@ -135,7 +130,7 @@ namespace map
 
 		bool UMPFile::load ()
 		{
-			AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(MAPS_DIR + _fileName));
+			AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(GlobalRadiant().getMapsPath() + _fileName));
 			if (file) {
 				AutoPtr<Tokeniser> reader(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
 				parse(*reader);
@@ -157,7 +152,8 @@ namespace map
 		{
 			const std::string relativeMapPath = GlobalFileSystem().getRelative(map);
 			const std::string baseMapName = os::stripExtension(relativeMapPath);
-			const std::string relativeToRMASubdir = baseMapName.substr(MAPS_DIR.length());
+			// remove the maps/ part
+			const std::string relativeToRMASubdir = baseMapName.substr(5);
 			const size_t size = getBase().length();
 			if (size > 0 && relativeToRMASubdir.length() > size)
 				return std::string("+") + relativeToRMASubdir.substr(size);
