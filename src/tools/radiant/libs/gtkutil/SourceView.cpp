@@ -80,9 +80,8 @@ namespace gtkutil
 
 	void SourceView::goToLine (int lineNumber)
 	{
-		// TODO: This is not yet working as intended
 		GtkTextIter iter;
-		gtk_text_view_get_iter_at_position(GTK_TEXT_VIEW(_view), &iter, (gint*)0, 1, lineNumber);
+		gtk_text_buffer_get_iter_at_line(GTK_TEXT_BUFFER(_buffer), &iter, lineNumber);
 		gtk_text_buffer_place_cursor(GTK_TEXT_BUFFER(_buffer), &iter);
 		gtk_text_view_scroll_mark_onscreen(GTK_TEXT_VIEW(_view), gtk_text_buffer_get_insert(GTK_TEXT_BUFFER(_buffer)));
 	}
