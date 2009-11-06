@@ -504,7 +504,7 @@ static void MN_LeftClick (int x, int y)
 	}
 
 	/* if we click out side a dropdown menu, we close it */
-	/** @todo need to refactoring it with a the focus code (cleaner) */
+	/** @todo need to refactoring it with the focus code (cleaner) */
 	/** @todo at least should be moved on the mouse down event (when the focus should change) */
 	if (!hoveredNode && mn.windowStackPos != 0) {
 		if (mn.windowStack[mn.windowStackPos - 1]->u.window.dropdown) {
@@ -629,6 +629,7 @@ void MN_MouseDown (int x, int y, int button)
 	node = capturedNode ? capturedNode : hoveredNode;
 
 	if (node != NULL) {
+		MN_MoveWindowOnTop(node->root);
 		if (node->behaviour->mouseDown)
 			node->behaviour->mouseDown(node, x, y, button);
 	}

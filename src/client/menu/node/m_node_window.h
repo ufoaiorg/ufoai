@@ -64,7 +64,7 @@ typedef struct {
 
 void MN_RegisterWindowNode(struct nodeBehaviour_s *behaviour);
 
-qboolean MN_WindowIsFullScreen(struct menuNode_s* const menu);
+qboolean MN_WindowIsFullScreen(const struct menuNode_s* const menu);
 void MN_WindowNodeSetRenderNode(struct menuNode_s *node, struct menuNode_s *renderNode);
 
 #endif

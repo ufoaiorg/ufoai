@@ -46,6 +46,7 @@ qboolean MN_IsMenuOnStack(const char* name);
 qboolean MN_IsPointOnMenu(int x, int y);
 void MN_InvalidateStack(void);
 void MN_InsertMenu(struct menuNode_s* menu);
+void MN_MoveWindowOnTop (struct menuNode_s * window);
 
 /* deprecated */
 const char* MN_GetActiveMenuName(void);

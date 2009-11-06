@@ -58,6 +58,43 @@ int MN_GetLastFullScreenWindow (void)
 }
 
 /**
+ * @brief Move the window on top of compatible windows.
+ * "Compatible" mean non full screen windows, and windows
+ * with the same window parent.
+ * @param window Window we want to move
+ */
+void MN_MoveWindowOnTop (menuNode_t * window)
+{
+	int i, j;
+
+	if (MN_WindowIsFullScreen(window))
+		return;
+
+	/* get window index */
+	for (i = 0; i < mn.windowStackPos; i++) {
+		if (mn.windowStack[i] == window)
+			break;
+	}
+
+	/* search the last compatible window */
+	for (j = i; j < mn.windowStackPos; j++) {
+		if (MN_WindowIsFullScreen(mn.windowStack[j]))
+			break;
+		if (window->u.window.parent != mn.windowStack[j]->u.window.parent)
+			break;
+	}
+	if (i + 1 == j)
+		return;
+
+	// translate windows
+	for (; i < j - 1; i++) {
+		mn.windowStack[i] = mn.windowStack[i+1];
+	}
+	// add the current window on top
+	mn.windowStack[i] = window;
+}
+
+/**
  * @brief Remove the menu from the menu stack
  * @param[in] menu The menu to remove from the stack
  * @sa MN_PushMenuDelete
