@@ -91,7 +91,6 @@ void CP_SetMissionVars (const mission_t *mission)
  */
 void CP_StartMissionMap (mission_t* mission)
 {
-	char expanded[MAX_QPATH];
 	base_t *bAttack;
 	const char *param = NULL;
 
@@ -106,12 +105,8 @@ void CP_StartMissionMap (mission_t* mission)
 	 * @sa Mod_LoadTexinfo */
 	refdef.mapZone = ccs.battleParameters.zoneType;
 
-	switch (mission->mapDef->map[0]) {
-	case '+':
-		Com_sprintf(expanded, sizeof(expanded), "maps/%s.ump", mission->mapDef->map + 1);
-		break;
 	/* base attack maps starts with a dot */
-	case '.':
+	if (mission->mapDef->map[0] == '.') {
 		bAttack = (base_t*)mission->data;
 		/* assemble a random base and set the base status to BASE_UNDER_ATTACK */
 		if (!bAttack) {
@@ -126,9 +121,6 @@ void CP_StartMissionMap (mission_t* mission)
 			Com_DPrintf(DEBUG_CLIENT, "Base is not under attack or no founded bases are left\n");
 
 		return;
-	default:
-		Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", mission->mapDef->map);
-		break;
 	}
 
 	SAV_QuickSave();
