@@ -40,6 +40,8 @@ typedef struct chatMessage_s {
 
 static chatMessage_t *mp_chatMessageStack;
 
+#define MAX_CHAT_TEXT 4096
+
 /**
  * @brief Displays a chat on the hud and add it to the chat buffer
  */
@@ -54,22 +56,21 @@ void MP_AddChatMessage (const char *text)
 	chat->text = Mem_PoolStrDup(text, cl_genericPool, 0);
 
 	if (!chatBuffer) {
-		chatBuffer = (char*)Mem_PoolAlloc(sizeof(char) * MAX_MESSAGE_TEXT, cl_genericPool, 0);
+		chatBuffer = (char*)Mem_PoolAlloc(MAX_CHAT_TEXT, cl_genericPool, 0);
 		if (!chatBuffer) {
 			Com_Printf("Could not allocate chat buffer\n");
 			return;
 		}
-		/* only link this once */
-		MN_RegisterText(TEXT_CHAT_WINDOW, chatBuffer);
 	}
 
 	*chatBuffer = '\0'; /* clear buffer */
 	do {
-		if (strlen(chatBuffer) + strlen(chat->text) >= sizeof(chatBuffer))
+		if (strlen(chatBuffer) + strlen(chat->text) >= MAX_CHAT_TEXT)
 			break;
-		Q_strcat(chatBuffer, chat->text, sizeof(chatBuffer)); /* fill buffer */
+		Q_strcat(chatBuffer, chat->text, MAX_CHAT_TEXT);
 		chat = chat->next;
 	} while (chat);
 
+	MN_RegisterText(TEXT_CHAT_WINDOW, chatBuffer);
 	Cmd_ExecuteString("unhide_chatscreen");
 }
