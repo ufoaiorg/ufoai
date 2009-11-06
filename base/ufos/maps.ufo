@@ -1,7 +1,7 @@
 // MAP DESCRIPTIONS
 //
 // valid terrain values:
-// * desert, arctic, cold, water, mountain, tropical, grass
+// * desert, arctic, cold, water, mountain, wasted, tropical, grass
 // valid culture values:
 // * eastern, western, oriental, african
 // valid population values:
@@ -131,7 +131,6 @@ mapdef or_small
 	multiplayer	false
 	description	"_A suburban district of an oriental area."
 	size		"small"
-	multiplayer	false
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
@@ -171,7 +170,6 @@ mapdef or_medium
 	multiplayer	false
 	description	"_A suburban district of an oriental area."
 	size		"small"
-	multiplayer	false
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
@@ -212,7 +210,6 @@ mapdef or_big
 	multiplayer	false
 	description	"_A suburban district of an oriental area."
 	size		"small"
-	multiplayer	false
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
@@ -985,7 +982,6 @@ mapdef forest_large
 	multiplayer	false
 	description	"_Aliens are up to no good in this sparsely populated forest region."
 	size		"large"
-	multiplayer	false
 	maxaliens	15 //TODO: This is an arbitrary value right now.
 
 	aircraft 
@@ -1028,7 +1024,6 @@ mapdef country_large
 	multiplayer	false
 	description	"_Some houses in desert"
 	size		"large"
-	multiplayer	false
 	maxaliens	10 //TODO: This is an arbitrary value right now.
 
 	aircraft 
@@ -1071,7 +1066,6 @@ mapdef country_street
 	multiplayer	false
 	description	"_Some houses in desert"
 	size		"large"
-	multiplayer	false
 	maxaliens	15 //TODO: This is an arbitrary value right now.
 
 	aircraft 
