@@ -96,8 +96,28 @@
 	</context>
 
 	<context id="types" style-ref="builtin-object">
+	  <keyword>craft_ufo.*</keyword>
+	  <keyword>craft_drop.*</keyword>
+	  <keyword>craft_crash.*</keyword>
 	  <keyword>true</keyword>
 	  <keyword>false</keyword>
+	  <keyword>desert</keyword>
+	  <keyword>arctic</keyword>
+	  <keyword>water</keyword>
+	  <keyword>mountain</keyword>
+	  <keyword>tropical</keyword>
+	  <keyword>cold</keyword>
+	  <keyword>wasted</keyword>
+	  <keyword>grass</keyword>
+	  <keyword>eastern</keyword>
+	  <keyword>western</keyword>
+	  <keyword>oriental</keyword>
+	  <keyword>african</keyword>
+	  <keyword>urban</keyword>
+	  <keyword>suburban</keyword>
+	  <keyword>village</keyword>
+	  <keyword>rural</keyword>
+	  <keyword>nopopulation</keyword>
 	</context>
 
 	<context id="keyword" style-ref="keyword">
