@@ -153,15 +153,15 @@ tech rs_laser
 
 tech rs_baselaser
 {
-	name "_Laser Turret"
+	name "_Base-Defence Laser Turret"
 	type	tech
 	up_chapter	equipment
 
 	description {
-		default "_baselaser_txt"
+		default "_b_baselaser_txt"
 	}
 	pre_description {
-		default "_baselaser_pre_txt"
+		default "_b_baselaser_pre_txt"
 	}
 
 	mail_pre
