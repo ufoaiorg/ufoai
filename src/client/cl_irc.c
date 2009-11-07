@@ -833,17 +833,11 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 	const char *p = NULL;
 	cmd.type = msg->type;
 
-	/* some debug output */
-	Com_DPrintf(DEBUG_CLIENT, "pre: '%s', param: '%s', trail: '%s'\n", msg->prefix, msg->params, msg->trailing);
-
 	/** @todo Skip non printable chars here */
 
 	switch (cmd.type) {
 	case IRC_COMMAND_NUMERIC:
 		cmd.id.numeric = msg->id.numeric;
-#ifdef DEBUG
-		Com_DPrintf(DEBUG_CLIENT, "<%s> [%03d] %s : %s", msg->prefix, cmd.id.numeric, msg->params, msg->trailing);
-#endif
 		switch (cmd.id.numeric) {
 		case RPL_HELLO:
 		case RPL_WELCOME:
