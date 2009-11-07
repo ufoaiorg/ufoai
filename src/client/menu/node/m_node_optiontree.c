@@ -143,7 +143,6 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	else {
 		const int height = MN_FontGetHeight(font);
 		currentDecY = (fontHeight - height) / 2;
-		currentY += currentDecY;
 	}
 
 	/* skip option over current position */
@@ -180,7 +179,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 		R_Color(NULL);
 		if (option->firstChild) {
 			menuIcon_t *icon = option->collapsed ? systemExpand : systemCollapse;
-			MN_DrawIconInBox(icon, 0, decX, currentY - currentDecY, icon->size[0], fontHeight);
+			MN_DrawIconInBox(icon, 0, decX, currentY, icon->size[0], fontHeight);
 		}
 
 		decX += COLLAPSEBUTTON_WIDTH;
@@ -194,8 +193,8 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 		}
 
 		R_Color(textColor);
-		MN_DrawString(font, ALIGN_UL, decX, currentY,
-			pos[0], currentY, node->size[0] - node->padding - node->padding, node->size[1],
+		MN_DrawString(font, ALIGN_UL, decX, currentY + currentDecY,
+			pos[0], currentY + currentDecY, node->size[0] - node->padding - node->padding, node->size[1],
 			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
