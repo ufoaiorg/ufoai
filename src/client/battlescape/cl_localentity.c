@@ -812,20 +812,7 @@ void LE_PlaceItem (le_t *le)
 	} else {
 		/* If no items in floor inventory, don't draw this le - the container is
 		 * maybe empty because an actor picked up the last items here */
-		/** @todo This will prevent LE_Add to get a floor-edict when in
-		 * mid-move. @sa g_client.c:G_ActorInvMove.
-		 * (It will cause asserts/segfaults in e.g. MN_DrawContainerNode)
-		 * mattn: But why do we want to get an empty container? If we don't set
-		 * this to qfalse we get the null model rendered, because the le->model
-		 * is @c NULL, too.
-		 * ---
-		 * I disabled the line again, because I really like having no segfauls/asserts.
-		 * There has to be a better solution/fix for the lila/null dummy models. --Hoehrer 2008-08-27
-		 * See the following link for details:
-		 * https://sourceforge.net/tracker/index.php?func=detail&aid=2071463&group_id=157793&atid=805242
-		le->inuse = qfalse;
-		*/
-		Com_Error(ERR_DROP, "Empty container as floor le with number: %i", le->entnum);
+		le->removeNextFrame = qtrue;
 	}
 }
 
@@ -1112,6 +1099,10 @@ void LE_AddToScene (void)
 	int i;
 
 	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
+		if (le->removeNextFrame) {
+			le->inuse = qfalse;
+			le->removeNextFrame = qfalse;
+		}
 		if (le->inuse && !le->invis) {
 			if (le->contents & CONTENTS_SOLID) {
 				if (!((1 << cl_worldlevel->integer) & le->levelflags))

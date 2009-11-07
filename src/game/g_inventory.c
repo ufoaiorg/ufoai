@@ -243,7 +243,6 @@ void G_SendInventory (unsigned int playerMask, edict_t *ent)
 		return;
 
 	gi.AddEvent(playerMask, EV_INV_ADD);
-
 	gi.WriteShort(ent->number);
 
 	/* size of inventory */

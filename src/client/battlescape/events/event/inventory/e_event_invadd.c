@@ -60,19 +60,10 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 	le_t *le = LE_Get(number);
 	int nr = NET_ReadShort(msg) / INV_INVENTORY_BYTES;
 
-	if (!le) {
-#ifdef DEBUG
-		for (; nr-- > 0;) {
-			CL_NetReceiveItem(msg, &item, &container, &x, &y);
-			Com_Printf("InvAdd: ignoring:\n");
-			INVSH_PrintItemDescription(item.t);
-		}
-#endif
-		Com_Error(ERR_DROP, "InvAdd: message ignored... LE %i not found\n", number);
-	}
+	if (!le)
+		Com_Error(ERR_DROP, "InvAdd message ignored... LE not found\n");
 
-	if (!le->inuse)
-		Com_Error(ERR_DROP, "InvAdd: warning... LE found but not in-use\n");
+	le->removeNextFrame = qfalse;
 
 	for (; nr-- > 0;) {
 		CL_NetReceiveItem(msg, &item, &container, &x, &y);

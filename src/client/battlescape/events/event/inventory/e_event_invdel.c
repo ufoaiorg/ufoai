@@ -39,10 +39,8 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 	NET_ReadFormat(msg, self->formatString, &number, &container, &x, &y);
 
 	le = LE_Get(number);
-	if (!le) {
-		Com_DPrintf(DEBUG_CLIENT, "InvDel message ignored... LE not found\n");
-		return;
-	}
+	if (!le)
+		Com_Error(ERR_DROP, "InvDel message ignored... LE not found\n");
 
 	ic = Com_SearchInInventory(&le->i, &csi.ids[container], x, y);
 

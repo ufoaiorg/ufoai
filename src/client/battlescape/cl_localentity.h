@@ -47,6 +47,7 @@ typedef enum {
 /** @brief a local entity */
 typedef struct le_s {
 	qboolean inuse;
+	qboolean removeNextFrame;	/**< will set the inuse value to false in the next frame */
 	qboolean invis;
 	qboolean selected;
 	int type;				/**< the local entity type */
