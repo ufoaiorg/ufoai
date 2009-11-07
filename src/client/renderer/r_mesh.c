@@ -325,7 +325,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 qboolean R_CullMeshModel (entity_t *e)
 {
 	int i;
-	int aggregatemask;
+	uint32_t aggregatemask;
 	vec3_t mins, maxs, origin;
 	vec4_t bbox[8];
 
