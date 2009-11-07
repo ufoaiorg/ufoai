@@ -24,6 +24,8 @@ UFO2MAPFLAGS = ' -v 2 -nice 19 -extra'
 URI = 'http://static.ufo.ludwigf.org/maps'
 __version__ = '0.0.4.1'
 
+downloadstatus = False
+
 """
 written by Florian Ludwig <dino@phidev.org>
 
@@ -68,6 +70,7 @@ def md5sum(path, binary = False):
 
 import time
 def download(uri):
+	global downloadstatus
     request = urllib2.Request(uri)
     import platform
     p = ' '.join([platform.platform()] + list(platform.dist()))
@@ -82,9 +85,11 @@ def download(uri):
     re = out = ''
     t = 1
     data = f.read(10240)
+    if not downloadstatus:
+    	print('downloading ' + uri)
     while data:
         re+= data
-        if sys.stdout.isatty:
+        if downloadstatus and sys.stdout.isatty:
             out = '\r%s %9ikb' % (uri, len(re) / 1024)
             sys.stdout.write(out)
             sys.stdout.flush()
@@ -92,7 +97,8 @@ def download(uri):
         data = f.read(10240)
         t = time.time() - t
     f.close()
-    sys.stdout.write('\r%s\r' % (' '*len(out)))
+    if downloadstatus:
+    	sys.stdout.write('\r%s\r' % (' '*len(out)))
     return re
 
 
@@ -272,11 +278,13 @@ def gen(args):
 
 
 def main(argv=None):
+	global downloadstatus
     commands = {'upgrade': upgrade,
                 'generate': gen}
 
     parser = optparse.OptionParser(argv)
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose')
+    parser.add_option('', '--no-downloadstatus', action='store_false', dest='downloadstatus')
 
     parser.usage = '%prog [options] command\n\n' \
                    'Commands:\n' \
@@ -288,6 +296,7 @@ def main(argv=None):
 
     logging.basicConfig(level=options.verbose and logging.DEBUG or logging.INFO,
                         format='%(message)s')
+    downloadstatus = options.downloadstatus
 
     # on windows always just upgrade
     if os.name == 'nt':
