@@ -173,7 +173,7 @@ install_exec: $(TARGETS)
 	@$(MAKE) lang
 	$(INSTALL) -d $(DESTDIR)$(DATADIR)/base
 # Copy each compiled file to datadir (with path)
-	for file in $(TARGETS); do $(INSTALL) -m 755 $$file $(DATADIR)/$$file; done
+	for file in $(TARGETS); do $(INSTALL) -m 755 $$file $(DESTDIR)$(DATADIR)/$$file; done
 # Copy all language files
 	for dir in base/i18n/*; do \
 		$(INSTALL) -d $(DESTDIR)$(DATADIR)/$$dir/LC_MESSAGES && \
