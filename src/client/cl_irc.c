@@ -916,8 +916,15 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 			}
 			return qtrue;
 
-		/* error codes */
+		case ERR_NICKNAMEINUSE:
 		case ERR_NOSUCHNICK:
+		case ERR_NONICKNAMEGIVEN:
+		case ERR_ERRONEUSNICKNAME:
+		case ERR_NICKCOLLISION:
+			Irc_AppendToBuffer("%s : %s", msg->params, msg->trailing);
+			/** @todo offer option to change the nickname */
+			break;
+		/* error codes */
 		case ERR_NOSUCHSERVER:
 		case ERR_NOSUCHCHANNEL:
 		case ERR_CANNOTSENDTOCHAN:
@@ -933,10 +940,6 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		case ERR_NOMOTD:
 		case ERR_NOADMININFO:
 		case ERR_FILEERROR:
-		case ERR_NONICKNAMEGIVEN:
-		case ERR_ERRONEUSNICKNAME:
-		case ERR_NICKNAMEINUSE:
-		case ERR_NICKCOLLISION:
 		case ERR_BANNICKCHANGE:
 		case ERR_NCHANGETOOFAST:
 		case ERR_USERNOTINCHANNEL:
