@@ -25,8 +25,8 @@ window ufopedia
 
 	panel summary {
 		{
-			pos		"27 95"
-			size	"307 501"
+			pos		"27 92"
+			size	"307 504"
 			image	"ui/panel_green"
 			layout	LAYOUT_BORDER
 			padding	10
@@ -56,13 +56,11 @@ window ufopedia
 		vscrollbar list_scroll {
 			image		ui/scrollbar_v_green
 			align		LAYOUTALIGN_RIGHT
-			height		"484"
 			current		0
 			viewsize	16
 			fullsize	50
 			onChange	{ *node:parent.list@viewpos <current> }
 		}
-		
 	}
 
 	panel content {
