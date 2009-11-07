@@ -37,8 +37,6 @@ window ufopedia
 			cvar		*cvar:up_summary_selection
 			dataid		OPTION_UFOPEDIA
 			align		LAYOUTALIGN_MIDDLE
-			pos			"10 10"
-			size		"257 484"
 			font		f_small
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -58,7 +56,6 @@ window ufopedia
 		vscrollbar list_scroll {
 			image		ui/scrollbar_v_green
 			align		LAYOUTALIGN_RIGHT
-			pos			"277 10"
 			height		"484"
 			current		0
 			viewsize	16
