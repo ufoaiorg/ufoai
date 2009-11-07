@@ -87,6 +87,7 @@ window messageoptions
 		color		"0 .78 0 1"
 		selectcolor "0 .78 0 1"
 		lineheight	"25"
+		padding		0
 		pos			"30 90"
 		size		"440 300"
 		onViewChange {
