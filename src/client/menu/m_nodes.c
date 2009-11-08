@@ -366,17 +366,20 @@ static menuNode_t *MN_GetNodeInTreeAtPosition (menuNode_t *node, int rx, int ry)
 	if (find)
 		return find;
 
-	/* is the node tangible */
-	if (node->ghost)
-		return NULL;
-
-	/* check excluded box */
-	for (i = 0; i < node->excludeRectNum; i++) {
-		if (rx >= node->excludeRect[i].pos[0]
-		 && rx < node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
-		 && ry >= node->excludeRect[i].pos[1]
-		 && ry < node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
+	/* disable ghost/excluderect in debug mode 2 */
+	if (MN_DebugMode() != 2) {
+		/* is the node tangible */
+		if (node->ghost)
 			return NULL;
+
+		/* check excluded box */
+		for (i = 0; i < node->excludeRectNum; i++) {
+			if (rx >= node->excludeRect[i].pos[0]
+			 && rx < node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
+			 && ry >= node->excludeRect[i].pos[1]
+			 && ry < node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
+				return NULL;
+		}
 	}
 
 	/* we are over the node */
