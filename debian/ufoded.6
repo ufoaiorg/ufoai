@@ -1,18 +1,42 @@
 .TH UFODED 6 "January 13, 2008"
 .SH NAME
 ufoded \- UFO: Alien Invasion server
+
 .SH SYNOPSIS
 .PP
 \fBufo\fR [\fB+set \fIoption\fR \fIvalue\fP] ...
+
 .SH DESCRIPTION
 This manual page documents briefly the
 .B ufoded
 command.
 .PP
 \fBufoded\fP is the server for the strategy game UFO: Alien Invasion.
+
 .SH OPTIONS
 .PP
 Options passed by "+set option value" are the same as the in-game console understands. For the in-game console press SHIFT+ESC.
+
+.SH "FILES"
+All theses files are part of a pk3 file in \fI/usr/share/games/ufoai/base/\fR. You can extract them (pk3 files are just zip files) 
+and place them in the home directory of the user running the dedicated server. Use the path \fI~/.ufoai/<VERSION>/base/\fR to place 
+these files. The files that are not located in the pk3 files have a higher priority than the files that are stored in the pk3 
+files. So you are able to replace any file you want like this. You can also add new maps and other game content to the \fIbase/\fR
+directory in your users home directory to be able to use new content in the game.
+.TP 
+\fBdedicated.cfg\fR
+Dedicated server config\&.
+.TP 
+\fBautoexec.cfg\fR
+Commands that are executed when starting the dedicated server\&.
+.TP 
+\fBmapcycle.txt\fR
+This defines the mapcycle the dedicated server is using\&.
+
+.SH "SEE ALSO"
+.PP
+\fBufo\fR(6)
+
 .SH AUTHOR
 \fBufoded\fP was written by the UFO: Alien Invasion team.
 .PP
