@@ -80,8 +80,8 @@ public:
 
 	virtual void getDefaultState(OpenGLState& state) const = 0;
 
-	virtual void insert(const char* name, const OpenGLState& state) = 0;
-	virtual void erase(const char* name) = 0;
+	virtual void insert(const std::string& name, const OpenGLState& state) = 0;
+	virtual void erase(const std::string& name) = 0;
 };
 
 #include "modulesystem.h"

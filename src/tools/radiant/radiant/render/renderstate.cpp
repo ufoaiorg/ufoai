@@ -305,9 +305,8 @@ class OpenGLShader: public Shader
 		}
 		void realise (const std::string& name)
 		{
-			const char *shaderName = name.c_str();
-			if (shaderName && shaderName[0] != '\0')
-				construct(shaderName);
+			if (!name.empty())
+				construct(name);
 
 			if (m_used != 0 && m_shader != 0) {
 				m_shader->SetInUse(true);
@@ -935,7 +934,7 @@ void OpenGLStateBucket::render (OpenGLState& current, unsigned int globalstate, 
 
 class OpenGLStateMap: public OpenGLStateLibrary
 {
-		typedef std::map<CopiedString, OpenGLState> States;
+		typedef std::map<std::string, OpenGLState> States;
 		States m_states;
 	public:
 		virtual ~OpenGLStateMap ()
@@ -958,18 +957,18 @@ class OpenGLStateMap: public OpenGLStateLibrary
 			OpenGLState_constructDefault(state);
 		}
 
-		void insert (const char* name, const OpenGLState& state)
+		void insert (const std::string& name, const OpenGLState& state)
 		{
 			bool inserted = m_states.insert(States::value_type(name, state)).second;
 			ASSERT_MESSAGE(inserted, "OpenGLStateMap::insert: " << name << " already exists");
 		}
-		void erase (const char* name)
+		void erase (const std::string& name)
 		{
 			std::size_t count = m_states.erase(name);
 			ASSERT_MESSAGE(count == 1, "OpenGLStateMap::erase: " << name << " does not exist");
 		}
 
-		iterator find (const char* name)
+		iterator find (const std::string& name)
 		{
 			return m_states.find(name);
 		}
@@ -1011,7 +1010,7 @@ void OpenGLShader::construct (const std::string& shaderName)
 {
 	const char *name = shaderName.c_str();
 	OpenGLState& state = appendDefaultPass();
-	switch (name[0]) {
+	switch (shaderName[0]) {
 	case '(':
 		sscanf(name, "(%g %g %g)", &state.m_colour[0], &state.m_colour[1], &state.m_colour[2]);
 		state.m_colour[3] = 1.0f;
