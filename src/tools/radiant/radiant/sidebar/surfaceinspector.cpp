@@ -799,7 +799,7 @@ void SurfaceInspector::Update (void)
 	const std::string& name = SurfaceInspector_GetSelectedShader();
 
 	if (shader_is_texture(name.c_str())) {
-		gtk_entry_set_text(m_texture, shader_get_textureName(name.c_str()));
+		gtk_entry_set_text(m_texture, shader_get_textureName(name).c_str());
 	} else {
 		gtk_entry_set_text(m_texture, "");
 	}
@@ -1147,7 +1147,7 @@ void TextureClipboard_textureSelected (const char* shader)
 }
 
 class TextureBrowser;
-void TextureBrowser_SetSelectedShader (TextureBrowser& textureBrowser, const char* shader);
+void TextureBrowser_SetSelectedShader (TextureBrowser& textureBrowser, const std::string& shader);
 const char* TextureBrowser_GetSelectedShader (TextureBrowser& textureBrowser);
 
 void Scene_copyClosestTexture (SelectionTest& test)

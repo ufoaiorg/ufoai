@@ -5,6 +5,7 @@
 #include "iselection.h"
 #include "stream/stringstream.h"
 #include "stream/textfilestream.h"
+#include "os/path.h"
 
 #include <map>
 
@@ -43,7 +44,7 @@ class ExportData
 	private:
 
 		// "textures/tex_common/caulk" -> "caulk"
-		void GetShaderNameFromShaderPath (const char* path, std::string& name);
+		std::string getShaderNameFromShaderPath (const std::string& path) const;
 
 		group* current;
 		collapsemode mode;
@@ -95,8 +96,7 @@ void ExportData::EndBrush (void)
 
 void ExportData::AddBrushFace (Face& f)
 {
-	std::string shadername;
-	GetShaderNameFromShaderPath(f.GetShader(), shadername);
+	std::string shadername = getShaderNameFromShaderPath(f.GetShader());
 
 	// ignore faces from ignore list
 	if (ignorelist.find(shadername) != ignorelist.end())
@@ -129,16 +129,9 @@ void ExportData::AddBrushFace (Face& f)
 #endif
 }
 
-void ExportData::GetShaderNameFromShaderPath (const char* path, std::string& name)
+std::string ExportData::getShaderNameFromShaderPath (const std::string& path) const
 {
-	std::string tmp(path);
-
-	size_t last_slash = tmp.find_last_of("/");
-
-	if (last_slash != std::string::npos && last_slash == (tmp.length() - 1))
-		name = path;
-	else
-		name = tmp.substr(last_slash + 1, tmp.length() - last_slash);
+	return os::getFilenameFromPath(path);
 }
 
 /*
@@ -321,7 +314,7 @@ class ForEachSelected: public SelectionSystem::Visitor
 
 		void visit (scene::Instance& instance) const
 		{
-			BrushInstance* bptr = dynamic_cast<BrushInstance*>(&instance);
+			BrushInstance* bptr = dynamic_cast<BrushInstance*> (&instance);
 			if (bptr) {
 				Brush& brush(bptr->getBrush());
 

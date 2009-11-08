@@ -272,7 +272,7 @@ const char* TextureBrowser_GetSelectedShader (TextureBrowser& textureBrowser)
  * @sa MainFrame::RedrawStatusText
  * @sa MainFrame::SetStatusText
  */
-void TextureBrowser_SetStatus (TextureBrowser& textureBrowser, const char* name)
+void TextureBrowser_SetStatus (TextureBrowser& textureBrowser, const std::string& name)
 {
 	IShader* shader = GlobalShaderSystem().getShaderForName(name);
 	qtexture_t* q = shader->getTexture();
@@ -282,9 +282,9 @@ void TextureBrowser_SetStatus (TextureBrowser& textureBrowser, const char* name)
 	g_pParentWnd->SetStatusText(g_pParentWnd->m_texture_status, strTex.c_str() + strlen("textures/"));
 }
 
-static void TextureBrowser_Focus (TextureBrowser& textureBrowser, const char* name);
+static void TextureBrowser_Focus (TextureBrowser& textureBrowser, const std::string& name);
 
-void TextureBrowser_SetSelectedShader (TextureBrowser& textureBrowser, const char* shader)
+void TextureBrowser_SetSelectedShader (TextureBrowser& textureBrowser, const std::string& shader)
 {
 	textureBrowser.shader = shader;
 	TextureBrowser_SetStatus(textureBrowser, shader);
@@ -628,7 +628,7 @@ void TextureBrowser_ShowStartupShaders (TextureBrowser& textureBrowser)
 // it might need to be split in parts or moved out .. dunno
 // scroll origin so the specified texture is completely on screen
 // if current texture is not displayed, nothing is changed
-static void TextureBrowser_Focus (TextureBrowser& textureBrowser, const char* name)
+static void TextureBrowser_Focus (TextureBrowser& textureBrowser, const std::string& name)
 {
 	TextureLayout layout;
 	// scroll origin so the texture is completely on screen

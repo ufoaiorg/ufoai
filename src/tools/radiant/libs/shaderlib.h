@@ -26,6 +26,7 @@
 #include "character.h"
 #include "ishaders.h"
 
+//! @Deprecated - use string compare directory. Shaders are only equal if filenames and shader ids are matching
 inline bool shader_equal (const std::string& shader, const std::string& other)
 {
 	return string_equal_nocase(shader.c_str(), other.c_str());
@@ -71,9 +72,9 @@ inline bool shader_is_texture (const std::string& name)
 	return shader_equal_prefix(name, GlobalTexturePrefix_get());
 }
 
-inline const char* shader_get_textureName (const char* name)
+inline const std::string shader_get_textureName (const std::string& name)
 {
-	return name + GlobalTexturePrefix_get().length();
+	return name.substr(GlobalTexturePrefix_get().length());
 }
 
 inline bool texdef_name_valid (const std::string& name)

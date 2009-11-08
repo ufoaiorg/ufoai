@@ -181,11 +181,11 @@ class UFOFaceTokenExporter
 		void exportTexture (const FaceShader& faceShader, TokenWriter& writer) const
 		{
 			// write shader name
-			const char *shaderName = shader_get_textureName(faceShader.getShader());
-			if (string_empty(shaderName)) {
+			const std::string shaderName = shader_get_textureName(faceShader.getShader());
+			if (shaderName.empty()) {
 				writer.writeToken("tex_common/nodraw");
 			} else {
-				writer.writeToken(shaderName);
+				writer.writeToken(shaderName.c_str());
 			}
 		}
 

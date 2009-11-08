@@ -43,7 +43,7 @@ class _QERFaceData
 		Vector3 m_p1;
 		Vector3 m_p2;
 		texdef_t m_texdef;
-		const char* m_shader;
+		std::string m_shader;
 		int contents;
 		int flags;
 		int value;

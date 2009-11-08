@@ -121,7 +121,7 @@ void MaterialSystem::generateMaterialFromTexture ()
 				!= g_SelectedFaceInstances.m_faceInstances.end(); ++i) {
 			const FaceInstance& faceInstance = *(*i);
 			const Face &face = faceInstance.getFace();
-			std::string texture = std::string(face.getShader().getShader());
+			const std::string& texture = face.GetShader();
 			// don't generate materials for common textures
 			if (texture.find("tex_common") != std::string::npos)
 				continue;

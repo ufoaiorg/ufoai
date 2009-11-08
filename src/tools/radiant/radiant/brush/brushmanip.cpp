@@ -431,8 +431,7 @@ class FaceSelectByShader
 		}
 		void operator() (FaceInstance& face) const
 		{
-			g_debug("checking %s = %s\n", face.getFace().GetShader(), m_name.c_str());
-			if (shader_equal(face.getFace().GetShader(), m_name.c_str())) {
+			if (shader_equal(face.getFace().GetShader(), m_name)) {
 				face.setSelected(SelectionSystem::eFace, true);
 			}
 		}
@@ -911,8 +910,8 @@ class BrushPrefab
 			if (modal_dialog_show(window, dialog) == eIDOK) {
 				const char *str = gtk_entry_get_text(sides_entry);
 
-				Scene_BrushConstructPrefab(GlobalSceneGraph(), type, atoi(str),
-						TextureBrowser_GetSelectedShader(GlobalTextureBrowser()));
+				Scene_BrushConstructPrefab(GlobalSceneGraph(), type, atoi(str), TextureBrowser_GetSelectedShader(
+						GlobalTextureBrowser()));
 			}
 
 			gtk_widget_destroy(GTK_WIDGET(window));

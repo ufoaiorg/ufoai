@@ -381,9 +381,9 @@ class FaceShader: public ModuleObserver
 			m_observers.detach(observer);
 		}
 
-		const char* getShader () const
+		const std::string& getShader () const
 		{
-			return m_shader.c_str();
+			return m_shader;
 		}
 		void setShader (const std::string& name)
 		{
@@ -1031,11 +1031,11 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 			SceneChangeNotify();
 		}
 
-		const char* GetShader () const
+		const std::string& GetShader () const
 		{
 			return m_shader.getShader();
 		}
-		void SetShader (const char* name)
+		void SetShader (const std::string& name)
 		{
 			undoSave();
 			m_shader.setShader(name);
