@@ -141,11 +141,11 @@ static void MN_DrawDebugMenuNodeNames (void)
 	/* main menus */
 	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "main active menu:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, Cvar_GetString("mn_active"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, Cvar_GetString("mn_sys_active"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "main option menu:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, Cvar_GetString("mn_main"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, Cvar_GetString("mn_sys_main"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
