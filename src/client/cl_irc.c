@@ -77,6 +77,14 @@ static qboolean Irc_AppendToBuffer(const char* const msg, ...) __attribute__((fo
 static qboolean Irc_Proto_ParseServerMsg(const char *txt, size_t txt_len, irc_server_msg_t *msg);
 static qboolean Irc_Proto_Enqueue(const char *msg, size_t msg_len);
 
+static qboolean Irc_Net_Connect(const char *host, const char *port);
+static qboolean Irc_Net_Disconnect(void);
+static void Irc_Net_Send(const char *msg, size_t msg_len);
+
+static void Irc_Connect_f(void);
+static void Irc_Disconnect_f(void);
+static void Irc_Input_Deactivate_f(void);
+
 /*
 ===============================================================
 Common functions
@@ -1278,7 +1286,7 @@ static void Irc_Logic_Disconnect (const char *reason)
 		Cvar_ForceSet("irc_defaultChannel", "");
 		Cvar_ForceSet("irc_topic", "Connecting (please wait)...");
 		MN_ResetData(TEXT_IRCUSERS);
-		Irc_Input_Deactivate();
+		Irc_Input_Deactivate_f();
 	} else
 		Com_Printf("Irc_Disconnect: not connected\n");
 }
@@ -1733,6 +1741,33 @@ static void Irc_UserRightClick_f (void)
 	Irc_Proto_Whois(&name[1]);
 }
 
+/**
+ * @sa Irc_Input_Deactivate
+ */
+static void Irc_Input_Activate_f (void)
+{
+	/* in case of a failure we need this in MN_PopMenu */
+	if (irc_connected && irc_defaultChannel->string[0] != '\0') {
+		MN_RegisterText(TEXT_IRCCONTENT, irc_buffer);
+	} else {
+		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
+		MN_PopMenu(qfalse);
+		MN_PushMenu("irc_popup", NULL);
+		/* cancel any active editing */
+		return;
+	}
+}
+
+/**
+ * @sa Irc_Input_Activate
+ */
+static void Irc_Input_Deactivate_f (void)
+{
+	irc_send_buffer->modified = qfalse;
+
+	MN_ResetData(TEXT_IRCCONTENT);
+}
+
 /*
 ===============================================================
 Init and Shutdown functions
@@ -1760,8 +1795,8 @@ void Irc_Init (void)
 	Cmd_AddCommand("irc_userlist_click", Irc_UserClick_f, "Menu function for clicking a user from the list");
 	Cmd_AddCommand("irc_userlist_rclick", Irc_UserRightClick_f, "Menu function for clicking a user from the list");
 
-	Cmd_AddCommand("irc_activate", Irc_Input_Activate, "IRC init when entering the menu");
-	Cmd_AddCommand("irc_deactivate", Irc_Input_Deactivate, "IRC deactivate when leaving the irc menu");
+	Cmd_AddCommand("irc_activate", Irc_Input_Activate_f, "IRC init when entering the menu");
+	Cmd_AddCommand("irc_deactivate", Irc_Input_Deactivate_f, "IRC deactivate when leaving the irc menu");
 
 	/* cvars */
 	irc_server = Cvar_Get("irc_server", "irc.freenode.org", CVAR_ARCHIVE, "IRC server to connect to");
@@ -1782,31 +1817,4 @@ void Irc_Shutdown (void)
 {
 	if (irc_connected)
 		Irc_Logic_Disconnect("shutdown");
-}
-
-/**
- * @sa Irc_Input_Deactivate
- */
-void Irc_Input_Activate (void)
-{
-	/* in case of a failure we need this in MN_PopMenu */
-	if (irc_connected && irc_defaultChannel->string[0] != '\0') {
-		MN_RegisterText(TEXT_IRCCONTENT, irc_buffer);
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
-		MN_PopMenu(qfalse);
-		MN_PushMenu("irc_popup", NULL);
-		/* cancel any active editing */
-		return;
-	}
-}
-
-/**
- * @sa Irc_Input_Activate
- */
-void Irc_Input_Deactivate (void)
-{
-	irc_send_buffer->modified = qfalse;
-
-	MN_ResetData(TEXT_IRCCONTENT);
 }

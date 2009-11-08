@@ -28,13 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef IRC_NET_H
 #define IRC_NET_H
 
-#ifdef _WIN32
-#	include <winsock.h>
-	typedef SOCKET irc_socket_t;
-#else
-	typedef int irc_socket_t;
-#endif
-
 #define IRC_SEND_BUF_SIZE 512
 #define IRC_RECV_BUF_SIZE 1024
 
@@ -243,9 +236,8 @@ typedef struct irc_server_msg_s {
 	char trailing[IRC_SEND_BUF_SIZE];
 } irc_server_msg_t;
 
-static qboolean Irc_Net_Connect(const char *host, const char *port);
-static qboolean Irc_Net_Disconnect(void);
-
-static void Irc_Net_Send(const char *msg, size_t msg_len);
+void Irc_Init(void);
+void Irc_Shutdown(void);
+void Irc_Logic_Frame(void);
 
 #endif

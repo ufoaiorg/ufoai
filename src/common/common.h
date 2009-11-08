@@ -134,21 +134,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MASTER_SERVER "http://ufoai.ninex.info/" /* sponsored by NineX */
 
-
-/*
-==============================================================
-IRC
-==============================================================
-*/
-void Irc_Init(void);
-void Irc_Shutdown(void);
-
-/* client side */
-void Irc_Logic_Frame(void);
-void Irc_Input_KeyEvent(int key);
-void Irc_Input_Deactivate(void);
-void Irc_Input_Activate(void);
-
 /*
 ==============================================================
 PROTOCOL
