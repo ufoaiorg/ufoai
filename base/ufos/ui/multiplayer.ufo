@@ -1105,133 +1105,197 @@ window multiplayer_selectteam
 	// background
 	// ==================
 
-	pic back_ul
-	{
-		image		ui/multiplayer_teamsel
-		pos			"256 28"
+	panel partyinfo {
+		{
+			pos		"100 30"
+			size	"400 430"
+			bordercolor		"0.5 0.5 0.5 1"
+			border			2
+			padding			5
+		}
+
+		pic back
+		{
+			image		ui/multiplayer_teamsel
+			size		"400 430"
+		}
+
+		string title
+		{
+			string		"_Party info"
+			font		f_big
+			color		"1 1 1 1"
+			pos			"0 0"
+			size		"415 50"
+			textalign	cc
+		}
+
+		string mapname
+		{
+			font		f_small
+			color		"1 1 1 1"
+			string		*cvar:mn_svmapname
+			pos			"50 50"
+			size		"300 20"
+			textalign	"cc"
+		}
+
+		pic mappic
+		{
+			pos			"40 80"
+			size		"320 200"
+			image		*cvar:mn_mappicbig
+		}
+
+		string maxplayersperteams_str
+		{
+			string		"_Max. players per team"
+			pos			"50 310"
+			size		"240 20"
+		}
+	
+		string maxplayersperteams_value
+		{
+			string		*cvar:mn_maxplayersperteam
+			pos			"300 310"
+			size		"50 20"
+		}
+	
+		string maxteams_str
+		{
+			string		"_Max. teams for this map"
+			pos			"50 330"
+			size		"240 20"
+		}
+	
+		string maxteams_value
+		{
+			string		*cvar:mn_maxteams
+			pos			"300 330"
+			size		"50 20"
+		}
 	}
 
-	string teamselection
-	{
-		string		"_Team selection"
-		font		f_big
-		color		"1 1 1 1"
-		pos			"305 50"
-		size		"415 30"
-		textalign	uc
+	panel players {
+
+		{
+			pos "520 30"
+			size "400 250"
+			bordercolor		"0.5 0.5 0.5 1"
+			border			2
+			padding			5
+		}
+
+		pic back
+		{
+			image		ui/multiplayer_teamsel
+			size		"400 250"
+		}
+
+		string title
+		{
+			string		"_Players connected"
+			font		f_big
+			color		"1 1 1 1"
+			pos			"0 0"
+			size		"415 50"
+			textalign	cc
+		}
+
+		text team_info
+		{
+			dataid		TEXT_LIST
+			pos			"50 50"
+			size		"300 300"
+			lineheight	16
+			tabwidth	60
+			rows		20
+		}
+
 	}
 
-	string info
-	{
-		string		"_Click the big button in the lower right corner when ready"
-		font		f_small
-		color		"1 1 1 1"
-		pos			"256 10"
-		size		"512 20"
-		textalign	uc
-	}
+	panel teamselection {
+		{
+			pos "520 310"
+			size "400 150"
+			bordercolor		"0.5 0.5 0.5 1"
+			border			2
+			padding			5
+		}
 
-	string mapname
-	{
-		string		*cvar:mn_svmapname
-		font		f_small
-		color		"1 1 1 1"
-		pos			"305 72"
-		size		"415 20"
-		textalign	uc
-	}
+		pic back
+		{
+			image		ui/multiplayer_teamsel
+			size		"400 150"
+		}
 
-	text team_info
-	{
-		dataid		TEXT_LIST
-		pos			"300 100"
-		size		"422 320"
-		lineheight	16
-		tabwidth	60
-		rows		20
-	}
+		string title
+		{
+			string		"_Team selection"
+			font		f_big
+			color		"1 1 1 1"
+			pos			"0 0"
+			size		"415 50"
+			textalign	cc
+		}
 
-	text teamnum_status
-	{
-		dataid		TEXT_STANDARD
-		pos			"300 430"
-		size		"422 16"
-		lineheight	16
-		tabwidth	60
-		rows		1
-	}
+		text teamnum_status
+		{
+			dataid		TEXT_STANDARD
+			pos			"0 50"
+			size		"400 16"
+			lineheight	16
+			tabwidth	60
+			rows		1
+			textalign	cc
+		}
 
-	string maxplayersperteams_str
-	{
-		string		"_Max. players per team"
-		pos			"300 460"
-		size		"240 20"
-	}
+		string teamnum_str
+		{
+			string		"_Team preference:"
+			pos			"25 80"
+			size		"185 20"
+		}
+		string teamnum_value
+		{
+			string		*cvar:cl_teamnum
+			pos			"210 80"
+			size		"40 20"
+			textalign	ur
+		}
+		pic teamnum_inc
+		{
+			tooltip		"_Next free team"
+			image		ui/buttons_small
+			pos			"268 82"
+			texl		"0 0"
+			texh		"16 16"
+			mousefx		true
+			onClick		{ cmd "teamnum_inc;" }
+		}
+		pic teamnum_dec
+		{
+			tooltip		"_Previous free team"
+			image		ui/buttons_small
+			pos			"284 82"
+			texl		"16 0"
+			texh		"32 16"
+			mousefx		true
+			onClick		{ cmd "teamnum_dec;" }
+		}
 
-	string maxplayersperteams_value
-	{
-		string		*cvar:mn_maxplayersperteam
-		pos			"550 460"
-		size		"50 20"
-	}
+		button button_ready
+		{
+			tooltip		"_Finish the teamselection and start the game"
+			image		ui/button_blue
+			pos			"250 100"
+			size		"100 40"
+			string		"_Ready..."
+			color		"0.8 0.8 0.8 1"
+			selectcolor "1 1 1 1"
+			onClick		{ cmd "spawnsoldiers;" }
+		}
 
-	string maxteams_str
-	{
-		string		"_Max. teams for this map"
-		pos			"300 480"
-		size		"240 20"
-	}
-
-	string maxteams_value
-	{
-		string		*cvar:mn_maxteams
-		pos			"550 480"
-		size		"50 20"
-	}
-
-	string teamnum_str
-	{
-		string		"_Team preference:"
-		pos			"325 500"
-		size		"185 20"
-	}
-	string teamnum_value
-	{
-		string		*cvar:cl_teamnum
-		pos			"510 500"
-		size		"40 20"
-		textalign	ur
-	}
-	pic teamnum_inc
-	{
-		tooltip		"_Next free team"
-		image		ui/buttons_small
-		pos			"568 502"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "teamnum_inc;" }
-	}
-	pic teamnum_dec
-	{
-		tooltip		"_Previous free team"
-		image		ui/buttons_small
-		pos			"584 502"
-		texl		"16 0"
-		texh		"32 16"
-		mousefx		true
-		onClick		{ cmd "teamnum_dec;" }
-	}
-
-	custombutton button_exit
-	{
-		tooltip		"_Finish the teamselection and start the game"
-		image		ui/button_background
-		pos			"684 494"
-		size		"64 37"
-		texl		"192 0"
-		icon		return
-		onClick		{ cmd "spawnsoldiers;" }
 	}
 
 	// update every 2 sec
@@ -1246,15 +1310,16 @@ window multiplayer_selectteam
 	todo updateplayerinfo { pos "60 280" string "Add something easy to change the user team" }
 	todo mapinfo { pos "60 310" string "Add info about the server, map image..." }
 	todo adminteam { pos "60 340" string "Feature: admin can affect a a player to a team" }
-	todo adminstart { pos "90 280" string "Feature: admin can start the party when he want" }
+	todo betterback { pos "30 370" string "Improve the 'background'" }
+	todo adminstart { pos "30 400" string "Feature: admin can start the party when he want" }
+	todo fixchat { pos "30 430" string "Fix irc/chat usability (last line on bottom and visible)" }
 
 	button swap_irc_connection_status {
 		string		"_Activate IRC"
-		image		ui/button_green_small
-		width		"200"
-		pos			"30 370"
-		font		f_menu
-		color		"0 0.5 0 1"
+		image		ui/button_blue
+		pos			"30 550"
+		size		"150 40"
+		color		"0.8 0.8 0.8 1"
 		selectcolor "1 1 1 1"
 		onClick {
 			if ( *cvar:mn_ircconnected == 1 ) {
@@ -1273,12 +1338,11 @@ window multiplayer_selectteam
 	
 	button swap_irc_users_visibility {
 		string		"_Display IRC users"
-		image		ui/button_green_small
-		width		"200"
-		pos			"30 410"
-		font		f_menu
+		image		ui/button_blue
+		pos			"30 600"
+		size		"150 40"
 		disabled	true
-		color		"0 0.5 0 1"
+		color		"0.8 0.8 0.8 1"
 		selectcolor "1 1 1 1"
 		onClick {
 			if ( *node:parent.allchats.ircscreen.users@invis == true ) {
@@ -1293,7 +1357,7 @@ window multiplayer_selectteam
 
 	panel allchats {
 		{
-			pos				"167 550"
+			pos				"200 550"
 			size			"800 200"
 			bordercolor		"0.5 0.5 0.5 1"
 			border			2
