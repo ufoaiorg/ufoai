@@ -31,12 +31,12 @@ class filetype_t
 			name(""), pattern("")
 		{
 		}
-		filetype_t (const char* _name, const char* _pattern) :
+		filetype_t (const std::string& _name, const std::string& _pattern) :
 			name(_name), pattern(_pattern)
 		{
 		}
-		const char* name;
-		const char* pattern;
+		const std::string& name;
+		const std::string& pattern;
 };
 
 class IFileTypeList
@@ -45,7 +45,7 @@ class IFileTypeList
 		virtual ~IFileTypeList ()
 		{
 		}
-		virtual void addType (const char* moduleName, filetype_t type) = 0;
+		virtual void addType (const std::string& moduleName, filetype_t type) = 0;
 };
 
 /**
@@ -74,7 +74,7 @@ class IFileTypeRegistry
 		 * The FileTypePattern to associate with this module name.
 		 */
 		virtual void addType (const char* moduleType, const char* moduleName, filetype_t type) = 0;
-		virtual void getTypeList (const char* moduleType, IFileTypeList* typelist) = 0;
+		virtual void getTypeList (const std::string& moduleType, IFileTypeList* typelist) = 0;
 };
 
 #include "modulesystem.h"

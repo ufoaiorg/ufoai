@@ -91,9 +91,9 @@ inline bool string_greater (const char* string, const char* other)
 /// Returns >0 if \p string is lexicographically greater than \p other after converting both to lower-case.
 /// Returns 0 if \p string is lexicographically equal to \p other after converting both to lower-case.
 /// O(n)
-inline int string_compare_nocase (const char* string, const char* other)
+inline int string_compare_nocase (const std::string& string, const std::string& other)
 {
-	return g_ascii_strcasecmp(string, other);
+	return g_ascii_strcasecmp(string.c_str(), other.c_str());
 }
 
 /// \brief Returns <0 if [\p string, \p string + \p n) is lexicographically less than [\p other, \p other + \p n).
@@ -109,7 +109,7 @@ inline int string_compare_nocase_n (const char* string, const char* other, std::
 /// \brief Returns true if \p string is lexicographically equal to \p other.
 /// Treats all ascii characters as lower-case during comparisons.
 /// O(n)
-inline bool string_equal_nocase (const char* string, const char* other)
+inline bool string_equal_nocase (const std::string& string, const std::string& other)
 {
 	return string_compare_nocase(string, other) == 0;
 }
@@ -515,7 +515,7 @@ namespace string
 		return ss.str();
 	}
 
-	inline bool contains(const std::string& source, const std::string& contains)
+	inline bool contains (const std::string& source, const std::string& contains)
 	{
 		return source.rfind(contains) != std::string::npos;
 	}
@@ -533,14 +533,14 @@ namespace string
 	inline std::string toLower (const std::string& str)
 	{
 		std::string convert = str;
-		std::transform(convert.begin(), convert.end(), convert.begin(), (int(*)(int))std::tolower);
+		std::transform(convert.begin(), convert.end(), convert.begin(), (int(*) (int)) std::tolower);
 		return convert;
 	}
 
 	inline std::string toUpper (const std::string& str)
 	{
 		std::string convert = str;
-		std::transform(convert.begin(), convert.end(), convert.begin(), (int(*)(int))std::toupper);
+		std::transform(convert.begin(), convert.end(), convert.begin(), (int(*) (int)) std::toupper);
 		return convert;
 	}
 }

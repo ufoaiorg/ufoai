@@ -24,6 +24,7 @@
 #include "debugging/debugging.h"
 
 #include "ifiletypes.h"
+#include "radiant_i18n.h"
 
 #include "string/string.h"
 #include "os/path.h"
@@ -35,7 +36,7 @@ class RadiantFileTypeRegistry: public IFileTypeRegistry
 	private:
 		struct filetype_copy_t
 		{
-				filetype_copy_t (const char* moduleName, const filetype_t other) :
+				filetype_copy_t (const std::string& moduleName, const filetype_t other) :
 					m_moduleName(moduleName), m_name(other.name), m_pattern(other.pattern)
 				{
 				}
@@ -45,7 +46,7 @@ class RadiantFileTypeRegistry: public IFileTypeRegistry
 				}
 				filetype_t getType () const
 				{
-					return filetype_t(m_name.c_str(), m_pattern.c_str());
+					return filetype_t(m_name, m_pattern);
 				}
 				std::string m_moduleName;
 				std::string m_name;
@@ -56,13 +57,13 @@ class RadiantFileTypeRegistry: public IFileTypeRegistry
 	public:
 		RadiantFileTypeRegistry ()
 		{
-			addType("*", "*", filetype_t("All Files", "*"));
+			addType("*", "*", filetype_t(_("All Files"), "*"));
 		}
 		void addType (const char* moduleType, const char* moduleName, filetype_t type)
 		{
 			m_typelists[moduleType].push_back(filetype_copy_t(moduleName, type));
 		}
-		void getTypeList (const char* moduleType, IFileTypeList* typelist)
+		void getTypeList (const std::string& moduleType, IFileTypeList* typelist)
 		{
 			filetype_list_t& list_ref = m_typelists[moduleType];
 			for (filetype_list_t::iterator i = list_ref.begin(); i != list_ref.end(); ++i) {
@@ -80,31 +81,27 @@ IFileTypeRegistry* GetFileTypeRegistry ()
 
 class SearchFileTypeList: public IFileTypeList
 {
-		char m_pattern[128];
-		const char* m_moduleName;
+		std::string m_moduleName;
+		std::string m_pattern;
 	public:
-		SearchFileTypeList (const char* ext) :
-			m_moduleName("")
+		SearchFileTypeList (const std::string& ext) :
+			m_moduleName(""), m_pattern("*." + ext)
 		{
-			m_pattern[0] = '*';
-			m_pattern[1] = '.';
-			strncpy(m_pattern + 2, ext, 125);
-			m_pattern[127] = '\0';
 		}
-		void addType (const char* moduleName, filetype_t type)
+		void addType (const std::string& moduleName, filetype_t type)
 		{
 			if (extension_equal(m_pattern, type.pattern)) {
 				m_moduleName = moduleName;
 			}
 		}
 
-		const char* getModuleName ()
+		const std::string& getModuleName ()
 		{
 			return m_moduleName;
 		}
 };
 
-const char* findModuleName (IFileTypeRegistry* registry, const char* moduleType, const char* extension)
+const std::string findModuleName (IFileTypeRegistry* registry, const std::string& moduleType, const std::string& extension)
 {
 	SearchFileTypeList search(extension);
 	registry->getTypeList(moduleType, &search);

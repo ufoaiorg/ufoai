@@ -369,8 +369,8 @@ bool Map_Unnamed (const Map& map)
 
 inline const MapFormat& MapFormat_forFile (const std::string& filename)
 {
-	const char* moduleName = findModuleName(GetFileTypeRegistry(), MapFormat::Name(),
-			os::getExtension(filename).c_str());
+	const std::string moduleName = findModuleName(GetFileTypeRegistry(), std::string(MapFormat::Name()),
+			os::getExtension(filename));
 	MapFormat* format = Radiant_getMapModules().findModule(moduleName);
 	return *format;
 }

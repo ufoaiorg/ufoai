@@ -158,7 +158,7 @@ inline int path_compare (const char* path, const char* other)
 
 /// \brief Returns true if \p path and \p other refer to the same file or directory.
 /// O(n)
-inline bool path_equal (const char* path, const char* other)
+inline bool path_equal (const std::string& path, const std::string& other)
 {
 #if defined(OS_CASE_INSENSITIVE)
 	return string_equal_nocase(path, other);
@@ -207,7 +207,7 @@ inline const char* path_make_relative (const char* path, const char* base)
 
 /// \brief Returns true if \p extension is of the same type as \p other.
 /// O(n)
-inline bool extension_equal (const char* extension, const char* other)
+inline bool extension_equal (const std::string& extension, const std::string& other)
 {
 	return path_equal(extension, other);
 }

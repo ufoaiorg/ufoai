@@ -81,7 +81,7 @@ class FileTypeList: public IFileTypeList
 			return m_types.size();
 		}
 
-		void addType (const char* moduleName, filetype_t type)
+		void addType (const std::string& moduleName, filetype_t type)
 		{
 			m_types.push_back(filetype_pair_t(moduleName, type));
 		}
@@ -111,8 +111,7 @@ class GTKMasks
 			std::vector<std::string>::const_iterator j = m_masks.begin();
 			for (FileTypeList::const_iterator i = m_types.begin(); i != m_types.end(); ++i, ++j) {
 				if (mask == (*j)) {
-					return filetype_pair_t((*i).m_moduleName, filetype_t((*i).m_name.c_str(),
-							(*i).m_pattern.c_str()));
+					return filetype_pair_t((*i).m_moduleName, filetype_t((*i).m_name.c_str(), (*i).m_pattern.c_str()));
 				}
 			}
 			return filetype_pair_t();
@@ -142,9 +141,8 @@ static char g_file_dialog_file[1024];
 static const char* file_dialog_show (GtkWidget* parent, bool open, const std::string& title, const std::string& path,
 		const std::string& pattern)
 {
-	filetype_t type;
 	FileTypeList typelist;
-	GlobalFiletypes().getTypeList(pattern.empty() ? "*" : pattern.c_str(), &typelist);
+	GlobalFiletypes().getTypeList(pattern.empty() ? "*" : pattern, &typelist);
 	std::string realTitle = title;
 	GTKMasks masks(typelist);
 
@@ -168,7 +166,7 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const std::st
 
 	// we expect an actual path below, if the path is 0 we might crash
 	if (!path.empty()) {
-		ASSERT_MESSAGE(g_path_is_absolute(path.c_str()), "file_dialog_show: path not absolute: " << makeQuoted(path.c_str()));
+		ASSERT_MESSAGE(g_path_is_absolute(path.c_str()), "file_dialog_show: path not absolute: " << makeQuoted(path));
 
 		if (strstr(g_file_dialog_file, path.c_str())) {
 			gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog), g_file_dialog_file);
@@ -198,17 +196,18 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const std::st
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
 		strcpy(g_file_dialog_file, gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
 
-		if (!string_equal(pattern, "*")) {
+		if (pattern != "*") {
 			GtkFileFilter* filter = gtk_file_chooser_get_filter(GTK_FILE_CHOOSER(dialog));
 			if (filter != 0) { // no filter set? some file-chooser implementations may allow the user to set no filter, which we treat as 'all files'
-				type = masks.GetTypeForGTKMask(gtk_file_filter_get_name(filter)).m_type;
+				std::string fileFilter = gtk_file_filter_get_name(filter);
+				filetype_t type = masks.GetTypeForGTKMask(fileFilter).m_type;
 				// last ext separator
 				const std::string extension = os::getExtension(g_file_dialog_file);
 				// no extension
 				if (extension.empty()) {
-					strcat(g_file_dialog_file, type.pattern + 1);
+					strcat(g_file_dialog_file, type.pattern.c_str() + 1);
 				} else {
-					strcpy(g_file_dialog_file + (extension.c_str() - g_file_dialog_file), type.pattern + 2);
+					strcpy(g_file_dialog_file + (extension.c_str() - g_file_dialog_file), type.pattern.c_str() + 2);
 				}
 			}
 		}

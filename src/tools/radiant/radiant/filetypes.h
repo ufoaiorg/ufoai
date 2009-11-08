@@ -22,8 +22,11 @@
 #if !defined(INCLUDED_FILETYPES_H)
 #define INCLUDED_FILETYPES_H
 
+#include <string>
+
 class IFileTypeRegistry;
 IFileTypeRegistry* GetFileTypeRegistry ();
-const char* findModuleName (IFileTypeRegistry* registry, const char* moduleType, const char* extension);
+const std::string findModuleName (IFileTypeRegistry* registry, const std::string& moduleType,
+		const std::string& extension);
 
 #endif

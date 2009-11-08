@@ -179,13 +179,13 @@ namespace
  */
 ModelLoader* ModelLoader_forType (const std::string& type)
 {
-	const char* moduleName = findModuleName(&GlobalFiletypes(), ModelLoader::Name(), type.c_str());
-	if (string_not_empty(moduleName)) {
+	const std::string moduleName = findModuleName(&GlobalFiletypes(), std::string(ModelLoader::Name()), type);
+	if (!moduleName.empty()) {
 		ModelLoader* table = ReferenceAPI_getModelModules().findModule(moduleName);
 		if (table != 0) {
 			return table;
 		} else {
-			g_warning("ERROR: Model type incorrectly registered: '%s'\n", moduleName);
+			g_warning("ERROR: Model type incorrectly registered: '%s'\n", moduleName.c_str());
 			return &g_NullModelLoader;
 		}
 	}
@@ -300,13 +300,13 @@ NodeSmartReference Model_load (ModelLoader* loader, const char* path, const char
 	if (loader != 0) {
 		return ModelResource_load(loader, name);
 	} else {
-		const char* moduleName = findModuleName(&GlobalFiletypes(), MapFormat::Name(), type);
-		if (string_not_empty(moduleName)) {
+		const std::string moduleName = findModuleName(&GlobalFiletypes(), std::string(MapFormat::Name()), type);
+		if (!moduleName.empty()) {
 			const MapFormat* format = ReferenceAPI_getMapModules().findModule(moduleName);
 			if (format != 0) {
 				return MapResource_load(*format, path, name);
 			} else {
-				g_warning("ERROR: Map type incorrectly registered: '%s'\n", moduleName);
+				g_warning("ERROR: Map type incorrectly registered: '%s'\n", moduleName.c_str());
 				return g_nullModel;
 			}
 		} else {
@@ -407,10 +407,11 @@ struct ModelResource: public Resource
 		bool save ()
 		{
 			if (!mapSaved()) {
-				const char* moduleName = findModuleName(GetFileTypeRegistry(), MapFormat::Name(), m_type.c_str());
-				if (string_not_empty(moduleName)) {
+				const std::string moduleName = findModuleName(GetFileTypeRegistry(), std::string(MapFormat::Name()),
+						m_type);
+				if (!moduleName.empty()) {
 					const MapFormat* format = ReferenceAPI_getMapModules().findModule(moduleName);
-					if (format != 0 && MapResource_save(*format, m_model.get(), m_path.c_str(), m_name.c_str())) {
+					if (format != 0 && MapResource_save(*format, m_model.get(), m_path, m_name)) {
 						mapSave();
 						return true;
 					}
