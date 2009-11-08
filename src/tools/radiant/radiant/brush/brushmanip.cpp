@@ -97,7 +97,7 @@ void Scene_BrushSetTexdef_Selected (scene::Graph& graph, const TextureProjection
 
 void Scene_BrushSetTexdef_Component_Selected (scene::Graph& graph, const TextureProjection& projection)
 {
-	Scene_ForEachSelectedBrushFace(graph, FaceSetTexdef(projection));
+	Scene_ForEachSelectedBrushFace(FaceSetTexdef(projection));
 	SceneChangeNotify();
 }
 
@@ -123,7 +123,7 @@ void Scene_BrushSetFlags_Selected (scene::Graph& graph, const ContentsFlagsValue
 
 void Scene_BrushSetFlags_Component_Selected (scene::Graph& graph, const ContentsFlagsValue& flags)
 {
-	Scene_ForEachSelectedBrushFace(graph, FaceSetFlags(flags));
+	Scene_ForEachSelectedBrushFace(FaceSetFlags(flags));
 	SceneChangeNotify();
 }
 
@@ -149,7 +149,7 @@ void Scene_BrushShiftTexdef_Selected (scene::Graph& graph, float s, float t)
 
 void Scene_BrushShiftTexdef_Component_Selected (scene::Graph& graph, float s, float t)
 {
-	Scene_ForEachSelectedBrushFace(graph, FaceShiftTexdef(s, t));
+	Scene_ForEachSelectedBrushFace(FaceShiftTexdef(s, t));
 	SceneChangeNotify();
 }
 
@@ -175,7 +175,7 @@ void Scene_BrushScaleTexdef_Selected (scene::Graph& graph, float s, float t)
 
 void Scene_BrushScaleTexdef_Component_Selected (scene::Graph& graph, float s, float t)
 {
-	Scene_ForEachSelectedBrushFace(graph, FaceScaleTexdef(s, t));
+	Scene_ForEachSelectedBrushFace(FaceScaleTexdef(s, t));
 	SceneChangeNotify();
 }
 
@@ -201,7 +201,7 @@ void Scene_BrushRotateTexdef_Selected (scene::Graph& graph, float angle)
 
 void Scene_BrushRotateTexdef_Component_Selected (scene::Graph& graph, float angle)
 {
-	Scene_ForEachSelectedBrushFace(graph, FaceRotateTexdef(angle));
+	Scene_ForEachSelectedBrushFace(FaceRotateTexdef(angle));
 	SceneChangeNotify();
 }
 
@@ -227,7 +227,7 @@ void Scene_BrushSetShader_Selected (scene::Graph& graph, const char* name)
 
 void Scene_BrushSetShader_Component_Selected (scene::Graph& graph, const char* name)
 {
-	Scene_ForEachSelectedBrushFace(graph, FaceSetShader(name));
+	Scene_ForEachSelectedBrushFace(FaceSetShader(name));
 	SceneChangeNotify();
 }
 
@@ -322,7 +322,7 @@ void Scene_BrushFindReplaceShader_Component_Selected (scene::Graph& graph, const
 	if (DoingSearch(replace)) {
 
 	} else {
-		Scene_ForEachSelectedBrushFace(graph, FaceFindReplaceShader(find, replace));
+		Scene_ForEachSelectedBrushFace(FaceFindReplaceShader(find, replace));
 	}
 }
 
@@ -348,7 +348,7 @@ void Scene_BrushFitTexture_Selected (scene::Graph& graph, float s_repeat, float 
 
 void Scene_BrushFitTexture_Component_Selected (scene::Graph& graph, float s_repeat, float t_repeat)
 {
-	Scene_ForEachSelectedBrushFace(graph, FaceFitTexture(s_repeat, t_repeat));
+	Scene_ForEachSelectedBrushFace(FaceFitTexture(s_repeat, t_repeat));
 	SceneChangeNotify();
 }
 
@@ -523,7 +523,7 @@ void Scene_BrushGetFlags_Selected (scene::Graph& graph, ContentsFlagsValue& flag
 void Scene_BrushGetFlags_Component_Selected (scene::Graph& graph, ContentsFlagsValue& flags)
 {
 	if (GlobalSelectionSystem().countSelectedComponents() != 0) {
-		Scene_ForEachSelectedBrushFace(graph, FaceGetFlags(flags));
+		Scene_ForEachSelectedBrushFace(FaceGetFlags(flags));
 	}
 }
 

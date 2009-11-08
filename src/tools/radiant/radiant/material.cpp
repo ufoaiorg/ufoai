@@ -116,7 +116,7 @@ void MaterialSystem::generateMaterialFromTexture ()
 		content = file->getString();
 
 	std::string append = "";
-	if (!g_SelectedFaceInstances.empty()) {
+	if (GlobalSelectionSystem().areFacesSelected()) {
 		for (FaceInstancesList::iterator i = g_SelectedFaceInstances.m_faceInstances.begin(); i
 				!= g_SelectedFaceInstances.m_faceInstances.end(); ++i) {
 			const FaceInstance& faceInstance = *(*i);

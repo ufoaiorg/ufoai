@@ -54,6 +54,7 @@
 #include "pivot.h"
 #include "stringio.h"
 #include "container/container.h"
+#include "brush/brush.h"
 
 #include "xyview/grid.h"
 
@@ -1156,6 +1157,17 @@ class RadiantSelectionSystem: public SelectionSystem,
 		std::size_t countSelectedComponents () const
 		{
 			return m_count_component.size();
+		}
+		std::size_t countSelectedFaces () const
+		{
+			if (!areFacesSelected())
+				return 0;
+
+			return g_SelectedFaceInstances.m_faceInstances.size();
+		}
+		bool areFacesSelected () const
+		{
+			return (!g_SelectedFaceInstances.empty());
 		}
 		void onSelectedChanged (scene::Instance& instance, const Selectable& selectable)
 		{

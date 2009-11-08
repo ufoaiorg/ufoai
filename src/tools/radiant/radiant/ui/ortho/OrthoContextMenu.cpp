@@ -7,6 +7,7 @@
 #include "../../entity.h" // Entity_createFromSelection(), Entity_connectSelected()
 #include "gtkutil/dialog.h"
 #include "../../map/map.h"
+#include "iufoscript.h"
 #include "imaterial.h"
 #include "radiant_i18n.h"
 #include "../Icons.h"
@@ -27,6 +28,7 @@ namespace ui
 		const char* CONNECT_ENTITIES_TEXT = _("Connect entities...");
 		const char* FIT_TEXTURE_TEXT = _("Fit textures...");
 		const char* GENERATE_MATERIALS_TEXT = _("Generate materials...");
+		const char* GENERATE_TERRAIN_TEXT = _("Generate terrain...");
 	}
 
 	// Static class function to display the singleton instance.
@@ -49,6 +51,7 @@ namespace ui
 		_connectEntities = gtkutil::IconTextMenuItem(ui::icons::ICON_CONNECT_ENTITIES, CONNECT_ENTITIES_TEXT);
 		_fitTexture = gtkutil::IconTextMenuItem(ui::icons::ICON_FIT_TEXTURE, FIT_TEXTURE_TEXT);
 		_generateMaterials = gtkutil::IconTextMenuItem(ui::icons::ICON_GENERATE_MATERIALS, GENERATE_MATERIALS_TEXT);
+		_generateTerrain = gtkutil::IconTextMenuItem(ui::icons::ICON_GENERATE_TERRAIN, GENERATE_TERRAIN_TEXT);
 
 		g_signal_connect(G_OBJECT(addEntity), "activate", G_CALLBACK(callbackAddEntity), this);
 		g_signal_connect(G_OBJECT(addLight), "activate", G_CALLBACK(callbackAddLight), this);
@@ -57,6 +60,7 @@ namespace ui
 		g_signal_connect(G_OBJECT(_connectEntities), "activate", G_CALLBACK(callbackConnectEntities), this);
 		g_signal_connect(G_OBJECT(_fitTexture), "activate", G_CALLBACK(callbackFitTexture), this);
 		g_signal_connect(G_OBJECT(_generateMaterials), "activate", G_CALLBACK(callbackGenerateMaterials), this);
+		g_signal_connect(G_OBJECT(_generateTerrain), "activate", G_CALLBACK(callbackGenerateTerrain), this);
 
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), addModel);
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), addLight);
@@ -66,6 +70,7 @@ namespace ui
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), _connectEntities);
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), _fitTexture);
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), _generateMaterials);
+		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), _generateTerrain);
 
 		gtk_widget_show_all(_widget);
 	}
@@ -77,6 +82,7 @@ namespace ui
 		checkConnectEntities();
 		checkFitTexture();
 		checkGenerateMaterial();
+		checkGenerateTerrain();
 		gtk_menu_popup(GTK_MENU(_widget), NULL, NULL, NULL, NULL, 1, GDK_CURRENT_TIME);
 	}
 
@@ -93,7 +99,6 @@ namespace ui
 	void OrthoContextMenu::checkGenerateMaterial ()
 	{
 		const std::string& mapname = GlobalRadiant().getMapName();
-		GlobalSelectionSystem().countSelectedComponents();
 		const int countSelectedPrimitives = GlobalSelectionSystem().countSelected();
 		const int countSelectedComponents = GlobalSelectionSystem().countSelectedComponents();
 		if ((countSelectedPrimitives == 0 && countSelectedComponents == 0) || mapname.empty() || Map_Unnamed(g_map)) {
@@ -103,10 +108,18 @@ namespace ui
 		}
 	}
 
+	void OrthoContextMenu::checkGenerateTerrain ()
+	{
+		if (!GlobalSelectionSystem().areFacesSelected()) {
+			gtk_widget_set_sensitive(_generateTerrain, FALSE);
+		} else {
+			gtk_widget_set_sensitive(_generateTerrain, TRUE);
+		}
+	}
+
 	void OrthoContextMenu::checkFitTexture ()
 	{
-		int countSelected = GlobalSelectionSystem().countSelected();
-		if (countSelected > 0) {
+		if (GlobalSelectionSystem().areFacesSelected() || GlobalSelectionSystem().countSelected() > 0) {
 			gtk_widget_set_sensitive(_fitTexture, TRUE);
 		} else {
 			gtk_widget_set_sensitive(_fitTexture, FALSE);
@@ -114,6 +127,11 @@ namespace ui
 	}
 
 	/* GTK CALLBACKS */
+
+	void OrthoContextMenu::callbackGenerateTerrain (GtkMenuItem* item, OrthoContextMenu* self)
+	{
+		GlobalUFOScriptSystem()->generateTerrainDefinition();
+	}
 
 	void OrthoContextMenu::callbackGenerateMaterials (GtkMenuItem* item, OrthoContextMenu* self)
 	{

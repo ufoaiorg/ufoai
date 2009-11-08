@@ -245,7 +245,7 @@ static void SurfaceInspector_SetCurrent_FromSelected (void)
 {
 	if (s_texture_selection_dirty == true) {
 		s_texture_selection_dirty = false;
-		if (!g_SelectedFaceInstances.empty()) {
+		if (GlobalSelectionSystem().areFacesSelected()) {
 			TextureProjection projection;
 			Scene_BrushGetTexdef_Component_Selected(GlobalSceneGraph(), projection);
 
@@ -260,9 +260,8 @@ static void SurfaceInspector_SetCurrent_FromSelected (void)
 
 			std::string name;
 			Scene_BrushGetShader_Component_Selected(GlobalSceneGraph(), name);
-			if (string_not_empty(name.c_str())) {
-				SurfaceInspector_SetSelectedShader(name.c_str());
-			}
+			if (!name.empty())
+				SurfaceInspector_SetSelectedShader(name);
 
 			ContentsFlagsValue flags(0, 0, 0, false);
 			Scene_BrushGetFlags_Component_Selected(GlobalSceneGraph(), flags);
@@ -274,9 +273,8 @@ static void SurfaceInspector_SetCurrent_FromSelected (void)
 
 			std::string name;
 			Scene_BrushGetShader_Selected(GlobalSceneGraph(), name);
-			if (string_not_empty(name.c_str())) {
-				SurfaceInspector_SetSelectedShader(name.c_str());
-			}
+			if (!name.empty())
+				SurfaceInspector_SetSelectedShader(name);
 
 			ContentsFlagsValue flags(0, 0, 0, false);
 			Scene_BrushGetFlags_Selected(GlobalSceneGraph(), flags);
@@ -868,7 +866,7 @@ void SurfaceInspector::UpdateFlagButtons ()
 		}
 	}
 
-	if (!g_SelectedFaceInstances.empty()) {
+	if (GlobalSelectionSystem().areFacesSelected()) {
 		gtk_widget_hide_all(GTK_WIDGET(m_contentFlagsFrame));
 	} else {
 		gtk_widget_show_all(GTK_WIDGET(m_contentFlagsFrame));
@@ -1176,7 +1174,7 @@ void Scene_applyClosestTexture (SelectionTest& test)
  */
 void SelectedFaces_copyTexture (void)
 {
-	if (!g_SelectedFaceInstances.empty()) {
+	if (GlobalSelectionSystem().areFacesSelected()) {
 		Face& face = g_SelectedFaceInstances.last().getFace();
 		face.GetTexdef(g_faceTextureClipboard.m_projection);
 		g_faceTextureClipboard.m_flags = face.getShader().m_flags;
@@ -1191,11 +1189,6 @@ static void FaceInstance_pasteTexture (FaceInstance& faceInstance)
 	faceInstance.getFace().SetShader(TextureBrowser_GetSelectedShader(GlobalTextureBrowser()));
 	faceInstance.getFace().SetFlags(g_faceTextureClipboard.m_flags);
 	SceneChangeNotify();
-}
-
-bool SelectedFaces_empty (void)
-{
-	return g_SelectedFaceInstances.empty();
 }
 
 void SelectedFaces_pasteTexture (void)

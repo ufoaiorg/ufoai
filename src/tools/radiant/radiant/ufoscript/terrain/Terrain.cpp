@@ -3,8 +3,11 @@
 #include "iradiant.h"
 #include "iselection.h"
 #include "gtkutil/dialog.h"
-#include "../../brush/brush.h"
 #include "../../ui/scripteditor/UFOScriptEditor.h"
+#include "../../brush/brush.h"
+
+#include <string>
+#include <map>
 
 namespace scripts
 {
@@ -18,25 +21,106 @@ namespace scripts
 	{
 	}
 
+	namespace
+	{
+		static const char* TEXTURES = "textures/";
+		static const std::size_t TEXTURES_LENGTH = strlen(TEXTURES);
+
+		// Functor to add terrain definition to a string stream that is later
+		// saved to the terrain.ufo script file
+		class GenerateTerrainForFaces
+		{
+			private:
+
+				std::stringstream& _os;
+				Terrain* _terrain;
+
+			private:
+
+				/**
+				 * @param terrainID The id that is used in the scripts. In general
+				 * this is the texture path relative to textures/
+				 * @return @c true if the terrain definition was already defined
+				 * in this run, or it is a special texture that is not shown in
+				 * the game and thus needs no terrain definition.
+				 */
+				bool skipTexture (const std::string& terrainID) const
+				{
+					if (_os.str().find(terrainID) != std::string::npos)
+						return true;
+
+					if (terrainID.find("tex_common/") != std::string::npos)
+						return true;
+
+					return false;
+				}
+
+			public:
+				GenerateTerrainForFaces (std::stringstream& os, Terrain* terrain) :
+					_os(os), _terrain(terrain)
+				{
+				}
+
+				void operator() (Face& face) const
+				{
+					const std::string texture = face.GetShader();
+					std::string terrainID = texture.substr(TEXTURES_LENGTH);
+					if (skipTexture(terrainID))
+						return;
+
+					const DataBlock* dataBlock = _terrain->getTerrainDefitionForTexture(texture);
+					if (!dataBlock) {
+						_os << "terrain " << terrainID << std::endl;
+						_os << "{" << std::endl;
+						_os << "//\tfootstepsound\t\"footsteps/grass2\"" << std::endl;
+						_os << "//\tbouncefraction\t1.0" << std::endl;
+						_os << "}" << std::endl;
+					}
+				}
+		};
+	}
+
+	void Terrain::generateTerrainDefinitionsForTextures ()
+	{
+		if (!GlobalSelectionSystem().areFacesSelected()) {
+			gtkutil::infoDialog(GlobalRadiant().getMainWindow(), _("No faces selected"));
+			return;
+		}
+
+		std::stringstream os;
+		Scene_ForEachSelectedBrushFace(GenerateTerrainForFaces(os, this));
+		ui::UFOScriptEditor editor("ufos/terrain.ufo", os.str());
+		editor.show();
+	}
+
+	const DataBlock* Terrain::getTerrainDefitionForTexture (const std::string& texture)
+	{
+		for (Parser::EntriesIterator i = _blocks.begin(); i != _blocks.end(); i++) {
+			const DataBlock* blockData = (*i);
+			const std::string terrainID = TEXTURES + blockData->getID();
+			if (terrainID == texture)
+				return blockData;
+		}
+		return (DataBlock*) 0;
+	}
+
 	void Terrain::showTerrainDefinitionForTexture ()
 	{
-		if (g_SelectedFaceInstances.empty()) {
+		if (!GlobalSelectionSystem().areFacesSelected()) {
 			gtkutil::infoDialog(GlobalRadiant().getMainWindow(), _("No faces selected"));
 			return;
 		}
 
 		const Face &face = g_SelectedFaceInstances.last().getFace();
-		for (Parser::EntriesIterator i = _blocks.begin(); i != _blocks.end(); i++) {
-			DataBlock* blockData = (*i);
-			const std::string shader = face.GetShader();
-			const std::string terrainID = "textures/" + blockData->getID();
-			if (terrainID == shader) {
-				// found it, now show it
-				ui::UFOScriptEditor editor("ufos/" + blockData->getFilename());
-				editor.goToLine(blockData->getLineNumber());
-				editor.show();
-				return;
-			}
+		const std::string shader = face.GetShader();
+
+		const DataBlock* blockData = getTerrainDefitionForTexture(shader);
+		if (blockData) {
+			// found it, now show it
+			ui::UFOScriptEditor editor("ufos/" + blockData->getFilename());
+			editor.goToLine(blockData->getLineNumber());
+			editor.show();
+			return;
 		}
 
 		gtkutil::infoDialog(GlobalRadiant().getMainWindow(), _("Could not find any associated terrain definition"));

@@ -81,6 +81,7 @@ namespace ui
 			static const std::string ICON_CONNECT_ENTITIES = "cmenu_connect_entities.png";
 			static const std::string ICON_FIT_TEXTURE = "cmenu_fit_texture.png";
 			static const std::string ICON_GENERATE_MATERIALS = "cmenu_generate_materials.png";
+			static const std::string ICON_GENERATE_TERRAIN = "cmenu_generate_terrain.png";
 
 			static const std::string ICON_LOGO = "logo.png";
 

@@ -58,6 +58,8 @@ class UFOScriptSystem
 
 		void editTerrainDefinition ();
 
+		void generateTerrainDefinition ();
+
 		void editMapDefinition ();
 
 		const std::string getUFOScriptDir () const;

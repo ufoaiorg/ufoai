@@ -120,8 +120,14 @@ class SelectionSystem
 		virtual EManipulatorMode ManipulatorMode () const = 0;
 
 		virtual SelectionChangeCallback getObserver (EMode mode) = 0;
+		// amount of selected primitives (brushes)
 		virtual std::size_t countSelected () const = 0;
+		// amount of selected components (vertices, edges, faces)
 		virtual std::size_t countSelectedComponents () const = 0;
+		// amount of selected faces
+		virtual std::size_t countSelectedFaces () const = 0;
+		// only checks whether faces are selected, but does not count them
+		virtual bool areFacesSelected () const = 0;
 		virtual void onSelectedChanged (scene::Instance& instance, const Selectable& selectable) = 0;
 		virtual void onComponentSelection (scene::Instance& instance, const Selectable& selectable) = 0;
 		virtual scene::Instance& ultimateSelected () const = 0;

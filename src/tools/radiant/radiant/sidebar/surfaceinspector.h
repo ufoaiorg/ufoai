@@ -28,7 +28,6 @@ void SurfaceInspector_Construct ();
 void SurfaceInspector_Destroy ();
 void SurfaceInspector_FitTexture (void);
 
-bool SelectedFaces_empty ();
 void SelectedFaces_copyTexture ();
 void SelectedFaces_pasteTexture ();
 

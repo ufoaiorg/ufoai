@@ -3624,7 +3624,7 @@ class FaceVisitorWrapper
 };
 
 template<typename Functor>
-inline const Functor& Scene_ForEachSelectedBrushFace (scene::Graph& graph, const Functor& functor)
+inline const Functor& Scene_ForEachSelectedBrushFace (const Functor& functor)
 {
 	g_SelectedFaceInstances.foreach(FaceVisitorWrapper<Functor> (functor));
 	return functor;

@@ -20,7 +20,13 @@ namespace scripts
 
 			virtual ~Terrain ();
 
+			// creates a terrain defintion for every selected texture
+			void generateTerrainDefinitionsForTextures ();
+
+			// shows existing terrain definitions
 			void showTerrainDefinitionForTexture ();
+
+			const DataBlock* getTerrainDefitionForTexture (const std::string& texture);
 	};
 }
 

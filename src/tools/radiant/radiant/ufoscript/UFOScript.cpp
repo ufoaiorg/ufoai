@@ -47,6 +47,12 @@ UFOScriptSystem::UFOScriptSystem ()
 {
 }
 
+void UFOScriptSystem::generateTerrainDefinition ()
+{
+	scripts::Terrain terrain;
+	terrain.generateTerrainDefinitionsForTextures();
+}
+
 void UFOScriptSystem::editTerrainDefinition ()
 {
 	scripts::Terrain terrain;

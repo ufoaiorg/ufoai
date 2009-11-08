@@ -34,10 +34,15 @@ namespace ui
 			 */
 			void checkGenerateMaterial ();
 
+			/** Enables or disables the "generate terrain" option
+			 */
+			void checkGenerateTerrain ();
+
 			// GTK widgets that are context dependent
 			GtkWidget* _connectEntities;
 			GtkWidget* _fitTexture;
 			GtkWidget* _generateMaterials;
+			GtkWidget* _generateTerrain;
 
 		private:
 
@@ -51,6 +56,7 @@ namespace ui
 			static void callbackAddLight (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackAddModel (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackGenerateMaterials (GtkMenuItem* item, OrthoContextMenu* self);
+			static void callbackGenerateTerrain (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackConnectEntities (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackFitTexture (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackAddSound (GtkMenuItem* item, OrthoContextMenu* self);

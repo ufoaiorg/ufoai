@@ -558,22 +558,22 @@ void Selection_Paste (void)
 
 void Copy (void)
 {
-	if (SelectedFaces_empty()) {
-		Selection_Copy();
-	} else {
+	if (GlobalSelectionSystem().areFacesSelected()) {
 		SelectedFaces_copyTexture();
+	} else {
+		Selection_Copy();
 	}
 }
 
 void Paste (void)
 {
-	if (SelectedFaces_empty()) {
+	if (GlobalSelectionSystem().areFacesSelected()) {
+		SelectedFaces_pasteTexture();
+	} else {
 		UndoableCommand undo("paste");
 
 		GlobalSelectionSystem().setSelectedAll(false);
 		Selection_Paste();
-	} else {
-		SelectedFaces_pasteTexture();
 	}
 }
 
