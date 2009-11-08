@@ -41,11 +41,11 @@ struct filetype_pair_t
 			m_moduleName("")
 		{
 		}
-		filetype_pair_t (const char* moduleName, filetype_t type) :
+		filetype_pair_t (const std::string& moduleName, filetype_t type) :
 			m_moduleName(moduleName), m_type(type)
 		{
 		}
-		const char* m_moduleName;
+		const std::string& m_moduleName;
 		filetype_t m_type;
 };
 
@@ -57,9 +57,9 @@ class FileTypeList: public IFileTypeList
 					m_moduleName(other.m_moduleName), m_name(other.m_type.name), m_pattern(other.m_type.pattern)
 				{
 				}
-				CopiedString m_moduleName;
-				CopiedString m_name;
-				CopiedString m_pattern;
+				std::string m_moduleName;
+				std::string m_name;
+				std::string m_pattern;
 		};
 
 		typedef std::list<filetype_copy_t> Types;
@@ -91,34 +91,27 @@ class GTKMasks
 {
 		const FileTypeList& m_types;
 	public:
-		std::vector<CopiedString> m_filters;
-		std::vector<CopiedString> m_masks;
+		std::vector<std::string> m_filters;
+		std::vector<std::string> m_masks;
 
 		GTKMasks (const FileTypeList& types) :
 			m_types(types)
 		{
 			m_masks.reserve(m_types.size());
-			for (FileTypeList::const_iterator i = m_types.begin(); i != m_types.end(); ++i) {
-				std::size_t len = strlen((*i).m_name.c_str()) + strlen((*i).m_pattern.c_str()) + 3;
-				StringOutputStream buffer(len + 1); // length + null char
-
-				buffer << (*i).m_name.c_str() << " <" << (*i).m_pattern.c_str() << ">";
-
-				m_masks.push_back(buffer.c_str());
-			}
+			for (FileTypeList::const_iterator i = m_types.begin(); i != m_types.end(); ++i)
+				m_masks.push_back((*i).m_name + " <" + (*i).m_pattern + ">");
 
 			m_filters.reserve(m_types.size());
-			for (FileTypeList::const_iterator i = m_types.begin(); i != m_types.end(); ++i) {
+			for (FileTypeList::const_iterator i = m_types.begin(); i != m_types.end(); ++i)
 				m_filters.push_back((*i).m_pattern);
-			}
 		}
 
-		filetype_pair_t GetTypeForGTKMask (const char *mask) const
+		filetype_pair_t GetTypeForGTKMask (const std::string& mask) const
 		{
-			std::vector<CopiedString>::const_iterator j = m_masks.begin();
+			std::vector<std::string>::const_iterator j = m_masks.begin();
 			for (FileTypeList::const_iterator i = m_types.begin(); i != m_types.end(); ++i, ++j) {
-				if (string_equal((*j).c_str(), mask)) {
-					return filetype_pair_t((*i).m_moduleName.c_str(), filetype_t((*i).m_name.c_str(),
+				if (mask == (*j)) {
+					return filetype_pair_t((*i).m_moduleName, filetype_t((*i).m_name.c_str(),
 							(*i).m_pattern.c_str()));
 				}
 			}
@@ -289,7 +282,8 @@ namespace gtkutil
 
 	FileChooser::FileChooser (GtkWidget* parent, const std::string& title, bool open, const std::string& pattern,
 			const std::string& defaultExt) :
-		_parent(parent), _dialog(NULL), _title(title), _pattern(pattern), _defaultExt(defaultExt), _open(open), _preview(NULL)
+		_parent(parent), _dialog(NULL), _title(title), _pattern(pattern), _defaultExt(defaultExt), _open(open),
+				_preview(NULL)
 	{
 		if (_pattern.empty()) {
 			_pattern = "*";
