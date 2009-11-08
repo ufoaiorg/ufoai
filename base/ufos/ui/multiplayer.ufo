@@ -1265,7 +1265,7 @@ window multiplayer_selectteam
 			} else {
 				cmd "irc_connect;"
 				*cvar:mn_ircconnected = 1
-				*node:this@string = "_Desactivate IRC"
+				*node:this@string = "_Deactivate IRC"
 				*node:parent.swap_irc_users_visibility@disabled = false
 			}
 		}
@@ -1421,7 +1421,7 @@ window multiplayer_selectteam
 					clickoutabort	true
 					onChange	{
 						cmd "irc_chanmsg;"
-						cmd "multiplayer_ircsay_edit"
+						cmd "multiplayer_ircsay_edit;"
 					}
 				}
 				
@@ -1497,7 +1497,7 @@ window multiplayer_selectteam
 					onChange	{
 						cmd "say <cvar:mn_entry>"
 						*cvar:mn_entry = ""
-						cmd "multiplayer_chatsay_edit"
+						cmd "multiplayer_chatsay_edit;"
 					}
 				}
 				
