@@ -84,7 +84,7 @@ void UMPSystem::init ()
 void UMPSystem::editUMPDefinition ()
 {
 	const std::string umpFileName = getUMPFilename(GlobalRadiant().getMapName());
-	if (umpFileName.length() == 0) {
+	if (umpFileName.empty()) {
 		gtkutil::infoDialog(GlobalRadiant().getMainWindow(), _("Could not find the map in any ump file"));
 		return;
 	}

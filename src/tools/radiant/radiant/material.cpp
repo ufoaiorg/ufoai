@@ -154,7 +154,7 @@ const std::string MaterialSystem::getMaterialFilename () const
 	const std::string& mapname = GlobalRadiant().getMapName();
 	const std::string umpname = GlobalUMPSystem()->getUMPFilename(mapname);
 	std::string materialFilename;
-	if (umpname.length() == 0)
+	if (umpname.empty())
 		materialFilename = os::getFilenameFromPath(mapname);
 	else
 		materialFilename = os::getFilenameFromPath(umpname);

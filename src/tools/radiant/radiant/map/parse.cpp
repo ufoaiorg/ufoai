@@ -60,7 +60,7 @@ NodeSmartReference Entity_parseTokens (Tokeniser& tokeniser, EntityCreator& enti
 	int count_primitives = 0;
 	while (1) {
 		std::string token = tokeniser.getToken();
-		if (token.length() == 0) {
+		if (token.empty()) {
 			Tokeniser_unexpectedError(tokeniser, token, "#entity-token");
 			return g_nullNode;
 		}
@@ -96,7 +96,7 @@ NodeSmartReference Entity_parseTokens (Tokeniser& tokeniser, EntityCreator& enti
 		} else { // epair
 			const std::string key = token;
 			token = tokeniser.getToken();
-			if (token.length() == 0) {
+			if (token.empty()) {
 				Tokeniser_unexpectedError(tokeniser, token, "#epair-value");
 				return g_nullNode;
 			}
@@ -113,7 +113,7 @@ void Map_Read (scene::Node& root, Tokeniser& tokeniser, EntityCreator& entityTab
 {
 	int count_entities = 0;
 	for (;;) {
-		if (tokeniser.getToken().length() == 0)
+		if (tokeniser.getToken().empty())
 			break;
 
 		NodeSmartReference entity(Entity_parseTokens(tokeniser, entityTable, parser, count_entities));

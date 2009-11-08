@@ -12,7 +12,7 @@ namespace scripts
 	{
 		int level = 0;
 		std::string token = tokeniser.getToken();
-		if (token.length() == 0)
+		if (token.empty())
 			return;
 
 		// most of the script entries have a type and a name
@@ -22,7 +22,7 @@ namespace scripts
 
 		for (;;) {
 			token = tokeniser.getToken();
-			if (token.length() == 0)
+			if (token.empty())
 				break;
 
 			if (token == "{") {
@@ -40,7 +40,7 @@ namespace scripts
 	{
 		for (;;) {
 			const std::string scriptID = tokeniser.getToken();
-			if (scriptID.length() == 0) {
+			if (scriptID.empty()) {
 				break;
 			} else if (scriptID != id) {
 				skipBlock(tokeniser);
@@ -49,7 +49,7 @@ namespace scripts
 				std::stringstream os;
 
 				const std::string token = tokeniser.getToken();
-				if (token.length() == 0)
+				if (token.empty())
 					break;
 				// most of the script entries have a type and a name
 				// before the data block follows, but some have not
@@ -59,7 +59,7 @@ namespace scripts
 				DataBlock* block = new DataBlock(filename, tokeniser.getLine(), token);
 				for (;;) {
 					const std::string token = tokeniser.getToken();
-					if (token.length() == 0)
+					if (token.empty())
 						break;
 
 					if (token == "{") {

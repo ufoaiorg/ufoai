@@ -50,20 +50,20 @@ static void ParseParticleScriptFile (Tokeniser& tokeniser, const std::string& fi
 	for (;;) {
 		std::string token = tokeniser.getToken();
 
-		if (token.length() == 0)
+		if (token.empty())
 			break;
 
 		if (string_equal(token, "particle")) {
 			int kill = 0;
 			const std::string particleID = tokeniser.getToken();
-			if (particleID.length() == 0) {
+			if (particleID.empty()) {
 				Tokeniser_unexpectedError(tokeniser, 0, "#id-name");
 				return;
 			}
 
 			if (!Tokeniser_parseToken(tokeniser, "{")) {
 				globalErrorStream() << "ERROR: expected {. parsing file " << filename << " particle: "
-						<< particleID.c_str() << "\n";
+						<< particleID << "\n";
 				return;
 			}
 

@@ -79,25 +79,25 @@ namespace map
 		void UMPFile::parseTile (Tokeniser &tokeniser) throw (UMPException)
 		{
 			std::string name = tokeniser.getToken();
-			if (name.length() == 0)
+			if (name.empty())
 				throw UMPException("Unexpected tile format, expected tile name");
 			std::string token = tokeniser.getToken();
 			if (token != "{")
 				throw UMPException("Unexpected tile format, expected {, found " + token);
 
 			std::string width = tokeniser.getToken();
-			if (width.length() == 0)
+			if (width.empty())
 				throw UMPException("Unexpected tile format, expected tile width");
 
 			std::string height = tokeniser.getToken();
-			if (width.length() == 0)
+			if (width.empty())
 				throw UMPException("Unexpected tile format, expected tile height");
 
 			UMPTile tile(name, string::toInt(width), string::toInt(height));
 
 			for (;;) {
 				token = tokeniser.getToken();
-				if (token.length() == 0 || token == "}")
+				if (token.empty() || token == "}")
 					break;
 				// TODO: fill the data
 			}
@@ -111,7 +111,7 @@ namespace map
 			while (token.length()) {
 				if (token == "base") {
 					_base = tokeniser.getToken();
-					if (_base.length() == 0) {
+					if (_base.empty()) {
 						globalErrorStream() << _fileName << ": base without parameter given\n";
 						return;
 					}

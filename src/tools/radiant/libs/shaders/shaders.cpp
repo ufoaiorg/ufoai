@@ -98,7 +98,7 @@ void parseTextureName (std::string& name, const std::string& token)
 bool Tokeniser_parseTextureName (Tokeniser& tokeniser, std::string& name)
 {
 	const std::string token = tokeniser.getToken();
-	if (token.length() == 0) {
+	if (token.empty()) {
 		Tokeniser_unexpectedError(tokeniser, token, "#texture-name");
 		return false;
 	}
@@ -109,7 +109,7 @@ bool Tokeniser_parseTextureName (Tokeniser& tokeniser, std::string& name)
 bool Tokeniser_parseShaderName (Tokeniser& tokeniser, std::string& name)
 {
 	std::string token = tokeniser.getToken();
-	if (token.length() == 0) {
+	if (token.empty()) {
 		Tokeniser_unexpectedError(tokeniser, token, "#shader-name");
 		return false;
 	}
@@ -120,7 +120,7 @@ bool Tokeniser_parseShaderName (Tokeniser& tokeniser, std::string& name)
 bool Tokeniser_parseString (Tokeniser& tokeniser, ShaderString& string)
 {
 	std::string token = tokeniser.getToken();
-	if (token.length() == 0) {
+	if (token.empty()) {
 		Tokeniser_unexpectedError(tokeniser, token, "#string");
 		return false;
 	}
@@ -485,7 +485,7 @@ bool ShaderTemplate::parseUFO (Tokeniser& tokeniser)
 	for (;;) {
 		std::string token = tokeniser.getToken();
 
-		if (token.length() == 0)
+		if (token.empty())
 			return false;
 
 		if (token == "{") {
@@ -569,7 +569,7 @@ void ParseShaderFile (Tokeniser& tokeniser, const std::string& filename)
 {
 	for (;;) {
 		std::string token = tokeniser.getToken();
-		if (token.length() == 0)
+		if (token.empty())
 			break;
 
 		if (!string_equal(token, "material") && !string_equal(token, "particle") && !string_equal(token, "skin")) {

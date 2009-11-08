@@ -149,7 +149,7 @@ void EntityClassUFO_Construct ()
 
 EntityClass *Eclass_ForName (const std::string& name, bool has_brushes)
 {
-	if (name.length() == 0)
+	if (name.empty())
 		return eclass_bad;
 
 	EntityClasses::iterator i = g_entityClasses.find(name.c_str());

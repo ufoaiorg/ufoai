@@ -1289,11 +1289,11 @@ static void EntityInspector_clearKeyValue (GtkButton * button, gpointer user_dat
 	GtkTreeView *view = GTK_TREE_VIEW(user_data);
 	GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
 	std::string key = gtkutil::TreeModel::getSelectedString(selection, KEYVALLIST_COLUMN_KEY);
-	if (key.length() == 0)
+	if (key.empty())
 		return;
 
 	std::string classname = gtkutil::TreeModel::getSelectedParentString(selection, KEYVALLIST_COLUMN_VALUE);
-	if (classname.length() == 0)
+	if (classname.empty())
 		classname = gtkutil::TreeModel::getSelectedString(selection, KEYVALLIST_COLUMN_VALUE);
 
 	if (key != "classname") {
@@ -1518,13 +1518,13 @@ static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
 		bool removeAllowed = true;
 		std::string classname;
 		std::string attribKey = gtkutil::TreeModel::getSelectedString(selection, KEYVALLIST_COLUMN_KEY);
-		if (attribKey.length() == 0) {
+		if (attribKey.empty()) {
 			/* new attribute, don't check for remove yet */
 			removeAllowed = false;
 		}
 
 		classname = gtkutil::TreeModel::getSelectedParentString(selection, KEYVALLIST_COLUMN_VALUE);
-		if (classname.length() == 0) {
+		if (classname.empty()) {
 			// no parent -> top level = classname selected, may not be removed
 			removeAllowed = false;
 			classname = gtkutil::TreeModel::getSelectedString(selection, KEYVALLIST_COLUMN_VALUE);

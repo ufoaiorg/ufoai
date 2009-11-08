@@ -89,8 +89,13 @@ namespace scripts
 
 		std::stringstream os;
 		Scene_ForEachSelectedBrushFace(GenerateTerrainForFaces(os, this));
-		ui::UFOScriptEditor editor("ufos/terrain.ufo", os.str());
-		editor.show();
+		const std::string& newTerrainDefinitions = os.str();
+		if (newTerrainDefinitions.empty()) {
+			showTerrainDefinitionForTexture();
+		} else {
+			ui::UFOScriptEditor editor("ufos/terrain.ufo", newTerrainDefinitions);
+			editor.show();
+		}
 	}
 
 	const DataBlock* Terrain::getTerrainDefitionForTexture (const std::string& texture)

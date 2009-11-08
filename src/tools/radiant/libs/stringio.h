@@ -294,7 +294,7 @@ inline bool Tokeniser_parseToken (Tokeniser& tokeniser, const char* expected)
 inline bool Tokeniser_nextTokenIsDigit (Tokeniser& tokeniser)
 {
 	const std::string token = tokeniser.getToken();
-	if (token.length() == 0) {
+	if (token.empty()) {
 		return false;
 	}
 	char c = *token.c_str();

@@ -86,7 +86,7 @@ class UFOFaceTokenImporter
 		bool importTextureName (FaceShader& faceShader, Tokeniser& tokeniser)
 		{
 			const std::string texture = tokeniser.getToken();
-			if (texture.length() == 0) {
+			if (texture.empty()) {
 				Tokeniser_unexpectedError(tokeniser, texture, "#texture-name");
 				return false;
 			}
