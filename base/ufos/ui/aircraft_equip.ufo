@@ -7,12 +7,6 @@ window aircraft_equip extends iaircraft
 	// background
 	// ==================
 
-	panel list_background {
-		pos		"24 441"
-		size	"292 319"
-		image	"ui/panel_grey_green"
-	}
-
 	pic equipment_background {
 		pos		"575 460"
 		size	"432 293"
@@ -35,13 +29,13 @@ window aircraft_equip extends iaircraft
 			*airequip_zone_select1@image  = "ui/airequip_selected_element"
 			*airequip_zone_select2@image  = ""
 			*cvar:mn_aircraft_item_selected = -1
-			*list_background@image = "ui/panel_grey_green"
+			*itemlist@image = "ui/panel_grey_green"
 			cmd "airequip_zone_select 1;"
 		} elif ( <1> eq "zone2" ) {
 			*airequip_zone_select1@image  = ""
 			*airequip_zone_select2@image  = "ui/airequip_selected_element"
 			*cvar:mn_aircraft_item_selected = -1
-			*list_background@image = "ui/panel_grey_green"
+			*iemlist@image = "ui/panel_grey_green"
 			cmd "airequip_zone_select 2;"
 		} elif ( <1> eq "slot" ) {
 			*cvar:tmp = ""
@@ -57,7 +51,7 @@ window aircraft_equip extends iaircraft
 		} elif ( <1> eq "item" ) {
 			*airequip_zone_select1@image  = ""
 			*airequip_zone_select2@image  = ""
-			*list_background@image = "ui/panel_grey_white"
+			*itemlist@image = "ui/panel_grey_white"
 			cmd "airequip_list_click <2>" 
 		}
 	}
@@ -75,15 +69,9 @@ window aircraft_equip extends iaircraft
 		view	"aircraft_equip"
 	}
 
-	string airequip_available
-	{
-		string		"_Available equipment:"
-		pos			"41 457"
-		size		"240 25"
-		font		f_big
-		textalign	cc
-	}
-
+	// ==================
+	// Select item box
+	// ==================
 	panel item {
 		{
 			pos		"317 441"
@@ -91,24 +79,37 @@ window aircraft_equip extends iaircraft
 			image	"ui/panel_grey_green"
 		}
 		
-		//
-		// Data
-		//
+		string airequip_selected
+		{
+			string		"_Selected item:"
+			pos			"14 20"
+			size		"224 25"
+			font		f_big
+			textalign	cc
+		}
+
+		string airequip_item_name
+		{
+			string		"*cvar:mn_itemname"
+			pos			"14 56"
+			size		"225 20"
+			textalign	cc
+		}
 
 		model mdl_top
 		{
 			model	"*cvar:mn_upmodel_top"
 			autoscale	true
-			pos		"0 76"
-			size	"240 96"
+			pos		"14 76"
+			size	"225 96"
 			view	aircraft_equip
 		}
-	
+
 		text description
 		{
 			dataid		TEXT_UFOPEDIA_METADATA
 			pos			"14 182"
-			size		"204 120"
+			size		"204 85"
 			tabwidth	130
 			font		"f_verysmall"
 			onViewChange {
@@ -117,46 +118,25 @@ window aircraft_equip extends iaircraft
 				*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
 			}
 		}
-	
+
 		vscrollbar description_scroll {
 			image		ui/scrollbar_v_green
 			pos			"218 182"
-			height		"120"
+			height		"85"
 			hidewhenunused	true
 			onChange 	{
 				*node:parent.description@viewpos = <current>
 			}
 		}
-	
-		string airequip_item_name
-		{
-			string		"*cvar:mn_itemname"
-			pos			"0 56"
-			size		"240 20"
-			textalign	cc
-		}
-	
-		string airequip_selected
-		{
-			string		"_Selected item:"
-			pos			"16 16"
-			size		"224 25"
-			font		f_big
-			textalign	cc
-		}
-
-		//
-		//	Status of selected item
-		//
 
 		string warning
 		{
 			string		*cvar:mn_aircraft_item_warning
 			image		ui/button_green_small
-			pos			"27 269"
-			size		"200 30"
+			pos			"19 269"
+			size		"215 32"
 			padding		0
-			textalign	cc
+			textalign	uc
 			font		f_small
 			color		"1 0 0 1"
 			onClick		{ cmd "mn_close popup;" }
@@ -184,90 +164,106 @@ window aircraft_equip extends iaircraft
 		}
 	}
 
-	//
-	//	Item list
-	//
+	// ==================
+	// Available items box
+	// ==================
+	panel itemlist {
+		{
+			pos		"24 441"
+			size	"292 319"
+			image	"ui/panel_grey_green"
+		}
 
-	selectbox craftitemtypeselector
-	{
-		cvar		*cvar:mn_equip_itemtype
-		image		"ui/selectbox_green"
-		pos			"53 497"
-		size		"235 20"
-		color		"0.6 0.6 0.6 0.3"
-		option weapons {
-			label	"_Weapons"
-			value	"weapon"
+		string airequip_available
+		{
+			string		"_Available equipment:"
+			pos			"14 20"
+			size		"264 25"
+			font		f_big
+			textalign	cc
 		}
-		option ammo {
-			label	"_Ammo"
-			value	"ammo"
-		}
-		option armour {
-			label	"_Armour"
-			value	"armour"
-		}
-		option items {
-			label	"_Items"
-			value	"item"
-		}
-		onChange {
-			cmd "airequip_selectcategory <cvar:mn_equip_itemtype>"
-		}
-	}
 
-	optionlist airequip_list
-	{
-		dataid		TEXT_LIST
-		cvar		*cvar:mn_aircraft_item_selected
-		pos			"43 529"
-		size		"215 132"
-		lineheight	"20"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		onChange		{
-			cmd "airequip_select item <cvar:mn_aircraft_item_selected>"
+		selectbox craftitemtypeselector
+		{
+			cvar		*cvar:mn_equip_itemtype
+			image		"ui/selectbox_green"
+			pos			"29 56"
+			size		"235 20"
+			color		"0.6 0.6 0.6 0.3"
+			option weapons {
+				label	"_Weapons"
+				value	"weapon"
+			}
+			option ammo {
+				label	"_Ammo"
+				value	"ammo"
+			}
+			option armour {
+				label	"_Armour"
+				value	"armour"
+			}
+			option items {
+				label	"_Items"
+				value	"item"
+			}
+			onChange {
+				cmd "airequip_selectcategory <cvar:mn_equip_itemtype>"
+			}
 		}
-		onViewChange {
-			*(abstractscrollbar)airequip_list_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)airequip_list_scroll@viewsize = <viewsize>
-			*(abstractscrollbar)airequip_list_scroll@current = <viewpos>
-			*(textlist)airequip_list_amount@viewpos = <viewpos>
-		}
-	}
 
-	textlist airequip_list_amount
-	{
-		dataid		TEXT_LIST2
-		ghost		true
-		pos			"258 529"
-		size		"25 132"
-		textalign	cr
-		lineheight	"20"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		onViewChange {
-			*(abstractscrollbar)airequip_list_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)airequip_list_scroll@viewsize = <viewsize>
-			*(abstractscrollbar)airequip_list_scroll@current = <viewpos>
-			*(textlist)airequip_list@viewpos = <viewpos>
+		optionlist airequip_list
+		{
+			dataid		TEXT_LIST
+			cvar		*cvar:mn_aircraft_item_selected
+			pos			"15 87"
+			size		"215 215"
+			lineheight	"20"
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			onChange		{
+				cmd "airequip_select item <cvar:mn_aircraft_item_selected>"
+			}
+			onViewChange {
+				*node:(abstractscrollbar)parent.airequip_list_scroll@fullsize = <fullsize>
+				*node:(abstractscrollbar)parent.airequip_list_scroll@viewsize = <viewsize>
+				*node:(abstractscrollbar)parent.airequip_list_scroll@current = <viewpos>
+				*node:(textlist)parent.airequip_list_amount@viewpos = <viewpos>
+			}
 		}
-	}
 
-	vscrollbar airequip_list_scroll {
-		image		ui/scrollbar_v_green
-		pos			"283 529"
-		height		"132"
-		hidewhenunused	true
-		onChange {
-			*airequip_list@viewpos = <current>
-			*airequip_list_amount@viewpos = <current>
+		textlist airequip_list_amount
+		{
+			dataid		TEXT_LIST2
+			ghost		true
+			pos			"234 87"
+			size		"25 215"
+			textalign	cr
+			lineheight	"20"
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			onViewChange {
+				*node:(abstractscrollbar)parent.airequip_list_scroll@fullsize = <fullsize>
+				*node:(abstractscrollbar)parent.airequip_list_scroll@viewsize = <viewsize>
+				*node:(abstractscrollbar)parent.airequip_list_scroll@current = <viewpos>
+				*node:(textlist)parent.airequip_list@viewpos = <viewpos>
+			}
+		}
+
+		vscrollbar airequip_list_scroll {
+			image		ui/scrollbar_v_green
+			pos			"259 87"
+			height		"215"
+			hidewhenunused	true
+			onChange {
+				*node:parent.airequip_list@viewpos = <current>
+				*node:parent.airequip_list_amount@viewpos = <current>
+			}
 		}
 	}
 
 	confunc aircraft_equip_unselectlist {
 		*cvar:mn_aircraft_item_selected = -1
-		*airequip_list_amount@lineselected = -1
+		*node:(textlist)itemlist.airequip_list_amount@lineselected = -1
 	}
 
 	// ==================
@@ -612,3 +608,4 @@ window aircraft_equip extends iaircraft
 		delete *cvar:mn_aircraft_item_selected
 	}
 }
+
