@@ -246,13 +246,13 @@ void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHe
 		free(outpixels);
 }
 
-typedef std::pair<LoadImageCallback, CopiedString> TextureKey;
+typedef std::pair<LoadImageCallback, std::string> TextureKey;
 
 void qtexture_realise (qtexture_t& texture, const TextureKey& key)
 {
 	texture.texture_number = 0;
 	/* skip empty names and normalmaps */
-	if (!string_empty(key.second.c_str()) && !strstr(key.second.c_str(), "_nm")) {
+	if (!key.second.empty() && !strstr(key.second.c_str(), "_nm")) {
 		AutoPtr<Image> image(key.first.loadImage(key.second.c_str()));
 		if (image) {
 			LoadTextureRGBA(&texture, image->getRGBAPixels(), image->getWidth(), image->getHeight());
