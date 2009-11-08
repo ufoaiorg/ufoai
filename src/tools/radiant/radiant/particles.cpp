@@ -138,7 +138,7 @@ static void ParseParticleScriptFile (Tokeniser& tokeniser, const std::string& fi
 				if (token == "}")
 					break;
 			}
-			if (!kill && (model.length() || image.length())) {
+			if (!kill && (!model.empty() || !image.empty())) {
 				// do we already have this particle?
 				ParticleDefinition *particleDefinition = new ParticleDefinition(particleID, model, image, blend, width,
 						height);
