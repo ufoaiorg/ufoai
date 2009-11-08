@@ -62,7 +62,7 @@ class EModel: public ModuleObserver
 			}
 		}
 
-		void modelChanged (const char* value)
+		void modelChanged (const std::string& value)
 		{
 			std::string cleaned = os::standardPath(value);
 			m_resource.detach(*this);
@@ -70,9 +70,9 @@ class EModel: public ModuleObserver
 			m_resource.attach(*this);
 			m_modelChanged();
 		}
-		typedef MemberCaller1<EModel, const char*, &EModel::modelChanged> ModelChangedCaller;
+		typedef MemberCaller1<EModel, const std::string&, &EModel::modelChanged> ModelChangedCaller;
 
-		const char* getName () const
+		const std::string& getName () const
 		{
 			return m_resource.getName();
 		}

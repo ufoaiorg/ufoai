@@ -658,10 +658,10 @@ class EntityKeyValues: public Entity
 /// \brief The resource is released when the ResourceReference is destroyed.
 class ResourceReference
 {
-		CopiedString m_name;
+		std::string m_name;
 		Resource* m_resource;
 	public:
-		ResourceReference (const char* name) :
+		ResourceReference (const std::string& name) :
 			m_name(name)
 		{
 			capture();
@@ -679,19 +679,19 @@ class ResourceReference
 		}
 		~ResourceReference ()
 		{
-			GlobalReferenceCache().release(m_name.c_str());
+			GlobalReferenceCache().release(m_name);
 		}
 
 		void capture ()
 		{
-			m_resource = GlobalReferenceCache().capture(m_name.c_str());
+			m_resource = GlobalReferenceCache().capture(m_name);
 		}
 
-		const char* getName () const
+		const std::string& getName () const
 		{
-			return m_name.c_str();
+			return m_name;
 		}
-		void setName (const char* name)
+		void setName (const std::string& name)
 		{
 			ResourceReference tmp(name);
 			tmp.swap(*this);

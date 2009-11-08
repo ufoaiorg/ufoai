@@ -582,15 +582,15 @@ class HashtableReferenceCache: public ReferenceCache, public ModuleObserver
 			m_references.clear();
 		}
 
-		Resource* capture (const char* path)
+		Resource* capture (const std::string& path)
 		{
-			g_debug("capture: \"%s\"\n", path);
-			return m_references.capture(std::string(path)).get();
+			g_debug("capture: \"%s\"\n", path.c_str());
+			return m_references.capture(path).get();
 		}
-		void release (const char* path)
+		void release (const std::string& path)
 		{
-			m_references.release(std::string(path));
-			g_debug("release: \"%s\"\n", path);
+			m_references.release(path);
+			g_debug("release: \"%s\"\n", path.c_str());
 		}
 
 		void setEntityCreator (EntityCreator& entityCreator)
