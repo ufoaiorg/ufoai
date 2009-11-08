@@ -79,13 +79,13 @@ void GlobalCommands_insert (const std::string& name, const Callback& callback, c
 {
 	bool added = g_commands.insert(Commands::value_type(name, Command(callback, GlobalShortcuts_insert(name,
 			accelerator)))).second;
-	ASSERT_MESSAGE(added, "command already registered: " << makeQuoted(name.c_str()));
+	ASSERT_MESSAGE(added, "command already registered: " << makeQuoted(name));
 }
 
 const Command& GlobalCommands_find (const std::string& command)
 {
 	Commands::iterator i = g_commands.find(command);
-	ASSERT_MESSAGE(i != g_commands.end(), "failed to lookup command " << makeQuoted(command.c_str()));
+	ASSERT_MESSAGE(i != g_commands.end(), "failed to lookup command " << makeQuoted(command));
 	return (*i).second;
 }
 
@@ -98,13 +98,13 @@ void GlobalToggles_insert (const std::string& name, const Callback& callback, co
 {
 	bool added = g_toggles.insert(Toggles::value_type(name, Toggle(callback, GlobalShortcuts_insert(name, accelerator),
 			exportCallback))).second;
-	ASSERT_MESSAGE(added, "toggle already registered: " << makeQuoted(name.c_str()));
+	ASSERT_MESSAGE(added, "toggle already registered: " << makeQuoted(name));
 }
 
 const Toggle& GlobalToggles_find (const std::string& name)
 {
 	Toggles::iterator i = g_toggles.find(name);
-	ASSERT_MESSAGE(i != g_toggles.end(), "failed to lookup toggle " << makeQuoted(name.c_str()));
+	ASSERT_MESSAGE(i != g_toggles.end(), "failed to lookup toggle " << makeQuoted(name));
 	return (*i).second;
 }
 
@@ -117,13 +117,13 @@ void GlobalKeyEvents_insert (const std::string& name, const Accelerator& acceler
 {
 	bool added = g_keyEvents.insert(KeyEvents::value_type(name, KeyEvent(GlobalShortcuts_insert(name, accelerator),
 			keyDown, keyUp))).second;
-	ASSERT_MESSAGE(added, "command already registered: " << makeQuoted(name.c_str()));
+	ASSERT_MESSAGE(added, "command already registered: " << makeQuoted(name));
 }
 
 const KeyEvent& GlobalKeyEvents_find (const std::string& name)
 {
 	KeyEvents::iterator i = g_keyEvents.find(name);
-	ASSERT_MESSAGE(i != g_keyEvents.end(), "failed to lookup keyEvent " << makeQuoted(name.c_str()));
+	ASSERT_MESSAGE(i != g_keyEvents.end(), "failed to lookup keyEvent " << makeQuoted(name));
 	return (*i).second;
 }
 
@@ -669,7 +669,7 @@ class ReadCommandMap: public CommandVisitor
 				if (accelerator.key != 0) {
 					++m_count;
 				} else {
-					globalOutputStream() << "WARNING: failed to parse user command " << makeQuoted(name.c_str())
+					globalOutputStream() << "WARNING: failed to parse user command " << makeQuoted(name)
 							<< ": unknown key " << makeQuoted(value) << "\n";
 				}
 			}

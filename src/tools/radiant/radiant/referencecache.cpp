@@ -356,7 +356,7 @@ struct ModelResource: public Resource
 			if (realised()) {
 				unrealise();
 			}
-			ASSERT_MESSAGE(!realised(), "ModelResource::~ModelResource: resource reference still realised: " << makeQuoted(m_name.c_str()));
+			ASSERT_MESSAGE(!realised(), "ModelResource::~ModelResource: resource reference still realised: " << makeQuoted(m_name));
 		}
 		// NOT COPYABLE
 		ModelResource (const ModelResource&);

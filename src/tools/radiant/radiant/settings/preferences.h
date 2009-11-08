@@ -218,7 +218,7 @@ class CGameDescription
 			if (i != m_gameDescription.end()) {
 				return (*i).second;
 			}
-			ERROR_MESSAGE("game attribute " << makeQuoted(key.c_str()) << " not found in " << makeQuoted(mGameFile.c_str()));
+			ERROR_MESSAGE("game attribute " << makeQuoted(key) << " not found in " << makeQuoted(mGameFile));
 			return CGameDescription::emptyString;
 		}
 
