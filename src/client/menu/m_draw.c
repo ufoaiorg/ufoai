@@ -37,10 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../renderer/r_draw.h"
 
-#ifdef DEBUG
-static cvar_t *mn_debug;
-#endif
-
 static cvar_t *mn_show_tooltips;
 static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip */
 static qboolean tooltipVisible = qfalse;
@@ -356,7 +352,7 @@ void MN_Draw (void)
 
 #ifdef DEBUG
 	/* debug information */
-	if (mn_debug->integer == 2) {
+	if (MN_DebugMode() >= 1) {
 		MN_DrawDebugMenuNodeNames();
 	}
 #endif
@@ -392,9 +388,6 @@ void MN_DisplayNotice (const char *text, int time, const char* windowName)
 
 void MN_InitDraw (void)
 {
-#ifdef DEBUG
-	mn_debug = Cvar_Get("debug_menu", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
-#endif
 	mn_show_tooltips = Cvar_Get("mn_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
 	tooltipTimer = MN_AllocTimer(NULL, TOOLTIP_DELAY, MN_CheckTooltipDelay);
 }

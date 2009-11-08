@@ -45,5 +45,6 @@ void MN_Shutdown(void);
 /* misc */
 void MN_SetCvar(const char *name, const char *str, float value);
 void MN_ExecuteConfunc(const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
+int MN_DebugMode(void);
 
 #endif

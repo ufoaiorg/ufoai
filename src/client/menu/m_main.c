@@ -37,6 +37,10 @@ menuGlobal_t mn;
 struct memPool_s *mn_dynStringPool;
 struct memPool_s *mn_sysPool;
 
+#ifdef DEBUG
+static cvar_t *mn_debug;
+#endif
+
 /**
  * @sa MN_DisplayNotice
  * @todo move it into a better file
@@ -50,6 +54,19 @@ static void MN_CheckCvar (const cvar_t *cvar)
 			MN_DisplayNotice(_("This change might require a restart"), 2000, NULL);
 		}
 	}
+}
+
+/**
+ * @sa MN_DisplayNotice
+ * @todo move it into a better file
+ */
+int MN_DebugMode (void)
+{
+#ifdef DEBUG
+	return mn_debug->integer;
+#else
+	return 0;
+#endif
 }
 
 /**
@@ -267,6 +284,10 @@ void MN_Init (void)
 {
 #ifdef DEBUG
 	MN_UnittestTimer();
+#endif
+
+#ifdef DEBUG
+	mn_debug = Cvar_Get("debug_menu", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
 #endif
 
 	/* reset menu structures */
