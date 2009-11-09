@@ -274,7 +274,10 @@ void S_Shutdown (void)
 
 	Mix_CloseAudio();
 
-	SDL_QuitSubSystem(SDL_INIT_AUDIO);
+	if (SDL_WasInit(SDL_INIT_EVERYTHING) == SDL_INIT_AUDIO)
+		SDL_Quit();
+	else
+		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 
 	Mem_FreeTag(cl_soundSysPool, 0);
 
