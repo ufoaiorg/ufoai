@@ -7,6 +7,11 @@ namespace map
 {
 	namespace ump
 	{
+		/**
+		 * A ump tile represents one bsp map that is part of a RMA (random map assembly). Such a tile must have
+		 * some boundaries defined. For more information on what a ump tile is, see
+		 * http://ufoai.ninex.info/wiki/index.php/Mapping/Random_map_assembly
+		 */
 		class UMPTile
 		{
 			private:
