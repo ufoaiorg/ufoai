@@ -114,7 +114,7 @@ static void S_Play_f (void)
 	}
 
 	i = 1;
-	while (i < Cmd_Argc()){
+	while (i < Cmd_Argc()) {
 		S_StartLocalSample(Cmd_Argv(i), SND_VOLUME_DEFAULT);
 		i++;
 	}
@@ -130,6 +130,7 @@ static void S_Restart_f (void)
 	Com_Printf("Restarting sound\n");
 	S_Shutdown();
 	S_Init();
+	S_LoadSamples();
 }
 
 /** @todo This should be removed and read from the dir tree instead */
@@ -250,9 +251,6 @@ void S_Init (void)
 	Com_Printf("... audio rate: %i\n... audio channels: %i\n", s_env.rate, s_env.numChannels);
 
 	s_env.initialized = qtrue;
-
-	/** @todo scripts are not yet loaded on the first run of the init function */
-	S_LoadSamples();
 
 	M_Init();
 }

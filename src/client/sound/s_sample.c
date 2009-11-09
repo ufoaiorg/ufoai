@@ -148,11 +148,14 @@ void S_LoadSamples (void)
 {
 	int i, j, k;
 
+	if (!s_env.initialized)
+		return;
+
 	/* load weapon sounds */
 	for (i = 0; i < csi.numODs; i++) { /* i = obj */
 		const objDef_t *od = &csi.ods[i];
 		for (j = 0; j < od->numWeapons; j++) {	/* j = weapon-entry per obj */
-			for (k = 0; k < od->numFiredefs[j]; k++) { /* k = firedef per wepaon */
+			for (k = 0; k < od->numFiredefs[j]; k++) { /* k = firedef per weapon */
 				const fireDef_t *fd = &od->fd[j][k];
 				if (fd->fireSound[0] != '\0')
 					S_LoadSample(fd->fireSound);

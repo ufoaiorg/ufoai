@@ -682,6 +682,7 @@ void CL_InitAfter (void)
 
 	/* start the music track already while precaching data */
 	S_Frame();
+	S_LoadSamples();
 
 	cls.loadingPercent = 2.0f;
 
