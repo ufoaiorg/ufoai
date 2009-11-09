@@ -198,7 +198,7 @@ void SV_LinkEdict (edict_t * ent)
 	/* expand for rotation */
 	if (ent->solid == SOLID_BSP && VectorNotEmpty(ent->angles)) {
 		vec3_t minVec, maxVec;
-		vec3_t centerVec, halfVec, worstVec, newCenterVec;
+		vec3_t centerVec, halfVec, newCenterVec;
 		vec3_t m[3];
 
 		/* Find the center of the extents. */
@@ -206,9 +206,6 @@ void SV_LinkEdict (edict_t * ent)
 
 		/* Find the half height and half width of the extents. */
 		VectorSubtract(ent->maxs, centerVec, halfVec);
-
-		/* Define the rough largest extenst that this box can have when rotated. */
-		worstVec[0] = worstVec[1] = worstVec[2] = halfVec[0] + halfVec[1] + halfVec[2];
 
 		/* Rotate the center about the origin. */
 		AngleVectors(ent->angles, m[0], m[1], m[2]);
