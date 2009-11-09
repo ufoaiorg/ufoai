@@ -31,8 +31,8 @@ class Postfix
 {
 		unsigned int m_value;
 	public:
-		Postfix (const char* postfix) :
-			m_value(atoi(postfix))
+		Postfix (const std::string& postfix) :
+			m_value(string::toInt(postfix))
 		{
 		}
 		unsigned int number () const
@@ -62,12 +62,12 @@ class Postfix
 		}
 };
 
-typedef std::pair<CopiedString, Postfix> name_t;
+typedef std::pair<std::string, Postfix> name_t;
 
 inline void name_write (char* buffer, name_t name)
 {
 	strcpy(buffer, name.first.c_str());
-	name.second.write(buffer + strlen(name.first.c_str()));
+	name.second.write(buffer + name.first.length());
 }
 
 inline name_t name_read (const char* name)
@@ -79,7 +79,7 @@ inline name_t name_read (const char* name)
 		end = p;
 	}
 
-	return name_t(CopiedString(StringRange(name, end)), Postfix(end));
+	return name_t(string::toString(string_clone_range(StringRange(name, end))), Postfix(end));
 }
 
 class PostFixes
@@ -138,7 +138,7 @@ class PostFixes
 
 class UniqueNames
 {
-		typedef std::map<CopiedString, PostFixes> names_t;
+		typedef std::map<std::string, PostFixes> names_t;
 		names_t m_names;
 	public:
 		name_t make_unique (const name_t& name) const
