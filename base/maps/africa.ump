@@ -110,6 +110,14 @@ ab  +a  +a  ab
 0   ab  ab  0
 }
 
+tile +empty6
+{
+3 3
+
+0   ab  0
+ab  +a  ab
+0   ab  0
+}
 
 tile +fence1
 {
@@ -205,6 +213,7 @@ title "_Africa"
 +empty1 "1 1"
 +empty2 "1 1"
 +empty5 "0 1"
++empty5 "0 3"
 +house1 "1 4"
 +house2 "1 4"
 +house3 "1 4"
@@ -225,6 +234,7 @@ title "_Africa"
 +empty1 "0 1"
 +empty2 "0 1"
 +empty5 "0 1"
++empty5 "0 3"
 +house1 "0 4"
 +house2 "0 4"
 +house3 "0 4"
