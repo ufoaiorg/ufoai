@@ -2868,6 +2868,8 @@ base/textures/tex_buildings/clangdark.jpg | GNU General Public License 2.0 | Ope
 base/textures/tex_buildings/clangdark_ow.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/clanggrate.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/clanggrate2.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_buildings/con_block.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/con_trim.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/concrete001.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil5_wall/concrete.jpg with some small changes by Werner Höhrer
 base/textures/tex_buildings/concrete001_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete002.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2977,6 +2979,11 @@ base/textures/tex_buildings/mtl_midwrn.jpg | GNU General Public License 2.0 | Ne
 base/textures/tex_buildings/mtl_midwrn_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/pent_metalbridge6.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/pewter.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_buildings/plat.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/platside.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/platstep1.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/platstep2.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/platvert.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/q1metal7_99.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/q1metal7_99_broke.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/roof002_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3216,6 +3223,9 @@ base/textures/tex_furniture/table004_nm.tga | GNU General Public License 2.0 or 
 base/textures/tex_furniture/table005_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/table006_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/table007_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_lights/light001.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light003.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light003_shell.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/mtl_l1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l1_fx0.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l1_fx1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -3656,6 +3666,13 @@ base/textures/tex_misc/pad.jpg | GNU General Public License 2.0 | Nexuiz GPLed D
 base/textures/tex_misc/pipes001.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/pipes002.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/pipes003.jpg | Public Domain |  | Public Domain Golgotha
+base/textures/tex_misc/rail_notice.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_notice0.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_notice1.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_noticeb.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_noticeb0.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_noticeb1.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_overlay.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rstbounce.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/rstbouncefan.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/sign_falloutshelter.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -3663,6 +3680,8 @@ base/textures/tex_misc/silo_a_nm.tga | GNU General Public License 2.0 or later |
 base/textures/tex_misc/stainless001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
 base/textures/tex_misc/straw.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2'ed photo by Martin Gerhardy (mattn)
 base/textures/tex_misc/straw_zyl.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2'ed photo by Martin Gerhardy (mattn)
+base/textures/tex_misc/trashbin001.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/trashbin001_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/yellowcamelcrossing.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/yellowroadcrossingsign.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/yellowtwowaysign.jpg | Public Domain |  | Public Domain Golgotha
