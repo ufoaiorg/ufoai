@@ -743,7 +743,7 @@ window popup_baseattack
 
 	func listen_automission
 	{
-		cmd "cp_mission_autogo"
+		cmd "cp_mission_autogo;"
 		cmd "mn_removelistener equipment@onClose <path:this>"
 	}
 
