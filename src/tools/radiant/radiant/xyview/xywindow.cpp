@@ -111,7 +111,7 @@ class ClipPoint
 		void Draw (const char *label, float scale);
 };
 
-VIEWTYPE g_clip_viewtype;
+EViewType g_clip_viewtype;
 bool g_bSwitch = true;
 bool g_clip_useNodraw = false;
 ClipPoint g_Clip1;
@@ -152,7 +152,7 @@ static inline float fDiff (float f1, float f2)
 		return f2 - f1;
 }
 
-static inline double ClipPoint_Intersect (const ClipPoint& clip, const Vector3& point, VIEWTYPE viewtype, float scale)
+static inline double ClipPoint_Intersect (const ClipPoint& clip, const Vector3& point, EViewType viewtype, float scale)
 {
 	const int nDim1 = (viewtype == YZ) ? 1 : 0;
 	const int nDim2 = (viewtype == XY) ? 1 : 2;
@@ -164,7 +164,7 @@ static inline double ClipPoint_Intersect (const ClipPoint& clip, const Vector3& 
 	return FLT_MAX;
 }
 
-static inline void ClipPoint_testSelect (ClipPoint& clip, const Vector3& point, VIEWTYPE viewtype, float scale,
+static inline void ClipPoint_testSelect (ClipPoint& clip, const Vector3& point, EViewType viewtype, float scale,
 		double& bestDistance, ClipPoint*& bestClip)
 {
 	if (clip.Set()) {
@@ -176,7 +176,7 @@ static inline void ClipPoint_testSelect (ClipPoint& clip, const Vector3& point, 
 	}
 }
 
-static inline ClipPoint* GlobalClipPoints_Find (const Vector3& point, VIEWTYPE viewtype, float scale)
+static inline ClipPoint* GlobalClipPoints_Find (const Vector3& point, EViewType viewtype, float scale)
 {
 	double bestDistance = FLT_MAX;
 	ClipPoint* bestClip = 0;
@@ -528,7 +528,7 @@ static void XYWnd_ZoomOut (XYWnd* xy)
 	}
 }
 
-VIEWTYPE GlobalXYWnd_getCurrentViewType (void)
+EViewType GlobalXYWnd_getCurrentViewType (void)
 {
 	ASSERT_NOTNULL(g_pParentWnd);
 	ASSERT_NOTNULL(g_pParentWnd->ActiveXY());
@@ -623,10 +623,10 @@ void WXY_Print (void)
 
 static Timer g_chasemouse_timer;
 
-void XYWnd::ChaseMouse (void)
+void XYWnd::chaseMouse (void)
 {
 	const float multiplier = g_chasemouse_timer.elapsed_msec() / 10.0f;
-	Scroll(float_to_integer(multiplier * m_chasemouse_delta_x), float_to_integer(multiplier * -m_chasemouse_delta_y));
+	scroll(float_to_integer(multiplier * m_chasemouse_delta_x), float_to_integer(multiplier * -m_chasemouse_delta_y));
 
 	XY_MouseMoved(m_chasemouse_current_x, m_chasemouse_current_y, getButtonState());
 	g_chasemouse_timer.start();
@@ -634,7 +634,7 @@ void XYWnd::ChaseMouse (void)
 
 static inline gboolean xywnd_chasemouse (gpointer data)
 {
-	reinterpret_cast<XYWnd*> (data)->ChaseMouse();
+	reinterpret_cast<XYWnd*> (data)->chaseMouse();
 	return TRUE;
 }
 
@@ -692,7 +692,7 @@ Shader* XYWnd::m_state_selected = 0;
 
 inline void xy_update_xor_rectangle (XYWnd& self, rect_t area)
 {
-	if (GTK_WIDGET_VISIBLE(self.GetWidget())) {
+	if (GTK_WIDGET_VISIBLE(self.getWidget())) {
 		self.m_XORRectangle.set(rectangle_from_area(area.min, area.max, self.Width(), self.Height()));
 	}
 }
@@ -749,12 +749,12 @@ static gboolean xywnd_size_allocate (GtkWidget* widget, GtkAllocation* allocatio
 
 static gboolean xywnd_expose (GtkWidget* widget, GdkEventExpose* event, XYWnd* xywnd)
 {
-	if (glwidget_make_current(xywnd->GetWidget()) != FALSE) {
+	if (glwidget_make_current(xywnd->getWidget()) != FALSE) {
 		if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
-			xywnd->XY_Draw();
+			xywnd->draw();
 			xywnd->m_XORRectangle.set(Rectangle());
 		}
-		glwidget_swap_buffers(xywnd->GetWidget());
+		glwidget_swap_buffers(xywnd->getWidget());
 	}
 	return FALSE;
 }
@@ -861,18 +861,18 @@ void XYWnd::releaseStates (void)
 	GlobalShaderCache().release("$XY_OVERLAY");
 }
 
-const Vector3& XYWnd::GetOrigin (void)
+const Vector3& XYWnd::getOrigin (void)
 {
 	return m_vOrigin;
 }
 
-void XYWnd::SetOrigin (const Vector3& origin)
+void XYWnd::setOrigin (const Vector3& origin)
 {
 	m_vOrigin = origin;
 	updateModelview();
 }
 
-void XYWnd::Scroll (int x, int y)
+void XYWnd::scroll (int x, int y)
 {
 	const int nDim1 = (m_viewType == YZ) ? 1 : 0;
 	const int nDim2 = (m_viewType == XY) ? 1 : 2;
@@ -895,7 +895,7 @@ void XYWnd::DropClipPoint (int pointx, int pointy)
 
 	Vector3 mid;
 	Select_GetMid(mid);
-	g_clip_viewtype = static_cast<VIEWTYPE> (GetViewType());
+	g_clip_viewtype = static_cast<EViewType> (GetViewType());
 	int nDim = (g_clip_viewtype == YZ) ? 0 : (g_clip_viewtype == XZ ? 1 : 2);
 	point[nDim] = mid[nDim];
 	vector3_snap(point, GetGridSize());
@@ -906,7 +906,7 @@ void XYWnd::Clipper_OnLButtonDown (int x, int y)
 {
 	Vector3 mousePosition = g_vector3_identity;
 	XY_ToPoint(x, y, mousePosition);
-	g_pMovingClip = GlobalClipPoints_Find(mousePosition, (VIEWTYPE) m_viewType, m_fScale);
+	g_pMovingClip = GlobalClipPoints_Find(mousePosition, (EViewType) m_viewType, m_fScale);
 	if (!g_pMovingClip) {
 		DropClipPoint(x, y);
 	}
@@ -923,7 +923,7 @@ void XYWnd::Clipper_OnMouseMoved (int x, int y)
 {
 	if (g_pMovingClip) {
 		XY_ToPoint(x, y, g_pMovingClip->m_ptClip);
-		XY_SnapToGrid(g_pMovingClip->m_ptClip);
+		snapToGrid(g_pMovingClip->m_ptClip);
 		Clip_Update();
 		ClipperChangeNotify();
 	}
@@ -933,7 +933,7 @@ void XYWnd::Clipper_Crosshair_OnMouseMoved (int x, int y)
 {
 	Vector3 mousePosition = g_vector3_identity;
 	XY_ToPoint(x, y, mousePosition);
-	if (ClipMode() && GlobalClipPoints_Find(mousePosition, (VIEWTYPE) m_viewType, m_fScale) != 0) {
+	if (ClipMode() && GlobalClipPoints_Find(mousePosition, (EViewType) m_viewType, m_fScale) != 0) {
 		GdkCursor *cursor = gdk_cursor_new(GDK_CROSSHAIR);
 		gdk_window_set_cursor(m_gl_widget->window, cursor);
 		gdk_cursor_unref(cursor);
@@ -951,7 +951,7 @@ void XYWnd_PositionCamera (XYWnd* xywnd, int x, int y, CamWnd& camwnd)
 {
 	Vector3 origin(Camera_getOrigin(camwnd));
 	xywnd->XY_ToPoint(x, y, origin);
-	xywnd->XY_SnapToGrid(origin);
+	xywnd->snapToGrid(origin);
 	Camera_setOrigin(camwnd, origin);
 }
 
@@ -966,7 +966,7 @@ static void XYWnd_OrientCamera (XYWnd* xywnd, int x, int y, CamWnd& camwnd)
 {
 	Vector3 point = g_vector3_identity;
 	xywnd->XY_ToPoint(x, y, point);
-	xywnd->XY_SnapToGrid(point);
+	xywnd->snapToGrid(point);
 	point -= Camera_getOrigin(camwnd);
 
 	const int n1 = (xywnd->GetViewType() == XY) ? 1 : 2;
@@ -1015,9 +1015,9 @@ void XYWnd::NewBrushDrag (int x, int y)
 	Vector3 mins = g_vector3_identity;
 	Vector3 maxs = g_vector3_identity;
 	XY_ToPoint(m_nNewBrushPressx, m_nNewBrushPressy, mins);
-	XY_SnapToGrid(mins);
+	snapToGrid(mins);
 	XY_ToPoint(x, y, maxs);
-	XY_SnapToGrid(maxs);
+	snapToGrid(maxs);
 
 	const int nDim = (m_viewType == XY) ? 2 : (m_viewType == YZ) ? 0 : 1;
 
@@ -1055,7 +1055,7 @@ void XYWnd::NewBrushDrag (int x, int y)
 void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
 {
 	xywnd->XY_ToPoint(x, y, point);
-	xywnd->XY_SnapToGrid(point);
+	xywnd->snapToGrid(point);
 
 	const int nDim = (xywnd->GetViewType() == XY) ? 2 : (xywnd->GetViewType() == YZ) ? 0 : 1;
 	const float fWorkMid = float_mid(Select_getWorkZone().min[nDim], Select_getWorkZone().max[nDim]);
@@ -1087,19 +1087,19 @@ static inline unsigned int Move_buttons (void)
 static void XYWnd_moveDelta (int x, int y, unsigned int state, void* data)
 {
 	reinterpret_cast<XYWnd*> (data)->EntityCreate_MouseMove(x, y);
-	reinterpret_cast<XYWnd*> (data)->Scroll(-x, y);
+	reinterpret_cast<XYWnd*> (data)->scroll(-x, y);
 }
 
 static gboolean XYWnd_Move_focusOut (GtkWidget* widget, GdkEventFocus* event, XYWnd* xywnd)
 {
-	xywnd->Move_End();
+	xywnd->endMove();
 	return FALSE;
 }
 
-void XYWnd::Move_Begin (void)
+void XYWnd::beginMove (void)
 {
 	if (m_move_started) {
-		Move_End();
+		endMove();
 	}
 	m_move_started = true;
 	g_xywnd_freezePointer.freeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow(), XYWnd_moveDelta,
@@ -1107,7 +1107,7 @@ void XYWnd::Move_Begin (void)
 	m_move_focusOut = g_signal_connect(G_OBJECT(m_gl_widget), "focus_out_event", G_CALLBACK(XYWnd_Move_focusOut), this);
 }
 
-void XYWnd::Move_End (void)
+void XYWnd::endMove (void)
 {
 	m_move_started = false;
 	g_xywnd_freezePointer.unfreeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow());
@@ -1140,14 +1140,14 @@ static void XYWnd_zoomDelta (int x, int y, unsigned int state, void* data)
 
 static gboolean XYWnd_Zoom_focusOut (GtkWidget* widget, GdkEventFocus* event, XYWnd* xywnd)
 {
-	xywnd->Zoom_End();
+	xywnd->endZoom();
 	return FALSE;
 }
 
-void XYWnd::Zoom_Begin (void)
+void XYWnd::beginZoom (void)
 {
 	if (m_zoom_started) {
-		Zoom_End();
+		endZoom();
 	}
 	m_zoom_started = true;
 	g_dragZoom = 0;
@@ -1156,7 +1156,7 @@ void XYWnd::Zoom_Begin (void)
 	m_zoom_focusOut = g_signal_connect(G_OBJECT(m_gl_widget), "focus_out_event", G_CALLBACK(XYWnd_Zoom_focusOut), this);
 }
 
-void XYWnd::Zoom_End (void)
+void XYWnd::endZoom (void)
 {
 	m_zoom_started = false;
 	g_xywnd_freezePointer.unfreeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow());
@@ -1166,7 +1166,7 @@ void XYWnd::Zoom_End (void)
 /**
  * @brief makes sure the selected brush or camera is in view
  */
-void XYWnd::PositionView (const Vector3& position)
+void XYWnd::positionView (const Vector3& position)
 {
 	const int nDim1 = (m_viewType == YZ) ? 1 : 0;
 	const int nDim2 = (m_viewType == XY) ? 1 : 2;
@@ -1179,7 +1179,7 @@ void XYWnd::PositionView (const Vector3& position)
 	XYWnd_Update(*this);
 }
 
-void XYWnd::SetViewType (VIEWTYPE viewType)
+void XYWnd::setViewType (EViewType viewType)
 {
 	m_viewType = viewType;
 	updateModelview();
@@ -1209,10 +1209,10 @@ void XYWnd::mouseDown (const WindowVector& position, ButtonIdentifier button, Mo
 void XYWnd::XY_MouseDown (int x, int y, unsigned int buttons)
 {
 	if (buttons == Move_buttons()) {
-		Move_Begin();
+		beginMove();
 		EntityCreate_MouseDown(x, y);
 	} else if (buttons == Zoom_buttons()) {
-		Zoom_Begin();
+		beginZoom();
 	} else if (ClipMode() && buttons == Clipper_buttons()) {
 		Clipper_OnLButtonDown(x, y);
 	} else if (buttons == NewBrushDrag_buttons() && GlobalSelectionSystem().countSelected() == 0) {
@@ -1232,10 +1232,10 @@ void XYWnd::XY_MouseDown (int x, int y, unsigned int buttons)
 void XYWnd::XY_MouseUp (int x, int y, unsigned int buttons)
 {
 	if (m_move_started) {
-		Move_End();
+		endMove();
 		EntityCreate_MouseUp(x, y);
 	} else if (m_zoom_started) {
-		Zoom_End();
+		endZoom();
 	} else if (ClipMode() && buttons == Clipper_buttons()) {
 		Clipper_OnLButtonUp(x, y);
 	} else if (m_bNewBrushDrag) {
@@ -1269,7 +1269,7 @@ void XYWnd::XY_MouseMoved (int x, int y, unsigned int buttons)
 
 		m_mousePosition = g_vector3_identity;
 		XY_ToPoint(x, y, m_mousePosition);
-		XY_SnapToGrid(m_mousePosition);
+		snapToGrid(m_mousePosition);
 
 		StringOutputStream status(64);
 		status << "x: " << FloatFormat(m_mousePosition[0], 6, 1) << "  y: " << FloatFormat(m_mousePosition[1], 6, 1)
@@ -1333,7 +1333,7 @@ void XYWnd::XY_ToPoint (int x, int y, Vector3& point)
 	}
 }
 
-void XYWnd::XY_SnapToGrid (Vector3& point)
+void XYWnd::snapToGrid (Vector3& point)
 {
 	if (m_viewType == XY) {
 		point[0] = float_snapped(point[0], GetGridSize());
@@ -1350,7 +1350,7 @@ void XYWnd::XY_SnapToGrid (Vector3& point)
 /**
  * @todo Use @code m_image = GlobalTexturesCache().capture(name) @endcode
  */
-void XYWnd::XY_LoadBackgroundImage (const std::string& name)
+void XYWnd::loadBackgroundImage (const std::string& name)
 {
 	std::string relative = GlobalFileSystem().getRelative(name);
 	if (relative == name)
@@ -1393,7 +1393,7 @@ void XYWnd::XY_LoadBackgroundImage (const std::string& name)
 	g_pParentWnd->ActiveXY()->m_ymax = max[m_iy];
 }
 
-void XYWnd::XY_DisableBackground (void)
+void XYWnd::disableBackground (void)
 {
 	g_pParentWnd->ActiveXY()->m_backgroundActivated = false;
 	if (g_pParentWnd->ActiveXY()->m_tex)
@@ -1411,9 +1411,9 @@ void WXY_BackgroundSelect (void)
 	}
 
 	const char* filename = file_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()), TRUE, _("Background Image"));
-	g_pParentWnd->ActiveXY()->XY_DisableBackground();
+	g_pParentWnd->ActiveXY()->disableBackground();
 	if (filename)
-		g_pParentWnd->ActiveXY()->XY_LoadBackgroundImage(filename);
+		g_pParentWnd->ActiveXY()->loadBackgroundImage(filename);
 }
 
 /*
@@ -1427,7 +1427,7 @@ static inline double two_to_the_power (int power)
 	return pow(2.0f, power);
 }
 
-void XYWnd::XY_DrawAxis (void)
+void XYWnd::drawAxis (void)
 {
 	if (g_xywindow_globals_private.show_axis) {
 		const char g_AxisName[3] = { 'X', 'Y', 'Z' };
@@ -1469,7 +1469,7 @@ void XYWnd::XY_DrawAxis (void)
 	}
 }
 
-void XYWnd::XY_DrawBackground (void)
+void XYWnd::drawBackground (void)
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 
@@ -1504,7 +1504,7 @@ void XYWnd::XY_DrawBackground (void)
 	glPopAttrib();
 }
 
-void XYWnd::XY_DrawGrid (void)
+void XYWnd::drawGrid (void)
 {
 	float x, y, xb, xe, yb, ye;
 	float w, h;
@@ -1637,7 +1637,7 @@ void XYWnd::XY_DrawGrid (void)
 		}
 	}
 
-	XYWnd::XY_DrawAxis();
+	XYWnd::drawAxis();
 
 	// show current work zone?
 	// the work zone is used to place dropped points and brushes
@@ -1661,7 +1661,7 @@ void XYWnd::XY_DrawGrid (void)
  XY_DrawBlockGrid
  ==============
  */
-void XYWnd::XY_DrawBlockGrid (void)
+void XYWnd::drawBlockGrid (void)
 {
 	if (Map_FindWorldspawn(g_map) == 0)
 		return;
@@ -1747,7 +1747,7 @@ void XYWnd::XY_DrawBlockGrid (void)
 	glColor4f(0, 0, 0, 0);
 }
 
-void XYWnd::DrawCameraIcon (const Vector3& origin, const Vector3& angles)
+void XYWnd::drawCameraIcon (const Vector3& origin, const Vector3& angles)
 {
 	float x, y;
 	double a;
@@ -2086,7 +2086,7 @@ void XYWnd::updateModelview ()
  ==============
  */
 
-void XYWnd::XY_Draw ()
+void XYWnd::draw ()
 {
 	// clear
 	glViewport(0, 0, m_nWidth, m_nHeight);
@@ -2117,11 +2117,11 @@ void XYWnd::XY_Draw ()
 	glDisable(GL_DEPTH_TEST);
 
 	if (m_backgroundActivated)
-		XY_DrawBackground();
-	XY_DrawGrid();
+		drawBackground();
+	drawGrid();
 
 	if (g_xywindow_globals_private.show_blocks)
-		XY_DrawBlockGrid();
+		drawBlockGrid();
 
 	glLoadMatrixf(reinterpret_cast<const float*> (&m_modelview));
 
@@ -2194,7 +2194,7 @@ void XYWnd::XY_Draw ()
 	glScalef(m_fScale, m_fScale, 1);
 	glTranslatef(-m_vOrigin[nDim1], -m_vOrigin[nDim2], 0);
 
-	DrawCameraIcon(Camera_getOrigin(*g_pParentWnd->GetCamWnd()), Camera_getAngles(*g_pParentWnd->GetCamWnd()));
+	drawCameraIcon(Camera_getOrigin(*g_pParentWnd->GetCamWnd()), Camera_getAngles(*g_pParentWnd->GetCamWnd()));
 
 	if (g_xywindow_globals_private.show_outline) {
 		if (Active()) {
@@ -2233,7 +2233,7 @@ void XYWnd::XY_Draw ()
 	glFinish();
 }
 
-void XYWnd::OnEntityCreate (const std::string& item)
+void XYWnd::onEntityCreate (const std::string& item)
 {
 	Vector3 point = g_vector3_identity;
 	XYWnd_MouseToPoint(this, m_entityCreate_x, m_entityCreate_y, point);
@@ -2253,7 +2253,7 @@ void XYWnd_Focus (XYWnd* xywnd)
 {
 	Vector3 position;
 	GetFocusPosition(position);
-	xywnd->PositionView(position);
+	xywnd->positionView(position);
 }
 
 /**
@@ -2264,9 +2264,9 @@ void XY_CenterViews ()
 	if (g_pParentWnd->CurrentStyle() == MainFrame::eSplit) {
 		Vector3 position;
 		GetFocusPosition(position);
-		g_pParentWnd->GetXYWnd()->PositionView(position);
-		g_pParentWnd->GetXZWnd()->PositionView(position);
-		g_pParentWnd->GetYZWnd()->PositionView(position);
+		g_pParentWnd->GetXYWnd()->positionView(position);
+		g_pParentWnd->GetXZWnd()->positionView(position);
+		g_pParentWnd->GetYZWnd()->positionView(position);
 	} else {
 		XYWnd* xywnd = g_pParentWnd->GetXYWnd();
 		XYWnd_Focus(xywnd);
@@ -2279,7 +2279,7 @@ void XY_CenterViews ()
 void XY_Top ()
 {
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
-	xywnd->SetViewType(XY);
+	xywnd->setViewType(XY);
 	XYWnd_Focus(xywnd);
 }
 
@@ -2289,7 +2289,7 @@ void XY_Top ()
 void XY_Side ()
 {
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
-	xywnd->SetViewType(XZ);
+	xywnd->setViewType(XZ);
 	XYWnd_Focus(xywnd);
 }
 
@@ -2306,7 +2306,7 @@ void XY_Front ()
 	}
 
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
-	xywnd->SetViewType(XY);
+	xywnd->setViewType(XY);
 	XYWnd_Focus(xywnd);
 }
 
@@ -2324,11 +2324,11 @@ void XY_Next ()
 
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
 	if (xywnd->GetViewType() == XY)
-		xywnd->SetViewType(XZ);
+		xywnd->setViewType(XZ);
 	else if (xywnd->GetViewType() == XZ)
-		xywnd->SetViewType(YZ);
+		xywnd->setViewType(YZ);
 	else
-		xywnd->SetViewType(XY);
+		xywnd->setViewType(XY);
 	XYWnd_Focus(xywnd);
 }
 

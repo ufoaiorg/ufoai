@@ -270,15 +270,15 @@ inline bool Edge_isDegenerate (const Vector3& x, const Vector3& y)
 void Winding_Clip (const FixedWinding& winding, const Plane3& plane, const Plane3& clipPlane, std::size_t adjacent,
 		FixedWinding& clipped);
 
-struct brushsplit_t
+struct BrushSplitType
 {
-		brushsplit_t ()
+		BrushSplitType ()
 		{
 			counts[0] = 0;
 			counts[1] = 0;
 			counts[2] = 0;
 		}
-		brushsplit_t& operator+= (const brushsplit_t& other)
+		BrushSplitType& operator+= (const BrushSplitType& other)
 		{
 			counts[0] += other.counts[0];
 			counts[1] += other.counts[1];
@@ -288,7 +288,7 @@ struct brushsplit_t
 		std::size_t counts[3];
 };
 
-brushsplit_t Winding_ClassifyPlane (const Winding& w, const Plane3& plane);
+BrushSplitType Winding_ClassifyPlane (const Winding& w, const Plane3& plane);
 
 bool Winding_PlanesConcave (const Winding& w1, const Winding& w2, const Plane3& plane1, const Plane3& plane2);
 bool Winding_TestPlane (const Winding& w, const Plane3& plane, bool flipped);

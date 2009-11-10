@@ -244,10 +244,10 @@ inline bool Face_testPlane (const Face& face, const Plane3& plane, bool flipped)
 }
 typedef Function3<const Face&, const Plane3&, bool, bool, Face_testPlane> FaceTestPlane;
 
-static brushsplit_t Brush_classifyPlane (const Brush& brush, const Plane3& plane)
+static BrushSplitType Brush_classifyPlane (const Brush& brush, const Plane3& plane)
 {
 	brush.evaluateBRep();
-	brushsplit_t split;
+	BrushSplitType split;
 	for (Brush::const_iterator i(brush.begin()); i != brush.end(); ++i) {
 		if ((*i)->contributes()) {
 			split += Winding_ClassifyPlane((*i)->getWinding(), plane);
@@ -265,7 +265,7 @@ static bool Brush_subtract (const Brush& brush, const Brush& other, brush_vector
 
 		for (Brush::const_iterator i(other.begin()); i != other.end(); ++i) {
 			if ((*i)->contributes()) {
-				brushsplit_t split = Brush_classifyPlane(back, (*i)->plane3());
+				BrushSplitType split = Brush_classifyPlane(back, (*i)->plane3());
 				if (split.counts[ePlaneFront] != 0 && split.counts[ePlaneBack] != 0) {
 					fragments.push_back(new Brush(back));
 					Face* newFace = fragments.back()->addFace(*(*i));
@@ -396,7 +396,7 @@ class BrushSplitByPlaneSelected: public scene::Graph::Walker
 				if (brush != 0 && Instance_getSelectable(instance)->isSelected()) {
 					Plane3 plane(plane3_for_points(m_p0, m_p1, m_p2));
 					if (plane3_valid(plane)) {
-						brushsplit_t split = Brush_classifyPlane(*brush, m_split == eFront ? plane3_flipped(plane)
+						BrushSplitType split = Brush_classifyPlane(*brush, m_split == eFront ? plane3_flipped(plane)
 								: plane);
 						if (split.counts[ePlaneBack] && split.counts[ePlaneFront]) {
 							// the plane intersects this brush

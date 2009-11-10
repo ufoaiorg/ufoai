@@ -795,7 +795,7 @@ struct AxisBase
 		}
 };
 
-AxisBase AxisBase_forViewType (VIEWTYPE viewtype)
+AxisBase AxisBase_forViewType (EViewType viewtype)
 {
 	switch (viewtype) {
 	case XY:
@@ -827,7 +827,7 @@ Vector3 AxisBase_axisForDirection (const AxisBase& axes, ENudgeDirection directi
 	return Vector3(0, 0, 0);
 }
 
-void NudgeSelection (ENudgeDirection direction, float fAmount, VIEWTYPE viewtype)
+void NudgeSelection (ENudgeDirection direction, float fAmount, EViewType viewtype)
 {
 	AxisBase axes(AxisBase_forViewType(viewtype));
 	Vector3 view_direction(-axes.z);
@@ -2111,8 +2111,8 @@ void MainFrame::Create (void)
 
 			// xy
 			m_pXYWnd = new XYWnd();
-			m_pXYWnd->SetViewType(XY);
-			GtkWidget* xy_window = GTK_WIDGET(create_framed_widget(m_pXYWnd->GetWidget()));
+			m_pXYWnd->setViewType(XY);
+			GtkWidget* xy_window = GTK_WIDGET(create_framed_widget(m_pXYWnd->getWidget()));
 
 			{
 				GtkWidget* vsplit2 = gtk_vpaned_new();
@@ -2159,18 +2159,18 @@ void MainFrame::Create (void)
 
 		// yz window
 		m_pYZWnd = new XYWnd();
-		m_pYZWnd->SetViewType(YZ);
-		GtkWidget* yz = m_pYZWnd->GetWidget();
+		m_pYZWnd->setViewType(YZ);
+		GtkWidget* yz = m_pYZWnd->getWidget();
 
 		// xy window
 		m_pXYWnd = new XYWnd();
-		m_pXYWnd->SetViewType(XY);
-		GtkWidget* xy = m_pXYWnd->GetWidget();
+		m_pXYWnd->setViewType(XY);
+		GtkWidget* xy = m_pXYWnd->getWidget();
 
 		// xz window
 		m_pXZWnd = new XYWnd();
-		m_pXZWnd->SetViewType(XZ);
-		GtkWidget* xz = m_pXZWnd->GetWidget();
+		m_pXZWnd->setViewType(XZ);
+		GtkWidget* xz = m_pXZWnd->getWidget();
 
 		// split view (4 views)
 		GtkHPaned* split = create_split_views(camera, yz, xy, xz);

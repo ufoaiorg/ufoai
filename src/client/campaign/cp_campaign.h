@@ -223,7 +223,7 @@ typedef struct battleParam_s {
 	char *param;					/**< in case of a random map assembly we can't use the param from mapDef - because
 									 * this is global for the mapDef - but we need a local mission param */
 	char alienEquipment[MAX_VAR];					/**< Equipment of alien team */
-	char civTeam[MAX_VAR];							/**< Type of civilian (europeean, ...) */
+	char civTeam[MAX_VAR];							/**< Type of civilian (European, ...) */
 	qboolean day;									/**< Mission is played during day */
 	const char *zoneType;							/**< Terrain type (used for texture replacement in base missions) */
 	int ugv;						/**< uncontrolled ground units (entity: info_2x2_start) */
@@ -231,7 +231,7 @@ typedef struct battleParam_s {
 	struct nation_s *nation;		/**< nation where the mission takes place */
 } battleParam_t;
 
-/** @brief Structure with mission info needed to create results summary at Menu Won. */
+/** @brief Structure with mission info needed to create results summary at menu won. */
 typedef struct missionResults_s {
 	int itemtypes;		/**< Types of items gathered from a mission. */
 	int itemamount;		/**< Amount of items (all) gathered from a mission. */

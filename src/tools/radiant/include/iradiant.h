@@ -98,7 +98,7 @@ typedef SignalHandler3<const WindowVector&, ButtonIdentifier, ModifierFlags> Mou
 typedef SignalFwd<MouseEventHandler>::handler_id_type MouseEventHandlerId;
 
 // Possible types of the orthogonal view window
-enum VIEWTYPE
+enum EViewType
 {
 	YZ = 0, XZ = 1, XY = 2
 };
@@ -146,7 +146,7 @@ struct IRadiant
 		void (*XYWindowDestroyed_disconnect) (SignalHandlerId id);
 		MouseEventHandlerId (*XYWindowMouseDown_connect) (const MouseEventHandler& handler);
 		void (*XYWindowMouseDown_disconnect) (MouseEventHandlerId id);
-		VIEWTYPE (*XYWindow_getViewType) ();
+		EViewType (*XYWindow_getViewType) ();
 		Vector3 (*XYWindow_windowToWorld) (const WindowVector& position);
 		const char* (*TextureBrowser_getSelectedShader) ();
 

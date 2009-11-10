@@ -493,7 +493,7 @@ void FocusViews (const Vector3& point, float angle)
 	Camera_setAngles(camwnd, angles);
 
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
-	xywnd->SetOrigin(point);
+	xywnd->setOrigin(point);
 }
 
 #include "stringio.h"
@@ -1686,11 +1686,11 @@ void RegionOff (void)
 
 void RegionXY (void)
 {
-	Map_RegionXY(g_pParentWnd->GetXYWnd()->GetOrigin()[0] - 0.5f * g_pParentWnd->GetXYWnd()->Width()
-			/ g_pParentWnd->GetXYWnd()->Scale(), g_pParentWnd->GetXYWnd()->GetOrigin()[1] - 0.5f
+	Map_RegionXY(g_pParentWnd->GetXYWnd()->getOrigin()[0] - 0.5f * g_pParentWnd->GetXYWnd()->Width()
+			/ g_pParentWnd->GetXYWnd()->Scale(), g_pParentWnd->GetXYWnd()->getOrigin()[1] - 0.5f
 			* g_pParentWnd->GetXYWnd()->Height() / g_pParentWnd->GetXYWnd()->Scale(),
-			g_pParentWnd->GetXYWnd()->GetOrigin()[0] + 0.5f * g_pParentWnd->GetXYWnd()->Width()
-					/ g_pParentWnd->GetXYWnd()->Scale(), g_pParentWnd->GetXYWnd()->GetOrigin()[1] + 0.5f
+			g_pParentWnd->GetXYWnd()->getOrigin()[0] + 0.5f * g_pParentWnd->GetXYWnd()->Width()
+					/ g_pParentWnd->GetXYWnd()->Scale(), g_pParentWnd->GetXYWnd()->getOrigin()[1] + 0.5f
 					* g_pParentWnd->GetXYWnd()->Height() / g_pParentWnd->GetXYWnd()->Scale());
 	SceneChangeNotify();
 }
@@ -1779,7 +1779,7 @@ void SelectBrush (int entitynum, int brushnum, int select)
 		Selectable* selectable = Instance_getSelectable(*instance);
 		ASSERT_MESSAGE(selectable != 0, "SelectBrush: path not selectable");
 		selectable->setSelected(select);
-		g_pParentWnd->GetXYWnd()->PositionView(instance->worldAABB().origin);
+		g_pParentWnd->GetXYWnd()->positionView(instance->worldAABB().origin);
 	}
 }
 

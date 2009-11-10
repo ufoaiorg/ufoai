@@ -109,7 +109,7 @@ scene::Node& getMapWorldEntity ()
 	return Map_FindOrInsertWorldspawn(g_map);
 }
 
-VIEWTYPE XYWindow_getViewType ()
+EViewType XYWindow_getViewType ()
 {
 	return g_pParentWnd->GetXYWnd()->GetViewType();
 }

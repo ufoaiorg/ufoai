@@ -54,7 +54,7 @@ void Clip ();
 void OnClipMode (bool enabled);
 bool ClipMode ();
 
-inline const char* ViewType_getTitle (VIEWTYPE viewtype)
+inline const char* ViewType_getTitle (EViewType viewtype)
 {
 	if (viewtype == XY) {
 		return "XY Top";
@@ -85,7 +85,7 @@ class XYWnd
 		{
 			m_deferredDraw.draw();
 		}
-		GtkWidget* GetWidget ()
+		GtkWidget* getWidget ()
 		{
 			return m_gl_widget;
 		}
@@ -97,19 +97,19 @@ class XYWnd
 		static void captureStates ();
 		static void releaseStates ();
 
-		void PositionView (const Vector3& position);
-		const Vector3& GetOrigin ();
-		void SetOrigin (const Vector3& origin);
-		void Scroll (int x, int y);
+		void positionView (const Vector3& position);
+		const Vector3& getOrigin ();
+		void setOrigin (const Vector3& origin);
+		void scroll (int x, int y);
 
-		void XY_Draw ();
-		void DrawCameraIcon (const Vector3& origin, const Vector3& angles);
-		void XY_DrawBlockGrid ();
-		void XY_DrawAxis ();
-		void XY_DrawGrid ();
-		void XY_DrawBackground ();
-		void XY_LoadBackgroundImage (const std::string& name);
-		void XY_DisableBackground ();
+		void draw ();
+		void drawCameraIcon (const Vector3& origin, const Vector3& angles);
+		void drawBlockGrid ();
+		void drawAxis ();
+		void drawGrid ();
+		void drawBackground ();
+		void loadBackgroundImage (const std::string& name);
+		void disableBackground ();
 
 		void XY_MouseUp (int x, int y, unsigned int buttons);
 		void XY_MouseDown (int x, int y, unsigned int buttons);
@@ -120,15 +120,15 @@ class XYWnd
 		void NewBrushDrag_End (int x, int y);
 
 		void XY_ToPoint (int x, int y, Vector3& point);
-		void XY_SnapToGrid (Vector3& point);
+		void snapToGrid (Vector3& point);
 
-		void Move_Begin ();
-		void Move_End ();
+		void beginMove ();
+		void endMove ();
 		bool m_move_started;
 		guint m_move_focusOut;
 
-		void Zoom_Begin ();
-		void Zoom_End ();
+		void beginZoom ();
+		void endZoom ();
 		bool m_zoom_started;
 		guint m_zoom_focusOut;
 
@@ -136,12 +136,11 @@ class XYWnd
 		{
 			m_bActive = b;
 		}
-		;
+
 		bool Active ()
 		{
 			return m_bActive;
 		}
-		;
 
 		void Clipper_OnLButtonDown (int x, int y);
 		void Clipper_OnLButtonUp (int x, int y);
@@ -149,14 +148,14 @@ class XYWnd
 		void Clipper_Crosshair_OnMouseMoved (int x, int y);
 		void DropClipPoint (int pointx, int pointy);
 
-		void SetViewType (VIEWTYPE n);
+		void setViewType (EViewType n);
 		bool m_bActive;
 
 		int m_chasemouse_current_x, m_chasemouse_current_y;
 		int m_chasemouse_delta_x, m_chasemouse_delta_y;
 
 		guint m_chasemouse_handler;
-		void ChaseMouse ();
+		void chaseMouse ();
 		bool chaseMouseMotion (int pointx, int pointy);
 
 		void updateModelview ();
@@ -190,7 +189,7 @@ class XYWnd
 
 		Vector3 m_mousePosition;
 
-		VIEWTYPE m_viewType;
+		EViewType m_viewType;
 
 		void OriginalButtonUp (guint32 nFlags, int point, int pointy);
 		void OriginalButtonDown (guint32 nFlags, int point, int pointy);
@@ -221,8 +220,8 @@ class XYWnd
 		void EntityCreate_MouseMove (int x, int y);
 		void EntityCreate_MouseUp (int x, int y);
 
-		void OnEntityCreate (const std::string& item);
-		VIEWTYPE GetViewType ()
+		void onEntityCreate (const std::string& item);
+		EViewType GetViewType ()
 		{
 			return m_viewType;
 		}
@@ -287,7 +286,7 @@ struct xywindow_globals_t
 
 extern xywindow_globals_t g_xywindow_globals;
 
-VIEWTYPE GlobalXYWnd_getCurrentViewType ();
+EViewType GlobalXYWnd_getCurrentViewType ();
 
 typedef struct _GtkWindow GtkWindow;
 void XY_Top_Shown_Construct (GtkWindow* parent);
