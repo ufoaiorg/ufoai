@@ -173,9 +173,9 @@ namespace map
 	void selectedBrushesSubtractOrigin (const Vector3& origin);
 
 	/**
-	 * @return The name of the current loaded map
+	 * @return @c true if the map is not yet saved, @c false otherwise
 	 */
-	const std::string getName ();
+	bool isUnnamed ();
 }
 
 #endif

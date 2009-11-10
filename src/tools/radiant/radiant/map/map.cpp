@@ -364,7 +364,8 @@ const std::string& Map_Name (const Map& map)
 
 bool Map_Unnamed (const Map& map)
 {
-	return Map_Name(map) == "unnamed.map";
+	const std::string name = Map_Name(map);
+	return (name.empty() || name == "unnamed.map");
 }
 
 inline const MapFormat& MapFormat_forFile (const std::string& filename)
@@ -1471,6 +1472,11 @@ namespace map
 		GlobalSceneGraph().traverse(CountSelectedBrushes(count));
 		return count;
 	}
+
+	bool isUnnamed ()
+	{
+		return Map_Unnamed(g_map);
+	}
 } // namespace map
 
 enum ENodeType
@@ -1589,7 +1595,12 @@ const std::string& getMapsPath (void)
 const std::string map_open (const std::string& title)
 {
 	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, true, "map", ".map");
-	fileChooser.setCurrentPath(getMapsPath());
+	if (map::isUnnamed()) {
+		fileChooser.setCurrentPath(getMapsPath());
+	} else {
+		const std::string mapName = GlobalRadiant().getMapName();
+		fileChooser.setCurrentPath(os::stripFilename(mapName));
+	}
 
 	// Instantiate a new preview object
 	// map::MapFileChooserPreview preview;
@@ -1603,7 +1614,12 @@ const std::string map_open (const std::string& title)
 const std::string map_save (const std::string& title)
 {
 	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, false, "map", ".map");
-	fileChooser.setCurrentPath(getMapsPath());
+	if (map::isUnnamed()) {
+		fileChooser.setCurrentPath(getMapsPath());
+	} else {
+		const std::string mapName = GlobalRadiant().getMapName();
+		fileChooser.setCurrentPath(os::stripFilename(mapName));
+	}
 
 	// Instantiate a new preview object
 	//map::MapFileChooserPreview preview;
