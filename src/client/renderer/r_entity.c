@@ -104,14 +104,9 @@ void R_EntityDrawBBox (vec3_t bbox[8])
  */
 static void R_DrawBox (const entity_t * e)
 {
-	vec3_t upper, lower;
-	float dx, dy;
 	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
 
 	glDisable(GL_TEXTURE_2D);
-	if (!r_wire->integer)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glEnable(GL_LINE_SMOOTH);
 
 	R_Color(color);
 
@@ -120,12 +115,15 @@ static void R_DrawBox (const entity_t * e)
 		R_EntityComputeBoundingBox(e->mins, e->maxs, bbox);
 		R_EntityDrawBBox(bbox);
 	} else {
+		vec3_t upper, lower;
+		const float dx = e->oldorigin[0] - e->origin[0];
+		const float dy = e->oldorigin[1] - e->origin[1];
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 		VectorCopy(e->origin, lower);
 		VectorCopy(e->origin, upper);
 		upper[2] = e->oldorigin[2];
-
-		dx = e->oldorigin[0] - e->origin[0];
-		dy = e->oldorigin[1] - e->origin[1];
 
 		glBegin(GL_QUAD_STRIP);
 		glVertex3fv(lower);
@@ -147,11 +145,9 @@ static void R_DrawBox (const entity_t * e)
 		glVertex3fv(lower);
 		glVertex3fv(upper);
 		glEnd();
-	}
 
-	glDisable(GL_LINE_SMOOTH);
-	if (!r_wire->integer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
 
 	glEnable(GL_TEXTURE_2D);
 
@@ -366,23 +362,15 @@ static void R_DrawMeshEntities (entity_t *ents)
 	e = ents;
 
 	while (e) {
-		if (e->flags & RF_BOX) {
-			R_DrawBox(e);
-		} else if (e->flags & RF_PATH) {
-			R_DrawFloor(e);
-		} else if (e->flags & RF_ARROW) {
-			R_DrawArrow(e);
-		} else {
-			switch (e->model->type) {
-			case mod_alias_dpm:
-			case mod_alias_md2:
-			case mod_alias_md3:
-			case mod_obj:
-				R_DrawAliasModel(e);
-				break;
-			default:
-				break;
-			}
+		switch (e->model->type) {
+		case mod_alias_dpm:
+		case mod_alias_md2:
+		case mod_alias_md3:
+		case mod_obj:
+			R_DrawAliasModel(e);
+			break;
+		default:
+			break;
 		}
 		e = e->next;
 	}
@@ -448,6 +436,31 @@ static void R_DrawNullModel (const entity_t *e)
 	glPopMatrix();
 
 	R_EnableTexture(&texunit_diffuse, qtrue);
+}
+
+static void R_DrawSpecialEntities (const entity_t *ents)
+{
+	const entity_t *e;
+
+	if (!ents)
+		return;
+
+	e = ents;
+
+	R_EnableBlend(qtrue);
+
+	while (e) {
+		if (e->flags & RF_BOX) {
+			R_DrawBox(e);
+		} else if (e->flags & RF_PATH) {
+			R_DrawFloor(e);
+		} else if (e->flags & RF_ARROW) {
+			R_DrawArrow(e);
+		}
+		e = e->next;
+	}
+
+	R_EnableBlend(qfalse);
 }
 
 /**
@@ -582,11 +595,12 @@ void R_DrawEntities (void)
 	entity_t **chain;
 	entity_t *r_bsp_entities, *r_opaque_mesh_entities;
 	entity_t *r_blend_mesh_entities, *r_null_entities;
+	entity_t *r_special_entities;
 
 	if (!r_drawentities->integer)
 		return;
 
-	r_bsp_entities = r_opaque_mesh_entities =
+	r_bsp_entities = r_opaque_mesh_entities = r_special_entities =
 		r_blend_mesh_entities = r_null_entities = NULL;
 
 	for (i = 0; i < r_numEntities; i++) {
@@ -600,7 +614,7 @@ void R_DrawEntities (void)
 
 		if (!e->model) {
 			if (e->flags & RF_BOX || e->flags & RF_PATH || e->flags & RF_ARROW)
-				chain = &r_blend_mesh_entities;
+				chain = &r_special_entities;
 			else
 				chain = &r_null_entities;
 		} else {
@@ -634,6 +648,7 @@ void R_DrawEntities (void)
 	R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
 	R_DrawBlendMeshEntities(r_blend_mesh_entities);
 	R_Color(NULL);
+	R_DrawSpecialEntities(r_special_entities);
 	R_DrawNullEntities(r_null_entities);
 	R_DrawEntityEffects();
 }
