@@ -402,6 +402,7 @@ void G_MatchEndCheck(void);
 qboolean G_MatchDoEnd(void);
 
 /* g_trigger.c */
+void G_SendTriggerBoundingBoxes(const int mask, const edict_t *ent);
 edict_t* G_TriggerSpawn(edict_t *owner);
 void SP_trigger_hurt(edict_t *ent);
 void SP_trigger_touch(edict_t *ent);

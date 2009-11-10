@@ -1145,13 +1145,7 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 
 			/* send trigger entities to the client to display them (needs mins, maxs set) */
 		case SOLID_TRIGGER:
-			if (sv_send_edicts->integer) {
-				gi.AddEvent(G_PlayerToPM(player), EV_ADD_EDICT);
-				gi.WriteShort(ent->type);
-				gi.WriteShort(ent->number);
-				gi.WritePos(ent->mins);
-				gi.WritePos(ent->maxs);
-			}
+			G_SendTriggerBoundingBoxes(G_PlayerToPM(player), ent);
 			break;
 
 		case SOLID_NOT:

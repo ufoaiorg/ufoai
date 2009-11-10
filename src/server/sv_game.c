@@ -183,12 +183,12 @@ static void SV_WriteString (const char *s)
 	NET_WriteString(pfe_msg, s);
 }
 
-static void SV_WritePos (vec3_t pos)
+static void SV_WritePos (const vec3_t pos)
 {
 	NET_WritePos(pfe_msg, pos);
 }
 
-static void SV_WriteGPos (pos3_t pos)
+static void SV_WriteGPos (const pos3_t pos)
 {
 	NET_WriteGPos(pfe_msg, pos);
 }

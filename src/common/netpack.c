@@ -79,14 +79,14 @@ void NET_Write2Pos (struct dbuffer *buf, vec2_t pos)
 /**
  * @sa NET_ReadPos
  */
-void NET_WritePos (struct dbuffer *buf, vec3_t pos)
+void NET_WritePos (struct dbuffer *buf, const vec3_t pos)
 {
 	NET_WriteLong(buf, (long) (pos[0] * 32.));
 	NET_WriteLong(buf, (long) (pos[1] * 32.));
 	NET_WriteLong(buf, (long) (pos[2] * 32.));
 }
 
-void NET_WriteGPos (struct dbuffer *buf, pos3_t pos)
+void NET_WriteGPos (struct dbuffer *buf, const pos3_t pos)
 {
 	NET_WriteByte(buf, pos[0]);
 	NET_WriteByte(buf, pos[1]);

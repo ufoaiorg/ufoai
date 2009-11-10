@@ -60,6 +60,17 @@ edict_t* G_TriggerSpawn (edict_t *owner)
 	return trigger;
 }
 
+void G_SendTriggerBoundingBoxes (const int mask, const edict_t *ent)
+{
+	if (sv_send_edicts->integer) {
+		gi.AddEvent(mask, EV_ADD_EDICT);
+		gi.WriteShort(ent->type);
+		gi.WriteShort(ent->number);
+		gi.WritePos(ent->mins);
+		gi.WritePos(ent->maxs);
+	}
+}
+
 /**
  * @brief Hurt trigger
  * @sa SP_trigger_hurt
