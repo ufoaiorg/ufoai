@@ -198,7 +198,7 @@ void SV_LinkEdict (edict_t * ent)
 	/* expand for rotation */
 	if (ent->solid == SOLID_BSP && VectorNotEmpty(ent->angles)) {
 		vec3_t minVec, maxVec;
-		vec3_t centerVec, halfVec, newCenterVec;
+		vec3_t centerVec, halfVec, newCenterVec, newHalfVec;
 		vec3_t m[3];
 
 		/* Find the center of the extents. */
@@ -210,10 +210,11 @@ void SV_LinkEdict (edict_t * ent)
 		/* Rotate the center about the origin. */
 		AngleVectors(ent->angles, m[0], m[1], m[2]);
 		VectorRotate(m, centerVec, newCenterVec);
+		VectorRotate(m, halfVec, newHalfVec);
 
 		/* Set minVec and maxVec to bound around newCenterVec at halfVec size. */
-		VectorSubtract(newCenterVec, halfVec, minVec);
-		VectorAdd(newCenterVec, halfVec, maxVec);
+		VectorSubtract(newCenterVec, newHalfVec, minVec);
+		VectorAdd(newCenterVec, newHalfVec, maxVec);
 
 		/* Adjust the absolute mins/maxs */
 		VectorAdd(ent->origin, minVec, ent->absmin);
