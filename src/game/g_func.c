@@ -128,8 +128,8 @@ DOOR FUNCTIONS
  */
 static qboolean Door_Use (edict_t *door)
 {
-	if (door->moveinfo.state == STATE_CLOSED) {
-		door->moveinfo.state = STATE_OPENED;
+	if (door->doorState == STATE_CLOSED) {
+		door->doorState = STATE_OPENED;
 
 		/* change rotation and relink */
 		door->angles[YAW] += DOOR_ROTATION_ANGLE;
@@ -143,8 +143,8 @@ static qboolean Door_Use (edict_t *door)
 			if (door->noise[0] != '\0')
 				gi.PositionedSound(PM_ALL, door->origin, door, door->noise);
 		}
-	} else if (door->moveinfo.state == STATE_OPENED) {
-		door->moveinfo.state = STATE_CLOSED;
+	} else if (door->doorState == STATE_OPENED) {
+		door->doorState = STATE_CLOSED;
 
 		/* change rotation and relink */
 		door->angles[YAW] -= DOOR_ROTATION_ANGLE;
@@ -227,7 +227,7 @@ void SP_func_door (edict_t *ent)
 	gi.SetModel(ent, ent->model);
 	ent->solid = SOLID_BSP;
 	gi.LinkEdict(ent);
-	ent->moveinfo.state = STATE_CLOSED;
+	ent->doorState = STATE_CLOSED;
 
 	if (ent->HP)
 		ent->flags |= FL_DESTROYABLE;

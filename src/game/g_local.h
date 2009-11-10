@@ -424,14 +424,12 @@ typedef enum {
 	MAT_MAX
 } edictMaterial_t;
 
+/** @brief actor movement */
 typedef struct {
-	/* actor movement */
 	int			contentFlags[MAX_DVTAB];
 	int			visflags[MAX_DVTAB];
 	byte		steps;
 	int			currentStep;
-
-	int			state;
 } moveinfo_t;
 
 /** @brief client data that stays across multiple level loads */
@@ -611,7 +609,8 @@ struct edict_s {
 	qboolean (*use)(edict_t *self);
 	qboolean (*destroy)(edict_t *self);
 
-	/** e.g. doors */
+	int doorState;	/**< open or closed */
+
 	moveinfo_t		moveinfo;
 
 	/** flags will have FL_GROUPSLAVE set when the edict is part of a chain,

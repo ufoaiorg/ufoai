@@ -108,7 +108,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 
 	/* if the alien is trying to hide and the door is
 	* still opened, close it */
-	if (ent->hiding && door->moveinfo.state == STATE_OPENED)
+	if (ent->hiding && door->doorState == STATE_OPENED)
 		return qtrue;
 
 	/* aliens and civilians need different handling */
