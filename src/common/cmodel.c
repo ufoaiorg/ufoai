@@ -2343,7 +2343,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 	/* get the target model's dimensions */
 	if (VectorNotEmpty(model->angles)) {
 		vec3_t minVec, maxVec;
-		vec3_t centerVec, halfVec, worstVec, newCenterVec;
+		vec3_t centerVec, halfVec, newCenterVec;
 		vec3_t m[3];
 
 		/* Find the center of the extents. */
@@ -2351,9 +2351,6 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 
 		/* Find the half height and half width of the extents. */
 		VectorSubtract(model->maxs, centerVec, halfVec);
-
-		/* Define the rough largest extenst that this box can have when rotated. */
-		worstVec[0] = worstVec[1] = worstVec[2] = halfVec[0] + halfVec[1] + halfVec[2];
 
 		/* Rotate the center about the origin. */
 		AngleVectors(model->angles, m[0], m[1], m[2]);
