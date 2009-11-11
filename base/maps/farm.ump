@@ -230,6 +230,16 @@ abcv   +a      +a      abc
 0      abch    abch    0
 }
 
+tile +farmhouse_c
+{
+4 4
+0      abch   abch   0
+abcv   +a     +a     abcv
+abcv   +a     +a     abcv
+0      abch   abch   0
+}
+
+
 // ---------------------------------
 // Barn horizontal
 tile +barn_a
@@ -357,12 +367,14 @@ grid "1 1"
 +silo "0 2"
 +road_rt "0 1"
 +road_v "1 10"
++road_v1 "0 1"
 +road_h "1 10"
 +road_hs "0 1"
 +road_h1 "0 1"
 +road_r "0 1"
 +farmhouse_a "0 1"
 +farmhouse_b "0 1"
++farmhouse_c "0 1"
 +barn_a "0 1"
 +barn_b "0 1"
 +stables_a "0 1"
@@ -388,11 +400,13 @@ grid "1 1"
 +wind "0 1"
 +farmhouse_a "0 1"
 +farmhouse_b "0 1"
++farmhouse_c "0 1"
 +road_hs "0 1"
 +road_h1 "0 1"
 +road_h "0 10"
 +road_rt "0 1"
 +road_v "0 10"
++road_v1 "0 2"
 +barn_a "0 1"
 +barn_b "0 1"
 +stables_a "0 1"
@@ -421,8 +435,10 @@ grid "1 1"
 +road_h "0 10"
 +road_rt "0 1"
 +road_v "0 10"
++road_v1 "0 1"
 +farmhouse_a "0 1"
 +farmhouse_b "0 1"
++farmhouse_c "0 1"
 +barn_a "0 1"
 +barn_b "0 1"
 +stables_a "0 1"
