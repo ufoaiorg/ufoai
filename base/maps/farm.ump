@@ -333,6 +333,16 @@ abc  +v  abc
 0     v    0
 }
 
+// vertical road with decorations.
+tile +road_v1
+{
+3 3
+0     v   0
+abc  +v   abc
+0     v   0
+}
+
+
 // right-top turn
 tile +road_rt
 {
