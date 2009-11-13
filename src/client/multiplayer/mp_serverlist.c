@@ -256,7 +256,7 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 
 		/* store data */
 		LIST_AddString(&userList, user);
-		LIST_AddString(&userTeam, _(va("Team %d", team)));
+		LIST_AddString(&userTeam, va(_("Team %d"), team));
 
 		/* next line */
 		s = strstr(s, "\n");
