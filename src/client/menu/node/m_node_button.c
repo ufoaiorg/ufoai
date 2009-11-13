@@ -150,9 +150,9 @@ static void MN_ButtonNodeLoaded (menuNode_t *node)
 
 static const value_t properties[] = {
 	/* @override image
-	 * Texture used by the button. It's a normalized texture of 128×128.
-	 * Normal button start at 0×0, mouse over start at 64×0, mouse click
-	 * start at 0×64 (but not yet implemented), and disabled start at 64×64.
+	 * Texture used by the button. It's a normalized texture of 128x128.
+	 * Normal button start at 0x0, mouse over start at 64x0, mouse click
+	 * start at 0x64 (but not yet implemented), and disabled start at 64x64.
 	 * See the image to have a usable template for this node.
 	 * @image html http://ufoai.ninex.info/wiki/images/Button_blue.png
 	 */
