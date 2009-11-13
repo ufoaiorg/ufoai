@@ -1506,7 +1506,7 @@ void Grid_DumpServerRoutes_f (void)
  * @return qtrue if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in
  * the forbidden list) otherwise false.
  */
-static qboolean Grid_CheckForbidden (const struct routing_s *map, const int actorSize, struct pathing_s *path, int x, int y, int z)
+static qboolean Grid_CheckForbidden (const routing_t *map, const int actorSize, struct pathing_s *path, int x, int y, int z)
 {
 	pos_t **p;
 	int i, size;
@@ -1601,7 +1601,7 @@ static void Grid_SetMoveData (struct pathing_s *path, const int x, const int y, 
  * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  */
-void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
+void Grid_MoveMark (const routing_t *map, const int actorSize, struct pathing_s *path, pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
 {
 	int x, y, z;
 	int nx, ny, nz;
@@ -1950,7 +1950,7 @@ void Grid_MoveMark (const struct routing_s *map, const int actorSize, struct pat
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_MoveCalc (const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingState, int distance, byte ** fb_list, int fb_length)
+void Grid_MoveCalc (const routing_t *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingState, int distance, byte ** fb_list, int fb_length)
 {
 	int dir;
 	int count;
@@ -2050,7 +2050,7 @@ pos_t Grid_MoveLength (const struct pathing_s *path, const pos3_t to, byte crouc
  * @return (Guess: a direction index (see dvecs and DIRECTIONS))
  * @sa Grid_MoveCheck
  */
-int Grid_MoveNext (const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingState)
+int Grid_MoveNext (const routing_t *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingState)
 {
 	const pos_t l = RT_AREA(path, from[0], from[1], from[2], crouchingState); /**< Get TUs for this square */
 
@@ -2072,7 +2072,7 @@ int Grid_MoveNext (const struct routing_s *map, const int actorSize, struct path
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's ceiling.
  */
-unsigned int Grid_Ceiling (const struct routing_s *map, const int actorSize, const pos3_t pos)
+unsigned int Grid_Ceiling (const routing_t *map, const int actorSize, const pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
@@ -2090,7 +2090,7 @@ unsigned int Grid_Ceiling (const struct routing_s *map, const int actorSize, con
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's ceiling.
  */
-int Grid_Height (const struct routing_s *map, const int actorSize, const pos3_t pos)
+int Grid_Height (const routing_t *map, const int actorSize, const pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
@@ -2109,7 +2109,7 @@ int Grid_Height (const struct routing_s *map, const int actorSize, const pos3_t 
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's floor.
  */
-int Grid_Floor (const struct routing_s *map, const int actorSize, const pos3_t pos)
+int Grid_Floor (const routing_t *map, const int actorSize, const pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
@@ -2128,7 +2128,7 @@ int Grid_Floor (const struct routing_s *map, const int actorSize, const pos3_t p
  * @param[in] dir the direction in which we are moving
  * @return The actual model height increase needed to move into an adjacent cell.
  */
-pos_t Grid_StepUp (const struct routing_s *map, const int actorSize, const pos3_t pos, const int dir)
+pos_t Grid_StepUp (const routing_t *map, const int actorSize, const pos3_t pos, const int dir)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
@@ -2157,7 +2157,7 @@ int Grid_TUsUsed (int dir)
  * @param[in] pos Position in the map to check for filling
  * @return 0 if the cell is vacant (of the world model), non-zero otherwise.
  */
-int Grid_Filled (const struct routing_s *map, const int actorSize, pos3_t pos)
+int Grid_Filled (const routing_t *map, const int actorSize, pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
@@ -2177,7 +2177,7 @@ int Grid_Filled (const struct routing_s *map, const int actorSize, pos3_t pos)
  * @return New z (height) value.
  * @return 0xFF if an error occurred.
  */
-pos_t Grid_Fall (const struct routing_s *map, const int actorSize, const pos3_t pos)
+pos_t Grid_Fall (const routing_t *map, const int actorSize, const pos3_t pos)
 {
 	int z = pos[2], base, diff;
 	qboolean flier = qfalse; /** @todo if an actor can fly, then set this to true. */
@@ -2215,7 +2215,7 @@ pos_t Grid_Fall (const struct routing_s *map, const int actorSize, const pos3_t 
  * @param[in] pos The grid position
  * @param[out] vec The world vector
  */
-void Grid_PosToVec (const struct routing_s *map, const int actorSize, const pos3_t pos, vec3_t vec)
+void Grid_PosToVec (const routing_t *map, const int actorSize, const pos3_t pos, vec3_t vec)
 {
 	SizedPosToVec(pos, actorSize, vec);
 #ifdef PARANOID
@@ -2235,7 +2235,7 @@ void Grid_PosToVec (const struct routing_s *map, const int actorSize, const pos3
  * @param[in] min The lower extents of the box to recalc routing for
  * @param[in] max The upper extents of the box to recalc routing for
  */
-void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
+void Grid_RecalcBoxRouting (routing_t *map, pos3_t min, pos3_t max)
 {
 	int x, y, z, actorSize, dir;
 
@@ -2310,7 +2310,7 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
  * @param[in] name Name of the inline model to compute the mins/maxs for
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **list)
+void Grid_RecalcRouting (routing_t *map, const char *name, const char **list)
 {
 	cBspModel_t *model;
 	pos3_t min, max;

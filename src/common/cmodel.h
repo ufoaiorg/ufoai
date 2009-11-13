@@ -58,29 +58,29 @@ trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_
 GRID ORIENTED MOVEMENT AND SCANNING
 ==========================================================*/
 
-extern struct routing_s svMap[ACTOR_MAX_SIZE], clMap[ACTOR_MAX_SIZE];
+extern routing_t svMap[ACTOR_MAX_SIZE], clMap[ACTOR_MAX_SIZE];
 extern struct pathing_s svPathMap;
 
 void Grid_DumpWholeServerMap_f(void);
 void Grid_DumpWholeClientMap_f(void);
 void Grid_DumpClientRoutes_f(void);
 void Grid_DumpServerRoutes_f(void);
-void Grid_RecalcBoxRouting(struct routing_s *map, pos3_t min, pos3_t max);
-void Grid_RecalcRouting(struct routing_s *map, const char *name, const char **list);
+void Grid_RecalcBoxRouting(routing_t *map, pos3_t min, pos3_t max);
+void Grid_RecalcRouting(routing_t *map, const char *name, const char **list);
 void Grid_DumpDVTable(const struct pathing_s *path);
-void Grid_MoveMark(const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue);
-void Grid_MoveCalc(const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingSstate, int distance, byte ** fb_list, int fb_length);
+void Grid_MoveMark(const routing_t *map, const int actorSize, struct pathing_s *path, pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue);
+void Grid_MoveCalc(const routing_t *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingSstate, int distance, byte ** fb_list, int fb_length);
 void Grid_MoveStore(struct pathing_s *path);
 pos_t Grid_MoveLength(const struct pathing_s *path, const pos3_t to, byte crouchingState, qboolean stored);
-int Grid_MoveNext(const struct routing_s *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingState);
-int Grid_Height(const struct routing_s *map, const int actorSize, const pos3_t pos);
-unsigned int Grid_Ceiling(const struct routing_s *map, const int actorSize, const pos3_t pos);
-int Grid_Floor(const struct routing_s *map, const int actorSize, const pos3_t pos);
-pos_t Grid_StepUp(const struct routing_s *map, const int actorSize, const pos3_t pos, const int dir);
+int Grid_MoveNext(const routing_t *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingState);
+int Grid_Height(const routing_t *map, const int actorSize, const pos3_t pos);
+unsigned int Grid_Ceiling(const routing_t *map, const int actorSize, const pos3_t pos);
+int Grid_Floor(const routing_t *map, const int actorSize, const pos3_t pos);
+pos_t Grid_StepUp(const routing_t *map, const int actorSize, const pos3_t pos, const int dir);
 int Grid_TUsUsed(int dir);
-int Grid_Filled(const struct routing_s *map, const int actorSize, pos3_t pos);
-pos_t Grid_Fall(const struct routing_s *map, const int actorSize, const pos3_t pos);
-void Grid_PosToVec(const struct routing_s *map, const int actorSize, const pos3_t pos, vec3_t vec);
+int Grid_Filled(const routing_t *map, const int actorSize, pos3_t pos);
+pos_t Grid_Fall(const routing_t *map, const int actorSize, const pos3_t pos);
+void Grid_PosToVec(const routing_t *map, const int actorSize, const pos3_t pos, vec3_t vec);
 
 
 /*==========================================================
