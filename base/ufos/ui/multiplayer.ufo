@@ -1202,14 +1202,18 @@ window multiplayer_selectteam
 			textalign	cc
 		}
 
-		text team_info
+		text userlist
 		{
-			dataid		TEXT_LIST
+			dataid		TEXT_MULTIPLAYER_USERLIST
 			pos			"50 50"
-			size		"300 300"
-			lineheight	16
-			tabwidth	60
-			rows		20
+			size		"150 300"
+		}
+
+		text teamlist
+		{
+			dataid		TEXT_MULTIPLAYER_USERTEAM
+			pos			"200 50"
+			size		"150 300"
 		}
 
 	}

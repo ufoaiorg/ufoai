@@ -204,7 +204,9 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	char *s = NET_ReadString(msg);
 	char *var;
 	char *value;
-	int cnt = 0, n;
+	int cnt = 0;
+	linkedList_t *userList = NULL;
+	linkedList_t *userTeam = NULL;
 
 	if (!s) {
 		MN_ResetData(TEXT_LIST);
@@ -230,36 +232,50 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	*var++ = '\0';
 	teamData.maxplayersperteam = atoi(value);
 
+	/* for each lines */
 	s = var;
-	if (s)
-		Q_strncpyz(teamData.teamInfoText, s, sizeof(teamData.teamInfoText));
+	while (s != NULL && s[0] != '\0') {
+		int team;
+		char user[MAX_VAR];
+		char *end;
 
-	while (s != NULL) {
-		value = strstr(s, "\n");
-		if (value)
-			*value++ = '\0';
-		else
-			break;
-		/* get teamnum */
-		var = strstr(s, "\t");
-		if (var)
-			*var++ = '\0';
+		/* first value is a team */
+		team = atoi(s);
+		if (team > 0 && team < MAX_TEAMS)
+			teamData.teamCount[team]++;
 
-		n = atoi(s);
-		if (n > 0 && n < MAX_TEAMS)
-			teamData.teamCount[n]++;
-		s = value;
+		/* second is a quoted user */
+		s = strstr(s, "\t");
+		assert(s != NULL);
+		s++;
+		assert(s[0] == '\"');
+		s++;
+		end = strstr(s, "\"");
+		assert(end != NULL);
+		strncpy(user, s, min(MAX_VAR, end - s));
+
+		/* store data */
+		LIST_AddString(&userList, user);
+		LIST_AddString(&userTeam, _(va("Team %d", team)));
+
+		/* next line */
+		s = strstr(s, "\n");
+		if (s) s++;
 		cnt++;
 	}
 
-	/* no players are connected atm */
-	if (!cnt)
-		Q_strcat(teamData.teamInfoText, _("No player connected\n"), sizeof(teamData.teamInfoText));
+	MN_RegisterLinkedListText(TEXT_MULTIPLAYER_USERLIST, userList);
+	MN_RegisterLinkedListText(TEXT_MULTIPLAYER_USERTEAM, userTeam);
+
+	/* no players are connected ATM */
+	if (!cnt) {
+		/** @TODO warning must not be into the player list, anyway, can it be possible? if we see this we are connected? */
+		/* Q_strcat(teamData.teamInfoText, _("No player connected\n"), sizeof(teamData.teamInfoText)); */
+	}
 
 	Cvar_SetValue("mn_maxteams", teamData.maxteams);
 	Cvar_SetValue("mn_maxplayersperteam", teamData.maxplayersperteam);
 
-	MN_RegisterText(TEXT_LIST, teamData.teamInfoText);
 	teamData.parsed = qtrue;
 
 	/* spawn multi-player death match soldiers here */

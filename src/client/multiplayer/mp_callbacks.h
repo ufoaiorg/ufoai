@@ -33,7 +33,7 @@ typedef struct teamData_s {
 	qboolean teamplay;
 	int maxteams;
 	int maxplayersperteam;		/**< max players per team */
-	char teamInfoText[MAX_MESSAGE_TEXT];
+
 	qboolean parsed;
 } teamData_t;
 
