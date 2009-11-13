@@ -312,13 +312,13 @@ void G_GenerateEntList (const char *entList[MAX_EDICTS])
  * @sa G_CompleteRecalcRouting
  * @sa Grid_RecalcRouting
  */
-void G_RecalcRouting (const edict_t * self)
+void G_RecalcRouting (const edict_t * ent)
 {
 	const char *entList[MAX_EDICTS];
 	/* generate entity list */
 	G_GenerateEntList(entList);
 	/* recalculate routing */
-	gi.GridRecalcRouting(gi.routingMap, self->model, entList);
+	gi.GridRecalcRouting(gi.routingMap, ent->model, entList);
 }
 
 /**
