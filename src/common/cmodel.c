@@ -1506,7 +1506,7 @@ void Grid_DumpServerRoutes_f (void)
  * @return qtrue if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in
  * the forbidden list) otherwise false.
  */
-static qboolean Grid_CheckForbidden (const routing_t *map, const int actorSize, struct pathing_s *path, int x, int y, int z)
+static qboolean Grid_CheckForbidden (const routing_t *map, const int actorSize, pathing_t *path, int x, int y, int z)
 {
 	pos_t **p;
 	int i, size;
@@ -1540,7 +1540,7 @@ static qboolean Grid_CheckForbidden (const routing_t *map, const int actorSize, 
 	return qfalse;
 }
 
-void Grid_DumpDVTable (const struct pathing_s *path)
+void Grid_DumpDVTable (const pathing_t *path)
 {
 	int px, py, pz, cr;
 	pos3_t mins, maxs;
@@ -1565,7 +1565,7 @@ void Grid_DumpDVTable (const struct pathing_s *path)
 	}
 }
 
-static void Grid_SetMoveData (struct pathing_s *path, const int x, const int y, const int z, const int c, const byte length, const int dir, const int ox, const int oy, const int oz, const int oc, priorityQueue_t *pqueue)
+static void Grid_SetMoveData (pathing_t *path, const int x, const int y, const int z, const int c, const byte length, const int dir, const int ox, const int oy, const int oz, const int oc, priorityQueue_t *pqueue)
 {
 	pos4_t dummy;
 
@@ -1601,7 +1601,7 @@ static void Grid_SetMoveData (struct pathing_s *path, const int x, const int y, 
  * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  */
-void Grid_MoveMark (const routing_t *map, const int actorSize, struct pathing_s *path, pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
+void Grid_MoveMark (const routing_t *map, const int actorSize, pathing_t *path, pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
 {
 	int x, y, z;
 	int nx, ny, nz;
@@ -1950,7 +1950,7 @@ void Grid_MoveMark (const routing_t *map, const int actorSize, struct pathing_s 
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_MoveCalc (const routing_t *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingState, int distance, byte ** fb_list, int fb_length)
+void Grid_MoveCalc (const routing_t *map, const int actorSize, pathing_t *path, pos3_t from, byte crouchingState, int distance, byte ** fb_list, int fb_length)
 {
 	int dir;
 	int count;
@@ -2006,7 +2006,7 @@ void Grid_MoveCalc (const routing_t *map, const int actorSize, struct pathing_s 
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @sa AI_ActorThink
  */
-void Grid_MoveStore (struct pathing_s *path)
+void Grid_MoveStore (pathing_t *path)
 {
 	memcpy(path->areaStored, path->area, sizeof(path->areaStored));
 }
@@ -2021,7 +2021,7 @@ void Grid_MoveStore (struct pathing_s *path)
  * @return ROUTING_NOT_REACHABLE if the move isn't possible
  * @return length of move otherwise (TUs)
  */
-pos_t Grid_MoveLength (const struct pathing_s *path, const pos3_t to, byte crouchingState, qboolean stored)
+pos_t Grid_MoveLength (const pathing_t *path, const pos3_t to, byte crouchingState, qboolean stored)
 {
 #ifdef PARANOID
 	if (to[2] >= PATHFINDING_HEIGHT) {
@@ -2050,7 +2050,7 @@ pos_t Grid_MoveLength (const struct pathing_s *path, const pos3_t to, byte crouc
  * @return (Guess: a direction index (see dvecs and DIRECTIONS))
  * @sa Grid_MoveCheck
  */
-int Grid_MoveNext (const routing_t *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingState)
+int Grid_MoveNext (const routing_t *map, const int actorSize, pathing_t *path, pos3_t from, byte crouchingState)
 {
 	const pos_t l = RT_AREA(path, from[0], from[1], from[2], crouchingState); /**< Get TUs for this square */
 

@@ -109,7 +109,7 @@ typedef struct {
 	int seed; /**< random seed */
 	csi_t *csi;
 	routing_t *routingMap;	/**< server side routing table */
-	struct pathing_s *pathingMap;
+	pathing_t *pathingMap;
 
 	/* special messages */
 
@@ -166,16 +166,16 @@ typedef struct {
 	qboolean (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
 	float (IMPORT *GrenadeTarget) (const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
 
-	void (IMPORT *MoveCalc) (const routing_t * map, int actorSize, struct pathing_s * path, pos3_t from, byte crouchingState, int distance, pos_t ** forbiddenList, int forbiddenListLength);
-	void (IMPORT *MoveStore) (struct pathing_s * path);
-	pos_t (IMPORT *MoveLength) (const struct pathing_s * path, const pos3_t to, byte crouchingState, qboolean stored);
-	int (IMPORT *MoveNext) (const routing_t * map, int actorSize, struct pathing_s *path, pos3_t from, byte crouchingState);
+	void (IMPORT *MoveCalc) (const routing_t * map, int actorSize, pathing_t * path, pos3_t from, byte crouchingState, int distance, pos_t ** forbiddenList, int forbiddenListLength);
+	void (IMPORT *MoveStore) (pathing_t * path);
+	pos_t (IMPORT *MoveLength) (const pathing_t * path, const pos3_t to, byte crouchingState, qboolean stored);
+	int (IMPORT *MoveNext) (const routing_t * map, int actorSize, pathing_t *path, pos3_t from, byte crouchingState);
 	int (IMPORT *GridFloor) (const routing_t * map, int actorSize, const pos3_t pos);
 	int (IMPORT *TUsUsed) (int dir);
 	pos_t (IMPORT *GridFall) (const routing_t * map, int actorSize, const pos3_t pos);
 	void (IMPORT *GridPosToVec) (const routing_t * map, int actorSize, const pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (routing_t * map, const char *name, const char **list);
-	void (IMPORT *GridDumpDVTable) (const struct pathing_s * path);
+	void (IMPORT *GridDumpDVTable) (const pathing_t * path);
 
 	/* filesystem functions */
 	const char *(IMPORT *FS_Gamedir) (void);

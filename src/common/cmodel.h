@@ -59,7 +59,7 @@ GRID ORIENTED MOVEMENT AND SCANNING
 ==========================================================*/
 
 extern routing_t svMap[ACTOR_MAX_SIZE], clMap[ACTOR_MAX_SIZE];
-extern struct pathing_s svPathMap;
+extern pathing_t svPathMap;
 
 void Grid_DumpWholeServerMap_f(void);
 void Grid_DumpWholeClientMap_f(void);
@@ -67,12 +67,12 @@ void Grid_DumpClientRoutes_f(void);
 void Grid_DumpServerRoutes_f(void);
 void Grid_RecalcBoxRouting(routing_t *map, pos3_t min, pos3_t max);
 void Grid_RecalcRouting(routing_t *map, const char *name, const char **list);
-void Grid_DumpDVTable(const struct pathing_s *path);
-void Grid_MoveMark(const routing_t *map, const int actorSize, struct pathing_s *path, pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue);
-void Grid_MoveCalc(const routing_t *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingSstate, int distance, byte ** fb_list, int fb_length);
-void Grid_MoveStore(struct pathing_s *path);
-pos_t Grid_MoveLength(const struct pathing_s *path, const pos3_t to, byte crouchingState, qboolean stored);
-int Grid_MoveNext(const routing_t *map, const int actorSize, struct pathing_s *path, pos3_t from, byte crouchingState);
+void Grid_DumpDVTable(const pathing_t *path);
+void Grid_MoveMark(const routing_t *map, const int actorSize, pathing_t *path, pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue);
+void Grid_MoveCalc(const routing_t *map, const int actorSize, pathing_t *path, pos3_t from, byte crouchingSstate, int distance, byte ** fb_list, int fb_length);
+void Grid_MoveStore(pathing_t *path);
+pos_t Grid_MoveLength(const pathing_t *path, const pos3_t to, byte crouchingState, qboolean stored);
+int Grid_MoveNext(const routing_t *map, const int actorSize, pathing_t *path, pos3_t from, byte crouchingState);
 int Grid_Height(const routing_t *map, const int actorSize, const pos3_t pos);
 unsigned int Grid_Ceiling(const routing_t *map, const int actorSize, const pos3_t pos);
 int Grid_Floor(const routing_t *map, const int actorSize, const pos3_t pos);
