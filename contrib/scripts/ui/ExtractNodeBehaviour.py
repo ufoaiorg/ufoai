@@ -125,7 +125,7 @@ class ExtractNodeBehaviour:
 		comments = []
 		override = False
 		propertyName = ""
-		
+
 		for line in properties.splitlines():
 			line = line.strip()
 
@@ -258,7 +258,7 @@ class ExtractNodeBehaviour:
 				doc = self.extractHeaderComments(data)
 			
 			for code in registrationFunctions:
-				lines = code.split('\n')
+				lines = code.splitlines()
 				dic = {}
 				for l in lines:
 					l = l.replace("behaviour->", "")

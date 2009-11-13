@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 #
 # @brief extract wiki documentation about behaviour from .h and .c files
 # @license Public domain
