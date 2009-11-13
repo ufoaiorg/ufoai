@@ -74,14 +74,20 @@ static const value_t properties[] = {
 	/* Border color we want to display. */
 	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
 
-	/* Used to set the position of the node when the parent use a layout manager.
+	/*
+	 * Used to set the position of the node when the parent use a layout manager.
 	 * Else it do nothing.
-	 * Allowed value depend the layout manager used. Check m_node_panel.c for more values.
-	 * @todo We should rename it and type it named const
+	 * Available values are: LAYOUTALIGN_TOPLEFT, LAYOUTALIGN_TOP, LAYOUTALIGN_TOPRIGHT,
+	 * LAYOUTALIGN_LEFT, LAYOUTALIGN_MIDDLE, LAYOUTALIGN_RIGHT, LAYOUTALIGN_BOTTOMLEFT,
+	 * LAYOUTALIGN_BOTTOM, LAYOUTALIGN_BOTTOMRIGHT, LAYOUTALIGN_FILL.
+	 * Allowed value depend the layout manager used. The update to date list is into
+	 * m_node_panel.c
+	 * @image html http://ufoai.ninex.info/wiki/images/Layout.png
 	 */
 	{"align", V_INT, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
 
-	/* Used share an int, only used by 1 behavour
+	/*
+	 * Used share an int, only used by 1 behavour
 	 * @todo move it to the right behaviour, delete it
 	 */
 	{"num", V_INT, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},

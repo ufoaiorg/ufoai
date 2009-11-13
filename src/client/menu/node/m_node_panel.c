@@ -358,10 +358,17 @@ static void MN_PanelNodeLoaded (menuNode_t *node)
  */
 static const value_t properties[] = {
 	/**
-	 * Select a layout manager to set position and size of child.
-	 * <ul>0: no layout manager,
-	 * <ul>1: top-down flow layout manager
-	 * @Todo use const string to set it
+	 * Select a layout manager to set position and size of child. Most of layout manager
+	 * do not move or resize child without align property set. In the image, number identify
+	 * the position of the child into node, and same color identify the same node. Text on child
+	 * display the value of the "align" property of each child.
+	 * <li>0: no layout manager. Child keep there position and there size.
+	 * <li>LAYOUT_TOP_DOWN_FLOW: layout child from top to down. Only child height do not change.
+	 * <li>LAYOUT_PACK: Pack one by one child into the available space of the node.
+	 * <li>LAYOUT_BORDER: Align nodes at a know position. Its look like pack layout, but the order is not the same.
+	 * top and bottom child first, then left and right, then middle. We can show the difference into the image.
+	 * <li>LAYOUT_STAR: Align the corner of child into the corner of the node. Child size do not change.
+	 * @image html http://ufoai.ninex.info/wiki/images/Layout.png
 	 */
 	{"layout", V_INT, MN_EXTRADATA_OFFSETOF(panelExtraData_t, layout), MEMBER_SIZEOF(panelExtraData_t, layout)},
 	/**
