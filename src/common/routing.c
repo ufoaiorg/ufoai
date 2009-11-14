@@ -161,7 +161,8 @@ void RT_DumpMap (const routing_t *map, int actorSize, int lx, int ly, int lz, in
  */
 void RT_DumpWholeMap (const routing_t *map)
 {
-	vec3_t mins, maxs, normal, origin;
+	box_t box;
+	vec3_t normal, origin;
 	pos3_t start, end, test;
 	trace_t trace;
 	int i;
@@ -179,12 +180,12 @@ void RT_DumpWholeMap (const routing_t *map)
 			VectorCopy(start, test);
 			test[i] = end[i] - 1; /* test is now one floor lower than end */
 			/* Prep boundary box */
-			PosToVec(test, mins);
-			VectorSubtract(mins, normal, mins);
-			PosToVec(end, maxs);
-			VectorAdd(maxs, normal, maxs);
+			PosToVec(test, box.mins);
+			VectorSubtract(box.mins, normal, box.mins);
+			PosToVec(end, box.maxs);
+			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE(origin, origin, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
+			trace = RT_COMPLETEBOXTRACE(origin, origin, box.mins, box.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, lower the boundary. */
@@ -197,12 +198,12 @@ void RT_DumpWholeMap (const routing_t *map)
 			VectorCopy(end, test);
 			test[i] = start[i] + 1; /* test is now one floor lower than end */
 			/* Prep boundary box */
-			PosToVec(start, mins);
-			VectorSubtract(mins, normal, mins);
-			PosToVec(test, maxs);
-			VectorAdd(maxs, normal, maxs);
+			PosToVec(start, box.mins);
+			VectorSubtract(box.mins, normal, box.mins);
+			PosToVec(test, box.maxs);
+			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE(origin, origin, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
+			trace = RT_COMPLETEBOXTRACE(origin, origin, box.mins, box.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, raise the boundary. */
@@ -225,9 +226,10 @@ void RT_DumpWholeMap (const routing_t *map)
  */
 void RT_GetMapSize (vec3_t map_min, vec3_t map_max)
 {
+	box_t box;
 	const vec3_t normal = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
 	pos3_t start, end, test;
-	vec3_t mins, maxs, origin;
+	vec3_t origin;
 	int i;
 	trace_t trace;
 
@@ -243,12 +245,12 @@ void RT_GetMapSize (vec3_t map_min, vec3_t map_max)
 			VectorCopy(start, test);
 			test[i] = end[i]; /* the box from test to end is now one cell high */
 			/* Prep boundary box */
-			PosToVec(test, mins);
-			VectorSubtract(mins, normal, mins);
-			PosToVec(end, maxs);
-			VectorAdd(maxs, normal, maxs);
+			PosToVec(test, box.mins);
+			VectorSubtract(box.mins, normal, box.mins);
+			PosToVec(end, box.maxs);
+			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE(origin, origin, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
+			trace = RT_COMPLETEBOXTRACE(origin, origin, box.mins, box.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, lower the boundary. */
@@ -261,12 +263,12 @@ void RT_GetMapSize (vec3_t map_min, vec3_t map_max)
 			VectorCopy(end, test);
 			test[i] = start[i]; /* the box from start to test is now one cell high */
 			/* Prep boundary box */
-			PosToVec(start, mins);
-			VectorSubtract(mins, normal, mins);
-			PosToVec(test, maxs);
-			VectorAdd(maxs, normal, maxs);
+			PosToVec(start, box.mins);
+			VectorSubtract(box.mins, normal, box.mins);
+			PosToVec(test, box.maxs);
+			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE(origin, origin, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
+			trace = RT_COMPLETEBOXTRACE(origin, origin, box.mins, box.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, raise the boundary. */
@@ -337,21 +339,21 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	/* ... and the same for the torso box */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 	/* This is a template for the extents of the box used by an actor's legs. */
-	const vec3_t floorMins = {-halfMicrostepSize, -halfMicrostepSize, 0};
-	const vec3_t floorMaxs = { halfMicrostepSize,  halfMicrostepSize, 0};
+	const box_t floorBox = {{-halfMicrostepSize, -halfMicrostepSize, 0},
+							{ halfMicrostepSize,  halfMicrostepSize, 0}};
 	/* This is a template for the extents of the box used by an actor's legs. */
-	const vec3_t footMins = {-halfMicrostepSize, -halfMicrostepSize, 0};
-	const vec3_t footMaxs = { halfMicrostepSize,  halfMicrostepSize, QuantToModel(PATHFINDING_LEGROOMHEIGHT) - DIST_EPSILON * 2};
+	const box_t footBox = {{-halfMicrostepSize, -halfMicrostepSize, 0},
+							{ halfMicrostepSize,  halfMicrostepSize, QuantToModel(PATHFINDING_LEGROOMHEIGHT) - DIST_EPSILON * 2}};
 	/* This is a template for the extents of the box used by an actor's torso. */
-	const vec3_t torsoMins = {-halfActorWidth, -halfActorWidth, QuantToModel(PATHFINDING_LEGROOMHEIGHT)};
-	const vec3_t torsoMaxs = { halfActorWidth,  halfActorWidth, QuantToModel(PATHFINDING_MIN_OPENING) - DIST_EPSILON * 2};
+	const box_t torsoBox = {{-halfActorWidth, -halfActorWidth, QuantToModel(PATHFINDING_LEGROOMHEIGHT)},
+							{ halfActorWidth,  halfActorWidth, QuantToModel(PATHFINDING_MIN_OPENING) - DIST_EPSILON * 2}};
 	/* This is a template for the ceiling trace after an actor's torso space has been found. */
-	const vec3_t ceilMins = {-halfActorWidth, -halfActorWidth, 0};
-	const vec3_t ceilMaxs = { halfActorWidth,  halfActorWidth, 0};
+	const box_t ceilBox = {{-halfActorWidth, -halfActorWidth, 0},
+							{ halfActorWidth,  halfActorWidth, 0}};
 
 	vec3_t start, end; /* Start and end of the downward traces. */
 	vec3_t tstart, tend; /* Start and end of the upward traces. */
-	vec3_t bmins, bmaxs; /* Holds the exact bounds to be traced for legs and torso. */
+	box_t box; /* Holds the exact bounds to be traced for legs and torso. */
 	pos3_t pos;
 	float bottom, top; /* Floor and ceiling model distances from the cell base. (in mapunits) */
 	float initial; /* Cell floor and ceiling z coordinate. */
@@ -396,7 +398,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 			Com_Printf("[(%i, %i, %i, %i)]Casting floor (%f, %f, %f) to (%f, %f, %f)\n",
 				x, y, z, actorSize, start[0], start[1], start[2], end[0], end[1], end[2]);
 
-		tr = RT_COMPLETEBOXTRACE(start, end, floorMins, floorMaxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
+		tr = RT_COMPLETEBOXTRACE(start, end, floorBox.mins, floorBox.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
 		if (tr.fraction >= 1.0) {
 			/* There is no brush underneath this starting point. */
 			if (debugTrace)
@@ -423,13 +425,13 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 		VectorCopy(tr.endpos, tstart);
 
 		/* Prep the start and end of the "leg room" test. */
-		VectorAdd(tstart, footMins, bmins); /* Now bmins has the lower required foot space extent */
-		VectorAdd(tstart, footMaxs, bmaxs); /* Now bmaxs has the upper required foot space extent */
+		VectorAdd(tstart, footBox.mins, box.mins); /* Now bmins has the lower required foot space extent */
+		VectorAdd(tstart, footBox.maxs, box.maxs); /* Now bmaxs has the upper required foot space extent */
 
 		if (debugTrace)
 			Com_Printf("    Casting leg room (%f, %f, %f) to (%f, %f, %f)\n",
-				bmins[0], bmins[1], bmins[2], bmaxs[0], bmaxs[1], bmaxs[2]);
-		tr = RT_COMPLETEBOXTRACE(vec3_origin, vec3_origin, bmins, bmaxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
+				box.mins[0], box.mins[1], box.mins[2], box.maxs[0], box.maxs[1], box.maxs[2]);
+		tr = RT_COMPLETEBOXTRACE(vec3_origin, vec3_origin, box.mins, box.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
 		if (tr.fraction < 1.0) {
 			if (debugTrace)
 				Com_Printf("Cannot use found surface- leg obstruction found.\n");
@@ -458,13 +460,13 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 		}
 
 		/* Prep the start and end of the "torso room" test. */
-		VectorAdd(tstart, torsoMins, bmins); /* Now bmins has the lower required torso space extent */
-		VectorAdd(tstart, torsoMaxs, bmaxs); /* Now bmaxs has the upper required torso space extent */
+		VectorAdd(tstart, torsoBox.mins, box.mins); /* Now bmins has the lower required torso space extent */
+		VectorAdd(tstart, torsoBox.maxs, box.maxs); /* Now bmaxs has the upper required torso space extent */
 
 		if (debugTrace)
 			Com_Printf("    Casting torso room (%f, %f, %f) to (%f, %f, %f)\n",
-				bmins[0], bmins[1], bmins[2], bmaxs[0], bmaxs[1], bmaxs[2]);
-		tr = RT_COMPLETEBOXTRACE(vec3_origin, vec3_origin, bmins, bmaxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
+				box.mins[0], box.mins[1], box.mins[2], box.maxs[0], box.maxs[1], box.maxs[2]);
+		tr = RT_COMPLETEBOXTRACE(vec3_origin, vec3_origin, box.mins, box.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
 		if (tr.fraction < 1.0) {
 			if (debugTrace)
 				Com_Printf("Cannot use found surface- torso obstruction found.\n");
@@ -497,7 +499,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 		 * This is a valid floor.  Find the actual ceiling.
 		 */
 
-		tstart[2] = bmaxs[2]; /* The box trace for height starts at the top of the last trace. */
+		tstart[2] = box.maxs[2]; /* The box trace for height starts at the top of the last trace. */
 		VectorCopy(tstart, tend);
 		tend[2] = PATHFINDING_HEIGHT * UNIT_HEIGHT; /* tend now reaches the model ceiling. */
 
@@ -505,7 +507,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 			Com_Printf("    Casting ceiling (%f, %f, %f) to (%f, %f, %f)\n",
 				tstart[0], tstart[1], tstart[2], tend[0], tend[1], tend[2]);
 
-		tr = RT_COMPLETEBOXTRACE(tstart, tend, ceilMins, ceilMaxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
+		tr = RT_COMPLETEBOXTRACE(tstart, tend, ceilBox.mins, ceilBox.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
 
 		/* We found the ceiling. */
 		top = tr.endpos[2];
@@ -658,15 +660,15 @@ static int RT_FillPassageData (routing_t * map, const int actorSize, const int d
  */
 static trace_t RT_ObstructedTrace (const vec3_t start, const vec3_t end, int actorSize, int hi, int lo)
 {
-	vec3_t bmin, bmax; /**< Tracing box extents */
+	box_t box; /**< Tracing box extents */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 
 	/* Configure the box trace extents. The box is relative to the original floor. */
-	VectorSet(bmax, halfActorWidth, halfActorWidth, QuantToModel(hi) - DIST_EPSILON);
-	VectorSet(bmin, -halfActorWidth, -halfActorWidth, QuantToModel(lo)  + DIST_EPSILON);
+	VectorSet(box.maxs, halfActorWidth, halfActorWidth, QuantToModel(hi) - DIST_EPSILON);
+	VectorSet(box.mins, -halfActorWidth, -halfActorWidth, QuantToModel(lo)  + DIST_EPSILON);
 
 	/* perform the trace, then return true if the trace was obstructed. */
-	return RT_COMPLETEBOXTRACE(start, end, bmin, bmax, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
+	return RT_COMPLETEBOXTRACE(start, end, box.mins, box.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
 }
 
 
@@ -681,14 +683,14 @@ static trace_t RT_ObstructedTrace (const vec3_t start, const vec3_t end, int act
  */
 static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const int actorSize, const float frac, const int startingHeight)
 {
-	vec3_t bmin, bmax; /**< Tracing box extents */
-	vec3_t mstart, mend; /**< Midpoint line to trace across */
+	box_t box;				/**< Tracing box extents */
+	vec3_t mstart, mend;	/**< Midpoint line to trace across */
 	trace_t tr;
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 
 	/* Configure bmin and bmax for the floor scan */
-	VectorSet(bmin, -halfActorWidth, -halfActorWidth, 0);
-	VectorSet(bmax, halfActorWidth, halfActorWidth, 0);
+	VectorSet(box.mins, -halfActorWidth, -halfActorWidth, 0);
+	VectorSet(box.maxs, halfActorWidth, halfActorWidth, 0);
 
 	/* Position mstart and mend at the fraction point */
 	VectorInterpolation(start, end, frac, mstart);
@@ -696,7 +698,7 @@ static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const 
 	mstart[2] = QuantToModel(startingHeight) + (QUANT / 2); /* Set at the starting height, plus a little more to keep us off a potential surface. */
 	mend[2] = -QUANT;  /* Set below the model. */
 
-	tr = RT_COMPLETEBOXTRACE(mstart, mend, bmin, bmax, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
+	tr = RT_COMPLETEBOXTRACE(mstart, mend, box.mins, box.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
 
 	if (debugTrace)
 		Com_Printf("Brush found at %f.\n", tr.endpos[2]);
@@ -719,14 +721,14 @@ static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const 
  */
 static int RT_FindOpeningCeilingFrac (const vec3_t start, const vec3_t end, const int actorSize, const float frac, const int startingHeight)
 {
-	vec3_t bmin, bmax; /**< Tracing box extents */
-	vec3_t mstart, mend; /**< Midpoint line to trace across */
+	box_t box;				/**< Tracing box extents */
+	vec3_t mstart, mend;	/**< Midpoint line to trace across */
 	trace_t tr;
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 
 	/* Configure bmin and bmax for the floor scan */
-	VectorSet(bmin, -halfActorWidth, -halfActorWidth, 0);
-	VectorSet(bmax, halfActorWidth, halfActorWidth, 0);
+	VectorSet(box.mins, -halfActorWidth, -halfActorWidth, 0);
+	VectorSet(box.maxs, halfActorWidth, halfActorWidth, 0);
 
 	/* Position mstart and mend at the midpoint */
 	VectorInterpolation(start, end, frac, mstart);
@@ -734,7 +736,7 @@ static int RT_FindOpeningCeilingFrac (const vec3_t start, const vec3_t end, cons
 	mstart[2] = QuantToModel(startingHeight) - (QUANT / 2); /* Set at the starting height, minus a little more to keep us off a potential surface. */
 	mend[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT + QUANT;  /* Set above the model. */
 
-	tr = RT_COMPLETEBOXTRACE(mstart, mend, bmin, bmax, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
+	tr = RT_COMPLETEBOXTRACE(mstart, mend, box.mins, box.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
 
 	if (debugTrace)
 		Com_Printf("Brush found at %f.\n", tr.endpos[2]);
@@ -940,7 +942,7 @@ static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, 
 	if (from->ceiling >= PATHFINDING_HEIGHT * CELL_HEIGHT
 	 && from->cell[2] * CELL_HEIGHT + RT_CEILING(map, actorSize, ax, ay, from->cell[2]) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
 		vec3_t sky, earth;
-		vec3_t bmin, bmax;	/**< Tracing box extents */
+		box_t box;	/**< Tracing box extents */
 		trace_t tr;
 		int tempBottom;
 		const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
@@ -952,9 +954,9 @@ static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, 
 		VectorCopy(sky, earth);
 		sky[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT;  /* Set to top of model. */
 		earth[2] = QuantToModel(bottom);
-		VectorSet(bmin, -halfActorWidth, -halfActorWidth, 0);
-		VectorSet(bmax, halfActorWidth, halfActorWidth, 0);
-		tr = RT_COMPLETEBOXTRACE(sky, earth, bmin, bmax, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
+		VectorSet(box.mins, -halfActorWidth, -halfActorWidth, 0);
+		VectorSet(box.maxs, halfActorWidth, halfActorWidth, 0);
+		tr = RT_COMPLETEBOXTRACE(sky, earth, box.mins, box.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
 		tempBottom = ModelFloorToQuant(tr.endpos[2]);
 		if (tempBottom <= bottom + PATHFINDING_MIN_STEPUP) {
 			const int hi = bottom + PATHFINDING_MIN_OPENING;
@@ -1021,7 +1023,7 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, c
 	/* Shortcut the value of UNIT_SIZE / PATHFINDING_MICROSTEP_SIZE. */
 	const int steps = UNIT_SIZE / PATHFINDING_MICROSTEP_SIZE;
 	trace_t tr;
-	vec3_t bmin, bmax;
+	box_t box;
 	int i, current_h, highest_h, highest_i = 0, skipped, newBottom;
 	vec3_t start, end;
 	pos3_t pos;
@@ -1051,8 +1053,8 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, c
 
 	/* Configure the box trace extents. */
 	width = PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON;
-	VectorSet(bmax, width, width, 0);
-	VectorSet(bmin, -width, -width, 0);
+	VectorSet(box.maxs, width, width, 0);
+	VectorSet(box.mins, -width, -width, 0);
 
 	newBottom = max(bases[0], bases[steps]);
 	/* Now calculate the rest of the microheights. */
@@ -1061,7 +1063,7 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, c
 		start[1] = end[1] = sy + (ey - sy) * (i / (float)steps);
 
 		/* perform the trace, then return true if the trace was obstructed. */
-		tr = RT_COMPLETEBOXTRACE(start, end, bmin, bmax, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
+		tr = RT_COMPLETEBOXTRACE(start, end, box.mins, box.maxs, TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE);
 		if (tr.fraction >= 1.0) {
 			bases[i] = -1;
 		} else {
@@ -1485,6 +1487,10 @@ void RT_UpdateConnectionColumn (routing_t * map, const int actorSize, const int 
 	assert(map);
 	assert((x >= 0) && (x <= PATHFINDING_WIDTH - actorSize));
 	assert((y >= 0) && (y <= PATHFINDING_WIDTH - actorSize));
+
+	/* just a place to place a breakpoint */
+	if (x == 119 && y == 136 && dir == 2)
+		new_z = 17;
 
 	/* Ensure that the current coordinates are valid. */
 	RT_CONN_TEST(map, actorSize, x, y, z, dir);

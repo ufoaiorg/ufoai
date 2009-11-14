@@ -96,6 +96,10 @@ typedef struct boxtrace_s {
 	TR_TILE_TYPE *tile;
 } boxtrace_t;
 
+typedef struct box_s {
+	vec3_t mins, maxs;
+} box_t;
+
 /*==============================================================
 BOX AND LINE TRACING
 ==============================================================*/
