@@ -133,30 +133,30 @@ function start_downloads()
 	download_archive http://www.libsdl.org/projects/SDL_mixer/release/ SDL_mixer-devel-${SDL_MIXER_VERSION}-VC8.zip sdl_mixer.zip
 	download_archive http://www.libsdl.org/projects/SDL_image/release/ SDL_image-devel-${SDL_IMAGE_VERSION}-VC8.zip sdl_image.zip
 
-	download_archive http://oss.netfarm.it/mplayer/pkgs/ libvorbis-mingw32-1.2.3-gcc45.tar.bz2 libvorbis.tar.bz2
-	download_archive http://oss.netfarm.it/mplayer/pkgs/ libtheora-mingw32-1.1alpha2-gcc45.tar.bz2 libtheora.tar.bz2
-	download_archive http://oss.netfarm.it/mplayer/pkgs/ xvidcore-mingw32-1.2.1-gcc45.tar.bz2 xvidcore.tar.bz2
-	download_archive http://oss.netfarm.it/mplayer/pkgs/ libogg-mingw32-1.1.4rc1-gcc45.tar.bz2 libogg.tar.bz2
+	download_archive http://oss.netfarm.it/mplayer/pkgs/ libvorbis-mingw32-1.2.3-gcc42.tar.bz2 libvorbis.tar.bz2
+	download_archive http://oss.netfarm.it/mplayer/pkgs/ libtheora-mingw32-1.1.1-gcc42.tar.bz2 libtheora.tar.bz2
+	download_archive http://oss.netfarm.it/mplayer/pkgs/ xvidcore-mingw32-1.2.2-gcc42.tar.bz2 xvidcore.tar.bz2
+	download_archive http://oss.netfarm.it/mplayer/pkgs/ libogg-mingw32-1.1.4-gcc42.tar.bz2 libogg.tar.bz2
 	
 #	download_archive http://downloads.xiph.org/releases/ogg/ libogg-1.1.3.tar.gz libogg.tar.gz
 #	download_archive http://downloads.xiph.org/releases/ogg/ libvorbis-1.2.0.tar.gz libvorbis.tar.gz
 
 	download_archive http://download.berlios.de/codeblocks/ wxmsw28u_gcc_cb_wx2810.7z codeblocks_gcc.7z
 	download_archive http://download.berlios.de/codeblocks/ mingwm10_gcc421.7z codeblocks_mingw.7z
-	download_archive http://download.berlios.de/codeblocks/ CB_20091010_rev5859_win32.7z codeblocks.7z
+	download_archive http://download.berlios.de/codeblocks/ CB_20091111_rev5911_win32.7z codeblocks.7z
 
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib_2.20.3-1_win32.zip glib.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.20/ glib-dev_2.20.3-1_win32.zip glib-dev.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.16/ gtk+-dev_2.16.2-1_win32.zip gtk+-dev.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtksourceview/2.7/ gtksourceview-dev-2.7.4.zip gtksourceview-dev.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.24/ pango-dev_1.24.2-1_win32.zip pango-dev.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.26/ atk-dev_1.26.0-1_win32.zip atk-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.22/ glib_2.22.2-1_win32.zip glib.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.22/ glib-dev_2.22.2-1_win32.zip glib-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.18/ gtk+-dev_2.18.3-1_win32.zip gtk+-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtksourceview/2.8/ gtksourceview-dev-2.8.1.zip gtksourceview-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.26/ pango-dev_1.26.0-1_win32.zip pango-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.28/ atk-dev_1.28.0-1_win32.zip atk-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.8-3_win32.zip cairo-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-0.17-1.zip gettext-runtime.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-tools-0.17.zip gettext-tools.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-dev-0.17-1.zip gettext-runtime-dev.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.6-1_win32.zip cairo-dev.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ pkg-config-0.23-2.zip pkg-config.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-0.17-1.zip gettext-runtime.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ libxml2-dev-2.6.27.zip libxml2.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ pkg-config-0.23-3.zip pkg-config.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ libxml2-dev-2.7.4-1.zip libxml2.zip
 
 	download_archive http://mattn.ninex.info/download/ gtkglext-1.2.zip gtkglext-dev.zip
 	download_archive http://mattn.ninex.info/download/ openal.zip libopenal-dev.zip
