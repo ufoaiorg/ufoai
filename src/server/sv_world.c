@@ -197,7 +197,7 @@ void SV_LinkEdict (edict_t * ent)
 
 	/* expand for rotation */
 	if (ent->solid == SOLID_BSP && VectorNotEmpty(ent->angles)) {
-		vec3_t minVec, maxVec;
+		vec3_t minVec, maxVec, tmpMinVec, tmpMaxVec;
 		vec3_t centerVec, halfVec, newCenterVec, newHalfVec;
 		vec3_t m[3];
 
@@ -208,13 +208,35 @@ void SV_LinkEdict (edict_t * ent)
 		VectorSubtract(ent->maxs, centerVec, halfVec);
 
 		/* Rotate the center about the origin. */
-		AngleVectors(ent->angles, m[0], m[1], m[2]);
-		VectorRotate(m, centerVec, newCenterVec);
-		VectorRotate(m, halfVec, newHalfVec);
+		if (ent->angles[YAW] == 90 &&		/* if it's a door */
+			ent->angles[PITCH] == 0 &&
+			ent->angles[ROLL] == 0) {
+			/** I currently don't trust AngleVectors(), so let's do the rotation manually. Duke, 14.11.2009 */
+			newCenterVec[0] = centerVec[1] * -1;
+			newCenterVec[1] = centerVec[0];
+			newCenterVec[2] = centerVec[2];
+			newHalfVec[0] = halfVec[1] * -1;
+			newHalfVec[1] = halfVec[0];
+			newHalfVec[2] = halfVec[2];
+		} else {
+			/** I believe that only doors use angles. This is a trap to verify that I'm right */
+			assert(ent->angles[YAW] == 7890);		/* must crash */
+			AngleVectors(ent->angles, m[0], m[1], m[2]);
+			VectorRotate(m, centerVec, newCenterVec);
+			VectorRotate(m, halfVec, newHalfVec);
+		}
 
 		/* Set minVec and maxVec to bound around newCenterVec at halfVec size. */
-		VectorSubtract(newCenterVec, newHalfVec, minVec);
-		VectorAdd(newCenterVec, newHalfVec, maxVec);
+		VectorSubtract(newCenterVec, newHalfVec, tmpMinVec);
+		VectorAdd(newCenterVec, newHalfVec, tmpMaxVec);
+
+		/* rotation may have changed min and max of the box, so adjust it */
+		minVec[0] = min(tmpMinVec[0], tmpMaxVec[0]);
+		minVec[1] = min(tmpMinVec[1], tmpMaxVec[1]);
+		minVec[2] = min(tmpMinVec[2], tmpMaxVec[2]);
+		maxVec[0] = max(tmpMinVec[0], tmpMaxVec[0]);
+		maxVec[1] = max(tmpMinVec[1], tmpMaxVec[1]);
+		maxVec[2] = max(tmpMinVec[2], tmpMaxVec[2]);
 
 		/* Adjust the absolute mins/maxs */
 		VectorAdd(ent->origin, minVec, ent->absmin);
