@@ -29,10 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 GLOBAL TYPES
 ==============================================================*/
 #if defined(COMPILE_MAP)
-  #define RT_COMPLETEBOXTRACE(s,e,mi,ma,lm,bm,br)	TR_SingleTileBoxTrace(s,e,mi,ma,lm,bm,br)
+  #define RT_COMPLETEBOXTRACE_SIZE(s,e,b)		TR_SingleTileBoxTrace(s,e,b.mins,b.maxs,TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0)
+  #define RT_COMPLETEBOXTRACE_PASSAGE(s,e,b)	TR_SingleTileBoxTrace(s,e,b.mins,b.maxs,TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
 
 #elif defined(COMPILE_UFO)
-  #define RT_COMPLETEBOXTRACE(s,e,mi,ma,lm,bm,br)	CM_EntCompleteBoxTrace(s,e,mi,ma,lm,bm,br)
+  #define RT_COMPLETEBOXTRACE_SIZE(s,e,b)		CM_EntCompleteBoxTrace(s,e,b.mins,b.maxs,TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0)
+  #define RT_COMPLETEBOXTRACE_PASSAGE(s,e,b)	CM_EntCompleteBoxTrace(s,e,b.mins,b.maxs,TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
 
 #else
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
