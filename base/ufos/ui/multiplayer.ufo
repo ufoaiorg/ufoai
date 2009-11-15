@@ -1221,7 +1221,6 @@ window multiplayer_selectteam
 			panel p7 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
 			panel p8 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
 			panel p9 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
-			panel p10 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
 		}
 
 		text userlist
