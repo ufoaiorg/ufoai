@@ -5,8 +5,7 @@
  * [mapname] [day|night] [gametype]
  */
 
-//"+frozend multiplayercoop" coop2
-"+industrial small" day 1on1
+"+frozen small" day 1on1
 "+italy default" day 1on1
 farm day 1on1
 "+africa default" day 1on1
