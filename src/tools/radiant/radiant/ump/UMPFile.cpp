@@ -14,7 +14,7 @@ namespace map
 {
 	namespace ump
 	{
-		UMPFile::UMPFile (const std::string& fileName, const std::string& base) :
+		UMPFile::UMPFile (const std::string& fileName, const std::string& base) throw (UMPException) :
 			_fileName(fileName), _base(base)
 		{
 			if (_fileName.empty())
@@ -142,7 +142,7 @@ namespace map
 		{
 			// a '+' indicates that this is a short name
 			if (tile.substr(0, 1) == "+") {
-				return getBase() + tile.substr(0, 1);
+				return getBase() + tile.substr(1);
 			}
 			return tile;
 		}

@@ -79,6 +79,7 @@
 #include "autosave.h"
 #include "../brush/brush.h"
 #include "../brush/brushnode.h"
+#include "../ump.h"
 
 #include "MapFileChooserPreview.h"
 
@@ -817,6 +818,7 @@ bool Map_LoadFile (const std::string& filename)
 	g_currentMap = &g_map;
 
 	sidebar::MapInfo::getInstance().update();
+	map::ump::UMPMenuCreator::getInstance()->updateMenu();
 	return true;
 }
 

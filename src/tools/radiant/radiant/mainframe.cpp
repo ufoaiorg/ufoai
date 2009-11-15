@@ -1687,10 +1687,12 @@ static GtkMenuItem* create_map_menu (void)
 	}
 	create_menu_item_with_mnemonic(menu, _("Edit UMP"), "EditUMPDefinition");
 	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("RMA tiles"));
+		GtkMenuItem* menuItem = new_sub_menu_item_with_mnemonic(_("RMA tiles"));
+		container_add_widget(GTK_CONTAINER(menu), GTK_WIDGET(menuItem));
+		GtkMenu* menu_in_menu = GTK_MENU(gtk_menu_item_get_submenu(menuItem));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		UMP_constructMenu(menu_in_menu);
+		UMP_constructMenu(menuItem, menu_in_menu);
 	}
 	create_menu_item_with_mnemonic(menu, _("Edit material"), "ShowMaterialDefinition");
 	create_menu_item_with_mnemonic(menu, _("Edit terrain definition"), "EditTerrainDefinition");

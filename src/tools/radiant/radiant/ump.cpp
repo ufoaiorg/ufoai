@@ -121,7 +121,8 @@ class UMPSystemAPI
 		UMPSystem * _UMPSystem;
 	public:
 		typedef UMPSystem Type;
-		STRING_CONSTANT(Name, "*");
+		STRING_CONSTANT(Name, "*")
+		;
 
 		UMPSystemAPI () :
 			_UMPSystem(0)
@@ -158,8 +159,95 @@ void UMP_Destroy ()
 {
 }
 
-void UMP_constructMenu (GtkMenu* menu)
+#include "gtkutil/menu.h"
+#include "gtkutil/container.h"
+#include "gtkutil/pointer.h"
+#include "map/map.h"
+#include "qe3.h"
+namespace map
 {
-	// TODO:
+	namespace ump
+	{
+		/**
+		 * Callback function for menu items to load the specific file
+		 * @param menuItem activated menu item
+		 * @param name map name to load as pointer to g_quark
+		 */
+		void UMPMenuItem_activate (GtkMenuItem* menuItem, gpointer name)
+		{
+			if (ConfirmModified(_("Open Map"))) {
+				//TODO have some MAP_doLoad which does all that stuff
+				Map_RegionOff();
+				Map_Free();
+				g_message("load file %s\n", g_quark_to_string(gpointer_to_int(name)));
+				Map_LoadFile(g_quark_to_string(gpointer_to_int(name)));
+			}
+		}
+
+		/**
+		 * visitor implementation that adds a menu item for each ump tile
+		 */
+		class UMPTileToMenuItemVisitor: public UMPTileVisitor
+		{
+			private:
+				GtkMenu* _parent;
+				UMPFile &_file;
+				UMPMenuCreator& _creator;
+
+				int _count;
+
+			public:
+				UMPTileToMenuItemVisitor (UMPMenuCreator &creator, GtkMenu *parent, UMPFile &file) :
+					_parent(parent), _file(file), _creator(creator), _count(0)
+				{
+				}
+				void visit (const UMPTile& tile)
+				{
+					std::string base = _file.getBase();
+					const std::string name = tile.getTileName(base);
+					const std::string relativeName = "maps/" + _file.getMapName(name) + ".map";
+					const std::string filename = GlobalFileSystem().findFile(relativeName) + relativeName;
+					GtkMenuItem* item = GTK_MENU_ITEM(gtk_menu_item_new_with_label(name.c_str()));
+					gtk_widget_show(GTK_WIDGET(item));
+					g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(UMPMenuItem_activate), gint_to_pointer(
+							g_quark_from_string(filename.c_str())));
+					container_add_widget(GTK_CONTAINER(_parent), GTK_WIDGET(item));
+					_count++;
+				}
+				int getCount (void)
+				{
+					return _count;
+				}
+
+		};
+
+		/**
+		 * Method recreates rma tile menu adding entries for all tiles in current rma if available
+		 */
+		void UMPMenuCreator::updateMenu ()
+		{
+			std::string umpFilename = GlobalUMPSystem()->getUMPFilename(GlobalRadiant().getMapName());
+			if (!umpFilename.empty()) {
+				map::ump::UMPFile file = map::ump::UMPFile(umpFilename);
+				if (!file.load())
+					return;
+				container_remove_all(GTK_CONTAINER(_menu));
+				map::ump::UMPTileToMenuItemVisitor visitor(*this, _menu, file);
+				file.forEachTile(visitor);
+				if (visitor.getCount() > 0)
+					gtk_widget_set_sensitive(GTK_WIDGET(_menuItem), true);
+				else
+					gtk_widget_set_sensitive(GTK_WIDGET(_menuItem), false);
+			} else {
+				gtk_widget_set_sensitive(GTK_WIDGET(_menuItem), false);
+			}
+		}
+	}
+}
+
+void UMP_constructMenu (GtkMenuItem* menuItem, GtkMenu* menu)
+{
+	map::ump::UMPMenuCreator::getInstance()->setMenuEntry(menuItem, menu);
+	map::ump::UMPMenuCreator::getInstance()->updateMenu();
 }
 

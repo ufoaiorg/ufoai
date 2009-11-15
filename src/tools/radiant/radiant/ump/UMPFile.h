@@ -12,6 +12,16 @@ namespace map
 {
 	namespace ump
 	{
+		class UMPTileVisitor
+		{
+			public:
+				virtual ~UMPTileVisitor ()
+				{
+				}
+
+				virtual void visit (const UMPTile& tile) = 0;
+		};
+
 		/**
 		 * An ump file is a file that defines a theme for the RMA (random map assembly). It contains a list of UMPTiles objects
 		 * that are part of the definition. Besides the tiles there are some UMPAssembly objects that defines a set of UMPTiles
@@ -51,7 +61,7 @@ namespace map
 				 * @param fileName The ump file to create or read
 				 * @param base The prefix for all ump tiles
 				 */
-				UMPFile (const std::string& fileName, const std::string& base = "");
+				UMPFile (const std::string& fileName, const std::string& base = "") throw (UMPException);
 
 				virtual ~UMPFile ();
 
@@ -101,6 +111,17 @@ namespace map
 				 * @return The tile name that might be shorter if a base is set
 				 */
 				const std::string getTileName (const std::string& map) const;
+
+				/**
+				 * Visits each tile of this UMP file.
+				 * @param visitor visitor to invoke for each tile.
+				 */
+				void forEachTile (UMPTileVisitor& visitor) const
+				{
+					for (UMPTileConstIterator i = _umpTiles.begin(); i != _umpTiles.end(); ++i) {
+						visitor.visit((*i));
+					}
+				}
 		};
 	}
 }
