@@ -1309,16 +1309,18 @@ window multiplayer_selectteam
 			onClick		{ cmd "teamnum_dec;" }
 		}
 
-		button button_ready_old
+		/** @todo only for admin, and command it self should check the user */
+		button button_force
 		{
-			tooltip		"_Force starting the game"
-			image		ui/button_blue
-			pos			"250 40"
-			size		"100 30"
+			visiblewhen "*cvar:cl_admin == 1"
 			string		"_Force start"
+			tooltip		"_Start the game even if not all teams is ready or have joined"
+			image		ui/button_blue
+			pos			"50 110"
+			size		"120 30"
 			color		"0.8 0.8 0.8 1"
 			selectcolor "1 1 1 1"
-			onClick		{ cmd "spawnsoldiers;" }
+			onClick		{ cmd "sv startgame;" }
 		}
 
 		checkbox cb_ready
