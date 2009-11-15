@@ -473,16 +473,20 @@ void gaussrand (float *gauss1, float *gauss2)
 
 
 /**
- * @brief Rotate a point around static (idle ?) frame {0, 1, 0}, {0, 0, 1} ,{1, 0, 0}
- * @param[in] angles Contains the three angles (in degree) of rotation around idle
- * frame ({0, 1, 0}, {0, 0, 1} ,{1, 0, 0}) (in this order)
- * @param[out] forward result of previous rotation for point {1, 0, 0} (can be NULL if not needed)
- * @param[out] right result of previous rotation for point {0, -1, 0} (!) (can be NULL if not needed)
- * @param[out] up result of previous rotation for point {0, 0, 1} (can be NULL if not needed)
- * @note Based on the orientation angles vector (pitch, yaw, roll) the direction vectors are filled up:
- * forward: along the orientation vector
- * right: in relation to forward rotated by 90 degree to the right
- * up: in relation to forward rotated by 90 degree to the up
+ * @brief Create the rotation matrix in order to rotate something.
+ * @param[in] angles Contains the three angles PITCH, YAW and ROLL (in degree) of rotation around idle
+ * frame ({0, 1, 0}, {0, 0, 1} ,{1, 0, 0}) (in this order!)
+ * @param[out] forward return the first line of the rotation matrix.
+ * @param[out] right return the second line of the rotation matrix.
+ * @param[out] up return the third line of the rotation matrix.
+ * @note This matrix is the product of the 3 matrixes R*P*Y (in this order!), where R is the rotation matrix around {1, 0, 0} only
+ * (angle of rotation is angle[2]), P is the rotation matrix around {0, 1, 0} only, and Y is the rotation matrix around {0, 0, 1}.
+ * @note Due to z convention for Quake, the z-axis is inverted. Therefore, if you want to use this function in a direct frame, don't
+ * forget to inverse the second line (@c right).
+ * Exemple : to rotate v2 into v :
+ * AngleVectors(angles, m[0], m[1], m[2]);
+ * VectorInverse(m[1]);
+ * VectorRotate(m, v2, v);
  * @sa RotatePointAroundVector : If you need rather "one rotation around a vector you choose" instead of "3 rotations around 3 vectors you don't choose".
  */
 void AngleVectors (const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
