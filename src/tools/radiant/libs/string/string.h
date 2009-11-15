@@ -418,64 +418,6 @@ namespace std
 	}
 }
 
-/// \brief A non-mutable string buffer which manages memory allocation.
-template<typename Allocator>
-class CopiedBuffer: private Allocator
-{
-		char* m_string;
-
-		char* copy_range (StringRange range)
-		{
-			return string_clone_range(range, static_cast<Allocator&> (*this));
-		}
-		char* copy (const char* other)
-		{
-			return string_clone(other, static_cast<Allocator&> (*this));
-		}
-		void destroy (char* string)
-		{
-			string_release(string, string_length(string), static_cast<Allocator&> (*this));
-		}
-
-	protected:
-		~CopiedBuffer ()
-		{
-			destroy(m_string);
-		}
-	public:
-		CopiedBuffer () :
-			m_string(copy(""))
-		{
-		}
-		explicit CopiedBuffer (const Allocator& allocator) :
-			Allocator(allocator), m_string(copy(""))
-		{
-		}
-		CopiedBuffer (const CopiedBuffer& other) :
-			Allocator(other), m_string(copy(other.m_string))
-		{
-		}
-		CopiedBuffer (const char* string, const Allocator& allocator = Allocator()) :
-			Allocator(allocator), m_string(copy(string))
-		{
-		}
-		CopiedBuffer (StringRange range, const Allocator& allocator = Allocator()) :
-			Allocator(allocator), m_string(copy_range(range))
-		{
-		}
-		const char* c_str () const
-		{
-			return m_string;
-		}
-		void swap (CopiedBuffer& other)
-		{
-			string_swap(m_string, other.m_string);
-		}
-};
-
-/// \brief A non-mutable string which uses copy-by-value for assignment.
-typedef String<CopiedBuffer<DefaultAllocator<char> > > CopiedString;
-
 struct RawStringEqual
 {
 		bool operator() (const std::string& x, const std::string& y) const
