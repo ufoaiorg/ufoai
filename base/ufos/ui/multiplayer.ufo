@@ -1202,10 +1202,33 @@ window multiplayer_selectteam
 			textalign	cc
 		}
 
+		panel ready {
+			{
+				layout LAYOUT_TOP_DOWN_FLOW
+				layoutMargin 3
+				padding		0
+				pos			"50 50"
+				size		"15 300"
+				invis		true		/** < @todo remove that when the ready status is ready */
+			}
+
+			panel p0 { size "15 15" }
+			panel p1 { size "15 15" }
+			panel p2 { size "15 15" }
+			panel p3 { size "15 15" }
+			panel p4 { size "15 15" }
+			panel p5 { size "15 15" }
+			panel p6 { size "15 15" }
+			panel p7 { size "15 15" }
+			panel p8 { size "15 15" }
+			panel p9 { size "15 15" }
+			panel p10 { size "15 15" }
+		}
+
 		text userlist
 		{
 			dataid		TEXT_MULTIPLAYER_USERLIST
-			pos			"50 50"
+			pos			"80 50"
 			size		"150 300"
 		}
 
@@ -1300,12 +1323,6 @@ window multiplayer_selectteam
 			onClick		{ cmd "spawnsoldiers;" }
 		}
 
-	}
-
-	// update every 2 sec
-	func onEvent
-	{
-		cmd "mp_selectteam_init;"
 	}
 
 	todo mergenext { pos "30 280" string "Merge the next window here"}
@@ -1584,15 +1601,39 @@ window multiplayer_selectteam
 	/**
 	 * @param <1> player ID/line
 	 * @param <2> 0: not ready, 1: ready
-	 * @todo implement that thing
+	 * @todo use an image instead of a color
 	 */
 	confunc multiplayer_playerIsReady {
-		
+		if ( ( <1> < 10 ) and ( <1> >= 0 ) ) {
+			if ( <2> == 0 ) {
+				*node:root.players.ready.p<1>@bgcolor = "1 0 0 1"
+			} else {
+				*node:root.players.ready.p<1>@bgcolor = "0 1 0 1"
+			}		
+		}
+	}
+
+	/**
+	 * @param <1> number of players
+	 */
+	confunc multiplayer_playerNumber {
+		*cvar:tmp = <1>
+		while ( *cvar:tmp < 10 ) {
+			*node:root.players.ready.p<cvar:tmp>@bgcolor = "0 0 0 0"
+			*cvar:tmp = ( *cvar:tmp + 1 )
+		}
 	}
 
 	// ===================
-	// INIT
+	// EVENTS
 	// ===================
+
+	// update every 2 sec
+	func onEvent
+	{
+		cmd "mp_selectteam_init;"
+	}
+
 	func onInit
 	{
 		cmd "mp_selectteam_init;"

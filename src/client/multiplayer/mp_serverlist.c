@@ -283,6 +283,7 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 
 	MN_RegisterLinkedListText(TEXT_MULTIPLAYER_USERLIST, userList);
 	MN_RegisterLinkedListText(TEXT_MULTIPLAYER_USERTEAM, userTeam);
+	MN_ExecuteConfunc("multiplayer_playerNumber %i", cnt);
 
 	/* no players are connected ATM */
 	if (!cnt) {
