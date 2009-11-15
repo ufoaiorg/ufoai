@@ -2353,7 +2353,7 @@ void Grid_RecalcRouting (routing_t *map, const char *name, const char **list)
 		VectorSubtract(model->maxs, centerVec, halfVec);
 
 		/* Rotate the center about the origin. */
-		AngleVectors(model->angles, m[0], m[1], m[2]);
+		VectorCreateRotationMatrix(model->angles, m);
 		VectorRotate(m, centerVec, newCenterVec);
 
 		/* Set minVec and maxVec to bound around newCenterVec at halfVec size. */

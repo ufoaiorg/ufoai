@@ -208,23 +208,9 @@ void SV_LinkEdict (edict_t * ent)
 		VectorSubtract(ent->maxs, centerVec, halfVec);
 
 		/* Rotate the center about the origin. */
-		if (ent->angles[YAW] == 90 &&		/* if it's a door */
-			ent->angles[PITCH] == 0 &&
-			ent->angles[ROLL] == 0) {
-			/** I currently don't trust AngleVectors(), so let's do the rotation manually. Duke, 14.11.2009 */
-			newCenterVec[0] = centerVec[1] * -1;
-			newCenterVec[1] = centerVec[0];
-			newCenterVec[2] = centerVec[2];
-			newHalfVec[0] = halfVec[1] * -1;
-			newHalfVec[1] = halfVec[0];
-			newHalfVec[2] = halfVec[2];
-		} else {
-			/** I believe that only doors use angles. This is a trap to verify that I'm right */
-			assert(ent->angles[YAW] == 7890);		/* must crash */
-			AngleVectors(ent->angles, m[0], m[1], m[2]);
-			VectorRotate(m, centerVec, newCenterVec);
-			VectorRotate(m, halfVec, newHalfVec);
-		}
+		VectorCreateRotationMatrix(ent->angles, m);
+		VectorRotate(m, centerVec, newCenterVec);
+		VectorRotate(m, halfVec, newHalfVec);
 
 		/* Set minVec and maxVec to bound around newCenterVec at halfVec size. */
 		VectorSubtract(newCenterVec, newHalfVec, tmpMinVec);
