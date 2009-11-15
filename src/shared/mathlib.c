@@ -478,6 +478,10 @@ void gaussrand (float *gauss1, float *gauss2)
  * @param[out] forward result of previous rotation for point {1, 0, 0} (can be NULL if not needed)
  * @param[out] right result of previous rotation for point {0, -1, 0} (!) (can be NULL if not needed)
  * @param[out] up result of previous rotation for point {0, 0, 1} (can be NULL if not needed)
+ * @note Based on the orientation angles vector (pitch, yaw, roll) the direction vectors are filled up:
+ * forward: along the orientation vector
+ * right: in relation to forward rotated by 90 degree to the right
+ * up: in relation to forward rotated by 90 degree to the up
  */
 void AngleVectors (const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 {
