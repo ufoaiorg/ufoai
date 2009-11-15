@@ -341,9 +341,8 @@ class KeyValue: public EntityKeyValue
 		}
 		const char* c_str () const
 		{
-			if (string_empty(m_string.c_str())) {
+			if (m_string.empty())
 				return m_empty;
-			}
 			return m_string.c_str();
 		}
 		void assign (const std::string& other)

@@ -108,7 +108,7 @@ class SingletonModel
 
 		void modelChanged (const std::string& value)
 		{
-			m_model.modelChanged(value.c_str());
+			m_model.modelChanged(value);
 		}
 		typedef MemberCaller1<SingletonModel, const std::string&, &SingletonModel::modelChanged> ModelChangedCaller;
 

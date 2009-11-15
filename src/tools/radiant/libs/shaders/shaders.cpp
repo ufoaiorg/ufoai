@@ -396,7 +396,7 @@ class CShader: public IShader
 		// test if it's a true shader, or a default shader created to wrap around a texture
 		bool IsDefault () const
 		{
-			return string_empty(m_filename);
+			return m_filename.empty();
 		}
 		// get the alphaFunc
 		void getAlphaFunc (EAlphaFunc *func, float *ref)

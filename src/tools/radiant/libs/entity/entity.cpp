@@ -56,7 +56,7 @@ inline scene::Node& entity_for_eclass (EntityClass* eclass)
 		return New_Light(eclass);
 	} else if (!eclass->fixedsize) {
 		return New_Group(eclass);
-	} else if (!string_empty(eclass->modelpath())) {
+	} else if (!eclass->modelpath().empty()) {
 		return New_EclassModel(eclass);
 	} else {
 		return New_GenericEntity(eclass);
