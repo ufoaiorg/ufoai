@@ -1332,13 +1332,13 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 
 	/* check to see if they are on the banned IP list */
 	if (SV_FilterPacket(value)) {
-		Info_SetValueForKey(userinfo, "rejmsg", REJ_BANNED);
+		Info_SetValueForKey(userinfo, MAX_INFO_STRING, "rejmsg", REJ_BANNED);
 		return qfalse;
 	}
 
 	value = Info_ValueForKey(userinfo, "password");
 	if (password->string[0] != '\0' && strcmp(password->string, "none") && strcmp(password->string, value)) {
-		Info_SetValueForKey(userinfo, "rejmsg", REJ_PASSWORD_REQUIRED_OR_INCORRECT);
+		Info_SetValueForKey(userinfo, MAX_INFO_STRING, "rejmsg", REJ_PASSWORD_REQUIRED_OR_INCORRECT);
 		return qfalse;
 	}
 

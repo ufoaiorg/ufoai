@@ -827,7 +827,7 @@ static char *Cvar_BitInfo (int bit)
 
 	for (var = cvarVars; var; var = var->next)
 		if (var->flags & bit)
-			Info_SetValueForKey(info, var->name, var->string);
+			Info_SetValueForKey(info, sizeof(info), var->name, var->string);
 	return info;
 }
 

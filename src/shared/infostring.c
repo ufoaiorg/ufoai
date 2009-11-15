@@ -81,6 +81,11 @@ const char *Info_BoolForKey (const char *s, const char *key)
 	return "Yes";
 }
 
+const int Info_IntegerForKey (const char *s, const char *key)
+{
+	return atoi(Info_ValueForKey(s, key));
+}
+
 /**
  * @brief Searches through s for key and remove is
  * @param[in] s String to search key in
@@ -145,12 +150,24 @@ qboolean Info_Validate (const char *s)
 }
 
 /**
+ * @sa Info_SetValueForKey
+ */
+void Info_SetValueForKeyAsInteger (char *s, const size_t size, const char *key, const int value)
+{
+	Info_SetValueForKey(s, size, key, va("%i", value));
+}
+
+/**
  * @brief Adds a new entry into string with given value.
  * @note Removed any old version of the key
  * @param[out] s The target info string
+ * @param[in] size The size of @c s
+ * @param[in] key The key to set
+ * @param[in] value The value to set for the given key
  * @sa Info_RemoveKey
+ * @sa Info_SetValueForKeyAsInteger
  */
-void Info_SetValueForKey (char *s, const char *key, const char *value)
+void Info_SetValueForKey (char *s, const size_t size, const char *key, const char *value)
 {
 	char newi[MAX_INFO_STRING];
 
@@ -169,10 +186,16 @@ void Info_SetValueForKey (char *s, const char *key, const char *value)
 		return;
 	}
 
-	if (strlen(key) > MAX_INFO_KEY - 1 || strlen(value) > MAX_INFO_KEY - 1) {
-		Com_Printf("Keys and values must be < 64 characters.\n");
+	if (strlen(key) > MAX_INFO_KEY - 1) {
+		Com_Printf("Keys must be < "STRINGIFY(MAX_INFO_KEY)" characters.\n");
 		return;
 	}
+
+	if (strlen(key) > MAX_INFO_VALUE - 1) {
+		Com_Printf("Values must be < "STRINGIFY(MAX_INFO_VALUE)" characters.\n");
+		return;
+	}
+
 	Info_RemoveKey(s, key);
 	if (!value || !strlen(value))
 		return;
@@ -180,7 +203,7 @@ void Info_SetValueForKey (char *s, const char *key, const char *value)
 	Com_sprintf(newi, sizeof(newi), "\\%s\\%s", key, value);
 
 	Q_strcat(newi, s, sizeof(newi));
-	Q_strncpyz(s, newi, MAX_INFO_STRING);
+	Q_strncpyz(s, newi, size);
 }
 
 /**

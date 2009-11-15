@@ -108,35 +108,33 @@ CONNECTIONLESS COMMANDS
 
 /**
  * @brief Responds with teaminfo such as free team num
+ * @sa CL_ParseTeamInfoMessage
  */
 static void SVC_TeamInfo (struct net_stream *s)
 {
-	char player[1024];
 	int i;
 	client_t *cl;
 	struct dbuffer *msg = new_dbuffer();
+	char infoGlobal[MAX_INFO_STRING];
+
 	NET_WriteByte(msg, clc_oob);
 	NET_WriteRawString(msg, "teaminfo\n");
 
-	NET_WriteRawString(msg, Cvar_GetString("sv_teamplay"));
-	NET_WriteRawString(msg, "\n");
-	NET_WriteRawString(msg, Cvar_GetString("sv_maxteams"));
-	NET_WriteRawString(msg, "\n");
-	NET_WriteRawString(msg, Cvar_GetString("sv_maxplayersperteam"));
-	NET_WriteRawString(msg, "\n");
+	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_teamplay", Cvar_GetString("sv_teamplay"));
+	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_maxteams", Cvar_GetString("sv_maxteams"));
+	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_maxplayersperteam", Cvar_GetString("sv_maxplayersperteam"));
+	NET_WriteRawString(msg, infoGlobal);
+
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl->state >= cs_connected) {
-			int teamId;
-			Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: connected client: %i %s\n", i, cl->name);
+			char infoPlayer[MAX_INFO_STRING];
 			/* show players that already have a team with their teamnum */
-			if (ge->ClientGetTeamNum(cl->player))
-				teamId = ge->ClientGetTeamNum(cl->player);
-			else if (ge->ClientGetTeamNumPref(cl->player))
-				teamId = ge->ClientGetTeamNumPref(cl->player);
-			else
-				teamId = TEAM_NO_ACTIVE;
-			Com_sprintf(player, sizeof(player), "%i\t%i\t\"%s\"\n", teamId, ge->ClientIsReady(cl->player), cl->name);
-			NET_WriteRawString(msg, player);
+			const int teamId = ge->ClientGetTeamNum(cl->player) || ge->ClientGetTeamNum(cl->player) || TEAM_NO_ACTIVE;
+			Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: connected client: %i %s\n", i, cl->name);
+			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_team", teamId);
+			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_ready", ge->ClientIsReady(cl->player));
+			Info_SetValueForKey(infoPlayer, sizeof(infoPlayer), "cl_name", cl->name);
+			NET_WriteRawString(msg, infoPlayer);
 		} else {
 			Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: unconnected client: %i %s\n", i, cl->name);
 		}
@@ -208,14 +206,14 @@ static void SVC_Info (struct net_stream *s)
 
 		infostring[0] = '\0';
 
-		Info_SetValueForKey(infostring, "sv_protocol", DOUBLEQUOTE(PROTOCOL_VERSION));
-		Info_SetValueForKey(infostring, "sv_hostname", sv_hostname->string);
-		Info_SetValueForKey(infostring, "sv_dedicated", sv_dedicated->string);
-		Info_SetValueForKey(infostring, "sv_gametype", sv_gametype->string);
-		Info_SetValueForKey(infostring, "sv_mapname", sv.name);
-		Info_SetValueForKey(infostring, "clients", va("%i", count));
-		Info_SetValueForKey(infostring, "sv_maxclients", sv_maxclients->string);
-		Info_SetValueForKey(infostring, "sv_version", UFO_VERSION);
+		Info_SetValueForKey(infostring, sizeof(infostring), "sv_protocol", DOUBLEQUOTE(PROTOCOL_VERSION));
+		Info_SetValueForKey(infostring, sizeof(infostring), "sv_hostname", sv_hostname->string);
+		Info_SetValueForKey(infostring, sizeof(infostring), "sv_dedicated", sv_dedicated->string);
+		Info_SetValueForKey(infostring, sizeof(infostring), "sv_gametype", sv_gametype->string);
+		Info_SetValueForKey(infostring, sizeof(infostring), "sv_mapname", sv.name);
+		Info_SetValueForKeyAsInteger(infostring, sizeof(infostring), "clients", count);
+		Info_SetValueForKey(infostring, sizeof(infostring), "sv_maxclients", sv_maxclients->string);
+		Info_SetValueForKey(infostring, sizeof(infostring), "sv_version", UFO_VERSION);
 		NET_OOB_Printf(s, "info\n%s", infostring);
 	}
 }
@@ -268,7 +266,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	}
 
 	/* force the IP key/value pair so the game can filter based on ip */
-	Info_SetValueForKey(userinfo, "ip", peername);
+	Info_SetValueForKey(userinfo, sizeof(userinfo), "ip", peername);
 
 	newcl = &temp;
 	memset(newcl, 0, sizeof(*newcl));

@@ -202,8 +202,6 @@ static void CL_AddServerToList (const char *node, const char *service)
 void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 {
 	char *s = NET_ReadString(msg);
-	char *var;
-	char *value;
 	int cnt = 0;
 	linkedList_t *userList = NULL;
 	linkedList_t *userTeam = NULL;
@@ -216,54 +214,18 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 
 	memset(&teamData, 0, sizeof(teamData));
 
-	value = s;
-	var = strstr(value, "\n");
-	*var++ = '\0';
-
-	teamData.teamplay = atoi(value);
-
-	value = var;
-	var = strstr(var, "\n");
-	*var++ = '\0';
-	teamData.maxteams = atoi(value);
-
-	value = var;
-	var = strstr(var, "\n");
-	*var++ = '\0';
-	teamData.maxplayersperteam = atoi(value);
+	teamData.teamplay = Info_IntegerForKey(s, "sv_teamplay");
+	teamData.maxteams = Info_IntegerForKey(s, "sv_maxteams");
+	teamData.maxplayersperteam = Info_IntegerForKey(s, "sv_maxplayersperteam");
 
 	/* for each lines */
-	s = var;
-	while (s != NULL && s[0] != '\0') {
-		int team;
-		char user[MAX_VAR];
-		char *end;
-		qboolean isReady;
+	while ((s = NET_ReadString(msg)) != NULL && s[0] != '\0') {
+		const int team = Info_IntegerForKey(s, "cl_team");
+		const int isReady = Info_IntegerForKey(s, "cl_ready");
+		const char *user = Info_ValueForKey(s, "cl_name");
 
-		/* first value is a team */
-		team = atoi(s);
 		if (team > 0 && team < MAX_TEAMS)
 			teamData.teamCount[team]++;
-		s = strstr(s, "\t");
-		if (!s)
-			return;
-		s++;
-
-		/* second */
-		isReady = atoi(s) > 0;
-		s = strstr(s, "\t");
-		if (!s)
-			return;
-		s++;
-
-		/* third is a quoted username */
-		if (s[0] != '"')
-			return;
-		s++;
-		end = strstr(s, "\"");
-		if (!end)
-			return;
-		strncpy(user, s, min(sizeof(user), end - s));
 
 		/* store data */
 		LIST_AddString(&userList, user);
