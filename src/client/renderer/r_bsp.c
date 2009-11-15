@@ -88,12 +88,19 @@ qboolean R_CullBspModel (const entity_t *e)
 static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 {
 	int i;
-	float dot;
 	mBspSurface_t *surf;
+
+	/* temporarily swap the view frame so that the surface drawing
+	 * routines pickup only the bsp model's surfaces */
+	const int f = r_locals.frame;
+	r_locals.frame = -1;
 
 	surf = &e->model->bsp.surfaces[e->model->bsp.firstmodelsurface];
 
 	for (i = 0; i < e->model->bsp.nummodelsurfaces; i++, surf++) {
+		/** @todo This leads to unrendered backfaces for e.g. doors */
+#if 0
+		float dot;
 		/* find which side of the surf we are on  */
 		if (AXIAL(surf->plane))
 			dot = modelorg[surf->plane->type] - surf->plane->dist;
@@ -102,6 +109,7 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 
 		if (((surf->flags & MSURF_PLANEBACK) && (dot < -BACKFACE_EPSILON)) ||
 			(!(surf->flags & MSURF_PLANEBACK) && (dot > BACKFACE_EPSILON)))
+#endif
 			/* visible flag for rendering */
 			surf->frame = r_locals.frame;
 	}
@@ -125,6 +133,9 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 	R_EnableFog(qtrue);
 
 	R_EnableBlend(qfalse);
+
+	/* undo the swap */
+	r_locals.frame = f;
 }
 
 /**
@@ -320,6 +331,10 @@ void R_GetLevelSurfaceLists (void)
 	int i, tile, mask;
 
 	r_locals.frame++;
+
+	/* avoid overflows, negatives are reserved */
+	if (r_locals.frame > 0xffff)
+		r_locals.frame = 0;
 
 	if (!r_drawworld->integer)
 		return;
