@@ -334,6 +334,7 @@ void G_ClientEndRound(player_t * player, qboolean quiet);
 void G_ClientTeamInfo(player_t * player);
 int G_ClientGetTeamNum(const player_t * player);
 int G_ClientGetTeamNumPref(const player_t * player);
+qboolean G_ClientIsReady(const player_t * player);
 void G_PlayerPrintf(const player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 void G_ResetClientData(void);
 
@@ -462,7 +463,9 @@ struct player_s {
 	/* private to game */
 	qboolean spawned;			/**< already spawned? */
 	qboolean began;				/**< the player sent his 'begin' already */
-	qboolean ready;				/**< ready to end his round */
+	qboolean roundDone;			/**< ready to end his round */
+
+	qboolean isReady;			/**< is the player agree to start the party (can we move it into "state"?) */
 
 	qboolean autostand;			/**< autostand for long walks */
 

@@ -165,18 +165,18 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	 * have finished their 'thinking' */
 	if (!G_IsAIPlayer(player) && sv_teamplay->integer) {
 		/* check if all team members are ready */
-		if (!player->ready) {
-			player->ready = qtrue;
+		if (!player->roundDone) {
+			player->roundDone = qtrue;
 			gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY);
 			gi.WriteByte(player->num);
 			gi.WriteByte(player->pers.team);
 			gi.EndEvents();
 		}
 		for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
-			if (p->inuse && p->pers.team == level.activeTeam && !p->ready && G_PlayerSoldiersCount(p) > 0)
+			if (p->inuse && p->pers.team == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(p) > 0)
 				return;
 	} else {
-		player->ready = qtrue;
+		player->roundDone = qtrue;
 	}
 
 	/* clear any remaining reaction fire */
@@ -222,5 +222,5 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	/* reset ready flag (even ai players) */
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam)
-			p->ready = qfalse;
+			p->roundDone = qfalse;
 }

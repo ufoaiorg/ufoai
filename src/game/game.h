@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/typedefs.h"
 #include "../common/tracing.h"
 
-#define	GAME_API_VERSION	5
+#define	GAME_API_VERSION	6
 
 /** @brief edict->solid values */
 typedef enum {
@@ -268,6 +268,7 @@ typedef struct {
 	void (EXPORT *ClientTeamInfo) (player_t * client);
 	int (EXPORT *ClientGetTeamNum) (const player_t * client);
 	int (EXPORT *ClientGetTeamNumPref) (const player_t * client);
+	qboolean (EXPORT *ClientIsReady) (const player_t * client);
 
 	int (EXPORT *ClientGetActiveTeam) (void);
 	const char* (EXPORT *ClientGetName) (int pnum);

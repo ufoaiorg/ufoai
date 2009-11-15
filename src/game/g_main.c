@@ -284,6 +284,7 @@ game_export_t *GetGameAPI (game_import_t * import)
 	globals.ClientTeamInfo = G_ClientTeamInfo;
 	globals.ClientGetTeamNum = G_ClientGetTeamNum;
 	globals.ClientGetTeamNumPref = G_ClientGetTeamNumPref;
+	globals.ClientIsReady = G_ClientIsReady;
 	globals.ClientGetName = G_GetPlayerName;
 	globals.ClientGetActiveTeam = G_GetActiveTeam;
 

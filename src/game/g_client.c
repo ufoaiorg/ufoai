@@ -820,6 +820,15 @@ int G_ClientGetTeamNumPref (const player_t * player)
 }
 
 /**
+ * @return @c true if the player is for starting the multiplayer match
+ */
+qboolean G_ClientIsReady (const player_t * player)
+{
+	assert(player);
+	return player->isReady;
+}
+
+/**
  * @brief Tests if all teams are connected for a multiplayer match and if so,
  * randomly assigns the first turn to a team.
  * @sa SVCmd_StartGame_f
@@ -864,7 +873,7 @@ static void G_ClientTeamAssign (const player_t * player)
 					Q_strcat(buffer, " ", sizeof(buffer));
 				} else
 					/* all the others are set to waiting */
-					p->ready = qtrue;
+					p->roundDone = qtrue;
 				if (p->pers.team)
 					G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
 			}
@@ -1295,6 +1304,9 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 	s = Info_ValueForKey(userinfo, "cl_autostand");
 	player->autostand = atoi(s);
 
+	s = Info_ValueForKey(userinfo, "cl_ready");
+	player->isReady = atoi(s);
+
 	/* send the updated config string */
 	gi.ConfigString(CS_PLAYERNAMES + player->num, "%s", player->pers.netname);
 }
@@ -1376,7 +1388,8 @@ void G_ClientDisconnect (player_t * player)
 
 	player->began = qfalse;
 	player->spawned = qfalse;
-	player->ready = qfalse;
+	player->roundDone = qfalse;
+	player->isReady = qfalse;
 
 	gi.BroadcastPrintf(PRINT_CHAT, "%s disconnected.\n", player->pers.netname);
 }

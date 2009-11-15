@@ -45,7 +45,7 @@ static void G_Players_f (const player_t *player)
 			continue;
 
 		Com_sprintf(smallBuf, sizeof(smallBuf), "(%i) Team %i %s status: %s\n", p->num,
-				p->pers.team, p->pers.netname, (p->ready ? "waiting" : "playing"));
+				p->pers.team, p->pers.netname, (p->roundDone ? "waiting" : "playing"));
 
 		/* can't print all of them in one packet */
 		if (strlen(smallBuf) + strlen(largeBuf) > sizeof(largeBuf) - 100) {

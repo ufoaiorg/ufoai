@@ -551,7 +551,6 @@ static float *R_CalcTransform (entity_t * e)
 	mc[13] = e->origin[1];
 	mc[14] = e->origin[2];
 
-
 	/* combine transformations */
 	if (mp)
 		GLMatrixMultiply(mp, mc, t->matrix);
@@ -573,6 +572,9 @@ static float *R_CalcTransform (entity_t * e)
  */
 static qboolean R_CullEntity (entity_t *e)
 {
+	if (refdef.rendererFlags & RDF_NOWORLDMODEL)
+		return qfalse;
+
 	if (r_nocull->integer)
 		return qfalse;
 
@@ -607,7 +609,7 @@ void R_DrawEntities (void)
 		entity_t *e = &r_entities[i];
 
 		/* frustum cull check - but not while we are in e.g. sequence mode */
-		if (!(refdef.rendererFlags & RDF_NOWORLDMODEL) && R_CullEntity(e))
+		if (R_CullEntity(e))
 			continue;
 
 		R_CalcTransform(e);
