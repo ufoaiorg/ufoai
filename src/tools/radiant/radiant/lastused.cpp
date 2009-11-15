@@ -60,7 +60,7 @@ static inline const char* MRU_GetText (std::size_t index)
 
 static void MRU_updateWidget (std::size_t index, const std::string& filename)
 {
-	const std::string mnemonic = string::toString(index + 1) + "- " + gtkutil::IConv::localeToUTF8(filename);
+	const std::string mnemonic = "_" + string::toString(index + 1) + " - " + string::replaceAll(gtkutil::IConv::localeToUTF8(filename), "_", "__");
 	gtk_label_set_text_with_mnemonic(GTK_LABEL(gtk_bin_get_child(GTK_BIN(MRU_items[index]))), mnemonic.c_str());
 }
 

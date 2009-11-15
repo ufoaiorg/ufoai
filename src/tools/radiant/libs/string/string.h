@@ -337,6 +337,29 @@ namespace string
 		std::transform(convert.begin(), convert.end(), convert.begin(), (int(*) (int)) std::toupper);
 		return convert;
 	}
+
+	/**
+	 * Replace all occurrences of @c searchStr with @c replaceStr
+	 * @param str source where all occurrences should be replaced
+	 * @param searchStr search for this string
+	 * @param replaceStr replace with that string
+	 * @return string with all occurrences replaced
+	 */
+	inline std::string replaceAll (const std::string& str, const std::string& searchStr, const std::string& replaceStr)
+	{
+		if (str.empty())
+			return str;
+		std::string sNew = str;
+		std::string::size_type loc;
+		const std::string::size_type replaceLength = replaceStr.length();
+		const std::string::size_type searchLength = searchStr.length();
+		std::string::size_type lastPosition = 0;
+		while (std::string::npos != (loc = sNew.find(searchStr, lastPosition))) {
+			sNew.replace(loc, searchLength, replaceStr);
+			lastPosition = loc + replaceLength;
+		}
+		return sNew;
+	}
 }
 
 #endif
