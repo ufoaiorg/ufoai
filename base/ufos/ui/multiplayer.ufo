@@ -1609,7 +1609,7 @@ window multiplayer_selectteam
 				*node:root.players.ready.p<1>@bgcolor = "1 0 0 1"
 			} else {
 				*node:root.players.ready.p<1>@bgcolor = "0 1 0 1"
-			}		
+			}
 		}
 	}
 
