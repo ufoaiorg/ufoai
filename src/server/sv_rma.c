@@ -225,7 +225,23 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 
 			Q_strncpyz(a->title, token, sizeof(a->title));
 			continue;
-			/* fix tilename x y */
+		} else if (!strncmp(token, "multiplayer", 11)) {
+			/* get map title */
+			token = Com_EParse(text, errhead, filename);
+			if (!text)
+				break;
+
+			/* a multiplayer only tile - forced to be exactly once in the map when
+			 * we are playing a multiplayer match */
+			if (sv_maxclients->integer >= 2) {
+				for (i = 0; i < map->numTiles; i++)
+					if (!strcmp(token, map->mTile[i].id)) {
+						a->min[i] = 1;
+						a->max[i] = 1;
+						break;
+					}
+			}
+			continue;
 		} else if (!strncmp(token, "size", 4)) {
 			/* get map size */
 			token = Com_EParse(text, errhead, filename);
