@@ -207,7 +207,9 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	linkedList_t *userTeam = NULL;
 
 	if (!s) {
-		MN_ResetData(TEXT_LIST);
+		MN_ResetData(TEXT_MULTIPLAYER_USERLIST);
+		MN_ResetData(TEXT_MULTIPLAYER_USERTEAM);
+		MN_ExecuteConfunc("multiplayer_playerNumber 0");
 		Com_DPrintf(DEBUG_CLIENT, "CL_ParseTeamInfoMessage: No teaminfo string\n");
 		return;
 	}
@@ -219,7 +221,7 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	teamData.maxplayersperteam = Info_IntegerForKey(s, "sv_maxplayersperteam");
 
 	/* for each lines */
-	while ((s = NET_ReadString(msg)) != NULL && s[0] != '\0') {
+	while (s != NULL && s[0] != '\0') {
 		const int team = Info_IntegerForKey(s, "cl_team");
 		const int isReady = Info_IntegerForKey(s, "cl_ready");
 		const char *user = Info_ValueForKey(s, "cl_name");
