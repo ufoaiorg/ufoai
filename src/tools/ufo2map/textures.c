@@ -131,6 +131,7 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 	dBspTexinfo_t tx, *tc;
 	int i, j, k;
 	float shift[2];
+	vec3_t scaledOrigin;
 
 	if (!bt->name[0])
 		return 0;
@@ -140,8 +141,12 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 
 	TextureAxisFromPlane(plane, vecs[0], vecs[1], isTerrain);
 
-	shift[0] = DotProduct(origin, vecs[0]);
-	shift[1] = DotProduct(origin, vecs[1]);
+	/* dot product of a vertex location with the [4] part will produce a
+	 * texcoord (s or t depending on the first index) */
+	VectorScale(origin, 1.0 / bt->scale[0], scaledOrigin);
+	shift[0] = DotProduct(scaledOrigin, vecs[0]);
+	VectorScale(origin, 1.0 / bt->scale[1], scaledOrigin);
+	shift[1] = DotProduct(scaledOrigin, vecs[1]);
 
 	if (!bt->scale[0])
 		bt->scale[0] = 1;
@@ -166,6 +171,9 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 		sinv = sin(ang);
 		cosv = cos(ang);
 	}
+
+	shift[0] = cosv * shift[0] - sinv * shift[1];
+	shift[1] = sinv * shift[0] + cosv * shift[1];
 
 	if (vecs[0][0])
 		sv = 0;
@@ -192,8 +200,10 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 		for (j = 0; j < 3; j++)
 			tx.vecs[i][j] = vecs[i][j] / bt->scale[i];
 
+	/* texture offsets */
 	tx.vecs[0][3] = bt->shift[0] + shift[0];
 	tx.vecs[1][3] = bt->shift[1] + shift[1];
+
 	tx.surfaceFlags = bt->surfaceFlags;
 	tx.value = bt->value;
 
