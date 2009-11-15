@@ -80,6 +80,19 @@ z      +b     +b     a
 0      a      a      0
 }
 
+// Multiplayer tile with a house and starting positions for team no 2
+
+tile +mp_team2
+{
+4 4
+
+0      0      0      0
+0      +a     +a     0 
+0      +a     +a     0 
+0      0      0      0
+}
+
+
 // Empty tiles:
 
 tile +empty1
@@ -210,9 +223,9 @@ assembly default
 {
 size "6 4"
 title "_Africa"
+multiplayer +mp_team2
 +empty1 "1 1"
 +empty2 "1 1"
-+empty5 "0 1"
 +empty5 "0 3"
 +house1 "1 4"
 +house2 "1 4"
@@ -222,7 +235,7 @@ title "_Africa"
 +fence1 "0 1"
 +fence2 "0 1"
 +fence3 "0 1"
-+misc1  "1 4"
++misc1  "0 4"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
@@ -231,9 +244,9 @@ assembly harvester
 {
 size "11 4"
 title "_Africa"
+multiplayer +mp_team2
 +empty1 "0 1"
 +empty2 "0 1"
-+empty5 "0 1"
 +empty5 "0 3"
 +house1 "0 4"
 +house2 "0 4"
@@ -247,4 +260,3 @@ title "_Africa"
 *rm_ufo +craft_ufo_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
-	
