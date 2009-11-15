@@ -465,7 +465,7 @@ struct player_s {
 	qboolean began;				/**< the player sent his 'begin' already */
 	qboolean roundDone;			/**< ready to end his round */
 
-	qboolean isReady;			/**< is the player agree to start the party (can we move it into "state"?) */
+	qboolean isReady;			/**< the player agreed to start the party */
 
 	qboolean autostand;			/**< autostand for long walks */
 
