@@ -245,21 +245,25 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 		if (team > 0 && team < MAX_TEAMS)
 			teamData.teamCount[team]++;
 		s = strstr(s, "\t");
-		assert(s != NULL);
+		if (!s)
+			return;
 		s++;
 
 		/* second */
 		isReady = atoi(s) > 0;
 		s = strstr(s, "\t");
-		assert(s != NULL);
+		if (!s)
+			return;
 		s++;
 
 		/* third is a quoted username */
-		assert(s[0] == '\"');
+		if (s[0] != '"')
+			return;
 		s++;
 		end = strstr(s, "\"");
-		assert(end != NULL);
-		strncpy(user, s, min(MAX_VAR, end - s));
+		if (!end)
+			return;
+		strncpy(user, s, min(sizeof(user), end - s));
 
 		/* store data */
 		LIST_AddString(&userList, user);
@@ -272,7 +276,8 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 
 		/* next line */
 		s = strstr(s, "\n");
-		if (s) s++;
+		if (s)
+			s++;
 		cnt++;
 	}
 
