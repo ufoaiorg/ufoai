@@ -572,9 +572,9 @@ void ParseShaderFile (Tokeniser& tokeniser, const std::string& filename)
 		if (token.empty())
 			break;
 
-		if (!string_equal(token, "material") && !string_equal(token, "particle") && !string_equal(token, "skin")) {
+		if (token != "material" && token != "particle" && token != "skin")
 			tokeniser.ungetToken();
-		}
+
 		// first token should be the path + name.. (from base)
 		std::string name;
 		Tokeniser_parseShaderName(tokeniser, name);

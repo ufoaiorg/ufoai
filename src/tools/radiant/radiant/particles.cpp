@@ -53,7 +53,7 @@ static void ParseParticleScriptFile (Tokeniser& tokeniser, const std::string& fi
 		if (token.empty())
 			break;
 
-		if (string_equal(token, "particle")) {
+		if (token == "particle") {
 			int kill = 0;
 			const std::string particleID = tokeniser.getToken();
 			if (particleID.empty()) {
@@ -62,8 +62,8 @@ static void ParseParticleScriptFile (Tokeniser& tokeniser, const std::string& fi
 			}
 
 			if (!Tokeniser_parseToken(tokeniser, "{")) {
-				globalErrorStream() << "ERROR: expected {. parsing file " << filename << " particle: "
-						<< particleID << "\n";
+				globalErrorStream() << "ERROR: expected {. parsing file " << filename << " particle: " << particleID
+						<< "\n";
 				return;
 			}
 
@@ -74,7 +74,7 @@ static void ParseParticleScriptFile (Tokeniser& tokeniser, const std::string& fi
 			int height = 0;
 			for (;;) {
 				token = tokeniser.getToken();
-				if (string_equal(token, "init")) {
+				if (token == "init") {
 					if (!Tokeniser_parseToken(tokeniser, "{")) {
 						globalErrorStream() << "ERROR: expected { in init.\n";
 						return;

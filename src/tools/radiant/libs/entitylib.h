@@ -347,7 +347,7 @@ class KeyValue: public EntityKeyValue
 		}
 		void assign (const std::string& other)
 		{
-			if (!string_equal(m_string.c_str(), other.c_str())) {
+			if (m_string != other) {
 				m_undo.save();
 				m_string = other;
 				notify();
