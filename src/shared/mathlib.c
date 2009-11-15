@@ -471,12 +471,24 @@ void gaussrand (float *gauss1, float *gauss2)
 	*gauss2 = x2 * w;
 }
 
+/**
+ * @param angles The angles to calulcate the rotation matrix for
+ * @param matrix The resulting rotation matrix. The @c right part of this matrix is inversed because
+ * of the coordinate system we are using internally.
+ * @see AnglesVectors
+ * @see VectorRotatePoint
+ */
 void VectorCreateRotationMatrix (const vec3_t angles, vec3_t matrix[3])
 {
     AngleVectors(angles, matrix[0], matrix[1], matrix[2]);
     VectorInverse(matrix[1]);
 }
 
+/**
+ * @param[out] point The vector to rotate around and the location of the rotated vector
+ * @param[in] matrix The input rotation matrix
+ * @see VectorCreateRotationMatrix
+ */
 void VectorRotatePoint (vec3_t point, const vec3_t matrix[3])
 {
     vec3_t tvec;
