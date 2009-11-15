@@ -208,7 +208,7 @@ void VecToPolar(const vec3_t v, vec2_t a);
 void PolarToVec(const vec2_t a, vec3_t v);
 
 void VectorCreateRotationMatrix(const vec3_t angles, vec3_t matrix[3]);
-void VectorRotatePoint(vec3_t point, const vec3_t matrix[3]);
+void VectorRotatePoint(vec3_t point, vec3_t matrix[3]);
 
 void AngleVectors(const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up);
 float AngleNormalize360(float angle);

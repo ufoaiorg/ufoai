@@ -139,15 +139,9 @@ void R_DrawBrushModel (const entity_t * e)
 	/* set the relative origin, accounting for rotation if necessary */
 	VectorSubtract(refdef.viewOrigin, e->origin, modelorg);
 	if (VectorNotEmpty(e->angles)) {
-		vec3_t temp;
-		vec3_t forward, right, up;
-
-		VectorCopy(modelorg, temp);
-		AngleVectors(e->angles, forward, right, up);
-
-		modelorg[0] = DotProduct(temp, forward);
-		modelorg[1] = -DotProduct(temp, right);
-		modelorg[2] = DotProduct(temp, up);
+		vec3_t rotationMatrix[3];
+		VectorCreateRotationMatrix(e->angles, rotationMatrix);
+		VectorRotatePoint(modelorg, rotationMatrix);
 	}
 
 	R_ShiftLights(e->origin);

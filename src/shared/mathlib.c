@@ -489,7 +489,7 @@ void VectorCreateRotationMatrix (const vec3_t angles, vec3_t matrix[3])
  * @param[in] matrix The input rotation matrix
  * @see VectorCreateRotationMatrix
  */
-void VectorRotatePoint (vec3_t point, const vec3_t matrix[3])
+void VectorRotatePoint (vec3_t point, vec3_t matrix[3])
 {
     vec3_t tvec;
 

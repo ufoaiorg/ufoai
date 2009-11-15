@@ -543,14 +543,14 @@ static float *R_CalcTransform (entity_t * e)
 	/* add rotation */
 	VectorCopy(e->angles, angles);
 	AngleVectors(angles, &mc[0], &mc[4], &mc[8]);
+	/* flip an axis */
+	VectorInverse(&mc[4]);
 
 	/* add translation */
 	mc[12] = e->origin[0];
 	mc[13] = e->origin[1];
 	mc[14] = e->origin[2];
 
-	/* flip an axis */
-	VectorScale(&mc[4], -1, &mc[4]);
 
 	/* combine transformations */
 	if (mp)
