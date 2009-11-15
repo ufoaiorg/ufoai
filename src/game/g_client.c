@@ -753,7 +753,7 @@ static void G_GetTeam (player_t * player)
 	else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
 		gi.dprintf("Get a team for teamplay for %s\n", player->pers.netname);
-		i = atoi(Info_ValueForKey(player->pers.userinfo, "cl_teamnum"));
+		i = G_ClientGetTeamNumPref(player);
 		/* civilians are at team zero */
 		if (i > TEAM_CIVILIAN && sv_maxteams->integer >= i) {
 			G_SetTeamForPlayer(player, i);
