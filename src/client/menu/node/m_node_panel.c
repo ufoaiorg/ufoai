@@ -351,6 +351,8 @@ static void MN_PanelNodeLoaded (menuNode_t *node)
 	if (node->size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
 		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical glitches\n", MN_GetPath(node));
 #endif
+	if (EXTRADATA(node).layout != LAYOUT_NONE)
+		MN_Invalidate(node);
 }
 
 /**

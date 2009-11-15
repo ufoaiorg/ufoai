@@ -1209,20 +1209,19 @@ window multiplayer_selectteam
 				padding		0
 				pos			"50 50"
 				size		"15 300"
-				invis		true		/** < @todo remove that when the ready status is ready */
 			}
 
-			panel p0 { size "15 15" }
-			panel p1 { size "15 15" }
-			panel p2 { size "15 15" }
-			panel p3 { size "15 15" }
-			panel p4 { size "15 15" }
-			panel p5 { size "15 15" }
-			panel p6 { size "15 15" }
-			panel p7 { size "15 15" }
-			panel p8 { size "15 15" }
-			panel p9 { size "15 15" }
-			panel p10 { size "15 15" }
+			panel p0 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
+			panel p1 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
+			panel p2 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
+			panel p3 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
+			panel p4 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
+			panel p5 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
+			panel p6 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
+			panel p7 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
+			panel p8 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
+			panel p9 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
+			panel p10 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
 		}
 
 		text userlist
@@ -1311,18 +1310,34 @@ window multiplayer_selectteam
 			onClick		{ cmd "teamnum_dec;" }
 		}
 
-		button button_ready
+		button button_ready_old
 		{
-			tooltip		"_Finish the teamselection and start the game"
+			tooltip		"_Force starting the game"
 			image		ui/button_blue
-			pos			"250 100"
-			size		"100 40"
-			string		"_Ready..."
+			pos			"250 40"
+			size		"100 30"
+			string		"_Force start"
 			color		"0.8 0.8 0.8 1"
 			selectcolor "1 1 1 1"
 			onClick		{ cmd "spawnsoldiers;" }
 		}
 
+		checkbox cb_ready
+		{
+			tooltip		"_Finish the teamselection and start the game"
+			image		ui/checkbox_green
+			pos			"200 120"
+			size		"20 20"
+			current		*cvar:cl_ready
+		}
+		string cb_ready_label
+		{
+			string		"_Are you ready?"
+			tooltip		"_Finish the teamselection and start the game"
+			pos			"230 120"
+			size		"180 20"
+			onClick		{ call *node:parent.cb_ready@toggle }
+		}
 	}
 
 	todo mergenext { pos "30 280" string "Merge the next window here"}
@@ -1639,6 +1654,7 @@ window multiplayer_selectteam
 		cmd "mp_selectteam_init;"
 		*cvar:mn_entry = ""
 		*cvar:mn_chatselect = "chat"
+		*cvar:cl_ready = 0
 	}
 	
 	func onClose
