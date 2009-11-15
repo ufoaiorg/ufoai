@@ -474,7 +474,8 @@ void gaussrand (float *gauss1, float *gauss2)
 
 /**
  * @brief Rotate a point around static (idle ?) frame {0, 1, 0}, {0, 0, 1} ,{1, 0, 0}
- * @param[in] angles Contains the three angles of rotation around idle frame ({0, 1, 0}, {0, 0, 1} ,{1, 0, 0}) (in this order)
+ * @param[in] angles Contains the three angles (in degree) of rotation around idle
+ * frame ({0, 1, 0}, {0, 0, 1} ,{1, 0, 0}) (in this order)
  * @param[out] forward result of previous rotation for point {1, 0, 0} (can be NULL if not needed)
  * @param[out] right result of previous rotation for point {0, -1, 0} (!) (can be NULL if not needed)
  * @param[out] up result of previous rotation for point {0, 0, 1} (can be NULL if not needed)
