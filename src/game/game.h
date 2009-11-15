@@ -50,8 +50,6 @@ typedef struct link_s {
 	struct link_s *prev, *next;
 } link_t;
 
-#define	MAX_ENT_CLUSTERS	16
-
 
 typedef struct edict_s edict_t;
 typedef struct player_s player_t;

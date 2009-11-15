@@ -471,6 +471,22 @@ void gaussrand (float *gauss1, float *gauss2)
 	*gauss2 = x2 * w;
 }
 
+void VectorCreateRotationMatrix (const vec3_t angles, vec3_t matrix[3])
+{
+    AngleVectors(angles, matrix[0], matrix[1], matrix[2]);
+    VectorInverse(matrix[1]);
+}
+
+void VectorRotatePoint (vec3_t point, const vec3_t matrix[3])
+{
+    vec3_t tvec;
+
+    VectorCopy(point, tvec);
+
+    point[0] = DotProduct(matrix[0], tvec);
+    point[1] = DotProduct(matrix[1], tvec);
+    point[2] = DotProduct(matrix[2], tvec);
+}
 
 /**
  * @brief Create the rotation matrix in order to rotate something.
