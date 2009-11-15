@@ -504,7 +504,7 @@ int main (int argc, char* argv[])
 	g_pParentWnd = new MainFrame();
 
 	if (g_bLoadLastMap && !g_strLastMap.empty()) {
-		Map_LoadFile(g_strLastMap.c_str());
+		Map_LoadFile(g_strLastMap);
 	} else if (argc == 2) {
 		if (file_readable(argv[1]))
 			Map_LoadFile(argv[1]);
