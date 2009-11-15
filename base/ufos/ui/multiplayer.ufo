@@ -1211,16 +1211,16 @@ window multiplayer_selectteam
 				size		"15 300"
 			}
 
-			panel p0 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
-			panel p1 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
-			panel p2 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
-			panel p3 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
-			panel p4 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
-			panel p5 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
-			panel p6 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
-			panel p7 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
-			panel p8 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
-			panel p9 { size "15 15" bgcolor "0.5 0.5 0.5 1" }
+			panel p0 { size "15 15" }
+			panel p1 { size "15 15" }
+			panel p2 { size "15 15" }
+			panel p3 { size "15 15" }
+			panel p4 { size "15 15" }
+			panel p5 { size "15 15" }
+			panel p6 { size "15 15" }
+			panel p7 { size "15 15" }
+			panel p8 { size "15 15" }
+			panel p9 { size "15 15" }
 		}
 
 		text userlist
