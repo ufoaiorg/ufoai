@@ -1581,6 +1581,15 @@ window multiplayer_selectteam
 	
 	}
 
+	/**
+	 * @param <1> player ID/line
+	 * @param <2> 0: not ready, 1: ready
+	 * @todo implement that thing
+	 */
+	confunc multiplayer_playerIsReady {
+		
+	}
+
 	// ===================
 	// INIT
 	// ===================
