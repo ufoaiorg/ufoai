@@ -491,12 +491,13 @@ struct player_s {
  */
 struct edict_s {
 	qboolean inuse;
-	int linkcount;
+	int linkcount;		/**< count the amount of server side links - if a link was called,
+						 * something on the position or the size of the entity was changed */
 
 	int number;			/**< the number in the global edict array */
 
 	vec3_t origin;		/**< the position in the world */
-	vec3_t angles;		/**< the rotation in the world */
+	vec3_t angles;		/**< the rotation in the world (pitch, yaw, roll) */
 
 	/** @todo move these fields to a server private sv_entity_t */
 	link_t area;				/**< linked to a division node or leaf */
@@ -582,7 +583,8 @@ struct edict_s {
 	int spawnflags;	/**< set via mapeditor */
 	const char *classname;
 
-	float angle;	/**< entity yaw - set via mapeditor - -1=up; -2=down */
+	float angle;	/**< entity yaw - (0-360 degree) set via mapeditor - sometimes used for movement direction,
+					 * then -1=up; -2=down is used additionally */
 
 	int speed;	/**< speed of entities - e.g. rotating or actors */
 	const char *target;	/**< name of the entity to trigger or move towards */

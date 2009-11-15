@@ -445,9 +445,8 @@ void R_DrawAliasModel (entity_t *e)
 			VectorCopy(e->lighting->color, color);
 	}
 
-	/* IR goggles override color
-	 * don't highlight all misc_models, only actors */
-	if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_ACTOR)
+	/* IR goggles override color for entities that are affected */
+	if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_IRGOGGLES)
 		color[0] = 1.0;
 
 	if (e->flags & RF_PULSE) {  /* and then adding in a pulse */
