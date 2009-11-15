@@ -3613,6 +3613,18 @@ base/textures/tex_mattn/wood024.jpg | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/wood024_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood025.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood025_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_misc/advertaa0.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertaa1.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertaa2.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertaa3.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertaa4.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertab0.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertab1.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertab2.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertab3.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertab4.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertab5.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertab6.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/barrel1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst.jpg
 base/textures/tex_misc/barrel2.tga | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst.jpg
 base/textures/tex_misc/barrel_top.tga | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst_top2.jpg
@@ -3669,13 +3681,24 @@ base/textures/tex_misc/pad.jpg | GNU General Public License 2.0 | Nexuiz GPLed D
 base/textures/tex_misc/pipes001.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/pipes002.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/pipes003.jpg | Public Domain |  | Public Domain Golgotha
+base/textures/tex_misc/rail_info.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_info0.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_notice.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_notice0.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_notice1.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_noticeb.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_noticeb0.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_noticeb01.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_noticeb02.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_noticeb1.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_overlay.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_route0.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_route1.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_route2.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_route3.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_route4.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_sign.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_sign0.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rstbounce.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/rstbouncefan.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/sign_falloutshelter.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
