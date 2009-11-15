@@ -1205,22 +1205,22 @@ window multiplayer_selectteam
 		panel ready {
 			{
 				layout LAYOUT_TOP_DOWN_FLOW
-				layoutMargin 3
+				layoutMargin 2
 				padding		0
 				pos			"50 50"
-				size		"15 300"
+				size		"16 300"
 			}
 
-			panel p0 { size "15 15" }
-			panel p1 { size "15 15" }
-			panel p2 { size "15 15" }
-			panel p3 { size "15 15" }
-			panel p4 { size "15 15" }
-			panel p5 { size "15 15" }
-			panel p6 { size "15 15" }
-			panel p7 { size "15 15" }
-			panel p8 { size "15 15" }
-			panel p9 { size "15 15" }
+			pic p0 { size "16 16" }
+			pic p1 { size "16 16" }
+			pic p2 { size "16 16" }
+			pic p3 { size "16 16" }
+			pic p4 { size "16 16" }
+			pic p5 { size "16 16" }
+			pic p6 { size "16 16" }
+			pic p7 { size "16 16" }
+			pic p8 { size "16 16" }
+			pic p9 { size "16 16" }
 		}
 
 		text userlist
@@ -1622,9 +1622,11 @@ window multiplayer_selectteam
 	confunc multiplayer_playerIsReady {
 		if ( ( <1> < 10 ) and ( <1> >= 0 ) ) {
 			if ( <2> == 0 ) {
-				*node:root.players.ready.p<1>@bgcolor = "1 0 0 1"
+				*node:root.players.ready.p<1>@image = "icons/off"
+				*node:root.players.ready.p<1>@invis = false
 			} else {
-				*node:root.players.ready.p<1>@bgcolor = "0 1 0 1"
+				*node:root.players.ready.p<1>@image = "icons/on"
+				*node:root.players.ready.p<1>@invis = false
 			}
 		}
 	}
@@ -1635,9 +1637,10 @@ window multiplayer_selectteam
 	confunc multiplayer_playerNumber {
 		*cvar:tmp = <1>
 		while ( *cvar:tmp < 10 ) {
-			*node:root.players.ready.p<cvar:tmp>@bgcolor = "0 0 0 0"
+			*node:root.players.ready.p<1>@invis = true
 			*cvar:tmp = ( *cvar:tmp + 1 )
 		}
+		delete *cvar:tmp
 	}
 
 	// ===================

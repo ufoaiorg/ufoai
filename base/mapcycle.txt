@@ -5,10 +5,10 @@
  * [mapname] [day|night] [gametype]
  */
 
+"+africa default" day 1on1
 "+frozen small" day 1on1
 "+italy default" day 1on1
 farm day 1on1
-"+africa default" day 1on1
 estate day 1on1
 "+japan default" day 1on1
 tower day 1on1
