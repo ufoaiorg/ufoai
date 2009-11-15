@@ -79,6 +79,7 @@ typedef struct client_s {
 	player_t *player;			/**< game client structure */
 	char name[32];				/**< extracted from userinfo, high bits masked */
 	int messagelevel;			/**< for filtering printed messages */
+	qboolean isReady;			/**< is the player agree to start the party (can we move it into "state"?) */
 	int lastconnect;
 	char peername[256];
 	struct net_stream *stream;

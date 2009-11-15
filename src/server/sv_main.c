@@ -135,7 +135,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 				teamId = ge->ClientGetTeamNumPref(cl->player);
 			else
 				teamId = TEAM_NO_ACTIVE;
-			Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", teamId, cl->name);
+			Com_sprintf(player, sizeof(player), "%i\t%i\t\"%s\"\n", teamId, cl->isReady, cl->name);
 			NET_WriteRawString(msg, player);
 		} else {
 			Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: unconnected client: %i %s\n", i, cl->name);

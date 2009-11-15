@@ -238,16 +238,23 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 		int team;
 		char user[MAX_VAR];
 		char *end;
+		qboolean isReady;
 
 		/* first value is a team */
 		team = atoi(s);
 		if (team > 0 && team < MAX_TEAMS)
 			teamData.teamCount[team]++;
-
-		/* second is a quoted user */
 		s = strstr(s, "\t");
 		assert(s != NULL);
 		s++;
+
+		/* second */
+		isReady = atoi(s) > 0;
+		s = strstr(s, "\t");
+		assert(s != NULL);
+		s++;
+
+		/* third is a quoted username */
 		assert(s[0] == '\"');
 		s++;
 		end = strstr(s, "\"");
@@ -260,6 +267,8 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 			LIST_AddString(&userTeam, va(_("Team %d"), team));
 		else
 			LIST_AddString(&userTeam, _("No team"));
+
+		MN_ExecuteConfunc("multiplayer_playerIsReady %i %i", cnt, isReady);
 
 		/* next line */
 		s = strstr(s, "\n");
