@@ -43,13 +43,6 @@ inline bool string_empty (const std::string& string)
 	return string.empty();
 }
 
-/// \brief Returns true if \p string length is not zero.
-/// O(1)
-inline bool string_not_empty (const std::string& string)
-{
-	return !string_empty(string);
-}
-
 /// \brief Returns <0 if \p string is lexicographically less than \p other.
 /// Returns >0 if \p string is lexicographically greater than \p other.
 /// Returns 0 if \p string is lexicographically equal to \p other.
@@ -78,13 +71,6 @@ inline bool string_equal_n (const char* string, const char* other, std::size_t n
 inline bool string_less (const char* string, const char* other)
 {
 	return string_compare(string, other) < 0;
-}
-
-/// \brief Returns true if \p string is lexicographically greater than \p other.
-/// O(n)
-inline bool string_greater (const char* string, const char* other)
-{
-	return string_compare(string, other) > 0;
 }
 
 /// \brief Returns <0 if \p string is lexicographically less than \p other after converting both to lower-case.
@@ -130,26 +116,11 @@ inline bool string_less_nocase (const char* string, const char* other)
 	return string_compare_nocase(string, other) < 0;
 }
 
-/// \brief Returns true if \p string is lexicographically greater than \p other.
-/// Treats all ascii characters as lower-case during comparisons.
-/// O(n)
-inline bool string_greater_nocase (const char* string, const char* other)
-{
-	return string_compare_nocase(string, other) > 0;
-}
-
 /// \brief Returns the number of non-null characters in \p string.
 /// O(n)
 inline std::size_t string_length (const std::string& string)
 {
 	return string.length();
-}
-
-/// \brief Returns true if the beginning of \p string is equal to \p prefix.
-/// O(n)
-inline bool string_equal_prefix (const char* string, const char* prefix)
-{
-	return string_equal_n(string, prefix, string_length(prefix));
 }
 
 /// \brief Copies \p other into \p string and returns \p string.
@@ -234,29 +205,12 @@ inline void string_swap (char_pointer& string, char_pointer& other)
 	std::swap(string, other);
 }
 
-typedef const char* char_const_pointer;
-/// \brief Swaps the values of \p string and \p other.
-inline void string_swap (char_const_pointer& string, char_const_pointer& other)
-{
-	std::swap(string, other);
-}
-
 /// \brief Converts each character of \p string to lower-case and returns \p string.
 /// O(n)
 inline char* string_to_lowercase (char* string)
 {
 	for (char* p = string; *p != '\0'; ++p) {
 		*p = (char) std::tolower(*p);
-	}
-	return string;
-}
-
-/// \brief Converts each character of \p string to upper-case and returns \p string.
-/// O(n)
-inline char* string_to_uppercase (char* string)
-{
-	for (char* p = string; *p != '\0'; ++p) {
-		*p = (char) std::toupper(*p);
 	}
 	return string;
 }

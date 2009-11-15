@@ -310,7 +310,7 @@ NodeSmartReference Model_load (ModelLoader* loader, const char* path, const char
 				return g_nullModel;
 			}
 		} else {
-			if (string_not_empty(type)) {
+			if (!string_empty(type)) {
 				g_warning("Model type not supported: '%s'\n", name);
 			}
 			return g_nullModel;

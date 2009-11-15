@@ -442,7 +442,7 @@ const std::string FindFile (const std::string& relative)
 const std::string FindPath (const std::string& absolute)
 {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		if (path_equal_n(absolute.c_str(), (*i).name.c_str(), string_length((*i).name.c_str()))) {
+		if (path_equal_n(absolute.c_str(), (*i).name.c_str(), (*i).name.length())) {
 			return (*i).name;
 		}
 	}
