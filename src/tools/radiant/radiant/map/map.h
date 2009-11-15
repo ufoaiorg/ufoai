@@ -29,7 +29,6 @@
 #include "iscenegraph.h"
 #include "generic/callback.h"
 #include "signal/signalfwd.h"
-#include "string/stringfwd.h"
 #include <string>
 
 class Map;
