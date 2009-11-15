@@ -126,14 +126,16 @@ static void SVC_TeamInfo (struct net_stream *s)
 	NET_WriteRawString(msg, "\n");
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl->state >= cs_connected) {
+			char teamId;
 			Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: connected client: %i %s\n", i, cl->name);
 			/* show players that already have a team with their teamnum */
 			if (ge->ClientGetTeamNum(cl->player))
-				Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
+				teamId = '0' + ge->ClientGetTeamNum(cl->player);
 			else if (ge->ClientGetTeamNumPref(cl->player))
-				Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", ge->ClientGetTeamNumPref(cl->player), cl->name);
+				teamId = '0' + ge->ClientGetTeamNumPref(cl->player);
 			else
-				Com_sprintf(player, sizeof(player), "-\t\"%s\"\n", cl->name);
+				teamId = '-';
+			Com_sprintf(player, sizeof(player), "%c\t\"%s\"\n", teamId, cl->name);
 			NET_WriteRawString(msg, player);
 		} else {
 			Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: unconnected client: %i %s\n", i, cl->name);
