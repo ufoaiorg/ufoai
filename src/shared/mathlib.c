@@ -483,6 +483,7 @@ void gaussrand (float *gauss1, float *gauss2)
  * forward: along the orientation vector
  * right: in relation to forward rotated by 90 degree to the right
  * up: in relation to forward rotated by 90 degree to the up
+ * @sa RotatePointAroundVector : If you need rather "one rotation around a vector you choose" instead of "3 rotations around 3 vectors you don't choose".
  */
 void AngleVectors (const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 {
