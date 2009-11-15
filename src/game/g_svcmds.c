@@ -306,47 +306,22 @@ static void SVCmd_ActorInvList_f (void)
  */
 static void SVCmd_StartGame_f (void)
 {
-	int i, j, teamCount = 0;
-	int playerCount = 0;
-	int knownTeams[MAX_TEAMS];
+	int i;
 	player_t *p;
-	char buffer[MAX_VAR] = "";
 
-	/* return with no action if activeTeam already assigned or if in single-player mode */
-	if (G_MatchIsRunning() || sv_maxclients->integer == 1)
+	G_ClientTeamAssign(qtrue);
+
+	if (level.activeTeam == TEAM_NO_ACTIVE) {
+		Com_Printf("Could not force the game start\n");
 		return;
-
-	/* count number of currently connected unique teams and players (only human controlled players) */
-	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
-		if (p->inuse && p->pers.team > 0) {
-			playerCount++;
-			for (j = 0; j < teamCount; j++) {
-				if (p->pers.team == knownTeams[j])
-					break;
-			}
-			if (j == teamCount)
-				knownTeams[teamCount++] = p->pers.team;
-		}
 	}
-	gi.dprintf("SVCmd_StartGame_f: Players in game: %i, Unique teams in game: %i\n",
-			playerCount, teamCount);
 
-	G_PrintStats(va("Starting new game: %s", level.mapname));
-	level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
 	/* spawn the player (only human controlled players) */
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
 		if (!p->inuse)
 			continue;
 		G_ClientSpawn(p);
-		if (p->pers.team == level.activeTeam) {
-			Q_strcat(buffer, p->pers.netname, MAX_VAR);
-			Q_strcat(buffer, " ", MAX_VAR);
-		}
-		G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
 	}
-	G_PrintStats(va("Team %i got the first round", level.activeTeam));
-	gi.BroadcastPrintf(PRINT_CONSOLE, _("Team %i (%s) will get the first turn.\n"),
-			level.activeTeam, buffer);
 }
 
 /**

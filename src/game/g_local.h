@@ -325,6 +325,8 @@ edict_t *G_SpawnFloor(pos3_t pos);
 int G_CheckVisTeam(int team, edict_t *check, qboolean perish, edict_t *ent);
 edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
 void G_SendState(unsigned int playerMask, const edict_t *ent);
+void G_ClientTeamAssign(qboolean force);
+void G_SetTeamForPlayer(player_t* player, const int team);
 
 qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_CheckForceEndRound(void);

@@ -735,41 +735,38 @@ static void G_GetTeam (player_t * player)
 			if (level.num_spawnpoints[i])
 				spawnCheck[spawnSpots++] = i;
 		}
-		/* we need at least 2 different team spawnpoints for multiplayer */
-		if (spawnSpots <= 1) {
-			Com_DPrintf(DEBUG_GAME, "G_GetTeam: Not enough spawn spots in map!\n");
-			player->pers.team = TEAM_NO_ACTIVE;
-			return;
-		}
+		/* we need at least 2 different team spawnpoints for multiplayer in a death match game */
+		if (spawnSpots < 2)
+			gi.error("G_GetTeam: Not enough spawn spots in map!");
+
 		/* assign random valid team number */
 		randomSpot = (int) (frand() * (spawnSpots - 1) + 0.5);
-		player->pers.team = spawnCheck[randomSpot];
+		G_SetTeamForPlayer(player, spawnCheck[randomSpot]);
 		gi.dprintf("You have been randomly assigned to team %i\n", player->pers.team);
 		return;
 	}
 
 	/* find a team */
 	if (sv_maxclients->integer == 1)
-		player->pers.team = TEAM_PHALANX;
+		G_SetTeamForPlayer(player, TEAM_PHALANX);
 	else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
 		gi.dprintf("Get a team for teamplay for %s\n", player->pers.netname);
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "cl_teamnum"));
 		/* civilians are at team zero */
 		if (i > TEAM_CIVILIAN && sv_maxteams->integer >= i) {
-			player->pers.team = i;
+			G_SetTeamForPlayer(player, i);
 			gi.BroadcastPrintf(PRINT_CHAT, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
 		} else {
 			gi.dprintf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
-			player->pers.team = TEAM_DEFAULT;
+			G_SetTeamForPlayer(player, TEAM_DEFAULT);
 		}
 	} else {
-		qboolean teamAvailable;
 		/* search team */
 		gi.dprintf("Getting a multiplayer team for %s\n", player->pers.netname);
 		for (i = TEAM_CIVILIAN + 1; i < MAX_TEAMS; i++) {
 			if (level.num_spawnpoints[i]) {
-				teamAvailable = qtrue;
+				qboolean teamAvailable = qtrue;
 				/* check if team is in use (only human controlled players) */
 				for (j = 0, p = game.players; j < game.sv_maxplayersperteam; j++, p++)
 					if (p->inuse && p->pers.team == i) {
@@ -793,11 +790,28 @@ static void G_GetTeam (player_t * player)
 					break;
 				}
 			Com_DPrintf(DEBUG_GAME, "Assigning %s to Team %i\n", player->pers.netname, i);
-			player->pers.team = i;
+			G_SetTeamForPlayer(player, i);
 		} else {
 			gi.dprintf("No free team - disconnecting '%s'\n", player->pers.netname);
 			G_ClientDisconnect(player);
 		}
+	}
+}
+
+void G_SetTeamForPlayer (player_t* player, const int team)
+{
+	assert(player);
+	assert(team >= TEAM_NO_ACTIVE && team < MAX_TEAMS);
+	player->pers.team = team;
+
+	if (team >= 0 && team < MAX_TEAMS) {
+		if (!level.num_spawnpoints[team])
+			gi.error("No spawnpoints for team %i", team);
+	}
+
+	if (!G_IsAIPlayer(player)) {
+		Info_RemoveKey(player->pers.userinfo, "cl_team");
+		Info_SetValueForKeyAsInteger(player->pers.userinfo, sizeof(player->pers.userinfo), "cl_team", team);
 	}
 }
 
@@ -833,15 +847,14 @@ qboolean G_ClientIsReady (const player_t * player)
  * randomly assigns the first turn to a team.
  * @sa SVCmd_StartGame_f
  */
-static void G_ClientTeamAssign (const player_t * player)
+void G_ClientTeamAssign (qboolean force)
 {
-	int i, j, teamCount = 1;
+	int i, j, teamCount = 0;
 	int playerCount = 0;
 	int knownTeams[MAX_TEAMS];
 	player_t *p;
-	knownTeams[0] = player->pers.team;
 
-	/* return with no action if activeTeam already assigned or if in single-player mode */
+	/* return with no action if activeTeam already assigned or if are in single-player mode */
 	if (G_MatchIsRunning() || sv_maxclients->integer == 1)
 		return;
 
@@ -862,10 +875,14 @@ static void G_ClientTeamAssign (const player_t * player)
 			teamCount);
 
 	/* if all teams/players have joined the game, randomly assign which team gets the first turn */
-	if ((sv_teamplay->integer && teamCount >= sv_maxteams->integer) || playerCount >= sv_maxclients->integer) {
+	if (force || (sv_teamplay->integer && teamCount >= sv_maxteams->integer) || playerCount >= sv_maxclients->integer) {
+		const int teamIndex = (int) (frand() * (teamCount - 1) + 0.5);
 		char buffer[MAX_VAR] = "";
+		assert(teamIndex >= 0);
+		assert(teamIndex < MAX_TEAMS);
+		assert(teamCount > 0);
 		G_PrintStats(va("Starting new game: %s with %i teams", level.mapname, teamCount));
-		level.activeTeam = knownTeams[(int) (frand() * (teamCount - 1) + 0.5)];
+		level.activeTeam = knownTeams[teamIndex];
 		for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
 			if (p->inuse) {
 				if (p->pers.team == level.activeTeam) {
@@ -1109,7 +1126,7 @@ void G_ClientTeamInfo (player_t * player)
 			G_ClientSkipActorInfo();
 		}
 	}
-	G_ClientTeamAssign(player);
+	G_ClientTeamAssign(qfalse);
 }
 
 /**

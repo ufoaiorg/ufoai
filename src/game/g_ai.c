@@ -1110,8 +1110,8 @@ player_t *AI_CreatePlayer (int team)
 			memset(p, 0, sizeof(*p));
 			p->inuse = qtrue;
 			p->num = p - game.players;
-			p->pers.team = team;
 			p->pers.ai = qtrue;
+			G_SetTeamForPlayer(p, team);
 			if (p->pers.team == TEAM_CIVILIAN)
 				G_SpawnAIPlayer(p, ai_numcivilians->integer);
 			else if (sv_maxclients->integer == 1)
