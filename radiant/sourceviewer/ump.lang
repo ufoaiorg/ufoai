@@ -96,6 +96,7 @@
 	</context>
 
 	<context id="keyword" style-ref="keyword">
+	  <keyword>multiplayer</keyword>
 	  <keyword>base</keyword>
 	  <keyword>grid</keyword>
 	  <keyword>tile</keyword>
