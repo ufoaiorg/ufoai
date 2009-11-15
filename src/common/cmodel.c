@@ -1202,7 +1202,7 @@ static void CMod_RerouteMap (void)
  * @brief Loads in the map and all submodels
  * @note This function loads the collision data from the bsp file. For
  * rendering @c R_ModBeginLoading is used.
- * @param[in] tiles	Map name(s) relative to base/maps
+ * @param[in] tiles	Map name(s) relative to base/maps or random map assembly string
  * @param[in] day Use the day (@c true) or the night (@c false) version of the map
  * @param[in] pos In case you gave more than one tile (Random map assembly [rma]) you also
  * have to provide the positions where those tiles should be placed at.

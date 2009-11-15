@@ -467,9 +467,11 @@ void CL_RequestNextDownload (void)
 
 		/* check download */
 		if (precache_check == CS_MODELS) { /* confirm map */
-			if (cl.configstrings[CS_TILES][0] != '+') {
-				if (!CL_CheckOrDownloadFile(va("maps/%s.bsp", cl.configstrings[CS_TILES])))
+			if (cl.configstrings[CS_NAME][0] != '+') {
+				if (!CL_CheckOrDownloadFile(va("maps/%s.bsp", cl.configstrings[CS_NAME])))
 					return; /* started a download */
+			} else {
+				/** @todo request ump bsp files */
 			}
 			precache_check = CS_MODELS + 1;
 		}
