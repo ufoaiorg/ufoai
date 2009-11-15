@@ -219,6 +219,7 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 		/* disappear */
 		gi.AddEvent(playerMask, EV_ENT_PERISH);
 		gi.WriteShort(check->number);
+		check->visflags = 0;
 	}
 }
 
