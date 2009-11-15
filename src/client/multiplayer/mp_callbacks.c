@@ -176,6 +176,7 @@ static void CL_WaitInit_f (void)
 /**
  * @brief Send the teaminfo string to server
  * @sa CL_ParseTeamInfoMessage
+ * @sa SV_ConnectionlessPacket
  */
 static void CL_SelectTeam_Init_f (void)
 {

@@ -404,6 +404,12 @@ static void SVC_RemoteCommand (struct net_stream *stream)
 	Com_EndRedirect();
 }
 
+/**
+ * @brief Handles a connectionless message from a client
+ * @sa NET_OOB_Printf
+ * @param[out] stream The stream to write to
+ * @param msg The message buffer to read the connectionless data from
+ */
 static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *msg)
 {
 	const char *s, *c;

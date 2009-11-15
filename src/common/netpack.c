@@ -508,6 +508,7 @@ void NET_ReadFormat (struct dbuffer *buf, const char *format, ...)
  * @brief Out of band print
  * @sa clc_oob
  * @sa CL_ReadPackets
+ * @sa SV_ConnectionlessPacket
  */
 void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
 {
