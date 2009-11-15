@@ -123,7 +123,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_teamplay", Cvar_GetString("sv_teamplay"));
 	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_maxteams", Cvar_GetString("sv_maxteams"));
 	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_maxplayersperteam", Cvar_GetString("sv_maxplayersperteam"));
-	NET_WriteRawString(msg, infoGlobal);
+	NET_WriteString(msg, infoGlobal);
 
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl->state >= cs_connected) {
@@ -134,7 +134,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_team", teamId);
 			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_ready", ge->ClientIsReady(cl->player));
 			Info_SetValueForKey(infoPlayer, sizeof(infoPlayer), "cl_name", cl->name);
-			NET_WriteRawString(msg, infoPlayer);
+			NET_WriteString(msg, infoPlayer);
 		} else {
 			Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: unconnected client: %i %s\n", i, cl->name);
 		}

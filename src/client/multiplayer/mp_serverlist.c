@@ -221,7 +221,7 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	teamData.maxplayersperteam = Info_IntegerForKey(s, "sv_maxplayersperteam");
 
 	/* for each lines */
-	while (s != NULL && s[0] != '\0') {
+	while ((s = NET_ReadString(msg)) != NULL && s[0] != '\0') {
 		const int team = Info_IntegerForKey(s, "cl_team");
 		const int isReady = Info_IntegerForKey(s, "cl_ready");
 		const char *user = Info_ValueForKey(s, "cl_name");
