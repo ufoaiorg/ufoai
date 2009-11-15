@@ -330,7 +330,7 @@ gboolean accelerator_window_key_press (GtkWidget *widget, GdkEventKey *event, gp
 
 #if 0
 	if (event->is_modifier)
-		return false;
+	return false;
 #else
 	switch (event->keyval) {
 	case GDK_Shift_L:
@@ -393,9 +393,9 @@ gboolean accelerator_window_key_press (GtkWidget *widget, GdkEventKey *event, gp
 					return;
 				if (accelerator == newAccel) {
 					StringOutputStream msg;
-					msg << "The command " << name.c_str() << " is already assigned to the key " << accelerator
-							<< ".\n\n" << "Do you want to unassign " << name.c_str() << " first?";
-					EMessageBoxReturn r = gtk_MessageBox(widget, msg.c_str(), "Key already used", eMB_YESNOCANCEL);
+					msg << "The command " << name << " is already assigned to the key " << accelerator << ".\n\n"
+							<< "Do you want to unassign " << name << " first?";
+					EMessageBoxReturn r = gtk_MessageBox(widget, msg.c_str(), _("Key already used"), eMB_YESNOCANCEL);
 					if (r == eIDYES) {
 						// clear the ACTUAL accelerator too!
 						disconnect_accelerator(name);
@@ -495,7 +495,8 @@ void DoCommandListDlg (void)
 {
 	command_list_dialog_t dialog;
 
-	GtkWindow* window = create_modal_dialog_window(GlobalRadiant().getMainWindow(), _("Mapped Commands"), dialog, -1, 400);
+	GtkWindow* window = create_modal_dialog_window(GlobalRadiant().getMainWindow(), _("Mapped Commands"), dialog, -1,
+			400);
 	g_signal_connect(G_OBJECT(window), "key-press-event", (GCallback) accelerator_window_key_press, &dialog);
 
 	GtkAccelGroup* accel = gtk_accel_group_new();
@@ -633,7 +634,7 @@ void SaveCommandMap (const std::string& path)
 				}
 				void visit (const std::string& name, Accelerator& accelerator)
 				{
-					m_file << name.c_str() << "=";
+					m_file << name << "=";
 
 					const char* key = gtk_accelerator_name(accelerator.key, accelerator.modifiers);
 					m_file << key;
@@ -701,14 +702,14 @@ void LoadCommandMap (const std::string& path)
 		}
 
 		if (version_compatible(version, dataVersion)) {
-			g_message("commands import: data version %i:%i is compatible with code version %i:%i\n",
-					version.major, version.minor, dataVersion.major, dataVersion.minor);
+			g_message("commands import: data version %i:%i is compatible with code version %i:%i\n", version.major,
+					version.minor, dataVersion.major, dataVersion.minor);
 			ReadCommandMap visitor(strINI);
 			GlobalShortcuts_foreach(visitor);
 			g_message("parsed %u custom shortcuts\n", Unsigned(visitor.count()));
 		} else {
-			g_message("commands import: data version %i:%i is not compatible with code version %i:%i\n",
-					version.major, version.minor, dataVersion.major, dataVersion.minor);
+			g_message("commands import: data version %i:%i is not compatible with code version %i:%i\n", version.major,
+					version.minor, dataVersion.major, dataVersion.minor);
 		}
 	} else {
 		g_warning("failed to load custom shortcuts from '%s'\n", strINI.c_str());
