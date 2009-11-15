@@ -820,7 +820,7 @@ void CL_CameraMove (void)
 	} else {
 		/* normal camera movement */
 		/* calculate ground-based movement vectors */
-		const float angle = cl.cam.angles[YAW] * (M_PI * 2 / 360);
+		const float angle = cl.cam.angles[YAW] * torad;
 		const float sy = sin(angle);
 		const float cy = cos(angle);
 

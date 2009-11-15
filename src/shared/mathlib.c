@@ -485,20 +485,15 @@ void gaussrand (float *gauss1, float *gauss2)
  */
 void AngleVectors (const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 {
-	float angle;
-	static float sr, sp, sy, cr, cp, cy;
-
-	/* static to help MS compiler fp bugs */
-
-	angle = angles[YAW] * (M_PI * 2 / 360);
-	sy = sin(angle);
-	cy = cos(angle);
-	angle = angles[PITCH] * (M_PI * 2 / 360);
-	sp = sin(angle);
-	cp = cos(angle);
-	angle = angles[ROLL] * (M_PI * 2 / 360);
-	sr = sin(angle);
-	cr = cos(angle);
+	const float anglePitch = angles[PITCH] * torad;
+	const float sp = sin(anglePitch);
+	const float cp = cos(anglePitch);
+	const float angleYaw = angles[YAW] * torad;
+	const float sy = sin(angleYaw);
+	const float cy = cos(angleYaw);
+	const float angleRoll = angles[ROLL] * torad;
+	const float sr = sin(angleRoll);
+	const float cr = cos(angleRoll);
 
 	if (forward) {
 		forward[0] = cp * cy;
