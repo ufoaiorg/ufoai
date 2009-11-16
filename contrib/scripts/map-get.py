@@ -24,7 +24,8 @@ UFO2MAPFLAGS = ' -v 2 -nice 19 -extra'
 URI = 'http://static.ufo.ludwigf.org/maps'
 __version__ = '0.0.4.1'
 
-downloadstatus = False
+displayDownloadStatus = False
+displayAlreadyUpToDate = True
 
 """
 written by Florian Ludwig <dino@phidev.org>
@@ -70,7 +71,7 @@ def md5sum(path, binary = False):
 
 import time
 def download(uri):
-	global downloadstatus
+	global displayDownloadStatus
     request = urllib2.Request(uri)
     import platform
     p = ' '.join([platform.platform()] + list(platform.dist()))
@@ -85,11 +86,11 @@ def download(uri):
     re = out = ''
     t = 1
     data = f.read(10240)
-    if not downloadstatus:
+    if not displayDownloadStatus:
     	print('downloading ' + uri)
     while data:
         re+= data
-        if downloadstatus and sys.stdout.isatty:
+        if displayDownloadStatus and sys.stdout.isatty:
             out = '\r%s %9ikb' % (uri, len(re) / 1024)
             sys.stdout.write(out)
             sys.stdout.flush()
@@ -97,7 +98,7 @@ def download(uri):
         data = f.read(10240)
         t = time.time() - t
     f.close()
-    if downloadstatus:
+    if displayDownloadStatus:
     	sys.stdout.write('\r%s\r' % (' '*len(out)))
     return re
 
@@ -124,6 +125,7 @@ def ufo2map_hash():
 
 def upgrade(arg):
     """Download the list of maps."""
+    global displayAlreadyUpToDate
     maps = {}
     print 'getting list of available maps'
     for i in download(URI + '/Maps').split('\n'):
@@ -147,7 +149,7 @@ def upgrade(arg):
 
 	print 'INFO write files into ' + UFOAI_ROOT
 
-    updated = missmatch = 0
+    updated = missmatch = uptodate = 0
     mapnames = maps.keys()
     mapnames.sort()
     for i in mapnames:
@@ -175,9 +177,11 @@ def upgrade(arg):
             print '%s - updated' % i
             updated+= 1
         else:
-            print '%s - already up to date' % i
+            if displayAlreadyUpToDate:
+                print '%s - already up to date' % i
+            uptodate+= 1
 
-    print '%d upgraded, %d version mismatched' % (updated, missmatch)
+    print '%d upgraded, %d version mismatched, %d already up to date' % (updated, missmatch, uptodate)
 
 
 def gen(args):
@@ -278,13 +282,15 @@ def gen(args):
 
 
 def main(argv=None):
-	global downloadstatus
+    global displayDownloadStatus
+    global displayAlreadyUpToDate
     commands = {'upgrade': upgrade,
                 'generate': gen}
 
     parser = optparse.OptionParser(argv)
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose')
-    parser.add_option('', '--no-downloadstatus', action='store_false', dest='downloadstatus')
+    parser.add_option('', '--no-downloadstatus', action='store_false', dest='displayDownloadStatus')
+    parser.add_option('', '--hide-uptodate', action='store_false', dest='displayAlreadyUpToDate')
 
     parser.usage = '%prog [options] command\n\n' \
                    'Commands:\n' \
@@ -296,7 +302,8 @@ def main(argv=None):
 
     logging.basicConfig(level=options.verbose and logging.DEBUG or logging.INFO,
                         format='%(message)s')
-    downloadstatus = options.downloadstatus
+    displayDownloadStatus = options.displayDownloadStatus
+    displayAlreadyUpToDate = options.displayAlreadyUpToDate
 
     # on windows always just upgrade
     if os.name == 'nt':
