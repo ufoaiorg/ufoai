@@ -170,10 +170,9 @@ static void CMod_LoadSubmodels (const lump_t * l, const vec3_t shift)
 
 /**
  * @param[in] l descriptor of the data block we are working on
- * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadSurfaces (const lump_t * l, const vec3_t shift)
+static void CMod_LoadSurfaces (const lump_t * l)
 {
 	const dBspTexinfo_t *in;
 	cBspSurface_t *out;
@@ -260,10 +259,9 @@ static void CMod_LoadNodes (const lump_t * l, const vec3_t shift)
 
 /**
  * @param[in] l descriptor of the data block we are working on
- * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushes (const lump_t * l, const vec3_t shift)
+static void CMod_LoadBrushes (const lump_t * l)
 {
 	const dBspBrush_t *in;
 	cBspBrush_t *out;
@@ -296,10 +294,9 @@ static void CMod_LoadBrushes (const lump_t * l, const vec3_t shift)
 
 /**
  * @param[in] l descriptor of the data block we are working on
- * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafs (const lump_t * l, const vec3_t shift)
+static void CMod_LoadLeafs (const lump_t * l)
 {
 	int i;
 	cBspLeaf_t *out;
@@ -394,10 +391,9 @@ static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
 
 /**
  * @param[in] l descriptor of the data block we are working on
- * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafBrushes (const lump_t * l, const vec3_t shift)
+static void CMod_LoadLeafBrushes (const lump_t * l)
 {
 	int i;
 	unsigned short *out;
@@ -431,10 +427,9 @@ static void CMod_LoadLeafBrushes (const lump_t * l, const vec3_t shift)
 
 /**
  * @param[in] l descriptor of the data block we are working on
- * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushSides (const lump_t * l, const vec3_t shift)
+static void CMod_LoadBrushSides (const lump_t * l)
 {
 	int i;
 	cBspBrushSide_t *out;
@@ -1084,12 +1079,12 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_HEIGHT);
 
 	/* load into heap */
-	CMod_LoadSurfaces(&header.lumps[LUMP_TEXINFO], shift);
-	CMod_LoadLeafs(&header.lumps[LUMP_LEAFS], shift);
-	CMod_LoadLeafBrushes(&header.lumps[LUMP_LEAFBRUSHES], shift);
+	CMod_LoadSurfaces(&header.lumps[LUMP_TEXINFO]);
+	CMod_LoadLeafs(&header.lumps[LUMP_LEAFS]);
+	CMod_LoadLeafBrushes(&header.lumps[LUMP_LEAFBRUSHES]);
 	CMod_LoadPlanes(&header.lumps[LUMP_PLANES], shift);
-	CMod_LoadBrushes(&header.lumps[LUMP_BRUSHES], shift);
-	CMod_LoadBrushSides(&header.lumps[LUMP_BRUSHSIDES], shift);
+	CMod_LoadBrushes(&header.lumps[LUMP_BRUSHES]);
+	CMod_LoadBrushSides(&header.lumps[LUMP_BRUSHSIDES]);
 	CMod_LoadSubmodels(&header.lumps[LUMP_MODELS], shift);
 	CMod_LoadNodes(&header.lumps[LUMP_NODES], shift);
 	CMod_LoadEntityString(&header.lumps[LUMP_ENTITIES], shift);
