@@ -31,6 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern const float STANDARD_3D_ZOOM;
 
+/** the last q value for the 2d geoscape night overlay */
+static float lastQ = 0.0f;
+
 image_t *shadow;
 image_t *blood[MAX_DEATH];
 
@@ -57,6 +60,8 @@ void R_DrawInitLocal (void)
 	draw_chars = R_FindImage("pics/conchars", it_chars);
 	if (draw_chars == r_noTexture)
 		Com_Error(ERR_FATAL, "Could not find conchars image in game pics directory!");
+
+	lastQ = -1;
 }
 
 #define MAX_CHARS 8192
@@ -239,7 +244,7 @@ void R_DrawImage (float x, float y, const image_t *image)
 	R_DrawImageArray(default_texcoords, image_verts, image);
 }
 
-void R_DrawStretchImage(float x, float y, int w, int h, const image_t *image)
+void R_DrawStretchImage (float x, float y, int w, int h, const image_t *image)
 {
 	float x1, x2, x3, x4, y1, y2, y3, y4;
 	short image_verts[8];
@@ -371,7 +376,6 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
  */
 void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
 {
-	static float lastQ = 0.0f;
 	image_t *gl;
 	float geoscape_texcoords[4 * 2];
 	short geoscape_verts[4 * 2];
@@ -977,7 +981,7 @@ void R_EndClipRect (void)
  * @note we use a big value (but not too big) to set the depth buffer, then it is not really a clean up
  * @todo can we fix bigZ with a value come from glGet?
  */
-void R_CleanupDepthBuffer(int x, int y, int width, int height)
+void R_CleanupDepthBuffer (int x, int y, int width, int height)
 {
 	const int nx = x * viddef.rx;
 	const int ny = y * viddef.ry;
@@ -995,9 +999,9 @@ void R_CleanupDepthBuffer(int x, int y, int width, int height)
 
 	glBegin(GL_QUADS);
 	glVertex3d(nx, ny, bigZ);
-	glVertex3d(nx+nwidth, ny, bigZ);
-	glVertex3d(nx+nwidth, ny+nheight, bigZ);
-	glVertex3d(nx, ny+nheight, bigZ);
+	glVertex3d(nx + nwidth, ny, bigZ);
+	glVertex3d(nx + nwidth, ny + nheight, bigZ);
+	glVertex3d(nx, ny + nheight, bigZ);
 	glEnd();
 
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
