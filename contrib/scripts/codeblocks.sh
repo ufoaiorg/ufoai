@@ -126,7 +126,7 @@ function start_downloads()
 
 	download_archive http://downloads.sourceforge.net/sevenzip/ 7za465.zip 7zip.zip
 
-	download_archive http://curl.de-mirror.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
+	download_archive http://curl.oslevel.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
 
 	download_archive http://www.libsdl.org/release/ SDL-devel-${SDL_VERSION}-mingw32.tar.gz sdl.tar.gz
 	download_archive http://www.libsdl.org/projects/SDL_ttf/release/ SDL_ttf-devel-${SDL_TTF_VERSION}-VC8.zip sdl_ttf.zip
@@ -155,8 +155,8 @@ function start_downloads()
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-0.17-1.zip gettext-runtime.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-tools-0.17.zip gettext-tools.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-dev-0.17-1.zip gettext-runtime-dev.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ pkg-config-0.23-3.zip pkg-config.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ libxml2-dev-2.7.4-1.zip libxml2.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ pkg-config_0.23-3_win32.zip pkg-config.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ libxml2-dev_2.7.4-1_win32.zip libxml2.zip
 
 	download_archive http://mattn.ninex.info/download/ gtkglext-1.2.zip gtkglext-dev.zip
 	download_archive http://mattn.ninex.info/download/ openal.zip libopenal-dev.zip
