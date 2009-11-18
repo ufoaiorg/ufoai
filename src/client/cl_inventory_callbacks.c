@@ -29,9 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_nodes.h"
 #include "cl_game.h"
 
-#define ITEM_DESCRIPTION_AMMO "1"
-#define ITEM_DESCRIPTION_WEAPON "2"
-
 static const objDef_t *currentDisplayedObject;
 static int itemIndex;
 static int fireModeIndex;
@@ -70,7 +67,7 @@ void INV_ItemDescription (const objDef_t *od)
 	int i, count;
 
 	/* reset everything */
-	MN_ExecuteConfunc("change_action 0");
+	MN_ExecuteConfunc("mn_item_change_view none");
 
 	currentDisplayedObject = od;
 
@@ -101,7 +98,7 @@ void INV_ItemDescription (const objDef_t *od)
 
 		/* Only display weapons if at least one is usable */
 		if (count > 0) {
-			MN_ExecuteConfunc("change_action "ITEM_DESCRIPTION_AMMO);
+			MN_ExecuteConfunc("mn_item_change_view ammo");
 			/* Display the name of the associated weapon */
 			Cvar_Set("mn_linkname", _(od->weapons[itemIndex]->name));
 		}
@@ -121,7 +118,7 @@ void INV_ItemDescription (const objDef_t *od)
 
 		/* Only display ammos if at least one has been researched */
 		if (count > 0) {
-			MN_ExecuteConfunc("change_action "ITEM_DESCRIPTION_WEAPON);
+			MN_ExecuteConfunc("mn_item_change_view weapon");
 			odAmmo = od->ammos[itemIndex];
 			if (!GAME_ItemIsUseable(odAmmo)) {
 				for (i = 0; i < od->numWeapons; i++) {

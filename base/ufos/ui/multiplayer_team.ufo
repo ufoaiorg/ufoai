@@ -325,7 +325,7 @@ window mp_team_edit
 		/**
 		 * @param[in] <1> true or false to hide or show the firemode nodes
 		 */
-		confunc hide_firemode {
+		confunc mn_item_hide_firemode {
 			// only show them when the object info window is active  
 			if ( *node:this.parent.item_name@invis == 0 ) {
 				*node:this.parent.firemode_dec@invis <1>
@@ -338,25 +338,25 @@ window mp_team_edit
 		/**
 		 * @param[in] <1> 1 or 2 for ammo or weapon. 0 to deactivate them
 		 */
-		confunc change_action {
+		confunc mn_item_change_view {
 			*cvar:mn_changeitem <1>
-			if ( *cvar:mn_changeitem != 0 ) {
+			if ( *cvar:mn_changeitem != "none" ) {
 				// only show them when the object info window is active  
 				if ( *node:this.parent.item_name@invis == 0 ) {
 					*node:this.parent.action_dec@invis false 
 					*node:this.parent.action_inc@invis false 
 					*node:this.parent.header_item@invis false
-					if ( *cvar:mn_changeitem == 2 ) {
-						cmd "hide_firemode true;"
+					if ( *cvar:mn_changeitem == "weapon" ) {
+						cmd "mn_item_hide_firemode true;"
 					} else {
-						cmd "hide_firemode false;"
+						cmd "mn_item_hide_firemode false;"
 					}				
 				}
 			} else {
 				*node:this.parent.action_dec@invis true 
 				*node:this.parent.action_inc@invis true 
 				*node:this.parent.header_item@invis true
-				cmd "hide_firemode true;" 
+				cmd "mn_item_hide_firemode true;" 
 			}
 		}
 

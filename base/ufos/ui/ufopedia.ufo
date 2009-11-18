@@ -14,11 +14,6 @@ window ufopedia
 		modal		true				// we can't click out
 	}
 
-	todo todoweaponinfo {
-		pos		"370 45"
-		string	"Weapon info are missing???"
-	}
-
 	// ==================
 	// summary
 	// ==================
