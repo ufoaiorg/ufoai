@@ -75,19 +75,8 @@ static qboolean Destroy_Breakable (edict_t *self)
 /**
  * @brief func_breakable (0.3 0.3 0.3) ?
  * Used for breakable objects.
- * SPAWNFLAGS bit values:
- *  0x0001 Visible from layer 1
- *  0x0002 Visible from layer 2
- *  0x0004 Visible from layer 3
- *  0x0008 Visible from layer 4
- *  0x0010 Visible from layer 5
- *  0x0020 Visible from layer 6
- *  0x0040 Visible from layer 7
- *  0x0080 Visible from layer 8
- *  0x0100 Not present during day (defined in src/client/cl_view.c)
- *  0x0200 Glows (defined in src/client/cl_view.c)
- * @note These edicts are added client side as local models
- * the are stored in the lmList (because they are inline models)
+ * @note These edicts are added client side as local models,
+ * they are stored in the lmList (because they are inline models)
  * for tracing (see inlineList in cmodel.c)
  * @sa CM_EntTestLine
  * @sa LM_AddModel

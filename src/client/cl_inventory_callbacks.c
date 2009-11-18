@@ -77,6 +77,7 @@ void INV_ItemDescription (const objDef_t *od)
 	if (!od) {	/* If nothing selected return */
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_item", "");
+		Cvar_Set("mn_linkname", "");
 		MN_ResetData(TEXT_STANDARD);
 		itemIndex = fireModeIndex = 0;
 		return;
@@ -85,6 +86,7 @@ void INV_ItemDescription (const objDef_t *od)
 	/* select item */
 	Cvar_Set("mn_itemname", _(od->name));
 	Cvar_Set("mn_item", od->id);
+	Cvar_Set("mn_linkname", "");
 
 	count = 0;
 	if (INV_IsAmmo(od)) {
@@ -122,7 +124,6 @@ void INV_ItemDescription (const objDef_t *od)
 			MN_ExecuteConfunc("change_action "ITEM_DESCRIPTION_WEAPON);
 			odAmmo = od->ammos[itemIndex];
 			if (!GAME_ItemIsUseable(odAmmo)) {
-				Cvar_Set("mn_linkname", _("None"));
 				for (i = 0; i < od->numWeapons; i++) {
 					itemIndex++;
 					odAmmo = od->ammos[itemIndex];
