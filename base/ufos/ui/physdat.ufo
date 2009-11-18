@@ -147,7 +147,6 @@ window physdata
 		image		ui/button_background
 		pos			"428 458"
 		size		"64 37"
-		texl		"192 0"
 		icon		return
 		onClick		{ cmd "mn_pop;" }
 	}
