@@ -228,145 +228,103 @@ window ufopedia
 	}
 
 	// ==================
-	// weapon info
-	// @todo never displayed??? can we fix something
+	// item description
 	// ==================
 
-	pic weapon_dec
-	{
-		visiblewhen "*cvar:mn_changeweapon == 1"
-		tooltip		"_Previous weapon chambered for this ammunition"
-		image		ui/buttons_small
-		pos			"270 704"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "mn_decreaseweapon;" }
-	}
+	panel itemdescription {
+		{
+			pos		"360 420"
+			size	"350 336"
+		}
 
-	pic ammo_dec
-	{
-		visiblewhen "*cvar:mn_changeweapon == 2"
-		tooltip		"_Previous ammunition compatible with this weapon"
-		image		ui/buttons_small
-		pos			"270 704"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "mn_decreaseweapon;" }
-	}
+		// ======================
+		// useable weapon or ammo
+		// ======================
 
-	pic weapon_inc
-	{
-		visiblewhen "*cvar:mn_changeweapon == 1"
-		tooltip		"_Next weapon chambered for this ammunition"
-		image		ui/buttons_small
-		pos			"510 704"
-		texl		"16 0"
-		texh		"32 16"
-		mousefx		true
-		onClick		{ cmd "mn_increaseweapon;" }
-	}
+		string header_item
+		{
+			string	"_With:"
+			pos		"10 0"
+			size	"100 16"
+			font	f_small
+		}
+	
+		pic action_dec
+		{
+			image	ui/buttons_small
+			pos		"120 0"
+			texl	"0 0"
+			texh	"16 16"
+			mousefx	true
+			onClick	{ cmd "mn_decreaseitem;" }
+		}
+	
+		string item_name
+		{
+			string	*cvar:mn_linkname
+			pos		"140 0"
+			size	"190 16"
+			textalign	cc
+			font	f_small
+		}
 
-	pic ammo_inc
-	{
-		visiblewhen "*cvar:mn_changeweapon == 2"
-		tooltip		"_Next ammunition compatible with this weapon"
-		image		ui/buttons_small
-		pos			"510 704"
-		texl		"16 0"
-		texh		"32 16"
-		mousefx		true
-		onClick		{ cmd "mn_increaseweapon;" }
-	}
+		pic action_inc
+		{
+			image	ui/buttons_small
+			pos		"334 0"
+			texl	"16 0"
+			texh	"32 16"
+			mousefx	true
+			onClick	{ cmd "mn_increaseitem;" }
+		}
 
-	string header_weapon
-	{
-		visiblewhen "*cvar:mn_displayweapon == 1"
-		string		"_With weapon:"
-		pos			"115 704"
-		size		"150 20"
-		textalign	cl
-		font		f_small
-	}
-
-	string header_ammo
-	{
-		visiblewhen "*cvar:mn_displayweapon == 2"
-		string		"_With ammo:"
-		pos			"115 704"
-		size		"150 20"
-		textalign	cl
-		font		f_small
-	}
-
-
-	string weapon_name
-	{
-		visiblewhen "*cvar:mn_displayweapon > 0"
-		string		*cvar:mn_researchedlinkname
-		pos			"285 704"
-		size		"230 20"
-		textalign	uc
-		font		f_small
-	}
-
-	zone weapon_name_click
-	{
-		visiblewhen "*cvar:mn_displayweapon > 0"
-		pos			"285 702"
-		size		"230 20"
-		onClick		{ cmd "mn_upgotoresearchedlink;" }
-	}
-
-	/** Firemodes */
-	string header_firemode
-	{
-		visiblewhen "*cvar:mn_displayfiremode == 1"
-		string		"_Firemode:"
-		pos			"115 724"
-		size		"150 20"
-		textalign	cl
-		font		f_small
-	}
-
-	pic firemode_dec
-	{
-		visiblewhen "*cvar:mn_changefiremode == 1"
-		tooltip		"_Previous firemode"
-		image		ui/buttons_small
-		pos			"270 724"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onClick		{ cmd "mn_decreasefiremode;" }
-	}
-
-	string firemode_name
-	{
-		visiblewhen "*cvar:mn_displayfiremode == 1"
-		string		*cvar:mn_firemodename
-		pos			"285 724"
-		size		"230 20"
-		textalign	cc
-		font		f_small
-	}
-
-	pic firemode_inc
-	{
-		visiblewhen "*cvar:mn_changefiremode == 1"
-		tooltip		"_Next firemode"
-		image		ui/buttons_small
-		pos			"510 724"
-		texl		"16 0"
-		texh		"32 16"
-		mousefx		true
-		onClick		{ cmd "mn_increasefiremode;" }
+		// ==================
+		// firemode
+		// ==================
+	
+		string header_firemode
+		{
+			string	"_Firemode:"
+			pos		"10 20"
+			size	"100 16"
+			font	f_small
+		}
+		
+		pic firemode_dec
+		{
+			tooltip "_Previous firemode"
+			image	ui/buttons_small
+			pos		"120 20"
+			texl	"0 0"
+			texh	"16 16"
+			mousefx	true
+			onClick	{ cmd "mn_decreasefiremode;" }
+		}
+		
+		string firemode_name
+		{
+			string	*cvar:mn_firemodename
+			pos		"140 20"
+			size	"190 16"
+			textalign	cc
+			font	f_small
+		}
+			
+		pic firemode_inc
+		{
+			tooltip "_Next firemode"
+			image	ui/buttons_small
+			pos		"334 20"
+			texl	"16 0"
+			texh	"32 16"
+			mousefx	true
+			onClick	{ cmd "mn_increasefiremode;" }
+		}
 	}
 
 	confunc update_ufopedia_layout {
 
-		// is right column is not empty?
+		// is right column not empty?
 		*cvar:mn_rightpanel = 0
 		if ( *cvar:mn_upimage_top ne "" ) { *cvar:mn_rightpanel = 1 } 
 		if ( *cvar:mn_upmodel_top ne "" ) { *cvar:mn_rightpanel = 1 } 
@@ -402,6 +360,7 @@ window ufopedia
 			*content.description@invis = true
 			*content.description_scroll@invis = true
 			*content.requirement@invis = false
+			*itemdescription@invis = true
 			if ( *cvar:mn_rightpanel == 1 ) {
 				*content.ufopedia@width = 406
 			} else {
@@ -414,6 +373,7 @@ window ufopedia
 			*content.description@invis = true
 			*content.description_scroll@invis = true
 			*content.requirement@invis = false
+			*itemdescription@invis = true
 			if ( *cvar:mn_rightpanel == 1 ) {
 				*content.ufopedia@width = 406
 			} else {
@@ -426,6 +386,7 @@ window ufopedia
 			*content.description@invis = false
 			*content.description_scroll@invis = false
 			*content.requirement@invis = true
+			*itemdescription@invis = false
 		}
 
 		// we only show requirements if there are needed
@@ -457,7 +418,7 @@ window ufopedia
 	func onInit
 	{
 		call *node:root.init_summary
-		cmd "update_ufopedia_layout"
+		cmd "update_ufopedia_layout;"
 	}
 
 	func onClose
