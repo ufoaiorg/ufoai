@@ -274,6 +274,11 @@ void G_MoraleBehaviour(int team, qboolean quiet);
 void G_PhysicsRun(void);
 void G_PhysicsStep(edict_t *ent);
 
+/* g_mission.c */
+qboolean G_MissionTouch(edict_t *self, edict_t *activator);
+static qboolean G_MissionUse(edict_t *self);
+void G_MissionThink(edict_t *self);
+
 /* g_utils.c */
 edict_t *G_Find(edict_t *from, int fieldofs, char *match);
 edict_t *G_FindRadius(edict_t *from, vec3_t org, float rad, entity_type_t type);

@@ -676,185 +676,6 @@ static void SP_civilian_target (edict_t *ent)
 }
 
 /**
- * @brief Mission trigger
- * @todo use level.nextmap to spawn another map when every living actor has touched the mission trigger
- * @todo use level.actualRound to determine the 'King of the Hill' time
- * @note Don't set a client action here - otherwise the movement event might
- * be corrupted
- */
-static qboolean Touch_Mission (edict_t *self, edict_t *activator)
-{
-	if (!self->owner)
-		return qfalse;
-
-	switch (self->owner->team) {
-	case TEAM_ALIEN:
-		if (activator->team == TEAM_ALIEN) {
-			if (!self->count) {
-				self->count = level.actualRound;
-				gi.BroadcastPrintf(PRINT_HUD, _("Aliens entered target zone\n"));
-			}
-			return qtrue;
-		} else {
-			/* reset king of the hill counter */
-			self->count = 0;
-		}
-	/* general case that also works for multiplayer teams */
-	default:
-		if (activator->team == self->owner->team) {
-			if (!self->owner->count) {
-				self->owner->count = level.actualRound;
-				if (self->owner->item) {
-					/* search the item in the activator's inventory */
-					int j;
-					invList_t *ic;
-
-					for (j = 0; j < gi.csi->numIDs; j++)
-						for (ic = activator->i.c[j]; ic; ic = ic->next) {
-							objDef_t *od = ic->item.t;
-							/* check whether we found the searched item in the
-							 * actor's inventory */
-							if (!strcmp(od->id, self->owner->item)) {
-								/* drop the weapon - even if out of TUs */
-								G_ActorInvMove(activator->number,
-									INVDEF(j), ic, INVDEF(gi.csi->idFloor),
-									NONE, NONE, qfalse, QUIET);
-								gi.BroadcastPrintf(PRINT_HUD, _("Item was placed\n"));
-								self->owner->count = level.actualRound;
-								return qtrue;
-							}
-						}
-				} else {
-					gi.BroadcastPrintf(PRINT_HUD, _("Target zone is occupied\n"));
-				}
-			}
-			return qtrue;
-		} else {
-			/* reset king of the hill counter */
-			self->count = 0;
-		}
-	}
-	return qfalse;
-}
-
-/**
- * @brief Mission trigger use function
- */
-static qboolean Use_Mission (edict_t *self)
-{
-	edict_t *target = G_FindTargetEntity(self->target);
-	if (!target) {
-		gi.dprintf("Target '%s' wasn't found for misc_mission\n", self->target);
-		G_FreeEdict(self);
-		return qfalse;
-	}
-
-	if (target->destroy) {
-		/* set this to zero to determine that this is a triggered destroy call */
-		target->HP = 0;
-		target->destroy(target);
-		/* freed when the level changes */
-		self->target = NULL;
-		self->use = NULL;
-	} else if (target->use)
-		target->use(target);
-
-	return qtrue;
-}
-
-/**
- * @note Think functions are only executed when level.activeTeam != -1
- * or in other word, the game has started
- */
-static void Think_Mission (edict_t *self)
-{
-	edict_t *chain = self->groupMaster;
-	edict_t *ent;
-	int i, team;
-
-	if (level.intermissionTime)
-		return;
-
-	/* when every player has joined the match - spawn the mission target
-	 * particle (if given) to mark the trigger */
-	if (self->particle) {
-		G_ParticleSpawn(self->origin, self->spawnflags, self->particle);
-
-		/* This is automatically freed on map shutdown */
-		self->particle = NULL;
-	}
-
-	if (!chain)
-		chain = self;
-	while (chain) {
-		if (chain->type == ET_MISSION) {
-			if (chain->item) {
-				const invList_t *ic;
-				G_GetFloorItems(chain);
-				ic = FLOOR(chain);
-				if (!ic) {
-					/* reset the counter if there is no item */
-					chain->count = 0;
-					return;
-				}
-				for (; ic; ic = ic->next) {
-					const objDef_t *od = ic->item.t;
-					assert(od);
-					/* not the item we are looking for */
-					if (!strcmp(od->id, chain->item))
-						break;
-				}
-				if (!ic) {
-					/* reset the counter if it's not the searched item */
-					chain->count = 0;
-					return;
-				}
-			}
-			if (chain->time) {
-				/* not every edict in the group chain has
-				 * been occupied long enough */
-				if (!chain->count || level.actualRound - chain->count < chain->time)
-					return;
-			}
-			/* not destroyed yet */
-			if ((chain->flags & FL_DESTROYABLE) && chain->HP)
-				return;
-		}
-		chain = chain->groupChain;
-	}
-
-	if (self->use)
-		self->use(self);
-
-	team = self->team;
-	chain = self->groupMaster;
-	if (!chain)
-		chain = self;
-	while (chain) {
-		/** @todo also remove the item on the floor - if any */
-		/*const invList_t *ic = FLOOR(chain);*/
-		ent = chain->groupChain;
-		/* free the trigger */
-		if (chain->child)
-			G_FreeEdict(chain->child);
-		/* free the group chain */
-		G_FreeEdict(chain);
-		chain = ent;
-	}
-
-	/* still active mission edicts left */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_MISSION) && ent->team == team) {
-			return;
-		}
-
-	/* mission succeeds */
-	gi.BroadcastPrintf(PRINT_HUD, _("Mission won for team %i\n"), team);
-
-	G_MatchEndTrigger(self->team, 10);
-}
-
-/**
  * @brief Initializes the human/phalanx mission entity
  */
 static void SP_misc_mission (edict_t *ent)
@@ -880,7 +701,7 @@ static void SP_misc_mission (edict_t *ent)
 	}
 
 	/* think function values */
-	ent->think = Think_Mission;
+	ent->think = G_MissionThink;
 	ent->nextthink = 1;
 
 	VectorSet(ent->absmax, PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
@@ -888,7 +709,7 @@ static void SP_misc_mission (edict_t *ent)
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
-	other->touch = Touch_Mission;
+	other->touch = G_MissionTouch;
 	if (ent->target)
 		ent->use = Use_Mission;
 	ent->child = other;
@@ -909,7 +730,7 @@ static void SP_misc_mission_aliens (edict_t *ent)
 	ent->solid = SOLID_BBOX;
 
 	/* think function values */
-	ent->think = Think_Mission;
+	ent->think = G_MissionThink;
 	ent->nextthink = 1;
 
 	VectorSet(ent->absmax, PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
@@ -917,7 +738,7 @@ static void SP_misc_mission_aliens (edict_t *ent)
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
-	other->touch = Touch_Mission;
+	other->touch = G_MissionTouch;
 	ent->child = other;
 
 	gi.LinkEdict(ent);

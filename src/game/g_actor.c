@@ -230,7 +230,7 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 	}
 
 	/* Try to actually move the item and check the return value */
-	ia = Com_MoveInInventory(&ent->i, from, fItem, to, tx, ty, &ent->TU, &ic);
+	ia = Com_MoveInInventory(&ent->i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
 	switch (ia) {
 	case IA_NONE:
 		/* No action possible - abort */
@@ -257,8 +257,6 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 		assert(!newFloor);
 		if (FLOOR(ent)) {
 			/* There is still something on the floor. */
-			/** @todo @b why do we do this here exactly? Shouldn't they be the
-			 * same already at this point? */
 			FLOOR(floor) = FLOOR(ent);
 			/* Tell the client to remove the item from the container */
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
@@ -336,7 +334,7 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 			G_CheckVis(floor, qtrue);
 		} else {
 			/* Add the item to an already existing floor edict - the floor container that
-			 * is already linked might be from a differnet entity */
+			 * is already linked might be from a different entity */
 			FLOOR(floor) = FLOOR(ent);
 			/* Tell the client to add the item to the container. */
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
