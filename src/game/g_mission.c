@@ -93,7 +93,7 @@ qboolean G_MissionTouch (edict_t *self, edict_t *activator)
 /**
  * @brief Mission trigger use function
  */
-qboolean Use_Mission (edict_t *self)
+qboolean G_MissionUse (edict_t *self)
 {
 	edict_t *target = G_FindTargetEntity(self->target);
 	if (!target) {

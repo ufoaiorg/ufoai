@@ -276,7 +276,7 @@ void G_PhysicsStep(edict_t *ent);
 
 /* g_mission.c */
 qboolean G_MissionTouch(edict_t *self, edict_t *activator);
-static qboolean G_MissionUse(edict_t *self);
+qboolean G_MissionUse(edict_t *self);
 void G_MissionThink(edict_t *self);
 
 /* g_utils.c */

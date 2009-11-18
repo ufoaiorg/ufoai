@@ -711,7 +711,7 @@ static void SP_misc_mission (edict_t *ent)
 	other = G_TriggerSpawn(ent);
 	other->touch = G_MissionTouch;
 	if (ent->target)
-		ent->use = Use_Mission;
+		ent->use = G_MissionUse;
 	ent->child = other;
 
 	gi.LinkEdict(ent);
