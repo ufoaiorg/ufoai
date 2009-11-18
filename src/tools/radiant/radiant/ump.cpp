@@ -94,6 +94,8 @@ void UMPSystem::editUMPDefinition ()
 
 const std::string UMPSystem::getUMPFilename (const std::string& map)
 {
+	if (map.empty())
+		return "";
 	for (UMPFilesIterator i = _umpFiles.begin(); i != _umpFiles.end(); i++) {
 		try {
 			map::ump::UMPFile umpFile(*i);

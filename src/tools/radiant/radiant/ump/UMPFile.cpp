@@ -32,6 +32,8 @@ namespace map
 
 		UMPTile* UMPFile::getTileForMap (const std::string& map)
 		{
+			if (map.find(getBase()) == std::string::npos)
+				return (UMPTile*) 0;
 			const std::string tileName = getTileName(map);
 			for (UMPTileIterator i = _umpTiles.begin(); i != _umpTiles.end(); i++) {
 				UMPTile& tile = *i;
