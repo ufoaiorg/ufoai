@@ -193,7 +193,100 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 }
 
 /**
+ * @brief sets market prices at start of the game
+ * @sa CP_CampaignInit
+ * @as B_SetUpFirstBase
+ * @sa BS_Load (Market load function)
+ * @param[in] load Is this an attempt to init the market for a savegame?
+ */
+void BS_InitMarket (qboolean load)
+{
+	int i;
+	campaign_t *campaign = ccs.curCampaign;
+
+	/* find the relevant markets */
+	campaign->marketDef = INV_GetEquipmentDefinitionByID(campaign->market);
+	if (!campaign->marketDef)
+		Com_Error(ERR_DROP, "CP_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
+				campaign->id, campaign->market);
+	campaign->asymptoticMarketDef = INV_GetEquipmentDefinitionByID(campaign->asymptoticMarket);
+	if (!ccs.curCampaign->asymptoticMarketDef)
+		Com_Error(ERR_DROP, "CP_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
+				campaign->id, campaign->asymptoticMarket);
+
+	/* the savegame loading process will get the following values from savefile */
+	if (load)
+		return;
+
+	for (i = 0; i < csi.numODs; i++) {
+		if (ccs.eMarket.ask[i] == 0) {
+			ccs.eMarket.ask[i] = csi.ods[i].price;
+			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i] * BID_FACTOR);
+		}
+
+		if (!ccs.curCampaign->marketDef->num[i])
+			continue;
+
+		if (!RS_IsResearched_ptr(csi.ods[i].tech) && campaign->marketDef->num[i] > 0)
+			Com_Error(ERR_DROP, "CP_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s", csi.ods[i].id, campaign->id);
+		else
+			/* the other relevant values were already set above */
+			ccs.eMarket.num[i] = campaign->marketDef->num[i];
+	}
+}
+
+/**
+ * @brief make number of items change every day.
+ * @sa CL_CampaignRun
+ * @sa daily called
+ * @note This function makes items number on market slowly reach the asymptotic number of items defined in equipment.ufo
+ * If an item has just been researched, it's not available on market until RESEARCH_LIMIT_DELAY days is reached.
+ */
+void CL_CampaignRunMarket (void)
+{
+	int i;
+	campaign_t *campaign = ccs.curCampaign;
+
+	assert(campaign->marketDef);
+	assert(campaign->asymptoticMarketDef);
+
+	for (i = 0; i < csi.numODs; i++) {
+		const technology_t *tech = csi.ods[i].tech;
+		const float TYPICAL_TIME = 10.f;			/**< Number of days to reach the asymptotic number of items */
+		const int RESEARCH_LIMIT_DELAY = 30;		/**< Numbers of days after end of research to wait in order to have
+													 * items added on market */
+		int asymptoticNumber;
+
+		if (!tech)
+			Com_Error(ERR_DROP, "No tech that provides '%s'\n", csi.ods[i].id);
+
+		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->num[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
+			/* if items are researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,
+			 * there number tend to the value defined in equipment.ufo.
+			 * This value is the asymptotic value if it is not 0, or initial value else */
+			asymptoticNumber = campaign->asymptoticMarketDef->num[i] ? campaign->asymptoticMarketDef->num[i] : campaign->marketDef->num[i];
+		} else {
+			/* items that have just been researched don't appear on market, but they can disappear */
+			asymptoticNumber = 0;
+		}
+
+		/* Store the evolution of the market in currentEvolution */
+		ccs.eMarket.currentEvolution[i] += (asymptoticNumber - ccs.eMarket.num[i]) / TYPICAL_TIME;
+
+		/* Check if new items appeared or disappeared on market */
+		if (fabs(ccs.eMarket.currentEvolution[i]) >= 1.0f) {
+			const int num = (int)(ccs.eMarket.currentEvolution[i]);
+			ccs.eMarket.num[i] += num;
+			ccs.eMarket.currentEvolution[i] -= num;
+		}
+		if (ccs.eMarket.num[i] < 0)
+			ccs.eMarket.num[i] = 0;
+	}
+}
+
+/**
  * @brief Returns true if you can buy or sell equipment
+ * @param[in] base Pointer to base to check on
  * @sa B_BaseInit_f
  */
 qboolean BS_BuySellAllowed (const base_t* base)
@@ -205,3 +298,4 @@ qboolean BS_BuySellAllowed (const base_t* base)
 		return qfalse;
 	}
 }
+

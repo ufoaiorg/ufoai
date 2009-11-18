@@ -52,6 +52,7 @@ struct storedUFO_s;
 #include "cp_airfight.h"
 #include "cp_messageoptions.h"
 #include "cp_alienbase.h"
+#include "cp_market.h"
 
 /* check for water */
 /* blue value is 64 */
@@ -344,14 +345,6 @@ typedef struct salary_s {
 #define SALARY_ADMIN_ROBOT ccs.salaries[ccs.curCampaign->idx].admin_robot
 #define SALARY_DEBT_INTEREST ccs.salaries[ccs.curCampaign->idx].debt_interest
 
-/** market structure */
-typedef struct market_s {
-	int num[MAX_OBJDEFS];					/**< number of items on the market */
-	int bid[MAX_OBJDEFS];					/**< price of item for selling */
-	int ask[MAX_OBJDEFS];					/**< price of item for buying */
-	double currentEvolution[MAX_OBJDEFS];	/**< evolution of the market */
-} market_t;
-
 /** possible geoscape actions */
 typedef enum mapAction_s {
 	MA_NONE,
@@ -629,7 +622,6 @@ qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 
 void CP_UFOProceedMission(aircraft_t *ufocraft);
-void CP_InitMarket(qboolean load);
 
 base_t *CP_GetMissionBase(void);
 

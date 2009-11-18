@@ -1165,7 +1165,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		Com_Error(ERR_DROP, "No base template for setting up the first base given");
 
 	RS_MarkResearchable(qtrue, base);
-	CP_InitMarket(qfalse);
+	BS_InitMarket(qfalse);
 	E_InitialEmployees();
 
 	if (buildings) {
