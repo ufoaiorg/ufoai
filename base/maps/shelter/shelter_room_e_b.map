@@ -3557,7 +3557,7 @@
 // entity 88
 {
 "classname" "info_civilian_start"
-"origin" "464 48 32"
+"origin" "496 80 32"
 }
 // entity 89
 {
@@ -3606,7 +3606,7 @@
 // entity 97
 {
 "classname" "info_player_start"
-"origin" "432 48 32"
+"origin" "400 48 32"
 "team" "3"
 "angle" "180"
 }
