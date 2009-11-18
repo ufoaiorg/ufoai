@@ -340,13 +340,13 @@ window mp_team_edit
 		 */
 		confunc mn_item_change_view {
 			*cvar:mn_changeitem <1>
-			if ( *cvar:mn_changeitem != "none" ) {
+			if ( *cvar:mn_changeitem ne "none" ) {
 				// only show them when the object info window is active  
 				if ( *node:this.parent.item_name@invis == 0 ) {
 					*node:this.parent.action_dec@invis false 
 					*node:this.parent.action_inc@invis false 
 					*node:this.parent.header_item@invis false
-					if ( *cvar:mn_changeitem == "weapon" ) {
+					if ( *cvar:mn_changeitem eq "weapon" ) {
 						cmd "mn_item_hide_firemode true;"
 					} else {
 						cmd "mn_item_hide_firemode false;"
