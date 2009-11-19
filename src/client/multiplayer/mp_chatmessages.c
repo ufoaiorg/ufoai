@@ -72,5 +72,5 @@ void MP_AddChatMessage (const char *text)
 	} while (chat);
 
 	MN_RegisterText(TEXT_CHAT_WINDOW, chatBuffer);
-	Cmd_ExecuteString("unhide_chatscreen");
+	MN_ExecuteConfunc("unhide_chatscreen");
 }
