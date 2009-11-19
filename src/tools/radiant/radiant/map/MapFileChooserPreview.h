@@ -27,7 +27,7 @@ namespace map
 		public:
 			MapFileChooserPreview ();
 
-			~MapFileChooserPreview ();
+			virtual ~MapFileChooserPreview ();
 
 			// Retrieve the preview widget for packing into the dialog
 			GtkWidget* getPreviewWidget ();

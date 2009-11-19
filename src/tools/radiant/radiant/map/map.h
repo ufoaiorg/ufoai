@@ -108,6 +108,8 @@ void Map_Reload (void);
 bool Map_LoadFile (const std::string& filename);
 bool Map_SaveFile (const std::string& filename);
 
+bool Map_ChangeMap (const std::string &dialogTitle, const std::string& newFilename = "");
+
 void Map_New ();
 void Map_Free ();
 

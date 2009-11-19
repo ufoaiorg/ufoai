@@ -177,13 +177,7 @@ namespace map
 		 */
 		void UMPMenuItem_activate (GtkMenuItem* menuItem, gpointer name)
 		{
-			if (ConfirmModified(_("Open Map"))) {
-				//TODO have some MAP_doLoad which does all that stuff
-				Map_RegionOff();
-				Map_Free();
-				g_message("load file %s\n", g_quark_to_string(gpointer_to_int(name)));
-				Map_LoadFile(g_quark_to_string(gpointer_to_int(name)));
-			}
+			Map_ChangeMap(_("Open Map"), g_quark_to_string(gpointer_to_int(name)));
 		}
 
 		/**

@@ -1634,16 +1634,36 @@ const std::string map_save (const std::string& title)
 
 void OpenMap (void)
 {
-	if (!ConfirmModified(_("Open Map")))
-		return;
+	Map_ChangeMap(_("Open Map"));
+}
 
-	const std::string filename = map_open(_("Open Map"));
+/**
+ * Load a map with given name or choosen by dialog.
+ * Will display confirm dialog for changed maps if @c dialogTitle is not empty.
+ * @param dialogTitle dialog title for confirm and load dialog if needed
+ * @param newFilename filename to load if known. If this is empty, load dialog is used.
+ * @return @c true if map loading was successful
+ */
+bool Map_ChangeMap (const std::string &dialogTitle, const std::string& newFilename)
+{
+	if (!dialogTitle.empty())
+		if (!ConfirmModified(dialogTitle))
+			return false;
+
+	std::string filename;
+	if (newFilename.empty())
+		filename = map_open(dialogTitle);
+	else
+		filename = newFilename;
 	if (!filename.empty()) {
 		Map_RegionOff();
 		Map_Free();
-		if (Map_LoadFile(filename))
+		if (Map_LoadFile(filename)); {
 			MRU_AddFile(filename);
+			return true;
+		}
 	}
+	return false;
 }
 
 void ImportMap (void)

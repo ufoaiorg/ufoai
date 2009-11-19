@@ -125,13 +125,9 @@ static void MRU_Activate (std::size_t index)
 	bool success = false;
 
 	if (file_readable(text)) {
-		Map_RegionOff();
-		Map_Free();
-		success = Map_LoadFile(text);
+		success = Map_ChangeMap("",text);
 	}
-	if (success) {
-		MRU_AddFile(text);
-	} else {
+	if (!success) {
 		MRU_used--;
 
 		for (std::size_t i = index; i < MRU_used; i++)
