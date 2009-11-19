@@ -294,13 +294,13 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 
 	left = action->d.nonTerminal.left;
 	if (left == NULL) {
-		Com_Printf("MN_ExecuteSetAction: Action without left operand skiped.\n");
+		Com_Printf("MN_ExecuteSetAction: Action without left operand skipped.\n");
 		return;
 	}
 
 	right = action->d.nonTerminal.right;
 	if (right == NULL) {
-		Com_Printf("MN_ExecuteSetAction: Action without right operand skiped.\n");
+		Com_Printf("MN_ExecuteSetAction: Action without right operand skipped.\n");
 		return;
 	}
 
