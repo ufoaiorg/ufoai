@@ -502,20 +502,15 @@ window equipment extends objectinfo
 	// switch
 	// ==================
 
-	confunc weapon_stats
+	// @todo merge with confunc mp_weapon_stats?
+	func weapon_stats
 	{
 		*itemdescription.itemname@invis false
 		*itemdescription.itemmodel@invis false
 		*itemdescription.description@invis false
 		*itemdescription.item_name@invis false
-		// they are hidden
-		*itemdescription.action_dec@invis true
-		*itemdescription.action_inc@invis true
-		*itemdescription.header_item@invis true
-		*itemdescription.firemode_dec@invis true
-		*itemdescription.firemode_inc@invis true
-		*itemdescription.header_firemode@invis true
-		*itemdescription.firemode_name@invis true
+
+		cmd "mn_item_change_view *cvar:mn_changeitem \"*cvar:mn_linkname\""
 
 		*pwr_lbl@invis true *pwr_val@invis true *pwr_bdr@invis true *pwr_bar@invis true
 		*spd_lbl@invis true *spd_val@invis true *spd_bdr@invis true *spd_bar@invis true
@@ -528,15 +523,16 @@ window equipment extends objectinfo
 		*exp_lbl@invis true *exp_val@invis true *exp_bdr@invis true *exp_bar@invis true
 	}
 
-	confunc actor_stats
+	// @todo merge with confunc mp_actor_stats?
+	func actor_stats
 	{
 		*itemdescription.itemname@invis true
 		*itemdescription.itemmodel@invis true
 		*itemdescription.description@invis true
+		*itemdescription.item_name@invis true
 		*itemdescription.action_dec@invis true
 		*itemdescription.action_inc@invis true
 		*itemdescription.header_item@invis true
-		*itemdescription.item_name@invis true
 		*itemdescription.firemode_dec@invis true
 		*itemdescription.firemode_inc@invis true
 		*itemdescription.header_firemode@invis true
@@ -567,9 +563,9 @@ window equipment extends objectinfo
 		}
 		onChange {
 			if ( *cvar:mn_infotype == 0 ) {
-				cmd "actor_stats;"
+				call *node:root.actor_stats
 			} elif ( *cvar:mn_infotype == 1 ) {
-				cmd "weapon_stats;"
+				call *node:root.weapon_stats
 			}
 		}
 	}

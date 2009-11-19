@@ -26,6 +26,7 @@ window objectinfo
 	 */
 	confunc mn_item_change_view {
 		*cvar:mn_changeitem <1>
+		*cvar:mn_linkname <2>
 		if ( *cvar:mn_changeitem ne "none" ) {
 			// only show them when the object info window is active  
 			if ( *node:this.parent.itemdescription.item_name@invis == 0 ) {
@@ -42,7 +43,10 @@ window objectinfo
 			*node:this.parent.itemdescription.action_dec@invis true 
 			*node:this.parent.itemdescription.action_inc@invis true 
 			*node:this.parent.itemdescription.header_item@invis true
+			*cvar:mn_itemname ""
+			*cvar:mn_item ""
 			cmd "mn_item_hide_firemode true;" 
 		}
+		
 	}
 }

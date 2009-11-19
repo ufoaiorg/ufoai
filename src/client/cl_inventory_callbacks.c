@@ -67,14 +67,11 @@ void INV_ItemDescription (const objDef_t *od)
 	int i, count;
 
 	/* reset everything */
-	MN_ExecuteConfunc("mn_item_change_view none");
+	MN_ExecuteConfunc("mn_item_change_view none \"\"");
 
 	currentDisplayedObject = od;
 
 	if (!od) {	/* If nothing selected return */
-		Cvar_Set("mn_itemname", "");
-		Cvar_Set("mn_item", "");
-		Cvar_Set("mn_linkname", "");
 		MN_ResetData(TEXT_STANDARD);
 		itemIndex = fireModeIndex = 0;
 		return;
@@ -83,7 +80,6 @@ void INV_ItemDescription (const objDef_t *od)
 	/* select item */
 	Cvar_Set("mn_itemname", _(od->name));
 	Cvar_Set("mn_item", od->id);
-	Cvar_Set("mn_linkname", "");
 
 	count = 0;
 	if (INV_IsAmmo(od)) {
@@ -98,9 +94,9 @@ void INV_ItemDescription (const objDef_t *od)
 
 		/* Only display weapons if at least one is usable */
 		if (count > 0) {
-			MN_ExecuteConfunc("mn_item_change_view ammo");
 			/* Display the name of the associated weapon */
-			Cvar_Set("mn_linkname", _(od->weapons[itemIndex]->name));
+			MN_ExecuteConfunc("mn_item_change_view ammo \"%s\"",
+					_(od->weapons[itemIndex]->name));
 		}
 	} else if (od->weapon && od->reload) {
 		/* We have a weapon that uses ammos */
@@ -118,20 +114,22 @@ void INV_ItemDescription (const objDef_t *od)
 
 		/* Only display ammos if at least one has been researched */
 		if (count > 0) {
-			MN_ExecuteConfunc("mn_item_change_view weapon");
+			const char *name;
 			odAmmo = od->ammos[itemIndex];
 			if (!GAME_ItemIsUseable(odAmmo)) {
 				for (i = 0; i < od->numWeapons; i++) {
 					itemIndex++;
 					odAmmo = od->ammos[itemIndex];
 					if (GAME_ItemIsUseable(odAmmo)) {
-						Cvar_Set("mn_linkname", _(odAmmo->name));
+						name = _(odAmmo->name);
 						break;
 					}
 				}
 			} else {
-				Cvar_Set("mn_linkname", _(odAmmo->name));
+				name = _(odAmmo->name);
 			}
+
+			MN_ExecuteConfunc("mn_item_change_view weapon \"%s\"", name);
 		}
 	}
 
