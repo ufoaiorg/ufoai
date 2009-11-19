@@ -1290,6 +1290,8 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 		menuNode_t *superMenu;
 		token = Com_Parse(text);
 		superMenu = MN_GetMenu(token);
+		if (superMenu == NULL)
+			Sys_Error("Could not get the super menu %s", token);
 		menu = MN_CloneNode(superMenu, NULL, qtrue, name);
 		token = Com_Parse(text);
 	} else {
