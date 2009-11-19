@@ -2,7 +2,7 @@
 // UFOPEDIA MENU
 // ==================
 
-window ufopedia
+window ufopedia extends objectinfo
 {
 	{
 		pos			"10 50"

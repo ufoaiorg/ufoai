@@ -2,7 +2,7 @@
 // MULTIPLAYER TEAM CREATION MENU
 // ==============================
 
-window mp_team_edit
+window mp_team_edit extends objectinfo
 {
 	// ==================
 	// background
@@ -320,44 +320,6 @@ window mp_team_edit
 		{
 			pos		"30 405"
 			size	"350 336"
-		}
-
-		/**
-		 * @param[in] <1> true or false to hide or show the firemode nodes
-		 */
-		confunc mn_item_hide_firemode {
-			// only show them when the object info window is active  
-			if ( *node:this.parent.item_name@invis == 0 ) {
-				*node:this.parent.firemode_dec@invis <1>
-				*node:this.parent.firemode_inc@invis <1>
-				*node:this.parent.header_firemode@invis <1>
-				*node:this.parent.firemode_name@invis <1>
-			}
-		}
-		
-		/**
-		 * @param[in] <1> 1 or 2 for ammo or weapon. 0 to deactivate them
-		 */
-		confunc mn_item_change_view {
-			*cvar:mn_changeitem <1>
-			if ( *cvar:mn_changeitem ne "none" ) {
-				// only show them when the object info window is active  
-				if ( *node:this.parent.item_name@invis == 0 ) {
-					*node:this.parent.action_dec@invis false 
-					*node:this.parent.action_inc@invis false 
-					*node:this.parent.header_item@invis false
-					if ( *cvar:mn_changeitem eq "weapon" ) {
-						cmd "mn_item_hide_firemode true;"
-					} else {
-						cmd "mn_item_hide_firemode false;"
-					}				
-				}
-			} else {
-				*node:this.parent.action_dec@invis true 
-				*node:this.parent.action_inc@invis true 
-				*node:this.parent.header_item@invis true
-				cmd "mn_item_hide_firemode true;" 
-			}
 		}
 
 		string itemname

@@ -2,7 +2,7 @@
 // EQUIPMENT MENU
 // ==================
 
-window equipment
+window equipment extends objectinfo
 {
 	// ==================
 	// background
