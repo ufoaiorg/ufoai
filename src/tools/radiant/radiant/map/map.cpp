@@ -1638,7 +1638,7 @@ void OpenMap (void)
 }
 
 /**
- * Load a map with given name or choosen by dialog.
+ * Load a map with given name or chosen by dialog.
  * Will display confirm dialog for changed maps if @c dialogTitle is not empty.
  * @param dialogTitle dialog title for confirm and load dialog if needed
  * @param newFilename filename to load if known. If this is empty, load dialog is used.
@@ -1658,7 +1658,7 @@ bool Map_ChangeMap (const std::string &dialogTitle, const std::string& newFilena
 	if (!filename.empty()) {
 		Map_RegionOff();
 		Map_Free();
-		if (Map_LoadFile(filename)); {
+		if (Map_LoadFile(filename)) {
 			MRU_AddFile(filename);
 			return true;
 		}
