@@ -985,12 +985,13 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 				if (model) {
 					VectorSubtract(model->mins, shift, model->mins);
 					VectorSubtract(model->maxs, shift, model->maxs);
+					model = NULL; /* reset it, or the next origin will shift it again */
 				}
 			} else if (!strcmp(keyname, "model") && token[0] == '*') {
 				/* adapt inline model number */
 				int num = atoi(token + 1);
 				/* Get the model */
-				model = &curTile->models[NUM_REGULAR_MODELS + num];
+				model = &curTile->models[NUM_REGULAR_MODELS + num - 1];
 				/* Now update the model number to reflect prior tiles loaded. */
 				num += numInline;
 				Q_strcat(mapEntityString, va("%s *%i ", keyname, num), MAX_MAP_ENTSTRING);
