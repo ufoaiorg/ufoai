@@ -380,13 +380,12 @@ window equipment
 			font	f_small
 		}
 	
-		pic action_dec
+		custombutton action_dec
 		{
 			image	ui/buttons_small
 			pos		"120 290"
-			texl	"0 0"
-			texh	"16 16"
-			mousefx	true
+			icon	prev
+			size	"16 16"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
 	
@@ -399,13 +398,12 @@ window equipment
 			font	f_small
 		}
 
-		pic action_inc
+		custombutton action_inc
 		{
 			image	ui/buttons_small
 			pos		"334 290"
-			texl	"16 0"
-			texh	"32 16"
-			mousefx	true
+			icon	next
+			size	"16 16"
 			onClick	{ cmd "mn_increaseitem;" }
 		}
 
@@ -421,14 +419,13 @@ window equipment
 			font	f_small
 		}
 		
-		pic firemode_dec
+		custombutton firemode_dec
 		{
 			tooltip "_Previous firemode"
 			image	ui/buttons_small
 			pos		"120 314"
-			texl	"0 0"
-			texh	"16 16"
-			mousefx	true
+			icon	prev
+			size	"16 16"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
 		
@@ -441,14 +438,13 @@ window equipment
 			font	f_small
 		}
 			
-		pic firemode_inc
+		custombutton firemode_inc
 		{
 			tooltip "_Next firemode"
 			image	ui/buttons_small
 			pos		"334 314"
-			texl	"16 0"
-			texh	"32 16"
-			mousefx	true
+			icon	next
+			size	"16 16"
 			onClick	{ cmd "mn_increasefiremode;" }
 		}
 	}
