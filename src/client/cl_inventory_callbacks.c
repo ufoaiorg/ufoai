@@ -66,12 +66,11 @@ void INV_ItemDescription (const objDef_t *od)
 	static char itemText[MAX_SMALLMENUTEXTLEN];
 	int i, count;
 
-	/* reset everything */
-	MN_ExecuteConfunc("mn_item_change_view none \"\"");
-
 	currentDisplayedObject = od;
 
 	if (!od) {	/* If nothing selected return */
+		Cvar_Set("mn_itemname", "");
+		Cvar_Set("mn_item", "");
 		MN_ResetData(TEXT_STANDARD);
 		itemIndex = fireModeIndex = 0;
 		return;
