@@ -133,7 +133,7 @@ int MN_GetActionTokenType (const char* token, int group)
 
 /**
  * @brief read a property name from an input buffer to an output
- * @return last position into the input buffer if we find property, else NULL
+ * @return last position in the input buffer if we find the property, NULL otherwise
  */
 static inline const char* MN_GenCommandReadProperty (const char* input, char* output, int outputSize)
 {
@@ -482,7 +482,7 @@ void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* first
 
 /**
  * @brief Test if a string use an injection syntax
- * @return True if we find in the string a syntaxe "<" {thing without space} ">"
+ * @return True if we find the following syntax in the string "<" {thing without space} ">"
  */
 qboolean MN_IsInjectedString (const char *string)
 {
@@ -617,7 +617,7 @@ static void MN_AddListener_f (void)
 }
 
 /**
- * @brief add a call of a function from a nodfe event
+ * @brief add a call of a function from a node event
  */
 static void MN_RemoveListener_f (void)
 {
