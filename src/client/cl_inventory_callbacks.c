@@ -136,7 +136,7 @@ void INV_ItemDescription (const objDef_t *od)
 	}
 
 
-	/* set description text if item as been researched or one of its ammo/weapon has been researched */
+	/* set description text if item has been researched or one of its ammo/weapon has been researched */
 	if (count > 0 || GAME_ItemIsUseable(od)) {
 		*itemText = '\0';
 		if (INV_IsArmour(od)) {
@@ -231,7 +231,6 @@ static void INV_DecreaseFiremode_f (void)
 /**
  * @brief Increases the number of the weapon to display (for ammo) or the ammo to display (for weapon)
  * @sa UP_ItemDescription
- * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's usable and needed in the equipment code, too
  */
 static void INV_IncreaseItem_f (void)
 {
@@ -258,7 +257,6 @@ static void INV_IncreaseItem_f (void)
 /**
  * @brief Decreases the number of the firemode to display (for ammo) or the ammo to display (for weapon)
  * @sa UP_ItemDescription
- * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's usable and needed in the equipment code, too
  */
 static void INV_DecreaseItem_f (void)
 {
