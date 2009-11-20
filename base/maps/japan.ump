@@ -10,6 +10,12 @@ base japan/ja_
 // a: main
 // b: dropship
 
+
+// Test.
+// v: vertical path            (grid32:   -- -- -+ -- ) (leftright)
+// h: horizontal path          (grid32:   -- -+ -- -- ) (updown)
+// H: big horizontal path      (grid32:   ++ -- -- -- ) (updown)
+
 tile +main
 {
 10 6
@@ -28,7 +34,7 @@ tile +craft_drop_firebird
 
 0      a      a      a
 0      +b     +b     a
-0      +b     +b     a
+H      +bH    +bH    H
 0      +b     +b     a
 0      0      0      0
 }
@@ -39,7 +45,7 @@ tile +craft_drop_herakles
 
 0      a      a      a
 0      +b     +b     a
-0      +b     +b     a
+H      +bH    +bH    H
 0      +b     +b     a
 0      0      0      0
 }
@@ -50,10 +56,69 @@ tile +craft_drop_raptor
 
 0      a      a      a
 0      +b     +b     a
-0      +b     +b     a
+H      +bH    +bH    H
 0      +b     +b     a
 0      0      0      0
 }
+
+tile +h1
+{
+4 6
+0      a      a      0
+a     +a     +a      a
+a     +a     +a      a
+a     +a     +a      a
+H     +aH    +ah     h
+0      a      a      0
+}
+
+tile +h2
+{
+5 4
+0      a      a     a    0
+a     +a     +a    +a    a
+a     +ac    +a    +a    a
+0      c      a     a    0
+}
+
+
+/// fillers:
+tile +f1
+{
+3 3
+0      a      0
+a     +a      a
+0      a      0
+}
+
+tile +f2
+{
+3 3
+0      a      0
+a     +a      a
+0      a      0
+}
+
+/// paths:
+
+// top-right
+tile +p_tr 
+{
+3 3
+0      v      0
+h    +hv      a
+0      a      0
+}
+
+// horizontal
+tile +p_h
+{
+3 3
+0      a      0
+h     +h      h
+0      a      0
+}
+
 
 // ########################################
 // ########### Maps for the game ##########
@@ -64,4 +129,13 @@ size "8 4"
 title "_Japan"
 +main "1 1"
 *rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly test
+{
+size "8 4"
+title "test assembly"
+
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
 }
