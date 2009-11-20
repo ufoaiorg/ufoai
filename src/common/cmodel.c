@@ -746,15 +746,12 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3
 	if (!inlineList || trace.fraction == 0.0)
 		return trace;
 
-	/* Find the size of the extents box from its center. */
-	VectorAdd(mins, maxs, boffset);
-	VectorDiv(boffset, 2.0, boffset);
-	/* Now find the original bounding box for the tracing line. */
+	/* Find the original bounding box for the tracing line. */
 	VectorSet(bmins, min(start[0], end[0]), min(start[1], end[1]), min(start[2], end[2]));
 	VectorSet(bmaxs, max(start[0], end[0]), max(start[1], end[1]), max(start[2], end[2]));
-	/* Now increase the bounding box by boffset in both directions. */
-	VectorSubtract(bmins, boffset, bmins);
-	VectorAdd(bmaxs, boffset, bmaxs);
+	/* Now increase the bounding box by mins and maxs in both directions. */
+	VectorAdd(bmins, mins, bmins);
+	VectorAdd(bmaxs, maxs, bmaxs);
 	/* Now bmins and bmaxs specify the whole volume to be traced through. */
 
 	for (name = inlineList; *name; name++) {
