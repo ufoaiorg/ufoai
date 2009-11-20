@@ -207,12 +207,12 @@ void BS_InitMarket (qboolean load)
 	/* find the relevant markets */
 	campaign->marketDef = INV_GetEquipmentDefinitionByID(campaign->market);
 	if (!campaign->marketDef)
-		Com_Error(ERR_DROP, "CP_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
-				campaign->id, campaign->market);
+		Com_Error(ERR_DROP, "BS_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
+				campaign->market, campaign->id);
 	campaign->asymptoticMarketDef = INV_GetEquipmentDefinitionByID(campaign->asymptoticMarket);
 	if (!ccs.curCampaign->asymptoticMarketDef)
-		Com_Error(ERR_DROP, "CP_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
-				campaign->id, campaign->asymptoticMarket);
+		Com_Error(ERR_DROP, "BS_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
+				campaign->asymptoticMarket, campaign->id);
 
 	/* the savegame loading process will get the following values from savefile */
 	if (load)
@@ -228,7 +228,7 @@ void BS_InitMarket (qboolean load)
 			continue;
 
 		if (!RS_IsResearched_ptr(csi.ods[i].tech) && campaign->marketDef->num[i] > 0)
-			Com_Error(ERR_DROP, "CP_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s", csi.ods[i].id, campaign->id);
+			Com_Error(ERR_DROP, "BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s", csi.ods[i].id, campaign->id);
 		else
 			/* the other relevant values were already set above */
 			ccs.eMarket.num[i] = campaign->marketDef->num[i];
