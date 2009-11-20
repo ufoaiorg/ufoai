@@ -739,7 +739,7 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3
 	cBspModel_t *model;
 	const char **name;
 	vec3_t amins, amaxs, acenter, aoffset;
-	vec3_t bmins, bmaxs, boffset;
+	vec3_t bmins, bmaxs;
 
 	/* trace against world first */
 	trace = TR_CompleteBoxTrace(start, end, mins, maxs, levelmask, brushmask, brushreject);
