@@ -288,9 +288,6 @@ int MN_DrawString (const char *fontID, int align, int x, int y, int absX, int ab
 	if (!font)
 		Com_Error(ERR_FATAL, "Could not find font with id: '%s'", fontID);
 
-	if (maxWidth <= 0)
-		maxWidth = VID_NORM_WIDTH;
-
 	if (lineHeight <= 0)
 		lineHeight = MN_FontGetHeight(font->name);
 
