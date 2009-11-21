@@ -16,6 +16,9 @@ base japan/ja_
 // h: horizontal path          (grid32:   -- -+ -- -- ) (updown)
 // H: big horizontal path      (grid32:   ++ -- -- -- ) (updown)
 
+// f: vertical fence           (grid32:   -- -- -- +- ) (leftright)
+
+
 tile +main
 {
 10 6
@@ -23,7 +26,7 @@ tile +main
 0      0      0      0      0      0      0      0      0      0
 0      +a     +a     +a     +a     +a     +a     +a     +a     0
 0      b      b      +a     +a     +a     +a     +a     +a     0
-0      b      b      +a     +a     +a     +a     +a     +a     0
+0      b      H      +H     +a     +a     +a     +a     +a     0
 0      b      b      +a     +a     +a     +a     +a     +a     0
 0      0      0      0      0      0      0      0      0      0
 }
@@ -69,7 +72,7 @@ a     +a     +a      a
 a     +a     +a      a
 a     +a     +a      a
 H     +aH    +ah     h
-0      a      a      0
+0      a     af      0
 }
 
 tile +h2
@@ -83,7 +86,7 @@ a     +ac    +a    +a    a
 
 
 /// fillers:
-tile +f1
+tile +fill1
 {
 3 3
 0      a      0
@@ -91,13 +94,25 @@ a     +a      a
 0      a      0
 }
 
-tile +f2
+tile +fill2
 {
 3 3
 0      a      0
 a     +a      a
 0      a      0
 }
+
+/// fences:
+
+// vertical fence with horizontal path and rocks
+tile +f1
+{
+3 3
+0        f      0
+h      +hfa     a
+0        f      0
+}
+
 
 /// paths:
 
@@ -131,11 +146,16 @@ title "_Japan"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
-assembly test
-{
-size "8 4"
-title "test assembly"
-
-*rm_drop +craft_drop_firebird "1 1"
-*rm_ufo +craft_ufo_scout "1 1"
-}
+//assembly test
+//{
+//size "8 4"
+//title "test assembly"
+//+h1    "1 1"
+//+h2    "1 1"
+//+fill1    "1 10"
+//+fill2    "1 10"
+//+p_tr  "0 2"
+//+p_h   "0 5"
+//*rm_drop +craft_drop_firebird "1 1"
+//*rm_ufo +craft_ufo_scout "1 1"
+//}
