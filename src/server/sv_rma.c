@@ -240,6 +240,8 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 						a->max[i] = 1;
 						break;
 					}
+				if (i == map->numTiles)
+					Com_Error(ERR_DROP, "Could not find tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
 			}
 			continue;
 		} else if (!strncmp(token, "size", 4)) {
@@ -268,14 +270,13 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 
 			for (i = 0; i < map->numTiles; i++)
 				if (!strcmp(token, map->mTile[i].id)) {
-					if (a->numFixed >= MAX_FIXEDTILES) {
-						Com_Printf("SV_ParseAssembly: Too many fixed tiles in assembly '%s'\n", a->id);
-						break;
-					}
+					if (a->numFixed >= MAX_FIXEDTILES)
+						Com_Error(ERR_DROP, "SV_ParseAssembly: Too many fixed tiles in assembly '%s'\n", a->id);
+
 					/* get coordinates */
 					token = Com_EParse(text, errhead, filename);
 					if (!text)
-						break;
+						Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s - could not get coordinates for fixed tile", filename);
 
 					sscanf(token, "%i %i", &x, &y);
 					a->fX[a->numFixed] = x;
@@ -283,6 +284,8 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 					a->fT[a->numFixed] = i;
 					a->numFixed++;
 				}
+			if (i == map->numTiles)
+				Com_Error(ERR_DROP, "Could not find tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
 			continue;
 		/* <format>*cvarname <defaultvalue> "min max"</format> */
 		} else if (*token == '*') {
@@ -309,15 +312,18 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 				/* get min and max tile number */
 				token = Com_EParse(text, errhead, filename);
 				if (!text || *token == '}')
-					break;
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (invalid syntax for tile %s)", filename, map->mTile[i].id);
 
-				if (!strstr(token, " ")) {
+				if (!strstr(token, " "))
 					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min max value of tile %s)", filename, map->mTile[i].id);
-					return 0;
-				}
+
 				sscanf(token, "%i %i", &x, &y);
 				a->min[i] = x;
 				a->max[i] = y;
+				if (a->min[i] > a->max[i])
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min is bigger than max for tile %s)", filename, map->mTile[i].id);
+				if (a->max[i] <= 0)
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (max is <= 0 for tile %s)", filename, map->mTile[i].id);
 				break;
 			}
 		if (i == map->numTiles)
