@@ -103,6 +103,14 @@ a      +a     +a     abv12
 0      abh23   abh23   0
 }
 
+tile +h4
+{
+4 4
+0      a      v23    0
+h12    +ah    +av    ab12
+a      +a     +a     abv12
+0      abh23   abh23   0
+}
 
 /// fillers:
 tile +fill1
@@ -228,6 +236,7 @@ title "_test assembly"
 +h1       "1 1"
 +h2       "0 1"
 +h3       "0 1"
++h4       "0 1"
 +fill1    "0 1"
 +fill2    "0 25"
 +f1       "0 4"
