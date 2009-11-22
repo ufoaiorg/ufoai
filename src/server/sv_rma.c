@@ -241,7 +241,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 						break;
 					}
 				if (i == map->numTiles)
-					Com_Error(ERR_DROP, "Could not find tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
+					Com_Error(ERR_DROP, "Could not find multiplayer tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
 			}
 			continue;
 		} else if (!strncmp(token, "size", 4)) {
@@ -261,7 +261,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 
 			sscanf(token, "%i %i", &a->dx, &a->dy);
 			continue;
-		/* fix tilename x y */
+		/* fix tilename "x y" */
 		} else if (!strncmp(token, "fix", 3)) {
 			/* get tile */
 			token = Com_EParse(text, errhead, filename);
@@ -285,7 +285,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 					a->numFixed++;
 				}
 			if (i == map->numTiles)
-				Com_Error(ERR_DROP, "Could not find tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
+				Com_Error(ERR_DROP, "Could not find fixed tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
 			continue;
 		/* <format>*cvarname <defaultvalue> "min max"</format> */
 		} else if (*token == '*') {
