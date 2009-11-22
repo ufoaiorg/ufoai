@@ -469,9 +469,9 @@ static void HUD_ReserveShot_f (void)
 
 	/* Check if we have enough TUs (again) */
 	if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT) >= reserveShotData->TUs) {
-		CL_ReserveTUs(selActor, RES_SHOT, reserveShotData->TUs);
+		CL_ReserveTUs(selActor, RES_SHOT, max(0, reserveShotData->TUs));
 		CL_CharacterSetShotSettings(selChr, reserveShotData->hand, reserveShotData->fireModeIndex, INVSH_GetItemByIDX(reserveShotData->weaponIndex));
-		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
+		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, max(0, selChr->reservedTus.shot)); /* Update server-side settings */
 		if (popupListNode)
 			MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
 	}
