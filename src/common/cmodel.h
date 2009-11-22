@@ -47,8 +47,8 @@ CMODEL BOX TRACING
 /** creates a clipping hull for an arbitrary box */
 int CM_HeadnodeForBox(int tile, const vec3_t mins, const vec3_t maxs);
 trace_t CM_CompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, int brushrejects, const vec3_t origin, const vec3_t angles);
-trace_t CM_HintedTransformedBoxTrace(const int tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const float fraction);
-#define CM_TransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushrejects, origin, angles) CM_HintedTransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushrejects, origin, angles, 1.0f);
+trace_t CM_HintedTransformedBoxTrace(const int tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction);
+#define CM_TransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushrejects, origin, angles) CM_HintedTransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushrejects, origin, angles, vec3_origin, 1.0f);
 qboolean CM_TestLineWithEnt(const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
 qboolean CM_EntTestLine(const vec3_t start, const vec3_t stop, const int levelmask);
 qboolean CM_EntTestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);

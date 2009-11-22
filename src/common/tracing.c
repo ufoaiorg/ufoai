@@ -1162,7 +1162,7 @@ static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t
  */
 trace_t TR_HintedTransformedBoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins,
 		const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const vec3_t origin,
-		const vec3_t angles, const float fraction)
+		const vec3_t angles, const vec3_t rmaShift, const float fraction)
 {
 	trace_t trace;
 	vec3_t start_l, end_l;
@@ -1194,6 +1194,11 @@ trace_t TR_HintedTransformedBoxTrace (TR_TILE_TYPE *tile, const vec3_t start, co
 		end_l[0] = DotProduct(temp, forward);
 		end_l[1] = -DotProduct(temp, right);
 		end_l[2] = DotProduct(temp, up);
+	}
+
+	if (VectorNotEmpty(origin)) {
+		VectorAdd(start_l, rmaShift, start_l);
+		VectorAdd(end_l, rmaShift, end_l);
 	}
 
 	/* sweep the box through the model */
