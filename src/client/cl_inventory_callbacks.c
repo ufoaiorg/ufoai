@@ -130,6 +130,8 @@ void INV_ItemDescription (const objDef_t *od)
 
 			MN_ExecuteConfunc("mn_item_change_view weapon \"%s\"", name);
 		}
+	} else {
+			MN_ExecuteConfunc("mn_item_change_view other");	
 	}
 
 

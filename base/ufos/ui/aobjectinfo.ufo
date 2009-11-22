@@ -17,7 +17,17 @@ window objectinfo
 		*node:this.parent.itemdescription.header_firemode@invis <1>
 		*node:this.parent.itemdescription.firemode_name@invis <1>
 	}
-	
+
+	/**
+	 * @param[in] <1> true or false to hide or show the firemode nodes
+	 */
+	confunc mn_item_hide_weaponammo {
+		*node:this.parent.itemdescription.header_item@invis <1>
+		*node:this.parent.itemdescription.action_dec@invis <1>
+		*node:this.parent.itemdescription.item_name@invis <1>
+		*node:this.parent.itemdescription.action_inc@invis <1>
+	}
+
 	/**
 	 * @param[in] <1> ammo, weapon or none to deactivate
 	 * @param[in] <2> the link object name
@@ -25,18 +35,25 @@ window objectinfo
 	confunc mn_item_change_view {
 		*cvar:tmp <1>
 		*cvar:mn_linkname <2>
+
 		if ( *cvar:tmp ne "none" ) {
 			*cvar:mn_changeitem *cvar:tmp
 			if ( *node:this.parent.itemdescription@invis == 0 ) {
 				if ( *cvar:mn_changeitem eq "weapon" ) {
 					cmd "mn_item_hide_firemode true;"
-				} else {
+					cmd "mn_item_hide_weaponammo false;"
+				} elif ( *cvar:mn_changeitem eq "ammo" ) {
 					cmd "mn_item_hide_firemode false;"
+					cmd "mn_item_hide_weaponammo false;"
+				} else {
+					cmd "mn_item_hide_firemode true;"
+					cmd "mn_item_hide_weaponammo true;"
 				}
-			}				
+			}
 		} else {
 			*node:this.parent.itemdescription@invis true
 		}
 		delete *cvar:tmp
 	}
 }
+
