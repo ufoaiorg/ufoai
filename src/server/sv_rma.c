@@ -283,6 +283,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 					a->fY[a->numFixed] = y;
 					a->fT[a->numFixed] = i;
 					a->numFixed++;
+					break;
 				}
 			if (i == map->numTiles)
 				Com_Error(ERR_DROP, "Could not find fixed tile: '%s' in assembly '%s' (%s)", token, a->id, filename);

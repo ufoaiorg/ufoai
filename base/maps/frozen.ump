@@ -397,8 +397,6 @@ multiplayer mp_team2
 +craft_drop_firebird "1 1"
 }
 
-/*
-// @FIXME: This is broken currently
 //Assembly to replace industrial.map
 assembly industrial_static
 {
@@ -420,4 +418,3 @@ fix +h05 "3 4"
 +n05 "0 10" //These Mapparts are just here to fill gaps that may appear after
 +n04 "0 10" //someone changes the size of the used maps
 }
-*/
