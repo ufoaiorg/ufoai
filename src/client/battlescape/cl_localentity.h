@@ -218,6 +218,7 @@ le_t *LE_Find(int type, pos3_t pos);
 void LE_PlaceItem(le_t *le);
 void LE_Cleanup(void);
 void LE_AddToScene(void);
+void LE_CenterView(const le_t *le);
 
 trace_t CL_Trace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask);
 

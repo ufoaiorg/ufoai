@@ -54,8 +54,7 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 	G_SendState(G_VisToPM(ent->visflags), ent);
 
 	/* center view */
-	gi.AddEvent(G_VisToPM(ent->visflags), EV_CENTERVIEW);
-	gi.WriteGPos(ent->pos);
+	G_CenterView(ent);
 
 	/* move around a bit, try to avoid opponents */
 	AI_ActorThink(G_PLAYER_FROM_ENT(ent), ent);

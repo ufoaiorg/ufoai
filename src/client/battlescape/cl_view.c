@@ -378,6 +378,8 @@ void V_RenderView (void)
 /**
  * @brief Centers the camera on a given grid field
  * @sa CL_CameraMove
+ * @sa LE_CenterView
+ * @sa CL_CameraRoute
  */
 void V_CenterView (const pos3_t pos)
 {

@@ -224,6 +224,16 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 }
 
 /**
+ * @brief Centers the view for all clients that are seeing the given edict on the world position of the edict
+ * @param ent The edict to use the position from
+ */
+void G_CenterView (const edict_t *ent)
+{
+	gi.AddEvent(G_VisToPM(ent->visflags), EV_CENTERVIEW);
+	gi.WriteGPos(ent->pos);
+}
+
+/**
  * @brief This function sends all the actors to the client that are not visible
  * initially - this is needed because an actor can e.g. produce sounds that are
  * send over the net. And the client can only handle them if he knows the

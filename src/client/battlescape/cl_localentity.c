@@ -986,6 +986,24 @@ void _LE_NotFoundError (const int entnum, const char *file, const int line)
 }
 
 /**
+ * @brief Center the camera on the local entity's origin
+ * @param le The local entity which origin is used to center the camera
+ * @sa CL_CenterView
+ * @sa V_CenterView
+ * @sa CL_CameraRoute
+ */
+void LE_CenterView (const le_t *le)
+{
+	/* if (cl_centerview->integer == 1 && cl.actTeam != cls.team) */
+	if (!cl_centerview->integer)
+		return;
+
+	assert(le);
+	Cvar_SetValue("cl_worldlevel", le->pos[2]);
+	VectorCopy(le->origin, cl.cam.origin);
+}
+
+/**
  * @brief Searches all local entities for the one with the searched entnum
  * @param[in] entnum The entity number (server side)
  * @sa LE_Add

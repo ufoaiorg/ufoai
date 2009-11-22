@@ -65,7 +65,7 @@ void CL_ActorStartShoot (const eventRegister_t *self, struct dbuffer *msg)
 	le = LE_Get(entnum);
 
 	/* center view (if wanted) */
-	if (cl_centerview->integer && cl.actTeam != cls.team)
+	if (cl.actTeam != cls.team)
 		CL_CameraRoute(from, target);
 
 	/* actor dependent stuff following */

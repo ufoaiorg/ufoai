@@ -861,9 +861,7 @@ qboolean CL_ActorSelectList (int num)
 		return qfalse;
 
 	/* center view (if wanted) */
-	if (cl_centerview->integer)
-		VectorCopy(le->origin, cl.cam.origin);
-	/* change to worldlevel were actor is right now */
+	LE_CenterView(le);
 	Cvar_SetValue("cl_worldlevel", le->pos[2]);
 
 	return qtrue;

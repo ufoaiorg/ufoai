@@ -144,10 +144,8 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 	assert(cls.state == ca_active);
 	if (!LE_IsDead(le)) {
 		/* center view (if wanted) */
-		if (cl_centerview->integer > 1 || (cl_centerview->integer == 1 && cl.actTeam != cls.team)) {
-			VectorCopy(le->origin, cl.cam.origin);
-			Cvar_SetValue("cl_worldlevel", le->pos[2]);
-		}
+		if (cl.actTeam != cls.team)
+			LE_CenterView(le);
 
 		/* draw line of sight */
 		if (le->team != cls.team) {

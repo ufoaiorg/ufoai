@@ -890,10 +890,17 @@ void CL_CameraMove (void)
 }
 
 /**
+ * @brief Interpolates the camera movement from the given start point to the given end point
  * @sa CL_CameraMove
+ * @sa V_CenterView
+ * @param[in] from The grid position to start the camera movement from
+ * @param[in] target The grid position to move the camera to
  */
 void CL_CameraRoute (const pos3_t from, const pos3_t target)
 {
+	if (!cl_centerview->integer)
+		return;
+
 	/* initialize the camera route variables */
 	PosToVec(from, routeFrom);
 	PosToVec(target, routeDelta);
