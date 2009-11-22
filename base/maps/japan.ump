@@ -232,7 +232,7 @@ title "_Japan"
 assembly test
 {
 size "5 8"
-title "_test assembly"
+title "test assembly"
 +h1       "1 1"
 +h2       "0 1"
 +h3       "0 1"
