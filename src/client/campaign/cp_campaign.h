@@ -404,7 +404,7 @@ typedef struct ccs_s {
 	/* how fast the game is running */
 	int gameTimeScale;
 
-	aircraft_t *missionaircraft;	/**< aircraft pointer for mission handling */
+	aircraft_t *missionAircraft;	/**< aircraft pointer for mission handling */
 
 	/* True if this objDef_t has autosell enabled. */
 	qboolean autosell[MAX_OBJDEFS];

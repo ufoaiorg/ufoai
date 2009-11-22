@@ -53,7 +53,7 @@ static void GAME_CP_MissionAutoGo_f (void)
 		return;
 	}
 
-	if (!ccs.missionaircraft) {
+	if (!ccs.missionAircraft) {
 		Com_Printf("GAME_CP_MissionAutoGo_f: No aircraft at target pos\n");
 		return;
 	}
@@ -284,9 +284,9 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		civilian_killed += civilian_stunned;
 
 	/* loot the battlefield */
-	AII_CollectingItems(ccs.missionaircraft, winner == cls.team);				/**< Collect items from the battlefield. */
+	AII_CollectingItems(ccs.missionAircraft, winner == cls.team);				/**< Collect items from the battlefield. */
 	if (winner == cls.team)
-		AL_CollectingAliens(ccs.missionaircraft);	/**< Collect aliens from the battlefield. */
+		AL_CollectingAliens(ccs.missionAircraft);	/**< Collect aliens from the battlefield. */
 
 	ccs.aliensKilled += their_killed;
 
@@ -319,7 +319,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 
 qboolean GAME_CP_Spawn (void)
 {
-	aircraft_t *aircraft = ccs.missionaircraft;
+	aircraft_t *aircraft = ccs.missionAircraft;
 	base_t *base;
 	int i;
 

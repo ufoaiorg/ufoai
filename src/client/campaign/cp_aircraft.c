@@ -1168,9 +1168,9 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			assert(aircraft->mission);
 			aircraft->mission->active = qtrue;
 			aircraft->status = AIR_DROP;
-			ccs.missionaircraft = aircraft;
-			MAP_SelectMission(ccs.missionaircraft->mission);
-			ccs.interceptAircraft = ccs.missionaircraft;
+			ccs.missionAircraft = aircraft;
+			MAP_SelectMission(ccs.missionAircraft->mission);
+			ccs.interceptAircraft = ccs.missionAircraft;
 			Com_DPrintf(DEBUG_CLIENT, "ccs.interceptAircraft: %i\n", ccs.interceptAircraft->idx);
 			CL_GameTimeStop();
 			MN_PushMenu("popup_intercept_ready", NULL);

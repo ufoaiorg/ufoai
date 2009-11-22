@@ -1297,10 +1297,10 @@ void CP_StartSelectedMission (void)
 	aircraft_t *aircraft;
 	base_t *base;
 
-	if (!ccs.missionaircraft)
+	if (!ccs.missionAircraft)
 		return;
 
-	aircraft = ccs.missionaircraft;
+	aircraft = ccs.missionAircraft;
 	base = CP_GetMissionBase();
 
 	if (!ccs.selectedMission)
@@ -2098,11 +2098,11 @@ static void CP_CampaignStats_f (void)
  */
 base_t *CP_GetMissionBase (void)
 {
-	if (!ccs.missionaircraft)
-		Com_Error(ERR_DROP, "CP_GetMissionBase: No missionaircraft given");
-	if (!ccs.missionaircraft->homebase)
-		Com_Error(ERR_DROP, "CP_GetMissionBase: Missionaircraft has no homebase set");
-	return ccs.missionaircraft->homebase;
+	if (!ccs.missionAircraft)
+		Com_Error(ERR_DROP, "CP_GetMissionBase: No mission aircraft given");
+	if (!ccs.missionAircraft->homebase)
+		Com_Error(ERR_DROP, "CP_GetMissionBase: Mission aircraft has no homebase set");
+	return ccs.missionAircraft->homebase;
 }
 
 /**

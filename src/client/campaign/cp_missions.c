@@ -356,7 +356,7 @@ void CP_CreateBattleParameters (mission_t *mission)
 
 	/* Set random map aircraft if this is a random map */
 	if (mission->mapDef->map[0] == '+') {
-		Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(ccs.missionaircraft->id));
+		Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(ccs.missionAircraft->id));
 	}
 }
 
@@ -1096,7 +1096,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 		/* HACK */
 		aircraft = base->aircraftCurrent;
 	} else {
-		aircraft = ccs.missionaircraft;
+		aircraft = ccs.missionAircraft;
 		base = CP_GetMissionBase();
 	}
 
