@@ -1196,8 +1196,10 @@ trace_t TR_HintedTransformedBoxTrace (TR_TILE_TYPE *tile, const vec3_t start, co
 		end_l[2] = DotProduct(temp, up);
 	}
 
-	if (VectorNotEmpty(origin)) {
-		VectorAdd(start_l, rmaShift, start_l);
+	/* When tracing through a model, we want to use the nodes, planes etc. as calculated by ufo2map.
+	 * But nodes and planes have been shifted in case of an RMA. At least for doors we need to undo the shift. */
+	if (VectorNotEmpty(origin)) {					/* only doors seem to have their origin set */
+		VectorAdd(start_l, rmaShift, start_l);		/* undo the shift */
 		VectorAdd(end_l, rmaShift, end_l);
 	}
 
