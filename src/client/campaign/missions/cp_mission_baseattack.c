@@ -205,6 +205,8 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	LIST_Delete(&hiredSoldiersInBase);
 	base->aircraftCurrent = &baseAttackFakeAircraft;
 	ccs.missionAircraft = &baseAttackFakeAircraft;
+	/** @todo remove me - this is not needed because we are using the base->aircraftCurrent
+	 * pointer for resolving the aircraft*/
 	ccs.interceptAircraft = &baseAttackFakeAircraft;	/* needed for updating soldier stats sa CL_UpdateCharacterStats*/
 	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
 
