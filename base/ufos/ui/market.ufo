@@ -2,7 +2,7 @@
 // MARKET MENU
 // ==================
 
-window market
+window market extends objectinfo
 {
 	// ==================
 	// background
@@ -777,7 +777,107 @@ window market
 			lineheight	15
 			tabwidth	168
 			font		"f_verysmall"
+			onViewChange {
+				*(abstractscrollbar)itemdescription.description_scroll@fullsize <fullsize>
+				*(abstractscrollbar)itemdescription.description_scroll@current <viewpos>
+			}
+			onWheel {
+				*(abstractscrollbar)itemdescription.description_scroll@current <viewpos>
+			}
 		}
+		vscrollbar description_scroll {
+			image		ui/scrollbar_v_green
+			pos			"370 257"
+			height		"120"
+			current		0
+			viewsize	8
+			fullsize	8
+			hidewhenunused true
+			onChange {
+				*itemdescription.description@viewpos <current>
+			}
+		}
+
+		// ======================
+		// useable weapon or ammo
+		// ======================
+
+		string header_item
+		{
+			string	"_With:"
+			pos		"32 390"
+			size	"100 16"
+			font	f_small
+		}
+	
+		custombutton action_dec
+		{
+			image	ui/buttons_small
+			pos		"142 390"
+			icon	prev
+			size	"16 16"
+			onClick	{ cmd "mn_decreaseitem;" }
+		}
+	
+		string item_name
+		{
+			string	*cvar:mn_linkname
+			pos		"162 390"
+			size	"190 16"
+			textalign	cc
+			font	f_small
+		}
+
+		custombutton action_inc
+		{
+			image	ui/buttons_small
+			pos		"356 390"
+			icon	next
+			size	"16 16"
+			onClick	{ cmd "mn_increaseitem;" }
+		}
+
+		// ==================
+		// firemode
+		// ==================
+	
+		string header_firemode
+		{
+			string	"_Firemode:"
+			pos		"32 414"
+			size	"100 16"
+			font	f_small
+		}
+		
+		custombutton firemode_dec
+		{
+			tooltip "_Previous firemode"
+			image	ui/buttons_small
+			pos		"142 414"
+			icon	prev
+			size	"16 16"
+			onClick	{ cmd "mn_decreasefiremode;" }
+		}
+		
+		string firemode_name
+		{
+			string	*cvar:mn_firemodename
+			pos		"162 414"
+			size	"190 16"
+			textalign	cc
+			font	f_small
+		}
+			
+		custombutton firemode_inc
+		{
+			tooltip "_Next firemode"
+			image	ui/buttons_small
+			pos		"356 414"
+			icon	next
+			size	"16 16"
+			onClick	{ cmd "mn_increasefiremode;" }
+		}
+
 	}
 
 	// =========================
