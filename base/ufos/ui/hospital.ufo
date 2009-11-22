@@ -120,6 +120,11 @@ window hospital
 		*hos_button<1>@image			ui/hosp_button_light
 		*click_hos_button<1>@tooltip	"_Slightly wounded"
 	}
+	confunc hospitalunused	{
+		*hos_icon<1>@image				icons/health_unused
+		*hos_button<1>@image			ui/hosp_button_green
+		*click_hos_button<1>@tooltip	"_Unused"
+	}
 
 	zone hos_scroll_zone
 	{

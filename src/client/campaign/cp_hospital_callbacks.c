@@ -117,6 +117,7 @@ static void HOS_UpdateMenu (void)
 		Cvar_Set(va("mn_hos_rank%i", entry), "");
 		Cvar_Set(va("mn_hos_hp%i", entry), "0");
 		Cvar_Set(va("mn_hos_hpmax%i", entry), "1");
+		MN_ExecuteConfunc("hospitalunused %i", entry);
 	}
 }
 
