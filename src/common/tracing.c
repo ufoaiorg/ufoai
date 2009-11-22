@@ -1157,6 +1157,10 @@ static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t
  * @param[in] headnode if < 0 we are in a leaf node
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
+ * @param[in] origin center for rotating objects
+ * @param[in] angles current rotation status (in degrees) for rotating objects
+ * @param[in] rmaShift how much the object was shifted by the RMA process (needed for doors)
+ * @param[in] fraction The furthest distance needed to trace before we stop.
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
