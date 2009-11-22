@@ -1096,7 +1096,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 		/* HACK */
 		aircraft = base->aircraftCurrent;
 	} else {
-		aircraft = ccs.interceptAircraft;
+		aircraft = ccs.missionaircraft;
 		base = CP_GetMissionBase();
 	}
 
