@@ -16,7 +16,7 @@ base japan/ja_
 // 2: rb path
 // 3: bl path
 // 4: lt path
-// H: big horizontal path      (grid32:   ++ -- -- -- ) (updown)
+// g: big horizontal path      (grid32:   ++ -- -- -- ) (updown)
 // f: vertical fence           (grid32:   -- -- -- +- ) (leftright)
 // w: vertical water: top (z0) (grid32:   -+ ++ ++ +- ) (leftright)
 //               bottom (z-40) (grid32:   -- -+ ++ -- )
@@ -28,7 +28,7 @@ tile +main
 0      0      0      0      0      0      0      0      0      0
 0      +a     +a     +a     +a     +a     +a     +a     +a     0
 0      b      b      +a     +a     +a     +a     +a     +a     0
-0      b      H      +H     +a     +a     +a     +a     +a     0
+0      b      g      +g     +a     +a     +a     +a     +a     0
 0      b      b      +a     +a     +a     +a     +a     +a     0
 0      0      0      0      0      0      0      0      0      0
 }
@@ -38,7 +38,7 @@ tile +craft_drop_firebird
 4 5
 0      ah14   ah14   0
 a      +b     +b     a
-H      +bH    +bH    H
+g      +bg    +bg    g
 a      +b     +b     a
 0      ah23   ah23   0
 }
@@ -48,7 +48,7 @@ tile +craft_drop_herakles
 4 5
 0      ah14   ah14   0
 a      +b     +b     a
-H      +bH    +bH    H
+g      +bg    +bg    g
 a      +b     +b     a
 0      ah23   ah23   0
 }
@@ -58,7 +58,7 @@ tile +craft_drop_raptor
 4 5
 0      ah14   ah14   0
 a      +b     +b     a
-H      +bH    +bH    H
+g      +bg    +bg    g
 a      +b     +b     a
 0      ah23   ah23   0
 }
@@ -78,20 +78,29 @@ av34    +a      +a       av12
 tile +h1
 {
 4 5
-0      ah14     ah14     0
-av3     +a     +a      av23
-a     +a     +a      av2
-H     +aH    +ah     h34
-0      ah23     ahf23      0
+0      abh14  abh14  0
+bav3   +a     +a     abv23
+ba     +a     +af     abv2
+bg     +ag    +ahf    h34
+0      bah23  baf23  0
 }
 
 tile +h2
 {
 5 4
-0      ah14      ah14     ah14    0
-av34     +a     +a    +a    av12
-a     +av    +a    +a    av12
-0      v14      ah23     ah23    0
+0      abh14   abh14   abh14   0
+abv34   +a     +a     +a     abv12
+ab      +av    +a     +a     abv12
+0      v14    abh23   abh23   0
+}
+
+tile +h3
+{
+4 4
+0      a      v23    0
+h12    +ah    +av    ab12
+a      +a     +a     abv12
+0      abh23   abh23   0
 }
 
 
@@ -99,17 +108,17 @@ a     +av    +a    +a    av12
 tile +fill1
 {
 3 3
-0      ah14      0
-a34     +a      av12
-0      a23      0
+0      abh14      0
+ab34     +a      abv12
+0      abh23      0
 }
 
 tile +fill2
 {
 3 3
-0      ah14      0
-a34     +a      av12
-0      a23      0
+0      abh14      0
+ab34     +a      abv12
+0      ab23      0
 }
 
 /// fences:
@@ -119,56 +128,64 @@ tile +f1
 {
 3 3
 0        f      0
-h12      +hfa     av12
+h12      +hfa     abv12
 0        f      0
+}
+
+tile +f2
+{
+3 3
+0      f      0
+ba34   +fa    abv12
+0      f      0
 }
 
 
 /// paths:
 
 // top-right
-tile +p_tr 
+tile +p_tr
 {
 3 3
 0      v      0
-a     +1      h
-0      a      0
+ab     +1      h
+0      ab      0
 }
 
 // bottom-right
-tile +p_br 
+tile +p_br
 {
 3 3
-0      a      0
-a     +2      h
+0      ab      0
+ab     +2      h
 0      v      0
 }
 
 // bottom-left
-tile +p_bl 
+tile +p_bl
 {
 3 3
-0      a      0
-h     +3      a
+0      ab      0
+h     +3      ab
 0      v      0
 }
 
 // top-left
-tile +p_tl 
+tile +p_tl
 {
 3 3
 0      v      0
-h     +4      a
-0      a      0
+h     +4      ab
+0      ab      0
 }
 
 // horizontal
 tile +p_h
 {
 3 3
-0      a      0
+0      ab      0
 h12   +h     h34
-0      a      0
+0      ab      0
 }
 
 //vertical
@@ -176,7 +193,7 @@ tile +p_v
 {
 3 3
 0      v23      0
-a      +v       a
+ab     +v       ab
 0      v34      0
 }
 
@@ -189,7 +206,7 @@ tile +bridge
 3 3
 0      w     0
 h12    +wah    h34
-0      a     0
+0      ba     0
 }
 
 
@@ -204,22 +221,24 @@ title "_Japan"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
-//assembly test
-//{
-//size "8 5"
-//title "test assembly"
-//+h1       "1 1"
-//+h2       "1 1"
-//+fill1    "1 5"
-//+fill2    "1 25"
-//+f1       "0 4"
-////+bridge   "1 1"
-//+p_tr     "1 5"
-//+p_tl     "1 5"
-//+p_br     "1 5"
-//+p_bl     "1 5"
-//+p_h      "2 10"
-//+p_v      "2 10"
-//*rm_drop +craft_drop_firebird "1 1"
-////*rm_ufo +craft_ufo_scout "1 1"
-//}
+assembly test
+{
+size "5 8"
+title "_test assembly"
++h1       "1 1"
++h2       "0 1"
++h3       "0 1"
++fill1    "0 1"
++fill2    "0 25"
++f1       "0 4"
++f2       "0 4"
++bridge   "0 1"
++p_tr     "0 5"
++p_tl     "0 5"
++p_br     "0 5"
++p_bl     "0 5"
++p_h      "0 10"
++p_v      "0 10"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
+}

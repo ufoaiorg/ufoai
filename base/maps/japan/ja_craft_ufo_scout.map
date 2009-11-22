@@ -333,3 +333,26 @@
 "model" "models/aircraft/ufo_scout/ufo_scout_upper.md2"
 "spawnflags" "254"
 }
+// entity 4
+{
+"classname" "info_alien_start"
+"origin" "80 272 28"
+"angle" "180"
+}
+// entity 5
+{
+"classname" "info_alien_start"
+"origin" "432 336 28"
+}
+// entity 6
+{
+"classname" "info_alien_start"
+"origin" "400 464 28"
+"angle" "90"
+}
+// entity 7
+{
+"classname" "info_alien_start"
+"origin" "80 432 28"
+"angle" "90"
+}
