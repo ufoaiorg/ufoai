@@ -232,20 +232,30 @@ static void INV_DecreaseFiremode_f (void)
 static void INV_IncreaseItem_f (void)
 {
 	const objDef_t *od = currentDisplayedObject;
+	qboolean overflow = qfalse;
+
 	if (!od)
 		return;
 
-	if (itemIndex < od->numWeapons) {
+	if (od->numWeapons) {
 		do {
-			if (itemIndex >= od->numWeapons - 1)
+			if (overflow)
 				break;
 			itemIndex++;
+			if (itemIndex > od->numWeapons - 1) {
+				itemIndex = 0;
+				overflow = qtrue;
+			}
 		} while (!GAME_ItemIsUseable(od->weapons[itemIndex]));
-	} else if (itemIndex < od->numAmmos) {
+	} else if (od->numAmmos) {
 		do {
-			if (itemIndex >= od->numAmmos - 1)
+			if (overflow)
 				break;
 			itemIndex++;
+			if (itemIndex > od->numAmmos - 1) {
+				itemIndex = 0;
+				overflow = qtrue;
+			}
 		} while (!GAME_ItemIsUseable(od->ammos[itemIndex]));
 	}
 	INV_ItemDescription(od);
@@ -258,20 +268,30 @@ static void INV_IncreaseItem_f (void)
 static void INV_DecreaseItem_f (void)
 {
 	const objDef_t *od = currentDisplayedObject;
+	qboolean underflow = qfalse;
+
 	if (!od)
 		return;
 
-	if (od->numWeapons && itemIndex > 0) {
+	if (od->numWeapons) {
 		do {
-			if (itemIndex == 0)
+			if (underflow)
 				break;
 			itemIndex--;
+			if (itemIndex < 0) {
+				itemIndex = od->numWeapons - 1;
+				underflow = qtrue;
+			}
 		} while (!GAME_ItemIsUseable(od->weapons[itemIndex]));
-	} else if (od->numAmmos && itemIndex > 0) {
+	} else if (od->numAmmos) {
 		do {
-			if (itemIndex == 0)
+			if (underflow)
 				break;
 			itemIndex--;
+			if (itemIndex < 0) {
+				itemIndex = od->numAmmos - 1;
+				underflow = qtrue;
+			}
 		} while (!GAME_ItemIsUseable(od->ammos[itemIndex]));
 	}
 	INV_ItemDescription(od);
