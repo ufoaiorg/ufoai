@@ -1295,7 +1295,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 	int headnode;
 	cBspModel_t *model;
 	const float *angles;
-	vec3_t origin;
+	vec3_t origin, shift;
 
 	if (clip->trace.allsolid)
 		return;
@@ -1318,16 +1318,18 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 			headnode = model->headnode;
 			tile = model->tile;
 			angles = le->angles;
+			VectorCopy(model->shift, shift);
 		} else {
 			/* might intersect, so do an exact clip */
 			/** @todo make headnode = HullForLe(le, &tile) ... the counterpart of SV_HullForEntity in server/sv_world.c */
 			headnode = CM_HeadnodeForBox(0, le->mins, le->maxs);
 			angles = vec3_origin;
+			VectorCopy(vec3_origin, shift);
 		}
 		VectorCopy(le->origin, origin);
 
 		assert(headnode < MAX_MAP_NODES);
-		trace = CM_TransformedBoxTrace(tile, clip->start, clip->end, clip->mins, clip->maxs, headnode, clip->contentmask, 0, origin, angles);
+		trace = CM_HintedTransformedBoxTrace(tile, clip->start, clip->end, clip->mins, clip->maxs, headnode, clip->contentmask, 0, origin, angles, shift, 1.0);
 
 		if (trace.fraction < clip->trace.fraction) {
 			qboolean oldStart;
