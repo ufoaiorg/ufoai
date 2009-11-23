@@ -25,6 +25,7 @@
 #include <cstddef>
 #include <string>
 #include "generic/callbackfwd.h"
+#include "brush.h"
 
 enum EBrushPrefab
 {
@@ -33,6 +34,18 @@ enum EBrushPrefab
 
 class TextureProjection;
 class ContentsFlagsValue;
+
+class FaceGetFlags
+{
+		ContentsFlagsValue& m_flags;
+	public:
+		FaceGetFlags (ContentsFlagsValue& flags) :
+			m_flags(flags)
+		{
+		}
+		void operator() (Face& face) const;
+};
+
 namespace scene
 {
 	class Graph;

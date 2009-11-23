@@ -399,6 +399,8 @@ class BrushSplitByPlaneSelected: public scene::Graph::Walker
 						BrushSplitType split = Brush_classifyPlane(*brush, m_split == eFront ? plane3_flipped(plane)
 								: plane);
 						if (split.counts[ePlaneBack] && split.counts[ePlaneFront]) {
+							ContentsFlagsValue flags(0, 0, 0, false);
+							Brush_forEachFace(*brush, FaceGetFlags(flags));
 							// the plane intersects this brush
 							if (m_split == eFrontAndBack) {
 								NodeSmartReference node((new BrushNode())->node());
@@ -408,6 +410,7 @@ class BrushSplitByPlaneSelected: public scene::Graph::Walker
 								if (newFace != 0 && m_split != eFront) {
 									newFace->flipWinding();
 								}
+								newFace->SetFlags(flags);
 								fragment->removeEmptyFaces();
 								ASSERT_MESSAGE(!fragment->empty(), "brush left with no faces after split");
 
@@ -420,8 +423,10 @@ class BrushSplitByPlaneSelected: public scene::Graph::Walker
 							}
 
 							Face* newFace = brush->addPlane(m_p0, m_p1, m_p2, m_shader, m_projection);
-							if (newFace != 0 && m_split == eFront) {
-								newFace->flipWinding();
+							if (newFace != 0){
+								newFace->SetFlags(flags);
+								if (m_split == eFront)
+									newFace->flipWinding();
 							}
 							brush->removeEmptyFaces();
 							ASSERT_MESSAGE(!brush->empty(), "brush left with no faces after split");

@@ -492,19 +492,10 @@ void Scene_BrushGetShaderSize_Component_Selected (scene::Graph& graph, size_t& w
 	}
 }
 
-class FaceGetFlags
+void FaceGetFlags::operator ()(Face& face) const
 {
-		ContentsFlagsValue& m_flags;
-	public:
-		FaceGetFlags (ContentsFlagsValue& flags) :
-			m_flags(flags)
-		{
-		}
-		void operator() (Face& face) const
-		{
-			face.GetFlags(m_flags);
-		}
-};
+	face.GetFlags(m_flags);
+}
 
 /**
  * @sa SurfaceInspector_SetCurrent_FromSelected
