@@ -549,6 +549,40 @@ GAME RELATED TRACING USING ENTITIES
 
 
 /**
+ * @brief A quick test if the trace might hit the inline model
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
+ * @param[in] model The entity to check
+ * @return qtrue - the line isn't anywhere near the model
+ */
+qboolean CM_LineMissesModel (const vec3_t start, const vec3_t stop, cBspModel_t *model)
+{
+	vec3_t amins, amaxs;
+
+	/* Quickly calculate the bounds of this model to see if they can overlap. */
+	VectorAdd(model->origin, model->mins, amins);
+	VectorAdd(model->origin, model->maxs, amaxs);
+	if (VectorNotEmpty(model->angles)) {
+		vec3_t acenter, aoffset;
+		const float offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
+		VectorCenterFromMinsMaxs(amins, amaxs, acenter);
+		VectorSet(aoffset, offset, offset, offset);
+		VectorAdd(acenter, aoffset, amaxs);
+		VectorSubtract(acenter, aoffset, amins);
+	}
+	/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
+	if ((start[0] > amaxs[0] && stop[0] > amaxs[0])
+		|| (start[1] > amaxs[1] && stop[1] > amaxs[1])
+		|| (start[2] > amaxs[2] && stop[2] > amaxs[2])
+		|| (start[0] < amins[0] && stop[0] < amins[0])
+		|| (start[1] < amins[1] && stop[1] < amins[1])
+		|| (start[2] < amins[2] && stop[2] < amins[2]))
+		return qtrue;
+
+	return qfalse;
+}
+
+/**
  * @brief Checks traces against the world and all inline models
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
@@ -564,7 +598,6 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 	trace_t trace;
 	cBspModel_t *model;
 	const char **name;
-	vec3_t amins, amaxs;
 
 	/* trace against world first */
 	if (TR_TestLine(start, stop, levelmask))
@@ -583,24 +616,8 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
 
-		/* Quickly calculate the bounds of this model to see if they can overlap. */
-		VectorAdd(model->origin, model->mins, amins);
-		VectorAdd(model->origin, model->maxs, amaxs);
-		if (VectorNotEmpty(model->angles)) {
-			vec3_t acenter, aoffset;
-			const float offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
-			VectorCenterFromMinsMaxs(amins, amaxs, acenter);
-			VectorSet(aoffset, offset, offset, offset);
-			VectorAdd(acenter, aoffset, amaxs);
-			VectorSubtract(acenter, aoffset, amins);
-		}
-		/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
-		if ((start[0] > amaxs[0] && stop[0] > amaxs[0])
-			|| (start[1] > amaxs[1] && stop[1] > amaxs[1])
-			|| (start[2] > amaxs[2] && stop[2] > amaxs[2])
-			|| (start[0] < amins[0] && stop[0] < amins[0])
-			|| (start[1] < amins[1] && stop[1] < amins[1])
-			|| (start[2] < amins[2] && stop[2] < amins[2]))
+		/* check if we can safely exclude that the trace can hit the model */
+		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
 		trace = CM_HintedTransformedBoxTrace(model->tile, start, stop, vec3_origin, vec3_origin, model->headnode, MASK_ALL, 0, model->origin, model->angles, model->shift, 1.0);
