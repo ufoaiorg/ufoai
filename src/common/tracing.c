@@ -1056,6 +1056,7 @@ static void TR_RecursiveHullCheck (boxtrace_t *traceData, int num, float p1f, fl
  * @param[in] headnode if < 0 we are in a leaf node
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
+ * @param[in] fraction The furthest distance needed to trace before we stop.
  * @sa TR_TransformedBoxTrace
  * @sa TR_CompleteBoxTrace
  * @sa TR_RecursiveHullCheck
