@@ -733,7 +733,7 @@ trace_t CM_HintedTransformedBoxTrace (const int tile, const vec3_t start, const 
  * @sa TR_CompleteBoxTrace
  * @sa CM_HintedTransformedBoxTrace
  */
-trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject)
+trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject)
 {
 	trace_t trace, newtr;
 	cBspModel_t *model;
@@ -742,7 +742,7 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3
 	vec3_t bmins, bmaxs;
 
 	/* trace against world first */
-	trace = TR_CompleteBoxTrace(start, end, mins, maxs, levelmask, brushmask, brushreject);
+	trace = TR_CompleteBoxTrace(start, end, traceBox->mins, traceBox->maxs, levelmask, brushmask, brushreject);
 	if (!inlineList || trace.fraction == 0.0)
 		return trace;
 
@@ -750,8 +750,8 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3
 	VectorSet(bmins, min(start[0], end[0]), min(start[1], end[1]), min(start[2], end[2]));
 	VectorSet(bmaxs, max(start[0], end[0]), max(start[1], end[1]), max(start[2], end[2]));
 	/* Now increase the bounding box by mins and maxs in both directions. */
-	VectorAdd(bmins, mins, bmins);
-	VectorAdd(bmaxs, maxs, bmaxs);
+	VectorAdd(bmins, traceBox->mins, bmins);
+	VectorAdd(bmaxs, traceBox->maxs, bmaxs);
 	/* Now bmins and bmaxs specify the whole volume to be traced through. */
 
 	for (name = inlineList; *name; name++) {
@@ -782,7 +782,7 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3
 			|| bmaxs[2] < amins[2])
 			continue;
 
-		newtr = CM_HintedTransformedBoxTrace(model->tile, start, end, mins, maxs, model->headnode, brushmask, brushreject, model->origin, model->angles, model->shift, trace.fraction);
+		newtr = CM_HintedTransformedBoxTrace(model->tile, start, end, traceBox->mins, traceBox->maxs, model->headnode, brushmask, brushreject, model->origin, model->angles, model->shift, trace.fraction);
 
 		/* memorize the trace with the minimal fraction */
 		if (newtr.fraction == 0.0)
