@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @sa G_GetFloorItems
  */
-static edict_t *G_GetFloorItemsFromPos (pos3_t pos)
+edict_t *G_GetFloorItemsFromPos (const pos3_t pos)
 {
 	edict_t *floor;
 
@@ -48,7 +48,7 @@ static edict_t *G_GetFloorItemsFromPos (pos3_t pos)
  * @param[in] ent Pointer to an entity being an actor.
  * @return pointer to edict_t being a floor (with items) or @c NULL in case no items were found
  * on the edict grid position.
- * @note This function is somehow broken - it returns NULL in some cases of items on the floor.
+ * @todo This function is somehow broken - it returns NULL in some cases of items on the floor.
  */
 edict_t *G_GetFloorItems (edict_t * ent)
 {

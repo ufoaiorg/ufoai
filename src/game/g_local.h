@@ -266,6 +266,7 @@ void G_SendPlayerStats(const player_t *player);
 void G_WriteItem(item_t item, const invDef_t *container, int x, int y);
 void G_ReadItem(item_t *item, invDef_t **container, int *x, int *y);
 void G_InventoryToFloor(edict_t *ent);
+edict_t *G_GetFloorItemsFromPos(const pos3_t pos);
 
 /* g_morale */
 void G_MoraleBehaviour(int team, qboolean quiet);
@@ -326,7 +327,7 @@ void G_FlushSteps(void);
 qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door);
 qboolean G_ActionCheck(player_t *player, edict_t *ent, int TU, qboolean quiet);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
-edict_t *G_SpawnFloor(pos3_t pos);
+edict_t *G_SpawnFloor(const pos3_t pos);
 int G_CheckVisTeam(int team, edict_t *check, qboolean perish, edict_t *ent);
 edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
 void G_SendState(unsigned int playerMask, const edict_t *ent);

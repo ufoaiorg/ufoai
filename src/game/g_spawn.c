@@ -422,7 +422,7 @@ edict_t *G_Spawn (void)
  * @brief Spawns a new entity at the floor
  * @note This is e.g. used to place dropped weapons/items at the floor
  */
-edict_t *G_SpawnFloor (pos3_t pos)
+edict_t *G_SpawnFloor (const pos3_t pos)
 {
 	edict_t *floor;
 

@@ -553,6 +553,36 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 	}
 }
 
+/**
+ * @brief Spawn an item on the floor. A new ET_ITEM edict is created if needed.
+ * @param[in] pos The grid position to spawn the item at
+ * @param[in] item The item to spawn
+ */
+static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
+{
+	edict_t *floor, *actor;
+
+	floor = G_GetFloorItemsFromPos(pos);
+	if (floor == NULL) {
+		floor = G_SpawnFloor(pos);
+
+		/* link the floor container to the actor standing on the given position */
+		for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
+			if (actor->inuse && G_IsActor(actor) && VectorCompare(pos, actor->pos)) {
+				FLOOR(actor) = FLOOR(floor);
+				break;
+			}
+	} else {
+		gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
+		gi.WriteShort(floor->number);
+		floor->visflags = 0;
+	}
+	Com_TryAddToInventory(&floor->i, *item, INVDEF(gi.csi->idFloor));
+
+	/* send item info to the clients */
+	G_CheckVis(floor, qtrue);
+}
+
 #define GRENADE_DT			0.1
 #define GRENADE_STOPSPEED	60.0
 /**
@@ -680,32 +710,8 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 					/* spawn the stone on the floor */
 					if (fd->ammo && !fd->splrad && weapon->t->thrown) {
 						pos3_t drop;
-						edict_t *floor, *actor;
-
 						VecToPos(tr.endpos, drop);
-
-						for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
-							if (floor->inuse
-								&& floor->type == ET_ITEM
-								&& VectorCompare(drop, floor->pos))
-								break;
-						}
-
-						if (floor == &g_edicts[globals.num_edicts]) {
-							floor = G_SpawnFloor(drop);
-
-							for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
-								if (actor->inuse && G_IsActor(actor) && VectorCompare(drop, actor->pos))
-									FLOOR(actor) = FLOOR(floor);
-						} else {
-							gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
-							gi.WriteShort(floor->number);
-							floor->visflags = 0;
-						}
-						Com_TryAddToInventory(&floor->i, *weapon, INVDEF(gi.csi->idFloor));
-
-						/* send item info to the clients */
-						G_CheckVis(floor, qtrue);
+						G_SpawnItemOnFloor(drop, weapon);
 					}
 				}
 				return;
@@ -996,7 +1002,6 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		/* spawn the throwable item on the floor but only if it is not depletable */
 		if (fd->ammo && !fd->splrad && weapon->t->thrown && !weapon->t->deplete) {
 			pos3_t drop;
-			edict_t *floor, *actor;
 
 			if (VectorCompare(ent->pos, at)) { /* throw under his own feet */
 				VectorCopy(at, drop);
@@ -1005,28 +1010,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 				VecToPos(impact, drop);
 			}
 
-			for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
-				if (floor->inuse
-					&& floor->type == ET_ITEM
-					&& VectorCompare(drop, floor->pos))
-					break;
-			}
-
-			if (floor == &g_edicts[globals.num_edicts]) {
-				floor = G_SpawnFloor(drop);
-
-				for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
-					if (actor->inuse && G_IsActor(actor) && VectorCompare(drop, actor->pos))
-						FLOOR(actor) = FLOOR(floor);
-			} else {
-				gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
-				gi.WriteShort(floor->number);
-				floor->visflags = 0;
-			}
-			Com_TryAddToInventory(&floor->i, *weapon, INVDEF(gi.csi->idFloor));
-
-			/* send item info to the clients */
-			G_CheckVis(floor, qtrue);
+			G_SpawnItemOnFloor(drop, weapon);
 		}
 	}
 }
