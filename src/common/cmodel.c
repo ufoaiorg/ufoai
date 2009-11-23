@@ -603,7 +603,7 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 			|| (start[2] < amins[2] && stop[2] < amins[2]))
 			continue;
 
-		trace = CM_TransformedBoxTrace(model->tile, start, stop, vec3_origin, vec3_origin, model->headnode, MASK_ALL, 0, model->origin, model->angles);
+		trace = CM_HintedTransformedBoxTrace(model->tile, start, stop, vec3_origin, vec3_origin, model->headnode, MASK_ALL, 0, model->origin, model->angles, model->shift, 1.0);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
 		if (trace.startsolid || trace.fraction < 1.0)
@@ -731,7 +731,7 @@ trace_t CM_HintedTransformedBoxTrace (const int tile, const vec3_t start, const 
  * @param[in] brushreject Any brush detected with any of these contents will be ignored.
  * @return a trace_t with the information of the closest brush intersected.
  * @sa TR_CompleteBoxTrace
- * @sa CM_TransformedBoxTrace
+ * @sa CM_HintedTransformedBoxTrace
  */
 trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject)
 {

@@ -369,8 +369,9 @@ typedef struct {
  * testing object's origin to get a point to use with the returned hull.
  * @param[in] ent The edict to get the bmodel from (at least in case of SOLID_BSP)
  * @param[out] tile The maptile the bmodel belongs, too (at least in case of SOLID_BSP)
+ * @param[out] rmaShift the shift vector in case of an RMA (needed for doors)
  */
-static int SV_HullForEntity (const edict_t *ent, int *tile)
+static int SV_HullForEntity (const edict_t *ent, int *tile, vec3_t rmaShift)
 {
 	assert(ent->solid != SOLID_NOT);
 	assert(ent->solid != SOLID_TRIGGER);
@@ -386,12 +387,14 @@ static int SV_HullForEntity (const edict_t *ent, int *tile)
 			Com_Error(ERR_FATAL, "SOLID_BSP with a non bsp model");
 
 		*tile = model->tile;
+		VectorCopy(model->shift, rmaShift);
 		assert(model->headnode < MAX_MAP_NODES);
 		return model->headnode;
 	}
 
 	/* create a temp hull from bounding box sizes */
 	*tile = 0;
+	VectorCopy(vec3_origin, rmaShift);
 	return CM_HeadnodeForBox(0, ent->mins, ent->maxs);
 }
 
@@ -414,7 +417,9 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
+		vec3_t rmaShift;
 		edict_t *touch = touchlist[i];
+
 		if (touch->solid == SOLID_NOT)
 			continue;
 		if (touch == clip->passedict)
@@ -431,7 +436,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 		}
 
 		/* might intersect, so do an exact clip */
-		headnode = SV_HullForEntity(touch, &tile);
+		headnode = SV_HullForEntity(touch, &tile, rmaShift);
 		if (headnode >= MAX_MAP_NODES)
 			continue;
 
@@ -441,7 +446,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 			angles = touch->angles;
 
 		assert(headnode < MAX_MAP_NODES);
-		trace = CM_TransformedBoxTrace(tile, clip->start, clip->end, clip->mins, clip->maxs, headnode, clip->contentmask, 0, touch->origin, angles);
+		trace = CM_HintedTransformedBoxTrace(tile, clip->start, clip->end, clip->mins, clip->maxs, headnode, clip->contentmask, 0, touch->origin, angles, rmaShift, 1.0);
 
 #ifdef PARANOID
 		Com_DPrintf(DEBUG_SERVER, "SV_ClipMoveToEntities: %i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex,
