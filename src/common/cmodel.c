@@ -672,7 +672,6 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 	cBspModel_t *model;
 	const char **name;
 	int blocked;
-	vec3_t amins, amaxs;
 	float fraction = 2.0f;
 
 	/* trace against world first */
@@ -688,24 +687,8 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
 
-		/* Quickly calculate the bounds of this model to see if they can overlap. */
-		VectorAdd(model->origin, model->mins, amins);
-		VectorAdd(model->origin, model->maxs, amaxs);
-		if (VectorNotEmpty(model->angles)) {
-			vec3_t acenter, aoffset;
-			const float offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
-			VectorCenterFromMinsMaxs(amins, amaxs, acenter);
-			VectorSet(aoffset, offset, offset, offset);
-			VectorAdd(acenter, aoffset, amaxs);
-			VectorSubtract(acenter, aoffset, amins);
-		}
-		/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
-		if ((start[0] > amaxs[0] && stop[0] > amaxs[0])
-			|| (start[1] > amaxs[1] && stop[1] > amaxs[1])
-			|| (start[2] > amaxs[2] && stop[2] > amaxs[2])
-			|| (start[0] < amins[0] && stop[0] < amins[0])
-			|| (start[1] < amins[1] && stop[1] < amins[1])
-			|| (start[2] < amins[2] && stop[2] < amins[2]))
+		/* check if we can safely exclude that the trace can hit the model */
+		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
 		trace = CM_HintedTransformedBoxTrace(model->tile, start, end, vec3_origin, vec3_origin, model->headnode, MASK_ALL, 0, model->origin, model->angles, vec3_origin, fraction);
@@ -755,21 +738,11 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_
 	trace_t trace, newtr;
 	cBspModel_t *model;
 	const char **name;
-	vec3_t amins, amaxs, acenter, aoffset;
-	vec3_t bmins, bmaxs;
 
 	/* trace against world first */
 	trace = TR_CompleteBoxTrace(start, end, traceBox->mins, traceBox->maxs, levelmask, brushmask, brushreject);
 	if (!inlineList || trace.fraction == 0.0)
 		return trace;
-
-	/* Find the original bounding box for the tracing line. */
-	VectorSet(bmins, min(start[0], end[0]), min(start[1], end[1]), min(start[2], end[2]));
-	VectorSet(bmaxs, max(start[0], end[0]), max(start[1], end[1]), max(start[2], end[2]));
-	/* Now increase the bounding box by mins and maxs in both directions. */
-	VectorAdd(bmins, traceBox->mins, bmins);
-	VectorAdd(bmaxs, traceBox->maxs, bmaxs);
-	/* Now bmins and bmaxs specify the whole volume to be traced through. */
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
@@ -779,24 +752,8 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
 
-		/* Quickly calculate the bounds of this model to see if they can overlap. */
-		VectorAdd(model->origin, model->mins, amins);
-		VectorAdd(model->origin, model->maxs, amaxs);
-		if (VectorNotEmpty(model->angles)) {
-			const float offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
-			VectorCenterFromMinsMaxs(amins, amaxs, acenter);
-			VectorSet(aoffset, offset, offset, offset);
-			VectorAdd(acenter, aoffset, amaxs);
-			VectorSubtract(acenter, aoffset, amins);
-		}
-
-		/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
-		if (bmins[0] > amaxs[0]
-			|| bmins[1] > amaxs[1]
-			|| bmins[2] > amaxs[2]
-			|| bmaxs[0] < amins[0]
-			|| bmaxs[1] < amins[1]
-			|| bmaxs[2] < amins[2])
+		/* check if we can safely exclude that the trace can hit the model */
+		if (CM_LineMissesModel(start, end, model))
 			continue;
 
 		newtr = CM_HintedTransformedBoxTrace(model->tile, start, end, traceBox->mins, traceBox->maxs, model->headnode, brushmask, brushreject, model->origin, model->angles, model->shift, trace.fraction);
