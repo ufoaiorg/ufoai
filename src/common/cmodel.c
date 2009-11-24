@@ -555,7 +555,7 @@ GAME RELATED TRACING USING ENTITIES
  * @param[in] model The entity to check
  * @return qtrue - the line isn't anywhere near the model
  */
-qboolean CM_LineMissesModel (const vec3_t start, const vec3_t stop, cBspModel_t *model)
+static qboolean CM_LineMissesModel (const vec3_t start, const vec3_t stop, cBspModel_t *model)
 {
 	vec3_t amins, amaxs;
 
