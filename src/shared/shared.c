@@ -55,11 +55,13 @@ char *Com_Trim (char *s)
 }
 
 /**
- * @brief Removed the file extension from a filename
+ * @brief Removes the file extension from a filename
  * @sa Com_SkipPath
+ * @param[in] in The incoming filename
+ * @param[in] out The stripped filename
  * @param[in] size The size of the output buffer
  */
-void Com_StripExtension (const char *in, char *out, size_t size)
+void Com_StripExtension (const char *in, char *out, const size_t size)
 {
 	char *out_ext = NULL;
 	int i = 1;
