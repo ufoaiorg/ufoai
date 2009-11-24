@@ -724,8 +724,7 @@ trace_t CM_HintedTransformedBoxTrace (const int tile, const vec3_t start, const 
  * @brief Performs box traces against the world and all inline models, gives the hit position back
  * @param[in] start The position to start the trace.
  * @param[in] end The position where the trace ends.
- * @param[in] mins The minimum extents of the collision box that is projected.
- * @param[in] maxs The maximum extents of the collision box that is projected.
+ * @param[in] traceBox The minimum/maximum extents of the collision box that is projected.
  * @param[in] levelmask A mask of the game levels to trace against. Mask 0x100 filters clips.
  * @param[in] brushmask Any brush detected must at least have one of these contents.
  * @param[in] brushreject Any brush detected with any of these contents will be ignored.
@@ -776,6 +775,7 @@ GAME RELATED TRACING
 
 
 /**
+ * @param[in] name The name of the maptile
  * @param[in] l Routing lump ... (routing data lump from bsp file)
  * @param[in] sX The x position on the world plane (grid position) - values from -(PATHFINDING_WIDTH/2) up to PATHFINDING_WIDTH/2 are allowed
  * @param[in] sY The y position on the world plane (grid position) - values from -(PATHFINDING_WIDTH/2) up to PATHFINDING_WIDTH/2 are allowed
