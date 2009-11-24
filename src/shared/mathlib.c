@@ -328,7 +328,7 @@ void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
 
 /**
  * @brief Rotate a vector with a rotation matrix.
- * @param[out] vb The result of multiplication (ie vector @va after rotation).
+ * @param[out] vb The result of multiplication (ie vector @c va after rotation).
  * @param[in] m The 3*3 matrix (rotation matrix in case of a rotation).
  * @param[in] va The vector that should be multiplied (ie rotated in case of rotation).
  * @note Basically, this is just the multiplication of @c m * @c va: this is the same than
@@ -385,6 +385,7 @@ vec_t VectorLength (const vec3_t v)
  * @param[in] v2 Second point of the line.
  * @param[in] mix Position on the line. If 0 < @c mix < 1, @c out is between @c v1 and @c v2 .
  * if @c mix < 0, @c out is outside @c v1 and @c v2 , on @c v1 side.
+ * @param[out] out The resulting point
  */
 void VectorMix (const vec3_t v1, const vec3_t v2, float mix, vec3_t out)
 {
@@ -396,7 +397,7 @@ void VectorMix (const vec3_t v1, const vec3_t v2, float mix, vec3_t out)
 
 /**
  * @brief Inverse a vector.
- * @param[in|out] v Vector to inverse. Output value is -@c v.
+ * @param[in,out] v Vector to inverse. Output value is -@c v.
  */
 void VectorInverse (vec3_t v)
 {
