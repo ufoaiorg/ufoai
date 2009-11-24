@@ -39,6 +39,11 @@ const value_t mn_iconProperties[] = {
 	{"size", V_POS, offsetof(menuIcon_t, size), MEMBER_SIZEOF(menuIcon_t, size)},
 	{"image", V_REF_OF_STRING, offsetof(menuIcon_t, image), 0},
 	{"single", V_BOOL, offsetof(menuIcon_t, single), 0},
+	{"blend", V_BOOL, offsetof(menuIcon_t, blend), 0},
+	{"normalcolor", V_COLOR, offsetof(menuIcon_t, normalColor), MEMBER_SIZEOF(menuIcon_t, normalColor)},
+	{"selectedcolor", V_COLOR, offsetof(menuIcon_t, selectedColor), MEMBER_SIZEOF(menuIcon_t, selectedColor)},
+	{"disabledcolor", V_COLOR, offsetof(menuIcon_t, disabledColor), MEMBER_SIZEOF(menuIcon_t, disabledColor)},
+	{"clickColor", V_COLOR, offsetof(menuIcon_t, clickColor), MEMBER_SIZEOF(menuIcon_t, clickColor)},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -96,7 +101,7 @@ void MN_DrawIconInBox (const menuIcon_t* icon, int status, int posX, int posY, i
 	int texY;
 	assert(icon->image != NULL);
 
-	if (icon->single)
+	if (icon->single || icon->blend)
 		texY = icon->pos[1];
 	else
 		/** @todo use an enum for status and document what the expected image format is */
@@ -105,6 +110,27 @@ void MN_DrawIconInBox (const menuIcon_t* icon, int status, int posX, int posY, i
 	posX += (sizeX - icon->size[0]) / 2;
 	posY += (sizeY - icon->size[1]) / 2;
 
+	if (icon->blend) {
+		const vec_t *color;
+		switch (status) {
+		case 0:
+			color = icon->normalColor;
+			break;
+		case 1:
+			color = icon->selectedColor;
+			break;
+		case 2:
+			color = icon->disabledColor;
+			break;
+		case 3:
+			color = icon->clickColor;
+			break;
+		}
+		R_Color(color);
+	}
+
 	MN_DrawNormImageByName(posX, posY, icon->size[0], icon->size[1],
 		texX + icon->size[0], texY + icon->size[1], texX, texY, icon->image);
+	if (icon->blend)
+		R_Color(NULL);
 }

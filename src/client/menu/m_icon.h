@@ -33,6 +33,11 @@ typedef struct menuIcon_s {
 	vec2_t pos;
 	vec2_t size;
 	qboolean single;
+	qboolean blend;
+	vec4_t normalColor;
+	vec4_t selectedColor;
+	vec4_t disabledColor;
+	vec4_t clickColor;
 } menuIcon_t;
 
 extern const value_t mn_iconProperties[];
