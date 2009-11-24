@@ -44,6 +44,12 @@ qboolean debugTrace = qfalse;
 
 #define RT_NO_OPENING -1
 
+/* Width of the box required to stand in a cell by an actor's feet.  */
+#define halfMicrostepSize (PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON)
+/* This is a template for the extents of the box used by an actor's feet. */
+const box_t footBox = {{-halfMicrostepSize, -halfMicrostepSize, 0},
+						{ halfMicrostepSize,  halfMicrostepSize, 0}};
+
 /*
 ==========================================================
   LOCAL TYPES
@@ -334,15 +340,10 @@ qboolean RT_AllCellsBelowAreFilled (const routing_t * map, const int actorSize, 
  */
 int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y, const int z)
 {
-	/* This sets up the size of the box required to stand in a cell by an actor's feet.  */
-	const float halfMicrostepSize = PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON;
-	/* ... and the same for the torso box */
+	/* Width of the box required to stand in a cell by an actor's torso.  */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 	/* This is a template for the extents of the box used by an actor's legs. */
-	const box_t floorBox = {{-halfMicrostepSize, -halfMicrostepSize, 0},
-							{ halfMicrostepSize,  halfMicrostepSize, 0}};
-	/* This is a template for the extents of the box used by an actor's legs. */
-	const box_t footBox = {{-halfMicrostepSize, -halfMicrostepSize, 0},
+	const box_t legBox = {{-halfMicrostepSize, -halfMicrostepSize, 0},
 							{ halfMicrostepSize,  halfMicrostepSize, QuantToModel(PATHFINDING_LEGROOMHEIGHT) - DIST_EPSILON * 2}};
 	/* This is a template for the extents of the box used by an actor's torso. */
 	const box_t torsoBox = {{-halfActorWidth, -halfActorWidth, QuantToModel(PATHFINDING_LEGROOMHEIGHT)},
@@ -398,7 +399,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 			Com_Printf("[(%i, %i, %i, %i)]Casting floor (%f, %f, %f) to (%f, %f, %f)\n",
 				x, y, z, actorSize, start[0], start[1], start[2], end[0], end[1], end[2]);
 
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(start, end, &floorBox);
+		tr = RT_COMPLETEBOXTRACE_PASSAGE(start, end, &footBox);
 		if (tr.fraction >= 1.0) {
 			/* There is no brush underneath this starting point. */
 			if (debugTrace)
@@ -425,8 +426,8 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 		VectorCopy(tr.endpos, tstart);
 
 		/* Prep the start and end of the "leg room" test. */
-		VectorAdd(tstart, footBox.mins, box.mins); /* Now bmins has the lower required foot space extent */
-		VectorAdd(tstart, footBox.maxs, box.maxs); /* Now bmaxs has the upper required foot space extent */
+		VectorAdd(tstart, legBox.mins, box.mins); /* Now bmins has the lower required foot space extent */
+		VectorAdd(tstart, legBox.maxs, box.maxs); /* Now bmaxs has the upper required foot space extent */
 
 		if (debugTrace)
 			Com_Printf("    Casting leg room (%f, %f, %f) to (%f, %f, %f)\n",
@@ -1024,12 +1025,10 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, c
 	/* Shortcut the value of UNIT_SIZE / PATHFINDING_MICROSTEP_SIZE. */
 	const int steps = UNIT_SIZE / PATHFINDING_MICROSTEP_SIZE;
 	trace_t tr;
-	box_t box;
 	int i, current_h, highest_h, highest_i = 0, skipped, newBottom;
 	vec3_t start, end;
 	pos3_t pos;
 	int last_step;
-	float width;
 
 	/* First prepare the two known end values. */
 	bases[0] = from->floor;
@@ -1052,11 +1051,6 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, c
 	ex = end[0];
 	ey = end[1];
 
-	/* Configure the box trace extents. */
-	width = PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON;
-	VectorSet(box.maxs, width, width, 0);
-	VectorSet(box.mins, -width, -width, 0);
-
 	newBottom = max(bases[0], bases[steps]);
 	/* Now calculate the rest of the microheights. */
 	for (i = 1; i < steps; i++) {
@@ -1064,7 +1058,7 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, c
 		start[1] = end[1] = sy + (ey - sy) * (i / (float)steps);
 
 		/* perform the trace, then return true if the trace was obstructed. */
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(start, end, &box);
+		tr = RT_COMPLETEBOXTRACE_PASSAGE(start, end, &footBox);
 		if (tr.fraction >= 1.0) {
 			bases[i] = -1;
 		} else {
