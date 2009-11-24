@@ -1197,7 +1197,7 @@ qboolean CP_CheckNextStageDestination (aircraft_t *ufocraft)
 
 /**
  * @brief Make UFO proceed with its mission when the fight with another aircraft is over (and UFO survived).
- * @param[in] ufocraft Pointer to the ufo that should proceed a mission.
+ * @param[in] ufo Pointer to the ufo that should proceed a mission.
  */
 void CP_UFOProceedMission (aircraft_t *ufo)
 {

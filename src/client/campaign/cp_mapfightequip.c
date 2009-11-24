@@ -83,7 +83,7 @@ itemWeight_t AII_GetItemWeightBySize (const objDef_t *od)
 
 /**
  * @brief Check if an aircraft item should or should not be displayed in airequip menu
- * @param[in] Pointer to an aircraft slot (can be base/installation too)
+ * @param[in] slot Pointer to an aircraft slot (can be base/installation too)
  * @param[in] tech Pointer to the technology to test
  * @return qtrue if the craft item should be displayed, qfalse else
  */
@@ -158,7 +158,7 @@ qboolean AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t
 /**
  * @brief Checks to see if the pilot is in any aircraft at this base.
  * @param[in] base Which base has the aircraft to search for the employee in.
- * @param[in] type Which employee to search for.
+ * @param[in] pilot Which employee to search for.
  * @return qtrue or qfalse depending on if the employee was found on the base aircraft.
  */
 qboolean AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
@@ -241,6 +241,7 @@ void BDEF_ReloadBattery (void)
 
 /**
  * @brief Remove a base defence sytem from base.
+ * @param[in] base The base that is affected
  * @param[in] basedefType (see basedefenceType_t)
  * @param[in] idx idx of the battery to destroy (-1 if this is random)
  * @sa BDEF_AddBattery
@@ -294,7 +295,7 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 
 /**
  * @brief Initialise all values of installation slot defence.
- * @param[in] Pointer to the installation which needs initalisation of its slots.
+ * @param[in] installation Pointer to the installation which needs initialisation of its slots.
  */
 void BDEF_InitialiseInstallationSlots (installation_t *installation)
 {
@@ -311,6 +312,7 @@ void BDEF_InitialiseInstallationSlots (installation_t *installation)
 /**
  * @brief Update the installation delay of one slot.
  * @param[in] base Pointer to the base to update the storage and capacity for
+ * @param[in] installation Pointer to the installation being installed.
  * @param[in] aircraft Pointer to the aircraft (NULL if a base is updated)
  * @param[in] slot Pointer to the slot to update
  * @sa AII_AddItemToSlot
@@ -760,8 +762,9 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 /**
  * @brief Initialise values of one slot of an aircraft or basedefence common to all types of items.
  * @param[in] slot	Pointer to the slot to initialize.
- * @param[in] aircraftTemplate	Pointer to aircraft template.
+ * @param[in] aircraft Template	Pointer to aircraft template.
  * @param[in] base	Pointer to base.
+ * @param[in] installation Pointer to the thing being installed.
  * @param[in] type
  */
 void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraft, base_t *base, installation_t *installation, aircraftItemType_t type)

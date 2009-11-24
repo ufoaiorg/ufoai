@@ -195,7 +195,7 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 /**
  * @brief sets market prices at start of the game
  * @sa CP_CampaignInit
- * @as B_SetUpFirstBase
+ * @sa B_SetUpFirstBase
  * @sa BS_Load (Market load function)
  * @param[in] load Is this an attempt to init the market for a savegame?
  */
