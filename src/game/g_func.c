@@ -245,8 +245,7 @@ void SP_func_door (edict_t *ent)
 }
 
 /**
- * @brief func_door (0 .5 .8) ?
- * "health"	if set, door must be shot open
+ * @brief Spawns a rotating solid inline brush model
  * @sa SV_SetModel
  * @sa LM_AddModel
  */
