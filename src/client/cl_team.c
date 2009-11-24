@@ -329,9 +329,9 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 
 /**
  * @brief Generates the skills and inventory for a character and for a 2x2 unit
- *
- * @param[in] employee The employee to create character data for.
- * @param[in] team Which team to use for creation.
+ * @param[in] chr The employee to create character data for.
+ * @param[in] teamDefName Which team to use for creation.
+ * @param[in] ugvType Currently unused.
  * @todo fix the assignment of ucn??
  * @todo fix the WholeTeam stuff
  */
