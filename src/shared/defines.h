@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @note The comment line specifying files has the following syntax:
- *   <parent dir>/<filename>   OR
+ *   [parent dir/filename]     OR
  *   [parent dir]              OR
  *   {project name}
  */
