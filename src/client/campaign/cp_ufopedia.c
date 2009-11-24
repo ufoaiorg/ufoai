@@ -491,6 +491,7 @@ int UP_GetUnreadMails (void)
  * @note if there is a mail header.
  * @param[in] tech The tech to generate a header for.
  * @param[in] type The type of mail (research proposal or finished research)
+ * @param[in] mail The mail descriptor structure
  * @sa UP_ChangeDisplay
  * @sa CL_EventAddMail_f
  * @sa CL_GetEventMail
@@ -724,7 +725,7 @@ void UP_OpenEventMail (const char *eventMailID)
 
 /**
  * @brief Opens the mail view from everywhere with the entry given through name
- * @param name mail entry id (technology script id)
+ * @param techID mail entry id (technology script id)
  * @sa UP_FindEntry_f
  */
 static void UP_OpenMailWith (const char *techID)
@@ -738,7 +739,7 @@ static void UP_OpenMailWith (const char *techID)
 
 /**
  * @brief Opens the UFOpaedia from everywhere with the entry given through name
- * @param name UFOpaedia entry id (technology script id)
+ * @param techID UFOpaedia entry id (technology script id)
  * @sa UP_FindEntry_f
  */
 void UP_OpenWith (const char *techID)
@@ -752,7 +753,7 @@ void UP_OpenWith (const char *techID)
 
 /**
  * @brief Opens the UFOpaedia with the entry given through name, not deleting copies
- * @param name UFOpaedia entry id (technology script id)
+ * @param techID UFOpaedia entry id (technology script id)
  * @sa UP_FindEntry_f
  */
 void UP_OpenCopyWith (const char *techID)
@@ -799,8 +800,6 @@ static void UP_FindEntry_f (void)
 /**
  * @brief Generate a list of options for all allowed articles of a chapter
  * @param[in] parentChapter requested chapter
- * @param[in] array first element of the array of option we can update
- * @param[out] count number of generated options/articles
  * @return The first option of the list, else NULL if no articles
  */
 static menuOption_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
