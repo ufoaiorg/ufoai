@@ -50,6 +50,15 @@ qboolean debugTrace = qfalse;
 const box_t footBox = {{-halfMicrostepSize, -halfMicrostepSize, 0},
 						{ halfMicrostepSize,  halfMicrostepSize, 0}};
 
+/* Width of the box required to stand in a cell by an actor's torso.  */
+#define half1x1Width (UNIT_SIZE * 1 / 2 - WALL_SIZE - DIST_EPSILON)
+#define half2x2Width (UNIT_SIZE * 2 / 2 - WALL_SIZE - DIST_EPSILON)
+/* These are templates for the extents of the box used by an actor's torso. */
+const box_t actor1x1Box = {{-half1x1Width, -half1x1Width, 0},
+							{ half1x1Width,  half1x1Width, 0}};
+const box_t actor2x2Box = {{-half2x2Width, -half2x2Width, 0},
+							{ half2x2Width,  half2x2Width, 0}};
+
 /*
 ==========================================================
   LOCAL TYPES
@@ -684,14 +693,9 @@ static trace_t RT_ObstructedTrace (const vec3_t start, const vec3_t end, int act
  */
 static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const int actorSize, const float frac, const int startingHeight)
 {
-	box_t box;				/**< Tracing box extents */
-	vec3_t mstart, mend;	/**< Midpoint line to trace across */
+	vec3_t mstart, mend;	/**< Midpoint line to trace across */	/**< Tracing box extents */
 	trace_t tr;
-	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
-
-	/* Configure bmin and bmax for the floor scan */
-	VectorSet(box.mins, -halfActorWidth, -halfActorWidth, 0);
-	VectorSet(box.maxs, halfActorWidth, halfActorWidth, 0);
+	const box_t* box = (actorSize == 1 ? &actor1x1Box : &actor2x2Box);
 
 	/* Position mstart and mend at the fraction point */
 	VectorInterpolation(start, end, frac, mstart);
@@ -699,7 +703,7 @@ static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const 
 	mstart[2] = QuantToModel(startingHeight) + (QUANT / 2); /* Set at the starting height, plus a little more to keep us off a potential surface. */
 	mend[2] = -QUANT;  /* Set below the model. */
 
-	tr = RT_COMPLETEBOXTRACE_PASSAGE(mstart, mend, &box);
+	tr = RT_COMPLETEBOXTRACE_PASSAGE(mstart, mend, box);
 
 	if (debugTrace)
 		Com_Printf("Brush found at %f.\n", tr.endpos[2]);
@@ -722,14 +726,9 @@ static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const 
  */
 static int RT_FindOpeningCeilingFrac (const vec3_t start, const vec3_t end, const int actorSize, const float frac, const int startingHeight)
 {
-	box_t box;				/**< Tracing box extents */
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */
 	trace_t tr;
-	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
-
-	/* Configure bmin and bmax for the floor scan */
-	VectorSet(box.mins, -halfActorWidth, -halfActorWidth, 0);
-	VectorSet(box.maxs, halfActorWidth, halfActorWidth, 0);
+	const box_t* box = (actorSize == 1 ? &actor1x1Box : &actor2x2Box);	/**< Tracing box extents */
 
 	/* Position mstart and mend at the midpoint */
 	VectorInterpolation(start, end, frac, mstart);
@@ -737,7 +736,7 @@ static int RT_FindOpeningCeilingFrac (const vec3_t start, const vec3_t end, cons
 	mstart[2] = QuantToModel(startingHeight) - (QUANT / 2); /* Set at the starting height, minus a little more to keep us off a potential surface. */
 	mend[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT + QUANT;  /* Set above the model. */
 
-	tr = RT_COMPLETEBOXTRACE_PASSAGE(mstart, mend, &box);
+	tr = RT_COMPLETEBOXTRACE_PASSAGE(mstart, mend, box);
 
 	if (debugTrace)
 		Com_Printf("Brush found at %f.\n", tr.endpos[2]);
@@ -943,10 +942,9 @@ static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, 
 	if (from->ceiling >= PATHFINDING_HEIGHT * CELL_HEIGHT
 	 && from->cell[2] * CELL_HEIGHT + RT_CEILING(map, actorSize, ax, ay, from->cell[2]) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
 		vec3_t sky, earth;
-		box_t box;	/**< Tracing box extents */
+		const box_t* box = (actorSize == 1 ? &actor1x1Box : &actor2x2Box);
 		trace_t tr;
 		int tempBottom;
-		const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 
 		if (debugTrace)
 			Com_Printf("Using sky trace.\n");
@@ -955,10 +953,8 @@ static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, 
 		VectorCopy(sky, earth);
 		sky[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT;  /* Set to top of model. */
 		earth[2] = QuantToModel(bottom);
-		VectorSet(box.mins, -halfActorWidth, -halfActorWidth, 0);
-		VectorSet(box.maxs, halfActorWidth, halfActorWidth, 0);
 
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(sky, earth, &box);
+		tr = RT_COMPLETEBOXTRACE_PASSAGE(sky, earth, box);
 		tempBottom = ModelFloorToQuant(tr.endpos[2]);
 		if (tempBottom <= bottom + PATHFINDING_MIN_STEPUP) {
 			const int hi = bottom + PATHFINDING_MIN_OPENING;
