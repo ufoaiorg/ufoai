@@ -187,7 +187,7 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t
 
 /**
  * @brief Choose a map for given mission.
- * @param[in|out] mission Pointer to the mission where a new map should be added
+ * @param[in,out] mission Pointer to the mission where a new map should be added
  * @param[in] pos position of the mission (NULL if the position will be chosen afterwards)
  * @param[in] ufoCrashed true if the ufo is crashed
  * @return qfalse if could not set mission
@@ -474,6 +474,7 @@ static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31
  * @param[in] date Contains the number of days to be converted.
  * @param[out] day The day in the month above.
  * @param[out] month The month. [1-12]
+ * @param[out] year The year.
  */
 void CL_DateConvert (const date_t * date, byte *day, byte *month, short *year)
 {
@@ -1577,6 +1578,7 @@ void CL_GameAutoGo (mission_t *mis)
 /**
  * Updates mission result menu text with appropriate values
  * @param resultCounts result counts
+ * @param won Whether we won the battle
  */
 void CP_InitMissionResults (int resultCounts[MAX_MISSIONRESULTCOUNT], qboolean won)
 {
@@ -1606,7 +1608,9 @@ void CP_InitMissionResults (int resultCounts[MAX_MISSIONRESULTCOUNT], qboolean w
 
 /**
  * @brief Update employeer stats after mission.
+ * @param[in] base The base where the team lives.
  * @param[in] won Determines whether we won the mission or not.
+ * @param[in] aircraft The aircraft used for the mission.
  * @note Soldier promotion is being done here.
  * @sa GAME_CP_Results_f
  */

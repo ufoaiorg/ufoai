@@ -1027,7 +1027,7 @@ le_t *LE_Get (int entnum)
 
 /**
  * @brief Checks if a given le_t structure is locked, i.e., used by another event at this time.
- * @param entnum, the entnum of the le_t struct involved.
+ * @param entnum the entnum of the le_t struct involved.
  * @return true if the le_t is locked (used by another event), false if it's not or if it doesn't exist.
  */
 qboolean LE_IsLocked (int entnum)

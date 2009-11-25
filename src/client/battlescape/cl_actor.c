@@ -2055,6 +2055,7 @@ static void CL_TargetingRadius (vec3_t center)
 /**
  * @brief Draws line to target.
  * @param[in] fromPos The (grid-) position of the aiming actor.
+ * @param[in] fromActorSize The size of the aiming actor (1 for 1x1 or 2 for 2x2).
  * @param[in] toPos The (grid-) position of the target.
  * @sa CL_TargetingGrenade
  * @sa CL_AddTargeting
