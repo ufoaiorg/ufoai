@@ -112,6 +112,7 @@ static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
  * @param[in] queue Pointer to the queue.
  * @param[in] item Item to add.
  * @param[in] aircraftTemplate aircraft to add.
+ * @param[in] ufo The UFO in case of a disassemly.
  * @param[in] amount Desired amount to produce.
  * @param[in] disassembling True if this is disassembling, false if production.
  */
@@ -146,7 +147,7 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 	/* self-reference. */
 	prod->idx = queue->numItems;
 
-	if (item) 
+	if (item)
 		tech = item->tech;
 	else if (aircraftTemplate)
 		tech = aircraftTemplate->tech;
@@ -172,7 +173,7 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 	prod->item = item;
 	prod->aircraft = aircraftTemplate;
 	prod->ufo = ufo;
-	
+
 	if (ufo) {
 		/* Disassembling. */
 		prod->production = qfalse;
@@ -328,9 +329,11 @@ static void PR_UpdateProductionList (const base_t* base)
 /**
  * @brief Prints information about the selected item (no aircraft) in production.
  * @param[in] base Pointer to the base where informations should be printed.
+ * @param[in] od The attributes of the item being produced.
+ * @param[in] percentDone How far this process has gotten yet.
  * @sa PR_ProductionInfo
  */
-static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, float percentDone)
+static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, const float percentDone)
 {
 	static char productionInfo[512];
 	int time;
@@ -363,6 +366,8 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, float
 /**
  * @brief Prints information about the selected disassembly task
  * @param[in] base Pointer to the base where informations should be printed.
+ * @param[in] ufo The UFO being disassembled.
+ * @param[in] percentDone How far this process has gotten yet.
  * @sa PR_ProductionInfo
  */
 static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, float percentDone)
@@ -779,7 +784,7 @@ static void PR_ProductionIncrease_f (void)
 		} else
 			MN_ExecuteConfunc("prod_selectline %i", prod->idx);
 
-		
+
 		if (prod->item) {
 			/* Get technology of the item in the selected queue-entry. */
 			const objDef_t *od = prod->item;

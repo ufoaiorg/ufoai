@@ -592,6 +592,7 @@ static void UP_DrawAssociatedAmmo (const technology_t* tech)
 /**
  * @brief Display only the TEXT_UFOPEDIA part for a given technology
  * @param[in] tech The technology_t pointer to print the UFOpaedia article for
+ * @param[in] mail The mail parameters in case we produce a mail
  * @sa UP_Article
  */
 static void UP_Article (technology_t* tech, eventMail_t *mail)

@@ -38,6 +38,7 @@ message_t *cp_messageStack;
  * @brief Returns formatted text of a message timestamp
  * @param[in] text Buffer to hold the final result
  * @param[in] message The message to convert into text
+ * @param[in] textsize The maximum length for text
  */
 static void MS_TimestampedText (char *text, message_t *message, size_t textsize)
 {

@@ -82,6 +82,7 @@ static void AIM_CheckAirequipSelectedSlot (const aircraft_t *aircraft)
 /**
  * @brief Returns a pointer to the selected slot.
  * @param[in] aircraft Pointer to the aircraft
+ * @param[in] airequipID value of aircraftItemType_t that defines what item we are installing
  * @note also used by BDEF_ functions
  * @return Pointer to the slot corresponding to airequipID
  */
@@ -215,7 +216,6 @@ static qboolean AIM_CrafttypeFilter (const base_t *base, const aircraftSlot_t *s
 /**
  * @brief Update the list of item you can choose
  * @param[in] slot Pointer to aircraftSlot where items can be equiped
- * @param[in] tech Pointer to the technolgy to select if needed (NULL if no selected technology).
  */
 static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 {
@@ -470,7 +470,7 @@ static void AIM_AircraftEquipMenuUpdate (qboolean updateItem)
 
 /**
  * @todo It is a generic function, we can move it into cm_mapfightequip
- * @param[in] Pointer to an aircraft slot (can be base/installation too)
+ * @param[in] slot Pointer to an aircraft slot (can be base/installation too)
  * @param[in] tech Pointer to the technology to test
  * @return The status of the technology versus the slot
  */
