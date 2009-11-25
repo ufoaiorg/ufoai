@@ -61,7 +61,7 @@ static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogo
  */
 static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 {
-	const ptrdiff_t num = (ptrdiff_t)(projectile);
+	const ptrdiff_t num = (ptrdiff_t)(projectile - ccs.projectiles);
 	REMOVE_ELEM_ADJUST_IDX(ccs.projectiles, num, ccs.numProjectiles);
 	return qtrue;
 }
