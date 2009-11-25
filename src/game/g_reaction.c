@@ -80,7 +80,6 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
  * @brief Check whether ent can reaction fire at target, i.e. that it can see it and neither is dead etc.
  * @param[in] ent The entity that might be firing
  * @param[in] target The entity that might be fired at
- * @param[out] reason If not null then it prints the reason that reaction fire wasn't possible
  * @returns Whether 'ent' can actually fire at 'target'
  */
 static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)

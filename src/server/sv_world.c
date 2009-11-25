@@ -490,7 +490,13 @@ int SV_PointContents (vec3_t p)
 }
 
 /**
- * @param[in] mins and maxs are relative
+ * @brief calculates the bounding box for the whole trace
+ * @param[in] start The starting point of the trace
+ * @param[in] mins extents of the box we are moving through the world
+ * @param[in] maxs guess what
+ * @param[in] end The point where the trace should end
+ * @param[out] boxmins The lower bounds of the trace
+ * @param[out] boxmaxs The upper bounds
  * @sa SV_Trace
  */
 static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, vec3_t boxmins, vec3_t boxmaxs)

@@ -120,7 +120,7 @@ void G_SendState (unsigned int playerMask, const edict_t *ent)
 
 /**
  * Send a particle spawn event to the client
- * @param player_mask The clients that should see the particle
+ * @param playerMask The clients that should see the particle
  * @param ent The particle to spawn
  */
 static void G_SendParticle (unsigned int playerMask, edict_t *ent)
@@ -141,7 +141,7 @@ static void G_EdictAppear (unsigned int playerMask, edict_t *ent)
 
 /**
  * @brief Send the appear or perish event the the affected clients
- * @param[in] player_mask These are the affected players or clients
+ * @param[in] playerMask These are the affected players or clients
  * In case of e.g. teamplay there can be more than one client affected - thus
  * this is a player mask
  * @param[in] appear Is this event about an appearing actor (or a perishing one)
@@ -1147,7 +1147,7 @@ void G_ClientTeamInfo (player_t * player)
  * func_rotating.
  * @sa CL_AddBrushModel
  * @sa EV_ADD_BRUSH_MODEL
- * @param[in] team The team the edicts are send to
+ * @param[in] player The player the edicts are send to
  */
 static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 {
