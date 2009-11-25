@@ -126,7 +126,7 @@ static void R_SetMinMaxOverlayRows (const vec2_t pos, float radius, const int he
  * @brief Return the half longitude affected when tracing a circle at a given latitude.
  * @param[in] centerPos center of the circle (radar coverage, XVI infection zone).
  * @param[in] radius radius of the circle.
- * @param[in] y latitude of current point (in radians).
+ * @param[in] yLat latitude of current point (in radians).
  * @note This is an implementation of the following facts:
  * - the distance (on a sphere) between the center of the circle and the border of the circle
  *    at current lattitude is equal to radius

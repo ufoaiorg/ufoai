@@ -909,9 +909,9 @@ void Key_Init (void)
  * @brief Sets the keyDest in cls
  * @param[in] keyDest see keydest_t
  */
-void Key_SetDest (int key_dest)
+void Key_SetDest (int keyDest)
 {
-	cls.keyDest = key_dest;
+	cls.keyDest = keyDest;
 	if (cls.keyDest == key_console) {
 		/* make sure the menu no more capture inputs */
 		MN_ReleaseInput();

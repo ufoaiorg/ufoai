@@ -1128,6 +1128,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
  * @param[in] tiles The tiles string can be only one map or a list of space
  * seperated map tiles for random assembly. In case of random assembly we also
  * need the @c pos string. Every tile needs an entry in the @c pos string, too.
+ * @param[in] day Load the day lightmap
  * @param[in] pos In case of a random map assembly this is the string that holds
  * the world grid positions of the tiles. The positions are x, y and z values.
  * They are just written one after another for every tile in the @c tiles string

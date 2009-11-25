@@ -656,7 +656,7 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 }
 
 /**
- * @param[in] fontID the font id (defined in ufos/fonts.ufo)
+ * @param[in] fontId the font id (defined in ufos/fonts.ufo)
  * @param[in] x Current x position (may differ from absX due to tabs e.g.)
  * @param[in] y Current y position (may differ from absY due to linebreaks)
  * @param[in] absX Absolute x value for this string
