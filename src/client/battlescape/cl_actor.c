@@ -2148,6 +2148,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 /**
  * @brief Shows targeting for a grenade.
  * @param[in] fromPos The (grid-) position of the aiming actor.
+ * @param[in] fromActorSize The size of the aiming actor (1 for 1x1 or 2 for 2x2).
  * @param[in] toPos The (grid-) position of the target (mousePos or mousePendPos).
  * @sa CL_TargetingStraight
  */
