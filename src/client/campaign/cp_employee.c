@@ -77,6 +77,7 @@ qboolean E_IsAwayFromBase (const employee_t *employee)
 
 /**
  * @brief  Hires some employees of appropriate type for a building
+ * @param[in] base Which base the employee should be hired in.
  * @param[in] building in which building
  * @param[in] num how many employees, if -1, hire building->maxEmployees
  * @sa B_SetUpBase
@@ -409,13 +410,13 @@ qboolean E_EmployeeIsCurrentlyInBase (const employee_t * employee)
 
 /**
  * @brief Gets an unassigned employee of a given type from the given base.
- *
+ * @param[in] base Which base the employee should be hired in.
  * @param[in] type The type of employee to search.
  * @return employee_t
  * @sa E_EmployeeIsUnassigned
  * @note assigned is not hired - they are already hired in a base, in a quarter _and_ working in another building.
  */
-employee_t* E_GetAssignedEmployee (const base_t* const base, employeeType_t type)
+employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_t type)
 {
 	int i;
 
@@ -429,12 +430,13 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, employeeType_t type
 
 /**
  * @brief Gets an assigned employee of a given type from the given base.
+ * @param[in] base Which base the employee should be hired in.
  * @param[in] type The type of employee to search.
  * @return employee_t
  * @sa E_EmployeeIsUnassigned
  * @note unassigned is not unhired - they are already hired in a base but are at quarters
  */
-employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeType_t type)
+employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeType_t type)
 {
 	int i;
 
@@ -709,9 +711,9 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 
 /**
  * @brief Creates an entry of a new employee in the global list and assignes it to no building/base.
- * @param[in] type Tell the function what type of employee to create.
- * @param[in] type Tell the function what nation the employee (mainly used for soldiers in singleplayer) comes from.
- * @param[in] type Tell the function what type of ugv this employee is.
+ * @param[in] type What type of employee to create.
+ * @param[in] nation What nation the employee (mainly used for soldiers in singleplayer) comes from.
+ * @param[in] ugvType What type of ugv this employee is.
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
@@ -724,6 +726,7 @@ employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvT
 /**
  * @brief Removes the employee completely from the game (buildings + global list).
  * @param[in] employee The pointer to the employee you want to remove.
+ * @param[in] type What type of employee to delete.
  * @return True if the employee was removed successfully, otherwise false.
  * @sa E_CreateEmployee
  * @sa E_ResetEmployees
@@ -788,7 +791,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 						aircraft->acTeam[l]--;
 				}
 				if (employee->type == EMPL_PILOT && aircraft->pilot >= employee)
-					aircraft->pilot--;			
+					aircraft->pilot--;
 			}
 		}
 		for (i = 0, transfer = ccs.transfers; i < ccs.numTransfers; i++, transfer++) {
