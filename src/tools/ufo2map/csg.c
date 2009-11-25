@@ -149,11 +149,13 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
 }
 
 /**
- * @brief
+ * @brief checks if the level# matches the contentsmask.
+ * The level# is mapped to the appropriate levelflags.
+ * @param[in] contents The contentsmask (of the brush, surface, etc.) to check
  * @param[in] level -1 for skipping the levelflag check
  * @return boolean value
  */
-static qboolean IsInLevel (int contents, int level)
+static qboolean IsInLevel (const int contents, const int level)
 {
 	/* special levels */
 	switch (level) {

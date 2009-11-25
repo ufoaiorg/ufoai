@@ -254,7 +254,7 @@ static void Check_MapSize (vec3_t mapSize)
  * @brief single brushes in func_groups are moved to worldspawn. this function allocates space for
  * pointers to those brushes. called when the .map is written back in map.c
  * @return a pointer to the array of pointers to brushes to be included in worldspawn.
- * @param[out] the number of brushes
+ * @param[out] numBrushes the number of brushes
  */
 mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 {

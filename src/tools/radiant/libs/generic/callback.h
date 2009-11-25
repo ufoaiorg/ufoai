@@ -626,7 +626,7 @@ class FreeCaller1: public BindFirstOpaque1<Caller1To2<Function1<FirstArgument, v
 
 /**
  * @brief Constructs a Callback from a non-const \p functor with zero arguments.
- * @param Functor Must define \c operator()().
+ * @param functor Must define \c operator()().
  */
 template<typename Functor>
 inline Callback makeCallback (Functor& functor)
@@ -636,7 +636,7 @@ inline Callback makeCallback (Functor& functor)
 
 /**
  * @brief Constructs a Callback from a const \p functor with zero arguments.
- * @param Functor Must define const \c operator()().
+ * @param functor Must define const \c operator()().
  */
 template<typename Functor>
 inline Callback makeCallback (const Functor& functor)
@@ -646,7 +646,7 @@ inline Callback makeCallback (const Functor& functor)
 
 /**
  * @brief Constructs a Callback1 from a non-const \p functor with one argument.
- * @param Functor Must define \c first_argument_type and \c operator()(first_argument_type).
+ * @param functor Must define \c first_argument_type and \c operator()(first_argument_type).
  */
 template<typename Functor>
 inline Callback1<typename Functor::first_argument_type> makeCallback1 (Functor& functor)
@@ -657,7 +657,7 @@ inline Callback1<typename Functor::first_argument_type> makeCallback1 (Functor& 
 
 /**
  * @brief  Constructs a Callback1 from a const \p functor with one argument.
- * @param Functor Must define \c first_argument_type and const \c operator()(first_argument_type).
+ * @param functor Must define \c first_argument_type and const \c operator()(first_argument_type).
  */
 template<typename Functor>
 inline Callback1<typename Functor::first_argument_type> makeCallback1 (const Functor& functor)

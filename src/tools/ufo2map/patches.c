@@ -346,7 +346,6 @@ static void SubdividePatch(patch_t *patch)
 
 /**
  * @brief Iterate all of the head face patches, subdividing them as necessary.
- * @param[in] num The number of patches - the list will grow in @c DicePatch
  */
 void SubdividePatches (void)
 {

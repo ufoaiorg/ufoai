@@ -143,6 +143,7 @@ static qboolean ParallelAndCoincidentTo (const side_t *side1, const side_t *side
 /**
  * @brief tests if a point is in a map brush.
  * @param[in] point The point to check whether it's inside the brush boundaries or not
+ * @param[in] brush The brush to check against
  * @param[in] mode determines how epsilons are applied
  * @return qtrue if the supplied point is inside the brush
  */
@@ -179,7 +180,7 @@ static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbr
 /**
  * @brief textures take priority over flags. checks if a tex marks a side as having a
  * special property.
- * @param (surface or content) flag the property to check for. should only have one bit set.
+ * @param flag The (surface or content) flag the property to check for. should only have one bit set.
  * @param s the side to check the texture of
  * @return qtrue if the tex indicates the side has the property. Also returns qfalse if
  * the property is not one of those covered by this function.
@@ -334,6 +335,8 @@ static void Check_NearList (void)
 
 /**
  * @brief tests the vertices in the winding of side s.
+ * @param[in] side The side
+ * @param[in] brush The brush
  * @param[in] mode determines how epsilon is applied
  * @return qtrue if they are all in or on (within epsilon) brush b
  * @sa Check_IsPointInsideBrush
