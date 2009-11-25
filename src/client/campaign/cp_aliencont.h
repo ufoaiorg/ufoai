@@ -28,15 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_ALIENCONT_CAP	32
 
-/** specializations of aliens *
- * @todo this is not used anywhere yet */
-typedef enum {
-	AS_PILOT,
-	AS_GUNNER,
-	AS_HARVESTER,
-	AS_SOLDIER
-} alienSpec_t;
-
 /** cases of alien amount calculation */
 typedef enum {
 	AL_RESEARCH,			/**< When we remove alien(s) because of research topic. */

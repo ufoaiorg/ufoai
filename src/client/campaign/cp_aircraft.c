@@ -2929,7 +2929,6 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 		if (tech) {
 			int j;
 			ccs.projectiles[i].aircraftItem = AII_GetAircraftItemByID(tech->provides);
-			ccs.projectiles[i].idx = i;
 			for (j = 0, ssnode=mxml_GetPos2(snode, "pos", ccs.projectiles[i].pos[0]); j < MAX_MULTIPLE_PROJECTILES && ssnode;
 			     ssnode = mxml_GetNextPos2(ssnode, snode, "pos", ccs.projectiles[i].pos[j]), j++)
 				;

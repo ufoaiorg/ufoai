@@ -70,7 +70,7 @@ typedef struct entity_s {
 	vec3_t mins, maxs;
 
 	/* tag positioning */
-	struct entity_s *tagent;	/**< pointer to the parent entity - @todo is this comment correct? */
+	struct entity_s *tagent;	/**< pointer to the parent entity */
 	const char *tagname;				/**< name of the tag */
 
 	/* misc */

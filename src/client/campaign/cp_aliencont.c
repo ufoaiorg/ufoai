@@ -286,8 +286,6 @@ void AL_AddAliens (aircraft_t *aircraft)
 void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, const alienCalcType_t action)
 {
 	int j, toremove;
-	int maxamount = 0; /* amount (of alien type), which is max in Containment) */
-	int maxidx = 0;
 	aliensCont_t *containment;
 
 	assert(base);
@@ -296,6 +294,8 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 	switch (action) {
 	case AL_RESEARCH:
 		if (!alienType) {
+			int maxidx = 0;
+			int maxamount = 0; /* amount (of alien type), which is max in Containment) */
 			/* Search for the type of alien, which has max amount
 			 * in Alien Containment, then remove (amount). */
 			while (amount > 0) {
@@ -345,14 +345,41 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 				if (containment[j].amountAlive == 0)
 					return;
 				/* We are killing only one here, so we
-				 * don't care about amount param.   */
+				 * don't care about amount param. */
 				AL_ChangeAliveAlienNumber(base, &containment[j], -1);
 				containment[j].amountDead++;
 				break;
 			}
 		}
 		break;
-	case AL_ADDALIVE:
+	default:
+		Sys_Error("AL_RemoveAliens: Use AL_AddAliens for action %i", action);
+	}
+}
+
+#ifdef DEBUG
+/**
+ * @todo find a better name (or rename the other AL_AddAliens function
+ * @todo use this function more often - the containment[j].amountDead and containment[j].amountAlive counter
+ * are used all over the code
+ */
+static void AL_AddAliens2 (base_t *base, const teamDef_t *alienType, int amount, const qboolean dead)
+{
+	int j;
+	aliensCont_t *containment;
+
+	assert(base);
+	containment = base->alienscont;
+
+	if (dead) {
+		for (j = 0; j < ccs.numAliensTD; j++) {
+			assert(containment[j].teamDef);
+			if (containment[j].teamDef == alienType) {
+				containment[j].amountDead++;
+				break;
+			}
+		}
+	} else {
 		/* We ignore 3rd parameter of AL_RemoveAliens() here: add only 1 alien */
 		if (!AL_CheckAliveFreeSpace(base, NULL, 1)) {
 			return; /* stop because we will else exceed the max of aliens */
@@ -364,24 +391,9 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 				break;
 			}
 		}
-		/**@todo why should we update actual visible containment here? */
-		/* aliencontCurrent = &containment[j]; */
-		break;
-	case AL_ADDDEAD:
-		for (j = 0; j < ccs.numAliensTD; j++) {
-			assert(containment[j].teamDef);
-			if (containment[j].teamDef == alienType) {
-				containment[j].amountDead++;
-				break;
-			}
-		}
-		/**@todo why should we update actual visible containment here? */
-		/* aliencontCurrent = &containment[j]; */
-		break;
-	default:
-		break;
 	}
 }
+#endif
 
 /**
  * @brief Get index of alien.
@@ -488,6 +500,7 @@ int AL_CountInBase (const base_t *base)
  * @param[in] containment Pointer to the containment
  * @param[in] num Number of alien to be added/removed
  * @pre free space has already been checked
+ * @todo handle containment[j].amountDead++; in case the @c num is negative?
  */
 void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num)
 {
@@ -606,7 +619,7 @@ static void AC_AddOne_f (void)
 	const char *alienName;
 	teamDef_t *alienType;
 	aliensCont_t *containment;
-	qboolean updateAlive;
+	qboolean updateAlive = qtrue;
 	int j;
 	base_t *base = B_GetCurrentSelectedBase();
 
@@ -652,12 +665,8 @@ static void AC_AddOne_f (void)
 		return;
 	}
 
-	/**@todo is AL_RemoveAliens a wrong name for this or why do we remove them on AC_AddOne? */
 	/* call the function that actually changes the persistent datastructure */
-	if (updateAlive)
-		AL_RemoveAliens(base, alienType, 1, AL_ADDALIVE);
-	else
-		AL_RemoveAliens(base, alienType, 1, AL_ADDDEAD);
+	AL_AddAliens2(base, alienType, 1, !updateAlive);
 }
 #endif
 

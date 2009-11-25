@@ -255,7 +255,7 @@ typedef struct objDef_s {
 	int price;			/**< Price for this item. */
 	int size;			/**< Size of an item, used in storage capacities. */
 
-	/** Item type used to check against buyypes.
+	/** Item type used to check against buytypes.
 	 * @sa type=="armour", type=="ammo"			equals "isAmmo"
 	 * @sa obj.craftitem.type == MAX_ACITEMS	equals "isCraftitem" */
 	qboolean isPrimary;

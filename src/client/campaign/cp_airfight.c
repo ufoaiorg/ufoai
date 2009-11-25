@@ -61,7 +61,8 @@ static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogo
  */
 static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 {
-	REMOVE_ELEM_ADJUST_IDX(ccs.projectiles, projectile->idx, ccs.numProjectiles);
+	const ptrdiff_t num = (ptrdiff_t)(projectile);
+	REMOVE_ELEM_ADJUST_IDX(ccs.projectiles, num, ccs.numProjectiles);
 	return qtrue;
 }
 
@@ -94,7 +95,6 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 
 	assert(weaponSlot->item);
 
-	projectile->idx = (ptrdiff_t)(projectile - ccs.projectiles);
 	projectile->aircraftItem = weaponSlot->ammo;
 	if (attackingBase) {
 		projectile->attackingAircraft = NULL;
