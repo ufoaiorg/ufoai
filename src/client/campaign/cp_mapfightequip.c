@@ -762,18 +762,20 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 /**
  * @brief Initialise values of one slot of an aircraft or basedefence common to all types of items.
  * @param[in] slot	Pointer to the slot to initialize.
- * @param[in] aircraft Template	Pointer to aircraft template.
+ * @param[in] aircraftTemplate Template	Pointer to aircraft template.
  * @param[in] base	Pointer to base.
  * @param[in] installation Pointer to the thing being installed.
  * @param[in] type
  */
-void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraft, base_t *base, installation_t *installation, aircraftItemType_t type)
+void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraftTemplate, base_t *base, installation_t *installation, aircraftItemType_t type)
 {
-	assert((!base && aircraft) || (base && !aircraft) || (installation && !aircraft));	/* Only one of them is allowed. */
-	assert((!base && installation) || (base && !installation) || (!base && !installation)); /* Only one of them is allowed or neither. */
+	/* Only one of them is allowed. */
+	assert((!base && aircraftTemplate) || (base && !aircraftTemplate) || (installation && !aircraftTemplate));
+	/* Only one of them is allowed or neither. */
+	assert((!base && installation) || (base && !installation) || (!base && !installation));
 
-	memset(slot, 0, sizeof(slot)); /* all values to 0 */
-	slot->aircraft = aircraft;
+	memset(slot, 0, sizeof(slot));
+	slot->aircraft = aircraftTemplate;
 	slot->base = base;
 	slot->installation = installation;
 	slot->item = NULL;
@@ -782,7 +784,8 @@ void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraft, base_t *bas
 	slot->size = ITEM_HEAVY;
 	slot->nextItem = NULL;
 	slot->type = type;
-	slot->ammoLeft = AMMO_STATUS_NOT_SET; /** sa BDEF_AddBattery: it needs to be AMMO_STATUS_NOT_SET and not 0 @sa B_SaveBaseSlots */
+	/** sa BDEF_AddBattery: it needs to be AMMO_STATUS_NOT_SET and not 0 @sa B_SaveBaseSlots */
+	slot->ammoLeft = AMMO_STATUS_NOT_SET;
 	slot->installationTime = 0;
 }
 
