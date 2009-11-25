@@ -288,7 +288,7 @@ void* Com_AlignPtr (void *memory, valueTypes_t type)
 
 /**
  * Parse a value
- * @param[out] writedByte
+ * @param[out] writtenBytes
  * @return A resultStatus_t value
  * @note instead of , this function separate error message and write byte result
  * @todo better doxygen documentation

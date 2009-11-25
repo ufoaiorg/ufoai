@@ -370,8 +370,8 @@ static void M_MusicStreamCallback (musicStream_t *userdata, byte *stream, int le
 }
 
 /**
- * Add stereo samples with a 16 byte width to the stream buffer
- * @param[in] the amount of stereo samples that should be added to the stream buffer (this
+ * @brief Add stereo samples with a 16 byte width to the stream buffer
+ * @param[in] samples The amount of stereo samples that should be added to the stream buffer (this
  * is usually 1/4 of the size of the data buffer, one sample should have 4 bytes, 2 for
  * each channel)
  * @param[in] data The stereo sample buffer

@@ -87,7 +87,7 @@ void S_SpatializeChannel (const s_channel_t *ch)
  * @sa S_StartLocalSample
  * @sa S_SetVolume
  */
-void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float volume)
+void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float relVolume)
 {
 	s_channel_t *ch;
 	int i;
@@ -111,7 +111,7 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float v
 		S_SpatializeChannel(ch);
 	}
 
-	Mix_VolumeChunk(ch->sample->chunk, snd_volume->value * volume * MIX_MAX_VOLUME);
+	Mix_VolumeChunk(ch->sample->chunk, snd_volume->value * relVolume * MIX_MAX_VOLUME);
 	Mix_PlayChannel(i, ch->sample->chunk, 0);
 }
 

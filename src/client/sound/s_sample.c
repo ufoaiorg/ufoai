@@ -85,7 +85,7 @@ static Mix_Chunk* S_LoadSampleChunk (const char *sound)
 
 /**
  * @brief Loads and registers a sound file for later use
- * @param[in] name The name of the soundfile, relative to the sounds dir
+ * @param[in] soundFile The name of the soundfile, relative to the sounds dir
  * @sa S_LoadSound
  */
 s_sample_t *S_LoadSample (const char *soundFile)
