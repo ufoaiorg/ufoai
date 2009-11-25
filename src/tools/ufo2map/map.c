@@ -214,9 +214,10 @@ int FindOrCreateFloatPlane (vec3_t normal, vec_t dist)
 }
 
 /**
- * Builds a plane normal and distance from three points on the plane.
+ * @brief Builds a plane normal and distance from three points on the plane.
  * If the normal is nearly axial, it will be snapped to be axial. Looks
  * up the plane in the unique planes.
+ * @param[in] b The brush that the points belong to.
  * @param[in] p0 Three points on the plane. (A vector with plane coordinates)
  * @param[in] p1 Three points on the plane. (A vector with plane coordinates)
  * @param[in] p2 Three points on the plane. (A vector with plane coordinates)
@@ -614,7 +615,8 @@ static inline void GenerateFootstepList (const char *filename, int mipTexIndex)
 /**
  * @brief Parses a brush from the map file
  * @sa FindMiptex
- * @param[in] filename The map filename
+ * @param[in] mapent The entity the brush to parse belongs to
+ * @param[in] filename The map filename, used to derive the name for the footsteps file
  */
 static void ParseBrush (entity_t *mapent, const char *filename)
 {
@@ -1034,8 +1036,9 @@ static inline void WriteMapEntities (qFILE *f, const epair_t *e)
 
 /**
  * @brief write a brush to the .map file
- * @param j the index of the brush in the entity, to label the brush in the comment in the map file
- * @param f file to write to
+ * @param[in] brush The brush to write
+ * @param[in] j the index of the brush in the entity, to label the brush in the comment in the map file
+ * @param[in] f file to write to
  */
 static void WriteMapBrush (const mapbrush_t *brush, const int j, qFILE *f)
 {

@@ -493,7 +493,9 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 
 
 /**
+ * @param[in] pos The point in the world that receives the light
  * @param[in] scale is the normalizer for multisampling
+ * @param[in] headhints An array of theads for each light to optimize the tracing
  */
 static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale, int *headhints)
 {

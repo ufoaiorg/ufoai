@@ -19,7 +19,7 @@ namespace brushconstruct
 
 		public:
 			/**
-			 * @param[out] The brush to creates the planes for
+			 * @param[out] brush The brush to create the planes for
 			 * @param[in] bounds The mins and maxs of the cube
 			 * @param[in] sides
 			 * @param[in] projection The texture projection that is used (shift, scale and rotate values)
