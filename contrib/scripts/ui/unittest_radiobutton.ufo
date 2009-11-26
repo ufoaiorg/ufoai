@@ -1,0 +1,94 @@
+/**
+ * @brief Unittest for radiobutton
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "mn_push unittest_radiobutton"
+ */
+
+window unittest_radiobutton
+{
+	{
+		pos "100 100"
+		size "250 250"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest radiobutton"
+		bgcolor		"0 0 0 1"
+	}
+
+	radiobutton button_1
+	{
+		pos		"10 60"
+		size	"27 35"
+		image	"ui/button_background2"
+		value	1
+		cvar	*cvar:foo
+		icon	number_1
+	}
+	radiobutton button_2
+	{
+		pos		"80 60"
+		size	"27 35"
+		image	"ui/button_background2"
+		value	2
+		cvar	*cvar:foo
+		icon	number_2
+	}
+	radiobutton button_3
+	{
+		pos		"150 60"
+		size	"27 35"
+		image	"ui/button_background2"
+		value	3
+		cvar	*cvar:foo
+		icon	number_3
+	}
+	radiobutton button_4
+	{
+		pos		"10 130"
+		size	"27 35"
+		image	"ui/button_background2"
+		value	4
+		cvar	*cvar:foo
+		icon	number_4
+	}
+	radiobutton button_5
+	{
+		pos		"80 130"
+		size	"27 35"
+		image	"ui/button_background2"
+		value	5
+		cvar	*cvar:foo
+		icon	number_5
+	}
+	radiobutton button_6
+	{
+		pos		"150 130"
+		size	"27 35"
+		image	"ui/button_background2"
+		value	6
+		cvar	*cvar:foo
+		icon	number_6
+	}
+	radiobutton button_7
+	{
+		pos		"10 200"
+		size	"27 35"
+		image	"ui/button_background2"
+		value	7
+		cvar	*cvar:foo
+		icon	number_7
+	}
+	radiobutton button_8
+	{
+		pos		"80 200"
+		size	"27 35"
+		image	"ui/button_background2"
+		value	8
+		cvar	*cvar:foo
+		icon	number_8
+	}
+
+	func onInit {
+		*cvar:foo = 1
+	}
+
+}

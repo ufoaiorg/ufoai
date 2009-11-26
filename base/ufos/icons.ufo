@@ -474,3 +474,55 @@ icon message_ufo {
 	size	"15 15"
 	single	true
 }
+
+//
+// hud icons
+//
+
+icon number_1 {
+	image "ui/icon_pack_hud"
+	texl	"0 0"
+	size	"17 26"
+}
+
+icon number_2 {
+	image "ui/icon_pack_hud"
+	texl	"17 0"
+	size	"17 26"
+}
+
+icon number_3 {
+	image "ui/icon_pack_hud"
+	texl	"36 0"
+	size	"17 26"
+}
+
+icon number_4 {
+	image "ui/icon_pack_hud"
+	texl	"53 0"
+	size	"17 26"
+}
+
+icon number_5 {
+	image "ui/icon_pack_hud"
+	texl	"72 0"
+	size	"17 26"
+}
+
+icon number_6 {
+	image "ui/icon_pack_hud"
+	texl	"92 0"
+	size	"17 26"
+}
+
+icon number_7 {
+	image "ui/icon_pack_hud"
+	texl	"110 0"
+	size	"17 26"
+}
+
+icon number_8 {
+	image "ui/icon_pack_hud"
+	texl	"129 0"
+	size	"17 26"
+}
