@@ -800,7 +800,7 @@ static void G_GetTeam (player_t * player)
 					p->inuse = qfalse;
 					break;
 				}
-			Com_DPrintf(DEBUG_GAME, "Assigning %s to Team %i\n", player->pers.netname, i);
+			Com_DPrintf(DEBUG_GAME, "Assigning %s to team %i\n", player->pers.netname, i);
 			G_SetTeamForPlayer(player, i);
 		} else {
 			gi.dprintf("No free team - disconnecting '%s'\n", player->pers.netname);
@@ -1336,6 +1336,12 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 
 	/* send the updated config string */
 	gi.ConfigString(CS_PLAYERNAMES + player->num, "%s", player->pers.netname);
+
+	/* try to update to the prefered team */
+	if (!G_MatchIsRunning()) {
+		player->pers.team = TEAM_NO_ACTIVE;
+		G_GetTeam(player);
+	}
 }
 
 /**

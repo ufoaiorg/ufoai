@@ -137,6 +137,8 @@ extern struct dbuffer *sv_msg;
 /* sv_main.c */
 void SV_DropClient(client_t *drop, const char *message);
 
+int SV_CountPlayers(void);
+
 int SV_ModelIndex(const char *name);
 
 void SV_InitOperatorCommands(void);
@@ -160,7 +162,6 @@ void SV_BroadcastPrintf(int level, const char *fmt, ...) __attribute__((format(p
 
 /* sv_user.c */
 void SV_ExecuteClientMessage(client_t * cl, int cmd, struct dbuffer *msg);
-int SV_CountPlayers(void);
 void SV_SetClientState(client_t* client, int state);
 
 /* sv_ccmds.c */
