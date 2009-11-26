@@ -82,14 +82,6 @@ window equipment extends objectinfo
 
 	func names_clear
 	{
-		*bt_actor0@image hud/buttons1
-		*bt_actor1@image hud/buttons1
-		*bt_actor2@image hud/buttons1
-		*bt_actor3@image hud/buttons1
-		*bt_actor4@image hud/buttons1
-		*bt_actor5@image hud/buttons1
-		*bt_actor6@image hud/buttons1
-		*bt_actor7@image hud/buttons1
 		*txt_actor0@color "0 .78 0 1"
 		*txt_actor1@color "0 .78 0 1"
 		*txt_actor2@color "0 .78 0 1"
@@ -101,90 +93,114 @@ window equipment extends objectinfo
 	}
 
 	confunc equipdeselect {
-		*bt_actor<1>@image hud/buttons1
+		*bt_actor<1>@disabled = false
 		*txt_actor<1>@color "0 .78 0 1"
 	}
 
 	confunc equipselect {
-		*bt_actor<1>@image hud/buttons1a
+		*bt_actor<1>@disabled = false
+		*cvar:selected_actor = <1>
 		*txt_actor<1>@color "1 1 1 1"
 	}
 
 	confunc equipdisable {
-		*bt_actor<1>@image hud/buttons1g
+		*bt_actor<1>@disabled = true
 	}
 
-	pic bt_actor0
+	radiobutton bt_actor0
 	{
-		tooltip	"_Equip this soldier"
 		pos		"10 14"
-		texl	"0 0"
-		texh	"28 36"
-		mousefx true
-		onClick { cmd "equip_select 0;" }
-	}
-	pic bt_actor1
-	{
+		size	"27 35"
+		image	"ui/button_background2"
+		value	0
+		cvar	*cvar:selected_actor
+		icon	number_1
+		onChange { cmd "equip_select 0;" }
 		tooltip	"_Equip this soldier"
+	}
+
+	radiobutton bt_actor1
+	{
 		pos		"10 55"
-		texl	"32 0"
-		texh	"60 36"
-		mousefx true
-		onClick { cmd "equip_select 1;" }
-	}
-	pic bt_actor2
-	{
+		size	"27 35"
+		image	"ui/button_background2"
+		value	1
+		cvar	*cvar:selected_actor
+		icon	number_2
+		onChange { cmd "equip_select 1;" }
 		tooltip	"_Equip this soldier"
+	}
+
+	radiobutton bt_actor2
+	{
 		pos		"10 96"
-		texl	"64 0"
-		texh	"92 36"
-		mousefx true
-		onClick { cmd "equip_select 2;" }
-	}
-	pic bt_actor3
-	{
+		size	"27 35"
+		image	"ui/button_background2"
+		value	2
+		cvar	*cvar:selected_actor
+		icon	number_3
+		onChange { cmd "equip_select 2;" }
 		tooltip	"_Equip this soldier"
+	}
+
+	radiobutton bt_actor3
+	{
 		pos		"10 137"
-		texl	"96 0"
-		texh	"124 36"
-		mousefx true
-		onClick { cmd "equip_select 3;" }
-	}
-	pic bt_actor4
-	{
+		size	"27 35"
+		image	"ui/button_background2"
+		value	3
+		cvar	*cvar:selected_actor
+		icon	number_4
+		onChange { cmd "equip_select 3;" }
 		tooltip	"_Equip this soldier"
+	}
+
+	radiobutton bt_actor4
+	{
 		pos		"10 178"
-		texl	"0 38"
-		texh	"28 74"
-		mousefx true
-		onClick { cmd "equip_select 4;" }
-	}
-	pic bt_actor5
-	{
+		size	"27 35"
+		image	"ui/button_background2"
+		value	4
+		cvar	*cvar:selected_actor
+		icon	number_5
+		onChange { cmd "equip_select 4;" }
 		tooltip	"_Equip this soldier"
+	}
+
+	radiobutton bt_actor5
+	{
 		pos		"10 219"
-		texl	"32 38"
-		texh	"60 74"
-		mousefx true
-		onClick { cmd "equip_select 5;" }
-	}
-	pic bt_actor6
-	{
+		size	"27 35"
+		image	"ui/button_background2"
+		value	5
+		cvar	*cvar:selected_actor
+		icon	number_6
+		onChange { cmd "equip_select 5;" }
 		tooltip	"_Equip this soldier"
+	}
+
+	radiobutton bt_actor6
+	{
 		pos		"10 260"
-		texl	"64 38"
-		texh	"92 74"
-		mousefx true
-		onClick { cmd "equip_select 6;" }
-	}
-	pic bt_actor7
-	{
+		size	"27 35"
+		image	"ui/button_background2"
+		value	6
+		cvar	*cvar:selected_actor
+		icon	number_7
+		onChange { cmd "equip_select 6;" }
 		tooltip	"_Equip this soldier"
+	}
+
+	radiobutton bt_actor7
+	{
 		pos		"10 301"
-		texl	"96 38"
-		texh	"124 74"
-		mousefx true
-		onClick { cmd "equip_select 7;" }
+		size	"27 35"
+		image	"ui/button_background2"
+		value	7
+		cvar	*cvar:selected_actor
+		icon	number_8
+		onChange { cmd "equip_select 7;" }
+		tooltip	"_Equip this soldier"
 	}
 
 	string txt_actor0
