@@ -204,77 +204,100 @@ window hud extends ahud
 			ghost	true
 		}
 
-		pic bt_actor0
+		radiobutton bt_actor0
 		{
-			tooltip	*cvar:mn_soldier0_tt
-			pos		"11 10"
-			texl	"0 0"
-			texh	"28 36"
-			mousefx	true
-			onClick	{ cmd "soldier_select 0;" }
+			tooltip		*cvar:mn_soldier0_tt
+			pos			"11 10"
+			size		"27 35"
+			image		"ui/button_background2"
+			value		0
+			cvar		*cvar:selected_soldier
+			icon		number_1
+			onChange	{ cmd "soldier_select 0;" }
 		}
-		pic bt_actor1
+
+		radiobutton bt_actor1
 		{
-			tooltip	*cvar:mn_soldier1_tt
-			pos		"42 10"
-			texl	"32 0"
-			texh	"60 36"
-			mousefx	true
-			onClick	{ cmd "soldier_select 1;" }
+			tooltip		*cvar:mn_soldier1_tt
+			pos			"42 10"
+			size		"27 35"
+			image		"ui/button_background2"
+			value		1
+			cvar		*cvar:selected_soldier
+			icon		number_2
+			onChange	{ cmd "soldier_select 1;" }
 		}
-		pic bt_actor2
+
+		radiobutton bt_actor2
 		{
-			tooltip	*cvar:mn_soldier2_tt
-			pos		"73 10"
-			texl	"64 0"
-			texh	"92 36"
-			mousefx	true
-			onClick	{ cmd "soldier_select 2;" }
+			tooltip		*cvar:mn_soldier2_tt
+			pos			"73 10"
+			size		"27 35"
+			image		"ui/button_background2"
+			value		2
+			cvar		*cvar:selected_soldier
+			icon		number_3
+			onChange	{ cmd "soldier_select 2;" }
 		}
-		pic bt_actor3
+
+		radiobutton bt_actor3
 		{
-			tooltip	*cvar:mn_soldier3_tt
-			pos		"104 10"
-			texl	"96 0"
-			texh	"124 36"
-			mousefx	true
-			onClick	{ cmd "soldier_select 3;" }
+			tooltip		*cvar:mn_soldier3_tt
+			pos			"104 10"
+			size		"27 35"
+			image		"ui/button_background2"
+			value		3
+			cvar		*cvar:selected_soldier
+			icon		number_4
+			onChange	{ cmd "soldier_select 3;" }
 		}
-		pic bt_actor4
+
+		radiobutton bt_actor4
 		{
-			tooltip	*cvar:mn_soldier4_tt
-			pos		"135 10"
-			texl	"0 38"
-			texh	"28 74"
-			mousefx	true
-			onClick	{ cmd "soldier_select 4;" }
+			tooltip		*cvar:mn_soldier4_tt
+			pos			"135 10"
+			size		"27 35"
+			image		"ui/button_background2"
+			value		4
+			cvar		*cvar:selected_soldier
+			icon		number_5
+			onChange	{ cmd "soldier_select 4;" }
 		}
-		pic bt_actor5
+
+		radiobutton bt_actor5
 		{
-			tooltip	*cvar:mn_soldier5_tt
-			pos		"166 10"
-			texl	"32 38"
-			texh	"60 74"
-			mousefx	true
-			onClick	{ cmd "soldier_select 5;" }
+			tooltip		*cvar:mn_soldier5_tt
+			pos			"166 10"
+			size		"27 35"
+			image		"ui/button_background2"
+			value		5
+			cvar		*cvar:selected_soldier
+			icon		number_6
+			onChange	{ cmd "soldier_select 5;" }
 		}
-		pic bt_actor6
+
+		radiobutton bt_actor6
 		{
-			tooltip	*cvar:mn_soldier6_tt
-			pos		"197 10"
-			texl	"64 38"
-			texh	"92 74"
-			mousefx	true
-			onClick	{ cmd "soldier_select 6;" }
+			tooltip		*cvar:mn_soldier6_tt
+			pos			"197 10"
+			size		"27 35"
+			image		"ui/button_background2"
+			value		6
+			cvar		*cvar:selected_soldier
+			icon		number_7
+			onChange	{ cmd "soldier_select 6;" }
 		}
-		pic bt_actor7
+
+		radiobutton bt_actor7
 		{
-			tooltip	*cvar:mn_soldier7_tt
-			pos		"228 10"
-			texl	"96 38"
-			texh	"124 74"
-			mousefx	true
-			onClick	{ cmd "soldier_select 7;" }
+			tooltip		*cvar:mn_soldier7_tt
+			pos			"228 10"
+			size		"27 35"
+			image		"ui/button_background2"
+			value		7
+			cvar		*cvar:selected_soldier
+			icon		number_8
+			onChange	{ cmd "soldier_select 7;" }
 		}
 	}
 
@@ -316,9 +339,16 @@ window hud extends ahud
 		}
 	}
 
-	confunc hudselect { *team_selection.bt_actor<1>@image hud/buttons1a }
-	confunc huddeselect { *team_selection.bt_actor<1>@image hud/buttons1 }
-	confunc huddisable { *team_selection.bt_actor<1>@image hud/buttons1g }
+	confunc hudselect {
+		*team_selection.bt_actor<1>@disabled = false
+		*cvar:selected_soldier = <1>
+	}
+	confunc huddeselect {
+		*team_selection.bt_actor<1>@disabled = false
+	}
+	confunc huddisable {
+		*team_selection.bt_actor<1>@disabled = true
+	}
 
 	// ==================
 	// round events
