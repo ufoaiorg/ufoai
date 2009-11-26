@@ -39,10 +39,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_icon.h"
 #include "../m_parse.h"
 #include "../m_input.h"
+#include "../m_render.h"
 #include "m_node_radiobutton.h"
 #include "m_node_abstractnode.h"
 
 #define EPSILON 0.001f
+
+/** Height of a status in a 4 status 256*256 texture */
+#define MN_4STATUS_TEX_HEIGHT 64
 
 /**
  * @brief Handles RadioButton draw
@@ -54,18 +58,32 @@ static void MN_RadioButtonNodeDraw (menuNode_t *node)
 	int status = 0;
 	const float current = MN_GetReferenceFloat(node, node->cvar);
 	const qboolean disabled = node->disabled || node->parent->disabled;
+	int texY;
+	const char *image;
 
 	if (disabled) {
 		status = 2;
+		texY = MN_4STATUS_TEX_HEIGHT * 3;
 	} else if (current > node->extraData1 - EPSILON && current < node->extraData1 + EPSILON) {
 		status = 3;
+		texY = MN_4STATUS_TEX_HEIGHT * 3;
 	} else if (node->state) {
 		status = 1;
+		texY = MN_4STATUS_TEX_HEIGHT;
 	} else {
 		status = 0;
+		texY = 0;
 	}
 
 	MN_GetNodeAbsPos(node, pos);
+
+	image = MN_GetReferenceString(node, node->image);
+	if (image) {
+		const int texX = rint(node->texl[0]);
+		texY += node->texl[1];
+		MN_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
+			texX + node->size[0], texY + node->size[1], texX, texY, image);
+	}
 
 	if (node->icon) {
 		MN_DrawIconInBox(node->icon, status, pos[0], pos[1], node->size[0], node->size[1]);
