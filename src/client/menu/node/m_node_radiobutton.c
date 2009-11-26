@@ -63,7 +63,7 @@ static void MN_RadioButtonNodeDraw (menuNode_t *node)
 
 	if (disabled) {
 		status = 2;
-		texY = MN_4STATUS_TEX_HEIGHT * 3;
+		texY = MN_4STATUS_TEX_HEIGHT * 2;
 	} else if (current > node->extraData1 - EPSILON && current < node->extraData1 + EPSILON) {
 		status = 3;
 		texY = MN_4STATUS_TEX_HEIGHT * 3;
