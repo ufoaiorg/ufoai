@@ -820,10 +820,8 @@ void G_SetTeamForPlayer (player_t* player, const int team)
 			gi.error("No spawnpoints for team %i", team);
 	}
 
-	if (!G_IsAIPlayer(player)) {
-		Info_RemoveKey(player->pers.userinfo, "cl_team");
+	if (!G_IsAIPlayer(player))
 		Info_SetValueForKeyAsInteger(player->pers.userinfo, sizeof(player->pers.userinfo), "cl_team", team);
-	}
 }
 
 /**
