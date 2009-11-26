@@ -129,7 +129,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 		if (cl->state >= cs_connected) {
 			char infoPlayer[MAX_INFO_STRING];
 			/* show players that already have a team with their teamnum */
-			const int teamId = ge->ClientGetTeamNum(cl->player) || ge->ClientGetTeamNum(cl->player) || TEAM_NO_ACTIVE;
+			const int teamId = ge->ClientGetTeamNum(cl->player) || TEAM_NO_ACTIVE;
 			Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: connected client: %i %s\n", i, cl->name);
 			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_team", teamId);
 			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_ready", ge->ClientIsReady(cl->player));
