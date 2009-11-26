@@ -50,84 +50,98 @@ window hud extends ahud
 			ghost	true
 		}
 
-		pic bt1
+		radiobutton bt1
 		{
 			tooltip	"_Level 1"
 			pos		"6 289"
-			texl	"0 0"
-			texh	"28 36"
-			mousefx	true
-			onClick	{ cmd "cl_worldlevel 0;" }
+			size	"27 35"
+			image	"ui/button_background2"
+			value	0
+			cvar	*cvar:cl_worldlevel
+			icon	number_1
 		}
-		pic bt2
+
+		radiobutton bt2
 		{
 			tooltip	"_Level 2"
 			pos		"6 249"
-			texl	"32 0"
-			texh	"60 36"
-			mousefx	true
-			onClick	{ cmd "cl_worldlevel 1;" }
+			size	"27 35"
+			image	"ui/button_background2"
+			value	1
+			cvar	*cvar:cl_worldlevel
+			icon	number_2
 		}
-		pic bt3
+
+		radiobutton bt3
 		{
 			tooltip	"_Level 3"
 			pos		"6 209"
-			texl	"64 0"
-			texh	"92 36"
-			mousefx	true
-			onClick	{ cmd "cl_worldlevel 2;" }
+			size	"27 35"
+			image	"ui/button_background2"
+			value	2
+			cvar	*cvar:cl_worldlevel
+			icon	number_3
 		}
-		pic bt4
+
+		radiobutton bt4
 		{
 			tooltip	"_Level 4"
 			pos		"6 169"
-			texl	"96 0"
-			texh	"124 36"
-			mousefx	true
-			onClick	{ cmd "cl_worldlevel 3;" }
+			size	"27 35"
+			image	"ui/button_background2"
+			value	3
+			cvar	*cvar:cl_worldlevel
+			icon	number_4
 		}
-		pic bt5
+
+		radiobutton bt5
 		{
 			tooltip	"_Level 5"
 			pos		"6 129"
-			texl	"0 38"
-			texh	"28 74"
-			mousefx	true
-			onClick	{ cmd "cl_worldlevel 4;" }
+			size	"27 35"
+			image	"ui/button_background2"
+			value	4
+			cvar	*cvar:cl_worldlevel
+			icon	number_5
 		}
-		pic bt6
+
+		radiobutton bt6
 		{
 			tooltip	"_Level 6"
 			pos		"6 89"
-			texl	"32 38"
-			texh	"60 74"
-			mousefx	true
-			onClick	{ cmd "cl_worldlevel 5;" }
+			size	"27 35"
+			image	"ui/button_background2"
+			value	5
+			cvar	*cvar:cl_worldlevel
+			icon	number_6
 		}
-		pic bt7
+
+		radiobutton bt7
 		{
 			tooltip	"_Level 7"
 			pos		"6 49"
-			texl	"64 38"
-			texh	"92 74"
-			mousefx	true
-			onClick	{ cmd "cl_worldlevel 6;" }
+			size	"27 35"
+			image	"ui/button_background2"
+			value	6
+			cvar	*cvar:cl_worldlevel
+			icon	number_7
 		}
-		pic bt8
+
+		radiobutton bt8
 		{
 			tooltip	"_Level 8"
-			pos		"6 9"
-			texl	"96 38"
-			texh	"124 74"
-			mousefx	true
-			onClick	{ cmd "cl_worldlevel 7;" }
+			pos		"6 49"
+			size	"27 35"
+			image	"ui/button_background2"
+			value	7
+			cvar	*cvar:cl_worldlevel
+			icon	number_8
 		}
-
 	}
 
-	confunc disfloor { *floor.bt<1>@image hud/buttons1g }
-	confunc deselfloor { *floor.bt<1>@image hud/buttons1 }
-	confunc selfloor { *floor.bt<1>@image hud/buttons1a }
+	confunc disfloor { *floor.bt<1>@disabled = true }
+	confunc deselfloor { *floor.bt<1>@disabled = false }
+	confunc selfloor { *floor.bt<1>@disabled = false }
 
 	// ==================
 	// actor and team bar
