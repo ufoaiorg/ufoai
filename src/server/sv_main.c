@@ -946,3 +946,26 @@ void SV_ShutdownWhenEmpty (void)
 	/* pretend server is already dead, otherwise clients may try and reconnect */
 	Com_SetServerState(ss_dead);
 }
+
+/**
+ * @brief Returns the number of spawned players
+ * @sa SV_ShutdownWhenEmpty
+ */
+int SV_CountPlayers (void)
+{
+	int i;
+	int count = 0;
+	client_t *cl;
+
+	if (!svs.initialized)
+		return 0;
+
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
+		if (cl->state != cs_spawned)
+			continue;
+
+		count++;
+	}
+
+	return count;
+}

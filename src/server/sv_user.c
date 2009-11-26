@@ -115,29 +115,6 @@ static void SV_New_f (void)
 }
 
 /**
- * @brief Returns the number of spawned players
- * @sa SV_ShutdownWhenEmpty
- */
-int SV_CountPlayers (void)
-{
-	int i;
-	int count = 0;
-	client_t *cl;
-
-	if (!svs.initialized)
-		return 0;
-
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
-		if (cl->state != cs_spawned)
-			continue;
-
-		count++;
-	}
-
-	return count;
-}
-
-/**
  * @sa SV_Spawn_f
  */
 static void SV_Begin_f (void)
