@@ -133,7 +133,6 @@ window firemode_left {
 			texl			"0 0"
 			texh			"214  63"
 			size			"214  63"
-			mousefx			false
 			invis			true
 			onClick			{ cmd "fireweap l 0;mn_pop;" }
 			onMouseEnter	{ *node:this@image "hud/firemode_hover" }
@@ -148,7 +147,6 @@ window firemode_left {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode l 0;" }
 		}
 		string name	{ string *cvar:mn_l_fm_name0	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -164,7 +162,6 @@ window firemode_left {
 			texl			"0 0"
 			texh			"214  63"
 			size			"214  63"
-			mousefx			false
 			invis			true
 			onClick			{ cmd "fireweap l 1;mn_pop;" }
 			onMouseEnter	{ *node:this@image "hud/firemode_hover" }
@@ -179,7 +176,6 @@ window firemode_left {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode l 1;" }
 		}
 		string name	{ string *cvar:mn_l_fm_name1	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -195,7 +191,6 @@ window firemode_left {
 			texl			"0 0"
 			texh			"214  63"
 			size			"214  63"
-			mousefx			false
 			invis			true
 			onClick			{ cmd "fireweap l 2;mn_pop;" }
 			onMouseEnter	{ *node:this@image "hud/firemode_hover" }
@@ -210,7 +205,6 @@ window firemode_left {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode l 2;" }
 		}
 		string name	{ string *cvar:mn_l_fm_name2	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -226,7 +220,6 @@ window firemode_left {
 			texl			"0 0"
 			texh			"214  63"
 			size			"214  63"
-			mousefx			false
 			invis			true
 			onClick			{ cmd "fireweap l 3;mn_pop;" }
 			onMouseEnter	{ *node:this@image "hud/firemode_hover" }
@@ -241,7 +234,6 @@ window firemode_left {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode l 3;" }
 		}
 		string name	{ string *cvar:mn_l_fm_name3	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -257,7 +249,6 @@ window firemode_left {
 			texl	"0 0"
 			texh	"214  63"
 			size	"214  63"
-			mousefx	false
 			invis true
 			onClick	{ cmd "fireweap l 4;mn_pop;" }
 			onMouseEnter { *node:this@image "hud/firemode_hover" }
@@ -272,7 +263,6 @@ window firemode_left {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode l 4;" }
 		}
 		string name	{ string *cvar:mn_l_fm_name4	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -288,7 +278,6 @@ window firemode_left {
 			texl	"0 0"
 			texh	"214  63"
 			size	"214  63"
-			mousefx	false
 			invis true
 			onClick	{ cmd "fireweap l 5;mn_pop;" }
 			onMouseEnter { *node:this@image "hud/firemode_hover" }
@@ -303,7 +292,6 @@ window firemode_left {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode l 5;" }
 		}
 		string name	{ string *cvar:mn_l_fm_name5	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -319,7 +307,6 @@ window firemode_left {
 			texl	"0 0"
 			texh	"214  63"
 			size	"214  63"
-			mousefx	false
 			invis true
 			onClick	{ cmd "fireweap l 6;mn_pop;" }
 			onMouseEnter { *node:this@image "hud/firemode_hover" }
@@ -334,7 +321,6 @@ window firemode_left {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode l 6;" }
 		}
 		string name	{ string *cvar:mn_l_fm_name6	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -350,7 +336,6 @@ window firemode_left {
 			texl	"0 0"
 			texh	"214  63"
 			size	"214  63"
-			mousefx	false
 			invis true
 			onClick	{ cmd "fireweap l 7;mn_pop;" }
 			onMouseEnter { *node:this@image "hud/firemode_hover" }
@@ -365,7 +350,6 @@ window firemode_left {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode l 7;" }
 		}
 		string name	{ string *cvar:mn_l_fm_name7	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -434,7 +418,6 @@ window firemode_right {
 			texl	"0 0"
 			texh	"214  63"
 			size	"214  63"
-			mousefx	false
 			invis true
 			onClick	{ cmd "fireweap r 0;mn_pop;" }
 			onMouseEnter { *node:this@image "hud/firemode_hover" }
@@ -449,7 +432,6 @@ window firemode_right {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode r 0;" }
 		}
 		string name	{ string *cvar:mn_r_fm_name0	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -465,7 +447,6 @@ window firemode_right {
 			texl	"0 0"
 			texh	"214  63"
 			size	"214  63"
-			mousefx	false
 			invis true
 			onClick	{ cmd "fireweap r 1;mn_pop;" }
 			onMouseEnter { *node:this@image "hud/firemode_hover" }
@@ -480,7 +461,6 @@ window firemode_right {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode r 1;" }
 		}
 		string name	{ string *cvar:mn_r_fm_name1	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -496,7 +476,6 @@ window firemode_right {
 			texl	"0 0"
 			texh	"214  63"
 			size	"214  63"
-			mousefx	false
 			invis true
 			onClick	{ cmd "fireweap r 2;mn_pop;" }
 			onMouseEnter { *node:this@image "hud/firemode_hover" }
@@ -511,7 +490,6 @@ window firemode_right {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode r 2;" }
 		}
 		string name	{ string *cvar:mn_r_fm_name2	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -527,7 +505,6 @@ window firemode_right {
 			texl	"0 0"
 			texh	"214  63"
 			size	"214  63"
-			mousefx	false
 			invis true
 			onClick	{ cmd "fireweap r 3;mn_pop;" }
 			onMouseEnter { *node:this@image "hud/firemode_hover" }
@@ -542,7 +519,6 @@ window firemode_right {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode r 3;" }
 		}
 		string name	{ string *cvar:mn_r_fm_name3	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -558,7 +534,6 @@ window firemode_right {
 			texl	"0 0"
 			texh	"214  63"
 			size	"214  63"
-			mousefx	false
 			invis true
 			onClick	{ cmd "fireweap r 4;mn_pop;" }
 			onMouseEnter { *node:this@image "hud/firemode_hover" }
@@ -573,7 +548,6 @@ window firemode_right {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode r 4;" }
 		}
 		string name	{ string *cvar:mn_r_fm_name4	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -589,7 +563,6 @@ window firemode_right {
 			texl	"0 0"
 			texh	"214  63"
 			size	"214  63"
-			mousefx	false
 			invis true
 			onClick	{ cmd "fireweap r 5;mn_pop;" }
 			onMouseEnter { *node:this@image "hud/firemode_hover" }
@@ -604,7 +577,6 @@ window firemode_right {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode r 5;" }
 		}
 		string name	{ string *cvar:mn_r_fm_name5	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -620,7 +592,6 @@ window firemode_right {
 			texl	"0 0"
 			texh	"214  63"
 			size	"214  63"
-			mousefx	false
 			invis true
 			onClick	{ cmd "fireweap r 6;mn_pop;" }
 			onMouseEnter { *node:this@image "hud/firemode_hover" }
@@ -635,7 +606,6 @@ window firemode_right {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode r 6;" }
 		}
 		string name	{ string *cvar:mn_r_fm_name6	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -651,7 +621,6 @@ window firemode_right {
 			texl	"0 0"
 			texh	"214  63"
 			size	"214  63"
-			mousefx	false
 			invis true
 			onClick	{ cmd "fireweap r 7;mn_pop;" }
 			onMouseEnter { *node:this@image "hud/firemode_hover" }
@@ -666,7 +635,6 @@ window firemode_right {
 			pos		"0 32"
 			texl	"0 0"
 			texh	"31 31"
-			mousefx	false
 			onClick	{ cmd "sel_reactmode r 7;" }
 		}
 		string name	{ string *cvar:mn_r_fm_name7	pos "27 4"	size "183 25"	textalign cl	ghost true }

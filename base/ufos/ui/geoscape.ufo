@@ -503,7 +503,6 @@ window geoscape
 			pos			"40 515"
 			texl		"0 0"
 			texh		"32 32"
-			mousefx		false
 			onClick		{ cmd "map_overlay nations;" }
 			onMouseLeave			{ *node:this@texl "0 0" *node:this@texh "32 32" }
 			onMouseEnter			{ *node:this@texl "32 0" *node:this@texh "64 32" }
@@ -516,7 +515,6 @@ window geoscape
 			pos			"70 515"
 			texl		"0 0"
 			texh		"32 32"
-			mousefx		false
 			onClick		{ cmd "map_overlay radar;" }
 			onMouseLeave			{ *node:this@texl "0 0" *node:this@texh "32 32" }
 			onMouseEnter			{ *node:this@texl "32 0" *node:this@texh "64 32" }
@@ -530,7 +528,6 @@ window geoscape
 			pos			"100 515"
 			texl		"0 0"
 			texh		"32 32"
-			mousefx		false
 			onClick		{ cmd "map_overlay xvi;" }
 			onMouseLeave			{ *node:this@texl "0 0" *node:this@texh "32 32" }
 			onMouseEnter			{ *node:this@texl "32 0" *node:this@texh "64 32" }
@@ -894,7 +891,6 @@ window popup_newbase
 		pos			"26 78"
 		texl		"0 48"
 		texh		"16 64"
-		mousefx		false
 		onClick		{ call *node:root.name@edit }
 	}
 
@@ -1317,7 +1313,6 @@ window popup_newinstallation
 		pos			"26 78"
 		texl		"0 48"
 		texh		"16 64"
-		mousefx		false
 		onClick		{ call *node:root.name@edit }
 	}
 
@@ -1450,7 +1445,6 @@ window popup_installationstatus
 		pos			"26 78"
 		texl		"0 48"
 		texh		"16 64"
-		mousefx		false
 		onClick		{ call *node:root.name@edit }
 	}
 

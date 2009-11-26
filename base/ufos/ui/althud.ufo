@@ -121,7 +121,6 @@ window althud extends ahud
 		size		"32 32"
 		texl		"64 0"
 		texh		"96 32"
-		mousefx		false
 		onMouseLeave			{
 			*chatscreen@size "690 48"
 			*chatscreen@rows "3"
@@ -143,7 +142,6 @@ window althud extends ahud
 		texl		"0 0"
 		texh		"32 36"
 		pos			"985 590"
-		mousefx		false
 	}
 
 	func onEvent
