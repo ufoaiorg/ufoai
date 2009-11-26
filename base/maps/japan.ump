@@ -245,6 +245,15 @@ h12    +wah    h34
 }
 
 
+tile +w1
+{
+3 3
+0       abh14       0
+abfv34    +wa       abfv12
+0         w       0
+}
+
+
 // ########################################
 // ########### Maps for the game ##########
 
@@ -268,7 +277,8 @@ title "_Small eastern park."
 +f1       "0 2"
 +f2       "0 2"
 +f3       "0 2"
-+bridge   "0 1"
++bridge   "1 1"
++w1       "1 1"
 +p_tr     "0 5"
 +p_tl     "0 5"
 +p_br     "0 5"
