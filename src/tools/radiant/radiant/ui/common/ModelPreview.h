@@ -69,14 +69,14 @@ namespace ui
 			/** Set the widget to display the given model. If the model name is the empty string,
 			 * the widget will release the currently displayed model.
 			 *
-			 * @param
+			 * @param model
 			 * String name of the model to display.
 			 */
 			void setModel (const std::string& model);
 
 			/** Set the skin to apply on the currently-displayed model.
 			 *
-			 * @param
+			 * @param skin
 			 * Name of the skin to apply.
 			 */
 			void setSkin (const std::string& skin);

@@ -90,7 +90,7 @@ namespace gtkutil
 			 * we are trying to get the parent, if there is one, return the string for the
 			 * given column, if there is none an empty string will be returned.
 			 *
-			 * @param selection
+			 * @param sel
 			 * GtkTreeSelection object to be tested for a selection.
 			 *
 			 * @param colNo

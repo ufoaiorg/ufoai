@@ -25,17 +25,10 @@ namespace gtkutil
 
 		public:
 
-			/** Construct an IconTextButton with the given label text and local icon
-			 * path.
-			 *
-			 * @param name
-			 * The text to display under the icon.
-			 *
-			 * @param iconPath
-			 * Name of local icon file.
-			 *
-			 * @param isToggle
-			 * true if the button should be a toggle button, false for a normal button.
+			/** Construct an IconTextButton with the given label text and local icon path.
+			 * @param name The text to display under the icon.
+			 * @param icon Name of local icon file.
+			 * @param isToggle true if the button should be a toggle button, false for a normal button.
 			 */
 			IconTextButton (const std::string& name, GdkPixbuf* icon, bool isToggle) :
 				_icon(icon), _label(NULL), _isToggle(isToggle)

@@ -92,11 +92,11 @@ namespace gtkutil
 			/**
 			 * Construct a new filechooser with the given parameters.
 			 *
-			 * @parent: The parent GtkWidget
-			 * @title: The dialog title.
-			 * @open: if TRUE this is asking for "Open" files, FALSE generates a "Save" dialog.
-			 * @pattern: the type "map", "prefab", this determines the file extensions.
-			 * @defaultExt: The default extension appended when the user enters
+			 * @param parent The parent GtkWidget
+			 * @param title: The dialog title.
+			 * @param open: if TRUE this is asking for "Open" files, FALSE generates a "Save" dialog.
+			 * @param pattern: the type "map", "prefab", this determines the file extensions.
+			 * @param defaultExt: The default extension appended when the user enters
 			 *              filenames without extension. (Including the dot as seperator character.)
 			 */
 			FileChooser (GtkWidget* parent, const std::string& title, bool open, const std::string& pattern = "",

@@ -22,7 +22,7 @@ namespace sound
 			/**
 			 * greebo: Loads a WAV file from a stream into OpenAL.
 			 *
-			 * @throws: std::runtime_error if an error occurs.
+			 * @throws std::runtime_error if an error occurs.
 			 */
 			static ALuint LoadFromStream (InputStream& stream)
 			{
