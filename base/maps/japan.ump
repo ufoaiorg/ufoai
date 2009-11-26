@@ -37,9 +37,9 @@ tile +craft_drop_firebird
 {
 4 5
 0      ah14   ah14   0
-a      +b     +b     a
+af      +b     +b    af
 g      +bg    +bg    g
-a      +b     +b     a
+af      +b     +b    af
 0      ah23   ah23   0
 }
 
@@ -47,9 +47,9 @@ tile +craft_drop_herakles
 {
 4 5
 0      ah14   ah14   0
-a      +b     +b     a
+af      +b     +b    af
 g      +bg    +bg    g
-a      +b     +b     a
+af      +b     +b    af
 0      ah23   ah23   0
 }
 
@@ -57,9 +57,9 @@ tile +craft_drop_raptor
 {
 4 5
 0      ah14   ah14   0
-a      +b     +b     a
+af      +b     +b    af
 g      +bg    +bg    g
-a      +b     +b     a
+af      +b     +b    af
 0      ah23   ah23   0
 }
 
@@ -69,8 +69,8 @@ tile +craft_ufo_scout
 {
 4 4
 0     ah14      ah14        0
-av34    +a      +a       av12
-av34    +a      +a       av12
+afv34    +a      +a       afv12
+afv34    +a      +a       afv12
 0     ah23      ah23        0
 }
 
@@ -79,18 +79,18 @@ tile +h1
 {
 4 5
 0      abh14  abh14  0
-bav3   +a     +a     abv23
-ba     +a     +af     abv2
-bg     +ag    +ahf    h34
-0      bah23  baf23  0
+fbav3   +a     +a     abv23
+fba     +a     +f     abv2
+bg     +ag    +hf    h34
+0      bah23  f  0
 }
 
 tile +h2
 {
 5 4
 0      abh14   abh14   abh14   0
-abv34   +a     +a     +a     abv12
-ab      +av    +a     +a     abv12
+abfv34   +a     +a     +a     abfv12
+abf      +av    +a     +a     abfv12
 0      v14    abh23   abh23   0
 }
 
@@ -98,8 +98,8 @@ tile +h3
 {
 4 4
 0      a      v23    0
-h12    +ah    +av    ab12
-a      +a     +a     abv12
+h12    +ah    +av    abf12
+af      +a     +a     abfv12
 0      abh23   abh23   0
 }
 
@@ -107,8 +107,8 @@ tile +h4
 {
 4 4
 0      a      v23    0
-h12    +ah    +av    ab12
-a      +a     +a     abv12
+h12    +ah    +av    abf12
+af      +a     +a     abfv12
 0      abh23   abh23   0
 }
 
@@ -117,7 +117,7 @@ tile +fill1
 {
 3 3
 0      abh14      0
-ab34     +a      abv12
+abfv34     +a      abfv12
 0      abh23      0
 }
 
@@ -125,9 +125,18 @@ tile +fill2
 {
 3 3
 0      abh14      0
-ab34     +a      abv12
+abfv34     +a      abfv12
 0      ab23      0
 }
+
+tile +fill3
+{
+3 3
+0      abh14      0
+abfv34  +a      abfv12
+0      ab23      0
+}
+
 
 /// fences:
 
@@ -136,7 +145,7 @@ tile +f1
 {
 3 3
 0        f      0
-h12      +hfa     abv12
+h12      +hf     abv12
 0        f      0
 }
 
@@ -144,7 +153,25 @@ tile +f2
 {
 3 3
 0      f      0
-ba34   +fa    abv12
+ba34   +f    abv12
+0      f      0
+}
+
+tile +f3
+{
+3 3
+0      f      0
+abv34  +fa    abv12
+0      abh23  0
+}
+
+
+tile +arc
+{
+3 4
+0      f      0
+ba     +f     abv12
+bg     +gf    abh34
 0      f      0
 }
 
@@ -156,7 +183,7 @@ tile +p_tr
 {
 3 3
 0      v      0
-ab     +1      h
+abf     +1      h
 0      ab      0
 }
 
@@ -165,7 +192,7 @@ tile +p_br
 {
 3 3
 0      ab      0
-ab     +2      h
+abf     +2      h
 0      v      0
 }
 
@@ -174,7 +201,7 @@ tile +p_bl
 {
 3 3
 0      ab      0
-h     +3      ab
+h     +3      abf
 0      v      0
 }
 
@@ -183,7 +210,7 @@ tile +p_tl
 {
 3 3
 0      v      0
-h     +4      ab
+h     +4      abf
 0      ab      0
 }
 
@@ -201,7 +228,7 @@ tile +p_v
 {
 3 3
 0      v23      0
-ab     +v       ab
+abf     +v       abf
 0      v34      0
 }
 
@@ -229,18 +256,18 @@ title "_Japan"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
-assembly test
+assembly small
 {
-size "5 8"
-title "test assembly"
-+h1       "1 1"
+size "7 5"
+title "_Small eastern park."
++arc      "0 1"
++h1       "0 1"
 +h2       "0 1"
 +h3       "0 1"
 +h4       "0 1"
-+fill1    "0 1"
-+fill2    "0 25"
-+f1       "0 4"
-+f2       "0 4"
++f1       "0 2"
++f2       "0 2"
++f3       "0 2"
 +bridge   "0 1"
 +p_tr     "0 5"
 +p_tl     "0 5"
@@ -248,6 +275,9 @@ title "test assembly"
 +p_bl     "0 5"
 +p_h      "0 10"
 +p_v      "0 10"
++fill1    "0 1"
++fill2    "0 10"
++fill3    "0 10"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }

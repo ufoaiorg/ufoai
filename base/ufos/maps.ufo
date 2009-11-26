@@ -1567,6 +1567,54 @@ mapdef japan
 	}
 }
 
+mapdef japan_small
+{
+	map			+japan
+	description	"_A classic eastern suburban area."
+	teams		2
+	multiplayer	false
+	teams		2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens	16
+
+	aircraft 
+	{
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	}
+
+	ufos
+	{
+		craft_ufo_scout
+	}
+
+	terrains
+	{
+		grass
+		tropic
+	}
+
+	cultures
+	{
+		eastern
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
 mapdef spedition
 {
 	map			+spedition
