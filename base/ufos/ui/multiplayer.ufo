@@ -1105,6 +1105,11 @@ window multiplayer_selectteam
 	// background
 	// ==================
 
+	pic background
+	{
+		image		ui/world_bg
+	}
+
 	panel partyinfo {
 		{
 			pos		"100 30"
@@ -1342,10 +1347,6 @@ window multiplayer_selectteam
 	}
 
 	todo mergenext { pos "30 280" string "Merge the next window here"}
-	todo ready { pos "30 310" string "Add a 'I am ready' button"}
-	todo playerinfo { pos "30 340" string "Add something to show player team/status" }
-	todo updateplayerinfo { pos "60 280" string "Add something easy to change the user team" }
-	todo mapinfo { pos "60 310" string "Add info about the server, map image..." }
 	todo adminteam { pos "60 340" string "Feature: admin can affect a a player to a team" }
 	todo betterback { pos "30 370" string "Improve the 'background'" }
 	todo adminstart { pos "30 400" string "Feature: admin can start the party when he want" }
