@@ -1600,7 +1600,7 @@ mapdef japan_small
 	terrains
 	{
 		grass
-		tropic
+		tropical
 	}
 
 	cultures
