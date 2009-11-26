@@ -723,16 +723,16 @@ static void G_GetTeam (player_t * player)
 	int i, j;
 	int playersInGame = 0;
 
+	/* player has already a team */
+	if (player->pers.team > 0) {
+		Com_DPrintf(DEBUG_GAME, "Player %s is already on team %i\n", player->pers.netname, player->pers.team);
+		return;
+	}
+
 	/* number of currently connected players (no ai players) */
 	for (j = 0, p = game.players; j < game.sv_maxplayersperteam; j++, p++)
 		if (p->inuse)
 			playersInGame++;
-
-	/* player has already a team */
-	if (player->pers.team > 0) {
-		Com_DPrintf(DEBUG_GAME, "You are already on team %i\n", player->pers.team);
-		return;
-	}
 
 	/* randomly assign a teamnumber in deathmatch games */
 	if (playersInGame <= 1 && sv_maxclients->integer > 1 && !sv_teamplay->integer) {
@@ -869,14 +869,17 @@ void G_ClientTeamAssign (qboolean force)
 
 	/* count number of currently connected unique teams and players (human controlled players only) */
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
-		if (p->inuse && p->pers.team > 0) {
-			playerCount++;
-			for (j = 0; j < teamCount; j++) {
-				if (p->pers.team == knownTeams[j])
-					break;
+		if (p->inuse) {
+			G_GetTeam(p);
+			if (p->pers.team > 0) {
+				playerCount++;
+				for (j = 0; j < teamCount; j++) {
+					if (p->pers.team == knownTeams[j])
+						break;
+				}
+				if (j == teamCount)
+					knownTeams[teamCount++] = p->pers.team;
 			}
-			if (j == teamCount)
-				knownTeams[teamCount++] = p->pers.team;
 		}
 	}
 
@@ -996,9 +999,6 @@ void G_ClientTeamInfo (player_t * player)
 	int x, y;
 	item_t item;
 	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
-
-	/* find a team */
-	G_GetTeam(player);
 
 	for (i = 0; i < length; i++) {
 		/* Search for a spawn point for each entry the client sent
@@ -1195,7 +1195,7 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
  * @sa G_ClientSpawn
  * @sa CL_StartGame
  */
-void G_ClientBegin (player_t* player)
+qboolean G_ClientBegin (player_t* player)
 {
 	/* this doesn't belong here, but it works */
 	if (!level.routed) {
@@ -1203,15 +1203,14 @@ void G_ClientBegin (player_t* player)
 		G_CompleteRecalcRouting();
 	}
 
-	/** @todo This should be a client side error */
-	if (!G_PlayerToPM(player)) {
-		gi.BroadcastPrintf(PRINT_CONSOLE, "%s tried to join - but server is full\n", player->pers.netname);
-		return;
-	}
-
 	player->began = qtrue;
-
 	level.numplayers++;
+
+	/* find a team */
+	G_GetTeam(player);
+	if (!player->began)
+		return qfalse;
+
 	gi.ConfigString(CS_PLAYERCOUNT, "%i", level.numplayers);
 
 	/* spawn camera (starts client rendering) */
@@ -1226,6 +1225,8 @@ void G_ClientBegin (player_t* player)
 
 	/* inform all clients */
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has joined team %i\n", player->pers.netname, player->pers.team);
+
+	return qtrue;
 }
 
 /**
@@ -1354,11 +1355,16 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 
 	value = Info_ValueForKey(userinfo, "ip");
 
-	Com_Printf("%s is trying to connect... (%s)\n", player->pers.netname, value);
+	Com_Printf("connection attempt from %s\n", value);
 
 	/* check to see if they are on the banned IP list */
 	if (SV_FilterPacket(value)) {
 		Info_SetValueForKey(userinfo, MAX_INFO_STRING, "rejmsg", REJ_BANNED);
+		return qfalse;
+	}
+
+	if (!G_PlayerToPM(player)) {
+		Info_SetValueForKey(userinfo, MAX_INFO_STRING, "rejmsg", "Server is full");
 		return qfalse;
 	}
 

@@ -257,7 +257,7 @@ typedef struct {
 	void (EXPORT *SpawnEntities) (const char *mapname, qboolean day, const char *entstring);
 
 	qboolean(EXPORT *ClientConnect) (player_t * client, char *userinfo);
-	void (EXPORT *ClientBegin) (player_t * client);
+	qboolean (EXPORT *ClientBegin) (player_t * client);
 	qboolean(EXPORT *ClientSpawn) (player_t * client);
 	void (EXPORT *ClientUserinfoChanged) (player_t * client, char *userinfo);
 	void (EXPORT *ClientDisconnect) (player_t * client);

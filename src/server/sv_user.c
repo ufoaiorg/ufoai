@@ -97,46 +97,17 @@ static void SV_New_f (void)
 
 	/* game server */
 	if (Com_ServerState() == ss_game) {
-		/* begin fetching configstrings */
-		SV_ClientCommand(sv_client, "cmd configstrings %i 0\n", svs.spawncount);
-	}
-}
-
-/**
- * @brief Send the configstrings to the client
- */
-static void SV_Configstrings_f (void)
-{
-	int i;
-	int start;
-
-	Com_DPrintf(DEBUG_SERVER, "Configstrings() from %s\n", sv_client->name);
-
-	if (sv_client->state != cs_spawning) {
-		Com_Printf("configstrings not valid -- already spawning\n");
-		return;
-	}
-
-	/* handle the case of a level changing while a client was connecting */
-	if (atoi(Cmd_Argv(1)) != svs.spawncount) {
-		Com_Printf("SV_Configstrings_f from different level\n");
-		SV_New_f();
-		return;
-	}
-
-	start = atoi(Cmd_Argv(2));
-	if (start < 0)
-		start = 0; /* catch negative offsets */
-
-	for (i = start; i < MAX_CONFIGSTRINGS; i++) {
-		if (sv.configstrings[i][0]) {
-			struct dbuffer *msg = new_dbuffer();
-			Com_DPrintf(DEBUG_SERVER, "sending configstring %d: %s\n", i, sv.configstrings[i]);
-			NET_WriteByte(msg, svc_configstring);
-			NET_WriteShort(msg, i);
-			NET_WriteString(msg, sv.configstrings[i]);
-			/* enqueue and free msg */
-			NET_WriteMsg(sv_client->stream, msg);
+		int i;
+		for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
+			if (sv.configstrings[i][0] != '\0') {
+				struct dbuffer *msg = new_dbuffer();
+				Com_DPrintf(DEBUG_SERVER, "sending configstring %d: %s\n", i, sv.configstrings[i]);
+				NET_WriteByte(msg, svc_configstring);
+				NET_WriteShort(msg, i);
+				NET_WriteString(msg, sv.configstrings[i]);
+				/* enqueue and free msg */
+				NET_WriteMsg(sv_client->stream, msg);
+			}
 		}
 	}
 
@@ -188,7 +159,10 @@ static void SV_Begin_f (void)
 	}
 
 	/* call the game begin function */
-	ge->ClientBegin(sv_player);
+	if (!ge->ClientBegin(sv_player)) {
+		SV_DropClient(sv_client, "'begin' failed\n");
+		return;
+	}
 
 	Cbuf_InsertFromDefer();
 }
@@ -265,7 +239,6 @@ typedef struct {
 static const ucmd_t ucmds[] = {
 	/* auto issued */
 	{"new", SV_New_f},
-	{"configstrings", SV_Configstrings_f},
 	{"begin", SV_Begin_f},
 	{"spawn", SV_Spawn_f},
 
