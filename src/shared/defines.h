@@ -298,6 +298,7 @@ COLLISION DETECTION
 #define	CONTENTS_ACTORCLIP		0x00010000
 #define	CONTENTS_PASSABLE		0x00020000
 #define CONTENTS_TERRAIN		0x00040000 /**<  */
+#define CONTENTS_LIGHTCLIP		0x00080000 /**< used for special brushes to cast shade */
 #define	CONTENTS_ACTOR			0x00800000 /**< should never be on a brush, only in game */
 #define	CONTENTS_ORIGIN			0x01000000 /**< removed before bsping an entity */
 #define	CONTENTS_WEAPONCLIP		0x02000000 /**< stop bullets */
@@ -409,9 +410,19 @@ COLLISION DETECTION
  * be in tree 7, saving memory
  */
 #define	LEVEL_LASTVISIBLE		255
+#if 0
+#define	LEVEL_LIGHTCLIP			256
+#define	LEVEL_LASTLIGHTBLOCKING	256
+#define	LEVEL_WEAPONCLIP		257
+#define	LEVEL_ACTORCLIP			258
+#define	LEVEL_MAX				259
+#else
+#define	LEVEL_LASTLIGHTBLOCKING	255
+#define	LEVEL_LIGHTCLIP			256
 #define	LEVEL_WEAPONCLIP		256
 #define	LEVEL_ACTORCLIP			257
 #define	LEVEL_MAX				258
+#endif
 /* ufo2map/bsp.c, common/cmodel.c, renderer/r_model_brush.c */
 #define	NUM_REGULAR_MODELS		(LEVEL_ACTORCLIP + 1)
 
