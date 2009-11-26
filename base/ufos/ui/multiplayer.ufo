@@ -1108,21 +1108,15 @@ window multiplayer_selectteam
 	pic background
 	{
 		image		ui/world_bg
+		size		"1024 768"
 	}
 
 	panel partyinfo {
 		{
 			pos		"100 30"
 			size	"400 430"
-			bordercolor		"0.5 0.5 0.5 1"
-			border			2
-			padding			5
-		}
-
-		pic back
-		{
-			image		ui/multiplayer_teamsel
-			size		"400 430"
+			padding	5
+			image	"ui/panel_window"
 		}
 
 		string title
@@ -1184,17 +1178,10 @@ window multiplayer_selectteam
 	panel players {
 
 		{
-			pos "520 30"
-			size "400 250"
-			bordercolor		"0.5 0.5 0.5 1"
-			border			2
-			padding			5
-		}
-
-		pic back
-		{
-			image		ui/multiplayer_teamsel
-			size		"400 250"
+			pos		"520 30"
+			size	"400 250"
+			padding	5
+			image	"ui/panel_window"
 		}
 
 		string title
@@ -1246,17 +1233,10 @@ window multiplayer_selectteam
 
 	panel teamselection {
 		{
-			pos "520 310"
-			size "400 150"
-			bordercolor		"0.5 0.5 0.5 1"
-			border			2
-			padding			5
-		}
-
-		pic back
-		{
-			image		ui/multiplayer_teamsel
-			size		"400 150"
+			pos		"520 310"
+			size	"400 150"
+			padding	5
+			image	"ui/panel_window"
 		}
 
 		string title
