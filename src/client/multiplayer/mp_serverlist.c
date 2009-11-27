@@ -216,9 +216,8 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 
 	memset(&teamData, 0, sizeof(teamData));
 
-	teamData.teamplay = Info_IntegerForKey(s, "sv_teamplay");
 	teamData.maxteams = Info_IntegerForKey(s, "sv_maxteams");
-	teamData.maxplayersperteam = Info_IntegerForKey(s, "sv_maxplayersperteam");
+	teamData.maxPlayersPerTeam = Info_IntegerForKey(s, "sv_maxplayersperteam");
 
 	/* for each lines */
 	while ((s = NET_ReadString(msg)) != NULL && s[0] != '\0') {
@@ -256,13 +255,7 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	}
 
 	Cvar_SetValue("mn_maxteams", teamData.maxteams);
-	Cvar_SetValue("mn_maxplayersperteam", teamData.maxplayersperteam);
-
-	teamData.parsed = qtrue;
-
-	/* spawn multi-player death match soldiers here */
-	if (!teamData.teamplay)
-		GAME_SpawnSoldiers();
+	Cvar_SetValue("mn_maxplayersperteam", teamData.maxPlayersPerTeam);
 }
 
 static char serverInfoText[1024];

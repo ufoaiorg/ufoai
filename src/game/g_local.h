@@ -468,13 +468,13 @@ struct player_s {
 	qboolean inuse;
 	int num;
 	int ping;
+	qboolean isReady;			/**< the player agreed to start the party */
 
 	/* private to game */
 	qboolean spawned;			/**< already spawned? */
 	qboolean began;				/**< the player sent his 'begin' already */
 	qboolean roundDone;			/**< ready to end his round */
 
-	qboolean isReady;			/**< the player agreed to start the party */
 
 	qboolean autostand;			/**< autostand for long walks */
 

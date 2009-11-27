@@ -145,30 +145,6 @@ static void SV_Begin_f (void)
 }
 
 /**
- * @brief Spawns all connected clients if they are not already spawned
- * @sa CL_SpawnSoldiers_f
- */
-static void SV_SpawnAllPending (void)
-{
-	int i;
-	client_t *cl;
-
-	if (!svs.initialized)
-		return;
-
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
-		if (cl && cl->state == cs_spawning) {
-			if (ge->ClientSpawn(cl->player))
-				SV_SetClientState(cl, cs_spawned);
-			else
-				/* false means, that there are not all players - so cycling to
-				 * the end here is not needed */
-				return;
-		}
-	}
-}
-
-/**
  * @sa SV_Begin_f
  */
 static void SV_Spawn_f (void)
@@ -182,8 +158,13 @@ static void SV_Spawn_f (void)
 		return;
 	}
 
-	/* try and spawn any connected but unspawned players */
-	SV_SpawnAllPending();
+	if (sv_client->state != cs_spawning) {
+		SV_DropClient(sv_client, "Invalid state\n");
+		return;
+	}
+
+	if (ge->ClientSpawn(sv_player))
+		SV_SetClientState(sv_client, cs_spawned);
 
 	Cbuf_InsertFromDefer();
 }

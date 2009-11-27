@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_StartGame (const eventRegister_t *self, struct dbuffer *msg)
 {
-	const int team_play = NET_ReadByte(msg);
+	const int isTeamPlay = NET_ReadByte(msg);
 
 	/* init camera position and angles */
 	memset(&cl.cam, 0, sizeof(cl.cam));
@@ -65,12 +65,8 @@ void CL_StartGame (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* back to the console */
 	if (GAME_IsMultiplayer()) {
-		if (team_play) {
-			MN_InitStack("multiplayer_selectteam", NULL, qtrue, qtrue);
-		} else {
-			MN_PopMenu(qtrue);
-			Cbuf_AddText("mp_selectteam_init\n");
-		}
+		const char *menu = isTeamPlay ? "multiplayer_selectteam" : "multiplayer_wait";
+		MN_InitStack(menu, NULL, qtrue, qtrue);
 	} else {
 		MN_InitStack(mn_hud->string, NULL, qtrue, qtrue);
 	}

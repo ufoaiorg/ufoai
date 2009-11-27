@@ -215,7 +215,7 @@ static void CL_TeamNum_f (void)
 
 	if (strncmp(Cmd_Argv(0), "teamnum_dec", 11)) {
 		for (i--; i > TEAM_CIVILIAN; i--) {
-			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
+			if (teamData.maxPlayersPerTeam > teamData.teamCount[i]) {
 				Cvar_SetValue("cl_teamnum", i);
 				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
 				MN_RegisterText(TEXT_STANDARD, buf);
@@ -223,12 +223,12 @@ static void CL_TeamNum_f (void)
 			} else {
 				MN_RegisterText(TEXT_STANDARD, _("Team is already in use"));
 				Com_DPrintf(DEBUG_CLIENT, "team %i is already in use: %i (max: %i)\n",
-					i, teamData.teamCount[i], teamData.maxplayersperteam);
+					i, teamData.teamCount[i], teamData.maxPlayersPerTeam);
 			}
 		}
 	} else {
 		for (i++; i <= teamData.maxteams; i++) {
-			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
+			if (teamData.maxPlayersPerTeam > teamData.teamCount[i]) {
 				Cvar_SetValue("cl_teamnum", i);
 				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
 				MN_RegisterText(TEXT_STANDARD, buf);
@@ -236,7 +236,7 @@ static void CL_TeamNum_f (void)
 			} else {
 				MN_RegisterText(TEXT_STANDARD, _("Team is already in use"));
 				Com_DPrintf(DEBUG_CLIENT, "team %i is already in use: %i (max: %i)\n",
-					i, teamData.teamCount[i], teamData.maxplayersperteam);
+					i, teamData.teamCount[i], teamData.maxPlayersPerTeam);
 			}
 		}
 	}

@@ -61,6 +61,7 @@ struct player_s {
 	qboolean inuse;
 	int num;					/**< communicated by server to clients */
 	int ping;
+	qboolean isReady;
 
 	/** the game dll can add anything it wants after
 	 * this point in the structure */

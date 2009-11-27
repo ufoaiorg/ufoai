@@ -737,6 +737,33 @@ static void Master_Heartbeat (void)
 }
 
 /**
+ * @brief If all connected clients have set their ready flag the server will spawn the clients
+ * and that change the client state.
+ */
+static void SV_CheckGameStart (void)
+{
+	int i;
+	client_t *cl;
+
+	/* already started? */
+	if (sv.started)
+		return;
+
+	if (sv_maxclients->integer > 1) {
+		/* check that every player has set the isReady flag */
+		for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
+			if (cl && cl->state != cs_free && !cl->player->isReady)
+				return;
+	}
+
+	sv.started = qtrue;
+
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
+		if (cl && cl->state != cs_free)
+			SV_ClientCommand(cl, "spawnsoldiers %i\n", svs.spawncount);
+}
+
+/**
  * @sa Qcommon_Frame
  */
 void SV_Frame (int now, void *data)
@@ -755,6 +782,8 @@ void SV_Frame (int now, void *data)
 
 	/* keep the random time dependent */
 	rand();
+
+	SV_CheckGameStart();
 
 	if (!sv_threads->integer)
 		SV_RunGameFrame();
@@ -795,8 +824,6 @@ static void Master_Shutdown (void)
 	}
 }
 
-/*============================================================================ */
-
 /**
  * @brief Pull specific info from a newly changed userinfo string into a more C friendly form.
  */
@@ -818,6 +845,8 @@ void SV_UserinfoChanged (client_t * cl)
 	val = Info_ValueForKey(cl->userinfo, "cl_msg");
 	if (strlen(val))
 		cl->messagelevel = atoi(val);
+
+	Com_DPrintf(DEBUG_SERVER, "SV_UserinfoChanged: Changed userinfo for player %s\n", cl->name);
 }
 
 /**

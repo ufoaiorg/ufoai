@@ -209,28 +209,12 @@ void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 
 qboolean GAME_MP_Spawn (void)
 {
-	const int n = cl_teamnum->integer;
 	int i;
-
-	if (!teamData.parsed) {
-		Com_Printf("GAME_MP_Spawn: teaminfo unparsed\n");
-		return qfalse;
-	}
-
-	/* we are already connected and in this list */
-	if (n <= TEAM_CIVILIAN || teamData.maxplayersperteam < teamData.teamCount[n]) {
-		MN_RegisterText(TEXT_STANDARD, _("Invalid or full team"));
-		Com_Printf("GAME_MP_Spawn: Invalid or full team %i\n"
-			"  maxplayers per team: %i - players on team: %i",
-			n, teamData.maxplayersperteam, teamData.teamCount[n]);
-		return qfalse;
-	}
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++)
 		cl.chrList.chr[i] = &multiplayerCharacters[i];
 	cl.chrList.num = MAX_ACTIVETEAM;
 
-	MN_PushMenu("multiplayer_wait", NULL);
 	return qtrue;
 }
 
@@ -260,12 +244,6 @@ const mapDef_t* GAME_MP_MapInfo (int step)
 		}
 		Cvar_Set("mn_mapgametypes", buf);
 		list = LIST_ContainsString(md->gameTypes, sv_gametype->string);
-		/* the map doesn't support the current selected gametype - switch to the next valid */
-#if 0
-		/** @todo this is still needed! fix this and clean this up */
-		if (!list)
-			MN_ChangeGametype_f();
-#endif
 	} else {
 		Cvar_Set("mn_mapgametypes", _("all"));
 	}
