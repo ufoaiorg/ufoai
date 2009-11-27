@@ -159,6 +159,11 @@ static qboolean IsInLevel (const int contents, const int level)
 {
 	/* special levels */
 	switch (level) {
+	case LEVEL_LIGHTCLIP:
+		if (contents & CONTENTS_LIGHTCLIP)
+			return qtrue;
+		else
+			return qfalse;
 	case LEVEL_WEAPONCLIP:
 		if (contents & CONTENTS_WEAPONCLIP)
 			return qtrue;

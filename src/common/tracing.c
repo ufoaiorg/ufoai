@@ -116,7 +116,7 @@ static void TR_MakeTracingNode (int nodenum)
 			const int index = -(node->children[i]) - 1;
 			const TR_LEAF_TYPE *leaf = &curTile->leafs[index];
 			const int contentFlags = leaf->contentFlags & ~(1 << 31);
-			if ((contentFlags & (MASK_IMPASSABLE | CONTENTS_WEAPONCLIP)) && !(contentFlags & CONTENTS_PASSABLE))
+			if ((contentFlags & (MASK_IMPASSABLE | CONTENTS_LIGHTCLIP | CONTENTS_WEAPONCLIP)) && !(contentFlags & CONTENTS_PASSABLE))
 				t->children[i] = -node->children[i] | (1 << 31);
 			else
 				t->children[i] = (1 << 31);
@@ -305,6 +305,8 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
 		const int level = tile->theadlevel[i];
 		if (level && corelevels && !(level & corelevels))
 			continue;
+/*		if (level == LEVEL_LIGHTCLIP)
+			continue;*/
 		if (level == LEVEL_ACTORCLIP && !(levelmask & TL_FLAG_ACTORCLIP))
 			continue;
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
@@ -340,7 +342,7 @@ qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *head
 	/* ufo2map does many traces to the same endpoint.
 	 * Often an occluding node will be found in the same thead
 	 * as the last trace, so test that one first. */
-	if (mapTiles[0].theadlevel[lastthead] <= LEVEL_LASTVISIBLE
+	if (mapTiles[0].theadlevel[lastthead] <= LEVEL_LASTLIGHTBLOCKING
 	    && TR_TestLine_r(&mapTiles[0], mapTiles[0].thead[lastthead], start, stop))
 		return qtrue;
 
@@ -348,7 +350,7 @@ qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *head
 		const int level = mapTiles[0].theadlevel[i];
 		if (i == lastthead)
 			continue;
-		if (level > LEVEL_LASTVISIBLE)
+		if (level > LEVEL_LASTLIGHTBLOCKING)
 			continue;
 		if (TR_TestLine_r(&mapTiles[0], mapTiles[0].thead[i], start, stop)) {
 			shared_lastthead = *headhint = i;
@@ -491,6 +493,8 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
 		const int level = tile->theadlevel[i];
 		if (level && corelevels && !(level & levelmask))
 			continue;
+/*		if (level == LEVEL_LIGHTCLIP)
+			continue;*/
 		if (level == LEVEL_ACTORCLIP && !(levelmask & TL_FLAG_ACTORCLIP))
 			continue;
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))

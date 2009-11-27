@@ -37,7 +37,7 @@ void LightWorld (void)
 	curTile->lightdata[config.compile_for_day][0] = config.lightquant;
 	curTile->lightdatasize[config.compile_for_day] = 1;
 
-	MakeTracingNodes(LEVEL_LASTVISIBLE + 1);
+	MakeTracingNodes(LEVEL_LASTLIGHTBLOCKING + 1);
 
 	/* turn each face into a single patch */
 	BuildPatches();

@@ -1487,9 +1487,6 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 			side->surfaceFlags |= SURF_NODRAW;
 			tex->surfaceFlags |= SURF_NODRAW;
 			flagsDescription = "SURF_NODRAW";
-		} else if (!strcmp(texname, "tex_common/lightclip")) {
-			side->contentFlags |= CONTENTS_LIGHTCLIP;
-			flagsDescription = "CONTENTS_LIGHTCLIP";
 		} else if (!strcmp(texname, "tex_common/hint")) {
 			side->surfaceFlags |= SURF_HINT;
 			tex->surfaceFlags |= SURF_HINT;
@@ -1499,6 +1496,9 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 			side->surfaceFlags |= SURF_NODRAW;
 			tex->surfaceFlags |= SURF_NODRAW;
 			flagsDescription = "CONTENTS_LADDER";
+		} else if (!strcmp(texname, "tex_common/lightclip")) {
+			side->contentFlags |= CONTENTS_LIGHTCLIP;
+			flagsDescription = "CONTENTS_LIGHTCLIP";
 		} else if (!strcmp(texname, "tex_common/nodraw")) {
 			/*side->contentFlags |= CONTENTS_SOLID;*/
 			side->surfaceFlags |= SURF_NODRAW;

@@ -53,7 +53,7 @@ void MakeTracingNodes (int levels)
 	curTile->numtheads = 0;
 
 	for (i = 0; i < levels; i++) {
-		if (!curTile->models[i].numfaces && i != LEVEL_ACTORCLIP)
+		if (!curTile->models[i].numfaces && i != LEVEL_LIGHTCLIP && i != LEVEL_ACTORCLIP)
 			continue;
 		if (curTile->models[i].headnode < 0)	/* empty models have headnode -1 */
 			continue;
