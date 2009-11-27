@@ -1317,6 +1317,7 @@ qboolean G_ClientSpawn (player_t * player)
 void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 {
 	const char *s;
+	const qboolean alreadyReady = player->isReady;
 
 	/* check for malformed or illegal info strings */
 	if (!Info_Validate(userinfo))
@@ -1339,8 +1340,14 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 
 	/* try to update to the prefered team */
 	if (!G_MatchIsRunning()) {
-		player->pers.team = TEAM_NO_ACTIVE;
-		G_GetTeam(player);
+		/* if the player is marked as ready he can't change his team */
+		if (!alreadyReady || !player->isReady) {
+			player->pers.team = TEAM_NO_ACTIVE;
+			G_GetTeam(player);
+		} else {
+			Com_DPrintf(DEBUG_GAME, "G_ClientUserinfoChanged: player %s is already marked as being ready\n",
+					player->pers.netname);
+		}
 	}
 }
 
