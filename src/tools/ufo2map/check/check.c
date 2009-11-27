@@ -199,6 +199,8 @@ static qboolean Check_SurfProp (const int flag, const side_t *s)
 		return !strcmp(tex->name, "tex_common/weaponclip");
 	case CONTENTS_ACTORCLIP:
 		return !strcmp(tex->name, "tex_common/actorclip");
+	case CONTENTS_LIGHTCLIP:
+		return !strcmp(tex->name, "tex_common/lightclip");
 	case CONTENTS_ORIGIN:
 		return !strcmp(tex->name, "tex_common/origin");
 	default:
@@ -230,6 +232,9 @@ static qboolean Check_SurfProps (const int flags, const side_t *s)
 		return qtrue;
 
 	if ((flags & CONTENTS_ACTORCLIP) && !strcmp(texname, "tex_common/actorclip"))
+		return qtrue;
+
+	if ((flags & CONTENTS_LIGHTCLIP) && !strcmp(texname, "tex_common/lightclip"))
 		return qtrue;
 
 	if ((flags & CONTENTS_LADDER) && !strcmp(texname, "tex_common/ladder"))
@@ -1482,6 +1487,9 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 			side->surfaceFlags |= SURF_NODRAW;
 			tex->surfaceFlags |= SURF_NODRAW;
 			flagsDescription = "SURF_NODRAW";
+		} else if (!strcmp(texname, "tex_common/lightclip")) {
+			side->contentFlags |= CONTENTS_LIGHTCLIP;
+			flagsDescription = "CONTENTS_LIGHTCLIP";
 		} else if (!strcmp(texname, "tex_common/hint")) {
 			side->surfaceFlags |= SURF_HINT;
 			tex->surfaceFlags |= SURF_HINT;
@@ -1620,6 +1628,10 @@ void CheckTexturesBasedOnFlags (void)
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,  "set actorclip texture for CONTENTS_ACTORCLIP\n");
 				Q_strncpyz(tex->name, "tex_common/actorclip", sizeof(tex->name));
 			}
+			if (side->contentFlags & CONTENTS_LIGHTCLIP && strcmp(tex->name, "tex_common/lightclip")) {
+				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,  "set lightclip texture for CONTENTS_LIGHTCLIP\n");
+				Q_strncpyz(tex->name, "tex_common/lightclip", sizeof(tex->name));
+			}
 			if (side->contentFlags & CONTENTS_ORIGIN && strcmp(tex->name, "tex_common/origin")) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "set origin texture for CONTENTS_ORIGIN\n");
 				Q_strncpyz(tex->name, "tex_common/origin", sizeof(tex->name));
@@ -1706,8 +1718,8 @@ void CheckMixedFaceContents (void)
 			}
 		}
 
-		if (nfActorclip && nfActorclip <  brush->numsides / 2) {
-			Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "ACTORCLIP set on less than half of the faces: removing.\n");
+		if (nfActorclip && nfActorclip != brush->numsides) {
+			Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "ACTORCLIP is not set on all of the faces: removing.\n");
 			for (j = 0; j < brush->numsides; j++) {
 				side_t *side = &brush->original_sides[j];
 				const ptrdiff_t index = side - brushsides;

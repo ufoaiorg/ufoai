@@ -37,6 +37,7 @@
   cont17="actorclip"
   cont18="passable"
   cont19="terrain"
+  cont20="lightclip"
   cont25="origin"
   cont26="weaponclip"
   cont28="detail"
