@@ -1525,6 +1525,7 @@ mapdef japan
 {
 	map			+japan
 	description	"_A classic eastern suburban area."
+	param		default
 	teams		2
 	multiplayer	true
 	teams		2
@@ -1570,6 +1571,7 @@ mapdef japan
 mapdef japan_small
 {
 	map			+japan
+	param		small
 	description	"_A classic eastern suburban area."
 	teams		2
 	multiplayer	false
