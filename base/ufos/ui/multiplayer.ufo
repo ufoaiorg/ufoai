@@ -797,8 +797,8 @@ window mp_create_server extends abstract_multiplayer
 
 	panel panel_option {
 		{
-			pos			"415 250"
-			size		"608 768"
+			pos			"475 260"
+			size		"460 350"
 		}
 
 		// ===================
@@ -807,13 +807,13 @@ window mp_create_server extends abstract_multiplayer
 		string morale_str
 		{
 			string		"_Enable morale states:"
-			pos			"85 0"
-			size		"280 20"
+			pos			"25 0"
+			size		"300 20"
 		}
 		checkbox morale_value
 		{
 			current		*cvar:sv_enablemorale
-			pos			"410 0"
+			pos			"350 1"
 			size		"20 18"
 			image		"ui/checkbox_blue"
 		}
@@ -821,22 +821,17 @@ window mp_create_server extends abstract_multiplayer
 		// ===================
 		// MAXCLIENTS
 		// ===================
-		todo todo5 {
-			string	"We should move number near spinner"
-			pos		"500 50"
-		}
-
 		string maxclients_str
 		{
 			string		"_Max. clients:"
 			tooltip		"_Sets the max allowed clients to connect"
-			pos			"85 50"
-			size		"280 20"
+			pos			"25 40"
+			size		"300 20"
 		}
 		string maxclients_value
 		{
 			string		*cvar:sv_maxclients
-			pos			"395 50"
+			pos			"335 40"
 			size		"50 20"
 			textalign	uc
 		}
@@ -844,7 +839,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		*cvar:sv_maxclients
 			image		ui/spinner_blue
-			pos			"475 49"
+			pos			"390 40"
 			min			2
 			max			16
 			delta		1
@@ -857,13 +852,13 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. soldiers per team:"
 			tooltip		"_Sets the max allowed soldiers per team"
-			pos			"85 70"
-			size		"280 20"
+			pos			"25 60"
+			size		"300 20"
 		}
 		string maxperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperteam
-			pos			"395 70"
+			pos			"335 60"
 			size		"50 20"
 			textalign	uc
 		}
@@ -871,7 +866,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		*cvar:sv_maxsoldiersperteam
 			image		ui/spinner_blue
-			pos			"475 69"
+			pos			"390 60"
 			min			1
 			max			8
 			delta		1
@@ -884,13 +879,13 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. soldiers per player:"
 			tooltip		"_Sets the max allowed soldiers per player when in teamplay"
-			pos			"85 90"
-			size		"280 20"
+			pos			"25 80"
+			size		"300 20"
 		}
 		string maxsoldierperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperplayer
-			pos			"395 90"
+			pos			"335 80"
 			size		"50 20"
 			textalign	uc
 		}
@@ -898,7 +893,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		*cvar:sv_maxsoldiersperplayer
 			image		ui/spinner_blue
-			pos			"475 89"
+			pos			"390 80"
 			min			1
 			max			8
 			delta		1
@@ -911,13 +906,13 @@ window mp_create_server extends abstract_multiplayer
 		string server_maxplayerperteam_str
 		{
 			string		"_Max. human players per team:"
-			pos			"85 110"
-			size		"280 20"
+			pos			"25 100"
+			size		"300 20"
 		}
 		string server_maxplayerperteam_value
 		{
 			string		*cvar:sv_maxplayersperteam
-			pos			"395 110"
+			pos			"335 100"
 			size		"50 20"
 			textalign	uc
 		}
@@ -925,7 +920,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		*cvar:sv_maxplayersperteam
 			image		ui/spinner_blue
-			pos			"475 109"
+			pos			"390 100"
 			min			1
 			max			8
 			delta		1
@@ -938,13 +933,13 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. AI actors:"
 			tooltip		"_Max AI actors for teamplay mode"
-			pos			"85 130"
-			size		"280 20"
+			pos			"25 120"
+			size		"300 20"
 		}
 		string ai_numactors_value
 		{
 			string		*cvar:ai_numactors
-			pos			"395 130"
+			pos			"335 120"
 			size		"50 20"
 			textalign	uc
 		}
@@ -952,7 +947,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		*cvar:ai_numactors
 			image		ui/spinner_blue
-			pos			"475 129"
+			pos			"390 120"
 			min			0
 			max			8
 			delta		1
