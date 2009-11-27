@@ -1275,6 +1275,7 @@ window multiplayer_selectteam
 		}
 		pic teamnum_inc
 		{
+			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Next free team"
 			image		ui/buttons_small
 			pos			"268 82"
@@ -1285,6 +1286,7 @@ window multiplayer_selectteam
 		}
 		pic teamnum_dec
 		{
+			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Previous free team"
 			image		ui/buttons_small
 			pos			"284 82"
@@ -1327,9 +1329,8 @@ window multiplayer_selectteam
 	}
 
 	todo mergenext { pos "30 280" string "Merge the next window here"}
-	todo adminteam { pos "60 340" string "Feature: admin can affect a a player to a team" }
-	todo betterback { pos "30 370" string "Improve the 'background'" }
-	todo adminstart { pos "30 400" string "Feature: admin can start the party when he want" }
+	todo adminteam { pos "60 340" string "Feature: admin can change a player's team" }
+	todo adminstart { pos "30 400" string "Feature: admin can force a start of the party" }
 	todo fixchat { pos "30 430" string "Fix irc/chat usability (last line on bottom and visible)" }
 
 	button swap_irc_connection_status {
