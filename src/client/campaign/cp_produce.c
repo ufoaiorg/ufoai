@@ -51,7 +51,6 @@ static cvar_t* mn_production_amount;	/**< Amount of the current production; if n
  * @param[in] base Pointer to the base with given production.
  * @param[in] tech Pointer to the technology for given production.
  * @param[in] comp Pointer to components definition.
- * @param[in] disassembly True if calculations for disassembling, false otherwise.
  * @sa PR_ProductionRun
  * @sa PR_ItemProductionInfo
  * @sa PR_DisassemblyInfo

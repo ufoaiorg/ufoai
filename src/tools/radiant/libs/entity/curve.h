@@ -1,5 +1,5 @@
 /**
- * @file src/tools/radiant/plugins/entity/curve.h
+ * @file src/tools/radiant/libs/entity/curve.h
  */
 
 /*

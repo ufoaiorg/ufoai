@@ -136,7 +136,7 @@ int UTF8_encoded_len (int c)
 
 /**
  * @brief Count the number of character (not the number of bytes) of a zero termination string
- * @note the '\0' termination characted is not counted
+ * @note the \\0 termination characted is not counted
  * @note to count the number of bytes, use strlen
  * @sa strlen
  */

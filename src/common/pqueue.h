@@ -24,8 +24,6 @@ originated:
  * @ingroup datastructure
  * Implementation of a priority queue by using a binary heap. Manage a priority
  * queue as a heap - the heap is implemented as an array.
- *
- * @{
  */
 
 typedef int priorityQueueRating_t;

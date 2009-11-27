@@ -114,7 +114,6 @@ static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
  * @param[in] aircraftTemplate aircraft to add.
  * @param[in] ufo The UFO in case of a disassemly.
  * @param[in] amount Desired amount to produce.
- * @param[in] disassembling True if this is disassembling, false if production.
  */
 static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, storedUFO_t *ufo, signed int amount)
 {

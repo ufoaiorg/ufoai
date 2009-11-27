@@ -53,8 +53,8 @@ class Module
 		virtual void* getTable () = 0;
 };
 
-/*! \fn Module_getTable
- *  Shorthand to call the getTable method on module
+/**
+ * @brief Shorthand to call the getTable method on module
  */
 inline void* Module_getTable (Module& module)
 {

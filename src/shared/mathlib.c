@@ -670,9 +670,8 @@ void PerpendicularVector (vec3_t dst, const vec3_t src)
  * @param[in] v1 directional vector
  * @param[in] v2 directional vector
  * @param[out] cross output
- * @example
- * you have the right and forward values of an axis, their cross product will
- * be a properly oriented "up" direction
+ * @note you have the right and forward values of an axis, their cross product will
+ * @note be a properly oriented "up" direction
  * @sa DotProduct
  * @sa VectorNormalize2
  */

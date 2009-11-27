@@ -382,7 +382,7 @@ entity_t entities[MAX_MAP_ENTITIES];
 /**
  * @brief Removes trailing whitespaces from the given string
  * @param[in,out] str The string to clean up
- * @note Whitespaces are converted to \0
+ * @note Whitespaces are converted to \\0
  */
 static void StripTrailingWhitespaces (char *str)
 {

@@ -458,7 +458,6 @@ inline Callback3<typename Caller::first_argument_type, typename Caller::second_a
 
 /**
  * @brief Forms a Callback from a non-const Environment reference and a non-const Environment member-function.
- * @dontinclude generic/callback.cpp
  * @skipline MemberCaller example
  * @until end example
  */
@@ -474,7 +473,6 @@ class MemberCaller: public BindFirstOpaque<Member<Environment, void, member> >
 
 /**
  * @brief Forms a Callback from a const Environment reference and a const Environment member-function.
- * @dontinclude generic/callback.cpp
  * @skipline MemberCaller example
  * @until end example
  */
@@ -516,7 +514,6 @@ class ConstMemberCaller1: public BindFirstOpaque1<ConstMember1<Environment, Firs
 
 /**
  * @brief Forms a Callback from a non-const Environment reference and a free function which operates on a non-const Environment reference.
- * @dontinclude generic/callback.cpp
  * @skipline ReferenceCaller example
  * @until end example
  */
@@ -532,7 +529,6 @@ class ReferenceCaller: public BindFirstOpaque<Function1<Environment&, void, func
 
 /**
  * @brief Forms a Callback from a const Environment reference and a free function which operates on a const Environment reference.
- * @dontinclude generic/callback.cpp
  * @skipline ReferenceCaller example
  * @until end example
  */

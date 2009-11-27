@@ -1,5 +1,5 @@
 /**
- * @file src/tools/radiant/radiant/map.h
+ * @file src/tools/radiant/radiant/map/map.h
  */
 
 /*

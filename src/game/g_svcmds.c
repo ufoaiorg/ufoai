@@ -31,10 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief PACKET FILTERING
- * You can add or remove addresses from the filter list with:
+ * @note You can add or remove addresses from the filter list with:
  *
- * addip <ip>
- * removeip <ip>
+ * addip IP
+ * removeip IP
  * The ip address is specified in dot format, and any unspecified digits will match any value, so you can specify an entire class C network with "addip 192.246.40".
  * Removeip will only remove an address specified exactly the same way. You cannot addip a subnet, then removeip a single host.
  *
@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * Prints the current list of filters.
  *
  * writeip
- * Dumps "addip <ip>" commands to listip.cfg so it can be executed at a later date.  The filter lists are not saved and restored by default, because I beleive it would cause too much confusion.
+ * Dumps "addip IP" commands to listip.cfg so it can be executed at a later date.  The filter lists are not saved and restored by default, because I beleive it would cause too much confusion.
  *
  * sv_filterban <0 or 1>
  * If 1 (the default), then ip addresses matching the current list will be prohibited from entering the game.  This is the default setting.

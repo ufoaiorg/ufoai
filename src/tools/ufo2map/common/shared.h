@@ -55,7 +55,7 @@ The .pak files are just a linear collapse of a directory tree
 ========================================================================*/
 
 /** @brief verbosity levels for use in calls to Verb_Printf
- *  and on the command line -v <int> */
+ *  and on the command line -v \<int\> */
 typedef enum {
 	VERB_SILENT_EXCEPT_ERROR,
 	VERB_CHECK, /**< print nothing, except check/fix messages */

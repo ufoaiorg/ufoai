@@ -26,7 +26,7 @@
 #include "character.h"
 #include "ishaders.h"
 
-//! @Deprecated - use string compare directory. Shaders are only equal if filenames and shader ids are matching
+//! @deprecated - use string compare directory. Shaders are only equal if filenames and shader ids are matching
 inline bool shader_equal (const std::string& shader, const std::string& other)
 {
 	return string_equal_nocase(shader.c_str(), other.c_str());
