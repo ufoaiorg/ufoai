@@ -1068,7 +1068,8 @@ static void CL_CvarCheck (void)
 			MN_ExecuteConfunc("deselfloor %i", i);
 		for (; i < PATHFINDING_HEIGHT; i++)
 			MN_ExecuteConfunc("disfloor %i", i);
-		MN_ExecuteConfunc("selfloor %i", cl_worldlevel->integer);
+		if (cl_worldlevel->integer >= 0)
+			MN_ExecuteConfunc("selfloor %i", cl_worldlevel->integer);
 		cl_worldlevel->modified = qfalse;
 	}
 
