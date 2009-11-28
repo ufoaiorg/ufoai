@@ -147,7 +147,11 @@ static const image_t* SCR_SetLoadingBackground (const char *mapString)
 
 	image = R_FindImage(va("pics/maps/loading/%s", mapname), it_pic);
 	if (image == r_noTexture)
-		return R_FindImage("pics/maps/loading/default", it_pic);
+		image = R_FindImage("pics/maps/loading/default", it_pic);
+
+	/* strip away the pics/ part */
+	Cvar_Set("mn_mappicbig", image->name + 5);
+
 	return image;
 }
 
