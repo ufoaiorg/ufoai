@@ -1211,6 +1211,9 @@ qboolean G_ClientBegin (player_t* player)
 	gi.AddEvent(G_PlayerToPM(player), EV_START | EVENT_INSTANTLY);
 	gi.WriteByte(sv_teamplay->integer);
 
+	/* send things like doors and breakables */
+	G_ClientSendEdictsAndBrushModels(player);
+
 	/* ensure that the start event is send */
 	gi.EndEvents();
 
@@ -1269,9 +1272,6 @@ qboolean G_ClientSpawn (player_t * player)
 
 	/* submit stats */
 	G_SendPlayerStats(player);
-
-	/* send things like doors and breakables */
-	G_ClientSendEdictsAndBrushModels(player);
 
 	/* give time units */
 	G_GiveTimeUnits(player->pers.team);
