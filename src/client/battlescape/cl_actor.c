@@ -1565,7 +1565,7 @@ void CL_NextRound_f (void)
 {
 	struct dbuffer *msg;
 	/* can't end round if we are not in battlescape */
-	if (!CL_OnBattlescape())
+	if (!CL_BattlescapeRunning())
 		return;
 
 	/* can't end round if we're not active */
@@ -2768,7 +2768,7 @@ void CL_DebugPath_f (void)
  */
 static void CL_NextSoldier_f (void)
 {
-	if (CL_OnBattlescape()) {
+	if (CL_BattlescapeRunning()) {
 		CL_ActorSelectNext();
 	}
 }
@@ -2778,7 +2778,7 @@ static void CL_NextSoldier_f (void)
  */
 static void CL_ThisSoldier_f (void)
 {
-	if (CL_OnBattlescape()) {
+	if (CL_BattlescapeRunning()) {
 		CL_ActorSelectList(cl_selected->integer);
 	}
 }
@@ -2833,7 +2833,7 @@ static void CL_ActorSoldierSelect_f (void)
 	}
 
 	/* check whether we are connected (tactical mission) */
-	if (CL_OnBattlescape()) {
+	if (CL_BattlescapeRunning()) {
 		const int num = atoi(Cmd_Argv(1));
 		CL_ActorSelectList(num);
 	}

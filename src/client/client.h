@@ -124,6 +124,8 @@ typedef struct client_state_s {
 	int numLEs;
 	int numLMs;
 
+	qboolean spawned;		/**< soldiers already spawned? */
+
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } client_state_t;
 
@@ -229,6 +231,7 @@ extern cvar_t *s_language;
 
 /* cl_main.c */
 qboolean CL_OnBattlescape(void);
+qboolean CL_BattlescapeRunning(void);
 void CL_SetClientState(int state);
 void CL_Disconnect(void);
 void CL_Init(void);

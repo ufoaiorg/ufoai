@@ -346,7 +346,7 @@ static void MN_PushDropDownMenu_f (void)
 static void MN_PushNoHud_f (void)
 {
 	/* can't hide hud if we are not in battlescape */
-	if (!CL_OnBattlescape())
+	if (!CL_BattlescapeRunning())
 		return;
 
 	MN_PushMenu("nohud", NULL);

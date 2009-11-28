@@ -266,9 +266,8 @@ static void SCR_DrawCursor (void)
 	if (!MN_DNDIsDragging()) {
 		const char *pic;
 		image_t *image;
-		const qboolean onBattlescape = CL_OnBattlescape();
 
-		if (cls.team != cl.actTeam && onBattlescape)
+		if (cls.team != cl.actTeam && CL_BattlescapeRunning())
 			pic = "pics/cursors/wait";
 		else
 			pic = cursorImage;
@@ -277,7 +276,7 @@ static void SCR_DrawCursor (void)
 		if (image)
 			R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, image);
 
-		if (mouseSpace == MS_WORLD && onBattlescape) {
+		if (mouseSpace == MS_WORLD && CL_BattlescapeRunning()) {
 			le_t *le = selActor;
 			if (le) {
 				/* Display 'crouch' icon if actor is crouched. */

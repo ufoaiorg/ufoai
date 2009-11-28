@@ -467,7 +467,7 @@ static void MN_DrawFree (int container, const menuNode_t *node, int posx, int po
 
 	/* if showTUs is true (only the first time in none single containers)
 	 * and we are connected to a game */
-	if (showTUs && CL_OnBattlescape()) {
+	if (showTUs && CL_BattlescapeRunning()) {
 		MN_DrawString("f_verysmall", ALIGN_UL, nodepos[0] + 3, nodepos[1] + 3,
 			nodepos[0] + 3, nodepos[1] + 3, node->size[0] - 6, 0, 0,
 			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse, 0);
@@ -1167,7 +1167,7 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 		return;
 
 	/* don't allow this in tactical missions */
-	if (CL_OnBattlescape())
+	if (CL_BattlescapeRunning())
 		return;
 
 	sel = cl_selected->integer;
@@ -1487,7 +1487,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 	}
 
 	/* on tactical mission */
-	if (CL_OnBattlescape()) {
+	if (CL_BattlescapeRunning()) {
 		const menuNode_t *target = MN_DNDGetTargetNode();
 		assert(EXTRADATA(source).container);
 		assert(target);

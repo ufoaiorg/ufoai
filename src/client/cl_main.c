@@ -437,6 +437,10 @@ static void CL_UserInfo_f (void)
  */
 static void CL_SpawnSoldiers_f (void)
 {
+	if (cl.spawned)
+		return;
+
+	cl.spawned = qtrue;
 	GAME_SpawnSoldiers();
 }
 
@@ -963,9 +967,21 @@ static void CL_SendChangedUserinfos (void)
 }
 
 /**
- * @brief Check whether we are in a tactical mission as server or as client
+ * @brief Check whether we already have actors spawned on the battlefield
+ * @sa CL_OnBattlescape
+ * @return true when we are in battlefield and have soldiers spawned (game is running)
+ */
+qboolean CL_BattlescapeRunning (void)
+{
+	return cl.spawned;
+}
+
+/**
+ * @brief Check whether we are in a tactical mission as server or as client. But this
+ * only means that we are able to render the map - not that the game is running (the
+ * team can still be missing - see @c CL_BattlescapeRunning)
  * @note handles multiplayer and singleplayer
- *
+ * @sa CL_BattlescapeRunning
  * @return true when we are in battlefield
  */
 qboolean CL_OnBattlescape (void)
