@@ -607,6 +607,15 @@
 		<Unit filename="../../src/tools/radiant/radiant/map/write.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/namespace/NameObserver.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/namespace/BasicNamespace.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/namespace/NamespaceAPI.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/mapmodule.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
