@@ -1129,11 +1129,10 @@ window multiplayer_wait
 			textalign	"cc"
 		}
 
-		pic mappic
+		zone render
 		{
 			pos			"40 80"
 			size		"320 200"
-			image		*cvar:mn_mappicbig
 		}
 
 		string maxplayersperteams_str
