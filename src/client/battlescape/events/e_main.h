@@ -25,15 +25,41 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef E_MAIN_H_
 #define E_MAIN_H_
 
+/**
+ * @brief Struct that defines one particular event with all its callbacks and data.
+ */
 typedef struct eventRegister_s {
+	/**
+	 * @brief The type of this event
+	 */
 	const int type;
+	/**
+	 * @brief the name of this event (e.g. for logs)
+	 */
 	const char *name;
+	/**
+	 * @brief The format string that is used to write and parse this event
+	 */
 	const char *formatString;
+	/**
+	 * @brief Callback that is executing the event
+	 * @param self A pointer to this struct
+	 * @param msg The buffer with the event data
+	 */
 	void (*eventCallback)(const struct eventRegister_s *self, struct dbuffer *msg);
+	/**
+	 * @brief Callback that is returning the time that is needed to execute this event
+	 * @param self A pointer to this struct
+	 * @param msg The buffer with the event data
+	 * @param dt The delta time value
+	 */
 	int (*timeCallback)(const struct eventRegister_s *self, struct dbuffer *msg, const int dt);
 	
-	/** Called to determine if this event is ok to run at this point.  Should check any 
-	 * conflicts with other ongoing events (see le_t->locked).  Return true if OK to run, false if not. */
+	/**
+	 * @brief Called to determine if this event is ok to run at this point. Should check any
+	 * conflicts with other ongoing events (see @c le_t->locked ).
+	 * @return @c true if OK to run, @c false if not.
+	 */
 	qboolean (*eventCheck)(const struct eventRegister_s *self, const struct dbuffer *msg);
 } eventRegister_t;
 
