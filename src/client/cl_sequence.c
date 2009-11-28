@@ -376,8 +376,12 @@ void CL_Sequence2D (void)
 			R_Color(s2d->color);
 
 			/* gettext placeholder */
-			if (s2d->text)
-				height += MN_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], (int) s2d->size[0], (int) s2d->size[1], -1 /** @todo use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+			if (s2d->text) {
+				int maxWidth = (int) s2d->size[0];
+				if (maxWidth <= 0)
+					maxWidth = VID_NORM_WIDTH;
+				height += MN_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], maxWidth, (int) s2d->size[1], -1 /** @todo use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+			}
 		}
 	R_Color(NULL);
 
