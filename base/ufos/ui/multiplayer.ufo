@@ -1128,7 +1128,7 @@ window multiplayer_wait
 			ghost	true
 		}
 
-		radiobutton bt1
+		radiobutton bt0
 		{
 			tooltip	"_Level 1"
 			pos		"6 293"
@@ -1139,7 +1139,7 @@ window multiplayer_wait
 			icon	number_1
 		}
 
-		radiobutton bt2
+		radiobutton bt1
 		{
 			tooltip	"_Level 2"
 			pos		"6 253"
@@ -1150,7 +1150,7 @@ window multiplayer_wait
 			icon	number_2
 		}
 
-		radiobutton bt3
+		radiobutton bt2
 		{
 			tooltip	"_Level 3"
 			pos		"6 213"
@@ -1161,7 +1161,7 @@ window multiplayer_wait
 			icon	number_3
 		}
 
-		radiobutton bt4
+		radiobutton bt3
 		{
 			tooltip	"_Level 4"
 			pos		"6 173"
@@ -1172,7 +1172,7 @@ window multiplayer_wait
 			icon	number_4
 		}
 
-		radiobutton bt5
+		radiobutton bt4
 		{
 			tooltip	"_Level 5"
 			pos		"6 133"
@@ -1183,7 +1183,7 @@ window multiplayer_wait
 			icon	number_5
 		}
 
-		radiobutton bt6
+		radiobutton bt5
 		{
 			tooltip	"_Level 6"
 			pos		"6 93"
@@ -1194,7 +1194,7 @@ window multiplayer_wait
 			icon	number_6
 		}
 
-		radiobutton bt7
+		radiobutton bt6
 		{
 			tooltip	"_Level 7"
 			pos		"6 53"
@@ -1205,7 +1205,7 @@ window multiplayer_wait
 			icon	number_7
 		}
 
-		radiobutton bt8
+		radiobutton bt7
 		{
 			tooltip	"_Level 8"
 			pos		"6 13"
