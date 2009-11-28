@@ -221,10 +221,16 @@ void LE_SetThink (le_t *le, void (*think) (le_t *le))
 }
 
 /**
- * @brief Adds local (not known or handled by the server) models to the map
+ * @brief Prepares local (not known or handled by the server) models to the map, which will be added later in LM_AddToScene().
+ * @param[in] model The model name.
+ * @param[in] particle Particle to be used with model (if there is any).
+ * @param[in] origin Origin of the model (position on map).
+ * @param[in] angles Angles of the model (how it should be rotated after adding to map).
+ * @param[in] scale Scaling of the model (how it should be scaled after adding to map).
+ * @param[in] entnum Entity number.
  * @note misc_model
+ * @todo we memset() such model here - find if we release such memory after removing an model, I can't find it out ( Zenerka)
  * @sa CL_ParseEntitystring
- * @param[in] entnum Entity number
  * @sa LM_AddToScene
  */
 localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
@@ -406,7 +412,11 @@ void LET_StartIdle (le_t * le)
 }
 
 /**
- * @param[in] contents The contents flash of the brush we are currently in
+ * @brief Plays sound of content for moving actor.
+ * @param[in] le Pointer to local entity being an actor.
+ * @param[in] contents The contents flag of the brush we are currently in
+ * @note Currently it supports only CONTENTS_WATER, any other special contents
+ * can be added here anytime.
  */
 static void LE_PlaySoundFileForContents (le_t* le, int contents)
 {
