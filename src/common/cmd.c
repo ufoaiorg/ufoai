@@ -999,6 +999,13 @@ static int Cmd_CompleteExecCommand (const char *partial, const char **match)
 	return 0;
 }
 
+/**
+ * @brief Dummy binding if you don't want unknown commands forwarded to the server
+ */
+void Cmd_Dummy_f (void)
+{
+}
+
 #ifdef DEBUG
 /**
  * @brief Tries to call every command (except the quit command) that's currently

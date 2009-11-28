@@ -323,6 +323,8 @@ void M_Frame (void)
 
 void M_Init (void)
 {
+	if (Cmd_Exists("music_change"))
+		Cmd_RemoveCommand("music_change");
 	Cmd_AddCommand("music_play", M_Play_f, "Plays a background sound track");
 	Cmd_AddCommand("music_change", M_Change_f, "Changes the music theme");
 	Cmd_AddCommand("music_stop", M_Stop, "Stops currently playing music tracks");

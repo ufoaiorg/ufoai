@@ -160,3 +160,8 @@ const char* Cmd_GetCommandDesc(const char* command);
  * @brief Clears the command execution buffer
  */
 void Cmd_BufClear(void);
+
+/**
+ * @brief Dummy binding if you don't want unknown commands forwarded to the server
+ */
+void Cmd_Dummy_f(void);

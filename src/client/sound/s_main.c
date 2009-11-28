@@ -199,6 +199,8 @@ void S_Init (void)
 
 	if (!snd_init->integer) {
 		Com_Printf("not initializing.\n");
+		Cmd_AddCommand("music_change", Cmd_Dummy_f, "Dummy command if sound is disabled");
+		Cvar_Get("snd_music", "PsymongN3", Cmd_Dummy_f, "Background music track");
 		return;
 	}
 
