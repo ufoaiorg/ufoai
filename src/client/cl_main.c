@@ -437,6 +437,9 @@ static void CL_UserInfo_f (void)
  */
 static void CL_SpawnSoldiers_f (void)
 {
+	if (!CL_OnBattlescape())
+		return;
+
 	if (cl.spawned)
 		return;
 

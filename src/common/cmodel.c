@@ -827,8 +827,8 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 		curTile->wpMaxs[i] = LittleLong(curTile->wpMaxs[i]);
 	}
 
-	Com_Printf("Map:%s  Offset:(%i, %i, %i)\n", name, sX, sY, sZ);
-	Com_Printf("wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", curTile->wpMins[0], curTile->wpMins[1], curTile->wpMins[2], curTile->wpMaxs[0], curTile->wpMaxs[1], curTile->wpMaxs[2]);
+	Com_DPrintf(DEBUG_ROUTING, "Map:%s  Offset:(%i, %i, %i)\n", name, sX, sY, sZ);
+	Com_DPrintf(DEBUG_ROUTING, "wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", curTile->wpMins[0], curTile->wpMins[1], curTile->wpMins[2], curTile->wpMaxs[0], curTile->wpMaxs[1], curTile->wpMaxs[2]);
 
 	/* wpMins and wpMaxs have the map size data from the initial build.
 	 * Offset this by the given parameters so the stored values are in real coordinates. */
@@ -839,7 +839,7 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 	curTile->wpMaxs[1] += sY;
 	curTile->wpMaxs[2] += sZ;
 
-	Com_Printf("Shifted wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", curTile->wpMins[0], curTile->wpMins[1], curTile->wpMins[2], curTile->wpMaxs[0], curTile->wpMaxs[1], curTile->wpMaxs[2]);
+	Com_DPrintf(DEBUG_ROUTING, "Shifted wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", curTile->wpMins[0], curTile->wpMins[1], curTile->wpMins[2], curTile->wpMaxs[0], curTile->wpMaxs[1], curTile->wpMaxs[2]);
 
 	/* Things that need to be done:
 	 * The floor, ceiling, and route data can be copied over from the map.
@@ -858,8 +858,8 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 	assert(minY <= maxY);
 	assert(minZ <= maxZ);
 
-	Com_Printf("Tile bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX, minY, minZ, maxX, maxY, maxZ);
-	Com_Printf("Source bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX - sX, minY - sY, minZ - sZ, maxX - sX, maxY - sY, maxZ - sZ);
+	Com_DPrintf(DEBUG_ROUTING, "Tile bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX, minY, minZ, maxX, maxY, maxZ);
+	Com_DPrintf(DEBUG_ROUTING, "Source bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX - sX, minY - sY, minZ - sZ, maxX - sX, maxY - sY, maxZ - sZ);
 
 	for (size = 0; size < ACTOR_MAX_SIZE; size++)
 		/* Adjust starting x and y by size to catch large actor cell overlap. */
@@ -884,10 +884,10 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 				}
 			}
 
-	Com_Printf("Done copying data.\n");
+	Com_DPrintf(DEBUG_ROUTING, "Done copying data.\n");
 
 	end = time(NULL);
-	Com_Printf("Loaded routing for tile %s in %5.1fs\n", name, end - start);
+	Com_DPrintf(DEBUG_ROUTING, "Loaded routing for tile %s in %5.1fs\n", name, end - start);
 }
 
 
