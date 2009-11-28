@@ -212,6 +212,19 @@ static void SV_Kick_f (void)
 	SV_DropClient(sv_client, "You were kicked from the game\n");
 }
 
+/**
+ * @brief Forces a game start even if not all players are ready yet
+ * @sa SV_CheckGameStart
+ */
+static void SV_StartGame_f (void)
+{
+	client_t* cl;
+	int i;
+
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
+		if (cl && cl->state != cs_free)
+			cl->player->isReady = qtrue;
+}
 
 /**
  * @brief Prints some server info to the game console - like connected players
@@ -556,6 +569,7 @@ void SV_InitOperatorCommands (void)
 {
 	Cmd_AddCommand("heartbeat", SV_Heartbeat_f, "Sends a heartbeat to the masterserver");
 	Cmd_AddCommand("kick", SV_Kick_f, "Kick a user from the server");
+	Cmd_AddCommand("startgame", SV_StartGame_f, "Forces a game start even if not all players are ready yet");
 	Cmd_AddCommand("status", SV_Status_f, "Prints status of server and connected clients");
 	Cmd_AddCommand("serverinfo", SV_Serverinfo_f, "Prints the serverinfo that is visible in the server browsers");
 	Cmd_AddCommand("info", SV_UserInfo_f, "Prints the userinfo for a given userid");

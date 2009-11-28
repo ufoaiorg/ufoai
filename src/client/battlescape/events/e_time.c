@@ -94,9 +94,8 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 	/* calculate time interval before the next event */
 	switch (eType) {
 	case EV_ACTOR_APPEAR:
-		if (cls.state == ca_active && cl.actTeam != cls.team) {
+		if (cl.actTeam != cls.team)
 			nextTime += 600;
-		}
 		break;
 	case EV_INV_RELOAD:
 		/* let the reload sound play */

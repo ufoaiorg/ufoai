@@ -301,28 +301,6 @@ static void SVCmd_ActorInvList_f (void)
 #endif
 
 /**
- * @brief Start the game even if not all players are connected
- * @sa G_ClientTeamAssign
- */
-static void SVCmd_StartGame_f (void)
-{
-	int i;
-	player_t *p;
-
-	if (level.activeTeam == TEAM_NO_ACTIVE) {
-		Com_Printf("Could not force the game start\n");
-		return;
-	}
-
-	/* spawn the player (only human controlled players) */
-	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
-		if (!p->inuse)
-			continue;
-		G_ClientSpawn(p);
-	}
-}
-
-/**
  * @brief ServerCommand will be called when an "sv" command is issued.
  * The game can issue gi.Cmd_Argc() / gi.Cmd_Argv() commands to get the rest
  * of the parameters
@@ -333,9 +311,7 @@ void ServerCommand (void)
 	const char *cmd;
 
 	cmd = gi.Cmd_Argv(1);
-	if (Q_strcasecmp(cmd, "startgame") == 0)
-		SVCmd_StartGame_f();
-	else if (Q_strcasecmp(cmd, "addip") == 0)
+	if (Q_strcasecmp(cmd, "addip") == 0)
 		SVCmd_AddIP_f();
 	else if (Q_strcasecmp(cmd, "removeip") == 0)
 		SVCmd_RemoveIP_f();

@@ -239,10 +239,16 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	Com_DPrintf(DEBUG_SERVER, "SVC_DirectConnect()\n");
 
+	if (sv.started) {
+		Com_Printf("rejected connect because match is already running\n");
+		NET_OOB_Printf(stream, "print\nGame has started already.\n");
+		return;
+	}
+
 	version = atoi(Cmd_Argv(1));
 	if (version != PROTOCOL_VERSION) {
-		NET_OOB_Printf(stream, "print\nServer is version %s.\n", UFO_VERSION);
 		Com_Printf("rejected connect from version %i - %s\n", version, peername);
+		NET_OOB_Printf(stream, "print\nServer is version %s.\n", UFO_VERSION);
 		return;
 	}
 

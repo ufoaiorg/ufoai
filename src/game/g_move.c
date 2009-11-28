@@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief The forbidden list is a list of entity positions that are occupied by an entity.
  * This list is checked everytime an actor wants to walk there.
  */
-pos_t *forbiddenList[MAX_FORBIDDENLIST];
-int forbiddenListLength;
+static pos_t *forbiddenList[MAX_FORBIDDENLIST];
+static int forbiddenListLength;
 
 /**
  * @brief Build the forbidden list for the pathfinding (server side).
@@ -190,7 +190,6 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 
 	/* everything ok, found valid route? */
 	if (VectorCompare(pos, ent->pos)) {
-
 		/* no floor inventory at this point */
 		FLOOR(ent) = NULL;
 
