@@ -850,6 +850,12 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
 
+static qboolean CL_CvarWorldLevel (cvar_t *cvar)
+{
+	const int maxLevel = cl.mapMaxLevel ? cl.mapMaxLevel - 1 : 7;
+	return Cvar_AssertValue(cvar, 0, maxLevel, qtrue);
+}
+
 /**
  * @brief Calls all reset functions for all subsystems like production and research
  * also initializes the cvars and commands
@@ -881,6 +887,7 @@ static void CL_InitLocal (void)
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_log_battlescape_events = Cvar_Get("cl_log_battlescape_events", "1", 0, "Log all battlescape events to events.log");
 	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode");
+	Cvar_SetCheckFunction("cl_worldlevel", CL_CvarWorldLevel);
 	cl_worldlevel->modified = qfalse;
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
 	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "15000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
@@ -1057,14 +1064,6 @@ static void CL_CvarCheck (void)
 	/* worldlevel */
 	if (cl_worldlevel->modified) {
 		int i;
-		if (cl_worldlevel->integer < 0)
-			Com_Error(ERR_DROP, "CL_CvarCheck: cl_worldlevel is negative");
-
-		if (cl_worldlevel->integer >= cl.mapMaxLevel)
-			Cvar_SetValue("cl_worldlevel", cl.mapMaxLevel - 1);
-		else if (cl_worldlevel->integer < 0)
-			Cvar_SetValue("cl_worldlevel", 0);
-
 		for (i = 0; i < 8; i++) {
 			int status = 0;
 			if (i == cl_worldlevel->integer)
