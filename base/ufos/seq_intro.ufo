@@ -1,7 +1,5 @@
 sequence intro // Last change 25-07-2009 by Vio
-
 {
-
 	cmd "seq_animspeed 100;"
 
 	precache pics
@@ -12,10 +10,8 @@ sequence intro // Last change 25-07-2009 by Vio
 		geoscape/mission
 	}
 
-
 	//fitting music, deactivate for geoscape track
 	cmd "snd_music PsymongN5;"
-	
 
 	2dobj i_menufade
 	{
@@ -38,22 +34,22 @@ sequence intro // Last change 25-07-2009 by Vio
 	2dobj i_sentence1
 	{
 		text	"_intro_sentence1"
-		pos	"512 100"		align	uc
+		pos		"512 100"		
+		align	uc
 		color	"0.2 1 0.5 0"
-		fade "0 0 0 0.5"
+		fade	"0 0 0 0.5"
 		speed	"0 0"
 		relative	false
-		//enlarge "0.9 0.9"
-		//font f_small
 	}
 	wait 20 //4 lines
 
 	2dobj i_sentence2
 	{
 		text	"_intro_sentence2"
-		pos		"512 120"		align	uc
+		pos		"512 120"		
+		align	uc
 		color	"0.2 1 0.5 0"
-		fade "0 0 0 0.5"
+		fade	"0 0 0 0.5"
 		speed	"0 0"
 		relative	true
 	}
@@ -62,9 +58,10 @@ sequence intro // Last change 25-07-2009 by Vio
 	2dobj i_sentence3
 	{
 		text	"_intro_sentence3"
-		pos		"512 140"		align	uc
+		pos		"512 140"		
+		align	uc
 		color	"0.2 1 0.5 0"
-		fade "0 0 0 0.5"
+		fade	"0 0 0 0.5"
 		relative	true
 	}
 	wait 5 //1 line
@@ -91,9 +88,6 @@ sequence intro // Last change 25-07-2009 by Vio
 	
 
 	cmd "snd_music AlexSullencity;"
-	//cmd "snd_music alBasrahM;"
-	//cmd "snd_music David03;"
-	//cmd "snd_music greecei;"
 	wait 2
 
 	2dobj i_xmumbai
@@ -134,7 +128,6 @@ sequence intro // Last change 25-07-2009 by Vio
 		relative	true
 	}
 	
-
 	wait 8 // 7 lines
 
 	2dobj i_xbonn // timed with Sullencity sirens 
@@ -186,10 +179,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 
 	cmd "snd_music space;"
-//	cmd "snd_music van_theme;"
-//	cmd "snd_music David01;"
 	wait 3
-
 
 	2dobj i_sentence6
 	{
@@ -212,7 +202,6 @@ sequence intro // Last change 25-07-2009 by Vio
 		relative	true
 	}
 	wait 17 // 3.5 lines
-
 
 	2dobj i_sentence8
 	{
