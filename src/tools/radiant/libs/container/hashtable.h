@@ -159,7 +159,6 @@ public:
 /// \param Hasher Must provide 'std::size_t operator()(const Key&) const' which always returns the same result if the same argument is given.
 /// \param KeyEqual Must provide 'bool operator==(const Key&, const Key&) const' which returns true only if both arguments are equal.
 ///
-/// \dontinclude container/hashtable.cpp
 /// \skipline HashTable example
 /// \until end example
 template < typename Key, typename Value, typename Hasher, typename KeyEqual = std::equal_to<Key> >

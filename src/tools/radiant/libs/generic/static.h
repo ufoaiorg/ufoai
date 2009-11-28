@@ -35,7 +35,6 @@ class Null {
 /// \param Type The singleton object type.
 /// \param Type The type distinguishing this instance from others of the same type.
 ///
-/// \dontinclude generic/static.cpp
 /// \skipline Static example
 /// \until end example
 template < typename Type, typename Context = Null >
@@ -57,7 +56,6 @@ Type Static<Type, Context>::m_instance;
 /// \param Type The singleton object type.
 /// \param Type The type distinguishing this instance from others of the same type.
 ///
-/// \dontinclude generic/static.cpp
 /// \skipline LazyStatic example
 /// \until end example
 template < typename Type, typename Context = Null >
@@ -114,7 +112,6 @@ Type* CountedStatic<Type, Context>::m_instance;
 /// \param Type The type parameter of the CountedStatic to reference.
 /// \param Type The type distinguishing this instance from others of the same type.
 ///
-/// \dontinclude generic/static.cpp
 /// \skipline SmartStatic example
 /// \until end example
 template < typename Type, typename Context = Null >
