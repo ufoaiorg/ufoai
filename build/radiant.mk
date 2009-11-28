@@ -79,6 +79,10 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/map/map.cpp \
 	$(RADIANT_BASE)/radiant/map/MapFileChooserPreview.cpp \
 	\
+	$(RADIANT_BASE)/radiant/namespace/NameObserver.cpp \
+	$(RADIANT_BASE)/radiant/namespace/BasicNamespace.cpp \
+	$(RADIANT_BASE)/radiant/namespace/NamespaceAPI.cpp \
+	\
 	$(RADIANT_BASE)/radiant/xyview/grid.cpp \
 	$(RADIANT_BASE)/radiant/xyview/xywindow.cpp \
 	\

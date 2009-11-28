@@ -37,7 +37,7 @@ public:
 
 	virtual void attach(const NameCallback& setName, const NameCallbackCallback& attachObserver) = 0;
 	virtual void detach(const NameCallback& setName, const NameCallbackCallback& detachObserver) = 0;
-	virtual void makeUnique(const char* name, const NameCallback& setName) const = 0;
+	virtual void makeUnique(const std::string& name, const NameCallback& setName) const = 0;
 };
 
 class Namespaced {
