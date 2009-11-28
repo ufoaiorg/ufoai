@@ -1094,18 +1094,10 @@ window multiplayer_selectteam
 {
 	{
 		timeout 2000
-	}
-	
-	// ==================
-	// background
-	// ==================
-
-	pic background
-	{
 		image		ui/world_bg
 		size		"1024 768"
 	}
-
+	
 	panel partyinfo {
 		{
 			pos		"100 30"
@@ -1652,84 +1644,108 @@ window multiplayer_wait
 {
 	{
 		string		"_Please wait"
-		pos			"256 156"
-		size		"526 437"
-		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		ui/world_bg
+		size		"1024 768"
 		timeout		2000
 	}
+
+	panel partyinfo {
+		{
+			pos		"256 156"
+			size	"526 437"
+			padding	5
+			image	"ui/panel_window"
+		}
+
+		string teams_str
+		{
+			string		"_Players connected, waiting for others"
+			pos			"60 50"
+			size		"350 20"
+		}
+		string teams_val
+		{
+			string		*cvar:mp_wait_init_players
+			color		"0 0.5 0 1"
+			pos			"30 50"
+			size		"30 20"
+		}
 	
-	string teams_str
-	{
-		string		"_Players connected, waiting for others"
-		pos			"60 50"
-		size		"350 20"
-	}
-	string teams_val
-	{
-		string		*cvar:mp_wait_init_players
-		color		"0 0.5 0 1"
-		pos			"30 50"
-		size		"30 20"
+		string mapname
+		{
+			font		f_small
+			color		"1 1 1 1"
+			string		*cvar:mn_svmapname
+			pos			"128 95"
+			size		"260 20"
+			textalign	"uc"
+		}
+		pic mappic
+		{
+			pos			"93 75"
+			size		"331 237"
+			image		*cvar:mn_mappicbig
+		}
+	
+		checkbox cb_ready
+		{
+			tooltip		"_Ready to start the game"
+			image		ui/checkbox_green
+			pos			"30 325"
+			size		"20 20"
+			current		*cvar:cl_ready
+		}
+		string cb_ready_label
+		{
+			string		"_Are you ready?"
+			tooltip		"_Ready to start the game"
+			pos			"60 325"
+			size		"180 20"
+			onClick		{ call *node:parent.cb_ready@toggle }
+		}
+	
+		button bt_lobby
+		{
+			visiblewhen "exists *cvar:irc_defaultChannel"
+			string		"_Lobby"
+			image		ui/button_green_small
+			width		"200"
+			pos			"30 373"
+			font		f_menu
+			color		"0 0.5 0 1"
+			selectcolor "1 1 1 1"
+			onClick		{ cmd "mn_push irc;" }
+		}
+		
+		button bt_invite
+		{
+			// @todo only in inet mode - not in lan mode
+			string		"_Invite others"
+			tooltip		"_Invite players that are online in the lobby"
+			image		ui/button_green_small
+			width		"200"
+			pos 		"297 373"
+			font		f_menu
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick		{ cmd "irc_invite;" }
+		}
+	
+		button bt_force
+		{
+			visiblewhen "*cvar:mp_wait_init_show_force == 1"
+			string		"_Force start"
+			tooltip		"_Start the game even if not all teams have joined"
+			image		ui/button_green_small
+			width		"200"
+			pos 		"297 330"
+			font		f_menu
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick		{ cmd "sv startgame;" }
+		}
 	}
 
-	string mapname
-	{
-		font		f_small
-		color		"1 1 1 1"
-		string		*cvar:mn_svmapname
-		pos			"128 95"
-		size		"260 20"
-		textalign	"uc"
-	}
-	pic mappic
-	{
-		pos			"93 75"
-		size		"331 237"
-		image		*cvar:mn_mappicbig
-	}
-
-	button bt_lobby
-	{
-		visiblewhen "exists *cvar:irc_defaultChannel"
-		string		"_Lobby"
-		image		ui/button_green_small
-		width		"200"
-		pos			"30 373"
-		font		f_menu
-		color		"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		onClick		{ cmd "mn_push irc;" }
-	}
-	
-	button bt_invite
-	{
-		// @todo only in inet mode - not in lan mode
-		string		"_Invite others"
-		tooltip		"_Invite players that are online in the lobby"
-		image		ui/button_green_small
-		width		"200"
-		pos 		"297 373"
-		font		f_menu
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		onClick		{ cmd "irc_invite;" }
-	}
-
-	button bt_force
-	{
-		visiblewhen "*cvar:mp_wait_init_show_force == 1"
-		string		"_Force start"
-		tooltip		"_Start the game even if not all teams have joined"
-		image		ui/button_green_small
-		width		"200"
-		pos 		"297 330"
-		font		f_menu
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		onClick		{ cmd "sv startgame;" }
-	}
-	
 	func onEvent
 	{
 		cmd		"mp_wait_init;"
