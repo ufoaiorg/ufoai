@@ -40,7 +40,7 @@ window objectinfo
 			*cvar:mn_changeitem *cvar:tmp
 			if ( *node:this.parent.itemdescription@invis == 0 ) {
 				if ( *cvar:mn_changeitem eq "weapon" ) {
-					cmd "mn_item_hide_firemode true;"
+					cmd "mn_item_hide_firemode false;"
 					cmd "mn_item_hide_weaponammo false;"
 				} elif ( *cvar:mn_changeitem eq "ammo" ) {
 					cmd "mn_item_hide_firemode false;"

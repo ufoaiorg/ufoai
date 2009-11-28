@@ -145,11 +145,26 @@ void INV_ItemDescription (const objDef_t *od)
 					continue;
 				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(itemText));
 			}
-		} else if (INV_IsAmmo(od)) {
+		} else if ((od->weapon && (od->reload || od->thrown)) || INV_IsAmmo(od)) {
+			const objDef_t *odAmmo;
+			int weaponIndex;
+
+			if (od->weapon) {
+				Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
+				if (od->ammo > 0)
+					Q_strcat(itemText, va(_("Max ammo:\t%i\n"), (int) (od->ammo)), sizeof(itemText));
+				odAmmo = (od->numAmmos) ? od->ammos[itemIndex] : od ;
+				assert(odAmmo);
+				for (weaponIndex = 0; (weaponIndex < odAmmo->numWeapons) && (odAmmo->weapons[weaponIndex] != od) ; weaponIndex++);
+			} else {
+				odAmmo = od;
+				weaponIndex = itemIndex;
+			}
+
 			/** @todo is there ammo with no firedefs? */
-			if (od->numFiredefs[itemIndex] > 0) {
+			if (GAME_ItemIsUseable(odAmmo) && odAmmo->numFiredefs[weaponIndex] > 0) {
 				const fireDef_t *fd;
-				const int numFiredefs = od->numFiredefs[itemIndex];
+				const int numFiredefs = odAmmo->numFiredefs[weaponIndex];
 
 				/* This contains everything common for weapons and ammos */
 
@@ -159,7 +174,7 @@ void INV_ItemDescription (const objDef_t *od)
 				if (fireModeIndex < 0)
 					fireModeIndex = numFiredefs - 1;
 
-				fd = &od->fd[itemIndex][fireModeIndex];
+				fd = &odAmmo->fd[weaponIndex][fireModeIndex];
 
 				/* We always display the name of the firemode for an ammo */
 				Cvar_Set("mn_firemodename", _(fd->name));
@@ -171,9 +186,6 @@ void INV_ItemDescription (const objDef_t *od)
 				Q_strcat(itemText, va(_("Range:\t%g\n"), fd->range / UNIT_SIZE), sizeof(itemText));
 				Q_strcat(itemText, va(_("Spreads:\t%g\n"), (fd->spread[0] + fd->spread[1]) / 2), sizeof(itemText));
 			}
-		} else if (od->weapon && (od->reload || od->thrown)) {
-			Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			Q_strcat(itemText, va(_("Max ammo:\t%i\n"), (int) (od->ammo)), sizeof(itemText));
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 		} else if (od->craftitem.type <= AC_ITEM_BASE_LASER) {
