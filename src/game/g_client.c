@@ -751,7 +751,7 @@ static void G_GetTeam (player_t * player)
 			gi.error("G_GetTeam: Not enough spawn spots in map!");
 
 		/* assign random valid team number */
-		randomSpot = (int) (frand() * (spawnSpots - 1) + 0.5);
+		randomSpot = rand() % spawnSpots;
 		G_SetTeamForPlayer(player, spawnCheck[randomSpot]);
 		gi.dprintf("You have been randomly assigned to team %i\n", player->pers.team);
 		return;
