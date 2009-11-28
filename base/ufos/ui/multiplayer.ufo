@@ -1093,23 +1093,27 @@ window multiplayer_wait
 {
 	{
 		timeout 	2000
+		fill		true
+		starlayout	true
 	}
 
 	zone render {
 		pos			"0 0"
 		size		"1024 768"
+		align		LAYOUTALIGN_FILL
 	}
 
 	todo adminteam { pos "80 310" string "Feature: admin can change a player's team" }
 	todo disablefloor { pos "80 340" string "Disable unless levels" }
 	todo fixchat { pos "80 370" string "Fix irc/chat usability (last line on bottom and visible)" }
 	todo inviteothers { pos "80 400" string "Invite button only in inet mode, not in lan mode"}
+	todo widescreen { pos "80 400" string "Center panels"}
 
 	panel floor {
 		{
 			pos		"0 128"
 			size	"40 369"
-			//align	LAYOUTALIGN_LEFT
+			align	LAYOUTALIGN_LEFT
 			excluderect	{
 				pos		"33 336"
 				size	"7 34"
