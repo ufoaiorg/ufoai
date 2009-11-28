@@ -81,7 +81,7 @@ const char *Info_BoolForKey (const char *s, const char *key)
 	return "Yes";
 }
 
-const int Info_IntegerForKey (const char *s, const char *key)
+int Info_IntegerForKey (const char *s, const char *key)
 {
 	return atoi(Info_ValueForKey(s, key));
 }
