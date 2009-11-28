@@ -56,11 +56,13 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	image = surf->texinfo->image;
 	R_BindTexture(image->texnum);  /* texture */
 
-	if (texunit_lightmap.enabled)  /* lightmap */
-		R_BindLightmapTexture(surf->lightmap_texnum);
+	if (texunit_lightmap.enabled) {  /* lightmap */
+		if (surf->flags & MSURF_LIGHTMAP)
+			R_BindLightmapTexture(surf->lightmap_texnum);
+	}
 
 	if (r_state.lighting_enabled && r_bumpmap->value) {
-		if (image->normalmap) {
+		if (image->normalmap && (surf->flags & MSURF_LIGHTMAP)) {
 			R_BindDeluxemapTexture(surf->deluxemap_texnum);
 			R_BindNormalmapTexture(image->normalmap->texnum);
 
