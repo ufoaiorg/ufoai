@@ -124,7 +124,8 @@ typedef struct client_state_s {
 	int numLEs;
 	int numLMs;
 
-	qboolean spawned;		/**< soldiers already spawned? This is only true if we are already on battlescape but our team was not yet spawned */
+	qboolean spawned;		/**< soldiers already spawned? This is only true if we are already on battlescape but
+							 * our team is not yet spawned */
 
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } client_state_t;
