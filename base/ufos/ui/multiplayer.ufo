@@ -1209,7 +1209,7 @@ window multiplayer_wait
 		radiobutton bt8
 		{
 			tooltip	"_Level 8"
-			pos		"6 49"
+			pos		"6 9"
 			size	"27 35"
 			image	"ui/button_background2"
 			value	7
