@@ -852,7 +852,7 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 
 static qboolean CL_CvarWorldLevel (cvar_t *cvar)
 {
-	const int maxLevel = cl.mapMaxLevel ? cl.mapMaxLevel - 1 : 7;
+	const int maxLevel = cl.mapMaxLevel ? cl.mapMaxLevel - 1 : PATHFINDING_HEIGHT - 1;
 	return Cvar_AssertValue(cvar, 0, maxLevel, qtrue);
 }
 
@@ -1064,7 +1064,7 @@ static void CL_CvarCheck (void)
 	/* worldlevel */
 	if (cl_worldlevel->modified) {
 		int i;
-		for (i = 0; i < 8; i++) {
+		for (i = 0; i < PATHFINDING_HEIGHT; i++) {
 			int status = 0;
 			if (i == cl_worldlevel->integer)
 				status = 2;
