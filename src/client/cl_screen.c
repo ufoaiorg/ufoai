@@ -129,9 +129,10 @@ void SCR_DrawPrecacheScreen (qboolean string)
  * @note If @c mapString is NULL the @c sv_mapname cvar is used
  * @return The loading/background pic path
  */
-static const char* SCR_SetLoadingBackground (const char *mapString)
+static const image_t* SCR_SetLoadingBackground (const char *mapString)
 {
 	const char *mapname;
+	image_t* image;
 
 	if (!mapString || Com_ServerState())
 		mapname = Cvar_GetString("sv_mapname");
@@ -140,17 +141,14 @@ static const char* SCR_SetLoadingBackground (const char *mapString)
 		Cvar_Set("sv_mapname", mapString);
 	}
 
-	if (mapname[0] == '\0')
-		return NULL;
-
 	/* we will try to load the random map shots by just removing the + from the beginning */
 	if (mapname[0] == '+')
 		mapname++;
 
-	if (R_FindImage(va("pics/maps/loading/%s", mapname), it_pic))
-		return mapname;
-	else
-		return "default";
+	image = R_FindImage(va("pics/maps/loading/%s", mapname), it_pic);
+	if (image == r_noTexture)
+		return R_FindImage("pics/maps/loading/default", it_pic);
+	return image;
 }
 
 /**
@@ -178,10 +176,9 @@ static void SCR_DrawDownloading (void)
  */
 static void SCR_DrawLoading (void)
 {
-	static const char *loadingPic;
+	static const image_t* loadingPic;
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
 	char *mapmsg;
-	const image_t *image;
 
 	if (cls.downloadName[0]) {
 		SCR_DrawDownloading();
@@ -195,13 +192,9 @@ static void SCR_DrawLoading (void)
 
 	if (!loadingPic)
 		loadingPic = SCR_SetLoadingBackground(cl.configstrings[CS_MAPTITLE]);
-	if (!loadingPic)
-		return;
 
 	/* center loading screen */
-	image = R_FindImage(va("pics/maps/loading/%s", loadingPic), it_world);
-	if (image != r_noTexture)
-		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, image);
+	R_DrawImage(viddef.virtualWidth / 2 - loadingPic->width / 2, viddef.virtualHeight / 2 - loadingPic->height / 2, loadingPic);
 	R_Color(color);
 
 	if (cl.configstrings[CS_TILES][0]) {
