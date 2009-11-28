@@ -252,7 +252,7 @@ void CL_Disconnect (void)
 	if (!Com_ServerState()) {
 		msg = new_dbuffer();
 		NET_WriteByte(msg, clc_stringcmd);
-		NET_WriteString(msg, "disconnect");
+		NET_WriteString(msg, "disconnect\n");
 		NET_WriteMsg(cls.netStream, msg);
 		/* make sure, that this is send */
 		NET_Wait(0);
@@ -352,7 +352,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		}
 		msg = new_dbuffer();
 		NET_WriteByte(msg, clc_stringcmd);
-		NET_WriteString(msg, "new");
+		NET_WriteString(msg, "new\n");
 		NET_WriteMsg(cls.netStream, msg);
 		CL_SetClientState(ca_connected);
 		return;
