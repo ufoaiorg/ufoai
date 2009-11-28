@@ -282,7 +282,7 @@ assembly small
 {
 size "4 5"
 title "_Snow"
-multiplayer mp_team2
+multiplayer +mp_team2
 +n01 "0 4"
 +n02 "0 4"
 +n03 "0 4"
@@ -299,7 +299,7 @@ assembly alienlandingnature
 {
 size "6 6"
 title "_Alien landing - Snow"
-multiplayer mp_team2
+multiplayer +mp_team2
 +n01 "0 8"
 +n02 "0 8"
 +n03 "0 8"
@@ -317,7 +317,7 @@ assembly industrial
 {
 size "6 6"
 title "_Industrial"
-multiplayer mp_team2
+multiplayer +mp_team2
 +n01 "0 8"
 +n02 "0 8"
 +n03 "0 8"
@@ -338,7 +338,7 @@ assembly alienlandingindustrial
 {
 size "8 8"
 title "_Alien landing - Industrial"
-multiplayer mp_team2
+multiplayer +mp_team2
 +n01 "0 8"
 +n02 "0 8"
 +n03 "0 8"
@@ -360,7 +360,7 @@ assembly multiplayercoop
 {
 size "8 8"
 title "_Multiplayer Coop"
-multiplayer mp_team2
+multiplayer +mp_team2
 +n01 "0 8"
 +n02 "0 8"
 +n03 "0 8"
@@ -381,7 +381,7 @@ assembly multiplayerdeathmatch
 {
 size "8 8"
 title "_Multiplayer Deathmatch"
-multiplayer mp_team2
+multiplayer +mp_team2
 +n01 "0 8"
 +n02 "0 8"
 +n03 "0 8"
@@ -414,7 +414,7 @@ fix +n01 "5 3"
 fix +craft_drop_firebird "0 4"
 fix +h02 "4 4"
 fix +h05 "3 4"
-// multiplayer mp_team2
+// multiplayer +mp_team2
 +n05 "0 10" //These Mapparts are just here to fill gaps that may appear after
 +n04 "0 10" //someone changes the size of the used maps
 }
