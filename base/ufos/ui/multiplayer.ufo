@@ -1093,8 +1093,10 @@ window multiplayer_wait
 {
 	{
 		timeout 	2000
+	}
+
+	pic background {
 		image		ui/world_bg
-		pos			"0 0"
 		size		"1024 768"
 	}
 
