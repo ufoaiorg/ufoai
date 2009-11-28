@@ -1292,7 +1292,7 @@ window multiplayer_wait
 			size		"120 30"
 			color		"0.8 0.8 0.8 1"
 			selectcolor "1 1 1 1"
-			onClick		{ cmd "sv startgame;" }
+			onClick		{ cmd "startgame;" }
 		}
 
 		checkbox cb_ready
@@ -1314,7 +1314,6 @@ window multiplayer_wait
 	}
 
 	todo adminteam { pos "30 310" string "Feature: admin can change a player's team" }
-	todo adminstart { pos "30 340" string "Feature: admin can force a start of the party" }
 	todo fixchat { pos "30 370" string "Fix irc/chat usability (last line on bottom and visible)" }
 	todo inviteothers { pos "30 400" string "Invite button only in inet mode, not in lan mode"}
 
