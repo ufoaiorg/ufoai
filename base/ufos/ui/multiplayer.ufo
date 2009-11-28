@@ -1097,7 +1097,8 @@ window multiplayer_wait
 
 	pic background {
 		image		ui/world_bg
-		size		"1024 768"
+		size		"256 768"
+		pos		"768 0"
 	}
 
 	panel partyinfo {
