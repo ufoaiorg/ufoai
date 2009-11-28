@@ -1580,7 +1580,6 @@ window multiplayer_selectteam
 				}
 			}
 		}
-	
 	}
 
 	/**
@@ -1651,7 +1650,7 @@ window multiplayer_wait
 
 	panel partyinfo {
 		{
-			pos		"256 156"
+			pos		"256 50"
 			size	"526 437"
 			padding	5
 			image	"ui/panel_window"
@@ -1703,19 +1702,6 @@ window multiplayer_wait
 			size		"180 20"
 			onClick		{ call *node:parent.cb_ready@toggle }
 		}
-	
-		button bt_lobby
-		{
-			visiblewhen "exists *cvar:irc_defaultChannel"
-			string		"_Lobby"
-			image		ui/button_green_small
-			width		"200"
-			pos			"30 373"
-			font		f_menu
-			color		"0 0.5 0 1"
-			selectcolor "1 1 1 1"
-			onClick		{ cmd "mn_push irc;" }
-		}
 		
 		button bt_invite
 		{
@@ -1743,6 +1729,268 @@ window multiplayer_wait
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			onClick		{ cmd "sv startgame;" }
+		}
+	}
+
+	button swap_irc_connection_status {
+		string		"_Activate IRC"
+		image		ui/button_blue
+		pos			"30 550"
+		size		"150 40"
+		color		"0.8 0.8 0.8 1"
+		selectcolor "1 1 1 1"
+		onClick {
+			if ( *cvar:mn_ircconnected == 1 ) {
+				cmd "irc_disconnect;"
+				*cvar:mn_ircconnected = 0
+				*node:this@string = "_Activate IRC"
+				*node:parent.swap_irc_users_visibility@disabled = true
+			} else {
+				cmd "irc_connect;"
+				*cvar:mn_ircconnected = 1
+				*node:this@string = "_Deactivate IRC"
+				*node:parent.swap_irc_users_visibility@disabled = false
+			}
+		}
+	}
+
+	button swap_irc_users_visibility {
+		string		"_Display IRC users"
+		image		ui/button_blue
+		pos			"30 600"
+		size		"150 40"
+		disabled	true
+		color		"0.8 0.8 0.8 1"
+		selectcolor "1 1 1 1"
+		onClick {
+			if ( *node:parent.allchats.ircscreen.users@invis == true ) {
+				*node:parent.allchats.ircscreen.users@invis = false
+				*node:this@string = "_Display IRC users"
+			} else {
+				*node:parent.allchats.ircscreen.users@invis = true
+				*node:this@string = "_Hide IRC users"
+			}
+		}
+	}
+
+	panel allchats {
+		{
+			pos				"200 550"
+			size			"800 200"
+			bordercolor		"0.5 0.5 0.5 1"
+			border			2
+			padding			5
+			layout			LAYOUT_BORDER
+		}
+
+		tab selectchat {
+			align	LAYOUTALIGN_TOP
+			height	40
+			cvar	*cvar:mn_chatselect
+			onChange {
+				if ( *cvar:mn_chatselect eq "irc" ) {
+					*node:parent.ircscreen@invis = false
+					*node:parent.chatscreen@invis = true
+				}
+				if ( *cvar:mn_chatselect eq "chat" ) {
+					*node:parent.ircscreen@invis = true
+					*node:parent.chatscreen@invis = false
+				}
+			}
+
+			option chat {
+				label	"_Party chat"
+				value	"chat"
+			}
+			option irc {
+				label	"_Global lobby (IRC)"
+				value	"irc"
+			}
+		}
+
+		panel ircscreen {
+			{
+				layout			LAYOUT_BORDER
+				align			LAYOUTALIGN_MIDDLE
+				layoutMargin	5
+				padding			5
+				bordercolor		"0.5 0.5 0.5 1"
+				border			2
+				bgcolor			"0 0.1 0 0.7"
+				invis			true
+			}
+
+			panel users {
+				{
+					width			"200"
+					layout			LAYOUT_BORDER
+					align			LAYOUTALIGN_RIGHT
+					layoutMargin	5
+					padding			0
+					invis			true
+				}
+
+				textlist list
+				{
+					lineheight	22
+					dataid		TEXT_IRCUSERS
+					rows		"27"
+					onClick		{ cmd "irc_userlist_click <lineselected>" }
+					onRClick	{ cmd "irc_userlist_rclick <lineselected>" }
+					onViewChange {
+						*node:(abstractscrollbar)parent.scroll@fullsize <fullsize>
+						*node:(abstractscrollbar)parent.scroll@current <viewpos>
+						*node:(abstractscrollbar)parent.scroll@viewsize <viewsize>
+					}
+				}
+
+				vscrollbar scroll {
+					image		ui/scrollbar_v_green
+					align		LAYOUTALIGN_RIGHT
+					onChange 	{
+						*node:parent.list@viewpos = <current>
+					}
+				}
+			}
+
+			text irc
+			{
+				dataid		TEXT_IRCCONTENT
+				align		LAYOUTALIGN_MIDDLE
+				font		"f_verysmall"
+				rows		"10"
+				lineheight	"16"
+				padding		5
+				onViewChange {
+					*node:(abstractscrollbar)parent.irc_scroll@fullsize = <fullsize>
+					*node:(abstractscrollbar)parent.irc_scroll@viewsize = <viewsize>
+					*node:(abstractscrollbar)parent.irc_scroll@current = <viewpos>
+				}
+			}
+
+			vscrollbar irc_scroll {
+				image		ui/scrollbar_v_green
+				align		LAYOUTALIGN_RIGHT
+				onChange 	{
+					*node:parent.irc@viewpos = <current>
+				}
+			}
+	
+			panel input {
+				{
+					layout			LAYOUT_PACK
+					layoutMargin	5
+					align			LAYOUTALIGN_BOTTOM
+					height			25
+				}
+				
+				string say_label {
+					align		LAYOUTALIGN_LEFT
+					width		"50"
+					textalign	cl
+					string		"_Say:"
+				}
+				
+				textentry say {
+					align		LAYOUTALIGN_FILL
+					image		ui/button_green_verysmall
+					string		*cvar:irc_send_buffer
+					color 		"0 .78 0 1"
+					selectcolor	"1 1 1 1"
+					textalign	cl
+					padding		8
+					font		"f_verysmall"
+					clickoutabort	true
+					onChange	{
+						cmd "irc_chanmsg;"
+						cmd "multiplayer_ircsay_edit;"
+					}
+				}
+				
+				/** @todo move it into say@onChange
+				 * But at the moment this call into that callback dont work
+				 * without an intermediat command
+				 */
+				confunc multiplayer_ircsay_edit {
+					call *node:parent.say@edit
+				}
+			}
+		}
+
+		panel chatscreen {
+			{
+				layout			LAYOUT_BORDER
+				align			LAYOUTALIGN_MIDDLE
+				layoutMargin	5
+				padding			5
+				bordercolor		"0.5 0.5 0.5 1"
+				border			2
+				bgcolor			"0 0.1 0 0.7"
+			}
+		
+			text chat
+			{
+				dataid		TEXT_CHAT_WINDOW
+				align		LAYOUTALIGN_MIDDLE
+				font		"f_verysmall"
+				rows		"10"
+				lineheight	"16"
+				padding		5
+				onViewChange {
+					*node:(abstractscrollbar)parent.chat_scroll@fullsize = <fullsize>
+					*node:(abstractscrollbar)parent.chat_scroll@viewsize = <viewsize>
+					*node:(abstractscrollbar)parent.chat_scroll@current = <viewpos>
+				}
+			}
+	
+			vscrollbar chat_scroll {
+				image		ui/scrollbar_v_green
+				align		LAYOUTALIGN_RIGHT
+				onChange 	{
+					*node:parent.chat@viewpos = <current>
+				}
+			}
+	
+			panel input {
+				{
+					layout			LAYOUT_PACK
+					layoutMargin	5
+					align			LAYOUTALIGN_BOTTOM
+					height			25
+				}
+				
+				string say_label {
+					align		LAYOUTALIGN_LEFT
+					width		"50"
+					textalign	cl
+					string		"_Say:"
+				}
+				
+				textentry say {
+					align		LAYOUTALIGN_FILL
+					image		ui/button_green_verysmall
+					string		*cvar:mn_entry
+					color 		"0 .78 0 1"
+					selectcolor	"1 1 1 1"
+					textalign	cl
+					padding		8
+					font		"f_verysmall"
+					clickoutabort	true
+					onChange	{
+						cmd "say <cvar:mn_entry>"
+						*cvar:mn_entry = ""
+						cmd "multiplayer_chatsay_edit;"
+					}
+				}
+				
+				/** @todo move it into say@onChange
+				 * But at the moment this call into that callback dont work
+				 * without an intermediat command
+				 */
+				confunc multiplayer_chatsay_edit {
+					call *node:parent.say@edit
+				}
+			}
 		}
 	}
 
