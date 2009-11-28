@@ -1095,10 +1095,123 @@ window multiplayer_wait
 		timeout 	2000
 	}
 
-	pic background {
-		image		ui/world_bg
-		size		"256 768"
-		pos		"768 0"
+	zone render {
+		pos			"0 0"
+		size		"1024 768"
+	}
+
+	todo adminteam { pos "80 310" string "Feature: admin can change a player's team" }
+	todo disablefloor { pos "80 340" string "Disable unless levels" }
+	todo fixchat { pos "80 370" string "Fix irc/chat usability (last line on bottom and visible)" }
+	todo inviteothers { pos "80 400" string "Invite button only in inet mode, not in lan mode"}
+
+	panel floor {
+		{
+			pos		"0 128"
+			size	"40 369"
+			//align	LAYOUTALIGN_LEFT
+			excluderect	{
+				pos		"33 336"
+				size	"7 34"
+			}
+		}
+
+		pic bar_floor
+		{
+			image	hud/bar_floor
+			pos		"0 0"
+			size	"40 369"
+			texh	"40 369"
+			ghost	true
+		}
+
+		radiobutton bt1
+		{
+			tooltip	"_Level 1"
+			pos		"6 289"
+			size	"27 35"
+			image	"ui/button_background2"
+			value	0
+			cvar	*cvar:cl_worldlevel
+			icon	number_1
+		}
+
+		radiobutton bt2
+		{
+			tooltip	"_Level 2"
+			pos		"6 249"
+			size	"27 35"
+			image	"ui/button_background2"
+			value	1
+			cvar	*cvar:cl_worldlevel
+			icon	number_2
+		}
+
+		radiobutton bt3
+		{
+			tooltip	"_Level 3"
+			pos		"6 209"
+			size	"27 35"
+			image	"ui/button_background2"
+			value	2
+			cvar	*cvar:cl_worldlevel
+			icon	number_3
+		}
+
+		radiobutton bt4
+		{
+			tooltip	"_Level 4"
+			pos		"6 169"
+			size	"27 35"
+			image	"ui/button_background2"
+			value	3
+			cvar	*cvar:cl_worldlevel
+			icon	number_4
+		}
+
+		radiobutton bt5
+		{
+			tooltip	"_Level 5"
+			pos		"6 129"
+			size	"27 35"
+			image	"ui/button_background2"
+			value	4
+			cvar	*cvar:cl_worldlevel
+			icon	number_5
+		}
+
+		radiobutton bt6
+		{
+			tooltip	"_Level 6"
+			pos		"6 89"
+			size	"27 35"
+			image	"ui/button_background2"
+			value	5
+			cvar	*cvar:cl_worldlevel
+			icon	number_6
+		}
+
+		radiobutton bt7
+		{
+			tooltip	"_Level 7"
+			pos		"6 49"
+			size	"27 35"
+			image	"ui/button_background2"
+			value	6
+			cvar	*cvar:cl_worldlevel
+			icon	number_7
+		}
+
+		radiobutton bt8
+		{
+			tooltip	"_Level 8"
+			pos		"6 49"
+			size	"27 35"
+			image	"ui/button_background2"
+			value	7
+			cvar	*cvar:cl_worldlevel
+			icon	number_8
+		}
 	}
 
 	panel partyinfo {
@@ -1119,6 +1232,34 @@ window multiplayer_wait
 			textalign	cc
 		}
 
+		checkbox display
+		{
+			tooltip		"_Display/hide the panel"
+			image		ui/checkbox_green
+			pos			"15 14"
+			size		"20 20"
+			current		*cvar:mn_displaypartyinfo
+			onChange {
+				if ( *cvar:mn_displaypartyinfo == true ) {
+					*node:parent.mapname@invis = false
+					*node:parent.mappic@invis = false
+					*node:parent.maxplayersperteams_str@invis = false
+					*node:parent.maxplayersperteams_value@invis = false
+					*node:parent.maxteams_str@invis = false
+					*node:parent.maxteams_value@invis = false
+					*node:parent@height = 430
+				} else {
+					*node:parent.mapname@invis = true
+					*node:parent.mappic@invis = true
+					*node:parent.maxplayersperteams_str@invis = true
+					*node:parent.maxplayersperteams_value@invis = true
+					*node:parent.maxteams_str@invis = true
+					*node:parent.maxteams_value@invis = true
+					*node:parent@height = 49
+				}
+			}
+		}
+
 		string mapname
 		{
 			font		f_small
@@ -1129,10 +1270,11 @@ window multiplayer_wait
 			textalign	"cc"
 		}
 
-		zone render
+		pic mappic
 		{
 			pos			"40 80"
 			size		"320 200"
+			image		*cvar:mn_mappicbig
 		}
 
 		string maxplayersperteams_str
@@ -1315,10 +1457,6 @@ window multiplayer_wait
 		}
 	}
 
-	todo adminteam { pos "30 310" string "Feature: admin can change a player's team" }
-	todo fixchat { pos "30 370" string "Fix irc/chat usability (last line on bottom and visible)" }
-	todo inviteothers { pos "30 400" string "Invite button only in inet mode, not in lan mode"}
-
 	button swap_irc_connection_status {
 		string		"_Activate IRC"
 		image		ui/button_blue
@@ -1380,10 +1518,9 @@ window multiplayer_wait
 		{
 			pos				"200 550"
 			size			"800 200"
-			bordercolor		"0.5 0.5 0.5 1"
-			border			2
-			padding			5
 			layout			LAYOUT_BORDER
+			padding	18
+			image	"ui/panel_window"
 		}
 
 		tab selectchat {
@@ -1417,8 +1554,6 @@ window multiplayer_wait
 				align			LAYOUTALIGN_MIDDLE
 				layoutMargin	5
 				padding			5
-				bordercolor		"0.5 0.5 0.5 1"
-				border			2
 				bgcolor			"0 0.1 0 0.7"
 				invis			true
 			}
@@ -1526,8 +1661,6 @@ window multiplayer_wait
 				align			LAYOUTALIGN_MIDDLE
 				layoutMargin	5
 				padding			5
-				bordercolor		"0.5 0.5 0.5 1"
-				border			2
 				bgcolor			"0 0.1 0 0.7"
 			}
 		
@@ -1646,6 +1779,7 @@ window multiplayer_wait
 	func onInit
 	{
 		cmd "mp_selectteam_init;"
+		*cvar:mn_displaypartyinfo = 1
 		*cvar:mn_entry = ""
 		*cvar:mn_chatselect = "chat"
 		*cvar:cl_ready = 0
@@ -1655,6 +1789,7 @@ window multiplayer_wait
 	{
 		delete *cvar:mn_entry	
 		delete *cvar:mn_chatselect
+		delete *cvar:mn_displaypartyinfo
 	}
 }
 
