@@ -1145,6 +1145,7 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 {
 	int i;
 	edict_t *ent;
+	const int mask = G_PlayerToPM(player);
 
 	/* make SOLID_BSP edicts visible to the client */
 	for (i = 1, ent = g_edicts + 1; i < globals.num_edicts; ent++, i++) {
@@ -1158,7 +1159,7 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 		case SOLID_BSP:
 			/* skip the world(s) in case of map assembly */
 			if (ent->type) {
-				gi.AddEvent(G_PlayerToPM(player), EV_ADD_BRUSH_MODEL);
+				gi.AddEvent(mask, EV_ADD_BRUSH_MODEL);
 				gi.WriteShort(ent->type);
 				gi.WriteShort(ent->number);
 				gi.WriteShort(ent->modelindex);
@@ -1174,7 +1175,7 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 
 			/* send trigger entities to the client to display them (needs mins, maxs set) */
 		case SOLID_TRIGGER:
-			G_SendTriggerBoundingBoxes(G_PlayerToPM(player), ent);
+			G_SendTriggerBoundingBoxes(mask, ent);
 			break;
 
 		case SOLID_NOT:

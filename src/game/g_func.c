@@ -157,7 +157,7 @@ static qboolean Door_Use (edict_t *door)
 	/* Update path finding table */
 	G_RecalcRouting(door);
 
-	G_SendTriggerBoundingBoxes(PM_ALL, door);
+	G_SendTriggerBoundingBoxes(PM_ALL, door->child);
 
 	return qtrue;
 }
