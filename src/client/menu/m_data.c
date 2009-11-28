@@ -161,6 +161,7 @@ int MN_GetDataVersion (int textId)
 
 /**
  * @brief Append an option to an option list.
+ * @param[inout] first option of the list/tree of options
  * @param[in] name name of the option (should be unique in the option list)
  * @param[in] label label displayed
  * @param[in] value value used when this option is selected
