@@ -29,6 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAMPLE_HASH_SIZE 64
 static s_sample_t *sampleHash[SAMPLE_HASH_SIZE];
 
+/**
+ * @brief Searches the hash for a given sound file
+ * @param name The soundfile (relative to the sound dir and without extension)
+ * @return @c NULL if not yet loaded
+ */
 static s_sample_t *S_FindName (const char *name)
 {
 	s_sample_t *sample;
