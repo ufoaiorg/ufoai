@@ -988,6 +988,20 @@ static void G_ClientSkipActorInfo (void)
 }
 
 /**
+ * @brief Checks whether the spawn of an actor is allowed for the current running match.
+ * @param num The nth actor the player want to spawn in the game.
+ * @param team The team the player is part of.
+ * @return @c true if spawn is allowed, @c false otherwise.
+ */
+static inline qboolean G_ActorSpawnIsAllowed (const int num, const int team)
+{
+	if (sv_maxclients->integer == 1)
+		return qtrue;
+
+	return (num < sv_maxsoldiersperplayer->integer && level.num_spawned[team] < sv_maxsoldiersperteam->integer);
+}
+
+/**
  * @brief The client lets the server spawn the actors for a given player by sending their information (models, inventory, etc..) over the network.
  * @param[in] player The player to spawn the actors for.
  * @sa GAME_SendCurrentTeamSpawningInfo
@@ -1008,9 +1022,7 @@ void G_ClientTeamInfo (player_t * player)
 		 * + the game is already running (activeTeam != -1)
 		 * + the sv_maxsoldiersperplayer limit is hit (e.g. the assembled team is bigger than the allowed number of soldiers)
 		 * + the team already hit the max allowed amount of soldiers */
-		if (player->pers.team != TEAM_NO_ACTIVE && (sv_maxclients->integer == 1 || (!G_MatchIsRunning() && i
-				< sv_maxsoldiersperplayer->integer && level.num_spawned[player->pers.team]
-				< sv_maxsoldiersperteam->integer))) {
+		if (player->pers.team != TEAM_NO_ACTIVE && G_ActorSpawnIsAllowed(i, player->pers.team)) {
 			/* Here the client tells the server the information for the spawned actor(s). */
 			edict_t *ent;
 

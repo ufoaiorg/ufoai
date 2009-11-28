@@ -44,7 +44,7 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 	case ET_ACTOR2x2:
 		break;
 	default:
-		Com_Printf("StateChange message ignored... LE not found or not an actor (number: %i, state: %i, type: %i)\n",
+		Com_Printf("StateChange message ignored... LE is no actor (number: %i, state: %i, type: %i)\n",
 			entnum, state, le->type);
 		return;
 	}
