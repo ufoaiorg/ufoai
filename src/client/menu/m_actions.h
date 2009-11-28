@@ -119,9 +119,9 @@ typedef union {
  * One function is one tree, and when we call this function, the tree is executed.
  *
  * An atom can be a command, an operator, or a value:
- * <ul> Each command (EA_ACTION like EA_CALL, EA_CMD...) uses its own action structure. It can sometimes use child actions, or can be a leaf.
- * <ul> Operators (EA_OPERATOR_*) use binary tree structure (left and right operands), else are unary.
- * <ul> A value (EA_VALUE_*) is a terminal action (a leaf).
+ * <ul> <li>Each command (EA_ACTION like EA_CALL, EA_CMD...) uses its own action structure. It can sometimes use child actions, or can be a leaf.</li>
+ * <li> Operators (EA_OPERATOR_*) use binary tree structure (left and right operands), else are unary.</li>
+ * <li> A value (EA_VALUE_*) is a terminal action (a leaf).</li></ul>
  */
 typedef struct menuAction_s {
 	/**

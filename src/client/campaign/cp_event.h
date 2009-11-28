@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa techMail_t
  * @note Parsed via CL_ParseEventMails
  * @note You can add a mail to the message system and mail client
- * by using e.g. the mission triggers with the script command 'addeventmail <id>'
+ * by using e.g. the mission triggers with the script command 'addeventmail \<id\>'
  */
 typedef struct eventMail_s {
 	char *id;			/**< script id */

@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Performs end-of-turn processing.
+ * @param[in] self Pointer to the event structure that is currently executed
  * @param[in] msg The netchannel message
  * @sa CL_EndRoundAnnounce
  */

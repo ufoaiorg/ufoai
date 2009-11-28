@@ -36,6 +36,7 @@ int CL_ActorDoThrowTime (const eventRegister_t *self, struct dbuffer *msg, const
 
 /**
  * @brief Throw item with actor.
+ * @param[in] self Pointer to the event structure that is currently executed
  * @param[in] msg The netchannel message
  */
 void CL_ActorDoThrow (const eventRegister_t *self, struct dbuffer *msg)

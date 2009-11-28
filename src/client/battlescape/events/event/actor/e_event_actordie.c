@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Kills an actor (all that is needed is the local entity state set to STATE_DEAD).
  * @note Also changes the animation to a random death sequence and appends the dead animation
  * @param[in] msg The netchannel message
+ * @param[in] self Pointer to the event structure that is currently executed
  */
 void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 {

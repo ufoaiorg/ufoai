@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Announces that a player ends his round
+ * @param[in] self Pointer to the event structure that is currently executed
  * @param[in] msg The message buffer to read from
  * @sa CL_DoEndRound
  * @note event EV_ENDROUNDANNOUNCE

@@ -46,7 +46,6 @@ namespace ui
 			/**
 			 * Constructor creates widgets.
 			 *
-			 * @parent
 			 * The parent window.
 			 */
 			SoundChooser ();

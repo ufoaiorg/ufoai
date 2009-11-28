@@ -70,6 +70,7 @@ const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, c
  * @brief Initializes the inventory definition by linking the ->next pointers properly.
  * @param[in] invList Pointer to invList_t definition being initialized. This array must have at
  * least the size @c MAX_INVLIST.
+ * @param[in] store When true, the last invUnused is backuped - @sa INVSH_InvUnusedRevert
  * @sa G_Init
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
@@ -559,6 +560,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
  * @param[in] container Container in the inventory.
  * @param[in] x/y Position in the scrollable container that you want to check. Ignored if "item" is set.
  * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
+ * @param[in] filterType Enum definition of type (types of items for filtering purposes).
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa Com_SearchInInventory
  */
@@ -1349,6 +1351,7 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
  * @brief Equip robot actor with default weapon. (defined in ugv_t->weapon)
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] chr Pointer to character data.
+ * @param[in] weapon Pointer to the item which being added to robot's inventory.
  */
 void INVSH_EquipActorRobot (inventory_t* const inv, character_t* chr, objDef_t* weapon)
 {

@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Let a particle appear for the client
+ * @param[in] self Pointer to the event structure that is currently executed
  * @param[in] msg holds the network data
  * @sa CL_ParticleSpawn
  * @sa EV_SPAWN_PARTICLE

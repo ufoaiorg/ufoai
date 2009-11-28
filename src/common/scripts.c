@@ -1412,7 +1412,7 @@ CASSERT(lengthof(air_slot_type_strings) == MAX_ACITEMS);
 
 
 /**
- * @brief Temporary list of weapon ids as parsed from the ufo file "weapon_mod <id>"
+ * @brief Temporary list of weapon ids as parsed from the ufo file "weapon_mod \<id\>"
  * in Com_ParseItem and used in Com_AddObjectLinks.
  */
 static linkedList_t *parseItemWeapons = NULL;

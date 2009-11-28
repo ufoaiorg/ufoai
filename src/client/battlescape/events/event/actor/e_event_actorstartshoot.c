@@ -39,6 +39,7 @@ int CL_ActorStartShootTime (const eventRegister_t *self, struct dbuffer *msg, co
 
 /**
  * @brief Starts shooting with actor.
+ * @param[in] self Pointer to the event structure that is currently executed
  * @param[in] msg The netchannel message
  * @sa CL_ActorShootHidden
  * @sa CL_ActorShoot

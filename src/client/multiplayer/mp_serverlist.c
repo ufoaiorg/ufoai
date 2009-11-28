@@ -250,7 +250,7 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 
 	/* no players are connected ATM */
 	if (!cnt) {
-		/** @TODO warning must not be into the player list, anyway, can it be possible? if we see this we are connected? */
+		/** @todo warning must not be into the player list, anyway, can it be possible? if we see this we are connected? */
 		/* Q_strcat(teamData.teamInfoText, _("No player connected\n"), sizeof(teamData.teamInfoText)); */
 	}
 

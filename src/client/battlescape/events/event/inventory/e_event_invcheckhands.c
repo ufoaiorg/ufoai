@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief The client changed something in his hand-containers. This function updates the reactionfire info.
+ * @param[in] self Pointer to the event structure that is currently executed
  * @param[in] msg The netchannel message
  */
 void CL_InvCheckHands (const eventRegister_t *self, struct dbuffer *msg)

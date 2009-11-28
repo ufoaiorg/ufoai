@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Turns actor.
+ * @param[in] self Pointer to the event structure that is currently executed
  * @param[in] msg The netchannel message
  */
 void CL_ActorDoTurn (const eventRegister_t *self, struct dbuffer *msg)

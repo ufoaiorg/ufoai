@@ -810,7 +810,7 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
  * @param[in] h menu node height
  * @param[in] rotate the rotate angle of the globe
  * @param[in] zoom the current globe zoon
- * @param[in] map the prefix of the map to use (image must be at base/pics/menu/<map>_[day|night])
+ * @param[in] map the prefix of the map to use (image must be at base/pics/menu/\<map\>_[day|night])
  * @sa R_DrawFlatGeoscape
  * @sa R_SphereGenerate
  */

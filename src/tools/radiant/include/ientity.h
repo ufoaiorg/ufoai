@@ -86,7 +86,7 @@ class Entity
 		virtual void setKeyValue (const std::string& key, const std::string& value) = 0;
 
 		/* Old const char* key value functions
-		 * TODO: deprecate these
+		 * @todo deprecate these
 		 */
 
 		virtual const char* getKeyValue (const char* key) const = 0;

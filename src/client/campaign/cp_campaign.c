@@ -1897,6 +1897,7 @@ static void CP_RemoveCampaignCommands (void)
 /**
  * @brief Called at new game and load game
  * @param[in] load qtrue if we are loading game, qfalse otherwise
+ * @param[in] campaign Pointer to campaign - it will be set to @c ccs.curCampaign here.
  */
 void CP_CampaignInit (campaign_t *campaign, qboolean load)
 {
