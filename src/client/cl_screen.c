@@ -148,11 +148,9 @@ static const char* SCR_SetLoadingBackground (const char *mapString)
 		mapname++;
 
 	if (R_FindImage(va("pics/maps/loading/%s", mapname), it_pic))
-		Cvar_Set("mn_mappicbig", va("maps/loading/%s", mapname));
+		return mapname;
 	else
-		Cvar_Set("mn_mappicbig", "maps/loading/default");
-
-	return Cvar_GetString("mn_mappicbig");
+		return "default";
 }
 
 /**
@@ -201,7 +199,7 @@ static void SCR_DrawLoading (void)
 		return;
 
 	/* center loading screen */
-	image = R_FindImage(va("pics/%s", loadingPic), it_world);
+	image = R_FindImage(va("pics/maps/loading/%s", loadingPic), it_world);
 	if (image != r_noTexture)
 		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, image);
 	R_Color(color);
