@@ -233,7 +233,6 @@ void MP_CallbacksInit (void)
 void MP_CallbacksShutdown (void)
 {
 	Cmd_RemoveCommand("mp_selectteam_init");
-	Cmd_RemoveCommand("mp_wait_init");
 	Cmd_RemoveCommand("teamnum_dec");
 	Cmd_RemoveCommand("teamnum_inc");
 	Cmd_RemoveCommand("saveteam");

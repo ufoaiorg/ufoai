@@ -65,7 +65,7 @@ void CL_StartGame (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* back to the console */
 	if (GAME_IsMultiplayer()) {
-		MN_ExecuteConfunc("multiplayer_wait_set_teamplay %i", isTeamPlay);
+		MN_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
 		MN_InitStack("multiplayer_wait", NULL, qtrue, qtrue);
 	} else {
 		MN_InitStack(mn_hud->string, NULL, qtrue, qtrue);

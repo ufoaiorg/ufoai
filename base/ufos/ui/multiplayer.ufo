@@ -1084,7 +1084,6 @@ window mp_create_server extends abstract_multiplayer
 		cmd "mp_update_config_navigation;"
 		cmd "mn_datareset TEXT_STANDARD;"
 	}
-
 }
 
 // ===========================================
@@ -1093,11 +1092,12 @@ window mp_create_server extends abstract_multiplayer
 window multiplayer_wait
 {
 	{
-		timeout 2000
+		timeout 	2000
 		image		ui/world_bg
+		pos			"0 0"
 		size		"1024 768"
 	}
-	
+
 	panel partyinfo {
 		{
 			pos		"100 30"
@@ -1139,21 +1139,21 @@ window multiplayer_wait
 			pos			"50 310"
 			size		"240 20"
 		}
-	
+
 		string maxplayersperteams_value
 		{
 			string		*cvar:mn_maxplayersperteam
 			pos			"300 310"
 			size		"50 20"
 		}
-	
+
 		string maxteams_str
 		{
 			string		"_Max. teams for this map"
 			pos			"50 330"
 			size		"240 20"
 		}
-	
+
 		string maxteams_value
 		{
 			string		*cvar:mn_maxteams
@@ -1341,7 +1341,7 @@ window multiplayer_wait
 			}
 		}
 	}
-	
+
 	button swap_irc_users_visibility {
 		string		"_Display IRC users"
 		image		ui/button_blue
@@ -1360,7 +1360,7 @@ window multiplayer_wait
 			}
 		}
 	}
-	
+
 	button invite_players {
 		string		"_Invite others"
 		image		ui/button_blue
