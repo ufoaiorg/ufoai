@@ -1060,7 +1060,7 @@ static void CL_CvarCheck (void)
 		if (cl_worldlevel->integer < 0)
 			Com_Error(ERR_DROP, "CL_CvarCheck: cl_worldlevel is negative\n");
 
-		if (cl_worldlevel->integer >= cl.mapMaxLevel - 1)
+		if (cl_worldlevel->integer >= cl.mapMaxLevel)
 			Cvar_SetValue("cl_worldlevel", cl.mapMaxLevel - 1);
 		else if (cl_worldlevel->integer < 0)
 			Cvar_SetValue("cl_worldlevel", 0);
