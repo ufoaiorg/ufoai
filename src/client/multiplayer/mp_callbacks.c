@@ -141,38 +141,6 @@ void CL_Reconnect_f (void)
 		Com_Printf("No server to reconnect to\n");
 }
 
-
-/**
- * @brief Multiplayer wait menu init function
- */
-static void CL_WaitInit_f (void)
-{
-	static qboolean reconnect = qfalse;
-	char buf[32];
-
-	/* the server knows this already */
-	if (!Com_ServerState()) {
-		Cvar_SetValue("sv_maxteams", atoi(cl.configstrings[CS_MAXTEAMS]));
-		Cvar_Set("mp_wait_init_show_force", "0");
-	} else {
-		Cvar_Set("mp_wait_init_show_force", "1");
-	}
-	Com_sprintf(buf, sizeof(buf), "%s/%s", cl.configstrings[CS_PLAYERCOUNT], cl.configstrings[CS_MAXCLIENTS]);
-	Cvar_Set("mp_wait_init_players", buf);
-	if (cl.configstrings[CS_NAME][0] == '\0') {
-		if (!reconnect) {
-			reconnect = qtrue;
-			CL_Reconnect_f();
-			MN_PopMenu(qfalse);
-		} else {
-			CL_Disconnect_f();
-			MN_PopMenu(qfalse);
-			MN_Popup(_("Error"), _("Server needs restarting - something went wrong"));
-		}
-	} else
-		reconnect = qfalse;
-}
-
 /**
  * @brief Send the teaminfo string to server
  * @sa CL_ParseTeamInfoMessage
@@ -253,7 +221,6 @@ void MP_CallbacksInit (void)
 	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
-	Cmd_AddCommand("mp_wait_init", CL_WaitInit_f, "Function that inits some nodes");
 	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the prefered teamnum");
 	Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the prefered teamnum");
 	Cmd_AddCommand("saveteam", MP_SaveTeamMultiplayer_f, "Save a multiplayer team slot");

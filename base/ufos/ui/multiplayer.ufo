@@ -1087,10 +1087,10 @@ window mp_create_server extends abstract_multiplayer
 
 }
 
-// ==========================
-// MULTIPLAYER TEAM SELECTION
-// ==========================
-window multiplayer_selectteam
+// ===========================================
+// MULTIPLAYER TEAM SELECTION AND WAIT DIALOG
+// ===========================================
+window multiplayer_wait
 {
 	{
 		timeout 2000
@@ -1163,7 +1163,6 @@ window multiplayer_selectteam
 	}
 
 	panel players {
-
 		{
 			pos		"520 30"
 			size	"400 250"
@@ -1215,7 +1214,6 @@ window multiplayer_selectteam
 			pos			"200 50"
 			size		"150 300"
 		}
-
 	}
 
 	panel teamselection {
@@ -1315,10 +1313,10 @@ window multiplayer_selectteam
 		}
 	}
 
-	todo mergenext { pos "30 280" string "Merge the next window here"}
-	todo adminteam { pos "60 340" string "Feature: admin can change a player's team" }
-	todo adminstart { pos "30 400" string "Feature: admin can force a start of the party" }
-	todo fixchat { pos "30 430" string "Fix irc/chat usability (last line on bottom and visible)" }
+	todo adminteam { pos "30 310" string "Feature: admin can change a player's team" }
+	todo adminstart { pos "30 340" string "Feature: admin can force a start of the party" }
+	todo fixchat { pos "30 370" string "Fix irc/chat usability (last line on bottom and visible)" }
+	todo inviteothers { pos "30 400" string "Invite button only in inet mode, not in lan mode"}
 
 	button swap_irc_connection_status {
 		string		"_Activate IRC"
@@ -1333,11 +1331,13 @@ window multiplayer_selectteam
 				*cvar:mn_ircconnected = 0
 				*node:this@string = "_Activate IRC"
 				*node:parent.swap_irc_users_visibility@disabled = true
+				*node:parent.invite_players@disabled = true
 			} else {
 				cmd "irc_connect;"
 				*cvar:mn_ircconnected = 1
 				*node:this@string = "_Deactivate IRC"
 				*node:parent.swap_irc_users_visibility@disabled = false
+				*node:parent.invite_players@disabled = false
 			}
 		}
 	}
@@ -1358,6 +1358,20 @@ window multiplayer_selectteam
 				*node:parent.allchats.ircscreen.users@invis = true
 				*node:this@string = "_Hide IRC users"
 			}
+		}
+	}
+	
+	button invite_players {
+		string		"_Invite others"
+		image		ui/button_blue
+		tooltip		"_Invite players that are online in the lobby"
+		pos			"30 650"
+		size		"150 40"
+		disabled	true
+		color		"0.8 0.8 0.8 1"
+		selectcolor "1 1 1 1"
+		onClick {
+			cmd "irc_invite;"
 		}
 	}
 
@@ -1611,6 +1625,13 @@ window multiplayer_selectteam
 		delete *cvar:tmp
 	}
 
+	/**
+	 * @param <1> boolean whether this is a teamplay match
+	 */
+	confunc multiplayer_setTeamplay {
+		// @todo - deactivate team change if the given boolean is false	(0)
+	}
+
 	// ===================
 	// EVENTS
 	// ===================
@@ -1633,370 +1654,6 @@ window multiplayer_selectteam
 	{
 		delete *cvar:mn_entry	
 		delete *cvar:mn_chatselect
-	}
-}
-
-// ==========================
-// MULTIPLAYER WAIT POPUP
-// ==========================
-window multiplayer_wait
-{
-	{
-		string		"_Please wait"
-		image		ui/world_bg
-		size		"1024 768"
-		timeout		2000
-	}
-
-	panel partyinfo {
-		{
-			pos		"256 50"
-			size	"526 437"
-			padding	5
-			image	"ui/panel_window"
-		}
-
-		string teams_str
-		{
-			string		"_Players connected, waiting for others"
-			pos			"60 50"
-			size		"350 20"
-		}
-		string teams_val
-		{
-			string		*cvar:mp_wait_init_players
-			color		"0 0.5 0 1"
-			pos			"30 50"
-			size		"30 20"
-		}
-	
-		string mapname
-		{
-			font		f_small
-			color		"1 1 1 1"
-			string		*cvar:mn_svmapname
-			pos			"128 95"
-			size		"260 20"
-			textalign	"uc"
-		}
-		pic mappic
-		{
-			pos			"93 75"
-			size		"331 237"
-			image		*cvar:mn_mappicbig
-		}
-	
-		checkbox cb_ready
-		{
-			tooltip		"_Ready to start the game"
-			image		ui/checkbox_green
-			pos			"30 325"
-			size		"20 20"
-			current		*cvar:cl_ready
-		}
-		string cb_ready_label
-		{
-			string		"_Are you ready?"
-			tooltip		"_Ready to start the game"
-			pos			"60 325"
-			size		"180 20"
-			onClick		{ call *node:parent.cb_ready@toggle }
-		}
-		
-		button bt_invite
-		{
-			// @todo only in inet mode - not in lan mode
-			string		"_Invite others"
-			tooltip		"_Invite players that are online in the lobby"
-			image		ui/button_green_small
-			width		"200"
-			pos 		"297 373"
-			font		f_menu
-			color		"0 0.5 0 1"
-			selectcolor	"1 1 1 1"
-			onClick		{ cmd "irc_invite;" }
-		}
-	
-		button bt_force
-		{
-			visiblewhen "*cvar:mp_wait_init_show_force == 1"
-			string		"_Force start"
-			tooltip		"_Start the game even if not all teams have joined"
-			image		ui/button_green_small
-			width		"200"
-			pos 		"297 330"
-			font		f_menu
-			color		"0 0.5 0 1"
-			selectcolor	"1 1 1 1"
-			onClick		{ cmd "sv startgame;" }
-		}
-	}
-
-	button swap_irc_connection_status {
-		string		"_Activate IRC"
-		image		ui/button_blue
-		pos			"30 550"
-		size		"150 40"
-		color		"0.8 0.8 0.8 1"
-		selectcolor "1 1 1 1"
-		onClick {
-			if ( *cvar:mn_ircconnected == 1 ) {
-				cmd "irc_disconnect;"
-				*cvar:mn_ircconnected = 0
-				*node:this@string = "_Activate IRC"
-				*node:parent.swap_irc_users_visibility@disabled = true
-			} else {
-				cmd "irc_connect;"
-				*cvar:mn_ircconnected = 1
-				*node:this@string = "_Deactivate IRC"
-				*node:parent.swap_irc_users_visibility@disabled = false
-			}
-		}
-	}
-
-	button swap_irc_users_visibility {
-		string		"_Display IRC users"
-		image		ui/button_blue
-		pos			"30 600"
-		size		"150 40"
-		disabled	true
-		color		"0.8 0.8 0.8 1"
-		selectcolor "1 1 1 1"
-		onClick {
-			if ( *node:parent.allchats.ircscreen.users@invis == true ) {
-				*node:parent.allchats.ircscreen.users@invis = false
-				*node:this@string = "_Display IRC users"
-			} else {
-				*node:parent.allchats.ircscreen.users@invis = true
-				*node:this@string = "_Hide IRC users"
-			}
-		}
-	}
-
-	panel allchats {
-		{
-			pos				"200 550"
-			size			"800 200"
-			bordercolor		"0.5 0.5 0.5 1"
-			border			2
-			padding			5
-			layout			LAYOUT_BORDER
-		}
-
-		tab selectchat {
-			align	LAYOUTALIGN_TOP
-			height	40
-			cvar	*cvar:mn_chatselect
-			onChange {
-				if ( *cvar:mn_chatselect eq "irc" ) {
-					*node:parent.ircscreen@invis = false
-					*node:parent.chatscreen@invis = true
-				}
-				if ( *cvar:mn_chatselect eq "chat" ) {
-					*node:parent.ircscreen@invis = true
-					*node:parent.chatscreen@invis = false
-				}
-			}
-
-			option chat {
-				label	"_Party chat"
-				value	"chat"
-			}
-			option irc {
-				label	"_Global lobby (IRC)"
-				value	"irc"
-			}
-		}
-
-		panel ircscreen {
-			{
-				layout			LAYOUT_BORDER
-				align			LAYOUTALIGN_MIDDLE
-				layoutMargin	5
-				padding			5
-				bordercolor		"0.5 0.5 0.5 1"
-				border			2
-				bgcolor			"0 0.1 0 0.7"
-				invis			true
-			}
-
-			panel users {
-				{
-					width			"200"
-					layout			LAYOUT_BORDER
-					align			LAYOUTALIGN_RIGHT
-					layoutMargin	5
-					padding			0
-					invis			true
-				}
-
-				textlist list
-				{
-					lineheight	22
-					dataid		TEXT_IRCUSERS
-					rows		"27"
-					onClick		{ cmd "irc_userlist_click <lineselected>" }
-					onRClick	{ cmd "irc_userlist_rclick <lineselected>" }
-					onViewChange {
-						*node:(abstractscrollbar)parent.scroll@fullsize <fullsize>
-						*node:(abstractscrollbar)parent.scroll@current <viewpos>
-						*node:(abstractscrollbar)parent.scroll@viewsize <viewsize>
-					}
-				}
-
-				vscrollbar scroll {
-					image		ui/scrollbar_v_green
-					align		LAYOUTALIGN_RIGHT
-					onChange 	{
-						*node:parent.list@viewpos = <current>
-					}
-				}
-			}
-
-			text irc
-			{
-				dataid		TEXT_IRCCONTENT
-				align		LAYOUTALIGN_MIDDLE
-				font		"f_verysmall"
-				rows		"10"
-				lineheight	"16"
-				padding		5
-				onViewChange {
-					*node:(abstractscrollbar)parent.irc_scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.irc_scroll@viewsize = <viewsize>
-					*node:(abstractscrollbar)parent.irc_scroll@current = <viewpos>
-				}
-			}
-
-			vscrollbar irc_scroll {
-				image		ui/scrollbar_v_green
-				align		LAYOUTALIGN_RIGHT
-				onChange 	{
-					*node:parent.irc@viewpos = <current>
-				}
-			}
-	
-			panel input {
-				{
-					layout			LAYOUT_PACK
-					layoutMargin	5
-					align			LAYOUTALIGN_BOTTOM
-					height			25
-				}
-				
-				string say_label {
-					align		LAYOUTALIGN_LEFT
-					width		"50"
-					textalign	cl
-					string		"_Say:"
-				}
-				
-				textentry say {
-					align		LAYOUTALIGN_FILL
-					image		ui/button_green_verysmall
-					string		*cvar:irc_send_buffer
-					color 		"0 .78 0 1"
-					selectcolor	"1 1 1 1"
-					textalign	cl
-					padding		8
-					font		"f_verysmall"
-					clickoutabort	true
-					onChange	{
-						cmd "irc_chanmsg;"
-						cmd "multiplayer_ircsay_edit;"
-					}
-				}
-				
-				/** @todo move it into say@onChange
-				 * But at the moment this call into that callback dont work
-				 * without an intermediat command
-				 */
-				confunc multiplayer_ircsay_edit {
-					call *node:parent.say@edit
-				}
-			}
-		}
-
-		panel chatscreen {
-			{
-				layout			LAYOUT_BORDER
-				align			LAYOUTALIGN_MIDDLE
-				layoutMargin	5
-				padding			5
-				bordercolor		"0.5 0.5 0.5 1"
-				border			2
-				bgcolor			"0 0.1 0 0.7"
-			}
-		
-			text chat
-			{
-				dataid		TEXT_CHAT_WINDOW
-				align		LAYOUTALIGN_MIDDLE
-				font		"f_verysmall"
-				rows		"10"
-				lineheight	"16"
-				padding		5
-				onViewChange {
-					*node:(abstractscrollbar)parent.chat_scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.chat_scroll@viewsize = <viewsize>
-					*node:(abstractscrollbar)parent.chat_scroll@current = <viewpos>
-				}
-			}
-	
-			vscrollbar chat_scroll {
-				image		ui/scrollbar_v_green
-				align		LAYOUTALIGN_RIGHT
-				onChange 	{
-					*node:parent.chat@viewpos = <current>
-				}
-			}
-	
-			panel input {
-				{
-					layout			LAYOUT_PACK
-					layoutMargin	5
-					align			LAYOUTALIGN_BOTTOM
-					height			25
-				}
-				
-				string say_label {
-					align		LAYOUTALIGN_LEFT
-					width		"50"
-					textalign	cl
-					string		"_Say:"
-				}
-				
-				textentry say {
-					align		LAYOUTALIGN_FILL
-					image		ui/button_green_verysmall
-					string		*cvar:mn_entry
-					color 		"0 .78 0 1"
-					selectcolor	"1 1 1 1"
-					textalign	cl
-					padding		8
-					font		"f_verysmall"
-					clickoutabort	true
-					onChange	{
-						cmd "say <cvar:mn_entry>"
-						*cvar:mn_entry = ""
-						cmd "multiplayer_chatsay_edit;"
-					}
-				}
-				
-				/** @todo move it into say@onChange
-				 * But at the moment this call into that callback dont work
-				 * without an intermediat command
-				 */
-				confunc multiplayer_chatsay_edit {
-					call *node:parent.say@edit
-				}
-			}
-		}
-	}
-
-	func onEvent
-	{
-		cmd		"mp_wait_init;"
 	}
 }
 
