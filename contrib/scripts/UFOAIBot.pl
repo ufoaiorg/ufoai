@@ -32,7 +32,7 @@ sub handleCommand($$) {
 	} elsif ($text =~ /^\!r(?:ev)?\s*#?(\d+)/i) {
 		$conn->privmsg($receiver, "http://ufoai.svn.sourceforge.net/viewvc/ufoai?view=rev&revision=$1");
 		$conn->privmsg($receiver, "http://sourceforge.net/apps/trac/ufoai/changeset/$1");
-	} elsif ($text =~ /^\S*\s\*\sr(\d+)\s.*/) {
+	} elsif ($text =~ /^\S*\s+\*\s+r(\d+)\s*.*/) {
 		$conn->privmsg($receiver, "http://ufoai.svn.sourceforge.net/viewvc/ufoai?view=rev&revision=$1");
 		$conn->privmsg($receiver, "http://sourceforge.net/apps/trac/ufoai/changeset/$1");
 	} elsif ($text =~ /^\!ticket\s*#?(\d+)/i) {
