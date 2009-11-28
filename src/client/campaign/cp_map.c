@@ -432,6 +432,7 @@ const float STANDARD_3D_ZOOM = 40.0f;
 
 /**
  * @brief Transform a 2D position on the map to screen coordinates.
+ * @param[in] node Menu node
  * @param[in] pos vector that holds longitude and latitude
  * @param[out] x normalized (rotated and scaled) x value of mouseclick
  * @param[out] y normalized (rotated and scaled) y value of mouseclick
@@ -540,6 +541,7 @@ qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, i
  * @param[in] pos Longitude and latitude of the marker to draw.
  * @param[in] theta Angle (degree) of the model to the horizontal.
  * @param[in] model The name of the model of the marker.
+ * @param[in] skin Number of modelskin to draw on marker
  */
 qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
 {
@@ -584,10 +586,10 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 
 /**
  * @brief Return longitude and latitude of a point of the screen for 2D geoscape
- * @return pos vec2_t was filled with longitude and latitude
+ * @param[in] node The current menuNode we was clicking into (3dmap or map)
  * @param[in] x X coordinate on the screen that was clicked to
  * @param[in] y Y coordinate on the screen that was clicked to
- * @param[in] node The current menuNode we was clicking into (3dmap or map)
+ * @param[out] pos vec2_t was filled with longitude and latitude
  */
 static void MAP_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 {
@@ -602,10 +604,10 @@ static void MAP_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 
 /**
  * @brief Return longitude and latitude of a point of the screen for 3D geoscape (globe)
- * @return pos vec2_t was filled with longitude and latitude
+ * @param[in] node The current menuNode we was clicking into (3dmap or map)
  * @param[in] x X coordinate on the screen that was clicked to
  * @param[in] y Y coordinate on the screen that was clicked to
- * @param[in] node The current menuNode we was clicking into (3dmap or map)
+ * @param[out] pos vec2_t was filled with longitude and latitude
  * @sa MAP_3DMapToScreen
  */
 static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
@@ -1808,6 +1810,7 @@ void MAP_NotifyMissionRemoved (const mission_t* mission)
 
 /**
  * @brief Notify that a UFO has been removed
+ * @param[in] ufo Pointer to the ufo has been removed
  * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed)
  */
 void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
@@ -1824,6 +1827,7 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 
 /**
  * @brief Notify that an aircraft has been removed from game
+ * @param[in] aircraft Pointer to the aircraft has been removed
  * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed)
  */
 void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft, qboolean destroyed)
