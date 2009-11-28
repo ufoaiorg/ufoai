@@ -303,15 +303,16 @@ static qboolean Irc_Proto_Topic (const char *channel, const char *topic)
  */
 static qboolean Irc_Proto_Msg (const char *target, const char *text)
 {
-	char msg[IRC_SEND_BUF_SIZE];
-	const int msg_len = snprintf(msg, sizeof(msg) - 1, "PRIVMSG %s :%s\r\n", target, text);
 	if (*text == '/') {
 		Com_DPrintf(DEBUG_CLIENT, "Don't send irc commands as PRIVMSG\n");
 		Cbuf_AddText(va("%s\n", &text[1]));
 		return qtrue;
+	} else {
+		char msg[IRC_SEND_BUF_SIZE];
+		const int msg_len = snprintf(msg, sizeof(msg) - 1, "PRIVMSG %s :%s\r\n", target, text);
+		msg[sizeof(msg) - 1] = '\0';
+		return Irc_Proto_Enqueue(msg, msg_len);
 	}
-	msg[sizeof(msg) - 1] = '\0';
-	return Irc_Proto_Enqueue(msg, msg_len);
 }
 
 /**
@@ -1654,7 +1655,11 @@ static void Irc_Client_Invite_f (void)
 	while (user) {
 		/** @todo Maybe somehow check the version of the client with ctcp VERSION and only send
 		 * to those, that are connected with ufoai and have a correct version */
-		Irc_Proto_Msg(user->key, buf);
+		/* the first character is a prefix, skip it when checking
+		 * against our own nickname */
+		const char *name = &(user->key[1]);
+		if (strcmp(name, irc_nick->string))
+			Irc_Proto_Msg(name, buf);
 		user = user->next;
 	}
 }
