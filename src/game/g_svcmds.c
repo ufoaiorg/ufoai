@@ -309,8 +309,6 @@ static void SVCmd_StartGame_f (void)
 	int i;
 	player_t *p;
 
-	G_ClientTeamAssign(qtrue);
-
 	if (level.activeTeam == TEAM_NO_ACTIVE) {
 		Com_Printf("Could not force the game start\n");
 		return;

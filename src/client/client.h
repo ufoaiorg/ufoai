@@ -103,7 +103,6 @@ typedef struct client_state_s {
 	int numAliensSpotted;
 
 	/** server state information */
-	int servercount;	/**< server identification for prespawns */
 	int pnum;			/**< player num you have on the server */
 	int actTeam;		/**< the currently active team (in this round) */
 

@@ -195,7 +195,6 @@ static void SV_InitGame (void)
 	/* get any latched variable changes (sv_maxclients, etc) */
 	Cvar_UpdateLatchedVars();
 
-	svs.spawncount = rand();
 	svs.clients = Mem_PoolAlloc(sizeof(client_t) * sv_maxclients->integer, sv_genericPool, 0);
 
 	/* init network stuff */

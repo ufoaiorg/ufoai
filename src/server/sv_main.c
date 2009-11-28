@@ -760,7 +760,7 @@ static void SV_CheckGameStart (void)
 
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
 		if (cl && cl->state != cs_free)
-			SV_ClientCommand(cl, "spawnsoldiers %i\n", svs.spawncount);
+			SV_ClientCommand(cl, "spawnsoldiers\n");
 }
 
 /**

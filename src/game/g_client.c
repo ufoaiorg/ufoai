@@ -852,11 +852,11 @@ qboolean G_ClientIsReady (const player_t * player)
 }
 
 /**
- * @brief Tests if all teams are connected for a multiplayer match and if so,
- * randomly assigns the first turn to a team.
+ * @brief Chose a team that should start the match
+ * @param[in] player In singleplayer mode the team of this player will get the first round
  * @sa SVCmd_StartGame_f
  */
-void G_ClientTeamAssign (qboolean force)
+static void G_ClientTeamAssign (const player_t* player)
 {
 	int i, j, teamCount = 0;
 	int playerCount = 0;
@@ -864,51 +864,34 @@ void G_ClientTeamAssign (qboolean force)
 	player_t *p;
 
 	/* return with no action if activeTeam already assigned or if are in single-player mode */
-	if (G_MatchIsRunning() || sv_maxclients->integer == 1)
+	if (G_MatchIsRunning())
 		return;
+
+	if (sv_maxclients->integer == 1) {
+		level.activeTeam = player->pers.team;
+		return;
+	}
 
 	/* count number of currently connected unique teams and players (human controlled players only) */
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
 		if (p->inuse) {
-			G_GetTeam(p);
-			if (p->pers.team > 0) {
-				playerCount++;
-				for (j = 0; j < teamCount; j++) {
-					if (p->pers.team == knownTeams[j])
-						break;
-				}
-				if (j == teamCount)
-					knownTeams[teamCount++] = p->pers.team;
+			playerCount++;
+			for (j = 0; j < teamCount; j++) {
+				if (p->pers.team == knownTeams[j])
+					break;
 			}
+			if (j == teamCount)
+				knownTeams[teamCount++] = p->pers.team;
 		}
 	}
 
-	Com_DPrintf(DEBUG_GAME, "G_ClientTeamAssign: Players in game: %i, Unique teams in game: %i\n", playerCount,
-			teamCount);
-
-	/* if all teams/players have joined the game, randomly assign which team gets the first turn */
-	if (force || (sv_teamplay->integer && teamCount >= sv_maxteams->integer) || playerCount >= sv_maxclients->integer) {
+	if (teamCount) {
 		const int teamIndex = (int) (frand() * (teamCount - 1) + 0.5);
-		char buffer[MAX_VAR] = "";
-		assert(teamIndex >= 0);
-		assert(teamIndex < MAX_TEAMS);
-		assert(teamCount > 0);
 		G_PrintStats(va("Starting new game: %s with %i teams", level.mapname, teamCount));
 		level.activeTeam = knownTeams[teamIndex];
-		for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
-			if (p->inuse) {
-				if (p->pers.team == level.activeTeam) {
-					Q_strcat(buffer, p->pers.netname, sizeof(buffer));
-					Q_strcat(buffer, " ", sizeof(buffer));
-				} else
-					/* all the others are set to waiting */
-					p->roundDone = qtrue;
-				if (p->pers.team)
-					G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
-			}
-		}
-		G_PrintStats(va("Team %i got the first round", level.activeTeam));
-		gi.BroadcastPrintf(PRINT_CONSOLE, _("Team %i (%s) will get the first turn.\n"), level.activeTeam, buffer);
+		for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
+			if (p->inuse && p->pers.team != level.activeTeam)
+				p->roundDone = qtrue;
 	}
 }
 
@@ -1147,7 +1130,6 @@ void G_ClientTeamInfo (player_t * player)
 			G_ClientSkipActorInfo();
 		}
 	}
-	G_ClientTeamAssign(qfalse);
 }
 
 /**
@@ -1261,19 +1243,9 @@ qboolean G_ClientSpawn (player_t * player)
 		return qfalse;
 	}
 
-	/** @todo Check player->pers.team here */
-	if (!G_MatchIsRunning()) {
-		/* activate round if in single-player */
-		if (sv_maxclients->integer == 1) {
-			level.activeTeam = player->pers.team;
-		} else {
-			/* return since not all multiplayer teams have joined */
-			/* (G_ClientTeamAssign sets level.activeTeam once all teams have joined) */
-			return qfalse;
-		}
-	}
-
 	player->spawned = qtrue;
+
+	G_ClientTeamAssign(player);
 
 	/* do all the init events here... */
 	/* reset the data */
@@ -1286,10 +1258,8 @@ qboolean G_ClientSpawn (player_t * player)
 	G_CheckVisPlayer(player, qfalse);
 	G_SendInvisible(player);
 
-	/** Set initial state of reaction fire to previously stored state for all team-members.
-	 * This (and the second loop below) defines the default reaction-mode.
-	 * @sa CL_GenerateCharacter for the initial default value.
-	 * @sa G_SpawnAIPlayer */
+	/* Set the initial state of reaction fire to previously stored state for all team-members.
+	 * This defines the default reaction-mode. */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && ent->team == player->pers.team && G_IsActor(ent)) {
 			Com_DPrintf(DEBUG_GAME, "G_ClientSpawn: Setting default reaction-mode to %i (%s - %s).\n",
@@ -1306,19 +1276,13 @@ qboolean G_ClientSpawn (player_t * player)
 	/* give time units */
 	G_GiveTimeUnits(player->pers.team);
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && ent->team == player->pers.team && G_IsActor(ent)) {
-			gi.AddEvent(player->pers.team, EV_ACTOR_STATECHANGE);
-			gi.WriteShort(ent->number);
-			gi.WriteShort(ent->state);
-		}
-
 	gi.AddEvent(G_PlayerToPM(player), EV_START_DONE);
 	/* ensure that the last event is send, too */
 	gi.EndEvents();
 
 	/* inform all clients */
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);
+
 	return qtrue;
 }
 

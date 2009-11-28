@@ -78,15 +78,13 @@ static void CL_ParseServerData (struct dbuffer *msg)
 	if (i != PROTOCOL_VERSION)
 		Com_Error(ERR_DROP, "Server returned version %i, not %i", i, PROTOCOL_VERSION);
 
-	cl.servercount = NET_ReadLong(msg);
-
 	/* parse player entity number */
 	cl.pnum = NET_ReadShort(msg);
 
 	/* get the full level name */
 	str = NET_ReadString(msg);
 
-	Com_DPrintf(DEBUG_CLIENT, "serverdata: count %d, pnum %d, level %s\n", cl.servercount, cl.pnum, str);
+	Com_DPrintf(DEBUG_CLIENT, "serverdata: pnum %d, level %s\n", cl.pnum, str);
 
 	if (cl.pnum >= 0) {
 		/* need to prep refresh at next opportunity */

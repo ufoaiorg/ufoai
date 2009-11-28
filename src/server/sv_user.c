@@ -85,7 +85,6 @@ static void SV_New_f (void)
 		struct dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, svc_serverdata);
 		NET_WriteLong(msg, PROTOCOL_VERSION);
-		NET_WriteLong(msg, svs.spawncount);
 
 		NET_WriteShort(msg, playernum);
 
@@ -111,7 +110,7 @@ static void SV_New_f (void)
 		}
 	}
 
-	SV_ClientCommand(sv_client, "precache %i\n", svs.spawncount);
+	SV_ClientCommand(sv_client, "precache\n");
 }
 
 /**
@@ -125,13 +124,6 @@ static void SV_Begin_f (void)
 	if (sv_client->state != cs_spawning) {
 		Com_Printf("EXPLOIT: Illegal 'begin' from %s (already spawned), client dropped.\n", sv_client->name);
 		SV_DropClient(sv_client, "Illegal begin\n");
-		return;
-	}
-
-	/* handle the case of a level changing while a client was connecting */
-	if (atoi(Cmd_Argv(1)) != svs.spawncount) {
-		Com_Printf("SV_Begin_f from different level (%i)\n", atoi(Cmd_Argv(1)));
-		SV_New_f();
 		return;
 	}
 
@@ -150,13 +142,6 @@ static void SV_Begin_f (void)
 static void SV_Spawn_f (void)
 {
 	Com_DPrintf(DEBUG_SERVER, "Spawn() from %s\n", sv_client->name);
-
-	/* handle the case of a level changing while a client was connecting */
-	if (atoi(Cmd_Argv(1)) != svs.spawncount) {
-		Com_Printf("SV_Spawn_f from different level\n");
-		SV_New_f();
-		return;
-	}
 
 	if (sv_client->state != cs_spawning) {
 		SV_DropClient(sv_client, "Invalid state\n");

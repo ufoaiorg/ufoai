@@ -395,7 +395,7 @@ void GAME_SpawnSoldiers (void)
 
 			msg = new_dbuffer();
 			NET_WriteByte(msg, clc_stringcmd);
-			NET_WriteString(msg, va("spawn %i\n", cl.servercount));
+			NET_WriteString(msg, "spawn\n");
 			NET_WriteMsg(cls.netStream, msg);
 		}
 	}
