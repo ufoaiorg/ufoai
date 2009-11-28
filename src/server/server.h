@@ -100,7 +100,6 @@ typedef struct {
 	qboolean initialized;		/**< sv_init has completed */
 	int realtime;				/**< always increasing, no clamping, etc */
 	struct datagram_socket *netDatagramSocket;
-	int spawncount;				/**< incremented each server start - used to check late spawns */
 	client_t *clients;			/**< [sv_maxclients->value]; */
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */

@@ -856,7 +856,7 @@ qboolean G_ClientIsReady (const player_t * player)
  * @param[in] player In singleplayer mode the team of this player will get the first round
  * @sa SVCmd_StartGame_f
  */
-static void G_ClientTeamAssign (const player_t* player)
+static void G_GetStartingTeam (const player_t* player)
 {
 	int i, j, teamCount = 0;
 	int playerCount = 0;
@@ -1245,7 +1245,7 @@ qboolean G_ClientSpawn (player_t * player)
 
 	player->spawned = qtrue;
 
-	G_ClientTeamAssign(player);
+	G_GetStartingTeam(player);
 
 	/* do all the init events here... */
 	/* reset the data */
