@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_main.h"
 #include "menu/m_popup.h"
 
-static character_t skirmishCharacters[MAX_ACTIVETEAM];
 static cvar_t *cl_equip;
 
 /**
@@ -42,7 +41,6 @@ static void GAME_SK_Start_f (void)
 {
 	char map[MAX_VAR];
 	mapDef_t *md;
-	int i;
 	const char *name = Cvar_GetString("cl_equip");
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
 	/** @todo support more teamdefs */
@@ -55,16 +53,10 @@ static void GAME_SK_Start_f (void)
 	if (!md)
 		return;
 
-	memset(&skirmishCharacters, 0, sizeof(skirmishCharacters));
+	GAME_GenerateTeam(teamDefID, ed);
 
 	assert(md->map);
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
-
-	for (i = 0; i < MAX_ACTIVETEAM; i++) {
-		CL_GenerateCharacter(&skirmishCharacters[i], teamDefID, NULL);
-		/* pack equipment */
-		INVSH_EquipActor(&skirmishCharacters[i].inv, ed, &skirmishCharacters[i]);
-	}
 
 	/* prepare */
 	MN_InitStack(NULL, "singleplayermission", qtrue, qfalse);
@@ -128,17 +120,6 @@ void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You've lost the game!"), resultText);
 		MN_Popup(_("Better luck next time"), popupText);
 	}
-}
-
-qboolean GAME_SK_Spawn (void)
-{
-	int i;
-
-	for (i = 0; i < MAX_ACTIVETEAM; i++)
-		cl.chrList.chr[i] = &skirmishCharacters[i];
-	cl.chrList.num = MAX_ACTIVETEAM;
-
-	return qtrue;
 }
 
 static inline void GAME_SK_HideDropships (const linkedList_t *dropships)

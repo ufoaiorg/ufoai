@@ -52,6 +52,7 @@ void GAME_SpawnSoldiers(void);
 int GAME_GetCurrentTeam(void);
 equipDef_t *GAME_GetEquipmentDefinition(void);
 void GAME_CharacterCvars(const character_t *chr);
+void GAME_GenerateTeam(const char *teamDefID, const equipDef_t *ed);
 qboolean GAME_TeamIsKnown(const teamDef_t *teamDef);
 void GAME_Drop(void);
 

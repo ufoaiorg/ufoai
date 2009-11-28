@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_main.h"
 #include "cl_team.h"
 #include "battlescape/events/e_main.h"
+#include "cl_inventory.h"
 
 static invList_t invList[MAX_INVLIST];
 
@@ -58,12 +59,33 @@ typedef struct gameTypeList_s {
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL},
 	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
+
+static character_t characters[MAX_ACTIVETEAM];
+
+void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed)
+{
+	int i;
+
+	if (ed == NULL)
+		Com_Error(ERR_DROP, "No equipment definition given");
+
+	memset(&characters, 0, sizeof(characters));
+
+	for (i = 0; i < MAX_ACTIVETEAM; i++) {
+		CL_GenerateCharacter(&characters[i], teamDefID, NULL);
+		/* pack equipment */
+		INVSH_EquipActor(&characters[i].inv, ed, &characters[i]);
+
+		chrDisplayList.chr[i] = &characters[i];
+	}
+	chrDisplayList.num = i;
+}
 
 static const gameTypeList_t *GAME_GetCurrentType (void)
 {
@@ -376,28 +398,51 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 	}
 }
 
+static qboolean GAME_Spawn (void)
+{
+	int i;
+
+	/* If there is no active gametype we create a team with default values.
+	 * This is e.g. the case when someone starts a map with the map command */
+	if (GAME_GetCurrentType() == NULL) {
+		const char *teamDefID = cl_team->integer == TEAM_PHALANX ? "phalanx" : "taman";
+		const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
+		GAME_GenerateTeam(teamDefID, ed);
+	}
+
+	for (i = 0; i < MAX_ACTIVETEAM; i++)
+		cl.chrList.chr[i] = &characters[i];
+	cl.chrList.num = MAX_ACTIVETEAM;
+
+	return qtrue;
+}
+
 /**
  * @brief Called during startup of mission to send team info
  */
 void GAME_SpawnSoldiers (void)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list) {
-		/* this callback is responsible to set up the cl.chrList */
-		const qboolean spawnStatus = list->spawn();
-		if (spawnStatus && cl.chrList.num > 0) {
-			struct dbuffer *msg;
+	qboolean spawnStatus;
 
-			/* send team info */
-			msg = new_dbuffer();
-			GAME_SendCurrentTeamSpawningInfo(msg, &cl.chrList);
-			NET_WriteMsg(cls.netStream, msg);
+	/* this callback is responsible to set up the cl.chrList */
+	if (list && list->spawn)
+		spawnStatus = list->spawn();
+	else
+		spawnStatus = GAME_Spawn();
 
-			msg = new_dbuffer();
-			NET_WriteByte(msg, clc_stringcmd);
-			NET_WriteString(msg, "spawn\n");
-			NET_WriteMsg(cls.netStream, msg);
-		}
+	if (spawnStatus && cl.chrList.num > 0) {
+		struct dbuffer *msg;
+
+		/* send team info */
+		msg = new_dbuffer();
+		GAME_SendCurrentTeamSpawningInfo(msg, &cl.chrList);
+		NET_WriteMsg(cls.netStream, msg);
+
+		msg = new_dbuffer();
+		NET_WriteByte(msg, clc_stringcmd);
+		NET_WriteString(msg, "spawn\n");
+		NET_WriteMsg(cls.netStream, msg);
 	}
 }
 
@@ -408,20 +453,16 @@ int GAME_GetCurrentTeam (void)
 	if (list)
 		return list->getteam();
 
-	Com_Error(ERR_FATAL, "GAME_GetCurrentTeam: Could not determine gamemode");
+	return TEAM_DEFAULT;
 }
 
 equipDef_t *GAME_GetEquipmentDefinition (void)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
 
-	if (list) {
-		if (list->getequipdef == NULL)
-			return NULL;
+	if (list && list->getequipdef != NULL)
 		return list->getequipdef();
-	}
-
-	Com_Error(ERR_FATAL, "GAME_GetEquipmentDefinition: Could not determine gamemode");
+	return NULL;
 }
 
 qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
@@ -431,26 +472,16 @@ qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
 	if (!teamDef)
 		return qfalse;
 
-	if (list) {
-		if (list->teamisknown)
-			return list->teamisknown(teamDef);
-		return qtrue;
-	}
-
-	Com_Error(ERR_FATAL, "GAME_TeamIsKnown: Could not determine gamemode");
+	if (list && list->teamisknown)
+		return list->teamisknown(teamDef);
+	return qtrue;
 }
 
 void GAME_CharacterCvars (const character_t *chr)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-
-	if (list) {
-		if (list->charactercvars)
-			list->charactercvars(chr);
-		return;
-	}
-
-	Com_Error(ERR_FATAL, "GAME_CharacterCvars: Could not determine gamemode");
+	if (list && list->charactercvars)
+		list->charactercvars(chr);
 }
 
 /**

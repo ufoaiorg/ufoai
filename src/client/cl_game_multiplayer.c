@@ -35,19 +35,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void GAME_MP_AutoTeam (void)
 {
-	int i;
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
 	/** @todo support more teamdefs */
 	const char *teamDefID = cl_team->integer == TEAM_PHALANX ? "phalanx" : "taman";
 
-	for (i = 0; i < MAX_ACTIVETEAM; i++) {
-		CL_GenerateCharacter(&multiplayerCharacters[i], teamDefID, NULL);
-		/* pack equipment */
-		INVSH_EquipActor(&multiplayerCharacters[i].inv, ed, &multiplayerCharacters[i]);
-
-		chrDisplayList.chr[i] = &multiplayerCharacters[i];
-	}
-	chrDisplayList.num = i;
+	GAME_GenerateTeam(teamDefID, ed);
 }
 
 static void GAME_MP_AutoTeam_f (void)
@@ -205,17 +197,6 @@ void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You've lost the game!"), resultText);
 		MN_Popup(_("Better luck next time"), popupText);
 	}
-}
-
-qboolean GAME_MP_Spawn (void)
-{
-	int i;
-
-	for (i = 0; i < MAX_ACTIVETEAM; i++)
-		cl.chrList.chr[i] = &multiplayerCharacters[i];
-	cl.chrList.num = MAX_ACTIVETEAM;
-
-	return qtrue;
 }
 
 const mapDef_t* GAME_MP_MapInfo (int step)
