@@ -584,7 +584,6 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	const float mapCoefX = (float) node->size[0] / (float) mapWidth;
 	const float mapCoefY = (float) node->size[1] / (float) mapHeight;
 
-	/** @todo remove cl.skipRadarNodes from the code */
 	if (cls.state != ca_active)
 		return;
 

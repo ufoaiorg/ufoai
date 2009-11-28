@@ -112,7 +112,6 @@ typedef struct client_state_s {
 	model_t *model_draw[MAX_MODELS];
 	struct cBspModel_s *model_clip[MAX_MODELS];
 
-	qboolean skipRadarNodes;	/**< maybe the current map doesn't have a radar image */
 	qboolean radarInited;		/**< every radar image (for every level [1-8]) is loaded */
 
 	clientinfo_t clientinfo[MAX_CLIENTS]; /**< client info of all connected clients */
