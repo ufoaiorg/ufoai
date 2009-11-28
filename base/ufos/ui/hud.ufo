@@ -138,9 +138,14 @@ window hud extends ahud
 		}
 	}
 
-	confunc disfloor { *floor.bt<1>@disabled = true }
-	confunc deselfloor { *floor.bt<1>@disabled = false }
-	confunc selfloor { *floor.bt<1>@disabled = false }
+	/**
+	 * @param <1> level ID (0..7)
+	 * @param <2> status: 0 not available, 1 available, 2 selected
+	 */
+	confunc updateLevelStatus {
+		if ( <2> == 0 ) { *floor.bt<1>@disabled = true }
+		elif ( <2> >= 1 ) { *floor.bt<1>@disabled = false }
+	}
 
 	// ==================
 	// actor and team bar
