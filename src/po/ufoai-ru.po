@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-11-23 00:11+0600\n"
-"PO-Revision-Date: 2009-11-23 00:21+0600\n"
+"PO-Revision-Date: 2009-11-29 20:24+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -440,7 +440,7 @@ msgstr "Локационная система НЛО"
 #: ../base/ufos/aircraftmanagement.ufo:978
 #: ../base/ufos/research.ufo:4386
 msgid "AA51 missile launcher"
-msgstr "Ракетная пусковая установка АА51"
+msgstr "РПУ АА51"
 
 #: ../base/ufos/aircraftmanagement.ufo:1007
 msgid "Base-Defense Laser Turret"
@@ -7939,12 +7939,10 @@ msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flas
 msgstr "Солдат с большим количеством Ед.Времени можно использовать как врачей или солдат ближнего боя."
 
 #: ../base/ufos/tips.ufo:30
-#, fuzzy
 msgid "Building a hospital allows you to heal your soldiers faster for their next mission."
-msgstr "Постройте госпиталь чтоб быстрее лечить солдат."
+msgstr "Постройте госпиталь чтоб лечить солдат."
 
 #: ../base/ufos/tips.ufo:31
-#, fuzzy
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "Плазменные гранаты наносят большие повреждения, но осколочные гранаты также могут быть полезны, так как могут быть брошены дальше."
 
@@ -11148,7 +11146,7 @@ msgstr "Пистолет кал.7.62мм"
 
 #: ../base/ufos/weapons_human.ufo:491
 msgid "7.62mm Pistol Magazine"
-msgstr "7.62мм обойма пистолета"
+msgstr "Обойма пистолета 7.62мм"
 
 #: ../base/ufos/weapons_human.ufo:571
 msgid "Machine Pistol"
@@ -11156,7 +11154,7 @@ msgstr "Автоматический пистолет"
 
 #: ../base/ufos/weapons_human.ufo:591
 msgid "4.2mm MP Magazine"
-msgstr "4.2мм обойма авт.пистолета"
+msgstr "Обойма авт.пистолета 4.2мм"
 
 #: ../base/ufos/weapons_human.ufo:673
 msgid "Submachine Gun"
@@ -11299,7 +11297,7 @@ msgstr "Тяжёлый лазер"
 
 #: ../base/ufos/weapons_laser.ufo:76
 msgid "Electro Laser"
-msgstr "Электрошокер"
+msgstr "Тетанайзер"
 
 #: ../base/ufos/weapons_laser.ufo:96
 msgid "D-F Cartridge"
@@ -11359,7 +11357,7 @@ msgstr "Плазменный меч"
 
 #: ../base/ufos/weapons_melee.ufo:283
 msgid "Lock"
-msgstr "фиксация"
+msgstr ""
 
 #: ../base/ufos/weapons_multiplayer.ufo:10
 msgid "Minigun"
@@ -11614,7 +11612,7 @@ msgid ""
 "ammo not available.\n"
 msgstr ""
 "Невозможно выполнить действие:\n"
-"патронов нет.\n"
+"нет патронов.\n"
 
 #: client/battlescape/cl_hud.c:803
 #: client/battlescape/cl_hud.c:874
@@ -11871,7 +11869,7 @@ msgstr "КРАСНАЯ ТРЕВОГА"
 
 #: client/campaign/cp_aircraft.c:438
 msgid "Nothing - should not be displayed"
-msgstr "ничего - отображать нечего"
+msgstr "ничего - не должно отображаться"
 
 #: client/campaign/cp_aircraft.c:440
 msgid "at home base"
@@ -12394,7 +12392,7 @@ msgstr "Модуль %s был уничтожен при взрыве храни
 #: client/campaign/cp_base_callbacks.c:179
 #, c-format
 msgid "Base #%i"
-msgstr "База #%i"
+msgstr "База №%i"
 
 #: client/campaign/cp_base_callbacks.c:183
 msgid "Home"
@@ -12591,7 +12589,7 @@ msgstr "Демонтаж"
 #: client/campaign/cp_basedefence_callbacks.c:331
 #, c-format
 msgid "Slot %i:\t%s (%s)"
-msgstr "Слот %i:\t%s (%s)"
+msgstr "#%i:\t%s (%s)"
 
 #: client/campaign/cp_basedefence_callbacks.c:283
 #: client/campaign/cp_basedefence_callbacks.c:311
@@ -13270,7 +13268,7 @@ msgstr "Пересылка пришельцев"
 
 #: client/campaign/cp_messageoptions.c:58
 msgid "transfer_uforecovery_finished"
-msgstr ""
+msgstr "Пересылка НЛО на разборку завершена"
 
 #: client/campaign/cp_messageoptions.c:59
 msgid "ufo_spotted"
@@ -13693,9 +13691,9 @@ msgid "Stored at: %s\n"
 msgstr "Состояние:\t%s\n"
 
 #: client/campaign/cp_produce_callbacks.c:386
-#, fuzzy, c-format
+#, c-format
 msgid "Disassembly time: %ih\n"
-msgstr "Время демонтажа:\t%iч\n"
+msgstr "Время демонтажа: %iч\n"
 
 #: client/campaign/cp_produce_callbacks.c:387
 msgid "Components:\n"

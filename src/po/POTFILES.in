@@ -27,8 +27,8 @@
 ./client/campaign/cp_market_callbacks.c
 ./client/campaign/cp_messageoptions.c
 ./client/campaign/cp_messages.c
-./client/campaign/cp_missions.c
 ./client/campaign/cp_mission_triggers.c
+./client/campaign/cp_missions.c
 ./client/campaign/cp_nation.c
 ./client/campaign/cp_nations.c
 ./client/campaign/cp_popup.c
@@ -58,6 +58,7 @@
 ./client/cl_screen.c
 ./client/cl_team.c
 ./client/input/cl_input.c
+./client/input/cl_joystick.c
 ./client/menu/m_main.c
 ./client/menu/m_menus.c
 ./client/menu/m_tooltip.c
@@ -70,8 +71,7 @@
 ./game/g_actor.c
 ./game/g_client.c
 ./game/g_combat.c
+./game/g_mission.c
 ./game/g_morale.c
 ./game/g_round.c
-./game/g_spawn.c
-./game/g_svcmds.c
 ./po/OTHER_STRINGS
