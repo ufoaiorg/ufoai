@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <io.h>
 #include <conio.h>
 
+HINSTANCE global_hInstance;
+
 int Sys_Milliseconds (void)
 {
 	static int base = 0;
@@ -287,4 +289,8 @@ int Sys_Setenv (const char *name, const char *value)
 	char str[256];
 	Com_sprintf(str, sizeof(str), "%s=%s", name, value);
 	return putenv(str);
+}
+
+void Sys_InitSignals (void)
+{
 }

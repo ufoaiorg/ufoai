@@ -86,10 +86,6 @@ void Sys_Init (void)
 #endif
 }
 
-void Sys_InitSignals (void)
-{
-}
-
 /*
 ========================================================================
 GAME DLL
@@ -323,8 +319,6 @@ static void ParseCommandLine (LPSTR lpCmdLine)
 		}
 	}
 }
-
-HINSTANCE global_hInstance;
 
 static void FixWorkingDirectory (void)
 {

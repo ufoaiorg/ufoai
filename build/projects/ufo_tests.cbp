@@ -11,8 +11,9 @@
 				<Option output="..\..\testall" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\..\" />
 				<Option object_output=".objs\client" />
-				<Option type="0" />
+				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
@@ -43,8 +44,9 @@
 				<Option output="..\..\testall" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\..\" />
 				<Option object_output=".objs\client" />
-				<Option type="0" />
+				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
@@ -64,6 +66,10 @@
 					<Add library="intl" />
 					<Add library="winmm" />
 					<Add library="ws2_32" />
+					<Add library="user32" />
+					<Add library="kernel32" />
+					<Add library="wsock32" />
+					<Add library="gdi32" />
 				</Linker>
 			</Target>
 			<Target title="linux">
@@ -71,8 +77,9 @@
 				<Option output="..\..\testall" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\..\" />
 				<Option object_output=".objs\client" />
-				<Option type="0" />
+				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
@@ -99,8 +106,9 @@
 				<Option output="..\..\testall" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\..\" />
 				<Option object_output=".objs\client" />
-				<Option type="0" />
+				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
@@ -225,11 +233,6 @@
 			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_console.c">
-			<Option compilerVar="CC" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
-		</Unit>
-		<Unit filename="..\..\src\ports\windows\win_main.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
