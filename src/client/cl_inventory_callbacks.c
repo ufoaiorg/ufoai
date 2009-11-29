@@ -152,10 +152,10 @@ void INV_ItemDescription (const objDef_t *od)
 			if (od->weapon) {
 				Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 				if (od->ammo > 0)
-					Q_strcat(itemText, va(_("Max ammo:\t%i\n"), (int) (od->ammo)), sizeof(itemText));
-				odAmmo = (od->numAmmos) ? od->ammos[itemIndex] : od ;
+					Q_strcat(itemText, va(_("Max ammo:\t%i\n"), od->ammo), sizeof(itemText));
+				odAmmo = (od->numAmmos) ? od->ammos[itemIndex] : od;
 				assert(odAmmo);
-				for (weaponIndex = 0; (weaponIndex < odAmmo->numWeapons) && (odAmmo->weapons[weaponIndex] != od) ; weaponIndex++);
+				for (weaponIndex = 0; (weaponIndex < odAmmo->numWeapons) && (odAmmo->weapons[weaponIndex] != od); weaponIndex++);
 			} else {
 				odAmmo = od;
 				weaponIndex = itemIndex;
