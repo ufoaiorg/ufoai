@@ -887,7 +887,7 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
 		star = strchr(path, '*');
 		assert(star);
 		star[0] = '\0';
-		Q_strcat(path, f, MAX_QPATH);
+		Q_strcat(path, f, sizeof(path));
 
 		/* skip incompatible blocks */
 		if (strstr(name, path) == NULL)

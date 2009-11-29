@@ -144,12 +144,18 @@ static void testMassAssemblySequential (void)
 int UFO_AddRandomMapAssemblyTests (void)
 {
 	static cvar_t svt;
+	static cvar_t maxclients;
 	/* add a suite to the registry */
 	CU_pSuite RandomMapAssemblySuite = CU_add_suite("RandomMapAssemblyTests", UFO_InitSuiteRandomMapAssembly, UFO_CleanSuiteRandomMapAssembly);
 
 	if (!sv_threads) {
 		sv_threads = &svt;
 		sv_threads->integer = 0;
+	}
+
+	if (!sv_maxclients) {
+		sv_maxclients = &maxclients;
+		sv_maxclients->integer = 1;
 	}
 
 	if (RandomMapAssemblySuite == NULL)
