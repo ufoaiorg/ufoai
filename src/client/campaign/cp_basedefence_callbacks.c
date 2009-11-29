@@ -116,8 +116,10 @@ static void BDEF_SelectItem_f (void)
 	}
 
 	if (slotIDX >= 0) {
+		const objDef_t *item;
 		slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType, slotIDX);
-		INV_ItemDescription((slot) ? slot->item : NULL);
+		item = (slot) ? ( (slot->nextItem) ? slot->nextItem : slot->item ) : NULL;
+		INV_ItemDescription(item);
 	} else if (itemIDX >= 0) {
 		technology_t **list;
 		technology_t *itemTech = NULL;
