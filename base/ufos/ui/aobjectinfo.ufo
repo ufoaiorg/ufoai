@@ -8,6 +8,25 @@
  */
 window objectinfo
 {
+	{ }
+	/*
+	 * dummy nodes
+	 */
+	pic  background { }
+
+	panel itemdescription {
+		{ }
+		string header_item { }
+		custombutton action_dec { }
+		string item_name { }
+		custombutton action_inc { }
+
+		string header_firemode { }
+		custombutton firemode_dec { }
+		string firemode_name { }
+		custombutton firemode_inc { }
+	}
+
 	/**
 	 * @param[in] <1> true or false to hide or show the firemode nodes
 	 */

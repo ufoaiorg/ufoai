@@ -1,4 +1,4 @@
-window basedefence
+window basedefence extends objectinfo
 {
 	{
 		pos			"100 150"
