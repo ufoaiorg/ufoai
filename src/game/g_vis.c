@@ -234,6 +234,11 @@ int G_TestVis (int team, edict_t * check, int flags)
 	return old;
 }
 
+static qboolean G_VisShouldStop (const edict_t *ent)
+{
+	return G_IsLivingActor(ent) && !G_IsCivilian(ent);
+}
+
 /**
  * @brief Sets visible edict on player spawn
  * @sa G_ClientSpawn
@@ -258,7 +263,7 @@ int G_CheckVisPlayer (player_t* player, qboolean perish)
 
 				if (vis & VIS_YES) {
 					status |= VIS_APPEAR;
-					if (G_IsLivingActor(ent) && ent->team != TEAM_CIVILIAN)
+					if (G_VisShouldStop(ent))
 						status |= VIS_STOP;
 				} else
 					status |= VIS_PERISH;
@@ -316,7 +321,7 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish, edict_t *ent)
 				/* ... to visible */
 				if (vis & VIS_YES) {
 					status |= VIS_APPEAR;
-					if (G_IsLivingActor(check))
+					if (G_VisShouldStop(check))
 						status |= VIS_STOP;
 				} else
 					status |= VIS_PERISH;

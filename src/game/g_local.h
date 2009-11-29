@@ -174,6 +174,8 @@ extern edict_t *g_edicts;
 #define G_IsAIPlayer(player)	((player)->pers.ai)
 #define G_TeamToVisMask(team)	(1 << (team))
 #define G_IsVisibleForTeam(ent, team) ((ent)->visflags & G_TeamToVisMask(team))
+/** @note check for actor first */
+#define G_IsCivilian(ent)		((ent)->team == TEAM_CIVILIAN)
 
 extern cvar_t *sv_maxentities;
 extern cvar_t *password;
