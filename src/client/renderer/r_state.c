@@ -50,7 +50,7 @@ qboolean R_SelectTexture (gltexunit_t *texunit)
 	return qtrue;
 }
 
-void R_BindTexture (int texnum)
+void R_BindTexture_ (int texnum)
 {
 	if (texnum == r_state.active_texunit->texnum)
 		return;
@@ -61,6 +61,14 @@ void R_BindTexture (int texnum)
 
 	glBindTexture(GL_TEXTURE_2D, texnum);
 	R_CheckError();
+}
+
+void R_BindTextureDebug(int texnum, const char *file, int line, const char *function)
+{
+	if (texnum <= 0) {
+		Com_Printf("Bad texnum (%d) in: %s (%d): %s\n", texnum, file, line, function);
+	}
+	R_BindTexture_(texnum);
 }
 
 void R_BindLightmapTexture (GLuint texnum)
