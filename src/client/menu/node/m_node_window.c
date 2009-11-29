@@ -259,9 +259,8 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 		MN_AppendNode(node, button);
 	}
 
-	if (node->size[0] == VID_NORM_WIDTH && node->size[1] == VID_NORM_HEIGHT) {
-		EXTRADATA(node).isFullScreen = qtrue;
-	}
+	EXTRADATA(node).isFullScreen = node->size[0] == VID_NORM_WIDTH
+			&& node->size[1] == VID_NORM_HEIGHT;
 
 #ifdef DEBUG
 	if (node->size[0] < LEFT_WIDTH + MID_WIDTH + RIGHT_WIDTH || node->size[1] < TOP_HEIGHT + MID_HEIGHT + BOTTOM_HEIGHT)
