@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ufo_tests" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="windows">
+				<Option platforms="Windows;" />
+				<Option output="..\..\testall" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\client" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectIncludeDirsRelation="1" />
+				<Option projectLibDirsRelation="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wall" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DWINVER=0x501" />
+					<Add option="-DNODEBUG" />
+					<Add option="-DHAVE_VORBIS_CODEC_H" />
+					<Add option="-DHAVE_XVID_H" />
+					<Add option="-DHAVE_THEORA_THEORA_H" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="opengl32" />
+					<Add library="intl" />
+					<Add library="winmm" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="kernel32" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="curl" />
+				</Linker>
+			</Target>
+			<Target title="windows_debug">
+				<Option platforms="Windows;" />
+				<Option output="..\..\testall" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\client" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectIncludeDirsRelation="1" />
+				<Option projectLibDirsRelation="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-pg" />
+					<Add option="-g" />
+					<Add option="-DWINVER=0x501" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DDEBUG" />
+					<Add option="-DHAVE_VORBIS_CODEC_H" />
+					<Add option="-DHAVE_XVID_H" />
+					<Add option="-DHAVE_THEORA_THEORA_H" />
+				</Compiler>
+				<Linker>
+					<Add option="-pg -lgmon" />
+					<Add library="opengl32" />
+					<Add library="intl" />
+					<Add library="winmm" />
+					<Add library="ws2_32" />
+				</Linker>
+			</Target>
+			<Target title="linux">
+				<Option platforms="Unix;" />
+				<Option output="..\..\testall" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\client" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectIncludeDirsRelation="1" />
+				<Option projectLibDirsRelation="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-pg" />
+					<Add option="-g" />
+					<Add option="-DWINVER=0x501" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DDEBUG" />
+					<Add option="-DHAVE_VORBIS_CODEC_H" />
+					<Add option="-DHAVE_XVID_H" />
+					<Add option="-DHAVE_THEORA_THEORA_H" />
+				</Compiler>
+				<Linker>
+					<Add option="-pg -lgmon" />
+					<Add library="opengl32" />
+					<Add library="intl" />
+					<Add library="winmm" />
+					<Add library="ws2_32" />
+				</Linker>
+			</Target>
+			<Target title="macosx">
+				<Option platforms="Mac;" />
+				<Option output="..\..\testall" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\client" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectIncludeDirsRelation="1" />
+				<Option projectLibDirsRelation="1" />
+				<Compiler>
+					<Add option="-DHAVE_VORBIS_CODEC_H" />
+					<Add option="-DHAVE_XVID_H" />
+					<Add option="-DHAVE_THEORA_THEORA_H" />
+					<Add directory="\sw\include" />
+					<Add directory="\Library\Frameworks\SDL.framework\Versions\A\Headers" />
+				</Compiler>
+				<Linker>
+					<Add option="-framework OpenGL" />
+					<Add option="-framework SDL" />
+					<Add option="-framework SDL_ttf" />
+					<Add option="-framework SDL_mixer" />
+					<Add option="-framework IOKit" />
+					<Add option="-framework,Cocoa" />
+					<Add option="-framework foundation" />
+					<Add library="libintl" />
+					<Add directory="\sw\lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-DCOMPILE_UFO" />
+			<Add option="-DDEDICATED_ONLY" />
+			<Add option="-ggdb" />
+			<Add option="-O0" />
+		</Compiler>
+		<Linker>
+			<Add library="curl" />
+			<Add library="cunit" />
+			<Add library="z" />
+			<Add library="SDL" />
+		</Linker>
+		<Unit filename="..\..\src\common\cmd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\cmodel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\common.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\cvar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\dbuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\files.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\http.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\ioapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\md4.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\md5.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\mem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\msg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\net.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\netpack.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\pqueue.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\routing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\scripts.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\tracing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\unzip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\inv_shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\q_shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\unix_console.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\unix_curses.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\unix_glob.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\unix_main.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\windows\ufo.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="windows" />
+			<Option target="windows_debug" />
+		</Unit>
+		<Unit filename="..\..\src\ports\windows\win_console.c">
+			<Option compilerVar="CC" />
+			<Option target="windows" />
+			<Option target="windows_debug" />
+		</Unit>
+		<Unit filename="..\..\src\ports\windows\win_main.c">
+			<Option compilerVar="CC" />
+			<Option target="windows" />
+			<Option target="windows_debug" />
+		</Unit>
+		<Unit filename="..\..\src\ports\windows\win_shared.c">
+			<Option compilerVar="CC" />
+			<Option target="windows" />
+			<Option target="windows_debug" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_ccmds.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_clientstub.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_game.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_send.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_user.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_world.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\byte.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\infostring.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\mathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_all.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_inventory.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_inventory.h" />
+		<Unit filename="..\..\src\tests\test_rma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_rma.h" />
+		<Unit filename="..\..\src\tests\test_routing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_routing.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
