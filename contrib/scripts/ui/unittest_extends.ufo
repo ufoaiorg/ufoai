@@ -1,0 +1,78 @@
+/**
+ * @brief Unittest for extended windows
+ * Every thing must be green and it must not print any text or warning into the console.
+ */
+
+window unittest_super {
+	{
+		size	"200 200"
+		pos		"10 10"
+		string "superFoo"
+		dragbutton true
+	}
+
+	panel a {
+		{
+			size "200 200"
+		}
+	
+		panel background2
+		{
+			bgcolor	"0.5 0.5 0 1"
+			size	"200 200"
+		}
+
+		panel background
+		{
+			bgcolor	"1 0 0 1"
+			pos		"100 100"
+			size	"50 50"
+		}
+
+		panel background3
+		{
+			bgcolor	"0 0.7 0 1"
+			size	"50 50"
+		}
+
+		panel background4
+		{
+			bgcolor	"1 0 0 1"
+			size	"10 10"
+		}
+	}
+}
+
+window unittest_extended extends unittest_super {
+
+	{
+		string "foo"
+	}
+
+	panel b { }
+
+	panel a {
+		panel background2
+		{
+			bgcolor	"0 0.5 0 1"
+		}
+
+		panel background
+		{
+			invis true
+		}
+
+		panel newBackground
+		{
+			bgcolor	"0 1 0 1"
+			size	"10 10"
+		}
+	}
+
+	panel c { }
+
+	string	{
+		pos	"10 170"
+		string "Everything must be green"
+	}
+}
