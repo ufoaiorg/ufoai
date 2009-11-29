@@ -96,8 +96,8 @@ AC_ARG_ENABLE(profiling,
 	[], [enable_profiling=no])
 
 AC_ARG_ENABLE(tests,
-	[AS_HELP_STRING([--enable-tests], [build with tests @<:@default=disabled@:>@])],
-	[], [enable_tests=no])
+	[AS_HELP_STRING([--enable-tests], [build with tests @<:@default=check@:>@])],
+	[], [enable_tests=check])
 
 AC_ARG_ENABLE(universal,
 	[AS_HELP_STRING([--enable-universal], [build universal binaries on Mac OS X @<:@default=disabled@:>@])],
@@ -797,20 +797,25 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_SUBST([BUILD_TESTS],0)
-if test "$enable_tests" = "yes"
+if test "$enable_tests" = "check" || test "$enable_tests" = "yes"
 then
-	AC_SEARCH_LIBS([CU_initialize_registry], [cunit])
-	if test "$ac_cv_search_cu_initialize_registry" != "no"
+	AC_SEARCH_LIBS([CU_initialize_registry],[cunit])
+	if test "$ac_cv_search_CU_initialize_registry" = "no"
 	then
+		if test "$enable_tests" = "yes"
+		then
+			AC_MSG_ERROR([--enable-tests specified but could not find cunit lib])
+		else
+			AC_SUBST([BUILD_TESTS],0)
+			AC_MSG_NOTICE([Without tests - cunit library not found])
+		fi
+	else
 		AC_SUBST([BUILD_TESTS],1)
 		AC_DEFINE([BUILD_TESTS],[1],[Have cunit library])
-	elif test "$enable_tests" = "yes"
-	then
-		AC_MSG_ERROR([--enable-tests specified but could not find cunit lib])
-	else
-		AC_SUBST([BUILD_TESTS],0)
-		AC_MSG_NOTICE([Without tests])
+		AC_MSG_NOTICE([With tests])
 	fi
+else
+	AC_MSG_NOTICE([Without tests])
 fi
 
 #---------------------------------------------------------------------------------------------
