@@ -731,14 +731,14 @@ static void SV_CheckGameStart (void)
 	if (sv_maxclients->integer > 1) {
 		/* check that every player has set the isReady flag */
 		for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
-			if (cl->state != cs_free && !cl->player->isReady)
+			if (cl && cl->state != cs_free && !cl->player->isReady)
 				return;
 	}
 
 	sv.started = qtrue;
 
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
-		if (cl->state == cs_spawning)
+		if (cl && cl->state != cs_free)
 			SV_ClientCommand(cl, "spawnsoldiers\n");
 }
 
